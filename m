@@ -2,247 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 824251F404
-	for <e@80x24.org>; Thu, 15 Feb 2018 23:10:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B9E141F404
+	for <e@80x24.org>; Thu, 15 Feb 2018 23:34:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756568AbeBOXKO (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Feb 2018 18:10:14 -0500
-Received: from mail-io0-f193.google.com ([209.85.223.193]:39132 "EHLO
-        mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756565AbeBOXKN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Feb 2018 18:10:13 -0500
-Received: by mail-io0-f193.google.com with SMTP id b198so2423442iof.6
-        for <git@vger.kernel.org>; Thu, 15 Feb 2018 15:10:13 -0800 (PST)
+        id S1165088AbeBOXeV (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Feb 2018 18:34:21 -0500
+Received: from mail-qt0-f173.google.com ([209.85.216.173]:34481 "EHLO
+        mail-qt0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1163785AbeBOXeU (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Feb 2018 18:34:20 -0500
+Received: by mail-qt0-f173.google.com with SMTP id d14so1863865qtg.1
+        for <git@vger.kernel.org>; Thu, 15 Feb 2018 15:34:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=5mZ1AOuJ+NgsNlf1mFUl7TAzUdyAg+QiVDjtcM9xRp4=;
-        b=mrxdwdOh7Ldztlq5+YeagS5VF4cLDtO+sqLF74Viyqb/HHW6EaY3a26kinN2n7oKEV
-         zWLGokpbRNUjsuJFW+RYfu1dcNCrJqRblq+56tc15j16o67rAvx3raRXbxl0eOk/R/F1
-         O2ygqtRlrWzgVr10lyUSsk0SDA14Pl3+oMOs0yXvCt0NRmYvZXAhukpTNIA2swIrhtO5
-         rJmg1QGMWjNPq6NUibXCoAhwzuKIb5RYQnHsHCg2A8zAhrTTdK/fYtxQEp9mpA2lAoti
-         n8pZIzP49HxM/8jKl0paqfKB4nsPwTckpaCqutm6DinBohYaQR1N9fbV2aKO6YdVGa8F
-         r/9A==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=llmn3ojIbrtZZlzKmSCFuiZ8ZBRuTxiznu4nzSd39FI=;
+        b=MS+o3cAGsbLu3phEVKdAol/+I48X+SJtsDAh2DBDiD2pFDCk1q61viHGW3M2qqFrUh
+         lmN/LNKYt/M3xMw1TRLMibHKi1UZs4zNrPpDNZBfY6F+rL7qMw5Yf9znjvhn3O+dlaXa
+         F6kCrHGT7bKnqxwzPQi2wb6PlCRZcuxoPRfRUpx8zB2yGQqhgEDHieh0L6v7aqDvf1P1
+         gnoVtdj+upPEKRhglsHj7r26FglrTjlmVmCudWfykgvj5+SWLLq8nqW8bJe8WpxzLVV/
+         ojugZ0Em/BoPh63lt/27K51Oll0ZmbCWJJKsfBLvYWs5VhbiWIqoI/4aK7MlkYcw2aRO
+         6ohw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
-         :in-reply-to:references;
-        bh=5mZ1AOuJ+NgsNlf1mFUl7TAzUdyAg+QiVDjtcM9xRp4=;
-        b=rhg3UJMskA2C4CT1HkySNwQulRqZjb2dv8iX3OhX4Damzr2h+lR+YyhRlcDzwkd7K0
-         eW0alE8MbjguOvBlj6+6UK/kcr2sea4XKM4CFMgNYyf0GW9NDuVXrJXTvwXcjsC9agqO
-         pvmKKN1z19RmsCfqRIy3TcTsNwLm95uwlgVK5XhdYbTJf6SseGluZtky+fh18XBN15j7
-         6SvabH4wH3OfWiLSKQ3S1cIRdjFvwuBlfC8aFdht9MnEsumO7KWWh7sLBOfpQcjDsywx
-         XzI91Qarxlt2VeCb98XO2K37xYV2Wld3bBYgXRd4l8hyKWC3n6nuJ92SYDFOeID3lOSv
-         Nu1A==
-X-Gm-Message-State: APf1xPBdABA2xmGTtblg0wPsmHMXpRNdPsVKp7XhDSQ6ZPT/UtzSWuL3
-        speJik8yYIHXuL6TJMWfbV7u3w==
-X-Google-Smtp-Source: AH8x224eE2Tr3GuShYMGlydUOXQBQw7ZuuOIcMiG6FqtqdhTj9B3RLwvt2jpuaPD8QY8tkUciX2lhQ==
-X-Received: by 10.107.13.143 with SMTP id 137mr5591377ion.265.1518736211335;
-        Thu, 15 Feb 2018 15:10:11 -0800 (PST)
-Received: from localhost.localdomain (user-12l2cs3.cable.mindspring.com. [69.81.51.131])
-        by smtp.gmail.com with ESMTPSA id h2sm1058590ioa.77.2018.02.15.15.10.10
-        (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Thu, 15 Feb 2018 15:10:10 -0800 (PST)
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=llmn3ojIbrtZZlzKmSCFuiZ8ZBRuTxiznu4nzSd39FI=;
+        b=mkLqaLqbGiOswsOdfaehCaWpmYwkDQesgvkG6Gwa9VTpwbcY/azfqJSr3Db2sgT+jW
+         eDnesDB9X7LQgGm5HelyJK4VNgk90KY2RpXaDzBnkwPuEoltG9X60SpN3Us4Dr6tkugI
+         ewVcokIpHd12udoRnTK5bQmSapr6g6GPwgt77wB6KYQTf0I6DWfsPkxzZPTr42GEgrnC
+         GBzXfz4yJrFSSNG2ve72rUreVoSrqKWJqfmj4NhkU9m5tzKU8GW3l3j1tpgKrlIbbX2c
+         TmYgybzlOET6kgaguYFyHmo6ZKIhRCBulDfLCWFmhqdXMMELyP2RxHdy4hyoHGBXFxZ4
+         g+jg==
+X-Gm-Message-State: APf1xPBj8fzGmNXM+hlHQZT5PkkYHd51hTuM6HnzzsZEFH7vjqdQrzs7
+        4ceYzYCT2rKz64F28z9UqvLQZ+QPL5+Tgia/q5c=
+X-Google-Smtp-Source: AH8x224cUPBKhRNiZv4PDb3E3isuzi0Ehucg2nJVDAdpImG5WTIJVHOtDWZfd9jfgMD10cvvrvkHNyp6eVLKkURGiRw=
+X-Received: by 10.237.37.161 with SMTP id x30mr6951754qtc.78.1518737659491;
+ Thu, 15 Feb 2018 15:34:19 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.12.128.40 with HTTP; Thu, 15 Feb 2018 15:34:19 -0800 (PST)
+In-Reply-To: <xmqqy3jt7ty8.fsf_-_@gitster-ct.c.googlers.com>
+References: <20180213080036.3bf3a908@canb.auug.org.au> <CA+55aFwM0vy+pw-Xv=gA19ULMwAXNPhdO3qR5A3hkMrZKJFNSQ@mail.gmail.com>
+ <CA+55aFzxsNxgKD1uGZQCiib+=+wCMSa0=B+Ye3Zi-u6kpz8Vrg@mail.gmail.com>
+ <xmqqfu65sx20.fsf@gitster-ct.c.googlers.com> <CA+55aFwTp8gg70sHXqOgR01Liv5c8nnfUP0yTdwpkh-rg+2EMA@mail.gmail.com>
+ <xmqqzi4drczv.fsf@gitster-ct.c.googlers.com> <20180212222157.0a3bd472@vento.lan>
+ <xmqqmv0crepg.fsf@gitster-ct.c.googlers.com> <CA+55aFxkYTeY9h=VHFXi=gbXsnsHCRMAVZ9=1_EsFGSqr0sj9g@mail.gmail.com>
+ <xmqqfu63o2xv.fsf@gitster-ct.c.googlers.com> <xmqqy3jt7ty8.fsf_-_@gitster-ct.c.googlers.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-To:     git@vger.kernel.org
-Cc:     Lars Schneider <larsxschneider@gmail.com>,
-        matthew.k.gumbel@intel.com, Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v3] worktree: add: fix 'post-checkout' not knowing new worktree location
-Date:   Thu, 15 Feb 2018 18:09:52 -0500
-Message-Id: <20180215230952.51887-1-sunshine@sunshineco.com>
-X-Mailer: git-send-email 2.16.1.370.g5c508858fb
-In-Reply-To: <20180215191841.40848-1-sunshine@sunshineco.com>
-References: <20180215191841.40848-1-sunshine@sunshineco.com>
+Date:   Thu, 15 Feb 2018 18:34:19 -0500
+X-Google-Sender-Auth: vNBnwzqvHAj-KTgXVLQwsKQKwCM
+Message-ID: <CAPig+cSJKDH=_-hGZLpZUjC4WEyjMRAd2VPgo-Vd+sHpa4jQ-Q@mail.gmail.com>
+Subject: Re: [PATCH] merge: allow fast-forward when merging a tracked tag
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Mauro Carvalho Chehab <mchehab@osg.samsung.com>,
+        Linus Torvalds <torvalds@linux-foundation.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Although "git worktree add" learned to run the 'post-checkout' hook in
-ade546be47 (worktree: invoke post-checkout hook, 2017-12-07), it
-neglected to change to the directory of the newly-created worktree
-before running the hook. Instead, the hook runs within the directory
-from which the "git worktree add" command itself was invoked, which
-effectively neuters the hook since it knows nothing about the new
-worktree directory.
+On Thu, Feb 15, 2018 at 5:45 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> [...]
+> Update the default (again) for "git merge" that merges a tag object
+> to (1) --no-ff (i.e. create a merge commit even when side branch
+> fast forwards) if the tag being merged is not at its expected place
+> in refs/tags/ hierarchy and (2) --ff (i.e. allow fast-forward update
+> when able) otherwise.
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+> diff --git a/builtin/merge.c b/builtin/merge.c
+> @@ -1125,6 +1126,42 @@ static struct commit_list *collect_parents(struct commit *head_commit,
+> +static int merging_a_throwaway_tag(struct commit *commit)
+> +{
+> +       const char *tag_ref;
+> +       struct object_id oid;
+> +
+> +       /* Are we merging a tag? */
+> +       if (!merge_remote_util(commit) ||
+> +           !merge_remote_util(commit)->obj ||
+> +           merge_remote_util(commit)->obj->type != OBJ_TAG)
+> +               return 0;
+> +
+> +       /*
+> +        * Now we know we are merging a tag object.  Are we downstream
+> +        * and following the tags from upstream?  If so, we must have
+> +        * the tag object pointed at by "refs/tags/$T" where $T is the
+> +        * tagname recorded in the tag object.  We want to allow such
+> +        * a "just to catch up" merge to fast-forward.
+> +        */
+> +       tag_ref = xstrfmt("refs/tags/%s",
+> +                         ((struct tag *)merge_remote_util(commit)->obj)->tag);
 
-Further, ade546be47 failed to sanitize the environment before running
-the hook, which means that user-assigned values of GIT_DIR and
-GIT_WORK_TREE could mislead the hook about the location of the new
-worktree. In the case of "git worktree add" being run from a bare
-repository, the GIT_DIR="." assigned by Git itself leaks into the hook's
-environment and breaks Git commands; this is so even when the working
-directory is correctly changed to the new worktree before the hook runs
-since ".", relative to the new worktree directory, does not point at the
-bare repository.
+xstrfmt() allocates a new string...
 
-Fix these problems by (1) changing to the new worktree's directory
-before running the hook, and (2) sanitizing the environment of GIT_DIR
-and GIT_WORK_TREE so hooks can't be confused by misleading values.
+> +       if (!read_ref(tag_ref, &oid) &&
+> +           !oidcmp(&oid, &merge_remote_util(commit)->obj->oid))
+> +               return 0;
 
-Enhance the t2025 'post-checkout' tests to verify that the hook is
-indeed run within the correct directory and that Git commands invoked by
-the hook compute Git-dir and top-level worktree locations correctly.
+...which is leaked here...
 
-While at it, also add two new tests: (1) verify that the hook is run
-within the correct directory even when the new worktree is created from
-a sibling worktree (as opposed to the main worktree); (2) verify that
-the hook is provided with correct context when the new worktree is
-created from a bare repository (test provided by Lars Schneider).
+> +
+> +       /*
+> +        * Otherwise, we are playing an integrator's role, making a
+> +        * merge with a throw-away tag from a contributor with
+> +        * something like "git pull $contributor $signed_tag".
+> +        * We want to forbid such a merge from fast-forwarding
+> +        * by default; otherwise we would not keep the signature
+> +        * anywhere.
+> +        */
+> +       return 1;
 
-Implementation Notes:
+...and here.
 
-Rather than sanitizing the environment of GIT_DIR and GIT_WORK_TREE, an
-alternative would be to set them explicitly, as is already done for
-other Git commands run internally by "git worktree add". This patch opts
-instead to sanitize the environment in order to clearly document that
-the worktree is fully functional by the time the hook is run, thus does
-not require special environmental overrides.
-
-The hook is run manually, rather than via run_hook_le(), since it needs
-to change the working directory to that of the worktree, and
-run_hook_le() does not provide such functionality. As this is a one-off
-case, adding 'run_hook' overloads which allow the directory to be set
-does not seem warranted at this time.
-
-Reported-by: Lars Schneider <larsxschneider@gmail.com>
-Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
----
-
-This is a re-roll of [1] which fixes "git worktree add" to provide
-proper context to the 'post-checkout' hook so that the hook knows the
-location of the newly-created worktree.
-
-Changes since v2:
-
-* Fix crash due to missing NULL-terminator on 'env' list passed to
-  run_command().
-
-[1]: https://public-inbox.org/git/20180215191841.40848-1-sunshine@sunshineco.com/
-
-builtin/worktree.c      | 20 ++++++++++++---
- t/t2025-worktree-add.sh | 54 ++++++++++++++++++++++++++++++++++-------
- 2 files changed, 62 insertions(+), 12 deletions(-)
-
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index 7cef5b120b..f69f862947 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -345,9 +345,23 @@ static int add_worktree(const char *path, const char *refname,
- 	 * Hook failure does not warrant worktree deletion, so run hook after
- 	 * is_junk is cleared, but do return appropriate code when hook fails.
- 	 */
--	if (!ret && opts->checkout)
--		ret = run_hook_le(NULL, "post-checkout", oid_to_hex(&null_oid),
--				  oid_to_hex(&commit->object.oid), "1", NULL);
-+	if (!ret && opts->checkout) {
-+		const char *hook = find_hook("post-checkout");
-+		if (hook) {
-+			const char *env[] = { "GIT_DIR", "GIT_WORK_TREE", NULL };
-+			cp.git_cmd = 0;
-+			cp.no_stdin = 1;
-+			cp.stdout_to_stderr = 1;
-+			cp.dir = path;
-+			cp.env = env;
-+			cp.argv = NULL;
-+			argv_array_pushl(&cp.args, absolute_path(hook),
-+					 oid_to_hex(&null_oid),
-+					 oid_to_hex(&commit->object.oid),
-+					 "1", NULL);
-+			ret = run_command(&cp);
-+		}
-+	}
- 
- 	argv_array_clear(&child_env);
- 	strbuf_release(&sb);
-diff --git a/t/t2025-worktree-add.sh b/t/t2025-worktree-add.sh
-index 2b95944973..d0d2e4f7ec 100755
---- a/t/t2025-worktree-add.sh
-+++ b/t/t2025-worktree-add.sh
-@@ -451,32 +451,68 @@ test_expect_success 'git worktree --no-guess-remote option overrides config' '
- '
- 
- post_checkout_hook () {
--	test_when_finished "rm -f .git/hooks/post-checkout" &&
--	mkdir -p .git/hooks &&
--	write_script .git/hooks/post-checkout <<-\EOF
--	echo $* >hook.actual
-+	gitdir=${1:-.git}
-+	test_when_finished "rm -f $gitdir/hooks/post-checkout" &&
-+	mkdir -p $gitdir/hooks &&
-+	write_script $gitdir/hooks/post-checkout <<-\EOF
-+	{
-+		echo $*
-+		git rev-parse --git-dir --show-toplevel
-+	} >hook.actual
- 	EOF
- }
- 
- test_expect_success '"add" invokes post-checkout hook (branch)' '
- 	post_checkout_hook &&
--	printf "%s %s 1\n" $_z40 $(git rev-parse HEAD) >hook.expect &&
-+	{
-+		echo $_z40 $(git rev-parse HEAD) 1 &&
-+		echo $(pwd)/.git/worktrees/gumby &&
-+		echo $(pwd)/gumby
-+	} >hook.expect &&
- 	git worktree add gumby &&
--	test_cmp hook.expect hook.actual
-+	test_cmp hook.expect gumby/hook.actual
- '
- 
- test_expect_success '"add" invokes post-checkout hook (detached)' '
- 	post_checkout_hook &&
--	printf "%s %s 1\n" $_z40 $(git rev-parse HEAD) >hook.expect &&
-+	{
-+		echo $_z40 $(git rev-parse HEAD) 1 &&
-+		echo $(pwd)/.git/worktrees/grumpy &&
-+		echo $(pwd)/grumpy
-+	} >hook.expect &&
- 	git worktree add --detach grumpy &&
--	test_cmp hook.expect hook.actual
-+	test_cmp hook.expect grumpy/hook.actual
- '
- 
- test_expect_success '"add --no-checkout" suppresses post-checkout hook' '
- 	post_checkout_hook &&
- 	rm -f hook.actual &&
- 	git worktree add --no-checkout gloopy &&
--	test_path_is_missing hook.actual
-+	test_path_is_missing gloopy/hook.actual
-+'
-+
-+test_expect_success '"add" in other worktree invokes post-checkout hook' '
-+	post_checkout_hook &&
-+	{
-+		echo $_z40 $(git rev-parse HEAD) 1 &&
-+		echo $(pwd)/.git/worktrees/guppy &&
-+		echo $(pwd)/guppy
-+	} >hook.expect &&
-+	git -C gloopy worktree add --detach ../guppy &&
-+	test_cmp hook.expect guppy/hook.actual
-+'
-+
-+test_expect_success '"add" in bare repo invokes post-checkout hook' '
-+	rm -rf bare &&
-+	git clone --bare . bare &&
-+	{
-+		echo $_z40 $(git --git-dir=bare rev-parse HEAD) 1 &&
-+		echo $(pwd)/bare/worktrees/goozy &&
-+		echo $(pwd)/goozy
-+	} >hook.expect &&
-+	post_checkout_hook bare &&
-+	git -C bare worktree add --detach ../goozy &&
-+	test_cmp hook.expect goozy/hook.actual
- '
- 
- test_done
--- 
-2.16.1.370.g5c508858fb
-
+> +}
