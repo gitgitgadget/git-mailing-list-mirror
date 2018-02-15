@@ -2,77 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B75971F404
-	for <e@80x24.org>; Thu, 15 Feb 2018 00:37:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5FF921F404
+	for <e@80x24.org>; Thu, 15 Feb 2018 00:53:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1032369AbeBOAg6 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Feb 2018 19:36:58 -0500
-Received: from mail-io0-f169.google.com ([209.85.223.169]:38867 "EHLO
-        mail-io0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1032189AbeBOAgp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Feb 2018 19:36:45 -0500
-Received: by mail-io0-f169.google.com with SMTP id d13so27117135iog.5
-        for <git@vger.kernel.org>; Wed, 14 Feb 2018 16:36:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=c8HbLouVdXkw+/aApj4G1FtUBxDHdSULAdIfneuMLTk=;
-        b=Y5JyeQcEVEa9QM+GvMkv728zlPPKqJoMLR7AdwPntxfSPmHrjrwfId0KHVHU69UVJR
-         m9/S2o4/63auCawMB97cSEICOm2d6sHJxyGo7+RwTgpCCN1qVJP2xk5QfTv63id7U/dO
-         0R629K82hvStVK1wFP3BScLmLX4jYfcnoEQAQkz+WU5RJ2JWlmLVZ6TQ4GRrL2up16/N
-         NxuWKq5HB3TPzMFiB/YQjT5kn0fGNDDZcumR60B1r2z0yeOcVh1pkPxUDlUWHXiiH5+g
-         EkHKwnoly9gPxiCBu8MNikjqprLckLt6st+/oJXTpusOh4C3sKIP3XHzgBGsSuW4QmEe
-         0UAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=c8HbLouVdXkw+/aApj4G1FtUBxDHdSULAdIfneuMLTk=;
-        b=NVLNqN6zvxzKH4+3NM4H3ol+Jyqik0V/WwHGV9YyvaoEdZw8TP0a8KCbOsbg5PR42C
-         LFMTjxpYVUqWsIMj1BXdbw6/oOgVb/IUMXJs1tug0UaVomqpiiZWJwTxgneJ6uu5sJdc
-         EfMtQ0chYxvg9ZMokUI7hTaZCL1qA3eljlc3jXcjhfns5FxD10zkVsoYQrWAGuqyPsDG
-         UBOdCIKNhHckh/3Hkr+sKeoi3bKMVf6i/1tisc4F5/39VngM5HG+jYNZjh70IE7HoHPt
-         /yCj/P2LRIv2pGAFP+cRZLDJ7PV/yHj9d41xdHIwLLuNA9MoQEHpC0XU4XKzf0aNawdN
-         wj+A==
-X-Gm-Message-State: APf1xPAo9Z4VKRayOUmSsilOfRdPBcivZ2htWjj5pQ8zvfDKAKhVZfPe
-        PYIIWGbqTpMSVDpTNOTyoCBVGDjwquftp2WmjGs=
-X-Google-Smtp-Source: AH8x226k++sjAVacJFvJF96IVb+Prjg4iFgGfjl2qqDFiphY43zS3+3lnuqg3G7w/Me9l0GozrHlKBPcBcqfluug/6M=
-X-Received: by 10.107.28.66 with SMTP id c63mr1452074ioc.247.1518655005152;
- Wed, 14 Feb 2018 16:36:45 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.2.5.147 with HTTP; Wed, 14 Feb 2018 16:36:44 -0800 (PST)
-In-Reply-To: <CAGZ79kZf1UKsBEJXuwAH+EWr+ZKj-FE8DuBvcM2nJeNhLEA4CQ@mail.gmail.com>
-References: <CAEWZXo7KiRWK7ddyZgQKs=F+sHY7TtFsXTMXyE-57=FRr6kf6w@mail.gmail.com>
- <CAGZ79kZf1UKsBEJXuwAH+EWr+ZKj-FE8DuBvcM2nJeNhLEA4CQ@mail.gmail.com>
-From:   Psidium Guajava <psiidium@gmail.com>
-Date:   Wed, 14 Feb 2018 22:36:44 -0200
-Message-ID: <CAEWZXo6ws5q-73AP6+Ru39a+drO88fRO49_QGJbQXfOYRpqKwg@mail.gmail.com>
-Subject: Re: git-rebase --undo-skip proposal
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Paul Tan <pyokagan@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        id S1032301AbeBOAxS (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Feb 2018 19:53:18 -0500
+Received: from mout.gmx.net ([212.227.17.22]:46085 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1032245AbeBOAxS (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Feb 2018 19:53:18 -0500
+Received: from MININT-TB4PCE7.southpacific.corp.microsoft.com
+ ([37.201.195.115]) by mail.gmx.com (mrgmx103 [212.227.17.168]) with ESMTPSA
+ (Nemesis) id 0Lwarz-1ejSNA1bYt-018GqZ; Thu, 15 Feb 2018 01:53:15 +0100
+Date:   Thu, 15 Feb 2018 01:53:14 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+To:     Psidium Guajava <psiidium@gmail.com>
+cc:     Stefan Beller <sbeller@google.com>, Paul Tan <pyokagan@gmail.com>,
         git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: git-rebase --undo-skip proposal
+In-Reply-To: <CAEWZXo6ws5q-73AP6+Ru39a+drO88fRO49_QGJbQXfOYRpqKwg@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1802150148040.35@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <CAEWZXo7KiRWK7ddyZgQKs=F+sHY7TtFsXTMXyE-57=FRr6kf6w@mail.gmail.com> <CAGZ79kZf1UKsBEJXuwAH+EWr+ZKj-FE8DuBvcM2nJeNhLEA4CQ@mail.gmail.com> <CAEWZXo6ws5q-73AP6+Ru39a+drO88fRO49_QGJbQXfOYRpqKwg@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:7Xju2vbs8Z+M0k5BqTImsgWVKxeqfeGOPQpn1AhD1r5cqnzxUF5
+ iPYVshVQAQcCpRFu2hf3Vdpg5gyy0J/kEaBGZ8OLp+84Db5s/3U2UL0mUX+bD0WlFdnj6M7
+ kMC9zol6ih9OPAEniBD357oe5r1psTyUyDyOitWzg1ZpwP6rdHgA8Q8b4oc+VK/xOTjxQ9E
+ E5UftSavvujQU5Hu4lyIw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:ebqSDtJpY1M=:jnkc7pzIxyT37TUXc9V8MW
+ lRbWkSIdRYYVNVedIvRX+hMMhAPk+G9Ei0Sjk7ZNaf5JdgX7QUd2BH/9eRQYN99u1iu/+Mezy
+ fKPzZqhb4ZwD6OLYxyMDgnenRXvPy4I4lRUPkaQskCOz7uuU5j6edkOz3yabFHXjx1eHUvVQG
+ ZNkTANC3YXJ8yxPA0BrVxgKJMSWIBLONTwKE5vsX8fZd9pHshWJy/W33FBe3vN60NQEhBLlKp
+ 8LnarmcsKT+cx0/dwX8KdSBP4mOlVvIiyXpwfTzRncxBB3bI9F3LZNiG847GAsVrPZnAXolGz
+ lKqAGvT2OQfhxGaIYnwDZftQJDibtlpxqhWNNJbn8ttkBros2U43R7+up8pvRdNpRBrSDsZsW
+ G9fmqeMrHalfJmkinJyGLop1fS8ouuBOyABJi3gUnxehoanr0atEFIjkmkf0WendytlNTf3wK
+ IiBMPFylr5/HLiW5qG0o5t/N0bSBpXsZuazAm+ogZ3yooG1f7oIfcBPhHl8e0qjgEwBaQtLNp
+ tRS+mY/iUMbuqSrky7kZeXi8/JO7G3OGzAGA87xS+olTLfBwEwJc9sHlc7MS5sTNKyA245lEQ
+ HbvR0Pl4eft6V40gh6lcrpsB7qLHB74Je8z0e2IZsyfYqhyLQrvV3YDM69PbbkvRtmY7kK/JX
+ dxMf5yeG/UrbFlfinfhXvYbEhVm+Z2TNRrQ0DxFNxR9+ld0zpRDo55uMwBC1n24XU/A5gHIB+
+ 5zt6AIkWSWqazWSqdUEHwbB+F4RV2mYesx0X53UivLVNLyVN4lK0RZwlN6CImGlK86Z5Z5vEr
+ +RQtYhzjpOPex+4w8fo2MgB0Oylg9XByEcKlAN/PITw7X6I99g=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2018-02-13 18:42 GMT-02:00 Stefan Beller <sbeller@google.com> wrote:
-> On Tue, Feb 13, 2018 at 12:22 PM, Psidium Guajava <psiidium@gmail.com> wrote:
-> I think this could also be done with "git rebase --edit-todo", which brings
-> up the right file in your editor.
+Hi,
 
-Yeah that'd would only work if one started a rebase as a interactive
-one, not am or merge.
+On Wed, 14 Feb 2018, Psidium Guajava wrote:
 
-> cc'd Paul Tan, maybe he recalls the situation.
+> On 2018-02-13 18:42 GMT-02:00 Stefan Beller <sbeller@google.com> wrote:
+> > On Tue, Feb 13, 2018 at 12:22 PM, Psidium Guajava <psiidium@gmail.com> wrote:
+> > I think this could also be done with "git rebase --edit-todo", which brings
+> > up the right file in your editor.
+> 
+> Yeah that'd would only work if one started a rebase as a interactive
+> one, not am or merge.
 
-From what I've found on the archive, he didn't recently answer mails
-that come from the mail list, I could be wrong tho.
+I agree that the original proposal was clearly for the non-interactive
+rebase (it talked about .git/rebase-apply/).
+
+The biggest problem with the feature request is not how useful it would
+be: I agree it would be useful. The biggest problem is that it is a little
+bit of an ill-defined problem.
+
+Imagine that you are rebasing 30 patches. Now, let's assume that patch #7
+causes a merge conflict, and you mistakenly call `git rebase --skip`.
+
+Now, when is the next possible time you can call `git rebase --undo-skip`?
+It could be after a merge conflict in #8. Or in interactive rebase, after
+a `pick` that was turned into an `edit`. Or, and this is also entirely
+possible, after the rebase finished with #30 without problems and the
+rebase is actually no longer in progress.
+
+So I do not think that there is a way, in general, to implement this
+feature. Even if you try to remember the state where a `--skip` was
+called, you would remember it in the .git/rebase-apply/ (or
+.git/rebase-merge/) directory, which is cleaned up after the rebase
+concluded successfully. So even then the information required to implement
+the feature would not necessarily be there, still, when it would be needed.
+
+Ciao,
+Johannes
