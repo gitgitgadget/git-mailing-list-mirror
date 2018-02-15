@@ -2,95 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 69C511F404
-	for <e@80x24.org>; Thu, 15 Feb 2018 20:42:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D43211F404
+	for <e@80x24.org>; Thu, 15 Feb 2018 20:43:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1166091AbeBOUms (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Feb 2018 15:42:48 -0500
-Received: from mail-wm0-f46.google.com ([74.125.82.46]:38378 "EHLO
-        mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1161186AbeBOUmp (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Feb 2018 15:42:45 -0500
-Received: by mail-wm0-f46.google.com with SMTP id 141so3211541wme.3
-        for <git@vger.kernel.org>; Thu, 15 Feb 2018 12:42:45 -0800 (PST)
+        id S1166340AbeBOUnA (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Feb 2018 15:43:00 -0500
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:50831 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1166217AbeBOUm5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Feb 2018 15:42:57 -0500
+Received: by mail-wm0-f66.google.com with SMTP id k87so3222651wmi.0
+        for <git@vger.kernel.org>; Thu, 15 Feb 2018 12:42:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=/N8Pc8YgXeNPJDUw/HAuq9KVdRBvz7rtN1xEhgW1onk=;
-        b=eUZq16iaR+s6FKPI4V70TQxhdhst82UJZz2bkzvjoKB9U0pL2+aVtia2Z4wo92JKa7
-         WQ9RmN4nw0AG333ChUFCoJc76niv2ecyJEnZVTlQLrx2C4tBvr1uSS03ru0vECdfQF36
-         36cAAPyLXOhWeV6od8F0LRA0sXbZEHLMuqFTkkkW6liLZZ9b+OJpa7Vqutkpqrb3ip+h
-         ms7adbWM7oAEqpNpjLByskTkEV6eVOZimnvuUQ1vINKh7LkEpfqCHoHstot9oGLTNIO2
-         /8TvqaAMy/c471UWoe02UhgBAQF1nEeEx1REogNnsliNHwhg///wUsjQ3NvPAyi4fLsG
-         L4Qw==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=aE4ysoezh++RVI/w12ZKqkM7J/6yC/VcIIVNYX74G80=;
+        b=mXLpSpdAkEqWGx/gr2ggc9VJ72Hh6+75fMWZD31VG/o4BLrOww9bCfUop+De6XEHpU
+         rqSGtf+sNTecB0huGeIQJ0CM2IhbKCZ/IQPCtG+FdhpTpEqmnw9OFXLjO4CxvBOj8z6e
+         yU64R5EAz3AM1lY1he6Kc3vveQOghd6uglwhdOHzdySvynHe1FrCiznXMck5zG0n+cjs
+         slYAe9Y+4t/t7F7I+WvlgXtHE4iQOX6b9WO8ERAIVaN/ReaEonfEz22+urbSQkPNg5H6
+         mdYdbc+Kz7rlgubSgljRVFUs1kkMGZRqbghgVy7TkTQmMeYIa/crcO6bFkNLbtW379T9
+         iWig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=/N8Pc8YgXeNPJDUw/HAuq9KVdRBvz7rtN1xEhgW1onk=;
-        b=iYX9qT7Hir3VLKel7VUMhy/tVGNGlpt+E4NwHLccTeW1AJrxHgt5A6b9SVN6sbMk/O
-         4y/+G4aahKKZq8rtgjnlcTVdOeXCPM9fa+KWaBYm/UQ4x/SrmwU6QppKadHhz4y4dIfQ
-         GeOH7Ho2kuCcXhAoC0IuOqPvpSproYB9LwLb1naftvWGdh3l5MB+UkAQN+oR4d24VedH
-         9QxYzffhJ4IBrOl+n/rR95sPW/XSUuNT/1YaDTjjoTI1DyMe/VDDnhGIRDespFrM960I
-         /6R9PmBASQ4Qd/ACAU4DLxqpDdOj8XGhQZxYtemYLodRaUqGb7uZNYsUep97KmF0o+/Y
-         vm2g==
-X-Gm-Message-State: APf1xPDBsi4mQKMLtAUcUGSjT15N5o+G4xrfGk6+4wpS2HchJUhyJzx+
-        52Pnvf+HZP8I5yLY4wc+L5ht6HRz
-X-Google-Smtp-Source: AH8x225mswxhWxES5WvLnLVIYdj/HkubYwuKpWkCJ/wEhXn+tF8IdOc6bIGQXe1KxN04dIkLwY7dGA==
-X-Received: by 10.28.93.83 with SMTP id r80mr3315244wmb.154.1518727362437;
-        Thu, 15 Feb 2018 12:42:42 -0800 (PST)
-Received: from evledraar (static-2-73-24-46.ipcom.comunitel.net. [46.24.73.2])
-        by smtp.gmail.com with ESMTPSA id p1sm16092180wra.90.2018.02.15.12.42.41
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=aE4ysoezh++RVI/w12ZKqkM7J/6yC/VcIIVNYX74G80=;
+        b=ayVj5ydSGSnOebV38Bp0yPPlp6d0vcjAWaGL43K6Yh/I8dJ7Iez7OCEI3y/e/WjwF9
+         YLrbHnbqfpZM4g8xms2RjcN9PVbzHygpVYHhOWNfG9gLVDIF1U2TBpCk8cnyZZ4D+n5i
+         O/QgHrRM1CCKq5UZE3u3TUGtvyyAVp1jcdClnsvtD8SHK1mES5Opk3WN22hnz5JjzsQa
+         U7gyui6v9z/GRf82runl+wFlsyi3DmMj+XjXSb5yQlbgPwqIiKnM9cxdtJE/fCQise8i
+         jzcZ7LLRMbsJ9kPOwBf3HaNbzqbZQhBko5zghCAYH1PduiyOHx7wOYcJjuoU73gLCmMX
+         uMBg==
+X-Gm-Message-State: APf1xPDZNRYNu59pJ/v6XcxFIHg3aQjlDTGLz0Gd8p3TEFCHs/XHXmO3
+        NWsE+JG//9XmtSEjCjMMhjo=
+X-Google-Smtp-Source: AH8x224f0ffB2jlae30bF0WT4RmjzE/seuEOldpb1vF0W20KXHjl8wDIypNPhMy2au4kh6+OUsKejQ==
+X-Received: by 10.28.177.7 with SMTP id a7mr3046992wmf.143.1518727375701;
+        Thu, 15 Feb 2018 12:42:55 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id 56sm25417391wrt.23.2018.02.15.12.42.54
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 15 Feb 2018 12:42:41 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Matthieu Moy <git@matthieu-moy.fr>, Petr Baudis <pasky@ucw.cz>,
-        Benoit Bourbie <bbourbie@slb.com>, Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jari Aalto <jari.aalto@cante.net>,
-        Giuseppe Bilotta <giuseppe.bilotta@gmail.com>,
-        Marcus Griep <marcus@griep.us>
-Subject: Re: [PATCH 8/8] perl: hard-depend on the File::{Temp,Spec} modules
-References: <20180214222146.10655-1-avarab@gmail.com> <20180214222146.10655-9-avarab@gmail.com> <20180214235404.GH136185@aiede.svl.corp.google.com>
-User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 1.1.0
-In-reply-to: <20180214235404.GH136185@aiede.svl.corp.google.com>
-Date:   Thu, 15 Feb 2018 21:42:39 +0100
-Message-ID: <87r2pmf0hs.fsf@evledraar.gmail.com>
+        Thu, 15 Feb 2018 12:42:55 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git@vger.kernel.org, pclouds@gmail.com, sunshine@sunshineco.com,
+        jonathantanmy@google.com
+Subject: Re: [PATCH 00/26] Moving global state into the repository object (part 1)
+References: <20180213012241.187007-1-sbeller@google.com>
+Date:   Thu, 15 Feb 2018 12:42:54 -0800
+In-Reply-To: <20180213012241.187007-1-sbeller@google.com> (Stefan Beller's
+        message of "Mon, 12 Feb 2018 17:22:15 -0800")
+Message-ID: <xmqqlgfu7zn5.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Stefan Beller <sbeller@google.com> writes:
 
-On Wed, Feb 14 2018, Jonathan Nieder jotted:
+> This is a real take on the first part of the recent RFC[1].
 
-> Ævar Arnfjörð Bjarmason wrote:
->
->> --- a/perl/Git.pm
->> +++ b/perl/Git.pm
->> @@ -1324,8 +1324,9 @@ sub _temp_cache {
->>  }
->>
->>  sub _verify_require {
->> -	eval { require File::Temp; require File::Spec; };
->> -	$@ and throw Error::Simple($@);
->> +	require File::Temp;
->> +	require File::Spec;
->> +	return;
->
-> Same question as in the other patches: any reason not to simplify by
-> using 'use' at the top of the file instead?
+For the patches remaining in this series, The scope is about right
+and the size is more manageable.  With topics already on 'master',
+they have some interactions:
 
-I was just going for the minimal change, but yeah, that makes
-sense. Will do that in v2.
+ - ot/mru-on-list & gs/retire-mru
+
+   The packed_git MRU has been greatly simplified by using list API
+   directly.
+
+ - cc/sha1-file-name
+
+   The function signature of sha1_file_name() has been updated.
+
+I could certainly carry evil merge resolutions going forward (these
+changes need to be made to object-store.h that has no mechanical
+conflicts), but it may be less distracting for later readers of the
+series if we rebase it on top of a more recent master.
