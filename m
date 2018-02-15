@@ -2,110 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 851131F404
-	for <e@80x24.org>; Thu, 15 Feb 2018 05:09:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 01FA81F404
+	for <e@80x24.org>; Thu, 15 Feb 2018 05:17:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751860AbeBOFJO (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Feb 2018 00:09:14 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:64787 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751793AbeBOFJN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Feb 2018 00:09:13 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 49370CFDF9;
-        Thu, 15 Feb 2018 00:09:12 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
-        :cc:subject:message-id:references:mime-version:content-type
-        :in-reply-to:content-transfer-encoding; s=sasl; bh=4SJiWDMYzHzDh
-        M0bLpdUhRfsSTI=; b=wTo33ijma1+cYojqFwswMlr+xPTEMpVS66/pvk4r5nfcr
-        LZhebskxQk4KStH3jaYkuqiyhS1egbglY8oIPiGAVEblfV5QG7AxAl9dkiGoTBF4
-        l/9+GUykpXgQQ+SBopNtDGZ9l3JKP0zlCc4Slxz0tWn6WFaHcpOOHROb7H7MN8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
-        :subject:message-id:references:mime-version:content-type
-        :in-reply-to:content-transfer-encoding; q=dns; s=sasl; b=AoTB2OM
-        uTYzdJ/WI1LAC8Tacs3dNwI+lKK2q0JPiLito2xD0iP3MDMymILWJ7pU0SCK0TiA
-        crwCzAp98wyLq299Jvzgm2YHZQISAwam+tu9e5LWv1v58IhjrhNnXxHorfP0b9hB
-        511wLOZr6Vpqrc3CuwN5rEWaCkherEv+9g6k=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4000FCFDF8;
-        Thu, 15 Feb 2018 00:09:12 -0500 (EST)
-Received: from zaya.teonanacatl.net (unknown [173.67.181.41])
-        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id ACCDACFDF7;
-        Thu, 15 Feb 2018 00:09:11 -0500 (EST)
-Date:   Thu, 15 Feb 2018 00:09:10 -0500
-From:   Todd Zullinger <tmz@pobox.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Matthieu Moy <git@matthieu-moy.fr>, Petr Baudis <pasky@ucw.cz>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jari Aalto <jari.aalto@cante.net>,
-        Giuseppe Bilotta <giuseppe.bilotta@gmail.com>,
-        Marcus Griep <marcus@griep.us>
-Subject: Re: [PATCH 3/8] perl: generalize the Git::LoadCPAN facility
-Message-ID: <20180215050909.GD27038@zaya.teonanacatl.net>
-References: <20180214222146.10655-1-avarab@gmail.com>
- <20180214222146.10655-4-avarab@gmail.com>
- <20180214225754.GC136185@aiede.svl.corp.google.com>
+        id S1750849AbeBOFRB (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Feb 2018 00:17:01 -0500
+Received: from cloud.peff.net ([104.130.231.41]:53302 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1750730AbeBOFRA (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Feb 2018 00:17:00 -0500
+Received: (qmail 315 invoked by uid 109); 15 Feb 2018 05:17:01 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 15 Feb 2018 05:17:01 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 7095 invoked by uid 111); 15 Feb 2018 05:17:45 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 15 Feb 2018 00:17:45 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 15 Feb 2018 00:16:58 -0500
+Date:   Thu, 15 Feb 2018 00:16:58 -0500
+From:   Jeff King <peff@peff.net>
+To:     Olga Telezhnaya <olyatelezhnaya@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v3 02/23] ref-filter: add return value to some functions
+Message-ID: <20180215051658.GB18780@sigill.intra.peff.net>
+References: <01020161890f4236-47989eb4-c19f-4282-9084-9d4f90c2ebeb-000000@eu-west-1.amazonses.com>
+ <01020161890f4311-ab635cac-1d48-47ee-90e1-f178f134db1c-000000@eu-west-1.amazonses.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20180214225754.GC136185@aiede.svl.corp.google.com>
-User-Agent: Mutt/1.9.3 (2018-01-21)
-X-Pobox-Relay-ID: 5C152F3C-120E-11E8-B665-D3940C78B957-09356542!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <01020161890f4311-ab635cac-1d48-47ee-90e1-f178f134db1c-000000@eu-west-1.amazonses.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jonathan,
+On Mon, Feb 12, 2018 at 08:08:54AM +0000, Olga Telezhnaya wrote:
 
-Jonathan Nieder wrote:
-> =C6var Arnfj=F6r=F0 Bjarmason wrote:
-> [...]
->> +++ b/perl/Git/LoadCPAN.pm
->> @@ -0,0 +1,74 @@
-> [...]
->> +The Perl code in Git depends on some modules from the CPAN, but we
->> +don't want to make those a hard requirement for anyone building from
->> +source.
->=20
-> not about this patch: have we considered making it a hard requirement?
-> Both Mail::Address and Error.pm are pretty widely available, and I
-> wonder if we could make the instructions in the INSTALL file say that
-> they are required dependencies to simplify things.
->=20
-> I admit part of my bias here is coming from the distro world, where we
-> have to do extra work to get rid of the FromCPAN embedded copies and
-> would be happier not to have to.
+> Add return flag to format_ref_array_item(), show_ref_array_item(),
+> get_ref_array_info() and populate_value() for further using.
+> Need it to handle situations when item is broken but we can not invoke
+> die() because we are in batch mode and all items need to be processed.
 
-Heh, a similar bias is what led me to suggest a Makefile
-knob to prevent installing the fallbacks.  I neglected to
-add you to the Cc list on that reply.  But I was thinking of
-Debian and other distributions whom I know would similarly
-want to exclude Git/FromCPAN from their git packages.  I
-know it's a simple rm, but it might as well be a simple rm
-in one place than spread across each package.  :)
+OK. The source of these errors would eventually be calls in
+populate_value(), but we don't flag any errors there yet (well, we do,
+but they all end up in die() for now). So I'd expect to see later in the
+series those die() calls converted to errors (I haven't looked further
+yet; just making a note to myself).
 
-It may still be worth considering whether it's reasonable to
-make Mail::Address and Error.pm hard requirements, but I'm
-not sure if there are any platforms where such a requirement
-would be a pain.  If there are folks here who are happy to
-maintain this fallback method, then a simple Makefile knob
-gives us the best of both worlds.
+> --- a/ref-filter.c
+> +++ b/ref-filter.c
+> @@ -1356,8 +1356,9 @@ static const char *get_refname(struct used_atom *atom, struct ref_array_item *re
+>  
+>  /*
+>   * Parse the object referred by ref, and grab needed value.
+> + * Return 0 if everything was successful, -1 otherwise.
+>   */
 
---=20
-Todd
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Historian, n. A broad-gauge gossip.
-    -- Ambrose Bierce, "The Devil's Dictionary"
+We discussed off-list the concept that the caller may want to know one
+of three outcomes:
 
+  - we completed the request, having accessed the object
+  - we completed the request, but it didn't require accessing any
+    objects
+  - an error occurred accessing the object
+
+Since callers like "cat-file" would need to check has_sha1_file()
+manually in the second case. Should this return value actually be an
+enum, which would make it easier to convert later to a tri-state?
+
+> -static void populate_value(struct ref_array_item *ref)
+> +static int populate_value(struct ref_array_item *ref)
+>  {
+>  	void *buf;
+>  	struct object *obj;
+> @@ -1482,7 +1483,7 @@ static void populate_value(struct ref_array_item *ref)
+>  		}
+>  	}
+>  	if (used_atom_cnt <= i)
+> -		return;
+> +		return 0;
+
+Most of these conversions are obviously correct, because they just turn
+a void return into one with a value. But this one is trickier:
+
+> @@ -2138,9 +2144,10 @@ void format_ref_array_item(struct ref_array_item *info,
+>  		ep = strchr(sp, ')');
+>  		if (cp < sp)
+>  			append_literal(cp, sp, &state);
+> -		get_ref_atom_value(info,
+> -				   parse_ref_filter_atom(format, sp + 2, ep),
+> -				   &atomv);
+> +		if (get_ref_atom_value(info,
+> +				       parse_ref_filter_atom(format, sp + 2, ep),
+> +				       &atomv))
+> +			return -1;
+>  		atomv->handler(atomv, &state);
+>  	}
+
+since it affects the control flow. Might we be skipping any necessary
+cleanup in the function if we see an error?
+
+It looks like we may have called push_stack_element(), but we'd never
+get to the end of the function where we call pop_stack_element(),
+causing us to leak.
+
+-Peff
