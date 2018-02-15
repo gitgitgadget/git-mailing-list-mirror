@@ -2,65 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B54641F404
-	for <e@80x24.org>; Thu, 15 Feb 2018 06:00:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A31F31F576
+	for <e@80x24.org>; Thu, 15 Feb 2018 08:52:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754785AbeBOGAf (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Feb 2018 01:00:35 -0500
-Received: from cloud.peff.net ([104.130.231.41]:53460 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1752423AbeBOGAf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Feb 2018 01:00:35 -0500
-Received: (qmail 3014 invoked by uid 109); 15 Feb 2018 06:00:35 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 15 Feb 2018 06:00:35 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 7557 invoked by uid 111); 15 Feb 2018 06:01:20 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 15 Feb 2018 01:01:20 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 15 Feb 2018 01:00:33 -0500
-Date:   Thu, 15 Feb 2018 01:00:33 -0500
-From:   Jeff King <peff@peff.net>
-To:     Olga Telezhnaya <olyatelezhnaya@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v3 23/23] cat-file: update of docs
-Message-ID: <20180215060033.GR18780@sigill.intra.peff.net>
-References: <01020161890f4236-47989eb4-c19f-4282-9084-9d4f90c2ebeb-000000@eu-west-1.amazonses.com>
- <01020161890f4391-9f76231a-4768-461b-80b9-02cada27a943-000000@eu-west-1.amazonses.com>
+        id S1755154AbeBOIwU (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Feb 2018 03:52:20 -0500
+Received: from mail-wr0-f170.google.com ([209.85.128.170]:33738 "EHLO
+        mail-wr0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755150AbeBOIwR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Feb 2018 03:52:17 -0500
+Received: by mail-wr0-f170.google.com with SMTP id s5so2521023wra.0
+        for <git@vger.kernel.org>; Thu, 15 Feb 2018 00:52:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=1aFoxX3VH6NSvKk3Upy0e4N5OYmOlxQTqUHXI+OWzWM=;
+        b=U8lib6V01JRke0OuJGVKpWe9E/M+HBgV7AVhpfkqKIPz6glhMhl56oJroSLPUd/4ah
+         uyd7Nps1OCzPPUJiAcLW9NgqX5hoEPWyLZNEwR1rVLC1LYKbxNZwkBxeQO7OUC63jZAW
+         SYXHk4STB4YCiPhLLMFLzsyn8FIuSsUvP8qpgNc0D9YyvHe3cNczsR0oIK+gFf5EaYdT
+         z37axTXsB19eTWtxJ0G2frDXpmn+eYZoZVanIbZleVvX5furXGgjC8CclBbX7M8ZkI2I
+         BeG12XhHxy/RHTCuBolJ35SQ+2Ly0+RKiV685XRGxQb3vLCsQAVTa9QUsVx+JpOFPKQi
+         uzdA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=1aFoxX3VH6NSvKk3Upy0e4N5OYmOlxQTqUHXI+OWzWM=;
+        b=sr+REcsmBG2vqpHyesy/C+j5RdlNDO9TSv1vmr+RYVJEnsTm07hKDhu7J0taDXEpnJ
+         hFvwZTEQ+WAX1z1oZZQnzoa5138QMuUTqKBj8e/O4Eogxj2vwCkNbQgLA5cOeQK2OnzT
+         TY3k+yFDOUQXemL+EmQJNpvd3ZtUFFjLN6kN30EjMf0eATU3/VQfSaM2aaKhzqIpvSVp
+         tCKAV0ztTwQtqa5SENknQA9HLjcYwPWL0cVtp9Y7JUAvgqJXFurdcLI+JP+z1colwYgM
+         EYM0rS5ZY4CGq57nOPzht1nlOvjyYKoeaaHtH9h22Yyrx8hmvJ2EUvKa6l9d8e8a3PIT
+         Kekw==
+X-Gm-Message-State: APf1xPDF13w29kTiIwn56jELDw4xi5jcZV2z739xpOPAXpI0yzWsyEz3
+        DA5sFQs3qFF1wnS1CvFHPBkVf5m+
+X-Google-Smtp-Source: AH8x224jHy/66aOpVfZwlsCTchIAVMsm3UYU9Ts7ZjW5E8jFOYm1WhN0JUMYTpGwsDI6MU59ltUlWw==
+X-Received: by 10.223.185.82 with SMTP id b18mr1650626wrg.180.1518684736543;
+        Thu, 15 Feb 2018 00:52:16 -0800 (PST)
+Received: from evledraar (static-2-73-24-46.ipcom.comunitel.net. [46.24.73.2])
+        by smtp.gmail.com with ESMTPSA id 41sm15435559wrc.12.2018.02.15.00.52.15
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 15 Feb 2018 00:52:15 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Makefile: generate Git(3pm) as dependency of the 'doc' and 'man' targets
+References: <20180215021410.14045-1-szeder.dev@gmail.com>
+User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 1.1.0
+In-reply-to: <20180215021410.14045-1-szeder.dev@gmail.com>
+Date:   Thu, 15 Feb 2018 09:52:13 +0100
+Message-ID: <87vaeyfxdu.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <01020161890f4391-9f76231a-4768-461b-80b9-02cada27a943-000000@eu-west-1.amazonses.com>
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Feb 12, 2018 at 08:08:54AM +0000, Olga Telezhnaya wrote:
 
-> Update the docs for cat-file command. Some new formatting atoms added
-> because of reusing ref-filter code.
-> We do not support cat-file atoms in general formatting logic
-> (there is just the support for cat-file), that is why some of the atoms
-> are still explained in cat-file docs.
-> We need to move these explanations when atoms will be supported
-> by other commands.
+On Thu, Feb 15 2018, SZEDER Gábor jotted:
 
-OK, so I've read through the whole series now. I still think it really
-needs some squashing in the middle to turn into a more comprehensible
-series.
+> Since commit 20d2a30f8f (Makefile: replace perl/Makefile.PL with
+> simple make rules, 2017-12-10), the Git(3pm) man page is only
+> generated as an indirect dependency of the 'install-doc' and
+> 'install-man' Makefile targets.  Consequently, if someone runs 'make
+> man && sudo make install-man' (or their 'doc' counterparts), then
+> Git(3pm) will be generated as root, and the resulting root-owned files
+> and directories will in turn cause the next user-run 'make clean' to
+> fail.  This was not an issue in the past, because Git(3pm) was
+> generated when 'make all' descended into 'perl/', which is usually not
+> run as root.
+>
+> List Git(3pm) as a dependency of the 'doc' and 'man' Makefile targets,
+> too, so it gets generated by targets that are usually built as
+> ordinary users.
+>
+> While at it, add 'install-man-perl' to the list of .PHONY targets.
 
-And I think by the end we need to address the atoms here that don't work
-in ref-filter. We certainly want them to work in the long term, and the
-fact that they don't is I think pointing to having the wrong
-architecture here in the intermediate step. We should just have a single
-set of placeholders, with no special "cat_file_data". If I understand
-correctly, that's what's causing those atoms not to work in
-for-each-ref.
+Thanks for the fixup of my crappy 'make' skills. I tested this before
+the patch and it indeed has the problem you describe, and this fixes
+it. Thanks! CC-ing Junio because I think it makes sense to pick this up
+as-is.
 
--Peff
+Reviewed-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
