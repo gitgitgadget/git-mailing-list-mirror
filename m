@@ -7,68 +7,128 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D94AF1F404
-	for <e@80x24.org>; Thu, 15 Feb 2018 01:50:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4523D1F404
+	for <e@80x24.org>; Thu, 15 Feb 2018 02:14:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1032456AbeBOBuJ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Feb 2018 20:50:09 -0500
-Received: from mail-io0-f172.google.com ([209.85.223.172]:38497 "EHLO
-        mail-io0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1032437AbeBOBuI (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Feb 2018 20:50:08 -0500
-Received: by mail-io0-f172.google.com with SMTP id d13so27250406iog.5
-        for <git@vger.kernel.org>; Wed, 14 Feb 2018 17:50:08 -0800 (PST)
+        id S1032557AbeBOCO1 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Feb 2018 21:14:27 -0500
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:45958 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1032447AbeBOCO0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Feb 2018 21:14:26 -0500
+Received: by mail-wr0-f196.google.com with SMTP id q16so46533wrf.12
+        for <git@vger.kernel.org>; Wed, 14 Feb 2018 18:14:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=byEoH5hdWKeAb9LwLZzC/iRh1RdpvaZOVZg/RzJKCMk=;
-        b=UBMohs8EPiqaOCEAWZxmuxw+tILXNp2p5suWdLcOoIYDsv5GpwNJK5hwJXS3lsbc1i
-         Nyn2j5fpD4JT4tvRPMUKDSk2Yg6KpI6R+F339gUh5f4vwxIPTs30jTLnBDvkHe4zEuhC
-         dgg9cO+0RTKIn+es8fTSta0rJt69PJSs5EGQfwSm0HShUQkCf58+k06cpHacxjT22W4M
-         RpUaz6f9vU/rs30aWZKTDJq4/sUJbZWWDgSCvww9dd4uW3WpyjkrWUWfk3f6E2xB/J6l
-         +QfuiKUD8KSEiLV3zP/2hhcqxxawHOONgJvyFskNQQbVA79CJejg3r3LHGf2j9pJcLkN
-         LuOw==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=iMpHuW2X/Qtn8oL5GL9KLKaRuLKMlQa6pfqYkyVA6kc=;
+        b=vU5t8sJdAGMAgxRQoIS5WYIKX42sJWKmESa9jsA9t7+6+VwdLo5CdjBX/bX4rr5lSe
+         n5kV0IPlls7u2TAAj75Kg+5y5lB0qu9q+/nE0dvJaGWHrE3nKV9mdpHsWNrErjMNJvu8
+         q8h9Z20xN1w0RpwwDoSUB3RdLTwqQ9f8i6Oow012q6AinDwInYWY/bKc+psNsCVWiqu3
+         K4x5bGtwP3bPUMBTxG0meoXqzdib9AeA0PnC2c2q7f7dKJx59xc4FY3B+FQvGMfDocAe
+         JQdpL+rtwiVEQi9aDpxKZWRbE75YygJVrMr54l1pgnCrxX+k6p86DoJ4hRmb3TQ+Ixx1
+         CJMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=byEoH5hdWKeAb9LwLZzC/iRh1RdpvaZOVZg/RzJKCMk=;
-        b=G1pO40+oAowcOpjEPxoNWElnPoXUxTZlqa8AUNvLbwnMKaxdqaONOM7tjelMTiHaTS
-         pcykuxjiy6kYFhLinCh1nUk2xzslUWkZB0KqEpLQo2MfYY1l6YpHOoIlvrK4cWtFIkkg
-         gXx64+3I8wMVqWZXlYTaJE42xWmmdhnaQKl4EvImCYIJ7lkrwWBtGsTr6+2dvJXzzwaC
-         zfbdoVBdEIxNVCUbbPdqXl4aMUMO5QY/3TVEh8JEnllSY0RVFq+kjF5HU/7t9dHIxyiV
-         OMNWU+Z2SQt3SAJU/GMLjZEhFFU/XoCvjtL9Jq54dXmZiLuOtOERKIatN8PwquwDo6Th
-         dwgg==
-X-Gm-Message-State: APf1xPAof5DPBEC5b8/7vElvUCgHEHjC2kXUHh0oNfJtqMikSgeaoNni
-        FnGskh1WceKJrqdhegjqXPrTf0pypT4v1uP49RU=
-X-Google-Smtp-Source: AH8x224MNGlLoeMvhc/9byLnegwmJEY1nXY/KPah/UeI4wj2kKrSbkvNkGalf0DxbErlP6TJwPvvxTJr1uVqNhhYLAk=
-X-Received: by 10.107.24.70 with SMTP id 67mr1578458ioy.15.1518659408291; Wed,
- 14 Feb 2018 17:50:08 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=iMpHuW2X/Qtn8oL5GL9KLKaRuLKMlQa6pfqYkyVA6kc=;
+        b=b+QCxujso8bJwEiVl8prEYhWByhdYo0m3EKn66TX+5WD7mTnggPoGxkt2WGTsjjccv
+         WuCChp1tu6Xz2vbAsO49Nkxj0vXG6LHEbaD3LfhsmXspnRjn7NDzdYeCWdhAjtlDf3jD
+         iSGaLFHkvczERXLWrvJmxA/TILH0uehYwvF7j4wxRsHaUdYrnzkR0ID5GSoQteBym9q8
+         GBJ4OtqhnKNWQ8aTWW4eIUeBT2EFcCURikMDIGv9du+0IEWAD0vPwLmjS0NH5mO2CnYQ
+         NtITuZeyub6Boi35Gc154zyR513jZt2fz3pdyYc/xDofxYaBmzIkGWoouU26wfa8haRe
+         eNUw==
+X-Gm-Message-State: APf1xPABBMuHg5iV1UoeVtm8FZbVLS0YEesU8oEllQ/9FGuUdBGI5pwk
+        60EPEVsrWDwv0pJpWTETRlQIPw==
+X-Google-Smtp-Source: AH8x227dKH5vHk2Qq8sTrAOcotgf7CV0emueQJhNUBtatzZKNeUpE+kTzKVrJ6c15l8kgc+Ti/GbBw==
+X-Received: by 10.223.190.141 with SMTP id i13mr987020wrh.211.1518660864875;
+        Wed, 14 Feb 2018 18:14:24 -0800 (PST)
+Received: from localhost.localdomain (x4db2793a.dyn.telefonica.de. [77.178.121.58])
+        by smtp.gmail.com with ESMTPSA id k125sm24464438wmd.48.2018.02.14.18.14.23
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 14 Feb 2018 18:14:24 -0800 (PST)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: [PATCH] Makefile: generate Git(3pm) as dependency of the 'doc' and 'man' targets
+Date:   Thu, 15 Feb 2018 03:14:10 +0100
+Message-Id: <20180215021410.14045-1-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.16.1.354.g266d823471
 MIME-Version: 1.0
-Received: by 10.2.5.147 with HTTP; Wed, 14 Feb 2018 17:50:07 -0800 (PST)
-In-Reply-To: <nycvar.QRO.7.76.6.1802150148040.35@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <CAEWZXo7KiRWK7ddyZgQKs=F+sHY7TtFsXTMXyE-57=FRr6kf6w@mail.gmail.com>
- <CAGZ79kZf1UKsBEJXuwAH+EWr+ZKj-FE8DuBvcM2nJeNhLEA4CQ@mail.gmail.com>
- <CAEWZXo6ws5q-73AP6+Ru39a+drO88fRO49_QGJbQXfOYRpqKwg@mail.gmail.com> <nycvar.QRO.7.76.6.1802150148040.35@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-From:   Psidium Guajava <psiidium@gmail.com>
-Date:   Wed, 14 Feb 2018 23:50:07 -0200
-Message-ID: <CAEWZXo74Z0PRkVPzkrMDdKNhLzyKL03vUYiN=SEnt5MBdXT81A@mail.gmail.com>
-Subject: Re: git-rebase --undo-skip proposal
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Stefan Beller <sbeller@google.com>, Paul Tan <pyokagan@gmail.com>,
-        git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-2018-02-14 22:53 GMT-02:00 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
-> Now, when is the next possible time you can call `git rebase --undo-skip`?
+Since commit 20d2a30f8f (Makefile: replace perl/Makefile.PL with
+simple make rules, 2017-12-10), the Git(3pm) man page is only
+generated as an indirect dependency of the 'install-doc' and
+'install-man' Makefile targets.  Consequently, if someone runs 'make
+man && sudo make install-man' (or their 'doc' counterparts), then
+Git(3pm) will be generated as root, and the resulting root-owned files
+and directories will in turn cause the next user-run 'make clean' to
+fail.  This was not an issue in the past, because Git(3pm) was
+generated when 'make all' descended into 'perl/', which is usually not
+run as root.
 
-What if the scope were reduced from `--undo-skip` to `--undo-last-skip`?
-Also, further reduce the scope to only allow `--undo-last-skip` during
-a ongoing rebase, not caring about a finished one?
+List Git(3pm) as a dependency of the 'doc' and 'man' Makefile targets,
+too, so it gets generated by targets that are usually built as
+ordinary users.
 
-But, this could be so niche that I have doubts if this would ever be used;
+While at it, add 'install-man-perl' to the list of .PHONY targets.
+
+Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+---
+ Makefile | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 5bcd83ddf3..8d2bf4de59 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2214,13 +2214,15 @@ $(VCSSVN_LIB): $(VCSSVN_OBJS)
+ 
+ export DEFAULT_EDITOR DEFAULT_PAGER
+ 
+-.PHONY: doc man html info pdf
+-doc:
++.PHONY: doc man man-perl html info pdf
++doc: man-perl
+ 	$(MAKE) -C Documentation all
+ 
+-man:
++man: man-perl
+ 	$(MAKE) -C Documentation man
+ 
++man-perl: perl/build/man/man3/Git.3pm
++
+ html:
+ 	$(MAKE) -C Documentation html
+ 
+@@ -2618,7 +2620,7 @@ endif
+ 	done && \
+ 	./check_bindir "z$$bindir" "z$$execdir" "$$bindir/git-add$X"
+ 
+-.PHONY: install-gitweb install-doc install-man install-html install-info install-pdf
++.PHONY: install-gitweb install-doc install-man install-man-perl install-html install-info install-pdf
+ .PHONY: quick-install-doc quick-install-man quick-install-html
+ install-gitweb:
+ 	$(MAKE) -C gitweb install
+@@ -2629,7 +2631,7 @@ install-doc: install-man-perl
+ install-man: install-man-perl
+ 	$(MAKE) -C Documentation install-man
+ 
+-install-man-perl: perl/build/man/man3/Git.3pm
++install-man-perl: man-perl
+ 	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(mandir_SQ)/man3'
+ 	(cd perl/build/man/man3 && $(TAR) cf - .) | \
+ 	(cd '$(DESTDIR_SQ)$(mandir_SQ)/man3' && umask 022 && $(TAR) xof -)
+-- 
+2.16.1.354.g266d823471
+
