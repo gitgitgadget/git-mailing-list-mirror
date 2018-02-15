@@ -2,96 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F010B1F404
-	for <e@80x24.org>; Thu, 15 Feb 2018 17:41:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 375C21F404
+	for <e@80x24.org>; Thu, 15 Feb 2018 18:02:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1164792AbeBORlq (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Feb 2018 12:41:46 -0500
-Received: from mail-vk0-f50.google.com ([209.85.213.50]:38878 "EHLO
-        mail-vk0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1164615AbeBORlp (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Feb 2018 12:41:45 -0500
-Received: by mail-vk0-f50.google.com with SMTP id z9so307774vkd.5
-        for <git@vger.kernel.org>; Thu, 15 Feb 2018 09:41:44 -0800 (PST)
+        id S1165937AbeBOSCE (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Feb 2018 13:02:04 -0500
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:51772 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1165818AbeBOSCD (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Feb 2018 13:02:03 -0500
+Received: by mail-wm0-f65.google.com with SMTP id r71so2472515wmd.1
+        for <git@vger.kernel.org>; Thu, 15 Feb 2018 10:02:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=82fECh3woqOVXU9MOo2kNTDoHK1usGcBU12MtqDVoCE=;
-        b=R8DbCn/g1T1sLH7nL71Is32ZC6L046GJhLk1agzyu2R0AygNtYFamdN3SUW9EEORUQ
-         KR/LoA8kq6iN8tPUc2gbhCt6PNH6xEFqk+tpW1DjX8PBO7EZARL2wS0pM3q1/uim5v4I
-         0wdJkqNvCIrLc/5kSxMDqZPhZBe4hp1HMI0ftQi4n91Ni3nzdD+10y4EV6T+Hpekxwa5
-         /zJLM44VOcGkKOHQej03x1Rcy0n5WyvVFtaxiDFFFfLJzptNuTzPs1igLUDS20rPYcCX
-         FD/B4ifOhoP+MnwxY1y/NCkrFETUt3RtDCyw8jgdSC0zpjDrVucs8nDQdKQpjbGythd5
-         xYzQ==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=JYpfVEJw7YsNqJYjI+w9VjQnMmqBMBlHJQW42ccT9fU=;
+        b=Oc88QdCRayIbbWEa0tzkrjSv4hCHJuSQ5pqu4ycNoL1YfO94AFQll2TeGb8KVmhFNc
+         zbeFOEMB6XKYdVtwHxl5sIvWnX4Vwm0/E8rtP1M7C/I0LHuey8C+ZaSTriRHM2Bq40ea
+         fNBVFoRZGWxEnrvJ/mi/CEq4Kq4yWc43ymNDUKXBZbKReAh3aqPoPigr6c4qL9zTsKaN
+         +7OzqQ1Wtozktb+xgYQW/oLOCDwJRE7zUm4D3eMuBWzLy5OX2+pOLl45dVzdfaBZLL9l
+         H60OUS8/pyFfdgnEvSlwC32POaCyn09rf3dXTTO1iGkADmcYiv1YkqjykPUO0r8EqD/T
+         C6IQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=82fECh3woqOVXU9MOo2kNTDoHK1usGcBU12MtqDVoCE=;
-        b=mWmV4iEKTgjSi/P0dTTs9WttNWayLr8cTjUGYJdx89HxEKagOYnUilxdw8UXu+yDtr
-         YinFaGWjkB+JZI3iYdrwFgejyBTpZIpYiXFkQXvKffShktWs9W+YXAZLTCHMRea32A/+
-         sLivW+wdFYN0wUKKYVZEv/d84j2NScxfcu/ZPaym0mjbnNVvBL1UaioFI3mxjNcsMbm5
-         1j0FVuzvrIQJNIzMHmyj+mH45GPxr6MFz9fbVvNUw/VIBQ/nhe2m0NhW0B2jfngyEXx5
-         xQnm195/RiBNaZpwYo3WTDiSAducTraHWUiL8PmrXqakw+EPPJZdp6VJAvC7MyPOS+iS
-         hRHA==
-X-Gm-Message-State: APf1xPBfm7/M5dUgBhInM7ZhPdTXfzOY1z7YlKozaTiKyR4Vk/KZVktq
-        T6x26putjQ1T30QEyfqQYbYiBwmbwFRaUtFq1A0=
-X-Google-Smtp-Source: AH8x2240q6JCfGOLWizX2ScVBfu5VlrCU/qw6TYYH2ciEhqbIp10/T9m52p/InQqd39Sh7OfSRSpILRBva6CntcEn0Q=
-X-Received: by 10.31.99.130 with SMTP id x124mr2469087vkb.155.1518716504345;
- Thu, 15 Feb 2018 09:41:44 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=JYpfVEJw7YsNqJYjI+w9VjQnMmqBMBlHJQW42ccT9fU=;
+        b=IB8BLQK+Ztwy3Ujl5DFFqEh4k4dD/kGdgCxWQy0ngka8cbk4Q3bT7iAjoDUgNpJDN4
+         rsIZJuSDxS37WGrxcfqh4CBrjM4i7PROX4QY8iuGVTmmejpwu9D8hpdYMSyTKu7nYXEY
+         mscISSO2a9MCCT2MF6xHtwGHP9UJcFdcNEv8EgyECS+AP+jS0kg4Hh8ft7AIzJOLyZGO
+         m/Sgb9cquTOSv1pDDzrTmPXCi4iZNw2iQIRtb9mVgYVPTltwz4GEfFK2uo+sdnL3g8vf
+         Wgs/xwKABfDh3qIQ4HfF+ZDAX22BfKbY6S4AZZMtpYWoB+vxrpoDony77g63i86udnIn
+         ORDA==
+X-Gm-Message-State: APf1xPC42BhBac3I9oGnBwBYvCQ6xES6zJFqzuqUfc73A4/qehdLmGjz
+        c5EHt0GfpJc/mviru24YPlQ=
+X-Google-Smtp-Source: AH8x226TVEl/kcfi7TyR7Fi1bxDE46PvTb1bHfRR0hLuFcCTCSBu9xHi1xJ1aeWw9SnYXb8cF2u9YQ==
+X-Received: by 10.28.148.150 with SMTP id w144mr2819553wmd.0.1518717721391;
+        Thu, 15 Feb 2018 10:02:01 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id 7sm16807697wmq.42.2018.02.15.10.01.59
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 15 Feb 2018 10:01:59 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Tatyana Krasnukha <tatyana@synopsys.com>
+Subject: Re: [PATCH 2/2] apply: handle Subversion diffs with /dev/null gracefully
+References: <cover.1518654532.git.johannes.schindelin@gmx.de>
+        <7858c01a2c92a55f86611335bbdcc93c94bc69d2.1518654532.git.johannes.schindelin@gmx.de>
+Date:   Thu, 15 Feb 2018 10:01:58 -0800
+In-Reply-To: <7858c01a2c92a55f86611335bbdcc93c94bc69d2.1518654532.git.johannes.schindelin@gmx.de>
+        (Johannes Schindelin's message of "Thu, 15 Feb 2018 01:29:34 +0100
+        (STD)")
+Message-ID: <xmqqsha29lnt.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.176.32.12 with HTTP; Thu, 15 Feb 2018 09:41:43 -0800 (PST)
-In-Reply-To: <20180215165218.GA7635@sigill.intra.peff.net>
-References: <20180213003601.7396-1-szeder.dev@gmail.com> <20180213222247.GA18401@sigill.intra.peff.net>
- <CAM0VKj=YPkS=YLtEz93RWS2=cvyy6LcyrBsCyBCg14ihxuKzjA@mail.gmail.com> <20180215165218.GA7635@sigill.intra.peff.net>
-From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Date:   Thu, 15 Feb 2018 18:41:43 +0100
-Message-ID: <CAM0VKjmW6_3z49uVMFUpwsK5khZ_bNALDgkKkPUQdvu2PEogfQ@mail.gmail.com>
-Subject: Re: [PATCH] t6300-for-each-ref: fix "more than one quoting style" tests
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 15, 2018 at 5:52 PM, Jeff King <peff@peff.net> wrote:
-> On Thu, Feb 15, 2018 at 05:39:28PM +0100, SZEDER G=C3=A1bor wrote:
->
->> On Tue, Feb 13, 2018 at 11:22 PM, Jeff King <peff@peff.net> wrote:
->>
->> >>  for i in "--perl --shell" "-s --python" "--python --tcl" "--tcl --pe=
-rl"; do
->> >>       test_expect_success "more than one quoting style: $i" "
->> >> -             git for-each-ref $i 2>&1 | (read line &&
->> >> -             case \$line in
->> >> -             \"error: more than one quoting style\"*) : happy;;
->> >> -             *) false
->> >> -             esac)
->> >> +             test_must_fail git for-each-ref $i 2>err &&
->> >> +             grep '^error: more than one quoting style' err
->> >
->> > I suspect in the long run this ought to be test_i18ngrep, but since it=
-'s
->> > not localized yet, it makes sense to stop here with this patch.
->>
->> I thought 'git for-each-ref' is plumbing and that means that it
->> shouldn't be localized.
->
-> I always assumed stderr was mostly fair game, even for plumbing. At any
-> rate, I'm willing to ignore the issue until somebody actually proposes a
-> patch to translate it.
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-Ah, OK, will keep that in mind.
+>  	} else {
+> -		if (!starts_with(line, "/dev/null\n"))
+> +		if (!is_dev_null(line))
+>  			return error(_("git apply: bad git-diff - expected /dev/null on line %d"), state->linenr);
+>  	}
 
-Anyway, the first GETTEXT_POISON build will fail if that error string
-ever gets translated but the test doesn't get updated.
+Yup.  This seems to be the last explicit/manual check with the
+string "/dev/null" (instead of using is_dev_null(), which is how it
+should be and already is done in codepaths that guesses -p value and
+decides if it is a creation or a deletion patch).
+
+Looks good.  Will queue.
+
+> diff --git a/t/t4135-apply-weird-filenames.sh b/t/t4135-apply-weird-filenames.sh
+> index b14b8085786..c7c688fcc4b 100755
+> --- a/t/t4135-apply-weird-filenames.sh
+> +++ b/t/t4135-apply-weird-filenames.sh
+> @@ -100,7 +100,7 @@ deleted file mode 100644
+>  -
+>  EOF
+>  
+> -test_expect_failure 'apply handles a diff generated by Subversion' '
+> +test_expect_success 'apply handles a diff generated by Subversion' '
+>  	>Makefile &&
+>  	git apply -p2 diff-from-svn &&
+>  	test_path_is_missing Makefile
