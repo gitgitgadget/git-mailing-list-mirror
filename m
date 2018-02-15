@@ -2,127 +2,149 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E4D421F576
-	for <e@80x24.org>; Thu, 15 Feb 2018 09:58:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D6DA31F576
+	for <e@80x24.org>; Thu, 15 Feb 2018 09:59:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755248AbeBOJ56 convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Thu, 15 Feb 2018 04:57:58 -0500
-Received: from mut-mta1-se01a-zose1-fr.yulpa.io ([185.49.21.248]:34790 "EHLO
-        mut-mta1-se01a-zose1-fr.yulpa.io" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1755165AbeBOJ5z (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 15 Feb 2018 04:57:55 -0500
-X-Greylist: delayed 1521 seconds by postgrey-1.27 at vger.kernel.org; Thu, 15 Feb 2018 04:57:54 EST
-Received: from zose-mx-out01.web4all.fr ([185.49.20.46] helo=zose-mta-hub-out-web-01.w4a.fr)
-        by mut-mta1-se01c-fr.yulpa.io with esmtps (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.89)
-        (envelope-from <matthieu.moy@matthieu-moy.fr>)
-        id 1emFtt-0001jF-Nz; Thu, 15 Feb 2018 10:32:25 +0100
-Received: from localhost (localhost [127.0.0.1])
-        by zose-mta-hub-out-web-01.w4a.fr (Postfix) with ESMTP id 060751C11D1;
-        Thu, 15 Feb 2018 10:31:40 +0100 (CET)
-Received: from zose-mta-hub-out-web-01.w4a.fr ([127.0.0.1])
-        by localhost (zose-mta-hub-out-web-01.w4a.fr [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id qtFSoMph-SWQ; Thu, 15 Feb 2018 10:31:38 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-        by zose-mta-hub-out-web-01.w4a.fr (Postfix) with ESMTP id 8E7241C11C1;
-        Thu, 15 Feb 2018 10:31:38 +0100 (CET)
-X-Virus-Scanned: amavisd-new at zose1.web4all.fr
-Received: from zose-mta-hub-out-web-01.w4a.fr ([127.0.0.1])
-        by localhost (zose-mta-hub-out-web-01.w4a.fr [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id HmONIo2GDK6X; Thu, 15 Feb 2018 10:31:38 +0100 (CET)
-Received: from zose-store11.web4all.fr (zose-store11.web4all.fr [10.101.13.41])
-        by zose-mta-hub-out-web-01.w4a.fr (Postfix) with ESMTP id 6D8B01C0E22;
-        Thu, 15 Feb 2018 10:31:38 +0100 (CET)
-Date:   Thu, 15 Feb 2018 10:32:14 +0100 (CET)
-From:   Matthieu Moy <git@matthieu-moy.fr>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Petr Baudis <pasky@ucw.cz>,
-        Benoit Bourbie <bbourbie@splunk.com>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jari Aalto <jari.aalto@cante.net>,
-        Giuseppe Bilotta <giuseppe.bilotta@gmail.com>,
-        Marcus Griep <marcus@griep.us>
-Message-ID: <1227220836.729681.1518687134631.JavaMail.zimbra@matthieu-moy.fr>
-In-Reply-To: <20180214234630.GE136185@aiede.svl.corp.google.com>
-References: <20180214222146.10655-1-avarab@gmail.com> <20180214222146.10655-6-avarab@gmail.com> <20180214234630.GE136185@aiede.svl.corp.google.com>
-Subject: Re: [PATCH 5/8] perl: update our copy of Mail::Address
+        id S1755267AbeBOJ7F (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Feb 2018 04:59:05 -0500
+Received: from mail-wr0-f174.google.com ([209.85.128.174]:36260 "EHLO
+        mail-wr0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755165AbeBOJ7C (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Feb 2018 04:59:02 -0500
+Received: by mail-wr0-f174.google.com with SMTP id u15so2724114wrg.3
+        for <git@vger.kernel.org>; Thu, 15 Feb 2018 01:59:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=15f077oxOAv0hkzm7ENMdMARl0KLat4TD4+Ud6TvDGE=;
+        b=lW9HnI/FaYQAmR5Dm2VosbfhJo79L3X51rYfy5gfVZAxtrIVRQiMbdOk0yTTUOOQqY
+         ov9NJ5T5G84gEoUI9ylKk3J8iBdmpNSsLYozNBUMcfjnU7B3WANvwET07ShMKTeDl0V2
+         ZQEpvmUhf7kGdHpTPJ/CwRKEoE9D/g/sa8nN+77iEjhILzVCT/FcYLMV9zHRf0+jcS4I
+         YO/NgO21al5zOOIXIWPUmkYnWC0ENbcGbchxBeG49suaAOfHH6k64FehM2idosuvnVx0
+         U1cHht3r5OaXOxRsX0THoAet+fwON0fXORdfnSOn2W0r6Pn51Py+y5375QEgpqKjgvd2
+         X7/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=15f077oxOAv0hkzm7ENMdMARl0KLat4TD4+Ud6TvDGE=;
+        b=Mdyq6MMWXnbSxyjuXy4fm7qeCeR476s9sb6gIJ2dRCeKNfGEz9cR3qU52gd8yHncC2
+         vvCZBN4jXJjNHBO9QQ0ZoJVjhBjFSRT1au5HlaRr16Re+lUkXh5oqo8PhdBmKbzCMODc
+         ctFPtWMtJorz5EFmklcycvL67xGoz8dFT8EzQ+Hwad/KAIG0HfPY8/oI8kpR93dxbz20
+         aHnKnz/h6XmYkvQS/lnNDj2rwHfuG52rgMPYexr0sqwinjZy4mSZsbfr5zIavepstXSX
+         kSLP1RlTcAG/jlhRQjaKo6fUNNvgMosBtDwVbMTltwlD+b70qOS3a1BXWcSP8aye6cZc
+         3cEw==
+X-Gm-Message-State: APf1xPBcmWGWxQVPeyuDogTJ76LC2O8Knmw2IQKtKq7EmYGyqwUHk7EX
+        wvFLaRwlZkyw3vNGteBkenFZH4QNxYvFDqfohOA=
+X-Google-Smtp-Source: AH8x224MuF/c3Mc75g2/5TBMa+XgLJlW92ILP0boT7+r7mcjiYljdQcOt1TEhscLm1FrX+i87l3w6Hk146vKhPslQGY=
+X-Received: by 10.223.176.201 with SMTP id j9mr2083390wra.210.1518688740919;
+ Thu, 15 Feb 2018 01:59:00 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Zimbra 8.7.11_GA_1854 (ZimbraWebClient - FF58 (Linux)/8.7.11_GA_1854)
-Thread-Topic: perl: update our copy of Mail::Address
-Thread-Index: u1hnr1260wbduncxk+RPGJjonjzJSQ==
-X-Originating-IP: 185.49.20.46
-X-SpamExperts-Domain: zose1.web4all.fr
-X-SpamExperts-Username: 185.49.20.46
-Authentication-Results: yulpa.io; auth=pass smtp.auth=185.49.20.46@zose1.web4all.fr
-X-SpamExperts-Outgoing-Class: ham
-X-SpamExperts-Outgoing-Evidence: Combined (0.01)
-X-Recommended-Action: accept
-X-Filter-ID: EX5BVjFpneJeBchSMxfU5vGvQxYaDibXf/t5ef8qBOB602E9L7XzfQH6nu9C/Fh9KJzpNe6xgvOx
- q3u0UDjvO7JN/Ahk3pUNhgSG5Y/486wK3Vg05iEhVtlVLxIoDa5/JnY3oudDRGl9PqcWMzkbTrhY
- PCxqwgo5YKhx28Sgzz9X47hzEvan4mW51I2Ph9jGEPH14t01+xDEo9jX/vdeZdbkkj0+dz3zOWCJ
- CtA4QkG6N+1VUNcClR7OpKDaMWVK5ab/w0pd6bWIpRejJFE72iN+/YZsfbLeqkjR05PDYJsloZFO
- o+Wa50OVnw/0nSi/v9YHmuAfRp1qyEu5Ju9xPAs+ScOlgemjTy7W4M75SMxj35TZ82Sw4eEBO7EJ
- QDB5qbTwVe2w7c8RZ6IX4qZlkqJh/sf/IF19W7oFco6qiVPpdoW5FF5tQXEr1cN2RQWmBMmyNbDn
- 7R5kilAhwr3KtIiiILkMOdp6YQ66CDf05wHbb3LAi50VdkYTPXFZwgQPZU2GICfTGzs+F8lUKgKl
- QuMOFaraXWS+MpnzoBGC6OdRIa89mx+tkjtlOjiIrcym/Dvbcwx3hRAEp9Szw6Y9GvqexC/FKmrB
- VQq3b2CTOB3jT+mbShou6hktCloTvTOZhth9l0V3K/i0PQzTWd3bdN1D9vMVR24Z2IIpUJ/Oara4
- bMhNtP7dNqUWA+bDQmxZZlNr7345IxfA8CDxo1heO7wqyT5p50x81ZKcmzCu2U2TLIJStWxour98
- oA/nMHn/UeymUySRv9UEZ8AMx8P6CS25wVRoSK4vDnDKBdKFXCTNCmNd9/oMqR3HFr02FASixkSn
- zvOM14y3UCJQwrLc0QcEaQl9xXYUqQie9rGnDhjKi1YqYU2OEruN9yRgmZNjM1zLTQBEE9Ey1XFv
- jK16M5mxbVKy9oe8K88nWw9a5cBSshGMS8wi2RE+BtvrU9ipd6iiv02852p6p7VmbWoqV9nP2ZZI
- NnMiGfy9mez1m2b+5xeMjf+8DZYUppeCyKFgo8TjnYyZBS8tp4RZW9IV0tq7/VbxLLZA3+C/u66L
- UngccBIk1Sag4dKiqCrF8eZZCP92LhhFOsN+9bgqzfUVDVqhGPQU+R6WcEzaexyeunHrBs6oeyM9
- /YLytWumqm/pr4Ff54xxyGzTCjn/Zxd+sWtjaPrMy5+1s8UPvgd5svoPogB+zOIRsDZit34c9voj
- xi8bExZ09S6HjTDouvl2APG1BwBDSRgbR8kv2P8SF2NzdJ+smPQvhUTS+PxmdPORrXvQL+LvjUMF
- uaasHQAtjjEvuGslKTrRIXcXpFg5ivY=
-X-Report-Abuse-To: spam@mut-mta1-se01a-fr.yulpa.io
+Received: by 10.223.155.17 with HTTP; Thu, 15 Feb 2018 01:59:00 -0800 (PST)
+In-Reply-To: <20180215051658.GB18780@sigill.intra.peff.net>
+References: <01020161890f4236-47989eb4-c19f-4282-9084-9d4f90c2ebeb-000000@eu-west-1.amazonses.com>
+ <01020161890f4311-ab635cac-1d48-47ee-90e1-f178f134db1c-000000@eu-west-1.amazonses.com>
+ <20180215051658.GB18780@sigill.intra.peff.net>
+From:   =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
+        <olyatelezhnaya@gmail.com>
+Date:   Thu, 15 Feb 2018 12:59:00 +0300
+Message-ID: <CAL21BmkQJTGYwR2BywNtsDVuMSGQVO+eWDTqTJL-WoiuAjmg0w@mail.gmail.com>
+Subject: Re: [PATCH v3 02/23] ref-filter: add return value to some functions
+To:     Jeff King <peff@peff.net>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Jonathan Nieder" <jrnieder@gmail.com> wrote:
-
-> Ævar Arnfjörð Bjarmason wrote:
+2018-02-15 8:16 GMT+03:00 Jeff King <peff@peff.net>:
+> On Mon, Feb 12, 2018 at 08:08:54AM +0000, Olga Telezhnaya wrote:
 >
-> > Update our copy of Mail::Address from 2.19 (Aug 22, 2017) to 2.20 (Jan
-> > 23, 2018). This should be a trivial update[1] but it seems the version
-> > Matthieu Moy imported in bd869f67b9 ("send-email: add and use a local
-> > copy of Mail::Address", 2018-01-05) doesn't correspond to any 2.19
-> > version found on the CPAN. From the comment at the top of the file it
-> > looks like some OS version with the POD stripped, and with different
-> > indentation.
+>> Add return flag to format_ref_array_item(), show_ref_array_item(),
+>> get_ref_array_info() and populate_value() for further using.
+>> Need it to handle situations when item is broken but we can not invoke
+>> die() because we are in batch mode and all items need to be processed.
 >
-> Were there changes other than the POD stripping?
+> OK. The source of these errors would eventually be calls in
+> populate_value(), but we don't flag any errors there yet (well, we do,
+> but they all end up in die() for now). So I'd expect to see later in the
+> series those die() calls converted to errors (I haven't looked further
+> yet; just making a note to myself).
+>
+>> --- a/ref-filter.c
+>> +++ b/ref-filter.c
+>> @@ -1356,8 +1356,9 @@ static const char *get_refname(struct used_atom *atom, struct ref_array_item *re
+>>
+>>  /*
+>>   * Parse the object referred by ref, and grab needed value.
+>> + * Return 0 if everything was successful, -1 otherwise.
+>>   */
+>
+> We discussed off-list the concept that the caller may want to know one
+> of three outcomes:
+>
+>   - we completed the request, having accessed the object
+>   - we completed the request, but it didn't require accessing any
+>     objects
+>   - an error occurred accessing the object
+>
+> Since callers like "cat-file" would need to check has_sha1_file()
+> manually in the second case. Should this return value actually be an
+> enum, which would make it easier to convert later to a tri-state?
 
-No.
+I decided not to implement this particular scenario because all other
+callers are waiting that everything will be printed inside ref-filter.
+We just add support for cat-file there. I don't think that I need to
+re-think all printing process and move printing logic to all other
+callers so that cat-file will behave fine. In my opinion, in the final
+version cat-file must accept all ref-filter logic parts and adapt to
+them.
 
-I should have mentionned it in the commit message, but the one I took was
-from:
+>
+>> -static void populate_value(struct ref_array_item *ref)
+>> +static int populate_value(struct ref_array_item *ref)
+>>  {
+>>       void *buf;
+>>       struct object *obj;
+>> @@ -1482,7 +1483,7 @@ static void populate_value(struct ref_array_item *ref)
+>>               }
+>>       }
+>>       if (used_atom_cnt <= i)
+>> -             return;
+>> +             return 0;
+>
+> Most of these conversions are obviously correct, because they just turn
+> a void return into one with a value. But this one is trickier:
+>
+>> @@ -2138,9 +2144,10 @@ void format_ref_array_item(struct ref_array_item *info,
+>>               ep = strchr(sp, ')');
+>>               if (cp < sp)
+>>                       append_literal(cp, sp, &state);
+>> -             get_ref_atom_value(info,
+>> -                                parse_ref_filter_atom(format, sp + 2, ep),
+>> -                                &atomv);
+>> +             if (get_ref_atom_value(info,
+>> +                                    parse_ref_filter_atom(format, sp + 2, ep),
+>> +                                    &atomv))
+>> +                     return -1;
+>>               atomv->handler(atomv, &state);
+>>       }
+>
+> since it affects the control flow. Might we be skipping any necessary
+> cleanup in the function if we see an error?
+>
+> It looks like we may have called push_stack_element(), but we'd never
+> get to the end of the function where we call pop_stack_element(),
+> causing us to leak.
 
-  http://cpansearch.perl.org/src/MARKOV/MailTools-2.19/lib/Mail/Address.pm
+Agree,  I will fix this.
 
-i.e. following the "source" link from:
-
-  http://search.cpan.org/~markov/MailTools-2.19/lib/Mail/Address.pod
-
-The link name suggested it was the actual source code but indeed it's a
-pre-processed file with the POD stripped.
-
-It would make sense to indicate explicitly where this file is from in
-this commit's message to avoid having the same discussion next time someone
-upgrades the package.
-
--- 
-Matthieu Moy
-https://matthieu-moy.fr/
+>
+> -Peff
