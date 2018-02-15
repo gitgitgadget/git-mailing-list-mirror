@@ -2,104 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.1 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1E8E91F404
-	for <e@80x24.org>; Thu, 15 Feb 2018 18:31:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 61A471F404
+	for <e@80x24.org>; Thu, 15 Feb 2018 18:33:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1166556AbeBOSbz (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Feb 2018 13:31:55 -0500
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:34110 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1163136AbeBOSbw (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Feb 2018 13:31:52 -0500
-Received: by mail-wr0-f194.google.com with SMTP id m5so648079wrg.1
-        for <git@vger.kernel.org>; Thu, 15 Feb 2018 10:31:52 -0800 (PST)
+        id S1162967AbeBOPYp (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Feb 2018 10:24:45 -0500
+Received: from mail-lf0-f53.google.com ([209.85.215.53]:41013 "EHLO
+        mail-lf0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1162872AbeBOPYm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Feb 2018 10:24:42 -0500
+Received: by mail-lf0-f53.google.com with SMTP id f136so16768lff.8
+        for <git@vger.kernel.org>; Thu, 15 Feb 2018 07:24:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=gcBEeCqF8uGndi3FtXeH685gZLoOwwwCVGBFlOr+8HE=;
-        b=sn5HSFbfRcHU9GDOOZPVbi8APWw/wfZEi44rN4b1GZZmlunMMEL0mV8TfsA3hvPmbc
-         HOYDn8p5aj8UEv9sSKwVd1b7BeiW/rhAxUNVQH1dnGNTJGSV14PyFZ7MxSawZAwom+1u
-         5LbFlIMBhmeLcV7UrXAEFfHFLhZTYoDOTVNvv3hRu/r2kd83bVf4G/AknBp82qyfI72t
-         CQi0uFo8axTXWEs9ywTOXr5PSHDpK8gjOYBFi+k1e99W+siZhMSm7b7fVydZOHyJk6LA
-         ZASbmwpodq3xuPtf4NUy8V61kCsUVetKg2h3Mnr8vnGoW1eLwjI8DkkahpNjgviBuSCe
-         ErBg==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-transfer-encoding;
+        bh=FVL2feRCBb7I/iTchwZq59WPH0McXkTztLlt4p9Dsms=;
+        b=HdzZ/YuL2e+uFAJsQ82WQRbTgtJaCqo+cdg2nvt20KkDbK8lvydN5bmZz6j3yLmkHB
+         5bnHKU1wC959XOlnB1MvevVxdLYkW0jTxrGA7Kx3FwVzlxW7lf2xTjonOevuhRjxKl+l
+         z0zMRW8qgCjF28y+UXP51o1KDrkYIx/IaliUqYbznfCYfSMeaswR5LJejH3Fvdsq3vkP
+         92rItug+0lW8L6kjZgS+jSKWV+nfyitxLteL6d4DZxiDRWW0vqhCfdd/exyeSiaG3s5Y
+         ugcegtB1vIeSKel6nDV2KuvDO8Od4v8qBuIjDrQj6p+YlQcWazcEIXx7od0ZEyABTpDX
+         aUdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=gcBEeCqF8uGndi3FtXeH685gZLoOwwwCVGBFlOr+8HE=;
-        b=Vu9gMJ5A/YV2G3GT7qSqrGos+Cdv5M/X/IHA1PcqbEu6Yk1tnPRufLabxT0xrawxgg
-         CerGARuWzmQWZrceuZRq2MafqGYan3Hg2RwD/yo6MJ3Ev4G3tYWo9ScDAY5j0B8bTkaV
-         MBTHIpsEDfHig5yiGGst5xzqu1QpVdCSkmyG3imunEp6QBAeLCIBaogJLbYj13+BiyvJ
-         qGm4AXPXcVcBkZIIOownPWsJyV4H917lp14SXCC/AOT39WJCvbJkkRXIrYfXFGNEvNJk
-         ekisrSHlo6RsurqAUaRop9eiy22plj2wsvf6RQbAHN6q8euHK8/D9YQSTBw7+UKpCh2b
-         CWnA==
-X-Gm-Message-State: APf1xPAyDh3eK8jq047+4TzCLKGWRFz9KM5U8iTK+C1dYgdd/ez6fuhV
-        sZb4E6Ln/r5BvhjygvotttygUv9d
-X-Google-Smtp-Source: AH8x225MsYY3rF/R1f19SL9WeLbZnvwYoL/w5XkKiCB/+f42GJvbZBmdPTGb2P/jBck0aTy3OTo/kw==
-X-Received: by 10.223.128.14 with SMTP id 14mr3573537wrk.94.1518719511174;
-        Thu, 15 Feb 2018 10:31:51 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id 90sm5971557wrp.2.2018.02.15.10.31.50
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 15 Feb 2018 10:31:50 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
-        <olyatelezhnaya@gmail.com>
-Cc:     Jeff King <peff@peff.net>, git <git@vger.kernel.org>
-Subject: Re: [PATCH v3 20/23] ref-filter: unifying formatting of cat-file opts
-References: <01020161890f4236-47989eb4-c19f-4282-9084-9d4f90c2ebeb-000000@eu-west-1.amazonses.com>
-        <01020161890f437a-302b1577-f034-4a24-a3a2-851d1cda0044-000000@eu-west-1.amazonses.com>
-        <20180215055618.GP18780@sigill.intra.peff.net>
-        <CAL21BmkVgCzihUOxM=Mih=EzYKZwYzpgkSrAZFVr12nkfoCtXw@mail.gmail.com>
-Date:   Thu, 15 Feb 2018 10:31:49 -0800
-In-Reply-To: <CAL21BmkVgCzihUOxM=Mih=EzYKZwYzpgkSrAZFVr12nkfoCtXw@mail.gmail.com>
-        (=?utf-8?B?ItCe0LvRjyDQotC10LvQtdC20L3QsNGPIidz?= message of "Thu, 15 Feb
- 2018 13:34:48
-        +0300")
-Message-ID: <xmqq8tbu9ka2.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=FVL2feRCBb7I/iTchwZq59WPH0McXkTztLlt4p9Dsms=;
+        b=RjzWaJZbqBaEbqBrlfD7wD2Lo6S9nG/LTYN/azKbOWbGJSp3vAyQBMooQtp+cuY3Uk
+         sFiESnV1afRWs7cqElytYFPxCKWOZNspf6jJKW1OMdHeuGG7WwQdP50ijnpFIKimnL8O
+         TGXu9F/nxNm2OqAHmJlAb7Fw4Q0rhu1dOoF7yvQsDA5k6d/wr74S0FGc+ye9gfZBwmSN
+         XCjhn7SrmG2F8VG+TbjwjZlkQtpGL736gRmgDpRPiYzMLODLPzOoax1QX9e1T9lPI9j9
+         eBWqK7gO4zq4e3ZvV5gvtZ2G+ZtAzbuylGc7RB1Bjcba21VxYXmjwOhhMkEGteUYsDSj
+         UILA==
+X-Gm-Message-State: APf1xPCzz3LSgoOTiHIKK5O084rmX6rfuJW3tbJuaT6rv4eaMrzagRI8
+        a9UnLnNlx+WbPlLNzAoxgtsEIsya+PsujmBnVDw=
+X-Google-Smtp-Source: AH8x225ln8h6q3Nj7/I0QlEm6/7nv5Hm3K9WE2F2jXogltjRfgTPcZc5JTleSkUMZITCqMzGBuGV+ODtXwdMAs5ETdE=
+X-Received: by 10.25.24.203 with SMTP id 72mr2077705lfy.132.1518708281112;
+ Thu, 15 Feb 2018 07:24:41 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+X-Google-Sender-Delegation: rcdailey@gmail.com
+Received: by 10.46.2.138 with HTTP; Thu, 15 Feb 2018 07:24:40 -0800 (PST)
+In-Reply-To: <xmqq8tgrhdt0.fsf@gitster.mtv.corp.google.com>
+References: <CAHd499B5hM9ixnsnwWwB2uyDT10dRQpN473m5QjxH9raHtFXiw@mail.gmail.com>
+ <958c9b03-062c-0bea-3b25-939a36659f32@web.de> <CAHd499AD5Kgbp-vxXTnEPkb-Mb5oEeXhaRO5kGniDdqmXwd2QQ@mail.gmail.com>
+ <88c57b88-ef2c-d7db-15e2-12791d4cb201@web.de> <xmqq8tgrhdt0.fsf@gitster.mtv.corp.google.com>
+From:   Robert Dailey <rcdailey.lists@gmail.com>
+Date:   Thu, 15 Feb 2018 09:24:40 -0600
+X-Google-Sender-Auth: XeFtFBv5t5cPMqDO2kB6i6zefqg
+Message-ID: <CAHd499CSe6d1SBaDYNRD9HXaWRJ9QYzmOCaBWFrV52UNRMVqhA@mail.gmail.com>
+Subject: Re: Line ending normalization doesn't work as expected
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+        Git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Оля Тележная  <olyatelezhnaya@gmail.com> writes:
-
->>> -             else if (deref)
->>> +             } else if (!strcmp(name, "objectsize:disk")) {
->>> +                     if (cat_file_info.is_cat_file) {
->>> +                             v->value = cat_file_info.disk_size;
->>> +                             v->s = xstrfmt("%"PRIuMAX, (uintmax_t)v->value);
->>> +                     }
->>> +             } else if (deref)
->>
->> Why do we care about is_cat_file here. Shouldn't:
->>
->>   git for-each-ref --format='%(objectsize:disk)'
->>
->> work? I.e., shouldn't the cat_file_info.disk_size variable be held
->> somewhere in a used_atom struct?
+On Tue, Oct 3, 2017 at 9:00 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Torsten B=C3=B6gershausen <tboegi@web.de> writes:
 >
-> At that point - no.
-> I think it sounds like other separate task to add this functionality
-> and to test it properly.
+>>> $ git rm -r --cached . && git add .
+>>
+>> (Both should work)
+>>
+>> To be honest, from the documentation, I can't figure out the difference =
+between
+>> $ git read-tree --empty
+>> and
+>> $ git rm -r --cached .
+>>
+>> Does anybody remember the discussion, why we ended up with read-tree ?
+>
+> We used to use neither, and considered it fine to "rm .git/index" if
+> you wanted to empty the on-disk index file in the old world.  In the
+> modern world, folks want you to avoid touching filesystem directly
+> and instead want you to use Git tools, and the above are two obvious
+> ways to do so.
+>
+> "git read-tree" (without any parameter, i.e. "read these 0 trees and
+> populate the index with it") and its modern and preferred synonym
+> "git read-tree --empty" (i.e. "I am giving 0 trees and I know the
+> sole effect of this command is to empty the index.") are more direct
+> ways to express "I want the index emptied" between the two.
+>
+> The other one, "git rm -r --cached .", in the end gives you the same
+> state because it tells Git to "iterate over all the entries in the
+> index, find the ones that match pathspec '.', and remove them from
+> the index.".  It is not wrong per-se, but conceptually it is a bit
+> roundabout way to say that "I want the index emptied", I would
+> think.
+>
+> I wouldn't be surprised if the "rm -r --cached ." were a lot slower,
+> due to the overhead of having to do the pathspec filtering that ends
+> up to be a no-op, but there shouldn't be a difference in the end
+> result.
 
-What does "that point" refer to?  This point at 20th patch in the
-23-patch series it is not premature, but it will become feasible in
-later steps?
-
-As Peff already said in his review on earlier steps like 4/23 and
-7/23, I too found the series quite confusing and felt as if I was
-watching somebody stumbling in all directions in the dark in the
-earlier steps in the series before deciding to go in one direction.
+Sorry to bring this old thread back to life, but I did notice that
+this causes file modes to reset back to 644 (from 755) on Windows
+version of Git. Is there a way to `$ git read-tree --empty && git add
+.` without mucking with file permissions?
