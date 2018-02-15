@@ -2,101 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 30AE31F404
-	for <e@80x24.org>; Thu, 15 Feb 2018 00:29:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B75971F404
+	for <e@80x24.org>; Thu, 15 Feb 2018 00:37:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1032286AbeBOA3n (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Feb 2018 19:29:43 -0500
-Received: from mout.gmx.net ([212.227.17.20]:59677 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1032237AbeBOA3m (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Feb 2018 19:29:42 -0500
-Received: from MININT-TB4PCE7.southpacific.corp.microsoft.com
- ([37.201.195.115]) by mail.gmx.com (mrgmx103 [212.227.17.168]) with ESMTPSA
- (Nemesis) id 0Lx8ZJ-1ek0yU2Bab-016cUN; Thu, 15 Feb 2018 01:29:35 +0100
-Date:   Thu, 15 Feb 2018 01:29:34 +0100 (STD)
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     git@vger.kernel.org
-cc:     Tatyana Krasnukha <tatyana@synopsys.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 2/2] apply: handle Subversion diffs with /dev/null
- gracefully
-In-Reply-To: <cover.1518654532.git.johannes.schindelin@gmx.de>
-Message-ID: <7858c01a2c92a55f86611335bbdcc93c94bc69d2.1518654532.git.johannes.schindelin@gmx.de>
-References: <cover.1518654532.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1032369AbeBOAg6 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Feb 2018 19:36:58 -0500
+Received: from mail-io0-f169.google.com ([209.85.223.169]:38867 "EHLO
+        mail-io0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1032189AbeBOAgp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Feb 2018 19:36:45 -0500
+Received: by mail-io0-f169.google.com with SMTP id d13so27117135iog.5
+        for <git@vger.kernel.org>; Wed, 14 Feb 2018 16:36:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=c8HbLouVdXkw+/aApj4G1FtUBxDHdSULAdIfneuMLTk=;
+        b=Y5JyeQcEVEa9QM+GvMkv728zlPPKqJoMLR7AdwPntxfSPmHrjrwfId0KHVHU69UVJR
+         m9/S2o4/63auCawMB97cSEICOm2d6sHJxyGo7+RwTgpCCN1qVJP2xk5QfTv63id7U/dO
+         0R629K82hvStVK1wFP3BScLmLX4jYfcnoEQAQkz+WU5RJ2JWlmLVZ6TQ4GRrL2up16/N
+         NxuWKq5HB3TPzMFiB/YQjT5kn0fGNDDZcumR60B1r2z0yeOcVh1pkPxUDlUWHXiiH5+g
+         EkHKwnoly9gPxiCBu8MNikjqprLckLt6st+/oJXTpusOh4C3sKIP3XHzgBGsSuW4QmEe
+         0UAg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=c8HbLouVdXkw+/aApj4G1FtUBxDHdSULAdIfneuMLTk=;
+        b=NVLNqN6zvxzKH4+3NM4H3ol+Jyqik0V/WwHGV9YyvaoEdZw8TP0a8KCbOsbg5PR42C
+         LFMTjxpYVUqWsIMj1BXdbw6/oOgVb/IUMXJs1tug0UaVomqpiiZWJwTxgneJ6uu5sJdc
+         EfMtQ0chYxvg9ZMokUI7hTaZCL1qA3eljlc3jXcjhfns5FxD10zkVsoYQrWAGuqyPsDG
+         UBOdCIKNhHckh/3Hkr+sKeoi3bKMVf6i/1tisc4F5/39VngM5HG+jYNZjh70IE7HoHPt
+         /yCj/P2LRIv2pGAFP+cRZLDJ7PV/yHj9d41xdHIwLLuNA9MoQEHpC0XU4XKzf0aNawdN
+         wj+A==
+X-Gm-Message-State: APf1xPAo9Z4VKRayOUmSsilOfRdPBcivZ2htWjj5pQ8zvfDKAKhVZfPe
+        PYIIWGbqTpMSVDpTNOTyoCBVGDjwquftp2WmjGs=
+X-Google-Smtp-Source: AH8x226k++sjAVacJFvJF96IVb+Prjg4iFgGfjl2qqDFiphY43zS3+3lnuqg3G7w/Me9l0GozrHlKBPcBcqfluug/6M=
+X-Received: by 10.107.28.66 with SMTP id c63mr1452074ioc.247.1518655005152;
+ Wed, 14 Feb 2018 16:36:45 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:l5NW1lYG/vQ2D+GvQVejITpqCXD/Gm4jtaIuUKCwzCtaEGi4FC0
- wL8g13vium71vZSOEmyQGO1JefnsilBqiJRvd7SHiY2g+6DAQhIR/k1nLK+ce4MKmwiiryF
- 6J/Xb6mjYqEvXfGcp5Qj6Ji6HMaN8Z9ksgW+d6HGb2eUrZLDq2zONSBAeIVMqe3I9qGgGrB
- QtkBZcU9q2u6E38ro2vDg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:UtVF5nZdXRs=:mFs0BgPcwRZuHO1p+HZSpN
- iBFeiK8TXKB+ntlXk0C1l/43qJA9vtgT9FdshlFwOZ0KB8c1s2n+4VIwG1AW2WVb8iCshEqgs
- KC6YEGV1VUWC3zIaUSg4sEJ/xBATxtR2sziz8KiticjIBFoVnDFFE3r7AJ+gbBPy3gH83ddrf
- TYLUzfhssfUTrgnWzbTmiBQfo9Hf0Xs8buwaFFpAA4Fic5Gx65x0PWZ2OpxCEyJTjbry+5k/h
- u6P43bX7qc4UpOYcBa3k5WFtxcCOEVR9pACdmUlf0/vgBZMXgoIvrpJgM8S51KJgt4ML2LBtH
- 8BSuHjXx7kMWmQAXpbjKuXO97620aIU//wA6W+h1IqUgqQU/Nq0Y+nENMzev3xRhGnPeRB6T7
- P4URMkMgG8Mw2TogzoC0YdXhJd6QuupmcpSvHZtoO4h9aQ5dwiJkfR2JY2ub1TYVy3svCfzck
- FOUmzxZ0HUNgoUgT86ROeQwGUJcQnhIz5tXKIKN73ZAo3AoqGkJntPPVoMJ5n/4obdceRiumz
- 1gbJdwtY8rpUYkmjKNAhnG5qIGWIvAcZPfg9WgEIDk4zaCAErChQ+gIKM/z92CkX0k5h9u02V
- 14D496pUPfN/XJcPMYXDUNcIoGYfrerFxLoiX/GthiHAgU5bIMyavTs0HwOsZaR1ZfM0Xg0zR
- za0ob0JTAM3EeHoJ0R8gzoQXzkdSUrH4bMzCuvkSw7YKMHx6b8W1nTM1VPLsFQriMNxKaNbGG
- 27vZVlKjZk7Xbb8CJ6ZOF81dBZbwljx1bRYmiRd/PDY/krYM9IhthsgeC8VyzL2ZUBFfA3eJz
- qq6FuN5ykF/IaeUTrv3Sqda+z3yYaUFFZMTrQABEWyl76TeRO0=
+Received: by 10.2.5.147 with HTTP; Wed, 14 Feb 2018 16:36:44 -0800 (PST)
+In-Reply-To: <CAGZ79kZf1UKsBEJXuwAH+EWr+ZKj-FE8DuBvcM2nJeNhLEA4CQ@mail.gmail.com>
+References: <CAEWZXo7KiRWK7ddyZgQKs=F+sHY7TtFsXTMXyE-57=FRr6kf6w@mail.gmail.com>
+ <CAGZ79kZf1UKsBEJXuwAH+EWr+ZKj-FE8DuBvcM2nJeNhLEA4CQ@mail.gmail.com>
+From:   Psidium Guajava <psiidium@gmail.com>
+Date:   Wed, 14 Feb 2018 22:36:44 -0200
+Message-ID: <CAEWZXo6ws5q-73AP6+Ru39a+drO88fRO49_QGJbQXfOYRpqKwg@mail.gmail.com>
+Subject: Re: git-rebase --undo-skip proposal
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Paul Tan <pyokagan@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Tatyana Krasnukha <tatyana@synopsys.com>
+On 2018-02-13 18:42 GMT-02:00 Stefan Beller <sbeller@google.com> wrote:
+> On Tue, Feb 13, 2018 at 12:22 PM, Psidium Guajava <psiidium@gmail.com> wrote:
+> I think this could also be done with "git rebase --edit-todo", which brings
+> up the right file in your editor.
 
-Subversion generates diffs that can contain lines like this one:
+Yeah that'd would only work if one started a rebase as a interactive
+one, not am or merge.
 
-	--- /dev/null  (nonexistent)
+> cc'd Paul Tan, maybe he recalls the situation.
 
-Let's teach Git's apply machinery to handle such a line gracefully.
-
-This fixes https://github.com/git-for-windows/git/isues/1489
-
-Signed-off-by: Tatyana Krasnukha <tatyana@synopsys.com>
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- apply.c                          | 2 +-
- t/t4135-apply-weird-filenames.sh | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/apply.c b/apply.c
-index f8b67bfee2c..107aa4c216e 100644
---- a/apply.c
-+++ b/apply.c
-@@ -950,7 +950,7 @@ static int gitdiff_verify_name(struct apply_state *state,
- 		}
- 		free(another);
- 	} else {
--		if (!starts_with(line, "/dev/null\n"))
-+		if (!is_dev_null(line))
- 			return error(_("git apply: bad git-diff - expected /dev/null on line %d"), state->linenr);
- 	}
- 
-diff --git a/t/t4135-apply-weird-filenames.sh b/t/t4135-apply-weird-filenames.sh
-index b14b8085786..c7c688fcc4b 100755
---- a/t/t4135-apply-weird-filenames.sh
-+++ b/t/t4135-apply-weird-filenames.sh
-@@ -100,7 +100,7 @@ deleted file mode 100644
- -
- EOF
- 
--test_expect_failure 'apply handles a diff generated by Subversion' '
-+test_expect_success 'apply handles a diff generated by Subversion' '
- 	>Makefile &&
- 	git apply -p2 diff-from-svn &&
- 	test_path_is_missing Makefile
--- 
-2.16.1.windows.1
+From what I've found on the archive, he didn't recently answer mails
+that come from the mail list, I could be wrong tho.
