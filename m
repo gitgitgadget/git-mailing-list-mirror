@@ -7,92 +7,103 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 375C21F404
-	for <e@80x24.org>; Thu, 15 Feb 2018 18:02:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C6C171F404
+	for <e@80x24.org>; Thu, 15 Feb 2018 18:05:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1165937AbeBOSCE (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Feb 2018 13:02:04 -0500
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:51772 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1165818AbeBOSCD (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Feb 2018 13:02:03 -0500
-Received: by mail-wm0-f65.google.com with SMTP id r71so2472515wmd.1
-        for <git@vger.kernel.org>; Thu, 15 Feb 2018 10:02:02 -0800 (PST)
+        id S1165865AbeBOSFP (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Feb 2018 13:05:15 -0500
+Received: from mail-wr0-f195.google.com ([209.85.128.195]:44091 "EHLO
+        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1164147AbeBOSFN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Feb 2018 13:05:13 -0500
+Received: by mail-wr0-f195.google.com with SMTP id v65so532118wrc.11
+        for <git@vger.kernel.org>; Thu, 15 Feb 2018 10:05:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=JYpfVEJw7YsNqJYjI+w9VjQnMmqBMBlHJQW42ccT9fU=;
-        b=Oc88QdCRayIbbWEa0tzkrjSv4hCHJuSQ5pqu4ycNoL1YfO94AFQll2TeGb8KVmhFNc
-         zbeFOEMB6XKYdVtwHxl5sIvWnX4Vwm0/E8rtP1M7C/I0LHuey8C+ZaSTriRHM2Bq40ea
-         fNBVFoRZGWxEnrvJ/mi/CEq4Kq4yWc43ymNDUKXBZbKReAh3aqPoPigr6c4qL9zTsKaN
-         +7OzqQ1Wtozktb+xgYQW/oLOCDwJRE7zUm4D3eMuBWzLy5OX2+pOLl45dVzdfaBZLL9l
-         H60OUS8/pyFfdgnEvSlwC32POaCyn09rf3dXTTO1iGkADmcYiv1YkqjykPUO0r8EqD/T
-         C6IQ==
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=d4D317p7f5UmEYbsVSUy3tD6PlRmxOlf+62ScW80aV4=;
+        b=rdFBq/v1KBQGqbcxbaU6B0sjKcAZVHQHjhwaKOsNzOGv/O3JVgJmtmknPmZBxEWxeK
+         Jb6h/ewrheTbN2FUimlxo/ythDH0uV3b5uVI4+PYOBv/zB5CnSIrGLzKGXGZaBzcHapC
+         t6NMNQB4uGn34v1dw8YWaUG0F+2MpPOjRuTdsMJ2v3ILDm5Y592AGGuoI8rgAs7gLPNd
+         /rLN75IkHAQc3pZqdK+xvLTeJbO401EyZ4qwR3uSnVfyJPOrG1zS7HafTjjF2fPc93R0
+         BYsHs0RbKUSErYdqDy4zgbWeiFrzPbrft6A8LalsPZPWGyAxRTlerIwBmCt+eSGPnxe/
+         UwyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=JYpfVEJw7YsNqJYjI+w9VjQnMmqBMBlHJQW42ccT9fU=;
-        b=IB8BLQK+Ztwy3Ujl5DFFqEh4k4dD/kGdgCxWQy0ngka8cbk4Q3bT7iAjoDUgNpJDN4
-         rsIZJuSDxS37WGrxcfqh4CBrjM4i7PROX4QY8iuGVTmmejpwu9D8hpdYMSyTKu7nYXEY
-         mscISSO2a9MCCT2MF6xHtwGHP9UJcFdcNEv8EgyECS+AP+jS0kg4Hh8ft7AIzJOLyZGO
-         m/Sgb9cquTOSv1pDDzrTmPXCi4iZNw2iQIRtb9mVgYVPTltwz4GEfFK2uo+sdnL3g8vf
-         Wgs/xwKABfDh3qIQ4HfF+ZDAX22BfKbY6S4AZZMtpYWoB+vxrpoDony77g63i86udnIn
-         ORDA==
-X-Gm-Message-State: APf1xPC42BhBac3I9oGnBwBYvCQ6xES6zJFqzuqUfc73A4/qehdLmGjz
-        c5EHt0GfpJc/mviru24YPlQ=
-X-Google-Smtp-Source: AH8x226TVEl/kcfi7TyR7Fi1bxDE46PvTb1bHfRR0hLuFcCTCSBu9xHi1xJ1aeWw9SnYXb8cF2u9YQ==
-X-Received: by 10.28.148.150 with SMTP id w144mr2819553wmd.0.1518717721391;
-        Thu, 15 Feb 2018 10:02:01 -0800 (PST)
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=d4D317p7f5UmEYbsVSUy3tD6PlRmxOlf+62ScW80aV4=;
+        b=bL0PJnhmmGNaTu3RUofnuiQbnmFpHJk5vqDjXt0tdmyU70WnyYbsIgsWSaiyWOKvZl
+         ZTen+OlrIkgVb/8mVnwPcwkw14/FBkH6pYtXrzbUmlUUdM5Ib2KDDivZyAXwAFl6Fb33
+         y9JH4FKeffGQiqj5cceQwv6fd4e7nxgN688lh1IXaa7hRiya55B8IzDtpJ7FGdBg/h/3
+         EHq/f52KZ3U8rn3xzBSVyRI7nhrkyO39iilRTI81l68ZgDm6w5Sa7r8M7YAYRquFAPk5
+         igPGFm+9n6DfXZvmY0VBJSXwhcKZtghaEfRqoBcTE+A3OfHpuLfrJf+5PrXrGf6o5LWW
+         XsDA==
+X-Gm-Message-State: APf1xPBzfeCF7I0kcppM99ejO1LJgcSpn5eIz/GmVv02GpHDRfq4VvYI
+        3dwoEgm/qOo7l9rpbGCmIXE=
+X-Google-Smtp-Source: AH8x225MVxo/cNL6zAUmAkw90tK96FY1mwpfHcVzONqrhYpQf0aOUxUKYjg+6fVXYRq7GyHWqFrDqw==
+X-Received: by 10.223.187.144 with SMTP id q16mr3132383wrg.67.1518717911818;
+        Thu, 15 Feb 2018 10:05:11 -0800 (PST)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id 7sm16807697wmq.42.2018.02.15.10.01.59
+        by smtp.gmail.com with ESMTPSA id 6sm15729668wrd.57.2018.02.15.10.05.11
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 15 Feb 2018 10:01:59 -0800 (PST)
+        Thu, 15 Feb 2018 10:05:11 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Tatyana Krasnukha <tatyana@synopsys.com>
-Subject: Re: [PATCH 2/2] apply: handle Subversion diffs with /dev/null gracefully
-References: <cover.1518654532.git.johannes.schindelin@gmx.de>
-        <7858c01a2c92a55f86611335bbdcc93c94bc69d2.1518654532.git.johannes.schindelin@gmx.de>
-Date:   Thu, 15 Feb 2018 10:01:58 -0800
-In-Reply-To: <7858c01a2c92a55f86611335bbdcc93c94bc69d2.1518654532.git.johannes.schindelin@gmx.de>
-        (Johannes Schindelin's message of "Thu, 15 Feb 2018 01:29:34 +0100
-        (STD)")
-Message-ID: <xmqqsha29lnt.fsf@gitster-ct.c.googlers.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH] Makefile: generate Git(3pm) as dependency of the 'doc' and 'man' targets
+References: <20180215021410.14045-1-szeder.dev@gmail.com>
+        <87vaeyfxdu.fsf@evledraar.gmail.com>
+Date:   Thu, 15 Feb 2018 10:05:09 -0800
+In-Reply-To: <87vaeyfxdu.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Thu, 15 Feb 2018 09:52:13 +0100")
+Message-ID: <xmqqo9kq9lii.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 
->  	} else {
-> -		if (!starts_with(line, "/dev/null\n"))
-> +		if (!is_dev_null(line))
->  			return error(_("git apply: bad git-diff - expected /dev/null on line %d"), state->linenr);
->  	}
+> On Thu, Feb 15 2018, SZEDER Gábor jotted:
+>
+>> Since commit 20d2a30f8f (Makefile: replace perl/Makefile.PL with
+>> simple make rules, 2017-12-10), the Git(3pm) man page is only
+>> generated as an indirect dependency of the 'install-doc' and
+>> 'install-man' Makefile targets.  Consequently, if someone runs 'make
+>> man && sudo make install-man' (or their 'doc' counterparts), then
+>> Git(3pm) will be generated as root, and the resulting root-owned files
+>> and directories will in turn cause the next user-run 'make clean' to
+>> fail.  This was not an issue in the past, because Git(3pm) was
+>> generated when 'make all' descended into 'perl/', which is usually not
+>> run as root.
+>>
+>> List Git(3pm) as a dependency of the 'doc' and 'man' Makefile targets,
+>> too, so it gets generated by targets that are usually built as
+>> ordinary users.
+>>
+>> While at it, add 'install-man-perl' to the list of .PHONY targets.
+>
+> Thanks for the fixup of my crappy 'make' skills. I tested this before
+> the patch and it indeed has the problem you describe, and this fixes
+> it. Thanks! CC-ing Junio because I think it makes sense to pick this up
+> as-is.
+>
+> Reviewed-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 
-Yup.  This seems to be the last explicit/manual check with the
-string "/dev/null" (instead of using is_dev_null(), which is how it
-should be and already is done in codepaths that guesses -p value and
-decides if it is a creation or a deletion patch).
+Thanks.  
 
-Looks good.  Will queue.
+It is better late than never to have fixes like this, but I am a bit
+disturbed to notice that for the last few batches, we see fixes to
+topics after they land 'master', not while they are in 'next'.
 
-> diff --git a/t/t4135-apply-weird-filenames.sh b/t/t4135-apply-weird-filenames.sh
-> index b14b8085786..c7c688fcc4b 100755
-> --- a/t/t4135-apply-weird-filenames.sh
-> +++ b/t/t4135-apply-weird-filenames.sh
-> @@ -100,7 +100,7 @@ deleted file mode 100644
->  -
->  EOF
->  
-> -test_expect_failure 'apply handles a diff generated by Subversion' '
-> +test_expect_success 'apply handles a diff generated by Subversion' '
->  	>Makefile &&
->  	git apply -p2 diff-from-svn &&
->  	test_path_is_missing Makefile
+Will apply.
+
