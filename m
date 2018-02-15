@@ -2,157 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8682C1F404
-	for <e@80x24.org>; Thu, 15 Feb 2018 01:14:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5940A1F404
+	for <e@80x24.org>; Thu, 15 Feb 2018 01:23:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1032356AbeBOBOR (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Feb 2018 20:14:17 -0500
-Received: from mout.gmx.net ([212.227.17.21]:53631 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1032245AbeBOBOQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Feb 2018 20:14:16 -0500
-Received: from MININT-TB4PCE7.southpacific.corp.microsoft.com
- ([37.201.195.115]) by mail.gmx.com (mrgmx103 [212.227.17.168]) with ESMTPSA
- (Nemesis) id 0LikyX-1eE9ov1zht-00d2XX; Thu, 15 Feb 2018 02:14:12 +0100
-Date:   Thu, 15 Feb 2018 02:14:11 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Jacob Keller <jacob.keller@gmail.com>
-cc:     Sergey Organov <sorganov@gmail.com>,
-        Git mailing list <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 5/8] rebase: introduce the --recreate-merges option
-In-Reply-To: <CA+P7+xpg76nP8+KBrYWeYPcm8+0jS_MzL+B=LF6WPfBv44zrwA@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1802150209390.35@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <cover.1516225925.git.johannes.schindelin@gmx.de> <71c42d6d3bb240d90071d5afdde81d1293fdf0ab.1516225925.git.johannes.schindelin@gmx.de> <874lmqirma.fsf@javad.com> <nycvar.QRO.7.76.6.1802102357510.35@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
- <87zi4edbp3.fsf@javad.com> <nycvar.QRO.7.76.6.1802122121230.35@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <CA+P7+xqKPbwt-KeYTKadM3bHDkU3m0WiezKeVu75TyftBSEYDA@mail.gmail.com> <8760718imo.fsf@javad.com>
- <CA+P7+xpg76nP8+KBrYWeYPcm8+0jS_MzL+B=LF6WPfBv44zrwA@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1032372AbeBOBX4 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Feb 2018 20:23:56 -0500
+Received: from mail-wm0-f44.google.com ([74.125.82.44]:50949 "EHLO
+        mail-wm0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1032245AbeBOBXz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Feb 2018 20:23:55 -0500
+Received: by mail-wm0-f44.google.com with SMTP id k87so8246361wmi.0
+        for <git@vger.kernel.org>; Wed, 14 Feb 2018 17:23:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=AkW+3fz2S6gI3iA2y3UbHhGm07s453EYmJTTe2VmXNE=;
+        b=tND0YA9nqzan/MMD7bl+5DqKe/so7TXQ7F2gHtNpTzbGpb+XbLhG5L9taU+WLJYLiE
+         3DPL67r6HII9ryjr7Hm4H4FJ2d/QArlfgPJBFWrUnESIVC07XZNqTXHshC8am1uCUtz1
+         TqWhJEFNf1YUQ6bDDq3q6Gl18h6KCChjs9zt3jCVIifRGPE3n/7/8D57ILu3wuxXdU4e
+         EoQ2J2V3Sva2brHSPQA0WaGqr4gpGQieHhBoouFRH9j1LdSrNBQ8bBYKORMTFCu31Z4X
+         di4140c+eRJVRrYT8QgGgAmb1sPNHsmuXO8G2ydQKU9F6N+JOVvtCDoUrg5IFJTV6qGj
+         ALTw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=AkW+3fz2S6gI3iA2y3UbHhGm07s453EYmJTTe2VmXNE=;
+        b=FLZ9FRk6XlNfiwAk6D6ujqFLCpCDO/U8Jbx6P3qkyb8gVNCQ2DtZCOP5/UB1yBZX9D
+         6BcQPzidYqDHEbY5mWUu4z8peq3roafhoM9F+mEPH+ma2SEJGjcfd1r63zXJ4W+gDZm5
+         59OoEdCjKbBmmX5bpg5oYIJEiRG+6/EJcqpZzeOBZBjVD/Okcxi4u7NZJRK71eO3MtQ6
+         QqySW/rJvcXRSeGXSHU/6rUtZ5Pck5LEzgKRKiHRHt5dj7sIDvkrwrLVKjpoqbMGzQpV
+         49zFGQ+1c+JhTL7ec4GcQt75nUV6Fr96JYmhfgVA/OsMN0m/ZdZLerLOI+Tjphuf9pf2
+         RSMQ==
+X-Gm-Message-State: APf1xPBSFWIOnAn/r9FbG/9FGh9DfxbxfNvrn0J2z8oQ/ZeIJtWeCLI/
+        jJ7gUtkpvKqQdWS5puD5kbD7/PO/EI1Ge7kEJ/s=
+X-Google-Smtp-Source: AH8x226EjSzUdriN4AookiQD8BhprIHwoRC02s/KpCeNdS3DPG9hncJ+1IHQ+t1pBxyN9bBlwFdMNFFTdbfy/iTvvek=
+X-Received: by 10.80.178.99 with SMTP id o90mr1052113edd.255.1518657833812;
+ Wed, 14 Feb 2018 17:23:53 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:jyapwW1cokSeCRvf75CFOgaa7WvUeHvdliGxuPxDMsi0Iht75If
- +y0s+Bvpj21eoDapm76C9Tp6j61INsNmKaX5cU3VtUyMGOZcvWM/NAqZsHpDFLN3mfPUHWD
- V3iIvx5e80f8lLqi/4unOMLZYCyUu65DrltsrxI5MekjfZD4gNMGgTftjJdTBxuBrwO3RIC
- in8ZJu5mSw2MpJ1BzHDEg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:0J1/FqXvYPI=:jFAXbXxTcrQzoas478FXOm
- LKZ3n/NVd8uvbHxa+wvlPYnaFXRQt6RTfP7gr/Fs+mA+1LLJ3FnMtRXzQYsV0skO1US8ekRt5
- nN2ZN5S2PjhQ18WV1BIs+1a4eO28ndxrbgnO4NlKZ62uzexAMciJx1D7udFJjmWX3Gge8qL62
- 7NS26WZMpqoRTne4rEsrzn62lrVNuxCL6Z0UWEQBogKSjQWnz0k7/x48uYiMvgh9xujwssqjy
- CKiClw2nZC0FpT9UMdHppalzuXCkIKi8Ds1wQwfB5OUGLUB7k2RX69eHjyNaouiZi1QZNA4YN
- NHPqI2WKOv7sVeMQI4fJRb0CqUqLfQBODuRGXTdX+nzEsxE7yLG5i7gls4i7yA//nazedNu+x
- D0UXGBZnSbSDGC3aTUlDVM74F/JJDaI6+8O+/nebffy4d5iOM33nvuWhHizoGaFCoTvjr66WO
- FPluDB4wpUIr/e+l42EwHbS3j/pcxkJTWaXZ1MecoXwCTA5qA42NpssQhYUjEBMaCezuliZri
- aPhVOXMDTI+LZhbYE4kjCXCIauI/VRs85i1K65ZhaYLU//i5FE0rjPXHRtoHx2Admkt3OsDsl
- s4XkJ0UhprRPSkVNhy50P3DrWSPfoSdfx1j2iswA1yFKD8mV3o2hMkT0q0sIjFbZY9+IOBfdw
- B7+vhcVw3MHJ5jx6pzecgoXPsOCnJ+Uu3VAU7PVOLISNGbHtgU2kILPDDudducuoVdGVcZol8
- YWr2sJRPndZrGj/T11mFVXTFj0tE3BWC31BKxXua1VqjCGL1SnF3XpV3A8RyH9Gr88odV1mHH
- 7T6laxsWx8x4I2r/ZysmmNEJZ1snt9Hhmk7s8k37hJuUdjp4wc=
+Received: by 10.80.149.220 with HTTP; Wed, 14 Feb 2018 17:23:33 -0800 (PST)
+In-Reply-To: <nycvar.QRO.7.76.6.1802150148040.35@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <CAEWZXo7KiRWK7ddyZgQKs=F+sHY7TtFsXTMXyE-57=FRr6kf6w@mail.gmail.com>
+ <CAGZ79kZf1UKsBEJXuwAH+EWr+ZKj-FE8DuBvcM2nJeNhLEA4CQ@mail.gmail.com>
+ <CAEWZXo6ws5q-73AP6+Ru39a+drO88fRO49_QGJbQXfOYRpqKwg@mail.gmail.com> <nycvar.QRO.7.76.6.1802150148040.35@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Wed, 14 Feb 2018 17:23:33 -0800
+Message-ID: <CA+P7+xrNPe5106qSjs1BiGJ5RbVxmR=MiGNVeCAUbT3gR0cdLw@mail.gmail.com>
+Subject: Re: git-rebase --undo-skip proposal
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Psidium Guajava <psiidium@gmail.com>,
+        Stefan Beller <sbeller@google.com>,
+        Paul Tan <pyokagan@gmail.com>, git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jake,
+On Wed, Feb 14, 2018 at 4:53 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi,
+>
+> On Wed, 14 Feb 2018, Psidium Guajava wrote:
+>
+>> On 2018-02-13 18:42 GMT-02:00 Stefan Beller <sbeller@google.com> wrote:
+>> > On Tue, Feb 13, 2018 at 12:22 PM, Psidium Guajava <psiidium@gmail.com> wrote:
+>> > I think this could also be done with "git rebase --edit-todo", which brings
+>> > up the right file in your editor.
+>>
+>> Yeah that'd would only work if one started a rebase as a interactive
+>> one, not am or merge.
+>
+> I agree that the original proposal was clearly for the non-interactive
+> rebase (it talked about .git/rebase-apply/).
+>
+> The biggest problem with the feature request is not how useful it would
+> be: I agree it would be useful. The biggest problem is that it is a little
+> bit of an ill-defined problem.
+>
+> Imagine that you are rebasing 30 patches. Now, let's assume that patch #7
+> causes a merge conflict, and you mistakenly call `git rebase --skip`.
+>
+> Now, when is the next possible time you can call `git rebase --undo-skip`?
+> It could be after a merge conflict in #8. Or in interactive rebase, after
+> a `pick` that was turned into an `edit`. Or, and this is also entirely
+> possible, after the rebase finished with #30 without problems and the
+> rebase is actually no longer in progress.
+>
+> So I do not think that there is a way, in general, to implement this
+> feature. Even if you try to remember the state where a `--skip` was
+> called, you would remember it in the .git/rebase-apply/ (or
+> .git/rebase-merge/) directory, which is cleaned up after the rebase
+> concluded successfully. So even then the information required to implement
+> the feature would not necessarily be there, still, when it would be needed.
+>
+> Ciao,
+> Johannes
 
-On Tue, 13 Feb 2018, Jacob Keller wrote:
+Instead of an "--undo-skip", what if we ask the question of what the
+user actually wants?
 
-> On Mon, Feb 12, 2018 at 11:15 PM, Sergey Organov <sorganov@gmail.com> wrote:
-> >
-> > Jacob Keller <jacob.keller@gmail.com> writes:
-> >
-> >> On Mon, Feb 12, 2018 at 12:39 PM, Johannes Schindelin
-> >> <Johannes.Schindelin@gmx.de> wrote:
-> >>>
-> >>> On Mon, 12 Feb 2018, Sergey Organov wrote:
-> >>>> > Have a look at https://github.com/git/git/pull/447, especially the
-> >>>> > latest commit in there which is an early version of the deprecation I
-> >>>> > intend to bring about.
-> >>>>
-> >>>> You shouldn't want a deprecation at all should you have re-used
-> >>>> --preserve-merges in the first place, and I still don't see why you
-> >>>> haven't.
-> >>>
-> >>> Keep repeating it, and it won't become truer.
-> >>>
-> >>> If you break formats, you break scripts. Git has *so* many users, there
-> >>> are very likely some who script *every* part of it.
-> >>>
-> >>> We simply cannot do that.
-> >>>
-> >>> What we can is deprecate designs which we learned on the way were not only
-> >>> incomplete from the get-go, but bad overall and hard (or impossible) to
-> >>> fix. Like --preserve-merges.
-> >>>
-> >>> Or for that matter like the design you proposed, to use --first-parent for
-> >>> --recreate-merges. Or to use --first-parent for some --recreate-merges,
-> >>> surprising users in very bad ways when it is not used (or when it is
-> >>> used). I get the impression that you still think it would be a good idea,
-> >>> even if it should be obvious that it is not.
-> >>
-> >> If we consider the addition of new todo list elements as "user
-> >> breaking", then yes this change would be user-script breaking.
-> >
-> > It _is_ user script breaking, provided such script exists. Has anybody
-> > actually seen one? Not that it's wrong to be extra-cautious about it,
-> > just curios. Note that to be actually affected, such a script must
-> > invoke "git rebase -p" _command_ and then tweak its todo output to
-> > produce outcome.
-> >
-> >> Since we did not originally spell out that todo-list items are subject
-> >> to enhancement by addition of operations in the future, scripts are
-> >> likely not designed to allow addition of new elements.
-> >
-> > Out of curiosity, are you going to spell it now, for the new todo
-> > format?
-> >
-> >> Thus, adding recreate-merges, and deprecating preserve-merges, seems
-> >> to me to be the correct action to take here.
-> >
-> > Yes, sure, provided there is actual breakage, or at least informed
-> > suspicion there is one.
-> >
-> >> One could argue that users should have expected new todo list elements
-> >> to be added in the future and thus design their scripts to cope with
-> >> such a thing. If you can convincingly argue this, then I don't
-> >> necessarily see it as a complete user breaking change to fix
-> >> preserve-merges in order to allow it to handle re-ordering properly..
-> >
-> > I'd not argue this way myself. If there are out-of-git-tree non-human
-> > users that accept and tweak todo _generated_ by current "git rebase -p"
-> > _command_, I also vote for a new option.
-> >
-> 
-> To be fair, I have not seen anything that actually reads the todo list
-> and tweaks it in such a manner. The closest example is the git garden
-> shears script, which simply replaces the todo list.
-> 
-> It's certainly *possible* that such a script would exist though,
+Generally I'd assume that the user wishes to go back to the rebase and
+"pick" the commit back in.
 
-We actually know of such scripts.
+So what if we just make "git rebase --skip" more verbose so that it
+more clearly spells out which commit is being skipped? Possibly even
+as extra lines of "the following patches were skipped during the
+rebase" after it completes?
 
-Remember how rewriting parts of rebase -i in C broke somebody's script
-because the todo list was not re-read after a successful `exec`?
+Then it's up to the user to determine what to do with those commits,
+and there are many tools they could use to solve it, "git rebase -i,
+git cherry-pick, git reflog to restore to a previous and re-run the
+rebase, etc".
 
-Guess three times why that script was broken? Precisely: it modified the
-todo list!
-
-To see the fix (and the explanation) in all its glory, just have a look at
-54fd3243dae (rebase -i: reread the todo list if `exec` touched it,
-2017-04-26).
-
-And even if we did not know about any user. What does that mean? Does it
-mean that there is no such user? Or does it not rather mean that our
-imagination is rather limited, but we *still* should practice safe
-software development and use the totally appropriate vehicle of
-deprecating, rather than replacing, functionality?
-
-Obviously, the latter option is what I favor, that's why I suggested it in
-the first place.
-
-Ciao,
-Dscho
+Thanks,
+Jake
