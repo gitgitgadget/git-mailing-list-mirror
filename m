@@ -7,88 +7,74 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 151971F404
-	for <e@80x24.org>; Thu, 15 Feb 2018 18:36:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 277B31F404
+	for <e@80x24.org>; Thu, 15 Feb 2018 19:07:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1166562AbeBOSgW (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Feb 2018 13:36:22 -0500
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:40160 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1162888AbeBOSgU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Feb 2018 13:36:20 -0500
-Received: by mail-wm0-f67.google.com with SMTP id v123so2594167wmd.5
-        for <git@vger.kernel.org>; Thu, 15 Feb 2018 10:36:20 -0800 (PST)
+        id S1167213AbeBOTH0 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Feb 2018 14:07:26 -0500
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:43863 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1167127AbeBOTHX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Feb 2018 14:07:23 -0500
+Received: by mail-wr0-f193.google.com with SMTP id b52so713764wrd.10
+        for <git@vger.kernel.org>; Thu, 15 Feb 2018 11:07:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=WKlplYGF+1gbaWnslmAtNZSXjFzhPZyohgKu4WG0dw0=;
-        b=V9SfbHJGiXj4SJRRBTN/DWALgUGi1FBk8M4yCatrt6Z3OJp33D7Edx4WRrtZSZM4sW
-         2UtKRX+CQpqjjN412bwrLA1ypwrCF7D0UdzAmlPbYpQIGaXfQxtz+SoecL3G0y2dCxUO
-         foptfAvOaXN2sGL9RCl4O8S0uA7+O1Qi8bqOuhL/snI20hZSPBJJNbLJTS+t4Tnrh51u
-         YJAZ49usu/daxN/7h+PxBtPMG9dL26ycRYiIxKyFtKIcr9dRnIymABRIVATvg/DRqKuD
-         AjEqrplmjqozhLQJlsScbu6tfofFzXyWM9zatdqKX8A87NwPKD1vy4fRbkOQOaFMc4qk
-         gClw==
+         :user-agent:mime-version;
+        bh=Tq/Q7Usa5XDwR0XMr1f0plCsbF46kxKv7G8nliUHgrg=;
+        b=nTeHnb//K1Mxq+KDGEVhZ5MHFQ+coErIziDkD8u9AfacY52m8nl1Nt0DbNoZqQ1ovW
+         yRNdmXugbFcP81JcbLiRgCcvTIQQlwJ1Ju+Fi1xFr2c945Fq+SZznYmaLHfvInf6WPGN
+         /f5JUNsdz7OgpEukiCfPAEggBDSXtqhS9Pl/s5+Ptb0ioGfhL94CNnA/lIYT0QQta9/l
+         j8iofs6qgGxYG5f8rEhx2TdiRfsdunFFO5Q56Nhnvu2CypI9QEubXBiHpFySiT4rjqOf
+         x8FJ2mmTARMBawRAg9Ur2fw9huTpIcVoKKnbLu2ZP6pb0WNhxKAN8K1lNbwUCJjLUSDs
+         5dAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=WKlplYGF+1gbaWnslmAtNZSXjFzhPZyohgKu4WG0dw0=;
-        b=eZEmc/PArBibsnnJkDW0Kx71jt9AU0afTAQ8nvHeVGvmx/4mqa7SuGQZQZm+2ZHlbM
-         2XTzrUDL9jQHM6sxXO7pZog+hf8hHNLfCPquv85N9O0Z/5sWaaLVrBNt3F2iaKDawYsY
-         w3IQE8G33Unbcs7TSqYrv8W/N8g9wwxzvtx1fIWBQut0sO6EAKpAcRuCuG3uMyni3NvO
-         w38zBbqlTyNVMANQVDH/bvlnef5ef1KbQKjBEgE/L7dFYqoG2yJ121cAKBDhJQb+gtXW
-         TNpZR4lXp1Fln//moPMdAtpGScLMNKhm1ShQYrwE1G6Ld5/6PQ+0Vs6gqgIQg0GJs/mb
-         KL/Q==
-X-Gm-Message-State: APf1xPAZbf/vaBKeMgCth0BD+c122myYZ9DeJEGLmF5lLeEu6Zh7EyBw
-        k0qn56FFgD9ai/ewYmRyNWSgi3g/
-X-Google-Smtp-Source: AH8x224VBm8WV19zbT2cOCVHHkUJ+h+YFGURkf0T0vVzuJrFXTCfCzmu2Gz3ytaGXHdrDZqFTzC8tA==
-X-Received: by 10.28.28.139 with SMTP id c133mr2674705wmc.144.1518719779012;
-        Thu, 15 Feb 2018 10:36:19 -0800 (PST)
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=Tq/Q7Usa5XDwR0XMr1f0plCsbF46kxKv7G8nliUHgrg=;
+        b=dQeBFPWWL6NAvxx1MjmsWTTKTOZLV1eSc5MjQnSqxpGA7KM2JS99rTRGcFsT2E77Zp
+         dIMNo8TQKDukdOlzSKtLaf0Dgb9gd+2v3+Z7v6bFKJ7xkxdcb/lIU4HM1sVUy3Brzkk/
+         XB6xb9atEwPU6AYwNSUB3EGgHk4fqdaGOGpwJpX/iNjsAKlka3IYw/FECJeqfw4J04uh
+         z39BvduTeJtCU1Bdl+kfaGmjo/vApcACVipuncv6yNmmawmEXsTxu3fGSzQFgctvFQ2M
+         eVWa7TJmtQ6Hzp42io48oQkzyve1+YWHCl5BjDLXOzdHpIor8CSXseNx5jUteAmziG3B
+         vTmQ==
+X-Gm-Message-State: APf1xPCcXVQkwIWRtZk+S36ZUAuI0ick7d1Cp16u5Y2s2fLXsJvLk5YV
+        OKSVKd5ndpDjkTAjoph/hK8=
+X-Google-Smtp-Source: AH8x227AQ0gcNOHMm9jBiyNkvSCqZ6tlDmA8E5DRb0AmO83D9LOcf0raYHJv9n6/Wd/vFt1bMRMrkA==
+X-Received: by 10.223.150.148 with SMTP id u20mr3209531wrb.276.1518721641863;
+        Thu, 15 Feb 2018 11:07:21 -0800 (PST)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id d9sm2938934wra.16.2018.02.15.10.36.18
+        by smtp.gmail.com with ESMTPSA id 123sm15868249wmt.31.2018.02.15.11.07.20
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 15 Feb 2018 10:36:18 -0800 (PST)
+        Thu, 15 Feb 2018 11:07:21 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        git@vger.kernel.org, doron.behar@gmail.com
-Subject: Re: [PATCH 1/2] parse-options: expand $HOME on filename options
-References: <20180214101019.gaenosifgq3wx2nm@NUC.localdomain>
-        <20180214105149.28896-1-pclouds@gmail.com>
-        <87wozffavp.fsf@evledraar.gmail.com>
-Date:   Thu, 15 Feb 2018 10:36:17 -0800
-In-Reply-To: <87wozffavp.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Wed, 14 Feb 2018 23:46:02 +0100")
-Message-ID: <xmqq4lmi9k2m.fsf@gitster-ct.c.googlers.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 1/1] Documentation/git-status: clarify status table for porcelain mode
+References: <20180215001812.135304-1-sbeller@google.com>
+        <20180215001812.135304-2-sbeller@google.com>
+Date:   Thu, 15 Feb 2018 11:07:20 -0800
+In-Reply-To: <20180215001812.135304-2-sbeller@google.com> (Stefan Beller's
+        message of "Wed, 14 Feb 2018 16:18:12 -0800")
+Message-ID: <xmqqzi4a842f.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+Stefan Beller <sbeller@google.com> writes:
 
-> In general I'm mildly negative on adding this, for every user like Doron
-> who'll be less confused by a hack like this, you'll have other users
-> who'll be confused about git inexplicably working with ~ in the middle
-> of strings, even though;
+> It is possible to have the output ' A' from 'git status --porcelain'
+> by adding a file using the '--intend-to-add' flag.  Make this clear by
+> adding the pattern in the table of the documentation.
 >
->     $ echo git init --template ~/path
->     git init --template /home/avar/path
->     $ echo git init --template=~/path
->     git init --template=~/path
->
-> I think it makes more sense to just leave such expansion to the shell,
-> and not try to magically expand it after the fact, since it's both
-> confusing (user: why does this work with git and not this other
-> program?), and as shown above changes existing semantics.
+> However the mode 'DM' (deleted in the index, modified in the working tree)
+> is not possible in the non-merge case in which the file only shows
+> as 'D ' (and adding it back to the worktree would show an additional line
 
-The above certainly is a reasonable argument.
-
-> I think this way lies madness, and it's better to just avoid it.
+Correct.  Thanks, will queue.
