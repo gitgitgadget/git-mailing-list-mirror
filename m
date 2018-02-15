@@ -2,98 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B708F1F404
-	for <e@80x24.org>; Thu, 15 Feb 2018 21:36:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DA9CD1F404
+	for <e@80x24.org>; Thu, 15 Feb 2018 21:47:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1163717AbeBOVgX (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Feb 2018 16:36:23 -0500
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:39181 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1162541AbeBOVgW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Feb 2018 16:36:22 -0500
-Received: by mail-wr0-f196.google.com with SMTP id w77so1105984wrc.6
-        for <git@vger.kernel.org>; Thu, 15 Feb 2018 13:36:22 -0800 (PST)
+        id S1164142AbeBOVrE (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Feb 2018 16:47:04 -0500
+Received: from mail-lf0-f53.google.com ([209.85.215.53]:39073 "EHLO
+        mail-lf0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1163782AbeBOVrD (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Feb 2018 16:47:03 -0500
+Received: by mail-lf0-f53.google.com with SMTP id h78so1547488lfg.6
+        for <git@vger.kernel.org>; Thu, 15 Feb 2018 13:47:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=1dJpyKYAo4jqoNu7IRDI8PLV77oM82vXPM3ewpOSu5s=;
-        b=jNOsKsMiOFL33mcKL9gxPA5gyo8hEUmzKZpAJ0b3+OPtJ+xTtF2Me69Loq/2sgjl9d
-         VzLsrA0zJedHbUlHI5NxaFcwPKpnLGe916yMTkz9YQh3VRAqdwdQrNVEXPsOCFDeio3j
-         DX05tafzhhiJGOagaAVHxrrMUTQmZ1LsKh4zEpPQwNrxo2ANmDMK3qtGqTt3Gr2dEPcR
-         zY2s1sHJJGEk1ebtLS2YJuAnHvpZt7g6XfSNn5MfJYDfa5tVLb68dGAaqxu9yFwO0/fZ
-         33sbJd8CJD7+rsZBgPjN9R1gwhaxsJkOR4wH23sfQjxH+ki8tzoQ9acQQJOI2firar7t
-         ggGg==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=6aD/4L5DSPqxRvQfeqK3nSBFkyCUI+bxuGNtoL/BKWw=;
+        b=sltL3xhVlRBMnhH6KVS+2TrYG5L3LHunsH26st0SNNTNntePrvgTZcwiWxpgt/n7FE
+         UjRRi9vBg1Mq0dn3wLXW3N9PXKBtwjJKirYQUICYCsgO+dOZNdCFKPihYecJHMDg/9Cn
+         7wMETbOnX4pxue0+gCKcMOM7olsnWs2UaSfw0ZHWHEmRHG8Fvmhj8P1EC1XBTwpmYteo
+         dZmDs56p6p4jkKxTpYNf37fFLoeD0uwIqJ5PLE/eEAw7fjGPV9hb6eAUlN0JUBbklGYU
+         EjtzbCEiWpz6f4m8poh+C46QqUFF5Ji3LT5pt9awegCFK+l9Bg2kQ5j8Qrcu0KkSwvnx
+         Db8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=1dJpyKYAo4jqoNu7IRDI8PLV77oM82vXPM3ewpOSu5s=;
-        b=EqgEfJMoGzF5t2t/X8DHS008D72dVyAeBAvMQIYed933HOJA3t1gKRHuSR8P1HpnVO
-         jlWqJDTPPUTdwTWIxbgLrZqpM1q6Pv+GcOOQBwOvDvZdcJcTm4mV5eGS1klP1E0ARar9
-         1nBWgZTPtdV2pIlymfktVEPW4vQwA+x8QUWt5aMTP/QFR4UlcLFajFXl31umYmRX4fL+
-         O56g1LAL4WUDgHSK9CxJ48OYcDCWdHGrTVZ0L5ZGBNVL6W5o91JA1WEVDYo/Q73QXE9V
-         WPzF9WewfcbZwoNUwEn3UxM2zIgg6ugfkeemcfmJiAO31WSF48/qXoePYUgZOo2c6x+N
-         w8Cw==
-X-Gm-Message-State: APf1xPAIuB+XKaAJl9SD62pAQCsTNzubMFnt3Sop8/HT/NnxsUXD66KT
-        Lo5d7mQZ0+Unq8V+wZl+BfE=
-X-Google-Smtp-Source: AH8x227IGGKew/Li/PDVejirTRSJkifYJXM37d3veb3HxExqq6p1mugZONZbXCbY0oV4h8wy4CHJGA==
-X-Received: by 10.223.160.100 with SMTP id l33mr3646820wrl.51.1518730581250;
-        Thu, 15 Feb 2018 13:36:21 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id v9sm16405408wre.8.2018.02.15.13.36.20
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 15 Feb 2018 13:36:20 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     git@vger.kernel.org, Lars Schneider <larsxschneider@gmail.com>,
-        matthew.k.gumbel@intel.com
-Subject: Re: [PATCH v2] worktree: add: fix 'post-checkout' not knowing new worktree location
-References: <20180212031526.40039-1-sunshine@sunshineco.com>
-        <20180215191841.40848-1-sunshine@sunshineco.com>
-        <xmqqh8qi7z7o.fsf@gitster-ct.c.googlers.com>
-        <20180215212751.GA42108@flurp.local>
-Date:   Thu, 15 Feb 2018 13:36:19 -0800
-In-Reply-To: <20180215212751.GA42108@flurp.local> (Eric Sunshine's message of
-        "Thu, 15 Feb 2018 16:27:51 -0500")
-Message-ID: <xmqq8tbu7x64.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=6aD/4L5DSPqxRvQfeqK3nSBFkyCUI+bxuGNtoL/BKWw=;
+        b=Xok6qoJbeNN095LdqIRRH2glfUu3L/0xdhXXx0y+yKuk4A61Q0S1ySROxRAcHuAWJ8
+         dq9EPlNj84r13s0K3BMVzCZJWimDHBJTGrASM93x3iG1PG+Llp91TFa4DoR74dOpRh9T
+         d+XuEm5gSQ5XehdGcOe2wJ2ge1vn+fmD8yeRMeyL7NP8FYLwhxeNRDPGx3jTnXkYd6Fw
+         Unvz32uN9xOqNC0pS7pfrABpQ6AD2psyWYVhOTtmDDKlmGMbGRY7ShLZKU+uRfedDh6k
+         Qvamw0N0V2+ENSNIQU84G5ZKR5G/SpmmOq3TJkspr1nOHeBDT23AJ6bfppVHoxJP7DGN
+         mxLg==
+X-Gm-Message-State: APf1xPD5e9XsZR6f+84dAH1rHeN/WUlB/fnseqSYsZzG4slYMEKP2oZh
+        SRwSDb/TqshCDlesyvSGwz3cg867f7OzGy3+yzM=
+X-Google-Smtp-Source: AH8x224QtXWYmCLnoigIfnsqr/9eJ+450hI8jnCEx9BSBitsuuowrBrNTngQGV8KiguoK4kDmhpgrpJwxIUipp2upfk=
+X-Received: by 10.25.44.147 with SMTP id s141mr2638570lfs.15.1518731222205;
+ Thu, 15 Feb 2018 13:47:02 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+X-Google-Sender-Delegation: rcdailey@gmail.com
+Received: by 10.46.114.19 with HTTP; Thu, 15 Feb 2018 13:47:01 -0800 (PST)
+In-Reply-To: <xmqqvaey83my.fsf@gitster-ct.c.googlers.com>
+References: <CAHd499B5hM9ixnsnwWwB2uyDT10dRQpN473m5QjxH9raHtFXiw@mail.gmail.com>
+ <958c9b03-062c-0bea-3b25-939a36659f32@web.de> <CAHd499AD5Kgbp-vxXTnEPkb-Mb5oEeXhaRO5kGniDdqmXwd2QQ@mail.gmail.com>
+ <88c57b88-ef2c-d7db-15e2-12791d4cb201@web.de> <xmqq8tgrhdt0.fsf@gitster.mtv.corp.google.com>
+ <CAHd499CSe6d1SBaDYNRD9HXaWRJ9QYzmOCaBWFrV52UNRMVqhA@mail.gmail.com> <xmqqvaey83my.fsf@gitster-ct.c.googlers.com>
+From:   Robert Dailey <rcdailey.lists@gmail.com>
+Date:   Thu, 15 Feb 2018 15:47:01 -0600
+X-Google-Sender-Auth: tOJT1hbHamBt9kmw36jAIfG26Gw
+Message-ID: <CAHd499C0+L5TgdaL_gBSfr54Mhx+8pGZun1ex8-YTkhUEi+k_w@mail.gmail.com>
+Subject: Re: Line ending normalization doesn't work as expected
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+        Git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
-
-> I'm a dummy. Can you squash in the following and retry?
-
-I haven't tried, but that does look like the right thing to do,
-whether it is the root cause of the fault I am seeing.
-
-Thanks.
-
+On Thu, Feb 15, 2018 at 1:16 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> I think the message you are referring to is a tangent that discusses
+> how it was done in the old world, with issues that come from the
+> fact that with such an approach the paths are first removed from the
+> index and then added afresh to the index, which can lose cases and
+> executable bits when working on a filesystem that does not retain
+> enough information.
 >
-> --- >8 ---
-> diff --git a/builtin/worktree.c b/builtin/worktree.c
-> index 604a0292b0..f69f862947 100644
-> --- a/builtin/worktree.c
-> +++ b/builtin/worktree.c
-> @@ -348,7 +348,7 @@ static int add_worktree(const char *path, const char *refname,
->  	if (!ret && opts->checkout) {
->  		const char *hook = find_hook("post-checkout");
->  		if (hook) {
-> -			const char *env[] = { "GIT_DIR", "GIT_WORK_TREE" };
-> +			const char *env[] = { "GIT_DIR", "GIT_WORK_TREE", NULL };
->  			cp.git_cmd = 0;
->  			cp.no_stdin = 1;
->  			cp.stdout_to_stderr = 1;
-> --- >8 ---
->
-> If that fixes it, can you squash it locally or should I re-send?
+> The way in the new world is to use "add --renormalize" which was
+> added at 9472935d ("add: introduce "--renormalize"", 2017-11-16), I
+> think.
+
+Oh I didn't realize someone actually did it. If so, that's awesome.
+Thanks Junio!
