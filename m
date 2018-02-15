@@ -2,90 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D24E51F404
-	for <e@80x24.org>; Thu, 15 Feb 2018 14:06:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9F2E81F404
+	for <e@80x24.org>; Thu, 15 Feb 2018 16:39:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1032973AbeBOOGT (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Feb 2018 09:06:19 -0500
-Received: from mail-io0-f199.google.com ([209.85.223.199]:33728 "EHLO
-        mail-io0-f199.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1032283AbeBOOGS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Feb 2018 09:06:18 -0500
-Received: by mail-io0-f199.google.com with SMTP id r1so410775ioa.0
-        for <git@vger.kernel.org>; Thu, 15 Feb 2018 06:06:18 -0800 (PST)
+        id S1426178AbeBOQjb (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Feb 2018 11:39:31 -0500
+Received: from mail-vk0-f44.google.com ([209.85.213.44]:39970 "EHLO
+        mail-vk0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1423532AbeBOQj3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Feb 2018 11:39:29 -0500
+Received: by mail-vk0-f44.google.com with SMTP id o17so176423vke.7
+        for <git@vger.kernel.org>; Thu, 15 Feb 2018 08:39:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=dedicatedaccounts.com; s=google;
-        h=mime-version:message-id:date:subject:from:to
-         :content-transfer-encoding;
-        bh=wRb+wbP7f7fEogLYT1kEVNm+ktqctEuc0O9J9ktqliI=;
-        b=MmIRSSBw4NQxhmtDUOTkPfiRGpwjaUgYNEm5IBdxwuUNmAfgLzov8rfJK/EMFgMYt2
-         ojwm07s0wVUKUhGWP8Q6wsabdlZYHTzdjUx427ivdT6w7a/8RZD37X81Sr26LTr3GCP0
-         jAmLMvjw66CkNf7c47LiRnlCXVg/Y4LALiGPeGnwHFXvVI3KgVCtGQyZBqlYVnZY02TG
-         0ngGYclKRhu3FjTpkzw6JxNzCTvoh6CUpLSzB+ifHGGR2J5ZRfxXud2IfcKf81MDWTz5
-         1uAWVXv3wGs04HSjkPCHHt6RtXTIVqWWXBk+ZQTTpLvKC5pH04/9smF725slTghyGf1x
-         n04Q==
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=5GMdvbaMdmvbJ/5RrTkv9nmtWVIj0yIsEJIkvX0S/nA=;
+        b=YVErvZuSfc8/9DTh4Pr5vPFT5L2MA8KcaMfk7za7ngt99XccHNl5QU3IjoaKnug14p
+         PRN/cThSw0BKBroVY9UwuzDgOIVyom+1+CHETywdk7u0/yYvGnYEz9mYW+8L9eySdwZ/
+         JfdtODX8qOYzSrmq6fw7/csxIFE/exRe3oECNsg8e4d3sWetvM5sDNA4JZZuD2+9MOBC
+         xDvKWL2z5WICj0NHHOj9kS/+PA0qOFBRe/dfHTKYMjhf7CuzECM7x3UtMMey1Bb16P5A
+         UkVHVAOxG9jiHPk7wt0vQrmmDKlxhL++u1FfAftDzFP/b+z1ITQwUI6m+Emlc0WcgTgS
+         hr/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:message-id:date:subject:from:to
-         :content-transfer-encoding;
-        bh=wRb+wbP7f7fEogLYT1kEVNm+ktqctEuc0O9J9ktqliI=;
-        b=AALEGsQWMdFiLDuDra2sgWX2eL2aDmBWcU8uoKKLln7mJA5GtbSQf+rAcujBU0tP2j
-         7htBdya0kPV+hfidKZvGnXaoHxrLvmeePdmLhZHx6m6U8byVXVGHrmVjSz57aUbjDZ8t
-         A+lL+JBZai2SoY0iIsKh60MxUN80OJU/KWbfiMxycJ0pYr9Sug9wxl96L9s8jlG+RlOf
-         te3qSHfsO0Wai6rRY6C3Niqgl/ztmYoZzLmxoWdguXVrEqnSf4BrjfswTDwrrXN+b5EN
-         CNheLc9sfxil7X5F4eh7mdL/Vmrq9N18Rvg7L5rs4eyFN9wWcEfTjY7VFkAEq2woC05Y
-         R4Hw==
-X-Gm-Message-State: APf1xPATncy96KEwhDSmlZ0dA321aeltiaNyqAPXsZ290MJt1vaGMCnq
-        GrMHrj7GhlmlGirBbJJ+fe0CI8ds+Y1E
-X-Google-Smtp-Source: AH8x226OKgnSSdjBbfm81VjNhIiox2rlIsuKXMUaDd9mg2LhNPxG7+qduYWQkunepjie6S4hm544sILoRg==
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=5GMdvbaMdmvbJ/5RrTkv9nmtWVIj0yIsEJIkvX0S/nA=;
+        b=nGz3J8b8VMb0eUQY+eLPx444Qq/FbUQ3wd8RC9y1cNVgqv6laKYQSm+OMSX+oaQJp1
+         FsRRzgKjpznqxR2pha0/2h1d+NH1maqYC0W1Wf8qIASYmgg3kB25ipVoCO6pTpW2Bw8M
+         9o8Qo4OHsVx8q1Epd5IPFSYuxpoJ6MGcVVm7tHO/tjLE44EYGQLak9yAQ9jFXEoJP5HF
+         lOE/u/meESi/HqPkdu4YxMjrAzBHcx40eGgFIao7sF9UOxxE3TTYlw1ewNqLhNjXMsim
+         591Icx+4ihkoBZUJgMrAbR1yJHyfTEzJAYmUMdnJke/pOO4slzbuLEBS8SlTIvnMvzQA
+         slRg==
+X-Gm-Message-State: APf1xPCxuz2VdDqcIBYoJHJ9wf2U1GsiBANOogWk4nY3zxLZqS2N2dHN
+        x+RdcT5TGRrn6YlSFCSLiSUxGDcTM3do/jMW/uE=
+X-Google-Smtp-Source: AH8x227ccIGoIkxXRpq3nVC3UwjxUxFKhLTd7mafhEoBBJ5Hlr8AHLUkTsQt3XfnOsGPQmB5xb1wcJ33QEVHn6+oeyI=
+X-Received: by 10.31.189.12 with SMTP id n12mr2517976vkf.3.1518712768483; Thu,
+ 15 Feb 2018 08:39:28 -0800 (PST)
 MIME-Version: 1.0
-X-Received: by 10.36.104.18 with SMTP id v18mr1976937itb.43.1518703577817;
- Thu, 15 Feb 2018 06:06:17 -0800 (PST)
-Message-ID: <001a113f67d64668e0056540bb26@google.com>
-Date:   Thu, 15 Feb 2018 14:06:17 +0000
-Subject: Targeted B2B Companies Emails List 
-From:   sally.grant@dedicatedaccounts.com
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"; format=flowed; delsp=yes
-Content-Transfer-Encoding: base64
+Received: by 10.176.32.12 with HTTP; Thu, 15 Feb 2018 08:39:28 -0800 (PST)
+In-Reply-To: <20180213222247.GA18401@sigill.intra.peff.net>
+References: <20180213003601.7396-1-szeder.dev@gmail.com> <20180213222247.GA18401@sigill.intra.peff.net>
+From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Date:   Thu, 15 Feb 2018 17:39:28 +0100
+Message-ID: <CAM0VKj=YPkS=YLtEz93RWS2=cvyy6LcyrBsCyBCg14ihxuKzjA@mail.gmail.com>
+Subject: Re: [PATCH] t6300-for-each-ref: fix "more than one quoting style" tests
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SGksDQoNCkkgd2FzIHdvbmRlcmluZyBpZiB5b3Ugd291bGQgYmUgaW50ZXJlc3RlZCBpbiB0YXJn
-ZXRpbmcgYSBjdXN0b21pemVkIGxpc3QgIA0Kb2YgeW91ciBjb21wZXRpdG9ycyBFbmQgVXNlcnMg
-SW5zdGFsbCBCYXNlIGZvciB5b3VyIHVwY29taW5nIE1hcmtldGluZyAgDQpTdHJhdGVneS4NCg0K
-4oCiIEVSUC0gSkQgRWR3YXJkcywgSW5mb3IgQmFhbiwgU0FQLCBFeGFjdCBTb2Z0d2FyZSwgTmV0
-U3VpdGUsIFBlb3BsZVNvZnQsICANCmV0Yy4NCuKAoiBDUk0tIFNhbGVzZm9yY2UsIE1TIER5bmFt
-aWNzLCBOZXRTdWl0ZSwgU2llYmVsLCBUZXJhZGF0YSwgRXBpY29yLCBJbmZvciwgIA0KQ0RDIFNv
-ZnR3YXJlLCBldGMuDQrigKIgRW5naW5lZXJpbmcgU29mdHdhcmUtIEF1dG9kZXNrLCBTaWVtZW5z
-IFBMTSwgQWRvYmUsIEF1dG9DQUQsIE1BWUEsIFJldml0LCAgDQpTb2xpZCB3b3JrcywgUFRDLCBN
-QURDQUQsIGV0Yy4NCuKAoiBDbG91ZCBDb21wdXRpbmctIEFtYXpvbiwgUmFjayBTcGFjZSwgR29v
-Z2xlIEFQUFMsIEh5cGVyLVYsIE5ldEFwcCwgZXRjLg0K4oCiIFN0b3JhZ2UgYXBwbGljYXRpb24g
-LSBOZXRBcHAsIEVNQywgQ2l0cml4LCBIUCwgQnJvY2FkZSwgREVMTCwgZXRjLg0K4oCiIFNlY3Vy
-aXR5IFNvZnR3YXJlLSBTeW1hbnRlYywgTWNBZmVlLCBJQk0sIFJpdmVyYmVkLCBUYWJiZXJnLCBD
-b21tdmF1bHQsICANCkp1bmlwZXIgTmV0d29ya3MsIEY1LCBldGMuDQrigKIgTmV0d29ya2luZy0g
-QnJvY2FkZSwgU3ltYW50ZWMsIEF2YXlhLCBDaXNjbywgU2hvcmV0ZWwsIGV0Yy4NCuKAoiBNZWRp
-Y2FsIFNvZnR3YXJlLSBOZXh0R2VuLCBBbGwgU2NyaXB0cywgRU1SLCBNY0tlc3NvbiwgUHJhY3Rp
-Y2UgRnVzaW9uLCAgDQplQ2xpbmljYWwgV29ya3MsIGV0Yy4NCuKAoiBBY2NvdW50aW5nIFNvZnR3
-YXJlLSBTYWdlLCBQZWFjaHRyZWUsIFRpbWJlcmxpbmUsIE1TIER5bmFtaWNzLCBOZXRTdWl0ZSwg
-IA0KRGVsdGVrLCBMYXdzb24sIFF1aWNrQm9va3MsIGV0Yy4NCuKAoiBCdXNpbmVzcyBJbnRlbGxp
-Z2VuY2UtIFNBUCBCdXNpbmVzcyBPYmplY3RzLCBNaWNyb3N0cmF0ZXJneSwgVGliY28sICANCk1p
-Y3Jvc29mdCBCSSwgUWxpa1RlY2gsIEluZm9ybWF0aW9uIEJ1aWxkZXJzLCBldGMuDQpXZSBwcm92
-aWRlIGRhdGEgYWNyb3NzIHRoZSBnbG9iZSAtIE5vcnRoIEFtZXJpY2EsIEVNRUEsIEFzaWEgUGFj
-aWZpYyBhbmQgIA0KTEFUQU0uIFdlIHByb3ZpZGUgdGhlIGRlY2lzaW9uIE1ha2VycyBjb250YWN0
-cyBsaWtlIENJTywgQ1RPLCBDSVNPLCBJVCBWUCwgIA0KSVQgRGlyZWN0b3IsIElUIG1hbmFnZXIs
-IElUIGhlYWQsIGV0Yy4NCg0KUGxlYXNlIHJldmlldyBhbmQgbGV0IG1lIGtub3cgaWYgeW91IGFy
-ZSBsb29raW5nIGZvciBhbnkgdHlwZSBvZiBsaXN0IGFuZCAgDQp3ZSBjYW4gc2VydmljZSB5b3Uu
-DQoNCklmIHlvdSBhcmUgaW50ZXJlc3RlZCwgbGV0IG1lIGtub3cgeW91ciB0YXJnZXRlZCBnZW9n
-cmFwaHkgc28gdGhhdCBJIHdpbGwgIA0KZ2V0IGJhY2sgdG8geW91IHdpdGggdGhlIGNvdW50cyBh
-bmQgbW9yZSBpbmZvcm1hdGlvbi4NCg0KQXdhaXQgeW91ciByZXNwb25zZSENClRoYW5rcywNClNh
-bGx5IEdyYW50DQpNYXJrZXRpbmcgRXhlY3V0aXZlDQoNCiAgSWYgeW91IGFyZSBub3QgaW50ZXJl
-c3RlZCBpbiByZWNlaXZpbmcgZnVydGhlciBlbWFpbHMsIHBsZWFzZSBhbnN3ZXIgYmFjayAgDQp3
-aXRoICJvdmVybG9vayIgaW4gdGhlIHRpdGxlLg0K
+On Tue, Feb 13, 2018 at 11:22 PM, Jeff King <peff@peff.net> wrote:
+
+>>  for i in "--perl --shell" "-s --python" "--python --tcl" "--tcl --perl"; do
+>>       test_expect_success "more than one quoting style: $i" "
+>> -             git for-each-ref $i 2>&1 | (read line &&
+>> -             case \$line in
+>> -             \"error: more than one quoting style\"*) : happy;;
+>> -             *) false
+>> -             esac)
+>> +             test_must_fail git for-each-ref $i 2>err &&
+>> +             grep '^error: more than one quoting style' err
+>
+> I suspect in the long run this ought to be test_i18ngrep, but since it's
+> not localized yet, it makes sense to stop here with this patch.
+
+I thought 'git for-each-ref' is plumbing and that means that it
+shouldn't be localized.
