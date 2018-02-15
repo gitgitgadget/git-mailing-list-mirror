@@ -2,131 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2E43E1FAE2
-	for <e@80x24.org>; Thu, 15 Feb 2018 20:03:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CDE081F404
+	for <e@80x24.org>; Thu, 15 Feb 2018 20:31:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1033884AbeBOUDP (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Feb 2018 15:03:15 -0500
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:33806 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1033881AbeBOUDM (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Feb 2018 15:03:12 -0500
-Received: by mail-wr0-f194.google.com with SMTP id m5so896139wrg.1
-        for <git@vger.kernel.org>; Thu, 15 Feb 2018 12:03:11 -0800 (PST)
+        id S1755773AbeBOUbh (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Feb 2018 15:31:37 -0500
+Received: from mail-wm0-f47.google.com ([74.125.82.47]:35187 "EHLO
+        mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755769AbeBOUbg (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Feb 2018 15:31:36 -0500
+Received: by mail-wm0-f47.google.com with SMTP id x21so3203464wmh.0
+        for <git@vger.kernel.org>; Thu, 15 Feb 2018 12:31:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=u7hG36OCG3JQ62oms4pRJhMlU/y7l7yrbHt27igSY2o=;
-        b=s9L1Yizp0H1L/38ZoromHG9KUuc6QezdVUl1dT44r1TYYFP+8Mrr4ckd1DaMjZuIpX
-         mhPR36CzeFaGSKMpCbIKrpRDxnepOZVY1AeF+IR1pRmSNfXR8a6solMtcK0jdk0G4ATa
-         h9z5eTln4vuJAsNuo26WLBDcCeLuSZ38MwXSPKqNXTkS7XYFutQblEejcjL3Je8Ym5Ws
-         oq6iErOpN4eu9Xc0O6vTcgSKWj2G+8oUY8vMoQ4zpJ/K2S80ndLXE2kIIt4T/7+AHtv9
-         pqjbt0xpUESZgP0B6A7ZbTvpIFbfQbNwtX6PUukqN/PIf1Ne3ZbIbuH/aPsWhZ1G3COi
-         nmAA==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=y1m0b+OiRulJXs/a4I59hbF874fREV/rhN739cSlVks=;
+        b=d3zd6zjehvsqRPt08jIW5FwlPK6ytsjCCg5oOQXjdGRRFM5h+n17eEPfLxrv8oGmri
+         pPjEbd+k7nKaUx+PABN96bZUo1NFxg+G/B2qQSJorh6twbXh0d2Sfbfj0STwjRItEX8V
+         jJlmlF6p3bwRc9DXNJABMre70DvF6T9twwRqgJnAjE290Wv7nH0oSOkkGd/5P9MtF/6f
+         bCn6YBWO4XZvSwjMpEI8Dx+lbsmI4dZbz9Ud6wexQcSYLfFUs6C4/ec2olnJ1g7Af3Fr
+         CCi1fHkMhbaImjD9UTY3GnFzi+Vb2DyutK2fsu6PeQik3CTNZUVsJdhrgz3XwItSnSGC
+         lg6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=u7hG36OCG3JQ62oms4pRJhMlU/y7l7yrbHt27igSY2o=;
-        b=Ldb7C//u8PPwBnhTXHBZeyjNgwl8If4DVpR6ZgHegeY3mh6t0oGV5YL8S3QktiR/zQ
-         1sOcZYk2RVE6MOWt8m5ysPBg0Wq+HmDv7/bbyxx/Mz1IUdJJHsNXuFV4R6hE/5IIsuJE
-         V495FqUqdZEdDplJWu91Fq5drKv62JB5KNopq/ZP22SxBAgzEBQ237iC5mhZlWXEHVY9
-         1bUJFJaA9RuRJB9Gix0OUE561xdpYa5Nu4rHPAzXHRpQHygkpWRRwaCBvrFFVWAAYdIv
-         6pOZ1LH3nvGk/qDjmJutZzYztplgzWQqj/43ZrsqWJ+sU3IoWw+UTSV+dUEEOiLiHRGs
-         6KGA==
-X-Gm-Message-State: APf1xPCBnuYLHRjzkzhoMerlkJZlsU5Uw+o4bab2zCFAWvGlq12ggASd
-        2qnDGTOr82RdAnsnOAEza88=
-X-Google-Smtp-Source: AH8x226gz5X7wZ8SxJBO9eQyRrHaTKfMslC85Pb1qg3UOWmltWNfLb/ZtSouVlzeo+zxjrdRGJ4vMw==
-X-Received: by 10.223.198.200 with SMTP id c8mr3756995wrh.79.1518724990166;
-        Thu, 15 Feb 2018 12:03:10 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id u3sm4994245wre.39.2018.02.15.12.03.07
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=y1m0b+OiRulJXs/a4I59hbF874fREV/rhN739cSlVks=;
+        b=r7C6h/tNRT6V6S9sqhv9N4ND3sLiKMu9iUsiZl9waBT6TWYaEXegs18CoZRmm0v5I2
+         We+1oY6BTpYz2XXlQkdxJIKfieLEZSr4i5w01LVOC35y7Q1iZ8cpWjjuU75D6gTkTbcA
+         A5LEKgtKMzgFf9W4eOR4VkZTekRtrT3yCZ5iqeJI5EApGlt3IuP6NNRYKnAZ1GdP/5kK
+         uGev3LzBmXXmeq+5JMoqz0vv/enWy+7Vg++NjmtpZrRhiKY0MSWdKQkwNjpxNDsa+Gzi
+         Xe2UoQZ4P/X2dY+FSAL7pGugW6PPVEp6hBwcBKLCbiY/cUOE9x6Inf1X92JIoob3vCj8
+         HlAQ==
+X-Gm-Message-State: APf1xPB33JkuDW03Xm4L9yiroPU3/bJ2012CG0sf9RDAYk5BvJbySPpT
+        avpvvn4v9TIfP8QPWwk0GtU=
+X-Google-Smtp-Source: AH8x224flrHnnhILrSdMmeg5z+cFeTsW297qsDFOFbYW+QAtSDSFb36DLjx9nDxqLqMZPG1PUodHtw==
+X-Received: by 10.28.235.6 with SMTP id j6mr2903482wmh.22.1518726694744;
+        Thu, 15 Feb 2018 12:31:34 -0800 (PST)
+Received: from evledraar (static-2-73-24-46.ipcom.comunitel.net. [46.24.73.2])
+        by smtp.gmail.com with ESMTPSA id 137sm14186938wmm.46.2018.02.15.12.31.31
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 15 Feb 2018 12:03:08 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     lars.schneider@autodesk.com
-Cc:     git@vger.kernel.org, tboegi@web.de, j6t@kdbg.org,
-        sunshine@sunshineco.com, peff@peff.net,
-        ramsay@ramsayjones.plus.com, Johannes.Schindelin@gmx.de,
-        Lars Schneider <larsxschneider@gmail.com>
-Subject: Re: [PATCH v7 0/7] convert: add support for different encodings
-References: <20180215152711.158-1-lars.schneider@autodesk.com>
-Date:   Thu, 15 Feb 2018 12:03:06 -0800
-In-Reply-To: <20180215152711.158-1-lars.schneider@autodesk.com> (lars
-        schneider's message of "Thu, 15 Feb 2018 16:27:04 +0100")
-Message-ID: <xmqqr2pm81hh.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        Thu, 15 Feb 2018 12:31:32 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Matthieu Moy <git@matthieu-moy.fr>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Petr Baudis <pasky@ucw.cz>,
+        Benoit Bourbie <bbourbie@splunk.com>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jari Aalto <jari.aalto@cante.net>,
+        Giuseppe Bilotta <giuseppe.bilotta@gmail.com>,
+        Marcus Griep <marcus@griep.us>
+Subject: Re: [PATCH 5/8] perl: update our copy of Mail::Address
+References: <20180214222146.10655-1-avarab@gmail.com> <20180214222146.10655-6-avarab@gmail.com> <20180214234630.GE136185@aiede.svl.corp.google.com> <1227220836.729681.1518687134631.JavaMail.zimbra@matthieu-moy.fr>
+User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 1.1.0
+In-reply-to: <1227220836.729681.1518687134631.JavaMail.zimbra@matthieu-moy.fr>
+Date:   Thu, 15 Feb 2018 21:31:29 +0100
+Message-ID: <87tvuif10e.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-lars.schneider@autodesk.com writes:
 
-> -- Git clients that do not support the `working-tree-encoding` attribute
-> -  will checkout the respective files UTF-8 encoded and not in the
-> -  expected encoding. Consequently, these files will appear different
-> -  which typically causes trouble. This is in particular the case for
-> -  older Git versions and alternative Git implementations such as JGit
-> -  or libgit2 (as of February 2018).
-> +- Third party Git implementations that do not support the
-> +  `working-tree-encoding` attribute will checkout the respective files
-> +  UTF-8 encoded and not in the expected encoding. Consequently, these
-> +  files will appear different which typically causes trouble. This is
-> +  in particular the case for older Git versions and alternative Git
-> +  implementations such as JGit or libgit2 (as of February 2018).
+On Thu, Feb 15 2018, Matthieu Moy jotted:
 
-I know somebody found "clients" misleading in the original, but the
-ones that do not understand w-t-e do not have to be third party
-reimplementations and imitations.  All existing Git implementations,
-including ours, don't.
+> "Jonathan Nieder" <jrnieder@gmail.com> wrote:
+>
+>> Ævar Arnfjörð Bjarmason wrote:
+>>
+>> > Update our copy of Mail::Address from 2.19 (Aug 22, 2017) to 2.20 (Jan
+>> > 23, 2018). This should be a trivial update[1] but it seems the version
+>> > Matthieu Moy imported in bd869f67b9 ("send-email: add and use a local
+>> > copy of Mail::Address", 2018-01-05) doesn't correspond to any 2.19
+>> > version found on the CPAN. From the comment at the top of the file it
+>> > looks like some OS version with the POD stripped, and with different
+>> > indentation.
+>>
+>> Were there changes other than the POD stripping?
+>
+> No.
+>
+> I should have mentionned it in the commit message, but the one I took was
+> from:
+>
+>   http://cpansearch.perl.org/src/MARKOV/MailTools-2.19/lib/Mail/Address.pm
+>
+> i.e. following the "source" link from:
+>
+>   http://search.cpan.org/~markov/MailTools-2.19/lib/Mail/Address.pod
+>
+> The link name suggested it was the actual source code but indeed it's a
+> pre-processed file with the POD stripped.
+>
+> It would make sense to indicate explicitly where this file is from in
+> this commit's message to avoid having the same discussion next time someone
+> upgrades the package.
 
-One thing I find more problematic is that the above places *too*
-much stress on the UTF-8 centric worldview.  It is perfectly valid
-to store your text contents encoded in ShiftJIS and check them out
-as-is, with or without this patch.  It is grossly misleading to say
-that older versions of Git will check them out in UTF-8.  "will
-checkout these files as-is without encoding conversion" is a better
-way to say it, probably.
-
-Also notice that even in the world with w-t-e, such a project won't
-benefit from w-t-e at all.  After all, they have been happy using
-ShiftJIS in repository and using the same encoding on the working
-tree, and because w-t-e assumes that everybody should be using UTF-8
-internally, such a project cannot take advantage of the new
-mechanism.
-
-And from that point of view, perhaps w-t-e attribute is somewhat
-misdesigned.
-
-In general, an attribute is about the project's contents in the
-manner independent of platform or environment.  You define "this
-file is a C source" or "this file has JPEG image" there.  What exact
-program you use to present diffs between the two versions of such a
-file (external diff command) or what exact program you use to
-extract the textual representations (textconv filter) is environment
-and platform dependent and is left to the configuration mechanism
-for each repository.
-
-To be in line with the above design principle, I think the attribute
-ought to be "the in-tree contents of this path is encoded in ..."
-whose values could be things like UTF-8, ShiftJIS, etc.  What
-external encoding the paths should be checked out is not a
-project-wide matter, especially when talking about cross platform
-projects.  Perhaps a project in Japanese language wants to check
-out its contents in EUC-jp on Unices and in ShiftJIS on DOS derived
-systems.  The participants all need to know what in-repository
-encoding is used, which is a sensible use of attributes.  They also
-need to know what the recommended external encoding to be used in
-the working tree is for their platforms, but that is more like what
-Makefile variable to set for their platforms, etc., and is not a
-good match to the attributes system.
-
+I see that I'm being a complete idiot and added the *.pod file in the
+distro instead of the *.pm file, I got it from metacpan and didn't check
+it carefully enough (and only tested with system Error.pm removed, not
+Mail::Address), sorry. So yours was the right version. Will fix in a
+re-roll.
