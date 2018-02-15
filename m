@@ -2,101 +2,143 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ECDBB1F404
-	for <e@80x24.org>; Thu, 15 Feb 2018 21:09:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7A1C81F404
+	for <e@80x24.org>; Thu, 15 Feb 2018 21:23:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1161121AbeBOVJW (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Feb 2018 16:09:22 -0500
-Received: from mail-yw0-f177.google.com ([209.85.161.177]:32832 "EHLO
-        mail-yw0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1161109AbeBOVJV (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Feb 2018 16:09:21 -0500
-Received: by mail-yw0-f177.google.com with SMTP id x84so771462ywb.0
-        for <git@vger.kernel.org>; Thu, 15 Feb 2018 13:09:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=omL60MSQSRuG37iih5mF9jT6/EzHxqxGLaCvFZxqev0=;
-        b=gd/B2EBBBpexPC4Fhx8kO24n+vIkfl5pdpxZIsvbFI4eQMgZWQL2HAI2nu+L+m5LsF
-         e0U/NN958A/PGfdgF5WEyqwxsAYs9/YLRtkFgaM1YSMRd2DTYv3XNn9izKAsrnpYuEMs
-         DYIP85UfBMux8WPZQk1N8Mobn97RZNDonEq0O12WtkP2KjfpNVaOUm4SOuc7pWaL9VuG
-         XZqkoA/qN/vn0OZFwNdTB4y+Nid0+Z6ApmDlCtP6y+U/5awQ7WtvKobEVB1TxfwoVgFM
-         G7ERey3l5fdWfoXFSmGCzciCLUeXy5L9ABYToF14xwsRD1rr804mJ8SsmTnP6i9L/O41
-         xxKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=omL60MSQSRuG37iih5mF9jT6/EzHxqxGLaCvFZxqev0=;
-        b=G51aZp/MqOZU9ZnurGx1FpOaNdHsOUd4ihGgKdtufrooV5kpUKRlxUBWKyuOnmILyK
-         Dyi1SAgPXIlfYJ99Ju4lCH8mnyQKCDwalpbvuGc/lzg5NsLi1C3BkhV5pRmpm7JMjO4w
-         p7jjIncH+2Ge7WyCSTCfQmYtv4t2D6Nk9yU8iRutEOJyuHX6Rs8eAPkGDC9oQUNdGsNZ
-         rH6povxf8DLrjUOcNEKuYQ8QMuP4B+R5KrjumQafxDEghqXdwH2FpPhAl9zp9ir6jPLz
-         MOFGDDwNCMgrjVfRx6yJRJ5jWrJYK3MkKv3RjyPdyvB72c6wmWQBmp6AD/FfKLWxDiPO
-         wTKQ==
-X-Gm-Message-State: APf1xPCXg/yW2v9pZzdA0NusB9E1v9TfiILHyiNIzBfRnDGHyRqCDIY1
-        L+DwSjHbn1lJCn3L+bndayrWiatFuPED2MDydb5kIw8p
-X-Google-Smtp-Source: AH8x226IoFZM9VCFOmiY9IcgYleV84rAKMYiiN8qhhomRRey9wHH+JHXQjOjaSmyaY1E0mD6HI3yddihROSuMwBRD3Y=
-X-Received: by 10.129.86.139 with SMTP id k133mr3072492ywb.253.1518728960920;
- Thu, 15 Feb 2018 13:09:20 -0800 (PST)
+        id S1161926AbeBOVXm (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Feb 2018 16:23:42 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:62725 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1161516AbeBOVXl (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Feb 2018 16:23:41 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5B3FADC189;
+        Thu, 15 Feb 2018 16:23:41 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
+        :cc:subject:message-id:references:mime-version:content-type
+        :in-reply-to:content-transfer-encoding; s=sasl; bh=y+K3yfREB+Su7
+        N93IUfuV8UxfOM=; b=hanP0pn09ZDgcxpnvTD5kq4WNhuWYCE7SUwd6NV90LPv9
+        fSvdyJJ2ZIZFE1ZA3u7gbXdc8tPD0NRaoefcjCPBFaVHjwxyLHWiG+tQiIxBU3Jc
+        VSEgx2xUYU/xBbKQr6BNSwFsxTNVQRT4L1sa9cg/KCht5aU0X96P+vBLQvo/2E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
+        :subject:message-id:references:mime-version:content-type
+        :in-reply-to:content-transfer-encoding; q=dns; s=sasl; b=rVWG96L
+        rUpVP/nz2ixwr0gur2oDbJqNbwdlxONCdYKtf0o4Uc1VH+j3U3gmLM8QdzLq9Dpb
+        OHs+kauat4HloakO4X2e5Tzk+UADMLrKpmk/wHc5uXxS1aTx96gpWRprdJ9T/RZ4
+        5l5oJCKL6il2gEPXivKt7fjy5WrTZd3RXMdQ=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4B469DC188;
+        Thu, 15 Feb 2018 16:23:41 -0500 (EST)
+Received: from zaya.teonanacatl.net (unknown [173.67.181.41])
+        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id AB012DC185;
+        Thu, 15 Feb 2018 16:23:40 -0500 (EST)
+Date:   Thu, 15 Feb 2018 16:23:38 -0500
+From:   Todd Zullinger <tmz@pobox.com>
+To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Matthieu Moy <git@matthieu-moy.fr>, Petr Baudis <pasky@ucw.cz>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jari Aalto <jari.aalto@cante.net>,
+        Giuseppe Bilotta <giuseppe.bilotta@gmail.com>,
+        Marcus Griep <marcus@griep.us>
+Subject: Re: [PATCH 3/8] perl: generalize the Git::LoadCPAN facility
+Message-ID: <20180215212338.GL27038@zaya.teonanacatl.net>
+References: <20180214222146.10655-1-avarab@gmail.com>
+ <20180214222146.10655-4-avarab@gmail.com>
+ <20180215045301.GC27038@zaya.teonanacatl.net>
+ <87sha2f0j1.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Received: by 2002:a25:cfcb:0:0:0:0:0 with HTTP; Thu, 15 Feb 2018 13:09:20
- -0800 (PST)
-In-Reply-To: <xmqqlgfu7zn5.fsf@gitster-ct.c.googlers.com>
-References: <20180213012241.187007-1-sbeller@google.com> <xmqqlgfu7zn5.fsf@gitster-ct.c.googlers.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 15 Feb 2018 13:09:20 -0800
-Message-ID: <CAGZ79kY5_aL0YRE5JMp4Y=J_yKA0QfoB-LzXxQH0NN8iU-q3TA@mail.gmail.com>
-Subject: Re: [PATCH 00/26] Moving global state into the repository object
- (part 1)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>, Duy Nguyen <pclouds@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+In-Reply-To: <87sha2f0j1.fsf@evledraar.gmail.com>
+User-Agent: Mutt/1.9.3 (2018-01-21)
+X-Pobox-Relay-ID: 7E502880-1296-11E8-AC74-D3940C78B957-09356542!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 15, 2018 at 12:42 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->> This is a real take on the first part of the recent RFC[1].
->
-> For the patches remaining in this series, The scope is about right
-> and the size is more manageable.
+[I dropped bbourbie@slb.com from the Cc: list, as it bounced
+on my previous reply.]
 
-ok, thanks.
+=C6var Arnfj=F6r=F0 Bjarmason wrote:
+> That makes sense, I'll incorporate that in a re-roll. I like
+> NO_PERL_CPAN_FALLBACKS or just NO_CPAN_FALLBACKS better.
 
->  With topics already on 'master',
-> they have some interactions:
->
->  - ot/mru-on-list & gs/retire-mru
->
->    The packed_git MRU has been greatly simplified by using list API
->    directly.
->
->  - cc/sha1-file-name
->
->    The function signature of sha1_file_name() has been updated.
->
-> I could certainly carry evil merge resolutions going forward (these
-> changes need to be made to object-store.h that has no mechanical
-> conflicts), but it may be less distracting for later readers of the
-> series if we rebase it on top of a more recent master.
+Either is an improvement.  Starting with NO_PERL_ seems
+like a slightly better bikeshed color. :)
 
-I was debating when to reroll this series as I want to make the
-change that Duy proposed, moving the 'ignore_env' into the
-object store as well.
+> I'd really like to find some solution that works differently though,
+> because with this approach we'll run the full test suite against a
+> system where our fallbacks will be in place (although if the OS
+> distributor has done as promised we won't use them), and then just
+> remove this at 'make install' time, also meaning we'll re-gen it before
+> running 'make install' again, only to rm it again.
+>=20
+> The former issue we could deal with by munging the Git::LoadCPAN file s=
+o
+> it knows about NO_PERL_CPAN_FALLBACKS, and will always refuse to use th=
+e
+> fallbacks if that's set. That's a good idea anyway, because right now i=
+f
+> you e.g. uninstall Error.pm on Debian (which strips the CPAN fallbacks)
+> you get a cryptic "BUG: ..." message, it should instead say "we couldn'=
+t
+> get this module the OS promised we'd have" or something to that effect.
 
-I'll rebase on top of the latest master or these topicc while at it.
+Teaching Git::LoadCPAN to never fallback sounds like a good
+idea.  At least then if the packager intended to avoid the
+fallbacks and didn't get it right the error message could be
+more useful.
 
-Thanks for the heads up.
-Stefan
+Hopefully that's not a common problem for packagers though.
+(And adding the Makefile knob was intended to help make it
+easier for packagers to achieve this common goal.)
+
+> The latter is trickier, I don't see an easy way to coerce the Makefile
+> into not copying the FromCPAN directory without going back to a
+> hardcoded list again, the easiest thing is probably to turn that:
+>=20
+>     $(TAR) cf - .)
+>=20
+> Into:
+>=20
+>     $(TAR) cf - $(find ... -not ....)
+>=20
+> Or something like that to get all the stuff that isn't the Git/FromCPAN
+> directory.
+>=20
+> Other suggestions most welcome.
+
+What about moving perl/Git/FromCPAN to perl/FromCPAN and
+then including perl/FromCPAN in LIB_PERL{,_GEN} only if
+NO_PERL_CPAN_FALLBACKS is unset?
+
+ LIB_PERL :=3D $(wildcard perl/Git.pm perl/Git/*.pm perl/Git/*/*.pm perl/=
+Git/*/*/*.pm)
++ifndef NO_PERL_CPAN_FALLBACKS
++LIB_PERL +=3D $(wildcard perl/FromCPAN/*.pm perl/FromCPAN/*/*.pm)
++endif
+ LIB_PERL_GEN :=3D $(patsubst perl/%.pm,perl/build/lib/%.pm,$(LIB_PERL))
+
+I haven't tested that at all, so it could be broken in many
+ways.
+
+Thanks,
+
+--=20
+Todd
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The nice thing about egotists is that they don't talk about other
+people.
+    -- Lucille S. Harper
+
