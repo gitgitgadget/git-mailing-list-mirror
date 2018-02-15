@@ -2,60 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3FC501F576
-	for <e@80x24.org>; Thu, 15 Feb 2018 10:33:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 30FE71F576
+	for <e@80x24.org>; Thu, 15 Feb 2018 10:34:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755323AbeBOKd2 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Feb 2018 05:33:28 -0500
-Received: from mail-wm0-f46.google.com ([74.125.82.46]:52667 "EHLO
-        mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755283AbeBOKd1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Feb 2018 05:33:27 -0500
-Received: by mail-wm0-f46.google.com with SMTP id j199so15836643wmj.2
-        for <git@vger.kernel.org>; Thu, 15 Feb 2018 02:33:26 -0800 (PST)
+        id S1755415AbeBOKev (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Feb 2018 05:34:51 -0500
+Received: from mail-wr0-f182.google.com ([209.85.128.182]:34931 "EHLO
+        mail-wr0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755300AbeBOKeu (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Feb 2018 05:34:50 -0500
+Received: by mail-wr0-f182.google.com with SMTP id l43so2831162wrc.2
+        for <git@vger.kernel.org>; Thu, 15 Feb 2018 02:34:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=Mx5QIAUOaMDjyuWr1CJiQaqB814VvcRdK2dGjsmaqJc=;
-        b=QPKze2r6qUxx0PPV+LQIPMD5C56I9bAOT8DVx3U48jeJWh2C6cnwTF9VUg4885Y/u0
-         SbHLuBmkCCqMY8xATFamE/EkHL6COGCeCPZ8HH6wpOr+G6PbWny6Y2ckCpFFfJGM3Fn/
-         pC9IaGL16+cEAvXAGVhxHUIsO8eBpKqiow7IF9cFZLMKXYamjxUSzTmzQ3PkXbvmug7V
-         s32z/wJwYqbkXDgbX5zNPxBQeftC+9y5aTDioDSt1C2hqORtFi94sXaJWs8IGYyOYVjw
-         s1RzJ0x+DJv8a4Wfe+vqQVGuljyDg8PfSqyR3+8bmAFYg2+lt+RqDmElRcj/s02HpjJx
-         NcYg==
+        bh=KY6mxNLtboo0puMRI4zUsyyWblE05o2VxXyFPJi2umQ=;
+        b=IaCyfvFecwq0Q0X2BcyBL0W3NaaGVPo9p+AC+mTchaw3Rxcol0Y8GeEhRh5gLw4+HU
+         H9KF1tBBr+0xHYDuRhzdEpd8uHpamELOpZJdIPz7mP9Jlc07KxPlw3Le0dxT96lde1Q1
+         NMd6K/p5sbPtwuPeLtSAVsXaL/UGNLcErNRGVLph2X4nF05Ta3h6iyWZlWV/30iOowas
+         uoZJzwWUF85PM/6UUXrOP9qONcmicCRGRr5yPBovcAOpD6pPeBkOPdCbQzdJfDs1voI3
+         BIK1qsbUfU93oXHcVu6bEOzuzAOWlsP+uWirIWlg7SPqTdr44E0avBwXzlrl+lZqwUSU
+         TwZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=Mx5QIAUOaMDjyuWr1CJiQaqB814VvcRdK2dGjsmaqJc=;
-        b=CNTRTJpi3sfO23rE8F0AagTsHDw0DxqqoVtPAHMr5p5cDV0RD9QnjIL5lUAU1wptDe
-         tl96zFCrCFeuRaSzcSCQgFFFeKm9OHCmImV0wrE+p2diN73zw/E7dWBW76JGtJ69mVLE
-         Ylz2mkbUhqlMPyCzNkfECMZeiBTCKhZPqELenIfYC300lEDyATRete+VfIqKDjvIkCTR
-         TZOzS9hbzHyBshz6uwBZfYAR/D5hdsUA5JlsodMBwFuTbgjFq3OR/9fE6qaSfmixsrsV
-         JH39vVqHFGN0memVyZ5tAlEm928L7z7w4IiQDexPkYSN+5A99nZa/gE+JGoGpzIi8VyK
-         CHHA==
-X-Gm-Message-State: APf1xPCO7tfGF8rpxTGJBbbRxuOqLb52Pd4GRAiG6NuDsn1nYT2lzEVC
-        tpps7J+yV4+hgPFmtEueFQl6PCsVGRUGUXpSXJoANA==
-X-Google-Smtp-Source: AH8x225BAmx5bteHDSX1a/fbpqmYffdpqdjnSgIk978+uEzFQEUZa7CJC1ZijXeQ/yEiB6WG8l8U3QTtooDvlzHTcm4=
-X-Received: by 10.28.182.86 with SMTP id g83mr1581399wmf.75.1518690806055;
- Thu, 15 Feb 2018 02:33:26 -0800 (PST)
+        bh=KY6mxNLtboo0puMRI4zUsyyWblE05o2VxXyFPJi2umQ=;
+        b=fzjHW/ju+jf8YmN4SrN23ps9SEhAlrIQEhvf+b7nmkIEQRl8mc9/VObyQ5TU9/9eIN
+         PyBP1QDeILIHmy76DgMPZG1cPLuzMcpou6Qr/O9ppjO/2pdtKyLndh66giIEVYxgOyvI
+         Qa5jclEq1zpv71I6YjwzTBB/377Z03V2RptWgjjsWUT5k+UKbIrZq7vU+SAmkOUE55bJ
+         SlI/SwJRZDs1bpNjfD1mYGQ+grjmM2tEf1NKvw7RdULLOANuTyed+LF65uMjy3S238DN
+         DeR6RgLLtp444v4FZu6nJSWVFw9Acfgm9F3ufdayYtua0DCR1yFsCcpxKL72hanC9SkU
+         ioIw==
+X-Gm-Message-State: APf1xPCMVUHLpzl/CN3zmdH1mE8Xg6Fts5jLdkOIqjfVcnNNguGUtQrY
+        uNpv34hiGMDZDo9rXUJ+TY+wslCGeFq+voqmZcc=
+X-Google-Smtp-Source: AH8x224IGyuMUuFU7m81x1YtHXH53JWM7RiPe2/BWabfB7VY8MKeQl3z7ECRVUIyT+4KHaEGun0AtY3bk204upB86mA=
+X-Received: by 10.223.160.157 with SMTP id m29mr1997042wrm.119.1518690888942;
+ Thu, 15 Feb 2018 02:34:48 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.223.155.17 with HTTP; Thu, 15 Feb 2018 02:33:25 -0800 (PST)
-In-Reply-To: <20180215055334.GN18780@sigill.intra.peff.net>
+Received: by 10.223.155.17 with HTTP; Thu, 15 Feb 2018 02:34:48 -0800 (PST)
+In-Reply-To: <20180215055618.GP18780@sigill.intra.peff.net>
 References: <01020161890f4236-47989eb4-c19f-4282-9084-9d4f90c2ebeb-000000@eu-west-1.amazonses.com>
- <01020161890f4376-0d1c5615-ae9c-4320-bc2d-fd3bda19bce0-000000@eu-west-1.amazonses.com>
- <20180215055334.GN18780@sigill.intra.peff.net>
+ <01020161890f437a-302b1577-f034-4a24-a3a2-851d1cda0044-000000@eu-west-1.amazonses.com>
+ <20180215055618.GP18780@sigill.intra.peff.net>
 From:   =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
         <olyatelezhnaya@gmail.com>
-Date:   Thu, 15 Feb 2018 13:33:25 +0300
-Message-ID: <CAL21BmmFaDstAT3Jm6AWh95mfWLJqN1MQF+pBTa3erX5w9MWRQ@mail.gmail.com>
-Subject: Re: [PATCH v3 16/23] ref-filter: make cat_file_info independent
+Date:   Thu, 15 Feb 2018 13:34:48 +0300
+Message-ID: <CAL21BmkVgCzihUOxM=Mih=EzYKZwYzpgkSrAZFVr12nkfoCtXw@mail.gmail.com>
+Subject: Re: [PATCH v3 20/23] ref-filter: unifying formatting of cat-file opts
 To:     Jeff King <peff@peff.net>
 Cc:     git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
@@ -64,26 +64,42 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-2018-02-15 8:53 GMT+03:00 Jeff King <peff@peff.net>:
+2018-02-15 8:56 GMT+03:00 Jeff King <peff@peff.net>:
 > On Mon, Feb 12, 2018 at 08:08:54AM +0000, Olga Telezhnaya wrote:
 >
->> Remove connection between expand_data variable
->> in cat-file and in ref-filter.
->> It will help further to get rid of using expand_data in cat-file.
+>> cat-file options are now filled by general logic.
 >
-> I have to admit I'm confused at this point about what is_cat_file is
-> for, or even why we need cat_file_data. Shouldn't these items be handled
-> by their matching ref-filter atoms at this point?
+> Yay.
+>
+> One puzzling thing:
+>
+>> diff --git a/ref-filter.c b/ref-filter.c
+>> index 8d104b567eb7c..5781416cf9126 100644
+>> --- a/ref-filter.c
+>> +++ b/ref-filter.c
+>> @@ -824,8 +824,12 @@ static void grab_common_values(struct atom_value *val, int deref, struct object
+>>               else if (!strcmp(name, "objectsize")) {
+>>                       v->value = sz;
+>>                       v->s = xstrfmt("%lu", sz);
+>> -             }
+>> -             else if (deref)
+>> +             } else if (!strcmp(name, "objectsize:disk")) {
+>> +                     if (cat_file_info.is_cat_file) {
+>> +                             v->value = cat_file_info.disk_size;
+>> +                             v->s = xstrfmt("%"PRIuMAX, (uintmax_t)v->value);
+>> +                     }
+>> +             } else if (deref)
+>
+> Why do we care about is_cat_file here. Shouldn't:
+>
+>   git for-each-ref --format='%(objectsize:disk)'
+>
+> work? I.e., shouldn't the cat_file_info.disk_size variable be held
+> somewhere in a used_atom struct?
 
-We discussed that earlier outside of mailing list, and I even tried to
-implement that idea and spent a couple of days to prove that it's not
-possible.
-The problem is that the list of atoms is made dynamically, and we
-can't store pointers to any values in each atom. That's why we need
-separate cat_file_info variable that is outside of main atom list.
-We also need is_cat_file because we still have some part of logic that
-is different for cat-file and for all other commands, and sometimes we
-need to know that information.
+At that point - no.
+I think it sounds like other separate task to add this functionality
+and to test it properly.
 
 >
 > -Peff
