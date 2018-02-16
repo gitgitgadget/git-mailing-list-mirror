@@ -2,79 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CD0341F404
-	for <e@80x24.org>; Fri, 16 Feb 2018 14:55:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 24ACF1F404
+	for <e@80x24.org>; Fri, 16 Feb 2018 16:34:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1034570AbeBPOz4 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Feb 2018 09:55:56 -0500
-Received: from mail-io0-f173.google.com ([209.85.223.173]:34403 "EHLO
-        mail-io0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1033471AbeBPOzz (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Feb 2018 09:55:55 -0500
-Received: by mail-io0-f173.google.com with SMTP id e7so4388583ioj.1
-        for <git@vger.kernel.org>; Fri, 16 Feb 2018 06:55:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=dinwoodie.org; s=google;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=X0FLCSnY51ajRhnTxpJdQbDnx/wEalqwcAXuo53DORU=;
-        b=KeUZs3zyIDiu6k552nFnfP6myA5emkZQbrS766z9wzMzav/24jddBKnRuuT2Sj5vTU
-         NWaqKH/jCEJ7vcEvONUA29woy25s/SWOtI7+nBghtK2mdIH2S6OdYMWynF29osImrtIl
-         7UUX/guMCHkXJ+le5iBOII3l1gkm2dsa0qIyg=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=X0FLCSnY51ajRhnTxpJdQbDnx/wEalqwcAXuo53DORU=;
-        b=GF/fz1QzpUk8V5D1rF9aM0Memfy+iMG1GILgtn8lZ4yP7TKF7AYGckjA/YEm290nng
-         tJQJPIp2ViGhHRkq2YPlopM8rcmuMrpg67wATmDKx7IZneD3/z+qffvxUN2NEVqYV87Y
-         jYhrMxsRO5KUrCr8c20+Cv0b9eiH8tqp5lQW5H/2H4iACpR7vYQtWtLLbk8ettSVkJQX
-         3/flRKcKJTRWSwUfEY+t0PYrO5sVq15Bk94u4VrYtsdYTdqrfflowzaM2oPOLEI9XG0/
-         s7FGuY+ZSd8YU5tBj4SCr3fmC5l1uKCdURCqKWArAII7J/cKdcJVnnn225+9YRNFXLHd
-         Z/9Q==
-X-Gm-Message-State: APf1xPBPzeQJFOj4Ot8k1Wgkgy9cBOtwTaik1SO8xmFNN0jswWMFCaoU
-        HTuWGpZgRF1ZqgDDWSWOTTjDM2KChVXMOj6U52SOPw==
-X-Google-Smtp-Source: AH8x224PPOUl+w1Qakze/1GOZoad9WwV1v2jzj2Li4H0H01FX83LDe0JztFy+GIeSvRaU+rrXb8cN5ZnAo9QclF8L/0=
-X-Received: by 10.107.166.140 with SMTP id p134mr8281777ioe.272.1518792954828;
- Fri, 16 Feb 2018 06:55:54 -0800 (PST)
+        id S1032227AbeBPQe2 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Feb 2018 11:34:28 -0500
+Received: from mout.web.de ([212.227.15.3]:33249 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751090AbeBPQe1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Feb 2018 11:34:27 -0500
+Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb003
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0LqUan-1eHo8E0WbR-00e7Rd; Fri, 16
+ Feb 2018 17:34:23 +0100
+Date:   Fri, 16 Feb 2018 17:34:22 +0100
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     Robert Dailey <rcdailey.lists@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git <git@vger.kernel.org>
+Subject: Re: Line ending normalization doesn't work as expected
+Message-ID: <20180216163422.GA2659@tor.lan>
+References: <CAHd499B5hM9ixnsnwWwB2uyDT10dRQpN473m5QjxH9raHtFXiw@mail.gmail.com>
+ <958c9b03-062c-0bea-3b25-939a36659f32@web.de>
+ <CAHd499AD5Kgbp-vxXTnEPkb-Mb5oEeXhaRO5kGniDdqmXwd2QQ@mail.gmail.com>
+ <88c57b88-ef2c-d7db-15e2-12791d4cb201@web.de>
+ <xmqq8tgrhdt0.fsf@gitster.mtv.corp.google.com>
+ <CAHd499CSe6d1SBaDYNRD9HXaWRJ9QYzmOCaBWFrV52UNRMVqhA@mail.gmail.com>
 MIME-Version: 1.0
-Received: by 10.107.58.86 with HTTP; Fri, 16 Feb 2018 06:55:13 -0800 (PST)
-In-Reply-To: <01020161890f4388-f6427c9d-2be6-4628-afc9-bfaeb58b1ebe-000000@eu-west-1.amazonses.com>
-References: <01020161890f4236-47989eb4-c19f-4282-9084-9d4f90c2ebeb-000000@eu-west-1.amazonses.com>
- <01020161890f4388-f6427c9d-2be6-4628-afc9-bfaeb58b1ebe-000000@eu-west-1.amazonses.com>
-From:   Adam Dinwoodie <git@dinwoodie.org>
-Date:   Fri, 16 Feb 2018 14:55:13 +0000
-X-Google-Sender-Auth: IjX6M8-w4YJgdXS5MN0s07nYerI
-Message-ID: <CA+kUOamJowkxp0xAPf5FA+wBkiOjQeYzW1sKMwcatQBBA1qWpw@mail.gmail.com>
-Subject: Re: [PATCH v3 22/23] cat-file: tests for new atoms added
-To:     Olga Telezhnaya <olyatelezhnaya@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAHd499CSe6d1SBaDYNRD9HXaWRJ9QYzmOCaBWFrV52UNRMVqhA@mail.gmail.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Provags-ID: V03:K0:la/0wWJvPqy4ssLWap4X/FmW/f7Vw0wbpGvVViifeg4OVe5B9tI
+ 3Dtp3ZUVk1RJ+p/A7PqTsH9DgQpB1guYHWSEWtEplVOcGPdN0x1DjJHF2GK4tnGh/el+ZS1
+ Ri8JY2gSNtcz9exGXxQKpV7mNU9AMdNuOA36K6TArqVeW4r0zTmW4OG77WUzN2BHYMjgXnF
+ hUqiqQjNf9oceePHUWrBA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:UaNFdHO6EQk=:rMxzyPrW5Rzp/CbRLbt3br
+ +EKjSK+hPQUZ4OF31OEitdnkerU1/4OQCVRHCPfXHm0bXb4o858BRcgm7z3AjaPkUdsiEENWa
+ FoJNkIlUnf856q3HkBOrOIxz4npL3bcDmBeZbj07t7cCULJOdM/HnellQXrCojC9P1lB35qzw
+ 3mu6LvCKeSXcmQIDWigX0ATmwGo9XdKNeYyFJcht5AkX6r7wJaVBYERz1ekxFk7+97/4pLN4Y
+ f3ghK0Psrau6jj6ygJZinCg0AidoqN62v/zlxaS3ft1YhHPlIozuW7lcUf8mdIjL+NSool1m3
+ Pvas9YnqVrZUi0zhvLMxCDh1wUD4aOXs54EtCn7F2JA812GfnzWZc6YUrdXxBpOHbCgvBM2wQ
+ 8woaMK7wZ1iytmnjXzicne+yWxEP/oBCQJFMshynH1Is5tmf4Wx5/MsMWlOm7/shPa5ysVM7m
+ 2n3wk4SIVj7KMe2RobVJlL9KrvZUNNs//T9esf52Vm/iT7kd9HdT5/J2IdA7vAEmZ/kq3jjJq
+ DVdrKoGSMF0gf5JErylp7xt+zXE0FEUj6FQVlL8u6x6+2CoZlvGAnnLkgNdaKoU+3oaCxDxiE
+ EXj5KIj0kYywcVUSxIbNq/uogeU4kWMGMRUJqKGzm3yZl3+qkDR8rQSfsPQvk+zF20ARL344b
+ K0SSZRrcPucr3iSvLzPgON+YmeEL1u1j0pDBuzHDeJakkwVjvj6KPDkSj+6ME8PNXswArB46K
+ NmsEyztlW+ljzMMrhABnUviARhgCHx6Kkn7m0uV/6amIP9/SEvWcApywUapyjc0cmEECV7deV
+ zT1Uwzpg6ozd7zpeQDCEyPmO9MsOA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12 February 2018 at 08:08, Olga Telezhnaya wrote:
-> Add some tests for new formatting atoms from ref-filter.
-> Some of new atoms are supported automatically,
-> some of them are expanded into empty string
-> (because they are useless for some types of objects),
-> some of them could be supported later in other patches.
+On Thu, Feb 15, 2018 at 09:24:40AM -0600, Robert Dailey wrote:
+> On Tue, Oct 3, 2017 at 9:00 PM, Junio C Hamano <gitster@pobox.com> wrote:
 
-This commit appears to be introducing failures in t1006 on Cygwin.
-Specifically, tests 15, 36, 58 and 89, all titled "Check %(refname)
-gives empty output", are failing on the pu branch at 21937aad4, and
-git bisect identifies this commit, 3c1571744 ("cat-file: tests for new
-atoms added", 2018-02-12), as the culprit.
+[]
+> 
+> Sorry to bring this old thread back to life, but I did notice that
+> this causes file modes to reset back to 644 (from 755) on Windows
+> version of Git. Is there a way to `$ git read-tree --empty && git add
+> .` without mucking with file permissions?
 
-I'm afraid I'm not going to have the time to investigate the failure
-any further in the immediate future, but I wanted to report it
-promptly in case you / someone else can see what's going wrong.
+No problem with the delay, under the time we had the chance to improve Git:
 
-Adam
+>Git 2.16 Release Notes
+>======================
+>[]
+>* "git add --renormalize ." is a new and safer way to record the fact
+>   that you are correcting the end-of-line convention and other
+>   "convert_to_git()" glitches in the in-repository data.
+
+Could you upgrade to Git 2.16.1 (or higher, just take the latest)
+and try with
+git add --renormalize .
+?
