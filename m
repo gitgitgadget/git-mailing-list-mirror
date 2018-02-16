@@ -2,104 +2,69 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B89701F404
-	for <e@80x24.org>; Fri, 16 Feb 2018 22:34:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AF9381F404
+	for <e@80x24.org>; Fri, 16 Feb 2018 23:30:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750944AbeBPWeJ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Feb 2018 17:34:09 -0500
-Received: from mail-pl0-f68.google.com ([209.85.160.68]:36820 "EHLO
-        mail-pl0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750885AbeBPWeI (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Feb 2018 17:34:08 -0500
-Received: by mail-pl0-f68.google.com with SMTP id v3so2433397plg.3
-        for <git@vger.kernel.org>; Fri, 16 Feb 2018 14:34:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=a88CAl6KLBh+lI1SUDi8Dbam7szY7p+zg/DvpqPzOv4=;
-        b=GRCD3ia2MksGROqtfMWmqijtWlcIL96B4ieyCev2Gcs71xB2BCimVx/6FaCYNIZBYG
-         24sW2LMcBb3dFWmMguHPGMnds8RH9MgdjT2qGHrbWCjAlooS42F52JTAFMYush7WV2Cc
-         Q9Ef03xuXjo/ApZFur0b2g2k+vamB/LGid4zt9KTiaUQ5cU5Lb4+NiP9d+hI8do2oEWX
-         PJxUfJf5iT6BvDIw993IzcoilPhwxoYF5LhO4J74rK7Ifcvli0bDcdv3+QR1z92CvzB5
-         YF5gxwWYTAwk0n+xPkd4f+y24KIiyjeDFxG0sNaVT1yuqMajV6r06kE2pt1wiG0kWc4E
-         CxWA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=a88CAl6KLBh+lI1SUDi8Dbam7szY7p+zg/DvpqPzOv4=;
-        b=IQgF9FAXc1aWq9py3pLLSXAq/RZKQEEMEvqqtq9y0EAKC1FCLzRT43/jwf1Bcc8KCV
-         ENS7GG+04gfY0rTS6Xn5l7QxJ3jnYFx1r96zuCb1PRBAG68uNfR6n4+QylX/NeUiS1lO
-         eZUTu2X/xiKvzENn+BHBfgtM7BQ79QOHKA0VuGGMiHNhbGOh3BqAyzb93ABO8tirBPRC
-         /fDgcoSmoCZ65PgvV+/cjZKcawn0CvBb6ZqII7KBgylbkGkp9Juv5gsd/3f4btaUp6k1
-         RLYC/Iv7FNZByQfDi8PazWLRfGd0wuYVbIfAVUEaopP6QTX+FlxXg3TV+TQkltoOcLJq
-         v+OQ==
-X-Gm-Message-State: APf1xPDdMDXxDvEFbHvvjQCLmwLennXO9C3U7dSI0JkHc3ExsCWkf4FO
-        dQyEEFoerqYWicJ3+D+uqGs=
-X-Google-Smtp-Source: AH8x226gxlpT5E9DmjkRTJcwbVjVlA1bIZZ0/1Wh9xBCw77Zj5+0IXx1vR3Gq24NhjN0Q0F6XfaUiw==
-X-Received: by 2002:a17:902:7182:: with SMTP id b2-v6mr7055553pll.331.1518820447550;
-        Fri, 16 Feb 2018 14:34:07 -0800 (PST)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id u90sm24090742pfk.114.2018.02.16.14.34.05
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 16 Feb 2018 14:34:06 -0800 (PST)
-Date:   Fri, 16 Feb 2018 14:34:04 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     gitster@pobox.com, git@vger.kernel.org, jonathantanmy@google.com,
-        pclouds@gmail.com, sunshine@sunshineco.com
-Subject: Re: [PATCHv2 00/16] Moving global state into the repository object
- (part 1)
-Message-ID: <20180216223404.GD216564@aiede.svl.corp.google.com>
-References: <xmqqlgfu7zn5.fsf@gitster-ct.c.googlers.com>
- <20180216174626.24677-1-sbeller@google.com>
+        id S1750832AbeBPXaM (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Feb 2018 18:30:12 -0500
+Received: from mout.gmx.net ([212.227.15.15]:54973 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750727AbeBPXaL (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Feb 2018 18:30:11 -0500
+Received: from MININT-TB4PCE7.southpacific.corp.microsoft.com
+ ([37.201.195.115]) by mail.gmx.com (mrgmx003 [212.227.17.190]) with ESMTPSA
+ (Nemesis) id 0MexaL-1fAgw40hNR-00OYR0; Sat, 17 Feb 2018 00:30:09 +0100
+Date:   Sat, 17 Feb 2018 00:30:08 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+To:     git-for-windows@googlegroups.com
+cc:     git@vger.kernel.org, git-packagers@googlegroups.com
+Subject: Please test Git for Windows' latest snapshot
+Message-ID: <nycvar.QRO.7.76.6.1802170018250.31@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180216174626.24677-1-sbeller@google.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:q/oaxyaGjnLOvzKPG5yKG4PPIE23YgRm7ARXcpMZFbSwlRzPCFu
+ wga/XvAOB378HMkdkXpomp5WvS35RxHfqXpSGcQM4HVI6un26/XQGabf0uohuxkeOuibZAP
+ xV7HATHWFQ6TKIRuRlqn7cRJHWXUYfggnkKSeOui6zjeEtkm3cYoYscSw6npTTaEQ44kOPI
+ gxd0vx1yM9AsBnytfXYLw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:O79YkBe7wek=:ciq3q64hMGIuc5xKb0RpZl
+ kxDsNCpxrA1O0e/4tLbYPGAtULTnacrNKcQnqV1WyXe9WzUuagjORi4Hs5mVeWlIPaxDxHXd+
+ FhpY5N/48iRYsG7fSv2D8i+zr9EHfru33L3x0SxBb3tSPNPDPOEui4DBBR3X4h7OxAWq2+2/5
+ 8mbZgdwPxsecIP9G3yN3LoZ1p6vDaOW1dYYLnjIxsyQ3JcSFHdF5hmUbf8V4O+V0M2RKapDGi
+ /vbgVBpvVWZ1XWcZQODj0kSMAgGilBCNfnVAsTPxOZEjLWKbBJnqMiE7QtvQYoBih+AR9zzeq
+ tSjBrnmJmI5NnDQZyt2A17REsB4sykym2BgP4Yt7jIlhAc9gugX6TRs8PlCrbhxs8BGVMnpe+
+ moGjcvmi95W6H9gx4wP3PnCtx0og9Qmslm8lLlcGyA1xvoSKnIHJHJsu7AIgbwq0NnVuINe4/
+ 2TEYrlivyTF6DDB7LvQqPbI346BZn6v0haUykR3nMpEhdQ7aC9Xn7aeZ1uogz8HXO2NTUEPAg
+ sIzT/yIpDSZK3TenMb3mdC0EW7KlXFzzAwU9V4ytjJxgAscsLKHqQSNSrXbGkazKd+u+YYovm
+ C9jAfgHHa1eYU8aGwxx7/9JE1Jv5cUO73AmkqYTw0FZy8u6lJktIuaot/zE1zMtB6raFSJyVA
+ yWr67BkIzWKbFMM5n9FK+V6lD5VSTL5i6Fq3INXd0hF7LIhrz1ZSu6oVqG7YryiIQ+M3xiwbz
+ h4jq/SFtrTLhsYHdk8jp6OAhsuwtswT7h9O3v84Qn84i62usxtTYfmQ6ulCZ2jqaMgt0OQBip
+ nZatOQFlXS30pqcYyDe4QQ9Fp2DrKfN0eJlf/pkZ3LpWh6bJHM=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hi team,
 
-Stefan Beller wrote:
+I am unwilling to release Git for Windows v2.16.2 on a Friday night, but I
+have something almost as good. There is a snapshot available here:
 
-> v2:
-> * duplicated the 'ignore_env' bit into the object store as well
-> * the #define trick no longer works as we do not have a "the_objectstore" global,
->   which means there is just one patch per function that is converted.
->   As this follows the same structure of the previous series, I am still confident
->   there is no hidden dependencies to globals outside the object store in these
->   converted functions.
-> * rebased on top of current master, resolving the merge conflicts.
->   I think I used the list.h APIs right, but please double check.
+	https://wingit.blob.core.windows.net/files/index.html
 
-For what it's worth, I think I prefer v1.  I put some comments on why
-on patch 0 of v1 and would be interested in your thoughts on them
-(e.g. as a reply to that).  I also think that even if we want to
-switch to a style that passes around object_store separately from
-repository, it is easier to do the migration in two steps: first get
-rid of hidden dependencies on the_repository, then do the (simpler)
-automatic migration from
+That snapshot brings quite a few updated components apart from Git proper
+(such as an updated MSYS2 runtime), and I would love to ask y'all to give
+this snapshot a proper "tire kicking".
 
- f(the_repository)
+Think of it as a release candidate. A real one, this really is the
+revision that I would like to release as Git for Windows v2.16.2 on Monday
+(with the only change being the version number).
 
-to
-
- f(the_repository->object_store)
-
-*afterwards*.
-
-Thoughts?
-
-Thanks,
-Jonathan
+Thank you for your help!
+Johannes
