@@ -2,221 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 44E3B1F404
-	for <e@80x24.org>; Fri, 16 Feb 2018 13:08:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D5D2A1F404
+	for <e@80x24.org>; Fri, 16 Feb 2018 14:39:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S968078AbeBPNIp (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Feb 2018 08:08:45 -0500
-Received: from mail.javad.com ([54.86.164.124]:49667 "EHLO mail.javad.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S967920AbeBPNIn (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Feb 2018 08:08:43 -0500
-Received: from osv (unknown [89.175.180.246])
-        by mail.javad.com (Postfix) with ESMTPSA id D89E340AE9;
-        Fri, 16 Feb 2018 13:08:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1518786522;
-        bh=kt6A2nAtiK0zxTGg/9BL6/iu5r5BLm5XV2jtQ2z2EKM=; l=5508;
-        h=Received:From:To:Subject;
-        b=NxkNjSLzVt8IlofDa/bFt1JVUe2KVfe0i8Tnl+Zc39xdvlP01kiB2wx3h1cZo7kHv
-         ekvM2EVbKm+I7zQRqfB2nDVwKAYMONPeuJQOCeyF3oRx/ly86VjN5jO8TKsOc0Il08
-         W/mDmuaEZNwNCfWYDQ/ILZ9+l8B26BcvHEOepSaE=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1518786522;
-        bh=kt6A2nAtiK0zxTGg/9BL6/iu5r5BLm5XV2jtQ2z2EKM=; l=5508;
-        h=Received:From:To:Subject;
-        b=NxkNjSLzVt8IlofDa/bFt1JVUe2KVfe0i8Tnl+Zc39xdvlP01kiB2wx3h1cZo7kHv
-         ekvM2EVbKm+I7zQRqfB2nDVwKAYMONPeuJQOCeyF3oRx/ly86VjN5jO8TKsOc0Il08
-         W/mDmuaEZNwNCfWYDQ/ILZ9+l8B26BcvHEOepSaE=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1518786522;
-        bh=kt6A2nAtiK0zxTGg/9BL6/iu5r5BLm5XV2jtQ2z2EKM=; l=5508;
-        h=Received:From:To:Subject;
-        b=NxkNjSLzVt8IlofDa/bFt1JVUe2KVfe0i8Tnl+Zc39xdvlP01kiB2wx3h1cZo7kHv
-         ekvM2EVbKm+I7zQRqfB2nDVwKAYMONPeuJQOCeyF3oRx/ly86VjN5jO8TKsOc0Il08
-         W/mDmuaEZNwNCfWYDQ/ILZ9+l8B26BcvHEOepSaE=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1518786522;
-        bh=kt6A2nAtiK0zxTGg/9BL6/iu5r5BLm5XV2jtQ2z2EKM=; l=5508;
-        h=Received:From:To:Subject;
-        b=NxkNjSLzVt8IlofDa/bFt1JVUe2KVfe0i8Tnl+Zc39xdvlP01kiB2wx3h1cZo7kHv
-         ekvM2EVbKm+I7zQRqfB2nDVwKAYMONPeuJQOCeyF3oRx/ly86VjN5jO8TKsOc0Il08
-         W/mDmuaEZNwNCfWYDQ/ILZ9+l8B26BcvHEOepSaE=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1518786522;
-        bh=kt6A2nAtiK0zxTGg/9BL6/iu5r5BLm5XV2jtQ2z2EKM=; l=5508;
-        h=Received:From:To:Subject;
-        b=NxkNjSLzVt8IlofDa/bFt1JVUe2KVfe0i8Tnl+Zc39xdvlP01kiB2wx3h1cZo7kHv
-         ekvM2EVbKm+I7zQRqfB2nDVwKAYMONPeuJQOCeyF3oRx/ly86VjN5jO8TKsOc0Il08
-         W/mDmuaEZNwNCfWYDQ/ILZ9+l8B26BcvHEOepSaE=
-Authentication-Results: mail.javad.com;
-        spf=pass (sender IP is 89.175.180.246) smtp.mailfrom=osv@javad.com smtp.helo=osv
-Received-SPF: pass (mail.javad.com: connection is authenticated)
-Received: from osv by osv with local (Exim 4.84_2)
-        (envelope-from <osv@osv.gnss.ru>)
-        id 1emfkl-00087o-UB; Fri, 16 Feb 2018 16:08:39 +0300
-From:   Sergey Organov <sorganov@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Johannes Sixt <j6t@kdbg.org>, Junio C Hamano <gitster@pobox.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [RFC] Rebasing merges: a jorney to the ultimate solution (Road Clear)
-Date:   Fri, 16 Feb 2018 16:08:39 +0300
-Message-ID: <87y3jtqdyg.fsf@javad.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+        id S1757956AbeBPOjJ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Feb 2018 09:39:09 -0500
+Received: from mail-wr0-f171.google.com ([209.85.128.171]:37250 "EHLO
+        mail-wr0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754785AbeBPOjI (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Feb 2018 09:39:08 -0500
+Received: by mail-wr0-f171.google.com with SMTP id k32so3134123wrk.4
+        for <git@vger.kernel.org>; Fri, 16 Feb 2018 06:39:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=FpPCyB5AE9ZoEk4unypEEh6OtH8qaN5W8X4eWc53E0g=;
+        b=tW1YnqRLGAD7jxDMKzLvPR1dVc0jq4dCK7M5kb5VMcQleffUDh3g1Uuq9ZFyXkKSc+
+         mB6+7zJUOSuMLtYeqEK2PL1xIiFRTfxeO386Fz4GkKrbJNBxZf+uZM1j2GelemfHYStG
+         VTN4w+TgSrt1qKc7WRqhbWmj+Q28dckXE0vm6ZLDmva6oCW+vMfObSJqvHJzzVLJIBOT
+         bUmS9LQTeSU4nIsuSRgKcE5oxI4U5ubydwAGVYmi8W13vZ3J9FlMyDSe/mNj49kx/Vuu
+         saEd34q0dowv+YCBf5ivYvGgB1jKQLUhMhMU31aDeYPZrALq6+22wJo7lduEDnpZZY2J
+         sCJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=FpPCyB5AE9ZoEk4unypEEh6OtH8qaN5W8X4eWc53E0g=;
+        b=Iop24xzL6/IjKpB4cVFLdADpkukp+nxAirqWW7e0pzLOihIDUe9s5pC4CjHzZqqs9b
+         cuf//rPHpn73wItY59D2P09+FFRY+Kd7NTMmpRyRMfC2KG95sDtz+9dlhH3NC9Uw8z/z
+         OxpjEcD6SsYyFHrBMJSr8CVH+17x2EVHD2la6uMJ2ogl0HNeu3oV7rqHoNRyc8oJpPh/
+         jIysN4VXVCus8hyXW9uZTXqHayG1BPRFM0Zf+CqzS5nBM/HB6QB3SGGDC9UsbxKcn+zV
+         mmjHz/jIRb/kozHP5yNPeU8EReuzqmUQYOeiip3HOkRJdt/hMZEpU3UuUyWw3B1KyrP9
+         CIug==
+X-Gm-Message-State: APf1xPCANcl8O6M89ScOepntT2KDt2+nuui+a1YUEmwP0C6ay0a5bxOQ
+        x1rGApHc0+iKYGU8a5ACYWeXubx1
+X-Google-Smtp-Source: AH8x227VsLmwkULAUmtfBYmoyjgXi1T5QG3EwbFe5XihUuPQ/8PDFw0/I9OIjyVETk4HwM1o1G4JGA==
+X-Received: by 10.223.202.9 with SMTP id o9mr6078208wrh.40.1518791946421;
+        Fri, 16 Feb 2018 06:39:06 -0800 (PST)
+Received: from evledraar (static-2-73-24-46.ipcom.comunitel.net. [46.24.73.2])
+        by smtp.gmail.com with ESMTPSA id u48sm1898529wrb.85.2018.02.16.06.39.05
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 16 Feb 2018 06:39:05 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Todd Zullinger <tmz@pobox.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Matthieu Moy <git@matthieu-moy.fr>, Petr Baudis <pasky@ucw.cz>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jari Aalto <jari.aalto@cante.net>,
+        Giuseppe Bilotta <giuseppe.bilotta@gmail.com>,
+        Marcus Griep <marcus@griep.us>
+Subject: Re: [PATCH 3/8] perl: generalize the Git::LoadCPAN facility
+References: <20180214222146.10655-1-avarab@gmail.com> <20180214222146.10655-4-avarab@gmail.com> <20180215045301.GC27038@zaya.teonanacatl.net> <87sha2f0j1.fsf@evledraar.gmail.com> <20180215212338.GL27038@zaya.teonanacatl.net>
+User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 1.1.0
+In-reply-to: <20180215212338.GL27038@zaya.teonanacatl.net>
+Date:   Fri, 16 Feb 2018 15:39:03 +0100
+Message-ID: <87k1vdf188.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
 
-By accepting the challenges raised in recent discussion of advanced
-support for history rebasing and editing in Git, I hopefully figured out
-a clean and elegant method of rebasing merges that I think is "The Right
-Way (TM)" to perform this so far troublesome operation. ["(TM)" here has
-second meaning: a "Trivial Merge (TM)", see below.]
+On Thu, Feb 15 2018, Todd Zullinger jotted:
 
-Let me begin by outlining the method in git terms, and special thanks
-here must go to "Johannes Sixt" <j6t@kdbg.org> for his original bright
-idea to use "cherry-pick -m1" to rebase merge commits.
+> [I dropped bbourbie@slb.com from the Cc: list, as it bounced
+> on my previous reply.]
+>
+> Ævar Arnfjörð Bjarmason wrote:
+>> That makes sense, I'll incorporate that in a re-roll. I like
+>> NO_PERL_CPAN_FALLBACKS or just NO_CPAN_FALLBACKS better.
+>
+> Either is an improvement.  Starting with NO_PERL_ seems
+> like a slightly better bikeshed color. :)
+>
+>> I'd really like to find some solution that works differently though,
+>> because with this approach we'll run the full test suite against a
+>> system where our fallbacks will be in place (although if the OS
+>> distributor has done as promised we won't use them), and then just
+>> remove this at 'make install' time, also meaning we'll re-gen it before
+>> running 'make install' again, only to rm it again.
+>>
+>> The former issue we could deal with by munging the Git::LoadCPAN file so
+>> it knows about NO_PERL_CPAN_FALLBACKS, and will always refuse to use the
+>> fallbacks if that's set. That's a good idea anyway, because right now if
+>> you e.g. uninstall Error.pm on Debian (which strips the CPAN fallbacks)
+>> you get a cryptic "BUG: ..." message, it should instead say "we couldn't
+>> get this module the OS promised we'd have" or something to that effect.
+>
+> Teaching Git::LoadCPAN to never fallback sounds like a good
+> idea.  At least then if the packager intended to avoid the
+> fallbacks and didn't get it right the error message could be
+> more useful.
+>
+> Hopefully that's not a common problem for packagers though.
+> (And adding the Makefile knob was intended to help make it
+> easier for packagers to achieve this common goal.)
+>
+>> The latter is trickier, I don't see an easy way to coerce the Makefile
+>> into not copying the FromCPAN directory without going back to a
+>> hardcoded list again, the easiest thing is probably to turn that:
+>>
+>>     $(TAR) cf - .)
+>>
+>> Into:
+>>
+>>     $(TAR) cf - $(find ... -not ....)
+>>
+>> Or something like that to get all the stuff that isn't the Git/FromCPAN
+>> directory.
+>>
+>> Other suggestions most welcome.
+>
+> What about moving perl/Git/FromCPAN to perl/FromCPAN and
+> then including perl/FromCPAN in LIB_PERL{,_GEN} only if
+> NO_PERL_CPAN_FALLBACKS is unset?
+>
+>  LIB_PERL := $(wildcard perl/Git.pm perl/Git/*.pm perl/Git/*/*.pm perl/Git/*/*/*.pm)
+> +ifndef NO_PERL_CPAN_FALLBACKS
+> +LIB_PERL += $(wildcard perl/FromCPAN/*.pm perl/FromCPAN/*/*.pm)
+> +endif
+>  LIB_PERL_GEN := $(patsubst perl/%.pm,perl/build/lib/%.pm,$(LIB_PERL))
+>
+> I haven't tested that at all, so it could be broken in many
+> ways.
 
-End of preface -- here we go.
-
-Given 2 original branches, b1 and b2, and a merge commit M that joins
-them, suppose we've already rebased b1 to b1', and b2 to b2'. Suppose
-also that B1' and B2' happen to be the tip commits on b1' and b2',
-respectively.
-
-To produce merge commit M' that joins b1' and b2', the following
-operations will suffice:
-
-1. Checkout b2' and cherry-pick -m2 M, to produce U2' (and new b2').
-2. Checkout b1' and cherry-pick -m1 M, to produce U1' (and new b1').
-3. Merge --no-ff new b2' to current new b1', to produce UM'.
-4. Get rid of U1' and U2' by re-writing parent references of UM' from
-   U1' and U2' to  B1' and B2', respectively, to produce M'.
-5. Mission complete.
-
-Let's now see why and how the method actually works.
-
-Firs off, let me introduce you to my new friend, the Trivial Merge, or
-(TM) for short. By definition, (TM) is a merge that introduces
-absolutely no differences to the sides of the merge. (I also like to
-sometimes call him "Angel Merge", both as the most beautiful of all
-merges, and as direct antithesis to "evil merge".)
-
-One very nice thing about (TM) is that to safely rebase it, it suffices
-to merge its (rebased) parents. It is safe in this case, as (TM) itself
-doesn't posses any content changes, and thus none could be missed by
-replacing it with another merge commit.
-
-I bet most of us have never seen (TM) in practice though, so let's see
-how (TM) can help us handle general case of some random merge. What I'm
-going to do is to create a virtual (TM) and see how it goes from there.
-
-Let's start with this history:
-
-  M
- / \
-B1  B2
-
-And let's transform it to the following one, contextually equivalent to
-the original, by introducing 2 simple utility commits U1 and U2, and a
-new utility merge commit UM:
-
-  UM
- /  \
-U1   U2
-|    |
-B1   B2
-
-Here content of any of the created UM, U1, and U2 is the same, and is
-exact copy of original content of M. I.e., provided [A] denotes
-"content of commit A", we have:
-
-[UM] = [U1] = [U2] = [M]
-
-Stress again how these changes to the history preserve the exact content
-of the original merge ([UM] = [M]), and how U1 an U2 represent content
-changes due to merge on either side[*], and how neither preceding nor
-subsequent commits content would be affected by the change of
-representation.
-
-Now observe that as [U1] = [UM], and [U2] = [UM], the UM happens to be
-exactly our new friend -- the "Trivial Merge (TM)" his true self,
-introducing zero changes to content.
-
-Next we rebase our new representation of the history and we get:
-
-  UM'
- /  \
-U1'  U2'
-|    |
-B1'  B2'
-
-Here UM' is bare merge of U1' and U2', in exact accordance with the
-method of rebasing a (TM) we've already discussed above, and U1' and U2'
-are rebased versions of U1 and U2, obtained by usual rebasing methods
-for non-merge commits.
-
-(Note, however, that at this point UM' is not necessarily a (TM)
-anymore, so in real implementation it may make sense to check if UM' is
-not a (TM) and stop for possible user amendment.)
-
-Finally, to get to our required merge commit M', we get the content of
-UM' and record two actual parents of the merge:
-
-  M'
- / \
-B1' B2'
-
-Where [M'] = [UM'].
-
-That's it. Mission complete.
-
-I expect the method to have the following nice features:
-
-- it carefully preserves user changes by rebasing the merge commit
-itself, in a way that is semantically similar to rebasing simple
-(non-merge) commits, yet it allows changes made to branches during
-history editing to propagate over corresponding merge commit that joins
-the branches, even automatically when the changes don't conflict, as
-expected.
-
-- it has provision for detection of even slightest chances of ending up
-with surprising merge (just check if UM' is still (TM)), so that
-implementation could stop for user inspection and amendment when
-appropriate, yet it is capable of handling trivial cases smoothly and
-automatically.
-
-- it never falls back to simple invocation of merge operation on rebased
-original branches themselves, thus avoiding the problem of lack of
-knowledge of how the merge at hand has been performed in the first
-place. It doesn't prevent implementation from letting user to manually
-perform whatever merge she wishes when suspect result is automatically
-detected though.
-
-- it extends trivially to octopus merges.
-
-- it appears shiny to the point that it will likely be able to handle
-even darkest evil merges nicely, no special treatment required.
-
-Footnote:
-
-[*] We may as well consider the (UM,U1,U2) trio to be semantically split
-representation of git merge commit, where U1 and U2 represent content
-changes to the sides, and UM represents pure history joint. Or, the
-other way around, we may consider git merge commit to be optimized
-representation of this trio. I think this split representation could
-help to simplify reasoning about git merges in general.
-
--- Sergey
+Yes that's a much better idea, it evades the whole problem of conflating
+the perl/Git* glob.
