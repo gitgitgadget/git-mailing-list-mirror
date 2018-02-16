@@ -2,60 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9B9731F576
-	for <e@80x24.org>; Fri, 16 Feb 2018 11:57:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C9CB51F404
+	for <e@80x24.org>; Fri, 16 Feb 2018 12:25:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965486AbeBPL47 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Feb 2018 06:56:59 -0500
-Received: from mail-qk0-f177.google.com ([209.85.220.177]:36763 "EHLO
-        mail-qk0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965036AbeBPL46 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Feb 2018 06:56:58 -0500
-Received: by mail-qk0-f177.google.com with SMTP id 15so3425468qkl.3
-        for <git@vger.kernel.org>; Fri, 16 Feb 2018 03:56:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=w2tAi4Tq9i53F3jvyPUVpdUNDmoMoTAJMvZ9Q0ldERY=;
-        b=YLfG1eHWO8WdV2gUc1GjvlG2mvqeHjAwuHpe1Wze//FzdOsRVN8XUg0hW0qpafzFYF
-         Cg6tzD8NlhHrpTuY3ThLNggyO3Fsn8BrmXmJFbCLo+viroTx0q1SnpXKngxLQsd35D2M
-         sL+rZx4f0xhK5Stl2LINkVA5AGlRPeMwJEaVoyVwZGJ+nRoNKgdqWSw+lgyAmZ3C590R
-         d2dEhtXhgKoJGgpKHiECxRpWJXMDOpHZrDtQsoFyy0JZziCZHcCQkaCYA/Q1JKWXYGyr
-         4S4sh7gSZc9AYYVX/8yVtsfvNb9dXMCzU2Fnvin7STN2bSgfP57uCw8uRjIrdbMMvzRK
-         2xAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=w2tAi4Tq9i53F3jvyPUVpdUNDmoMoTAJMvZ9Q0ldERY=;
-        b=GWOXZnxpatRDOiWir4TIopZM1zBvOfiCdVTXUzwkdzDqQDpKMXUDBUbX6RIsvzRVyl
-         pU4fwno2Jgnlqm/UES9lV/ZVzQa3jnc1Yzya4wRV7wbXHlWJ5GmfXlsNgByg6BOgC2Ox
-         F5oPiVHzrw9F/PB/PdFV/mYc1P2u5bEFHXq+SKWTaUxG3ZMsDQe/G1kvar6jUayvuieR
-         TPN5r0aJmvRKy6zIve1fECkNXlDtbnYhbU49ubjLpKY6X+fiusmqp1S9z4GHU7lM+QP/
-         hUVbIvgFv3c58bSwRxaxQdm2vCH8TRkRZ2+eJ6FyEX5XSauk2viunqCFnUWzWYBjyZju
-         9QrA==
-X-Gm-Message-State: APf1xPDsijXF7VxREIjuaPtHO/nKvGpvOwFfZexkVz+dD/UKWdoMtQwK
-        fWJ6tsgm5z9LI0QaZ9I4jVhlg+rnzqRlEeBgou+e9Q==
-X-Google-Smtp-Source: AH8x224RWd8Hl2RQTSlsTEYlnJo/X8gKywZypouBKXQQgyEMKPtMcr3SdHMaPb+S6JgjGDXXtATkWnaTARL/zSwn13c=
-X-Received: by 10.55.76.17 with SMTP id z17mr9378662qka.145.1518782217705;
- Fri, 16 Feb 2018 03:56:57 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.12.194.147 with HTTP; Fri, 16 Feb 2018 03:56:57 -0800 (PST)
-From:   Mike Nordell <tamlin.thefirst@gmail.com>
-Date:   Fri, 16 Feb 2018 12:56:57 +0100
-Message-ID: <CAF9mB_srRftVRy++Hg0ULtbeBni8U0tchSoJdhKKgRk7g21szA@mail.gmail.com>
-Subject: [PATCH] git-worktree.txt (single char)
+        id S966392AbeBPMZu (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Feb 2018 07:25:50 -0500
+Received: from mout.gmx.net ([212.227.15.18]:46717 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S966351AbeBPMZt (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Feb 2018 07:25:49 -0500
+Received: from MININT-TB4PCE7.southpacific.corp.microsoft.com
+ ([37.201.195.115]) by mail.gmx.com (mrgmx002 [212.227.17.190]) with ESMTPSA
+ (Nemesis) id 0MfVU3-1fAWf41B99-00P38O; Fri, 16 Feb 2018 13:25:45 +0100
+Date:   Fri, 16 Feb 2018 13:25:44 +0100 (STD)
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
 To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+cc:     Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 0/1] Colorize some errors on stderr
+Message-ID: <cover.1518783709.git.johannes.schindelin@gmx.de>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:iSzyiye2Sss+00E2/IwLcysXaOCu3fZK0V1g3tWJM1EMFf0b0SA
+ 2acYIZRMtxrlXtMZuSakryAFuA6BnAHAQM7DpxygCMrn/s7lFxNNRMcFoYgHOhPw1/+cCkW
+ mS5W/GLAlOihrQzCV7IvZwQufk92P62K0Hqe3PFKoTVTH+mkyDIVVsOziNF9SAXpEVDFVQ3
+ LOviU6k7SfMAz0UBMHiOQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:ttctQEeDUhQ=:/RknMt3hNFTHp7bpEDUmru
+ u9sr6P8LPzuhu5S14GfK7lk/tTjsdyUdKAekQnFEC3U7ab9xLiU5bSKIgX8QBjoSPaR/5YVDy
+ +04XThDumZeshoOSn4KfrNKSA8cLyRvAr1UxiGUC/alHhbJcMlx/Iafp/RNePWEHJgWFDz4Jo
+ tHCNRy7mLPPrOyVOA3yqtutKb4aWloH7Wx0aoTjqFdGiocH2q4g9zZKjCcDyBpyjmQrnpSda3
+ Lz6/Ye6Pj6H3KZaBKwX2gNw4m6EOGTfNnrl3v8ObST77DXIfPgiNxJ0veLmrjrxUOMKctrRNh
+ r7/yBsQQugJx/zBKtfU+H85aIgBYvlYjfgUjnzU5CNgOy/mdfjKaRkug/BrjuoXFPEwe9pDpd
+ D4cde5e+EzAsAOmwpxnsLMpaFMQ+HD/yP21sgc6deiS8y/DBSNVSpix+IVpPfXzR5Aa+SZ4Yb
+ Ow39MDkRyv8mOiJatOpZ6r8Y+t4DrUhbBa3zbQ6eEYsGjcdbCZ3twJaMtyveB5+AhO7ruI/1z
+ Hfs9duyoPxkxYdToqSlB2gs7BAqxYEG8DdlOfDf93QV0RDo67qJITKhUPRFL3bAKk9/Xi67uB
+ BvUT9OaCq63sZtUXadurGUv0XvyzMjY1af+eZNI3tGcvntmT4mxt4Ls2OGQ2Fj4k+m5KSyTHp
+ YVxuuFVCbZj8r+QapNd43Rr/5gWMY9oz7rs6QayH9CLOVVNd3RxNO+f2k9W4oWNyZSVjkTOwr
+ mb+p0sZ3ljjSpKY0Y/+kn6AeyMukJAZUQHIACA+mFGpk5NyySB0fbLvtNJ8xtFhANgQ4u41l8
+ LN0wtpLW+oYE44Onk44sBK/Kh/Nv39s/jfF5QGesGWzuDQQ3sU=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Missing ')' after the closing '`'.
+This is an RFC because it tries to introduce a fundamental new color feature:
+Coloring messages *on stderr*.
 
-"If <commit-ish> is a branch name (call it `<branch>` and"
+So far, pretty much everything in color.[ch] assumed that you want to color
+only stuff on stdout.
+
+However, in this case, a user (who became a contributor!) wanted some messages
+that are printed to stderr and were missed by his colleagues to be colored.
+
+The contribution comes via Pull Request from the Git for Windows project:
+
+	https://github.com/git-for-windows/git/pull/1429
+
+Now, what would be possible solutions for this?
+
+- introduce `int fd` in `want_color()` (and callees) so that we can make
+  a distinction whether we want to detect whether stdout or stderr is connected
+  to a tty
+
+- introduce a separate `want_color_stderr()` (we still would need to decide
+  whether we want a config setting for this)
+
+- not color stderr, ever
+
+Also, I did not have too much time to dig into the question how to test this in
+Git's test suite. Do we already have tests that generate fake server-side errors
+onto which I could piggy-back a new test case?
+
+Thoughts? Suggestions? Help?
+
+
+Ryan Dammrose (1):
+  Colorize push errors
+
+ advice.c       | 42 +++++++++++++++++++++++++++++++++++++++--
+ builtin/push.c | 38 +++++++++++++++++++++++++++++++++++++
+ transport.c    | 59 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 3 files changed, 136 insertions(+), 3 deletions(-)
+
+
+base-commit: b2e45c695d09f6a31ce09347ae0a5d2cdfe9dd4e
+Published-As: https://github.com/dscho/git/releases/tag/colorize-push-errors-v1
+Fetch-It-Via: git fetch https://github.com/dscho/git colorize-push-errors-v1
+-- 
+2.16.1.windows.4
+
