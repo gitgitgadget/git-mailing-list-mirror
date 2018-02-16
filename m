@@ -2,123 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 39B5A1F404
-	for <e@80x24.org>; Fri, 16 Feb 2018 20:27:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 324D31F404
+	for <e@80x24.org>; Fri, 16 Feb 2018 20:45:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750780AbeBPU1c (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Feb 2018 15:27:32 -0500
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:52443 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750713AbeBPU1b (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Feb 2018 15:27:31 -0500
-Received: by mail-wm0-f66.google.com with SMTP id t3so5244088wmc.2
-        for <git@vger.kernel.org>; Fri, 16 Feb 2018 12:27:31 -0800 (PST)
+        id S1751021AbeBPUpb (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Feb 2018 15:45:31 -0500
+Received: from mail-io0-f196.google.com ([209.85.223.196]:41558 "EHLO
+        mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750813AbeBPUp3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Feb 2018 15:45:29 -0500
+Received: by mail-io0-f196.google.com with SMTP id e4so5405787iob.8
+        for <git@vger.kernel.org>; Fri, 16 Feb 2018 12:45:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=jlLa15fsf1LgLuxHQnbqoyjP5a0YaWbN8kK/aAXsR4Y=;
-        b=prEJ58ozGNIPLX6p3aHNtWTLvG7Gwvn/Oj3hhxPlOO0AGAM3g7YpKNryfotYcCkDE/
-         x4OicrE5+LQkWquiiRU7fjzi8ouEr95a0LSlR+qHHduuUiEY8o5Jo5/Atf06jwQ2Xmcn
-         Q/1Q61EqebRr9r8rMa5bFW2lGY+BRpKqp96NLc48E9h7haW89QQfEsUOkK3K/UCv2j/I
-         vF+4JkXZzG6r9E9XqszKjrg0etgHptaZ9pKU9ZuTBRu6eLE137Xvl8/jJVPBah7ukvWj
-         CzfDCamU1iS/YDq5ydn3CfPWSjB3LGAw+duzYqzvlgIAaH43vRD/M3e6qIFJ85dhfbXc
-         DTHQ==
+        h=sender:from:to:cc:subject:date:message-id;
+        bh=Ug3LBKQpzDX7MGF3fTPcQGMJetk3C4wB19Ufh1YfHPI=;
+        b=nQBTg87efT9CBpGV1i9aV4QDPgTaFNc1Xa4atfhOZfZIbL5f8nsfwNSKhT6YzygIxr
+         0EFrLE0O1uKDwevL0mu9t8izbXVgQbWfZuSLJyFq2HM8/BGZw+oWslfvHvQ/YtCsuUqN
+         Z/mKpnh5z2Phsu7Plrmca9Vbc1lWedLn13A9yBS44pxv2Evf2RkHSFNEly92ZEjptFsu
+         RHaYNmLjp0PLhHDupOioZeReObuo/pXuLVArydnKsKJdX5Vw0+t35JN4Z49SoyIhsWaS
+         arNpW7QowvmXBCz+n/NvQthEfhJA8u+nrEQZEVN5xQYAbWQle87IU3A1S+ooA5og/35s
+         joMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=jlLa15fsf1LgLuxHQnbqoyjP5a0YaWbN8kK/aAXsR4Y=;
-        b=pJ0OdhTyUL9pr1zFIITUnZQ0Fp9EDr5X9v1a6iXWGvIz5LvCx8zhAFk1XqywUF4Xhf
-         2ST8L8o0VdPgZBM4HiJIzqof2ha54u7G5YCZgIRuWt9gUoms8zw+zNn+CQ/dPxV7uTdu
-         tzYM3VWOe+2aKpzrYa8U4lQZv2o29bpUtEU/VPV24AmDXrcb1W/H4fVdxfigAEFibXKp
-         ZbiCd6qnd3n/d4f5n+XlBvmx1N7NXNUt5L7CqV4Dg0iX7vrzVPs3Kvo7/pE5iqxjgk9c
-         jFRsl76ySEKCaCbYT0nvpe69WfpI16F0ZVRW8S2rQIGrGuZJfqNheZxbKOKQNvuQ3aHV
-         uN2A==
-X-Gm-Message-State: APf1xPCi4jdg+lTQndl20StThSxx+ASN4zTcBaGZjF+Sxv21vvb8suOZ
-        KGCl7lrs8WZ31ZL3S0Js5rI=
-X-Google-Smtp-Source: AH8x226GBI3pCAmDHkLPDX2Dedq+1Ef0xSCNhPkkUGlLze6Mf01mjm0ygXwl3KVE61L25BA0aczs5w==
-X-Received: by 10.28.13.18 with SMTP id 18mr6380163wmn.112.1518812850175;
-        Fri, 16 Feb 2018 12:27:30 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id b72sm16868242wmf.2.2018.02.16.12.27.27
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 16 Feb 2018 12:27:28 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org, jonathantanmy@google.com, pclouds@gmail.com,
-        sunshine@sunshineco.com, Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 04/16] object-store: move packed_git and packed_git_mru to object store
-References: <xmqqlgfu7zn5.fsf@gitster-ct.c.googlers.com>
-        <20180216174626.24677-1-sbeller@google.com>
-        <20180216174626.24677-5-sbeller@google.com>
-Date:   Fri, 16 Feb 2018 12:27:27 -0800
-In-Reply-To: <20180216174626.24677-5-sbeller@google.com> (Stefan Beller's
-        message of "Fri, 16 Feb 2018 09:46:14 -0800")
-Message-ID: <xmqqfu6065ow.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id;
+        bh=Ug3LBKQpzDX7MGF3fTPcQGMJetk3C4wB19Ufh1YfHPI=;
+        b=JMsKHv+OKJWJpweshS5CeF4Uu+qduDEK8s8fyuaJ/ulzXZARvgPQrPMdx4qY6ZPl3m
+         z+pnT5yKO7AOFeRCloQCRjcfiM4tMDyhsvT96tG0jBR2FbE+BwYk+gjecVicbGumLXdO
+         m6ZfkE7t20/Om7gE2IHfP/Tt6NOzdnV4X3lKuosBPU5yM1MT/q+YsrPfxaLyQKrnuXJv
+         M48nlylAWicQBztNDDzdWLXIwuEJMPugQ6UfAEU55URxnrQQ9tuHq6zeQSYB1p5mSfRc
+         rtZlfEDI03IxwSivJpfk/JshXLKW64MNavRQMUCWEPTvBTdY1YJSw3eBZxU4JCjm1kNK
+         b90A==
+X-Gm-Message-State: APf1xPAgdQhuBs8maXuzyZOa7jN9vC82IJT7IhAMlAuZUxZ1SojZUKkG
+        ccvfv3RrsuhqKvM04UtrCJzUMg==
+X-Google-Smtp-Source: AH8x227qb4Zm+ptZi/3IZqvqKpVtzEzMcZCCovl0j+ScKSlDXL+NmRhwWSzzHAU0lE5hxryKBnHJxQ==
+X-Received: by 10.107.164.134 with SMTP id d6mr10032119ioj.176.1518813928450;
+        Fri, 16 Feb 2018 12:45:28 -0800 (PST)
+Received: from localhost.localdomain (user-12l2cs3.cable.mindspring.com. [69.81.51.131])
+        by smtp.gmail.com with ESMTPSA id z75sm2541844ita.3.2018.02.16.12.45.27
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Fri, 16 Feb 2018 12:45:27 -0800 (PST)
+From:   Eric Sunshine <sunshine@sunshineco.com>
+To:     git@vger.kernel.org
+Cc:     Thomas Gummerer <t.gummerer@gmail.com>,
+        Mike Nordell <tamlin.thefirst@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH 0/2] fix minor git-worktree.txt botches
+Date:   Fri, 16 Feb 2018 15:44:50 -0500
+Message-Id: <20180216204452.2153-1-sunshine@sunshineco.com>
+X-Mailer: git-send-email 2.16.1.374.g7648891022
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+This patch series fixes a couple git-worktree.txt botches from
+4e85333197 (worktree: make add <path> <branch> dwim, 2017-11-26).
 
->   @@ @@
->   - packed_git_mru
->   + the_repository->objects.packed_git_mru
+Eric Sunshine (2):
+  git-worktree.txt: fix missing ")" typo
+  git-worktree.txt: fix indentation of example and text of 'add' command
 
-Regarding this...
+ Documentation/git-worktree.txt | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-> diff --git a/object-store.h b/object-store.h
-> index a3f0d6ac15..024ccc91e9 100644
-> --- a/object-store.h
-> +++ b/object-store.h
-> @@ -2,6 +2,7 @@
->  #define OBJECT_STORE_H
->  
->  #include "cache.h"
-> +#include "list.h"
->  
->  struct raw_object_store {
-> ... 
-> +	struct packed_git *packed_git;
-> +	/*
-> +	 * A most-recently-used ordered version of the packed_git list, which can
-> +	 * be iterated instead of packed_git (and marked via mru_mark).
-> +	 */
-> +	struct list_head packed_git_mru;
-> +
->  	struct alternate_object_database *alt_odb_list;
->  	struct alternate_object_database **alt_odb_tail;
->  
->  	unsigned ignore_env : 1;
->  };
-> -#define RAW_OBJECT_STORE_INIT { NULL, NULL, NULL, 0 }
-> +
-> +#define MRU_LIST_INIT {NULL, NULL}
-> +#define RAW_OBJECT_STORE_INIT { NULL, NULL, MRU_LIST_INIT, NULL, NULL, 0 }
-> ...
-> diff --git a/packfile.c b/packfile.c
-> index 216ea836ee..d41e4c83d0 100644
-> --- a/packfile.c
-> +++ b/packfile.c
-> @@ -7,6 +7,7 @@
-> -...
-> -LIST_HEAD(packed_git_mru);
-
-Given that the definition of LIST_HEAD() is
-
-    /* Define a variable with the head and tail of the list. */
-    #define LIST_HEAD(name) \
-            struct list_head name = { &(name), &(name) }
-
-doesn't the updated definition of RAW_OBJECT_STORE_INIT look fishy?
+-- 
+2.16.1.374.g7648891022
 
