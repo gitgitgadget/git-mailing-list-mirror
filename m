@@ -7,61 +7,57 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D98531F404
-	for <e@80x24.org>; Fri, 16 Feb 2018 19:05:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7AC9A1F404
+	for <e@80x24.org>; Fri, 16 Feb 2018 19:21:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752682AbeBPTE6 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Feb 2018 14:04:58 -0500
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:34035 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751111AbeBPTE5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Feb 2018 14:04:57 -0500
-Received: by mail-wm0-f65.google.com with SMTP id j21so6742754wmh.1
-        for <git@vger.kernel.org>; Fri, 16 Feb 2018 11:04:56 -0800 (PST)
+        id S1753950AbeBPTVb (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Feb 2018 14:21:31 -0500
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:33021 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753945AbeBPTVY (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Feb 2018 14:21:24 -0500
+Received: by mail-wr0-f196.google.com with SMTP id s5so3951820wra.0
+        for <git@vger.kernel.org>; Fri, 16 Feb 2018 11:21:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=J70+kGMMV5zn/XPmzYKPmM6fwS3nd2IUQKboBXNgbbk=;
-        b=LmrHEI6t0Gh0eUZZ1ANgsPiVZ81s9knRo2EXjkl0rrOzq1bic+hOJDJu757o0nvQyD
-         9l2gHSE7rSJG73r9dzjvO4aH+CNFdqdVGFwXZtspTBCZyrIaLbLUFC7Mq963mGPyeAfF
-         0+MqVbQs9A9+3gxF7rwfkR69eq7/FDMB9luGwFDkQwz+DultWw93STM7mx5wBoFP04lT
-         ohZmnh9i/fTgCgR1FrZNNEiXBVb9ESM2UJAr+6csQqYp3YIbk3G2FfDtTKVkK9wmQ5LE
-         USpS3X7TeASnt+dbxV1Nuc5S77igB0c2yxwrkmfSny9TDTFxEe1Mnf64Mf1mTt99+yM7
-         33Sg==
+        bh=zEPrHEP2ZUAZ1lYEYAF+NU+kOPN5z6C2Xs/3OKr5D7w=;
+        b=dv8hzGIcQQaplKuq7d86C0ZanXcWdGEf7FEG2L84pECepYHuiDuAWo6/2gMiZQR1jL
+         0m8uDQ4iNntlPoWMeemXShbSv7YC1K7U9UUPxBf+js1n8//3e8Xvm7NirgzJzh/D3xrN
+         6rbTXhLgWBPWQF3ixWsxzcLt33QJL2f8rktB8fcavgdNNwkX4Del28mNxB+HlfhqMuG/
+         bfdu3cuv71Stxm9bC5bOUlY0G3OKX3vnMEtEa75LIgDOXTIta7nyrTBtUNIx+V/+FzHX
+         HDcYRw4J8pGh7IhSMl1aWyu9ugbugHD+7IQt4WR2hRIVy6EWx2da9yqKsl6mqkv5YJmI
+         qLpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=J70+kGMMV5zn/XPmzYKPmM6fwS3nd2IUQKboBXNgbbk=;
-        b=uUtzIM3ltWJdy+C+Sft9X2zflYqlhEhywpwe6kq5HlXA9g/AjxyVkZ7npEDS1B16x/
-         CNCUjVhNhe/GE9MSqcbexPCd9yKDsk9A5ztZMepBKDmEg58yS3hUJvNj2QZhNfB+pl8h
-         TzyNTMXVxyMwDcIukIbuq3ThLL2yE1ZosY3iNVqN1BLKldcJWIr4Ecf3MAqnpqFGMvn1
-         UFaeEQcD0tlxCp+4i1MmdUF5+1wJVgR+YA+iI9WqmOkFZ4OJhpG4TXCHN3VK6xL0oeQX
-         SAlbzz9mXD/aOwnXV/fj48zS+iN8cas6P7mzlkqUZlCfT1rBWxsEyBLdFLs6NXTxyFbd
-         VTaQ==
-X-Gm-Message-State: APf1xPBViPneWxhStnbj5FD4LjtqIS7Ps2gsL0H37HlPs/8T6mZc+VUg
-        ZPvFV9/VcYWI/s+sWUbrCXs=
-X-Google-Smtp-Source: AH8x226CQZhAaGvp1s/9G7Oo5tMBTLdg84tQHcSuC1Ttcn8wjiOyAWUEZdKTpwHQr6ExmzrVIhGZCw==
-X-Received: by 10.28.71.70 with SMTP id u67mr5340680wma.46.1518807895505;
-        Fri, 16 Feb 2018 11:04:55 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id o82sm13806701wmo.30.2018.02.16.11.04.54
+        bh=zEPrHEP2ZUAZ1lYEYAF+NU+kOPN5z6C2Xs/3OKr5D7w=;
+        b=Z5aK+u9E58zuaKXMKQELQ1JLoTpUnrJDhLfcMITVcx1kQZ9Mqg2YRHK11TgfFOYJne
+         bEYmcjTwgixgtVzhrzv97rHKIe2R+bi0xkc4EGQARZxiXTfv8zMe0om6tGbridWIKIR5
+         uykAk4N7eKNYEwFuEyeG6SzdDLX9Hs3pJ8zflURG10t8sogdKcdrqzp6FEA2KSN45k1t
+         LfzCiw5I58d1KqIu+PB9Pb65RUCF4VKsC0COoHntz0vBwgaYSYMaEzmXPs4W/ROOQQe8
+         kr2l6odu7mCRGIlULeTFsESlej8GULnmbrMGJWQnCzoLM8eK5f8MEQUTF5LTBI8cBCuJ
+         dCzA==
+X-Gm-Message-State: APf1xPDhnqIxZCbuQclh3GJwEUtEcIOPTPVQPBl6uic39JpGAEZwKkEq
+        qj3F+C2BLv5MnaR9mdIDYWY=
+X-Google-Smtp-Source: AH8x2268RiZ1a+Vjw3Jl1+HhuiJrsTkxkNiZsjW9K8gkPANxeDQ9sNRV2XNehEdcjPLW/uqr9pg/cQ==
+X-Received: by 10.223.179.69 with SMTP id k5mr6365630wrd.278.1518808882895;
+        Fri, 16 Feb 2018 11:21:22 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id q15sm20942537wra.54.2018.02.16.11.21.21
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 16 Feb 2018 11:04:54 -0800 (PST)
+        Fri, 16 Feb 2018 11:21:22 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Lars Schneider <larsxschneider@gmail.com>
-Cc:     lars.schneider@autodesk.com, git@vger.kernel.org, tboegi@web.de,
-        j6t@kdbg.org, sunshine@sunshineco.com, peff@peff.net,
-        ramsay@ramsayjones.plus.com, Johannes.Schindelin@gmx.de
-Subject: Re: [PATCH v7 0/7] convert: add support for different encodings
-References: <20180215152711.158-1-lars.schneider@autodesk.com>
-        <xmqqr2pm81hh.fsf@gitster-ct.c.googlers.com>
-        <DC552BF4-3E87-41E0-BF92-4BA9633D374E@gmail.com>
-Date:   Fri, 16 Feb 2018 11:04:53 -0800
-In-Reply-To: <DC552BF4-3E87-41E0-BF92-4BA9633D374E@gmail.com> (Lars
-        Schneider's message of "Fri, 16 Feb 2018 15:42:35 +0100")
-Message-ID: <xmqq1shk7o2y.fsf@gitster-ct.c.googlers.com>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 0/1] Colorize some errors on stderr
+References: <cover.1518783709.git.johannes.schindelin@gmx.de>
+Date:   Fri, 16 Feb 2018 11:21:21 -0800
+In-Reply-To: <cover.1518783709.git.johannes.schindelin@gmx.de> (Johannes
+        Schindelin's message of "Fri, 16 Feb 2018 13:25:44 +0100 (STD)")
+Message-ID: <xmqqwozc68r2.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -70,45 +66,34 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Lars Schneider <larsxschneider@gmail.com> writes:
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
->> One thing I find more problematic is that the above places *too*
->> much stress on the UTF-8 centric worldview.  It is perfectly valid
->> to store your text contents encoded in ShiftJIS and check them out
->> as-is, with or without this patch.  It is grossly misleading to say
->> that older versions of Git will check them out in UTF-8.  "will
->> checkout these files as-is without encoding conversion" is a better
->> way to say it, probably.
+> Now, what would be possible solutions for this?
 >
-> True. But that's not what I wanted to say in the "pitfalls" section.
-> If my Git client supports w-t-e and I add the ShiftJIS encoded
-> file "foo.bar" to my repository, then Git will store the file as
-> UTF-8 _internally_. That means if you clone my repository and your 
-> Git client does _not_ support w-t-e, then you will see "foo.bar" as 
-> UTF-8 encoded.
-
-What you wrote implies *more* than that, which is what I had trouble
-with.
-
-If you say "what you have is checked out as-is", then it is still
-clear that those who use w-t-e to convert non UTF-8 into UTF-8 when
-checking in will get UTF-8 out when they use an older version of
-Git.  If you say "what you have will be checked out in UTF-8", it
-makes it sound as if pre w-t-e Git will somehow reject non UTF-8
-in-tree contents, or magically convert anything to UTF-8 while
-checking out, which is *not* what you want to imply.
-
->> Also notice that even in the world with w-t-e, such a project won't
->> benefit from w-t-e at all.  After all, they have been happy using
->> ShiftJIS in repository and using the same encoding on the working
->> tree, and because w-t-e assumes that everybody should be using UTF-8
->> internally, such a project cannot take advantage of the new
->> mechanism.
+> - introduce `int fd` in `want_color()` (and callees) so that we can make
+>   a distinction whether we want to detect whether stdout or stderr is connected
+>   to a tty
 >
-> Agreed. However, people using ShiftJIS are not my target audience.
+> - introduce a separate `want_color_stderr()` (we still would need to decide
+>   whether we want a config setting for this)
 
-Be aware that you are writing *not* *solely* for your target
-audience.  You write document for everybody, and make sure the
-description of a feature makes it clear who the feature primarily
-targets and how using (or not using) the feature affects users.
+Between the above two, there probably aren't so big a difference, but
+in order to avoid disrupting existing callers of want_color() while
+possibly sharing as much code between the old and new callers,
+perhaps:
 
+	extern int want_color_fd(int fd, int colorbool);
+	#define want_color(colorbool) want_color_fd(1, (colorbool))
+	#define want_color_stderr(colorbool) want_color_fd(2, (colorbool))
+
+We should honor configuration at two levels, just like the colors on
+stdout, i.e. color in which individual items are painted (e.g.
+color.diff.filename, color.advice.hint) and whether we use colors in
+UI at all (e.g. color.ui).  I do not think it is necessary or even
+at the right granularity to allow settings like "do color stdout but
+do not color errors".
+
+> - not color stderr, ever
+
+This is my personal preference, but that does not and should not
+carry too much weight ;-)
