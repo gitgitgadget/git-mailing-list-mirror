@@ -7,153 +7,92 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3D7751F576
-	for <e@80x24.org>; Fri, 16 Feb 2018 17:55:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E33901F404
+	for <e@80x24.org>; Fri, 16 Feb 2018 18:05:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1162511AbeBPRzc (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Feb 2018 12:55:32 -0500
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:35450 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1162497AbeBPRz0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Feb 2018 12:55:26 -0500
-Received: by mail-wm0-f65.google.com with SMTP id x21so4548545wmh.0;
-        Fri, 16 Feb 2018 09:55:26 -0800 (PST)
+        id S1162415AbeBPSFu (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Feb 2018 13:05:50 -0500
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:37703 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1161668AbeBPSFt (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Feb 2018 13:05:49 -0500
+Received: by mail-wr0-f193.google.com with SMTP id k32so3751053wrk.4
+        for <git@vger.kernel.org>; Fri, 16 Feb 2018 10:05:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:date:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=GGDfF4aGOSSTY2S8sThkBL4qxagJNNFWzIm/lnVbA9k=;
-        b=axskhzmSadziMjHFpdkBHALissOANHBBUk13MjOPgOpi2YrKy9bWFFTdKforaKEldD
-         VcRhA9+EGktfkyk9J6wsTcIDVN3xaVqULtd84MVMgq4HtXfQcDDNYfrNOsuTRa8Bxe/S
-         w6GHuQRHLVF7mG+pxnXgFEfnfZsg+fWVw/pl+sqGyeL9ZpdU7vm0S9bCk61Q02W9YD7b
-         Xi18jW2imhdtU+PWSnSVbwIgJeU5/+j7pWcJ/k7NMEhr51RQbD5zneNLKPRYuiEsPhsn
-         tapdWkpnigGO/DO0quAajnnXk7cIVJ0r/TiC/eTAs2xmsAo4u/I9G+lVuW+8cIiKQbRY
-         yf8w==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=48lRtkAxpiqJNQ+Ip8ppxwKvsMg8AEm+e+w6HurT04A=;
+        b=nZ/AcyqDGhKj5PvciPTbKXfM8eCYUgx5eZQ1HBezU8ceg99W7Ia+NAZB8CZpuDJj6k
+         TcssdmPE1lCegEuEEB6fWIvufqnjVD5VeNYFPVC/FjXguOgWTqOsBuqq+uj6mbVf6PEs
+         jBl7iifj5RYuiYfaOht4FEv32tbCIjEiXj5hx0xAD6WkdQzgAxRTF5WGhmaq8dZiFgDo
+         K+kT5cNIqtEdiXCvguLlWrgz1+2JhpU7UJ8JoiR+WQ+tPKV1t/R0c8ODI6NJsFhmOJKB
+         YUB90W3yoA+XhpUb4UGPc97ojsSrEapAvrBcMYCQ9B43uKwHRvgpvGE4WpFkqwlfaat2
+         0OYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=GGDfF4aGOSSTY2S8sThkBL4qxagJNNFWzIm/lnVbA9k=;
-        b=BYmEqHb+cWDiWEHTMZnjLu3sXgsYLEBivevXP4+JI3B/yQM4ONIY0muhOm9tuhKTdM
-         okoeh1piyZfydGR6h3dmQ9KvMwJHR5otGCOn2OIDO1giSNh5k5XTHi/kxHSMpmpeph2m
-         a1BnT4GRXTfiqIzQMQLSw1aWqk5/AzxH7KJtjnHRnUGmhrFt/jAlOXPYo3V3asfCKoJh
-         hMOR3yGSQecAWCCJjlPJ3jUKchKORvCnt4fBKDA6IRINXKpEuu6s6L6DVyRdRfdY/CsX
-         otFW8QLBbz7Z5DEem94HSFew0FoYCR31FHlXIaUXsrBEgiqeH8Dy9JEKRLJcFjBn1AoZ
-         lYvA==
-X-Gm-Message-State: APf1xPALYH7vXuBT4vYbx5dcDt4/vA/T61DBpHD44mG7YvEUPAmBaIrx
-        Tr95Fj35NCK3yi+Y+iz5rzGqDgBr
-X-Google-Smtp-Source: AH8x224RQDYr5rI1i2Dr5wlYNrUFoGDgL/p8CgtioVR7V+mWccn0zYh8WiqOqpgdQGj7pjBIIoaZUw==
-X-Received: by 10.28.113.216 with SMTP id d85mr1774373wmi.3.1518803724676;
-        Fri, 16 Feb 2018 09:55:24 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id x203sm34744224wmd.11.2018.02.16.09.55.23
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=48lRtkAxpiqJNQ+Ip8ppxwKvsMg8AEm+e+w6HurT04A=;
+        b=VNC6/asmy8Y6Z8kOOTF9rcDF1Ah9WCNNnjJyggFYYWp9MKfrpLogH5cLd8GgqQsDLc
+         FW1wOZNZ4+xf18+Joo0b4+AlCWUnpSpv2YA4akSKwldg3t9gl2jbsroz4n7pE+3EHOxc
+         wy92I6pBKI5Bt8ZLFf63RM7WhI/mjMEtZqi3rf2pGSOYG9nE4x56pCis+mB9Ua7tOkAP
+         ImHSEWKdqHu4VnbtM0x6yHb7msqN5ihMIVJlj5SUo2mn4HgfSvi8XRW2KizGV/UTIsT+
+         2sQktHSlELRhFtm1QLheWgCQIH7oR78/FKLRgfhKOstG2Dyu4VJwaZkbTa9gKpLfmGH9
+         opHw==
+X-Gm-Message-State: APf1xPAp8RAVQFuRzEzV+Ptn7j/w2BuHwLLK48afFFQCDiYla0km1K3g
+        R/ShKR40kSPqGZYVnn6RN30=
+X-Google-Smtp-Source: AH8x227f1j2G1S8r9tUixYPvGAjjUkZDCDCdId1NSoJpWgWkIp+ebwHYdyf4CsApqFFl0yr29gQruA==
+X-Received: by 10.223.153.23 with SMTP id x23mr6238731wrb.134.1518804347772;
+        Fri, 16 Feb 2018 10:05:47 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id g13sm21843077wrh.51.2018.02.16.10.05.46
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 16 Feb 2018 09:55:23 -0800 (PST)
+        Fri, 16 Feb 2018 10:05:47 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org
-Cc:     Linux Kernel <linux-kernel@vger.kernel.org>,
-        git-packagers@googlegroups.com
-Subject: [ANNOUNCE] Git v2.16.2
-Date:   Fri, 16 Feb 2018 09:55:22 -0800
-Message-ID: <xmqqinaw7rat.fsf@gitster-ct.c.googlers.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     git@vger.kernel.org, Lars Schneider <larsxschneider@gmail.com>,
+        matthew.k.gumbel@intel.com
+Subject: Re: [PATCH v3] worktree: add: fix 'post-checkout' not knowing new worktree location
+References: <20180215191841.40848-1-sunshine@sunshineco.com>
+        <20180215230952.51887-1-sunshine@sunshineco.com>
+Date:   Fri, 16 Feb 2018 10:05:46 -0800
+In-Reply-To: <20180215230952.51887-1-sunshine@sunshineco.com> (Eric Sunshine's
+        message of "Thu, 15 Feb 2018 18:09:52 -0500")
+Message-ID: <xmqqeflk7qth.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The latest maintenance release Git v2.16.2 is now available at
-the usual places, with small fixes that are already in the 
-'master' front.
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-The tarballs are found at:
+> ...
+> The hook is run manually, rather than via run_hook_le(), since it needs
+> to change the working directory to that of the worktree, and
+> run_hook_le() does not provide such functionality. As this is a one-off
+> case, adding 'run_hook' overloads which allow the directory to be set
+> does not seem warranted at this time.
+>
+> Reported-by: Lars Schneider <larsxschneider@gmail.com>
+> Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+> ---
+>
+> This is a re-roll of [1] which fixes "git worktree add" to provide
+> proper context to the 'post-checkout' hook so that the hook knows the
+> location of the newly-created worktree.
+>
+> Changes since v2:
+>
+> * Fix crash due to missing NULL-terminator on 'env' list passed to
+>   run_command().
 
-    https://www.kernel.org/pub/software/scm/git/
+Thanks.  This matches what I had (v2 plus manual fixup while
+queueing) and looks good.
 
-The following public repositories all have a copy of the 'v2.16.2'
-tag and the 'maint' branch that the tag points at:
-
-  url = https://kernel.googlesource.com/pub/scm/git/git
-  url = git://repo.or.cz/alt-git.git
-  url = https://github.com/gitster/git
-
-----------------------------------------------------------------
-
-Git v2.16.2 Release Notes
-=========================
-
-Fixes since v2.16.1
--------------------
-
- * An old regression in "git describe --all $annotated_tag^0" has been
-   fixed.
-
- * "git svn dcommit" did not take into account the fact that a
-   svn+ssh:// URL with a username@ (typically used for pushing) refers
-   to the same SVN repository without the username@ and failed when
-   svn.pushmergeinfo option is set.
-
- * "git merge -Xours/-Xtheirs" learned to use our/their version when
-   resolving a conflicting updates to a symbolic link.
-
- * "git clone $there $here" is allowed even when here directory exists
-   as long as it is an empty directory, but the command incorrectly
-   removed it upon a failure of the operation.
-
- * "git stash -- <pathspec>" incorrectly blew away untracked files in
-   the directory that matched the pathspec, which has been corrected.
-
- * "git add -p" was taught to ignore local changes to submodules as
-   they do not interfere with the partial addition of regular changes
-   anyway.
-
-
-Also contains various documentation updates and code clean-ups.
-
-----------------------------------------------------------------
-
-Changes since v2.16.1 are as follows:
-
-Andreas G. Schacker (1):
-      doc/read-tree: remove obsolete remark
-
-Daniel Knittl-Frank (1):
-      describe: prepend "tags/" when describing tags with embedded name
-
-Jason Merrill (1):
-      git-svn: fix svn.pushmergeinfo handling of svn+ssh usernames.
-
-Jeff King (4):
-      t5600: fix outdated comment about unborn HEAD
-      t5600: modernize style
-      clone: factor out dir_exists() helper
-      clone: do not clean up directories we didn't create
-
-Junio C Hamano (2):
-      merge: teach -Xours/-Xtheirs to symbolic link merge
-      Git 2.16.2
-
-Nguyễn Thái Ngọc Duy (1):
-      add--interactive: ignore submodule changes except HEAD
-
-René Scharfe (9):
-      commit: avoid allocation in clear_commit_marks_many()
-      commit: use clear_commit_marks_many() in remove_redundant()
-      ref-filter: use clear_commit_marks_many() in do_merge_filter()
-      object: add clear_commit_marks_all()
-      bisect: avoid using the rev_info flag leak_pending
-      bundle: avoid using the rev_info flag leak_pending
-      checkout: avoid using the rev_info flag leak_pending
-      revision: remove the unused flag leak_pending
-      commit: remove unused function clear_commit_marks_for_object_array()
-
-Thomas Gummerer (1):
-      stash: don't delete untracked files that match pathspec
-
-Ævar Arnfjörð Bjarmason (2):
-      perf: amend the grep tests to test grep.threads
-      cat-file doc: document that -e will return some output
-
+As long as the "hand-rolled" implementation uses the same
+find_hook() helper used in run_hook[lv]e, I do not think a one-off
+invocation of the hook is not too bad, at least for now.
