@@ -2,94 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D8FD51F404
-	for <e@80x24.org>; Fri, 16 Feb 2018 19:25:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CB41D1F404
+	for <e@80x24.org>; Fri, 16 Feb 2018 19:26:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750914AbeBPTZD (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Feb 2018 14:25:03 -0500
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:40532 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750797AbeBPTZA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Feb 2018 14:25:00 -0500
-Received: by mail-wm0-f65.google.com with SMTP id v10so4914989wmh.5
-        for <git@vger.kernel.org>; Fri, 16 Feb 2018 11:24:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=nEND1TTu58zVXOpUSgYAcBghcJPsNHajwxJuGdiMUjA=;
-        b=aDz3rku85EZhsAy1ey4q1CWbRn8HHwi3ns1URvIvJIGMYhj4ec08QnXhaXH7NF36/L
-         ugEkSAXVqZlJ0oJ5qwZwMEo91Jo3vcpotZBTnZ8vLn4QAViKaA/prAeGi7lyfPgWjgHm
-         Gpbb7b0phH6wXBBkhn85K3AxAzsMOYgTZdL0uWVfxpXz4kga0NASlTaUcz747edSIWxX
-         oNPYoqvgphBvBtOy7EL0q0n1GZA8V2w3+IrfF4k3nLOqawxJFDSyemgk7P4SR2exnOw3
-         Sl+8s3e5w8Tne+g1pv/bRpYlHRMjS/oWhS16ZVNWxJ9cNlYx5WBn+gmhQiIVzdJxCB7E
-         kzwg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=nEND1TTu58zVXOpUSgYAcBghcJPsNHajwxJuGdiMUjA=;
-        b=fveDDo87ZTB/dYUAKtHJmW68KY1LPdFNOXs8AZISmVNRSzQsaMr6T4imt+qi8TM3Ru
-         bC+8MF0OU8r5JrHlycUx0bRfkhag+e1nXzGhVujMrrj1QwckOHSp6Wkb3AiNvFtuEOpu
-         g6PEasmQHbKadjZLqnRj5/gatQt02tadGcbG3hCG/+VCN9ZjxMSldA/D8mM361fyvFa1
-         EBvgUqQjKwmWelicwO6XoMEim725p7Ek/MxD4UGLnjJhwFEJ9c4EyVozLfVBz4RlWpu3
-         cvS4nR/N34AEeSnVogqNY4o5OrvTRL7OraCLGyHaFuNQ3iwKGNB/8It0LVYbYnpdyR+g
-         bNHg==
-X-Gm-Message-State: APf1xPBbz4IToXC94b0Wl2GQDi7qrCQgvzd+VZgpsex+0ZCPV+4KJQ6A
-        +XPdnUfcwBJ0OZwu2gBJz3E=
-X-Google-Smtp-Source: AH8x224TOKSSTR9Rjp+kKGg/W5u0DHNPmaV1NkLjo+MCMCjmkZBBi6QqpskIW6Nz9kUg+t3DbZSrUg==
-X-Received: by 10.28.169.200 with SMTP id s191mr5994803wme.9.1518809098650;
-        Fri, 16 Feb 2018 11:24:58 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id b79sm14061183wmb.18.2018.02.16.11.24.57
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 16 Feb 2018 11:24:58 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Rasmus Villemoes <rv@rasmusvillemoes.dk>, git@vger.kernel.org
-Subject: Re: [PATCH 1/3] grep: move grep_source_init outside critical section
-References: <20180215215615.21208-1-rv@rasmusvillemoes.dk>
-        <20180215215615.21208-2-rv@rasmusvillemoes.dk>
-        <20180215221713.GB23970@sigill.intra.peff.net>
-Date:   Fri, 16 Feb 2018 11:24:57 -0800
-In-Reply-To: <20180215221713.GB23970@sigill.intra.peff.net> (Jeff King's
-        message of "Thu, 15 Feb 2018 17:17:13 -0500")
-Message-ID: <xmqqsha068l2.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1751114AbeBPTZz (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Feb 2018 14:25:55 -0500
+Received: from cloud.peff.net ([104.130.231.41]:55488 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1751083AbeBPTZn (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Feb 2018 14:25:43 -0500
+Received: (qmail 18085 invoked by uid 109); 16 Feb 2018 19:25:43 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 16 Feb 2018 19:25:43 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 21323 invoked by uid 111); 16 Feb 2018 19:26:28 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 16 Feb 2018 14:26:28 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 16 Feb 2018 14:25:41 -0500
+Date:   Fri, 16 Feb 2018 14:25:41 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     lars.schneider@autodesk.com, git@vger.kernel.org, tboegi@web.de,
+        j6t@kdbg.org, sunshine@sunshineco.com, ramsay@ramsayjones.plus.com,
+        Johannes.Schindelin@gmx.de,
+        Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: [PATCH v7 0/7] convert: add support for different encodings
+Message-ID: <20180216192541.GA22993@sigill.intra.peff.net>
+References: <20180215152711.158-1-lars.schneider@autodesk.com>
+ <xmqqr2pm81hh.fsf@gitster-ct.c.googlers.com>
+ <20180215220952.GA23970@sigill.intra.peff.net>
+ <xmqq606w7oht.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq606w7oht.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Fri, Feb 16, 2018 at 10:55:58AM -0800, Junio C Hamano wrote:
 
-> I think this makes sense. It does blur the memory ownership lines of the
-> grep_source, though. Can we make that more clear with a comment here:
->
->> +	grep_source_init(&gs, GREP_SOURCE_OID, pathbuf.buf, path, oid);
->> +
->>  #ifndef NO_PTHREADS
->>  	if (num_threads) {
->> -		add_work(opt, GREP_SOURCE_OID, pathbuf.buf, path, oid);
->> +		add_work(opt, &gs);
->>  		strbuf_release(&pathbuf);
->>  		return 0;
->>  	} else
->
-> like:
->
->   /* leak grep_source, whose fields are now owned by add_work() */
->
-> or something? We could even memset() it back to all-zeroes to avoid an
-> accidental call to grep_source_clear(), but that's probably unnecessary
-> if we have a comment.
+> Jeff King <peff@peff.net> writes:
+> 
+> > So a full proposal would support both cases: "check this out in the
+> > local platform's preferred encoding" and "always check this out in
+> > _this_ encoding". And Lars's proposal is just the second half of that.
+> 
+> Actually, what you seem to take as a whole is just half of the
+> story.  The other half that is an ability to say "what is in the
+> repository for this path is stored in this encoding".  I agree that
+> "check it out in this encoding" is a useful thing to have, and using
+> the in-tree .gitattributes as a place to state the project-wide
+> preference may be OK (and .git/info/attributes should be able to
+> override it if needed -- this probably deserves to be added to a
+> test somewhere by this series).
 
-I share the same uneasiness about the fuzzy memory ownership this
-change brings in.  Thanks for suggesting improvements.
+If we are just talking about a check-out feature, I'm not sure that the
+in-repository encoding is all that interesting. As with CRLFs, we would
+be declaring UTF-8 as the "canonical" in-repo encoding for such
+conversions. Is there a reason you'd want something else?
+
+If the feature were "the in-repo encoding is X, and I want you to show
+me a diff using encoding Y", then I could see the use of that (and I
+think for most people's purposes that would be an equally valid solution
+to their problem).
+
+-Peff
