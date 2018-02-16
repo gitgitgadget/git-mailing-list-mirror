@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EA2481F404
-	for <e@80x24.org>; Fri, 16 Feb 2018 17:47:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 37FA91F404
+	for <e@80x24.org>; Fri, 16 Feb 2018 17:47:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1162430AbeBPRrL (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Feb 2018 12:47:11 -0500
-Received: from mail-pl0-f66.google.com ([209.85.160.66]:45008 "EHLO
-        mail-pl0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1162385AbeBPRqv (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Feb 2018 12:46:51 -0500
-Received: by mail-pl0-f66.google.com with SMTP id w21so2039321plp.11
-        for <git@vger.kernel.org>; Fri, 16 Feb 2018 09:46:51 -0800 (PST)
+        id S1162279AbeBPRqr (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Feb 2018 12:46:47 -0500
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:40962 "EHLO
+        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1758982AbeBPRqp (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Feb 2018 12:46:45 -0500
+Received: by mail-pg0-f65.google.com with SMTP id t4so2954684pgp.8
+        for <git@vger.kernel.org>; Fri, 16 Feb 2018 09:46:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=O2diRDv8Aaiq0mDwWvmae+DL6uOX+6OAlQGjq2E+MOw=;
-        b=gWMra1tGbzyzJ9nzIpvlgHVIUdOvmmtuTYdOqB+i+RHYD/U05KH7pojHkZ81lG17D3
-         FCVmzCfIUukEoDBnb/R6F1DeS1ErVU6Yx3uzT0+BbEr2NcOvk1etg5KiPyUmFbpuQktJ
-         550pMC5g2pcuDneKu97Jdx3L48VeRisuZFfy0sm+NeLpNL5gtLiatzYV1zpWuztpKfx5
-         XIWLMf2aH0jN+11rtiaoxFd/g5QLsqgUvo1Vgx3k4zckexqRzGs2jYPnJWojcqfovrJm
-         luozpQNuFKBKCWF7ZTAdMUL8XviU2aB4A53/PhFkmu7Ew6QjsJ6K7grDFCOoBLHC3uTH
-         LFGQ==
+        bh=EMrMAMjbKUtAJvJSiXE7GDvo3ONv/eaeBOOcef3sLXw=;
+        b=JTeuATiBjQWua0fjnbAiWt8Csp9h8FGbEcrs8GSZKWNWERtzDkvvALi6aHQGYG/HrY
+         0JzsOYHfboXWoAvM0bHhlJExZPwnZ0bkoLhyWuPzgdrDo6idYfZK1ChukHHjjYHxU6AI
+         xU9wxPK62bQT3zzYfNFeyv4JUe3BOjYZDSMG9ztBP7ojvqFBKptVZ5pALmcl4MJS6kRY
+         o3n+i9Qi84tvwzkdvOInvTOmM4mklKeBQ6LqeZDCcJI2uRpKujo9qRVOxIamToEo+Wdi
+         RGwBx6SpvcjqEclCq1V4cQhyi11qUgXvt6xaIBlUJWQaU7jcT5gEE/2/FNKvN5RLw8ue
+         nuEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=O2diRDv8Aaiq0mDwWvmae+DL6uOX+6OAlQGjq2E+MOw=;
-        b=R3GqZMm0b50JtH5gxRDdvBmyuancdzqv0zSh4WkdjcSBLbLKKCK/fpQ4K/xjjh2sqK
-         HfNaeApmUEa9d04hyd3v4nqjIQLohfl5SqS2dME6oW5waC3lpTDXfZGRaICteCybe7pz
-         DFBJYSKaMz87aLj5fKrz/bYcqSL0SmInfwq2HvDfmJe4bc3cqhsqZyDjj1BJTddIuhXG
-         Qg2kb+ZWmEx0WXFH8hyUHrLP8NR38Qf4nYBEqyKahs97OV6u+OVh//mUVb2URmj4/u2U
-         cwvifdt9m81B2pQx4K0MtkkFHGmycPWlpvhtiBBY6SmyHs8RVrVH4wrgdXlCN1misO48
-         PB0Q==
-X-Gm-Message-State: APf1xPBD/Bo9WbAQGgg7pvCsPMwGl8SpgLljgeEBgk7i3QyDVEosyVDx
-        nCiC2kMaAKMFmD1vb+zNKTiKGw==
-X-Google-Smtp-Source: AH8x227cW4yA+C/OQj2FKbfDu9IBII4sTw0rQGx0jpPMcJdcnL/mAFAifH1RnvNMKNmbmxFJKA2l4A==
-X-Received: by 2002:a17:902:b942:: with SMTP id h2-v6mr6531377pls.45.1518803210653;
-        Fri, 16 Feb 2018 09:46:50 -0800 (PST)
+        bh=EMrMAMjbKUtAJvJSiXE7GDvo3ONv/eaeBOOcef3sLXw=;
+        b=H8sYcqVEWygJ4I/X1WLwY+O8SogCxrGsa7p56L/eHsiIqb7/67W61Fm4dRAeh5NUQ4
+         eiQgcucmidYN9bR3jIMQwIz6QWLQZSBc/dh52o7nfl3BxMod4MCP/R/62W8MaxJuXn90
+         B9cUtNfOFli0C12J+Y1yJvdGANyBFh+uEgoxbwhrv58mYTaMvVR4/+kSbVtfwPNaBYiK
+         9x7r6t8GrdIvsWWuDXrI4qH8kpUcbZvdx5vOU64HNbA894ZRXr5XfpFU4wcECuAWqckK
+         HS+XAsjHqtQpURzCz404NeSPfSiUli6VDpuTWwBMEl6nvc7rlP2AMY2GSizx2sPg95io
+         2sLQ==
+X-Gm-Message-State: APf1xPBKrL2oK+Stnms0GZy+udXvt1KXE8UTuzZInkGfDs88wjHnDmg2
+        6KTt26KY7bod+Ad9SwszWGZQzw==
+X-Google-Smtp-Source: AH8x224/D44/vKsRh9EadnnyukzZIqTtSGlxxWGV5rzTXFmpYfJndVz+Jz4bVDlqixpwg/fkwWaFFQ==
+X-Received: by 10.99.176.15 with SMTP id h15mr5809708pgf.374.1518803204362;
+        Fri, 16 Feb 2018 09:46:44 -0800 (PST)
 Received: from localhost ([2620:0:100e:422:2d12:5719:3437:fdb7])
-        by smtp.gmail.com with ESMTPSA id d64sm45311383pfa.91.2018.02.16.09.46.49
+        by smtp.gmail.com with ESMTPSA id u25sm41713159pfh.142.2018.02.16.09.46.43
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 16 Feb 2018 09:46:49 -0800 (PST)
+        Fri, 16 Feb 2018 09:46:43 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     gitster@pobox.com
 Cc:     git@vger.kernel.org, jonathantanmy@google.com, pclouds@gmail.com,
         sbeller@google.com, sunshine@sunshineco.com,
         Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 11/16] sha1_file: allow sha1_file_name to handle arbitrary object stores
-Date:   Fri, 16 Feb 2018 09:46:21 -0800
-Message-Id: <20180216174626.24677-12-sbeller@google.com>
+Subject: [PATCH 07/16] pack: move approximate object count to object store
+Date:   Fri, 16 Feb 2018 09:46:17 -0800
+Message-Id: <20180216174626.24677-8-sbeller@google.com>
 X-Mailer: git-send-email 2.16.1.291.g4437f3f132-goog
 In-Reply-To: <20180216174626.24677-1-sbeller@google.com>
 References: <xmqqlgfu7zn5.fsf@gitster-ct.c.googlers.com>
@@ -65,147 +65,91 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-While at it, move the declaration to object-store.h, where it should
-be easier to find.
+The approximate_object_count() function maintains a rough count of
+objects in a repository to estimate how long object name abbreviates
+should be.  Object names are scoped to a repository and the
+appropriate length may differ by repository, so the object count
+should not be global.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- cache.h        |  6 ------
- http-walker.c  |  3 ++-
- http.c         |  5 ++---
- object-store.h |  6 ++++++
- sha1_file.c    | 12 ++++++------
- 5 files changed, 16 insertions(+), 16 deletions(-)
+ object-store.h | 10 +++++++++-
+ packfile.c     | 11 +++++------
+ 2 files changed, 14 insertions(+), 7 deletions(-)
 
-diff --git a/cache.h b/cache.h
-index d0c1a533c5..2495c7081d 100644
---- a/cache.h
-+++ b/cache.h
-@@ -961,12 +961,6 @@ extern void check_repository_format(void);
- #define DATA_CHANGED    0x0020
- #define TYPE_CHANGED    0x0040
- 
--/*
-- * Put in `buf` the name of the file in the local object database that
-- * would be used to store a loose object with the specified sha1.
-- */
--extern void sha1_file_name(struct strbuf *buf, const unsigned char *sha1);
--
- /*
-  * Return an abbreviated sha1 unique within this repository's object database.
-  * The result will be at least `len` characters long, and will be NUL
-diff --git a/http-walker.c b/http-walker.c
-index 8bb5d991bb..59bc0417d2 100644
---- a/http-walker.c
-+++ b/http-walker.c
-@@ -1,4 +1,5 @@
- #include "cache.h"
-+#include "repository.h"
- #include "commit.h"
- #include "walker.h"
- #include "http.h"
-@@ -546,7 +547,7 @@ static int fetch_object(struct walker *walker, unsigned char *sha1)
- 		ret = error("File %s has bad hash", hex);
- 	} else if (req->rename < 0) {
- 		struct strbuf buf = STRBUF_INIT;
--		sha1_file_name(&buf, req->sha1);
-+		sha1_file_name(&the_repository->objects, &buf, req->sha1);
- 		ret = error("unable to write sha1 filename %s", buf.buf);
- 		strbuf_release(&buf);
- 	}
-diff --git a/http.c b/http.c
-index a4a9e583c7..058436d9d3 100644
---- a/http.c
-+++ b/http.c
-@@ -2247,7 +2247,7 @@ struct http_object_request *new_http_object_request(const char *base_url,
- 	hashcpy(freq->sha1, sha1);
- 	freq->localfile = -1;
- 
--	sha1_file_name(&filename, sha1);
-+	sha1_file_name(&the_repository->objects, &filename, sha1);
- 	snprintf(freq->tmpfile, sizeof(freq->tmpfile),
- 		 "%s.temp", filename.buf);
- 
-@@ -2396,8 +2396,7 @@ int finish_http_object_request(struct http_object_request *freq)
- 		unlink_or_warn(freq->tmpfile);
- 		return -1;
- 	}
--
--	sha1_file_name(&filename, freq->sha1);
-+	sha1_file_name(&the_repository->objects, &filename, freq->sha1);
- 	freq->rename = finalize_object_file(freq->tmpfile, filename.buf);
- 	strbuf_release(&filename);
- 
 diff --git a/object-store.h b/object-store.h
-index 280e8e16ad..5f6beb9d91 100644
+index 794cb0af59..80a2ca6f75 100644
 --- a/object-store.h
 +++ b/object-store.h
-@@ -67,6 +67,12 @@ extern struct packed_git {
- 	char pack_name[FLEX_ARRAY]; /* more */
- } *packed_git;
+@@ -23,6 +23,14 @@ struct raw_object_store {
  
-+/*
-+ * Put in `buf` the name of the file in the local object database that
-+ * would be used to store a loose object with the specified sha1.
-+ */
-+void sha1_file_name(struct raw_object_store *o, struct strbuf *buf, const unsigned char *sha1);
+ 	unsigned ignore_env : 1;
+ 
++	/*
++	 * A fast, rough count of the number of objects in the repository.
++	 * These two fields are not meant for direct access. Use
++	 * approximate_object_count() instead.
++	 */
++	unsigned long approximate_object_count;
++	unsigned approximate_object_count_valid : 1;
 +
- void prepare_alt_odb(struct raw_object_store *o);
+ 	/*
+ 	 * Whether packed_git has already been populated with this repository's
+ 	 * packs.
+@@ -31,7 +39,7 @@ struct raw_object_store {
+ };
  
- #endif /* OBJECT_STORE_H */
-diff --git a/sha1_file.c b/sha1_file.c
-index 04a81e29f2..d64cdbb494 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -323,9 +323,9 @@ static void fill_sha1_path(struct strbuf *buf, const unsigned char *sha1)
- 	}
+ #define MRU_LIST_INIT {NULL, NULL}
+-#define RAW_OBJECT_STORE_INIT { NULL, NULL, MRU_LIST_INIT, NULL, NULL, 0, 0 }
++#define RAW_OBJECT_STORE_INIT { NULL, NULL, MRU_LIST_INIT, NULL, NULL, 0, 0, 0, 0 }
+ 
+ void raw_object_store_clear(struct raw_object_store *o);
+ 
+diff --git a/packfile.c b/packfile.c
+index a8a2e7fe43..693bafbc98 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -803,8 +803,6 @@ static void prepare_packed_git_one(char *objdir, int local)
+ 	strbuf_release(&path);
  }
  
--void sha1_file_name(struct strbuf *buf, const unsigned char *sha1)
-+void sha1_file_name(struct raw_object_store *o, struct strbuf *buf, const unsigned char *sha1)
+-static int approximate_object_count_valid;
+-
+ /*
+  * Give a fast, rough count of the number of objects in the repository. This
+  * ignores loose objects completely. If you have a lot of them, then either
+@@ -814,8 +812,8 @@ static int approximate_object_count_valid;
+  */
+ unsigned long approximate_object_count(void)
  {
--	strbuf_addstr(buf, get_object_directory());
-+	strbuf_addstr(buf, o->objectdir);
- 	strbuf_addch(buf, '/');
- 	fill_sha1_path(buf, sha1);
+-	static unsigned long count;
+-	if (!approximate_object_count_valid) {
++	if (!the_repository->objects.approximate_object_count_valid) {
++		unsigned long count;
+ 		struct packed_git *p;
+ 
+ 		prepare_packed_git();
+@@ -825,8 +823,9 @@ unsigned long approximate_object_count(void)
+ 				continue;
+ 			count += p->num_objects;
+ 		}
++		the_repository->objects.approximate_object_count = count;
+ 	}
+-	return count;
++	return the_repository->objects.approximate_object_count;
  }
-@@ -717,7 +717,7 @@ static int check_and_freshen_local(const unsigned char *sha1, int freshen)
- 	static struct strbuf buf = STRBUF_INIT;
  
- 	strbuf_reset(&buf);
--	sha1_file_name(&buf, sha1);
-+	sha1_file_name(&the_repository->objects, &buf, sha1);
+ static void *get_next_packed_git(const void *p)
+@@ -901,7 +900,7 @@ void prepare_packed_git(void)
  
- 	return check_and_freshen_file(buf.buf, freshen);
+ void reprepare_packed_git(void)
+ {
+-	approximate_object_count_valid = 0;
++	the_repository->objects.approximate_object_count_valid = 0;
+ 	the_repository->objects.packed_git_initialized = 0;
+ 	prepare_packed_git();
  }
-@@ -878,7 +878,7 @@ static int stat_sha1_file(const unsigned char *sha1, struct stat *st,
- 	static struct strbuf buf = STRBUF_INIT;
- 
- 	strbuf_reset(&buf);
--	sha1_file_name(&buf, sha1);
-+	sha1_file_name(&the_repository->objects, &buf, sha1);
- 	*path = buf.buf;
- 
- 	if (!lstat(*path, st))
-@@ -907,7 +907,7 @@ static int open_sha1_file(const unsigned char *sha1, const char **path)
- 	static struct strbuf buf = STRBUF_INIT;
- 
- 	strbuf_reset(&buf);
--	sha1_file_name(&buf, sha1);
-+	sha1_file_name(&the_repository->objects, &buf, sha1);
- 	*path = buf.buf;
- 
- 	fd = git_open(*path);
-@@ -1592,7 +1592,7 @@ static int write_loose_object(const unsigned char *sha1, char *hdr, int hdrlen,
- 	static struct strbuf filename = STRBUF_INIT;
- 
- 	strbuf_reset(&filename);
--	sha1_file_name(&filename, sha1);
-+	sha1_file_name(&the_repository->objects, &filename, sha1);
- 
- 	fd = create_tmpfile(&tmp_file, filename.buf);
- 	if (fd < 0) {
 -- 
 2.16.1.291.g4437f3f132-goog
 
