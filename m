@@ -2,175 +2,158 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3E2C71F404
-	for <e@80x24.org>; Fri, 16 Feb 2018 17:55:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3D7751F576
+	for <e@80x24.org>; Fri, 16 Feb 2018 17:55:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1162502AbeBPRzZ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Feb 2018 12:55:25 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:61748 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1162497AbeBPRzX (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Feb 2018 12:55:23 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2FC97C8E8D;
-        Fri, 16 Feb 2018 12:55:22 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
-        :cc:subject:message-id:references:mime-version:content-type
-        :in-reply-to:content-transfer-encoding; s=sasl; bh=Hq2U35AsO/qNb
-        oFb9KU99OXXV9w=; b=Btxi/rPhjVU88rBnxzKY58NiMkstK+8WMKgW/6x6hH8IE
-        5aHu2k9enlp9P57hlktcJzsmA94UwEWke8RyN96UlF5mWSM+p9FAK0Vkah1Exklw
-        Ma8defqJEEFPtdVvX17eyS+eIu2uo/QiJdxFvhmIiYbMZUHA8VtytRNh/ZJ/Hg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
-        :subject:message-id:references:mime-version:content-type
-        :in-reply-to:content-transfer-encoding; q=dns; s=sasl; b=ANW7U7G
-        mIhWJTUTbw6UlsDFC0PsdIJXueeharYwhrXeNA7F5lgB0oi6PwE/N75jEBv+kWsb
-        Pbgym2W5H+S5H7LEikfUeT6x74kg/MpAmwzcdY6PI44aF+AY+kAxCxcg+vk5+g7H
-        S/GC95bEQrnEfy7fNrdEruQk0QVTG7fFSnow=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 20FBFC8E8C;
-        Fri, 16 Feb 2018 12:55:22 -0500 (EST)
-Received: from zaya.teonanacatl.net (unknown [173.67.181.41])
-        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9D01DC8E8B;
-        Fri, 16 Feb 2018 12:55:21 -0500 (EST)
-Date:   Fri, 16 Feb 2018 12:55:19 -0500
-From:   Todd Zullinger <tmz@pobox.com>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Matthieu Moy <git@matthieu-moy.fr>, Petr Baudis <pasky@ucw.cz>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jari Aalto <jari.aalto@cante.net>,
-        Giuseppe Bilotta <giuseppe.bilotta@gmail.com>,
-        Marcus Griep <marcus@griep.us>
-Subject: Re: [PATCH 3/8] perl: generalize the Git::LoadCPAN facility
-Message-ID: <20180216175519.GQ27038@zaya.teonanacatl.net>
-References: <20180214222146.10655-1-avarab@gmail.com>
- <20180214222146.10655-4-avarab@gmail.com>
- <20180215045301.GC27038@zaya.teonanacatl.net>
- <87sha2f0j1.fsf@evledraar.gmail.com>
- <20180215212338.GL27038@zaya.teonanacatl.net>
- <87k1vdf188.fsf@evledraar.gmail.com>
+        id S1162511AbeBPRzc (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Feb 2018 12:55:32 -0500
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:35450 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1162497AbeBPRz0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Feb 2018 12:55:26 -0500
+Received: by mail-wm0-f65.google.com with SMTP id x21so4548545wmh.0;
+        Fri, 16 Feb 2018 09:55:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:date:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=GGDfF4aGOSSTY2S8sThkBL4qxagJNNFWzIm/lnVbA9k=;
+        b=axskhzmSadziMjHFpdkBHALissOANHBBUk13MjOPgOpi2YrKy9bWFFTdKforaKEldD
+         VcRhA9+EGktfkyk9J6wsTcIDVN3xaVqULtd84MVMgq4HtXfQcDDNYfrNOsuTRa8Bxe/S
+         w6GHuQRHLVF7mG+pxnXgFEfnfZsg+fWVw/pl+sqGyeL9ZpdU7vm0S9bCk61Q02W9YD7b
+         Xi18jW2imhdtU+PWSnSVbwIgJeU5/+j7pWcJ/k7NMEhr51RQbD5zneNLKPRYuiEsPhsn
+         tapdWkpnigGO/DO0quAajnnXk7cIVJ0r/TiC/eTAs2xmsAo4u/I9G+lVuW+8cIiKQbRY
+         yf8w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=GGDfF4aGOSSTY2S8sThkBL4qxagJNNFWzIm/lnVbA9k=;
+        b=BYmEqHb+cWDiWEHTMZnjLu3sXgsYLEBivevXP4+JI3B/yQM4ONIY0muhOm9tuhKTdM
+         okoeh1piyZfydGR6h3dmQ9KvMwJHR5otGCOn2OIDO1giSNh5k5XTHi/kxHSMpmpeph2m
+         a1BnT4GRXTfiqIzQMQLSw1aWqk5/AzxH7KJtjnHRnUGmhrFt/jAlOXPYo3V3asfCKoJh
+         hMOR3yGSQecAWCCJjlPJ3jUKchKORvCnt4fBKDA6IRINXKpEuu6s6L6DVyRdRfdY/CsX
+         otFW8QLBbz7Z5DEem94HSFew0FoYCR31FHlXIaUXsrBEgiqeH8Dy9JEKRLJcFjBn1AoZ
+         lYvA==
+X-Gm-Message-State: APf1xPALYH7vXuBT4vYbx5dcDt4/vA/T61DBpHD44mG7YvEUPAmBaIrx
+        Tr95Fj35NCK3yi+Y+iz5rzGqDgBr
+X-Google-Smtp-Source: AH8x224RQDYr5rI1i2Dr5wlYNrUFoGDgL/p8CgtioVR7V+mWccn0zYh8WiqOqpgdQGj7pjBIIoaZUw==
+X-Received: by 10.28.113.216 with SMTP id d85mr1774373wmi.3.1518803724676;
+        Fri, 16 Feb 2018 09:55:24 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id x203sm34744224wmd.11.2018.02.16.09.55.23
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 16 Feb 2018 09:55:23 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     git@vger.kernel.org
+Cc:     Linux Kernel <linux-kernel@vger.kernel.org>,
+        git-packagers@googlegroups.com
+Subject: [ANNOUNCE] Git v2.16.2
+Date:   Fri, 16 Feb 2018 09:55:22 -0800
+Message-ID: <xmqqinaw7rat.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-In-Reply-To: <87k1vdf188.fsf@evledraar.gmail.com>
-User-Agent: Mutt/1.9.3 (2018-01-21)
-X-Pobox-Relay-ID: 8EB13D5C-1342-11E8-8A0F-D3940C78B957-09356542!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C6var Arnfj=F6r=F0 Bjarmason wrote:
-> On Thu, Feb 15 2018, Todd Zullinger jotted:
->> What about moving perl/Git/FromCPAN to perl/FromCPAN and
->> then including perl/FromCPAN in LIB_PERL{,_GEN} only if
->> NO_PERL_CPAN_FALLBACKS is unset?
->>
->>  LIB_PERL :=3D $(wildcard perl/Git.pm perl/Git/*.pm perl/Git/*/*.pm pe=
-rl/Git/*/*/*.pm)
->> +ifndef NO_PERL_CPAN_FALLBACKS
->> +LIB_PERL +=3D $(wildcard perl/FromCPAN/*.pm perl/FromCPAN/*/*.pm)
->> +endif
->>  LIB_PERL_GEN :=3D $(patsubst perl/%.pm,perl/build/lib/%.pm,$(LIB_PERL=
-))
->>
->> I haven't tested that at all, so it could be broken in many
->> ways.
->=20
-> Yes that's a much better idea, it evades the whole problem of conflatin=
-g
-> the perl/Git* glob.
+The latest maintenance release Git v2.16.2 is now available at
+the usual places, with small fixes that are already in the 
+'master' front.
 
-I did test this yesterday and it seems to work well.  Here
-it is in patch form, in case it's helpful to you for the
-next version.  It might well be better as part of a commit
-teaching Git::LoadCPAN to respect NO_PERL_CPAN_FALLBACKS.
+The tarballs are found at:
 
----- 8< ----
-From: Todd Zullinger <tmz@pobox.com>
-Subject: [PATCH] Makefile: add NO_PERL_CPAN_FALLBACKS to disable fallback
- module install
+    https://www.kernel.org/pub/software/scm/git/
 
-As noted in perl/Git/LoadCPAN.pm, operating system packages often don't
-want to ship Git::FromCPAN tree at all, preferring to use their own
-packaging of CPAN modules instead.  Allow such packagers to set
-NO_PERL_CPAN_FALLBACKS to easily avoid installing these fallback perl
-CPAN modules.
+The following public repositories all have a copy of the 'v2.16.2'
+tag and the 'maint' branch that the tag points at:
 
-Signed-off-by: Todd Zullinger <tmz@pobox.com>
----
- Makefile                                    | 6 ++++++
- perl/{Git =3D> }/FromCPAN/.gitattributes      | 0
- perl/{Git =3D> }/FromCPAN/Error.pm            | 0
- perl/{Git =3D> }/FromCPAN/Mail/.gitattributes | 0
- perl/{Git =3D> }/FromCPAN/Mail/Address.pm     | 0
- 5 files changed, 6 insertions(+)
- rename perl/{Git =3D> }/FromCPAN/.gitattributes (100%)
- rename perl/{Git =3D> }/FromCPAN/Error.pm (100%)
- rename perl/{Git =3D> }/FromCPAN/Mail/.gitattributes (100%)
- rename perl/{Git =3D> }/FromCPAN/Mail/Address.pm (100%)
+  url = https://kernel.googlesource.com/pub/scm/git/git
+  url = git://repo.or.cz/alt-git.git
+  url = https://github.com/gitster/git
 
-diff --git a/Makefile b/Makefile
-index 5bcd83ddf3..838b3c6393 100644
---- a/Makefile
-+++ b/Makefile
-@@ -296,6 +296,9 @@ all::
- #
- # Define NO_PERL if you do not want Perl scripts or libraries at all.
- #
-+# Define NO_PERL_CPAN_FALLBACKS if you do not want to install fallbacks =
-for
-+# perl CPAN modules.
-+#
- # Define PYTHON_PATH to the path of your Python binary (often /usr/bin/p=
-ython
- # but /usr/bin/python2.7 on some platforms).
- #
-@@ -2297,6 +2300,9 @@ po/build/locale/%/LC_MESSAGES/git.mo: po/%.po
- 	$(QUIET_MSGFMT)mkdir -p $(dir $@) && $(MSGFMT) -o $@ $<
-=20
- LIB_PERL :=3D $(wildcard perl/Git.pm perl/Git/*.pm perl/Git/*/*.pm perl/=
-Git/*/*/*.pm)
-+ifndef NO_PERL_CPAN_FALLBACKS
-+LIB_PERL +=3D $(wildcard perl/FromCPAN/*.pm perl/FromCPAN/*/*.pm)
-+endif
- LIB_PERL_GEN :=3D $(patsubst perl/%.pm,perl/build/lib/%.pm,$(LIB_PERL))
-=20
- ifndef NO_PERL
-diff --git a/perl/Git/FromCPAN/.gitattributes b/perl/FromCPAN/.gitattribu=
-tes
-similarity index 100%
-rename from perl/Git/FromCPAN/.gitattributes
-rename to perl/FromCPAN/.gitattributes
-diff --git a/perl/Git/FromCPAN/Error.pm b/perl/FromCPAN/Error.pm
-similarity index 100%
-rename from perl/Git/FromCPAN/Error.pm
-rename to perl/FromCPAN/Error.pm
-diff --git a/perl/Git/FromCPAN/Mail/.gitattributes b/perl/FromCPAN/Mail/.=
-gitattributes
-similarity index 100%
-rename from perl/Git/FromCPAN/Mail/.gitattributes
-rename to perl/FromCPAN/Mail/.gitattributes
-diff --git a/perl/Git/FromCPAN/Mail/Address.pm b/perl/FromCPAN/Mail/Addre=
-ss.pm
-similarity index 100%
-rename from perl/Git/FromCPAN/Mail/Address.pm
-rename to perl/FromCPAN/Mail/Address.pm
---=20
-2.16.1
+----------------------------------------------------------------
 
---=20
-Todd
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Damn you and your estrogenical treachery!
-    -- Stewie Griffin
+Git v2.16.2 Release Notes
+=========================
+
+Fixes since v2.16.1
+-------------------
+
+ * An old regression in "git describe --all $annotated_tag^0" has been
+   fixed.
+
+ * "git svn dcommit" did not take into account the fact that a
+   svn+ssh:// URL with a username@ (typically used for pushing) refers
+   to the same SVN repository without the username@ and failed when
+   svn.pushmergeinfo option is set.
+
+ * "git merge -Xours/-Xtheirs" learned to use our/their version when
+   resolving a conflicting updates to a symbolic link.
+
+ * "git clone $there $here" is allowed even when here directory exists
+   as long as it is an empty directory, but the command incorrectly
+   removed it upon a failure of the operation.
+
+ * "git stash -- <pathspec>" incorrectly blew away untracked files in
+   the directory that matched the pathspec, which has been corrected.
+
+ * "git add -p" was taught to ignore local changes to submodules as
+   they do not interfere with the partial addition of regular changes
+   anyway.
+
+
+Also contains various documentation updates and code clean-ups.
+
+----------------------------------------------------------------
+
+Changes since v2.16.1 are as follows:
+
+Andreas G. Schacker (1):
+      doc/read-tree: remove obsolete remark
+
+Daniel Knittl-Frank (1):
+      describe: prepend "tags/" when describing tags with embedded name
+
+Jason Merrill (1):
+      git-svn: fix svn.pushmergeinfo handling of svn+ssh usernames.
+
+Jeff King (4):
+      t5600: fix outdated comment about unborn HEAD
+      t5600: modernize style
+      clone: factor out dir_exists() helper
+      clone: do not clean up directories we didn't create
+
+Junio C Hamano (2):
+      merge: teach -Xours/-Xtheirs to symbolic link merge
+      Git 2.16.2
+
+Nguyễn Thái Ngọc Duy (1):
+      add--interactive: ignore submodule changes except HEAD
+
+René Scharfe (9):
+      commit: avoid allocation in clear_commit_marks_many()
+      commit: use clear_commit_marks_many() in remove_redundant()
+      ref-filter: use clear_commit_marks_many() in do_merge_filter()
+      object: add clear_commit_marks_all()
+      bisect: avoid using the rev_info flag leak_pending
+      bundle: avoid using the rev_info flag leak_pending
+      checkout: avoid using the rev_info flag leak_pending
+      revision: remove the unused flag leak_pending
+      commit: remove unused function clear_commit_marks_for_object_array()
+
+Thomas Gummerer (1):
+      stash: don't delete untracked files that match pathspec
+
+Ævar Arnfjörð Bjarmason (2):
+      perf: amend the grep tests to test grep.threads
+      cat-file doc: document that -e will return some output
 
