@@ -2,121 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0E40F1F404
-	for <e@80x24.org>; Fri, 16 Feb 2018 03:34:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A2A0D1F576
+	for <e@80x24.org>; Fri, 16 Feb 2018 09:47:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750743AbeBPDeG (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Feb 2018 22:34:06 -0500
-Received: from mail-lf0-f65.google.com ([209.85.215.65]:34755 "EHLO
-        mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750727AbeBPDeF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Feb 2018 22:34:05 -0500
-Received: by mail-lf0-f65.google.com with SMTP id l191so2352216lfe.1
-        for <git@vger.kernel.org>; Thu, 15 Feb 2018 19:34:04 -0800 (PST)
+        id S932472AbeBPJrp (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Feb 2018 04:47:45 -0500
+Received: from mail-io0-f176.google.com ([209.85.223.176]:41751 "EHLO
+        mail-io0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932325AbeBPJrn (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Feb 2018 04:47:43 -0500
+Received: by mail-io0-f176.google.com with SMTP id e4so3566893iob.8
+        for <git@vger.kernel.org>; Fri, 16 Feb 2018 01:47:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=2zoE3xnTLI9v4k5Levxk+PcpRIsGi7ExTfs4XLr+eYs=;
-        b=ZL8QtFvpCtB3PCxvidjRU62uIg2DMIiHMHknHsbzZfXHl2wkEwlvo6pQVyH3MZhc67
-         qUyxMUq7RY0rNo7rDfMmK2XKXS+jIIaPlcRq6GNNHUXtdX8qRCJoHJfL1QRjRCOuofVg
-         jZgnkD59rX0ErCCKAp4GKHhkWyWq3Fel5BpPubjlTJRNOVZTnhmwSCxbTUsntb2tMZ/C
-         BSSKwZlp+lXB94K/vyPDHVko00uMTYk85IZ+IR0scqbB6CLucWMN9+uvoKi0YRAXIcoa
-         5dqNaPGLZVrXY43tuRhFYBNxixfdijyCjfpWcjhI+f3DOdoxzWl2G9Mstwdy2hZBL3QE
-         ymGg==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=8C/20WfZZQhx3+KOHofqDVaD7tnMzcL1lm/m7pbunDY=;
+        b=I+5QaNx7OryGkEU7vmESKog10TBlbl3wrfuj4sCHtXbUhoSVTxdsJrKUpoIChgpSrY
+         gAkiF5qWCWl/NOzAjN2acEn5Z4rtSFADFa1J4eR8RTuTKfMo/InNbgkIlD/oR8ApxVr/
+         8gRo3f4JnCoT6Ju1WaDmiaaAZlGUqt0X/fF108sziw5vMe+GvmgpXIBjSvNexjCqQweG
+         J5Zlfss+0xvPuCLX9GWapNNWkRdMgJkHWY0WJGvsmQT714tP7wa5WeBUwOuyUquvvtND
+         Vs3rqziYBY0tno6783pn1HRtVaYEwV+mVO2gGOVKa9y830rXeM8JLlfF2upxrKfLufG+
+         M+6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=2zoE3xnTLI9v4k5Levxk+PcpRIsGi7ExTfs4XLr+eYs=;
-        b=YzBw1Gl/V+h1q3ZSNSP9Z5dJUt4qLBtgb1TzI6VXox7LGj7rmtr18rxuLfyqRvsWJj
-         Tf9Wj/fn4fixgRNlwh+CoTJ8yZVBVzHRcAokrVcKnIF1kZh5mdhAJZfX+yv6xZj9VQvl
-         /i1uaZ5yIq9kLgdveGNwHrLgFVf4CBQkmmXHkHWqPG+NkhPkUXw+84pIodKc2NToMtty
-         WCXCef2D8gRK5vIfp+E7LCpG6cm0lDqPmL56gaKs2SgIAyYBPZWh665zcSheru9SK0Ax
-         ZgT9QK1rwKunFVIyQF1IQupG876zDVMe2gHBC7VHOKJ5hgJv7I8tJvozBCz++MRnSazK
-         4yGQ==
-X-Gm-Message-State: APf1xPCSoxW2AIeWCMDrl8s9UjgnHSu+DBh4+VdZg9+af6WqQVV8du21
-        MgESvanbD5rbbU0HpsCqUR1sH76P+iqTnja7c+FnGkDE
-X-Google-Smtp-Source: AH8x224kCEup1ofNHga500zdi1dBDdooZQq7B0lTP/YKNSxGBuDJcrg3tDW+XKO3NSQneWzFP4EZhEZxCkawl/KnkBY=
-X-Received: by 10.25.206.131 with SMTP id e125mr3453414lfg.145.1518752043677;
- Thu, 15 Feb 2018 19:34:03 -0800 (PST)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=8C/20WfZZQhx3+KOHofqDVaD7tnMzcL1lm/m7pbunDY=;
+        b=ha0vVZj0DfjF2JMmp3MVqWond5LOjqtFNniJFZXCmddorPnD076xSk2qCJMJNXvIcG
+         o3RFcj6dLrZvhrj2Mb1bm6LwDQB6c6NYNy07nYotxXNkz9WKrDjOmmrFXWxmGoANx5gj
+         3o6z1mjRn8WM78IljJCOGNVsQWSfbj/nr6XuIecmBK+/1SyvviGcq5rN9NVfJbXWRAuT
+         mugHS7P0Q/ekjV3IcolIe5d02Odj8AAughSRViW0gliJ6VfVWvUmXz1S5fhL7l2BR7KD
+         4WpBHqxXCYxea2UuxAgBBLgQOPctJ7pvybISb/ZYEpeAziltVcRF5LwFZOfb3uTnvQPT
+         itdw==
+X-Gm-Message-State: APf1xPBD9e6s3Lwkhv4SpVUl8nh2592U/1ks/NQiEk1oE/HcuNomo+rm
+        jOik7rafuaF2DgJPebRCZaQwNeUGZ0cnYvtNFi+Dog==
+X-Google-Smtp-Source: AH8x225j+la38aByMS/asEdgmJbbzmxkli7nplZnVpOkd/iaFxMx0L/dX+IaQauBLLIiuSQ/SQx7QApcZ1LAdTJ/3Xw=
+X-Received: by 10.107.101.13 with SMTP id z13mr7060059iob.141.1518774462523;
+ Fri, 16 Feb 2018 01:47:42 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.46.125.26 with HTTP; Thu, 15 Feb 2018 19:34:03 -0800 (PST)
-From:   Stephen R Guglielmo <srguglielmo@gmail.com>
-Date:   Thu, 15 Feb 2018 22:34:03 -0500
-Message-ID: <CADfK3RXjK9ExcSLLxkbkDvb2o_U9+7Ykua5cHEXc9+uUU17z9g@mail.gmail.com>
-Subject: [PATCH] subtree: hide GPG signatures in calls to log
-To:     git <git@vger.kernel.org>
-Cc:     Avery Pennarun <apenwarr@gmail.com>,
-        Stefan Beller <sbeller@google.com>
+Received: by 10.107.30.82 with HTTP; Fri, 16 Feb 2018 01:47:41 -0800 (PST)
+From:   hgfds jhgfds <lvl100p@gmail.com>
+Date:   Fri, 16 Feb 2018 17:47:41 +0800
+Message-ID: <CAOrVMvvM4XUsE0v7oxotD8yPHkmstG-mQYuhF0OsC-bETGQ-Og@mail.gmail.com>
+Subject: Is the -w option for git blame bugged?
+To:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This fixes `add` and `pull` for GPG signed objects.
+Hi,
 
-Signed-off-by: Stephen R Guglielmo <srg@guglielmo.us>
----
- contrib/subtree/git-subtree.sh | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+I recently asked a question on stackoverflow regarding what seemed to
+be erroneous output from git blame when the -w option is specified.
+However, no one answered my question, so I decided to ask here
+instead.
 
-diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
-index dec085a23..9594ca4b5 100755
---- a/contrib/subtree/git-subtree.sh
-+++ b/contrib/subtree/git-subtree.sh
-@@ -297,7 +297,7 @@ find_latest_squash () {
-     main=
-     sub=
-     git log --grep="^git-subtree-dir: $dir/*\$" \
--        --pretty=format:'START %H%n%s%n%n%b%nEND%n' HEAD |
-+        --no-show-signature --pretty=format:'START %H%n%s%n%n%b%nEND%n' HEAD |
-     while read a b junk
-     do
-         debug "$a $b $junk"
-@@ -341,7 +341,7 @@ find_existing_splits () {
-     main=
-     sub=
-     git log --grep="^git-subtree-dir: $dir/*\$" \
--        --pretty=format:'START %H%n%s%n%n%b%nEND%n' $revs |
-+        --no-show-signature --pretty=format:'START %H%n%s%n%n%b%nEND%n' $revs |
-     while read a b junk
-     do
-         case "$a" in
-@@ -382,7 +382,7 @@ copy_commit () {
-     # We're going to set some environment vars here, so
-     # do it in a subshell to get rid of them safely later
-     debug copy_commit "{$1}" "{$2}" "{$3}"
--    git log -1 --pretty=format:'%an%n%ae%n%aD%n%cn%n%ce%n%cD%n%B' "$1" |
-+    git log --no-show-signature -1
---pretty=format:'%an%n%ae%n%aD%n%cn%n%ce%n%cD%n%B' "$1" |
-     (
-         read GIT_AUTHOR_NAME
-         read GIT_AUTHOR_EMAIL
-@@ -462,8 +462,8 @@ squash_msg () {
-         oldsub_short=$(git rev-parse --short "$oldsub")
-         echo "Squashed '$dir/' changes from $oldsub_short..$newsub_short"
-         echo
--        git log --pretty=tformat:'%h %s' "$oldsub..$newsub"
--        git log --pretty=tformat:'REVERT: %h %s' "$newsub..$oldsub"
-+        git log --no-show-signature --pretty=tformat:'%h %s' "$oldsub..$newsub"
-+        git log --no-show-signature --pretty=tformat:'REVERT: %h %s'
-"$newsub..$oldsub"
-     else
-         echo "Squashed '$dir/' content from commit $newsub_short"
-     fi
-@@ -475,7 +475,7 @@ squash_msg () {
+The question is available at
+https://stackoverflow.com/questions/48808281/git-blame-ignore-whitespace-option-bugged
 
- toptree_for_commit () {
-     commit="$1"
--    git log -1 --pretty=format:'%T' "$commit" -- || exit $?
-+    git rev-parse --verify "$commit^{tree}" || exit $?
- }
+Hope someone can help to shed light on this issue soon.
 
- subtree_for_commit () {
--- 
-2.16.1
+Thanks!
