@@ -2,125 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B9E141F404
-	for <e@80x24.org>; Thu, 15 Feb 2018 23:34:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 115721F404
+	for <e@80x24.org>; Fri, 16 Feb 2018 01:14:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1165088AbeBOXeV (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Feb 2018 18:34:21 -0500
-Received: from mail-qt0-f173.google.com ([209.85.216.173]:34481 "EHLO
-        mail-qt0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1163785AbeBOXeU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Feb 2018 18:34:20 -0500
-Received: by mail-qt0-f173.google.com with SMTP id d14so1863865qtg.1
-        for <git@vger.kernel.org>; Thu, 15 Feb 2018 15:34:20 -0800 (PST)
+        id S1757049AbeBPBO2 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Feb 2018 20:14:28 -0500
+Received: from mail-ua0-f194.google.com ([209.85.217.194]:45541 "EHLO
+        mail-ua0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753066AbeBPBO1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Feb 2018 20:14:27 -0500
+Received: by mail-ua0-f194.google.com with SMTP id z3so1018874uae.12
+        for <git@vger.kernel.org>; Thu, 15 Feb 2018 17:14:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=llmn3ojIbrtZZlzKmSCFuiZ8ZBRuTxiznu4nzSd39FI=;
-        b=MS+o3cAGsbLu3phEVKdAol/+I48X+SJtsDAh2DBDiD2pFDCk1q61viHGW3M2qqFrUh
-         lmN/LNKYt/M3xMw1TRLMibHKi1UZs4zNrPpDNZBfY6F+rL7qMw5Yf9znjvhn3O+dlaXa
-         F6kCrHGT7bKnqxwzPQi2wb6PlCRZcuxoPRfRUpx8zB2yGQqhgEDHieh0L6v7aqDvf1P1
-         gnoVtdj+upPEKRhglsHj7r26FglrTjlmVmCudWfykgvj5+SWLLq8nqW8bJe8WpxzLVV/
-         ojugZ0Em/BoPh63lt/27K51Oll0ZmbCWJJKsfBLvYWs5VhbiWIqoI/4aK7MlkYcw2aRO
-         6ohw==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=E0nhnBjGLhiUf4mK3w8oKCeKKQNPpgY57+RRqqHslfk=;
+        b=NlZoX/Jss3v0A9349y0EAIT6Piaf+ptBTNujU0dJ/zjy39wbLkYIrt2pz1JebZU7lL
+         qImWev0myS7jJRwrANNM1Y0Sd67yTRF5idN6+THs0b91axwcLgs1mhfuHB7jmPEvlqpb
+         RMaW9gezLjPGQJCDY/SkBfDFjEPsE7oQfEuWrm8wYv4dF2oFe/PilSgCsbmlrIoSoScB
+         hTADYGn3HG66P3Kk+FHrfQbQKuJk20Sr8fNJAXhvy4uOV51mCutrnldomt4VyU/fbjB6
+         EqdyDf45LSnjAfgB7hkY8ukObbUIl9c/1e1+xH9wWXn98EoqHKFsf8V9Ak5jpOo+yhV4
+         CfXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=llmn3ojIbrtZZlzKmSCFuiZ8ZBRuTxiznu4nzSd39FI=;
-        b=mkLqaLqbGiOswsOdfaehCaWpmYwkDQesgvkG6Gwa9VTpwbcY/azfqJSr3Db2sgT+jW
-         eDnesDB9X7LQgGm5HelyJK4VNgk90KY2RpXaDzBnkwPuEoltG9X60SpN3Us4Dr6tkugI
-         ewVcokIpHd12udoRnTK5bQmSapr6g6GPwgt77wB6KYQTf0I6DWfsPkxzZPTr42GEgrnC
-         GBzXfz4yJrFSSNG2ve72rUreVoSrqKWJqfmj4NhkU9m5tzKU8GW3l3j1tpgKrlIbbX2c
-         TmYgybzlOET6kgaguYFyHmo6ZKIhRCBulDfLCWFmhqdXMMELyP2RxHdy4hyoHGBXFxZ4
-         g+jg==
-X-Gm-Message-State: APf1xPBj8fzGmNXM+hlHQZT5PkkYHd51hTuM6HnzzsZEFH7vjqdQrzs7
-        4ceYzYCT2rKz64F28z9UqvLQZ+QPL5+Tgia/q5c=
-X-Google-Smtp-Source: AH8x224cUPBKhRNiZv4PDb3E3isuzi0Ehucg2nJVDAdpImG5WTIJVHOtDWZfd9jfgMD10cvvrvkHNyp6eVLKkURGiRw=
-X-Received: by 10.237.37.161 with SMTP id x30mr6951754qtc.78.1518737659491;
- Thu, 15 Feb 2018 15:34:19 -0800 (PST)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=E0nhnBjGLhiUf4mK3w8oKCeKKQNPpgY57+RRqqHslfk=;
+        b=aoJ889wIRywqX7PmL3eCiL8YU0F0C9O5ru3AO3pTNhRp672CjIoKow/6mt7Lpg0V1X
+         QTagZQkfS1QE3wVYjracP8daZmphVQEG/N7/hotFrnjJcUiFD0UGYHf/RFko53qi8dzE
+         gs7bzkJCYCn4ox1R7fchrE5QM2C8mGnusc8N+PDEGw1EvV7Wd1NA25dxxDEPZIcOHIaO
+         sMKv1f/2z5uJZCfIDBwocUKlma0Bn/zOnWF9GOPimQUZ5ms4QXnfru5qQ0LVx4SEfCEH
+         pdLQ+dL+Z5XhcyD/5UueU6Vp6xBvzRwcei7SX7hKyB1o7AR5KxIvVhXuR7pEaEY8I+CV
+         /H+A==
+X-Gm-Message-State: APf1xPDMBJtDpxHF7TYAVfogdMYVHIrJjbiUlWYZEr1LnN230Y5zBKnf
+        5U3jQU2T7JzuJSeW1DOHeM+bEucKK+fasioAD0Xd6w==
+X-Google-Smtp-Source: AH8x2264J7BIvfH94m1gJS/Jao84Yl+uB/uLZftimrBqbG2DCLb1CjzNvfPO9nfmhTGDb9MScR7F66LJFi0NM+p0KEQ=
+X-Received: by 10.176.68.35 with SMTP id m32mr3680756uam.39.1518743666989;
+ Thu, 15 Feb 2018 17:14:26 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.12.128.40 with HTTP; Thu, 15 Feb 2018 15:34:19 -0800 (PST)
-In-Reply-To: <xmqqy3jt7ty8.fsf_-_@gitster-ct.c.googlers.com>
-References: <20180213080036.3bf3a908@canb.auug.org.au> <CA+55aFwM0vy+pw-Xv=gA19ULMwAXNPhdO3qR5A3hkMrZKJFNSQ@mail.gmail.com>
- <CA+55aFzxsNxgKD1uGZQCiib+=+wCMSa0=B+Ye3Zi-u6kpz8Vrg@mail.gmail.com>
- <xmqqfu65sx20.fsf@gitster-ct.c.googlers.com> <CA+55aFwTp8gg70sHXqOgR01Liv5c8nnfUP0yTdwpkh-rg+2EMA@mail.gmail.com>
- <xmqqzi4drczv.fsf@gitster-ct.c.googlers.com> <20180212222157.0a3bd472@vento.lan>
- <xmqqmv0crepg.fsf@gitster-ct.c.googlers.com> <CA+55aFxkYTeY9h=VHFXi=gbXsnsHCRMAVZ9=1_EsFGSqr0sj9g@mail.gmail.com>
- <xmqqfu63o2xv.fsf@gitster-ct.c.googlers.com> <xmqqy3jt7ty8.fsf_-_@gitster-ct.c.googlers.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 15 Feb 2018 18:34:19 -0500
-X-Google-Sender-Auth: vNBnwzqvHAj-KTgXVLQwsKQKwCM
-Message-ID: <CAPig+cSJKDH=_-hGZLpZUjC4WEyjMRAd2VPgo-Vd+sHpa4jQ-Q@mail.gmail.com>
-Subject: Re: [PATCH] merge: allow fast-forward when merging a tracked tag
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Mauro Carvalho Chehab <mchehab@osg.samsung.com>,
-        Linus Torvalds <torvalds@linux-foundation.org>
+Received: by 10.176.32.12 with HTTP; Thu, 15 Feb 2018 17:14:26 -0800 (PST)
+In-Reply-To: <20180130232533.25846-26-newren@gmail.com>
+References: <20180130232533.25846-1-newren@gmail.com> <20180130232533.25846-26-newren@gmail.com>
+From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Date:   Fri, 16 Feb 2018 02:14:26 +0100
+Message-ID: <CAM0VKjkqOe_pU78cRqgaqEoiZP6PENUvq6-RnDWEKCKsB1rQXA@mail.gmail.com>
+Subject: Re: [PATCH v7 25/31] merge-recursive: apply necessary modifications
+ for directory renames
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git mailing list <git@vger.kernel.org>,
+        Stefan Beller <sbeller@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 15, 2018 at 5:45 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> [...]
-> Update the default (again) for "git merge" that merges a tag object
-> to (1) --no-ff (i.e. create a merge commit even when side branch
-> fast forwards) if the tag being merged is not at its expected place
-> in refs/tags/ hierarchy and (2) --ff (i.e. allow fast-forward update
-> when able) otherwise.
+On Wed, Jan 31, 2018 at 12:25 AM, Elijah Newren <newren@gmail.com> wrote:
+> This commit hooks together all the directory rename logic by making the
+> necessary changes to the rename struct, it's dst_entry, and the
+> diff_filepair under consideration.
 >
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> Signed-off-by: Elijah Newren <newren@gmail.com>
 > ---
-> diff --git a/builtin/merge.c b/builtin/merge.c
-> @@ -1125,6 +1126,42 @@ static struct commit_list *collect_parents(struct commit *head_commit,
-> +static int merging_a_throwaway_tag(struct commit *commit)
+>  merge-recursive.c                   | 187 +++++++++++++++++++++++++++++++++++-
+>  t/t6043-merge-rename-directories.sh |  50 +++++-----
+>  2 files changed, 211 insertions(+), 26 deletions(-)
+>
+> diff --git a/merge-recursive.c b/merge-recursive.c
+> index 38dc0eefaf..7c78dc2dc1 100644
+> --- a/merge-recursive.c
+> +++ b/merge-recursive.c
+
+> @@ -641,6 +643,27 @@ static int update_stages(struct merge_options *opt, const char *path,
+>         return 0;
+>  }
+>
+> +static int update_stages_for_stage_data(struct merge_options *opt,
+> +                                       const char *path,
+> +                                       const struct stage_data *stage_data)
 > +{
-> +       const char *tag_ref;
-> +       struct object_id oid;
+> +       struct diff_filespec o, a, b;
 > +
-> +       /* Are we merging a tag? */
-> +       if (!merge_remote_util(commit) ||
-> +           !merge_remote_util(commit)->obj ||
-> +           merge_remote_util(commit)->obj->type != OBJ_TAG)
-> +               return 0;
+> +       o.mode = stage_data->stages[1].mode;
+> +       oidcpy(&o.oid, &stage_data->stages[1].oid);
 > +
-> +       /*
-> +        * Now we know we are merging a tag object.  Are we downstream
-> +        * and following the tags from upstream?  If so, we must have
-> +        * the tag object pointed at by "refs/tags/$T" where $T is the
-> +        * tagname recorded in the tag object.  We want to allow such
-> +        * a "just to catch up" merge to fast-forward.
-> +        */
-> +       tag_ref = xstrfmt("refs/tags/%s",
-> +                         ((struct tag *)merge_remote_util(commit)->obj)->tag);
-
-xstrfmt() allocates a new string...
-
-> +       if (!read_ref(tag_ref, &oid) &&
-> +           !oidcmp(&oid, &merge_remote_util(commit)->obj->oid))
-> +               return 0;
-
-...which is leaked here...
-
+> +       a.mode = stage_data->stages[2].mode;
+> +       oidcpy(&a.oid, &stage_data->stages[2].oid);
 > +
-> +       /*
-> +        * Otherwise, we are playing an integrator's role, making a
-> +        * merge with a throw-away tag from a contributor with
-> +        * something like "git pull $contributor $signed_tag".
-> +        * We want to forbid such a merge from fast-forwarding
-> +        * by default; otherwise we would not keep the signature
-> +        * anywhere.
-> +        */
-> +       return 1;
+> +       b.mode = stage_data->stages[3].mode;
+> +       oidcpy(&b.oid, &stage_data->stages[3].oid);
+> +
+> +       return update_stages(opt, path,
+> +                            is_null_sha1(o.oid.hash) ? NULL : &o,
+> +                            is_null_sha1(a.oid.hash) ? NULL : &a,
+> +                            is_null_sha1(b.oid.hash) ? NULL : &b);
 
-...and here.
-
-> +}
+Please use is_null_oid(&o.oid) etc. instead of is_null_sha1().
