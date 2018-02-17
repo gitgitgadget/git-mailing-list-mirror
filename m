@@ -2,126 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DEBFA1F404
-	for <e@80x24.org>; Sat, 17 Feb 2018 00:47:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 685221F404
+	for <e@80x24.org>; Sat, 17 Feb 2018 03:00:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750957AbeBQAr6 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Feb 2018 19:47:58 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:50922 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750940AbeBQAr4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Feb 2018 19:47:56 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 52F5FCF8E8;
-        Fri, 16 Feb 2018 19:47:56 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
-        :cc:subject:message-id:references:mime-version:content-type
-        :in-reply-to; s=sasl; bh=/iIsW2/LOah9qQ3mks4EqC9A1ek=; b=Uo275L4
-        pEmA09wJ/q3tMAdunn8/o3LcX2NFffC4SmqtOtJdwM5c786T016XBeLpTWlgVV0U
-        VZE8WNW27Ym6P+Lh4ZV8/9H5ynLLKx2XTQrP9kI9MaNVPR/DaHfvLCrP+j8/Ixrd
-        6fwewOajmhYb5iOpvqyllGvaq+g1toEI5x8w=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
-        :subject:message-id:references:mime-version:content-type
-        :in-reply-to; q=dns; s=sasl; b=KVJe6cEOYoX5FU2qdKDtnsQZZBhirTQoA
-        h1cWElNUB9nb3jRbWQSKOWLuhvPniWsw3ifxbGO4lQu5Xa7yYXtj6Fa5gyL3S22H
-        0bfUkB69dOEdDofL0ZOYBy7bDGZlks0QIBMdvQmUtTAMFQSLyQ+uZLla2H5TwtfR
-        JbvsBIjstQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 49924CF8E7;
-        Fri, 16 Feb 2018 19:47:56 -0500 (EST)
-Received: from zaya.teonanacatl.net (unknown [173.67.181.41])
-        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B6ECACF8E6;
-        Fri, 16 Feb 2018 19:47:55 -0500 (EST)
-Date:   Fri, 16 Feb 2018 19:47:54 -0500
-From:   Todd Zullinger <tmz@pobox.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Matthieu Moy <git@matthieu-moy.fr>, Petr Baudis <pasky@ucw.cz>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jari Aalto <jari.aalto@cante.net>,
-        Giuseppe Bilotta <giuseppe.bilotta@gmail.com>,
-        Marcus Griep <marcus@griep.us>
-Subject: Re: [PATCH 3/8] perl: generalize the Git::LoadCPAN facility
-Message-ID: <20180217004753.GS27038@zaya.teonanacatl.net>
-References: <20180214222146.10655-1-avarab@gmail.com>
- <20180214222146.10655-4-avarab@gmail.com>
- <20180215045301.GC27038@zaya.teonanacatl.net>
- <87sha2f0j1.fsf@evledraar.gmail.com>
- <20180215212338.GL27038@zaya.teonanacatl.net>
- <87k1vdf188.fsf@evledraar.gmail.com>
- <20180216175519.GQ27038@zaya.teonanacatl.net>
- <20180216220300.GC216564@aiede.svl.corp.google.com>
+        id S1750942AbeBQCyw (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Feb 2018 21:54:52 -0500
+Received: from mail-vk0-f47.google.com ([209.85.213.47]:43546 "EHLO
+        mail-vk0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750763AbeBQCyv (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Feb 2018 21:54:51 -0500
+Received: by mail-vk0-f47.google.com with SMTP id x203so2917355vkx.10
+        for <git@vger.kernel.org>; Fri, 16 Feb 2018 18:54:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=atlassian-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=C0ETDisZvffU0l/Q5wSfX2YdxhrhVHwqMDMm+kSU7mQ=;
+        b=qs9AS5NO4PDNLbJJqcHM+AGO+Qk4fHaVCkPqMwmvW5ppppeHRmH4Cq4TK9ju2nm4xU
+         o+oBN4jhTVMU6o7bdlgFa2M8mASVpQrg2LZUbsrD3UFAhs7ZGiOWZ46rTEahzy3EJjlM
+         /tVgnRVlqzqSp8Z7bzcPR3gccfe5Uha+7Zzf5azeZmrVWvcycmcHjmwayCP9R8je/88/
+         xYNURwTgu7POndc+mJ+qXpM9wsDXbKGGlit5szmTVKwAaHoQ4ePfdiHE517SOOj09FDp
+         47/VIvvM6b2AyoGVwEpHGu8NJb/QkjAntXaOZ3JrZUriUSn22xPIikAx1nnurb8w3v/a
+         k8Og==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=C0ETDisZvffU0l/Q5wSfX2YdxhrhVHwqMDMm+kSU7mQ=;
+        b=OGzUwELc+Zlzv4dym3OxMOWMZVvGIHqd/5OZ9sAUNGsbeBZ5gEJLJoqwCu8NHKUbSH
+         4YnMho8oVDZ5IcYtOiuoNkR3UEhQOcpjhqmZoCWKbCtEH83luwnmBTmI4OzDfKb3IimM
+         a0p149OJIagxsAZXH+Dxgbs4CRtEnY0mArVIxgKLUlgiauEl5zKl6cp6tARjc5K5M0Oa
+         uigZjdijC10eT/yhRWNavgw1IvX0Z5p0kPO0KPJCmKX2paWc7bfHVzQBmskxp4pki3rm
+         46cGFdYD26peQ5y6EGIbeqFCuCz30/Q9M18PlzjaGgtmVEWj6O23vIX5fQcr5gErGL+D
+         /P+w==
+X-Gm-Message-State: APf1xPAfKwF6qJbnTwijvHDTNqGifEONP8Z9Gm6kKGXorv7L1OA1Y0qh
+        OmNqt+SGzqGkTu90NvmX6nxpGXlGmxLtWkWPUZCcWQ==
+X-Google-Smtp-Source: AH8x225Q6l0kaCJR3iaw3PbQSxnl65e6vjlAXVKt/RfeMQBFgM36murh1jsxs+3U+E64ZGoVN0cuL81ejBorOUcLDp8=
+X-Received: by 10.31.63.6 with SMTP id m6mr6636789vka.43.1518836090306; Fri,
+ 16 Feb 2018 18:54:50 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180216220300.GC216564@aiede.svl.corp.google.com>
-User-Agent: Mutt/1.9.3 (2018-01-21)
-X-Pobox-Relay-ID: 314CF48C-137C-11E8-87D3-D3940C78B957-09356542!pb-smtp2.pobox.com
+Received: by 10.159.32.70 with HTTP; Fri, 16 Feb 2018 18:54:49 -0800 (PST)
+In-Reply-To: <nycvar.QRO.7.76.6.1802170018250.31@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <nycvar.QRO.7.76.6.1802170018250.31@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+From:   Bryan Turner <bturner@atlassian.com>
+Date:   Fri, 16 Feb 2018 18:54:49 -0800
+Message-ID: <CAGyf7-GK+HgYx0AjRQXPhbxNTaohN1K2NFf3eWPjLsxHC6CvtQ@mail.gmail.com>
+Subject: Re: Please test Git for Windows' latest snapshot
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git-for-windows@googlegroups.com, Git Users <git@vger.kernel.org>,
+        git-packagers@googlegroups.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jonathan,
+On Fri, Feb 16, 2018 at 3:30 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi team,
+>
+> I am unwilling to release Git for Windows v2.16.2 on a Friday night, but =
+I
+> have something almost as good. There is a snapshot available here:
+>
+>         https://urldefense.proofpoint.com/v2/url?u=3Dhttps-3A__wingit.blo=
+b.core.windows.net_files_index.html&d=3DDwIBAg&c=3DwBUwXtM9sKhff6UeHOQgvw&r=
+=3DuBedA6EFFVX1HiLgmpdrBrv8bIDAScKjk1yk9LOASBM&m=3DxZghHWteeNbJ2bu5ySDq9Wwq=
+nfX8X7FZ_CWsV9gAyJU&s=3DNzSYCFSWWokPP9A9FA_EmJO5yu8qtRKw5M-Ep_qooUc&e=3D
+>
+> That snapshot brings quite a few updated components apart from Git proper
+> (such as an updated MSYS2 runtime), and I would love to ask y'all to give
+> this snapshot a proper "tire kicking".
 
-Jonathan Nieder wrote:
-> Todd Zullinger wrote:
-[...]
->> +++ b/Makefile
->> @@ -296,6 +296,9 @@ all::
->>  #
->>  # Define NO_PERL if you do not want Perl scripts or libraries at all.
->>  #
->> +# Define NO_PERL_CPAN_FALLBACKS if you do not want to install fallbacks for
->> +# perl CPAN modules.
-> 
-> nit: Looking at this as a naive user, it's not obvious what kind of
-> fallbacks are meant. How about:
-> 
-> 	Define NO_PERL_CPAN_FALLBACKS if you do not want to install bundled
-> 	copies of CPAN modules that serve as a fallback in case the modules are
-> 	not available on the system.
-> 
-> Or perhaps:
-> 
-> 	Define HAVE_CPAN_MODULES if you have Error.pm and Mail::Address installed
-> 	and do not want to install the fallback copies from perl/FromCPAN.
+I've run Bitbucket Server's full Git test suite (~1,500 tests) against
+the Portable Git snapshot (e1848984d1), no failures to report.
 
-Hmm, a positive variable like HAVE_CPAN_MODULES is
-appealing.
-
-I don't know about listing the modules, as those seem likely
-to change and then the comment becomes stale.  It's nice to
-have a shorter name.  I could easily go back and forth.
-Hopefully some other folks will chime in with preferences.
-
-> Would this patch need to update the loader to expect the modules in
-> the new location?
-
-That's a good catch.  In checking how this ends up when not
-setting NO_PERL_CPAN_FALLBACKS, we end up installing
-FromCPAN at the root of $perllibdir rather than under the
-Git dir.
-
-While we could probably fix Git::LoadCPAN, I doubt we want
-to pollute the namespace. ;) So we'll want to ensure the
-files get put in the right place from the start.  I'll try
-to fix that up.
-
-Thanks for the careful eyes, as usual.
-
--- 
-Todd
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Happiness is like peeing on yourself. Everyone can see it, but only
-you can feel its warmth
-
+Bryan
