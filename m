@@ -7,43 +7,43 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 431261F404
-	for <e@80x24.org>; Mon, 19 Feb 2018 23:01:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4B36A1F404
+	for <e@80x24.org>; Mon, 19 Feb 2018 23:01:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932240AbeBSXBE (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Feb 2018 18:01:04 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:33400 "EHLO
+        id S932349AbeBSXBF (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Feb 2018 18:01:05 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:33384 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S932251AbeBSW7y (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 19 Feb 2018 17:59:54 -0500
+        by vger.kernel.org with ESMTP id S932280AbeBSW7w (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 19 Feb 2018 17:59:52 -0500
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 0282760B4D;
-        Mon, 19 Feb 2018 22:59:52 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 4792B60B4A;
+        Mon, 19 Feb 2018 22:59:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1519081193;
-        bh=kI/xvctqTHInaV+x/u5bgYuU1dy+AxA8nabk26cFRII=;
+        s=default; t=1519081191;
+        bh=moz7LrlWxTo0NW+jhuZ7DAHz8noxUp2oJxvCnXhu3P0=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=1RZGWkabr3tgOWhaLDWgOs5tpiRQBHBUqRgjLyOkniOTzQUOCDKLCpKMl8C0rdTZA
-         QUmLdbk0gq1oVG/qzVH2IOGiWZKsUMNUUOk2Gk3/+p9pgmLnsToxl6zf6IvsH86huW
-         vHFd/K6WFD71eU9+zif4eztkAq0SEDpBuyaEGx9gjNsTTRZPl0cOHRBAjY60a5sje0
-         B9PYrF8FM262gKI5begDYrq0vkYFfZkUobuiuQROShAAhRzRXygkZUaReABmTbI4oO
-         RMCGgO9nwm7LdYAIVbxiy/SlcpsFU/PMBEdERAcWCG8MZiOQv3DgVkQBSCFEZ6x2RH
-         smgU+QGVh1qG/lXfbNa/0ZDmaZStpYbpyi9oTaiLgfDcq32AFbAU0lNZHrsoiXFr/5
-         /HhWRuoHY5uO6XfDVo/i5+tPpDqAtOptD/PVjzweX33UGyrNFykkYU4iJvsFFrdj1z
-         nHWEa8P2p0Ag6T+zpuluruaK8Fg/zWxPgNHuMMgvvcg8GzgZy5s
+        b=nE3159uAj2cMP0CgphwXPBXHu5WE9iOUNo/HPnfvhXmnW7sjJ/JPC9ygOA0cPvUaC
+         9iUJYSbWhtIsuT1ZvYx6xQo1CYSILLKcea5C1zmD3CRiTayc65ITJABiLXzDDUFEsO
+         NvmmRCpQbLCQCgXimSDO7zKw671LvwnZxAwl0GL7t9LnLXlzZWOPMxjGenMUA4R1yM
+         /5Qi7jSVGdynweAkvDEVvMkAxSB+Ecdc3cPZ8LREUa3h1Q85zJvEBbbQrxiEfovsam
+         DODEouoqKdn6co9S1kuag0qRgD+8ZjXRS3tJc8ibOmQBNO4ACBAFaOa6UaqpTsuIG4
+         hp7ZYRWCqHH+awDSXbNMt6hF6hv8V3EdhF8AxSlNayzehmbsZHeiK8XqM3Q4KnSbIu
+         GuT31jOMaqjQz6zF8dtkdEtUkth5a+kjgej4hZjrY8A1ad42wpGUqORH2HcVp/p2Yo
+         d3zGk5YCRHL3oJ3ycoxIRBcMX/fT/mqXo5AQlyQhYc4uWbqMEOB
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>, Patryk Obara <patryk.obara@gmail.com>,
         Jeff King <peff@peff.net>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH 19/36] sha1_file: convert check_sha1_signature to struct object_id
-Date:   Mon, 19 Feb 2018 22:59:10 +0000
-Message-Id: <20180219225927.386065-20-sandals@crustytoothpaste.net>
+Subject: [PATCH 17/36] builtin/index-pack: convert struct ref_delta_entry to object_id
+Date:   Mon, 19 Feb 2018 22:59:08 +0000
+Message-Id: <20180219225927.386065-18-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.16.1.291.g4437f3f132
 In-Reply-To: <20180219225927.386065-1-sandals@crustytoothpaste.net>
 References: <20180219225927.386065-1-sandals@crustytoothpaste.net>
@@ -53,176 +53,128 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert this function to take a pointer to struct object_id and rename
-it check_object_signature.  Introduce temporaries to convert the return
-values of lookup_replace_object and lookup_replace_object_extended into
-struct object_id.
-
-The temporaries are needed because in order to convert
-lookup_replace_object, open_istream needs to be converted, and
-open_istream needs check_sha1_signature to be converted, causing a loop
-of dependencies.  The temporaries will be removed in a future patch.
+Convert this struct to use a member of type object_id.  Convert various
+static functions as well.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin/fast-export.c |  2 +-
- builtin/index-pack.c  |  2 +-
- builtin/mktag.c       |  5 ++++-
- cache.h               |  2 +-
- object.c              | 10 ++++++++--
- pack-check.c          |  4 ++--
- sha1_file.c           | 12 ++++++------
- 7 files changed, 23 insertions(+), 14 deletions(-)
+ builtin/index-pack.c | 34 +++++++++++++++++-----------------
+ 1 file changed, 17 insertions(+), 17 deletions(-)
 
-diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-index 796d0cd66c..293a6615fa 100644
---- a/builtin/fast-export.c
-+++ b/builtin/fast-export.c
-@@ -240,7 +240,7 @@ static void export_blob(const struct object_id *oid)
- 		buf = read_sha1_file(oid->hash, &type, &size);
- 		if (!buf)
- 			die ("Could not read blob %s", oid_to_hex(oid));
--		if (check_sha1_signature(oid->hash, buf, size, typename(type)) < 0)
-+		if (check_object_signature(oid, buf, size, typename(type)) < 0)
- 			die("sha1 mismatch in blob %s", oid_to_hex(oid));
- 		object = parse_object_buffer(oid, type, size, buf, &eaten);
- 	}
 diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 5c7ab47c36..e0a776f1ac 100644
+index 7e3e1a461c..5c7ab47c36 100644
 --- a/builtin/index-pack.c
 +++ b/builtin/index-pack.c
-@@ -1377,7 +1377,7 @@ static void fix_unresolved_deltas(struct hashfile *f)
+@@ -58,7 +58,7 @@ struct ofs_delta_entry {
+ };
+ 
+ struct ref_delta_entry {
+-	unsigned char sha1[20];
++	struct object_id oid;
+ 	int obj_no;
+ };
+ 
+@@ -671,18 +671,18 @@ static void find_ofs_delta_children(off_t offset,
+ 	*last_index = last;
+ }
+ 
+-static int compare_ref_delta_bases(const unsigned char *sha1,
+-				   const unsigned char *sha2,
++static int compare_ref_delta_bases(const struct object_id *oid1,
++				   const struct object_id *oid2,
+ 				   enum object_type type1,
+ 				   enum object_type type2)
+ {
+ 	int cmp = type1 - type2;
+ 	if (cmp)
+ 		return cmp;
+-	return hashcmp(sha1, sha2);
++	return oidcmp(oid1, oid2);
+ }
+ 
+-static int find_ref_delta(const unsigned char *sha1, enum object_type type)
++static int find_ref_delta(const struct object_id *oid, enum object_type type)
+ {
+ 	int first = 0, last = nr_ref_deltas;
+ 
+@@ -691,7 +691,7 @@ static int find_ref_delta(const unsigned char *sha1, enum object_type type)
+ 		struct ref_delta_entry *delta = &ref_deltas[next];
+ 		int cmp;
+ 
+-		cmp = compare_ref_delta_bases(sha1, delta->sha1,
++		cmp = compare_ref_delta_bases(oid, &delta->oid,
+ 					      type, objects[delta->obj_no].type);
+ 		if (!cmp)
+ 			return next;
+@@ -704,11 +704,11 @@ static int find_ref_delta(const unsigned char *sha1, enum object_type type)
+ 	return -first-1;
+ }
+ 
+-static void find_ref_delta_children(const unsigned char *sha1,
++static void find_ref_delta_children(const struct object_id *oid,
+ 				    int *first_index, int *last_index,
+ 				    enum object_type type)
+ {
+-	int first = find_ref_delta(sha1, type);
++	int first = find_ref_delta(oid, type);
+ 	int last = first;
+ 	int end = nr_ref_deltas - 1;
+ 
+@@ -717,9 +717,9 @@ static void find_ref_delta_children(const unsigned char *sha1,
+ 		*last_index = -1;
+ 		return;
+ 	}
+-	while (first > 0 && !hashcmp(ref_deltas[first - 1].sha1, sha1))
++	while (first > 0 && !oidcmp(&ref_deltas[first - 1].oid, oid))
+ 		--first;
+-	while (last < end && !hashcmp(ref_deltas[last + 1].sha1, sha1))
++	while (last < end && !oidcmp(&ref_deltas[last + 1].oid, oid))
+ 		++last;
+ 	*first_index = first;
+ 	*last_index = last;
+@@ -991,7 +991,7 @@ static struct base_data *find_unresolved_deltas_1(struct base_data *base,
+ 						  struct base_data *prev_base)
+ {
+ 	if (base->ref_last == -1 && base->ofs_last == -1) {
+-		find_ref_delta_children(base->obj->idx.oid.hash,
++		find_ref_delta_children(&base->obj->idx.oid,
+ 					&base->ref_first, &base->ref_last,
+ 					OBJ_REF_DELTA);
+ 
+@@ -1075,7 +1075,7 @@ static int compare_ref_delta_entry(const void *a, const void *b)
+ 	const struct ref_delta_entry *delta_a = a;
+ 	const struct ref_delta_entry *delta_b = b;
+ 
+-	return hashcmp(delta_a->sha1, delta_b->sha1);
++	return oidcmp(&delta_a->oid, &delta_b->oid);
+ }
+ 
+ static void resolve_base(struct object_entry *obj)
+@@ -1141,7 +1141,7 @@ static void parse_pack_objects(unsigned char *hash)
+ 			ofs_delta++;
+ 		} else if (obj->type == OBJ_REF_DELTA) {
+ 			ALLOC_GROW(ref_deltas, nr_ref_deltas + 1, ref_deltas_alloc);
+-			hashcpy(ref_deltas[nr_ref_deltas].sha1, ref_delta_oid.hash);
++			oidcpy(&ref_deltas[nr_ref_deltas].oid, &ref_delta_oid);
+ 			ref_deltas[nr_ref_deltas].obj_no = i;
+ 			nr_ref_deltas++;
+ 		} else if (!data) {
+@@ -1373,14 +1373,14 @@ static void fix_unresolved_deltas(struct hashfile *f)
+ 
+ 		if (objects[d->obj_no].real_type != OBJ_REF_DELTA)
+ 			continue;
+-		base_obj->data = read_sha1_file(d->sha1, &type, &base_obj->size);
++		base_obj->data = read_sha1_file(d->oid.hash, &type, &base_obj->size);
  		if (!base_obj->data)
  			continue;
  
--		if (check_sha1_signature(d->oid.hash, base_obj->data,
-+		if (check_object_signature(&d->oid, base_obj->data,
+-		if (check_sha1_signature(d->sha1, base_obj->data,
++		if (check_sha1_signature(d->oid.hash, base_obj->data,
  				base_obj->size, typename(type)))
- 			die(_("local object %s is corrupt"), oid_to_hex(&d->oid));
- 		base_obj->obj = append_obj_to_pack(f, d->oid.hash,
-diff --git a/builtin/mktag.c b/builtin/mktag.c
-index 65bb41e3cd..810b24bef3 100644
---- a/builtin/mktag.c
-+++ b/builtin/mktag.c
-@@ -27,8 +27,11 @@ static int verify_object(const struct object_id *oid, const char *expected_type)
- 	const unsigned char *repl = lookup_replace_object(oid->hash);
- 
- 	if (buffer) {
-+		struct object_id reploid;
-+		hashcpy(reploid.hash, repl);
-+
- 		if (type == type_from_string(expected_type))
--			ret = check_sha1_signature(repl, buffer, size, expected_type);
-+			ret = check_object_signature(&reploid, buffer, size, expected_type);
- 		free(buffer);
- 	}
- 	return ret;
-diff --git a/cache.h b/cache.h
-index 8a9055f4e7..f29ff43bbd 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1236,7 +1236,7 @@ extern void *map_sha1_file(const unsigned char *sha1, unsigned long *size);
- extern int unpack_sha1_header(git_zstream *stream, unsigned char *map, unsigned long mapsize, void *buffer, unsigned long bufsiz);
- extern int parse_sha1_header(const char *hdr, unsigned long *sizep);
- 
--extern int check_sha1_signature(const unsigned char *sha1, void *buf, unsigned long size, const char *type);
-+extern int check_object_signature(const struct object_id *oid, void *buf, unsigned long size, const char *type);
- 
- extern int finalize_object_file(const char *tmpfile, const char *filename);
- 
-diff --git a/object.c b/object.c
-index 9e6f9ff20b..c63f02a40f 100644
---- a/object.c
-+++ b/object.c
-@@ -255,7 +255,10 @@ struct object *parse_object(const struct object_id *oid)
- 	if ((obj && obj->type == OBJ_BLOB && has_object_file(oid)) ||
- 	    (!obj && has_object_file(oid) &&
- 	     sha1_object_info(oid->hash, NULL) == OBJ_BLOB)) {
--		if (check_sha1_signature(repl, NULL, 0, NULL) < 0) {
-+		struct object_id reploid;
-+		hashcpy(reploid.hash, repl);
-+
-+		if (check_object_signature(&reploid, NULL, 0, NULL) < 0) {
- 			error("sha1 mismatch %s", oid_to_hex(oid));
- 			return NULL;
- 		}
-@@ -265,7 +268,10 @@ struct object *parse_object(const struct object_id *oid)
- 
- 	buffer = read_sha1_file(oid->hash, &type, &size);
- 	if (buffer) {
--		if (check_sha1_signature(repl, buffer, size, typename(type)) < 0) {
-+		struct object_id reploid;
-+		hashcpy(reploid.hash, repl);
-+
-+		if (check_object_signature(&reploid, buffer, size, typename(type)) < 0) {
- 			free(buffer);
- 			error("sha1 mismatch %s", sha1_to_hex(repl));
- 			return NULL;
-diff --git a/pack-check.c b/pack-check.c
-index 403a572567..80ef7c1c63 100644
---- a/pack-check.c
-+++ b/pack-check.c
-@@ -126,7 +126,7 @@ static int verify_packfile(struct packed_git *p,
- 
- 		if (type == OBJ_BLOB && big_file_threshold <= size) {
- 			/*
--			 * Let check_sha1_signature() check it with
-+			 * Let check_object_signature() check it with
- 			 * the streaming interface; no point slurping
- 			 * the data in-core only to discard.
- 			 */
-@@ -141,7 +141,7 @@ static int verify_packfile(struct packed_git *p,
- 			err = error("cannot unpack %s from %s at offset %"PRIuMAX"",
- 				    oid_to_hex(entries[i].oid.oid), p->pack_name,
- 				    (uintmax_t)entries[i].offset);
--		else if (check_sha1_signature(entries[i].oid.hash, data, size, typename(type)))
-+		else if (check_object_signature(entries[i].oid.oid, data, size, typename(type)))
- 			err = error("packed %s from %s is corrupt",
- 				    oid_to_hex(entries[i].oid.oid), p->pack_name);
- 		else if (fn) {
-diff --git a/sha1_file.c b/sha1_file.c
-index 69e8d27773..64f0905799 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -784,8 +784,8 @@ void *xmmap(void *start, size_t length,
-  * With "map" == NULL, try reading the object named with "sha1" using
-  * the streaming interface and rehash it to do the same.
-  */
--int check_sha1_signature(const unsigned char *sha1, void *map,
--			 unsigned long size, const char *type)
-+int check_object_signature(const struct object_id *oid, void *map,
-+			   unsigned long size, const char *type)
- {
- 	struct object_id real_oid;
- 	enum object_type obj_type;
-@@ -796,10 +796,10 @@ int check_sha1_signature(const unsigned char *sha1, void *map,
- 
- 	if (map) {
- 		hash_object_file(map, size, type, &real_oid);
--		return hashcmp(sha1, real_oid.hash) ? -1 : 0;
-+		return oidcmp(oid, &real_oid) ? -1 : 0;
- 	}
- 
--	st = open_istream(sha1, &obj_type, &size, NULL);
-+	st = open_istream(oid->hash, &obj_type, &size, NULL);
- 	if (!st)
- 		return -1;
- 
-@@ -823,7 +823,7 @@ int check_sha1_signature(const unsigned char *sha1, void *map,
- 	}
- 	the_hash_algo->final_fn(real_oid.hash, &c);
- 	close_istream(st);
--	return hashcmp(sha1, real_oid.hash) ? -1 : 0;
-+	return oidcmp(oid, &real_oid) ? -1 : 0;
- }
- 
- int git_open_cloexec(const char *name, int flags)
-@@ -2217,7 +2217,7 @@ int read_loose_object(const char *path,
- 			git_inflate_end(&stream);
- 			goto out;
- 		}
--		if (check_sha1_signature(expected_oid->hash, *contents,
-+		if (check_object_signature(expected_oid, *contents,
- 					 *size, typename(*type))) {
- 			error("sha1 mismatch for %s (expected %s)", path,
- 			      oid_to_hex(expected_oid));
+-			die(_("local object %s is corrupt"), sha1_to_hex(d->sha1));
+-		base_obj->obj = append_obj_to_pack(f, d->sha1,
++			die(_("local object %s is corrupt"), oid_to_hex(&d->oid));
++		base_obj->obj = append_obj_to_pack(f, d->oid.hash,
+ 					base_obj->data, base_obj->size, type);
+ 		find_unresolved_deltas(base_obj);
+ 		display_progress(progress, nr_resolved_deltas);
