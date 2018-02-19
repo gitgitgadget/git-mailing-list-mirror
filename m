@@ -2,78 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B978D1F404
-	for <e@80x24.org>; Mon, 19 Feb 2018 21:29:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 76FBF1F404
+	for <e@80x24.org>; Mon, 19 Feb 2018 21:40:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753728AbeBSV3k (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Feb 2018 16:29:40 -0500
-Received: from cloud.peff.net ([104.130.231.41]:57308 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1753624AbeBSV3j (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Feb 2018 16:29:39 -0500
-Received: (qmail 5322 invoked by uid 109); 19 Feb 2018 21:29:39 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 19 Feb 2018 21:29:39 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 7793 invoked by uid 111); 19 Feb 2018 21:30:25 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 19 Feb 2018 16:30:25 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 19 Feb 2018 16:29:37 -0500
-Date:   Mon, 19 Feb 2018 16:29:37 -0500
-From:   Jeff King <peff@peff.net>
-To:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] t/known-leaky: add list of known-leaky test scripts
-Message-ID: <20180219212937.GB9748@sigill.intra.peff.net>
-References: <xmqqo9kro4oq.fsf@gitster-ct.c.googlers.com>
- <20180214215637.6462-1-martin.agren@gmail.com>
+        id S1753755AbeBSVkD (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Feb 2018 16:40:03 -0500
+Received: from hapkido.dreamhost.com ([66.33.216.122]:58254 "EHLO
+        hapkido.dreamhost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753624AbeBSVkC (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Feb 2018 16:40:02 -0500
+Received: from homiemail-a5.g.dreamhost.com (homie.mail.dreamhost.com [208.97.132.208])
+        by hapkido.dreamhost.com (Postfix) with ESMTP id 6858D8E0FC
+        for <git@vger.kernel.org>; Mon, 19 Feb 2018 13:40:02 -0800 (PST)
+Received: from homiemail-a5.g.dreamhost.com (localhost [127.0.0.1])
+        by homiemail-a5.g.dreamhost.com (Postfix) with ESMTP id CF865704071
+        for <git@vger.kernel.org>; Mon, 19 Feb 2018 13:40:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=bit-booster.com; h=
+        mime-version:in-reply-to:references:from:date:message-id:subject
+        :to:cc:content-type; s=bit-booster.com; bh=17KrXlJdlapyYKwDj9jcu
+        mIuydM=; b=aHVLxBCXyRnt82W3/1rccDxQvtEE+4fm0ud96gnXWYCvNr1CshU1U
+        cR0M+IW+HL9aHqiQwWMdYo65eGgMS6Rf2/jspkcBSytIRKAcsSNa8OnH/3nZPIAu
+        mbC9wqA7eZm3Fil8AMHWwMhKmTShrT6SmkEQzczxqTvOs+sTDXEB0E=
+Received: from mail-lf0-f42.google.com (mail-lf0-f42.google.com [209.85.215.42])
+        (using TLSv1 with cipher AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: sylvie@bit-booster.com)
+        by homiemail-a5.g.dreamhost.com (Postfix) with ESMTPSA id 73E8170406F
+        for <git@vger.kernel.org>; Mon, 19 Feb 2018 13:40:01 -0800 (PST)
+Received: by mail-lf0-f42.google.com with SMTP id v9so1383384lfa.11
+        for <git@vger.kernel.org>; Mon, 19 Feb 2018 13:40:01 -0800 (PST)
+X-Gm-Message-State: APf1xPDkaySVvBHgnkiulNy4ciEn5HXO048Jv2iAnjfQioKEUL3V/89T
+        pD6xf9rKXzuqA3WKLVER/bguOBOw7xjsw83DfAk=
+X-Google-Smtp-Source: AH8x2258dIPVQQsFvQk+7dSRSekSP/VWFAkNeBj8N5gN33Y/ttNlkjKvikpTvesOvfWBI0QW0XgHBNpJ1prlkgvJRQI=
+X-Received: by 10.46.43.219 with SMTP id r88mr4375429ljr.26.1519076399662;
+ Mon, 19 Feb 2018 13:39:59 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20180214215637.6462-1-martin.agren@gmail.com>
+Received: by 10.25.242.5 with HTTP; Mon, 19 Feb 2018 13:39:59 -0800 (PST)
+In-Reply-To: <87wozry7z4.fsf@javad.com>
+References: <87wozry7z4.fsf@javad.com>
+From:   "G. Sylvie Davies" <sylvie@bit-booster.com>
+Date:   Mon, 19 Feb 2018 13:39:59 -0800
+X-Gmail-Original-Message-ID: <CAAj3zPxiLxqgnKXth2EZZWwgYhW_cHEcxbM6_BqpzpHR_ipqyQ@mail.gmail.com>
+Message-ID: <CAAj3zPxiLxqgnKXth2EZZWwgYhW_cHEcxbM6_BqpzpHR_ipqyQ@mail.gmail.com>
+Subject: Re: cherry-pick '-m' curiosity
+To:     Sergey Organov <sorganov@gmail.com>
+Cc:     Git Users <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 14, 2018 at 10:56:37PM +0100, Martin Ågren wrote:
+On Mon, Feb 5, 2018 at 3:46 AM, Sergey Organov <sorganov@gmail.com> wrote:
+> Hello,
+>
+> $ git help cherry-pick
+>
+> -m parent-number, --mainline parent-number
+>            Usually you cannot cherry-pick a merge because you do not
+>            know which side of the merge should be considered the
+>            mainline.
+>
+> Isn't it always the case that "mainline" is the first parent, as that's
+> how "git merge" happens to work?
+>
 
-> Here's what a list of known leaks might look like. It feels a bit
-> awkward to post a known-incomplete list (I don't run all tests). Duy
-> offered to pick up the ball if I gave up, maybe you could complete and
-> post this as your own? :-? Even if I (or others) can't reproduce the
-> complete list locally, regressions will be trivial to find, and newly
-> leak-free tests fairly easy to notice.
+First-parent will be whatever commit you were sitting on when you
+typed "git merge".
 
-I didn't think about that when I posted my scripts. In general, it's OK
-to me if you miss a script when you generate the "leaky" list. But if
-you skip it, you cannot say whether it is leaky or not, and should
-probably neither add nor remove it from the known-leaky list. So I think
-the second shell snippet needs to become a little more clever about
-skipped test scripts.
+If you're sitting on your branch and you type "git fetch; git merge
+origin/master", then "mainline" will be 2nd parent.
 
-Even that isn't 100% fool-proof, as some individual tests may be skipped
-or not skipped on various platforms. But it may be enough in practice
-(and eventually we'd have no known-leaky tests, of course ;) ).
+Same happens if you type "git pull".
 
-Or alternatively, we could just not bother with checking this into the
-repository, and it becomes a local thing for people interested in
-leak-testing. What's the value in having a shared known-leaky list,
-especially if we don't expect most people to run it.
+Further reading here:
+https://developer.atlassian.com/blog/2016/04/stop-foxtrots-now/
 
-I guess it lets us add a Travis job to do the leak-checking, which might
-get more coverage. So maybe if we do have an in-repo known-leaky, it
-should match some canonical Travis environment. That won't give us
-complete coverage, but at this point we're just trying to notice
-low-hanging fruit.
+"git revert -m" also has the same problem.
 
--Peff
+
+> Is, say, "-m 2" ever useful?
+>
+> --
+> Sergey
