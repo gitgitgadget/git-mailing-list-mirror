@@ -2,149 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 51C0E1F404
-	for <e@80x24.org>; Mon, 19 Feb 2018 23:01:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 676491F404
+	for <e@80x24.org>; Mon, 19 Feb 2018 23:09:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932283AbeBSXB1 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Feb 2018 18:01:27 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:33314 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S932261AbeBSW7q (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 19 Feb 2018 17:59:46 -0500
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id B4CFD609E7;
-        Mon, 19 Feb 2018 22:59:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1519081185;
-        bh=EKdbCCsiKJxi25/N8sI2PC1hHz5VBqrxvJBU8Z/ASCE=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
-         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
-         In-Reply-To:References:Content-Type:Content-Disposition;
-        b=1EAGboho1V+9MjLEbuK9MjHTh5/CyaWqzl9WvzPDd4BKv+ZXM6EdvjGXNZUNaplrT
-         BDA6+JGJoHJUYO9UUtqG5WzTKwEgkin4ezFyrbOt0fsbzcncLl+dIQBDVArKoVIHhR
-         TiYACjNZmIpEnbxKk+6fNyZiqS/+mWiiALhkJ+0f2dIavavo6mFFbf9oos4idhb1um
-         h4Y4Re0mUjdSdV+iA1I1olBA3VZD2dZooRn8yUAaHefaQOkwf/P4Zz27mPSFKbcYFQ
-         TP9qNw/kFLXHhqsgo8YyEqc1Yt4uHLMfDAOKkOMm21qWebUZBUB4I687XvurW6Zanf
-         9M3a+jsgds+ANNO1lAR9zwHOjuhB9mVsVoNbqtVDd56FAfTnQh1TXu1TVwTb+MDEmK
-         rxzwftMSOCWmZxxETKtfU/RtRWynwaEFz/awH5sVxQZH1x4v+s8fOeFahhcWdV7t69
-         Wi5/5RdAuq7HlUZCQC0XrV5J0OfpIiNeX9YzGal5yIHHwFvdScc
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>, Patryk Obara <patryk.obara@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH 11/36] http-walker: convert struct object_request to use struct object_id
-Date:   Mon, 19 Feb 2018 22:59:02 +0000
-Message-Id: <20180219225927.386065-12-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.16.1.291.g4437f3f132
-In-Reply-To: <20180219225927.386065-1-sandals@crustytoothpaste.net>
-References: <20180219225927.386065-1-sandals@crustytoothpaste.net>
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+        id S932218AbeBSXJq (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Feb 2018 18:09:46 -0500
+Received: from mail-wm0-f45.google.com ([74.125.82.45]:35807 "EHLO
+        mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932169AbeBSXJp (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Feb 2018 18:09:45 -0500
+Received: by mail-wm0-f45.google.com with SMTP id x21so17871103wmh.0
+        for <git@vger.kernel.org>; Mon, 19 Feb 2018 15:09:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=+2BM8VPbwutTcCKo2W0qhoJlvLwG4fnQXW9vYIbEc0A=;
+        b=gRNr9bCaV+WmvRyvxiC3cyV7yqkDAjtInbzixQU6UlmT78cVSx0dgdjitbLuuhdmWP
+         tJem56RICuZ83Q7gqth1l9nwEzC4qZFlfrHDM+TcQvtJkix+/2USmx96kdwXCw0qWOrt
+         ZBp5H7WZDJcEakIGLP4x1Op1KygYBw65h70pfHwm59kF9y7rw6axuHocgqD/XyTCXBO/
+         voLzzR1iklqmCNjhlGhy4Utq0wjEZ1dc8OJJXmdKTzfQ+KQ55fyKbo59Khx89/882yqN
+         LoItKyQ4S38pn0az7FHWMbh5j4FACyUz4NSKAInLtdfEfO9cdlzaMqiLl2FD//8hNBvE
+         9x4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=+2BM8VPbwutTcCKo2W0qhoJlvLwG4fnQXW9vYIbEc0A=;
+        b=XthLgOtSMAcBuGfy38ktvFgHyYcjGCr7T3hoCOqruQ7GtWy93MvWZyNdk3KcLlipEz
+         vD8R61ghTRHSlFeyFLavkRCo1QM52mk6zTrHI7lTKyKomCkNJtF90qhRmwZc09284e44
+         yB0lA88iUHwqFj3yxkKLJZtFg/nJXTtHaLS1VS808gOjJeiSA9e28OGCFp8IMwFQ/DW+
+         +qA8vSXAVpSW2stc7D6h+aPpOOHd+fhW7M6jTimAGX18km0fln9hNQefxhQd3gkxErSF
+         Xji/Se/j5cu6YfW/ivp0Dvy9/Td9EJKZPC7SreclAQqg9dC+A6q/ICikkRiliDLTnx8k
+         5zZQ==
+X-Gm-Message-State: APf1xPBK8A71QKF6jq359pDGGxt+g9xbpyfz2hAEvA2iR3GISrlDmm0n
+        uRax2CQtdtHAP09eCUFhYo2e/aoxKwGJ/Au2JJ8=
+X-Google-Smtp-Source: AH8x227Z0sKpjgk/c7WbSGpn2cMuw+JNu6jFs4himbXi3YK8F/3TGEeevXykuyrUVjj+n7i706gBqMNkWOVPBI9MS8k=
+X-Received: by 10.28.107.69 with SMTP id g66mr11237233wmc.145.1519081783679;
+ Mon, 19 Feb 2018 15:09:43 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.223.195.200 with HTTP; Mon, 19 Feb 2018 15:09:23 -0800 (PST)
+In-Reply-To: <20180219223653.GE6619@genre.crustytoothpaste.net>
+References: <CAE1pOi1XtrWqG7mOdrNt10YoZG0LOAB7i9cc1Gi8oWhULxE57A@mail.gmail.com>
+ <20180219223653.GE6619@genre.crustytoothpaste.net>
+From:   Hilco Wijbenga <hilco.wijbenga@gmail.com>
+Date:   Mon, 19 Feb 2018 15:09:23 -0800
+Message-ID: <CAE1pOi070p9VNPnLS3jSXp7TrbR2fhOc7sx+58exAp92k4D0dw@mail.gmail.com>
+Subject: Re: Is there any way to "interrupt" a rebase?
+To:     Git Users <git@vger.kernel.org>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert struct object_request to use struct object_id by updating the
-definition and applying the following semantic patch, plus the standard
-object_id transforms:
+On Mon, Feb 19, 2018 at 2:36 PM, brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+> On Mon, Feb 19, 2018 at 11:35:25AM -0800, Hilco Wijbenga wrote:
+>> So a scenario like this:
+>>
+>> my-branch : X -> A -> B -> C -> D -> E -> F -> G
+>> base-branch : X -> Y
+>>
+>> git rebase --onto base-branch HEAD~7
+>> commit A --> conflicts
+>> ... lots of work ...
+>> commit B --> conflicts
+>> ... lots of work ...
+>> commit C (Git handles conflicts)
+>> commit D (no conflict)
+>> commit E --> conflicts
+>> ... er, that should have been fixed in commit C
+>>
+>> How do I keep all the work I did for commits A and B? I get the
+>> impression that rerere does not help here because I did not finish the
+>> rebase succesfully (and that makes perfect sense, of course). Is there
+>> a way at this point in the rebase to "go back" to commit C (so without
+>> "git rebase --abort")?
+>
+> What I do in this case is I unstage all the changes from the index, make
+> the change that should have gone into commit C, use git commit --fixup
+> (or --squash), and then restage the rest of the changes and continue
+> with the rebase.  I can then use git rebase -i --autosquash afterwards
+> to insert the commit into the right place.
 
-@@
-struct object_request E1;
-@@
-- E1.sha1
-+ E1.oid.hash
-
-@@
-struct object_request *E1;
-@@
-- E1->sha1
-+ E1->oid.hash
-
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
- http-walker.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
-
-diff --git a/http-walker.c b/http-walker.c
-index 07c2b1af82..f506f394ac 100644
---- a/http-walker.c
-+++ b/http-walker.c
-@@ -22,7 +22,7 @@ enum object_request_state {
- 
- struct object_request {
- 	struct walker *walker;
--	unsigned char sha1[20];
-+	struct object_id oid;
- 	struct alt_base *repo;
- 	enum object_request_state state;
- 	struct http_object_request *req;
-@@ -56,7 +56,7 @@ static void start_object_request(struct walker *walker,
- 	struct active_request_slot *slot;
- 	struct http_object_request *req;
- 
--	req = new_http_object_request(obj_req->repo->base, obj_req->sha1);
-+	req = new_http_object_request(obj_req->repo->base, obj_req->oid.hash);
- 	if (req == NULL) {
- 		obj_req->state = ABORTED;
- 		return;
-@@ -82,7 +82,7 @@ static void finish_object_request(struct object_request *obj_req)
- 		return;
- 
- 	if (obj_req->req->rename == 0)
--		walker_say(obj_req->walker, "got %s\n", sha1_to_hex(obj_req->sha1));
-+		walker_say(obj_req->walker, "got %s\n", oid_to_hex(&obj_req->oid));
- }
- 
- static void process_object_response(void *callback_data)
-@@ -129,7 +129,7 @@ static int fill_active_slot(struct walker *walker)
- 	list_for_each_safe(pos, tmp, head) {
- 		obj_req = list_entry(pos, struct object_request, node);
- 		if (obj_req->state == WAITING) {
--			if (has_sha1_file(obj_req->sha1))
-+			if (has_sha1_file(obj_req->oid.hash))
- 				obj_req->state = COMPLETE;
- 			else {
- 				start_object_request(walker, obj_req);
-@@ -148,7 +148,7 @@ static void prefetch(struct walker *walker, unsigned char *sha1)
- 
- 	newreq = xmalloc(sizeof(*newreq));
- 	newreq->walker = walker;
--	hashcpy(newreq->sha1, sha1);
-+	hashcpy(newreq->oid.hash, sha1);
- 	newreq->repo = data->alt;
- 	newreq->state = WAITING;
- 	newreq->req = NULL;
-@@ -481,13 +481,13 @@ static int fetch_object(struct walker *walker, unsigned char *sha1)
- 
- 	list_for_each(pos, head) {
- 		obj_req = list_entry(pos, struct object_request, node);
--		if (!hashcmp(obj_req->sha1, sha1))
-+		if (!hashcmp(obj_req->oid.hash, sha1))
- 			break;
- 	}
- 	if (obj_req == NULL)
- 		return error("Couldn't find request for %s in the queue", hex);
- 
--	if (has_sha1_file(obj_req->sha1)) {
-+	if (has_sha1_file(obj_req->oid.hash)) {
- 		if (obj_req->req != NULL)
- 			abort_http_object_request(obj_req->req);
- 		abort_object_request(obj_req);
-@@ -541,7 +541,7 @@ static int fetch_object(struct walker *walker, unsigned char *sha1)
- 	} else if (req->zret != Z_STREAM_END) {
- 		walker->corrupt_object_found++;
- 		ret = error("File %s (%s) corrupt", hex, req->url);
--	} else if (hashcmp(obj_req->sha1, req->real_sha1)) {
-+	} else if (hashcmp(obj_req->oid.hash, req->real_sha1)) {
- 		ret = error("File %s has bad hash", hex);
- 	} else if (req->rename < 0) {
- 		struct strbuf buf = STRBUF_INIT;
+Yes, that's essentially what I end up doing too. Obviously, in cases
+like this, Murphy likes to drop by so commit D will have made changes
+to the same files as commit C and you can't cleanly move the fix-up
+commit to commit C. :-( I had hoped there might be an easier/cleaner
+way to do it.
