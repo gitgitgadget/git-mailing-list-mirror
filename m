@@ -2,72 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-2.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_WEB,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 27FE21F404
-	for <e@80x24.org>; Mon, 19 Feb 2018 12:39:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6A4671F404
+	for <e@80x24.org>; Mon, 19 Feb 2018 13:01:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752734AbeBSMjr (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Feb 2018 07:39:47 -0500
-Received: from mout.gmx.net ([212.227.15.15]:42685 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752638AbeBSMjo (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Feb 2018 07:39:44 -0500
-Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LhwLy-1eR7VG3dwY-00n9ZJ; Mon, 19
- Feb 2018 13:39:32 +0100
-Date:   Mon, 19 Feb 2018 13:39:16 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Christian Couder <christian.couder@gmail.com>
-cc:     Git Mailing List <git@vger.kernel.org>,
-        Matthieu Moy <git@matthieu-moy.fr>,
-        Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>
-Subject: Re: GSoC 2018: Git has been accepted as a mentor organization!
-In-Reply-To: <CAP8UFD0Qqf23Ya3BP4oL641G+EsZ9pP17iKpSEV4JFsEbEPPKQ@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1802191338510.31@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <CAP8UFD0Qqf23Ya3BP4oL641G+EsZ9pP17iKpSEV4JFsEbEPPKQ@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1752732AbeBSNBv (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Feb 2018 08:01:51 -0500
+Received: from smtp-out-2.talktalk.net ([62.24.135.66]:62580 "EHLO
+        smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752638AbeBSNBh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Feb 2018 08:01:37 -0500
+Received: from [192.168.2.201] ([92.22.21.220])
+        by smtp.talktalk.net with SMTP
+        id nl4YeA0gIoNnDnl4YeU8wi; Mon, 19 Feb 2018 13:01:35 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1519045295;
+        bh=++V2uZ8tL7w+gXmTd6wGww40Fqiyt4VUCGOBbvKycyo=;
+        h=Reply-To:Subject:To:References:From:Date:In-Reply-To;
+        b=dNRK5SCSMRanySPYF340FNMf4CC2JR8zCCcNge3dEZwTmGTcEktyt1KaVEw4puH5W
+         tiMpBR38k/aiCaNXcfle6UPqPqXdqRPTKYfJHAkaWnGdtYyMMmInzw7HLRCRwOIrQR
+         oLoj/HY7ThLO+3yh15qbUSKskkuoeWGfipaWIR/g=
+X-Originating-IP: [92.22.21.220]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=ZZ9tDodA c=1 sm=1 tr=0 a=VSxTZYxioCnvaH7igEU67w==:117
+ a=VSxTZYxioCnvaH7igEU67w==:17 a=N659UExz7-8A:10 a=evINK-nbAAAA:8
+ a=wVsNTyUSwQVMGWEdgTAA:9 a=pILNOxqGKmIA:10 a=RfR_gqz1fSpA9VikTjo0:22
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 0/4] Correct offsets of hunks when one is skipped
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Git Mailing List <git@vger.kernel.org>
+References: <20180213104408.9887-1-phillip.wood@talktalk.net>
+ <20180213235642.GD1022467@genre.crustytoothpaste.net>
+From:   Phillip Wood <phillip.wood@talktalk.net>
+Message-ID: <21bc3131-9432-537f-9e60-8cb3166572eb@talktalk.net>
+Date:   Mon, 19 Feb 2018 13:01:34 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.6.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:brFDyxbazA5PQ0aiMaa/3gHO8q+50Y6QnhdH1A7IE7IIbF8rXw3
- b+4KKBqUlOURgdBXSIDwq8ZfxeBJtZX9ZvYDglPlJfBLKRW145nj7llCCD5R06VpqZty5gT
- pzNbVXxNHvlTtyPhut38orbRY+RoRdLtRJ1FpJQjrcgIj8N4TKSXHdWIDaWmJ6LuWOGWARR
- kt+qfMBvxTWsjo7CEg1cA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:w1D3vJOcIpE=:AWeU9jIHMS7r52q3xV1eyS
- vsDZpUdesv7RvUtjxyNUVB1pyk+vY6eGAMQ3IGs7siwcZfX3r0jv6Yr2/cvKsWGM5i2EJBXAB
- OOJ6NEYZbO3SsKPfAr3LJA1awRDcVEwnDfbbJpc3og114axb1SXRqZry3IQLw0haz8+ujMBQa
- DP9O6vlpODSQQOL5+ScQr/6PK2ry2m3bAJUWPV6sBSjxwj0s3MOOVCrcKCYPLdrmDrto3KJbB
- K/VkrQ5piHqe1lthumOmaIazf3/5ka/WujJE6k/viQ12XoMbxKnuxdvA4bMSQp5lE5pCotMN+
- VdJGtRKSqfPnasosRf20UynF0Kk1x7yI42PzpXWnR2vH1cLK8sExgZG0zCeDX7u5G0SWpsUoj
- lg3OqO0/xKAsiosn7f7K3rbYJgRN/YJRvfuHeExfMxrl2qZGuT1UTvKd/xA8mRsmAKqLyXr6d
- GBb+H/oW4iWIPAvKqA3lJbO9QBOwGxAs54y6IKar9ExkrwWHTBynxDzSLNq0ROQEGedHeAIAu
- Ebc081XgStc6igESMxOn/bxdAXyvsDlsfZgT3cvjRBI0squApo8f40AUfDnMTXZZdGSF4R3lF
- ql5xzr2NDtPHOlXCnuCdTdT4/VlnQS99ZS0Yy5r6dyg3RNGiE6p5oSkp7s0PGsZwgmocbxaBD
- MM2sAmwzay9fef17kBpCl4wF1SqvET6qTgYu+L1YQaIpF4GtrHmPpijgUEoQrfaKfllKOCx1P
- N6PgnIbTTdtYjFVkw2LZ1Sw0JRFoXcM99REmGM2iBP6L4V8JIUinaYcn7QBuSu4/NVbr0PMoM
- YD4IXF/Ku8IffD/SWMCe+N6XDZU8zuwy/1NK8rm+7YdEsG1jEc=
+In-Reply-To: <20180213235642.GD1022467@genre.crustytoothpaste.net>
+Content-Type: text/plain; charset=windows-1252
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfF6hTe4qpLIU9n6mhRYVWwD/0kPv01+AiYuN6ZlMaYpWUZGfFNmTidRb7V6FQueBrSU+ARRDCuEE0q984zWoMTrFr6+fpJr0/PKOBexRGX7rU2Qy20LD
+ EKVQxI4XzNHJ45YvSfV6RmRpUNyqPuFlQrd7c08D+qS/x11FvxjJ6z7al6bFpMyw1HV0DTH+dMf1Bmn5TPu63AbBFeGEdNyndorsDwKbxzMivflZ5QLct1PE
+ /6HbLKUTpnLztaeI2FOskJzYszoUHxRo02qS80xViuI=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Christian,
+On 13/02/18 23:56, brian m. carlson wrote:
+> On Tue, Feb 13, 2018 at 10:44:04AM +0000, Phillip Wood wrote:
+>> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>>
+>> While working on a patch series to stage selected lines from a hunk
+>> without having to edit it I got worried that subsequent patches would
+>> be applied in the wrong place which lead to this series to correct the
+>> offsets of hunks following those that are skipped or edited.
+>>
+>> Phillip Wood (4):
+>>   add -i: add function to format hunk header
+>>   t3701: add failing test for pathological context lines
+>>   add -p: Adjust offsets of subsequent hunks when one is skipped
+>>   add -p: calculate offset delta for edited patches
+>>
+>>  git-add--interactive.perl  | 93 +++++++++++++++++++++++++++++++++++-----------
+>>  t/t3701-add-interactive.sh | 30 +++++++++++++++
+>>  2 files changed, 102 insertions(+), 21 deletions(-)
+> 
+> This looks reasonably sane to me.  I really like that you managed to
+> produce failing tests for this situation.  I know pathological cases
+> like this have bit GCC in the past, so it's good that you fixed this.
+> 
 
-On Sun, 18 Feb 2018, Christian Couder wrote:
+Thanks Brain, it's interesting to hear that GCC has been bitten in the past
 
-> Just a quick message to let everyone know that Git has been accepted
-> as a mentor organization for the Google Summer of Code 2018.
+Best Wishes
 
-Nice!
-
-> Dscho, I just sent you an invite as a mentor, as I think you said you
-> are ok to mentor.
-
-Yes, I just accepted.
-
-Ciao,
-Dscho
+Phillip
