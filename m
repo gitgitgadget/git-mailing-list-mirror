@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6C7071F404
-	for <e@80x24.org>; Mon, 19 Feb 2018 18:53:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B364B1F404
+	for <e@80x24.org>; Mon, 19 Feb 2018 18:53:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753487AbeBSSxf (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Feb 2018 13:53:35 -0500
-Received: from mail-qk0-f194.google.com ([209.85.220.194]:39981 "EHLO
-        mail-qk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753439AbeBSSxd (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Feb 2018 13:53:33 -0500
-Received: by mail-qk0-f194.google.com with SMTP id n198so13469366qke.7
-        for <git@vger.kernel.org>; Mon, 19 Feb 2018 10:53:33 -0800 (PST)
+        id S1753526AbeBSSxj (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Feb 2018 13:53:39 -0500
+Received: from mail-qk0-f196.google.com ([209.85.220.196]:41130 "EHLO
+        mail-qk0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753439AbeBSSxg (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Feb 2018 13:53:36 -0500
+Received: by mail-qk0-f196.google.com with SMTP id h129so13449881qke.8
+        for <git@vger.kernel.org>; Mon, 19 Feb 2018 10:53:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=VZMaGWRi5fB/BVOgCabbFVeUs3/0XP60gi38k4WuOaw=;
-        b=MKvME/LS2fmBOaV20GG0NxhRSgGRyOFSq18PBm0XSRMtA52vkK9MboLnSqrQsSa/ou
-         6Uw+EeEj/IH9tcv99NRG5ivXvulcNaaEFjUd8aix356VoXPirYJS9Rm8dnsjiAp1QzKd
-         U0WJFFMQsNRt8oYD8lTX1CMEUdK9XJptPi2brvndSle14PUTNJRUzrKMnQMZIuFAgWA+
-         ae8mmW09C6PUKZbVFz606dg30ueCDdUqMFfMYnSh3x3OfM5C9FYKlctuWrR+TwdrpnKk
-         2sv9OBT3meqCxciwf5lAai7nJxCLnylC2rLmBoOaBxESKWwZIwU5wmPyIIHKTsAfsLrz
-         GtMg==
+        bh=JWZY6Xg7q2635K9hFK4JzUgOHU3AYUdsqxkjEVuHNLg=;
+        b=DdU9NRujTccn7eWq1fjiwVncYgn+JUN+6Jt5WeEgfpARX3TFHoK7jB+rAczHrvInVC
+         fNEwlZA5PnhxtTK4yBUH+jtbQ9WgEcydofTZHyIj9ZkB6LI4xH2HBYyb6nO05gsVUb8A
+         rTYSgUehl6VSU4xwxUa7oonuiZZwtibaTW/LyZswB5Sok6l9bAJ1CWRuxgkEjrQuieyA
+         9hshVd2fJDndkZjipNcpIj+C+mQHfK8EFCbqQ5o2/eC9MqcU8pIPZYeenUJGF6CW9HBU
+         TGH1f8D2nJ7d6QGUcn2jUsbVLgy2VYClSSaUcEaB9xFMd3LI16Nj93eQtUiwUrO0tAHK
+         fqTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=VZMaGWRi5fB/BVOgCabbFVeUs3/0XP60gi38k4WuOaw=;
-        b=I3/yfuNC4+97l5DeJWofArY/ObZxfr8AoyUd+zBMmKOmNcxfoTdG3myZX3ynHEwwVO
-         LjEju5LmCxdd/1uItdUGvfq4REw0wUoRq/fXnPVn4DQkGjKjlQNOhDTKRkiIwGWfW/lX
-         qN2IM7B1m84l9v6VI/6/YwN8WFaU2ToEwPgR2L31jkG81SClj7jDg4c1YFd39s3wJKYY
-         gjNrIzgh+z6u8oh9kvw/22qKgUuSgwTZMRGcukrhxP+vc67LyIw5Nod1JMxk7fnDy7M+
-         vRkTwr3+V1XQ0tlptHKDal2JywSaPYZm+9dG0X+jt10PanUSRWDifAgDWSUOUlOiGnpo
-         XC7A==
-X-Gm-Message-State: APf1xPA7cfEKIKVLtTbUlYCdu/ugOfRd6CDMaEe7R6Xvoi033Pe1P2qR
-        soitBVT/j8/4FbB42I1gUjFcRZ3AZqc=
-X-Google-Smtp-Source: AH8x227vzlHQqDt5sxMcD5kJCcGUdCTssyj5h0QYX30H5r7J2NrotkT1GbLdQT3TjzWRCmls0Q+Cig==
-X-Received: by 10.233.222.132 with SMTP id s126mr24927631qkf.60.1519066412252;
-        Mon, 19 Feb 2018 10:53:32 -0800 (PST)
+        bh=JWZY6Xg7q2635K9hFK4JzUgOHU3AYUdsqxkjEVuHNLg=;
+        b=aIXQzA20mKAm9sdBXmYL1nsU8Q1h7rxhBTMm4+TUlG7kzdSe6x8+TP4IXdtVNjlARm
+         xXfVdKmd+riH3NviYEREfGsdG1PQjo6/s0ar6YfirR2gOQNpz7c4MPZEAlOJkajkk2FS
+         LBdH1Nt2L6igG8AqmaMzVTNIkIYcfv/BVl3ZXT1oP/vqhRORypTwM/VEtGEEO8Ig52yw
+         /RC/yOvGo3PJoJKvj1+45mkVo5W/pyGJTryjQpPismfurCvM4v+vvFmtlYlIgjEZ2SIe
+         qMtQVYDfWkkqKfolEU/aA+vBsfCxhSQbCBlKaLAORRHRdYShcIDGqW9axy7J3kGQVWe+
+         SQNA==
+X-Gm-Message-State: APf1xPBtFfzT078iUJFbqpgq4CyHPoMaKMLQ42T1i339QBiOZ5z3ClmI
+        v1Ql7hSvCDiTL9+hq2X6R6EeGjkWs5I=
+X-Google-Smtp-Source: AH8x226k5WyHQlXqQb3jQS/vIz6i5v1TxGfMiqcIlaiAYalJ6ccGtpC/xf7LeF1oSlnDMB0K+dkR1Q==
+X-Received: by 10.55.71.201 with SMTP id u192mr20959901qka.357.1519066414959;
+        Mon, 19 Feb 2018 10:53:34 -0800 (PST)
 Received: from stolee-linux.corp.microsoft.com ([2001:4898:8010:0:eb4a:5dff:fe0f:7308])
-        by smtp.gmail.com with ESMTPSA id o12sm1672631qke.81.2018.02.19.10.53.30
+        by smtp.gmail.com with ESMTPSA id o12sm1672631qke.81.2018.02.19.10.53.33
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 19 Feb 2018 10:53:31 -0800 (PST)
+        Mon, 19 Feb 2018 10:53:34 -0800 (PST)
 From:   Derrick Stolee <stolee@gmail.com>
 X-Google-Original-From: Derrick Stolee <dstolee@microsoft.com>
 To:     git@vger.kernel.org, git@jeffhostetler.com
 Cc:     peff@peff.net, jonathantanmy@google.com, szeder.dev@gmail.com,
         sbeller@google.com, gitster@pobox.com,
         Derrick Stolee <dstolee@microsoft.com>
-Subject: [PATCH v4 01/13] commit-graph: add format document
-Date:   Mon, 19 Feb 2018 13:53:14 -0500
-Message-Id: <1519066406-81663-2-git-send-email-dstolee@microsoft.com>
+Subject: [PATCH v4 03/13] commit-graph: create git-commit-graph builtin
+Date:   Mon, 19 Feb 2018 13:53:16 -0500
+Message-Id: <1519066406-81663-4-git-send-email-dstolee@microsoft.com>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1519066406-81663-1-git-send-email-dstolee@microsoft.com>
 References: <4d1ee202-7d79-d73c-6e05-d0fc85db943c@gmail.com>
@@ -66,129 +66,143 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add document specifying the binary format for commit graphs. This
-format allows for:
-
-* New versions.
-* New hash functions and hash lengths.
-* Optional extensions.
-
-Basic header information is followed by a binary table of contents
-into "chunks" that include:
-
-* An ordered list of commit object IDs.
-* A 256-entry fanout into that list of OIDs.
-* A list of metadata for the commits.
-* A list of "large edges" to enable octopus merges.
-
-The format automatically includes two parent positions for every
-commit. This favors speed over space, since using only one position
-per commit would cause an extra level of indirection for every merge
-commit. (Octopus merges suffer from this indirection, but they are
-very rare.)
+Teach git the 'commit-graph' builtin that will be used for writing and
+reading packed graph files. The current implementation is mostly
+empty, except for an '--object-dir' option.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- Documentation/technical/commit-graph-format.txt | 90 +++++++++++++++++++++++++
- 1 file changed, 90 insertions(+)
- create mode 100644 Documentation/technical/commit-graph-format.txt
+ .gitignore                         |  1 +
+ Documentation/git-commit-graph.txt | 11 +++++++++++
+ Makefile                           |  1 +
+ builtin.h                          |  1 +
+ builtin/commit-graph.c             | 37 +++++++++++++++++++++++++++++++++++++
+ command-list.txt                   |  1 +
+ git.c                              |  1 +
+ 7 files changed, 53 insertions(+)
+ create mode 100644 Documentation/git-commit-graph.txt
+ create mode 100644 builtin/commit-graph.c
 
-diff --git a/Documentation/technical/commit-graph-format.txt b/Documentation/technical/commit-graph-format.txt
+diff --git a/.gitignore b/.gitignore
+index 833ef3b..e82f901 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -34,6 +34,7 @@
+ /git-clone
+ /git-column
+ /git-commit
++/git-commit-graph
+ /git-commit-tree
+ /git-config
+ /git-count-objects
+diff --git a/Documentation/git-commit-graph.txt b/Documentation/git-commit-graph.txt
 new file mode 100644
-index 0000000..11b18b5
+index 0000000..e1c3078
 --- /dev/null
-+++ b/Documentation/technical/commit-graph-format.txt
-@@ -0,0 +1,90 @@
-+Git commit graph format
-+=======================
++++ b/Documentation/git-commit-graph.txt
+@@ -0,0 +1,11 @@
++git-commit-graph(1)
++===================
 +
-+The Git commit graph stores a list of commit OIDs and some associated
-+metadata, including:
++NAME
++----
++git-commit-graph - Write and verify Git commit graphs (.graph files)
 +
-+- The generation number of the commit. Commits with no parents have
-+  generation number 1; commits with parents have generation number
-+  one more than the maximum generation number of its parents. We
-+  reserve zero as special, and can be used to mark a generation
-+  number invalid or as "not computed".
++GIT
++---
++Part of the linkgit:git[1] suite
 +
-+- The root tree OID.
+diff --git a/Makefile b/Makefile
+index ee9d5eb..fc40b81 100644
+--- a/Makefile
++++ b/Makefile
+@@ -932,6 +932,7 @@ BUILTIN_OBJS += builtin/clone.o
+ BUILTIN_OBJS += builtin/column.o
+ BUILTIN_OBJS += builtin/commit-tree.o
+ BUILTIN_OBJS += builtin/commit.o
++BUILTIN_OBJS += builtin/commit-graph.o
+ BUILTIN_OBJS += builtin/config.o
+ BUILTIN_OBJS += builtin/count-objects.o
+ BUILTIN_OBJS += builtin/credential.o
+diff --git a/builtin.h b/builtin.h
+index 42378f3..079855b 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -149,6 +149,7 @@ extern int cmd_clone(int argc, const char **argv, const char *prefix);
+ extern int cmd_clean(int argc, const char **argv, const char *prefix);
+ extern int cmd_column(int argc, const char **argv, const char *prefix);
+ extern int cmd_commit(int argc, const char **argv, const char *prefix);
++extern int cmd_commit_graph(int argc, const char **argv, const char *prefix);
+ extern int cmd_commit_tree(int argc, const char **argv, const char *prefix);
+ extern int cmd_config(int argc, const char **argv, const char *prefix);
+ extern int cmd_count_objects(int argc, const char **argv, const char *prefix);
+diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
+new file mode 100644
+index 0000000..98110bb
+--- /dev/null
++++ b/builtin/commit-graph.c
+@@ -0,0 +1,37 @@
++#include "builtin.h"
++#include "config.h"
++#include "parse-options.h"
 +
-+- The commit date.
++static char const * const builtin_commit_graph_usage[] = {
++	N_("git commit-graph [--object-dir <objdir>]"),
++	NULL
++};
 +
-+- The parents of the commit, stored using positional references within
-+  the graph file.
++static struct opts_commit_graph {
++	const char *obj_dir;
++} opts;
 +
-+== graph-*.graph files have the following format:
 +
-+In order to allow extensions that add extra data to the graph, we organize
-+the body into "chunks" and provide a binary lookup table at the beginning
-+of the body. The header includes certain values, such as number of chunks,
-+hash lengths and types.
++int cmd_commit_graph(int argc, const char **argv, const char *prefix)
++{
++	static struct option builtin_commit_graph_options[] = {
++		{ OPTION_STRING, 'p', "object-dir", &opts.obj_dir,
++			N_("dir"),
++			N_("The object directory to store the graph") },
++		OPT_END(),
++	};
 +
-+All 4-byte numbers are in network order.
++	if (argc == 2 && !strcmp(argv[1], "-h"))
++		usage_with_options(builtin_commit_graph_usage,
++				   builtin_commit_graph_options);
 +
-+HEADER:
++	git_config(git_default_config, NULL);
++	argc = parse_options(argc, argv, prefix,
++			     builtin_commit_graph_options,
++			     builtin_commit_graph_usage,
++			     PARSE_OPT_STOP_AT_NON_OPTION);
 +
-+  4-byte signature:
-+      The signature is: {'C', 'G', 'P', 'H'}
++	usage_with_options(builtin_commit_graph_usage,
++			   builtin_commit_graph_options);
++}
 +
-+  1-byte version number:
-+      Currently, the only valid version is 1.
-+
-+  1-byte Object Id Version (1 = SHA-1)
-+
-+  1-byte number (C) of "chunks"
-+
-+  1-byte (reserved for later use)
-+
-+CHUNK LOOKUP:
-+
-+  (C + 1) * 12 bytes listing the table of contents for the chunks:
-+      First 4 bytes describe chunk id. Value 0 is a terminating label.
-+      Other 8 bytes provide offset in current file for chunk to start.
-+      (Chunks are ordered contiguously in the file, so you can infer
-+      the length using the next chunk position if necessary.)
-+
-+  The remaining data in the body is described one chunk at a time, and
-+  these chunks may be given in any order. Chunks are required unless
-+  otherwise specified.
-+
-+CHUNK DATA:
-+
-+  OID Fanout (ID: {'O', 'I', 'D', 'F'}) (256 * 4 bytes)
-+      The ith entry, F[i], stores the number of OIDs with first
-+      byte at most i. Thus F[255] stores the total
-+      number of commits (N).
-+
-+  OID Lookup (ID: {'O', 'I', 'D', 'L'}) (N * H bytes)
-+      The OIDs for all commits in the graph, sorted in ascending order.
-+
-+  Commit Data (ID: {'C', 'G', 'E', 'T' }) (N * (H + 16) bytes)
-+    * The first H bytes are for the OID of the root tree.
-+    * The next 8 bytes are for the int-ids of the first two parents
-+      of the ith commit. Stores value 0xffffffff if no parent in that
-+      position. If there are more than two parents, the second value
-+      has its most-significant bit on and the other bits store an array
-+      position into the Large Edge List chunk.
-+    * The next 8 bytes store the generation number of the commit and
-+      the commit time in seconds since EPOCH. The generation number
-+      uses the higher 30 bits of the first 4 bytes, while the commit
-+      time uses the 32 bits of the second 4 bytes, along with the lowest
-+      2 bits of the lowest byte, storing the 33rd and 34th bit of the
-+      commit time.
-+
-+  Large Edge List (ID: {'E', 'D', 'G', 'E'}) [Optional]
-+      This list of 4-byte values store the second through nth parents for
-+      all octopus merges. The second parent value in the commit data stores
-+      an array position within this list along with the most-significant bit
-+      on. Starting at that array position, iterate through this list of int-ids
-+      for the parents until reaching a value with the most-significant bit on.
-+      The other bits correspond to the int-id of the last parent.
-+
-+TRAILER:
-+
-+	H-byte HASH-checksum of all of the above.
-+
+diff --git a/command-list.txt b/command-list.txt
+index a1fad28..835c589 100644
+--- a/command-list.txt
++++ b/command-list.txt
+@@ -34,6 +34,7 @@ git-clean                               mainporcelain
+ git-clone                               mainporcelain           init
+ git-column                              purehelpers
+ git-commit                              mainporcelain           history
++git-commit-graph                        plumbingmanipulators
+ git-commit-tree                         plumbingmanipulators
+ git-config                              ancillarymanipulators
+ git-count-objects                       ancillaryinterrogators
+diff --git a/git.c b/git.c
+index 9e96dd4..d4832c1 100644
+--- a/git.c
++++ b/git.c
+@@ -388,6 +388,7 @@ static struct cmd_struct commands[] = {
+ 	{ "clone", cmd_clone },
+ 	{ "column", cmd_column, RUN_SETUP_GENTLY },
+ 	{ "commit", cmd_commit, RUN_SETUP | NEED_WORK_TREE },
++	{ "commit-graph", cmd_commit_graph, RUN_SETUP },
+ 	{ "commit-tree", cmd_commit_tree, RUN_SETUP },
+ 	{ "config", cmd_config, RUN_SETUP_GENTLY },
+ 	{ "count-objects", cmd_count_objects, RUN_SETUP },
 -- 
 2.7.4
 
