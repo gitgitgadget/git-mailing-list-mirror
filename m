@@ -2,86 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_WEB,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6A4671F404
-	for <e@80x24.org>; Mon, 19 Feb 2018 13:01:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AE7161F404
+	for <e@80x24.org>; Mon, 19 Feb 2018 14:50:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752732AbeBSNBv (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Feb 2018 08:01:51 -0500
-Received: from smtp-out-2.talktalk.net ([62.24.135.66]:62580 "EHLO
-        smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752638AbeBSNBh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Feb 2018 08:01:37 -0500
-Received: from [192.168.2.201] ([92.22.21.220])
-        by smtp.talktalk.net with SMTP
-        id nl4YeA0gIoNnDnl4YeU8wi; Mon, 19 Feb 2018 13:01:35 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1519045295;
-        bh=++V2uZ8tL7w+gXmTd6wGww40Fqiyt4VUCGOBbvKycyo=;
-        h=Reply-To:Subject:To:References:From:Date:In-Reply-To;
-        b=dNRK5SCSMRanySPYF340FNMf4CC2JR8zCCcNge3dEZwTmGTcEktyt1KaVEw4puH5W
-         tiMpBR38k/aiCaNXcfle6UPqPqXdqRPTKYfJHAkaWnGdtYyMMmInzw7HLRCRwOIrQR
-         oLoj/HY7ThLO+3yh15qbUSKskkuoeWGfipaWIR/g=
-X-Originating-IP: [92.22.21.220]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=ZZ9tDodA c=1 sm=1 tr=0 a=VSxTZYxioCnvaH7igEU67w==:117
- a=VSxTZYxioCnvaH7igEU67w==:17 a=N659UExz7-8A:10 a=evINK-nbAAAA:8
- a=wVsNTyUSwQVMGWEdgTAA:9 a=pILNOxqGKmIA:10 a=RfR_gqz1fSpA9VikTjo0:22
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 0/4] Correct offsets of hunks when one is skipped
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Git Mailing List <git@vger.kernel.org>
-References: <20180213104408.9887-1-phillip.wood@talktalk.net>
- <20180213235642.GD1022467@genre.crustytoothpaste.net>
-From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <21bc3131-9432-537f-9e60-8cb3166572eb@talktalk.net>
-Date:   Mon, 19 Feb 2018 13:01:34 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
+        id S1752766AbeBSOuX (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Feb 2018 09:50:23 -0500
+Received: from mail-qt0-f179.google.com ([209.85.216.179]:45886 "EHLO
+        mail-qt0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752609AbeBSOuW (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Feb 2018 09:50:22 -0500
+Received: by mail-qt0-f179.google.com with SMTP id v90so9711849qte.12
+        for <git@vger.kernel.org>; Mon, 19 Feb 2018 06:50:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gnustavo-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
+        bh=lNGzFHeO2H911liR4G3mdlTAx2WACNvty9LpGnmmqKg=;
+        b=sRgHvXXjf9bAFgY4SjzVNU7Z+1vViDY174JsefLf+pqKmDsNjxJMQC61Zpi9nGDrfB
+         8c8/G31hKd33ftZOHAUcI1UIPmjl/o4cEiDBD2eJtVQSe3Vg5hbM0q9b1tNE2zZRemLq
+         4td/qoAwLodfHh24zmw3dx3n5o2+zpzSNr1TCVmIpXzcfBox0+vhZvxwHZltLX9DwG0v
+         LOdGq//qMzius0r8R+W1bz1+xJh3Evd8SpBI4441NUQ0lbetfAyalqSa2Q+7mom3EUFw
+         ZSdiWQEljwRd5F9wtOQ5ekXmv9/qv/T9B17zYGkT3JaY/MMYRmSwnVvbtEKklogZFOaH
+         O+3A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=lNGzFHeO2H911liR4G3mdlTAx2WACNvty9LpGnmmqKg=;
+        b=pTj9d/2fvN1BJ0WJ13l64rKPGQ8rSqxhv34woUBs2kmwUdgu0gGPCoBNDPO4hr3cYD
+         db0JgbohtbI7a0wlsh2xyU5MI2kByUFyd5fX64Vs9jR9cdDihs1f67zvCJ7vVIuUM8xX
+         QEHVkpg953ASWOiT7uSekv7+B2T15CJqTB+vZIqSNL9FTeF3T2a+paafBcWul9ZA/lmP
+         Si0785up1ccCWaoRg9jJBIsCDQa57tNfHJOy/6lDO7CM7kW9sYjSyAz5S4wS13ulxhy+
+         g98whxP1UF5b/RrlrKOBp6qJ/6dgpWlJI0ppgnXtKw34sglg7klQDCiGhkKcTFYgvzSB
+         JOAw==
+X-Gm-Message-State: APf1xPC65bxkWLvupMOgPegEIWGa6Rc/9j/mOT/o9ncPCGlgmGk/qTGy
+        DfUltWkhqvYMTAHAOXtSe9UNIRUbN2BlWvYWZ6irYNKFU/8=
+X-Google-Smtp-Source: AH8x227+HLacXosbdCqD/Pbe8a6qkTrx+uf9mMesoldUT0UvkS+CKJtRc6NwW7lwYq4/LtYw5yYF2/iS09C1BK0PGU4=
+X-Received: by 10.200.40.129 with SMTP id i1mr6095985qti.176.1519051821438;
+ Mon, 19 Feb 2018 06:50:21 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20180213235642.GD1022467@genre.crustytoothpaste.net>
-Content-Type: text/plain; charset=windows-1252
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfF6hTe4qpLIU9n6mhRYVWwD/0kPv01+AiYuN6ZlMaYpWUZGfFNmTidRb7V6FQueBrSU+ARRDCuEE0q984zWoMTrFr6+fpJr0/PKOBexRGX7rU2Qy20LD
- EKVQxI4XzNHJ45YvSfV6RmRpUNyqPuFlQrd7c08D+qS/x11FvxjJ6z7al6bFpMyw1HV0DTH+dMf1Bmn5TPu63AbBFeGEdNyndorsDwKbxzMivflZ5QLct1PE
- /6HbLKUTpnLztaeI2FOskJzYszoUHxRo02qS80xViuI=
+Received: by 10.140.107.230 with HTTP; Mon, 19 Feb 2018 06:50:00 -0800 (PST)
+In-Reply-To: <CAPx58qqv84+i0JbdsVzFqWB=bRDecWHxss8frD4=nWOsFj-NPg@mail.gmail.com>
+References: <CAPx58qqv84+i0JbdsVzFqWB=bRDecWHxss8frD4=nWOsFj-NPg@mail.gmail.com>
+From:   Gustavo Chaves <gustavo@gnustavo.com>
+Date:   Mon, 19 Feb 2018 11:50:00 -0300
+Message-ID: <CAPx58qoS-J+yJ_J4QOOnKyG=EOrT5J=UoCrXfXxEijq4Z2Z_3w@mail.gmail.com>
+Subject: Re: Why git-revert doesn't invoke the pre-commit and the commit-msg hooks?
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 13/02/18 23:56, brian m. carlson wrote:
-> On Tue, Feb 13, 2018 at 10:44:04AM +0000, Phillip Wood wrote:
->> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->>
->> While working on a patch series to stage selected lines from a hunk
->> without having to edit it I got worried that subsequent patches would
->> be applied in the wrong place which lead to this series to correct the
->> offsets of hunks following those that are skipped or edited.
->>
->> Phillip Wood (4):
->>   add -i: add function to format hunk header
->>   t3701: add failing test for pathological context lines
->>   add -p: Adjust offsets of subsequent hunks when one is skipped
->>   add -p: calculate offset delta for edited patches
->>
->>  git-add--interactive.perl  | 93 +++++++++++++++++++++++++++++++++++-----------
->>  t/t3701-add-interactive.sh | 30 +++++++++++++++
->>  2 files changed, 102 insertions(+), 21 deletions(-)
-> 
-> This looks reasonably sane to me.  I really like that you managed to
-> produce failing tests for this situation.  I know pathological cases
-> like this have bit GCC in the past, so it's good that you fixed this.
-> 
+I asked this question on StackOverflow and got an answer:
+https://stackoverflow.com/q/48852925/114983
 
-Thanks Brain, it's interesting to hear that GCC has been bitten in the past
+The problem is that git-revert invokes git-commit with the -n flag,
+explicitly avoiding the pre-commit and the commit-msg hooks.
 
-Best Wishes
+This was originally introduced on commit 9fa4db544e2e, by Junio
+Hamano, in 2005! The rationale in the commit message was the
+following:
 
-Phillip
+>> Do not verify reverted/cherry-picked/rebased patches.
+
+>> The original committer may have used validation criteria that is less
+>> stricter than yours.  You do not want to lose the changes even if they
+>> are done in substandard way from your 'commit -v' verifier's point of
+>> view.
+
+I get it, but since by default you are allowed to edit the commit
+message during a git-revert I think there's a case to be made to make
+the pre-commit and the commit-msg being invoked by default. Also,
+git-revert introduces new lines in the original commit message, and
+they could be used to trigger specific checks, such as the one I
+wanted to implement, to deny commits reverting merge-commits.
+
+Shouldn't git-revert work exactly as git-commit? Instead of disabling
+hooks by default, it could accept the --no-verify flag just like
+git-commit to disable the hooks if the user wants it.
+
+-- 
+Gustavo Chaves
