@@ -7,43 +7,43 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 593201F404
-	for <e@80x24.org>; Mon, 19 Feb 2018 22:59:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 966811F404
+	for <e@80x24.org>; Mon, 19 Feb 2018 22:59:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932245AbeBSW7i (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Feb 2018 17:59:38 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:33274 "EHLO
+        id S932222AbeBSW7h (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Feb 2018 17:59:37 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:33278 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S932192AbeBSW7f (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 19 Feb 2018 17:59:35 -0500
+        by vger.kernel.org with ESMTP id S932190AbeBSW7g (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 19 Feb 2018 17:59:36 -0500
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 7827B609CA;
-        Mon, 19 Feb 2018 22:59:34 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 7F319609D9;
+        Mon, 19 Feb 2018 22:59:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1519081174;
-        bh=srvlUylHOJSzffY4an6tbaxNcuR5y1CSUgv9jc/3K6k=;
+        s=default; t=1519081176;
+        bh=l/ZjgfmEdPH63a5+PxoJes0WtiPfGGj7/5IEnIzZS/Y=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=C5eE0mnikVrX8SakKXZnTgjEHNnqH8ILRVJGcQFMvwyvl9HrJ2cthL2OmX9FLd2P0
-         XlM4FgYI+uUlDAeoP1KHAinZJlT19+3VxmO7X1QTQxEMACG+NuK76/0ttTzd+LmuPx
-         t3AjsR2lO/48zZdHcdWEjItknBk6M1/QM/1J8XnjKaJIr+3QylIPRpmcpQV+PZSdS6
-         yF2WHw6RA0L7zug4S/eOKNJj7mDTbGJFsLj9d4aqutaGGxNj7eOeODrmY6Zn6vWyYR
-         Q4ShM6dCY2ftlHl44wbYVrL/h6LOMiMc2a/ydXrcDcPdpgeHSz9Guqjf6gnNNTupkI
-         bcSSXq3W6jdj3If/VcwIdHXJkKNye6J88rfSnmMcjvXJz0tWsj+/ievIACMXDjFpbR
-         66HF2qdOBMvsmckOjayDQinhSmMII5DZoPPCIgsKeZrAYfJNJm9ShGrJgOFmekf+4/
-         zcak+mDi1V3voPDxeaylNbXldelJbbR5+hDva4mLxQHH4ayXJSk
+        b=mUtcz2tL/r0jT/Gdosjil5O+L46NgaMrJbqc9iqoo3LAWn6VCmNzUDLe/WXerPWJq
+         IAnv7knZa2e8Kd0mBTt2pFvRT74608v+OTQmBWcGPleF63BU1OuKY0zG3VOJeNvO4J
+         eRBOzMVSYpRBRNBNtWsviQcsDywX96tRbM2H70hQ2vSMCPo9XbmP8Izd6Fxu+PxaOF
+         if4a+AA6kuyNllR9MHfoGMUFHPId+8+6y5MyHIkL/dJCn/NleC2nA2Nnm0JPZtIsN0
+         SlzV9wbR+IsvOXG6K+z2zhJKvSxVgkD7rOlKhsruINvagMLgJEqR9kLweD3iWPrsKU
+         P668/RSopReNN22Gcxve1uYkog+pa3Aj4LxC4Y529H6oKJeiTZMcWPTZTx+IsM/39j
+         73puLtsF5e8K8L+LgY7sSzAeJDl4EgzV1tow2r6b1NgHJc5cMwN7ybJD0meyTV8jx4
+         2bFTHEz7PTm4CFzuFUE8C1v61n8Iar4Lk8/1Inm3d9NIC9brwqY
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>, Patryk Obara <patryk.obara@gmail.com>,
         Jeff King <peff@peff.net>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH 01/36] bulk-checkin: convert index_bulk_checkin to struct object_id
-Date:   Mon, 19 Feb 2018 22:58:52 +0000
-Message-Id: <20180219225927.386065-2-sandals@crustytoothpaste.net>
+Subject: [PATCH 02/36] builtin/write-tree: convert to struct object_id
+Date:   Mon, 19 Feb 2018 22:58:53 +0000
+Message-Id: <20180219225927.386065-3-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.16.1.291.g4437f3f132
 In-Reply-To: <20180219225927.386065-1-sandals@crustytoothpaste.net>
 References: <20180219225927.386065-1-sandals@crustytoothpaste.net>
@@ -53,108 +53,36 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert the index_bulk_checkin function, and the static functions it
-calls, to use pointers to struct object_id.
+This is needed to convert parts of the cache-tree code.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- bulk-checkin.c | 18 +++++++++---------
- bulk-checkin.h |  2 +-
- sha1_file.c    |  2 +-
- 3 files changed, 11 insertions(+), 11 deletions(-)
+ builtin/write-tree.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/bulk-checkin.c b/bulk-checkin.c
-index 8bcd1c8665..6f5ee25bff 100644
---- a/bulk-checkin.c
-+++ b/bulk-checkin.c
-@@ -60,17 +60,17 @@ static void finish_bulk_checkin(struct bulk_checkin_state *state)
- 	reprepare_packed_git();
- }
- 
--static int already_written(struct bulk_checkin_state *state, unsigned char sha1[])
-+static int already_written(struct bulk_checkin_state *state, struct object_id *oid)
+diff --git a/builtin/write-tree.c b/builtin/write-tree.c
+index bd0a78aa3c..299a121531 100644
+--- a/builtin/write-tree.c
++++ b/builtin/write-tree.c
+@@ -19,7 +19,7 @@ int cmd_write_tree(int argc, const char **argv, const char *unused_prefix)
  {
- 	int i;
+ 	int flags = 0, ret;
+ 	const char *prefix = NULL;
+-	unsigned char sha1[20];
++	struct object_id oid;
+ 	const char *me = "git-write-tree";
+ 	struct option write_tree_options[] = {
+ 		OPT_BIT(0, "missing-ok", &flags, N_("allow missing objects"),
+@@ -38,10 +38,10 @@ int cmd_write_tree(int argc, const char **argv, const char *unused_prefix)
+ 	argc = parse_options(argc, argv, unused_prefix, write_tree_options,
+ 			     write_tree_usage, 0);
  
- 	/* The object may already exist in the repository */
--	if (has_sha1_file(sha1))
-+	if (has_sha1_file(oid->hash))
- 		return 1;
- 
- 	/* Might want to keep the list sorted */
- 	for (i = 0; i < state->nr_written; i++)
--		if (!hashcmp(state->written[i]->oid.hash, sha1))
-+		if (!oidcmp(&state->written[i]->oid, oid))
- 			return 1;
- 
- 	/* This is a new object we need to keep */
-@@ -186,7 +186,7 @@ static void prepare_to_stream(struct bulk_checkin_state *state,
- }
- 
- static int deflate_to_pack(struct bulk_checkin_state *state,
--			   unsigned char result_sha1[],
-+			   struct object_id *result_oid,
- 			   int fd, size_t size,
- 			   enum object_type type, const char *path,
- 			   unsigned flags)
-@@ -236,17 +236,17 @@ static int deflate_to_pack(struct bulk_checkin_state *state,
- 		if (lseek(fd, seekback, SEEK_SET) == (off_t) -1)
- 			return error("cannot seek back");
- 	}
--	the_hash_algo->final_fn(result_sha1, &ctx);
-+	the_hash_algo->final_fn(result_oid->hash, &ctx);
- 	if (!idx)
- 		return 0;
- 
- 	idx->crc32 = crc32_end(state->f);
--	if (already_written(state, result_sha1)) {
-+	if (already_written(state, result_oid)) {
- 		hashfile_truncate(state->f, &checkpoint);
- 		state->offset = checkpoint.offset;
- 		free(idx);
- 	} else {
--		hashcpy(idx->oid.hash, result_sha1);
-+		oidcpy(&idx->oid, result_oid);
- 		ALLOC_GROW(state->written,
- 			   state->nr_written + 1,
- 			   state->alloc_written);
-@@ -255,11 +255,11 @@ static int deflate_to_pack(struct bulk_checkin_state *state,
- 	return 0;
- }
- 
--int index_bulk_checkin(unsigned char *sha1,
-+int index_bulk_checkin(struct object_id *oid,
- 		       int fd, size_t size, enum object_type type,
- 		       const char *path, unsigned flags)
- {
--	int status = deflate_to_pack(&state, sha1, fd, size, type,
-+	int status = deflate_to_pack(&state, oid, fd, size, type,
- 				     path, flags);
- 	if (!state.plugged)
- 		finish_bulk_checkin(&state);
-diff --git a/bulk-checkin.h b/bulk-checkin.h
-index fbd40fc98c..a85527318b 100644
---- a/bulk-checkin.h
-+++ b/bulk-checkin.h
-@@ -4,7 +4,7 @@
- #ifndef BULK_CHECKIN_H
- #define BULK_CHECKIN_H
- 
--extern int index_bulk_checkin(unsigned char sha1[],
-+extern int index_bulk_checkin(struct object_id *oid,
- 			      int fd, size_t size, enum object_type type,
- 			      const char *path, unsigned flags);
- 
-diff --git a/sha1_file.c b/sha1_file.c
-index 826d7a0ae3..c1d06c6109 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -1892,7 +1892,7 @@ static int index_stream(struct object_id *oid, int fd, size_t size,
- 			enum object_type type, const char *path,
- 			unsigned flags)
- {
--	return index_bulk_checkin(oid->hash, fd, size, type, path, flags);
-+	return index_bulk_checkin(oid, fd, size, type, path, flags);
- }
- 
- int index_fd(struct object_id *oid, int fd, struct stat *st,
+-	ret = write_cache_as_tree(sha1, flags, prefix);
++	ret = write_cache_as_tree(oid.hash, flags, prefix);
+ 	switch (ret) {
+ 	case 0:
+-		printf("%s\n", sha1_to_hex(sha1));
++		printf("%s\n", oid_to_hex(&oid));
+ 		break;
+ 	case WRITE_TREE_UNREADABLE_INDEX:
+ 		die("%s: error reading the index", me);
