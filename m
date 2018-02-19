@@ -7,43 +7,43 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6D9321F404
-	for <e@80x24.org>; Mon, 19 Feb 2018 22:59:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 27C1E1F404
+	for <e@80x24.org>; Mon, 19 Feb 2018 22:59:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932258AbeBSW7m (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Feb 2018 17:59:42 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:33284 "EHLO
+        id S932271AbeBSW7s (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Feb 2018 17:59:48 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:33314 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S932213AbeBSW7h (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 19 Feb 2018 17:59:37 -0500
+        by vger.kernel.org with ESMTP id S932253AbeBSW7l (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 19 Feb 2018 17:59:41 -0500
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 4EF64609DA;
-        Mon, 19 Feb 2018 22:59:36 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id E80AF609DE;
+        Mon, 19 Feb 2018 22:59:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1519081176;
-        bh=eyzvVAu6BgVrS7INubTTLIZGi7OJSOrWu4786xdnohk=;
+        s=default; t=1519081180;
+        bh=+kq+WVQ60QMpAl2aeoeBV1AvO6KTfLPVEOaIs+V5fro=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=mr5jbePovB5/HpKyNKSwgZIZazWRld/ikf3tIPu2We+mSoLu8myaA/gppo/vxTeDV
-         FL4O0gyiyabsauvJ5wLti87n7QcXVejzj6G3evzulnWLcdlSJTQ33KPsCQku8HuoeU
-         dpChlQz4h+twApy9ogBHSluavRQykGfReBTyOmiO6iVHarVX+aZ3dWCkmdk/fPyreA
-         togVsr6rN/r7N4xdj7UZdXUNxqVQjvxC/Ff49B+h1iRHAy/qr1hxt7kAPQkfEo++0N
-         gjbC7OU9AmrDMKXU9dKrShH3o+KYCbXx/InOAEwYS5aKFBUm/ww03LKmSJOpKv/vFF
-         OmUADW/o3lbhqeCLfVdhY3kltj7pWStN2cOM0u3SB1T2ofs2cnmO8lRNGHfVAuB4+L
-         DlOSX+DqgqM+2K9rK/+leNyVBC4R1P962J61LGOxaL0fAfqcmaVbbrJqY/1yDkTZUN
-         2mK5niSYwMEdoIsnJbC8UzeQ2K8uwJVljNjDttDoTZMvGGBHNmr
+        b=jXbJEON6Kre+/9KPYTpMHRHWiCPBOY+5GBeOidHL5+p34Swy3biKIBaQyaSSzcBAI
+         cY+VOSA75EYe2CYE5SpmdGWsiXZBGsXTFl/YV6KMhIIyuBLToC2bsDKx3cv3vd/huj
+         g833V18OGtyr/VAYy+nC0sDMX9qKRGKOZXPgQQ8zCQTlVOVb8FJw0jNoV3BSAsyfM/
+         Fz0CCzGcpgio1/KqyAUbiJTOMuGJ5VZnxXI2p8U4ZkplapPfdCt6uata8CteJETM8S
+         hEm2Eivmcm3OrD+t/DtJzzzcQbMW5SMlcReFbvJLvHbitg9c7LeMNAH4j6K9vpkTCM
+         XiYJt8N58ojrjo4pRyqI45absGsAOPH3Oc3GmChZj0U641BB6krMmnn8zQ8aVbbRyh
+         trMmZUqlBzY0wsNRAfiX81hC7hKMA9lEE+05WnUiUkZ4evKWa6iR8OpJXAxL9ZKVEz
+         DMbUgHnrIbTGqZJvmO51pu3L09GNgrDm6x8PE9xLVSOrGmDDI+v
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>, Patryk Obara <patryk.obara@gmail.com>,
         Jeff King <peff@peff.net>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH 03/36] cache-tree: convert write_*_as_tree to object_id
-Date:   Mon, 19 Feb 2018 22:58:54 +0000
-Message-Id: <20180219225927.386065-4-sandals@crustytoothpaste.net>
+Subject: [PATCH 07/36] ref-filter: convert grab_objectname to struct object_id
+Date:   Mon, 19 Feb 2018 22:58:58 +0000
+Message-Id: <20180219225927.386065-8-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.16.1.291.g4437f3f132
 In-Reply-To: <20180219225927.386065-1-sandals@crustytoothpaste.net>
 References: <20180219225927.386065-1-sandals@crustytoothpaste.net>
@@ -53,156 +53,55 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert write_index_as_tree and write_cache_as_tree to use struct
-object_id.
+This is necessary in order to convert find_unique_abbrev.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin/am.c         |  8 ++++----
- builtin/merge.c      |  2 +-
- builtin/write-tree.c |  2 +-
- cache-tree.c         | 10 +++++-----
- cache-tree.h         |  4 ++--
- sequencer.c          |  4 ++--
- 6 files changed, 15 insertions(+), 15 deletions(-)
+ ref-filter.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/builtin/am.c b/builtin/am.c
-index 6661edc162..220c5deed8 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -1546,7 +1546,7 @@ static int fall_back_threeway(const struct am_state *state, const char *index_pa
- 	discard_cache();
- 	read_cache_from(index_path);
- 
--	if (write_index_as_tree(orig_tree.hash, &the_index, index_path, 0, NULL))
-+	if (write_index_as_tree(&orig_tree, &the_index, index_path, 0, NULL))
- 		return error(_("Repository lacks necessary blobs to fall back on 3-way merge."));
- 
- 	say(state, stdout, _("Using index info to reconstruct a base tree..."));
-@@ -1571,7 +1571,7 @@ static int fall_back_threeway(const struct am_state *state, const char *index_pa
- 		return error(_("Did you hand edit your patch?\n"
- 				"It does not apply to blobs recorded in its index."));
- 
--	if (write_index_as_tree(their_tree.hash, &the_index, index_path, 0, NULL))
-+	if (write_index_as_tree(&their_tree, &the_index, index_path, 0, NULL))
- 		return error("could not write tree");
- 
- 	say(state, stdout, _("Falling back to patching base and 3-way merge..."));
-@@ -1622,7 +1622,7 @@ static void do_commit(const struct am_state *state)
- 	if (run_hook_le(NULL, "pre-applypatch", NULL))
- 		exit(1);
- 
--	if (write_cache_as_tree(tree.hash, 0, NULL))
-+	if (write_cache_as_tree(&tree, 0, NULL))
- 		die(_("git write-tree failed to write a tree"));
- 
- 	if (!get_oid_commit("HEAD", &parent)) {
-@@ -2001,7 +2001,7 @@ static int clean_index(const struct object_id *head, const struct object_id *rem
- 	if (fast_forward_to(head_tree, head_tree, 1))
- 		return -1;
- 
--	if (write_cache_as_tree(index.hash, 0, NULL))
-+	if (write_cache_as_tree(&index, 0, NULL))
- 		return -1;
- 
- 	index_tree = parse_tree_indirect(&index);
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 92ba99a1a5..861b170468 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -638,7 +638,7 @@ static int read_tree_trivial(struct object_id *common, struct object_id *head,
- 
- static void write_tree_trivial(struct object_id *oid)
- {
--	if (write_cache_as_tree(oid->hash, 0, NULL))
-+	if (write_cache_as_tree(oid, 0, NULL))
- 		die(_("git write-tree failed to write a tree"));
+diff --git a/ref-filter.c b/ref-filter.c
+index f9e25aea7a..9cbd92611c 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -737,18 +737,18 @@ static void *get_obj(const struct object_id *oid, struct object **obj, unsigned
+ 	return buf;
  }
  
-diff --git a/builtin/write-tree.c b/builtin/write-tree.c
-index 299a121531..c9d3c544e7 100644
---- a/builtin/write-tree.c
-+++ b/builtin/write-tree.c
-@@ -38,7 +38,7 @@ int cmd_write_tree(int argc, const char **argv, const char *unused_prefix)
- 	argc = parse_options(argc, argv, unused_prefix, write_tree_options,
- 			     write_tree_usage, 0);
- 
--	ret = write_cache_as_tree(oid.hash, flags, prefix);
-+	ret = write_cache_as_tree(&oid, flags, prefix);
- 	switch (ret) {
- 	case 0:
- 		printf("%s\n", oid_to_hex(&oid));
-diff --git a/cache-tree.c b/cache-tree.c
-index c52e4303df..ba07a8067e 100644
---- a/cache-tree.c
-+++ b/cache-tree.c
-@@ -599,7 +599,7 @@ static struct cache_tree *cache_tree_find(struct cache_tree *it, const char *pat
- 	return it;
- }
- 
--int write_index_as_tree(unsigned char *sha1, struct index_state *index_state, const char *index_path, int flags, const char *prefix)
-+int write_index_as_tree(struct object_id *oid, struct index_state *index_state, const char *index_path, int flags, const char *prefix)
+-static int grab_objectname(const char *name, const unsigned char *sha1,
++static int grab_objectname(const char *name, const struct object_id *oid,
+ 			   struct atom_value *v, struct used_atom *atom)
  {
- 	int entries, was_valid;
- 	struct lock_file lock_file = LOCK_INIT;
-@@ -640,19 +640,19 @@ int write_index_as_tree(unsigned char *sha1, struct index_state *index_state, co
- 			ret = WRITE_TREE_PREFIX_ERROR;
- 			goto out;
+ 	if (starts_with(name, "objectname")) {
+ 		if (atom->u.objectname.option == O_SHORT) {
+-			v->s = xstrdup(find_unique_abbrev(sha1, DEFAULT_ABBREV));
++			v->s = xstrdup(find_unique_abbrev(oid->hash, DEFAULT_ABBREV));
+ 			return 1;
+ 		} else if (atom->u.objectname.option == O_FULL) {
+-			v->s = xstrdup(sha1_to_hex(sha1));
++			v->s = xstrdup(oid_to_hex(oid));
+ 			return 1;
+ 		} else if (atom->u.objectname.option == O_LENGTH) {
+-			v->s = xstrdup(find_unique_abbrev(sha1, atom->u.objectname.length));
++			v->s = xstrdup(find_unique_abbrev(oid->hash, atom->u.objectname.length));
+ 			return 1;
+ 		} else
+ 			die("BUG: unknown %%(objectname) option");
+@@ -775,7 +775,7 @@ static void grab_common_values(struct atom_value *val, int deref, struct object
+ 			v->s = xstrfmt("%lu", sz);
  		}
--		hashcpy(sha1, subtree->oid.hash);
-+		oidcpy(oid, &subtree->oid);
+ 		else if (deref)
+-			grab_objectname(name, obj->oid.hash, v, &used_atom[i]);
++			grab_objectname(name, &obj->oid, v, &used_atom[i]);
  	}
- 	else
--		hashcpy(sha1, index_state->cache_tree->oid.hash);
-+		oidcpy(oid, &index_state->cache_tree->oid);
- 
- out:
- 	rollback_lock_file(&lock_file);
- 	return ret;
  }
  
--int write_cache_as_tree(unsigned char *sha1, int flags, const char *prefix)
-+int write_cache_as_tree(struct object_id *oid, int flags, const char *prefix)
- {
--	return write_index_as_tree(sha1, &the_index, get_index_file(), flags, prefix);
-+	return write_index_as_tree(oid, &the_index, get_index_file(), flags, prefix);
- }
- 
- static void prime_cache_tree_rec(struct cache_tree *it, struct tree *tree)
-diff --git a/cache-tree.h b/cache-tree.h
-index f7b9cab7ee..cfd5328cc9 100644
---- a/cache-tree.h
-+++ b/cache-tree.h
-@@ -47,8 +47,8 @@ int update_main_cache_tree(int);
- #define WRITE_TREE_UNMERGED_INDEX (-2)
- #define WRITE_TREE_PREFIX_ERROR (-3)
- 
--int write_index_as_tree(unsigned char *sha1, struct index_state *index_state, const char *index_path, int flags, const char *prefix);
--int write_cache_as_tree(unsigned char *sha1, int flags, const char *prefix);
-+int write_index_as_tree(struct object_id *oid, struct index_state *index_state, const char *index_path, int flags, const char *prefix);
-+int write_cache_as_tree(struct object_id *oid, int flags, const char *prefix);
- void prime_cache_tree(struct index_state *, struct tree *);
- 
- extern int cache_tree_matches_traversal(struct cache_tree *, struct name_entry *ent, struct traverse_info *info);
-diff --git a/sequencer.c b/sequencer.c
-index e9baaf59bd..d2fc1871ed 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -1113,7 +1113,7 @@ static int try_to_commit(struct strbuf *msg, const char *author,
- 		commit_list_insert(current_head, &parents);
- 	}
- 
--	if (write_cache_as_tree(tree.hash, 0, NULL)) {
-+	if (write_cache_as_tree(&tree, 0, NULL)) {
- 		res = error(_("git write-tree failed to write a tree"));
- 		goto out;
- 	}
-@@ -1475,7 +1475,7 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
- 		 * that represents the "current" state for merge-recursive
- 		 * to work on.
- 		 */
--		if (write_cache_as_tree(head.hash, 0, NULL))
-+		if (write_cache_as_tree(&head, 0, NULL))
- 			return error(_("your index file is unmerged."));
- 	} else {
- 		unborn = get_oid("HEAD", &head);
+@@ -1439,7 +1439,7 @@ static void populate_value(struct ref_array_item *ref)
+ 				v->s = xstrdup(buf + 1);
+ 			}
+ 			continue;
+-		} else if (!deref && grab_objectname(name, ref->objectname.hash, v, atom)) {
++		} else if (!deref && grab_objectname(name, &ref->objectname, v, atom)) {
+ 			continue;
+ 		} else if (!strcmp(name, "HEAD")) {
+ 			if (atom->u.head && !strcmp(ref->refname, atom->u.head))
