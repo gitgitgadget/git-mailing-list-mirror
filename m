@@ -7,43 +7,43 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 497891F404
-	for <e@80x24.org>; Mon, 19 Feb 2018 23:00:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9E4E91F404
+	for <e@80x24.org>; Mon, 19 Feb 2018 23:00:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932305AbeBSXAD (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Feb 2018 18:00:03 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:33438 "EHLO
+        id S932220AbeBSXAE (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Feb 2018 18:00:04 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:33424 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S932285AbeBSW77 (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 19 Feb 2018 17:59:59 -0500
+        by vger.kernel.org with ESMTP id S932295AbeBSW76 (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 19 Feb 2018 17:59:58 -0500
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 1CA9F60D8D;
-        Mon, 19 Feb 2018 22:59:58 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 63D2A60D79;
+        Mon, 19 Feb 2018 22:59:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1519081198;
-        bh=FVDPo28uGaDPLoIaKCyup4xi+a6Ff07Q4saUgposbpk=;
+        s=default; t=1519081196;
+        bh=AiN6MUHA779NJFN7C1av5+6y4YCEqAQ6XHZprcSa9qg=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=nJXIABTvWf8g+tAtDJKvfHLxNf5wa0i/vwdLV+9H+yWXh03DcXRmIkbxEHGgb61Kl
-         x+/6ajdlL1VhMqb8bfcnfVNH4+9kLxGr7W2m1jlW3/XOyAyyQ6oR2r0pUymyx6OXX0
-         zdl6h88cB/Se3oJDRvLQ+LXUSH9mqPcIZM1PQieu2MOlXwIGi3Rc8kv5PEAc06XTrb
-         HIR0JeoZ3WOoWwJWz2UJpKOj4gFv55m+yDfQq42c8SWD8t4tZxbf21zvL74PiKgN+M
-         yFXhjW8sEbeBHoRqHUIsLzEFFLDMwqlFUUVeuqUAw6QzA2B9a+kY18JoI2eIHkZJzE
-         wFWieMHfgAFTEhetuSXouIjtc1tj5CwR26gY+YV2E/WsE+P3WHJZFu7p8wKdlkhIfr
-         PuOTNjpbAbirl46jeNYiQ6HKepYu7r7COPNQd3F7hvHX9bU+Rm/mZjsdmLtFbdLdkn
-         oMm1UnCxYlSczD3MS4jQyvQgP9EzXmCZWnIzna+zp1Thdzbj189
+        b=UAlXgg9Igf06cgYNcvPNYYSTu+SyOwNwd9MQfJaRocPPFlPfsYVaAT8n4CVKwmeHi
+         XOi0NoA4FfcAgFFvVgJsCGp9PcJBb4pC4irCa9iqdDMS1sYyv7ZlWNSBNq9mB0GUZf
+         bXDy07n3h42YEgWkXvjg3npIcNZVw5RBAoxQlFvSGgeuDRu/Qweq5pg91C+TqqldCD
+         5GEQL6TaK+86StaIQ3LKfL+7FTd4B/YC08oIKnarGYwIAre+GnHu0SFBYCes0+isad
+         pOvCy0HzaIflsAS7oVPiXn2j6/JgguuCQ7MxQM+DO4fnsduyQF7/L2gtV4YyMoEbji
+         ATuNp9wiUGERPDx7ObRTCp7qghhSEI55/LHGgvJ7Bw1wW2gR1A24QV4OTf4QSu/qg9
+         K8ytcPFcDzk4d82/RqGmgARu2oxQMNlgNqYGpdlnBqWv74vQ3naJinP2G1BpN5LD3X
+         lFtZxbIoo0GBoVUuVpccK7uym/FA6+j9gFJ/JKh/yl958OehiBZ
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>, Patryk Obara <patryk.obara@gmail.com>,
         Jeff King <peff@peff.net>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH 24/36] packfile: convert unpack_entry to struct object_id
-Date:   Mon, 19 Feb 2018 22:59:15 +0000
-Message-Id: <20180219225927.386065-25-sandals@crustytoothpaste.net>
+Subject: [PATCH 22/36] sha1_file: convert assert_sha1_type to object_id
+Date:   Mon, 19 Feb 2018 22:59:13 +0000
+Message-Id: <20180219225927.386065-23-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.16.1.291.g4437f3f132
 In-Reply-To: <20180219225927.386065-1-sandals@crustytoothpaste.net>
 References: <20180219225927.386065-1-sandals@crustytoothpaste.net>
@@ -53,68 +53,75 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert unpack_entry and read_object to use struct object_id.
----
- packfile.c | 22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+Convert this function to take a pointer to struct object_id and rename
+it to assert_oid_type.
 
-diff --git a/packfile.c b/packfile.c
-index bfa6438b4e..ed7b342ebf 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -1452,7 +1452,7 @@ struct unpack_entry_stack_ent {
- 	unsigned long size;
- };
- 
--static void *read_object(const unsigned char *sha1, enum object_type *type,
-+static void *read_object(const struct object_id *oid, enum object_type *type,
- 			 unsigned long *size)
- {
- 	struct object_info oi = OBJECT_INFO_INIT;
-@@ -1461,7 +1461,7 @@ static void *read_object(const unsigned char *sha1, enum object_type *type,
- 	oi.sizep = size;
- 	oi.contentp = &content;
- 
--	if (sha1_object_info_extended(sha1, &oi, 0) < 0)
-+	if (sha1_object_info_extended(oid->hash, &oi, 0) < 0)
- 		return NULL;
- 	return content;
- }
-@@ -1501,11 +1501,11 @@ void *unpack_entry(struct packed_git *p, off_t obj_offset,
- 			struct revindex_entry *revidx = find_pack_revindex(p, obj_offset);
- 			off_t len = revidx[1].offset - obj_offset;
- 			if (check_pack_crc(p, &w_curs, obj_offset, len, revidx->nr)) {
--				const unsigned char *sha1 =
--					nth_packed_object_sha1(p, revidx->nr);
-+				struct object_id oid;
-+				nth_packed_object_oid(&oid, p, revidx->nr);
- 				error("bad packed object CRC for %s",
--				      sha1_to_hex(sha1));
--				mark_bad_packed_object(p, sha1);
-+				      oid_to_hex(&oid));
-+				mark_bad_packed_object(p, oid.hash);
- 				data = NULL;
- 				goto out;
- 			}
-@@ -1588,16 +1588,16 @@ void *unpack_entry(struct packed_git *p, off_t obj_offset,
- 			 * of a corrupted pack, and is better than failing outright.
- 			 */
- 			struct revindex_entry *revidx;
--			const unsigned char *base_sha1;
-+			struct object_id base_oid;
- 			revidx = find_pack_revindex(p, obj_offset);
- 			if (revidx) {
--				base_sha1 = nth_packed_object_sha1(p, revidx->nr);
-+				nth_packed_object_oid(&base_oid, p, revidx->nr);
- 				error("failed to read delta base object %s"
- 				      " at offset %"PRIuMAX" from %s",
--				      sha1_to_hex(base_sha1), (uintmax_t)obj_offset,
-+				      oid_to_hex(&base_oid), (uintmax_t)obj_offset,
- 				      p->pack_name);
--				mark_bad_packed_object(p, base_sha1);
--				base = read_object(base_sha1, &type, &base_size);
-+				mark_bad_packed_object(p, base_oid.hash);
-+				base = read_object(&base_oid, &type, &base_size);
- 				external_base = base;
- 			}
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+---
+ builtin/commit-tree.c | 2 +-
+ cache.h               | 2 +-
+ commit.c              | 2 +-
+ sha1_file.c           | 8 ++++----
+ 4 files changed, 7 insertions(+), 7 deletions(-)
+
+diff --git a/builtin/commit-tree.c b/builtin/commit-tree.c
+index e5bdf57b1e..ecf42191da 100644
+--- a/builtin/commit-tree.c
++++ b/builtin/commit-tree.c
+@@ -58,7 +58,7 @@ int cmd_commit_tree(int argc, const char **argv, const char *prefix)
+ 				usage(commit_tree_usage);
+ 			if (get_oid_commit(argv[i], &oid))
+ 				die("Not a valid object name %s", argv[i]);
+-			assert_sha1_type(oid.hash, OBJ_COMMIT);
++			assert_oid_type(&oid, OBJ_COMMIT);
+ 			new_parent(lookup_commit(&oid), &parents);
+ 			continue;
  		}
+diff --git a/cache.h b/cache.h
+index f29ff43bbd..b1a117e404 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1275,7 +1275,7 @@ extern int has_object_file_with_flags(const struct object_id *oid, int flags);
+  */
+ extern int has_loose_object_nonlocal(const unsigned char *sha1);
+ 
+-extern void assert_sha1_type(const unsigned char *sha1, enum object_type expect);
++extern void assert_oid_type(const struct object_id *oid, enum object_type expect);
+ 
+ /* Helper to check and "touch" a file */
+ extern int check_and_freshen_file(const char *fn, int freshen);
+diff --git a/commit.c b/commit.c
+index e8a49b9c84..b9f028976f 100644
+--- a/commit.c
++++ b/commit.c
+@@ -1517,7 +1517,7 @@ int commit_tree_extended(const char *msg, size_t msg_len,
+ 	int encoding_is_utf8;
+ 	struct strbuf buffer;
+ 
+-	assert_sha1_type(tree->hash, OBJ_TREE);
++	assert_oid_type(tree, OBJ_TREE);
+ 
+ 	if (memchr(msg, '\0', msg_len))
+ 		return error("a NUL byte in commit log message not allowed.");
+diff --git a/sha1_file.c b/sha1_file.c
+index 5dc85122c3..fa69d86309 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -1966,13 +1966,13 @@ int read_pack_header(int fd, struct pack_header *header)
+ 	return 0;
+ }
+ 
+-void assert_sha1_type(const unsigned char *sha1, enum object_type expect)
++void assert_oid_type(const struct object_id *oid, enum object_type expect)
+ {
+-	enum object_type type = sha1_object_info(sha1, NULL);
++	enum object_type type = sha1_object_info(oid->hash, NULL);
+ 	if (type < 0)
+-		die("%s is not a valid object", sha1_to_hex(sha1));
++		die("%s is not a valid object", oid_to_hex(oid));
+ 	if (type != expect)
+-		die("%s is not a valid '%s' object", sha1_to_hex(sha1),
++		die("%s is not a valid '%s' object", oid_to_hex(oid),
+ 		    typename(expect));
+ }
+ 
