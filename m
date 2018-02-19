@@ -2,79 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1F07B1F404
-	for <e@80x24.org>; Mon, 19 Feb 2018 12:20:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3F0AF1F404
+	for <e@80x24.org>; Mon, 19 Feb 2018 12:28:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752697AbeBSMU3 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Feb 2018 07:20:29 -0500
-Received: from mail-io0-f195.google.com ([209.85.223.195]:33871 "EHLO
-        mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752678AbeBSMU2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Feb 2018 07:20:28 -0500
-Received: by mail-io0-f195.google.com with SMTP id e7so11117843ioj.1
-        for <git@vger.kernel.org>; Mon, 19 Feb 2018 04:20:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Uk1U18zh7m0QkVDyg+TNlaL+Le/IhoFuhl/DZBZnaHw=;
-        b=COon4O2bOo6gwU9h85+HTQty4arHPHvR2EEsYOZyvmABpPkg0A3cBRqw7rEhwvyNV4
-         fcbRzerOK2jEj3lUcgUaWl5EVgLkRqgxFoNO2Ji/KnHSn3NDo3qfVHf21qUX/FVX2mvZ
-         1zAGphGKMh/tzDkJLEAGJ63pOYYjWTdvQlElxDx5Va2NR6gKMcXkPkSvoJBDlOUuBm3Q
-         NY7RU8ld35h43F0xixO/AhCW05Eyzryn4lb0Fpc7FG1hhJF6ASuopkqZPPPRNfRHAIg8
-         1BB0HNX+A6f5rSZm/yTKIGYM/Gn8UrrKeOLx4wIsdmseSxk32E/v2lzposq/yYHpFYSe
-         9PXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Uk1U18zh7m0QkVDyg+TNlaL+Le/IhoFuhl/DZBZnaHw=;
-        b=S/zn07N2DU4wXDajMo/xL8ImEQTfNBBfS0V4r6wubjuV7odTOxHltq/bxwg5zXZ4Ki
-         DtxJGzUhBE7VTPgyOFEjw7sZnt7tNTgLrzTQYYjV3y2juSxg1f82hvcSWq2PKd/gQvnw
-         oaxM26L68huKSfgqzY88dsFsQkcsBQsYH3ZYnk8u08OskSXtQ46hypvy7acNRM2cwbvp
-         vrhh+aCPUdgVjKHLGVX2r69zhMMfOd8LiOqiv33wJkJw+p6578B9Q5+aL/peFknVs7XY
-         NCmZN4P6HjHZLsNXJzT/MyoiFTAMWt+PTpGj1AK/YJJKw101lmdXK4CHB1IjTofZZkrL
-         Lqmg==
-X-Gm-Message-State: APf1xPCkNBT4safd6f9Tyj8iqI5U8FdpXi/W6ejVCTXTPbNR0TzlpaLg
-        945irh4dQ2cO2Z3rGGPfcKS6Zvy5PU2ISC2gnsc=
-X-Google-Smtp-Source: AH8x227Yz9cTmmQ1zHmJHPWkSevN16EJCZV+CH5+eXvgbGgx81xin+cFiejJNciRMcbzHhBmr1QkXoXNoZFvA6wEsmE=
-X-Received: by 10.107.195.1 with SMTP id t1mr18910224iof.142.1519042827402;
- Mon, 19 Feb 2018 04:20:27 -0800 (PST)
+        id S1752709AbeBSM2G (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Feb 2018 07:28:06 -0500
+Received: from mout.gmx.net ([212.227.15.15]:57605 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752657AbeBSM2F (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Feb 2018 07:28:05 -0500
+Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M9JYE-1euwcc1nMU-00CiDn; Mon, 19
+ Feb 2018 13:27:56 +0100
+Date:   Mon, 19 Feb 2018 13:27:40 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+To:     Bryan Turner <bturner@atlassian.com>
+cc:     git-for-windows@googlegroups.com, Git Users <git@vger.kernel.org>,
+        git-packagers@googlegroups.com
+Subject: Re: Please test Git for Windows' latest snapshot
+In-Reply-To: <CAGyf7-GK+HgYx0AjRQXPhbxNTaohN1K2NFf3eWPjLsxHC6CvtQ@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1802191326350.31@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <nycvar.QRO.7.76.6.1802170018250.31@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <CAGyf7-GK+HgYx0AjRQXPhbxNTaohN1K2NFf3eWPjLsxHC6CvtQ@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Received: by 10.79.230.7 with HTTP; Mon, 19 Feb 2018 04:20:26 -0800 (PST)
-In-Reply-To: <20180219113619.26566-1-phillip.wood@talktalk.net>
-References: <20180219113619.26566-1-phillip.wood@talktalk.net>
-From:   Gustavo Leite <gustavoleite.ti@gmail.com>
-Date:   Mon, 19 Feb 2018 09:20:26 -0300
-Message-ID: <CAEGv8HiRsS9N2nHBu8uwm+35GS+HRVc6Q0e1R+=-tZn7JcZ8BQ@mail.gmail.com>
-Subject: Re: [PATCH v1 0/3] add -p: select individual hunk lines
-To:     Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:WfUYDShZaX1X586CLnFzNYB1gv1Tqt/MywitmorDMDIqOYiDrTG
+ rsG8Pm9xrM+e7P+BzSD2pYwsvtp7WSimsyEWvRmz0Gg111qEkmupBy20S9ENTWcTg52SjRu
+ zT9hYo9DsrG3dA1Bo1yzaih8Zt7Se9MgA5R1HKzBhZILQl3LK5VtgL5IB4fh4RaU2dfu123
+ /lORn/gic2L5vQ4PO+4MA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:6gtfcvpTnaU=:Y/PXGpA4DAAWFEI1QyYA3h
+ Ra2q0t2/QVdlBP3WpTknbm3G6tSAHdOereuwknr4VQCU9ESev3gNN8iN3e2UNOPekAgiBNfvi
+ u+JbrCISmX61WdD4ErQywIiM7kqRecJ+cfI5SHwZbGNatQbGznLhw4B8/dCQCSR9GkeB5rspo
+ EH1+N1VUTROWcJ0PYkt4qahj2CFtWHXIO/aZ7swZKjMEoDevBe8oGB/IZ+jZ65Wn7BsBwOo0f
+ uNmmmwfkQ9HVQNjWULexuqN+xHGO2LI1Pe69yB2K8um9gAjfn1vrIyXNL4IsqUcrzelTvzzXk
+ yKJTMfEpuHJEYCd5KQrE+RwJQG1j8TBABP0V19KCb63VBCcsTIbynftB58QoYcJ4Zk+s4tQ3R
+ VPQ6AOYxijbpIemCE8Z+wtiTDqhqSYMfUy+IJyVEha3qBIERegw005WjGM4nNffLfdiGYK+ki
+ WoYbYBLTpepKO1IKXfG8+wxP/K8fc6zj0zWTPcocFI5v7eOIsP7X15VVtJx4pMYnFdOiQhnRs
+ klCXM05sBX2QoZQVjsHgABWUG/lcFE/HQfuwfQ7AQtnJHBvK03F/0k0Uw9W25ySK17h/G/IsL
+ Q8xNvveJ7RLlKT/MSEe4hFMqEvBAUSiY3xo7wlnQKJYBScoP1XLKAAGKZ/fQ9+RpcbB7qt8k5
+ 7IGVJZ0QnFJzXSFIiMz7SumQqNJJBO3mvTFur+ITuGVZnuKDEzIQRnZFFNN0yMeywbAe6GeWv
+ XJDSVmDfgMrGiteJhM73SsPQf07TN8N1A1kir1ls717DJVk5n5tKG1lslGKyXGhoOctJ1asUZ
+ s+2psfbUGenbKwnGqK/zNntDLWT6CLRe0DcWS8WuXk8qlBM/vw=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-2018-02-19 8:36 GMT-03:00 Phillip Wood <phillip.wood@talktalk.net>:
->
-> "When I end up editing hunks it is almost always because I want to
-> stage a subset of the lines in the hunk. Doing this by editing the
-> hunk is inconvenient and error prone (especially so if the patch is
-> going to be reversed before being applied). Instead offer an option
-> for add -p to stage individual lines. When the user presses 'l' the
-> hunk is redrawn with labels by the insertions and deletions and they
-> are prompted to enter a list of the lines they wish to stage. Ranges
-> of lines may be specified using 'a-b' where either 'a' or 'b' may be
-> omitted to mean all lines from 'a' to the end of the hunk or all lines
-> from 1 upto and including 'b'."
+Hi Bryan,
 
-This is an interesting (and needed feature). Would be nice to see it merged.
+On Fri, 16 Feb 2018, Bryan Turner wrote:
 
---
-Gustavo Leite
+> On Fri, Feb 16, 2018 at 3:30 PM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> > Hi team,
+> >
+> > I am unwilling to release Git for Windows v2.16.2 on a Friday night, but I
+> > have something almost as good. There is a snapshot available here:
+> >
+> >         https://urldefense.proofpoint.com/v2/url?u=https-3A__wingit.blob.core.windows.net_files_index.html&d=DwIBAg&c=wBUwXtM9sKhff6UeHOQgvw&r=uBedA6EFFVX1HiLgmpdrBrv8bIDAScKjk1yk9LOASBM&m=xZghHWteeNbJ2bu5ySDq9WwqnfX8X7FZ_CWsV9gAyJU&s=NzSYCFSWWokPP9A9FA_EmJO5yu8qtRKw5M-Ep_qooUc&e=
+> >
+> > That snapshot brings quite a few updated components apart from Git proper
+> > (such as an updated MSYS2 runtime), and I would love to ask y'all to give
+> > this snapshot a proper "tire kicking".
+> 
+> I've run Bitbucket Server's full Git test suite (~1,500 tests) against
+> the Portable Git snapshot (e1848984d1), no failures to report.
+
+Thank you as always!
+
+Sadly, another user found out that `git svn` is completely broken in the
+32-bit versions, and that's what I am trying to figure out right now. Not
+a problem in Git itself, of course, but in the way the Subversion Perl
+bindings were built.
+
+Ciao,
+Dscho
