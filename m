@@ -7,43 +7,43 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 966811F404
-	for <e@80x24.org>; Mon, 19 Feb 2018 22:59:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6D9321F404
+	for <e@80x24.org>; Mon, 19 Feb 2018 22:59:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932222AbeBSW7h (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Feb 2018 17:59:37 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:33278 "EHLO
+        id S932258AbeBSW7m (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Feb 2018 17:59:42 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:33284 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S932190AbeBSW7g (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 19 Feb 2018 17:59:36 -0500
+        by vger.kernel.org with ESMTP id S932213AbeBSW7h (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 19 Feb 2018 17:59:37 -0500
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 7F319609D9;
-        Mon, 19 Feb 2018 22:59:35 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 4EF64609DA;
+        Mon, 19 Feb 2018 22:59:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
         s=default; t=1519081176;
-        bh=l/ZjgfmEdPH63a5+PxoJes0WtiPfGGj7/5IEnIzZS/Y=;
+        bh=eyzvVAu6BgVrS7INubTTLIZGi7OJSOrWu4786xdnohk=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=mUtcz2tL/r0jT/Gdosjil5O+L46NgaMrJbqc9iqoo3LAWn6VCmNzUDLe/WXerPWJq
-         IAnv7knZa2e8Kd0mBTt2pFvRT74608v+OTQmBWcGPleF63BU1OuKY0zG3VOJeNvO4J
-         eRBOzMVSYpRBRNBNtWsviQcsDywX96tRbM2H70hQ2vSMCPo9XbmP8Izd6Fxu+PxaOF
-         if4a+AA6kuyNllR9MHfoGMUFHPId+8+6y5MyHIkL/dJCn/NleC2nA2Nnm0JPZtIsN0
-         SlzV9wbR+IsvOXG6K+z2zhJKvSxVgkD7rOlKhsruINvagMLgJEqR9kLweD3iWPrsKU
-         P668/RSopReNN22Gcxve1uYkog+pa3Aj4LxC4Y529H6oKJeiTZMcWPTZTx+IsM/39j
-         73puLtsF5e8K8L+LgY7sSzAeJDl4EgzV1tow2r6b1NgHJc5cMwN7ybJD0meyTV8jx4
-         2bFTHEz7PTm4CFzuFUE8C1v61n8Iar4Lk8/1Inm3d9NIC9brwqY
+        b=mr5jbePovB5/HpKyNKSwgZIZazWRld/ikf3tIPu2We+mSoLu8myaA/gppo/vxTeDV
+         FL4O0gyiyabsauvJ5wLti87n7QcXVejzj6G3evzulnWLcdlSJTQ33KPsCQku8HuoeU
+         dpChlQz4h+twApy9ogBHSluavRQykGfReBTyOmiO6iVHarVX+aZ3dWCkmdk/fPyreA
+         togVsr6rN/r7N4xdj7UZdXUNxqVQjvxC/Ff49B+h1iRHAy/qr1hxt7kAPQkfEo++0N
+         gjbC7OU9AmrDMKXU9dKrShH3o+KYCbXx/InOAEwYS5aKFBUm/ww03LKmSJOpKv/vFF
+         OmUADW/o3lbhqeCLfVdhY3kltj7pWStN2cOM0u3SB1T2ofs2cnmO8lRNGHfVAuB4+L
+         DlOSX+DqgqM+2K9rK/+leNyVBC4R1P962J61LGOxaL0fAfqcmaVbbrJqY/1yDkTZUN
+         2mK5niSYwMEdoIsnJbC8UzeQ2K8uwJVljNjDttDoTZMvGGBHNmr
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>, Patryk Obara <patryk.obara@gmail.com>,
         Jeff King <peff@peff.net>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH 02/36] builtin/write-tree: convert to struct object_id
-Date:   Mon, 19 Feb 2018 22:58:53 +0000
-Message-Id: <20180219225927.386065-3-sandals@crustytoothpaste.net>
+Subject: [PATCH 03/36] cache-tree: convert write_*_as_tree to object_id
+Date:   Mon, 19 Feb 2018 22:58:54 +0000
+Message-Id: <20180219225927.386065-4-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.16.1.291.g4437f3f132
 In-Reply-To: <20180219225927.386065-1-sandals@crustytoothpaste.net>
 References: <20180219225927.386065-1-sandals@crustytoothpaste.net>
@@ -53,36 +53,156 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is needed to convert parts of the cache-tree code.
+Convert write_index_as_tree and write_cache_as_tree to use struct
+object_id.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin/write-tree.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ builtin/am.c         |  8 ++++----
+ builtin/merge.c      |  2 +-
+ builtin/write-tree.c |  2 +-
+ cache-tree.c         | 10 +++++-----
+ cache-tree.h         |  4 ++--
+ sequencer.c          |  4 ++--
+ 6 files changed, 15 insertions(+), 15 deletions(-)
 
+diff --git a/builtin/am.c b/builtin/am.c
+index 6661edc162..220c5deed8 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -1546,7 +1546,7 @@ static int fall_back_threeway(const struct am_state *state, const char *index_pa
+ 	discard_cache();
+ 	read_cache_from(index_path);
+ 
+-	if (write_index_as_tree(orig_tree.hash, &the_index, index_path, 0, NULL))
++	if (write_index_as_tree(&orig_tree, &the_index, index_path, 0, NULL))
+ 		return error(_("Repository lacks necessary blobs to fall back on 3-way merge."));
+ 
+ 	say(state, stdout, _("Using index info to reconstruct a base tree..."));
+@@ -1571,7 +1571,7 @@ static int fall_back_threeway(const struct am_state *state, const char *index_pa
+ 		return error(_("Did you hand edit your patch?\n"
+ 				"It does not apply to blobs recorded in its index."));
+ 
+-	if (write_index_as_tree(their_tree.hash, &the_index, index_path, 0, NULL))
++	if (write_index_as_tree(&their_tree, &the_index, index_path, 0, NULL))
+ 		return error("could not write tree");
+ 
+ 	say(state, stdout, _("Falling back to patching base and 3-way merge..."));
+@@ -1622,7 +1622,7 @@ static void do_commit(const struct am_state *state)
+ 	if (run_hook_le(NULL, "pre-applypatch", NULL))
+ 		exit(1);
+ 
+-	if (write_cache_as_tree(tree.hash, 0, NULL))
++	if (write_cache_as_tree(&tree, 0, NULL))
+ 		die(_("git write-tree failed to write a tree"));
+ 
+ 	if (!get_oid_commit("HEAD", &parent)) {
+@@ -2001,7 +2001,7 @@ static int clean_index(const struct object_id *head, const struct object_id *rem
+ 	if (fast_forward_to(head_tree, head_tree, 1))
+ 		return -1;
+ 
+-	if (write_cache_as_tree(index.hash, 0, NULL))
++	if (write_cache_as_tree(&index, 0, NULL))
+ 		return -1;
+ 
+ 	index_tree = parse_tree_indirect(&index);
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 92ba99a1a5..861b170468 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -638,7 +638,7 @@ static int read_tree_trivial(struct object_id *common, struct object_id *head,
+ 
+ static void write_tree_trivial(struct object_id *oid)
+ {
+-	if (write_cache_as_tree(oid->hash, 0, NULL))
++	if (write_cache_as_tree(oid, 0, NULL))
+ 		die(_("git write-tree failed to write a tree"));
+ }
+ 
 diff --git a/builtin/write-tree.c b/builtin/write-tree.c
-index bd0a78aa3c..299a121531 100644
+index 299a121531..c9d3c544e7 100644
 --- a/builtin/write-tree.c
 +++ b/builtin/write-tree.c
-@@ -19,7 +19,7 @@ int cmd_write_tree(int argc, const char **argv, const char *unused_prefix)
- {
- 	int flags = 0, ret;
- 	const char *prefix = NULL;
--	unsigned char sha1[20];
-+	struct object_id oid;
- 	const char *me = "git-write-tree";
- 	struct option write_tree_options[] = {
- 		OPT_BIT(0, "missing-ok", &flags, N_("allow missing objects"),
-@@ -38,10 +38,10 @@ int cmd_write_tree(int argc, const char **argv, const char *unused_prefix)
+@@ -38,7 +38,7 @@ int cmd_write_tree(int argc, const char **argv, const char *unused_prefix)
  	argc = parse_options(argc, argv, unused_prefix, write_tree_options,
  			     write_tree_usage, 0);
  
--	ret = write_cache_as_tree(sha1, flags, prefix);
-+	ret = write_cache_as_tree(oid.hash, flags, prefix);
+-	ret = write_cache_as_tree(oid.hash, flags, prefix);
++	ret = write_cache_as_tree(&oid, flags, prefix);
  	switch (ret) {
  	case 0:
--		printf("%s\n", sha1_to_hex(sha1));
-+		printf("%s\n", oid_to_hex(&oid));
- 		break;
- 	case WRITE_TREE_UNREADABLE_INDEX:
- 		die("%s: error reading the index", me);
+ 		printf("%s\n", oid_to_hex(&oid));
+diff --git a/cache-tree.c b/cache-tree.c
+index c52e4303df..ba07a8067e 100644
+--- a/cache-tree.c
++++ b/cache-tree.c
+@@ -599,7 +599,7 @@ static struct cache_tree *cache_tree_find(struct cache_tree *it, const char *pat
+ 	return it;
+ }
+ 
+-int write_index_as_tree(unsigned char *sha1, struct index_state *index_state, const char *index_path, int flags, const char *prefix)
++int write_index_as_tree(struct object_id *oid, struct index_state *index_state, const char *index_path, int flags, const char *prefix)
+ {
+ 	int entries, was_valid;
+ 	struct lock_file lock_file = LOCK_INIT;
+@@ -640,19 +640,19 @@ int write_index_as_tree(unsigned char *sha1, struct index_state *index_state, co
+ 			ret = WRITE_TREE_PREFIX_ERROR;
+ 			goto out;
+ 		}
+-		hashcpy(sha1, subtree->oid.hash);
++		oidcpy(oid, &subtree->oid);
+ 	}
+ 	else
+-		hashcpy(sha1, index_state->cache_tree->oid.hash);
++		oidcpy(oid, &index_state->cache_tree->oid);
+ 
+ out:
+ 	rollback_lock_file(&lock_file);
+ 	return ret;
+ }
+ 
+-int write_cache_as_tree(unsigned char *sha1, int flags, const char *prefix)
++int write_cache_as_tree(struct object_id *oid, int flags, const char *prefix)
+ {
+-	return write_index_as_tree(sha1, &the_index, get_index_file(), flags, prefix);
++	return write_index_as_tree(oid, &the_index, get_index_file(), flags, prefix);
+ }
+ 
+ static void prime_cache_tree_rec(struct cache_tree *it, struct tree *tree)
+diff --git a/cache-tree.h b/cache-tree.h
+index f7b9cab7ee..cfd5328cc9 100644
+--- a/cache-tree.h
++++ b/cache-tree.h
+@@ -47,8 +47,8 @@ int update_main_cache_tree(int);
+ #define WRITE_TREE_UNMERGED_INDEX (-2)
+ #define WRITE_TREE_PREFIX_ERROR (-3)
+ 
+-int write_index_as_tree(unsigned char *sha1, struct index_state *index_state, const char *index_path, int flags, const char *prefix);
+-int write_cache_as_tree(unsigned char *sha1, int flags, const char *prefix);
++int write_index_as_tree(struct object_id *oid, struct index_state *index_state, const char *index_path, int flags, const char *prefix);
++int write_cache_as_tree(struct object_id *oid, int flags, const char *prefix);
+ void prime_cache_tree(struct index_state *, struct tree *);
+ 
+ extern int cache_tree_matches_traversal(struct cache_tree *, struct name_entry *ent, struct traverse_info *info);
+diff --git a/sequencer.c b/sequencer.c
+index e9baaf59bd..d2fc1871ed 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -1113,7 +1113,7 @@ static int try_to_commit(struct strbuf *msg, const char *author,
+ 		commit_list_insert(current_head, &parents);
+ 	}
+ 
+-	if (write_cache_as_tree(tree.hash, 0, NULL)) {
++	if (write_cache_as_tree(&tree, 0, NULL)) {
+ 		res = error(_("git write-tree failed to write a tree"));
+ 		goto out;
+ 	}
+@@ -1475,7 +1475,7 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
+ 		 * that represents the "current" state for merge-recursive
+ 		 * to work on.
+ 		 */
+-		if (write_cache_as_tree(head.hash, 0, NULL))
++		if (write_cache_as_tree(&head, 0, NULL))
+ 			return error(_("your index file is unmerged."));
+ 	} else {
+ 		unborn = get_oid("HEAD", &head);
