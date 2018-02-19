@@ -2,126 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_WEB,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EB7371F576
-	for <e@80x24.org>; Mon, 19 Feb 2018 11:36:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1F07B1F404
+	for <e@80x24.org>; Mon, 19 Feb 2018 12:20:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752604AbeBSLgf (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Feb 2018 06:36:35 -0500
-Received: from smtp-out-2.talktalk.net ([62.24.135.66]:55790 "EHLO
-        smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752579AbeBSLgb (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Feb 2018 06:36:31 -0500
-Received: from lindisfarne.localdomain ([92.22.21.220])
-        by smtp.talktalk.net with SMTP
-        id njk7e9rCnoNnDnjkEeU6PK; Mon, 19 Feb 2018 11:36:30 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1519040190;
-        bh=jtp4PFb/pPfVuhvE287tdVmARyyUnS91krfSHvLCjsk=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:Reply-To;
-        b=oFhA140wLVNMD8h6HlHt5cCtgaULWsHUtyx+uadGs5N5+JY8Vf1OCFZYI6POgcV0S
-         kRtWHnv+jRFo+ZmvwlWUycWYI283D+erZalUSoeAwCrSKFgPP/gqTtqG31IsdiIK2A
-         EjEJ61JG5p/xoQr1NBC6XKfwGwatBkWxRBEH0eP0=
-X-Originating-IP: [92.22.21.220]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=ZZ9tDodA c=1 sm=1 tr=0 a=VSxTZYxioCnvaH7igEU67w==:117
- a=VSxTZYxioCnvaH7igEU67w==:17 a=evINK-nbAAAA:8 a=swg0IrpoHZ5_w8mBtXsA:9
- a=7Zwj6sZBwVKJAoWSPKxL6X1jA+E=:19 a=kLn7Op8jVmEGbLkZ:21 a=06jbKfjSUb0NSWct:21
- a=RfR_gqz1fSpA9VikTjo0:22
-From:   Phillip Wood <phillip.wood@talktalk.net>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH v1 3/3] add -p: optimize line selection for short hunks
-Date:   Mon, 19 Feb 2018 11:36:19 +0000
-Message-Id: <20180219113619.26566-4-phillip.wood@talktalk.net>
-X-Mailer: git-send-email 2.16.1
+        id S1752697AbeBSMU3 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Feb 2018 07:20:29 -0500
+Received: from mail-io0-f195.google.com ([209.85.223.195]:33871 "EHLO
+        mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752678AbeBSMU2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Feb 2018 07:20:28 -0500
+Received: by mail-io0-f195.google.com with SMTP id e7so11117843ioj.1
+        for <git@vger.kernel.org>; Mon, 19 Feb 2018 04:20:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=Uk1U18zh7m0QkVDyg+TNlaL+Le/IhoFuhl/DZBZnaHw=;
+        b=COon4O2bOo6gwU9h85+HTQty4arHPHvR2EEsYOZyvmABpPkg0A3cBRqw7rEhwvyNV4
+         fcbRzerOK2jEj3lUcgUaWl5EVgLkRqgxFoNO2Ji/KnHSn3NDo3qfVHf21qUX/FVX2mvZ
+         1zAGphGKMh/tzDkJLEAGJ63pOYYjWTdvQlElxDx5Va2NR6gKMcXkPkSvoJBDlOUuBm3Q
+         NY7RU8ld35h43F0xixO/AhCW05Eyzryn4lb0Fpc7FG1hhJF6ASuopkqZPPPRNfRHAIg8
+         1BB0HNX+A6f5rSZm/yTKIGYM/Gn8UrrKeOLx4wIsdmseSxk32E/v2lzposq/yYHpFYSe
+         9PXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Uk1U18zh7m0QkVDyg+TNlaL+Le/IhoFuhl/DZBZnaHw=;
+        b=S/zn07N2DU4wXDajMo/xL8ImEQTfNBBfS0V4r6wubjuV7odTOxHltq/bxwg5zXZ4Ki
+         DtxJGzUhBE7VTPgyOFEjw7sZnt7tNTgLrzTQYYjV3y2juSxg1f82hvcSWq2PKd/gQvnw
+         oaxM26L68huKSfgqzY88dsFsQkcsBQsYH3ZYnk8u08OskSXtQ46hypvy7acNRM2cwbvp
+         vrhh+aCPUdgVjKHLGVX2r69zhMMfOd8LiOqiv33wJkJw+p6578B9Q5+aL/peFknVs7XY
+         NCmZN4P6HjHZLsNXJzT/MyoiFTAMWt+PTpGj1AK/YJJKw101lmdXK4CHB1IjTofZZkrL
+         Lqmg==
+X-Gm-Message-State: APf1xPCkNBT4safd6f9Tyj8iqI5U8FdpXi/W6ejVCTXTPbNR0TzlpaLg
+        945irh4dQ2cO2Z3rGGPfcKS6Zvy5PU2ISC2gnsc=
+X-Google-Smtp-Source: AH8x227Yz9cTmmQ1zHmJHPWkSevN16EJCZV+CH5+eXvgbGgx81xin+cFiejJNciRMcbzHhBmr1QkXoXNoZFvA6wEsmE=
+X-Received: by 10.107.195.1 with SMTP id t1mr18910224iof.142.1519042827402;
+ Mon, 19 Feb 2018 04:20:27 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.79.230.7 with HTTP; Mon, 19 Feb 2018 04:20:26 -0800 (PST)
 In-Reply-To: <20180219113619.26566-1-phillip.wood@talktalk.net>
 References: <20180219113619.26566-1-phillip.wood@talktalk.net>
-Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
-X-CMAE-Envelope: MS4wfPiq8V0zOiYCabzB+oOlHa8mDedD8UNKMF+NCI29zzQdDiLEJFk43Gvm0XSjgv6W71jDx6sEY1miWbzP+WXvlvNYenoUgl4+HwSzAmUkyshZQbxxzKpi
- QAPN2d8aQiZLYn42PJuV0WMj+Px4PMS5m+ERLDpu/b/ceEHAipO0BLgfhfhU3iUnpiqSul+c3pdO2NqYcZj4tt4VCDzDlXxPnwnf86qFY+cBkdMk3SZZScb1
+From:   Gustavo Leite <gustavoleite.ti@gmail.com>
+Date:   Mon, 19 Feb 2018 09:20:26 -0300
+Message-ID: <CAEGv8HiRsS9N2nHBu8uwm+35GS+HRVc6Q0e1R+=-tZn7JcZ8BQ@mail.gmail.com>
+Subject: Re: [PATCH v1 0/3] add -p: select individual hunk lines
+To:     Phillip Wood <phillip.wood@dunelm.org.uk>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+2018-02-19 8:36 GMT-03:00 Phillip Wood <phillip.wood@talktalk.net>:
+>
+> "When I end up editing hunks it is almost always because I want to
+> stage a subset of the lines in the hunk. Doing this by editing the
+> hunk is inconvenient and error prone (especially so if the patch is
+> going to be reversed before being applied). Instead offer an option
+> for add -p to stage individual lines. When the user presses 'l' the
+> hunk is redrawn with labels by the insertions and deletions and they
+> are prompted to enter a list of the lines they wish to stage. Ranges
+> of lines may be specified using 'a-b' where either 'a' or 'b' may be
+> omitted to mean all lines from 'a' to the end of the hunk or all lines
+> from 1 upto and including 'b'."
 
-If there are fewer than ten changes in a hunk then make spaces
-optional when selecting individual lines. This means that for short
-hunks one can just type -357 to stage lines 1, 2, 3, 5 & 7.
+This is an interesting (and needed feature). Would be nice to see it merged.
 
-Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
----
- git-add--interactive.perl  | 30 ++++++++++++++++++++++++++++++
- t/t3701-add-interactive.sh |  2 +-
- 2 files changed, 31 insertions(+), 1 deletion(-)
-
-diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index 0e3960b1ecf004bff51d28d540f685a5dc91fad1..3d9720af03eb113c7f3d2b73f17b4b51a7685bf3 100755
---- a/git-add--interactive.perl
-+++ b/git-add--interactive.perl
-@@ -1067,6 +1067,33 @@ sub check_hunk_label {
- 	return 1;
- }
- 
-+sub split_hunk_selection {
-+	local $_;
-+	my @fields = @_;
-+	my @ret;
-+	for (@fields) {
-+		if (/^(-[0-9])(.*)/) {
-+			push @ret, $1;
-+			$_ = $2;
-+		}
-+		while ($_ ne '') {
-+			if (/^[0-9]-$/) {
-+				push @ret, $_;
-+				last;
-+			} elsif (/^([0-9](?:-[0-9])?)(.*)/) {
-+				push @ret, $1;
-+				$_ = $2;
-+			} else {
-+				error_msg sprintf
-+				    __("invalid hunk line '%s'\n"),
-+				    substr($_, 0, 1);
-+				return ();
-+			}
-+		}
-+	}
-+	return @ret;
-+}
-+
- sub parse_hunk_selection {
- 	local $_;
- 	my ($hunk, $line) = @_;
-@@ -1085,6 +1112,9 @@ sub parse_hunk_selection {
- 			}
- 		}
- 	}
-+	if ($max_label < 10) {
-+		@fields = split_hunk_selection(@fields) or return undef;
-+	}
- 	for (@fields) {
- 		if (/^([0-9]*)-([0-9]*)$/) {
- 			if ($1 eq '' and $2 eq '') {
-diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-index 4ae706fd121f157e9cbd93ec293f45ce2a3a53b5..c6d847dc495c92782e37ef7b0e2800d7936aabd7 100755
---- a/t/t3701-add-interactive.sh
-+++ b/t/t3701-add-interactive.sh
-@@ -390,7 +390,7 @@ test_expect_success 'setup expected diff' '
- '
- 
- test_expect_success 'can reset individual lines of patch' '
--	printf "%s\n" l "^1 3" |
-+	printf "%s\n" l ^13 |
- 	EDITOR=: git reset -p 2>error &&
- 	test_must_be_empty error &&
- 	git diff --cached HEAD | sed /^index/d >actual &&
--- 
-2.16.1
-
+--
+Gustavo Leite
