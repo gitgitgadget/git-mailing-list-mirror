@@ -7,43 +7,43 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3ECC81F404
-	for <e@80x24.org>; Mon, 19 Feb 2018 23:01:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B67C81F404
+	for <e@80x24.org>; Mon, 19 Feb 2018 23:01:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932280AbeBSXBL (ORCPT <rfc822;e@80x24.org>);
+        id S932257AbeBSXBL (ORCPT <rfc822;e@80x24.org>);
         Mon, 19 Feb 2018 18:01:11 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:33370 "EHLO
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:33376 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S932213AbeBSW7u (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 19 Feb 2018 17:59:50 -0500
+        by vger.kernel.org with ESMTP id S932279AbeBSW7w (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 19 Feb 2018 17:59:52 -0500
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 3BF7A60B45;
-        Mon, 19 Feb 2018 22:59:49 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 5A59B60B47;
+        Mon, 19 Feb 2018 22:59:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1519081189;
-        bh=J+XoN/fd19x19dZ2+lsmSJJOuE0yra2npyO0zF4/Tb4=;
+        s=default; t=1519081190;
+        bh=c0RgsoY6tSOq88ZbB6jV1r0ZIoecLC1NDplPS5VFc3U=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=gEFTbR9LEMF100uOJistXQOrQZb1QKn6hb2ASjhRYwjA9glF6R09d/XpHoOlI8rtB
-         FnKSNHkMQcBCcUCU1YbLStpXbvx2WBHNix6OKJxYz80E5Wv7h6/zqwhvsz8RGW75m1
-         Ph2IRhpdZuetvp/Pl2UITX3YsYiBRfPfW7Vzk2XgcCDZJhdWJFbmVTKPAo82JGH9hy
-         Z1MLNw5wt2eWV5Ja5lMrAVm39SEK6GmzlPjWPO7ZZ6ySngSE25o7H1VQiCdmLsOqhB
-         fIMjZnj7ipya4awve2MkMsjsjmijwmm2wlIJ2+cs2TCzDJfWycQ2rJJVpMPq5nJSIJ
-         mzsD9oNpl7/haVXPsHfo6ygrq36z48HI5Gq1mN76vny4l9VS9ZVo9wKrLp9N/7azH3
-         TfNH/CODt+n51TUcb3v5oKzWJlnu2EeGWtk5G/im/GLoofS+EcIBmEtM69EJNwmz/J
-         KzmoK2u7gGp7D7YSbZQXm7Ogz07z6b9a4rNXkoY3NHtAwUxUzds
+        b=qPgxnbGCVGwIyFA8tNpZAvZua6wURfWravmkHsMEhTyStP2hVn3noddAcGZAXiBZ9
+         J1ZKcAXpAOH9oKZ4ptw8ZoXq5iB74LdBWInuOvOJ/aTG0Gvs3DAB9MmDsbcuqFxeiy
+         BP4l3qrrqx0kWgRHIVfmddzLN5Y0pR4fhs2+TAQFDNiiwmhF54KavyGadmtGXylSPk
+         CFgyLJWg/eeyxYhkKX9aWZfcYf7sNSbLU2855/25IJ59MEVtNPUKu8HYThiFFklOdy
+         P01xcHGdk6R9HyJUrnixAfu6f7bhiXcXTxomewHGOkYpCXl5tw/Dop7LKaACeAbS1S
+         8M2rF9kvXLHlYMiAh5QqDhw0cYeLbIiDj5DM0Hm+0BPD7EMIDxe9OnwwcWpVJhXtBn
+         eRvzVIahHyiVVtz1D2JlxsTSXvQvfRkkqGCzfX/lh98ZwXrJFmwZKcU4ToELbxQfQF
+         HNxd7fsrPBOVCsVOqZaB4ydBpYfXrLdYRwIuGGmf0FtCz2SPWex
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>, Patryk Obara <patryk.obara@gmail.com>,
         Jeff King <peff@peff.net>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH 15/36] archive: convert write_archive_entry_fn_t to object_id
-Date:   Mon, 19 Feb 2018 22:59:06 +0000
-Message-Id: <20180219225927.386065-16-sandals@crustytoothpaste.net>
+Subject: [PATCH 16/36] archive: convert sha1_file_to_archive to struct object_id
+Date:   Mon, 19 Feb 2018 22:59:07 +0000
+Message-Id: <20180219225927.386065-17-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.16.1.291.g4437f3f132
 In-Reply-To: <20180219225927.386065-1-sandals@crustytoothpaste.net>
 References: <20180219225927.386065-1-sandals@crustytoothpaste.net>
@@ -53,263 +53,86 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert the write_archive_entry_fn_t type to use a pointer to struct
-object_id.  Convert various static functions in the tar and zip
-archivers also.
+Convert this function to take a pointer to struct object_id and rename
+it object_file_to_archive.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- archive-tar.c | 28 ++++++++++++++--------------
- archive-zip.c | 16 ++++++++--------
- archive.c     | 12 ++++++------
- archive.h     |  2 +-
- 4 files changed, 29 insertions(+), 29 deletions(-)
+ archive-tar.c |  2 +-
+ archive-zip.c |  4 ++--
+ archive.c     | 10 +++++-----
+ archive.h     |  8 ++++----
+ 4 files changed, 12 insertions(+), 12 deletions(-)
 
 diff --git a/archive-tar.c b/archive-tar.c
-index c6ed96ee74..24b1ccef3a 100644
+index 24b1ccef3a..fd622eacc0 100644
 --- a/archive-tar.c
 +++ b/archive-tar.c
-@@ -111,7 +111,7 @@ static void write_trailer(void)
-  * queues up writes, so that all our write(2) calls write exactly one
-  * full block; pads writes to RECORDSIZE
-  */
--static int stream_blocked(const unsigned char *sha1)
-+static int stream_blocked(const struct object_id *oid)
- {
- 	struct git_istream *st;
- 	enum object_type type;
-@@ -119,9 +119,9 @@ static int stream_blocked(const unsigned char *sha1)
- 	char buf[BLOCKSIZE];
- 	ssize_t readlen;
- 
--	st = open_istream(sha1, &type, &sz, NULL);
-+	st = open_istream(oid->hash, &type, &sz, NULL);
- 	if (!st)
--		return error("cannot stream blob %s", sha1_to_hex(sha1));
-+		return error("cannot stream blob %s", oid_to_hex(oid));
- 	for (;;) {
- 		readlen = read_istream(st, buf, sizeof(buf));
- 		if (readlen <= 0)
-@@ -218,7 +218,7 @@ static void prepare_header(struct archiver_args *args,
- }
- 
- static void write_extended_header(struct archiver_args *args,
--				  const unsigned char *sha1,
-+				  const struct object_id *oid,
- 				  const void *buffer, unsigned long size)
- {
- 	struct ustar_header header;
-@@ -226,14 +226,14 @@ static void write_extended_header(struct archiver_args *args,
- 	memset(&header, 0, sizeof(header));
- 	*header.typeflag = TYPEFLAG_EXT_HEADER;
- 	mode = 0100666;
--	xsnprintf(header.name, sizeof(header.name), "%s.paxheader", sha1_to_hex(sha1));
-+	xsnprintf(header.name, sizeof(header.name), "%s.paxheader", oid_to_hex(oid));
- 	prepare_header(args, &header, mode, size);
- 	write_blocked(&header, sizeof(header));
- 	write_blocked(buffer, size);
- }
- 
- static int write_tar_entry(struct archiver_args *args,
--			   const unsigned char *sha1,
-+			   const struct object_id *oid,
- 			   const char *path, size_t pathlen,
- 			   unsigned int mode)
- {
-@@ -257,7 +257,7 @@ static int write_tar_entry(struct archiver_args *args,
- 		mode = (mode | ((mode & 0100) ? 0777 : 0666)) & ~tar_umask;
- 	} else {
- 		return error("unsupported file mode: 0%o (SHA1: %s)",
--			     mode, sha1_to_hex(sha1));
-+			     mode, oid_to_hex(oid));
- 	}
- 	if (pathlen > sizeof(header.name)) {
- 		size_t plen = get_path_prefix(path, pathlen,
-@@ -268,7 +268,7 @@ static int write_tar_entry(struct archiver_args *args,
- 			memcpy(header.name, path + plen + 1, rest);
- 		} else {
- 			xsnprintf(header.name, sizeof(header.name), "%s.data",
--				  sha1_to_hex(sha1));
-+				  oid_to_hex(oid));
- 			strbuf_append_ext_header(&ext_header, "path",
- 						 path, pathlen);
- 		}
-@@ -276,14 +276,14 @@ static int write_tar_entry(struct archiver_args *args,
- 		memcpy(header.name, path, pathlen);
- 
- 	if (S_ISREG(mode) && !args->convert &&
--	    sha1_object_info(sha1, &size) == OBJ_BLOB &&
-+	    sha1_object_info(oid->hash, &size) == OBJ_BLOB &&
- 	    size > big_file_threshold)
+@@ -281,7 +281,7 @@ static int write_tar_entry(struct archiver_args *args,
  		buffer = NULL;
  	else if (S_ISLNK(mode) || S_ISREG(mode)) {
  		enum object_type type;
--		buffer = sha1_file_to_archive(args, path, sha1, old_mode, &type, &size);
-+		buffer = sha1_file_to_archive(args, path, oid->hash, old_mode, &type, &size);
+-		buffer = sha1_file_to_archive(args, path, oid->hash, old_mode, &type, &size);
++		buffer = object_file_to_archive(args, path, oid, old_mode, &type, &size);
  		if (!buffer)
--			return error("cannot read %s", sha1_to_hex(sha1));
-+			return error("cannot read %s", oid_to_hex(oid));
+ 			return error("cannot read %s", oid_to_hex(oid));
  	} else {
- 		buffer = NULL;
- 		size = 0;
-@@ -292,7 +292,7 @@ static int write_tar_entry(struct archiver_args *args,
- 	if (S_ISLNK(mode)) {
- 		if (size > sizeof(header.linkname)) {
- 			xsnprintf(header.linkname, sizeof(header.linkname),
--				  "see %s.paxheader", sha1_to_hex(sha1));
-+				  "see %s.paxheader", oid_to_hex(oid));
- 			strbuf_append_ext_header(&ext_header, "linkpath",
- 			                         buffer, size);
- 		} else
-@@ -308,7 +308,7 @@ static int write_tar_entry(struct archiver_args *args,
- 	prepare_header(args, &header, mode, size_in_header);
- 
- 	if (ext_header.len > 0) {
--		write_extended_header(args, sha1, ext_header.buf,
-+		write_extended_header(args, oid, ext_header.buf,
- 				      ext_header.len);
- 	}
- 	strbuf_release(&ext_header);
-@@ -317,7 +317,7 @@ static int write_tar_entry(struct archiver_args *args,
- 		if (buffer)
- 			write_blocked(buffer, size);
- 		else
--			err = stream_blocked(sha1);
-+			err = stream_blocked(oid);
- 	}
- 	free(buffer);
- 	return err;
 diff --git a/archive-zip.c b/archive-zip.c
-index e8913e5a26..e2e5513c03 100644
+index e2e5513c03..5841a6ceb6 100644
 --- a/archive-zip.c
 +++ b/archive-zip.c
-@@ -276,7 +276,7 @@ static int entry_is_binary(const char *path, const void *buffer, size_t size)
- #define STREAM_BUFFER_SIZE (1024 * 16)
- 
- static int write_zip_entry(struct archiver_args *args,
--			   const unsigned char *sha1,
-+			   const struct object_id *oid,
- 			   const char *path, size_t pathlen,
- 			   unsigned int mode)
- {
-@@ -314,7 +314,7 @@ static int write_zip_entry(struct archiver_args *args,
- 
- 	if (pathlen > 0xffff) {
- 		return error("path too long (%d chars, SHA1: %s): %s",
--				(int)pathlen, sha1_to_hex(sha1), path);
-+				(int)pathlen, oid_to_hex(oid), path);
- 	}
- 
- 	if (S_ISDIR(mode) || S_ISGITLINK(mode)) {
-@@ -325,7 +325,7 @@ static int write_zip_entry(struct archiver_args *args,
- 		compressed_size = 0;
- 		buffer = NULL;
- 	} else if (S_ISREG(mode) || S_ISLNK(mode)) {
--		enum object_type type = sha1_object_info(sha1, &size);
-+		enum object_type type = sha1_object_info(oid->hash, &size);
- 
- 		method = 0;
- 		attr2 = S_ISLNK(mode) ? ((mode | 0777) << 16) :
-@@ -337,18 +337,18 @@ static int write_zip_entry(struct archiver_args *args,
- 
- 		if (S_ISREG(mode) && type == OBJ_BLOB && !args->convert &&
- 		    size > big_file_threshold) {
--			stream = open_istream(sha1, &type, &size, NULL);
-+			stream = open_istream(oid->hash, &type, &size, NULL);
- 			if (!stream)
- 				return error("cannot stream blob %s",
--					     sha1_to_hex(sha1));
-+					     oid_to_hex(oid));
+@@ -344,8 +344,8 @@ static int write_zip_entry(struct archiver_args *args,
  			flags |= ZIP_STREAM;
  			out = buffer = NULL;
  		} else {
--			buffer = sha1_file_to_archive(args, path, sha1, mode,
-+			buffer = sha1_file_to_archive(args, path, oid->hash, mode,
- 						      &type, &size);
+-			buffer = sha1_file_to_archive(args, path, oid->hash, mode,
+-						      &type, &size);
++			buffer = object_file_to_archive(args, path, oid, mode,
++							&type, &size);
  			if (!buffer)
  				return error("cannot read %s",
--					     sha1_to_hex(sha1));
-+					     oid_to_hex(oid));
- 			crc = crc32(crc, buffer, size);
- 			is_binary = entry_is_binary(path_without_prefix,
- 						    buffer, size);
-@@ -357,7 +357,7 @@ static int write_zip_entry(struct archiver_args *args,
- 		compressed_size = (method == 0) ? size : 0;
- 	} else {
- 		return error("unsupported file mode: 0%o (SHA1: %s)", mode,
--				sha1_to_hex(sha1));
-+				oid_to_hex(oid));
- 	}
- 
- 	if (creator_version > max_creator_version)
+ 					     oid_to_hex(oid));
 diff --git a/archive.c b/archive.c
-index e664cdb624..4942b5632b 100644
+index 4942b5632b..da62b2f541 100644
 --- a/archive.c
 +++ b/archive.c
-@@ -121,7 +121,7 @@ static int check_attr_export_subst(const struct attr_check *check)
- 	return check && ATTR_TRUE(check->items[1].value);
+@@ -63,16 +63,16 @@ static void format_subst(const struct commit *commit,
+ 	free(to_free);
  }
  
--static int write_archive_entry(const unsigned char *sha1, const char *base,
-+static int write_archive_entry(const struct object_id *oid, const char *base,
- 		int baselen, const char *filename, unsigned mode, int stage,
- 		void *context)
+-void *sha1_file_to_archive(const struct archiver_args *args,
+-			   const char *path, const unsigned char *sha1,
+-			   unsigned int mode, enum object_type *type,
+-			   unsigned long *sizep)
++void *object_file_to_archive(const struct archiver_args *args,
++			     const char *path, const struct object_id *oid,
++			     unsigned int mode, enum object_type *type,
++			     unsigned long *sizep)
  {
-@@ -153,7 +153,7 @@ static int write_archive_entry(const unsigned char *sha1, const char *base,
- 	if (S_ISDIR(mode) || S_ISGITLINK(mode)) {
- 		if (args->verbose)
- 			fprintf(stderr, "%.*s\n", (int)path.len, path.buf);
--		err = write_entry(args, sha1, path.buf, path.len, mode);
-+		err = write_entry(args, oid, path.buf, path.len, mode);
- 		if (err)
- 			return err;
- 		return (S_ISDIR(mode) ? READ_TREE_RECURSIVE : 0);
-@@ -161,7 +161,7 @@ static int write_archive_entry(const unsigned char *sha1, const char *base,
+ 	void *buffer;
+ 	const struct commit *commit = args->convert ? args->commit : NULL;
  
- 	if (args->verbose)
- 		fprintf(stderr, "%.*s\n", (int)path.len, path.buf);
--	return write_entry(args, sha1, path.buf, path.len, mode);
-+	return write_entry(args, oid, path.buf, path.len, mode);
- }
- 
- static void queue_directory(const unsigned char *sha1,
-@@ -191,7 +191,7 @@ static int write_directory(struct archiver_context *c)
- 	d->path[d->len - 1] = '\0'; /* no trailing slash */
- 	ret =
- 		write_directory(c) ||
--		write_archive_entry(d->oid.hash, d->path, d->baselen,
-+		write_archive_entry(&d->oid, d->path, d->baselen,
- 				    d->path + d->baselen, d->mode,
- 				    d->stage, c) != READ_TREE_RECURSIVE;
- 	free(d);
-@@ -231,7 +231,7 @@ static int queue_or_write_archive_entry(const struct object_id *oid,
- 
- 	if (write_directory(c))
- 		return -1;
--	return write_archive_entry(oid->hash, base->buf, base->len, filename, mode,
-+	return write_archive_entry(oid, base->buf, base->len, filename, mode,
- 				   stage, context);
- }
- 
-@@ -250,7 +250,7 @@ int write_archive_entries(struct archiver_args *args,
- 			len--;
- 		if (args->verbose)
- 			fprintf(stderr, "%.*s\n", (int)len, args->base);
--		err = write_entry(args, args->tree->object.oid.hash, args->base,
-+		err = write_entry(args, &args->tree->object.oid, args->base,
- 				  len, 040777);
- 		if (err)
- 			return err;
+ 	path += args->baselen;
+-	buffer = read_sha1_file(sha1, type, sizep);
++	buffer = read_sha1_file(oid->hash, type, sizep);
+ 	if (buffer && S_ISREG(mode)) {
+ 		struct strbuf buf = STRBUF_INIT;
+ 		size_t size = 0;
 diff --git a/archive.h b/archive.h
-index 62d1d82c1a..741991bfb6 100644
+index 741991bfb6..1f9954f7cd 100644
 --- a/archive.h
 +++ b/archive.h
-@@ -31,7 +31,7 @@ extern void init_tar_archiver(void);
- extern void init_zip_archiver(void);
+@@ -39,9 +39,9 @@ extern int write_archive_entries(struct archiver_args *args, write_archive_entry
+ extern int write_archive(int argc, const char **argv, const char *prefix, const char *name_hint, int remote);
  
- typedef int (*write_archive_entry_fn_t)(struct archiver_args *args,
--					const unsigned char *sha1,
-+					const struct object_id *oid,
- 					const char *path, size_t pathlen,
- 					unsigned int mode);
+ const char *archive_format_from_filename(const char *filename);
+-extern void *sha1_file_to_archive(const struct archiver_args *args,
+-				  const char *path, const unsigned char *sha1,
+-				  unsigned int mode, enum object_type *type,
+-				  unsigned long *sizep);
++extern void *object_file_to_archive(const struct archiver_args *args,
++				    const char *path, const struct object_id *oid,
++				    unsigned int mode, enum object_type *type,
++				    unsigned long *sizep);
  
+ #endif	/* ARCHIVE_H */
