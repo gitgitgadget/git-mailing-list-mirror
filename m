@@ -2,137 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_WEB,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 59A6D1F404
-	for <e@80x24.org>; Mon, 19 Feb 2018 05:28:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 717AF1F576
+	for <e@80x24.org>; Mon, 19 Feb 2018 11:29:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750985AbeBSF2u (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Feb 2018 00:28:50 -0500
-Received: from mail.javad.com ([54.86.164.124]:60953 "EHLO mail.javad.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750753AbeBSF2t (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Feb 2018 00:28:49 -0500
-Received: from osv (unknown [89.175.180.246])
-        by mail.javad.com (Postfix) with ESMTPSA id 59F213E89E;
-        Mon, 19 Feb 2018 05:28:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1519018128;
-        bh=l5dNI5TR5qnTa56wlmZE6aW4rWYhEND3fx93VASyuRo=; l=2285;
-        h=Received:From:To:Subject;
-        b=c7TIwpqS+NL2wUrFFNcKmu+SRnTk7MnOMFobg7C4yJXRIP4TsMaTgA4Q+w9jTrPsg
-         5YyubosN5W/suDpgUYI7132O6D7DFewMt2Pl7WZwg0HU/xypladqs/LWmvfhpS5MBt
-         5MER1Vk4sv4Bvqnu0IQdynXO0obk14AjyJbcC86w=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1519018128;
-        bh=l5dNI5TR5qnTa56wlmZE6aW4rWYhEND3fx93VASyuRo=; l=2285;
-        h=Received:From:To:Subject;
-        b=c7TIwpqS+NL2wUrFFNcKmu+SRnTk7MnOMFobg7C4yJXRIP4TsMaTgA4Q+w9jTrPsg
-         5YyubosN5W/suDpgUYI7132O6D7DFewMt2Pl7WZwg0HU/xypladqs/LWmvfhpS5MBt
-         5MER1Vk4sv4Bvqnu0IQdynXO0obk14AjyJbcC86w=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1519018128;
-        bh=l5dNI5TR5qnTa56wlmZE6aW4rWYhEND3fx93VASyuRo=; l=2285;
-        h=Received:From:To:Subject;
-        b=c7TIwpqS+NL2wUrFFNcKmu+SRnTk7MnOMFobg7C4yJXRIP4TsMaTgA4Q+w9jTrPsg
-         5YyubosN5W/suDpgUYI7132O6D7DFewMt2Pl7WZwg0HU/xypladqs/LWmvfhpS5MBt
-         5MER1Vk4sv4Bvqnu0IQdynXO0obk14AjyJbcC86w=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1519018128;
-        bh=l5dNI5TR5qnTa56wlmZE6aW4rWYhEND3fx93VASyuRo=; l=2285;
-        h=Received:From:To:Subject;
-        b=c7TIwpqS+NL2wUrFFNcKmu+SRnTk7MnOMFobg7C4yJXRIP4TsMaTgA4Q+w9jTrPsg
-         5YyubosN5W/suDpgUYI7132O6D7DFewMt2Pl7WZwg0HU/xypladqs/LWmvfhpS5MBt
-         5MER1Vk4sv4Bvqnu0IQdynXO0obk14AjyJbcC86w=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1519018128;
-        bh=l5dNI5TR5qnTa56wlmZE6aW4rWYhEND3fx93VASyuRo=; l=2285;
-        h=Received:From:To:Subject;
-        b=c7TIwpqS+NL2wUrFFNcKmu+SRnTk7MnOMFobg7C4yJXRIP4TsMaTgA4Q+w9jTrPsg
-         5YyubosN5W/suDpgUYI7132O6D7DFewMt2Pl7WZwg0HU/xypladqs/LWmvfhpS5MBt
-         5MER1Vk4sv4Bvqnu0IQdynXO0obk14AjyJbcC86w=
-Authentication-Results: mail.javad.com;
-        spf=pass (sender IP is 89.175.180.246) smtp.mailfrom=osv@javad.com smtp.helo=osv
-Received-SPF: pass (mail.javad.com: connection is authenticated)
-Received: from osv by osv with local (Exim 4.84_2)
-        (envelope-from <osv@osv.gnss.ru>)
-        id 1ene0M-000346-LS; Mon, 19 Feb 2018 08:28:46 +0300
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Jacob Keller <jacob.keller@gmail.com>
-Cc:     Git mailing list <git@vger.kernel.org>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [RFC] Rebasing merges: a jorney to the ultimate solution (Road Clear)
-References: <87y3jtqdyg.fsf@javad.com>
-        <CA+P7+xrgmSHv-coOdUAmBm31Sd0DzYdoez=tVO8drew9q7DExw@mail.gmail.com>
-Date:   Mon, 19 Feb 2018 08:28:46 +0300
-In-Reply-To: <CA+P7+xrgmSHv-coOdUAmBm31Sd0DzYdoez=tVO8drew9q7DExw@mail.gmail.com>
-        (Jacob Keller's message of "Sat, 17 Feb 2018 20:16:34 -0800")
-Message-ID: <87a7w5r1ip.fsf@javad.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        id S1752667AbeBSL30 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Feb 2018 06:29:26 -0500
+Received: from smtp-out-2.talktalk.net ([62.24.135.66]:12480 "EHLO
+        smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752633AbeBSL3X (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Feb 2018 06:29:23 -0500
+Received: from lindisfarne.localdomain ([92.22.21.220])
+        by smtp.talktalk.net with SMTP
+        id njdCe9qQuoNnDnjdHeU68x; Mon, 19 Feb 2018 11:29:20 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1519039760;
+        bh=yzNdZx9hB530TsCSom4/auMBOMXI4Tj6Ir6RWLTcrPM=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:Reply-To;
+        b=aP8LocbaGIJ8f6bG5qnIvKpc3JZCN898JHRDmsEmUxZhROfAszAoU9WFySntzO/MR
+         FJG7jdDSCobFNciAkbM/NAk8uR7d+qkR7mTD0INJXw7zs55CVnLIIcApnQYq9vZ+L4
+         n/H4PJw+HEEQKGa4bqRGvA4LOnkWMiP6H0zq06tE=
+X-Originating-IP: [92.22.21.220]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=ZZ9tDodA c=1 sm=1 tr=0 a=VSxTZYxioCnvaH7igEU67w==:117
+ a=VSxTZYxioCnvaH7igEU67w==:17 a=evINK-nbAAAA:8 a=W1d3ZkXJKmyTQXOkrsQA:9
+ a=RfR_gqz1fSpA9VikTjo0:22
+From:   Phillip Wood <phillip.wood@talktalk.net>
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        "Brian M. Carlson" <sandals@crustytoothpaste.net>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: [PATCH v2 0/9] Correct offsets of hunks when one is skipped
+Date:   Mon, 19 Feb 2018 11:29:01 +0000
+Message-Id: <20180219112910.24471-1-phillip.wood@talktalk.net>
+X-Mailer: git-send-email 2.16.1
+In-Reply-To: <20180213104408.9887-1-phillip.wood@talktalk.net>
+References: <20180213104408.9887-1-phillip.wood@talktalk.net>
+Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
+X-CMAE-Envelope: MS4wfAYuBUv9AtovsLXYEZYrWJMkkPRPTXn+Uraj2AnL6O9bzVyl0QQ49Q7u95z9f7HmZmQ73m5Kii0viDgZ+Ng4SKbOPwXcbyVN3P0xKzDnPIk9Otvg0IOJ
+ TPOenD++JySxE8WOWTUkXs/aWW90pKb9TYjfrO1wuzfOT4K7KhXdeyeuOCinsltf44b6mEvQfiBsEs4kiiaN2vbSnmszEDlqINbIO4jExmaYauTk+KOuBjpm
+ 57DJxnstyGvbJuLmIOlKhz+T7/LeXlhagN/oomlCi91PzAVeOZ/zdk1akf4BEPia
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jake,
+From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-Jacob Keller <jacob.keller@gmail.com> writes:
-> On Fri, Feb 16, 2018 at 5:08 AM, Sergey Organov <sorganov@gmail.com> wrote:
->> Hi,
->>
->> By accepting the challenges raised in recent discussion of advanced
->> support for history rebasing and editing in Git, I hopefully figured out
->> a clean and elegant method of rebasing merges that I think is "The Right
->> Way (TM)" to perform this so far troublesome operation. ["(TM)" here has
->> second meaning: a "Trivial Merge (TM)", see below.]
->>
->> Let me begin by outlining the method in git terms, and special thanks
->> here must go to "Johannes Sixt" <j6t@kdbg.org> for his original bright
->> idea to use "cherry-pick -m1" to rebase merge commits.
->>
->> End of preface -- here we go.
->>
->
-> I hope to take a more detailed look at this, also possibly with some
-> attempts at re-creating the process by hand to see it in practice.
+Since v1 I've added some test cleanups for t3701, fixed the counting
+when splitting and coalescing hunks containing "\ No newline at end of
+file" lines and added a patch to remove '--recount' from the
+invocation of 'git apply'. There are minor changes to patches 5
+(previously patch 2) and patch 7 (previously patch 4) which I've
+explained in the comments on those patches. Otherwise the original
+patches are unchanged.
 
-Thank you for your interest and for the review, and yes, some testing is
-what the idea desperately needs. Unfortunately I don't have much time
-for it right now, nor am I fluent enough in git internals to actually
-make even a raw prototype really soon, sorry. Anybody who is interested
-is very welcome to volunteer!
+Cover letter to v1:
 
-[...]
->
-> This might be a bit tricky for a user to understand what the process
-> is, especially if they don't understand how it's creating special U1'
-> and U2' commits. However, it *is* the cleanest method I've either seen
-> or thought of for presenting the conflict to the user.
->
-[...]
->> - it appears shiny to the point that it will likely be able to handle
->> even darkest evil merges nicely, no special treatment required.
->>
->
-> Yep, and I like that it has a pretty reasonable way of presenting
-> conflicts for resolution. It may be a bit tricky to explain the use of
-> the intermittent commits U1' and U2' though.
+While working on a patch series to stage selected lines from a hunk
+without having to edit it I got worried that subsequent patches would
+be applied in the wrong place which lead to this series to correct the
+offsets of hunks following those that are skipped or edited.
 
-Yeah, I see how all this sends somewhat unique challenges to the
-implementation to get user interaction in case of conflicts right, even
-though all the basic concepts are old buddies and should be familiar to
-the user.
 
-That said, the recursive merge strategy comes to mind, where creating
-virtual merge base may itself cause conflicts, so something similar
-enough is likely to already exist.
+Phillip Wood (9):
+  add -i: add function to format hunk header
+  t3701: indent here documents
+  t3701: use test_write_lines and write_script
+  t3701: don't hard code sha1 hash values
+  t3701: add failing test for pathological context lines
+  add -p: Adjust offsets of subsequent hunks when one is skipped
+  add -p: calculate offset delta for edited patches
+  add -p: fix counting when splitting and coalescing
+  add -p: don't rely on apply's '--recount' option
 
--- Sergey
+ git-add--interactive.perl  | 106 ++++++++++++-----
+ t/t3701-add-interactive.sh | 281 ++++++++++++++++++++++++---------------------
+ 2 files changed, 229 insertions(+), 158 deletions(-)
+
+-- 
+2.16.1
+
