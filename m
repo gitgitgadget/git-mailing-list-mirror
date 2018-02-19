@@ -7,43 +7,43 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 707EE1F404
-	for <e@80x24.org>; Mon, 19 Feb 2018 23:00:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 61D0A1F404
+	for <e@80x24.org>; Mon, 19 Feb 2018 23:00:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932226AbeBSXAl (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Feb 2018 18:00:41 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:33544 "EHLO
+        id S932303AbeBSXAC (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Feb 2018 18:00:02 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:33448 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S932244AbeBSXAO (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 19 Feb 2018 18:00:14 -0500
+        by vger.kernel.org with ESMTP id S932299AbeBSXAA (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 19 Feb 2018 18:00:00 -0500
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id A943E61396;
-        Mon, 19 Feb 2018 23:00:12 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id E3DE26135B;
+        Mon, 19 Feb 2018 22:59:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1519081213;
-        bh=PeRrEw4WUin/82xRXmj2QQ25k32ecciB4TtjI9MNNS0=;
+        s=default; t=1519081199;
+        bh=zL06vtmSphMUe2GK3USDKw1xnKVgiUjE8ug81IMUf3s=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=uFcJ+hmwBhuoDHWfA7ZLsgLkglQkPqWIkSW2Nhjh9AQWPeLK+NIKXj5t+/LV8gKCc
-         IqyyM0eyhSnUstrj3beRsT6cjg5MIsb7Xq99PsdF4mgNtZ3l1cqed6Io8n7nMxH6zo
-         3iJ4k69KSIsBY/EZktBxKhFvnCg5w7RYELYx/BHCsJTJAw5ec8LaZjbXJlh71dbnlt
-         GRYOb4dHswWz6l59CnXdrtV7lAmj4oQB2JbkslupGNUUxgAoSzKEoMubC/LUoMHzIY
-         2GgliZoUcICyOgRkC/9ZPavgrYW+G1KwA9/xNAZx4ey4el9kNpABh01lu2KTClio2c
-         lQv8gEfnXV/n2CH7w4qBXbRBwmFy6uGN/Ipql1cd7n7s2WGlwS8FdNEePZIwwZabgI
-         H1XEdPp93Jnfwe8MbLxwICj5dg5ysdHDIkGL0U3gjmN/CAEKChhP+HHEy01x58Pc1j
-         WzJgkPzfktBEAvjcUex75RLAF1GIxiu1a73AYxDs8h+2/pUhZLG
+        b=A2nLnQFUrtZVzChXGwmoJC77MjVFaRHCw9tB3rei9nef2lD4bT0HHFg0ZUn4oM7zu
+         MZjq7dl5FnWU7AUbv96lNx3jMezp8gDvZWKwjphhnPAQXDxebTLuwwtsVWl72dYzkU
+         we9SPcVNrLCeoSByS+pOFxb38YuUcQl0WuMIuBo7xRf3Kvp88pQd3RwObXN7IGg2QK
+         L2S0/NmdsCnMPeZkHMY6w2kAN8qrpGEcA7k6F4GCwSRoHt61m3rkibOqyU9zRXHZ7n
+         TsBUUrGKXhnz3vxHl9wPkemZBlxJCAZXBlg0cFS1Y+uUUoDnRJDSjGjvDbP0JeC7xN
+         +cOKET5D5hnwCBWA8Yj2bohlDEXWTTLlYspjc+3+m4bHxQiUX5EfoQOqGU3ueLTamC
+         wHDWQKE6mIFSwsBZzkw+Wi6QuwpiR9L9YfMtlnZ+8QRRi/SJHm6jCxJ92kDAQisW90
+         ehL/UsYOaBrAu43QAWPp+ji6bCiEbrD2gDyYh2dkPZgGtaHy23B
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>, Patryk Obara <patryk.obara@gmail.com>,
         Jeff King <peff@peff.net>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH 36/36] convert: convert to struct object_id
-Date:   Mon, 19 Feb 2018 22:59:27 +0000
-Message-Id: <20180219225927.386065-37-sandals@crustytoothpaste.net>
+Subject: [PATCH 25/36] Convert remaining callers of sha1_object_info_extended to object_id
+Date:   Mon, 19 Feb 2018 22:59:16 +0000
+Message-Id: <20180219225927.386065-26-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.16.1.291.g4437f3f132
 In-Reply-To: <20180219225927.386065-1-sandals@crustytoothpaste.net>
 References: <20180219225927.386065-1-sandals@crustytoothpaste.net>
@@ -53,99 +53,88 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert convert.c to struct object_id.  Add a use of the_hash_algo to
-replace hard-coded constants and change a strbuf_add to a strbuf_addstr
-to avoid another hard-coded constant.
-
-Note that a strict conversion using the hexsz constant would cause
-problems in the future if the internal and user-visible hash algorithms
-differed, as anticipated by the hash function transition plan.
+Convert the remaining caller of sha1_object_info_extended to use struct
+object_id.  Introduce temporaries, which will be removed later, since
+there is a dependency loop between sha1_object_info_extended and
+lookup_replace_object_extended.  This allows us to convert the code in a
+piecemeal fashion instead of all at once.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- convert.c | 12 ++++++------
- convert.h |  2 +-
- entry.c   |  2 +-
- 3 files changed, 8 insertions(+), 8 deletions(-)
+ sha1_file.c | 14 +++++++++++---
+ streaming.c |  5 ++++-
+ 2 files changed, 15 insertions(+), 4 deletions(-)
 
-diff --git a/convert.c b/convert.c
-index cc562f6509..c480097a2a 100644
---- a/convert.c
-+++ b/convert.c
-@@ -914,7 +914,7 @@ static int ident_to_worktree(const char *path, const char *src, size_t len,
- 		to_free = strbuf_detach(buf, NULL);
- 	hash_object_file(src, len, "blob", &oid);
+diff --git a/sha1_file.c b/sha1_file.c
+index fa69d86309..19995766b6 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -1231,6 +1231,9 @@ int sha1_object_info_extended(const unsigned char *sha1, struct object_info *oi,
+ 				    lookup_replace_object(sha1) :
+ 				    sha1;
+ 	int already_retried = 0;
++	struct object_id realoid;
++
++	hashcpy(realoid.hash, real);
  
--	strbuf_grow(buf, len + cnt * 43);
-+	strbuf_grow(buf, len + cnt * (the_hash_algo->hexsz + 3));
- 	for (;;) {
- 		/* step 1: run to the next '$' */
- 		dollar = memchr(src, '$', len);
-@@ -1510,7 +1510,7 @@ struct ident_filter {
- 	struct stream_filter filter;
- 	struct strbuf left;
- 	int state;
--	char ident[45]; /* ": x40 $" */
-+	char ident[GIT_MAX_HEXSZ + 5]; /* ": x40 $" */
- };
- 
- static int is_foreign_ident(const char *str)
-@@ -1635,12 +1635,12 @@ static struct stream_filter_vtbl ident_vtbl = {
- 	ident_free_fn,
- };
- 
--static struct stream_filter *ident_filter(const unsigned char *sha1)
-+static struct stream_filter *ident_filter(const struct object_id *oid)
+ 	if (is_null_sha1(real))
+ 		return -1;
+@@ -1295,7 +1298,7 @@ int sha1_object_info_extended(const unsigned char *sha1, struct object_info *oi,
+ 	rtype = packed_object_info(e.p, e.offset, oi);
+ 	if (rtype < 0) {
+ 		mark_bad_packed_object(e.p, real);
+-		return sha1_object_info_extended(real, oi, 0);
++		return sha1_object_info_extended(realoid.hash, oi, 0);
+ 	} else if (oi->whence == OI_PACKED) {
+ 		oi->u.packed.offset = e.offset;
+ 		oi->u.packed.pack = e.p;
+@@ -1323,13 +1326,16 @@ int sha1_object_info(const unsigned char *sha1, unsigned long *sizep)
+ static void *read_object(const unsigned char *sha1, enum object_type *type,
+ 			 unsigned long *size)
  {
- 	struct ident_filter *ident = xmalloc(sizeof(*ident));
++	struct object_id oid;
+ 	struct object_info oi = OBJECT_INFO_INIT;
+ 	void *content;
+ 	oi.typep = type;
+ 	oi.sizep = size;
+ 	oi.contentp = &content;
  
- 	xsnprintf(ident->ident, sizeof(ident->ident),
--		  ": %s $", sha1_to_hex(sha1));
-+		  ": %s $", oid_to_hex(oid));
- 	strbuf_init(&ident->left, 0);
- 	ident->filter.vtbl = &ident_vtbl;
- 	ident->state = 0;
-@@ -1655,7 +1655,7 @@ static struct stream_filter *ident_filter(const unsigned char *sha1)
-  * Note that you would be crazy to set CRLF, smuge/clean or ident to a
-  * large binary blob you would want us not to slurp into the memory!
-  */
--struct stream_filter *get_stream_filter(const char *path, const unsigned char *sha1)
-+struct stream_filter *get_stream_filter(const char *path, const struct object_id *oid)
- {
- 	struct conv_attrs ca;
- 	struct stream_filter *filter = NULL;
-@@ -1668,7 +1668,7 @@ struct stream_filter *get_stream_filter(const char *path, const unsigned char *s
+-	if (sha1_object_info_extended(sha1, &oi, 0) < 0)
++	hashcpy(oid.hash, sha1);
++
++	if (sha1_object_info_extended(oid.hash, &oi, 0) < 0)
  		return NULL;
+ 	return content;
+ }
+@@ -1723,9 +1729,11 @@ int force_object_loose(const struct object_id *oid, time_t mtime)
  
- 	if (ca.ident)
--		filter = ident_filter(sha1);
-+		filter = ident_filter(oid);
+ int has_sha1_file_with_flags(const unsigned char *sha1, int flags)
+ {
++	struct object_id oid;
+ 	if (!startup_info->have_repository)
+ 		return 0;
+-	return sha1_object_info_extended(sha1, NULL,
++	hashcpy(oid.hash, sha1);
++	return sha1_object_info_extended(oid.hash, NULL,
+ 					 flags | OBJECT_INFO_SKIP_CACHED) >= 0;
+ }
  
- 	if (output_eol(ca.crlf_action) == EOL_CRLF)
- 		filter = cascade_filter(filter, lf_to_crlf_filter());
-diff --git a/convert.h b/convert.h
-index 65ab3e5167..2e9b4f49cc 100644
---- a/convert.h
-+++ b/convert.h
-@@ -93,7 +93,7 @@ extern int would_convert_to_git_filter_fd(const char *path);
+diff --git a/streaming.c b/streaming.c
+index be85507922..042d6082e8 100644
+--- a/streaming.c
++++ b/streaming.c
+@@ -111,10 +111,13 @@ static enum input_source istream_source(const unsigned char *sha1,
+ {
+ 	unsigned long size;
+ 	int status;
++	struct object_id oid;
++
++	hashcpy(oid.hash, sha1);
  
- struct stream_filter; /* opaque */
+ 	oi->typep = type;
+ 	oi->sizep = &size;
+-	status = sha1_object_info_extended(sha1, oi, 0);
++	status = sha1_object_info_extended(oid.hash, oi, 0);
+ 	if (status < 0)
+ 		return stream_error;
  
--extern struct stream_filter *get_stream_filter(const char *path, const unsigned char *);
-+extern struct stream_filter *get_stream_filter(const char *path, const struct object_id *);
- extern void free_stream_filter(struct stream_filter *);
- extern int is_null_stream_filter(struct stream_filter *);
- 
-diff --git a/entry.c b/entry.c
-index 3f21d2c913..49b83f4a97 100644
---- a/entry.c
-+++ b/entry.c
-@@ -266,7 +266,7 @@ static int write_entry(struct cache_entry *ce,
- 
- 	if (ce_mode_s_ifmt == S_IFREG) {
- 		struct stream_filter *filter = get_stream_filter(ce->name,
--								 ce->oid.hash);
-+								 &ce->oid);
- 		if (filter &&
- 		    !streaming_write_entry(ce, path, filter,
- 					   state, to_tempfile,
