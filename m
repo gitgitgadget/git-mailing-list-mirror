@@ -2,89 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AE7161F404
-	for <e@80x24.org>; Mon, 19 Feb 2018 14:50:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F0C8B1F404
+	for <e@80x24.org>; Mon, 19 Feb 2018 18:36:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752766AbeBSOuX (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Feb 2018 09:50:23 -0500
-Received: from mail-qt0-f179.google.com ([209.85.216.179]:45886 "EHLO
-        mail-qt0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752609AbeBSOuW (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Feb 2018 09:50:22 -0500
-Received: by mail-qt0-f179.google.com with SMTP id v90so9711849qte.12
-        for <git@vger.kernel.org>; Mon, 19 Feb 2018 06:50:22 -0800 (PST)
+        id S1753483AbeBSSgm (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Feb 2018 13:36:42 -0500
+Received: from mail-qk0-f196.google.com ([209.85.220.196]:39549 "EHLO
+        mail-qk0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753444AbeBSSgl (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Feb 2018 13:36:41 -0500
+Received: by mail-qk0-f196.google.com with SMTP id z197so13382063qkb.6
+        for <git@vger.kernel.org>; Mon, 19 Feb 2018 10:36:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gnustavo-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=lNGzFHeO2H911liR4G3mdlTAx2WACNvty9LpGnmmqKg=;
-        b=sRgHvXXjf9bAFgY4SjzVNU7Z+1vViDY174JsefLf+pqKmDsNjxJMQC61Zpi9nGDrfB
-         8c8/G31hKd33ftZOHAUcI1UIPmjl/o4cEiDBD2eJtVQSe3Vg5hbM0q9b1tNE2zZRemLq
-         4td/qoAwLodfHh24zmw3dx3n5o2+zpzSNr1TCVmIpXzcfBox0+vhZvxwHZltLX9DwG0v
-         LOdGq//qMzius0r8R+W1bz1+xJh3Evd8SpBI4441NUQ0lbetfAyalqSa2Q+7mom3EUFw
-         ZSdiWQEljwRd5F9wtOQ5ekXmv9/qv/T9B17zYGkT3JaY/MMYRmSwnVvbtEKklogZFOaH
-         O+3A==
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=VWex5VxIX5rA/zFfrYp5AR5FWclrn8jrV0W89CAOg4I=;
+        b=X76zib7zdZhjxuFKEehdBuHj25zJQQ6stbTMeff3GNe4UgJOtyPp/wkcaxlY3Ws6+4
+         o5n1GCqH9RjWBKSdpt76piYKLCYgYLV7/ylQdkVx59bSDJ5fU+FYrJT4Jy2Wadmhc9QK
+         jrrNaPiDs7hD+feGSUlxWXgra6PzCdJG4ldzgOuHN543dXi6qeUtB0Ku2ynMRWrIp6iR
+         0VjjF0wH4iCtEgPQP28XjZRUjsK4AgYiVu2GtLVodJfdxkOUBr3aV7IFr/20+AEQreIA
+         N63Cw0GlmR86/ON7k7u2kZUpVwOmXe96m71lUV+XwV7REwvqCBJmoza6SzE1ga57Cy+1
+         6bAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=lNGzFHeO2H911liR4G3mdlTAx2WACNvty9LpGnmmqKg=;
-        b=pTj9d/2fvN1BJ0WJ13l64rKPGQ8rSqxhv34woUBs2kmwUdgu0gGPCoBNDPO4hr3cYD
-         db0JgbohtbI7a0wlsh2xyU5MI2kByUFyd5fX64Vs9jR9cdDihs1f67zvCJ7vVIuUM8xX
-         QEHVkpg953ASWOiT7uSekv7+B2T15CJqTB+vZIqSNL9FTeF3T2a+paafBcWul9ZA/lmP
-         Si0785up1ccCWaoRg9jJBIsCDQa57tNfHJOy/6lDO7CM7kW9sYjSyAz5S4wS13ulxhy+
-         g98whxP1UF5b/RrlrKOBp6qJ/6dgpWlJI0ppgnXtKw34sglg7klQDCiGhkKcTFYgvzSB
-         JOAw==
-X-Gm-Message-State: APf1xPC65bxkWLvupMOgPegEIWGa6Rc/9j/mOT/o9ncPCGlgmGk/qTGy
-        DfUltWkhqvYMTAHAOXtSe9UNIRUbN2BlWvYWZ6irYNKFU/8=
-X-Google-Smtp-Source: AH8x227+HLacXosbdCqD/Pbe8a6qkTrx+uf9mMesoldUT0UvkS+CKJtRc6NwW7lwYq4/LtYw5yYF2/iS09C1BK0PGU4=
-X-Received: by 10.200.40.129 with SMTP id i1mr6095985qti.176.1519051821438;
- Mon, 19 Feb 2018 06:50:21 -0800 (PST)
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=VWex5VxIX5rA/zFfrYp5AR5FWclrn8jrV0W89CAOg4I=;
+        b=UMqgC0jn/3bL7Xh2BNd3l9CFzhGJzd9EL1JqN9HA+EqXtno7PmuAjOBYTriBTXOSRv
+         U+Va6zRCq5x6nZVlzPq3bqJq81egb1cQsln7b5H97I64nyc/Wa+5Z0jT7bJgvjtzRfV0
+         tkriA1TiltO0KUiFEgXIZ+PDtAfpmzMXkU9uWDA+eqgoQFmLxaGaGkrHiPmuYuxjjkgW
+         ZtcKlZRY3Yko28mHRd/NJe3egMCJm7DeGUy23tBZBZluSNlS13Exjm4hiYqpeH/m58e0
+         Kixj8QKG0UDcYycdp6nBr8mYj19zkLu0D7pGnb7OIQ/AWyHKBUq1r9bJ5Rq8cWxknTBv
+         PRow==
+X-Gm-Message-State: APf1xPBFPRWpsBv/Pty6sZM6nfBSX12uxiBNzP7CFINP6E7f6SAiFHYM
+        roqUDFtj6OVJ0BcyvpQWMemjwrfSKOAyjA8tt18=
+X-Google-Smtp-Source: AH8x226fYuit4oRktAKPqUM/VhucgCGZjATM6XLKYC/YbQ/Rd8NpACExlGNbiG7SEbfy8oLv4JlKRDHYAr5BwnqocI8=
+X-Received: by 10.55.49.74 with SMTP id x71mr25695935qkx.133.1519065399588;
+ Mon, 19 Feb 2018 10:36:39 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.140.107.230 with HTTP; Mon, 19 Feb 2018 06:50:00 -0800 (PST)
-In-Reply-To: <CAPx58qqv84+i0JbdsVzFqWB=bRDecWHxss8frD4=nWOsFj-NPg@mail.gmail.com>
-References: <CAPx58qqv84+i0JbdsVzFqWB=bRDecWHxss8frD4=nWOsFj-NPg@mail.gmail.com>
-From:   Gustavo Chaves <gustavo@gnustavo.com>
-Date:   Mon, 19 Feb 2018 11:50:00 -0300
-Message-ID: <CAPx58qoS-J+yJ_J4QOOnKyG=EOrT5J=UoCrXfXxEijq4Z2Z_3w@mail.gmail.com>
-Subject: Re: Why git-revert doesn't invoke the pre-commit and the commit-msg hooks?
-To:     git@vger.kernel.org
+Received: by 10.12.143.26 with HTTP; Mon, 19 Feb 2018 10:36:39 -0800 (PST)
+In-Reply-To: <20180219112910.24471-3-phillip.wood@talktalk.net>
+References: <20180213104408.9887-1-phillip.wood@talktalk.net>
+ <20180219112910.24471-1-phillip.wood@talktalk.net> <20180219112910.24471-3-phillip.wood@talktalk.net>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Mon, 19 Feb 2018 13:36:39 -0500
+X-Google-Sender-Auth: 44Wx7M4UsGUotm6c7HtTbTjbzdQ
+Message-ID: <CAPig+cTUdw+eHOfj9=wt6DRR5xfaQxg-qQpF1VFfArY1uwcHnA@mail.gmail.com>
+Subject: Re: [PATCH v2 2/9] t3701: indent here documents
+To:     Phillip Wood <phillip.wood@dunelm.org.uk>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        "Brian M. Carlson" <sandals@crustytoothpaste.net>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I asked this question on StackOverflow and got an answer:
-https://stackoverflow.com/q/48852925/114983
+On Mon, Feb 19, 2018 at 6:29 AM, Phillip Wood <phillip.wood@talktalk.net> wrote:
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>
+> Indent here documents in line with the current style for tests.
+>
+> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+> ---
+> diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
+> @@ -22,14 +22,14 @@ test_expect_success 'status works (initial)' '
+>  test_expect_success 'setup expected' '
+> -cat >expected <<EOF
+> -new file mode 100644
+> -index 0000000..d95f3ad
+> ---- /dev/null
+> -+++ b/file
+> -@@ -0,0 +1 @@
+> -+content
+> -EOF
+> +       cat >expected <<-EOF
 
-The problem is that git-revert invokes git-commit with the -n flag,
-explicitly avoiding the pre-commit and the commit-msg hooks.
+Minor: You could take the opportunity to update these to use -\EOF
+(rather than -EOF) to document that no variable interpolation is
+expected inside the 'here' document. Probably itself not worth a
+re-roll.
 
-This was originally introduced on commit 9fa4db544e2e, by Junio
-Hamano, in 2005! The rationale in the commit message was the
-following:
-
->> Do not verify reverted/cherry-picked/rebased patches.
-
->> The original committer may have used validation criteria that is less
->> stricter than yours.  You do not want to lose the changes even if they
->> are done in substandard way from your 'commit -v' verifier's point of
->> view.
-
-I get it, but since by default you are allowed to edit the commit
-message during a git-revert I think there's a case to be made to make
-the pre-commit and the commit-msg being invoked by default. Also,
-git-revert introduces new lines in the original commit message, and
-they could be used to trigger specific checks, such as the one I
-wanted to implement, to deny commits reverting merge-commits.
-
-Shouldn't git-revert work exactly as git-commit? Instead of disabling
-hooks by default, it could accept the --no-verify flag just like
-git-commit to disable the hooks if the user wants it.
-
--- 
-Gustavo Chaves
+> +       new file mode 100644
+> +       index 0000000..d95f3ad
+> +       --- /dev/null
+> +       +++ b/file
+> +       @@ -0,0 +1 @@
+> +       +content
+> +       EOF
+>  '
