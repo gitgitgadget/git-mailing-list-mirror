@@ -2,90 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2EA9C1F404
-	for <e@80x24.org>; Tue, 20 Feb 2018 21:51:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BC0F91F404
+	for <e@80x24.org>; Tue, 20 Feb 2018 22:00:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751155AbeBTVvW (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Feb 2018 16:51:22 -0500
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:41789 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750710AbeBTVvV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Feb 2018 16:51:21 -0500
-Received: by mail-wr0-f194.google.com with SMTP id f14so14133434wre.8
-        for <git@vger.kernel.org>; Tue, 20 Feb 2018 13:51:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=TNSgQBR/a4I7nMmE9G1A1b3ZHfrSBRyUMpPWSErsFNM=;
-        b=EeYtyRQJCDb0zqNN86DO88czkkwr40fqqnKao5NX780c3C7uHKviQK61QKHdgvCea6
-         OZWEaVOP9zWqUj73t9utSKiGaUjAZB3de59rTO5Hc07yI6wwlcu0k+mba0m5stz5kFkq
-         IUM9Aqn+5oyTIjyc2o/l90r1E3zYWWbCEM7RlPA7e7nG9NUmCqgKAqxX6tri0dOSvmp1
-         7NdH+0HX57c/9jXMMEpGbYPZW8gdhP9thpuMCpBaokOcGKozINLrM0rNTQ7XTZNuNtR8
-         x/g/uDGNzL3SGu0+IKGOkpuZjrpqj3GiormotGzx1uf18NW6RFafWQ7j2y44Igk2lWC9
-         inGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=TNSgQBR/a4I7nMmE9G1A1b3ZHfrSBRyUMpPWSErsFNM=;
-        b=V5G5zkxb563Q6Zx/7Pg8dkPlUY8JgfSGxXE5T7YJTA7yASafGOW4JHb/ZsjTnbz1wW
-         wyIW5LdmpEVi04SryLlQTDYFpRggNVtvSanX3d/4Pf9VOSFIGEJ0q1GQP+QUsl8L3vPb
-         57YHUo0t/9KY3ptR+qaXTvFzpedKIdIu6gJFmXD3JBLsPlQI/8AtUVdCVKp6JAmjbNEq
-         lgNnYU5uvClTKK3ElAI+RPK05o/tWyoXfbFbB5FUWkhaZgkA8yNCrOiPgZDfOWJqLg2N
-         sK5FcCjA2gOHyb9kirrF6f7eRMCLHK8e5Rt/+rW2fLXdBxHMIY1+oYR5eAMQW3iNsau/
-         POtg==
-X-Gm-Message-State: APf1xPA3BWyro8d59QCX1xQyxa6Eda+6VztIe/H1lhrxDQzeus/fNDU6
-        BpAzKBAGVyZz5SgNQz5hWZc=
-X-Google-Smtp-Source: AH8x227XNpIvI848Ow263+2bsLdFqrku2FR4x6tCj82jaQp+jlSh9bOIf1G14/MA7LJKKKlk6Bejfg==
-X-Received: by 10.28.210.77 with SMTP id j74mr332528wmg.13.1519163480312;
-        Tue, 20 Feb 2018 13:51:20 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id s2sm14220574wmf.0.2018.02.20.13.51.19
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 20 Feb 2018 13:51:19 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     git@vger.kernel.org, git@jeffhostetler.com, peff@peff.net,
-        jonathantanmy@google.com, szeder.dev@gmail.com, sbeller@google.com,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v4 03/13] commit-graph: create git-commit-graph builtin
-References: <4d1ee202-7d79-d73c-6e05-d0fc85db943c@gmail.com>
-        <1519066406-81663-1-git-send-email-dstolee@microsoft.com>
-        <1519066406-81663-4-git-send-email-dstolee@microsoft.com>
-Date:   Tue, 20 Feb 2018 13:51:18 -0800
-In-Reply-To: <1519066406-81663-4-git-send-email-dstolee@microsoft.com>
-        (Derrick Stolee's message of "Mon, 19 Feb 2018 13:53:16 -0500")
-Message-ID: <xmqqvaer1ga1.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1750829AbeBTWAD (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Feb 2018 17:00:03 -0500
+Received: from hapkido.dreamhost.com ([66.33.216.122]:56011 "EHLO
+        hapkido.dreamhost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750735AbeBTWAD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Feb 2018 17:00:03 -0500
+Received: from homiemail-a3.g.dreamhost.com (homie.mail.dreamhost.com [208.97.132.208])
+        by hapkido.dreamhost.com (Postfix) with ESMTP id AE00F90ED8
+        for <git@vger.kernel.org>; Tue, 20 Feb 2018 14:00:02 -0800 (PST)
+Received: from homiemail-a3.g.dreamhost.com (localhost [127.0.0.1])
+        by homiemail-a3.g.dreamhost.com (Postfix) with ESMTP id D261E284091
+        for <git@vger.kernel.org>; Tue, 20 Feb 2018 14:00:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=mergebase.com; h=
+        mime-version:from:date:message-id:subject:to:content-type; s=
+        mergebase.com; bh=J+/34byAuha0txPSKP0kN/luUDc=; b=Pg+iUhcRE33HG/
+        xiT+w7lrbAHQ1CT3Kt74S7ETI48dU+K5GUAdtZ7resFuZQZ5kvTkHD42UHImWn+d
+        /Y00MJzobzez0Z14YZK+TXXWOnfsADC0DDlVZMo70e7F94V9nGpkm4eyIpSJiySd
+        FbwXTr1a8mi1VfSFYCPd2NedG4tkM=
+Received: from mail-io0-f177.google.com (mail-io0-f177.google.com [209.85.223.177])
+        (using TLSv1 with cipher AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: julius@mergebase.com)
+        by homiemail-a3.g.dreamhost.com (Postfix) with ESMTPSA id A654C284087
+        for <git@vger.kernel.org>; Tue, 20 Feb 2018 14:00:01 -0800 (PST)
+Received: by mail-io0-f177.google.com with SMTP id e7so16618104ioj.1
+        for <git@vger.kernel.org>; Tue, 20 Feb 2018 14:00:01 -0800 (PST)
+X-Gm-Message-State: APf1xPBBHNW7DFMFD0zPfh0L1rCi4Um7U81Yq65LT8V8kmb0pQs0tNY2
+        76wHwC2WMftqbyuBwehSSMgcEx5Mv9s9J6pHdg==
+X-Google-Smtp-Source: AH8x226xkyVmGTqa11587/pOFLPhT/3cwmHxU/CCT4zwYdMNmvAtl2qGWbz5USo3YXowMYsDSP/zFBSSKpMIlI2Ioxg=
+X-Received: by 10.107.205.196 with SMTP id d187mr1547470iog.42.1519164000938;
+ Tue, 20 Feb 2018 14:00:00 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.79.1.69 with HTTP; Tue, 20 Feb 2018 14:00:00 -0800 (PST)
+From:   Julius Musseau <julius@mergebase.com>
+Date:   Tue, 20 Feb 2018 14:00:00 -0800
+X-Gmail-Original-Message-ID: <CAA7Zk=vWdEUnrfBcxCH6WAFH9Jss7T9_zK-zMnWbVO7B+2YySw@mail.gmail.com>
+Message-ID: <CAA7Zk=vWdEUnrfBcxCH6WAFH9Jss7T9_zK-zMnWbVO7B+2YySw@mail.gmail.com>
+Subject: I'm trying to break "git pull --rebase"
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <stolee@gmail.com> writes:
+Hi, Git Developers,
 
-> +int cmd_commit_graph(int argc, const char **argv, const char *prefix)
-> +{
-> +	static struct option builtin_commit_graph_options[] = {
-> +		{ OPTION_STRING, 'p', "object-dir", &opts.obj_dir,
-> +			N_("dir"),
-> +			N_("The object directory to store the graph") },
+I'm currently writing a blog post about "git pull --rebase".   The
+point of the blog post is to examine scenarios where two people are
+working together on a short-lived feature branch, where history
+rewrites are allowed, and where both are using "git pull --rebase" to
+stay in sync with each other.
 
-I have a suspicion that this was modeled after some other built-in
-that has a similar issue (perhaps written long time ago), but isn't
-OPT_STRING() sufficient to define this element these days?
+I was hoping to concoct a situation where "git pull --rebase" makes a
+mess of things.
 
-Or am I missing something?
+So far I have been unable to do this.  I tried version v1.7.2 of Git
+as well as version v2.14.1, and as far as I can tell, "git pull
+--rebase" is bulletproof.
 
-Why squat on short-and-sweet "-p"?  For that matter, since this is
-not expected to be end-user facing command anyway, I suspect that we
-do not want to allocate a single letter option from day one, which
-paints ourselves into a corner from where we cannot escape.
+Does anyone here happen to know a situation where "git pull --rebase"
+makes a mess?
+
+Here's a draft of the blog post:
+
+Title:  "(Too much) fun with git pull --rebase"
+
+https://mergebase.com/doing-git-wrong/2018/02/17/fun-with-git-pull-rebase/
+
+
+Here are the "git pull --rebase" scenarios I've tested so far:
+
+1.  origin/feature rebased against origin/master
+
+2.  origin/feature squash-merged against origin/master
+
+3.  origin/feature squashed in-place`
+
+4.  origin/feature dropped a commit
+
+5.  origin/feature insanity (adjusted merge-base, reversed commits,
+squashed some commits)
+
+6.  undo of 5
+
+
+So far "git pull --rebase" does the exact right thing in every case!
+
+If anyone knows a scenario where "git pull --rebase" fails to do the
+right thing, I would be very grateful to hear of it.
+
+
+
+Thanks!
+
+yours sincerely,
+
+Julius Musseau
