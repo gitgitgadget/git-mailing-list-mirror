@@ -2,106 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_WEB,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B10DD1F576
-	for <e@80x24.org>; Tue, 20 Feb 2018 10:29:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4D9C91F576
+	for <e@80x24.org>; Tue, 20 Feb 2018 10:46:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751631AbeBTK26 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Feb 2018 05:28:58 -0500
-Received: from smtp-out-6.talktalk.net ([62.24.135.70]:8515 "EHLO
-        smtp-out-6.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751172AbeBTK25 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Feb 2018 05:28:57 -0500
-Received: from [192.168.2.201] ([92.22.21.220])
-        by smtp.talktalk.net with SMTP
-        id o5ANeakAJLSHJo5ANexuFP; Tue, 20 Feb 2018 10:28:56 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1519122536;
-        bh=TUAuIA5UsnttbXYaCFnQ3CLZnEDtmBAELubXuptopPQ=;
-        h=Reply-To:Subject:To:References:From:Date:In-Reply-To;
-        b=cgs2wysdK26//lKGz/SMWFS/MaY8yuZQ4PubdS9pUBNHfIMvU5OMlSV2bu4Cye9SK
-         6F/vBOmicUfXsyXnz+nMyO7NS6Qgcjcw7OqgdwD9vkdaj5qvpjlFY4J45HzXxb/tnS
-         RGlmkQtoJp3zbdC/lsFdgHm5+7+lk+NwxWTXbk+4=
-X-Originating-IP: [92.22.21.220]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=NqehS4VJ c=1 sm=1 tr=0 a=VSxTZYxioCnvaH7igEU67w==:117
- a=VSxTZYxioCnvaH7igEU67w==:17 a=IkcTkHD0fZMA:10 a=uPZiAMpXAAAA:8
- a=eU1zHdUWG92YyBEDvhcA:9 a=QEXdDO2ut3YA:10
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: Why git-revert doesn't invoke the pre-commit and the commit-msg
- hooks?
-To:     Gustavo Chaves <gustavo@gnustavo.com>, git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>
-References: <CAPx58qqv84+i0JbdsVzFqWB=bRDecWHxss8frD4=nWOsFj-NPg@mail.gmail.com>
- <CAPx58qoS-J+yJ_J4QOOnKyG=EOrT5J=UoCrXfXxEijq4Z2Z_3w@mail.gmail.com>
-From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <7ff6079d-5834-3bbd-781b-a2fc0659e7e5@talktalk.net>
-Date:   Tue, 20 Feb 2018 10:28:55 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
+        id S1751358AbeBTKqn (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Feb 2018 05:46:43 -0500
+Received: from mout.gmx.net ([212.227.17.21]:42751 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751052AbeBTKqm (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Feb 2018 05:46:42 -0500
+Received: from MININT-TB4PCE7.southpacific.corp.microsoft.com
+ ([37.201.195.115]) by mail.gmx.com (mrgmx101 [212.227.17.168]) with ESMTPSA
+ (Nemesis) id 0MCPhl-1ewZu33mtd-0096Tx; Tue, 20 Feb 2018 11:46:39 +0100
+Date:   Tue, 20 Feb 2018 11:46:38 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+To:     Peter Backes <rtc@helen.PLASMA.Xg8.DE>
+cc:     git@vger.kernel.org
+Subject: Re: Git should preserve modification times at least on request
+In-Reply-To: <20180219220819.GA10466@helen.PLASMA.Xg8.DE>
+Message-ID: <nycvar.QRO.7.76.6.1802201127140.31@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <20180219212235.GA9891@helen.PLASMA.Xg8.DE> <nycvar.QRO.7.76.6.1802192257100.31@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <20180219220819.GA10466@helen.PLASMA.Xg8.DE>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <CAPx58qoS-J+yJ_J4QOOnKyG=EOrT5J=UoCrXfXxEijq4Z2Z_3w@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfLv7PhHoJpJz6arVuF+qGiaRd/W55yGhyVrGP7795FYF/aDZEZ0F4Ztos6OV+hofik93wNW1/vdBzhiQlk/bW2rrEdv8AMdse9JLbag58nFB2GS0MGab
- MA9bZ6q8mOXJSo6tq5xyPV382GSsa5U+5KUpEHYvCEdB/pSs25Mxini4qVEUzAYD2O2Hm4HzflNRJePTx/FYolL7ad9mGJx/xPGyBqdqOfYK3S9rnMHlF+Ce
- wJq6u+BMXDX09msy9Fdx0Mcii8Q5FPEfrQZhJrpS1Ig=
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:QCj94TIU12yUEBPOCUtFCiWBn2mBj2pso49OGRCwugHhwLAcmE8
+ ukFgrrlYR07ya5ncIoqFIC6jp5T9u605BMmfkL9f22bDjNuXFc0w+BiO5RUKcGY+KENyOx0
+ ViwLL2dneYMkyqXidu8FblnBq5U0v4OyVxSS8b5N5fL5yvp/HPJHkiL6PmIrIc6fc4beaVO
+ HqSX5hXt80TyiSLyE8uTQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:lZK3CshDfJo=:Jc3cfmd8JTppp+qmDp82PU
+ RNSyy2kBRuLGKYCegQnM2CpdnTeEVMe7nwIhQQc4kFPIgp+1f+udiRIycsm2NuxYDA1EkJTA2
+ c+Mhyjg7Fd04qCD0U07XqQK2HZ2S8o7r+Uwumgti9rw6qPeRLDjCNjx7AdgC9Tm3p1iUcnn0b
+ 25e6mcZz2H0JJFCmV2qWwppFZbe4Ly2CqhGTJ3BZvy2zXokQPyfX8yXM+wRfbui2/Jb8nzZEQ
+ nj5e4Rae70yAim2abS0644GlNiXxk3ag5IY3QRBNyiLO1zmB6vLW+4RJrdzePmJ9eTHk/kuug
+ DvEGqNDi4RyztbcLUYsZ2fYaJf47c0Fd9kF9C6UepD3vrjUzA/OfMm1DovxofODr+3U0yEum2
+ DT8N/8siamCwKZQQaVwiWWqh2aX+MLJU+uaBHkUf1Rg2/N8p+/8Y0RY2rKTWSE1Qj2h9AN3eY
+ BIb9S4XN5cUTn+EcnmSThDctywSWONA6/Y75PVw0W4f3FGk9aB+9fpzJbqkCn98n32JxheRD5
+ fJ3G3++jbdGmQe/7PnNv5Z4KD6N1o6MwgQ2Y+QRYw1MppCUqFaIWIZwnC0kj8Tpj1N9C0hgci
+ ERvd2fMXZ4XIT6e9+1XJCa/hZo7jywfiBIAUhNPUETgEJ1x7kEied07u4a8j9gaAdYni5dNTC
+ wMxrfFd2kbVsMrw2pcKCgmAzM0EDqlSUcZ8qHoP5qSkr30AEbvi0a3abRoODFti/BvYd9E1kI
+ DX6JU+6jxuErejd+90hFbqFV7HnAlSONBpg+M+TfjM38FEiYqkIHaV5ecnni5lgqszeeWNivS
+ KfvO/QTlBpjvO82SLoYSMERagtVkLP+jAutMK3DbZM1SDuaCFQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Gustavo
+Hi Peter,
 
-On 19/02/18 14:50, Gustavo Chaves wrote:
-> 
-> I asked this question on StackOverflow and got an answer:
-> https://stackoverflow.com/q/48852925/114983
-> 
-> The problem is that git-revert invokes git-commit with the -n flag,
-> explicitly avoiding the pre-commit and the commit-msg hooks.
-> 
-> This was originally introduced on commit 9fa4db544e2e, by Junio
-> Hamano, in 2005! The rationale in the commit message was the
-> following:
-> 
->>> Do not verify reverted/cherry-picked/rebased patches.
-> 
->>> The original committer may have used validation criteria that is less
->>> stricter than yours.  You do not want to lose the changes even if they
->>> are done in substandard way from your 'commit -v' verifier's point of
->>> view.
-> 
-> I get it, but since by default you are allowed to edit the commit
-> message during a git-revert I think there's a case to be made to make
-> the pre-commit and the commit-msg being invoked by default. Also,
-> git-revert introduces new lines in the original commit message, and
-> they could be used to trigger specific checks, such as the one I
-> wanted to implement, to deny commits reverting merge-commits.
-> 
-> Shouldn't git-revert work exactly as git-commit? Instead of disabling
-> hooks by default, it could accept the --no-verify flag just like
-> git-commit to disable the hooks if the user wants it.
-> 
+On Mon, 19 Feb 2018, Peter Backes wrote:
 
-I think you're right that cherry-pick and revert should not be passing
---no-verify when the commit message is being edited (I was surprised to
-see that they were). I wonder if it's worth getting rid of the
-VERIFY_MSG flag completely and just set --no-verify if EDIT_MSG isn't
-set to avoid these problems in the future. I'm worried though that
-someone out there is scripting with a non-interactive editor which may
-break if we start verifying the message so maybe the default should be
-changed and a --no-verify option added to cherry-pick and revert
-instead. They'd have to change their script but at least it would work
-and everyone else would get the behaviour they probably expect.
+> On Mon, Feb 19, 2018 at 10:58:12PM +0100, Johannes Schindelin wrote:
+> > Since you already assessed that it shouldn't be hard to do, you
+> > probably want to put your money where your mouth is and come up with a
+> > patch, and then offer it up for discussion on this here mailing list.
+> 
+> Well, it would be good to discuss this a bit beforehand, since my time 
+> is wasted if there's no chance to get it accepted. Perhaps there is 
+> some counterargument I don't know about.
 
-Best Wishes
+Oh, sorry. I understood your mail as if you had told the core Git
+developers that they should implement the feature you desire. I did not
+understand that you hinted at a discussion first, and that you would then
+go and implement the feature you asked for.
 
-Phillip
+> Is there some existing code that could be used? I think I read 
+> somewhere that git once did preserve mtimes, but that this code was 
+> removed because of the build tool issues. Perhaps that code could 
+> simply be put back in, and surrounded by conditions.
 
+I don't think that code was ever there. Maybe you heard about some file
+mode being preserved overzealously (we stored the octal file mode
+verbatim, but then decided to store only 644 or 755).
+
+(This is to add to Theodore's reply, giving a bit more depth.)
+
+As you can see from the code decoding a tree entry:
+
+https://github.com/git-for-windows/git/blob/e1848984d/tree-walk.c#L25-L52
+
+there is no mtime at all in the on-disk format of tree objects. There is
+the hash, the mode, and the file name.
+
+As your main use case would be stashing and unstashing (which uses tree
+objects as storage format), this means you would have to find a different
+way to store the information you desire.
+
+If I were you, and if I had the time to implement this feature, I would go
+about it by adding a note (using `git notes` from a script first, but only
+for proof of concept, because I saw too many things go wrong with Unix
+shell scripts in production) for the tree object, say, in
+refs/notes/mtimes. I would probably invent a file format
+(`<mtime><TAB><path><LF>`) to store the information, and for starters I
+would only store the mtimes of the files that were stashed, then extend
+the script into a full Git builtin with a subcommand that can generates
+these notes, a subcommand to replay them, and a subcommand to inspect
+them.
+
+Then I would extend `git-stash.sh` to take an option (and later, to heed a
+new config setting to do this automatically) to generate those mtime notes
+for the newest stash's top-level tree object (storing only the times of
+the files that were modified by the `stash` command), and to replay them
+if such an mtime note is found for the stash that is being applied.
+
+You will not be able to convince the core Git developers to make this the
+default, I don't think. But if you make it an opt-in as I outlined above,
+I believe your chances would be good to get that feature if you put in the
+effort to implement it.
+
+Oh, and if you implement the feature using notes, the same feature can be
+used not only for stashing and unstashing. These notes are maintained in
+regular Git refs, i.e. they can be shared. And since those notes would be
+for tree objects, you could even apply the mtimes on a fresh clone, if
+you have a use case for that.
+
+Ciao,
+Johannes
