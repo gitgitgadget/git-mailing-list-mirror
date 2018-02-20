@@ -2,98 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4C4091F404
-	for <e@80x24.org>; Tue, 20 Feb 2018 22:08:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CF30B1F404
+	for <e@80x24.org>; Tue, 20 Feb 2018 22:12:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751345AbeBTWIp (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Feb 2018 17:08:45 -0500
-Received: from mail-wr0-f171.google.com ([209.85.128.171]:40377 "EHLO
-        mail-wr0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751326AbeBTWIn (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Feb 2018 17:08:43 -0500
-Received: by mail-wr0-f171.google.com with SMTP id o76so18660889wrb.7
-        for <git@vger.kernel.org>; Tue, 20 Feb 2018 14:08:42 -0800 (PST)
+        id S1751352AbeBTWMy (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Feb 2018 17:12:54 -0500
+Received: from mail-qt0-f193.google.com ([209.85.216.193]:34224 "EHLO
+        mail-qt0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751343AbeBTWMx (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Feb 2018 17:12:53 -0500
+Received: by mail-qt0-f193.google.com with SMTP id d14so18458924qtg.1
+        for <git@vger.kernel.org>; Tue, 20 Feb 2018 14:12:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Q39LaJcNL7d8g59jJq7DV5C0JvPxl2xJB+HRtg1NGXw=;
-        b=P302ShuB5NH1rh9J5rcu5zfh0MYj/gR3LapEJ31Jw9zkLGR7ZPObthR+j6l4DttSxv
-         d0dZvTDISCTMb74qCrt8PbY37N9qa1tA7hQhpu2Qw0vhDt5dn+UmMYIx8Sa56b+LFl2D
-         blFgHaeEXuAEKgLzqbljb2j8mukh47WLkV6s5ItOg11jBsjfbQrweCV7swIm+thPtsHE
-         Afh4oGdboGb00RLXZKkO2L6yTiOPUbxPcvNLyJ0dQ1NKWMvbwC6M+f6zvNoSe8Rd1VDJ
-         BxO2d9Hog2FrxDPUeOn3SgGTFt19blxjAadc3WMb/ptirp0rFdBMoITEiW7p7qPRcC74
-         wTAw==
+        d=gmail.com; s=20161025;
+        h=to:cc:from:subject:message-id:date:user-agent:mime-version
+         :content-transfer-encoding:content-language;
+        bh=9FVg/T075k5zGx5WsRO9Y8128HbLWEgQrIn2pPDdpYI=;
+        b=Of+39FrMJyaAzE81GT1L0MdmJEujFYuJEd4YnR0jwFFrkg9ZxbtLhYqYrdC4AzNoDS
+         Ts4s8DF4qYNLUJmB3iU3AbN416GUbMvp+vVHVDkjxOB1vCYkuy9F505wj37SuDbFUwa+
+         TwFIylYeAWVBAtPU8N8UUl9+3PCgPm0IAAaaPAcJAi5Uiw3KGs9PEHX3U//M4mrAzboz
+         ahFRbQkQ0BEuB44+S7P2hHXAoTUuLuq1d5GJI8tV7KIRNK2eLiT++aFhpsYB0CKdjl4h
+         RN52FlT0H3SXe+9Fhyct9M1Ope08KV0b2fZF9IK/0pyikjbjJ009gEoq7w7C9MCLBSdl
+         I0/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Q39LaJcNL7d8g59jJq7DV5C0JvPxl2xJB+HRtg1NGXw=;
-        b=NtZ9HhKENKDvQcJGacrLZ+bB8ogfz4E9ZJXdLp2mT/3O1AncksEiKeKky4V1wVPA6R
-         BBdi2yP8gCn8JNYjDmnGQhThso2qyF/JJLY/1JE8pHLK9VFJ1zu/7Z7tMTmYPrqxsW10
-         fiAke28cXFObCjhlqf1JgEAVOjhzwyj2e7gLHHOPf7CTzdQXMsl3ixjbK4AN0MN9822/
-         kDiqkszrtJhE81Ko27mI6OX19Lb/FLQeZRiMFX3jDr/eH5gwlYDkE08eUdd2c3lirWNi
-         6f4kz0mdCr+XAEL5+rGhErN/IOHB7mN3YwE839mJ4Dx6OxbsHFk7TkzlfywJdBztAEY5
-         m4eA==
-X-Gm-Message-State: APf1xPCipX0jJIPzw3g8jep3e7GMf5beN2ZJLKiwhdNrd3uxqrpb8zI4
-        cB2ZCISa8m5wyvaQouHofVWxbnQRjZVV6hU44sfNrw==
-X-Google-Smtp-Source: AH8x226egJzCKduxzYxAtHFkfdboLG8mgOtkCMcrImoXTOSpzfmySyHLJS5YaW+M27XLjZRCUXQWQ8jtxF/SB8TWcWM=
-X-Received: by 10.28.237.5 with SMTP id l5mr332478wmh.154.1519164521284; Tue,
- 20 Feb 2018 14:08:41 -0800 (PST)
+        h=x-gm-message-state:to:cc:from:subject:message-id:date:user-agent
+         :mime-version:content-transfer-encoding:content-language;
+        bh=9FVg/T075k5zGx5WsRO9Y8128HbLWEgQrIn2pPDdpYI=;
+        b=nPwNG/qRfkIo7DhrOgizwTfUNPyyR7xkYcRNzT393YTaoeQHLJTnPSpmFnJ/q9efg5
+         grPXIgLKR/FnDVHUi6rkeHdsH/6qXe5mGMIDNUawb6e2/JF+RUEAwRr2WkDBvnW0DzjQ
+         /OgwRzyJ864Vs8dBd2j0CD06XZGFkBg5n5jJUSTsOgDPaQdf6H5YFOeCqBZ1eH9ec4ZP
+         6Qz4iyac/+HHZaDX/pHrpyG2y8LT0aWNIDwTdJQAyCgFV0DElklVNvZtoPIQJWwdx+nE
+         uKXjWu8hQcL4Y8gVJzlv2EkDEZ8EbLuMCZ4wLKylodfomJActy1yg1p5b9g3ILv8ldJl
+         aQTA==
+X-Gm-Message-State: APf1xPAaK2LibNx5cbaZb/NbIBShm8hKEQRpq+dTY+Cj5k55SsjoEEkJ
+        ygKqVKbwNaafrLSzBA2i/tM7Z8SS
+X-Google-Smtp-Source: AH8x225KpD/vizh1l6QAkj/nYxwpft8k53WE/5Xv96Av4qTMrATPF8emx/EuDtCHJu6PR4+iRbld5A==
+X-Received: by 10.200.58.161 with SMTP id x30mr1987027qte.62.1519164773043;
+        Tue, 20 Feb 2018 14:12:53 -0800 (PST)
+Received: from ?IPv6:2001:4898:6808:13e:c4e6:7a22:56f1:df04? ([2001:4898:8010:0:ae1c:7a22:56f1:df04])
+        by smtp.gmail.com with ESMTPSA id u17sm7155664qka.46.2018.02.20.14.12.51
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 20 Feb 2018 14:12:52 -0800 (PST)
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Cc:     Jeff King <peff@peff.net>, Derrick Stolee <dstolee@microsoft.com>,
+        Junio C Hamano <gitster@pobox.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Subject: Question about get_cached_commit_buffer()
+Message-ID: <ecbbe515-b7a8-3dc8-7d14-32412e7b12c3@gmail.com>
+Date:   Tue, 20 Feb 2018 17:12:50 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.6.0
 MIME-Version: 1.0
-Received: by 10.223.179.2 with HTTP; Tue, 20 Feb 2018 14:08:40 -0800 (PST)
-In-Reply-To: <CAA7Zk=vWdEUnrfBcxCH6WAFH9Jss7T9_zK-zMnWbVO7B+2YySw@mail.gmail.com>
-References: <CAA7Zk=vWdEUnrfBcxCH6WAFH9Jss7T9_zK-zMnWbVO7B+2YySw@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 20 Feb 2018 14:08:40 -0800
-Message-ID: <CAGZ79kbXvNqAvrkH-=S_bb-VRPGd4Lj7-vvnPh73HavV7kM9zw@mail.gmail.com>
-Subject: Re: I'm trying to break "git pull --rebase"
-To:     Julius Musseau <julius@mergebase.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 20, 2018 at 2:00 PM, Julius Musseau <julius@mergebase.com> wrote:
-> Hi, Git Developers,
->
-> I'm currently writing a blog post about "git pull --rebase".   The
-> point of the blog post is to examine scenarios where two people are
-> working together on a short-lived feature branch, where history
-> rewrites are allowed, and where both are using "git pull --rebase" to
-> stay in sync with each other.
->
-> I was hoping to concoct a situation where "git pull --rebase" makes a
-> mess of things.
->
-> So far I have been unable to do this.  I tried version v1.7.2 of Git
-> as well as version v2.14.1, and as far as I can tell, "git pull
-> --rebase" is bulletproof.
->
-> Does anyone here happen to know a situation where "git pull --rebase"
-> makes a mess?
+While working on my commit-graph patch [1] and using a local build in my 
+usual workflows, I found a bug in my branch.
 
-If you are inclined to experiment with submodules,
-I would have an easy answer for you. :)
+Essentially, when calling `git rev-list --header`, the header 
+information is actually missing for many commits except the first. This 
+was not caught in my testing since t6000-rev-list-misc.sh creates a test 
+repo with only one commit.
 
-But instead of giving an answer myself (as I love reading about
-things the usual mailing list folks miss),
-maybe this is a good starting point to poke at things
-https://github.com/git/git/commit/a6d7eb2c7a6a402a938824bcf1c5f331dd1a06bb
+The root cause is that the serialized commit graph gets its speedup by 
+not loading buffers for every commit. For many use-cases (merge bases, 
+--topo-order, etc.) we do not need the buffer for most of the commits. 
+In the rev-list example, the buffer is loaded due to a side-effect of 
+being referenced by HEAD or a branch. A similar effect happened in `git 
+log`, hence the following change in my patch:
 
-For the non-submodule use case, I would think pull is pretty solid,
-as you lay out in your blog draft.
+diff --git a/log-tree.c b/log-tree.c
+index 580b3a9..14735d4 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -647,8 +647,7 @@ void show_log(struct rev_info *opt)
+  		show_mergetag(opt, commit);
+  	}
+  
+-	if (!get_cached_commit_buffer(commit, NULL))
+-		return;
++	get_commit_buffer(commit, NULL);
+  
+  	if (opt->show_notes) {
+  		int raw;
 
-(If you finish by Wednesday 21st), you may be interested in
-submitting to Git rev-news (or a later edition if you take time writing)
-https://public-inbox.org/git/CAP8UFD1HPruE3N_0k8_TFreBML9V8K=SS8LqD-XkeEuheSmGvw@mail.gmail.com/
+
+In rev-list, the "--header" option outputs a value and expects the 
+buffer to be cached. It outputs the header info only if 
+get_cached_commit_buffer() returns a non-null buffer, giving incorrect 
+output. If it called get_commit_buffer() instead, it would immediately 
+call get_cached_commit_buffer() and on failure actually load the buffer.
+
+This has not been a problem before, since the buffer was always loaded 
+at some point for each commit (and saved because of the 
+save_commit_buffer global).
+
+I propose to make get_cached_commit_buffer() static to commit.c and 
+convert all callers to get_commit_buffer(). Is there any reason to _not_ 
+do this? It seems that there is no functional or performance change.
+
+After the serialized commit graph exists and is used, the only change is 
+that we delay loading the buffer until we need to read the commit 
+metadata that is not stored in the graph (message, author/committer).
 
 Thanks,
-Stefan
+-Stolee
+
+[1] 
+https://public-inbox.org/git/4d1ee202-7d79-d73c-6e05-d0fc85db943c@gmail.com/T/#m381bfd3f2eafbd254e35a5147cd198bc35055e92
+     [Patch v4 00/14] Serialized Git Commit Graph
+
+[2] 
+https://public-inbox.org/git/20140610214039.GJ19147@sigill.intra.peff.net/
+     [Patch 10/17] provide helpers to access the commit buffer
