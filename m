@@ -2,204 +2,179 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ACB931F404
-	for <e@80x24.org>; Tue, 20 Feb 2018 16:52:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 933E01F404
+	for <e@80x24.org>; Tue, 20 Feb 2018 17:19:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753138AbeBTQwh (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Feb 2018 11:52:37 -0500
-Received: from a7-20.smtp-out.eu-west-1.amazonses.com ([54.240.7.20]:41770
-        "EHLO a7-20.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752960AbeBTQwg (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 20 Feb 2018 11:52:36 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=shh3fegwg5fppqsuzphvschd53n6ihuv; d=amazonses.com; t=1519145555;
-        h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-        bh=uIta/OOordic6zK7Q3h0dAcsYgcuzs0v8BZK1SuO2qI=;
-        b=cZvQGVAOV0E1L3jt6WJVgcHiohEYeo0QmWvZ6cD5N7NnISo7Z5lnCzKjLDoRPkXt
-        UNx5ch1I3YjQKV58oBNZiqXqQLdo18EYtCA+5033Yj7j/PeYpkBMfEWSXQYl/3Wfqmm
-        ZrBHEOLzNLcaRF7DMP3wbBYpkzed4+zF1/uDcbDg=
-From:   =?UTF-8?Q?Herv=C3=A9_Beraud?= <herveberaud.pro@gmail.com>
-To:     git@vger.kernel.org
-Message-ID: <01020161b421939a-4ad52aaa-dda8-4250-9bce-71f0ede1a199-000000@eu-west-1.amazonses.com>
-In-Reply-To: <01020161992fe7ce-b41bf370-1480-4efe-8980-0c52fb9b9be5-000000@eu-west-1.amazonses.com>
-References: <01020161992fe7ce-b41bf370-1480-4efe-8980-0c52fb9b9be5-000000@eu-west-1.amazonses.com>
-Subject: [PATCH] make hg-to-git compatible with python2.x and 3.x
+        id S1753340AbeBTRTN (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Feb 2018 12:19:13 -0500
+Received: from mail-wr0-f176.google.com ([209.85.128.176]:40026 "EHLO
+        mail-wr0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753323AbeBTRTM (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Feb 2018 12:19:12 -0500
+Received: by mail-wr0-f176.google.com with SMTP id o76so16542430wrb.7
+        for <git@vger.kernel.org>; Tue, 20 Feb 2018 09:19:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=p05pOhDIlRhAC55uQoebSY36LxjBQusFokcemMsvkJA=;
+        b=hoMEKbKGqNKypB5JrQMGuSGEoaxHhrE6Jg4Lj1O+l8BUOjM5dsDzut0zVqiwfBi/Pb
+         Zt5enWq4qLd07EUzvUs9HCtxo24ciJE7BrWWByJBJwudTzvmyN2bYXtiiKXr2ellYeKT
+         LCKMOtXrZUOtaTraF9aj1AyEicKGOJvIxfN/3qdQLIFc8wg9L0CO6lnCboRWguLW0v8c
+         qw+tNhGS6lZIWO4tedRWh+JWi5OZTt0Dl8C4qdIaVeGmmH4ABClPygibHNV3P9FuZmDG
+         IQum7+7CRkOiXUMS2T+GcErMs2Y54FSXZrD8cDUYJiZOQzvMbnk9IQjWvQanr7K03RRx
+         Iq4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=p05pOhDIlRhAC55uQoebSY36LxjBQusFokcemMsvkJA=;
+        b=fh+dv10/9AKolNshrfNmSBCQpg2+qsJhu04W5XP80XMu8IlUsNeyh0NGkAgymxWyYb
+         /RoXo3Rq8HdUZdwtllOOblSQdPv3KThdV3IXPsBgo+ce5qiUMf2GVYfYm+oEMo9xaWNz
+         Cks0b13MN6iU9R7lkVg1hMEhGy+SjWo+JVVRCUuERp/2mE7FlDJ5nCnuEFuO/QxVFyWz
+         QEd9+6lEssRlC3EoeNXVBloHQHl6haH70myfoa2uA/k4CsdMKsWO/6QO5/teXRMXwBOm
+         CZkynctztDMyiD2kT2J5CAhWTKCKdgBKZGH1VMguWGBLT1EVSDgUIvOPO9bI9uOA6Q/e
+         C/Rg==
+X-Gm-Message-State: APf1xPD1PGq8sVYQFXL7ZKw/BC+wSvvx3QrUuDQkb7juwkv6BBtVpLMO
+        aAwv+N3qKqX+GSzqC1uzCPX9Y3Ko
+X-Google-Smtp-Source: AH8x226WyjWyLlxdbvBIv57bUq4hdmTq6hbMkK5YHhaLuQMY0ABQVwLzbvmLBiuIZWojDaMsWIwa7w==
+X-Received: by 10.28.210.212 with SMTP id j203mr822492wmg.53.1519147150395;
+        Tue, 20 Feb 2018 09:19:10 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id 27sm26652932wry.5.2018.02.20.09.19.07
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 20 Feb 2018 09:19:08 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Git Mailing List <git@vger.kernel.org>,
+        "Brian M. Carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH v2 3/9] t3701: use test_write_lines and write_script
+References: <20180213104408.9887-1-phillip.wood@talktalk.net>
+        <20180219112910.24471-1-phillip.wood@talktalk.net>
+        <20180219112910.24471-4-phillip.wood@talktalk.net>
+        <CAPig+cRWCd6pYxc8NrOM_ntodgkwwfMpD_tWQXYXOukVWgQfCw@mail.gmail.com>
+Date:   Tue, 20 Feb 2018 09:19:06 -0800
+In-Reply-To: <CAPig+cRWCd6pYxc8NrOM_ntodgkwwfMpD_tWQXYXOukVWgQfCw@mail.gmail.com>
+        (Eric Sunshine's message of "Mon, 19 Feb 2018 13:47:16 -0500")
+Message-ID: <xmqqr2pf4m0l.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Date:   Tue, 20 Feb 2018 16:52:34 +0000
-X-SES-Outgoing: 2018.02.20-54.240.7.20
-Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Herv=C3=A9 Beraud <herveberaud.pro@gmail.com>
----
- contrib/hg-to-git/hg-to-git.py | 52 +++++++++++++++++++++-----------------=
-----
- 1 file changed, 26 insertions(+), 26 deletions(-)
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-diff --git a/contrib/hg-to-git/hg-to-git.py b/contrib/hg-to-git/hg-to-git.p=
-y
-index de3f81667ed97..8fa7698df5c20 100755
---- a/contrib/hg-to-git/hg-to-git.py
-+++ b/contrib/hg-to-git/hg-to-git.py
-@@ -42,7 +42,7 @@
-=20
- def usage():
-=20
--        print """\
-+        print("""\
- %s: [OPTIONS] <hgprj>
-=20
- options:
-@@ -54,7 +54,7 @@ def usage():
-=20
- required:
-     hgprj:  name of the HG project to import (directory)
--""" % sys.argv[0]
-+""" % sys.argv[0])
-=20
- #-------------------------------------------------------------------------=
------
-=20
-@@ -104,29 +104,29 @@ def getgitenv(user, date):
- if state:
-     if os.path.exists(state):
-         if verbose:
--            print 'State does exist, reading'
-+            print('State does exist, reading')
-         f =3D open(state, 'r')
-         hgvers =3D pickle.load(f)
-     else:
--        print 'State does not exist, first run'
-+        print('State does not exist, first run')
-=20
- sock =3D os.popen('hg tip --template "{rev}"')
- tip =3D sock.read()
- if sock.close():
-     sys.exit(1)
- if verbose:
--    print 'tip is', tip
-+    print('tip is', tip)
-=20
- # Calculate the branches
- if verbose:
--    print 'analysing the branches...'
-+    print('analysing the branches...')
- hgchildren["0"] =3D ()
- hgparents["0"] =3D (None, None)
- hgbranch["0"] =3D "master"
- for cset in range(1, int(tip) + 1):
-     hgchildren[str(cset)] =3D ()
-     prnts =3D os.popen('hg log -r %d --template "{parents}"' % cset).read(=
-).strip().split(' ')
--    prnts =3D map(lambda x: x[:x.find(':')], prnts)
-+    prnts =3D [x[:x.find(':')] for x in prnts]
-     if prnts[0] !=3D '':
-         parent =3D prnts[0].strip()
-     else:
-@@ -154,15 +154,15 @@ def getgitenv(user, date):
-         else:
-             hgbranch[str(cset)] =3D "branch-" + str(cset)
-=20
--if not hgvers.has_key("0"):
--    print 'creating repository'
-+if "0" not in hgvers:
-+    print('creating repository')
-     os.system('git init')
-=20
- # loop through every hg changeset
- for cset in range(int(tip) + 1):
-=20
-     # incremental, already seen
--    if hgvers.has_key(str(cset)):
-+    if str(cset) in hgvers:
-         continue
-     hgnewcsets +=3D 1
-=20
-@@ -180,27 +180,27 @@ def getgitenv(user, date):
-     os.write(fdcomment, csetcomment)
-     os.close(fdcomment)
-=20
--    print '-----------------------------------------'
--    print 'cset:', cset
--    print 'branch:', hgbranch[str(cset)]
--    print 'user:', user
--    print 'date:', date
--    print 'comment:', csetcomment
-+    print('-----------------------------------------')
-+    print('cset:', cset)
-+    print('branch:', hgbranch[str(cset)])
-+    print('user:', user)
-+    print('date:', date)
-+    print('comment:', csetcomment)
-     if parent:
--=09print 'parent:', parent
-+=09print('parent:', parent)
-     if mparent:
--        print 'mparent:', mparent
-+        print('mparent:', mparent)
-     if tag:
--        print 'tag:', tag
--    print '-----------------------------------------'
-+        print('tag:', tag)
-+    print('-----------------------------------------')
-=20
-     # checkout the parent if necessary
-     if cset !=3D 0:
-         if hgbranch[str(cset)] =3D=3D "branch-" + str(cset):
--            print 'creating new branch', hgbranch[str(cset)]
-+            print('creating new branch', hgbranch[str(cset)])
-             os.system('git checkout -b %s %s' % (hgbranch[str(cset)], hgve=
-rs[parent]))
-         else:
--            print 'checking out branch', hgbranch[str(cset)]
-+            print('checking out branch', hgbranch[str(cset)])
-             os.system('git checkout %s' % hgbranch[str(cset)])
-=20
-     # merge
-@@ -209,7 +209,7 @@ def getgitenv(user, date):
-             otherbranch =3D hgbranch[mparent]
-         else:
-             otherbranch =3D hgbranch[parent]
--        print 'merging', otherbranch, 'into', hgbranch[str(cset)]
-+        print('merging', otherbranch, 'into', hgbranch[str(cset)])
-         os.system(getgitenv(user, date) + 'git merge --no-commit -s ours "=
-" %s %s' % (hgbranch[str(cset)], otherbranch))
-=20
-     # remove everything except .git and .hg directories
-@@ -233,12 +233,12 @@ def getgitenv(user, date):
-=20
-     # delete branch if not used anymore...
-     if mparent and len(hgchildren[str(cset)]):
--        print "Deleting unused branch:", otherbranch
-+        print("Deleting unused branch:", otherbranch)
-         os.system('git branch -d %s' % otherbranch)
-=20
-     # retrieve and record the version
-     vvv =3D os.popen('git show --quiet --pretty=3Dformat:%H').read()
--    print 'record', cset, '->', vvv
-+    print('record', cset, '->', vvv)
-     hgvers[str(cset)] =3D vvv
-=20
- if hgnewcsets >=3D opt_nrepack and opt_nrepack !=3D -1:
-@@ -247,7 +247,7 @@ def getgitenv(user, date):
- # write the state for incrementals
- if state:
-     if verbose:
--        print 'Writing state'
-+        print('Writing state')
-     f =3D open(state, 'w')
-     pickle.dump(hgvers, f)
-=20
+>>  test_expect_success 'setup fake editor' '
+>> -       echo "#!$SHELL_PATH" >fake_editor.sh &&
+>> -       cat >>fake_editor.sh <<-\EOF &&
+>> +       FAKE_EDITOR="$(pwd)/fake-editor.sh" &&
+>> +       write_script "$FAKE_EDITOR" <<-\EOF &&
+>>         mv -f "$1" oldpatch &&
+>>         mv -f patch "$1"
+>>         EOF
+>> -       chmod a+x fake_editor.sh &&
+>> -       test_set_editor "$(pwd)/fake_editor.sh"
+>> +       test_set_editor "$FAKE_EDITOR"
+>>  '
+>
+> The very first thing that test_set_editor() does is set FAKE_EDITOR to
+> the value of $1, so it is confusing to see it getting setting it here
+> first; the reader has to spend extra brain cycles wondering if
+> something non-obvious is going on that requires this manual
+> assignment. Perhaps drop the assignment altogether and just write
+> literal "fake_editor.sh" in the couple places it's needed (as was done
+> in the original code)?
 
---
-https://github.com/git/git/pull/458
+Yeah, I think $(pwd)/ prefix is needed at the final step (i.e. as
+the first argument to test_set_editor) for this to be a faithful
+rewrite but it is distracting having to write it anywhere else.
+
+Other than that, this looks like a quite straight-forward cleanup.
+
+Thanks, both.  Here is what I'd be queuing tentatively.
+
+ t/t3701-add-interactive.sh | 33 +++++----------------------------
+ 1 file changed, 5 insertions(+), 28 deletions(-)
+
+diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
+index 39c7423069..4a369fcb51 100755
+--- a/t/t3701-add-interactive.sh
++++ b/t/t3701-add-interactive.sh
+@@ -87,13 +87,8 @@ test_expect_success 'setup expected' '
+ 	EOF
+ '
+ 
+-test_expect_success 'setup fake editor' '
+-	>fake_editor.sh &&
+-	chmod a+x fake_editor.sh &&
+-	test_set_editor "$(pwd)/fake_editor.sh"
+-'
+-
+ test_expect_success 'dummy edit works' '
++	test_set_editor : &&
+ 	(echo e; echo a) | git add -p &&
+ 	git diff > diff &&
+ 	test_cmp expected diff
+@@ -110,12 +105,10 @@ test_expect_success 'setup patch' '
+ '
+ 
+ test_expect_success 'setup fake editor' '
+-	echo "#!$SHELL_PATH" >fake_editor.sh &&
+-	cat >>fake_editor.sh <<-\EOF &&
++	write_script "fake_editor.sh" <<-\EOF &&
+ 	mv -f "$1" oldpatch &&
+ 	mv -f patch "$1"
+ 	EOF
+-	chmod a+x fake_editor.sh &&
+ 	test_set_editor "$(pwd)/fake_editor.sh"
+ '
+ 
+@@ -302,18 +295,12 @@ test_expect_success 'deleting an empty file' '
+ 
+ test_expect_success 'split hunk setup' '
+ 	git reset --hard &&
+-	for i in 10 20 30 40 50 60
+-	do
+-		echo $i
+-	done >test &&
++	test_write_lines 10 20 30 40 50 60 >test &&
+ 	git add test &&
+ 	test_tick &&
+ 	git commit -m test &&
+ 
+-	for i in 10 15 20 21 22 23 24 30 40 50 60
+-	do
+-		echo $i
+-	done >test
++	test_write_lines 10 15 20 21 22 23 24 30 40 50 60 >test
+ '
+ 
+ test_expect_success 'split hunk "add -p (edit)"' '
+@@ -334,17 +321,7 @@ test_expect_success 'split hunk "add -p (edit)"' '
+ '
+ 
+ test_expect_failure 'split hunk "add -p (no, yes, edit)"' '
+-	cat >test <<-\EOF &&
+-	5
+-	10
+-	20
+-	21
+-	30
+-	31
+-	40
+-	50
+-	60
+-	EOF
++	test_write_lines 5 10 20 21 30 31 40 50 60 >test &&
+ 	git reset &&
+ 	# test sequence is s(plit), n(o), y(es), e(dit)
+ 	# q n q q is there to make sure we exit at the end.
