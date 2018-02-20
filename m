@@ -2,93 +2,148 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9F9C81F404
-	for <e@80x24.org>; Tue, 20 Feb 2018 16:20:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 53FD61FAE3
+	for <e@80x24.org>; Tue, 20 Feb 2018 16:23:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752761AbeBTQUR (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Feb 2018 11:20:17 -0500
-Received: from mout.gmx.net ([212.227.15.19]:41429 "EHLO mout.gmx.net"
+        id S1752840AbeBTQXM (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Feb 2018 11:23:12 -0500
+Received: from mail.javad.com ([54.86.164.124]:35502 "EHLO mail.javad.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752115AbeBTQUQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Feb 2018 11:20:16 -0500
-Received: from MININT-TB4PCE7.southpacific.corp.microsoft.com
- ([37.201.195.115]) by mail.gmx.com (mrgmx001 [212.227.17.190]) with ESMTPSA
- (Nemesis) id 0MNIi1-1eqegR16Kn-006xVB; Tue, 20 Feb 2018 17:20:14 +0100
-Date:   Tue, 20 Feb 2018 17:20:13 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Stefan Beller <sbeller@google.com>
-cc:     git@vger.kernel.org
-Subject: File locking issues with fetching submodules in parallel
-Message-ID: <nycvar.QRO.7.76.6.1802201709570.31@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1752702AbeBTQXL (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Feb 2018 11:23:11 -0500
+Received: from osv (unknown [89.175.180.246])
+        by mail.javad.com (Postfix) with ESMTPSA id 5B61941769;
+        Tue, 20 Feb 2018 16:23:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1519143790;
+        bh=kUA7veVmHEvjJSQJpzZGbFU2MfUurbQPAL47gAjR2wE=; l=3477;
+        h=Received:From:To:Subject;
+        b=Ya5Xhq11c0av2qY3HLx6K0M6xZnYGkoK+HgxNzsAkB0XcXmW75Wyg9RbjpA6POmbm
+         bDt/YTvnjlyGntEyRcyVy3H0U3hyl/0QR0v5LDIexj8MLrCqyE97oPRGlDfNxoIM0P
+         z4VfzOyvJdwen87MbaVsfjLggJ5PEiT6Ic2idXic=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1519143790;
+        bh=kUA7veVmHEvjJSQJpzZGbFU2MfUurbQPAL47gAjR2wE=; l=3477;
+        h=Received:From:To:Subject;
+        b=Ya5Xhq11c0av2qY3HLx6K0M6xZnYGkoK+HgxNzsAkB0XcXmW75Wyg9RbjpA6POmbm
+         bDt/YTvnjlyGntEyRcyVy3H0U3hyl/0QR0v5LDIexj8MLrCqyE97oPRGlDfNxoIM0P
+         z4VfzOyvJdwen87MbaVsfjLggJ5PEiT6Ic2idXic=
+Authentication-Results: mail.javad.com;
+        spf=pass (sender IP is 89.175.180.246) smtp.mailfrom=osv@javad.com smtp.helo=osv
+Received-SPF: pass (mail.javad.com: connection is authenticated)
+Received: from osv by osv with local (Exim 4.84_2)
+        (envelope-from <osv@osv.gnss.ru>)
+        id 1eoAhA-00061L-Oo; Tue, 20 Feb 2018 19:23:08 +0300
+From:   Sergey Organov <sorganov@gmail.com>
+To:     "G. Sylvie Davies" <sylvie@bit-booster.com>
+Cc:     Git Users <git@vger.kernel.org>
+Subject: Re: cherry-pick '-m' curiosity
+References: <87wozry7z4.fsf@javad.com>
+        <CAAj3zPxiLxqgnKXth2EZZWwgYhW_cHEcxbM6_BqpzpHR_ipqyQ@mail.gmail.com>
+Date:   Tue, 20 Feb 2018 19:23:08 +0300
+In-Reply-To: <CAAj3zPxiLxqgnKXth2EZZWwgYhW_cHEcxbM6_BqpzpHR_ipqyQ@mail.gmail.com>
+        (G. Sylvie Davies's message of "Mon, 19 Feb 2018 13:39:59 -0800")
+Message-ID: <87606rk4ur.fsf@javad.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:0spZxTvpZEwCiW8VJ1g7yufy5EfJMh6ospRhmHYlY/wVFnCVS2D
- Gv1BHEIWacKCg368LyPecv8cnMTBV5ol4UInatxEwz2NLX+UDhWbMeLoL01fDTPHRbV0Qxu
- UGCLTWUFoQqPPvksY3/GmppGZQoTT+0scsRx6w6yllqzR8a1XYmDUgrnty2WSHCAr1KLAqZ
- K1Pz5Jm2zsgTsGl0mk8VA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:NcCHWQTHx04=:cXRJi1cm0x8TO5BY5YAV97
- U4GHYVQUR64UXgieEIDYOeytLUL0MAFYk6UQibJhl3+aWS6aaEWCPgPmGUIdbHjpmFf1kmLMR
- UdxjzNcSSEC+m0Y7uwk6n5a+LGxuvRBeQBI/f9Fm3R0HfiTd0FLWwSEkThweyRl1RCmSxfmsV
- 0XN45g08sw5YJeoRltXMOIBRu8Q6lDVyWd5UAGuov9r+xYMLeSjNAnbZAfZ67BDyvL49T4u0E
- JzRRzFzItgwnSq2teT6kJkg8gwv4YPKcpDqZUX343ZOPLWwBQTYxTstxKZbmnru9xm6wcVFDZ
- bWUKXwEtqLWMt70mvCPsUcOm8WqX2nLG/Dn/SnrLBmWgTi+QLnYNHQ+Hs4ZzclVmCZ64dLHxl
- Q9gBuKBMsRcYCcoylB7eglfpa2YJNECWmmSqbE3JuQWtWbD/5VkQbrhACHu0Qxeug/4emR3Yk
- G7dapRx4XeFvYVjGuhA/GIUGMyfxea9Mi8OIh0VD/ytu6fwDRUONcIIfFbNTG4Imb1CcBBpWJ
- DDREPBYfRUrXBrinbd6OjASL7al4N7e7ULSPkEgn9+H1/qGwtqggMfzpavGt+rja8Yyg6SHuc
- S6OSww2XrKktcDDBvIj9x1nqVjleL1Vgsf3ms0ED71ElAMsO19tCxSTnaSI7xkjouC1kcFzxk
- CpTvjZYlTwwlBKRRBOYdd9PdcsNF00M7SBLBvr2AAbqkQI5VWB7g6s2CzLRTO4xfMcTwgkC2S
- Aq3mjaaMXl7NzpWelELnR0s0PJHDZ8juchWm0aZPPf1X4DBCZ9s0fzCWlDlel1x2hN2q7kEWp
- R2HMxVz22+ncdgBG4er5Mu6QnCfks/r2hAHSlKBvyBi/oXylWM=
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Stefan (and other submodule wizards),
+"G. Sylvie Davies" <sylvie@bit-booster.com> writes:
 
-Igor Melnichenko reported a submodule problem in a Git for Windows ticket:
+> On Mon, Feb 5, 2018 at 3:46 AM, Sergey Organov <sorganov@gmail.com> wrote:
+>> Hello,
+>>
+>> $ git help cherry-pick
+>>
+>> -m parent-number, --mainline parent-number
+>>            Usually you cannot cherry-pick a merge because you do not
+>>            know which side of the merge should be considered the
+>>            mainline.
+>>
+>> Isn't it always the case that "mainline" is the first parent, as that's
+>> how "git merge" happens to work?
+>>
+>
+> First-parent will be whatever commit you were sitting on when you
+> typed "git merge".
 
-	https://github.com/git-for-windows/git/issues/1469
+Right, but I believe it's also "mainline", see below.
 
-Part of it is due to Windows' behavior where you cannot read the same file
-in one process while you write it in another process.
+> If you're sitting on your branch and you type "git fetch; git merge
+> origin/master", then "mainline" will be 2nd parent.
 
-The other part is how our submodule code works in parallel. In particular,
-we seem to write the `.git` file maybe even every time a submodule is
-fetched, unconditionally, not even testing whether the .git file is
-already there and contains the correct contents?
+No. If you ever want to cherry-pick this commit, it'd still be -m1 side
+of it that likely makes sense, and it's exactly the side that makes
+sense to be picked that is called "mainline" in the manual page we are
+discussing, and there is no any other definition of "mainline" as far as
+I can tell.
 
-For some reason, the bug reporter saw a "Permission denied" on the `.git`
-file when we try to write it (and I am pretty certain that I tracked it
-down correctly to the `connect_work_tree_and_git_dir()` function). The
-intermittent "Permission denied" error seems to suggest that *another*
-process is accessing this file while we are writing it.
+There is nothing about 'origin/master' that makes it "mainline" from the
+POV of future cherry-picks, if any, of this merge commit. I was also
+unable to find any git documentation that calls 'origin/master'
+"mainline". It's called "remote-tracking branch", or maybe sometimes
+"upstream".
 
-It also seems that this problem becomes worse if the firewall is turned
-on, in which case a couple of network operations become a little slower
-(which I could imagine to be the factor making the problems more likely).
+OTOH, when one merges something, he often merges "side branch" onto
+"mainline", so in the context of this particular merge, your local
+"master" happens to be "mainline" and "origin/master" happens to be
+"side branch".
 
-A plausible workaround would be to write the `.git` file only when needed
-(which also would fix a bug on macOS/Linux, although the window is
-substantially smaller: the reader could potentially read a
-partially-written file).
+> "git revert -m" also has the same problem.
 
-But maybe we are simply holding onto an open handle to the `.git` file too
-long?
+Yes, as it's essentially just "git cherry-pick --reverse -m", provided
+cherry-pick has had the "--reverse" from regular "patch" utility [*].
 
-I tried to put together a bit more information here:
+It's also interesting to notice that manual page for "git revert" refers
+to the revert-a-faulty-merge How-To, that in turn again uses only "git
+revert -m 1".
 
-https://github.com/git-for-windows/git/issues/1469#issuecomment-366932746
+Overall, it's still a mystery to me why "-m 1" is not the default
+behavior for both "git revert" and "git cherry-pick".
 
-Do you think there is an easy solution for this? You're much deeper in the
-submodule code than I ever want to be...
+The only suspicion I have is that actual intention is to deny picking
+merge commits by default. Then, the usual git way would be to use
+--force or --enable-merges to overcome the denial, but if we still do
+need "-m 2" etc. even rarely, then rather re-using "-m 1" as "I mean it"
+indication is only logical.
 
-Thanks,
-Dscho
+If my suspicion is true, how about something like this:
+
+-m parent-number, --mainline parent-number
+	This option specifies the parent number (starting from 1) of a
+	commit and instructs cherry-pick to replay the change relative
+	to the specified parent. Cherry-pick will refuse to handle merge
+	commits unless this option is given.
+
+Damn, it now has no "mainline" in the description at all, so it's
+unclear why it has been called --mainline in the first place, not that
+it was somehow clear to me before.
+
+And while we are at it, I just stumbled over "git cherry-pick -m 1"
+refusing to handle non-merge commits:
+
+$ git cherry-pick -m1 dd5c320
+error: Mainline was specified but commit dd5c320a300520a044cfa73d17f6cbffbbef60ef is not a merge.
+fatal: cherry-pick failed
+$ 
+
+I wonder whether this is intentional? What's the rationale then? It
+seems it could be useful to be able to cherry-pick multiple commits,
+some of which are merges, no?
+
+Footnote:
+
+[*] rebase, revert, and cherry-pick all look rather similar in git and
+could be calling for some unification.
+
+-- Sergey
