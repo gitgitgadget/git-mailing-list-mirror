@@ -2,87 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4A1D11F404
-	for <e@80x24.org>; Tue, 20 Feb 2018 22:48:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0CFD01F404
+	for <e@80x24.org>; Tue, 20 Feb 2018 22:57:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751401AbeBTWs1 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Feb 2018 17:48:27 -0500
-Received: from titan.plasma.xg8.de ([85.10.203.189]:37564 "EHLO
-        titan.PLASMA.Xg8.DE" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750884AbeBTWs0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Feb 2018 17:48:26 -0500
-Received: from titan.PLASMA.Xg8.DE (localhost [127.0.0.1])
-        by titan.PLASMA.Xg8.DE (8.15.2/8.15.2) with ESMTPS id w1KMmOpK001528
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Tue, 20 Feb 2018 23:48:24 +0100
-Received: (from uucp@localhost)
-        by titan.PLASMA.Xg8.DE (8.15.2/8.15.2/Submit) with UUCP id w1KMmOlG001527;
-        Tue, 20 Feb 2018 23:48:24 +0100
-Received: from helen.PLASMA.Xg8.DE (localhost.localdomain [127.0.0.1])
-        by helen.PLASMA.Xg8.DE (8.15.2/8.15.2) with ESMTP id w1KMm9ie025819;
-        Tue, 20 Feb 2018 23:48:09 +0100
-Received: (from rtc@localhost)
-        by helen.PLASMA.Xg8.DE (8.15.2/8.15.2/Submit) id w1KMm9A5025818;
-        Tue, 20 Feb 2018 23:48:09 +0100
-Date:   Tue, 20 Feb 2018 23:48:09 +0100
-From:   Peter Backes <rtc@helen.PLASMA.Xg8.DE>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org
-Subject: Re: Git should preserve modification times at least on request
-Message-ID: <20180220224808.GA25678@helen.PLASMA.Xg8.DE>
-References: <20180219212235.GA9891@helen.PLASMA.Xg8.DE>
- <nycvar.QRO.7.76.6.1802192257100.31@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
- <20180219220819.GA10466@helen.PLASMA.Xg8.DE>
- <nycvar.QRO.7.76.6.1802201127140.31@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
- <20180220210554.GA24474@helen.PLASMA.Xg8.DE>
- <nycvar.QRO.7.76.6.1802202329540.31@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        id S1751494AbeBTW53 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Feb 2018 17:57:29 -0500
+Received: from cloud.peff.net ([104.130.231.41]:58834 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1750998AbeBTW53 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Feb 2018 17:57:29 -0500
+Received: (qmail 15437 invoked by uid 109); 20 Feb 2018 22:57:29 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 20 Feb 2018 22:57:29 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 18278 invoked by uid 111); 20 Feb 2018 22:58:15 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 20 Feb 2018 17:58:15 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 20 Feb 2018 17:57:27 -0500
+Date:   Tue, 20 Feb 2018 17:57:27 -0500
+From:   Jeff King <peff@peff.net>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: Question about get_cached_commit_buffer()
+Message-ID: <20180220225726.GA17496@sigill.intra.peff.net>
+References: <ecbbe515-b7a8-3dc8-7d14-32412e7b12c3@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.1802202329540.31@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-User-Agent: Mutt/1.9.1 (2017-09-22)
+In-Reply-To: <ecbbe515-b7a8-3dc8-7d14-32412e7b12c3@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 20, 2018 at 11:32:23PM +0100, Johannes Schindelin wrote:
-> Hi Peter,
+On Tue, Feb 20, 2018 at 05:12:50PM -0500, Derrick Stolee wrote:
+
+> In rev-list, the "--header" option outputs a value and expects the buffer to
+> be cached. It outputs the header info only if get_cached_commit_buffer()
+> returns a non-null buffer, giving incorrect output. If it called
+> get_commit_buffer() instead, it would immediately call
+> get_cached_commit_buffer() and on failure actually load the buffer.
 > 
-> On Tue, 20 Feb 2018, Peter Backes wrote:
+> This has not been a problem before, since the buffer was always loaded at
+> some point for each commit (and saved because of the save_commit_buffer
+> global).
 > 
-> > On Tue, Feb 20, 2018 at 11:46:38AM +0100, Johannes Schindelin wrote:
-> > 
-> > > I would probably invent a file format (`<mtime><TAB><path><LF>`)
-> > 
-> > I'm stuck there because of <path> being munged.
-> 
-> From which command do you want to get it? If you are looking at `git
-> diff`, you may want to use the `-z --name-only` options to avoid munging
-> the paths.
+> I propose to make get_cached_commit_buffer() static to commit.c and convert
+> all callers to get_commit_buffer(). Is there any reason to _not_ do this? It
+> seems that there is no functional or performance change.
 
-I plan to use "git diff-tree --name-only $w_tree HEAD" and subtract
-all lines from "git diff-index --name-only HEAD" to get the files for 
-which the timestamp should be stored..
+That helper was added in 152ff1cceb (provide helpers to access the
+commit buffer, 2014-06-10). I think interesting part is the final
+paragraph:
 
-If I use "-z" I get the non-munged path, but I cannot safely store such 
-paths in the proposed file format; they might contain newlines (sigh). 
-So at one point I have to munge. Then the same question arises when I 
-have to get the actual path from the munged path when restoring the 
-timestamps.
+      Note that we also need to add a "get_cached" variant which
+      returns NULL when we do not have a cached buffer. At first
+      glance this seems to defeat the purpose of "get", which is
+      to always provide a return value. However, some log code
+      paths actually use the NULL-ness of commit->buffer as a
+      boolean flag to decide whether to try printing the
+      commit. At least for now, we want to continue supporting
+      that use.
 
-If there's no ready-made functionality to munge and unmunge paths, I 
-have to write some awk for this. At first I thought this might add one 
-more dependency to git, but it seems that awk is already used in 
-git-mergetool.sh, so I suppose it's okay to use in git-stash.sh etc, 
-too.
+So I think a conversion to get_commit_buffer() would break the callers
+that use the boolean nature for something useful. Unfortunately the
+author did not enumerate exactly what those uses are, so we'll have to
+dig. :)
 
-Best wishes
-Peter
+My guess is that it has to do with showing some commits twice, since we
+would normally have the buffer available the first time we hit the
+commit, and then free it in finish_commit().
 
--- 
-Peter Backes, rtc@helen.PLASMA.Xg8.DE
+If we blame that rev-list line (and then walk back over a bunch of
+uninteresting commits via parent re-blaming), it comes from 3131b71301
+(Add "--show-all" revision walker flag for debugging, 2008-02-09).
+
+So there it is. It does show commits multiple times, but suppresses the
+verbose header after the first showing. If we do something like this:
+
+  git rev-list --show-all --pretty --boundary c93150cfb0^-
+
+you'll see some boundary commits that _don't_ have their pretty headers
+shown. And with your proposed patch, we'd show them again. To keep the
+same behavior we need to store that "we've already seen this" boolean
+somewhere else (e.g., in an object flag; possibly SEEN, but that might
+run afoul of other logic).
+
+It looks like the call in log-tree comes from the same commit, and
+serves the same purpose.
+
+Aside from storing the boolean "did we show it" in another way, the
+other option is to simply change the behavior and accept that we might
+pretty-print the commit twice. This is a backwards-incompatible change,
+but I'm not sure if anybody would care. According to that commit,
+--show-all was added explicitly for debugging, and it has never been
+documented.  I couldn't find any reference to people actually using it
+on the list (a grep of the whole archive turns up 32 messages, most of
+which are just it appearing in context; the only person mentioning its
+actual use was Linus in 2008.
+
+-Peff
