@@ -7,68 +7,88 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CEDC21F404
-	for <e@80x24.org>; Tue, 20 Feb 2018 15:15:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9F9C81F404
+	for <e@80x24.org>; Tue, 20 Feb 2018 16:20:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752553AbeBTPPf (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Feb 2018 10:15:35 -0500
-Received: from mout.gmx.net ([212.227.17.20]:33873 "EHLO mout.gmx.net"
+        id S1752761AbeBTQUR (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Feb 2018 11:20:17 -0500
+Received: from mout.gmx.net ([212.227.15.19]:41429 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752401AbeBTPPd (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Feb 2018 10:15:33 -0500
+        id S1752115AbeBTQUQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Feb 2018 11:20:16 -0500
 Received: from MININT-TB4PCE7.southpacific.corp.microsoft.com
- ([37.201.195.115]) by mail.gmx.com (mrgmx103 [212.227.17.168]) with ESMTPSA
- (Nemesis) id 0LoEcP-1eHXdy1UPR-00gK99; Tue, 20 Feb 2018 16:15:31 +0100
-Date:   Tue, 20 Feb 2018 16:15:29 +0100 (STD)
+ ([37.201.195.115]) by mail.gmx.com (mrgmx001 [212.227.17.190]) with ESMTPSA
+ (Nemesis) id 0MNIi1-1eqegR16Kn-006xVB; Tue, 20 Feb 2018 17:20:14 +0100
+Date:   Tue, 20 Feb 2018 17:20:13 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Tim Mayo <Tim.Mayo@ubisense.net>
-cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Stackdump from stash save on Windows 10 64-bit
-In-Reply-To: <3859F9D06DD39A44AB88A072AD53704DD08E9925@CAM1MAIL01.ubisense.local>
-Message-ID: <nycvar.QRO.7.76.6.1802201408190.31@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <3859F9D06DD39A44AB88A072AD53704DD08E9925@CAM1MAIL01.ubisense.local>
+To:     Stefan Beller <sbeller@google.com>
+cc:     git@vger.kernel.org
+Subject: File locking issues with fetching submodules in parallel
+Message-ID: <nycvar.QRO.7.76.6.1802201709570.31@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:QoWgBRi8nzKTr/a6LK3DnNsWBkdYd7YwwLa1t0iMw4DU3xDm9du
- dlIrZQJZHBZ4puhnifiDN/mCKF4EdnTA6j8YYn1W+DGkRu+nBjOr56cMDRJE611VmXch0zI
- 2TH3+8ZBrJqJzRic8L7YQIoWuLpjoVnbAuIMkZksDiDfsmmEjyzYG7NdzgqqFvTPX9YhH4Y
- mAHKK/8C4ifo9oy+2NOOw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:TH/YNmy37YU=:rTcLkZzf9Y8wptZXD323bc
- yqwbQRwOwyipJCVuQ4FV1I386BdzTfax+JUHmt2ZbznQ5nmABCnUWf9IPyBAwgasuLGC9aiT7
- HwBqXD3ls/VOsqCUapwHwFV7nuszO5+sULNhh8qc/gMuN4WDYonlAH7Pm0QUxnqTbg0MPhhed
- WVykxU6BzLuMOktR4CveYeeWETjdEhE0j8i3xIZosE3WeObZd+EXkZCtD3rUlTXjUTZn6PCMw
- 81GuFZCQA6xER2pCH/zptVAOyNd5qL+x8eyPML2K6HNVmHHHbIlNf/B8xggTccRoQ+WUDIpDo
- 4Nmj5N9t/Sl/EjUJho0HlBu2XO0nx9P6sccyoob47QcJ6ciRm7GQq3YAkTFXrfK1MGiMZU8BW
- YlfVt1MCgHVe3hK94p5QAZfhK4YrhtvbOSsP/FVc5aAjaqFbf6rFF0ob9FaRvI3qj1hza/l13
- iIA+Mcauz7cLTBI2cOx4nSvZ5YL9lP4xcMBKarZ6e6DanM8YPUlbdrDmkuO0SC/9upyLlxQ40
- WFszm2FptKXNtqhnWP4Ly/CFqPJ5LIfKf/3p6ih1MmWfJjG1g28luUOw1NiEHjy1yxPI2TYlF
- LoOOgtUa+ad0JUCHjpM3x7Ab/QFmiSG3V0n8PZjeJnDIst53xioXnGKH6RJspnP7Ch4ZKQlB9
- NeX62VRJK4PcvPpJLZM1SCtRiUOTg/XwxhXSiUZeYewjn7qqiC+LxBYf166vBncBivqY7LR6Z
- 8rx2ElfJUwiOqs6LSNsv7xe6B9cTFS/iuS2+BVzCqIwwC3cLTlN5efiwippCLLpswYLLgRU0G
- IyVzesyA3YAPNFusnfQbJs9nXxu1ER8tVngZ8X4omMahu7Nrf0=
+X-Provags-ID: V03:K0:0spZxTvpZEwCiW8VJ1g7yufy5EfJMh6ospRhmHYlY/wVFnCVS2D
+ Gv1BHEIWacKCg368LyPecv8cnMTBV5ol4UInatxEwz2NLX+UDhWbMeLoL01fDTPHRbV0Qxu
+ UGCLTWUFoQqPPvksY3/GmppGZQoTT+0scsRx6w6yllqzR8a1XYmDUgrnty2WSHCAr1KLAqZ
+ K1Pz5Jm2zsgTsGl0mk8VA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:NcCHWQTHx04=:cXRJi1cm0x8TO5BY5YAV97
+ U4GHYVQUR64UXgieEIDYOeytLUL0MAFYk6UQibJhl3+aWS6aaEWCPgPmGUIdbHjpmFf1kmLMR
+ UdxjzNcSSEC+m0Y7uwk6n5a+LGxuvRBeQBI/f9Fm3R0HfiTd0FLWwSEkThweyRl1RCmSxfmsV
+ 0XN45g08sw5YJeoRltXMOIBRu8Q6lDVyWd5UAGuov9r+xYMLeSjNAnbZAfZ67BDyvL49T4u0E
+ JzRRzFzItgwnSq2teT6kJkg8gwv4YPKcpDqZUX343ZOPLWwBQTYxTstxKZbmnru9xm6wcVFDZ
+ bWUKXwEtqLWMt70mvCPsUcOm8WqX2nLG/Dn/SnrLBmWgTi+QLnYNHQ+Hs4ZzclVmCZ64dLHxl
+ Q9gBuKBMsRcYCcoylB7eglfpa2YJNECWmmSqbE3JuQWtWbD/5VkQbrhACHu0Qxeug/4emR3Yk
+ G7dapRx4XeFvYVjGuhA/GIUGMyfxea9Mi8OIh0VD/ytu6fwDRUONcIIfFbNTG4Imb1CcBBpWJ
+ DDREPBYfRUrXBrinbd6OjASL7al4N7e7ULSPkEgn9+H1/qGwtqggMfzpavGt+rja8Yyg6SHuc
+ S6OSww2XrKktcDDBvIj9x1nqVjleL1Vgsf3ms0ED71ElAMsO19tCxSTnaSI7xkjouC1kcFzxk
+ CpTvjZYlTwwlBKRRBOYdd9PdcsNF00M7SBLBvr2AAbqkQI5VWB7g6s2CzLRTO4xfMcTwgkC2S
+ Aq3mjaaMXl7NzpWelELnR0s0PJHDZ8juchWm0aZPPf1X4DBCZ9s0fzCWlDlel1x2hN2q7kEWp
+ R2HMxVz22+ncdgBG4er5Mu6QnCfks/r2hAHSlKBvyBi/oXylWM=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Tim,
+Hi Stefan (and other submodule wizards),
 
-On Tue, 20 Feb 2018, Tim Mayo wrote:
+Igor Melnichenko reported a submodule problem in a Git for Windows ticket:
 
-> As of yesterday, stash save stopped working on my Windows 10 box - I get:
-> 
->        > git stash save
->        Cannot save the current worktree state
-> 
-> and a stackdump file (see below).  This is with the 64-bit version of 2.16.1.  Switching to the 32-bit version resolved the problem for me.
+	https://github.com/git-for-windows/git/issues/1469
 
-Can you please test with v2.16.2 (you can use the 64-bit Portable Git if
-you want to keep your current installation), and if the problem still
-persists please open a ticket here:
+Part of it is due to Windows' behavior where you cannot read the same file
+in one process while you write it in another process.
 
-	https://github.com/git-for-windows/git/issues/new
+The other part is how our submodule code works in parallel. In particular,
+we seem to write the `.git` file maybe even every time a submodule is
+fetched, unconditionally, not even testing whether the .git file is
+already there and contains the correct contents?
 
-Ciao,
-Johannes
+For some reason, the bug reporter saw a "Permission denied" on the `.git`
+file when we try to write it (and I am pretty certain that I tracked it
+down correctly to the `connect_work_tree_and_git_dir()` function). The
+intermittent "Permission denied" error seems to suggest that *another*
+process is accessing this file while we are writing it.
+
+It also seems that this problem becomes worse if the firewall is turned
+on, in which case a couple of network operations become a little slower
+(which I could imagine to be the factor making the problems more likely).
+
+A plausible workaround would be to write the `.git` file only when needed
+(which also would fix a bug on macOS/Linux, although the window is
+substantially smaller: the reader could potentially read a
+partially-written file).
+
+But maybe we are simply holding onto an open handle to the `.git` file too
+long?
+
+I tried to put together a bit more information here:
+
+https://github.com/git-for-windows/git/issues/1469#issuecomment-366932746
+
+Do you think there is an easy solution for this? You're much deeper in the
+submodule code than I ever want to be...
+
+Thanks,
+Dscho
