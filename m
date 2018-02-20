@@ -2,93 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B68AD1F404
-	for <e@80x24.org>; Tue, 20 Feb 2018 23:03:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 748D31F404
+	for <e@80x24.org>; Tue, 20 Feb 2018 23:29:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751762AbeBTXD3 convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Tue, 20 Feb 2018 18:03:29 -0500
-Received: from elephants.elehost.com ([216.66.27.132]:50224 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751758AbeBTXD2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Feb 2018 18:03:28 -0500
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id w1KN3MAq095886
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Tue, 20 Feb 2018 18:03:22 -0500 (EST)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'Eric Sunshine'" <sunshine@sunshineco.us>
-Cc:     "'Git List'" <git@vger.kernel.org>
-References: <005301d3aa8a$80521c70$80f65550$@nexbridge.com> <CAPig+cTHTZT2vRBYbdAgeVg+TDuo_C=mXRXYX4o094VmtygxRQ@mail.gmail.com>
-In-Reply-To: <CAPig+cTHTZT2vRBYbdAgeVg+TDuo_C=mXRXYX4o094VmtygxRQ@mail.gmail.com>
-Subject: RE: [BUG] Worktree prune complains about missing path
-Date:   Tue, 20 Feb 2018 18:03:16 -0500
-Message-ID: <006001d3aa9f$011dab80$03590280$@nexbridge.com>
+        id S1751893AbeBTX3r (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Feb 2018 18:29:47 -0500
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:37087 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751860AbeBTX3q (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Feb 2018 18:29:46 -0500
+Received: by mail-wr0-f196.google.com with SMTP id z12so12933762wrg.4
+        for <git@vger.kernel.org>; Tue, 20 Feb 2018 15:29:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=1aGTrABI5Ij8XI+VtrD4AGu3QB0PIpk3hlPaLcFw7ak=;
+        b=Pw//z1gpqjzifYNGRlyuc1JfKWDCMvgV+nnak/ZdMcMTtgLewlVvhJTYA1NtZ9wlyb
+         Rt+xQUwLySfEon7WdlvcvgvqKCBwalWIG0NDsnbKMHtMlaNxOQGQ8XFTLv66jngl2Dbo
+         S54giUyb2qKvBIryo5kgHBVP+U4EYz5exAPpra1ZBVJ5N9rG5flXcsXpWS4RV7cZQPuo
+         Et7sW40TffJ9dDGsERovA6eeH5Fuq3IEmSrHRUz91mGULZ0INHirz7JvhgnylcypEQNQ
+         rVmozijwPnQDiSdqtxJ/BD8LyLMAhlZwsFgdtPYtZZ5xZnWhh23fRennfMVR9ZuosA45
+         QO/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=1aGTrABI5Ij8XI+VtrD4AGu3QB0PIpk3hlPaLcFw7ak=;
+        b=BXaPHgjMJ2u+kWlx9XDFde6RTxP0NbcVf0Kyl/9c/P0uPWGlHihjWq1PGiFLUJt82D
+         VfRqNYon87XbjCERDMsTtqfSDdWwbAP/xoqLq6K5TmnCNS1rDfKBXwMCSh1S2GrhQjge
+         QljjYF2wkUHctdoZefg4OGqODJZ9M+sk2JXI4pVaw08LeRGv2P96pz4qeX4L73ID/mfd
+         sfUpmek/cfoV50T4UW4ZQHDncVpn3v+hmXnGLYBRMFTVkp08RcsayFs1z//M4bqn9ckG
+         WmXtMvm1VwRYBWtYjc2GWhKodMoEFEkC8orKwzVA46r6Fydhp5mI/RYEvG6qUHNkCzJe
+         2yNw==
+X-Gm-Message-State: APf1xPCr8Zf1SyCueHjPLR/Yx25MKJjYJFgFN1fNnpHkbf2FlLksNeUd
+        V0+qBtK3IqzqbC+WBK4ra6oxpR0k
+X-Google-Smtp-Source: AH8x224YZDW6GSQcsGlOlcCaa9k71RK2vB/Qc1dpHrLRa9qFqYJsjV0/Tb3nakJbEr6YSgEZ5X88Ug==
+X-Received: by 10.28.41.3 with SMTP id p3mr489467wmp.140.1519169384625;
+        Tue, 20 Feb 2018 15:29:44 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id u20sm4339797wru.94.2018.02.20.15.29.42
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 20 Feb 2018 15:29:42 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
+        git <git@vger.kernel.org>
+Subject: Re: [GSoC][PATCH] tag: Make "git tag --contains <id>" less chatty if <id> is invalid
+References: <20180219212130.4217-1-ungureanupaulsebastian@gmail.com>
+        <CAGZ79kbXXN_nxFZUorsbFHcg4-8H7ZnAOnaViUrnP4r4u6ThhQ@mail.gmail.com>
+Date:   Tue, 20 Feb 2018 15:29:41 -0800
+In-Reply-To: <CAGZ79kbXXN_nxFZUorsbFHcg4-8H7ZnAOnaViUrnP4r4u6ThhQ@mail.gmail.com>
+        (Stefan Beller's message of "Tue, 20 Feb 2018 14:35:49 -0800")
+Message-ID: <xmqqinar1bq2.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQINSVcQmnaRefgkcdyr8T2TyNu3bQFjDDMhoy+QSNA=
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On February 20, 2018 5:22 PM Eric Sunshine wrote:
-> On Tue, Feb 20, 2018 at 3:36 PM, Randall S. Becker
-> <rsbecker@nexbridge.com> wrote:
-> > I’m a bit confused about this, as I thought I understood worktrees :(.
-> >
-> > /home/randall/nsgit/test/test dir.mytest: rm -rf dest.wt
-> > /home/randall/nsgit/test/test dir.mytest/dest: git worktree prune -v
-> > Removing worktrees/dest.wt: gitdir file points to non-existent
-> > location
-> >
-> > It seems like one or two situations are a problem:
-> > 1) I’m using a full path for the worktree.
-> > 2) There’s a blank in my path – deliberate… tests, yanno.
-> >
-> > This is git 2.16.2. Could anyone shed some light on this?
-> 
-> This appears to be working as intended. "git worktree prune" is telling you
-> that it is pruning the administrative data for the "dest.wt" worktree (reason:
-> "worktree location no longer exists"), which you intentionally deleted before
-> pruning. It's not clear what it is that you find confusing. There is not a lot
-> more I can say without understanding what behavior you were expecting
-> and how your expectation differs from the actual experience.
+Stefan Beller <sbeller@google.com> writes:
 
-I should have been more clear here as to the issue. My bad. The git worktree prune operation does not remove all vestiges of the removed worktree. The following files are retained:
+>> diff --git a/t/t7013-tag-contains.sh b/t/t7013-tag-contains.sh
+>> new file mode 100755
+>> index 000000000..65119dada
+>> --- /dev/null
+>> +++ b/t/t7013-tag-contains.sh
+>
+> Thanks for adding the tests into a new file instead of putting it somewhere
+> where it is already convenient. (We have too many of those "just add it there
+> as it is easiest to fit in")
 
-./logs/refs/heads/dest.wt
-./refs/heads/dest.wt
+Careful, as that cuts both ways.  We want to strongly encourage
+people to see if there is already a place that is a good enough fit
+for new tests before adding small test scripts randomly to consume
+the test serial numbers and test process start-up cost.  Only when
+there is nowhere appropriate, we do want to add.  And if this covers
+both tag and branch, then a new script may be appropriate but it
+shouldn't limit its future enhancement (to test 'git branch') by
+having 'tag' to pretend that this file must be limited to 'git tag'.
 
-So, now that I understand in hindsight, these are actually references to the worktree branch 'dest.wt' that obviously remains correctly and properly in git.
+> So I'd expect the return code to be 0 (if we don't care) or 1
+> (if we do care), in the case of 1, we shall write:
+>
+>   test_must_fail git tag --contains ... &&
+>   grep ....
+>
+> (A long way of hinting at the test_must_fail test function,
+> that lives in t/test-lib-functions.sh)
 
-Adding:  git branch -D dest.wt    to my test script cleared my (embarrassing) problem of my own doing.
-
-> 
-> (Also, please consider how easy or difficult it is for a reader to interpret your
-> pasted "sample session". The one provided is more confusing than necessary
-> due to the command prompt bearing the same path information as the
-> output of the "git worktree list" command, as well as unnecessary duplicated
-> commands, such as "ls", and missing "cd" commands which do not help to
-> illuminate what it is you are trying to get across. The pasted transcript also
-> contains invalid code-points which render as oddball characters -- or not at all
-> -- which didn't help. Best would be to prepare a minimal example of shell
-> commands to reproduce the behavior you're trying to illustrate.)
-
-Good point. Again, my bad - very long day debugging. I wanted to show where I was in the directory so I sacrificed brevity for completeness and noise. My apologies.
-
-So, no bug, just a buggy user.
-
-Cheers,
-Randall
-
+If you are looking at error stream, it is very likely that you would
+want to study test_i18ngrep and use it, as errors are fair game for
+i18n (and possibly coloring, which is a near-by topic).
