@@ -2,152 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A7EDB1F404
-	for <e@80x24.org>; Tue, 20 Feb 2018 19:36:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8BEE51F404
+	for <e@80x24.org>; Tue, 20 Feb 2018 19:38:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752177AbeBTTgo (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Feb 2018 14:36:44 -0500
-Received: from mail-pg0-f53.google.com ([74.125.83.53]:45010 "EHLO
-        mail-pg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752047AbeBTTgo (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Feb 2018 14:36:44 -0500
-Received: by mail-pg0-f53.google.com with SMTP id l4so5347294pgp.11
-        for <git@vger.kernel.org>; Tue, 20 Feb 2018 11:36:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to;
-        bh=YoDQubBfwvghJrh+/qjXwaz1Kov1t+Mg/lUDBwQ5TgE=;
-        b=fm3w5/tbvlmndbHDkiCD75TYl6SZ9VJpl8fjqPTUPW7GJRCuIYvOre9fgk/eXbBNek
-         sySoDIyVKhxziCkSM1mNSYMrl9Aw6xnOzqXqg27brExo7gAuw2i6NaBzSo6Qp87ZLqM6
-         50OH5CruMtpBd4JTVrXIwH+vZ1Ees4yM0wxBQ+XL1nQFUzWAE6lf/GBAE1EK87XqkTpO
-         PEn5eDAd3pyzBNtJ/2tfxG0AHgAX+wk1IP6hcFf8x1vKeSyNINmzO3bT/AG4FKCMCRsD
-         /jlEFBDpjhYU1Jmf6H2AS5wgYzCeEF2GXQW551fbm90ahXcdULxrHsODED2dAI+WB458
-         KhnQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to;
-        bh=YoDQubBfwvghJrh+/qjXwaz1Kov1t+Mg/lUDBwQ5TgE=;
-        b=sxFrIvNM1F93cB0IbMoKbGGIuMYwPEJBXOzZ9/fg4d8cnYFV6MjyCNIFyhboH/MTcI
-         mF37otYvCXmnZGBcFkx6dSUrKYhAIwvGNfV5JJ0K5tTb/aHseqIwuQm2sORt75DMG1kp
-         qdmKFYJT2gxG6qdR/mzMHomCzevHF6YfHFznEtws/8PXv2iVRI/S8dXPAsvvCHX3cOrW
-         /m0MRNTBkBDjaKpjTIqbRxDKY9nt8C0tw0k+v1zlt6ffPpFLJdyPfpyrb5Sv1HQG5M67
-         4QptUHbyF/VXGrVeNxMTSKqdUHkfGH+c5P6rQkwKa0YTby1Gjpk5n3jzvEJa4nHcM4Iq
-         Y1FA==
-X-Gm-Message-State: APf1xPCux1SDHEuc5fb00giaU7NoQmWyOxrbIkTxuZUZD1Wp5yjGjCex
-        FvtrUyEPi3Ap9KVWzCQGcoL5YLmO
-X-Google-Smtp-Source: AH8x226HLbx/EtaUKOB7eGHjDWyOtjvpEeeQCcm5QcQR0K0I6jogjlJgUKbRvJsRxA/8G5MpPAOpRg==
-X-Received: by 10.99.121.5 with SMTP id u5mr560471pgc.444.1519155402958;
-        Tue, 20 Feb 2018 11:36:42 -0800 (PST)
-Received: from [192.168.42.146] ([106.203.65.211])
-        by smtp.gmail.com with ESMTPSA id z6sm53150362pgu.49.2018.02.20.11.36.40
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 20 Feb 2018 11:36:41 -0800 (PST)
+        id S1752917AbeBTTij (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Feb 2018 14:38:39 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54248 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752047AbeBTTih (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Feb 2018 14:38:37 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 940EBBCBD0;
+        Tue, 20 Feb 2018 14:38:36 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
+        :cc:subject:message-id:references:mime-version:content-type
+        :in-reply-to:content-transfer-encoding; s=sasl; bh=DHTK57re2S5Ei
+        HTV7Zowurshlww=; b=X/ZfNrD8n2OYelAc3FFDY43lo3ag0yjrYSfBgl7vFd3W2
+        FmdRb3w2+HFkI2LdQZOywYm0aSQ3ExJ7N4jsqAuuJRzQM3DOYNchOTYPZZyv/sr/
+        fSlTdanIS2Mv1fyywOEnEA+tEUGPtpiEdwWySu1SIqDJPXjus6OxktU1GZJpVU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
+        :subject:message-id:references:mime-version:content-type
+        :in-reply-to:content-transfer-encoding; q=dns; s=sasl; b=al5MsUy
+        GSpJ4d9QKVHq7EP10o8lDHDiiRdQAduQIw5phdHue0ChTWk/zn9MOkQyqrD+z15n
+        Or4RYw24w54ZbUE+rANhAkzwZUrKLFflsUGGLQyM8pcf3uQzUp/ZCv7Fu/uA/czY
+        FrlpnQ13GvrhcE8w0GcxuaDz4jkHNgAC+fbE=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8B725BCBCF;
+        Tue, 20 Feb 2018 14:38:36 -0500 (EST)
+Received: from zaya.teonanacatl.net (unknown [173.67.181.41])
+        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 10C6FBCBCE;
+        Tue, 20 Feb 2018 14:38:36 -0500 (EST)
+Date:   Tue, 20 Feb 2018 14:38:34 -0500
+From:   Todd Zullinger <tmz@pobox.com>
+To:     marmot1123 <marmot.motoki@gmail.com>
+Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Stefan Beller <sbeller@google.com>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
 Subject: Re: [PATCH v2] Fix misconversion of gitsubmodule.txt
-To:     Stefan Beller <sbeller@google.com>,
-        marmot1123 <marmot.motoki@gmail.com>
-Cc:     git <git@vger.kernel.org>
+Message-ID: <20180220193834.GM27038@zaya.teonanacatl.net>
 References: <01020161b2696296-9d580cc6-c21f-4fa2-a876-7d77d36cb44a-000000@eu-west-1.amazonses.com>
  <01020161b30b99df-5029ec2b-a5cb-475b-b54f-9879a117a7f3-000000@eu-west-1.amazonses.com>
- <CAGZ79kajrwqu2X7BRe8w0W_sa0nosXxspfhbrm0d-ASzxCLn-A@mail.gmail.com>
-From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Message-ID: <b4e6f89b-fc20-7244-ad23-548697f9764e@gmail.com>
-Date:   Wed, 21 Feb 2018 01:06:38 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
 MIME-Version: 1.0
-In-Reply-To: <CAGZ79kajrwqu2X7BRe8w0W_sa0nosXxspfhbrm0d-ASzxCLn-A@mail.gmail.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="DTThfAcfvx3zB9UlS9WO6uShJMBgJCxPO"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <01020161b30b99df-5029ec2b-a5cb-475b-b54f-9879a117a7f3-000000@eu-west-1.amazonses.com>
+User-Agent: Mutt/1.9.3 (2018-01-21)
+X-Pobox-Relay-ID: A47ECCEA-1675-11E8-83A1-692D1A68708C-09356542!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---DTThfAcfvx3zB9UlS9WO6uShJMBgJCxPO
-Content-Type: multipart/mixed; boundary="IA7E1fQefcZZdz5VxKenO79y8oWrjokgO";
- protected-headers="v1"
-From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-To: Stefan Beller <sbeller@google.com>, marmot1123 <marmot.motoki@gmail.com>
-Cc: git <git@vger.kernel.org>
-Message-ID: <b4e6f89b-fc20-7244-ad23-548697f9764e@gmail.com>
-Subject: Re: [PATCH v2] Fix misconversion of gitsubmodule.txt
-References: <01020161b2696296-9d580cc6-c21f-4fa2-a876-7d77d36cb44a-000000@eu-west-1.amazonses.com>
- <01020161b30b99df-5029ec2b-a5cb-475b-b54f-9879a117a7f3-000000@eu-west-1.amazonses.com>
- <CAGZ79kajrwqu2X7BRe8w0W_sa0nosXxspfhbrm0d-ASzxCLn-A@mail.gmail.com>
-In-Reply-To: <CAGZ79kajrwqu2X7BRe8w0W_sa0nosXxspfhbrm0d-ASzxCLn-A@mail.gmail.com>
-
---IA7E1fQefcZZdz5VxKenO79y8oWrjokgO
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-
 Hi,
 
-On Wednesday 21 February 2018 12:20 AM, Stefan Beller wrote:
-> Kaartic was the last to touch that file,
-> (as found via git log origin/master -- Documentation/gitsubmodules.txt)=
-,
-> sorry I did not find this in the review.
->=20
+marmot1123 wrote:
+> In the 2nd and 4th paragraph of DESCRIPTION, there ware misconversions =
+`submodule=E2=80=99s`.
+> It seems non-ASCII apostrophes, so I rewrite ASCII apostrophes.
 
-"Non-ASCII characters" made me dig into to this a little deeper as I
-generally don't use them particularly for text files.
+If replacing the non-ASCI apostrophes is the goal, aren't
+there a number of others in the same file worth cleaning up
+at the same time?
 
-"git blame" points at d48034551 (submodules: overhaul documentation,
-2017-06-22) as the offending comment.
+$ grep '=E2=80=99' Documentation/gitsubmodules.txt
+the submodule=E2=80=99s working directory pointing to (i).
+superproject expects the submodule=E2=80=99s working directory to be at.
+When deinitialized or deleted (see below), the submodule=E2=80=99s Git
+but no submodule working directory. The submodule=E2=80=99s Git directory
+the superproject=E2=80=99s `$GIT_DIR/config` file, so the superproject=E2=
+=80=99s history
+The deletion removes the superproject=E2=80=99s tracking data, which are
+The submodule=E2=80=99s working directory is removed from the file
 
+This does seem to be the only file which includes the
+non-ASCII apostrophe under Documentation.
 
-> Thanks for the patch!
+Some tests include it (intentionally) as does
+contrib/credential/netrc/git-credential-netrc.
 
-Yeah, nice catch!
+--=20
+Todd
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The direct use of physical force is so poor a solution to the problem
+of limited resources that it is commonly employed only by small
+children and great nations.
+    -- David Friedman
 
-
---
-Kaartic
-
-QUOTE
-
-=E2=80=9CIt is impossible to live without failing at something, unless yo=
-u live
-so cautiously that you might as well not have lived at all =E2=80=93 in w=
-hich
-case, you fail by default.=E2=80=9D
-
-      - J. K. Rowling
-
-
---IA7E1fQefcZZdz5VxKenO79y8oWrjokgO--
-
---DTThfAcfvx3zB9UlS9WO6uShJMBgJCxPO
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQJPBAEBCAA5FiEEmrp5T6QugsbUnN0Nveda2sPWGWkFAlqMeMYbHGthYXJ0aWMu
-c2l2YXJhYW1AZ21haWwuY29tAAoJEL3nWtrD1hlpIw0QAIIzIlFNjGr+LautTDkl
-cHAowK7+NcVXGrzEapTB50F8liAzBpIX27DMOJBBcNdv0D5s47A++oXM4+HUubwx
-dS9Bg9C2JDRqOAqQYUqr0B64lKwyKAFYfqHJI3rwFtrjdmPfw2cY1ubDRJbvkqG7
-neuAEPWV98T6OdywqfUZGHJNR0ShPCycHTI27ohqa5Q4ZYk9e2Eqbven2pXsV7Ff
-j1VBZCnTPrkCPJSOYnriW6YxUCCXF1Fq83SUzWjjwAmz0xTV+lO7TMyNk7QKFS0c
-NIjsfo/y+4qHbvmqiyIo07z61kD3ULA69aVR1adpMDCKQps3vlpG5cIsDfhaiaiC
-JrTri1HOtxemsgMWAikHTUqB4aPZSNn3Vhzz045nZ1W7vc9LoYmkTi2yHAZUtX9+
-8EfF7HWNQJ5Fg8kFlk1NOuejIV8Oky2AbU38acWGeDJo1zoecXwRONgr3M5W66xt
-jF9plYi4GPaeXdVlGpc2gwTKHJsu3/YqyeEKU2SBRoE+5BXfBtG5lDhwWUBTRYNb
-nlNel5wKXmkQ5LD021OJKbyzweev2xFdnkRmf3xvlm6Uuj9WClwNfWXtEbNYDyli
-aGr1OHZ9yj3vMmaBfuPD+tFhwfdjXIjN0fCctFkmWyjsF2XdY4OUHYvdJcNuirk/
-E12WZ7vycVNEyTjM3LwvcfKM
-=B5a9
------END PGP SIGNATURE-----
-
---DTThfAcfvx3zB9UlS9WO6uShJMBgJCxPO--
