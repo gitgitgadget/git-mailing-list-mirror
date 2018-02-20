@@ -2,82 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 310F81F404
-	for <e@80x24.org>; Tue, 20 Feb 2018 19:45:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8A65F1FAE2
+	for <e@80x24.org>; Tue, 20 Feb 2018 19:55:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751168AbeBTTpB (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Feb 2018 14:45:01 -0500
-Received: from mail-yw0-f181.google.com ([209.85.161.181]:34250 "EHLO
-        mail-yw0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750934AbeBTTpA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Feb 2018 14:45:00 -0500
-Received: by mail-yw0-f181.google.com with SMTP id c193so2382426ywb.1
-        for <git@vger.kernel.org>; Tue, 20 Feb 2018 11:44:59 -0800 (PST)
+        id S1751364AbeBTTzY (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Feb 2018 14:55:24 -0500
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:38907 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750799AbeBTTzX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Feb 2018 14:55:23 -0500
+Received: by mail-wr0-f193.google.com with SMTP id n7so17804420wrn.5
+        for <git@vger.kernel.org>; Tue, 20 Feb 2018 11:55:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=+KXAuHYnqL6OaLvpLpb60YJE9frammgeHL2V+CSTfcU=;
-        b=PQQkj04utzPqX8flqRYOfKh2AHb2zN5BdE7iQUxdUeNETf0pY+2o/DL0YSsy8Bp4HO
-         yFaMDq9StNk8EqnSJof8ZvvkVayPpo9NGLuWlllk4duEL9Mcm8NielDUKJK5TJWrrFE2
-         vFJR7fcQENhbvAtrxgiYGXtsw0hMrAnLqNB5pUbdilk8YFY+R5pRAuWmKuRpA/kofx6U
-         Q1llC0Yb09Wag1voqmKXcwEC5VLamsoESF2I+O7YeKE++svBWFIaDz0z94aYjCv43dRS
-         xE6CZyn9lhCVADkMB2DiKBGf4IAe7hHsIMLbVXpfY5TkoEop0dFVj61mF3K5f2cE635/
-         NkQg==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=ATWSBtSH+wk49t/6HMSUpXvoXqHJ/5rn5nTkUAc5Vh4=;
+        b=BrQZPlmzsp3ZJL/QPGwNbpIJIKQpruDr78MyCnAqtKMCdpa+M2/ewypPldPmC6Xxzl
+         AZDzoDmYXz7G9OSxG38hEigVNqhqzncN+28NX4cFtp9JoCDIe2Sw8ng8wBcXoIAfCGcL
+         rTkAKgEar2EK8Tu8S3D0MRUgLG/pay6gxh7Ad+0HziaCSZQ5y/a3YNBBFBllSi2tfQ9S
+         iYUEa1lKZMc3323Co9MOufv0SXasrk9o0b8rtzybsJ4ivHJQ69lLmSl/fKiIw6ODY3Gp
+         8qkMFTIYctsmslmgzYQldtigHeeHB5J4jXWWEOyCgrH1TCUdo6aVBe+K+NJ/6a8BiR8h
+         54vA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=+KXAuHYnqL6OaLvpLpb60YJE9frammgeHL2V+CSTfcU=;
-        b=X9apwViAvoH9CFtUr2j0DCtsG4WWFA6AE0RU7AyUSXlZ3laZTcRVZN5sLf72jzhS4v
-         cNVT6TYjXaF2E+t7YOOGSvji5fjJFnzL0A+E58AEFluzMRO0lmvoJeeyOPGGprgar89z
-         Eofhj5qUSptxWFF2o4tfgyeNGcIAhL/uchB+8yWAfmb24mmg2Wf4uA4NxkrUDpElZ180
-         ZXUlfl1K0dLLztQUCYQ8PnkDGIPeHY0F6uCSEMSyJMNz7snoCOsdKGQFtcHOd9bFP6bW
-         NfIoqsfIXjL9PP3n5NmB04CafnP5MLtQLLeIZEvq6cIA3+eta+t8DYI26tjjJFatLGpV
-         CprA==
-X-Gm-Message-State: APf1xPA3nTsrF+cM+AfsD46AVnrE4GGkQWYOVnB9jhyU/aiAj70jDZA8
-        vHQEWgr7j/KV737l6ZEt2yDysjS7UfSXVk2WWLzfBugw
-X-Google-Smtp-Source: AH8x225NsHv6eaU5SOYMWQ4GfYpIdwvKz99KsNuUzlkEeNth0361zJi02HYdRFCR0tIyV3xQwXcG9FzoqnxlE8teWVI=
-X-Received: by 10.129.73.80 with SMTP id w77mr647502ywa.421.1519155899143;
- Tue, 20 Feb 2018 11:44:59 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=ATWSBtSH+wk49t/6HMSUpXvoXqHJ/5rn5nTkUAc5Vh4=;
+        b=eeN13jPf2C/uBK2A4flMaKzbu+8nenUJejSH3S7mnmDk72VewcJFy0IP7inMK6nSgh
+         GUqNAns8B8iM0fPZLLXHNXAB4DT60P8gQqtveFvW7hnB9n6n5eQGaVwXOIYb2jmUu7jn
+         K/3qZmtRsrsp2+mV0AVPdTIq5llgZFnPrrqEi6dEqMAMqwlnijGIVsj/SekQyWhuaoUO
+         FLMnYuVIzEly7qQKbmfD0k9YGSMPIvze+MyQSpxEmLjva4caXAZisz+GupNRunBZ64eE
+         1vOK8+kHHTz6rU1UDtS+nPmTnMoARS3a0l82W84ubN/ugueQ1UyLcAVeTZNI/NJFOnCR
+         czBA==
+X-Gm-Message-State: APf1xPCl8AiCkdupri8z0f5ITeylxymXQ5O6gkufCVBi2Ip8s6rFY86w
+        giWReglrYSTbF2/PoDP3n4IbTPpO
+X-Google-Smtp-Source: AH8x224reYmVbhm2ZjR2CISANIL1ZbaA/dW6gAEDhk9s73zGsSJPdULUMQ5j/11J3iEnV3SnxMuULQ==
+X-Received: by 10.28.131.66 with SMTP id f63mr133344wmd.12.1519156521894;
+        Tue, 20 Feb 2018 11:55:21 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id q14sm7931574wre.83.2018.02.20.11.55.20
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 20 Feb 2018 11:55:21 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        git <git@vger.kernel.org>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCHv2 00/16] Moving global state into the repository object (part 1)
+References: <xmqqlgfu7zn5.fsf@gitster-ct.c.googlers.com>
+        <20180216174626.24677-1-sbeller@google.com>
+        <20180216223404.GD216564@aiede.svl.corp.google.com>
+        <xmqq371v4h6u.fsf@gitster-ct.c.googlers.com>
+        <CAGZ79kaUYYqtaJ-S6WaQ9NmXDnf6_wY_fRCSxLR8=Do1qSLMug@mail.gmail.com>
+Date:   Tue, 20 Feb 2018 11:55:20 -0800
+In-Reply-To: <CAGZ79kaUYYqtaJ-S6WaQ9NmXDnf6_wY_fRCSxLR8=Do1qSLMug@mail.gmail.com>
+        (Stefan Beller's message of "Tue, 20 Feb 2018 11:06:25 -0800")
+Message-ID: <xmqqk1v7307r.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 2002:a25:cfcb:0:0:0:0:0 with HTTP; Tue, 20 Feb 2018 11:44:58
- -0800 (PST)
-In-Reply-To: <b4e6f89b-fc20-7244-ad23-548697f9764e@gmail.com>
-References: <01020161b2696296-9d580cc6-c21f-4fa2-a876-7d77d36cb44a-000000@eu-west-1.amazonses.com>
- <01020161b30b99df-5029ec2b-a5cb-475b-b54f-9879a117a7f3-000000@eu-west-1.amazonses.com>
- <CAGZ79kajrwqu2X7BRe8w0W_sa0nosXxspfhbrm0d-ASzxCLn-A@mail.gmail.com> <b4e6f89b-fc20-7244-ad23-548697f9764e@gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 20 Feb 2018 11:44:58 -0800
-Message-ID: <CAGZ79kZf6hm9jU2oBUsxp2X33B=_RQps0y9JOc2-j2zm1k4cDw@mail.gmail.com>
-Subject: Re: [PATCH v2] Fix misconversion of gitsubmodule.txt
-To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Cc:     marmot1123 <marmot.motoki@gmail.com>, git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 20, 2018 at 11:36 AM, Kaartic Sivaraam
-<kaartic.sivaraam@gmail.com> wrote:
-> Hi,
->
-> On Wednesday 21 February 2018 12:20 AM, Stefan Beller wrote:
->> Kaartic was the last to touch that file,
->> (as found via git log origin/master -- Documentation/gitsubmodules.txt),
->> sorry I did not find this in the review.
->>
->
-> "Non-ASCII characters" made me dig into to this a little deeper as I
-> generally don't use them particularly for text files.
->
-> "git blame" points at d48034551 (submodules: overhaul documentation,
-> 2017-06-22) as the offending comment.
+Stefan Beller <sbeller@google.com> writes:
 
-Hah, good catch! Sorry for my assumptions there.
+> The step to take an object store would just add expressiveness
+> to the code, which may help in understanding what part of the code is
+> related to what other part of the code, so it may be a readability gain
+> on its own?
+
+It certainly would allow you to have a standalone object store that
+is not associated with *any* repository, but if we are not using
+such a layout, I doubt it would be a readability gain to add excess
+and unexercised expressiveness to the code.
+
