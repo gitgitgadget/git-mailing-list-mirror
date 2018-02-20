@@ -2,105 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7421F1F404
-	for <e@80x24.org>; Tue, 20 Feb 2018 20:12:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 52D291F404
+	for <e@80x24.org>; Tue, 20 Feb 2018 20:16:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750998AbeBTUMU (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Feb 2018 15:12:20 -0500
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:33820 "EHLO
-        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750829AbeBTUMT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Feb 2018 15:12:19 -0500
-Received: by mail-wr0-f193.google.com with SMTP id m5so17931626wrg.1
-        for <git@vger.kernel.org>; Tue, 20 Feb 2018 12:12:18 -0800 (PST)
+        id S1751155AbeBTUQg (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Feb 2018 15:16:36 -0500
+Received: from mail-yb0-f169.google.com ([209.85.213.169]:34330 "EHLO
+        mail-yb0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750829AbeBTUQf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Feb 2018 15:16:35 -0500
+Received: by mail-yb0-f169.google.com with SMTP id e3-v6so2140909ybk.1
+        for <git@vger.kernel.org>; Tue, 20 Feb 2018 12:16:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=9WjDhsS9vTPBUJUP94rbRwtvruhrqsyj/uV9FMFc8pg=;
-        b=NgD2eUhpR07yEnEIiWDFbo/8QIInphKxv0+oVBBe/3+ITBS/hFT0iw/fjRLMyf4Y1V
-         MoccjrCozD+OksuedF89qTf7w4XofGifzqHgdy5f2EB+oy33Pi+eBhU6RsPMfg7+i2bh
-         8YsEzs+FHGvxHsZuOpnxfnsQQ+pH8w3xy4hjt05EVKgg/HfzwPFOXzSizDcUawkoaayp
-         vKnk6H4adlZoqgp3TwN25+C+KXscVNJJ/GGlekZW9ZMC33zfBxwpYRmfjgXg5HK7NZf0
-         ymbh3VlPlKB+uL0765M/MXBjUqxrDRbDXiTHhrnPAZMYpXU+jaQrrVYWnpyBW5s55pRn
-         AMeg==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=Kp2ZNH0rY/tyTqUIIzh3xR0a3Fd5srHcejXlSLXNh4E=;
+        b=GfAas/Z6pDxDHLd/PwvfEDtxQ5UyahInq1zyYD9Zx+4EbzmL60Nk4vSeNDpbXpoW0I
+         /rv81q9OdZSsyugEiZIaCSiAT2uLU1xrvMAt0L7ad5Np6mOCJ2AFFcGaw31SBdpsijCs
+         d4qG2KayOWhxbu/vR33jgUMY1luv2GmDp9WHuj1am7xyAPdSKEUb2SOztTq7GUxCGOVA
+         7GACG5rnoncHZujveYKfz1m/Tdf+lfXM3+U/oivoDmSXnlmKun2yztottQyNh2qeAa7J
+         V/VjMCQdcZJiLYN3GWkmyVdlBZM7pJAaIvydnm/4WfhwxZpOsZrQdU+H0YVHf9u6kETA
+         Ni3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=9WjDhsS9vTPBUJUP94rbRwtvruhrqsyj/uV9FMFc8pg=;
-        b=PGqkjSJFOPhBiw9sKJ7y2pM6Mr4oMxYP3qfkT+bk8mnAA3xRyT/ZeykZ6hizWYLXkn
-         RpbyNta1Eld1UVo6X2GrtG+ZJOSnB/T7/8XzUodmQL93WX5xc/YlibHqEidX8e2A9GMY
-         bHyaEz6Qep8HJdUEhJGRopJQE1QAe2zvs1MPVtZezJcMabI4P5YWoJsJMsoJ9PSTG4p0
-         OaJh67+O0Jeym416SgUt/BncyF31AhnPF90nSmhdiUiZacLV7TQ4eRn53daLfl3MlYdb
-         Tl/0CG8ph06CFNZFGHcEi6F0lDo1fp7pQGmP/MhVG2MTSkJOOp0MI24RjHSCFM0T3QsZ
-         8kMA==
-X-Gm-Message-State: APf1xPCl45JVZD9tdenlx89ldn3RwaQiJF06QMT3wkKKF1c9cDAOhdOT
-        lGk7OmO8BTaNWByvaKy+fwE=
-X-Google-Smtp-Source: AH8x225G0nvueWU0++XjgVGx8LJqUVQ8JT30kUgUDHwR3qfM/jur0xuVKisj55dslwtMQgRpinLx4w==
-X-Received: by 10.223.139.131 with SMTP id o3mr708222wra.279.1519157537900;
-        Tue, 20 Feb 2018 12:12:17 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id w134sm2507373wmd.6.2018.02.20.12.12.17
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 20 Feb 2018 12:12:17 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Todd Zullinger <tmz@pobox.com>
-Cc:     marmot1123 <marmot.motoki@gmail.com>, git@vger.kernel.org,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Stefan Beller <sbeller@google.com>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Subject: Re: [PATCH v2] Fix misconversion of gitsubmodule.txt
-References: <01020161b2696296-9d580cc6-c21f-4fa2-a876-7d77d36cb44a-000000@eu-west-1.amazonses.com>
-        <01020161b30b99df-5029ec2b-a5cb-475b-b54f-9879a117a7f3-000000@eu-west-1.amazonses.com>
-        <20180220193834.GM27038@zaya.teonanacatl.net>
-Date:   Tue, 20 Feb 2018 12:12:16 -0800
-In-Reply-To: <20180220193834.GM27038@zaya.teonanacatl.net> (Todd Zullinger's
-        message of "Tue, 20 Feb 2018 14:38:34 -0500")
-Message-ID: <xmqqfu5v2zfj.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Kp2ZNH0rY/tyTqUIIzh3xR0a3Fd5srHcejXlSLXNh4E=;
+        b=okUOK2Ojn7/fHCL8xBvFG6xwhRdaCNhCXkRB6REV8XRe6sfa4GSIqlRrB9lSXtIUcf
+         o8TRd4vy005oZuKL6Q2nEJ5zo2TwJzb+6oeLbAnRvx/dfqmZMuXV0hgOqTMHzfNXWa4Q
+         +jThf3y/+0/+3CSzL13C+LTTeODq4gWEqk7EI2X4bmE4MMv9YI2qta51/gYXAXjJinaF
+         IilWUvkOwofMS/jr0i+7+xQWFmhU76yaI8BVnTnx2KlW0vlfxmgLApmzYJuQA8qy3czV
+         gFr/TkWxDrjXNj7nRTmEGg++2pZygpV7MABHJwPXb48xUFf6r7i7VpiBW6NyfEbpA0rA
+         wEDQ==
+X-Gm-Message-State: APf1xPBQqpsbV8zcuUjJ/P2og4xFM8Wqe+zGex8rU7xhFp7RZwjUxvMV
+        6ISF5TD1U0mxt/fzDiB8m+NjgUtvxNUIW/GtmLRmQg==
+X-Google-Smtp-Source: AH8x224XKjZaBqLelOq5QzvD60C3jsn5XKzmTkkRHjNwQXGQz03L1cBCXJs1K/Oy0jjeKJFtOvLv+iwWeq91GUk7FKk=
+X-Received: by 2002:a25:b382:: with SMTP id m2-v6mr715947ybj.334.1519157794368;
+ Tue, 20 Feb 2018 12:16:34 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Received: by 2002:a25:cfcb:0:0:0:0:0 with HTTP; Tue, 20 Feb 2018 12:16:33
+ -0800 (PST)
+In-Reply-To: <xmqqk1v7307r.fsf@gitster-ct.c.googlers.com>
+References: <xmqqlgfu7zn5.fsf@gitster-ct.c.googlers.com> <20180216174626.24677-1-sbeller@google.com>
+ <20180216223404.GD216564@aiede.svl.corp.google.com> <xmqq371v4h6u.fsf@gitster-ct.c.googlers.com>
+ <CAGZ79kaUYYqtaJ-S6WaQ9NmXDnf6_wY_fRCSxLR8=Do1qSLMug@mail.gmail.com> <xmqqk1v7307r.fsf@gitster-ct.c.googlers.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 20 Feb 2018 12:16:33 -0800
+Message-ID: <CAGZ79kbyB49J8eT0oQoA0UCzRnn=gBdiSZy3mB03gJaihVGTvQ@mail.gmail.com>
+Subject: Re: [PATCHv2 00/16] Moving global state into the repository object
+ (part 1)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        git <git@vger.kernel.org>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Todd Zullinger <tmz@pobox.com> writes:
-
-> If replacing the non-ASCI apostrophes is the goal, aren't
-> there a number of others in the same file worth cleaning up
-> at the same time?
+On Tue, Feb 20, 2018 at 11:55 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
 >
-> $ grep '’' Documentation/gitsubmodules.txt
-> the submodule’s working directory pointing to (i).
-> superproject expects the submodule’s working directory to be at.
-> When deinitialized or deleted (see below), the submodule’s Git
-> but no submodule working directory. The submodule’s Git directory
-> the superproject’s `$GIT_DIR/config` file, so the superproject’s history
-> The deletion removes the superproject’s tracking data, which are
-> The submodule’s working directory is removed from the file
+>> The step to take an object store would just add expressiveness
+>> to the code, which may help in understanding what part of the code is
+>> related to what other part of the code, so it may be a readability gain
+>> on its own?
 >
-> This does seem to be the only file which includes the
-> non-ASCII apostrophe under Documentation.
+> It certainly would allow you to have a standalone object store that
+> is not associated with *any* repository, but if we are not using
+> such a layout, I doubt it would be a readability gain to add excess
+> and unexercised expressiveness to the code.
 
-Thanks for checking.  I agree that it is a good idea to clean the
-whole file up at the same time.  The title would need to be updated,
-as it will no longer be "fix misconversion".  The justification would
-also become different---"the 'overhaul' did not just move the text
-but made the apostrophe style changes and reverting that change is a
-good thing" was a good justification for "fix misconversion", but
-now we need to explain to the future readers of "git log" why we
-prefer to turn all of them in this file to ASCII single quotes (just
-saying "make it consistent" is sufficient).
+So you favor v1?
+Duy seems to be ok with v1 too if there is consensus that it is best
+(or rather "if it makes Stefan's life hell, it's not worth doing.")[1].
 
-Thanks.
+I will try to resend that v1 shortly[2], as the only actual concern about the
+code was where one struct was defined[3]. All other discussion was
+meta-level, which direction to go.
 
+Thanks for the clarification!
+Stefan
+
+[1] https://public-inbox.org/git/CACsJy8CPKESE8atc_eWdNVknQYp9T6ebwKwCdzLHyaFKH2BnZA@mail.gmail.com/
+[2] https://public-inbox.org/git/20180213012241.187007-1-sbeller@google.com/
+[3] https://public-inbox.org/git/20180213185120.GA108526@google.com/
