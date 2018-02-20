@@ -2,122 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 01A751F404
-	for <e@80x24.org>; Tue, 20 Feb 2018 12:42:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 00F791F404
+	for <e@80x24.org>; Tue, 20 Feb 2018 13:21:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751704AbeBTMmm (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Feb 2018 07:42:42 -0500
-Received: from mail.javad.com ([54.86.164.124]:34093 "EHLO mail.javad.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751537AbeBTMml (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Feb 2018 07:42:41 -0500
-Received: from osv (unknown [89.175.180.246])
-        by mail.javad.com (Postfix) with ESMTPSA id 0DA1E41736;
-        Tue, 20 Feb 2018 12:42:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1519130560;
-        bh=p7jXR+NjXE2D4Jj/qYNPRY+nLY/rfaTSLp1TC3Q2OBA=; l=973;
-        h=Received:From:To:Subject;
-        b=S3zx5/LoLBPCIWcPFFhE54U9px+rZepK880FvLMUmttIgrBEPl8soBIG9VV/ijHrW
-         G4Nqr9Pnvwh1fFYXjAoKW+Zigp4AGYq9fG8YIraH1DGXLeo6slRUYK8QK2Oa3VNVX8
-         GRFpfIX2mfPF7aJptOPU70YwiPvM2/TWtrUwH55A=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1519130560;
-        bh=p7jXR+NjXE2D4Jj/qYNPRY+nLY/rfaTSLp1TC3Q2OBA=; l=973;
-        h=Received:From:To:Subject;
-        b=S3zx5/LoLBPCIWcPFFhE54U9px+rZepK880FvLMUmttIgrBEPl8soBIG9VV/ijHrW
-         G4Nqr9Pnvwh1fFYXjAoKW+Zigp4AGYq9fG8YIraH1DGXLeo6slRUYK8QK2Oa3VNVX8
-         GRFpfIX2mfPF7aJptOPU70YwiPvM2/TWtrUwH55A=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1519130560;
-        bh=p7jXR+NjXE2D4Jj/qYNPRY+nLY/rfaTSLp1TC3Q2OBA=; l=973;
-        h=Received:From:To:Subject;
-        b=S3zx5/LoLBPCIWcPFFhE54U9px+rZepK880FvLMUmttIgrBEPl8soBIG9VV/ijHrW
-         G4Nqr9Pnvwh1fFYXjAoKW+Zigp4AGYq9fG8YIraH1DGXLeo6slRUYK8QK2Oa3VNVX8
-         GRFpfIX2mfPF7aJptOPU70YwiPvM2/TWtrUwH55A=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1519130560;
-        bh=p7jXR+NjXE2D4Jj/qYNPRY+nLY/rfaTSLp1TC3Q2OBA=; l=973;
-        h=Received:From:To:Subject;
-        b=S3zx5/LoLBPCIWcPFFhE54U9px+rZepK880FvLMUmttIgrBEPl8soBIG9VV/ijHrW
-         G4Nqr9Pnvwh1fFYXjAoKW+Zigp4AGYq9fG8YIraH1DGXLeo6slRUYK8QK2Oa3VNVX8
-         GRFpfIX2mfPF7aJptOPU70YwiPvM2/TWtrUwH55A=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1519130560;
-        bh=p7jXR+NjXE2D4Jj/qYNPRY+nLY/rfaTSLp1TC3Q2OBA=; l=973;
-        h=Received:From:To:Subject;
-        b=S3zx5/LoLBPCIWcPFFhE54U9px+rZepK880FvLMUmttIgrBEPl8soBIG9VV/ijHrW
-         G4Nqr9Pnvwh1fFYXjAoKW+Zigp4AGYq9fG8YIraH1DGXLeo6slRUYK8QK2Oa3VNVX8
-         GRFpfIX2mfPF7aJptOPU70YwiPvM2/TWtrUwH55A=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1519130560;
-        bh=p7jXR+NjXE2D4Jj/qYNPRY+nLY/rfaTSLp1TC3Q2OBA=; l=973;
-        h=Received:From:To:Subject;
-        b=S3zx5/LoLBPCIWcPFFhE54U9px+rZepK880FvLMUmttIgrBEPl8soBIG9VV/ijHrW
-         G4Nqr9Pnvwh1fFYXjAoKW+Zigp4AGYq9fG8YIraH1DGXLeo6slRUYK8QK2Oa3VNVX8
-         GRFpfIX2mfPF7aJptOPU70YwiPvM2/TWtrUwH55A=
-Authentication-Results: mail.javad.com;
-        spf=pass (sender IP is 89.175.180.246) smtp.mailfrom=osv@javad.com smtp.helo=osv
-Received-SPF: pass (mail.javad.com: connection is authenticated)
-Received: from osv by osv with local (Exim 4.84_2)
-        (envelope-from <osv@osv.gnss.ru>)
-        id 1eo7Fm-0005fE-AC; Tue, 20 Feb 2018 15:42:38 +0300
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Igor Djordjevic <igor.d.djordjevic@gmail.com>
-Cc:     git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [RFC] Rebasing merges: a jorney to the ultimate solution (Road Clear)
-References: <87y3jtqdyg.fsf@javad.com>
-        <bbe64321-4d3a-d3fe-8bb9-58b600fabf35@gmail.com>
-Date:   Tue, 20 Feb 2018 15:42:38 +0300
-In-Reply-To: <bbe64321-4d3a-d3fe-8bb9-58b600fabf35@gmail.com> (Igor
-        Djordjevic's message of "Tue, 20 Feb 2018 00:44:52 +0100")
-Message-ID: <87woz7ltmp.fsf@javad.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+        id S1751683AbeBTNVH (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Feb 2018 08:21:07 -0500
+Received: from m131-177.yeah.net ([123.58.177.131]:40530 "EHLO
+        m131-177.yeah.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751628AbeBTNVG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Feb 2018 08:21:06 -0500
+X-Greylist: delayed 1877 seconds by postgrey-1.27 at vger.kernel.org; Tue, 20 Feb 2018 08:21:05 EST
+Received: from [192.168.1.101] (unknown [120.239.72.141])
+        by smtp1 (Coremail) with SMTP id ClUQrACHgPRmGYxai8YtFw--.16427S3;
+        Tue, 20 Feb 2018 20:49:43 +0800 (CST)
+From:   chenzero <chenzero@netease.com>
+Subject: About connection resuming
+To:     git@vger.kernel.org
+Message-ID: <b85f9654-3552-30c0-79bb-84fe10309d8b@netease.com>
+Date:   Tue, 20 Feb 2018 20:49:42 +0800
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.0
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-CM-TRANSID: ClUQrACHgPRmGYxai8YtFw--.16427S3
+X-Coremail-Antispam: 1Uf129KBjvdXoW7Xr4kCF4DGFyrWr18XrW5ZFb_yoWDZFX_uF
+        yft34qv3y0yFZ7Gay7Krs5Zr9xW39rXFWFkF98WrsIgry5Zan3W3yvk3s0vr4rJayvgr13
+        WFnxu3ZrCr1I9jkaLaAFLSUrUUUUUb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+        9fnUUvcSsGvfC2KfnxnUUI43ZEXa7IU0khLUUUUUU==
+X-Originating-IP: [120.239.72.141]
+X-CM-SenderInfo: hfkh06hhurq05hwht23hof0z/1tbiDQfywlH7jFhcpQAAs9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Igor,
+Hello,
+First, I am a user of git for about 2 years, I really appreciated you 
+all to create this great useful software!
+My encountered problem is:
+sometimes, the repo is big and because my networking is not stable(or my 
+network proxy has
+some limitations), so, the clone will always fail.
+I tried following ways to solve this, however, not much success.
+1. clone depth 1
+git clone --depth=1 https://..../repo.git
+however, some repo even depth=1 might fail.(It seemed that my network 
+proxy limit tcp connection.
+if transfer over 50M, it will break)
+2. download bundle file.
+but no all git repo provide bundle files to download.
 
-Igor Djordjevic <igor.d.djordjevic@gmail.com> writes:
+After some investment on the code, I think, perhaps,
+if enhance the git-http-backend to support http header: Range, or 
+Content-Range,
+maybe it will enable connection resuming.
+the problem of this way is: it needs to upgrade the current deployed 
+"git-http-backend",
+and maybe much code need to change including git-remote-http etc.
 
-> Hi Sergey,
->
+This is the very basic thought, and whether I should try other way ?
+Thanks a lot!
 
-[...]
-
->
-> Even though this behavior is known and documented, it still left some 
-> to be desired.
->
-> Might be I`m missing something, but so far I like how described 
-> approach just "feels right" (to me, for now), being really simple, 
-> yet robust :)
->
-> As my humble contribution to the cause and discussion itself, I`m 
-> providing possibly naive, yet simple demonstration script[1], and 
-> clearly showing where current `git rebase --preserve-merges` is 
-> lacking (in my opinion, even though being expected and documented), 
-> and how your proposal seems to improve the situation here.
-
-Thanks for the test-case, -- it's nice to see this thingy working!
-
->
-> Thanks for your thoughts, and hoping to see this going somewhere :)
-
-So do I. Even if nobody volunteers to adopt it, I hope I'll be able to
-implement something myself, not very soon though.
-
--- Sergey
