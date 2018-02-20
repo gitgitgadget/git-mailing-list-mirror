@@ -2,74 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9021D1F404
-	for <e@80x24.org>; Tue, 20 Feb 2018 14:48:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CEDC21F404
+	for <e@80x24.org>; Tue, 20 Feb 2018 15:15:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752035AbeBTOsO (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Feb 2018 09:48:14 -0500
-Received: from mail-oi0-f50.google.com ([209.85.218.50]:40376 "EHLO
-        mail-oi0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751000AbeBTOsN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Feb 2018 09:48:13 -0500
-Received: by mail-oi0-f50.google.com with SMTP id c12so2814890oic.7
-        for <git@vger.kernel.org>; Tue, 20 Feb 2018 06:48:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=G5wOvVuC3WocG/oyyHXsI8p3dVDaNvnH2R9Y/u9wyms=;
-        b=GGdFA2+UQllayzAIt0sC9dzsFFHrAxnTqRukezMpg6ZKez9OB7GyrNNH6SDGa5TmwI
-         FXLP0H1VMJl/Pl0TUt5ZxGig5IGVkVpEEJByaIQXuhgJR/N/Tnnul7+k1Z2ExdHOUWsU
-         LZU8aM+GldpB2gO7RIMB1t8vTyk3CljDJY+VrdRTrVskUuE5FxOZFQL8S1PV36VW/4+d
-         p7HNPJ6sQsrxo+9f8P6mQWQcnOPGxyQ4C8UnEdKBuEkOp+c2aAFgW8r28XOdh9N5vdk6
-         +4Zp8/HXrQHFZ1zKppdm5FuttaHuU6vYGNi+CCryfFso+wkiA0Y8VUup/jHbhGz6Gc96
-         Pxag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=G5wOvVuC3WocG/oyyHXsI8p3dVDaNvnH2R9Y/u9wyms=;
-        b=Ue3VCTo/qdlM+Y9y1BWHhcnexkjdVibZa8YD3GhsTRVCSbsYU2oF9LLsep/O+74FSp
-         7APDdUG+sMMTR7xcVBBvYyjsvC/Q+VLt+kQOJ/Aaby2gIjD657qMfRfLPQgToTmrG0LA
-         zdf66LZU4vbCwFA9s8HPP36wUB+7OQNUoy9+lh7lBAsnXq0/quZbqN2lE4PJ4T/NEc7E
-         5iTaeNprCx3qUOhNmUGFA5Tgmz4Qn+DaSLnRXse7Uj6G0loBeFo4NKgM8Q/dw5spoNpD
-         q9grWYGRpMDZjqjxEE86FXhUSu9aq1uJUdKUcZUOnmjbXqYb370SC605qnRB2XQ9V100
-         EhgQ==
-X-Gm-Message-State: APf1xPA484Lp2cboVPCaGXw1mfS756JMAQIwDtyWhgddDp0ij/ZE8PRG
-        wX0jdPlsqflW+pij3zo0gBFcE31kio4k5akx21n6Wg==
-X-Google-Smtp-Source: AH8x227WmF8LhMNl3f/rJ1wbzcTcisiSahBOKDEC7wha6yDq1MqoNb3A6vZOUB28dVynBsMCZts61gayDmp/eG2p6GQ=
-X-Received: by 10.202.8.206 with SMTP id 197mr12029770oii.265.1519138092480;
- Tue, 20 Feb 2018 06:48:12 -0800 (PST)
+        id S1752553AbeBTPPf (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Feb 2018 10:15:35 -0500
+Received: from mout.gmx.net ([212.227.17.20]:33873 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752401AbeBTPPd (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Feb 2018 10:15:33 -0500
+Received: from MININT-TB4PCE7.southpacific.corp.microsoft.com
+ ([37.201.195.115]) by mail.gmx.com (mrgmx103 [212.227.17.168]) with ESMTPSA
+ (Nemesis) id 0LoEcP-1eHXdy1UPR-00gK99; Tue, 20 Feb 2018 16:15:31 +0100
+Date:   Tue, 20 Feb 2018 16:15:29 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+To:     Tim Mayo <Tim.Mayo@ubisense.net>
+cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Stackdump from stash save on Windows 10 64-bit
+In-Reply-To: <3859F9D06DD39A44AB88A072AD53704DD08E9925@CAM1MAIL01.ubisense.local>
+Message-ID: <nycvar.QRO.7.76.6.1802201408190.31@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <3859F9D06DD39A44AB88A072AD53704DD08E9925@CAM1MAIL01.ubisense.local>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Received: by 10.74.98.4 with HTTP; Tue, 20 Feb 2018 06:48:12 -0800 (PST)
-From:   Birger Skogeng Pedersen <birger.sp@gmail.com>
-Date:   Tue, 20 Feb 2018 15:48:12 +0100
-Message-ID: <CAGr--=KeRQyJMk1vfx1hNWgo85cU8oNcm9WRVV=Um_Hf8341=w@mail.gmail.com>
-Subject: git-gui, BUG: minimize/maximize buttons missing when repo is opened
- in gui
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:QoWgBRi8nzKTr/a6LK3DnNsWBkdYd7YwwLa1t0iMw4DU3xDm9du
+ dlIrZQJZHBZ4puhnifiDN/mCKF4EdnTA6j8YYn1W+DGkRu+nBjOr56cMDRJE611VmXch0zI
+ 2TH3+8ZBrJqJzRic8L7YQIoWuLpjoVnbAuIMkZksDiDfsmmEjyzYG7NdzgqqFvTPX9YhH4Y
+ mAHKK/8C4ifo9oy+2NOOw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:TH/YNmy37YU=:rTcLkZzf9Y8wptZXD323bc
+ yqwbQRwOwyipJCVuQ4FV1I386BdzTfax+JUHmt2ZbznQ5nmABCnUWf9IPyBAwgasuLGC9aiT7
+ HwBqXD3ls/VOsqCUapwHwFV7nuszO5+sULNhh8qc/gMuN4WDYonlAH7Pm0QUxnqTbg0MPhhed
+ WVykxU6BzLuMOktR4CveYeeWETjdEhE0j8i3xIZosE3WeObZd+EXkZCtD3rUlTXjUTZn6PCMw
+ 81GuFZCQA6xER2pCH/zptVAOyNd5qL+x8eyPML2K6HNVmHHHbIlNf/B8xggTccRoQ+WUDIpDo
+ 4Nmj5N9t/Sl/EjUJho0HlBu2XO0nx9P6sccyoob47QcJ6ciRm7GQq3YAkTFXrfK1MGiMZU8BW
+ YlfVt1MCgHVe3hK94p5QAZfhK4YrhtvbOSsP/FVc5aAjaqFbf6rFF0ob9FaRvI3qj1hza/l13
+ iIA+Mcauz7cLTBI2cOx4nSvZ5YL9lP4xcMBKarZ6e6DanM8YPUlbdrDmkuO0SC/9upyLlxQ40
+ WFszm2FptKXNtqhnWP4Ly/CFqPJ5LIfKf/3p6ih1MmWfJjG1g28luUOw1NiEHjy1yxPI2TYlF
+ LoOOgtUa+ad0JUCHjpM3x7Ab/QFmiSG3V0n8PZjeJnDIst53xioXnGKH6RJspnP7Ch4ZKQlB9
+ NeX62VRJK4PcvPpJLZM1SCtRiUOTg/XwxhXSiUZeYewjn7qqiC+LxBYf166vBncBivqY7LR6Z
+ 8rx2ElfJUwiOqs6LSNsv7xe6B9cTFS/iuS2+BVzCqIwwC3cLTlN5efiwippCLLpswYLLgRU0G
+ IyVzesyA3YAPNFusnfQbJs9nXxu1ER8tVngZ8X4omMahu7Nrf0=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-System: Ubuntu 17.10 Gnome
+Hi Tim,
 
-When opening git-gui from a directory which is a repository, minimize
-and maximize buttons are showing and functional in git-gui.
+On Tue, 20 Feb 2018, Tim Mayo wrote:
 
-However, if I open git-gui in a non-repo directory, git-gui opens a
-dialog where I can "Create New Repository", "Clone Existing
-Repository", etc. When a repository is opened from this dialog, the
-git-gui window does not have minimize and maximize buttons visible.
+> As of yesterday, stash save stopped working on my Windows 10 box - I get:
+> 
+>        > git stash save
+>        Cannot save the current worktree state
+> 
+> and a stackdump file (see below).  This is with the 64-bit version of 2.16.1.  Switching to the 32-bit version resolved the problem for me.
 
-Steps to reproduce:
-1. Open git-gui in a non-repository directory
-2. Click "Open Existing Repository"
-3. Click "Browse" and select an existing repository directory
-4. The repository is opened with git-gui, but without
-minimize/maximize buttons visible
+Can you please test with v2.16.2 (you can use the 64-bit Portable Git if
+you want to keep your current installation), and if the problem still
+persists please open a ticket here:
+
+	https://github.com/git-for-windows/git/issues/new
+
+Ciao,
+Johannes
