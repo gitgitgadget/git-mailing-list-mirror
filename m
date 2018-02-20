@@ -2,80 +2,204 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3722C1FAE2
-	for <e@80x24.org>; Tue, 20 Feb 2018 16:43:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ACB931F404
+	for <e@80x24.org>; Tue, 20 Feb 2018 16:52:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753074AbeBTQnD (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Feb 2018 11:43:03 -0500
-Received: from mail-wr0-f175.google.com ([209.85.128.175]:41784 "EHLO
-        mail-wr0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753033AbeBTQnB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Feb 2018 11:43:01 -0500
-Received: by mail-wr0-f175.google.com with SMTP id f14so11790960wre.8
-        for <git@vger.kernel.org>; Tue, 20 Feb 2018 08:43:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=B7TkyBZ0uu43OKhZg0GDHZ+tD46D5MJ+BXVG9V69H6k=;
-        b=Yvl/2W7y0HwPipA2gPXIDn0xTEUKHtieZiRNOL7phc1fdUSC1BKhLADQiMbbXz94IC
-         PgWGXa4hINFEk4cvtGTWEIETFH5ft89kCdyp7D2Fj8+Sb27XVFJj3vzmEvvZ+Al6dWlF
-         TB4BYNfXXHJ54CmkCHSw5ALigC9i4g2VeqhrRneh+DVgNx++Zl/VDD/3t/6BNrWYU7LG
-         vVtTk3FE2nvFhkRRzu4fRegjEczaWLtmDIkdB4TShSy5O1NXFDzTuGVJKTscwOc36YAh
-         5UrdC1pNVbjd8VvSOYkUQhsNkUzYEldbsTkfpHR/AjfAwgA1Vp+JPPkwKLeif8yCpSgL
-         SQqA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=B7TkyBZ0uu43OKhZg0GDHZ+tD46D5MJ+BXVG9V69H6k=;
-        b=j/h2wGQRRiOThpfPkuO/gmwk+KscETPwMpAK4L37N1ceshYTbdOXuBGxBkjdmBEDtT
-         tFIxkLHZ2Sj5VgFgxwaFv6hTCxWJsHYn0cMmKY8SuJBHxh2yHEeueVUkVo/xI2AKMgVf
-         CFrhHVlZLJWlTGS51VD68Qsw2Hes8O7s8IiFk5a8CesZ+tG4ENwC+oPfD4T5SKpwdPQY
-         98HzrnzL1eEXO/2lBy1cSOpuwgPIJ4xI6ToBvvjF850lTSANZiA55aq+IyQrhNuVUePh
-         uLPVoH6stR2+uvnjbXPJgyDa+6kUdV3ECqfMylmmFoh1PDWVkkK1gKM/Q3yg4UnwftKW
-         xbmA==
-X-Gm-Message-State: APf1xPCokYO8dPlp7lHB3bLiSWr4EfQ0jncSsFwd24kOyF43Kyok2hd+
-        zkl0ypWNL6D6CfJM4x5l0hiE4VZZLNv38SxFKP4=
-X-Google-Smtp-Source: AH8x224JyNf8bUSbwNV/tJxqWbni7qn6Brev7lgIxzNL9//G6nFsHNDcRPsAG5j6Vio0aOxaf9buuqOZ4W47O2IykJM=
-X-Received: by 10.223.199.69 with SMTP id b5mr230354wrh.212.1519144980035;
- Tue, 20 Feb 2018 08:43:00 -0800 (PST)
+        id S1753138AbeBTQwh (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Feb 2018 11:52:37 -0500
+Received: from a7-20.smtp-out.eu-west-1.amazonses.com ([54.240.7.20]:41770
+        "EHLO a7-20.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1752960AbeBTQwg (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 20 Feb 2018 11:52:36 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=shh3fegwg5fppqsuzphvschd53n6ihuv; d=amazonses.com; t=1519145555;
+        h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
+        bh=uIta/OOordic6zK7Q3h0dAcsYgcuzs0v8BZK1SuO2qI=;
+        b=cZvQGVAOV0E1L3jt6WJVgcHiohEYeo0QmWvZ6cD5N7NnISo7Z5lnCzKjLDoRPkXt
+        UNx5ch1I3YjQKV58oBNZiqXqQLdo18EYtCA+5033Yj7j/PeYpkBMfEWSXQYl/3Wfqmm
+        ZrBHEOLzNLcaRF7DMP3wbBYpkzed4+zF1/uDcbDg=
+From:   =?UTF-8?Q?Herv=C3=A9_Beraud?= <herveberaud.pro@gmail.com>
+To:     git@vger.kernel.org
+Message-ID: <01020161b421939a-4ad52aaa-dda8-4250-9bce-71f0ede1a199-000000@eu-west-1.amazonses.com>
+In-Reply-To: <01020161992fe7ce-b41bf370-1480-4efe-8980-0c52fb9b9be5-000000@eu-west-1.amazonses.com>
+References: <01020161992fe7ce-b41bf370-1480-4efe-8980-0c52fb9b9be5-000000@eu-west-1.amazonses.com>
+Subject: [PATCH] make hg-to-git compatible with python2.x and 3.x
 MIME-Version: 1.0
-Received: by 10.223.195.200 with HTTP; Tue, 20 Feb 2018 08:42:39 -0800 (PST)
-In-Reply-To: <CAE1pOi00dRYGgLbvep=pC1azAqc+qX=K1+iM-SZycygZyMBg6w@mail.gmail.com>
-References: <20180219212235.GA9891@helen.PLASMA.Xg8.DE> <nycvar.QRO.7.76.6.1802192257100.31@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
- <007901d3a9d2$2edd7cd0$8c987670$@nexbridge.com> <CAE1pOi00dRYGgLbvep=pC1azAqc+qX=K1+iM-SZycygZyMBg6w@mail.gmail.com>
-From:   Hilco Wijbenga <hilco.wijbenga@gmail.com>
-Date:   Tue, 20 Feb 2018 08:42:39 -0800
-Message-ID: <CAE1pOi1FMbdrgpN44BN3MxXoMLA=osPSFiLLHN-FEYABb=NPzA@mail.gmail.com>
-Subject: Re: Git should preserve modification times at least on request
-To:     Git Users <git@vger.kernel.org>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Peter Backes <rtc@helen.plasma.xg8.de>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Date:   Tue, 20 Feb 2018 16:52:34 +0000
+X-SES-Outgoing: 2018.02.20-54.240.7.20
+Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Feb 19, 2018 at 3:22 PM, Hilco Wijbenga
-<hilco.wijbenga@gmail.com> wrote:
-> Aside from exactly which modification times should be used (which I
-> would love to have a bit more control over as well), something else
-> I'd like to see is that, when switching between branches, files that
-> are the same on both branches should not have their modification time
-> changed.
+Signed-off-by: Herv=C3=A9 Beraud <herveberaud.pro@gmail.com>
+---
+ contrib/hg-to-git/hg-to-git.py | 52 +++++++++++++++++++++-----------------=
+----
+ 1 file changed, 26 insertions(+), 26 deletions(-)
 
-As Junio pointed out to me, Git actually already does what I want when
-switching branches. To verify, I switched between 5 branches after
-setting a specific timestamp on a particular file, and it did not
-change throughout the process. Now I'm left wondering when this
-changed or whether my memory is faulty. I could have sworn this did
-not work previously. :-)
+diff --git a/contrib/hg-to-git/hg-to-git.py b/contrib/hg-to-git/hg-to-git.p=
+y
+index de3f81667ed97..8fa7698df5c20 100755
+--- a/contrib/hg-to-git/hg-to-git.py
++++ b/contrib/hg-to-git/hg-to-git.py
+@@ -42,7 +42,7 @@
+=20
+ def usage():
+=20
+-        print """\
++        print("""\
+ %s: [OPTIONS] <hgprj>
+=20
+ options:
+@@ -54,7 +54,7 @@ def usage():
+=20
+ required:
+     hgprj:  name of the HG project to import (directory)
+-""" % sys.argv[0]
++""" % sys.argv[0])
+=20
+ #-------------------------------------------------------------------------=
+-----
+=20
+@@ -104,29 +104,29 @@ def getgitenv(user, date):
+ if state:
+     if os.path.exists(state):
+         if verbose:
+-            print 'State does exist, reading'
++            print('State does exist, reading')
+         f =3D open(state, 'r')
+         hgvers =3D pickle.load(f)
+     else:
+-        print 'State does not exist, first run'
++        print('State does not exist, first run')
+=20
+ sock =3D os.popen('hg tip --template "{rev}"')
+ tip =3D sock.read()
+ if sock.close():
+     sys.exit(1)
+ if verbose:
+-    print 'tip is', tip
++    print('tip is', tip)
+=20
+ # Calculate the branches
+ if verbose:
+-    print 'analysing the branches...'
++    print('analysing the branches...')
+ hgchildren["0"] =3D ()
+ hgparents["0"] =3D (None, None)
+ hgbranch["0"] =3D "master"
+ for cset in range(1, int(tip) + 1):
+     hgchildren[str(cset)] =3D ()
+     prnts =3D os.popen('hg log -r %d --template "{parents}"' % cset).read(=
+).strip().split(' ')
+-    prnts =3D map(lambda x: x[:x.find(':')], prnts)
++    prnts =3D [x[:x.find(':')] for x in prnts]
+     if prnts[0] !=3D '':
+         parent =3D prnts[0].strip()
+     else:
+@@ -154,15 +154,15 @@ def getgitenv(user, date):
+         else:
+             hgbranch[str(cset)] =3D "branch-" + str(cset)
+=20
+-if not hgvers.has_key("0"):
+-    print 'creating repository'
++if "0" not in hgvers:
++    print('creating repository')
+     os.system('git init')
+=20
+ # loop through every hg changeset
+ for cset in range(int(tip) + 1):
+=20
+     # incremental, already seen
+-    if hgvers.has_key(str(cset)):
++    if str(cset) in hgvers:
+         continue
+     hgnewcsets +=3D 1
+=20
+@@ -180,27 +180,27 @@ def getgitenv(user, date):
+     os.write(fdcomment, csetcomment)
+     os.close(fdcomment)
+=20
+-    print '-----------------------------------------'
+-    print 'cset:', cset
+-    print 'branch:', hgbranch[str(cset)]
+-    print 'user:', user
+-    print 'date:', date
+-    print 'comment:', csetcomment
++    print('-----------------------------------------')
++    print('cset:', cset)
++    print('branch:', hgbranch[str(cset)])
++    print('user:', user)
++    print('date:', date)
++    print('comment:', csetcomment)
+     if parent:
+-=09print 'parent:', parent
++=09print('parent:', parent)
+     if mparent:
+-        print 'mparent:', mparent
++        print('mparent:', mparent)
+     if tag:
+-        print 'tag:', tag
+-    print '-----------------------------------------'
++        print('tag:', tag)
++    print('-----------------------------------------')
+=20
+     # checkout the parent if necessary
+     if cset !=3D 0:
+         if hgbranch[str(cset)] =3D=3D "branch-" + str(cset):
+-            print 'creating new branch', hgbranch[str(cset)]
++            print('creating new branch', hgbranch[str(cset)])
+             os.system('git checkout -b %s %s' % (hgbranch[str(cset)], hgve=
+rs[parent]))
+         else:
+-            print 'checking out branch', hgbranch[str(cset)]
++            print('checking out branch', hgbranch[str(cset)])
+             os.system('git checkout %s' % hgbranch[str(cset)])
+=20
+     # merge
+@@ -209,7 +209,7 @@ def getgitenv(user, date):
+             otherbranch =3D hgbranch[mparent]
+         else:
+             otherbranch =3D hgbranch[parent]
+-        print 'merging', otherbranch, 'into', hgbranch[str(cset)]
++        print('merging', otherbranch, 'into', hgbranch[str(cset)])
+         os.system(getgitenv(user, date) + 'git merge --no-commit -s ours "=
+" %s %s' % (hgbranch[str(cset)], otherbranch))
+=20
+     # remove everything except .git and .hg directories
+@@ -233,12 +233,12 @@ def getgitenv(user, date):
+=20
+     # delete branch if not used anymore...
+     if mparent and len(hgchildren[str(cset)]):
+-        print "Deleting unused branch:", otherbranch
++        print("Deleting unused branch:", otherbranch)
+         os.system('git branch -d %s' % otherbranch)
+=20
+     # retrieve and record the version
+     vvv =3D os.popen('git show --quiet --pretty=3Dformat:%H').read()
+-    print 'record', cset, '->', vvv
++    print('record', cset, '->', vvv)
+     hgvers[str(cset)] =3D vvv
+=20
+ if hgnewcsets >=3D opt_nrepack and opt_nrepack !=3D -1:
+@@ -247,7 +247,7 @@ def getgitenv(user, date):
+ # write the state for incrementals
+ if state:
+     if verbose:
+-        print 'Writing state'
++        print('Writing state')
+     f =3D open(state, 'w')
+     pickle.dump(hgvers, f)
+=20
+
+--
+https://github.com/git/git/pull/458
