@@ -2,192 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 943C81F404
-	for <e@80x24.org>; Tue, 20 Feb 2018 22:35:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 650A91F404
+	for <e@80x24.org>; Tue, 20 Feb 2018 22:40:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751542AbeBTWfv (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Feb 2018 17:35:51 -0500
-Received: from mail-yw0-f170.google.com ([209.85.161.170]:38971 "EHLO
-        mail-yw0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751537AbeBTWfu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Feb 2018 17:35:50 -0500
-Received: by mail-yw0-f170.google.com with SMTP id b20so2414492ywe.6
-        for <git@vger.kernel.org>; Tue, 20 Feb 2018 14:35:50 -0800 (PST)
+        id S1751385AbeBTWkc (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Feb 2018 17:40:32 -0500
+Received: from mail-wr0-f172.google.com ([209.85.128.172]:35783 "EHLO
+        mail-wr0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750998AbeBTWkb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Feb 2018 17:40:31 -0500
+Received: by mail-wr0-f172.google.com with SMTP id l43so18866851wrc.2
+        for <git@vger.kernel.org>; Tue, 20 Feb 2018 14:40:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
+        d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=UzSjlbF1JnQHANpgMAxXV9nsjugI3rtNnGWAQcOijYk=;
-        b=OjJQRAYcsaYRrO6UD9Swad4DJ+Jb6DmanQcpYDO51/atrJPKZkcTVEbi379vWXeCIK
-         Ve7TMFMiI2u7uVklwB5+orjbNrMiZsYxD9fjek1z0RR6NFGMMdql/rY+lGdh7IeXYnxg
-         ftxLQ1F+697Yj8xn+NXYr5fbQrvCkfiPzYlIPpJOYziVse7hrBHT4yVmUiDaE+pmLgz3
-         MnKg+FS2irWAj5L4PF8H6J3fQheGc+V+YE+gvCLz1vGyYhe+EXY/oxlhk9d2M8QDLh46
-         tNOmP2JOYojSJsKPqu4aH1HdtJZR0L5KpEDv8/mME4J1oTBs0wiDgbWOIciQjzVGR2fQ
-         B7Ig==
+        bh=7Vn9wicvkZ+WNvtJtihmOCJ+Vsz5Wovty/fIZdKD0VM=;
+        b=pu5NlR5/b3GWCj9uyDclSLog+7TUUAElH8DHAHUJAEnbMSoVBEoX+tkq3S+RMK2qUR
+         5exvoVvgBrCmvlok3Ylp1909CfkqCioo9/WVAcCQcL22SFbclzywXq3MLie+1RygbuWc
+         lNJqFdlRo2KbwgYkxkKTPtlPO9RJceO7909XywawCR2zbiV1Tb0PVWwny7TbozShRPmT
+         8NLyq07wynRgITvEjlKm9BgDWMAQbUcQnRDwouSE6XU+uT4sKr1lAcUelXlpFVjPI7SU
+         H3UEwqysYRADOtxd+kB+/Bo5pihzS5RTmucZ1+LglL8FIeyjyciZ/s5x+9ABbQL8d9GA
+         9SMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=UzSjlbF1JnQHANpgMAxXV9nsjugI3rtNnGWAQcOijYk=;
-        b=ffcVmuoonyp4W/3XpjXwZ5FV5sgEUlaFsXAXWTzYs0TNmfCQ62atRjsyOh7dKhP7vF
-         XcP0XdtBbt5isUoYcT6PKK1YNipcukSQqBjYZtTK/n8cr8il0AVgLaT/DdYFdz4ceiae
-         ss/9XcvArnxIp41Kmzg6mLegVMdK04cTePyQ6xyOcntAeq96KX3beQgb3AVAID+0ugaI
-         5WpVnohmKwT5Q8dfQuQg4rHWAZoBG87gUZLyXDD7k9OrFE7U2XIP150NDOSKEuYex8Dk
-         57jJ1tS89rdBSC4WJfqzRlSk9Xar8IXyBDYJUpIlV4iuZDF/p1R71p+L23lvkYeuqkpd
-         pqIQ==
-X-Gm-Message-State: APf1xPAT9DD91MSLOPddbt12gjcA2f6H1AHwSrDIXC8yzW9WVnxMl7cw
-        epKhbaydPh02jjHRW4NCNeBqJJO/S9k6ES22eNFFvg==
-X-Google-Smtp-Source: AH8x224xtpdF4gmTD/yuUc4RHJZv3kZIK90rVuo4mKX/NCK+AiGm7TRCRl7rpA6WVHS5nIrZgnmygSIPd3AyVJyv7Bo=
-X-Received: by 10.129.25.214 with SMTP id 205mr966909ywz.340.1519166149617;
- Tue, 20 Feb 2018 14:35:49 -0800 (PST)
+        bh=7Vn9wicvkZ+WNvtJtihmOCJ+Vsz5Wovty/fIZdKD0VM=;
+        b=QqohNcz23jP8f+D++RwEYLyIpYAywwU+5/w7/gEgHeYo8v24J2UBCAY7AdoC+/iZvK
+         3fjg7WRk8Or/fK2dfQ8863MuLOTdNTHpbl+pQn5cA64f1VGb5ISNTzyrlE25jH04OVi9
+         TDN2QFCh7jiI6Qbcwvy70lQNF5CiTWoMIoK0ikdhyBOlOBhvR0q6iAfUFeI/FZw6zCwB
+         WJ0kMcqk8fiVzy6Rz5vufWEcXxZsAPv2peCoy1epvcPXst79dqRKf2JVkOGdHQgACr2h
+         BAaNn3L3Sqz9xGW6jBPajdd5D7QqRyZ5d8XcQLvTe1zdlNKSWJSY5R9qxF4eVYQH85Lw
+         eU0Q==
+X-Gm-Message-State: APf1xPD3tMtIhYHgN7Vo0KfHMRsEM8L0aq/qHF0Qi7QwNYuZ1WggolUh
+        KBwtovetlgtyiUusRx0AfMA01DplxfAsx10QQlQ=
+X-Google-Smtp-Source: AH8x2260XnJkJT0NOF+t9u9AAwrlsF093s5MlRWzB9DTPHWNldb4JO49yFSTb/GzvQUzCyyTBkJyEO7S9TS8BgS6U20=
+X-Received: by 10.80.220.70 with SMTP id y6mr2176006edk.236.1519166429907;
+ Tue, 20 Feb 2018 14:40:29 -0800 (PST)
 MIME-Version: 1.0
-Received: by 2002:a25:cfcb:0:0:0:0:0 with HTTP; Tue, 20 Feb 2018 14:35:49
- -0800 (PST)
-In-Reply-To: <20180219212130.4217-1-ungureanupaulsebastian@gmail.com>
-References: <20180219212130.4217-1-ungureanupaulsebastian@gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 20 Feb 2018 14:35:49 -0800
-Message-ID: <CAGZ79kbXXN_nxFZUorsbFHcg4-8H7ZnAOnaViUrnP4r4u6ThhQ@mail.gmail.com>
-Subject: Re: [GSoC][PATCH] tag: Make "git tag --contains <id>" less chatty if
- <id> is invalid
-To:     Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
-Cc:     git <git@vger.kernel.org>
+Received: by 10.80.139.133 with HTTP; Tue, 20 Feb 2018 14:40:09 -0800 (PST)
+In-Reply-To: <20180220205603.GA13721@sigill.intra.peff.net>
+References: <CAE1pOi1XtrWqG7mOdrNt10YoZG0LOAB7i9cc1Gi8oWhULxE57A@mail.gmail.com>
+ <20180219223653.GE6619@genre.crustytoothpaste.net> <CAE1pOi070p9VNPnLS3jSXp7TrbR2fhOc7sx+58exAp92k4D0dw@mail.gmail.com>
+ <nycvar.QRO.7.76.6.1802201147300.31@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+ <nycvar.QRO.7.76.6.1802201240010.31@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <20180220205603.GA13721@sigill.intra.peff.net>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Tue, 20 Feb 2018 14:40:09 -0800
+Message-ID: <CA+P7+xpWi0kekTM3aJ4VnxtVh0DpGb_U2D6=cUCqz0XqvYwJTQ@mail.gmail.com>
+Subject: Re: Is there any way to "interrupt" a rebase?
+To:     Jeff King <peff@peff.net>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Hilco Wijbenga <hilco.wijbenga@gmail.com>,
+        Git Users <git@vger.kernel.org>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Welcome to the Git mailing list!
-
-On Mon, Feb 19, 2018 at 1:21 PM, Paul-Sebastian Ungureanu
-<ungureanupaulsebastian@gmail.com> wrote:
-> git tag --contains <id> prints the whole help text if <id> is
-> invalid. It should only show the error message instead.
-
-Makes sense.
-
+On Tue, Feb 20, 2018 at 12:56 PM, Jeff King <peff@peff.net> wrote:
+> On Tue, Feb 20, 2018 at 12:44:51PM +0100, Johannes Schindelin wrote:
 >
-> This bug was a side effect of looking up the commit in option
-> parser callback. When a error occurs in the option parser, the
-> full usage is shown. To fix this bug, the part related to
-> looking up the commit was moved outside of the option parser
-> to the ref-filter module.
+>> > It might be even possible to design a new subcommand for the interactive
+>> > rebase to facilitate a variation of this strategy (possibly even making
+>> > use of the fact that the interactive rebase accumulates mappings between
+>> > the original commits and the rewritten ones in
+>> > $GIT_DIR/rebase-merge/rewritten-list, intended for use in the post-rewrite
+>> > hook).
+>>
+>> This feature might look somewhat like this:
+>>
+>>       git rebase --replay-latest-commits 3
+>>
+>> and it would not even have to look at the `rewritten-list`. All it would
+>> do is to put back the latest `pick` from the `done` file (in case of merge
+>> conflicts) into the `git-rebase-todo` file, then insert `pick lines for
+>> HEAD~3.. at the beginning of that todo file, and then `git reset --hard
+>> HEAD~3`.
 >
-> Basically, the option parser only parses strings that represent
-> commits and the ref-filter performs the commit look-up. If an
-> error occurs during the option parsing, then it must be an invalid
-> argument and the user should be informed of usage, but if a error
-> occurs during ref-filtering, then it is a problem with the
-> argument.
+> Keep in mind that the "pick" lines could be "edit", "squash", etc.
 >
-> Signed-off-by: Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
-> ---
-
-> diff --git a/parse-options.h b/parse-options.h
-> index af711227a..3aa8ddd46 100644
-> --- a/parse-options.h
-> +++ b/parse-options.h
-
-parse-options.h is a very generic place in Gits source code,
-so this would also fix 'git branch --contains=<id>' at the same time?
-Would it make sense to say so in the commit message or have a
-test for that?
-
-> @@ -258,9 +258,20 @@ extern int parse_opt_passthru_argv(const struct option *, const char *, int);
->           PARSE_OPT_LASTARG_DEFAULT | flag, \
->           parse_opt_commits, (intptr_t) "HEAD" \
->         }
-> +#define _OPT_CONTAINS_OR_WITH_STRS(name, variable, help, flag) \
-> +       { OPTION_CALLBACK, 0, name, (variable), N_("commit"), (help), \
-> +         PARSE_OPT_LASTARG_DEFAULT | flag, \
-> +         parse_opt_string_list, (intptr_t) "HEAD" \
-> +       }
-
-This is the same as _OPT_CONTAINS_OR_WITH
-except parse_opt_commits is substituted by parse_opt_string_list.
-
-Do we need both? (As far as I understand this addresses a whole class
-of errors that could be eliminated, we do not want to fix git-tag only,
-we'd also want to fix git-branch as well as git-for-each-ref ?)
-So instead convert all callers to the new behavior, or would that break
-existing conventions? (Then there is no need to have 2 competing
-defines that are nearly identical) Instead of double-defining, would it
-be possible to turn it into a flag? OPT_DONT_HELP_ON_BAD_OBJECTID
-or something?
-
-> +
->  #define OPT_CONTAINS(v, h) _OPT_CONTAINS_OR_WITH("contains", v, h, PARSE_OPT_NONEG)
->  #define OPT_NO_CONTAINS(v, h) _OPT_CONTAINS_OR_WITH("no-contains", v, h, PARSE_OPT_NONEG)
->  #define OPT_WITH(v, h) _OPT_CONTAINS_OR_WITH("with", v, h, PARSE_OPT_HIDDEN | PARSE_OPT_NONEG)
->  #define OPT_WITHOUT(v, h) _OPT_CONTAINS_OR_WITH("without", v, h, PARSE_OPT_HIDDEN | PARSE_OPT_NONEG)
+> I think the general form of your original email's proposal is something
+> like: What if we had a "git rebase --rewind" that could "undo" the prior
+> command? So if I had a todo file like:
 >
-> +#define OPT_CONTAINS_STRS(v, h) _OPT_CONTAINS_OR_WITH_STRS("contains", v, h, PARSE_OPT_NONEG)
-> +#define OPT_NO_CONTAINS_STRS(v, h) _OPT_CONTAINS_OR_WITH_STRS("no-contains", v, h, PARSE_OPT_NONEG)
-> +#define OPT_WITH_STRS(v, h) _OPT_CONTAINS_OR_WITH_STRS("with", v, h, PARSE_OPT_HIDDEN | PARSE_OPT_NONEG)
-> +#define OPT_WITHOUT_STRS(v, h) _OPT_CONTAINS_OR_WITH_STRS("without", v, h, PARSE_OPT_HIDDEN | PARSE_OPT_NONEG)
-> +
+>   pick 1
+>   edit 2
+>   x make test
+>   edit 3
+>   x make test
+>   pick 4
+>
+> and I failed at the second "make test", then I'd have:
+>
+>   pick 1
+>   edit 2
+>   x make test
+>   edit 3
+>   x make test
+>
+> in the "done" file, with the final pick remaining in "todo". Could I
+> then ask to "rewind" my state by moving "x make test" back to the
+> "todo". And two rewinds would get me back to applying patch 3, which I
+> could then fix up and re-run my test. Or four rewinds would get me back
+> to patch 2, which maybe is where I made the initial mistake.
+>
+> That's a bit more primitive than what you're proposing in this
+> follow-on, because you'd be doing the replay yourself (unless we remap
+> the commits). But it's very easy to reason about and implement.
+>
+> Anyway, just musing at this point. I haven't thought it through, but I
+> like the direction of everything you're saying. ;)
+>
+> -Peff
 
+Using a --rewind that simply tracks the point of each history and can
+reset back to each seems a bit more inline with what the original
+suggestion is. Sort of like "undo" in an editor might. You could even
+add a "rewind=x" so it could go back more than one step at a time, tho
+just re-running rewind until you get where you want would be doable as
+well.
 
-> diff --git a/t/t7013-tag-contains.sh b/t/t7013-tag-contains.sh
-> new file mode 100755
-> index 000000000..65119dada
-> --- /dev/null
-> +++ b/t/t7013-tag-contains.sh
-
-Thanks for adding the tests into a new file instead of putting it somewhere
-where it is already convenient. (We have too many of those "just add it there
-as it is easiest to fit in")
-
-> +
-> +test_expect_success 'tag --contains <existent_tag>' '
-> +       ! (git tag --contains "v1.0" 2>&1 | grep -o "usage")
-
-In the test suite we assume everything but Git flawless, but
-Git *may* be faulty. What if Git crashes (segfault) ?
-Then this test is still producing a valid "ok" as grep
-doesn't find "usage". This pattern of piping output of
-Git into other commands is around the test suite unfortunately,
-but we'd want to not add this pattern in new code. So maybe:
-
-    git tag --contains v1.0 2 >error &&
-    grep "usage" err
-
-Another thing on this: we'd want to check the return code of
-git tag in this case.
-
-In case of an error in parse-opt we error out with 129
-just as git would without this patch:
-
- $ git tag --contains=a6d7eb2c7a6a402a938824bcf1c5f331dd1a06bc
-error: no such commit a6d7eb2c7a6a402a938824bcf1c5f331dd1a06bc
-usage: git tag [-a | -s | -u <key-id>] [-f] [-m <msg> | -F <file>]
-<tagname> [<head>]
-   or: git tag -d <tagname>...
-   or: git tag -l [-n[<num>]] [--contains <commit>] [--no-contains
-<commit>] [--points-at <object>]
-[....]
- $ echo $?
-129
-
-But after applying this patch, we also do not want to have 129
-as the return code as that indicates that parsing the options was
-unsuccessful. Instead we want to see that the --contains operation was
-unsucessful, maybe?
-
-So I'd expect the return code to be 0 (if we don't care) or 1
-(if we do care), in the case of 1, we shall write:
-
-  test_must_fail git tag --contains ... &&
-  grep ....
-
-(A long way of hinting at the test_must_fail test function,
-that lives in t/test-lib-functions.sh)
+I like the overall direction of both these suggestions.
 
 Thanks,
-Stefan
+Jake
