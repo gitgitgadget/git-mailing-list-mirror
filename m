@@ -2,109 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BC0F91F404
-	for <e@80x24.org>; Tue, 20 Feb 2018 22:00:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 86BCE1F404
+	for <e@80x24.org>; Tue, 20 Feb 2018 22:05:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750829AbeBTWAD (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Feb 2018 17:00:03 -0500
-Received: from hapkido.dreamhost.com ([66.33.216.122]:56011 "EHLO
-        hapkido.dreamhost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750735AbeBTWAD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Feb 2018 17:00:03 -0500
-Received: from homiemail-a3.g.dreamhost.com (homie.mail.dreamhost.com [208.97.132.208])
-        by hapkido.dreamhost.com (Postfix) with ESMTP id AE00F90ED8
-        for <git@vger.kernel.org>; Tue, 20 Feb 2018 14:00:02 -0800 (PST)
-Received: from homiemail-a3.g.dreamhost.com (localhost [127.0.0.1])
-        by homiemail-a3.g.dreamhost.com (Postfix) with ESMTP id D261E284091
-        for <git@vger.kernel.org>; Tue, 20 Feb 2018 14:00:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=mergebase.com; h=
-        mime-version:from:date:message-id:subject:to:content-type; s=
-        mergebase.com; bh=J+/34byAuha0txPSKP0kN/luUDc=; b=Pg+iUhcRE33HG/
-        xiT+w7lrbAHQ1CT3Kt74S7ETI48dU+K5GUAdtZ7resFuZQZ5kvTkHD42UHImWn+d
-        /Y00MJzobzez0Z14YZK+TXXWOnfsADC0DDlVZMo70e7F94V9nGpkm4eyIpSJiySd
-        FbwXTr1a8mi1VfSFYCPd2NedG4tkM=
-Received: from mail-io0-f177.google.com (mail-io0-f177.google.com [209.85.223.177])
-        (using TLSv1 with cipher AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: julius@mergebase.com)
-        by homiemail-a3.g.dreamhost.com (Postfix) with ESMTPSA id A654C284087
-        for <git@vger.kernel.org>; Tue, 20 Feb 2018 14:00:01 -0800 (PST)
-Received: by mail-io0-f177.google.com with SMTP id e7so16618104ioj.1
-        for <git@vger.kernel.org>; Tue, 20 Feb 2018 14:00:01 -0800 (PST)
-X-Gm-Message-State: APf1xPBBHNW7DFMFD0zPfh0L1rCi4Um7U81Yq65LT8V8kmb0pQs0tNY2
-        76wHwC2WMftqbyuBwehSSMgcEx5Mv9s9J6pHdg==
-X-Google-Smtp-Source: AH8x226xkyVmGTqa11587/pOFLPhT/3cwmHxU/CCT4zwYdMNmvAtl2qGWbz5USo3YXowMYsDSP/zFBSSKpMIlI2Ioxg=
-X-Received: by 10.107.205.196 with SMTP id d187mr1547470iog.42.1519164000938;
- Tue, 20 Feb 2018 14:00:00 -0800 (PST)
+        id S1750915AbeBTWFq (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Feb 2018 17:05:46 -0500
+Received: from titan.plasma.xg8.de ([85.10.203.189]:37556 "EHLO
+        titan.PLASMA.Xg8.DE" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750773AbeBTWFp (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Feb 2018 17:05:45 -0500
+Received: from titan.PLASMA.Xg8.DE (localhost [127.0.0.1])
+        by titan.PLASMA.Xg8.DE (8.15.2/8.15.2) with ESMTPS id w1KM5f4E001392
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Tue, 20 Feb 2018 23:05:41 +0100
+Received: (from uucp@localhost)
+        by titan.PLASMA.Xg8.DE (8.15.2/8.15.2/Submit) with UUCP id w1KM5fvp001391;
+        Tue, 20 Feb 2018 23:05:41 +0100
+Received: from helen.PLASMA.Xg8.DE (localhost.localdomain [127.0.0.1])
+        by helen.PLASMA.Xg8.DE (8.15.2/8.15.2) with ESMTP id w1KM5Q1c025370;
+        Tue, 20 Feb 2018 23:05:26 +0100
+Received: (from rtc@localhost)
+        by helen.PLASMA.Xg8.DE (8.15.2/8.15.2/Submit) id w1KM5P7u025368;
+        Tue, 20 Feb 2018 23:05:25 +0100
+Date:   Tue, 20 Feb 2018 23:05:25 +0100
+From:   Peter Backes <rtc@helen.PLASMA.Xg8.DE>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Subject: Re: Git should preserve modification times at least on request
+Message-ID: <20180220220525.GA25134@helen.PLASMA.Xg8.DE>
+References: <20180219212235.GA9891@helen.PLASMA.Xg8.DE>
+ <20180220211634.GA15232@sigill.intra.peff.net>
 MIME-Version: 1.0
-Received: by 10.79.1.69 with HTTP; Tue, 20 Feb 2018 14:00:00 -0800 (PST)
-From:   Julius Musseau <julius@mergebase.com>
-Date:   Tue, 20 Feb 2018 14:00:00 -0800
-X-Gmail-Original-Message-ID: <CAA7Zk=vWdEUnrfBcxCH6WAFH9Jss7T9_zK-zMnWbVO7B+2YySw@mail.gmail.com>
-Message-ID: <CAA7Zk=vWdEUnrfBcxCH6WAFH9Jss7T9_zK-zMnWbVO7B+2YySw@mail.gmail.com>
-Subject: I'm trying to break "git pull --rebase"
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180220211634.GA15232@sigill.intra.peff.net>
+User-Agent: Mutt/1.9.1 (2017-09-22)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi, Git Developers,
+Hi Jeff,
 
-I'm currently writing a blog post about "git pull --rebase".   The
-point of the blog post is to examine scenarios where two people are
-working together on a short-lived feature branch, where history
-rewrites are allowed, and where both are using "git pull --rebase" to
-stay in sync with each other.
+On Tue, Feb 20, 2018 at 04:16:34PM -0500, Jeff King wrote:
+> I think there are some references buried somewhere in that wiki, but did
+> you look at any of the third-party tools that store file metadata
+> alongside the files in the repository? E.g.:
+> 
+>   https://etckeeper.branchable.com/
+> 
+> or
+> 
+>   https://github.com/przemoc/metastore
+> 
+> I didn't see either of those mentioned in this thread (though I also do
+> not have personal experience with them, either).
+> 
+> Modification times are a subset of the total metadata you might care
+> about, so they are solving a much more general problem. Which may also
+> partially answer your question about why this isn't built into git. The
+> general problem gets much bigger when you start wanting to carry things
+> like modes (which git doesn't actually track; we really only care about
+> the executable bit) or extended attributes (acls, etc).
 
-I was hoping to concoct a situation where "git pull --rebase" makes a
-mess of things.
+I know about those, but that's not what I am looking for. Those tools 
+serve entirely different purposes, ie., tracking file system changes. 
+I, however, am specifically interested in version control.
 
-So far I have been unable to do this.  I tried version v1.7.2 of Git
-as well as version v2.14.1, and as far as I can tell, "git pull
---rebase" is bulletproof.
+In version control, the user checks out his own copy of the tree for 
+working. For this purpose, it is thus pointless to track ownership, 
+permissions (except for the x bit), xattrs, or any other metadata. In 
+fact, it can be considered the wrong thing to do.
 
-Does anyone here happen to know a situation where "git pull --rebase"
-makes a mess?
+The modification time, however, is special. It clearly has its place in 
+version control. It tells us when the last modification was actually 
+done to the file. I am often working on some feature, and one part is 
+finished and is lying around, but I am still working on other parts in 
+other files. Then, maybe after some weeks, the other parts are 
+finished. Now, when committing, the information about modification time 
+is lost. Maybe some weeks later I want to figure out when I last 
+modified those files that were committed. But that information is now 
+gone, at least in the git repository. Sure, I could do lots of WIP 
+commits, but this would clutter up the history unneccessarly and I 
+would have lots of versions that might not even compile, let alone run.
 
-Here's a draft of the blog post:
+As far as I remember, bitkeeper had this distinction between checkins 
+and commits. You could check in a file at any time, and any number of 
+times, and then group all those checkins together with a commit. Git 
+seems to have avoided this principle, or have kept it only 
+rudimentarily via git add (but git add cannot add more than one version 
+of the same file). Perhaps for simplificiation of use, perhaps for 
+simplification of implementation, I don't know.
 
-Title:  "(Too much) fun with git pull --rebase"
+I assume, if it were not for the build tool issues, git would have 
+tracked mtime from the very start.
 
-https://mergebase.com/doing-git-wrong/2018/02/17/fun-with-git-pull-rebase/
-
-
-Here are the "git pull --rebase" scenarios I've tested so far:
-
-1.  origin/feature rebased against origin/master
-
-2.  origin/feature squash-merged against origin/master
-
-3.  origin/feature squashed in-place`
-
-4.  origin/feature dropped a commit
-
-5.  origin/feature insanity (adjusted merge-base, reversed commits,
-squashed some commits)
-
-6.  undo of 5
-
-
-So far "git pull --rebase" does the exact right thing in every case!
-
-If anyone knows a scenario where "git pull --rebase" fails to do the
-right thing, I would be very grateful to hear of it.
-
-
-
-Thanks!
-
-yours sincerely,
-
-Julius Musseau
+Best wishes
+Peter
+-- 
+Peter Backes, rtc@helen.PLASMA.Xg8.DE
