@@ -2,148 +2,177 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-1.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 592101F404
-	for <e@80x24.org>; Tue, 20 Feb 2018 19:03:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 935DC1F404
+	for <e@80x24.org>; Tue, 20 Feb 2018 19:05:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751834AbeBTTDu (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Feb 2018 14:03:50 -0500
-Received: from mail-yb0-f194.google.com ([209.85.213.194]:47047 "EHLO
-        mail-yb0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751709AbeBTTDt (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Feb 2018 14:03:49 -0500
-Received: by mail-yb0-f194.google.com with SMTP id z7-v6so4311594ybz.13
-        for <git@vger.kernel.org>; Tue, 20 Feb 2018 11:03:49 -0800 (PST)
+        id S1751707AbeBTTFj (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Feb 2018 14:05:39 -0500
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:44277 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751274AbeBTTFi (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Feb 2018 14:05:38 -0500
+Received: by mail-pf0-f196.google.com with SMTP id 17so3824772pfw.11
+        for <git@vger.kernel.org>; Tue, 20 Feb 2018 11:05:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=4WfBNh9onznIl+Kzq9q9yE0PZ7p4RFOv/KSUh8nCpoI=;
-        b=L6zAWJh0SQHSRCGAD3nUuPbosn3C0fMYKuEFRwnBsKiKEo3y59dPh+8ir30s7pmsGI
-         LThCU4Vc5rAZJFM2oZA04xURvQ3A97avu7/YwiBou0wflvYdksscSa6H/MfswJ4CmDna
-         QOc6IyosGIe10L67szfRQU0KIpzDASiGzULHT9dcXjUxRJwtaSTk8dTphrItq0i0sc1G
-         RHC+nW1xCh+GGe6FsNIC6KU0cgBm81vwt8Ap6Qlzc8n7z2HRBLzLRf5LtF9MGDgj6IEV
-         tNdwWfHgQfnznhx/H/WCOQAtFp1tuP3IwLH7w9dNcA8O9pCM5E7Egpd1mfl6uEgnm4en
-         /3Hg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=/xLge1i/aBGffOQvU9kVzIXTDX+EwxBn3s+4KNJ7Xtg=;
+        b=PcbidtZnm/oozH5bbvDQgAhnhMm1YnHC582tnwCt6+uvC30etNREAQspXv+7mBxBtW
+         yKEdHzBkoCs/ASLppig7UJ4gPrGflnoyP3qaB4jQICVTKsCoExxKFeg8TjITRZoermLo
+         9HBjYnTY9Gt7e1s3KYrd0XrwII/wYIZMc8R2s97j0P/RY6hbbO+C5Mj9s6e14CStcUX/
+         VaeYmneaZbTb87ymscBCekzx/WJkA2RWHAqJS10sug38MZBnJyKBBMA/6LBjToD71+OE
+         LKzN/r0ujCMfi2GbRyi1ujUtQDZUfK693yoafe9Ny0uB4MH8oWg2arvW5g2i0tsljxux
+         Q7Gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=4WfBNh9onznIl+Kzq9q9yE0PZ7p4RFOv/KSUh8nCpoI=;
-        b=SlBen0SDBsWBH3dTFijX5U8EXFBwCEWbRIUaKH34HNcQBp8QQ1Q5w8dt/DREDToyCm
-         qQf/Gt5Zb5pvYvDJutWjxzAmoVm+YsM1r3vcjSZoQwvNWCRTymZX9llJ4q/zZ2mwfBiz
-         CePGN+jKYVEaeu6mSc1VeFsugAOi7RtL6ppsgmZD1TNHdB8ex8JuZ7XzakK0sMfqBR0V
-         j1TWz6ufPrwxDZwhPajgIvxUGsDenAu58mGxlWqv7mtzdb4Oo7h1nmzhHvYeYHDHvcoG
-         Zx+VP0sZsKb/doQJyXcRF9HnDQ8GhrDcBukJN0fahYHeBLdM/TjHjj7+9ydGF8RGV+Az
-         woiA==
-X-Gm-Message-State: APf1xPDlZCLTAVnnW4TChiLcwjsFb9oqSi/3dmb+ebRBAcv71+JA4Oog
-        oL1qcRraU167dAgu6gmk0zADaEoU52ppfQoaaAlmUQ==
-X-Google-Smtp-Source: AH8x225XdnpLx6n4/czi1vlQt/N6JJI+hvrOlH6kUyQcYC3DzGNWykxoE2yXjLZXG7FFVRPFqF7xPAtpENMlDhQha90=
-X-Received: by 2002:a25:b087:: with SMTP id f7-v6mr579537ybj.247.1519153428676;
- Tue, 20 Feb 2018 11:03:48 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=/xLge1i/aBGffOQvU9kVzIXTDX+EwxBn3s+4KNJ7Xtg=;
+        b=KUDkaZP8Jp3+iVRQR97iQhZYvTIvBFZhjhS2I3W76dvfuHOO3nsXKQWtV8uNwwl9bI
+         l95seqJg0nKcoDykQ4yCNJc7WbJeIgkE39O4lLe9lbzUg7kbpvTS6S7PK8cc7VkGMWxY
+         B2AVNYxuzuFfLTtHV4zCtzKXNpXTVcX9tzjONhVJSc31qg2EY0msUZ1BT4drEF4CfDnx
+         jxhw+0dWPSQdUZGpdPIXUWa6ZyToSIJtXdNiaXEQ0rUKbayMcdXEGr/9WpaIo1nMCUeP
+         lJal7eOb/X2P8ZnuV633VMoJUX7o3HXhcCmrUWKlqB1r4xdnbW0QdbhbjWxA0GepWWwu
+         3ccQ==
+X-Gm-Message-State: APf1xPDLTbeRnBjyPAKLMZ6ljFde80iMJPPpgyqDmVSLi9Yom4zieYce
+        qDF2pC+AmH42fMP67jTFfCmFAg==
+X-Google-Smtp-Source: AH8x224swWu7KMl9EWDxn+KG1RmGOkrvDIKo7M0BQXQriyNzHIMa+hb0N9zlP5jKua5NgJTqEK2nCA==
+X-Received: by 10.98.80.89 with SMTP id e86mr632666pfb.46.1519153537871;
+        Tue, 20 Feb 2018 11:05:37 -0800 (PST)
+Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
+        by smtp.gmail.com with ESMTPSA id e125sm10385391pgc.76.2018.02.20.11.05.36
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 20 Feb 2018 11:05:37 -0800 (PST)
+Date:   Tue, 20 Feb 2018 11:05:35 -0800
+From:   Brandon Williams <bmwill@google.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Jon Simons <jon@jonsimons.org>
+Subject: Re: [PATCH 2/2] remote-curl: unquote incoming push-options
+Message-ID: <20180220190535.GB201604@google.com>
+References: <20180219194709.GA837@sigill.intra.peff.net>
+ <20180219195014.GB988@sigill.intra.peff.net>
 MIME-Version: 1.0
-Received: by 2002:a25:cfcb:0:0:0:0:0 with HTTP; Tue, 20 Feb 2018 11:03:48
- -0800 (PST)
-In-Reply-To: <20180220190009.GA201604@google.com>
-References: <xmqqlgfu7zn5.fsf@gitster-ct.c.googlers.com> <20180216174626.24677-1-sbeller@google.com>
- <20180216223404.GD216564@aiede.svl.corp.google.com> <CAGZ79kafB8JZ0hz4ZbjSpkA2j2AOWjFjoxcQ3e9KcovLp1tzxw@mail.gmail.com>
- <20180220190009.GA201604@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 20 Feb 2018 11:03:48 -0800
-Message-ID: <CAGZ79kZaDieXu+O6zA1W1pciMqa5_enjNXr9MOuzn=3oDSoU-w@mail.gmail.com>
-Subject: Re: [PATCHv2 00/16] Moving global state into the repository object
- (part 1)
-To:     Brandon Williams <bmwill@google.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        git <git@vger.kernel.org>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180219195014.GB988@sigill.intra.peff.net>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 20, 2018 at 11:00 AM, Brandon Williams <bmwill@google.com> wrote:
-> On 02/20, Stefan Beller wrote:
->> On Fri, Feb 16, 2018 at 2:34 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
->> > Hi,
->> >
->> > Stefan Beller wrote:
->> >
->> >> v2:
->> >> * duplicated the 'ignore_env' bit into the object store as well
->> >> * the #define trick no longer works as we do not have a "the_objectstore" global,
->> >>   which means there is just one patch per function that is converted.
->> >>   As this follows the same structure of the previous series, I am still confident
->> >>   there is no hidden dependencies to globals outside the object store in these
->> >>   converted functions.
->> >> * rebased on top of current master, resolving the merge conflicts.
->> >>   I think I used the list.h APIs right, but please double check.
->> >
->> > For what it's worth, I think I prefer v1.  I put some comments on why
->> > on patch 0 of v1 and would be interested in your thoughts on them
->> > (e.g. as a reply to that).  I also think that even if we want to
->> > switch to a style that passes around object_store separately from
->> > repository, it is easier to do the migration in two steps: first get
->> > rid of hidden dependencies on the_repository, then do the (simpler)
->> > automatic migration from
->> >
->> >  f(the_repository)
->> >
->> > to
->> >
->> >  f(the_repository->object_store)
->> >
->> > *afterwards*.
->> >
->> > Thoughts?
->>
->> I would prefer to not spend more time on these conversions.
->> If Duy and you would come to a conclusion to either pick this
->> or the previous version I would be happy.
->>
->> I do not see the benefit in splitting up the series even further and
->> do this multistep f(repo) -> f(object store), as the cost in potential
->> merge conflicts is too high. Note that brian just sent another object
->> id conversion series, also touching sha1_file.c, which I am sure will
->> produce merge conflicts for Junio.
->>
->> For the next part 2 and onwards I'd be happy to take either this
->> strategy or Duys strategy as requested.
->
-> I think Jonathan is trying to point out that converting to f(repo) maybe
-> easier than converting to f(repo->object_store) upfront
+On 02/19, Jeff King wrote:
+> The transport-helper protocol c-style quotes the value of
+> any options passed to the helper via the "option <key> <value>"
+> directive. However, remote-curl doesn't actually unquote the
+> push-option values, meaning that we will send the quoted
+> version to the other side (whereas git-over-ssh would send
+> the raw value).
+> 
+> The pack-protocol.txt documentation defines the push-options
+> as a series of VCHARs, which excludes most characters that
+> would need quoting. But:
+> 
+>   1. You can still see the bug with a valid push-option that
+>      starts with a double-quote (since that triggers
+>      quoting).
+> 
+>   2. We do currently handle any non-NUL characters correctly
+>      in git-over-ssh. So even though the spec does not say
+>      that we need to handle most quoted characters, it's
+>      nice if our behavior is consistent between protocols.
+> 
+> There are two new tests: the "direct" one shows that this
+> already works in the non-http case, and the http one covers
+> this bugfix.
 
-I agree.
+This seems like a fairly obvious fix.  If the value is quoted, unquote
+it and send the unquoted value as a push-option, otherwise just send the
+already unquoted value as a push-option.
 
-> which would make
-> it easier to write the patches (which most of them are already written)
+Thanks for finding and fixing this :)
 
-true, but for this series we also have the conversion to f(object_store)
-written already.
+> 
+> Reported-by: Jon Simons <jon@jonsimons.org>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  remote-curl.c           | 11 ++++++++++-
+>  t/t5545-push-options.sh | 18 ++++++++++++++++++
+>  2 files changed, 28 insertions(+), 1 deletion(-)
+> 
+> diff --git a/remote-curl.c b/remote-curl.c
+> index 6ec5352435..f5b3d22e26 100644
+> --- a/remote-curl.c
+> +++ b/remote-curl.c
+> @@ -13,6 +13,7 @@
+>  #include "credential.h"
+>  #include "sha1-array.h"
+>  #include "send-pack.h"
+> +#include "quote.h"
+>  
+>  static struct remote *remote;
+>  /* always ends with a trailing slash */
+> @@ -145,7 +146,15 @@ static int set_option(const char *name, const char *value)
+>  			return -1;
+>  		return 0;
+>  	} else if (!strcmp(name, "push-option")) {
+> -		string_list_append(&options.push_options, value);
+> +		if (*value != '"')
+> +			string_list_append(&options.push_options, value);
+> +		else {
+> +			struct strbuf unquoted = STRBUF_INIT;
+> +			if (unquote_c_style(&unquoted, value, NULL) < 0)
+> +				die("invalid quoting in push-option value");
+> +			string_list_append_nodup(&options.push_options,
+> +						 strbuf_detach(&unquoted, NULL));
+> +		}
+>  		return 0;
+>  
+>  #if LIBCURL_VERSION_NUM >= 0x070a08
+> diff --git a/t/t5545-push-options.sh b/t/t5545-push-options.sh
+> index c64dee2127..b47a95871c 100755
+> --- a/t/t5545-push-options.sh
+> +++ b/t/t5545-push-options.sh
+> @@ -217,6 +217,15 @@ test_expect_success 'invalid push option in config' '
+>  	test_refs master HEAD@{1}
+>  '
+>  
+> +test_expect_success 'push options keep quoted characters intact (direct)' '
+> +	mk_repo_pair &&
+> +	git -C upstream config receive.advertisePushOptions true &&
+> +	test_commit -C workbench one &&
+> +	git -C workbench push --push-option="\"embedded quotes\"" up master &&
+> +	echo "\"embedded quotes\"" >expect &&
+> +	test_cmp expect upstream/.git/hooks/pre-receive.push_options
+> +'
+> +
+>  . "$TEST_DIRECTORY"/lib-httpd.sh
+>  start_httpd
+>  
+> @@ -260,6 +269,15 @@ test_expect_success 'push options work properly across http' '
+>  	test_cmp expect actual
+>  '
+>  
+> +test_expect_success 'push options keep quoted characters intact (http)' '
+> +	mk_http_pair true &&
+> +
+> +	test_commit -C test_http_clone one &&
+> +	git -C test_http_clone push --push-option="\"embedded quotes\"" origin master &&
+> +	echo "\"embedded quotes\"" >expect &&
+> +	test_cmp expect "$HTTPD_DOCUMENT_ROOT_PATH"/upstream.git/hooks/pre-receive.push_options
+> +'
+> +
+>  stop_httpd
+>  
+>  test_done
+> -- 
+> 2.16.2.552.gea2a3cf654
 
-> and to review because you can use the #define trick to make some sort of
-> guarantees.
-
-That is true, so it would be a tradeoff between reviewers and maintainers time?
-
-> After we have successfully completed the migration to f(repo), then we
-> can revisit the subsystems which want to have a clearer abstraction
-> layer and make the jump to f(repo->object_store).
-
-I would think we can take this series as-is and then move on with making
-f(repo) abstractions, eventually moving to f(specialized-subsystem) as those
-patches are not written yet (neither direct conversions, nor the repo trick;
-the patches I already have need adaption which takes enough time on its own.)
-
-
->
-> --
-> Brandon Williams
+-- 
+Brandon Williams
