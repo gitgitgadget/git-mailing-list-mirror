@@ -6,62 +6,66 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4A5E31F404
-	for <e@80x24.org>; Tue, 20 Feb 2018 21:08:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8CB531F404
+	for <e@80x24.org>; Tue, 20 Feb 2018 21:16:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751296AbeBTVIZ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Feb 2018 16:08:25 -0500
-Received: from cloud.peff.net ([104.130.231.41]:58650 "HELO cloud.peff.net"
+        id S1751363AbeBTVQh (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Feb 2018 16:16:37 -0500
+Received: from cloud.peff.net ([104.130.231.41]:58678 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1750799AbeBTVIY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Feb 2018 16:08:24 -0500
-Received: (qmail 9327 invoked by uid 109); 20 Feb 2018 21:08:24 -0000
+        id S1750799AbeBTVQg (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Feb 2018 16:16:36 -0500
+Received: (qmail 9825 invoked by uid 109); 20 Feb 2018 21:16:36 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 20 Feb 2018 21:08:24 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 20 Feb 2018 21:16:36 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 17031 invoked by uid 111); 20 Feb 2018 21:09:11 -0000
+Received: (qmail 17126 invoked by uid 111); 20 Feb 2018 21:17:23 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 20 Feb 2018 16:09:11 -0500
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 20 Feb 2018 16:17:23 -0500
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 20 Feb 2018 16:08:22 -0500
-Date:   Tue, 20 Feb 2018 16:08:22 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 20 Feb 2018 16:16:34 -0500
+Date:   Tue, 20 Feb 2018 16:16:34 -0500
 From:   Jeff King <peff@peff.net>
-To:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] t/known-leaky: add list of known-leaky test scripts
-Message-ID: <20180220210822.GA15010@sigill.intra.peff.net>
-References: <xmqqo9kro4oq.fsf@gitster-ct.c.googlers.com>
- <20180214215637.6462-1-martin.agren@gmail.com>
- <20180219212937.GB9748@sigill.intra.peff.net>
- <CAN0heSoDJdA3tTVZZ=imj8+z5FeqKy00dA2kWP4CAC4=+7VBiw@mail.gmail.com>
+To:     Peter Backes <rtc@helen.PLASMA.Xg8.DE>
+Cc:     git@vger.kernel.org
+Subject: Re: Git should preserve modification times at least on request
+Message-ID: <20180220211634.GA15232@sigill.intra.peff.net>
+References: <20180219212235.GA9891@helen.PLASMA.Xg8.DE>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAN0heSoDJdA3tTVZZ=imj8+z5FeqKy00dA2kWP4CAC4=+7VBiw@mail.gmail.com>
+In-Reply-To: <20180219212235.GA9891@helen.PLASMA.Xg8.DE>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 20, 2018 at 09:44:51PM +0100, Martin Ågren wrote:
+On Mon, Feb 19, 2018 at 10:22:36PM +0100, Peter Backes wrote:
 
-> For finding this sort of low-hanging fruit (windfall?) any local
-> scripting and greping will do. I sort of hesitate wasting community CPU
-> cycles on something which might be appreciated, in theory, but that
-> doesn't have enough attention to move beyond "every now and then,
-> something is fixed, but just as often, tests gain leaks and the
-> blacklist gains entries".
+> please ensure to CC me if you reply as I am not subscribed to the list.
 > 
-> To sum up: I probably won't be looking into Travis-ing such a blacklist
-> in the near future.
+> https://git.wiki.kernel.org/index.php/Git_FAQ#Why_isn.27t_Git_preserving_modification_time_on_files.3F 
+> argues that git isn't preserving modification times because it needs to 
+> ensure that build tools work properly.
 
-Yeah, I think that's the right path for now. Hopefully we can get close
-to zero leaks at some point, and then think about adding this kind of
-infrastructure. Thanks for talking it through.
+I think there are some references buried somewhere in that wiki, but did
+you look at any of the third-party tools that store file metadata
+alongside the files in the repository? E.g.:
+
+  https://etckeeper.branchable.com/
+
+or
+
+  https://github.com/przemoc/metastore
+
+I didn't see either of those mentioned in this thread (though I also do
+not have personal experience with them, either).
+
+Modification times are a subset of the total metadata you might care
+about, so they are solving a much more general problem. Which may also
+partially answer your question about why this isn't built into git. The
+general problem gets much bigger when you start wanting to carry things
+like modes (which git doesn't actually track; we really only care about
+the executable bit) or extended attributes (acls, etc).
 
 -Peff
