@@ -2,74 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F2F3F1F576
-	for <e@80x24.org>; Tue, 20 Feb 2018 08:51:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BF24A1F576
+	for <e@80x24.org>; Tue, 20 Feb 2018 10:02:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751043AbeBTIvs (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Feb 2018 03:51:48 -0500
-Received: from a7-18.smtp-out.eu-west-1.amazonses.com ([54.240.7.18]:57992
-        "EHLO a7-18.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1750988AbeBTIvs (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 20 Feb 2018 03:51:48 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=shh3fegwg5fppqsuzphvschd53n6ihuv; d=amazonses.com; t=1519116706;
-        h=From:To:Message-ID:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-        bh=Y67jcCsP4oHfgdC3Z86CFoi9OuRRVKTDhHGjZMirtZc=;
-        b=RIFaM40sEM3Cy7jzx8vuVcbcdslgtxOmh7LUrQf66ye2X+h2/QW5geNhol8GTEBn
-        SfMCrIpcYHai1kfElNHIuKTob0oW6mzPwGPHM7wtiIywFhLhh2dzGPp0Rev/5UcrwLo
-        es8x4zhXGEgjZJmdIVlssvZUsjlBq2Jy0gaq7a20=
-From:   marmot1123 <marmot.motoki@gmail.com>
-To:     git@vger.kernel.org
-Message-ID: <01020161b2696296-9d580cc6-c21f-4fa2-a876-7d77d36cb44a-000000@eu-west-1.amazonses.com>
-Subject: [PATCH] Fix misconversion of gitsubmodule.txt
+        id S1751233AbeBTKCJ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Feb 2018 05:02:09 -0500
+Received: from mail-qk0-f180.google.com ([209.85.220.180]:40824 "EHLO
+        mail-qk0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751012AbeBTKCI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Feb 2018 05:02:08 -0500
+Received: by mail-qk0-f180.google.com with SMTP id n198so15676757qke.7
+        for <git@vger.kernel.org>; Tue, 20 Feb 2018 02:02:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-transfer-encoding;
+        bh=45/yAVd50DEAZZ7rp4XrrT7sl5FrwUY6HjJgfoJMBt8=;
+        b=OS0y+XRN4QUy6zIyS+s4aWwHjkDYg25FLJEBW5dbBqgehls5hVxFs8mrzluTSRlcpS
+         pzI1kaJEgLJ839VPq3bH8ExWfkJ3TVjpdY444XuAKg2WVvh3XvkJcBRoJdobtWbNF9NS
+         6Er6w+NHHcMB1BvQ3EoZK7db0TlhgwRRlqaD+hgxLMuZkyTHB/9v/w9T7G41dkhL7c7z
+         vYk+xNQTEwNHW/i69ioaFgPPJ2pxtZzG22Ut0u05hY5KPlkphiu4Y2e2N70ICYuUFvtl
+         Kh8dpkzJlZ018i+BN0oQLPcPErAZqoyuW5ZfWdlcEi6H522BR+O9k32vOwO0/lWXc035
+         8reA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=45/yAVd50DEAZZ7rp4XrrT7sl5FrwUY6HjJgfoJMBt8=;
+        b=M8jHoAvCNQ/Or/p7KHJvnKoXi/CujQ0e5pyWQ5Xi/lhxOfJIbUX3GuWs9n07vEqY1s
+         2IOCbk75OQxLjkUbSkzH1JiMiFPRSPcDHVhwSWRgj/J0d+p1kO8HGMK6iVX6FoF+mpfU
+         xDo+mFp/BYOAud5U4dTn0bm6jbmY/kCY29aFL1SV2Q86wLEHYFOLECg3tWU4KH4bsfdn
+         TKgUtKMMbUBjnhn0jR0xlhyLbP5JNljU5jvvGpqmm7/c36Sxr3e94SPYRqWRlZ6QArru
+         LzsQmBbeyyHkpxbEVpC2zUb2h4ntrKHhUSYj4P05M3F4e6TSCYzuro9B3hLBMGeDcTlw
+         5BKw==
+X-Gm-Message-State: APf1xPCZsVR5+vlb1buwNnl9iT77fBOdVvtoJO89CwKoC3I7YAROA/AC
+        484aQaF9f2yEluyh+3EW2uv47xoJv3CpXxLLlEw=
+X-Google-Smtp-Source: AH8x225fz12uJJ7mGx96xDZ8nLrL4nqwXVlDpLC1m4GUTN6/S1FXQwhWrdLcQdzc2f4SexCZY1cSpnrbsWTTOnxQH34=
+X-Received: by 10.55.134.133 with SMTP id i127mr28419987qkd.275.1519120927337;
+ Tue, 20 Feb 2018 02:02:07 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Received: by 10.12.143.26 with HTTP; Tue, 20 Feb 2018 02:02:06 -0800 (PST)
+In-Reply-To: <01020161b2696296-9d580cc6-c21f-4fa2-a876-7d77d36cb44a-000000@eu-west-1.amazonses.com>
+References: <01020161b2696296-9d580cc6-c21f-4fa2-a876-7d77d36cb44a-000000@eu-west-1.amazonses.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Tue, 20 Feb 2018 05:02:06 -0500
+X-Google-Sender-Auth: h609aVrs6tbZwcAo5xuqSxI1cEk
+Message-ID: <CAPig+cS0D_Svkj+1yFTT1nk1jvXhH35uNCET1r_6tLd86tdviQ@mail.gmail.com>
+Subject: Re: [PATCH] Fix misconversion of gitsubmodule.txt
+To:     marmot1123 <marmot.motoki@gmail.com>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Date:   Tue, 20 Feb 2018 08:51:46 +0000
-X-SES-Outgoing: 2018.02.20-54.240.7.18
-Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In the 2nd and 4th paragraph of DESCRIPTION, there ware misconversions `sub=
-module=E2=80=99s`.
-It seems non-ASCII apostrophes, so I rewrite ASCII apostrophes.
----
- Documentation/gitsubmodules.txt | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+On Tue, Feb 20, 2018 at 3:51 AM, marmot1123 <marmot.motoki@gmail.com> wrote=
+:
+> In the 2nd and 4th paragraph of DESCRIPTION, there ware misconversions `s=
+ubmodule=E2=80=99s`.
+> It seems non-ASCII apostrophes, so I rewrite ASCII apostrophes.
 
-diff --git a/Documentation/gitsubmodules.txt b/Documentation/gitsubmodules.=
-txt
-index 46cf120f666df..0d59ab4cdfb1c 100644
---- a/Documentation/gitsubmodules.txt
-+++ b/Documentation/gitsubmodules.txt
-@@ -24,7 +24,7 @@ On the filesystem, a submodule usually (but not always - =
-see FORMS below)
- consists of (i) a Git directory located under the `$GIT_DIR/modules/`
- directory of its superproject, (ii) a working directory inside the
- superproject's working directory, and a `.git` file at the root of
--the submodule=E2=80=99s working directory pointing to (i).
-+the submodule's working directory pointing to (i).
-=20
- Assuming the submodule has a Git directory at `$GIT_DIR/modules/foo/`
- and a working directory at `path/to/bar/`, the superproject tracks the
-@@ -33,7 +33,7 @@ in its `.gitmodules` file (see linkgit:gitmodules[5]) of =
-the form
- `submodule.foo.path =3D path/to/bar`.
-=20
- The `gitlink` entry contains the object name of the commit that the
--superproject expects the submodule=E2=80=99s working directory to be at.
-+superproject expects the submodule's working directory to be at.
-=20
- The section `submodule.foo.*` in the `.gitmodules` file gives additional
- hints to Gits porcelain layer such as where to obtain the submodule via
-
---
-https://github.com/git/git/pull/459
+Thanks for the contribution. Please sign-off your patch; see
+Documentation/SubmittingPatches.
