@@ -2,88 +2,183 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C91A91F404
-	for <e@80x24.org>; Wed, 21 Feb 2018 18:47:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 93DB41F404
+	for <e@80x24.org>; Wed, 21 Feb 2018 18:48:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752944AbeBUSrX (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Feb 2018 13:47:23 -0500
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:40198 "EHLO
-        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752761AbeBUSrW (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Feb 2018 13:47:22 -0500
-Received: by mail-wr0-f193.google.com with SMTP id o76so7335359wrb.7
-        for <git@vger.kernel.org>; Wed, 21 Feb 2018 10:47:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=6L9Y/2szdNmQkaCcc0tINMF0FoQaoDCuXuNmMJWeFdA=;
-        b=klI9LNxDWgjbFaD99iZzIUUPJFtw1YclABxJPH5dEtlqJVzvi83WKnCWZIgLwIuwiy
-         4Hwru+LoT8MgzbOC/YCC5tXQee+dOLeWFWDf7N2C9tYeZhZvq/RwO8W4LTGKyzwJweDx
-         TJV6m9ue+aDGJvL+SK2wUAiyL/9VCurnv2XHgmlrP6oqw/Kgck0n9gQAyRvxdT2DnK3C
-         UkF/9Q8hUPrS53gZos0QCFiKHuIM4jt56vpGrbqHAUVX5xwi28PL6bQQM/ydIgjXZL3F
-         P56PIzxWg1uECItEoB892O8M+ZfOp8Jvy+Wzt8h7xnN1GFKCOBXiRW5MLdxpIi4e4qzM
-         NVWA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=6L9Y/2szdNmQkaCcc0tINMF0FoQaoDCuXuNmMJWeFdA=;
-        b=IRQMY+lfjPyCYwBivKZJBWQH2j8D7PkLjbBQ/sdwyZ+IkUA8OP97hyJTwdOxSzqXiQ
-         r0jjxMfKzoNG/QtEPX2NBfxAMsI4DpkDhpbxUUlEUTg6xezJbOWBFyDqlVUI3QXfEFtB
-         PHfIujMkoftc7u749b4VAaGMNR1ajxp/EGtVmu5vp0koEORjleXOsPC9QT6Axh/Hv30I
-         uRG72dHK8fsxtScRdhPng58i/TWJuMpme1Lwn9Ds0g+8Aq287nnOTbW0TyS76Nl/ILPG
-         sTfmzbT4Kbd28CCCbYxHmg3YnDmCw2eCTci5cTlJovURbOzbM7JnyOnJPM7wBZsQTeRa
-         jrJw==
-X-Gm-Message-State: APf1xPDKqorTUUrF9ZWNDzGKMbvuwTkcAo4YL9N/pd9dGFhILev8zjuf
-        a9n7b+jdeOqZbUJHYEiAZaw=
-X-Google-Smtp-Source: AH8x226NnDij/q6UREftpLFChRBUHMSx2BvrANt/DA0MEC/Z2OmNOSSoxgrxKD7NqDDBG3BGpzPSmw==
-X-Received: by 10.223.183.39 with SMTP id l39mr4170724wre.214.1519238840691;
-        Wed, 21 Feb 2018 10:47:20 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id o16sm14806470wro.55.2018.02.21.10.47.20
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 21 Feb 2018 10:47:20 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Patryk Obara <patryk.obara@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 00/36] object_id part 12
-References: <20180219225927.386065-1-sandals@crustytoothpaste.net>
-Date:   Wed, 21 Feb 2018 10:47:19 -0800
-In-Reply-To: <20180219225927.386065-1-sandals@crustytoothpaste.net> (brian
-        m. carlson's message of "Mon, 19 Feb 2018 22:58:51 +0000")
-Message-ID: <xmqqh8qayybs.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1753010AbeBUSsP (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Feb 2018 13:48:15 -0500
+Received: from cloud.peff.net ([104.130.231.41]:59532 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1752094AbeBUSsO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Feb 2018 13:48:14 -0500
+Received: (qmail 7296 invoked by uid 109); 21 Feb 2018 18:48:14 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 21 Feb 2018 18:48:14 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 23597 invoked by uid 111); 21 Feb 2018 18:49:01 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 21 Feb 2018 13:49:01 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 21 Feb 2018 13:48:12 -0500
+Date:   Wed, 21 Feb 2018 13:48:12 -0500
+From:   Jeff King <peff@peff.net>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: Question about get_cached_commit_buffer()
+Message-ID: <20180221184811.GD4333@sigill.intra.peff.net>
+References: <ecbbe515-b7a8-3dc8-7d14-32412e7b12c3@gmail.com>
+ <20180220225726.GA17496@sigill.intra.peff.net>
+ <22169205-8020-c816-0968-f6293e8d40bc@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <22169205-8020-c816-0968-f6293e8d40bc@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+On Wed, Feb 21, 2018 at 09:13:22AM -0500, Derrick Stolee wrote:
 
-> This is the twelfth in a series of patches to convert from unsigned char
-> [20] to struct object_id.  This series is based on next.
->
-> Included in this series are conversions for find_unique_abbrev and
-> lookup_replace_object, as well as parts of the sha1_file code.
->
-> Conflicts with pu are average in number but minor, mostly because of the
-> type_name conversion.  None of them are tricky, except that the
-> introduction of get_tree_entry_if_blob requires a conversion of that
-> function.
+> > So there it is. It does show commits multiple times, but suppresses the
+> > verbose header after the first showing. If we do something like this:
+> > 
+> >    git rev-list --show-all --pretty --boundary c93150cfb0^-
+> > 
+> > you'll see some boundary commits that _don't_ have their pretty headers
+> > shown. And with your proposed patch, we'd show them again. To keep the
+> > same behavior we need to store that "we've already seen this" boolean
+> > somewhere else (e.g., in an object flag; possibly SEEN, but that might
+> > run afoul of other logic).
+> 
+> What confuses me about this behavior is that the OID is still shown on the
+> repeat (and in the case of `git log --oneline` will not actually have a line
+> break between two short-OIDs). I don't believe this behavior is something to
+> preserve.
 
-And the reason why this is based on 'next' is...?  Which topic(s) do
-we have to wait for until we can queue this series, in other words?
+I think that repeating the oid is intentional; the point is to dump how
+the traversal code is hitting the endpoints, even if we do so multiple
+times.
 
-Thanks for working on this, though.
+The --oneline behavior just looks like a bug. I think --format is broken
+with --show-all, too (it does not show anything!).
+
+> Unless I am misunderstanding, the current behavior on a repeated commit is
+> already incorrect: some amount of output occurs before checking the buffer,
+> so the output includes repeated records but with formatting that violates
+> the expectation. By doing the simple change of swapping
+> get_cached_commit_buffer() with get_commit_buffer(), we correct that format
+> violation but have duplicate copies.
+
+Yeah, I'd agree with that assessment.
+
+> The most-correct thing to do (in my opinion) is to put the requirement of
+> "no repeats" into the revision walk logic and stop having the formatting
+> methods expect them. Then, however we change this boolean setting of "we
+> have seen this before" it will not require the formatting methods to change.
+
+But then you wouldn't show repeats at all. If I'm understanding you
+correctly.
+
+TBH, I do not think it is worth spending a lot of effort on this
+--show-all feature. It seems mostly like forgotten debugging cruft to
+me. That's why I'd be OK with showing the whole header as the simplest
+fix (i.e., just removing those calls entirely, not even converting them
+to get_commit_buffer).
+
+> I can start working on a patch to move the duplicate-removal logic into
+> revision.c instead of these three callers:
+> 
+> builtin/rev-list.c:     if (revs->verbose_header &&
+> get_cached_commit_buffer(commit, NULL)) {
+> log-tree.c:     if (!get_cached_commit_buffer(commit, NULL))
+> object.c:                       if (!get_cached_commit_buffer(commit, NULL))
+
+Those first two are duplicate detection. The third one in object.c
+should stay, though. We've been fed a commit buffer to parse, and we
+want to know whether we should attach it as the cached buffer for that
+commit. But if we already have a cached buffer, there's no point in
+doing so. And that's what we're checking there.
+
+Though I think it would be equally correct to have set_commit_buffer()
+just throw away the existing cache entry and replace it with this one. I
+don't think there's a real reason to prefer the old to the new. And that
+might be worth doing if it would let us drop get_cached_commit_buffer()
+as a public function. But...
+
+> But this caller seems pretty important in pretty.c:
+> 
+>         /*
+>          * Otherwise, we still want to munge the encoding header in the
+>          * result, which will be done by modifying the buffer. If we
+>          * are using a fresh copy, we can reuse it. But if we are using
+>          * the cached copy from get_commit_buffer, we need to duplicate it
+>          * to avoid munging the cached copy.
+>          */
+>         if (msg == get_cached_commit_buffer(commit, NULL))
+>                 out = xstrdup(msg);
+>         else
+>                 out = (char *)msg
+
+Like the one in object.c, this really does want to know about the cached
+entry. And it should be unaffected by your patch, since we will have
+called get_commit_buffer() at the top of that function.
+
+If we wanted to write this one without get_cached_commit_buffer(), we'd
+really need a function to ask "did this pointer come from the cache, or
+was it freshly allocated?". That's the same thing we do for
+unuse_commit_buffer(). So in theory we could have a boolean function
+that would check that, and that would let us make
+get_cached_commit_buffer() private.
+
+In my opinion it's not really worth trying to make it private. The
+confusion you're fixing in the first two calls is not due to a bad API,
+but due to some subtly confusing logic in that code's use of the API. ;)
+
+So I'd probably do this:
+
+diff --git a/builtin/rev-list.c b/builtin/rev-list.c
+index d94062bc84..3af56921c8 100644
+--- a/builtin/rev-list.c
++++ b/builtin/rev-list.c
+@@ -150,7 +150,7 @@ static void show_commit(struct commit *commit, void *data)
+ 	else
+ 		putchar('\n');
+ 
+-	if (revs->verbose_header && get_cached_commit_buffer(commit, NULL)) {
++	if (revs->verbose_header) {
+ 		struct strbuf buf = STRBUF_INIT;
+ 		struct pretty_print_context ctx = {0};
+ 		ctx.abbrev = revs->abbrev;
+diff --git a/log-tree.c b/log-tree.c
+index cab9353f45..cb2dab8a1c 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -690,9 +690,6 @@ void show_log(struct rev_info *opt)
+ 		show_mergetag(opt, commit);
+ 	}
+ 
+-	if (!get_cached_commit_buffer(commit, NULL))
+-		return;
+-
+ 	if (opt->show_notes) {
+ 		int raw;
+ 		struct strbuf notebuf = STRBUF_INIT;
+
+with the rationale that:
+
+  1. Nobody really cares about this verbose-output suppression anyway.
+
+  2. The code is confusing and fragile, since it uses the cached commit
+     buffer as an implicit boolean for "did we show the commit already".
+
+  3. It's broken for --oneline and user-formats, and this fixes it.
+
+-Peff
