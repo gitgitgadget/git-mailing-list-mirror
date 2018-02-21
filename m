@@ -7,126 +7,92 @@ X-Spam-Status: No, score=-2.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_WEB,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2A7311F576
-	for <e@80x24.org>; Wed, 21 Feb 2018 11:28:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 916141F576
+	for <e@80x24.org>; Wed, 21 Feb 2018 11:42:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932398AbeBUL2g (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Feb 2018 06:28:36 -0500
-Received: from smtp-out-3.talktalk.net ([62.24.135.67]:31633 "EHLO
+        id S933584AbeBULmd (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Feb 2018 06:42:33 -0500
+Received: from smtp-out-3.talktalk.net ([62.24.135.67]:4081 "EHLO
         smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751887AbeBUL2f (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Feb 2018 06:28:35 -0500
+        with ESMTP id S932556AbeBULmc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Feb 2018 06:42:32 -0500
 Received: from [192.168.2.240] ([92.22.21.220])
         by smtp.talktalk.net with SMTP
-        id oSZdeEdxQYeIpoSZeecnxO; Wed, 21 Feb 2018 11:28:34 +0000
+        id oSn8eEfSmYeIpoSn8ecoR5; Wed, 21 Feb 2018 11:42:31 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1519212514;
-        bh=e6HqnDRFrLTih4pOHDIYKEXRICKiouURpR1PijrCMkU=;
-        h=Reply-To:Subject:From:To:Cc:References:Date:In-Reply-To;
-        b=nF1AO3JTyPnqMHiQ0/352pf07wtimsz8H+V1mvdHcQhQ/zT/XUzHPA97dk4627I0b
-         RmTF/zrWad5sPm4flIL0xPgnTMiiKIB1mY//vvS+rBFKCCG9h+cdnc/TtTY9aVLaCe
-         zeEYDtzG+cOiSuFVIgGEvKif7FePvDISnZWpvhtY=
+        s=cmr1711; t=1519213351;
+        bh=8X7SyPE6lDklwlPYZbkB8VQywdX5IdMBmfSfW4uUt34=;
+        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=hnlrqr2KgubhhZmYVRq9p92Ir5thq75IzETNaEJaiTk+txZrHxodRbUrukgid3prS
+         ncEUWm1/ks4D7v4cPceIAyGPPbAHDGFRLgzwZZH1sPhC49SPRH7PYTSt8eammpLVBi
+         hZ29v0yKh97DhM05grOxaLxegtz080LBCE2O7xS4=
 X-Originating-IP: [92.22.21.220]
 X-Spam: 0
 X-OAuthority: v=2.2 cv=WZB8UwpX c=1 sm=1 tr=0 a=VSxTZYxioCnvaH7igEU67w==:117
- a=VSxTZYxioCnvaH7igEU67w==:17 a=IkcTkHD0fZMA:10 a=evINK-nbAAAA:8
- a=WvESTxkSeTEF8LECkvQA:9 a=_dbRjs0I79sj8RWB:21 a=7IZBSK-OCb8ssTkv:21
- a=QEXdDO2ut3YA:10 a=RfR_gqz1fSpA9VikTjo0:22
-Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v2 5/9] t3701: add failing test for pathological context
- lines
-From:   Phillip Wood <phillip.wood@talktalk.net>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
+ a=VSxTZYxioCnvaH7igEU67w==:17 a=IkcTkHD0fZMA:10 a=nN7BH9HXAAAA:8
+ a=evINK-nbAAAA:8 a=hFcsm8C3tOQNot5fCWsA:9 a=QEXdDO2ut3YA:10 a=SHUmGpGg8TAA:10
+ a=RfR_gqz1fSpA9VikTjo0:22
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2 4/9] t3701: don't hard code sha1 hash values
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        "Brian M. Carlson" <sandals@crustytoothpaste.net>,
         Phillip Wood <phillip.wood@dunelm.org.uk>
 References: <20180213104408.9887-1-phillip.wood@talktalk.net>
  <20180219112910.24471-1-phillip.wood@talktalk.net>
- <20180219112910.24471-6-phillip.wood@talktalk.net>
-Message-ID: <69548d34-3982-6eb7-2620-6e223ab80aaf@talktalk.net>
-Date:   Wed, 21 Feb 2018 11:28:31 +0000
+ <20180219112910.24471-5-phillip.wood@talktalk.net>
+ <xmqqk1v74l1t.fsf@gitster-ct.c.googlers.com>
+From:   Phillip Wood <phillip.wood@talktalk.net>
+Message-ID: <8f39e6b1-0031-5d97-f636-ae67cfdb3f1c@talktalk.net>
+Date:   Wed, 21 Feb 2018 11:42:30 +0000
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
  Thunderbird/52.6.0
 MIME-Version: 1.0
-In-Reply-To: <20180219112910.24471-6-phillip.wood@talktalk.net>
+In-Reply-To: <xmqqk1v74l1t.fsf@gitster-ct.c.googlers.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-GB-large
 Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfNo91cR4tfCZCFa/lxLdNjefrAX81jjlobSTLr0RQ/t0LrjGY0v9FJVpNYDvdDfNxhuTVqsKxSlR6OSfuj1eo7JzZPFYS6b4porZ4huqGpknczob4DWe
- mVd7vTanAXKa5bkALmqAEzOr0Ubu0bfSDgl3ZcCaoWOFNOTiDsEHaZYWpUIZ4O8ZLwSeNToiNRb88eWySsSBHjHLzshnc5iYJtyYYOwM50yle+uoYcmQw8Zw
- Xn4IakAqRfdWglObpk/jgQ==
+X-CMAE-Envelope: MS4wfES0QX0RRpLuEhZxkWMdlRUDobjmLvN4YxyZ/VdwtXLjqQaC6XjIpdcbugkVmz96CeiSmWXZqVfgHCF4UwSn7xxeEU6slycuU9Akp3PXiF5teXC1aSB1
+ 6974RXh10BEQgCOL8nx37/6c3zE7wpxuKUpxIBwuwxTkZN8t4orcDDSh5Q8WGu05kZQAmeP7BSkgzToNqmzDgoh/UN9Ny3kfXhXz73tP7XxBiDSUCPlgA3KX
+ Paq0tgCYH22dUSMDNiYDjEg/r3BOHnQ3Ccz9L42nslFJfNRa5i09fS7lkWpVsZHx
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 19/02/18 11:29, Phillip Wood wrote:
-> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+On 20/02/18 17:39, Junio C Hamano wrote:
+> Phillip Wood <phillip.wood@talktalk.net> writes:
 > 
-> When a hunk is skipped by add -i the offsets of subsequent hunks are
-> not adjusted to account for any missing insertions due to the skipped
-> hunk. Most of the time this does not matter as apply uses the context
-> lines to apply the subsequent hunks in the correct place, however in
-> pathological cases the context lines will match at the now incorrect
-> offset and the hunk will be applied in the wrong place. The offsets of
-> hunks following an edited hunk that has had the number of insertions
-> or deletions changed also need to be updated in the same way. Add
-> failing tests to demonstrate this.
+>> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>>
+>> Purge the index lines from diffs so we're not hard coding sha1 hash
+>> values in the expected output.
 > 
-> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-> ---
+> The motivation of this patch is clear, but all-zero object name for
+> missing side of deletion or creation patch should not change when we
+> transition to any hash function.  Neither the permission bits shown
+> in the output (and whether the index line has the bits are shown on
+> it in the first place, i.e. the index line of a creation patch does
+> not, whilethe one in a modification patch does).
 > 
-> Notes:
->      changes since v1:
->       - changed edit test to use the existing fake editor and to strip
->         the hunk header and some context lines as well as deleting an
->         insertion
->       - style fixes
+> So I am a bit ambivalent about this change.
 > 
->   t/t3701-add-interactive.sh | 31 +++++++++++++++++++++++++++++++
->   1 file changed, 31 insertions(+)
+> Perhaps have a filter that redacts, instead of removes, selected
+> pieces of information that are likely to change while hash
+> transition, and use that consistently to filter both the expected
+> output and the actual output before comparing?
 > 
-> diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-> index 70748393f28c93f4bc5d43b07bd96bd208aba3e9..06c4747f506a1b05ccad0f9387e1fbd69cfd7784 100755
-> --- a/t/t3701-add-interactive.sh
-> +++ b/t/t3701-add-interactive.sh
-> @@ -511,4 +511,35 @@ test_expect_success 'status ignores dirty submodules (except HEAD)' '
->   	! grep dirty-otherwise output
->   '
->   
-> +test_expect_success 'set up pathological context' '
-> +	git reset --hard &&
-> +	test_write_lines a a a a a a a a a a a >a &&
-> +	git add a &&
-> +	git commit -m a &&
-> +	test_write_lines c b a a a a a a a b a a a a >a &&
-> +	test_write_lines     a a a a a a a b a a a a >expected-1 &&
-> +	test_write_lines   b a a a a a a a b a a a a >expected-2 &&
-> +	# check editing can cope with missing header and deleted context lines
-> +	# as well as changes to other lines
-> +	test_write_lines +b " a" >patch
-> +'
-> +
-> +test_expect_failure 'add -p works with pathological context lines' '
-> +	git reset &&
-> +	printf "%s\n" n y |
-> +	git add -p &&
-> +	git cat-file blob :a >actual &&
-> +	test_cmp expected-1 actual
-> +'
-> +
-> +test_expect_failure 'add -p patch editing works with pathological context lines' '
-> +	git reset &&
-> +	test_set_editor "$FAKE_EDITOR" &&
-In light of the discussion of patch 2, I think this line should be deleted
+Keeping the permission bits makes sense (I'd not thought of them when I 
+created the patch) as we want to check that the file has the correct 
+permissions. As for the all-zero object name, is it really worth leaving 
+it in - if a file has been created or deleted then we'll still have 
+/dev/null as the file name for one side or the other and the diff lines 
+will show it as well. As these tests are just to check the state of the 
+index then I'm not sure the hash values add anything. How do you feel 
+about a filter like
 
+sed "/^	index/s/ [0-9a-f][0-9a-f]*\.\.[0-9a-f][0-9a-f]*/x/"
 
-> +	# n q q below is in case edit fails
-> +	printf "%s\n" e y    n q q |
-> +	git add -p &&
-> +	git cat-file blob :a >actual &&
-> +	test_cmp expected-2 actual
-> +'
-> +
->   test_done
-> 
+Best Wishes
 
+Phillip
