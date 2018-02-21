@@ -8,124 +8,67 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1C56B1F576
-	for <e@80x24.org>; Wed, 21 Feb 2018 07:02:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6F58E1F576
+	for <e@80x24.org>; Wed, 21 Feb 2018 07:02:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751643AbeBUHCj (ORCPT <rfc822;e@80x24.org>);
+        id S1751534AbeBUHCj (ORCPT <rfc822;e@80x24.org>);
         Wed, 21 Feb 2018 02:02:39 -0500
-Received: from a7-19.smtp-out.eu-west-1.amazonses.com ([54.240.7.19]:37552
-        "EHLO a7-19.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751485AbeBUHCi (ORCPT
+Received: from a7-11.smtp-out.eu-west-1.amazonses.com ([54.240.7.11]:51512
+        "EHLO a7-11.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751369AbeBUHCi (ORCPT
         <rfc822;git@vger.kernel.org>); Wed, 21 Feb 2018 02:02:38 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
         s=shh3fegwg5fppqsuzphvschd53n6ihuv; d=amazonses.com; t=1519196556;
         h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-        bh=iIFREaDJoXJamPkYBjGTffzJ5G+QIKcpNXCmTpLny1c=;
-        b=G2/AZTF+TGblQS1bVbPX9SdETZLDrcoCq6ox8xjRxUePz3UGrFTEzEZhTJb+osHY
-        vRBZ7My/Sl92EqqmWMOworHGpXkalv9OiKjDV+p3szZatmVLhbLMVz9XZu5/u55BTft
-        sIoZuBA+bb2OOJenujZ8qjpnRsT7D+SEyftHaAso=
+        bh=5btz4G2ovz2HstqPSNV6limMK0yOVtFo7yyYcpSC2ZQ=;
+        b=D8z0G4hdTSMR1FKpUynytrTkBeL9mmLxFKnwNzR1i4KlIb0SL+tbPcBkRossd+ne
+        J6MuohwSaVxdr9F7Mdlwz2+GKXijVJRB2uBJwDHQnPL6NA06px+r0o/BpVX+KMQ8Opi
+        R82HpUU+XQWGlXo3E/y6NWdDigHKShSxQX1vgQbA=
 From:   Olga Telezhnaya <olyatelezhnaya@gmail.com>
 To:     git@vger.kernel.org
-Message-ID: <01020161b72bcdff-eb1350fb-12a2-4aaa-abb0-248bf481b2ab-000000@eu-west-1.amazonses.com>
-In-Reply-To: <01020161b728823f-daec904e-44ff-45f9-9c89-d447b89c7802-000000@eu-west-1.amazonses.com>
-References: <01020161b728823f-daec904e-44ff-45f9-9c89-d447b89c7802-000000@eu-west-1.amazonses.com>
-Subject: [PATCH v2 1/2] ref-filter: get rid of duplicate code
+Message-ID: <01020161b72bce58-d3167109-3dd1-40fe-8ad9-727629cd918e-000000@eu-west-1.amazonses.com>
+In-Reply-To: <01020161b72bcdff-eb1350fb-12a2-4aaa-abb0-248bf481b2ab-000000@eu-west-1.amazonses.com>
+References: <01020161b72bcdff-eb1350fb-12a2-4aaa-abb0-248bf481b2ab-000000@eu-west-1.amazonses.com>
+Subject: [PATCH v2 2/2] ref-filter: get rid of goto
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
 Date:   Wed, 21 Feb 2018 07:02:36 +0000
-X-SES-Outgoing: 2018.02.21-54.240.7.19
+X-SES-Outgoing: 2018.02.21-54.240.7.11
 Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Make one function from 2 duplicate pieces and invoke it twice.
+Get rid of goto command in ref-filter for better readability.
 
 Signed-off-by: Olga Telezhnaia <olyatelezhnaya@gmail.com>
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored by: Jeff King <peff@peff.net>
 ---
- ref-filter.c | 45 +++++++++++++++++++++------------------------
- 1 file changed, 21 insertions(+), 24 deletions(-)
+ ref-filter.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/ref-filter.c b/ref-filter.c
-index f9e25aea7a97e..83ffd84affe52 100644
+index 83ffd84affe52..35359818a1ebb 100644
 --- a/ref-filter.c
 +++ b/ref-filter.c
-@@ -1354,15 +1354,31 @@ static const char *get_refname(struct used_atom *atom, struct ref_array_item *re
- 	return show_ref(&atom->u.refname, ref->refname);
- }
+@@ -1494,11 +1494,11 @@ static void populate_value(struct ref_array_item *ref)
+ 	for (i = 0; i < used_atom_cnt; i++) {
+ 		struct atom_value *v = &ref->value[i];
+ 		if (v->s == NULL)
+-			goto need_obj;
++			break;
+ 	}
+-	return;
++	if (i >= used_atom_cnt)
++		return;
  
-+static void get_object(struct ref_array_item *ref, const struct object_id *oid,
-+		       int deref, struct object **obj)
-+{
-+	int eaten;
-+	unsigned long size;
-+	void *buf = get_obj(oid, obj, &size, &eaten);
-+	if (!buf)
-+		die(_("missing object %s for %s"),
-+		    oid_to_hex(oid), ref->refname);
-+	if (!*obj)
-+		die(_("parse_object_buffer failed on %s for %s"),
-+		    oid_to_hex(oid), ref->refname);
-+
-+	grab_values(ref->value, deref, *obj, buf, size);
-+	if (!eaten)
-+		free(buf);
-+}
-+
- /*
-  * Parse the object referred by ref, and grab needed value.
-  */
- static void populate_value(struct ref_array_item *ref)
- {
--	void *buf;
- 	struct object *obj;
--	int eaten, i;
--	unsigned long size;
-+	int i;
- 	const struct object_id *tagged;
- 
- 	ref->value = xcalloc(used_atom_cnt, sizeof(struct atom_value));
-@@ -1483,17 +1499,7 @@ static void populate_value(struct ref_array_item *ref)
- 	return;
- 
-  need_obj:
--	buf = get_obj(&ref->objectname, &obj, &size, &eaten);
--	if (!buf)
--		die(_("missing object %s for %s"),
--		    oid_to_hex(&ref->objectname), ref->refname);
--	if (!obj)
--		die(_("parse_object_buffer failed on %s for %s"),
--		    oid_to_hex(&ref->objectname), ref->refname);
--
--	grab_values(ref->value, 0, obj, buf, size);
--	if (!eaten)
--		free(buf);
-+	get_object(ref, &ref->objectname, 0, &obj);
+- need_obj:
+ 	get_object(ref, &ref->objectname, 0, &obj);
  
  	/*
- 	 * If there is no atom that wants to know about tagged
-@@ -1514,16 +1520,7 @@ static void populate_value(struct ref_array_item *ref)
- 	 * is not consistent with what deref_tag() does
- 	 * which peels the onion to the core.
- 	 */
--	buf = get_obj(tagged, &obj, &size, &eaten);
--	if (!buf)
--		die(_("missing object %s for %s"),
--		    oid_to_hex(tagged), ref->refname);
--	if (!obj)
--		die(_("parse_object_buffer failed on %s for %s"),
--		    oid_to_hex(tagged), ref->refname);
--	grab_values(ref->value, 1, obj, buf, size);
--	if (!eaten)
--		free(buf);
-+	get_object(ref, tagged, 1, &obj);
- }
- 
- /*
 
 --
 https://github.com/git/git/pull/460
