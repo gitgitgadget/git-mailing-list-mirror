@@ -2,76 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C34D61F404
-	for <e@80x24.org>; Wed, 21 Feb 2018 22:50:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EC31E1F404
+	for <e@80x24.org>; Wed, 21 Feb 2018 22:53:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751203AbeBUWuF (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Feb 2018 17:50:05 -0500
-Received: from cloud.peff.net ([104.130.231.41]:60028 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751104AbeBUWuE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Feb 2018 17:50:04 -0500
-Received: (qmail 19516 invoked by uid 109); 21 Feb 2018 22:50:04 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 21 Feb 2018 22:50:04 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 28475 invoked by uid 111); 21 Feb 2018 22:50:51 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 21 Feb 2018 17:50:51 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 21 Feb 2018 17:50:02 -0500
-Date:   Wed, 21 Feb 2018 17:50:02 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: Question about get_cached_commit_buffer()
-Message-ID: <20180221225002.GB7944@sigill.intra.peff.net>
-References: <ecbbe515-b7a8-3dc8-7d14-32412e7b12c3@gmail.com>
- <20180220225726.GA17496@sigill.intra.peff.net>
- <22169205-8020-c816-0968-f6293e8d40bc@gmail.com>
- <20180221184811.GD4333@sigill.intra.peff.net>
- <xmqqtvuax9te.fsf@gitster-ct.c.googlers.com>
+        id S1750805AbeBUWxn (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Feb 2018 17:53:43 -0500
+Received: from mail-wr0-f172.google.com ([209.85.128.172]:42234 "EHLO
+        mail-wr0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750738AbeBUWxl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Feb 2018 17:53:41 -0500
+Received: by mail-wr0-f172.google.com with SMTP id k9so8675715wre.9
+        for <git@vger.kernel.org>; Wed, 21 Feb 2018 14:53:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=xD8no8H+hLdbrnitVVrXwgMds7jGG8FFFud+rIiqCk0=;
+        b=DZKedoltWmsV+PiiTGqGTbFuHT+RaX417KZTRu64+XGkpO1Y7RHIRZyxuGFKWw4oZy
+         8zUGD4o/WcF3U0RwKOW0RWB3J+cOqXAA6+NKDE4tDcmvS0RqXx4D0m0BpX/gBXAesJZ9
+         doWNnn9cYbWlBG6uWOHVuJWv6cVJL7Hdutfp04w23TcAM32t4rPz93Jznf9GNhFpW7aA
+         maqesrWyu/gUfXFmaQJyB6gM48KT5xBsd6mvqfA6goHzSy3cmLno2gSH+TOPdv1PDShf
+         9sBBAya0nKPpZ2ibfHIObAL+Un5KKcPIRC4+kfUJRU3zvdajKi7xatHNuoYCMpNQUejN
+         tMgA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=xD8no8H+hLdbrnitVVrXwgMds7jGG8FFFud+rIiqCk0=;
+        b=rGG7v8iGLDMns6mk1C+JgCkn3LPYOLvmdGDohMnaPETDbXm4sSAAoEPWCR1tWXuuqj
+         xuvFOLnQzOonTgKEfQ8DD/fzeqOlqVKZyZB+R41b2+J5j1pyOnjMA+AB70auC0Z9yO7s
+         QgKOz1Y8lJO2nqI4bEmo3V8RCZZ4XW0Gpl8xCWZbmmcKm2ACHGIyy5uR/sulsXJ45rrU
+         gHHQRcL/CZNmcjdd4NbefjweB+xDsIwMbgIQs4mWbECM+gw1vls29YP28l9ZbRZnj34N
+         qjNuMA7GjmN5hlSnRKnFBZqQ2Cj3j21lBMiAX0i3M8rL1YDat4eucilEy/oOYhfGMFlv
+         O13Q==
+X-Gm-Message-State: APf1xPDYg+cpeJhcqatAWE3XoNdc+RyeP/ltdT5JlG1J1CRuUznY4Ahh
+        JjDvQg4/dAYzUWtkWiUDhPxFCn/w
+X-Google-Smtp-Source: AH8x2269jifX8jXS+0AOIEz5RRJHOH7d9NIwliZxkxgKhzGWhrElH90Ws+l3yqWnGC/yMX7EhYWFRA==
+X-Received: by 10.223.187.199 with SMTP id z7mr4430186wrg.58.1519253620534;
+        Wed, 21 Feb 2018 14:53:40 -0800 (PST)
+Received: from evledraar (178-84-79-100.dynamic.upc.nl. [178.84.79.100])
+        by smtp.gmail.com with ESMTPSA id u22sm36252551wrf.86.2018.02.21.14.53.38
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 21 Feb 2018 14:53:39 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Basin Ilya <basinilya@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: test bare repository for unit tests
+References: <b8afa3d7-dc65-1abf-062a-a503f0c0f38d@gmail.com>
+User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 1.1.0
+In-reply-to: <b8afa3d7-dc65-1abf-062a-a503f0c0f38d@gmail.com>
+Date:   Wed, 21 Feb 2018 23:53:37 +0100
+Message-ID: <878tbmeyz2.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqtvuax9te.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 21, 2018 at 02:22:05PM -0800, Junio C Hamano wrote:
 
-> > I think that repeating the oid is intentional; the point is to dump how
-> > the traversal code is hitting the endpoints, even if we do so multiple
-> > times.
-> >
-> > The --oneline behavior just looks like a bug. I think --format is broken
-> > with --show-all, too (it does not show anything!).
-> 
-> I do not know about the --format thing,[...]
+On Wed, Feb 21 2018, Basin Ilya jotted:
 
-Hmm, maybe it is fine. I thought before that I got funny output out of
-"git log --show-all --format", but I can't seem to reproduce it now.
+> Hi.
+> I want to the test-repo-git under https://github.com/apache/maven-wagon/tree/master/wagon-providers/wagon-scm/src/test/resources/
+> just like test-repo-cvs and test-repo-svn
+>
+> Which configuation options would suit that?
+> I think core.compression 0 for human readable diffs.
+> also, I need to force loose, gc after each push.
 
-> being a bug is correct.  I've known about the oneline that does not
-> show anything other than the oid (not even end-of-line) for unparsed
-> commits for a long time---I just didn't bother looking into fixing
-> it exactly because this is only a debugging aid ;-)
+It looks like you have unit tests that are going to do integration tests
+of some SVN/CVS repos as used by some other tool, and want to add git to
+that.
 
-Out of curiosity, do you actually use --show-all for anything? I didn't
-even know it existed until this thread, and AFAICT nobody but Linus has
-ever recommended its use. And it does not even seem that useful as a
-general debugging aid.
+Since you have git already, the most straightforward thing to do would
+be to ship the output of git-fast-export in the repo, and have the test
+setup code create a repo locally out of that, then test it.
 
-So what I'm wondering is whether we should consider just ripping it out
-(but I'm OK with keeping it, as once the commit-buffer stuff is fixed,
-it's probably not hurting anybody).
-
--Peff
+Or do you really need to commit the raw repo files as-is for some reason
+I've missed?
