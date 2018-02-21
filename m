@@ -2,210 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CC9F01F404
-	for <e@80x24.org>; Wed, 21 Feb 2018 19:25:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5C7B11F404
+	for <e@80x24.org>; Wed, 21 Feb 2018 19:34:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751633AbeBUTZo (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Feb 2018 14:25:44 -0500
-Received: from mail-wr0-f195.google.com ([209.85.128.195]:38273 "EHLO
-        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751376AbeBUTZl (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Feb 2018 14:25:41 -0500
-Received: by mail-wr0-f195.google.com with SMTP id n7so7640502wrn.5
-        for <git@vger.kernel.org>; Wed, 21 Feb 2018 11:25:40 -0800 (PST)
+        id S1751565AbeBUTe5 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Feb 2018 14:34:57 -0500
+Received: from mail-yw0-f179.google.com ([209.85.161.179]:35060 "EHLO
+        mail-yw0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751401AbeBUTe4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Feb 2018 14:34:56 -0500
+Received: by mail-yw0-f179.google.com with SMTP id d205so893705ywe.2
+        for <git@vger.kernel.org>; Wed, 21 Feb 2018 11:34:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=XnauEjY4NqO893LT94Cqr5vwKn4ePDdYCtOWlqGwpz0=;
-        b=PLlT4t2M7e2xCseWXh4r2ZMJwc1lFr5b6b9jFaoOmnvopBcAz1B5h+J4BjNHWt8Err
-         eF3OstUm4r2dE8h23rXEc/94pa5gc0ZhbU2ZAUT2PNI44rKUV1xJoYFtTSOG56A9/8RJ
-         02uxlznSJCTdxfOxftJuaj73IDI3Taf0qAlWCfiOtcye+SswAIjXPMnK3m2Ygn5nXJs8
-         JDq7+gH6WXFdidjgmNg0sYgKCE5J5W7NEbX0FQ2/MPyqLMQcmrpuiEjiBsBFzC7BOcIO
-         kVtrHNu4on1oyunMJ8DgIFcZryQCSVmw8hya9k29AIupT0/6csKWdlL7G34ibpytVWnM
-         sMBg==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=OsCFTJ2lsXd1L8ousWdzfMqMQEm0nAN3pR7qLOEtmuQ=;
+        b=dDe1tr1FHOP8RMFJvkFt0CTb1QEMVslquCPYzR3nIs7jVEwdGExMLDSC1ZgrvnMsbS
+         KZ5avnAljqNPojUpVLw/cjk18jsGvt9AGqFm/eNk+Hi9nNoxU1jLN1L2G8SLlVISoH0a
+         QJTq4s+Ux7v8dKks7T769JV/DpWAi85ZAGlGU/6+BV2CFFAkNMH6HOnpBmg9PTH/kvU2
+         Wx9R+gH4oBdU5jWQBaX7xO3h39xosBHxIPzZ1v/Xr+qFIIDBXW/dpI8uwjzuvtWSuSkk
+         S5VKjGV8EgkK0graLp9CAovcivYr5tcc44vfmCnTto6upXPjxjPByyPoXOJvOPDj++No
+         nagA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=XnauEjY4NqO893LT94Cqr5vwKn4ePDdYCtOWlqGwpz0=;
-        b=t5mMWKPBEM6bN0moTlXx6mRBlpsd8Ua4GcWLqZ9iJsNdcQOem1ZJEX45HMWnDWnZuL
-         LCsV86g/CnxO793OB3xipEAK4HOCIVy/yQVYay/CkxIdlw6lqscyzk4uJUGD0QDz9hPt
-         rWLrW3XXTGv8T+8+3b7qr4Kc7v+Fa5Mopd9uvKunumi0X2VrdZ4CXKhz3seKnWNpp/WQ
-         UdDGfrMQR2WlZ09ZUCnqqWiHE94jdsN5HIYy/Y2gfCub10Y2x/MoPamD6zsFogkL5SIr
-         7JD8otFLQVa2VNnLSIkbtp4NgCYAVmmlDIblAvMpjEGIksKvM5g50V7kuNZ+jxiqLxOM
-         YeAw==
-X-Gm-Message-State: APf1xPAekNL2H284aF5BUSfHLc1zzIUQ2HYYG4lGun/8+Jznc+QsvfVG
-        rDZkd4xxyePscPucWRK1S1M=
-X-Google-Smtp-Source: AH8x225GRn81IU5BgssLn+ohv5IgslifThoCMWcJ0wNczv8j8fTV4NAATg83Pp8vCVtSo6NYKu/arg==
-X-Received: by 10.28.230.87 with SMTP id d84mr3043848wmh.133.1519241139113;
-        Wed, 21 Feb 2018 11:25:39 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id p29sm12669307wmf.3.2018.02.21.11.25.38
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 21 Feb 2018 11:25:38 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     git@vger.kernel.org, git@jeffhostetler.com, peff@peff.net,
-        jonathantanmy@google.com, szeder.dev@gmail.com, sbeller@google.com,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v4 05/13] commit-graph: implement 'git-commit-graph write'
-References: <4d1ee202-7d79-d73c-6e05-d0fc85db943c@gmail.com>
-        <1519066406-81663-1-git-send-email-dstolee@microsoft.com>
-        <1519066406-81663-6-git-send-email-dstolee@microsoft.com>
-Date:   Wed, 21 Feb 2018 11:25:37 -0800
-In-Reply-To: <1519066406-81663-6-git-send-email-dstolee@microsoft.com>
-        (Derrick Stolee's message of "Mon, 19 Feb 2018 13:53:18 -0500")
-Message-ID: <xmqq8tbmywjy.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=OsCFTJ2lsXd1L8ousWdzfMqMQEm0nAN3pR7qLOEtmuQ=;
+        b=TNTSqa8iAICiGcVrDHiE3z4p/SO32C17NolsuS+NyOd5YAViNOnb2KuJbUtGOwuYJG
+         6kAfz6cJBz6IDE2XLWi356NMndYKO3C2+T5r7Vuile/VKoCym0Do42jR0MGJKM2s916N
+         6KRYuNmnBsti0Mt6LDwVWr3rCtwitNhvap9ucrdFWZntAX7pIq3Qj7D0+pqfY3erisQ1
+         ecl90LyAo/yrCtWw0uO7gGSxeL8kpNGVldCINwsIrabLMX0FuO0Jn17HbZzpn7ruAchy
+         bdLJnzMbXXcx1gYWKY8s21GJxJZo3snjxiqj/otYDF8wq7HNMJE71NOFvOk5WQ6Gwb7k
+         soYg==
+X-Gm-Message-State: APf1xPAL6WpU+XysfZl3+zKN4q5KCDFsaDegU8PSCpXR0HizWvS53WDp
+        Y4LvgV234eYKDykywXxHz0BV1LoqttCiqVpFTMOH0Q==
+X-Google-Smtp-Source: AH8x227LxNnmMEiEoWR8KvkAfV/4jZOhXZfvwMl7cKgiykQsSAAH1XLFUxLmdGHkJofoY3XjMXTMpZsESpSqp13+kwo=
+X-Received: by 10.129.182.2 with SMTP id u2mr3057559ywh.345.1519241695350;
+ Wed, 21 Feb 2018 11:34:55 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 2002:a25:cfcb:0:0:0:0:0 with HTTP; Wed, 21 Feb 2018 11:34:54
+ -0800 (PST)
+In-Reply-To: <1519066406-81663-3-git-send-email-dstolee@microsoft.com>
+References: <4d1ee202-7d79-d73c-6e05-d0fc85db943c@gmail.com>
+ <1519066406-81663-1-git-send-email-dstolee@microsoft.com> <1519066406-81663-3-git-send-email-dstolee@microsoft.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 21 Feb 2018 11:34:54 -0800
+Message-ID: <CAGZ79kZy1Z9GnHjA=NRoiszjP+pYwBZCKRps_RCgwa+x-jmrWA@mail.gmail.com>
+Subject: Re: [PATCH v4 02/13] graph: add commit graph design document
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     git <git@vger.kernel.org>, Jeff Hostetler <git@jeffhostetler.com>,
+        Jeff King <peff@peff.net>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <stolee@gmail.com> writes:
+> +[3] https://public-inbox.org/git/20170907094718.b6kuzp2uhvkmwcso@sigill.intra.peff.net/t/#m7a2ea7b355aeda962e6b86404bcbadc648abfbba
+> +    More discussion about generation numbers and not storing them inside
+> +    commit objects. A valuable quote:
 
-> +static int graph_write(int argc, const char **argv)
-> +{
-> + ...
-> +	graph_name = write_commit_graph(opts.obj_dir);
-> +
-> +	if (graph_name) {
-> +		printf("%s\n", graph_name);
-> +		FREE_AND_NULL(graph_name);
-> +	}
-> +
-> +	return 0;
-> +}
-
-After successfully writing a graph file out, write_commit_graph()
-signals that fact by returning a non-NULL pointer, so that this
-caller can report the filename to the end user.  This caller
-protects itself from a NULL return, presumably because the callee
-uses it to signal an error when writing the graph file out?  
-
-Is it OK to lose that 1-bit of information, or should we have more like
-
-	if (graph_name) {
-		printf;
-		return 0;
-	} else {
-		return -1;
-	}
-
->  int cmd_commit_graph(int argc, const char **argv, const char *prefix)
->  {
->  	static struct option builtin_commit_graph_options[] = {
-> -		{ OPTION_STRING, 'p', "object-dir", &opts.obj_dir,
-> +		{ OPTION_STRING, 'o', "object-dir", &opts.obj_dir,
->  			N_("dir"),
->  			N_("The object directory to store the graph") },
->  		OPT_END(),
-
-The same comment for a no-op patch from an earlier step applies
-here, and we have another one that we saw above in graph_write().
-
-> @@ -31,6 +67,11 @@ int cmd_commit_graph(int argc, const char **argv, const char *prefix)
->  			     builtin_commit_graph_usage,
->  			     PARSE_OPT_STOP_AT_NON_OPTION);
->  
-> +	if (argc > 0) {
-> +		if (!strcmp(argv[0], "write"))
-> +			return graph_write(argc, argv);
-
-And if we fix "graph_write" to report an error with negative return,
-this needs to become something like
-
-		return !!graph_write(argc, argv);
-
-as we do not want to return a negative value to be passed via
-run_builtin() to exit(3) in handle_builtin().
-
-> diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
-> new file mode 100755
-> index 0000000..6a5e93c
-> --- /dev/null
-> +++ b/t/t5318-commit-graph.sh
-> @@ -0,0 +1,119 @@
-> +#!/bin/sh
-> +
-> +test_description='commit graph'
-> +. ./test-lib.sh
-> +
-> +test_expect_success 'setup full repo' '
-> +	rm -rf .git &&
-
-I am perfectly OK with creating a separate subdirectory called
-'full' in the trash directory given by the test framework, but
-unless absolutely necessary I'd rather not to see "rm -rf", 
-especially on ".git", in our test scripts.  People can screw up
-doing various things (like copying and pasting).
-
-> +	mkdir full &&
-> +	cd full &&
-> +	git init &&
-> +	objdir=".git/objects"
-> +'
-
-And I absolutely do not want to see "cd full" that leaves and stays
-in the subdirectory after this step is done.  
-
-Imagine what happens if any earlier step fails before doing "cd
-full", causing this "setup full" step to report failure, and then
-the test goes on to the next step?  We will not be in "full" and
-worse yet because we do not have "$TRASH_DIRECTORY/.git" (you
-removed it), the "git commit-graph write --object-dir" command we
-end up doing next will see the git source repository as the
-repository it is working on.  Never risk trashing our source
-repository with your test.  That is why we give you $TRASH_DIRECTORY
-to play in.  Make use of it when you can.
-
-I'd make this step just a single
-
-	git init full
-
-and then the next one
-
-	git -C full commit-graph write --object-dir .
-
-In later tests that have multi-step things, I'd instead make them
-
-	(
-		cd full &&
-		... whatever you do  &&
-		... in that separate  &&
-		... 'full' repository
-	)
-
-if I were writing this test *and* if I really wanted to do things
-inside $TRASH_DIRECTORY/full/.git repository.  I am not convinced
-yet about the latter.  I know that it will make certain things
-simpler to use a separate /full hierarchy (e.g. cleaning up, having
-another unrelated test repository, etc.) while making other things
-more cumbersome (e.g. you need to be careful when you "cd" and the
-easiest way to do so is to ( do things in a subshell )).  I just do
-not know what the trade-off would look like in this particular case.
-
-A simple rule of thumb I try to follow is not to change $(pwd) for
-the process that runs these test_expect_success shell functions.
-
-> +
-> +test_expect_success 'write graph with no packs' '
-> +	git commit-graph write --object-dir .
-> +'
-> +
-> +test_expect_success 'create commits and repack' '
-> +	for i in $(test_seq 3)
-> +	do
-> +		test_commit $i &&
-> +		git branch commits/$i
-> +	done &&
-> +	git repack
-> +'
+Unlike the other public inbox links this links to a discussion with
+all messages on one page,
+https://public-inbox.org/git/20170908034739.4op3w4f2ma5s65ku@sigill.intra.peff.net/
+would
+have this be more inline with the other links. (this is a super small
+nit, which I am not sure if
+we care about at all; the rest of the doc is awesome!)
