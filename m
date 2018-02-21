@@ -2,103 +2,163 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4DFDE1F404
-	for <e@80x24.org>; Wed, 21 Feb 2018 21:34:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E915D1F404
+	for <e@80x24.org>; Wed, 21 Feb 2018 21:44:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751158AbeBUVex (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Feb 2018 16:34:53 -0500
-Received: from mail-yw0-f182.google.com ([209.85.161.182]:44471 "EHLO
-        mail-yw0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750779AbeBUVew (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Feb 2018 16:34:52 -0500
-Received: by mail-yw0-f182.google.com with SMTP id x197so754458ywg.11
-        for <git@vger.kernel.org>; Wed, 21 Feb 2018 13:34:52 -0800 (PST)
+        id S1750779AbeBUVo0 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Feb 2018 16:44:26 -0500
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:45916 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750716AbeBUVoZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Feb 2018 16:44:25 -0500
+Received: by mail-pf0-f195.google.com with SMTP id j24so1208955pff.12
+        for <git@vger.kernel.org>; Wed, 21 Feb 2018 13:44:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=9W8SRQ2HK/74ugjg2zBog+nyKnFwh3Pc2nj2FljTFzQ=;
-        b=Y72VdNd4oLG31xDdlqGPfehXJGW5fJwiZe8yRKjsGqD/WObmAfrQLj8Rhb9184xclL
-         lBVC1h+QcgI1Vtyb4hA1bO2sfgeIl9puZJU4wgn47G5lBLRCyHSm/ytXdPjl2NQehcWb
-         hecF5itBQtF+z6mjQNYAOlab1hG/sZPr3It4HachyERq4XV1aqDtx2Ya/exTykZRgmvN
-         87Y2bfhWE7tD7q1HCwsH8fzSAeVZPwxbe/qncLDD7CX06exqFEg6Swgxx4y8LyxXfqaT
-         DQQ8iCbB8J7LsQH3b8onOT/1RdbyQ2RtaoKkBk46c6WBX2R83A0KYaXjfmGEUrkXujAd
-         A1hQ==
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=TqwQaczBnM2M30be4pGdGVSVIgwTzewf6P4sCwxdZyQ=;
+        b=o5eCDO6J6yowJdstFGbNPrzOzXKracPy4+xpRSZQScitFPIlrz+e9m0JOMufeIj2ph
+         2SvRkwnrrgIPhI8vCRoXRep/hdWt/jZrbNDiCBHbVdvli/AnPbwGnvr1Q2Ix2BJXZ7JY
+         gl/QAENohVOqjIX9BB8KCElbfmTBOLIoCTrZ+qv3L+lD+X0Qp6VVKJSk6uB7Vhy9MBej
+         8okgWKs3BEBTRH4lJUZgbP+dFboWh65z3ISDb4JU+sxZjUilzziUH5k+B3/RjEhi1+OG
+         HqbhDgOHFx5FNLH7t2qdjBGBbXu/mccPqBhFN6wUahseUOMrtyBBXs7oYrFpzFx7gcWc
+         Xi9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=9W8SRQ2HK/74ugjg2zBog+nyKnFwh3Pc2nj2FljTFzQ=;
-        b=g1FW9tA2svw+MQ8LBUJ9LjcdeJzcI4i/VBfySBqwfwdRhhP/+AJlvnWCkEx6X9YVM2
-         Qix9oVsz8XVukRsCjbY2lft5ZPS6uBrf2EVSD9ZeTqCRMW+OYdGa6LfWrvkaVBC3f8Sf
-         jTloPujTOU1DFOBIz1MjYu2WkxIFAXNnc91GSilqzWK7MQgFEQLNch/iXZLROYu95eQM
-         gBCJTYhMTaSkzsT0Wkhq+88uF+qN90TjBM97t6BNViZbc9ybg9AQgFV/rDY6gdSXqIK7
-         mmQEt3XrzeFXjlujjPJ2+LWO7Z9I60fgdUfBkhMP3UcZULWuLkJZUyBQeFMVPLIiF7mv
-         JfpQ==
-X-Gm-Message-State: APf1xPBmWQmjZXkEF83TzA5zhQlqtb4KNnnsIpy2CGQD4HVl6fWLkacN
-        /e0/eQcFO5S3qgxIzbozfznd8rujMMiXtbdZUSB83w==
-X-Google-Smtp-Source: AH8x225gDFBbAX2vsVc2mAJZ1cpq4m7WQCXmVpIXk9yJ5HRIRQDi/4w3SLVM+a4B2kATScMzFADGXUU0W/NpciaJTaY=
-X-Received: by 10.13.237.70 with SMTP id w67mr3348975ywe.414.1519248891270;
- Wed, 21 Feb 2018 13:34:51 -0800 (PST)
-MIME-Version: 1.0
-Received: by 2002:a25:cfcb:0:0:0:0:0 with HTTP; Wed, 21 Feb 2018 13:34:50
- -0800 (PST)
-In-Reply-To: <1519066406-81663-9-git-send-email-dstolee@microsoft.com>
-References: <4d1ee202-7d79-d73c-6e05-d0fc85db943c@gmail.com>
- <1519066406-81663-1-git-send-email-dstolee@microsoft.com> <1519066406-81663-9-git-send-email-dstolee@microsoft.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 21 Feb 2018 13:34:50 -0800
-Message-ID: <CAGZ79kai=KegG-XPmtZJRhTcD-M5Edsw8eocje41mdbL-RARAA@mail.gmail.com>
-Subject: Re: [PATCH v4 08/13] commit-graph: implement --delete-expired
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     git <git@vger.kernel.org>, Jeff Hostetler <git@jeffhostetler.com>,
-        Jeff King <peff@peff.net>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=TqwQaczBnM2M30be4pGdGVSVIgwTzewf6P4sCwxdZyQ=;
+        b=Q+jGs/RiM5L8udVKjrSSPQjA8TFzoykSBHKma09HHwnTAmaMiqeHc8gASBryVJF+iB
+         WfueFkawfO3Yrf+ZtPATqQ0w08itrdIOoLyZU6LIK9PXS89jnfZyTiDL83M07WVOzM8C
+         yqeVaNIgP0/rOFV2txjU4yDh07NYNzHBZABqcZBYEQO1zsZLn6O9MAVjchxZiPEQKMwj
+         WDz3/wVo7RjYIlLiJP455YIGLe8lOGAmCIr10hOoMuxElqZyHqti/YD19sLiWS+GiJrW
+         BcmfWv7AQXke9CZuc/3eakSwSqRdPYjOkcHIZ8+PQrfOiRV3g0B0bZzOyv6QF9lZY/OA
+         ixbg==
+X-Gm-Message-State: APf1xPAGIn0/pRJ4HL8zCP6aPIn0KCIUGpOqK6t6t9UW7/08IFC3DAaz
+        kW1YH31zqPfEYYmFVR9TfuYymQ==
+X-Google-Smtp-Source: AH8x2269HSX63WKZMYm1Q9WT9ZbwJSGdb5B43KyZk5x7D7YdkuKAzzgrP0sypzkBTN68XDb4vQJ5ZQ==
+X-Received: by 10.98.14.200 with SMTP id 69mr4574735pfo.168.1519249464805;
+        Wed, 21 Feb 2018 13:44:24 -0800 (PST)
+Received: from twelve3.svl.corp.google.com ([2620:0:100e:422:ffac:c1d4:4bf7:bb93])
+        by smtp.gmail.com with ESMTPSA id c14sm24941473pfn.185.2018.02.21.13.44.22
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 21 Feb 2018 13:44:23 -0800 (PST)
+Date:   Wed, 21 Feb 2018 13:44:22 -0800
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git@vger.kernel.org, sbeller@google.com, peff@peff.net,
+        gitster@pobox.com, jrnieder@gmail.com, stolee@gmail.com,
+        git@jeffhostetler.com, pclouds@gmail.com
+Subject: Re: [PATCH v3 04/35] upload-pack: convert to a builtin
+Message-Id: <20180221134422.2386e1aca39fe673235590e7@google.com>
+In-Reply-To: <20180207011312.189834-5-bmwill@google.com>
+References: <20180125235838.138135-1-bmwill@google.com>
+        <20180207011312.189834-1-bmwill@google.com>
+        <20180207011312.189834-5-bmwill@google.com>
+X-Mailer: Sylpheed 3.6.0 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Feb 19, 2018 at 10:53 AM, Derrick Stolee <stolee@gmail.com> wrote:
+On Tue,  6 Feb 2018 17:12:41 -0800
+Brandon Williams <bmwill@google.com> wrote:
 
->         graph_name = write_commit_graph(opts.obj_dir);
->
->         if (graph_name) {
->                 if (opts.set_latest)
->                         set_latest_file(opts.obj_dir, graph_name);
->
-> +               if (opts.delete_expired)
-> +                       do_delete_expired(opts.obj_dir,
-> +                                         old_graph_name,
-> +                                         graph_name);
-> +
+> In order to allow for code sharing with the server-side of fetch in
+> protocol-v2 convert upload-pack to be a builtin.
+> 
+> Signed-off-by: Brandon Williams <bmwill@google.com>
 
-So this only allows to delete expired things and setting the latest
-when writing a new graph. Would we ever envision a user to produce
-a new graph (e.g. via obtaining a graph that they got from a server) and
-then manually rerouting the latest to that new graph file without writing
-that graph file in the same process? The same for expired.
+As Stefan mentioned in [1], also mention in the commit message that this
+means that the "git-upload-pack" invocation gains additional
+capabilities (for example, invoking a pager for --help).
 
-I guess these operations are just available via editing the
-latest or deleting files manually, which slightly contradicts
-e.g. "git update-ref", which in olden times was just a fancy way
-of rewriting the refs file manually. (though it claims to be less
-prone to errors as it takes lock files)
+Having said that, the main purpose of this patch seems to be to libify
+upload-pack, and the move to builtin is just a way of putting the
+program somewhere - we could have easily renamed upload-pack.c and
+created a new upload-pack.c containing the main(), preserving the
+non-builtin-ness of upload-pack, while still gaining the benefits of
+libifying upload-pack.
 
->
->  extern char *get_graph_latest_filename(const char *obj_dir);
-> +extern char *get_graph_latest_contents(const char *obj_dir);
+If the community does want to make upload-pack a builtin, I would write
+the commit message this way:
 
-Did
-https://public-inbox.org/git/20180208213806.GA6381@sigill.intra.peff.net/
-ever make it into tree? (It is sort of new, but I feel we'd want to
-strive for consistency in the code base, eventually.)
+  upload-pack: libify
+
+  Libify upload-pack. The main() function is moved to
+  builtin/upload-pack.c, thus making upload-pack a builtin. Note that
+  this means that "git-upload-pack" gains functionality such as the
+  ability to invoke a pager when passed "--help".
+
+And if not:
+
+  upload-pack: libify
+
+  Libify upload-pack by moving most of the functionality in
+  upload-pack.c into a file upload-pack-lib.c (or some other name),
+  to be used in subsequent patches.
+
+[1] https://public-inbox.org/git/CAGZ79kb2=uU0_K8wr27gNdNX-T+P+7gVdgc5EBdYc3zBobsR8w@mail.gmail.com/
+
+> -static void upload_pack(void)
+> -{
+> -	struct string_list symref = STRING_LIST_INIT_DUP;
+> -
+> -	head_ref_namespaced(find_symref, &symref);
+> -
+> -	if (advertise_refs || !stateless_rpc) {
+> -		reset_timeout();
+> -		head_ref_namespaced(send_ref, &symref);
+> -		for_each_namespaced_ref(send_ref, &symref);
+> -		advertise_shallow_grafts(1);
+> -		packet_flush(1);
+> -	} else {
+> -		head_ref_namespaced(check_ref, NULL);
+> -		for_each_namespaced_ref(check_ref, NULL);
+> -	}
+> -	string_list_clear(&symref, 1);
+> -	if (advertise_refs)
+> -		return;
+> -
+> -	receive_needs();
+> -	if (want_obj.nr) {
+> -		get_common_commits();
+> -		create_pack_file();
+> -	}
+> -}
+
+I see that this function had to be moved to the bottom because it now
+also needs to make use of functions like upload_pack_config() - that's
+fine.
+
+> +struct upload_pack_options {
+> +	int stateless_rpc;
+> +	int advertise_refs;
+> +	unsigned int timeout;
+> +	int daemon_mode;
+> +};
+
+I would have expected "unsigned stateless_rpc : 1" etc., but I see that
+this makes it easier to use with OPT_BOOL (which needs us to pass it a
+pointer-to-int).
+
+As for what existing code does, files like fetch-pack and diff use
+"unsigned : 1", but they also process arguments without OPT_, so I don't
+think they are relevant.
+
+I think that we should decide if we're going to prefer "unsigned : 1" or
+"int" for flags in new code. Personally, I prefer "unsigned : 1"
+(despite the slight inconvenience in that argument parsers will need to
+declare their own temporary "int" and then assign its contents to the
+options struct) because of the stronger type, but I'm OK either way.
+Whatever the decision, I don't think it needs to block the review of
+this patch set.
