@@ -2,66 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 86EE11F404
-	for <e@80x24.org>; Wed, 21 Feb 2018 23:34:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4508C1F404
+	for <e@80x24.org>; Wed, 21 Feb 2018 23:35:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751000AbeBUXeg (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Feb 2018 18:34:36 -0500
-Received: from cloud.peff.net ([104.130.231.41]:60162 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1750752AbeBUXef (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Feb 2018 18:34:35 -0500
-Received: (qmail 21840 invoked by uid 109); 21 Feb 2018 23:34:35 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 21 Feb 2018 23:34:35 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 29234 invoked by uid 111); 21 Feb 2018 23:35:22 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 21 Feb 2018 18:35:22 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 21 Feb 2018 18:34:33 -0500
-Date:   Wed, 21 Feb 2018 18:34:33 -0500
-From:   Jeff King <peff@peff.net>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Derrick Stolee <dstolee@microsoft.com>, git@vger.kernel.org
-Subject: Re: [PATCH] commit: drop uses of get_cached_commit_buffer()
-Message-ID: <20180221233433.GA29992@sigill.intra.peff.net>
-References: <20180221185204.GA8476@sigill.intra.peff.net>
- <1519240631-221761-1-git-send-email-dstolee@microsoft.com>
- <07690508-e6c6-5b3b-6c03-5ad83c9c3501@gmail.com>
+        id S1751158AbeBUXfy (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Feb 2018 18:35:54 -0500
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:40011 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750752AbeBUXfx (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Feb 2018 18:35:53 -0500
+Received: by mail-wm0-f67.google.com with SMTP id t82so420993wmt.5
+        for <git@vger.kernel.org>; Wed, 21 Feb 2018 15:35:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=z77ZEG10R7tQEerUgE5p40bwujjUuWvk4mt9zb8I3Zs=;
+        b=dyUncaClKgxqi1sEPDUkTNI+op7BmcFTNpb0Eyx75kK+hI8Ui91WtY/5QnmDEka88v
+         tSjeWh47A2bow8GMGtJwcJkz1dUWQQpw3sQ5BfGc0uew+YAOqGw9PGN530ZxuUH+JGwV
+         0aNzxBdZEK9mlBv/mQPzvmvReU72R6mrAKfP0I2V4+AliwmZ6w7awkU6FzYNh+DXfsHs
+         yOZq6z95nNmkQ3plcH0tXRKO9t5od1yzZ/pI8vpPfU7LQScsoAKtss8zXKvneGISD5St
+         YB3C4JE3/wuf1ZPLhLIQbZEl/dNX2Oi75OU/jVs1x3aBC+ZZtJ3BD0exrr8y5xjTCnCh
+         e72g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=z77ZEG10R7tQEerUgE5p40bwujjUuWvk4mt9zb8I3Zs=;
+        b=KeSw1X6E4xqpX6iAbiBeqQB+oGAYuImetXOLkHJRKLmtgeKWFviuDsRHx63fgZDnBR
+         w+Ne24jbQvr4Ah/zN8d+LeumHVDm1laEIbvEiO+hqAq2BSzaTREvvVF3qy5lYqDi/ydN
+         D9lN/T+IG3iMiXnxiLTd5XNop8DjKsb9USR+niS7yRc5uE4mn07CBwX+d++ZMVoQ0GKE
+         1sxFoJ0i5ONfMf8Ar2yCpVpsYg+NpGFatqB29oBPrhiX0YK8mMZeExgZ+RGR2uJR6zEs
+         wJBUb0BjsGve0ILKdp8sSog5gSn9IVwWp9nE6+g4By8jm+IPSRIT0b+AvQ+qJzcTUOqO
+         Gb/Q==
+X-Gm-Message-State: APf1xPCpEbb1L0rmH3qfrskEVUqLTTGsUTCHNacrO2MrOLgLK0zBIAKK
+        Io4972J+QXRGlCg/ieDmEfY=
+X-Google-Smtp-Source: AH8x225hwIhjGVNXvoscMiTankEtkJpafbqrrPlYrpBEglkPLqWEa6Dk7HTPTjBlsh7SzZLuuH5gFA==
+X-Received: by 10.28.3.4 with SMTP id 4mr3430881wmd.60.1519256151615;
+        Wed, 21 Feb 2018 15:35:51 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id m69sm11244116wmd.32.2018.02.21.15.35.50
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 21 Feb 2018 15:35:50 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Brandon Williams <bmwill@google.com>,
+        Stefan Beller <sbeller@google.com>, git <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>,
+        Philip Oakley <philipoakley@iee.org>,
+        Derrick Stolee <stolee@gmail.com>,
+        Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: [PATCH 04/26] upload-pack: convert to a builtin
+References: <20180103001828.205012-1-bmwill@google.com>
+        <20180103001828.205012-5-bmwill@google.com>
+        <CAGZ79kb2=uU0_K8wr27gNdNX-T+P+7gVdgc5EBdYc3zBobsR8w@mail.gmail.com>
+        <20180103203956.GA44365@google.com>
+        <20180221214755.GA10327@aiede.svl.corp.google.com>
+Date:   Wed, 21 Feb 2018 15:35:50 -0800
+In-Reply-To: <20180221214755.GA10327@aiede.svl.corp.google.com> (Jonathan
+        Nieder's message of "Wed, 21 Feb 2018 13:47:55 -0800")
+Message-ID: <xmqqefldykyx.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <07690508-e6c6-5b3b-6c03-5ad83c9c3501@gmail.com>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 21, 2018 at 02:19:17PM -0500, Derrick Stolee wrote:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> > These behaviors are undocumented, untested, and unlikely to be
-> > expected by users or other software attempting to parse this output.
-> > 
-> > Helped-by: Jeff King <peff@peff.net>
-> > Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> 
-> This would be a good time to allow multiple authors, or to just change the
-> author, since this is exactly the diff you (Peff) provided in an earlier
-> email. The commit message hopefully summarizes our discussion, but I welcome
-> edits.
+> For defense in depth, it would be comforting if the git wrapper had
+> some understanding of "don't support --help in handle_builtin when
+> invoked as a dashed command".  That is, I don't expect that anyone has
+> been relying on
+>
+> 	git-add --help
+>
+> acting like
+>
+> 	git help add
+>
+> instead of printing the usage message from
+>
+> 	git add -h
 
-The point is moot if we take the revision I just sent (though in
-retrospect I really ought to have put in a Reported-by: for you there).
+Sounds like a neat trick.
 
-But some communities are settling on Co-authored-by as a trailer for
-this case. And GitHub has started parsing and showing that along with
-author information:
+> It's a little fussy because today we rewrite "git add --help" to
+> "git-add --help" before rewriting it to "git help add"; we'd have to
+> skip that middle hop for this to work.
 
-  https://github.com/blog/2496-commit-together-with-co-authors
+I do not quite get this part.  "git add --help" goes through run_argv()
+and then to handle_builtin() which is what does this "git help add"
+swapping.
 
--Peff
+"git-add --help" does get thrown into the same codepath by
+pretending as if we got "add --help" as an argument to "git"
+command, and that happens without going through run_argv(),
+so presumably we can add another perameter to handle_builtin()
+so that the callee can tell these two invocation sites apart, no?
+
+> I don't think that has to block this patch or series, though --- it's
+> just a separate thought about hardening.
+
+Yeah, I agree with this assessment.
