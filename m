@@ -2,77 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D641F1F404
-	for <e@80x24.org>; Wed, 21 Feb 2018 13:34:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C04711F404
+	for <e@80x24.org>; Wed, 21 Feb 2018 13:47:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S936225AbeBUNeG (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Feb 2018 08:34:06 -0500
-Received: from mail-qk0-f170.google.com ([209.85.220.170]:33349 "EHLO
-        mail-qk0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933420AbeBUNeD (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Feb 2018 08:34:03 -0500
-Received: by mail-qk0-f170.google.com with SMTP id f25so1917614qkm.0
-        for <git@vger.kernel.org>; Wed, 21 Feb 2018 05:34:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gnustavo-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=hm64wt/u6UKdIQ37lMyoNShvj3jGgyg+7wctMwOp6zM=;
-        b=JbShoCO6AJIeVm1cywMhD7grCAO8sRPTXyOi0Eil1kjG5WfrS3dVGqK72xIL0Bp4bT
-         fdwPkRbledVegtjNIgedg2cu2taoel110Ye38FJO74PI7q3/0ZS7i3oIfv/YnjEOm0nJ
-         yaOBWmgSQGWCj27lAdODCWmAXp+kVSdvq/7vheaAZclKo99ZsFlO1ZeTqC4VzLQfLXLm
-         xeqSK7XcapqZJ2YOV+kilDuqBxB7GzE2oGmQDtgHZQ2W6CXmZ8uuvExtPRIGDWS04MnQ
-         7Dk15wt6Uk47MECTmanMbcBHxzaBfU6389cgHZgu0ztJ7rHPztClClbeJt1s1AN/ttK7
-         IJ1g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=hm64wt/u6UKdIQ37lMyoNShvj3jGgyg+7wctMwOp6zM=;
-        b=tb8wpxD5/Qx8yEFBSkfjR9H3qcsWU0pT53jY89BDh1mHgG8AgFPvZbnR2qCaulvoo7
-         L6bt5QZydEcb8d1WLzKUubEZTyonWG4A/b+FGkVYQH1I8o4RPrTVf/z3rmJC9aDusG2m
-         eC+3X7ycx6708RcR/xQ0lg+46FNkErIKX+Hf7hRhr+aPUdruXvQmkoplTfpl/l1R9jKI
-         TlitWTGI2hjIgjW18Ah+hxE6HHmqKfY652lsx1VSjnQrfcoSb2bu3oqf1pQ6ezp0U/FC
-         TKAtMMLKqqjyS4ocRpNN42YfaJMcXF8ZoY9lExV0C7IAzKw32h5TbLHRuNF/aRLkZ3lT
-         X2HQ==
-X-Gm-Message-State: APf1xPBQiJhDil2f9X806REYngxSvPYqAUFU+Fvo9ZKdAtYhIznzWCPg
-        weR6AYVhAw6dC8EzoKxSw4vBCYr/mocJIJy9NdyqYw==
-X-Google-Smtp-Source: AG47ELst2dDNl3/cX26/7hpvqgq7j/L7T3eN57HBk8Itb66glAvr8rzUwN7NmZftIniR9y1w7GfTmcssKcYggaefxNQ=
-X-Received: by 10.55.77.77 with SMTP id a74mr4843476qkb.239.1519220043128;
- Wed, 21 Feb 2018 05:34:03 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.140.80.145 with HTTP; Wed, 21 Feb 2018 05:33:42 -0800 (PST)
-In-Reply-To: <xmqqfu5v4k4c.fsf@gitster-ct.c.googlers.com>
-References: <CAPx58qqv84+i0JbdsVzFqWB=bRDecWHxss8frD4=nWOsFj-NPg@mail.gmail.com>
- <CAPx58qoS-J+yJ_J4QOOnKyG=EOrT5J=UoCrXfXxEijq4Z2Z_3w@mail.gmail.com>
- <7ff6079d-5834-3bbd-781b-a2fc0659e7e5@talktalk.net> <xmqqfu5v4k4c.fsf@gitster-ct.c.googlers.com>
-From:   Gustavo Chaves <gustavo@gnustavo.com>
-Date:   Wed, 21 Feb 2018 10:33:42 -0300
-Message-ID: <CAPx58qp4VssKSKWJ=ng9CwHZUqkgnw6=D5iJLFyhYzwMz-zocA@mail.gmail.com>
-Subject: Re: Why git-revert doesn't invoke the pre-commit and the commit-msg hooks?
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Phillip Wood <phillip.wood@talktalk.net>, git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+        id S935292AbeBUNrv (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Feb 2018 08:47:51 -0500
+Received: from homie.mail.dreamhost.com ([208.97.132.208]:59721 "EHLO
+        homiemail-a37.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S932772AbeBUNrt (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 21 Feb 2018 08:47:49 -0500
+X-Greylist: delayed 86719 seconds by postgrey-1.27 at vger.kernel.org; Wed, 21 Feb 2018 08:47:49 EST
+Received: from homiemail-a37.g.dreamhost.com (localhost [127.0.0.1])
+        by homiemail-a37.g.dreamhost.com (Postfix) with ESMTP id C14B620806E
+        for <git@vger.kernel.org>; Wed, 21 Feb 2018 05:47:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=mattmccutchen.net; h=
+        message-id:subject:from:to:date:in-reply-to:references
+        :content-type:mime-version:content-transfer-encoding; s=
+        mattmccutchen.net; bh=qyDX3igq0m+p1pk0/MUGfqtUVd8=; b=sgM4SyUh6J
+        1UVtw+i1eSZsq7Fi75GYyKkiBC14hPblv+Pe4D1gKBPZey5T1is5f/afWMJ97gCK
+        5b3lVmXUXa8mL0PR6tJnyigkVQICxRuX09FIEaP8kwhdXU4KfBXK8IQ1jNiOR3Wa
+        EIgCUMxDLVHWkn11X2sRaC17I61wVOpko=
+Received: from main (c-73-149-22-67.hsd1.ma.comcast.net [73.149.22.67])
+        (using TLSv1 with cipher AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: matt@mattmccutchen.net)
+        by homiemail-a37.g.dreamhost.com (Postfix) with ESMTPSA id 5E75220806C
+        for <git@vger.kernel.org>; Wed, 21 Feb 2018 05:47:48 -0800 (PST)
+Message-ID: <1519220864.3059.14.camel@mattmccutchen.net>
+Subject: Re: Duplicate safecrlf warning for racily clean index entry
+From:   Matt McCutchen <matt@mattmccutchen.net>
+To:     git <git@vger.kernel.org>
+Date:   Wed, 21 Feb 2018 08:47:44 -0500
+In-Reply-To: <1519134146.6055.23.camel@mattmccutchen.net>
+References: <1519134146.6055.23.camel@mattmccutchen.net>
 Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.24.6 (3.24.6-1.fc26) 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-2018-02-20 15:00 GMT-03:00 Junio C Hamano <gitster@pobox.com>:
-> It would make more sense (if we were to add
-> an option to run any hook we currently do not run to the command) to
-> run pre-revert/revert-msg hooks instead, and then people who happen
-> to want to do the same thing in these hooks what they do for
-> ordinary commits can just call their pre-commit/commit-msg hooks
-> from there, perhaps.
+On Tue, 2018-02-20 at 08:42 -0500, Matt McCutchen wrote:
+> In either case, if "git update-index --refresh" (or "git status") is
+> run before "git add", then "git add" does not print the warning.  On
+> the other hand, if line endings in the working tree file are changed,
+> then git shows the file as having an unstaged change, even though the
+> content that would be added to the index after CRLF conversion is
+> identical.  So it seems that git remembers the pre-conversion file
+> content and uses it for "git update-index --refresh" and would just
+> need to use it for "git add" as well.
 
-I like this idea very much as it doesn't break a long standing behaviour and
-simply introduces a new feature.
+On further testing, this analysis is wrong.  What I was seeing is that
+if the size of the working tree file has changed, git reports an
+unstaged change.  (I suppose that reporting an unstaged change in this
+case without checking whether the post-conversion content has changed
+may be an important optimization.)  If the line endings are changed
+without changing the size or post-conversion content, then no unstaged
+change is reported.  It does not appear that git saves the pre-
+conversion content.
 
--- 
-Gustavo.
+Thus, if it were possible to create a file that doesn't need a safecrlf
+warning, add it to the index, and then modify it so that it does need a
+safecrlf warning without changing the size or post-conversion content,
+we would have a bug where no warning is shown in the case where "git
+status" is run before the second "git add".  I believe this bug can't
+occur in the particular case of CRLF conversion without other filters
+because the file that doesn't need a safecrlf warning has a unique
+minimum (LF) or maximum (CRLF) size, though I presume it could occur
+with custom filters.  My proposal would then be that "git add" should
+not show a safecrlf warning if the size and post-conversion content
+haven't changed; it would merely bring "git add" to parity with the
+potential bug in the "git status" case.
+
+Matt
