@@ -2,118 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9E9DE1F404
-	for <e@80x24.org>; Wed, 21 Feb 2018 22:11:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C68F41F404
+	for <e@80x24.org>; Wed, 21 Feb 2018 22:14:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751155AbeBUWLj (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Feb 2018 17:11:39 -0500
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:35198 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750738AbeBUWLi (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Feb 2018 17:11:38 -0500
-Received: by mail-pf0-f194.google.com with SMTP id y186so561702pfb.2
-        for <git@vger.kernel.org>; Wed, 21 Feb 2018 14:11:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=DLS/KiuGh3XWiLwryrtkDaKLu5EHS3Mo/6cKtS4gAFM=;
-        b=f17tX91OHv/YqRfnfzTJoyI/iZWDnW/ecR+CeR87EL1wK8FbT792NCXD7OpBKndmAI
-         YbI9lWa6ccqYxrmUXEuSdEzdQNcdL7O1TP+AQ0MXy9YD5FWkJgB2vew1C30UhjnmkFqB
-         pOrimh1hctpE46EB3/4oX2grBrbgzW91KvoiVKyR5UlaBqA8iJIH+DaR/vinkGQl63Co
-         +uEdtz6ymFF2F71jZEYwhLQwlVISWMOrhd6X0ZVyYgrNavmwPks9r4SiTJymq5Qv1kUF
-         3hNOvsyj21IPctiCEAwXzwW+lkbXtRYBvSU67gD8yUZwMc6eQwfpbcb1qarRJO0NqLwP
-         SxmA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=DLS/KiuGh3XWiLwryrtkDaKLu5EHS3Mo/6cKtS4gAFM=;
-        b=jrFje32yB3ZcKWmEywZOPBGINWdZTZl4PpuUna2jii2SMIS6WcyxWaVNEa+v0UbVxB
-         nXy+XSdiLUqdjebQvi1gHY7LjuQLdYkz5wY9RjpZspDmN0gPj4WLXwW2jLxQXu9MIsUs
-         AifAu4Mg9+vQONYvuZgjJS2mWRsDnJFefvCROpMQxQfzIbENsVBvvf79q8GeHXORaR+C
-         xfi5b0jaZLTMlm4WTxQMotseQDuo3cnXDtNihpluHyiQZuWc9riPee0jdQBZ/G1z5280
-         qtliWKVbCiWpdy5FmFCa+eEAcWNFhABXXuw9kM30n4blm/zSj5O74augnjy73a/N5xd3
-         fOXw==
-X-Gm-Message-State: APf1xPBr6bRuRI5HygAQzc6LkxdxwPvZCdDdHoDfsnOprtE4eBJBB5Gs
-        i83sctuVIAcIA329XLh524SucA==
-X-Google-Smtp-Source: AH8x226GwcmcnVlaUFwVSxjnJPbdGcgsuWxltHQkBucxl8i+y1UHrs1bSCxBepITtLiPrZv90D8+BQ==
-X-Received: by 10.99.95.81 with SMTP id t78mr3830975pgb.380.1519251097770;
-        Wed, 21 Feb 2018 14:11:37 -0800 (PST)
-Received: from twelve3.svl.corp.google.com ([2620:0:100e:422:ffac:c1d4:4bf7:bb93])
-        by smtp.gmail.com with ESMTPSA id q65sm4846579pfd.140.2018.02.21.14.11.35
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 21 Feb 2018 14:11:36 -0800 (PST)
-Date:   Wed, 21 Feb 2018 14:11:35 -0800
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org, sbeller@google.com, peff@peff.net,
-        gitster@pobox.com, jrnieder@gmail.com, stolee@gmail.com,
-        git@jeffhostetler.com, pclouds@gmail.com
-Subject: Re: [PATCH v3 08/35] connect: discover protocol version outside of
- get_remote_heads
-Message-Id: <20180221141135.c78d72b422f985aae5375bca@google.com>
-In-Reply-To: <20180207011312.189834-9-bmwill@google.com>
-References: <20180125235838.138135-1-bmwill@google.com>
-        <20180207011312.189834-1-bmwill@google.com>
-        <20180207011312.189834-9-bmwill@google.com>
-X-Mailer: Sylpheed 3.6.0 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+        id S1750826AbeBUWOp (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Feb 2018 17:14:45 -0500
+Received: from titan.plasma.xg8.de ([85.10.203.189]:37612 "EHLO
+        titan.PLASMA.Xg8.DE" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750738AbeBUWOp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Feb 2018 17:14:45 -0500
+Received: from titan.PLASMA.Xg8.DE (localhost [127.0.0.1])
+        by titan.PLASMA.Xg8.DE (8.15.2/8.15.2) with ESMTPS id w1LMEdLg005253
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Wed, 21 Feb 2018 23:14:39 +0100
+Received: (from uucp@localhost)
+        by titan.PLASMA.Xg8.DE (8.15.2/8.15.2/Submit) with UUCP id w1LMEc3M005252;
+        Wed, 21 Feb 2018 23:14:39 +0100
+Received: from helen.PLASMA.Xg8.DE (localhost.localdomain [127.0.0.1])
+        by helen.PLASMA.Xg8.DE (8.15.2/8.15.2) with ESMTP id w1LMEKfg008145;
+        Wed, 21 Feb 2018 23:14:20 +0100
+Received: (from rtc@localhost)
+        by helen.PLASMA.Xg8.DE (8.15.2/8.15.2/Submit) id w1LMEKpi008144;
+        Wed, 21 Feb 2018 23:14:20 +0100
+Date:   Wed, 21 Feb 2018 23:14:20 +0100
+From:   Peter Backes <rtc@helen.PLASMA.Xg8.DE>
+To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Cc:     Derek Fawcus <dfawcus+lists-git@employees.org>, git@vger.kernel.org
+Subject: Re: Git should preserve modification times at least on request
+Message-ID: <20180221221420.GA7743@helen.PLASMA.Xg8.DE>
+References: <20180219212235.GA9891@helen.PLASMA.Xg8.DE>
+ <20180221210339.GA43094@accordion.employees.org>
+ <87bmgif2pa.fsf@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87bmgif2pa.fsf@evledraar.gmail.com>
+User-Agent: Mutt/1.9.1 (2017-09-22)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue,  6 Feb 2018 17:12:45 -0800
-Brandon Williams <bmwill@google.com> wrote:
+On Wed, Feb 21, 2018 at 10:33:05PM +0100, Ævar Arnfjörð Bjarmason wrote:
+> This sounds like a sensible job for a git import tool, i.e. import a
+> target directory into git, and instead of 'git add'-ing the whole thing
+> it would look at the mtimes, sort files by mtime, then add them in order
+> and only commit those files that had the same mtime in the same commit
+> (or within some boundary).
 
-> -	get_remote_heads(fd[0], NULL, 0, &ref, 0, NULL, &shallow);
-> +
-> +	packet_reader_init(&reader, fd[0], NULL, 0,
-> +			   PACKET_READ_CHOMP_NEWLINE |
-> +			   PACKET_READ_GENTLE_ON_EOF);
-> +
-> +	switch (discover_version(&reader)) {
-> +	case protocol_v1:
-> +	case protocol_v0:
-> +		get_remote_heads(&reader, &ref, 0, NULL, &shallow);
-> +		break;
-> +	case protocol_unknown_version:
-> +		BUG("unknown protocol version");
-> +	}
+I think that this would be The Wrong Thing to do.
 
-This inlining is repeated a few times, which raises the question: if the
-intention is to keep the v0/1 logic separately from v2, why not have a
-single function that wraps them all? Looking at the end result (after
-all the patches in this patch set are applied), it seems that the v2
-version does not have extra_have or shallow parameters, which is a good
-enough reason for me (I don't think functions that take in many
-arguments and then selectively use them is a good idea). I think that
-other reviewers will have this question too, so maybe discuss this in
-the commit message.
+The commit time is just that: The time the commit was done. The commit 
+is an atomic group of changes to a number of files that hopefully bring 
+the tree from one usable state into the next.
 
-> diff --git a/remote.h b/remote.h
-> index 1f6611be2..2016461df 100644
-> --- a/remote.h
-> +++ b/remote.h
-> @@ -150,10 +150,11 @@ int check_ref_type(const struct ref *ref, int flags);
->  void free_refs(struct ref *ref);
->  
->  struct oid_array;
-> -extern struct ref **get_remote_heads(int in, char *src_buf, size_t src_len,
-> +struct packet_reader;
-> +extern struct ref **get_remote_heads(struct packet_reader *reader,
->  				     struct ref **list, unsigned int flags,
->  				     struct oid_array *extra_have,
-> -				     struct oid_array *shallow);
-> +				     struct oid_array *shallow_points);
+The mtime, in contrast, tells us when a file was most recently modified.
 
-This change probably does not belong in this patch, especially since
-remote.c is unchanged.
+It may well be that main.c was most recently modified yesterday, and 
+feature.c was modified this morning, and that only both changes taken 
+together make sense as a commit, despite the long time in between.
+
+Even worse, it may be that feature A took a long time to implement, so 
+we have huge gaps in between the mtimes, but feature B was quickly done 
+after A was finished. Such an algorithm would probably split feature A 
+incorrectly into several commits, and group the more recently changed 
+files of feature A with those of feature B.
+
+And if Feature A and Feature B were developed in parallel, things get 
+completely messy.
+
+> The advantage of doing this via such a tool is that you could tweak it
+> to commit by any criteria you wanted, e.g. not mtime but ctime or even
+> atime.
+
+Maybe, but it would be rather useless to commit by ctime or atime. You 
+do one grep -r and the atime is different. You do one chmod or chown 
+and the ctime is different. Those timestamps are really only useful for 
+very limited purposes.
+
+That ctime exists seems reasonable, since it's only ever updated when 
+the inode is written anyway.
+
+atime, in contrast, was clearly one of the rather nonsensical 
+innovations of UNIX: Do one write to the disk for each read from the 
+disk. C'mon, really? It would have been a lot more reasonable to simply 
+provide a generic way for tracing read() system calls instead; then 
+userspace could decide what to do with that information and which of it 
+is useful and should be kept and perhaps stored on disk. Now we have 
+this ugly hack called relatime to deal with the problem.
+
+> You'd get the same thing as you'd get if git's tree format would change
+> to include mtimes (which isn't going to happen), but with a lot more
+> flexibility.
+
+Well, from basic logic, I don't see how a decision not to implement a 
+feature could possibly increase flexility. The opposite seems to be the 
+case.
+
+Best wishes
+Peter
+
+-- 
+Peter Backes, rtc@helen.PLASMA.Xg8.DE
