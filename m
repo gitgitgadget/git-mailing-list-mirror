@@ -2,97 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_WEB,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 916141F576
-	for <e@80x24.org>; Wed, 21 Feb 2018 11:42:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C02731F404
+	for <e@80x24.org>; Wed, 21 Feb 2018 12:22:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933584AbeBULmd (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Feb 2018 06:42:33 -0500
-Received: from smtp-out-3.talktalk.net ([62.24.135.67]:4081 "EHLO
-        smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932556AbeBULmc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Feb 2018 06:42:32 -0500
-Received: from [192.168.2.240] ([92.22.21.220])
-        by smtp.talktalk.net with SMTP
-        id oSn8eEfSmYeIpoSn8ecoR5; Wed, 21 Feb 2018 11:42:31 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1519213351;
-        bh=8X7SyPE6lDklwlPYZbkB8VQywdX5IdMBmfSfW4uUt34=;
-        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=hnlrqr2KgubhhZmYVRq9p92Ir5thq75IzETNaEJaiTk+txZrHxodRbUrukgid3prS
-         ncEUWm1/ks4D7v4cPceIAyGPPbAHDGFRLgzwZZH1sPhC49SPRH7PYTSt8eammpLVBi
-         hZ29v0yKh97DhM05grOxaLxegtz080LBCE2O7xS4=
-X-Originating-IP: [92.22.21.220]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=WZB8UwpX c=1 sm=1 tr=0 a=VSxTZYxioCnvaH7igEU67w==:117
- a=VSxTZYxioCnvaH7igEU67w==:17 a=IkcTkHD0fZMA:10 a=nN7BH9HXAAAA:8
- a=evINK-nbAAAA:8 a=hFcsm8C3tOQNot5fCWsA:9 a=QEXdDO2ut3YA:10 a=SHUmGpGg8TAA:10
- a=RfR_gqz1fSpA9VikTjo0:22
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 4/9] t3701: don't hard code sha1 hash values
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        "Brian M. Carlson" <sandals@crustytoothpaste.net>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <20180213104408.9887-1-phillip.wood@talktalk.net>
- <20180219112910.24471-1-phillip.wood@talktalk.net>
- <20180219112910.24471-5-phillip.wood@talktalk.net>
- <xmqqk1v74l1t.fsf@gitster-ct.c.googlers.com>
-From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <8f39e6b1-0031-5d97-f636-ae67cfdb3f1c@talktalk.net>
-Date:   Wed, 21 Feb 2018 11:42:30 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
+        id S1754059AbeBUMWt (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Feb 2018 07:22:49 -0500
+Received: from mail-it0-f43.google.com ([209.85.214.43]:50284 "EHLO
+        mail-it0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752350AbeBUMWs (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Feb 2018 07:22:48 -0500
+Received: by mail-it0-f43.google.com with SMTP id a75so2015282itd.0
+        for <git@vger.kernel.org>; Wed, 21 Feb 2018 04:22:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=v6SoxexJeiDSPoDc+TJN997lJE3GyOL6UoHTi+gMJeo=;
+        b=prqo4cWgnKwI6grrdzdIl2PCUpho5HdbnFSk6sfSd+XGNK06JAUafsx/AQ8sjoIGXB
+         8NNyYrswjZccqfr8qWEy3/ik+LtS2vEgJySggdxVsyTrArffXuN3cEQULo0qtydPB3AT
+         i8MUsT2pwewd5WhmyDFzZ+r+BrMjrkUN9xhYFfG16OTcAX0tADlhGhLprr4CEwk0jW22
+         g6g4XqCZgfJZsO/6FidVAH6B+IziioSQGB/WD09/hJQjbE/eTB+qCiKPBbUbzuvYEBfn
+         DzN7YI+AWq0VGjFAyWJjE7UK/F3K7aFwb4phe6w90uCPfR5bRdAvVTBHku3oR53fFoBb
+         71GA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=v6SoxexJeiDSPoDc+TJN997lJE3GyOL6UoHTi+gMJeo=;
+        b=aWdyrDXLsatAojPOMemzR4+XQaPkq8L8Ye1Et9okgdeesP5LNQM1WmHBrnre5bCIV7
+         wnpEegtOOgd89YSc7s9z8wHx4xYjasBL16/qsmJg3z1zKkUJF4UstPi5vQFEI8te+AY/
+         J2hABCTy/V1/LD3iP9jxakyv2EmGKbjgeOUrWQbrvQ/Y8u1/aNyvfTLMG4BY1J4BlM8t
+         G/fpX7F8S8MqwXcvElzFWS2Eo9EiTLjuOuopxAmDyDRNRGknNrRVlnLsv/MVfwyFr0qB
+         DLFolk0cMvAl9QS956mAcy4EbD+yB2aNQCQGrMvzoLOzE3nda3zWTCukW4txTdqBx1gw
+         //DQ==
+X-Gm-Message-State: APf1xPA8XAI4vbD+ofbAAbYmCgE99uCmARjJjM3iYdTkTzfYtnFX9Kuc
+        NwBQvJ9xOcxnIv33jMQfaNymRAZEaJldfKACliQsrvyT
+X-Google-Smtp-Source: AH8x227vGeybD++PFiJp3nZ5juvKD7EaqxNyoEsrK/P5bmLDDM6/D4Kz9xzG5bbGwNi1bMnhXjJX7rVyB6xoxswoUZ0=
+X-Received: by 10.36.88.213 with SMTP id f204mr2908569itb.81.1519215767115;
+ Wed, 21 Feb 2018 04:22:47 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <xmqqk1v74l1t.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfES0QX0RRpLuEhZxkWMdlRUDobjmLvN4YxyZ/VdwtXLjqQaC6XjIpdcbugkVmz96CeiSmWXZqVfgHCF4UwSn7xxeEU6slycuU9Akp3PXiF5teXC1aSB1
- 6974RXh10BEQgCOL8nx37/6c3zE7wpxuKUpxIBwuwxTkZN8t4orcDDSh5Q8WGu05kZQAmeP7BSkgzToNqmzDgoh/UN9Ny3kfXhXz73tP7XxBiDSUCPlgA3KX
- Paq0tgCYH22dUSMDNiYDjEg/r3BOHnQ3Ccz9L42nslFJfNRa5i09fS7lkWpVsZHx
+Received: by 10.79.206.20 with HTTP; Wed, 21 Feb 2018 04:22:46 -0800 (PST)
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Wed, 21 Feb 2018 13:22:46 +0100
+Message-ID: <CAP8UFD2TZ5v4DMEy4SA1s859a+baDfKRATxi1gVh7STWPbPsNw@mail.gmail.com>
+Subject: [ANNOUNCE] Git Rev News edition 36
+To:     git <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>, lwn@lwn.net,
+        Jakub Narebski <jnareb@gmail.com>,
+        Markus Jansen <mja@jansen-preisler.de>,
+        Gabriel Alcaras <gabriel.alcaras@telecom-paristech.fr>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Ed Thomson <ethomson@edwardthomson.com>,
+        Chris DiBona <chris@dibona.com>,
+        Luca Milanesio <luca.milanesio@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 20/02/18 17:39, Junio C Hamano wrote:
-> Phillip Wood <phillip.wood@talktalk.net> writes:
-> 
->> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->>
->> Purge the index lines from diffs so we're not hard coding sha1 hash
->> values in the expected output.
-> 
-> The motivation of this patch is clear, but all-zero object name for
-> missing side of deletion or creation patch should not change when we
-> transition to any hash function.  Neither the permission bits shown
-> in the output (and whether the index line has the bits are shown on
-> it in the first place, i.e. the index line of a creation patch does
-> not, whilethe one in a modification patch does).
-> 
-> So I am a bit ambivalent about this change.
-> 
-> Perhaps have a filter that redacts, instead of removes, selected
-> pieces of information that are likely to change while hash
-> transition, and use that consistently to filter both the expected
-> output and the actual output before comparing?
-> 
-Keeping the permission bits makes sense (I'd not thought of them when I 
-created the patch) as we want to check that the file has the correct 
-permissions. As for the all-zero object name, is it really worth leaving 
-it in - if a file has been created or deleted then we'll still have 
-/dev/null as the file name for one side or the other and the diff lines 
-will show it as well. As these tests are just to check the state of the 
-index then I'm not sure the hash values add anything. How do you feel 
-about a filter like
+Hi everyone,
 
-sed "/^	index/s/ [0-9a-f][0-9a-f]*\.\.[0-9a-f][0-9a-f]*/x/"
+The 36th edition of Git Rev News is now published:
 
-Best Wishes
+  https://git.github.io/rev_news/2018/02/21/edition-36/
 
-Phillip
+Thanks a lot to all the contributors!
+
+Enjoy,
+Christian, Jakub, Markus and Gabriel.
