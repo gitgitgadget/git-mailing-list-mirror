@@ -2,80 +2,69 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3173A1F404
-	for <e@80x24.org>; Wed, 21 Feb 2018 23:57:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8A5D71F404
+	for <e@80x24.org>; Wed, 21 Feb 2018 23:58:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751180AbeBUX5v (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Feb 2018 18:57:51 -0500
-Received: from mail-ot0-f180.google.com ([74.125.82.180]:35299 "EHLO
-        mail-ot0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751158AbeBUX5u (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Feb 2018 18:57:50 -0500
-Received: by mail-ot0-f180.google.com with SMTP id p8so3085694otf.2
-        for <git@vger.kernel.org>; Wed, 21 Feb 2018 15:57:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=clarifai.com; s=google;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=V9XoKegX13JwGxZ+oVsd89gsZRiX8PYxNWF541iVc8k=;
-        b=eLThtgRrhnAZmHfv2kuVgqCjYVcFW+A3Ml1fQOXcKdg4M0deC5khWAphiarx4hzYFJ
-         modsIEbSR0O7mPOH8FsIQqAucU/kf8E8p7H3PJbp5J/2Cvk/T2c90Rw4EjbdetVaM/3O
-         CwEtW3oAZQS93lDOk8ar4aXa3WKIQp2oja5Qo=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=V9XoKegX13JwGxZ+oVsd89gsZRiX8PYxNWF541iVc8k=;
-        b=W6985CNpgsxrFF6+4+bG4v/Y9ybXR5buacIfldG8rDJTd9bf8hZErrXEkeCHQqW7OG
-         DamGrlQg/Pf8p+ToNcnPePjcRBE7Sd+lp4XmnojEbkkMkwr2q+ORMzhSHo5F+OtJ3yZE
-         cNwxEEXPxhwVRxuQkfDbXozf70lL+MeSOlT561oBdMoJNPCfBxJTey0PL1Ct+dQLnCPE
-         ImqMvmDA+ZSKXPw+MRrbHapxURCi/Eta/A8EeSbkcDR1MrnAmBl5IarrtiUJs1APp9fa
-         2S3lL+wj7VTZa43eUGy8x1mExjypog2mWNF7FO7VGbE7K0fK6KRcTTOG6lzgpnAhvmYi
-         E0Wg==
-X-Gm-Message-State: APf1xPB2mCKwDPbcKXXRoAhOgXXdeXT7OhoTHiMM5OMcXyYG9jPGP6ZY
-        BkAtPW4pVeiAzadISmJXsbN+A/LGhp4NGNNtYY45rlnsc+w=
-X-Google-Smtp-Source: AG47ELtQisSgDogYhVJXwvjGo6v9YD4ki4V6BJvIPErc0f7LBYsIb6amSLFl5CQAE5MOK3aiBLrHBu6JJFzGOlRybHg=
-X-Received: by 10.157.24.48 with SMTP id b45mr3130598ote.195.1519257469834;
- Wed, 21 Feb 2018 15:57:49 -0800 (PST)
+        id S1751155AbeBUX6u convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Wed, 21 Feb 2018 18:58:50 -0500
+Received: from elephants.elehost.com ([216.66.27.132]:55833 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750805AbeBUX6t (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Feb 2018 18:58:49 -0500
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id w1LNwfTc068595
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Wed, 21 Feb 2018 18:58:41 -0500 (EST)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     "'Peter Backes'" <rtc@helen.PLASMA.Xg8.DE>,
+        "=?iso-8859-1?Q?'=C6var_Arnfj=F6r=F0_Bjarmason'?=" <avarab@gmail.com>
+Cc:     "'Derek Fawcus'" <dfawcus+lists-git@employees.org>,
+        <git@vger.kernel.org>, "'Theodore Ts'o'" <tytso@mit.edu>
+References: <20180219212235.GA9891@helen.PLASMA.Xg8.DE> <20180221210339.GA43094@accordion.employees.org> <87bmgif2pa.fsf@evledraar.gmail.com> <20180221221420.GA7743@helen.PLASMA.Xg8.DE> <87a7w2ezeq.fsf@evledraar.gmail.com> <20180221231234.GA8509@helen.PLASMA.Xg8.DE>
+In-Reply-To: <20180221231234.GA8509@helen.PLASMA.Xg8.DE>
+Subject: RE: Git should preserve modification times at least on request
+Date:   Wed, 21 Feb 2018 18:58:34 -0500
+Message-ID: <007d01d3ab6f$e5439f10$afcadd30$@nexbridge.com>
 MIME-Version: 1.0
-Received: by 10.74.138.221 with HTTP; Wed, 21 Feb 2018 15:57:29 -0800 (PST)
-From:   Josh Tepper <josh@clarifai.com>
-Date:   Wed, 21 Feb 2018 18:57:29 -0500
-Message-ID: <CAPFeJUAF99buo=yTZQeHawU-npLHk0iJ1iQxYwMroFdDcKhqjA@mail.gmail.com>
-Subject: Bug: git log: boundary commits do not respect order (e.g. date-order,
- topo-order) 2
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain;
+        charset="iso-8859-1"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQJZbTC47MKZPVAOS2Y2vuFiN4livgIvGfNUAqkrcnkCpkG6hgItVZkNAdyeioeiR8C4sA==
+Content-Language: en-ca
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When using git log, boundary commits (ie, those commits added by
-specifying --boundary) do not respect the order (e.g., --date-order,
---topo-order).  Consider the following commit history, where number
-indicates the order of the commit timestamps:
+On February 21, 2018 6:13 PM, Peter Backes wrote:
+> On Wed, Feb 21, 2018 at 11:44:13PM +0100, Ævar Arnfjörð Bjarmason wrote:
+> > If it were added as a first-level feature to git it would present a
+> > lot of UX confusion. E.g. you run "git add" and it'll be showing the
+> > mtime somehow, or you get a formatted patch over E-Mail and it doesn't
+> > only include the commit time but also times for individual files.
+> 
+> But that's pretty standard. patch format has timestamp fields for
+precisely
+> this purpose:
+> 
+> % echo a > x
+> % echo b > y
+> % diff -u x y
+> --- x	2018-02-21 23:56:29.574029523 +0100
+> +++ y	2018-02-21 23:56:31.430003389 +0100
 
-<view with a fixed with font! 3's ancestor is 1, 6's ancestors are 4,5>
-0----1----2----5  <--A
-       \         \
-         3----4----6  <--B
+May I suggest storing the date/time in UTC+0 in all cases. I can see
+potential issues a couple of times a year where holes exist. I cannot even
+fathom what would happen on a merge or edit of history.
 
+Cheers,
+Randall
 
-Executing the following command:
-
-$ git log --boundary --date-order ^A B
-
-Should produce the following order (boundary commits shown with dashes):
-6 -5 4 3 -1
-
-However, it in fact produces:
-6 4 3 -5 -1
-
-Please advise.
-
-Best,
-~Josh
