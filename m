@@ -7,54 +7,55 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CD6C81F404
-	for <e@80x24.org>; Wed, 21 Feb 2018 01:55:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 648C21F404
+	for <e@80x24.org>; Wed, 21 Feb 2018 01:55:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751449AbeBUBzH (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Feb 2018 20:55:07 -0500
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:33444 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751418AbeBUBzF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Feb 2018 20:55:05 -0500
-Received: by mail-pf0-f195.google.com with SMTP id q13so64644pff.0
-        for <git@vger.kernel.org>; Tue, 20 Feb 2018 17:55:04 -0800 (PST)
+        id S1751456AbeBUBzI (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Feb 2018 20:55:08 -0500
+Received: from mail-pl0-f66.google.com ([209.85.160.66]:45713 "EHLO
+        mail-pl0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751426AbeBUBzD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Feb 2018 20:55:03 -0500
+Received: by mail-pl0-f66.google.com with SMTP id p5so79485plo.12
+        for <git@vger.kernel.org>; Tue, 20 Feb 2018 17:55:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=TVbwGpOLT/0Rnw49aQy3sJrkJQTdf9qcuemln3dmNTA=;
-        b=NrqOnP8GDf6C3rIKMfukLngN2INhr+o91elcKbLyqyXWM2iouHDUEDP5C4ksuECjxP
-         +U3aJd8gkgFLd1V6oXOFyfwO1FzhQnx1Kw46aXMw2MQSrwcBKyhJGvJAedhc93Lfa5SP
-         KLzrwc4IW2I1GEesuPZ47JW7BLvGZKXtg/luaCujQVftasZaFcS+RNMv+UaYjsOnCBS0
-         zMiv4+9E38u+7VWyZhtlIRMIJraEgA+MSBvnBdrGPmdFHXwCWDWp21aZOTWhJd7vObfa
-         SnzAu+8b1EmWIhGXUYajqo6gbFNZPNxY8z66SLlo45LtxNlLgBKyz/l7bAyqr+1kfVjb
-         0paA==
+        bh=haPKyfmRAsXV2FUmknuviNgtdSKHQmqD6rgy6ysdMKA=;
+        b=qQJeEzeWQUdu0q+OOBMpgVOLVEYdRBVF3Ym5RIytubsK+JOJ3VyJjsUyaoKkcS5QQG
+         AhCWgBVAKZNTmYyhg6QkeeBpWjpUGJ5wzgMK4DC+rSLDn3FxkY4BI7DeLzcU8Swb8j+w
+         xwPSwmba4vCUoyvJrepzh5cIpN/y/o8wVjsTMovqxODk1u2wNgC6x+559mPK0bbbUqwK
+         c34LZixxh/NJa44ADZdfi1nOohI6i4bSyZVhIynJnrPkakpshZ9IaubB9mUoTCMhBVSb
+         WNpXG0y9X7GByybYotS6o1Khxj5osKODf4KBIzlBG7DezBkEMSHXgIt4Q/sTljQrWSVZ
+         KmJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=TVbwGpOLT/0Rnw49aQy3sJrkJQTdf9qcuemln3dmNTA=;
-        b=b+OeMnVgwznw1SHC2FLZjox7wls6q3CkzZIBgROnmTd8c3H2bQKcqH/5ri2sGtswlJ
-         UH8JmxnqNZUrqHkemYA33rqRtgdTYTSVSaB95z9QiV6zal0bou2ZglFL5HXA/jXAU3GS
-         8KMOJ3VWT9nIh7VVAdIhKfV+T4ODZYYYatZMtW2nKzCGeYKHPdtOiV7F6bX6YWubvacz
-         6lHNpvcxtafoLCmt0Y3xAcW+qMMHh2PDqrKFRlS0CVb//EIRfrzt9wv4mGldcrJuaIhG
-         ltsqq6yxZIfSiDGE/8vPuU8CoPLHGuDPDV9IjlCTroi90mloRbQK5Pa9TWdQpIHA0yV2
-         ilgA==
-X-Gm-Message-State: APf1xPDFl97YEX0j05y6kVYc0+TMdQNl4c/rM3kZeOWBAiyGGH/G4M+3
-        RL3BXElVpGHUlVQL0wCF7tzLNk3h+3s=
-X-Google-Smtp-Source: AH8x226okOyyQHXIuCcgjZaQN/UOPA2+E1kj1pm2FYs5l6X8LuEUtBfDI4IhRy58TXJ2+TWY0z+Bjg==
-X-Received: by 10.98.97.198 with SMTP id v189mr1623323pfb.110.1519178104337;
-        Tue, 20 Feb 2018 17:55:04 -0800 (PST)
+        bh=haPKyfmRAsXV2FUmknuviNgtdSKHQmqD6rgy6ysdMKA=;
+        b=pcgqFVngqtLPR2PN5ETjc4r9YCMPaNq6anD9zcO2YeomC/Wcbu+GiThuR3hZdH0wYi
+         6uYEGmGwjApznfiMMGQvzppx3hX2Lg3BfJi9e9wThnRz09TbKivJkUpHN+1QlROwsUF5
+         OibxDJr7uIi+cGP/axE1PRtxY5lRvrqJb7l5fdzrPXXi43lqY7ZENjI8TKGZMibBlLwZ
+         H1v/BPjHSn3HonvrEkiVRszvwKrpCXfu+M6lTi+7N1Ub2b5/xCnvbQbvxiuBvE+BmoXS
+         ajZDynBEOkFIM/Jn2pcbrK+SjT03n7v/jQ8UismvYGi+4tZJXgoDCVrG261NLnar6pHB
+         RX4g==
+X-Gm-Message-State: APf1xPBPH8ZLyh2lQ1t+NUl71w3CsSev9k+F+ofwwGq4Pyh0lfBwOkxZ
+        rP2meMNhdjQLK9YJtzjHNl1JlQ==
+X-Google-Smtp-Source: AH8x225ri9vbZyBDReuEP9s9ZQgDkkxfQVdDqlvS8y8M8dNMkzRyYhv3jTsjJBck4kn5qlVm+blnZg==
+X-Received: by 2002:a17:902:a9ca:: with SMTP id b10-v6mr1532347plr.223.1519178102504;
+        Tue, 20 Feb 2018 17:55:02 -0800 (PST)
 Received: from localhost ([2620:0:100e:422:2d12:5719:3437:fdb7])
-        by smtp.gmail.com with ESMTPSA id c62sm17193519pfk.127.2018.02.20.17.55.03
+        by smtp.gmail.com with ESMTPSA id x4sm27220728pgv.84.2018.02.20.17.55.01
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 20 Feb 2018 17:55:03 -0800 (PST)
+        Tue, 20 Feb 2018 17:55:01 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     sbeller@google.com
 Cc:     git@vger.kernel.org, gitster@pobox.com, jonathantanmy@google.com,
-        pclouds@gmail.com, sunshine@sunshineco.com
-Subject: [PATCH 15/27] sha1_file: allow prepare_alt_odb to handle arbitrary repositories
-Date:   Tue, 20 Feb 2018 17:54:18 -0800
-Message-Id: <20180221015430.96054-16-sbeller@google.com>
+        pclouds@gmail.com, sunshine@sunshineco.com,
+        Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH 14/27] sha1_file: allow link_alt_odb_entries to handle arbitrary repositories
+Date:   Tue, 20 Feb 2018 17:54:17 -0800
+Message-Id: <20180221015430.96054-15-sbeller@google.com>
 X-Mailer: git-send-email 2.16.1.291.g4437f3f132-goog
 In-Reply-To: <20180221015430.96054-1-sbeller@google.com>
 References: <20180216174626.24677-1-sbeller@google.com>
@@ -64,63 +65,140 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Actually this also allows read_info_alternates and link_alt_odb_entry to
+handle arbitrary repositories, but link_alt_odb_entries is the most
+interesting function in this set of functions, hence the commit subject.
+
+These functions span a strongly connected component in the function
+graph, i.e. the recursive call chain might look like
+
+  -> link_alt_odb_entries
+    -> link_alt_odb_entry
+      -> read_info_alternates
+        -> link_alt_odb_entries
+
+That is why we need to convert all these functions at the same time.
+
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- object-store.h |  3 +--
- sha1_file.c    | 21 +++++++++++----------
- 2 files changed, 12 insertions(+), 12 deletions(-)
+ object-store.h |  4 ++++
+ sha1_file.c    | 36 ++++++++++++++++--------------------
+ 2 files changed, 20 insertions(+), 20 deletions(-)
 
 diff --git a/object-store.h b/object-store.h
-index f283fbdba9..873b341774 100644
+index 514ad94287..f283fbdba9 100644
 --- a/object-store.h
 +++ b/object-store.h
-@@ -24,8 +24,7 @@ struct alternate_object_database {
- 	 */
+@@ -18,6 +18,10 @@ struct alternate_object_database {
+ 	char loose_objects_subdir_seen[256];
+ 	struct oid_array loose_objects_cache;
+ 
++	/*
++	 * Path to the alternative object store. If this is a relative path,
++	 * it is relative to the current working directory.
++	 */
  	char path[FLEX_ARRAY];
  };
--#define prepare_alt_odb(r) prepare_alt_odb_##r()
--void prepare_alt_odb_the_repository(void);
-+void prepare_alt_odb(struct repository *r);
- char *compute_alternate_path(const char *path, struct strbuf *err);
- typedef int alt_odb_fn(struct alternate_object_database *, void *);
- int foreach_alt_odb(alt_odb_fn, void*);
+ #define prepare_alt_odb(r) prepare_alt_odb_##r()
 diff --git a/sha1_file.c b/sha1_file.c
-index 6e5105a252..9cf3fffbeb 100644
+index c26921df4a..6e5105a252 100644
 --- a/sha1_file.c
 +++ b/sha1_file.c
-@@ -673,21 +673,22 @@ int foreach_alt_odb(alt_odb_fn fn, void *cb)
- 	return r;
- }
- 
--void prepare_alt_odb_the_repository(void)
-+void prepare_alt_odb(struct repository *r)
+@@ -390,11 +390,10 @@ static int alt_odb_usable(struct raw_object_store *o,
+  * SHA1, an extra slash for the first level indirection, and the
+  * terminating NUL.
+  */
+-#define read_info_alternates(r, rb, d) read_info_alternates_##r(rb, d)
+-static void read_info_alternates_the_repository(const char *relative_base,
+-						int depth);
+-#define link_alt_odb_entry(r, e, rb, d, n) link_alt_odb_entry_##r(e, rb, d, n)
+-static int link_alt_odb_entry_the_repository(const char *entry,
++static void read_info_alternates(struct repository *r,
++				 const char *relative_base,
++				 int depth);
++static int link_alt_odb_entry(struct repository *r, const char *entry,
+ 	const char *relative_base, int depth, const char *normalized_objdir)
  {
--	const char *alt;
--
--	if (the_repository->objects.alt_odb_tail)
-+	if (r->objects.alt_odb_tail)
- 		return;
+ 	struct alternate_object_database *ent;
+@@ -420,7 +419,7 @@ static int link_alt_odb_entry_the_repository(const char *entry,
+ 	while (pathbuf.len && pathbuf.buf[pathbuf.len - 1] == '/')
+ 		strbuf_setlen(&pathbuf, pathbuf.len - 1);
  
--	alt = getenv(ALTERNATE_DB_ENVIRONMENT);
-+	r->objects.alt_odb_tail = &r->objects.alt_odb_list;
-+
-+	if (!r->ignore_env) {
-+		const char *alt = getenv(ALTERNATE_DB_ENVIRONMENT);
-+		if (!alt)
-+			alt = "";
+-	if (!alt_odb_usable(&the_repository->objects, &pathbuf, normalized_objdir)) {
++	if (!alt_odb_usable(&r->objects, &pathbuf, normalized_objdir)) {
+ 		strbuf_release(&pathbuf);
+ 		return -1;
+ 	}
+@@ -428,12 +427,12 @@ static int link_alt_odb_entry_the_repository(const char *entry,
+ 	ent = alloc_alt_odb(pathbuf.buf);
  
--	the_repository->objects.alt_odb_tail =
--			&the_repository->objects.alt_odb_list;
--	link_alt_odb_entries(the_repository, alt,
--			     PATH_SEP, NULL, 0);
-+		link_alt_odb_entries(r, alt, PATH_SEP, NULL, 0);
-+	}
+ 	/* add the alternate entry */
+-	*the_repository->objects.alt_odb_tail = ent;
+-	the_repository->objects.alt_odb_tail = &(ent->next);
++	*r->objects.alt_odb_tail = ent;
++	r->objects.alt_odb_tail = &(ent->next);
+ 	ent->next = NULL;
  
--	read_info_alternates(the_repository, get_object_directory(), 0);
-+	read_info_alternates(r, r->objects.objectdir, 0);
+ 	/* recursively add alternates */
+-	read_info_alternates(the_repository, pathbuf.buf, depth + 1);
++	read_info_alternates(r, pathbuf.buf, depth + 1);
+ 
+ 	strbuf_release(&pathbuf);
+ 	return 0;
+@@ -468,12 +467,8 @@ static const char *parse_alt_odb_entry(const char *string,
+ 	return end;
  }
  
- /* Returns 1 if we have successfully freshened the file, 0 otherwise. */
+-#define link_alt_odb_entries(r, a, s, rb, d) \
+-	link_alt_odb_entries_##r(a, s, rb, d)
+-static void link_alt_odb_entries_the_repository(const char *alt,
+-						int sep,
+-						const char *relative_base,
+-						int depth)
++static void link_alt_odb_entries(struct repository *r, const char *alt,
++				 int sep, const char *relative_base, int depth)
+ {
+ 	struct strbuf objdirbuf = STRBUF_INIT;
+ 	struct strbuf entry = STRBUF_INIT;
+@@ -487,7 +482,7 @@ static void link_alt_odb_entries_the_repository(const char *alt,
+ 		return;
+ 	}
+ 
+-	strbuf_add_absolute_path(&objdirbuf, get_object_directory());
++	strbuf_add_absolute_path(&objdirbuf, r->objects.objectdir);
+ 	if (strbuf_normalize_path(&objdirbuf) < 0)
+ 		die("unable to normalize object directory: %s",
+ 		    objdirbuf.buf);
+@@ -496,15 +491,16 @@ static void link_alt_odb_entries_the_repository(const char *alt,
+ 		alt = parse_alt_odb_entry(alt, sep, &entry);
+ 		if (!entry.len)
+ 			continue;
+-		link_alt_odb_entry(the_repository, entry.buf,
++		link_alt_odb_entry(r, entry.buf,
+ 				   relative_base, depth, objdirbuf.buf);
+ 	}
+ 	strbuf_release(&entry);
+ 	strbuf_release(&objdirbuf);
+ }
+ 
+-static void read_info_alternates_the_repository(const char *relative_base,
+-						int depth)
++static void read_info_alternates(struct repository *r,
++				 const char *relative_base,
++				 int depth)
+ {
+ 	char *path;
+ 	struct strbuf buf = STRBUF_INIT;
+@@ -516,7 +512,7 @@ static void read_info_alternates_the_repository(const char *relative_base,
+ 		return;
+ 	}
+ 
+-	link_alt_odb_entries(the_repository, buf.buf, '\n', relative_base, depth);
++	link_alt_odb_entries(r, buf.buf, '\n', relative_base, depth);
+ 	strbuf_release(&buf);
+ 	free(path);
+ }
 -- 
 2.16.1.291.g4437f3f132-goog
 
