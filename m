@@ -2,77 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C02731F404
-	for <e@80x24.org>; Wed, 21 Feb 2018 12:22:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D641F1F404
+	for <e@80x24.org>; Wed, 21 Feb 2018 13:34:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754059AbeBUMWt (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Feb 2018 07:22:49 -0500
-Received: from mail-it0-f43.google.com ([209.85.214.43]:50284 "EHLO
-        mail-it0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752350AbeBUMWs (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Feb 2018 07:22:48 -0500
-Received: by mail-it0-f43.google.com with SMTP id a75so2015282itd.0
-        for <git@vger.kernel.org>; Wed, 21 Feb 2018 04:22:47 -0800 (PST)
+        id S936225AbeBUNeG (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Feb 2018 08:34:06 -0500
+Received: from mail-qk0-f170.google.com ([209.85.220.170]:33349 "EHLO
+        mail-qk0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933420AbeBUNeD (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Feb 2018 08:34:03 -0500
+Received: by mail-qk0-f170.google.com with SMTP id f25so1917614qkm.0
+        for <git@vger.kernel.org>; Wed, 21 Feb 2018 05:34:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=v6SoxexJeiDSPoDc+TJN997lJE3GyOL6UoHTi+gMJeo=;
-        b=prqo4cWgnKwI6grrdzdIl2PCUpho5HdbnFSk6sfSd+XGNK06JAUafsx/AQ8sjoIGXB
-         8NNyYrswjZccqfr8qWEy3/ik+LtS2vEgJySggdxVsyTrArffXuN3cEQULo0qtydPB3AT
-         i8MUsT2pwewd5WhmyDFzZ+r+BrMjrkUN9xhYFfG16OTcAX0tADlhGhLprr4CEwk0jW22
-         g6g4XqCZgfJZsO/6FidVAH6B+IziioSQGB/WD09/hJQjbE/eTB+qCiKPBbUbzuvYEBfn
-         DzN7YI+AWq0VGjFAyWJjE7UK/F3K7aFwb4phe6w90uCPfR5bRdAvVTBHku3oR53fFoBb
-         71GA==
+        d=gnustavo-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=hm64wt/u6UKdIQ37lMyoNShvj3jGgyg+7wctMwOp6zM=;
+        b=JbShoCO6AJIeVm1cywMhD7grCAO8sRPTXyOi0Eil1kjG5WfrS3dVGqK72xIL0Bp4bT
+         fdwPkRbledVegtjNIgedg2cu2taoel110Ye38FJO74PI7q3/0ZS7i3oIfv/YnjEOm0nJ
+         yaOBWmgSQGWCj27lAdODCWmAXp+kVSdvq/7vheaAZclKo99ZsFlO1ZeTqC4VzLQfLXLm
+         xeqSK7XcapqZJ2YOV+kilDuqBxB7GzE2oGmQDtgHZQ2W6CXmZ8uuvExtPRIGDWS04MnQ
+         7Dk15wt6Uk47MECTmanMbcBHxzaBfU6389cgHZgu0ztJ7rHPztClClbeJt1s1AN/ttK7
+         IJ1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=v6SoxexJeiDSPoDc+TJN997lJE3GyOL6UoHTi+gMJeo=;
-        b=aWdyrDXLsatAojPOMemzR4+XQaPkq8L8Ye1Et9okgdeesP5LNQM1WmHBrnre5bCIV7
-         wnpEegtOOgd89YSc7s9z8wHx4xYjasBL16/qsmJg3z1zKkUJF4UstPi5vQFEI8te+AY/
-         J2hABCTy/V1/LD3iP9jxakyv2EmGKbjgeOUrWQbrvQ/Y8u1/aNyvfTLMG4BY1J4BlM8t
-         G/fpX7F8S8MqwXcvElzFWS2Eo9EiTLjuOuopxAmDyDRNRGknNrRVlnLsv/MVfwyFr0qB
-         DLFolk0cMvAl9QS956mAcy4EbD+yB2aNQCQGrMvzoLOzE3nda3zWTCukW4txTdqBx1gw
-         //DQ==
-X-Gm-Message-State: APf1xPA8XAI4vbD+ofbAAbYmCgE99uCmARjJjM3iYdTkTzfYtnFX9Kuc
-        NwBQvJ9xOcxnIv33jMQfaNymRAZEaJldfKACliQsrvyT
-X-Google-Smtp-Source: AH8x227vGeybD++PFiJp3nZ5juvKD7EaqxNyoEsrK/P5bmLDDM6/D4Kz9xzG5bbGwNi1bMnhXjJX7rVyB6xoxswoUZ0=
-X-Received: by 10.36.88.213 with SMTP id f204mr2908569itb.81.1519215767115;
- Wed, 21 Feb 2018 04:22:47 -0800 (PST)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=hm64wt/u6UKdIQ37lMyoNShvj3jGgyg+7wctMwOp6zM=;
+        b=tb8wpxD5/Qx8yEFBSkfjR9H3qcsWU0pT53jY89BDh1mHgG8AgFPvZbnR2qCaulvoo7
+         L6bt5QZydEcb8d1WLzKUubEZTyonWG4A/b+FGkVYQH1I8o4RPrTVf/z3rmJC9aDusG2m
+         eC+3X7ycx6708RcR/xQ0lg+46FNkErIKX+Hf7hRhr+aPUdruXvQmkoplTfpl/l1R9jKI
+         TlitWTGI2hjIgjW18Ah+hxE6HHmqKfY652lsx1VSjnQrfcoSb2bu3oqf1pQ6ezp0U/FC
+         TKAtMMLKqqjyS4ocRpNN42YfaJMcXF8ZoY9lExV0C7IAzKw32h5TbLHRuNF/aRLkZ3lT
+         X2HQ==
+X-Gm-Message-State: APf1xPBQiJhDil2f9X806REYngxSvPYqAUFU+Fvo9ZKdAtYhIznzWCPg
+        weR6AYVhAw6dC8EzoKxSw4vBCYr/mocJIJy9NdyqYw==
+X-Google-Smtp-Source: AG47ELst2dDNl3/cX26/7hpvqgq7j/L7T3eN57HBk8Itb66glAvr8rzUwN7NmZftIniR9y1w7GfTmcssKcYggaefxNQ=
+X-Received: by 10.55.77.77 with SMTP id a74mr4843476qkb.239.1519220043128;
+ Wed, 21 Feb 2018 05:34:03 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.79.206.20 with HTTP; Wed, 21 Feb 2018 04:22:46 -0800 (PST)
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Wed, 21 Feb 2018 13:22:46 +0100
-Message-ID: <CAP8UFD2TZ5v4DMEy4SA1s859a+baDfKRATxi1gVh7STWPbPsNw@mail.gmail.com>
-Subject: [ANNOUNCE] Git Rev News edition 36
-To:     git <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>, lwn@lwn.net,
-        Jakub Narebski <jnareb@gmail.com>,
-        Markus Jansen <mja@jansen-preisler.de>,
-        Gabriel Alcaras <gabriel.alcaras@telecom-paristech.fr>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Ed Thomson <ethomson@edwardthomson.com>,
-        Chris DiBona <chris@dibona.com>,
-        Luca Milanesio <luca.milanesio@gmail.com>
+Received: by 10.140.80.145 with HTTP; Wed, 21 Feb 2018 05:33:42 -0800 (PST)
+In-Reply-To: <xmqqfu5v4k4c.fsf@gitster-ct.c.googlers.com>
+References: <CAPx58qqv84+i0JbdsVzFqWB=bRDecWHxss8frD4=nWOsFj-NPg@mail.gmail.com>
+ <CAPx58qoS-J+yJ_J4QOOnKyG=EOrT5J=UoCrXfXxEijq4Z2Z_3w@mail.gmail.com>
+ <7ff6079d-5834-3bbd-781b-a2fc0659e7e5@talktalk.net> <xmqqfu5v4k4c.fsf@gitster-ct.c.googlers.com>
+From:   Gustavo Chaves <gustavo@gnustavo.com>
+Date:   Wed, 21 Feb 2018 10:33:42 -0300
+Message-ID: <CAPx58qp4VssKSKWJ=ng9CwHZUqkgnw6=D5iJLFyhYzwMz-zocA@mail.gmail.com>
+Subject: Re: Why git-revert doesn't invoke the pre-commit and the commit-msg hooks?
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Phillip Wood <phillip.wood@talktalk.net>, git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi everyone,
+2018-02-20 15:00 GMT-03:00 Junio C Hamano <gitster@pobox.com>:
+> It would make more sense (if we were to add
+> an option to run any hook we currently do not run to the command) to
+> run pre-revert/revert-msg hooks instead, and then people who happen
+> to want to do the same thing in these hooks what they do for
+> ordinary commits can just call their pre-commit/commit-msg hooks
+> from there, perhaps.
 
-The 36th edition of Git Rev News is now published:
+I like this idea very much as it doesn't break a long standing behaviour and
+simply introduces a new feature.
 
-  https://git.github.io/rev_news/2018/02/21/edition-36/
-
-Thanks a lot to all the contributors!
-
-Enjoy,
-Christian, Jakub, Markus and Gabriel.
+-- 
+Gustavo.
