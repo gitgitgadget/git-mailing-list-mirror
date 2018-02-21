@@ -7,54 +7,55 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D89CB1F404
-	for <e@80x24.org>; Wed, 21 Feb 2018 01:55:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9BDB91F404
+	for <e@80x24.org>; Wed, 21 Feb 2018 01:55:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751497AbeBUBzL (ORCPT <rfc822;e@80x24.org>);
+        id S1751499AbeBUBzQ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Feb 2018 20:55:16 -0500
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:38597 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751332AbeBUBzL (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 20 Feb 2018 20:55:11 -0500
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:33893 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751332AbeBUByx (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Feb 2018 20:54:53 -0500
-Received: by mail-pf0-f196.google.com with SMTP id k2so64493pfi.1
-        for <git@vger.kernel.org>; Tue, 20 Feb 2018 17:54:53 -0800 (PST)
+Received: by mail-pf0-f195.google.com with SMTP id d26so60290pfn.5
+        for <git@vger.kernel.org>; Tue, 20 Feb 2018 17:55:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=7j0z1T1MKzhg3bnyjXBl4GMBnEzaHgu2Gsi0sUUyspU=;
-        b=UjZg6y2x3xbHqCW5OfSTMTYby/44EffNx5EBSYGr7STv1zyKk1n7HMIFBznWu7UbBp
-         QDRv0vhFbRL+dlcX6rrGouXTh0tTyQUP5lfKOtveGrCOrHn79sCbxzrkMKuE1pvZCoAC
-         dm/pYc1FmhFYSls9LeStq8vtNzGzgNFf+oTIs0XVnIk3Ct/lm38WU6dOS9nLbyXhbMWS
-         PXZk+sQ3bTqjU7OoKzDA4/LoHlYh/NF8acbE9XS4PzqtklY542+QS19RRWmG3TEJpurZ
-         gRdK5vakTuQiHckznobtpLwbsFJ+9NYjOdshYSpuAhPO5cVQ0i9YGFHpKYeKmGdANs8Y
-         AwFQ==
+        bh=6xZYjlp630TEJPCFug4S0b2L5B9DRHsl2Ztv8Azj9Os=;
+        b=iTkJbnn48gYyj8+BOwunfq9Mi6Rt+Wt+V+gqL6NklmQayanwqef7pwpt8rJ0nwb3rq
+         AQYkDyJBgy8ulziKkPiv2s3L4BUcNIqHjO/7wcBWyxW9sI+Tlg8PhGlkmaczyES166t9
+         /gcF2Y6TsxKarKID4MlFUCpvjKg2XNWhyLXOgblKho4+508Im/j16t3pkHict5a5UYP6
+         UcSLs78+KpXiMXiXkYWkbzqp+Q6GkgFD2DyxSmWMC2MDs4ha5Qk9ZhGhT2BiEenrlNJT
+         bTLOf+jsVWNrZwR9m8lYM7xiffJ8k5Hstv5Uxhd663sUHP31AGnh3yISqdaPHIsB5m8y
+         jYCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=7j0z1T1MKzhg3bnyjXBl4GMBnEzaHgu2Gsi0sUUyspU=;
-        b=ImO32760j150Qb+7ItGllUkblKWRcJDYSBvE/NgEMDCia+DEIcLko/4rRapcsKWrTn
-         rQIHaAfVrOLOQ760eaHAoA7uUOI4EpEp1MCKCVO//6DNP0vcKNdVkbJk84mxrH8neL7V
-         g/Mr3ZiUu1BbKTSnD3DwdCMpL/arF/xXPwCu4fT136Oywqu/P8fyntx9epK9ljrNvsfj
-         dovsDU+VKLJA/G/XTPSt9rVku5ne/ED4i5B3Z2X1Vv1EkJKImGMUxV6yOeBQ91oIL03K
-         2r0fNRWKQ2Iom6THfvNXc/znWvs7649YB+sAVOKekIT7dl18Su0fYuH039gD34UbrvJv
-         Xejw==
-X-Gm-Message-State: APf1xPBDKuvaIoEN+G74q0zzkUrff3RG0aosxhtO7xfahBNDNWBQ2OaS
-        CNHNLxLtffHJ3vepHoi9m4+I1g==
-X-Google-Smtp-Source: AH8x227n/7uBE3ZMON2cDWNP0M6gCqPxPCpBokelRXF6UKCjwjZH2vrvudm9v1s1SaSac7c8ec8RQA==
-X-Received: by 10.98.252.22 with SMTP id e22mr1569848pfh.235.1519178093099;
-        Tue, 20 Feb 2018 17:54:53 -0800 (PST)
+        bh=6xZYjlp630TEJPCFug4S0b2L5B9DRHsl2Ztv8Azj9Os=;
+        b=drXI4Z28MTh2k4ruz9vMfCgCnZmNo7SZ2p3M7i1UY0v/EKZy2+J74uatb4yhQpDXG2
+         f34z3lVcXYm+ubeh8xLKYozXzmWO/hdg89CMu/z02I5Watw/BWxdNIOvQl0Wqtv6tHF5
+         sR8ZdvLHFh3/UofcRew1Zjle49ytCVwH7dM2tfg6XOtr72JGykbQEIahpX6e1Ow4t9MF
+         5GXuzjJfajy020b+75O+Z/F8V8t9oZSldjM6Fc4H9zl/oJJoaRKlE+mmUz+zzoKzCGUp
+         jGLE2uE08GWF4FzJckTZF2KuHYphHqElZbwjvXp/+p9Ni6sITGrY4crU4jwtCmHILCDy
+         YmTQ==
+X-Gm-Message-State: APf1xPD/JPpZRRu+IMQHfSeICRsnGkMb61nUrqIaT0ybRxrb6Rzys7fw
+        ZeUh2YYitz1qLNCT4Ju2rmzizw==
+X-Google-Smtp-Source: AH8x225J1IWZuKCSKnJ+Ji1U7N56xspxIUvBz98ADVsE+p6VXL573FNpt/8jeN8dsToW9ZMmsFe/SQ==
+X-Received: by 10.99.49.198 with SMTP id x189mr1316840pgx.135.1519178110892;
+        Tue, 20 Feb 2018 17:55:10 -0800 (PST)
 Received: from localhost ([2620:0:100e:422:2d12:5719:3437:fdb7])
-        by smtp.gmail.com with ESMTPSA id m80sm74804271pfj.163.2018.02.20.17.54.52
+        by smtp.gmail.com with ESMTPSA id t25sm57687152pge.41.2018.02.20.17.55.09
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 20 Feb 2018 17:54:52 -0800 (PST)
+        Tue, 20 Feb 2018 17:55:10 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     sbeller@google.com
 Cc:     git@vger.kernel.org, gitster@pobox.com, jonathantanmy@google.com,
-        pclouds@gmail.com, sunshine@sunshineco.com
-Subject: [PATCH 09/27] sha1_file: add raw_object_store argument to alt_odb_usable
-Date:   Tue, 20 Feb 2018 17:54:12 -0800
-Message-Id: <20180221015430.96054-10-sbeller@google.com>
+        pclouds@gmail.com, sunshine@sunshineco.com,
+        Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH 19/27] sha1_file: add repository argument to map_sha1_file_1
+Date:   Tue, 20 Feb 2018 17:54:22 -0800
+Message-Id: <20180221015430.96054-20-sbeller@google.com>
 X-Mailer: git-send-email 2.16.1.291.g4437f3f132-goog
 In-Reply-To: <20180221015430.96054-1-sbeller@google.com>
 References: <20180216174626.24677-1-sbeller@google.com>
@@ -64,48 +65,56 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a raw_object_store to alt_odb_usable to be more specific about which
-repository to act on. The choice of the repository is delegated to its
-only caller link_alt_odb_entry.
+Add a repository argument to allow the map_sha1_file_1 caller to be
+more specific about which repository to act on. This is a small
+mechanical change; it doesn't change the implementation to handle
+repositories other than the_repository yet.
+
+As with the previous commits, use a macro to catch callers passing a
+repository other than the_repository at compile time.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- sha1_file.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ sha1_file.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
 diff --git a/sha1_file.c b/sha1_file.c
-index 1348dce68f..a8e23bd2f8 100644
+index 68aff90792..7fa9ed2f25 100644
 --- a/sha1_file.c
 +++ b/sha1_file.c
-@@ -346,7 +346,9 @@ static const char *alt_sha1_path(struct alternate_object_database *alt,
- /*
-  * Return non-zero iff the path is usable as an alternate object database.
+@@ -938,9 +938,10 @@ static int open_sha1_file_the_repository(const unsigned char *sha1,
+  * Map the loose object at "path" if it is not NULL, or the path found by
+  * searching for a loose object named "sha1".
   */
--static int alt_odb_usable(struct strbuf *path, const char *normalized_objdir)
-+static int alt_odb_usable(struct raw_object_store *o,
-+			  struct strbuf *path,
-+			  const char *normalized_objdir)
+-static void *map_sha1_file_1(const char *path,
+-			     const unsigned char *sha1,
+-			     unsigned long *size)
++#define map_sha1_file_1(r, p, s, si) map_sha1_file_1_##r(p, s, si)
++static void *map_sha1_file_1_the_repository(const char *path,
++					    const unsigned char *sha1,
++					    unsigned long *size)
  {
- 	struct alternate_object_database *alt;
+ 	void *map;
+ 	int fd;
+@@ -969,7 +970,7 @@ static void *map_sha1_file_1(const char *path,
  
-@@ -362,7 +364,7 @@ static int alt_odb_usable(struct strbuf *path, const char *normalized_objdir)
- 	 * Prevent the common mistake of listing the same
- 	 * thing twice, or object directory itself.
- 	 */
--	for (alt = the_repository->objects.alt_odb_list; alt; alt = alt->next) {
-+	for (alt = o->alt_odb_list; alt; alt = alt->next) {
- 		if (!fspathcmp(path->buf, alt->path))
- 			return 0;
- 	}
-@@ -414,7 +416,7 @@ static int link_alt_odb_entry(const char *entry, const char *relative_base,
- 	while (pathbuf.len && pathbuf.buf[pathbuf.len - 1] == '/')
- 		strbuf_setlen(&pathbuf, pathbuf.len - 1);
+ void *map_sha1_file(const unsigned char *sha1, unsigned long *size)
+ {
+-	return map_sha1_file_1(NULL, sha1, size);
++	return map_sha1_file_1(the_repository, NULL, sha1, size);
+ }
  
--	if (!alt_odb_usable(&pathbuf, normalized_objdir)) {
-+	if (!alt_odb_usable(&the_repository->objects, &pathbuf, normalized_objdir)) {
- 		strbuf_release(&pathbuf);
- 		return -1;
- 	}
+ static int unpack_sha1_short_header(git_zstream *stream,
+@@ -2199,7 +2200,7 @@ int read_loose_object(const char *path,
+ 
+ 	*contents = NULL;
+ 
+-	map = map_sha1_file_1(path, NULL, &mapsize);
++	map = map_sha1_file_1(the_repository, path, NULL, &mapsize);
+ 	if (!map) {
+ 		error_errno("unable to mmap %s", path);
+ 		goto out;
 -- 
 2.16.1.291.g4437f3f132-goog
 
