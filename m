@@ -2,211 +2,264 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 222F31F404
-	for <e@80x24.org>; Wed, 21 Feb 2018 20:01:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BA9791F404
+	for <e@80x24.org>; Wed, 21 Feb 2018 20:11:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751338AbeBUUBq (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Feb 2018 15:01:46 -0500
-Received: from mail-pg0-f42.google.com ([74.125.83.42]:44852 "EHLO
-        mail-pg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751276AbeBUUBp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Feb 2018 15:01:45 -0500
-Received: by mail-pg0-f42.google.com with SMTP id l4so1064606pgp.11
-        for <git@vger.kernel.org>; Wed, 21 Feb 2018 12:01:45 -0800 (PST)
+        id S1750988AbeBUULT (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Feb 2018 15:11:19 -0500
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:39007 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750741AbeBUULS (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Feb 2018 15:11:18 -0500
+Received: by mail-wr0-f196.google.com with SMTP id w77so7940004wrc.6
+        for <git@vger.kernel.org>; Wed, 21 Feb 2018 12:11:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=c8+Cke6g+9u1fKBfX1utyUIv1dwxwHhupO3a18mDJoc=;
-        b=hpgXsjztHZlWNf6+TfbvjCaPjuR1XB8UFwajTXyLBEG42JijWcP2edqcxTWnNDaKUx
-         zhFxlo10kUmz4vZDb7XdmCl8lqgW7CMlpEvLjH/t0cn1HH3VZlLZSYgF8oJLntn0vVHp
-         lSdyCUxyqrFfdhoNYK6ags+nrNEwxEzm9y5IKyq+gwQ8vXvmFR3DqMXChLpJfrIgyh2t
-         RtESrrz7cyMgJsEB5PE6SgScH0hj1G5eqO4Qg5F0VVLwVOFPA2zVaWuOn/DI2ihXPa27
-         uqfQDB8ioTaTnIkQfkh4gj7pM+PnaxBGlXzSD15TV2r2ega68GEIcgZDyIy1zNMsKjNt
-         vNrA==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=BdA1/Y9UDHHWUiue593t0AV+2T/G6fAODyLgSP9DDtg=;
+        b=AM+cfju17Zs9U6kI+gyNxy91DGHTpRpI/vh+vf7L4Pe5UPg0X+jJFXjfC+4Ufs+nZq
+         8e2BHSiyZs1hKFAmtTxcjxFi5baW5KomiPMSqqlTCP5g+cg+ePZZXYdvaAl+tkpmkiWC
+         W32LO3HvY1Yafzf0DS709jFSjz+0w70nLBVw5o8wRhMod38cbKJx+Yoq8VdD1utsQ+bj
+         R+se16vOGlsZdo9qVBaKkhOJ4GQscU9SW172Xv276dD4J3m0KuzSjU9rk21RacGxDnoX
+         FU3njDlC+768aIdQ8NQW7o2Y+mOK7ix8z1wmN/txYi9g2ztHcvQkEHx/9F1P8f9MwGWV
+         +JEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=c8+Cke6g+9u1fKBfX1utyUIv1dwxwHhupO3a18mDJoc=;
-        b=r6wA0L9ok9fZMrayJCUdjNzV2OEE2btzYIPeQ/5fxwFsk1LwFit8MV+dgpuoNkG+et
-         7kEuni4iJON/RC6Gu9hQamSfHv4FtSHUhzgz2qEizKMd36asMramlbQp4Fdo+CK0IXhx
-         0nkq0mKbTX3UetDHuNUXWqeNs8F1u19gwpd00ut1ObhYAZoXKyU1lgnnTnGTeujsjoQC
-         Dl/k8JVel0dLX8zkcoSPoKiGBjLTSndK0R9zdBMrwZj3sFZlqKHSkOqMAhl0+4eAxLj0
-         5kus1P/x51mIA8upwvtpTObKaHz8x9DmCsA9zg/eiK0agIOhWCgsi7/UKQgSYxSCObfq
-         UUZQ==
-X-Gm-Message-State: APf1xPDCpRJgUrBOxgXWHFhEz54VfKpFClzmmhmaLf+U/F3o9FFFgTcu
-        VSYEO4qUCHcUmd5bTAuRXnel1ePwlok=
-X-Google-Smtp-Source: AH8x224DzH5WNacy7xSsq1a/ijbBIQW/FeX3/fdgQmYpLeWv6n0ptVz+qu+pO3hBOOztzUZaA/I3ww==
-X-Received: by 10.101.72.198 with SMTP id o6mr3560070pgs.279.1519243303673;
-        Wed, 21 Feb 2018 12:01:43 -0800 (PST)
-Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
-        by smtp.gmail.com with ESMTPSA id w71sm57155110pfd.184.2018.02.21.12.01.41
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=BdA1/Y9UDHHWUiue593t0AV+2T/G6fAODyLgSP9DDtg=;
+        b=qClmJ/34cQO8AqJTs5ymN0yPVZpR0cRrVi+cqKsz6WsVIMfuLIz4JX3zD8nBuGJTr2
+         KID1ZH+UEEyUJp66TuAvlHkX8VYOClD2t6qQqwqk/5Ho9b+LOkIHrVHpOryetciB5Zjo
+         h35w36/nyWhLM/eS7+lZs6A6aykmO0QOrjjrPA0kravCgBPEf/P660RO0crCjolu6Ob5
+         WeSVPvNld4nEjaxk69kMucyS7xkyIFtSfjxkYq1IwktGij19h6xJGEJO0x+bLOoFPalB
+         uinc1McIsoplp1uZDNTvuMZCwteWtA1N50d13aejFoGWjAjCWSv2nhHRLcoRMPBuOIag
+         58YA==
+X-Gm-Message-State: APf1xPAHdhju2cZWZCCnDbmq2+cDgYVHYpshIvwxXBOvFMp69wDMCNQb
+        MyqYyWKjzd66KUIx3gwSz9Q=
+X-Google-Smtp-Source: AH8x225J6Ram/uU1T8QO4THn5MNrjMw44z/q36+lzVIhDeg5yXuupQrtk9r78rmk/llwjzAMQeafiw==
+X-Received: by 10.223.160.100 with SMTP id l33mr3999214wrl.51.1519243875877;
+        Wed, 21 Feb 2018 12:11:15 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id k2sm566716wrc.30.2018.02.21.12.11.14
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 21 Feb 2018 12:01:42 -0800 (PST)
-Date:   Wed, 21 Feb 2018 12:01:41 -0800
-From:   Brandon Williams <bmwill@google.com>
-To:     git@vger.kernel.org
-Cc:     sbeller@google.com, peff@peff.net, gitster@pobox.com,
-        jrnieder@gmail.com, stolee@gmail.com, git@jeffhostetler.com,
-        pclouds@gmail.com
-Subject: Re: [PATCH v3 00/35] protocol version 2
-Message-ID: <20180221200141.GA127348@google.com>
-References: <20180125235838.138135-1-bmwill@google.com>
- <20180207011312.189834-1-bmwill@google.com>
+        Wed, 21 Feb 2018 12:11:15 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     git@vger.kernel.org, git@jeffhostetler.com, peff@peff.net,
+        jonathantanmy@google.com, szeder.dev@gmail.com, sbeller@google.com,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v4 06/13] commit-graph: implement git commit-graph read
+References: <4d1ee202-7d79-d73c-6e05-d0fc85db943c@gmail.com>
+        <1519066406-81663-1-git-send-email-dstolee@microsoft.com>
+        <1519066406-81663-7-git-send-email-dstolee@microsoft.com>
+Date:   Wed, 21 Feb 2018 12:11:14 -0800
+In-Reply-To: <1519066406-81663-7-git-send-email-dstolee@microsoft.com>
+        (Derrick Stolee's message of "Mon, 19 Feb 2018 13:53:19 -0500")
+Message-ID: <xmqq371uyufx.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180207011312.189834-1-bmwill@google.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 02/06, Brandon Williams wrote:
-> Changes in v3:
->  * There were some comments about how the protocol should be designed
->    stateless first.  I've made this change and instead of having to
->    supply the `stateless-rpc=true` capability to force stateless
->    behavior, the protocol just requires all commands to be stateless.
+Derrick Stolee <stolee@gmail.com> writes:
+
+> +'read'::
+> +
+> +Read a graph file given by the graph-head file and output basic
+> +details about the graph file.
+> ++
+> +With `--file=<name>` option, consider the graph stored in the file at
+> +the path  <object-dir>/info/<name>.
+> +
+
+A sample reader confusion after reading the above twice:
+
+    What is "the graph-head file" and how does the user specify it?  Is
+    it given by  the value for the "--file=<name>" command line option?
+
+Another sample reader reaction after reading the above:
+
+    What are the kind of "basic details" we can learn from this
+    command is unclear, but perhaps there is an example to help me
+    decide if this command is worth studying.
+
+> @@ -44,6 +53,12 @@ EXAMPLES
+>  $ git commit-graph write
+>  ------------------------------------------------
 >  
->  * Added some patches towards the end of the series to force the client
->    to not request to use protocol v2 when pushing (even if configured to
->    use v2).  This is to ease the roll-out process of a push command in
->    protocol v2.  This way when servers gain the ability to accept
->    pushing in v2 (and they start responding using v2 when requests are
->    sent to the git-receive-pack endpoint) that clients who still don't
->    understand how to push using v2 won't request to use v2 and then die
->    when they recognize that the server does indeed know how to accept a
->    push under v2.
-> 
->  * I implemented the `shallow` feature for fetch.  This feature
->    encapsulates the existing functionality of all the shallow/deepen
->    capabilities in v0.  So now a server can process shallow requests.
-> 
->  * Various other small tweaks that I can't remember :)
-> 
-> After all of that I think the series is in a pretty good state, baring
-> any more critical reviewing feedback.
-> 
-> Thanks!
+> +* Read basic information from a graph file.
+> ++
+> +------------------------------------------------
+> +$ git commit-graph read --file=<name>
+> +------------------------------------------------
+> +
 
-I'm hoping to get some more in depth review before I do any more
-re-rolls, but for those interested I will need to do a re-roll to
-eliminate the prelude from the http transport.  This is the prelude
-which includes the service line followed by any number of packet lines
-culminating in a flush-pkt like so:
+And the sample reader is utterly disappointed at this point.
 
-  # service=git-upload-pack
-  some
-  other
-  optional
-  lines
-  0000
+> +static int graph_read(int argc, const char **argv)
+> +{
+> +	struct commit_graph *graph = 0;
+> +	struct strbuf full_path = STRBUF_INIT;
+> +
+> +	static struct option builtin_commit_graph_read_options[] = {
+> +		{ OPTION_STRING, 'o', "object-dir", &opts.obj_dir,
+> +			N_("dir"),
+> +			N_("The object directory to store the graph") },
+> +		{ OPTION_STRING, 'H', "file", &opts.graph_file,
+> +			N_("file"),
+> +			N_("The filename for a specific commit graph file in the object directory."),
+> +			PARSE_OPT_OPTARG, NULL, (intptr_t) "" },
+> +		OPT_END(),
+> +	};
 
-With this eliminated all transports will be exactly the same, the only
-difference will be how the protocol is tunneled.
+The same comment as all the previous ones apply, wrt short options
+and non-use of OPT_STRING().
 
-> 
-> Brandon Williams (35):
->   pkt-line: introduce packet_read_with_status
->   pkt-line: introduce struct packet_reader
->   pkt-line: add delim packet support
->   upload-pack: convert to a builtin
->   upload-pack: factor out processing lines
->   transport: use get_refs_via_connect to get refs
->   connect: convert get_remote_heads to use struct packet_reader
->   connect: discover protocol version outside of get_remote_heads
->   transport: store protocol version
->   protocol: introduce enum protocol_version value protocol_v2
->   test-pkt-line: introduce a packet-line test helper
->   serve: introduce git-serve
->   ls-refs: introduce ls-refs server command
->   connect: request remote refs using v2
->   transport: convert get_refs_list to take a list of ref patterns
->   transport: convert transport_get_remote_refs to take a list of ref
->     patterns
->   ls-remote: pass ref patterns when requesting a remote's refs
->   fetch: pass ref patterns when fetching
->   push: pass ref patterns when pushing
->   upload-pack: introduce fetch server command
->   fetch-pack: perform a fetch using v2
->   upload-pack: support shallow requests
->   fetch-pack: support shallow requests
->   connect: refactor git_connect to only get the protocol version once
->   connect: don't request v2 when pushing
->   transport-helper: remove name parameter
->   transport-helper: refactor process_connect_service
->   transport-helper: introduce stateless-connect
->   pkt-line: add packet_buf_write_len function
->   remote-curl: create copy of the service name
->   remote-curl: store the protocol version the server responded with
->   http: allow providing extra headers for http requests
->   http: don't always add Git-Protocol header
->   remote-curl: implement stateless-connect command
->   remote-curl: don't request v2 when pushing
-> 
->  .gitignore                              |   1 +
->  Documentation/technical/protocol-v2.txt | 338 +++++++++++++++++
->  Makefile                                |   7 +-
->  builtin.h                               |   2 +
->  builtin/clone.c                         |   2 +-
->  builtin/fetch-pack.c                    |  21 +-
->  builtin/fetch.c                         |  14 +-
->  builtin/ls-remote.c                     |   7 +-
->  builtin/receive-pack.c                  |   6 +
->  builtin/remote.c                        |   2 +-
->  builtin/send-pack.c                     |  20 +-
->  builtin/serve.c                         |  30 ++
->  builtin/upload-pack.c                   |  74 ++++
->  connect.c                               | 352 +++++++++++++-----
->  connect.h                               |   7 +
->  fetch-pack.c                            | 319 +++++++++++++++-
->  fetch-pack.h                            |   4 +-
->  git.c                                   |   2 +
->  http.c                                  |  25 +-
->  http.h                                  |   2 +
->  ls-refs.c                               |  96 +++++
->  ls-refs.h                               |   9 +
->  pkt-line.c                              | 149 +++++++-
->  pkt-line.h                              |  77 ++++
->  protocol.c                              |   2 +
->  protocol.h                              |   1 +
->  remote-curl.c                           | 257 ++++++++++++-
->  remote.h                                |   9 +-
->  serve.c                                 | 260 +++++++++++++
->  serve.h                                 |  15 +
->  t/helper/test-pkt-line.c                |  64 ++++
->  t/t5701-git-serve.sh                    | 176 +++++++++
->  t/t5702-protocol-v2.sh                  | 239 ++++++++++++
->  transport-helper.c                      |  84 +++--
->  transport-internal.h                    |   4 +-
->  transport.c                             | 116 ++++--
->  transport.h                             |   9 +-
->  upload-pack.c                           | 625 ++++++++++++++++++++++++--------
->  upload-pack.h                           |  21 ++
->  39 files changed, 3088 insertions(+), 360 deletions(-)
->  create mode 100644 Documentation/technical/protocol-v2.txt
->  create mode 100644 builtin/serve.c
->  create mode 100644 builtin/upload-pack.c
->  create mode 100644 ls-refs.c
->  create mode 100644 ls-refs.h
->  create mode 100644 serve.c
->  create mode 100644 serve.h
->  create mode 100644 t/helper/test-pkt-line.c
->  create mode 100755 t/t5701-git-serve.sh
->  create mode 100755 t/t5702-protocol-v2.sh
->  create mode 100644 upload-pack.h
-> 
-> -- 
-> 2.16.0.rc1.238.g530d649a79-goog
-> 
+Also, I suspect that these two would want to use OPT_FILENAME
+instead, if we anticipate that the command might want to be
+sometimes run from a subdirectory.  Otherwise wouldn't
 
--- 
-Brandon Williams
+	cd t && git commit-graph read --file=../.git/object/info/$whatever
+
+end up referring to a wrong place because the code that uses the
+value obtained from OPTION_STRING does not do the equivalent of
+parse-options.c::fix_filename()?  The same applies to object-dir
+handling.
+
+> +	argc = parse_options(argc, argv, NULL,
+> +			     builtin_commit_graph_read_options,
+> +			     builtin_commit_graph_read_usage, 0);
+> +
+> +	if (!opts.obj_dir)
+> +		opts.obj_dir = get_object_directory();
+> +
+> +	if (!opts.graph_file)
+> +		die("no graph hash specified");
+> +
+> +	strbuf_addf(&full_path, "%s/info/%s", opts.obj_dir, opts.graph_file);
+
+Ahh, I was fooled by a misnamed option.  --file does *not* name the
+file.  It is a filename in a fixed place that is determined by other
+things.
+
+So it would be a mistake to use OPT_FILENAME() in the parser for
+that misnamed "--file" option.  The parser for --object-dir still
+would want to be OPT_FILENAME(), but quite honestly, I do not see
+the point of having --object-dir option in the first place.  The
+graph file is not relative to it but is forced to have /info/ in
+between that directory and the filename, so it is not like the user
+gets useful flexibility out of being able to specify two different
+places using --object-dir= option and $GIT_OBJECT_DIRECTORY
+environment (iow, a caller that wants to work on a specific object
+directory can use the environment, which is how it would tell any
+other Git subcommand which object store it wants to work with).
+
+But stepping back a bit, I think the way --file argument is defined
+is halfway off from two possible more useful ways to define it.  If
+it were just "path to the file" (iow, what OPT_FILENAME() is suited
+for parsing it), then a user could say "I have this graph file that
+I created for testing, it is not installed in its usual place in
+$GIT_OBJECT_DIRECTORY/info/ at all, but I want you to read it
+because I am debugging".  That is one possible useful extreme.  The
+other possibility would be to allow *only* the hash part to be
+specified, iow, not just forcing /info/ relative to object
+directory, you would force the "graph-" prefix and ".graph" suffix.
+That would be the other extreme that is useful (less typing and less
+error prone).
+
+For a low-level command line this, my gut feeling is that it would
+be better to allow paths to the object directory and the graph file
+to be totally independently specified.
+
+> +	if (graph_signature != GRAPH_SIGNATURE) {
+> +		munmap(graph_map, graph_size);
+> +		close(fd);
+> +		die("graph signature %X does not match signature %X",
+> +			graph_signature, GRAPH_SIGNATURE);
+> +	}
+> +
+> +	graph_version = *(unsigned char*)(data + 4);
+> +	if (graph_version != GRAPH_VERSION) {
+> +		munmap(graph_map, graph_size);
+> +		close(fd);
+> +		die("graph version %X does not match version %X",
+> +			graph_version, GRAPH_VERSION);
+> +	}
+> +
+> +	hash_version = *(unsigned char*)(data + 5);
+> +	if (hash_version != GRAPH_OID_VERSION) {
+> +		munmap(graph_map, graph_size);
+> +		close(fd);
+> +		die("hash version %X does not match version %X",
+> +			hash_version, GRAPH_OID_VERSION);
+
+It becomes a bit tiring to see munmap/close/die pattern repreated
+over and over again, doesn't it?  Can we make it simpler, perhaps by
+letting die() take care of the clean-up?  After all, if the very
+next step dies because alloc_commit_graph() got NULL in xmalloc(),
+we are letting die() there take care of the clean-up anyway already,
+and die() in the chunk parsing look has no such cleanup, either.
+
+Of course, when we later want to libify this part of the code, then
+we wouldn't be calling die() from this codepath, but the change
+required to do so will not be just s/die/error/; it would be more
+like
+
+	if (x_version != X_VERSION) {
+		error("X version %X does not match",...);
+		goto cleanup_fail;
+	}
+
+with munmap/close done at the jumped-to label.
+
+> +	}
+> +
+> +	graph = alloc_commit_graph();
+> +
+> +	graph->hash_len = GRAPH_OID_LEN;
+> + ...
+> +		if (chunk_offset > graph_size - GIT_MAX_RAWSZ)
+> +			die("improper chunk offset %08x%08x", (uint32_t)(chunk_offset >> 32),
+> +			    (uint32_t)chunk_offset);
+> +
+> +		switch (chunk_id) {
+> +			case GRAPH_CHUNKID_OIDFANOUT:
+> +				graph->chunk_oid_fanout = (uint32_t*)(data + chunk_offset);
+> +				break;
+
+This is over-indented from our point of view.  In our codebase, case
+arms aling with switch, i.e.
+
+		switch (chunk_id) {
+		case GRAPH_CHUNKID_OIDFANOUT:
+			graph->chunk_oid_fanout = ...;
+			break;
+
+When the input file has GRAPH_CHUNKID_OIDFANOUT twice, I think it
+should be flagged as a corrupt/malformed input file, causing the
+reader to reject it.  It is plausible that you wanted to make it
+"the last one wins", but even if that is the case, I think the user
+should at least get a warning, as (I'd imagine) it is an unusual
+condition.
+
+The same applies to multiple instances of any currently-defined
+chunk types.
+
+> +graph_read_expect() {
+> +	OPTIONAL=""
+> +	NUM_CHUNKS=3
+> +	if [ ! -z $2 ]
+
+We use "test" and do not use "[ ... ]" or "[[ ... ]]".
+
+I'll stop here.
+
