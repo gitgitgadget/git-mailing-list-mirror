@@ -2,106 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CD3831F404
-	for <e@80x24.org>; Wed, 21 Feb 2018 18:29:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BB9AD1F404
+	for <e@80x24.org>; Wed, 21 Feb 2018 18:44:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752811AbeBUS3k (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Feb 2018 13:29:40 -0500
-Received: from mail-pl0-f42.google.com ([209.85.160.42]:35844 "EHLO
-        mail-pl0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751712AbeBUS3i (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Feb 2018 13:29:38 -0500
-Received: by mail-pl0-f42.google.com with SMTP id v3so1390355plg.3
-        for <git@vger.kernel.org>; Wed, 21 Feb 2018 10:29:38 -0800 (PST)
+        id S1752133AbeBUSou (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Feb 2018 13:44:50 -0500
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:33907 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751610AbeBUSot (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Feb 2018 13:44:49 -0500
+Received: by mail-wr0-f194.google.com with SMTP id m5so7336481wrg.1
+        for <git@vger.kernel.org>; Wed, 21 Feb 2018 10:44:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:content-transfer-encoding:subject:message-id:date:to
-         :mime-version;
-        bh=9Vo7/w2bSZ2oxtRnzdxRABfCdqKNJ2xmCWh/yRLpciU=;
-        b=h7guvpvWIu4i35OsrHPbfr3zS0yVGCZVtIjlVI+f9AyqP3iZ4zR3siWN90cRrzPWPu
-         mH1rrvmuAMDDuyLOYj4Z01P3e0O93WKerNVMPfJWw6IPNzEKoJC//fkD/+YhgyeCuUIV
-         TC4c+Nfxb6z7UXsgG/CnFmJokTU24OpeqF2Tb9s8nylSNMhkcCjb0jlEunNp5GVG9fyM
-         hi8RusbNQ+aFzqteQiHH4DbDUqxgxyKyF3VtKWXLonW/HnVVgAB/FsqesOaHxyKORmz9
-         MIpKjSzPHhpdNLBzBC9CcGMPEfZ+bvkxwei4BI7M/gfBT6jQymPNEZcZTardSkbAALdx
-         /PPA==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=RPWqKsdD35CpQbFXTfmNJ0+QtllgVQqDRdZ6Ay2vjSg=;
+        b=jvY3RPtYubHPOvfnHIc81FOTOmKsSvsVa3aQuwQfIfk3zTOfQ1QzwixyNa7dl2I2gt
+         vgfMmlwyKPNIoslb4QXJX90LuggZBFXf9re6LC6kP7iEyhIMLDpTvR5Yn5walOV4zUC8
+         QsvFgzgwXdhrVF1wSWCyo6o+eaAWHcyQr05oXjmtPkWVOCHOg0qVV73OMstp9erS2W1/
+         ZPqGDgVACPGcPQ7bgugp1iarbAvcJ4mS842KZppZDRioG0t8aCs2gervPVtirgYv0eHg
+         /2QVj//yMi2x49Xo2SVNQMIjZL72NSIqKvQFrDcoXniEc5tRbvHGems4Kbq42Dw3ESmy
+         H/Hw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:content-transfer-encoding:subject
-         :message-id:date:to:mime-version;
-        bh=9Vo7/w2bSZ2oxtRnzdxRABfCdqKNJ2xmCWh/yRLpciU=;
-        b=GfwxiHen2R+VxNSMglUt8qW0rz42YX+pENKSYgLRACdZdNp4heJfGaz4jzerGJUgX+
-         HXyyhoHxt/7DQLofNzTgdRA6QihNWcg4lQgNnvnA4etqoOuN+PBqZlKQehy97OpVeNik
-         hsWy/1Hi+ISBTsyWK6jU2LIhW2dlS/ZDNSVsM19Nq8A/2ZO6cNzVxr6LU/Df6WFW1OrK
-         WXfPMqjGn3KeyRN7qPO0W5eqh3Nb6Atzvip8eQ1SKry1/ty32oBEFT7qVKB+jCFNWIE4
-         cwlbpg51bCs7KKgx6eA5ebQFOYL6KgbxfM+8FHrTcYiLYgczl9jXNmizEYPU2grC1w4Y
-         QrLg==
-X-Gm-Message-State: APf1xPDdZJj21jE70ec8JXDp7LWU/OuGasMDfl8E+23FXAINfkZITBrS
-        c8q9DlGHD3X7IQmRy47YZ+xhxpGX
-X-Google-Smtp-Source: AH8x225RIMZQi78Q+iojQ8WvNNb1bmrYQtEvhqKnOYJXO3/3Ti/iRhuYctdwF3ftQoQWAb6qYXOSzg==
-X-Received: by 2002:a17:902:5a88:: with SMTP id r8-v6mr4080417pli.426.1519237777499;
-        Wed, 21 Feb 2018 10:29:37 -0800 (PST)
-Received: from pants.nat.office.privatealpha.com ([198.47.44.221])
-        by smtp.gmail.com with ESMTPSA id 66sm9281641pfh.96.2018.02.21.10.29.36
-        for <git@vger.kernel.org>
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 21 Feb 2018 10:29:36 -0800 (PST)
-From:   Dorian Taylor <dorian.taylor.lists@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Subject: bug in HTTP protocol spec
-Message-Id: <4F85B1C3-9B5B-4D7C-8907-B728C18A70CD@gmail.com>
-Date:   Wed, 21 Feb 2018 10:29:35 -0800
-To:     git@vger.kernel.org
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-X-Mailer: Apple Mail (2.3124)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=RPWqKsdD35CpQbFXTfmNJ0+QtllgVQqDRdZ6Ay2vjSg=;
+        b=lqVhG8iXSGVE9dh6svyUqZ7mOJ/XeTJy/az9dX6meA46ae7dEpFM+uJzAFuB4UQ+Nq
+         Bvl4NPQ6kUes3LJaxnDAju0WMemdOlUl30U0KUG8USKywj/DoZczqaKPO0h9/1aADvCu
+         SZdwub8QTajhh9puxbjCaD9ppG/EN6+6l29McoFvYOa08+Ss6IXmqP/UOoxPFgAKfN+v
+         +iRrz4bKDu8Mig5s3bmVLLHfvUWZViyWSip9iBEfvIUtef9vIFv0hJEbKXB0oL6wPky2
+         KHXlBjDz9a6cwVVOHckSvFiokfolrnrgYvDQiUapQHG7dvZoSSfNTyPLXvQ8d3UVBsEF
+         tBCA==
+X-Gm-Message-State: APf1xPB465h9u8w3Paoflwi80Js6sWCQfxVxAdtVgCl+f/f08CXWl28V
+        kTvNHPlJJ1znCV/G/KAtCNuHBin9
+X-Google-Smtp-Source: AH8x226i79pW9Lozxn3VsTix5gFVBOibDt/sU96LBLoHjszJNhG4QOnQ7rNP209J4WVcQH74lDlAIg==
+X-Received: by 10.28.249.18 with SMTP id x18mr3004908wmh.49.1519238688042;
+        Wed, 21 Feb 2018 10:44:48 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id s125sm8253854wmf.4.2018.02.21.10.44.47
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 21 Feb 2018 10:44:47 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] submodule: indicate that 'submodule.recurse' doesn't apply to clone
+References: <20180220202922.220568-1-bmwill@google.com>
+Date:   Wed, 21 Feb 2018 10:44:46 -0800
+In-Reply-To: <20180220202922.220568-1-bmwill@google.com> (Brandon Williams's
+        message of "Tue, 20 Feb 2018 12:29:22 -0800")
+Message-ID: <xmqqlgfmyyg1.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello list,
+Brandon Williams <bmwill@google.com> writes:
 
-I had been banging my head all morning trying to figure out why I =
-couldn=E2=80=99t get a little HTTP implementation to clone/push via the =
-smart protocol (just wrapping git-receive-pack/git-upload-pack). I kept =
-getting the following (likely familiar to some) error:
+> Update the documentation for the 'submodule.recurse' config to identify
+> that the clone command does not respect it.
+>
+> Signed-off-by: Brandon Williams <bmwill@google.com>
+> ---
+>  Documentation/config.txt | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
 
-```
-fatal: Could not read from remote repository.
+Thanks.
 
-Please make sure you have the correct access rights
-and the repository exists.
-```
-
-I didn=E2=80=99t get an insight until I ran with GIT_TRACE_PACKET=3Dtrue =
-on a known-good remote (i.e. GitHub), that the null packet-line `0000` =
-has to follow the service line. This is not reflected in the example =
-here:
-
-=
-https://github.com/git/git/blob/6464679d9620d91b639e2681b9cc6473f3856d09/D=
-ocumentation/technical/http-protocol.txt#L216
-
-It is also not reflected in the BNF:
-
-=
-https://github.com/git/git/blob/6464679d9620d91b639e2681b9cc6473f3856d09/D=
-ocumentation/technical/http-protocol.txt#L279
-
-(Note these links are from the most recent commit of this file as of =
-this writing.)
-
-Just thought somebody would like to know.
-
-Regards,
-
---
-Dorian Taylor
-Make things. Make sense.
-https://doriantaylor.com
-
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index f57e9cf10..59ff29d7a 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -3210,7 +3210,8 @@ submodule.active::
+>  
+>  submodule.recurse::
+>  	Specifies if commands recurse into submodules by default. This
+> -	applies to all commands that have a `--recurse-submodules` option.
+> +	applies to all commands that have a `--recurse-submodules` option,
+> +	except `clone`.
+>  	Defaults to false.
+>  
+>  submodule.fetchJobs::
