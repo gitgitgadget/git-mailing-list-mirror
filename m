@@ -2,189 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 130FA1F404
-	for <e@80x24.org>; Wed, 21 Feb 2018 23:27:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2BEFC1F404
+	for <e@80x24.org>; Wed, 21 Feb 2018 23:28:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751203AbeBUX11 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Feb 2018 18:27:27 -0500
-Received: from cloud.peff.net ([104.130.231.41]:60132 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1750741AbeBUX10 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Feb 2018 18:27:26 -0500
-Received: (qmail 21477 invoked by uid 109); 21 Feb 2018 23:27:26 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 21 Feb 2018 23:27:26 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 29156 invoked by uid 111); 21 Feb 2018 23:28:13 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 21 Feb 2018 18:28:13 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 21 Feb 2018 18:27:24 -0500
-Date:   Wed, 21 Feb 2018 18:27:24 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Linus Torvalds <torvalds@linux-foundation.org>,
-        Derrick Stolee <stolee@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: [PATCH] revision: drop --show-all option
-Message-ID: <20180221232724.GD7944@sigill.intra.peff.net>
-References: <ecbbe515-b7a8-3dc8-7d14-32412e7b12c3@gmail.com>
- <20180220225726.GA17496@sigill.intra.peff.net>
- <22169205-8020-c816-0968-f6293e8d40bc@gmail.com>
- <20180221184811.GD4333@sigill.intra.peff.net>
- <xmqqtvuax9te.fsf@gitster-ct.c.googlers.com>
- <20180221225002.GB7944@sigill.intra.peff.net>
- <xmqqinaqx7wp.fsf@gitster-ct.c.googlers.com>
+        id S1751265AbeBUX2k (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Feb 2018 18:28:40 -0500
+Received: from mail-ot0-f172.google.com ([74.125.82.172]:41995 "EHLO
+        mail-ot0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751165AbeBUX2j (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Feb 2018 18:28:39 -0500
+Received: by mail-ot0-f172.google.com with SMTP id a7so3021875otk.9
+        for <git@vger.kernel.org>; Wed, 21 Feb 2018 15:28:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=clarifai.com; s=google;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=IOl6/R55JQ32JM9V5En/iwCxkp973Od9sB77KhDqkY4=;
+        b=lMYSFhOkLDGeOJusBebI+Svw0RZ17Dn8CG0bViamMljd/g1h+TvAVl3595QKY+8jVK
+         mzfSOkQEq0KQMCDkblsXLp3rp7LwLfKBRFuUNnQe6pfYkEP+UAJBqBpCNTBDdn2AxVXc
+         ztu6uwcsy9Ck+JXFAJY6caBXR35mrWesPaKT4=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=IOl6/R55JQ32JM9V5En/iwCxkp973Od9sB77KhDqkY4=;
+        b=DewaEY1xEahhkG+6mKI3UmpU1uRKXt6BhgwVwku5uG9jnTe4OTULpGDZkal1EfvJx2
+         +B7xasxgEUHC08f0QEfMMSepalb5ANqR5RG8Z5sTyHhDurU68S6j8LRAMyLT1DIP+QYh
+         lCL250UgRYVFIgVjjxGiksFNLCPSUe8lU1SQ6qnyn+vag0m0kq0sx3HEUU6DdTmxKBG0
+         Bu/1qWNyu+NWqIgI+s9QBtBg1gIJ74eJYiIpJR3Fr6gJtyxhESUX/Em0PtWzSP/NvXa1
+         wpnDhaqC03ARsnr8xrNIVuscht8rHducHq+qfOs42F6rKKXohMwF/BJbc/xPQFaZCVIA
+         GElA==
+X-Gm-Message-State: APf1xPBoYOkeECRPYoxpfDqyku1ImOWr+8aurASm3B9yr2v+Nvxc25w8
+        xFOTEcdrU/UVxZ5w+PK44EtPUAPnx+c+/3PB1FzPIPoGA5k=
+X-Google-Smtp-Source: AG47ELuMeVdsAp0YbLVNsIfhoj913vYVz64ynKb6VYQmV/bsa3Aj2HT5S7C1yY40648Umg9K6vWpQZupB+BGCF4UuKo=
+X-Received: by 10.157.24.48 with SMTP id b45mr3074427ote.195.1519255718603;
+ Wed, 21 Feb 2018 15:28:38 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqinaqx7wp.fsf@gitster-ct.c.googlers.com>
+Received: by 10.74.138.221 with HTTP; Wed, 21 Feb 2018 15:28:18 -0800 (PST)
+From:   Josh Tepper <josh@clarifai.com>
+Date:   Wed, 21 Feb 2018 18:28:18 -0500
+Message-ID: <CAPFeJUA=7NyZZxkjpYjoRiXTb1WA1cQ-dYsn_XykMYt=iWGKOA@mail.gmail.com>
+Subject: Bug: git log: boundary commits do not respect order (e.g. date-order, topo-order)
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 21, 2018 at 03:03:18PM -0800, Junio C Hamano wrote:
+When using git log, boundary commits (ie, those commits added by
+specifying --boundary) do not respect the order (e.g., --date-order,
+--topo-order).  Consider the following commit history, where number
+indicates the order of the commit timestamps:
 
-> > So what I'm wondering is whether we should consider just ripping it out
-> > (but I'm OK with keeping it, as once the commit-buffer stuff is fixed,
-> > it's probably not hurting anybody).
-> 
-> I see no problem in removing it.  With more "interesting" features
-> relying on post-processing (like 'simplify-merges'), show_all whose
-> primary focus was how limit_list() behaves soft of outlived its
-> usefulness, I would think.
+<view with a fixed with font! 3's ancestor is 1, 6's ancestors are 4,5>
+0----1----2----5  <--A
+       \         \
+         3----4----6  <--B
 
-So here's a patch to do that (textually independent but conceptually on
-top of the earlier one to fix the commit-buffer thing). It actually
-doesn't remove that much code, so I could go either way on it.
 
-+cc Linus in case he's secretly in love with this feature.
+Executing the following command:
 
--- >8 --
-Subject: [PATCH] revision: drop --show-all option
+$ git log --boundary --date-order ^A B
 
-This was an undocumented debugging aid that does not seem to
-have come in handy in the past decade, judging from its lack
-of mentions on the mailing list.
+Should produce the following order (boundary commits shown with dashes):
+6 -5 4 3 -1
 
-Let's drop it in the name of simplicity. This is morally a
-revert of 3131b71301 (Add "--show-all" revision walker flag
-for debugging, 2008-02-09), but note that I did leave in the
-mapping of UNINTERESTING to "^" in get_revision_mark(). I
-don't think this would be possible to trigger with the
-current code, but it's the only sensible marker.
+However, it in fact produces:
+6 4 3 -7 -1
 
-We'll skip the usual deprecation period because this was
-explicitly a debugging aid that was never documented.
+Please advise.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- revision.c                           | 10 ---------
- revision.h                           |  1 -
- t/t6015-rev-list-show-all-parents.sh | 31 ----------------------------
- 3 files changed, 42 deletions(-)
- delete mode 100755 t/t6015-rev-list-show-all-parents.sh
-
-diff --git a/revision.c b/revision.c
-index 5ce9b93baa..5c1cb7277c 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1065,14 +1065,9 @@ static int limit_list(struct rev_info *revs)
- 			return -1;
- 		if (obj->flags & UNINTERESTING) {
- 			mark_parents_uninteresting(commit);
--			if (revs->show_all)
--				p = &commit_list_insert(commit, p)->next;
- 			slop = still_interesting(list, date, slop, &interesting_cache);
- 			if (slop)
- 				continue;
--			/* If showing all, add the whole pending list to the end */
--			if (revs->show_all)
--				*p = list;
- 			break;
- 		}
- 		if (revs->min_age != -1 && (commit->date > revs->min_age))
-@@ -1864,8 +1859,6 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
- 		revs->dense = 1;
- 	} else if (!strcmp(arg, "--sparse")) {
- 		revs->dense = 0;
--	} else if (!strcmp(arg, "--show-all")) {
--		revs->show_all = 1;
- 	} else if (!strcmp(arg, "--in-commit-order")) {
- 		revs->tree_blobs_in_commit_order = 1;
- 	} else if (!strcmp(arg, "--remove-empty")) {
-@@ -3094,8 +3087,6 @@ enum commit_action get_commit_action(struct rev_info *revs, struct commit *commi
- 		return commit_ignore;
- 	if (revs->unpacked && has_sha1_pack(commit->object.oid.hash))
- 		return commit_ignore;
--	if (revs->show_all)
--		return commit_show;
- 	if (commit->object.flags & UNINTERESTING)
- 		return commit_ignore;
- 	if (revs->min_age != -1 &&
-@@ -3194,7 +3185,6 @@ enum commit_action simplify_commit(struct rev_info *revs, struct commit *commit)
- 	enum commit_action action = get_commit_action(revs, commit);
- 
- 	if (action == commit_show &&
--	    !revs->show_all &&
- 	    revs->prune && revs->dense && want_ancestry(revs)) {
- 		/*
- 		 * --full-diff on simplified parents is no good: it
-diff --git a/revision.h b/revision.h
-index 3dee97bfb9..b8c47b98e2 100644
---- a/revision.h
-+++ b/revision.h
-@@ -90,7 +90,6 @@ struct rev_info {
- 	unsigned int	dense:1,
- 			prune:1,
- 			no_walk:2,
--			show_all:1,
- 			remove_empty_trees:1,
- 			simplify_history:1,
- 			topo_order:1,
-diff --git a/t/t6015-rev-list-show-all-parents.sh b/t/t6015-rev-list-show-all-parents.sh
-deleted file mode 100755
-index 3c73c93ba6..0000000000
---- a/t/t6015-rev-list-show-all-parents.sh
-+++ /dev/null
-@@ -1,31 +0,0 @@
--#!/bin/sh
--
--test_description='--show-all --parents does not rewrite TREESAME commits'
--
--. ./test-lib.sh
--
--test_expect_success 'set up --show-all --parents test' '
--	test_commit one foo.txt &&
--	commit1=$(git rev-list -1 HEAD) &&
--	test_commit two bar.txt &&
--	commit2=$(git rev-list -1 HEAD) &&
--	test_commit three foo.txt &&
--	commit3=$(git rev-list -1 HEAD)
--	'
--
--test_expect_success '--parents rewrites TREESAME parents correctly' '
--	echo $commit3 $commit1 > expected &&
--	echo $commit1 >> expected &&
--	git rev-list --parents HEAD -- foo.txt > actual &&
--	test_cmp expected actual
--	'
--
--test_expect_success '--parents --show-all does not rewrites TREESAME parents' '
--	echo $commit3 $commit2 > expected &&
--	echo $commit2 $commit1 >> expected &&
--	echo $commit1 >> expected &&
--	git rev-list --parents --show-all HEAD -- foo.txt > actual &&
--	test_cmp expected actual
--	'
--
--test_done
--- 
-2.16.2.555.g885a024879
-
+Best,
+~Josh
