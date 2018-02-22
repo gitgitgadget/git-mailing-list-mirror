@@ -2,100 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BDA5A1F576
-	for <e@80x24.org>; Thu, 22 Feb 2018 09:50:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 27E3E1F576
+	for <e@80x24.org>; Thu, 22 Feb 2018 09:58:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753285AbeBVJun (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Feb 2018 04:50:43 -0500
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:38658 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753129AbeBVJub (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Feb 2018 04:50:31 -0500
-Received: by mail-wm0-f67.google.com with SMTP id z9so2509110wmb.3
-        for <git@vger.kernel.org>; Thu, 22 Feb 2018 01:50:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=from:to:cc:subject:date:message-id;
-        bh=EU5JQA3gKHammWXx5qH0z1B2VRHzU41ukcpUFzI0dCU=;
-        b=IlKtddIFe3iahYQq2AHp2yAVzFGDgXO7N5CXoHhq2QkhJDWMM+7KtIeVQRekCrPGJx
-         83XYjU/e2kGZtWga374+E1dFr8ulYsNdPgoAsYfOdRk2VCErOIZfP0hMw7Vs8W3lev6Q
-         h1jcK5pw3k9IFzKS1wfCBbRG0ZDovQgURK4us=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=EU5JQA3gKHammWXx5qH0z1B2VRHzU41ukcpUFzI0dCU=;
-        b=HNB3lH3RaHGzH0mmEIXFvYCWQZFF7H63p8pJy9TIbbjdqPAvfN/HLFTKrWezAeMOlQ
-         SJTGY+TBgAn5ub1xlJ7s/HpS4Xu2bj8iY1Lvxtkp6qiB/y5oJzL7Gi7li+Gsbml9HFQQ
-         HrIvSq0hSsp1zbtw6xKnHkrkPaqM5DYGSv6yqX5VDQgVbhAezO1/GkNmRRbuH5FgLpoL
-         oSCDsHhptv+DGAngcsuBRbzOq1Ev54nVgYYYthzz1imccbghrB3uLcx/yqtyiXkKrv2a
-         mwTUKVuGdPqDp1BDeFFyAVmCjRMqVFEQBO/NigrxNl5pAlrOes7ULyDdr15FOyzBpHvQ
-         2WHQ==
-X-Gm-Message-State: APf1xPB5GOBO2rSZpuRPttGNOIZWqnXuOuHM5cnGEzMzeoq6I/3KHoxf
-        TqU3+fK2Sn22AwnLhwFuHlzPO6WI
-X-Google-Smtp-Source: AH8x227m2uuGX87iWVtbqRDhYXOcvjTdjAu7qt1594SPZKYqJGheZ9l9KThsez6rnBfmey08h6RRRg==
-X-Received: by 10.28.112.21 with SMTP id l21mr2152677wmc.70.1519293029869;
-        Thu, 22 Feb 2018 01:50:29 -0800 (PST)
-Received: from ethel.corp.roku (cpc92728-cmbg20-2-0-cust351.5-4.cable.virginm.net. [82.29.15.96])
-        by smtp.gmail.com with ESMTPSA id m187sm3022wmg.0.2018.02.22.01.50.28
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 22 Feb 2018 01:50:29 -0800 (PST)
-From:   Luke Diamand <luke@diamand.org>
-To:     git@vger.kernel.org
-Cc:     Lars Schneider <larsxschneider@gmail.com>,
-        miguel.torroja@gmail.com, gvanburgh@bloomberg.net,
-        Luke Diamand <luke@diamand.org>
-Subject: [PATCH 0/1] git-p4: add unshelve command
-Date:   Thu, 22 Feb 2018 09:50:21 +0000
-Message-Id: <20180222095022.6227-1-luke@diamand.org>
-X-Mailer: git-send-email 2.15.1.272.gc310869385
+        id S1753159AbeBVJ6g (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Feb 2018 04:58:36 -0500
+Received: from cloud.peff.net ([104.130.231.41]:60688 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1753088AbeBVJ6g (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Feb 2018 04:58:36 -0500
+Received: (qmail 26669 invoked by uid 109); 22 Feb 2018 09:58:35 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 22 Feb 2018 09:58:35 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 1286 invoked by uid 111); 22 Feb 2018 09:59:23 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 22 Feb 2018 04:59:23 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 22 Feb 2018 04:58:34 -0500
+Date:   Thu, 22 Feb 2018 04:58:34 -0500
+From:   Jeff King <peff@peff.net>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     Brandon Williams <bmwill@google.com>, git@vger.kernel.org,
+        sbeller@google.com, gitster@pobox.com, jrnieder@gmail.com,
+        stolee@gmail.com, git@jeffhostetler.com, pclouds@gmail.com
+Subject: Re: [PATCH v3 04/35] upload-pack: convert to a builtin
+Message-ID: <20180222095833.GC12442@sigill.intra.peff.net>
+References: <20180125235838.138135-1-bmwill@google.com>
+ <20180207011312.189834-1-bmwill@google.com>
+ <20180207011312.189834-5-bmwill@google.com>
+ <20180221134422.2386e1aca39fe673235590e7@google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20180221134422.2386e1aca39fe673235590e7@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is an initial attempt at adding an unshelve command to
-git-p4.
+On Wed, Feb 21, 2018 at 01:44:22PM -0800, Jonathan Tan wrote:
 
-For those not familiar with it, p4 shelve creates a "pending"
-changelist, which isn't committed into the central repo but is
-nonetheless visible to other develoeprs. The "unshelve" command
-takes one of these pending changelists and applies it to your repo.
-It is used quite a lot for code review.
+> On Tue,  6 Feb 2018 17:12:41 -0800
+> Brandon Williams <bmwill@google.com> wrote:
+> 
+> > In order to allow for code sharing with the server-side of fetch in
+> > protocol-v2 convert upload-pack to be a builtin.
+> > 
+> > Signed-off-by: Brandon Williams <bmwill@google.com>
+> 
+> As Stefan mentioned in [1], also mention in the commit message that this
+> means that the "git-upload-pack" invocation gains additional
+> capabilities (for example, invoking a pager for --help).
 
-git-p4 learned about shelving changelists recently; this completes
-the picture by letting you unshelve them as well.
+And possibly respecting pager.upload-pack, which would violate our rule
+that it is safe to run upload-pack in untrusted repositories.
 
-This was inspired by the stackoverflow answer here:
+(This actually doesn't work right now because pager.* is broken for
+builtins that don't specify RUN_SETUP; but I think with the fixes last
+year to the config code, we can now drop that restriction).
 
-    https://stackoverflow.com/questions/41841917/git-p4-how-to-fetch-a-changelist
+Obviously we can work around this with an extra RUN_NO_PAGER_CONFIG
+flag. But I think it points to a general danger in making upload-pack a
+builtin. I'm not sure what other features it would want to avoid (or
+what might grow in the future).
 
-The secret is to use the "p4 print file@=N" syntax to get the
-contents of a shelved changelist, which has long perplexed me.
+> Having said that, the main purpose of this patch seems to be to libify
+> upload-pack, and the move to builtin is just a way of putting the
+> program somewhere - we could have easily renamed upload-pack.c and
+> created a new upload-pack.c containing the main(), preserving the
+> non-builtin-ness of upload-pack, while still gaining the benefits of
+> libifying upload-pack.
 
-I haven't used this a great deal, so it may still have a few rough
-edges.
+Yeah, this seems like a better route to me.
 
-In particular, it currently puts the unshelved commit into
-    refs/remotes/p4/unshelved/<N>
-
-where <N> is the changelist being unshelved. That might not be
-the best way to do this.
-
-
-Luke Diamand (1):
-  git-p4: add unshelve command
-
- Documentation/git-p4.txt |  22 ++++++++
- git-p4.py                | 128 +++++++++++++++++++++++++++++++++++------------
- t/t9832-unshelve.sh      |  67 +++++++++++++++++++++++++
- 3 files changed, 186 insertions(+), 31 deletions(-)
- create mode 100755 t/t9832-unshelve.sh
-
--- 
-2.15.1.272.gc310869385
-
+-Peff
