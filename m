@@ -2,152 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D57081F576
-	for <e@80x24.org>; Thu, 22 Feb 2018 06:48:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5CBE41F576
+	for <e@80x24.org>; Thu, 22 Feb 2018 06:51:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752576AbeBVGsj (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Feb 2018 01:48:39 -0500
-Received: from cloud.peff.net ([104.130.231.41]:60506 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1752557AbeBVGsj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Feb 2018 01:48:39 -0500
-Received: (qmail 13645 invoked by uid 109); 22 Feb 2018 06:48:39 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 22 Feb 2018 06:48:39 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 32497 invoked by uid 111); 22 Feb 2018 06:49:26 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 22 Feb 2018 01:49:26 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 22 Feb 2018 01:48:37 -0500
-Date:   Thu, 22 Feb 2018 01:48:37 -0500
-From:   Jeff King <peff@peff.net>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Subject: [PATCH] t: send verbose test-helper output to fd 4
-Message-ID: <20180222064836.GA10719@sigill.intra.peff.net>
+        id S1752505AbeBVGv0 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Feb 2018 01:51:26 -0500
+Received: from mail-it0-f66.google.com ([209.85.214.66]:53017 "EHLO
+        mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752462AbeBVGvZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Feb 2018 01:51:25 -0500
+Received: by mail-it0-f66.google.com with SMTP id o13so5079057ito.2
+        for <git@vger.kernel.org>; Wed, 21 Feb 2018 22:51:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=7Zc6KJqGrj0V5Vi2I4VLJe8phG8ylOBwAq6pTEnhb4E=;
+        b=C+0bBbMLucPayHxmfqd2s7wakpbgUlglGuIyIWZ3kQwAxfC5Ds0hlb7nJ5Q+Jri8p3
+         bjOSJfE+KsVtYV6a3eSLH1ctGXs3dhcp8o/ZG/KlHS31yUUlf3tFzeIzIsH+UnxwKRqk
+         /maNq4HMn0J7b3l12wVERdyt6UtesTRUmjiF33oH8JcElWH3DB9g61MhHmVJpF3IvqAs
+         XqpZidbzzGm0Qw4mQexgOcVLz/bJoXzaqla4XYf27KLi4DPdn0xJ9mGuDoAfk3Rdrhr6
+         HVzakRs2vztpeo27a0aBFGgYmsWz1mTyQ4AQqsCnRgwioT3syN7Iwb+/sPgcgN5U1XEp
+         FtYw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=7Zc6KJqGrj0V5Vi2I4VLJe8phG8ylOBwAq6pTEnhb4E=;
+        b=nZIqpngS4lk0JmN81EYP0wrqVWMcIjRqYTCnwYV4d99rP4bPFx8g536WJbC5z0d4zT
+         m/5oXw5AHB3BuesNG5DIFnx5XuEwoPZXHjW7MIDBg/vN5k8q7i6nu0m0E9DuRKmB7pBM
+         QbKrpGd12p5WfZzIdlRCLHENEWXoXH6zgK+s4s/JJvTerQeNKT/YH2krChX5aetHySPI
+         AXGrJ+rB5dOVglE0Y6P1A1fpeE7HgfY8f3mWms9ErrsPANTaUvloCeRqW7vCLWBqXW6O
+         T59sR2Fgzciu/sneLA8PZhqgMe8ob9IoVeI/o7zqEj1nbZxeOt/q1EUEab3egk9BKRlX
+         Fc2A==
+X-Gm-Message-State: APf1xPC3lZAdOC+4dkczsO9rk7Qw+//dJF+ab/cG7Aw73vI/jF3NNYyu
+        eFvBB+Kcah0Yth5TVRfbC+9JS0iy
+X-Google-Smtp-Source: AH8x225hGQhe7vs37QLeTA2icsmlEEAoRTOsN2sK2kIcyf0B8roGgfUpwJXVbQUF3eV6SepnPxNxWg==
+X-Received: by 10.36.73.18 with SMTP id z18mr6916667ita.132.1519282284946;
+        Wed, 21 Feb 2018 22:51:24 -0800 (PST)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id 83sm13067553itj.3.2018.02.21.22.51.23
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 21 Feb 2018 22:51:24 -0800 (PST)
+Date:   Wed, 21 Feb 2018 22:51:22 -0800
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, jonathantanmy@google.com,
+        pclouds@gmail.com, sunshine@sunshineco.com
+Subject: Re: [PATCH 13/27] sha1_file: add repository argument to
+ prepare_alt_odb
+Message-ID: <20180222065122.GE133592@aiede.svl.corp.google.com>
+References: <20180216174626.24677-1-sbeller@google.com>
+ <20180221015430.96054-1-sbeller@google.com>
+ <20180221015430.96054-14-sbeller@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+In-Reply-To: <20180221015430.96054-14-sbeller@google.com>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a repost of the two patches from:
+Hi,
 
-  https://public-inbox.org/git/20180209185710.GA23403@sigill.intra.peff.net/
+Stefan Beller wrote:
 
-(now just one patch, since sg/test-i18ngrep graduated and we can do it
-all in one step). The idea got positive feedback, but nobody commented
-on patches and I didn't see them in "What's cooking".
+> See previous patch for explanation.
+>
+> While at it, move the declaration to object-store.h,
+> where it should be easier to find.
 
--- >8 --
-Test helper functions like test_must_fail may produce
-messages to stderr when they see a problem. When the tests
-are run with "--verbose", this ends up on the test script's
-stderr, and the user can read it.
+Which declaration?  It looks like prepare_alt_odb is already in
+object-store.h.
 
-But there's a problem. Some tests record stderr as part of
-the test, like:
+[...]
+> --- a/builtin/fsck.c
+> +++ b/builtin/fsck.c
+> @@ -717,7 +717,7 @@ int cmd_fsck(int argc, const char **argv, const char *prefix)
+>  	} else {
+>  		fsck_object_dir(get_object_directory());
+>  
+> -		prepare_alt_odb();
+> +		prepare_alt_odb(the_repository);
 
-  test_must_fail git foo 2>output &&
-  test_i18ngrep expected.message output
+Patch 2 added a #include of "repository.h".  Good.
 
-In this case the error text goes into "output". This makes
-the --verbose output less useful (it also means we might
-accidentally match it in the second, though in practice we
-tend to produce these messages only on error, so we'd abort
-the test when the first command fails).
+(I checked because with the definition of prepare_alt_odb as a macro,
+the function call would compile correctly even if the_repository
+weren't in scope, but we want to include what we use as a matter of
+style/maintainability.)
 
-Let's instead send this user-facing output directly to
-descriptor 4, which always points to the original stderr (or
-/dev/null in non-verbose mode). And it's already forbidden
-to redirect descriptor 4, since we use it for BASH_XTRACEFD,
-as explained in 9be795fbce (t5615: avoid re-using descriptor
-4, 2017-12-08).
+[...]
+> --- a/packfile.c
+> +++ b/packfile.c
+> @@ -890,7 +890,7 @@ void prepare_packed_git(void)
+>  	if (the_repository->objects.packed_git_initialized)
+>  		return;
+>  	prepare_packed_git_one(get_object_directory(), 1);
+> -	prepare_alt_odb();
+> +	prepare_alt_odb(the_repository);
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- t/test-lib-functions.sh | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+Also good, since patch 3 added a #include of "repository.h".
 
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 67b5994afb..aabee13e5d 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -625,22 +625,22 @@ test_must_fail () {
- 	exit_code=$?
- 	if test $exit_code -eq 0 && ! list_contains "$_test_ok" success
- 	then
--		echo >&2 "test_must_fail: command succeeded: $*"
-+		echo >&4 "test_must_fail: command succeeded: $*"
- 		return 1
- 	elif test_match_signal 13 $exit_code && list_contains "$_test_ok" sigpipe
- 	then
- 		return 0
- 	elif test $exit_code -gt 129 && test $exit_code -le 192
- 	then
--		echo >&2 "test_must_fail: died by signal $(($exit_code - 128)): $*"
-+		echo >&4 "test_must_fail: died by signal $(($exit_code - 128)): $*"
- 		return 1
- 	elif test $exit_code -eq 127
- 	then
--		echo >&2 "test_must_fail: command not found: $*"
-+		echo >&4 "test_must_fail: command not found: $*"
- 		return 1
- 	elif test $exit_code -eq 126
- 	then
--		echo >&2 "test_must_fail: valgrind error: $*"
-+		echo >&4 "test_must_fail: valgrind error: $*"
- 		return 1
- 	fi
- 	return 0
-@@ -678,7 +678,7 @@ test_expect_code () {
- 		return 0
- 	fi
- 
--	echo >&2 "test_expect_code: command exited with $exit_code, we wanted $want_code $*"
-+	echo >&4 "test_expect_code: command exited with $exit_code, we wanted $want_code $*"
- 	return 1
- }
- 
-@@ -742,18 +742,18 @@ test_i18ngrep () {
- 		shift
- 		! grep "$@" && return 0
- 
--		echo >&2 "error: '! grep $@' did find a match in:"
-+		echo >&4 "error: '! grep $@' did find a match in:"
- 	else
- 		grep "$@" && return 0
- 
--		echo >&2 "error: 'grep $@' didn't find a match in:"
-+		echo >&4 "error: 'grep $@' didn't find a match in:"
- 	fi
- 
- 	if test -s "$last_arg"
- 	then
--		cat >&2 "$last_arg"
-+		cat >&4 "$last_arg"
- 	else
--		echo >&2 "<File '$last_arg' is empty>"
-+		echo >&4 "<File '$last_arg' is empty>"
- 	fi
- 
- 	return 1
-@@ -764,7 +764,7 @@ test_i18ngrep () {
- # not output anything when they fail.
- verbose () {
- 	"$@" && return 0
--	echo >&2 "command failed: $(git rev-parse --sq-quote "$@")"
-+	echo >&4 "command failed: $(git rev-parse --sq-quote "$@")"
- 	return 1
- }
- 
--- 
-2.16.2.580.g650ee5408b
+[...]
+> --- a/sha1_file.c
+> +++ b/sha1_file.c
+> @@ -23,6 +23,7 @@
+>  #include "sha1-lookup.h"
+>  #include "bulk-checkin.h"
+>  #include "repository.h"
+> +#include "object-store.h"
+
+Should this #include have been added in an earlier patch, since the
+file both uses and defines prepare_alt_odb, which is declared there?
+
+The rest looks good.
+
+Thanks,
+Jonathan
