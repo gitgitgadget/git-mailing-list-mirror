@@ -2,94 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 03A191F404
-	for <e@80x24.org>; Thu, 22 Feb 2018 19:31:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8C6601F404
+	for <e@80x24.org>; Thu, 22 Feb 2018 19:32:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751340AbeBVTbI (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Feb 2018 14:31:08 -0500
-Received: from mail-wr0-f180.google.com ([209.85.128.180]:39835 "EHLO
-        mail-wr0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750821AbeBVTbF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Feb 2018 14:31:05 -0500
-Received: by mail-wr0-f180.google.com with SMTP id w77so11716970wrc.6
-        for <git@vger.kernel.org>; Thu, 22 Feb 2018 11:31:05 -0800 (PST)
+        id S1751363AbeBVTca (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Feb 2018 14:32:30 -0500
+Received: from mail-pl0-f47.google.com ([209.85.160.47]:46026 "EHLO
+        mail-pl0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750916AbeBVTc3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Feb 2018 14:32:29 -0500
+Received: by mail-pl0-f47.google.com with SMTP id v9-v6so1443828plp.12
+        for <git@vger.kernel.org>; Thu, 22 Feb 2018 11:32:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=dcU0rHGYd0xQgth9Z4YGZOoHHrOMUOt9JLLoopYGjHA=;
-        b=ko3+GnuhQxgr2ZgK/Hcd/oPfehzW6mLDw+zyT3ku5DC2UJ/q8ZENEg6PwwV/ya3GOj
-         RkS6zvz52VNuHsuoTroO09jnuW4NNc8On9NwNYp0NNv8iLX6MAi/LgyJuY96XlANLuSH
-         IejJ+MjCQgRLBfM6hwatwVQZ3h0q85o2Coqjn/4cmR8HxHjHuro1inLnRYOj1gMnj3mp
-         sPE7FXqdK4MTfxdlhEo7+gngqHZPWPwd1y8owVPddtYoY5oT32+MeJse/5p0x5SVHhF5
-         3l3pduuk44z2hvhNoblDDFkabCJvKg1oMiJHOZEsCBzYbHXIr/S2XyFluNmnaUsdOmtJ
-         2ycA==
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=9qU+eebLUmx9GvMiLXRUeAvRBlfpSbBUpUVSgC3+nic=;
+        b=nkD6VDDfRaq5XYusE0bSgtWLb1XdK2SyrR/ufkQKtNh/BfEIopEd21daY0xBmyuy04
+         12WHcQSBF6FaFj1dGiChwWE2NzW6BJhLmvn+aIseJ/UfFYiH/e73EJ7PMXy07+M634ky
+         jPyZ+J2A10hcS30up9vPQmVyOF1ZfB2P1SiIgoQcpgQFYwNC97QKdR5wvjwvEPrngFDq
+         qvkLGKyjhmce5LR8n3vYyrQUARMSRBB9Nr/mHMQ9fnj+wyLdFJD/lCynllptT5wEVF5F
+         2gnLCSYh+XGhJfAbaw0deKsyOCAm1chbnMJYxwkyq+kv7Hp9OpPi/4+kkEo04qYC2Fuk
+         bX3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=dcU0rHGYd0xQgth9Z4YGZOoHHrOMUOt9JLLoopYGjHA=;
-        b=kLUMCSO4DvVZz5IPgOpFLb2vBr+Io88HFY3tS/ueagFq6vpMeV5vT6dA+vGJAhILFW
-         6SAr9SltZZZlsUxx7WidfZ7kjUQUOgOFX/5t//4gcQiVtD+B3GihDBgztTU3HlDQc+7u
-         aTVdhpzz4Mq39B1xI1Jm3brRAaER4RhEkRYJL8xwVyLbHNRIDnKya5TSu+YiTA1TZFeb
-         EfiBvvhEgNiomxSO2U6xScXpbBh2qK9/4AFQEv3pSIrwvNlTNakksuFKxW//eLr+svAw
-         ugpOCuvl0gugeo2DqnKWpjhPcW1149yVgPGZVldwj/DJgZBUbnxsXKbqIHbIBzQvI4PE
-         n42Q==
-X-Gm-Message-State: APf1xPCBe+0UONU3RtEQks+iaO3chjWriokP7hwvan2zuy9KymzDAeL1
-        IX7KzemLZG7orhr/5JEhxK/MRL1ov7Tas9HxNcGfNA==
-X-Google-Smtp-Source: AH8x2260T3yvhQdRyKVsyIeVzjBwfrfv7485qK1lDTlwOGzo4bATYh+l+pgSgU+vhkzMQ5y7UBgS6Vjqh1AZ1G9LZX8=
-X-Received: by 10.223.132.103 with SMTP id 94mr7512309wrf.115.1519327864204;
- Thu, 22 Feb 2018 11:31:04 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.223.179.2 with HTTP; Thu, 22 Feb 2018 11:31:03 -0800 (PST)
-In-Reply-To: <20180207011312.189834-6-bmwill@google.com>
-References: <20180125235838.138135-1-bmwill@google.com> <20180207011312.189834-1-bmwill@google.com>
- <20180207011312.189834-6-bmwill@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 22 Feb 2018 11:31:03 -0800
-Message-ID: <CAGZ79kanWXGa3v4oJmoerh3XzisS+3V2oyO7WXK-tPTiHgSgxg@mail.gmail.com>
-Subject: Re: [PATCH v3 05/35] upload-pack: factor out processing lines
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=9qU+eebLUmx9GvMiLXRUeAvRBlfpSbBUpUVSgC3+nic=;
+        b=sJxa8DON1IOdhHivQeEZS4+5bCyXP9EpUAPRBRmDsRp4tQkr7e+olSvk3wFRhaq8ZV
+         0zBWGNhnYuclCoKtJtuBd/Dd6UaLQal8yf2hwTJN785MB3nAPI6H1w/AQ3P0p3evtG7c
+         v+tlyiQnGww2EBlLKC4fArZef9dH152boSlersNpNLamFB/CDv2e53l68vDUAJoYpE9q
+         NJaxz4WnIr7nn9iWqA4G/kcRq/kYLDtpqWRdQpknFQq4A9V6cMbyd8PSg+j6D8AgN7Gc
+         HSvgnohhz33WSsabvruoIO79x1EMJQtWhEy3XnW6c2h52ZaiiosR9o6GnYKKmc1a/Tuw
+         xtQg==
+X-Gm-Message-State: APf1xPA9wRARnARpDUZsSh2KROri6ecOpwKVMyHRz3588fBLfGoX0f3Y
+        1zx9xkQfcEBA/VrkwP42p50K1w==
+X-Google-Smtp-Source: AH8x226821YS5ML8icARjy8uF67UImFF6DkqEZcqF1HaZC0ev0XXag7lPFYKo09blk6hz8o2Ts96dQ==
+X-Received: by 2002:a17:902:b606:: with SMTP id b6-v6mr2616951pls.93.1519327949136;
+        Thu, 22 Feb 2018 11:32:29 -0800 (PST)
+Received: from twelve3.svl.corp.google.com ([2620:0:100e:422:ffac:c1d4:4bf7:bb93])
+        by smtp.gmail.com with ESMTPSA id s127sm1210074pfb.178.2018.02.22.11.32.27
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 22 Feb 2018 11:32:27 -0800 (PST)
+Date:   Thu, 22 Feb 2018 11:32:26 -0800
+From:   Jonathan Tan <jonathantanmy@google.com>
 To:     Brandon Williams <bmwill@google.com>
-Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Duy Nguyen <pclouds@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     git@vger.kernel.org, sbeller@google.com, peff@peff.net,
+        gitster@pobox.com, jrnieder@gmail.com, stolee@gmail.com,
+        git@jeffhostetler.com, pclouds@gmail.com
+Subject: Re: [PATCH v3 16/35] transport: convert transport_get_remote_refs
+ to take a list of ref patterns
+Message-Id: <20180222113226.208f86fff80fb0d05c620433@google.com>
+In-Reply-To: <20180222182647.GF185096@google.com>
+References: <20180125235838.138135-1-bmwill@google.com>
+        <20180207011312.189834-1-bmwill@google.com>
+        <20180207011312.189834-17-bmwill@google.com>
+        <20180221145804.f483fb21559f71618812404d@google.com>
+        <20180222182647.GF185096@google.com>
+X-Mailer: Sylpheed 3.6.0 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 6, 2018 at 5:12 PM, Brandon Williams <bmwill@google.com> wrote:
-> Factor out the logic for processing shallow, deepen, deepen_since, and
-> deepen_not lines into their own functions to simplify the
-> 'receive_needs()' function in addition to making it easier to reuse some
-> of this logic when implementing protocol_v2.
->
-> Signed-off-by: Brandon Williams <bmwill@google.com>
+On Thu, 22 Feb 2018 10:26:47 -0800
+Brandon Williams <bmwill@google.com> wrote:
 
-Reviewed-by: Stefan Beller <sbeller@google.com>
-for the stated purpose of just refactoring existing code for better reuse later.
+> On 02/21, Jonathan Tan wrote:
+> > On Tue,  6 Feb 2018 17:12:53 -0800
+> > Brandon Williams <bmwill@google.com> wrote:
+> > 
+> > > -const struct ref *transport_get_remote_refs(struct transport *transport)
+> > > +const struct ref *transport_get_remote_refs(struct transport *transport,
+> > > +					    const struct argv_array *ref_patterns)
+> > >  {
+> > >  	if (!transport->got_remote_refs) {
+> > > -		transport->remote_refs = transport->vtable->get_refs_list(transport, 0, NULL);
+> > > +		transport->remote_refs =
+> > > +			transport->vtable->get_refs_list(transport, 0,
+> > > +							 ref_patterns);
+> > >  		transport->got_remote_refs = 1;
+> > >  	}
+> > 
+> > Should we do our own client-side filtering if the server side cannot do
+> > it for us (because it doesn't support protocol v2)? Either way, this
+> > decision should be mentioned in the commit message.
+> 
+> If someone wants to add this in the future they can, but that is outside
+> the scope of this series.
 
-I do have a few comments on the code in general,
-which might be out of scope for this series.
+In that case, also document that this function is allowed to return refs
+that do not match the ref patterns.
 
-A close review would have been fastest if we had some sort of
-https://public-inbox.org/git/20171025224620.27657-1-sbeller@google.com/
-which I might revive soon for this purpose. (it showed that I would need it)
+Unlike in patch 15 (which deals with the interface between the transport
+code and transport vtables, which can be changed as long as the
+transport code is aware of it, as I wrote in [1]), this may result in
+user-visible differences depending on which protocol is used. But after
+more thinking, I don't think we're in a situation yet where having extra
+refs shown/written are harmful, and if it comes to that, we can tighten
+this code later without backwards incompatibility. So, OK, this is fine.
 
-
-> +               *depth = (int)strtol(arg, &end, 0);
-
-strtol is not used quite correctly here IMHO, as we do not
-inspect errno for ERANGE
-
-Thanks,
-Stefan
+[1] https://public-inbox.org/git/20180221145639.c6cf2409ce2120109bdd169f@google.com/
