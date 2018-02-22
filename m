@@ -2,106 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 66ADA1F404
-	for <e@80x24.org>; Thu, 22 Feb 2018 22:28:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C6B5F1F404
+	for <e@80x24.org>; Thu, 22 Feb 2018 22:42:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751901AbeBVW2T (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Feb 2018 17:28:19 -0500
-Received: from mail-oi0-f44.google.com ([209.85.218.44]:34731 "EHLO
-        mail-oi0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751731AbeBVW2S (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Feb 2018 17:28:18 -0500
-Received: by mail-oi0-f44.google.com with SMTP id c83so4930015oib.1
-        for <git@vger.kernel.org>; Thu, 22 Feb 2018 14:28:17 -0800 (PST)
+        id S1751819AbeBVWmj (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Feb 2018 17:42:39 -0500
+Received: from mail-pl0-f68.google.com ([209.85.160.68]:37391 "EHLO
+        mail-pl0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751694AbeBVWmi (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Feb 2018 17:42:38 -0500
+Received: by mail-pl0-f68.google.com with SMTP id ay8so3733141plb.4
+        for <git@vger.kernel.org>; Thu, 22 Feb 2018 14:42:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=ngEdjiXGAUyKGnD5GfLkqjPp/CoaE6hIexRbUjFeeSY=;
-        b=R4iDJNjsC+7Vz6yOgqK10rFNbnjSM9WCwIFNemLTxyea4NMwfgMKhrHaQSY79OJk5Q
-         YPwFqHTCKNdnAd3Hml8ylsy3n2vy2VwrwwEinQR1Vuo4cKRT+xtfEe1G43CmWbFGRllT
-         mU7COz0YnBHt0lmOCr7R06U5jcsXlCO2ek+W4=
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=vljLm8LzwZdmW0A46WQh24op8/AW42pPlXA3Rw3lvo0=;
+        b=ptApY79aATjoJl18/kMPGwHC4TbqWGoe3xdVKvrSFnwQbEyJ7uxe2PJ1ZH69+98Mgw
+         LuBFEN6244JHWMiM3VjpSnkSex2lujqeGzjQZXh/fpDQh71hjh4tqCAwqfTX/3ke2xan
+         7Hrlp8t1rNuA3uLaUkGmJM3FrPUogxBuQV93/Vaa3bHDNQpAE//Aufc2wocIUc2Rcm5p
+         DCTNqF+lAiqzV3EuqYKHKSUaZCvUn69A73m+qeL9lu33/X6ri2NGcX2hpbLEt2iRlI8q
+         8HZcI1ky9IrcasZSK70A3my0Py9p2UNCmEyjV4D3LsoKZg1dZM8xD1rd0+m5rRpO7RIo
+         cAAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=ngEdjiXGAUyKGnD5GfLkqjPp/CoaE6hIexRbUjFeeSY=;
-        b=ZzyviAK1+jkkIL8cn+EB2hYto6ZJilfGsCkVDJY7OmLLZIrC1iRGbGXoyEcIUaoApM
-         4dcMNuHFDfrixwhKi4yWe3dYGbc64TH14as3RcxSDnRX7fHg0geTVloodttlRai52khe
-         XSQjiF/YW/7mvWYvavysThMfKFo3oWV8yZ9WyNJk5SLHrA8Kf6sB4IJoe87uuRYR+mNw
-         vJR+J18JYvfCl6CVA88KC8N1zRB4cFtxxxuUIcQhy9+ncRm0V0pG5nlEYe/7T5N9M4L+
-         4QUUVyxZawVoXxHTY8c0QwWXg1S7KUfnUoGsO3mOdo8x+1Eu7L67AZc+Sky/Y98jjB27
-         OBBA==
-X-Gm-Message-State: APf1xPB0jnjLjmRemudKBu51J7gWFcCoYbaUBruJleIqfcAhscMelXz2
-        MI/tjSJk8UtKoHY9duPVyNw9EolWE95JRSfeBbxNFg==
-X-Google-Smtp-Source: AG47ELtFwqeQlUxKJtDOhzeT6SOAEOzOi3n2BcL3OD8JfqbG3QcV4S1ze1WqR6KFh/3jYHWhkr8i6WBwJg1Y4YK2bYs=
-X-Received: by 10.202.74.148 with SMTP id x142mr6024540oia.157.1519338497532;
- Thu, 22 Feb 2018 14:28:17 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=vljLm8LzwZdmW0A46WQh24op8/AW42pPlXA3Rw3lvo0=;
+        b=XgvXHEX9wRP9fr9l0XpW8tAxP/zRUUfdJ6dDwMoiflCUsilBBF9UqzQX69GbF/VFoe
+         ZoK40MEAhS9wBeDzTrxsTu0GaVnjxNtfO/zG5DsDO5Z53nZGpo1ujH7UGgUPNY01Hw/0
+         1xews79DjA+f8xlGnErGSJQPjsaVtfeaGPCQznmlwBlS5VZGT1Utmp8IgAmo+ueODDql
+         YLvjl0ePbXSgP5C5I4j3OWOCYZsGlPB8PhKsxRm/Jkm6z/LMYdIvUbjE4XuvaWV3juu4
+         gZmgA5RkmKKMp8pX3DxtFRp9ILM3ySsQent/UlpYElPQJYoDsa5BVgtw8ehOk7imRo9f
+         pqYw==
+X-Gm-Message-State: APf1xPBSuOp1V4hs2lpfq4u+xfw08JrKrE239j+rWeG1axm0fONaTfiF
+        Y3cZXDvc+Xm9CohfReMiZRQ=
+X-Google-Smtp-Source: AH8x227+FsSBImBsoEU0j3tlt2lXqrdH6K0KqKsshspuVZMhheI2u4Ma9pWtfN2TLXmfurld/sXbpw==
+X-Received: by 2002:a17:902:7006:: with SMTP id y6-v6mr7984411plk.37.1519339358182;
+        Thu, 22 Feb 2018 14:42:38 -0800 (PST)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id i4sm2163028pfa.40.2018.02.22.14.42.36
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 22 Feb 2018 14:42:37 -0800 (PST)
+Date:   Thu, 22 Feb 2018 14:42:35 -0800
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Brandon Williams <bmwill@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
+        sbeller@google.com, gitster@pobox.com, stolee@gmail.com,
+        git@jeffhostetler.com, pclouds@gmail.com
+Subject: Re: [PATCH v3 04/35] upload-pack: convert to a builtin
+Message-ID: <20180222224235.GD256918@aiede.svl.corp.google.com>
+References: <20180207011312.189834-5-bmwill@google.com>
+ <20180221134422.2386e1aca39fe673235590e7@google.com>
+ <20180222095833.GC12442@sigill.intra.peff.net>
+ <20180222180715.GB185096@google.com>
+ <20180222181400.GA19035@sigill.intra.peff.net>
+ <20180222193814.GA256918@aiede.svl.corp.google.com>
+ <20180222201940.GB23561@sigill.intra.peff.net>
+ <20180222212402.GB256918@aiede.svl.corp.google.com>
+ <20180222214402.GA30638@sigill.intra.peff.net>
+ <20180222222146.GA30988@sigill.intra.peff.net>
 MIME-Version: 1.0
-Received: by 10.157.2.231 with HTTP; Thu, 22 Feb 2018 14:28:16 -0800 (PST)
-In-Reply-To: <CAKYtbVYe5hHDXf=nQzt6r9N20CrTgbEMbBS0JBBXQLpz+BVu1A@mail.gmail.com>
-References: <20180222095022.6227-1-luke@diamand.org> <20180222095022.6227-2-luke@diamand.org>
- <CAKYtbVYe5hHDXf=nQzt6r9N20CrTgbEMbBS0JBBXQLpz+BVu1A@mail.gmail.com>
-From:   Luke Diamand <luke@diamand.org>
-Date:   Thu, 22 Feb 2018 22:28:16 +0000
-Message-ID: <CAE5ih79E1Z8h+hAgr8zCw7=Dtec6sxT7Xf4cWn8zOLNs=mY1jg@mail.gmail.com>
-Subject: Re: [PATCH 1/1] git-p4: add unshelve command
-To:     Miguel Torroja <miguel.torroja@gmail.com>
-Cc:     Git Users <git@vger.kernel.org>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        gvanburgh@bloomberg.net
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180222222146.GA30988@sigill.intra.peff.net>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 22 February 2018 at 21:39, Miguel Torroja <miguel.torroja@gmail.com> wrote:
-> Hi Luke,
->
-> I really like the idea of creating a branch based on a shelved CL (We
-> particularly use shelves all the time), I tested your change and I
-> have some comments.
->
->  - I have some concerns about having the same "[git-p4...change =
-> .....]" as if it were a real submitted CL.
->     One use case I foresee of the new implementation could be to
-> cherry-pick that change on another branch (or current branch) prior to
-> a git p4 submit.
+Jeff King wrote:
 
-OK, I think we could just not add that in the case of an unshelved commit.
+> All of that said, I think the current code is quite dangerous already,
+> and maybe even broken.  upload-pack may run sub-commands like rev-list
+> or pack-objects, which are themselves builtins.
 
->
->  - I see that the new p4/unshelve... branch is based on the tip of
-> p4/master by default. what if we set the default to the current HEAD?
+Sounds like more commands to set the IGNORE_PAGER_CONFIG flag for in
+git.c.
 
-There's a "--origin" option you can use to set it to whatever you want.
+Thanks for looking this over thoughtfully.
 
-I started out with HEAD as the default, but then found that to get a
-sensible diff you have to both sync and rebase, which can be quite
-annoying.
+[...]
+> I couldn't quite get it to work, but I think it's because I'm doing
+> something wrong with the submodules. But I also think this attack would
+> _have_ to be done over ssh, because on a local system the submodule
+> clone would a hard-link rather than a real fetch.
 
-In my case, in my early testing, I ended up with a git commit which
-included both the creation of a file, and a subsequent change, even
-though I had only unshelved the subsequent change. That was because
-HEAD didn't include the file creation change (but p4/master _did_).
+What happens if the submodule URL starts with file://?
 
->
->  - Shelved CLs can be updated and you might have to run "git p4
-> unshelve" a second time to get the latest updates. if we call it a
-> second time it fails as it's trying to update p4/unshelve... rather
-> than discarding previous one and creating a new one.
-
-OK, that should also be fixable.
-
->
->
-> Thanks,
-
-Thanks for the feedback, very useful! I'll reroll.
-Luke
+Thanks,
+Jonathan
