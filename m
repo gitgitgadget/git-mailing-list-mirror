@@ -2,131 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_BL_SPAMCOP_NET,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A1F011F404
-	for <e@80x24.org>; Thu, 22 Feb 2018 18:30:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 24F861F404
+	for <e@80x24.org>; Thu, 22 Feb 2018 18:31:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933727AbeBVSaF (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Feb 2018 13:30:05 -0500
-Received: from gproxy1-pub.mail.unifiedlayer.com ([69.89.25.95]:42989 "EHLO
-        outbound-ss-1812.hostmonster.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S933725AbeBVSaD (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 22 Feb 2018 13:30:03 -0500
-Received: from CMOut01 (cmgw2 [10.0.90.82])
-        by gproxy1.mail.unifiedlayer.com (Postfix) with ESMTP id 8C292175E81
-        for <git@vger.kernel.org>; Thu, 22 Feb 2018 11:29:59 -0700 (MST)
-Received: from box5008.bluehost.com ([50.116.64.19])
-        by CMOut01 with 
-        id DuVw1x00K0QvKlu01uVzM0; Thu, 22 Feb 2018 11:29:59 -0700
-X-Authority-Analysis: v=2.2 cv=ft6sXBwf c=1 sm=1 tr=0
- a=gch/BGY/Gm5DEW28s2kmlQ==:117 a=gch/BGY/Gm5DEW28s2kmlQ==:17
- a=IkcTkHD0fZMA:10 a=Op4juWPpsa0A:10 a=eonSy44sy_rk5nA6RUsA:9 a=QEXdDO2ut3YA:10
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=mad-scientist.net; s=default; h=Content-Transfer-Encoding:Mime-Version:
-        Content-Type:Date:To:Reply-To:From:Subject:Message-ID:Sender:Cc:Content-ID:
-        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
-        List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=OdeuaTUWIcHcUkHGRk5khNV4mBCufYeQew4UqKdsG3E=; b=PrQX8Z6QpKNTSmHW3D+pCdEUQn
-        wJqt4R4TyWQlxSX4ZO19dMSAkIxrKfr8qBdkPo0J/lsd5vEFFvdA/dsRwmJx0a7/6eLSiZprstqxJ
-        yq8V7XTiEc3fh/wHWG5Zl+Mve;
-Received: from [50.226.24.42] (port=49168 helo=pdsdesk)
-        by box5008.bluehost.com with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.89_1)
-        (envelope-from <paul@mad-scientist.net>)
-        id 1eovcx-000GyU-U8
-        for git@vger.kernel.org; Thu, 22 Feb 2018 11:29:56 -0700
-Message-ID: <1519324188.6391.156.camel@mad-scientist.net>
-Subject: Git "branch properties"-- thoughts?
-From:   Paul Smith <paul@mad-scientist.net>
-Reply-To: paul@mad-scientist.net
-To:     Git mailing list <git@vger.kernel.org>
-Date:   Thu, 22 Feb 2018 13:29:48 -0500
-Organization: I may be mad, but I'm a professional!
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.26.1-1 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5008.bluehost.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - mad-scientist.net
-X-BWhitelist: no
-X-Source-IP: 50.226.24.42
-X-Exim-ID: 1eovcx-000GyU-U8
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: (pdsdesk) [50.226.24.42]:49168
-X-Source-Auth: paul@mad-scientist.us
-X-Email-Count: 1
-X-Source-Cap: bWFkc2NpZTE7bWFkc2NpZTE7Ym94NTAwOC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
+        id S1753719AbeBVSbq (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Feb 2018 13:31:46 -0500
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:39148 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753570AbeBVSbp (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Feb 2018 13:31:45 -0500
+Received: by mail-wr0-f194.google.com with SMTP id w77so11554659wrc.6
+        for <git@vger.kernel.org>; Thu, 22 Feb 2018 10:31:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=hU+cp07QhsX0HZH7e1OoJBR6KzX4gxb2GZrpQMeCCN0=;
+        b=CCgHJOTtl/xg71H1QmaSRvM1NqBGUFFrOsFXa9T6WIxf8dCJkpevfasA0mFz+UtVDK
+         GRZzrhWrnmbyJ4+2LOQHyAxhVLEVS10ADGhcSVuhgulz5LsWZCkW8Lh5Zkq9kDsPRYd9
+         W1JiLSGhjmLRiI9A9lZJtb15fRxTBnQLz9fvdgDb8Kl0G0pJ5k4DK4Np7xNRrVoOuXAm
+         5GfaRtoe9e09SDnmyRPp7lJPXeNhXjl3YgWyI2YaYZxp8wXHk6qmE9SLwSws+xky1lwP
+         TMoChWbkiQYeNDpekVrAARYTe9a7js2kI0nIMWE5i5hQ3Afit3ntBBU9v3pBV/7rBqMo
+         6sTA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=hU+cp07QhsX0HZH7e1OoJBR6KzX4gxb2GZrpQMeCCN0=;
+        b=gkbVvr/kk7/HWsKUByE47IT9TjqWwsfYK6yRFXe/AGl9keD1JNpAy535fZZ4zlG3Wl
+         xTr3X9ZMea9Ka1Dca02HRJzXI7eHoY4ZxwnFB2gUc7zEa81Z9BQDytLALmdrLqvbbkVz
+         qz7uKEQ7IIWOv2+0h8uvhhvYnMpLRpFMQn2oQsdyMRBQ/A1Oj9ZGecPBqDzpUxxFvWE6
+         8j2Bw8OAs6oHLz+dnrSF6gsfuY/J1d3NgTD0P3n/K1cMGSvXdhjEKVkjh0tOmRThWGfg
+         EwIVubu0zAbxUDHI68h3fRhEYFUnrkHDYZUK5fH78fgPT91m1EBL0OHJKIuRnxCVvYTg
+         bJ3Q==
+X-Gm-Message-State: APf1xPAnBt3nl7N0na6/38WVTujTKnpzTh9pSoM/VsG0kiWcoqeCvoEk
+        GhX4FLvglkAFGSU5B1FmlmYC47E4
+X-Google-Smtp-Source: AH8x225u3lubWgLc1SNwePsWC92o4U4Cq45lNFE3Pj7NlQEiPqeP/a8PpcQJ8mjhmcqdSFh7GJZ/WQ==
+X-Received: by 10.223.134.136 with SMTP id 8mr7353479wrx.86.1519324303697;
+        Thu, 22 Feb 2018 10:31:43 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id b136sm49438wme.34.2018.02.22.10.31.43
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 22 Feb 2018 10:31:43 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     git@vger.kernel.org, git@jeffhostetler.com, peff@peff.net,
+        jonathantanmy@google.com, szeder.dev@gmail.com, sbeller@google.com,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v4 07/13] commit-graph: implement --set-latest
+References: <4d1ee202-7d79-d73c-6e05-d0fc85db943c@gmail.com>
+        <1519066406-81663-1-git-send-email-dstolee@microsoft.com>
+        <1519066406-81663-8-git-send-email-dstolee@microsoft.com>
+Date:   Thu, 22 Feb 2018 10:31:42 -0800
+In-Reply-To: <1519066406-81663-8-git-send-email-dstolee@microsoft.com>
+        (Derrick Stolee's message of "Mon, 19 Feb 2018 13:53:20 -0500")
+Message-ID: <xmqqk1v4x4dt.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi all.  I'm wondering if anyone has any thoughts about the best, or
-even any, way to have "branch properties": some extra information which
-is attached to a branch (that is, the actual branch name not the commit
-it currently points to).
+Derrick Stolee <stolee@gmail.com> writes:
 
-My requirements are that the information needs to be pushed to the
-server, so that lets out branch descriptions for example.  Ideally the
-information would also be easily updated and available in all clones
-during normal fetch operations but this isn't a hard requirement: I
-could script it.
+>  static struct opts_commit_graph {
+>  	const char *obj_dir;
+>  	const char *graph_file;
+> +	int set_latest;
+>  } opts;
+> ...
+> @@ -89,6 +106,8 @@ static int graph_write(int argc, const char **argv)
+>  		{ OPTION_STRING, 'o', "object-dir", &opts.obj_dir,
+>  			N_("dir"),
+>  			N_("The object directory to store the graph") },
+> +		OPT_BOOL('u', "set-latest", &opts.set_latest,
+> +			N_("update graph-head to written graph file")),
+>  		OPT_END(),
+>  	};
+>  
+> @@ -102,6 +121,9 @@ static int graph_write(int argc, const char **argv)
+>  	graph_name = write_commit_graph(opts.obj_dir);
+>  
+>  	if (graph_name) {
+> +		if (opts.set_latest)
+> +			set_latest_file(opts.obj_dir, graph_name);
+> +
 
-My immediate desire is to find a way to mark a branch as "frozen", that
-will control which pushes are allowed.  I use gitolite on my server and
-I can easily write a server hook that will handle the checking,
-rejecting, etc.  I already have such an infrastructure.  What I need is
-a way to know which branches are in that state, so my hook can see that
-and DTRT.  There are other "branch properties" I could envision, too,
-but don't have a real need right now.
+This feels like a very strange API from potential caller's point of
+view.  Because you have to decide that you are going to mark it as
+the latest one upfront before actually writing the graph file, if
+you forget to pass --set-latest, you have to know how to manually
+mark the file as latest anyway.  I would understand if it were one
+of the following:
 
-Of course I could embed the frozen state into the gitolite repository
-configuration.  Indeed, I have already implemented "locks" for obsolete
-branches.  But "frozen" is a more ephemeral state and requiring access
-to the gitolite repository to manage it is just not what I want; it's a
-separate repository so the state is not visible, requires privileges I
-really don't want to hand out to everyone, and is generally difficult. 
-I want some users to be able to manage frozen branches relatively
-easily, and all users to be able to see the state of which branches are
-frozen, etc.
+ (1) whenever a new commit graph file is written in the
+     objects/info/ directory, always mark it as the latest (drop
+     --set-latest option altogether); or
 
-So then I thought about creating a "frozen" tag, like "frozen/v1.0" or
-something.  This is slightly weird because it is applied to a commit,
-which is not really right, but whatever: it's just a marker so I would
-just be checking to see if it exists or not.  The other problem is that
-Git tags are not intended to be transient/moveable.  While you CAN
-delete them and move them, when someone pulls the repository they won't
-get that update by default.  Since the hook is server-side the fact
-that the local repository has the wrong information doesn't matter for
-behavior, but it's confusing for people.  So, it's not ideal.
+ (2) make set-latest command that takes a name of an existing graph
+     file in the objects/info/ directory, and sets the latest
+     pointer to point at it (make it separate from 'write' command).
 
-I thought about creating a branch, like "frozen/v1.0", rather than a
-tag.  I don't need a branch here, and no one would push to that branch
-(I'd have to disallow that in my hooks), and the commit associated with
-the branch would not be relevant most likely.  I would only check to
-see if the branch existed, or not.  Branches are nice because creating
-and deleting them is handled automatically (if you use prune
-consistently, which we do because we have tons of transient branches).
+though.
 
-Then I looked into using notes, and they look interesting, but they're
-associated with a specific commit as well and I don't want that: a
-frozen branch can still have new commits pushed to it they just have
-meet certain criteria.  This makes them hard to translate into a branch
-name.
-
-So far, using a special branch name seems the most "reasonable".  But,
-I wonder if I missed some cool aspect if Git that would work better, or
-if anyone else has other suggestions.
-
-Cheers!
