@@ -2,199 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6F3271F404
-	for <e@80x24.org>; Thu, 22 Feb 2018 19:29:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 940F81F404
+	for <e@80x24.org>; Thu, 22 Feb 2018 19:29:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750927AbeBVT3i (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Feb 2018 14:29:38 -0500
-Received: from mout.web.de ([217.72.192.78]:50661 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750776AbeBVT3h (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Feb 2018 14:29:37 -0500
-Received: from [192.168.178.36] ([79.237.251.165]) by smtp.web.de (mrweb103
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0LetQh-1eOyCh28Vj-00qn5f; Thu, 22
- Feb 2018 20:29:32 +0100
-X-Mozilla-News-Host: news://news.public-inbox.org:119
-To:     Git List <git@vger.kernel.org>
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] sequencer: factor out strbuf_read_file_or_whine()
-Message-ID: <6b58885c-b0f6-1687-3f2d-4594aacff9ac@web.de>
-Date:   Thu, 22 Feb 2018 20:29:25 +0100
+        id S1751346AbeBVT3l (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Feb 2018 14:29:41 -0500
+Received: from mail-qt0-f180.google.com ([209.85.216.180]:42886 "EHLO
+        mail-qt0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751180AbeBVT3j (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Feb 2018 14:29:39 -0500
+Received: by mail-qt0-f180.google.com with SMTP id l19so7730559qtj.9
+        for <git@vger.kernel.org>; Thu, 22 Feb 2018 11:29:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-transfer-encoding:content-language;
+        bh=bREdhXA01Z9u154b5TFzjNmNXvflJYnUFaUPNTAVc2E=;
+        b=c3erGqMzIQIqH7Zw05DdFQJCgjgk61we8+YIyNPEwHhCJKbVqN7jK8kwG27zQTZ5K+
+         7jfLRamvGjCdRnH3ak5ovCMW7gMXJ4Dpt9Jnxfu6xE0L6Jh5nZO0qqoNUvtGB7l251vH
+         zLfqSg09nJwzPeHe5X3IBZZolVoRP7WC4WFHIYj+RK1WCkM9udF6rWYaeY4qD0H0+Eyr
+         gyUVHcuEFDLzueckXzZLTM1UxvddKa7PE1VnTkQjAT21i/SAve8ZCYADR6i3zjnu9K+G
+         f3krfNmfBtbuw6ynWtx+/seoEsdFJvnjzJWIHxHPYMH9BybtBS7j2Kkj75pixXyTQJUt
+         6EZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=bREdhXA01Z9u154b5TFzjNmNXvflJYnUFaUPNTAVc2E=;
+        b=qnRL0YVGUgjVUwDi9ZLHrNL+QjqER8qoJ2JyaC3h7dSZ5q2iDtIvUzVU4jo2p8bUMI
+         ksAnm7xiUL+jVfPo5XaUzni4fWG0vPHTWmlS1HZztnynb0JLht1FPRmjs+wQ3jYtclIs
+         uIX2fYN2TdQ+eGDpH+ZyAz4AhLqyzbCMlExLVc5FSTsiax4EpAl7xgP9lQrn2LB4qm6J
+         yFfNuBhKl1x4OfDrh7Qcl+OclvNcwpDbOZvshgOoz7ze1W0gtTDXgqTQYZwfiVLSEu6H
+         Ich5VRIeqNmeuac5xj1itYCJ4WSd/XaPpmb7B/QGfLSdHu1EOW6wMs+M6VYZmkzBnUVT
+         PZ9Q==
+X-Gm-Message-State: APf1xPAVskcHoh0Mm8XUz0+bUsURvnz24sT/eYt2tXc4+cao+Fdyn+1S
+        oQBkdLBML9UQlIi89gBy5FtBqpGd
+X-Google-Smtp-Source: AH8x2271Ip844zRdsPvlk0VCf7firNmRTR5oKydDf12g1rYXw14kMorr3/4RCOgTWhyK94iKjqAvZA==
+X-Received: by 10.200.4.159 with SMTP id s31mr12842836qtg.144.1519327778627;
+        Thu, 22 Feb 2018 11:29:38 -0800 (PST)
+Received: from ?IPv6:2001:4898:6808:13e:c4e6:7a22:56f1:df04? ([2001:4898:8010:0:ae1c:7a22:56f1:df04])
+        by smtp.gmail.com with ESMTPSA id h5sm518816qkd.61.2018.02.22.11.29.37
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 22 Feb 2018 11:29:37 -0800 (PST)
+Subject: Re: Bug: git log: boundary commits do not respect order (e.g.
+ date-order, topo-order) 2
+To:     Josh Tepper <josh@clarifai.com>, git@vger.kernel.org
+References: <CAPFeJUAF99buo=yTZQeHawU-npLHk0iJ1iQxYwMroFdDcKhqjA@mail.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <cc579f55-cb5c-d6fb-c03f-f180137e5c25@gmail.com>
+Date:   Thu, 22 Feb 2018 14:29:36 -0500
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
  Thunderbird/52.6.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <CAPFeJUAF99buo=yTZQeHawU-npLHk0iJ1iQxYwMroFdDcKhqjA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:xocH286Gei73xruRvcHf+c52iKRuKKloOtJHhcxmDTQKEpGvx5d
- ixffJ3i7KJY3Yp1nBp8XFM/oy5Oh9URsa+sm7ClUHASSsk4lEKt40A7dhCHAYO5G9uchcks
- J1w40cVKHA2X80RyYLSeCUp30DkrGy6Qph3Rz/eqgE5SA0/YaSENGTHXIur5FCqdt74coMz
- lOZtd59TpAeCqbi6LPE2A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:ykPr8I8OBYM=:7eILPuy3qpz9FqAPx24PO/
- x4EcsjoZ1LML9Ke1Tl9+imaWBq8kb6an97Y9Sbc8+MTc8gGl75sJvZtqXYR91adFUFEuLvPS0
- Z3VsIhyZtskU3iscCY1sjWg/A6VeoEeh5P0pWJLSeNxjjaKSMgU2caxI7xeyH8MPTvVPYr57l
- cmZ8AjPhtKSEqVA2WI4DU6nmPRqONfBFacZViC0Neiev4wIbbOCQ4CjwSfmuJjXDBfvtQ3FnR
- zJbVBIF2IGaw85jH/W3TyDw2rEyqnt6ld0qopm0cRapr70M8pgDGFF6XQZR+AKJmbFA+sLegr
- Erg1mgx5dpHJFLtXaI7h36ePhYYQEcmkgnsma4g3dfqAPDdSrvLggYEqjXP6dAErTV0EUAyEc
- BZBBIlfMkA7fDIFDW7rTfhcvapJ10Oh6mxXt6QuleBz2VteNJH88G7PpVMB+P1fOcJ8wvxyAs
- UKuWDo1eV8s40wCdmqZehApIQjOXNJmSIs17RPBFCYVgf+IFyGeVwHk+8SvhaY7bM29gIat8z
- yz6MkSjmYjXRBerLZw6JjJsIJB9kNpRvCj/IFUnTd83lpIHGUxG6VaLY0mK15x6K+iorp7gdY
- g5nbQHC86oZ/E8l6YUN0J8855/IHjzgWiFfD1RZSrXj767V7mM3L+R6chQ1zcnem3ID1n6gJg
- rA1DGhYvVHCGaJI2BrEsH3vagZxJV8+FUChp0ZbrAUuB80+vnp1HN+uR5eFq7jl2rJef1gISc
- 3YNWv3F1NoHfrZgGmV0ZQiDQekiYsYi9pqXG65zSVZN14j97YDe04GsxkKdRygzTfzJyitJfg
- uYc8f1NcqrjnllUQj9dhuogv2y3bunDAipcTyYtZDlk/8w27PA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Reduce code duplication by factoring out a function that reads an entire
-file into a strbuf, or reports errors on stderr if something goes wrong.
+On 2/21/2018 6:57 PM, Josh Tepper wrote:
+> When using git log, boundary commits (ie, those commits added by
+> specifying --boundary) do not respect the order (e.g., --date-order,
+> --topo-order).  Consider the following commit history, where number
+> indicates the order of the commit timestamps:
+>
+> <view with a fixed with font! 3's ancestor is 1, 6's ancestors are 4,5>
+> 0----1----2----5  <--A
+>         \         \
+>           3----4----6  <--B
+>
+>
+> Executing the following command:
+>
+> $ git log --boundary --date-order ^A B
+>
+> Should produce the following order (boundary commits shown with dashes):
+> 6 -5 4 3 -1
+>
+> However, it in fact produces:
+> 6 4 3 -5 -1
+>
+> Please advise.
+>
 
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
----
-The difference to using strbuf_read_file() is more detailed error
-messages for open(2) failures.  But I don't know if we need them -- or
-under which circumstances reading todo files could fail anyway.  When
-doing multiple rebases in parallel perhaps?
+Hi Josh,
 
- sequencer.c | 74 +++++++++++++++++++++++--------------------------------------
- 1 file changed, 28 insertions(+), 46 deletions(-)
+Looking at the docs [1], I don't see any specifics on how the boundary 
+commits should be ordered.
 
-diff --git a/sequencer.c b/sequencer.c
-index e9baaf59bd..e34334f0ef 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -1869,22 +1869,31 @@ static int count_commands(struct todo_list *todo_list)
- 	return count;
- }
- 
-+static ssize_t strbuf_read_file_or_whine(struct strbuf *sb, const char *path)
-+{
-+	int fd;
-+	ssize_t len;
-+
-+	fd = open(path, O_RDONLY);
-+	if (fd < 0)
-+		return error_errno(_("could not open '%s'"), path);
-+	len = strbuf_read(sb, fd, 0);
-+	close(fd);
-+	if (len < 0)
-+		return error(_("could not read '%s'."), path);
-+	return len;
-+}
-+
- static int read_populate_todo(struct todo_list *todo_list,
- 			struct replay_opts *opts)
- {
- 	struct stat st;
- 	const char *todo_file = get_todo_path(opts);
--	int fd, res;
-+	int res;
- 
- 	strbuf_reset(&todo_list->buf);
--	fd = open(todo_file, O_RDONLY);
--	if (fd < 0)
--		return error_errno(_("could not open '%s'"), todo_file);
--	if (strbuf_read(&todo_list->buf, fd, 0) < 0) {
--		close(fd);
--		return error(_("could not read '%s'."), todo_file);
--	}
--	close(fd);
-+	if (strbuf_read_file_or_whine(&todo_list->buf, todo_file) < 0)
-+		return -1;
- 
- 	res = stat(todo_file, &st);
- 	if (res)
-@@ -3151,20 +3160,13 @@ int check_todo_list(void)
- 	struct strbuf todo_file = STRBUF_INIT;
- 	struct todo_list todo_list = TODO_LIST_INIT;
- 	struct strbuf missing = STRBUF_INIT;
--	int advise_to_edit_todo = 0, res = 0, fd, i;
-+	int advise_to_edit_todo = 0, res = 0, i;
- 
- 	strbuf_addstr(&todo_file, rebase_path_todo());
--	fd = open(todo_file.buf, O_RDONLY);
--	if (fd < 0) {
--		res = error_errno(_("could not open '%s'"), todo_file.buf);
--		goto leave_check;
--	}
--	if (strbuf_read(&todo_list.buf, fd, 0) < 0) {
--		close(fd);
--		res = error(_("could not read '%s'."), todo_file.buf);
-+	if (strbuf_read_file_or_whine(&todo_list.buf, todo_file.buf) < 0) {
-+		res = -1;
- 		goto leave_check;
- 	}
--	close(fd);
- 	advise_to_edit_todo = res =
- 		parse_insn_buffer(todo_list.buf.buf, &todo_list);
- 
-@@ -3180,17 +3182,10 @@ int check_todo_list(void)
- 
- 	todo_list_release(&todo_list);
- 	strbuf_addstr(&todo_file, ".backup");
--	fd = open(todo_file.buf, O_RDONLY);
--	if (fd < 0) {
--		res = error_errno(_("could not open '%s'"), todo_file.buf);
--		goto leave_check;
--	}
--	if (strbuf_read(&todo_list.buf, fd, 0) < 0) {
--		close(fd);
--		res = error(_("could not read '%s'."), todo_file.buf);
-+	if (strbuf_read_file_or_whine(&todo_list.buf, todo_file.buf) < 0) {
-+		res = -1;
- 		goto leave_check;
- 	}
--	close(fd);
- 	strbuf_release(&todo_file);
- 	res = !!parse_insn_buffer(todo_list.buf.buf, &todo_list);
- 
-@@ -3271,15 +3266,8 @@ int skip_unnecessary_picks(void)
- 	}
- 	strbuf_release(&buf);
- 
--	fd = open(todo_file, O_RDONLY);
--	if (fd < 0) {
--		return error_errno(_("could not open '%s'"), todo_file);
--	}
--	if (strbuf_read(&todo_list.buf, fd, 0) < 0) {
--		close(fd);
--		return error(_("could not read '%s'."), todo_file);
--	}
--	close(fd);
-+	if (strbuf_read_file_or_whine(&todo_list.buf, todo_file) < 0)
-+		return -1;
- 	if (parse_insn_buffer(todo_list.buf.buf, &todo_list) < 0) {
- 		todo_list_release(&todo_list);
- 		return -1;
-@@ -3370,17 +3358,11 @@ int rearrange_squash(void)
- 	const char *todo_file = rebase_path_todo();
- 	struct todo_list todo_list = TODO_LIST_INIT;
- 	struct hashmap subject2item;
--	int res = 0, rearranged = 0, *next, *tail, fd, i;
-+	int res = 0, rearranged = 0, *next, *tail, i;
- 	char **subjects;
- 
--	fd = open(todo_file, O_RDONLY);
--	if (fd < 0)
--		return error_errno(_("could not open '%s'"), todo_file);
--	if (strbuf_read(&todo_list.buf, fd, 0) < 0) {
--		close(fd);
--		return error(_("could not read '%s'."), todo_file);
--	}
--	close(fd);
-+	if (strbuf_read_file_or_whine(&todo_list.buf, todo_file) < 0)
-+		return -1;
- 	if (parse_insn_buffer(todo_list.buf.buf, &todo_list) < 0) {
- 		todo_list_release(&todo_list);
- 		return -1;
--- 
-2.16.2
+Clearly, the implementation specifies that the boundary is written after 
+all other commits. For a full discussion of this, see the commit message 
+for 86ab4906a7c "revision walker: Fix --boundary when limited". Here is 
+an excerpt:
+
+      - After get_revision() finishes giving out all the positive
+        commits, if we are doing the boundary processing, we look at
+        the parents that we marked as potential boundaries earlier,
+        see if they are really boundaries, and give them out.
+
+The boundary commits are correctly sorted by topo-order among themselves 
+as of commit 4603ec0f960 "get_revision(): honor the topo_order flag for 
+boundary commits".
+
+So, I'm not sure that this is a bug (it is working "as designed") but it 
+certainly is non-obvious behavior.
+
+In what use case do you need these boundary commits to appear earlier?
+
+Thanks,
+-Stolee
+
+[1] https://git-scm.com/docs/git-log
+
+
