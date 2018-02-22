@@ -6,78 +6,107 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 27E3E1F576
-	for <e@80x24.org>; Thu, 22 Feb 2018 09:58:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 11B801F576
+	for <e@80x24.org>; Thu, 22 Feb 2018 10:08:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753159AbeBVJ6g (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Feb 2018 04:58:36 -0500
-Received: from cloud.peff.net ([104.130.231.41]:60688 "HELO cloud.peff.net"
+        id S1753192AbeBVKIn (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Feb 2018 05:08:43 -0500
+Received: from cloud.peff.net ([104.130.231.41]:60704 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1753088AbeBVJ6g (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Feb 2018 04:58:36 -0500
-Received: (qmail 26669 invoked by uid 109); 22 Feb 2018 09:58:35 -0000
+        id S1753000AbeBVKIm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Feb 2018 05:08:42 -0500
+Received: (qmail 27161 invoked by uid 109); 22 Feb 2018 10:08:41 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 22 Feb 2018 09:58:35 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 22 Feb 2018 10:08:41 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 1286 invoked by uid 111); 22 Feb 2018 09:59:23 -0000
+Received: (qmail 1329 invoked by uid 111); 22 Feb 2018 10:09:29 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 22 Feb 2018 04:59:23 -0500
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 22 Feb 2018 05:09:29 -0500
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 22 Feb 2018 04:58:34 -0500
-Date:   Thu, 22 Feb 2018 04:58:34 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 22 Feb 2018 05:08:40 -0500
+Date:   Thu, 22 Feb 2018 05:08:40 -0500
 From:   Jeff King <peff@peff.net>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     Brandon Williams <bmwill@google.com>, git@vger.kernel.org,
-        sbeller@google.com, gitster@pobox.com, jrnieder@gmail.com,
-        stolee@gmail.com, git@jeffhostetler.com, pclouds@gmail.com
-Subject: Re: [PATCH v3 04/35] upload-pack: convert to a builtin
-Message-ID: <20180222095833.GC12442@sigill.intra.peff.net>
-References: <20180125235838.138135-1-bmwill@google.com>
- <20180207011312.189834-1-bmwill@google.com>
- <20180207011312.189834-5-bmwill@google.com>
- <20180221134422.2386e1aca39fe673235590e7@google.com>
+To:     Dorian Taylor <dorian.taylor.lists@gmail.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+        Brandon Williams <bmwill@google.com>
+Subject: Re: bug in HTTP protocol spec
+Message-ID: <20180222100840.GD12442@sigill.intra.peff.net>
+References: <4F85B1C3-9B5B-4D7C-8907-B728C18A70CD@gmail.com>
+ <20180221221516.GA7944@sigill.intra.peff.net>
+ <89E9DF80-F811-4F7A-AA35-0F52F1180BAF@gmail.com>
+ <20180222053722.GB133592@aiede.svl.corp.google.com>
+ <614A9A36-9DE3-4A85-BFA8-8380C4AC21B8@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20180221134422.2386e1aca39fe673235590e7@google.com>
+In-Reply-To: <614A9A36-9DE3-4A85-BFA8-8380C4AC21B8@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 21, 2018 at 01:44:22PM -0800, Jonathan Tan wrote:
+On Wed, Feb 21, 2018 at 11:23:52PM -0800, Dorian Taylor wrote:
 
-> On Tue,  6 Feb 2018 17:12:41 -0800
-> Brandon Williams <bmwill@google.com> wrote:
+> diff --git a/Documentation/technical/http-protocol.txt b/Documentation/technical/http-protocol.txt
+> index a0e45f2889e6e..19d73f7efb338 100644
+> --- a/Documentation/technical/http-protocol.txt
+> +++ b/Documentation/technical/http-protocol.txt
+> @@ -214,14 +214,17 @@ smart server reply:
+>   S: Cache-Control: no-cache
+>   S:
+>   S: 001e# service=git-upload-pack\n
+> +   S: 0000
+>   S: 004895dcfa3633004da0049d3d0fa03f80589cbcaf31 refs/heads/maint\0multi_ack\n
+>   S: 0042d049f6c27a2244e12041955e262a404c7faba355 refs/heads/master\n
+>   S: 003c2cb58b79488a98d2721cea644875a8dd0026b115 refs/tags/v1.0\n
+>   S: 003fa3c2e2402b99163d1d59756e5f207ae21cccba4c refs/tags/v1.0^{}\n
+> +   S: 0000
+
+This indentation is funny. But I suspect it is because your whole patch
+seems to have been whitespace-damaged (see the section on gmail in
+"git help git-format-patch").
+
+> The client may send Extra Parameters (see
+> Documentation/technical/pack-protocol.txt) as a colon-separated string
+> -in the Git-Protocol HTTP header.
+> +in the Git-Protocol HTTP header. Note as well that there is *no* newline
+> +after the `0000`.
+
+I guess I'm not opposed to calling that out, but this is normal for
+pktline (the flush packet has no data; in the other lines the newline is
+not a syntactic part of the pktline stream, but is actually data
+contained inside each of those pktlines).
+
+> Dumb Server Response
+> ^^^^^^^^^^^^^^^^^^^^
+> @@ -264,8 +267,8 @@ Servers MUST set $servicename to be the request parameter value.
+> Servers SHOULD include an LF at the end of this line.
+> Clients MUST ignore an LF at the end of the line.
 > 
-> > In order to allow for code sharing with the server-side of fetch in
-> > protocol-v2 convert upload-pack to be a builtin.
-> > 
-> > Signed-off-by: Brandon Williams <bmwill@google.com>
+> -Servers MUST terminate the response with the magic `0000` end
+> -pkt-line marker.
+> +Servers MUST follow the first pkt-line, as well as terminate the
+> +response, with the magic `0000` end pkt-line marker.
+
+In theory there can actually be one or more headers after the "service"
+line. But I don't think they've ever been used (and the current client
+just throws them away).
+
+> The returned response is a pkt-line stream describing each ref and
+> its known value.  The stream SHOULD be sorted by name according to
+> @@ -278,6 +281,7 @@ Extra Parameter.
 > 
-> As Stefan mentioned in [1], also mention in the commit message that this
-> means that the "git-upload-pack" invocation gains additional
-> capabilities (for example, invoking a pager for --help).
+>  smart_reply     =  PKT-LINE("# service=$servicename" LF)
+> 		     *1("version 1")
+> +		     "0000"
+> 		     ref_list
+> 		     "0000"
 
-And possibly respecting pager.upload-pack, which would violate our rule
-that it is safe to run upload-pack in untrusted repositories.
+I think Jonathan is right that the version must go after the flush
+packet (just looking at the v2 protocol patches elsewhere on the list,
+the version tag is really part of the ref_list).
 
-(This actually doesn't work right now because pager.* is broken for
-builtins that don't specify RUN_SETUP; but I think with the fixes last
-year to the config code, we can now drop that restriction).
-
-Obviously we can work around this with an extra RUN_NO_PAGER_CONFIG
-flag. But I think it points to a general danger in making upload-pack a
-builtin. I'm not sure what other features it would want to avoid (or
-what might grow in the future).
-
-> Having said that, the main purpose of this patch seems to be to libify
-> upload-pack, and the move to builtin is just a way of putting the
-> program somewhere - we could have easily renamed upload-pack.c and
-> created a new upload-pack.c containing the main(), preserving the
-> non-builtin-ness of upload-pack, while still gaining the benefits of
-> libifying upload-pack.
-
-Yeah, this seems like a better route to me.
+Not related to your patch, but I suspect it should also be
+PKT-LINE("version 1").
 
 -Peff
