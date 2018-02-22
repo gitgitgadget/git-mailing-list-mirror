@@ -2,79 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 41AB11F404
-	for <e@80x24.org>; Thu, 22 Feb 2018 20:18:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 670CE1F404
+	for <e@80x24.org>; Thu, 22 Feb 2018 20:19:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751165AbeBVUSs (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Feb 2018 15:18:48 -0500
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:39121 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750802AbeBVUSr (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Feb 2018 15:18:47 -0500
-Received: by mail-wr0-f194.google.com with SMTP id w77so11842307wrc.6
-        for <git@vger.kernel.org>; Thu, 22 Feb 2018 12:18:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=iJo61SUHqO4yVB5hegx8NFnfxX6MOM/uglqx9cbxd9A=;
-        b=f+R467v28b1wINzpdnoRzDQCgKZAZQOeLzRrkee83YJEFIyENh5xbRQ+fypiHkV9ep
-         g1P3nWaRbvZmO3mqXBPXO/oM8WwZ0Pxqt8Zm//kxuty0YyKwyJ4iaGOGyCn5DEKp6Gsr
-         11x73MK0PRysSdbVdwRtMIT5wt4mXdI/lgGebH5InX0BvUWUkpxt4jI/bIvXLXirEOHk
-         SHqio/DT31mxq3nTFZX/2AGBjzlXmCcMufz0KFhngteSPG4la2lWB8cmLqpoGXAZEWfd
-         JMVqSBgV0q4UN65DNj8sMH3CvUOt0Rc5quwcGDiMEiGU7STvs+Uv9kHMkm/pEUjZCiTW
-         lKlw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=iJo61SUHqO4yVB5hegx8NFnfxX6MOM/uglqx9cbxd9A=;
-        b=TnCLtUlm81+ZkGFVhI39mIlN7zL1u2AWxdxGu+isMRNpYl8krFOmb1hQ31LPJ/r7q9
-         kqZNHCQb+XW3ggcUu2/Rgol5ykCdpmiUfhMCNS/qFWxQxQ1RhFYN00DHPPutkhIgclbb
-         KMIF2WzumZKtq+gvUPqZ1IDHHIY/TStMVnzT0Sz5DsWOaAqoR5E6xNZdV1gG23Znta/z
-         bQk0rWVl4zXhCap9sjxwEpVbJnHcLQGJdbSOz/CeW0lTpAr4zifdZ/WBIMj+wot7K9nn
-         ACtSAYP/bBVNVOaFqF/DY7ISjcg+j7Wo9EDm3XTTdIHhrJxJibsp0yfHmFOpUF5jOH3e
-         FoKg==
-X-Gm-Message-State: APf1xPApYVPkXENVpTwb4jHyplDXc4GoC8mj5Z6Te1PiO7V4B64UD1jY
-        w3afGawrfdJu/FEQ5nG2MFU=
-X-Google-Smtp-Source: AH8x225R4xAWfm09IfwNSvlwM5X3H81EMGOjhH9bctJipRhEgfWPjBMlcSW2zc902ThvkOjU8gVcEQ==
-X-Received: by 10.223.178.206 with SMTP id g72mr7028517wrd.135.1519330725740;
-        Thu, 22 Feb 2018 12:18:45 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id c7sm956812wrh.18.2018.02.22.12.18.45
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 22 Feb 2018 12:18:45 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH] t: send verbose test-helper output to fd 4
-References: <20180222064836.GA10719@sigill.intra.peff.net>
-Date:   Thu, 22 Feb 2018 12:18:44 -0800
-In-Reply-To: <20180222064836.GA10719@sigill.intra.peff.net> (Jeff King's
-        message of "Thu, 22 Feb 2018 01:48:37 -0500")
-Message-ID: <xmqq371swzff.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1751000AbeBVUTn (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Feb 2018 15:19:43 -0500
+Received: from cloud.peff.net ([104.130.231.41]:33214 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1750802AbeBVUTm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Feb 2018 15:19:42 -0500
+Received: (qmail 30410 invoked by uid 109); 22 Feb 2018 20:19:42 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 22 Feb 2018 20:19:42 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 7411 invoked by uid 111); 22 Feb 2018 20:20:30 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 22 Feb 2018 15:20:30 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 22 Feb 2018 15:19:40 -0500
+Date:   Thu, 22 Feb 2018 15:19:40 -0500
+From:   Jeff King <peff@peff.net>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Brandon Williams <bmwill@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
+        sbeller@google.com, gitster@pobox.com, stolee@gmail.com,
+        git@jeffhostetler.com, pclouds@gmail.com
+Subject: Re: [PATCH v3 04/35] upload-pack: convert to a builtin
+Message-ID: <20180222201940.GB23561@sigill.intra.peff.net>
+References: <20180125235838.138135-1-bmwill@google.com>
+ <20180207011312.189834-1-bmwill@google.com>
+ <20180207011312.189834-5-bmwill@google.com>
+ <20180221134422.2386e1aca39fe673235590e7@google.com>
+ <20180222095833.GC12442@sigill.intra.peff.net>
+ <20180222180715.GB185096@google.com>
+ <20180222181400.GA19035@sigill.intra.peff.net>
+ <20180222193814.GA256918@aiede.svl.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20180222193814.GA256918@aiede.svl.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Thu, Feb 22, 2018 at 11:38:14AM -0800, Jonathan Nieder wrote:
 
-> This is a repost of the two patches from:
->
->   https://public-inbox.org/git/20180209185710.GA23403@sigill.intra.peff.net/
->
-> (now just one patch, since sg/test-i18ngrep graduated and we can do it
-> all in one step). The idea got positive feedback, but nobody commented
-> on patches and I didn't see them in "What's cooking".
+> >>> And possibly respecting pager.upload-pack, which would violate our rule
+> >>> that it is safe to run upload-pack in untrusted repositories.
+> >>
+> >> And this isn't an issue with receive-pack because this same guarantee
+> >> doesn't exist?
+> >
+> > Yes, exactly (which is confusing and weird, yes, but that's how it is).
+> 
+> To be clear, which of the following are you (most) worried about?
+> 
+>  1. being invoked with --help and spawning a pager
+>  2. receiving and acting on options between 'git' and 'upload-pack'
+>  3. repository discovery
+>  4. pager config
+>  5. alias discovery
+>  6. increased code surface / unknown threats
 
-Thanks for clearly explaining the change.  Will queue.
+My immediate concern is (4). But my greater concern is that people who
+work on git.c should not have to worry about accidentally violating this
+principle when they add a new feature or config option.
+
+In other words, it seems like an accident waiting to happen. I'd be more
+amenable to it if there was some compelling reason for it to be a
+builtin, but I don't see one listed in the commit message. I see only
+"let's make it easier to share the code", which AFAICT is equally served
+by just lib-ifying the code and calling it from the standalone
+upload-pack.c.
+
+> Although in most setups the user does not control the config files on
+> a server, item (4) looks like a real issue worth solving.  I think we
+> should introduce a flag to skip looking for pager config.  We could
+> use it for receive-pack, too.
+
+There's not much point for receive-pack. It respects hooks, so any
+security ship has already sailed there.
+
+-Peff
