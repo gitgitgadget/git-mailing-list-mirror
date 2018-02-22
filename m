@@ -2,111 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 49C731F576
-	for <e@80x24.org>; Thu, 22 Feb 2018 09:26:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 38CC11F576
+	for <e@80x24.org>; Thu, 22 Feb 2018 09:33:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753026AbeBVJ0o (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Feb 2018 04:26:44 -0500
-Received: from mail-ot0-f169.google.com ([74.125.82.169]:41085 "EHLO
-        mail-ot0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752961AbeBVJ0n (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Feb 2018 04:26:43 -0500
-Received: by mail-ot0-f169.google.com with SMTP id w38so4035905ota.8
-        for <git@vger.kernel.org>; Thu, 22 Feb 2018 01:26:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=7Ot2PgavcpE/HL+ksCkzgeNlFupGGpfhwuASw4gpcs4=;
-        b=rXnWZO/BKHBIjLbGKM0JTt+5BY4QBvouPHvnl2hJ2SonlHRAKqq0SYxV/Khwl+oT7D
-         87RRyfrxpIRKr2djzic/WnPXml/ap0sBop/VZBeZOovyZl6PvTyftMzDG1InjaQSqMdG
-         ZUGELD2zPVUHaL6MxDGqrm03Jvzyl8V/7YkGDign/mgRoRmvIb+pC1frw3E9y/kdI4RE
-         YljE4+jtEOcYajysmXTtTzBVY+KLlm+q/HOSwQebXFwDhcXsagMWV0VO7S2OdlEpYzVz
-         8aRr1XlTX64QCBUoKs4hEX7lhiJhIqYsaQGY54Vo6FOuZpZr6C+qUZev0ggjqmu4lHbC
-         E0Gw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=7Ot2PgavcpE/HL+ksCkzgeNlFupGGpfhwuASw4gpcs4=;
-        b=jInbEK9t9QAJBHVM3BqSi2t5kQDCWA6b5y5xPwqz27ENfUHaql9yOEObGIRKFGB1kr
-         LzYdGOBbu5P80geb/6EJJFDl2VGAyZDan3xGxji5Fob20a5q5NDGR0wRM4pzwq4RYP3P
-         mzXpixvzWQ0n2qRMz2zg9CmPoT+hR/ZoW5xt/BZz2IEZy95kraHuIvPylTbEv36X7XRU
-         EwUqMJ9SYKgbPBez2IwpbPzwlQsYVqKV+/16/QQqClYREKHSdW7oIamcEttQMpSlnI2y
-         YORdIpFznCKLZVwJWjRxaemrYGfUzaTu8XD9Nsnst7Ch+/okrnFk9qR0xFSiN6yuxuEx
-         1jSA==
-X-Gm-Message-State: APf1xPDvCnlE89NiFukuhtyMHAFHFFS7TvsqBP440IIh/j5gjvFh1Gh2
-        icwu3l/XCsYJH5ZBymuQBqHJhQ5BdMsOGOTfVeA=
-X-Google-Smtp-Source: AG47ELtmiYlAGYlcmYytZ2gPUS/KfTu5JOxduxYfU8vh7j9X94uxQ3YLto/R/XwG9mbI856SffNMgmdpWYstmMgy0xg=
-X-Received: by 10.157.81.92 with SMTP id u28mr4788613oti.152.1519291602308;
- Thu, 22 Feb 2018 01:26:42 -0800 (PST)
+        id S1753035AbeBVJda (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Feb 2018 04:33:30 -0500
+Received: from cloud.peff.net ([104.130.231.41]:60636 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1752991AbeBVJda (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Feb 2018 04:33:30 -0500
+Received: (qmail 25162 invoked by uid 109); 22 Feb 2018 09:33:29 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 22 Feb 2018 09:33:29 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 1162 invoked by uid 111); 22 Feb 2018 09:34:16 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 22 Feb 2018 04:34:16 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 22 Feb 2018 04:33:27 -0500
+Date:   Thu, 22 Feb 2018 04:33:27 -0500
+From:   Jeff King <peff@peff.net>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git@vger.kernel.org, sbeller@google.com, gitster@pobox.com,
+        jrnieder@gmail.com, stolee@gmail.com, git@jeffhostetler.com,
+        pclouds@gmail.com
+Subject: Re: [PATCH v3 12/35] serve: introduce git-serve
+Message-ID: <20180222093327.GA12442@sigill.intra.peff.net>
+References: <20180125235838.138135-1-bmwill@google.com>
+ <20180207011312.189834-1-bmwill@google.com>
+ <20180207011312.189834-13-bmwill@google.com>
 MIME-Version: 1.0
-Received: by 10.74.25.140 with HTTP; Thu, 22 Feb 2018 01:26:11 -0800 (PST)
-In-Reply-To: <87wozffavp.fsf@evledraar.gmail.com>
-References: <20180214101019.gaenosifgq3wx2nm@NUC.localdomain>
- <20180214105149.28896-1-pclouds@gmail.com> <87wozffavp.fsf@evledraar.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Thu, 22 Feb 2018 16:26:11 +0700
-Message-ID: <CACsJy8BsUsT6iO9_68+rHnZG5B-tcaXZAXR88nh8DgR65zvVKw@mail.gmail.com>
-Subject: Re: [PATCH 1/2] parse-options: expand $HOME on filename options
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>, doron.behar@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20180207011312.189834-13-bmwill@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 15, 2018 at 5:46 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
-> In general I'm mildly negative on adding this, for every user like Doron
-> who'll be less confused by a hack like this, you'll have other users
-> who'll be confused about git inexplicably working with ~ in the middle
-> of strings, even though;
->
->     $ echo git init --template ~/path
->     git init --template /home/avar/path
->     $ echo git init --template=3D~/path
->     git init --template=3D~/path
+On Tue, Feb 06, 2018 at 05:12:49PM -0800, Brandon Williams wrote:
 
-If you have a directory named '~', I expect you are already used to
-prefixing it with './' because '~' will be expanded in many places
-where you might want to avoid.
+> +In protocol v2 communication is command oriented.  When first contacting a
+> +server a list of capabilities will advertised.  Some of these capabilities
+> +will be commands which a client can request be executed.  Once a command
+> +has completed, a client can reuse the connection and request that other
+> +commands be executed.
 
-> I think it makes more sense to just leave such expansion to the shell,
-> and not try to magically expand it after the fact, since it's both
-> confusing (user: why does this work with git and not this other
-> program?), and as shown above changes existing semantics.
->
-> We'll also be setting ourselves up for more disappointed users who'll
-> notice that e.g. `git clone file://~/path` doesn't work, but `git clone
-> file://$HOME/path` does, requiring more hacks to expand ~ in more
-> codepaths. Will they also expact `git log -G~` to find references to
-> their homedir in their dotfiles.git?
->
-> I think this way lies madness, and it's better to just avoid it.
+If I understand this correctly, we'll potentially have a lot more
+round-trips between the client and server (one per "command"). And for
+git-over-http, each one will be its own HTTP request?
 
-Well. That's a bit extreme, I think if we add this then we handle case
-by case in future when it makes sense, not blindly expanding '~'
-everywhere.
+We've traditionally tried to minimize HTTP requests, but I guess it's
+not too bad if we can keep the connection open in most cases. Then we
+just suffer some extra framing bytes, but we don't have to re-establish
+the TCP connection each time.
 
-The problem I have with this --template=3D~/path is tab-completion
-actually completes the path, which (mis)leads me to think the command
-will accept '~/' too. But this looks like a bug in git-completion.bash
-though, it's a bit eager in completing stuff (or maybe it completes
-"--template ~/path" and "--template=3D~/path" the same way).
+I do wonder if the extra round trips will be noticeable in high-latency
+conditions. E.g., if I'm 200ms away, converting the current
+ref-advertisement spew to "capabilities, then the client asks for refs,
+then we spew the refs" is going to cost an extra 200ms, even if the
+fetch just ends up being a noop. I'm not sure how bad that is in the
+grand scheme of things (after all, the TCP handshake involves some
+round-trips, too).
 
-I don't feel strongly about this. I'm OK with dropping these patches
-if people think it's not a good idea (then I will try to fix
-git-completion.bash not to complete '~' in this case).
+> + Capability Advertisement
+> +--------------------------
+> +
+> +A server which decides to communicate (based on a request from a client)
+> +using protocol version 2, notifies the client by sending a version string
+> +in its initial response followed by an advertisement of its capabilities.
+> +Each capability is a key with an optional value.  Clients must ignore all
+> +unknown keys.  Semantics of unknown values are left to the definition of
+> +each key.  Some capabilities will describe commands which can be requested
+> +to be executed by the client.
+> +
+> +    capability-advertisement = protocol-version
+> +			       capability-list
+> +			       flush-pkt
+> +
+> +    protocol-version = PKT-LINE("version 2" LF)
+> +    capability-list = *capability
+> +    capability = PKT-LINE(key[=value] LF)
+> +
+> +    key = 1*CHAR
+> +    value = 1*CHAR
+> +    CHAR = 1*(ALPHA / DIGIT / "-" / "_")
+> +
+> +A client then responds to select the command it wants with any particular
+> +capabilities or arguments.  There is then an optional section where the
+> +client can provide any command specific parameters or queries.
+> +
+> +    command-request = command
+> +		      capability-list
+> +		      (command-args)
+> +		      flush-pkt
+> +    command = PKT-LINE("command=" key LF)
+> +    command-args = delim-pkt
+> +		   *arg
+> +    arg = 1*CHAR
 
-> But I think that if we're going to keep it it needs some tests & docs to
-> point confused users to.
---=20
-Duy
+For a single stateful TCP connection like git:// or git-over-ssh, the
+client would get the capabilities once and then issue a series of
+commands. For git-over-http, how does it work?
+
+The client speaks first in HTTP, so we'd first make a request to get
+just the capabilities from the server? And then proceed from there with
+a series of requests, assuming that the capabilities for each server we
+subsequently contact are the same? That's probably reasonable (and
+certainly the existing http protocol makes that capabilities
+assumption).
+
+I don't see any documentation on how this all works with http. But
+reading patch 34, it looks like we just do the usual
+service=git-upload-pack request (with the magic request for v2), and
+then the server would send us capabilities. Which follows my line of
+thinking in the paragraph above.
+
+-Peff
