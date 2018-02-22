@@ -2,81 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A32451F404
-	for <e@80x24.org>; Thu, 22 Feb 2018 23:23:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 07C931F404
+	for <e@80x24.org>; Thu, 22 Feb 2018 23:24:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751928AbeBVXX3 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Feb 2018 18:23:29 -0500
-Received: from cloud.peff.net ([104.130.231.41]:33510 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751553AbeBVXX2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Feb 2018 18:23:28 -0500
-Received: (qmail 6108 invoked by uid 109); 22 Feb 2018 23:23:29 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 22 Feb 2018 23:23:28 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 9889 invoked by uid 111); 22 Feb 2018 23:24:16 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 22 Feb 2018 18:24:16 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 22 Feb 2018 18:23:26 -0500
-Date:   Thu, 22 Feb 2018 18:23:26 -0500
-From:   Jeff King <peff@peff.net>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Brandon Williams <bmwill@google.com>,
-        Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
-        sbeller@google.com, gitster@pobox.com, stolee@gmail.com,
-        git@jeffhostetler.com, pclouds@gmail.com
-Subject: Re: [PATCH v3 04/35] upload-pack: convert to a builtin
-Message-ID: <20180222232326.GA8585@sigill.intra.peff.net>
-References: <20180222095833.GC12442@sigill.intra.peff.net>
- <20180222180715.GB185096@google.com>
- <20180222181400.GA19035@sigill.intra.peff.net>
- <20180222193814.GA256918@aiede.svl.corp.google.com>
- <20180222201940.GB23561@sigill.intra.peff.net>
- <20180222212402.GB256918@aiede.svl.corp.google.com>
- <20180222214402.GA30638@sigill.intra.peff.net>
- <20180222222146.GA30988@sigill.intra.peff.net>
- <20180222224235.GD256918@aiede.svl.corp.google.com>
- <20180222230515.GA976@sigill.intra.peff.net>
+        id S1751663AbeBVXYN (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Feb 2018 18:24:13 -0500
+Received: from accordion.employees.org ([198.137.202.74]:45529 "EHLO
+        accordion.employees.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751481AbeBVXYM (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Feb 2018 18:24:12 -0500
+Received: by accordion.employees.org (Postfix, from userid 1736)
+        id CB6572D5048; Thu, 22 Feb 2018 23:24:11 +0000 (UTC)
+Date:   Thu, 22 Feb 2018 23:24:11 +0000
+From:   Derek Fawcus <dfawcus+lists-git@employees.org>
+To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Cc:     Peter Backes <rtc@helen.PLASMA.Xg8.DE>, git@vger.kernel.org,
+        Theodore Ts'o <tytso@mit.edu>
+Subject: Re: Git should preserve modification times at least on request
+Message-ID: <20180222232411.GA54558@accordion.employees.org>
+Mail-Followup-To: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        Peter Backes <rtc@helen.PLASMA.Xg8.DE>, git@vger.kernel.org,
+        Theodore Ts'o <tytso@mit.edu>
+References: <20180219212235.GA9891@helen.PLASMA.Xg8.DE>
+ <20180221210339.GA43094@accordion.employees.org>
+ <87bmgif2pa.fsf@evledraar.gmail.com>
+ <20180221221420.GA7743@helen.PLASMA.Xg8.DE>
+ <87a7w2ezeq.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20180222230515.GA976@sigill.intra.peff.net>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87a7w2ezeq.fsf@evledraar.gmail.com>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 22, 2018 at 06:05:15PM -0500, Jeff King wrote:
+On Wed, Feb 21, 2018 at 11:44:13PM +0100, Ævar Arnfjörð Bjarmason wrote:
+> On Wed, Feb 21 2018, Peter Backes jotted:
+> > On Wed, Feb 21, 2018 at 10:33:05PM +0100, Ævar Arnfjörð Bjarmason wrote:
+> >> This sounds like a sensible job for a git import tool, i.e. import a
+> >> target directory into git, and instead of 'git add'-ing the whole thing
+> >> it would look at the mtimes, sort files by mtime, then add them in order
+> >> and only commit those files that had the same mtime in the same commit
+> >> (or within some boundary).
+> >
+> > I think that this would be The Wrong Thing to do.
 
-> On Thu, Feb 22, 2018 at 02:42:35PM -0800, Jonathan Nieder wrote:
-> 
-> > > I couldn't quite get it to work, but I think it's because I'm doing
-> > > something wrong with the submodules. But I also think this attack would
-> > > _have_ to be done over ssh, because on a local system the submodule
-> > > clone would a hard-link rather than a real fetch.
-> > 
-> > What happens if the submodule URL starts with file://?
-> 
-> Ah, that would do it. Or I guess any follow-up fetch.
-> 
-> I'm still having trouble convincing submodules to fetch _just_ the
-> desired sha1, though. It always just fetches everything. I know there's
-> a way that this kicks in (that's why we have things like
-> allowReachableSHA1InWant), but I'm not sufficiently well-versed in
-> submodules to know how to trigger it.
+Agreed, but probably for a different reason.
 
-<facepalm> This won't work anyway. I was right when I said that we don't
-redirect stderr for rev-list, but of course it's stdout that determines
-the pager behavior. So I don't think you could get rev-list to trigger a
-pager here.
+> I'm merely pointing out that if you have the use-case Derek Fawcus
+> describes you can get per-file mtimes via something similar to the the
+> hook method Theodore Ts'o described today with a simple import tool with
+> no changes to git or its object format required.
 
-I don't think there's currently any vulnerability, but it's more to do
-with luck than any amount of carefulness on our part.
+Actually, I was not proposing any change to the git objects.
+I was simply suggesting a case where I'd have found a optional mechanism
+for mtime restoration useful.
 
--Peff
+What would be useful is a better version of the hook based scheme which
+Ted mentioned.  The import could be via a wrapper script, but checkouts
+would have to be via a hook such that the original timestamps could then
+be applied; and those stamps would have to be part of the tar-file commit.
+
+The idea of automatically generating a bunch of commits in time order
+would be the wrong thing here. That is because one file could well
+contain changes from more than one logical commit (as guided by the
+Changelog), and that one logical commit can be spread across a few
+files with diffrent mode time, one has to manually tease those apart.
+
+So here the purpose behind restoring the timestamps is as an aid in
+guiding the examination of files to find the changes referenced in
+the Changelog.
+
+Git is quite useful for this sort of effort, as once a sensible commit
+has been synthsized, rebase of the next tar-file commit then helps
+reveal the next set of changes.
+
+So what I'm thinking of is for stuff like this: https://github.com/DoctorWkt/unix-jun72
+(and the other repros there), where one wishes to figure out and
+regenerate a history of changes.  Since git is quite useful for
+representing the end result, it is just that other scripting
+may make it easier to use for such cases.
+
+DF
