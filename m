@@ -7,60 +7,60 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 551BE1F404
-	for <e@80x24.org>; Thu, 22 Feb 2018 00:12:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 18DE91F404
+	for <e@80x24.org>; Thu, 22 Feb 2018 00:20:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751273AbeBVAMN (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Feb 2018 19:12:13 -0500
-Received: from mail-pl0-f49.google.com ([209.85.160.49]:46408 "EHLO
-        mail-pl0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751158AbeBVAMM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Feb 2018 19:12:12 -0500
-Received: by mail-pl0-f49.google.com with SMTP id x19so1885955plr.13
-        for <git@vger.kernel.org>; Wed, 21 Feb 2018 16:12:12 -0800 (PST)
+        id S1751351AbeBVAUX (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Feb 2018 19:20:23 -0500
+Received: from mail-pf0-f182.google.com ([209.85.192.182]:36212 "EHLO
+        mail-pf0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751302AbeBVAUW (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Feb 2018 19:20:22 -0500
+Received: by mail-pf0-f182.google.com with SMTP id 68so1382155pfx.3
+        for <git@vger.kernel.org>; Wed, 21 Feb 2018 16:20:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:from:to:cc:subject:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=aseQ6FtizYE3I/B4a/z8oKseaHx0vm4HCBMcR5pITNw=;
-        b=GknmJSuJ/jIbB8kBfyVpLzc4yLhU2eaa/6NvjgrWQUJwpwy8Ak5xXkmNPrECEORpAp
-         2tq1T51OzS6UFzuZFAN10gl/hw5Izv3+Muw5e/hWOMaxreaLZGSN0PU5NPYxvBEm0zF1
-         b2VEYemVsq+4/Vi6G6w97jTtGE84pfso9aq0i/ZjJKvqXWu1HfO8WxCJ9lexYm8Bcfqu
-         8ZGHStiPK0/9fY4CiTK6ORK8iTagJ7WgtZHO5MupuSngdTpQ+fHqogNL6e6HVTI1vtdY
-         jtbr7CiDbalj5bVB2tF38oJttb/191QTyYv6EuALLNAPXmy/vxYGZCpMJwDoj2FnP174
-         6Eug==
+        bh=vk7Dt96GqvXU+TltiTzMSF1iRukm0hG2yNtw3jMVPek=;
+        b=jEL6xR5gvjL7cFEWgAn4ok8CUgq6dZYvApX+LGlJJr7YusdTfFm8bbqDMinWX6utMu
+         eg6Snyh2Ip/69DqgRVRguTcliJ3cSQDU18WHmM7+Yks+rDYfLD2dpvfsW9bNYLUB9ehf
+         hWun9tusei7XA5T+HUMqzcklWActz1lB5+W3nUKjWe/nPH6yLGQ0q5orh+CkAiFdEW+G
+         NzeUr1FQVNgZXGHku5Y8mHMf40ZOgKLXNoWRk71dMPR3Q6zdgjMxhO70EfoxqxAXRIT6
+         Y5p7X74k2A35xsxul0/PY+Rpi1T1WwHKNfG5bdhFyIot9DYZpm/VkVmmu1kdFxsT/KKt
+         fH/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=aseQ6FtizYE3I/B4a/z8oKseaHx0vm4HCBMcR5pITNw=;
-        b=W/PhyUvoEmM845E4GhEwHfUK4ANRjyU6lceWIYIVBIK2swCZW/oQTtI2DjU2ErfBhs
-         rh4ptMB+FN6bViCSDwu78a2pgbcWe3YBsihq4o68oWug23IMEgVu4yskTGLsLtbClBE5
-         I2bN7q/cjhZbdjSMKi0YOCrgQhIpFZiyDTEEHJkT6EtDs3xtK1H6rsYDy6AUaoeZebkQ
-         Dbrc2uEy3+s7LJ3pnJ0VKNApmtjLWcRBi78+x4fxCWRNRXdvlUSrcakJhDin6UVA+xfq
-         Ft/01P15Iv07ORxYbnUCn5jy1b8IBqmCuuZoD2feb5pVm/oUfx7wFBuP8fScnC23EXCX
-         WOcA==
-X-Gm-Message-State: APf1xPAsGBesWXm1wuG2uremoz1RlyqsHAybT8+yHBOWSDcwuiE9ijuI
-        GG5PujQJt5/GFjXo2QbD0Fcd+g==
-X-Google-Smtp-Source: AH8x225IIh1brWSGzQSaQ4PMs1TdAD8YrZcMudbBPdQijLiVudk7AdxqYO4xT9JPZceU+exj3Q+QFw==
-X-Received: by 2002:a17:902:51e9:: with SMTP id y96-v6mr4742745plh.344.1519258331854;
-        Wed, 21 Feb 2018 16:12:11 -0800 (PST)
+        bh=vk7Dt96GqvXU+TltiTzMSF1iRukm0hG2yNtw3jMVPek=;
+        b=NZ9F1+HnXmmdvHxL9ckY4BjM7m5fdyBfi1FS5iT7/7fTVeo9uiRIQwMR5ZWEUR5pZt
+         34XgP6czgQWiDVaH2CpSmxJZU7fF26cnRCDpyIk6nO1qH+kv7vSBSvG4OvF3UOQvIli8
+         85g6pRqtzAsUZ0+jbZSVQpfLcQhu9wwMI0dBY2o29lKKdNuvn0cGChGYe9fLonM0dqqD
+         f9cHjXhcvEh/N6JkWgVdss1nUqMVqaGI9VPy++upqEL7wz/XFpuhQv/OeTKk/3s0HEhw
+         qRi8TdTjGyLHy8sH8zzq3ytX3ftT5Plb2Q4h6xAudsJFRkMC8uxKREBuCN4XMCV6K6OT
+         v+LA==
+X-Gm-Message-State: APf1xPAAC8JOb1vkjv4/CYgLfMP2kyQToDUT6mpvXcCEiGbFi0uc+7LP
+        yjqxrPTUy/X4hu/EWAdvDV6RVg==
+X-Google-Smtp-Source: AH8x226MAT5rtcABRByZlq4lPNUFTUOgtC0Pohj+vU/WncmQoq0u4y9Zp/Jxd0yE5M+3kNnZij2hew==
+X-Received: by 10.99.143.69 with SMTP id r5mr4072212pgn.160.1519258821622;
+        Wed, 21 Feb 2018 16:20:21 -0800 (PST)
 Received: from twelve3.svl.corp.google.com ([2620:0:100e:422:ffac:c1d4:4bf7:bb93])
-        by smtp.gmail.com with ESMTPSA id i14sm66151955pgv.40.2018.02.21.16.12.10
+        by smtp.gmail.com with ESMTPSA id q13sm8773651pgr.15.2018.02.21.16.20.20
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 21 Feb 2018 16:12:10 -0800 (PST)
-Date:   Wed, 21 Feb 2018 16:12:09 -0800
+        Wed, 21 Feb 2018 16:20:20 -0800 (PST)
+Date:   Wed, 21 Feb 2018 16:20:19 -0800
 From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org, sbeller@google.com, peff@peff.net,
-        gitster@pobox.com, jrnieder@gmail.com, stolee@gmail.com,
-        git@jeffhostetler.com, pclouds@gmail.com
-Subject: Re: [PATCH v3 35/35] remote-curl: don't request v2 when pushing
-Message-Id: <20180221161209.80f0a3b941a069ea78ccf43e@google.com>
-In-Reply-To: <20180207011312.189834-36-bmwill@google.com>
-References: <20180125235838.138135-1-bmwill@google.com>
-        <20180207011312.189834-1-bmwill@google.com>
-        <20180207011312.189834-36-bmwill@google.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, pclouds@gmail.com,
+        sunshine@sunshineco.com, Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 07/27] pack: move prepare_packed_git_run_once to object
+ store
+Message-Id: <20180221162019.bba08985870de3755a550b57@google.com>
+In-Reply-To: <20180221015430.96054-8-sbeller@google.com>
+References: <20180216174626.24677-1-sbeller@google.com>
+        <20180221015430.96054-1-sbeller@google.com>
+        <20180221015430.96054-8-sbeller@google.com>
 X-Mailer: Sylpheed 3.6.0 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
@@ -70,23 +70,18 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue,  6 Feb 2018 17:13:12 -0800
-Brandon Williams <bmwill@google.com> wrote:
+On Tue, 20 Feb 2018 17:54:10 -0800
+Stefan Beller <sbeller@google.com> wrote:
 
-> +test_expect_success 'push with http:// and a config of v2 does not request v2' '
-> +	# Till v2 for push is designed, make sure that if a client has
-> +	# protocol.version configured to use v2, that the client instead falls
-> +	# back and uses v0.
-> +
-> +	test_commit -C http_child three &&
-> +
-> +	# Push to another branch, as the target repository has the
-> +	# master branch checked out and we cannot push into it.
-> +	GIT_TRACE_PACKET=1 git -C http_child -c protocol.version=1 \
-> +		push origin HEAD:client_branch && 2>log &&
+> Each repository's object store can be initialized independently, so
+> they must not share a run_once variable.
+> 
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 
-Should it be protocol.version=2? Also, two double ampersands?
+Reviewed-by: Jonathan Tan <jonathantanmy@google.com>
 
-Also, optionally, it might be better to do
-GIT_TRACE_PACKET="$(pwd)/log", so that it does not get mixed with other
-stderr output.
+> -#define RAW_OBJECT_STORE_INIT { NULL, NULL, __MRU_INIT, NULL, NULL }
+> +#define RAW_OBJECT_STORE_INIT { NULL, NULL, __MRU_INIT, NULL, NULL, 0 }
+
+Optional: Trailing zeros are not needed in struct initializers.
