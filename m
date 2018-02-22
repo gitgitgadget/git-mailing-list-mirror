@@ -2,155 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EC6B31F404
-	for <e@80x24.org>; Thu, 22 Feb 2018 18:52:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 801861F404
+	for <e@80x24.org>; Thu, 22 Feb 2018 18:53:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751379AbeBVSwn (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Feb 2018 13:52:43 -0500
-Received: from mail-yb0-f193.google.com ([209.85.213.193]:38843 "EHLO
-        mail-yb0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751365AbeBVSwm (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Feb 2018 13:52:42 -0500
-Received: by mail-yb0-f193.google.com with SMTP id p77-v6so2090110yba.5
-        for <git@vger.kernel.org>; Thu, 22 Feb 2018 10:52:41 -0800 (PST)
+        id S1750967AbeBVSxh (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Feb 2018 13:53:37 -0500
+Received: from mail-wr0-f195.google.com ([209.85.128.195]:35831 "EHLO
+        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750776AbeBVSxf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Feb 2018 13:53:35 -0500
+Received: by mail-wr0-f195.google.com with SMTP id l43so11653495wrc.2
+        for <git@vger.kernel.org>; Thu, 22 Feb 2018 10:53:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=wjsKDcN+r4RNNcsbNOCJvUlCzIomJ1LE2OwbRY4Wwsc=;
-        b=C7Pcs+R6bg2ohNaIAXineN0mFtiiDO9w+AmyoTgbMfJF/e9RNa2czoT5NFqvRt/pAS
-         YpSVjAIcsOW8bwkZCHnF4E5iNiAbZW/nxmIruXx9Zg8d8RVdFQ2XOwiXxd9R99+bPPxn
-         5pfBo1toRN6rDCJlsdG2c6RyE5JG5X3XZ3kFl1cgL+HwhkRuJkDlQy/740m0ztUD54dG
-         a7LZiuvOGiOy1MkYNdlBpfyDCkpmTIQRNkF99cP+oQVG4cBlHBi3pjyyIGfiZZpwtEoS
-         KvJglUPA+x9HsTlzL3cbwW5hyPDx01++Iwly+qhx3JumCoeokCG9erJ7UyyG7nu9HQAa
-         j67Q==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=l1UbQynCzQN+pFOGxqfzezakrJoXy5YRI8Emo70iEyA=;
+        b=adURR3zHJ47F4Hsin1yGRruvA5ogdURGGaNq7T2NdK4mn26VALO3e+oU95LLXKXs9G
+         AMlwZhc6k33HQRFMSl8MWtWk0q+taH6m6xPLaRorPBpBK0uicleCv6yP1woqGVs8YVd8
+         2oJTAkckwTSE77RlX64bc9XUQbl0QymF/rZQYY/gAHh/3IHnA26heWTIUh1UWJWUxfCy
+         nv1mUdAcb9Ikc11GvY/sgwU+LDbnA55srPoLgjuQ3/k96LIonbmm74ZVeZVKksAw6IZT
+         ylZpmfu5Zo2mQnXOlJvJA/tD+Us5uMd38PmzQPB7zbZPsQ0a5HUv0JcoDEhtjt6Zrml/
+         t80A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=wjsKDcN+r4RNNcsbNOCJvUlCzIomJ1LE2OwbRY4Wwsc=;
-        b=pXectg3noM3+b12izFvRGKR8e0EtoB5mibtD1tMl/LBiYevrGNrfo8oPEcIPUq2Tqp
-         +5URAeuW+brX1ufmvMdyb0tUqRnmwcC9egJ+xwi2liNMesnSs13OxYJf9T95X5y2tkuQ
-         y0ZcHafC7OdLqJkOg1+bp+6SKTZoSzEdWYZcPq+s4THAiTgu5RxX7ZVgawyuG8Sw9GUu
-         ToF355xucfR5H99u+UdpdRHmBnvT4iI7dPopwg51HrUs1qgG+0c9Bs6zUze6d/gBMF+D
-         bnClLS4bwfcJz4aGHaJLtSg75NUoiBrYu/kiXFKZ4fd1Y3jOYUeaTEu/z886fmHHbib/
-         9SFQ==
-X-Gm-Message-State: APf1xPD8Fbf+stPftwEmGlBumD+1s81R5M87QlQBw/r0y77Ybra/695M
-        6bhsuSC++VM5xFN4KBqNPZPeKIE5X4TgtQCM0/sGmg==
-X-Google-Smtp-Source: AH8x226oMlLS3Kk9tneei7dpWB+uhGZ6Hl7I9Lg7s684RHYhfo3LGHi3kJurPIRRMfY02sgTgZoKtLhR+uOOMrjwBY0=
-X-Received: by 2002:a25:b4d:: with SMTP id 74-v6mr5443977ybl.167.1519325561080;
- Thu, 22 Feb 2018 10:52:41 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=l1UbQynCzQN+pFOGxqfzezakrJoXy5YRI8Emo70iEyA=;
+        b=iZgxf22OWUpO5/3zufKhZm4f5r/KdbCqfI5z7QIjIfwLnSvxG7qb5h4bRdLCvt+apn
+         GIldCcgVqwJPKlxs4wnRIJKpo1ck8IpQeQigUVPyeN+7MvwICeqyG5V6K1tXa0FP4C9K
+         AkCTie6lSzlf16BGoHYjYQrGWTvogxJjdGz9FczS0c+Nn64LrkVDofuMdeP87BRaayIp
+         +Wh8cR1SzAqznAXukWDFVfmO+G7xlpR0TdywALptk1HRU+HjKF3z6c3UisQFwFf9Cnr6
+         0dRrqxQuvyB/grOpZdrgOj0ULFauLKeLdNgZ+XQrXCCusKl7QXHCkfKkXs4O4yNaXWcG
+         G3VA==
+X-Gm-Message-State: APf1xPCGCsCTypKzM+VRZaZpNclM/p2yUIq3HvffxgMZBZMYwZg6V1RS
+        llGGnBCjlIBTzVcKF4DjFiY=
+X-Google-Smtp-Source: AH8x224io2zg/23056Lpq3E1s5LfX8Uo7C1YTDaaTOqFdVVknK6YPQGKZLX0kcS+8xGvYLHadhki0w==
+X-Received: by 10.223.166.103 with SMTP id k94mr6756814wrc.237.1519325291896;
+        Thu, 22 Feb 2018 10:48:11 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id v23sm108394wmv.8.2018.02.22.10.48.11
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 22 Feb 2018 10:48:11 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     git@vger.kernel.org, git@jeffhostetler.com, peff@peff.net,
+        jonathantanmy@google.com, szeder.dev@gmail.com, sbeller@google.com,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v4 08/13] commit-graph: implement --delete-expired
+References: <4d1ee202-7d79-d73c-6e05-d0fc85db943c@gmail.com>
+        <1519066406-81663-1-git-send-email-dstolee@microsoft.com>
+        <1519066406-81663-9-git-send-email-dstolee@microsoft.com>
+Date:   Thu, 22 Feb 2018 10:48:10 -0800
+In-Reply-To: <1519066406-81663-9-git-send-email-dstolee@microsoft.com>
+        (Derrick Stolee's message of "Mon, 19 Feb 2018 13:53:21 -0500")
+Message-ID: <xmqqfu5sx3md.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 2002:a25:cfcb:0:0:0:0:0 with HTTP; Thu, 22 Feb 2018 10:52:40
- -0800 (PST)
-In-Reply-To: <CADfK3RVMxv8RPYS34jhLq=0TievNwwKH2fgn=knPjxraXN=wUw@mail.gmail.com>
-References: <CADfK3RXjK9ExcSLLxkbkDvb2o_U9+7Ykua5cHEXc9+uUU17z9g@mail.gmail.com>
- <CADfK3RVMxv8RPYS34jhLq=0TievNwwKH2fgn=knPjxraXN=wUw@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 22 Feb 2018 10:52:40 -0800
-Message-ID: <CAGZ79kbyVAcVOJ0waD6Fi+9eEs1-gGySLY+A6Rs2_xxXMJbhLQ@mail.gmail.com>
-Subject: Re: [PATCH] subtree: hide GPG signatures in calls to log
-To:     Stephen R Guglielmo <srguglielmo@gmail.com>
-Cc:     git <git@vger.kernel.org>, Avery Pennarun <apenwarr@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 22, 2018 at 5:37 AM, Stephen R Guglielmo
-<srguglielmo@gmail.com> wrote:
-> On Feb 15, 2018 10:34 PM, "Stephen R Guglielmo" <srguglielmo@gmail.com>
-> wrote:
->
-> This fixes `add` and `pull` for GPG signed objects.
->
-> Signed-off-by: Stephen R Guglielmo <srg@guglielmo.us>
+Derrick Stolee <stolee@gmail.com> writes:
 
-Yay! Thanks for a patch!
-I had to go back to the discussion
-https://public-inbox.org/git/CADfK3RV1qo_jP=WD6ZF2U9bH2Xf+GJWbC9T4a3YK+C08O0O50Q@mail.gmail.com/
-to really understand what is happening here. Can you give a summary
-and explanation in the commit message?
-(What is the current bug, how is it triggered, and why this is the
-best way to fix it? That would be essentially repeating
-https://public-inbox.org/git/CADfK3RWAcb0m+m_U51JLA9tNyru_7XEsfy55i5EUsKh98jGFtA@mail.gmail.com/)
+> Teach git-commit-graph to delete the .graph files that are siblings of a
+> newly-written graph file, except for the file referenced by 'graph-latest'
+> at the beginning of the process and the newly-written file. If we fail to
+> delete a graph file, only report a warning because another git process may
+> be using that file. In a multi-process environment, we expect the previoius
+> graph file to be used by a concurrent process, so we do not delete it to
+> avoid race conditions.
 
-Now that I read the discussion, I think the code is fine.
+I do not understand the later part of the above.  On some operating
+systems, you actually can remove a file that is open by another
+process without any ill effect.  There are systems that do not allow
+removing a file that is in use, and an attempt to unlink it may
+fail.  The need to handle such a failure gracefully is not limited
+to the case of removing a commit graph file---we need to deal with
+it when removing file of _any_ type.
 
-Reviewed-by: Stefan Beller <sbeller@google.com>
+Especially the last sentence "we do not delete it to avoid race
+conditions" I find problematic.  If a system does not allow removing
+a file in use and we detect a failure after an attempt to do so, it
+is not "we do not delete it" --- even if you do, you won't succeed
+anyway, so there is no point saying that.  And on systems that do
+allow safe removal of a file in use (i.e. they allow an open file to
+be used by processes that have open filehandles to it after its
+removal), there is no point refraining to delete it "to avoid race
+conditions", either---in fact it is unlikely that you would even know
+somebody else had it open and was using it.
 
-> ---
->  contrib/subtree/git-subtree.sh | 12 ++++++------
->  1 file changed, 6 insertions(+), 6 deletions(-)
->
-> diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
-> index dec085a23..9594ca4b5 100755
-> --- a/contrib/subtree/git-subtree.sh
-> +++ b/contrib/subtree/git-subtree.sh
-> @@ -297,7 +297,7 @@ find_latest_squash () {
->      main=
->      sub=
->      git log --grep="^git-subtree-dir: $dir/*\$" \
-> -        --pretty=format:'START %H%n%s%n%n%b%nEND%n' HEAD |
-> +        --no-show-signature --pretty=format:'START %H%n%s%n%n%b%nEND%n'
-> HEAD |
->      while read a b junk
->      do
->          debug "$a $b $junk"
-> @@ -341,7 +341,7 @@ find_existing_splits () {
->      main=
->      sub=
->      git log --grep="^git-subtree-dir: $dir/*\$" \
-> -        --pretty=format:'START %H%n%s%n%n%b%nEND%n' $revs |
-> +        --no-show-signature --pretty=format:'START %H%n%s%n%n%b%nEND%n'
-> $revs |
->      while read a b junk
->      do
->          case "$a" in
-> @@ -382,7 +382,7 @@ copy_commit () {
->      # We're going to set some environment vars here, so
->      # do it in a subshell to get rid of them safely later
->      debug copy_commit "{$1}" "{$2}" "{$3}"
-> -    git log -1 --pretty=format:'%an%n%ae%n%aD%n%cn%n%ce%n%cD%n%B' "$1" |
-> +    git log --no-show-signature -1
-> --pretty=format:'%an%n%ae%n%aD%n%cn%n%ce%n%cD%n%B' "$1" |
->      (
->          read GIT_AUTHOR_NAME
->          read GIT_AUTHOR_EMAIL
-> @@ -462,8 +462,8 @@ squash_msg () {
->          oldsub_short=$(git rev-parse --short "$oldsub")
->          echo "Squashed '$dir/' changes from $oldsub_short..$newsub_short"
->          echo
-> -        git log --pretty=tformat:'%h %s' "$oldsub..$newsub"
-> -        git log --pretty=tformat:'REVERT: %h %s' "$newsub..$oldsub"
-> +        git log --no-show-signature --pretty=tformat:'%h %s'
-> "$oldsub..$newsub"
-> +        git log --no-show-signature --pretty=tformat:'REVERT: %h %s'
-> "$newsub..$oldsub"
->      else
->          echo "Squashed '$dir/' content from commit $newsub_short"
->      fi
-> @@ -475,7 +475,7 @@ squash_msg () {
->
->  toptree_for_commit () {
->      commit="$1"
-> -    git log -1 --pretty=format:'%T' "$commit" -- || exit $?
-> +    git rev-parse --verify "$commit^{tree}" || exit $?
->  }
->
->  subtree_for_commit () {
-> --
-> 2.16.1
->
->
->
-> Hi all, just following up on this as I haven't heard any feedback.
->
-> Thanks,
-> Steve
+In any case, I do not think '--delete-expired' option that can be
+given only when you are writing makes much sense as an API.  An
+'expire' command, just like 'set-latest' command, that is a separate
+command from 'write',  may make sense, though.
