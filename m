@@ -2,108 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CFD081F404
-	for <e@80x24.org>; Thu, 22 Feb 2018 19:09:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CA94E1F404
+	for <e@80x24.org>; Thu, 22 Feb 2018 19:13:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751338AbeBVTJG (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Feb 2018 14:09:06 -0500
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:47086 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750764AbeBVTJE (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Feb 2018 14:09:04 -0500
-Received: by mail-pg0-f66.google.com with SMTP id m1so2360670pgp.13
-        for <git@vger.kernel.org>; Thu, 22 Feb 2018 11:09:04 -0800 (PST)
+        id S1750826AbeBVTNi (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Feb 2018 14:13:38 -0500
+Received: from mail-wr0-f176.google.com ([209.85.128.176]:34328 "EHLO
+        mail-wr0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750725AbeBVTNh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Feb 2018 14:13:37 -0500
+Received: by mail-wr0-f176.google.com with SMTP id m5so11699423wrg.1
+        for <git@vger.kernel.org>; Thu, 22 Feb 2018 11:13:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=r9yv2q80q0VckSvy8+q2UPzoZlNTjc2mk8Q5dapnuQQ=;
-        b=Dnm8nFxOAb+WdsRHJQn5cZsb+I1egOn53cSci0OyGM+d0tFUypS8vJc+PQIjPoYYAd
-         yNHcEfNZnZXmYBR1E3SrPFILtYlOxmSf27k/1WIfK5YfqfMyFOr0F7ihErlKFBT7IYYn
-         vgniyRE8F62ANR7Cw/+HRrnLqvbZQlRc+HAX0AtbSGKZz1lKyL06LtI+gJsKv8IdP8Tc
-         JrB3RRmwe9SIcWY4APW11Klqek+0QLZUwD1oVXt1herfjmqiORjrBeMxbNl4Yby2nb6V
-         LYINsmKS3PyEJHxptZa+BVf3MrwIac2+YxOwh234JV2ludbj+U4Kb1Y9TA3Gv89D5vk2
-         klTw==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=PIK9Gd40I66tmPd6lK8iARvQ0rlMOKLqdEf5tJJ9bBY=;
+        b=uFO/CgXG9SEs+T6KBccT0rBF2aLEk/j5dA3o3fCQD8k4eO4rtmtGpoPVaGKcL16rJH
+         17fcJKrKFqLXwVSVAtogDL/Ks7tQF5cbRGzMfXEEZigXwhBMcGCK/nirFAsVxdZaueWC
+         y1i4tnEh/5V750bI+yb3tXj68mv6ko9QCCvdpFZwMNUrlQ+EzvleiWsDTMAXZnBTiw+t
+         IShn74CDO8nl8/cpGRYPXDzuNxU26Pdv6jmG13j2zGQOxlTviC6UrVuh03a3aK7LYC8d
+         TlA5dBJFGKqRWeLaeKUF7vQx0SgdQCRgSSLdm4/BUW263d3EVZTellUaPPY5+OE9x/3c
+         UCEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=r9yv2q80q0VckSvy8+q2UPzoZlNTjc2mk8Q5dapnuQQ=;
-        b=RXLMoE587S0Umj8JlJgEBu37CH19dl9quBHbqXWd+WdbM+41OzzkSGNMzWAq+N3sKz
-         Iorix59XJZaniKKZMYVgVJXV5gNJh4dNwJ7pZpJe84R8iwTs3yylSHQnpY9uJZDZlg9v
-         K3XvG/Qg6F71c9sWa8eWDrEbccNOdxnE6BHITujIygImQI+4iZwgjwNcFZEig5SjhS9V
-         nHgXF0FPu4cyUx77La1tLbHiYPdaiGwbh30IBRnecmD2qGgSTCIQPB9junNxY1A39Eef
-         z06Nod/f054nV8o17bYLlZ74IjAVHIfGfcZNvlY/ruuKYhGKYjc3GSlCOP08JWKm9TNY
-         OUiw==
-X-Gm-Message-State: APf1xPA63upIC4ibQWeaF0QQyZ2AwZ+GaeikG2ZsbEpuvFP75+tzrqIr
-        muHZ+RvUexIv8c/Fbx0Atpe20g==
-X-Google-Smtp-Source: AH8x225mgvQ9K1OXw1SKfsGjWxC1Tm3TH0OsXDVoYiPbsIryobTn7f6WW2CeX4iyrvcETIrI6y+zkQ==
-X-Received: by 10.99.140.29 with SMTP id m29mr6601484pgd.320.1519326544143;
-        Thu, 22 Feb 2018 11:09:04 -0800 (PST)
-Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
-        by smtp.gmail.com with ESMTPSA id t8sm1015745pgn.93.2018.02.22.11.09.02
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 22 Feb 2018 11:09:03 -0800 (PST)
-Date:   Thu, 22 Feb 2018 11:09:01 -0800
-From:   Brandon Williams <bmwill@google.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, sbeller@google.com, peff@peff.net,
-        gitster@pobox.com, jrnieder@gmail.com, stolee@gmail.com,
-        git@jeffhostetler.com, pclouds@gmail.com
-Subject: Re: [PATCH v3 35/35] remote-curl: don't request v2 when pushing
-Message-ID: <20180222190901.GL185096@google.com>
-References: <20180125235838.138135-1-bmwill@google.com>
- <20180207011312.189834-1-bmwill@google.com>
- <20180207011312.189834-36-bmwill@google.com>
- <20180221161209.80f0a3b941a069ea78ccf43e@google.com>
- <20180222185948.GK185096@google.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=PIK9Gd40I66tmPd6lK8iARvQ0rlMOKLqdEf5tJJ9bBY=;
+        b=qwhVuqF5k9kbM3NUsuaOA3FHyyUcBsKZNyDzltx4FnaqWusFixW8TpgjSJ9OzVfRnh
+         NN87c7/exgUOK6XE93KZCICKNs22JbadTzh/F1KFvj9RbcIMYmteUG5S4A4f+sJJPtmG
+         FNkvnddrsCmJljZRbNRsOGpLURUejRCQwiSbGjJ/BrC+veSb+o/mR1a+SNfW8Q13BTgE
+         zvUvxVjq7v61L2ebNoH4082TW5eNTe92KabDGOga8SczcX8HhMiy59nMuR87BWKcJxtW
+         LJvUDJJv5W+6r3vU3zVrSml41f86y9BbKLHz6wgUFX0szaJBLz4NPRPNOBrBco3J0tG4
+         Ui8A==
+X-Gm-Message-State: APf1xPDm0xInp76veiNH0K9dNFlExUXlvC8QqoD3k0Qug4Z65DjSc3v5
+        QBMIkyeHo5EbXZ4FlURmz6Sqmw+W3pTBB8YGcphpvQ==
+X-Google-Smtp-Source: AH8x226yFRFmYMCJ7UkRHc8Op+M4E/IxvAamgtyqrt5rIYAFkbjicIzwEx1PHKUOzpssbHpc8ghhHWGbWleG60Ok9Wc=
+X-Received: by 10.223.160.125 with SMTP id l58mr6960068wrl.264.1519326816031;
+ Thu, 22 Feb 2018 11:13:36 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180222185948.GK185096@google.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+Received: by 10.223.179.2 with HTTP; Thu, 22 Feb 2018 11:13:34 -0800 (PST)
+In-Reply-To: <20180207011312.189834-4-bmwill@google.com>
+References: <20180125235838.138135-1-bmwill@google.com> <20180207011312.189834-1-bmwill@google.com>
+ <20180207011312.189834-4-bmwill@google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 22 Feb 2018 11:13:34 -0800
+Message-ID: <CAGZ79kauYniFpo+Y_hFauVKMWNgxjQ_OOoX0mgePcr3Z6hSLWg@mail.gmail.com>
+Subject: Re: [PATCH v3 03/35] pkt-line: add delim packet support
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Duy Nguyen <pclouds@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 02/22, Brandon Williams wrote:
-> On 02/21, Jonathan Tan wrote:
-> > On Tue,  6 Feb 2018 17:13:12 -0800
-> > Brandon Williams <bmwill@google.com> wrote:
-> > 
-> > > +test_expect_success 'push with http:// and a config of v2 does not request v2' '
-> > > +	# Till v2 for push is designed, make sure that if a client has
-> > > +	# protocol.version configured to use v2, that the client instead falls
-> > > +	# back and uses v0.
-> > > +
-> > > +	test_commit -C http_child three &&
-> > > +
-> > > +	# Push to another branch, as the target repository has the
-> > > +	# master branch checked out and we cannot push into it.
-> > > +	GIT_TRACE_PACKET=1 git -C http_child -c protocol.version=1 \
-> > > +		push origin HEAD:client_branch && 2>log &&
-> > 
-> > Should it be protocol.version=2? Also, two double ampersands?
-> > 
-> > Also, optionally, it might be better to do
-> > GIT_TRACE_PACKET="$(pwd)/log", so that it does not get mixed with other
-> > stderr output.
-> 
-> Wow thanks for catching that, let me fix that.
+On Tue, Feb 6, 2018 at 5:12 PM, Brandon Williams <bmwill@google.com> wrote:
+> One of the design goals of protocol-v2 is to improve the semantics of
+> flush packets.  Currently in protocol-v1, flush packets are used both to
+> indicate a break in a list of packet lines as well as an indication that
+> one side has finished speaking.  This makes it particularly difficult
+> to implement proxies as a proxy would need to completely understand git
+> protocol instead of simply looking for a flush packet.
+>
+> To do this, introduce the special deliminator packet '0001'.  A delim
+> packet can then be used as a deliminator between lists of packet lines
+> while flush packets can be reserved to indicate the end of a response.
 
-I like setting the log via "$(pwd)/log" but it turns out that this
-appends to the file if it already exists, which means the previous tests
-need to do some cleanup.  This is actually probably preferable anyway.
+Please mention where this can be found in the documentation.
+(Defer to later patch?)
+As the commit message states, this is only to be used for v2,
+in v0 it is still an illegal pkt.
 
-> 
-> -- 
-> Brandon Williams
+>
+> Signed-off-by: Brandon Williams <bmwill@google.com>
 
--- 
-Brandon Williams
+The code is
+Reviewed-by: Stefan Beller <sbeller@google.com>
