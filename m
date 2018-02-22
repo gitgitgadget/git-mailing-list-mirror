@@ -2,125 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 940F81F404
-	for <e@80x24.org>; Thu, 22 Feb 2018 19:29:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 03A191F404
+	for <e@80x24.org>; Thu, 22 Feb 2018 19:31:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751346AbeBVT3l (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Feb 2018 14:29:41 -0500
-Received: from mail-qt0-f180.google.com ([209.85.216.180]:42886 "EHLO
-        mail-qt0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751180AbeBVT3j (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Feb 2018 14:29:39 -0500
-Received: by mail-qt0-f180.google.com with SMTP id l19so7730559qtj.9
-        for <git@vger.kernel.org>; Thu, 22 Feb 2018 11:29:39 -0800 (PST)
+        id S1751340AbeBVTbI (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Feb 2018 14:31:08 -0500
+Received: from mail-wr0-f180.google.com ([209.85.128.180]:39835 "EHLO
+        mail-wr0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750821AbeBVTbF (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Feb 2018 14:31:05 -0500
+Received: by mail-wr0-f180.google.com with SMTP id w77so11716970wrc.6
+        for <git@vger.kernel.org>; Thu, 22 Feb 2018 11:31:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-transfer-encoding:content-language;
-        bh=bREdhXA01Z9u154b5TFzjNmNXvflJYnUFaUPNTAVc2E=;
-        b=c3erGqMzIQIqH7Zw05DdFQJCgjgk61we8+YIyNPEwHhCJKbVqN7jK8kwG27zQTZ5K+
-         7jfLRamvGjCdRnH3ak5ovCMW7gMXJ4Dpt9Jnxfu6xE0L6Jh5nZO0qqoNUvtGB7l251vH
-         zLfqSg09nJwzPeHe5X3IBZZolVoRP7WC4WFHIYj+RK1WCkM9udF6rWYaeY4qD0H0+Eyr
-         gyUVHcuEFDLzueckXzZLTM1UxvddKa7PE1VnTkQjAT21i/SAve8ZCYADR6i3zjnu9K+G
-         f3krfNmfBtbuw6ynWtx+/seoEsdFJvnjzJWIHxHPYMH9BybtBS7j2Kkj75pixXyTQJUt
-         6EZw==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=dcU0rHGYd0xQgth9Z4YGZOoHHrOMUOt9JLLoopYGjHA=;
+        b=ko3+GnuhQxgr2ZgK/Hcd/oPfehzW6mLDw+zyT3ku5DC2UJ/q8ZENEg6PwwV/ya3GOj
+         RkS6zvz52VNuHsuoTroO09jnuW4NNc8On9NwNYp0NNv8iLX6MAi/LgyJuY96XlANLuSH
+         IejJ+MjCQgRLBfM6hwatwVQZ3h0q85o2Coqjn/4cmR8HxHjHuro1inLnRYOj1gMnj3mp
+         sPE7FXqdK4MTfxdlhEo7+gngqHZPWPwd1y8owVPddtYoY5oT32+MeJse/5p0x5SVHhF5
+         3l3pduuk44z2hvhNoblDDFkabCJvKg1oMiJHOZEsCBzYbHXIr/S2XyFluNmnaUsdOmtJ
+         2ycA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=bREdhXA01Z9u154b5TFzjNmNXvflJYnUFaUPNTAVc2E=;
-        b=qnRL0YVGUgjVUwDi9ZLHrNL+QjqER8qoJ2JyaC3h7dSZ5q2iDtIvUzVU4jo2p8bUMI
-         ksAnm7xiUL+jVfPo5XaUzni4fWG0vPHTWmlS1HZztnynb0JLht1FPRmjs+wQ3jYtclIs
-         uIX2fYN2TdQ+eGDpH+ZyAz4AhLqyzbCMlExLVc5FSTsiax4EpAl7xgP9lQrn2LB4qm6J
-         yFfNuBhKl1x4OfDrh7Qcl+OclvNcwpDbOZvshgOoz7ze1W0gtTDXgqTQYZwfiVLSEu6H
-         Ich5VRIeqNmeuac5xj1itYCJ4WSd/XaPpmb7B/QGfLSdHu1EOW6wMs+M6VYZmkzBnUVT
-         PZ9Q==
-X-Gm-Message-State: APf1xPAVskcHoh0Mm8XUz0+bUsURvnz24sT/eYt2tXc4+cao+Fdyn+1S
-        oQBkdLBML9UQlIi89gBy5FtBqpGd
-X-Google-Smtp-Source: AH8x2271Ip844zRdsPvlk0VCf7firNmRTR5oKydDf12g1rYXw14kMorr3/4RCOgTWhyK94iKjqAvZA==
-X-Received: by 10.200.4.159 with SMTP id s31mr12842836qtg.144.1519327778627;
-        Thu, 22 Feb 2018 11:29:38 -0800 (PST)
-Received: from ?IPv6:2001:4898:6808:13e:c4e6:7a22:56f1:df04? ([2001:4898:8010:0:ae1c:7a22:56f1:df04])
-        by smtp.gmail.com with ESMTPSA id h5sm518816qkd.61.2018.02.22.11.29.37
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 22 Feb 2018 11:29:37 -0800 (PST)
-Subject: Re: Bug: git log: boundary commits do not respect order (e.g.
- date-order, topo-order) 2
-To:     Josh Tepper <josh@clarifai.com>, git@vger.kernel.org
-References: <CAPFeJUAF99buo=yTZQeHawU-npLHk0iJ1iQxYwMroFdDcKhqjA@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <cc579f55-cb5c-d6fb-c03f-f180137e5c25@gmail.com>
-Date:   Thu, 22 Feb 2018 14:29:36 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=dcU0rHGYd0xQgth9Z4YGZOoHHrOMUOt9JLLoopYGjHA=;
+        b=kLUMCSO4DvVZz5IPgOpFLb2vBr+Io88HFY3tS/ueagFq6vpMeV5vT6dA+vGJAhILFW
+         6SAr9SltZZZlsUxx7WidfZ7kjUQUOgOFX/5t//4gcQiVtD+B3GihDBgztTU3HlDQc+7u
+         aTVdhpzz4Mq39B1xI1Jm3brRAaER4RhEkRYJL8xwVyLbHNRIDnKya5TSu+YiTA1TZFeb
+         EfiBvvhEgNiomxSO2U6xScXpbBh2qK9/4AFQEv3pSIrwvNlTNakksuFKxW//eLr+svAw
+         ugpOCuvl0gugeo2DqnKWpjhPcW1149yVgPGZVldwj/DJgZBUbnxsXKbqIHbIBzQvI4PE
+         n42Q==
+X-Gm-Message-State: APf1xPCBe+0UONU3RtEQks+iaO3chjWriokP7hwvan2zuy9KymzDAeL1
+        IX7KzemLZG7orhr/5JEhxK/MRL1ov7Tas9HxNcGfNA==
+X-Google-Smtp-Source: AH8x2260T3yvhQdRyKVsyIeVzjBwfrfv7485qK1lDTlwOGzo4bATYh+l+pgSgU+vhkzMQ5y7UBgS6Vjqh1AZ1G9LZX8=
+X-Received: by 10.223.132.103 with SMTP id 94mr7512309wrf.115.1519327864204;
+ Thu, 22 Feb 2018 11:31:04 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <CAPFeJUAF99buo=yTZQeHawU-npLHk0iJ1iQxYwMroFdDcKhqjA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+Received: by 10.223.179.2 with HTTP; Thu, 22 Feb 2018 11:31:03 -0800 (PST)
+In-Reply-To: <20180207011312.189834-6-bmwill@google.com>
+References: <20180125235838.138135-1-bmwill@google.com> <20180207011312.189834-1-bmwill@google.com>
+ <20180207011312.189834-6-bmwill@google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 22 Feb 2018 11:31:03 -0800
+Message-ID: <CAGZ79kanWXGa3v4oJmoerh3XzisS+3V2oyO7WXK-tPTiHgSgxg@mail.gmail.com>
+Subject: Re: [PATCH v3 05/35] upload-pack: factor out processing lines
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Duy Nguyen <pclouds@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2/21/2018 6:57 PM, Josh Tepper wrote:
-> When using git log, boundary commits (ie, those commits added by
-> specifying --boundary) do not respect the order (e.g., --date-order,
-> --topo-order).  Consider the following commit history, where number
-> indicates the order of the commit timestamps:
+On Tue, Feb 6, 2018 at 5:12 PM, Brandon Williams <bmwill@google.com> wrote:
+> Factor out the logic for processing shallow, deepen, deepen_since, and
+> deepen_not lines into their own functions to simplify the
+> 'receive_needs()' function in addition to making it easier to reuse some
+> of this logic when implementing protocol_v2.
 >
-> <view with a fixed with font! 3's ancestor is 1, 6's ancestors are 4,5>
-> 0----1----2----5  <--A
->         \         \
->           3----4----6  <--B
->
->
-> Executing the following command:
->
-> $ git log --boundary --date-order ^A B
->
-> Should produce the following order (boundary commits shown with dashes):
-> 6 -5 4 3 -1
->
-> However, it in fact produces:
-> 6 4 3 -5 -1
->
-> Please advise.
->
+> Signed-off-by: Brandon Williams <bmwill@google.com>
 
-Hi Josh,
+Reviewed-by: Stefan Beller <sbeller@google.com>
+for the stated purpose of just refactoring existing code for better reuse later.
 
-Looking at the docs [1], I don't see any specifics on how the boundary 
-commits should be ordered.
+I do have a few comments on the code in general,
+which might be out of scope for this series.
 
-Clearly, the implementation specifies that the boundary is written after 
-all other commits. For a full discussion of this, see the commit message 
-for 86ab4906a7c "revision walker: Fix --boundary when limited". Here is 
-an excerpt:
+A close review would have been fastest if we had some sort of
+https://public-inbox.org/git/20171025224620.27657-1-sbeller@google.com/
+which I might revive soon for this purpose. (it showed that I would need it)
 
-      - After get_revision() finishes giving out all the positive
-        commits, if we are doing the boundary processing, we look at
-        the parents that we marked as potential boundaries earlier,
-        see if they are really boundaries, and give them out.
 
-The boundary commits are correctly sorted by topo-order among themselves 
-as of commit 4603ec0f960 "get_revision(): honor the topo_order flag for 
-boundary commits".
+> +               *depth = (int)strtol(arg, &end, 0);
 
-So, I'm not sure that this is a bug (it is working "as designed") but it 
-certainly is non-obvious behavior.
-
-In what use case do you need these boundary commits to appear earlier?
+strtol is not used quite correctly here IMHO, as we do not
+inspect errno for ERANGE
 
 Thanks,
--Stolee
-
-[1] https://git-scm.com/docs/git-log
-
-
+Stefan
