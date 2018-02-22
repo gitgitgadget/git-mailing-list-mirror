@@ -2,123 +2,199 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A0BAB1F404
-	for <e@80x24.org>; Thu, 22 Feb 2018 00:56:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 70D551F404
+	for <e@80x24.org>; Thu, 22 Feb 2018 01:52:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751552AbeBVA4n (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Feb 2018 19:56:43 -0500
-Received: from mail-pg0-f46.google.com ([74.125.83.46]:43440 "EHLO
-        mail-pg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751413AbeBVA4m (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Feb 2018 19:56:42 -0500
-Received: by mail-pg0-f46.google.com with SMTP id f6so1361748pgs.10
-        for <git@vger.kernel.org>; Wed, 21 Feb 2018 16:56:42 -0800 (PST)
+        id S1751807AbeBVBwi (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Feb 2018 20:52:38 -0500
+Received: from mail-qk0-f196.google.com ([209.85.220.196]:35890 "EHLO
+        mail-qk0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751659AbeBVBwh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Feb 2018 20:52:37 -0500
+Received: by mail-qk0-f196.google.com with SMTP id d206so4623846qkb.3
+        for <git@vger.kernel.org>; Wed, 21 Feb 2018 17:52:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=pSGu2rrWQh6syKTmQrgpiGqcEklgZDyZ+S5wiuxu7FU=;
-        b=IYpZkY1TyY9iB6fSrG4+fr3rGsycs3goszLLXDqlgLcRxLEos/zZMmsMc9jg3BKN9h
-         L4oYUiwiKiiNDPS7tfwwDSW+GcN5SfNA+AO4f1h+BRryq+CYwpBZzHP5Nd5Fq7nYfKYc
-         mQg7ytFYSH4WfyHgskHsZwu9ZaFArw7j4oPgiowqDK4d/oNP0o7vWFbKn7hvEV22UB72
-         Jc/6zeNe/vJ8tq5pfOaXApthfwcdPVkB30RLPLMvxyij8LYIvPSfFZv1ZukesAYYtOgj
-         IBzWVGI1SI1n4BGa7rDjXNvqCOlu+dm8hiTOjLkNN5a+lk45ZHAB++GP4jfjPeZiOE4P
-         oxFQ==
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=yMJoAgbpXaamGqHdMUh1V5PUs5frgVaa94dLqwLiRwQ=;
+        b=gpOOAW4u/nS0wdy8jd8CX9YH0cX7rAx+WY0544/Qvb7p68mrECgJWv0jK/ZaBAbyPb
+         646LdZ8h2UD85eAd830xS7QZy4qON00aHegZavbcrmcuCwztf/5YITxHaSi0CFkAsWD8
+         wUqg4EkE3uQbht3mI4arxk+xezWXv/Uo39Jcx4pqzrrtfrYyErrS12JuNqFVf1Sw4PSH
+         rs8/ps3pA66mc/Lek9J5d4gihUADf06kLXK+ea9Rhl3JMI4OjI2WUge36mQm5z8dPq+W
+         7ROT449WWulvziwXW0kWl+/P48BXRYXrsui+dlIQFZtZRNacquBsRse67YTJhpznLFeJ
+         hcNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=pSGu2rrWQh6syKTmQrgpiGqcEklgZDyZ+S5wiuxu7FU=;
-        b=m4lBhMnDXUdpIDLx722cGHPaeKscy7UFX5akGZhSk6ufh3EogEul4K+vLLrY+pTV8Q
-         y0gkAEhxc3zq9/2vpxboSzsB654kyykT1EjDJSyu1mlzabY9x+BzhzjSsjFxFFwPD781
-         q7DYDTVCB2Ys3DD2a1NzFhn4Ve61CUp69+1Bw2lQe9RMLf+xH3F0fWL8MRKEtG9inF6s
-         YJLqhFoj2NFiEmJI7DcPzq0LB1rvGlxL9K3I8zBZNBiZOh+p8PJmiTDVPNOUO+Ilc4LR
-         1m0p+BCeGx5pQhwoY4TUIiAirttXcnokAHIcQQ1JFViJsZ5ubWtcfIWP/z3/yCYkx4Sr
-         W85A==
-X-Gm-Message-State: APf1xPDfTzRFUgaRRpyoNJ184SOvK06aVBPuU4qkCPzLVGNB2Ill1Uxw
-        09Lo21iaHClrMlnU4OqDNVMuyVimH1I=
-X-Google-Smtp-Source: AH8x224vzufIOvwdG4QQ2QjbfrgVJ4aRqsL/UQU70lOTn3lYcBj8Vx9MoFdkBPgTxW35LxNSeRTBnw==
-X-Received: by 10.99.95.201 with SMTP id t192mr4231342pgb.313.1519261002122;
-        Wed, 21 Feb 2018 16:56:42 -0800 (PST)
-Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
-        by smtp.gmail.com with ESMTPSA id g9sm1016804pfh.153.2018.02.21.16.56.40
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 21 Feb 2018 16:56:41 -0800 (PST)
-Date:   Wed, 21 Feb 2018 16:56:40 -0800
-From:   Brandon Williams <bmwill@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Feb 2018, #03; Wed, 21)
-Message-ID: <20180222005640.GI127348@google.com>
-References: <xmqq1shdyidz.fsf@gitster-ct.c.googlers.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=yMJoAgbpXaamGqHdMUh1V5PUs5frgVaa94dLqwLiRwQ=;
+        b=KxThOGQUwD0TiDeEkT8t7+zfgRgFgrxlPEuwEYPV/8elWF+QE71IXM71P6RFXy2mdH
+         HCbpLcHvU7cCedeDaadbgVTwHV+9sVTxKQVwZB6DJIO0nBV3/0O+3bIlONktBG+jvIXw
+         5P8nZjZ02GSyjHvLynVeJDcK5OzvyOVshRPKdpvWfXQ+JlYRh7sBoQKk6ujeCyxJQCvt
+         VdnEFN5TEDGkWh6+GfnlZgFIa1PuNRNKkp9nW74rnI6F7wU59MObmOXGjZTEfLZMTw93
+         HCsBGcZC00+vvnHGlYCwSJWoS5lct20DsT9lj9YlV4j1QLY9XU8Gw09WJSyNupzedHxH
+         rTpQ==
+X-Gm-Message-State: APf1xPCdj15Gq21x5AxPfoSX2Wf9A3xk5McreshpWKZhmfXmYpqZLXx7
+        VXFW9HqrL/W4srGnZPAPFm4=
+X-Google-Smtp-Source: AH8x225lfwHi3/BGBgsXIlkUkMK1SPGHlRcJz7GgqbB6rIXsO/GTiKYWdfU3/GoG1D5RT42XLcwV0w==
+X-Received: by 10.55.41.12 with SMTP id p12mr8553271qkh.136.1519264356721;
+        Wed, 21 Feb 2018 17:52:36 -0800 (PST)
+Received: from [172.22.150.178] ([98.122.163.216])
+        by smtp.gmail.com with ESMTPSA id t200sm17397124qke.72.2018.02.21.17.52.33
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 21 Feb 2018 17:52:33 -0800 (PST)
+Subject: Re: [PATCH] commit: drop uses of get_cached_commit_buffer()
+To:     Jeff King <peff@peff.net>, Derrick Stolee <dstolee@microsoft.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+References: <20180221185204.GA8476@sigill.intra.peff.net>
+ <1519240631-221761-1-git-send-email-dstolee@microsoft.com>
+ <20180221231338.GC7944@sigill.intra.peff.net>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <562f72bd-1917-6c29-97fc-6098bd109d52@gmail.com>
+Date:   Wed, 21 Feb 2018 20:52:32 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:59.0) Gecko/20100101
+ Thunderbird/59.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq1shdyidz.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+In-Reply-To: <20180221231338.GC7944@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 02/21, Junio C Hamano wrote:
-> * bw/c-plus-plus (2018-02-14) 38 commits
->  - fixup! diff: rename 'this' variables
->  - replace: rename 'new' variables
->  - trailer: rename 'template' variables
->  - tempfile: rename 'template' variables
->  - wrapper: rename 'template' variables
->  - environment: rename 'namespace' variables
->  - diff: rename 'template' variables
->  - environment: rename 'template' variables
->  - init-db: rename 'template' variables
->  - unpack-trees: rename 'new' variables
->  - trailer: rename 'new' variables
->  - submodule: rename 'new' variables
->  - split-index: rename 'new' variables
->  - remote: rename 'new' variables
->  - ref-filter: rename 'new' variables
->  - read-cache: rename 'new' variables
->  - line-log: rename 'new' variables
->  - imap-send: rename 'new' variables
->  - http: rename 'new' variables
->  - entry: rename 'new' variables
->  - diffcore-delta: rename 'new' variables
->  - diff: rename 'new' variables
->  - diff-lib: rename 'new' variable
->  - commit: rename 'new' variables
->  - combine-diff: rename 'new' variables
->  - remote: rename 'new' variables
->  - reflog: rename 'new' variables
->  - pack-redundant: rename 'new' variables
->  - help: rename 'new' variables
->  - checkout: rename 'new' variables
->  - apply: rename 'new' variables
->  - apply: rename 'try' variables
->  - diff: rename 'this' variables
->  - rev-parse: rename 'this' variable
->  - pack-objects: rename 'this' variables
->  - blame: rename 'this' variables
->  - object: rename function 'typename' to 'type_name'
->  - object_info: change member name from 'typename' to 'type_name'
-> 
->  Avoid using identifiers that clash with C++ keywords.  Even though
->  it is not a goal to compile Git with C++ compilers, changes like
->  this help use of code analysis tools that targets C++ on our
->  codebase.
-> 
->  Is the 'fixup!' cleanly squashable to the problematic one, or does
->  this series require another reroll to get it in a good enough shape?
+On 2/21/2018 6:13 PM, Jeff King wrote:
+> On Wed, Feb 21, 2018 at 02:17:11PM -0500, Derrick Stolee wrote:
+>
+>> The get_cached_commit_buffer() method provides access to the buffer
+>> loaded for a struct commit, if it was ever loadead and was not freed.
+>>
+>> Two places use this to inform how to output information about commits.
+>>
+>> log-tree.c uses this method to short-circuit the output of commit
+>> information when the buffer is not cached. However, this leads to
+>> incorrect output in 'git log --oneline' where the short-OID is written
+>> but then the rest of the commit information is dropped and the next
+>> commit is written on the same line.
+>>
+>> rev-list uses this method for two reasons:
+>>
+>> - First, if the revision walk visits a commit twice, the buffer was
+>>    freed by rev-list in the first write. The output then does not
+>>    match the format expectations, since the OID is written without the
+>>    rest of the content.
+> I'm not sure after my earlier digging if there is even a way to trigger
+> this (and if so, it is probably accidental, since those lines were added
+> explicitly for --show-all).
+>
+> And actually after re-reading the commit message for 3131b7130 again, I
+> think the current behavior is definitely not something that was
+> carefully planned. So I'd propose a commit message like below.
 
-Yeah the fixup patch looks good to me.  I don't think there was anything
-else that needed attention so it should be in good shape with the fixup
-patch.
+I only submitted my patch to avoid making you do the work of writing the 
+commit message. My messages still don't have quite the right amount of 
+detail (or the correct details, in this case).
+
+Junio: please add
+
+Reported-by: Derrick Stolee <dstolee@microsoft.com>
+
+Thanks,
+
+-Stolee
 
 
--- 
-Brandon Williams
+>
+> -- >8 --
+> Subject: [PATCH] commit: drop uses of get_cached_commit_buffer()
+>
+> The "--show-all" revision option shows UNINTERESTING
+> commits. Some of these commits may be unparsed when we try
+> to show them (since we may or may not need to walk their
+> parents to fulfill the request).
+>
+> Commit 3131b71301 (Add "--show-all" revision walker flag for
+> debugging, 2008-02-09) resolved this by just skipping
+> pretty-printing for commits without their object contents
+> cached, saying:
+>
+>    Because we now end up listing commits we may not even have been parsed
+>    at all "show_log" and "show_commit" need to protect against commits
+>    that don't have a commit buffer entry.
+>
+> That was the easy fix to avoid the pretty-printer segfaulting,
+> but:
+>
+>    1. It doesn't work for all formats. E.g., --oneline
+>       prints the oid for each such commit but not a trailing
+>       newline, leading to jumbled output.
+>
+>    2. It only affects some commits, depending on whether we
+>       happened to parse them or not (so if they were at the
+>       tip of an UNINTERESTING starting point, or if we
+>       happened to traverse over them, you'd see more data).
+>
+>    3. It unncessarily ties the decision to show the verbose
+>       header to whether the commit buffer was cached. That
+>       makes it harder to change the logic around caching
+>       (e.g., if we could traverse without actually loading
+>       the full commit objects).
+>
+> These days it's safe to feed such a commit to the
+> pretty-print code. Since be5c9fb904 (logmsg_reencode: lazily
+> load missing commit buffers, 2013-01-26), we'll load it on
+> demand in such a case. So let's just always show the verbose
+> headers.
+>
+> This does change the behavior of plumbing, but:
+>
+>    a. The --show-all option was explicitly introduced as a
+>       debugging aid, and was never documented (and has rarely
+>       even been mentioned on the list by git devs).
+>
+>    b. Avoiding the commits was already not deterministic due
+>       to (2) above. So the caller might have seen full
+>       headers for these commits anyway, and would need to be
+>       prepared for it.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>   builtin/rev-list.c | 2 +-
+>   log-tree.c         | 3 ---
+>   2 files changed, 1 insertion(+), 4 deletions(-)
+>
+> diff --git a/builtin/rev-list.c b/builtin/rev-list.c
+> index 48300d9e11..d320b6f1e3 100644
+> --- a/builtin/rev-list.c
+> +++ b/builtin/rev-list.c
+> @@ -134,7 +134,7 @@ static void show_commit(struct commit *commit, void *data)
+>   	else
+>   		putchar('\n');
+>   
+> -	if (revs->verbose_header && get_cached_commit_buffer(commit, NULL)) {
+> +	if (revs->verbose_header) {
+>   		struct strbuf buf = STRBUF_INIT;
+>   		struct pretty_print_context ctx = {0};
+>   		ctx.abbrev = revs->abbrev;
+> diff --git a/log-tree.c b/log-tree.c
+> index fc0cc0d6d1..22b2fb6c58 100644
+> --- a/log-tree.c
+> +++ b/log-tree.c
+> @@ -659,9 +659,6 @@ void show_log(struct rev_info *opt)
+>   		show_mergetag(opt, commit);
+>   	}
+>   
+> -	if (!get_cached_commit_buffer(commit, NULL))
+> -		return;
+> -
+>   	if (opt->show_notes) {
+>   		int raw;
+>   		struct strbuf notebuf = STRBUF_INIT;
