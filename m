@@ -2,342 +2,152 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5445F1F576
-	for <e@80x24.org>; Thu, 22 Feb 2018 06:47:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D57081F576
+	for <e@80x24.org>; Thu, 22 Feb 2018 06:48:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752500AbeBVGo3 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Feb 2018 01:44:29 -0500
-Received: from mail-it0-f68.google.com ([209.85.214.68]:53263 "EHLO
-        mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752399AbeBVGo2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Feb 2018 01:44:28 -0500
-Received: by mail-it0-f68.google.com with SMTP id w63so5046863ita.3
-        for <git@vger.kernel.org>; Wed, 21 Feb 2018 22:44:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=0SaVBuSbvTZ2TelvPx+bRcK7sJlN4VINVV7qrDIAFRE=;
-        b=rwaBiiT1HyOHMC570ORKE7kw8Cs90wAqGhWiD9shwi4Qt+0NZnnMJ6XHP/oo4amInU
-         JlC3ls1ATEx4DWzA/akqaq09U3Y7e82RBEIhi0hhc4rNJywGFEBB8rfs60PsGqE4mkwM
-         Me13PPHvkI46qHPVTbDuJr0eVAJWPiLu8J7aEpJALzo+kZxtfLhb8vc9WLwWNiB+n00A
-         WdxjpZ/K30r7XnjNK47OuQ6JR/D7HcRFA39/WYPLliJ9F4BBlQbv88DCIhJMS+O4xQj1
-         4JPkKbBd/Ni8Mk9cePSgOgEneBw1F8zLNbEcnJaHKgkVYn189RygICacSiZAmT/+pcGZ
-         immA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=0SaVBuSbvTZ2TelvPx+bRcK7sJlN4VINVV7qrDIAFRE=;
-        b=UrZY0VZy56pM9vrR3AYj+Wp8FxvHySO6Ptrk0ajtR5zfs8tyZ+cMzUrq1zWJa3gMSd
-         Rk7D99wl9+44sNRiCHhF5z4Ql5B3nvMQ/Fu79wLYsvh/fOeXmPtAOnIKvbBQv7HYQyBa
-         kv2gTzUxdzJTjpd/4QeZgBNm/LMG8QJivLzxmIIZMU0wSrVsgtsriU8DXgBAouek/nuk
-         AHEyvULV1J/s1n1AOHe0eHiRwVuqdStgIOY+9ztZRedQnT3euaeHo87BQ10rY+JBuAB2
-         NSaeMMoma7PQ5yOsg5p/jltdxfYjNuloH9Yv5xOcik8RX3btnluIGY1Pz0ZRqIPHfvdQ
-         0yTA==
-X-Gm-Message-State: APf1xPCmPytYN9peWo+N7KkkFNbLyPENw6sBPhQcxJ+I8N+KsFsRLkpq
-        OcLSwVvApKvXonD/TlYdbGS722vD
-X-Google-Smtp-Source: AH8x224gOmM1SdXxsKNxb423amU5EDp0rwbkYKiGZettMdqkdI3hwt7fVzl1Io2h89jDxvixISkd7g==
-X-Received: by 10.36.118.211 with SMTP id z202mr6985977itb.104.1519281867246;
-        Wed, 21 Feb 2018 22:44:27 -0800 (PST)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id r65sm12698852ioe.26.2018.02.21.22.44.25
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 21 Feb 2018 22:44:25 -0800 (PST)
-Date:   Wed, 21 Feb 2018 22:44:23 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, jonathantanmy@google.com,
-        pclouds@gmail.com, sunshine@sunshineco.com
-Subject: Re: [PATCH 05/27] object-store: move packed_git and packed_git_mru
- to object store
-Message-ID: <20180222064423.GD133592@aiede.svl.corp.google.com>
-References: <20180216174626.24677-1-sbeller@google.com>
- <20180221015430.96054-1-sbeller@google.com>
- <20180221015430.96054-6-sbeller@google.com>
+        id S1752576AbeBVGsj (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Feb 2018 01:48:39 -0500
+Received: from cloud.peff.net ([104.130.231.41]:60506 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1752557AbeBVGsj (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Feb 2018 01:48:39 -0500
+Received: (qmail 13645 invoked by uid 109); 22 Feb 2018 06:48:39 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 22 Feb 2018 06:48:39 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 32497 invoked by uid 111); 22 Feb 2018 06:49:26 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 22 Feb 2018 01:49:26 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 22 Feb 2018 01:48:37 -0500
+Date:   Thu, 22 Feb 2018 01:48:37 -0500
+From:   Jeff King <peff@peff.net>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+Subject: [PATCH] t: send verbose test-helper output to fd 4
+Message-ID: <20180222064836.GA10719@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20180221015430.96054-6-sbeller@google.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+This is a repost of the two patches from:
 
-Stefan Beller wrote:
+  https://public-inbox.org/git/20180209185710.GA23403@sigill.intra.peff.net/
 
-> In a process with multiple repositories open, packfile accessors
-> should be associated to a single repository and not shared globally.
-> Move packed_git and packed_git_mru into the_repository and adjust
-> callers to reflect this.
->
-> Patch generated by
->
->  1. Moving the struct packed_git declaration to object-store.h
->     and packed_git, packed_git_mru globals to struct object_store.
->
->  2. Applying the semantic patch
->     contrib/coccinelle/refactoring/packed_git.cocci to adjust callers.
->     This semantic patch is placed in a sub directory of the coccinelle
->     contrib dir, as this semantic patch is not expected to be of general
->     usefulness; it is only useful during developing this series and
->     merging it with other topics in flight. At a later date, just
->     delete that semantic patch.
+(now just one patch, since sg/test-i18ngrep graduated and we can do it
+all in one step). The idea got positive feedback, but nobody commented
+on patches and I didn't see them in "What's cooking".
 
-Can the semantic patch go in the commit message instead?  It is very
-brief.
+-- >8 --
+Test helper functions like test_must_fail may produce
+messages to stderr when they see a problem. When the tests
+are run with "--verbose", this ends up on the test script's
+stderr, and the user can read it.
 
-Actually, I don't see this semantic patch in the diffstat.  Is the
-commit message stale?
+But there's a problem. Some tests record stderr as part of
+the test, like:
 
->  3. Applying line wrapping fixes from "make style" to break the
->     resulting long lines.
->
->  4. Adding missing #includes of repository.h and object-store.h
->     where needed.
+  test_must_fail git foo 2>output &&
+  test_i18ngrep expected.message output
 
-Is there a way to automate this step?  (I'm asking for my own
-reference when writing future patches, not because of any concern
-about the correctness of this one.)
->
->  5. As the packfiles are now owned by an objectstore/repository, which
->     is ephemeral unlike globals, we introduce memory leaks. So address
->     them in raw_object_store_clear().
+In this case the error text goes into "output". This makes
+the --verbose output less useful (it also means we might
+accidentally match it in the second, though in practice we
+tend to produce these messages only on error, so we'd abort
+the test when the first command fails).
 
-The compound words are confusing me.  What is an
-objectstore/repository?  Are these referring to particular identifiers
-or something else?
+Let's instead send this user-facing output directly to
+descriptor 4, which always points to the original stderr (or
+/dev/null in non-verbose mode). And it's already forbidden
+to redirect descriptor 4, since we use it for BASH_XTRACEFD,
+as explained in 9be795fbce (t5615: avoid re-using descriptor
+4, 2017-12-08).
 
-Would some wording like the following work?
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ t/test-lib-functions.sh | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-   5. Freeing packed_git and packed_git_mru in raw_object_store_clear
-      to avoid a per-repository memory leak.  Previously they were
-      global singletons, so code to free them did not exist.
-
-[...]
-> --- a/builtin/index-pack.c
-> +++ b/builtin/index-pack.c
-> @@ -12,6 +12,7 @@
->  #include "exec_cmd.h"
->  #include "streaming.h"
->  #include "thread-utils.h"
-> +#include "object-store.h"
->  #include "packfile.h"
->  
->  static const char index_pack_usage[] =
-
-Change from a different patch leaked into this one?
-
-[...]
-> +++ b/builtin/pack-objects.c
-[...]
-> @@ -1044,7 +1045,7 @@ static int want_object_in_pack(const struct object_id *oid,
->  			}
->  			want = want_found_object(exclude, p);
->  			if (!exclude && want > 0)
-> -				list_move(&p->mru, &packed_git_mru);
-> +				list_move(&p->mru, &the_repository->objects.packed_git_mru);
-
-Long line.  Can "make style" catch this?
-
-[...]
-> +++ b/builtin/receive-pack.c
-> @@ -7,6 +7,7 @@
->  #include "sideband.h"
->  #include "run-command.h"
->  #include "exec_cmd.h"
-> +#include "object-store.h"
->  #include "commit.h"
->  #include "object.h"
->  #include "remote.h"
-
-Another change leaked in?
-
-[...]
-> --- a/cache.h
-> +++ b/cache.h
-> @@ -1585,35 +1585,6 @@ struct pack_window {
->  	unsigned int inuse_cnt;
->  };
->  
-> -extern struct packed_git {
-[...]
-> -} *packed_git;
-
-Move detecting diff confirms that this wasn't modified.  Thanks for
-creating it.
-
-[...]
-> +++ b/fast-import.c
-[...]
-> @@ -1110,7 +1112,7 @@ static int store_object(
->  	if (e->idx.offset) {
->  		duplicate_count_by_type[type]++;
->  		return 1;
-> -	} else if (find_sha1_pack(oid.hash, packed_git)) {
-> +	} else if (find_sha1_pack(oid.hash, the_repository->objects.packed_git)) {
-
-Long line.  (I'll refrain from commenting about any further ones.)
-
-[...]
-> +++ b/http-push.c
-> @@ -1,4 +1,5 @@
->  #include "cache.h"
-> +#include "object-store.h"
->  #include "commit.h"
->  #include "tag.h"
->  #include "blob.h"
-
-Stray change?
-
-> diff --git a/http-walker.c b/http-walker.c
-> index 07c2b1af82..8bb5d991bb 100644
-> --- a/http-walker.c
-> +++ b/http-walker.c
-> @@ -4,6 +4,7 @@
->  #include "http.h"
->  #include "list.h"
->  #include "transport.h"
-> +#include "object-store.h"
->  #include "packfile.h"
->  
->  struct alt_base {
-
-Same question.
-
-> diff --git a/http.c b/http.c
-> index 31755023a4..a4a9e583c7 100644
-> --- a/http.c
-> +++ b/http.c
-> @@ -1,6 +1,7 @@
->  #include "git-compat-util.h"
->  #include "http.h"
->  #include "config.h"
-> +#include "object-store.h"
->  #include "pack.h"
->  #include "sideband.h"
->  #include "run-command.h"
-
-Likewise.
-
-> diff --git a/object-store.h b/object-store.h
-> index e78eea1dde..1de9e07102 100644
-> --- a/object-store.h
-> +++ b/object-store.h
-> @@ -52,6 +52,30 @@ void add_to_alternates_memory(const char *dir);
->   */
->  struct strbuf *alt_scratch_buf(struct alternate_object_database *alt);
->  
-> +struct packed_git {
-> +	struct packed_git *next;
-> +	struct list_head mru;
-> +	struct pack_window *windows;
-> +	off_t pack_size;
-> +	const void *index_data;
-> +	size_t index_size;
-> +	uint32_t num_objects;
-> +	uint32_t num_bad_objects;
-> +	unsigned char *bad_object_sha1;
-> +	int index_version;
-> +	time_t mtime;
-> +	int pack_fd;
-> +	unsigned pack_local:1,
-> +		 pack_keep:1,
-> +		 freshened:1,
-> +		 do_not_close:1,
-> +		 pack_promisor:1;
-> +	unsigned char sha1[20];
-> +	struct revindex_entry *revindex;
-> +	/* something like ".git/objects/pack/xxxxx.pack" */
-> +	char pack_name[FLEX_ARRAY]; /* more */
-> +};
-> +
->  struct raw_object_store {
->  	/*
->  	 * Path to the repository's object store.
-> @@ -59,10 +83,25 @@ struct raw_object_store {
->  	 */
->  	char *objectdir;
->  
-> +	struct packed_git *packed_git;
-> +	/*
-> +	 * A most-recently-used ordered version of the packed_git list, which can
-> +	 * be iterated instead of packed_git (and marked via mru_mark).
-> +	 */
-> +	struct list_head packed_git_mru;
-
-I don't understand the new part of the comment.  Can you explain here,
-for me?
-
-Is this meant as a list of related functions, an explanation of what the
-field is for, or something else?
-
-> +
->  	struct alternate_object_database *alt_odb_list;
->  	struct alternate_object_database **alt_odb_tail;
->  };
-> -#define RAW_OBJECT_STORE_INIT { NULL, NULL, NULL }
-> +
-> +/*
-> + * The mru list_head is supposed to be initialized using
-> + * the LIST_HEAD macro, assigning prev/next to itself.
-> + * However this doesn't work in this case as some compilers dislike
-> + * that macro on member variables. Use NULL instead as that is defined
-> + * and accepted, deferring the real init to prepare_packed_git_mru(). */
-
-style nit: '*/' should be on its own line.
-
-More importantly, we can avoid such an issue as described by Junio. :)
-
-> +#define __MRU_INIT { NULL, NULL }
-
-Identifiers with leading underscores like this are in a reserved
-namespace for the language implementation --- we can't count on them
-being available for our own use.
-
-> +#define RAW_OBJECT_STORE_INIT { NULL, NULL, __MRU_INIT, NULL, NULL }
-[...]
-> --- a/object.c
-> +++ b/object.c
-> @@ -466,4 +466,11 @@ void raw_object_store_clear(struct raw_object_store *o)
->  
->  	free_alt_odbs(o);
->  	o->alt_odb_tail = NULL;
-> +
-> +	while (!list_empty(&o->packed_git_mru))
-> +		list_del(&o->packed_git_mru);
-> +	/*
-> +	 * TODO: call close_all_packs once migrated to
-> +	 * take an object store argument
-> +	 */
-
-Can you say more about this TODO?  Does this mean the patches are out
-of order (i.e. that raw_object_store_clear leaves behind a leak until
-a later patch)?
-
-[...]
-> --- a/pack-check.c
-> +++ b/pack-check.c
-> @@ -1,5 +1,6 @@
->  #include "cache.h"
->  #include "pack.h"
-> +#include "object-store.h"
->  #include "pack-revindex.h"
->  #include "progress.h"
->  #include "packfile.h"
-
-Another unexplained #include (I'll refrain from pointing out later
-ones).
-
-The rest looks good.
-
-Thanks,
-Jonathan
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index 67b5994afb..aabee13e5d 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -625,22 +625,22 @@ test_must_fail () {
+ 	exit_code=$?
+ 	if test $exit_code -eq 0 && ! list_contains "$_test_ok" success
+ 	then
+-		echo >&2 "test_must_fail: command succeeded: $*"
++		echo >&4 "test_must_fail: command succeeded: $*"
+ 		return 1
+ 	elif test_match_signal 13 $exit_code && list_contains "$_test_ok" sigpipe
+ 	then
+ 		return 0
+ 	elif test $exit_code -gt 129 && test $exit_code -le 192
+ 	then
+-		echo >&2 "test_must_fail: died by signal $(($exit_code - 128)): $*"
++		echo >&4 "test_must_fail: died by signal $(($exit_code - 128)): $*"
+ 		return 1
+ 	elif test $exit_code -eq 127
+ 	then
+-		echo >&2 "test_must_fail: command not found: $*"
++		echo >&4 "test_must_fail: command not found: $*"
+ 		return 1
+ 	elif test $exit_code -eq 126
+ 	then
+-		echo >&2 "test_must_fail: valgrind error: $*"
++		echo >&4 "test_must_fail: valgrind error: $*"
+ 		return 1
+ 	fi
+ 	return 0
+@@ -678,7 +678,7 @@ test_expect_code () {
+ 		return 0
+ 	fi
+ 
+-	echo >&2 "test_expect_code: command exited with $exit_code, we wanted $want_code $*"
++	echo >&4 "test_expect_code: command exited with $exit_code, we wanted $want_code $*"
+ 	return 1
+ }
+ 
+@@ -742,18 +742,18 @@ test_i18ngrep () {
+ 		shift
+ 		! grep "$@" && return 0
+ 
+-		echo >&2 "error: '! grep $@' did find a match in:"
++		echo >&4 "error: '! grep $@' did find a match in:"
+ 	else
+ 		grep "$@" && return 0
+ 
+-		echo >&2 "error: 'grep $@' didn't find a match in:"
++		echo >&4 "error: 'grep $@' didn't find a match in:"
+ 	fi
+ 
+ 	if test -s "$last_arg"
+ 	then
+-		cat >&2 "$last_arg"
++		cat >&4 "$last_arg"
+ 	else
+-		echo >&2 "<File '$last_arg' is empty>"
++		echo >&4 "<File '$last_arg' is empty>"
+ 	fi
+ 
+ 	return 1
+@@ -764,7 +764,7 @@ test_i18ngrep () {
+ # not output anything when they fail.
+ verbose () {
+ 	"$@" && return 0
+-	echo >&2 "command failed: $(git rev-parse --sq-quote "$@")"
++	echo >&4 "command failed: $(git rev-parse --sq-quote "$@")"
+ 	return 1
+ }
+ 
+-- 
+2.16.2.580.g650ee5408b
