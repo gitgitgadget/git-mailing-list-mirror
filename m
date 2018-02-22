@@ -7,84 +7,116 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A23E91F404
-	for <e@80x24.org>; Thu, 22 Feb 2018 05:23:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A39BA1F404
+	for <e@80x24.org>; Thu, 22 Feb 2018 05:35:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751651AbeBVFXL (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Feb 2018 00:23:11 -0500
-Received: from mail-io0-f195.google.com ([209.85.223.195]:34607 "EHLO
-        mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750776AbeBVFXK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Feb 2018 00:23:10 -0500
-Received: by mail-io0-f195.google.com with SMTP id e7so4694951ioj.1
-        for <git@vger.kernel.org>; Wed, 21 Feb 2018 21:23:10 -0800 (PST)
+        id S1752418AbeBVFfH (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Feb 2018 00:35:07 -0500
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:55389 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751594AbeBVFfG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Feb 2018 00:35:06 -0500
+Received: by mail-wm0-f68.google.com with SMTP id q83so1503647wme.5
+        for <git@vger.kernel.org>; Wed, 21 Feb 2018 21:35:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Yt8NPGXbqNgl0Hkadv4dHlaLcYHqknKY72H9GuI+Shk=;
-        b=p3Hte9CCPz9EJIcjSvFVPPonBSbYorSRH+fcAf/WDdxNI4TLfhmL2EKYc6oydZs06v
-         sJACkRj2rsPVVsuDMGAejXPZVvFFe+v3YqBE0ke7GnWmAHw3MrmB0NR9Ap+2eYjyAIjY
-         iMUekKqMzMQLjrJBmeDnz8mZqJFoJrEyF22+NmUtkgbgpreNibvkg0ZZRSrixX/BU6Go
-         NBqF/4w0Hf81fHCZnwUWImzYZmfPp3qdggR07MdauUYpSaKEYvxMEbXzafm70Qg9C0JL
-         X1BUxlkCIPBx4ak8I/kG1sQgSMGTtx2QJmPlyLY2pRSb7JVBK7F/mqOB5UX6biSwrsle
-         mutw==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=k4K14+TZA8HnNpHP1e7h7LBU4CH7GCgRsxrWPO2KBRQ=;
+        b=ETfH2TlQw7TmVLZFsUX8bj4cx04J4YkjpVydSfakASvuGsE4ZWVdOBn5MsiuSzSEVZ
+         xqp9DJpws5YZ4Y7HccoViL5aeC2IF1Ikpkb9pSL0HuAfOJz8DW48M6eHcjtR/0d6SNJ2
+         acOg4wgkZwuodYus7S0GHM5somQKWqpDks8ECP3BTqkmWw1fiYW9y8QOOVxkyRGdXkrg
+         pfX4zYNUzgQ89fqzqAZ04VHQX1f7z+/U4uagXK+qAU/PI5fDWRTIu/uq8w5NO4poggOG
+         b8V5Rc9kYaDXtnMt12RIri2F5+QaX5xq6DX5dbxo351R9mTZl3LAj2C0XZ9olacCMZ4e
+         QwXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Yt8NPGXbqNgl0Hkadv4dHlaLcYHqknKY72H9GuI+Shk=;
-        b=MlRtCPzq21nUHewThXQiSKOqvf5OIor1p3Nw/Egkmte5ozPwVvwKgGGwoJUICox7Y0
-         PAj34SXTiBZuXp8f+LkPRn2Vuz+uDigiArk7kjbqCXyJRu3dDHi1cZdVgfhYPRC96uaz
-         2PGmZ43aKjdC25QYOPXJs3wQ020vPoxkLjyZ5XnVzZR7xdnW61fEdfFQMNeVbcTj+GrK
-         WfzBQP/Ck5vePfbqU84cdXQKClhMh+eHLztCe1FZa44IgaWlu0xj9lxCmJD6bVpEEnYI
-         HYxHx7mgDVPfys/9xQA1bLlVG6aDkbAYmVlGdc5Cp6ZHALp3m6C+DGglACAM8J8alyhY
-         xH0A==
-X-Gm-Message-State: APf1xPCiSerpDR6SmOX7vz931pnqkbbvTX75JW59/z4RsCdlKdejBevR
-        xlUEgmCvRlkUgW8Nbnmd6PYNpavl
-X-Google-Smtp-Source: AG47ELtCIuD+49G66biTE5URep5KOtI8o4oykL1/Lmi5NLx71rUoKl1l0U+37hxR0pg40IAFg7PNPg==
-X-Received: by 10.107.50.210 with SMTP id y201mr6981733ioy.224.1519276989580;
-        Wed, 21 Feb 2018 21:23:09 -0800 (PST)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id a188sm6111588itg.30.2018.02.21.21.23.08
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 21 Feb 2018 21:23:09 -0800 (PST)
-Date:   Wed, 21 Feb 2018 21:22:27 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Raining Chain <rainingchain@gmail.com>
-Cc:     git@vger.kernel.org, git-for-windows@googlegroups.com
-Subject: Re: Bug Report: git status triggers a file change event
-Message-ID: <20180222052227.GA133592@aiede.svl.corp.google.com>
-References: <CAPaSTm=Vhg+S0Cf7rkcvXKH1eaEbw5aGOfCmtU7K3D+1kc-pGg@mail.gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=k4K14+TZA8HnNpHP1e7h7LBU4CH7GCgRsxrWPO2KBRQ=;
+        b=XziF5ivNE00pI1hZ3yEprcUHTHkStYB233MB5IKrtHiBYMpaQ6zTwcZ+44SZaZPSiG
+         DyH/zEg/jYlS7HtvXOKFPdP8X2pHeedIlNHYhARtDTxg6zGMZmpbeUFnO61zVUC3C/A3
+         /Lw09hYCrV92jShAX41NXzRfwyw/V31iONEdxS0Y7ASisha6q4O6Ka7ndyzmDARKvBK9
+         9V+nBxgDaTw/o7Knt6lZjxfhcw6r2wbye02L712+nsotAViVVHkvpF3+m3MLIMattDdR
+         QwqLUqQH1LdIO4+25GK9tuGZVG8lyZuf9VSh+NTkzRADjLLWf813CBs3WEYkUk+63sLX
+         kLug==
+X-Gm-Message-State: APf1xPBjzNwpUHkhrd3kKavE/EWUdLQDevDe127MizuXCEwvh7RGVEMG
+        GjaxWXkD0x3/xcPaDmrNpfvmVunGScPCD0szPglBPA==
+X-Google-Smtp-Source: AH8x227mEYNPtdTYGSF0wO9mIhhtqY3vcRsJsAaWvTRdpFLIPzhfRMKq2/X3ggR468abwV5t3NIPAeD2gFBQnF7D2lk=
+X-Received: by 10.28.112.15 with SMTP id l15mr3963579wmc.119.1519277704927;
+ Wed, 21 Feb 2018 21:35:04 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAPaSTm=Vhg+S0Cf7rkcvXKH1eaEbw5aGOfCmtU7K3D+1kc-pGg@mail.gmail.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+Received: by 10.223.197.147 with HTTP; Wed, 21 Feb 2018 21:35:04 -0800 (PST)
+In-Reply-To: <xmqqpo4yz1cw.fsf@gitster-ct.c.googlers.com>
+References: <01020161b728823f-daec904e-44ff-45f9-9c89-d447b89c7802-000000@eu-west-1.amazonses.com>
+ <01020161b7288324-d478f224-7a37-4341-993f-3c82a9941b7f-000000@eu-west-1.amazonses.com>
+ <xmqqpo4yz1cw.fsf@gitster-ct.c.googlers.com>
+From:   =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
+        <olyatelezhnaya@gmail.com>
+Date:   Thu, 22 Feb 2018 08:35:04 +0300
+Message-ID: <CAL21Bm=FptUV3xRnYf-iiht8HQF+-uF=cOZyybh7VNCmP=Nxbg@mail.gmail.com>
+Subject: Re: [PATCH 2/2] ref-filter: get rid of goto
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-+git-for-windows
-Hi,
-
-Raining Chain wrote:
-
-> On Windows 10, git version 2.16.2.windows.1, running the command
+2018-02-21 20:41 GMT+03:00 Junio C Hamano <gitster@pobox.com>:
+> Olga Telezhnaya <olyatelezhnaya@gmail.com> writes:
 >
-> git status
+>> Get rid of goto command in ref-filter for better readability.
+>>
+>> Signed-off-by: Olga Telezhnaia <olyatelezhnaya@gmail.com>
+>> Mentored-by: Christian Couder <christian.couder@gmail.com>
+>> Mentored by: Jeff King <peff@peff.net>
+>> ---
+>>  ref-filter.c | 6 +++---
+>>  1 file changed, 3 insertions(+), 3 deletions(-)
 >
-> will trigger a file change event to file C:\myPath\.git  "Attributes changed."
+> It looks like this is the same change as the bottom-most change on
+> your "cat-file --batch" series (and is obviously correct).
 >
-> This causes problems when using scripts that detect file changes such
-> as tsc -w (Typescript compiler) and using softwares that regularly
-> call git status such as VisualStudioCode.
->
-> Thanks.
+> I am puzzled by your intention---are you re-organizing and rebooting
+> the series?  Either 'Yes' or 'No' is an acceptable answer, and so is
+> anything else.  I just want to know what you want to happen to the
+> merge conflicts if I queued this while still keeping your "cat-file
+> --batch" thing I have on 'pu').
 
-Can you say more about how "tsc -w" reacts to the file change?  Is there
-a way to tell it to exclude particular files from the files it watches?
+Thanks for the question, I needed to mention that.
+We (with Peff) decided that it's better and easier to remake whole
+previous patch. Before that, I want to make some refactorings in
+ref-filter so after that migrating should go much easier. I want to do
+that by small separate patches, so this is first in the series. I hope
+it would be both easier to review for you and easier to fix for me.
+So, if everything is fine, you could merge it to master. I will
+rewrite most parts of previous patch anyway.
 
-Thanks,
-Jonathan
+Thanks!
+
+>
+>>
+>> diff --git a/ref-filter.c b/ref-filter.c
+>> index 83ffd84affe52..28df6e21fb996 100644
+>> --- a/ref-filter.c
+>> +++ b/ref-filter.c
+>> @@ -1494,11 +1494,11 @@ static void populate_value(struct ref_array_item *ref)
+>>       for (i = 0; i < used_atom_cnt; i++) {
+>>               struct atom_value *v = &ref->value[i];
+>>               if (v->s == NULL)
+>> -                     goto need_obj;
+>> +                     break;
+>>       }
+>> -     return;
+>> +     if (used_atom_cnt <= i)
+>> +             return;
+>>
+>> - need_obj:
+>>       get_object(ref, &ref->objectname, 0, &obj);
+>>
+>>       /*
+>>
+>> --
+>> https://github.com/git/git/pull/460
