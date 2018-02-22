@@ -2,100 +2,203 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.1 required=3.0 tests=BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,NUMERIC_HTTP_ADDR,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C6B5F1F404
-	for <e@80x24.org>; Thu, 22 Feb 2018 22:42:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 42F1A1F404
+	for <e@80x24.org>; Thu, 22 Feb 2018 22:47:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751819AbeBVWmj (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Feb 2018 17:42:39 -0500
-Received: from mail-pl0-f68.google.com ([209.85.160.68]:37391 "EHLO
-        mail-pl0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751694AbeBVWmi (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Feb 2018 17:42:38 -0500
-Received: by mail-pl0-f68.google.com with SMTP id ay8so3733141plb.4
-        for <git@vger.kernel.org>; Thu, 22 Feb 2018 14:42:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=vljLm8LzwZdmW0A46WQh24op8/AW42pPlXA3Rw3lvo0=;
-        b=ptApY79aATjoJl18/kMPGwHC4TbqWGoe3xdVKvrSFnwQbEyJ7uxe2PJ1ZH69+98Mgw
-         LuBFEN6244JHWMiM3VjpSnkSex2lujqeGzjQZXh/fpDQh71hjh4tqCAwqfTX/3ke2xan
-         7Hrlp8t1rNuA3uLaUkGmJM3FrPUogxBuQV93/Vaa3bHDNQpAE//Aufc2wocIUc2Rcm5p
-         DCTNqF+lAiqzV3EuqYKHKSUaZCvUn69A73m+qeL9lu33/X6ri2NGcX2hpbLEt2iRlI8q
-         8HZcI1ky9IrcasZSK70A3my0Py9p2UNCmEyjV4D3LsoKZg1dZM8xD1rd0+m5rRpO7RIo
-         cAAA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=vljLm8LzwZdmW0A46WQh24op8/AW42pPlXA3Rw3lvo0=;
-        b=XgvXHEX9wRP9fr9l0XpW8tAxP/zRUUfdJ6dDwMoiflCUsilBBF9UqzQX69GbF/VFoe
-         ZoK40MEAhS9wBeDzTrxsTu0GaVnjxNtfO/zG5DsDO5Z53nZGpo1ujH7UGgUPNY01Hw/0
-         1xews79DjA+f8xlGnErGSJQPjsaVtfeaGPCQznmlwBlS5VZGT1Utmp8IgAmo+ueODDql
-         YLvjl0ePbXSgP5C5I4j3OWOCYZsGlPB8PhKsxRm/Jkm6z/LMYdIvUbjE4XuvaWV3juu4
-         gZmgA5RkmKKMp8pX3DxtFRp9ILM3ySsQent/UlpYElPQJYoDsa5BVgtw8ehOk7imRo9f
-         pqYw==
-X-Gm-Message-State: APf1xPBSuOp1V4hs2lpfq4u+xfw08JrKrE239j+rWeG1axm0fONaTfiF
-        Y3cZXDvc+Xm9CohfReMiZRQ=
-X-Google-Smtp-Source: AH8x227+FsSBImBsoEU0j3tlt2lXqrdH6K0KqKsshspuVZMhheI2u4Ma9pWtfN2TLXmfurld/sXbpw==
-X-Received: by 2002:a17:902:7006:: with SMTP id y6-v6mr7984411plk.37.1519339358182;
-        Thu, 22 Feb 2018 14:42:38 -0800 (PST)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id i4sm2163028pfa.40.2018.02.22.14.42.36
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 22 Feb 2018 14:42:37 -0800 (PST)
-Date:   Thu, 22 Feb 2018 14:42:35 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Brandon Williams <bmwill@google.com>,
-        Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
-        sbeller@google.com, gitster@pobox.com, stolee@gmail.com,
-        git@jeffhostetler.com, pclouds@gmail.com
-Subject: Re: [PATCH v3 04/35] upload-pack: convert to a builtin
-Message-ID: <20180222224235.GD256918@aiede.svl.corp.google.com>
-References: <20180207011312.189834-5-bmwill@google.com>
- <20180221134422.2386e1aca39fe673235590e7@google.com>
- <20180222095833.GC12442@sigill.intra.peff.net>
- <20180222180715.GB185096@google.com>
- <20180222181400.GA19035@sigill.intra.peff.net>
- <20180222193814.GA256918@aiede.svl.corp.google.com>
- <20180222201940.GB23561@sigill.intra.peff.net>
- <20180222212402.GB256918@aiede.svl.corp.google.com>
- <20180222214402.GA30638@sigill.intra.peff.net>
- <20180222222146.GA30988@sigill.intra.peff.net>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180222222146.GA30988@sigill.intra.peff.net>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+        id S1751542AbeBVWrZ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Feb 2018 17:47:25 -0500
+Received: from hosted.mailcow.de ([5.1.76.202]:53360 "EHLO hosted.mailcow.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751379AbeBVWrY (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Feb 2018 17:47:24 -0500
+X-Greylist: delayed 356 seconds by postgrey-1.27 at vger.kernel.org; Thu, 22 Feb 2018 17:47:24 EST
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=childno.de; s=default;
+        t=1519339281;
+        h=from:sender:reply-to:subject:date:message-id:to:cc:mime-version:content-type:content-transfer-encoding:resent-to:resent-cc:resent-from:resent-sender:resent-message-id:in-reply-to:references:list-id:list-owner:list-unsubscribe:list-subscribe:list-post;
+        bh=f+nfloi+oQpybU01AkYGstegjUquJ4VseNq/O0bA//A=;
+        b=Xr5OLK+V5gXhBT2Ys5VCvapaZBYvyT93xNi6mWPK2b0qTadq47HSWW/WH/owCGo50h1xR5
+        94WgD70aOy4ys1Q6wjCPxxPjOdtW3qSOS1lHnm1Y6xOTj9FkaGeXnUst2JSBRhzZVGm1fR
+        DYx6M2EAM6Y12CSBkfaP9LcN8fJkxQA=
+Received: from localhost (localhost [127.0.0.1]) (Authenticated sender: marcel@traut.cloud)
+        by hosted.mailcow.de (Postfix) with ESMTPSA id A143B5C0F76
+        for <git@vger.kernel.org>; Thu, 22 Feb 2018 23:41:21 +0100 (CET)
+From:   =?utf-8?B?Ik1hcmNlbCAnY2hpbGROb82hLmRlJyBUcmF1dHdlaW4i?= 
+        <c0d3+gitscm@childno.de>
+Content-Type: text/plain;
+        charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 11.2 \(3445.5.20\))
+Subject: [BUG] [git 2.16.1] yeeek ... my files are gone .. by git pull
+ <otherRepositoryUrl>
+Message-Id: <741A56BF-93C0-41EA-856F-C1170803F0A7@childno.de>
+Date:   Thu, 22 Feb 2018 23:41:20 +0100
+To:     git@vger.kernel.org
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=childno.de;
+        s=default; t=1519339281;
+        h=from:sender:reply-to:subject:date:message-id:to:cc:mime-version:content-type:content-transfer-encoding:resent-to:resent-cc:resent-from:resent-sender:resent-message-id:in-reply-to:references:list-id:list-owner:list-unsubscribe:list-subscribe:list-post;
+        bh=f+nfloi+oQpybU01AkYGstegjUquJ4VseNq/O0bA//A=;
+        b=QLiWNbIDwvlwMmmp4sBdNd2AjEJTIdZ5fBoLsKxnmRhclXJgZx2Qx0y6kQq+jPf8yDdyEA
+        JOkN3XKdUokCZRFhYLHz+/BkI2Ghibo6BUBb4ROUi69cU8tvCMMDjZ5UmFsYdLpUyi3D3C
+        01Tmj6dy0nqQLbgs0nGh3Yrg6R/jjoE=
+ARC-Seal: i=1; s=default; d=childno.de; t=1519339281; a=rsa-sha256;
+        cv=none;
+        b=SENa/J1pCg6eHbkuA3T/YWS7PQnKMG8uoRQ7T506D/vGzipuUVB3MdM7iQMh+LWEjllpp4aiPSp7wZuD563v2ohK/2FPlK1TsqNf0Uzp68GbX4yqxO1Q/eoPRcEZtARyOkj96gCWWau4ip69tOF8brMlY+JgiCjCWnrnob23SqQ=
+ARC-Authentication-Results: i=1; auth=pass smtp.auth=marcel@traut.cloud
+        smtp.mailfrom=c0d3@childno.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King wrote:
+Hi,
 
-> All of that said, I think the current code is quite dangerous already,
-> and maybe even broken.  upload-pack may run sub-commands like rev-list
-> or pack-objects, which are themselves builtins.
+I think we have a problem =E2=80=A6 or at least I had
+and I=E2=80=99m not quite sure if this is =E2=80=9Eworking as =
+designed=E2=80=9C
+but I=E2=80=99m sure it =E2=80=9Eshould not work as it did=E2=80=9C.
 
-Sounds like more commands to set the IGNORE_PAGER_CONFIG flag for in
-git.c.
+Because? It pruned a lot of files and even the local repository.
+by pull
+by giving another repository URL instead of a known remote
 
-Thanks for looking this over thoughtfully.
+While working in a subpath of my homedir
+(that is a git repository itself, without any changes in worktree or =
+index: https://bitbucket.org/childnode/marcel/ )
+I wanted to clone another repository =E2=80=A6 but yeah =E2=80=A6 it=E2=80=
+=99s late for me today and I put
+in s.th. `git pull =
+git@private.gitlab.instance.example.com:aGroup/repository.git`
 
-[...]
-> I couldn't quite get it to work, but I think it's because I'm doing
-> something wrong with the submodules. But I also think this attack would
-> _have_ to be done over ssh, because on a local system the submodule
-> clone would a hard-link rather than a real fetch.
+next =E2=80=A6 all committed files are zapped and the repository given =
+has been checked out in my home directory =F0=9F=A4=AF=F0=9F=91=BB
 
-What happens if the submodule URL starts with file://?
+what? Shouldn=E2=80=99t this just fail? Why can I pass another remote to =
+pull?
 
-Thanks,
-Jonathan
+=F0=9F=99=8F god any untracked / ignored files are still alive
+
+a, yeh, I=E2=80=99m on a mac=20
+(for any git configuration =E2=80=A6 have a look in my repository=20
+=
+https://bitbucket.org/childnode/marcel/src/88ff8d0c28bb90dfde3aea9e6c39bb5=
+51bea8ca8/.gitconfig?at=3Dmaster&fileviewer=3Dfile-view-default
+
+the console out was:
+```
+-bash:$ git pull =
+git@private.gitlab.instance.example.com:aGroup/repository.git
+Warning: Permanently added the ECDSA host key for IP address '10.1.2.3' =
+to the list of known hosts.
+warning: no common commits
+remote: Counting objects: 2301, done.
+remote: Compressing objects: 100% (710/710), done.
+remote: Total 2301 (delta 1040), reused 2239 (delta 1004)
+Receiving objects: 100% (2301/2301), 405.41 KiB | 635.00 KiB/s, done.
+Resolving deltas: 100% (1040/1040), done.
+=46rom private.gitlab.instance.example.com:aGroup/repository
+ * branch            HEAD       -> FETCH_HEAD
+Fetching submodule .shapps/willgit
+Fetching submodule .vim
+Fetching submodule .vim/autoload/pathogen
+warning: redirecting to https://github.com/tpope/vim-pathogen.git/
+Fetching submodule .vim/bundle/ack
+warning: redirecting to https://github.com/mileszs/ack.vim.git/
+Fetching submodule .vim/bundle/colors-solarized
+warning: redirecting to =
+https://github.com/altercation/vim-colors-solarized.git/
+Fetching submodule .vim/bundle/flake8
+Fetching submodule .vim/bundle/fugitive
+warning: redirecting to https://github.com/tpope/vim-fugitive.git/
+Fetching submodule .vim/bundle/kwbdi
+warning: redirecting to https://github.com/vim-scripts/kwbdi.vim.git/
+Fetching submodule .vim/bundle/markdown
+warning: redirecting to https://github.com/tpope/vim-markdown.git/
+Fetching submodule .vim/bundle/nerdtree
+warning: redirecting to https://github.com/scrooloose/nerdtree.git/
+Fetching submodule .vim/bundle/unimpaired
+warning: redirecting to https://github.com/tpope/vim-unimpaired.git/
+Fetching submodule =
+gists/bitbucket/childnode/2015-06-16_G4pLy_prevent-empty-version-comment-i=
+n.git
+Fetching submodule =
+gists/bitbucket/childnode/2015-06-21_kyAAM_plasticscm-addcurrentworkdir-ba=
+tch-task
+Fetching submodule =
+gists/github/childnode/18de20f4448692257aa3e99c8319b70d
+Fetching submodule gists/github/childnode/295dbd6e_hasSize.regex
+Fetching submodule =
+gists/github/childnode/4a0de936_gradle_buildSrc_dogfood
+Fetching submodule gists/github/childnode/66d4b982_git.rebaseAllBranches
+Fetching submodule =
+gists/github/childnode/6df6d14c_ideaGradleProjectSetupForAdditionalSourceS=
+ets
+Fetching submodule =
+gists/github/childnode/81ae6468_build_jar_manifest.gradle
+Fetching submodule =
+gists/github/childnode/85958ff8_extendedHelp.gradle_secret
+Fetching submodule =
+gists/github/childnode/88304258_git_deleteAllRemoteBranches.sh
+Fetching submodule =
+gists/github/childnode/8f100f90_dockerSaveAllImages.sh
+Fetching submodule =
+gists/github/childnode/9741c4d1_idea.warnGenerateWorkspace.gradle_secret
+Fetching submodule =
+gists/github/childnode/a175d954_ext.props.gradle_secret
+Fetching submodule =
+gists/github/childnode/d15cd5e9_atlassian-confluence-config
+Fetching submodule =
+gists/github/childnode/d35cf810dd28775ac5c0e491107215fd
+Fetching submodule =
+gists/github/childnode/da08e8a6f989ce0f94077ae1a6b1573b
+Fetching submodule gists/github/childnode/e7ef876c_html2ical_secret
+Fetching submodule =
+gists/github/childnode/eb3199790f2f82785f62c3150f352ede
+Successfully rebased and updated refs/heads/master.
+
+```
+
+trying to fix this up by doing another pull failed:
+```
+-bash:$ git remote -v
+origin	git@bitbucket.org:childnode/marcel.git (fetch)
+origin	git@bitbucket.org:childnode/marcel.git (push)
+
+-bash:$ git pull
+fatal: refusing to merge unrelated histories
+
+-bash:$ git pull git@bitbucket.org:childnode/marcel.git
+=46rom bitbucket.org:childnode/marcel
+ * branch            HEAD       -> FETCH_HEAD
+fatal: refusing to merge unrelated histories
+
+```
+
+these messages and the fact that it doesn=E2=80=99t work backward let me =
+think I ran into
+a collision? really?
+
+revlog looks a bit strange too
+```
+04f3066 (HEAD -> master) HEAD@{0}: pull =
+git@private.gitlab.instance.example.com:aGroup/repository.git: checkout =
+04f3066d03e09323c7341c472be4c45ea5e3a4ff: returning to refs/heads/master
+04f3066 (HEAD -> master) HEAD@{1}: pull =
+git@private.gitlab.instance.example.com:aGroup/repository.git: checkout =
+04f3066d03e09323c7341c472be4c45ea5e3a4ff
+88ff8d0 (origin/master, origin/HEAD) HEAD@{2}: pull --rebase=3Dpreserve: =
+checkout 88ff8d0c28bb90dfde3aea9e6c39bb551bea8ca8: returning to =
+refs/heads/master
+```
+
+where 88ff8d0 was the latest from marcel.git
+and logs look like the pulled repository is like an orphan aside my =
+original one.=20
+
+~Marcel
+
+P.S: I reverted by `$ git reset 88ff8d0 && git checkout -- .`=
