@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E87601F404
-	for <e@80x24.org>; Thu, 22 Feb 2018 21:24:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1552A1F404
+	for <e@80x24.org>; Thu, 22 Feb 2018 21:32:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751412AbeBVVYH (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Feb 2018 16:24:07 -0500
-Received: from mail-pl0-f65.google.com ([209.85.160.65]:43955 "EHLO
-        mail-pl0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751366AbeBVVYG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Feb 2018 16:24:06 -0500
-Received: by mail-pl0-f65.google.com with SMTP id f23so3618176plr.10
-        for <git@vger.kernel.org>; Thu, 22 Feb 2018 13:24:06 -0800 (PST)
+        id S1751365AbeBVVc4 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Feb 2018 16:32:56 -0500
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:37109 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751158AbeBVVcz (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Feb 2018 16:32:55 -0500
+Received: by mail-pg0-f67.google.com with SMTP id y26so2518259pgv.4
+        for <git@vger.kernel.org>; Thu, 22 Feb 2018 13:32:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=yNh4/3WnWoDRweeuUE7sFxnn/UzCwlHFaF9k9O53e6U=;
-        b=vCYnQpIfsI+PioTZwIkUa39aqySH8gEBRDMOhQaDGODV9uDkT/KySvwfIm2yMKYFaf
-         RPUpTJrR8Qw0Al8WPNvZGXT2ZIepfSTI8ZNpT+JlAY3LqOyBO50KOM9Hgsrz/JbaNtfw
-         Xyo2SzOlp7b2+BPxdax0MzjpZSjE38GE3I3qoM/eS+0TNtOVSQOQ+J5OZi3le6wnO40Z
-         AR6GegkQawXydEsCbfhdG5E9vEXe9VQrQMQ7rdkYnzJul2OTy4SNVcCHyRv+2I9WENVG
-         t+rRLZiUXuinXc0X3v02YsUgu+SsBowXlkkH971wbPpts0dVBsd1Q7i5AhuSZDDmUIZk
-         +uXA==
+        bh=gvIeSA4WGhD3RL/BN4gnBQ0DYDuVXfVAljwTCkR90Nk=;
+        b=kjZ+0sXtnXQsHrGB+tNr3QONbh+Y7eMOajLH+ghMUUGlHwtYwB9ZJMu1jR+yzr1EUy
+         QBkyijBx3+2qL4HJjCmFZS2a3YOKv26OWxklKKSkrVfc1Cg9I4jLYXM5ZMxc7xLYKU+c
+         mSf6dG2xhWUnVMZ6KTI8KXNDCnYa6vcFPss8xeth2z5ZlbEUCkhZTHLhyRr8T+Ew4ZkA
+         zXNUCK6nK2jt3qCwsrkuDOXfSHX9jn6GySyZT2I9+Zjzeg8knJwmP23Smq+RO8eL2Jjj
+         odKv7bgJzGVPhBayyWWcpScN3cgyWpWWhCS8lCDrL5lEPDx+QeWcGZzg3tmfkXI+HgbQ
+         fIcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=yNh4/3WnWoDRweeuUE7sFxnn/UzCwlHFaF9k9O53e6U=;
-        b=Wu7daVxhdohpsd4FGKnDz2iBaPlPRK7XuwiHmTgeD3q2TgHvyu27BEes4S1grJvMEB
-         vaFgoSEC/r6YWY3i/JWmzYGMIpnoaB73yTEut1HQlItjhhBgncQPfqcWDYHt27RqmbIs
-         si7tug+DtatBj12S6RtndCWdkwPp9zTJBO0qS+o8szXX82qpOTScDtRUctMVdN113Kz4
-         XJiHuLc2TKt3NG3lG4YKYD6ckRZ4fMP2VDQRZgxpfF18cKGFISr2KpCnVJAJCiRAsUhb
-         RJG5/aVP8qC8GCHSjpgjctuckNbSgd90JdtkfOsLBxLmI7RQL0lERjlR23/fIqwWmKj7
-         awLA==
-X-Gm-Message-State: APf1xPDQv+9E96tCJLnVMtjKgNQZno0Jun6KRUXHyaFbI194BMF9k07/
-        fiVWz+M4r44ano8rs/4sJXo=
-X-Google-Smtp-Source: AH8x227gbHmt+n3sxpau/dygsp0RUxTogBJ+ULDK1mcdOggIZEi3ml3uTGNnmkxkGQ5qWFrdSg51fA==
-X-Received: by 2002:a17:902:7614:: with SMTP id k20-v6mr7834855pll.343.1519334645416;
-        Thu, 22 Feb 2018 13:24:05 -0800 (PST)
+        bh=gvIeSA4WGhD3RL/BN4gnBQ0DYDuVXfVAljwTCkR90Nk=;
+        b=K5JiX25wWxZgNJpBHWsfWNcqv7WPjgNom3MrOcn73ch7Sb+9j9g0bWHEoP2BCmzvC3
+         JLRWvJbtu+FFpYkHghP4WkqkhfYzEQRK/uXxLpRZHJ1rP4XPdyLLRKLpMFABvpEYEtQj
+         vOy+xxcdVtgzhfVBq4QEQL1b2ZMRCkQPwUX9L7Ff7/JKD0CkdwbhIBEyLgpmIBEl1Vn3
+         aWSDDnDz3Iy1wvTBsArkZP5b+LOd3AP6UCPJTUVSfHZ4KTb+3FLGh2acVswILl6h6EpM
+         CcYKDAbsTSDBVazhKVVn3Q/pBsgM3hw+fJUU+MojhbVBo5Zi/SMwJyy4wBojYcxAJjwi
+         iZhw==
+X-Gm-Message-State: APf1xPDfYouREE4SQ5G8FFgKb16bt/7bgeWJyM2PRUE75pXyz/Nh6bHG
+        027ukAtYhstRbX33ebF/MqU=
+X-Google-Smtp-Source: AH8x226fhjUsXk6b5BKj3Km8esN8BbhfgWV1GM2PuYJmTnRQ3ZGJ8JBqlfDAtYRjbtvVfi5D4Ioyvw==
+X-Received: by 10.99.96.146 with SMTP id u140mr6772159pgb.211.1519334797116;
+        Thu, 22 Feb 2018 13:26:37 -0800 (PST)
 Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id w22sm1131535pge.65.2018.02.22.13.24.04
+        by smtp.gmail.com with ESMTPSA id v8sm1851351pfa.32.2018.02.22.13.26.35
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 22 Feb 2018 13:24:04 -0800 (PST)
-Date:   Thu, 22 Feb 2018 13:24:02 -0800
+        Thu, 22 Feb 2018 13:26:36 -0800 (PST)
+Date:   Thu, 22 Feb 2018 13:26:34 -0800
 From:   Jonathan Nieder <jrnieder@gmail.com>
 To:     Jeff King <peff@peff.net>
 Cc:     Brandon Williams <bmwill@google.com>,
@@ -57,7 +57,7 @@ Cc:     Brandon Williams <bmwill@google.com>,
         sbeller@google.com, gitster@pobox.com, stolee@gmail.com,
         git@jeffhostetler.com, pclouds@gmail.com
 Subject: Re: [PATCH v3 04/35] upload-pack: convert to a builtin
-Message-ID: <20180222212402.GB256918@aiede.svl.corp.google.com>
+Message-ID: <20180222212634.GC256918@aiede.svl.corp.google.com>
 References: <20180125235838.138135-1-bmwill@google.com>
  <20180207011312.189834-1-bmwill@google.com>
  <20180207011312.189834-5-bmwill@google.com>
@@ -67,85 +67,31 @@ References: <20180125235838.138135-1-bmwill@google.com>
  <20180222181400.GA19035@sigill.intra.peff.net>
  <20180222193814.GA256918@aiede.svl.corp.google.com>
  <20180222201940.GB23561@sigill.intra.peff.net>
+ <20180222202150.GA23985@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20180222201940.GB23561@sigill.intra.peff.net>
+In-Reply-To: <20180222202150.GA23985@sigill.intra.peff.net>
 User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-
 Jeff King wrote:
-> On Thu, Feb 22, 2018 at 11:38:14AM -0800, Jonathan Nieder wrote:
 
->> To be clear, which of the following are you (most) worried about?
->>
->>  1. being invoked with --help and spawning a pager
->>  2. receiving and acting on options between 'git' and 'upload-pack'
->>  3. repository discovery
->>  4. pager config
->>  5. alias discovery
->>  6. increased code surface / unknown threats
->
-> My immediate concern is (4).
+>                 The current property is that it's safe to fetch from an
+> untrusted repository, even over ssh. If we're keeping that for protocol
+> v1, we'd want it to apply to protocol v2, as well.
 
-Thanks for clarifying.
+Ah, this is what I had been missing (the non-ssh case).
 
->                              But my greater concern is that people who
-> work on git.c should not have to worry about accidentally violating this
-> principle when they add a new feature or config option.
+I see your point.  I think we need to fix the pager config issue and add
+some clarifying documentation to git.c so that people know what to look
+out for.
 
-That sounds like a combination of (6) and insufficient documentation
-or tests.  Ideas for how we can help prevent such accidents?
-
-> In other words, it seems like an accident waiting to happen. I'd be more
-> amenable to it if there was some compelling reason for it to be a
-> builtin, but I don't see one listed in the commit message. I see only
-> "let's make it easier to share the code", which AFAICT is equally served
-> by just lib-ifying the code and calling it from the standalone
-> upload-pack.c.
-
-If we have so little control of the common code used by git commands
-that could be invoked by a remote user, I think we're in trouble
-already.  I don't think being a builtin vs not makes that
-significantly different, since there are plenty of builtins that can
-be triggered by remote users.  Further, if we have so little control
-over the security properties of git.c, what hope do we have of making
-the rest of libgit.a usable in secure code?
-
-In other words, having to pay more attention to the git wrapper from a
-security pov actually feels to me like a *good* thing.  The git
-wrapper is the entry point to almost all git commands.  If it is an
-accident waiting to happen, then anything that calls git commands is
-already an accident waiting to happen.  So how can we make it not an
-accident waiting to happen? :)
-
->> Although in most setups the user does not control the config files on
->> a server, item (4) looks like a real issue worth solving.  I think we
->> should introduce a flag to skip looking for pager config.  We could
->> use it for receive-pack, too.
->
-> There's not much point for receive-pack. It respects hooks, so any
-> security ship has already sailed there.
-
-Yet there are plenty of cases where people who can push are not
-supposed to have root privilege.  I am not worried about hooks
-specifically (although the changes described at [1] might help and I
-still plan to work on those) but I am worried about e.g. commandline
-injection issues.  I don't think we can treat receive-pack as out of
-scope.
-
-And to be clear, I don't think you were saying receive-pack *is* out
-of scope.  But you seem to be trying to draw some boundary, where I
-only see something fuzzier (e.g. if a bug only applies to
-receive-pack, then that certainly decreases its impact, but it doesn't
-make the impact go away).
+Keep in mind that git upload-archive (a read-only command, just like
+git upload-pack) also already has the same issues.
 
 Thanks,
 Jonathan
-
-[1] https://public-inbox.org/git/20171002234517.GV19555@aiede.mtv.corp.google.com/
