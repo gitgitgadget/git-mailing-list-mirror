@@ -2,104 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7CAEE1F404
-	for <e@80x24.org>; Thu, 22 Feb 2018 22:21:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 66ADA1F404
+	for <e@80x24.org>; Thu, 22 Feb 2018 22:28:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751772AbeBVWVu (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Feb 2018 17:21:50 -0500
-Received: from cloud.peff.net ([104.130.231.41]:33428 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751763AbeBVWVs (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Feb 2018 17:21:48 -0500
-Received: (qmail 3418 invoked by uid 109); 22 Feb 2018 22:21:48 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 22 Feb 2018 22:21:48 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 9505 invoked by uid 111); 22 Feb 2018 22:22:36 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 22 Feb 2018 17:22:36 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 22 Feb 2018 17:21:46 -0500
-Date:   Thu, 22 Feb 2018 17:21:46 -0500
-From:   Jeff King <peff@peff.net>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Brandon Williams <bmwill@google.com>,
-        Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
-        sbeller@google.com, gitster@pobox.com, stolee@gmail.com,
-        git@jeffhostetler.com, pclouds@gmail.com
-Subject: Re: [PATCH v3 04/35] upload-pack: convert to a builtin
-Message-ID: <20180222222146.GA30988@sigill.intra.peff.net>
-References: <20180207011312.189834-1-bmwill@google.com>
- <20180207011312.189834-5-bmwill@google.com>
- <20180221134422.2386e1aca39fe673235590e7@google.com>
- <20180222095833.GC12442@sigill.intra.peff.net>
- <20180222180715.GB185096@google.com>
- <20180222181400.GA19035@sigill.intra.peff.net>
- <20180222193814.GA256918@aiede.svl.corp.google.com>
- <20180222201940.GB23561@sigill.intra.peff.net>
- <20180222212402.GB256918@aiede.svl.corp.google.com>
- <20180222214402.GA30638@sigill.intra.peff.net>
+        id S1751901AbeBVW2T (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Feb 2018 17:28:19 -0500
+Received: from mail-oi0-f44.google.com ([209.85.218.44]:34731 "EHLO
+        mail-oi0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751731AbeBVW2S (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Feb 2018 17:28:18 -0500
+Received: by mail-oi0-f44.google.com with SMTP id c83so4930015oib.1
+        for <git@vger.kernel.org>; Thu, 22 Feb 2018 14:28:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=diamand.org; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=ngEdjiXGAUyKGnD5GfLkqjPp/CoaE6hIexRbUjFeeSY=;
+        b=R4iDJNjsC+7Vz6yOgqK10rFNbnjSM9WCwIFNemLTxyea4NMwfgMKhrHaQSY79OJk5Q
+         YPwFqHTCKNdnAd3Hml8ylsy3n2vy2VwrwwEinQR1Vuo4cKRT+xtfEe1G43CmWbFGRllT
+         mU7COz0YnBHt0lmOCr7R06U5jcsXlCO2ek+W4=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=ngEdjiXGAUyKGnD5GfLkqjPp/CoaE6hIexRbUjFeeSY=;
+        b=ZzyviAK1+jkkIL8cn+EB2hYto6ZJilfGsCkVDJY7OmLLZIrC1iRGbGXoyEcIUaoApM
+         4dcMNuHFDfrixwhKi4yWe3dYGbc64TH14as3RcxSDnRX7fHg0geTVloodttlRai52khe
+         XSQjiF/YW/7mvWYvavysThMfKFo3oWV8yZ9WyNJk5SLHrA8Kf6sB4IJoe87uuRYR+mNw
+         vJR+J18JYvfCl6CVA88KC8N1zRB4cFtxxxuUIcQhy9+ncRm0V0pG5nlEYe/7T5N9M4L+
+         4QUUVyxZawVoXxHTY8c0QwWXg1S7KUfnUoGsO3mOdo8x+1Eu7L67AZc+Sky/Y98jjB27
+         OBBA==
+X-Gm-Message-State: APf1xPB0jnjLjmRemudKBu51J7gWFcCoYbaUBruJleIqfcAhscMelXz2
+        MI/tjSJk8UtKoHY9duPVyNw9EolWE95JRSfeBbxNFg==
+X-Google-Smtp-Source: AG47ELtFwqeQlUxKJtDOhzeT6SOAEOzOi3n2BcL3OD8JfqbG3QcV4S1ze1WqR6KFh/3jYHWhkr8i6WBwJg1Y4YK2bYs=
+X-Received: by 10.202.74.148 with SMTP id x142mr6024540oia.157.1519338497532;
+ Thu, 22 Feb 2018 14:28:17 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20180222214402.GA30638@sigill.intra.peff.net>
+Received: by 10.157.2.231 with HTTP; Thu, 22 Feb 2018 14:28:16 -0800 (PST)
+In-Reply-To: <CAKYtbVYe5hHDXf=nQzt6r9N20CrTgbEMbBS0JBBXQLpz+BVu1A@mail.gmail.com>
+References: <20180222095022.6227-1-luke@diamand.org> <20180222095022.6227-2-luke@diamand.org>
+ <CAKYtbVYe5hHDXf=nQzt6r9N20CrTgbEMbBS0JBBXQLpz+BVu1A@mail.gmail.com>
+From:   Luke Diamand <luke@diamand.org>
+Date:   Thu, 22 Feb 2018 22:28:16 +0000
+Message-ID: <CAE5ih79E1Z8h+hAgr8zCw7=Dtec6sxT7Xf4cWn8zOLNs=mY1jg@mail.gmail.com>
+Subject: Re: [PATCH 1/1] git-p4: add unshelve command
+To:     Miguel Torroja <miguel.torroja@gmail.com>
+Cc:     Git Users <git@vger.kernel.org>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        gvanburgh@bloomberg.net
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 22, 2018 at 04:44:02PM -0500, Jeff King wrote:
+On 22 February 2018 at 21:39, Miguel Torroja <miguel.torroja@gmail.com> wrote:
+> Hi Luke,
+>
+> I really like the idea of creating a branch based on a shelved CL (We
+> particularly use shelves all the time), I tested your change and I
+> have some comments.
+>
+>  - I have some concerns about having the same "[git-p4...change =
+> .....]" as if it were a real submitted CL.
+>     One use case I foresee of the new implementation could be to
+> cherry-pick that change on another branch (or current branch) prior to
+> a git p4 submit.
 
-> But I don't think it _is_ an accident waiting to happen for the rest of
-> the commands. upload-pack is special. The point is that people may touch
-> git.c thinking they are adding a nice new feature (like pager config, or
-> aliases, or default options, or whatever). And it _would_ be a nice new
-> feature for most commands, but not for upload-pack, because its
-> requirements are different.
-> 
-> So thinking about security in the git wrapper is just a burden for those
-> other commands.
+OK, I think we could just not add that in the case of an unshelved commit.
 
-All of that said, I think the current code is quite dangerous already,
-and maybe even broken.  upload-pack may run sub-commands like rev-list
-or pack-objects, which are themselves builtins.
+>
+>  - I see that the new p4/unshelve... branch is based on the tip of
+> p4/master by default. what if we set the default to the current HEAD?
 
-For example:
+There's a "--origin" option you can use to set it to whatever you want.
 
-  git init --bare evil.git
-  git -C evil.git --work-tree=. commit --allow-empty -m foo
-  git -C evil.git config pager.pack-objects 'echo >&2 oops'
-  git clone --no-local evil.git victim
+I started out with HEAD as the default, but then found that to get a
+sensible diff you have to both sync and rebase, which can be quite
+annoying.
 
-That doesn't _quite_ work, because we route pack-objects' stderr into a
-pipe, which suppresses the pager. But we don't for rev-list, which we
-call when checking reachability. It's a bit tricky to get a client to
-trigger those for a vanilla fetch, though. Here's the best I could come
-up with:
+In my case, in my early testing, I ended up with a git commit which
+included both the creation of a file, and a subsequent change, even
+though I had only unshelved the subsequent change. That was because
+HEAD didn't include the file creation change (but p4/master _did_).
 
-  git init --bare evil.git
-  git -C evil.git --work-tree=. commit --allow-empty -m one
-  git -C evil.git config pager.rev-list 'echo >&2 oops'
+>
+>  - Shelved CLs can be updated and you might have to run "git p4
+> unshelve" a second time to get the latest updates. if we call it a
+> second time it fails as it's trying to update p4/unshelve... rather
+> than discarding previous one and creating a new one.
 
-  git init super
-  (
-	cd super
-	# obviously use host:path if you're attacking somebody over ssh
-	git submodule add ../evil.git evil
-	git commit -am 'add evil submodule'
-  )
-  git -C evil.git config uploadpack.allowReachableSHA1InWant true
-  git -C evil.git update-ref -d refs/heads/master
+OK, that should also be fixable.
 
-  git clone --recurse-submodules super victim
+>
+>
+> Thanks,
 
-I couldn't quite get it to work, but I think it's because I'm doing
-something wrong with the submodules. But I also think this attack would
-_have_ to be done over ssh, because on a local system the submodule
-clone would a hard-link rather than a real fetch.
-
--Peff
+Thanks for the feedback, very useful! I'll reroll.
+Luke
