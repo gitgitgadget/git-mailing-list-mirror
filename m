@@ -7,62 +7,63 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 75EE41F576
-	for <e@80x24.org>; Thu, 22 Feb 2018 06:26:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5445F1F576
+	for <e@80x24.org>; Thu, 22 Feb 2018 06:47:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752408AbeBVG0m (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Feb 2018 01:26:42 -0500
-Received: from mail-io0-f195.google.com ([209.85.223.195]:43097 "EHLO
-        mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750725AbeBVG0k (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Feb 2018 01:26:40 -0500
-Received: by mail-io0-f195.google.com with SMTP id l12so4813245ioc.10
-        for <git@vger.kernel.org>; Wed, 21 Feb 2018 22:26:40 -0800 (PST)
+        id S1752500AbeBVGo3 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Feb 2018 01:44:29 -0500
+Received: from mail-it0-f68.google.com ([209.85.214.68]:53263 "EHLO
+        mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752399AbeBVGo2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Feb 2018 01:44:28 -0500
+Received: by mail-it0-f68.google.com with SMTP id w63so5046863ita.3
+        for <git@vger.kernel.org>; Wed, 21 Feb 2018 22:44:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=TuEm9lmXIv+bpXxx3rLOOxi8ya/Xt2LXXhMesxKCPQs=;
-        b=QdCd/gQcsTWFY3NhjijPUncYNwsgOB57y68+VZFNnylwGTF67HAU+6Kohvzhhz4OF4
-         7D/72OYdvdgkoysCJflaBJrtDAefIfZbpUWDw/NgLEW0NZN8oc8mlnWoP1iMnCCTKwUq
-         w1JRzCVvGXVwHidTB3HhIN3UzTmmluTAFU46mE+c7DvnrHUANAqNn5cp8+PfUxqOPnnK
-         uItIIUv8Fq7dk+yKl0PNGIsth6plzhDRIYeuhN92llgt3Q3iFoPkuEplXb33IOihVVao
-         jndy2woLKaOqN6r9dIL7GmbUAAosJtz4ilz2Q6ZzgGVIjRwHc7JcsKCu7DJN3Gf8ruVk
-         kfpg==
+        bh=0SaVBuSbvTZ2TelvPx+bRcK7sJlN4VINVV7qrDIAFRE=;
+        b=rwaBiiT1HyOHMC570ORKE7kw8Cs90wAqGhWiD9shwi4Qt+0NZnnMJ6XHP/oo4amInU
+         JlC3ls1ATEx4DWzA/akqaq09U3Y7e82RBEIhi0hhc4rNJywGFEBB8rfs60PsGqE4mkwM
+         Me13PPHvkI46qHPVTbDuJr0eVAJWPiLu8J7aEpJALzo+kZxtfLhb8vc9WLwWNiB+n00A
+         WdxjpZ/K30r7XnjNK47OuQ6JR/D7HcRFA39/WYPLliJ9F4BBlQbv88DCIhJMS+O4xQj1
+         4JPkKbBd/Ni8Mk9cePSgOgEneBw1F8zLNbEcnJaHKgkVYn189RygICacSiZAmT/+pcGZ
+         immA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=TuEm9lmXIv+bpXxx3rLOOxi8ya/Xt2LXXhMesxKCPQs=;
-        b=pKX9orfxngwDqFjzBiWlAtArjiMMo74nUny7vtHBEiV3sVkEwn5M0jJHHxAnE3O4Cz
-         AAEUI1rCD8N6fMo/qONoJkNYOL8jE1Z6s+sgAdhTMv109t62DFcVJmUCX0t/OUpQlpQZ
-         Q2wJmHKmBQhVVAIPrCTK81q8DD7T241qRVf8nebIvJXU5es4hfLAlcmfOnb9mHyiOwT3
-         QNkEA7sdfNQh25wqs8u7aahWzRignCIaP/+r4KtYRj2WxyW6o5l6F2sFRLFZ7vFujDpt
-         qzLn1wNpq81oFRLi9PIzE2W53i+SJfBusmsPsOHIdsuzITZbMntwVz5b4U6FEqeh4sz7
-         2QHA==
-X-Gm-Message-State: APf1xPA2oPGsXbNXNkDTgQ5H4aVUDvcKqAelvSasIkzHGny7BKPA4Xen
-        O1u60BS+Z1/eklKfGA96F5Q=
-X-Google-Smtp-Source: AH8x2247FsWouZEYEQv3iyMwMgZO/GwrHhuNbtc3LJ59Mbm4xxqHd7kEDYMkG7dxzv5LeHMkTs9sng==
-X-Received: by 10.107.174.14 with SMTP id x14mr7516745ioe.67.1519280799912;
-        Wed, 21 Feb 2018 22:26:39 -0800 (PST)
+        bh=0SaVBuSbvTZ2TelvPx+bRcK7sJlN4VINVV7qrDIAFRE=;
+        b=UrZY0VZy56pM9vrR3AYj+Wp8FxvHySO6Ptrk0ajtR5zfs8tyZ+cMzUrq1zWJa3gMSd
+         Rk7D99wl9+44sNRiCHhF5z4Ql5B3nvMQ/Fu79wLYsvh/fOeXmPtAOnIKvbBQv7HYQyBa
+         kv2gTzUxdzJTjpd/4QeZgBNm/LMG8QJivLzxmIIZMU0wSrVsgtsriU8DXgBAouek/nuk
+         AHEyvULV1J/s1n1AOHe0eHiRwVuqdStgIOY+9ztZRedQnT3euaeHo87BQ10rY+JBuAB2
+         NSaeMMoma7PQ5yOsg5p/jltdxfYjNuloH9Yv5xOcik8RX3btnluIGY1Pz0ZRqIPHfvdQ
+         0yTA==
+X-Gm-Message-State: APf1xPCmPytYN9peWo+N7KkkFNbLyPENw6sBPhQcxJ+I8N+KsFsRLkpq
+        OcLSwVvApKvXonD/TlYdbGS722vD
+X-Google-Smtp-Source: AH8x224gOmM1SdXxsKNxb423amU5EDp0rwbkYKiGZettMdqkdI3hwt7fVzl1Io2h89jDxvixISkd7g==
+X-Received: by 10.36.118.211 with SMTP id z202mr6985977itb.104.1519281867246;
+        Wed, 21 Feb 2018 22:44:27 -0800 (PST)
 Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id j130sm25573286ita.33.2018.02.21.22.26.37
+        by smtp.gmail.com with ESMTPSA id r65sm12698852ioe.26.2018.02.21.22.44.25
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 21 Feb 2018 22:26:39 -0800 (PST)
-Date:   Wed, 21 Feb 2018 22:26:35 -0800
+        Wed, 21 Feb 2018 22:44:25 -0800 (PST)
+Date:   Wed, 21 Feb 2018 22:44:23 -0800
 From:   Jonathan Nieder <jrnieder@gmail.com>
 To:     Stefan Beller <sbeller@google.com>
 Cc:     git@vger.kernel.org, gitster@pobox.com, jonathantanmy@google.com,
         pclouds@gmail.com, sunshine@sunshineco.com
-Subject: Re: [PATCH 01/27] repository: introduce raw object store field
-Message-ID: <20180222062635.GC133592@aiede.svl.corp.google.com>
+Subject: Re: [PATCH 05/27] object-store: move packed_git and packed_git_mru
+ to object store
+Message-ID: <20180222064423.GD133592@aiede.svl.corp.google.com>
 References: <20180216174626.24677-1-sbeller@google.com>
  <20180221015430.96054-1-sbeller@google.com>
- <20180221015430.96054-2-sbeller@google.com>
+ <20180221015430.96054-6-sbeller@google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20180221015430.96054-2-sbeller@google.com>
+In-Reply-To: <20180221015430.96054-6-sbeller@google.com>
 User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -73,134 +74,270 @@ Hi,
 
 Stefan Beller wrote:
 
-> The raw object store field will contain any objects needed for
-> access to objects in a given repository.
+> In a process with multiple repositories open, packfile accessors
+> should be associated to a single repository and not shared globally.
+> Move packed_git and packed_git_mru into the_repository and adjust
+> callers to reflect this.
 >
-> This patch introduces the raw object store and populates it with the
-> `objectdir`, which used to be part of the repository struct.
+> Patch generated by
 >
-> As the struct gains members, we'll also populate the function to clear
-> the memory for these members.
+>  1. Moving the struct packed_git declaration to object-store.h
+>     and packed_git, packed_git_mru globals to struct object_store.
 >
-> In a later we'll introduce a struct object_parser, that will complement
-> the object parsing in a repository struct: The raw object parser is the
-> layer that will provide access to raw object content, while the higher
-> level object parser code will parse raw objects and keeps track of
-> parenthood and other object relationships using 'struct object'.
-> For now only add the lower level to the repository struct.
+>  2. Applying the semantic patch
+>     contrib/coccinelle/refactoring/packed_git.cocci to adjust callers.
+>     This semantic patch is placed in a sub directory of the coccinelle
+>     contrib dir, as this semantic patch is not expected to be of general
+>     usefulness; it is only useful during developing this series and
+>     merging it with other topics in flight. At a later date, just
+>     delete that semantic patch.
+
+Can the semantic patch go in the commit message instead?  It is very
+brief.
+
+Actually, I don't see this semantic patch in the diffstat.  Is the
+commit message stale?
+
+>  3. Applying line wrapping fixes from "make style" to break the
+>     resulting long lines.
 >
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
-> ---
+>  4. Adding missing #includes of repository.h and object-store.h
+>     where needed.
 
-Heh, I suppose that sign-off makes me not a great candidate for
-reviewing this.  It's been long enough since I looked at the patch
-that I feel okay trying anyway.
+Is there a way to automate this step?  (I'm asking for my own
+reference when writing future patches, not because of any concern
+about the correctness of this one.)
+>
+>  5. As the packfiles are now owned by an objectstore/repository, which
+>     is ephemeral unlike globals, we introduce memory leaks. So address
+>     them in raw_object_store_clear().
 
-[...]
-> --- /dev/null
-> +++ b/object-store.h
-> @@ -0,0 +1,15 @@
-> +#ifndef OBJECT_STORE_H
-> +#define OBJECT_STORE_H
-> +
-> +struct raw_object_store {
-> +	/*
-> +	 * Path to the repository's object store.
-> +	 * Cannot be NULL after initialization.
-> +	 */
-> +	char *objectdir;
-> +};
-> +#define RAW_OBJECT_STORE_INIT { NULL }
+The compound words are confusing me.  What is an
+objectstore/repository?  Are these referring to particular identifiers
+or something else?
 
-Who owns and is responsible for freeing objectdir?
+Would some wording like the following work?
 
-> +
-> +void raw_object_store_clear(struct raw_object_store *o);
-
-Oh, that answers that.
-
-It could be worth a note in the doc comment anyway, but I don't mind
-not having one.
+   5. Freeing packed_git and packed_git_mru in raw_object_store_clear
+      to avoid a per-repository memory leak.  Previously they were
+      global singletons, so code to free them did not exist.
 
 [...]
-> +
-> +void raw_object_store_clear(struct raw_object_store *o)
-> +{
-> +	free(o->objectdir);
-> +}
-
-Should this use FREE_AND_NULL?
-
-[...]
-> --- a/repository.c
-> +++ b/repository.c
-[...]
-> @@ -42,8 +49,8 @@ static void repo_setup_env(struct repository *repo)
->  						    !repo->ignore_env);
->  	free(repo->commondir);
->  	repo->commondir = strbuf_detach(&sb, NULL);
-> -	free(repo->objectdir);
-> -	repo->objectdir = git_path_from_env(DB_ENVIRONMENT, repo->commondir,
-> +	free(repo->objects.objectdir);
-
-Should this call raw_object_store_clear instead of calling free
-directly?
-
-> +	repo->objects.objectdir = git_path_from_env(DB_ENVIRONMENT, repo->commondir,
->  					    "objects", !repo->ignore_env);
-
-Long line.  One way to break it would be
-
-	repo->objects.objectdir =
-		git_path_from_env(DB_ENVIRONMENT, repo->commondir,
-				  "objects", !repo->ignore_env);
-
->  	free(repo->graft_file);
->  	repo->graft_file = git_path_from_env(GRAFT_ENVIRONMENT, repo->commondir,
-> @@ -209,12 +216,14 @@ void repo_clear(struct repository *repo)
->  {
->  	FREE_AND_NULL(repo->gitdir);
->  	FREE_AND_NULL(repo->commondir);
-> -	FREE_AND_NULL(repo->objectdir);
->  	FREE_AND_NULL(repo->graft_file);
->  	FREE_AND_NULL(repo->index_file);
->  	FREE_AND_NULL(repo->worktree);
->  	FREE_AND_NULL(repo->submodule_prefix);
->  
-> +	raw_object_store_clear(&repo->objects);
-> +	memset(&repo->objects, 0, sizeof(repo->objects));
-
-If raw_object_store_clear uses FREE_AND_NULL, this memset won't be necessary.
-
-[...]
-> --- a/repository.h
-> +++ b/repository.h
-> @@ -1,6 +1,8 @@
->  #ifndef REPOSITORY_H
->  #define REPOSITORY_H
->  
+> --- a/builtin/index-pack.c
+> +++ b/builtin/index-pack.c
+> @@ -12,6 +12,7 @@
+>  #include "exec_cmd.h"
+>  #include "streaming.h"
+>  #include "thread-utils.h"
 > +#include "object-store.h"
+>  #include "packfile.h"
+>  
+>  static const char index_pack_usage[] =
+
+Change from a different patch leaked into this one?
+
+[...]
+> +++ b/builtin/pack-objects.c
+[...]
+> @@ -1044,7 +1045,7 @@ static int want_object_in_pack(const struct object_id *oid,
+>  			}
+>  			want = want_found_object(exclude, p);
+>  			if (!exclude && want > 0)
+> -				list_move(&p->mru, &packed_git_mru);
+> +				list_move(&p->mru, &the_repository->objects.packed_git_mru);
+
+Long line.  Can "make style" catch this?
+
+[...]
+> +++ b/builtin/receive-pack.c
+> @@ -7,6 +7,7 @@
+>  #include "sideband.h"
+>  #include "run-command.h"
+>  #include "exec_cmd.h"
+> +#include "object-store.h"
+>  #include "commit.h"
+>  #include "object.h"
+>  #include "remote.h"
+
+Another change leaked in?
+
+[...]
+> --- a/cache.h
+> +++ b/cache.h
+> @@ -1585,35 +1585,6 @@ struct pack_window {
+>  	unsigned int inuse_cnt;
+>  };
+>  
+> -extern struct packed_git {
+[...]
+> -} *packed_git;
+
+Move detecting diff confirms that this wasn't modified.  Thanks for
+creating it.
+
+[...]
+> +++ b/fast-import.c
+[...]
+> @@ -1110,7 +1112,7 @@ static int store_object(
+>  	if (e->idx.offset) {
+>  		duplicate_count_by_type[type]++;
+>  		return 1;
+> -	} else if (find_sha1_pack(oid.hash, packed_git)) {
+> +	} else if (find_sha1_pack(oid.hash, the_repository->objects.packed_git)) {
+
+Long line.  (I'll refrain from commenting about any further ones.)
+
+[...]
+> +++ b/http-push.c
+> @@ -1,4 +1,5 @@
+>  #include "cache.h"
+> +#include "object-store.h"
+>  #include "commit.h"
+>  #include "tag.h"
+>  #include "blob.h"
+
+Stray change?
+
+> diff --git a/http-walker.c b/http-walker.c
+> index 07c2b1af82..8bb5d991bb 100644
+> --- a/http-walker.c
+> +++ b/http-walker.c
+> @@ -4,6 +4,7 @@
+>  #include "http.h"
+>  #include "list.h"
+>  #include "transport.h"
+> +#include "object-store.h"
+>  #include "packfile.h"
+>  
+>  struct alt_base {
+
+Same question.
+
+> diff --git a/http.c b/http.c
+> index 31755023a4..a4a9e583c7 100644
+> --- a/http.c
+> +++ b/http.c
+> @@ -1,6 +1,7 @@
+>  #include "git-compat-util.h"
+>  #include "http.h"
+>  #include "config.h"
+> +#include "object-store.h"
+>  #include "pack.h"
+>  #include "sideband.h"
+>  #include "run-command.h"
+
+Likewise.
+
+> diff --git a/object-store.h b/object-store.h
+> index e78eea1dde..1de9e07102 100644
+> --- a/object-store.h
+> +++ b/object-store.h
+> @@ -52,6 +52,30 @@ void add_to_alternates_memory(const char *dir);
+>   */
+>  struct strbuf *alt_scratch_buf(struct alternate_object_database *alt);
+>  
+> +struct packed_git {
+> +	struct packed_git *next;
+> +	struct list_head mru;
+> +	struct pack_window *windows;
+> +	off_t pack_size;
+> +	const void *index_data;
+> +	size_t index_size;
+> +	uint32_t num_objects;
+> +	uint32_t num_bad_objects;
+> +	unsigned char *bad_object_sha1;
+> +	int index_version;
+> +	time_t mtime;
+> +	int pack_fd;
+> +	unsigned pack_local:1,
+> +		 pack_keep:1,
+> +		 freshened:1,
+> +		 do_not_close:1,
+> +		 pack_promisor:1;
+> +	unsigned char sha1[20];
+> +	struct revindex_entry *revindex;
+> +	/* something like ".git/objects/pack/xxxxx.pack" */
+> +	char pack_name[FLEX_ARRAY]; /* more */
+> +};
 > +
->  struct config_set;
->  struct index_state;
->  struct submodule_cache;
-> @@ -21,10 +23,9 @@ struct repository {
->  	char *commondir;
->  
+>  struct raw_object_store {
 >  	/*
-> -	 * Path to the repository's object store.
-> -	 * Cannot be NULL after initialization.
-> +	 * Holds any information related to the object store.
+>  	 * Path to the repository's object store.
+> @@ -59,10 +83,25 @@ struct raw_object_store {
 >  	 */
-
-This comment doesn't make it clear to me what the field represents.
-Can it be replaced with some of the description from the commit
-message?
-
-> -	char *objectdir;
-> +	struct raw_object_store objects;
+>  	char *objectdir;
 >  
+> +	struct packed_git *packed_git;
+> +	/*
+> +	 * A most-recently-used ordered version of the packed_git list, which can
+> +	 * be iterated instead of packed_git (and marked via mru_mark).
+> +	 */
+> +	struct list_head packed_git_mru;
+
+I don't understand the new part of the comment.  Can you explain here,
+for me?
+
+Is this meant as a list of related functions, an explanation of what the
+field is for, or something else?
+
+> +
+>  	struct alternate_object_database *alt_odb_list;
+>  	struct alternate_object_database **alt_odb_tail;
+>  };
+> -#define RAW_OBJECT_STORE_INIT { NULL, NULL, NULL }
+> +
+> +/*
+> + * The mru list_head is supposed to be initialized using
+> + * the LIST_HEAD macro, assigning prev/next to itself.
+> + * However this doesn't work in this case as some compilers dislike
+> + * that macro on member variables. Use NULL instead as that is defined
+> + * and accepted, deferring the real init to prepare_packed_git_mru(). */
+
+style nit: '*/' should be on its own line.
+
+More importantly, we can avoid such an issue as described by Junio. :)
+
+> +#define __MRU_INIT { NULL, NULL }
+
+Identifiers with leading underscores like this are in a reserved
+namespace for the language implementation --- we can't count on them
+being available for our own use.
+
+> +#define RAW_OBJECT_STORE_INIT { NULL, NULL, __MRU_INIT, NULL, NULL }
+[...]
+> --- a/object.c
+> +++ b/object.c
+> @@ -466,4 +466,11 @@ void raw_object_store_clear(struct raw_object_store *o)
+>  
+>  	free_alt_odbs(o);
+>  	o->alt_odb_tail = NULL;
+> +
+> +	while (!list_empty(&o->packed_git_mru))
+> +		list_del(&o->packed_git_mru);
+> +	/*
+> +	 * TODO: call close_all_packs once migrated to
+> +	 * take an object store argument
+> +	 */
+
+Can you say more about this TODO?  Does this mean the patches are out
+of order (i.e. that raw_object_store_clear leaves behind a leak until
+a later patch)?
+
+[...]
+> --- a/pack-check.c
+> +++ b/pack-check.c
+> @@ -1,5 +1,6 @@
+>  #include "cache.h"
+>  #include "pack.h"
+> +#include "object-store.h"
+>  #include "pack-revindex.h"
+>  #include "progress.h"
+>  #include "packfile.h"
+
+Another unexplained #include (I'll refrain from pointing out later
+ones).
+
+The rest looks good.
 
 Thanks,
 Jonathan
