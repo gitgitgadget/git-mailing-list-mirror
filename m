@@ -2,109 +2,199 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 804081F404
-	for <e@80x24.org>; Thu, 22 Feb 2018 19:25:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6F3271F404
+	for <e@80x24.org>; Thu, 22 Feb 2018 19:29:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750967AbeBVTZh (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Feb 2018 14:25:37 -0500
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:39934 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750776AbeBVTZg (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Feb 2018 14:25:36 -0500
-Received: by mail-pf0-f194.google.com with SMTP id c143so2480265pfb.6
-        for <git@vger.kernel.org>; Thu, 22 Feb 2018 11:25:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=WINEbht5e6fZsdm3eqbQB2xaRvLq4gWhWuTEiHrVpTk=;
-        b=ayClUaaGGhWvuh3/H1rx10zsEYAzSYE0ORK73yg4i5Qwdk7wTwmp7zTZjryj/Nv7P8
-         a+FX1XrJN58fxHY1E26Hlpcl41yN84N0q5dUgu5huFTrAnGsoTn5TFPCqcDn3/ToEzgF
-         E/GvlTjZesKS1y6cRKWnRouuV6d/CUtXiv37Glc9vGVTZnhst33uhLkCP25oNapa65uW
-         IY2tWNW4+fOUtPbAX7EQvLrv4GeR8TvEmE28jZYkFEFXF1sr3yeNfEPmA7xw12q0N0Kz
-         Ni2OI71SC6bDxZdtjXzpCSv8OWV0yS3z5Y1qvd7HRXAPfieitbSfCzMwj0YHZcGWjjW3
-         veZg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=WINEbht5e6fZsdm3eqbQB2xaRvLq4gWhWuTEiHrVpTk=;
-        b=Qi9Jnzbq9XAjgzbA7eHZYO4k5FlSSnsRv2E7W+DpbgS0MQTXYpzmsmXISrwi/Bny38
-         TG3MBnQJM8BS2Euq7ba2j9Sr0gSyoP8HrlqNmBEUTUeNMkxDrtfj28jI8kseA6aJqTKc
-         95Z/Z1r4OLcbFZUpl7ZeWJDgDhvYE/HPEpXc1o546pXXVbDCRP7BKhfawgaaZOW/RkiX
-         R/cBFPLtQIRf46BVAr0BkjmU8bKgKEVIe2fL5iC1SqEpFDiOqYq2ayEKiUT64h8/pqp2
-         z8BUl4CeRvEEqfo7YFjcqCMok8zqBdijVOsUBvwuZsqgriyuhvIrs+NF2Tx6EpXAXZw2
-         l0Fw==
-X-Gm-Message-State: APf1xPD0l10Y1R4bEsFrUuIJJMfh5D+4QdofHWKv9BV6C6t9nm8gko2S
-        jitVb7ayfrBPp+Jj3UQ4m5B/XryAMZ4=
-X-Google-Smtp-Source: AH8x226reXp2UBxyeSqlmTsJt4fD9PJikmYYy1UIendgtBPyIxMaOwz5P5wjHt0rPlMugp6pTBuVDg==
-X-Received: by 10.99.96.73 with SMTP id u70mr6285706pgb.199.1519327535504;
-        Thu, 22 Feb 2018 11:25:35 -0800 (PST)
-Received: from twelve3.svl.corp.google.com ([2620:0:100e:422:ffac:c1d4:4bf7:bb93])
-        by smtp.gmail.com with ESMTPSA id 83sm1212215pfj.151.2018.02.22.11.25.33
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 22 Feb 2018 11:25:34 -0800 (PST)
-Date:   Thu, 22 Feb 2018 11:25:33 -0800
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Brandon Williams <bmwill@google.com>, git@vger.kernel.org,
-        sbeller@google.com, gitster@pobox.com, jrnieder@gmail.com,
-        stolee@gmail.com, git@jeffhostetler.com, pclouds@gmail.com
-Subject: Re: [PATCH v3 14/35] connect: request remote refs using v2
-Message-Id: <20180222112533.0d7c6023fb8e4098efedfe31@google.com>
-In-Reply-To: <20180222182657.GE19035@sigill.intra.peff.net>
-References: <20180125235838.138135-1-bmwill@google.com>
-        <20180207011312.189834-1-bmwill@google.com>
-        <20180207011312.189834-15-bmwill@google.com>
-        <20180221145411.35b2ea84747518a499276bdd@google.com>
-        <20180222181922.GD185096@google.com>
-        <20180222182657.GE19035@sigill.intra.peff.net>
-X-Mailer: Sylpheed 3.6.0 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+        id S1750927AbeBVT3i (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Feb 2018 14:29:38 -0500
+Received: from mout.web.de ([217.72.192.78]:50661 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750776AbeBVT3h (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Feb 2018 14:29:37 -0500
+Received: from [192.168.178.36] ([79.237.251.165]) by smtp.web.de (mrweb103
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0LetQh-1eOyCh28Vj-00qn5f; Thu, 22
+ Feb 2018 20:29:32 +0100
+X-Mozilla-News-Host: news://news.public-inbox.org:119
+To:     Git List <git@vger.kernel.org>
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH] sequencer: factor out strbuf_read_file_or_whine()
+Message-ID: <6b58885c-b0f6-1687-3f2d-4594aacff9ac@web.de>
+Date:   Thu, 22 Feb 2018 20:29:25 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.6.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:xocH286Gei73xruRvcHf+c52iKRuKKloOtJHhcxmDTQKEpGvx5d
+ ixffJ3i7KJY3Yp1nBp8XFM/oy5Oh9URsa+sm7ClUHASSsk4lEKt40A7dhCHAYO5G9uchcks
+ J1w40cVKHA2X80RyYLSeCUp30DkrGy6Qph3Rz/eqgE5SA0/YaSENGTHXIur5FCqdt74coMz
+ lOZtd59TpAeCqbi6LPE2A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:ykPr8I8OBYM=:7eILPuy3qpz9FqAPx24PO/
+ x4EcsjoZ1LML9Ke1Tl9+imaWBq8kb6an97Y9Sbc8+MTc8gGl75sJvZtqXYR91adFUFEuLvPS0
+ Z3VsIhyZtskU3iscCY1sjWg/A6VeoEeh5P0pWJLSeNxjjaKSMgU2caxI7xeyH8MPTvVPYr57l
+ cmZ8AjPhtKSEqVA2WI4DU6nmPRqONfBFacZViC0Neiev4wIbbOCQ4CjwSfmuJjXDBfvtQ3FnR
+ zJbVBIF2IGaw85jH/W3TyDw2rEyqnt6ld0qopm0cRapr70M8pgDGFF6XQZR+AKJmbFA+sLegr
+ Erg1mgx5dpHJFLtXaI7h36ePhYYQEcmkgnsma4g3dfqAPDdSrvLggYEqjXP6dAErTV0EUAyEc
+ BZBBIlfMkA7fDIFDW7rTfhcvapJ10Oh6mxXt6QuleBz2VteNJH88G7PpVMB+P1fOcJ8wvxyAs
+ UKuWDo1eV8s40wCdmqZehApIQjOXNJmSIs17RPBFCYVgf+IFyGeVwHk+8SvhaY7bM29gIat8z
+ yz6MkSjmYjXRBerLZw6JjJsIJB9kNpRvCj/IFUnTd83lpIHGUxG6VaLY0mK15x6K+iorp7gdY
+ g5nbQHC86oZ/E8l6YUN0J8855/IHjzgWiFfD1RZSrXj767V7mM3L+R6chQ1zcnem3ID1n6gJg
+ rA1DGhYvVHCGaJI2BrEsH3vagZxJV8+FUChp0ZbrAUuB80+vnp1HN+uR5eFq7jl2rJef1gISc
+ 3YNWv3F1NoHfrZgGmV0ZQiDQekiYsYi9pqXG65zSVZN14j97YDe04GsxkKdRygzTfzJyitJfg
+ uYc8f1NcqrjnllUQj9dhuogv2y3bunDAipcTyYtZDlk/8w27PA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 22 Feb 2018 13:26:58 -0500
-Jeff King <peff@peff.net> wrote:
+Reduce code duplication by factoring out a function that reads an entire
+file into a strbuf, or reports errors on stderr if something goes wrong.
 
-> On Thu, Feb 22, 2018 at 10:19:22AM -0800, Brandon Williams wrote:
-> 
-> > On 02/21, Jonathan Tan wrote:
-> > > On Tue,  6 Feb 2018 17:12:51 -0800
-> > > Brandon Williams <bmwill@google.com> wrote:
-> > > 
-> > > > +extern struct ref **get_remote_refs(int fd_out, struct packet_reader *reader,
-> > > > +				    struct ref **list, int for_push,
-> > > > +				    const struct argv_array *ref_patterns);
-> > > 
-> > > I haven't looked at the rest of this patch in detail, but the type of
-> > > ref_patterns is probably better as struct string_list, since this is not
-> > > a true argument array (e.g. with flags starting with --). Same comment
-> > > for the next few patches that deal with ref patterns.
-> > 
-> > Its just a list of strings which don't require having a util pointer
-> > hanging around so actually using an argv_array would be more memory
-> > efficient than a string_list.  But either way I don't think it matters
-> > much.
-> 
-> I agree that it shouldn't matter much here. But if the name argv_array
-> is standing in the way of using it, I think we should consider giving it
-> a more general name. I picked that not to evoke "this must be arguments"
-> but "this is terminated by a single NULL".
-> 
-> In general I think it should be the preferred structure for string
-> lists, just because it actually converts for free to the "other" common
-> format (whereas you can never pass string_list.items to a function that
-> doesn't know about string lists).
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+The difference to using strbuf_read_file() is more detailed error
+messages for open(2) failures.  But I don't know if we need them -- or
+under which circumstances reading todo files could fail anyway.  When
+doing multiple rebases in parallel perhaps?
 
-This sounds reasonable - I withdraw my comment about using struct
-string_list.
+ sequencer.c | 74 +++++++++++++++++++++++--------------------------------------
+ 1 file changed, 28 insertions(+), 46 deletions(-)
+
+diff --git a/sequencer.c b/sequencer.c
+index e9baaf59bd..e34334f0ef 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -1869,22 +1869,31 @@ static int count_commands(struct todo_list *todo_list)
+ 	return count;
+ }
+ 
++static ssize_t strbuf_read_file_or_whine(struct strbuf *sb, const char *path)
++{
++	int fd;
++	ssize_t len;
++
++	fd = open(path, O_RDONLY);
++	if (fd < 0)
++		return error_errno(_("could not open '%s'"), path);
++	len = strbuf_read(sb, fd, 0);
++	close(fd);
++	if (len < 0)
++		return error(_("could not read '%s'."), path);
++	return len;
++}
++
+ static int read_populate_todo(struct todo_list *todo_list,
+ 			struct replay_opts *opts)
+ {
+ 	struct stat st;
+ 	const char *todo_file = get_todo_path(opts);
+-	int fd, res;
++	int res;
+ 
+ 	strbuf_reset(&todo_list->buf);
+-	fd = open(todo_file, O_RDONLY);
+-	if (fd < 0)
+-		return error_errno(_("could not open '%s'"), todo_file);
+-	if (strbuf_read(&todo_list->buf, fd, 0) < 0) {
+-		close(fd);
+-		return error(_("could not read '%s'."), todo_file);
+-	}
+-	close(fd);
++	if (strbuf_read_file_or_whine(&todo_list->buf, todo_file) < 0)
++		return -1;
+ 
+ 	res = stat(todo_file, &st);
+ 	if (res)
+@@ -3151,20 +3160,13 @@ int check_todo_list(void)
+ 	struct strbuf todo_file = STRBUF_INIT;
+ 	struct todo_list todo_list = TODO_LIST_INIT;
+ 	struct strbuf missing = STRBUF_INIT;
+-	int advise_to_edit_todo = 0, res = 0, fd, i;
++	int advise_to_edit_todo = 0, res = 0, i;
+ 
+ 	strbuf_addstr(&todo_file, rebase_path_todo());
+-	fd = open(todo_file.buf, O_RDONLY);
+-	if (fd < 0) {
+-		res = error_errno(_("could not open '%s'"), todo_file.buf);
+-		goto leave_check;
+-	}
+-	if (strbuf_read(&todo_list.buf, fd, 0) < 0) {
+-		close(fd);
+-		res = error(_("could not read '%s'."), todo_file.buf);
++	if (strbuf_read_file_or_whine(&todo_list.buf, todo_file.buf) < 0) {
++		res = -1;
+ 		goto leave_check;
+ 	}
+-	close(fd);
+ 	advise_to_edit_todo = res =
+ 		parse_insn_buffer(todo_list.buf.buf, &todo_list);
+ 
+@@ -3180,17 +3182,10 @@ int check_todo_list(void)
+ 
+ 	todo_list_release(&todo_list);
+ 	strbuf_addstr(&todo_file, ".backup");
+-	fd = open(todo_file.buf, O_RDONLY);
+-	if (fd < 0) {
+-		res = error_errno(_("could not open '%s'"), todo_file.buf);
+-		goto leave_check;
+-	}
+-	if (strbuf_read(&todo_list.buf, fd, 0) < 0) {
+-		close(fd);
+-		res = error(_("could not read '%s'."), todo_file.buf);
++	if (strbuf_read_file_or_whine(&todo_list.buf, todo_file.buf) < 0) {
++		res = -1;
+ 		goto leave_check;
+ 	}
+-	close(fd);
+ 	strbuf_release(&todo_file);
+ 	res = !!parse_insn_buffer(todo_list.buf.buf, &todo_list);
+ 
+@@ -3271,15 +3266,8 @@ int skip_unnecessary_picks(void)
+ 	}
+ 	strbuf_release(&buf);
+ 
+-	fd = open(todo_file, O_RDONLY);
+-	if (fd < 0) {
+-		return error_errno(_("could not open '%s'"), todo_file);
+-	}
+-	if (strbuf_read(&todo_list.buf, fd, 0) < 0) {
+-		close(fd);
+-		return error(_("could not read '%s'."), todo_file);
+-	}
+-	close(fd);
++	if (strbuf_read_file_or_whine(&todo_list.buf, todo_file) < 0)
++		return -1;
+ 	if (parse_insn_buffer(todo_list.buf.buf, &todo_list) < 0) {
+ 		todo_list_release(&todo_list);
+ 		return -1;
+@@ -3370,17 +3358,11 @@ int rearrange_squash(void)
+ 	const char *todo_file = rebase_path_todo();
+ 	struct todo_list todo_list = TODO_LIST_INIT;
+ 	struct hashmap subject2item;
+-	int res = 0, rearranged = 0, *next, *tail, fd, i;
++	int res = 0, rearranged = 0, *next, *tail, i;
+ 	char **subjects;
+ 
+-	fd = open(todo_file, O_RDONLY);
+-	if (fd < 0)
+-		return error_errno(_("could not open '%s'"), todo_file);
+-	if (strbuf_read(&todo_list.buf, fd, 0) < 0) {
+-		close(fd);
+-		return error(_("could not read '%s'."), todo_file);
+-	}
+-	close(fd);
++	if (strbuf_read_file_or_whine(&todo_list.buf, todo_file) < 0)
++		return -1;
+ 	if (parse_insn_buffer(todo_list.buf.buf, &todo_list) < 0) {
+ 		todo_list_release(&todo_list);
+ 		return -1;
+-- 
+2.16.2
