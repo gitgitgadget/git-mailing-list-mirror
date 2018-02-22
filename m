@@ -3,133 +3,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6A7B41F404
-	for <e@80x24.org>; Thu, 22 Feb 2018 20:13:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 41AB11F404
+	for <e@80x24.org>; Thu, 22 Feb 2018 20:18:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751217AbeBVUM6 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Feb 2018 15:12:58 -0500
-Received: from mail-pl0-f43.google.com ([209.85.160.43]:41068 "EHLO
-        mail-pl0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750826AbeBVUM5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Feb 2018 15:12:57 -0500
-Received: by mail-pl0-f43.google.com with SMTP id k8so3509267pli.8
-        for <git@vger.kernel.org>; Thu, 22 Feb 2018 12:12:57 -0800 (PST)
+        id S1751165AbeBVUSs (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Feb 2018 15:18:48 -0500
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:39121 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750802AbeBVUSr (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Feb 2018 15:18:47 -0500
+Received: by mail-wr0-f194.google.com with SMTP id w77so11842307wrc.6
+        for <git@vger.kernel.org>; Thu, 22 Feb 2018 12:18:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc:message-id:references
-         :to;
-        bh=lxAv1tXEWS2xLY57idcXfDqFqdEtx3j7NMoyBTbFo8I=;
-        b=sjUKRFbpfVnz7v2VYBhveVfEEFzoW9UpdVRnaD/nc+ZQICgEToyGfbUPcEwbsKJG33
-         R0e2YgUoQvV9J+zg2Bk3L2I6h18lPq9sDZL+sOanBz6MIJN8TvNjpmJVoBUi83ScaiC1
-         JBR5MVGaMATjeC8CYLkWGOcQ0MmGueGmB87BKJiQY5NrzwRNtFP1IKLXDA36zRxxayee
-         2t6wCDh/Mnogoq0YP4/x3cavQSeHqZOOaIQg1O61wzRRa6p9iYZRzJ+NZ1C9WS7cpKVd
-         hQatYlo1R23JrQ+pxNQN/+eXILWdpwoHKnI0Kmp+r94zO+/QljQJkcKWwdWr8ReXmcWB
-         0pOw==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=iJo61SUHqO4yVB5hegx8NFnfxX6MOM/uglqx9cbxd9A=;
+        b=f+R467v28b1wINzpdnoRzDQCgKZAZQOeLzRrkee83YJEFIyENh5xbRQ+fypiHkV9ep
+         g1P3nWaRbvZmO3mqXBPXO/oM8WwZ0Pxqt8Zm//kxuty0YyKwyJ4iaGOGyCn5DEKp6Gsr
+         11x73MK0PRysSdbVdwRtMIT5wt4mXdI/lgGebH5InX0BvUWUkpxt4jI/bIvXLXirEOHk
+         SHqio/DT31mxq3nTFZX/2AGBjzlXmCcMufz0KFhngteSPG4la2lWB8cmLqpoGXAZEWfd
+         JMVqSBgV0q4UN65DNj8sMH3CvUOt0Rc5quwcGDiMEiGU7STvs+Uv9kHMkm/pEUjZCiTW
+         lKlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :message-id:references:to;
-        bh=lxAv1tXEWS2xLY57idcXfDqFqdEtx3j7NMoyBTbFo8I=;
-        b=E2pZiDMJ9irMMNwSI6BKBNhIs+BWKNcN988d4Wn4enq/7eetL7rFx7QEokJOKTwTNn
-         JoN03Q4ZGsrXWhe9buTruVsK8Td8tkncxiXAGa+BzKnT9/c+cGWwRABXW4tjrDy7K3vE
-         h/RCP+GOFdyoZQ858FNq5/xK0fk3Ggw0IJz6SmAuQCdojKkYWwZLdBMI+vwhY0twnbYq
-         ZlWITAhNGlc4oDOUryB015wzFxEubjofCW22xhHHVOoTITxWbmmSgmEr0ltCGOb6DW2i
-         nmpzkXdNP34sl1IkqInMYqOcSUEQyySt9SEvD1j/yxNJNUMapBJdH9o6ElNiEMRIVVPJ
-         vChw==
-X-Gm-Message-State: APf1xPDc6GUrGaZ16EIdzWdEQ4W57xnHcWKXz9OUkW8JCSGIa+HbnTUF
-        kar/X6f/SZVkwwQxqDD+GJ4=
-X-Google-Smtp-Source: AH8x225XDUJxD0DUBGiPNvMhOFh3hUk+uQZL+XB8dVV/ZBQQUdnfR2XN9qwD0lSq0Spz4irKrTqTVQ==
-X-Received: by 2002:a17:902:5914:: with SMTP id o20-v6mr7595487pli.60.1519330377311;
-        Thu, 22 Feb 2018 12:12:57 -0800 (PST)
-Received: from pants.nat.office.privatealpha.com ([198.47.44.221])
-        by smtp.gmail.com with ESMTPSA id v65sm1310178pfv.61.2018.02.22.12.12.56
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 22 Feb 2018 12:12:56 -0800 (PST)
-Content-Type: multipart/signed; boundary="Apple-Mail=_1A39F2EB-E822-4A8D-AD3C-A3D9E97316A2"; protocol="application/pgp-signature"; micalg=pgp-sha512
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: bug in HTTP protocol spec
-From:   Dorian Taylor <dorian.taylor.lists@gmail.com>
-In-Reply-To: <xmqqbmggx063.fsf@gitster-ct.c.googlers.com>
-Date:   Thu, 22 Feb 2018 12:12:54 -0800
-Cc:     Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>,
-        git@vger.kernel.org, Brandon Williams <bmwill@google.com>
-Message-Id: <01B07AA7-B2A4-4A81-B1F0-E2EC3D6BFBF9@gmail.com>
-References: <4F85B1C3-9B5B-4D7C-8907-B728C18A70CD@gmail.com> <20180221221516.GA7944@sigill.intra.peff.net> <89E9DF80-F811-4F7A-AA35-0F52F1180BAF@gmail.com> <20180222053722.GB133592@aiede.svl.corp.google.com> <614A9A36-9DE3-4A85-BFA8-8380C4AC21B8@gmail.com> <20180222100840.GD12442@sigill.intra.peff.net> <xmqqbmggx063.fsf@gitster-ct.c.googlers.com>
-To:     Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3124)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=iJo61SUHqO4yVB5hegx8NFnfxX6MOM/uglqx9cbxd9A=;
+        b=TnCLtUlm81+ZkGFVhI39mIlN7zL1u2AWxdxGu+isMRNpYl8krFOmb1hQ31LPJ/r7q9
+         kqZNHCQb+XW3ggcUu2/Rgol5ykCdpmiUfhMCNS/qFWxQxQ1RhFYN00DHPPutkhIgclbb
+         KMIF2WzumZKtq+gvUPqZ1IDHHIY/TStMVnzT0Sz5DsWOaAqoR5E6xNZdV1gG23Znta/z
+         bQk0rWVl4zXhCap9sjxwEpVbJnHcLQGJdbSOz/CeW0lTpAr4zifdZ/WBIMj+wot7K9nn
+         ACtSAYP/bBVNVOaFqF/DY7ISjcg+j7Wo9EDm3XTTdIHhrJxJibsp0yfHmFOpUF5jOH3e
+         FoKg==
+X-Gm-Message-State: APf1xPApYVPkXENVpTwb4jHyplDXc4GoC8mj5Z6Te1PiO7V4B64UD1jY
+        w3afGawrfdJu/FEQ5nG2MFU=
+X-Google-Smtp-Source: AH8x225R4xAWfm09IfwNSvlwM5X3H81EMGOjhH9bctJipRhEgfWPjBMlcSW2zc902ThvkOjU8gVcEQ==
+X-Received: by 10.223.178.206 with SMTP id g72mr7028517wrd.135.1519330725740;
+        Thu, 22 Feb 2018 12:18:45 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id c7sm956812wrh.18.2018.02.22.12.18.45
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 22 Feb 2018 12:18:45 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH] t: send verbose test-helper output to fd 4
+References: <20180222064836.GA10719@sigill.intra.peff.net>
+Date:   Thu, 22 Feb 2018 12:18:44 -0800
+In-Reply-To: <20180222064836.GA10719@sigill.intra.peff.net> (Jeff King's
+        message of "Thu, 22 Feb 2018 01:48:37 -0500")
+Message-ID: <xmqq371swzff.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Jeff King <peff@peff.net> writes:
 
---Apple-Mail=_1A39F2EB-E822-4A8D-AD3C-A3D9E97316A2
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=utf-8
+> This is a repost of the two patches from:
+>
+>   https://public-inbox.org/git/20180209185710.GA23403@sigill.intra.peff.net/
+>
+> (now just one patch, since sg/test-i18ngrep graduated and we can do it
+> all in one step). The idea got positive feedback, but nobody commented
+> on patches and I didn't see them in "What's cooking".
 
-
-> On Feb 22, 2018, at 12:02 PM, Junio C Hamano <gitster@pobox.com> =
-wrote:
->=20
-> I saw somewhere "Apple-Mail" and a phrase "repaste".  So perhaps
-> copy&paste on the client is involved in the whitespace damage (of
-> course the original could be broken, but I somehow doubt it).
-
-https://doriantaylor.com/file/well-ill-be-damned.png
-
-> For what it's worth, I am slightly negative on this addition.  It
-> makes it inconsistent if we only mention it about _this_ flush and
-> not any other flush.  It even gets in the way of learning the
-> protocol by new people reading it, by giving an impression that
-> somehow LF is outside and in between packet line.
->=20
-> Thanks.
-
-This patch exists because I was asked to write it. I don=E2=80=99t know =
-squat about this protocol other than the fact that I followed the spec =
-and it didn=E2=80=99t work. I traced a known-good protocol endpoint and =
-found it contained content that didn=E2=80=99t agree with the spec. I =
-then obliged the request to submit a patch with *what I knew to be true* =
-about the sample that actually worked. I then followed the =
-recommendations *advertised on GitHub* for submitting the patch.
-
-You=E2=80=99re welcome.
-
---
-Dorian Taylor
-Make things. Make sense.
-https://doriantaylor.com
-
-
---Apple-Mail=_1A39F2EB-E822-4A8D-AD3C-A3D9E97316A2
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
-	filename=signature.asc
-Content-Type: application/pgp-signature;
-	name=signature.asc
-Content-Description: Message signed with OpenPGP using GPGMail
-
------BEGIN PGP SIGNATURE-----
-Comment: GPGTools - https://gpgtools.org
-
-iQIcBAEBCgAGBQJajyRHAAoJEIqxSjt9ja+jhZcP/2QYeHtO2jWmI/pBPl7l7dsM
-2hXeCXMZWjrp0RO3ZT/iN0zPjTWvEvZUyNN5pq3bkarJam4WIlJnl3f3Lh1O6iFl
-va3gmGDutvlaua8BZfX8xKyD+jE5weZcCF+lb3mTLOMnU/7YhCbT6f35RVsHsfIh
-Gu+auTkMJVnloX+aJWk9Adn487zVJVup/BaRI0UmTHH3RuNuBEJ54te90rSY7W1A
-EZ0KyO1ihftb/7a6eeR/p8hEySb6E4+Q7+n/ZdyjumAOQ1ymYhB3uOHkzf8hyhL3
-EbivJm3Y8OAGYVbbPvpChxE0NofBuoOOnaMBV08A4BQeCzKn/gaEn51MipPA9kv5
-iVSmagOAPjPoYp6lql6SDNJYDQFuIe/Rb2D0rsFl8MSepezmitSgF05uLqXnpYQN
-1rF8c3KaUOQGrgWIl1KG6i2P1LaK+jY6gE5o0LkkGu0FQyq2WuidkV+u/yVXGkBB
-fqFoPve6PJzbGHoZ+JoNH9HTU+lUHPybwD6wh8g0LzEWlbAcyExBv3O/7zgv4uiH
-qvEreqBl/0qzKLpsTKcaXFtcAE6YTV8kPEfWO7Sgr7MFlO7yAejHPjzl9OU3aBUM
-pIIbjFO1U0ReLEZmu1HjfwOdCw+vpk1v/FC35Fw9GBn3VLFwD6cQ+jcEPLaQYQDY
-avWd2IwMV439gqa3dxKx
-=P653
------END PGP SIGNATURE-----
-
---Apple-Mail=_1A39F2EB-E822-4A8D-AD3C-A3D9E97316A2--
+Thanks for clearly explaining the change.  Will queue.
