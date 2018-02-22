@@ -2,85 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A97551F404
-	for <e@80x24.org>; Thu, 22 Feb 2018 00:24:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 707331F404
+	for <e@80x24.org>; Thu, 22 Feb 2018 00:24:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751466AbeBVAYD (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Feb 2018 19:24:03 -0500
-Received: from mail-wr0-f195.google.com ([209.85.128.195]:40077 "EHLO
-        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751270AbeBVAYC (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Feb 2018 19:24:02 -0500
-Received: by mail-wr0-f195.google.com with SMTP id o76so8837472wrb.7
-        for <git@vger.kernel.org>; Wed, 21 Feb 2018 16:24:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=DWYSWOV3f31JToifM0hfHZoS194RwsFsoMZcAfXmEhk=;
-        b=JXOMJANVrnflt1NDmL9hRvSEG8EjlToV/ryw8MgnfiFHrHgfUVU7xiulkGW2gLyvv4
-         1CxKt4CoMQ6SF6SIegYpqZ8coi3j2WbdFXI+eTsSAQAupQoAbbMR395PHX9w5PRKfNfe
-         wjLlKh0PHZjsndm75AwJ0uKKxrXkHNL+Hmxe/t+iWV/flk93mbvK37THmh1GHvYoxrFL
-         RSvsE6o/Q34SfRi44G6vGpahpgDrgX5XKN8ZDYVfrT9lvT/UO2/Slt+o+OqwgqS0q9Ml
-         oo8Q8w+VZTKrIbEaqCUYa1JYbAIvhhJ9E8I2cxrRYbCXmuexQObLECMTWFO2U8qs2NZm
-         h9Mg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=DWYSWOV3f31JToifM0hfHZoS194RwsFsoMZcAfXmEhk=;
-        b=b78Vh1zW52zIwfAH+De74S8Od2F31mSNZ4dn/8A0aocCEVbZ/Btts1yaYtX3eNsoTC
-         mJB27VfpGIF+w3yIuRnDWPmCCmBspP7qCTonArAOnbTs9TJ2khxGyyunUXjbS0DzujdP
-         c14AHGn6Q2PX+euozdUc3Up37Qh6dgQ4SUDdgBNdxaURCDBESRGXvMIriQhsjCUt8hcm
-         deubL9b3GNk0EJ0R/3Vdv1cKVo2Wo4eZIa2kTUvz6Wll+0pLG2nYJY9mYqQstrcB+6WK
-         Fx+4tiunnPTjVOfFSj4WotOOF9jGId+fxDYmQ0zgAEK3c9uzH5D0S/ubVyN497WRlG4k
-         vCkA==
-X-Gm-Message-State: APf1xPCBhI5LEN4IRVIdGYAd3Er33RLn0vyDObOdDkUNRTS5fM6MbH7X
-        tPnOGBMgDi87c8kK9r1DmsQ=
-X-Google-Smtp-Source: AH8x2259D0ZhR8dxCOIzXr7K2qgQ4ycA9nH/bR1/rz8NpFMmRIvfD7f2miE7JvJ/Mp/8uXPo0tNS3w==
-X-Received: by 10.223.179.194 with SMTP id x2mr4773895wrd.94.1519259040676;
-        Wed, 21 Feb 2018 16:24:00 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id f142sm11200610wme.15.2018.02.21.16.23.59
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 21 Feb 2018 16:23:59 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Michael Giuffrida <michaelpg@chromium.org>,
-        Michael Schubert <mschub@elegosoft.com>,
+        id S1751502AbeBVAYS (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Feb 2018 19:24:18 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:33664 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751270AbeBVAYR (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 21 Feb 2018 19:24:17 -0500
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 93F536042F;
+        Thu, 22 Feb 2018 00:24:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1519259055;
+        bh=qXDxdKOSl3oPdDnZnwSLfLDNm1B6qlXgkzFs8lh1CSU=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=slDu02Lr/GStjFPIZDADBISaZGwTr+1paI9E1SwPwXvNEtYinwWJof4DiqU8WtP6K
+         YP32PM4s5XmdcNp90tO7FaG0XU52p8KW+vL6pVRSZWWrQk42loEBjAnNwjyxk+Zms1
+         z8/ZURiwsp6K2H7famWb9sKZq9q4ytiJznnqZ7909SC9QR9XRXs/GJHD/4FqCzXLgl
+         7Ucht1NrTwlVS/ad6AD/GFPuBro5vWW+mUlwe2zFVEA0cZWDzUGKQtZB2+M59Lwhkk
+         YBagfuTnm08cP+ybwly1cV5hGr5v3MgbEcQznr3ZvJTd57r6AsoAyYXeecKMVUtxyO
+         MHrJ7aO8ZdeQfrIwMRhkseh+hxttHXluXeEKNsekYY9jnE91LNYZD72Y3s2urayiBM
+         yRK+7yhor0A3x3mxKkFBDNS4MOPamWpuq94L6WF81RvtYXPr94FlKW/r6cpt+gAznb
+         Lx5gGan6+huQ+D2L4pmj0BnbyfpEHo07ck4ODOBtUQDIKqOwyzd
+Date:   Thu, 22 Feb 2018 00:24:08 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Patryk Obara <patryk.obara@gmail.com>,
         Jeff King <peff@peff.net>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH v5 00/17] document & test fetch pruning & add fetch.pruneTags
-References: <20180121000304.32323-1-avarab@gmail.com>
-        <20180209203216.11560-1-avarab@gmail.com>
-Date:   Wed, 21 Feb 2018 16:23:59 -0800
-In-Reply-To: <20180209203216.11560-1-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
- =?utf-8?B?IEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Fri, 9 Feb 2018 20:31:59 +0000")
-Message-ID: <xmqq606pyiqo.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 00/36] object_id part 12
+Message-ID: <20180222002408.GH6619@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Patryk Obara <patryk.obara@gmail.com>, Jeff King <peff@peff.net>,
+        Eric Sunshine <sunshine@sunshineco.com>
+References: <20180219225927.386065-1-sandals@crustytoothpaste.net>
+ <xmqqh8qayybs.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="XigHxYirkHk2Kxsx"
+Content-Disposition: inline
+In-Reply-To: <xmqqh8qayybs.fsf@gitster-ct.c.googlers.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.14.0-3-amd64)
+User-Agent: Mutt/1.9.3 (2018-01-21)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
 
-> Here's a v5 (correct subject line this time!). Many thanks to Eric for
-> a thorough review.
+--XigHxYirkHk2Kxsx
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-We haven't seen any comments on this round.  Is everybody happy?
+On Wed, Feb 21, 2018 at 10:47:19AM -0800, Junio C Hamano wrote:
+> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+>=20
+> > This is the twelfth in a series of patches to convert from unsigned char
+> > [20] to struct object_id.  This series is based on next.
+> >
+> > Included in this series are conversions for find_unique_abbrev and
+> > lookup_replace_object, as well as parts of the sha1_file code.
+> >
+> > Conflicts with pu are average in number but minor, mostly because of the
+> > type_name conversion.  None of them are tricky, except that the
+> > introduction of get_tree_entry_if_blob requires a conversion of that
+> > function.
+>=20
+> And the reason why this is based on 'next' is...?  Which topic(s) do
+> we have to wait for until we can queue this series, in other words?
+>=20
+> Thanks for working on this, though.
 
-I do not have a strong opinion on the new feature, either for or
-against.  I didn't find anything majorly questionable in the
-execution, though, so...
+It was waiting on the hash_algo changes I had submitted, and I don't
+believe they'd made it into master.  When they have, I'll rebase and
+send a v2.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
+https://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: https://keybase.io/bk2204
+
+--XigHxYirkHk2Kxsx
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.4 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlqODagACgkQv1NdgR9S
+9oubrA//Q5ImqUzEngiG6WhR4DTGcxNVbuGWCBExcJn4xd72izYtyraJNcIJ/T4u
+NIIM/1fkxqBd2iWzCWPSPTvtwtXsJwh6StCXe0PRFiBgfhp2LuYVLw7mLe50DquX
+mlVuCk/d/QWtLnSr8pgr9xdQmSleL93ZSJwX1i/ttkzs31+3qZnC972RdCSNikh/
+NkV9zHI8bJXjzz7lATSldoOQOy8vEcoDwu1fzW43sFLDHpJMnYDAyq7NXQzfUySl
+MqKhmAc7cinhre81sFWC/x7Xw0f2W6HCsEwq95J/bKMAWDT/iqNh8DdXpvb8Dtp8
+7OiNxQsiKbpUQxnOWL+SOqu5gFHs+ex8eYuIEszKEKfYplaCvkgrSEDM/1lVjfKC
+JhjRsZt54uEUxyDvovwhiUZk+QbW3nc1oL/vfmiD0W2pFxaxpFUv1I0/kwRWRZAq
+6Fvn1JjHy9uemREur/5H1Lno6Ss1dHgk7VRG83jPzLmv6cUyU45P9UTcKcsG15Q2
+o0Gr0bw18BkWZcIhGzJ9N3thXNCuAA6CL/OkMNU6jmP3otU+Fc7IGuuR/dn3XRej
+NQe6CWUmY1dgL7CTQl1EkD75NlN6AwI5KBxZKkn9GxDkmqQu1WraRVJoYOqh55fy
+GunULCH817eqSbKx82bcELTUhM7vDLojxj/sNjxUEK+ARIq7oms=
+=C4Hz
+-----END PGP SIGNATURE-----
+
+--XigHxYirkHk2Kxsx--
