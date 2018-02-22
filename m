@@ -3,224 +3,149 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3AA671F404
-	for <e@80x24.org>; Thu, 22 Feb 2018 20:57:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E87601F404
+	for <e@80x24.org>; Thu, 22 Feb 2018 21:24:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751270AbeBVU5y (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Feb 2018 15:57:54 -0500
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:37458 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751119AbeBVU5x (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Feb 2018 15:57:53 -0500
-Received: by mail-wm0-f68.google.com with SMTP id m207so891791wma.2
-        for <git@vger.kernel.org>; Thu, 22 Feb 2018 12:57:52 -0800 (PST)
+        id S1751412AbeBVVYH (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Feb 2018 16:24:07 -0500
+Received: from mail-pl0-f65.google.com ([209.85.160.65]:43955 "EHLO
+        mail-pl0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751366AbeBVVYG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Feb 2018 16:24:06 -0500
+Received: by mail-pl0-f65.google.com with SMTP id f23so3618176plr.10
+        for <git@vger.kernel.org>; Thu, 22 Feb 2018 13:24:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=1pfP0d5pvJ2X6O5BDJyj1vF3NdPWvDcAtj3q+leva10=;
-        b=Reng7LsqOxgnIbBEpjyWOBOhrD1MNiNy5vv28NPDuTjiTTDIypIBBBNSXTbc6ytSai
-         22P28Ge1iQIAk6BcrIhp9OfvOA7hfwwdoCfntnEr6kHCPK8ppGoRf5cFSRDN63RT3RFo
-         axzVZhwN64tU6gqDsZmENbyIumQgjAlBe0t6BOuQTdSKG6vevOSecmEZbvfSsBtnMqAo
-         Y5rY2s/qMTzvFQHf393Z/r741zPldYAYtwb1s6MgzwCOZq7OYHf78O4jGs9hvTVapKW7
-         /ipo4Ed13NMGN1r3w+wmo9hMjN/bqxmZMwOqWs0d9Rrj+vUaDBGxj9VhKYTaYuG5MyMc
-         uWHg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=yNh4/3WnWoDRweeuUE7sFxnn/UzCwlHFaF9k9O53e6U=;
+        b=vCYnQpIfsI+PioTZwIkUa39aqySH8gEBRDMOhQaDGODV9uDkT/KySvwfIm2yMKYFaf
+         RPUpTJrR8Qw0Al8WPNvZGXT2ZIepfSTI8ZNpT+JlAY3LqOyBO50KOM9Hgsrz/JbaNtfw
+         Xyo2SzOlp7b2+BPxdax0MzjpZSjE38GE3I3qoM/eS+0TNtOVSQOQ+J5OZi3le6wnO40Z
+         AR6GegkQawXydEsCbfhdG5E9vEXe9VQrQMQ7rdkYnzJul2OTy4SNVcCHyRv+2I9WENVG
+         t+rRLZiUXuinXc0X3v02YsUgu+SsBowXlkkH971wbPpts0dVBsd1Q7i5AhuSZDDmUIZk
+         +uXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=1pfP0d5pvJ2X6O5BDJyj1vF3NdPWvDcAtj3q+leva10=;
-        b=DAGXar5fdpwJ6bLsXLt5iwVwOw0XDcy3bxSh2b86AdP2CbUDxQJp72PYwOjlKTp4pu
-         Jk5dtQ7QMAPyswlDNDjrx6G84ekHxgly4hbyk/aPZ5/k+84QH3UD8Ll2OKoiiu1ga8H0
-         kiCDEqggDnKaJbYQMsMDiQfRvKQkhluEiTiN++PmvE98TxSYKm66M7hWhJfRCFkONgHO
-         38kdrDMC+92oIiUvbaPUdNKqiHNZZBHRSUNM/yTgU6eFSgYGicdkbRFO3U7WGSjwr//P
-         yVrjuZcgF/Rg/WDoKDtsP/SF/EyRncASXemhWSTDJ2A3DMSt1sNvYLF5lKzIknk8/DFv
-         KZqw==
-X-Gm-Message-State: APf1xPDxcBupeokatXtU/NhEizgd75+8qaQyZ/OZFg4HY+2kDObAJhVM
-        7dricW+q2GU5FdOt3rumMLE=
-X-Google-Smtp-Source: AG47ELt9c5bvDE5c47K4WvFggjBZFCjdTUDoDZ3qh6zSQopmgFu+YIBIuC7YfOf/3ghm/Qfs1YPEVg==
-X-Received: by 10.28.184.8 with SMTP id i8mr432072wmf.52.1519333071573;
-        Thu, 22 Feb 2018 12:57:51 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id 72sm305965wmh.44.2018.02.22.12.57.50
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=yNh4/3WnWoDRweeuUE7sFxnn/UzCwlHFaF9k9O53e6U=;
+        b=Wu7daVxhdohpsd4FGKnDz2iBaPlPRK7XuwiHmTgeD3q2TgHvyu27BEes4S1grJvMEB
+         vaFgoSEC/r6YWY3i/JWmzYGMIpnoaB73yTEut1HQlItjhhBgncQPfqcWDYHt27RqmbIs
+         si7tug+DtatBj12S6RtndCWdkwPp9zTJBO0qS+o8szXX82qpOTScDtRUctMVdN113Kz4
+         XJiHuLc2TKt3NG3lG4YKYD6ckRZ4fMP2VDQRZgxpfF18cKGFISr2KpCnVJAJCiRAsUhb
+         RJG5/aVP8qC8GCHSjpgjctuckNbSgd90JdtkfOsLBxLmI7RQL0lERjlR23/fIqwWmKj7
+         awLA==
+X-Gm-Message-State: APf1xPDQv+9E96tCJLnVMtjKgNQZno0Jun6KRUXHyaFbI194BMF9k07/
+        fiVWz+M4r44ano8rs/4sJXo=
+X-Google-Smtp-Source: AH8x227gbHmt+n3sxpau/dygsp0RUxTogBJ+ULDK1mcdOggIZEi3ml3uTGNnmkxkGQ5qWFrdSg51fA==
+X-Received: by 2002:a17:902:7614:: with SMTP id k20-v6mr7834855pll.343.1519334645416;
+        Thu, 22 Feb 2018 13:24:05 -0800 (PST)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id w22sm1131535pge.65.2018.02.22.13.24.04
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 22 Feb 2018 12:57:50 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Git List <git@vger.kernel.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] sequencer: factor out strbuf_read_file_or_whine()
-References: <6b58885c-b0f6-1687-3f2d-4594aacff9ac@web.de>
-Date:   Thu, 22 Feb 2018 12:57:50 -0800
-In-Reply-To: <6b58885c-b0f6-1687-3f2d-4594aacff9ac@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-        message of "Thu, 22 Feb 2018 20:29:25 +0100")
-Message-ID: <xmqqlgfkvj1t.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        Thu, 22 Feb 2018 13:24:04 -0800 (PST)
+Date:   Thu, 22 Feb 2018 13:24:02 -0800
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Brandon Williams <bmwill@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
+        sbeller@google.com, gitster@pobox.com, stolee@gmail.com,
+        git@jeffhostetler.com, pclouds@gmail.com
+Subject: Re: [PATCH v3 04/35] upload-pack: convert to a builtin
+Message-ID: <20180222212402.GB256918@aiede.svl.corp.google.com>
+References: <20180125235838.138135-1-bmwill@google.com>
+ <20180207011312.189834-1-bmwill@google.com>
+ <20180207011312.189834-5-bmwill@google.com>
+ <20180221134422.2386e1aca39fe673235590e7@google.com>
+ <20180222095833.GC12442@sigill.intra.peff.net>
+ <20180222180715.GB185096@google.com>
+ <20180222181400.GA19035@sigill.intra.peff.net>
+ <20180222193814.GA256918@aiede.svl.corp.google.com>
+ <20180222201940.GB23561@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180222201940.GB23561@sigill.intra.peff.net>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-René Scharfe <l.s.r@web.de> writes:
+Hi,
 
-> Reduce code duplication by factoring out a function that reads an entire
-> file into a strbuf, or reports errors on stderr if something goes wrong.
+Jeff King wrote:
+> On Thu, Feb 22, 2018 at 11:38:14AM -0800, Jonathan Nieder wrote:
+
+>> To be clear, which of the following are you (most) worried about?
+>>
+>>  1. being invoked with --help and spawning a pager
+>>  2. receiving and acting on options between 'git' and 'upload-pack'
+>>  3. repository discovery
+>>  4. pager config
+>>  5. alias discovery
+>>  6. increased code surface / unknown threats
 >
-> Signed-off-by: Rene Scharfe <l.s.r@web.de>
-> ---
-> The difference to using strbuf_read_file() is more detailed error
-> messages for open(2) failures.  But I don't know if we need them -- or
-> under which circumstances reading todo files could fail anyway.  When
-> doing multiple rebases in parallel perhaps?
+> My immediate concern is (4).
+
+Thanks for clarifying.
+
+>                              But my greater concern is that people who
+> work on git.c should not have to worry about accidentally violating this
+> principle when they add a new feature or config option.
+
+That sounds like a combination of (6) and insufficient documentation
+or tests.  Ideas for how we can help prevent such accidents?
+
+> In other words, it seems like an accident waiting to happen. I'd be more
+> amenable to it if there was some compelling reason for it to be a
+> builtin, but I don't see one listed in the commit message. I see only
+> "let's make it easier to share the code", which AFAICT is equally served
+> by just lib-ifying the code and calling it from the standalone
+> upload-pack.c.
+
+If we have so little control of the common code used by git commands
+that could be invoked by a remote user, I think we're in trouble
+already.  I don't think being a builtin vs not makes that
+significantly different, since there are plenty of builtins that can
+be triggered by remote users.  Further, if we have so little control
+over the security properties of git.c, what hope do we have of making
+the rest of libgit.a usable in secure code?
+
+In other words, having to pay more attention to the git wrapper from a
+security pov actually feels to me like a *good* thing.  The git
+wrapper is the entry point to almost all git commands.  If it is an
+accident waiting to happen, then anything that calls git commands is
+already an accident waiting to happen.  So how can we make it not an
+accident waiting to happen? :)
+
+>> Although in most setups the user does not control the config files on
+>> a server, item (4) looks like a real issue worth solving.  I think we
+>> should introduce a flag to skip looking for pager config.  We could
+>> use it for receive-pack, too.
 >
->  sequencer.c | 74 +++++++++++++++++++++++--------------------------------------
->  1 file changed, 28 insertions(+), 46 deletions(-)
->
-> diff --git a/sequencer.c b/sequencer.c
-> index e9baaf59bd..e34334f0ef 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -1869,22 +1869,31 @@ static int count_commands(struct todo_list *todo_list)
->  	return count;
->  }
->  
-> +static ssize_t strbuf_read_file_or_whine(struct strbuf *sb, const char *path)
-> +{
-> +	int fd;
-> +	ssize_t len;
-> +
-> +	fd = open(path, O_RDONLY);
-> +	if (fd < 0)
-> +		return error_errno(_("could not open '%s'"), path);
-> +	len = strbuf_read(sb, fd, 0);
-> +	close(fd);
-> +	if (len < 0)
-> +		return error(_("could not read '%s'."), path);
-> +	return len;
-> +}
-> +
+> There's not much point for receive-pack. It respects hooks, so any
+> security ship has already sailed there.
 
-This looks like a good granularity of a unit of independent work.
-The original we see below looks like it was written with scissors
-and glue ;-)
+Yet there are plenty of cases where people who can push are not
+supposed to have root privilege.  I am not worried about hooks
+specifically (although the changes described at [1] might help and I
+still plan to work on those) but I am worried about e.g. commandline
+injection issues.  I don't think we can treat receive-pack as out of
+scope.
 
-It appears to me that no topic in flight introduce more instances
-that need to be converted with a quick trial merge to 'pu', so I'll
-queue this forked at the tip of 'master'.
+And to be clear, I don't think you were saying receive-pack *is* out
+of scope.  But you seem to be trying to draw some boundary, where I
+only see something fuzzier (e.g. if a bug only applies to
+receive-pack, then that certainly decreases its impact, but it doesn't
+make the impact go away).
 
-Thanks.
+Thanks,
+Jonathan
 
->  static int read_populate_todo(struct todo_list *todo_list,
->  			struct replay_opts *opts)
->  {
->  	struct stat st;
->  	const char *todo_file = get_todo_path(opts);
-> -	int fd, res;
-> +	int res;
->  
->  	strbuf_reset(&todo_list->buf);
-> -	fd = open(todo_file, O_RDONLY);
-> -	if (fd < 0)
-> -		return error_errno(_("could not open '%s'"), todo_file);
-> -	if (strbuf_read(&todo_list->buf, fd, 0) < 0) {
-> -		close(fd);
-> -		return error(_("could not read '%s'."), todo_file);
-> -	}
-> -	close(fd);
-> +	if (strbuf_read_file_or_whine(&todo_list->buf, todo_file) < 0)
-> +		return -1;
->  
->  	res = stat(todo_file, &st);
->  	if (res)
-> @@ -3151,20 +3160,13 @@ int check_todo_list(void)
->  	struct strbuf todo_file = STRBUF_INIT;
->  	struct todo_list todo_list = TODO_LIST_INIT;
->  	struct strbuf missing = STRBUF_INIT;
-> -	int advise_to_edit_todo = 0, res = 0, fd, i;
-> +	int advise_to_edit_todo = 0, res = 0, i;
->  
->  	strbuf_addstr(&todo_file, rebase_path_todo());
-> -	fd = open(todo_file.buf, O_RDONLY);
-> -	if (fd < 0) {
-> -		res = error_errno(_("could not open '%s'"), todo_file.buf);
-> -		goto leave_check;
-> -	}
-> -	if (strbuf_read(&todo_list.buf, fd, 0) < 0) {
-> -		close(fd);
-> -		res = error(_("could not read '%s'."), todo_file.buf);
-> +	if (strbuf_read_file_or_whine(&todo_list.buf, todo_file.buf) < 0) {
-> +		res = -1;
->  		goto leave_check;
->  	}
-> -	close(fd);
->  	advise_to_edit_todo = res =
->  		parse_insn_buffer(todo_list.buf.buf, &todo_list);
->  
-> @@ -3180,17 +3182,10 @@ int check_todo_list(void)
->  
->  	todo_list_release(&todo_list);
->  	strbuf_addstr(&todo_file, ".backup");
-> -	fd = open(todo_file.buf, O_RDONLY);
-> -	if (fd < 0) {
-> -		res = error_errno(_("could not open '%s'"), todo_file.buf);
-> -		goto leave_check;
-> -	}
-> -	if (strbuf_read(&todo_list.buf, fd, 0) < 0) {
-> -		close(fd);
-> -		res = error(_("could not read '%s'."), todo_file.buf);
-> +	if (strbuf_read_file_or_whine(&todo_list.buf, todo_file.buf) < 0) {
-> +		res = -1;
->  		goto leave_check;
->  	}
-> -	close(fd);
->  	strbuf_release(&todo_file);
->  	res = !!parse_insn_buffer(todo_list.buf.buf, &todo_list);
->  
-> @@ -3271,15 +3266,8 @@ int skip_unnecessary_picks(void)
->  	}
->  	strbuf_release(&buf);
->  
-> -	fd = open(todo_file, O_RDONLY);
-> -	if (fd < 0) {
-> -		return error_errno(_("could not open '%s'"), todo_file);
-> -	}
-> -	if (strbuf_read(&todo_list.buf, fd, 0) < 0) {
-> -		close(fd);
-> -		return error(_("could not read '%s'."), todo_file);
-> -	}
-> -	close(fd);
-> +	if (strbuf_read_file_or_whine(&todo_list.buf, todo_file) < 0)
-> +		return -1;
->  	if (parse_insn_buffer(todo_list.buf.buf, &todo_list) < 0) {
->  		todo_list_release(&todo_list);
->  		return -1;
-> @@ -3370,17 +3358,11 @@ int rearrange_squash(void)
->  	const char *todo_file = rebase_path_todo();
->  	struct todo_list todo_list = TODO_LIST_INIT;
->  	struct hashmap subject2item;
-> -	int res = 0, rearranged = 0, *next, *tail, fd, i;
-> +	int res = 0, rearranged = 0, *next, *tail, i;
->  	char **subjects;
->  
-> -	fd = open(todo_file, O_RDONLY);
-> -	if (fd < 0)
-> -		return error_errno(_("could not open '%s'"), todo_file);
-> -	if (strbuf_read(&todo_list.buf, fd, 0) < 0) {
-> -		close(fd);
-> -		return error(_("could not read '%s'."), todo_file);
-> -	}
-> -	close(fd);
-> +	if (strbuf_read_file_or_whine(&todo_list.buf, todo_file) < 0)
-> +		return -1;
->  	if (parse_insn_buffer(todo_list.buf.buf, &todo_list) < 0) {
->  		todo_list_release(&todo_list);
->  		return -1;
+[1] https://public-inbox.org/git/20171002234517.GV19555@aiede.mtv.corp.google.com/
