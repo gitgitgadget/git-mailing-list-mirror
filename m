@@ -2,78 +2,193 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A4B241F576
-	for <e@80x24.org>; Thu, 22 Feb 2018 08:52:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 89CAE1F576
+	for <e@80x24.org>; Thu, 22 Feb 2018 09:14:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752737AbeBVIw1 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Feb 2018 03:52:27 -0500
-Received: from a7-20.smtp-out.eu-west-1.amazonses.com ([54.240.7.20]:50446
-        "EHLO a7-20.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752553AbeBVIw1 (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 22 Feb 2018 03:52:27 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=shh3fegwg5fppqsuzphvschd53n6ihuv; d=amazonses.com; t=1519289545;
-        h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-        bh=kSGw6yifFCdeDjpkAkAv74ezLwbh9leWuS13XfR46Fc=;
-        b=AYv3m22anmXhtBFJga+oR7nlTz2iZXMKIVJZqjJ9aTJ2GaVGPGLodV6YFjr4aaCp
-        Vn0a+trjpLhEEj9ptiwNYDs22KGKwT+Ocu+9ZtA6endxw5UPKwVezavJoeWkIEmCyv2
-        2Qf/3kVG+WUUCfJqmJ4Rd3p1vxmjQL6P6Yumui04=
-From:   marmot1123 <marmot.motoki@gmail.com>
-To:     git@vger.kernel.org
-Message-ID: <01020161bcb6b2b5-6a915ec6-57e5-4619-b281-0e2a193c69a2-000000@eu-west-1.amazonses.com>
-In-Reply-To: <01020161b30b99df-5029ec2b-a5cb-475b-b54f-9879a117a7f3-000000@eu-west-1.amazonses.com>
-References: <01020161b30b99df-5029ec2b-a5cb-475b-b54f-9879a117a7f3-000000@eu-west-1.amazonses.com>
-Subject: [PATCH v3 1/2] Fix misconversion of gitsubmodule.txt
+        id S1753061AbeBVJOY (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Feb 2018 04:14:24 -0500
+Received: from mail-ot0-f193.google.com ([74.125.82.193]:34364 "EHLO
+        mail-ot0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752857AbeBVJOX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Feb 2018 04:14:23 -0500
+Received: by mail-ot0-f193.google.com with SMTP id n74so3813656ota.1
+        for <git@vger.kernel.org>; Thu, 22 Feb 2018 01:14:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=DcYeYtYDJMLf/qq6/gl6qYqJqeVxi7HQ+CUlncR4s00=;
+        b=BJqEyBxlhAvfCV8BQrRog5WigskV825rYFzuBBge/iXAjPZBmrJypOFJwZyiUJ6WSp
+         bI5bpXCOaT5sR5koOIZ5fhvAdvsukNLGVdYCjmkXti2ilxhLeF9CPvBuBW96IVdh+5dn
+         7UkvwS8GN4mh8xzRN/u2XzAwSvZNOIwkBgJtnsALcw9CZKlqeLjzlwI644KZ+RuZSbi5
+         IGHAUzlHo5HFJDEb9fFSjZlvgLJ152vtxo2nYlhsS13MGADcxPdsZ8dHPYaN2d10QLwg
+         TRY87+3OTlHovj3JIVw6Hr8Ku7OB/493tkbUSdrKKRqZFIsg+aupzf8mstF6GHfCFLqv
+         wuLw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=DcYeYtYDJMLf/qq6/gl6qYqJqeVxi7HQ+CUlncR4s00=;
+        b=pwNacm/rQhsm5IZjnyEeOLaoHuHGtVG84a3VKZbD1ClhZbOTkFHiSKQHmtC3TfJE98
+         xh9qn9VllHW/rXsQHDexe47dzv2hZCf0a14Oyc5LtSXBBpkOULPzAjGKnJdhFN6c0Zhs
+         RYkEV3WqXKvGL0+4dMquJrhjlxVJCnpt8F8TTqrnQ6F41q4Cr6l1y3YLKQo+tMfQFrtk
+         dVh0i2idCRyIKoyUozHTqqdDIiNNaT+cO/nAbaZPZ82i+F7HTnvTlyeWaNIbkpAE39mm
+         2BkHpv4nLoOZEYhc27RCrF/XmT7mo0tTpqpX51RNGOZLLX/v+MBVJCS7i+V76lDTZkt3
+         v/rQ==
+X-Gm-Message-State: APf1xPBlsrLmOazT8Y2Hviz3GmEgTtzrZ9lXmAK2yD6wLDnC58BAX84x
+        49KColAaSHDHB/QExOAjFBWD/hHhaRPl3d4HTfQ=
+X-Google-Smtp-Source: AH8x224WkNcEMNYvoFvKZxfTFGuyC/CBMQLy9ZmPaP2UwZbIkc4DBASz0yi/UlGgzRL6yYuB9J4Y55s91WD9xfOSIgM=
+X-Received: by 10.157.24.42 with SMTP id b39mr4774168ote.356.1519290862318;
+ Thu, 22 Feb 2018 01:14:22 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Received: by 10.74.25.140 with HTTP; Thu, 22 Feb 2018 01:13:51 -0800 (PST)
+In-Reply-To: <CAM0VKjmFEyr4qHdc1qfW0M_RZ7cM9bCfsn-M4Rapzt6CPhZE1g@mail.gmail.com>
+References: <20180131110547.20577-1-pclouds@gmail.com> <20180209110221.27224-1-pclouds@gmail.com>
+ <20180209110221.27224-7-pclouds@gmail.com> <CAM0VKjmFEyr4qHdc1qfW0M_RZ7cM9bCfsn-M4Rapzt6CPhZE1g@mail.gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Thu, 22 Feb 2018 16:13:51 +0700
+Message-ID: <CACsJy8CWdJJigQSEjGuhoH1URGY8=YSAHiqhaGBZK7Zr8GZUGg@mail.gmail.com>
+Subject: Re: [PATCH v3 06/42] completion: use __gitcomp_builtin in _git_am
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Git mailing list <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Date:   Thu, 22 Feb 2018 08:52:25 +0000
-X-SES-Outgoing: 2018.02.22-54.240.7.20
-Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In the 2nd and 4th paragraph of DESCRIPTION, there ware misconversions `sub=
-module=E2=80=99s`.
-It seems non-ASCII apostrophes, so I rewrite ASCII apostrophes.
+On Wed, Feb 14, 2018 at 7:53 PM, SZEDER G=C3=A1bor <szeder.dev@gmail.com> w=
+rote:
+> On Fri, Feb 9, 2018 at 12:01 PM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Du=
+y <pclouds@gmail.com> wrote:
+>> The new completable options are:
+>>
+>> --directory
+>> --exclude
+>> --gpg-sign
+>> --include
+>> --keep-cr
+>> --keep-non-patch
+>> --message-id
+>> --no-keep-cr
+>> --patch-format
+>> --quiet
+>> --reject
+>> --resolvemsg=3D
+>>
+>> In-progress options like --continue will be part of --git-completion-hel=
+per
+>> then filtered out by _git_am() unless the operation is in progress. This
+>> helps keep marking of these operations in just one place.
+>>
+>> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.=
+com>
+>> ---
+>>  contrib/completion/git-completion.bash | 11 ++++-------
+>>  parse-options.h                        |  4 ++--
+>>  rerere.h                               |  3 ++-
+>>  3 files changed, 8 insertions(+), 10 deletions(-)
+>>
+>> diff --git a/contrib/completion/git-completion.bash b/contrib/completion=
+/git-completion.bash
+>> index 1e0bd835fe..eba482eb9c 100644
+>> --- a/contrib/completion/git-completion.bash
+>> +++ b/contrib/completion/git-completion.bash
+>> @@ -1105,12 +1105,13 @@ __git_count_arguments ()
+>>  }
+>>
+>>  __git_whitespacelist=3D"nowarn warn error error-all fix"
+>> +__git_am_inprogress_options=3D"--skip --continue --resolved --abort"
+>>
+>>  _git_am ()
+>>  {
+>>         __git_find_repo_path
+>>         if [ -d "$__git_repo_path"/rebase-apply ]; then
+>> -               __gitcomp "--skip --continue --resolved --abort"
+>> +               __gitcomp "$__git_am_inprogress_options"
+>>                 return
+>>         fi
+>>         case "$cur" in
+>> @@ -1119,12 +1120,8 @@ _git_am ()
+>>                 return
+>>                 ;;
+>>         --*)
+>> -               __gitcomp "
+>> -                       --3way --committer-date-is-author-date --ignore-=
+date
+>> -                       --ignore-whitespace --ignore-space-change
+>> -                       --interactive --keep --no-utf8 --signoff --utf8
+>> -                       --whitespace=3D --scissors
+>> -                       "
+>> +               __gitcomp_builtin am "--no-utf8" \
+>> +                       "$__git_am_inprogress_options"
+>>                 return
+>>         esac
+>>  }
+>> diff --git a/parse-options.h b/parse-options.h
+>> index 3c32401736..009cd863e5 100644
+>> --- a/parse-options.h
+>> +++ b/parse-options.h
+>> @@ -144,8 +144,8 @@ struct option {
+>>  #define OPT_STRING_LIST(s, l, v, a, h) \
+>>                                     { OPTION_CALLBACK, (s), (l), (v), (a=
+), \
+>>                                       (h), 0, &parse_opt_string_list }
+>> -#define OPT_UYN(s, l, v, h)         { OPTION_CALLBACK, (s), (l), (v), N=
+ULL, \
+>> -                                     (h), PARSE_OPT_NOARG, &parse_opt_t=
+ertiary }
+>> +#define OPT_UYN(s, l, v, h, f)      { OPTION_CALLBACK, (s), (l), (v), N=
+ULL, \
+>> +                                     (h), PARSE_OPT_NOARG|(f), &parse_o=
+pt_tertiary }
+>>  #define OPT_DATE(s, l, v, h) \
+>>         { OPTION_CALLBACK, (s), (l), (v), N_("time"),(h), 0,    \
+>>           parse_opt_approxidate_cb }
+>
+> Shouldn't this hunk go into a commit of its own?  Or at least it would
+> deserve a mention in the commit message.
 
-Signed-off-by: Motoki Seki <marmot.motoki@gmail.com>
----
- Documentation/gitsubmodules.txt | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+It's not a standalone change. It is used by the OPT_RERERE_AUTOUPDATE
+below, which in turn is used by git-add. Together, --rerere-autoupdate
+is removed from the completion list of git-add (and also a few more
+commands).
 
-diff --git a/Documentation/gitsubmodules.txt b/Documentation/gitsubmodules.=
-txt
-index 46cf120f666df..0d59ab4cdfb1c 100644
---- a/Documentation/gitsubmodules.txt
-+++ b/Documentation/gitsubmodules.txt
-@@ -24,7 +24,7 @@ On the filesystem, a submodule usually (but not always - =
-see FORMS below)
- consists of (i) a Git directory located under the `$GIT_DIR/modules/`
- directory of its superproject, (ii) a working directory inside the
- superproject's working directory, and a `.git` file at the root of
--the submodule=E2=80=99s working directory pointing to (i).
-+the submodule's working directory pointing to (i).
-=20
- Assuming the submodule has a Git directory at `$GIT_DIR/modules/foo/`
- and a working directory at `path/to/bar/`, the superproject tracks the
-@@ -33,7 +33,7 @@ in its `.gitmodules` file (see linkgit:gitmodules[5]) of =
-the form
- `submodule.foo.path =3D path/to/bar`.
-=20
- The `gitlink` entry contains the object name of the commit that the
--superproject expects the submodule=E2=80=99s working directory to be at.
-+superproject expects the submodule's working directory to be at.
-=20
- The section `submodule.foo.*` in the `.gitmodules` file gives additional
- hints to Gits porcelain layer such as where to obtain the submodule via
+Now that you mention it, the only command that completes
+--rerere-autoupdate is git-merge. Since this is "auto" I don't think
+people want to type manually. Maybe I should separate these changes
+_and_ remove --rerere-autoupdate from _git_merge() too? At least that
+it will be consistent that way.
 
---
-https://github.com/git/git/pull/459
+>> diff --git a/rerere.h b/rerere.h
+>> index c2961feaaa..5e5a312e4c 100644
+>> --- a/rerere.h
+>> +++ b/rerere.h
+>> @@ -37,6 +37,7 @@ extern void rerere_clear(struct string_list *);
+>>  extern void rerere_gc(struct string_list *);
+>>
+>>  #define OPT_RERERE_AUTOUPDATE(v) OPT_UYN(0, "rerere-autoupdate", (v), \
+>> -       N_("update the index with reused conflict resolution if possible=
+"))
+>> +       N_("update the index with reused conflict resolution if possible=
+"), \
+>> +       PARSE_OPT_NOCOMPLETE)
+>>
+>>  #endif
+>> --
+>> 2.16.1.207.gedba492059
+>>
+
+
+
+--=20
+Duy
