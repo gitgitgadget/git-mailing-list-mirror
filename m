@@ -7,19 +7,19 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B0C8E1F404
-	for <e@80x24.org>; Fri, 23 Feb 2018 12:36:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2892C1F404
+	for <e@80x24.org>; Fri, 23 Feb 2018 12:36:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751406AbeBWMgW (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Feb 2018 07:36:22 -0500
-Received: from mout.gmx.net ([212.227.15.15]:33227 "EHLO mout.gmx.net"
+        id S1751598AbeBWMgn (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Feb 2018 07:36:43 -0500
+Received: from mout.gmx.net ([212.227.17.22]:34247 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750805AbeBWMgW (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Feb 2018 07:36:22 -0500
-Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MX1dc-1fCQQ42Xzw-00VyMT; Fri, 23
- Feb 2018 13:36:12 +0100
-Date:   Fri, 23 Feb 2018 13:35:56 +0100 (STD)
+        id S1751391AbeBWMgm (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Feb 2018 07:36:42 -0500
+Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MC8iq-1ey2IE2cIy-008qtd; Fri, 23
+ Feb 2018 13:36:34 +0100
+Date:   Fri, 23 Feb 2018 13:36:19 +0100 (STD)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
 To:     git@vger.kernel.org
@@ -29,87 +29,71 @@ cc:     Junio C Hamano <gitster@pobox.com>,
         Philip Oakley <philipoakley@iee.org>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH v4 01/12] sequencer: avoid using errno clobbered by
- rollback_lock_file()
+Subject: [PATCH v4 02/12] sequencer: make rearrange_squash() a bit more
+ obvious
 In-Reply-To: <cover.1519389319.git.johannes.schindelin@gmx.de>
-Message-ID: <8ec3a73dfdc76c503d50e34e5fc8b8a3d5ea7dd8.1519389319.git.johannes.schindelin@gmx.de>
+Message-ID: <a7e01df062d64a2b89c99a4de4a772cfb0c84017.1519389319.git.johannes.schindelin@gmx.de>
 References: <cover.1518307771.git.johannes.schindelin@gmx.de> <cover.1519389319.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:WcX7Bw3E39UESmcJVmIuXdMNrKRWSsk8WdW7Qi9DB0ym/l0ym1e
- rGUD5eDjUVxyFciRnAu64wTRXNSzOW9PYe+3ZfTm1dEgKfuZ5ef7swZMhK51TCabTed5KA2
- TD3IVRhmxaJEvLE92yhj9C5JsEMwMv0voJT9jZCTs5J4zDogT+5+0P5JBkpClqiExEbA+vW
- Do0rJx+UTaBUl2zLIFc5w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:gF3qqx0q/O0=:3W2H0bt/Zgw1gVO3AOfzp9
- 9MY5mlzFGgAjj82LLiUY/9f4FiAb80IbRuSzBVQC5bGmAFXdavbbvO7hx2+/PnUcr4X0LfcK3
- 8UkIO1f4d7NWBH6OGgEy3K0VsM/23acFgA6CK7rnZmqlywlrbDMOBIDCCwGbnt9gB3RlZ1Ikd
- TabZpQhp3KRcXoTS+eaII9YvmkyqVQU9Bg4reIxmPdr2UPVB5+E/ZKxW15b+lQsKGyqKuu39y
- CfrveLPVQH635B1E323agL/e0Zj7F2mQP9bv3a7ydxYIrrhVpH+m7Mv72qs76axieUSX2uWmK
- Vsx10eXcg3sqRAzZXt2q5yEdoNlYK+J+XRs0TkphknuFuTJVrAtRbgFG6WOu4SaMYvf06RxsY
- BsWZqc2f8a1rXO5oySxDRM0V7Kh9+xpuhi5v4CSPygLZu6zl/aovLqo/UjPQqpW7i8dUtf1/+
- 5Pz5DC5WFOdNk9UcW+eoa99e+3zXMdjQoSiEO+KvTzVrehmZfsvK8pxF52zEeEW90f5mAPXme
- hm+TO4KsKtaVgmvBphY9w9GVj22oyDTIi2e1Ko/b+hlR/hjiAdAQGnofFPYtRhCqFA+tCzjuS
- qd2KMLbcYHFZAZ8GSMaVtJtNC3MRaZjHDbaAc3+Olu2Ev8qA3AWy8Hg8dspdQLsgn0qOLJwgY
- LgyIk6894frgcVhff/Z3p99aY6/HH6x7kz37g/9aKGbT6hCCa7X190V2FHthx0lYkYYGQ/F46
- DxDVo9wiDat2mTHqytMvmBK6Em0ib0R9muu2it++oUOTe1DvLU+j3ubRuOY29xIAXoAlByPNA
- 4ADvebUShp/CdKdod30fHttgdmZTBc/WmFyUab0yQfUaaXzyx8=
+X-Provags-ID: V03:K0:Yr3HSrKIILH1g5D5ZYN4fMZE0ZnadM0tnBBmjI3J3E3VK0eybxK
+ onFffzY6H5v41YD2nHsvsI0h3tqS81ArHWC2NoGkuTG9kzSnjneHUvbdS3xWmMYHxUscP92
+ YBsUNGwDtlTzeGwAiJweAnfv5SWV4iaFnTJKEr73nIZbuF3iQAIFVNnTxGj+wTEAaDhcBDa
+ h6AfLtiYnvS0Jmfc2Pwdg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:BIn8doyuEgw=:jm8GuVTgeOWPk4xyfBTOL+
+ 36vO3Wxq1kQgIQWgCUWP5YTyRKE+3uN7UJ+7EA9HtlRDbVwu0giD7b4gjiDrgROgmfwNoYNgP
+ c2CeOCe+2SC6hsUTD19EOT84z6cVE22VdGYhx5wratJcpM5F0/RkZzgFtwniIGOa43DarDjEL
+ ZL1quf17Cz7tYMaSAIMkCqYT8A8AReAAOCabhvLaJsPu/DdU6Pea28regWG2UeUPJeDmHIUz0
+ Z3UuovnrpBRtdicy63kshxVZ7BwVS8lFZg3F8WsxCkaIgnSdc8TtilKh3vm03CafV3bmGUA3i
+ q7WKa2YWVkKDq28ddm+XBLO6MDvh3sdMFJK57y7TmY7WTMtu6KeOhXUhA6m80jhghQFvNAzzZ
+ YiPB+VtLEu00kwxZUHHk0+3Iq081JwXongrfEOabqe7IsxkovSZoX1pSYWOus6H97r8qImB52
+ wRVqXHcScPjWqkGzRaDASdgjRU5/i8OW7PzoEhRxVS/pQOIJUy4xkAjkjjKb/jhp/nFUBwAFB
+ A3xbNKDDO/zt2kujhR6McBRXPk8J99rSHzVET+cNYBXJsqfRB6Cki+NA0IZcjYJYjqNV6PKiY
+ YU7TXr3O8mANGm/7SspqjLWBo5Grmr66B8SMAj3lnaZyV5iFEXUkHuAu24GekmJ9vZWPOgSI5
+ JDzXJ+YTtptkCiE8mEBELKFPEnTsbB0YKbyVOgO4ym0ux4O4k1qlD0xawsSz4FqFkJt42j9HX
+ taBVku5mWAt4mwBtWFfkp0Gtp+afPz+yeLYmKcL70PCtnklpVyCBj1/BCjyeEZ7fuzi0RaqW7
+ YuzFY7YnOP5Z7rFCve/qzrTVpWq4rJBfXmLPgMmkwzqAEeXTxc=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As pointed out in a review of the `--recreate-merges` patch series,
-`rollback_lock_file()` clobbers errno. Therefore, we have to report the
-error message that uses errno before calling said function.
+There are some commands that have to be skipped from rearranging by virtue
+of not handling any commits.
+
+However, the logic was not quite obvious: it skipped commands based on
+their position in the enum todo_command.
+
+Instead, let's make it explicit that we skip all commands that do not
+handle any commit. With one exception: the `drop` command, because it,
+well, drops the commit and is therefore not eligible to rearranging.
+
+Note: this is a bit academic at the moment because the only time we call
+`rearrange_squash()` is directly after generating the todo list, when we
+have nothing but `pick` commands anyway.
+
+However, the upcoming `merge` command *will* want to be handled by that
+function, and it *can* handle commits.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- sequencer.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ sequencer.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/sequencer.c b/sequencer.c
-index e9baaf59bd9..5aa3dc3c95c 100644
+index 5aa3dc3c95c..cfa01d3bdd2 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -345,12 +345,14 @@ static int write_message(const void *buf, size_t len, const char *filename,
- 	if (msg_fd < 0)
- 		return error_errno(_("could not lock '%s'"), filename);
- 	if (write_in_full(msg_fd, buf, len) < 0) {
-+		error_errno(_("could not write to '%s'"), filename);
- 		rollback_lock_file(&msg_file);
--		return error_errno(_("could not write to '%s'"), filename);
-+		return -1;
- 	}
- 	if (append_eol && write(msg_fd, "\n", 1) < 0) {
-+		error_errno(_("could not write eol to '%s'"), filename);
- 		rollback_lock_file(&msg_file);
--		return error_errno(_("could not write eol to '%s'"), filename);
-+		return -1;
- 	}
- 	if (commit_lock_file(&msg_file) < 0) {
- 		rollback_lock_file(&msg_file);
-@@ -2106,16 +2108,17 @@ static int save_head(const char *head)
+@@ -3412,7 +3412,7 @@ int rearrange_squash(void)
+ 		struct subject2item_entry *entry;
  
- 	fd = hold_lock_file_for_update(&head_lock, git_path_head_file(), 0);
- 	if (fd < 0) {
-+		error_errno(_("could not lock HEAD"));
- 		rollback_lock_file(&head_lock);
--		return error_errno(_("could not lock HEAD"));
-+		return -1;
- 	}
- 	strbuf_addf(&buf, "%s\n", head);
- 	written = write_in_full(fd, buf.buf, buf.len);
- 	strbuf_release(&buf);
- 	if (written < 0) {
-+		error_errno(_("could not write to '%s'"), git_path_head_file());
- 		rollback_lock_file(&head_lock);
--		return error_errno(_("could not write to '%s'"),
--				   git_path_head_file());
-+		return -1;
- 	}
- 	if (commit_lock_file(&head_lock) < 0) {
- 		rollback_lock_file(&head_lock);
+ 		next[i] = tail[i] = -1;
+-		if (item->command >= TODO_EXEC) {
++		if (!item->commit || item->command == TODO_DROP) {
+ 			subjects[i] = NULL;
+ 			continue;
+ 		}
 -- 
 2.16.1.windows.4
 
