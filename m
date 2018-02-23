@@ -7,91 +7,97 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CC6761F576
-	for <e@80x24.org>; Fri, 23 Feb 2018 10:11:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3F98F1F576
+	for <e@80x24.org>; Fri, 23 Feb 2018 10:18:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751338AbeBWKLu (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Feb 2018 05:11:50 -0500
-Received: from mail-ot0-f179.google.com ([74.125.82.179]:41971 "EHLO
-        mail-ot0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750935AbeBWKLt (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Feb 2018 05:11:49 -0500
-Received: by mail-ot0-f179.google.com with SMTP id w38so7032875ota.8
-        for <git@vger.kernel.org>; Fri, 23 Feb 2018 02:11:49 -0800 (PST)
+        id S1751605AbeBWKSH (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Feb 2018 05:18:07 -0500
+Received: from mail-ot0-f174.google.com ([74.125.82.174]:35418 "EHLO
+        mail-ot0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751413AbeBWKSE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Feb 2018 05:18:04 -0500
+Received: by mail-ot0-f174.google.com with SMTP id p8so7050424otf.2
+        for <git@vger.kernel.org>; Fri, 23 Feb 2018 02:18:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=wZGk1Jgceu+9bK982XnynCCcBk3lL1pT7ySiMUuKxOw=;
-        b=lItHkKuhUjx1WMlnRdzQK+PRw/vKbHNTpq46B8KBOzvEIjQ12HPhb247a6ta1o4/iT
-         8h3Qxlxmlc/hCSLFOnY9u5roNf9SswOgwFsttFQkTeGhW4CKsh1KnATlI3MfXVfFMVZg
-         ZEtbEf/s+VQ4Epxlt+XyCFrqaLafjIszxAWe0n3xtfJMB1gz66gjvC2FIhUSYx8tDaBS
-         oFu+evTnU4W4Ag0DXzLGrXFGpwen+b0ZOeFjQNf7IdZ77CwwUUcuXXZ2BTyk5UG5ShcF
-         dNuMSuveqrvGAFiBdDAxe5XuFpfDyacSikRGj+5ITZpFITRRWtOwYcyLaNmmuflJBEXj
-         IJCw==
+         :cc;
+        bh=dZ3HCUepqieM8HY2EWS+Aa/5muiEU/fPEyZuTQ+rDio=;
+        b=F3p2IcjFLNScqqojkWovnSGjyoYgepq9gOo0Jge1RtkeVrNlo1UszG/FnJ4d/4ZH8i
+         FMplMImc4KaIZN0tGZhxZizcI22lrRNtDorKzWC/1F8zKqF/ndGdPmujZ6Pd0XWwEqJJ
+         Ib0p7EKJH6cHhN1lI+VZFoSVsngo8gbb5ncV2mmcez87MPvYTIXWlyvgPDjpGpj9WcSA
+         MnCMatPaUsWAnHBT2Z5awwYXIcLWIQoxFRP8AatpT0uZ4/vDhG+3CdJVsC641wwxVOne
+         OQ9pytzDkaWG8bwQomGzesslF+MDu5wIz0AuN2/GachKTGhw0KEX+M0gm8xiEsgWJATf
+         L8MA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=wZGk1Jgceu+9bK982XnynCCcBk3lL1pT7ySiMUuKxOw=;
-        b=H5m2lvw/RJWDdwhfrNbu5OQ7X4wnTMgJUbL71Ww87dXEPFLlQv4VgLKhrr1Uu3VBLO
-         V77va7cJsrFqazO2v037/X1OvkhdoNkAKqDR6O+CJ4DsPsG++bSA5/eC888A9jWDtq1x
-         872tFHzLZEhnlLgz2j+fWi+AMCAGTuvgCPAVKW5ood+UOD6pUyBSTu1vItVlCyepxa+1
-         ejYxeyEo457BvDcJvg4HNuWNwytcpEF95+My3hDerOAYXLc0Sk3KDVuTi1MBP6jy6l4f
-         fRY8fuWpUZxw4tP5bswdJXhiIIAzBBBJXKo+44Gd3dKUqE/yQg4KD5L1O2gj6K5/MweV
-         /hEw==
-X-Gm-Message-State: APf1xPCgHbCRiMkhNDjY0aFeSMiTPV+HOG8hOpVKpxS+ZEzkQv5G/i71
-        YQv8DAVl4VSBKQyvxd8jKaY4k0IoSEd1TE0fqJc=
-X-Google-Smtp-Source: AG47ELvu/QulMfz4hwfZG6CosG1npKjGb7D2eeKonkCHXttgvYPPEEJsUx0IuTxtM9qMa2FE28+kuYO70UV+79H4u8w=
-X-Received: by 10.157.67.42 with SMTP id s39mr724344ote.14.1519380709324; Fri,
- 23 Feb 2018 02:11:49 -0800 (PST)
+         :message-id:subject:to:cc;
+        bh=dZ3HCUepqieM8HY2EWS+Aa/5muiEU/fPEyZuTQ+rDio=;
+        b=r81rI6K7VCHfz9+J5/zVoAAQjqPPun/Jk1nw8qTOuB343WQbNWSxR1K68lapFsIQ7o
+         GizP37Q+GiZLJJKDTJ4OOPG9NC3TtBlmOXtFkLY+Uuh/GtBsRJhmdKMwASv2ZciA3fJP
+         b4/6gPqIDE1kVHJQowta0BTdjbgJ+v4Rr/poBlKLk3J3lvBUDUH9IP3hLf1wygHON7Sr
+         adMRNhY3USnjokGiSjN9Rc90rBgMPXyg2PtEUD6IJhh7KP/btrC9Cra6G5MpKfurpbMP
+         Lt4N3AduewFe85yeHCF8YqVwbMFqSBYxlJYjb4bzjIlABSxMWrB+Sqd9FFOunkxgPJjd
+         QXUw==
+X-Gm-Message-State: APf1xPBVyhFP0Q8PKIAAYwFT5Zgiod24ZXYKe+ouaOWAyhdTTOdHvaoS
+        uK1zcNK5Mvg4LmSz2m50tYpWVnjMcw1YOMav/Yw=
+X-Google-Smtp-Source: AG47ELv21R4eMYxwG9mYAlnVi4JbdI4zeJA0TwoyzAL0nk/kAG+G+zoQmD8axWa2t0SW2INFJxVEIDns3kNJcq5OfL0=
+X-Received: by 10.157.54.161 with SMTP id h30mr702582otc.173.1519381084381;
+ Fri, 23 Feb 2018 02:18:04 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.74.25.140 with HTTP; Fri, 23 Feb 2018 02:11:18 -0800 (PST)
-In-Reply-To: <87606pf8kg.fsf@evledraar.gmail.com>
-References: <20180214101019.gaenosifgq3wx2nm@NUC.localdomain>
- <20180214105149.28896-1-pclouds@gmail.com> <87wozffavp.fsf@evledraar.gmail.com>
- <CACsJy8BsUsT6iO9_68+rHnZG5B-tcaXZAXR88nh8DgR65zvVKw@mail.gmail.com> <87606pf8kg.fsf@evledraar.gmail.com>
+Received: by 10.74.25.140 with HTTP; Fri, 23 Feb 2018 02:17:33 -0800 (PST)
+In-Reply-To: <xmqqsh9sx4xk.fsf@gitster-ct.c.googlers.com>
+References: <20180131110547.20577-1-pclouds@gmail.com> <20180209110221.27224-1-pclouds@gmail.com>
+ <20180209110221.27224-7-pclouds@gmail.com> <CAM0VKjmFEyr4qHdc1qfW0M_RZ7cM9bCfsn-M4Rapzt6CPhZE1g@mail.gmail.com>
+ <CACsJy8CWdJJigQSEjGuhoH1URGY8=YSAHiqhaGBZK7Zr8GZUGg@mail.gmail.com> <xmqqsh9sx4xk.fsf@gitster-ct.c.googlers.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Fri, 23 Feb 2018 17:11:18 +0700
-Message-ID: <CACsJy8BqWVh0VY5Ydqez_Kqc-UwWk7YRuJWCUpYhkBU80rKe7w@mail.gmail.com>
-Subject: Re: [PATCH 1/2] parse-options: expand $HOME on filename options
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>, doron.behar@gmail.com
+Date:   Fri, 23 Feb 2018 17:17:33 +0700
+Message-ID: <CACsJy8DWwOezWpTVmpndhvhujzGV79uT2RqpZJxcp7oLr7G+-g@mail.gmail.com>
+Subject: Re: [PATCH v3 06/42] completion: use __gitcomp_builtin in _git_am
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Git mailing list <git@vger.kernel.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 22, 2018 at 8:38 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
-> Ah I see, so you're doing "git init --template=3D~/<TAB>".
+On Fri, Feb 23, 2018 at 1:19 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Duy Nguyen <pclouds@gmail.com> writes:
 >
-> ...
+>> Now that you mention it, the only command that completes
+>> --rerere-autoupdate is git-merge. Since this is "auto" I don't think
+>> people want to type manually.
 >
-> I wonder if the consistency with the tab completion wouldn't be better
-> done by teaching the tab completion to just expand --template=3D~/<TAB> t=
-o
-> e.g. --template=3D/home/duy/.
->
-> On my (Debian) system doing e.g.:
->
->     echo $HOME/bin/<TAB>
->
-> Will expand to:
->
->     echo /home/avar/bin/
->
-> Maybe we could intercept that in the completion and ~ to the value of
-> $HOME.
+> Sorry, but I do not quite get the connection between "since this is
+> 'auto'" and the rest of the sentence.  Is it just it is so lengthy
+> that people do not want to type and are likely to use completion?
 
-Yeah that's what I had in mind (though I still have no idea if it's
-hard to do). Let's drop this series then. I'll keep this <TAB> thing
-in my backlog and hopefully will fix it soon. I'll have to read
-git-completion.bash carefully for another series anyway. And I have a
-feeling that "git --completion-helper" needs to tell
-git-completion.bash "this argument takes a path" before we start to
-expand stuff.
---=20
+Well, if it is to be done automatically, I should not need to tell it
+manually (by typing the option on command line). Granted it's a weak
+argument.
+
+>> Maybe I should separate these changes
+>> _and_ remove --rerere-autoupdate from _git_merge() too? At least that
+>> it will be consistent that way.
+>
+> Hmmmm.  Why not complete this option?  Is it because the current
+> completion script does not and we are trying to preserve the
+> behaviour?  I do not have a strong opinion either way, but just
+> trying to understand the reasoning behind the choice.
+
+There's not a strong argument for not completing this option really.
+
+It may belong to the unpopular category and adding it may make people
+<TAB> more for other options. But I think it's way too early to decide
+that. And even if that's true, I think we should let the user choose
+to not complete certain options they don't like.
+
+It's good that this is spotted. I think I'll just keep all
+--rerere-autoupdate completable. Well, v4's coming (in a few days)...
+-- 
 Duy
