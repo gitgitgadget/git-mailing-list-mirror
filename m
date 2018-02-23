@@ -2,135 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_WEB,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9180C1F576
-	for <e@80x24.org>; Fri, 23 Feb 2018 11:23:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7696F1F404
+	for <e@80x24.org>; Fri, 23 Feb 2018 12:11:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751610AbeBWLXD (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Feb 2018 06:23:03 -0500
-Received: from smtp-out-6.talktalk.net ([62.24.135.70]:40179 "EHLO
-        smtp-out-6.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751547AbeBWLXC (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Feb 2018 06:23:02 -0500
-Received: from [192.168.2.201] ([92.22.21.220])
-        by smtp.talktalk.net with SMTP
-        id pBRKeiBw1LSHJpBRLezf0n; Fri, 23 Feb 2018 11:22:59 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1519384979;
-        bh=j7c6qSSyDuuT0Q0roC5noSkdBqdYosJwOaHwoc6a2Yg=;
-        h=Reply-To:Subject:To:References:From:Date:In-Reply-To;
-        b=ccaXzR27nmpwGj32/1IyifR0JYijBq8ETPa0o5v8v+Yqz1aZyrI4hh1NEqZuCD5KA
-         TXghcpwCpgOCoJIFKnxEcSUPFntRggAAGsDov0RVAdr1DvhBRPi++i2dW6KRWJQRLG
-         hFcpyJhxTkg4AERI07fJ0FurPMR3Y9afsoXODlNg=
-X-Originating-IP: [92.22.21.220]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=NqehS4VJ c=1 sm=1 tr=0 a=VSxTZYxioCnvaH7igEU67w==:117
- a=VSxTZYxioCnvaH7igEU67w==:17 a=IkcTkHD0fZMA:10 a=3ynUh9etfZC-0S1kUlMA:9
- a=QEXdDO2ut3YA:10
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: Git "branch properties"-- thoughts?
-To:     paul@mad-scientist.net, Git mailing list <git@vger.kernel.org>
-References: <1519324188.6391.156.camel@mad-scientist.net>
-From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <2607f7e8-b680-50ac-0c08-7abc35499f1d@talktalk.net>
-Date:   Fri, 23 Feb 2018 11:22:58 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
+        id S1751332AbeBWMLW (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Feb 2018 07:11:22 -0500
+Received: from mout.gmx.net ([212.227.15.15]:44723 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751015AbeBWMLV (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Feb 2018 07:11:21 -0500
+Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LvENG-1ehBig0aos-010Nwo; Fri, 23
+ Feb 2018 13:11:16 +0100
+Date:   Fri, 23 Feb 2018 13:11:01 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Feb 2018, #03; Wed, 21)
+In-Reply-To: <xmqq1shdyidz.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1802231310120.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <xmqq1shdyidz.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <1519324188.6391.156.camel@mad-scientist.net>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfINwnbZH5NDSsGJ5iS7oUqazSZhPi+1MBmehbVXGGGv/CDNSPqNJa41Tu+GYv3e8nK/jD6nGMLDurb8M06XS8OACl21BkmJvy+/BSCsTBBTEqKWpey9R
- Rp7EdLBsZoiQfkHnv8PJySWoypMlbgszjHKiYVpi466i8aeRHsToGGP8Ch3ZFhYJ1G6Ao2ooUKYH00GPCTiDCU3btdoQBWDVGIE=
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:qRvDdUo4hOuGAax6+5dpgoAOvuxw6Ijg4RjJ6b9lsZ4FcoigW/A
+ MkzJ/je6WgqyTc2Ti8GVZ0NL/LDCfSK/PMIR3BTqJzfsEUeHaNgChaPiOfGCLtdLw08OXVs
+ 8pcxEExKKIu2TzWtopNFKKqCeja6IN5gtt9MR6P55opNvIlEPEo6ycs1cLGkMEEMB1zQF1v
+ y3lyXVmyCjFTGE0YT1SLA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:HEVgfKPQenw=:ibBiSIS0v3Nok7aRPnZE7k
+ yBFa5jl/onfByf67mslXVX5z6xwirjnLYWB1Ma1MIjAgvPLdMGUQy+t7OKG34PtUcFjYE0KxR
+ 5bzoblLq8oD2hGtgpYK17NWl8uhwV2/gpl1XZU9z864SB970g0uRT6SgKvsrdYtxYiPt0goMI
+ yBVbBGWdFTL9s6N7FP2PUuuNfbAfFG1APHPOqPnHPssmsaVi0jCXyYNT0uvBQcBXuy71xFmn+
+ +9/ITPtRE0he1Agw8Yf/zuU2rACkKZ/3A/LxkOMze0FA9MBVoC0YMrvYPQnJSeCMOu0VfBkhD
+ ZW5WWksszITJc31h6qzV+i7LkLu/1+xG0Da9ruUvDkke5wsQd+Otd00NW5DjEatHxtLlv6avS
+ BHIA92gSTn3B51iruDNwoV4BbK61kqclyRFwrS3ctP4/c2t2FnEUB/GN7mIzpT6JfpKgEiL3w
+ eyOZY5k/wOnCJ70hNeOFlrx+2Q/1iOkXFz4z1hgWIaAEEl7DbJJMYpOzYwGP9UwU2Hqq1K6sE
+ muITJso8XtRuwnj9t46omgj4yhu1wQH21YCeHKEJAWEN/7eR4QdiiT2KJH2Hy3Wq1wSbIZcA4
+ 6dl9SxRT5KOu9wrA4nB02d75y2v8qv8GRjly9ReqpoYZVMas5r7DMKVKMukr89AK9I6/7kwss
+ BQRQbNWzMX4/pMC6ApJHBHzrKBUOKIauTEWht/6J7jZSEd3Q9+jjA5Co7wQAKdYP4EocwFqU6
+ TdLVZAJ81vxxjKSAqWS8FL24J8xFOXZ4xz2SXuP+CfWn4loMC2dzegwduWS1PBs/XEsy8HxZj
+ 9X3vys4PTEMUlTvyQmiZOS3V/9cPYof2W4DUQFm9RX/+qc/d6Y=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 22/02/18 18:29, Paul Smith wrote:
-> 
-> Hi all.  I'm wondering if anyone has any thoughts about the best, or
-> even any, way to have "branch properties": some extra information which
-> is attached to a branch (that is, the actual branch name not the commit
-> it currently points to).
-> 
-> My requirements are that the information needs to be pushed to the
-> server, so that lets out branch descriptions for example.  Ideally the
-> information would also be easily updated and available in all clones
-> during normal fetch operations but this isn't a hard requirement: I
-> could script it.
-> 
-> My immediate desire is to find a way to mark a branch as "frozen", that
-> will control which pushes are allowed.  I use gitolite on my server and
-> I can easily write a server hook that will handle the checking,
-> rejecting, etc.  I already have such an infrastructure.  What I need is
-> a way to know which branches are in that state, so my hook can see that
-> and DTRT.  There are other "branch properties" I could envision, too,
-> but don't have a real need right now.
-> 
-> Of course I could embed the frozen state into the gitolite repository
-> configuration.  Indeed, I have already implemented "locks" for obsolete
-> branches.  But "frozen" is a more ephemeral state and requiring access
-> to the gitolite repository to manage it is just not what I want; it's a
-> separate repository so the state is not visible, requires privileges I
-> really don't want to hand out to everyone, and is generally difficult. 
-> I want some users to be able to manage frozen branches relatively
-> easily, and all users to be able to see the state of which branches are
-> frozen, etc.
-> 
-> So then I thought about creating a "frozen" tag, like "frozen/v1.0" or
-> something.  This is slightly weird because it is applied to a commit,
-> which is not really right, but whatever: it's just a marker so I would
-> just be checking to see if it exists or not.  The other problem is that
-> Git tags are not intended to be transient/moveable.  While you CAN
-> delete them and move them, when someone pulls the repository they won't
-> get that update by default.  Since the hook is server-side the fact
-> that the local repository has the wrong information doesn't matter for
-> behavior, but it's confusing for people.  So, it's not ideal.
-> 
-> I thought about creating a branch, like "frozen/v1.0", rather than a
-> tag.  I don't need a branch here, and no one would push to that branch
-> (I'd have to disallow that in my hooks), and the commit associated with
-> the branch would not be relevant most likely.  I would only check to
-> see if the branch existed, or not.  Branches are nice because creating
-> and deleting them is handled automatically (if you use prune
-> consistently, which we do because we have tons of transient branches).
-> 
-> Then I looked into using notes, and they look interesting, but they're
-> associated with a specific commit as well and I don't want that: a
-> frozen branch can still have new commits pushed to it they just have
-> meet certain criteria.  This makes them hard to translate into a branch
-> name.
-> 
-> So far, using a special branch name seems the most "reasonable".  But,
-> I wonder if I missed some cool aspect if Git that would work better, or
-> if anyone else has other suggestions.
-> 
-> Cheers!
-> 
+Hi Junio,
 
-Hi Paul
+On Wed, 21 Feb 2018, Junio C Hamano wrote:
 
-It would certainly be nice to be able to share branch descriptions so
-that if I clone a repository I can get a bit more detail about the ideas
-behind each branch. Shared descriptions could be displayed in web uis. I
-sometimes find myself wanting something like notes for branches as well
-to make a todo list for future commits. Maybe there could be a well
-known refs (say refs/metadata) that contains public metadata for other
-refs. In the same way that refs/notes/commits contains a tree of commit
-ids refs/metadata would contain ref paths without the leaning ref/.
-Under than directory there would be a subtree with the metadata - files
-called description, frozen, a directory of notes etc. So for
-refs/heads/master you'd have refs/metadata/heads/description containing
-the description refs/metadata/heads/master/notes/... containing the
-notes I want to share and refs/heads/metadata/master/frozen to indicate
-if the branch was frozen.
+> * js/rebase-recreate-merge (2018-02-12) 12 commits
+>  - rebase -i: introduce --recreate-merges=[no-]rebase-cousins
+>  - pull: accept --rebase=recreate to recreate the branch topology
+>  - sequencer: handle post-rewrite for merge commands
+>  - sequencer: make refs generated by the `label` command worktree-local
+>  - rebase: introduce the --recreate-merges option
+>  - rebase-helper --make-script: introduce a flag to recreate merges
+>  - sequencer: fast-forward merge commits, if possible
+>  - sequencer: introduce the `merge` command
+>  - sequencer: introduce new commands to reset the revision
+>  - git-rebase--interactive: clarify arguments
+>  - sequencer: make rearrange_squash() a bit more obvious
+>  - sequencer: avoid using errno clobbered by rollback_lock_file()
+> 
+>  "git rebase" learned "--recreate-merges" to transplant the whole
+>  topology of commit graph elsewhere.
+> 
+>  Is this ready for 'next'?
 
-Best Wishes
+Not quite. I have two more changes lined up. Let me send v4.
 
-Phillip
+Ciao,
+Dscho
