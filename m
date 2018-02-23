@@ -2,146 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-1.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
 	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 301B71F404
-	for <e@80x24.org>; Fri, 23 Feb 2018 22:56:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 05CFE1F404
+	for <e@80x24.org>; Fri, 23 Feb 2018 22:56:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752014AbeBWW4T (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Feb 2018 17:56:19 -0500
-Received: from mout.web.de ([212.227.15.4]:49857 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751527AbeBWW4S (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Feb 2018 17:56:18 -0500
-Received: from [192.168.178.36] ([79.237.251.165]) by smtp.web.de (mrweb002
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0Lgpcs-1eM5Ww096U-00oJPe; Fri, 23
- Feb 2018 23:56:08 +0100
-Subject: Re: [PATCH] strbuf_read_file(): preserve errno across close() call
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <6b58885c-b0f6-1687-3f2d-4594aacff9ac@web.de>
- <20180223064952.GB19791@sigill.intra.peff.net>
- <20180223070053.GC19791@sigill.intra.peff.net>
- <f134c6bf-c147-4201-1217-b59bfb9f2288@web.de>
- <xmqqk1v3s64y.fsf@gitster-ct.c.googlers.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <612cc15c-624c-0963-4d12-aed0993ea16c@web.de>
-Date:   Fri, 23 Feb 2018 23:55:59 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
+        id S1752083AbeBWW4l (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Feb 2018 17:56:41 -0500
+Received: from mail-pl0-f68.google.com ([209.85.160.68]:37594 "EHLO
+        mail-pl0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751527AbeBWW4k (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Feb 2018 17:56:40 -0500
+Received: by mail-pl0-f68.google.com with SMTP id ay8so5709519plb.4
+        for <git@vger.kernel.org>; Fri, 23 Feb 2018 14:56:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=7PBn8mLdqOiHw2jhFSK22LBv6L+/uC8CyB1FBu65SI0=;
+        b=SzILq0d+eys+kg4zitH15ZbVG1YjJEfbdhB0J4yc1rJxzfA0AqS+7ZHBJM4378goAB
+         gP/clNl0sYVmaf/DxqtqsMsV0JahM3ETJB245cCewJ6JlsxiGuUbURc9fmMMdJZU7cRE
+         Pl5qhfDUcZSCCM346wt+By29kYuaBfAphJAt+NDjoOkUHepJoth4IrTm4bnWwXVWxySr
+         dUmk/hqReDBr4lXnvA6oCj3/XIjuaOxkf19kyKIun64tAQnXK/7nuXJ9m29xCwYncMaI
+         xLIv8BWD3LHRSRnf3lLuHLJh7vIutxrNzMA5uIpu5m/jCoN7K1SAVyyZubJnyJzGwRPb
+         atmA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=7PBn8mLdqOiHw2jhFSK22LBv6L+/uC8CyB1FBu65SI0=;
+        b=kV7s3gBkMunREh3Hii5P4f+fUOsJ1p1U4jFZAQ+1MK8vcIJh8G3Cld9Zv5woO0HB/X
+         SqPEj/jT3wMK0GJwEjCudUG8jIzd7ASogEaceVug0PkdGT2Lanm834Mor6moAGNrkxkT
+         X2O9d0L7P/tjLWNWrJqvAlcmTjQ3jkaEvuAWi4M7UuB+HNIRoEXdcQY+9f07mdzQee4L
+         UVKY9QkgnUan6oS5CqtBo9o6CGEzU+KdsIi2NsO3KNJ32yozQSNAKHXDvtUYS20mS3uS
+         ZdQzA1b1m7b4TTe3GvjN4RBFJHwQa06qxJw0Y9Uq6691AhLoHDApe6RkaHy4FwfAuAW5
+         tbeQ==
+X-Gm-Message-State: APf1xPDBri/UakEdmDb8MddoWYUvnW9x5IEafv9o8EUX0Ef+yOb/vj0Y
+        4q92ki8eWTvoqMGlPG3Xx0HJRA==
+X-Google-Smtp-Source: AH8x225LKyXDo+6qZTKa2pICQdRHHVqf/wbuFrlnQMNwqXcn/ZD+e7iWrGTF86yRxp9/DvrDLazJaQ==
+X-Received: by 2002:a17:902:9a41:: with SMTP id x1-v6mr3071185plv.256.1519426599234;
+        Fri, 23 Feb 2018 14:56:39 -0800 (PST)
+Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
+        by smtp.gmail.com with ESMTPSA id 66sm6845392pfh.96.2018.02.23.14.56.37
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 23 Feb 2018 14:56:38 -0800 (PST)
+Date:   Fri, 23 Feb 2018 14:56:37 -0800
+From:   Brandon Williams <bmwill@google.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v3 07/35] connect: convert get_remote_heads to use struct
+ packet_reader
+Message-ID: <20180223225637.GG234838@google.com>
+References: <20180125235838.138135-1-bmwill@google.com>
+ <20180207011312.189834-1-bmwill@google.com>
+ <20180207011312.189834-8-bmwill@google.com>
+ <CAGZ79kbnioP+12xa2qfaYLyzdeCH8hh2Ri0xHD7rNciJiTYxmg@mail.gmail.com>
+ <20180223213000.GD234838@google.com>
+ <CAGZ79kbh0q8=N07yc+gGnLjggco_+H4YiYAiNOXR3yvO6QX6uw@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <xmqqk1v3s64y.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:F7XG64FndnxijyM8648UnqpNxi/4qkXFohQeg5TQlSPsgXjs+u6
- ATNa9ljJx+xt6yANxIMDygwkzECnGHnc0fYzWLFiH+Ib7gYViEBryfy61fq8RjCdqYtOsVK
- nfHIUR4clPZc2YaSKsX5KdwZGDUg8VhuzmJ1hoJwXQZ9qYm2cmK96iTh2uqcgwlfL8EQeUs
- E4GoYq66pKlM3VyOA4Y/Q==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:71gD/wcIOp4=:my/AeO+7CqOIX9Eh/VC9Kg
- eQUdnTELOfR3i3MCCr3Rf4efiyL5sUjRU8/XkpLSf44t2NTe6JIfVZmu7ci2XoOVDKK0uKf//
- A0d8CYsAzrw6MRVVQ2EGUSc1a+UeZDPuZjUNMFrrSbKZfd6gTkP5L6MW46YlMxgqA+0F22IoU
- cciISExZJ2fhhlXzAHLiPxVd1KKXNZnS+qWnfMO61UVi4pCLOK9cLWTu457fTX9HnaWMfRJA0
- eidKUnCirBN20hHYmvo/0yxrcZ6nkSStUwuo8ruKjK7LOdIAxViViGj2joH8Nyakur/n//+2T
- rabd2+0ADEGTMT3BtI9+4aHlJUtGYmUubHIv6K8S3qEgbUss1Sv4LgjbRTiX2Q6z74xXHxdVq
- 8vY54fW3j3dcK2EiDtFHzujCnZPFOYvk3EeEACJWpRNHNlWs4O7hxg3Kiu4OZMwme0AboYeBY
- H0NGGLUSj7erq7dzOYAT6qDc5sgkPT0C3IVr18uZ25tym+QuU2CEpb5v3nq4jYHiLQs/udE0/
- HAH/RvAyXm4RtQ4R7F11uUcWfI8zuj8lGDZLIrCFJ0B7Rzboq6PFfV70iiT0yyguycTARv8ch
- e/ouZVWokdgcF2v/sRBC1Gtl+slO4yiJDq8Mxc96Gh8D9HZXlEVO5k1DI2J9ntxKurblMDQrZ
- /tLMOnwk42h2w9+jgMA+n0/am+EqDrgEJgpSbnBBGFah3EC+UbxVD9CJoe2RjBidkX6eWTPec
- FgLASQ+ydre7q24+ePH3GOxNyQZfLmkSeHSEyZBmC0PzJXzbWT2/f7x167O747ab1/opvoD6h
- vSK4KDEaUGbbwankfPb0CqXtmtVIN4c76H6tteltcktDCiFIek=
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kbh0q8=N07yc+gGnLjggco_+H4YiYAiNOXR3yvO6QX6uw@mail.gmail.com>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 23.02.2018 um 23:17 schrieb Junio C Hamano:
-> René Scharfe <l.s.r@web.de> writes:
+On 02/23, Stefan Beller wrote:
+> On Fri, Feb 23, 2018 at 1:30 PM, Brandon Williams <bmwill@google.com> wrote:
+> > On 02/22, Stefan Beller wrote:
+> >> > +static enum protocol_version discover_version(struct packet_reader *reader)
+> >> > +{
+> >> ...
+> >> > +
+> >> > +       /* Maybe process capabilities here, at least for v2 */
+> >> > +       switch (version) {
+> >> > +       case protocol_v1:
+> >> > +               /* Read the peeked version line */
+> >> > +               packet_reader_read(reader);
+> >> > +               break;
+> >> > +       case protocol_v0:
+> >> > +               break;
+> >> > +       case protocol_unknown_version:
+> >> > +               die("unknown protocol version: '%s'\n", reader->line);
+> >>
+> >> The following patches introduce more of the switch(version) cases.
+> >> And there it actually is a
+> >>     BUG("protocol version unknown? should have been set in discover_version")
+> >> but here it is a mere
+> >>   die (_("The server uses a different protocol version than we can
+> >> speak: %s\n"),
+> >>       reader->line);
+> >> so I would think here it is reasonable to add _(translation).
+> >
+> > This should be a BUG as it shouldn't ever be unknown at this point.  And
+> > I'll also drop that comment.
 > 
->> +#define IGNORE_ERROR(expr) do { int e_ = errno; expr; errno = e_; } while (0)
-> 
-> The macro certainly is a cute idea, but ...
-> 
->> @@ -391,7 +393,7 @@ ssize_t strbuf_read(struct strbuf *sb, int fd, size_t hint)
->>   
->>   		if (got < 0) {
->>   			if (oldalloc == 0)
->> -				strbuf_release(sb);
->> +				IGNORE_ERROR(strbuf_release(sb));
->>   			else
->>   				strbuf_setlen(sb, oldlen);
->>   			return -1;
-> 
-> ... ideally, I would imagine that we wish we could write this hunk
-> to something that expands to:
-> 
-> 		if (got < 0) {
-> 			do {
->                                  int e_ = errno;
->                                  if (oldalloc == 0)
->                                          strbuf_release(sb);
->                                  else
->                                          strbuf_setlen(sb, oldlen);
->                                  errno = e_;
-> 			} while (0);
-> 			return -1;
-> 
-> no?  That is (1) we do not want to rely too much on knowing that
-> strbuf_setlen() is very thin and does not touch errno, and hence (2)
-> we want to mark not just a single expr but a block as "we know we
-> got an error and errno from that error is more precious than what we
-> do in this block to clean thihngs up".
+> Huh?
+> Then I miss-understood the flow of code. When the server announces its
+> answer is version 42, but the client cannot handle it, which die call is
+> responsible for reporting it to the user?
+> (That is technically a BUG on the server side, as we probably never
+> asked for v42, so I would not want to print BUG locally at the client?)
 
-Relying on that internal knowledge should be OK in strbuf.c, but in
-this specific example we could of course do:
+This is handled in 
+`determine_protocol_version_client(const char *server_response)`,
+which is just a few lines out of context here.
 
-			if (oldalloc == 0)
-				IGNORE_ERROR(strbuf_release(sb));
-			else
-				IGNORE_ERROR(strbuf_setlen(sb, oldlen));
-
-I guess ignoring errors of whole blocks is not that common, based on
-a quick search (git grep -W int.*_errno).  And in such a case we could
-factor that code out into a separate function, if really needed.  Or
-continue saving errno explicitly.
-
-Compilers should be smart enough to avoid saving and restoring errno
-between multiple uses of that macro, e.g. code like this would only do
-it once, from what I saw when experimenting with the Compiler Explorer
-(https://godbolt.org/):
-
-	IGNORE_ERROR(close(fd1));
-	IGNORE_ERROR(close(fd2));
-
-> Of course, a pair of macros
-> 
-> 	#define IGNORE_ERROR_BEGIN do { int e_ = errno
-> 	#define IGNORE_ERROR_END errno = e_; } while (0)
-> 
-> is probably the only way to do so in C, and that is already too ugly
-> to live, so we cannot achieve the ideal.
-> 
-> So I dunno..
-
-*shudder*
-
-> 
->> @@ -617,9 +619,11 @@ ssize_t strbuf_read_file(struct strbuf *sb, const char *path, size_t hint)
->>   	if (fd < 0)
->>   		return -1;
->>   	len = strbuf_read(sb, fd, hint);
->> -	close(fd);
->> -	if (len < 0)
->> +	if (len < 0) {
->> +		IGNORE_ERROR(close(fd));
->>   		return -1;
->> +	}
->> +	close(fd);
->>   
->>   	return len;
->>   }
+-- 
+Brandon Williams
