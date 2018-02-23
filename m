@@ -7,76 +7,92 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7696F1F404
-	for <e@80x24.org>; Fri, 23 Feb 2018 12:11:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 779231F404
+	for <e@80x24.org>; Fri, 23 Feb 2018 12:18:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751332AbeBWMLW (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Feb 2018 07:11:22 -0500
-Received: from mout.gmx.net ([212.227.15.15]:44723 "EHLO mout.gmx.net"
+        id S1751366AbeBWMSf (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Feb 2018 07:18:35 -0500
+Received: from mout.gmx.net ([212.227.17.22]:57745 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751015AbeBWMLV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Feb 2018 07:11:21 -0500
-Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LvENG-1ehBig0aos-010Nwo; Fri, 23
- Feb 2018 13:11:16 +0100
-Date:   Fri, 23 Feb 2018 13:11:01 +0100 (STD)
+        id S1751283AbeBWMSe (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Feb 2018 07:18:34 -0500
+Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MXEs5-1fCgk60WKT-00WHUJ; Fri, 23
+ Feb 2018 13:18:31 +0100
+Date:   Fri, 23 Feb 2018 13:18:16 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Feb 2018, #03; Wed, 21)
-In-Reply-To: <xmqq1shdyidz.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1802231310120.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <xmqq1shdyidz.fsf@gitster-ct.c.googlers.com>
+To:     Stefan Beller <sbeller@google.com>
+cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Raining Chain <rainingchain@gmail.com>,
+        git <git@vger.kernel.org>, git-for-windows@googlegroups.com
+Subject: Re: Bug Report: git status triggers a file change event
+In-Reply-To: <CAGZ79kZBrG7uQ5KOrpdkkhzet7chJhxVsKjTnVMQTrSGFAMZhw@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1802231315480.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <CAPaSTm=Vhg+S0Cf7rkcvXKH1eaEbw5aGOfCmtU7K3D+1kc-pGg@mail.gmail.com> <20180222052227.GA133592@aiede.svl.corp.google.com> <CAGZ79kZBrG7uQ5KOrpdkkhzet7chJhxVsKjTnVMQTrSGFAMZhw@mail.gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:qRvDdUo4hOuGAax6+5dpgoAOvuxw6Ijg4RjJ6b9lsZ4FcoigW/A
- MkzJ/je6WgqyTc2Ti8GVZ0NL/LDCfSK/PMIR3BTqJzfsEUeHaNgChaPiOfGCLtdLw08OXVs
- 8pcxEExKKIu2TzWtopNFKKqCeja6IN5gtt9MR6P55opNvIlEPEo6ycs1cLGkMEEMB1zQF1v
- y3lyXVmyCjFTGE0YT1SLA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:HEVgfKPQenw=:ibBiSIS0v3Nok7aRPnZE7k
- yBFa5jl/onfByf67mslXVX5z6xwirjnLYWB1Ma1MIjAgvPLdMGUQy+t7OKG34PtUcFjYE0KxR
- 5bzoblLq8oD2hGtgpYK17NWl8uhwV2/gpl1XZU9z864SB970g0uRT6SgKvsrdYtxYiPt0goMI
- yBVbBGWdFTL9s6N7FP2PUuuNfbAfFG1APHPOqPnHPssmsaVi0jCXyYNT0uvBQcBXuy71xFmn+
- +9/ITPtRE0he1Agw8Yf/zuU2rACkKZ/3A/LxkOMze0FA9MBVoC0YMrvYPQnJSeCMOu0VfBkhD
- ZW5WWksszITJc31h6qzV+i7LkLu/1+xG0Da9ruUvDkke5wsQd+Otd00NW5DjEatHxtLlv6avS
- BHIA92gSTn3B51iruDNwoV4BbK61kqclyRFwrS3ctP4/c2t2FnEUB/GN7mIzpT6JfpKgEiL3w
- eyOZY5k/wOnCJ70hNeOFlrx+2Q/1iOkXFz4z1hgWIaAEEl7DbJJMYpOzYwGP9UwU2Hqq1K6sE
- muITJso8XtRuwnj9t46omgj4yhu1wQH21YCeHKEJAWEN/7eR4QdiiT2KJH2Hy3Wq1wSbIZcA4
- 6dl9SxRT5KOu9wrA4nB02d75y2v8qv8GRjly9ReqpoYZVMas5r7DMKVKMukr89AK9I6/7kwss
- BQRQbNWzMX4/pMC6ApJHBHzrKBUOKIauTEWht/6J7jZSEd3Q9+jjA5Co7wQAKdYP4EocwFqU6
- TdLVZAJ81vxxjKSAqWS8FL24J8xFOXZ4xz2SXuP+CfWn4loMC2dzegwduWS1PBs/XEsy8HxZj
- 9X3vys4PTEMUlTvyQmiZOS3V/9cPYof2W4DUQFm9RX/+qc/d6Y=
+X-Provags-ID: V03:K0:EO/2f2d5sZ/SwCBqD7WsRhrwyECR5ZC0e2eFopISbcsjEuZUo+s
+ uICnltIj4yXcOIWqSoPaSRYQGtHSvuyap3wetuiUGabciHtyHaqlIfb44A9WE29deknkceL
+ V5S/LGk0GkNgqm21mDtcyi5XDWa5R5yB/IDOpKn9WJPdjMXFfIf981COavvnSzOsm2pcfWB
+ wU2kcaSNAGlm0vrz3Vvcg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:914RzR8RJj4=:KCwfyVxWUCxu5g7odGuU7p
+ KUW2Gc166TWOMKtOYf+yxqOwU1GT6ZUDMNFjDVwUomESADe6ks8Xhx5s6oBC/8oX4kv+AaG9l
+ 1GZ4QZM5I7u0tV1ccnf55GmOFW4JOx2lLfy2HCVox3OaDXULuU6kk1kgPajv1m8AjmeXrE3l2
+ hEcM2UJTYbX7DWvRfNjCrHH8aWByHPQNl6vubJ9swwuzg/3aISVSXLXIcBI/n4fLOO+AhsfxS
+ 6sHljKUm7GUIRR72MpGBafuIODaxbjydmLAR1xRfj0EBP/+fD3CKNDFv83oCJ84P/ACmYD/+X
+ khMNUXcI8LIr5G/6lGLsN2wiSxww6uI5etKod+GUp9Q9uV+Pb8JVJVG3Lo+7YwC5x+zEHA5yL
+ nkhgF76LagrwlAELimptFL2WOk3P1xYRHKudPmx7jDJBB3D5c2PWJ6ZGg5qiu9sFq1vI1V1yM
+ gJsGhT6q6JqzEfiCcyt/Y2UYMjCg2EivXLVgNVfSaRiqwUjMxgWI8H8l3EkZZ9vSjYkL+0lO9
+ DwqvHRlVXFyCxqZdH62+zuiP0Vy61U9GBTD1QXVlyju1KAwxboEwLCmAZGWqxaQLMnzcWmujN
+ ZRhcB/Sg1up4fEJeBH7tg2vb96HpFLo3vWB+C+s+E9c/R2nYhDGFOM5ZAqjbt0xjYjQNWZG1K
+ UScMW6OP31Nl7AKGiNge1UrRI6pPbcGFcS4N1pRdVEDGxaSbP9G7qQFqd9CSOS9EI1UO/hF2f
+ 7dlk/OphqFQO6LztKPeunLQmj4ZvAoYANkvI7a0cU4LFukJ6tmEFKTUIA1qH9/+SVgpHZJY6A
+ uXmYsCmR29t6l0NYiXFosUZKDtRK5gt7iSYS8x+VI7dGo9n+Bs=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Hi all,
 
-On Wed, 21 Feb 2018, Junio C Hamano wrote:
+On Thu, 22 Feb 2018, Stefan Beller wrote:
 
-> * js/rebase-recreate-merge (2018-02-12) 12 commits
->  - rebase -i: introduce --recreate-merges=[no-]rebase-cousins
->  - pull: accept --rebase=recreate to recreate the branch topology
->  - sequencer: handle post-rewrite for merge commands
->  - sequencer: make refs generated by the `label` command worktree-local
->  - rebase: introduce the --recreate-merges option
->  - rebase-helper --make-script: introduce a flag to recreate merges
->  - sequencer: fast-forward merge commits, if possible
->  - sequencer: introduce the `merge` command
->  - sequencer: introduce new commands to reset the revision
->  - git-rebase--interactive: clarify arguments
->  - sequencer: make rearrange_squash() a bit more obvious
->  - sequencer: avoid using errno clobbered by rollback_lock_file()
-> 
->  "git rebase" learned "--recreate-merges" to transplant the whole
->  topology of commit graph elsewhere.
-> 
->  Is this ready for 'next'?
+> On Wed, Feb 21, 2018 at 9:22 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> > +git-for-windows
 
-Not quite. I have two more changes lined up. Let me send v4.
+First of all, this is clearly not a Windows-specific problem, as the index
+file *is* updated, and that is simply the same behavior as on Linux/macOS.
+
+> > Raining Chain wrote:
+> >
+> >> On Windows 10, git version 2.16.2.windows.1, running the command
+> >>
+> >> git status
+> >>
+> >> will trigger a file change event to file C:\myPath\.git  "Attributes
+> >> changed."
+
+Correct, because .git\index changed.
+
+> >> This causes problems when using scripts that detect file changes such
+> >> as tsc -w (Typescript compiler) and using softwares that regularly
+> >> call git status such as VisualStudioCode.
+
+Visual Studio Code most likely does not look at .git for worktree changes.
+
+As to the Typescript compiler: it should only look for .ts files, I would
+be very surprised if it was confused by .git's filesystem attributes
+changing!
+
+If tsw is still confused, try adding
+
+	"exclude": [
+	    ".git"
+	]
+
+to your tsconfig.json.
 
 Ciao,
-Dscho
+Johannes
