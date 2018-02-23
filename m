@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 934D01F404
-	for <e@80x24.org>; Fri, 23 Feb 2018 23:40:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D65351F404
+	for <e@80x24.org>; Fri, 23 Feb 2018 23:40:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752569AbeBWXkV (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Feb 2018 18:40:21 -0500
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:39290 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752524AbeBWXkQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Feb 2018 18:40:16 -0500
-Received: by mail-wm0-f65.google.com with SMTP id 191so7341334wmm.4
-        for <git@vger.kernel.org>; Fri, 23 Feb 2018 15:40:15 -0800 (PST)
+        id S1752524AbeBWXk0 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Feb 2018 18:40:26 -0500
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:37190 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752044AbeBWXkU (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Feb 2018 18:40:20 -0500
+Received: by mail-wr0-f194.google.com with SMTP id z12so15694474wrg.4
+        for <git@vger.kernel.org>; Fri, 23 Feb 2018 15:40:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=y3RBcWOZIBLYRN7s6JSPfMQydFgE7qIoDykqs/U6yc0=;
-        b=CisJpYYW4xWbtuTKk6JQW1amKZvFvOM0CL0K91+gwB+f1ZZLZXzg53w9sweTSpDftz
-         RuwhCeNGK9433tCl5ocqGuUgEBDdsNBwNlIU9My+uHzJufLQz+A1c/7vX8KjH+D6p8Cc
-         GWpv9fOmGYrEs0OC3P3+wmniEV8bsHeWaA96T8bYYBdot6WicxNrEt4HCxn3WjAg3P3h
-         WDFkE1KA2EMVW7mrDgwMl06F/ZFAuiXgwbu131cnwXmQO/OueK/JTDGZncxfiuqB1j0e
-         F+/ztj0FthpogpCy06I2Rdz5WK9FYE4Lt7jAMhX+Z298B36bDtj+qnvdk3UgagtciOpT
-         jq0g==
+        bh=c2O22oZNqsdz5SYH8tsm/BqUz/deoDouS8hzRvsXMxQ=;
+        b=Td0rR8RbQBLO3sXom7QNQHqsEiDGaJETRGfZAH7vjb2u88go/2qH77QYZX6Uvvfcd4
+         WP4AIOROh610inIkRSPSnvh2KvUZ1DyUZ1ozrS4sXwQ/y9hsBexSUXfwvX6FIL2pW0nU
+         a6LDKjONHd+BHy/cs4Th4fCks7twUMuMi76+i0d8AwHO+RzRpdJ22fKhbVMREvF8T3MF
+         OxZbXGsE7XfI0k5Hn5aK96hVrKldDOry0kDkGtWAvwwk2wCYmVprpCiqbQOSHOLXVD/t
+         3lcmKPOGaag/JjX+uiJs0yaHbzkMAu+QFTSceCJyNjDEhdEXarBFhX3k2a96LeHI/UMx
+         ERUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=y3RBcWOZIBLYRN7s6JSPfMQydFgE7qIoDykqs/U6yc0=;
-        b=eCHhIdZfUoyFm8Ekcx8VMURXpujjNLdeAPKcZg1VvwxcWzpHCwG3WEgzkX/n0nWp6U
-         zMM36+dWUYr3qBsmCf1iYokL9qtuptHvbvIjx0t8bFcSbdCS1kwGKxmp/ZE+A3izwfQf
-         zvYUoAD5i5Wm34rM/LrhGQ6QRMKdnRHm5OdH07oU3HFPCFiAXSQfykRO3331LHaWTgES
-         3r+nwKvYvMEZhFLz4/JDpPSINQoV2fnw024GlakHBO6ydbebQXFLWNP3iqp00U9w8/4B
-         6+FBZbDWH7AHspwLI7EwEtIPb9srrn+am2Lk+GMs7jwtnYj9Bf/5vthylpm4+n3isQWq
-         QeAA==
-X-Gm-Message-State: APf1xPCEwyw2FM66/X0C/UDsLVQUlmyxMLYyuHTHT7/++DaOnNzW1vUJ
-        aKNNJWI6cQVS8wtvbJKRF0M6mw==
-X-Google-Smtp-Source: AG47ELtre5nxinMzPN+9Tg8Dvv/iEPmhkXQQD5WxvNoXDQwM23gzd8fw0F5t/FEdbvHdSj9X3hMjaA==
-X-Received: by 10.28.92.201 with SMTP id q192mr3216758wmb.33.1519429214985;
-        Fri, 23 Feb 2018 15:40:14 -0800 (PST)
+        bh=c2O22oZNqsdz5SYH8tsm/BqUz/deoDouS8hzRvsXMxQ=;
+        b=QSOrQl7PuCfJP0w1Wo07Ov+C0ifSqD9yeYH6a2T9equbi4robrPt2Zyq0eXsuZPy2H
+         glXTmrDYwk/2UQ/Wm5fJYuSQcX81cOPw/10twXNbJ+ru1wL1YBDvm2gHphohLmf1wTg9
+         Am8GRRcmoxXdwkWzSc8mPCALYq5Nb/wneoGLVNpAR2lIOmsZHAs/BYe0HhBlx42EcOm8
+         05fnNPYld2O/nALk1+9FNtmlYyyePra/y2HYcSzYSFZgKrz7LRKu9w5DNl3dgqCe2jIE
+         U3hn4eJSF6andvAAEAOVajM+Uzl8LyAuSBpQKeOnvxwWsXYu2eTfkYE7riIj2dIbPFPP
+         CMqg==
+X-Gm-Message-State: APf1xPA4ZlP0NVhP+yYdjTot8GHkgaptxaims1G5kcQmrOjyPvBA9hxE
+        CVtQ7ebqRTQ5i3LH8C/Ky6sEsQ==
+X-Google-Smtp-Source: AH8x227KmfiJcC0RX2GiKXUcRRZZiP1AGe91+OQZqj4kumpbKdhHlpP1ueYVx2Qin1pPEmgyx2xmWw==
+X-Received: by 10.223.129.33 with SMTP id 30mr2829013wrm.91.1519429218723;
+        Fri, 23 Feb 2018 15:40:18 -0800 (PST)
 Received: from localhost.localdomain (x590e551c.dyn.telefonica.de. [89.14.85.28])
-        by smtp.gmail.com with ESMTPSA id c14sm7028939wmh.2.2018.02.23.15.40.14
+        by smtp.gmail.com with ESMTPSA id c14sm7028939wmh.2.2018.02.23.15.40.17
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 23 Feb 2018 15:40:14 -0800 (PST)
+        Fri, 23 Feb 2018 15:40:18 -0800 (PST)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH 07/11] t5570-git-daemon: don't check the stderr of a subshell
-Date:   Sat, 24 Feb 2018 00:39:47 +0100
-Message-Id: <20180223233951.11154-8-szeder.dev@gmail.com>
+Subject: [PATCH 11/11] travis-ci: run tests with '-x' tracing
+Date:   Sat, 24 Feb 2018 00:39:51 +0100
+Message-Id: <20180223233951.11154-12-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.16.2.400.g911b7cc0da
 In-Reply-To: <20180223233951.11154-1-szeder.dev@gmail.com>
 References: <20180223233951.11154-1-szeder.dev@gmail.com>
@@ -67,37 +67,32 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The test 'no-op fetch without "-v" is quiet' in 't5570-git-daemon.sh'
-fails when the test script is run with '-x' tracing (and using a shell
-other than a Bash version supporting BASH_XTRACEFD).  The reason for
-the failure is that the test checks the emptiness of a subshell's
-stderr, which includes the trace of commands executed in that subshell
-as well, throwing off the emptiness check.
+Now that the test suite runs successfully with '-x' tracing even with
+/bin/sh, enable it on Travis CI in order to
 
-Save the stderr of 'git fetch' only instead of the whole subshell's, so
-it remains free from tracing output.
+  - get more information about test failures, and
 
-After this change t5570 passes with '-x', even when running with
-/bin/sh.
+  - catch constructs breaking '-x' with /bin/sh sneaking into our test
+    suite.
 
 Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 ---
- t/t5570-git-daemon.sh | 2 +-
+ ci/lib-travisci.sh | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t5570-git-daemon.sh b/t/t5570-git-daemon.sh
-index 755b05a8ae..0d4c52016b 100755
---- a/t/t5570-git-daemon.sh
-+++ b/t/t5570-git-daemon.sh
-@@ -50,7 +50,7 @@ test_expect_success 'no-op fetch -v stderr is as expected' '
- '
+diff --git a/ci/lib-travisci.sh b/ci/lib-travisci.sh
+index 1efee55ef7..109ef280da 100755
+--- a/ci/lib-travisci.sh
++++ b/ci/lib-travisci.sh
+@@ -97,7 +97,7 @@ fi
+ export DEVELOPER=1
+ export DEFAULT_TEST_TARGET=prove
+ export GIT_PROVE_OPTS="--timer --jobs 3 --state=failed,slow,save"
+-export GIT_TEST_OPTS="--verbose-log"
++export GIT_TEST_OPTS="--verbose-log -x"
+ export GIT_TEST_CLONE_2GB=YesPlease
  
- test_expect_success 'no-op fetch without "-v" is quiet' '
--	(cd clone && git fetch) 2>stderr &&
-+	(cd clone && git fetch 2>../stderr) &&
- 	! test -s stderr
- '
- 
+ case "$jobname" in
 -- 
 2.16.2.400.g911b7cc0da
 
