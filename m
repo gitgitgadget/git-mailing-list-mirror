@@ -2,107 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D1B031F404
-	for <e@80x24.org>; Fri, 23 Feb 2018 22:22:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AB1701F404
+	for <e@80x24.org>; Fri, 23 Feb 2018 22:26:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751707AbeBWWWQ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Feb 2018 17:22:16 -0500
-Received: from mail-yb0-f195.google.com ([209.85.213.195]:46680 "EHLO
-        mail-yb0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752071AbeBWWWP (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Feb 2018 17:22:15 -0500
-Received: by mail-yb0-f195.google.com with SMTP id e142-v6so1248262ybc.13
-        for <git@vger.kernel.org>; Fri, 23 Feb 2018 14:22:15 -0800 (PST)
+        id S1752014AbeBWW0I (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Feb 2018 17:26:08 -0500
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:38971 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751607AbeBWW0H (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Feb 2018 17:26:07 -0500
+Received: by mail-wm0-f68.google.com with SMTP id 191so7140813wmm.4
+        for <git@vger.kernel.org>; Fri, 23 Feb 2018 14:26:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=tHS0L/Rw7RCJXR5QYZ0888oNfFLPcS3QzKslBMMDu6M=;
-        b=G80n/Olwc+w+hJ3otr6SlkvGGqlCClfIvf/oFRXp3Z/fDH2mKtLrgeIsm2AFmiBF57
-         MaKPC2JFuaOINqS1YjU33cnNNfmKL3lz3DJl1QQoZIrABhRwbdLeeSMxW2yDMoA3y1Bf
-         6WSvY8+0V3KG99Xq22GApGmgvwVPkeNtR9hsOMkpxbjso8gYbPS/oFKLDJ+tC7j3a34f
-         /vMP2PSV62+iK54l4PvPe8dHNd+DkZfAkMJjKPVbUnDZzHFEZgg6XVdO9g4Eyo3FaDyH
-         QpPvSfSweQ8PKFI+l8PbdY9FDELwtuUDwu/CGyvWyzk6pmYQtl/LyFERLT9CTmfhfTvH
-         jBVw==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=uJZlT7H1zYqMb+hMbdaZtkhCsTeCLUiHUiVE8RrisWg=;
+        b=M/tk4lLWxmtdy5qp7VECnBTUbFDpPXrK936DlUlRT0FqmS/XdMmHAdtwkhHUMDgfqp
+         fOuHkYfBo964FC8A74uaFapOgA/oZNgDqYOc1RwIVY6LweRtJ/Hx1MPVRb5AmP663gmY
+         eYOc/T4AjBWRNoXrErvsTajIskBC4NHiWrnoMs1+T/+pQ+fsjFr6jDSQTKj150B3D3bB
+         Er+WGbZwFQ/I61EbC66N3rHixTYZglwT3AL8KAvgqEHwchCnghBwoQYxT3XxykdqJTJv
+         aXKfZqXGl30iFZNr3SbQ1Ak4CPW32TsjB6iIyaUUUm/i5J/1YRi158Gpxbz4cx+xC8mh
+         uZIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=tHS0L/Rw7RCJXR5QYZ0888oNfFLPcS3QzKslBMMDu6M=;
-        b=fkdSa/C/T5dBMfEfubPmwLHDbrhBxtFtSBzO88WQIZd6+EP3yA2H/IwTYN110Ro73E
-         b9BTGmME0D89Y/Any4ZtX0Sez3a1QfDMXwCPL+AWq1hcWv1Z5j4PwdHZpUipfjIVA6FX
-         r6kVLsTYkMAb41N8pThob8W/Kjr0Y/PghAFyLRN2wi6QAladtlv8zGIW5mZF3eMi1EZN
-         dHdmtxl1z2vzddNYBW6cZPqzcPT6Tfcn+6FsbgDM7AakuQ0kSMeVYkJ+XrMC1Wc2ql+y
-         rS8xJmOu6NpDXUGcCbnnlxlBE942gx57sYUyq2kO6ySxQ8jRHr74qJhDnb/TOE+5i6PK
-         DOqw==
-X-Gm-Message-State: APf1xPDpr+5EzZMcOyjRsVJtygSlHugC4AfY2tI1RnskMf+tg1dtaa4R
-        1f8xevzQ+bA0J6bi9gDS26C1uWIrrhALH7wfNB+eSA==
-X-Google-Smtp-Source: AG47ELttpO6lkZctizK9Z573HZI2a2UbjfBelj8D2W3GCX2o8Xrky6Y70Y11JNkL0YZuMDfmSLnneg8hYvtH8SU5Ayg=
-X-Received: by 2002:a25:6b0e:: with SMTP id g14-v6mr2281503ybc.292.1519424534822;
- Fri, 23 Feb 2018 14:22:14 -0800 (PST)
-MIME-Version: 1.0
-Received: by 2002:a25:cfcb:0:0:0:0:0 with HTTP; Fri, 23 Feb 2018 14:22:14
- -0800 (PST)
-In-Reply-To: <20180222004710.GF127348@google.com>
-References: <20180216174626.24677-1-sbeller@google.com> <20180221015430.96054-1-sbeller@google.com>
- <20180221015430.96054-9-sbeller@google.com> <20180222004710.GF127348@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 23 Feb 2018 14:22:14 -0800
-Message-ID: <CAGZ79kahS_mk8gFONUAxBjw7iV=5q1ff-ZgjLnQ7rMw=kBKThw@mail.gmail.com>
-Subject: Re: [PATCH 08/27] pack: move approximate object count to object store
-To:     Brandon Williams <bmwill@google.com>, Jeff King <peff@peff.net>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Duy Nguyen <pclouds@gmail.com>,
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=uJZlT7H1zYqMb+hMbdaZtkhCsTeCLUiHUiVE8RrisWg=;
+        b=pYHBEb/kvaAlAQmXL0uod4bhQV69ZiYVx38NRIS8AAGXm9FvyzU9H10pdmlKmrYcUF
+         IQD0hWaGn2XjBuQb2cKltnFzA70ffZdFzdMPEq6XFUcITsVUgqc7pSmf0YBOQmrCMjBP
+         e/ICfdwRLX2GotzCA8zanEif+xmPi+/HpkQBtvnlHUq8ITP2sgfcaGYH0SwDVLqg3LCK
+         p4VLjfbpBs93lj6dOt4wfNRAFyPtkgGvlm4N3Blvnw8b3rc8LEz4XVoQFEMudx0/PcEq
+         k1ZpyOsJiL/sBN2h1yCqk5GWRyaxl+urHTXQDERYS1oaLjurTJV251vtHPcdUGfGjBQN
+         l/eQ==
+X-Gm-Message-State: APf1xPBvWsxjWL04BL98fTtu2s1S+wF4G78NId2wG3oaH78oRgL4c7Xv
+        8F+NwWkbV8ZPwBWkhEWF0sw=
+X-Google-Smtp-Source: AH8x2274ya4Ev9XFWOLqKVcj2xxB/vnRc40eFYjapU1dJYheMNKdZc/MXBgiXPca0R8Cegkr0EbvTQ==
+X-Received: by 10.28.11.147 with SMTP id 141mr2713487wml.138.1519424765738;
+        Fri, 23 Feb 2018 14:26:05 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id h50sm6021031wrf.65.2018.02.23.14.26.04
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 23 Feb 2018 14:26:05 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        git <git@vger.kernel.org>, Brandon Williams <bmwill@google.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+        Jonathan Tan <jonathantanmy@google.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH 2/2] Revert "repository: pre-initialize hash algo pointer"
+References: <20180214180814.GA139458@google.com>
+        <20180223095640.25876-1-pclouds@gmail.com>
+        <20180223095640.25876-3-pclouds@gmail.com>
+        <CAGZ79karK7MT_qpFyYfVkioeBsBHidGdC_QfisPmG1a4dQuk5A@mail.gmail.com>
+        <xmqqfu5rtrhg.fsf@gitster-ct.c.googlers.com>
+        <CAGZ79kZUyo-C8FvphXh8dO8s0V5-Sa=fP=faXEiyD3xSezQsRw@mail.gmail.com>
+Date:   Fri, 23 Feb 2018 14:26:04 -0800
+In-Reply-To: <CAGZ79kZUyo-C8FvphXh8dO8s0V5-Sa=fP=faXEiyD3xSezQsRw@mail.gmail.com>
+        (Stefan Beller's message of "Fri, 23 Feb 2018 12:04:22 -0800")
+Message-ID: <xmqqfu5rs5qb.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 21, 2018 at 4:47 PM, Brandon Williams <bmwill@google.com> wrote:
-> On 02/20, Stefan Beller wrote:
->> The approximate_object_count() function maintains a rough count of
->> objects in a repository to estimate how long object name abbreviates
->> should be.  Object names are scoped to a repository and the
->> appropriate length may differ by repository, so the object count
->> should not be global.
->>
->> Signed-off-by: Stefan Beller <sbeller@google.com>
->> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
->> ---
->>  object-store.h | 10 +++++++++-
->>  packfile.c     | 11 +++++------
->>  2 files changed, 14 insertions(+), 7 deletions(-)
->>
->> diff --git a/object-store.h b/object-store.h
->> index 6cecba3951..bd1e4fcd8b 100644
->> --- a/object-store.h
->> +++ b/object-store.h
->> @@ -93,6 +93,14 @@ struct raw_object_store {
->>       struct alternate_object_database *alt_odb_list;
->>       struct alternate_object_database **alt_odb_tail;
->>
->> +     /*
->> +      * A fast, rough count of the number of objects in the repository.
->> +      * These two fields are not meant for direct access. Use
->> +      * approximate_object_count() instead.
->> +      */
->> +     unsigned long approximate_object_count;
->> +     unsigned approximate_object_count_valid : 1;
->
-> Patch looks fine and is effectively a no-op, though what is the need for
-> both of these variables?  Maybe it can be simplified down to just use
-> one?  Just musing as its out of the scope of this patch and we probably
-> shouldn't try to change that in this series.
+Stefan Beller <sbeller@google.com> writes:
 
-I agree we should. It was introduced in e323de4ad7f (sha1_file:
-allow sha1_loose_object_info to handle arbitrary repositories, 2017-08-30)
-and I think it was seen as a clever optimization trick back then?
+> On Fri, Feb 23, 2018 at 11:50 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Stefan Beller <sbeller@google.com> writes:
+>>
+>>> I wonder if there is yet another missing case in the enumeration of
+>>> the previous patch:
+>>> Some commands are able to operate on GIT_OBJECT_DIR instead
+>>> of GIT_DIR (git repack?), which may not even explore the full git directory,
+>>> and so doesn't know about the hash value.
+>>
+>> ... because GIT_DIR/config is not known?  "repack" is not one of
+>> them, though---it needs to at least use refs as the starting point
+>> so a standalone OBJECT_DIR is insufficient.
+>
+> Yes, I could have worded this as a question:
+> Is there any command that operates on GIT_OBJECT_DIR
+> without trying to discover GIT_DIR ?
+
+If somebody finds one that would be a good argument not to pursue
+the approach.  Lack of response to the question would not amount to
+that much---it is possible all people who bothered to think of
+overlooked something obvious, though.  "When I asked around nobody
+thought of a possibly way for this to cause breakages, so let's
+declare it is safe to do so and do it" is not how we want to do
+things X-<.
+
