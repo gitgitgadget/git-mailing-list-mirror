@@ -2,117 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E14431F404
-	for <e@80x24.org>; Fri, 23 Feb 2018 19:44:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 71D011F404
+	for <e@80x24.org>; Fri, 23 Feb 2018 19:48:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754858AbeBWToS (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Feb 2018 14:44:18 -0500
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:55279 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934377AbeBWSsX (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Feb 2018 13:48:23 -0500
-Received: by mail-wm0-f68.google.com with SMTP id z81so6412607wmb.4
-        for <git@vger.kernel.org>; Fri, 23 Feb 2018 10:48:23 -0800 (PST)
+        id S1754745AbeBWTsL (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Feb 2018 14:48:11 -0500
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:35466 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754561AbeBWTsJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Feb 2018 14:48:09 -0500
+Received: by mail-wr0-f196.google.com with SMTP id l43so15248882wrc.2
+        for <git@vger.kernel.org>; Fri, 23 Feb 2018 11:48:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=fqZXrvhh3xV2Dy+oRohKda9UwksyF9lSN3IUyisXRMY=;
-        b=KiQChWDZkG4ukO/bHLCWA1q26Lz9pvi3clQzuBjntXCPolY3IPL8SqZBiG5pwXx7Z9
-         2g/GwvZWoe8vfzN4iQsKYEBiqlumgw5W/6a4rGfrlMIZ+eF0iGeGNVeryfD/uw2FEeM8
-         9wQUTjYErV07/hXo+wxzhY5OHYCJwyBi325op/3WVh+u6+wstL+MIxJv4RTrKeGZqufK
-         1Fi9byT+G84pGzLJA9KWaBHtW4FecsMWUO+kUJ9i/GcfsHdv+/bevFpelGMx9YTvSxKi
-         9tfTRgvOllNwSBjFMQBt2Gy6m+Jfaq1e7Ivlrn4/Qx0Gbc1j38wI0O0Ys7zHzZwsB1Hn
-         NY8w==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=EwLsp5tmFUGGQwDJMhZbtx6kE/5YCwDLKAw50K4jiZQ=;
+        b=r6i33CQMSkJ1BGMgYwySYOrZlE/xe/wpFhZNZ3O8T8vKK1zUjvpbXjR4a7EA6hvPpb
+         7AzcOrWwXDJBLWYGiy4hMUKSWT69YZHtWc9ftB5PwnZePUmIxBKow0BHs7PrHkKTHErZ
+         lJO/64IneKUE/9A/qmGCheOTQO+frO8iYBvOGlGZabtINgp4trcbXIX1t+kRtJ3D03+f
+         SQiKAsGTTDscf77ZxVQ0j9lBqXbsuR9x4juhnLZ4Mjd4RarUAycWxUNScsEX/iqX7nFH
+         9KqTZfdQ69ujdNz/nvVNNOhPAwp8DJW3qM/vVHx1H0E9GGo2KejmwlhhLnh7KtsOIsee
+         krkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=fqZXrvhh3xV2Dy+oRohKda9UwksyF9lSN3IUyisXRMY=;
-        b=qPBhmvOBQJfigSmpT/A7oQ+3cbncHIMLBPLVz10j2o8YRLlRTOKNBcZLNXLi/WCxbi
-         MxGqomJAr2rbdBvnFq9iUm8jbjggP0we4c1/nAq8FkXirmS1dTvybx59eIZntggj7esu
-         iJ2YPTAzlURFHMkxKwn6+7jsE4R+Kta4HhtR+jPzqrmb8SeObUje72OtUEuoSyZtPNxs
-         LTycrRrzEjk+acp3Pq7wvOgVXJ8zYyfZjSLAP5nCN/h1IdQTGXm7yEhoPvispVBRSzoF
-         aaJSsJChZCnxAr2m/WmW/n82hsjxlyfJ4iTQEs3XJO29TvK0r5LkvfSE2EY4NLRXoKqH
-         Vt/A==
-X-Gm-Message-State: APf1xPBBLIY1T5c5L6fR4eNUO5bQ+Sv/OZBNGZOYm10uJK4TpCqHubhM
-        D/M2kjZUEIpFVdeiqtwqvi3Ss/78d544soo25sE=
-X-Google-Smtp-Source: AH8x226wEJoky2+VOWPPbBi81tbkRX9qZqiA3dDmxtFnosFc6qaLIuxfwSnj7QXr55M2W8WjaFK4BRtSRugd5+k6dTc=
-X-Received: by 10.28.55.9 with SMTP id e9mr2460172wma.20.1519411702497; Fri,
- 23 Feb 2018 10:48:22 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=EwLsp5tmFUGGQwDJMhZbtx6kE/5YCwDLKAw50K4jiZQ=;
+        b=DFps8FmPautOHP5h4KBUGR4ZvXcN8qg3C/Lcpi09DcCwiR23X9wDQ8H8Gd32hL+F7v
+         D52+hgkg2DE2LSlPYzWIpivc/VD1UJSv1AYVs2rqFXzIKOd2i2hGPXenj+3b2Ec5uyFe
+         5r+kkNWfYOcOQA555Lmq/okoMaMoQLycYeompwe3Wtlx5fIuS9zbH58j9t4j4IZQst4k
+         yHtlL895hV9KVTAxjME+0PUUKt/59UQxZ2ODWzH8Jtoy+o7u9Ug+QDYHi6zHT2E+umGm
+         nhlfHcwD/tm/T3YJ7U5zbW2oVz4avhuw8UkUg9YfxGlmT9RfDCiaKybqtuHlFUKVUknQ
+         rtNA==
+X-Gm-Message-State: APf1xPDkla5NNbjWceXs+fcNCay7dqrIvVuKw2VOlIyBoX+AkgpgWyAa
+        2RSQNAelLXoLi+5Z1lxoWqU=
+X-Google-Smtp-Source: AH8x224M5Qz7FLG4kzVuGFPbW/0PgwStIfB8WtniJnVSgJmQERsurkxcOCTtQi0i/nPYj6jfq52J5w==
+X-Received: by 10.223.173.131 with SMTP id w3mr2797247wrc.195.1519415288376;
+        Fri, 23 Feb 2018 11:48:08 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id r68sm2335897wmr.14.2018.02.23.11.48.07
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 23 Feb 2018 11:48:07 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     git@vger.kernel.org, git@jeffhostetler.com, peff@peff.net,
+        jonathantanmy@google.com, szeder.dev@gmail.com, sbeller@google.com,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v4 04/13] commit-graph: implement write_commit_graph()
+References: <4d1ee202-7d79-d73c-6e05-d0fc85db943c@gmail.com>
+        <1519066406-81663-1-git-send-email-dstolee@microsoft.com>
+        <1519066406-81663-5-git-send-email-dstolee@microsoft.com>
+        <xmqqmv031d7d.fsf@gitster-ct.c.googlers.com>
+        <4d453f29-8e5b-2a98-ab11-415f63613be8@gmail.com>
+        <xmqqsh9rtsg0.fsf@gitster-ct.c.googlers.com>
+Date:   Fri, 23 Feb 2018 11:48:07 -0800
+In-Reply-To: <xmqqsh9rtsg0.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Fri, 23 Feb 2018 11:30:07 -0800")
+Message-ID: <xmqqk1v3trm0.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.223.201.11 with HTTP; Fri, 23 Feb 2018 10:48:21 -0800 (PST)
-In-Reply-To: <CAHd499A+TT4zWPvW84B8XpmCdvoJCnSOZxY98MKZUO3h7cwo0g@mail.gmail.com>
-References: <20180123001648.24260-1-isaachier@gmail.com> <675fa58d-bff3-d7e4-5fac-ecf1401932f4@jeffhostetler.com>
- <CAG6xkCbe+pLwTCButZGdPucHoRCq-a8mWfifd6z2bzGZNseE9A@mail.gmail.com>
- <ee5185b1-7820-b2ac-1bde-da1c761fa594@jeffhostetler.com> <CAG6xkCa_nKtzhJJq=v7gazWe+8FnN3mz1vDftzZw2WUFqJ1bzw@mail.gmail.com>
- <CAHd499A+TT4zWPvW84B8XpmCdvoJCnSOZxY98MKZUO3h7cwo0g@mail.gmail.com>
-From:   Isaac Hier <isaachier@gmail.com>
-Date:   Fri, 23 Feb 2018 13:48:21 -0500
-Message-ID: <CAG6xkCahiTedAiB9m8yjMN=QD_KLqc_bKwT9nGt=y2Jd3SsSBw@mail.gmail.com>
-Subject: Re: [RFC PATCH 0/1] Implement CMake build
-To:     Robert Dailey <rcdailey.lists@gmail.com>
-Cc:     Jeff Hostetler <git@jeffhostetler.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Git <git@vger.kernel.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Yes I think I mentioned earlier that I have it hosted at
-https://github.com/isaachier/git. I have been busy with a few things
-so have not continued much since I started this conversation, but it
-covers a large part of the Makefile if not all the significant
-portions.
+Junio C Hamano <gitster@pobox.com> writes:
 
-On Tue, Feb 20, 2018 at 11:28 AM, Robert Dailey
-<rcdailey.lists@gmail.com> wrote:
-> On Thu, Jan 25, 2018 at 6:21 PM, Isaac Hier <isaachier@gmail.com> wrote:
->> Hi Jeff,
->>
->> I have been looking at the build generator, which looks promising, but
->> I have one concern. Assuming I can generate a CMakeLists.txt that
->> appropriately updates the library sources, etc. how do you suggest I
->> handle new portability macros? For example, assume someone adds a
->> macro HAVE_X to indicate the availability of some platform-specific
->> function x. In the current Makefile, a comment would be added to the
->> top indicating when HAVE_X or NO_X should be set, and that option
->> would toggle the HAVE_X C macro. But CMake can test for the
->> availability of x, which is one of the main motives for adding a CMake
->> build. The current build generator uses the output of make, so all it
->> would know is whether or not HAVE_X is defined on the platform that
->> ran the Makefile, but not the entire list of platform that git
->> supports.
->>
->> Bottom line: should I add the portability tests as they are now,
->> without accounting for future portability macros? One good alternative
->> might be to suggest the authors of new portability macros include a
->> small sample C program to test it. That would allow me to easily patch
->> the CMake tests whenever that came up. In a best case scenario, a
->> practice could be established to write the test in a specific
->> directory with a certain name so that I could automatically update the
->> CMake tests from the build generator.
+>> I think the current name makes the following call very clear:
 >
-> Isaac,
->
-> I'm very happy that you have started support for CMake. I have a lot
-> of experience with it. I'd love to help contribute. Do you have a fork
-> on github where this code is? I'd have to figure out how to apply a
-> patch from email, I haven't done it before. I think the goal should be
-> to replace the existing build system (this can be a transition that
-> happens slowly). I've been in situations where multiple build systems
-> are supported in parallel, worst case because of split personal
-> preferences on a project. That is more counterproductive than asking
-> the team to just compromise and take the initial hit on learning
-> curve. Ultimately that's up to the Git community, but that would be my
-> recommendation. But I think making CMake as complete as possible will
-> help build that confidence and trust. I can completely understand the
-> complexities and concerns they have.
+> It is still a strange name nevertheless.
+
+Sorry for simply repeating "strange" without spelling out why in the
+previous message.  This certainly is subjective and depends on your
+cultural background, but in our codebase, I tried to name functions
+after "what" they do and "why", rather than "how" they do so.  In a
+way, it's the same kind of uneasiness I feel when I see variables
+named in hungarian notation.
+
+You would inspect the object and treat 'data' as a list and add to
+the object if it is a commit, and if_packed_commit_add_to_list()
+certainly is a name that describes all of that well, but does it
+give readers a good answer when they wonder why the function is
+doing so?  You described with the name of the function how it
+collects commits that are in the pack, without explicitly saying
+that you want to collect packed commits and that is why you are
+inspecting for type and doing so only for commit (i.e.
+"if_packed_commit" part of the name) and why you are adding to a
+list.
