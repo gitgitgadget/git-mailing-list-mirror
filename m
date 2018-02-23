@@ -2,145 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-1.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
 	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 347CF1F404
-	for <e@80x24.org>; Fri, 23 Feb 2018 21:00:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 019D61F404
+	for <e@80x24.org>; Fri, 23 Feb 2018 21:09:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751881AbeBWVAn (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Feb 2018 16:00:43 -0500
-Received: from mout.web.de ([212.227.15.4]:58451 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751580AbeBWVAm (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Feb 2018 16:00:42 -0500
-Received: from [192.168.178.36] ([79.237.251.165]) by smtp.web.de (mrweb004
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0M0w07-1ebnkU1OEJ-00v9MB; Fri, 23
- Feb 2018 22:00:33 +0100
-Subject: Re: [PATCH] strbuf_read_file(): preserve errno across close() call
+        id S1751936AbeBWVJI (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Feb 2018 16:09:08 -0500
+Received: from mail-pg0-f42.google.com ([74.125.83.42]:37769 "EHLO
+        mail-pg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751843AbeBWVJH (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Feb 2018 16:09:07 -0500
+Received: by mail-pg0-f42.google.com with SMTP id y26so3815158pgv.4
+        for <git@vger.kernel.org>; Fri, 23 Feb 2018 13:09:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=4xjLGeVRE6YCYD+NnO56MllVLgkidjSvxaFeA0fB9Ts=;
+        b=qwu7A4vWekhcJQR1m+D6YA4GToBnKdw9yVmz7dW3UQDpWluniIXzba4Qw8YD0kBVcw
+         hY9Qkw2Dcen4Y+ZIpIi2g3DUyx7LR8wBSj739ztIK+rISJnm9b0y8rIS3/L6JHvLjPsO
+         /rCNP1popUoBjdH9t3wQgaiHc2SWoO12+/s1fKSZouqxcP5ezb8wCzoCYaQkXCEQesAH
+         cd1N8kanFnENQSlLd61KgcAIMWbN4OyI7J/yyrvu1Q5AbVyti5mLVIwaAoWP+XCObKzx
+         JQikRnogpLLTFt2AVYm8O+nJzWFrAL09K82QYJ13J04V1gNgulfhHvFrse0uI9eMK/Kz
+         Cv2A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=4xjLGeVRE6YCYD+NnO56MllVLgkidjSvxaFeA0fB9Ts=;
+        b=B6z01aABvYZzMgj6AbwugSEp5xzPk+OtROLqVYTj/FwSXR++Ky6P3GJxf/L+gFFkx+
+         Vmm94GQw6s6/xlSlzcSP9yDiMl+WiO+3s+1jO/tX3rqH4P+nl3m4cxHBz33uYsmnNLot
+         Ewdv8dWc3vsnbAEic7RLopZzxAyH7UZgLVLrVdfRA9V97vI4IuKQMvu/QrncXhUMDJ9k
+         YhvThey1i9u29OvT0mwx5YnX1XubCPBWbm2r4/zxsgY1kYCwwQUqNVlD9E4lt4zUbUvt
+         jMD67eeatQYeqrBJqTxwy7dONrxNbex5iLWEHdHY/ta/CBskLE8vX2XlPPGQ9qaTw1yY
+         Pzxw==
+X-Gm-Message-State: APf1xPDWefJ7twY4ne/xyCbOvfNw7H6bekoxzfFv6FhTXKjlin+Gs+OS
+        LTuZdFyHiNCHzDMGjA98ezgTuA==
+X-Google-Smtp-Source: AH8x226Gj8RZuyoTrTisFIJ2nn/ovlDmsryMtEPf/a4TtEOflKCc7og/e14S4OFrmpRaq8lCN/qUNQ==
+X-Received: by 10.99.109.70 with SMTP id i67mr2435273pgc.190.1519420146885;
+        Fri, 23 Feb 2018 13:09:06 -0800 (PST)
+Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
+        by smtp.gmail.com with ESMTPSA id u85sm6582400pfi.80.2018.02.23.13.09.05
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 23 Feb 2018 13:09:05 -0800 (PST)
+Date:   Fri, 23 Feb 2018 13:09:04 -0800
+From:   Brandon Williams <bmwill@google.com>
 To:     Jeff King <peff@peff.net>
-Cc:     Git List <git@vger.kernel.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>
-References: <6b58885c-b0f6-1687-3f2d-4594aacff9ac@web.de>
- <20180223064952.GB19791@sigill.intra.peff.net>
- <20180223070053.GC19791@sigill.intra.peff.net>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <f134c6bf-c147-4201-1217-b59bfb9f2288@web.de>
-Date:   Fri, 23 Feb 2018 22:00:24 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
+        sbeller@google.com, gitster@pobox.com, stolee@gmail.com,
+        git@jeffhostetler.com, pclouds@gmail.com
+Subject: Re: [PATCH v3 04/35] upload-pack: convert to a builtin
+Message-ID: <20180223210904.GB234838@google.com>
+References: <20180125235838.138135-1-bmwill@google.com>
+ <20180207011312.189834-1-bmwill@google.com>
+ <20180207011312.189834-5-bmwill@google.com>
+ <20180221134422.2386e1aca39fe673235590e7@google.com>
+ <20180222095833.GC12442@sigill.intra.peff.net>
+ <20180222180715.GB185096@google.com>
+ <20180222181400.GA19035@sigill.intra.peff.net>
+ <20180222193814.GA256918@aiede.svl.corp.google.com>
+ <20180222201940.GB23561@sigill.intra.peff.net>
+ <20180222202150.GA23985@sigill.intra.peff.net>
 MIME-Version: 1.0
-In-Reply-To: <20180223070053.GC19791@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:r/zy5a14r54/GIg1OxyAViZtXPEnM5Gr3PYbTrtv8vL+HjSPeCp
- 1ws15SzMgDl5sf4xWk8fbX0sSVZjLlPBE01wP2z8+9NWlMLNrvimCyB66v33l3CUgK/86po
- +BF/crdGMUhsdTVoZS356IPH5REO227+LJPuesiUcirNkCxVFZxJnQWvjGtE5bxwxZLCou7
- Vw7q9aQJVriUJr6MuqFQw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:32TywmSNJ14=:rGQK2DpJi8+gsUrXNPxE0c
- upIMiraZ5tcVPa4cEnpN7/AQmacTf2RlJvHuzE5qQ+WU0rZ+VrteFVptb2mycsqPqaNlUMtVu
- v49t7rbezOzOQuXxyNI6ii2EEExYfW6JAyz42I9m+igDidCxg1Kqs6NTlzeLoYCroPOhITyJk
- 47yN8ElK8VwIrwMNG7ofi8MxPkoNHfQ+q/kEG/npRsGOzN+TNs3cG+AdMegItQSWdhsTR6kdR
- xvkSa6et33JemrBx0TnrJ3grlnsECm++ezUcoaO56hqDyQqAo631vp+H7ghFNI6HmkFwLW3Fo
- 0f+f2dvt2OlDhATDLCfBWAPGHHOHhOvlytOPeIQCNLZecQJHHeWxukqmtjhXKK1yWVEgVHGBd
- AT/utVTmNijfvf4jNn1cJ3+wZ2DaVZEGLGJk7tTgDa8eWKYGH1RXjSSIYIMbCtWkFeVnl1Dho
- YFEb334rQGYwiGD9ZJiJAgaq4bHmaLtOXVN49sFmsgUSSE2MY/quX2NpvI1myo2IL0A8CqFQV
- xRMfdmI4FSpMgmyLO9/zkzUnTFEl1BzJUWm5KZPBLjQ+A0uLN+m5MxpPgTqMXqTupjlDc/KRf
- pvwxAyqMQNhHuQpEashU7EQKk8G6umFRSMmKuhdSW2l3jTKdLRW4sF/uehvfJ1cBvtgEYpAhX
- SyU3xV41ODZSUNP0PZwXviCScIrTJ8GmgGlX3r7RnLX/fto5cLmFdGDTHBF9VS2ZI4RMK4g+M
- 7F0fBhZZHpL+QC5SQThwGc5SmtjRpCoilnApxxFY+kW4gjhZSAens57jwJNASIU5HsmAptR0p
- R134p9VTtPh4W7JLA7WMK4oouVCYl23DzZL9AW+cK1V82GlLlE=
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180222202150.GA23985@sigill.intra.peff.net>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 23.02.2018 um 08:00 schrieb Jeff King:
-> On Fri, Feb 23, 2018 at 01:49:52AM -0500, Jeff King wrote:
-> Subject: [PATCH] strbuf_read_file(): preserve errno across close() call
+On 02/22, Jeff King wrote:
+> On Thu, Feb 22, 2018 at 03:19:40PM -0500, Jeff King wrote:
 > 
-> If we encounter a read error, the user may want to report it
-> by looking at errno. However, our close() call may clobber
-> errno, leading to confusing results. Let's save and restore
-> it in the error case.
-
-Good idea.
-
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->   strbuf.c | 6 +++++-
->   1 file changed, 5 insertions(+), 1 deletion(-)
+> > > To be clear, which of the following are you (most) worried about?
+> > > 
+> > >  1. being invoked with --help and spawning a pager
+> > >  2. receiving and acting on options between 'git' and 'upload-pack'
+> > >  3. repository discovery
+> > >  4. pager config
+> > >  5. alias discovery
+> > >  6. increased code surface / unknown threats
+> > 
+> > My immediate concern is (4). But my greater concern is that people who
+> > work on git.c should not have to worry about accidentally violating this
+> > principle when they add a new feature or config option.
+> > 
+> > In other words, it seems like an accident waiting to happen. I'd be more
+> > amenable to it if there was some compelling reason for it to be a
+> > builtin, but I don't see one listed in the commit message. I see only
+> > "let's make it easier to share the code", which AFAICT is equally served
+> > by just lib-ifying the code and calling it from the standalone
+> > upload-pack.c.
 > 
-> diff --git a/strbuf.c b/strbuf.c
-> index 1df674e919..5f138ed3c8 100644
-> --- a/strbuf.c
-> +++ b/strbuf.c
-> @@ -612,14 +612,18 @@ ssize_t strbuf_read_file(struct strbuf *sb, const char *path, size_t hint)
->   {
->   	int fd;
->   	ssize_t len;
-> +	int saved_errno;
->   
->   	fd = open(path, O_RDONLY);
->   	if (fd < 0)
->   		return -1;
->   	len = strbuf_read(sb, fd, hint);
-> +	saved_errno = errno;
->   	close(fd);
-> -	if (len < 0)
-> +	if (len < 0) {
-> +		errno = saved_errno;
->   		return -1;
-> +	}
->   
->   	return len;
->   }
+> By the way, any decision here would presumably need to be extended to
+> git-serve, etc. The current property is that it's safe to fetch from an
+> untrusted repository, even over ssh. If we're keeping that for protocol
+> v1, we'd want it to apply to protocol v2, as well.
+> 
+> -Peff
 
-How about adding a stealthy close_no_errno(), or do something like the
-following to get shorter and more readable code?  (We could also keep
-a single close() call, but would then set errno even on success.)
+This may be more complicated.  Right now (for backward compatibility)
+all fetches for v2 are issued to the upload-pack endpoint. So even
+though I've introduced git-serve it doesn't have requests issued to it
+and no requests can be issued to it currently (support isn't added to
+http-backend or git-daemon).  This just means that the command already
+exists to make it easy for testing specific v2 stuff and if we want to
+expose it as an endpoint (like when we have a brand new server command
+that is completely incompatible with v1) its already there and support
+just needs to be plumbed in.
 
---- 
- strbuf.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+This whole notion of treating upload-pack differently from receive-pack
+has bad consequences for v2 though.  The idea for v2 is to be able to
+run any number of commands via the same endpoint, so at the end of the
+day the endpoint you used is irrelevant.  So you could issue both fetch
+and push commands via the same endpoint in v2 whether its git-serve,
+receive-pack, or upload-pack.  So really, like Jonathan has said
+elsewhere, we need to figure out how to be ok with having receive-pack
+and upload-pack builtins, or having neither of them builtins, because it
+doesn't make much sense for v2 to straddle that line.  I mean you could
+do some complicated advertising of commands based on the endpoint you
+hit, but then what does that mean if you're hitting the git-serve
+endpoint where you should presumably be able to do any operation.
 
-diff --git a/strbuf.c b/strbuf.c
-index 1df674e919..c0066b1db9 100644
---- a/strbuf.c
-+++ b/strbuf.c
-@@ -2,6 +2,8 @@
- #include "refs.h"
- #include "utf8.h"
- 
-+#define IGNORE_ERROR(expr) do { int e_ = errno; expr; errno = e_; } while (0)
-+
- int starts_with(const char *str, const char *prefix)
- {
- 	for (; ; str++, prefix++)
-@@ -391,7 +393,7 @@ ssize_t strbuf_read(struct strbuf *sb, int fd, size_t hint)
- 
- 		if (got < 0) {
- 			if (oldalloc == 0)
--				strbuf_release(sb);
-+				IGNORE_ERROR(strbuf_release(sb));
- 			else
- 				strbuf_setlen(sb, oldlen);
- 			return -1;
-@@ -617,9 +619,11 @@ ssize_t strbuf_read_file(struct strbuf *sb, const char *path, size_t hint)
- 	if (fd < 0)
- 		return -1;
- 	len = strbuf_read(sb, fd, hint);
--	close(fd);
--	if (len < 0)
-+	if (len < 0) {
-+		IGNORE_ERROR(close(fd));
- 		return -1;
-+	}
-+	close(fd);
- 
- 	return len;
- }
+-- 
+Brandon Williams
