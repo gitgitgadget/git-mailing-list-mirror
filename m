@@ -7,58 +7,59 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3F98F1F576
-	for <e@80x24.org>; Fri, 23 Feb 2018 10:18:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8E1811F576
+	for <e@80x24.org>; Fri, 23 Feb 2018 10:21:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751605AbeBWKSH (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Feb 2018 05:18:07 -0500
-Received: from mail-ot0-f174.google.com ([74.125.82.174]:35418 "EHLO
-        mail-ot0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751413AbeBWKSE (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Feb 2018 05:18:04 -0500
-Received: by mail-ot0-f174.google.com with SMTP id p8so7050424otf.2
-        for <git@vger.kernel.org>; Fri, 23 Feb 2018 02:18:04 -0800 (PST)
+        id S1751827AbeBWKVR (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Feb 2018 05:21:17 -0500
+Received: from mail-ot0-f193.google.com ([74.125.82.193]:36190 "EHLO
+        mail-ot0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751819AbeBWKVP (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Feb 2018 05:21:15 -0500
+Received: by mail-ot0-f193.google.com with SMTP id 108so1176218otv.3
+        for <git@vger.kernel.org>; Fri, 23 Feb 2018 02:21:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=dZ3HCUepqieM8HY2EWS+Aa/5muiEU/fPEyZuTQ+rDio=;
-        b=F3p2IcjFLNScqqojkWovnSGjyoYgepq9gOo0Jge1RtkeVrNlo1UszG/FnJ4d/4ZH8i
-         FMplMImc4KaIZN0tGZhxZizcI22lrRNtDorKzWC/1F8zKqF/ndGdPmujZ6Pd0XWwEqJJ
-         Ib0p7EKJH6cHhN1lI+VZFoSVsngo8gbb5ncV2mmcez87MPvYTIXWlyvgPDjpGpj9WcSA
-         MnCMatPaUsWAnHBT2Z5awwYXIcLWIQoxFRP8AatpT0uZ4/vDhG+3CdJVsC641wwxVOne
-         OQ9pytzDkaWG8bwQomGzesslF+MDu5wIz0AuN2/GachKTGhw0KEX+M0gm8xiEsgWJATf
-         L8MA==
+        bh=DBhqhypR0wP1/6OpocAQxey6UJcKdL/iPgq38voV0tA=;
+        b=h11kRk/FhG+4PpH8y7p2FWUMiYmz6KizacPVt0ZK67g+OXwZlYRge9TLSDEXc3mMfP
+         PdI/8UnnPlNGYHSiKBhbQl9nYNIo1Lup30aLu2VCBbH7dbSjdVsRRrHypnFBr5coXzsX
+         YfmDi194ToSa5I7zzJtq7WUOIAI32N7mf7V4AYb34fge/14Wcm/FXPoIjMhgNdA13Wyj
+         aVkPyqVebZn9PgBbb4zuYNAUqy1KNMt9oX4/aZ01zONeVoFdQVKmiOaKJDbbJtifwwsk
+         xzivWdUBbCaYOp6McqMyFrLLL79GP3PHtqsQIfs2L0lvc8cyhnysmyM1HdJ6pOq4blrj
+         i4JA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=dZ3HCUepqieM8HY2EWS+Aa/5muiEU/fPEyZuTQ+rDio=;
-        b=r81rI6K7VCHfz9+J5/zVoAAQjqPPun/Jk1nw8qTOuB343WQbNWSxR1K68lapFsIQ7o
-         GizP37Q+GiZLJJKDTJ4OOPG9NC3TtBlmOXtFkLY+Uuh/GtBsRJhmdKMwASv2ZciA3fJP
-         b4/6gPqIDE1kVHJQowta0BTdjbgJ+v4Rr/poBlKLk3J3lvBUDUH9IP3hLf1wygHON7Sr
-         adMRNhY3USnjokGiSjN9Rc90rBgMPXyg2PtEUD6IJhh7KP/btrC9Cra6G5MpKfurpbMP
-         Lt4N3AduewFe85yeHCF8YqVwbMFqSBYxlJYjb4bzjIlABSxMWrB+Sqd9FFOunkxgPJjd
-         QXUw==
-X-Gm-Message-State: APf1xPBVyhFP0Q8PKIAAYwFT5Zgiod24ZXYKe+ouaOWAyhdTTOdHvaoS
-        uK1zcNK5Mvg4LmSz2m50tYpWVnjMcw1YOMav/Yw=
-X-Google-Smtp-Source: AG47ELv21R4eMYxwG9mYAlnVi4JbdI4zeJA0TwoyzAL0nk/kAG+G+zoQmD8axWa2t0SW2INFJxVEIDns3kNJcq5OfL0=
-X-Received: by 10.157.54.161 with SMTP id h30mr702582otc.173.1519381084381;
- Fri, 23 Feb 2018 02:18:04 -0800 (PST)
+        bh=DBhqhypR0wP1/6OpocAQxey6UJcKdL/iPgq38voV0tA=;
+        b=e0iDkpjWcU/cBPlKNlr+BE93ya6c/oDnNPUjhKERuaf60d9bls8m+UJwGKp2t7Bik/
+         DalJzEQ+1ya1XmMSYQRmuE9am769SCeOCZDzSaG/4CJntCNQenbDmigvDOyFQE0lxJBl
+         iokSJhsFivoewwKoAD5KFkDFIK2l7TW6BsV123LiMaf96u7g31bcAR0zeqOiVkRUD8a6
+         Wa9LYRqeGt7hSX3PbBw5a/FGhWTWK4FQWz4s5afORA7aoHRYiV3/imn5vYDkT/udn97H
+         093CJGwzUd6EDdvOvZ5p61ASXFOg8yf2+GVbhBOuZEq4+lvT0bujQ4c/U0131PCXSLbP
+         bpQA==
+X-Gm-Message-State: APf1xPCqjOtHwvDV4HpS9jwOeFzqLYjsyixoc17rNzETVBkije/Hi/Hh
+        CaLjcH1AlSCmF3HeOE2Uv8CYuGFgE9fHe3LN5kQ=
+X-Google-Smtp-Source: AG47ELsPcrLmWqisg+9dW3wV/Wf0o8r1iHGZhS9yBbPxtH9z77Rb7rGAOyWACMsnrOKFbK7NQJfC7wo0W9R3IQelvtk=
+X-Received: by 10.157.54.204 with SMTP id s12mr722754otd.304.1519381275067;
+ Fri, 23 Feb 2018 02:21:15 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.74.25.140 with HTTP; Fri, 23 Feb 2018 02:17:33 -0800 (PST)
-In-Reply-To: <xmqqsh9sx4xk.fsf@gitster-ct.c.googlers.com>
-References: <20180131110547.20577-1-pclouds@gmail.com> <20180209110221.27224-1-pclouds@gmail.com>
- <20180209110221.27224-7-pclouds@gmail.com> <CAM0VKjmFEyr4qHdc1qfW0M_RZ7cM9bCfsn-M4Rapzt6CPhZE1g@mail.gmail.com>
- <CACsJy8CWdJJigQSEjGuhoH1URGY8=YSAHiqhaGBZK7Zr8GZUGg@mail.gmail.com> <xmqqsh9sx4xk.fsf@gitster-ct.c.googlers.com>
+Received: by 10.74.25.140 with HTTP; Fri, 23 Feb 2018 02:20:44 -0800 (PST)
+In-Reply-To: <87h8q97sim.fsf@passepartout.tim-landscheidt.de>
+References: <20180131093051.15525-1-pclouds@gmail.com> <20180211094328.6157-1-pclouds@gmail.com>
+ <xmqqa7w1yiuj.fsf@gitster-ct.c.googlers.com> <87h8q97sim.fsf@passepartout.tim-landscheidt.de>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Fri, 23 Feb 2018 17:17:33 +0700
-Message-ID: <CACsJy8DWwOezWpTVmpndhvhujzGV79uT2RqpZJxcp7oLr7G+-g@mail.gmail.com>
-Subject: Re: [PATCH v3 06/42] completion: use __gitcomp_builtin in _git_am
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Git mailing list <git@vger.kernel.org>,
+Date:   Fri, 23 Feb 2018 17:20:44 +0700
+Message-ID: <CACsJy8DefOL=JS-24GBucGfUx5q3A=JoLVq2N6ykdtz4yQ-dmA@mail.gmail.com>
+Subject: Re: [PATCH v3 0/3] Add "git rebase --show-current-patch"
+To:     Tim Landscheidt <tim@tim-landscheidt.de>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
         =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Eric Sunshine <sunshine@sunshineco.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
@@ -66,38 +67,35 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 23, 2018 at 1:19 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Duy Nguyen <pclouds@gmail.com> writes:
+On Thu, Feb 22, 2018 at 7:54 AM, Tim Landscheidt <tim@tim-landscheidt.de> wrote:
+> Junio C Hamano <gitster@pobox.com> wrote:
 >
->> Now that you mention it, the only command that completes
->> --rerere-autoupdate is git-merge. Since this is "auto" I don't think
->> people want to type manually.
+>>> Compared to v2:
 >
-> Sorry, but I do not quite get the connection between "since this is
-> 'auto'" and the rest of the sentence.  Is it just it is so lengthy
-> that people do not want to type and are likely to use completion?
-
-Well, if it is to be done automatically, I should not need to tell it
-manually (by typing the option on command line). Granted it's a weak
-argument.
-
->> Maybe I should separate these changes
->> _and_ remove --rerere-autoupdate from _git_merge() too? At least that
->> it will be consistent that way.
+>>> - the potential loss of errno before it's printed out in builtin/am.c
+>>>   is fixed.
+>>> - keep update_ref() in sequencer.c non-fatal like this rest
+>>> - rename ORIG_COMMIT to REBASE_HEAD
 >
-> Hmmmm.  Why not complete this option?  Is it because the current
-> completion script does not and we are trying to preserve the
-> behaviour?  I do not have a strong opinion either way, but just
-> trying to understand the reasoning behind the choice.
+>>> Interdiff:
+>
+>> This round hasn't seen any comments.  Is everybody happy with it?
+>
+>> I personally do not have strong opinion for the feature but didn't
+>> spot anything against the execution, either, so...
+>
+> Sorry for the late reply: I dislike REBASE_/HEAD/ because
+> ORIG_/HEAD/ refers to the tip of the original branch, and
+> /ORIG/_HEAD refers to the original branch, so
+> /REBASE/_/HEAD/ is doubly confusing IMHO.  I consider
+> ORIG_COMMIT easier to understand because ORIG_HEAD refers to
+> the tip of the original branch, and ORIG_COMMIT would refer
+> to one of the commits making up that original branch, but as
+> I suggested it myself I might not be very objective in that
+> regard :-).
 
-There's not a strong argument for not completing this option really.
-
-It may belong to the unpopular category and adding it may make people
-<TAB> more for other options. But I think it's way too early to decide
-that. And even if that's true, I think we should let the user choose
-to not complete certain options they don't like.
-
-It's good that this is spotted. I think I'll just keep all
---rerere-autoupdate completable. Well, v4's coming (in a few days)...
+I wonder if you could make a ref symlink named ORIG_COMMIT pointing to
+REBASE_HEAD. A bit more setup for you, but that'll make everybody
+happy.
 -- 
 Duy
