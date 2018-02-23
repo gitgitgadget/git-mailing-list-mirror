@@ -3,216 +3,192 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EF9E01F404
-	for <e@80x24.org>; Fri, 23 Feb 2018 19:19:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 906291F404
+	for <e@80x24.org>; Fri, 23 Feb 2018 19:30:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754509AbeBWTTa (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Feb 2018 14:19:30 -0500
-Received: from mail-qk0-f193.google.com ([209.85.220.193]:43332 "EHLO
-        mail-qk0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754057AbeBWTT1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Feb 2018 14:19:27 -0500
-Received: by mail-qk0-f193.google.com with SMTP id j4so6222614qke.10
-        for <git@vger.kernel.org>; Fri, 23 Feb 2018 11:19:26 -0800 (PST)
+        id S1754658AbeBWTaQ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Feb 2018 14:30:16 -0500
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:33416 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754646AbeBWTaL (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Feb 2018 14:30:11 -0500
+Received: by mail-wr0-f196.google.com with SMTP id s5so15208059wra.0
+        for <git@vger.kernel.org>; Fri, 23 Feb 2018 11:30:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=+APtplzf45Vsom9XxgTaZ22mI2/UlRA/ac6plJu08kU=;
-        b=uKYKBhqvHqWxM5wPYp4yaprujUrY9zGi83WMLNZkZ9xMspx3XCnu1ikqgJrG75kwFB
-         CwLMcwIiEDCvY3RzjJWFk9cVZfzmHiPrCXSwrjfiluadgbrUedwXnrRurGnem4aX3h3O
-         Zz8YVeOMIvnmtfr2yAEL/jACFldT8b5O6Xrx50TKq8q8EBpIorCLHlf0lXrIwX8GfkcC
-         IWeKAt1wAty40vXkVwSf5TeQ0D2Akjq4ZvdP4z+PM7xSV5XGKE+jBDdt/pZBhO/0YSj2
-         62KCF95hGEQg14bVL/L4BsR5BOMTOf9ZfegW0/gln8A7GEsecQUHxlNnAheGr4yDERuu
-         PXFw==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=c3LYKPlMUn1+SLDgdhOBqWByzU3xeHNCmPBM9TVFvP8=;
+        b=MJWT3hh7Cu+i2Rk8QHnAmQseCpjhdc7SYwkk0th5tmtS5V5McvTpoI5Bmpkc2ESms+
+         TP3gD0fzXMAoym4AYfRIw0za+SjDUkKocUW7U+WAK4EtkyEZ5iWzQ/Qu6keezFwuPqki
+         QHDrf+cIGO5MSUx0hF1IDaqnddSW7kicSQ5WbT5/FNAZHU4FrvJr6dKSw9i0aSXAdrf8
+         MRxfMSqM5tCwBb4jF1W/7D4yJxjvZ2WIJbyUDcFRuIcu4mZjZCM+7d0SMhNZaSYSPl6J
+         1gL/FhEsXcEiPi3FioEWCsvE5+OYXPfmyWFpdZbSQ7WfOkb8gaLglznR6tXCq9Qnhuj8
+         E88w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=+APtplzf45Vsom9XxgTaZ22mI2/UlRA/ac6plJu08kU=;
-        b=tm7Sf8Q1+qtj9WrOZvACDHL9/cRhVRUboGUo367/hCg2QVKwap4yjROJ/mdk3bHo4A
-         svfXrGlgEl6vfbyWw6WQpOjrlq/JwlaOPNUdLngss4DCawIDKNHoUczdKp1J8mMSHuVW
-         QNmpVKvFzUtO7Xc+GUap2YbsVD3Tjckbmnw5E6Jb9pUNiE1BFGvkC+tpjQMabWk7VTqM
-         JC54kr346C2ekW60lhjwL+scFZnSfCECmIA++VEo5s6NZC0u9RRAzIqoscsKB+66hjsQ
-         e0i5xshCaCRigu0edkUXnQtgDBbF0ZhVbs5DCMzSgy3k97zkjq4Cik6YKEbiRSvHfViQ
-         EP4w==
-X-Gm-Message-State: APf1xPDHi1DT3gIPpSEOM4gyoW6/ner2U/jgOlZlSV1yuZUz4HNzAFuC
-        tWJzpUmhfwNuyqzhAZr+uxM=
-X-Google-Smtp-Source: AG47ELsgq3l6GO+d7OHizpoLRnzaDqeMKAIQ8XWnvjiigi63CkRS4ZNUG8T3bBWV7bShZCjTSUE70Q==
-X-Received: by 10.55.239.26 with SMTP id j26mr4247964qkk.315.1519413566097;
-        Fri, 23 Feb 2018 11:19:26 -0800 (PST)
-Received: from ?IPv6:2001:4898:6808:13e:c4e6:7a22:56f1:df04? ([2001:4898:8010:0:ae1c:7a22:56f1:df04])
-        by smtp.gmail.com with ESMTPSA id q24sm2166000qkq.75.2018.02.23.11.19.24
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 23 Feb 2018 11:19:25 -0800 (PST)
-Subject: Re: [PATCH v4 12/13] commit-graph: read only from specific
- pack-indexes
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git <git@vger.kernel.org>, Jeff Hostetler <git@jeffhostetler.com>,
-        Jeff King <peff@peff.net>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=c3LYKPlMUn1+SLDgdhOBqWByzU3xeHNCmPBM9TVFvP8=;
+        b=jvQch9NAA8+Z21ReXRdVdQPcZSUlIGAzmyeSg5mFxbzdDeuPUxQIKhJJLPRAfyUYtc
+         XDX1fKxCdmp1qAvvDLPp8287oYxOPXeOWigWGZD9+jluvEk7Z7TyfhO9nl9GwAy5NrXR
+         CETSonWhv+RgPN2vCiWe4nKfdYwr86ojo8PZxJduxR5VnQ2+KM1ycxumvzUZjggHJ01e
+         1upWIhpWqNeCNZwd8V5FSeKsG3JL61yP0k+AR3Xt0RMis55iZ3izEp86dZgYOFhiJ29L
+         ulbquUgfmJ7LctnYCsPMYSIGn8++gLjVN+1Mc1T7B9OXKBf/OS8RQ5aFj9I/mqbaLq++
+         /Wcg==
+X-Gm-Message-State: APf1xPBisG5/lNRzY615/BGNL7YTh8cc9CIW7LPkQYjAkki6pK6ticZj
+        Cs/0/CuqbdqXNY33fuxXCvo=
+X-Google-Smtp-Source: AH8x225f7A+bweeWvoYk9rdrvty50fe5FgniSSaRHIF4NlQTNccLMBhZNldujfyLdKz+/VfPoj7lLQ==
+X-Received: by 10.223.144.163 with SMTP id i32mr2787700wri.73.1519414208942;
+        Fri, 23 Feb 2018 11:30:08 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id 77sm3229837wmu.17.2018.02.23.11.30.08
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 23 Feb 2018 11:30:08 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     git@vger.kernel.org, git@jeffhostetler.com, peff@peff.net,
+        jonathantanmy@google.com, szeder.dev@gmail.com, sbeller@google.com,
         Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v4 04/13] commit-graph: implement write_commit_graph()
 References: <4d1ee202-7d79-d73c-6e05-d0fc85db943c@gmail.com>
- <1519066406-81663-1-git-send-email-dstolee@microsoft.com>
- <1519066406-81663-13-git-send-email-dstolee@microsoft.com>
- <CAGZ79kZbdvehOQMZj3NkkSt5RoArtv0ixb8pHvFDrHTrWmVuDg@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <3609f373-28e9-e849-7126-cd88b54013b9@gmail.com>
-Date:   Fri, 23 Feb 2018 14:19:23 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
+        <1519066406-81663-1-git-send-email-dstolee@microsoft.com>
+        <1519066406-81663-5-git-send-email-dstolee@microsoft.com>
+        <xmqqmv031d7d.fsf@gitster-ct.c.googlers.com>
+        <4d453f29-8e5b-2a98-ab11-415f63613be8@gmail.com>
+Date:   Fri, 23 Feb 2018 11:30:07 -0800
+In-Reply-To: <4d453f29-8e5b-2a98-ab11-415f63613be8@gmail.com> (Derrick
+        Stolee's message of "Fri, 23 Feb 2018 12:23:26 -0500")
+Message-ID: <xmqqsh9rtsg0.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <CAGZ79kZbdvehOQMZj3NkkSt5RoArtv0ixb8pHvFDrHTrWmVuDg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2/21/2018 5:25 PM, Stefan Beller wrote:
-> On Mon, Feb 19, 2018 at 10:53 AM, Derrick Stolee <stolee@gmail.com> wrote:
->> Teach git-commit-graph to inspect the objects only in a certain list
->> of pack-indexes within the given pack directory. This allows updating
->> the commit graph iteratively, since we add all commits stored in a
->> previous commit graph.
+Derrick Stolee <stolee@gmail.com> writes:
+
+> jt/binsearch-with-fanout introduces one when there is a 256-entry
+> fanout table (not the case here).
+>
+> The bsearch() method in search.h (and used in
+> pack-write.c:need_large_offset) does not return the _position_ of a
+> found element.
+>
+> Neither of these suit my needs, but I could just be searching for the
+> wrong strings. Also, I could divert my energies in this area to create
+> a generic search in the style of jt/binsearch-with-fanout.
+
+... me goes and digs ...
+
+What I had in mind was the one in sha1-lookup.c, actually.  Having
+said that, hand-rolling another one is not too huge a deal;
+eventually people will notice and consolidate code after the series
+stabilizes anyway ;-)
+
+>>> +				num_large_edges++;
+>>> +				parent = parent->next;
+>>> +			} while (parent);
+>> It feels somewhat wasteful to traverse the commit's parents list
+>> only to count, without populating the octopus table (which I
+>> understand is assumed to be minority case under this design).
+>
+> Since we are writing the commit graph file in-order, we cannot write
+> the octopus table until after the chunk lengths are known.
+
+Oh, my "minority case" comment was me wondering "since we expect
+there are only a few, why not keep them in memory while we discover
+them here, so that the writing phase that come later do not have to
+go through all commits again counting their parents?  would it be
+more performant and a better trade-off?"  We can certainly do such
+an optimization later (iow, it is not all that crucial issue and
+certainly I didn't mention the above as something that needs to be
+"fixed"--there is nothing broken).
+
+> store the octopus table in memory and then dump it into the file
+> later, but walking the parents is quite fast after all the commits are
+> loaded. I'm not sure the time optimization merits the extra complexity
+> here. (I'm happy to revisit this if we do see this performance
+> lacking.)
+>
+> P.S. I really like the name "octopus table" and will use that for
+> informal discussions of this format.
+
+I actually do not mind that name used as the official term.  I find
+it far more descriptive and understandable than "long edge" / "large
+edge" at least to a Git person.
+
+> You're right that int_id isn't great, and your more-specific
+> "oid_table_pos" shows an extra reason why it isn't great: when we add
+> the GRAPH_LAST_EDGE bit or set it to GRAPH_PARENT_MISSING, the value
+> is NOT a table position.
+
+Perhaps I am somewhat biased, but it is quite natural for our
+codebase and internal API to say something like this:
+
+    x_pos(table, key) function's return value is the non-negative
+    position for the key in the table when the key is there; when it
+    returns a negative value, it is (-1 - position) where the "position"
+    is the position in the table they key would have been found if
+    it was in there.
+
+and store the return value from such a function in a variable called
+"pos".  Surely, sometimes "pos" does not have _the_ position, but
+that does not make it a bad name.
+
+Saying "MISSING is a special value that denotes 'nothing is here'"
+and allowing it to be set to a variable that meant to hold the
+position is not such a bad thing, though.  After all, that is how
+you use NULL as a special value for a pointer variable ;-).
+
+Same for using the high bit to mean something else.  Taking these
+together you would explain "low 31-bit of pos holds the position for
+the item in the table.  MISSING is a special value that you can use
+to denote there is nothing.  The LAST_EDGE bit denotes that one
+group of positions ends there", or something like that.
+
+> I think the current name makes the following call very clear:
+
+It is still a strange name nevertheless.
+
+>>> +char *write_commit_graph(const char *obj_dir)
+>>> +{
+>>> +	struct packed_oid_list oids;
+>>> +	struct packed_commit_list commits;
+>>> +	struct sha1file *f;
+>>> +	int i, count_distinct = 0;
+>>> +	DIR *info_dir;
+>>> +	struct strbuf tmp_file = STRBUF_INIT;
+>>> +	struct strbuf graph_file = STRBUF_INIT;
+>>> +	unsigned char final_hash[GIT_MAX_RAWSZ];
+>>> +	char *graph_name;
+>>> +	int fd;
+>>> +	uint32_t chunk_ids[5];
+>>> +	uint64_t chunk_offsets[5];
+>>> +	int num_chunks;
+>>> +	int num_long_edges;
+>>> +	struct commit_list *parent;
+>>> +
+>>> +	oids.nr = 0;
+>>> +	oids.alloc = (int)(0.15 * approximate_object_count());
+>> Heh, traditionalist would probably avoid unnecessary use of float
+>> and use something like 1/4 or 1/8 ;-)  After all, it is merely a
+>> ballpark guestimate.
 >>
->> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
->> ---
->>   Documentation/git-commit-graph.txt | 11 +++++++++++
->>   builtin/commit-graph.c             | 32 +++++++++++++++++++++++++++++---
->>   commit-graph.c                     | 26 ++++++++++++++++++++++++--
->>   commit-graph.h                     |  4 +++-
->>   packfile.c                         |  4 ++--
->>   packfile.h                         |  2 ++
->>   t/t5318-commit-graph.sh            | 16 ++++++++++++++++
->>   7 files changed, 87 insertions(+), 8 deletions(-)
->>
->> diff --git a/Documentation/git-commit-graph.txt b/Documentation/git-commit-graph.txt
->> index b9b4031..93d50d1 100644
->> --- a/Documentation/git-commit-graph.txt
->> +++ b/Documentation/git-commit-graph.txt
->> @@ -42,6 +42,10 @@ With the `--delete-expired` option, delete the graph files in the pack
->>   directory that are not referred to by the graph-latest file. To avoid race
->>   conditions, do not delete the file previously referred to by the
->>   graph-latest file if it is updated by the `--set-latest` option.
->> ++
->> +With the `--stdin-packs` option, generate the new commit graph by
->> +walking objects only in the specified packfiles and any commits in
->> +the existing graph-head.
-> A general question on this series:
-> How do commit graph buildups deal with garbage collected commits?
-> (my personal workflow is heavy on rebase, which generates lots of
-> dangling commits, to be thrown out later)
+>>> +	num_long_edges = 0;
+>> This again is about naming, but I find it a bit unnatural to call
+>> the edge between a chind and its octopus parents "long".  Individual
+>> edges are not long--the only thing that is long is your "list of
+>> edges".  Some other codepaths in this patch seems to call the same
+>> concept with s/long/large/, which I found somewhat puzzling.
 >
-> The second half of the sentence makes it sound like once a
-> commit is in the graph it cannot be pulled out easily again, hence
-> the question on the impact of graphs on a long living repository
-> which is garbage collected frequently.
+> How about "num_extra_edges"...
 
-This is another place that I failed to update when I stopped 
-automatically including commits from the existing graph. As of v4, the 
-new graph should only contain commits reachable from the commits 
-discovered by the three mechanisms (inspecting all packs, inspecting the 
---stdin-packs, or reading the OIDs with --stdin-commits). Thus, commits 
-that are GC'd will not appear in the new graph.
-
-If a commit has been GC'd, then parse_commit_gently() will never be 
-called since it is called after lookup_object() to create the struct 
-commit. The only case we could have is where we navigate to a parent 
-using the commmit graph but that parent is GC'd (this does not make sense).
-
-It may be helpful to add an "--additive" argument to specify that we 
-want to keep all commits that are already in the graph.
-
-> AFAICT you could just run
->      git commit-graph write --set-latest [--delete-expired]
-> as that actually looks up objects from outside the existing graph files,
-> such that lost objects are ignored?
->
->> +       const char **lines = NULL;
->> +       int nr_lines = 0;
->> +       int alloc_lines = 0;
-> (nit:)
-> I had the impression that these triplet-variables, that are used in
-> ALLOC_GROW are allo X, X_nr and X_allow, but I might be wrong.
-
-"git grep ALLOC_GROW" confirms your impression. Will fix.
-
->
->> @@ -170,7 +178,25 @@ static int graph_write(int argc, const char **argv)
->>
->>          old_graph_name = get_graph_latest_contents(opts.obj_dir);
->>
->> -       graph_name = write_commit_graph(opts.obj_dir);
->> +       if (opts.stdin_packs) {
->> +               struct strbuf buf = STRBUF_INIT;
->> +               nr_lines = 0;
->> +               alloc_lines = 128;
-> alloc_lines has been initialized before, so why redo it here again?
-> Also what is the rationale for choosing 128 as a good default?
-> I would guess 0 is just as fine, because ALLOC_GROW makes sure
-> that it growth fast in the first couple entries by having an additional
-> offset. (no need to fine tune the starting allocation IMHO)
-
-I was unaware that ALLOC_GROW() handled the alloc == 0 case. Thanks.
-
->
->> +               ALLOC_ARRAY(lines, alloc_lines);
->> +
->> +               while (strbuf_getline(&buf, stdin) != EOF) {
->> +                       ALLOC_GROW(lines, nr_lines + 1, alloc_lines);
->> +                       lines[nr_lines++] = buf.buf;
->> +                       strbuf_detach(&buf, NULL);
-> strbuf_detach returns its previous buf.buf, such that you can combine these
-> two lines as
->      lines[nr_lines++] = strbuf_detach(&buf, NULL);
->
->
->> +               }
->> +
->> +               pack_indexes = lines;
->> +               nr_packs = nr_lines;
-> Technically we do not need to strbuf_release(&buf) here, because
-> strbuf_detach is always called, and by knowing its implementation,
-> it is just as good.
->
->
->> @@ -579,7 +581,27 @@ char *write_commit_graph(const char *obj_dir)
->>                  oids.alloc = 1024;
->>          ALLOC_ARRAY(oids.list, oids.alloc);
->>
->> -       for_each_packed_object(if_packed_commit_add_to_list, &oids, 0);
->> +       if (pack_indexes) {
->> +               struct strbuf packname = STRBUF_INIT;
->> +               int dirlen;
->> +               strbuf_addf(&packname, "%s/pack/", obj_dir);
->> +               dirlen = packname.len;
->> +               for (i = 0; i < nr_packs; i++) {
->> +                       struct packed_git *p;
->> +                       strbuf_setlen(&packname, dirlen);
->> +                       strbuf_addstr(&packname, pack_indexes[i]);
->> +                       p = add_packed_git(packname.buf, packname.len, 1);
->> +                       if (!p)
->> +                               die("error adding pack %s", packname.buf);
->> +                       if (open_pack_index(p))
->> +                               die("error opening index for %s", packname.buf);
->> +                       for_each_object_in_pack(p, if_packed_commit_add_to_list, &oids);
->> +                       close_pack(p);
->> +               }
-> strbuf_release(&packname);
->
->> +       }
->> +       else
-> (micro style nit)
->
->      } else
+Yes, "extra" in the name makes it very understandable.
 
