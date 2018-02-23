@@ -2,83 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DA5FD1F576
-	for <e@80x24.org>; Fri, 23 Feb 2018 08:15:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5B7031F576
+	for <e@80x24.org>; Fri, 23 Feb 2018 09:04:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751411AbeBWIP3 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Feb 2018 03:15:29 -0500
-Received: from mail-ua0-f169.google.com ([209.85.217.169]:42509 "EHLO
-        mail-ua0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750903AbeBWIP2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Feb 2018 03:15:28 -0500
-Received: by mail-ua0-f169.google.com with SMTP id b23so2673166uak.9
-        for <git@vger.kernel.org>; Fri, 23 Feb 2018 00:15:27 -0800 (PST)
+        id S1751378AbeBWJEO (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Feb 2018 04:04:14 -0500
+Received: from mail-wm0-f43.google.com ([74.125.82.43]:50204 "EHLO
+        mail-wm0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751332AbeBWJEN (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Feb 2018 04:04:13 -0500
+Received: by mail-wm0-f43.google.com with SMTP id k87so3283279wmi.0
+        for <git@vger.kernel.org>; Fri, 23 Feb 2018 01:04:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=maptek-com-au.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=x/Un6+NSZHNDK4/66gRdFgmSZqI/rsXoO5SqtIjvx4c=;
-        b=waMNzII+bCXu4OHI7IjF4/Bruc8aSTQUoD7gytRoDfTo/kQhhvH73S/cLeS7cxAhcY
-         fFmWF0WZeM4kDthHZ7ZbfvRGnMcKuoSrFvHpJHfNXPfcy1LuXPVPIUseU7bPfXOgEC8n
-         UAGwrUe8sn+Zrb6NuDY+LSCl6Ty5MxjRkaf7p0QwkDCnFBXpuF384egJSDTmx4/zAdSV
-         9kKpciTEWB1S9e++5NurUjD0utxL7gOHcmVzFZ06O6O14ZiMeD9lrQUrHc9a46P/K24G
-         Vw19uUDicqFFlGoxy4rUlGm7j6Z8aCIHCfFsgPh0ustqdf+FILVUv7ZKBX1zjERm1bzT
-         y57w==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=4BeWdLB50SR4WbtDaFf9sbVcH6ux2CLwCRh6qhRci9s=;
+        b=lPiZ9xMA7hHIGv/VzssftdMEL11K50ZqNiTVwLRNR2HCu8OlnM6bSmHyScwAekBgHN
+         lSpvFXP0qmB6R6GZiuZL+C87Zjjf4Hw1JWU9MQ9DX4qoUAMMNdYcLQvltBKKQD4gmqXR
+         PN8ymnIE5C5H11wVMKXtX01TG63MJPbtM3KdRv2/w0DsnNNTVM7o2YuxQkCkicPW3F2K
+         u2xmPomwrN+/Mb/tNm66aFVsInRhnwn4AL5S/TreIHw6NUeGbPM//6MUYaYBvQ1jVDoG
+         kniq/8qlctGhb+LeAur4y9Z8VQpwqDLtfDbRqzjqBI5NycrcCvC3tblIw68P/WHeE/wM
+         hp6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=x/Un6+NSZHNDK4/66gRdFgmSZqI/rsXoO5SqtIjvx4c=;
-        b=VfTOYcYoxfCk7rVOiZsqASZDajnr6K1sGTJo+zlmfye4t4g41iNyfk57i67o3aTTzx
-         RFGMT4nyo4vbz/U2QZ/VXHbLYy03aWwHl90a7h3KAOKE994OQOrN65rw5srygeIN7On9
-         6+bIjakXjeb8agpyiNtTYfjxpcSiC6ZfE+Qfxfde7NnE7s+tlOWKIXfzq/0WripjQ/VD
-         HZNZkkmn2Sy0xYT+55H1gQZxlNUB0P5MrmfmKtQPHoYp82UALy6CuOf91kxryCBshFsE
-         71/cBciRj9ClwLLcruyqsA40mMXXXJN3wXN8HyAyfm7dRGMswR3mpZe6NEeoNe1EhPaw
-         s3Yw==
-X-Gm-Message-State: APf1xPBOOgDm3x56cBU9vNPN7yr/53wMq+eEtF9jKCkkvifPTx4vRrsu
-        kxJUrjBjgdRpQtZVrcPSHOlQUzlUMdZU67Fok8HFQQ0PnQ0=
-X-Google-Smtp-Source: AG47ELvdaMz+B42YBBlBj2Q4rqfu/LpHTYZPtyGBmWAjHw0o7ZExUuZaQLXwTtorTiDkErrwg8evzH+dYAGU8Roq2wQ=
-X-Received: by 10.176.72.197 with SMTP id y5mr605305uac.122.1519373727177;
- Fri, 23 Feb 2018 00:15:27 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=4BeWdLB50SR4WbtDaFf9sbVcH6ux2CLwCRh6qhRci9s=;
+        b=lVGoJvrv5O8AlNdgxGVnZmLch+eZ+vE8bzDtZHKUPlfoxwnRwTX77Rnh3FUXrRFcZq
+         8zvSEGGkGt6DjKZdos+oCYd79a0CU5bdkmY5IrTJWocChNCfQqg+aVCcorY9zfVAoCsC
+         JjAaFn1PM+oDV8OkoQVCeUopVjQGdPBX4fwMY4PYXVizuOoztpgWHtBp/RA3vWLmvzYg
+         7zy5ieX7EylqI2riPKnZeH3aGkE/d3M/ek0aePxCHm/Vui1fmPtK2HAcSwmIVoVcatHd
+         J9+KS+O4Auh+s28m9I8DfsEe6tiasAZC0s6Fp/sHtguU4z2Nc6sOBcS6hdzW/prq9rbH
+         yGuQ==
+X-Gm-Message-State: APf1xPDyCe/IX1VxzO1yGgTQQpExCVlm1L72XC4lm+7Zbb/GjzO7I9i6
+        EtATRPd1zMaB87ZFcPUAfvE=
+X-Google-Smtp-Source: AG47ELtxqDxYSgFjHS8H+LF6OE7Um9OHe76i8Df8xh43O21N67tHtrsjKK8V1mr2itLwvfzgyG1isw==
+X-Received: by 10.28.105.7 with SMTP id e7mr1095673wmc.125.1519376651670;
+        Fri, 23 Feb 2018 01:04:11 -0800 (PST)
+Received: from evledraar (178-84-79-100.dynamic.upc.nl. [178.84.79.100])
+        by smtp.gmail.com with ESMTPSA id s81sm2308494wma.45.2018.02.23.01.04.07
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 23 Feb 2018 01:04:08 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Michael Giuffrida <michaelpg@chromium.org>,
+        Michael Schubert <mschub@elegosoft.com>,
+        Jeff King <peff@peff.net>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH v5 00/17] document & test fetch pruning & add fetch.pruneTags
+References: <20180121000304.32323-1-avarab@gmail.com>
+        <20180209203216.11560-1-avarab@gmail.com>
+        <xmqq606pyiqo.fsf@gitster-ct.c.googlers.com>
+        <874lm9f6pe.fsf@evledraar.gmail.com>
+        <xmqq7er4wzub.fsf@gitster-ct.c.googlers.com>
+User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 1.1.0
+In-reply-to: <xmqq7er4wzub.fsf@gitster-ct.c.googlers.com>
+Date:   Fri, 23 Feb 2018 10:04:06 +0100
+Message-ID: <87zi40dqm1.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Received: by 10.176.65.67 with HTTP; Fri, 23 Feb 2018 00:15:26 -0800 (PST)
-From:   Daryl Van Den Brink <daryl.vandenbrink@maptek.com.au>
-Date:   Fri, 23 Feb 2018 18:45:26 +1030
-Message-ID: <CAC4jX8GEg5=9BPepYLntGRG7n_84ju7rTSYO82SQyuiiff0UcQ@mail.gmail.com>
-Subject: git stash --keep-index doesn't have the expected behaviour
-To:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If you search the internet for "git stash only unstaged changes" you
-can find much misleading information about what "git stash
---keep-index" does. However, it is my opinion that the --keep-index
-option is broken, in that it doesn't do what 90% of people want it to
-do - that is, stash only the unstaged changes and not include the
-staged changes in the stash. You can find many hacks to work around
-this limitation, none of which are very satisfactory.
 
-It was pointed out by some commenters on Stack Overflow that the
-examples given in the documentation at
-https://git-scm.com/docs/git-stash imply that the intended behaviour
-of "git stash --keep-index" is to stash only the unstaged changes.
-Based on that, they reason that it's actually a bug. I'm not sure
-that's true, but I find the existing behaviour of "--keep-index"
-puzzling because I can't think of when I would use it (whereas
-stashing only unstaged changes is a feature I would frequently use).
+On Thu, Feb 22 2018, Junio C. Hamano jotted:
 
-Is it possible that --keep-index could be fixed/improved/modified to
-stash only the unstaged changes, or alternatively a new option
-introduced which does this?
+> Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+>
+>> On Thu, Feb 22 2018, Junio C. Hamano jotted:
+>>
+>>> Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
+>>>
+>>>> Here's a v5 (correct subject line this time!). Many thanks to Eric for
+>>>> a thorough review.
+>>>
+>>> We haven't seen any comments on this round.  Is everybody happy?
+>>>
+>>> I do not have a strong opinion on the new feature, either for or
+>>> against.  I didn't find anything majorly questionable in the
+>>> execution, though, so...
+>>
+>> I've been running that here on thousands of boxes (that are actively
+>> using it) for 2 weeks now without issue. Would be great to have it
+>> merged down & in 2.17.
+>
+> If those thousands of boxes are all employing one specific workflow
+> that is helped by these changes, and the workflow is that other
+> people do not care about (or even worse, actively do not want to let
+> their junior project members to use without thinking), then a
+> data-point from the original author does not amount to much ;-)
 
--- 
-Daryl van den Brink
-Software Engineer
-Maptek | 31 Flemington Street, Glenside, SA 5065, Australia
-Tel: +61-8 8338 9222 | Dir: +61-8 8338 9222 | Fax: +61-8 8338 9229
-daryl.vandenbrink@maptek.com.au | www.maptek.com
+Of course, I should have been clearer. I just meant to chime in with the
+datapoint that I'm fairly sure this doesn't have any serious bugs given
+the wide internal testing it's gotten.
+
+> Let's see how others find it useful and/or if the changed code gets
+> in the way of others (I am not absolutely sure if the changes are
+> free of regression to existing users who do not use the new
+> feature).
+
+I think if you're on the fence about merging it down (and others don't
+chime in saying the want it / like it) it makes sense to merge down
+1-14/17 and we could discard 15-17/17 for now for a later re-submission
+and discussion once the earlier part of the series lands in master.
+
+The earlier part of the series is just trivial code changes that don't
+change any functionality, more documentation for how existing
+functionality works, and more thorough testing of existing
+functionality.
