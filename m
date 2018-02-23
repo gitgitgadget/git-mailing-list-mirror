@@ -2,118 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BEE5E1F404
-	for <e@80x24.org>; Fri, 23 Feb 2018 17:21:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B79931F404
+	for <e@80x24.org>; Fri, 23 Feb 2018 17:22:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751517AbeBWRV4 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Feb 2018 12:21:56 -0500
-Received: from mx2.suse.de ([195.135.220.15]:57582 "EHLO mx2.suse.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751351AbeBWRVz (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Feb 2018 12:21:55 -0500
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Received: from relay1.suse.de (charybdis-ext.suse.de [195.135.220.254])
-        by mx2.suse.de (Postfix) with ESMTP id 56704AE21;
-        Fri, 23 Feb 2018 17:21:54 +0000 (UTC)
-From:   "Bernhard M. Wiedemann" <bwiedemann@suse.de>
-To:     git@vger.kernel.org
-Cc:     Ben Walton <bdwalton@gmail.com>,
-        Matthias Urlichs <smurf@smurf.noris.de>,
-        Ryuichi Kokubo <ryu1kkb@gmail.com>,
-        "Bernhard M. Wiedemann" <bwiedemann@suse.de>
-Subject: [PATCH] Call timegm and timelocal with 4-digit year
-Date:   Fri, 23 Feb 2018 18:20:45 +0100
-Message-Id: <20180223172045.32090-1-bwiedemann@suse.de>
-X-Mailer: git-send-email 2.13.6
+        id S1751842AbeBWRWc (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Feb 2018 12:22:32 -0500
+Received: from mail-lf0-f52.google.com ([209.85.215.52]:46804 "EHLO
+        mail-lf0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751836AbeBWRWb (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Feb 2018 12:22:31 -0500
+Received: by mail-lf0-f52.google.com with SMTP id r80so13374289lfe.13
+        for <git@vger.kernel.org>; Fri, 23 Feb 2018 09:22:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=diamand.org; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=iig/QkhOJxfLjZYbG3xFNVmRSdOy3WBcQlSQ9mku/C4=;
+        b=G7e0tjoubQMZfH+r5wgfQF976llrwfx9JTlCNaOOkF4GMWGtHEYyTZ8EGkVE+/B696
+         XqcPRsU+NN7N22HA0eqfdTUSsb1JkyPlO1T4JybW11ThNXv7rRmo3I8CmGrw1GTQSo/Z
+         Abo/AdRMnkeiUrdblW4+k5dVhQ516J3PeUTpU=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=iig/QkhOJxfLjZYbG3xFNVmRSdOy3WBcQlSQ9mku/C4=;
+        b=fQ/oQZpEQ9V5381rXnN5vASaihqUfxVbK4DekfMGIg7ARyH8zEpZf9DgJQRbR2oe7s
+         rwkHL1Wl/CUfGqkc9dZ35s2WrJk/b8OsqbJQwOI0Mq3rVsNThdwjESy78M/nfEwuHq0P
+         NekwkOT4ucxEwad2Isaw10RH6PclQ08Oe4BCFlZsq8I9ralQKnu98Vj097/IdPkXCwfW
+         68LAPTTVyMIJB6a4j+9Q6vYxkf1WFRXRWPQQRX51mL6+nBNseA5uYkldtZijX4DqKw2w
+         NSUjKv+XPuiVAUmYLg7grts6eLe086ZXv7TAlx3lvD1IdIFMEbAHHksDyl/tl/lumS5c
+         9koA==
+X-Gm-Message-State: APf1xPDT4cAPUkLQo4uAOBNQiop1ZRJnPaJUsDj1gJ1K0OKt1eS+rB3O
+        iY/znzjukw1Yvnjc5ximwAGqbtIvzC1JhDmp/IhsBA==
+X-Google-Smtp-Source: AH8x2265SNwD6pTG+QBSMPSb8QBJtoq5t7LiFg63tiUxKU4cQU0xYwsejtgyf5XfeaZy9NPzAobovDeXJjoOg//Wkps=
+X-Received: by 10.46.84.5 with SMTP id i5mr1829605ljb.83.1519406550377; Fri,
+ 23 Feb 2018 09:22:30 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.25.148.90 with HTTP; Fri, 23 Feb 2018 09:22:29 -0800 (PST)
+In-Reply-To: <CAE5ih79E1Z8h+hAgr8zCw7=Dtec6sxT7Xf4cWn8zOLNs=mY1jg@mail.gmail.com>
+References: <20180222095022.6227-1-luke@diamand.org> <20180222095022.6227-2-luke@diamand.org>
+ <CAKYtbVYe5hHDXf=nQzt6r9N20CrTgbEMbBS0JBBXQLpz+BVu1A@mail.gmail.com> <CAE5ih79E1Z8h+hAgr8zCw7=Dtec6sxT7Xf4cWn8zOLNs=mY1jg@mail.gmail.com>
+From:   Luke Diamand <luke@diamand.org>
+Date:   Fri, 23 Feb 2018 17:22:29 +0000
+Message-ID: <CAE5ih7_=0Vn2J+TRnUfzT8TsyfmUa5PYpzviOf_DD+NTZtUZPA@mail.gmail.com>
+Subject: Re: [PATCH 1/1] git-p4: add unshelve command
+To:     Miguel Torroja <miguel.torroja@gmail.com>
+Cc:     Git Users <git@vger.kernel.org>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        gvanburgh@bloomberg.net
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-amazingly timegm(gmtime(0)) is only 0 before 2020
-because perl's timegm deviates from GNU timegm(3) in how it handles years.
+On 22 February 2018 at 22:28, Luke Diamand <luke@diamand.org> wrote:
+> On 22 February 2018 at 21:39, Miguel Torroja <miguel.torroja@gmail.com> wrote:
+>> Hi Luke,
+>>
+>> I really like the idea of creating a branch based on a shelved CL (We
+>> particularly use shelves all the time), I tested your change and I
+>> have some comments.
+>>
+>>  - I have some concerns about having the same "[git-p4...change =
+>> .....]" as if it were a real submitted CL.
+>>     One use case I foresee of the new implementation could be to
+>> cherry-pick that change on another branch (or current branch) prior to
+>> a git p4 submit.
+>
+> OK, I think we could just not add that in the case of an unshelved commit.
+>
+>>
+>>  - I see that the new p4/unshelve... branch is based on the tip of
+>> p4/master by default. what if we set the default to the current HEAD?
+>
+> There's a "--origin" option you can use to set it to whatever you want.
+>
+> I started out with HEAD as the default, but then found that to get a
+> sensible diff you have to both sync and rebase, which can be quite
+> annoying.
+>
+> In my case, in my early testing, I ended up with a git commit which
+> included both the creation of a file, and a subsequent change, even
+> though I had only unshelved the subsequent change. That was because
+> HEAD didn't include the file creation change (but p4/master _did_).
 
-man Time::Local says
+Discussing this with some of my colleagues, and playing around with
+it, it seems that what it really needs to do is to figure out the
+parent commit of the shelved changelist, and use that as the basis for
+the diff.
 
- Whenever possible, use an absolute four digit year instead.
+Unfortunately, Perforce doesn't have any concept of a "parent commit".
+One option that would be possible to implement though is to look at
+the shelved changelist, and foreach file, find the original revision
+number ("//depot/foo.c#97"). Then "p4 changes //depot/foo.c" would
+give you the changelist number for that file. Find the most recent P4
+changelist, find the git commit corresponding to that, and do the diff
+against that.
 
-with a detailed explanation about ambiguity of 2-digit years above that.
+It's pretty clunky, and I'm quite glad I didn't try to do that in the
+initial revision, as I would surely have given up!
 
-Even though this ambiguity is error-prone with >50% of users getting it
-wrong, it has been like this for 20+ years, so we just use 4-digit years
-everywhere to be on the safe side.
+To do it properly of course you need to handle the case where the
+shelved changelist author had some files at one changelist, and others
+at another. But I think that's just far too complicated to deal with.
 
-We add some extra logic to cvsimport because it allows 2-digit year
-input and interpreting an 18 as 1918 can be avoided easily and safely.
-
-Signed-off-by: Bernhard M. Wiedemann <bwiedemann@suse.de>
----
- contrib/examples/git-svnimport.perl | 2 +-
- git-cvsimport.perl                  | 4 +++-
- perl/Git.pm                         | 4 +++-
- perl/Git/SVN.pm                     | 2 +-
- 4 files changed, 8 insertions(+), 4 deletions(-)
-
-diff --git a/contrib/examples/git-svnimport.perl b/contrib/examples/git-svnimport.perl
-index c414f0d9c..75a43e23b 100755
---- a/contrib/examples/git-svnimport.perl
-+++ b/contrib/examples/git-svnimport.perl
-@@ -238,7 +238,7 @@ sub pdate($) {
- 	my($d) = @_;
- 	$d =~ m#(\d\d\d\d)-(\d\d)-(\d\d)T(\d\d):(\d\d):(\d\d)#
- 		or die "Unparseable date: $d\n";
--	my $y=$1; $y-=1900 if $y>1900;
-+	my $y=$1; $y+=1900 if $y<1000;
- 	return timegm($6||0,$5,$4,$3,$2-1,$y);
- }
- 
-diff --git a/git-cvsimport.perl b/git-cvsimport.perl
-index 2d8df8317..b31613cb8 100755
---- a/git-cvsimport.perl
-+++ b/git-cvsimport.perl
-@@ -601,7 +601,9 @@ sub pdate($) {
- 	my ($d) = @_;
- 	m#(\d{2,4})/(\d\d)/(\d\d)\s(\d\d):(\d\d)(?::(\d\d))?#
- 		or die "Unparseable date: $d\n";
--	my $y=$1; $y-=1900 if $y>1900;
-+	my $y=$1;
-+	$y+=100 if $y<70;
-+	$y+=1900 if $y<1000;
- 	return timegm($6||0,$5,$4,$3,$2-1,$y);
- }
- 
-diff --git a/perl/Git.pm b/perl/Git.pm
-index ffa09ace9..df62518c7 100644
---- a/perl/Git.pm
-+++ b/perl/Git.pm
-@@ -534,7 +534,9 @@ If TIME is not supplied, the current local time is used.
- sub get_tz_offset {
- 	# some systems don't handle or mishandle %z, so be creative.
- 	my $t = shift || time;
--	my $gm = timegm(localtime($t));
-+	my @t = localtime($t);
-+	$t[5] += 1900;
-+	my $gm = timegm(@t);
- 	my $sign = qw( + + - )[ $gm <=> $t ];
- 	return sprintf("%s%02d%02d", $sign, (gmtime(abs($t - $gm)))[2,1]);
- }
-diff --git a/perl/Git/SVN.pm b/perl/Git/SVN.pm
-index bc4eed3d7..991a5885e 100644
---- a/perl/Git/SVN.pm
-+++ b/perl/Git/SVN.pm
-@@ -1405,7 +1405,7 @@ sub parse_svn_date {
- 		$ENV{TZ} = 'UTC';
- 
- 		my $epoch_in_UTC =
--		    Time::Local::timelocal($S, $M, $H, $d, $m - 1, $Y - 1900);
-+		    Time::Local::timelocal($S, $M, $H, $d, $m - 1, $Y);
- 
- 		# Determine our local timezone (including DST) at the
- 		# time of $epoch_in_UTC.  $Git::SVN::Log::TZ stored the
--- 
-2.13.6
-
+Luke
