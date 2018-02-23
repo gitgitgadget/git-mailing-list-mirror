@@ -7,70 +7,68 @@ X-Spam-Status: No, score=-1.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 05CFE1F404
-	for <e@80x24.org>; Fri, 23 Feb 2018 22:56:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ACD4B1F404
+	for <e@80x24.org>; Fri, 23 Feb 2018 23:11:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752083AbeBWW4l (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Feb 2018 17:56:41 -0500
-Received: from mail-pl0-f68.google.com ([209.85.160.68]:37594 "EHLO
-        mail-pl0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751527AbeBWW4k (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Feb 2018 17:56:40 -0500
-Received: by mail-pl0-f68.google.com with SMTP id ay8so5709519plb.4
-        for <git@vger.kernel.org>; Fri, 23 Feb 2018 14:56:39 -0800 (PST)
+        id S1752133AbeBWXLq (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Feb 2018 18:11:46 -0500
+Received: from mail-pl0-f47.google.com ([209.85.160.47]:37345 "EHLO
+        mail-pl0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751570AbeBWXLp (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Feb 2018 18:11:45 -0500
+Received: by mail-pl0-f47.google.com with SMTP id ay8so5728258plb.4
+        for <git@vger.kernel.org>; Fri, 23 Feb 2018 15:11:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=7PBn8mLdqOiHw2jhFSK22LBv6L+/uC8CyB1FBu65SI0=;
-        b=SzILq0d+eys+kg4zitH15ZbVG1YjJEfbdhB0J4yc1rJxzfA0AqS+7ZHBJM4378goAB
-         gP/clNl0sYVmaf/DxqtqsMsV0JahM3ETJB245cCewJ6JlsxiGuUbURc9fmMMdJZU7cRE
-         Pl5qhfDUcZSCCM346wt+By29kYuaBfAphJAt+NDjoOkUHepJoth4IrTm4bnWwXVWxySr
-         dUmk/hqReDBr4lXnvA6oCj3/XIjuaOxkf19kyKIun64tAQnXK/7nuXJ9m29xCwYncMaI
-         xLIv8BWD3LHRSRnf3lLuHLJh7vIutxrNzMA5uIpu5m/jCoN7K1SAVyyZubJnyJzGwRPb
-         atmA==
+        bh=n+ZTAhthnmrwQ7pE2HQarzHC9zO4AFRYiAOJLz8KGTs=;
+        b=PfBnelRbNBqeafIWCq1zAnSPFwrvLj30IriBbex+AwMfV0HqPOw/d6agsYdujI6dMs
+         eyVzvXwkqkRu3TFuZTPdki0nYZMEmUij6h29p6DRxx944SBQf70owjS6VW8zQlk1DFuQ
+         mCpnp6qp/OqNcFK8xHWvKXIRg3iF35Tx5BsMGL4TVL5Fx96HmrBctuxC8BmFNncuaiH4
+         vQIRrx/NFl8bfUU3L6AVlbYmFKC7PXifVm37utpdWkqimHTGA1ZLRMXW+MP+ByupT2n2
+         k4J44XkvXCG7Xca0xhREBBsPYqbc/SWRej5j0kroEMfPCxerTJW+SJM2Mn1ouzBthknO
+         T5WA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=7PBn8mLdqOiHw2jhFSK22LBv6L+/uC8CyB1FBu65SI0=;
-        b=kV7s3gBkMunREh3Hii5P4f+fUOsJ1p1U4jFZAQ+1MK8vcIJh8G3Cld9Zv5woO0HB/X
-         SqPEj/jT3wMK0GJwEjCudUG8jIzd7ASogEaceVug0PkdGT2Lanm834Mor6moAGNrkxkT
-         X2O9d0L7P/tjLWNWrJqvAlcmTjQ3jkaEvuAWi4M7UuB+HNIRoEXdcQY+9f07mdzQee4L
-         UVKY9QkgnUan6oS5CqtBo9o6CGEzU+KdsIi2NsO3KNJ32yozQSNAKHXDvtUYS20mS3uS
-         ZdQzA1b1m7b4TTe3GvjN4RBFJHwQa06qxJw0Y9Uq6691AhLoHDApe6RkaHy4FwfAuAW5
-         tbeQ==
-X-Gm-Message-State: APf1xPDBri/UakEdmDb8MddoWYUvnW9x5IEafv9o8EUX0Ef+yOb/vj0Y
-        4q92ki8eWTvoqMGlPG3Xx0HJRA==
-X-Google-Smtp-Source: AH8x225LKyXDo+6qZTKa2pICQdRHHVqf/wbuFrlnQMNwqXcn/ZD+e7iWrGTF86yRxp9/DvrDLazJaQ==
-X-Received: by 2002:a17:902:9a41:: with SMTP id x1-v6mr3071185plv.256.1519426599234;
-        Fri, 23 Feb 2018 14:56:39 -0800 (PST)
+        bh=n+ZTAhthnmrwQ7pE2HQarzHC9zO4AFRYiAOJLz8KGTs=;
+        b=qk8uFhBXtJsUaA+EZ8enYZzcb4JhFdNmiR0OMePAAF1atRyllyqYRFivT1444WVkB6
+         trbGZ3FnthmmhvgdMYZfTlvKnkzgRGlh2jAjUc0XwBOOuiWsbZGa3ZxD3SZgEZYDIpH5
+         aD4x7vC6KfpUPhLdLrDRZBlPdCTl4glO2y8YXpFf6hznuXoYIekpji39fJOEYrG0TawD
+         fejpn1KDNtFjhvKr2hoP65iDSg94KO/pD6wC/42oSe97igTfLl/ehrJTV2cdlK1hvgVp
+         ekmzybkq+J54rjC3DMH2Suu9YkquWRH7DRf82PgpalHh+oBxKloKqLUPH+1NNmrlFSoM
+         cTmg==
+X-Gm-Message-State: APf1xPAt9KiYTnTzxeFEYwdCJfaqNV1OJxDaD7USZV8Vx7SbCy6zumrK
+        7OLbcrK9ZfzHwHIg1rQXK1EFvQ==
+X-Google-Smtp-Source: AH8x227oFl5pFsPVDwcdIIzeGPNbDTCkXRTOrSLTOMSMTdCSQAG7zhuRLUJoDNvuLS/l7TM+P39uUA==
+X-Received: by 2002:a17:902:b185:: with SMTP id s5-v6mr3122276plr.109.1519427504921;
+        Fri, 23 Feb 2018 15:11:44 -0800 (PST)
 Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
-        by smtp.gmail.com with ESMTPSA id 66sm6845392pfh.96.2018.02.23.14.56.37
+        by smtp.gmail.com with ESMTPSA id s78sm4172448pfe.162.2018.02.23.15.11.43
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 23 Feb 2018 14:56:38 -0800 (PST)
-Date:   Fri, 23 Feb 2018 14:56:37 -0800
+        Fri, 23 Feb 2018 15:11:44 -0800 (PST)
+Date:   Fri, 23 Feb 2018 15:11:42 -0800
 From:   Brandon Williams <bmwill@google.com>
 To:     Stefan Beller <sbeller@google.com>
-Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v3 07/35] connect: convert get_remote_heads to use struct
- packet_reader
-Message-ID: <20180223225637.GG234838@google.com>
-References: <20180125235838.138135-1-bmwill@google.com>
- <20180207011312.189834-1-bmwill@google.com>
- <20180207011312.189834-8-bmwill@google.com>
- <CAGZ79kbnioP+12xa2qfaYLyzdeCH8hh2Ri0xHD7rNciJiTYxmg@mail.gmail.com>
- <20180223213000.GD234838@google.com>
- <CAGZ79kbh0q8=N07yc+gGnLjggco_+H4YiYAiNOXR3yvO6QX6uw@mail.gmail.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 16/27] sha1_file: add repository argument to
+ sha1_file_name
+Message-ID: <20180223231142.GH234838@google.com>
+References: <20180216174626.24677-1-sbeller@google.com>
+ <20180221015430.96054-1-sbeller@google.com>
+ <20180221015430.96054-17-sbeller@google.com>
+ <20180222005149.GH127348@google.com>
+ <CAGZ79kZess5QJL1RuV+qmUYtLoY0q0EJkvRF1rZPWeScFcRz_w@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAGZ79kbh0q8=N07yc+gGnLjggco_+H4YiYAiNOXR3yvO6QX6uw@mail.gmail.com>
+In-Reply-To: <CAGZ79kZess5QJL1RuV+qmUYtLoY0q0EJkvRF1rZPWeScFcRz_w@mail.gmail.com>
 User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -78,45 +76,34 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On 02/23, Stefan Beller wrote:
-> On Fri, Feb 23, 2018 at 1:30 PM, Brandon Williams <bmwill@google.com> wrote:
-> > On 02/22, Stefan Beller wrote:
-> >> > +static enum protocol_version discover_version(struct packet_reader *reader)
-> >> > +{
-> >> ...
-> >> > +
-> >> > +       /* Maybe process capabilities here, at least for v2 */
-> >> > +       switch (version) {
-> >> > +       case protocol_v1:
-> >> > +               /* Read the peeked version line */
-> >> > +               packet_reader_read(reader);
-> >> > +               break;
-> >> > +       case protocol_v0:
-> >> > +               break;
-> >> > +       case protocol_unknown_version:
-> >> > +               die("unknown protocol version: '%s'\n", reader->line);
+> On Wed, Feb 21, 2018 at 4:51 PM, Brandon Williams <bmwill@google.com> wrote:
+> > On 02/20, Stefan Beller wrote:
+> >> Add a repository argument to allow sha1_file_name callers to be more
+> >> specific about which repository to handle. This is a small mechanical
+> >> change; it doesn't change the implementation to handle repositories
+> >> other than the_repository yet.
 > >>
-> >> The following patches introduce more of the switch(version) cases.
-> >> And there it actually is a
-> >>     BUG("protocol version unknown? should have been set in discover_version")
-> >> but here it is a mere
-> >>   die (_("The server uses a different protocol version than we can
-> >> speak: %s\n"),
-> >>       reader->line);
-> >> so I would think here it is reasonable to add _(translation).
+> >> As with the previous commits, use a macro to catch callers passing a
+> >> repository other than the_repository at compile time.
+> >>
+> >> While at it, move the declaration to object-store.h, where it should
+> >> be easier to find.
 > >
-> > This should be a BUG as it shouldn't ever be unknown at this point.  And
-> > I'll also drop that comment.
+> > Seems like we may want to make a sha1-file.h or an oid-file.h or
+> > something like that at some point as that seems like a better place for
+> > the function than in the object-store.h file?
 > 
-> Huh?
-> Then I miss-understood the flow of code. When the server announces its
-> answer is version 42, but the client cannot handle it, which die call is
-> responsible for reporting it to the user?
-> (That is technically a BUG on the server side, as we probably never
-> asked for v42, so I would not want to print BUG locally at the client?)
+> It depends what our long term goal is.
+> Do we want header and source file name to match for each function?
+> Or do we want a coarser set of headers, such that we have a broad
+> object-store.h, but that is implemented in sha1_file.c, packfile.c
+> for the parts of the raw_objectstore and other .c files for the higher
+> levels of the object store?
+> 
+> For now I'd just keep it in object-store.h as moving out just a couple
+> functions seems less consistent?
 
-This is handled in 
-`determine_protocol_version_client(const char *server_response)`,
-which is just a few lines out of context here.
+Fair enough :)
 
 -- 
 Brandon Williams
