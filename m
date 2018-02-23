@@ -2,100 +2,146 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ECC5E1F404
-	for <e@80x24.org>; Fri, 23 Feb 2018 16:35:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D3C5F1F404
+	for <e@80x24.org>; Fri, 23 Feb 2018 16:42:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751492AbeBWQfx (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Feb 2018 11:35:53 -0500
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:50319 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751430AbeBWQfw (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Feb 2018 11:35:52 -0500
-Received: by mail-wm0-f65.google.com with SMTP id k87so5767269wmi.0
-        for <git@vger.kernel.org>; Fri, 23 Feb 2018 08:35:52 -0800 (PST)
+        id S1751903AbeBWQm1 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Feb 2018 11:42:27 -0500
+Received: from mail-oi0-f68.google.com ([209.85.218.68]:44913 "EHLO
+        mail-oi0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751680AbeBWQmY (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Feb 2018 11:42:24 -0500
+Received: by mail-oi0-f68.google.com with SMTP id b8so6280192oib.11
+        for <git@vger.kernel.org>; Fri, 23 Feb 2018 08:42:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=G/3eoQOCjestVr7i5D9V7rBNnq/3n0EE/oLKtTXen0g=;
-        b=kkciOoM064Uk+xvrUNX/Gp56we3no5gDinpbjNZ2NcyB8HY+mMXDk7pE3O3zNKsiVB
-         mG9Qw0OV9rGrvIQLHAIxdkIj3vAzQdcqaOEwsuP4LWTtGey5qv2usBGwpgqObT0VBRAL
-         NbGDvbFPxPzUetOJjEJ0WoWKdMgCaoXcdqbP84M77OS1vqZbJ89vCTyKb1ijy+Uf8N81
-         g386oHIbwhpnDoXKOBI2F3uLag3P5dknq9sLnAnmmnaSuPHKwflQYy7toPh/99hsGQOa
-         +1vOuT9nMqI4pEgkgR/oG/zrD2dMezankm0o0q+Yg3LLRkmJpC/JqPpggIbbu09HiGYb
-         pyKw==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to;
+        bh=lFPg5dMvp53VuW7uf995jm8z8xMQtp92wHl+vFt2Uf0=;
+        b=ZM72EZts+3pBdJvSYWwOtxL//h+L84x8xix0AwUX+XFeT+CSNP4R9HV71dKfN8No8Z
+         G9YVpe7xW7/EWCjm7lWdGvuA0POYoK/n90lkTwPqIDcWBVJ9nkOekbXYR8m9rFfX8j3k
+         mpAnlz49ATRnEkuTfbe0GUzjBvK4mbFn8EQCr+f9+oyDbxD7zMe6fBH9ZsrT8J1U65WP
+         6DeDC49O/g0DrOePjLGkM1CKLJAmCGLGq2JfhcrdgUtOgc8G0Iv8tBmjfOGb6clYDj98
+         2t6c4mE0NRB2hSUtiRjfX9iXqZ+ligkZAJiVGGFy65EidbFKDW7cY6mT7oBoqB+vceml
+         52kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=G/3eoQOCjestVr7i5D9V7rBNnq/3n0EE/oLKtTXen0g=;
-        b=e2AjB9MEPewnPD3r5uJTy2MJPvDB/ZXL6Z4QQMsfV5NQAt9Ck1GnpAbL1gWMTD7k8g
-         cRqxR5z9/yuLS66IIiLbANdzUcULSFW8Fti+3hxJiGbIH2T0I7M5RsqUUMlYy3FGXQcH
-         Vkuxop75y+nFmlUKgnMG6wvPNlylaQKvjLdUVaKCVzPX6+oxciaopYFI7to+MqQbIMWO
-         xt9dBVjmJJTAQsEkDBXSaF6po5B1oGftSNXfN1r61gimMgXNGMoIgYL0zu9d30Wk/KjG
-         BLOGzq7SQZvBcq0ErV0Tlvb8MiEqryDebyx5Ngs4nFf5osi1J92I+L9viQOO4u120Y9d
-         0TPw==
-X-Gm-Message-State: APf1xPBq0RD0NO9lebSiT+N/Xt2NKfyikb30sp1SQnVsTybm6zYsU3dC
-        ojcABEhucabhO2tA/bOcSX5tCS5+
-X-Google-Smtp-Source: AG47ELvsI2tLyOG8uGD8QyFOWdisyKUi8KbK7Jt39v+XoVoYR/i1oJpZZ1Ejemg/AwWr3sharmYemA==
-X-Received: by 10.28.87.20 with SMTP id l20mr2069026wmb.48.1519403751202;
-        Fri, 23 Feb 2018 08:35:51 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id e67sm4575431wmf.7.2018.02.23.08.35.50
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 23 Feb 2018 08:35:50 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Lars Schneider <larsxschneider@gmail.com>
-Cc:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-        lars.schneider@autodesk.com, git@vger.kernel.org, j6t@kdbg.org,
-        sunshine@sunshineco.com, peff@peff.net,
-        ramsay@ramsayjones.plus.com, Johannes.Schindelin@gmx.de
-Subject: Re: [PATCH v7 0/7] convert: add support for different encodings
-References: <20180215152711.158-1-lars.schneider@autodesk.com>
-        <xmqqr2pm81hh.fsf@gitster-ct.c.googlers.com>
-        <DC552BF4-3E87-41E0-BF92-4BA9633D374E@gmail.com>
-        <20180216165815.GA4681@tor.lan>
-        <19EDC192-0D83-4762-AC6A-81F7D693475A@gmail.com>
-Date:   Fri, 23 Feb 2018 08:35:49 -0800
-In-Reply-To: <19EDC192-0D83-4762-AC6A-81F7D693475A@gmail.com> (Lars
-        Schneider's message of "Thu, 22 Feb 2018 21:00:45 +0100")
-Message-ID: <xmqqbmgfvf2y.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to;
+        bh=lFPg5dMvp53VuW7uf995jm8z8xMQtp92wHl+vFt2Uf0=;
+        b=nF5+yP0bT6XVwHVuZyx3S4qwDUy75JtBoHSQBs3mar1rQRSJU5QwhPVRWrXCS+X+ar
+         nsa5agyuYRHq8voLXKWZMBZHigFMPzTJFbI4DGmFt6E8z4ip2W2fm6VXrww5EtFNYoFd
+         fVTRsxKmAgJVmmOBzf/xnjZ1xZff+eJ/4fUTBzLqM675zBN8wQlNCtCYxSiS58lIj+N/
+         6vS4u7o6TnZ7MYEVIwTtSonT3RnusQwVT/47DYNAKamYitOsPeCOVa7HdMfqDiML2QYL
+         Cda9fGSdA4hd1kQwRQxegDhFEs7wPhHnR5axX1nX8/dxAJQP/CoZvh/NpUsOUT2t2CVL
+         BF2A==
+X-Gm-Message-State: APf1xPCdbNmj54VnvrOrxWJRiD8GMt4WwC5aUzxoIkOrfAFv4UNOYP4B
+        eIibG179XllFIH+P6IDfRREuy1ICtW59ePZbV+RgiA==
+X-Google-Smtp-Source: AG47ELvfnUnqv3LgrNto2pQD7XX0iWnJh7HrWMHvYiRIglXXmS+ByNeqgO0E8Es/06ZUJBiKU5cYf41yT58dfD6ZvGw=
+X-Received: by 10.202.244.11 with SMTP id s11mr1363165oih.204.1519404143405;
+ Fri, 23 Feb 2018 08:42:23 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.74.98.4 with HTTP; Fri, 23 Feb 2018 08:42:22 -0800 (PST)
+In-Reply-To: <20180223102242.5850-1-birgersp@gmail.com>
+References: <CAGr--=LZ9TSM9v0SZOi_mj1t8se0Ck-nDHkwum3kC8uz9HKW6A@mail.gmail.com>
+ <20180223102242.5850-1-birgersp@gmail.com>
+From:   Birger Skogeng Pedersen <birgersp@gmail.com>
+Date:   Fri, 23 Feb 2018 17:42:22 +0100
+X-Google-Sender-Auth: 3-T7zlFKJwX6ed92qymVN03T17U
+Message-ID: <CAGr--=Kn5pRindZ-fu0YQ+s4uKgNz+d1rB1O4O6W+fhd_o2zTg@mail.gmail.com>
+Subject: Re: [PATCH] git-gui: Add hotkeys to change focus between ui widgets
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Lars Schneider <larsxschneider@gmail.com> writes:
+Hi,
 
-> I still think it would be nice to see diffs for arbitrary encodings.
-> Would it be an option to read the `encoding` attribute and use it in
-> `git diff`?
+I've discovered a bug, I'll be sending a new version soon.
 
-Reusing that gitk-only thing and suddenly start doing so would break
-gitk users, no?  The tool expects the diff to come out encoded in
-the encoding that is specified by that attribute (which is learned
-from get_path_encoding helper) and does its thing.
+br
+Birger
 
-I guess that gitk uses diff-tree plumbing and you won't be applying
-this change to the plumbing, perhaps?  If so, it might not be too
-bad, but those who decided to postprocess "git diff" output (instead
-of "git diff-tree" output) mimicking how gitk does it by thinking
-that is the safe and sane thing to do will be broken by such a
-change.  You could do "use the encoding only when a command line
-option says so", but then people will add a configuration variable
-to turn it always on and these existing scripts will be broken.
-
-I do not personally have much sympathy for the last case (i.e. those
-who scripted around 'git diff' instead of 'git diff-tree' to get
-broken), so making the new feature only work with the Porcelain "git
-diff" might be an option.  I'll need a bit more time to formulate
-the rest of my thought ;-)
-
+On Fri, Feb 23, 2018 at 11:22 AM, Birger Skogeng Pedersen
+<birgersp@gmail.com> wrote:
+> The user cannot change focus between the list of files, the diff view
+> and the commit message widgets without using the mouse (clicking either of
+> the four widgets ).
+>
+> Hotkeys CTRL/CMD+number (1-4) now focuses the first file of either the
+> "Unstaged Changes" or "Staged Changes", the diff view or the
+> commit message dialog widgets, respectively. This enables the user to
+> select/unselect files, view the diff and create a commit in git-gui
+> using keyboard-only.
+>
+> Signed-off-by: Birger Skogeng Pedersen <birgersp@gmail.com>
+> ---
+>  git-gui/git-gui.sh | 34 ++++++++++++++++++++++++++++++++++
+>  1 file changed, 34 insertions(+)
+>
+> diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
+> index 91c00e648..bdbe166f7 100755
+>
+> (First timere here, any feedback is highly appreciated)
+>
+> --- a/git-gui/git-gui.sh
+> +++ b/git-gui/git-gui.sh
+> @@ -2664,6 +2664,35 @@ proc show_less_context {} {
+>         }
+>  }
+>
+> +proc select_first_path {w} {
+> +       global file_lists last_clicked selected_paths
+> +       if {[llength $file_lists($w)] > 0} {
+> +               focus $w
+> +               set last_clicked [list $w 1]
+> +               show_diff [lindex $file_lists($w) 0] $w
+> +       }
+> +}
+> +
+> +proc select_first_unstaged_changes_path {} {
+> +       global ui_workdir
+> +       select_first_path $ui_workdir
+> +}
+> +
+> +proc select_first_staged_changes_path {} {
+> +       global ui_index
+> +       select_first_path $ui_index
+> +}
+> +
+> +proc focus_diff {} {
+> +       global ui_diff
+> +       focus $ui_diff
+> +}
+> +
+> +proc focus_commit_message {} {
+> +       global ui_comm
+> +       focus $ui_comm
+> +}
+> +
+>  ######################################################################
+>  ##
+>  ## ui construction
+> @@ -3876,6 +3905,11 @@ foreach i [list $ui_index $ui_workdir] {
+>  }
+>  unset i
+>
+> +bind . <$M1B-Key-1> {select_first_unstaged_changes_path}
+> +bind . <$M1B-Key-2> {select_first_staged_changes_path}
+> +bind . <$M1B-Key-3> {focus_diff}
+> +bind . <$M1B-Key-4> {focus_commit_message}
+> +
+>  set file_lists($ui_index) [list]
+>  set file_lists($ui_workdir) [list]
+>
+> --
+> 2.16.2.266.g75bb9601e
+>
