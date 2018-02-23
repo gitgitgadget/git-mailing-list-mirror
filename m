@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C79341F404
-	for <e@80x24.org>; Fri, 23 Feb 2018 23:40:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 934D01F404
+	for <e@80x24.org>; Fri, 23 Feb 2018 23:40:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752545AbeBWXkT (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Feb 2018 18:40:19 -0500
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:56135 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752147AbeBWXkO (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Feb 2018 18:40:14 -0500
-Received: by mail-wm0-f66.google.com with SMTP id q83so7504691wme.5
-        for <git@vger.kernel.org>; Fri, 23 Feb 2018 15:40:14 -0800 (PST)
+        id S1752569AbeBWXkV (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Feb 2018 18:40:21 -0500
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:39290 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752524AbeBWXkQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Feb 2018 18:40:16 -0500
+Received: by mail-wm0-f65.google.com with SMTP id 191so7341334wmm.4
+        for <git@vger.kernel.org>; Fri, 23 Feb 2018 15:40:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=aPFse5Q7asBASvb0SXTgufs55KaCFshJ8+6ISNPq7Js=;
-        b=q3PZJvEiud8ntN8qtyFLw6L234zJNBCsXFKavTjNYvOSYqaZ+etDFV8l+INrSTssPo
-         0+ICps5sKX9JoPq6fcQR7U94F7hlHtcYOr7d1NApH8vgR3eu3mrWYtV2Lb9xfDIgl4f1
-         Od/zcxTIasrJSFhQdXPZudZ9YoXB8WgZw2WqN3LuIVmzF9TLyP9vLpWdk3SNjUyw4sXK
-         g4iTUmn1b5iHxSno3/L+irlLpfXO03JsrK5xR1ZkIz0EBE6HmjE60ST7daajvq5wxzGu
-         T2sUPuPVLh93RJg5Af7O4KERg/GnTgafZuLa3+Y32Brrr4wBWfSjPaF1jYialFFWPBll
-         nEaA==
+        bh=y3RBcWOZIBLYRN7s6JSPfMQydFgE7qIoDykqs/U6yc0=;
+        b=CisJpYYW4xWbtuTKk6JQW1amKZvFvOM0CL0K91+gwB+f1ZZLZXzg53w9sweTSpDftz
+         RuwhCeNGK9433tCl5ocqGuUgEBDdsNBwNlIU9My+uHzJufLQz+A1c/7vX8KjH+D6p8Cc
+         GWpv9fOmGYrEs0OC3P3+wmniEV8bsHeWaA96T8bYYBdot6WicxNrEt4HCxn3WjAg3P3h
+         WDFkE1KA2EMVW7mrDgwMl06F/ZFAuiXgwbu131cnwXmQO/OueK/JTDGZncxfiuqB1j0e
+         F+/ztj0FthpogpCy06I2Rdz5WK9FYE4Lt7jAMhX+Z298B36bDtj+qnvdk3UgagtciOpT
+         jq0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=aPFse5Q7asBASvb0SXTgufs55KaCFshJ8+6ISNPq7Js=;
-        b=N7PsmqRsWZJvijdGEG8CWA1K+k8Fc859PHgT/0jFZKvp+pHQavJPSS3EZrhWZtrIp6
-         nhNCMvd3QpcCI44etlIgtzRxS+duV0UZHS7teKq2q9/2hjyNQZolzS//dC63qIbRZT/3
-         Qt77gVUcozjFYqk7zGfRzd0LQNmsLFJS21k14B1f7YTeejdihGeEMniH42Iikq79e1l0
-         UtR5HT5DGaUtj+sBUll6Nv5BsIbaZWupjoMzU/AANLsJvlRafAt9xFhpEbgPp+HXFzod
-         S1Jm/I8q4Mn4xDqg2FvTweEktgIkkXZy/uNHW2gwE7MILVWvMnv+UFeroC8uX5j+jlMq
-         nmgw==
-X-Gm-Message-State: APf1xPBicHRHbgHmOWgG/hqTsrWkGcCWsm4cDCvQZlbwXRcRg/SHkHI+
-        nQ7ORt5l8jl87M9TQLpXIqBVHQ==
-X-Google-Smtp-Source: AG47ELtrc7j8ExhGVHOyxp6eJJ9EZRrEQitt/LtqAQsARbO5jVB8UfV72Hw4zn3LyxqhZhYTBITW1w==
-X-Received: by 10.28.54.220 with SMTP id y89mr3206395wmh.138.1519429213234;
-        Fri, 23 Feb 2018 15:40:13 -0800 (PST)
+        bh=y3RBcWOZIBLYRN7s6JSPfMQydFgE7qIoDykqs/U6yc0=;
+        b=eCHhIdZfUoyFm8Ekcx8VMURXpujjNLdeAPKcZg1VvwxcWzpHCwG3WEgzkX/n0nWp6U
+         zMM36+dWUYr3qBsmCf1iYokL9qtuptHvbvIjx0t8bFcSbdCS1kwGKxmp/ZE+A3izwfQf
+         zvYUoAD5i5Wm34rM/LrhGQ6QRMKdnRHm5OdH07oU3HFPCFiAXSQfykRO3331LHaWTgES
+         3r+nwKvYvMEZhFLz4/JDpPSINQoV2fnw024GlakHBO6ydbebQXFLWNP3iqp00U9w8/4B
+         6+FBZbDWH7AHspwLI7EwEtIPb9srrn+am2Lk+GMs7jwtnYj9Bf/5vthylpm4+n3isQWq
+         QeAA==
+X-Gm-Message-State: APf1xPCEwyw2FM66/X0C/UDsLVQUlmyxMLYyuHTHT7/++DaOnNzW1vUJ
+        aKNNJWI6cQVS8wtvbJKRF0M6mw==
+X-Google-Smtp-Source: AG47ELtre5nxinMzPN+9Tg8Dvv/iEPmhkXQQD5WxvNoXDQwM23gzd8fw0F5t/FEdbvHdSj9X3hMjaA==
+X-Received: by 10.28.92.201 with SMTP id q192mr3216758wmb.33.1519429214985;
+        Fri, 23 Feb 2018 15:40:14 -0800 (PST)
 Received: from localhost.localdomain (x590e551c.dyn.telefonica.de. [89.14.85.28])
-        by smtp.gmail.com with ESMTPSA id c14sm7028939wmh.2.2018.02.23.15.40.12
+        by smtp.gmail.com with ESMTPSA id c14sm7028939wmh.2.2018.02.23.15.40.14
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 23 Feb 2018 15:40:12 -0800 (PST)
+        Fri, 23 Feb 2018 15:40:14 -0800 (PST)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH 05/11] t5500-fetch-pack: don't check the stderr of a subshell
-Date:   Sat, 24 Feb 2018 00:39:45 +0100
-Message-Id: <20180223233951.11154-6-szeder.dev@gmail.com>
+Subject: [PATCH 07/11] t5570-git-daemon: don't check the stderr of a subshell
+Date:   Sat, 24 Feb 2018 00:39:47 +0100
+Message-Id: <20180223233951.11154-8-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.16.2.400.g911b7cc0da
 In-Reply-To: <20180223233951.11154-1-szeder.dev@gmail.com>
 References: <20180223233951.11154-1-szeder.dev@gmail.com>
@@ -67,57 +67,35 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Three "missing reference" tests in 't5500-fetch-pack.sh' fail when the
-test script is run with '-x' tracing (and using a shell other than a
-Bash version supporting BASH_XTRACEFD).  The reason for those failures
-is that the tests check a subshell's stderr, which includes the trace
-of executing commands in that subshell as well, throwing off the
-comparison with the expected output.
+The test 'no-op fetch without "-v" is quiet' in 't5570-git-daemon.sh'
+fails when the test script is run with '-x' tracing (and using a shell
+other than a Bash version supporting BASH_XTRACEFD).  The reason for
+the failure is that the test checks the emptiness of a subshell's
+stderr, which includes the trace of commands executed in that subshell
+as well, throwing off the emptiness check.
 
-Save the stderr of 'git fetch-pack' only instead of the whole
-subshell, so it remains free from tracing output.
+Save the stderr of 'git fetch' only instead of the whole subshell's, so
+it remains free from tracing output.
 
-After this change t5500 passes with '-x', even when running with
+After this change t5570 passes with '-x', even when running with
 /bin/sh.
 
 Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 ---
- t/t5500-fetch-pack.sh | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ t/t5570-git-daemon.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
-index ec9ba9bf6e..0680dec808 100755
---- a/t/t5500-fetch-pack.sh
-+++ b/t/t5500-fetch-pack.sh
-@@ -482,24 +482,24 @@ test_expect_success 'set up tests of missing reference' '
- test_expect_success 'test lonely missing ref' '
- 	(
- 		cd client &&
--		test_must_fail git fetch-pack --no-progress .. refs/heads/xyzzy
--	) >/dev/null 2>error-m &&
-+		test_must_fail git fetch-pack --no-progress .. refs/heads/xyzzy 2>../error-m
-+	) &&
- 	test_i18ncmp expect-error error-m
+diff --git a/t/t5570-git-daemon.sh b/t/t5570-git-daemon.sh
+index 755b05a8ae..0d4c52016b 100755
+--- a/t/t5570-git-daemon.sh
++++ b/t/t5570-git-daemon.sh
+@@ -50,7 +50,7 @@ test_expect_success 'no-op fetch -v stderr is as expected' '
  '
  
- test_expect_success 'test missing ref after existing' '
- 	(
- 		cd client &&
--		test_must_fail git fetch-pack --no-progress .. refs/heads/A refs/heads/xyzzy
--	) >/dev/null 2>error-em &&
-+		test_must_fail git fetch-pack --no-progress .. refs/heads/A refs/heads/xyzzy 2>../error-em
-+	) &&
- 	test_i18ncmp expect-error error-em
- '
- 
- test_expect_success 'test missing ref before existing' '
- 	(
- 		cd client &&
--		test_must_fail git fetch-pack --no-progress .. refs/heads/xyzzy refs/heads/A
--	) >/dev/null 2>error-me &&
-+		test_must_fail git fetch-pack --no-progress .. refs/heads/xyzzy refs/heads/A 2>../error-me
-+	) &&
- 	test_i18ncmp expect-error error-me
+ test_expect_success 'no-op fetch without "-v" is quiet' '
+-	(cd clone && git fetch) 2>stderr &&
++	(cd clone && git fetch 2>../stderr) &&
+ 	! test -s stderr
  '
  
 -- 
