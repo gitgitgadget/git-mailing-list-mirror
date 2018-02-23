@@ -2,92 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2C6231F404
-	for <e@80x24.org>; Fri, 23 Feb 2018 19:56:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E328A1F404
+	for <e@80x24.org>; Fri, 23 Feb 2018 20:02:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932295AbeBWT4K (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Feb 2018 14:56:10 -0500
-Received: from mail-pl0-f47.google.com ([209.85.160.47]:36174 "EHLO
-        mail-pl0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754793AbeBWT4I (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Feb 2018 14:56:08 -0500
-Received: by mail-pl0-f47.google.com with SMTP id v3so5488253plg.3
-        for <git@vger.kernel.org>; Fri, 23 Feb 2018 11:56:08 -0800 (PST)
+        id S1755141AbeBWUCD (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Feb 2018 15:02:03 -0500
+Received: from mail-yb0-f173.google.com ([209.85.213.173]:46494 "EHLO
+        mail-yb0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754609AbeBWUCB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Feb 2018 15:02:01 -0500
+Received: by mail-yb0-f173.google.com with SMTP id e142-v6so1121647ybc.13
+        for <git@vger.kernel.org>; Fri, 23 Feb 2018 12:02:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=4AEiR7q44gUbvbkqDMrNr4Umgs1evpsvHyYbcIZ/LEI=;
-        b=hr1cqfuYBbrbQtTDrMEsG97s2LPnSBvzk6qpiszbSHsMzU4FABs7xXEHELNS1M84mO
-         y4LvFEVH4U/F7CVBwDbWpQP1pFwPxELajdDezLMhsLUq4JHYQw0ek4yn1GyxA5tRiLkp
-         3alvUwvbtKI9i79zaTZvJJX/AGhwetcOsRqbgzlqSCyF7kfmNZVhFDR1dqFJLUQJlo51
-         lmDY0j1V/aF+oKlfd4EHiJjru40VZEyr0d0J5WnAAbquJZh768ZldhCesE1d4PeOBn3l
-         VK2Qe8fBkCa1vyCRI4tu0XJDrYfnOuxPAk+Iby9S/drnp4KZmecZKNa2JsrQDJoRjWzD
-         Ch5Q==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=RXwoH9+j5UXHaQyzDWbYVYmZhsnxJvHz5kE2uXblBmk=;
+        b=tHCWBHTurCY+Jc6NexhB9i8EZuf29lF/2EYmBjD98mTNh9iNu83g4QrQwZDIFVz+Fu
+         3wNkIXX9mZd8HQj2bPG8dgVO6e9ItdJGSKklmy3ba/bhV24yLrZr/wAgnUcXfQgk9Am2
+         hQ+7w6j5ArRMdnjq3na/2jMGrxAKE48UOysr05rWM/OYxhVdRyoc55/f2hL80W/IAX5w
+         jxCH3KUhwt2olMxgOWI9sKpCcxlptbsGzOMiOKHBx06k8RQaWwoZOM/NWtcClNz/5I/c
+         wOi9wYNhEQMn0uaAC3fE4VvA3YNDrSOkosweg6hLx0yt6zUPjA0lSSns6GaiuvUHpMu1
+         pkpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=4AEiR7q44gUbvbkqDMrNr4Umgs1evpsvHyYbcIZ/LEI=;
-        b=h9pe87a0pe2ujzi0WelktcNO4iBmlGWhC9s8+24xpyibEuWPu0QON45Awb+nGxa7eA
-         +LqOXbiySIzH1vTmj9H21Q0ziLQ7rPf4k8pD+xh5RAG6hERbuC9uKADzoqsE2YUE6JhL
-         nd/T16wfB0UclrB4PpdswR/bPJYvtLc6gb/c8Qohqrx30DgWfE/IK8QBh6ygfyBBtVwj
-         xbSS2MRh+Z92YwyRJB0grKej65jZF6RnQGrMmFTAhIfNl2Z79ocG8wlducs9/AsvGk6/
-         AsKdFUD3G36UXLO1NlGnpnTS+Zwu6rVMewm7bMPY+wCN198gaccRtKi4JycOlcmb0r2w
-         WHow==
-X-Gm-Message-State: APf1xPCcp785rPCqmLiKhfW/ABjIOAaLYKScR/qDAfDDobZycmcK66WH
-        6wvb/jf1NoUXzvsaR9Sen2bRpQ==
-X-Google-Smtp-Source: AH8x22535Pp81u6kv1TxARNh++YfEcYSWfQPhwhAAWCORQYZmcaVo4MHQrOPnAB+s13zMqXWITC0JA==
-X-Received: by 2002:a17:902:6083:: with SMTP id s3-v6mr2661760plj.6.1519415767379;
-        Fri, 23 Feb 2018 11:56:07 -0800 (PST)
-Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
-        by smtp.gmail.com with ESMTPSA id k12sm1122518pgr.75.2018.02.23.11.56.05
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 23 Feb 2018 11:56:06 -0800 (PST)
-Date:   Fri, 23 Feb 2018 11:56:05 -0800
-From:   Brandon Williams <bmwill@google.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, sbeller@google.com, peff@peff.net,
-        gitster@pobox.com, jrnieder@gmail.com, stolee@gmail.com,
-        git@jeffhostetler.com, pclouds@gmail.com
-Subject: Re: [PATCH v3 23/35] fetch-pack: support shallow requests
-Message-ID: <20180223195605.GA234838@google.com>
-References: <20180125235838.138135-1-bmwill@google.com>
- <20180207011312.189834-1-bmwill@google.com>
- <20180207011312.189834-24-bmwill@google.com>
- <20180223113722.ac4a8d3ef18bec31f20e79f7@google.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=RXwoH9+j5UXHaQyzDWbYVYmZhsnxJvHz5kE2uXblBmk=;
+        b=hGq4jplek7ca2kOm8UZZGReGGD7Mra/y7NSXllKARUSFED6ECXg1Ee6WHGL0EhucuU
+         N3OdUQI6gfbF66LbITQ4RTkBc9h+s/ilIYhfiJdTksxtIp6EaUq/oZGL3OkDtSHA+M3O
+         vP/wEWhVODBYvHbv8QRo9MxdZl5C/kJ33l6/dvMhAq7tNEYnP/zKhEYTs/oIJPXu+oeE
+         kY36mB9XT/dU6/arc8caEiXxIcG+d4VEJJ+Ffm+DTrDhSN+g4bbQtHow82SMl0IVwCJd
+         Xq/gDfvKhxpHFzyfmLrBK7CovpoHzf3FNSan7IbzpBU/A27HBtxDScZYZgnfCvMaMhfB
+         Qpjw==
+X-Gm-Message-State: APf1xPBrteD8RdjadaoGLn0LpwwLhwd36JbN+k95K9evTdVe918VtFpQ
+        M7SBmZZ/4AoXJTIYCtRh1Wff1fMqHVSjdvypXycriw==
+X-Google-Smtp-Source: AG47ELtniSF7H3zmNbUxl/Pq3rf4L8fP3xieLBvSLhO+aqSRSgwKA6Jm1FC6J//g4CPzlUD/e7kUs72iV+DznpJS3AI=
+X-Received: by 2002:a25:7d42:: with SMTP id y63-v6mr2040422ybc.307.1519416119834;
+ Fri, 23 Feb 2018 12:01:59 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180223113722.ac4a8d3ef18bec31f20e79f7@google.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+Received: by 2002:a25:cfcb:0:0:0:0:0 with HTTP; Fri, 23 Feb 2018 12:01:59
+ -0800 (PST)
+In-Reply-To: <xmqqy3jmxb8s.fsf@gitster-ct.c.googlers.com>
+References: <20180216174626.24677-1-sbeller@google.com> <20180221015430.96054-1-sbeller@google.com>
+ <20180221015430.96054-6-sbeller@google.com> <xmqqy3jmxb8s.fsf@gitster-ct.c.googlers.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 23 Feb 2018 12:01:59 -0800
+Message-ID: <CAGZ79kZjOz0RcBHZDrT3g3Rjkx=Q94aj81Y+PGmjcB11oAn16w@mail.gmail.com>
+Subject: Re: [PATCH 05/27] object-store: move packed_git and packed_git_mru to
+ object store
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git <git@vger.kernel.org>, Jonathan Tan <jonathantanmy@google.com>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 02/23, Jonathan Tan wrote:
-> On Tue,  6 Feb 2018 17:13:00 -0800
-> Brandon Williams <bmwill@google.com> wrote:
-> 
-> > @@ -1090,6 +1110,10 @@ static int send_fetch_request(int fd_out, const struct fetch_pack_args *args,
-> >  	if (prefer_ofs_delta)
-> >  		packet_buf_write(&req_buf, "ofs-delta");
-> >  
-> > +	/* Add shallow-info and deepen request */
-> > +	if (server_supports_feature("fetch", "shallow", 1))
-> > +		add_shallow_requests(&req_buf, args);
-> 
-> One more thing I observed when trying to implement the server side in
-> JGit - the last argument should be 0, not 1, right? I don't think that
-> "shallow" should be required on the server unless we really need it.
+On Wed, Feb 21, 2018 at 1:51 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
+>
+>> +
+>> +/*
+>> + * The mru list_head is supposed to be initialized using
+>> + * the LIST_HEAD macro, assigning prev/next to itself.
+>> + * However this doesn't work in this case as some compilers dislike
+>> + * that macro on member variables. Use NULL instead as that is defined
+>> + * and accepted, deferring the real init to prepare_packed_git_mru(). */
+>> +#define __MRU_INIT { NULL, NULL }
+>> +#define RAW_OBJECT_STORE_INIT { NULL, NULL, __MRU_INIT, NULL, NULL }
+>
+> I do not think it has to be this way to abuse two NULLs, if you
+> faithfully mimicked how LIST_HEAD() macro is constructed.  The
+> reason why it does not try to introduce
+>
+>         struct list_head x = LIST_HEAD_INIT;
+>
+> and instead, uses
+>
+>         LIST_HEAD(x);
+>
+> is because of the need for self referral.  If we learn from it, we
+> can do the same, i.e. instead of doing
+>
+>         struct raw_object_store x = RAW_OBJECT_STORE_INIT;
+>
+> we can do
+>
+>         RAW_OBJECT_STORE(x);
+>
+> that expands to
+>
+>         struct raw_object_store x = {
+>                 ...
+>                 { &x.packed_git_mru, &x.packed_git_mru },
+>                 ...
+>         };
+>
+> no?  Then we do not need such a lengthy comment that reads only like
+> an excuse ;-)
 
-Good catch, I'll fix that.
+We cannot do this, because the object store is directly
+embedded into the the_repository (not as a pointer),
+which is a global on its own. So we'd have to do this
+at the repository level, which I would not want.
+I'd want to have the #defines where the structs are declared.
 
--- 
-Brandon Williams
+Any guidance on how to do that correctly with self referential
+definitions without making the object store a pointer then?
