@@ -3,129 +3,175 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 432CB1F404
-	for <e@80x24.org>; Fri, 23 Feb 2018 20:41:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 816051F404
+	for <e@80x24.org>; Fri, 23 Feb 2018 20:58:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753376AbeBWUl3 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Feb 2018 15:41:29 -0500
-Received: from mail-lf0-f68.google.com ([209.85.215.68]:40290 "EHLO
-        mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753046AbeBWUl1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Feb 2018 15:41:27 -0500
-Received: by mail-lf0-f68.google.com with SMTP id 37so14123094lfs.7
-        for <git@vger.kernel.org>; Fri, 23 Feb 2018 12:41:27 -0800 (PST)
+        id S1752004AbeBWU6l (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Feb 2018 15:58:41 -0500
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:54674 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751917AbeBWU6k (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Feb 2018 15:58:40 -0500
+Received: by mail-wm0-f65.google.com with SMTP id z81so6957368wmb.4
+        for <git@vger.kernel.org>; Fri, 23 Feb 2018 12:58:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=Ij9kmHdNB2PXgBgtvjEZNsYjgxoNsbcAnAtvnG3m5M8=;
-        b=k8lQpHY5cZgBEn04g0OqnBl5J3LpUtmJ4yPsmxnk8g/kyXqiLlUr+iyZ2rT1j29U8C
-         LdlymRQXNpLqhPBWfccgTuFZ+vNp9jxPdvRHQyEiP+fLzG6h+5dsGLp84LFyo0tu9rgm
-         lls13MZVkfPT8sxWoOp8qyVHQOI7wRv67sIbyPSayrYraZzPKm3Zz/k7FxokXQQ9wWc2
-         vVNXGM39n3pVfDWYKDhK4SDxZms3FrTpZ5JZbj0aWNqnks+miMOaUKpK7ThXj+Oi48b5
-         0zF9JlOjkojg2pIz84zCpfj4QLo/5OZXQCVkulQPaOYL65Jxvhfx6Ku4oLF0SoKULH5g
-         zEbQ==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=OM4astDOrtDem/EFyhZbq8Kj11fnAlpEf8WkLvcpPXw=;
+        b=kkLdV5HaA9KknN7xryiUsgRRg7zXN9t0MhPF9hcHyqn+3JyI+iMMsjQ55BmtZLxs7J
+         Et8AKs7C4oL9mODpsbgF0M06oxMI3XXYokPzGKRpU6WAbeXZO8kJokMg2W0sdvNtN/No
+         W9+pryuzLdAs/hLwnlTbON1EC1Vkv7xZCy+U2gXGZd8i+KIsjEk2cYZCNiSPe21MPKeg
+         QnUQTyfZ2gsQPcoKTmtJauSvcGyyNfRnZSiLxHse7AvLvpTTa2+U54pUDBkPGcQXEoUI
+         qc8LEjd8T+NTQk2KJDr0vzXXryw62XRK7CrrscqVbVDQuVOrCXdA1IqSMl+PbxftmAMV
+         kBIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=Ij9kmHdNB2PXgBgtvjEZNsYjgxoNsbcAnAtvnG3m5M8=;
-        b=B91Z8wNQ1UHvBmnZ84k0jOAH4oePM9yPzbGiZAVNeT+gvNQ6Sm44njHjslcf8eGxYE
-         Brw6y68Rah33JFlzc6aRo+xKo45A1FUQSEuJOD1cRQr4id47XqOo4gLNW7F/MNwR7E2L
-         3h5ybkvaE4cunTUFilqkzs02VTk0un44gUSESxMRwXwlRa1LXDuck6C/a/VSLXx33St6
-         tbm6MbhrsFUt41PLnmkWfaXNSUKvzgBzw+rzFWOJSDJ0vurDAIOrMIMMmxXns6C6Fwma
-         JE4K7qtNw831uGwnh8Y2kv6rV88xFXuAbFi8EfIgrlpewgS/wUQSHclifvxq5HkrLZLx
-         v3dg==
-X-Gm-Message-State: APf1xPCoVrj5x0zNsmFKclwyYcJtrrkNlCuhirmXQuk9zpxYZ0RLSku3
-        ANd8T+GTUNrWAvysbwizGUNsF2u+TYU/Z9Ipzbn+SDVp
-X-Google-Smtp-Source: AG47ELt3fmN6AdthbA94FSLJlWTdUtWf3fCrfRhoAyKsa63I1D7iW0bxi5bB1nsJCbP250KMlAas+AxHdNhfrRIBhbU=
-X-Received: by 10.25.201.76 with SMTP id z73mr2275963lff.74.1519418485922;
- Fri, 23 Feb 2018 12:41:25 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=OM4astDOrtDem/EFyhZbq8Kj11fnAlpEf8WkLvcpPXw=;
+        b=fxIAm3q1c5jpVpZACsCmA/OlKPdGEGq3twp+9mIXIjhexYaAIauy03dqP7e7q7I2RF
+         xXQoEtAsgx+PIRCAI1Khkx649/S6l/sxlCloN8kw5W7wDmV8bPzKdMWG86TYqgAfyRx3
+         bdj7sWRNPwuYu73eBihpQLJugnsw7OKewHH40j7spapmknAUnB+MbODEU8I/A/rmtSRG
+         J3b0xLg7tXU6YJL5eHajFJ4gNmRtnzvyilPp3fldWHxJsdNPVcAs6XFR16AJLvQ6+x2j
+         Yd/SLnGy2LbovTb+66aljVEs39yqzSHMMoQvP1FiHCjT66Tz278i0WwtQ8ZgSnZHh7nP
+         AwTQ==
+X-Gm-Message-State: APf1xPAd5bqWDthmYzJrlc1U1NdQNFJtXmRTiaCWyELsBIlGN6vyU9+b
+        Z70iTImbE4fH95dUYRFKvhg+TbGh
+X-Google-Smtp-Source: AH8x227U2FQ2yNQrTgLMeAS7ge7lvCRXNslWoshHbMC4xLtmSyGXA4hgeqC6L5RTpylqEuPQnMRUBA==
+X-Received: by 10.28.107.213 with SMTP id a82mr2586108wmi.91.1519419518398;
+        Fri, 23 Feb 2018 12:58:38 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id w134sm234308wmd.45.2018.02.23.12.58.37
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 23 Feb 2018 12:58:37 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [GSoC][PATCH v2] ref-filter: Make "--contains <id>" less chatty if <id> is invalid
+References: <20180223162557.31477-1-ungureanupaulsebastian@gmail.com>
+Date:   Fri, 23 Feb 2018 12:58:37 -0800
+In-Reply-To: <20180223162557.31477-1-ungureanupaulsebastian@gmail.com>
+        (Paul-Sebastian Ungureanu's message of "Fri, 23 Feb 2018 18:25:57
+        +0200")
+Message-ID: <xmqqwoz3s9s2.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.46.85.134 with HTTP; Fri, 23 Feb 2018 12:41:25 -0800 (PST)
-From:   Stephen R Guglielmo <srguglielmo@gmail.com>
-Date:   Fri, 23 Feb 2018 15:41:25 -0500
-Message-ID: <CADfK3RVJ9pYtpX9x2=CZSKLVy2qxBKeyyGA_S=jo8K-Fa4FOqA@mail.gmail.com>
-Subject: [PATCH v2] subtree: fix add and pull for GPG-signed commits
-To:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>,
-        Avery Pennarun <apenwarr@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If log.showsignature is true (or --show-signature is passed) while
-performing a `subtree add` or `subtree pull`, the command fails.
+Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com> writes:
 
-toptree_for_commit() calls `log` and passes the output to `commit-tree`.
-If this output shows the GPG signature data, `commit-tree` throws a
-fatal error.
+> Hello,
+> I have made the changes after review. This is the updated patch
+> based on what was discussed last time [1].
+>
+> In this patch, I have fixed the same issue that was also seen
+> in "git branch" and "git for-reach-ref". I have also removed the
+> dead code that was left and updated the patches accordingly.
+>
+> [1] https://public-inbox.org/git/20180219212130.4217-1-ungureanupaulsebastian@gmail.com/
+>
+> Best regards,
+> Paul Ungureanu
+>
+> https://public-inbox.org/git/20180219212130.4217-1-ungureanupaulsebastian@gmail.com/
 
-This commit fixes the issue by adding --no-show-signature to `log` calls
-in a few places, as well as using the more appropriate `rev-parse`
-instead where possible.
+You do not want all of the above, upto and including the "---" below,
+to appear in the log message of the resulting commit.  One way to
+tell the reading end that you have such preamble in your message is
+to write "-- >8 --" instead of "---" there.
 
-Signed-off-by: Stephen R Guglielmo <srg@guglielmo.us>
----
- contrib/subtree/git-subtree.sh | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+> ---
+>
+> Some git commands which use --contains <id> print the whole
+> help text if <id> is invalid. It should only show the error
+> message instead.
+>
+> This patch applies to "git tag", "git branch", "git for-each-ref".
+>
+> This bug was a side effect of looking up the commit in option
+> parser callback. When a error occurs in the option parser, the
+> full usage is shown. To fix this bug, the part related to
+> looking up the commit was moved outside of the option parser
+> to the ref-filter module.
+>
+> Basically, the option parser only parses strings that represent
+> commits and the ref-filter performs the commit look-up. If an
+> error occurs during the option parsing, then it must be an invalid
+> argument and the user should be informed of usage, but if a error
+> occurs during ref-filtering, then it is a problem with the
+> argument.
 
-diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
-index dec085a23..9594ca4b5 100755
---- a/contrib/subtree/git-subtree.sh
-+++ b/contrib/subtree/git-subtree.sh
-@@ -297,7 +297,7 @@ find_latest_squash () {
-  main=
-  sub=
-  git log --grep="^git-subtree-dir: $dir/*\$" \
-- --pretty=format:'START %H%n%s%n%n%b%nEND%n' HEAD |
-+ --no-show-signature --pretty=format:'START %H%n%s%n%n%b%nEND%n' HEAD |
-  while read a b junk
-  do
-  debug "$a $b $junk"
-@@ -341,7 +341,7 @@ find_existing_splits () {
-  main=
-  sub=
-  git log --grep="^git-subtree-dir: $dir/*\$" \
-- --pretty=format:'START %H%n%s%n%n%b%nEND%n' $revs |
-+ --no-show-signature --pretty=format:'START %H%n%s%n%n%b%nEND%n' $revs |
-  while read a b junk
-  do
-  case "$a" in
-@@ -382,7 +382,7 @@ copy_commit () {
-  # We're going to set some environment vars here, so
-  # do it in a subshell to get rid of them safely later
-  debug copy_commit "{$1}" "{$2}" "{$3}"
-- git log -1 --pretty=format:'%an%n%ae%n%aD%n%cn%n%ce%n%cD%n%B' "$1" |
-+ git log --no-show-signature -1
---pretty=format:'%an%n%ae%n%aD%n%cn%n%ce%n%cD%n%B' "$1" |
-  (
-  read GIT_AUTHOR_NAME
-  read GIT_AUTHOR_EMAIL
-@@ -462,8 +462,8 @@ squash_msg () {
-  oldsub_short=$(git rev-parse --short "$oldsub")
-  echo "Squashed '$dir/' changes from $oldsub_short..$newsub_short"
-  echo
-- git log --pretty=tformat:'%h %s' "$oldsub..$newsub"
-- git log --pretty=tformat:'REVERT: %h %s' "$newsub..$oldsub"
-+ git log --no-show-signature --pretty=tformat:'%h %s' "$oldsub..$newsub"
-+ git log --no-show-signature --pretty=tformat:'REVERT: %h %s'
-"$newsub..$oldsub"
-  else
-  echo "Squashed '$dir/' content from commit $newsub_short"
-  fi
-@@ -475,7 +475,7 @@ squash_msg () {
+The same problem appears for "git branch --points-at <commit>",
+doesn't it?
 
- toptree_for_commit () {
-  commit="$1"
-- git log -1 --pretty=format:'%T' "$commit" -- || exit $?
-+ git rev-parse --verify "$commit^{tree}" || exit $?
- }
+> diff --git a/ref-filter.c b/ref-filter.c
+> index f9e25aea7..aa282a27f 100644
+> --- a/ref-filter.c
+> +++ b/ref-filter.c
+> @@ -2000,6 +2000,25 @@ static void do_merge_filter(struct ref_filter_cbdata *ref_cbdata)
+>  	free(to_clear);
+>  }
+>  
+> +int add_str_to_commit_list(struct string_list_item *item, void *commit_list)
 
- subtree_for_commit () {
--- 
-2.16.2
+If this function can be static to this file (and I suspect it is),
+please make it so.
+
+> +{
+> +	struct object_id oid;
+> +	struct commit *commit;
+> +
+> +	if (get_oid(item->string, &oid)) {
+> +		error(_("malformed object name %s"), item->string);
+> +		exit(1);
+> +	}
+> +	commit = lookup_commit_reference(&oid);
+> +	if (!commit) {
+> +		error(_("no such commit %s"), item->string);
+> +		exit(1);
+> +	}
+> +	commit_list_insert(commit, commit_list);
+
+The original (i.e. before this patch) does commit_list_insert() in
+the order the commits are given on the command line.  This version
+collects the command line arguments with string_list_append() that
+preserves the order, and feeds them to commit_list_insert() here, so
+the resulting commit_list will have the commits in the same order
+before or after this patch.
+
+Which is good.
+
+> +	return 0;
+> +}
+
+The code after this patch is a strict improvement (the current code
+do not do so either), so this is outside the scope of this patch,
+but we may want to give this function another "const char *" that is
+used to report which option we got a malformed object name for.
+
+> @@ -2012,6 +2031,10 @@ int filter_refs(struct ref_array *array, struct ref_filter *filter, unsigned int
+>  	int ret = 0;
+>  	unsigned int broken = 0;
+>  
+> +	/* Convert string representation and add to commit list. */
+> +	for_each_string_list(&filter->with_commit_strs, add_str_to_commit_list, &filter->with_commit);
+> +	for_each_string_list(&filter->no_commit_strs, add_str_to_commit_list, &filter->no_commit);
+> +
+
+As it does not use item->util in the callback helper, this should
+use for_each_string_list_item() instead; then you can do
+
+	for_each_string_list_item(item, &filter_no_commit_strs)
+		collect_commit(&filter->no_commit, item->string);
+
+which allows the other helper take a simple string, instead of
+requiring a string_list_item.
