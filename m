@@ -7,68 +7,65 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 32DDA1F404
-	for <e@80x24.org>; Fri, 23 Feb 2018 17:43:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CCAAB1F404
+	for <e@80x24.org>; Fri, 23 Feb 2018 17:53:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751578AbeBWRn1 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Feb 2018 12:43:27 -0500
-Received: from mail-qk0-f178.google.com ([209.85.220.178]:39264 "EHLO
-        mail-qk0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751406AbeBWRn0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Feb 2018 12:43:26 -0500
-Received: by mail-qk0-f178.google.com with SMTP id z197so11699714qkb.6
-        for <git@vger.kernel.org>; Fri, 23 Feb 2018 09:43:26 -0800 (PST)
+        id S1751845AbeBWRxh (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Feb 2018 12:53:37 -0500
+Received: from mail-qk0-f174.google.com ([209.85.220.174]:46053 "EHLO
+        mail-qk0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751455AbeBWRxg (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Feb 2018 12:53:36 -0500
+Received: by mail-qk0-f174.google.com with SMTP id g2so11727800qkd.12
+        for <git@vger.kernel.org>; Fri, 23 Feb 2018 09:53:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=4kHmJUr8TV6jz7c88yH35ptmbGjy85Qfab5YJfpTUAU=;
-        b=D/kaVmVzVV2Ypa6ZyTogGRXeTDQWK0YyGhe21f4fZFwg0fvHcpHC2AKs7GjUI3u6M3
-         H5ue36qODCJv9iTQT0lp7Q1s+Alcl/UrhWbkuqFpRegugG3KnrhYe7ywThfzE1zqmqtl
-         ElPcC8zd9uj5YMK8YjjgGV8KqzsaAB2Kb65PC1YfaJ59JrDRFnF9PTAHxUrpVoGaWnlM
-         QiDHbL67Dla15Zm0QO0iDDR99yq5S6S/d2TLn9z+W9+qlx3mzyNpT7nyia0tyw70IIMa
-         qi1NLA45rdOfIp2HIXSYWJA8+g5mdWF4hFg8jAbxaBJZMyS19ah5b1p3peu2lXx8b40L
-         M3yg==
+        bh=PU/6GHnxgT3OV+OXzb6Uk0q2ZOldkhuAfx6HghwKrHg=;
+        b=DqziX2+SrBnbd/gMCAlR7BCmJmBibpur/cyiAo5D4HVs2IjlV/WsS9HPmx3G8bwJuc
+         j/OtGL0iotPpYjh5HfYf9Kidx9hXXDNW123e/52BuTptFoLDuO7TAzY5r+j8TbEq7IyG
+         oE5CudYGP1s/J2rYM4c0aAHQ3MaQ0+UrmviA9Av440vXa9LzRFzmysx/TZ20z+urVBf1
+         I/VEUIIr0sTeMftOe5+vO/HYtnx3u6lpXS5dOXuJ1zi7aT2uB+/kxxNtS7zlI2D+lwSA
+         7jWIsHsXgWprDPEi/V3GsWJobw5naLKKgWH6CxaWhSxVQmw/E1XVOBLcwdjcz4MpqVey
+         VHvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-transfer-encoding
          :content-language;
-        bh=4kHmJUr8TV6jz7c88yH35ptmbGjy85Qfab5YJfpTUAU=;
-        b=EQvMdvJKiSWvTiCGSAQsPV0fBX7dV2Ve0CfSQKXPQwe+HmBNA2nC3yZriJVhP9D5Zt
-         ToD0GM+RvjUPFT59rW40Dfe0+z1gF6NLAx2un7M2bNWDsDTfdzjLyaR6JBT2USGWZmzU
-         uonqWp6m+Y2FBnbL2Hp/vH+7kk1f8CIlFhUXS5Smd5VhzvQeNFF5wr1+h4o+isaWR7ps
-         5/advEQqxCG3uXe8yYeM+hNkM7NbrFTgXHgF5vGfAoMey5AQvFeupF5KWI0k+2KTnDuf
-         rII0ruTJ2VCH/9W55kWP/S+ES3WDw3qGryR1MfGSeo4SPu8IoEPOjY+TjQwGZmp80kwk
-         DI+g==
-X-Gm-Message-State: APf1xPD2rM5DBUq08FGJRp/E2FqBGx9PE/OS2GNa/XFaQGTqLZ4QdsGp
-        ehn+/j1FdgnY4LMlbSAGlAo=
-X-Google-Smtp-Source: AG47ELv4y0VwC8lPuEN5D5UN9FoSKEnlefmHf8ExMJPYXiGDhYKoKdpGV3zuyraP3pAKbMzsm1FmVA==
-X-Received: by 10.55.76.206 with SMTP id z197mr3535942qka.143.1519407805847;
-        Fri, 23 Feb 2018 09:43:25 -0800 (PST)
+        bh=PU/6GHnxgT3OV+OXzb6Uk0q2ZOldkhuAfx6HghwKrHg=;
+        b=Ob404R7EQFlkQBHAI5JC3ssVQG4edumBLwgSnUrWSIRE2Da4Ok8k4jEciqjr55J8ka
+         kLNsja4oXjhScWypXJmqOqNvGXxlkicwklTdbFetHx6oO/vcS08+MeQIiUM0flTCr3Hg
+         ZXTAOgs/pdHbwLnLZPkJGSa33RPqSmOBFTwkugGEikNiKNXkvnX/+yUenwsNw8gIc68y
+         InuPHVqKvVrT9Qlhc7m+1m9TMVb0TazK4DQiXbRF2bRJPwYj3L3PsBAHj/QFBKQNbRy/
+         8oV8vKdjPOkRkHObUZDGDbuEsVP85nzEgCD99FJ4WMWnNCvrjE1VOIjGqp5oCIX8oVTC
+         +Ygg==
+X-Gm-Message-State: APf1xPAN/N930msGZsSAwUTqODtj9nsB1Ha9vaIK1Nm5LN3Mpyi1DJ/T
+        x3xJhnK5qykp5fUxvzf27cUqm6uptf0=
+X-Google-Smtp-Source: AG47ELtCuTeRxICvZyBERJZiZAO7ynxAeCHWQigrNzwH5Ovx6JMgELY4ZU3U/4Vcrct/4jVrWoJDhg==
+X-Received: by 10.55.89.193 with SMTP id n184mr3714707qkb.270.1519408415461;
+        Fri, 23 Feb 2018 09:53:35 -0800 (PST)
 Received: from ?IPv6:2001:4898:6808:13e:c4e6:7a22:56f1:df04? ([2001:4898:8010:0:ae1c:7a22:56f1:df04])
-        by smtp.gmail.com with ESMTPSA id p4sm1658943qtd.55.2018.02.23.09.43.24
+        by smtp.gmail.com with ESMTPSA id 127sm1607465qko.7.2018.02.23.09.53.33
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 23 Feb 2018 09:43:24 -0800 (PST)
-Subject: Re: [PATCH v4 08/13] commit-graph: implement --delete-expired
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git <git@vger.kernel.org>, Jeff Hostetler <git@jeffhostetler.com>,
-        Jeff King <peff@peff.net>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
+        Fri, 23 Feb 2018 09:53:34 -0800 (PST)
+Subject: Re: [PATCH v4 07/13] commit-graph: implement --set-latest
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, git@jeffhostetler.com, peff@peff.net,
+        jonathantanmy@google.com, szeder.dev@gmail.com, sbeller@google.com,
         Derrick Stolee <dstolee@microsoft.com>
 References: <4d1ee202-7d79-d73c-6e05-d0fc85db943c@gmail.com>
  <1519066406-81663-1-git-send-email-dstolee@microsoft.com>
- <1519066406-81663-9-git-send-email-dstolee@microsoft.com>
- <CAGZ79kai=KegG-XPmtZJRhTcD-M5Edsw8eocje41mdbL-RARAA@mail.gmail.com>
+ <1519066406-81663-8-git-send-email-dstolee@microsoft.com>
+ <xmqqk1v4x4dt.fsf@gitster-ct.c.googlers.com>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <deac2f34-d3c3-b17d-e7f0-b1c044c0d3ff@gmail.com>
-Date:   Fri, 23 Feb 2018 12:43:23 -0500
+Message-ID: <e7ed962e-aa39-a8e7-2b24-a86dcd30dfa9@gmail.com>
+Date:   Fri, 23 Feb 2018 12:53:32 -0500
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
  Thunderbird/52.6.0
 MIME-Version: 1.0
-In-Reply-To: <CAGZ79kai=KegG-XPmtZJRhTcD-M5Edsw8eocje41mdbL-RARAA@mail.gmail.com>
+In-Reply-To: <xmqqk1v4x4dt.fsf@gitster-ct.c.googlers.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Content-Language: en-US
@@ -77,49 +74,65 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2/21/2018 4:34 PM, Stefan Beller wrote:
-> On Mon, Feb 19, 2018 at 10:53 AM, Derrick Stolee <stolee@gmail.com> wrote:
+On 2/22/2018 1:31 PM, Junio C Hamano wrote:
+> Derrick Stolee <stolee@gmail.com> writes:
 >
->>          graph_name = write_commit_graph(opts.obj_dir);
->>
->>          if (graph_name) {
->>                  if (opts.set_latest)
->>                          set_latest_file(opts.obj_dir, graph_name);
->>
->> +               if (opts.delete_expired)
->> +                       do_delete_expired(opts.obj_dir,
->> +                                         old_graph_name,
->> +                                         graph_name);
+>>   static struct opts_commit_graph {
+>>   	const char *obj_dir;
+>>   	const char *graph_file;
+>> +	int set_latest;
+>>   } opts;
+>> ...
+>> @@ -89,6 +106,8 @@ static int graph_write(int argc, const char **argv)
+>>   		{ OPTION_STRING, 'o', "object-dir", &opts.obj_dir,
+>>   			N_("dir"),
+>>   			N_("The object directory to store the graph") },
+>> +		OPT_BOOL('u', "set-latest", &opts.set_latest,
+>> +			N_("update graph-head to written graph file")),
+>>   		OPT_END(),
+>>   	};
+>>   
+>> @@ -102,6 +121,9 @@ static int graph_write(int argc, const char **argv)
+>>   	graph_name = write_commit_graph(opts.obj_dir);
+>>   
+>>   	if (graph_name) {
+>> +		if (opts.set_latest)
+>> +			set_latest_file(opts.obj_dir, graph_name);
 >> +
-> So this only allows to delete expired things and setting the latest
-> when writing a new graph. Would we ever envision a user to produce
-> a new graph (e.g. via obtaining a graph that they got from a server) and
-> then manually rerouting the latest to that new graph file without writing
-> that graph file in the same process? The same for expired.
+> This feels like a very strange API from potential caller's point of
+> view.  Because you have to decide that you are going to mark it as
+> the latest one upfront before actually writing the graph file, if
+> you forget to pass --set-latest, you have to know how to manually
+> mark the file as latest anyway.  I would understand if it were one
+> of the following:
 >
-> I guess these operations are just available via editing the
-> latest or deleting files manually, which slightly contradicts
-> e.g. "git update-ref", which in olden times was just a fancy way
-> of rewriting the refs file manually. (though it claims to be less
-> prone to errors as it takes lock files)
-
-I imagine these alternatives for placing a new, latest commit graph file 
-would want Git to handle rewriting the "graph-latest" file. Given such a 
-use case, we could consider extending the 'commit-graph' interface, but 
-I don't want to plan for it now.
-
+>   (1) whenever a new commit graph file is written in the
+>       objects/info/ directory, always mark it as the latest (drop
+>       --set-latest option altogether); or
 >
->>   extern char *get_graph_latest_filename(const char *obj_dir);
->> +extern char *get_graph_latest_contents(const char *obj_dir);
-> Did
-> https://public-inbox.org/git/20180208213806.GA6381@sigill.intra.peff.net/
-> ever make it into tree? (It is sort of new, but I feel we'd want to
-> strive for consistency in the code base, eventually.)
+>   (2) make set-latest command that takes a name of an existing graph
+>       file in the objects/info/ directory, and sets the latest
+>       pointer to point at it (make it separate from 'write' command).
+>
+> though.
 
-Thank you for the reminder. I've removed the externs from 'commit-graph.h'.
+Perhaps the 'write' subcommand should be replaced with 'replace' which 
+does the following:
 
-Should I also remove the externs from other methods I introduce even 
-though their surrounding definitions include 'extern'?
+1. Write a new commit graph based on the starting commits (from all 
+packs, from specified packs, from OIDs).
+2. Update 'graph-latest' to point to that new file.
+3. Delete all "expired" commit graph files.
+
+(Hence, we would drop the "--set-latest" and "--delete-expired" options.)
+
+Due to the concerns with concurrency, I really don't want to split these 
+operations into independent processes that consumers need to call in 
+series. Since this sequence of events is the only real interaction we 
+expect (for now), this interface will simplify the design.
+
+The biggest reason I didn't design it like this in the first place is 
+that the behavior changes as the patch develops.
 
 Thanks,
 -Stolee
