@@ -3,130 +3,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D92D91F404
-	for <e@80x24.org>; Fri, 23 Feb 2018 17:59:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 265171F404
+	for <e@80x24.org>; Fri, 23 Feb 2018 18:00:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751517AbeBWR7D (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Feb 2018 12:59:03 -0500
-Received: from mail-qt0-f179.google.com ([209.85.216.179]:37383 "EHLO
-        mail-qt0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751406AbeBWR7D (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Feb 2018 12:59:03 -0500
-Received: by mail-qt0-f179.google.com with SMTP id r16so2600343qtm.4
-        for <git@vger.kernel.org>; Fri, 23 Feb 2018 09:59:02 -0800 (PST)
+        id S1751907AbeBWSAU (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Feb 2018 13:00:20 -0500
+Received: from mail-wr0-f171.google.com ([209.85.128.171]:45456 "EHLO
+        mail-wr0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751897AbeBWSAT (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Feb 2018 13:00:19 -0500
+Received: by mail-wr0-f171.google.com with SMTP id p104so14938269wrc.12
+        for <git@vger.kernel.org>; Fri, 23 Feb 2018 10:00:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=AdwJNLtKXaqDP4jh6fU2c0gVEiKWlZzhtmJNDeL8SQ4=;
-        b=feZhiyBgl2UiL92QbQBTy2dokyFWjQBLGSn28XODRzPn2gk5P3kCb12sazjo2MpzPW
-         sLKrqUsq9CbbiR4cbq1UZuOqdLzrDkdGeckxc8TFhhmkZFDPzpSrSzTHbXO67ea2vaZn
-         fR9KIC8z4OevYYPAlFVkclyV132MEjWRmkrxUzuZuT16GjohCL3OyJlKDDuiH7ZHnEPZ
-         MKw2dGQBcJESMX34Qro4uSuJRdaK9O7fBsg03VBMWR5UyhFfU4iREMaCp8c72Rrd+8N7
-         /Sau35nMIKr9L4I/Wukmsr0f59UThUkmCw9j0EmUr5ggvdDLsgld8ABX1KX63Iha8oV7
-         qGDA==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=3XB9Ut4PcC4zkhiV6DZcBw0zlPKiZAFX0WvCCz/7M54=;
+        b=e/L47fj5q+Kk10T8ESw7kYfHueIs1wh5co0Nbt616442En4bPrap4cQV4/Fjf/VMUE
+         eYrBAAyTS+TAprgtWaWFeM9uiJK+wHr/+rlBKhOrOf8dv/bVofWsJCQYRu43mVW+TyDJ
+         Csz8lEhBoJK+qBd5iuWjuWtRCa912gUJGa64tTt//1io3se6xFy0pLRnMU494qWOg69c
+         v95OCE7n2qMiQyhfTuTXBTn/LRc4jEbW6ny+cXBju03+f2OKa298qP/bUpFqQEk+Nlcj
+         YvZ1hSjW+IqpGpwRcaqXHK08QWrFIYM9YkhF1oUZZgZNRXfHfFABW/XONIqB7qj/wdhM
+         z+JQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=AdwJNLtKXaqDP4jh6fU2c0gVEiKWlZzhtmJNDeL8SQ4=;
-        b=gCS1tTZuP37P5JmrQlc/hr5M5qvq4fUCpEbcDxcrWyj8zv6RILXNoekAHtvPELKHQu
-         rVm2Bb/jBGX3bXQ2fUI7ovBbypLdaLE51yxUWMQ4AXvil0IkHwxDcLDVT7VcxzrBvW6B
-         advvaXJizVVyGhpIxC5hE6PaHnTVOXzAtYUrtffPtiM/yiSxuXRyonA74ai1bNjMXXOZ
-         Glgrey58qMg4P2aP3tVGWlR2CLaqvHTsqt5zQeBMZ7MuXvZ6lQ0pXn5LmavnvXup+9e1
-         F3xGo2GF8Cb9Fv4sPxtdbhDSD9iQleOJG/grrrLKgK/VAfQSw1fwkiaVmW+hK+5nTnEn
-         1vFQ==
-X-Gm-Message-State: APf1xPBVr+co8TBkaUbzTkbjPtZqt0/muNZRHSyyDlk5nUQ8NJxsLy8A
-        rfpjxabhZtkIu5tMoufhzY/QqjfsbWo=
-X-Google-Smtp-Source: AG47ELtiBw3r3k0kHO6W4HNGR9uG782Bjq5fwSpvDZZR09Adhao2DFN4+Rcn3MusiX8rQpx7jL9CNg==
-X-Received: by 10.200.47.212 with SMTP id m20mr3966745qta.170.1519408742100;
-        Fri, 23 Feb 2018 09:59:02 -0800 (PST)
-Received: from ?IPv6:2001:4898:6808:13e:c4e6:7a22:56f1:df04? ([2001:4898:8010:0:ae1c:7a22:56f1:df04])
-        by smtp.gmail.com with ESMTPSA id 42sm1631375qte.13.2018.02.23.09.59.00
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 23 Feb 2018 09:59:01 -0800 (PST)
-Subject: Re: [PATCH v4 08/13] commit-graph: implement --delete-expired
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, git@jeffhostetler.com, peff@peff.net,
-        jonathantanmy@google.com, szeder.dev@gmail.com, sbeller@google.com,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <4d1ee202-7d79-d73c-6e05-d0fc85db943c@gmail.com>
- <1519066406-81663-1-git-send-email-dstolee@microsoft.com>
- <1519066406-81663-9-git-send-email-dstolee@microsoft.com>
- <xmqqfu5sx3md.fsf@gitster-ct.c.googlers.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <67871288-ea70-69d4-9c3d-5cc946d8dbe2@gmail.com>
-Date:   Fri, 23 Feb 2018 12:59:00 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=3XB9Ut4PcC4zkhiV6DZcBw0zlPKiZAFX0WvCCz/7M54=;
+        b=TjXnMRTGlrpzo0B6KO8HkoUUnBKhUO1UHtbrPqfbMftdiTbOHkQ1eLrKZ9+2sb5q0W
+         BtRPRjgGGlAkvYNlftkk3KEuV9NzRrBiU6199gEXhLpsacqzivVJFft9+T7t1aYE3PRl
+         m39YzP2DvZzHfFjnlQDLjsDSy2IlYkY9YINz6snqono9g3XVBVM5qTgQuVEbG4g4cB2L
+         Z+K7rQprX/3uZ7enE+FMOdDj4rBDn6+gNyh5+9v+jhR3e7Of+JppOJyxWHMX6omiyuPV
+         2r4224K4+CqSb7q+sDz9IzTyeIhu3SikphiMy9X0urKuVIfNHX1lObNTVm+Zg/HoyW4d
+         ijFw==
+X-Gm-Message-State: APf1xPBwApVjoD/P+n7WDVt7+KiBdmX6YueVkKdUnCKjViIH17qe/Zxk
+        KwUwn8CX1edXWIghYAkRXUg=
+X-Google-Smtp-Source: AH8x227841mc0jgOFp/ECficS3T+1QymDY3y0GN4BVeT+zZPO2O8dDpe9LklZJGRI8fMvMq1IsAG/g==
+X-Received: by 10.223.134.193 with SMTP id 1mr2252597wry.245.1519408817416;
+        Fri, 23 Feb 2018 10:00:17 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id d63sm2529082wmh.16.2018.02.23.10.00.16
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 23 Feb 2018 10:00:16 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH] am: support --quit
+References: <20180214111606.4257-1-pclouds@gmail.com>
+        <xmqqy3jvmkyn.fsf@gitster-ct.c.googlers.com>
+        <CACsJy8CUmpXNZDR6jvXP=hQkuTmCqzYYqitXJyYYR31Yw7DXXw@mail.gmail.com>
+Date:   Fri, 23 Feb 2018 10:00:15 -0800
+In-Reply-To: <CACsJy8CUmpXNZDR6jvXP=hQkuTmCqzYYqitXJyYYR31Yw7DXXw@mail.gmail.com>
+        (Duy Nguyen's message of "Fri, 23 Feb 2018 17:24:34 +0700")
+Message-ID: <xmqq606nvb68.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <xmqqfu5sx3md.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2/22/2018 1:48 PM, Junio C Hamano wrote:
-> Derrick Stolee <stolee@gmail.com> writes:
+Duy Nguyen <pclouds@gmail.com> writes:
+
+>> The internal implementation detail of am_abort() is leaking out
+>> here, by saying "rerere-clear" is the only special thing other than
+>> recovering the HEAD and working tree state when abort happens.  It
+>> makes readers wonder if am_rerere_clear() should become part of
+>> am_destroy().  I dunno.
 >
->> Teach git-commit-graph to delete the .graph files that are siblings of a
->> newly-written graph file, except for the file referenced by 'graph-latest'
->> at the beginning of the process and the newly-written file. If we fail to
->> delete a graph file, only report a warning because another git process may
->> be using that file. In a multi-process environment, we expect the previoius
->> graph file to be used by a concurrent process, so we do not delete it to
->> avoid race conditions.
-> I do not understand the later part of the above.  On some operating
-> systems, you actually can remove a file that is open by another
-> process without any ill effect.  There are systems that do not allow
-> removing a file that is in use, and an attempt to unlink it may
-> fail.  The need to handle such a failure gracefully is not limited
-> to the case of removing a commit graph file---we need to deal with
-> it when removing file of _any_ type.
+> I think the original design is am_destroy takes care of
+> $GIT_DIR/rebase-apply and nothing else. --abort has to clean up things
+> outside (index, HEAD, rerere) while a successful operation should not
+> leave anything else to clean up (except rebase-apply dir).
 
-My thought is that we should _warn_ when we fail to delete a .graph file 
-that we think should be safe to delete. However, if we are warning for a 
-file that is currently being accessed (as is the case on Windows, at 
-least), then we will add a lot of noise. This is especially true when 
-using IDEs that run 'status' or 'fetch' in the background, frequently.
+Yes, and that is why I think the code would have been nicer to
+understand if the update to add 'reset' had turned the existing
+am_abort() into a helper that is one level higher in the abstraction
+(perhaps even by renaming the function) that the caller can tell
+which part to clear (i.e. e.g. am_finish(&state, AM_CLEAR_ALL) vs
+am_finish(&state, AM_CLEAR_STEP_ONLY)).  Stepping back even further,
+perhaps the call made to am_destroy() in the normal exit case at the
+end of am_run() could have been using the same helper.
 
-> Especially the last sentence "we do not delete it to avoid race
-> conditions" I find problematic.  If a system does not allow removing
-> a file in use and we detect a failure after an attempt to do so, it
-> is not "we do not delete it" --- even if you do, you won't succeed
-> anyway, so there is no point saying that.  And on systems that do
-> allow safe removal of a file in use (i.e. they allow an open file to
-> be used by processes that have open filehandles to it after its
-> removal), there is no point refraining to delete it "to avoid race
-> conditions", either---in fact it is unlikely that you would even know
-> somebody else had it open and was using it.
 
-The (unlikely, but possible) race condition involves two processes (P1 
-and P2):
 
-1. P1 reads from graph-latest to see commit graph file F1.
-2. P2 updates graph-latest to point to F2 and deletes F1.
-3. P1 tries to read F1 and fails.
-
-I could explicitly mention this condition in the message, or we can just 
-let P2 fail by deleting all files other than the one referenced by 
-'graph-latest'. Thoughts?
-
-> In any case, I do not think '--delete-expired' option that can be
-> given only when you are writing makes much sense as an API.  An
-> 'expire' command, just like 'set-latest' command, that is a separate
-> command from 'write',  may make sense, though.
-
-In another message, I proposed dropping the argument and assuming 
-expires happen on every write.
-
-Thanks,
--Stolee
