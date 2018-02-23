@@ -7,19 +7,19 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7C4A41F404
-	for <e@80x24.org>; Fri, 23 Feb 2018 12:39:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 470621F404
+	for <e@80x24.org>; Fri, 23 Feb 2018 12:39:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751456AbeBWMjb (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Feb 2018 07:39:31 -0500
-Received: from mout.gmx.net ([212.227.15.15]:45713 "EHLO mout.gmx.net"
+        id S1751468AbeBWMjs (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Feb 2018 07:39:48 -0500
+Received: from mout.gmx.net ([212.227.15.19]:58875 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750827AbeBWMja (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Feb 2018 07:39:30 -0500
-Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M0PdN-1ebNbj333V-00udux; Fri, 23
- Feb 2018 13:39:22 +0100
-Date:   Fri, 23 Feb 2018 13:39:07 +0100 (STD)
+        id S1750827AbeBWMjr (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Feb 2018 07:39:47 -0500
+Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Ledpu-1eOR8t3gsQ-00qNpg; Fri, 23
+ Feb 2018 13:39:41 +0100
+Date:   Fri, 23 Feb 2018 13:39:26 +0100 (STD)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
 To:     git@vger.kernel.org
@@ -29,109 +29,178 @@ cc:     Junio C Hamano <gitster@pobox.com>,
         Philip Oakley <philipoakley@iee.org>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH v4 10/12] sequencer: handle post-rewrite for merge commands
+Subject: [PATCH v4 11/12] pull: accept --rebase=recreate to recreate the
+ branch topology
 In-Reply-To: <cover.1519389319.git.johannes.schindelin@gmx.de>
-Message-ID: <8ecddf181eeaa9c6bfc9ff573562f9bd9d3d32a5.1519389319.git.johannes.schindelin@gmx.de>
+Message-ID: <f475b92b9ae8ef946512841cc539f7881372b63d.1519389319.git.johannes.schindelin@gmx.de>
 References: <cover.1518307771.git.johannes.schindelin@gmx.de> <cover.1519389319.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:U0ivv25LKKKymv73zfsV8zw74b3sUvA3UrRqPRuy3B13lvbB8Th
- E8uFI4nO8iJ0Ub/LNhLBEQ8B+hLc33wL32/rVF68l2iED/rus6IQNEOp1eQX0lo5MYVY66E
- rkSkeMNsHFn2Aa2PbgETBOiOKLQnF9jA41PcReynXthBRnnSIzlnXTbmLQu/9GUmTdoS1I8
- vbIdx80IQh14wdlVm1KHw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:FK/Ub/2NPTY=:z0dOTNCnlpWOp85gA7cuHa
- 8Ay5CckZX9UyLLyxH7rmkkp/29MounGOFDtF+D6H7+2M6Gn8OdwSH1hEq+N5AvZCdzvJa9Qzj
- iDlI+5SQkaN4ExgCgA+qWiikQ+M2FxR8pXdcpPQf6P4J3OOIuwsuuKc6P/t5ERkTF3wKSalXS
- rcFgrVRA4gl4nWlFPUEDr0e0Fqd/DpduNO6/gOnXgDhAmCo0595+WNxPwgvccu9BQGsrgQR6Z
- 2TTyWsAtTGbqWsA9T/WsY+elHNbZo55Tt1rlFbfDB3xBUEQxMtL/5+nzzKQKaVy1Fmem9eMLV
- U7Xm77fd//RIqL/zqjDAfHh/Z9Oyq42zMXv189my2IzImbv1GpBDH8uJ71GELU1lskdVmelKv
- h41dRJp+fGDyMnT5r+lNFzPD7G0kf2A5mra9eixutrduc7ER0gA3mdykaYcMx2sEz2BdCHVMh
- s3Jb2Sgjk5m+qXNXV1cetksEW3/8yDlQPRd3ygznHEBuExY3mYXwJK1vOBMLiz9jjIXLWQkOk
- UufzNv38hm2EfzqpcBsGpNIkqd8FwhJ32B3l7nEq5EtZzIjPGCKnzMwAqqj77HgpbRx+lWnzk
- xNKPU9oOUGXCIBWRIdF9aqVw5swCmRE2Hqte7CKHUlyGbOSanGKKkVgYnVGUJ3GcCxJTc6PWx
- FiZHSDPnWmTylm2TGWbsJFIiwa9LH8+5i8yGSA8GQFy2m6e1a/zrUZrtIz7GM05/8Oo9JnXG5
- QcnrR/b5S0XYDL9joEioVhwEgp7/ToKYyIlNYLNL6rBUqD/SMoxA7mTW9nwhMKyScdEePbJqd
- ddhvR8iuwmHeJMOTwwdSl3VZJeOJEoFastjK25yzotRmnchhgw=
+X-Provags-ID: V03:K0:YNcTbvsW2Velnc3wIh3vR0EQIokrHqYYUkXbV4A8aFa6TKRmYaS
+ 0wJ1JPhHeUx1kcJJn1FLIdqe79q+deRxxWtYSU03FiDBxyYZYkybkyN/AsUhO3ADmk+gcix
+ crAB09N3eNAnLCsPaOa3m7a2yfnXkMwLkmbct37DwU2Xrq9WJiW62rJNXyznB6Sm0WVVhBl
+ jVw2ePub3DKqFR4gTea4g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:c2CsQMC5vts=:FqHfI8oAalLp0BTfuTwa9E
+ AYFDEV4EniWinfIl1GJtR45O1BjmPGPb4I+R7NSLncuMf5GfmyZPttPQzCUWdCCzd2yG06A7y
+ 53cGsOjxNcpYV8QhGi8MAnNXaZlOlQ/QR5FL2dSaYYc8dY6K8gKAqMHVDR+N2TidP9MaxBnmw
+ Ejvahk2P5Dc6qPndn2olERQdhh8w0RTIeFYbMeDZZrQN1rF+DHGnD7bNoQx9gOxVuP3a1KRpZ
+ d+DNiLJc5HSiswFLkNqI91SUdNLV3jpim6OEcz0TVJiJ1jzPb0MLE7LlDF5UdLdwmijDsiSIU
+ G2bOFqlcGXxlmLt/JxVmWxo66PuMBK8m3OgjuVkAcYqR7FUaUEnXyaARmqu3icsRivHs9q540
+ IbV1NAHTQwTLf6u/mx2n+RcU2HfAR/3YOrhoE3NJSyVr3VOPniXuXmU5t05C34mhBgNr8uc2S
+ H0ldjanhnVpAEh7Xqm18L1SHAT2eHo79EIYCl6ubd2fmdFe7oL+iBJwX/W3SR8TaJnw833Yb9
+ QtZduJ+RelliVFQJD/KbW03KOKWv1WSLPflhfjQc2RyTgLMxOpQnYT5gqUJTmAqwx/hJbfeZz
+ zlgkVDBgCZ9ln/B2bIgZ/rX7F8xxPz4TtXnOEZR6o4w1gjLFbQdndhnIWh7FE+UHN4ea+RzZY
+ ceolWbzeWmkrmKmWghrhO0lztDqsV5Ja8KR239Qx7iMMcJPZ5Spm3I7fRWor17Cak0gjHRU83
+ 68AtKDzCvVRI6Ak7+6cTymO4TOs9uloDlzKa33m4ScKblePW8P2V2PS1b/pTUwt64mk7IOVWS
+ jYrq48njvVzJFkwykRgUoGr7ObN4WEui/t2BH8WhLtUnfl1zjA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In the previous patches, we implemented the basic functionality of the
-`git rebase -i --recreate-merges` command, in particular the `merge`
-command to create merge commits in the sequencer.
+Similar to the `preserve` mode simply passing the `--preserve-merges`
+option to the `rebase` command, the `recreate` mode simply passes the
+`--recreate-merges` option.
 
-The interactive rebase is a lot more these days, though, than a simple
-cherry-pick in a loop. For example, it calls the post-rewrite hook (if
-any) after rebasing with a mapping of the old->new commits.
-
-This patch implements the post-rewrite handling for the `merge` command
-we just introduced. The other commands that were added recently (`label`
-and `reset`) do not create new commits, therefore post-rewrite do not
-need to handle them.
+This will allow users to conveniently rebase non-trivial commit
+topologies when pulling new commits, without flattening them.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- sequencer.c                       |  7 +++++--
- t/t3430-rebase-recreate-merges.sh | 25 +++++++++++++++++++++++++
- 2 files changed, 30 insertions(+), 2 deletions(-)
+ Documentation/config.txt               |  8 ++++++++
+ Documentation/git-pull.txt             |  5 ++++-
+ builtin/pull.c                         | 14 ++++++++++----
+ builtin/remote.c                       |  2 ++
+ contrib/completion/git-completion.bash |  2 +-
+ 5 files changed, 25 insertions(+), 6 deletions(-)
 
-diff --git a/sequencer.c b/sequencer.c
-index 01bafe2fe47..85ce37cb99f 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -2980,11 +2980,14 @@ static int pick_commits(struct todo_list *todo_list, struct replay_opts *opts)
- 		else if (item->command == TODO_RESET)
- 			res = do_reset(item->arg, item->arg_len, opts);
- 		else if (item->command == TODO_MERGE ||
--			 item->command == TODO_MERGE_AND_EDIT)
-+			 item->command == TODO_MERGE_AND_EDIT) {
- 			res = do_merge(item->commit, item->arg, item->arg_len,
- 				       item->command == TODO_MERGE_AND_EDIT ?
- 				       EDIT_MSG | VERIFY_MSG : 0, opts);
--		else if (!is_noop(item->command))
-+			if (item->commit)
-+				record_in_rewritten(&item->commit->object.oid,
-+						    peek_command(todo_list, 1));
-+		} else if (!is_noop(item->command))
- 			return error(_("unknown command %d"), item->command);
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index f57e9cf10ca..8c9adea0d0c 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1058,6 +1058,10 @@ branch.<name>.rebase::
+ 	"git pull" is run. See "pull.rebase" for doing this in a non
+ 	branch-specific manner.
+ +
++When recreate, also pass `--recreate-merges` along to 'git rebase'
++so that locally committed merge commits will not be flattened
++by running 'git pull'.
+++
+ When preserve, also pass `--preserve-merges` along to 'git rebase'
+ so that locally committed merge commits will not be flattened
+ by running 'git pull'.
+@@ -2607,6 +2611,10 @@ pull.rebase::
+ 	pull" is run. See "branch.<name>.rebase" for setting this on a
+ 	per-branch basis.
+ +
++When recreate, also pass `--recreate-merges` along to 'git rebase'
++so that locally committed merge commits will not be flattened
++by running 'git pull'.
+++
+ When preserve, also pass `--preserve-merges` along to 'git rebase'
+ so that locally committed merge commits will not be flattened
+ by running 'git pull'.
+diff --git a/Documentation/git-pull.txt b/Documentation/git-pull.txt
+index ce05b7a5b13..b4f9f057ea9 100644
+--- a/Documentation/git-pull.txt
++++ b/Documentation/git-pull.txt
+@@ -101,13 +101,16 @@ Options related to merging
+ include::merge-options.txt[]
  
- 		todo_list->current++;
-diff --git a/t/t3430-rebase-recreate-merges.sh b/t/t3430-rebase-recreate-merges.sh
-index 1a3e43d66ff..35a61ce90bb 100755
---- a/t/t3430-rebase-recreate-merges.sh
-+++ b/t/t3430-rebase-recreate-merges.sh
-@@ -157,4 +157,29 @@ test_expect_success 'refs/rewritten/* is worktree-local' '
- 	test_cmp_rev HEAD "$(cat wt/b)"
- '
+ -r::
+---rebase[=false|true|preserve|interactive]::
++--rebase[=false|true|recreate|preserve|interactive]::
+ 	When true, rebase the current branch on top of the upstream
+ 	branch after fetching. If there is a remote-tracking branch
+ 	corresponding to the upstream branch and the upstream branch
+ 	was rebased since last fetched, the rebase uses that information
+ 	to avoid rebasing non-local changes.
+ +
++When set to recreate, rebase with the `--recreate-merges` option passed
++to `git rebase` so that locally created merge commits will not be flattened.
+++
+ When set to preserve, rebase with the `--preserve-merges` option passed
+ to `git rebase` so that locally created merge commits will not be flattened.
+ +
+diff --git a/builtin/pull.c b/builtin/pull.c
+index 1876271af94..9da2cfa0bd3 100644
+--- a/builtin/pull.c
++++ b/builtin/pull.c
+@@ -27,14 +27,16 @@ enum rebase_type {
+ 	REBASE_FALSE = 0,
+ 	REBASE_TRUE,
+ 	REBASE_PRESERVE,
++	REBASE_RECREATE,
+ 	REBASE_INTERACTIVE
+ };
  
-+test_expect_success 'post-rewrite hook and fixups work for merges' '
-+	git checkout -b post-rewrite &&
-+	test_commit same1 &&
-+	git reset --hard HEAD^ &&
-+	test_commit same2 &&
-+	git merge -m "to fix up" same1 &&
-+	echo same old same old >same2.t &&
-+	test_tick &&
-+	git commit --fixup HEAD same2.t &&
-+	fixup="$(git rev-parse HEAD)" &&
-+
-+	mkdir -p .git/hooks &&
-+	test_when_finished "rm .git/hooks/post-rewrite" &&
-+	echo "cat >actual" | write_script .git/hooks/post-rewrite &&
-+
-+	test_tick &&
-+	git rebase -i --autosquash --recreate-merges HEAD^^^ &&
-+	printf "%s %s\n%s %s\n%s %s\n%s %s\n" >expect $(git rev-parse \
-+		$fixup^^2 HEAD^2 \
-+		$fixup^^ HEAD^ \
-+		$fixup^ HEAD \
-+		$fixup HEAD) &&
-+	test_cmp expect actual
-+'
-+
- test_done
+ /**
+  * Parses the value of --rebase. If value is a false value, returns
+  * REBASE_FALSE. If value is a true value, returns REBASE_TRUE. If value is
+- * "preserve", returns REBASE_PRESERVE. If value is a invalid value, dies with
+- * a fatal error if fatal is true, otherwise returns REBASE_INVALID.
++ * "recreate", returns REBASE_RECREATE. If value is "preserve", returns
++ * REBASE_PRESERVE. If value is a invalid value, dies with a fatal error if
++ * fatal is true, otherwise returns REBASE_INVALID.
+  */
+ static enum rebase_type parse_config_rebase(const char *key, const char *value,
+ 		int fatal)
+@@ -47,6 +49,8 @@ static enum rebase_type parse_config_rebase(const char *key, const char *value,
+ 		return REBASE_TRUE;
+ 	else if (!strcmp(value, "preserve"))
+ 		return REBASE_PRESERVE;
++	else if (!strcmp(value, "recreate"))
++		return REBASE_RECREATE;
+ 	else if (!strcmp(value, "interactive"))
+ 		return REBASE_INTERACTIVE;
+ 
+@@ -130,7 +134,7 @@ static struct option pull_options[] = {
+ 	/* Options passed to git-merge or git-rebase */
+ 	OPT_GROUP(N_("Options related to merging")),
+ 	{ OPTION_CALLBACK, 'r', "rebase", &opt_rebase,
+-	  "false|true|preserve|interactive",
++	  "false|true|recreate|preserve|interactive",
+ 	  N_("incorporate changes by rebasing rather than merging"),
+ 	  PARSE_OPT_OPTARG, parse_opt_rebase },
+ 	OPT_PASSTHRU('n', NULL, &opt_diffstat, NULL,
+@@ -800,7 +804,9 @@ static int run_rebase(const struct object_id *curr_head,
+ 	argv_push_verbosity(&args);
+ 
+ 	/* Options passed to git-rebase */
+-	if (opt_rebase == REBASE_PRESERVE)
++	if (opt_rebase == REBASE_RECREATE)
++		argv_array_push(&args, "--recreate-merges");
++	else if (opt_rebase == REBASE_PRESERVE)
+ 		argv_array_push(&args, "--preserve-merges");
+ 	else if (opt_rebase == REBASE_INTERACTIVE)
+ 		argv_array_push(&args, "--interactive");
+diff --git a/builtin/remote.c b/builtin/remote.c
+index d95bf904c3b..b7d0f7ce596 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -306,6 +306,8 @@ static int config_read_branches(const char *key, const char *value, void *cb)
+ 				info->rebase = v;
+ 			else if (!strcmp(value, "preserve"))
+ 				info->rebase = NORMAL_REBASE;
++			else if (!strcmp(value, "recreate"))
++				info->rebase = NORMAL_REBASE;
+ 			else if (!strcmp(value, "interactive"))
+ 				info->rebase = INTERACTIVE_REBASE;
+ 		}
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 38bba3835c6..3d44cb6890c 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -2182,7 +2182,7 @@ _git_config ()
+ 		return
+ 		;;
+ 	branch.*.rebase)
+-		__gitcomp "false true preserve interactive"
++		__gitcomp "false true recreate preserve interactive"
+ 		return
+ 		;;
+ 	remote.pushdefault)
 -- 
 2.16.1.windows.4
 
