@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 425171F404
-	for <e@80x24.org>; Sat, 24 Feb 2018 00:48:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D2F451F404
+	for <e@80x24.org>; Sat, 24 Feb 2018 00:48:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752740AbeBXAsw (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Feb 2018 19:48:52 -0500
-Received: from mail-pl0-f65.google.com ([209.85.160.65]:41741 "EHLO
+        id S1752754AbeBXAsz (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Feb 2018 19:48:55 -0500
+Received: from mail-pl0-f65.google.com ([209.85.160.65]:44519 "EHLO
         mail-pl0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752649AbeBXAsc (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Feb 2018 19:48:32 -0500
-Received: by mail-pl0-f65.google.com with SMTP id k8so5843505pli.8
-        for <git@vger.kernel.org>; Fri, 23 Feb 2018 16:48:31 -0800 (PST)
+        with ESMTP id S1752445AbeBXAsW (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Feb 2018 19:48:22 -0500
+Received: by mail-pl0-f65.google.com with SMTP id w21so5842971plp.11
+        for <git@vger.kernel.org>; Fri, 23 Feb 2018 16:48:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=c2AydxjqpbkI61TU6F6LuHCOMGydNIu1A0QTu3J7SiI=;
-        b=WU27N8h33I53XsRPGTgk3lj3pQalU5kjy6bZZnAGdsQFXbCyFaqHezQEhNI9ex+OX2
-         zCsXYnNsr39TL3JdqPAzkn+xReJekgUXMvqv6DMw4iGgmFNRvui4iRUIQu5Xo01zi8b6
-         KB0Vkt+jLWxOfPnWV/Xzn9DvDLD+J99aFdDd7EriIyGq/oeT9R3ze0tq5/vxcls9YHLM
-         mE3CJM1q/+RqKhyr0f+RBDeaJfxankOgeJJdXfkmYNhnr1AfI0iS8GLOuGNE+JH8lLSQ
-         UF21K8j/cg2FQnH/PGNY4zzoHN0G9pbZkkZ3CwDT1sHAAvH1TSvvfPR5H4g6t1/52lI7
-         WAYA==
+        bh=qyW7tm1PnOqJ6Ztca4ce9aMfO8ny/I4JZj/bWN9yr08=;
+        b=plDwzpnprRkEjsMKWvgFA0/VME1TOaWYUNfT7cO0A38F8ScrOBI+x/xiKfT2cTKa6c
+         3BoFAqyZVkDSVyeKY4EcnryTaulzDUuPI0h0tpUSPAzxRteEoOlXYFca9G00hCy8RcpY
+         slni7dPMzVq143b+HW3Smj1lMtRM02ek68wuUdG7BnA+UR48A4150NV6PRBk0warFaK1
+         MzSR+TVLzV75P1/ybgy9cVpJPN522Bhn9ke8aMZZK79ZuCRs6C0njreN5I3PNU+EbaRO
+         1EfcS6fDNn54Jn2oxvy1YPXRDI1jjib7pXpzHUeJF11P4afaPS7pzhxoxmZeXcJQOwwH
+         eZcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=c2AydxjqpbkI61TU6F6LuHCOMGydNIu1A0QTu3J7SiI=;
-        b=JXJtkkEoKLkYkE8Offx8tLxj1MyfFePp5UXtphGv+uBJv77fv0rt3NZzCvZOux9/x7
-         bA6T+17BdPAoQjLigOmQbKXAQk7R2HOXTcagQ8oKZj8sRbj7WNWWquEnvFYSBCvXTuj4
-         v3zT9xc44rrbzwGrP1mRiHGOsaHVTrWoLp59U9bXGs/4VuIFOTcqWjXGUvyQgG4Ss7hy
-         IWOACBi6iSpWKPsvmuETApZTT5ndcJ2VnZo5gjn6C1xYdImiRa5e4E5Lr99+UgmYLPBa
-         wkCJ9ZPXn6hQ7+GMfRevHobRHlgU2Bvcl6OskMlqTjYthaMllkVM33XlP4nnh0tbEDid
-         ouvQ==
-X-Gm-Message-State: APf1xPDJ4qmwRufLLpsaOjSGz76C21jvLE1Jn3Q6pgiGey+vAPbpZ4U9
-        rzbkZ6Z9zyFccBBHddjyKHqoj2kXU24=
-X-Google-Smtp-Source: AH8x226Q79wsV/3vK40Os43Rcs36H7loVcsquG7zGmeVU6MvSMSAVau0qgIOLrZWNaNF4aWq189cnQ==
-X-Received: by 2002:a17:902:5a88:: with SMTP id r8-v6mr3464038pli.426.1519433311240;
-        Fri, 23 Feb 2018 16:48:31 -0800 (PST)
+        bh=qyW7tm1PnOqJ6Ztca4ce9aMfO8ny/I4JZj/bWN9yr08=;
+        b=D0gJ9+TbSnJsQEeQXODDqDOS1qHRBz2rSs6KBEcUbWnKaTjgE0UPCPKz6AcOA7+76h
+         OWaAfh6ytTPRuJ5pAAMac+DqGhwoauULUSHL0MN2+QeP0IZXNqnpP0sWytejZD3eF5+u
+         Xo3vhEtQoKXua9nDu+YpDDr6CnSMm//3wr3byjWDvOtx6R8noFtANVmVVH0/o+u2V5pX
+         kwtg2solY20U14ZQ11B1D7DaOkst9+mbTbns8p/JQJZf18prbfNQZm6Nag+oALi8/nv5
+         yuRBjmufueKjFfM66FGzSO4Us8Yk6ZqjNHPIOqOVH9FaKOJ43ff0FtKqolz7JN0WxqwZ
+         Jofg==
+X-Gm-Message-State: APf1xPBF2se1IGB3kgeb9nsnktUmLnaKQG0HEb2sP5osaQS2wO4GEtQS
+        UNrYw10pgYx8zUKqan6a7Zrsfw==
+X-Google-Smtp-Source: AH8x227KRQ/MZZKsTfOnD9PAzYfBs780IUd+nh9l6Gut5ozwZi/iNx7Z5gviYpLtKd+MvVfElI6ZmQ==
+X-Received: by 2002:a17:902:7c11:: with SMTP id x17-v6mr3393104pll.59.1519433301958;
+        Fri, 23 Feb 2018 16:48:21 -0800 (PST)
 Received: from localhost ([2620:0:100e:422:2d12:5719:3437:fdb7])
-        by smtp.gmail.com with ESMTPSA id z79sm7904135pfa.139.2018.02.23.16.48.30
+        by smtp.gmail.com with ESMTPSA id p9sm5501238pgs.35.2018.02.23.16.48.21
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 23 Feb 2018 16:48:30 -0800 (PST)
+        Fri, 23 Feb 2018 16:48:21 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     sbeller@google.com
 Cc:     git@vger.kernel.org, gitster@pobox.com, jonathantanmy@google.com,
         pclouds@gmail.com, sunshine@sunshineco.com, bmwill@google.com,
         Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCHv4 24/27] sha1_file: allow open_sha1_file to handle arbitrary repositories
-Date:   Fri, 23 Feb 2018 16:47:51 -0800
-Message-Id: <20180224004754.129721-25-sbeller@google.com>
+Subject: [PATCHv4 17/27] sha1_file: add repository argument to stat_sha1_file
+Date:   Fri, 23 Feb 2018 16:47:44 -0800
+Message-Id: <20180224004754.129721-18-sbeller@google.com>
 X-Mailer: git-send-email 2.16.1.291.g4437f3f132-goog
 In-Reply-To: <20180224004754.129721-1-sbeller@google.com>
 References: <20180221015430.96054-1-sbeller@google.com>
@@ -65,48 +65,54 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Add a repository argument to allow the stat_sha1_file caller to be
+more specific about which repository to act on. This is a small
+mechanical change; it doesn't change the implementation to handle
+repositories other than the_repository yet.
+
+As with the previous commits, use a macro to catch callers passing a
+repository other than the_repository at compile time.
+
 Signed-off-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- sha1_file.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ sha1_file.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
 diff --git a/sha1_file.c b/sha1_file.c
-index 952deb02195..73bbe3a3e88 100644
+index 8ef2f856035..b7e6e4a9bfc 100644
 --- a/sha1_file.c
 +++ b/sha1_file.c
-@@ -897,9 +897,8 @@ static int stat_sha1_file(struct repository *r, const unsigned char *sha1,
-  * Like stat_sha1_file(), but actually open the object and return the
-  * descriptor. See the caveats on the "path" parameter above.
+@@ -869,8 +869,9 @@ int git_open_cloexec(const char *name, int flags)
+  * Note that it may point to static storage and is only valid until another
+  * call to sha1_file_name(), etc.
   */
--#define open_sha1_file(r, s, p) open_sha1_file_##r(s, p)
--static int open_sha1_file_the_repository(const unsigned char *sha1,
--					 const char **path)
-+static int open_sha1_file(struct repository *r,
-+			  const unsigned char *sha1, const char **path)
+-static int stat_sha1_file(const unsigned char *sha1, struct stat *st,
+-			  const char **path)
++#define stat_sha1_file(r, s, st, p) stat_sha1_file_##r(s, st, p)
++static int stat_sha1_file_the_repository(const unsigned char *sha1,
++					 struct stat *st, const char **path)
  {
- 	int fd;
  	struct alternate_object_database *alt;
-@@ -907,7 +906,7 @@ static int open_sha1_file_the_repository(const unsigned char *sha1,
  	static struct strbuf buf = STRBUF_INIT;
+@@ -1176,7 +1177,7 @@ static int sha1_loose_object_info(const unsigned char *sha1,
+ 	if (!oi->typep && !oi->typename && !oi->sizep && !oi->contentp) {
+ 		const char *path;
+ 		struct stat st;
+-		if (stat_sha1_file(sha1, &st, &path) < 0)
++		if (stat_sha1_file(the_repository, sha1, &st, &path) < 0)
+ 			return -1;
+ 		if (oi->disk_sizep)
+ 			*oi->disk_sizep = st.st_size;
+@@ -1390,7 +1391,7 @@ void *read_sha1_file_extended(const unsigned char *sha1,
+ 		die("replacement %s not found for %s",
+ 		    sha1_to_hex(repl), sha1_to_hex(sha1));
  
- 	strbuf_reset(&buf);
--	sha1_file_name(the_repository, &buf, sha1);
-+	sha1_file_name(r, &buf, sha1);
- 	*path = buf.buf;
+-	if (!stat_sha1_file(repl, &st, &path))
++	if (!stat_sha1_file(the_repository, repl, &st, &path))
+ 		die("loose object %s (stored in %s) is corrupt",
+ 		    sha1_to_hex(repl), path);
  
- 	fd = git_open(*path);
-@@ -915,8 +914,8 @@ static int open_sha1_file_the_repository(const unsigned char *sha1,
- 		return fd;
- 	most_interesting_errno = errno;
- 
--	prepare_alt_odb(the_repository);
--	for (alt = the_repository->objects.alt_odb_list; alt; alt = alt->next) {
-+	prepare_alt_odb(r);
-+	for (alt = r->objects.alt_odb_list; alt; alt = alt->next) {
- 		*path = alt_sha1_path(alt, sha1);
- 		fd = git_open(*path);
- 		if (fd >= 0)
 -- 
 2.16.1.291.g4437f3f132-goog
 
