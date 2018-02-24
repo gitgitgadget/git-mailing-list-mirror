@@ -2,42 +2,44 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ADA631F404
-	for <e@80x24.org>; Sat, 24 Feb 2018 16:29:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3847D1F404
+	for <e@80x24.org>; Sat, 24 Feb 2018 16:29:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751454AbeBXQ3g (ORCPT <rfc822;e@80x24.org>);
-        Sat, 24 Feb 2018 11:29:36 -0500
+        id S1751474AbeBXQ3j (ORCPT <rfc822;e@80x24.org>);
+        Sat, 24 Feb 2018 11:29:39 -0500
 Received: from mail-cys01nam02on0121.outbound.protection.outlook.com ([104.47.37.121]:55968
         "EHLO NAM02-CY1-obe.outbound.protection.outlook.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1751131AbeBXQ3f (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 24 Feb 2018 11:29:35 -0500
+        id S1751416AbeBXQ3g (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 24 Feb 2018 11:29:36 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=autodesk.com;
  s=selector1; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
- bh=apR7R02x7Y1zt1YE2Zt3g7br3Yi7EoXxEorQs/B/3k0=;
- b=IGvpJ1nphT5pDQV8xm6iSNV9StzQvfL1xgbLFYEPXD4jHrvn/pQe4HmOSmTf4CifUuiNBtLj7hj/7qB34+jopL7tl3hAgSSEyZA0KTlxUnBvWxWnDZlUfDi16nVJLgPu2zq2SuyLfXe5N3NNNAM2IBvPcwarA3d9TtaqmP3URZc=
+ bh=8o3sHu6rkjUymqBr30CM6mUK0fpAASLNdWncZq/XpwY=;
+ b=gmOeSFI02+d8v8/1GN+DdRzmBXCDCE2vWgdvyLpO6cy8F7SLFcsnZs+e/HBOe0KcuswPwZLs1sCjT7FigEWc9mY8ujRR7rwoX82le1c/4bXIuOuwQU/EE5rliXdX8m5L00JoCGpLla7Th1GbeKJJukqH/YlXyvMulYJsZ9/7Na4=
 Authentication-Results: spf=none (sender IP is )
  smtp.mailfrom=lars.schneider@autodesk.com; 
 Received: from localhost.localdomain (132.188.32.100) by
  CY4P136MB0007.NAMP136.PROD.OUTLOOK.COM (2603:10b6:923:12::22) with Microsoft
  SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P256) id 15.20.506.26; Sat, 24
- Feb 2018 16:28:30 +0000
+ Feb 2018 16:28:33 +0000
 From:   lars.schneider@autodesk.com
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, tboegi@web.de, j6t@kdbg.org,
         sunshine@sunshineco.com, peff@peff.net,
         ramsay@ramsayjones.plus.com, Johannes.Schindelin@gmx.de,
         Lars Schneider <larsxschneider@gmail.com>
-Subject: [PATCH v8 0/7] convert: add support for different encodings
-Date:   Sat, 24 Feb 2018 17:27:54 +0100
-Message-Id: <20180224162801.98860-1-lars.schneider@autodesk.com>
+Subject: [PATCH v8 1/7] strbuf: remove unnecessary NUL assignment in xstrdup_tolower()
+Date:   Sat, 24 Feb 2018 17:27:55 +0100
+Message-Id: <20180224162801.98860-2-lars.schneider@autodesk.com>
 X-Mailer: git-send-email 2.16.1
+In-Reply-To: <20180224162801.98860-1-lars.schneider@autodesk.com>
+References: <20180224162801.98860-1-lars.schneider@autodesk.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Originating-IP: [132.188.32.100]
@@ -46,42 +48,42 @@ X-ClientProxiedBy: CY4PR1201CA0003.namprd12.prod.outlook.com
  (2603:10b6:923:12::22)
 X-MS-PublicTrafficType: Email
 X-MS-Office365-Filtering-HT: Tenant
-X-MS-Office365-Filtering-Correlation-Id: 57456934-46aa-4be0-0aee-08d57ba3a562
+X-MS-Office365-Filtering-Correlation-Id: ac2d9352-d107-401a-f925-08d57ba3a6f4
 X-Microsoft-Antispam: UriScan:;BCL:0;PCL:0;RULEID:(7020095)(4652020)(48565401081)(4534165)(4627221)(201703031133081)(201702281549075)(5600026)(4604075)(2017052603307)(7153060)(7193020);SRVR:CY4P136MB0007;
-X-Microsoft-Exchange-Diagnostics: 1;CY4P136MB0007;3:wrk/EdJKVEfpecwulUy5APkcGjqalpePbcemJYBUv/7BkxnyyC7FCq3R79sif22YwKk7EKYnaNdmcPaAUQ+9oMNeHFqBfK3d9VOnG83li1vdg4Q4oV9m/WbPXBfE3cXxbEzxLLQ0WJ/7hyP0xDou9qyd70tIblNQhwrXlInh2qydr7ltjI18LNc5BvN0kkM80Joj5XJqzVuPPsr2tTY9A8av/YGPeJzwA+90RlG7h2UWyG+0EdlC6FUT0V/uEj25;25:Hazvbvu6SY9AbCkqSUNdeoqym66XyNjWBFcW8+sKSz9H5ms5N7bRQ5JNjo/WvWuWQoISDfDEpmiJOaYVltkM2XSRUpXpc8dp0yJN1M6qNErhgrdAZbN4DAVO0J7vmvRiJrkrzwplBhSfTHKgjq91efdZKj2d7d5MTqm0TerImH8jCoMelEU5/958E1Idk1zRQFxbyvGbnVRBve9wVw20IuAJGmIeUCae3ccjSz7BK9gYkVRB0iYFyRnspFxZBrTVWN0Owq7eXT2MQ3JLQJie5uK9fI0rEkOJFAk4dAlWtX//hYlb0UzexwwagB1LDMgQocb8GOG/dXNgxw8FHfR0hw==;31:gdqf7kZs1Wmp/L7F/8HqAmnnKzWOZMNVajaiHEthbEvFVX9XSzKYiCCzLE9S1Q4YDBDSgueHqhKLcH4CDQdw0RbRsmJFibrUqzCmnD7oAANS1G10HR17c/vdObdIOg5B/u08bcX3fFmnlgVAtAiUS0+xOxURaNh8gtCJDBc0KH7ylYucqaJ9iWMvEctjJFUeyDAo3aaqYoE2+sd6xNX1hoN6h1yuVXncgRF23jBZYog=
+X-Microsoft-Exchange-Diagnostics: 1;CY4P136MB0007;3:qyX6Zxv94kL8BeD+cG28mt3YK67IP8ancv1Y4fzRnvL64gbdbDU9zFLEAvHFPW9TatoFYVg44vfNiJM7f8SKGfvj2GjMN8Wj2mIPOVPfXRyB/HDTKeQQ8ZC35AE35175SQznKxhysp+UcsRB3aE+Rjx3u9MTeeZKoVk0YWH54u9ODQ1FpAZfiG/HuOv6dff8uncnbqzCF3I/oLA9bRNNiJSTRyPhFGCU8R0VCkyZa5XBpN1yL963NRCWv67UsNxm;25:dIPS1IA3+BuY3EHmqas0ALA4pmFzkQP7wrFkIs2GkO1nzIEZW+YpXskY1O3pFK00VIg9RFzGcHmtCoE+664wk2Wk2MsZ249hSzD0KxKO57BkDYIbdTos1bvs4+URNXwfHgY29ssk0yHzyyC12MMvXSfUX76V6KzVmgtAikvtb84tM+XZlNsuYLnLYjo74CAB3eqXoeHXj8qL8W7lVKMyxMXAqAFZb1oWMhSuCyFqVoQljBUgzoPuKXeAr32oMM2SKoOPly59I8nim22vPcjcKV/52UJrgSphPkmQyxrUpz89u9c3QuhgxkD8/XB/8m7W3lkpKr7lZUyqN4mHGzKVzQ==;31:uoNVMel1Hut7DA/9ei3UCt4TJ+6xMX5FEXm1EdzPsoDE6VeNMSusNUcpV68Co4sB08YTfTNIpLUq3t85eAw/LBTLSrs34QQjeAZ5LFJji0JH+D52mktwi6K34t1Cgxny5N7CQvgDgjNEgx9pMGDXizWbe4VLMJsmXo9b0ZN9TgVXRvHg5GaqSk1mMASGn6251nsX+lohxdcVqjdbHs9RFANgH6FBwwJZ0/Jkwfju7/o=
 X-MS-TrafficTypeDiagnostic: CY4P136MB0007:
-X-Microsoft-Exchange-Diagnostics: 1;CY4P136MB0007;20:+nQhmW2mhxrOxV5wBfG9Dn+wfz966T4ju7HzDnnvNyUTwh0C2bLdvM4ZYZFPycod4oCFpdkLqhR95zOOB/3aPVBoWXUyxQtYGJhFD4tId/UiC2LN5MpnfDtNiHprw4W7b3C5qY+yhZS9Vt9QxJ+ZxlXjAEpbPCKPqtX5JVg0eIFInoeNKRLpoDqkR90tidikVbeUr7nXYmBrtXaQqosuTcHx5frjTAxJej/I2CvOqu5hHh1/GdpswWldWVvd4lSjr28kANRBYo7zk3wdPQmWsYl50zdqKYK2bqWgnJrvwGA7LiX9LNjqaTxwW/igqITatksGJi3ibfxEN5eZNQk0rMAnh8VnK5BvEQZOWixU0Ts2U5oWEI1pzhDzdJyfk+JjX4997zlvv4vCe6Y/9wB2Fiw83i8ros4OTj4rhJBSUYqj571Q/CAG9BGZjYKXWkWZnR7v2+AhCnBkYLy9h+iUwbGjne20Ss4VKiAsHghryj+DBlG1rps2yi6gYwHaVZdUu5YCnHxDbsyRqlqdGzSr320rBjxTQ2df90u5h+oLhg+QSJ8wF94h8bQiHUXsTW+jMqHD+o2xr1CF5bnAW1sJlRwLO0eA1EISfD5ESLtjK4A=;4:X+JQNfLOdQrJ+4KMmTBn2oxBOavVRTXOp1oSe7Q7UuA31/yS2CBUN/Z+j7+ASqQYmjLgksW7jUfhkQrcJDMARlf3rXndfxG7kEqTjoDXb41QXeZuInrADGMhgeSMVylgdBt0ErNZYfyiqP2G2l9XO7XdRA52+u9qWiMIbskTXrolDw7J5vObEq//HeXq/AyCEj5XEtkK4+7n96YE3t0FEYM3p63V1SI5qrsqK8yMy3KQjVVDdXCBXgrZx2pSY35w2LFw/BBUiDv4crkOyCVuUg==
+X-Microsoft-Exchange-Diagnostics: 1;CY4P136MB0007;20:DA8uBmFRumNhNVBzH7AsNlDgP8KG32i2/bdVHAp4AvOWGHuqW9q3IYq2S09gNjg1u4ZIOhyKfgt9wmQkxlkshIXDoP3IzGCbBcH1bOuIIVQ0fymXbHOssetiLoZmqyvrPBkLgbRB+OI31lRULXaGtmh4Jf5rq7cOr/S4XHTn7R/PuzbFik9YFUjDVwb0fDxjQKZLq7wuIWP/UP9vdclosb00Tsh8FAV2+mwIYS0SlsUCIUez5VnCp1QKBt5naWnVBbqnH1/5m8hJ9HSDqMKKaSv9Pxid27lXRVl1M5CQ1fTRpgmSZUdqlLFzi6K8JwJHzRRZH4OT3GyKebm3zaVZ1C6BptvdADFwgPgxe3WfFMVGftvMe7vZea7mDRiflQW+j0Cc6qZ8i9gs1xB1un9axR8pV8+BQ4zKjf3sNAwmgeH8BlFsM6mbMSJyNGiyfvjCKEnZFKB4VANh7/KzFW4SPeCqjiPwVNYVfdNOv098XXojM2eKNINUjZqqLewab8W3cYYbhQY8W6IYEj9q/3aTOYrGUj+ERyqFGBENJlpaBBfFsQyS8p4za4Yaj5RWfuVxTa8wQRrFebvplqKhTE3V8Dg9W09V327sZZ2L5/0+pbo=;4:8rVCwaEXHdZ3AIRQ2ppj7ByX9q8EvAsRvPkL/dUXzhkCR5SzUqB/SQ5PO/kioqVluwOE4SNQ8MOKqRIJYLaUVDMJYgare9aISOB5Da6qKBfnEu3i1uCG8ZOp/66zfBLQf7y5Ojh/+WWy+p63R6p+WR8tuaea/4U9OU9gwRFl929HG2rWrXVuXb52lNFrHyEjKCJ0/r9cCSdJyn0K90gvpc1WyJ3g3zZGlYMZ4r9BciIXIgcnJekX2my0XyKIEexH
 X-Exchange-Antispam-Report-CFA: BCL:0;PCL:0;RULEID:(3231001);SRVR:CY4P136MB0007;BCL:0;PCL:0;RULEID:;SRVR:CY4P136MB0007;
 X-Forefront-PRVS: 0593E261C4
-X-Forefront-Antispam-Report: SFV:NSPM;SFS:(10019020)(6069001)(366004)(199004)(377424004)(189003)(8656006)(5660300001)(7736002)(66066001)(50226002)(47776003)(97736004)(8936002)(6512007)(9686003)(305945005)(8666007)(6306002)(6486002)(106356001)(36756003)(2351001)(2361001)(8676002)(81156014)(48376002)(68736007)(50466002)(85782001)(16586007)(33896004)(59450400001)(6506007)(386003)(105586002)(86362001)(26005)(6116002)(3846002)(1076002)(16526019)(186003)(52116002)(966005)(51416003)(39060400002)(6666003)(4326008)(25786009)(6916009)(85772001);DIR:OUT;SFP:1102;SCL:1;SRVR:CY4P136MB0007;H:localhost.localdomain;FPR:;SPF:None;PTR:InfoNoRecords;A:1;MX:1;LANG:en;
+X-Forefront-Antispam-Report: SFV:NSPM;SFS:(10019020)(6069001)(366004)(199004)(377424004)(189003)(8656006)(5660300001)(7736002)(66066001)(50226002)(47776003)(97736004)(8936002)(6512007)(9686003)(305945005)(8666007)(6486002)(106356001)(36756003)(2351001)(2361001)(8676002)(81156014)(48376002)(68736007)(50466002)(85782001)(16586007)(33896004)(59450400001)(6506007)(386003)(105586002)(86362001)(26005)(6116002)(3846002)(1076002)(16526019)(186003)(52116002)(2950100002)(51416003)(39060400002)(76176011)(6666003)(4326008)(25786009)(6916009)(85772001);DIR:OUT;SFP:1102;SCL:1;SRVR:CY4P136MB0007;H:localhost.localdomain;FPR:;SPF:None;PTR:InfoNoRecords;A:1;MX:1;LANG:en;
 Received-SPF: None (protection.outlook.com: autodesk.com does not designate
  permitted sender hosts)
-X-Microsoft-Exchange-Diagnostics: =?us-ascii?Q?1;CY4P136MB0007;23:mx/8ZaeECVfcWDNfAm8xwUdhPPonuXjAOwGqjX9Qk?=
- =?us-ascii?Q?ty40OhB0W7qQKAHlbYFZvi1brNdF3imhsUf89i9JD1pft3yl+cxtdFv93RWO?=
- =?us-ascii?Q?i6aDyJxs/6j144OriB9vVIqeIUMWxliffSwvO8hPsG9hldKFE6YcIf/qsfFe?=
- =?us-ascii?Q?G/X0fKObidcvn0/AvROviL/D3OYAaUuUUYHdSfDCaF4x4gg8eUx406UcV9j0?=
- =?us-ascii?Q?KjYWOe7an1L51F2Slv/5iz+6sTHRvlhaRHlOqKqsbruQPNiTXpE8DJhw9L8x?=
- =?us-ascii?Q?VWTEd0C7ZaoTVVE8xxwhA8mRDVwv5M1s/E+ZZbmjVop2ZWtBjn3nossGeECV?=
- =?us-ascii?Q?PO+ZV9kRNqeB/UjbBuylIgGxlqcZlcP3Ya1bqOQIsM5CgtHAxcbaDu8gTG0N?=
- =?us-ascii?Q?obPRArYppkbl/jjN9gyDhje+Q5AFul/r+te8YNC5shmkUTINc7oklJ7pHUMC?=
- =?us-ascii?Q?8oDcEvgeoLu/PMTMsG8sfBnYVoDu3fF65/N1PQ6kYO00BgDVBtL9CTiHdLdd?=
- =?us-ascii?Q?m0g5dwRQXMNmjlEXznl+1RZ+Tdx1b5A7+b5C11mZh+2PaR/0c7drTB6po3BQ?=
- =?us-ascii?Q?KOJX+eHgxpPdBHdYvpvxjz/0qWj9E8pwCY/r6th3sY2pbGAl9R5iGIoS+5Ee?=
- =?us-ascii?Q?doSl9Ed/O3j+NW2PHnEFs0wF3ybRqousJN3aGZxFigIfoLS8Qh0LleMIFpe5?=
- =?us-ascii?Q?WHSKt827/XZixYbTG2drZqByH+/wKqConlHwS1HKYYY+lA1d0dTBZlVPC2dh?=
- =?us-ascii?Q?Z996Mtx06TJi45qMeCgdPAdiW7mAt7dRVcanfwg8pUTLt1rloSAGRzS18h8/?=
- =?us-ascii?Q?9zTDvqNv6ZYgXG6hF/JGRoHOUT4DXG7SFFvzCWvCnI1M0GEmjpS5joKtqetO?=
- =?us-ascii?Q?yuvkvDgEJTQxEovcPs5len1+t5DMcP3F+EMBQuEJISzh3BsmX7ezn4Dji2kJ?=
- =?us-ascii?Q?pWTTKhWIWhO7zdhIVxrdawVOUhxMrwx3q9/vspiYq27Ceqpk1Id9Ztz7OvWd?=
- =?us-ascii?Q?juPy5vGagLvh+n0piVPWhqC+EaRjsONNJBuYVTKZKnquggJhUBsBmzMKuF15?=
- =?us-ascii?Q?gq38G4K+RaqZ6I9bBQKzsYrfEhXlULapWdBkZSkv9s3VtDU0tX0B/nJFxV9f?=
- =?us-ascii?Q?VrH8SOk24lz7SJG877l6kbJgoMU/D6HYz63R+Sk4DMaVD80aJAP0Q=3D=3D?=
-X-Microsoft-Exchange-Diagnostics: 1;CY4P136MB0007;6:PFsgV4sAqmxtTAo20IiG+31bWr1NvEXmPNvsG4BQ9TYVG6I+4pNc6LmN5MD5YCwPPmI4aEHUphENLkArbyzRHOfFI2PcJGbYywFUYk4TXSXpVFzvCi4YkG8006eKa9GlC3paqgIGBbih9EBrB33Xtn2BcxP6mkcXY//KeM5LqSaMJyLpdp7bQyDSYBQvoPOqw/2Om9ZfmQ90eNQFJ2cSJl4npfUz2Q+vPzrzv89ssIgvv9a3DFm9RE8szEYqx0jqVUqpoCWLAOcIrkERskpym0Ji0YkYUddKcHl+bYUpRTbMW9QhwHzJenS3AbXFcvLMibRj7WMBDCg0JzQFNW0E0q9M++/WT8vR13OJ9OprZig=;5:NrjkSZMtLyGyGnhjPvyVyMMABKg8qysI0eRBf2GiiLyeBI3NFSBBXveQH15wt8qIfwsuf4tLjbtzZ/bDiSjgKv/SGBONBSpisnAOxS6xsN19SpuEljdkmOO4/kBUOFPgBWhpy5S70dvzTZEnru8bWIuQK99m4F4H8TnnCWFY1zc=;24:DMChlJ4oFnCeofbLwpAibA3C/Gv0PBHTGf7V7xHO2b01JnXFZKzVVfssaV43fL5M8E/F0lNQ4KUcsaztr5MHASkjY+vWQ4w2gUO9bdvCOV4=;7:vGMWM+tNpVAAoig7lCL3frE8nwF0kU68EIf3Rf1qr/y8YUTgi4mvMIU2qhC2mhaEmivEs8Nr7McPfuWeg8Cg54zuDTv7TlsRgDY6/b9TKLe5eZ9kDU+O/TcKWy0Tor5CWyd6EGHD9mxkDLOPNeUxwB6mrjyJrKPD+qLM2xGopjjX3MZxLAwtjP94lIwh8vKd7QSab8WzxgDWZbnwOQ9elnwXpCFvOsNq+B8IooYEezha5ODwPdRi9KFj30vewgas
+X-Microsoft-Exchange-Diagnostics: =?us-ascii?Q?1;CY4P136MB0007;23:qCEEeoZKh52muS6pLBLaQmZRWqxwF1CjoxfU0V2uZ?=
+ =?us-ascii?Q?0Uu765rzmdu2rSHye7ZtzZLcnn5oyk1Q8ISJL36scQDBcGpcHUwpxmpDVM2h?=
+ =?us-ascii?Q?tM9XSOef6/MGWSAVHaYTf5pTZoU4ZKUF5/yo+2i09uLxNlyAtKAGSS6pW07D?=
+ =?us-ascii?Q?oqmPoCEh47B8KqS0brnMstddwjafL8bRTA2VpHifbjLT5iv7s5vf674FGkP6?=
+ =?us-ascii?Q?bY9ug5o2mrAV4ZipTnN1KKUNtgs4KAba6gUc79tSRy75rBkPusfDMAAYY4u8?=
+ =?us-ascii?Q?VD7wpDeneKUXoMzzaUMuduCVosIcD2a5P58iomhar9pOjFE8PqdEMe8Ddsh1?=
+ =?us-ascii?Q?AbMJjQgzCNY4ffhNMEWhWeTwHWVHR6hWAm9wQFLNKhgSj3LigPLTzL7+sdB4?=
+ =?us-ascii?Q?XfT6D3U8/oopYpWkwBWPrSTacYIJRMteG4NF7Z7NERk/hvya8yQn0uNKwau7?=
+ =?us-ascii?Q?9hlpSSYTFhvFbkOiNwRtmU7uU9WyOWyePxtv2vfUpNrbH/uOB4BIhNA6OmM9?=
+ =?us-ascii?Q?khKne6wRadFitxnierL8xM9+VurTc9FJBozH9pSXJB0+3K1kY6tzT439r5ya?=
+ =?us-ascii?Q?wGo077g3EThNYC//g+KjU+mtYzJSFrE0FD7limRfuCMaU0tLlGBv747VaGAy?=
+ =?us-ascii?Q?WveV+1J2K3O3EWhRepGap6gEzfhi7dmlFkeitN9Or+M4HYGjUN8IjC/quK8U?=
+ =?us-ascii?Q?0gh4eKyf5SZ/nho1LUVT3ENlIUhX2vRBAcR7bFcMZza5uVhgXWOWXN4Gwjcm?=
+ =?us-ascii?Q?6ju4ijiWkSQu5As9COWLvdeubfvjWnwha92OqbqODqNgGG3xxdVJ4NLodIZu?=
+ =?us-ascii?Q?af1CdCyR0TGSMx6cN8bgzTMIoSaLbWOYnIbiTEBFw7zG3mbYqsLod3mlnpga?=
+ =?us-ascii?Q?A0udp+1set3tr0HOeOJ3siEx/S1r2yfeaDlv9E0AdURuRtSZr/qFe3Adcpq2?=
+ =?us-ascii?Q?gCVEUiSWw2zvf/RAeDWZxGS8XrfYHtIDti58agiaYVkpauI2lzvUvofMaPmk?=
+ =?us-ascii?Q?QIhZmFBQy2Y0VAa7Phq49P5HecB2y0HGK85PvKHXBgi9qsU7qapEconprvC4?=
+ =?us-ascii?Q?4nxX/7zuRwI9NVKMSbf18k/cEz5h7LCsaWSJsjmZ5qFj/WYKgpyU29R2Exkt?=
+ =?us-ascii?Q?X1xZSuGLfs1/aE0CctFySAaA0XFvK5wiXUoVPAFc0rsBVrO6HMrTQ=3D=3D?=
+X-Microsoft-Exchange-Diagnostics: 1;CY4P136MB0007;6:HeIGuvAfPKflUPWkZY1KT1PxV9EKhkyGVRyGcX2xSk4FShZ4We5OhXNpTnhbJrBSeFfPfqDD+lDae/ZI8kJ9XKlhlRD/xtZb0yMj4NvFhzUoXwGGvRSHUeOiF5y7KsACDOYlDbjw0S8n/Tr7HykJRDxWsNhUKdTXTyUTjayvQf1HVQ/NHCQ/td7pK5SiLZivb3mojz0rOTtMx7KETo+ZkIB/DW4tZT10mqByFbW1046yHCu/EsKGA7wQLvGgnh1TOaAeZJQ4yyTpVTGNgOOR2fj8aD3Y1N7dM+Pe4/cyiLS1J4yA845sa6VVn+ZnPd1OWiV8IaJ9aBNHD1uXFOHyTL2jIxfTg5PnsMXL6bnj+oU=;5:eZ4i+qYCZ31IGfRuALc60Y4UUurh/Iwafvjh8nN8R1CNyj7SjQd5tXCnfIHlcpG17mBgcYzddEOlMIlcDywrpqeZDzZ5HfdjdR3qs3CaonH8HOUal4Lm6w7NCrQffJGAAuq0mhIp7JHA9H+NbZGStCiYNu0fNBAOSmvPm/v5CcQ=;24:QZqYkRFBZbdx9KkrsAsgH24FS4zTYxomVZMkvPXORDzGkT/rwV7dWraDxXaPnE3776RRiZ7Kn1bUjJyC9C1a+Elxwrl1ssAyezKmR55jFy0=;7:MYO1oqVpLm4VC4Ap+/u2JTtI1OmZizU/PBh2IxXX+OAaGydKGeu9zwlaqi1WtZ8H/TCScddjumPdy4V4RfP495GbwLe14hb7D6CnrXlaWoao1sTx9o0K8Rxg+dmOtGLvz08jO//BEjmdo8L3ayq5rN4IEqz+usTfkzTuxOicbMSIN7bVjy+60UNrH9aa1jjhch6At0xrPDc9lgr0yQ6ewilw5bViAtfsW4pnmm7OevmXBivPvVQlVP1gI2HL0Z/q
 SpamDiagnosticOutput: 1:99
 SpamDiagnosticMetadata: NSPM
 X-OriginatorOrg: autodesk.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Feb 2018 16:28:30.6563 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 57456934-46aa-4be0-0aee-08d57ba3a562
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Feb 2018 16:28:33.2813 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: ac2d9352-d107-401a-f925-08d57ba3a6f4
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 67bff79e-7f91-4433-a8e5-c9252d2ddc1d
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY4P136MB0007
@@ -92,168 +94,29 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Lars Schneider <larsxschneider@gmail.com>
 
-Hi,
+Since 3733e69464 (use xmallocz to avoid size arithmetic, 2016-02-22) we
+allocate the buffer for the lower case string with xmallocz(). This
+already ensures a NUL at the end of the allocated buffer.
 
-Patches 1-4, 6 are preparation and helper functions.
-Patch 5,7 are the actual change.
+Remove the unnecessary assignment.
 
-This series depends on Torsten's 8462ff43e4 (convert_to_git():
-safe_crlf/checksafe becomes int conv_flags, 2018-01-13) which is
-already in master.
+Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
+---
+ strbuf.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-Changes since v7:
-
-* make it clearer in the documentation that Git stores content "as-is"
-  by default. Content is only stored in UTF-8 if w-t-e is used (Junio)
-* add test case for $GIT_DIR/info/attributes support (Junio)
-
-Thanks,
-Lars
-
-  RFC: https://public-inbox.org/git/BDB9B884-6D17-4BE3-A83C-F67E2AFA2B46@gmail.com/
-   v1: https://public-inbox.org/git/20171211155023.1405-1-lars.schneider@autodesk.com/
-   v2: https://public-inbox.org/git/20171229152222.39680-1-lars.schneider@autodesk.com/
-   v3: https://public-inbox.org/git/20180106004808.77513-1-lars.schneider@autodesk.com/
-   v4: https://public-inbox.org/git/20180120152418.52859-1-lars.schneider@autodesk.com/
-   v5: https://public-inbox.org/git/20180129201855.9182-1-tboegi@web.de/
-   v6: https://public-inbox.org/git/20180209132830.55385-1-lars.schneider@autodesk.com/
-   v7: https://public-inbox.org/git/20180215152711.158-1-lars.schneider@autodesk.com/
-
-
-Base Ref:
-Web-Diff: https://github.com/larsxschneider/git/commit/2758a2da29
-Checkout: git fetch https://github.com/larsxschneider/git encoding-v8 && git checkout 2758a2da29
-
-
-### Interdiff (v7..v8):
-
-diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
-index 10cb37795d..11315054f4 100644
---- a/Documentation/gitattributes.txt
-+++ b/Documentation/gitattributes.txt
-@@ -275,11 +275,11 @@ few exceptions.  Even though...
- `working-tree-encoding`
- ^^^^^^^^^^^^^^^^^^^^^^^
-
--Git recognizes files encoded with ASCII or one of its supersets (e.g.
--UTF-8 or ISO-8859-1) as text files.  All other encodings are usually
--interpreted as binary and consequently built-in Git text processing
--tools (e.g. 'git diff') as well as most Git web front ends do not
--visualize the content.
-+Git recognizes files encoded in ASCII or one of its supersets (e.g.
-+UTF-8, ISO-8859-1, ...) as text files. Files encoded in certain other
-+encodings (e.g. UTF-16) are interpreted as binary and consequently
-+built-in Git text processing tools (e.g. 'git diff') as well as most Git
-+web front ends do not visualize the contents of these files by default.
-
- In these cases you can tell Git the encoding of a file in the working
- directory with the `working-tree-encoding` attribute. If a file with this
-@@ -291,12 +291,24 @@ the content is reencoded back to the specified encoding.
- Please note that using the `working-tree-encoding` attribute may have a
- number of pitfalls:
-
--- Third party Git implementations that do not support the
--  `working-tree-encoding` attribute will checkout the respective files
--  UTF-8 encoded and not in the expected encoding. Consequently, these
--  files will appear different which typically causes trouble. This is
--  in particular the case for older Git versions and alternative Git
--  implementations such as JGit or libgit2 (as of February 2018).
-+- Alternative Git implementations (e.g. JGit or libgit2) and older Git
-+  versions (as of March 2018) do not support the `working-tree-encoding`
-+  attribute. If you decide to use the `working-tree-encoding` attribute
-+  in your repository, then it is strongly recommended to ensure that all
-+  clients working with the repository support it.
-+
-+  If you declare `*.proj` files as UTF-16 and you add `foo.proj` with an
-+  `working-tree-encoding` enabled Git client, then `foo.proj` will be
-+  stored as UTF-8 internally. A client without `working-tree-encoding`
-+  support will checkout `foo.proj` as UTF-8 encoded file. This will
-+  typically cause trouble for the users of this file.
-+
-+  If a Git client, that does not support the `working-tree-encoding`
-+  attribute, adds a new file `bar.proj`, then `bar.proj` will be
-+  stored "as-is" internally (in this example probably as UTF-16).
-+  A client with `working-tree-encoding` support will interpret the
-+  internal contents as UTF-8 and try to convert it to UTF-16 on checkout.
-+  That operation will fail and cause an error.
-
- - Reencoding content to non-UTF encodings can cause errors as the
-   conversion might not be UTF-8 round trip safe. If you suspect your
-diff --git a/t/t0028-working-tree-encoding.sh b/t/t0028-working-tree-encoding.sh
-index e4717402a5..e34c21eb29 100755
---- a/t/t0028-working-tree-encoding.sh
-+++ b/t/t0028-working-tree-encoding.sh
-@@ -13,8 +13,11 @@ test_expect_success 'setup test repo' '
- 	echo "*.utf16 text working-tree-encoding=utf-16" >.gitattributes &&
- 	printf "$text" >test.utf8.raw &&
- 	printf "$text" | iconv -f UTF-8 -t UTF-16 >test.utf16.raw &&
-+	printf "$text" | iconv -f UTF-8 -t UTF-32 >test.utf32.raw &&
- 	cp test.utf16.raw test.utf16 &&
-+	cp test.utf32.raw test.utf32 &&
-
-+	# Add only UTF-16 file, we will add the UTF-32 file later
- 	git add .gitattributes test.utf16 &&
- 	git commit -m initial
- '
-@@ -24,7 +27,7 @@ test_expect_success 'ensure UTF-8 is stored in Git' '
- 	test_cmp_bin test.utf8.raw test.utf16.git &&
-
- 	# cleanup
--	rm test.utf8.raw test.utf16.git
-+	rm test.utf16.git
- '
-
- test_expect_success 're-encode to UTF-16 on checkout' '
-@@ -36,6 +39,19 @@ test_expect_success 're-encode to UTF-16 on checkout' '
- 	rm test.utf16.raw
- '
-
-+test_expect_success 'check $GIT_DIR/info/attributes support' '
-+	echo "*.utf32 text working-tree-encoding=utf-32" >.git/info/attributes &&
-+
-+	git add test.utf32 &&
-+
-+	git cat-file -p :test.utf32 >test.utf32.git &&
-+	test_cmp_bin test.utf8.raw test.utf32.git &&
-+
-+	# cleanup
-+	git reset --hard HEAD &&
-+	rm test.utf8.raw test.utf32.raw test.utf32.git
-+'
-+
- test_expect_success 'check prohibited UTF BOM' '
- 	printf "\0a\0b\0c"                         >nobom.utf16be.raw &&
- 	printf "a\0b\0c\0"                         >nobom.utf16le.raw &&
-
-
-### Patches
-
-Lars Schneider (7):
-  strbuf: remove unnecessary NUL assignment in xstrdup_tolower()
-  strbuf: add xstrdup_toupper()
-  utf8: add function to detect prohibited UTF-16/32 BOM
-  utf8: add function to detect a missing UTF-16/32 BOM
-  convert: add 'working-tree-encoding' attribute
-  convert: add tracing for 'working-tree-encoding' attribute
-  convert: add round trip check based on 'core.checkRoundtripEncoding'
-
- Documentation/config.txt         |   6 +
- Documentation/gitattributes.txt  |  86 +++++++++++++
- config.c                         |   5 +
- convert.c                        | 256 ++++++++++++++++++++++++++++++++++++-
- convert.h                        |   2 +
- environment.c                    |   1 +
- sha1_file.c                      |   2 +-
- strbuf.c                         |  13 +-
- strbuf.h                         |   1 +
- t/t0028-working-tree-encoding.sh | 269 +++++++++++++++++++++++++++++++++++++++
- utf8.c                           |  37 ++++++
- utf8.h                           |  25 ++++
- 12 files changed, 700 insertions(+), 3 deletions(-)
- create mode 100755 t/t0028-working-tree-encoding.sh
-
-
-base-commit: 8a2f0888555ce46ac87452b194dec5cb66fb1417
---
+diff --git a/strbuf.c b/strbuf.c
+index 1df674e919..55b7daeb35 100644
+--- a/strbuf.c
++++ b/strbuf.c
+@@ -781,7 +781,6 @@ char *xstrdup_tolower(const char *string)
+ 	result = xmallocz(len);
+ 	for (i = 0; i < len; i++)
+ 		result[i] = tolower(string[i]);
+-	result[i] = '\0';
+ 	return result;
+ }
+ 
+-- 
 2.16.1
 
