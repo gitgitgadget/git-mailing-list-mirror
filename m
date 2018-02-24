@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CFE5C1F404
-	for <e@80x24.org>; Sat, 24 Feb 2018 00:48:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3536D1F404
+	for <e@80x24.org>; Sat, 24 Feb 2018 00:48:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752095AbeBXAsE (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Feb 2018 19:48:04 -0500
-Received: from mail-pl0-f68.google.com ([209.85.160.68]:46276 "EHLO
-        mail-pl0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751955AbeBXAsC (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Feb 2018 19:48:02 -0500
-Received: by mail-pl0-f68.google.com with SMTP id x19so5843730plr.13
-        for <git@vger.kernel.org>; Fri, 23 Feb 2018 16:48:02 -0800 (PST)
+        id S1752153AbeBXAsH (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Feb 2018 19:48:07 -0500
+Received: from mail-pl0-f67.google.com ([209.85.160.67]:46278 "EHLO
+        mail-pl0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751955AbeBXAsF (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Feb 2018 19:48:05 -0500
+Received: by mail-pl0-f67.google.com with SMTP id x19so5843779plr.13
+        for <git@vger.kernel.org>; Fri, 23 Feb 2018 16:48:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=oe54K4u+MOJS+lOsjJwKcCS3Y2Uigu6wzk6aW5UB0Oo=;
-        b=J63EdXc8hqyFTsQFILejRjsm5JBXw/fWCjD5JAtzIxO699xqioU9TqqKAKfXzZlWNW
-         c53BUaIK6ERyg2AG1GkNQdAfFXAMwe2n9Y11B87e6OIo++lB5TRXcc5Kg6FMTWL1XiSU
-         Fts7BScgxpbk+4qi9lYb2C1HJ0YPpONxArJiIuJ3M07Z22R/r9iw1LdU7EF/Jt4c+cm0
-         w5pgtCAU+aSNRyaDYAhfmXTiBZsAJoHmX/C0pkWtwvQSQUXeJGuzmPlV0cXxL9K9EeNS
-         Id/BTfI9OPiLRtaHc7rU3cJYlSn9R/d0Hgc2NBGNzLzl3wPOoHvjT/1gHRgPdD+InRqi
-         yc6A==
+        bh=YSToifHIoRXUt7Nbl5HkAbnbVF1Ib9tf/JI0kHNKkS0=;
+        b=mvs4TLL9V6bfKenBunE3UAW5gNWddpSeshf5CbrGlJ7FH2UPPNuLQiy000kZkKfNXZ
+         qYSv9uXS8EZNUW+0hfupl9FQ2xrvPtyJcn7977VcausCKYShyvw1SbtzyWRGIWSdt+BR
+         DFlTIx1qf1ijoC+h/HAHS9MNReYJGbIvTOefAKPujmbXrxi/F1mOdZYhpZVbWCmKZYT8
+         j1/LIURh3aJRG4rOrSATrk3yLMMleWCSQBM5ntLOCCtPbdGVUviVz0VSS6MckOMNJE+2
+         +W9vTihjVjEClBtlfK673ZWLufq90uF4s07FYob41a1EkWnq8PrhEYFPb+FaUB5GHA+9
+         oszg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=oe54K4u+MOJS+lOsjJwKcCS3Y2Uigu6wzk6aW5UB0Oo=;
-        b=SSy3RDmdqZOs4fn7RAlRqSXNnzMSspkokeRt7w9Ol2Bu6NfJRZOEFFQTBWJfGfHqs0
-         yD/HvYfhwZ0JXfj3u10odxI3ZLKN1fB4OlFi/yo6Dh7ZTJdKIj5vXlKkGih3GWlLEzaZ
-         amc+cHeTvcH3E/9oFjy+h7PaOxdw6xaIQbhIGWEOnr+DH/e2rVL7xYuZOLKfqFaT54IX
-         QpNvlTfp4gRMTnTslUxh86FRld5eHjasat5wIwhvCw49U52bbHaiH7VBDI+zxcdzcyr+
-         DeuvFLk6o8GSxBeUKUVSaNjjJWeXMWxt5AiH88ck36dqdYKkUctVxOKL8RbhVcXc43Qx
-         9QIw==
-X-Gm-Message-State: APf1xPAckfKvb7IQ4D2FeJwA6m9BGE9X+VOH1QHjkyr4YcsdX3hbLTiN
-        3a5nTEvGXKmT7auVAGtC4262dw==
-X-Google-Smtp-Source: AH8x227ruHj9mAlU/oThRzaT9B64S9qDZ11gZ0q2M1yiYy6+Z6ljhb3PtsjUc9H5drARA3WrP4b1qQ==
-X-Received: by 2002:a17:902:540f:: with SMTP id d15-v6mr3421122pli.224.1519433281815;
-        Fri, 23 Feb 2018 16:48:01 -0800 (PST)
+        bh=YSToifHIoRXUt7Nbl5HkAbnbVF1Ib9tf/JI0kHNKkS0=;
+        b=Wn9jce71xtwlK+u8cq3DomldmCJnTmfIkafSAlLHo+oQLVQ0Cb9FNhspCeC6lkiVF9
+         cjyJk72X43o7Mw6j3UKxIbMTV97teK2IzxHAeQJS6YMFCHlO2HZc0WFffNTOxKq6X1Zg
+         Hb9JbwpGwBghvj0DRGlpOgvtM87VFfJLFVW6DwjPlgSdiKuPqUQgePJPxoQeD5OCXdhh
+         5Pzop6b0nHptcsDQHMIJKv77/q5n7XgztDyrFZ0jxUomyhmLHZ400sAY5WAXVz3IOp+V
+         yWgZHdJmTH+RKJPjKbIDl6Jqb8nUluaxajqBV7z1Iu4R5PheGl7/f6zwljmc4RlLITLs
+         7C6w==
+X-Gm-Message-State: APf1xPBj9NdW7jCldmVi1aTxuk/P1XvBT6/mahFoSyhHH4aZmJ0/6Zxd
+        L4LT/i/lou6R6svf26fhO/m8oA==
+X-Google-Smtp-Source: AH8x225oHJfeYsUSjCtnv4UfITQBvTEoNH0nVtTMLqXx22AQcfe5g8MTh3dYGlNeaY7Zsnu41JJssQ==
+X-Received: by 2002:a17:902:47:: with SMTP id 65-v6mr3286659pla.194.1519433284577;
+        Fri, 23 Feb 2018 16:48:04 -0800 (PST)
 Received: from localhost ([2620:0:100e:422:2d12:5719:3437:fdb7])
-        by smtp.gmail.com with ESMTPSA id s78sm4326387pfe.162.2018.02.23.16.48.01
+        by smtp.gmail.com with ESMTPSA id t87sm7718414pfi.37.2018.02.23.16.48.03
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 23 Feb 2018 16:48:01 -0800 (PST)
+        Fri, 23 Feb 2018 16:48:04 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     sbeller@google.com
 Cc:     git@vger.kernel.org, gitster@pobox.com, jonathantanmy@google.com,
         pclouds@gmail.com, sunshine@sunshineco.com, bmwill@google.com
-Subject: [PATCHv4 02/27] object-store: migrate alternates struct and functions from cache.h
-Date:   Fri, 23 Feb 2018 16:47:29 -0800
-Message-Id: <20180224004754.129721-3-sbeller@google.com>
+Subject: [PATCHv4 04/27] object-store: free alt_odb_list
+Date:   Fri, 23 Feb 2018 16:47:31 -0800
+Message-Id: <20180224004754.129721-5-sbeller@google.com>
 X-Mailer: git-send-email 2.16.1.291.g4437f3f132-goog
 In-Reply-To: <20180224004754.129721-1-sbeller@google.com>
 References: <20180221015430.96054-1-sbeller@google.com>
@@ -64,142 +64,42 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Migrate the struct alternate_object_database and all its related
-functions to the object store as these functions are easier found in
-that header. The migration is just a verbatim copy, no need to
-include the object store header at any C file, because cache.h includes
-repository.h which in turn includes the object-store.h
+Free the memory and reset alt_odb_{list, tail} to NULL.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- cache.h        | 51 --------------------------------------------------
- object-store.h | 51 ++++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 51 insertions(+), 51 deletions(-)
+ object.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/cache.h b/cache.h
-index 21fbcc24149..99eb2bdb893 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1560,57 +1560,6 @@ extern int has_dirs_only_path(const char *name, int len, int prefix_len);
- extern void schedule_dir_for_removal(const char *name, int len);
- extern void remove_scheduled_dirs(void);
+diff --git a/object.c b/object.c
+index a2acdee1405..920dc4463fa 100644
+--- a/object.c
++++ b/object.c
+@@ -446,7 +446,24 @@ void clear_commit_marks_all(unsigned int flags)
+ 	}
+ }
  
--extern struct alternate_object_database {
--	struct alternate_object_database *next;
--
--	/* see alt_scratch_buf() */
--	struct strbuf scratch;
--	size_t base_len;
--
--	/*
--	 * Used to store the results of readdir(3) calls when searching
--	 * for unique abbreviated hashes.  This cache is never
--	 * invalidated, thus it's racy and not necessarily accurate.
--	 * That's fine for its purpose; don't use it for tasks requiring
--	 * greater accuracy!
--	 */
--	char loose_objects_subdir_seen[256];
--	struct oid_array loose_objects_cache;
--
--	char path[FLEX_ARRAY];
--} *alt_odb_list;
--extern void prepare_alt_odb(void);
--extern char *compute_alternate_path(const char *path, struct strbuf *err);
--typedef int alt_odb_fn(struct alternate_object_database *, void *);
--extern int foreach_alt_odb(alt_odb_fn, void*);
--
--/*
-- * Allocate a "struct alternate_object_database" but do _not_ actually
-- * add it to the list of alternates.
-- */
--struct alternate_object_database *alloc_alt_odb(const char *dir);
--
--/*
-- * Add the directory to the on-disk alternates file; the new entry will also
-- * take effect in the current process.
-- */
--extern void add_to_alternates_file(const char *dir);
--
--/*
-- * Add the directory to the in-memory list of alternates (along with any
-- * recursive alternates it points to), but do not modify the on-disk alternates
-- * file.
-- */
--extern void add_to_alternates_memory(const char *dir);
--
--/*
-- * Returns a scratch strbuf pre-filled with the alternate object directory,
-- * including a trailing slash, which can be used to access paths in the
-- * alternate. Always use this over direct access to alt->scratch, as it
-- * cleans up any previous use of the scratch buffer.
-- */
--extern struct strbuf *alt_scratch_buf(struct alternate_object_database *alt);
--
- struct pack_window {
- 	struct pack_window *next;
- 	unsigned char *base;
-diff --git a/object-store.h b/object-store.h
-index cf35760ceb6..5678aa1136c 100644
---- a/object-store.h
-+++ b/object-store.h
-@@ -1,6 +1,57 @@
- #ifndef OBJECT_STORE_H
- #define OBJECT_STORE_H
- 
-+extern struct alternate_object_database {
-+	struct alternate_object_database *next;
++static void free_alt_odb(struct alternate_object_database *alt)
++{
++	strbuf_release(&alt->scratch);
++	oid_array_clear(&alt->loose_objects_cache);
++}
 +
-+	/* see alt_scratch_buf() */
-+	struct strbuf scratch;
-+	size_t base_len;
++static void free_alt_odbs(struct raw_object_store *o)
++{
++	while (o->alt_odb_list) {
++		free_alt_odb(o->alt_odb_list);
++		o->alt_odb_list = o->alt_odb_list->next;
++	}
++}
 +
-+	/*
-+	 * Used to store the results of readdir(3) calls when searching
-+	 * for unique abbreviated hashes.  This cache is never
-+	 * invalidated, thus it's racy and not necessarily accurate.
-+	 * That's fine for its purpose; don't use it for tasks requiring
-+	 * greater accuracy!
-+	 */
-+	char loose_objects_subdir_seen[256];
-+	struct oid_array loose_objects_cache;
+ void raw_object_store_clear(struct raw_object_store *o)
+ {
+ 	FREE_AND_NULL(o->objectdir);
 +
-+	char path[FLEX_ARRAY];
-+} *alt_odb_list;
-+void prepare_alt_odb(void);
-+char *compute_alternate_path(const char *path, struct strbuf *err);
-+typedef int alt_odb_fn(struct alternate_object_database *, void *);
-+int foreach_alt_odb(alt_odb_fn, void*);
-+
-+/*
-+ * Allocate a "struct alternate_object_database" but do _not_ actually
-+ * add it to the list of alternates.
-+ */
-+struct alternate_object_database *alloc_alt_odb(const char *dir);
-+
-+/*
-+ * Add the directory to the on-disk alternates file; the new entry will also
-+ * take effect in the current process.
-+ */
-+void add_to_alternates_file(const char *dir);
-+
-+/*
-+ * Add the directory to the in-memory list of alternates (along with any
-+ * recursive alternates it points to), but do not modify the on-disk alternates
-+ * file.
-+ */
-+void add_to_alternates_memory(const char *dir);
-+
-+/*
-+ * Returns a scratch strbuf pre-filled with the alternate object directory,
-+ * including a trailing slash, which can be used to access paths in the
-+ * alternate. Always use this over direct access to alt->scratch, as it
-+ * cleans up any previous use of the scratch buffer.
-+ */
-+struct strbuf *alt_scratch_buf(struct alternate_object_database *alt);
-+
- struct raw_object_store {
- 	/*
- 	 * Path to the repository's object store.
++	free_alt_odbs(o);
++	o->alt_odb_tail = NULL;
+ }
 -- 
 2.16.1.291.g4437f3f132-goog
 
