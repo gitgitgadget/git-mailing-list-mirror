@@ -2,90 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4593A1F404
-	for <e@80x24.org>; Sat, 24 Feb 2018 03:45:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 02A541F404
+	for <e@80x24.org>; Sat, 24 Feb 2018 04:01:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752398AbeBXDpC (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Feb 2018 22:45:02 -0500
-Received: from mail-ot0-f170.google.com ([74.125.82.170]:44309 "EHLO
-        mail-ot0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751917AbeBXDpC (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Feb 2018 22:45:02 -0500
-Received: by mail-ot0-f170.google.com with SMTP id 79so9021737oth.11
-        for <git@vger.kernel.org>; Fri, 23 Feb 2018 19:45:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=n3KFcD3DC9v6ZdmEgwKoP6OEWuP0KaPft99vtRB+hp4=;
-        b=qo/ISGLdnsF3K30lUF0dk6bzTlBTHZrvgWKAR8AUabLmUNIpBFjWOFE69UzGQqRck6
-         TC54I9VgY2oP0kxBx6T5vS3deIsCNrOrDEqMLjJt2rKZZduKZzrHC8+XI12aAt9gGN+x
-         4vjSo0DhYHDRBVI4qJ+vJj7hhRP6hHrVNLaa1zQEgvDgqM0IxN4S8VTCIAnD45Uck0vo
-         4C9JvZ+UUsbKQ34Md7yK44U8za5PLRbjRQ5e5GodXw7uwQsiLfXOqPYDDCCiabjRwPmm
-         fDPfeWFVQV3xPGpL2wUCta/siJdvW8wLSJY1+EHnPUAFMNcj1oeLwKjNaE0o5aVjmXhS
-         igcw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=n3KFcD3DC9v6ZdmEgwKoP6OEWuP0KaPft99vtRB+hp4=;
-        b=BIn9Qia38Z7WWx1irIjMgg2KVMrqMOhApaabDzU9F5PG0OaRugfr3h+lglhUG/QBWy
-         1KLYXzVtuwTOFiZ4RtYbrf0J7kqnd7nQ1B852NB870ip++LRdXhtVrtqu914054KM5BG
-         7Bn2jTZjVnSshWHznCChqtfkrF0Dr0smHB+ohLUllDH3ZpEjgZ3XB4a6EWrO/r0cQLpT
-         dOzs7PqzJunLt/BsefG1xCrHBZkL3afdaZy0Bvvqtft/zxXhUOY9SAQM+Zm4bOZQzm3m
-         XuGOo59hpxVW2KkBEXUDEVt4rANv1d5C8rMYfa0IHXDL0Ye4/vWenZPx1pRYGocWcIwL
-         H2lQ==
-X-Gm-Message-State: APf1xPAUwWRk8QwFdrNFl0vgf0B/BllAvqeEqchoQhGHfMndKYxFroDx
-        wnTYmPLzEv0n6tazSfdJ9R85dyoSaNNXjkxoxX0=
-X-Google-Smtp-Source: AG47ELvSnKxgJeeBa5wnlXjZaQO5Cs+XWzLOaX3pNAqfMn12w060ni/yYONt+n7zG8hVaBa6NGbXKavMw1BP/zTGCM0=
-X-Received: by 10.157.85.214 with SMTP id z22mr2749797oti.75.1519443901369;
- Fri, 23 Feb 2018 19:45:01 -0800 (PST)
+        id S1752217AbeBXEBx (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Feb 2018 23:01:53 -0500
+Received: from cloud.peff.net ([104.130.231.41]:35122 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1751943AbeBXEBw (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Feb 2018 23:01:52 -0500
+Received: (qmail 3150 invoked by uid 109); 24 Feb 2018 04:01:53 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 24 Feb 2018 04:01:53 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 23407 invoked by uid 111); 24 Feb 2018 04:02:39 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 23 Feb 2018 23:02:39 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 23 Feb 2018 23:01:49 -0500
+Date:   Fri, 23 Feb 2018 23:01:49 -0500
+From:   Jeff King <peff@peff.net>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git@vger.kernel.org, sbeller@google.com, gitster@pobox.com,
+        jrnieder@gmail.com, stolee@gmail.com, git@jeffhostetler.com,
+        pclouds@gmail.com
+Subject: Re: [PATCH v3 13/35] ls-refs: introduce ls-refs server command
+Message-ID: <20180224040149.GA16743@sigill.intra.peff.net>
+References: <20180125235838.138135-1-bmwill@google.com>
+ <20180207011312.189834-1-bmwill@google.com>
+ <20180207011312.189834-14-bmwill@google.com>
+ <20180222094831.GB12442@sigill.intra.peff.net>
+ <20180223004514.GP185096@google.com>
 MIME-Version: 1.0
-Received: by 10.74.25.140 with HTTP; Fri, 23 Feb 2018 19:44:30 -0800 (PST)
-In-Reply-To: <20180223222950.GK6619@genre.crustytoothpaste.net>
-References: <20180214180814.GA139458@google.com> <20180223095640.25876-1-pclouds@gmail.com>
- <20180223095640.25876-3-pclouds@gmail.com> <20180223222950.GK6619@genre.crustytoothpaste.net>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sat, 24 Feb 2018 10:44:30 +0700
-Message-ID: <CACsJy8AUvAv61wM5hnvhyCaOd_oKmMbhAyDGJ9pmkiSu_WveZQ@mail.gmail.com>
-Subject: Re: [PATCH 2/2] Revert "repository: pre-initialize hash algo pointer"
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Git Mailing List <git@vger.kernel.org>,
-        Brandon Williams <bmwill@google.com>,
-        Stefan Beller <sbeller@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20180223004514.GP185096@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Feb 24, 2018 at 5:29 AM, brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
->> @@ -40,5 +41,8 @@ int main(int argc, const char **argv)
->>
->>       restore_sigpipe_to_default();
->>
->> +     if (getenv("GIT_HASH_FIXUP"))
->> +             repo_set_hash_algo(the_repository, GIT_HASH_SHA1);
->
-> I'm lukewarm on adding this environment variable, but considering our
-> history here, we had probably better.  We can always remove it after a
-> few releases.
+On Thu, Feb 22, 2018 at 04:45:14PM -0800, Brandon Williams wrote:
 
-Yes that's the intention. But after writing cover letter for v2 and
-sending it out, it looks to me that this thing must stay until all our
-code is converted to using the_hash_algo (I don't know if there are
-more to convert or it's finished already). So an alternative is we do
-the opposite: default to GIT_HASH_SHA1, but when an env variable is
-set, reset it back to NULL. This env variable will _always_ be set by
-the test suite to help us catch problems.
--- 
-Duy
+> > This kind of tail matching can't quite implement all of the current
+> > behavior. Because we actually do the normal dwim_ref() matching, which
+> > includes stuff like "refs/remotes/%s/HEAD".
+> > 
+> > The other problem with tail-matching is that it's inefficient on the
+> > server. Ideally we could get a request for "master" and only look up
+> > refs/heads/master, refs/tags/master, etc. And if there are 50,000 refs
+> > in refs/pull, we wouldn't have to process those at all. Of course this
+> > is no worse than the current code, which not only looks at each ref but
+> > actually _sends_ it. But it would be nice if we could fix this.
+> > 
+> > There's some more discussion in this old thread:
+> > 
+> >   https://public-inbox.org/git/20161024132932.i42rqn2vlpocqmkq@sigill.intra.peff.net/
+> 
+> Thanks for the pointer.  I was told to be wary a while about about
+> performance implications on the server but no discussion ensued till now
+> about it :)
+> 
+> We always have the ability to extend the patterns accepted via a feature
+> (or capability) to ls-refs, so maybe the best thing to do now would only
+> support a few patterns with specific semantics.  Something like if you
+> say "master" only match against refs/heads/ and refs/tags/ and if you
+> want something else you would need to specify "refs/pull/master"?
+
+The big question is whether you want to break compatibility with the
+existing program behavior. If not, then I think you have to ask for
+every variant in ref_rev_parse_rules (of which there are 6 variants).
+
+Which sounds pretty gross, but it actually may not be _too_ bad. Most
+fetches tend to ask for either a single name, or they use left-anchored
+wildcards. So it would work to just have the client expand all of the
+possibilities itself into fully-qualified refs, and keep the server as
+dumb as possible.
+
+And then the server for now can just cull based on the pattern list,
+like you have here. But later, we could optimize it to look up the
+individual patterns, which should be cheaper, since we'd generally have
+many fewer patterns than total refs.
+
+> > Does the client have to be aware that we're using wildmatch? I think
+> > they'd need "refs/heads/**" to actually implement what we usually
+> > specify in refspecs as "refs/heads/*". Or does the lack of WM_PATHNAME
+> > make this work with just "*"?
+> > 
+> > Do we anticipate that the client would left-anchor the refspec like
+> > "/refs/heads/*" so that in theory the server could avoid looking outside
+> > of /refs/heads/?
+> 
+> Yeah we may want to anchor it by providing the leading '/' instead of
+> just "refs/<blah>".
+
+I actually wonder if we should just specify that the patterns must
+_always_ be fully-qualified, but may end with a single "/*" to iterate
+over wildcards. Or even simpler, that "refs/heads/foo" would find that
+ref itself, and anything under it.
+
+That drops any question about how wildcards work (e.g., does "refs/foo*"
+work to find "refs/foobar"?).
+
+> I need to read over the discussion you linked to more but what sort of
+> ref patterns do you believe we should support as part of the initial
+> release of v2?  It seems like you wanted this at some point in the past
+> so I assume you have an idea of what sort of filtering would be
+> beneficial.
+
+My goals were just optimizing:
+
+  1. Don't send all the refs across the wire if we can avoid it.
+
+  2. Don't even iterate over all the refs internally if we can avoid it.
+
+Especially with the new binary-searching packed-refs code, we should be
+able to serve a request like "ls-refs refs/heads/*" without looking into
+"refs/pull" or "refs/changes" at all.
+
+-Peff
