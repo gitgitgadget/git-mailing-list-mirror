@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3BF9F1F404
-	for <e@80x24.org>; Sat, 24 Feb 2018 03:35:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B37211F404
+	for <e@80x24.org>; Sat, 24 Feb 2018 03:35:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752963AbeBXDe6 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Feb 2018 22:34:58 -0500
-Received: from mail-pl0-f66.google.com ([209.85.160.66]:45162 "EHLO
-        mail-pl0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752949AbeBXDe5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Feb 2018 22:34:57 -0500
-Received: by mail-pl0-f66.google.com with SMTP id v9-v6so4021289plp.12
-        for <git@vger.kernel.org>; Fri, 23 Feb 2018 19:34:57 -0800 (PST)
+        id S1753006AbeBXDfD (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Feb 2018 22:35:03 -0500
+Received: from mail-pl0-f68.google.com ([209.85.160.68]:47070 "EHLO
+        mail-pl0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752996AbeBXDfD (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Feb 2018 22:35:03 -0500
+Received: by mail-pl0-f68.google.com with SMTP id x19so6019201plr.13
+        for <git@vger.kernel.org>; Fri, 23 Feb 2018 19:35:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=dL/93X4C2NmD/cwvJ5pd98v5Arfsk03Eiklzo/xPx2U=;
-        b=skBqbq5pq41RpZlhKcamtigDp2qvP/E65sdyQO0H1LoX7WmJSKjxTZ40NtWq5frTd5
-         ywt7kcJRBbVUPmvGVdqusSpA3SKMQl9Mj8ak3HZNSTLiAmnC8AO8bqm+tOm2YszCR+nN
-         1gQ2ReQEy9JyFV6BAY50vrsykcZG8EV72Kk7UBieKNvxwa1FM+3wXth4Y4+dsH2w6KQm
-         L269cNEcdhBTPzU9YnB/A7arPiUAXgbfQCg/3/CEXDTbJ+kLyxnG0agyKN6F4IyLa0c+
-         EwzlVpuv0eLgIyWRAkkASoLkRjY+JjwVFK7en+BxbJMIZqckqH0URcgdEZin91MEzIdm
-         CLMg==
+        bh=zFYlGDjLPyvdI/6eMf1yMgUeKZteZw0ThlzuAKLRX2o=;
+        b=GKRHuIAd41/e0XALIBWYLYZxMFWwoTqsdG71fGyh+e1qblH6QzQv8udLAPRs7fWkfB
+         EGrD0Gcajte2YhTDuSfEr89d7bB1b+b7fqKsqrbKQX38GAKyR7GiQzvXnFj2xpWM2Xca
+         5bWujpdoOhYXkLiIaOkiPydITVk622WgZNlpXAo53/Ubb/vF5YDnC+qR680u37MkgTRD
+         VwEgNESvFUhToCX2N5CaerJaGeciyzAfiE8XAREn6tRyE7AwzgMxQ3SmE8JCpNB7XqJA
+         GYQZ5R14CpglgedlAiTdoFeRWq9OV3apxNNeB3giJdNaEjWhzS11ZcDUjS3QcN39exXW
+         6L1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=dL/93X4C2NmD/cwvJ5pd98v5Arfsk03Eiklzo/xPx2U=;
-        b=J8KBylQaleRIVfaCuZtvf1+QTKo4lqg4PE8mnu7T8psj5C1q0JguQrZi6Vc6duIxcv
-         JE6o/Flrk2uwLO3FldfOkUYuRtjaPnXsTHPtIGwRufD6lQC9Rh54LmxmHQqci3UsoLqf
-         sykW2XvUfSh+8izyv2EhLl6Arf8fkgNuMAL9aSmyjfpyqhu1EN03RFvpFsPWsRjChuys
-         oj/kWgaFl/hNYS1HHL881UDRs8s0PbhEndCTd28QTjHicgTqASv3fFcI5AlPX2TFEKVQ
-         rdx37SY3PB63hn01GvGU8QGXQc2/tG7rUN9rI9pNcPkAqffRzarJae9Iorppklzbb2Cs
-         /Cuw==
-X-Gm-Message-State: APf1xPAEuBGWE2YXD+pnRrhUvxtJovM1BoN0JhOrXkRRok5NAv5vN87Q
-        mRjhdxLQS8sCG3scu0TxXE6sOw==
-X-Google-Smtp-Source: AH8x226/wZ/hpi669+8oxdittLiHRELIx02ysUTkIAR/PVbvd7sJi+b8L8x6inmprgHc7orW8YqWdA==
-X-Received: by 2002:a17:902:8a94:: with SMTP id p20-v6mr3739945plo.74.1519443297068;
-        Fri, 23 Feb 2018 19:34:57 -0800 (PST)
+        bh=zFYlGDjLPyvdI/6eMf1yMgUeKZteZw0ThlzuAKLRX2o=;
+        b=ibS/N46zKPW63+LxbIBDmiBNH6NSx2XhAYxC2N+KYDp0eb7cR+XbHvCItSILZzWPxO
+         vSeRXiqwa56Kj763QJkSDeb37gmZXFaYMx0nEe3AjcjkPXBXx1mNpkWNbhVIQxBCb4o9
+         FGagg4+JwvV+ZnbQrTfyAtDVVYvkthvdYPPZ08wvQdZoIK/nEFsknKv9f+seZWE70tot
+         suv7mnfbWyRYl4rrNwsqGTcvYNQjBdNkqjzqy9vR+umZrB/EGR0AKXprcWyB/vtyx1E6
+         ktCes1g4uEpg17l7wZKvfRpbvBKjJQMpPdbDZbRfvbSi7A3yCowc2Pk8wJ/3MMJo31Gz
+         zzRQ==
+X-Gm-Message-State: APf1xPDhRLzzElaaI1YTu9Kdioj9ivsZaAw8mcEAmCjYgwZXQwu+Sane
+        mUCweQ9BczgUs92qaYe4OalkSg==
+X-Google-Smtp-Source: AH8x224QiHgp7sEY/pUVe4lpsJ5y0O2wRDJ9l4NdRUGStbDtcEMC5JSgg1/FJwfXpd1szhAQ9XRWFA==
+X-Received: by 2002:a17:902:34f:: with SMTP id 73-v6mr3602083pld.55.1519443302400;
+        Fri, 23 Feb 2018 19:35:02 -0800 (PST)
 Received: from ash ([171.232.93.137])
-        by smtp.gmail.com with ESMTPSA id i4sm8430647pfa.40.2018.02.23.19.34.53
+        by smtp.gmail.com with ESMTPSA id f80sm7575235pfa.176.2018.02.23.19.34.58
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 23 Feb 2018 19:34:56 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Sat, 24 Feb 2018 10:34:51 +0700
+        Fri, 23 Feb 2018 19:35:01 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Sat, 24 Feb 2018 10:34:57 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -61,9 +61,9 @@ Cc:     Brandon Williams <bmwill@google.com>,
         "brian m . carlson" <sandals@crustytoothpaste.net>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v2 3/5] index-pack: check (and optionally set) hash algo based on input file
-Date:   Sat, 24 Feb 2018 10:34:27 +0700
-Message-Id: <20180224033429.9656-4-pclouds@gmail.com>
+Subject: [PATCH v2 4/5] diff.c: initialize hash algo when running in --no-index mode
+Date:   Sat, 24 Feb 2018 10:34:28 +0700
+Message-Id: <20180224033429.9656-5-pclouds@gmail.com>
 X-Mailer: git-send-email 2.16.1.435.g8f24da2e1a
 In-Reply-To: <20180224033429.9656-1-pclouds@gmail.com>
 References: <20180223095640.25876-1-pclouds@gmail.com>
@@ -76,72 +76,47 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-After 454253f059 (builtin/index-pack: improve hash function abstraction
-- 2018-02-01), index-pack uses the_hash_algo for hashing. If "git
-index-pack" is executed without a repository, we do not know what hash
-algorithm to be used and the_hash_algo in theory could be undefined.
+Our "git diff" command supports running as a standalone tool. In this
+code path, we try to hash the file content but after
+18e2588e11 (sha1_file: switch uses of SHA-1 to the_hash_algo -
+2018-02-01), there is a chance that the_hash_algo (required by
+index_path) may still be uninitialized if no repository is found.
 
-Since there should be some information about the hash algorithm in the
-input pack file, we can initialize the correct hash algorithm with that
-if the_hash_algo is not yet initialized. This assumes that pack files
-with new hash algorithm MUST step up pack version.
+Executing index_path() when the_hash_algo is NULL (or points to unknown
+algo) either crashes or dies. Let's make it a bit safer by explicitly
+falling back to SHA-1 (so that the diff output remains the same as
+before, compared to the alternative that we simply do not hash).
 
-While at there, make sure the hash algorithm requested by the pack file
-and configured by the repository (if we're running with a repo) are
-consistent.
+dòng được
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- builtin/index-pack.c | 26 +++++++++++++++++++++++++-
- 1 file changed, 25 insertions(+), 1 deletion(-)
+ diff.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 7e3e1a461c..1144458140 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -326,10 +326,31 @@ static const char *open_pack_file(const char *pack_name)
- 		output_fd = -1;
- 		nothread_data.pack_fd = input_fd;
+diff --git a/diff.c b/diff.c
+index 21c3838b25..f5755425b6 100644
+--- a/diff.c
++++ b/diff.c
+@@ -3995,6 +3995,18 @@ static void run_diff(struct diff_filepair *p, struct diff_options *o)
+ 		return;
  	}
--	the_hash_algo->init_fn(&input_ctx);
- 	return pack_name;
- }
  
-+static void prepare_hash_algo(uint32_t pack_version)
-+{
-+	const struct git_hash_algo *pack_algo;
++	/*
++	 * NEEDSWORK: When running in no-index mode (and no repo is
++	 * found, thus no hash algo conifugred), fall back to SHA-1
++	 * hashing (which is used by diff_fill_oid_info below) to
++	 * avoid regression in diff output.
++	 *
++	 * In future, perhaps we can allow the user to specify their
++	 * hash algorithm from command line in this mode.
++	 */
++	if (o->flags.no_index && !the_hash_algo)
++		the_hash_algo = &hash_algos[GIT_HASH_SHA1];
 +
-+	switch (pack_version) {
-+	case 2:
-+	case 3:
-+		pack_algo = &hash_algos[GIT_HASH_SHA1];
-+		break;
-+	default:
-+		die("BUG: how to determine hash algo for new version?");
-+	}
-+
-+	if (!the_hash_algo)	/* running without repo */
-+		the_hash_algo = pack_algo;
-+
-+	if (the_hash_algo != pack_algo)
-+		die(_("incompatible hash algorithm, "
-+		      "configured for %s but the pack file needs %s"),
-+		    the_hash_algo->name, pack_algo->name);
-+}
-+
- static void parse_pack_header(void)
- {
- 	struct pack_header *hdr = fill(sizeof(struct pack_header));
-@@ -341,6 +362,9 @@ static void parse_pack_header(void)
- 		die(_("pack version %"PRIu32" unsupported"),
- 			ntohl(hdr->hdr_version));
+ 	diff_fill_oid_info(one);
+ 	diff_fill_oid_info(two);
  
-+	prepare_hash_algo(ntohl(hdr->hdr_version));
-+	the_hash_algo->init_fn(&input_ctx);
-+
- 	nr_objects = ntohl(hdr->hdr_entries);
- 	use(sizeof(struct pack_header));
- }
 -- 
 2.16.1.435.g8f24da2e1a
 
