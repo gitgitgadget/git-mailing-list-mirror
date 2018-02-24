@@ -2,183 +2,148 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4EF0B1F404
-	for <e@80x24.org>; Sat, 24 Feb 2018 22:28:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 844B01F404
+	for <e@80x24.org>; Sat, 24 Feb 2018 22:29:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751482AbeBXW2r (ORCPT <rfc822;e@80x24.org>);
-        Sat, 24 Feb 2018 17:28:47 -0500
-Received: from mail-wm0-f51.google.com ([74.125.82.51]:36868 "EHLO
-        mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751399AbeBXW2q (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 24 Feb 2018 17:28:46 -0500
-Received: by mail-wm0-f51.google.com with SMTP id m207so10727090wma.2
-        for <git@vger.kernel.org>; Sat, 24 Feb 2018 14:28:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=0jvGNywFou6RGqrrmOfb1w2E5ARjO4bq6MoBHU1s3Xk=;
-        b=h7E14q3SdTRWQrB0C+juLVEqNom5P43yZ4OS1MWJiNbXmpu52vuvda65LrcCIlcSi3
-         yRtF9Ar/vzoEV/Yxs38kPNIbWTY9gic2cI9owxwd7pfB5nVqB3tSj8ehst/VM0Tiw4zx
-         3QtrQpDFYHRLHCfZg7c46lh+LHv+bhiVDM9afw74IgiZ0BTrEsUg4S41RctYFGwW3yl0
-         SdH1x5pA0jMFXGIKsW9lGixIS9FCJqzyZ5vIIrpGa62mJWLWxzXsD6jNeMY+WZYR5wyM
-         b8fMmqyaZ/dc/nrBtSNYEAWW2KtnNErooM3fMqBPTnjE0GtnjS9vhAepP580EktvSpRH
-         9BNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=0jvGNywFou6RGqrrmOfb1w2E5ARjO4bq6MoBHU1s3Xk=;
-        b=OCXSQ+EGiQs9xAZ53qSUCbV6fO0035J1tnxoNaqO04Wwb01UUxpfbNHB1mTGoBUSGB
-         Q0skOuZDR8QP6G32a5S8J6PjP/rrfYucqU+jGnQLTJfrHV+NGCMm/U44yot/4RPq051Z
-         bnbUMhEMHNSC9iIsd8mqXLPCDlgB+Ly0Bt4QQ79Aw518M95SMdP/DFosawuq82NsfMja
-         UFF55oUURNUNkCg8Itq5IV+hb1u7T4a+qkYFHZRRa+KXH3fAgCnhjhD5Dd27huvJoWnT
-         LiW742Rt6/7xqifOVJC0Z6EB7cPHpuGiimOhpkWYGT1FltUH+RUaphQQ1kq9T//jukjh
-         zwFA==
-X-Gm-Message-State: APf1xPBCof/Qethonl9Zz9s/BThPeHiXfOX2CnIobTyE+zQ05yhCCWs8
-        jd72PL7X2xF9Z1omWBZOGN0=
-X-Google-Smtp-Source: AH8x226Glf+3+nA9HgQsCbZE0YsHjSCNiUQSRKf6DFmSTIohhC5UB0h0qLd81mutS7XIlWmraK+EWg==
-X-Received: by 10.80.166.99 with SMTP id d90mr8587236edc.174.1519511325127;
-        Sat, 24 Feb 2018 14:28:45 -0800 (PST)
-Received: from evledraar (178-84-79-100.dynamic.upc.nl. [178.84.79.100])
-        by smtp.gmail.com with ESMTPSA id g2sm4958314eda.85.2018.02.24.14.28.43
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 24 Feb 2018 14:28:43 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     "Bernhard M. Wiedemann" <bwiedemann@suse.de>
-Cc:     git@vger.kernel.org, Ben Walton <bdwalton@gmail.com>,
-        Matthias Urlichs <smurf@smurf.noris.de>,
-        Ryuichi Kokubo <ryu1kkb@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Call timegm and timelocal with 4-digit year
-References: <20180223172045.32090-1-bwiedemann@suse.de>
-User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 1.1.0
-In-reply-to: <20180223172045.32090-1-bwiedemann@suse.de>
-Date:   Sat, 24 Feb 2018 23:28:42 +0100
-Message-ID: <87tvu6dntx.fsf@evledraar.gmail.com>
+        id S1751501AbeBXW3K (ORCPT <rfc822;e@80x24.org>);
+        Sat, 24 Feb 2018 17:29:10 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:33750 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751399AbeBXW3J (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 24 Feb 2018 17:29:09 -0500
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 022CE6042F;
+        Sat, 24 Feb 2018 22:29:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1519511347;
+        bh=+QU8EbLnVNpgbNch0dMCfUs+euiaGYrbeZrDv+Qg6vE=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=fvp21KdzgJjg88F0SRpKB4m7DIjkvTfWupLkQ4zhtSBTQ27pbQ4YJGm9F0lOZGgLZ
+         vZke6mj879HvffVE0VtGSkxoi7owEPyB2sRZOF5yIrjfilLxjawSKdpgYSeboheIFO
+         k6VPDhUVEgMZvbRBNy9TvGpu5wnr4YViplJHoHcJV01noAUv5cBcIoggwPKmaZoJ9n
+         C/kVJxIfxEL9lgyWP27eACeZHEs+tLTl/FV5FqwKyuvpdaJvOpsb70fYdp8KZbt7Zr
+         6O9H6Xc7vcui06lqMX2KzFmY0gmsPUkhiptBAM8e1639g4VFRizPQXF3LwgBHxm0tD
+         5kkXpvFgZmLxZBmmUCCgJXtDygDPuaCG9SSfIS9cjNU/qHmeW+fpWQmBMlpOTrWAht
+         CoI6glOLhSTBUxri7fLwh/KOOxWHgixDIB2HUgMNSw+ohdqNu2b2wCj+BgF8WqMw96
+         kehD9inEhRPzpn29atzd/6VyCmXs1GV1Pz6zcuOrdctbmhnvM8E
+Date:   Sat, 24 Feb 2018 22:29:00 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Brandon Williams <bmwill@google.com>,
+        Stefan Beller <sbeller@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [PATCH v2 4/5] diff.c: initialize hash algo when running in
+ --no-index mode
+Message-ID: <20180224222900.GA4620@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Brandon Williams <bmwill@google.com>,
+        Stefan Beller <sbeller@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+References: <20180223095640.25876-1-pclouds@gmail.com>
+ <20180224033429.9656-1-pclouds@gmail.com>
+ <20180224033429.9656-5-pclouds@gmail.com>
+ <CACsJy8AUXf4uA-zymrhWUagW84bUzfB6JBQLyaHDJtudTcNy=A@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="GvXjxJ+pjyke8COw"
+Content-Disposition: inline
+In-Reply-To: <CACsJy8AUXf4uA-zymrhWUagW84bUzfB6JBQLyaHDJtudTcNy=A@mail.gmail.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.15.0-1-amd64)
+User-Agent: Mutt/1.9.3 (2018-01-21)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Fri, Feb 23 2018, Bernhard M. Wiedemann jotted:
+--GvXjxJ+pjyke8COw
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> amazingly timegm(gmtime(0)) is only 0 before 2020
-> because perl's timegm deviates from GNU timegm(3) in how it handles years.
->
-> man Time::Local says
->
->  Whenever possible, use an absolute four digit year instead.
->
-> with a detailed explanation about ambiguity of 2-digit years above that.
->
-> Even though this ambiguity is error-prone with >50% of users getting it
-> wrong, it has been like this for 20+ years, so we just use 4-digit years
-> everywhere to be on the safe side.
->
-> We add some extra logic to cvsimport because it allows 2-digit year
-> input and interpreting an 18 as 1918 can be avoided easily and safely.
->
-> Signed-off-by: Bernhard M. Wiedemann <bwiedemann@suse.de>
-> ---
->  contrib/examples/git-svnimport.perl | 2 +-
->  git-cvsimport.perl                  | 4 +++-
->  perl/Git.pm                         | 4 +++-
->  perl/Git/SVN.pm                     | 2 +-
->  4 files changed, 8 insertions(+), 4 deletions(-)
->
-> diff --git a/contrib/examples/git-svnimport.perl b/contrib/examples/git-svnimport.perl
-> index c414f0d9c..75a43e23b 100755
-> --- a/contrib/examples/git-svnimport.perl
-> +++ b/contrib/examples/git-svnimport.perl
-> @@ -238,7 +238,7 @@ sub pdate($) {
->  	my($d) = @_;
->  	$d =~ m#(\d\d\d\d)-(\d\d)-(\d\d)T(\d\d):(\d\d):(\d\d)#
->  		or die "Unparseable date: $d\n";
-> -	my $y=$1; $y-=1900 if $y>1900;
-> +	my $y=$1; $y+=1900 if $y<1000;
->  	return timegm($6||0,$5,$4,$3,$2-1,$y);
+On Sat, Feb 24, 2018 at 09:36:03PM +0700, Duy Nguyen wrote:
+> On Sat, Feb 24, 2018 at 10:34 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc D=
+uy
+> <pclouds@gmail.com> wrote:
+> > @@ -3995,6 +3995,18 @@ static void run_diff(struct diff_filepair *p, st=
+ruct diff_options *o)
+> >                 return;
+> >         }
+> >
+> > +       /*
+> > +        * NEEDSWORK: When running in no-index mode (and no repo is
+> > +        * found, thus no hash algo conifugred), fall back to SHA-1
+> > +        * hashing (which is used by diff_fill_oid_info below) to
+> > +        * avoid regression in diff output.
+> > +        *
+> > +        * In future, perhaps we can allow the user to specify their
+> > +        * hash algorithm from command line in this mode.
+> > +        */
+> > +       if (o->flags.no_index && !the_hash_algo)
+> > +               the_hash_algo =3D &hash_algos[GIT_HASH_SHA1];
+>=20
+> Brian, are we supposed to use the_hash_algo this way (i.e. as a
+> writable var)? Or should I stick to something like
+>=20
+>     repo_set_hash_algo(the_repository, GIT_HASH_SHA1);
+>=20
+> which allows us to notify other parts inside struct repository about
+> the hash algorithm change, if we ever need to?
 
-I wonder if this whole thing was just cargo-culted to begin with. We
-need to match (\d\d\d\d) here, so did SVN's format ever have years like
-"0098" (just "98" wouldn't match), so I suspect the whole munging could
-be dropped, but this change seems harmless. Just something that jumped
-out at me reviewing this.
+I would definitely recommend using the function.  As you pointed out, it
+makes our code future-proof against needing to more work when setting
+the value.
 
-> diff --git a/git-cvsimport.perl b/git-cvsimport.perl
-> index 2d8df8317..b31613cb8 100755
-> --- a/git-cvsimport.perl
-> +++ b/git-cvsimport.perl
-> @@ -601,7 +601,9 @@ sub pdate($) {
->  	my ($d) = @_;
->  	m#(\d{2,4})/(\d\d)/(\d\d)\s(\d\d):(\d\d)(?::(\d\d))?#
->  		or die "Unparseable date: $d\n";
-> -	my $y=$1; $y-=1900 if $y>1900;
-> +	my $y=$1;
-> +	$y+=100 if $y<70;
-> +	$y+=1900 if $y<1000;
->  	return timegm($6||0,$5,$4,$3,$2-1,$y);
->  }
+> If the_hash_algo is supposed to be read-only, maybe I should convert
+> that macro to an inline function to prevent people from accidentally
+> reassigning it?
 
-My Time::Local 1.2300 on perl 5.024001 currently interprets "69" here as
-1969, but after this it'll be 2069.
+You could if you want to, although I don't really see a need to, since
+we can just catch it in review.  If you wanted to, I'd make it an inline
+function for performance reasons.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
+https://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: https://keybase.io/bk2204
 
-Now I doubt anyone's going to be importing CVS history of projects a
-little over 20 years before CVS was created in 1990 (although I suppose
-old imports...), but just wanted to note it since it seems odd for code
-that's auto-interpreting double digit years for the purposes of
-importing existing data to end up in an edge case where it returns dates
-more than 50 years in the future.
+--GvXjxJ+pjyke8COw
+Content-Type: application/pgp-signature; name="signature.asc"
 
-> diff --git a/perl/Git.pm b/perl/Git.pm
-> index ffa09ace9..df62518c7 100644
-> --- a/perl/Git.pm
-> +++ b/perl/Git.pm
-> @@ -534,7 +534,9 @@ If TIME is not supplied, the current local time is used.
->  sub get_tz_offset {
->  	# some systems don't handle or mishandle %z, so be creative.
->  	my $t = shift || time;
-> -	my $gm = timegm(localtime($t));
-> +	my @t = localtime($t);
-> +	$t[5] += 1900;
-> +	my $gm = timegm(@t);
->
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.5 (GNU/Linux)
 
-Nice. Just using the 4-digit date is always more correct and won't ever
-be buggy.
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlqR5ywACgkQv1NdgR9S
+9osEIhAAnBUB+/YRM86UJJGzYgW/BaVzqiIoTSByRWRcJDOsIbUApNE3OeVj1LKf
+V0UrUtAxI0pfVGt/U4nTbOxfdTVPim+TCO0E+9muqt6AT9DETd1//q1COuRIHayn
+BJFdNmw4OWDubO8aCQBRo8SbUdhyb4XuOVlw4EYnUp7VUVqIWjEhReRwaAlWhAA9
+KdWqJXcExCvJVswxhme7BftH5JFUES1R/u3Oo0NAyGEh971KQqO8sL8aY+eHPbus
+IRZj02t8G9ZxshwKkE2j4E2ENq42mATbMPbmLx5CZWaiaBO6WwFZZ6iyowQCrn7n
+bW2Qfm5hK0mRoZh0pI20FODklsDejz1pvsGiB+bH4EMxRF6YTNMdzds3RVl5Rj+i
+WGcKOcKBkBde6Y/I3IZMbtjgtflKxqPyymW2ijO3gkkF+cM7HmEvI2ixISzgg04Q
+j4QYlfny8IJjFm1FJm6fdtPFd8WhqA2V9M4AxLDHwvOE+O0Hyl+fYln3A5MBAf20
+Gm3nSYRua21ttKwJPIUtOkM0I0+UHBLRgO5H/pQ2YmC9mTYvGAUoG+W8jzVdD0rb
+gyXw+/hdHnMhxparzXYlL6hQ4knEFDTjQbJpzUf8MvkplIFdilIwfeTaP6YDvLIN
+hUjTYTKEtyO6THYLtD40iQ1+qG6DKSoHhAev5GMRS4Hf/aBF90M=
+=AhAo
+-----END PGP SIGNATURE-----
 
->  	my $sign = qw( + + - )[ $gm <=> $t ];
->  	return sprintf("%s%02d%02d", $sign, (gmtime(abs($t - $gm)))[2,1]);
->  }
-> diff --git a/perl/Git/SVN.pm b/perl/Git/SVN.pm
-> index bc4eed3d7..991a5885e 100644
-> --- a/perl/Git/SVN.pm
-> +++ b/perl/Git/SVN.pm
-> @@ -1405,7 +1405,7 @@ sub parse_svn_date {
->  		$ENV{TZ} = 'UTC';
->
->  		my $epoch_in_UTC =
-> -		    Time::Local::timelocal($S, $M, $H, $d, $m - 1, $Y - 1900);
-> +		    Time::Local::timelocal($S, $M, $H, $d, $m - 1, $Y);
-
-Ditto. Nicely caught.
-
->
->  		# Determine our local timezone (including DST) at the
->  		# time of $epoch_in_UTC.  $Git::SVN::Log::TZ stored the
-
-Anyway, this all looks good to me as-is. That CVS edge case is obscure
-and not worth focusing on, and the SVN one could be fixed up in another
-commit if anyone cared.
-
-I just spent a bit more time than I should have wondering what this
-timegm() edge case was about and whether it might impact other
-(unrelated to git) code I had.
+--GvXjxJ+pjyke8COw--
