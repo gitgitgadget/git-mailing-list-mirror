@@ -2,116 +2,194 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D38521F404
-	for <e@80x24.org>; Sat, 24 Feb 2018 00:46:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1D2A51F404
+	for <e@80x24.org>; Sat, 24 Feb 2018 00:48:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752011AbeBXAqD (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Feb 2018 19:46:03 -0500
-Received: from gproxy3-pub.mail.unifiedlayer.com ([69.89.30.42]:58383 "EHLO
-        gproxy3-pub.mail.unifiedlayer.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751674AbeBXAqC (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 23 Feb 2018 19:46:02 -0500
-X-Greylist: delayed 1251 seconds by postgrey-1.27 at vger.kernel.org; Fri, 23 Feb 2018 19:46:02 EST
-Received: from cmgw4 (unknown [10.0.90.85])
-        by gproxy3.mail.unifiedlayer.com (Postfix) with ESMTP id 10D4840250
-        for <git@vger.kernel.org>; Fri, 23 Feb 2018 17:25:09 -0700 (MST)
-Received: from box5008.bluehost.com ([50.116.64.19])
-        by cmgw4 with 
-        id EQR51x00X0QvKlu01QR8lQ; Fri, 23 Feb 2018 17:25:09 -0700
-X-Authority-Analysis: v=2.2 cv=G85sK5s5 c=1 sm=1 tr=0
- a=gch/BGY/Gm5DEW28s2kmlQ==:117 a=gch/BGY/Gm5DEW28s2kmlQ==:17
- a=IkcTkHD0fZMA:10 a=Op4juWPpsa0A:10 a=uPAkQHdKeDEV1LCO42oA:9 a=QEXdDO2ut3YA:10
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=mad-scientist.net; s=default; h=Content-Transfer-Encoding:Mime-Version:
-        Content-Type:Date:To:Reply-To:From:Subject:Message-ID:Sender:Cc:Content-ID:
-        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
-        List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=/ASWBJmeNS6sCkHrQJKdJ36/R9VnuKq1c4jpQTO2bXo=; b=fRMIKxkhoh5WKfXD3A1XFp2Ud2
-        zGsf/FJ4/tr6YJuX1Mb4K2PRxSZYsyetYTMPZ954MHUlw2oC3scyLF8xYYkDr2u+UTdzI3KdEabZh
-        tAZmXrLHaZhlE6ovcHoKB/9oi;
-Received: from pool-74-104-137-100.bstnma.fios.verizon.net ([74.104.137.100]:53520 helo=homebase)
-        by box5008.bluehost.com with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.89_1)
-        (envelope-from <paul@mad-scientist.net>)
-        id 1epNeD-0010yM-7x
-        for git@vger.kernel.org; Fri, 23 Feb 2018 17:25:05 -0700
-Message-ID: <1519431904.3405.933.camel@mad-scientist.net>
-Subject: Git 2.16.2: Build failure linking static libcurl / static SSL
-From:   Paul Smith <paul@mad-scientist.net>
-Reply-To: paul@mad-scientist.net
-To:     Git mailing list <git@vger.kernel.org>
-Date:   Fri, 23 Feb 2018 19:25:04 -0500
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.26.1-1 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5008.bluehost.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - mad-scientist.net
-X-BWhitelist: no
-X-Source-IP: 74.104.137.100
-X-Exim-ID: 1epNeD-0010yM-7x
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: pool-74-104-137-100.bstnma.fios.verizon.net (homebase) [74.104.137.100]:53520
-X-Source-Auth: paul@mad-scientist.us
-X-Email-Count: 1
-X-Source-Cap: bWFkc2NpZTE7bWFkc2NpZTE7Ym94NTAwOC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
+        id S1751943AbeBXAsA (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Feb 2018 19:48:00 -0500
+Received: from mail-pl0-f68.google.com ([209.85.160.68]:33565 "EHLO
+        mail-pl0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751674AbeBXAr7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Feb 2018 19:47:59 -0500
+Received: by mail-pl0-f68.google.com with SMTP id c11-v6so2431782plo.0
+        for <git@vger.kernel.org>; Fri, 23 Feb 2018 16:47:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=4jFlI4YFAGR/qFEH+r24gmlKMTNJkWEPlTgt3Ci5mJU=;
+        b=g/FhTFuXQiw5ZM9eHbChg/NpWY48aCB1Lpp17Jp/KuaEzZPFtUiQm0nsfSHNtSaUU9
+         cW6gwD/w342mGRrfcN+1o2it/EqAlUuPp3MzYoji+aTalem/ZFXTuVYJVwqEJksYOvGu
+         bvjiqKO9jcgWkzJQxV9zafg2ukAJGd2fd2l03iE0019mHREyZoZNkfSVuVn6th/uIJ+c
+         ExTne3JitcXJuy8bveoftnf9dv6kzlQR8Kiwt4olNeWW9/I5ssrnJ5vTR1ByvqG3PGK9
+         o+0qKEZftiZe9Jk3SLWKCIDgYe/skslzWf5gUnc6MLqUgQGxgu6qrdC2fM+1V7/OnztY
+         eBAw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=4jFlI4YFAGR/qFEH+r24gmlKMTNJkWEPlTgt3Ci5mJU=;
+        b=hLMBhaqZPE42WwJZdMLGqB+ve/6QsP32KhIXox1whm89SS52ScT3Jy4fNGmn9+Sgus
+         tql2bAk4XJT/gSwSTwQDWiEt7GLbQmrEi/ZNAApniN4Y6xCuP2aWa4SNZoJrKKBXHozn
+         PdUzAb2edYR8lr0G/QkoBv8viGzGGvJ6ahQ5iBoxoEi/Bs8UvWfhhBdiYxeOeUEK6tnw
+         JELjYMXyrA1tKsKGD+HytaG8grdBYQ6+zAymdHSo4deNsf0yTbuIooKjQmmKDEQJeekt
+         cRmZOe57P6kPDUDmGPdar82zE2teAbBnjyYsLf4iZrYMYpcNE+MXdsgE+GFMVDvxBajo
+         k8HQ==
+X-Gm-Message-State: APf1xPBrvvus1z9flHc8w9O1FusjN9FDQMtvsi+wLtG2ZcJgdqMiMRzP
+        Mq7rdBs7qV1gLzKKDEtp1BAHx0ggCDs=
+X-Google-Smtp-Source: AH8x226ItkZ+0EyUZgXCx7Y9J3NyneD0h2vncR0UP8VRjVyt38RPIcQr6GwvgZ/GYIqFo6sgX4tBvw==
+X-Received: by 2002:a17:902:9693:: with SMTP id n19-v6mr3311148plp.69.1519433279040;
+        Fri, 23 Feb 2018 16:47:59 -0800 (PST)
+Received: from localhost ([2620:0:100e:422:2d12:5719:3437:fdb7])
+        by smtp.gmail.com with ESMTPSA id b8sm6906402pff.31.2018.02.23.16.47.58
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 23 Feb 2018 16:47:58 -0800 (PST)
+From:   Stefan Beller <sbeller@google.com>
+To:     sbeller@google.com
+Cc:     git@vger.kernel.org, gitster@pobox.com, jonathantanmy@google.com,
+        pclouds@gmail.com, sunshine@sunshineco.com, bmwill@google.com
+Subject: [PATCHv4 00/27] Moving global state into the repository object (part 1)
+Date:   Fri, 23 Feb 2018 16:47:27 -0800
+Message-Id: <20180224004754.129721-1-sbeller@google.com>
+X-Mailer: git-send-email 2.16.1.291.g4437f3f132-goog
+In-Reply-To: <20180221015430.96054-1-sbeller@google.com>
+References: <20180221015430.96054-1-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I'm compiling Git with my own static libcurl and my own static
-LibreSSL.  They live in two different locations.
+v4:
+* addressed feedback from the single patches (mostly nits)
+* rebased on latest master
 
-Building Curl with a pointer to my LibreSSL works fine, and compiling
-Git works fine: the correct -I options are added to the compile line
-when I configure with --with-openssl=/path/to/libressl/dist
+v3:
+* reverted back to use the repository for most of the functions
+  (including unduplicating 'ignore_env')
+* rebased on master again (I lost that state when doing v2, as
+  I did both rebase as well as conversion to object store in one go)
+* one additional patch, that moves the alternates related things to
+  object-store.h, such that inclusion of cache.h (in object-store.h)
+  is not required any more.
 
-However, linking fails to find the crypto and ssl libraries, because
-the OPENSSLDIR lib directory is not added to the link line with -L. 
-The link line in question is from Makefile:
+v2:
+* duplicated the 'ignore_env' bit into the object store as well
+* the #define trick no longer works as we do not have a "the_objectstore" global,
+  which means there is just one patch per function that is converted.
+  As this follows the same structure of the previous series, I am still confident
+  there is no hidden dependencies to globals outside the object store in these
+  converted functions.
+* rebased on top of current master, resolving the merge conflicts.
+  I think I used the list.h APIs right, but please double check.
 
-  git-http-fetch$X: http.o http-walker.o http-fetch.o GIT-LDFLAGS $(GITLIBS)
-        $(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
-                $(CURL_LIBCURL) $(LIBS)
-  git-http-push$X: http.o http-push.o GIT-LDFLAGS $(GITLIBS)
-        $(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
-                $(CURL_LIBCURL) $(EXPAT_LIBEXPAT) $(LIBS)
+Thanks,
+Stefan
 
-The OpenSSL libraries are included in CURL_LIBCURL, but the -L flags
-are not:
+v1:
+This is a real take on the first part of the recent RFC[1].
 
-        ifdef NEEDS_SSL_WITH_CURL
-                CURL_LIBCURL += -lssl
-                ifdef NEEDS_CRYPTO_WITH_SSL
-                        CURL_LIBCURL += -lcrypto
-                endif
-        endif
+Jonathan Tan suggested[2] that "sha1_loose_object_info to handle arbitrary repositories"
+might be a good breaking point for a first part at that RFC at patch 38.
+This series is smaller and contains only 26 patches as the patches in the big
+RFC were slightly out of order.
 
-This section needs to add in the OPENSSL_LINK variable, or maybe it has
-to go directly in the git-http-fetch/push recipe, I'm not sure which is
-appropriate.  There seems to be a lot of different variables that have
-similar content, that maybe should be aligned (OPENSSL_LIBSSL,
-OPENSSL_LINK, LIB_4_CRYPTO, CURL_LIBCURL, etc.)
+I developed this series partly by writing patches, but mostly by cherrypicking
+from that RFC on top of current master. I noticed no external conflicts apart
+from one addition to the repositories _INIT macro, which was easy to resolve.
 
-But, the -L is definitely missing:
+Comments in the early range of that RFC were on 003 where Junio pointed out
+that the coccinelle patch ought to be not in contrib/coccinelle, so I put it
+in a sub directory there, as 'make coccicheck' doesn't traverse subdirs.
 
-  gcc -g -O2 -I. -DGIT_HOST_CPU="\"x86_64\"" -DHAVE_ALLOCA_H -I/work/src/git/Linux-Release-make/dist/include -I/work/src/libressl/Linux-Release-make/dist/include -DNO_GETTEXT -DSHA1_DC -DSHA1DC_NO_STANDARD_INCLUDES -DSHA1DC_INIT_SAFE_HASH_DEFAULT=0 -DSHA1DC_CUSTOM_INCLUDE_SHA1_C="\"cache.h\"" -DSHA1DC_CUSTOM_INCLUDE_UBC_CHECK_C="\"git-compat-util.h\"" -pthread -DHAVE_PATHS_H -DHAVE_STRINGS_H -DHAVE_DEV_TTY -DHAVE_CLOCK_GETTIME -DHAVE_CLOCK_MONOTONIC -DHAVE_GETDELIM  -DFREAD_READS_DIRECTORIES -DNO_STRLCPY -DSHELL_PATH='"/bin/sh"' -DPAGER_ENV='"LESS=FRX LV=-c"' -o git-http-fetch   http.o http-walker.o http-fetch.o common-main.o \
-        -L/work/src/git/Linux-Release-make/dist/lib -L/work/src/git/Linux-Release-make/dist/lib -lcurl -lssl -lcrypto -lidn libgit.a xdiff/lib.a  -lz -pthread -lrt
-  ld: error: cannot find -lssl
-  ld: error: cannot find -lcrypto
+brian had a questoin on patch 25 in the RFC, but that seemed to resolve itself
+without any suggestion to include into this series[3].
 
-Note how the -I.../libressl/.../include option is present, but the
--L.../libressl/.../lib option is missing.
+Duy suggested that we shall not use the repository blindly, but should carefully
+examine whether to pass on an object store or the refstore or such[4], which
+I agree with if it makes sense. This series unfortunately has an issue with that
+as I would not want to pass down the `ignore_env` flag separately from the object
+store, so I made all functions that only take the object store to have the raw
+object store as the first parameter, and others using the full repository.
+
+Eric Sunshine brought up memory leaks with the RFC, and I would think to
+have plugged all holes.
+
+[1] https://public-inbox.org/git/20180205235508.216277-1-sbeller@google.com/
+[2] https://public-inbox.org/git/20180207143300.ce1c39ca07f6a0d64fe0e7ca@google.com/
+[3] https://public-inbox.org/git/20180206011940.GD7904@genre.crustytoothpaste.net/
+[4] https://public-inbox.org/git/CACsJy8CGgekpX4cZkyyTSPrj87uQVKZSOL7fyT__P2dh_1LmVQ@mail.gmail.com/
+
+Thanks,
+Stefan
+
+Jonathan Nieder (2):
+  sha1_file: allow map_sha1_file_1 to handle arbitrary repositories
+  sha1_file: allow sha1_loose_object_info to handle arbitrary
+    repositories
+
+Stefan Beller (25):
+  repository: introduce raw object store field
+  object-store: migrate alternates struct and functions from cache.h
+  object-store: move alt_odb_list and alt_odb_tail to object store
+  object-store: free alt_odb_list
+  object-store: move packed_git and packed_git_mru to object store
+  object-store: close all packs upon clearing the object store
+  pack: move prepare_packed_git_run_once to object store
+  pack: move approximate object count to object store
+  sha1_file: add raw_object_store argument to alt_odb_usable
+  sha1_file: add repository argument to link_alt_odb_entry
+  sha1_file: add repository argument to read_info_alternates
+  sha1_file: add repository argument to link_alt_odb_entries
+  sha1_file: add repository argument to prepare_alt_odb
+  sha1_file: allow link_alt_odb_entries to handle arbitrary repositories
+  sha1_file: allow prepare_alt_odb to handle arbitrary repositories
+  sha1_file: add repository argument to sha1_file_name
+  sha1_file: add repository argument to stat_sha1_file
+  sha1_file: add repository argument to open_sha1_file
+  sha1_file: add repository argument to map_sha1_file_1
+  sha1_file: add repository argument to map_sha1_file
+  sha1_file: add repository argument to sha1_loose_object_info
+  sha1_file: allow sha1_file_name to handle arbitrary repositories
+  sha1_file: allow stat_sha1_file to handle arbitrary repositories
+  sha1_file: allow open_sha1_file to handle arbitrary repositories
+  sha1_file: allow map_sha1_file to handle arbitrary repositories
+
+ builtin/am.c             |   2 +-
+ builtin/clone.c          |   2 +-
+ builtin/count-objects.c  |   5 +-
+ builtin/fetch.c          |   2 +-
+ builtin/fsck.c           |  12 ++--
+ builtin/gc.c             |   3 +-
+ builtin/grep.c           |   2 +-
+ builtin/merge.c          |   2 +-
+ builtin/pack-objects.c   |  20 ++++---
+ builtin/pack-redundant.c |   5 +-
+ builtin/receive-pack.c   |   2 +-
+ cache.h                  |  87 ---------------------------
+ environment.c            |   5 +-
+ fast-import.c            |   7 ++-
+ http-backend.c           |   5 +-
+ http-walker.c            |   3 +-
+ http.c                   |   5 +-
+ object-store.h           | 124 ++++++++++++++++++++++++++++++++++++++
+ object.c                 |  27 +++++++++
+ pack-bitmap.c            |   3 +-
+ packfile.c               |  64 ++++++++++----------
+ packfile.h               |   2 +-
+ path.c                   |   2 +-
+ repository.c             |  21 +++++--
+ repository.h             |   7 ++-
+ server-info.c            |   5 +-
+ sha1_file.c              | 125 +++++++++++++++++++++------------------
+ sha1_name.c              |  10 ++--
+ streaming.c              |   5 +-
+ 29 files changed, 335 insertions(+), 229 deletions(-)
+ create mode 100644 object-store.h
+
+-- 
+2.16.1.291.g4437f3f132-goog
+
