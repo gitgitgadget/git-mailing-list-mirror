@@ -7,56 +7,63 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E5B781F576
-	for <e@80x24.org>; Sat, 24 Feb 2018 08:04:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F37D31F576
+	for <e@80x24.org>; Sat, 24 Feb 2018 08:15:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751531AbeBXIEW (ORCPT <rfc822;e@80x24.org>);
-        Sat, 24 Feb 2018 03:04:22 -0500
-Received: from mail-qk0-f195.google.com ([209.85.220.195]:33907 "EHLO
-        mail-qk0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751522AbeBXIEV (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 24 Feb 2018 03:04:21 -0500
-Received: by mail-qk0-f195.google.com with SMTP id l206so13616224qke.1
-        for <git@vger.kernel.org>; Sat, 24 Feb 2018 00:04:20 -0800 (PST)
+        id S1750934AbeBXIPn (ORCPT <rfc822;e@80x24.org>);
+        Sat, 24 Feb 2018 03:15:43 -0500
+Received: from mail-qt0-f196.google.com ([209.85.216.196]:45951 "EHLO
+        mail-qt0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750737AbeBXIPm (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 24 Feb 2018 03:15:42 -0500
+Received: by mail-qt0-f196.google.com with SMTP id v90so13377967qte.12
+        for <git@vger.kernel.org>; Sat, 24 Feb 2018 00:15:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:sender:in-reply-to:references:from:date:message-id
          :subject:to:cc:content-transfer-encoding;
-        bh=4lBaf9iRI4QkbLPOobQlYCHpPPf1QS+Nc06nqaLx+co=;
-        b=ckzN9JJB5e/VkgScDk32xs1eEReDLPEchlFVaOSxS5bZjtFm5oxQk6pxt/23ZxS+m3
-         30SMDiH3yMEQG6mUG7zBXow1oDDfQ39Bsg3x/tMyU2ZeN7F3D+fWHj1fV4rg02HOOAts
-         QcQeMn/ZWd7bXR3oILXl3L/1cKQgAiCOZP+zYSImYa+qZRa1u7cRy6jgaPJXbdaZmOKp
-         GPniH97g120ENystF0JC47SKiUs0BmaK7KsoCnzI9kjun9YPlcUuPzCSo3qxwMUsW2Da
-         E1vMPrmksYztmJR3XcaAI08WrdlxGoAd5OLy8lX4GqAoWMrgkmy2H8+A5O4H6HgVHaAj
-         6bdw==
+        bh=j+z12zQ0jmiCd/HeuA2prpYSjtnHG5pH8TxEqi8vamk=;
+        b=lsucshf1mlv16bgaTqyIC8SB81xrCMfDkzMNbo6rcBumJuIfguu1eDDhNKGihmLtzj
+         W6HvdUjCYNmYS5Vax6wFwa3KJvxomw/+KaSjj8KEFkEAc+sJF2jAW7I42Jim3IZiRCZy
+         MuULP6uQ6ROLEwGqpz0KX0D9XSIyLiiFxKgp8hLhvk586ZizafTpwmBQCjhPLlk7cY4b
+         GDZkWi5x2kWgkXQMnw6gfovhdMwswJRsdaWqd4CMw7BxJd0jRiHZoICsmdDYgCiNu6rK
+         nMpa1KYNpYSCepAo4pP1Rc45P95AlmuX9Yuw7L8kTTS3pd5RTwjKZAs6A9aIgN+xvjfW
+         yGhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
          :date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=4lBaf9iRI4QkbLPOobQlYCHpPPf1QS+Nc06nqaLx+co=;
-        b=rMbIJvg7hu2/A81GDmiLjNPj6EpLFIZukciSfWJN1GBHwuia8AkhebfNLL8Y10GFxE
-         V+qRp0C82uX5vzRwTB4CmtHwLeJxQra52iitRCbe2FUUb0R23IAhXZ8Vkg8E+IPAzBuJ
-         wLGJQISilJfmW+E3XNmnWc/fTKLEsm+xZ4vrFb8YbCyyb31YrTN238iKxP17qOu2JMlq
-         JgaFZZ+rD02AYQgQtCD7UlHjaRe8IWaNhH+j/dnlXK1JIC+oWK4f77dmpUliW1KmR3AT
-         UrHBoe57jI99WQNTaO8l8ZYF7IZ5WeAWpf5DNqU4Ot6e88EN/b8uecwN4fZKQaeSY9yi
-         U7TA==
-X-Gm-Message-State: APf1xPAPwbTJm1bWbRM57ZracOWqe+0RpKmiHCMJ8cq6Uj6+eetuDm67
-        DeI35UubRb1wFeduQaKqlbYQZH/NRueI1FFPW/k=
-X-Google-Smtp-Source: AG47ELsv1mvUK+/8TeVWeUoMVUirPUt3dMVHFfdSSlnfLwVuTn5lF/WQO+AnEOYLfWCv+rDzA41oVzqMYY5n5Eg/u8U=
-X-Received: by 10.55.56.84 with SMTP id f81mr269803qka.176.1519459460455; Sat,
- 24 Feb 2018 00:04:20 -0800 (PST)
+        bh=j+z12zQ0jmiCd/HeuA2prpYSjtnHG5pH8TxEqi8vamk=;
+        b=RCZH1qnzC4k45VEY92wzgyEWKH6vgzhidYPAD/jkqmw8KbU4G6K/kiiFl+4tmDfrF8
+         N2SIpYpo81Rq8BL0J6+AqCBnKtsJwGHs4c3yLzefPaADe3UruLuuoCU+xNuLMdV8LF/M
+         xgHCOPotQxeoFKQ15/h3rPGAg4o/eg9/IRMSR6euj6Kzjh92lLw6k+3hNB3E7sJSTfmN
+         DrYWEzkgE+hugVpawCbmaveC3h5yXZ1p/NDHvMA++mBSnIfJDa3w6LyXRLZ0Kjcxt2dI
+         iy0eaasiX7jDU1qLuEFrazHpAD5lWxm9bGjhxo6k6EpqTnHVs5de4jUPXQiyx3eD7svC
+         GfRA==
+X-Gm-Message-State: APf1xPCgQmnmwV4G29rQOrgxZ6fVI4zgHy54ogntogdza2k0D5y2NZRj
+        Ndc6cpXsvh2hNT0cFVQI/PXGMRmC5iUS6PkvdNQ=
+X-Google-Smtp-Source: AG47ELvsfLUTMgibYCRpkkzuP+Go1WoDbQNLTNKMtqs2ypfpwZdVUtKRnorY4zJCgxqitkNg3xsM7rJCcjChJ5dDIhA=
+X-Received: by 10.200.58.167 with SMTP id x36mr6865023qte.246.1519460141956;
+ Sat, 24 Feb 2018 00:15:41 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.12.142.14 with HTTP; Sat, 24 Feb 2018 00:04:20 -0800 (PST)
-In-Reply-To: <20180223233951.11154-5-szeder.dev@gmail.com>
-References: <20180223233951.11154-1-szeder.dev@gmail.com> <20180223233951.11154-5-szeder.dev@gmail.com>
+Received: by 10.12.142.14 with HTTP; Sat, 24 Feb 2018 00:15:41 -0800 (PST)
+In-Reply-To: <20180224033429.9656-5-pclouds@gmail.com>
+References: <20180223095640.25876-1-pclouds@gmail.com> <20180224033429.9656-1-pclouds@gmail.com>
+ <20180224033429.9656-5-pclouds@gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sat, 24 Feb 2018 03:04:20 -0500
-X-Google-Sender-Auth: W1-CpKuNzjeRhv2tl1r8dXcp8ds
-Message-ID: <CAPig+cTSGNE_qzP74Bn+JnhvRsVt1-HzAiEf=1w_Rk6rUCrsWg@mail.gmail.com>
-Subject: Re: [PATCH 04/11] t3030-merge-recursive: don't check the stderr of a subshell
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Junio C Hamano <gitster@pobox.com>
+Date:   Sat, 24 Feb 2018 03:15:41 -0500
+X-Google-Sender-Auth: -GXf8I1g-xbG1OHCZJSFjXOCrLM
+Message-ID: <CAPig+cQq32eyArKME4_H0njjn2mbPkNVKo=ULbh-16d55tVYOQ@mail.gmail.com>
+Subject: Re: [PATCH v2 4/5] diff.c: initialize hash algo when running in
+ --no-index mode
+To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Brandon Williams <bmwill@google.com>,
+        Stefan Beller <sbeller@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
@@ -64,33 +71,43 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 23, 2018 at 6:39 PM, SZEDER G=C3=A1bor <szeder.dev@gmail.com> w=
-rote:
-> The two test checking 'git mmerge-recursive' in an empty worktree in
+On Fri, Feb 23, 2018 at 10:34 PM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy
+<pclouds@gmail.com> wrote:
+> Our "git diff" command supports running as a standalone tool. In this
+> code path, we try to hash the file content but after
+> 18e2588e11 (sha1_file: switch uses of SHA-1 to the_hash_algo -
+> 2018-02-01), there is a chance that the_hash_algo (required by
+> index_path) may still be uninitialized if no repository is found.
+>
+> Executing index_path() when the_hash_algo is NULL (or points to unknown
+> algo) either crashes or dies. Let's make it a bit safer by explicitly
+> falling back to SHA-1 (so that the diff output remains the same as
+> before, compared to the alternative that we simply do not hash).
+>
+> d=C3=B2ng =C4=91=C6=B0=E1=BB=A3c
 
-s/mmerge/merge/, I guess.
+Accidental paste?
 
-> 't3030-merge-recursive.sh' fail when the test script is run with '-x'
-> tracing (and using a shell other than a Bash version supporting
-> BASH_XTRACEFD).  The reason for those failures is that the tests check
-> the emptiness of a subshell's stderr, which includes the trace of
-> commands executed in that subshell as well, throwing off the emptiness
-> check.
->
-> Note that both subshells execute four git commands each, meaning that
-> checking the emptiness of the whole subshell implicitly ensures that
-> not only 'git merge-recursive' but none of the other three commands
-> outputs anything to their stderr.  Note also that if one of those
-> commands were to output anything on its stderr, then the current
-> combined check would not tell us which one of those four commands the
-> unexpected output came from.
->
-> Save the stderr of those four commands only instead of the whole
-> subshell, so it remains free from tracing output, and save and check
-> them individually, so they will show us from which command the
-> unexpected output came from.
->
-> After this change t3030 passes with '-x', even when running with
-> /bin/sh.
->
-> Signed-off-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.c=
+om>
+> ---
+> diff --git a/diff.c b/diff.c
+> @@ -3995,6 +3995,18 @@ static void run_diff(struct diff_filepair *p, stru=
+ct diff_options *o)
+> +       /*
+> +        * NEEDSWORK: When running in no-index mode (and no repo is
+> +        * found, thus no hash algo conifugred), fall back to SHA-1
+
+s/conifugred/configured/
+
+> +        * hashing (which is used by diff_fill_oid_info below) to
+> +        * avoid regression in diff output.
+> +        *
+> +        * In future, perhaps we can allow the user to specify their
+> +        * hash algorithm from command line in this mode.
+> +        */
+> +       if (o->flags.no_index && !the_hash_algo)
+> +               the_hash_algo =3D &hash_algos[GIT_HASH_SHA1];
+> +
+>         diff_fill_oid_info(one);
+>         diff_fill_oid_info(two);
