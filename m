@@ -2,80 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8E4421F404
-	for <e@80x24.org>; Sat, 24 Feb 2018 04:03:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DB3BA1F404
+	for <e@80x24.org>; Sat, 24 Feb 2018 05:43:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752113AbeBXEDx (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Feb 2018 23:03:53 -0500
-Received: from cloud.peff.net ([104.130.231.41]:35142 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751943AbeBXEDw (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Feb 2018 23:03:52 -0500
-Received: (qmail 3258 invoked by uid 109); 24 Feb 2018 04:03:54 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 24 Feb 2018 04:03:54 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 23430 invoked by uid 111); 24 Feb 2018 04:04:40 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 23 Feb 2018 23:04:40 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 23 Feb 2018 23:03:50 -0500
-Date:   Fri, 23 Feb 2018 23:03:50 -0500
-From:   Jeff King <peff@peff.net>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org, sbeller@google.com, gitster@pobox.com,
-        jrnieder@gmail.com, stolee@gmail.com, git@jeffhostetler.com,
-        pclouds@gmail.com
-Subject: Re: [PATCH v3 13/35] ls-refs: introduce ls-refs server command
-Message-ID: <20180224040350.GB16743@sigill.intra.peff.net>
-References: <20180125235838.138135-1-bmwill@google.com>
- <20180207011312.189834-1-bmwill@google.com>
- <20180207011312.189834-14-bmwill@google.com>
- <20180222094831.GB12442@sigill.intra.peff.net>
- <20180223004514.GP185096@google.com>
- <20180224001954.GA153423@google.com>
+        id S1750964AbeBXFnP (ORCPT <rfc822;e@80x24.org>);
+        Sat, 24 Feb 2018 00:43:15 -0500
+Received: from mout.web.de ([212.227.15.4]:58849 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750751AbeBXFnP (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 24 Feb 2018 00:43:15 -0500
+Received: from [192.168.178.36] ([79.237.251.165]) by smtp.web.de (mrweb004
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0LpQjF-1eD5Sb0djJ-00f7l6; Sat, 24
+ Feb 2018 06:43:08 +0100
+Subject: Re: [PATCH] commit-graph: fix some "plain integer as NULL pointer"
+ warnings
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>, stolee@gmail.com
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        GIT Mailing-list <git@vger.kernel.org>
+References: <e0bc5fe0-3b32-bebf-11cd-e335a8cf4e1c@ramsayjones.plus.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <93d2329a-1963-dca8-2f9e-ba225ead9d0b@web.de>
+Date:   Sat, 24 Feb 2018 06:42:58 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.6.0
 MIME-Version: 1.0
+In-Reply-To: <e0bc5fe0-3b32-bebf-11cd-e335a8cf4e1c@ramsayjones.plus.com>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20180224001954.GA153423@google.com>
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:zs6K23s4IDFgOC+ieHmZ8hIrRRRGn7PfHB2xj90XW3G03lxeLLR
+ 26+WN24qz912S46VQ9CvyICl1LpeananF0BBpTns4/sFBvqu716cp3L3EXReVaDQzdS6Xus
+ vXU8zklqJa965i07St3EtL947rEa8heebzPDW8x3tw7Pu7bQ62qeRvJ33/43jQd96NBAE3W
+ NP3tadOCeAPU7GbYOf6Eg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:FRXixK6bBe8=:mipEbwD6dEoU/1ApwAhNHv
+ 4uMhqwKfr/GjnBEUYNBf5EJgoK6WL8bSfDvFMNLRCWA2WVcz9eCiDrPk5NJmVEoGtX49Yi4VK
+ zE+jWC4M/w1BSvj/coDzvA4HORraJOynvipQ8Zj2y9P6zMMF9s+RmwO09tetM96OBuLEfLbbe
+ Wb6Vx2Om7ajacYlwQjfe6SMCujdgMoHBcLQOxrbQ75WbH1bEM/Xu8BIUBR6t5iudu0UQOaiVT
+ kpXho1ul0kavqZJXg5OsmDDl3kaW1qtrHNJ7EyET75knqTLnture991z9qqBXDUZegHUW6cLG
+ YE2isilcjLj7/eVeZ64vXeU4rVo+veqW+yhhs+VG+aoiW1B/DodzynQpnAL6G3f/+xDfqqOl+
+ NKcNtLGBx0clQzaFgK8YtcxoIAmS+gxNroHedepka/wsRmdizul6RMeYbPp3oLIHRHwk9wK1L
+ R2G+rvpRBam4cR+zy3GoXQ8XXT2ebhsxHnUqK9gXvgx9miNvQSAFQUwsdsKwBWwZbzsxSa1F/
+ 8c/Jd27sxz7aAN1+8utik0kURjMKhSztq4JnZGaMRLhPNtBoNtExliIuhK0YGop96YT/9t6MA
+ KLZHtCaNgB8c4BsS+664lvIpK4IXLaII8C79FqzXsFcVfpoB82+qKWcU7KQ0/bLadXDxm+1jc
+ V2dkpqW6si8p9bKCAaoZ2fCQTV8IFCEkQ7Z65s5QuefIocZxl1a2cZID4u8gXPsKekFqRJJT2
+ TAKNndmk+uXl2To1BkIDv30o14kIf0fSck2ZmS+TSsxvM6Znizv0vaRUY4LvdWaRmImwf68te
+ r1vMh59DQQJspxlyQfLoo/BrWm7o07YklrVZsFFR2gT1kHLqvE=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 23, 2018 at 04:19:54PM -0800, Brandon Williams wrote:
+Am 24.02.2018 um 03:24 schrieb Ramsay Jones:
+> diff --git a/commit-graph.c b/commit-graph.c
+> index fc5ee7e99..c2f443436 100644
+> --- a/commit-graph.c
+> +++ b/commit-graph.c
+> @@ -45,7 +45,7 @@ char *get_graph_latest_filename(const char *obj_dir)
+>   {
+>   	struct strbuf fname = STRBUF_INIT;
+>   	strbuf_addf(&fname, "%s/info/graph-latest", obj_dir);
+> -	return strbuf_detach(&fname, 0);
+> +	return strbuf_detach(&fname, NULL);
+>   }
 
-> > We always have the ability to extend the patterns accepted via a feature
-> > (or capability) to ls-refs, so maybe the best thing to do now would only
-> > support a few patterns with specific semantics.  Something like if you
-> > say "master" only match against refs/heads/ and refs/tags/ and if you
-> > want something else you would need to specify "refs/pull/master"?
-> > 
-> > That way we could only support globs at the end "master*" where * can
-> > match anything (including slashes)
-> 
-> After some in-office discussion it seems like the best thing to do for
-> this (right now since if we change our mind we can just introduce a
-> capability which extends the patterns supported) would be to left-anchor
-> the ref-patterns and only allow for a single wildcard character '*'
-> which matches zero or more characters (and doesn't care about slashes
-> '/').  This wildcard character should only be supported at the end of
-> the ref pattern.  This means that if a client wants 'master' then they
-> would need to specify 'refs/heads/master' (and the other
-> ref_rev_parse_rules expansions) as a ref pattern. But they could say
-> "refs/heads/*" for all refs under refs/heads.
+You could also replace that function body with:
 
-Heh, I just responded without having read this and came up with the same
-suggestion.
+	return xstrfmt("%s/info/graph-latest", obj_dir);
 
-So I agree that is the right path. Or the simplification I mentioned
-that "refs/heads/master" would return that ref or possibly
-"refs/heads/master/foo" if it exists. Remember that it's fine to be
-overly broad here. This is purely an optimization in the advertisement,
-as we'd still pick out the refs we care about in a separate step.
-
--Peff
+René
