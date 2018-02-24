@@ -2,154 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 963421F404
-	for <e@80x24.org>; Sat, 24 Feb 2018 00:36:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D38521F404
+	for <e@80x24.org>; Sat, 24 Feb 2018 00:46:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751873AbeBXAgJ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Feb 2018 19:36:09 -0500
-Received: from mail-yb0-f182.google.com ([209.85.213.182]:42680 "EHLO
-        mail-yb0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751547AbeBXAgI (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Feb 2018 19:36:08 -0500
-Received: by mail-yb0-f182.google.com with SMTP id i13-v6so3510678ybl.9
-        for <git@vger.kernel.org>; Fri, 23 Feb 2018 16:36:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=4gXyhVHJS7vUhqGTfb9kGXztf9InfrfFdMCTIpWJ5D0=;
-        b=lwXbuHMFxxGWb7owZ0ug0BweENAjX3PpuGikUYjRew9sbuXfpucLErL4etRBpGDpC5
-         l6wnuvlIbfdvYKzfRVEOxmLDhHZO1g9KmJcg990ioVNwoPJgHm1uRlxzmUrLPe5pkPPl
-         JJGCsOlWStUHlkaIFY0oVZk4tiZKRDEPqozwOSR5PsADPoaY1dXAJVF6pnfEADFLwisg
-         YLfeMtewLi+iVc9ThFIM6gO1GMfx0OhFz/p38MKGhT0iGgMvoIrquuIlnrVwkoboTeiu
-         K4UXdL8T65wHvwwf9s0ymZE2Xzsq2QC/VudfR97X9f2sjtwg5RKmwiwjX74tpVXqmO8B
-         vZqg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=4gXyhVHJS7vUhqGTfb9kGXztf9InfrfFdMCTIpWJ5D0=;
-        b=kVtYWaS4/GCUaBlZOOb5qcLgc6Pdoh+4HXonn+Ey12DhvsQFQo5JS7AKWC6pyHKTxR
-         iv9jsTO/GWd4j0HCzbfQD7Rgxf69/l4DMKUuE9vrHl6bywAf+AuuGSU7ziVk2TJcsrOl
-         kQQx9XDihHzdVbrvmSIYo1GyGtIoQqYGoDGOGjAmB4bQXR6UTJCGqJv2C8CyvbOdnY2L
-         hCf4xfNjNLYuv1ye36aD7Banm/2MmQMFCObHH/uV/n6sAeXgaloLoDl8rqV1MdCc4BDs
-         L0RN0o4PXURKEsU+5935WQTN0xRwMmucHnY7lCkmvY7yzZkRVpqXmqEF58vxL4D0H8Ge
-         JcnA==
-X-Gm-Message-State: APf1xPA3HUt5mS1wAqsRkyGKabTvlW/3cfngOgLHkOgwPWc6xtlE4V/J
-        rRUMMO9Tji9HsH2Tj4wCGc2g3AyMlp12FkBRIEZbhQ==
-X-Google-Smtp-Source: AG47ELt6NW7aH4A5sy+Q8Z8P0opCc26g3Sih6RyWOLV9p1qqp3r5XZVmLJrl3/+hI7b8RwmTAVPlR49uxI13oHxs+Sw=
-X-Received: by 2002:a25:f40e:: with SMTP id q14-v6mr2389759ybd.334.1519432567832;
- Fri, 23 Feb 2018 16:36:07 -0800 (PST)
-MIME-Version: 1.0
-Received: by 2002:a25:cfcb:0:0:0:0:0 with HTTP; Fri, 23 Feb 2018 16:36:07
- -0800 (PST)
-In-Reply-To: <OF65A78D43.F69630E3-ONC125823B.0057EE88-C125823C.0042D7B0@continental-corporation.com>
-References: <OF65A78D43.F69630E3-ONC125823B.0057EE88-C125823C.0042D7B0@continental-corporation.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 23 Feb 2018 16:36:07 -0800
-Message-ID: <CAGZ79kZPFF-htksHsnRSDpScWoCLap5Az+s=09htx_0Tz2_u8A@mail.gmail.com>
-Subject: Re: Issue in switching branches with different submodules
-To:     Christian.Zitzmann@continental-corporation.com
-Cc:     git <git@vger.kernel.org>
+        id S1752011AbeBXAqD (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Feb 2018 19:46:03 -0500
+Received: from gproxy3-pub.mail.unifiedlayer.com ([69.89.30.42]:58383 "EHLO
+        gproxy3-pub.mail.unifiedlayer.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751674AbeBXAqC (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 23 Feb 2018 19:46:02 -0500
+X-Greylist: delayed 1251 seconds by postgrey-1.27 at vger.kernel.org; Fri, 23 Feb 2018 19:46:02 EST
+Received: from cmgw4 (unknown [10.0.90.85])
+        by gproxy3.mail.unifiedlayer.com (Postfix) with ESMTP id 10D4840250
+        for <git@vger.kernel.org>; Fri, 23 Feb 2018 17:25:09 -0700 (MST)
+Received: from box5008.bluehost.com ([50.116.64.19])
+        by cmgw4 with 
+        id EQR51x00X0QvKlu01QR8lQ; Fri, 23 Feb 2018 17:25:09 -0700
+X-Authority-Analysis: v=2.2 cv=G85sK5s5 c=1 sm=1 tr=0
+ a=gch/BGY/Gm5DEW28s2kmlQ==:117 a=gch/BGY/Gm5DEW28s2kmlQ==:17
+ a=IkcTkHD0fZMA:10 a=Op4juWPpsa0A:10 a=uPAkQHdKeDEV1LCO42oA:9 a=QEXdDO2ut3YA:10
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=mad-scientist.net; s=default; h=Content-Transfer-Encoding:Mime-Version:
+        Content-Type:Date:To:Reply-To:From:Subject:Message-ID:Sender:Cc:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+        List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=/ASWBJmeNS6sCkHrQJKdJ36/R9VnuKq1c4jpQTO2bXo=; b=fRMIKxkhoh5WKfXD3A1XFp2Ud2
+        zGsf/FJ4/tr6YJuX1Mb4K2PRxSZYsyetYTMPZ954MHUlw2oC3scyLF8xYYkDr2u+UTdzI3KdEabZh
+        tAZmXrLHaZhlE6ovcHoKB/9oi;
+Received: from pool-74-104-137-100.bstnma.fios.verizon.net ([74.104.137.100]:53520 helo=homebase)
+        by box5008.bluehost.com with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.89_1)
+        (envelope-from <paul@mad-scientist.net>)
+        id 1epNeD-0010yM-7x
+        for git@vger.kernel.org; Fri, 23 Feb 2018 17:25:05 -0700
+Message-ID: <1519431904.3405.933.camel@mad-scientist.net>
+Subject: Git 2.16.2: Build failure linking static libcurl / static SSL
+From:   Paul Smith <paul@mad-scientist.net>
+Reply-To: paul@mad-scientist.net
+To:     Git mailing list <git@vger.kernel.org>
+Date:   Fri, 23 Feb 2018 19:25:04 -0500
 Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.26.1-1 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5008.bluehost.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - mad-scientist.net
+X-BWhitelist: no
+X-Source-IP: 74.104.137.100
+X-Exim-ID: 1epNeD-0010yM-7x
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: pool-74-104-137-100.bstnma.fios.verizon.net (homebase) [74.104.137.100]:53520
+X-Source-Auth: paul@mad-scientist.us
+X-Email-Count: 1
+X-Source-Cap: bWFkc2NpZTE7bWFkc2NpZTE7Ym94NTAwOC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 22, 2018 at 4:10 AM,
-<Christian.Zitzmann@continental-corporation.com> wrote:
-> Hello,
-> I've found an issue in git when working with submodules.
-> My Project is set up using hundreds of components by submodules (and
-> nested submodules), that are independent created in central development
-> groups.
-> Now it occurs that the structure of the submodules is changed over time.
->
-> E.g.
-> Project1(OldBranch)
->   - ComponentX/SubComp1 -> ssh://Server/ComponentX/SubComp1
->   - ComponentX/SubComp2 -> ssh://Server/ComponentX/SubComp2
->   - ComponentX/SubComp2 -> ssh://Server/ComponentX/SubComp2
->
-> Project1(Masster)
->   - ComponentX-> ssh://Server/ComponentX
->
-> There is both a repository for the old subcomponents, and for the new
-> Component on the server.
+I'm compiling Git with my own static libcurl and my own static
+LibreSSL.  They live in two different locations.
 
-ok, so you're saying this is all a client side problem?
+Building Curl with a pointer to my LibreSSL works fine, and compiling
+Git works fine: the correct -I options are added to the compile line
+when I configure with --with-openssl=/path/to/libressl/dist
 
-> When trying to switch between the branches all git commands are failing.
-> It seems like most git commands are not creating the SubComponent
-> submodules because the .git file from the Component is not deleted
->
-> A 'git submodule sync' fails with:
-> fatal: Not a git repository:
-> D:/Project1/ComponentX/../.git/modules/ComponentX
->
-> Looking into the folders I see:
-> D:/Project1/.git/modules/ComponentX/SubComp1
-> D:/Project1/.git/modules/ComponentX/SubComp2
-> D:/Project1/.git/modules/ComponentX/SubComp3
-> D:/Project1/ComponentX/.git (file)
+However, linking fails to find the crypto and ssl libraries, because
+the OPENSSLDIR lib directory is not added to the link line with -L. 
+The link line in question is from Makefile:
 
-As a quick workaround to repair your current corrupted repo,
-you can just delete the .git file, which presumably contains
+  git-http-fetch$X: http.o http-walker.o http-fetch.o GIT-LDFLAGS $(GITLIBS)
+        $(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
+                $(CURL_LIBCURL) $(LIBS)
+  git-http-push$X: http.o http-push.o GIT-LDFLAGS $(GITLIBS)
+        $(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
+                $(CURL_LIBCURL) $(EXPAT_LIBEXPAT) $(LIBS)
 
-  gitdir: ../.git/modules/ComponentX
+The OpenSSL libraries are included in CURL_LIBCURL, but the -L flags
+are not:
 
-I think this reveals (yet another) problem that we have with
-with submodule names. Submodules used to have its git directory
-inside its own working tree, but now they are encouraged to have
-it in the superproject in .git/modules/<name>.
+        ifdef NEEDS_SSL_WITH_CURL
+                CURL_LIBCURL += -lssl
+                ifdef NEEDS_CRYPTO_WITH_SSL
+                        CURL_LIBCURL += -lcrypto
+                endif
+        endif
 
-Considering your submodules
-    "ComponentX/..."
-    "ComponentX"
-you may have a directory conflict, because there is already a
-directory named "ComponentX" so we cannot store the later
-submodules git directory.
+This section needs to add in the OPENSSL_LINK variable, or maybe it has
+to go directly in the git-http-fetch/push recipe, I'm not sure which is
+appropriate.  There seems to be a lot of different variables that have
+similar content, that maybe should be aligned (OPENSSL_LIBSSL,
+OPENSSL_LINK, LIB_4_CRYPTO, CURL_LIBCURL, etc.)
 
-> A 'git submodule update --init also fails with this folders
-> Neither a forced checkout or a hard reset is working.
+But, the -L is definitely missing:
 
-For this problem you could manually repair the superproject by
-giving better names to submodules, such that you have unique
-names, such that one is not the prefix directory of another.
+  gcc -g -O2 -I. -DGIT_HOST_CPU="\"x86_64\"" -DHAVE_ALLOCA_H -I/work/src/git/Linux-Release-make/dist/include -I/work/src/libressl/Linux-Release-make/dist/include -DNO_GETTEXT -DSHA1_DC -DSHA1DC_NO_STANDARD_INCLUDES -DSHA1DC_INIT_SAFE_HASH_DEFAULT=0 -DSHA1DC_CUSTOM_INCLUDE_SHA1_C="\"cache.h\"" -DSHA1DC_CUSTOM_INCLUDE_UBC_CHECK_C="\"git-compat-util.h\"" -pthread -DHAVE_PATHS_H -DHAVE_STRINGS_H -DHAVE_DEV_TTY -DHAVE_CLOCK_GETTIME -DHAVE_CLOCK_MONOTONIC -DHAVE_GETDELIM  -DFREAD_READS_DIRECTORIES -DNO_STRLCPY -DSHELL_PATH='"/bin/sh"' -DPAGER_ENV='"LESS=FRX LV=-c"' -o git-http-fetch   http.o http-walker.o http-fetch.o common-main.o \
+        -L/work/src/git/Linux-Release-make/dist/lib -L/work/src/git/Linux-Release-make/dist/lib -lcurl -lssl -lcrypto -lidn libgit.a xdiff/lib.a  -lz -pthread -lrt
+  ld: error: cannot find -lssl
+  ld: error: cannot find -lcrypto
 
-> Similar errors can occur when switching between branches with a different
-> number of components used as submodules vs. project specific content.
-> As a result it happens that people are working with an incosistend state
-> of the working directory.
->
-> My expectation would be that, when switching between branches/commits with
-> a git checkout --recurse-submodules the branche including all submodules
-> is checked out fully to exactly the state of the desired branch/commit
-> I.e the following usecases are an issue
-> - Deleted submodule
-> - Added submodule as replacement of local directory
-> - Changed remote location of submodule (One component is available from
-> different providers having individual repositories)
-> - Restructured Component (see example)
-
-I agree with this expectation and we'd need to discuss how to make this happen
-as the submodule naming scheme doesn't allow for this to work flawlessly.
-
-> Similar issues are existing when creating the new structure to commit it,
-> but here the error is more obvious and people are manually deleting as
-> much as required to get the new submodules correctly in.
->
-> Best regards
-
-Thanks for this bug report; I needed some time to ingest it and come up
-with speculation on what might be the cause. (Not sure if it is the correct
-root cause though)
-
-Thanks,
-Stefan
+Note how the -I.../libressl/.../include option is present, but the
+-L.../libressl/.../lib option is missing.
