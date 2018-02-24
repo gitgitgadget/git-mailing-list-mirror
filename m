@@ -7,55 +7,54 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B69811F404
-	for <e@80x24.org>; Sat, 24 Feb 2018 00:48:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CFE5C1F404
+	for <e@80x24.org>; Sat, 24 Feb 2018 00:48:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752014AbeBXAsC (ORCPT <rfc822;e@80x24.org>);
+        id S1752095AbeBXAsE (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Feb 2018 19:48:04 -0500
+Received: from mail-pl0-f68.google.com ([209.85.160.68]:46276 "EHLO
+        mail-pl0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751955AbeBXAsC (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 23 Feb 2018 19:48:02 -0500
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:33777 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751674AbeBXAsB (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Feb 2018 19:48:01 -0500
-Received: by mail-pf0-f196.google.com with SMTP id q13so4193924pff.0
-        for <git@vger.kernel.org>; Fri, 23 Feb 2018 16:48:01 -0800 (PST)
+Received: by mail-pl0-f68.google.com with SMTP id x19so5843730plr.13
+        for <git@vger.kernel.org>; Fri, 23 Feb 2018 16:48:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=fO6ZVhE+FszAEbkxUhDsmdtJmjAny0MYQBmnEzbgWss=;
-        b=jO1Fq1JO01M3u/NQKb2oQNPFEDGvwrSAYDqTDev6L5ZNKp3bhBLuUp3aMnw4NkextB
-         RRXgqhHIG2G8P8AlJn/q1WDFw7Vo4VDhtxcOOzQeWdIguqiFzBGyX0/Z8WoQdqlbq0nQ
-         f05HEQIoKOnqVUL9y50r8ZEljqxal1AcaZJZgFFkw3mrCV6/3gokQinBytAy1ZGqjBEE
-         qfmiuKMlU2qcJvHGXwoXqqDkYh+1810+rhwa5HN+TpXT+RbBIbtm2zc8oAEsZ70R2Yq+
-         G9jv93Zltj57P+T+jnui+KVr4wREr3FyPakV35YWRw6qlvfhv6ww43eD7HzCrV9tbmYP
-         YDwg==
+        bh=oe54K4u+MOJS+lOsjJwKcCS3Y2Uigu6wzk6aW5UB0Oo=;
+        b=J63EdXc8hqyFTsQFILejRjsm5JBXw/fWCjD5JAtzIxO699xqioU9TqqKAKfXzZlWNW
+         c53BUaIK6ERyg2AG1GkNQdAfFXAMwe2n9Y11B87e6OIo++lB5TRXcc5Kg6FMTWL1XiSU
+         Fts7BScgxpbk+4qi9lYb2C1HJ0YPpONxArJiIuJ3M07Z22R/r9iw1LdU7EF/Jt4c+cm0
+         w5pgtCAU+aSNRyaDYAhfmXTiBZsAJoHmX/C0pkWtwvQSQUXeJGuzmPlV0cXxL9K9EeNS
+         Id/BTfI9OPiLRtaHc7rU3cJYlSn9R/d0Hgc2NBGNzLzl3wPOoHvjT/1gHRgPdD+InRqi
+         yc6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=fO6ZVhE+FszAEbkxUhDsmdtJmjAny0MYQBmnEzbgWss=;
-        b=kpdm+nEc82ELnb+YLv+qIt7+7SFE5xAiRjs2KWeKvgAOcHhOgm1qEgsrPFxbfAwsMQ
-         wVGrB9nfe66ksFflw5NY/VejtamUm9qkisSZoo6XMyX5CRcsfNICxzixW5xKOUIWA5v0
-         eXtHzhdDBIxL9zDHfPGErPWF77KzloSV/Z3EUchfNCjEZ1CgTOnWRSvWGcFsyD8TlWWg
-         bnJIvhFMSSA7YkAt6GqJPRb4Uo9NHq0kIVwyRxSgJS5nOndmltyFAGQoHS7VCKtM85r2
-         nr8wzN229HYtU2kU4PBRXTO8veae4zwX1arMi0Uec6CR9Xu69n+yD5Ko+S3NjFVnjJJV
-         hL9Q==
-X-Gm-Message-State: APf1xPDUQcg9s/VsSwYIzWf7lyZtuouE6ymf1ElyMwVnt0vkxueoAQel
-        aI+gRzIPlmcHTW2RFG/ydOnYHA==
-X-Google-Smtp-Source: AH8x225QBE8UJ8t0/nOl0B5oRBIncfpuS/0LX0RxCCG9QdMJFLJ50DR0pfJ9lz5neRE112OMDFGMFg==
-X-Received: by 10.101.76.204 with SMTP id n12mr2789869pgt.249.1519433280522;
-        Fri, 23 Feb 2018 16:48:00 -0800 (PST)
+        bh=oe54K4u+MOJS+lOsjJwKcCS3Y2Uigu6wzk6aW5UB0Oo=;
+        b=SSy3RDmdqZOs4fn7RAlRqSXNnzMSspkokeRt7w9Ol2Bu6NfJRZOEFFQTBWJfGfHqs0
+         yD/HvYfhwZ0JXfj3u10odxI3ZLKN1fB4OlFi/yo6Dh7ZTJdKIj5vXlKkGih3GWlLEzaZ
+         amc+cHeTvcH3E/9oFjy+h7PaOxdw6xaIQbhIGWEOnr+DH/e2rVL7xYuZOLKfqFaT54IX
+         QpNvlTfp4gRMTnTslUxh86FRld5eHjasat5wIwhvCw49U52bbHaiH7VBDI+zxcdzcyr+
+         DeuvFLk6o8GSxBeUKUVSaNjjJWeXMWxt5AiH88ck36dqdYKkUctVxOKL8RbhVcXc43Qx
+         9QIw==
+X-Gm-Message-State: APf1xPAckfKvb7IQ4D2FeJwA6m9BGE9X+VOH1QHjkyr4YcsdX3hbLTiN
+        3a5nTEvGXKmT7auVAGtC4262dw==
+X-Google-Smtp-Source: AH8x227ruHj9mAlU/oThRzaT9B64S9qDZ11gZ0q2M1yiYy6+Z6ljhb3PtsjUc9H5drARA3WrP4b1qQ==
+X-Received: by 2002:a17:902:540f:: with SMTP id d15-v6mr3421122pli.224.1519433281815;
+        Fri, 23 Feb 2018 16:48:01 -0800 (PST)
 Received: from localhost ([2620:0:100e:422:2d12:5719:3437:fdb7])
-        by smtp.gmail.com with ESMTPSA id n67sm7173508pfh.150.2018.02.23.16.47.59
+        by smtp.gmail.com with ESMTPSA id s78sm4326387pfe.162.2018.02.23.16.48.01
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 23 Feb 2018 16:47:59 -0800 (PST)
+        Fri, 23 Feb 2018 16:48:01 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     sbeller@google.com
 Cc:     git@vger.kernel.org, gitster@pobox.com, jonathantanmy@google.com,
-        pclouds@gmail.com, sunshine@sunshineco.com, bmwill@google.com,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCHv4 01/27] repository: introduce raw object store field
-Date:   Fri, 23 Feb 2018 16:47:28 -0800
-Message-Id: <20180224004754.129721-2-sbeller@google.com>
+        pclouds@gmail.com, sunshine@sunshineco.com, bmwill@google.com
+Subject: [PATCHv4 02/27] object-store: migrate alternates struct and functions from cache.h
+Date:   Fri, 23 Feb 2018 16:47:29 -0800
+Message-Id: <20180224004754.129721-3-sbeller@google.com>
 X-Mailer: git-send-email 2.16.1.291.g4437f3f132-goog
 In-Reply-To: <20180224004754.129721-1-sbeller@google.com>
 References: <20180221015430.96054-1-sbeller@google.com>
@@ -65,198 +64,142 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The raw object store field will contain any objects needed for
-access to objects in a given repository.
-
-This patch introduces the raw object store and populates it with the
-`objectdir`, which used to be part of the repository struct.
-
-As the struct gains members, we'll also populate the function to clear
-the memory for these members.
-
-In a later we'll introduce a struct object_parser, that will complement
-the object parsing in a repository struct: The raw object parser is the
-layer that will provide access to raw object content, while the higher
-level object parser code will parse raw objects and keeps track of
-parenthood and other object relationships using 'struct object'.
-For now only add the lower level to the repository struct.
+Migrate the struct alternate_object_database and all its related
+functions to the object store as these functions are easier found in
+that header. The migration is just a verbatim copy, no need to
+include the object store header at any C file, because cache.h includes
+repository.h which in turn includes the object-store.h
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- builtin/grep.c |  2 +-
- environment.c  |  5 +++--
- object-store.h | 15 +++++++++++++++
- object.c       |  5 +++++
- path.c         |  2 +-
- repository.c   | 19 ++++++++++++++-----
- repository.h   |  7 ++++---
- 7 files changed, 43 insertions(+), 12 deletions(-)
- create mode 100644 object-store.h
+ cache.h        | 51 --------------------------------------------------
+ object-store.h | 51 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 51 insertions(+), 51 deletions(-)
 
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 3ca4ac80d8c..0f0c195705f 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -432,7 +432,7 @@ static int grep_submodule(struct grep_opt *opt, struct repository *superproject,
- 	 * object.
- 	 */
- 	grep_read_lock();
--	add_to_alternates_memory(submodule.objectdir);
-+	add_to_alternates_memory(submodule.objects.objectdir);
- 	grep_read_unlock();
+diff --git a/cache.h b/cache.h
+index 21fbcc24149..99eb2bdb893 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1560,57 +1560,6 @@ extern int has_dirs_only_path(const char *name, int len, int prefix_len);
+ extern void schedule_dir_for_removal(const char *name, int len);
+ extern void remove_scheduled_dirs(void);
  
- 	if (oid) {
-diff --git a/environment.c b/environment.c
-index de8431e01e7..ec10b062e68 100644
---- a/environment.c
-+++ b/environment.c
-@@ -13,6 +13,7 @@
- #include "refs.h"
- #include "fmt-merge-msg.h"
- #include "commit.h"
-+#include "object-store.h"
- 
- int trust_executable_bit = 1;
- int trust_ctime = 1;
-@@ -244,9 +245,9 @@ const char *get_git_work_tree(void)
- 
- char *get_object_directory(void)
- {
--	if (!the_repository->objectdir)
-+	if (!the_repository->objects.objectdir)
- 		BUG("git environment hasn't been setup");
--	return the_repository->objectdir;
-+	return the_repository->objects.objectdir;
- }
- 
- int odb_mkstemp(struct strbuf *template, const char *pattern)
+-extern struct alternate_object_database {
+-	struct alternate_object_database *next;
+-
+-	/* see alt_scratch_buf() */
+-	struct strbuf scratch;
+-	size_t base_len;
+-
+-	/*
+-	 * Used to store the results of readdir(3) calls when searching
+-	 * for unique abbreviated hashes.  This cache is never
+-	 * invalidated, thus it's racy and not necessarily accurate.
+-	 * That's fine for its purpose; don't use it for tasks requiring
+-	 * greater accuracy!
+-	 */
+-	char loose_objects_subdir_seen[256];
+-	struct oid_array loose_objects_cache;
+-
+-	char path[FLEX_ARRAY];
+-} *alt_odb_list;
+-extern void prepare_alt_odb(void);
+-extern char *compute_alternate_path(const char *path, struct strbuf *err);
+-typedef int alt_odb_fn(struct alternate_object_database *, void *);
+-extern int foreach_alt_odb(alt_odb_fn, void*);
+-
+-/*
+- * Allocate a "struct alternate_object_database" but do _not_ actually
+- * add it to the list of alternates.
+- */
+-struct alternate_object_database *alloc_alt_odb(const char *dir);
+-
+-/*
+- * Add the directory to the on-disk alternates file; the new entry will also
+- * take effect in the current process.
+- */
+-extern void add_to_alternates_file(const char *dir);
+-
+-/*
+- * Add the directory to the in-memory list of alternates (along with any
+- * recursive alternates it points to), but do not modify the on-disk alternates
+- * file.
+- */
+-extern void add_to_alternates_memory(const char *dir);
+-
+-/*
+- * Returns a scratch strbuf pre-filled with the alternate object directory,
+- * including a trailing slash, which can be used to access paths in the
+- * alternate. Always use this over direct access to alt->scratch, as it
+- * cleans up any previous use of the scratch buffer.
+- */
+-extern struct strbuf *alt_scratch_buf(struct alternate_object_database *alt);
+-
+ struct pack_window {
+ 	struct pack_window *next;
+ 	unsigned char *base;
 diff --git a/object-store.h b/object-store.h
-new file mode 100644
-index 00000000000..cf35760ceb6
---- /dev/null
+index cf35760ceb6..5678aa1136c 100644
+--- a/object-store.h
 +++ b/object-store.h
-@@ -0,0 +1,15 @@
-+#ifndef OBJECT_STORE_H
-+#define OBJECT_STORE_H
+@@ -1,6 +1,57 @@
+ #ifndef OBJECT_STORE_H
+ #define OBJECT_STORE_H
+ 
++extern struct alternate_object_database {
++	struct alternate_object_database *next;
 +
-+struct raw_object_store {
++	/* see alt_scratch_buf() */
++	struct strbuf scratch;
++	size_t base_len;
++
 +	/*
-+	 * Path to the repository's object store.
-+	 * Cannot be NULL after initialization.
++	 * Used to store the results of readdir(3) calls when searching
++	 * for unique abbreviated hashes.  This cache is never
++	 * invalidated, thus it's racy and not necessarily accurate.
++	 * That's fine for its purpose; don't use it for tasks requiring
++	 * greater accuracy!
 +	 */
-+	char *objectdir;
-+};
-+#define RAW_OBJECT_STORE_INIT { NULL }
++	char loose_objects_subdir_seen[256];
++	struct oid_array loose_objects_cache;
 +
-+void raw_object_store_clear(struct raw_object_store *o);
++	char path[FLEX_ARRAY];
++} *alt_odb_list;
++void prepare_alt_odb(void);
++char *compute_alternate_path(const char *path, struct strbuf *err);
++typedef int alt_odb_fn(struct alternate_object_database *, void *);
++int foreach_alt_odb(alt_odb_fn, void*);
 +
-+#endif /* OBJECT_STORE_H */
-diff --git a/object.c b/object.c
-index 9e6f9ff20b0..a2acdee1405 100644
---- a/object.c
-+++ b/object.c
-@@ -445,3 +445,8 @@ void clear_commit_marks_all(unsigned int flags)
- 			obj->flags &= ~flags;
- 	}
- }
++/*
++ * Allocate a "struct alternate_object_database" but do _not_ actually
++ * add it to the list of alternates.
++ */
++struct alternate_object_database *alloc_alt_odb(const char *dir);
 +
-+void raw_object_store_clear(struct raw_object_store *o)
-+{
-+	FREE_AND_NULL(o->objectdir);
-+}
-diff --git a/path.c b/path.c
-index da8b655730d..81a42d91155 100644
---- a/path.c
-+++ b/path.c
-@@ -382,7 +382,7 @@ static void adjust_git_path(const struct repository *repo,
- 		strbuf_splice(buf, 0, buf->len,
- 			      repo->index_file, strlen(repo->index_file));
- 	else if (dir_prefix(base, "objects"))
--		replace_dir(buf, git_dir_len + 7, repo->objectdir);
-+		replace_dir(buf, git_dir_len + 7, repo->objects.objectdir);
- 	else if (git_hooks_path && dir_prefix(base, "hooks"))
- 		replace_dir(buf, git_dir_len + 5, git_hooks_path);
- 	else if (repo->different_commondir)
-diff --git a/repository.c b/repository.c
-index 4ffbe9bc94e..fb65e8072d5 100644
---- a/repository.c
-+++ b/repository.c
-@@ -1,11 +1,18 @@
- #include "cache.h"
- #include "repository.h"
-+#include "object-store.h"
- #include "config.h"
- #include "submodule-config.h"
- 
- /* The main repository */
- static struct repository the_repo = {
--	NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, &the_index, &hash_algos[GIT_HASH_SHA1], 0, 0
-+	NULL, NULL,
-+	RAW_OBJECT_STORE_INIT,
-+	NULL, NULL, NULL,
-+	NULL, NULL, NULL,
-+	&the_index,
-+	&hash_algos[GIT_HASH_SHA1],
-+	0, 0
- };
- struct repository *the_repository = &the_repo;
- 
-@@ -42,9 +49,10 @@ static void repo_setup_env(struct repository *repo)
- 						    !repo->ignore_env);
- 	free(repo->commondir);
- 	repo->commondir = strbuf_detach(&sb, NULL);
--	free(repo->objectdir);
--	repo->objectdir = git_path_from_env(DB_ENVIRONMENT, repo->commondir,
--					    "objects", !repo->ignore_env);
-+	raw_object_store_clear(&repo->objects);
-+	repo->objects.objectdir =
-+		git_path_from_env(DB_ENVIRONMENT, repo->commondir,
-+				  "objects", !repo->ignore_env);
- 	free(repo->graft_file);
- 	repo->graft_file = git_path_from_env(GRAFT_ENVIRONMENT, repo->commondir,
- 					     "info/grafts", !repo->ignore_env);
-@@ -209,12 +217,13 @@ void repo_clear(struct repository *repo)
- {
- 	FREE_AND_NULL(repo->gitdir);
- 	FREE_AND_NULL(repo->commondir);
--	FREE_AND_NULL(repo->objectdir);
- 	FREE_AND_NULL(repo->graft_file);
- 	FREE_AND_NULL(repo->index_file);
- 	FREE_AND_NULL(repo->worktree);
- 	FREE_AND_NULL(repo->submodule_prefix);
- 
-+	raw_object_store_clear(&repo->objects);
++/*
++ * Add the directory to the on-disk alternates file; the new entry will also
++ * take effect in the current process.
++ */
++void add_to_alternates_file(const char *dir);
 +
- 	if (repo->config) {
- 		git_configset_clear(repo->config);
- 		FREE_AND_NULL(repo->config);
-diff --git a/repository.h b/repository.h
-index 0329e40c7f5..fa73ab8e938 100644
---- a/repository.h
-+++ b/repository.h
-@@ -1,6 +1,8 @@
- #ifndef REPOSITORY_H
- #define REPOSITORY_H
- 
-+#include "object-store.h"
++/*
++ * Add the directory to the in-memory list of alternates (along with any
++ * recursive alternates it points to), but do not modify the on-disk alternates
++ * file.
++ */
++void add_to_alternates_memory(const char *dir);
 +
- struct config_set;
- struct index_state;
- struct submodule_cache;
-@@ -21,10 +23,9 @@ struct repository {
- 	char *commondir;
- 
++/*
++ * Returns a scratch strbuf pre-filled with the alternate object directory,
++ * including a trailing slash, which can be used to access paths in the
++ * alternate. Always use this over direct access to alt->scratch, as it
++ * cleans up any previous use of the scratch buffer.
++ */
++struct strbuf *alt_scratch_buf(struct alternate_object_database *alt);
++
+ struct raw_object_store {
  	/*
--	 * Path to the repository's object store.
--	 * Cannot be NULL after initialization.
-+	 * Holds any information related to accessing the raw object content.
- 	 */
--	char *objectdir;
-+	struct raw_object_store objects;
- 
- 	/*
- 	 * Path to the repository's graft file.
+ 	 * Path to the repository's object store.
 -- 
 2.16.1.291.g4437f3f132-goog
 
