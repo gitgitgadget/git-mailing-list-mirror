@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6E22F1F404
-	for <e@80x24.org>; Sun, 25 Feb 2018 19:47:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CF52D1F404
+	for <e@80x24.org>; Sun, 25 Feb 2018 19:47:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751968AbeBYTrf (ORCPT <rfc822;e@80x24.org>);
-        Sun, 25 Feb 2018 14:47:35 -0500
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:40809 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751950AbeBYTrX (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 25 Feb 2018 14:47:23 -0500
-Received: by mail-wm0-f67.google.com with SMTP id t6so5071237wmt.5
-        for <git@vger.kernel.org>; Sun, 25 Feb 2018 11:47:21 -0800 (PST)
+        id S1751973AbeBYTrh (ORCPT <rfc822;e@80x24.org>);
+        Sun, 25 Feb 2018 14:47:37 -0500
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:33080 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751945AbeBYTrU (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 25 Feb 2018 14:47:20 -0500
+Received: by mail-wm0-f65.google.com with SMTP id s206so14153226wme.0
+        for <git@vger.kernel.org>; Sun, 25 Feb 2018 11:47:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=5xC0i6jrKxKi7N6w0sC/VEBMWtlRL/bjc2JG1kEudYg=;
-        b=J4JhKI3uXpC8hIIor/zGIu/A0ThHe33SoS+H2c6rVFHdIBIZiEMb4SrVnofgz/81id
-         V9fmtOPbqsTCZXlqMSSx/+PyCxrsDnsaLjyaXH9lcDLPg18wFVJ/9qJHmqR81oX4gPut
-         XCgmjBYXxvP0BfRx9u4871bpVUII1WmSyOfv39BlDYjZopIVdhv3YOGVGrKzXT2IvdfE
-         uAhrNLBZrlzl2JWRHWFLrC7EyR1p/b06hxsNimAeqUawUJsx62h8cTfdIpg+tuDpibOh
-         eK07E/eERtUA0LGHHHbUGeUnq98LwwlBgjxB5a8kUwK27299GLYKDb1MMkqfdyJfrPWW
-         qS6w==
+        bh=/ygaY3lDYxQBoJk65BzqonVAssYfwwbhbfWJu7zVayA=;
+        b=LunMyK3sqKPduovczv5Lx4ZCRtq73pFs5SPvoWvs4N4Clg2uEIso9d06JSRImnkrRj
+         miSpW0/uv/hC1PYMTqOS7TPvTr4yRKNQismZGtcexYAb1UOOkY6ayXMtx0EwYJQJR/rv
+         sWRiwM+3SZKg9tE5jIL4e/7YOPFkI8doTZ6altVmcgowhOXN4XxiiRRhsD5PM2zdg/kq
+         j482G/pL6pqKAMDCuhU7v0YfTypEf+CLg83HwNNHI1rExb6De3V9/0nCgvWY5fGKwhdp
+         QLuWzYqYc0hfJisIOm2dRkxQIikcvKhj7MHCHyKip11Z0iTlkE4u94PvjvRWZyJ+9ban
+         J6HQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=5xC0i6jrKxKi7N6w0sC/VEBMWtlRL/bjc2JG1kEudYg=;
-        b=SgvBxEQG+ZYVOYFdQoo9LXAUIemChL2F7qbHdrkuvlMTtlT4g4qgHQchNp87doUlIe
-         bMY1q3o5Y9X2/WstDyWTeLfE+FEVepXezpJO7U4inScWALIsDyRli4KWq+hjxhmtW6+k
-         OfsKEl/qWcKHNoQ8Sm9p0bIWhB4IVTtCa7GXzmcrPM968BmTrC9Q+lsPXVVEK1pZmd2f
-         0/hxJqvXtojdUwDmb0OZ18jcKjLOy5KtsMgr64tWNG8BJOmiqmUJ/5ewBdeeqqLjFuj2
-         0hVTRRI7MmXqCfhMgm2uxqLRCNMRcpSfIMSpmD2AgqHfHmoS/Ol+cKTh9QvUZ2jJWjSR
-         g3Zw==
-X-Gm-Message-State: APf1xPBJALVKpMw7C4320IaVho3nTrZBNxTImD/AKHwNFn/7NcgOpJ7f
-        f+aLHkXSR7sTagLT1XWM3RyOIaBa
-X-Google-Smtp-Source: AG47ELu0qznTKMbBo6KvSeWGfoypv9Ct57Y5YE/j4USz5iV0yACjz7uceLa9567Ra4xUmhtX+PvG8A==
-X-Received: by 10.28.105.65 with SMTP id e62mr3187937wmc.126.1519588040814;
-        Sun, 25 Feb 2018 11:47:20 -0800 (PST)
+        bh=/ygaY3lDYxQBoJk65BzqonVAssYfwwbhbfWJu7zVayA=;
+        b=p83s+TGmgITW0LoYfh/lkuFKWXMGcDjYC//NdjzgPIOMb6Ak1j3+8j3vPcSo3pGQmb
+         wOI0alpRU1z43D966VkE1AQWlRSLMHWxjbQ57XNWLALbN/b/7Nm0hY19VjAkfDckvFQq
+         pzEKGf88l4+jPLKlj9bofna7BmRq9iTNTeApkZnh90Qnk7wnNcGdCsDbfRmTRunZkeL/
+         EUOS0Dw1lUTM6sxtxcD33UXz8Ia9/q6EpequtoA4L85OnYgzyOtqopYMzTRYsE9ldpJA
+         ljZFxMFKjyDU2WUkR4H5KTLkZ6tJbgqP2bsZoP7o4Vd8bHAE1PrP9u7uft55hCKqbQvD
+         jJEQ==
+X-Gm-Message-State: APf1xPDfR1yTxpfUU7Pd39PJVRB0j7RYjVufeKiGYpuOsXMeDOjxZjWY
+        Wl98QfPUULIm6wM5O7oR/74jfbln
+X-Google-Smtp-Source: AG47ELvw1WwaZMLgGcAtWh8qpTJsZ1XpXHfIa5RXxKhzc+QdekxnpmmzPdcaUoPkqhfDXEzaCC6gbw==
+X-Received: by 10.28.69.65 with SMTP id s62mr6602372wma.78.1519588038987;
+        Sun, 25 Feb 2018 11:47:18 -0800 (PST)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id b66sm4394003wmg.28.2018.02.25.11.47.19
+        by smtp.gmail.com with ESMTPSA id b66sm4394003wmg.28.2018.02.25.11.47.17
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 25 Feb 2018 11:47:19 -0800 (PST)
+        Sun, 25 Feb 2018 11:47:18 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -64,9 +64,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         "Randall S . Becker" <rsbecker@nexbridge.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 13/13] perl Git::LoadCPAN: emit better errors under NO_PERL_CPAN_FALLBACKS
-Date:   Sun, 25 Feb 2018 19:46:37 +0000
-Message-Id: <20180225194637.18630-14-avarab@gmail.com>
+Subject: [PATCH v2 12/13] Makefile: add NO_PERL_CPAN_FALLBACKS knob
+Date:   Sun, 25 Feb 2018 19:46:36 +0000
+Message-Id: <20180225194637.18630-13-avarab@gmail.com>
 X-Mailer: git-send-email 2.15.1.424.g9478a66081
 In-Reply-To: <20180225194637.18630-1-avarab@gmail.com>
 References: <20180225194637.18630-1-avarab@gmail.com>
@@ -80,148 +80,52 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Before my 20d2a30f8f ("Makefile: replace perl/Makefile.PL with simple
-make rules", 2017-12-10) on an OS package that removed the
-private-Error.pm copy we carried around manually removing the OS's
-Error.pm would yield:
+From: Todd Zullinger <tmz@pobox.com>
 
-    $ git add -p
-    Can't locate Error.pm in @INC (you may need to install the Error module) [...]
+We include some perl modules which are not part of the core perl
+install, as a convenience.  This allows us to rely on those modules in
+our perl-based tools and scripts without requiring users to install the
+modules from CPAN or their operating system packages.
 
-Now, before this change we'll instead emit this more cryptic error:
+Users whose operating system provides these modules and packagers of Git
+often don't want to ship or use these bundled modules.  Allow these
+users to set NO_PERL_CPAN_FALLBACKS to avoid installing the bundled
+modules.
 
-    $ git add -p
-    BUG: '/usr/share/perl5/Git/FromCPAN' should be a directory! at /usr/share/perl5/Git/Error.pm line 36.
-
-This is a confusing error. Now if the new NO_PERL_CPAN_FALLBACKS
-option is specified and we can't find the module we'll instead emit:
-
-    $ /tmp/git/bin/git add -p
-    BUG: The 'Error' module is not here, but NO_PERL_CPAN_FALLBACKS was set!
-
-    [...]
-
-Where [...] is the lengthy explanation seen in the change below, which
-explains what the potential breakage is, and how to fix it.
-
-The reason for checking @@NO_PERL_CPAN_FALLBACKS@@] against the empty
-string in Perl is as opposed to checking for a boolean value is that
-that's (as far as I can tell) make's idea of a string that's set, and
-e.g. NO_PERL_CPAN_FALLBACKS=0 is enough to set NO_PERL_CPAN_FALLBACKS.
-
+Signed-off-by: Todd Zullinger <tmz@pobox.com>
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- INSTALL              | 11 ++++++++---
- Makefile             |  5 ++++-
- perl/Git/LoadCPAN.pm | 33 ++++++++++++++++++++++++++++++++-
- 3 files changed, 44 insertions(+), 5 deletions(-)
+ Makefile | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/INSTALL b/INSTALL
-index 808e07b659..60e515eaf7 100644
---- a/INSTALL
-+++ b/INSTALL
-@@ -88,9 +88,9 @@ Issues of note:
- 	export GIT_EXEC_PATH PATH GITPERLLIB
- 
-  - By default (unless NO_PERL is provided) Git will ship various perl
--   scripts & libraries it needs. However, for simplicity it doesn't
--   use the ExtUtils::MakeMaker toolchain to decide where to place the
--   perl libraries. Depending on the system this can result in the perl
-+   scripts. However, for simplicity it doesn't use the
-+   ExtUtils::MakeMaker toolchain to decide where to place the perl
-+   libraries. Depending on the system this can result in the perl
-    libraries not being where you'd like them if they're expected to be
-    used by things other than Git itself.
- 
-@@ -102,6 +102,11 @@ Issues of note:
-    Will result in e.g. perllibdir=/usr/share/perl/5.26.1 on Debian,
-    perllibdir=/usr/share/perl5 (which we'd use by default) on CentOS.
- 
-+ - Unless NO_PERL is provided Git will ship various perl libraries it
-+   needs. Distributors of Git will usually want to set
-+   NO_PERL_CPAN_FALLBACKS if NO_PERL is not provided to use their own
-+   copies of the CPAN modules Git needs.
-+
-  - Git is reasonably self-sufficient, but does depend on a few external
-    programs and libraries.  Git can be used without most of them by adding
-    the approriate "NO_<LIBRARY>=YesPlease" to the make command line or
 diff --git a/Makefile b/Makefile
-index 518c5f6be0..4e0cdb3ca4 100644
+index 7b97699864..518c5f6be0 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -2314,11 +2314,14 @@ all:: $(LIB_PERL_GEN)
- ifndef NO_PERL_CPAN_FALLBACKS
+@@ -296,6 +296,12 @@ all::
+ #
+ # Define NO_PERL if you do not want Perl scripts or libraries at all.
+ #
++# Define NO_PERL_CPAN_FALLBACKS if you do not want to install bundled
++# copies of CPAN modules that serve as a fallback in case the modules
++# are not available on the system. This option is intended for
++# distributions that want to use their packaged versions of Perl
++# modules, instead of the fallbacks shipped with Git.
++#
+ # Define PYTHON_PATH to the path of your Python binary (often /usr/bin/python
+ # but /usr/bin/python2.7 on some platforms).
+ #
+@@ -2305,8 +2311,10 @@ LIB_CPAN_GEN := $(patsubst perl/%.pm,perl/build/lib/%.pm,$(LIB_CPAN))
+ 
+ ifndef NO_PERL
+ all:: $(LIB_PERL_GEN)
++ifndef NO_PERL_CPAN_FALLBACKS
  all:: $(LIB_CPAN_GEN)
  endif
-+NO_PERL_CPAN_FALLBACKS_SQ = $(subst ','\'',$(NO_PERL_CPAN_FALLBACKS))
- endif
++endif
  
  perl/build/lib/%.pm: perl/%.pm
  	$(QUIET_GEN)mkdir -p $(dir $@) && \
--	sed -e 's|@@LOCALEDIR@@|$(localedir_SQ)|g' < $< > $@
-+	sed -e 's|@@LOCALEDIR@@|$(localedir_SQ)|g' \
-+	    -e 's|@@NO_PERL_CPAN_FALLBACKS@@|$(NO_PERL_CPAN_FALLBACKS_SQ)|g' \
-+	< $< > $@
- 
- perl/build/man/man3/Git.3pm: perl/Git.pm
- 	$(QUIET_GEN)mkdir -p $(dir $@) && \
-diff --git a/perl/Git/LoadCPAN.pm b/perl/Git/LoadCPAN.pm
-index 229c1ee87d..e5585e75e8 100644
---- a/perl/Git/LoadCPAN.pm
-+++ b/perl/Git/LoadCPAN.pm
-@@ -19,13 +19,25 @@ attempt to load C<Module::Name> from the OS, and if that doesn't work
- will fall back on C<FromCPAN::Module::Name> shipped with Git itself.
- 
- Usually distributors will not ship with Git's Git::FromCPAN tree at
--all, preferring to use their own packaging of CPAN modules instead.
-+all via the C<NO_PERL_CPAN_FALLBACKS> option, preferring to use their
-+own packaging of CPAN modules instead.
- 
- This module is only intended to be used for code shipping in the
- C<git.git> repository. Use it for anything else at your peril!
- 
- =cut
- 
-+# NO_PERL_CPAN_FALLBACKS_STR evades the sed search-replace from the
-+# Makefile, and allows for detecting whether the module is loaded from
-+# perl/Git as opposed to perl/build/Git, which is useful for one-off
-+# testing without having Error.pm et al installed.
-+use constant NO_PERL_CPAN_FALLBACKS_STR => '@@' . 'NO_PERL_CPAN_FALLBACKS' . '@@';
-+use constant NO_PERL_CPAN_FALLBACKS => (
-+	q[@@NO_PERL_CPAN_FALLBACKS@@] ne ''
-+	and
-+	q[@@NO_PERL_CPAN_FALLBACKS@@] ne NO_PERL_CPAN_FALLBACKS_STR
-+);
-+
- sub import {
- 	shift;
- 	my $caller = caller;
-@@ -45,6 +57,25 @@ sub import {
- 	} or do {
- 		my $error = $@ || "Zombie Error";
- 
-+		if (NO_PERL_CPAN_FALLBACKS) {
-+			chomp(my $error = sprintf <<'THEY_PROMISED', $module);
-+BUG: The '%s' module is not here, but NO_PERL_CPAN_FALLBACKS was set!
-+
-+Git needs this Perl module from the CPAN, and will by default ship
-+with a copy of it. This Git was built with NO_PERL_CPAN_FALLBACKS,
-+meaning that whoever built it promised to provide this module.
-+
-+You're seeing this error because they broke that promise, and we can't
-+load our fallback version, since we were asked not to install it.
-+
-+If you're seeing this error and didn't package Git yourself the
-+package you're using is broken, or your system is broken. This error
-+won't appear if Git is built without NO_PERL_CPAN_FALLBACKS (instead
-+we'll use our fallback version of the module).
-+THEY_PROMISED
-+			die $error;
-+		}
-+
- 		my $Git_LoadCPAN_pm_path = $INC{"Git/LoadCPAN.pm"} || die "BUG: Should have our own path from %INC!";
- 
- 		require File::Basename;
 -- 
 2.15.1.424.g9478a66081
 
