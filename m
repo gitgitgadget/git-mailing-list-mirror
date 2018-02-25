@@ -7,61 +7,62 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1A5A31F576
-	for <e@80x24.org>; Sun, 25 Feb 2018 11:18:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E06C71F576
+	for <e@80x24.org>; Sun, 25 Feb 2018 11:18:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751545AbeBYLSw (ORCPT <rfc822;e@80x24.org>);
-        Sun, 25 Feb 2018 06:18:52 -0500
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:42875 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750987AbeBYLSu (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 25 Feb 2018 06:18:50 -0500
-Received: by mail-pg0-f65.google.com with SMTP id y8so5118286pgr.9
-        for <git@vger.kernel.org>; Sun, 25 Feb 2018 03:18:50 -0800 (PST)
+        id S1751585AbeBYLS5 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 25 Feb 2018 06:18:57 -0500
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:46728 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751576AbeBYLS4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 25 Feb 2018 06:18:56 -0500
+Received: by mail-pf0-f193.google.com with SMTP id z10so1046231pfh.13
+        for <git@vger.kernel.org>; Sun, 25 Feb 2018 03:18:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=eUFmrqtccgInlI88XH04Fond9tdUgjuyIbVGlCSJtEk=;
-        b=mJvgXMPetTTyrlXAuZMRnxOe9VllWEBXkg2jgfXDV/XspQb0G7pjGheoDgdItZytZ/
-         PQUkO4T9tlqDB8+Oh+/czL1n1tKpJAzPQdfLtwUPAN/609Paludh1A+cZv3lhD0GUz3/
-         umemd5PD0OGWvY5kFvB+wze6KLhnahYx2rLLAwgEPJg3wPiEF/bmW/I2op7Z7CJjA/II
-         ZP2dk38OQz41CNPF+q4vv50eDPIcRP5A9yUQkvaHbOlHLcwpZcfw8prqJkUVFY+9ThsE
-         TOo6xzumI82dcDzlJsPyu9hpNIIoamyUymYpPYN+t7U7OhdMARuCv7OfS62xOdiUmafp
-         +I9A==
+        bh=YS83EE6u6f2ry0pCITC0ZqASXHTfzxM1ckbmLF4doI4=;
+        b=XD5L8yhU2tf3oxWmeoCbvqgPT850+J7jF4t9zPE8sWeJ7DDj4gyBc89Uj2/zNrog9K
+         wLxzza2jQElctGpaKCTwusmf1ZfbQSuKb2U4uT9B2asNF5ZaplwKiwp+H4sy0Xe8wxso
+         3wfuJIlUedn6A3b4/7a8wPBtFv4LIQ4E4E935zRn7V4MmQO37S0DaM1MLBsBiwv3MwNs
+         29bZMg1QVMFtg/adfIBOM0YrULVss3U+Nokgw+zNbWlNFOAO3uxCVP9p1ZMk5MEjzNC7
+         SupeH9PeWgc8Zi9TMhdGPnNhdpOHgCYGmZeMh3Z6c4UObggMA4UXi1iFERxkR+rjHapp
+         muJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=eUFmrqtccgInlI88XH04Fond9tdUgjuyIbVGlCSJtEk=;
-        b=P+8tGQ7cTENJS63nEfQmXLE1fjcOxYdu2DiG7RLs0uwD29rfBKAxIYYzv8oRYGJl9f
-         S3LFKGTPk2bF5XzvUascMCKmbjXtJRp5k+5b16Dq+y3XTj/E/eLiRXrwQI6S/64cu/NU
-         nTZnssLpVhLIq4B98skx7RRkZkB5DWiDm7W6/N+4K5QX2IVBFl9scxM8iUpHrcK4psME
-         wtPVMmOH8/fZJ8npLT3My6InRGl4o5tRs1F3GmtdZI1xWZGvmF925bkJjzWaTYNtqfdP
-         6axZ+ut9BySZPUJRYKOy+QfgEzkt272X/xrWqSlA6Gz+gEic7prxkv+LcNiHCkm3foFT
-         3KZg==
-X-Gm-Message-State: APf1xPD2Uz04QNKlDw39RaaGIoAe030uYkPFpcvj1qWxCTGNxFQPhryn
-        xG+FCMrZe6u0Oal2OmD1Za4=
-X-Google-Smtp-Source: AG47ELsGnfLb/JnkBzUnAPDxUcg7ZSlcXjk3F2I2yHwSrEROXMFu/M3B/RDtevXq7UPJrr2C01rgDQ==
-X-Received: by 10.98.141.205 with SMTP id p74mr2566840pfk.211.1519557529959;
-        Sun, 25 Feb 2018 03:18:49 -0800 (PST)
+        bh=YS83EE6u6f2ry0pCITC0ZqASXHTfzxM1ckbmLF4doI4=;
+        b=KYRAzIupQRp0iPnrmSuwDeQeO1TAco5GC9n+Ql2Tm+qJ3j3IURXnhW0+kI4wgWRG5C
+         KBLkyAO8cpaEv1V5r7kyafHwcJQTvLKSe6CgSAICU3LUUrU/7uoLcoJMJ2LIiEZ0DqdN
+         EiuMrgeVkbb/9YuZSF4KulLcrzXAt1M4tT1N71jWpcRnPCTlogk9Jpb5DwTx8ikg0HyL
+         fI0Ltsat0nkuitZJA7X+yc/qz+gONsqmA/Nf6FZSE0H4uq7+2sQEquRF41zQ28qOC9pX
+         g7rk4OJkM2o3U2BMGh9DnKvjyNy8RhB842t30HdIvHlaqHe2BiHWoK6y6YGYru58HrbT
+         z+HQ==
+X-Gm-Message-State: APf1xPDV7fF15dw+g/tIxV71K3AYgmeqnPdWBPooF/dh4JS/i/V5Fki2
+        pXNNtJQE5/LK0rsJbQ0n92u+0g==
+X-Google-Smtp-Source: AH8x2269+lncW+6PbWwjry+gaoAhIgbxgKOTe3y92gMQ4oBYtW2aR7rJKnJSpoyY7G7HxNLHjv4jJw==
+X-Received: by 10.101.75.70 with SMTP id k6mr6010617pgt.335.1519557535876;
+        Sun, 25 Feb 2018 03:18:55 -0800 (PST)
 Received: from ash ([171.232.93.137])
-        by smtp.gmail.com with ESMTPSA id j13sm14673080pfk.174.2018.02.25.03.18.46
+        by smtp.gmail.com with ESMTPSA id g67sm11037327pgc.60.2018.02.25.03.18.52
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 25 Feb 2018 03:18:49 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Sun, 25 Feb 2018 18:18:44 +0700
+        Sun, 25 Feb 2018 03:18:55 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Sun, 25 Feb 2018 18:18:50 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     bmwill@google.com, git@vger.kernel.org, gitster@pobox.com,
         jonathantanmy@google.com, sandals@crustytoothpaste.net,
         sbeller@google.com, sunshine@sunshineco.com
-Subject: [PATCH v3 0/6] Fix initializing the_hash_algo
-Date:   Sun, 25 Feb 2018 18:18:34 +0700
-Message-Id: <20180225111840.16421-1-pclouds@gmail.com>
+Subject: [PATCH v3 1/6] setup.c: initialize the_repository correctly in all cases
+Date:   Sun, 25 Feb 2018 18:18:35 +0700
+Message-Id: <20180225111840.16421-2-pclouds@gmail.com>
 X-Mailer: git-send-email 2.16.1.435.g8f24da2e1a
-In-Reply-To: <20180224033429.9656-1-pclouds@gmail.com>
+In-Reply-To: <20180225111840.16421-1-pclouds@gmail.com>
 References: <20180224033429.9656-1-pclouds@gmail.com>
+ <20180225111840.16421-1-pclouds@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,133 +71,131 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-v3 refines v2 a bit more:
+There are many ways for any command to access a git repository:
 
-- fix configure typo (and stray words in commit message)
-- use repo_set_hash_algo() instead of reassigning the_hash_algo
-- compare hash algos by format_id
-- catch NULL hash algo, report nicely and suggest GIT_HASH_FIXUP
+- most of them will try to discover the .git dir via
+  setup_git_directory() and friends
 
-The last point makes me much happier about keeping this workaround
-around until we are confident we can live without it. Interdiff
+- the server side programs already know where the repo is and prepare
+  with enter_repo()
 
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 1144458140..2c75f28b41 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -331,21 +331,24 @@ static const char *open_pack_file(const char *pack_name)
+- special commands that deal with repo creation (init/clone) use
+  init_db() once the new repo is ready for access.
+
+- somebody accesses $GIT_DIR before any of above functions are called
+  and accidentally sets up a git repository by set_git_dir() alone
+
+"the_repository" is partially set up via set_git_dir() at some point
+in all four cases. The hash algorithm though is configured later after
+.git/config is read.
+
+So far proper repo initialization is done only for the first case [1].
+The second case is not covered (but that's fine [3]). The third case
+was found and worked around in [2]. The fourth case is a buggy one,
+which should be fixed already by jk/no-looking-at-dotgit-outside-repo
+and never happens again.
+
+This patch makes sure all cases initialize the hash algorithm in
+the_repository correctly. Both second and third cases must run
+check_repo_format() before "entering" it. Eventually we probably just
+rename this function to init_repo() or something.
+
+[1] 78a6766802 (Integrate hash algorithm support with repo setup -
+    2017-11-12)
+
+[2] e26f7f19b6 (repository: pre-initialize hash algo pointer -
+    2018-01-19)
+
+[3] the reason server side is still running ok with no hash algo before
+    [2] is because the programs that use enter_repo() do very
+    little (and unlikely to hash anything) then spawn a new
+    program (like pack-objects or upload-archive) to do the heavy
+    lifting. These programs already use setup_git_directory() or the
+    gently version
+
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ builtin/init-db.c | 3 ++-
+ cache.h           | 3 ++-
+ path.c            | 2 +-
+ setup.c           | 5 ++++-
+ 4 files changed, 9 insertions(+), 4 deletions(-)
+
+diff --git a/builtin/init-db.c b/builtin/init-db.c
+index c9b7946bad..d119d9906b 100644
+--- a/builtin/init-db.c
++++ b/builtin/init-db.c
+@@ -9,6 +9,7 @@
+ #include "builtin.h"
+ #include "exec_cmd.h"
+ #include "parse-options.h"
++#include "repository.h"
  
- static void prepare_hash_algo(uint32_t pack_version)
- {
-+	int pack_algo_id;
- 	const struct git_hash_algo *pack_algo;
+ #ifndef DEFAULT_GIT_TEMPLATE_DIR
+ #define DEFAULT_GIT_TEMPLATE_DIR "/usr/share/git-core/templates"
+@@ -369,7 +370,7 @@ int init_db(const char *git_dir, const char *real_git_dir,
+ 	 * config file, so this will not fail.  What we are catching
+ 	 * is an attempt to reinitialize new repository with an old tool.
+ 	 */
+-	check_repository_format();
++	check_repository_format(the_repository);
  
- 	switch (pack_version) {
- 	case 2:
- 	case 3:
--		pack_algo = &hash_algos[GIT_HASH_SHA1];
-+		pack_algo_id = GIT_HASH_SHA1;
- 		break;
- 	default:
--		die("BUG: how to determine hash algo for new version?");
-+		die("BUG: how to determine hash algo for version %d?",
-+		    pack_version);
- 	}
+ 	reinit = create_default_files(template_dir, original_git_dir);
  
--	if (!the_hash_algo)	/* running without repo */
--		the_hash_algo = pack_algo;
-+	if (!repo_has_valid_hash_algo(the_repository)) /* running without repo */
-+		repo_set_hash_algo(the_repository, pack_algo_id);
- 
--	if (the_hash_algo != pack_algo)
-+	pack_algo = &hash_algos[pack_algo_id];
-+	if (the_hash_algo->format_id != pack_algo->format_id)
- 		die(_("incompatible hash algorithm, "
- 		      "configured for %s but the pack file needs %s"),
- 		    the_hash_algo->name, pack_algo->name);
 diff --git a/cache.h b/cache.h
-index 6b97138264..55b31e9756 100644
+index 21fbcc2414..6b97138264 100644
 --- a/cache.h
 +++ b/cache.h
-@@ -53,7 +53,7 @@ struct object_id {
- 	unsigned char hash[GIT_MAX_RAWSZ];
- };
+@@ -894,6 +894,7 @@ extern int repository_format_precious_objects;
+ extern char *repository_format_partial_clone;
+ extern const char *core_partial_clone_filter_default;
  
--#define the_hash_algo the_repository->hash_algo
-+#define the_hash_algo repo_get_hash_algo(the_repository)
- 
- #if defined(DT_UNKNOWN) && !defined(NO_D_TYPE_IN_DIRENT)
- #define DTYPE(de)	((de)->d_type)
-diff --git a/diff.c b/diff.c
-index f5755425b6..5f28d84b87 100644
---- a/diff.c
-+++ b/diff.c
-@@ -3997,15 +3997,15 @@ static void run_diff(struct diff_filepair *p, struct diff_options *o)
- 
- 	/*
- 	 * NEEDSWORK: When running in no-index mode (and no repo is
--	 * found, thus no hash algo conifugred), fall back to SHA-1
-+	 * found, thus no hash algo configured), fall back to SHA-1
- 	 * hashing (which is used by diff_fill_oid_info below) to
- 	 * avoid regression in diff output.
- 	 *
- 	 * In future, perhaps we can allow the user to specify their
- 	 * hash algorithm from command line in this mode.
- 	 */
--	if (o->flags.no_index && !the_hash_algo)
--		the_hash_algo = &hash_algos[GIT_HASH_SHA1];
-+	if (o->flags.no_index && !repo_has_valid_hash_algo(the_repository))
-+		repo_set_hash_algo(the_repository, GIT_HASH_SHA1);
- 
- 	diff_fill_oid_info(one);
- 	diff_fill_oid_info(two);
-diff --git a/repository.h b/repository.h
-index 0329e40c7f..40bd49611f 100644
---- a/repository.h
-+++ b/repository.h
-@@ -107,4 +107,20 @@ extern void repo_clear(struct repository *repo);
++struct repository;
+ struct repository_format {
+ 	int version;
+ 	int precious_objects;
+@@ -926,7 +927,7 @@ int verify_repository_format(const struct repository_format *format,
+  * set_git_dir() before calling this, and use it only for "are we in a valid
+  * repo?".
   */
- extern int repo_read_index(struct repository *repo);
+-extern void check_repository_format(void);
++extern void check_repository_format(struct repository *);
  
-+static inline const struct git_hash_algo *repo_get_hash_algo(
-+	const struct repository *repo)
-+{
-+	if (!repo->hash_algo)
-+		die("BUG: hash_algo is not initialized!\n%s",
-+		    _("You can work around this by setting environment"
-+		      " variable GIT_HASH_FIXUP=1.\n"
-+		      "Please report this to git@vger.kernel.org"));
-+	return repo->hash_algo;
-+}
-+
-+static inline int repo_has_valid_hash_algo(const struct repository *repo)
-+{
-+	return repo->hash_algo != NULL;
-+}
-+
- #endif /* REPOSITORY_H */
-
-Nguyễn Thái Ngọc Duy (6):
-  setup.c: initialize the_repository correctly in all cases
-  sha1_file.c: keep a good name for "unknown" hash_algos[UNKNOWN]
-  cache.h: make the_hash_algo read-only
-  index-pack: check (and optionally set) hash algo based on input file
-  diff.c: initialize hash algo when running in --no-index mode
-  Revert "repository: pre-initialize hash algo pointer"
-
- builtin/index-pack.c             | 29 ++++++++++++++++++++++++++++-
- builtin/init-db.c                |  3 ++-
- cache.h                          |  5 +++--
- common-main.c                    | 10 ++++++++++
- diff.c                           | 12 ++++++++++++
- path.c                           |  2 +-
- repository.c                     |  2 +-
- repository.h                     | 16 ++++++++++++++++
- setup.c                          |  5 ++++-
- sha1_file.c                      |  2 +-
- t/helper/test-dump-split-index.c |  2 ++
- 11 files changed, 80 insertions(+), 8 deletions(-)
-
+ #define MTIME_CHANGED	0x0001
+ #define CTIME_CHANGED	0x0002
+diff --git a/path.c b/path.c
+index da8b655730..a544252198 100644
+--- a/path.c
++++ b/path.c
+@@ -827,7 +827,7 @@ const char *enter_repo(const char *path, int strict)
+ 
+ 	if (is_git_directory(".")) {
+ 		set_git_dir(".");
+-		check_repository_format();
++		check_repository_format(the_repository);
+ 		return path;
+ 	}
+ 
+diff --git a/setup.c b/setup.c
+index c5d55dcee4..a82103832e 100644
+--- a/setup.c
++++ b/setup.c
+@@ -1180,11 +1180,14 @@ int git_config_perm(const char *var, const char *value)
+ 	return -(i & 0666);
+ }
+ 
+-void check_repository_format(void)
++/* optionally configure "repo" to the correct format */
++void check_repository_format(struct repository *repo)
+ {
+ 	struct repository_format repo_fmt;
+ 	check_repository_format_gently(get_git_dir(), &repo_fmt, NULL);
+ 	startup_info->have_repository = 1;
++	if (repo)
++		repo_set_hash_algo(repo, repo_fmt.hash_algo);
+ }
+ 
+ /*
 -- 
 2.16.1.435.g8f24da2e1a
 
