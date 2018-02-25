@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BA7FE1F404
-	for <e@80x24.org>; Sun, 25 Feb 2018 19:47:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 97AF81F404
+	for <e@80x24.org>; Sun, 25 Feb 2018 19:47:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751937AbeBYTrU (ORCPT <rfc822;e@80x24.org>);
-        Sun, 25 Feb 2018 14:47:20 -0500
-Received: from mail-wm0-f46.google.com ([74.125.82.46]:40853 "EHLO
-        mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751893AbeBYTrO (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 25 Feb 2018 14:47:14 -0500
-Received: by mail-wm0-f46.google.com with SMTP id t6so5070862wmt.5
-        for <git@vger.kernel.org>; Sun, 25 Feb 2018 11:47:13 -0800 (PST)
+        id S1751952AbeBYTrY (ORCPT <rfc822;e@80x24.org>);
+        Sun, 25 Feb 2018 14:47:24 -0500
+Received: from mail-wm0-f51.google.com ([74.125.82.51]:51452 "EHLO
+        mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751921AbeBYTrL (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 25 Feb 2018 14:47:11 -0500
+Received: by mail-wm0-f51.google.com with SMTP id h21so13651899wmd.1
+        for <git@vger.kernel.org>; Sun, 25 Feb 2018 11:47:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=DqzVa5/RB1TEjvK9qazSfT71mV2JflaAd0egRPDNf/w=;
-        b=Inx+zelyuPT3kbCcS5+lWBqyz9QDU1DLUK8myCx337x7mU5e6FwFdkPrrPHgHS38Fl
-         mS27frHx888+VlwrQIsrd9sXKOcOyE1mdzkW+xtxzDQIbdUMk/z7ppSUic4/9ZizcIAg
-         ZHio5LpivOAaFEvyxiK69dCEVff1EnMjL1SnsDjY0YpyPzNoBljyehjOheWCocL3PBuk
-         RJzad4r117yRypfqahjqh3DnB8nAi9FdY7NkFsK6HKKpsxCNpjb3hBiOMxwO8lBTyWTH
-         leWE6zIHhkyq7537EtIZGyewFUgxC8Pj2Ugx3sgilPjElALSJVydkOSzhBU57G+Gf0m3
-         Fz5g==
+        bh=jZU/xvB9oCpFJ8FG1eTaaKje+Iu9zGjhvXi49mUWLVY=;
+        b=Vzn1SWzUcYhkXFn0sMogmC1J05V79eMHdw8sQUZ25XOmhdcHJA1CDhuiTtTvrLZAnT
+         o1uTS95sW+ZrySYgkDjkkCpIsQUewK99AoH+MSyg5Fca9LpoRCu+h449hqjWfk5bp5pB
+         l9FW9B1aH3D0Ij+PawtOM7jj9SuG/7477PV3mQ7jBI/2DVIXUAyuoTmBTSVaVLD/56k4
+         9kyO3hTgipF4x2snBnt8QTcrZBpPYn2KHtoMCsB4npHbTEd8PrINDU8+k04o8Z3g8GXA
+         ZrrFUOEx4gZefclWzi++WbgxS/bnO5ckkO3ry+5PyiXboB3UEbwinSBNILu8h4byom5l
+         9oGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=DqzVa5/RB1TEjvK9qazSfT71mV2JflaAd0egRPDNf/w=;
-        b=MPg3XNCCnpn/mBFpF08yBr9iXME41Vep13Qyc2/aekYFPuRpNeg+pnuffvxFu/eFUE
-         Vm2DFFfJer2L7BOGBnWUU5UX0ycIyXYRvQi4K8K55KP6bMcF72ZVIVeXmA8aI7yj6/VJ
-         QaVpKxpBFUVX5JJpyUsJI+VyqMPmpAMUUmpE+1mrLNma6IE6++rjfUc5my7PFxyy25xQ
-         SK8oVC+1ykJ2ZVvCHSSxz9GXwGg0ivH5wOJvRHyWccflTVSI8BI9rUzN/Bn7Qcm6kXT+
-         BvFvi35/F/A56ZwfRV2HXplh98cNpVIvttZ83qVCMForWSZaFofrnj/SYleK2JpSd7th
-         igHQ==
-X-Gm-Message-State: APf1xPCB+kirON+II/lJGyPabkCQYRYlsdx9lT1iVKMliaFEq3xGBJzH
-        iU+WXlYuFAvk7H4mZn/kW8SutB42
-X-Google-Smtp-Source: AG47ELtG7THV4B936H+nIxs5EnaPGEmB5qAPo0wvAzmDNiuw0Eystp1l3JKVVLomFuk9xfU8AP7VvQ==
-X-Received: by 10.28.55.72 with SMTP id e69mr2890232wma.86.1519588032749;
-        Sun, 25 Feb 2018 11:47:12 -0800 (PST)
+        bh=jZU/xvB9oCpFJ8FG1eTaaKje+Iu9zGjhvXi49mUWLVY=;
+        b=BZkvN4b3nkfPPkjSg47hQMnvk7fEn/vArqiROhw4BGysyOC+dyhwO0pwGe8ibvK/p/
+         jSDI/tLTTjlXfjnXMLuClsyJ4IsaPr5GGtdTgpBIGmNNDkI76PwM3EDCi7A3BPlW61TO
+         7xaqdeGxzw3zZ2hp7ium68VdxSoJDlgj0jLM7mXJ2vpEMRXObWU0lUSKCsKqhAmO/wAP
+         ciq4YFMflM5CkROoQIEpc3FTxwUCi7Tu47J+TkqcBFsZh5yEKM4J3DIP7l6pIg0fdvHk
+         PMcKs32l5TqFu2IZAE42byvNou37VWzc79qOHipu/qACeD/84Hb3iAz4Ed/T2wPhO/GG
+         qFXw==
+X-Gm-Message-State: APf1xPCShvhJ4IIQBwuHCa21cLH8NufVD8uQSxB+9syHeN7awbikoZkF
+        TIrf/v8DO7tMh3DCqMLtPllKcdYa
+X-Google-Smtp-Source: AG47ELt1H5qXmI3Amli9seMaWazXnhmIn291zU6wWhDGZAF5Te7jNXX1Llvf1Q3WOIVKole7sfosJg==
+X-Received: by 10.28.241.2 with SMTP id p2mr6195108wmh.105.1519588030297;
+        Sun, 25 Feb 2018 11:47:10 -0800 (PST)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id b66sm4394003wmg.28.2018.02.25.11.47.11
+        by smtp.gmail.com with ESMTPSA id b66sm4394003wmg.28.2018.02.25.11.47.09
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 25 Feb 2018 11:47:11 -0800 (PST)
+        Sun, 25 Feb 2018 11:47:09 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -64,9 +64,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         "Randall S . Becker" <rsbecker@nexbridge.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 09/13] perl: move CPAN loader wrappers to another namespace
-Date:   Sun, 25 Feb 2018 19:46:33 +0000
-Message-Id: <20180225194637.18630-10-avarab@gmail.com>
+Subject: [PATCH v2 08/13] perl: update our copy of Mail::Address
+Date:   Sun, 25 Feb 2018 19:46:32 +0000
+Message-Id: <20180225194637.18630-9-avarab@gmail.com>
 X-Mailer: git-send-email 2.15.1.424.g9478a66081
 In-Reply-To: <20180225194637.18630-1-avarab@gmail.com>
 References: <20180225194637.18630-1-avarab@gmail.com>
@@ -80,135 +80,39 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Move the Git::Error and Git::Mail::Address wrappers to the
-Git::LoadCPAN::Loader::* namespace, e.g. Git::LoadCPAN::Error. That
-module will then either load Error from CPAN (if installed on the OS),
-or use Git::FromCPAN::Error.
+Update our copy of Mail::Address from 2.19 (Aug 22, 2017) to 2.20 (Jan
+23, 2018). Like the preceding Error.pm update this is done simply to
+keep up-to-date with upstream, and as can be shown from the diff
+there's no functional changes.
 
-When I added the Error wrapper in 20d2a30f8f ("Makefile: replace
-perl/Makefile.PL with simple make rules", 2017-12-10) I didn't think
-about how confusing it would be to have these modules sitting in the
-same tree as our normal modules. Let's put these all into
-Git::{Load,From}CPAN::* to clearly distinguish them from the rest.
-
-This also makes things a bit less confusing since there was already a
-Git::Error namespace ever since 8b9150e3e3 ("Git.pm: Handle failed
-commands' output", 2006-06-24).
+The updated source was retrieved from
+https://fastapi.metacpan.org/source/MARKOV/MailTools-2.20/lib/Mail/Address.pm
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- contrib/examples/git-difftool.perl      | 2 +-
- git-send-email.perl                     | 4 ++--
- perl/Git.pm                             | 2 +-
- perl/Git/{ => LoadCPAN}/Error.pm        | 8 ++++----
- perl/Git/{ => LoadCPAN}/Mail/Address.pm | 4 ++--
- 5 files changed, 10 insertions(+), 10 deletions(-)
- rename perl/Git/{ => LoadCPAN}/Error.pm (78%)
- rename perl/Git/{ => LoadCPAN}/Mail/Address.pm (69%)
+ perl/Git/FromCPAN/Mail/Address.pm | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/contrib/examples/git-difftool.perl b/contrib/examples/git-difftool.perl
-index fb0fd0b84b..b2ea80f9ed 100755
---- a/contrib/examples/git-difftool.perl
-+++ b/contrib/examples/git-difftool.perl
-@@ -13,7 +13,7 @@
- use 5.008;
+diff --git a/perl/Git/FromCPAN/Mail/Address.pm b/perl/Git/FromCPAN/Mail/Address.pm
+index 13b2ff7d05..683d490b2b 100644
+--- a/perl/Git/FromCPAN/Mail/Address.pm
++++ b/perl/Git/FromCPAN/Mail/Address.pm
+@@ -1,10 +1,14 @@
+-# Copyrights 1995-2017 by [Mark Overmeer <perl@overmeer.net>].
++# Copyrights 1995-2018 by [Mark Overmeer].
+ #  For other contributors see ChangeLog.
+ # See the manual pages for details on the licensing terms.
+ # Pod stripped from pm file by OODoc 2.02.
++# This code is part of the bundle MailTools.  Meta-POD processed with
++# OODoc into POD and HTML manual-pages.  See README.md for Copyright.
++# Licensed under the same terms as Perl itself.
++
+ package Mail::Address;
+ use vars '$VERSION';
+-$VERSION = '2.19';
++$VERSION = '2.20';
+ 
  use strict;
- use warnings;
--use Git::Error qw(:try);
-+use Git::LoadCPAN::Error qw(:try);
- use File::Basename qw(dirname);
- use File::Copy;
- use File::Find;
-diff --git a/git-send-email.perl b/git-send-email.perl
-index d5a4826a1c..1ec22c5ef3 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -26,13 +26,13 @@ use Text::ParseWords;
- use Term::ANSIColor;
- use File::Temp qw/ tempdir tempfile /;
- use File::Spec::Functions qw(catdir catfile);
--use Git::Error qw(:try);
-+use Git::LoadCPAN::Error qw(:try);
- use Cwd qw(abs_path cwd);
- use Git;
- use Git::I18N;
--use Git::Mail::Address;
- use Net::Domain ();
- use Net::SMTP ();
-+use Git::LoadCPAN::Mail::Address;
- 
- Getopt::Long::Configure qw/ pass_through /;
- 
-diff --git a/perl/Git.pm b/perl/Git.pm
-index 151b0e7144..9f246c7988 100644
---- a/perl/Git.pm
-+++ b/perl/Git.pm
-@@ -104,7 +104,7 @@ increase notwithstanding).
- 
- 
- use Carp qw(carp croak); # but croak is bad - throw instead
--use Git::Error qw(:try);
-+use Git::LoadCPAN::Error qw(:try);
- use Cwd qw(abs_path cwd);
- use IPC::Open2 qw(open2);
- use Fcntl qw(SEEK_SET SEEK_CUR);
-diff --git a/perl/Git/Error.pm b/perl/Git/LoadCPAN/Error.pm
-similarity index 78%
-rename from perl/Git/Error.pm
-rename to perl/Git/LoadCPAN/Error.pm
-index 09bbc97390..3513fe745b 100644
---- a/perl/Git/Error.pm
-+++ b/perl/Git/LoadCPAN/Error.pm
-@@ -1,11 +1,11 @@
--package Git::Error;
-+package Git::LoadCPAN::Error;
- use 5.008;
- use strict;
- use warnings;
- 
- =head1 NAME
- 
--Git::Error - Wrapper for the L<Error> module, in case it's not installed
-+Git::LoadCPAN::Error - Wrapper for the L<Error> module, in case it's not installed
- 
- =head1 DESCRIPTION
- 
-@@ -26,13 +26,13 @@ sub import {
-     } or do {
- 	my $error = $@ || "Zombie Error";
- 
--	my $Git_Error_pm_path = $INC{"Git/Error.pm"} || die "BUG: Should have our own path from %INC!";
-+	my $Git_Error_pm_path = $INC{"Git/LoadCPAN/Error.pm"} || die "BUG: Should have our own path from %INC!";
- 
- 	require File::Basename;
- 	my $Git_Error_pm_root = File::Basename::dirname($Git_Error_pm_path) || die "BUG: Can't figure out lib/Git dirname from '$Git_Error_pm_path'!";
- 
- 	require File::Spec;
--	my $Git_pm_FromCPAN_root = File::Spec->catdir($Git_Error_pm_root, 'FromCPAN');
-+	my $Git_pm_FromCPAN_root = File::Spec->catdir($Git_Error_pm_root, '..', 'FromCPAN');
- 	die "BUG: '$Git_pm_FromCPAN_root' should be a directory!" unless -d $Git_pm_FromCPAN_root;
- 
- 	local @INC = ($Git_pm_FromCPAN_root, @INC);
-diff --git a/perl/Git/Mail/Address.pm b/perl/Git/LoadCPAN/Mail/Address.pm
-similarity index 69%
-rename from perl/Git/Mail/Address.pm
-rename to perl/Git/LoadCPAN/Mail/Address.pm
-index 2ce3e84670..879c2f5cd1 100644
---- a/perl/Git/Mail/Address.pm
-+++ b/perl/Git/LoadCPAN/Mail/Address.pm
-@@ -1,11 +1,11 @@
--package Git::Mail::Address;
-+package Git::LoadCPAN::Mail::Address;
- use 5.008;
- use strict;
- use warnings;
- 
- =head1 NAME
- 
--Git::Mail::Address - Wrapper for the L<Mail::Address> module, in case it's not installed
-+Git::LoadCPAN::Mail::Address - Wrapper for the L<Mail::Address> module, in case it's not installed
- 
- =head1 DESCRIPTION
  
 -- 
 2.15.1.424.g9478a66081
