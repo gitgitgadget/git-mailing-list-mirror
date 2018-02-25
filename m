@@ -7,43 +7,43 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 491431F404
-	for <e@80x24.org>; Sun, 25 Feb 2018 21:13:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E83C81F404
+	for <e@80x24.org>; Sun, 25 Feb 2018 21:13:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752021AbeBYVN0 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 25 Feb 2018 16:13:26 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:34000 "EHLO
+        id S1752028AbeBYVN2 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 25 Feb 2018 16:13:28 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:33990 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751924AbeBYVM4 (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 25 Feb 2018 16:12:56 -0500
+        by vger.kernel.org with ESMTP id S1751964AbeBYVMy (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 25 Feb 2018 16:12:54 -0500
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 52BC460E5B;
-        Sun, 25 Feb 2018 21:12:54 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 888E960E59;
+        Sun, 25 Feb 2018 21:12:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
         s=default; t=1519593174;
-        bh=sBa+2Vl+rUaMLfuWiuH1OyhXSQ9e+wPvaaSh3yyB7cc=;
+        bh=MqnbCGQHqIuno3Uk3pzIVZoIdDRLSfQmaLdWqU1N9a0=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=rZOWcVHnvN1cJ6H5xOto3+X2o/ekbpjun0fco/pOaG/RRT9ERwUW7BkXfobPcnwk7
-         PqwX/51KC8LazO30kaI5lqt/3sPlJiEPqFdEdJguv0NektTDEPpZgPQ6oI5lJSPuwZ
-         sBBrvK58qBKvsw5sN91IRNsABy423MtOkb+IJS2OImhXiXv7riXncefoiwRgJAew9e
-         CoKD5fNAlpBH8wC5uI9C+eIEHB/YoWcZr42KmVch+KUosQZq/7z2evOJy40OGEqvxZ
-         Wt0kOLY3Xj9XqqhsvDVlINQAe5sHIvqpQe95rH6nNKotE/Q3QYR6Vg8TSRlvmP5VGH
-         0alLuhjifctqAzQ0w6Uu9Zui3oTqNInUnHZJQS6OuQDibJQwxKzvnmd178ZUoaFRlk
-         tQ0KyUAwrVO54WBrwE2iWQhLdxZu+zg3JvcNVKZJFEqmBAl7uTa+2sZxMy+hR5p73I
-         Y0xzQMb2ZjWJxziHmmGyzjWd5pyvZkwlB2cZ6/BS2VNX40gIzWa
+        b=tJYwaQLb53nt1jVmGUvSJzU2Y0ReyWM4EAmxz69SMTEkzBLid0bHtdk+zW8ldunUf
+         Wm+c5NCJwjyCwWkdxx498QuD1Sv3V7sDeeqx1nPxOwjUykuQfdfBRj2wGNbNjJ6VOR
+         7OIJHtw8C6rJwDMhuJJl/z5P/WdbNkXxHd6qusS4PrKK8rpBFB6UHxNzGG5NhHmwea
+         34Hj2u6QZIwY72NiQO9Bu0q4gXoC1oArIOUDHzeSQVGc5Y+qHA0ycTSomaFltmj6Vf
+         5vYBT4u6ZGMvzy9Mri7xAdZjGzFIhmkqi9wuX/rDPizGXgvDMWrwnFgzvZ6rMi9FZx
+         A99qahWhEovAm3oeRpCzDFKNMaWLKfwRo9nJ2BCtnKT5Mg8tiGcLiV1xwB1CM4f8wZ
+         2jWBO7wTDiz8ZOuefP7RcBHMpYvNodtXd/x5CRbZmtEwd8YV7XCnbxmLG34EpTFEn9
+         EosWaB5Cb6MSezCRokmaL40/PHetsJTmOHHHsWSPEewPClm0hZW
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>, Patryk Obara <patryk.obara@gmail.com>,
         Jeff King <peff@peff.net>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 28/36] builtin/notes: convert static functions to object_id
-Date:   Sun, 25 Feb 2018 21:12:04 +0000
-Message-Id: <20180225211212.477570-29-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 27/36] builtin/fmt-merge-msg: convert remaining code to object_id
+Date:   Sun, 25 Feb 2018 21:12:03 +0000
+Message-Id: <20180225211212.477570-28-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.16.2.395.g2e18187dfd
 In-Reply-To: <20180225211212.477570-1-sandals@crustytoothpaste.net>
 References: <20180225211212.477570-1-sandals@crustytoothpaste.net>
@@ -53,56 +53,32 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert the remaining static functions to take pointers to struct
-object_id.
+We were using the util pointer, which is a pointer to void, as an
+unsigned char pointer.  The pointer actually points to a struct
+origin_data, which has a struct object_id as its first member, which in
+turn has an unsigned char array as its first member, so this was valid.
+Since we want to convert this to struct object_id, simply change the
+pointer we're using.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin/notes.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ builtin/fmt-merge-msg.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/notes.c b/builtin/notes.c
-index 39304ba743..08ab9d7130 100644
---- a/builtin/notes.c
-+++ b/builtin/notes.c
-@@ -118,11 +118,11 @@ static int list_each_note(const struct object_id *object_oid,
- 	return 0;
- }
+diff --git a/builtin/fmt-merge-msg.c b/builtin/fmt-merge-msg.c
+index 8e8a15ea4a..0bc0dda99c 100644
+--- a/builtin/fmt-merge-msg.c
++++ b/builtin/fmt-merge-msg.c
+@@ -485,10 +485,10 @@ static void fmt_merge_msg_sigs(struct strbuf *out)
+ 	struct strbuf tagbuf = STRBUF_INIT;
  
--static void copy_obj_to_fd(int fd, const unsigned char *sha1)
-+static void copy_obj_to_fd(int fd, const struct object_id *oid)
- {
- 	unsigned long size;
- 	enum object_type type;
--	char *buf = read_sha1_file(sha1, &type, &size);
-+	char *buf = read_sha1_file(oid->hash, &type, &size);
- 	if (buf) {
- 		if (size)
- 			write_or_die(fd, buf, size);
-@@ -162,7 +162,7 @@ static void write_commented_object(int fd, const struct object_id *object)
- }
+ 	for (i = 0; i < origins.nr; i++) {
+-		unsigned char *sha1 = origins.items[i].util;
++		struct object_id *oid = origins.items[i].util;
+ 		enum object_type type;
+ 		unsigned long size, len;
+-		char *buf = read_sha1_file(sha1, &type, &size);
++		char *buf = read_sha1_file(oid->hash, &type, &size);
+ 		struct strbuf sig = STRBUF_INIT;
  
- static void prepare_note_data(const struct object_id *object, struct note_data *d,
--		const unsigned char *old_note)
-+		const struct object_id *old_note)
- {
- 	if (d->use_editor || !d->given) {
- 		int fd;
-@@ -457,7 +457,7 @@ static int add(int argc, const char **argv, const char *prefix)
- 			oid_to_hex(&object));
- 	}
- 
--	prepare_note_data(&object, &d, note ? note->hash : NULL);
-+	prepare_note_data(&object, &d, note);
- 	if (d.buf.len || allow_empty) {
- 		write_note_data(&d, &new_note);
- 		if (add_note(t, &object, &new_note, combine_notes_overwrite))
-@@ -602,7 +602,7 @@ static int append_edit(int argc, const char **argv, const char *prefix)
- 	t = init_notes_check(argv[0], NOTES_INIT_WRITABLE);
- 	note = get_note(t, &object);
- 
--	prepare_note_data(&object, &d, edit && note ? note->hash : NULL);
-+	prepare_note_data(&object, &d, edit && note ? note : NULL);
- 
- 	if (note && !edit) {
- 		/* Append buf to previous note contents */
+ 		if (!buf || type != OBJ_TAG)
