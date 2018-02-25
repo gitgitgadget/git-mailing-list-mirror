@@ -7,43 +7,43 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 292021F404
-	for <e@80x24.org>; Sun, 25 Feb 2018 21:13:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BE5C01F404
+	for <e@80x24.org>; Sun, 25 Feb 2018 21:13:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752045AbeBYVNu (ORCPT <rfc822;e@80x24.org>);
-        Sun, 25 Feb 2018 16:13:50 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:33964 "EHLO
+        id S1752048AbeBYVNx (ORCPT <rfc822;e@80x24.org>);
+        Sun, 25 Feb 2018 16:13:53 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:33954 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751937AbeBYVMr (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 25 Feb 2018 16:12:47 -0500
+        by vger.kernel.org with ESMTP id S1751931AbeBYVMq (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 25 Feb 2018 16:12:46 -0500
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 8C50C60E57;
-        Sun, 25 Feb 2018 21:12:45 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 7B50A60E56;
+        Sun, 25 Feb 2018 21:12:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1519593166;
-        bh=RtZTVLRC4kNneZYywzoQSdUTcL+tbNM5/uwnZqrHXxA=;
+        s=default; t=1519593165;
+        bh=kI/xvctqTHInaV+x/u5bgYuU1dy+AxA8nabk26cFRII=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=mDu+iPGWr9LyguAmfhHOxpjqyrV4S1j4DYa/48U6jO8XJ2QktTlmHZE4BDGkWFUIE
-         Nz+nyB7a+oo4woOqe+hhG+JSXH2o7YuD4UC0fBQqt14CG/jsWO8JEX7HJK/5AD3o8r
-         QDeFLwiGlft7+dOZAcXG+4sUGoZMht0N3pVcoyZW2kbh6XN8W8gM1Wn1KED+KQZR9S
-         G2gsy03jxIQ87mGf02BOzpNqk3NbSAh9vYDf/+yfDlrKk+PBvjVkJE//84LNRFwWwd
-         pPonrg4lrRnAQxqNv8BIQzTg6FKCOouT4N9mf4iLg8BOGbLwdRcdCwCb7qBP/IcPKG
-         KLEGLGiXcqxUKCVEOqdJUsoLctMgsN7ZdF8DewdoLEhnaUai7VIW9Py/YDAqs63xOE
-         2v806RIub9JjlVbeRyvFUAsWQHaRwCVkdnfF8hNvsEwrGAp657OnLXaHx8nDU4o7k0
-         0ONIQlkRDtoGpR/ide5VP0VWYUUedadIaLZ3f2PxkElNZFn1WTe
+        b=d/P4+I3geR52DDBTzTUYnXPvLI+CkkSzpOH+ipK5GdFE89mxFiPbOw9aRTUFFRtq7
+         reMEKpiegv5JMNLmNWlJspN28kFz5BqVOTsTyMOdgLs4k8oFNW/x1eVNvg1qF54bWO
+         jQm14xV+xhGsdUHP+VJGv9+3RqbSidX/iENUZra8Es3KsyzSpn4BnTX9myF76JzzYY
+         tLIW92QR2Hx0zmDHp1qQHqOg92oSVWMQK/S+zJ0GEGVvUSonmxvzE7AA7hRFTNG1Es
+         zCCx0bvtBR0R4ACSrspCJN0ZZq3RZt52jI0/3aIJ4ybLpSYob2OCL0I9APi18RVvut
+         2m6cMLhC2X3VUIEZ7dXXgw0BggkHK4O7b5fUi5UCkmv2aEEEBZPOESNpJb2t6FlGiK
+         M1Bvt6/dgVTClLsP50dFp7PdNkJGoUvXfzE7Ts/154rxD4C+hGwxlEo9h62k2fMBWe
+         OPY/a9JBnx6RqGHexQeaeS10e+Snt/UrSfXQtENnd+uIrRNVHxA
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>, Patryk Obara <patryk.obara@gmail.com>,
         Jeff King <peff@peff.net>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 20/36] streaming: convert open_istream to use struct object_id
-Date:   Sun, 25 Feb 2018 21:11:56 +0000
-Message-Id: <20180225211212.477570-21-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 19/36] sha1_file: convert check_sha1_signature to struct object_id
+Date:   Sun, 25 Feb 2018 21:11:55 +0000
+Message-Id: <20180225211212.477570-20-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.16.2.395.g2e18187dfd
 In-Reply-To: <20180225211212.477570-1-sandals@crustytoothpaste.net>
 References: <20180225211212.477570-1-sandals@crustytoothpaste.net>
@@ -53,122 +53,176 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Convert this function to take a pointer to struct object_id and rename
+it check_object_signature.  Introduce temporaries to convert the return
+values of lookup_replace_object and lookup_replace_object_extended into
+struct object_id.
+
+The temporaries are needed because in order to convert
+lookup_replace_object, open_istream needs to be converted, and
+open_istream needs check_sha1_signature to be converted, causing a loop
+of dependencies.  The temporaries will be removed in a future patch.
+
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- archive-tar.c          | 2 +-
- archive-zip.c          | 2 +-
- builtin/index-pack.c   | 2 +-
- builtin/pack-objects.c | 2 +-
- sha1_file.c            | 2 +-
- streaming.c            | 6 +++---
- streaming.h            | 2 +-
- 7 files changed, 9 insertions(+), 9 deletions(-)
+ builtin/fast-export.c |  2 +-
+ builtin/index-pack.c  |  2 +-
+ builtin/mktag.c       |  5 ++++-
+ cache.h               |  2 +-
+ object.c              | 10 ++++++++--
+ pack-check.c          |  4 ++--
+ sha1_file.c           | 12 ++++++------
+ 7 files changed, 23 insertions(+), 14 deletions(-)
 
-diff --git a/archive-tar.c b/archive-tar.c
-index fd622eacc0..7a0d31d847 100644
---- a/archive-tar.c
-+++ b/archive-tar.c
-@@ -119,7 +119,7 @@ static int stream_blocked(const struct object_id *oid)
- 	char buf[BLOCKSIZE];
- 	ssize_t readlen;
- 
--	st = open_istream(oid->hash, &type, &sz, NULL);
-+	st = open_istream(oid, &type, &sz, NULL);
- 	if (!st)
- 		return error("cannot stream blob %s", oid_to_hex(oid));
- 	for (;;) {
-diff --git a/archive-zip.c b/archive-zip.c
-index 5841a6ceb6..18b951b732 100644
---- a/archive-zip.c
-+++ b/archive-zip.c
-@@ -337,7 +337,7 @@ static int write_zip_entry(struct archiver_args *args,
- 
- 		if (S_ISREG(mode) && type == OBJ_BLOB && !args->convert &&
- 		    size > big_file_threshold) {
--			stream = open_istream(oid->hash, &type, &size, NULL);
-+			stream = open_istream(oid, &type, &size, NULL);
- 			if (!stream)
- 				return error("cannot stream blob %s",
- 					     oid_to_hex(oid));
+diff --git a/builtin/fast-export.c b/builtin/fast-export.c
+index 796d0cd66c..293a6615fa 100644
+--- a/builtin/fast-export.c
++++ b/builtin/fast-export.c
+@@ -240,7 +240,7 @@ static void export_blob(const struct object_id *oid)
+ 		buf = read_sha1_file(oid->hash, &type, &size);
+ 		if (!buf)
+ 			die ("Could not read blob %s", oid_to_hex(oid));
+-		if (check_sha1_signature(oid->hash, buf, size, typename(type)) < 0)
++		if (check_object_signature(oid, buf, size, typename(type)) < 0)
+ 			die("sha1 mismatch in blob %s", oid_to_hex(oid));
+ 		object = parse_object_buffer(oid, type, size, buf, &eaten);
+ 	}
 diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index e0a776f1ac..a0ca525e99 100644
+index 5c7ab47c36..e0a776f1ac 100644
 --- a/builtin/index-pack.c
 +++ b/builtin/index-pack.c
-@@ -771,7 +771,7 @@ static int check_collison(struct object_entry *entry)
+@@ -1377,7 +1377,7 @@ static void fix_unresolved_deltas(struct hashfile *f)
+ 		if (!base_obj->data)
+ 			continue;
  
- 	memset(&data, 0, sizeof(data));
- 	data.entry = entry;
--	data.st = open_istream(entry->idx.oid.hash, &type, &size, NULL);
-+	data.st = open_istream(&entry->idx.oid, &type, &size, NULL);
- 	if (!data.st)
- 		return -1;
- 	if (size != entry->size || type != entry->type)
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 5c674b2843..ef63aa5878 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -267,7 +267,7 @@ static unsigned long write_no_reuse_object(struct hashfile *f, struct object_ent
- 	if (!usable_delta) {
- 		if (entry->type == OBJ_BLOB &&
- 		    entry->size > big_file_threshold &&
--		    (st = open_istream(entry->idx.oid.hash, &type, &size, NULL)) != NULL)
-+		    (st = open_istream(&entry->idx.oid, &type, &size, NULL)) != NULL)
- 			buf = NULL;
- 		else {
- 			buf = read_sha1_file(entry->idx.oid.hash, &type,
+-		if (check_sha1_signature(d->oid.hash, base_obj->data,
++		if (check_object_signature(&d->oid, base_obj->data,
+ 				base_obj->size, typename(type)))
+ 			die(_("local object %s is corrupt"), oid_to_hex(&d->oid));
+ 		base_obj->obj = append_obj_to_pack(f, d->oid.hash,
+diff --git a/builtin/mktag.c b/builtin/mktag.c
+index 65bb41e3cd..810b24bef3 100644
+--- a/builtin/mktag.c
++++ b/builtin/mktag.c
+@@ -27,8 +27,11 @@ static int verify_object(const struct object_id *oid, const char *expected_type)
+ 	const unsigned char *repl = lookup_replace_object(oid->hash);
+ 
+ 	if (buffer) {
++		struct object_id reploid;
++		hashcpy(reploid.hash, repl);
++
+ 		if (type == type_from_string(expected_type))
+-			ret = check_sha1_signature(repl, buffer, size, expected_type);
++			ret = check_object_signature(&reploid, buffer, size, expected_type);
+ 		free(buffer);
+ 	}
+ 	return ret;
+diff --git a/cache.h b/cache.h
+index 8a9055f4e7..f29ff43bbd 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1236,7 +1236,7 @@ extern void *map_sha1_file(const unsigned char *sha1, unsigned long *size);
+ extern int unpack_sha1_header(git_zstream *stream, unsigned char *map, unsigned long mapsize, void *buffer, unsigned long bufsiz);
+ extern int parse_sha1_header(const char *hdr, unsigned long *sizep);
+ 
+-extern int check_sha1_signature(const unsigned char *sha1, void *buf, unsigned long size, const char *type);
++extern int check_object_signature(const struct object_id *oid, void *buf, unsigned long size, const char *type);
+ 
+ extern int finalize_object_file(const char *tmpfile, const char *filename);
+ 
+diff --git a/object.c b/object.c
+index 9e6f9ff20b..c63f02a40f 100644
+--- a/object.c
++++ b/object.c
+@@ -255,7 +255,10 @@ struct object *parse_object(const struct object_id *oid)
+ 	if ((obj && obj->type == OBJ_BLOB && has_object_file(oid)) ||
+ 	    (!obj && has_object_file(oid) &&
+ 	     sha1_object_info(oid->hash, NULL) == OBJ_BLOB)) {
+-		if (check_sha1_signature(repl, NULL, 0, NULL) < 0) {
++		struct object_id reploid;
++		hashcpy(reploid.hash, repl);
++
++		if (check_object_signature(&reploid, NULL, 0, NULL) < 0) {
+ 			error("sha1 mismatch %s", oid_to_hex(oid));
+ 			return NULL;
+ 		}
+@@ -265,7 +268,10 @@ struct object *parse_object(const struct object_id *oid)
+ 
+ 	buffer = read_sha1_file(oid->hash, &type, &size);
+ 	if (buffer) {
+-		if (check_sha1_signature(repl, buffer, size, typename(type)) < 0) {
++		struct object_id reploid;
++		hashcpy(reploid.hash, repl);
++
++		if (check_object_signature(&reploid, buffer, size, typename(type)) < 0) {
+ 			free(buffer);
+ 			error("sha1 mismatch %s", sha1_to_hex(repl));
+ 			return NULL;
+diff --git a/pack-check.c b/pack-check.c
+index 403a572567..80ef7c1c63 100644
+--- a/pack-check.c
++++ b/pack-check.c
+@@ -126,7 +126,7 @@ static int verify_packfile(struct packed_git *p,
+ 
+ 		if (type == OBJ_BLOB && big_file_threshold <= size) {
+ 			/*
+-			 * Let check_sha1_signature() check it with
++			 * Let check_object_signature() check it with
+ 			 * the streaming interface; no point slurping
+ 			 * the data in-core only to discard.
+ 			 */
+@@ -141,7 +141,7 @@ static int verify_packfile(struct packed_git *p,
+ 			err = error("cannot unpack %s from %s at offset %"PRIuMAX"",
+ 				    oid_to_hex(entries[i].oid.oid), p->pack_name,
+ 				    (uintmax_t)entries[i].offset);
+-		else if (check_sha1_signature(entries[i].oid.hash, data, size, typename(type)))
++		else if (check_object_signature(entries[i].oid.oid, data, size, typename(type)))
+ 			err = error("packed %s from %s is corrupt",
+ 				    oid_to_hex(entries[i].oid.oid), p->pack_name);
+ 		else if (fn) {
 diff --git a/sha1_file.c b/sha1_file.c
-index 64f0905799..5dc85122c3 100644
+index 69e8d27773..64f0905799 100644
 --- a/sha1_file.c
 +++ b/sha1_file.c
-@@ -799,7 +799,7 @@ int check_object_signature(const struct object_id *oid, void *map,
- 		return oidcmp(oid, &real_oid) ? -1 : 0;
+@@ -784,8 +784,8 @@ void *xmmap(void *start, size_t length,
+  * With "map" == NULL, try reading the object named with "sha1" using
+  * the streaming interface and rehash it to do the same.
+  */
+-int check_sha1_signature(const unsigned char *sha1, void *map,
+-			 unsigned long size, const char *type)
++int check_object_signature(const struct object_id *oid, void *map,
++			   unsigned long size, const char *type)
+ {
+ 	struct object_id real_oid;
+ 	enum object_type obj_type;
+@@ -796,10 +796,10 @@ int check_sha1_signature(const unsigned char *sha1, void *map,
+ 
+ 	if (map) {
+ 		hash_object_file(map, size, type, &real_oid);
+-		return hashcmp(sha1, real_oid.hash) ? -1 : 0;
++		return oidcmp(oid, &real_oid) ? -1 : 0;
  	}
  
--	st = open_istream(oid->hash, &obj_type, &size, NULL);
-+	st = open_istream(oid, &obj_type, &size, NULL);
+-	st = open_istream(sha1, &obj_type, &size, NULL);
++	st = open_istream(oid->hash, &obj_type, &size, NULL);
  	if (!st)
  		return -1;
  
-diff --git a/streaming.c b/streaming.c
-index 5892b50bd8..be85507922 100644
---- a/streaming.c
-+++ b/streaming.c
-@@ -130,14 +130,14 @@ static enum input_source istream_source(const unsigned char *sha1,
+@@ -823,7 +823,7 @@ int check_sha1_signature(const unsigned char *sha1, void *map,
  	}
+ 	the_hash_algo->final_fn(real_oid.hash, &c);
+ 	close_istream(st);
+-	return hashcmp(sha1, real_oid.hash) ? -1 : 0;
++	return oidcmp(oid, &real_oid) ? -1 : 0;
  }
  
--struct git_istream *open_istream(const unsigned char *sha1,
-+struct git_istream *open_istream(const struct object_id *oid,
- 				 enum object_type *type,
- 				 unsigned long *size,
- 				 struct stream_filter *filter)
- {
- 	struct git_istream *st;
- 	struct object_info oi = OBJECT_INFO_INIT;
--	const unsigned char *real = lookup_replace_object(sha1);
-+	const unsigned char *real = lookup_replace_object(oid->hash);
- 	enum input_source src = istream_source(real, type, &oi);
- 
- 	if (src < 0)
-@@ -507,7 +507,7 @@ int stream_blob_to_fd(int fd, const struct object_id *oid, struct stream_filter
- 	ssize_t kept = 0;
- 	int result = -1;
- 
--	st = open_istream(oid->hash, &type, &sz, filter);
-+	st = open_istream(oid, &type, &sz, filter);
- 	if (!st) {
- 		if (filter)
- 			free_stream_filter(filter);
-diff --git a/streaming.h b/streaming.h
-index 73c1d156b3..32f4626771 100644
---- a/streaming.h
-+++ b/streaming.h
-@@ -8,7 +8,7 @@
- /* opaque */
- struct git_istream;
- 
--extern struct git_istream *open_istream(const unsigned char *, enum object_type *, unsigned long *, struct stream_filter *);
-+extern struct git_istream *open_istream(const struct object_id *, enum object_type *, unsigned long *, struct stream_filter *);
- extern int close_istream(struct git_istream *);
- extern ssize_t read_istream(struct git_istream *, void *, size_t);
- 
+ int git_open_cloexec(const char *name, int flags)
+@@ -2217,7 +2217,7 @@ int read_loose_object(const char *path,
+ 			git_inflate_end(&stream);
+ 			goto out;
+ 		}
+-		if (check_sha1_signature(expected_oid->hash, *contents,
++		if (check_object_signature(expected_oid, *contents,
+ 					 *size, typename(*type))) {
+ 			error("sha1 mismatch for %s (expected %s)", path,
+ 			      oid_to_hex(expected_oid));
