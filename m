@@ -7,43 +7,43 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 27AB41F404
-	for <e@80x24.org>; Sun, 25 Feb 2018 21:13:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 292021F404
+	for <e@80x24.org>; Sun, 25 Feb 2018 21:13:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751916AbeBYVMh (ORCPT <rfc822;e@80x24.org>);
-        Sun, 25 Feb 2018 16:12:37 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:33848 "EHLO
+        id S1752045AbeBYVNu (ORCPT <rfc822;e@80x24.org>);
+        Sun, 25 Feb 2018 16:13:50 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:33964 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751884AbeBYVMa (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 25 Feb 2018 16:12:30 -0500
+        by vger.kernel.org with ESMTP id S1751937AbeBYVMr (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 25 Feb 2018 16:12:47 -0500
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 1176460E4F;
-        Sun, 25 Feb 2018 21:12:29 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 8C50C60E57;
+        Sun, 25 Feb 2018 21:12:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1519593149;
-        bh=IrlRGlgbao8xNKtLMd50SaAPoQi2LaIuq7AHKrS+0K4=;
+        s=default; t=1519593166;
+        bh=RtZTVLRC4kNneZYywzoQSdUTcL+tbNM5/uwnZqrHXxA=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=h0jnB5bIBY/xpQYd9ruCOGpf8E5esYTimKwHOlDz8KTBboKSR8HgPvwTvoxx5Nff4
-         z9o+32X7z0CAAf6RCQDESDCI94LTeIH0um0rB6W8+g3ndNblPmlM9jZLjjDLzCNX2A
-         I6kOkynqlhrPQwetULhwjeuUt2YnFoV8C4eR1ezifrR/8dIkYOQJXcT4Qv968VHslc
-         D3yW5u6nLslaIf48xFikgKe4+54G6+IqBlTpCyybv8tZqWt8eeMhRc0BZJE/71ooQ1
-         TEErICJDbs1jnWx+GJF0bWYCrGr5n8YI/duzdg1aVwBt0HiKbhwDhAGV+Ah4Ukd1Jj
-         ofQ+HuShvyx1Ka1HHZ84KaDrMABe77gwGHXRjfsxsfmzim7Ew0Y3RlDLAbWv+LA9BY
-         /oo63Z+K6/4rb2BeYEjTIymeKki1qfra8WNW5x84x9YLfwiMIxJJZdu2BF/tRV0osK
-         WfJ1BkdJLK9piIqW1y8/+g9ICUSiPv1koYDPTuXY3pL1+WeEUze
+        b=mDu+iPGWr9LyguAmfhHOxpjqyrV4S1j4DYa/48U6jO8XJ2QktTlmHZE4BDGkWFUIE
+         Nz+nyB7a+oo4woOqe+hhG+JSXH2o7YuD4UC0fBQqt14CG/jsWO8JEX7HJK/5AD3o8r
+         QDeFLwiGlft7+dOZAcXG+4sUGoZMht0N3pVcoyZW2kbh6XN8W8gM1Wn1KED+KQZR9S
+         G2gsy03jxIQ87mGf02BOzpNqk3NbSAh9vYDf/+yfDlrKk+PBvjVkJE//84LNRFwWwd
+         pPonrg4lrRnAQxqNv8BIQzTg6FKCOouT4N9mf4iLg8BOGbLwdRcdCwCb7qBP/IcPKG
+         KLEGLGiXcqxUKCVEOqdJUsoLctMgsN7ZdF8DewdoLEhnaUai7VIW9Py/YDAqs63xOE
+         2v806RIub9JjlVbeRyvFUAsWQHaRwCVkdnfF8hNvsEwrGAp657OnLXaHx8nDU4o7k0
+         0ONIQlkRDtoGpR/ide5VP0VWYUUedadIaLZ3f2PxkElNZFn1WTe
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>, Patryk Obara <patryk.obara@gmail.com>,
         Jeff King <peff@peff.net>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 05/36] resolve-undo: convert struct resolve_undo_info to object_id
-Date:   Sun, 25 Feb 2018 21:11:41 +0000
-Message-Id: <20180225211212.477570-6-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 20/36] streaming: convert open_istream to use struct object_id
+Date:   Sun, 25 Feb 2018 21:11:56 +0000
+Message-Id: <20180225211212.477570-21-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.16.2.395.g2e18187dfd
 In-Reply-To: <20180225211212.477570-1-sandals@crustytoothpaste.net>
 References: <20180225211212.477570-1-sandals@crustytoothpaste.net>
@@ -53,79 +53,122 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert the sha1 member of this struct to be an array of struct
-object_id instead.  This change is needed to convert find_unique_abbrev.
-
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin/ls-files.c | 2 +-
- resolve-undo.c     | 8 ++++----
- resolve-undo.h     | 2 +-
- 3 files changed, 6 insertions(+), 6 deletions(-)
+ archive-tar.c          | 2 +-
+ archive-zip.c          | 2 +-
+ builtin/index-pack.c   | 2 +-
+ builtin/pack-objects.c | 2 +-
+ sha1_file.c            | 2 +-
+ streaming.c            | 6 +++---
+ streaming.h            | 2 +-
+ 7 files changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-index 2fc836e330..9df66ba307 100644
---- a/builtin/ls-files.c
-+++ b/builtin/ls-files.c
-@@ -271,7 +271,7 @@ static void show_ru_info(const struct index_state *istate)
- 			if (!ui->mode[i])
- 				continue;
- 			printf("%s%06o %s %d\t", tag_resolve_undo, ui->mode[i],
--			       find_unique_abbrev(ui->sha1[i], abbrev),
-+			       find_unique_abbrev(ui->oid[i].hash, abbrev),
- 			       i + 1);
- 			write_name(path);
- 		}
-diff --git a/resolve-undo.c b/resolve-undo.c
-index b40f3173d3..109c658a85 100644
---- a/resolve-undo.c
-+++ b/resolve-undo.c
-@@ -24,7 +24,7 @@ void record_resolve_undo(struct index_state *istate, struct cache_entry *ce)
- 	if (!lost->util)
- 		lost->util = xcalloc(1, sizeof(*ui));
- 	ui = lost->util;
--	hashcpy(ui->sha1[stage - 1], ce->oid.hash);
-+	oidcpy(&ui->oid[stage - 1], &ce->oid);
- 	ui->mode[stage - 1] = ce->ce_mode;
- }
+diff --git a/archive-tar.c b/archive-tar.c
+index fd622eacc0..7a0d31d847 100644
+--- a/archive-tar.c
++++ b/archive-tar.c
+@@ -119,7 +119,7 @@ static int stream_blocked(const struct object_id *oid)
+ 	char buf[BLOCKSIZE];
+ 	ssize_t readlen;
  
-@@ -44,7 +44,7 @@ void resolve_undo_write(struct strbuf *sb, struct string_list *resolve_undo)
- 		for (i = 0; i < 3; i++) {
- 			if (!ui->mode[i])
- 				continue;
--			strbuf_add(sb, ui->sha1[i], 20);
-+			strbuf_add(sb, ui->oid[i].hash, the_hash_algo->rawsz);
- 		}
+-	st = open_istream(oid->hash, &type, &sz, NULL);
++	st = open_istream(oid, &type, &sz, NULL);
+ 	if (!st)
+ 		return error("cannot stream blob %s", oid_to_hex(oid));
+ 	for (;;) {
+diff --git a/archive-zip.c b/archive-zip.c
+index 5841a6ceb6..18b951b732 100644
+--- a/archive-zip.c
++++ b/archive-zip.c
+@@ -337,7 +337,7 @@ static int write_zip_entry(struct archiver_args *args,
+ 
+ 		if (S_ISREG(mode) && type == OBJ_BLOB && !args->convert &&
+ 		    size > big_file_threshold) {
+-			stream = open_istream(oid->hash, &type, &size, NULL);
++			stream = open_istream(oid, &type, &size, NULL);
+ 			if (!stream)
+ 				return error("cannot stream blob %s",
+ 					     oid_to_hex(oid));
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index e0a776f1ac..a0ca525e99 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -771,7 +771,7 @@ static int check_collison(struct object_entry *entry)
+ 
+ 	memset(&data, 0, sizeof(data));
+ 	data.entry = entry;
+-	data.st = open_istream(entry->idx.oid.hash, &type, &size, NULL);
++	data.st = open_istream(&entry->idx.oid, &type, &size, NULL);
+ 	if (!data.st)
+ 		return -1;
+ 	if (size != entry->size || type != entry->type)
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 5c674b2843..ef63aa5878 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -267,7 +267,7 @@ static unsigned long write_no_reuse_object(struct hashfile *f, struct object_ent
+ 	if (!usable_delta) {
+ 		if (entry->type == OBJ_BLOB &&
+ 		    entry->size > big_file_threshold &&
+-		    (st = open_istream(entry->idx.oid.hash, &type, &size, NULL)) != NULL)
++		    (st = open_istream(&entry->idx.oid, &type, &size, NULL)) != NULL)
+ 			buf = NULL;
+ 		else {
+ 			buf = read_sha1_file(entry->idx.oid.hash, &type,
+diff --git a/sha1_file.c b/sha1_file.c
+index 64f0905799..5dc85122c3 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -799,7 +799,7 @@ int check_object_signature(const struct object_id *oid, void *map,
+ 		return oidcmp(oid, &real_oid) ? -1 : 0;
+ 	}
+ 
+-	st = open_istream(oid->hash, &obj_type, &size, NULL);
++	st = open_istream(oid, &obj_type, &size, NULL);
+ 	if (!st)
+ 		return -1;
+ 
+diff --git a/streaming.c b/streaming.c
+index 5892b50bd8..be85507922 100644
+--- a/streaming.c
++++ b/streaming.c
+@@ -130,14 +130,14 @@ static enum input_source istream_source(const unsigned char *sha1,
  	}
  }
-@@ -89,7 +89,7 @@ struct string_list *resolve_undo_read(const char *data, unsigned long size)
- 				continue;
- 			if (size < 20)
- 				goto error;
--			hashcpy(ui->sha1[i], (const unsigned char *)data);
-+			hashcpy(ui->oid[i].hash, (const unsigned char *)data);
- 			size -= 20;
- 			data += 20;
- 		}
-@@ -145,7 +145,7 @@ int unmerge_index_entry_at(struct index_state *istate, int pos)
- 		struct cache_entry *nce;
- 		if (!ru->mode[i])
- 			continue;
--		nce = make_cache_entry(ru->mode[i], ru->sha1[i],
-+		nce = make_cache_entry(ru->mode[i], ru->oid[i].hash,
- 				       name, i + 1, 0);
- 		if (matched)
- 			nce->ce_flags |= CE_MATCHED;
-diff --git a/resolve-undo.h b/resolve-undo.h
-index 46306455ed..87291904bd 100644
---- a/resolve-undo.h
-+++ b/resolve-undo.h
-@@ -3,7 +3,7 @@
  
- struct resolve_undo_info {
- 	unsigned int mode[3];
--	unsigned char sha1[3][20];
-+	struct object_id oid[3];
- };
+-struct git_istream *open_istream(const unsigned char *sha1,
++struct git_istream *open_istream(const struct object_id *oid,
+ 				 enum object_type *type,
+ 				 unsigned long *size,
+ 				 struct stream_filter *filter)
+ {
+ 	struct git_istream *st;
+ 	struct object_info oi = OBJECT_INFO_INIT;
+-	const unsigned char *real = lookup_replace_object(sha1);
++	const unsigned char *real = lookup_replace_object(oid->hash);
+ 	enum input_source src = istream_source(real, type, &oi);
  
- extern void record_resolve_undo(struct index_state *, struct cache_entry *);
+ 	if (src < 0)
+@@ -507,7 +507,7 @@ int stream_blob_to_fd(int fd, const struct object_id *oid, struct stream_filter
+ 	ssize_t kept = 0;
+ 	int result = -1;
+ 
+-	st = open_istream(oid->hash, &type, &sz, filter);
++	st = open_istream(oid, &type, &sz, filter);
+ 	if (!st) {
+ 		if (filter)
+ 			free_stream_filter(filter);
+diff --git a/streaming.h b/streaming.h
+index 73c1d156b3..32f4626771 100644
+--- a/streaming.h
++++ b/streaming.h
+@@ -8,7 +8,7 @@
+ /* opaque */
+ struct git_istream;
+ 
+-extern struct git_istream *open_istream(const unsigned char *, enum object_type *, unsigned long *, struct stream_filter *);
++extern struct git_istream *open_istream(const struct object_id *, enum object_type *, unsigned long *, struct stream_filter *);
+ extern int close_istream(struct git_istream *);
+ extern ssize_t read_istream(struct git_istream *, void *, size_t);
+ 
