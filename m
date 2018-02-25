@@ -7,65 +7,55 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ECCC91F404
-	for <e@80x24.org>; Sun, 25 Feb 2018 20:28:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F3A8D1F404
+	for <e@80x24.org>; Sun, 25 Feb 2018 20:34:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751886AbeBYU22 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 25 Feb 2018 15:28:28 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:33802 "EHLO
+        id S1751904AbeBYUeI (ORCPT <rfc822;e@80x24.org>);
+        Sun, 25 Feb 2018 15:34:08 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:33814 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751826AbeBYU21 (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 25 Feb 2018 15:28:27 -0500
+        by vger.kernel.org with ESMTP id S1751826AbeBYUeI (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 25 Feb 2018 15:34:08 -0500
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 2F4D76042F;
-        Sun, 25 Feb 2018 20:28:24 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 5983A6042F;
+        Sun, 25 Feb 2018 20:34:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1519590504;
-        bh=nsOlA8nV2RHkyjusiZnMOKCRaSzKb/wA8EppU+husNo=;
+        s=default; t=1519590847;
+        bh=TW3oPWGIdJg3Ny1hapooXD01fUng9ie50+Idsa4SRk8=;
         h=Date:From:To:Cc:Subject:References:Content-Type:
          Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
          Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
          Content-Type:Content-Disposition;
-        b=rF7Js1SYPMRD7T/iPPPv/qC+9kj3B4ZN53PfJqCNDGF6ycWEucFV1ntM04Z2fLR30
-         yHgufJdxMP75UGxwhz4YQIaHpL7LJ0rVLF9cqrj87PecxaC+rYgUyv7//lXJ+s+M92
-         BfwgslCm7Klp7+ik3vDscIBLOoeVc2Ouxw+sbk7mh0IEy1nWtJCZAs4A6x4InXXU3Y
-         Q4IL4BZgB6c1o9OEQdttKW5/yaNX1+INZHK4V3NOtwTqlUxyugZG2LPeyZgtP20KkJ
-         7+D6ld+Rddbk6GgWNq8ZaLPKbYzwqjjfwrcAU7DjkJq3GkvCEwwfcNhNLvmXdexMdq
-         jSNsw3lIN350RvbZu8nNlVPNbYdOa3YBC9NSdBxAvRgkBltlBfpR33+W41ALhaEpjh
-         T7Dtbykjlr76E7M/iUw39xhfnrRUnGeY4XN0N2rGBON0dlAOY5ttJlspfZeZHAZDp2
-         A7BKT+BXKNBZyO2yN0/xPGS27TY5qqPtvsHdxt1WLGl3vcP6xHQ
-Date:   Sun, 25 Feb 2018 20:28:16 +0000
+        b=biOZw7X+znwgeZfaHGuUq/OeQKOODDXeHLagtzUPlai1CZgUzkON/wSOq9WnO0I7x
+         Y3qybqDcm5e3k9zkku8wXXT/tU08BoNayWUy47itjM85zBf11+b+1SfJJFUSgB+uM6
+         M9x2a9odJUIi0dvwq4fdqEppxm9g/aHcxnIjQTcpxc07a/flnq+7bqTGUpzHl47IDD
+         bYyThv6J9E30OlEE3yEhWei4kSj5Y1N5EiLpIT94bn9+idRd9dr1E/6mWk+zr0KPH1
+         NaV7TiHc3RJD2X55biBjrnfOaJcdVMW5yfdqtc0ifdRhWfMXxIwNcVX5xgjBjQYXAU
+         9qayOhRwo6g2l9kJlO5+1d5KUD6DIUbyGbsALxeF/a1VEHNvTnnOrHBZhMdlGgLYXK
+         pSp6djGDA7SpheRohZYfrXdRuN7k6vicnQMkxdxUl3jxTg3OQFpc6PwB8OgiOeRJcA
+         mH//MI3EPJplSdP2inV8Iub/ExUtrwcArnurC7GQhl85TlBCkbB
+Date:   Sun, 25 Feb 2018 20:34:01 +0000
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Brandon Williams <bmwill@google.com>,
-        Stefan Beller <sbeller@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH v2 5/5] Revert "repository: pre-initialize hash algo
- pointer"
-Message-ID: <20180225202816.GE4620@genre.crustytoothpaste.net>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     bmwill@google.com, git@vger.kernel.org, gitster@pobox.com,
+        jonathantanmy@google.com, sbeller@google.com,
+        sunshine@sunshineco.com
+Subject: Re: [PATCH v3 0/6] Fix initializing the_hash_algo
+Message-ID: <20180225203401.GF4620@genre.crustytoothpaste.net>
 Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Brandon Williams <bmwill@google.com>,
-        Stefan Beller <sbeller@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-References: <20180223095640.25876-1-pclouds@gmail.com>
- <20180224033429.9656-1-pclouds@gmail.com>
- <20180224033429.9656-6-pclouds@gmail.com>
- <20180224225839.GD4620@genre.crustytoothpaste.net>
- <CACsJy8BP0ro6raD-s4uYOqMg1BhSEtNdn-HCpHYDz_NHXgkRbA@mail.gmail.com>
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        bmwill@google.com, git@vger.kernel.org, gitster@pobox.com,
+        jonathantanmy@google.com, sbeller@google.com,
+        sunshine@sunshineco.com
+References: <20180224033429.9656-1-pclouds@gmail.com>
+ <20180225111840.16421-1-pclouds@gmail.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="idY8LE8SD6/8DnRI"
+        protocol="application/pgp-signature"; boundary="GV0iVqYguTV4Q9ER"
 Content-Disposition: inline
-In-Reply-To: <CACsJy8BP0ro6raD-s4uYOqMg1BhSEtNdn-HCpHYDz_NHXgkRbA@mail.gmail.com>
+In-Reply-To: <20180225111840.16421-1-pclouds@gmail.com>
 X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
  4.15.0-1-amd64)
 User-Agent: Mutt/1.9.3 (2018-01-21)
@@ -76,51 +66,50 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---idY8LE8SD6/8DnRI
-Content-Type: text/plain; charset=us-ascii
+--GV0iVqYguTV4Q9ER
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Sun, Feb 25, 2018 at 10:29:29AM +0700, Duy Nguyen wrote:
-> When I set unknown hash algo here, I think some test failed
-> mysteriously because it used rawsz field (which has value zero), it
-> didn't match some expectation, the code went to the error handling
-> path, which eventually failed with some error message, but it's not
-> obvious that the problem was rawsz being zero and back tracking that
-> took me some time.
+On Sun, Feb 25, 2018 at 06:18:34PM +0700, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=
+=8Dc Duy wrote:
+> v3 refines v2 a bit more:
 >=20
-> With NULL hash_algo, any dereferencing fails immediately with a nice
-> stack trace. Another reason to push me towards NULL hash algo is, even
-> if we prefer nice messages over segmentation faults, we can't avoid it
-> completely anyway (empty_tree and empty_blob are still NULL in unknown
-> hash algo and will cause segfaults). Might as well make things
-> consistent and always segfault.
+> - fix configure typo (and stray words in commit message)
+> - use repo_set_hash_algo() instead of reassigning the_hash_algo
+> - compare hash algos by format_id
+> - catch NULL hash algo, report nicely and suggest GIT_HASH_FIXUP
+>=20
+> The last point makes me much happier about keeping this workaround
+> around until we are confident we can live without it. Interdiff
 
-That makes sense.  Thanks for the explanation.
+This looks sane to me.
+
+Reviewed-by: brian m. carlson <sandals@crustytoothpaste.net>
 --=20
 brian m. carlson / brian with sandals: Houston, Texas, US
 https://www.crustytoothpaste.net/~bmc | My opinion only
 OpenPGP: https://keybase.io/bk2204
 
---idY8LE8SD6/8DnRI
+--GV0iVqYguTV4Q9ER
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2.2.5 (GNU/Linux)
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlqTHGAACgkQv1NdgR9S
-9ovEFA/9FmjHVJw+PUV/FL+7L5Fe8BfrES0iZmDyOdChXiKaQjNloSbxmiiEbWjD
-pqg+1gs1b1/OZluAU5qaLDK+22njNKkAJnlDBr2Zd/eFAqqdTu9sgk4esu5aER2a
-3O9XjadKxzj+yGZEN+b0WhYpSr+zbRUeddkqhx+I0q5tgHusdCK+5vOMlmKldQXB
-J7KV+hIOm/M384vrAstgI1Vwt6Y+qB1qWh0K2OxYFve53axiNOyTPlIyTSfjhlk0
-wsaSN6KZFZoMiOhgdURgE6frMdj1+H5PdeuYtZAVr/VEQ0tuIi0dwj34Oqp5Oexr
-JGyQJ7elyyGKHgx9tYPB5uO0cmPUCLVfsG/iagMYNU8gDdgv69htq1bpWRkYa3T6
-+J5w4P9bh37Rhdalay2bOGUys7LKrj/zHeQiOT5e/LMGh/fVIlZUrUuvdzQvc9HK
-i3RyQUng7RX30lcVHpoS/Zz6Vfke7ml1wwwsd76zy44+FnSrii/cFi8KEo83rn72
-qERYvAscFIBNMcL7QIcaC33Evm79+8juBK28TeLqfSkT6hGr//Fqe4c9kap34kY3
-VEkFAO2+9CNQyH+EPIo/aQnseAGINWUvdg6USL6tsjnTrQ7DoFYvOLCDMB0czhnU
-t5749JFEVF7EKzNMQaaURzmS0dMaiSoi5cHHrCFNiw9nSMQQrEQ=
-=vOVO
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlqTHbkACgkQv1NdgR9S
+9osBLxAAxr4ndDxJqrHncQYqts2PoFayscOcr7WZUaoClbk/KoR3+ubAaLoC5roh
+79G8wNCxeEybPbxle1h8a+jFRLWokAZ6sRqSq2tPrsKXaD7M9X+mhPXCKBndD7Bq
+6tWDmCZesaCZRh3oyifJhxA6qApie/1kUJKltCcX4yadyqTazpEz5QQodWi2z85J
+ih1cHV4o027GOhbR9OlhgF2I+KqfGlYhkiQrcxOPGZgOiajIUngdnZmhTHcaaEhb
+LvnmON0XH02cuURzfceyuS93AQ1t1g1pRNfI3JkWAb5Lz/TuLnQ7RK8Ba/tMfTQO
++oHl3QJ4DfdN3B5c0s30Qku/HQtwq6W7RQGwDvjBAWySOjPmiLRwdEciCE2a42bg
+FY7xN7pyBbzbJn0tT+obsn7tsLru8Hd/LQhVqoUlDZL9QUqIwKOq8tqCTPfdgobH
+EdPHxfKy8Y10A7Z4WanuTOGDRzA0Q3IRrxdY+JSdsEiHlkbea7fB6HDCLkTozv2e
+bIsvDdSTbM13yyBaklqd7SIIgmhYZryb0BUdIsWLzc3EowC+nsABU4nYLNWGlvh6
+9Z7INnSkKLDy73/NlVc5o0AfXRlx44k/MI9GpSaz/mVsHTM3CWZ+KnDGVVuPiUKO
+ETAAOuako62qoQwh3XViwf24a4L4cHNwZnoP8q4QvRKn48TV+h4=
+=c0Zp
 -----END PGP SIGNATURE-----
 
---idY8LE8SD6/8DnRI--
+--GV0iVqYguTV4Q9ER--
