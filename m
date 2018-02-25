@@ -2,117 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EBFA71F576
-	for <e@80x24.org>; Sun, 25 Feb 2018 11:41:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6582D1F404
+	for <e@80x24.org>; Sun, 25 Feb 2018 13:18:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751638AbeBYLlj (ORCPT <rfc822;e@80x24.org>);
-        Sun, 25 Feb 2018 06:41:39 -0500
-Received: from mail-pl0-f50.google.com ([209.85.160.50]:45338 "EHLO
-        mail-pl0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751505AbeBYLli (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 25 Feb 2018 06:41:38 -0500
-Received: by mail-pl0-f50.google.com with SMTP id v9-v6so5639525plp.12
-        for <git@vger.kernel.org>; Sun, 25 Feb 2018 03:41:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=82gYkrfdwiu85BScfwqpMuMUEeJ594wo1Dlw+IaVHR8=;
-        b=nLVm0LES8nfrpwZ3l2Jc8PXhPANwTP0p8jgJnjXPmH8hxxXlSd/rO+jHWSQhUKfx+/
-         ZIXo84G0HFDgeXUS+Zmmf+B9mjxPMwm252nnHpijeWpsBng/1pziG0+UD1n+uQP8QQc4
-         4E7XC/Tfz64heMjLXDzlm6houMZ5z4E6XcwfHnLZoHfDS41vOKETp9W5NxJKly7WHapT
-         yC3GoG1+du/e/CI2EdMm4Q6fpr/rEYZSqJ+mxPgyRolnwAqn3qHP5ku7uGEkmCvwxPd7
-         aqhwsbyjIgKLHVWGRzHeDuLACa1Iz6PddHHGO3La1KLZcu06NMAE7761NcQok+Zia0M9
-         wkaA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=82gYkrfdwiu85BScfwqpMuMUEeJ594wo1Dlw+IaVHR8=;
-        b=R/dl9VmrMC9yolv9n7IDSRLs8Icyhp4iIdPlaY8kcNbAZohFpL6ejVqMelbIx9DBZs
-         BJuS5ffuWSpFweHBHCIyYQkp5HtaLR67P/mB7mpkEKC1+ydz1LylYb+3A37biIi0Hyj5
-         p4zgaQ2+xsCxXz6hK3KIlTPmaSwBcKck3CtmlXxi3YJ1J2VeL3E0k+e1K7Hmb8o9x/GH
-         3kWeaN5fARgNFf9A9QHFOYpedpF7oT3N40YJB7B7oTBc/bb9AWpRN4NkKnWky98MNOZs
-         kaf/Wyv4nhVjE6WeW5RypvR+h0r32P90K2of//26vdWLSLB7VzCl2481F3XFWOW4g/hR
-         it8A==
-X-Gm-Message-State: APf1xPCjwOqM4sr+z8or9XQQDcTVaiLqfVxToUs/ju8FXmpDft9+IBFp
-        OKpAE/wC1II0B3iGoV8Bumo=
-X-Google-Smtp-Source: AG47ELs25zXCg1SxU3+uydlxMUXAW9IMYoRueKYQpeqFaAbqYb2sWLJ3ZG95DV7r3zoy6TPcMnbqLg==
-X-Received: by 2002:a17:902:bd05:: with SMTP id p5-v6mr2420679pls.137.1519558898327;
-        Sun, 25 Feb 2018 03:41:38 -0800 (PST)
-Received: from [10.32.248.206] (adsknateur.autodesk.com. [132.188.32.100])
-        by smtp.gmail.com with ESMTPSA id b5sm10346582pgc.13.2018.02.25.03.41.35
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 25 Feb 2018 03:41:37 -0800 (PST)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH v8 4/7] utf8: add function to detect a missing UTF-16/32 BOM
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <CAPig+cSX9uLWi++3pOis+iPGqEbrAL5px70CB-aUjDVGYZqweA@mail.gmail.com>
-Date:   Sun, 25 Feb 2018 12:41:34 +0100
-Cc:     Lars Schneider <lars.schneider@autodesk.com>,
-        Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-        Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <8EE59DC3-69E0-412B-AC50-5D348D6D5BE0@gmail.com>
-References: <20180224162801.98860-1-lars.schneider@autodesk.com> <20180224162801.98860-5-lars.schneider@autodesk.com> <CAPig+cSX9uLWi++3pOis+iPGqEbrAL5px70CB-aUjDVGYZqweA@mail.gmail.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-X-Mailer: Apple Mail (2.3124)
+        id S1751742AbeBYNSX (ORCPT <rfc822;e@80x24.org>);
+        Sun, 25 Feb 2018 08:18:23 -0500
+Received: from mout.web.de ([212.227.15.3]:43443 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751710AbeBYNSW (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 25 Feb 2018 08:18:22 -0500
+Received: from [192.168.178.36] ([79.237.251.165]) by smtp.web.de (mrweb004
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0LaIRi-1eS7RJ3ZXy-00m2PK; Sun, 25
+ Feb 2018 14:18:15 +0100
+X-Mozilla-News-Host: news://news.public-inbox.org:119
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH] perf: use GIT_PERF_REPEAT_COUNT=3 by default even without
+ config file
+Message-ID: <d80b51db-a746-e526-5005-141504f087bc@web.de>
+Date:   Sun, 25 Feb 2018 14:18:05 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.6.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:mA9dFUWOvnEiyqoMev5zG8q0EYOSj2fECUkwYrXWbZIwWB4Hl3f
+ OvRejJq4O3tAgo/NTLBj4Cccr1u0dPmNRRqEEGy6Z0dFd5kikArxvXHVMtAfpjaCu3XyA/1
+ X7WApQ3nD0frEMR6LzWrBw0SnZyr/e/OceiT9epbR0uM6dl4stAjUDzOANOvmPqTXnUq18i
+ HlYUdMGHMxMM/KQF+2vbQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:3kzgJ56aI/Q=:gNfWTSfq8MHUlOdZW1U8NV
+ 0VAm8Nsk9jIpGtZDMmwSC8h7AP9ZyupEmNqybnXkdUs+2600oX1hHPRmOCY6k4UYJJsaufhvD
+ 4WCgDTnCsKm5k5OoWCXMyS2S6jIp3j5jgtoHEiEFBOuSu8raOU4w9VPKo/9qVAfWbSd0TIfFj
+ ArPAZWSeMY7RIAPtSiTeyDiuAg6ka4sbiqy7ldoL/iSSkltbG+WCKPgD24Mub0IL82LbQbfsd
+ qDALqfjmv7YMvPUUehwWfpk0WND9dv1XeqX9Ra0t5EB/4ZETypRZLIlvbUyhanPb9zm9KOzkz
+ FzPoCB8+xiiQBiyHWCe6FaqVUUb/VRjDVwVgN05rhLYxl2BHJ9+MI9DiJt5Dxxu2RBDIjHld/
+ NnjWQbWnWkwJ+6nNEOIstXGgP44T5dBn09PGgws4ZT8fftJeNxxv6fJhDWNIFqpExn7PwF2vP
+ 5JaeByRMTrh16Y0Kf/vmZOLU1bsis6L+vgjZhfnmqHS3RVZs8J63TN6C/WCIGk1vhwf0cNKEw
+ JQ+qNKd+D7gLdeExP+f1uSFpJf3s5H5jQOwWrSzDmvYqf8TzK9lApjAmVtKkJ/eWuejDonLSV
+ Ug3FcNtm9Passhg7Ji6n6D+/FL3V1KzxIFGdn/cQtRiHl1mB/Gv5yckkpOY7v+GpaofhQhVr6
+ XuZX5oJI7U41dTW3tVLdsCzCZUw3bUoG1MhrPUXPgY9OrQCoquwHYXhoMwXJg1vJFoKjiHqt7
+ KsnYnOyAJIVzMlSWsTPrJpBKrb390N2KRt1IbvYnF7Y11lWF60oK/9viJgVRXKR2PHSy41LJs
+ x8Ydr5eybFA7zLf9LI7lSlc54MZS1XzdCK9GGWrOESlpZtGhz0=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+9ba95ed23c (perf/run: update get_var_from_env_or_config() for
+subsections) stopped setting a default value for GIT_PERF_REPEAT_COUNT
+if no perf config file is present, because get_var_from_env_or_config
+returns early in that case.
 
-> On 25 Feb 2018, at 04:52, Eric Sunshine <sunshine@sunshineco.com> =
-wrote:
->=20
-> On Sat, Feb 24, 2018 at 11:27 AM,  <lars.schneider@autodesk.com> =
-wrote:
->> If the endianness is not defined in the encoding name, then let's
->> be strict and require a BOM to avoid any encoding confusion. The
->> is_missing_required_utf_bom() function returns true if a required BOM
->> is missing.
->>=20
->> The Unicode standard instructs to assume big-endian if there in no =
-BOM
->> for UTF-16/32 [1][2]. However, the W3C/WHATWG encoding standard used
->> in HTML5 recommends to assume little-endian to "deal with deployed
->> content" [3]. Strictly requiring a BOM seems to be the safest option
->> for content in Git.
->>=20
->> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
->> ---
->> diff --git a/utf8.h b/utf8.h
->> @@ -79,4 +79,20 @@ void strbuf_utf8_align(struct strbuf *buf, =
-align_type position, unsigned int wid
->> +/*
->> + * If the endianness is not defined in the encoding name, then we
->> + * require a BOM. The function returns true if a required BOM is =
-missing.
->> + *
->> + * The Unicode standard instructs to assume big-endian if there
->> + * in no BOM for UTF-16/32 [1][2]. However, the W3C/WHATWG
->> + * encoding standard used in HTML5 recommends to assume
->> + * little-endian to "deal with deployed content" [3].
->=20
-> Perhaps you could tack on to the comment here the final bit of
-> explanation from the commit message which ties these conflicting
-> recommendations together. In particular:
->=20
->    Therefore, strictly requiring a BOM seems to be the
->    safest option for content in Git.
+Fix it by setting the default value after calling this function.  Its
+fifth parameter is not used for any other variable, so remove the
+associated code.
 
-Agreed. I'll change it.
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+ t/perf/run | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-Thanks,
-Lars=
+diff --git a/t/perf/run b/t/perf/run
+index 1a100d6134..213da5d6b9 100755
+--- a/t/perf/run
++++ b/t/perf/run
+@@ -106,29 +106,27 @@ get_var_from_env_or_config () {
+ 	conf_sec="$2"
+ 	conf_var="$3"
+ 	conf_opts="$4" # optional
+-	# $5 can be set to a default value
+ 
+ 	# Do nothing if the env variable is already set
+ 	eval "test -z \"\${$env_var+x}\"" || return
+ 
+ 	test -z "$GIT_PERF_CONFIG_FILE" && return
+ 
+ 	# Check if the variable is in the config file
+ 	if test -n "$GIT_PERF_SUBSECTION"
+ 	then
+ 		var="$conf_sec.$GIT_PERF_SUBSECTION.$conf_var"
+ 		conf_value=$(git config $conf_opts -f "$GIT_PERF_CONFIG_FILE" "$var") &&
+ 		eval "$env_var=\"$conf_value\"" && return
+ 	fi
+ 	var="$conf_sec.$conf_var"
+ 	conf_value=$(git config $conf_opts -f "$GIT_PERF_CONFIG_FILE" "$var") &&
+-	eval "$env_var=\"$conf_value\"" && return
+-
+-	test -n "${5+x}" && eval "$env_var=\"$5\""
++	eval "$env_var=\"$conf_value\""
+ }
+ 
+ run_subsection () {
+-	get_var_from_env_or_config "GIT_PERF_REPEAT_COUNT" "perf" "repeatCount" "--int" 3
++	get_var_from_env_or_config "GIT_PERF_REPEAT_COUNT" "perf" "repeatCount" "--int"
++	: ${GIT_PERF_REPEAT_COUNT:=3}
+ 	export GIT_PERF_REPEAT_COUNT
+ 
+ 	get_var_from_env_or_config "GIT_PERF_DIRS_OR_REVS" "perf" "dirsOrRevs"
+-- 
+2.16.2
