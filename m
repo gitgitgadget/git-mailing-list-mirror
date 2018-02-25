@@ -7,58 +7,58 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 422621F576
-	for <e@80x24.org>; Sun, 25 Feb 2018 11:19:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C1BC61F576
+	for <e@80x24.org>; Sun, 25 Feb 2018 11:19:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751710AbeBYLTS (ORCPT <rfc822;e@80x24.org>);
-        Sun, 25 Feb 2018 06:19:18 -0500
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:42582 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751683AbeBYLTR (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 25 Feb 2018 06:19:17 -0500
-Received: by mail-pf0-f194.google.com with SMTP id t15so5376322pfh.9
-        for <git@vger.kernel.org>; Sun, 25 Feb 2018 03:19:17 -0800 (PST)
+        id S1751713AbeBYLTZ (ORCPT <rfc822;e@80x24.org>);
+        Sun, 25 Feb 2018 06:19:25 -0500
+Received: from mail-pl0-f68.google.com ([209.85.160.68]:43543 "EHLO
+        mail-pl0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751702AbeBYLTX (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 25 Feb 2018 06:19:23 -0500
+Received: by mail-pl0-f68.google.com with SMTP id f23so7624503plr.10
+        for <git@vger.kernel.org>; Sun, 25 Feb 2018 03:19:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=DBJksSBzQKQh4Y90ofWZs2oh3r93F+IQ1fVbXvcuxu4=;
-        b=cRDQVdJ7U+1KDeb4ta3fN8PIAnztCBqlwfs70rjcUkWXNVcJzYbtCAKmPYWDlgqL7Q
-         n8JVG/2ac8dST7QPfox29WI65jd8rFrgnUdqYzMYxIzgtf2bta5h4fmjDkFjJm7Lpyvy
-         X2VGH2O8b12MdTikR71t+Cvjuhj05+/BSmrTKn+/mdAAPHMhl2Rvxh3OWCQn5L9pA3hm
-         qnH5pD3bqRVJCaW89BYdWVUD4Fxja8HRpyp1iUCPsuwaV4D/8LhW+OkCg2f4UtI7Z7C9
-         7+T8mbaQEKcSCTZPrkl24L5qGjqrxo7qKu4etwux6Dq4vLWOCuaUZZS66K9X1dOCNK2g
-         567w==
+        bh=o2SJahbPTegu1VghNg2kWWEi6o4h7cdzf4E3vhjYKz8=;
+        b=G6f6Bd5XWZyuyQx3YpK0yrgFcsMxPRtzQOfDVNEtTBGm1k0h+5BpfnRgnb8eqmnQlS
+         RCA6JzSO4tuQimQGS3lKIlIzbeid/aocGmNJ2IVCKtN8ssGZuujCnvRSYS0CRIQGOuhr
+         qxp6teGrz5XFxKuE2nLibuyLTvho8c2Y8IOBLuVYAo5U5+UZWK2n9IxhQbo2Cil2yOOQ
+         9G5+RVJhMFtbTjjAINJmgaaN6A4X2o/Hy3uh/gr0EUiNNXgHNYzITUu9fKlBf10AeM0M
+         Xe42GJK+Z1uM+3ybutIOQydnl6p7fgV02ZB02MGN4f3LXHgMzeZwfYslemEKtZslmihm
+         Fovw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=DBJksSBzQKQh4Y90ofWZs2oh3r93F+IQ1fVbXvcuxu4=;
-        b=kKlBC36UdZ/6cFWXs3KQ8FP8QDW0dL7TKF6b/dQZ8pB5diRQxT9ViRPPR9d6zodYuA
-         LKwEH1ETeO5sg2CWNm9lXNXG3t71+77VtvY3fdyW7Y0qi7Pv0eRh6ElxOnGHiHhz4QWO
-         BynB74oKhGho/vEbFy1WcwbytajGz1qErdoRuQIs1w6jF5SWx9BqmW8QLzGsXlCvkNhg
-         OPoUB/Whhq59XFsvLIUflsUBAuPgFcAhX4XVq1lizm4ZaQPElNU0786uLxed+2XVv1c3
-         MbY5pPfRqnYIpprSwwotSUPEXIstaNQUo1k0lF3mtLOwv+cfdkT80DDUzlkU38K5tMZK
-         XejA==
-X-Gm-Message-State: APf1xPAMJmZnai7bBcT2XdMprCOZoLmQrQ9jC0FZUDsDBEu5Kf2sD/E4
-        KsQRh8sZkfn92TpoyDIDJw1jZw==
-X-Google-Smtp-Source: AH8x225DejV0vx/Ma5JXXj8F40zCi+H72jyzY2hCqHph12jK6sukyMF34pSl74v1X2p1UfS4GGQhOA==
-X-Received: by 10.99.148.17 with SMTP id m17mr5827463pge.367.1519557557538;
-        Sun, 25 Feb 2018 03:19:17 -0800 (PST)
+        bh=o2SJahbPTegu1VghNg2kWWEi6o4h7cdzf4E3vhjYKz8=;
+        b=OZHLx4FnMp46VPt0Resi+Rs3xzvB9fB9KqUEbkZ8/jHS86W7TGTd70A8BHRIrdrgVE
+         5ZApS/eqpblv5pr4Uut2b1HGKOBUSju1YJZnN/GqSOjygAliK+H1TayvxPKQnKDxLxVs
+         ZchvI5O3OFiHD1c+glf8dDVxIG0UxjwY07sj/BWhsQHV5itToHZWuGUBY79y0Py+pL7n
+         1XFnkOHHwEa/yaBV1RHnkFkY5q0FRrAoWYM6QHiYXhd8IEsNFAe0tTLHiKLFZkDy90jO
+         I5ADKoLI/TLi0xQgMJrAZFR7poiwOZobVGW8EbJqwBu84FMCk7Tw8WcHPXauga1Rgl3v
+         zn6Q==
+X-Gm-Message-State: APf1xPDCZE2NXxCKFxGDn8WwLIJd/fEfNwBqaneTlIT6KXR9/F/xCY9m
+        WzDHrTCj59gjlJcqcesWBaxiIQ==
+X-Google-Smtp-Source: AH8x224CLSfmmoDYIOTDKkJw3/FEA4l/+gjlpUXmTUq6dmYIlmR1Ll1mSJT7Gm3xwfhZ1E417p07WA==
+X-Received: by 2002:a17:902:64d7:: with SMTP id y23-v6mr7282872pli.258.1519557562835;
+        Sun, 25 Feb 2018 03:19:22 -0800 (PST)
 Received: from ash ([171.232.93.137])
-        by smtp.gmail.com with ESMTPSA id d15sm8896035pfj.121.2018.02.25.03.19.13
+        by smtp.gmail.com with ESMTPSA id 76sm14288427pfp.53.2018.02.25.03.19.19
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 25 Feb 2018 03:19:16 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Sun, 25 Feb 2018 18:19:12 +0700
+        Sun, 25 Feb 2018 03:19:22 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Sun, 25 Feb 2018 18:19:17 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     bmwill@google.com, git@vger.kernel.org, gitster@pobox.com,
         jonathantanmy@google.com, sandals@crustytoothpaste.net,
         sbeller@google.com, sunshine@sunshineco.com
-Subject: [PATCH v3 5/6] diff.c: initialize hash algo when running in --no-index mode
-Date:   Sun, 25 Feb 2018 18:18:39 +0700
-Message-Id: <20180225111840.16421-6-pclouds@gmail.com>
+Subject: [PATCH v3 6/6] Revert "repository: pre-initialize hash algo pointer"
+Date:   Sun, 25 Feb 2018 18:18:40 +0700
+Message-Id: <20180225111840.16421-7-pclouds@gmail.com>
 X-Mailer: git-send-email 2.16.1.435.g8f24da2e1a
 In-Reply-To: <20180225111840.16421-1-pclouds@gmail.com>
 References: <20180224033429.9656-1-pclouds@gmail.com>
@@ -71,45 +71,99 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Our "git diff" command supports running as a standalone tool. In this
-code path, we try to hash the file content but after
-18e2588e11 (sha1_file: switch uses of SHA-1 to the_hash_algo -
-2018-02-01), there is a chance that the_hash_algo (required by
-index_path) may still be uninitialized if no repository is found.
+This reverts commit e26f7f19b6c7485f04234946a59ab8f4fd21d6d1. The root
+problem, git clone not setting up the_hash_algo, has been fixed in the
+previous patch.
 
-Executing index_path() when the_hash_algo is NULL (or points to unknown
-algo) either crashes or dies. Let's make it a bit safer by explicitly
-falling back to SHA-1 (so that the diff output remains the same as
-before, compared to the alternative that we simply do not hash).
+Since this is a dangerous move and could potentially break stuff after
+release (and leads to workaround like the reverted commit), the
+workaround technically remains, but is hidden behind a new environment
+variable GIT_HASH_FIXUP. This should let the users continue to use git
+while we fix the problem. This variable can be deleted after one or two
+releases.
+
+test-dump-split-index.c needs to call setup_git_directory() after this
+to configure hash algorithm before parsing the index file. It's not the
+best way (i.e. check index file version) but it's a test tool, this is
+good enough.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- diff.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ common-main.c                    | 10 ++++++++++
+ repository.c                     |  2 +-
+ repository.h                     |  5 +++++
+ t/helper/test-dump-split-index.c |  2 ++
+ 4 files changed, 18 insertions(+), 1 deletion(-)
 
-diff --git a/diff.c b/diff.c
-index 21c3838b25..5f28d84b87 100644
---- a/diff.c
-+++ b/diff.c
-@@ -3995,6 +3995,18 @@ static void run_diff(struct diff_filepair *p, struct diff_options *o)
- 		return;
- 	}
+diff --git a/common-main.c b/common-main.c
+index 6a689007e7..fbfa98c3b8 100644
+--- a/common-main.c
++++ b/common-main.c
+@@ -1,6 +1,7 @@
+ #include "cache.h"
+ #include "exec_cmd.h"
+ #include "attr.h"
++#include "repository.h"
+ 
+ /*
+  * Many parts of Git have subprograms communicate via pipe, expect the
+@@ -40,5 +41,14 @@ int main(int argc, const char **argv)
+ 
+ 	restore_sigpipe_to_default();
  
 +	/*
-+	 * NEEDSWORK: When running in no-index mode (and no repo is
-+	 * found, thus no hash algo configured), fall back to SHA-1
-+	 * hashing (which is used by diff_fill_oid_info below) to
-+	 * avoid regression in diff output.
-+	 *
-+	 * In future, perhaps we can allow the user to specify their
-+	 * hash algorithm from command line in this mode.
++	 * Temporary recovery measure while hashing code is being
++	 * refactored. This variable should be gone after everybody
++	 * has used the_hash_algo in one or two releases and nobody
++	 * complains anything.
 +	 */
-+	if (o->flags.no_index && !repo_has_valid_hash_algo(the_repository))
++	if (getenv("GIT_HASH_FIXUP"))
 +		repo_set_hash_algo(the_repository, GIT_HASH_SHA1);
 +
- 	diff_fill_oid_info(one);
- 	diff_fill_oid_info(two);
+ 	return cmd_main(argc, argv);
+ }
+diff --git a/repository.c b/repository.c
+index 4ffbe9bc94..0d715f4fdb 100644
+--- a/repository.c
++++ b/repository.c
+@@ -5,7 +5,7 @@
  
+ /* The main repository */
+ static struct repository the_repo = {
+-	NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, &the_index, &hash_algos[GIT_HASH_SHA1], 0, 0
++	NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, &the_index, NULL, 0, 0
+ };
+ struct repository *the_repository = &the_repo;
+ 
+diff --git a/repository.h b/repository.h
+index 02c695bc74..40bd49611f 100644
+--- a/repository.h
++++ b/repository.h
+@@ -110,6 +110,11 @@ extern int repo_read_index(struct repository *repo);
+ static inline const struct git_hash_algo *repo_get_hash_algo(
+ 	const struct repository *repo)
+ {
++	if (!repo->hash_algo)
++		die("BUG: hash_algo is not initialized!\n%s",
++		    _("You can work around this by setting environment"
++		      " variable GIT_HASH_FIXUP=1.\n"
++		      "Please report this to git@vger.kernel.org"));
+ 	return repo->hash_algo;
+ }
+ 
+diff --git a/t/helper/test-dump-split-index.c b/t/helper/test-dump-split-index.c
+index e44430b699..b759fe3fc1 100644
+--- a/t/helper/test-dump-split-index.c
++++ b/t/helper/test-dump-split-index.c
+@@ -12,6 +12,8 @@ int cmd_main(int ac, const char **av)
+ 	struct split_index *si;
+ 	int i;
+ 
++	setup_git_directory();
++
+ 	do_read_index(&the_index, av[1], 1);
+ 	printf("own %s\n", sha1_to_hex(the_index.sha1));
+ 	si = the_index.split_index;
 -- 
 2.16.1.435.g8f24da2e1a
 
