@@ -7,43 +7,43 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3BC0F1F404
-	for <e@80x24.org>; Sun, 25 Feb 2018 21:13:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8FCFC1F404
+	for <e@80x24.org>; Sun, 25 Feb 2018 21:13:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751991AbeBYVNC (ORCPT <rfc822;e@80x24.org>);
-        Sun, 25 Feb 2018 16:13:02 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:33990 "EHLO
+        id S1751985AbeBYVNA (ORCPT <rfc822;e@80x24.org>);
+        Sun, 25 Feb 2018 16:13:00 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:33964 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751978AbeBYVM6 (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 25 Feb 2018 16:12:58 -0500
+        by vger.kernel.org with ESMTP id S1751948AbeBYVMt (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 25 Feb 2018 16:12:49 -0500
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id B480160E58;
-        Sun, 25 Feb 2018 21:12:56 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 9116060E5A;
+        Sun, 25 Feb 2018 21:12:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1519593177;
-        bh=+KenqkZSUGcJDnJUYus0elVvr1Espm8By/Ezj4XOWLo=;
+        s=default; t=1519593168;
+        bh=AiN6MUHA779NJFN7C1av5+6y4YCEqAQ6XHZprcSa9qg=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=BjRdKjNR55mj6A3yj3l6+l7Z/774T3q7CytT8+5Wi1VzYj+avoAb9K+1ysnRAo4vM
-         y2+RJppsX4Vj+bnPis3/HPCcwAxqDxA2PBaEyj7TFOTWQMk64lt2qMcNX/irfAK+G2
-         dB1VK2MbXJZY6zHxvNmg1ZXwYhPxpU1gcVJj6AQfD5Z1H6IHZYfOIEJjUwYymL4EDx
-         sTrCPLxmmCVzX1mPaw/HcNCCbvrnOJuEp9yCPWziduh2IfpVTSNdYYQZvRcGXLnTOD
-         Lp1bnYaN/kDH3ZLycuXVKF3vJIr3GLq4AKoqnBbAyfJ9O4tuAimnFh3yKc//Dy0QWL
-         cgBItkUM/b5gE2461WmiCx8FkB2IbIvks1ouNYwppC31afLPjOLZm09XCvz42gNT8H
-         1Cma/kATs5QOiojRKBQZUcbMqoTqRVm+VAYwD1f4UlEiCG4/nGIEn6aHUbKiamc9XB
-         jNkcHdcEJ8SgHLusMq7B06el3+ENQIjTjbfqd6XRmOeZJsGVJDg
+        b=kEhp7VNLVG2/OOfYZWFwaflNG+1nXPKARKjInIpWQs6uhSEHeBepnEgAXbe0rF/J/
+         4HPqyyK/7EIgeREuBcKNtGU10JU+M5YyQMHJgYm8wPnyva26u9VQne/hOlN6tp90f9
+         k+NP5ePh/pXBexHE6aJR8e7JFKPVQrV2BtvQYDGbbs69xpXxFoNUsT0+z03TxCdY6I
+         riAL5WmMwUjyxjEGXNFvsyxiMIPZCxh6P6aaJd7in50r5xjdcN3JFnVg1jeMdnIPz5
+         O+i4dZr1Lz/Eo7i5W1E6tBkyI/3cc8wT8WIl+cxuF9cViji3B6XkQ1qCLEM1XKe1x4
+         QvLHiq4qDs7LWq3aJGdQTbPkwfEn99hAFs3GMcCigyOfMWass0pxU+zIpjcV5+gfwb
+         S9vy9KGDkLq9iFy2+39SMKHC+7wBa7pnQ9DTHTUPws4TnGpNjwq03sJCfS4jPaUAEx
+         DyLaJ+NzNrklRFisZEQGy842cq8mdUw/DK8TbBUhXl9xnH+crD7
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>, Patryk Obara <patryk.obara@gmail.com>,
         Jeff King <peff@peff.net>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 30/36] streaming: convert istream internals to struct object_id
-Date:   Sun, 25 Feb 2018 21:12:06 +0000
-Message-Id: <20180225211212.477570-31-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 22/36] sha1_file: convert assert_sha1_type to object_id
+Date:   Sun, 25 Feb 2018 21:11:58 +0000
+Message-Id: <20180225211212.477570-23-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.16.2.395.g2e18187dfd
 In-Reply-To: <20180225211212.477570-1-sandals@crustytoothpaste.net>
 References: <20180225211212.477570-1-sandals@crustytoothpaste.net>
@@ -53,72 +53,75 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert the various open_istream variants to take a pointer to struct
-object_id.  Introduce a temporary, which will be removed later, to work
-around the fact that lookup_replace_object still returns a pointer to
-unsigned char.
+Convert this function to take a pointer to struct object_id and rename
+it to assert_oid_type.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- streaming.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ builtin/commit-tree.c | 2 +-
+ cache.h               | 2 +-
+ commit.c              | 2 +-
+ sha1_file.c           | 8 ++++----
+ 4 files changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/streaming.c b/streaming.c
-index 344678e95f..3f4be1ea2c 100644
---- a/streaming.c
-+++ b/streaming.c
-@@ -14,7 +14,7 @@ enum input_source {
- 
- typedef int (*open_istream_fn)(struct git_istream *,
- 			       struct object_info *,
--			       const unsigned char *,
-+			       const struct object_id *,
- 			       enum object_type *);
- typedef int (*close_istream_fn)(struct git_istream *);
- typedef ssize_t (*read_istream_fn)(struct git_istream *, char *, size_t);
-@@ -27,7 +27,7 @@ struct stream_vtbl {
- #define open_method_decl(name) \
- 	int open_istream_ ##name \
- 	(struct git_istream *st, struct object_info *oi, \
--	 const unsigned char *sha1, \
-+	 const struct object_id *oid, \
- 	 enum object_type *type)
- 
- #define close_method_decl(name) \
-@@ -142,13 +142,16 @@ struct git_istream *open_istream(const struct object_id *oid,
- 	struct object_info oi = OBJECT_INFO_INIT;
- 	const unsigned char *real = lookup_replace_object(oid->hash);
- 	enum input_source src = istream_source(real, type, &oi);
-+	struct object_id realoid;
-+
-+	hashcpy(realoid.hash, real);
- 
- 	if (src < 0)
- 		return NULL;
- 
- 	st = xmalloc(sizeof(*st));
--	if (open_istream_tbl[src](st, &oi, real, type)) {
--		if (open_istream_incore(st, &oi, real, type)) {
-+	if (open_istream_tbl[src](st, &oi, &realoid, type)) {
-+		if (open_istream_incore(st, &oi, &realoid, type)) {
- 			free(st);
- 			return NULL;
+diff --git a/builtin/commit-tree.c b/builtin/commit-tree.c
+index e5bdf57b1e..ecf42191da 100644
+--- a/builtin/commit-tree.c
++++ b/builtin/commit-tree.c
+@@ -58,7 +58,7 @@ int cmd_commit_tree(int argc, const char **argv, const char *prefix)
+ 				usage(commit_tree_usage);
+ 			if (get_oid_commit(argv[i], &oid))
+ 				die("Not a valid object name %s", argv[i]);
+-			assert_sha1_type(oid.hash, OBJ_COMMIT);
++			assert_oid_type(&oid, OBJ_COMMIT);
+ 			new_parent(lookup_commit(&oid), &parents);
+ 			continue;
  		}
-@@ -338,7 +341,7 @@ static struct stream_vtbl loose_vtbl = {
+diff --git a/cache.h b/cache.h
+index f29ff43bbd..b1a117e404 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1275,7 +1275,7 @@ extern int has_object_file_with_flags(const struct object_id *oid, int flags);
+  */
+ extern int has_loose_object_nonlocal(const unsigned char *sha1);
  
- static open_method_decl(loose)
- {
--	st->u.loose.mapped = map_sha1_file(sha1, &st->u.loose.mapsize);
-+	st->u.loose.mapped = map_sha1_file(oid->hash, &st->u.loose.mapsize);
- 	if (!st->u.loose.mapped)
- 		return -1;
- 	if ((unpack_sha1_header(&st->z,
-@@ -489,7 +492,7 @@ static struct stream_vtbl incore_vtbl = {
+-extern void assert_sha1_type(const unsigned char *sha1, enum object_type expect);
++extern void assert_oid_type(const struct object_id *oid, enum object_type expect);
  
- static open_method_decl(incore)
+ /* Helper to check and "touch" a file */
+ extern int check_and_freshen_file(const char *fn, int freshen);
+diff --git a/commit.c b/commit.c
+index e8a49b9c84..b9f028976f 100644
+--- a/commit.c
++++ b/commit.c
+@@ -1517,7 +1517,7 @@ int commit_tree_extended(const char *msg, size_t msg_len,
+ 	int encoding_is_utf8;
+ 	struct strbuf buffer;
+ 
+-	assert_sha1_type(tree->hash, OBJ_TREE);
++	assert_oid_type(tree, OBJ_TREE);
+ 
+ 	if (memchr(msg, '\0', msg_len))
+ 		return error("a NUL byte in commit log message not allowed.");
+diff --git a/sha1_file.c b/sha1_file.c
+index 5dc85122c3..fa69d86309 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -1966,13 +1966,13 @@ int read_pack_header(int fd, struct pack_header *header)
+ 	return 0;
+ }
+ 
+-void assert_sha1_type(const unsigned char *sha1, enum object_type expect)
++void assert_oid_type(const struct object_id *oid, enum object_type expect)
  {
--	st->u.incore.buf = read_sha1_file_extended(sha1, type, &st->size, 0);
-+	st->u.incore.buf = read_sha1_file_extended(oid->hash, type, &st->size, 0);
- 	st->u.incore.read_ptr = 0;
- 	st->vtbl = &incore_vtbl;
+-	enum object_type type = sha1_object_info(sha1, NULL);
++	enum object_type type = sha1_object_info(oid->hash, NULL);
+ 	if (type < 0)
+-		die("%s is not a valid object", sha1_to_hex(sha1));
++		die("%s is not a valid object", oid_to_hex(oid));
+ 	if (type != expect)
+-		die("%s is not a valid '%s' object", sha1_to_hex(sha1),
++		die("%s is not a valid '%s' object", oid_to_hex(oid),
+ 		    typename(expect));
+ }
  
