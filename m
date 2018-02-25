@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0824C1F404
-	for <e@80x24.org>; Sun, 25 Feb 2018 19:47:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A7DB51F404
+	for <e@80x24.org>; Sun, 25 Feb 2018 19:47:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751901AbeBYTrE (ORCPT <rfc822;e@80x24.org>);
-        Sun, 25 Feb 2018 14:47:04 -0500
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:35881 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751895AbeBYTrB (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 25 Feb 2018 14:47:01 -0500
-Received: by mail-wm0-f68.google.com with SMTP id 188so12867089wme.1
-        for <git@vger.kernel.org>; Sun, 25 Feb 2018 11:47:00 -0800 (PST)
+        id S1751912AbeBYTrH (ORCPT <rfc822;e@80x24.org>);
+        Sun, 25 Feb 2018 14:47:07 -0500
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:38724 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751893AbeBYTrD (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 25 Feb 2018 14:47:03 -0500
+Received: by mail-wr0-f196.google.com with SMTP id n7so19087625wrn.5
+        for <git@vger.kernel.org>; Sun, 25 Feb 2018 11:47:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=ary++scGnP8C/TbaNGI6Lt9ZrohtuAoHPg8pEs9dOTs=;
-        b=A9XuIXiu1qC5OLU8Q0bwakh6CdM0cA3nnh6CDbEnMOZXJYfUbUMG2IEeohbUHcJZ3S
-         afZhEgM12y0tzTo7yyt+8Gocih2XFYgHIBOkF4TMJBxXhML7vbQdsRvyBlYqu4CmeF5Z
-         rIi//Tnz904X4Wbs7ZmLTQ/LOjs8TAGVYh3P9icQXa3K9AeY8BsPmCl5s8+VSKfOr2OS
-         BGHiumO01duVkfa2WDKGf0pcWYJYf7bVEJfsvcm25Lu7ncQuMp5Mr19X/p5DNb6QX7DN
-         Ed+0L9pWpSeaRIHQ7ldT+/KqYWSQ78H70a+PWRjbH2b1OBuMwTUFaqV1LP3J02WkREEX
-         F4pg==
+        bh=SFjbhLghepNk/okzcY6yQ+AAqxxXqjwiJemTpnh9hME=;
+        b=jAp1Q5APyW/1U8zDNxfiB5qdjjUTooKbdboEBGt9ucCdB4M8zePx7NImXtBoIswK94
+         /V19icNh+VEusD/bwUI9Jau8bSDXEYKDNOfTxC3llZm09kkpXTUclM0/HOJKnGtkXYYr
+         Qopw6WzVw0+SgKx0QWd+bLJ0knJAmqZfwRxXsMF95bS31DBGnq/x3028/k4XeUu52TVN
+         YTwzMlSS19pq9xJE163mze7Ty0AAV3gghS7odXJBbvz9gjX/ehj0BTY5Pnu76df4b/Cz
+         FXwrwdH1QnCOZqg27jRimB3ZtzxbbAW0TAs3A97gO7OjnFdz3FmEYHziegGgw0mWrJPH
+         ElMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=ary++scGnP8C/TbaNGI6Lt9ZrohtuAoHPg8pEs9dOTs=;
-        b=EDW1dh/pQkd/aw7aHTl8rOCSbDX5CSaZdrTa5hAMie0gwJc9Fe9YVRn0ys9b9tps7O
-         yor3o8p/JesxTr7ExICBr9iNm3l98gEdsJUddDsjGOih7LESI8maVq3CIhwmp3SweFZ2
-         xMG+lmt6dtTJdVCMDDcQXYFUqXSUc/XEalEVLA6kPvZQ2Yljaha06rRAnBlGS42725Qa
-         zVkJ7lJyBpzP3P0xbsVEryX+t7/zCXblF81d1F4ie6i+BK+kfipnxtcca/2g5QNKVqtG
-         R1BvgY0nTeUXHW0WMVcbp8yxsgOadvcdDJJG/9EJPXgDgiPfAink3PtIOCbq7+SpRpsT
-         h47g==
-X-Gm-Message-State: APf1xPDDsWqS373nm4iKtKV7PTwoJGAo8VII3TU4grrJwmxONw1xQc89
-        zpCjxGXqQn1v2N8CGJn9QrrHNBki
-X-Google-Smtp-Source: AG47ELu8OU85y/FSleQGAj9Udk1OygzgLClKIWEnIYl6UOFVpqVVJ+5BHbHVakUZcjrw8om8fam+gg==
-X-Received: by 10.28.91.3 with SMTP id p3mr1743500wmb.30.1519588019664;
-        Sun, 25 Feb 2018 11:46:59 -0800 (PST)
+        bh=SFjbhLghepNk/okzcY6yQ+AAqxxXqjwiJemTpnh9hME=;
+        b=Ov82Z9soRIuMWw9oL63Dc+GsMmXfF5Yobt8ZPzxWlF89DjAjAlysZVpL3UiukF4dOQ
+         QqhhX0bsbx2olciE6qdpPZV6QoKjO3g8WJinvWKyQeS9FbeLimBa6eSYl9a20DR7xAiP
+         jHCFsEwiE3I1rAcGesf+ifoo+YnWSNEULswxrvGY/ZPo0/H2UEoIB0C/KE04LS/jNnlg
+         gOy+/Hx130MLjweg4To+ZQVi8vHI9aJIUME2p1aT8iscGnguuC6I141+KS8beV7SBRNm
+         49kHNBeRVvJc2mJkTg4C+ERwMtWOai7v7loFXXNBUvlLVGoIj3BV/s/YYLL3zO0QLnIy
+         fjHQ==
+X-Gm-Message-State: APf1xPCEW5s+Ard5pG0SUwWVcp3HSFA2NXx3cHJ+4DSkThsj95u5ugKd
+        Y8u2Kvs1cJKTkn64WQDV5ayN2vb1
+X-Google-Smtp-Source: AH8x224PSksV29CQ8Mu7ise6kjpnumS4D3ApZA/ixmtkADa1fA0eKW3wvxjTUYH3lKbBQ5Lw8i+91g==
+X-Received: by 10.223.161.144 with SMTP id u16mr7639111wru.137.1519588022068;
+        Sun, 25 Feb 2018 11:47:02 -0800 (PST)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id b66sm4394003wmg.28.2018.02.25.11.46.58
+        by smtp.gmail.com with ESMTPSA id b66sm4394003wmg.28.2018.02.25.11.47.00
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 25 Feb 2018 11:46:58 -0800 (PST)
+        Sun, 25 Feb 2018 11:47:01 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -64,9 +64,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         "Randall S . Becker" <rsbecker@nexbridge.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 04/13] gitweb: hard-depend on the Digest::MD5 5.8 module
-Date:   Sun, 25 Feb 2018 19:46:28 +0000
-Message-Id: <20180225194637.18630-5-avarab@gmail.com>
+Subject: [PATCH v2 05/13] Git.pm: hard-depend on the File::{Temp,Spec} modules
+Date:   Sun, 25 Feb 2018 19:46:29 +0000
+Message-Id: <20180225194637.18630-6-avarab@gmail.com>
 X-Mailer: git-send-email 2.15.1.424.g9478a66081
 In-Reply-To: <20180225194637.18630-1-avarab@gmail.com>
 References: <20180225194637.18630-1-avarab@gmail.com>
@@ -82,98 +82,60 @@ X-Mailing-List: git@vger.kernel.org
 
 Since my d48b284183 ("perl: bump the required Perl version to 5.8 from
 5.6.[21]", 2010-09-24), we've depended on 5.8, so there's no reason to
-conditionally require Digest::MD5 anymore. It was released with perl
-v5.7.3[1]
+conditionally require File::Temp and File::Spec anymore. They were
+first released with perl versions v5.6.1 and 5.00405, respectively.
 
-The initial introduction of the dependency in
-e9fdd74e53 ("gitweb: (gr)avatar support", 2009-06-30) says as much,
-this also undoes part of the later 2e9c8789b7 ("gitweb: Mention
-optional Perl modules in INSTALL", 2011-02-04) since gitweb will
-always be run on at least 5.8, so there's no need to mention
-Digest::MD5 as a required module in the documentation, let's instead
-say that we require perl 5.8.
-
-As with the preceding Net::{SMTP,Domain} change we now unconditionally
-"use" the module instead.
-
-1. $ corelist Digest::MD5
-   Data for 2015-02-14
-   Digest::MD5 was first released with perl v5.7.3
+This code was originally added in c14c8ceb13 ("Git.pm: Make File::Spec
+and File::Temp requirement lazy", 2008-08-15), presumably to make
+Git.pm work on 5.6.0.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- gitweb/INSTALL     |  3 +--
- gitweb/gitweb.perl | 17 ++++-------------
- 2 files changed, 5 insertions(+), 15 deletions(-)
+ perl/Git.pm | 10 ++--------
+ 1 file changed, 2 insertions(+), 8 deletions(-)
 
-diff --git a/gitweb/INSTALL b/gitweb/INSTALL
-index 408f2859d3..a58e6b3c44 100644
---- a/gitweb/INSTALL
-+++ b/gitweb/INSTALL
-@@ -29,12 +29,11 @@ Requirements
- ------------
+diff --git a/perl/Git.pm b/perl/Git.pm
+index 7ec16e6dde..151b0e7144 100644
+--- a/perl/Git.pm
++++ b/perl/Git.pm
+@@ -11,6 +11,8 @@ use 5.008;
+ use strict;
+ use warnings;
  
-  - Core git tools
-- - Perl
-+ - Perl 5.8
-  - Perl modules: CGI, Encode, Fcntl, File::Find, File::Basename.
-  - web server
++use File::Temp ();
++use File::Spec ();
  
- The following optional Perl modules are required for extra features
-- - Digest::MD5 - for gravatar support
-  - CGI::Fast and FCGI - for running gitweb as FastCGI script
-  - HTML::TagCloud - for fancy tag cloud in project list view
-  - HTTP::Date or Time::ParseDate - to support If-Modified-Since for feeds
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 2417057f2b..2594a4badb 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -20,6 +20,8 @@ use Fcntl ':mode';
- use File::Find qw();
- use File::Basename qw(basename);
- use Time::HiRes qw(gettimeofday tv_interval);
-+use Digest::MD5 qw(md5_hex);
-+
- binmode STDOUT, ':utf8';
+ BEGIN {
  
- if (!defined($CGI::VERSION) || $CGI::VERSION < 4.08) {
-@@ -490,7 +492,6 @@ our %feature = (
- 	# Currently available providers are gravatar and picon.
- 	# If an unknown provider is specified, the feature is disabled.
+@@ -190,7 +192,6 @@ sub repository {
+ 		};
  
--	# Gravatar depends on Digest::MD5.
- 	# Picon currently relies on the indiana.edu database.
+ 		if ($dir) {
+-			_verify_require();
+ 			File::Spec->file_name_is_absolute($dir) or $dir = $opts{Directory} . '/' . $dir;
+ 			$opts{Repository} = abs_path($dir);
  
- 	# To enable system wide have in $GITWEB_CONFIG
-@@ -1166,18 +1167,8 @@ sub configure_gitweb_features {
- 	our @snapshot_fmts = gitweb_get_feature('snapshot');
- 	@snapshot_fmts = filter_snapshot_fmts(@snapshot_fmts);
+@@ -1289,8 +1290,6 @@ sub temp_release {
+ sub _temp_cache {
+ 	my ($self, $name) = _maybe_self(@_);
  
--	# check that the avatar feature is set to a known provider name,
--	# and for each provider check if the dependencies are satisfied.
--	# if the provider name is invalid or the dependencies are not met,
--	# reset $git_avatar to the empty string.
- 	our ($git_avatar) = gitweb_get_feature('avatar');
--	if ($git_avatar eq 'gravatar') {
--		$git_avatar = '' unless (eval { require Digest::MD5; 1; });
--	} elsif ($git_avatar eq 'picon') {
--		# no dependencies
--	} else {
--		$git_avatar = '';
--	}
-+	$git_avatar = '' unless $git_avatar =~ /^(?:gravatar|picon)$/s;
- 
- 	our @extra_branch_refs = gitweb_get_feature('extra-branch-refs');
- 	@extra_branch_refs = filter_and_validate_refs (@extra_branch_refs);
-@@ -2167,7 +2158,7 @@ sub gravatar_url {
- 	my $size = shift;
- 	$avatar_cache{$email} ||=
- 		"//www.gravatar.com/avatar/" .
--			Digest::MD5::md5_hex($email) . "?s=";
-+			md5_hex($email) . "?s=";
- 	return $avatar_cache{$email} . $size;
+-	_verify_require();
+-
+ 	my $temp_fd = \$TEMP_FILEMAP{$name};
+ 	if (defined $$temp_fd and $$temp_fd->opened) {
+ 		if ($TEMP_FILES{$$temp_fd}{locked}) {
+@@ -1324,11 +1323,6 @@ sub _temp_cache {
+ 	$$temp_fd;
  }
  
+-sub _verify_require {
+-	eval { require File::Temp; require File::Spec; };
+-	$@ and throw Error::Simple($@);
+-}
+-
+ =item temp_reset ( FILEHANDLE )
+ 
+ Truncates and resets the position of the C<FILEHANDLE>.
 -- 
 2.15.1.424.g9478a66081
 
