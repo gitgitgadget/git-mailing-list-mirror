@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C050E1F404
-	for <e@80x24.org>; Sun, 25 Feb 2018 18:56:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BB2931F404
+	for <e@80x24.org>; Sun, 25 Feb 2018 19:01:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751881AbeBYS4m (ORCPT <rfc822;e@80x24.org>);
-        Sun, 25 Feb 2018 13:56:42 -0500
-Received: from mail-wm0-f45.google.com ([74.125.82.45]:35747 "EHLO
-        mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751728AbeBYS4j (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 25 Feb 2018 13:56:39 -0500
-Received: by mail-wm0-f45.google.com with SMTP id x7so10964912wmc.0
-        for <git@vger.kernel.org>; Sun, 25 Feb 2018 10:56:38 -0800 (PST)
+        id S1751895AbeBYTBW (ORCPT <rfc822;e@80x24.org>);
+        Sun, 25 Feb 2018 14:01:22 -0500
+Received: from mail-wm0-f50.google.com ([74.125.82.50]:52892 "EHLO
+        mail-wm0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751634AbeBYTBV (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 25 Feb 2018 14:01:21 -0500
+Received: by mail-wm0-f50.google.com with SMTP id t3so13532457wmc.2
+        for <git@vger.kernel.org>; Sun, 25 Feb 2018 11:01:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:user-agent:in-reply-to:date
          :message-id:mime-version:content-transfer-encoding;
-        bh=57ExUdxK4M+gaNwEUY2ObCOcAJ6oM1CwjxL+i/SaGIs=;
-        b=nVWbJxEVN4MRHPagsT0Aygn5sWnxxpil2mv55tblhs41jwAH4rhT7WnyYG/57YMbO4
-         r16wZcvOOkVyYa8UwfZtApdYcfqgvAKYJSazT4L2SOCrX0/rp6DlHPIqeanapeIhBmEG
-         ABCHJlLrKfYEKaWAO2+RqPwqpVxEOXZ/YQg24j2W6A/usd4F3IxIy+3sLOOogbnuGbhH
-         u+7ipDlrmz1qYCH0wzCeHTTXngCC96frZvd2jt/cd8MckLMhnnsB2+MBhgRKDAy3+mGN
-         r6hdCXGfRwltoMxUZhBo9wwoa8fp2VDjfTOTC1kJyf7pyTqW6Gxw8qvUwmldARBJj4hS
-         X6wA==
+        bh=7NdnCHH9XuWRWmXXDA5PpQqnfOq6dyyHxMG1tV5XR30=;
+        b=ZAbwLzxR9xkSIdzMJiOJZWf0D2R1QFoEDUROYwEL9QPwCrq2wDSFXiYRpCBYEcHcNW
+         h8YmK0B9Mo7F8Qp8Rz/wKeBVShKFH4tSvVZhLcm2WrPwfDfQ9d1lnAtswtS18lgDB7ae
+         GnTSK+/LQYyV1CHBb2ugXsA+QN6MHaJplGS/T3lfsbnPxXAbNTVWjW/xG8KaP690Pvra
+         6cojJbGpyBR4rZ4ZRqsjxnWLNFsUGmiy1DkIPMI8leRtvjHSmE2fLn+a+QYsD5BaFZQA
+         g/lfAn3IpsyBFuRsTsd9gM80aK69IBQru6JlzifkGSDGCzdi9hzmXdOraoIXXhfvyiha
+         Ikgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:user-agent
          :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=57ExUdxK4M+gaNwEUY2ObCOcAJ6oM1CwjxL+i/SaGIs=;
-        b=s6whPb3I2KJ1r7ZsX4RP7cODBMeGZSWo9Zr1h3+IgT2l1IgmYR1HCxQAhxcWSTgL8W
-         A4KLKguhfTwCPrqPp4KDcUsLoWfsMTgP8M8bO5NiNuqfDjAz+FkVFVFTqF/eXPMan6t9
-         r0QTcDkqQIVrOWXmg+hQYNFC0n7TRHQYE/a2d0EKkrpXJDC5zR8UG0GsVS6wWx4xLzO9
-         mRUafATgHiUJbzxTyARe0OeGd028n5IjMfS5pMVfeDlNBaqKXxEusG7qbMh3VG/Ofd6a
-         82vvzlmHmdfWJEb+SG7ZnNuK0dXPO/xUR1MFJCkTJdwURnU2lpTVWmFj9L0TQyPvyBZn
-         jAlQ==
-X-Gm-Message-State: APf1xPDxFJFbdZDW0fogdLPV5vTH+HaxoWcB/flt4lZEZ8AquozxspOB
-        r8URXkls9QGvDJ3bDQIsGzR0M9+x
-X-Google-Smtp-Source: AH8x226bJOMOErrLjGPlIokzaJ5352cII+1QJnkJYX/RkUthCvufDQ4bf8p8CsZ+WDg/jSPXv0Y0tg==
-X-Received: by 10.80.172.131 with SMTP id x3mr11577477edc.260.1519584997466;
-        Sun, 25 Feb 2018 10:56:37 -0800 (PST)
+        bh=7NdnCHH9XuWRWmXXDA5PpQqnfOq6dyyHxMG1tV5XR30=;
+        b=fxuaFyFIdfShpQZ8sJHPRiC0mqfNROfv5eAJyv/ub/1TGc4lJsRTxKXE6QFQHkhy9H
+         U2wpQkuxtVhOZ2BQqsApk/2dTwF9hzlodZEsTiXWmDE2xeB1plgNDfZEsSxm7gXp/3vr
+         e/wU/RIh1+R0ziNV9fGnxUyVJV57CG/20qkRysHVDMVSwK6pjT18rnZBCkv7Tfbwm+Uw
+         CvJYBjCqXTWxaVDYQIHnozh0koblM+FdWzmTtN5yAB2dGoMId+bSWIa9KvdziTXvTrjR
+         Y6SjDN/3/JTOLA/f0DJT3HTdfmIERTzEIoaNjTLgyy9Jw4OWrX4JWZemHb54Mj7Ay5kl
+         UYMQ==
+X-Gm-Message-State: APf1xPDSHBWDm6+YmzAP46n7SK0ub/kSvF/zsCxDkrMrWcZscMxe8C1/
+        ftO9KUcTOWl+GsYn0f8MfyUYqRsn
+X-Google-Smtp-Source: AH8x226u53Es3nfsxPROrik2XAq9c9b9MbaCRQhY86A0Di7rI1+CNJHj60dzfqTC9kXXcqHO8DZcgA==
+X-Received: by 10.80.182.73 with SMTP id c9mr11057840ede.55.1519585280137;
+        Sun, 25 Feb 2018 11:01:20 -0800 (PST)
 Received: from evledraar (178-84-79-100.dynamic.upc.nl. [178.84.79.100])
-        by smtp.gmail.com with ESMTPSA id u38sm6700659edm.50.2018.02.25.10.56.35
+        by smtp.gmail.com with ESMTPSA id 8sm5415189edw.72.2018.02.25.11.01.18
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 25 Feb 2018 10:56:36 -0800 (PST)
+        Sun, 25 Feb 2018 11:01:18 -0800 (PST)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Jonathan Nieder <jrnieder@gmail.com>
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
@@ -58,12 +58,12 @@ Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Jari Aalto <jari.aalto@cante.net>,
         Giuseppe Bilotta <giuseppe.bilotta@gmail.com>,
         Marcus Griep <marcus@griep.us>
-Subject: Re: [PATCH 3/8] perl: generalize the Git::LoadCPAN facility
-References: <20180214222146.10655-1-avarab@gmail.com> <20180214222146.10655-4-avarab@gmail.com> <20180214225754.GC136185@aiede.svl.corp.google.com>
+Subject: Re: [PATCH 1/8] perl: *.pm files should not have the executable bit
+References: <20180214222146.10655-1-avarab@gmail.com> <20180214222146.10655-2-avarab@gmail.com> <20180214224137.GA136185@aiede.svl.corp.google.com>
 User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 1.1.0
-In-reply-to: <20180214225754.GC136185@aiede.svl.corp.google.com>
-Date:   Sun, 25 Feb 2018 19:56:34 +0100
-Message-ID: <87sh9oew4d.fsf@evledraar.gmail.com>
+In-reply-to: <20180214224137.GA136185@aiede.svl.corp.google.com>
+Date:   Sun, 25 Feb 2018 20:01:18 +0100
+Message-ID: <87r2p8evwh.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
@@ -75,114 +75,31 @@ X-Mailing-List: git@vger.kernel.org
 
 On Wed, Feb 14 2018, Jonathan Nieder jotted:
 
+> Hi,
+>
 > Ævar Arnfjörð Bjarmason wrote:
 >
->> Change the two wrappers to load from CPAN (local OS) or our own copy
->> to do so via the same codepath.
+>> The Git::Mail::Address file added in bd869f67b9 ("send-email: add and
+>> use a local copy of Mail::Address", 2018-01-05) had the executable bit
+>> set, this should not be the case with *.pm files, it breaks nothing,
+>> but is redundant and confusing as none of the other files have it, and
+>> it's never executed as a stand-alone program.
 >
-> nit: I think with s/to load/that load/ this will be easier to read.
+> Needs a period somewhere to break up the long sentence with comma
+> splices.  How about:
 >
->> I added the Error.pm wrapper in 20d2a30f8f ("Makefile: replace
->> perl/Makefile.PL with simple make rules", 2017-12-10), and shortly
->> afterwards Matthieu Moy added a wrapper for Mail::Address in
->> bd869f67b9 ("send-email: add and use a local copy of Mail::Address",
->> 2018-01-05).
->>
->> His was simpler since Mail::Address doesn't have an "import" method,
->> but didn't do the same sanity checking, e.g. a missing FromCPAN
->> directory (which OS packages are likely not to have) wouldn't be
->> explicitly warned about.
+> 	The Git::Mail::Address file added in bd869f67b9 ("send-email: add and
+> 	use a local copy of Mail::Address", 2018-01-05) had the executable bit
+> 	set. That bit should not be set for *.pm files. It breaks nothing but
+> 	but it is redundant and confusing as none of the other files have it
+> 	and these files are never executed as stand-alone programs.
+
+Thanks, used this with s/but but/but/
+
+>> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 >
-> I'm having trouble parsing this.  Mail::Address didn't do the same
-> sanity checking or his didn't?
+> With or without such a tweak,
+> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 >
-> The comma before e.g. should be a period or semicolon, since it's
-> starting a new independent clause.
->
->> Now both use a modification of the previously Error.pm-specific
->> codepath, which has been amended to take the module to load as
->> parameter, as well as whether or not that module has an import method.
->
-> Does "now" mean before this patch or after this patch?  Usually
-> commit messages describe the status quo without the patch in the
-> present tense and the change the patch will make in the imperative.
-> So this could say:
->
-> 	Update both to use a common implementation based on the previous
-> 	Error.pm loader.
+> Thanks.
 
-All good feeedback, thanks. Incorporated into v2 which I'm about to
-submit.
-
-> [...]
->> +++ b/perl/Git/LoadCPAN.pm
->> @@ -0,0 +1,74 @@
-> [...]
->> +The Perl code in Git depends on some modules from the CPAN, but we
->> +don't want to make those a hard requirement for anyone building from
->> +source.
->
-> not about this patch: have we considered making it a hard requirement?
-> Both Mail::Address and Error.pm are pretty widely available, and I
-> wonder if we could make the instructions in the INSTALL file say that
-> they are required dependencies to simplify things.
-
-I can't remember when, but at some point this was discussed on list, and
-the consensus was that us using perl should be kept as a non-invasive
-implementation detail that would be as small of a pain as possible for
-users.
-
-It's easy for distros to package these modules, but for users building
-from source who know nothing about perl it can be a pain.
-
-I also think it's very useful to avoid the side-discussion about not
-using some useful CPAN module in the future just because it's not widely
-used, but would be perfect for some use-case of ours.
-
-> I admit part of my bias here is coming from the distro world, where we
-> have to do extra work to get rid of the FromCPAN embedded copies and
-> would be happier not to have to.
-
-I think there's a very good argument to be made for inverting the
-NO_PERL_CPAN_FALLBACKS logic, but my soon to be submitted v2 keeps it
-off by default.
-
-> [...]
->> +Usually OS's will not ship with Git's Git::FromCPAN tree at all,
->> +preferring to use their own packaging of CPAN modules instead.
->
-> nit: I think the plural of OS is OSes, or something like
-> "distributors" or "operating systems".
-
-Thanks.
-
-> [...]
->> +    eval {
->> +	require $package_pm;
->> +	1;
->> +    } or do {
->
-> also not about this patch: this mixed tabs/spacing formatting feels a
-> bit unusual.  I don't know if it's idiomatic for perl, and if it is
-> then no complaints; it just stood out a little.  Can
-> Documentation/CodingGuidelines say something about the preferred
-> indentation in Perl to avoid having to think about such questions?
-
-Thanks, that sucked. Changed to \t. I still haven't gotten around to
-hacking my $EDITOR settings for git.git (like for C & SH).
-
->> --- a/perl/Git/LoadCPAN/Error.pm
->> +++ b/perl/Git/LoadCPAN/Error.pm
->> @@ -2,45 +2,9 @@ package Git::LoadCPAN::Error;
->>  use 5.008;
->>  use strict;
->>  use warnings;
->> +use Git::LoadCPAN (
->> +    module => 'Error',
->> +    import => 1,
->> +);
->
-> Nice!
->
-> Thanks and hope that helps,
-> Jonathan
