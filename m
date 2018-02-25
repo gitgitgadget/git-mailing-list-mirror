@@ -2,224 +2,223 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C37051F404
-	for <e@80x24.org>; Sun, 25 Feb 2018 20:35:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C70DF1F404
+	for <e@80x24.org>; Sun, 25 Feb 2018 21:12:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751930AbeBYUfz (ORCPT <rfc822;e@80x24.org>);
-        Sun, 25 Feb 2018 15:35:55 -0500
-Received: from mail-wr0-f195.google.com ([209.85.128.195]:44902 "EHLO
-        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751913AbeBYUfw (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 25 Feb 2018 15:35:52 -0500
-Received: by mail-wr0-f195.google.com with SMTP id v65so19116879wrc.11
-        for <git@vger.kernel.org>; Sun, 25 Feb 2018 12:35:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=JQzcVTVNNovVfPPD4uS7UgWZFagaf4/lG9LBF6Z+APE=;
-        b=Fez4zZWxzpVOOgPwP03fCCbGm8UNL98uba+V1m7TCdqDdyoUu2HW08VaFfApXLrJKf
-         H4yyZ8NQsrzUT9e9LKG7zSomW96jaRjEAGnJKh3H9V2H031BGHljhKcKUppDPI6ie2NE
-         tNn9NoRMoG4jXojqMmUrjylknkFPydAa9zntdRgE3ecJcG8EMcppW/PJ6RPR+9MzHEmU
-         2ycwx2rM5NyickbTqWxTTcuuTHFwjG4DBxQJgQeHYBKXzIMaZ3dLakkXVy75hIZNq0DN
-         QfL0f2qKOXvKvgsfGIdbyCff9f+sFMwKrFWN/oNM3V6voPUKg/SWDBJmPPCDuKJLTTYM
-         40MA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=JQzcVTVNNovVfPPD4uS7UgWZFagaf4/lG9LBF6Z+APE=;
-        b=oXolp6S2/fxse6nJw38jqmztidKE9djj2IQYlt+/01Old6X00a5Xd3LBqUC6HYU2Bm
-         d8sCaYg1aoxuDWWQ7NPVbtFT3ju7TP5AnfKRpChgQHC7C79a9qQ/oXihViAwInjMT1fH
-         8qB4iowy3tGzNbvbCp4AGHWntWID3OYRm4Fw+O8rASz89COkHMqBhvJXhJ8PtSRpkMfd
-         S6t/WK2M5+PDt3wH5lYBryNSfiUTzQS7c+shKa1Xfw2EdYDQ0HDN2DI4mzLbULQWVhrZ
-         8HNNKWSB9ly3h0uYBxIpBKd5844aA7io65gDoHywQXCos6+b/z0NB9FeMxZGBorw3L+S
-         HmyA==
-X-Gm-Message-State: APf1xPCfizS2yvPJc+2uk3DTFLvHo/x008jgndAYFwwBB3HcdCtx/GBa
-        rA5/8BOZTXrRmo29jzMf/SFti8aI
-X-Google-Smtp-Source: AH8x2256zCeZnimWGS4IcCoe8/9kpf89LMLWJMr0BIQyR+PLRdC2hO2+T1GJQyzfAS9Rvs4ZEB6uMg==
-X-Received: by 10.223.153.23 with SMTP id x23mr7205968wrb.134.1519590950713;
-        Sun, 25 Feb 2018 12:35:50 -0800 (PST)
-Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id 7sm6564268wmq.42.2018.02.25.12.35.49
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 25 Feb 2018 12:35:49 -0800 (PST)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
+        id S1751872AbeBYVM0 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 25 Feb 2018 16:12:26 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:33822 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751557AbeBYVMZ (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 25 Feb 2018 16:12:25 -0500
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 22CC86042F;
+        Sun, 25 Feb 2018 21:12:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1519593141;
+        bh=kCNp8RgUPY7BD6mtd4Z4RdF0bCk1xcBFItzb/v94/S8=;
+        h=From:To:Cc:Subject:Date:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=gqSn51qudwSA8miMNBIhU+Orr2AKiia0D1VmiEMSx9GWioC2gpOIGTvnej8fiK4/9
+         99ikBHL50cdAUaodaeRGmw8FoEhNJfbt86/mfWKpJfTKwImmwAuzdpOOAV3pitoNQs
+         K1TMuycgzLnRbr3BqPJeM4vheISn3d2pwKst54PY3b8IvhnrEqTOho+EzwtQrp/WEz
+         uz8qyxV3FJzCd9Eb+uGVpzROSyI5lLYz9rbhRRpl9SxjGsKZi/7feW0l3d5gLCKnS1
+         LHiKtwFHZ4oHeNOKVNbAMs6bVNUcyrnDQ4OqxnS9T69bmieMeeZauYNFE6Rf9K+oNJ
+         wNyKTnVhOlljeCPHB2UPDnWRtKUG6H8Doi46PBeFdKSptJFn0QddptZJNIkK0NrVp+
+         IDL5h12rEwBTAnjVePoT6QXLj8CLwu/AcUO2fHwgdENWbyf3msQFM23z/kpmk//Rgd
+         wOEvLR80ejTMUhQhIhT3XOhs1VvBsiHpII8FRe2r2ZWMjaxLw0Z
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>, Jeff King <peff@peff.net>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH 2/2] wildmatch: use the new precompiling wildmatch()
-Date:   Sun, 25 Feb 2018 20:35:37 +0000
-Message-Id: <20180225203537.28318-3-avarab@gmail.com>
-X-Mailer: git-send-email 2.15.1.424.g9478a66081
-In-Reply-To: <20180225203537.28318-1-avarab@gmail.com>
-References: <20180225203537.28318-1-avarab@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>, Patryk Obara <patryk.obara@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH v2 00/36] object_id part 12
+Date:   Sun, 25 Feb 2018 21:11:36 +0000
+Message-Id: <20180225211212.477570-1-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.16.2.395.g2e18187dfd
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Make some limited use of the wildmatch() interface for "precompiling"
-patterns, although the current implementation does not do this yet.
+This is the twelfth in a series of patches to convert various parts of
+the code to struct object_id.
 
-The main hot codepath in dir.c is not being touched yet, but some
-other invocations where we repeatedly match the same glob against
-multiple strings have been migrated.
+The primary changes here are to the sha1_file code, find_unique_abbrev,
+and lookup_replace_object.  Due to the circular nature of converting the
+latter, there are several places where we briefly insert temporaries to
+allow a multi-patch conversion.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- builtin/name-rev.c | 7 ++++++-
- builtin/replace.c  | 7 ++++---
- config.c           | 8 ++++++--
- refs.c             | 7 ++++---
- 4 files changed, 20 insertions(+), 9 deletions(-)
+Also included is a constant for object header length allocation.  This
+isn't strictly related to the series, but it makes for a nice cleanup of
+hard-coded constants, which is good for maintainability.
 
-diff --git a/builtin/name-rev.c b/builtin/name-rev.c
-index 9e088ebd11..c75ac8d9af 100644
---- a/builtin/name-rev.c
-+++ b/builtin/name-rev.c
-@@ -128,14 +128,19 @@ static void name_rev(struct commit *commit,
- static int subpath_matches(const char *path, const char *filter)
- {
- 	const char *subpath = path;
-+	struct wildmatch_compiled *wildmatch_compiled =
-+		wildmatch_compile(filter, 0);
- 
- 	while (subpath) {
--		if (!wildmatch(filter, subpath, 0))
-+		if (!wildmatch_match(wildmatch_compiled, subpath)) {
-+			wildmatch_free(wildmatch_compiled);
- 			return subpath - path;
-+		}
- 		subpath = strchr(subpath, '/');
- 		if (subpath)
- 			subpath++;
- 	}
-+	wildmatch_free(wildmatch_compiled);
- 	return -1;
- }
- 
-diff --git a/builtin/replace.c b/builtin/replace.c
-index 83d3235721..9be72f2b7b 100644
---- a/builtin/replace.c
-+++ b/builtin/replace.c
-@@ -32,7 +32,7 @@ enum replace_format {
- };
- 
- struct show_data {
--	const char *pattern;
-+	struct wildmatch_compiled *wildmatch_compiled;
- 	enum replace_format format;
- };
- 
-@@ -41,7 +41,7 @@ static int show_reference(const char *refname, const struct object_id *oid,
- {
- 	struct show_data *data = cb_data;
- 
--	if (!wildmatch(data->pattern, refname, 0)) {
-+	if (!wildmatch_match(data->wildmatch_compiled, refname)) {
- 		if (data->format == REPLACE_FORMAT_SHORT)
- 			printf("%s\n", refname);
- 		else if (data->format == REPLACE_FORMAT_MEDIUM)
-@@ -70,7 +70,7 @@ static int list_replace_refs(const char *pattern, const char *format)
- 
- 	if (pattern == NULL)
- 		pattern = "*";
--	data.pattern = pattern;
-+	data.wildmatch_compiled = wildmatch_compile(pattern, 0);
- 
- 	if (format == NULL || *format == '\0' || !strcmp(format, "short"))
- 		data.format = REPLACE_FORMAT_SHORT;
-@@ -84,6 +84,7 @@ static int list_replace_refs(const char *pattern, const char *format)
- 		    format);
- 
- 	for_each_replace_ref(show_reference, (void *)&data);
-+	wildmatch_free(data.wildmatch_compiled);
- 
- 	return 0;
- }
-diff --git a/config.c b/config.c
-index b0c20e6cb8..0f595de971 100644
---- a/config.c
-+++ b/config.c
-@@ -210,6 +210,7 @@ static int include_by_gitdir(const struct config_options *opts,
- 	int ret = 0, prefix;
- 	const char *git_dir;
- 	int already_tried_absolute = 0;
-+	struct wildmatch_compiled *wildmatch_compiled = NULL;
- 
- 	if (opts->git_dir)
- 		git_dir = opts->git_dir;
-@@ -237,8 +238,10 @@ static int include_by_gitdir(const struct config_options *opts,
- 			goto done;
- 	}
- 
--	ret = !wildmatch(pattern.buf + prefix, text.buf + prefix,
--			 icase ? WM_CASEFOLD : 0);
-+	if (!wildmatch_compiled)
-+		wildmatch_compiled = wildmatch_compile(pattern.buf + prefix,
-+						       icase ? WM_CASEFOLD : 0);
-+	ret = !wildmatch_match(wildmatch_compiled, text.buf + prefix);
- 
- 	if (!ret && !already_tried_absolute) {
- 		/*
-@@ -257,6 +260,7 @@ static int include_by_gitdir(const struct config_options *opts,
- done:
- 	strbuf_release(&pattern);
- 	strbuf_release(&text);
-+	wildmatch_free(wildmatch_compiled);
- 	return ret;
- }
- 
-diff --git a/refs.c b/refs.c
-index 20ba82b434..c631793d1e 100644
---- a/refs.c
-+++ b/refs.c
-@@ -213,7 +213,7 @@ char *resolve_refdup(const char *refname, int resolve_flags,
- 
- /* The argument to filter_refs */
- struct ref_filter {
--	const char *pattern;
-+	struct wildmatch_compiled *code;
- 	each_ref_fn *fn;
- 	void *cb_data;
- };
-@@ -291,7 +291,7 @@ static int filter_refs(const char *refname, const struct object_id *oid,
- {
- 	struct ref_filter *filter = (struct ref_filter *)data;
- 
--	if (wildmatch(filter->pattern, refname, 0))
-+	if (wildmatch_match(filter->code, refname))
- 		return 0;
- 	return filter->fn(refname, oid, flags, filter->cb_data);
- }
-@@ -454,12 +454,13 @@ int for_each_glob_ref_in(each_ref_fn fn, const char *pattern,
- 		strbuf_addch(&real_pattern, '*');
- 	}
- 
--	filter.pattern = real_pattern.buf;
-+	filter.code = wildmatch_compile(real_pattern.buf, 0);
- 	filter.fn = fn;
- 	filter.cb_data = cb_data;
- 	ret = for_each_ref(filter_refs, &filter);
- 
- 	strbuf_release(&real_pattern);
-+	wildmatch_free(filter.code);
- 	return ret;
- }
- 
--- 
-2.15.1.424.g9478a66081
+This series further decreases the number of hard-coded constants in the
+code.  After this series, there are only 172 instances of the constant
+"20" in the code (for any purpose) and 98 instances of "40".
+
+Changes from v1:
+* Rebase onto master.
+
+brian m. carlson (36):
+  bulk-checkin: convert index_bulk_checkin to struct object_id
+  builtin/write-tree: convert to struct object_id
+  cache-tree: convert write_*_as_tree to object_id
+  cache-tree: convert remnants to struct object_id
+  resolve-undo: convert struct resolve_undo_info to object_id
+  tree: convert read_tree_recursive to struct object_id
+  ref-filter: convert grab_objectname to struct object_id
+  strbuf: convert strbuf_add_unique_abbrev to use struct object_id
+  wt-status: convert struct wt_status_state to object_id
+  Convert find_unique_abbrev* to struct object_id
+  http-walker: convert struct object_request to use struct object_id
+  send-pack: convert remaining functions to struct object_id
+  replace_object: convert struct replace_object to object_id
+  builtin/mktag: convert to struct object_id
+  archive: convert write_archive_entry_fn_t to object_id
+  archive: convert sha1_file_to_archive to struct object_id
+  builtin/index-pack: convert struct ref_delta_entry to object_id
+  sha1_file: convert read_loose_object to use struct object_id
+  sha1_file: convert check_sha1_signature to struct object_id
+  streaming: convert open_istream to use struct object_id
+  builtin/mktree: convert to struct object_id
+  sha1_file: convert assert_sha1_type to object_id
+  sha1_file: convert retry_bad_packed_offset to struct object_id
+  packfile: convert unpack_entry to struct object_id
+  Convert remaining callers of sha1_object_info_extended to object_id
+  sha1_file: convert sha1_object_info* to object_id
+  builtin/fmt-merge-msg: convert remaining code to object_id
+  builtin/notes: convert static functions to object_id
+  tree-walk: convert get_tree_entry_follow_symlinks internals to
+    object_id
+  streaming: convert istream internals to struct object_id
+  tree-walk: convert tree entry functions to object_id
+  sha1_file: convert read_object_with_reference to object_id
+  sha1_file: convert read_sha1_file to struct object_id
+  Convert lookup_replace_object to struct object_id
+  sha1_file: introduce a constant for max header length
+  convert: convert to struct object_id
+
+ apply.c                  |   4 +-
+ archive-tar.c            |  28 ++++----
+ archive-zip.c            |  18 ++---
+ archive.c                |  32 ++++-----
+ archive.h                |  10 +--
+ bisect.c                 |   3 +-
+ blame.c                  |  18 +++--
+ builtin/am.c             |   8 +--
+ builtin/blame.c          |   2 +-
+ builtin/branch.c         |   2 +-
+ builtin/cat-file.c       |  30 +++++----
+ builtin/checkout.c       |  12 ++--
+ builtin/commit-tree.c    |   2 +-
+ builtin/describe.c       |   4 +-
+ builtin/difftool.c       |   2 +-
+ builtin/fast-export.c    |   8 +--
+ builtin/fetch.c          |  10 +--
+ builtin/fmt-merge-msg.c  |   4 +-
+ builtin/fsck.c           |   4 +-
+ builtin/grep.c           |   6 +-
+ builtin/index-pack.c     |  43 ++++++------
+ builtin/log.c            |   8 +--
+ builtin/ls-files.c       |   4 +-
+ builtin/ls-tree.c        |   8 +--
+ builtin/merge-tree.c     |   5 +-
+ builtin/merge.c          |   8 +--
+ builtin/mktag.c          |  20 +++---
+ builtin/mktree.c         |  24 +++----
+ builtin/name-rev.c       |   2 +-
+ builtin/notes.c          |  14 ++--
+ builtin/pack-objects.c   |  27 ++++----
+ builtin/prune.c          |   2 +-
+ builtin/receive-pack.c   |   8 +--
+ builtin/reflog.c         |   2 +-
+ builtin/replace.c        |  10 +--
+ builtin/reset.c          |   2 +-
+ builtin/rev-list.c       |   2 +-
+ builtin/rev-parse.c      |   2 +-
+ builtin/rm.c             |   2 +-
+ builtin/show-branch.c    |   2 +-
+ builtin/show-ref.c       |   4 +-
+ builtin/tag.c            |  16 +++--
+ builtin/unpack-file.c    |   2 +-
+ builtin/unpack-objects.c |   4 +-
+ builtin/update-index.c   |   2 +-
+ builtin/verify-commit.c  |   2 +-
+ builtin/worktree.c       |   4 +-
+ builtin/write-tree.c     |   6 +-
+ bulk-checkin.c           |  18 ++---
+ bulk-checkin.h           |   2 +-
+ bundle.c                 |   2 +-
+ cache-tree.c             |  36 +++++-----
+ cache-tree.h             |   4 +-
+ cache.h                  |  42 ++++++------
+ combine-diff.c           |   6 +-
+ commit.c                 |   8 +--
+ config.c                 |   2 +-
+ convert.c                |  12 ++--
+ convert.h                |   2 +-
+ diff.c                   |   6 +-
+ dir.c                    |   2 +-
+ entry.c                  |   4 +-
+ fast-import.c            |  31 ++++-----
+ fsck.c                   |   2 +-
+ grep.c                   |   2 +-
+ http-push.c              |   2 +-
+ http-walker.c            |  16 ++---
+ line-log.c               |   3 +-
+ list-objects-filter.c    |   2 +-
+ log-tree.c               |  12 ++--
+ mailmap.c                |   2 +-
+ match-trees.c            |  10 +--
+ merge-blobs.c            |   4 +-
+ merge-recursive.c        |  20 +++---
+ notes-cache.c            |   2 +-
+ notes-merge.c            |   2 +-
+ notes.c                  |  10 +--
+ object.c                 |  12 ++--
+ pack-bitmap-write.c      |   3 +-
+ pack-check.c             |   4 +-
+ packfile.c               |  30 ++++-----
+ pretty.c                 |   8 +--
+ reachable.c              |   2 +-
+ read-cache.c             |   4 +-
+ ref-filter.c             |  14 ++--
+ refs.c                   |   2 +-
+ remote-testsvn.c         |   4 +-
+ remote.c                 |   2 +-
+ replace_object.c         |  26 ++++----
+ rerere.c                 |   4 +-
+ resolve-undo.c           |   8 +--
+ resolve-undo.h           |   2 +-
+ send-pack.c              |  12 ++--
+ sequencer.c              |   9 +--
+ sha1_file.c              | 137 ++++++++++++++++++++-------------------
+ sha1_name.c              |  31 +++++----
+ strbuf.c                 |   4 +-
+ strbuf.h                 |   8 ++-
+ streaming.c              |  18 ++---
+ streaming.h              |   2 +-
+ submodule-config.c       |   2 +-
+ submodule.c              |   6 +-
+ tag.c                    |  10 +--
+ transport.c              |   6 +-
+ tree-walk.c              |  45 +++++++------
+ tree-walk.h              |   2 +-
+ tree.c                   |  16 ++---
+ tree.h                   |   2 +-
+ wt-status.c              |  20 +++---
+ wt-status.h              |   6 +-
+ xdiff-interface.c        |   2 +-
+ 111 files changed, 591 insertions(+), 580 deletions(-)
 
