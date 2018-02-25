@@ -7,43 +7,43 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 232B41F404
+	by dcvr.yhbt.net (Postfix) with ESMTP id 03BA61FAE2
 	for <e@80x24.org>; Sun, 25 Feb 2018 21:12:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751907AbeBYVMg (ORCPT <rfc822;e@80x24.org>);
-        Sun, 25 Feb 2018 16:12:36 -0500
+        id S1751893AbeBYVMb (ORCPT <rfc822;e@80x24.org>);
+        Sun, 25 Feb 2018 16:12:31 -0500
 Received: from injection.crustytoothpaste.net ([192.241.140.119]:33840 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751817AbeBYVM3 (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 25 Feb 2018 16:12:29 -0500
+        by vger.kernel.org with ESMTP id S1751874AbeBYVM2 (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 25 Feb 2018 16:12:28 -0500
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 1642C60E4C;
-        Sun, 25 Feb 2018 21:12:28 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id DFF2B60E4D;
+        Sun, 25 Feb 2018 21:12:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1519593148;
-        bh=yPanls0eoYg/enOBpT0eIKnDj5qMZSoKxoTkbwl+5NA=;
+        s=default; t=1519593146;
+        bh=l/ZjgfmEdPH63a5+PxoJes0WtiPfGGj7/5IEnIzZS/Y=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=Kh4W+EXRraXCR9/nSionl2ZCTbhTXUAUyebVhnXW0FWAKMWIvyaqgoK06zqsp8QJ+
-         YqKe2lMDvUCeC2FzDssegWtukXxPE6R2golgP7PFOJLpw/wkIOoQMI5Oufsyohxaa9
-         M5unCEikRvq5QgcQJkYz8Ozv2M3nQwOfEQ4SDhj4kCj65IupDT4NiCMcXUDfEGsNwG
-         kFda1nUJFhRnK3xHUNlTJHhs+BRkn2m/7/sTaeaQCKeo7uXjUEJrhOjfueqRoS2WbQ
-         f2cNuLYit5IEo3ZTG4EIFxqoUl2Hsw+ro/OT8bO0quYQzKX33QhaSG1GZEo3+tiAtc
-         +TBcYxOWW1n42JhXV2pREOhfyywAdHr4f4Yt25GmumaC+dsm9m4wQCM5kCk7ILPUgB
-         ikwM7T/xdX1XS0/P4k4Ccxb2x85H1PRNN5EiEsiFCA/Nf4pIhQG5vC1/wAfSYzjDij
-         ubFtVG6ghvRtxayXAQ0Fqd1a6Aij38s2AaqM64forwu8P2usvu/
+        b=VxsUn0+iL0UNIayv1NgPNQMPNVRGPB7ilfpJ4nPPHCQvSna12UaB3GR2TwwcZp/V+
+         VlRmnSxDId1HIjt29bO3bSVf1oXIVMTNAqJkml0fq9c/CKvw4s8gUgMzsrC9HOqTb+
+         6eIXZ9cn16CeLfA6Yk1DWRCmU32tBTkMAxJhFXaptf9zhflOFoRNCw7ONCbfA7Pa7y
+         qd03qxMfUhQCrgzG3X8S3hJDc0vjBAzvq+9JMM8gmlxuJpy7I+iu8NIcVIDp2iKwnB
+         zwqBWU6LC3qgThNzrC1bpDUNCucf9PWay1DX5ZfGx1Rh+aU81CrACDNiom9AZ03Hkd
+         hB1ntNPZ1YB3B8Ud2raJKojotg2Dzb4C3owtAldMiHRN1xXgf4ectJDLYpCxk3O7lw
+         eRkEYvxdLBKMjKTifQKbaWaWqy0gnH9p+cUjtSdWPrcbDkKbVu3NirPUXkdykdfsdW
+         Nf3pkP+RAQ47CleopED49FSDDImKUCeDACt61Y24bRy8CcNlPxr
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>, Patryk Obara <patryk.obara@gmail.com>,
         Jeff King <peff@peff.net>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 04/36] cache-tree: convert remnants to struct object_id
-Date:   Sun, 25 Feb 2018 21:11:40 +0000
-Message-Id: <20180225211212.477570-5-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 02/36] builtin/write-tree: convert to struct object_id
+Date:   Sun, 25 Feb 2018 21:11:38 +0000
+Message-Id: <20180225211212.477570-3-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.16.2.395.g2e18187dfd
 In-Reply-To: <20180225211212.477570-1-sandals@crustytoothpaste.net>
 References: <20180225211212.477570-1-sandals@crustytoothpaste.net>
@@ -53,105 +53,36 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert the remaining portions of cache-tree.c to use struct object_id.
-Convert several instances of 20 to use the_hash_algo instead.
+This is needed to convert parts of the cache-tree code.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- cache-tree.c | 26 +++++++++++++-------------
- 1 file changed, 13 insertions(+), 13 deletions(-)
+ builtin/write-tree.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/cache-tree.c b/cache-tree.c
-index ba07a8067e..601dd1bb1f 100644
---- a/cache-tree.c
-+++ b/cache-tree.c
-@@ -320,7 +320,7 @@ static int update_one(struct cache_tree *it,
- 		struct cache_tree_sub *sub = NULL;
- 		const char *path, *slash;
- 		int pathlen, entlen;
--		const unsigned char *sha1;
-+		const struct object_id *oid;
- 		unsigned mode;
- 		int expected_missing = 0;
- 		int contains_ita = 0;
-@@ -338,7 +338,7 @@ static int update_one(struct cache_tree *it,
- 				die("cache-tree.c: '%.*s' in '%s' not found",
- 				    entlen, path + baselen, path);
- 			i += sub->count;
--			sha1 = sub->cache_tree->oid.hash;
-+			oid = &sub->cache_tree->oid;
- 			mode = S_IFDIR;
- 			contains_ita = sub->cache_tree->entry_count < 0;
- 			if (contains_ita) {
-@@ -347,19 +347,19 @@ static int update_one(struct cache_tree *it,
- 			}
- 		}
- 		else {
--			sha1 = ce->oid.hash;
-+			oid = &ce->oid;
- 			mode = ce->ce_mode;
- 			entlen = pathlen - baselen;
- 			i++;
- 		}
+diff --git a/builtin/write-tree.c b/builtin/write-tree.c
+index bd0a78aa3c..299a121531 100644
+--- a/builtin/write-tree.c
++++ b/builtin/write-tree.c
+@@ -19,7 +19,7 @@ int cmd_write_tree(int argc, const char **argv, const char *unused_prefix)
+ {
+ 	int flags = 0, ret;
+ 	const char *prefix = NULL;
+-	unsigned char sha1[20];
++	struct object_id oid;
+ 	const char *me = "git-write-tree";
+ 	struct option write_tree_options[] = {
+ 		OPT_BIT(0, "missing-ok", &flags, N_("allow missing objects"),
+@@ -38,10 +38,10 @@ int cmd_write_tree(int argc, const char **argv, const char *unused_prefix)
+ 	argc = parse_options(argc, argv, unused_prefix, write_tree_options,
+ 			     write_tree_usage, 0);
  
--		if (is_null_sha1(sha1) ||
--		    (mode != S_IFGITLINK && !missing_ok && !has_sha1_file(sha1))) {
-+		if (is_null_oid(oid) ||
-+		    (mode != S_IFGITLINK && !missing_ok && !has_object_file(oid))) {
- 			strbuf_release(&buffer);
- 			if (expected_missing)
- 				return -1;
- 			return error("invalid object %06o %s for '%.*s'",
--				mode, sha1_to_hex(sha1), entlen+baselen, path);
-+				mode, oid_to_hex(oid), entlen+baselen, path);
- 		}
- 
- 		/*
-@@ -385,12 +385,12 @@ static int update_one(struct cache_tree *it,
- 		/*
- 		 * "sub" can be an empty tree if all subentries are i-t-a.
- 		 */
--		if (contains_ita && !hashcmp(sha1, EMPTY_TREE_SHA1_BIN))
-+		if (contains_ita && !oidcmp(oid, &empty_tree_oid))
- 			continue;
- 
- 		strbuf_grow(&buffer, entlen + 100);
- 		strbuf_addf(&buffer, "%o %.*s%c", mode, entlen, path + baselen, '\0');
--		strbuf_add(&buffer, sha1, 20);
-+		strbuf_add(&buffer, oid->hash, the_hash_algo->rawsz);
- 
- #if DEBUG
- 		fprintf(stderr, "cache-tree update-one %o %.*s\n",
-@@ -401,7 +401,7 @@ static int update_one(struct cache_tree *it,
- 	if (repair) {
- 		struct object_id oid;
- 		hash_object_file(buffer.buf, buffer.len, tree_type, &oid);
--		if (has_sha1_file(oid.hash))
-+		if (has_object_file(&oid))
- 			oidcpy(&it->oid, &oid);
- 		else
- 			to_invalidate = 1;
-@@ -465,7 +465,7 @@ static void write_one(struct strbuf *buffer, struct cache_tree *it,
- #endif
- 
- 	if (0 <= it->entry_count) {
--		strbuf_add(buffer, it->oid.hash, 20);
-+		strbuf_add(buffer, it->oid.hash, the_hash_algo->rawsz);
- 	}
- 	for (i = 0; i < it->subtree_nr; i++) {
- 		struct cache_tree_sub *down = it->down[i];
-@@ -520,11 +520,11 @@ static struct cache_tree *read_one(const char **buffer, unsigned long *size_p)
- 		goto free_return;
- 	buf++; size--;
- 	if (0 <= it->entry_count) {
--		if (size < 20)
-+		if (size < the_hash_algo->rawsz)
- 			goto free_return;
- 		hashcpy(it->oid.hash, (const unsigned char*)buf);
--		buf += 20;
--		size -= 20;
-+		buf += the_hash_algo->rawsz;
-+		size -= the_hash_algo->rawsz;
- 	}
- 
- #if DEBUG
+-	ret = write_cache_as_tree(sha1, flags, prefix);
++	ret = write_cache_as_tree(oid.hash, flags, prefix);
+ 	switch (ret) {
+ 	case 0:
+-		printf("%s\n", sha1_to_hex(sha1));
++		printf("%s\n", oid_to_hex(&oid));
+ 		break;
+ 	case WRITE_TREE_UNREADABLE_INDEX:
+ 		die("%s: error reading the index", me);
