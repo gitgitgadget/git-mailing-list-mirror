@@ -7,83 +7,87 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2DECE1F404
-	for <e@80x24.org>; Mon, 26 Feb 2018 16:10:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DCFE71F404
+	for <e@80x24.org>; Mon, 26 Feb 2018 16:26:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751455AbeBZQKU (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Feb 2018 11:10:20 -0500
-Received: from mail-vk0-f51.google.com ([209.85.213.51]:42698 "EHLO
-        mail-vk0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750969AbeBZQKT (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Feb 2018 11:10:19 -0500
-Received: by mail-vk0-f51.google.com with SMTP id y127so10147626vky.9
-        for <git@vger.kernel.org>; Mon, 26 Feb 2018 08:10:19 -0800 (PST)
+        id S1752107AbeBZQ0y (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Feb 2018 11:26:54 -0500
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:38017 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751813AbeBZQ0x (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Feb 2018 11:26:53 -0500
+Received: by mail-wr0-f194.google.com with SMTP id n7so21864048wrn.5
+        for <git@vger.kernel.org>; Mon, 26 Feb 2018 08:26:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=4yoYwLllkP8qJm8xrBxPrLiaD9uJ/MEE++xIhATCyQY=;
-        b=u8q0JFJhLbAQmS5+0LM2bbQFrsJ6RCOrNnug+HcQ3FSJ9cwK+T4KaTQmaaI4Xcsv2A
-         HPaKQUEAjFBpJgUY+Og5oLheYH1VQx3zBuVjNx3YwfBbgiX/T2cXTtVw5/w/GYK4c55U
-         S7POM0b+KFio03yBamyKYrT8CRt7s6j3uA5f5LbaqqSS+mjs7bMJWEh3eMMVqtGsmjFa
-         0z9fFIOtNsbrpjPAfnxJzC7b2wWBCSKts+cpYw9h49KOzSvolYzrxpVijK5ufgjbuFam
-         PDCNQ2Wh4oWQrd7x/AfKafRjJGWZFN52KRXJ52HaXorKvW2+7nDbV0jLEOlhnt03xzIk
-         eehw==
+        h=from:to:cc:subject:date:message-id:in-reply-to;
+        bh=/LeAdc5q4zSpnDdKaATFeXYamJmOFZXwpiVipV1nnX8=;
+        b=VQdada8qEHTbmiinPZm62xltLgL9wwhY/DDciqT73nIG2lEtQpqStQkln5yI0gEJne
+         L8an91QtuVSso+dcXm+9Ydzi97DcNIHDZlh93KmdXP7rv9rrmFUPLgEdgIlSDe3UrTYe
+         aaoG7jVLAWr7EqTBoC5cklNttyke3hZydL0pwDvVu68xxTF9XUck1EVQG0VSkt4tlN1Z
+         J0D/NdT4nexNXeJCqW/l6n1KSefjOzpF1ypjPmisxoNXVVBi87dMxiPVZGJ0X9nqoINZ
+         c/lOC5UbsZ6xAI61OIMLE6ClFiQ/vg7h62h88dV8ZVd7qFCJKxHS+iGddXERo8qLpBmw
+         ieoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=4yoYwLllkP8qJm8xrBxPrLiaD9uJ/MEE++xIhATCyQY=;
-        b=Y+OZu6SiKaBQOZpcvi7/zogEBjPxK8bhlVKcmQa7iTyfZ5/ehIg4iNC2QzOGagtBFw
-         OzFdxrrshMXYU2YEXj0YbLX+zj9UYuqIilECJGluZ4mTP3fqhTVnVmKxqhSLiG/SHZSE
-         mLyEHPY8eXcYi2qO1X4PPUVy4m1AvxYBN2DJZ85sKNJOQEBLcZtcuKRCOM+RYqZAuhXT
-         ew538d/yecnooOB2+FyO8yTyBT1PHIeDU5FuTqkUUJ2vEHwAOFDudwTTD1GVn02Wrtdn
-         tJFAO8nFkCesltNZ7a7doc9i2gOG5OBXpWFdKelc8jc+YWOma8Oa5LwaGUm3mocVCua4
-         czeA==
-X-Gm-Message-State: APf1xPCZ5hYDLrqlMcJh/SfpKd35Bb8nqEP5sw9u4VtU6ieUZXRTfYkm
-        VRuha1iTgo65iZm1B64UNhFOMTHxf96vXH4MQTM=
-X-Google-Smtp-Source: AG47ELvtwZE6UDrGELnEGdx5DTa+jDAKX4YqteRa19j1aHuM6En/XCgDkXawv5PGLK0UGY3nSImIlxrL46NT8EgCpM8=
-X-Received: by 10.31.51.73 with SMTP id z70mr7947204vkz.2.1519661419012; Mon,
- 26 Feb 2018 08:10:19 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.159.59.233 with HTTP; Mon, 26 Feb 2018 08:10:18 -0800 (PST)
-In-Reply-To: <1519066406-81663-5-git-send-email-dstolee@microsoft.com>
-References: <4d1ee202-7d79-d73c-6e05-d0fc85db943c@gmail.com>
- <1519066406-81663-1-git-send-email-dstolee@microsoft.com> <1519066406-81663-5-git-send-email-dstolee@microsoft.com>
-From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Date:   Mon, 26 Feb 2018 17:10:18 +0100
-Message-ID: <CAM0VKjk2dphJsMfuG2F4-G0xW=YfmVsDsPpxm_XoXTCgQHA7=g@mail.gmail.com>
-Subject: Re: [PATCH v4 04/13] commit-graph: implement write_commit_graph()
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to;
+        bh=/LeAdc5q4zSpnDdKaATFeXYamJmOFZXwpiVipV1nnX8=;
+        b=pR9MXVPcUHwgBoIhUydWTEbQQQJcHUW/C4q/GJU1Fkr+fNihqS/DM1MXEcOvBfrttZ
+         wH/03ysXykOdV5Zx6xq0f00J6D8gOafpwtxIjXx19xyDI++YNtE5V1HxzNSUhhHmbL/8
+         1hbP6rqfR+WEDmbY+BB7NhvNmdDHjJwN/5M3N7DgvsvKjxvzO6pCc1VoMa5hyS1UZtfd
+         ley4Ot13IhVqMdyeGvtYQhrH9SCt6ogAVbbwhiq07PJSDixL4/Yk+L+tl56yTPK8WVMU
+         AcBJvS+//6D+iM3Hike6zt2fYtdi0cIunJ10+Uysk8miD5fViw3HGCAGk3RNLY8QFaMM
+         vcOQ==
+X-Gm-Message-State: APf1xPD/pOuNMwFWY1jWluyc21WnsEREW7f+06jcZmD5hYtSm94k33yO
+        ysnuCc+hhoLi3IdC+hyVJqo=
+X-Google-Smtp-Source: AH8x227X3TWm8WDiVh4DyG0N+z7t/u9ixH+SxFQ89OHWaROqitF2XNRP0oM4exr9UC/UDrBZpdxvlA==
+X-Received: by 10.223.143.101 with SMTP id p92mr9707984wrb.241.1519662412829;
+        Mon, 26 Feb 2018 08:26:52 -0800 (PST)
+Received: from localhost.localdomain (x4db1d28c.dyn.telefonica.de. [77.177.210.140])
+        by smtp.gmail.com with ESMTPSA id b99sm9087652wrd.75.2018.02.26.08.26.51
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 26 Feb 2018 08:26:52 -0800 (PST)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Git mailing list <git@vger.kernel.org>, git@jeffhostetler.com,
-        Jeff King <peff@peff.net>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Stefan Beller <sbeller@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
+Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org, git@jeffhostetler.com, peff@peff.net,
+        jonathantanmy@google.com, sbeller@google.com, gitster@pobox.com,
         Derrick Stolee <dstolee@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH v4 03/13] commit-graph: create git-commit-graph builtin
+Date:   Mon, 26 Feb 2018 17:25:39 +0100
+Message-Id: <20180226162539.7463-1-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.16.2.409.g7f85f628cc
+In-Reply-To: <1519066406-81663-4-git-send-email-dstolee@microsoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Feb 19, 2018 at 7:53 PM, Derrick Stolee <stolee@gmail.com> wrote:
+> Teach git the 'commit-graph' builtin that will be used for writing and
+> reading packed graph files. The current implementation is mostly
+> empty, except for an '--object-dir' option.
 
-> +static int if_packed_commit_add_to_list(const struct object_id *oid,
-> +                                       struct packed_git *pack,
-> +                                       uint32_t pos,
-> +                                       void *data)
-> +{
-> +       struct packed_oid_list *list = (struct packed_oid_list*)data;
-> +       enum object_type type;
-> +       unsigned long size;
-> +       void *inner_data;
-> +       off_t offset = nth_packed_object_offset(pack, pos);
-> +       inner_data = unpack_entry(pack, offset, &type, &size);
-> +
-> +       if (inner_data)
-> +               free(inner_data);
+Since 'git commit-graph' is a builtin command, it shouldn't show up in
+completion when doing 'git co<TAB>'.
+Please squash in the patch below to make it so.
 
-The condition is unnecessary, free() can handle a NULL argument just fine.
+Furthermore, please have a look at
+  
+  https://public-inbox.org/git/20180202160132.31550-1-szeder.dev@gmail.com/
 
-(Suggested by Coccinelle and 'contrib/coccinelle/free.cocci.patch'.)
+for an other oneliner change.
+
+
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 17929b0809..fafed13c06 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -841,6 +841,7 @@ __git_list_porcelain_commands ()
+ 		check-ref-format) : plumbing;;
+ 		checkout-index)   : plumbing;;
+ 		column)           : internal helper;;
++		commit-graph)     : plumbing;;
+ 		commit-tree)      : plumbing;;
+ 		count-objects)    : infrequent;;
+ 		credential)       : credentials;;
+
