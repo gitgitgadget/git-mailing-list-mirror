@@ -2,85 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EC6ED1F576
-	for <e@80x24.org>; Mon, 26 Feb 2018 11:38:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 468DD1F576
+	for <e@80x24.org>; Mon, 26 Feb 2018 11:48:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752730AbeBZLiT (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Feb 2018 06:38:19 -0500
-Received: from mail-ot0-f194.google.com ([74.125.82.194]:44849 "EHLO
-        mail-ot0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752456AbeBZLiS (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Feb 2018 06:38:18 -0500
-Received: by mail-ot0-f194.google.com with SMTP id 79so13049143oth.11
-        for <git@vger.kernel.org>; Mon, 26 Feb 2018 03:38:18 -0800 (PST)
+        id S1752833AbeBZLsc (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Feb 2018 06:48:32 -0500
+Received: from mail-wr0-f195.google.com ([209.85.128.195]:34669 "EHLO
+        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752264AbeBZLsb (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Feb 2018 06:48:31 -0500
+Received: by mail-wr0-f195.google.com with SMTP id m5so20885550wrg.1
+        for <git@vger.kernel.org>; Mon, 26 Feb 2018 03:48:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=n9+JeC6H47R0iEfmFC6Ge+TUWisVZdcojMxW/VKd7sQ=;
-        b=KFsFE6I2DmBgOCt5UEz9WHu42XqvtuP/BqDAfwIFxYrJI3ESB2U6+pw44FBMxNEya8
-         ujZXJamrGCuS8drryNnAInnCHqpa6HFiFODm58BUGHc8DSW9MH9NBos+NGpdQ8MDXMXe
-         aV0zlrr4jp9Han+nWIkDOHkTrI4a5AHynV1wbrqIpjcXa6l9EfDCzgSoikY+MJXG56BQ
-         uDMZ8zQ0VvHaNk959eHW69Cxjk+tqmuq2S7uQXDMkHxG6cKVzXwXk8pwQgJ5Z7sf0p1i
-         dy/CoGiMSz1ieWLeU1+i4iF4wBVw2X5zOFjupKcD85XZP28U3Vb5ARbev0+bPcID4LWr
-         ZvPQ==
+        d=diamand.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=utiH5csSWnTe2cmHU/rjrdRRlRB+lPS1jADxYFnpdxA=;
+        b=dYs5+2UtEnyVoJGqursmorHCAVhYwbaIAq6vsODOeutgJoLCtQQZnpt+zOSwFf2f6t
+         9IPuyZSpD15m1LrRM9camC76MhNvwYkL7Iz2LKcPD8PuJVRhZdCbZGvkJDoQy8QghVUZ
+         wQOlbV3i5iato26aFnQIS4u7az4pM2LW35LT0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=n9+JeC6H47R0iEfmFC6Ge+TUWisVZdcojMxW/VKd7sQ=;
-        b=SCw7G8E+rn+HLOCAMprVKyLLMHEqmxuIkrQc1yDdP7184rb30XI6g6SKyPwGcJmPiu
-         GnMv2eRX3ZptGGHe0tfDoacA91Dk5eFCair2zmrplqI0D1+aqYJnyJc3F1w8qCJ1F5XF
-         xZT3dO1EjF71VIxMQ4B/zfpm9XNI9mecG390aOm32VOaDVvXvREUb1ziuNVazPGNvVSr
-         +qtBce+obexnnNhVHWW9L3f8/PdKLKQg8udr2O0sxQ6nap/GKn1T7+e8GrYzvk4oXK/g
-         RoXlrYRNTIA5+Awf5YASAmdmXBHHp6ugmuuI4pwwmFya70gzB7LgqlydCuCOR8xGJGrf
-         rVmw==
-X-Gm-Message-State: APf1xPDkyDDSRdlmuTgRBbzWL01z8K4DWZ1fs7382tZhpreUnMImWBeu
-        hoZV6BNEIJ76Jr+E/zwaQVNLrg3FfSZHKVtQxv0=
-X-Google-Smtp-Source: AG47ELt6gN53TZBpvdmCEhgIzXt15PgypoTOjEX5BR6lhI/AF1vhJuKnR8IKeoM4uMpwZ4uhLquRxaotejMM6sAMIDE=
-X-Received: by 10.157.54.204 with SMTP id s12mr7763074otd.304.1519645098390;
- Mon, 26 Feb 2018 03:38:18 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.74.25.140 with HTTP; Mon, 26 Feb 2018 03:37:48 -0800 (PST)
-In-Reply-To: <20180225211212.477570-35-sandals@crustytoothpaste.net>
-References: <20180225211212.477570-1-sandals@crustytoothpaste.net> <20180225211212.477570-35-sandals@crustytoothpaste.net>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 26 Feb 2018 18:37:48 +0700
-Message-ID: <CACsJy8BcFVVjvfrqot5mTv4+zKx_GnRQ_vsiyXvKkYvWVnS0LA@mail.gmail.com>
-Subject: Re: [PATCH v2 34/36] Convert lookup_replace_object to struct object_id
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Patryk Obara <patryk.obara@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=utiH5csSWnTe2cmHU/rjrdRRlRB+lPS1jADxYFnpdxA=;
+        b=ulMy1wd6ogKnkTMjNDYGQ1c/7pDmuRVJjV7wz9HwKE7+FrUrpF7ezzDm9YeVceh2ak
+         zE0/O1sKMQpRHbi6dtFNQA1c3slSGjP1hIbvQz1iHqPisP/qsMLGRvQPrbg31gEanLw8
+         G1pfy8EMb5Uap+62P2vK8wPchX/CxslK4gTaPazkS2y8IPSzsulPARWeGJIG+G8+hayc
+         WA5P0fctzbiMV5koJP3llxDCPqdqBP7VwhH1yPiLzhi9IWegfd8HzOE7aTO34hKlCcD1
+         rSn8b4G+5p+bz4vnAVQukDQmgr1rioFRD465/KdA5ppwYB8+8WUh/fg1+ModYja1yTEl
+         Ue3Q==
+X-Gm-Message-State: APf1xPB+D6j2IeJ6Gn4TpsqdaFjy7nlbsOXlMi/YN5w0hKGOQmUTmfkf
+        kBgAgO+kQScraIxBb47kLmtFo1x/
+X-Google-Smtp-Source: AH8x2276mA35Zjyv/jkedaRIUuIjz/6FiPuDlHpjy3LX1IyWk5DYqq9d8WHvQ56oY6hQyoKMzr83uA==
+X-Received: by 10.223.138.203 with SMTP id z11mr8759830wrz.199.1519645710435;
+        Mon, 26 Feb 2018 03:48:30 -0800 (PST)
+Received: from ethel.corp.roku (cpc92728-cmbg20-2-0-cust351.5-4.cable.virginm.net. [82.29.15.96])
+        by smtp.gmail.com with ESMTPSA id w195sm794768wmw.29.2018.02.26.03.48.29
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 26 Feb 2018 03:48:29 -0800 (PST)
+From:   Luke Diamand <luke@diamand.org>
+To:     git@vger.kernel.org
+Cc:     Lars Schneider <larsxschneider@gmail.com>,
+        Miguel Torroja <miguel.torroja@gmail.com>,
+        George Vanburgh <gvanburgh@bloomberg.net>,
+        Luke Diamand <luke@diamand.org>
+Subject: [PATCH 0/1] git-p4: add format-patch subcommand
+Date:   Mon, 26 Feb 2018 11:48:21 +0000
+Message-Id: <20180226114822.1617-1-luke@diamand.org>
+X-Mailer: git-send-email 2.15.1.272.gc310869385
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Feb 26, 2018 at 4:12 AM, brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
-> diff --git a/sha1_file.c b/sha1_file.c
-> index 7493bc7f11..c41fbe2f01 100644
-> --- a/sha1_file.c
-> +++ b/sha1_file.c
-> @@ -1227,22 +1227,18 @@ int oid_object_info_extended(const struct object_id *oid, struct object_info *oi
->         static struct object_info blank_oi = OBJECT_INFO_INIT;
->         struct pack_entry e;
->         int rtype;
-> -       const unsigned char *real = (flags & OBJECT_INFO_LOOKUP_REPLACE) ?
-> -                                   lookup_replace_object(oid->hash) :
-> -                                   oid->hash;
-> +       const struct object_id *real = (flags & OBJECT_INFO_LOOKUP_REPLACE) ?
-> +                                      lookup_replace_object(oid) :
-> +                                      oid;
+This is an initial attempt to add a "format-patch" command
+to git-p4, following on from the earlier discussion about
+shelving.
 
-Micro nit. Perhaps we should replace "? :" with a real "if" construct
+It uses the "p4 describe" command to generate the diff content and
+post-processes it enough to generate git-style patches. These
+can be fed to tools such as patch, or "git am".
+
+This is useful for "unshelving" a P4 changelist into your git tree,
+since the usual git subcommands (sync, clone) cannot easily read
+a shelved changelist: there is no good way to get from Perforce
+a consistent single revision against which to generate a diff
+using git fast-import, since Perforce doesn't have the concept of
+a repo revision.
+
+By default, it leaves the depot prefix in the patch, but using
+the option "--strip-depot-prefix" makes it suitable for "git am".
+
+Use it like this:
+
+ $ git p4 format-patch 12345 >out.patch
+
+or
+ $ mkdir patches
+ $ git p4 format-patch --output patches 12345 12346
+
+or
+ $ git p4 format-patch --strip-depot-prefix 12347 >out.patch
+ $ git am out.patch
+
+Limitations of "p4 describe" mean that this will not work reliably
+with binary files. There's no easy way around this. The change makes
+a small attempt to at least stop on binary files, but in the case
+of a file marked in P4 as "text", which contains binary deltas, the
+file will unavoidably come out corrupted.
+
+Luke Diamand (1):
+  git-p4: add format-patch subcommand
+
+ Documentation/git-p4.txt |  33 +++++
+ git-p4.py                | 304 +++++++++++++++++++++++++++++++++++++++++++++--
+ t/t9832-make-patch.sh    | 135 +++++++++++++++++++++
+ 3 files changed, 462 insertions(+), 10 deletions(-)
+ create mode 100755 t/t9832-make-patch.sh
+
 -- 
-Duy
+2.15.1.272.gc310869385
+
