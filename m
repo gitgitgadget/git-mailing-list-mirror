@@ -2,223 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5127F1F576
-	for <e@80x24.org>; Mon, 26 Feb 2018 09:30:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 323871F576
+	for <e@80x24.org>; Mon, 26 Feb 2018 09:53:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752056AbeBZJau (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Feb 2018 04:30:50 -0500
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:36559 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751799AbeBZJat (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Feb 2018 04:30:49 -0500
-Received: by mail-pf0-f194.google.com with SMTP id 68so6283213pfx.3
-        for <git@vger.kernel.org>; Mon, 26 Feb 2018 01:30:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=0A0ZJNMcF29zuYkdSK3RCUhHDwFU2AhbXECWl1WDh00=;
-        b=VmBwUzDFLNMqn7km/Ysi9ubJr87QkPduS3V0J0muzheNX8q1r3JjqekPLSXXzdG+kS
-         2HB8aOlSPnKcwa9RPGU9HbSojlbgApbcCWn7FqYMo583vrNF0eS8QdOZLGcziwqpujGw
-         dXqaCD7wlDr9gQJKwa2w5+bOASyZmnocjRAN+OkjqvmJQd+E6KqeR7Xrz9m6JlfISdi3
-         YEiVL96M4AuCVMwzdslrbbSpvJWyUeJi/IMdBPSH6OfslrgXWzwXQRrEfKFL+lKtZEe/
-         zWfBOXnyELhehssbmWtlcfLxtvw1kSpzW18jd1TQ3yZDdUXUd1R70obeS0BvLyK64Ie0
-         AD4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=0A0ZJNMcF29zuYkdSK3RCUhHDwFU2AhbXECWl1WDh00=;
-        b=bN9WgAewzLCLeJVODfCoPjm7fxMYrZ749Ws5syaVZKt5o1c/5jQCDm0nwSm/bGzMlG
-         i4LUR+ZOEn+oNoXQkP1fjZbZzJgSlN2pjMbitTBRAuib9j3vLFBax/aLqhI8PMx+2a05
-         cd6ILgaapIIpfuDFg7eTob4QgRve/m2lDgoeKl+QaIbF+ZNJdjWLImWc1GIasXe7linY
-         xv/KS2Ekes01V8Bgw4PJVW981f3YYn0ZvWBIAmBbO7rnFOc4dk3jwaWga/JJHsdms9L9
-         PiiXrkyk5Q7Sru1D2sxMll5P+UQwI6Ymo4C0ooPM+Zy9z+PwqgaSGHgpOJo8aHNwQ+My
-         FW4w==
-X-Gm-Message-State: APf1xPADK29vUhKg7/fIeAwJieKIMm4ak6zZ7ghYcc33sPuR3d7oNjk9
-        LoQxxinnOLdN9Q9Kx58C6LM9EA==
-X-Google-Smtp-Source: AG47ELtR/KFaEbRrJ1xgO3ChaXuYvf5phZl2tbRwrsb4cvWbSRh8Nucs9mJmZrEe4nQ9vaCm5thpjQ==
-X-Received: by 10.98.178.17 with SMTP id x17mr575842pfe.2.1519637448880;
-        Mon, 26 Feb 2018 01:30:48 -0800 (PST)
-Received: from ash ([171.232.93.137])
-        by smtp.gmail.com with ESMTPSA id 205sm17122461pfy.117.2018.02.26.01.30.45
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 26 Feb 2018 01:30:48 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Mon, 26 Feb 2018 16:30:41 +0700
-Date:   Mon, 26 Feb 2018 16:30:41 +0700
-From:   Duy Nguyen <pclouds@gmail.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, jonathantanmy@google.com,
-        sunshine@sunshineco.com, bmwill@google.com,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCHv4 01/27] repository: introduce raw object store field
-Message-ID: <20180226093040.GA10479@ash>
-References: <20180221015430.96054-1-sbeller@google.com>
- <20180224004754.129721-1-sbeller@google.com>
- <20180224004754.129721-2-sbeller@google.com>
+        id S1752054AbeBZJxO (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Feb 2018 04:53:14 -0500
+Received: from cloud.peff.net ([104.130.231.41]:36950 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1751022AbeBZJxO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Feb 2018 04:53:14 -0500
+Received: (qmail 2378 invoked by uid 109); 26 Feb 2018 09:53:13 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 26 Feb 2018 09:53:13 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 11075 invoked by uid 111); 26 Feb 2018 09:54:02 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 26 Feb 2018 04:54:02 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 26 Feb 2018 04:53:11 -0500
+Date:   Mon, 26 Feb 2018 04:53:11 -0500
+From:   Jeff King <peff@peff.net>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Derrick Stolee <stolee@gmail.com>, git <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: Use of uninitialised value of size 8 in sha1_name.c
+Message-ID: <20180226095311.GA14831@sigill.intra.peff.net>
+References: <CAP8UFD23z9YDukO=O+cK=o_0DLcxbkXWzp4rCA1kRXGTZ-TMcQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20180224004754.129721-2-sbeller@google.com>
-X-Clacks-Overhead: GNU Terry Pratchett
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <CAP8UFD23z9YDukO=O+cK=o_0DLcxbkXWzp4rCA1kRXGTZ-TMcQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 23, 2018 at 04:47:28PM -0800, Stefan Beller wrote:
->  /* The main repository */
->  static struct repository the_repo = {
-> -	NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, &the_index, &hash_algos[GIT_HASH_SHA1], 0, 0
-> +	NULL, NULL,
-> +	RAW_OBJECT_STORE_INIT,
-> +	NULL, NULL, NULL,
-> +	NULL, NULL, NULL,
-> +	&the_index,
-> +	&hash_algos[GIT_HASH_SHA1],
-> +	0, 0
->  };
->  struct repository *the_repository = &the_repo;
+On Mon, Feb 26, 2018 at 10:04:22AM +0100, Christian Couder wrote:
 
-I wonder if we should do something like this. It makes the_repo
-initialization easier to read and it helps unify the init code with
-submodule.
+> ==21455== Use of uninitialised value of size 8
+> ==21455==    at 0x2D2A73: get_hex_char_from_oid (sha1_name.c:492)
+> ==21455==    by 0x2D2AFE: extend_abbrev_len (sha1_name.c:502)
+> ==21455==    by 0x2D2C3D: find_abbrev_len_for_pack (sha1_name.c:551)
+> ==21455==    by 0x2D2CFF: find_abbrev_len_packed (sha1_name.c:569)
+> ==21455==    by 0x2D2E12: find_unique_abbrev_r (sha1_name.c:608)
+> ==21455==    by 0x2DCB66: strbuf_add_unique_abbrev (strbuf.c:877)
+> ==21455==    by 0x14F7CE: update_local_ref (fetch.c:700)
+> ==21455==    by 0x1500CF: store_updated_refs (fetch.c:871)
+> ==21455==    by 0x15035B: fetch_refs (fetch.c:932)
+> ==21455==    by 0x150CF8: do_fetch (fetch.c:1146)
+> ==21455==    by 0x1515AB: fetch_one (fetch.c:1370)
+> ==21455==    by 0x151A1D: cmd_fetch (fetch.c:1457)
+> ==21455==  Uninitialised value was created by a stack allocation
+> ==21455==    at 0x2D2B2E: find_abbrev_len_for_pack (sha1_name.c:513)
+> ==21455==
+> 
+> A quick git blame seems to point to 0e87b85683 (sha1_name: minimize
+> OID comparisons during disambiguation, 2017-10-12).
+> 
+> It is difficult to tell for sure though as t5616-partial-clone.sh was
+> added after that commit.
 
-No don't reroll. If you think it's a good idea, you can do something
-like this in the next series instead.
+I think that commit is to blame, though the error isn't exactly where
+that stack trace puts it. Try this:
 
--- 8< --
-diff --git a/check-racy.c b/check-racy.c
-index 24b6542352..47cbb4eb6d 100644
---- a/check-racy.c
-+++ b/check-racy.c
-@@ -1,10 +1,12 @@
- #include "cache.h"
-+#include "repository.h"
- 
- int main(int ac, char **av)
- {
- 	int i;
- 	int dirty, clean, racy;
- 
-+	init_the_repository();
- 	dirty = clean = racy = 0;
- 	read_cache();
- 	for (i = 0; i < active_nr; i++) {
-diff --git a/common-main.c b/common-main.c
-index 6a689007e7..a13ab981aa 100644
---- a/common-main.c
-+++ b/common-main.c
-@@ -1,6 +1,7 @@
- #include "cache.h"
- #include "exec_cmd.h"
- #include "attr.h"
-+#include "repository.h"
- 
- /*
-  * Many parts of Git have subprograms communicate via pipe, expect the
-@@ -32,6 +33,8 @@ int main(int argc, const char **argv)
+diff --git a/sha1_name.c b/sha1_name.c
+index 611c7d24dd..6f7f36436f 100644
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -547,7 +547,10 @@ static void find_abbrev_len_for_pack(struct packed_git *p,
  	 */
- 	sanitize_stdfds();
- 
-+	init_the_repository();
-+
- 	git_setup_gettext();
- 
- 	attr_start();
-diff --git a/object-store.h b/object-store.h
-index cf35760ceb..c3253ebc59 100644
---- a/object-store.h
-+++ b/object-store.h
-@@ -8,8 +8,8 @@ struct raw_object_store {
- 	 */
- 	char *objectdir;
- };
--#define RAW_OBJECT_STORE_INIT { NULL }
- 
-+void raw_object_store_init(struct raw_object_store *o);
- void raw_object_store_clear(struct raw_object_store *o);
- 
- #endif /* OBJECT_STORE_H */
-diff --git a/object.c b/object.c
-index 11d904c033..8a4d01dd5f 100644
---- a/object.c
-+++ b/object.c
-@@ -446,6 +446,11 @@ void clear_commit_marks_all(unsigned int flags)
- 	}
- }
- 
-+void raw_object_store_init(struct raw_object_store *o)
-+{
-+	memset(o, 0, sizeof(*o));
-+}
-+
- void raw_object_store_clear(struct raw_object_store *o)
- {
- 	free(o->objectdir);
-diff --git a/repository.c b/repository.c
-index 2255ff657e..0ebcca8539 100644
---- a/repository.c
-+++ b/repository.c
-@@ -5,16 +5,22 @@
- #include "submodule-config.h"
- 
- /* The main repository */
--static struct repository the_repo = {
--	NULL, NULL,
--	RAW_OBJECT_STORE_INIT,
--	NULL, NULL, NULL,
--	NULL, NULL, NULL,
--	&the_index,
--	&hash_algos[GIT_HASH_SHA1],
--	0, 0
--};
--struct repository *the_repository = &the_repo;
-+static struct repository the_repo;
-+struct repository *the_repository;
-+
-+static void repo_pre_init(struct repository *repo)
-+{
-+	memset(repo, 0, sizeof(*repo));
-+	raw_object_store_init(&repo->objects);
-+}
-+
-+void init_the_repository(void)
-+{
-+	the_repository = &the_repo;
-+	repo_pre_init(the_repository);
-+	the_repository->index = &the_index;
-+	repo_set_hash_algo(the_repository, GIT_HASH_SHA1);
-+}
- 
- static char *git_path_from_env(const char *envvar, const char *git_dir,
- 			       const char *path, int fromenv)
-@@ -138,7 +144,8 @@ static int read_and_verify_repository_format(struct repository_format *format,
- int repo_init(struct repository *repo, const char *gitdir, const char *worktree)
- {
- 	struct repository_format format;
--	memset(repo, 0, sizeof(*repo));
-+
-+	repo_pre_init(repo);
- 
- 	repo->ignore_env = 1;
- 
-diff --git a/repository.h b/repository.h
-index 1f8bc7a7cf..da6a8f9af9 100644
---- a/repository.h
-+++ b/repository.h
-@@ -93,6 +93,7 @@ extern void repo_set_gitdir(struct repository *repo, const char *path);
- extern void repo_set_worktree(struct repository *repo, const char *path);
- extern void repo_set_hash_algo(struct repository *repo, int algo);
- extern int repo_init(struct repository *repo, const char *gitdir, const char *worktree);
-+extern void init_the_repository(void);
- extern int repo_submodule_init(struct repository *submodule,
- 			       struct repository *superproject,
- 			       const char *path);
--- 8< --
+ 	mad->init_len = 0;
+ 	if (!match) {
+-		nth_packed_object_oid(&oid, p, first);
++		warning("p->num_objects = %u, first = %u",
++			p->num_objects, first);
++		if (!nth_packed_object_oid(&oid, p, first))
++			die("oops!");
+ 		extend_abbrev_len(&oid, mad);
+ 	} else if (first < num - 1) {
+ 		nth_packed_object_oid(&oid, p, first + 1);
+
+I get failures all over the test suite, like this:
+
+  warning: p->num_objects = 4, first = 3
+  warning: p->num_objects = 8, first = 6
+  warning: p->num_objects = 10, first = 0
+  warning: p->num_objects = 4, first = 0
+  warning: p->num_objects = 8, first = 0
+  warning: p->num_objects = 10, first = 10
+  fatal: oops!
+
+Any time the abbreviated hex would go after the last object in the pack,
+then first==p->num_objects, and nth_packed_object_oid() will fail. That
+leaves uninitialized data in "oid", which is what valgrind complains
+about when we examine it in extend_abbrev_len().
+
+Most of the time the code behaves correctly anyway, because the
+uninitialized bytes are unlikely to match up with our hex and extend the
+length. Probably we just need to detect that case and skip the call to
+extend_abbrev_len() altogether.
+
+-Peff
