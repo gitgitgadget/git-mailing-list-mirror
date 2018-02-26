@@ -2,103 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-1.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 62AC11F404
-	for <e@80x24.org>; Mon, 26 Feb 2018 18:19:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2BD281F404
+	for <e@80x24.org>; Mon, 26 Feb 2018 18:23:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751946AbeBZSTt (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Feb 2018 13:19:49 -0500
-Received: from mail-wr0-f195.google.com ([209.85.128.195]:38696 "EHLO
-        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751761AbeBZSTq (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Feb 2018 13:19:46 -0500
-Received: by mail-wr0-f195.google.com with SMTP id n7so22240300wrn.5
-        for <git@vger.kernel.org>; Mon, 26 Feb 2018 10:19:46 -0800 (PST)
+        id S1751544AbeBZSX1 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Feb 2018 13:23:27 -0500
+Received: from mail-pl0-f52.google.com ([209.85.160.52]:35630 "EHLO
+        mail-pl0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750969AbeBZSX1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Feb 2018 13:23:27 -0500
+Received: by mail-pl0-f52.google.com with SMTP id bb3so9747912plb.2
+        for <git@vger.kernel.org>; Mon, 26 Feb 2018 10:23:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=p75Mj5hm6xpxHBCUediH9W0Pd+iHb8jhNfJdydhIx2I=;
-        b=Zkc6LgpyvuKnRkAEOFamWUMVrHYgBM84YmaYonDU8jr8RYoLPfTTDEmnMnhhTw/sUv
-         3CpybdkFD/ZEnhvzqg87vBtPDlua6FqvI3IqphpjKYuef+sbrmmOgn1JJeV3Tx8JIExc
-         Vx5vhK/LDcnVDMLdoIsxQcqBi5UQTMb2CQHxtFDTEla/cSQKOdYCKtkuR4mAOzcaEswd
-         IN99wqJbqebveB3ijGKuzdS/jUWu8w3OZXxa2krLPI5KRjpsnnGaIdb7uxpMapRdGd2Q
-         BUkyZUNSNyOEhxsnvL/QyG18zeb47PCQa3ATzTXVkDsdj1L5c8x5/vN26AhR4QoiM1IG
-         AVPA==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=TznRTNc0skZwDiBt7c6u5++pqcqgfDndQwPRERFgsOk=;
+        b=EUqxz4mpphGBOwU4xLqgB6jmqQR92pyTXMXrjAc/U7TA7ES4QKlIpaJNk+zjDdvyIL
+         RmrRIteddZ1z2mZmTXigx8da2dJoNV6osRsOz0oDd+mqPSSAp0TQ29DwhMhqXq55af5q
+         ou1jU1kTpX0wxuOYBk2JETv1TvIegrlLtTqGTX6szRT1Jc5AjJ+HMXhMnDnTb/QLXsvZ
+         7jMnAorcjFlLApFoo9LccTKv7sdIlG3CPxDJvlQm5uUfD/+LQBVAtdbbVkDWfmliOsLc
+         75pJx/ofkMi6lX26I3/T2l7CUem9+n3IyEI/PUg5xqyxDnkSaEWlYujShS3QD3nZewHH
+         N3lA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=p75Mj5hm6xpxHBCUediH9W0Pd+iHb8jhNfJdydhIx2I=;
-        b=VNE6rk+9W9Mbpv0YPMHRu5aITuv5e+rFey0gOva9U20UVhqR06sxQ4TPGT3won6UBs
-         HAyeJB9eMt2Jx9y8tFzpiLwFdt8jdwkZY21DQvbQYpORDksDmMFcCvCCTbOMcjsuDj2B
-         9SelWKHe1/4QhpnTz/3YVhq0wLLdId7EI1pfkOIONRSmMu8qDAblmpveux5Rjh9xFe1r
-         1UxPtyevzPNlEDJyQ4SWekRDU1GiNXHIvM9Aq0XflhNGrSTlnJ8rxyAzrxq6ckw82xcc
-         rGuooHteG1D1KQekRObwru9DY55Y38WcfwyeHmVrAV9fiZm63o1qSgRjjYgyqOZZEdsY
-         i7xg==
-X-Gm-Message-State: APf1xPCIzHYfoG5iSC5RtegLnFAXvBIKaQJU0QngFtBwd9VROh7aMtAI
-        f6efYn2n53H7jS/o4jl43F0=
-X-Google-Smtp-Source: AH8x226/EKLJAnQnU8Uorpy6PLwhlDpVvBjm3Z9xR4SFz4qvkNTCyG3HiUgPxNXiYFjIs6wdTEhOUw==
-X-Received: by 10.223.135.102 with SMTP id 35mr11063034wrz.53.1519669185228;
-        Mon, 26 Feb 2018 10:19:45 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id y145sm9300180wmd.43.2018.02.26.10.19.44
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=TznRTNc0skZwDiBt7c6u5++pqcqgfDndQwPRERFgsOk=;
+        b=UOOz9IRz0WwbPMiwmfKRRKsTWz73ZcDmSMuEJWkXtryQei5YflcrjBpCNGQHkpHpxu
+         v7noUhgY0p5ujwPqpoz2Avv7rf3dmiP4y0Zp5+12UkBb2LfMAwLuZ7HLCRZ1Rg6OkNAS
+         29WXE+inHQP7tFaWfUXrZH/VQ3ubsTiOGp3bR+63bpnjbBEQCS97U+ssHR4u69w/d4tj
+         bGIIhDhC7u9KCUxu/QSVzRux+r5Eyxw5kARLmvmYoRl7k1OxED+XtNVbxUMXY53TpZ2i
+         VeIKURY1MqhvdC7vde3uW3MFueL7Zp1RUcDXqxE+NNybxJUgJk5ybeCO/oIKx/kK4Ay7
+         nvsw==
+X-Gm-Message-State: APf1xPB/WJ6ckSi4ByX1tRawDja6c/zavlAfs9d8uizGbKA+Sq3u+KUy
+        ZAYYS6vjoLZey5yIRrE7BJ4Df34OxUs=
+X-Google-Smtp-Source: AH8x225uKIxxVgeYtB3nBtc7GeedtUbkD8US0Ehc5OObq15/9cC5cgXaJ1lX3CMg6sk1N5viiWv7Jw==
+X-Received: by 2002:a17:902:7282:: with SMTP id d2-v6mr10363763pll.303.1519669406135;
+        Mon, 26 Feb 2018 10:23:26 -0800 (PST)
+Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
+        by smtp.gmail.com with ESMTPSA id a13sm17706982pgd.1.2018.02.26.10.23.24
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 26 Feb 2018 10:19:44 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
-        jonathantanmy@google.com, sunshine@sunshineco.com,
-        bmwill@google.com, Jonathan Nieder <jrnieder@gmail.com>
+        Mon, 26 Feb 2018 10:23:25 -0800 (PST)
+Date:   Mon, 26 Feb 2018 10:23:24 -0800
+From:   Brandon Williams <bmwill@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Duy Nguyen <pclouds@gmail.com>, Stefan Beller <sbeller@google.com>,
+        git@vger.kernel.org, jonathantanmy@google.com,
+        sunshine@sunshineco.com, Jonathan Nieder <jrnieder@gmail.com>
 Subject: Re: [PATCHv4 01/27] repository: introduce raw object store field
+Message-ID: <20180226182324.GA60857@google.com>
 References: <20180221015430.96054-1-sbeller@google.com>
-        <20180224004754.129721-1-sbeller@google.com>
-        <20180224004754.129721-2-sbeller@google.com>
-        <20180226093040.GA10479@ash>
-Date:   Mon, 26 Feb 2018 10:19:44 -0800
-In-Reply-To: <20180226093040.GA10479@ash> (Duy Nguyen's message of "Mon, 26
-        Feb 2018 16:30:41 +0700")
-Message-ID: <xmqqo9kbr4u7.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+ <20180224004754.129721-1-sbeller@google.com>
+ <20180224004754.129721-2-sbeller@google.com>
+ <20180226093040.GA10479@ash>
+ <xmqqo9kbr4u7.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqo9kbr4u7.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Duy Nguyen <pclouds@gmail.com> writes:
+On 02/26, Junio C Hamano wrote:
+> Duy Nguyen <pclouds@gmail.com> writes:
+> 
+> > diff --git a/common-main.c b/common-main.c
+> > index 6a689007e7..a13ab981aa 100644
+> > --- a/common-main.c
+> > +++ b/common-main.c
+> > @@ -1,6 +1,7 @@
+> >  #include "cache.h"
+> >  #include "exec_cmd.h"
+> >  #include "attr.h"
+> > +#include "repository.h"
+> >  
+> >  /*
+> >   * Many parts of Git have subprograms communicate via pipe, expect the
+> > @@ -32,6 +33,8 @@ int main(int argc, const char **argv)
+> >  	 */
+> >  	sanitize_stdfds();
+> >  
+> > +	init_the_repository();
+> > +
+> >  	git_setup_gettext();
+> > ...
+> > +void init_the_repository(void)
+> > +{
+> > +	the_repository = &the_repo;
+> > +	repo_pre_init(the_repository);
+> > +	the_repository->index = &the_index;
+> > +	repo_set_hash_algo(the_repository, GIT_HASH_SHA1);
+> > +}
+> 
+> I see what you did here, and I like it.
 
-> diff --git a/common-main.c b/common-main.c
-> index 6a689007e7..a13ab981aa 100644
-> --- a/common-main.c
-> +++ b/common-main.c
-> @@ -1,6 +1,7 @@
->  #include "cache.h"
->  #include "exec_cmd.h"
->  #include "attr.h"
-> +#include "repository.h"
->  
->  /*
->   * Many parts of Git have subprograms communicate via pipe, expect the
-> @@ -32,6 +33,8 @@ int main(int argc, const char **argv)
->  	 */
->  	sanitize_stdfds();
->  
-> +	init_the_repository();
-> +
->  	git_setup_gettext();
-> ...
-> +void init_the_repository(void)
-> +{
-> +	the_repository = &the_repo;
-> +	repo_pre_init(the_repository);
-> +	the_repository->index = &the_index;
-> +	repo_set_hash_algo(the_repository, GIT_HASH_SHA1);
-> +}
+I thought this would be a good idea to do eventually but back when I
+first introduced struct repository there wasn't enough to justify it
+till now.  This definitely makes it much easier to read the
+initialization and I prefer this over the initializer.  Thanks for
+working on this :)
 
-I see what you did here, and I like it.
+-- 
+Brandon Williams
