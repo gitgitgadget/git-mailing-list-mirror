@@ -7,109 +7,97 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5EF541F404
-	for <e@80x24.org>; Mon, 26 Feb 2018 21:29:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E775A1F404
+	for <e@80x24.org>; Mon, 26 Feb 2018 21:29:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751510AbeBZV3Z (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Feb 2018 16:29:25 -0500
-Received: from mout.gmx.net ([212.227.15.18]:50891 "EHLO mout.gmx.net"
+        id S1751575AbeBZV3d (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Feb 2018 16:29:33 -0500
+Received: from mout.gmx.net ([212.227.15.18]:33459 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751245AbeBZV3X (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Feb 2018 16:29:23 -0500
+        id S1751511AbeBZV3a (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Feb 2018 16:29:30 -0500
 Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MUILK-1fHGsJ2LwI-00R2LP; Mon, 26
- Feb 2018 22:29:17 +0100
-Date:   Mon, 26 Feb 2018 22:29:16 +0100 (STD)
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LxgM7-1egGIZ2iM7-017Eq1; Mon, 26
+ Feb 2018 22:29:24 +0100
+Date:   Mon, 26 Feb 2018 22:29:23 +0100 (STD)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
 To:     git@vger.kernel.org
-cc:     Junio C Hamano <gitster@pobox.com>,
+cc:     Stefan Beller <stefanbeller@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
         Jacob Keller <jacob.keller@gmail.com>,
         Stefan Beller <sbeller@google.com>,
         Philip Oakley <philipoakley@iee.org>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH v5 01/12] sequencer: avoid using errno clobbered by
- rollback_lock_file()
+Subject: [PATCH v5 03/12] git-rebase--interactive: clarify arguments
 In-Reply-To: <cover.1519680483.git.johannes.schindelin@gmx.de>
-Message-ID: <8ec3a73dfdc76c503d50e34e5fc8b8a3d5ea7dd8.1519680483.git.johannes.schindelin@gmx.de>
+Message-ID: <157d36ec8954e33ddc5670548b66ca58025d81ad.1519680483.git.johannes.schindelin@gmx.de>
 References: <cover.1518307771.git.johannes.schindelin@gmx.de> <cover.1519680483.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:Dh6S+nP7Nc6aFMz3NXjahf2CtUA6vrQ/nqviQ1ZDN4ZXlC8naD5
- 4zGg9GWaQgtZTBKsdcFM0kWACNifWLzcnpRft7d+EksHdZIBBgOm966vvzUclF1ryAXIu4o
- lRXk9BPjpaA1Es2ndg2B8T9gCWdg/YYAsygKt6jXS16/54TTA6bUCNRLqPB4+9kA8CWsGF3
- FREyHAkCy2i9lpupwlGGA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:vgIL42B/g70=:6zz4K8RnQ344Tf/6ZQV97s
- tLACPH38grriU06X9ylTjwZJtVBdGelrT177Bcg6QmES1j3AWb9s4DuKofW6+u1foVBK5hZbK
- 1TK+XJkmAkyT6Avh+U6UywU2kUOxz1OoXnOzKR6eQ02BNlUIaZR2MzahcewQlJsNAMrd9vaod
- 68B4SygQv+7lb+cJfVv5Ps28wgWIN7FKmqELHp9k/RxE784HMCcx4XY8qG1HpyP0Qwg1/s3IH
- 1M/QwVlwe23KnKg4TfWntGtJ+eiaRINdGy14/DRUuD7St+tnZdIxunDOLG908iRkc3D3aSpcK
- sj6Cva/iv8MCLATvOTA3I45GZ/Lh1b5MKLn69+JtjLlnIf28B2x6TBO/CtbcFst4Tu+yw+jRH
- BzKIQYbKfeN73xDahufPUauT6DR/ihUTovb8Oiji+intEBceWFpsXNRc7p/srDU6v+MmxQBka
- 9VruDoj9Eeifoh6P/b17Z0zzDlLg6xjwcPQexaK4RGX491xzpcBPPBbO1DIwib2rnNlH0cfGb
- Blcua6iKLEb7F7hZ+jUzZa4hlumeODeY169R+M04scxvfxCJ1emd2a71Ze++C2YXYFzilUbwy
- eXjI4uxzmvnI84+FbED/1ccoHfufNqwqu6l/OC6T2S/autKUobm8WDIMDoQTaJRfBqQKfHAug
- KIWyKdjalzWdlkXmftcCTXtM3pDaPvQN5TbrKu07Xqa/c9JvoPYsmbETNYyzkZkKc58qr6ss+
- NzBG34f0TNze1Ta4lYJRrVC9wss7L10inPb1xbN08US++O7EEjp45ddh4fbsPcqsCnDV/4wcO
- 31DXbvQmywtzB/Wop3IwWv00h85ZiKoleuu4zWSR2xFaLEONARWgTref2DWk9KaoXMw1iVA
+X-Provags-ID: V03:K0:BNd4uknO3wI525WM6g6Qxr14bQa1x/+baOV2YGUWU3YsaMLzUhj
+ 6a+aylM13AFueF8LCxHCHx9T8By59yZL35iSjVWx6M6BRTamKCu+bqGQTQtaxBNwF8vsNJ+
+ OGXIodBMhNab7tgEaS1TFATJf8uIKE7+efzBvA9EBVrodd85RZ08xgkpKgTIWfH4vusTbjl
+ igpIFdwAv2IB+tBy3nmKQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:t5bfTLePzWw=:VczStFph7NntHzrUklTs56
+ n1FJo638JC16oHHwc/8Q3be+79g0oUyypCBSWASsU70y0TDi4WtOmZEmXLwkpK1bpGx0QUtFt
+ PGKX5NOn6RjoMpAP3LRZckpaCIuQ3PbAabwBm+3R/O5BKdrlr3aEah8wA8Hg4dy1UpbQTQacV
+ qe9SsgNkgWS3ShSU0B3GbvL4/50ryW2x1SnHiNeN5PiXHrtnAoBHE6gFfLLLv/JNH4pWZEyjS
+ RWB4m45dvbFAKeaGIG/3r0j22xtzc52L1kpyOMZ08zDmD3hGLbsnxh8rpBRrN/THlAA1t6D52
+ SIrhtTwOCmazH//RJSTdkT3gAMIoKGJDjkZp3ZTJGsqcmXjkTj+nQl4Rns23dl5gcGjqemXiY
+ CaEkY5UUqPKjt+p54V4RxFG+lL/ELPtlODjqBDGBWXoslzOBWl0797cMEqOPBRlVKkwqcWjoD
+ 6aOR7/tzsAaOmS49Nz6DKZkS8O254cw1TgiwJacNQikzVgPwfkuF0LkWi+OlFU9AJVLMwkFDu
+ M3J9AN7pqUlZirKq/QcHxc6QnqZpHZ9p8JD9OOoPDslSk6r0YiKqDbX9Dtwr112beYvA5auHb
+ 5pPgNEMXNj9hZicb6aoCRl8kiS4P+mlXquJUrpjiHiWCyi5MLrCZmTplJkBRzeOrhxFcvYg8T
+ 6/gp0ZZFRRIqa4SkurJEFRNqGrbYP7I2DoXpI9p4HJ65k1MaTD+qw2LGDKuGyv6LlJPstplH+
+ r9DU35TlmghFHBwMOAHQniODkkxdwGTFkLZ98gqGt9SfB5jHAXBaBW04hBvQaiO7wL1ym9YzA
+ SumkfTHh1XiDLq2fY8ILRw7rwPoJCXD4AFPygAnfywLki+qvqPmF7zcUMkO6PXTkJaN6kQ/
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As pointed out in a review of the `--recreate-merges` patch series,
-`rollback_lock_file()` clobbers errno. Therefore, we have to report the
-error message that uses errno before calling said function.
+From: Stefan Beller <stefanbeller@gmail.com>
 
+Up to now each command took a commit as its first argument and ignored
+the rest of the line (usually the subject of the commit)
+
+Now that we are about to introduce commands that take different
+arguments, clarify each command by giving the argument list.
+
+Signed-off-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- sequencer.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ git-rebase--interactive.sh | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/sequencer.c b/sequencer.c
-index e9baaf59bd9..5aa3dc3c95c 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -345,12 +345,14 @@ static int write_message(const void *buf, size_t len, const char *filename,
- 	if (msg_fd < 0)
- 		return error_errno(_("could not lock '%s'"), filename);
- 	if (write_in_full(msg_fd, buf, len) < 0) {
-+		error_errno(_("could not write to '%s'"), filename);
- 		rollback_lock_file(&msg_file);
--		return error_errno(_("could not write to '%s'"), filename);
-+		return -1;
- 	}
- 	if (append_eol && write(msg_fd, "\n", 1) < 0) {
-+		error_errno(_("could not write eol to '%s'"), filename);
- 		rollback_lock_file(&msg_file);
--		return error_errno(_("could not write eol to '%s'"), filename);
-+		return -1;
- 	}
- 	if (commit_lock_file(&msg_file) < 0) {
- 		rollback_lock_file(&msg_file);
-@@ -2106,16 +2108,17 @@ static int save_head(const char *head)
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index 81c5b428757..a2659fea982 100644
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -155,13 +155,13 @@ reschedule_last_action () {
+ append_todo_help () {
+ 	gettext "
+ Commands:
+-p, pick = use commit
+-r, reword = use commit, but edit the commit message
+-e, edit = use commit, but stop for amending
+-s, squash = use commit, but meld into previous commit
+-f, fixup = like \"squash\", but discard this commit's log message
+-x, exec = run command (the rest of the line) using shell
+-d, drop = remove commit
++p, pick <commit> = use commit
++r, reword <commit> = use commit, but edit the commit message
++e, edit <commit> = use commit, but stop for amending
++s, squash <commit> = use commit, but meld into previous commit
++f, fixup <commit> = like \"squash\", but discard this commit's log message
++x, exec <commit> = run command (the rest of the line) using shell
++d, drop <commit> = remove commit
  
- 	fd = hold_lock_file_for_update(&head_lock, git_path_head_file(), 0);
- 	if (fd < 0) {
-+		error_errno(_("could not lock HEAD"));
- 		rollback_lock_file(&head_lock);
--		return error_errno(_("could not lock HEAD"));
-+		return -1;
- 	}
- 	strbuf_addf(&buf, "%s\n", head);
- 	written = write_in_full(fd, buf.buf, buf.len);
- 	strbuf_release(&buf);
- 	if (written < 0) {
-+		error_errno(_("could not write to '%s'"), git_path_head_file());
- 		rollback_lock_file(&head_lock);
--		return error_errno(_("could not write to '%s'"),
--				   git_path_head_file());
-+		return -1;
- 	}
- 	if (commit_lock_file(&head_lock) < 0) {
- 		rollback_lock_file(&head_lock);
+ These lines can be re-ordered; they are executed from top to bottom.
+ " | git stripspace --comment-lines >>"$todo"
 -- 
 2.16.1.windows.4
 
