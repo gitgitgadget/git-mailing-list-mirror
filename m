@@ -2,110 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 323871F576
-	for <e@80x24.org>; Mon, 26 Feb 2018 09:53:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 930C81FAE2
+	for <e@80x24.org>; Mon, 26 Feb 2018 10:18:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752054AbeBZJxO (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Feb 2018 04:53:14 -0500
-Received: from cloud.peff.net ([104.130.231.41]:36950 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751022AbeBZJxO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Feb 2018 04:53:14 -0500
-Received: (qmail 2378 invoked by uid 109); 26 Feb 2018 09:53:13 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 26 Feb 2018 09:53:13 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 11075 invoked by uid 111); 26 Feb 2018 09:54:02 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 26 Feb 2018 04:54:02 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 26 Feb 2018 04:53:11 -0500
-Date:   Mon, 26 Feb 2018 04:53:11 -0500
-From:   Jeff King <peff@peff.net>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     Derrick Stolee <stolee@gmail.com>, git <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: Use of uninitialised value of size 8 in sha1_name.c
-Message-ID: <20180226095311.GA14831@sigill.intra.peff.net>
-References: <CAP8UFD23z9YDukO=O+cK=o_0DLcxbkXWzp4rCA1kRXGTZ-TMcQ@mail.gmail.com>
+        id S1752592AbeBZKSL (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Feb 2018 05:18:11 -0500
+Received: from mail-ot0-f170.google.com ([74.125.82.170]:38024 "EHLO
+        mail-ot0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752275AbeBZKSJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Feb 2018 05:18:09 -0500
+Received: by mail-ot0-f170.google.com with SMTP id 95so12876558ote.5
+        for <git@vger.kernel.org>; Mon, 26 Feb 2018 02:18:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=+Bj3+JOMTjRM7s+WtVfXOu+izD5rjsGKnN1oOoPcH2k=;
+        b=ABMOjW5J3HEy1mZkfYrZuKpb5p26SwYeX3qyD09fc/eZDtBw/bNZBuVjjrRswHCXC1
+         jAUaF/kDDBGahUq2HqsX1PvBgqtz9zU29cucWyRden9dnStn1swokEDNDwSyCfudc7JZ
+         o/vMToXVgnwk8nXXAL7GfW7VIUvuHa6CWJzL7Bh/3Mv34C6SELwkqC8LapVG05xFR6hd
+         Y38+5w7z79XBU1uOj4PDihT81kTUsiJlRz6JWMgUN17RI6Yo463T/37ALZxmOIr7KBdQ
+         kfXJaAaB8mzRZX0JuO2xaMQJsc1hDUQZwsaCTsUL0Tcpen/zr1LYot1ie+ypACNPaN+/
+         xBTg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=+Bj3+JOMTjRM7s+WtVfXOu+izD5rjsGKnN1oOoPcH2k=;
+        b=L90khD1KwVzHSEc0YF0GOBKV0nwpfHtMSr8Lu0Rp6WKtsFDXitFwHvx6dxFoToMnDC
+         c2C6U4CaVVXop5ypgTE6Zb9aVu5dEVisAHhYeE0nlMdcUjFUyGyDkYMRN9FYvKo1YSni
+         vWMSa1SBiSzBesUzlRBZX6bLKQXz0VdEeIJOYTIssru2+fTdqunKM3e68LYCUOehBNRn
+         QGVu1k0Tpv3Rx/81GmVjdggApe61eU78hmDhM9eBxXdc2zX21vm4KdoyEmnKxRK/QOoD
+         9EL2HBKDcy8eYgxtykCMmNZGxtdFV8fI/okJnUPNP+RLziBf7FMIduCDe0ric8Z+rcAX
+         8u8g==
+X-Gm-Message-State: APf1xPDobEaljriXsBWm6Lln8gU3Ye0kAQq/Q0xwpD+/OWs1NwPmcC1k
+        m3nL75hQ9n6bx8sdWj7nlAglobZ2Hd+L1B+6l78=
+X-Google-Smtp-Source: AG47ELsHsoQu4KtJvBtFM22rVEgSgLzlD+CJyQcAUCoxNh7XBk2l78bIad9eH+RyIxVf91m/NIlln+UVyyjcW/hqop4=
+X-Received: by 10.157.24.42 with SMTP id b39mr7593017ote.356.1519640289381;
+ Mon, 26 Feb 2018 02:18:09 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAP8UFD23z9YDukO=O+cK=o_0DLcxbkXWzp4rCA1kRXGTZ-TMcQ@mail.gmail.com>
+Received: by 10.74.25.140 with HTTP; Mon, 26 Feb 2018 02:17:38 -0800 (PST)
+In-Reply-To: <xmqq1shdyidz.fsf@gitster-ct.c.googlers.com>
+References: <xmqq1shdyidz.fsf@gitster-ct.c.googlers.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Mon, 26 Feb 2018 17:17:38 +0700
+Message-ID: <CACsJy8CxvabA5+GF62==w6KSi5Vm+kLjs5+grPbWJsf_bfCT0w@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Feb 2018, #03; Wed, 21)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Feb 26, 2018 at 10:04:22AM +0100, Christian Couder wrote:
+On Thu, Feb 22, 2018 at 7:31 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> * nd/worktree-move (2018-02-12) 7 commits
+>  - worktree remove: allow it when $GIT_WORK_TREE is already gone
+>  - worktree remove: new command
+>  - worktree move: refuse to move worktrees with submodules
+>  - worktree move: accept destination as directory
+>  - worktree move: new command
+>  - worktree.c: add update_worktree_location()
+>  - worktree.c: add validate_worktree()
+>
+>  "git worktree" learned move and remove subcommands.
+>
+>  Expecting a reroll.
+>  cf. <20180124095357.19645-1-pclouds@gmail.com>
 
-> ==21455== Use of uninitialised value of size 8
-> ==21455==    at 0x2D2A73: get_hex_char_from_oid (sha1_name.c:492)
-> ==21455==    by 0x2D2AFE: extend_abbrev_len (sha1_name.c:502)
-> ==21455==    by 0x2D2C3D: find_abbrev_len_for_pack (sha1_name.c:551)
-> ==21455==    by 0x2D2CFF: find_abbrev_len_packed (sha1_name.c:569)
-> ==21455==    by 0x2D2E12: find_unique_abbrev_r (sha1_name.c:608)
-> ==21455==    by 0x2DCB66: strbuf_add_unique_abbrev (strbuf.c:877)
-> ==21455==    by 0x14F7CE: update_local_ref (fetch.c:700)
-> ==21455==    by 0x1500CF: store_updated_refs (fetch.c:871)
-> ==21455==    by 0x15035B: fetch_refs (fetch.c:932)
-> ==21455==    by 0x150CF8: do_fetch (fetch.c:1146)
-> ==21455==    by 0x1515AB: fetch_one (fetch.c:1370)
-> ==21455==    by 0x151A1D: cmd_fetch (fetch.c:1457)
-> ==21455==  Uninitialised value was created by a stack allocation
-> ==21455==    at 0x2D2B2E: find_abbrev_len_for_pack (sha1_name.c:513)
-> ==21455==
-> 
-> A quick git blame seems to point to 0e87b85683 (sha1_name: minimize
-> OID comparisons during disambiguation, 2017-10-12).
-> 
-> It is difficult to tell for sure though as t5616-partial-clone.sh was
-> added after that commit.
-
-I think that commit is to blame, though the error isn't exactly where
-that stack trace puts it. Try this:
-
-diff --git a/sha1_name.c b/sha1_name.c
-index 611c7d24dd..6f7f36436f 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -547,7 +547,10 @@ static void find_abbrev_len_for_pack(struct packed_git *p,
- 	 */
- 	mad->init_len = 0;
- 	if (!match) {
--		nth_packed_object_oid(&oid, p, first);
-+		warning("p->num_objects = %u, first = %u",
-+			p->num_objects, first);
-+		if (!nth_packed_object_oid(&oid, p, first))
-+			die("oops!");
- 		extend_abbrev_len(&oid, mad);
- 	} else if (first < num - 1) {
- 		nth_packed_object_oid(&oid, p, first + 1);
-
-I get failures all over the test suite, like this:
-
-  warning: p->num_objects = 4, first = 3
-  warning: p->num_objects = 8, first = 6
-  warning: p->num_objects = 10, first = 0
-  warning: p->num_objects = 4, first = 0
-  warning: p->num_objects = 8, first = 0
-  warning: p->num_objects = 10, first = 10
-  fatal: oops!
-
-Any time the abbreviated hex would go after the last object in the pack,
-then first==p->num_objects, and nth_packed_object_oid() will fail. That
-leaves uninitialized data in "oid", which is what valgrind complains
-about when we examine it in extend_abbrev_len().
-
-Most of the time the code behaves correctly anyway, because the
-uninitialized bytes are unlikely to match up with our hex and extend the
-length. Probably we just need to detect that case and skip the call to
-extend_abbrev_len() altogether.
-
--Peff
+I think 'pu' already has the reroll (v2). So far no new comments.
+-- 
+Duy
