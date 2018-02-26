@@ -2,105 +2,186 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C55301FAE2
-	for <e@80x24.org>; Mon, 26 Feb 2018 21:22:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7D9721F404
+	for <e@80x24.org>; Mon, 26 Feb 2018 21:29:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751539AbeBZVWd (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Feb 2018 16:22:33 -0500
-Received: from mail-pl0-f45.google.com ([209.85.160.45]:39772 "EHLO
-        mail-pl0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751334AbeBZVWc (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Feb 2018 16:22:32 -0500
-Received: by mail-pl0-f45.google.com with SMTP id s13so10031530plq.6
-        for <git@vger.kernel.org>; Mon, 26 Feb 2018 13:22:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=xXS3Clv1XylUiG+bQefl66HFnokXHxss/CZVEPwFfZo=;
-        b=myWwlawT3BmNB/A9wGkP/zU1Zw9kVbVaCXSnlWJWe3mgtGM1YEW0RPMUiWUo1ZlFO6
-         hCs64wTKwpsANrKoymqD1p1WArhAz8GF/KmdppUXT3KjfnPqumTlyqNaOkucJrbZF5oP
-         cXyoNLq46faxzcWk3fTVCEzg4rIZiqqK6/2zlZV79eBlea/Z2t8fIxpzaBRpao3NJh7m
-         sXbHlgd9dA4F1lB/x9rqo/+qirn+JDBwj0KAPefvtlNv8bbwZJxkcs1RQJx0SnWfA2se
-         qrRZ5KBpzMHiNpItBV3821dWYT7a6plJ7hsvKkENxB+q/UpQ3U/9kHDuSxA6b44k+i/c
-         1lJQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=xXS3Clv1XylUiG+bQefl66HFnokXHxss/CZVEPwFfZo=;
-        b=WdwMuz71j4S1BUp0Wm34WNZXg2Dj0YBjX5Iu28D3lAHajXCCmc5TsK0JMHaA2atTK7
-         5HgviqkBg4tq26FGKQueh02aJdEwZ6FsdFdUmMp27XcF4Q8PlD4pHDY4rcrfDXyhI+x3
-         RS5yNle0V8+VTVdNqJsEZ/NpRSWZuvfp/EJgRH45WwrONAxPbkeEtmYrEhZy++HMChaV
-         DCyYY3eifhJwbmuhvDMtkSVqM0uNH3pd6fe3j9VzVcQY3VUC9bayVJtgGWLJQyx4SzyC
-         GfRurGZq1hilg5QKnlIP9AbaW/MR4NGS2Vw6qul7ZlAXXoODEMnhgDprr8YSgINmnkTj
-         mUCA==
-X-Gm-Message-State: APf1xPBp7jlBkOgN1Vk31cSWApLJXOSy+SLahKwHdDmWO3MWG83X99s6
-        kZyk3+8FLnUnhW8WzU/1Yb7xjRhqjn+Zhs0ggpc=
-X-Google-Smtp-Source: AG47ELtMxIkFT7E4ARtRPQnUZiXwV6Xhm01N5SqxiTV40M7p/emGgkYFcclyOfoSft8fz3WnFC0PdXRxqYC0zoSyzZg=
-X-Received: by 2002:a17:902:b117:: with SMTP id q23-v6mr8312754plr.58.1519680152032;
- Mon, 26 Feb 2018 13:22:32 -0800 (PST)
+        id S1751422AbeBZV3X (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Feb 2018 16:29:23 -0500
+Received: from mout.gmx.net ([212.227.15.18]:38129 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751165AbeBZV3W (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Feb 2018 16:29:22 -0500
+Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M92ZJ-1f0YGi3wtB-00CPB3; Mon, 26
+ Feb 2018 22:29:14 +0100
+Date:   Mon, 26 Feb 2018 22:29:11 +0100 (STD)
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+To:     git@vger.kernel.org
+cc:     Junio C Hamano <gitster@pobox.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Stefan Beller <sbeller@google.com>,
+        Philip Oakley <philipoakley@iee.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: [PATCH v5 00/12] rebase -i: offer to recreate merge commits
+In-Reply-To: <cover.1518307771.git.johannes.schindelin@gmx.de>
+Message-ID: <cover.1519680483.git.johannes.schindelin@gmx.de>
+References: <cover.1518307771.git.johannes.schindelin@gmx.de>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Received: by 10.236.191.144 with HTTP; Mon, 26 Feb 2018 13:22:31 -0800 (PST)
-In-Reply-To: <a86793c8-2051-4d92-967b-1d24dbf4a2ff@gmail.com>
-References: <xmqqo9kro4oq.fsf@gitster-ct.c.googlers.com> <20180214215637.6462-1-martin.agren@gmail.com>
- <20180219212937.GB9748@sigill.intra.peff.net> <CAN0heSoDJdA3tTVZZ=imj8+z5FeqKy00dA2kWP4CAC4=+7VBiw@mail.gmail.com>
- <a86793c8-2051-4d92-967b-1d24dbf4a2ff@gmail.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Mon, 26 Feb 2018 22:22:31 +0100
-Message-ID: <CAN0heSq0aWXkjEN7zjQs7yV8V0JSupNwy30yvqcM_V8M-rw-9A@mail.gmail.com>
-Subject: Re: [PATCH] t/known-leaky: add list of known-leaky test scripts
-To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:NOL/vyWwWJLOxw4wgIdSa6fEf9qw9cCPCxoTu0GTxaNa/Gzo47Q
+ Y2XsUJiTEZLYRQVnBBbBQYEaTNk0fSoOxM2yNOOmYULAYQR7UvvxH3qkuWeYd01nNK0Lxlx
+ KdqH6ecyAx/oY7Meh8k3AajWruXThXNMqsCZ9EMpJjx9Iii5Clz/yR/LyCLViMN8pa4pvgu
+ 58JQukqyk41DGLFNBhKPw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:l5fYoxAeIn4=:eGkmgRgxz2RUhgktjs1ke8
+ oC+/3k7R9z97t3MOxEb6UOPR+WOlOT4ZjvpjpsnlS6ofGg9mUGw7rg8Ti780J3BVuM7Yw93Dv
+ 5jaPkY1YxeWTLCZrhEKSXBm5EAy5BwoBcmD7bZZZNjdOvXIQ+reb5SHoZb1f5AhWEJGuVFexO
+ rrTmyAPqIG3NrW8/lENbxUqWshVDNfvIqjxhMbJ7eBsBCAdEdv2a4rP+dUqwsAyrie44010Y1
+ iCaocdLw1mt1XNAQChiPUzZJH/q+Pd64nZKlNGSasBKUM4tkAdSJ+zA5rIlAKdocOu2WT9k8y
+ 5iaqGewCyTuwL1U6P+R7Lmn+s9yM8re8O8e4hkvgdP8u9skByfXOUHgGIIskWx//TEUuLFT1c
+ o4IogX1ucepSueQWLqluyXut6+SU2Q33KOzAaABKY7LGjHygr0uPoX+GNRwQPdi94IGR8cX80
+ Z/5WpYPf6epoJI0e2lVHaup2wcFRW9rcBjHzIbIoB6w42MKar2s6P6pFPXgsXa03O+HgSFJ0h
+ ABdvDe/wb7f/SM5dPBHqyuHClTi57sKKdbgZoSV/nDtY6ci/8aGPgPT+L11hQxi5II3YFKLsT
+ m0V92EJQynq3AGQ5BRMBXRwYez6yxAMQxPouxwrylmKhkz7rbY4pU4xe27ZSJmPHWOwuLNpmt
+ dHuZCA2vZMV8ZyhDpKqB1Q6pL63zv9NPCb0ZES1LtG9re0kyRrsSRA+xGp2eFZf/lsEKM9P9v
+ 2ewblsJjfP38kINhQ7fi0mQ51ldlr83LO6XIVxMnSc2O83yIS8nwB5/Qa6MRCPfP5mv73N8wC
+ APhfYVPX8ZfTGr+5XJwLvl4sMcLu4+MuTzEeKBkQ/9NDNpuhlUAGl8Ha3NSB22RIQQXHwls
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 25 February 2018 at 04:48, Kaartic Sivaraam
-<kaartic.sivaraam@gmail.com> wrote:
-> On Wednesday 21 February 2018 02:14 AM, Martin =C3=85gren wrote:
->> To sum up: I probably won't be looking into Travis-ing such a blacklist
->> in the near future.
->>
->
-> Just thinking out loud, how about having a white-list instead of a
-> black-list and using it to run only those tests in the white list.
-> Something like,
->
-> t/white_list
-> ------------
-> t0000
-> t0001
->
-> To run
-> ------
->
-> cd t/
-> for test in $(cat white_list)
-> do
->     white_list_tests=3D"$white_list_tests $test*"
-> done
-> make SANITIZE=3Dleak $white_list_tests
+Once upon a time, I dreamt of an interactive rebase that would not
+flatten branch structure, but instead recreate the commit topology
+faithfully.
 
-Yeah, that would also work. An incomplete whitelist can't cause errors
-for those running other tests, as an incomplete blacklist could. So
-that's good. At some point, the whitelist would need to be turned into a
-blacklist. At the very latest when the whitelist is the full set of
-tests, in order to flip the default of new tests. ;-) Right now, I think
-whitelists and blacklists are about equally useful.
+My original attempt was --preserve-merges, but that design was so
+limited that I did not even enable it in interactive mode.
 
-Let's hope we're heading for a future where a blacklist gets more and
-more feasible, whereas a whitelist would get longer and longer. ;-)
+Subsequently, it *was* enabled in interactive mode, with the predictable
+consequences: as the --preserve-merges design does not allow for
+specifying the parents of merge commits explicitly, all the new commits'
+parents are defined *implicitly* by the previous commit history, and
+hence it is *not possible to even reorder commits*.
 
-Martin
+This design flaw cannot be fixed. Not without a complete re-design, at
+least. This patch series offers such a re-design.
+
+Think of --recreate-merges as "--preserve-merges done right". It
+introduces new verbs for the todo list, `label`, `reset` and `merge`.
+For a commit topology like this:
+
+            A - B - C
+              \   /
+                D
+
+the generated todo list would look like this:
+
+            # branch D
+            pick 0123 A
+            label branch-point
+            pick 1234 D
+            label D
+
+            reset branch-point
+            pick 2345 B
+            merge -C 3456 D # C
+
+There are more patches in the pipeline, based on this patch series, but
+left for later in the interest of reviewable patch series: one mini
+series to use the sequencer even for `git rebase -i --root`, and another
+one to add support for octopus merges to --recreate-merges.
+
+Changes since v3:
+
+- (sorry for the broken iteration v4)
+
+- fixed a grammar error in "introduce the `merge` command"'s commit message.
+
+- fixed a couple of resource leaks in safe_append() and do_reset(), pointed
+  out by Eric Sunshine.
+
+
+Johannes Schindelin (11):
+  sequencer: avoid using errno clobbered by rollback_lock_file()
+  sequencer: make rearrange_squash() a bit more obvious
+  sequencer: introduce new commands to reset the revision
+  sequencer: introduce the `merge` command
+  sequencer: fast-forward merge commits, if possible
+  rebase-helper --make-script: introduce a flag to recreate merges
+  rebase: introduce the --recreate-merges option
+  sequencer: make refs generated by the `label` command worktree-local
+  sequencer: handle post-rewrite for merge commands
+  pull: accept --rebase=recreate to recreate the branch topology
+  rebase -i: introduce --recreate-merges=[no-]rebase-cousins
+
+Stefan Beller (1):
+  git-rebase--interactive: clarify arguments
+
+ Documentation/config.txt               |   8 +
+ Documentation/git-pull.txt             |   5 +-
+ Documentation/git-rebase.txt           |  14 +-
+ builtin/pull.c                         |  14 +-
+ builtin/rebase--helper.c               |  13 +-
+ builtin/remote.c                       |   2 +
+ contrib/completion/git-completion.bash |   4 +-
+ git-rebase--interactive.sh             |  22 +-
+ git-rebase.sh                          |  16 +
+ refs.c                                 |   3 +-
+ sequencer.c                            | 742 ++++++++++++++++++++++++++++++++-
+ sequencer.h                            |   7 +
+ t/t3430-rebase-recreate-merges.sh      | 208 +++++++++
+ 13 files changed, 1027 insertions(+), 31 deletions(-)
+ create mode 100755 t/t3430-rebase-recreate-merges.sh
+
+
+base-commit: e3a80781f5932f5fea12a49eb06f3ade4ed8945c
+Published-As: https://github.com/dscho/git/releases/tag/recreate-merges-v5
+Fetch-It-Via: git fetch https://github.com/dscho/git recreate-merges-v5
+
+Interdiff vs v4:
+ diff --git a/sequencer.c b/sequencer.c
+ index 63ae71a7512..b2bf63029d4 100644
+ --- a/sequencer.c
+ +++ b/sequencer.c
+ @@ -2514,14 +2514,17 @@ static int safe_append(const char *filename, const char *fmt, ...)
+  
+  	if (write_in_full(fd, buf.buf, buf.len) < 0) {
+  		error_errno(_("could not write to '%s'"), filename);
+ +		strbuf_release(&buf);
+  		rollback_lock_file(&lock);
+  		return -1;
+  	}
+  	if (commit_lock_file(&lock) < 0) {
+ +		strbuf_release(&buf);
+  		rollback_lock_file(&lock);
+  		return error(_("failed to finalize '%s'"), filename);
+  	}
+  
+ +	strbuf_release(&buf);
+  	return 0;
+  }
+  
+ @@ -2601,8 +2604,11 @@ static int do_reset(const char *name, int len, struct replay_opts *opts)
+  	unpack_tree_opts.update = 1;
+  	unpack_tree_opts.reset = 1;
+  
+ -	if (read_cache_unmerged())
+ +	if (read_cache_unmerged()) {
+ +		rollback_lock_file(&lock);
+ +		strbuf_release(&ref_name);
+  		return error_resolve_conflict(_(action_name(opts)));
+ +	}
+  
+  	if (!fill_tree_descriptor(&desc, &oid)) {
+  		error(_("failed to find tree of %s"), oid_to_hex(&oid));
+-- 
+2.16.1.windows.4
+
