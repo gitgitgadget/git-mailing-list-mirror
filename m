@@ -2,61 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 75B961F576
-	for <e@80x24.org>; Mon, 26 Feb 2018 11:28:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EC6ED1F576
+	for <e@80x24.org>; Mon, 26 Feb 2018 11:38:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752336AbeBZL2J (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Feb 2018 06:28:09 -0500
-Received: from continuum.iocl.org ([217.140.74.2]:50003 "EHLO
-        continuum.iocl.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752131AbeBZL2J (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Feb 2018 06:28:09 -0500
-X-Greylist: delayed 1872 seconds by postgrey-1.27 at vger.kernel.org; Mon, 26 Feb 2018 06:28:08 EST
-Received: (from krey@localhost)
-        by continuum.iocl.org (8.11.3/8.9.3) id w1QAugk06686;
-        Mon, 26 Feb 2018 11:56:42 +0100
-Date:   Mon, 26 Feb 2018 11:56:42 +0100
-From:   Andreas Krey <a.krey@gmx.de>
-To:     "'Peter Backes'" <rtc@helen.PLASMA.Xg8.DE>
-Cc:     "Randall S. Becker" <rsbecker@nexbridge.com>,
-        "=?iso-8859-1?Q?'=C6var_Arnfj=F6r=F0?= Bjarmason'" <avarab@gmail.com>,
-        "'Derek Fawcus'" <dfawcus+lists-git@employees.org>,
-        git@vger.kernel.org, "'Theodore Ts'o'" <tytso@mit.edu>
-Subject: Re: Git should preserve modification times at least on request
-Message-ID: <20180226105642.GA6549@inner.h.apk.li>
-References: <20180219212235.GA9891@helen.PLASMA.Xg8.DE> <20180221210339.GA43094@accordion.employees.org> <87bmgif2pa.fsf@evledraar.gmail.com> <20180221221420.GA7743@helen.PLASMA.Xg8.DE> <87a7w2ezeq.fsf@evledraar.gmail.com> <20180221231234.GA8509@helen.PLASMA.Xg8.DE> <007d01d3ab6f$e5439f10$afcadd30$@nexbridge.com> <20180222020535.GA11063@helen.PLASMA.Xg8.DE>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180222020535.GA11063@helen.PLASMA.Xg8.DE>
-User-Agent: Mutt/1.4.2.1i
-X-message-flag: What did you expect to see here?
+        id S1752730AbeBZLiT (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Feb 2018 06:38:19 -0500
+Received: from mail-ot0-f194.google.com ([74.125.82.194]:44849 "EHLO
+        mail-ot0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752456AbeBZLiS (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Feb 2018 06:38:18 -0500
+Received: by mail-ot0-f194.google.com with SMTP id 79so13049143oth.11
+        for <git@vger.kernel.org>; Mon, 26 Feb 2018 03:38:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=n9+JeC6H47R0iEfmFC6Ge+TUWisVZdcojMxW/VKd7sQ=;
+        b=KFsFE6I2DmBgOCt5UEz9WHu42XqvtuP/BqDAfwIFxYrJI3ESB2U6+pw44FBMxNEya8
+         ujZXJamrGCuS8drryNnAInnCHqpa6HFiFODm58BUGHc8DSW9MH9NBos+NGpdQ8MDXMXe
+         aV0zlrr4jp9Han+nWIkDOHkTrI4a5AHynV1wbrqIpjcXa6l9EfDCzgSoikY+MJXG56BQ
+         uDMZ8zQ0VvHaNk959eHW69Cxjk+tqmuq2S7uQXDMkHxG6cKVzXwXk8pwQgJ5Z7sf0p1i
+         dy/CoGiMSz1ieWLeU1+i4iF4wBVw2X5zOFjupKcD85XZP28U3Vb5ARbev0+bPcID4LWr
+         ZvPQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=n9+JeC6H47R0iEfmFC6Ge+TUWisVZdcojMxW/VKd7sQ=;
+        b=SCw7G8E+rn+HLOCAMprVKyLLMHEqmxuIkrQc1yDdP7184rb30XI6g6SKyPwGcJmPiu
+         GnMv2eRX3ZptGGHe0tfDoacA91Dk5eFCair2zmrplqI0D1+aqYJnyJc3F1w8qCJ1F5XF
+         xZT3dO1EjF71VIxMQ4B/zfpm9XNI9mecG390aOm32VOaDVvXvREUb1ziuNVazPGNvVSr
+         +qtBce+obexnnNhVHWW9L3f8/PdKLKQg8udr2O0sxQ6nap/GKn1T7+e8GrYzvk4oXK/g
+         RoXlrYRNTIA5+Awf5YASAmdmXBHHp6ugmuuI4pwwmFya70gzB7LgqlydCuCOR8xGJGrf
+         rVmw==
+X-Gm-Message-State: APf1xPDkyDDSRdlmuTgRBbzWL01z8K4DWZ1fs7382tZhpreUnMImWBeu
+        hoZV6BNEIJ76Jr+E/zwaQVNLrg3FfSZHKVtQxv0=
+X-Google-Smtp-Source: AG47ELt6gN53TZBpvdmCEhgIzXt15PgypoTOjEX5BR6lhI/AF1vhJuKnR8IKeoM4uMpwZ4uhLquRxaotejMM6sAMIDE=
+X-Received: by 10.157.54.204 with SMTP id s12mr7763074otd.304.1519645098390;
+ Mon, 26 Feb 2018 03:38:18 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.74.25.140 with HTTP; Mon, 26 Feb 2018 03:37:48 -0800 (PST)
+In-Reply-To: <20180225211212.477570-35-sandals@crustytoothpaste.net>
+References: <20180225211212.477570-1-sandals@crustytoothpaste.net> <20180225211212.477570-35-sandals@crustytoothpaste.net>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Mon, 26 Feb 2018 18:37:48 +0700
+Message-ID: <CACsJy8BcFVVjvfrqot5mTv4+zKx_GnRQ_vsiyXvKkYvWVnS0LA@mail.gmail.com>
+Subject: Re: [PATCH v2 34/36] Convert lookup_replace_object to struct object_id
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Patryk Obara <patryk.obara@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 22 Feb 2018 03:05:35 +0000, 'Peter Backes' wrote:
-...
-> The bigger issue is usually to copy with those pesky leap seconds. It 
-> makes a difference whether one uses solar seconds ("posix" style; those 
-> are more commonly seen) or atomic seconds ("right" style) for the UNIX 
-> timestamp.
+On Mon, Feb 26, 2018 at 4:12 AM, brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+> diff --git a/sha1_file.c b/sha1_file.c
+> index 7493bc7f11..c41fbe2f01 100644
+> --- a/sha1_file.c
+> +++ b/sha1_file.c
+> @@ -1227,22 +1227,18 @@ int oid_object_info_extended(const struct object_id *oid, struct object_info *oi
+>         static struct object_info blank_oi = OBJECT_INFO_INIT;
+>         struct pack_entry e;
+>         int rtype;
+> -       const unsigned char *real = (flags & OBJECT_INFO_LOOKUP_REPLACE) ?
+> -                                   lookup_replace_object(oid->hash) :
+> -                                   oid->hash;
+> +       const struct object_id *real = (flags & OBJECT_INFO_LOOKUP_REPLACE) ?
+> +                                      lookup_replace_object(oid) :
+> +                                      oid;
 
-Is there any system, unix or otherwise, that uses 'right'-style seconds,
-i.e. TAI, as its base?
-
-(I.e. one where (time(0)%60) does not indicate the current position
-of the second hand of an accurate clock?)
-
-- Andreas
-
+Micro nit. Perhaps we should replace "? :" with a real "if" construct
 -- 
-"Totally trivial. Famous last words."
-From: Linus Torvalds <torvalds@*.org>
-Date: Fri, 22 Jan 2010 07:29:21 -0800
+Duy
