@@ -2,114 +2,169 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 128581F404
-	for <e@80x24.org>; Mon, 26 Feb 2018 17:28:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 308371F404
+	for <e@80x24.org>; Mon, 26 Feb 2018 17:35:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751094AbeBZR22 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Feb 2018 12:28:28 -0500
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:53595 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750826AbeBZR21 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Feb 2018 12:28:27 -0500
-Received: by mail-wm0-f67.google.com with SMTP id t74so19090635wme.3
-        for <git@vger.kernel.org>; Mon, 26 Feb 2018 09:28:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=SaGyr4wt84KEoO4pjiBjSsKqS5PRJnJt4iEe3uxxuGM=;
-        b=eMXGdGvbuwBISk/YA4DEFi1OGkrZQIaDh8/e+fJ8Nqt9jzl8HKK4z8Yw4d6HJEYmqh
-         EwFmwe08DIdhVjM5vb8+0b+qI+kOG50XkMyNBiW+QaD9vl4XFRwlfH2mEBhXhFWdYW6l
-         A/XY6kOFWmVWulAhfl/Fgz5ymMb1ay4Tewxfu2SdpgMP0EdVywJzqu/mq1KYhO7oBTJw
-         BJ/JcOj0EcuwnJMId6Ir2og9lJk4Pni2enTfY4dcDzFeRYg8lwrARJ/qjYZQU7hFxLz0
-         35D7W8SXsGxQ6dt31xsDIk0Bt15p1Cn6NQGxGuHqhjKdEn9HtAce2NSxXHQb9CjAn8Yb
-         V2/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=SaGyr4wt84KEoO4pjiBjSsKqS5PRJnJt4iEe3uxxuGM=;
-        b=HPzcPeHT6cxkiXxbBo+/XQmJH2nHT+M+SsaLYcCjbCNWkvN978muqtYcQh28KMevWs
-         lW61xKklCrsBCe8Yd1Pzg3WkixBr7CRrAQxaHViVSZYfTepSpgaW424pGM5to+duCP6V
-         SFT4s01bB0ZNTQFRJQFnivO8dtrSm78d/Ud2L70tOc4sXrLF0mGv1lCTcOra5Mw1Pgqg
-         Ouab4q5XSegFiuM3OfRfLaLybBx/a1eEZKKXfLz3CixWqNUdsB5am8jFloMKCm3JjcYT
-         AEn3YNrecmKYY3hyeBsJo0csykqdeEn/T+fRng0HAB7/lcPCfsRqpKq1Or9YSSWYDJLq
-         LtXg==
-X-Gm-Message-State: APf1xPCQP26YX7SGMF7aJ4BlIDIlKSnNEaCIbcddsCKaQQGRb6LB5Hp9
-        1yr0unvEY6ihN+Q61VEB95U=
-X-Google-Smtp-Source: AH8x2244UlF6XTC6U1r5E+1EQlRO7Ipp17SK5SWQymvL4Cd+2NmNG5wK+h1gq/GIV//eGm+xjZEguw==
-X-Received: by 10.28.143.66 with SMTP id r63mr9789847wmd.82.1519666105412;
-        Mon, 26 Feb 2018 09:28:25 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id p21sm7189622wmc.45.2018.02.26.09.28.24
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 26 Feb 2018 09:28:24 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stephen R Guglielmo <srguglielmo@gmail.com>
-Cc:     git <git@vger.kernel.org>, Stefan Beller <sbeller@google.com>,
-        Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: [PATCH v2] subtree: fix add and pull for GPG-signed commits
-References: <CADfK3RVJ9pYtpX9x2=CZSKLVy2qxBKeyyGA_S=jo8K-Fa4FOqA@mail.gmail.com>
-        <xmqq7er3s4t7.fsf@gitster-ct.c.googlers.com>
-        <CADfK3RXa9wngOZ9YmurThm=Xu8J=nq0tK5yaMOMT4T0be2sUZA@mail.gmail.com>
-Date:   Mon, 26 Feb 2018 09:28:24 -0800
-In-Reply-To: <CADfK3RXa9wngOZ9YmurThm=Xu8J=nq0tK5yaMOMT4T0be2sUZA@mail.gmail.com>
-        (Stephen R. Guglielmo's message of "Mon, 26 Feb 2018 09:46:32 -0500")
-Message-ID: <xmqqwoyzr77r.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1751472AbeBZRft (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Feb 2018 12:35:49 -0500
+Received: from mout.web.de ([212.227.17.12]:44815 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751269AbeBZRfs (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Feb 2018 12:35:48 -0500
+Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb103
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MGzba-1evMtJ0iQs-00DsQd; Mon, 26
+ Feb 2018 18:35:35 +0100
+Date:   Mon, 26 Feb 2018 18:35:33 +0100
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     Jeff King <peff@peff.net>
+Cc:     Lars Schneider <larsxschneider@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Lars Schneider <lars.schneider@autodesk.com>,
+        git <git@vger.kernel.org>, Johannes Sixt <j6t@kdbg.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        ramsay@ramsayjones.plus.com, Johannes.Schindelin@gmx.de
+Subject: Re: [PATCH v7 0/7] convert: add support for different encodings
+Message-ID: <20180226173533.GA7877@tor.lan>
+References: <20180215152711.158-1-lars.schneider@autodesk.com>
+ <xmqqr2pm81hh.fsf@gitster-ct.c.googlers.com>
+ <DC552BF4-3E87-41E0-BF92-4BA9633D374E@gmail.com>
+ <20180216165815.GA4681@tor.lan>
+ <19EDC192-0D83-4762-AC6A-81F7D693475A@gmail.com>
+ <xmqqbmgfvf2y.fsf@gitster-ct.c.googlers.com>
+ <xmqq7er3tqjq.fsf@gitster-ct.c.googlers.com>
+ <FDF4DEB8-E71A-4BFC-9437-678C8F65BBDC@gmail.com>
+ <20180226014445.GB8677@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180226014445.GB8677@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Provags-ID: V03:K0:gWxDVRt+D29eJ1cjmNVJPRJX8X0czytSMAaqSWM3qWT3QNO2BuG
+ LUozipO/P0G25s+H07t5ZKU79LduXY3bC3HBhkMB3V+XOOI09ftK6S0ouC5sQHSRQ4UEbiV
+ M40gOY5YxfiAtNp+GKQoKWLY0xKj93gstneGv7mZu3s/Y1zF9P3gk98/ljoAICnS5d38dy8
+ GI6z+VjtWGduUPrvoSoUA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:BQA6sgCQe4I=:4g1POAAvPmiTau1k0oZiO1
+ sSM7dgDjjMNMcXwUUOUlLgDOjOXHByLv0wu8Z/DkZkVRYqivGswy8rFV8zRd2gyAjXX1XUn0J
+ hgtUB8xIpDh6X7DyW/xaRSh9HovXTLGx6XqI9OEfQpSMKpcIQrVqBZsu+B0eZmao6MaVX+9v7
+ 18O2gzYDnunhpQlnamc34xpJnJNtLpJ5EtuBKvsJZF1tPnomQwtJ0lZ8ejAmV1CQo8HDLkTC3
+ AwgnMR7kRBft1aHfLnajFzIc2dsbmfpAmYEnd8z8T74R7OI/IKkHdwJNXN1yqV7ngKGeMDrq4
+ rf231rln2eMAJoXXj4mPYYeA3rL2S72xnCbGsmE6sG63ldJp7/I52Z0XnBl8l5yL90VKo9FxJ
+ zUnh1V4VX1IyqHtOkY3uvbvpbsu6mCYtrsauAAb7oUCGPBsk9VHhuXXGXdajqbhMlv41ObaSb
+ WoaaLoHONrutJxESoJNgMeF0BkzEPWoTBwwXwQgWMPnMwvMrfaeA2555KENLxBJ9SWVjZ0Svk
+ xE3GaKNl5ay+utqTBPV+lDWE0x3/yu3yALvRadrimITIKqzih6Ftq0S7f+dR3q5jOUCT47oBi
+ fBsaYKdgXU5QQi3a9NWZmgufEDo5cCQ0dJoP5DNgswI99KBIcTAfxJ9qjsSP9ajE2tBOnu9Mp
+ JrUbWqNGC2FbOlAGEYkVxo81czKmxm71aoJspaS6lhht7lsUWdtq7aNl8SAIVVwFp3t8cQa/M
+ oHbZTzKUuGJgDrP1W85tPp2EStGN7UUaYZ4UnSlHXsHECNdDy0iVvpx6h/RzADUKCN/gLaVVc
+ prhMwbM4PpzIjEvrpIaXCiuWwt+Mw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stephen R Guglielmo <srguglielmo@gmail.com> writes:
+On Sun, Feb 25, 2018 at 08:44:46PM -0500, Jeff King wrote:
+> On Sat, Feb 24, 2018 at 04:18:36PM +0100, Lars Schneider wrote:
+> 
+> > > We always use the in-repo contents when generating 'diff'.  I think
+> > > by "attribute to be used in diff", what you are reallying after is
+> > > to convert the in-repo contents to that encoding _BEFORE_ running
+> > > 'diff' on it.  E.g. in-repo UTF-16 that can have NUL bytes all over
+> > > the place will not diff well with the xdiff machinery, but if you
+> > > first convert it to UTF-8 and have xdiff work on it, you can get
+> > > reasonable result out of it.  It is unclear what encoding you want
+> > > your final diff output in (it is equally valid in such a set-up to
+> > > desire your patch output in UTF-16 or UTF-8), but assuming that you
+> > > want UTF-8 in your patch output, perhaps we do not have to break
+> > > gitk users by hijacking the 'encoding' attribute.  Instead what you
+> > > want is a single bit that says between in-repo or working tree which
+> > > representation should be given to the xdiff machinery.
+> > 
+> > I fear that we could confuse users with an additional knob/bit that
+> > defines what we diff against. Git always diff'ed against in-repo 
+> > content and I feel it should stay that way.
+> 
+> Well, except for textconv. You can already do this:
+> 
+>   echo "foo diff=utf16" >.gitattributes
+>   git config diff.utf16.textconv 'iconv -f utf16 -t utf8'
+> 
+> We could make that easier to use and much more efficient by:
+> 
+>   1. Allowing a special syntax for textconv filters that kicks off an
+>      internal iconv.
+> 
+>   2. Providing baked-in config for utf16.
+> 
+> The patch below provides a sketch. But I think Torsten raised a good
+> point that you might want the encoding conversion to be independent of
+> other diff characteristics (so, e.g., you might say "this is utf16 but
+> once converted treat it like C code for finding funcnames, etc").
+> 
+> ---
+> diff --git a/diff.c b/diff.c
+> index 21c3838b25..04032e059c 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -5968,6 +5968,21 @@ struct diff_filepair *diff_unmerge(struct diff_options *options, const char *pat
+>  	return pair;
+>  }
+>  
+> +static char *iconv_textconv(const char *encoding, struct diff_filespec *spec,
+> +			    size_t *outsize)
+> +{
+> +	char *ret;
+> +	int outsize_int; /* this really should be a size_t */
+> +
+> +	if (diff_populate_filespec(spec, 0))
+> +		die("unable to load content for %s", spec->path);
+> +	ret = reencode_string_len(spec->data, spec->size,
+> +				  "utf-8", /* should be log_output_encoding? */
+> +				  encoding, &outsize_int);
+> +	*outsize = outsize_int;
+> +	return ret;
+> +}
+> +
+>  static char *run_textconv(const char *pgm, struct diff_filespec *spec,
+>  		size_t *outsize)
+>  {
+> @@ -5978,6 +5993,9 @@ static char *run_textconv(const char *pgm, struct diff_filespec *spec,
+>  	struct strbuf buf = STRBUF_INIT;
+>  	int err = 0;
+>  
+> +	if (skip_prefix(pgm, "iconv:", &pgm))
+> +		return iconv_textconv(pgm, spec, outsize);
+> +
+>  	temp = prepare_temp_file(spec->path, spec);
+>  	*arg++ = pgm;
+>  	*arg++ = temp->name;
+> diff --git a/userdiff.c b/userdiff.c
+> index dbfb4e13cd..48fa7e8bdd 100644
+> --- a/userdiff.c
+> +++ b/userdiff.c
+> @@ -161,6 +161,7 @@ IPATTERN("css",
+>  	 "-?[_a-zA-Z][-_a-zA-Z0-9]*" /* identifiers */
+>  	 "|-?[0-9]+|\\#[0-9a-fA-F]+" /* numbers */
+>  ),
+> +{ "utf16", NULL, -1, { NULL, 0 }, NULL, "iconv:utf16" },
+>  { "default", NULL, -1, { NULL, 0 } },
+>  };
+>  #undef PATTERNS
 
-> On Fri, Feb 23, 2018 at 5:45 PM, Junio C Hamano <gitster@pobox.com> wrote:
->...
->> I am however starting to feel that
->> ...
->> may be a better approach.
-> ...
-> I'm happy to develop a new patch based on your recommendations. Should
-> it be on top of the previous patch I sent or should it replace the
-> previous patch?
+The patch looks like a possible step into the right direction -
+some minor notes: "utf8" is better written as "UTF-8", when talking
+to iconv.h, same for utf16.
 
-Even though I said "may be a better approach", to be bluntly honest,
-I do not think it is _that_ _much_ better than what you sent ;-)  So
-please do the "on top of the previous patch" thing as an independent
-effort (not the "git log" workaround bugfix) only if you deeply care
-about improving "subtree" script (as opposed to just want to see the
-immediate glitch corrected to get on with your life---I happen to be
-in the latter category with respect to this issue).  The independent
-effort's focus would instead be to improve the script not to make so
-heavy use of "git log" (and other Porcelain commands) in it, so that
-we do not have to tweak the script to undo improvements we will make
-to the Porcelain commands for better human experience in the future.
+But, how do I activate the diff ?
+I have in .gitattributes
+XXXenglish.txt diff=UTF-16
 
-Notice that one hunk in this patch is a small step in the direction;
-it stops using "git log -1" and uses "rev-parse" instead.
-
-For the remainder of the script, we need to identify how "git log"
-is used in the script and what they are used for, and then rewrite
-them with the more stable lower level interface.  It is a very first
-step to mark invocation sites by replacing "git log" with "$git_log"
-;-)  
-
-The same may apply to uses of other Porcelain commands.  A general
-rule is that scripts should avoid using Porcelain commands unless
-they are interested in giving output for human-consumption directly
-out of these commands (as opposed to running the Git commands and
-then reading their output and reacting to it).
-
-Thanks.
+and in .git/config
+[diff "UTF-16"]
+      command = iconv:UTF-16
 
 
-
-
+What am I doing wrong ?
