@@ -2,132 +2,179 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,SORTED_RECIPS,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C0F6D1F576
-	for <e@80x24.org>; Mon, 26 Feb 2018 10:31:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1C8DC1F576
+	for <e@80x24.org>; Mon, 26 Feb 2018 10:54:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752523AbeBZKbO (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Feb 2018 05:31:14 -0500
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:37070 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752353AbeBZKbH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Feb 2018 05:31:07 -0500
-Received: by mail-pg0-f67.google.com with SMTP id y26so6009797pgv.4
-        for <git@vger.kernel.org>; Mon, 26 Feb 2018 02:31:07 -0800 (PST)
+        id S1752455AbeBZKyZ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Feb 2018 05:54:25 -0500
+Received: from mail-oi0-f66.google.com ([209.85.218.66]:43519 "EHLO
+        mail-oi0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752322AbeBZKyX (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Feb 2018 05:54:23 -0500
+Received: by mail-oi0-f66.google.com with SMTP id a207so10280228oii.10
+        for <git@vger.kernel.org>; Mon, 26 Feb 2018 02:54:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=D/L8DPG0dZ5QGxQ3EpcLf/Um9+/MMx0AxB2aKssL+M8=;
-        b=PH7mMJD2PaYq2c/2RR5U+xDUcUD0U3YIThKD/OINxZD8bS1kFo295jIgmII4TPz27M
-         IOmtRLSLLmPNgX7DUDpQr39Q4ESMqiQwAemJ9PhJuKJDOhbCj7l65qhHE+xBloxoR3Kf
-         aG+0V56y1DU3MaV3OckMFgCZKkPqEHoFeopyMF09WkWZrdezPfUbxEt+6VTPCSLK57nH
-         jxrtjUEdTcSb3i/IBLfXvbVcGT1mHglkNuK+9hHdPguK+WZsR8pFPhmyzTQVPnedzYSf
-         EUXOZFY2aiwmKsOJQqxTTIzueJGxtj6lYXgbA+razN3JAKBThE5SlMIhgROlVo27mnoA
-         BL9w==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=N1G6kUHtSWuMQGRi2lhOpf5lPhBWqOBc2RoSXOV8dl8=;
+        b=XJGzysIEgWc6xt/KRLcDkFyIh0cHGyK54rKzyECjXjf3/JluML1aczWoCTdLdyeARI
+         IdRpY700h1TvhT1cXLhGNcxykp2HTaVCSKnjykgqpdavz+72XEagTKMyLbD/ih9PI0gd
+         5M8sngMtIVFAz/Jk89ETTJlHmBLGJQqowriOBiQt58xtg4nh27IPfYvOwL4NO6tu5zoI
+         2joAvHTFrk0SEpS7yLXFnzQKtLnqZOoqWiSTnf/QJqYpFa+6H/TZtWDuD0fj4+5TMUS8
+         eMzXWUz8tDoPH7pps5MUxmjA/VZ6TkoSONYh40cGr5G6rOz8a09ymsqgYP9T3OrkTjJR
+         jPcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=D/L8DPG0dZ5QGxQ3EpcLf/Um9+/MMx0AxB2aKssL+M8=;
-        b=T7qsdR7cBRzRbG541INTQEWZMx4RRvkO0S5Yu9X3AwVRUyNE+sSVb0e39n1FST8s2q
-         1V9fFk7KGGjp3LLJrMj9QhO5idgfGX7T1dsvSY9RDCKX7MbUPs3iifliKBSXD3crnwSG
-         iFJaiB8tAwGe18MBqNFsVDtmS5zyzag8mdpbP81ImSMfiO+WRoOKtNA/jNQVIebG5ajf
-         iCI8ichw9KzGnZS7oOIJUTdCNF+mLIRb+PIXDtS4rLtbNEETu7BAprTF4Dlz5nss6g+Y
-         14mM96BR/aTq9QI4KgQYpTuvIGSTPaXDBe0JqSC1dw2mkpwivyyX1A+IZ9IwNfFXbMVu
-         okAw==
-X-Gm-Message-State: APf1xPCK/L/koPvnub1YA9tSUeqRAy9A1/K7UjUjYXVQhk8JycDp1p+h
-        lSQPBJ0UjboHudaoRvwpDQw=
-X-Google-Smtp-Source: AH8x226eP1VgbolNqCQYILBMbjGyqX2lJfaYqjxVnG83J8PJ0Row2nO11I2SNwVhjaGCdB2x+H2uxQ==
-X-Received: by 10.99.103.195 with SMTP id b186mr8060145pgc.446.1519641066905;
-        Mon, 26 Feb 2018 02:31:06 -0800 (PST)
-Received: from ash ([171.232.93.137])
-        by smtp.gmail.com with ESMTPSA id p63sm16766311pfk.74.2018.02.26.02.31.03
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 26 Feb 2018 02:31:06 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Mon, 26 Feb 2018 17:31:01 +0700
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     bmwill@google.com
-Cc:     git@vger.kernel.org, gitster@pobox.com, jonathantanmy@google.com,
-        pclouds@gmail.com, sbeller@google.com, sunshine@sunshineco.com
-Subject: [PATCH 4/4] repository: delete ignore_env member
-Date:   Mon, 26 Feb 2018 17:30:30 +0700
-Message-Id: <20180226103030.26900-5-pclouds@gmail.com>
-X-Mailer: git-send-email 2.16.1.435.g8f24da2e1a
-In-Reply-To: <20180226103030.26900-1-pclouds@gmail.com>
-References: <20180214180814.GA139458@google.com>
- <20180226103030.26900-1-pclouds@gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=N1G6kUHtSWuMQGRi2lhOpf5lPhBWqOBc2RoSXOV8dl8=;
+        b=FL6QRuqMgeHOPnv11x6LBukKOO+yxy/KUWDmz7zA6kYYo7k6Wjnnb/bd3KoalTJnc3
+         tmn36tVO7gRE8ZTSiNtLvA8RtAd0SQt0UX+zdO3YW7hkX4UK0FQ01sY+OpITH50eNqFI
+         i96JWWgzVC3q9Q7NPSMjhEn7aOecnt9B5IQFdfWpGjWvYzhKui7iiZ7Wq6hv0HZIGDSd
+         SNjMLlZ2YKAVAqxZWoVNDwmRx6WCasmf0wH0HQe5OKpOglup857AM06OMhXvMTS/TYLa
+         865e97O0ZvXIlBvbwzLg2j3AcxsnO74ohW/S+hcTt2FF7MLtLCMPz173XafP4T5ugLHE
+         GmMg==
+X-Gm-Message-State: APf1xPDF72kULUZEfIogpAscoJqI3S8mG8CHQIRPS0lRAjY6LEnAobIa
+        TQXcpx6ZvcU3REEQ1cK4vb6/zIrBf2nFMCqRJrQ=
+X-Google-Smtp-Source: AG47ELvAldS2V6rq16oRD5GVhP9ruHxRcCrun7YO83YaM1dinc+Z+DucmQzdkDkYQQTrYRMVnzZTepjcZk2S15VUzIA=
+X-Received: by 10.202.217.67 with SMTP id q64mr6517062oig.30.1519642463110;
+ Mon, 26 Feb 2018 02:54:23 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Received: by 10.74.25.140 with HTTP; Mon, 26 Feb 2018 02:53:52 -0800 (PST)
+In-Reply-To: <20180225203537.28318-2-avarab@gmail.com>
+References: <20180225203537.28318-1-avarab@gmail.com> <20180225203537.28318-2-avarab@gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Mon, 26 Feb 2018 17:53:52 +0700
+Message-ID: <CACsJy8Dkq4KCgHtvOt9wmxmSTRUaCPzq9jXRwUvMOEUu7Go3yQ@mail.gmail.com>
+Subject: Re: [PATCH 1/2] wildmatch: add interface for precompiling wildmatch() patterns
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This variable was added because the repo_set_gitdir() was created to
-cover both submodule and main repos, but these two are initialized a
-bit differently so ignore_env == 0 means main repo, while ignore_env
-!= 0 is submodules.
+On Mon, Feb 26, 2018 at 3:35 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+> Add the scaffolding necessary for precompiling wildmatch()
+> patterns.
+>
+> There is currently no point in doing this with the wildmatch()
+> function we have now, since it can't make any use of precompiling the
+> pattern.
+>
+> But adding this interface and making use of it will make it easy to
+> refactor the wildmatch() function to parse the pattern into opcodes as
+> some glob() implementations do, or to drop an alternate wildmatch()
+> backend in which trades parsing slowness for faster matching, such as
+> the PCRE v2 conversion function that understands the wildmatch()
+> syntax.
+>
+> It's very unlikely that we'll remove the wildmatch() function as a
+> convenience wrapper even if we end up requiring a separate compilation
+> step in some future implementation. There are a lot of one-shot
+> wildmatches in the codebase, in that case most likely wildmatch() will
+> be kept around as a shorthand for wildmatch_{compile,match,free}().
+>
+> I modeled this interface on the PCRE v2 interface. I didn't go with a
+> glob(3) & globfree(3)-like interface because that would require every
+> wildmatch() user to pass a dummy parameter, which I got rid of in
+> 55d3426929 ("wildmatch: remove unused wildopts parameter",
+> 2017-06-22).
+>
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+> ---
+>  wildmatch.c | 25 +++++++++++++++++++++++++
+>  wildmatch.h | 11 +++++++++++
+>  2 files changed, 36 insertions(+)
+>
+> diff --git a/wildmatch.c b/wildmatch.c
+> index d074c1be10..032f339391 100644
+> --- a/wildmatch.c
+> +++ b/wildmatch.c
+> @@ -276,3 +276,28 @@ int wildmatch(const char *pattern, const char *text,=
+ unsigned int flags)
+>  {
+>         return dowild((const uchar*)pattern, (const uchar*)text, flags);
+>  }
+> +
+> +struct wildmatch_compiled *wildmatch_compile(const char *pattern,
+> +                                            unsigned int flags)
+> +{
+> +       struct wildmatch_compiled *wildmatch_compiled =3D xmalloc(
+> +               sizeof(struct wildmatch_compiled));
 
-Since the difference part (env variables) has been moved out of
-repo_set_gitdir(), this function works the same way for both repo
-types and ignore_env is not needed anymore.
+struct wildmatch_compiled *data =3D xmalloc(sizeof(*data));
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- repository.c | 4 +---
- repository.h | 9 ---------
- 2 files changed, 1 insertion(+), 12 deletions(-)
+?
 
-diff --git a/repository.c b/repository.c
-index 19532ec5ff..8f6386022f 100644
---- a/repository.c
-+++ b/repository.c
-@@ -12,7 +12,7 @@ static struct repository the_repo = {
- 	NULL, NULL, NULL,
- 	&the_index,
- 	&hash_algos[GIT_HASH_SHA1],
--	0, 0
-+	0
- };
- struct repository *the_repository = &the_repo;
- 
-@@ -134,8 +134,6 @@ int repo_init(struct repository *repo, const char *gitdir, const char *worktree)
- 	struct repository_format format;
- 	memset(repo, 0, sizeof(*repo));
- 
--	repo->ignore_env = 1;
--
- 	INIT_LIST_HEAD(&repo->objects.packed_git_mru);
- 
- 	if (repo_init_gitdir(repo, gitdir))
-diff --git a/repository.h b/repository.h
-index b1da2a6384..07e8971428 100644
---- a/repository.h
-+++ b/repository.h
-@@ -73,15 +73,6 @@ struct repository {
- 	const struct git_hash_algo *hash_algo;
- 
- 	/* Configurations */
--	/*
--	 * Bit used during initialization to indicate if repository state (like
--	 * the location of the 'objectdir') should be read from the
--	 * environment.  By default this bit will be set at the begining of
--	 * 'repo_init()' so that all repositories will ignore the environment.
--	 * The exception to this is 'the_repository', which doesn't go through
--	 * the normal 'repo_init()' process.
--	 */
--	unsigned ignore_env:1;
- 
- 	/* Indicate if a repository has a different 'commondir' from 'gitdir' */
- 	unsigned different_commondir:1;
--- 
-2.16.1.435.g8f24da2e1a
+It shortens the line a bit. We already use WM_ prefix for wildmatch
+flags, perhaps we can use it for wildmatch structs too (e.g.
+wm_compiled instead)
 
+> +       wildmatch_compiled->pattern =3D xstrdup(pattern);
+> +       wildmatch_compiled->flags =3D flags;
+> +
+> +       return wildmatch_compiled;
+> +}
+> +
+> +int wildmatch_match(struct wildmatch_compiled *wildmatch_compiled,
+> +                   const char *text)
+> +{
+> +       return wildmatch(wildmatch_compiled->pattern, text,
+> +                        wildmatch_compiled->flags);
+> +}
+> +
+> +void wildmatch_free(struct wildmatch_compiled *wildmatch_compiled)
+> +{
+> +       if (wildmatch_compiled)
+> +               free((void *)wildmatch_compiled->pattern);
+
+Why do make pattern type "const char *" then remove "const" with
+typecast here? Why not just "char *" in wildmatch_compiled?
+
+If the reason is to avoid other users from peeking in and modifying
+it, then perhaps you can move struct wildmatch_compiled to wildmatch.c
+and keep it an opaque struct pointer.
+
+> +       free(wildmatch_compiled);
+> +}
+> diff --git a/wildmatch.h b/wildmatch.h
+> index b8c826aa68..2fc00e0ca0 100644
+> --- a/wildmatch.h
+> +++ b/wildmatch.h
+> @@ -10,5 +10,16 @@
+>  #define WM_ABORT_ALL -1
+>  #define WM_ABORT_TO_STARSTAR -2
+>
+> +struct wildmatch_compiled {
+> +       const char *pattern;
+> +       unsigned int flags;
+> +};
+> +
+>  int wildmatch(const char *pattern, const char *text, unsigned int flags)=
+;
+> +struct wildmatch_compiled *wildmatch_compile(const char *pattern,
+> +                                            unsigned int flags);
+> +int wildmatch_match(struct wildmatch_compiled *wildmatch_compiled,
+> +                   const char *text);
+> +void wildmatch_free(struct wildmatch_compiled *wildmatch_compiled);
+> +
+>  #endif
+> --
+> 2.15.1.424.g9478a66081
+>
+
+
+
+--=20
+Duy
