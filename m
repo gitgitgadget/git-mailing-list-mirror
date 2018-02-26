@@ -7,87 +7,166 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 05AA51F404
-	for <e@80x24.org>; Mon, 26 Feb 2018 19:20:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E27201F404
+	for <e@80x24.org>; Mon, 26 Feb 2018 19:28:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751798AbeBZTUx (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Feb 2018 14:20:53 -0500
-Received: from mail-yb0-f182.google.com ([209.85.213.182]:37507 "EHLO
-        mail-yb0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750877AbeBZTUw (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Feb 2018 14:20:52 -0500
-Received: by mail-yb0-f182.google.com with SMTP id u5-v6so4420404ybf.4
-        for <git@vger.kernel.org>; Mon, 26 Feb 2018 11:20:52 -0800 (PST)
+        id S1751811AbeBZT2F (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Feb 2018 14:28:05 -0500
+Received: from mail-yb0-f178.google.com ([209.85.213.178]:42097 "EHLO
+        mail-yb0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751788AbeBZT2E (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Feb 2018 14:28:04 -0500
+Received: by mail-yb0-f178.google.com with SMTP id i13-v6so5700917ybl.9
+        for <git@vger.kernel.org>; Mon, 26 Feb 2018 11:28:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=xdzv6ojr+/WvIW5e6es38RkwPnQsi1K/Y1XDJq7HVII=;
-        b=rAYtCwrcX3Qgd+V/gPrmLIFj7RR19FXK5jQNsnW0ZfAzP1CS/2cJ6WO58qYID9/TKg
-         OPQNIwb5H/ZK9HSj9+4wrszO+L8o96UYIrafa0PmeHOiJV83QjF1WMGCJtG+ldKrsPLG
-         wGFhdqcHN7CyvLxmHKNA3OtJJYcKI9SU8vjDrojNg8ylPDnOp+zNf3/5/N4UY6NC6iqa
-         4RmkdXbqyCc6Ejwed/9GMiXDPz/V98vvFxaxvr0/usBYbyy9r9q+i/qzUSRure1vCtqA
-         xrzUWa+ayFQi387mL4oQwN6Nz7EtGjvtxR39ATYG3JwDuBDC2JQ/PGEA0pavOuWNUE6E
-         2Fog==
+         :cc;
+        bh=UOHPUE4PhJkLSXVr0XcIxk0+56dW5sjsJHGUhM8Yal8=;
+        b=mVA3o06SJeLSHpoQlyYR1KoZT/5p0Xo+ndluRruCxVqzXwAZlwYOWhFU8716aaDMZf
+         TC6tnv97gpmh/Wqjn23vTF2R+vxeO8BIKCf1pfJYAEwnzEq8SGSC2rVEiEGgk0FbOkGG
+         hdCVlXOLHOexX0QKevUY3ZIgNOK3P8ILsQBItak5dhuTsK1FfbmGur/vk2WnBPX9x0JY
+         PL5emsSbxHCP5VoSv04U9jm+7k5x7UwmhmNLXw2moBdMYsdanrbCzYq/I4Ip9i9aCwkM
+         2olO6VuiFm9HYe4oQ0QM9BY0qfRs9jZcPfFkeXiXsTx4lFc8cvD1KYRq1JGM0+wOGQMR
+         Rl5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:content-transfer-encoding;
-        bh=xdzv6ojr+/WvIW5e6es38RkwPnQsi1K/Y1XDJq7HVII=;
-        b=O2WeZzh2t+NckwRKB9Ux1F7qanZJSqG0cPffQ3IoIOWakVhCs5H1Ib0/ddxiSZ4c8f
-         FS9mYdm/v/UhK1KrcHKZVu06dLcIhWgnJ6pyizN9D9DkGEl9AwcGjyD87rHPzm4V7lS/
-         EAohyRL3WCDU3Dv6/4ciev8ioGtX4UA+/ePXGE+Pt4B67K3PwGjlRpR2izVIAZIgr2x0
-         rgzmgoxA39B8VrjM0+gjx1+MxHjATTBBVK8X8xdiHAhOwlT7KTqoZac3UeC7fq+WnGZE
-         dCX8OoUelomkHw5eVCC6HgPKLfer7k8d2U6DtOIdUPUT5aaCL5ood2Y4QSSdH7s6piei
-         q9ng==
-X-Gm-Message-State: APf1xPCKzE2+RtRYRR/i31yfMBjr9YeYYJyPeadPYJPEtx/3mvg/QAQx
-        WHuxN/QNOtOKVWHiIfEoRF6QrQyikIYRAnRYxW+d4Q==
-X-Google-Smtp-Source: AG47ELvBwV/JbDGa3ES1O9r6j/Aaga55UkN5xwciICvJQ0QKfzk5VYNOp29AjY24+zMzgkMSshgwt4AX6aI8EDKSJa0=
-X-Received: by 2002:a25:b087:: with SMTP id f7-v6mr8168324ybj.247.1519672851769;
- Mon, 26 Feb 2018 11:20:51 -0800 (PST)
+         :message-id:subject:to:cc;
+        bh=UOHPUE4PhJkLSXVr0XcIxk0+56dW5sjsJHGUhM8Yal8=;
+        b=R9RkQKNF3wxYRU3jfwbNjVCfOIDdtJVsbbFfg+1Nk5zgqCME3Ex0BMJ/HP6kA1sE3J
+         KVeO03tTXbVHJLOrLhwWIgp2SpJbrJLYX6qZQ1rTNDu/gf7x8oY7sHzmQSZ3cbxI+RnM
+         zs+pd3euyTg4KNqRhONnIsUxx2smcjRvkUpRW3kBkJNMPW5mRCRf5a8vfr+RmSlKXGzw
+         IoZPsZu+/TQz8HW9mUanfDJexl35BvQqlhCvbDf/iNYfkeSj/CSAUcQKanLwhlyh9nkG
+         4PRPFAMNmZoXFyo7nxzcwY5eCGhF3y8iVlKajQbLb1yOqv2tpOsPoe1dXUgnHVArYy/a
+         p/AQ==
+X-Gm-Message-State: APf1xPBb9J9/HR/XpGMcIveGmiKNW8Fzatp9eALQhJPfRyntcTLCVHct
+        o/AYAlX7Vi87YzEYnRIMRoN0Exrd398c4Fg2JNsLUVsf
+X-Google-Smtp-Source: AG47ELu0SqhyFi1EGEBGpfQ3YT9StaZfQQjLQEnSD00MJYHrAEqQDLmSp//Tg67l6yf77knb5RG1HZNVQP2cAZ1Zoyw=
+X-Received: by 2002:a25:d9d6:: with SMTP id q205-v6mr7621365ybg.515.1519673283234;
+ Mon, 26 Feb 2018 11:28:03 -0800 (PST)
 MIME-Version: 1.0
-Received: by 2002:a25:cfcb:0:0:0:0:0 with HTTP; Mon, 26 Feb 2018 11:20:51
+Received: by 2002:a25:cfcb:0:0:0:0:0 with HTTP; Mon, 26 Feb 2018 11:28:02
  -0800 (PST)
-In-Reply-To: <20180225203401.GF4620@genre.crustytoothpaste.net>
-References: <20180224033429.9656-1-pclouds@gmail.com> <20180225111840.16421-1-pclouds@gmail.com>
- <20180225203401.GF4620@genre.crustytoothpaste.net>
+In-Reply-To: <20180226093040.GA10479@ash>
+References: <20180221015430.96054-1-sbeller@google.com> <20180224004754.129721-1-sbeller@google.com>
+ <20180224004754.129721-2-sbeller@google.com> <20180226093040.GA10479@ash>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 26 Feb 2018 11:20:51 -0800
-Message-ID: <CAGZ79kY-n-4xnN450+U6_dn2u27ZZE5fKCY4sKKA_yGE=gUOMA@mail.gmail.com>
-Subject: Re: [PATCH v3 0/6] Fix initializing the_hash_algo
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Brandon Williams <bmwill@google.com>,
-        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+Date:   Mon, 26 Feb 2018 11:28:02 -0800
+Message-ID: <CAGZ79kZDhoWWPpoENwvE6esxzdJvTnL4EAxGX5HV=DwDtDOEgw@mail.gmail.com>
+Subject: Re: [PATCHv4 01/27] repository: introduce raw object store field
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
         Jonathan Tan <jonathantanmy@google.com>,
-        Stefan Beller <sbeller@google.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Brandon Williams <bmwill@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Feb 25, 2018 at 12:34 PM, brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
-> On Sun, Feb 25, 2018 at 06:18:34PM +0700, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=
-=BB=8Dc Duy wrote:
->> v3 refines v2 a bit more:
->>
->> - fix configure typo (and stray words in commit message)
->> - use repo_set_hash_algo() instead of reassigning the_hash_algo
->> - compare hash algos by format_id
->> - catch NULL hash algo, report nicely and suggest GIT_HASH_FIXUP
->>
->> The last point makes me much happier about keeping this workaround
->> around until we are confident we can live without it. Interdiff
+On Mon, Feb 26, 2018 at 1:30 AM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Fri, Feb 23, 2018 at 04:47:28PM -0800, Stefan Beller wrote:
+>>  /* The main repository */
+>>  static struct repository the_repo = {
+>> -     NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, &the_index, &hash_algos[GIT_HASH_SHA1], 0, 0
+>> +     NULL, NULL,
+>> +     RAW_OBJECT_STORE_INIT,
+>> +     NULL, NULL, NULL,
+>> +     NULL, NULL, NULL,
+>> +     &the_index,
+>> +     &hash_algos[GIT_HASH_SHA1],
+>> +     0, 0
+>>  };
+>>  struct repository *the_repository = &the_repo;
 >
-> This looks sane to me.
+> I wonder if we should do something like this. It makes the_repo
+> initialization easier to read and it helps unify the init code with
+> submodule.
 >
-> Reviewed-by: brian m. carlson <sandals@crustytoothpaste.net>
+> No don't reroll. If you think it's a good idea, you can do something
+> like this in the next series instead.
+>
+> -- 8< --
+> diff --git a/check-racy.c b/check-racy.c
+> index 24b6542352..47cbb4eb6d 100644
+> --- a/check-racy.c
+> +++ b/check-racy.c
 
-I agree with this version as well.
+totally offtopic: Do we want to move this file into t/helper?
 
-Thanks,
+> --- a/common-main.c
+> +++ b/common-main.c
+> @@ -1,6 +1,7 @@
+>  #include "cache.h"
+>  #include "exec_cmd.h"
+>  #include "attr.h"
+> +#include "repository.h"
+>
+>  /*
+>   * Many parts of Git have subprograms communicate via pipe, expect the
+> @@ -32,6 +33,8 @@ int main(int argc, const char **argv)
+>          */
+>         sanitize_stdfds();
+>
+> +       init_the_repository();
+> +
+
+So this is the real deal.
+
+> -#define RAW_OBJECT_STORE_INIT { NULL }
+>
+> +void raw_object_store_init(struct raw_object_store *o);
+>  void raw_object_store_clear(struct raw_object_store *o);
+>
+>  #endif /* OBJECT_STORE_H */
+> diff --git a/object.c b/object.c
+> index 11d904c033..8a4d01dd5f 100644
+> --- a/object.c
+> +++ b/object.c
+> @@ -446,6 +446,11 @@ void clear_commit_marks_all(unsigned int flags)
+>         }
+>  }
+>
+> +void raw_object_store_init(struct raw_object_store *o)
+> +{
+> +       memset(o, 0, sizeof(*o));
+> +}
+
+We'll have to adapt this for the list that we use for packed_git_mru,
+but that should be no problem.
+
+> +
+> +static void repo_pre_init(struct repository *repo)
+> +{
+> +       memset(repo, 0, sizeof(*repo));
+> +       raw_object_store_init(&repo->objects);
+> +}
+> +
+> +void init_the_repository(void)
+> +{
+> +       the_repository = &the_repo;
+> +       repo_pre_init(the_repository);
+> +       the_repository->index = &the_index;
+> +       repo_set_hash_algo(the_repository, GIT_HASH_SHA1);
+> +}
+>
+>  static char *git_path_from_env(const char *envvar, const char *git_dir,
+>                                const char *path, int fromenv)
+> @@ -138,7 +144,8 @@ static int read_and_verify_repository_format(struct repository_format *format,
+>  int repo_init(struct repository *repo, const char *gitdir, const char *worktree)
+>  {
+>         struct repository_format format;
+> -       memset(repo, 0, sizeof(*repo));
+> +
+> +       repo_pre_init(repo);
+>
+>         repo->ignore_env = 1;
+>
+
+I like the approach. Though as you say, let's have it in the next series.
+
+Thanks for the thoughts and guidance,
 Stefan
