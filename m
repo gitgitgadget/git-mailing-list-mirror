@@ -2,113 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D90B91F404
-	for <e@80x24.org>; Mon, 26 Feb 2018 20:46:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CD1801F404
+	for <e@80x24.org>; Mon, 26 Feb 2018 20:49:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752204AbeBZUqi (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Feb 2018 15:46:38 -0500
-Received: from cloud.peff.net ([104.130.231.41]:37712 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1752065AbeBZUqh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Feb 2018 15:46:37 -0500
-Received: (qmail 29543 invoked by uid 109); 26 Feb 2018 20:46:37 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 26 Feb 2018 20:46:37 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 16248 invoked by uid 111); 26 Feb 2018 20:47:26 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 26 Feb 2018 15:47:26 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 26 Feb 2018 15:46:35 -0500
-Date:   Mon, 26 Feb 2018 15:46:35 -0500
-From:   Jeff King <peff@peff.net>
-To:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-Cc:     Lars Schneider <larsxschneider@gmail.com>,
+        id S1752204AbeBZUte (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Feb 2018 15:49:34 -0500
+Received: from mout.gmx.net ([212.227.17.22]:41491 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751465AbeBZUtc (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Feb 2018 15:49:32 -0500
+Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0M1WHV-1ebMpn1Gu1-00tXV6; Mon, 26
+ Feb 2018 21:49:22 +0100
+Date:   Mon, 26 Feb 2018 21:49:20 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+To:     Jacob Keller <jacob.keller@gmail.com>
+cc:     Git mailing list <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
-        Lars Schneider <lars.schneider@autodesk.com>,
-        git <git@vger.kernel.org>, Johannes Sixt <j6t@kdbg.org>,
+        Stefan Beller <sbeller@google.com>,
+        Philip Oakley <philipoakley@iee.org>,
         Eric Sunshine <sunshine@sunshineco.com>,
-        ramsay@ramsayjones.plus.com, Johannes.Schindelin@gmx.de
-Subject: Re: [PATCH v7 0/7] convert: add support for different encodings
-Message-ID: <20180226204635.GB12598@sigill.intra.peff.net>
-References: <20180215152711.158-1-lars.schneider@autodesk.com>
- <xmqqr2pm81hh.fsf@gitster-ct.c.googlers.com>
- <DC552BF4-3E87-41E0-BF92-4BA9633D374E@gmail.com>
- <20180216165815.GA4681@tor.lan>
- <19EDC192-0D83-4762-AC6A-81F7D693475A@gmail.com>
- <xmqqbmgfvf2y.fsf@gitster-ct.c.googlers.com>
- <xmqq7er3tqjq.fsf@gitster-ct.c.googlers.com>
- <FDF4DEB8-E71A-4BFC-9437-678C8F65BBDC@gmail.com>
- <20180226014445.GB8677@sigill.intra.peff.net>
- <20180226173533.GA7877@tor.lan>
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v4 00/12] rebase -i: offer to recreate merge commits
+In-Reply-To: <CA+P7+xpr1Ho4+xi4QhADP6sWRMP49yqvVRkcHkCY2QUZWkUz5Q@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1802262148560.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <cover.1518307771.git.johannes.schindelin@gmx.de> <cover.1519389319.git.johannes.schindelin@gmx.de> <CA+P7+xpr1Ho4+xi4QhADP6sWRMP49yqvVRkcHkCY2QUZWkUz5Q@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20180226173533.GA7877@tor.lan>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:cXTWmzJqoBewtQ5kuQnpS1mIgitYnelEzT4dWjjIa3wK8puYsWb
+ VbJyWLiBlJjSGfbVC6aop40/pRT2nhTZlG7PX7ffrXuVrV37EdhrCRQjHuOZqJ4EFfY/cXU
+ w3O9A2qOtCpwWRddvDMHw1pfJKX/B2WZ1GbTfub02vXvsNVmr0NYdxzoLvFBDRa2unY9oAY
+ L+EHTYBgGKZ3jEdgubL9A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:b5hvmCrVAr4=:4RUWabmQeDQD81Kec2XS3y
+ CdEtNiB9dHWZ9OrCU2g+9bs/Y9uYEo3ip/iT7RwUerJEzuBgHCnjIghwVrq8x48Ef1k32gBUB
+ QXwa3jEoKPYgkHxuvOvZuXCXMwkUWO3rgaDwpzbVy1abaionjfOmFgRFf8evKq3mI4z0ypQbf
+ 0G5YCilLYIW269OL4LVfbmy5Se72YlpsrrdwtGDRoW9dnWDn78UKtGAR0+SQJ/sJ+8xPoBYNd
+ JX6s3/hESV4xo8sCAodR5nHRmS3OUXDd4OKOdUr19jLo2i6VYJKfE3QPDGombiNxmgzSbRuDI
+ BwZOYBuUVKz+ajUyZHhxQkTryeZIeRL7RQZauQ98atdWkjbHXhBPElX4LXKEEWBK8HZeJbTXJ
+ y1I9zsEniuS1yu1+PzGtwlCSqjaNDiR+PKPcrSrp7HM7ibDEZVM5i+up+WEqIQa78Iq8PHTbw
+ /DolSiidzC7OJb1PTnPu5zW4wHbX5rvtDudD57a9FHouh73Pq54OoE1isqyk7cBdv99WwgxIV
+ dLmCM6M9TK2EbG/aJ3XBvQvRxlJT653nALMVwcKhqmCkeV4mICVAIdIMBg7Oe6Ufx8VHUQdTp
+ QuB14ZlP67Cg7YD+IU/8IYDp6fnrA+3qrlO/abILGSmQYYKnOwJdhfAvPJHHbfG1rpRADHmy6
+ yFJ+cUygq/eD1b874VHkoqopq8NmHhCZyIuEXEE718e5WAFPk/AbpfcgpG3FF67ZOYrg1xy+G
+ I0ZtmUvk5SzW27UFX6kVSfcSvsQyQ43ry2eWf6WFH0pAtMexxSZH13BinMml590VI5ZZHYbmC
+ TOE4ACon6Jc2p3wwxPEHFGD0j9RbSjiIM9sKLG+xawdQwJLKVRVh5GfXvYnZL4tAmRVO1qJ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Feb 26, 2018 at 06:35:33PM +0100, Torsten Bögershausen wrote:
+Hi Jake,
 
-> > diff --git a/userdiff.c b/userdiff.c
-> > index dbfb4e13cd..48fa7e8bdd 100644
-> > --- a/userdiff.c
-> > +++ b/userdiff.c
-> > @@ -161,6 +161,7 @@ IPATTERN("css",
-> >  	 "-?[_a-zA-Z][-_a-zA-Z0-9]*" /* identifiers */
-> >  	 "|-?[0-9]+|\\#[0-9a-fA-F]+" /* numbers */
-> >  ),
-> > +{ "utf16", NULL, -1, { NULL, 0 }, NULL, "iconv:utf16" },
-> >  { "default", NULL, -1, { NULL, 0 } },
-> >  };
-> >  #undef PATTERNS
+On Sun, 25 Feb 2018, Jacob Keller wrote:
+
+> On Fri, Feb 23, 2018 at 4:35 AM, Johannes Schindelin
+> <johannes.schindelin@gmx.de> wrote:
+> > Changes since v3:
+> >
+> > - fixed a grammar error in "introduce the `merge` command"'s commit message.
+> >
+> > - fixed a couple of resource leaks in safe_append() and do_reset(), pointed
+> >   out by Eric Sunshine.
+> >
 > 
-> The patch looks like a possible step into the right direction -
-> some minor notes: "utf8" is better written as "UTF-8", when talking
-> to iconv.h, same for utf16.
-> 
-> But, how do I activate the diff ?
-> I have in .gitattributes
-> XXXenglish.txt diff=UTF-16
-> 
-> and in .git/config
-> [diff "UTF-16"]
->       command = iconv:UTF-16
-> 
-> 
-> What am I doing wrong ?
+> The interdiff seems incorrect for such a small list of changes, it
+> appears like large sections of code added by this series appear in the
+> interdiff without subtractions from the previous versions? Is all that
+> code new to v3? If not, I'd suspect you accidentally diffed between
+> the wrong points.
 
-After applying the patch, if I do:
+Indeed, it seems that I messed this iteration up rather well. Will redo.
 
-  git init
-  echo hello | iconv -f utf8 -t utf16 >file
-  git add file
-  git commit -m one
-  echo goodbye | iconv -f utf8 -t utf16 >file
-  git add file
-  git commit -m two
-
-then:
-
-  git log -p
-
-shows "binary files differ" but:
-
-  echo "file diff=utf16" >.gitattributes
-  git log -p
-
-shows text diffs. I assume you tweaked the patch before switching to
-the UTF-16 spelling in your example. Did you use a plumbing command to
-show the diff? textconv isn't enabled for plumbing, because the
-resulting patches cannot actually be applied (in that sense an encoding
-switch is potentially special, since in theory one could convert to the
-canonical text format, apply the patch, and then convert back).
-
--Peff
+Ciao,
+Dscho
