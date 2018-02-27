@@ -2,140 +2,206 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CC6CB1F404
-	for <e@80x24.org>; Tue, 27 Feb 2018 19:46:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E415F1F404
+	for <e@80x24.org>; Tue, 27 Feb 2018 20:00:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751935AbeB0TqI (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Feb 2018 14:46:08 -0500
-Received: from mail-pg0-f49.google.com ([74.125.83.49]:39981 "EHLO
-        mail-pg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751788AbeB0TqH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Feb 2018 14:46:07 -0500
-Received: by mail-pg0-f49.google.com with SMTP id g2so2589pgn.7
-        for <git@vger.kernel.org>; Tue, 27 Feb 2018 11:46:07 -0800 (PST)
+        id S1751894AbeB0UAE (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Feb 2018 15:00:04 -0500
+Received: from mail-wm0-f52.google.com ([74.125.82.52]:37082 "EHLO
+        mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751788AbeB0UAD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Feb 2018 15:00:03 -0500
+Received: by mail-wm0-f52.google.com with SMTP id 139so876442wmn.2
+        for <git@vger.kernel.org>; Tue, 27 Feb 2018 12:00:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=w8O7lT/6OvXXiDZhGHC/7ZQF6Uie+7es4f8mAHaV85g=;
-        b=hUvTtPs7lyyvXXde5LJfmFcr6WFC3hCbuPvQgeZiNZZI+83w+LQZLtLrIwy9Rm1zj5
-         pFb1hUnFMoFNiWWz/hR37sQT4qfJJZctVdBMVGcxOnmer3klYibFzsVWzy3mRIKsH+K/
-         N830RZivtai5+E/+H06jl5urfk5pTmzoCkILNgDTkjCrbDvEhfEitenTO69NXURUz4ee
-         ZWkRbbVUMAZ93RitgdDmIb6KpmWZf37DNE1ca6u1kZEmdsT6CVW0fecwwcUKU4lEi9o1
-         Cu9ND+TbPwcphP3/RvCJ26/uYT+pMuowngEOoBeoQk8+4ssMF3vt/qTMJH94dtegZW/m
-         nq3Q==
+        d=gmail.com; s=20161025;
+        h=subject:from:to:cc:references:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=CgiTWbjSWoQBs32Ra+WYngSu0yzFKipI4A6ddb8uKyc=;
+        b=ZXRilQCJXgbTBchb8tS/129cbAmAfV62URO6bumW/I2l9VrMk3xJw1RAWePNunk439
+         5eDIoVr1bH1aDwzgaHbdMeUvCZgtIJdjXBcegVD4g3qF7cezRpsdQpbOt36YZXkuQf8+
+         eQlMWrXcWLGhh3Ph8e3kALRdGiuD22ku9txzUhi5HR1pOwJYFO+ky8wUai9GqtD5hr6M
+         kQjdY8TqdztKdiah7j5XhI4V/3+HCTn4wjmc4NNn3EoWZ+ef1nCYM0lIRIRg03n/96kw
+         sTK7YAXhCvKstLz9oyDzMTKMj3vBSsQN+CtAPwB3WEcZJljE8K5t9mPFywJ0X4F2w6Ty
+         15qQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=w8O7lT/6OvXXiDZhGHC/7ZQF6Uie+7es4f8mAHaV85g=;
-        b=XHqWP7pyDPgMsOi/DVgXrwoSfcL0cJhrHuzKUiDpIgOzmOGEh6DrWZK1kUdIK/tdbF
-         4+qZqEeVLaoY5P3LWYp5WFxxzvat1GtuLtf3XDqiyZKiJV36wJ530BUsTOB0PkwnzMZY
-         X8LHVzEtx0QRdCgUvG74fET7KNmZ3Je+SeOog7dsr+3pqawusC3ivTPdY6xyBcMQ+Rr0
-         54NLjKhaTfo3i8wid0gixOKl/+sbxM8K8PRWkTSbMn5yYSFQqwVuVDs8nC2dWjOMAm4w
-         IIpufUVm4uAqPu/8ueiW8nqS+zT8/JtLUE9NqI5bsdPiRbheaLTnWGWC2loupXxLHEo4
-         MkSA==
-X-Gm-Message-State: APf1xPBSkhaigWc+JVS9jG5K8LC6Ol7DTgCVKyDzIsinkrSbODlnqMA5
-        Ft+3RQNB/5yM2Jcu5QdMJAtTXSVIFa4=
-X-Google-Smtp-Source: AH8x227/elQbyqRXeylQl4rBpHV4E26+5p2NNdYhBngX5f7XaBt2yy+CozDQ8iCFbcb4C0ublcpE+A==
-X-Received: by 10.98.247.9 with SMTP id h9mr15187912pfi.212.1519760766881;
-        Tue, 27 Feb 2018 11:46:06 -0800 (PST)
-Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
-        by smtp.gmail.com with ESMTPSA id k192sm13023645pfc.98.2018.02.27.11.46.05
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 27 Feb 2018 11:46:05 -0800 (PST)
-Date:   Tue, 27 Feb 2018 11:46:04 -0800
-From:   Brandon Williams <bmwill@google.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     git@vger.kernel.org, sbeller@google.com, peff@peff.net,
-        gitster@pobox.com, stolee@gmail.com, git@jeffhostetler.com,
-        pclouds@gmail.com
-Subject: Re: [PATCH v3 06/35] transport: use get_refs_via_connect to get refs
-Message-ID: <20180227194604.GI209668@google.com>
-References: <20180125235838.138135-1-bmwill@google.com>
- <20180207011312.189834-1-bmwill@google.com>
- <20180207011312.189834-7-bmwill@google.com>
- <20180227060840.GD65699@aiede.svl.corp.google.com>
- <20180227181715.GC209668@google.com>
- <20180227192514.GC174036@aiede.svl.corp.google.com>
+        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=CgiTWbjSWoQBs32Ra+WYngSu0yzFKipI4A6ddb8uKyc=;
+        b=ol5I9Hv5cnfl75lZjmMZzJsI4NENDB24P8SU9LBRevXAVAPCu39kCt9K/nCBm9krxV
+         PXmWbLL9KUy3yM4xm5PyvvyKGhTZq7OvdossosAXQmBAT178PneurKmHDKTh4/0arRnv
+         uAgE7qikPpiEdD3h5n/VQLLFbhz3EIoW3mhENZznaiKMxheifrDX86Rb7NQstC/VEoa4
+         NjR47jThx/JOSfg7wAC6kprJCoWHvZPdyAIW1m8rvU6BBD89Y6KhiJXHu3ZE7FKuU1oK
+         rh8XwNnDswNKG8mQLcMtDNQc0TREkuUKg5jQ5+44k30lATG9BBEyL02SW/iygrzmKczT
+         g7Ew==
+X-Gm-Message-State: APf1xPDkkUUT/UDkkkQuHiiVq9qsg5jKKIue9lY5wQUNCrYaMBtP+iRi
+        FYwbethq2ixTZPBu5Hw9MQQ=
+X-Google-Smtp-Source: AG47ELsPBAIfkUiDrPrcecbqG7DcpfH7RjZoLn4UX6QFJQg8+a1NDZb1HykTpGPlGJOQu9X/S+yI1w==
+X-Received: by 10.28.53.130 with SMTP id c124mr11019910wma.110.1519761602434;
+        Tue, 27 Feb 2018 12:00:02 -0800 (PST)
+Received: from [192.168.5.102] (cable-24-135-61-30.dynamic.sbb.rs. [24.135.61.30])
+        by smtp.gmail.com with ESMTPSA id u22sm12894859wrf.86.2018.02.27.12.00.00
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 27 Feb 2018 12:00:01 -0800 (PST)
+Subject: Re: [RFC] Rebasing merges: a jorney to the ultimate solution (Road
+ Clear)
+From:   Igor Djordjevic <igor.d.djordjevic@gmail.com>
+To:     Git mailing list <git@vger.kernel.org>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Sergey Organov <sorganov@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Junio C Hamano <gitster@pobox.com>
+References: <87y3jtqdyg.fsf@javad.com>
+ <bbe64321-4d3a-d3fe-8bb9-58b600fabf35@gmail.com>
+ <nycvar.QRO.7.76.6.1802270051470.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+ <CA+P7+xq8UUcLWomUi=PS_hTKfJd3dMAxMmhioDS1bixwcmKAqw@mail.gmail.com>
+ <nycvar.QRO.7.76.6.1802271718090.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+ <4d7f3406-b206-cc22-87df-85700d6a03d9@gmail.com>
+Message-ID: <33da31e9-9101-475d-8901-4b6b3df2f29d@gmail.com>
+Date:   Tue, 27 Feb 2018 20:59:55 +0100
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.6.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180227192514.GC174036@aiede.svl.corp.google.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+In-Reply-To: <4d7f3406-b206-cc22-87df-85700d6a03d9@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 02/27, Jonathan Nieder wrote:
-> Brandon Williams wrote:
-> > On 02/26, Jonathan Nieder wrote:
-> >> Brandon Williams wrote:
+On 27/02/2018 19:55, Igor Djordjevic wrote:
 > 
-> >>> +++ b/transport.c
-> >>> @@ -230,12 +230,8 @@ static int fetch_refs_via_pack(struct transport *transport,
-> >>>  	args.cloning = transport->cloning;
-> >>>  	args.update_shallow = data->options.update_shallow;
-> >>>  
-> >>> -	if (!data->got_remote_heads) {
-> >>> -		connect_setup(transport, 0);
-> >>> -		get_remote_heads(data->fd[0], NULL, 0, &refs_tmp, 0,
-> >>> -				 NULL, &data->shallow);
-> >>> -		data->got_remote_heads = 1;
-> >>> -	}
-> >>> +	if (!data->got_remote_heads)
-> >>> +		refs_tmp = get_refs_via_connect(transport, 0);
-> >>
-> >> The only difference between the old and new code is that the old code
-> >> passes NULL as 'extra_have' and the new code passes &data->extra_have.
-> >>
-> >> That means this populates the data->extra_have oid_array.  Does it
-> >> matter?
-> [...]
-> > I don't think its a problem to have extra_have populated, least I
-> > haven't seen anything to lead me to believe it would be a problem.
+> It would be more along the lines of "(1) rebase old merge commit parents, 
+> (2) generate separate diff between old merge commit and each of its 
+> parents, (3) apply each diff to their corresponding newly rebased 
+> parent respectively (as a temporary commit, one per rebased parent), 
+> (4) merge these temporary commits to generate 'rebased' merge commit, 
+> (5) drop temporary commits, recording their parents as parents of 
+> 'rebased' merge commit (instead of dropped temporary commits)".
 > 
-> Assuming it gets properly freed later, the only effect I can imagine
-> is some increased memory usage.
-> 
-> I'm inclined to agree with you that the simplicity is worth it.  It
-> seems worth mentioning in the commit message, though.
-> 
-> [...]
-> >>> @@ -541,14 +537,8 @@ static int git_transport_push(struct transport *transport, struct ref *remote_re
-> >>>  	struct send_pack_args args;
-> >>>  	int ret;
-> >>>  
-> >>> -	if (!data->got_remote_heads) {
-> >>> -		struct ref *tmp_refs;
-> >>> -		connect_setup(transport, 1);
-> >>> -
-> >>> -		get_remote_heads(data->fd[0], NULL, 0, &tmp_refs, REF_NORMAL,
-> >>> -				 NULL, &data->shallow);
-> >>> -		data->got_remote_heads = 1;
-> >>> -	}
-> >>> +	if (!data->got_remote_heads)
-> >>> +		get_refs_via_connect(transport, 1);
-> >>
-> >> not a new problem, just curious: Does this leak tmp_refs?
-> >
-> > Maybe, though its removed by this patch.
-> 
-> Sorry for the lack of clarity.  If it was leaked before, then it is
-> still leaked now, via the discarded return value from
-> get_refs_via_connect.
-> 
-> Any idea how we can track that down?  E.g. are there ways to tell leak
-> checkers "just tell me about this particular allocation"?
+> Implementation wise, steps (2) and (3) could also be done by simply 
+> copying old merge commit _snapshot_ on top of each of its parents as 
+> a temporary, non-merge commit, then rebasing (cherry-picking) these 
+> temporary commits on top of their rebased parent commits to produce 
+> rebased temporary commits (to be merged for generating 'rebased' 
+> merge commit in step (4)).
 
-Hmm I wonder if that code path is even used, because it just throws away
-the result.
+For those still tagging along (and still confused), here are some 
+diagrams (following what Sergey originally described). Note that 
+actual implementation might be even simpler, but I believe it`s a bit 
+easier to understand like this, using some "temporary" commits approach.
 
--- 
-Brandon Williams
+Here`s our starting position:
+
+(0) ---X1---o---o---o---o---o---X2 (master)
+       |\
+       | A1---A2---A3
+       |             \
+       |              M (topic)
+       |             /
+       \-B1---B2---B3
+
+
+Now, we want to rebase merge commit M from X1 onto X2. First, rebase
+merge commit parents as usual:
+
+(1) ---X1---o---o---o---o---o---X2
+       |\                       |\
+       | A1---A2---A3           | A1'--A2'--A3'
+       |             \          |
+       |              M         |
+       |             /          |
+       \-B1---B2---B3           \-B1'--B2'--B3'
+
+
+That was commonly understandable part. Now, for "rebasing" the merge 
+commit (keeping possible amendments), we do some extra work. First, 
+we make two temporary commits on top of old merge parents, by using 
+exact tree (snapshot) of commit M:
+
+(2) ---X1---o---o---o---o---o---X2
+       |\                       |\
+       | A1---A2---A3---U1      | A1'--A2'--A3'
+       |             \          |
+       |              M         |
+       |             /          |
+       \-B1---B2---B3---U2      \-B1'--B2'--B3'
+
+
+So here, in terms of _snapshots_ (trees, not diffs), U1 = U2 = M.
+
+Now, we rebase these temporary commits, too:
+
+(3) ---X1---o---o---o---o---o---X2
+       |\                       |\
+       | A1---A2---A3---U1      | A1'--A2'--A3'--U1'
+       |             \          |
+       |              M         |
+       |             /          |
+       \-B1---B2---B3---U2      \-B1'--B2'--B3'--U2'
+
+
+As a next step, we merge these temporary commits to produce our 
+"rebased" merged commit M:
+
+(4) ---X1---o---o---o---o---o---X2
+       |\                       |\
+       | A1---A2---A3---U1      | A1'--A2'--A3'--U1'
+       |             \          |                  \
+       |              M         |                   M'
+       |             /          |                  /
+       \-B1---B2---B3---U2      \-B1'--B2'--B3'--U2'
+
+
+Finally, we drop temporary commits, and record rebased commits A3' 
+and B3' as our "rebased" merge commit parents instead (merge commit 
+M' keeps its same tree/snapshot state, just gets parents replaced):
+
+(5) ---X1---o---o---o---o---o---X2
+       |\                       |\
+       | A1---A2---A3---U1      | A1'--A2'--A3'
+       |             \          |             \
+       |              M         |              M'
+       |             /          |             /
+       \-B1---B2---B3---U2      \-B1'--B2'--B3'
+
+
+And that`s it, our merge commit M has been "rebased" to M' :)
+
+(6) ---X1---o---o---o---o---o---X2 (master)
+                                |\
+                                | A1'--A2'--A3'
+                                |             \
+                                |              M' (topic)
+                                |             /
+                                \-B1'--B2'--B3'
+
+
+Important thing to note here is that in our step (3) above, still in 
+terms of trees/snapshots (not diffs), U1' could still be equal to 
+U2', produced merge commit M' tree thus being equal to both of them 
+as well (merge commit introducing no changes to either of its 
+parents, originally described by Sergey as "angel merge").
+
+But it doesn`t have to be so - if any of the rebased commits A1 to A3 
+or B1 to B3 was dropped or modified (or extra commits added, even), 
+that would influence the trees (snapshots) produced after rebasing U1 
+and U2 to U1' and U2', final merge M' reflecting all these changes as 
+well, besides keeping original merge commit M amendments (preserving 
+"evil merge").
+
+
+Well, that`s some theory, now to hopefully confirm/test/polish all 
+this... or trash it, if flawed beyond correction :P
+
+Regards, Buga
