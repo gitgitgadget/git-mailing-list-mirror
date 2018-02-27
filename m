@@ -6,70 +6,88 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CA1401FAE2
-	for <e@80x24.org>; Tue, 27 Feb 2018 21:58:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 40A4A1F404
+	for <e@80x24.org>; Tue, 27 Feb 2018 22:04:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751799AbeB0V6s (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Feb 2018 16:58:48 -0500
-Received: from cloud.peff.net ([104.130.231.41]:39492 "HELO cloud.peff.net"
+        id S1751927AbeB0WEs (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Feb 2018 17:04:48 -0500
+Received: from cloud.peff.net ([104.130.231.41]:39508 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751789AbeB0V6s (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Feb 2018 16:58:48 -0500
-Received: (qmail 9217 invoked by uid 109); 27 Feb 2018 21:58:48 -0000
+        id S1751919AbeB0WEq (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Feb 2018 17:04:46 -0500
+Received: (qmail 9621 invoked by uid 109); 27 Feb 2018 22:04:46 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 27 Feb 2018 21:58:48 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 27 Feb 2018 22:04:46 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 27874 invoked by uid 111); 27 Feb 2018 21:59:36 -0000
+Received: (qmail 27900 invoked by uid 111); 27 Feb 2018 22:05:34 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 27 Feb 2018 16:59:36 -0500
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 27 Feb 2018 17:05:34 -0500
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 27 Feb 2018 16:58:46 -0500
-Date:   Tue, 27 Feb 2018 16:58:46 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 27 Feb 2018 17:04:43 -0500
+Date:   Tue, 27 Feb 2018 17:04:43 -0500
 From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Lars Schneider <lars.schneider@autodesk.com>,
-        git <git@vger.kernel.org>, Johannes Sixt <j6t@kdbg.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        ramsay@ramsayjones.plus.com, Johannes.Schindelin@gmx.de
-Subject: Re: [PATCH v7 0/7] convert: add support for different encodings
-Message-ID: <20180227215845.GA11187@sigill.intra.peff.net>
-References: <19EDC192-0D83-4762-AC6A-81F7D693475A@gmail.com>
- <xmqqbmgfvf2y.fsf@gitster-ct.c.googlers.com>
- <xmqq7er3tqjq.fsf@gitster-ct.c.googlers.com>
- <FDF4DEB8-E71A-4BFC-9437-678C8F65BBDC@gmail.com>
- <20180226014445.GB8677@sigill.intra.peff.net>
- <20180226173533.GA7877@tor.lan>
- <20180226204635.GB12598@sigill.intra.peff.net>
- <20180227210517.GA17555@tor.lan>
- <20180227212537.GA6899@sigill.intra.peff.net>
- <xmqqd10qp07d.fsf@gitster-ct.c.googlers.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Brandon Williams <bmwill@google.com>, git@vger.kernel.org,
+        sbeller@google.com, stolee@gmail.com, git@jeffhostetler.com,
+        pclouds@gmail.com
+Subject: Re: [PATCH v3 14/35] connect: request remote refs using v2
+Message-ID: <20180227220443.GB11187@sigill.intra.peff.net>
+References: <20180125235838.138135-1-bmwill@google.com>
+ <20180207011312.189834-1-bmwill@google.com>
+ <20180207011312.189834-15-bmwill@google.com>
+ <20180221145411.35b2ea84747518a499276bdd@google.com>
+ <20180222181922.GD185096@google.com>
+ <20180222182657.GE19035@sigill.intra.peff.net>
+ <20180222112533.0d7c6023fb8e4098efedfe31@google.com>
+ <20180227062128.GG65699@aiede.svl.corp.google.com>
+ <xmqq8tbep02f.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqd10qp07d.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqq8tbep02f.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 27, 2018 at 01:55:02PM -0800, Junio C Hamano wrote:
+On Tue, Feb 27, 2018 at 01:58:00PM -0800, Junio C Hamano wrote:
 
-> Jeff King <peff@peff.net> writes:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
 > 
-> > Of the three solutions, I think the relative merits are something like
-> > this:
-> > ...
-> >   3. w-t-e (Lars's patch)
+> > Jonathan Tan wrote:
+> >> On Thu, 22 Feb 2018 13:26:58 -0500
+> >> Jeff King <peff@peff.net> wrote:
+> >
+> >>> I agree that it shouldn't matter much here. But if the name argv_array
+> >>> is standing in the way of using it, I think we should consider giving it
+> >>> a more general name. I picked that not to evoke "this must be arguments"
+> >>> but "this is terminated by a single NULL".
+> > [...]
+> >> This sounds reasonable - I withdraw my comment about using struct
+> >> string_list.
+> >
+> > Marking with #leftoverbits as a reminder to think about what such a
+> > more general name would be (or what kind of docs to put in
+> > argv-array.h) and make it so the next time I do a search for that
+> > keyword.
 > 
-> I thought Lars's w-t-e was about keeping the in-repo contents in
-> UTF-8 and externalize in whatever encoding (e.g. UTF-16), so it
-> won't help the issue hosting folks want to deal with, i.e. showing
-> in-repo data that is stored in a strange binary-looking encoding in
-> a more reasonable encodign while diffing, no?
+> So are we looking for a natural name to call an array of trings?  I
+> personally do not mind argv_array too much, but perhaps we can call
+> it a string_array and then everybody will be happy?
 
-I thought it solved that by the hosting folks never seeing the strange
-binary-looking data. They see only utf8, which diffs well.
+That would be fine with me. Though I would love it if we could find a
+shorter name for the associated functions. For example,
+argv_array_pushf() can make lines quite long, and something like
+argv_pushf() is easier to read (in my opinion). And that might work
+because "argv" is pretty unique by itself, but "string" is not.
+
+Some one-word name like "strarray" might work, though I find that is not
+quite catchy. I guess "strv" is short if you assume that people know the
+"v" suffix means "vector".
+
+It may not be worth worrying too much about, though. We already have
+24-character monstrosities like string_list_append_nodup(). ;)
 
 -Peff
