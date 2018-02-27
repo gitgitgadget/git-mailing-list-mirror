@@ -6,85 +6,80 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 00A4E1F404
-	for <e@80x24.org>; Tue, 27 Feb 2018 23:47:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4946A1F404
+	for <e@80x24.org>; Tue, 27 Feb 2018 23:50:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751611AbeB0XrI (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Feb 2018 18:47:08 -0500
-Received: from avasout04.plus.net ([212.159.14.19]:35892 "EHLO
-        avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751516AbeB0XrH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Feb 2018 18:47:07 -0500
-Received: from [10.0.2.15] ([80.189.70.162])
-        by smtp with ESMTPA
-        id qoxceAYBbshmQqoxdefZj1; Tue, 27 Feb 2018 23:47:05 +0000
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.3 cv=eJ89ckh1 c=1 sm=1 tr=0
- a=zzlqjQC3YyNvDZl/Gy+4mg==:117 a=zzlqjQC3YyNvDZl/Gy+4mg==:17
- a=IkcTkHD0fZMA:10 a=ybZZDoGAAAAA:8 a=EBOSESyhAAAA:8 a=d52jGl4dsc0oubC2YgQA:9
- a=QEXdDO2ut3YA:10 a=0RhZnL1DYvcuLYC8JZ5M:22 a=yJM6EZoI5SlJf8ks9Ge_:22
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH 2/2] t5556: replace test_i18ngrep with a simple grep
-To:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
-Cc:     Jeff King <peff@peff.net>, GIT Mailing-list <git@vger.kernel.org>
-References: <d0e6c6cf-7166-bef6-f179-c4e6acf7b0ac@ramsayjones.plus.com>
- <xmqq3726t11d.fsf@gitster-ct.c.googlers.com>
- <69c7dc21-fb52-5982-f7d8-04518d06db6c@ramsayjones.plus.com>
- <xmqqvaf1qqcx.fsf@gitster-ct.c.googlers.com>
- <20180213100437.15685-1-szeder.dev@gmail.com>
- <xmqqr2porf4z.fsf@gitster-ct.c.googlers.com>
- <20180213172603.GA10062@sigill.intra.peff.net>
- <xmqqeflorc9m.fsf@gitster-ct.c.googlers.com>
- <xmqq371mqjce.fsf@gitster-ct.c.googlers.com>
- <xmqq4lm2ozq3.fsf@gitster-ct.c.googlers.com>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <192d4ee4-dbdd-3e47-b45c-8d1f7b69b9af@ramsayjones.plus.com>
-Date:   Tue, 27 Feb 2018 23:47:03 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
+        id S1751723AbeB0Xuf (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Feb 2018 18:50:35 -0500
+Received: from elephants.elehost.com ([216.66.27.132]:18591 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751563AbeB0Xuf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Feb 2018 18:50:35 -0500
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id w1RNoVnE056138
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Tue, 27 Feb 2018 18:50:31 -0500 (EST)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     <git@vger.kernel.org>
+Cc:     "'Joachim Schmitz'" <jojo@schmitz-digital.de>
+Subject: [Problem] test_must_fail makes possibly questionable assumptions about exit_code.
+Date:   Tue, 27 Feb 2018 18:50:25 -0500
+Message-ID: <005501d3b025$c0057ce0$401076a0$@nexbridge.com>
 MIME-Version: 1.0
-In-Reply-To: <xmqq4lm2ozq3.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
+Content-Type: text/plain;
+        charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfMLXEnRk7fBVz+SawWPWUZnMHPLyDiobTDgqE6FrEjtW/zFc26l9TZvtzf5bIwtYzoCQ0sSJ9J0wi+G2XQfVxzFYckjzgIy5Ig6zW2PT6XUR7klsKlyt
- p9S3lJmaA+8YlJZ1G4QxKv5mfVgtXjm9SODtkSarR9LrgNpqKTYA+VXnRlj2Bm2V+lLVtNG+bAaAsw==
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AdOwI9jQuWDAxkQHSzuLX0Z3NLLBaw==
+Content-Language: en-ca
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi all,
+
+After months of arguing with some platform developers on this subject, the
+perl spec was held over my head repeatedly about a few lines that are
+causing issues. The basic problem is this line (test-lib-functions.sh, line
+633, still in ffa952497)
+
+>        elif test $exit_code -gt 129 && test $exit_code -le 192
+>       then
+>               echo >&2 "test_must_fail: died by signal $(($exit_code -
+128)):
+
+According to the perl spec http://perldoc.perl.org/functions/die.html, die
+basically takes whatever errno is, mods it with 256 and there you go. EBADF
+is what is used when perl reads from stdin and calls die - that's standard
+perl. In most systems, you end up with something useful, when EBADF is 9.
+But when it is 4009, you get a garbage answer (4009 mod 256 a.k.a. 169).
+However, only 128-165 are technically reserved for signals, rather than all
+the way up to 192, which may be true in some places but not everywhere.
+
+The advice (I'm putting that nicely) I received was to use exit so that the
+result is predictable - unlikely to be useful in the 15K test suites in git.
+However, dropping this to 165 conditionally might help.
+
+I'm looking for what approach to take here, because I don't think I'm going
+to get perl fixed any time soon, or the error number range on the platform
+fixed ... ever.
+
+This is causing only two breaks that I have lived with and probably still
+could. Consider me begging for a suggestion.
+
+Sincerest,
+Randall
+
+-- Brief whoami:
+ NonStop developer since approximately 211288444200000000
+ UNIX developer since approximately 421664400
+-- In my real life, I talk too much.
 
 
-On 27/02/18 22:05, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
->> OK, somehow I had the version from Ramsay on a topic branch that was
->> not merged to 'pu'.  Here is the replacement for 2/2 I'd be queuing.
->>
->> We'd need SZEDER to sign it off (optionally correcting mistakes in
->> the log message) if we are going with this solution.
->>
->> Thanks.
-> 
-> I guess I missed Ramsay's v2 which already did this
-> 
-> <550fb3f4-8d25-c5c4-0ecd-3a4e61ea13f4@ramsayjones.plus.com>
 
-Yes, and as I said in the cover letter, I wasn't too sure that
-I had passed that patch along correctly. ;-)
-
-> so I'll use that version.  We still want sign-off from Szeder,
-> though.
-
-I would be happy with either version, or maybe Szeder would like
-to tweak the commit message. In any event, it would be good to
-get sign-off from Szeder.
-
-Thanks!
-
-ATB,
-Ramsay Jones
 
 
