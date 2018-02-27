@@ -7,136 +7,89 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BCCCB1F404
-	for <e@80x24.org>; Tue, 27 Feb 2018 21:28:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 769741F404
+	for <e@80x24.org>; Tue, 27 Feb 2018 21:30:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751552AbeB0V2r (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Feb 2018 16:28:47 -0500
-Received: from mail-ua0-f180.google.com ([209.85.217.180]:33018 "EHLO
-        mail-ua0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751139AbeB0V2q (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Feb 2018 16:28:46 -0500
-Received: by mail-ua0-f180.google.com with SMTP id p12so207328uad.0
-        for <git@vger.kernel.org>; Tue, 27 Feb 2018 13:28:46 -0800 (PST)
+        id S1751744AbeB0Val (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Feb 2018 16:30:41 -0500
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:37612 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751610AbeB0Vak (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Feb 2018 16:30:40 -0500
+Received: by mail-wr0-f196.google.com with SMTP id z12so271953wrg.4
+        for <git@vger.kernel.org>; Tue, 27 Feb 2018 13:30:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=sZZqo+WJBBnPqFP0fNcQHznrBhhEvlFFL7XrMxHwzEU=;
-        b=lheetfVkusj2Mthv1p5U7Ob0UUojj7mVvttF9zFbQr8jF0ph+3XeVop6vJRx6DJV1G
-         K+9IVw9asCqLNLJxZBZMyd4GGKKsGzFP2AkwQxMSNrJSf7Zw5obnW1vZLXElOHSmtj1h
-         oqDu9uuC2tZYmWhIA9LUJJwvhTjxcmZe/UKGrvRyzlCQFDx/K1qUCV/vrTBbIJNbSBWN
-         fvfZvMej1QnN8Z2tuKXpHmQf+L6fVkHVsOFqwaCdPuhCe/EaWCiMZVoJSfQ5veCRCuR4
-         B9cjBAgvQlKCvV0LIr59QjrFXQyMd5uDlod9xUJ8PjgrkfsRH3DRGrRuvyVs54Dp9f2B
-         dpcw==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Rix874TbM7JFzedMWfjvQ1VS07Qz815qR5HtvRme7m4=;
+        b=rSPmISnWcmVug41lRfKZiPhYXDMqie3SomB28he+EI8Rt0ZlKHIxPDuQXco7YmATH/
+         ETwrVqPs5KJtWBaLmQfwoVXaUpMy3AdYzMZgFz+jKctAYBLVJX6tUJE4G4/z++Rhed4Q
+         wOWGPsVbmQ9NSwXCcZgs1Hcjw+/AA1FotBVy2T3skWhpxphCuuoUzIE5NLvq2iLsoG0t
+         04OdOEyuILNWUqVQ8tUUNEJ+qTN47YnoIeTTRUdkmDFsXerCLYaKcqZy2D9I/Blr4u3C
+         XtQsy+sAVJFaspqp5Jw9rE6ceKyOy058YBjqeqqp6UeHrSmXRe4SDHd40XX5IEWKWdqE
+         0nXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=sZZqo+WJBBnPqFP0fNcQHznrBhhEvlFFL7XrMxHwzEU=;
-        b=dQwhzCdQYEdi2nBvhr+k36mhyXjS+1oxZI94l3N3i1IWGcL95H1WPKOvBMm12ncRyE
-         z1M4QjzsX9V838qv9UmwKH/9ABdHH0Aj+1U5jUBPnrFXtV3yF6BuukqGyFOU9mEEVvNI
-         J0DbKjD9jPb2L+ycYcKdi2ziIdXiaYT+tKkh3s62aq3N5xDaMbNiS5ua2Nwr8SNrirE0
-         YBRoLwjc3aLC0lf5Dbgho3knXvFGcKhdpeyPB/uYDJCNMYtQqvFHnteDNSlIB1xqbR93
-         d7WFgRnUmwB3Ex8u0gazQxjUzF6XNAWyHVOJDHfTw0c7MIO15wYslFl4ZBIWb5IAoMq/
-         Xerw==
-X-Gm-Message-State: APf1xPCK5g2FVPz8AxT/fAsLGtWq3mEoy8q3IVFP40oxNqlVVdjL+c3G
-        6SNJ2F7F8C7b8Fx1IXoRXSuyN6gPybZX9V4xglzXXA==
-X-Google-Smtp-Source: AG47ELuGNcLz1tcJa3J+22LWN3LPg+NrKQfnuramc8VMrq3XpRpoV2mGisszduPS8YYd/nE3xa88ECrLPyyEqm2xL7c=
-X-Received: by 10.176.33.86 with SMTP id t22mr11599068ual.149.1519766926108;
- Tue, 27 Feb 2018 13:28:46 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Rix874TbM7JFzedMWfjvQ1VS07Qz815qR5HtvRme7m4=;
+        b=ACjkrAfkDgBbf14RvIm9sO1EEl3OE+UlP1ZEbozGGHVidzqeo0iF/wajT+aFC8KtIe
+         up9z+Lr2eRaa4ChJbRVZYL5NF1bTWGRC3cTITeaJTh66sgKxuNt6lA47VMr2atemL/n6
+         SwtBSNgacAe3m70jpNPMBeJt2aHAWJwf/4rseZg+d6+DVciXKU43VNEVRr2eQYMuorEp
+         CsAkMLFe9Tbnvo3uZvFH/tj4utRI5dx35jIovflCoX7pGH6/kWcuwFqqGNSWBGCqYSiq
+         35rpLq+1fghdlm8RBK/U1UEotahdequGY9Tc1tb++r2VTzLRV6C4ELbowoARI8GRdCbW
+         Yp6Q==
+X-Gm-Message-State: APf1xPC47bnieyVbFjXFn3Ti3hxa8erlTXC4ozRWlpzHygjN5n6dWY/u
+        9nYXNVdA/mv5XiJjL8n/vLF0bSkI
+X-Google-Smtp-Source: AH8x225EW3+f7m425D/8xpnJjbVyT/Fy3L7Y0RnSoyLcARfvCgqzlXdu1RUaFyHBMCIQczFJuXJt5A==
+X-Received: by 10.223.195.204 with SMTP id d12mr14327358wrg.116.1519767039086;
+        Tue, 27 Feb 2018 13:30:39 -0800 (PST)
+Received: from localhost.localdomain ([2a02:aa16:5782:c100:c938:fbb7:46f8:2405])
+        by smtp.gmail.com with ESMTPSA id t91sm126888wrc.21.2018.02.27.13.30.37
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 27 Feb 2018 13:30:37 -0800 (PST)
+From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH 0/5] roll back locks in various code paths
+Date:   Tue, 27 Feb 2018 22:30:08 +0100
+Message-Id: <cover.1519763396.git.martin.agren@gmail.com>
+X-Mailer: git-send-email 2.16.2.246.ga4ee44448f
 MIME-Version: 1.0
-Received: by 10.159.59.233 with HTTP; Tue, 27 Feb 2018 13:28:45 -0800 (PST)
-In-Reply-To: <xmqqpo4qp290.fsf@gitster-ct.c.googlers.com>
-References: <20180223233951.11154-1-szeder.dev@gmail.com> <20180223233951.11154-5-szeder.dev@gmail.com>
- <xmqqtvu2p2kx.fsf@gitster-ct.c.googlers.com> <xmqqpo4qp290.fsf@gitster-ct.c.googlers.com>
-From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Date:   Tue, 27 Feb 2018 22:28:45 +0100
-Message-ID: <CAM0VKjnVWZ8Ysp5YyfcStgcBuME0q=usT5MKiAcWyxDwAKk+Fg@mail.gmail.com>
-Subject: Re: [PATCH 04/11] t3030-merge-recursive: don't check the stderr of a subshell
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git mailing list <git@vger.kernel.org>, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 27, 2018 at 10:10 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
->>
->>> The two test checking 'git mmerge-recursive' in an empty worktree in
->>> ...
->>>              GIT_INDEX_FILE=3D"$PWD/ours-has-rename-index" &&
->>>              export GIT_INDEX_FILE &&
->>>              mkdir "$GIT_WORK_TREE" &&
->>> -            git read-tree -i -m $c7 &&
->>> -            git update-index --ignore-missing --refresh &&
->>> -            git merge-recursive $c0 -- $c7 $c3 &&
->>> -            git ls-files -s >actual-files
->>> -    ) 2>actual-err &&
->>> -    >expected-err &&
->>> +            git read-tree -i -m $c7 2>actual-err &&
->>> +            test_must_be_empty expected-err &&
->>> +            git update-index --ignore-missing --refresh 2>actual-err &=
-&
->>> +            test_must_be_empty expected-err &&
->>> +            git merge-recursive $c0 -- $c7 $c3 2>actual-err &&
->>> +            test_must_be_empty expected-err &&
->>> +            git ls-files -s >actual-files 2>actual-err &&
->>> +            test_must_be_empty expected-err
->>
->> Where do the contents of all of these expected-err files come from?
->> Should all of the test_must_be_empty checks be checking actual-err
->> instead?
+Patches 2-4 are the actual fixes where I teach some functions to always
+roll back the lock they're holding. Notably, these are all in "libgit".
 
-Ugh, I messed that up.
+Patch 1 is a "while at it" to use locks on the stack instead of having
+them be static. Patch 5 removes code to roll back locks which are
+already rolled back.
 
-> And the reason why your pre-submission testing did not catch may be
-> because test_must_be_empty is broken?  I wonder if this is a good
-> way forward to catch a possible bug like this.
+I've based this on maint. There's a conflict on pu, with c7d4394111
+(sequencer: avoid using errno clobbered by rollback_lock_file(),
+2018-02-11). The conflict resolution would be to take my version for the
+"could not lock HEAD"-hunk.
 
-Yeah.  'test -s file' means "exists and has a size greater than zero",
-so the missing file doesn't trigger the error code path.
+Martin
 
-> Of course, if somebody was using the helepr for "must be either
-> missing or empty", this change will break it, but I somehow doubt
-> it.
+Martin Ågren (5):
+  sequencer: make lockfiles non-static
+  sequencer: always roll back lock in `do_recursive_merge()`
+  merge-recursive: always roll back lock in `merge_recursive_generic()`
+  merge: always roll back lock in `checkout_fast_forward()`
+  sequencer: do not roll back lockfile unnecessarily
 
-FWIW, I just run the test suite with this change added, and there were
-no failures.  I think it's a good change.
+ merge-recursive.c |  4 +++-
+ merge.c           | 12 +++++++++---
+ sequencer.c       | 32 ++++++++++++++------------------
+ 3 files changed, 26 insertions(+), 22 deletions(-)
 
->  A program that creates/opens and writes an error message only
-> when an error is detected is certainly possible, and could be tested
-> with the current test_must_be_empty this way:
->
->         rm -f actual-err &&
->         git frotz --error-to=3Dactual-err &&
->         test_must_be_empty actual-err
->
-> but then the last step in such a test like the above is more natural
-> to check if actual-err _exists_ in the first place anyway, so...
->
->  t/test-lib-functions.sh | 6 +++++-
->  1 file changed, 5 insertions(+), 1 deletion(-)
->
-> diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-> index 37eb34044a..6cfbee60e4 100644
-> --- a/t/test-lib-functions.sh
-> +++ b/t/test-lib-functions.sh
-> @@ -772,7 +772,11 @@ verbose () {
->  # otherwise.
->
->  test_must_be_empty () {
-> -       if test -s "$1"
-> +       if ! test -f "$1"
-> +       then
-> +               echo "'$1' is missing"
-> +               return 1
-> +       elif test -s "$1"
->         then
->                 echo "'$1' is not empty, it contains:"
->                 cat "$1"
+-- 
+2.16.2.246.ga4ee44448f
+
