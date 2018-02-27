@@ -2,114 +2,137 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E73F01F404
-	for <e@80x24.org>; Tue, 27 Feb 2018 05:16:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C09541F404
+	for <e@80x24.org>; Tue, 27 Feb 2018 05:17:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751861AbeB0FQe (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Feb 2018 00:16:34 -0500
-Received: from mail-pl0-f67.google.com ([209.85.160.67]:45739 "EHLO
-        mail-pl0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751679AbeB0FQc (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Feb 2018 00:16:32 -0500
-Received: by mail-pl0-f67.google.com with SMTP id v9-v6so8747309plp.12
-        for <git@vger.kernel.org>; Mon, 26 Feb 2018 21:16:31 -0800 (PST)
+        id S1751664AbeB0FRq (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Feb 2018 00:17:46 -0500
+Received: from mail-qk0-f181.google.com ([209.85.220.181]:38439 "EHLO
+        mail-qk0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750981AbeB0FRp (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Feb 2018 00:17:45 -0500
+Received: by mail-qk0-f181.google.com with SMTP id s198so22063470qke.5
+        for <git@vger.kernel.org>; Mon, 26 Feb 2018 21:17:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=ZnsQGY5NYJodYRU3MrDNUodlmRS0geEIVcQVhfTNHu4=;
-        b=rkF5UVAvyhYMoIuca51Ahexqn0ZhIF3u6R7SdN4EqX8mmUb2suW8F8aO0dtr6IuxHX
-         SBHCq1NKrTjs4SY023JzPRJ6av1kYeqJFc310Yl7DQFK1D+1DxErK1ldzsBH9efgyY8l
-         9F3CX2cpPQH4rfbHBElzNntb/TzWwIZXqDJ0WVq2SchTpl3VJff+F125z7H2d7nRbFw+
-         /s0DTcjQtq4CyVtjQGEm1O6c8e0yoSEI+1rbfQpV3KmdxB9LpRvFoD/dQhFKTcT3oFT8
-         njngYx2DmW3p16VjQdhSXEgiSTh55EJ7pHXQC7twxAXhGv9vELXyIsIrLW8IeDk96H+q
-         wwLQ==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=ic3R+XNmpljrIkR3JulliJms8QB2SDfnBD323Pk0Tjw=;
+        b=YDdi9zI0jaEm1sna7SCm6ykl2mo5bnmlpGvUO9mNbmMQ2iZzm293ZsDLEyFfRAQBWp
+         wD459HaX9oGpVDtHbGzrg1VP71jItHYTAyzgYfMKjy34vRy0oCOsZ7JMRDn5r2zG1m9e
+         wxhk8egXgB1bN1Ddwi0b+M6EL9V/lBMiezmxG/XRcSN2a0YWoZF+Ea6grxw5mGXSqRB0
+         hmOPtrnhScpJMwgCgIPVBEm1YpEcqU/WRHwRrCtzf7zlaAp9QtwAWs3TdihsPgwPCN6d
+         gksAOHhK+og+v3FH0/Bg3SoVc4jw4R1KBZgtPPLZywTksiNNuz4Y1d0gqXb8Ls4eluHh
+         IntQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=ZnsQGY5NYJodYRU3MrDNUodlmRS0geEIVcQVhfTNHu4=;
-        b=YgSvG8dXZKbNvrYtqkyJtGK20t6RsEt6Yw1ZOKrPnCDw0BRsyno3B0Jlq5PJko6sh1
-         jTVv32yMKACaPWZwvGKyYJksFPhAoGYUvjhSbjuSxiMRG3LDJS0lM+PN0zLighjBkvEO
-         +Y+SFGZNqf33tFhz/lr8Zwv0nTwWBPmf2k7l7CALpm8CfpNFZ032FFnM5ZjoL6tgDAd4
-         9HQ0GXxkWzDx4s0Hxj+nch2BAOqo01601QfxsjkkCLYUtEqZsTz5KxfAoIoOEhkfluOn
-         HvHeC1M+cKg125DZtYYCOy6nR2hO8hB500WAPXSGT3CivBIV5pO6mSBaIBlxQHDyab9v
-         ucKw==
-X-Gm-Message-State: APf1xPAN0YEBkzJSevIiWKQZ+QyPP4TFItX+Q3bGQh+yFRm/spBIU7zQ
-        jbubmnhLxpH2qMVDkXglNwA=
-X-Google-Smtp-Source: AH8x224c87A57QrkQeuEAZA9qfNQJzzAiLq53jumXUDOeuEXwvJMa271+PLQr8yCP4zsNR9Z3WnViw==
-X-Received: by 2002:a17:902:9002:: with SMTP id a2-v6mr12965423plp.412.1519708591328;
-        Mon, 26 Feb 2018 21:16:31 -0800 (PST)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id j64sm22747681pfe.68.2018.02.26.21.16.30
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 26 Feb 2018 21:16:30 -0800 (PST)
-Date:   Mon, 26 Feb 2018 21:15:55 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     Jeff King <peff@peff.net>, Brandon Williams <bmwill@google.com>,
-        git@vger.kernel.org, sbeller@google.com, gitster@pobox.com,
-        stolee@gmail.com, git@jeffhostetler.com, pclouds@gmail.com
-Subject: Re: [PATCH v3 13/35] ls-refs: introduce ls-refs server command
-Message-ID: <20180227051555.GA65699@aiede.svl.corp.google.com>
-References: <20180125235838.138135-1-bmwill@google.com>
- <20180207011312.189834-1-bmwill@google.com>
- <20180207011312.189834-14-bmwill@google.com>
- <20180222094831.GB12442@sigill.intra.peff.net>
- <20180223004514.GP185096@google.com>
- <20180224040149.GA16743@sigill.intra.peff.net>
- <87inaje1uv.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=ic3R+XNmpljrIkR3JulliJms8QB2SDfnBD323Pk0Tjw=;
+        b=GQtQZ6qTZTC/jI1M80UCfxcCoW2q7Ium15TYwNzEiGCG89WdM5dvVFaA+JFLR/g31u
+         Q8jwBlWkFM9tQyRzD1p4NeWHw09j83jwUj4IeIXLd3KACpxn8IprdsSX5PNfxnqsTqYt
+         h/7GpOH8wloEyp731r8AvvF8Mpuxlglf7K4Yc9ym+oImFwQPXJsz3o2X14lCm17sxF/e
+         QvWS4wfbezNQTPTKFAjDMS252pW79CyjBVqyk7ZXkecK03av9tAaYgZD+J+qzTyet2wi
+         T8cRxWNLcjXqFyEqMbYxoOhsgLM/i+LzDB8Kcybvmdh/ETp6+QazY7AtK8tePGS+AK2N
+         hZ0Q==
+X-Gm-Message-State: APf1xPDKn++tmerpSm8NsnZEpabdgTwscAc1G+EUZ04isU+Ie2omq9Ep
+        6YZubFSYS9ELDLg/n7G3GBGBbb0x2mwdNzuFThzNHw==
+X-Google-Smtp-Source: AG47ELu8wG3wQCehc4DjztEE3HGVF+jwjEVHJ1rcAkKPekW6MDX8WjDwDgHB7FVJMiT1uxGW7oI2C5TnD9oMxkO327U=
+X-Received: by 10.55.134.133 with SMTP id i127mr21080777qkd.275.1519708664704;
+ Mon, 26 Feb 2018 21:17:44 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87inaje1uv.fsf@evledraar.gmail.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+Received: by 10.12.142.14 with HTTP; Mon, 26 Feb 2018 21:17:44 -0800 (PST)
+In-Reply-To: <392C5E11-A3CA-4D65-B9D4-9EE30258C83A@gmail.com>
+References: <20180224162801.98860-1-lars.schneider@autodesk.com>
+ <20180224162801.98860-4-lars.schneider@autodesk.com> <CAPig+cQdoicxSMLRbdCfFGXyXLirbRLVJi2QahCSe1ZesVOKBg@mail.gmail.com>
+ <392C5E11-A3CA-4D65-B9D4-9EE30258C83A@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Tue, 27 Feb 2018 00:17:44 -0500
+X-Google-Sender-Auth: j7NUI9fC_GUczfVCs4LYVnbw--w
+Message-ID: <CAPig+cSh6YVK_KbinEv+1fwU1Wo4BErfYBZ76KKdhu9dM1D5Dg@mail.gmail.com>
+Subject: Re: [PATCH v8 3/7] utf8: add function to detect prohibited UTF-16/32 BOM
+To:     Lars Schneider <larsxschneider@gmail.com>
+Cc:     Lars Schneider <lars.schneider@autodesk.com>,
+        Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+        Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason wrote:
-> On Sat, Feb 24 2018, Jeff King jotted:
-
->> I actually wonder if we should just specify that the patterns must
->> _always_ be fully-qualified, but may end with a single "/*" to iterate
->> over wildcards. Or even simpler, that "refs/heads/foo" would find that
->> ref itself, and anything under it.
+On Sun, Feb 25, 2018 at 6:35 AM, Lars Schneider
+<larsxschneider@gmail.com> wrote:
+>> On 25 Feb 2018, at 04:41, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>> Is this interpretation correct? When I read [1], I interpret it as
+>> saying that no BOM _of any sort_ should be present when the encoding
+>> is declared as one of UTF-16BE, UTF-16LE, UTF-32BE, or UTF-32LE.
 >
-> I agree that this is a very good trade-off for now, but I think having
-> an escape hatch makes sense. It looks like the protocol is implicitly
-> extendible since another parameter could be added, but maybe having such
-> a parameter from the get-go would make sense:
+> Correct!
+>
+>> This code, on the other hand, only checks for BOMs corresponding
+>> to the declared size (16 or 32 bits).
+>
+> Hmm. Interesting thought. You are saying that my code won't complain if
+> a document declared as UTF-16LE has a UTF32-LE BOM, correct?
 
-I prefer to rely on the implicit extensibility (following the general
-YAGNI principle).
+Well, not specifically that case since UTF-16LE BOM is a subset of UTF32-LE BOM.
 
-In other words, we can introduce a pattern-type later and make the
-current pattern-type the default.
+My observation was more general in that [1] seems to say that there
+should be _no_ BOM whatsoever if one of UTF-16BE, UTF-16LE, UTF-32BE,
+or UTF-32LE is declared.
 
-Thanks for looking to the future.
+> I would say
+> this is correct behavior in context of this function. This function assumes
+> that the document is proper UTF-16/UTF-16BE/UTF-16LE but it is wrongly
+> declared with respect to its BOM in the .gitattributes. Would this
+> comment make it more clear to you?
+>         /*
+>          * If a data stream is declared as UTF-16BE or UTF-16LE, then a UTF-16
+>          * BOM must not be used [1]. The same applies for the UTF-32 equivalents.
+>          * The function returns true if this rule is violated.
+>          *
+>          * [1] http://unicode.org/faq/utf_bom.html#bom10
+>          */
+> I think what you are referring to is a different class of error and
+> would therefore warrant its own checker function. Would you agree?
 
-[...]
-> E.g. if the refs were stored indexed using the method described at
-> https://swtch.com/~rsc/regexp/regexp4.html tail matching becomes no less
-> efficient than prefix matching, but a function of how many trigrams in
-> your index match the pattern given.
+I don't understand to what different class of error you refer. The
+FAQ[1] seems pretty clear to me in that if one of those declarations
+is used explicitly, then there should be _no_ BOM, period. It doesn't
+say anything about allowing a BOM for a differently-sized encoding (16
+vs 32).
 
-I think the nearest planned change to ref storage is [1], which is
-still optimized for prefix matching.  Longer term, maybe some day
-we'll want a secondary index that supports infix matching, or maybe
-we'll never need it. :)
+If I squint very hard, I _guess_ I can see how you interpret [1] with
+the more narrow meaning of the restriction applying only to a BOM of
+the same size as the declared encoding, though reading it that way
+doesn't come easily to me.
 
-Sincerely,
-Jonathan
+>> I suppose the intention of [1] is to detect a mismatch between the
+>> declared encoding and how the stream is actually encoded. The check
+>> implemented here will fail to detect a mismatch between, say, declared
+>> encoding UTF-16BE and actual encoding UTF-32BE.
+>
+> As stated above the intention is to detect wrong BOMs! I think we cannot
+> detect the "declared as UTF-16BE but actually UTF-32BE" error.
+>
+> Consider this:
+>
+> printf "test" | iconv -f UTF-8 -t UTF-32BE | iconv -f UTF-16BE -t UTF-8 | od -c
+> 0000000   \0   t  \0   e  \0   s  \0   t
+> 0000010
+>
+> In the first step we "encode" the string to UTF-32BE and then we "decode" it as
+> UTF-16BE. The result is valid although not correct. Does this make sense?
 
-[1] https://public-inbox.org/git/CAJo=hJsZcAM9sipdVr7TMD-FD2V2W6_pvMQ791EGCDsDkQ033w@mail.gmail.com/#t
+I'm probably being dense, but I don't understand what this is trying
+to illustrate in relation to has_prohibited_utf_bom().
