@@ -7,55 +7,57 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 769741F404
-	for <e@80x24.org>; Tue, 27 Feb 2018 21:30:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 583DF1F404
+	for <e@80x24.org>; Tue, 27 Feb 2018 21:30:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751744AbeB0Val (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Feb 2018 16:30:41 -0500
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:37612 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751610AbeB0Vak (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Feb 2018 16:30:40 -0500
-Received: by mail-wr0-f196.google.com with SMTP id z12so271953wrg.4
-        for <git@vger.kernel.org>; Tue, 27 Feb 2018 13:30:40 -0800 (PST)
+        id S1751799AbeB0Vap (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Feb 2018 16:30:45 -0500
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:52545 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751779AbeB0Vao (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Feb 2018 16:30:44 -0500
+Received: by mail-wm0-f68.google.com with SMTP id t3so1269776wmc.2
+        for <git@vger.kernel.org>; Tue, 27 Feb 2018 13:30:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Rix874TbM7JFzedMWfjvQ1VS07Qz815qR5HtvRme7m4=;
-        b=rSPmISnWcmVug41lRfKZiPhYXDMqie3SomB28he+EI8Rt0ZlKHIxPDuQXco7YmATH/
-         ETwrVqPs5KJtWBaLmQfwoVXaUpMy3AdYzMZgFz+jKctAYBLVJX6tUJE4G4/z++Rhed4Q
-         wOWGPsVbmQ9NSwXCcZgs1Hcjw+/AA1FotBVy2T3skWhpxphCuuoUzIE5NLvq2iLsoG0t
-         04OdOEyuILNWUqVQ8tUUNEJ+qTN47YnoIeTTRUdkmDFsXerCLYaKcqZy2D9I/Blr4u3C
-         XtQsy+sAVJFaspqp5Jw9rE6ceKyOy058YBjqeqqp6UeHrSmXRe4SDHd40XX5IEWKWdqE
-         0nXQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=trRgM/76Ggfh1+l05d7I/hlGT1Ko8oZRptCskbqUlU0=;
+        b=R+RY3cnQ5Lt56obpU88/HApcqWc+JEGUIM9xOQvNUPdWeFFzfpT1dXg++H2tHnTl7a
+         BCYHrMQYPuNu9Pb41AE5ohe60s5NR6D6eNRGt50nTEDT9/yJ0F4bFBI/o1bm4TteuUyZ
+         eQ/ZlYrE8fYHUhw9kBEdnYrSRoqqikEG8hLgu68MX8BMfKEKknvoVYpIoSiG0k5y5ntW
+         +tvSwE6RG7lIeTQyEEkzmTJIqkk+0192vPhIbNpUeZytjZim6CV11IhnzaHmgdpU6wbv
+         O+dYkBYzVV/D0SUlEye1ojSM//sn+KOyJABgh8j/lvn9nykK82qSC7JISuYHA3JleS5h
+         9/aA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Rix874TbM7JFzedMWfjvQ1VS07Qz815qR5HtvRme7m4=;
-        b=ACjkrAfkDgBbf14RvIm9sO1EEl3OE+UlP1ZEbozGGHVidzqeo0iF/wajT+aFC8KtIe
-         up9z+Lr2eRaa4ChJbRVZYL5NF1bTWGRC3cTITeaJTh66sgKxuNt6lA47VMr2atemL/n6
-         SwtBSNgacAe3m70jpNPMBeJt2aHAWJwf/4rseZg+d6+DVciXKU43VNEVRr2eQYMuorEp
-         CsAkMLFe9Tbnvo3uZvFH/tj4utRI5dx35jIovflCoX7pGH6/kWcuwFqqGNSWBGCqYSiq
-         35rpLq+1fghdlm8RBK/U1UEotahdequGY9Tc1tb++r2VTzLRV6C4ELbowoARI8GRdCbW
-         Yp6Q==
-X-Gm-Message-State: APf1xPC47bnieyVbFjXFn3Ti3hxa8erlTXC4ozRWlpzHygjN5n6dWY/u
-        9nYXNVdA/mv5XiJjL8n/vLF0bSkI
-X-Google-Smtp-Source: AH8x225EW3+f7m425D/8xpnJjbVyT/Fy3L7Y0RnSoyLcARfvCgqzlXdu1RUaFyHBMCIQczFJuXJt5A==
-X-Received: by 10.223.195.204 with SMTP id d12mr14327358wrg.116.1519767039086;
-        Tue, 27 Feb 2018 13:30:39 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=trRgM/76Ggfh1+l05d7I/hlGT1Ko8oZRptCskbqUlU0=;
+        b=lZBNLGZdu/CVOrm/d9iRHtcdR1thZl2zjzBoIGTmwuq8L5NsqQkK/Y32Zsz0OSepUu
+         JxKfZdJyKNZfdUa1+Knd1hBQC+cN8D9uqPZDQxpvGRPpKGbAT9bWNJBXB0GKWiaJ7Prr
+         5ilG6NohydeDQnI6Ihze6XEIjCo4NOIrSoP+7VAYqCprCK9yck9D2801n1O1Xavhz5LB
+         Yry6yOpeBQ2izt44voctWFAGwglYq/4w4cxpekjUsHq3icZ+E72n2fRgeZmJ1Hb+iW0N
+         sdhTZvZGRng2NsdpG6vfgs3qQ6wN8M8yTd3X8ekxyl57mmH0p1AMMZuoD41MAQyXhs2/
+         H+bw==
+X-Gm-Message-State: APf1xPDTufZMwlO8dfHvI6bzn2ZZ1emhUwGvvvt4qsPJ2F8zeb7K+LAY
+        +pU6umgy9lbBnHhKECVryLf8u6wO
+X-Google-Smtp-Source: AG47ELvALV+sDoDzYqx+ETqrw042V5s6NDuinr9VLItoD3HEIkni6pcKHw0FVF+7vmrpmHURGQt0yg==
+X-Received: by 10.28.196.200 with SMTP id u191mr12542780wmf.17.1519767042807;
+        Tue, 27 Feb 2018 13:30:42 -0800 (PST)
 Received: from localhost.localdomain ([2a02:aa16:5782:c100:c938:fbb7:46f8:2405])
-        by smtp.gmail.com with ESMTPSA id t91sm126888wrc.21.2018.02.27.13.30.37
+        by smtp.gmail.com with ESMTPSA id t91sm126888wrc.21.2018.02.27.13.30.41
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 27 Feb 2018 13:30:37 -0800 (PST)
+        Tue, 27 Feb 2018 13:30:41 -0800 (PST)
 From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 0/5] roll back locks in various code paths
-Date:   Tue, 27 Feb 2018 22:30:08 +0100
-Message-Id: <cover.1519763396.git.martin.agren@gmail.com>
+Subject: [PATCH 1/5] sequencer: make lockfiles non-static
+Date:   Tue, 27 Feb 2018 22:30:09 +0100
+Message-Id: <4572a84cfdcb1897b67c271a9d06ca38802a2352.1519763396.git.martin.agren@gmail.com>
 X-Mailer: git-send-email 2.16.2.246.ga4ee44448f
+In-Reply-To: <cover.1519763396.git.martin.agren@gmail.com>
+References: <cover.1519763396.git.martin.agren@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -64,32 +66,66 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Patches 2-4 are the actual fixes where I teach some functions to always
-roll back the lock they're holding. Notably, these are all in "libgit".
+After 076aa2cbd (tempfile: auto-allocate tempfiles on heap, 2017-09-05),
+we can have lockfiles on the stack.
 
-Patch 1 is a "while at it" to use locks on the stack instead of having
-them be static. Patch 5 removes code to roll back locks which are
-already rolled back.
+One of these functions fails to always roll back the lock. That will be
+fixed in the next commit.
 
-I've based this on maint. There's a conflict on pu, with c7d4394111
-(sequencer: avoid using errno clobbered by rollback_lock_file(),
-2018-02-11). The conflict resolution would be to take my version for the
-"could not lock HEAD"-hunk.
+Signed-off-by: Martin Ågren <martin.agren@gmail.com>
+---
+ sequencer.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-Martin
-
-Martin Ågren (5):
-  sequencer: make lockfiles non-static
-  sequencer: always roll back lock in `do_recursive_merge()`
-  merge-recursive: always roll back lock in `merge_recursive_generic()`
-  merge: always roll back lock in `checkout_fast_forward()`
-  sequencer: do not roll back lockfile unnecessarily
-
- merge-recursive.c |  4 +++-
- merge.c           | 12 +++++++++---
- sequencer.c       | 32 ++++++++++++++------------------
- 3 files changed, 26 insertions(+), 22 deletions(-)
-
+diff --git a/sequencer.c b/sequencer.c
+index 4d3f60594c..90807c4559 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -290,7 +290,7 @@ static void print_advice(int show_hint, struct replay_opts *opts)
+ static int write_message(const void *buf, size_t len, const char *filename,
+ 			 int append_eol)
+ {
+-	static struct lock_file msg_file;
++	struct lock_file msg_file = LOCK_INIT;
+ 
+ 	int msg_fd = hold_lock_file_for_update(&msg_file, filename, 0);
+ 	if (msg_fd < 0)
+@@ -436,7 +436,7 @@ static int do_recursive_merge(struct commit *base, struct commit *next,
+ 	struct tree *result, *next_tree, *base_tree, *head_tree;
+ 	int clean;
+ 	char **xopt;
+-	static struct lock_file index_lock;
++	struct lock_file index_lock = LOCK_INIT;
+ 
+ 	if (hold_locked_index(&index_lock, LOCK_REPORT_ON_ERROR) < 0)
+ 		return -1;
+@@ -1183,7 +1183,7 @@ static int prepare_revs(struct replay_opts *opts)
+ 
+ static int read_and_refresh_cache(struct replay_opts *opts)
+ {
+-	static struct lock_file index_lock;
++	struct lock_file index_lock = LOCK_INIT;
+ 	int index_fd = hold_locked_index(&index_lock, 0);
+ 	if (read_index_preload(&the_index, NULL) < 0) {
+ 		rollback_lock_file(&index_lock);
+@@ -1577,7 +1577,7 @@ static int create_seq_dir(void)
+ 
+ static int save_head(const char *head)
+ {
+-	static struct lock_file head_lock;
++	struct lock_file head_lock = LOCK_INIT;
+ 	struct strbuf buf = STRBUF_INIT;
+ 	int fd;
+ 	ssize_t written;
+@@ -1702,7 +1702,7 @@ int sequencer_rollback(struct replay_opts *opts)
+ 
+ static int save_todo(struct todo_list *todo_list, struct replay_opts *opts)
+ {
+-	static struct lock_file todo_lock;
++	struct lock_file todo_lock = LOCK_INIT;
+ 	const char *todo_path = get_todo_path(opts);
+ 	int next = todo_list->current, offset, fd;
+ 
 -- 
 2.16.2.246.ga4ee44448f
 
