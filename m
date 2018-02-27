@@ -7,115 +7,89 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AE6BF1FAE2
-	for <e@80x24.org>; Tue, 27 Feb 2018 06:18:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8EEC51FAE2
+	for <e@80x24.org>; Tue, 27 Feb 2018 06:21:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751932AbeB0GSS (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Feb 2018 01:18:18 -0500
-Received: from mail-io0-f193.google.com ([209.85.223.193]:36758 "EHLO
-        mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751881AbeB0GSR (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Feb 2018 01:18:17 -0500
-Received: by mail-io0-f193.google.com with SMTP id e30so9453970ioc.3
-        for <git@vger.kernel.org>; Mon, 26 Feb 2018 22:18:17 -0800 (PST)
+        id S1751128AbeB0GVd (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Feb 2018 01:21:33 -0500
+Received: from mail-it0-f65.google.com ([209.85.214.65]:50708 "EHLO
+        mail-it0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751093AbeB0GVc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Feb 2018 01:21:32 -0500
+Received: by mail-it0-f65.google.com with SMTP id a75so13800578itd.0
+        for <git@vger.kernel.org>; Mon, 26 Feb 2018 22:21:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=uDMpe3lYB769mrRzkysnUW7y9PDPWtqVZbUWpwHSqmI=;
-        b=BaHpI/Y3FJw9RMuE9MUciD/A2hZqCxIoSvsCI13g2/0zlmZvEtD7i1pdVrSyw137sr
-         Ty3WNwE+dCfLAf3g9D+W/d4BqyNoi2qo0mt3TyEMq0d7NR9bY/hUR85E/olJrUpXU2N5
-         uHhi0A+iwOwhibkzSyXzfs9wDaMQt9CVVnfmxoKKHVW+zuiQiVIwmpBtTXmdxoqy2blx
-         Dc9azlYTRNGH0cTWyOepKcikYgNnu6lybf+PNVJj3Qg8T+rma9QvL8d43h4pXrpbuT8o
-         MFI9CE3WOG4YskIpBkrMYIR1zsmGeJ5X7qcnEJV5wY/IjLZ9ETcT0BvW9u0WqPTVAc7h
-         AL+Q==
+        bh=RNJl3tjz/kvgou5gc8JCEEIVPNL08BmhYZyVXEY8Dbo=;
+        b=jRfuK0Nqz6IkdEEVhsUvm2UKspT+tUjbwlOxT+xveRPtNizBN8jXkJu5G4Eg2LLG6V
+         G99VNZV5hrP4AbxoxAvnrAuaXtZDg3dzOfDar3Y2TO4awpOgnutv+wdsFxJSsj7YIJCr
+         HJ7Eigk8+p5qPn6ULdhNdCQg3ZTO+z2B5CDYWor8r4vdLGqURX80iXGn4Py1ZAuOBT/i
+         60/SF3vdbq8Hwt5tZlPji1wwM/iBAohjgIxQVsMqH7lbqSxdR24PbHxmxoG+BV7rWJMQ
+         aikLSKKlmcWZIsZ6tLUyeAWgF2Oaj0zgm9UUjJ9jI5DqrJztEsmMW7nSZKjTKoa9Vuf1
+         Lrbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=uDMpe3lYB769mrRzkysnUW7y9PDPWtqVZbUWpwHSqmI=;
-        b=mPWM5yjI5BMiPlnY2aEXN5CVnZ4/ukJMtDr7xNAsdjhBZCrowv0Z5hna2qSF5Odzm8
-         f8KIVwPO00RUZScrlWiKBKXiWXxHyyDZNeuxJcsb7hvSXNDKuRS9XMHtSKLUYFTxRs6h
-         JP9GX9egFeF+R5kRjP7YyTJQoxn2MR8ntHZKNvjnUGp/8cHiwUaDf082N1QzpHoUHL1F
-         WV8iMBYAyicyt/lqGrXmtxKtfq9AZ2IIBpq8MZSqqDtSAM53ss1OBqkKhjVl2Z0eXf2a
-         0Z+1hf4Lzc6ay43tiYYH4I04fNhRKaiPVVSR0r36b+HFV3xP4S7aA37mOlzZrNbCx0HC
-         zFPw==
-X-Gm-Message-State: APf1xPCKCuDjTnQzRHmX3c7mwxe4dfgwxjLRr+v1cEgmm9NuOCYBZUkf
-        D2z3AZC3DyBZPiuSYeHx214=
-X-Google-Smtp-Source: AG47ELt5uqLoOpK1xr7alWoe4oXvpzhPbwARxN2VI+wTG+olAS2W5YZwAHwMcB4c1VMUX89Skho/Uw==
-X-Received: by 10.107.16.22 with SMTP id y22mr14420758ioi.213.1519712296506;
-        Mon, 26 Feb 2018 22:18:16 -0800 (PST)
+        bh=RNJl3tjz/kvgou5gc8JCEEIVPNL08BmhYZyVXEY8Dbo=;
+        b=GvHemqRxDJhlK5HSJqNqvIARxABC6N5SioSufCSXq8kfSNkScsvDb7NQLOgV/BYCU/
+         8jRglpTJTdaVNKhmpIaE6qpcmpKdGW0kS2q5ZlG7g3n9syRfPyc5374zaG16JxFPROWT
+         LgvrahCJiy53pTlDeLCsbQ/f7cnfEiuHAohuaKoU9go2AQ+ysvIt22sj0kU/j9bbckXt
+         lE+a8WNI5xPXcb144uJ4XEINvijUz2c62/InY+lACqeWdmLNhGu6NezRebdri5yl+fFl
+         eAoeWgvX8N9QgvO0XqAvSbmak0b5lFUIH7WsdtpvdbTyf+5UnEZRYnqU63oszMBxL8Q9
+         5t4Q==
+X-Gm-Message-State: APf1xPCL4VbRAmBRzIVPMLp4BcxXjXGyfRgmpm7sRIEQ0sKKgGdrbC/W
+        bqXHBtMvHAvfD9dltxcVnEo=
+X-Google-Smtp-Source: AG47ELt5hUbpouPIa8CH2ep7wR3uywLk00IJTmBXoih82wC8FA3ejcZ/yTmKbuVQb1TU/yxiBaY48A==
+X-Received: by 10.36.77.143 with SMTP id l137mr14679517itb.118.1519712491885;
+        Mon, 26 Feb 2018 22:21:31 -0800 (PST)
 Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id j88sm7024763iod.22.2018.02.26.22.18.15
+        by smtp.gmail.com with ESMTPSA id 27sm5096547iog.17.2018.02.26.22.21.29
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 26 Feb 2018 22:18:15 -0800 (PST)
-Date:   Mon, 26 Feb 2018 22:18:13 -0800
+        Mon, 26 Feb 2018 22:21:30 -0800 (PST)
+Date:   Mon, 26 Feb 2018 22:21:28 -0800
 From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org, sbeller@google.com, peff@peff.net,
-        gitster@pobox.com, stolee@gmail.com, git@jeffhostetler.com,
-        pclouds@gmail.com
-Subject: Re: [PATCH v3 10/35] protocol: introduce enum protocol_version value
- protocol_v2
-Message-ID: <20180227061813.GF65699@aiede.svl.corp.google.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     Jeff King <peff@peff.net>, Brandon Williams <bmwill@google.com>,
+        git@vger.kernel.org, sbeller@google.com, gitster@pobox.com,
+        stolee@gmail.com, git@jeffhostetler.com, pclouds@gmail.com
+Subject: Re: [PATCH v3 14/35] connect: request remote refs using v2
+Message-ID: <20180227062128.GG65699@aiede.svl.corp.google.com>
 References: <20180125235838.138135-1-bmwill@google.com>
  <20180207011312.189834-1-bmwill@google.com>
- <20180207011312.189834-11-bmwill@google.com>
+ <20180207011312.189834-15-bmwill@google.com>
+ <20180221145411.35b2ea84747518a499276bdd@google.com>
+ <20180222181922.GD185096@google.com>
+ <20180222182657.GE19035@sigill.intra.peff.net>
+ <20180222112533.0d7c6023fb8e4098efedfe31@google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20180207011312.189834-11-bmwill@google.com>
+In-Reply-To: <20180222112533.0d7c6023fb8e4098efedfe31@google.com>
 User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Jonathan Tan wrote:
+> On Thu, 22 Feb 2018 13:26:58 -0500
+> Jeff King <peff@peff.net> wrote:
 
-Brandon Williams wrote:
-
-> Introduce protocol_v2, a new value for 'enum protocol_version'.
-> Subsequent patches will fill in the implementation of protocol_v2.
->
-> Signed-off-by: Brandon Williams <bmwill@google.com>
-> ---
-
-Yay!
-
+>> I agree that it shouldn't matter much here. But if the name argv_array
+>> is standing in the way of using it, I think we should consider giving it
+>> a more general name. I picked that not to evoke "this must be arguments"
+>> but "this is terminated by a single NULL".
 [...]
-> +++ b/builtin/fetch-pack.c
-> @@ -201,6 +201,9 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
->  			   PACKET_READ_GENTLE_ON_EOF);
->  
->  	switch (discover_version(&reader)) {
-> +	case protocol_v2:
-> +		die("support for protocol v2 not implemented yet");
-> +		break;
+> This sounds reasonable - I withdraw my comment about using struct
+> string_list.
 
-This code goes away in a later patch, so no need to do anything about
-this, but the 'break' is redundant after the 'die'.
-
-[...]
-> --- a/builtin/receive-pack.c
-> +++ b/builtin/receive-pack.c
-> @@ -1963,6 +1963,12 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
->  		unpack_limit = receive_unpack_limit;
->  
->  	switch (determine_protocol_version_server()) {
-> +	case protocol_v2:
-> +		/*
-> +		 * push support for protocol v2 has not been implemented yet,
-> +		 * so ignore the request to use v2 and fallback to using v0.
-> +		 */
-> +		break;
-
-As you mentioned in the cover letter, it's probably worth doing the
-same fallback on the client side (send-pack), too.
-
-Otherwise when this client talks to a new-enough server, it would
-request protocol v2 and then get confused when the server responds
-with the protocol v2 it requested.
+Marking with #leftoverbits as a reminder to think about what such a
+more general name would be (or what kind of docs to put in
+argv-array.h) and make it so the next time I do a search for that
+keyword.
 
 Thanks,
 Jonathan
