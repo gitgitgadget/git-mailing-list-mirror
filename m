@@ -7,124 +7,124 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F00B11F404
-	for <e@80x24.org>; Tue, 27 Feb 2018 05:30:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 229771F404
+	for <e@80x24.org>; Tue, 27 Feb 2018 05:46:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751697AbeB0FaX (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Feb 2018 00:30:23 -0500
-Received: from mail-wm0-f52.google.com ([74.125.82.52]:37420 "EHLO
-        mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750919AbeB0FaX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Feb 2018 00:30:23 -0500
-Received: by mail-wm0-f52.google.com with SMTP id 139so8184942wmn.2
-        for <git@vger.kernel.org>; Mon, 26 Feb 2018 21:30:22 -0800 (PST)
+        id S1751004AbeB0Fqn (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Feb 2018 00:46:43 -0500
+Received: from mail-io0-f196.google.com ([209.85.223.196]:43542 "EHLO
+        mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750770AbeB0Fqm (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Feb 2018 00:46:42 -0500
+Received: by mail-io0-f196.google.com with SMTP id l12so19868837ioc.10
+        for <git@vger.kernel.org>; Mon, 26 Feb 2018 21:46:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=3mzfGpBMun8kPVMvLqJjpUeHLFDOpmnck5RHSmJ6cOk=;
-        b=DWipBGqviA+/za04PZdoiyLtN6GmAu/qRGJmtsdGxXqd1bgJMnb3YqnWv+CwO2BOUk
-         UTR9yurwDEC1P7eki8KRWnjy+A7JJAgnog+9lNBq8+iXoYovSmOzSYIKm6BgYQ0xlewo
-         GVAJACRL2H+M+3rcqEFHxcJOP980mPlCUmbnmL70ReArWjbQd69xHteitQ0PkX8CqcNJ
-         BnSenamu/vv3AfYNjMLZNpkrpV/msUBMHxkK7n1N56yijrhp8C8q0xQY/aW2FQQloyvt
-         5+IenWhK/r5nilVOPXmt+Vn5KfouWMaoBUr2WIPzznr2Ifg8NDbqq1XX6mxYQKonSvQj
-         hCDQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=ASkhw6pdOjcu+tudQkZqWcMgTAVJnLmgFzeMHqYZo5M=;
+        b=g+My8nhvkqv8ROIm+CRrk1miTSczv4yusVoivj0QN0d5JA2AXKcv+x7LM7j9BZbDEd
+         Ei+9mjGrcZgz3rVCokncawS0afHJaPedqY8NxMXr2u/MYXAWJ/0NmEY618Eynr7MdNL1
+         EYm1l59QcqvmimTFhC2Jp5iLO2Juybc279KAwlXjkbeFmuyNbgPlCNHubK3CwtRMBtZ4
+         KhXhDf9b97EXrkC2DRLRcUdNPErQCpdCVRi5MKNcHS7GGpgyWcQY4K5Anuem6jvk6Gnv
+         XtJSf2qjO/vTmuaFV3n3ly3s67ZYZUN3mp6y7kjSmb6fcpCzaY7u6yIU7lPRDTG5MaIa
+         u2LA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=3mzfGpBMun8kPVMvLqJjpUeHLFDOpmnck5RHSmJ6cOk=;
-        b=SC+tXy/Qkj6V8ByRk4NlBveJahCI2SO4XsU0Z38n++NO8vPhpHsCGh1U3S4xhPQ0Ls
-         WN7HS6ucPw/w0BPmjwutxmipex2Tv6EcHA9ISVB2HwSsnproIwH5nO+4SwjYFFbH5MwA
-         vWK3y5tZxJVOTwSisdrkrGEnBaiRYgOsYOWUeBaMDPUyyy9Zey3Cnlj9GStPCeYkAxvV
-         JlYzwFfY5dc/uJ+gZjwhr/mjR2VJOr/VHnlpP0iPohUSv7wF4kPDyF7LseUySwMF2Rcs
-         vlYsKZydnNt0n8zKQIBstTuuRftzrYrdDVhekRxuvFbFG9Qf4Eb1JBNMCovhJoglbl8x
-         YvHw==
-X-Gm-Message-State: APf1xPBbGpmGWEwmStsi45jbhqrZX94Zu8U0v+GcBbREcbazd7xPdR+2
-        Lqv0eVLqL5Pa4T4ZmJBBktQHDcG3LUS/FmhGTzU=
-X-Google-Smtp-Source: AG47ELtgwgoLmENCUKaCgItsTDfYTZBiZVursq+V3PuPSwGPgCS95cVVU+OoyZxhkSG0/aCWPnzzkrtuYHWvEh4viHk=
-X-Received: by 10.80.149.68 with SMTP id v4mr9502944eda.236.1519709421756;
- Mon, 26 Feb 2018 21:30:21 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=ASkhw6pdOjcu+tudQkZqWcMgTAVJnLmgFzeMHqYZo5M=;
+        b=nes8aJgWX8G75H5CsyOJUY4ez7an8hYfYQ4Y8HwdeOpieT3UmVpCfTDzErY0PWjV9j
+         k+vAQozIvP1nbjIgE9MXihNTL2yBxiEkmfZnMx8F218BdZMvl2VjNZBxUMU4i34czrIH
+         9NgOx6VZlJ3Ja192kbXjIi6MSknY4VpwohLabqwtaQWcyUffNRaREhCHyeVSXKxQZSzo
+         4hVHIVh7S4zgXxYagXNjp4rA7o2SfDg6Q7wIzgdiTY2j9Ekn9t6D+zu8xHfGpKkh9Xtb
+         M+kJMB12ke89Gj4YdxErVmfsd/goRKFl+nATyFdsCIM5q94DAkwXxbPOn0Dl6jZlCNrE
+         Z4+A==
+X-Gm-Message-State: APf1xPCnAf6rrAz6A8Z6A7FE+i8k1JGJrxqDgD0WOKcRA7BOuy8hQRp0
+        BaRVi7Q0n60j13HqFa+7KhY=
+X-Google-Smtp-Source: AG47ELtVU2SAOcSt2C0wDL6wrxmBZ5+59O8JVH4tjOsh2qqGHnGoWyLeIlt2Mnf48hroF9kp8WFlIw==
+X-Received: by 10.107.63.131 with SMTP id m125mr14268948ioa.211.1519710401763;
+        Mon, 26 Feb 2018 21:46:41 -0800 (PST)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id g3sm6653900ioj.6.2018.02.26.21.46.39
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 26 Feb 2018 21:46:40 -0800 (PST)
+Date:   Mon, 26 Feb 2018 21:46:38 -0800
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Brandon Williams <bmwill@google.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Stefan Beller <sbeller@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Philip Oakley <philipoakley@iee.org>, stolee@gmail.com
+Subject: Re: [PATCH v2 12/27] serve: introduce git-serve
+Message-ID: <20180227054638.GB65699@aiede.svl.corp.google.com>
+References: <20180103001828.205012-1-bmwill@google.com>
+ <20180125235838.138135-1-bmwill@google.com>
+ <20180125235838.138135-13-bmwill@google.com>
+ <CACsJy8BHh+Kv=om+rc6=TM60E1j9=wq4rRBvKB8HLfNTMa51Rg@mail.gmail.com>
 MIME-Version: 1.0
-Received: by 10.80.139.133 with HTTP; Mon, 26 Feb 2018 21:30:01 -0800 (PST)
-In-Reply-To: <nycvar.QRO.7.76.6.1802270051470.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <87y3jtqdyg.fsf@javad.com> <bbe64321-4d3a-d3fe-8bb9-58b600fabf35@gmail.com>
- <nycvar.QRO.7.76.6.1802270051470.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Mon, 26 Feb 2018 21:30:01 -0800
-Message-ID: <CA+P7+xq8UUcLWomUi=PS_hTKfJd3dMAxMmhioDS1bixwcmKAqw@mail.gmail.com>
-Subject: Re: [RFC] Rebasing merges: a jorney to the ultimate solution (Road Clear)
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Igor Djordjevic <igor.d.djordjevic@gmail.com>,
-        Sergey Organov <sorganov@gmail.com>,
-        Git mailing list <git@vger.kernel.org>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CACsJy8BHh+Kv=om+rc6=TM60E1j9=wq4rRBvKB8HLfNTMa51Rg@mail.gmail.com>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Feb 26, 2018 at 4:07 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi Buga,
->
-> On Tue, 20 Feb 2018, Igor Djordjevic wrote:
->
->> I`m really interested in this topic, which seems to (try to) address the
->> only "bad feeling" I had with rebasing merges - being afraid of silently
->> losing amendments by actually trying to "replay" the merge (where
->> additional and possibly important context is missing), instead of really
->> "rebasing" it (somehow).
->
-> If those amendments are what you are worried about, why not address them
-> specifically?
->
-> In other words, rather than performing the equivalent of
->
->         git show <merge>^! | git apply
->
-> (which would of course completely ignore if the rewritten <merge>^2
-> dropped a patch, amended a patch, or even added a new patch), what you
-> really want is to figure out what changes the user made when merging, and
-> what merge strategy was used to begin with.
->
-> To see what I mean, look at the output of `git show 0fd90daba8`: it shows
-> how conflicts were resolved. By necessity, this is more complicated than a
-> simple diff: it is *not* as simple as taking a diff between two revisions
-> and applying that diff to a third revision. There were (at least) three
-> revisions involved in the original merge commit, and recreating that merge
-> commit faithfully means to represent the essence of the merge commit
-> faithfully enough to be able to replay it on a new set of at least three
-> revisions.  That can be simplified to two-way diffs only in very, very
-> special circumstances, and in all other cases this simplification will
-> simply fall on its nose.
->
-> If the proposed solution was to extend `git apply` to process combined
-> diffs, I would agree that we're on to something. That is not the proposed
-> solution, though.
->
-> In short: while I am sympathetic to the desire to keep things simple,
-> the idea to somehow side-step replaying the original merge seems to be
-> *prone* to be flawed. Any system that cannot accommodate
-> dropped/changed/added commits on either side of a merge is likely to be
-> too limited to be useful.
->
+Hi Duy,
 
+Duy Nguyen wrote:
+> On Fri, Jan 26, 2018 at 6:58 AM, Brandon Williams <bmwill@google.com> wrote:
 
-The reason Sergey's solution works is because he cherry picks the
-merge using each parent first, and then merges the result of those. So
-each branch of the merge gets one, and then you merge the result of
-those cherry-picks. This preservers amendments and changes properly,
-and should result in a good solution.
+>> + stateless-rpc
+>> +---------------
+>> +
+>> +If advertised, the `stateless-rpc` capability indicates that the server
+>> +supports running commands in a stateless-rpc mode, which means that a
+>> +command lasts for only a single request-response round.
+>> +
+>> +Normally a command can last for as many rounds as are required to
+>> +complete it (multiple for negotiation during fetch or no additional
+>> +trips in the case of ls-refs).  If the client sends the `stateless-rpc`
+>> +capability with a value of `true` (in the form `stateless-rpc=true`)
+>> +then the invoked command must only last a single round.
+>
+> Speaking of stateless-rpc, I remember last time this topic was brought
+> up, there was some discussion to kind of optimize it for http as well,
+> to fit the "client sends request, server responds data" model and
+> avoid too many round trips (ideally everything happens in one round
+> trip). Does it evolve to anything real? All the cool stuff happened
+> while I was away, sorry if this was discussed and settled.
 
-I agree that making "git apply" work with combined diffs could also be
-another solution, but it may be trickier.
+We have a few different ideas for improving negotiation.  They were
+speculative enough that we didn't want to make them part of the
+baseline protocol v2.  Feel free to poke me in a new thread. :)
 
-If this *doesn't* work, a test case showing that it doesn't work would
-be appreciated. I'm hoping to be able to put together something soon,
-but I haven't had time due to $dayjob.
+Some teasers:
 
-> Ciao,
-> Johannes
+- allow both client and server to suggest commits in negotiation,
+  instead of just the client?
+
+- send a bloom filter for the peer to filter their suggestions
+  against?
+
+- send other basic information like maximum generation number or
+  maximum commit date?
+
+- exponential backoff in negotiation instead of linear walking?
+  prioritizing ref tips?  Imitating the bitmap selection algorithm?
+
+- at the "end" of negotiation, sending a graph data structure instead
+  of a pack, to allow an extra round trip to produce a truly minimal
+  pack?
+
+Those are some initial ideas, but it's also likely that someone can
+come up with some other experiments to try, too.  (E.g. we've looked
+at various papers on set reconciliation, but they don't make enough
+use of the graph structure to help much.)
+
+Thanks,
+Jonathan
