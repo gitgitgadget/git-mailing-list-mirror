@@ -7,105 +7,130 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2CF301F404
-	for <e@80x24.org>; Tue, 27 Feb 2018 00:00:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0E3901F404
+	for <e@80x24.org>; Tue, 27 Feb 2018 00:02:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751455AbeB0AAF (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Feb 2018 19:00:05 -0500
-Received: from mail-ot0-f176.google.com ([74.125.82.176]:41558 "EHLO
-        mail-ot0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751165AbeB0AAE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Feb 2018 19:00:04 -0500
-Received: by mail-ot0-f176.google.com with SMTP id w38so2163249ota.8
-        for <git@vger.kernel.org>; Mon, 26 Feb 2018 16:00:03 -0800 (PST)
+        id S1751553AbeB0ACh (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Feb 2018 19:02:37 -0500
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:38803 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751487AbeB0ACg (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Feb 2018 19:02:36 -0500
+Received: by mail-wm0-f65.google.com with SMTP id z9so20386656wmb.3
+        for <git@vger.kernel.org>; Mon, 26 Feb 2018 16:02:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=nWRauJhb/gsHPcK47mTJ+fmiOG9zDZLQ45PpgvmFu1M=;
-        b=P5QCa2fTN6AEA6ECawxRszxBTcgg1goNb3SFXjneBuY9uO8CnvLqFujg5sKYyMgy5S
-         s9IJ7ckpHgFujiX04I0d0NoraQtOBUh3Qmh5Pj9B7tT8+TtP/sG1SZ6MEVVSB+D1pzWE
-         eeqKjqb+uP0scY5EkGVU/RVGcz5QO000EgCY7B0AdKdyKB//47FFRSUFuMO+FkK7AkRK
-         WF1VjyItmMzd7zJDJBrM38yJ44MneWgXwm7XAB+JL6ZiKzhHuLco74jLy8tG1sLSi27J
-         Horu1GeLFIhr2q7YQRmSRK2ZrphIfO9AqxstB+mJmEmycIh2UA7ntI02NhlEvpsYgC+p
-         MJNg==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=DNrKbXnanIiAdau+Simv9R3ENFCiHLPgTs5XkVQSg3g=;
+        b=EoHsGhkIqX7NjZJr3IjXSWm3Mc02/8Ix2Si+sjg4OJyK/cNEBZ0V5FsrehQPkGsM98
+         MvHX98ZvxAGtvRiBIOpmhIhnrTjCNcI53ys589Jp14sSMawOADYhNbIEE9vOrey7zCvm
+         gokwKC4HP+qNTVYl7JHhsBfyFDhpQfshfnATpeV1gynZeQaQ9ewetBumVFy/L72n7eju
+         lRYrlgH9UzTMMd85Hkn6RZDiqdeqmNYxstkQUhWErTr4Goqnv4pZXhHbV6lN8JKqlmFv
+         fRL9MQaUUe4XF/132qEWwbbK7XDVFrgGNXUpQNuTVIT9QNZcJchnPtdm+88IIYaDYQzY
+         lOHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=nWRauJhb/gsHPcK47mTJ+fmiOG9zDZLQ45PpgvmFu1M=;
-        b=UuZ1B9PS0eX/fwWYhHz5BtXEsvMhMSGg4XDqLCfIeOB1mxakyQjn7nmqYLf/mTALoq
-         VEv9JU1MyEz/W50UN6FFJL4JisWB9wy2NgDokiaxtWbYRDkurq/OwzszlBUUj6/5B4P/
-         toZVOVFbJp9MVDyBu9i27TjmTp7DCfpYKooJWwhm+VbzIb1pXQMt9k9IiTN3Axj6M9wi
-         KBIPaGDR6/OVr1dV0CbWt++ugQian6/ituAGmvdnQzcRVQfnuIEMdFik3BGroRZQuaLq
-         tG3bWZ2xxogR4BdE/Ia6meJ5iw/gDNdaE6DmL5J3j/8g3Jgi5LXu2XJvF/gst9I7UZEn
-         6APg==
-X-Gm-Message-State: APf1xPBC+4FP+ZORqUuItd1btvSSYdhbR/MuxnvT84Tm6oo9dRQ99NtZ
-        VOkd87hsPvJP/kOoGp7AUyMM0JnUijOd+u8MOeM=
-X-Google-Smtp-Source: AG47ELt8SfRxWD6xRLlOTN6B6YpJJNRXMv/AxvZdrfaF5nL2oUOXXlPV2LYzUOI23FCVwGz4SeCWGZlpVvTwOZn9dsc=
-X-Received: by 10.157.54.161 with SMTP id h30mr9337021otc.173.1519689603466;
- Mon, 26 Feb 2018 16:00:03 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=DNrKbXnanIiAdau+Simv9R3ENFCiHLPgTs5XkVQSg3g=;
+        b=CS8a7DlH3j3BOvazOEZw44yrALimfeIHkAyKGaIo+YIvRq+4iWjTcShEkCl+nqXJJ/
+         L4PS89BvSVc0QOoYc7wAH51kBst3hpOnk0fBEIYz+oEH0n8zld4oQPXTSStTQt5GZTtk
+         pHLDI+JYU18GTeHozKlpIRnJBzO34cnaXxh8yujKKOpdzWG8FktbqOlnijZNbvSsVZOk
+         AOyqd/fkhqHEN1jE3NsXuR/wKl71J/Cxz7c9F6YVNNy8O0N5x+kA7GcLiH70iBOCyHNm
+         C5Lvii9DcDiHEvuxmPZn+4aEFIvLrBtLLUcEfNN9ePKSeuqlG/Tfnczvivp/WDxj533K
+         AyHQ==
+X-Gm-Message-State: APf1xPD5H9FWcgsSXOXxHGqmO92IxXP38ngr5KIfA8dDazY/S3HeFr8X
+        22o6GuCFoEIQGPQwNZ1Yg/g=
+X-Google-Smtp-Source: AH8x227jVPBGGQHVUdMrvN9vgYsxmPE57Px+66lvpvK5gWeROktBcnhKXbinAzeFtUk6/KiWC3Vr/w==
+X-Received: by 10.80.142.27 with SMTP id 27mr16979024edw.127.1519689754943;
+        Mon, 26 Feb 2018 16:02:34 -0800 (PST)
+Received: from evledraar (178-84-79-100.dynamic.upc.nl. [178.84.79.100])
+        by smtp.gmail.com with ESMTPSA id n2sm8697761edl.74.2018.02.26.16.02.33
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 26 Feb 2018 16:02:33 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Brandon Williams <bmwill@google.com>, git@vger.kernel.org,
+        sbeller@google.com, gitster@pobox.com, jrnieder@gmail.com,
+        stolee@gmail.com, git@jeffhostetler.com, pclouds@gmail.com
+Subject: Re: [PATCH v3 13/35] ls-refs: introduce ls-refs server command
+References: <20180125235838.138135-1-bmwill@google.com>
+        <20180207011312.189834-1-bmwill@google.com>
+        <20180207011312.189834-14-bmwill@google.com>
+        <20180222094831.GB12442@sigill.intra.peff.net>
+        <20180223004514.GP185096@google.com>
+        <20180224040149.GA16743@sigill.intra.peff.net>
+User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 1.1.0
+In-reply-to: <20180224040149.GA16743@sigill.intra.peff.net>
+Date:   Tue, 27 Feb 2018 01:02:32 +0100
+Message-ID: <87inaje1uv.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Received: by 10.74.25.140 with HTTP; Mon, 26 Feb 2018 15:59:33 -0800 (PST)
-In-Reply-To: <CAGZ79kZDhoWWPpoENwvE6esxzdJvTnL4EAxGX5HV=DwDtDOEgw@mail.gmail.com>
-References: <20180221015430.96054-1-sbeller@google.com> <20180224004754.129721-1-sbeller@google.com>
- <20180224004754.129721-2-sbeller@google.com> <20180226093040.GA10479@ash> <CAGZ79kZDhoWWPpoENwvE6esxzdJvTnL4EAxGX5HV=DwDtDOEgw@mail.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 27 Feb 2018 06:59:33 +0700
-Message-ID: <CACsJy8Csr+u9S5hs=jyEqpb3=4zpR8Ap9ks29jV4YFO1eSR5vQ@mail.gmail.com>
-Subject: Re: [PATCHv4 01/27] repository: introduce raw object store field
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Brandon Williams <bmwill@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 27, 2018 at 2:28 AM, Stefan Beller <sbeller@google.com> wrote:
-> On Mon, Feb 26, 2018 at 1:30 AM, Duy Nguyen <pclouds@gmail.com> wrote:
->> On Fri, Feb 23, 2018 at 04:47:28PM -0800, Stefan Beller wrote:
->>>  /* The main repository */
->>>  static struct repository the_repo = {
->>> -     NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, &the_index, &hash_algos[GIT_HASH_SHA1], 0, 0
->>> +     NULL, NULL,
->>> +     RAW_OBJECT_STORE_INIT,
->>> +     NULL, NULL, NULL,
->>> +     NULL, NULL, NULL,
->>> +     &the_index,
->>> +     &hash_algos[GIT_HASH_SHA1],
->>> +     0, 0
->>>  };
->>>  struct repository *the_repository = &the_repo;
+
+On Sat, Feb 24 2018, Jeff King jotted:
+
+> On Thu, Feb 22, 2018 at 04:45:14PM -0800, Brandon Williams wrote:
+>> > Does the client have to be aware that we're using wildmatch? I think
+>> > they'd need "refs/heads/**" to actually implement what we usually
+>> > specify in refspecs as "refs/heads/*". Or does the lack of WM_PATHNAME
+>> > make this work with just "*"?
+>> >
+>> > Do we anticipate that the client would left-anchor the refspec like
+>> > "/refs/heads/*" so that in theory the server could avoid looking outside
+>> > of /refs/heads/?
 >>
->> I wonder if we should do something like this. It makes the_repo
->> initialization easier to read and it helps unify the init code with
->> submodule.
->>
->> No don't reroll. If you think it's a good idea, you can do something
->> like this in the next series instead.
->>
->> -- 8< --
->> diff --git a/check-racy.c b/check-racy.c
->> index 24b6542352..47cbb4eb6d 100644
->> --- a/check-racy.c
->> +++ b/check-racy.c
+>> Yeah we may want to anchor it by providing the leading '/' instead of
+>> just "refs/<blah>".
 >
-> totally offtopic: Do we want to move this file into t/helper?
+> I actually wonder if we should just specify that the patterns must
+> _always_ be fully-qualified, but may end with a single "/*" to iterate
+> over wildcards. Or even simpler, that "refs/heads/foo" would find that
+> ref itself, and anything under it.
 
-No wonder both Jeff and I missed this program (he didn't convert it to
-use cmd_main, and I didn't move it to t/helper). This git-check-racy
-is added in 42f774063d (Add check program "git-check-racy" -
-2006-08-15) and is not part of the default build. You need to manually
-update Makefile first to build it.
+I agree that this is a very good trade-off for now, but I think having
+an escape hatch makes sense. It looks like the protocol is implicitly
+extendible since another parameter could be added, but maybe having such
+a parameter from the get-go would make sense:
 
-Right now it's broken (multiple definition of 'main'). If you add
-init_the_repository() or something similar, just leave this file
-untouched. Maybe I'll fix it later, separately. Or perhaps I'll move
-this functionality to git-update-index if this is still worth keeping.
--- 
-Duy
+    pattern-type [simple|wildmatch|pcre|...]
+    ref-pattern <pattern>
+
+E.g.:
+
+    pattern-type simple
+    ref-pattern refs/tags/*
+    ref-pattern refs/pull/*
+    pattern-type wildmatch
+    ref-pattern refs/**/2018
+    pattern-type pcre
+    ref-pattern ^refs/release/v-201[56789]-\d+$
+
+I.e. each ref-pattern is typed by the pattern-type in play, with just
+"simple" (with the behavior being discussed here) for now, anything else
+(wildmatch, pcre etc.) would be an error.
+
+But it allows for adding more patterns down the line, and in
+e.g. in-house setups of git where you control both the server & clients
+to make the trade-off that we'd like a bit more work on the server
+(e.g. to match dated tags created in the last 3 months) by setting some
+config option.
+
+The discussion upthread about:
+
+> The other problem with tail-matching is that it's inefficient on the
+> server[...]
+
+Is also something that's only true in the current implementation, but
+doesn't need to be, so it would be unfortunate to not work in an escape
+hatch for that limtiation.
+
+E.g. if the refs were stored indexed using the method described at
+https://swtch.com/~rsc/regexp/regexp4.html tail matching becomes no less
+efficient than prefix matching, but a function of how many trigrams in
+your index match the pattern given.
