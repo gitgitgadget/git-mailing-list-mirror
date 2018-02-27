@@ -3,107 +3,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 08B541F404
-	for <e@80x24.org>; Tue, 27 Feb 2018 22:42:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3FCA61F404
+	for <e@80x24.org>; Tue, 27 Feb 2018 23:03:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751893AbeB0Wm3 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Feb 2018 17:42:29 -0500
-Received: from mail-wm0-f41.google.com ([74.125.82.41]:54592 "EHLO
-        mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751754AbeB0Wm2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Feb 2018 17:42:28 -0500
-Received: by mail-wm0-f41.google.com with SMTP id z81so1495618wmb.4
-        for <git@vger.kernel.org>; Tue, 27 Feb 2018 14:42:27 -0800 (PST)
+        id S1751882AbeB0XDX (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Feb 2018 18:03:23 -0500
+Received: from mail-pl0-f65.google.com ([209.85.160.65]:43553 "EHLO
+        mail-pl0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751835AbeB0XDW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Feb 2018 18:03:22 -0500
+Received: by mail-pl0-f65.google.com with SMTP id f23-v6so307779plr.10
+        for <git@vger.kernel.org>; Tue, 27 Feb 2018 15:03:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=7I5xuO4yeke+ojScKrPZFHh/DB76vylahGS8FdmeY5M=;
-        b=PMTP3JT0J9010E6HOxv/t4lkz9eAHHo3cBahEhTKz1BGkBbJcy2TL0ceVdTeLaSqTx
-         /EuTvk9vcXdKjcBr91WI8uQIt9/FAOGZsP1tI8+zoCHw34eQ7E+rOChMhLC9CrFlqk3R
-         TROZhuR4gfRe+O89/CfjhFnJXlD/DxJ9zcFP7+AiE+Z6MgHQvjLiOpWmx5Jo+CT2WLPn
-         SJtZjByFGP4vhO/B6ElsI4q3yhVI+YAdJ1q3Fwopcm1wkL0BOLZmmQAkwNOGTP1gYEs2
-         pVKKHN45om7z1OAA1pKBNpFfB0L/j/XNdS5KHeX5HmiirrFpoZfd5oiXZMKySF+A6/6d
-         Nnjw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=pExV2xfdY3lhNqRq1wte5bEUfkb3MLK6Kbxm6k1RE6g=;
+        b=Lx7h5EPektX81pdjYRz5CaCwtX+ZvSCdJfe+kuKqT2962agaFVfjp23O6XbS5SM4vS
+         bxu4sKCWbYXFG0pA//YTCito4eg0SGBoQilOXePEHIt+Uf7JMycCnr37ucBTxS8ylO2i
+         ultdbZdnqSAC/rhmE9lQoIpMM787HgW5FZOeDFED50Gjs+Qxo78qf5Il7k4dOlWub7m2
+         aP+/P8F8EKupWz880mO11qQNoIdOfmX3/UoOMWyadtOFfAPCnGWY7PxCEY45thhgIIvr
+         a1xoCsHBnr0Uzuvy7aymwLrEA3AUqgW+tkKCsM6Oi4Xb33Q2z6Gcp14u5TbZpMPGTsmg
+         +oXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=7I5xuO4yeke+ojScKrPZFHh/DB76vylahGS8FdmeY5M=;
-        b=PVBXxTl+az9CGJy4qqvnnNIG6zBmAVZcdB/f90LLVxYAaqlhSVDlgSlwr/Mmg8UWBo
-         M//u2eT0kHmVRWv2OsSU5Dc++AaS9Jm8sI6u17qY6XPN08ZxbRCHquC3qlXBBilsrepQ
-         x+CYvY3n6t5XW0GFybHA0vu8gUbVSWS8hLMsFPyylbtgIs6qP4zSHEK5ESE/4hZhzNDP
-         Bp6JfDoql+eg7A9Lz+kDQm4LWODtez4MrgIbSAdYd70K+UOztJQLyoHKXbr2cGUat3PN
-         srLj0T0RV7xPARhekiirBmihJxdb33lz8WUwcRxGLtAuhVFUWb25zremzKGnWnSE0Mlc
-         dADw==
-X-Gm-Message-State: APf1xPAyUd7M3Ef1TeKbQ5/PDYx03mBfudd/Boa56N2sA3kEQ+jPVMX4
-        BkmojvVKDoOXf3sel92bu7M=
-X-Google-Smtp-Source: AG47ELsbMe9GbP7AVngeiwavUnSFvEYaN+52VRIFjRGFaVicrV5IqykqCblvjWwQTt8urGBdlWeXkg==
-X-Received: by 10.28.198.199 with SMTP id w190mr11420391wmf.62.1519771346615;
-        Tue, 27 Feb 2018 14:42:26 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id h50sm295617wrf.65.2018.02.27.14.42.25
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=pExV2xfdY3lhNqRq1wte5bEUfkb3MLK6Kbxm6k1RE6g=;
+        b=P1rAzq4CfMF/0LRv7iiccwYKm+7teOf7HmVbspHrih2zLhA4xVWffoQQSSdwkfQ0cn
+         +AUWyab3sk9KUlgI23Ckc+RHqyjDg+cKEFjSNTBbYbNmlmRVah30ckXWu7pI0JftdVBz
+         Or02WqYx5NTo+XznovOtSayxETPBWy1jCIdmpm8vfACq35p8454Wluy8Ov76Nr+k3Ydb
+         jaxR/mFOhRSGMjpVVVyShTIUPCOacg34vO3D3hREvpMOZihCWjrrKNr+WHoi4gYJSPF/
+         XyeTKoV0+KVyXcHB4gWK4/Y6+u/EN29ybhrKjAXSiufV1oFu0W9FoRNGe+BjdFM1FqeW
+         C/Cw==
+X-Gm-Message-State: APf1xPAPibi4826U1GNUkzBInvc/6BtOLlcoxPQXEJUSpO3BQ13mRgZG
+        bRiwO8gFQq9zL2Jslhefj0SVv4o9
+X-Google-Smtp-Source: AH8x2263/8vpBYVE2cNi99HS3nyHKORtYKsmXkDjmJr97+3ydEjANPJAQrmvZO1q38LSVQSodh87Iw==
+X-Received: by 2002:a17:902:aa5:: with SMTP id 34-v6mr15978635plp.429.1519772601562;
+        Tue, 27 Feb 2018 15:03:21 -0800 (PST)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id x124sm253196pfx.105.2018.02.27.15.03.18
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 27 Feb 2018 14:42:25 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Phillip Wood <phillip.wood@talktalk.net>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        "Brian M. Carlson" <sandals@crustytoothpaste.net>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v3 4/9] t3701: don't hard code sha1 hash values
-References: <20180213104408.9887-1-phillip.wood@talktalk.net>
-        <20180227110404.16816-1-phillip.wood@talktalk.net>
-        <20180227110404.16816-5-phillip.wood@talktalk.net>
-Date:   Tue, 27 Feb 2018 14:42:25 -0800
-In-Reply-To: <20180227110404.16816-5-phillip.wood@talktalk.net> (Phillip
-        Wood's message of "Tue, 27 Feb 2018 11:03:59 +0000")
-Message-ID: <xmqqinainjfy.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        Tue, 27 Feb 2018 15:03:18 -0800 (PST)
+Date:   Tue, 27 Feb 2018 15:03:16 -0800
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git@vger.kernel.org, sbeller@google.com, peff@peff.net,
+        gitster@pobox.com, stolee@gmail.com, git@jeffhostetler.com,
+        pclouds@gmail.com
+Subject: Re: [PATCH v3 26/35] transport-helper: remove name parameter
+Message-ID: <20180227230316.GE174036@aiede.svl.corp.google.com>
+References: <20180125235838.138135-1-bmwill@google.com>
+ <20180207011312.189834-1-bmwill@google.com>
+ <20180207011312.189834-27-bmwill@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180207011312.189834-27-bmwill@google.com>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Phillip Wood <phillip.wood@talktalk.net> writes:
+Brandon Williams wrote:
 
->  t/t3701-add-interactive.sh | 30 ++++++++++++++++++++----------
->  1 file changed, 20 insertions(+), 10 deletions(-)
+> Commit 266f1fdfa (transport-helper: be quiet on read errors from
+> helpers, 2013-06-21) removed a call to 'die()' which printed the name of
+> the remote helper passed in to the 'recvline_fh()' function using the
+> 'name' parameter.  Once the call to 'die()' was removed the parameter
+> was no longer necessary but wasn't removed.  Clean up 'recvline_fh()'
+> parameter list by removing the 'name' parameter.
 >
-> diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-> index bdd1f292a9..46d655038f 100755
-> --- a/t/t3701-add-interactive.sh
-> +++ b/t/t3701-add-interactive.sh
-> @@ -10,6 +10,16 @@ then
->  	test_done
->  fi
->  
-> +diff_cmp () {
-> +	for x
-> +	do
-> +		sed  -e '/^index/s/[0-9a-f]*[1-9a-f][0-9a-f]*\.\./1234567../' \
-> +		     -e '/^index/s/\.\.[0-9a-f]*[1-9a-f][0-9a-f]*/..9abcdef/' \
-> +		     "$x" >"$x.filtered"
+> Signed-off-by: Brandon Williams <bmwill@google.com>
+> ---
+>  transport-helper.c | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
 
-Interesting ;-)  You require .. and on the left hand side you want
-to see a run of hexdec with at least one non-zero hexdigit, which is
-filtered to fixed-length 1234567; right hand side is the same deal.
+Nice.
 
-Which sounds like a reasonable way to future-proof the comparison.
-
-If 7 zeros are expected in the result, and the actual output had 8
-zeros, the filter does not touch either so they compare differently,
-which is somewhat unfortunate.  Perhaps something like
-
-	/^index/s/^00*\.\./0000000../
-	/^index/s/\([^0-9a-f]\)00*\.\./\10000000../
-	/^index/s/\.\.00*$/..0000000/
-	/^index/s/\.\.00*\([^0-9a-f]\)/..0000000\1/
-
-after the above two patterns help?
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
