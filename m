@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E23021F576
-	for <e@80x24.org>; Tue, 27 Feb 2018 11:04:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E8C301F576
+	for <e@80x24.org>; Tue, 27 Feb 2018 11:04:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752773AbeB0LE3 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Feb 2018 06:04:29 -0500
-Received: from smtp-out-2.talktalk.net ([62.24.135.66]:55253 "EHLO
+        id S1752833AbeB0LEh (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Feb 2018 06:04:37 -0500
+Received: from smtp-out-2.talktalk.net ([62.24.135.66]:48503 "EHLO
         smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752621AbeB0LE1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Feb 2018 06:04:27 -0500
+        with ESMTP id S1752745AbeB0LE3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Feb 2018 06:04:29 -0500
 Received: from lindisfarne.localdomain ([89.242.176.20])
         by smtp.talktalk.net with SMTP
-        id qd3QeQ4WdoNnDqd3ZeXd0s; Tue, 27 Feb 2018 11:04:26 +0000
+        id qd3QeQ4WdoNnDqd3ceXd1F; Tue, 27 Feb 2018 11:04:28 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1519729466;
-        bh=pkKrIQXWrlEFTns2etoCbmtiCY7p9Wd4Uig4VkCUJ7U=;
+        s=cmr1711; t=1519729468;
+        bh=BbB5Iwmjucr5OD0+0d6qpeboUjDL1yHtD3kgVhn7cao=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:Reply-To;
-        b=Hodr/4wq9/mbVakt8I4F6a8AW4iim3fGX+GHSteh+wInGEK3PUO7inRZEBIln/is2
-         S3YQZBq/1v7QasD9asa0St9GRTjeIHeOqf5WGjUkaA0uwxEG8mcNMw76HbzFtzFm2A
-         0NR7lfuuOTxdVCGgvIkAwoxDlqo7I0BAVpYbno2E=
+        b=TLdKj8GK0xOgeBeL8aN63cplzCuRS6YMu/fQN2/9sasflb+gtDdhFqbUQ5E5vpoUl
+         uww6HLeYZmWkOZsliCC16I9gwaRc5PpKyBJ45i7f5AHsjWv4cDJ/X7v2o2ZVhUQM/G
+         LW2hkPtOD2lWsAx47R8eKXe3ApbjpQ8LhpYuoxFc=
 X-Originating-IP: [89.242.176.20]
 X-Spam: 0
 X-OAuthority: v=2.2 cv=ZZ9tDodA c=1 sm=1 tr=0 a=BZXIa/HMvEOrkAULb1ciZg==:117
- a=BZXIa/HMvEOrkAULb1ciZg==:17 a=evINK-nbAAAA:8 a=jIkynP5I9sAo3PriuZ8A:9
- a=FXBJT50yf1defmuw:21 a=DYTXFpXuwx9TLzfG:21 a=RfR_gqz1fSpA9VikTjo0:22
+ a=BZXIa/HMvEOrkAULb1ciZg==:17 a=evINK-nbAAAA:8 a=btPmDDSnAHUVDtEEeN8A:9
+ a=z2bXthiuOIam2nBN:21 a=hEE-zIYjV4AsxFf3:21 a=RfR_gqz1fSpA9VikTjo0:22
 From:   Phillip Wood <phillip.wood@talktalk.net>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Junio C Hamano <gitster@pobox.com>,
         "Brian M. Carlson" <sandals@crustytoothpaste.net>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH v3 5/9] t3701: add failing test for pathological context lines
-Date:   Tue, 27 Feb 2018 11:04:00 +0000
-Message-Id: <20180227110404.16816-6-phillip.wood@talktalk.net>
+Subject: [PATCH v3 9/9] add -p: don't rely on apply's '--recount' option
+Date:   Tue, 27 Feb 2018 11:04:04 +0000
+Message-Id: <20180227110404.16816-10-phillip.wood@talktalk.net>
 X-Mailer: git-send-email 2.16.1
 In-Reply-To: <20180227110404.16816-1-phillip.wood@talktalk.net>
 References: <20180213104408.9887-1-phillip.wood@talktalk.net>
  <20180227110404.16816-1-phillip.wood@talktalk.net>
 Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
-X-CMAE-Envelope: MS4wfK0t3wZtx8x4mg/CuvfWOMZZ93gNhU3xqHdacWn1o+FYN7JmDen3+N104iIHOx0+d0tJA8cGuYBFT6P2YN9Kv260PLxASMb6qv85jKSsojEOkzo1NSdS
- GYMpWBqfulXRMSYsifKqSH1TlPzplfHjKlWUDTP+F2kW1ocgENizNvKnq0B/nC5AvtWjmrkAnTQ7rRc0+cOsQsLjAEFhBybbRlVfU1CiAy2JI9o7WYU1lyGl
- jS3HLmKfCV1/mqZNn4JN3A2u0YcV5s1NA6PqsBN2vVmgYAvKVqXJjIMmgiIfiNEOnqfw99M+BL1gq234PefyCE3+YX/c8eNVdL16FilEuA8=
+X-CMAE-Envelope: MS4wfO8HvJeCRbP7IsoBzLkiVt2gMzTaj/3KOoXVaCr/EuDu00KbIV8upnffm00N6fg3rZKcZPnLtZ+kLMFQrNZRjAkzjsWe5kv/cF2SdMT7ubPKYHEuo+8t
+ DD8nsaZaqk3GEFpjg3Q0heJrSwrNLc3dWNkDzaMjC0Y1Z+g/OgPn5G3Kp+HZd9KeNfu7p+K2Kkhpt2llMQV4ij+KiJg5L73gsAkZy7yWgK4T1kQlFTWlKs0O
+ 95qNFwB6XhVZQfSaI+DPqZOb1GbQnizW4T1uKUoGPpk9/6Ugrts6aevSzL46FtgmKYaDJqfMdrfX1N46vElxF3PoMxHBXM9wf5gquVs98/s=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -55,71 +55,33 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-When a hunk is skipped by add -i the offsets of subsequent hunks are
-not adjusted to account for any missing insertions due to the skipped
-hunk. Most of the time this does not matter as apply uses the context
-lines to apply the subsequent hunks in the correct place, however in
-pathological cases the context lines will match at the now incorrect
-offset and the hunk will be applied in the wrong place. The offsets of
-hunks following an edited hunk that has had the number of insertions
-or deletions changed also need to be updated in the same way. Add
-failing tests to demonstrate this.
+Now that add -p counts patches properly it should be possible to turn
+off the '--recount' option when invoking 'git apply'
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
 
 Notes:
-    changes since v2:
-     - removed test_set_editor as it is already set
-    
-    changes since v1:
-     - changed edit test to use the existing fake editor and to strip
-       the hunk header and some context lines as well as deleting an
-       insertion
-     - style fixes
+    I can't think of a reason why this shouldn't be OK but I can't help
+    feeling slightly nervous about it. I've made it a separate patch so it
+    can be easily dropped or reverted if I've missed something.
 
- t/t3701-add-interactive.sh | 30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+ git-add--interactive.perl | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-index 46d655038f..da73fbdf4d 100755
---- a/t/t3701-add-interactive.sh
-+++ b/t/t3701-add-interactive.sh
-@@ -528,4 +528,34 @@ test_expect_success 'status ignores dirty submodules (except HEAD)' '
- 	! grep dirty-otherwise output
- '
- 
-+test_expect_success 'set up pathological context' '
-+	git reset --hard &&
-+	test_write_lines a a a a a a a a a a a >a &&
-+	git add a &&
-+	git commit -m a &&
-+	test_write_lines c b a a a a a a a b a a a a >a &&
-+	test_write_lines     a a a a a a a b a a a a >expected-1 &&
-+	test_write_lines   b a a a a a a a b a a a a >expected-2 &&
-+	# check editing can cope with missing header and deleted context lines
-+	# as well as changes to other lines
-+	test_write_lines +b " a" >patch
-+'
-+
-+test_expect_failure 'add -p works with pathological context lines' '
-+	git reset &&
-+	printf "%s\n" n y |
-+	git add -p &&
-+	git cat-file blob :a >actual &&
-+	test_cmp expected-1 actual
-+'
-+
-+test_expect_failure 'add -p patch editing works with pathological context lines' '
-+	git reset &&
-+	# n q q below is in case edit fails
-+	printf "%s\n" e y    n q q |
-+	git add -p &&
-+	git cat-file blob :a >actual &&
-+	test_cmp expected-2 actual
-+'
-+
- test_done
+diff --git a/git-add--interactive.perl b/git-add--interactive.perl
+index 3226c2c4f0..a64c0db57d 100755
+--- a/git-add--interactive.perl
++++ b/git-add--interactive.perl
+@@ -677,7 +677,7 @@ sub add_untracked_cmd {
+ sub run_git_apply {
+ 	my $cmd = shift;
+ 	my $fh;
+-	open $fh, '| git ' . $cmd . " --recount --allow-overlap";
++	open $fh, '| git ' . $cmd . " --allow-overlap";
+ 	print $fh @_;
+ 	return close $fh;
+ }
 -- 
 2.16.1
 
