@@ -2,85 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 632311F404
-	for <e@80x24.org>; Tue, 27 Feb 2018 21:19:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3C41C1F404
+	for <e@80x24.org>; Tue, 27 Feb 2018 21:25:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751814AbeB0VTy (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Feb 2018 16:19:54 -0500
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:34408 "EHLO
-        mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751518AbeB0VTx (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 27 Feb 2018 16:19:53 -0500
-Received: from pps.filterd (m0131697.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w1RLETbi017068;
-        Tue, 27 Feb 2018 13:18:37 -0800
-Authentication-Results: palantir.com;
-        spf=softfail smtp.mailfrom=newren@gmail.com
-Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
-        by mx0a-00153501.pphosted.com with ESMTP id 2gb6sn490t-1;
-        Tue, 27 Feb 2018 13:18:37 -0800
-Received: from mxw1.palantir.com (smtp.yojoe.local [172.19.0.45])
-        by smtp-transport.yojoe.local (Postfix) with ESMTP id 0A5B52212884;
-        Tue, 27 Feb 2018 13:18:37 -0800 (PST)
-Received: from newren2-linux.yojoe.local (newren2-linux.dyn.yojoe.local [10.100.68.32])
-        by smtp.yojoe.local (Postfix) with ESMTP id F40AE2CDEB1;
-        Tue, 27 Feb 2018 13:18:36 -0800 (PST)
-From:   Elijah Newren <newren@gmail.com>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org, sbeller@google.com,
-        Elijah Newren <newren@gmail.com>
-Subject: [PATCH v8 30/29] fixup! merge-recursive: apply necessary modifications for directory renames
-Date:   Tue, 27 Feb 2018 13:18:36 -0800
-Message-Id: <20180227211836.20889-1-newren@gmail.com>
-X-Mailer: git-send-email 2.16.1.232.gbf538760f8
+        id S1751732AbeB0VZo (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Feb 2018 16:25:44 -0500
+Received: from cloud.peff.net ([104.130.231.41]:39340 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1751907AbeB0VZl (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Feb 2018 16:25:41 -0500
+Received: (qmail 6997 invoked by uid 109); 27 Feb 2018 21:25:40 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 27 Feb 2018 21:25:40 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 27253 invoked by uid 111); 27 Feb 2018 21:26:29 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 27 Feb 2018 16:26:29 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 27 Feb 2018 16:25:38 -0500
+Date:   Tue, 27 Feb 2018 16:25:38 -0500
+From:   Jeff King <peff@peff.net>
+To:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+Cc:     Lars Schneider <larsxschneider@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Lars Schneider <lars.schneider@autodesk.com>,
+        git <git@vger.kernel.org>, Johannes Sixt <j6t@kdbg.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        ramsay@ramsayjones.plus.com, Johannes.Schindelin@gmx.de
+Subject: Re: [PATCH v7 0/7] convert: add support for different encodings
+Message-ID: <20180227212537.GA6899@sigill.intra.peff.net>
+References: <DC552BF4-3E87-41E0-BF92-4BA9633D374E@gmail.com>
+ <20180216165815.GA4681@tor.lan>
+ <19EDC192-0D83-4762-AC6A-81F7D693475A@gmail.com>
+ <xmqqbmgfvf2y.fsf@gitster-ct.c.googlers.com>
+ <xmqq7er3tqjq.fsf@gitster-ct.c.googlers.com>
+ <FDF4DEB8-E71A-4BFC-9437-678C8F65BBDC@gmail.com>
+ <20180226014445.GB8677@sigill.intra.peff.net>
+ <20180226173533.GA7877@tor.lan>
+ <20180226204635.GB12598@sigill.intra.peff.net>
+ <20180227210517.GA17555@tor.lan>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-X-Proofpoint-SPF-Result: softfail
-X-Proofpoint-SPF-Record: v=spf1 redirect=_spf.google.com
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,, definitions=2018-02-27_11:,,
- signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 suspectscore=4 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1034 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=507 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1711220000 definitions=main-1802270263
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20180227210517.GA17555@tor.lan>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Use is_null_oid() instead of is_null_sha1()
----
-This is just a fixup to patch 23/29 in my v8 series for detecting directo=
-ry renames;
-should squash cleanly.
+On Tue, Feb 27, 2018 at 10:05:17PM +0100, Torsten Bögershausen wrote:
 
- merge-recursive.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+> The other question is:
+> Would this help showing diffs of UTF-16 encoded files on a "git hoster",
+> github/bitbucket/.... ?
 
-diff --git a/merge-recursive.c b/merge-recursive.c
-index ffe1d0d117..6e6ec90e9e 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -667,9 +667,9 @@ static int update_stages_for_stage_data(struct merge_=
-options *opt,
- 	oidcpy(&b.oid, &stage_data->stages[3].oid);
-=20
- 	return update_stages(opt, path,
--			     is_null_sha1(o.oid.hash) ? NULL : &o,
--			     is_null_sha1(a.oid.hash) ? NULL : &a,
--			     is_null_sha1(b.oid.hash) ? NULL : &b);
-+			     is_null_oid(&o.oid) ? NULL : &o,
-+			     is_null_oid(&a.oid) ? NULL : &a,
-+			     is_null_oid(&b.oid) ? NULL : &b);
- }
-=20
- static void update_entry(struct stage_data *entry,
---=20
-2.16.1.232.gbf538760f8
+Almost. There's probably one more thing needed. We don't currently read
+in-tree .gitattributes when doing a diff in a bare repository. And most
+hosting sites will store bare repositories.
 
+And of course it would require the users to actually set the attributes
+themselves.
+
+> Or would the auto-magic UTF-16 avoid binary patch that I send out be more helpful ?
+> Or both ?
+> Or the w-t-e encoding ?
+
+Of the three solutions, I think the relative merits are something like
+this:
+
+  1. baked-in textconv (my patch)
+
+     - reuses an existing diff feature, so minimal code and not likely to
+       break things
+
+     - requires people to add a .gitattributes entry
+
+     - needs work to make bare-repo .gitattributes work (though I think
+       this would be useful for other features, too)
+
+     - has a run-time cost at each diff to do the conversion
+
+     - may sometimes annoy people when it doesn't kick in (e.g.,
+       emailed patches from format-patch won't have a readable diff)
+
+     - doesn't combine with other custom-diff config (e.g., utf-16
+       storing C code should still use diff=c funcname rules, but
+       wouldn't with my patch)
+
+  2. auto-detect utf-16 (your patch)
+     - Just Works for existing repositories storing utf-16
+
+     - carries some risk of kicking in when people would like it not to
+       (e.g., when they really do want a binary patch that can be
+       applied).
+
+       I think it would probably be OK if this kicked in only when
+       ALLOW_TEXTCONV is set (the default for porcelain), and --binary
+       is not (i.e., when we would otherwise just say "binary
+       files differ").
+
+     - similar to (1), carries a run-time cost for each diff, and users
+       may sometimes still see binary diffs
+
+  3. w-t-e (Lars's patch)
+
+     - requires no server-side modifications; the diff is plain vanilla
+
+     - works everywhere you diff, plumbing and porcelain
+
+     - does require people to add a .gitattributes entry
+
+     - run-time cost is per-checkout, not per-diff
+
+So I can see room for (3) to co-exist alongside the others. Between (1)
+and (2), I think (2) is probably the better direction.
+
+-Peff
