@@ -2,144 +2,137 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 503311F404
-	for <e@80x24.org>; Tue, 27 Feb 2018 21:05:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 592371F404
+	for <e@80x24.org>; Tue, 27 Feb 2018 21:10:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751798AbeB0VFf (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Feb 2018 16:05:35 -0500
-Received: from mout.web.de ([212.227.15.14]:48473 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751518AbeB0VFe (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Feb 2018 16:05:34 -0500
-Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb004
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MW6Ib-1fEgBa23lR-00XNTE; Tue, 27
- Feb 2018 22:05:19 +0100
-Date:   Tue, 27 Feb 2018 22:05:17 +0100
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     Jeff King <peff@peff.net>
-Cc:     Lars Schneider <larsxschneider@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Lars Schneider <lars.schneider@autodesk.com>,
-        git <git@vger.kernel.org>, Johannes Sixt <j6t@kdbg.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        ramsay@ramsayjones.plus.com, Johannes.Schindelin@gmx.de
-Subject: Re: [PATCH v7 0/7] convert: add support for different encodings
-Message-ID: <20180227210517.GA17555@tor.lan>
-References: <xmqqr2pm81hh.fsf@gitster-ct.c.googlers.com>
- <DC552BF4-3E87-41E0-BF92-4BA9633D374E@gmail.com>
- <20180216165815.GA4681@tor.lan>
- <19EDC192-0D83-4762-AC6A-81F7D693475A@gmail.com>
- <xmqqbmgfvf2y.fsf@gitster-ct.c.googlers.com>
- <xmqq7er3tqjq.fsf@gitster-ct.c.googlers.com>
- <FDF4DEB8-E71A-4BFC-9437-678C8F65BBDC@gmail.com>
- <20180226014445.GB8677@sigill.intra.peff.net>
- <20180226173533.GA7877@tor.lan>
- <20180226204635.GB12598@sigill.intra.peff.net>
+        id S1751923AbeB0VKz (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Feb 2018 16:10:55 -0500
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:54776 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751518AbeB0VKy (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Feb 2018 16:10:54 -0500
+Received: by mail-wm0-f67.google.com with SMTP id z81so1157961wmb.4
+        for <git@vger.kernel.org>; Tue, 27 Feb 2018 13:10:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=5afsCJDuPCt821NRVaQl0+1yOeC5IfxSzGSUQNIfk1w=;
+        b=AoZkirWZoEZ5XPzq2oK21kWJNckMOhdbPUlwV1RIGhkG7K7EnY8xjw0pUG4sZlH/0D
+         XgL4k0ikveMs4JlK4KtUYaAMYkMziSzTvJ5F5Rx4IYxLGQjbkShRcAFll0O08kh8ONGZ
+         h0HlpLVElndU7ICFkRo6TMrpfTLMZdVYSuSPDOCWzhepWONHPOyzziWSN5LIrSfECcN9
+         jEywlYy+LtIM8rHlYX0I4LoRklTxIEEaZlwct9JdWdPp8fAhVpt4IquBQMHZj8BFCihr
+         bRREbf9hmL7arv4/85bEayNMlD2//PZvqCdzjReCNNSpD4OgS6mksLMfeDzDTHRhx8Mh
+         /w0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=5afsCJDuPCt821NRVaQl0+1yOeC5IfxSzGSUQNIfk1w=;
+        b=tDLLlef3U/oFBwEvFh3ZXay8xFGS6+CAUf/o2gQ+66ZEnDpzn2YifzF5lvQ2QXKWzC
+         /lmDmb9Q8Dt4N1C8U9SeHN7l8VjtlAb6r5Bv8jYwchG6a2vWOfQR605UZac8D9sA2FzA
+         Hhx9jrIBKuj8aVXi9PbalxCD1qY4n4ar9GRiua5OOSVS/4AmJbnE+fGzgoIiC4G9x+Gs
+         syb+9Q4iGIE60UQ2Ttg7kPhdfYZlVpGCptuZsra/lIScLOdmEekui8npuINFQc+7uFEI
+         jkpg/WDPaWyF/bgGy5r0euLp78Zipdsn/onjibhm1o7E2QzVm3DQJpgbDCNKR6izvJqe
+         V6tw==
+X-Gm-Message-State: APf1xPDOSCWI2qGiASu8/SgM8oQ7oljh416cipCl4KaV6eexvXUxM6qG
+        mAihZ0UcsIzd7J2gTOJsfLg=
+X-Google-Smtp-Source: AG47ELvfJcoTEuK0B7i7voyKKGxhAcNWB8uSFJ5zG0RW1BUbshUWoWPWTpoR1YgdVXW2rd06tDI/vQ==
+X-Received: by 10.28.74.217 with SMTP id n86mr13271989wmi.93.1519765852890;
+        Tue, 27 Feb 2018 13:10:52 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id z72sm523208wmc.2.2018.02.27.13.10.52
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 27 Feb 2018 13:10:52 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: Re: [PATCH 04/11] t3030-merge-recursive: don't check the stderr of a subshell
+References: <20180223233951.11154-1-szeder.dev@gmail.com>
+        <20180223233951.11154-5-szeder.dev@gmail.com>
+        <xmqqtvu2p2kx.fsf@gitster-ct.c.googlers.com>
+Date:   Tue, 27 Feb 2018 13:10:51 -0800
+In-Reply-To: <xmqqtvu2p2kx.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Tue, 27 Feb 2018 13:03:42 -0800")
+Message-ID: <xmqqpo4qp290.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20180226204635.GB12598@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Provags-ID: V03:K0:TkNv1dZw7l50p2yy34bYnOXyTpxI6WRplOokpv3//XFy0ycUhYs
- Jr9kxUPGs5lvfmgqQvC2yRRoGZRpkKwCwhUF6NGkKbWgWuYJhXpfN89IPSY4Biwd7zJh0dI
- 235XUNNbO4J0tVEcn3thV9axB8hHBHC8y9hu0dDbgCaV+RMGY2gUDJ58Pl6v40TXQjpJV+x
- 79XKY2sKK4b4FW2V7WUlw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:iIjKfLv5AQI=:X7oRriCh72Wp0YCrZ3E4tX
- svGOllCMBAK1ej6QwB73/DXXdR5ntmKMYVcW9+p8bOE7wJ5kRsJia67BHxMGyDPzOUES/Pz+o
- x60xmDIWc2wryEnbzRZuPJOXwHY4JdA9mLK3wG+eN9GI2rXG2CHv2FAbNZx9nSEfIW0/qNueT
- TX0FeQli5A7u3UqRbeBm5OTPwvUh9ea7XRS3C2lbYKQRw4+QmirxXms3Qx+Z3lEPsF0opcEoi
- JmWgByKy0ZHXLOVTmkIAP8QVFl1Rc4N1O+kkwzY51WT0tuRxXN2MyEQh0TcJW/qGf3pW15Apg
- E50EEJtFgb9krl4Oat+dCjC6oNOUgOcITZAaA1u5ofWYcLBs86uMHoq82m4gK/rX+KTnJlu3D
- 1pA9wNkNGzj4wzQR0Aj6C3BLRx2bS7vam5xbaQcLiwwvKjjb2m2aalxNXEQrXpsyhxYuoOuAV
- 0z2idCtVMD8lBO8xxvyWI5JiJ99MeNh1EhG/qlnIpxiLgnzu4HAVuxtfbWbgc3rFXD8yj5oFJ
- PymAJ0FYoxbgsJiMhDMgiOw2wHIR/5Y8zWzLYH8TgxEXkbMhhAPbKexT2gDAgreC/Lt8GZAWG
- AGJvbp4am94yY5dcCwuZUIDSvCiNyBlpoeQ23vaKLENPxJh17Jg/eTFnlEH17XfrTsKODJ4Ia
- HtgQHsNKZ0uQq7NCuaqvD4BYa+mFx7wYRWskjtLbsC1X6IIGviAqAQzm28SDoQiQqyBNHDlCx
- Yb/v4r+hNiY2nYPy+xtRQiiUmh5GEDYfTbmnAl9LHBlZb3JuiRrQ0zjjPJg5ENEeYmN9JEdve
- S6fQjQwN6phHxUNuKuIswVdemwf0A==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Feb 26, 2018 at 03:46:35PM -0500, Jeff King wrote:
-> On Mon, Feb 26, 2018 at 06:35:33PM +0100, Torsten Bögershausen wrote:
-> 
-> > > diff --git a/userdiff.c b/userdiff.c
-> > > index dbfb4e13cd..48fa7e8bdd 100644
-> > > --- a/userdiff.c
-> > > +++ b/userdiff.c
-> > > @@ -161,6 +161,7 @@ IPATTERN("css",
-> > >  	 "-?[_a-zA-Z][-_a-zA-Z0-9]*" /* identifiers */
-> > >  	 "|-?[0-9]+|\\#[0-9a-fA-F]+" /* numbers */
-> > >  ),
-> > > +{ "utf16", NULL, -1, { NULL, 0 }, NULL, "iconv:utf16" },
-> > >  { "default", NULL, -1, { NULL, 0 } },
-> > >  };
-> > >  #undef PATTERNS
-> > 
-> > The patch looks like a possible step into the right direction -
-> > some minor notes: "utf8" is better written as "UTF-8", when talking
-> > to iconv.h, same for utf16.
-> > 
-> > But, how do I activate the diff ?
-> > I have in .gitattributes
-> > XXXenglish.txt diff=UTF-16
-> > 
-> > and in .git/config
-> > [diff "UTF-16"]
-> >       command = iconv:UTF-16
-> > 
-> > 
-> > What am I doing wrong ?
-> 
-> After applying the patch, if I do:
-> 
->   git init
->   echo hello | iconv -f utf8 -t utf16 >file
->   git add file
->   git commit -m one
->   echo goodbye | iconv -f utf8 -t utf16 >file
->   git add file
->   git commit -m two
-> 
-> then:
-> 
->   git log -p
-> 
-> shows "binary files differ" but:
-> 
->   echo "file diff=utf16" >.gitattributes
->   git log -p
-> 
-> shows text diffs. I assume you tweaked the patch before switching to
-> the UTF-16 spelling in your example. Did you use a plumbing command to
-> show the diff? textconv isn't enabled for plumbing, because the
-> resulting patches cannot actually be applied (in that sense an encoding
-> switch is potentially special, since in theory one could convert to the
-> canonical text format, apply the patch, and then convert back).
-> 
-> -Peff
+Junio C Hamano <gitster@pobox.com> writes:
 
-Thanks for helping me out.
-I didn't use "git log -p", but a simple "git diff".
-(And after re-using utf16 with lowercase, it works as you described it)
+> SZEDER GÃ¡bor <szeder.dev@gmail.com> writes:
+>
+>> The two test checking 'git mmerge-recursive' in an empty worktree in
+>> ...
+>>  		GIT_INDEX_FILE="$PWD/ours-has-rename-index" &&
+>>  		export GIT_INDEX_FILE &&
+>>  		mkdir "$GIT_WORK_TREE" &&
+>> -		git read-tree -i -m $c7 &&
+>> -		git update-index --ignore-missing --refresh &&
+>> -		git merge-recursive $c0 -- $c7 $c3 &&
+>> -		git ls-files -s >actual-files
+>> -	) 2>actual-err &&
+>> -	>expected-err &&
+>> +		git read-tree -i -m $c7 2>actual-err &&
+>> +		test_must_be_empty expected-err &&
+>> +		git update-index --ignore-missing --refresh 2>actual-err &&
+>> +		test_must_be_empty expected-err &&
+>> +		git merge-recursive $c0 -- $c7 $c3 2>actual-err &&
+>> +		test_must_be_empty expected-err &&
+>> +		git ls-files -s >actual-files 2>actual-err &&
+>> +		test_must_be_empty expected-err
+>
+> Where do the contents of all of these expected-err files come from?
+> Should all of the test_must_be_empty checks be checking actual-err
+> instead?
 
-I wasn't aware of "git log -p", something learned (or re-learned)
 
-The other question is:
-Would this help showing diffs of UTF-16 encoded files on a "git hoster",
-github/bitbucket/.... ?
+And the reason why your pre-submission testing did not catch may be
+because test_must_be_empty is broken?  I wonder if this is a good
+way forward to catch a possible bug like this.
 
-Or would the auto-magic UTF-16 avoid binary patch that I send out be more helpful ?
-Or both ?
-Or the w-t-e encoding ?
+Of course, if somebody was using the helepr for "must be either
+missing or empty", this change will break it, but I somehow doubt
+it.  A program that creates/opens and writes an error message only
+when an error is detected is certainly possible, and could be tested
+with the current test_must_be_empty this way:
 
-Questions over questions.
+	rm -f actual-err &&
+	git frotz --error-to=actual-err &&
+	test_must_be_empty actual-err
 
+but then the last step in such a test like the above is more natural
+to check if actual-err _exists_ in the first place anyway, so...
+
+ t/test-lib-functions.sh | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index 37eb34044a..6cfbee60e4 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -772,7 +772,11 @@ verbose () {
+ # otherwise.
+ 
+ test_must_be_empty () {
+-	if test -s "$1"
++	if ! test -f "$1"
++	then
++		echo "'$1' is missing"
++		return 1
++	elif test -s "$1"
+ 	then
+ 		echo "'$1' is not empty, it contains:"
+ 		cat "$1"
