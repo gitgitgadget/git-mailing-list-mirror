@@ -2,89 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1D0941F404
-	for <e@80x24.org>; Tue, 27 Feb 2018 23:42:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 00A4E1F404
+	for <e@80x24.org>; Tue, 27 Feb 2018 23:47:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751658AbeB0XmM (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Feb 2018 18:42:12 -0500
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:44720 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751563AbeB0XmL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Feb 2018 18:42:11 -0500
-Received: by mail-wr0-f196.google.com with SMTP id v65so514402wrc.11
-        for <git@vger.kernel.org>; Tue, 27 Feb 2018 15:42:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=JIaGekvKr2BkWG5HlwkXTtVYR/dV6SPPih8E9REkTic=;
-        b=pgyaYvA0j8pju4cY7wAMTSx1QEGEwpBe/4GGuJTI+t1MC/B4GnHkVRtQRbdb6sQh61
-         E2asGJYfrpzJeUpn/6osFOJSISHj/el5GuvYVSllOlMWq/9a8mdPLR3+szD0bapKNTqo
-         BnLSaCoHefIspLA8fgG55Aki6nAHkv6ob1FGEQXJGuXrNeubBPE8w317/zgLDCaGbXlQ
-         kZ+3qeTdmvIj+mW9Pe/wsnTHIMCI03iNywaxG8p8u2qfSQj62kSaijF6NELMKJGOeoWk
-         RJhlON4ewKPwH/LSfAoLA+dWxLM05hw3bb7Uxzve1il5Bg58GXErpWwJsqpj5nSGatY8
-         4O9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=JIaGekvKr2BkWG5HlwkXTtVYR/dV6SPPih8E9REkTic=;
-        b=h12flZKu06T3qUSueoVLW3rHuYAuDvMeJmjVr4mzpX6kLKBUUISUAVygePzHrs9iRe
-         7b54+mtNz/HfyjrO1ALrfsg0rHfUKLgduOAKH1KWmsLLeTtXREoCtgF2mIyLYTMwDxTP
-         Cfc8bYOWXthquVHZk8Kflq0RtysFSxLsd+EKqH5hpm71XOIjgbioxAi0FuXDu01suOb8
-         GBseel1rNNqXWaHIRZdQR5Fav24XBGzmlZlvMUcpzFie9J3GQ2YzrqGsB6w6Wbd2ptpE
-         Ub3ZeCt+3rGf9fXWPPGz41wqklrHhZWcVqVNdWeneRBypJKQn3QgQZxULqtN/EL/ebgx
-         dTGQ==
-X-Gm-Message-State: APf1xPBHgg4uSQt3JSbhLmFauwi3Tdaz8wYNksi4UUFC+pDBkm9cGaw/
-        Fl0NoqZKcjtFObaDRrlncf4=
-X-Google-Smtp-Source: AH8x226fJbPqg9TOdzdTm1o94liPlPmcKLPI7c4XSHUHBckwd4ZMhrsNu1auOnec48Bguk+tr0MHxg==
-X-Received: by 10.223.154.7 with SMTP id z7mr13854638wrb.98.1519774929634;
-        Tue, 27 Feb 2018 15:42:09 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id e18sm1166874wmc.21.2018.02.27.15.42.08
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 27 Feb 2018 15:42:09 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 0/5] roll back locks in various code paths
-References: <cover.1519763396.git.martin.agren@gmail.com>
-Date:   Tue, 27 Feb 2018 15:42:08 -0800
-In-Reply-To: <cover.1519763396.git.martin.agren@gmail.com> ("Martin
- =?utf-8?Q?=C3=85gren=22's?=
-        message of "Tue, 27 Feb 2018 22:30:08 +0100")
-Message-ID: <xmqq1sh6ngof.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1751611AbeB0XrI (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Feb 2018 18:47:08 -0500
+Received: from avasout04.plus.net ([212.159.14.19]:35892 "EHLO
+        avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751516AbeB0XrH (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Feb 2018 18:47:07 -0500
+Received: from [10.0.2.15] ([80.189.70.162])
+        by smtp with ESMTPA
+        id qoxceAYBbshmQqoxdefZj1; Tue, 27 Feb 2018 23:47:05 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.3 cv=eJ89ckh1 c=1 sm=1 tr=0
+ a=zzlqjQC3YyNvDZl/Gy+4mg==:117 a=zzlqjQC3YyNvDZl/Gy+4mg==:17
+ a=IkcTkHD0fZMA:10 a=ybZZDoGAAAAA:8 a=EBOSESyhAAAA:8 a=d52jGl4dsc0oubC2YgQA:9
+ a=QEXdDO2ut3YA:10 a=0RhZnL1DYvcuLYC8JZ5M:22 a=yJM6EZoI5SlJf8ks9Ge_:22
+X-AUTH: ramsayjones@:2500
+Subject: Re: [PATCH 2/2] t5556: replace test_i18ngrep with a simple grep
+To:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
+Cc:     Jeff King <peff@peff.net>, GIT Mailing-list <git@vger.kernel.org>
+References: <d0e6c6cf-7166-bef6-f179-c4e6acf7b0ac@ramsayjones.plus.com>
+ <xmqq3726t11d.fsf@gitster-ct.c.googlers.com>
+ <69c7dc21-fb52-5982-f7d8-04518d06db6c@ramsayjones.plus.com>
+ <xmqqvaf1qqcx.fsf@gitster-ct.c.googlers.com>
+ <20180213100437.15685-1-szeder.dev@gmail.com>
+ <xmqqr2porf4z.fsf@gitster-ct.c.googlers.com>
+ <20180213172603.GA10062@sigill.intra.peff.net>
+ <xmqqeflorc9m.fsf@gitster-ct.c.googlers.com>
+ <xmqq371mqjce.fsf@gitster-ct.c.googlers.com>
+ <xmqq4lm2ozq3.fsf@gitster-ct.c.googlers.com>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <192d4ee4-dbdd-3e47-b45c-8d1f7b69b9af@ramsayjones.plus.com>
+Date:   Tue, 27 Feb 2018 23:47:03 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.6.0
 MIME-Version: 1.0
+In-Reply-To: <xmqq4lm2ozq3.fsf@gitster-ct.c.googlers.com>
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfMLXEnRk7fBVz+SawWPWUZnMHPLyDiobTDgqE6FrEjtW/zFc26l9TZvtzf5bIwtYzoCQ0sSJ9J0wi+G2XQfVxzFYckjzgIy5Ig6zW2PT6XUR7klsKlyt
+ p9S3lJmaA+8YlJZ1G4QxKv5mfVgtXjm9SODtkSarR9LrgNpqKTYA+VXnRlj2Bm2V+lLVtNG+bAaAsw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Martin Ågren <martin.agren@gmail.com> writes:
 
-> Patches 2-4 are the actual fixes where I teach some functions to always
-> roll back the lock they're holding. Notably, these are all in "libgit".
->
-> Patch 1 is a "while at it" to use locks on the stack instead of having
-> them be static. Patch 5 removes code to roll back locks which are
-> already rolled back.
->
-> I've based this on maint. There's a conflict on pu, with c7d4394111
-> (sequencer: avoid using errno clobbered by rollback_lock_file(),
-> 2018-02-11). The conflict resolution would be to take my version for the
-> "could not lock HEAD"-hunk.
 
-Thanks for running a trial merge before sending your patches out.  I
-wish there were more contributors like you ;-)
+On 27/02/18 22:05, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+>> OK, somehow I had the version from Ramsay on a topic branch that was
+>> not merged to 'pu'.  Here is the replacement for 2/2 I'd be queuing.
+>>
+>> We'd need SZEDER to sign it off (optionally correcting mistakes in
+>> the log message) if we are going with this solution.
+>>
+>> Thanks.
+> 
+> I guess I missed Ramsay's v2 which already did this
+> 
+> <550fb3f4-8d25-c5c4-0ecd-3a4e61ea13f4@ramsayjones.plus.com>
 
-The changes looked reasonable.
+Yes, and as I said in the cover letter, I wasn't too sure that
+I had passed that patch along correctly. ;-)
+
+> so I'll use that version.  We still want sign-off from Szeder,
+> though.
+
+I would be happy with either version, or maybe Szeder would like
+to tweak the commit message. In any event, it would be good to
+get sign-off from Szeder.
+
+Thanks!
+
+ATB,
+Ramsay Jones
+
+
