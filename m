@@ -2,124 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3C41C1F404
-	for <e@80x24.org>; Tue, 27 Feb 2018 21:25:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 632E71F404
+	for <e@80x24.org>; Tue, 27 Feb 2018 21:27:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751732AbeB0VZo (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Feb 2018 16:25:44 -0500
-Received: from cloud.peff.net ([104.130.231.41]:39340 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751907AbeB0VZl (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Feb 2018 16:25:41 -0500
-Received: (qmail 6997 invoked by uid 109); 27 Feb 2018 21:25:40 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 27 Feb 2018 21:25:40 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 27253 invoked by uid 111); 27 Feb 2018 21:26:29 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 27 Feb 2018 16:26:29 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 27 Feb 2018 16:25:38 -0500
-Date:   Tue, 27 Feb 2018 16:25:38 -0500
-From:   Jeff King <peff@peff.net>
-To:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-Cc:     Lars Schneider <larsxschneider@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Lars Schneider <lars.schneider@autodesk.com>,
-        git <git@vger.kernel.org>, Johannes Sixt <j6t@kdbg.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        ramsay@ramsayjones.plus.com, Johannes.Schindelin@gmx.de
-Subject: Re: [PATCH v7 0/7] convert: add support for different encodings
-Message-ID: <20180227212537.GA6899@sigill.intra.peff.net>
-References: <DC552BF4-3E87-41E0-BF92-4BA9633D374E@gmail.com>
- <20180216165815.GA4681@tor.lan>
- <19EDC192-0D83-4762-AC6A-81F7D693475A@gmail.com>
- <xmqqbmgfvf2y.fsf@gitster-ct.c.googlers.com>
- <xmqq7er3tqjq.fsf@gitster-ct.c.googlers.com>
- <FDF4DEB8-E71A-4BFC-9437-678C8F65BBDC@gmail.com>
- <20180226014445.GB8677@sigill.intra.peff.net>
- <20180226173533.GA7877@tor.lan>
- <20180226204635.GB12598@sigill.intra.peff.net>
- <20180227210517.GA17555@tor.lan>
+        id S1751722AbeB0V1d (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Feb 2018 16:27:33 -0500
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:54456 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751516AbeB0V1c (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Feb 2018 16:27:32 -0500
+Received: by mail-wm0-f67.google.com with SMTP id z81so1227542wmb.4
+        for <git@vger.kernel.org>; Tue, 27 Feb 2018 13:27:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=T4b3pjMcMYIyluRT9cmNFsfYOK81/tLRsRmSV6PBXCs=;
+        b=F3Dtlwoix4eIMLKpn1XmpMJrvO6RW+EJ+vQlVeZb5Bh2c5IGnexvSxlU+/SCaDPQWD
+         uSe7PEhKYHkUyWp/Wjb79HWQQXgJn7W+oQvPLPzzYHllaYVQj0Yd/sUGd8WiubVPy8Hd
+         38H+r3tgoxvksntWRje2Z6MqYa8OBa9Dcifdj9ohS1SfTCvgUq1mmqts5SGZnTXI+5p1
+         B8VCMCwYYbmOe9Sw3ogDOrWRMlK8MB1wnImIsVgwd1ervRjWPA6xqALR2iO2u2J6zyPz
+         mYQ30JDt+nMS+77/n8PdvOIdeVhigGoT9zYb3SIJ7m8Ydrs4rH/fD5YSpfLHysyh/m3v
+         MD/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=T4b3pjMcMYIyluRT9cmNFsfYOK81/tLRsRmSV6PBXCs=;
+        b=lYKlXCU7696SUC00qCrVYU/+CptcGLT40VmgUIwgqr6xaru8gZvI8mwQBNuBYcDm/T
+         2Xe2YACuOmFGUlArK82kMRiYrE2aGGKS0yL7y7Gp6CRDN1Vi2+V3Dp8iyf+IuMTQ1W78
+         s8JqwCy2sOWUyoSLDRSAuOb2TMJ9pK0fIqKYlEiJ1C4QzKz4Q2xK3MiZtWLVBfuVhqf9
+         V9epQdDRhTotBanhKaPwdBb2V77PcX+cIorT5xARbtFBRVsm9RKzw5G4QwCrpk0LPdVN
+         r9ywh5oZkBRwRsHdbr/NpK88IGMv9DqYkmGFs3PNcByLhseCVJc2a52l8kP36D1adtZm
+         cckA==
+X-Gm-Message-State: APf1xPBHpp2AafEX2FeEse1Q4BBFs2A3dG/9NadLVtCox4u0h65dn65A
+        GXZ4WyxXDlPusS5baV0S/5Oo6NWZ
+X-Google-Smtp-Source: AH8x2240p4iwY62LJbofFxQzFINUGZ9/DVuwgGn/pUBaatxmD+DFuv2eJFtQ8k1uqXlhXK+O0sCJ4Q==
+X-Received: by 10.28.220.66 with SMTP id t63mr11862076wmg.100.1519766850575;
+        Tue, 27 Feb 2018 13:27:30 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id d5sm571004wma.18.2018.02.27.13.27.29
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 27 Feb 2018 13:27:29 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     git@vger.kernel.org
+Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Jeff King <peff@peff.net>
+Subject: [PATCH] test_must_be_empty: make sure the file exists, not just empty
+References: <20180223233951.11154-1-szeder.dev@gmail.com>
+        <20180223233951.11154-5-szeder.dev@gmail.com>
+        <xmqqtvu2p2kx.fsf@gitster-ct.c.googlers.com>
+        <xmqqpo4qp290.fsf@gitster-ct.c.googlers.com>
+Date:   Tue, 27 Feb 2018 13:27:29 -0800
+In-Reply-To: <xmqqpo4qp290.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Tue, 27 Feb 2018 13:10:51 -0800")
+Message-ID: <xmqqh8q2p1ha.fsf_-_@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20180227210517.GA17555@tor.lan>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 27, 2018 at 10:05:17PM +0100, Torsten Bögershausen wrote:
+The helper function test_must_be_empty is meant to make sure the
+given file is empty, but its implementation is:
 
-> The other question is:
-> Would this help showing diffs of UTF-16 encoded files on a "git hoster",
-> github/bitbucket/.... ?
+	if test -s "$1"
+	then
+		... not empty, we detected a failure ...
+	fi
 
-Almost. There's probably one more thing needed. We don't currently read
-in-tree .gitattributes when doing a diff in a bare repository. And most
-hosting sites will store bare repositories.
+Surely, the file having non-zero size is a sign that the condition
+"the file must be empty" is violated, but it misses the case where
+the file does not even exist.  It is an accident waiting to happen
+with a buggy test like this:
 
-And of course it would require the users to actually set the attributes
-themselves.
+	git frotz 2>error-message &&
+	test_must_be_empty errro-message
 
-> Or would the auto-magic UTF-16 avoid binary patch that I send out be more helpful ?
-> Or both ?
-> Or the w-t-e encoding ?
+that won't get caught until you deliberately break 'git frotz' and
+notice why the test does not fail.
 
-Of the three solutions, I think the relative merits are something like
-this:
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ t/test-lib-functions.sh | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-  1. baked-in textconv (my patch)
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index 37eb34044a..6cfbee60e4 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -772,7 +772,11 @@ verbose () {
+ # otherwise.
+ 
+ test_must_be_empty () {
+-	if test -s "$1"
++	if ! test -f "$1"
++	then
++		echo "'$1' is missing"
++		return 1
++	elif test -s "$1"
+ 	then
+ 		echo "'$1' is not empty, it contains:"
+ 		cat "$1"
+-- 
+2.16.2-325-g2fc74f41c5
 
-     - reuses an existing diff feature, so minimal code and not likely to
-       break things
-
-     - requires people to add a .gitattributes entry
-
-     - needs work to make bare-repo .gitattributes work (though I think
-       this would be useful for other features, too)
-
-     - has a run-time cost at each diff to do the conversion
-
-     - may sometimes annoy people when it doesn't kick in (e.g.,
-       emailed patches from format-patch won't have a readable diff)
-
-     - doesn't combine with other custom-diff config (e.g., utf-16
-       storing C code should still use diff=c funcname rules, but
-       wouldn't with my patch)
-
-  2. auto-detect utf-16 (your patch)
-     - Just Works for existing repositories storing utf-16
-
-     - carries some risk of kicking in when people would like it not to
-       (e.g., when they really do want a binary patch that can be
-       applied).
-
-       I think it would probably be OK if this kicked in only when
-       ALLOW_TEXTCONV is set (the default for porcelain), and --binary
-       is not (i.e., when we would otherwise just say "binary
-       files differ").
-
-     - similar to (1), carries a run-time cost for each diff, and users
-       may sometimes still see binary diffs
-
-  3. w-t-e (Lars's patch)
-
-     - requires no server-side modifications; the diff is plain vanilla
-
-     - works everywhere you diff, plumbing and porcelain
-
-     - does require people to add a .gitattributes entry
-
-     - run-time cost is per-checkout, not per-diff
-
-So I can see room for (3) to co-exist alongside the others. Between (1)
-and (2), I think (2) is probably the better direction.
-
--Peff
