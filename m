@@ -2,92 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0A7781F404
-	for <e@80x24.org>; Tue, 27 Feb 2018 00:03:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 917F21F404
+	for <e@80x24.org>; Tue, 27 Feb 2018 00:07:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751587AbeB0ADM (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Feb 2018 19:03:12 -0500
-Received: from mail-ot0-f171.google.com ([74.125.82.171]:41823 "EHLO
-        mail-ot0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751567AbeB0ADL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Feb 2018 19:03:11 -0500
-Received: by mail-ot0-f171.google.com with SMTP id w38so2169936ota.8
-        for <git@vger.kernel.org>; Mon, 26 Feb 2018 16:03:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=/OrhAhqv9uQdBtpoyBheeQl+VB8sw7CLwqOXfPJtGSQ=;
-        b=AjuUDkojF0YeeJjiTOrO0tj1tgeIpXrkehEQV1cJzwY4K7ZkslU59eYzhddQQSWX7W
-         gR5cvdCd0nOYK8wOGDjnaHFJaScQBzEkFCnJTF3A+Lgj0QdvwFRNUuqEYReV73HXK+ns
-         9NERnhK3inTnZB/Ih90TWFHwP/KY663Zi9xHTTe/dH4FQlmy9Qt51U47f9HwDIegC353
-         zT73Q2ieG/trSWoNooaJc9aRS95480MnIA+pNWwlP2zUSIXKEgjvtloeBEGP77E6z4zJ
-         2GeJrn4O7SbW91Y6p4DkedMERQ2jd4o80us7midE18BnQ+aJRqwS6UqO/zHn4aFqOHev
-         E4pg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=/OrhAhqv9uQdBtpoyBheeQl+VB8sw7CLwqOXfPJtGSQ=;
-        b=rDuQkjqH9/gYY49/ZhC/2iSEfDFRaYvDPOBlzr7QZi+YuMTyRcnJ8rgocjZfeEgYtx
-         BDMBXQaNy1lRAbWULSbu33bO6MlOSUpQYOlvFd+R+mKBdc2NzTt6H92MYjO5jx3RHZAG
-         3Syx85bV3KBebx8d4j8rZj84C0Me+BrQFphYiWmbEfI6AWrjrJkl0GwQ1TUS0OBtdpuK
-         +DAWeh/bUD2F9GhbOp9M6gpQlcm03FLBWpeM/gDfsPARx/2t0jDdfk/JVxOGVSNwocqb
-         aaTNrCLxQMzNtOfBEAq9KzEAmNyiVGjOfpj3O2tV2/GK7YfgMa77RLRl/Ho+FFQxaiSR
-         VoxA==
-X-Gm-Message-State: APf1xPDifiToWca4TN4vGSQwsUhaXKCTrFSXXN4UKbpz9whfcKLvr2GD
-        DFdYySxMIy/Q17oG5oQDy8iSnV4nUJFVDSVcVfs=
-X-Google-Smtp-Source: AG47ELszaKFVCrUcH6r1ameV3Rc/jSnTK1s2qP0nbP2R2gBIdD5BxMzL8znLEymuSm2chXxXokqH4KqQwi9jz2rp3m4=
-X-Received: by 10.157.11.4 with SMTP id a4mr9361771ota.65.1519689790705; Mon,
- 26 Feb 2018 16:03:10 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.74.25.140 with HTTP; Mon, 26 Feb 2018 16:02:40 -0800 (PST)
-In-Reply-To: <CAGZ79kbgYwCjDT3wviFXakqhAKf51AvTyJOPDCW_6OtxGax87g@mail.gmail.com>
-References: <20180221015430.96054-1-sbeller@google.com> <20180224004754.129721-1-sbeller@google.com>
- <CACsJy8AS5RiuXeM2u34i0hjKXJqEhsrb4Ysi9Md9OhRpP4_B-A@mail.gmail.com> <CAGZ79kbgYwCjDT3wviFXakqhAKf51AvTyJOPDCW_6OtxGax87g@mail.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 27 Feb 2018 07:02:40 +0700
-Message-ID: <CACsJy8BDxbvAigg2wVh82jh3iQ1gy5dnCh0zXQ64B6QqrGE0tA@mail.gmail.com>
-Subject: Re: [PATCHv4 00/27] Moving global state into the repository object
- (part 1)
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
+        id S1751533AbeB0AHK (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Feb 2018 19:07:10 -0500
+Received: from mout.gmx.net ([212.227.17.20]:35009 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750941AbeB0AHJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Feb 2018 19:07:09 -0500
+Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MVsUW-1fEiqN0cae-00X7oK; Tue, 27
+ Feb 2018 01:07:03 +0100
+Date:   Tue, 27 Feb 2018 01:07:01 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+To:     Igor Djordjevic <igor.d.djordjevic@gmail.com>
+cc:     Sergey Organov <sorganov@gmail.com>, git@vger.kernel.org,
+        Johannes Sixt <j6t@kdbg.org>,
         Junio C Hamano <gitster@pobox.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Brandon Williams <bmwill@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [RFC] Rebasing merges: a jorney to the ultimate solution (Road
+ Clear)
+In-Reply-To: <bbe64321-4d3a-d3fe-8bb9-58b600fabf35@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1802270051470.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <87y3jtqdyg.fsf@javad.com> <bbe64321-4d3a-d3fe-8bb9-58b600fabf35@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:kKW/36ZaL6uJB3kb6Z0M3VWx1k1izW8V1X5pAJjLIwhTY1aVqiT
+ h4OD2/bLvgottst1aYEnhLtDlCS6zP8ZKf/pOalVjp2astabwQn+339CDGLmnZeUdg2ZfvW
+ k7SmdbO7NCX19orq+6uEiVu6Bss2AdeI5e4ttFiFNPZeG0mf4D5DTkEJ0RWsbLYmWz9gV6m
+ jAzXxLw4ps6Wgqk1FRaYw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:OCf4DXAw7DQ=:COS4F/kkGGj88q4sgacGNy
+ qtqP0EKDqprwMTAnVYIEa8MfP4nBcchDKGEP8W4QnVNUu/kpYkGQOdQDXr5XebRx1GJdYCcA9
+ R/0GI7YbtKMCmbwVMhtBFfp2LJUfvbGQoHg5zrCiUb2p7F6fU1Nf998qpAZItngqTRTRFXqiB
+ Q+A9VUCuJ/ibPEHqOk/hox3T/20vvBQG0bd1znFuJ9Sg1qE4g5VVZHlT53B5jHQj+/t7Sd3eK
+ VWQkuTIMGOPoxDVnQAgXzsT+RM/uKB2qWhS7zXu5CKejS6LIcP8xc4lmdcF4kIDSm7g/FCos5
+ jSzwS4rMoe1hpMJtu4ZDFIzERAiVGPltI2faM2+4GWqwbV66g1GQyq31mQT7mH/HYmAzlVjbG
+ LL3c9MIrOZdopEM4iqXNbnHiDYNw2XeonGWB42riQJqmnFmjhkCU0qyzFa/SvWrv3moi88u6s
+ oQvDMYv4KFCCA7nOGifX0HDh2m86X2IB3xL378jutiVXg7lJ/ADA5c/yKuO0liIQjl5ZxD8Yp
+ Bb00fWJ18d4i03iSHVNQpAhyqA0BPOeAYQPUaNjxM8m0W1zaOAe1K4c0D9ygerFhqbkNj0Xr3
+ lKAMxb16uKSASsZFEdZKVgIr4LMIAnJG48CtVtwIZYjvysZfJo9H/XrHc4xcoGuZHDhR/bgcu
+ B3cAHO1wi4jRO14n5K4dMj+IcrkGSDEmadMKze0dYJXW6ndwiwwJfWF8FmjTWe1MWjl8rXVWj
+ A6FkYi3w/Sq0IBOUtRtP7HmUO5RpnVufWz6ftRwsHKmk9B9ZruI4tYBtPOmrUeH8zv1YMvU2k
+ aNrMa2FO+eNnmXCCU0ec+QNKPqJdmPNPNBzGmXfJmSal9tEO/nrvQFSZaf3uoFOqJlCy2bw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 27, 2018 at 3:50 AM, Stefan Beller <sbeller@google.com> wrote:
->> The natural thing to do is move these to raw_object_store too (and
->> repo_submodule_init needs to check submodule's config file). But one
->> may argue these should be per-process instead of per-repo though. I
->> don't know. But I thought I should mention this.
->
-> For now a process and a repository is the same as git-gc or git-repack
+Hi Buga,
 
-I think you're thinking about the pack writing part, but these are
-configuration for pack reading (aka "object store"). If you read a
-blob from a submodule (e.g. git-grep), you'll use these configurations
-at some point.
+On Tue, 20 Feb 2018, Igor Djordjevic wrote:
 
-There are of course more configuration for pack writing (like
-zlib_compression_level) which I deliberately avoided to mention
-because I don't even know where they belong.
+> I`m really interested in this topic, which seems to (try to) address the
+> only "bad feeling" I had with rebasing merges - being afraid of silently
+> losing amendments by actually trying to "replay" the merge (where
+> additional and possibly important context is missing), instead of really
+> "rebasing" it (somehow).
 
-> doesn't know about the --recurse-submodules flag, yet.
-> I wonder if we ever want to teach those commands the submodule
-> recursion, because of the issue you bring up, which settings do we apply
-> for a submodule? Traditionally we'd just have the command line override
-> the configuration, which I don't know if it is a good idea for these settings.
--- 
-Duy
+If those amendments are what you are worried about, why not address them
+specifically?
+
+In other words, rather than performing the equivalent of
+
+	git show <merge>^! | git apply
+
+(which would of course completely ignore if the rewritten <merge>^2
+dropped a patch, amended a patch, or even added a new patch), what you
+really want is to figure out what changes the user made when merging, and
+what merge strategy was used to begin with.
+
+To see what I mean, look at the output of `git show 0fd90daba8`: it shows
+how conflicts were resolved. By necessity, this is more complicated than a
+simple diff: it is *not* as simple as taking a diff between two revisions
+and applying that diff to a third revision. There were (at least) three
+revisions involved in the original merge commit, and recreating that merge
+commit faithfully means to represent the essence of the merge commit
+faithfully enough to be able to replay it on a new set of at least three
+revisions.  That can be simplified to two-way diffs only in very, very
+special circumstances, and in all other cases this simplification will
+simply fall on its nose.
+
+If the proposed solution was to extend `git apply` to process combined
+diffs, I would agree that we're on to something. That is not the proposed
+solution, though.
+
+In short: while I am sympathetic to the desire to keep things simple,
+the idea to somehow side-step replaying the original merge seems to be
+*prone* to be flawed. Any system that cannot accommodate
+dropped/changed/added commits on either side of a merge is likely to be
+too limited to be useful.
+
+Ciao,
+Johannes
