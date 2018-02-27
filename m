@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A70441F404
-	for <e@80x24.org>; Tue, 27 Feb 2018 21:30:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D2DBD1F404
+	for <e@80x24.org>; Tue, 27 Feb 2018 21:30:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751838AbeB0Vaw (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Feb 2018 16:30:52 -0500
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:35114 "EHLO
+        id S1751851AbeB0Vaz (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Feb 2018 16:30:55 -0500
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:43864 "EHLO
         mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751825AbeB0Vau (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Feb 2018 16:30:50 -0500
-Received: by mail-wr0-f193.google.com with SMTP id l43so277862wrc.2
-        for <git@vger.kernel.org>; Tue, 27 Feb 2018 13:30:49 -0800 (PST)
+        with ESMTP id S1751839AbeB0Vaw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Feb 2018 16:30:52 -0500
+Received: by mail-wr0-f193.google.com with SMTP id u49so258182wrc.10
+        for <git@vger.kernel.org>; Tue, 27 Feb 2018 13:30:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=UTPoUgCtTVTcd4YwpPzsuQVXSSp4wa+Mk/VvQqpqAe8=;
-        b=jF8g3GAgS1OCVnF5L3T/nVhukIMkoOCkAvdYpQ2JfLiuG8IzvVHz+rCEMbefAyT6LG
-         OxlPXacumRekyNZ/10+UlWkj88sDcljWre/HL5W80lLkBw2RaxAymXt3wpSW68vfRCRw
-         Tg7vWb6gcsIVqzmgFLY3Vg8BDxuRd7aBwk/XEWFzNI9NjmWWTJkLKhneiCxycaV5vinw
-         5TtBnOXJMHk+mk8b3vriwg4D1xhXU6idsP9FLGa5ua/HmfhpFz77QeumL9mSLuhgLrzX
-         CcqL63RNU/xBt4hUYFHYKR8fhs39HNpYfjwACTfCDgZxQW9QqJhmU+3rGMr5Oh93cmeK
-         7Zgg==
+        bh=Sf/0JRipMIvQtGg+TlUaVLiKDUPNiuju8T5nMs/Q+vs=;
+        b=YCFt5Rw5RdlPq4J1q+hGTn6Bx6hr8Z1vau7TsSWkRsxmXmQeM8usHCIaHV7Y060KUE
+         y/IKp2Xu/K1RPHApeqP36P3IHp9VRDrxLoGUuESlv8sc2a1PKZMFH3MKus03GK/3LWQs
+         CLoG2eC0G6GEdadujBBoQW3VHrfbjTnML8yKNL6NYlZEHkjxAn0oP6ZBQL+TeeWgT1aK
+         kvblwSt1/lVexmCrREO5tTukmy3fHFN4kubWmwEkt2/OkYCn++0TGfCGzBzamcbii+bM
+         sIE/8XZIpiGfgxXhrmOx+DgT92kkpf1o9YZnE14G720BnEjS5Dz/uzek+03a5+yo63Q2
+         R12Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=UTPoUgCtTVTcd4YwpPzsuQVXSSp4wa+Mk/VvQqpqAe8=;
-        b=dq7Rvs76hk47JIfu1CP249JQ0gndLIrrtmw9kYmOQ2IdaTJ5zg4cDeyZ/LECOWbsPa
-         NG/eBvRIWnJAtpRcDXJsX7QBJcFLubCCur19nfKrUE6Wmu81fp4HB8I+vpDa8r7eJyrU
-         ojF1dB2kbNulibNKC5414gDgYsArb/cDnEyvh+mzyQr+MObRdFuAse2bnfZXfKMDrs0R
-         +Z8QWyCc/5hvEA4qpWnwoj/f1Bf9NtqExM0wfS1jK94UShemcijIi3HJhRULtZMREFuv
-         Ygs9pwWUG8ZRofa5u3h9EYk70/rjEp3Gr+UjNOyrjvMUZY/jkWlPn9oF72ksa5pLZ7iL
-         5KAA==
-X-Gm-Message-State: APf1xPDcS741hgL8U/nKehA1xugKW5XrGTzwsHDwX77GE9Zx9lrI4iMB
-        onRjfNoTFwu/YSraD4aVxSZ4jxSB
-X-Google-Smtp-Source: AH8x227V2ksXsCxy8u3toHUjD+TmQ/Jn4kCVqNk4kHfEnULkzwScZ7s8wX9I2Zdo0ifBfpIqI63ANg==
-X-Received: by 10.223.184.230 with SMTP id c35mr12950927wrg.190.1519767048532;
-        Tue, 27 Feb 2018 13:30:48 -0800 (PST)
+        bh=Sf/0JRipMIvQtGg+TlUaVLiKDUPNiuju8T5nMs/Q+vs=;
+        b=P4fMnJj/nXV6AQuv24F6viz7GQLDDSEnAa/tp+hODlY54v/JbgKn6FVa48IeZxNEY6
+         LNJzsi7kt6eLxDyIzY4hQMBoyE1oWIWrJMz01ZvsNX9lVvu7m2wB055XvOGi+O7cACCB
+         UEjmTrKsBfzPByq+KV8wo4EK6VHTW4eCp0T8uTo/2mY7USeCBGxxMt2OUYVEmqsYZtKx
+         vFdrT0Np0Pc+UNfl8LlCeFl0u2/BY2+f3estRTetdYdCOhFlcvk0Y9hO84eLf/UESC3f
+         QBWlEolxlKBiPblc5ZKShzCH+3/lmpQfBoWxHRyOXX3ZJ7fjXKRlguXGiZZmV7LFuX1g
+         6h9A==
+X-Gm-Message-State: APf1xPDZ3onsfdLRK7OBC5SuN/B/QfRKqbfQ+1jslLdkzLO9Ta5W8xSC
+        28ereRhelHjZ9XeMPV7w9sEpPofq
+X-Google-Smtp-Source: AH8x2271VBfaq4p6DoJroopl2lwQO3AD8b8h74Vl0muwwDqURem4pCqI9siMxZTE0FC9XzAffBM/1Q==
+X-Received: by 10.223.192.76 with SMTP id c12mr13359370wrf.177.1519767051305;
+        Tue, 27 Feb 2018 13:30:51 -0800 (PST)
 Received: from localhost.localdomain ([2a02:aa16:5782:c100:c938:fbb7:46f8:2405])
-        by smtp.gmail.com with ESMTPSA id t91sm126888wrc.21.2018.02.27.13.30.47
+        by smtp.gmail.com with ESMTPSA id t91sm126888wrc.21.2018.02.27.13.30.50
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 27 Feb 2018 13:30:47 -0800 (PST)
+        Tue, 27 Feb 2018 13:30:50 -0800 (PST)
 From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 3/5] merge-recursive: always roll back lock in `merge_recursive_generic()`
-Date:   Tue, 27 Feb 2018 22:30:11 +0100
-Message-Id: <b19db05a8d8a98977788c04908134915eebc86a3.1519763396.git.martin.agren@gmail.com>
+Subject: [PATCH 4/5] merge: always roll back lock in `checkout_fast_forward()`
+Date:   Tue, 27 Feb 2018 22:30:12 +0100
+Message-Id: <8d2a1da0ad699c885b6ef335633c038ab7e354c4.1519763396.git.martin.agren@gmail.com>
 X-Mailer: git-send-email 2.16.2.246.ga4ee44448f
 In-Reply-To: <cover.1519763396.git.martin.agren@gmail.com>
 References: <cover.1519763396.git.martin.agren@gmail.com>
@@ -66,29 +66,49 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If we return early, we forget to roll back the lockfile. Do so.
+This function originated in builtin/merge.c. It was moved to merge.c in
+commit db699a8a1f (Move try_merge_command and checkout_fast_forward to
+libgit.a, 2012-10-26), but was used from sequencer.c even before that.
+
+If a problem occurs, the function returns without rolling back the
+lockfile. Teach it to do so.
 
 Signed-off-by: Martin Ågren <martin.agren@gmail.com>
 ---
- merge-recursive.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ merge.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/merge-recursive.c b/merge-recursive.c
-index cc5fa0a949..7345125691 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -2198,8 +2198,10 @@ int merge_recursive_generic(struct merge_options *o,
- 	hold_locked_index(&lock, LOCK_DIE_ON_ERROR);
- 	clean = merge_recursive(o, head_commit, next_commit, ca,
- 			result);
--	if (clean < 0)
-+	if (clean < 0) {
-+		rollback_lock_file(&lock);
- 		return clean;
-+	}
+diff --git a/merge.c b/merge.c
+index 195b578700..f06a4773d4 100644
+--- a/merge.c
++++ b/merge.c
+@@ -113,17 +113,23 @@ int checkout_fast_forward(const struct object_id *head,
+ 	setup_unpack_trees_porcelain(&opts, "merge");
  
- 	if (active_cache_changed &&
- 	    write_locked_index(&the_index, &lock, COMMIT_LOCK))
+ 	trees[nr_trees] = parse_tree_indirect(head);
+-	if (!trees[nr_trees++])
++	if (!trees[nr_trees++]) {
++		rollback_lock_file(&lock_file);
+ 		return -1;
++	}
+ 	trees[nr_trees] = parse_tree_indirect(remote);
+-	if (!trees[nr_trees++])
++	if (!trees[nr_trees++]) {
++		rollback_lock_file(&lock_file);
+ 		return -1;
++	}
+ 	for (i = 0; i < nr_trees; i++) {
+ 		parse_tree(trees[i]);
+ 		init_tree_desc(t+i, trees[i]->buffer, trees[i]->size);
+ 	}
+-	if (unpack_trees(nr_trees, t, &opts))
++	if (unpack_trees(nr_trees, t, &opts)) {
++		rollback_lock_file(&lock_file);
+ 		return -1;
++	}
+ 	if (write_locked_index(&the_index, &lock_file, COMMIT_LOCK))
+ 		return error(_("unable to write new index file"));
+ 	return 0;
 -- 
 2.16.2.246.ga4ee44448f
 
