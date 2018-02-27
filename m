@@ -2,206 +2,292 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E415F1F404
-	for <e@80x24.org>; Tue, 27 Feb 2018 20:00:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3D96E1F404
+	for <e@80x24.org>; Tue, 27 Feb 2018 20:10:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751894AbeB0UAE (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Feb 2018 15:00:04 -0500
-Received: from mail-wm0-f52.google.com ([74.125.82.52]:37082 "EHLO
-        mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751788AbeB0UAD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Feb 2018 15:00:03 -0500
-Received: by mail-wm0-f52.google.com with SMTP id 139so876442wmn.2
-        for <git@vger.kernel.org>; Tue, 27 Feb 2018 12:00:03 -0800 (PST)
+        id S1751777AbeB0UKF (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Feb 2018 15:10:05 -0500
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:46466 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751605AbeB0UKC (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Feb 2018 15:10:02 -0500
+Received: by mail-pg0-f67.google.com with SMTP id r26so21446pgv.13
+        for <git@vger.kernel.org>; Tue, 27 Feb 2018 12:10:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:from:to:cc:references:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=CgiTWbjSWoQBs32Ra+WYngSu0yzFKipI4A6ddb8uKyc=;
-        b=ZXRilQCJXgbTBchb8tS/129cbAmAfV62URO6bumW/I2l9VrMk3xJw1RAWePNunk439
-         5eDIoVr1bH1aDwzgaHbdMeUvCZgtIJdjXBcegVD4g3qF7cezRpsdQpbOt36YZXkuQf8+
-         eQlMWrXcWLGhh3Ph8e3kALRdGiuD22ku9txzUhi5HR1pOwJYFO+ky8wUai9GqtD5hr6M
-         kQjdY8TqdztKdiah7j5XhI4V/3+HCTn4wjmc4NNn3EoWZ+ef1nCYM0lIRIRg03n/96kw
-         sTK7YAXhCvKstLz9oyDzMTKMj3vBSsQN+CtAPwB3WEcZJljE8K5t9mPFywJ0X4F2w6Ty
-         15qQ==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=2T7ly5xEKNMwwOm6Bs01g/PyngBUeq4wjEmAxPdsIYI=;
+        b=gQOLVMTpY29wHEsd29PkX3uVAcCMITtFoLZOacEah6NzurjvcYbch9UpL/ZS+Vj0sI
+         8QcPYKiV7zdobrEztdU48J88DtuKURlpBbmSXzFJK2ZlYaGNJgwo9Pr2L+IUHmQVpWsL
+         /coUTIrvz0iC++MUSSPtpX5nZTiErL+6bKWYKfjQhh20c7QDOGLua36AYZnQA6xc5sGj
+         HJ85Ir7JvKJ29lgjjerga71JIkpIAm1BO8ALBBU3rdnxCdDzV5lLl3OJtbqOApf1Z3UX
+         hF+jRxSYnB7YSXbcn41Uik13Dqt4AOYRuEWsFIxKNiTldzI2GutuXT4B5Vy8RCM8ASPC
+         CMWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=CgiTWbjSWoQBs32Ra+WYngSu0yzFKipI4A6ddb8uKyc=;
-        b=ol5I9Hv5cnfl75lZjmMZzJsI4NENDB24P8SU9LBRevXAVAPCu39kCt9K/nCBm9krxV
-         PXmWbLL9KUy3yM4xm5PyvvyKGhTZq7OvdossosAXQmBAT178PneurKmHDKTh4/0arRnv
-         uAgE7qikPpiEdD3h5n/VQLLFbhz3EIoW3mhENZznaiKMxheifrDX86Rb7NQstC/VEoa4
-         NjR47jThx/JOSfg7wAC6kprJCoWHvZPdyAIW1m8rvU6BBD89Y6KhiJXHu3ZE7FKuU1oK
-         rh8XwNnDswNKG8mQLcMtDNQc0TREkuUKg5jQ5+44k30lATG9BBEyL02SW/iygrzmKczT
-         g7Ew==
-X-Gm-Message-State: APf1xPDkkUUT/UDkkkQuHiiVq9qsg5jKKIue9lY5wQUNCrYaMBtP+iRi
-        FYwbethq2ixTZPBu5Hw9MQQ=
-X-Google-Smtp-Source: AG47ELsPBAIfkUiDrPrcecbqG7DcpfH7RjZoLn4UX6QFJQg8+a1NDZb1HykTpGPlGJOQu9X/S+yI1w==
-X-Received: by 10.28.53.130 with SMTP id c124mr11019910wma.110.1519761602434;
-        Tue, 27 Feb 2018 12:00:02 -0800 (PST)
-Received: from [192.168.5.102] (cable-24-135-61-30.dynamic.sbb.rs. [24.135.61.30])
-        by smtp.gmail.com with ESMTPSA id u22sm12894859wrf.86.2018.02.27.12.00.00
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 27 Feb 2018 12:00:01 -0800 (PST)
-Subject: Re: [RFC] Rebasing merges: a jorney to the ultimate solution (Road
- Clear)
-From:   Igor Djordjevic <igor.d.djordjevic@gmail.com>
-To:     Git mailing list <git@vger.kernel.org>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Sergey Organov <sorganov@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Junio C Hamano <gitster@pobox.com>
-References: <87y3jtqdyg.fsf@javad.com>
- <bbe64321-4d3a-d3fe-8bb9-58b600fabf35@gmail.com>
- <nycvar.QRO.7.76.6.1802270051470.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
- <CA+P7+xq8UUcLWomUi=PS_hTKfJd3dMAxMmhioDS1bixwcmKAqw@mail.gmail.com>
- <nycvar.QRO.7.76.6.1802271718090.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
- <4d7f3406-b206-cc22-87df-85700d6a03d9@gmail.com>
-Message-ID: <33da31e9-9101-475d-8901-4b6b3df2f29d@gmail.com>
-Date:   Tue, 27 Feb 2018 20:59:55 +0100
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=2T7ly5xEKNMwwOm6Bs01g/PyngBUeq4wjEmAxPdsIYI=;
+        b=PjPsnM8Wvw8EbAfqxCANH1gpS9E0BH0g26YlVoISMfoXkzOunnjIPpt3WfnztGVo9h
+         ZrweQoDfydVmTxx5yVNhdsmjAcHHOt0SjQZlJ/qYFMrXVFbHtqkoNtFTmbYJ7MoWr328
+         bVDUOOt7LI7fA41k4El4RlUTL02+47vz4BK+LT/muYNQ+itTIwyQSzMw4zjmnHfXaxAI
+         rPYdBN68AUOxTOQb85bYe32epSQK2OQDzWNZHNbC25/q2S1S4xSA8m0Mj/AQdNsQTsbG
+         CjUldsvbMqwesGOTZFPh8cbTXfOk8EFAIiOxxDzkub7X4uiI5oR9DvT1FqzEkkwfT3Xq
+         Xv1g==
+X-Gm-Message-State: APf1xPDxRAnu/+AWqtzbUrhRiFimyMtpbj67f4p29E5YnWSZfNZYnOZS
+        YTBITmnAIPcWj9Ep2HzmA/TwNw==
+X-Google-Smtp-Source: AH8x225n7MLKHIYQ09o6+QuLKcV1JVIH0AE9dkfFlQv/vf+xjPhLx81k7hokBQqVBCYJTIJVEIFlEg==
+X-Received: by 10.98.7.129 with SMTP id 1mr15255301pfh.133.1519762201537;
+        Tue, 27 Feb 2018 12:10:01 -0800 (PST)
+Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
+        by smtp.gmail.com with ESMTPSA id c18sm26990122pfd.100.2018.02.27.12.10.00
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 27 Feb 2018 12:10:00 -0800 (PST)
+Date:   Tue, 27 Feb 2018 12:09:59 -0800
+From:   Brandon Williams <bmwill@google.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, jonathantanmy@google.com,
+        sbeller@google.com, sunshine@sunshineco.com
+Subject: Re: [PATCH v2 1/4] repository.c: move env-related setup code back to
+ environment.c
+Message-ID: <20180227200959.GJ209668@google.com>
+References: <20180226103030.26900-1-pclouds@gmail.com>
+ <20180227095846.9238-1-pclouds@gmail.com>
+ <20180227095846.9238-2-pclouds@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <4d7f3406-b206-cc22-87df-85700d6a03d9@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20180227095846.9238-2-pclouds@gmail.com>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 27/02/2018 19:55, Igor Djordjevic wrote:
+On 02/27, Nguyễn Thái Ngọc Duy wrote:
+> It does not make sense that generic repository code contains handling
+> of environment variables, which are specific for the main repository
+> only. Refactor repo_set_gitdir() function to take $GIT_DIR and
+> optionally _all_ other customizable paths. These optional paths can be
+> NULL and will be calculated according to the default directory layout.
 > 
-> It would be more along the lines of "(1) rebase old merge commit parents, 
-> (2) generate separate diff between old merge commit and each of its 
-> parents, (3) apply each diff to their corresponding newly rebased 
-> parent respectively (as a temporary commit, one per rebased parent), 
-> (4) merge these temporary commits to generate 'rebased' merge commit, 
-> (5) drop temporary commits, recording their parents as parents of 
-> 'rebased' merge commit (instead of dropped temporary commits)".
+> Note that some dead functions are left behind to reduce diff
+> noise. They will be deleted in the next patch.
 > 
-> Implementation wise, steps (2) and (3) could also be done by simply 
-> copying old merge commit _snapshot_ on top of each of its parents as 
-> a temporary, non-merge commit, then rebasing (cherry-picking) these 
-> temporary commits on top of their rebased parent commits to produce 
-> rebased temporary commits (to be merged for generating 'rebased' 
-> merge commit in step (4)).
+> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+> ---
+>  cache.h       |  2 +-
+>  environment.c | 29 +++++++++++++++++++++++++---
+>  repository.c  | 53 +++++++++++++++++++++++++++++++++++++++++++++------
+>  repository.h  | 11 ++++++++++-
+>  setup.c       |  3 +--
+>  5 files changed, 85 insertions(+), 13 deletions(-)
+> 
+> diff --git a/cache.h b/cache.h
+> index 5717399183..b164a407eb 100644
+> --- a/cache.h
+> +++ b/cache.h
+> @@ -459,7 +459,7 @@ static inline enum object_type object_type(unsigned int mode)
+>   */
+>  extern const char * const local_repo_env[];
+>  
+> -extern void setup_git_env(void);
+> +extern void setup_git_env(const char *git_dir);
+>  
+>  /*
+>   * Returns true iff we have a configured git repository (either via
+> diff --git a/environment.c b/environment.c
+> index ec10b062e6..74a2900ddf 100644
+> --- a/environment.c
+> +++ b/environment.c
+> @@ -14,6 +14,7 @@
+>  #include "fmt-merge-msg.h"
+>  #include "commit.h"
+>  #include "object-store.h"
+> +#include "argv-array.h"
+>  
+>  int trust_executable_bit = 1;
+>  int trust_ctime = 1;
+> @@ -148,10 +149,33 @@ static char *expand_namespace(const char *raw_namespace)
+>  	return strbuf_detach(&buf, NULL);
+>  }
+>  
+> -void setup_git_env(void)
+> +/* Wrapper of getenv() that returns a strdup value. This value is kept
+> + * in argv to be freed later.
+> + */
+> +static const char *getenv_safe(struct argv_array *argv, const char *name)
+> +{
+> +	const char *value = getenv(name);
+> +
+> +	if (!value)
+> +		return NULL;
+> +
+> +	argv_array_push(argv, value);
+> +	return argv->argv[argv->argc - 1];
+> +}
+> +
+> +void setup_git_env(const char *git_dir)
+>  {
+>  	const char *shallow_file;
+>  	const char *replace_ref_base;
+> +	struct set_gitdir_args args = { NULL };
+> +	struct argv_array to_free = ARGV_ARRAY_INIT;
+> +
+> +	args.shared_root = getenv_safe(&to_free, GIT_COMMON_DIR_ENVIRONMENT);
+> +	args.object_dir = getenv_safe(&to_free, DB_ENVIRONMENT);
+> +	args.graft_file = getenv_safe(&to_free, GRAFT_ENVIRONMENT);
+> +	args.index_file = getenv_safe(&to_free, INDEX_ENVIRONMENT);
+> +	repo_set_gitdir(the_repository, git_dir, &args);
+> +	argv_array_clear(&to_free);
+>  
+>  	if (getenv(NO_REPLACE_OBJECTS_ENVIRONMENT))
+>  		check_replace_refs = 0;
+> @@ -301,8 +325,7 @@ int set_git_dir(const char *path)
+>  {
+>  	if (setenv(GIT_DIR_ENVIRONMENT, path, 1))
+>  		return error("Could not set GIT_DIR to '%s'", path);
+> -	repo_set_gitdir(the_repository, path);
+> -	setup_git_env();
+> +	setup_git_env(path);
+>  	return 0;
+>  }
+>  
+> diff --git a/repository.c b/repository.c
+> index a069b1b640..343efe7282 100644
+> --- a/repository.c
+> +++ b/repository.c
+> @@ -61,15 +61,55 @@ static void repo_setup_env(struct repository *repo)
+>  					     "index", !repo->ignore_env);
+>  }
+>  
+> -void repo_set_gitdir(struct repository *repo, const char *path)
+> +static void expand_base_dir(char **out, const char *in,
+> +			    const char *base_dir, const char *def_in)
+>  {
+> -	const char *gitfile = read_gitfile(path);
+> -	char *old_gitdir = repo->gitdir;
+> +	free(*out);
+> +	if (in)
+> +		*out = xstrdup(in);
+> +	else
+> +		*out = xstrfmt("%s/%s", base_dir, def_in);
+> +}
+> +
+> +static void repo_set_commondir(struct repository *repo,
+> +			       const char *shared_root)
+> +{
+> +	struct strbuf sb = STRBUF_INIT;
+> +
+> +	free(repo->commondir);
+>  
+> -	repo->gitdir = xstrdup(gitfile ? gitfile : path);
+> -	repo_setup_env(repo);
+> +	if (shared_root) {
+> +		repo->different_commondir = 1;
+> +		repo->commondir = xstrdup(shared_root);
+> +		return;
+> +	}
+>  
+> +	repo->different_commondir = get_common_dir_noenv(&sb, repo->gitdir);
+> +	repo->commondir = strbuf_detach(&sb, NULL);
+> +}
+> +
+> +void repo_set_gitdir(struct repository *repo,
+> +		     const char *root,
+> +		     const struct set_gitdir_args *o)
+> +{
+> +	const char *gitfile = read_gitfile(root);
+> +	/*
+> +	 * repo->gitdir is saved because the caller could pass "root"
+> +	 * that also points to repo->gitdir. We want to keep it alive
+> +	 * until after xstrdup(root). Then we can free it.
+> +	 */
+> +	char *old_gitdir = repo->gitdir;
+> +
+> +	repo->gitdir = xstrdup(gitfile ? gitfile : root);
+>  	free(old_gitdir);
+> +
+> +	repo_set_commondir(repo, o->shared_root);
+> +	expand_base_dir(&repo->objects.objectdir, o->object_dir,
+> +			repo->commondir, "objects");
+> +	expand_base_dir(&repo->graft_file, o->graft_file,
+> +			repo->commondir, "info/grafts");
+> +	expand_base_dir(&repo->index_file, o->index_file,
+> +			repo->gitdir, "index");
+>  }
+>  
+>  void repo_set_hash_algo(struct repository *repo, int hash_algo)
+> @@ -87,6 +127,7 @@ static int repo_init_gitdir(struct repository *repo, const char *gitdir)
+>  	int error = 0;
+>  	char *abspath = NULL;
+>  	const char *resolved_gitdir;
+> +	struct set_gitdir_args args = { NULL };
+>  
+>  	abspath = real_pathdup(gitdir, 0);
+>  	if (!abspath) {
+> @@ -101,7 +142,7 @@ static int repo_init_gitdir(struct repository *repo, const char *gitdir)
+>  		goto out;
+>  	}
+>  
+> -	repo_set_gitdir(repo, resolved_gitdir);
+> +	repo_set_gitdir(repo, resolved_gitdir, &args);
+>  
+>  out:
+>  	free(abspath);
+> diff --git a/repository.h b/repository.h
+> index fa73ab8e93..b5b5d138aa 100644
+> --- a/repository.h
+> +++ b/repository.h
+> @@ -89,7 +89,16 @@ struct repository {
+>  
+>  extern struct repository *the_repository;
+>  
+> -extern void repo_set_gitdir(struct repository *repo, const char *path);
+> +struct set_gitdir_args {
+> +	const char *shared_root;
 
-For those still tagging along (and still confused), here are some 
-diagrams (following what Sergey originally described). Note that 
-actual implementation might be even simpler, but I believe it`s a bit 
-easier to understand like this, using some "temporary" commits approach.
+Can you add a comment explaining what shared_root is? From reading the
+code it seems to be the common gitdir but its not clear from just
+reading this.
 
-Here`s our starting position:
+> +	const char *object_dir;
+> +	const char *graft_file;
+> +	const char *index_file;
+> +};
+> +
+> +extern void repo_set_gitdir(struct repository *repo,
+> +			    const char *root,
+> +			    const struct set_gitdir_args *optional);
+>  extern void repo_set_worktree(struct repository *repo, const char *path);
+>  extern void repo_set_hash_algo(struct repository *repo, int algo);
+>  extern int repo_init(struct repository *repo, const char *gitdir, const char *worktree);
+> diff --git a/setup.c b/setup.c
+> index c5d55dcee4..6fac1bb58a 100644
+> --- a/setup.c
+> +++ b/setup.c
+> @@ -1116,8 +1116,7 @@ const char *setup_git_directory_gently(int *nongit_ok)
+>  			const char *gitdir = getenv(GIT_DIR_ENVIRONMENT);
+>  			if (!gitdir)
+>  				gitdir = DEFAULT_GIT_DIR_ENVIRONMENT;
+> -			repo_set_gitdir(the_repository, gitdir);
+> -			setup_git_env();
+> +			setup_git_env(gitdir);
+>  		}
+>  		if (startup_info->have_repository)
+>  			repo_set_hash_algo(the_repository, repo_fmt.hash_algo);
+> -- 
+> 2.16.1.435.g8f24da2e1a
+> 
 
-(0) ---X1---o---o---o---o---o---X2 (master)
-       |\
-       | A1---A2---A3
-       |             \
-       |              M (topic)
-       |             /
-       \-B1---B2---B3
-
-
-Now, we want to rebase merge commit M from X1 onto X2. First, rebase
-merge commit parents as usual:
-
-(1) ---X1---o---o---o---o---o---X2
-       |\                       |\
-       | A1---A2---A3           | A1'--A2'--A3'
-       |             \          |
-       |              M         |
-       |             /          |
-       \-B1---B2---B3           \-B1'--B2'--B3'
-
-
-That was commonly understandable part. Now, for "rebasing" the merge 
-commit (keeping possible amendments), we do some extra work. First, 
-we make two temporary commits on top of old merge parents, by using 
-exact tree (snapshot) of commit M:
-
-(2) ---X1---o---o---o---o---o---X2
-       |\                       |\
-       | A1---A2---A3---U1      | A1'--A2'--A3'
-       |             \          |
-       |              M         |
-       |             /          |
-       \-B1---B2---B3---U2      \-B1'--B2'--B3'
-
-
-So here, in terms of _snapshots_ (trees, not diffs), U1 = U2 = M.
-
-Now, we rebase these temporary commits, too:
-
-(3) ---X1---o---o---o---o---o---X2
-       |\                       |\
-       | A1---A2---A3---U1      | A1'--A2'--A3'--U1'
-       |             \          |
-       |              M         |
-       |             /          |
-       \-B1---B2---B3---U2      \-B1'--B2'--B3'--U2'
-
-
-As a next step, we merge these temporary commits to produce our 
-"rebased" merged commit M:
-
-(4) ---X1---o---o---o---o---o---X2
-       |\                       |\
-       | A1---A2---A3---U1      | A1'--A2'--A3'--U1'
-       |             \          |                  \
-       |              M         |                   M'
-       |             /          |                  /
-       \-B1---B2---B3---U2      \-B1'--B2'--B3'--U2'
-
-
-Finally, we drop temporary commits, and record rebased commits A3' 
-and B3' as our "rebased" merge commit parents instead (merge commit 
-M' keeps its same tree/snapshot state, just gets parents replaced):
-
-(5) ---X1---o---o---o---o---o---X2
-       |\                       |\
-       | A1---A2---A3---U1      | A1'--A2'--A3'
-       |             \          |             \
-       |              M         |              M'
-       |             /          |             /
-       \-B1---B2---B3---U2      \-B1'--B2'--B3'
-
-
-And that`s it, our merge commit M has been "rebased" to M' :)
-
-(6) ---X1---o---o---o---o---o---X2 (master)
-                                |\
-                                | A1'--A2'--A3'
-                                |             \
-                                |              M' (topic)
-                                |             /
-                                \-B1'--B2'--B3'
-
-
-Important thing to note here is that in our step (3) above, still in 
-terms of trees/snapshots (not diffs), U1' could still be equal to 
-U2', produced merge commit M' tree thus being equal to both of them 
-as well (merge commit introducing no changes to either of its 
-parents, originally described by Sergey as "angel merge").
-
-But it doesn`t have to be so - if any of the rebased commits A1 to A3 
-or B1 to B3 was dropped or modified (or extra commits added, even), 
-that would influence the trees (snapshots) produced after rebasing U1 
-and U2 to U1' and U2', final merge M' reflecting all these changes as 
-well, besides keeping original merge commit M amendments (preserving 
-"evil merge").
-
-
-Well, that`s some theory, now to hopefully confirm/test/polish all 
-this... or trash it, if flawed beyond correction :P
-
-Regards, Buga
+-- 
+Brandon Williams
