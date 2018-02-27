@@ -2,133 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6F0741F404
-	for <e@80x24.org>; Tue, 27 Feb 2018 21:18:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 632311F404
+	for <e@80x24.org>; Tue, 27 Feb 2018 21:19:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751893AbeB0VR7 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Feb 2018 16:17:59 -0500
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:36038 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751777AbeB0VR7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Feb 2018 16:17:59 -0500
-Received: by mail-wm0-f68.google.com with SMTP id 188so1237204wme.1
-        for <git@vger.kernel.org>; Tue, 27 Feb 2018 13:17:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=rs8rHEwJB9BUwyuFwcLNWDnLd9wKqZz6FKYTvSglL3M=;
-        b=rabBsJ1xLVnm61y3g+wcF1oWZ94YIzbGuUFKFA8/AUpEtvHNZmKGrISJH7P9uklWzf
-         EwWz7XQbbczpnqKXXOCq3alN+15Uj4TGFxyEl37TLzL76Kjp7sUdcezRkLTKCF/o7jR0
-         uWk+N1WJdwHA4DTh7VBg0fSag3XJxmStyqHt6zOAv6IFYvS8ZA8q1N+5jAGNvI8D78ac
-         3RoErAJH4/6avN7has2tkwy/SxpYdWPnYjVzmvOXQabCLrny0Bu9Fl/3BSKMwfn8wL3u
-         bsn/DwWT458cBS3Dy8Vx3WmRjDzKNe+FjRvt+Cbz5SFg35EfRwaW9w4uIhagNP1YuQit
-         THJg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=rs8rHEwJB9BUwyuFwcLNWDnLd9wKqZz6FKYTvSglL3M=;
-        b=GSZZ9eLDtD6eCJVTo49SHg1b5T/Om6v3JuSXQnGY99fU3fJz2fxcmpdufZ4b6HaDW5
-         7RgC/LWiU7/6de2UWI/PLOq2SMDpOQ4Q2RsEazmf16gysW5PhToNUUcI3qyCxMvd5RrB
-         M+RQWz/53DRSGjfRn33v+AECfJ22ai7L5xvh84tO3USX+gK5H4hGtKcAESg5q5UM7LJ5
-         ecVjUunr53PJQ2TJkePM/gLMK7JbLWAeUuN78q5/yNDkvHLPVlBkOqSZscl7Wrw4RD+6
-         HfaYMEq9QAQVzm6BCaxqQ8u1AATJhRg/ihXjmh5/Xtikzldb13El01qdQERHj90u4Tat
-         fhEw==
-X-Gm-Message-State: APf1xPBIKRgE3QG38NSDuwzOI5awEwYlpEfaX9nFE/s6cgc9i/ngZloR
-        Fl813Y+ltsWTsGs7w31kyho=
-X-Google-Smtp-Source: AG47ELsrvq2AL5m3kUQI6S2kCzv9ZHLquDZYpBlgGn6dxZNvtaQzJyrTr0Dk710nRjfbvj829v9vNQ==
-X-Received: by 10.28.21.67 with SMTP id 64mr7656545wmv.151.1519766277577;
-        Tue, 27 Feb 2018 13:17:57 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id h38sm76149wrh.61.2018.02.27.13.17.56
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 27 Feb 2018 13:17:57 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: Re: [PATCH 04/11] t3030-merge-recursive: don't check the stderr of a subshell
-References: <20180223233951.11154-1-szeder.dev@gmail.com>
-        <20180223233951.11154-5-szeder.dev@gmail.com>
-Date:   Tue, 27 Feb 2018 13:17:56 -0800
-In-Reply-To: <20180223233951.11154-5-szeder.dev@gmail.com> ("SZEDER
- =?utf-8?Q?G=C3=A1bor=22's?=
-        message of "Sat, 24 Feb 2018 00:39:44 +0100")
-Message-ID: <xmqqlgfep1x7.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1751814AbeB0VTy (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Feb 2018 16:19:54 -0500
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:34408 "EHLO
+        mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751518AbeB0VTx (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 27 Feb 2018 16:19:53 -0500
+Received: from pps.filterd (m0131697.ppops.net [127.0.0.1])
+        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w1RLETbi017068;
+        Tue, 27 Feb 2018 13:18:37 -0800
+Authentication-Results: palantir.com;
+        spf=softfail smtp.mailfrom=newren@gmail.com
+Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
+        by mx0a-00153501.pphosted.com with ESMTP id 2gb6sn490t-1;
+        Tue, 27 Feb 2018 13:18:37 -0800
+Received: from mxw1.palantir.com (smtp.yojoe.local [172.19.0.45])
+        by smtp-transport.yojoe.local (Postfix) with ESMTP id 0A5B52212884;
+        Tue, 27 Feb 2018 13:18:37 -0800 (PST)
+Received: from newren2-linux.yojoe.local (newren2-linux.dyn.yojoe.local [10.100.68.32])
+        by smtp.yojoe.local (Postfix) with ESMTP id F40AE2CDEB1;
+        Tue, 27 Feb 2018 13:18:36 -0800 (PST)
+From:   Elijah Newren <newren@gmail.com>
+To:     gitster@pobox.com
+Cc:     git@vger.kernel.org, sbeller@google.com,
+        Elijah Newren <newren@gmail.com>
+Subject: [PATCH v8 30/29] fixup! merge-recursive: apply necessary modifications for directory renames
+Date:   Tue, 27 Feb 2018 13:18:36 -0800
+Message-Id: <20180227211836.20889-1-newren@gmail.com>
+X-Mailer: git-send-email 2.16.1.232.gbf538760f8
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
+X-Proofpoint-SPF-Result: softfail
+X-Proofpoint-SPF-Record: v=spf1 redirect=_spf.google.com
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,, definitions=2018-02-27_11:,,
+ signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ malwarescore=0 suspectscore=4 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1034 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=507 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1711220000 definitions=main-1802270263
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SZEDER Gábor <szeder.dev@gmail.com> writes:
+Use is_null_oid() instead of is_null_sha1()
+---
+This is just a fixup to patch 23/29 in my v8 series for detecting directo=
+ry renames;
+should squash cleanly.
 
-> +		git read-tree -i -m $c3 2>actual-err &&
-> +		test_must_be_empty expected-err &&
-> +		git update-index --ignore-missing --refresh 2>>actual-err &&
-> +		test_must_be_empty expected-err &&
-> +		git merge-recursive $c0 -- $c3 $c7 2>>actual-err &&
-> +		test_must_be_empty expected-err &&
-> +		git ls-files -s >actual-files 2>>actual-err &&
-> +		test_must_be_empty expected-err
+ merge-recursive.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-Also, with the error output of individual steps tested like this
-(assuming that test-must-be-empty checks are to be done on
-the actual-err file, not ecpected-err that nobody creates), I do not
-see a point in appending to the file.  So perhaps squash this in?
+diff --git a/merge-recursive.c b/merge-recursive.c
+index ffe1d0d117..6e6ec90e9e 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -667,9 +667,9 @@ static int update_stages_for_stage_data(struct merge_=
+options *opt,
+ 	oidcpy(&b.oid, &stage_data->stages[3].oid);
+=20
+ 	return update_stages(opt, path,
+-			     is_null_sha1(o.oid.hash) ? NULL : &o,
+-			     is_null_sha1(a.oid.hash) ? NULL : &a,
+-			     is_null_sha1(b.oid.hash) ? NULL : &b);
++			     is_null_oid(&o.oid) ? NULL : &o,
++			     is_null_oid(&a.oid) ? NULL : &a,
++			     is_null_oid(&b.oid) ? NULL : &b);
+ }
+=20
+ static void update_entry(struct stage_data *entry,
+--=20
+2.16.1.232.gbf538760f8
 
- t/t3030-merge-recursive.sh | 22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
-
-diff --git a/t/t3030-merge-recursive.sh b/t/t3030-merge-recursive.sh
-index cbeea1cf94..3563e77b37 100755
---- a/t/t3030-merge-recursive.sh
-+++ b/t/t3030-merge-recursive.sh
-@@ -526,13 +526,13 @@ test_expect_success 'merge-recursive w/ empty work tree - ours has rename' '
- 		export GIT_INDEX_FILE &&
- 		mkdir "$GIT_WORK_TREE" &&
- 		git read-tree -i -m $c7 2>actual-err &&
--		test_must_be_empty expected-err &&
-+		test_must_be_empty actual-err &&
- 		git update-index --ignore-missing --refresh 2>actual-err &&
--		test_must_be_empty expected-err &&
-+		test_must_be_empty actual-err &&
- 		git merge-recursive $c0 -- $c7 $c3 2>actual-err &&
--		test_must_be_empty expected-err &&
-+		test_must_be_empty actual-err &&
- 		git ls-files -s >actual-files 2>actual-err &&
--		test_must_be_empty expected-err
-+		test_must_be_empty actual-err
- 	) &&
- 	cat >expected-files <<-EOF &&
- 	100644 $o3 0	b/c
-@@ -551,13 +551,13 @@ test_expect_success 'merge-recursive w/ empty work tree - theirs has rename' '
- 		export GIT_INDEX_FILE &&
- 		mkdir "$GIT_WORK_TREE" &&
- 		git read-tree -i -m $c3 2>actual-err &&
--		test_must_be_empty expected-err &&
--		git update-index --ignore-missing --refresh 2>>actual-err &&
--		test_must_be_empty expected-err &&
--		git merge-recursive $c0 -- $c3 $c7 2>>actual-err &&
--		test_must_be_empty expected-err &&
--		git ls-files -s >actual-files 2>>actual-err &&
--		test_must_be_empty expected-err
-+		test_must_be_empty actual-err &&
-+		git update-index --ignore-missing --refresh 2>actual-err &&
-+		test_must_be_empty actual-err &&
-+		git merge-recursive $c0 -- $c3 $c7 2>actual-err &&
-+		test_must_be_empty actual-err &&
-+		git ls-files -s >actual-files 2>actual-err &&
-+		test_must_be_empty actual-err
- 	) &&
- 	cat >expected-files <<-EOF &&
- 	100644 $o3 0	b/c
