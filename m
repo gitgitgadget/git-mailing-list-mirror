@@ -2,88 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 145901F404
-	for <e@80x24.org>; Tue, 27 Feb 2018 04:16:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1042B1F404
+	for <e@80x24.org>; Tue, 27 Feb 2018 05:01:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751742AbeB0EQz (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Feb 2018 23:16:55 -0500
-Received: from a7-17.smtp-out.eu-west-1.amazonses.com ([54.240.7.17]:50158
-        "EHLO a7-17.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751663AbeB0EQy (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 26 Feb 2018 23:16:54 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=shh3fegwg5fppqsuzphvschd53n6ihuv; d=amazonses.com; t=1519705013;
-        h=From:To:Message-ID:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-        bh=FhKCiwRfyl2d8tbY8PBbDgLHNr6BJdiocCvYmACH3YM=;
-        b=jXUbEmLQVAOIP7T2tnVxFuiC2O9QiEgdYTzJpFKc6yYkrcYzEXql0cZcd0SvxOMY
-        8r7gV/IQA6FrbaOk7KWp8zte3kfJn8CIekO3TeKKqXRkSdBDuLJ6NVOi1ILQ8PIxnhz
-        y+nNtr2zWzeIojuI98nvNWKeEPyCHc3oZIpw+GE0=
-From:   Nuno Subtil <subtil@gmail.com>
-To:     git@vger.kernel.org
-Message-ID: <01020161d57a3c14-1177a79b-cc21-4d78-8bbd-b6650f7a6169-000000@eu-west-1.amazonses.com>
-Subject: [PATCH] git-p4: Fix depot path stripping
+        id S1751937AbeB0FBw (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Feb 2018 00:01:52 -0500
+Received: from mail.javad.com ([54.86.164.124]:55461 "EHLO mail.javad.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751930AbeB0FBv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Feb 2018 00:01:51 -0500
+Received: from osv (unknown [89.175.180.246])
+        by mail.javad.com (Postfix) with ESMTPSA id 4D6EF407CA;
+        Tue, 27 Feb 2018 05:01:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1519707710;
+        bh=5+NW7EKmZoIA2TLkikZN9jbdrCxEjyoQNh07vBvqVvM=; l=1132;
+        h=Received:From:To:Subject;
+        b=OCV/wkL3b9A8fh3+jVBZHPcwa04QRhJOfmA4UYbMtzlmcXW4mNxuPm2FvbYmJ1DHv
+         UwJP/+tocLgrr3pAozSTq3H2/Bz2phNLs34Toj3ASIuNhYaq4QaF7D75JgX5jvE5Je
+         yU6LJCFSVNd34ps4AlowWAjrP1NzOWnAK9Ne5Cb4=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1519707710;
+        bh=5+NW7EKmZoIA2TLkikZN9jbdrCxEjyoQNh07vBvqVvM=; l=1132;
+        h=Received:From:To:Subject;
+        b=OCV/wkL3b9A8fh3+jVBZHPcwa04QRhJOfmA4UYbMtzlmcXW4mNxuPm2FvbYmJ1DHv
+         UwJP/+tocLgrr3pAozSTq3H2/Bz2phNLs34Toj3ASIuNhYaq4QaF7D75JgX5jvE5Je
+         yU6LJCFSVNd34ps4AlowWAjrP1NzOWnAK9Ne5Cb4=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1519707710;
+        bh=5+NW7EKmZoIA2TLkikZN9jbdrCxEjyoQNh07vBvqVvM=; l=1132;
+        h=Received:From:To:Subject;
+        b=OCV/wkL3b9A8fh3+jVBZHPcwa04QRhJOfmA4UYbMtzlmcXW4mNxuPm2FvbYmJ1DHv
+         UwJP/+tocLgrr3pAozSTq3H2/Bz2phNLs34Toj3ASIuNhYaq4QaF7D75JgX5jvE5Je
+         yU6LJCFSVNd34ps4AlowWAjrP1NzOWnAK9Ne5Cb4=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1519707710;
+        bh=5+NW7EKmZoIA2TLkikZN9jbdrCxEjyoQNh07vBvqVvM=; l=1132;
+        h=Received:From:To:Subject;
+        b=OCV/wkL3b9A8fh3+jVBZHPcwa04QRhJOfmA4UYbMtzlmcXW4mNxuPm2FvbYmJ1DHv
+         UwJP/+tocLgrr3pAozSTq3H2/Bz2phNLs34Toj3ASIuNhYaq4QaF7D75JgX5jvE5Je
+         yU6LJCFSVNd34ps4AlowWAjrP1NzOWnAK9Ne5Cb4=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1519707710;
+        bh=5+NW7EKmZoIA2TLkikZN9jbdrCxEjyoQNh07vBvqVvM=; l=1132;
+        h=Received:From:To:Subject;
+        b=OCV/wkL3b9A8fh3+jVBZHPcwa04QRhJOfmA4UYbMtzlmcXW4mNxuPm2FvbYmJ1DHv
+         UwJP/+tocLgrr3pAozSTq3H2/Bz2phNLs34Toj3ASIuNhYaq4QaF7D75JgX5jvE5Je
+         yU6LJCFSVNd34ps4AlowWAjrP1NzOWnAK9Ne5Cb4=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1519707710;
+        bh=5+NW7EKmZoIA2TLkikZN9jbdrCxEjyoQNh07vBvqVvM=; l=1132;
+        h=Received:From:To:Subject;
+        b=OCV/wkL3b9A8fh3+jVBZHPcwa04QRhJOfmA4UYbMtzlmcXW4mNxuPm2FvbYmJ1DHv
+         UwJP/+tocLgrr3pAozSTq3H2/Bz2phNLs34Toj3ASIuNhYaq4QaF7D75JgX5jvE5Je
+         yU6LJCFSVNd34ps4AlowWAjrP1NzOWnAK9Ne5Cb4=
+Authentication-Results: mail.javad.com;
+        spf=pass (sender IP is 89.175.180.246) smtp.mailfrom=osv@javad.com smtp.helo=osv
+Received-SPF: pass (mail.javad.com: connection is authenticated)
+Received: from osv by osv with local (Exim 4.84_2)
+        (envelope-from <osv@osv.gnss.ru>)
+        id 1eqXOe-0007ZL-9j; Tue, 27 Feb 2018 08:01:48 +0300
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Igor Djordjevic <igor.d.djordjevic@gmail.com>, git@vger.kernel.org,
+        Johannes Sixt <j6t@kdbg.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [RFC] Rebasing merges: a jorney to the ultimate solution (Road Clear)
+References: <87y3jtqdyg.fsf@javad.com>
+        <bbe64321-4d3a-d3fe-8bb9-58b600fabf35@gmail.com>
+        <nycvar.QRO.7.76.6.1802270051470.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+Date:   Tue, 27 Feb 2018 08:01:48 +0300
+In-Reply-To: <nycvar.QRO.7.76.6.1802270051470.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        (Johannes Schindelin's message of "Tue, 27 Feb 2018 01:07:01 +0100
+        (STD)")
+Message-ID: <87tvu36n5v.fsf@javad.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Date:   Tue, 27 Feb 2018 04:16:53 +0000
-X-SES-Outgoing: 2018.02.27-54.240.7.17
-Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When useClientSpec=true, stripping of P4 depot paths doesn't happen
-correctly on sync. Modifies stripRepoPath to handle this case better.
+Hi Johannes,
 
-Signed-off-by: Nuno Subtil <subtil@gmail.com>
----
- git-p4.py | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> Hi Buga,
+>
+> On Tue, 20 Feb 2018, Igor Djordjevic wrote:
+>
+>> I`m really interested in this topic, which seems to (try to) address the
+>> only "bad feeling" I had with rebasing merges - being afraid of silently
+>> losing amendments by actually trying to "replay" the merge (where
+>> additional and possibly important context is missing), instead of really
+>> "rebasing" it (somehow).
 
-diff --git a/git-p4.py b/git-p4.py
-index 7bb9cadc69738..3df95d0fd1d83 100755
---- a/git-p4.py
-+++ b/git-p4.py
-@@ -2480,7 +2480,7 @@ def stripRepoPath(self, path, prefixes):
-                     if path.startswith(b + "/"):
-                         path = path[len(b)+1:]
- 
--        elif self.keepRepoPath:
-+        if self.keepRepoPath:
-             # Preserve everything in relative path name except leading
-             # //depot/; just look at first prefix as they all should
-             # be in the same depot.
-@@ -2490,6 +2490,12 @@ def stripRepoPath(self, path, prefixes):
- 
-         else:
-             for p in prefixes:
-+		if self.useClientSpec and not self.keepRepoPath:
-+                    # when useClientSpec is false, the prefix will contain the depot name but the path will not
-+                    # extract the depot name and add it to the path so the match below will do the right thing
-+                    depot = re.sub("^(//[^/]+/).*", r'\1', p)
-+                    path = depot + path
-+
-                 if p4PathStartsWith(path, p):
-                     path = path[len(p):]
-                     break
-@@ -2526,8 +2532,8 @@ def splitFilesIntoBranches(self, commit):
-             # go in a p4 client
-             if self.useClientSpec:
-                 relPath = self.clientSpecDirs.map_in_client(path)
--            else:
--                relPath = self.stripRepoPath(path, self.depotPaths)
-+
-+            relPath = self.stripRepoPath(path, self.depotPaths)
- 
-             for branch in self.knownBranches.keys():
-                 # add a trailing slash so that a commit into qt/4.2foo
+[...]
 
---
-https://github.com/git/git/pull/463
+> In short: while I am sympathetic to the desire to keep things simple,
+> the idea to somehow side-step replaying the original merge seems to be
+> *prone* to be flawed.
+
+The proposed (TM) solution does replay the original merge.
+
+> Any system that cannot accommodate dropped/changed/added commits on
+> either side of a merge is likely to be too limited to be useful.
+
+I believe the proposed (TM) solution handles all that nicely. It does
+accommodate dropped/changed/added commits on either side of a merge,
+symmetrically, and never silently drops user modifications.
+
+If you think (TM) is flawed, please give us a test-case.
+
+-- Sergey
