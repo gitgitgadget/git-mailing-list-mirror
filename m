@@ -2,122 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5EB761F404
-	for <e@80x24.org>; Tue, 27 Feb 2018 02:33:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 145901F404
+	for <e@80x24.org>; Tue, 27 Feb 2018 04:16:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752028AbeB0Cdq (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Feb 2018 21:33:46 -0500
-Received: from mail-qt0-f196.google.com ([209.85.216.196]:32882 "EHLO
-        mail-qt0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751923AbeB0CdY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Feb 2018 21:33:24 -0500
-Received: by mail-qt0-f196.google.com with SMTP id a23so9058070qtn.0
-        for <git@vger.kernel.org>; Mon, 26 Feb 2018 18:33:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=bD5CL0rLNT81GlK7MX95hl2j7k/fzwnEI79/hx8SDts=;
-        b=O0g5he5QhmIIWQu+Ut7PzIt35aBWhZZCNzqvEdbcamAevNoEOFiuSJd+Qpt/pWMPbO
-         gwPt1TPcu8MX1ijGt/2qWrHrVgP1GI2J+R0KnVxZM1xixVDMm+fMxvZQUK1NNmMj7D4J
-         f2JFA2cjAZXryRremALiJc8Io5xwvKXIlZLYVRlRqtEU3dvqH0itL7WwpFBEXd/8UBSQ
-         JPKdsIuhI29SEbaZxDb9J5v4LbRgLJFEv1HFoL7EeE/hY2I/LVfRlC6R1FV+zOUdC9so
-         S06ZehuolY/Rr/u4PLkP23eI0huZXXxNCkcemS5r7y3mawj9tu39uLD6d5w1/jVOS9Yv
-         5krg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=bD5CL0rLNT81GlK7MX95hl2j7k/fzwnEI79/hx8SDts=;
-        b=Jr8gqdafXo7X6+q+we+3Le8WrEC/3hvhUqau354GL2PXNvPc7AJTdmlKwg4jNIiDv2
-         64/808WCkQUmUdO0ctRj7IJkkVO84DuDUKKx5WoEcES7/R3D9QE1M8FrL+opxJQvUMNm
-         xgFsltZr0J59c9WM2KtCUL8NkAXYeOUzCVRfIfJXlaxf5olKxGXQxhQ4NXdnMmJVVrD6
-         4DOF0J8Cgj2bwF+XanLAvjRC2hsJG1pj9CHDuI7MNs9Z+Uj9k3sa1ULR8NWDkiKSHrPU
-         nhfzybPnQ/0/RXpmU5iFtjyfJiWcDXoR/jpFeHn19qrNXdbNsvK7ajuatp2apAUjlsbd
-         yTGg==
-X-Gm-Message-State: APf1xPAVnuUMTiZrb6Okl+/phz4lgFM67FaD5hJBAF8y6YlWS6Z0JvvR
-        DJCeisov1Sk7tRWE4n39ON888aQmNwM=
-X-Google-Smtp-Source: AG47ELtKZh8b920Q39Gj4RPDnhkgIz75RFQEO2i8cciwyJES8IYmOfquf79lWi9ikfOpxDi6IyG5dA==
-X-Received: by 10.237.59.59 with SMTP id p56mr21837381qte.84.1519698803867;
-        Mon, 26 Feb 2018 18:33:23 -0800 (PST)
-Received: from stolee-linux.corp.microsoft.com ([2001:4898:8010:0:eb4a:5dff:fe0f:7308])
-        by smtp.gmail.com with ESMTPSA id 94sm5566530qtb.2.2018.02.26.18.33.22
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 26 Feb 2018 18:33:23 -0800 (PST)
-From:   Derrick Stolee <stolee@gmail.com>
-X-Google-Original-From: Derrick Stolee <dstolee@microsoft.com>
+        id S1751742AbeB0EQz (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Feb 2018 23:16:55 -0500
+Received: from a7-17.smtp-out.eu-west-1.amazonses.com ([54.240.7.17]:50158
+        "EHLO a7-17.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751663AbeB0EQy (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 26 Feb 2018 23:16:54 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=shh3fegwg5fppqsuzphvschd53n6ihuv; d=amazonses.com; t=1519705013;
+        h=From:To:Message-ID:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
+        bh=FhKCiwRfyl2d8tbY8PBbDgLHNr6BJdiocCvYmACH3YM=;
+        b=jXUbEmLQVAOIP7T2tnVxFuiC2O9QiEgdYTzJpFKc6yYkrcYzEXql0cZcd0SvxOMY
+        8r7gV/IQA6FrbaOk7KWp8zte3kfJn8CIekO3TeKKqXRkSdBDuLJ6NVOi1ILQ8PIxnhz
+        y+nNtr2zWzeIojuI98nvNWKeEPyCHc3oZIpw+GE0=
+From:   Nuno Subtil <subtil@gmail.com>
 To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, peff@peff.net, git@jeffhostetler.com,
-        jonathantanmy@google.com, sbeller@google.com, szeder.dev@gmail.com,
-        ramsay@ramsayjones.plus.com, Derrick Stolee <dstolee@microsoft.com>
-Subject: [PATCH v5 09/13] commit-graph: close under reachability
-Date:   Mon, 26 Feb 2018 21:33:03 -0500
-Message-Id: <1519698787-190494-10-git-send-email-dstolee@microsoft.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1519698787-190494-1-git-send-email-dstolee@microsoft.com>
-References: <1519698787-190494-1-git-send-email-dstolee@microsoft.com>
+Message-ID: <01020161d57a3c14-1177a79b-cc21-4d78-8bbd-b6650f7a6169-000000@eu-west-1.amazonses.com>
+Subject: [PATCH] git-p4: Fix depot path stripping
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 27 Feb 2018 04:16:53 +0000
+X-SES-Outgoing: 2018.02.27-54.240.7.17
+Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Teach write_commit_graph() to walk all parents from the commits
-discovered in packfiles. This prevents gaps given by loose objects or
-previously-missed packfiles.
+When useClientSpec=true, stripping of P4 depot paths doesn't happen
+correctly on sync. Modifies stripRepoPath to handle this case better.
 
-Also automatically add commits from the existing graph file, if it
-exists.
-
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+Signed-off-by: Nuno Subtil <subtil@gmail.com>
 ---
- commit-graph.c | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+ git-p4.py | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/commit-graph.c b/commit-graph.c
-index 7b0cfb4..01aa23d 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -369,6 +369,28 @@ static int add_packed_commits(const struct object_id *oid,
- 	return 0;
- }
+diff --git a/git-p4.py b/git-p4.py
+index 7bb9cadc69738..3df95d0fd1d83 100755
+--- a/git-p4.py
++++ b/git-p4.py
+@@ -2480,7 +2480,7 @@ def stripRepoPath(self, path, prefixes):
+                     if path.startswith(b + "/"):
+                         path = path[len(b)+1:]
  
-+static void close_reachable(struct packed_oid_list *oids)
-+{
-+	int i;
-+	struct rev_info revs;
-+	struct commit *commit;
-+	init_revisions(&revs, NULL);
-+	for (i = 0; i < oids->nr; i++) {
-+		commit = lookup_commit(&oids->list[i]);
-+		if (commit && !parse_commit(commit))
-+			revs.commits = commit_list_insert(commit, &revs.commits);
-+	}
+-        elif self.keepRepoPath:
++        if self.keepRepoPath:
+             # Preserve everything in relative path name except leading
+             # //depot/; just look at first prefix as they all should
+             # be in the same depot.
+@@ -2490,6 +2490,12 @@ def stripRepoPath(self, path, prefixes):
+ 
+         else:
+             for p in prefixes:
++		if self.useClientSpec and not self.keepRepoPath:
++                    # when useClientSpec is false, the prefix will contain the depot name but the path will not
++                    # extract the depot name and add it to the path so the match below will do the right thing
++                    depot = re.sub("^(//[^/]+/).*", r'\1', p)
++                    path = depot + path
 +
-+	if (prepare_revision_walk(&revs))
-+		die(_("revision walk setup failed"));
+                 if p4PathStartsWith(path, p):
+                     path = path[len(p):]
+                     break
+@@ -2526,8 +2532,8 @@ def splitFilesIntoBranches(self, commit):
+             # go in a p4 client
+             if self.useClientSpec:
+                 relPath = self.clientSpecDirs.map_in_client(path)
+-            else:
+-                relPath = self.stripRepoPath(path, self.depotPaths)
 +
-+	while ((commit = get_revision(&revs)) != NULL) {
-+		ALLOC_GROW(oids->list, oids->nr + 1, oids->alloc);
-+		oidcpy(&oids->list[oids->nr], &(commit->object.oid));
-+		(oids->nr)++;
-+	}
-+}
-+
- void write_commit_graph(const char *obj_dir)
- {
- 	struct packed_oid_list oids;
-@@ -393,6 +415,7 @@ void write_commit_graph(const char *obj_dir)
- 	ALLOC_ARRAY(oids.list, oids.alloc);
++            relPath = self.stripRepoPath(path, self.depotPaths)
  
- 	for_each_packed_object(add_packed_commits, &oids, 0);
-+	close_reachable(&oids);
- 
- 	QSORT(oids.list, oids.nr, commit_compare);
- 
--- 
-2.7.4
+             for branch in self.knownBranches.keys():
+                 # add a trailing slash so that a commit into qt/4.2foo
 
+--
+https://github.com/git/git/pull/463
