@@ -2,111 +2,259 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 988C71F404
-	for <e@80x24.org>; Tue, 27 Feb 2018 18:55:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8F8AD1FAE2
+	for <e@80x24.org>; Tue, 27 Feb 2018 18:57:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751710AbeB0Szy (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Feb 2018 13:55:54 -0500
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:53539 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751589AbeB0Szx (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Feb 2018 13:55:53 -0500
-Received: by mail-wm0-f66.google.com with SMTP id t74so543213wme.3
-        for <git@vger.kernel.org>; Tue, 27 Feb 2018 10:55:53 -0800 (PST)
+        id S1751554AbeB0S5i (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Feb 2018 13:57:38 -0500
+Received: from mail-io0-f178.google.com ([209.85.223.178]:39188 "EHLO
+        mail-io0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751463AbeB0S5h (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Feb 2018 13:57:37 -0500
+Received: by mail-io0-f178.google.com with SMTP id b34so386558ioj.6
+        for <git@vger.kernel.org>; Tue, 27 Feb 2018 10:57:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=pQ4kIZZ6+rWgqgTCXhahKfWvPAdsJXuUOC7VBOhZfXg=;
-        b=PGudnZ93/EBPpr8+5JH3IcIEzZVx0uOmFdaVQ6Y/dRh4P+1e4jhnhrgkzUjs46NT/0
-         Kv1IZGwI0/nnk5mfA4oAZf1M5kLYPyepe9IW6dYdkOfX9klcNQySfLtiSmDXMz6mB1nG
-         dzcEgxtQy0nFaAdcqNuVrzpn0Wxy0MFU94KeufQod8vljLpOAb9unPekSwHIJrmsISjS
-         +59LnvPNPOVWGaiQ5/py3jQDGGl7jiq5PiTGq3YFWWDzsMr2e2eM8m0lAvQygztEkyLe
-         fms4krG+LJqzULhv2zlbF8+HW3xVmiAqUHwS0G7qApQHMktId6NBznRTELkFFUwYNEd/
-         wdsw==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=low81NFJqbV+bzLswtdU1vqVE9iOtVnXxAqzU8FlaeE=;
+        b=oCaMeJrdRaw2K0YdkM2ylVC9Kwjq12wpI4aqepOyEeGPFshpMnWlLo3X32i8JFHqmF
+         dvbSw0zYqvmNuR5yzY/BwvgmR9xgA7gFmiOM2ln6YDWEum9I9+dwPUzooCUT7oZcGBEx
+         +lHMsbxqkCaXS2v9QEKntIXZTo6LIkAsIGl9IF/i2FaTQ1hkuGsYux5s9ib8h+DECnTy
+         hbNXoB5sv+oQTAxc/8RLORPQaSc9QWbjNnavKcxoVb/FkUwQX0fv4LWZUMEfRJcDn4td
+         BIX5Qkt6jCt7E9dlOJMTGQRwTD841b1S3gCTqIuFeHbFUkiF81uFBjny1xD7fRnTl9pe
+         GzDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=pQ4kIZZ6+rWgqgTCXhahKfWvPAdsJXuUOC7VBOhZfXg=;
-        b=P8VzT/QVUX3tXhcXfc4s6X460L4pAU0rvKqRPUg9QdOThDJ3/94qtq354pW4HPWQEY
-         nPOTGgf9Luw9bLxrMrpW7EMzUCrYBn7JVp8G+bQfkm9g8jcPAww858XXUKC7JCqQE8Ww
-         mnPFl5hr0pERbAf5+YoyLDghPRxt8/jlB62mHKZc3KP+kraI1Qa6IzRX2lkOGCxYre90
-         w8FwEMsBy4KYbGzO0cm6oN3XsuH8M7HJedPBdOiQTIEhixzJ1K5CtE2mlpEW9hIh4VWG
-         +/s2gXjHlO5aUk7Y9Myx6GJRLiTKBfE7l9hc4D3qwmcmyg2DEuVxhJCNGHelZOHRwx74
-         vjwA==
-X-Gm-Message-State: APf1xPDPKVp5xA1nQJi2UaITkX/lV0mS8C67UzSnryDupgsumn9Q2HPJ
-        qWe7m/RLdEeoJZYVKzPq82U=
-X-Google-Smtp-Source: AH8x227bFL65e5ptnWkbvDufLo0Mv9KzHm98LQb5V6EbhTREiTIcCUY14gNeFEBb4u72NtFd3PIrmQ==
-X-Received: by 10.28.106.18 with SMTP id f18mr12118038wmc.51.1519757752193;
-        Tue, 27 Feb 2018 10:55:52 -0800 (PST)
-Received: from [192.168.5.102] (cable-24-135-61-30.dynamic.sbb.rs. [24.135.61.30])
-        by smtp.gmail.com with ESMTPSA id b185sm218637wmb.24.2018.02.27.10.55.50
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 27 Feb 2018 10:55:51 -0800 (PST)
-Subject: Re: [RFC] Rebasing merges: a jorney to the ultimate solution (Road
- Clear)
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jacob Keller <jacob.keller@gmail.com>
-Cc:     Sergey Organov <sorganov@gmail.com>,
-        Git mailing list <git@vger.kernel.org>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Junio C Hamano <gitster@pobox.com>
-References: <87y3jtqdyg.fsf@javad.com>
- <bbe64321-4d3a-d3fe-8bb9-58b600fabf35@gmail.com>
- <nycvar.QRO.7.76.6.1802270051470.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
- <CA+P7+xq8UUcLWomUi=PS_hTKfJd3dMAxMmhioDS1bixwcmKAqw@mail.gmail.com>
- <nycvar.QRO.7.76.6.1802271718090.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-From:   Igor Djordjevic <igor.d.djordjevic@gmail.com>
-Message-ID: <4d7f3406-b206-cc22-87df-85700d6a03d9@gmail.com>
-Date:   Tue, 27 Feb 2018 19:55:46 +0100
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=low81NFJqbV+bzLswtdU1vqVE9iOtVnXxAqzU8FlaeE=;
+        b=XjZjpuK6Q/U5un4wA7U4JvoO0RSHXeyPqufwFwCnX7EaCzn44Sp7kZIhZD8loWX3TA
+         CLhYge+gSITuU2VbDc1nxBl/GH1GXdZOiS7TjEP+eRoluAB5mfc+i3EplSGAJd6vXhXy
+         nk9A+SRP/P/27zEz9GT+Ww13MKtcTXT4c0aPZk/YD0r6iynLsWbWEd8JkW9gj2EbrSUw
+         G4Ys/Q+ssnj4eKWKiM5rz4ZXcv876hhDNtHKzmTIyY0l8DyOBhU+i6aBDe1qYxIVNIrB
+         sOoACadlRm79tTHiLbPYskpsrInNOGmB+1JwEPPCBG7BzOdGwORaL0lDbV2cYlhtaxrn
+         5ntQ==
+X-Gm-Message-State: APf1xPB8tSswPY1xqwMt0TYb7to8Hv9Ffd0Qhj/0nndk9A42LH87vnt6
+        5UEiybmKLUuzXzdrVsrOLh6gCA==
+X-Google-Smtp-Source: AG47ELswcCgNoop93YHE27ayPXeWNPEfjTt9gyAApeScgEub6bz2ojr4buCwlMH+YBbwtoSzjJA5Xw==
+X-Received: by 10.107.48.3 with SMTP id w3mr16653346iow.84.1519757856008;
+        Tue, 27 Feb 2018 10:57:36 -0800 (PST)
+Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
+        by smtp.gmail.com with ESMTPSA id l42sm2958033ioi.53.2018.02.27.10.57.34
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 27 Feb 2018 10:57:35 -0800 (PST)
+Date:   Tue, 27 Feb 2018 10:57:33 -0800
+From:   Brandon Williams <bmwill@google.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     git@vger.kernel.org, sbeller@google.com, peff@peff.net,
+        gitster@pobox.com, stolee@gmail.com, git@jeffhostetler.com,
+        pclouds@gmail.com
+Subject: Re: [PATCH v3 22/35] upload-pack: support shallow requests
+Message-ID: <20180227185733.GF209668@google.com>
+References: <20180125235838.138135-1-bmwill@google.com>
+ <20180207011312.189834-1-bmwill@google.com>
+ <20180207011312.189834-23-bmwill@google.com>
+ <20180227182854.GA174036@aiede.svl.corp.google.com>
 MIME-Version: 1.0
-In-Reply-To: <nycvar.QRO.7.76.6.1802271718090.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180227182854.GA174036@aiede.svl.corp.google.com>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Dscho,
+On 02/27, Jonathan Nieder wrote:
 
-On 27/02/2018 17:21, Johannes Schindelin wrote:
+I'll make the documentation changes you suggested.
+
+> > +    deepen <depth>
+> > +	Request that the fetch/clone should be shallow having a commit depth of
 > 
-> Do you have any way to describe the idea in a simple, 3-5 lines long 
-> paragraph?
+> nit: s/Request/Requests/, for consistency with the others?
 > 
-> So far, I just know that it is some sort of confusing criss-cross 
-> cherry-picking and merging and stuff, but nothing in those steps
-> shouts out to me what the *idea* is.
+> > +	<depth> relative to the remote side.
 > 
-> If it would be something like "recreate the old merge, with merge 
-> conflicts and all, then generate the diff to the actual tree of the
-> merge commit, then apply that to the newly-generated merge", I would
-> understand.
+> What does the value of <depth> mean? E.g. does a depth of 1 mean to
+> fetch only the commits named in "have", 2 to fetch those commits plus
+> their parents, etc, or am I off by one?
 
-It would be more along the lines of "(1) rebase old merge commit parents, 
-(2) generate separate diff between old merge commit and each of its 
-parents, (3) apply each diff to their corresponding newly rebased 
-parent respectively (as a temporary commit, one per rebased parent), 
-(4) merge these temporary commits to generate 'rebased' merge commit, 
-(5) drop temporary commits, recording their parents as parents of 
-'rebased' merge commit (instead of dropped temporary commits)".
+Honestly I have no clue, what does the current protocol do?  There isn't
+any documentation about it and this just reuses the logic from that.
 
-Implementation wise, steps (2) and (3) could also be done by simply 
-copying old merge commit _snapshot_ on top of each of its parents as 
-a temporary, non-merge commit, then rebasing (cherry-picking) these 
-temporary commits on top of their rebased parent commits to produce 
-rebased temporary commits (to be merged for generating 'rebased' 
-merge commit in step (4)).
+> 
+> Is <depth> always a positive number?
+> 
+> What happens if <depth> starts with a 0?  Is that a client error?
+> 
 
-Regards, Buga
+> >      output = *section
+> > -    section = (acknowledgments | packfile)
+> > +    section = (acknowledgments | shallow-info | packfile)
+> >  	      (flush-pkt | delim-pkt)
+> 
+> It looks like sections can go in an arbitrary order.  Are there
+> tests to make sure the server can cope with reordering?  (I ask
+> not because I mistrust the server but because I have some vague
+> hope that other server implementations might be inspired by our
+> tests.)
+
+I'll fix this so that they don't come in arbitrary order
+
+> 
+> [...]
+> > @@ -215,6 +245,11 @@ header.
+> >      nak = PKT-LINE("NAK" LF)
+> >      ack = PKT-LINE("ACK" SP obj-id LF)
+> >  
+> > +    shallow-info = PKT-LINE("shallow-info" LF)
+> > +		   *PKT-LINE((shallow | unshallow) LF)
+> > +    shallow = "shallow" SP obj-id
+> > +    unshallow = "unshallow" SP obj-id
+> 
+> Likewise: it looks like shallows and unshallows can be intermixed; can
+> this be either (a) tightened or (b) covered by tests to make sure a
+> later refactoring doesn't accidentally tighten it?
+
+This reuses the existing logic from v0 so its due to that spec.
+
+> > --- a/upload-pack.c
+> > +++ b/upload-pack.c
+> > @@ -710,7 +710,6 @@ static void deepen(int depth, int deepen_relative,
+> >  	}
+> >  
+> >  	send_unshallow(shallows);
+> > -	packet_flush(1);
+> 
+> What does this part do?
+> >  }
+> >  
+> >  static void deepen_by_rev_list(int ac, const char **av,
+> > @@ -722,7 +721,52 @@ static void deepen_by_rev_list(int ac, const char **av,
+> >  	send_shallow(result);
+> >  	free_commit_list(result);
+> >  	send_unshallow(shallows);
+> > -	packet_flush(1);
+> 
+> Same question.
+
+Pulling out the flush packet so that the logic can be reused for v2, the
+flush is added back in for the v0 case but not for the v2 case.
+
+> 
+> > +}
+> > +
+> > +static int send_shallow_list(int depth, int deepen_rev_list,
+> > +			     timestamp_t deepen_since,
+> > +			     struct string_list *deepen_not,
+> > +			     struct object_array *shallows)
+> 
+> What does the return value from this function represent?  It doesn't
+> appear to be the usual "0 means success, -1 means failure" so a
+> comment would help.
+
+I'll add a comment.
+
+> 
+> > +{
+> > +	int ret = 0;
+> > +
+> > +	if (depth > 0 && deepen_rev_list)
+> > +		die("git upload-pack: deepen and deepen-since (or deepen-not) cannot be used together");
+> 
+> nit: long line (can/should "make style" find these?)
+> 
+> The error message is pretty long, longer than a typical 80-column
+> terminal, so probably best to find a way to make the message shorter.
+> E.g.
+> 
+> 		die("upload-pack: deepen cannot be combined with other deepen-* options");
+> 
+> That still would be >80 columns with the indent, so the usual style
+> would be to break it into multiple strings and use C preprocessor
+> concatenation (yuck):
+> 
+> 		die("upload-pack: "
+> 		    "deepen cannot be combined with other deepen-* options");
+> 
+
+> [...]
+> > +	if (depth > 0) {
+> > +		deepen(depth, deepen_relative, shallows);
+> > +		ret = 1;
+> > +	} else if (deepen_rev_list) {
+> > +		struct argv_array av = ARGV_ARRAY_INIT;
+> > +		int i;
+> > +
+> > +		argv_array_push(&av, "rev-list");
+> > +		if (deepen_since)
+> > +			argv_array_pushf(&av, "--max-age=%"PRItime, deepen_since);
+> > +		if (deepen_not->nr) {
+> > +			argv_array_push(&av, "--not");
+> > +			for (i = 0; i < deepen_not->nr; i++) {
+> > +				struct string_list_item *s = deepen_not->items + i;
+> > +				argv_array_push(&av, s->string);
+> 
+> This accepts arbitrary rev-list arguments, which feels dangerous
+> (could end up doing an expensive operation or reading arbitrary files
+> or finding a way to execute arbitrary code).
+> 
+> [...]
+> > -		if (deepen_not.nr) {
+> > -			argv_array_push(&av, "--not");
+> > -			for (i = 0; i < deepen_not.nr; i++) {
+> > -				struct string_list_item *s = deepen_not.items + i;
+> > -				argv_array_push(&av, s->string);
+> 
+> Huh.  Looks like some of the above comments are better addressed to an
+> earlier patch.
+
+If someone wants to fix this after the fact they can, I just moved this
+logic, I didn't add it.
+
+> 
+> [...]
+> > @@ -1071,6 +1085,13 @@ struct upload_pack_data {
+> >  	struct object_array wants;
+> >  	struct oid_array haves;
+> >  
+> > +	struct object_array shallows;
+> > +	struct string_list deepen_not;
+> > +	int depth;
+> > +	timestamp_t deepen_since;
+> > +	int deepen_rev_list;
+> > +	int deepen_relative;
+> 
+> Nice.
+> 
+> Comments describing deepen_Rev_list and deepen_relative would be nice.
+> 
+> Are those boolean?  Can they be unsigned:1 to make that
+> self-explanatory?
+
+They are boolean but are passed via reference at some points so they
+can't be bit flags.
+
+> 
+> [...]
+> > @@ -1080,12 +1101,14 @@ struct upload_pack_data {
+> >  	unsigned done : 1;
+> >  };
+> >  
+> > -#define UPLOAD_PACK_DATA_INIT { OBJECT_ARRAY_INIT, OID_ARRAY_INIT, 0, 0, 0, 0, 0, 0 }
+> > +#define UPLOAD_PACK_DATA_INIT { OBJECT_ARRAY_INIT, OID_ARRAY_INIT, OBJECT_ARRAY_INIT, STRING_LIST_INIT_DUP, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
+> 
+> Long line, "make style" should be able to fix it.
+> 
+
+I'll fix this.
+
+-- 
+Brandon Williams
