@@ -2,115 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6B9B51F404
-	for <e@80x24.org>; Tue, 27 Feb 2018 20:52:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E82D31F404
+	for <e@80x24.org>; Tue, 27 Feb 2018 21:03:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751848AbeB0UwK (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Feb 2018 15:52:10 -0500
-Received: from mail-io0-f172.google.com ([209.85.223.172]:44064 "EHLO
-        mail-io0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751754AbeB0UwJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Feb 2018 15:52:09 -0500
-Received: by mail-io0-f172.google.com with SMTP id h23so728984iob.11
-        for <git@vger.kernel.org>; Tue, 27 Feb 2018 12:52:08 -0800 (PST)
+        id S1751748AbeB0VDr (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Feb 2018 16:03:47 -0500
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:38548 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751518AbeB0VDq (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Feb 2018 16:03:46 -0500
+Received: by mail-wm0-f67.google.com with SMTP id z9so1148498wmb.3
+        for <git@vger.kernel.org>; Tue, 27 Feb 2018 13:03:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=to:from:subject:organization:message-id:date:user-agent
-         :mime-version;
-        bh=Q9lGOkcgd6va3cpheRDinNm/jqsQFCpKXZwfhDtOjGQ=;
-        b=OnEKBnqaNCIoppSgq7mdvvJ+BTt493IvxsxaWjvq4hFNGaHsCJBIVeAO2nE1MbszL8
-         a5GfyEyLFFjn9brAEB2+X9CAEzxHqMw430b5FEJreE82BU8ACuwbXsh+QUA/SiXD04Uo
-         h0cbchkS9MDxMGit8xmamR5SntcT4Sw4gcFMg=
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=sUERdREaVTuLjddA15RNEr4IjMIOvdV1D8X8e8Rrb3g=;
+        b=KBUwOW0yUNmvtmEAtlJCsYN8weQfRYC5+7coSwsAEeHw3xa9rfQZnE9etAZH9lMpUU
+         IpcbppJzYQlOHEO7/o3p/jbdEbGfdEhpqnlY2VE0diyenPnmTuWIGuKLwm6FzV8r2nLW
+         RXOhhUKDZA13kweI6zTIQt255VlRI7sZh4T2/axM+BXJExeoNxWN66knOzr0hKBSfx+e
+         g83pYbZcI8YQ3LJzG8JhQnjZs/9TxcL4SFl4T7ggvRG5Q4EjGa7y9H2tKu7vql+kIKVs
+         yZy2ix4fRZK9q5yWreAqSnnzC2UxqTKGo/0VqvMltsJlVPK+Ie40MYxnIOqBBsICZVCu
+         Da9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:to:from:subject:organization:message-id:date
-         :user-agent:mime-version;
-        bh=Q9lGOkcgd6va3cpheRDinNm/jqsQFCpKXZwfhDtOjGQ=;
-        b=uRM2HGbgmIKooEuNkILn7YvAasHdBqINgJsA26kdeTnhGO755YSIQF9AV2SHXmRoxu
-         isK/IYSGgei+TfW2hOOupsV23ryKcUwlAb25gxZprAcw3yRbgrEK1qAJY2dT/1krwrvz
-         O1OqIBsEq3UaVYaM2neVLR6EPD5rc5u03J4jP7kfuUw45dJb6iHQC9FS0EoQjWFkA7b8
-         xvRomVrSfNxCKYPXrtcUCr/U9jvO6gzv19Km9Q5PXFE3Gc31msqYrP8CB2fy+ynOV1jM
-         NLYxBPWMoMP/KKGpKlxNFuJP3jtK74DAwpSwI9iUwDTA6xpXFZQzwDltQM1dHzc8Ro0k
-         MTlQ==
-X-Gm-Message-State: APf1xPDPbl2e4ICUoZpnwg0tIByueCY9nT9qrjjEdYZmZ7rxSSyMd6Xp
-        jhzA+7HtVvnZ7G4natTC+jBjxIOvD6A=
-X-Google-Smtp-Source: AG47ELtPLa0jkwlr5LBAJkaSSiqDT+5JxtSDAGBXqgpFSiRzZNEv2Ok3+v64TscyejC+2eAGPpYeow==
-X-Received: by 10.107.180.196 with SMTP id d187mr17799259iof.187.1519764728227;
-        Tue, 27 Feb 2018 12:52:08 -0800 (PST)
-Received: from [10.137.0.22] ([199.66.90.113])
-        by smtp.gmail.com with ESMTPSA id g1sm250885itg.10.2018.02.27.12.52.07
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 27 Feb 2018 12:52:07 -0800 (PST)
-To:     git@vger.kernel.org
-From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Subject: Is offloading to GPU a worthwhile feature?
-Organization: The Linux Foundation
-Message-ID: <efc4af6b-53c9-bd02-65f6-9de517f6868e@linuxfoundation.org>
-Date:   Tue, 27 Feb 2018 15:52:12 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.5.2
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=sUERdREaVTuLjddA15RNEr4IjMIOvdV1D8X8e8Rrb3g=;
+        b=WBPFgRM6rPlWUUI2pbGlhlcTi6tkEjEqRQp64H2CrS8iWtmS4sN+ctHml8iHikW2gE
+         A731kHkkwXLcHpVn37LXRFyz0pNfTjJnotALqmrn8N10uroWC9X78KnwdPXS50KxkERL
+         cwJ/edXBaMextbMHdkXF4/coPxxI1qXpfVtZB4p0ByOXUUs9Ugq/Xga6TS6WKiBXUZx5
+         36OSlb8kFxjPhgZ9J+SXbIsNhRJp580cBDmjjB84c9gB8URpc/jB4VK9V8gC1pdjACr+
+         4LUdM3uTh7glfJ2+TWvFwLf2F3YfTjV+OazxpAZUyrK1Zg9hk24VAdzmV7FfwsG0+67p
+         opvQ==
+X-Gm-Message-State: APf1xPCFc+Gr5/+ze7j2u1wd7SUvGftqDgQVfmd+uF7KPGLngN1Gu92Y
+        2LGYCVJeg1/XTd8XyLrGhp0=
+X-Google-Smtp-Source: AG47ELtkUCI9DDyJGQNin+iDL/SYCVOhidBblJZ3sPEvWorC78Ml88c57Psrc5XQLDhYy0yxVv7rwA==
+X-Received: by 10.28.15.4 with SMTP id 4mr3300829wmp.33.1519765424527;
+        Tue, 27 Feb 2018 13:03:44 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id t4sm459540wmt.16.2018.02.27.13.03.43
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 27 Feb 2018 13:03:43 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: Re: [PATCH 04/11] t3030-merge-recursive: don't check the stderr of a subshell
+References: <20180223233951.11154-1-szeder.dev@gmail.com>
+        <20180223233951.11154-5-szeder.dev@gmail.com>
+Date:   Tue, 27 Feb 2018 13:03:42 -0800
+In-Reply-To: <20180223233951.11154-5-szeder.dev@gmail.com> ("SZEDER
+ =?utf-8?Q?G=C3=A1bor=22's?=
+        message of "Sat, 24 Feb 2018 00:39:44 +0100")
+Message-ID: <xmqqtvu2p2kx.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="5OwWWMOeocwxuEwj9ukJr9wctAvXG0hRR"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---5OwWWMOeocwxuEwj9ukJr9wctAvXG0hRR
-Content-Type: multipart/mixed; boundary="dJeNRmNMbucX24X1VqFC1ZUHPOjTOyybK";
- protected-headers="v1"
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: git@vger.kernel.org
-Message-ID: <efc4af6b-53c9-bd02-65f6-9de517f6868e@linuxfoundation.org>
-Subject: Is offloading to GPU a worthwhile feature?
+SZEDER Gábor <szeder.dev@gmail.com> writes:
 
---dJeNRmNMbucX24X1VqFC1ZUHPOjTOyybK
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-CA
-Content-Transfer-Encoding: quoted-printable
+> The two test checking 'git mmerge-recursive' in an empty worktree in
+> ...
+>  		GIT_INDEX_FILE="$PWD/ours-has-rename-index" &&
+>  		export GIT_INDEX_FILE &&
+>  		mkdir "$GIT_WORK_TREE" &&
+> -		git read-tree -i -m $c7 &&
+> -		git update-index --ignore-missing --refresh &&
+> -		git merge-recursive $c0 -- $c7 $c3 &&
+> -		git ls-files -s >actual-files
+> -	) 2>actual-err &&
+> -	>expected-err &&
+> +		git read-tree -i -m $c7 2>actual-err &&
+> +		test_must_be_empty expected-err &&
+> +		git update-index --ignore-missing --refresh 2>actual-err &&
+> +		test_must_be_empty expected-err &&
+> +		git merge-recursive $c0 -- $c7 $c3 2>actual-err &&
+> +		test_must_be_empty expected-err &&
+> +		git ls-files -s >actual-files 2>actual-err &&
+> +		test_must_be_empty expected-err
 
-Hi, all:
+Where do the contents of all of these expected-err files come from?
+Should all of the test_must_be_empty checks be checking actual-err
+instead?
 
-This is an entirely idle pondering kind of question, but I wanted to
-ask. I recently discovered that some edge providers are starting to
-offer systems with GPU cards in them -- primarily for clients that need
-to provide streaming video content, I guess. As someone who needs to run
-a distributed network of edge nodes for a fairly popular git server, I
-wondered if git could at all benefit from utilizing a GPU card for
-something like delta calculations or compression offload, or if benefits
-would be negligible.
-
-I realize this would be silly amounts of work. But, if it's worth it,
-perhaps we can benefit from all the GPU computation libs written for
-cryptocoin mining and use them for something good. :)
-
-Best,
---=20
-Konstantin Ryabitsev
-
-
---dJeNRmNMbucX24X1VqFC1ZUHPOjTOyybK--
-
---5OwWWMOeocwxuEwj9ukJr9wctAvXG0hRR
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEARYIAB0WIQR2vl2yUnHhSB5njDW2xBzjVmSZbAUCWpXE/AAKCRC2xBzjVmSZ
-bCcbAP4yKdoQOPNB+lowUG5DdT9jXJxx5WpfrxRlXdDhzR7DCwEArl5pK8OzfqJ4
-UkZY7tWxlfrRZHEeLlnYoVg1rUq5nw0=
-=FLXK
------END PGP SIGNATURE-----
-
---5OwWWMOeocwxuEwj9ukJr9wctAvXG0hRR--
