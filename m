@@ -2,145 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 20ECB1F404
-	for <e@80x24.org>; Tue, 27 Feb 2018 20:14:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4465B1F404
+	for <e@80x24.org>; Tue, 27 Feb 2018 20:16:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751964AbeB0UOs (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Feb 2018 15:14:48 -0500
-Received: from mail-pl0-f65.google.com ([209.85.160.65]:36994 "EHLO
-        mail-pl0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751663AbeB0UOr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Feb 2018 15:14:47 -0500
-Received: by mail-pl0-f65.google.com with SMTP id ay8-v6so56970plb.4
-        for <git@vger.kernel.org>; Tue, 27 Feb 2018 12:14:47 -0800 (PST)
+        id S1751777AbeB0UP6 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Feb 2018 15:15:58 -0500
+Received: from mail-yb0-f171.google.com ([209.85.213.171]:45434 "EHLO
+        mail-yb0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751605AbeB0UP5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Feb 2018 15:15:57 -0500
+Received: by mail-yb0-f171.google.com with SMTP id e89-v6so25894ybi.12
+        for <git@vger.kernel.org>; Tue, 27 Feb 2018 12:15:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=p3rG8qfnKaRQ0fMK9/cCuFKrUPL2dvVrpETFJJI2ky0=;
-        b=fJl0+5PA3U94KezmH2Oi0haTJtQyZUFzrenUqis7zGYHVLKioQK15H3JKtOrGuIM+C
-         UhBhhR+xx7N4z6L7Z9bEV57ddnYqPT9rGZvjyjG3cNejYDgm0d0TOpnQCwR3iJCMNi1G
-         NVtcn2wBNCsIou95KScFDPbbh9F+pb4PDfG7bYUNA97H94Q4F+QpqBWhtS0X3VONrmpq
-         XVjV2LDcbX1sSXm/7EWNPfnapuM5I40mjVlkG37axgRsGMNXy85dc4iLsvPRiiyoUMb1
-         uoD2tmKc9H3AVwI+0cacG3Erc7hjbpn2SnqZjt8hncr36IF0Cxf5HaiwcGGg1Zo/epEa
-         azVg==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=joVoW+EcNEbR4iL2+0rQvnah3+c/7c4jXtXkQc96128=;
+        b=gam4/Fhrv/Zmu7m3vY0XsSVkkm7e4RuCePFtqkJzIrp7wuzUGU9RUcB1yiZojN+jSD
+         2yirjbyneHN6ZGY7+uJQauaFoCup4BygqngLX/7bL53ZKH3eJ/LSsFSdnSBl9vD8uXo7
+         C9dmolDM8HBHAOSQ1QcrZnDUN98kDxEbsaDSHUxWJt+qMNfFqqqqGpWEnptFi8qd1DmL
+         uwINhHKe3Rr/rmX2gz8Eo4MFeKpXtxdI8BePT078TQgecNEebOpGleHWTU/Uow+5Tc8Z
+         97Jj3SUwpikXKz7jfSCsD4dBdMfafRBjd4tZ0bdHGNhzwCXmCKX1cxuDz/yJ7ZSIbRfv
+         kXFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=p3rG8qfnKaRQ0fMK9/cCuFKrUPL2dvVrpETFJJI2ky0=;
-        b=edrNrtpnzJieP2dMxf/1PdtAichZMjhA5Cmr5xirWkGEeffmL+A9QI5MS0dQKB3mGe
-         YJ5r2JIyt8A/6lr/06NbWK7j0Wfp3NufcIYBW+fzBNdIQcrbIjGH+Ku4ZxJ3vw7MdLli
-         n9XTklTtXWnPDNywO0ImstWbIXrSrlb0tM805b93d0om76q+K6oX0c+pnHp1zx2TbqWX
-         uUNSzSLkv4EIvWPQjJky6PzSBnsamtbzjii7Jse3EgpMNxSnmM5/yIsoiiVu46W78Ij2
-         ZPHDeFD6vrPCq7JmCNgGIRgKdLoGe7pjB5xtE624p8yaUMZs1fkbOoHeLlg/J9yP/Hnn
-         ipmQ==
-X-Gm-Message-State: APf1xPDVoqsPh87l9U9h+QhYGx9vWoyyhF8agGtMrduNIz5A543X1iR/
-        muj9xxizfAJ8ys4znmZjaQZzqw==
-X-Google-Smtp-Source: AH8x226g1AF9TyjUjLr8yqCfjDMso/Peh9dA1k6/Y3PjfAL4Ky6Zk8hsYzEu8c+ivqLEcVZbHQOXDQ==
-X-Received: by 2002:a17:902:6782:: with SMTP id g2-v6mr15575421plk.19.1519762487268;
-        Tue, 27 Feb 2018 12:14:47 -0800 (PST)
-Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
-        by smtp.gmail.com with ESMTPSA id d77sm26437285pfe.20.2018.02.27.12.14.45
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 27 Feb 2018 12:14:46 -0800 (PST)
-Date:   Tue, 27 Feb 2018 12:14:45 -0800
-From:   Brandon Williams <bmwill@google.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, jonathantanmy@google.com,
-        sbeller@google.com, sunshine@sunshineco.com
-Subject: Re: [PATCH v2 4/4] repository: delete ignore_env member
-Message-ID: <20180227201445.GM209668@google.com>
-References: <20180226103030.26900-1-pclouds@gmail.com>
- <20180227095846.9238-1-pclouds@gmail.com>
- <20180227095846.9238-5-pclouds@gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=joVoW+EcNEbR4iL2+0rQvnah3+c/7c4jXtXkQc96128=;
+        b=I8GcIb2JnZdWg2kpwSJXXeIC644mFtXqrfzhIIPm19snhYWc+7Wj6FFQczBGjctb2G
+         Mgd0EPL5QIypVE7yNDRa5c0s8XjJzWc/DvHtwNkG8lAsOsAhy76EO25sPN1J4FtSHxgj
+         IMA+0OPSE9xsJFcqyr/6lbS9sI+7lXJxVC/s4/AzSPAQH8XoZR9ckb91MhOm3d2KzrLi
+         djNIJrHkDRo5RFmG9uxnd+1Goe45roxulcjx9QmaIZJ21NgVbzKfn9oJ/ZbXbdyQQHyB
+         nDz/vSpxhzo0yrR+y20OlDs6cohSfSUKIY0cSjjuKJJ5MiQyDl/NWhCBUdvbPqK67jD6
+         abfg==
+X-Gm-Message-State: APf1xPAlTH3gHQb/XeVTV+I9z+b0032sQJrJz6p7uiuf8tCnTU4f8QZr
+        guUwWpd4CZUc+pCWKiSsJ6xGmtqMDSCgfasAoF6MyA==
+X-Google-Smtp-Source: AG47ELuRjN9SwhsJniG3D6X875CsLzWwbP4fmTGsV8VqcfsODwMLPL45YKtyUphcxKrAhLHZMNq/XkxLnuKOce1uYis=
+X-Received: by 2002:a25:3781:: with SMTP id e123-v6mr774154yba.247.1519762556456;
+ Tue, 27 Feb 2018 12:15:56 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20180227095846.9238-5-pclouds@gmail.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+Received: by 2002:a25:cfcb:0:0:0:0:0 with HTTP; Tue, 27 Feb 2018 12:15:55
+ -0800 (PST)
+In-Reply-To: <1519698787-190494-12-git-send-email-dstolee@microsoft.com>
+References: <1519698787-190494-1-git-send-email-dstolee@microsoft.com> <1519698787-190494-12-git-send-email-dstolee@microsoft.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 27 Feb 2018 12:15:55 -0800
+Message-ID: <CAGZ79kYM0fHiYQ2+k5__A2hY1PeCyigYf3n9ZBJSKH8yJZOF0A@mail.gmail.com>
+Subject: Re: [PATCH v5 11/13] commit-graph: read only from specific pack-indexes
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 02/27, Nguyễn Thái Ngọc Duy wrote:
-> This variable was added because the repo_set_gitdir() was created to
-> cover both submodule and main repos, but these two are initialized a
-> bit differently so ignore_env == 0 means main repo, while ignore_env
-> != 0 is submodules.
-> 
-> Since the difference part (env variables) has been moved out of
-> repo_set_gitdir(), this function works the same way for both repo
-> types and ignore_env is not needed anymore.
-> 
-> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-> ---
->  repository.c | 4 +---
->  repository.h | 9 ---------
->  2 files changed, 1 insertion(+), 12 deletions(-)
-> 
-> diff --git a/repository.c b/repository.c
-> index e326f0fcbc..c555dacad2 100644
-> --- a/repository.c
-> +++ b/repository.c
-> @@ -12,7 +12,7 @@ static struct repository the_repo = {
->  	NULL, NULL, NULL,
->  	&the_index,
->  	&hash_algos[GIT_HASH_SHA1],
-> -	0, 0
-> +	0
->  };
->  struct repository *the_repository = &the_repo;
->  
-> @@ -139,8 +139,6 @@ int repo_init(struct repository *repo, const char *gitdir, const char *worktree)
->  	struct repository_format format;
->  	memset(repo, 0, sizeof(*repo));
->  
-> -	repo->ignore_env = 1;
-> -
->  	INIT_LIST_HEAD(&repo->objects.packed_git_mru);
->  
->  	if (repo_init_gitdir(repo, gitdir))
-> diff --git a/repository.h b/repository.h
-> index b1da2a6384..07e8971428 100644
-> --- a/repository.h
-> +++ b/repository.h
-> @@ -73,15 +73,6 @@ struct repository {
->  	const struct git_hash_algo *hash_algo;
->  
->  	/* Configurations */
-> -	/*
-> -	 * Bit used during initialization to indicate if repository state (like
-> -	 * the location of the 'objectdir') should be read from the
-> -	 * environment.  By default this bit will be set at the begining of
-> -	 * 'repo_init()' so that all repositories will ignore the environment.
-> -	 * The exception to this is 'the_repository', which doesn't go through
-> -	 * the normal 'repo_init()' process.
-> -	 */
-> -	unsigned ignore_env:1;
+> @@ -76,10 +77,18 @@ static int graph_read(int argc, const char **argv)
+>
+>  static int graph_write(int argc, const char **argv)
+>  {
+> +       const char **pack_indexes = NULL;
+> +       int packs_nr = 0;
+> +       const char **lines = NULL;
+> +       int lines_nr = 0;
+> +       int lines_alloc = 0;
+> +
+>         static struct option builtin_commit_graph_write_options[] = {
+>                 OPT_STRING(0, "object-dir", &opts.obj_dir,
+>                         N_("dir"),
+>                         N_("The object directory to store the graph")),
+> +               OPT_BOOL(0, "stdin-packs", &opts.stdin_packs,
+> +                       N_("scan packfiles listed by stdin for commits")),
+>                 OPT_END(),
+>         };
+>
+> @@ -90,7 +99,25 @@ static int graph_write(int argc, const char **argv)
+>         if (!opts.obj_dir)
+>                 opts.obj_dir = get_object_directory();
+>
+> -       write_commit_graph(opts.obj_dir);
+> +       if (opts.stdin_packs) {
+> +               struct strbuf buf = STRBUF_INIT;
+> +               lines_nr = 0;
+> +               lines_alloc = 128;
 
-Nice, glad to see this get a bit less complicated.  I'm also very glad I
-didn't end up using this variable when doing anything else but
-initializing a repo object otherwise you would have had a bit more
-difficult time getting rid of it :)
-
-Thanks!
-
->  
->  	/* Indicate if a repository has a different 'commondir' from 'gitdir' */
->  	unsigned different_commondir:1;
-> -- 
-> 2.16.1.435.g8f24da2e1a
-> 
-
--- 
-Brandon Williams
+both lines_nr as well as lines_alloc are already initialized?
