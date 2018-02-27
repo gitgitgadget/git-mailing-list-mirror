@@ -2,92 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E30FB1F576
-	for <e@80x24.org>; Tue, 27 Feb 2018 10:26:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0529B1F576
+	for <e@80x24.org>; Tue, 27 Feb 2018 11:04:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752816AbeB0K0h (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Feb 2018 05:26:37 -0500
-Received: from mout.web.de ([217.72.192.78]:54037 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752090AbeB0K0g (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Feb 2018 05:26:36 -0500
-Received: from [192.168.178.36] ([79.237.251.165]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0Lw0uH-1eePjw3fYr-017nx4; Tue, 27
- Feb 2018 11:26:33 +0100
-Subject: Re:
-To:     Alan Gage <sergeantdestroyersc@gmail.com>
-References: <CAJTBYTnA56peLi4Cb0ZEx1PtOmh8eRF45tQgE=prwF_o7FDMcA@mail.gmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Cc:     git@vger.kernel.org
-Message-ID: <d842741d-c079-3222-3655-cdd426ff0516@web.de>
-Date:   Tue, 27 Feb 2018 11:26:32 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
-MIME-Version: 1.0
-In-Reply-To: <CAJTBYTnA56peLi4Cb0ZEx1PtOmh8eRF45tQgE=prwF_o7FDMcA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:NiCGMGILSZgC5aIspSEf+SToUaXPLSy6xhwV0rTie3R4P6BS8Qu
- 695mX/aVx2Rvafacn2MQ0XyfwHoZya1cMIXLCNLYAEZtYDh3sh8YXIdrlIAwfnNX1k8f6hX
- TrFsrOl4vEKp64WCs6eji2OJVuKwbxrnRzxMBQHcPclFpItNkxif0LEBFPqzekc6B3xFOlm
- KlIH6Xc2Jg2udGiMQh3vw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:pCoGwZm5/3Y=:S3tRZZHjdG7zeIjLEU6uxc
- GI31zrk+Hn0H4yW7IQRDV8Rk5aBuVquFkDZaFnJzVjTt04hUXhRhLlyehaOZ8jLvv2xJMqwGi
- Q1YnrNa9czE+N4AgBxG/LFf9cyGdPuvVBhTXiFTcwjBfBZJm5068WJveL1mizzO2GxHfLHyPS
- avxYZ8mD+21IfNy+ROVZin2jSNg9rlVKu4moyjiGKO81pkpNNE9mDas0+R+8xeAMcI8uaH6h4
- Py1oReZLP8QHRqCyYYp0p0+JCahYFR3fhvPqyLRK3phCeAwdPugVk11ShXl3xDBr7WtfeBSdB
- BZ5dvIlfI6DW0Lt6Q4pnpyLgvCf3w3ABnTfLsRmkPdvAPasIabl8jE67LiAUfmDWSjoBdMA8J
- Bkg7sR2AFh5v3XWhEfCMjbRccK7l646zmhnqsFKxU3YU0SD+3JzjxLbGMAawhXuGr5P3oLT40
- E/Gj3QQro0vDseYVL1NSoaIP+JSJnXVkOS0TGAC94pOkzDLuzNrvI7jrgOOPPWfqXkxJrc2wR
- GB3/LGsTHXvgkAdEMkAri7X73GWA4TvG7/gErA9c3wZLLp05S+SJSjOYK+18x/luZHGpXmlvp
- cBA3gYblKnEWxbZCgSEqzkNNf0fOP/Hz4edqKurTf/34ubOv834JwIwd7g20ZmDbauJywvapi
- cFTMDkvmH5gxbbV6Um15omy3VfQpOyL2ahvNI100HI3Mqmmf27zoPsA1dt1islq1FXc+t7X+X
- YquIevpoyNUkGAR6/2LS1/ydj6U8WOTnQvMdiYr1HiTsEV0f2uKyjF44EpNbTvYMOVQGdPIvt
- 0KpGaulbC2RAIJX1FXCo+FLsvDhNw/vWKYY1bP3XWUI1h9Fr9c=
+        id S1752708AbeB0LE1 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Feb 2018 06:04:27 -0500
+Received: from smtp-out-2.talktalk.net ([62.24.135.66]:55253 "EHLO
+        smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751752AbeB0LEZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Feb 2018 06:04:25 -0500
+Received: from lindisfarne.localdomain ([89.242.176.20])
+        by smtp.talktalk.net with SMTP
+        id qd3QeQ4WdoNnDqd3XeXd0V; Tue, 27 Feb 2018 11:04:24 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1519729464;
+        bh=0W9QB0CDmw3WSKDt28Pdfguv9WGZmpzOeaQDnk2oi0g=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:Reply-To;
+        b=B30tMrgfe+IKFQQU4H19qlyvGwfsnRvd+77cCPDP6xZ4Rf2Z+B25A1IPfj2mS/Dct
+         5l337BMV+KvXuJs2WE7yRqn2OVY7/Xv9qvRr/9z/VPLpCavRMZ2DF8c9txvXYa3OM+
+         S7BQC9pcrdH3HMcXKm0gAZ23mpeenLVZVfxSNT8U=
+X-Originating-IP: [89.242.176.20]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=ZZ9tDodA c=1 sm=1 tr=0 a=BZXIa/HMvEOrkAULb1ciZg==:117
+ a=BZXIa/HMvEOrkAULb1ciZg==:17 a=evINK-nbAAAA:8 a=TgBjFQ-4gL6B6trCziwA:9
+ a=lEOF10Py47WRiUkP:21 a=vgxmcP0Jzq72Yh1e:21 a=RfR_gqz1fSpA9VikTjo0:22
+From:   Phillip Wood <phillip.wood@talktalk.net>
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        "Brian M. Carlson" <sandals@crustytoothpaste.net>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: [PATCH v3 1/9] add -i: add function to format hunk header
+Date:   Tue, 27 Feb 2018 11:03:56 +0000
+Message-Id: <20180227110404.16816-2-phillip.wood@talktalk.net>
+X-Mailer: git-send-email 2.16.1
+In-Reply-To: <20180227110404.16816-1-phillip.wood@talktalk.net>
+References: <20180213104408.9887-1-phillip.wood@talktalk.net>
+ <20180227110404.16816-1-phillip.wood@talktalk.net>
+Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
+X-CMAE-Envelope: MS4wfNQAq7iSApLOxHuMk+ZDh+sk3k5LCxS8Yl5sEcMuWbTdV+VkbxtHeoHG2jaC4ZIisAeAcVtbZvwL/6vDRznNIsQITitUkFHwG3ACxFM290wQ4n7GDt77
+ 5Pi3cIZ5fUPq9S5qYQl3lVc79lDK35nrpy7CICmooB1BJx9RGrDWId7UUwctOc2IPj58dskMJS6KueL0iz7UgT0Qnwgd7j0INRi8b/+rboo6gTFk2VcWYufK
+ Mzl+Pp3LZ7iAuzTne3MPpHuvJvuEn5siVIZ9H1N3KasO0r9bOym0AGzfZs0z4MPnDgGgRRFwtKESOPTua2qave83aXAKKJGn8zVNOnnVyoU=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 27.02.2018 um 02:18 schrieb Alan Gage:
-> Hello, I recently noticed a bug involving GitBash and Python. I was
-> running a function that would post the system time once every second
-> using a while loop but the text was only sent after the while loop
-> ended due to a timer I had set. Essesntially, instead of it being
-> entered every second into the terminal, it was entered all at once,
-> when the loop ended. I tried this with the Command Line, among other
-> things, and it worked as intended, with the text being entered every
-> second. This is on Windows 10 Pro with the Fall Creators Update and
-> the most recent version of GitBash.
+From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-Python buffers its output by default.  On terminals it enables line
-buffering, i.e. the accumulated output is flushed when a newline
-character is reached.  Otherwise it uses a system-dependent buffer
-size in the range of a few kilobytes.  You can check if your output
-is a terminal e.g. with:
+This code is duplicated in a couple of places so make it into a
+function as we're going to add some more callers shortly.
 
-  python -c "import sys; print(sys.stdout.isatty())"
+Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+---
+ git-add--interactive.perl | 21 +++++++++++----------
+ 1 file changed, 11 insertions(+), 10 deletions(-)
 
-You can disable buffering by running your script with "python -u".
-This discussion mentions more options:
+diff --git a/git-add--interactive.perl b/git-add--interactive.perl
+index 964c3a7542..8ababa6453 100755
+--- a/git-add--interactive.perl
++++ b/git-add--interactive.perl
+@@ -751,6 +751,15 @@ sub parse_hunk_header {
+ 	return ($o_ofs, $o_cnt, $n_ofs, $n_cnt);
+ }
+ 
++sub format_hunk_header {
++	my ($o_ofs, $o_cnt, $n_ofs, $n_cnt) = @_;
++	return ("@@ -$o_ofs" .
++		(($o_cnt != 1) ? ",$o_cnt" : '') .
++		" +$n_ofs" .
++		(($n_cnt != 1) ? ",$n_cnt" : '') .
++		" @@\n");
++}
++
+ sub split_hunk {
+ 	my ($text, $display) = @_;
+ 	my @split = ();
+@@ -838,11 +847,7 @@ sub split_hunk {
+ 		my $o_cnt = $hunk->{OCNT};
+ 		my $n_cnt = $hunk->{NCNT};
+ 
+-		my $head = ("@@ -$o_ofs" .
+-			    (($o_cnt != 1) ? ",$o_cnt" : '') .
+-			    " +$n_ofs" .
+-			    (($n_cnt != 1) ? ",$n_cnt" : '') .
+-			    " @@\n");
++		my $head = format_hunk_header($o_ofs, $o_cnt, $n_ofs, $n_cnt);
+ 		my $display_head = $head;
+ 		unshift @{$hunk->{TEXT}}, $head;
+ 		if ($diff_use_color) {
+@@ -912,11 +917,7 @@ sub merge_hunk {
+ 		}
+ 		push @line, $line;
+ 	}
+-	my $head = ("@@ -$o0_ofs" .
+-		    (($o_cnt != 1) ? ",$o_cnt" : '') .
+-		    " +$n0_ofs" .
+-		    (($n_cnt != 1) ? ",$n_cnt" : '') .
+-		    " @@\n");
++	my $head = format_hunk_header($o0_ofs, $o_cnt, $n0_ofs, $n_cnt);
+ 	@{$prev->{TEXT}} = ($head, @line);
+ }
+ 
+-- 
+2.16.1
 
-  https://stackoverflow.com/questions/107705/disable-output-buffering
-
-You can also start bash on the command line.  I do wonder why Git CMD
-seems to be started in what passes as a terminal, while Git BASH is
-not, though.
-
-You may want to check out https://gitforwindows.org/ and report your
-findings using their issue tracker.
-
-(This mailing list here, git@vger.kernel.org, is mostly used for
-discussing Git itself, not so much about extra tools like bash or
-Python that are packaged with Git for Windows.)
-
-René
