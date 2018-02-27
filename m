@@ -3,108 +3,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 39C0D1F404
-	for <e@80x24.org>; Tue, 27 Feb 2018 23:32:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 06EC71F404
+	for <e@80x24.org>; Tue, 27 Feb 2018 23:40:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751881AbeB0Xck (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Feb 2018 18:32:40 -0500
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:52601 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751550AbeB0Xci (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Feb 2018 18:32:38 -0500
-Received: by mail-wm0-f68.google.com with SMTP id t3so1676708wmc.2
-        for <git@vger.kernel.org>; Tue, 27 Feb 2018 15:32:38 -0800 (PST)
+        id S1751793AbeB0Xkw (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Feb 2018 18:40:52 -0500
+Received: from mail-wr0-f173.google.com ([209.85.128.173]:46141 "EHLO
+        mail-wr0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751778AbeB0Xkt (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Feb 2018 18:40:49 -0500
+Received: by mail-wr0-f173.google.com with SMTP id m12so510295wrm.13
+        for <git@vger.kernel.org>; Tue, 27 Feb 2018 15:40:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=PggjVZ/iViQ0xHCJi+ivsfDD4Nn2kBquWlBlFnRk0Js=;
-        b=Jftp9hks986VUAYM23E2dTsNvb1qGQ41ITl/IU+hj/2eBvtYheYshiEountP1EixY5
-         IdovISYHXPyiil3U5wAbR8FwVaV8sAdyql16YQtSGn0xxOVIM+xGcvEZKvKm7/WBT08w
-         sq7ShA/90K2EzwuF3TorCFlMTAiBEpsmxnZbQzKX6ioFu6djMSM2GuJxy5GK4IWPjSa2
-         OojHvTHdemdIze/bAj1f3IuEJtP+Eda/rsOQb+o+eP5Uri4KrulsAXY+I20YjCZfLx/d
-         icdKHmYrfjkIWMo5/zzOSQI81/dvY3Mypy1OXVXYpNX7VuYuQh2ZKq4p44j5WN5ydPOm
-         Ve9g==
+        h=subject:from:to:cc:references:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=JPm3G6J/kjO9by3Sg+al8WK79YNycthxdwG3d2/BsC0=;
+        b=YLSxSavu9yemIqpx6DG9KLAQSkBSI9/4lM00egO+8d4IOVcFyPuHHl/07w28opFcjt
+         MKdyRGTltxnd6vSw4Wsfgv5FB5Sr+E+jhyJsuxq7Wad/2Te7wu16Wc21+Lpj1vZGHuVw
+         E7fOEAR+qzPpfrEoCjaBrWBcQX9CUthR3oW6YrQ9DA07I/TvIwJ+QSh5sD/zsh2cHlhB
+         RQFmztWcUMT1OOBmq0C1YuAaWep7BZhQ6t0G8gs/f3rlBNDA3yq6o3VSZRxB6WTRcjWc
+         Bd6MPkmwW9FyjDXSlwvNPivnKgM7SGyT/+CSDzjCBxGAsUqp4/mAbwvcr85Zqyb1aDcm
+         05Xg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=PggjVZ/iViQ0xHCJi+ivsfDD4Nn2kBquWlBlFnRk0Js=;
-        b=PeMkKCry0zvZVFM3uocCadVNRSdnSBu5loWRkWzKxF2YqeG/T/ryZ1L6AycAcHb+R2
-         gGJV2Z+doogmFjYXEbJOkS76VnR8QfQaQm3Ml1n7zD7a0qjj2j+AL0TvUIFLq2U9Sdxg
-         FF127ZeFwA2iYJ1W1IPuGaC23ZUI0boz5ifus6/61+uZjUMUswNUCKwshmHZIgExbRRj
-         k11Bljzu0skAm/4awpfl2TRJs2d+L7OsGu7wRcbAJjEgdi+6jJR6NeiobSVY5MVUf5My
-         sgVP2Z3bSOpSPzycaBhz19DgvnisJE2939vQXeReFWFR811iQDwmyht7Vuo1wXIUUheD
-         wn9Q==
-X-Gm-Message-State: APf1xPC8RacIxq5v4DoeOiNeMMFY0+C+6cBw+OnLmernxLRLknPZLJ1l
-        TcdlBy51vMAIJmDKZMvrHjm9z1U1
-X-Google-Smtp-Source: AH8x227gGvDLEezWsYmvpeEv/9HvSIzVwjfe1tSETcOhA4ityZWl4zTF7LuYo0FBmqJibfXX+UGEUQ==
-X-Received: by 10.28.131.210 with SMTP id f201mr13027506wmd.117.1519774357454;
-        Tue, 27 Feb 2018 15:32:37 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id l11sm189142wrg.71.2018.02.27.15.32.36
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 27 Feb 2018 15:32:36 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Brandon Williams <bmwill@google.com>,
-        Git List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmc=?= =?utf-8?B?4buNYw==?= Duy 
-        <pclouds@gmail.com>
-Subject: Re: [PATCH v3 14/35] connect: request remote refs using v2
-References: <20180207011312.189834-1-bmwill@google.com>
-        <20180207011312.189834-15-bmwill@google.com>
-        <20180221145411.35b2ea84747518a499276bdd@google.com>
-        <20180222181922.GD185096@google.com>
-        <20180222182657.GE19035@sigill.intra.peff.net>
-        <20180222112533.0d7c6023fb8e4098efedfe31@google.com>
-        <20180227062128.GG65699@aiede.svl.corp.google.com>
-        <xmqq8tbep02f.fsf@gitster-ct.c.googlers.com>
-        <20180227220443.GB11187@sigill.intra.peff.net>
-        <CAPig+cS+G-xC51n-Ud0Wbmcc-zeHBM3-5WQQAFm9gwm9LNk3Gg@mail.gmail.com>
-        <20180227221808.GE11187@sigill.intra.peff.net>
-Date:   Tue, 27 Feb 2018 15:32:36 -0800
-In-Reply-To: <20180227221808.GE11187@sigill.intra.peff.net> (Jeff King's
-        message of "Tue, 27 Feb 2018 17:18:08 -0500")
-Message-ID: <xmqq606inh4b.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=JPm3G6J/kjO9by3Sg+al8WK79YNycthxdwG3d2/BsC0=;
+        b=LVCfabdRuFd6V1WCodY46XmlKQ6KncXhE7wsx7KJP4eie+kzv0POD13vJsL3tX/e55
+         EYAGaFC18MkeZneJX2gtVxd9ZCyAq7yP1qV6NTMjKv36r+mVWPwXEmRkFuOx0hacJTzH
+         OJTdJUCoT/D/RHuKuVoJQOJB4yWr9FEZHSLmVK6Rkttd2chbbFTws0NUPYcaV+q84SOc
+         cTlPIipDsuDaCFQyEsVC+Tt2wrdf7sUfgJOvgwirCAW5wash7jMJD9FoPmWPeYy9HkJs
+         tdKmbEEWuQRb9c9vuewbZrFSlwqyKUESLbM0Id0fUrq/+aNMZGgpNa5VM+ZZSvgMy3pw
+         zuSw==
+X-Gm-Message-State: APf1xPC1c1gMBpZIMxH+NblIO28/BJl+XO+1MU0HUN6a/3Gm6ooFQi59
+        gNG9bqT13n43lZTFLmC9QJs=
+X-Google-Smtp-Source: AH8x226Mxx1Mt1YPjtakiRoWw+qyocXcAFJorrDLzoamInuFqyVyxWcC6wWXzkHtma+izZ1gA2KTgw==
+X-Received: by 10.223.209.18 with SMTP id a18mr13958427wri.141.1519774848714;
+        Tue, 27 Feb 2018 15:40:48 -0800 (PST)
+Received: from [192.168.5.102] (cable-24-135-61-30.dynamic.sbb.rs. [24.135.61.30])
+        by smtp.gmail.com with ESMTPSA id m7sm765238wrm.35.2018.02.27.15.40.47
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 27 Feb 2018 15:40:47 -0800 (PST)
+Subject: Re: [RFC] Rebasing merges: a jorney to the ultimate solution (Road
+ Clear)
+From:   Igor Djordjevic <igor.d.djordjevic@gmail.com>
+To:     Git mailing list <git@vger.kernel.org>
+Cc:     Sergey Organov <sorganov@gmail.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Junio C Hamano <gitster@pobox.com>
+References: <87y3jtqdyg.fsf@javad.com>
+ <bbe64321-4d3a-d3fe-8bb9-58b600fabf35@gmail.com>
+ <nycvar.QRO.7.76.6.1802270051470.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+ <CA+P7+xq8UUcLWomUi=PS_hTKfJd3dMAxMmhioDS1bixwcmKAqw@mail.gmail.com>
+ <nycvar.QRO.7.76.6.1802271718090.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+ <4d7f3406-b206-cc22-87df-85700d6a03d9@gmail.com>
+ <33da31e9-9101-475d-8901-4b6b3df2f29d@gmail.com>
+Message-ID: <940d959d-151d-68dd-0f13-320ebad0d75b@gmail.com>
+Date:   Wed, 28 Feb 2018 00:40:31 +0100
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.6.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <33da31e9-9101-475d-8901-4b6b3df2f29d@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On 27/02/2018 20:59, Igor Djordjevic wrote:
+> 
+> (3) ---X1---o---o---o---o---o---X2
+>        |\                       |\
+>        | A1---A2---A3---U1      | A1'--A2'--A3'--U1'
+>        |             \          |
+>        |              M         |
+>        |             /          |
+>        \-B1---B2---B3---U2      \-B1'--B2'--B3'--U2'
+> 
 
->> struct strs {...};
->> 
->> void strs_init(struct strs *);
->> void strs_push(struct strs *, const char *);
->> void strs_pushf(struct strs *, const char *fmt, ...);
->> void strs_pushl(struct strs *, ...);
->> void strs_pushv(struct strs *, const char **);
->> void strs_pop(struct strs *);
->> void strs_clear(struct strs *);
->> const char **strs_detach(struct strs *);
->> 
->> ...is short, feels pretty natural, and doesn't require understanding
->> "v" for "vector".
->
-> Not bad. The "v" carries the information that it _is_ a NULL-terminated
-> vector and not some other list-like structure (and so is suitable for
-> feeding to execv, etc). But that may just be obvious from looking at its
-> uses and documentation.
+Meh, I hope I`m rushing it now, but for example, if we had decided to 
+drop commit A2 during an interactive rebase (so losing A2' from 
+diagram above), wouldn`t U2' still introduce those changes back, once 
+U1' and U2' are merged, being incorrect/unwanted behavior...? :/
 
-And with "v", it probably is obvious without looking at its uses and
-documentation, so... ;-)
+p.s. Looks like Johannes already elaborated on this in the meantime, 
+let`s see... (goes reading that other e-mail[1])
+
+[1] https://public-inbox.org/git/nycvar.QRO.7.76.6.1802272330290.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz/
