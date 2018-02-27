@@ -2,111 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 68A381F404
-	for <e@80x24.org>; Tue, 27 Feb 2018 22:08:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DE6E51F404
+	for <e@80x24.org>; Tue, 27 Feb 2018 22:10:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751927AbeB0WIa (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Feb 2018 17:08:30 -0500
-Received: from mail-yw0-f182.google.com ([209.85.161.182]:35177 "EHLO
-        mail-yw0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751853AbeB0WI3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Feb 2018 17:08:29 -0500
-Received: by mail-yw0-f182.google.com with SMTP id d205so148036ywe.2
-        for <git@vger.kernel.org>; Tue, 27 Feb 2018 14:08:29 -0800 (PST)
+        id S1751896AbeB0WKZ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Feb 2018 17:10:25 -0500
+Received: from mail-qk0-f194.google.com ([209.85.220.194]:40921 "EHLO
+        mail-qk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751574AbeB0WKL (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Feb 2018 17:10:11 -0500
+Received: by mail-qk0-f194.google.com with SMTP id o25so548499qkl.7
+        for <git@vger.kernel.org>; Tue, 27 Feb 2018 14:10:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=QgfhTP/1cthsx+BWQcJG2cq6Eja787Ot9C/LIcDVeGo=;
-        b=lfTiubchG6zSHgKdLmVBEes8z5nI7RCYUyBAnygt2YIjAnW34XtVGC6YiVM8dVkMpx
-         CGpOVo07EvGBZRwsaZm+sjF5VOFc/lvYsJrF/IAF8CkCesV/XY+aWaZ5PCvOngNiXEic
-         OL0BnZPbPL5f/+RHtgfoiL3BnxX7/gX3KaEanXg7t4A0D2NJZSaRc7yMIBU0Y/ZYB8j5
-         VZEQew0WEnKM/85MHZLtSiC9J1cXxc+6fWxSPvXvL2eFrpPaf3r1WrKSQ1XtZdpMta+i
-         +Ctpg9piw2kB8tGPONnLlv7P3Ox7Gnkxszh92E1bcDGsrwu2ZQfLoRt/bS93twVH7V/5
-         Oilw==
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=CtfjB6FTkWCxHtRd4u6flRA5gmiTACCW+6M8iq3lpno=;
+        b=XlZuWiT8NosZC8EF79rcL2XPHkrt493mcZ9yvbSFj85Tn+jsYC51KIBkn7m+1fVoM8
+         HCtHs37sQ3aHnb9gurP6ynvQvUklNngmIiap7u+ZvBrNbrBrxiNZ019ng4MdpdkiE8oP
+         vQX7urtuFemxhFjkWAsfkriXM8zU6Z6qnSVDA4/HbgCJ+9O65Ova1bHgEr2Qe3BmWnwh
+         T9QxL5VGFHuw0S9izFgtcuglVUAGHwkIFUQVkBAudmW7HlZCFUWVpEUnjInhOZh4XEed
+         FMvyGZ2QV6xu79WKf6bnjgHkb/sePwNJSYm1cCyNKkTLP2EQf6AIcQvccYe3q93da6gY
+         tHnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=QgfhTP/1cthsx+BWQcJG2cq6Eja787Ot9C/LIcDVeGo=;
-        b=LFmz9yS3JHysdWLN38g6sxZB/UOALvB//yrwNw5BjXnu3iBI9sabyHI/bA7V6tBhOQ
-         us1qyiEfcFetyppR6HIIFKpU31c5Zha0O+HuxnAiPlJcyqrWWpYvoCBhF0/7AI+CmMxx
-         9BnAdyzmv0dt8Ye4peBdUlC/qTbo79+aBVVKnbPpBY4XM/mbZEJioHeActyzShxgGlrW
-         SMl89ERJZexW9tZ5B9A25XbZEA5mb90gnBavJlPummv6Td2WnYW7q1km7UvePJkqv5VJ
-         aqHXswJODhudh79acj4T4OaQUFHqUPi37NEJ83fuv5K/SKgY0hq6jvPE6QmagXAoiOwb
-         Z72Q==
-X-Gm-Message-State: APf1xPDFWrIZsoFKCEazXmQf/n/E+84W0GRuf6PL+VnodiCSdmfnSGnM
-        j7dwVFvELikBJvwK5oulcdVphpI5O6ezmQHkDHuqow==
-X-Google-Smtp-Source: AH8x224IuZMoc0JrrR+biBX2qvNllOdsZ6qPzy0luZbvLHQvTkhjLxD30rCpg8Ni1731O/gjsrSCLWt1x3+u8XVfsvk=
-X-Received: by 10.129.25.214 with SMTP id 205mr10687440ywz.340.1519769308184;
- Tue, 27 Feb 2018 14:08:28 -0800 (PST)
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=CtfjB6FTkWCxHtRd4u6flRA5gmiTACCW+6M8iq3lpno=;
+        b=IoY+DRyEuwzfe4s3cPWG+IdXZ1yfKyqcBtfsczgSTwHEzvqN7KrdmLnkSQIOciybmp
+         TzlFABTbGqnpVQzDVyQRSNOM1cA1AzWStyuC7Fglc/uHxHga2dBz9sUSl1pEXNnrmz8M
+         49FJidKwga7J/Dr3tFAQ8EdtX7yTrK1juZJP5Mo4pyumdIXkRSbLQgMox+d9zW3PrXaL
+         wMaNXGQH3nFy5/v+JOtz7rmA7mkDmb5U0/SZi9ZPpVobHsVhwbPa8kG6RB6/qlPQGzgc
+         cptrrugjK5r+LnrV2u2E+eI6C/857tPfNTshv94i0z0w6uD/r/SS0ij6cC27hmRbBnJj
+         pQyQ==
+X-Gm-Message-State: APf1xPBU8+qVzG1tJKJNqLDpxCmMVTOZzPfPG5u06ie4VB+r2mrzek/3
+        x/sfmEjGRa3eZAwyDmKgQ0u7ipjlqokCdqIiQjCTsA==
+X-Google-Smtp-Source: AG47ELsRNwqwZSERwBlUsWBBM863nS4yP8dwwp78VeGTty01uKAiTVkalVF3ycPa1fAhsIM/T2bOTAj4aMQxa2UGuRQ=
+X-Received: by 10.55.132.67 with SMTP id g64mr25784474qkd.28.1519769410072;
+ Tue, 27 Feb 2018 14:10:10 -0800 (PST)
 MIME-Version: 1.0
-Received: by 2002:a25:cfcb:0:0:0:0:0 with HTTP; Tue, 27 Feb 2018 14:08:27
- -0800 (PST)
-In-Reply-To: <efc4af6b-53c9-bd02-65f6-9de517f6868e@linuxfoundation.org>
-References: <efc4af6b-53c9-bd02-65f6-9de517f6868e@linuxfoundation.org>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 27 Feb 2018 14:08:27 -0800
-Message-ID: <CAGZ79kbJawTH6bPWC+4is+okTf7ZRN5U68JZgOy8EFvaZOtF5g@mail.gmail.com>
-Subject: Re: Is offloading to GPU a worthwhile feature?
-To:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc:     git <git@vger.kernel.org>
+Received: by 10.12.142.14 with HTTP; Tue, 27 Feb 2018 14:10:09 -0800 (PST)
+In-Reply-To: <20180227220443.GB11187@sigill.intra.peff.net>
+References: <20180125235838.138135-1-bmwill@google.com> <20180207011312.189834-1-bmwill@google.com>
+ <20180207011312.189834-15-bmwill@google.com> <20180221145411.35b2ea84747518a499276bdd@google.com>
+ <20180222181922.GD185096@google.com> <20180222182657.GE19035@sigill.intra.peff.net>
+ <20180222112533.0d7c6023fb8e4098efedfe31@google.com> <20180227062128.GG65699@aiede.svl.corp.google.com>
+ <xmqq8tbep02f.fsf@gitster-ct.c.googlers.com> <20180227220443.GB11187@sigill.intra.peff.net>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Tue, 27 Feb 2018 17:10:09 -0500
+X-Google-Sender-Auth: _N_eoXewyNgVauOEE2v5jYdIbjY
+Message-ID: <CAPig+cS+G-xC51n-Ud0Wbmcc-zeHBM3-5WQQAFm9gwm9LNk3Gg@mail.gmail.com>
+Subject: Re: [PATCH v3 14/35] connect: request remote refs using v2
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Brandon Williams <bmwill@google.com>,
+        Git List <git@vger.kernel.org>,
+        Stefan Beller <sbeller@google.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 27, 2018 at 12:52 PM, Konstantin Ryabitsev
-<konstantin@linuxfoundation.org> wrote:
-> compression offload
+On Tue, Feb 27, 2018 at 5:04 PM, Jeff King <peff@peff.net> wrote:
+> On Tue, Feb 27, 2018 at 01:58:00PM -0800, Junio C Hamano wrote:
+>> So are we looking for a natural name to call an array of trings?  I
+>> personally do not mind argv_array too much, but perhaps we can call
+>> it a string_array and then everybody will be happy?
+>
+> That would be fine with me. Though I would love it if we could find a
+> shorter name for the associated functions. For example,
+> argv_array_pushf() can make lines quite long, and something like
+> argv_pushf() is easier to read (in my opinion). And that might work
+> because "argv" is pretty unique by itself, but "string" is not.
+>
+> Some one-word name like "strarray" might work, though I find that is not
+> quite catchy. I guess "strv" is short if you assume that people know the
+> "v" suffix means "vector".
 
-Currently there is a series under review that introduces a commit graph
-file[1], which would allow to not need decompressing objects for a rev walk, but
-have the walking information as-needed on disk.
+struct strs {...};
 
-Once walking (as part of negotiation) is done,
-we'd have to pack a pack file to return to the client,
-which maybe can be improved by GPU acceleration[2].
+void strs_init(struct strs *);
+void strs_push(struct strs *, const char *);
+void strs_pushf(struct strs *, const char *fmt, ...);
+void strs_pushl(struct strs *, ...);
+void strs_pushv(struct strs *, const char **);
+void strs_pop(struct strs *);
+void strs_clear(struct strs *);
+const char **strs_detach(struct strs *);
 
-Though once upon a time Junio had proposed to change
-this part of the protocol as well. Instead of having a packfile
-catered to a specific user/request, the server would store
-multiple pack files, which are temporally sorted, e.g.
-one "old" packfile containing everything that is roughly older
-than 4 weeks ago, then a "medium pack file" that is up to last
-weekend, and then a "new" pack that is just this weeks work,
-followed by the on-demand pack that is just the latest
-generated on the fly.
-
-The server would just dump these different packfiles
-(concatenated?) at the user, and would need to refresh
-its packfiles occasionally every week or so.
-
-[1] https://public-inbox.org/git/1519698787-190494-1-git-send-email-dstolee@microsoft.com/
-[2] http://on-demand.gputechconf.com/gtc/2014/presentations/S4459-parallel-lossless-compression-using-gpus.pdf
-
-
-> I realize this would be silly amounts of work. But, if it's worth it,
-> perhaps we can benefit from all the GPU computation libs written for
-> cryptocoin mining and use them for something good. :)
-
-Currently there is work being done on "protocol v2"[3], which
-is also motivated by the desire to have easy extensibility in the protocol,
-so if you want to put in a cryptocoin-secret-handshake [into the protocol]
-that improves the cost of compute or the bandwidth required for your
-typical use case, it will be possible to do so with ease.
-
-[3] https://public-inbox.org/git/20180207011312.189834-1-bmwill@google.com/
-
-I wonder if the bitmap code can be sped up using GPUs. Every once in a while
-the discussion floats up bloom filters or inverse bloom filters for
-the negotiation
-part, and a quick search shows that those could also be sped up using GPUs.
-
-Stefan
+...is short, feels pretty natural, and doesn't require understanding
+"v" for "vector".
