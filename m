@@ -2,137 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C09541F404
-	for <e@80x24.org>; Tue, 27 Feb 2018 05:17:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F00B11F404
+	for <e@80x24.org>; Tue, 27 Feb 2018 05:30:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751664AbeB0FRq (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Feb 2018 00:17:46 -0500
-Received: from mail-qk0-f181.google.com ([209.85.220.181]:38439 "EHLO
-        mail-qk0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750981AbeB0FRp (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Feb 2018 00:17:45 -0500
-Received: by mail-qk0-f181.google.com with SMTP id s198so22063470qke.5
-        for <git@vger.kernel.org>; Mon, 26 Feb 2018 21:17:45 -0800 (PST)
+        id S1751697AbeB0FaX (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Feb 2018 00:30:23 -0500
+Received: from mail-wm0-f52.google.com ([74.125.82.52]:37420 "EHLO
+        mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750919AbeB0FaX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Feb 2018 00:30:23 -0500
+Received: by mail-wm0-f52.google.com with SMTP id 139so8184942wmn.2
+        for <git@vger.kernel.org>; Mon, 26 Feb 2018 21:30:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=ic3R+XNmpljrIkR3JulliJms8QB2SDfnBD323Pk0Tjw=;
-        b=YDdi9zI0jaEm1sna7SCm6ykl2mo5bnmlpGvUO9mNbmMQ2iZzm293ZsDLEyFfRAQBWp
-         wD459HaX9oGpVDtHbGzrg1VP71jItHYTAyzgYfMKjy34vRy0oCOsZ7JMRDn5r2zG1m9e
-         wxhk8egXgB1bN1Ddwi0b+M6EL9V/lBMiezmxG/XRcSN2a0YWoZF+Ea6grxw5mGXSqRB0
-         hmOPtrnhScpJMwgCgIPVBEm1YpEcqU/WRHwRrCtzf7zlaAp9QtwAWs3TdihsPgwPCN6d
-         gksAOHhK+og+v3FH0/Bg3SoVc4jw4R1KBZgtPPLZywTksiNNuz4Y1d0gqXb8Ls4eluHh
-         IntQ==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=3mzfGpBMun8kPVMvLqJjpUeHLFDOpmnck5RHSmJ6cOk=;
+        b=DWipBGqviA+/za04PZdoiyLtN6GmAu/qRGJmtsdGxXqd1bgJMnb3YqnWv+CwO2BOUk
+         UTR9yurwDEC1P7eki8KRWnjy+A7JJAgnog+9lNBq8+iXoYovSmOzSYIKm6BgYQ0xlewo
+         GVAJACRL2H+M+3rcqEFHxcJOP980mPlCUmbnmL70ReArWjbQd69xHteitQ0PkX8CqcNJ
+         BnSenamu/vv3AfYNjMLZNpkrpV/msUBMHxkK7n1N56yijrhp8C8q0xQY/aW2FQQloyvt
+         5+IenWhK/r5nilVOPXmt+Vn5KfouWMaoBUr2WIPzznr2Ifg8NDbqq1XX6mxYQKonSvQj
+         hCDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=ic3R+XNmpljrIkR3JulliJms8QB2SDfnBD323Pk0Tjw=;
-        b=GQtQZ6qTZTC/jI1M80UCfxcCoW2q7Ium15TYwNzEiGCG89WdM5dvVFaA+JFLR/g31u
-         Q8jwBlWkFM9tQyRzD1p4NeWHw09j83jwUj4IeIXLd3KACpxn8IprdsSX5PNfxnqsTqYt
-         h/7GpOH8wloEyp731r8AvvF8Mpuxlglf7K4Yc9ym+oImFwQPXJsz3o2X14lCm17sxF/e
-         QvWS4wfbezNQTPTKFAjDMS252pW79CyjBVqyk7ZXkecK03av9tAaYgZD+J+qzTyet2wi
-         T8cRxWNLcjXqFyEqMbYxoOhsgLM/i+LzDB8Kcybvmdh/ETp6+QazY7AtK8tePGS+AK2N
-         hZ0Q==
-X-Gm-Message-State: APf1xPDKn++tmerpSm8NsnZEpabdgTwscAc1G+EUZ04isU+Ie2omq9Ep
-        6YZubFSYS9ELDLg/n7G3GBGBbb0x2mwdNzuFThzNHw==
-X-Google-Smtp-Source: AG47ELu8wG3wQCehc4DjztEE3HGVF+jwjEVHJ1rcAkKPekW6MDX8WjDwDgHB7FVJMiT1uxGW7oI2C5TnD9oMxkO327U=
-X-Received: by 10.55.134.133 with SMTP id i127mr21080777qkd.275.1519708664704;
- Mon, 26 Feb 2018 21:17:44 -0800 (PST)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=3mzfGpBMun8kPVMvLqJjpUeHLFDOpmnck5RHSmJ6cOk=;
+        b=SC+tXy/Qkj6V8ByRk4NlBveJahCI2SO4XsU0Z38n++NO8vPhpHsCGh1U3S4xhPQ0Ls
+         WN7HS6ucPw/w0BPmjwutxmipex2Tv6EcHA9ISVB2HwSsnproIwH5nO+4SwjYFFbH5MwA
+         vWK3y5tZxJVOTwSisdrkrGEnBaiRYgOsYOWUeBaMDPUyyy9Zey3Cnlj9GStPCeYkAxvV
+         JlYzwFfY5dc/uJ+gZjwhr/mjR2VJOr/VHnlpP0iPohUSv7wF4kPDyF7LseUySwMF2Rcs
+         vlYsKZydnNt0n8zKQIBstTuuRftzrYrdDVhekRxuvFbFG9Qf4Eb1JBNMCovhJoglbl8x
+         YvHw==
+X-Gm-Message-State: APf1xPBbGpmGWEwmStsi45jbhqrZX94Zu8U0v+GcBbREcbazd7xPdR+2
+        Lqv0eVLqL5Pa4T4ZmJBBktQHDcG3LUS/FmhGTzU=
+X-Google-Smtp-Source: AG47ELtgwgoLmENCUKaCgItsTDfYTZBiZVursq+V3PuPSwGPgCS95cVVU+OoyZxhkSG0/aCWPnzzkrtuYHWvEh4viHk=
+X-Received: by 10.80.149.68 with SMTP id v4mr9502944eda.236.1519709421756;
+ Mon, 26 Feb 2018 21:30:21 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.12.142.14 with HTTP; Mon, 26 Feb 2018 21:17:44 -0800 (PST)
-In-Reply-To: <392C5E11-A3CA-4D65-B9D4-9EE30258C83A@gmail.com>
-References: <20180224162801.98860-1-lars.schneider@autodesk.com>
- <20180224162801.98860-4-lars.schneider@autodesk.com> <CAPig+cQdoicxSMLRbdCfFGXyXLirbRLVJi2QahCSe1ZesVOKBg@mail.gmail.com>
- <392C5E11-A3CA-4D65-B9D4-9EE30258C83A@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 27 Feb 2018 00:17:44 -0500
-X-Google-Sender-Auth: j7NUI9fC_GUczfVCs4LYVnbw--w
-Message-ID: <CAPig+cSh6YVK_KbinEv+1fwU1Wo4BErfYBZ76KKdhu9dM1D5Dg@mail.gmail.com>
-Subject: Re: [PATCH v8 3/7] utf8: add function to detect prohibited UTF-16/32 BOM
-To:     Lars Schneider <larsxschneider@gmail.com>
-Cc:     Lars Schneider <lars.schneider@autodesk.com>,
-        Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-        Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Received: by 10.80.139.133 with HTTP; Mon, 26 Feb 2018 21:30:01 -0800 (PST)
+In-Reply-To: <nycvar.QRO.7.76.6.1802270051470.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <87y3jtqdyg.fsf@javad.com> <bbe64321-4d3a-d3fe-8bb9-58b600fabf35@gmail.com>
+ <nycvar.QRO.7.76.6.1802270051470.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Mon, 26 Feb 2018 21:30:01 -0800
+Message-ID: <CA+P7+xq8UUcLWomUi=PS_hTKfJd3dMAxMmhioDS1bixwcmKAqw@mail.gmail.com>
+Subject: Re: [RFC] Rebasing merges: a jorney to the ultimate solution (Road Clear)
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Igor Djordjevic <igor.d.djordjevic@gmail.com>,
+        Sergey Organov <sorganov@gmail.com>,
+        Git mailing list <git@vger.kernel.org>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Feb 25, 2018 at 6:35 AM, Lars Schneider
-<larsxschneider@gmail.com> wrote:
->> On 25 Feb 2018, at 04:41, Eric Sunshine <sunshine@sunshineco.com> wrote:
->> Is this interpretation correct? When I read [1], I interpret it as
->> saying that no BOM _of any sort_ should be present when the encoding
->> is declared as one of UTF-16BE, UTF-16LE, UTF-32BE, or UTF-32LE.
+On Mon, Feb 26, 2018 at 4:07 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi Buga,
 >
-> Correct!
+> On Tue, 20 Feb 2018, Igor Djordjevic wrote:
 >
->> This code, on the other hand, only checks for BOMs corresponding
->> to the declared size (16 or 32 bits).
+>> I`m really interested in this topic, which seems to (try to) address the
+>> only "bad feeling" I had with rebasing merges - being afraid of silently
+>> losing amendments by actually trying to "replay" the merge (where
+>> additional and possibly important context is missing), instead of really
+>> "rebasing" it (somehow).
 >
-> Hmm. Interesting thought. You are saying that my code won't complain if
-> a document declared as UTF-16LE has a UTF32-LE BOM, correct?
-
-Well, not specifically that case since UTF-16LE BOM is a subset of UTF32-LE BOM.
-
-My observation was more general in that [1] seems to say that there
-should be _no_ BOM whatsoever if one of UTF-16BE, UTF-16LE, UTF-32BE,
-or UTF-32LE is declared.
-
-> I would say
-> this is correct behavior in context of this function. This function assumes
-> that the document is proper UTF-16/UTF-16BE/UTF-16LE but it is wrongly
-> declared with respect to its BOM in the .gitattributes. Would this
-> comment make it more clear to you?
->         /*
->          * If a data stream is declared as UTF-16BE or UTF-16LE, then a UTF-16
->          * BOM must not be used [1]. The same applies for the UTF-32 equivalents.
->          * The function returns true if this rule is violated.
->          *
->          * [1] http://unicode.org/faq/utf_bom.html#bom10
->          */
-> I think what you are referring to is a different class of error and
-> would therefore warrant its own checker function. Would you agree?
-
-I don't understand to what different class of error you refer. The
-FAQ[1] seems pretty clear to me in that if one of those declarations
-is used explicitly, then there should be _no_ BOM, period. It doesn't
-say anything about allowing a BOM for a differently-sized encoding (16
-vs 32).
-
-If I squint very hard, I _guess_ I can see how you interpret [1] with
-the more narrow meaning of the restriction applying only to a BOM of
-the same size as the declared encoding, though reading it that way
-doesn't come easily to me.
-
->> I suppose the intention of [1] is to detect a mismatch between the
->> declared encoding and how the stream is actually encoded. The check
->> implemented here will fail to detect a mismatch between, say, declared
->> encoding UTF-16BE and actual encoding UTF-32BE.
+> If those amendments are what you are worried about, why not address them
+> specifically?
 >
-> As stated above the intention is to detect wrong BOMs! I think we cannot
-> detect the "declared as UTF-16BE but actually UTF-32BE" error.
+> In other words, rather than performing the equivalent of
 >
-> Consider this:
+>         git show <merge>^! | git apply
 >
-> printf "test" | iconv -f UTF-8 -t UTF-32BE | iconv -f UTF-16BE -t UTF-8 | od -c
-> 0000000   \0   t  \0   e  \0   s  \0   t
-> 0000010
+> (which would of course completely ignore if the rewritten <merge>^2
+> dropped a patch, amended a patch, or even added a new patch), what you
+> really want is to figure out what changes the user made when merging, and
+> what merge strategy was used to begin with.
 >
-> In the first step we "encode" the string to UTF-32BE and then we "decode" it as
-> UTF-16BE. The result is valid although not correct. Does this make sense?
+> To see what I mean, look at the output of `git show 0fd90daba8`: it shows
+> how conflicts were resolved. By necessity, this is more complicated than a
+> simple diff: it is *not* as simple as taking a diff between two revisions
+> and applying that diff to a third revision. There were (at least) three
+> revisions involved in the original merge commit, and recreating that merge
+> commit faithfully means to represent the essence of the merge commit
+> faithfully enough to be able to replay it on a new set of at least three
+> revisions.  That can be simplified to two-way diffs only in very, very
+> special circumstances, and in all other cases this simplification will
+> simply fall on its nose.
+>
+> If the proposed solution was to extend `git apply` to process combined
+> diffs, I would agree that we're on to something. That is not the proposed
+> solution, though.
+>
+> In short: while I am sympathetic to the desire to keep things simple,
+> the idea to somehow side-step replaying the original merge seems to be
+> *prone* to be flawed. Any system that cannot accommodate
+> dropped/changed/added commits on either side of a merge is likely to be
+> too limited to be useful.
+>
 
-I'm probably being dense, but I don't understand what this is trying
-to illustrate in relation to has_prohibited_utf_bom().
+
+The reason Sergey's solution works is because he cherry picks the
+merge using each parent first, and then merges the result of those. So
+each branch of the merge gets one, and then you merge the result of
+those cherry-picks. This preservers amendments and changes properly,
+and should result in a good solution.
+
+I agree that making "git apply" work with combined diffs could also be
+another solution, but it may be trickier.
+
+If this *doesn't* work, a test case showing that it doesn't work would
+be appreciated. I'm hoping to be able to put together something soon,
+but I haven't had time due to $dayjob.
+
+> Ciao,
+> Johannes
