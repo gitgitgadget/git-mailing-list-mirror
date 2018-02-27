@@ -3,87 +3,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D320E1F404
-	for <e@80x24.org>; Tue, 27 Feb 2018 23:17:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6A3801F404
+	for <e@80x24.org>; Tue, 27 Feb 2018 23:24:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752025AbeB0XRy (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Feb 2018 18:17:54 -0500
-Received: from mail-pl0-f67.google.com ([209.85.160.67]:34826 "EHLO
-        mail-pl0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751779AbeB0XRx (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Feb 2018 18:17:53 -0500
-Received: by mail-pl0-f67.google.com with SMTP id bb3-v6so338991plb.2
-        for <git@vger.kernel.org>; Tue, 27 Feb 2018 15:17:52 -0800 (PST)
+        id S1752438AbeB0XYs (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Feb 2018 18:24:48 -0500
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:41810 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752428AbeB0XYr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Feb 2018 18:24:47 -0500
+Received: by mail-wr0-f196.google.com with SMTP id f14so491511wre.8
+        for <git@vger.kernel.org>; Tue, 27 Feb 2018 15:24:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=EF6HzYfrZgNWmAE5d83tB9QEdno8AgmxzZexwSwurXI=;
-        b=W0a3czoQ7kACVFk1oyOnTJdn+xHQ2ntJv2IIfTyTrzFqTV/OQYR0a8SVBX/2JkdNVd
-         JOvlRNCHxDRSnNaTDJfVCoPYdy5l1kQeuWbayeJzL1O17LT7aRq3PslstB9dR32D6vXs
-         Dv8s1neFzWjeR310y0iXJj3W6uDlZxkpCbBGw/Oo1wF0Q+NvNtJRhRLbGGH2haasV+Xt
-         PPNP9Bm10xmkJ77eqzc47WGsp/9nmpVoOqGxvRhFqme/A49XYS66+0EzTauVahDUjf6k
-         2cdpEihTZE1pwPmEBCdA0RjqTbbin3s5afi6I6FiGlNdfHwgjp/O60+qRYfYdQ1TIzla
-         0oyA==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=vQpmjJkpe6t0v7N5yF+UNTjrN01dzv+IJiZV1BMMLLo=;
+        b=tI2KKURJqeMtjLr652jiXI/ZSnI/O7y0YNWvYS4d9YMR18l+JgucBARxzhGgTed98G
+         JxctIt74kryPJV/8X1aWyezx7nVYYmBfqtRTK3MbODEnKX65TOvTdNS04ksh6ahdV3o2
+         9BH5Ygo23LHW6BirsOkZ32sG+5jVrEEch+JuBG0ZI4aIfXcqbZmQgbqqK4ptCSW3S8Wy
+         m0gq6EJ9IGATtP5cySgIDS/yr9DgISoA3l4IFDiPj9vgAJ0KoDsXh8xkJzLhAO7qAW/X
+         tXmH2fCnrT+JrRchmAo2f11QtPZ05mi3WFdONio6z7K0H6FcNbAPWmwJyyyfRk1sMq9f
+         yASQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=EF6HzYfrZgNWmAE5d83tB9QEdno8AgmxzZexwSwurXI=;
-        b=MJA0qirzgStoLG3QH4WrB0nI8JwF0SlxgbGuehMY4vRdK4qSVpFXEU5sIIgqMq7UKJ
-         3hv9tXwDDpj0S6vS1uqqGLHa2/yEMtxDNO5/0GIpipsCSwTzJy7mhLw9NQNKF1Kfc6u5
-         R4ijlQy+orAAOard4yLgLRq5+Ya2go5BWQKm+u1jrOXahT1bi8Wwq/6n6tIipvwG0d2n
-         VWZ+/B+zWsv6OGjQ9ZqBkJxrBB/URwdnxhEHdGQURd1uxxEncFBfhnfLMQGOqeob8Xkm
-         mxiyo1ksCwP9Z1apWDWPZ/FmfZq2ucvkENv03xWM+GkyvBlBso/vMvkGWP1gbnT9xDjz
-         bunQ==
-X-Gm-Message-State: APf1xPA72grSUioyc9ZPeHd5G46tqcpN+hU8RuI/UlCrBUkY8SMHUoRx
-        lb7ORp9JOsxVot+gw5yUFtg=
-X-Google-Smtp-Source: AG47ELsIUfv5md0hnOssZ3LZi5j3OlQxDsmTVtji7PFcxzv769D9IkbWUnFRwNtIj0fsIKgzFz2TJg==
-X-Received: by 2002:a17:902:76cb:: with SMTP id j11-v6mr11140677plt.431.1519773472390;
-        Tue, 27 Feb 2018 15:17:52 -0800 (PST)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id s90sm29753pfd.153.2018.02.27.15.17.51
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=vQpmjJkpe6t0v7N5yF+UNTjrN01dzv+IJiZV1BMMLLo=;
+        b=cQJIaPavBXVa80uFbQGFKk50ko11TcLpiUhPzDZPl7lgI9tb+pKXYDHXva8UDIBllc
+         qW3/K1YCrQBJXhKDQcH3PCuvEYRAj4cHFqjVN0gbw5t7mSkNAzlhfU8DJrVuYkXUNXeO
+         ATAuaOVxdmKmP/7orE8llawbuqkg+MFobJ4CSt7lGyimwfYRdydP2Bxh+vGfUh2oXTnA
+         HbC5+LRm3kJAopp/bVaCttUvDL3Tp3L0WjfEpTTryDghIUuGiRly3gDAxPWgyqAbUVzg
+         7HXwfZBISE0gYahkLmq4DhE4JVEs+9ER0WTGoulrlcQ7cgwS8gjYUgOXZkDjAbxPr3/F
+         gq1g==
+X-Gm-Message-State: APf1xPDmbls2f/B0hiH8SuF0OTc00eHrrZH9XC8Ivw36Ny8kvSLP1Wqb
+        Omfza1EjNojs8uE4tEbMcMY=
+X-Google-Smtp-Source: AH8x225dAYiOnPNnG2eM5+6DN7pvqk2lSBt/YcfACs1QA0YTeareBGMvrulPrfgxot9vsivl5OihRQ==
+X-Received: by 10.223.202.18 with SMTP id o18mr15239568wrh.4.1519773885725;
+        Tue, 27 Feb 2018 15:24:45 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id v63sm690265wrc.69.2018.02.27.15.24.44
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 27 Feb 2018 15:17:51 -0800 (PST)
-Date:   Tue, 27 Feb 2018 15:17:49 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org, sbeller@google.com, peff@peff.net,
-        gitster@pobox.com, stolee@gmail.com, git@jeffhostetler.com,
-        pclouds@gmail.com
-Subject: Re: [PATCH v3 31/35] remote-curl: store the protocol version the
- server responded with
-Message-ID: <20180227231749.GG174036@aiede.svl.corp.google.com>
-References: <20180125235838.138135-1-bmwill@google.com>
- <20180207011312.189834-1-bmwill@google.com>
- <20180207011312.189834-32-bmwill@google.com>
+        Tue, 27 Feb 2018 15:24:44 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v5 0/2] diff: add --compact-summary (aka nd/diff-stat-with-summary)
+References: <20180224140509.25061-1-pclouds@gmail.com>
+        <20180224140959.25402-1-pclouds@gmail.com>
+Date:   Tue, 27 Feb 2018 15:24:44 -0800
+In-Reply-To: <20180224140959.25402-1-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
+ =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
+        Duy"'s message of "Sat, 24 Feb 2018 21:09:57 +0700")
+Message-ID: <xmqqa7vunhhf.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180207011312.189834-32-bmwill@google.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Brandon Williams wrote:
+Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
 
-> Store the protocol version the server responded with when performing
-> discovery.  This will be used in a future patch to either change the
-> 'Git-Protocol' header sent in subsequent requests or to determine if a
-> client needs to fallback to using a different protocol version.
+> ... and v5 fixes the commit message of 2/2 where in v4 it still
+> mentions --stat-with-summary instead of --compact-summary. Sorry.
+>
+> Nguyễn Thái Ngọc Duy (2):
+>   diff.c: refactor pprint_rename() to use strbuf
+>   diff: add --compact-summary
 
-nit: s/fallback/fall back/ (fallback is the noun/adjective, fall back
-the verb)
+Thanks, will queue.  I guess we all run out of paints of different
+colours, and it's a good time to go incremental by merging the topic
+to 'next'.
 
-> Signed-off-by: Brandon Williams <bmwill@google.com>
-
-With or without that tweak,
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
-
-Thanks.
+>
+>  Documentation/diff-options.txt                |  8 ++
+>  diff.c                                        | 96 ++++++++++++-------
+>  diff.h                                        |  1 +
+>  t/t4013-diff-various.sh                       |  5 +
+>  ...ty_--root_--stat_--compact-summary_initial | 12 +++
+>  ...-R_--root_--stat_--compact-summary_initial | 12 +++
+>  ...tree_--stat_--compact-summary_initial_mode |  4 +
+>  ...e_-R_--stat_--compact-summary_initial_mode |  4 +
+>  8 files changed, 109 insertions(+), 33 deletions(-)
+>  create mode 100644 t/t4013/diff.diff-tree_--pretty_--root_--stat_--compact-summary_initial
+>  create mode 100644 t/t4013/diff.diff-tree_--pretty_-R_--root_--stat_--compact-summary_initial
+>  create mode 100644 t/t4013/diff.diff-tree_--stat_--compact-summary_initial_mode
+>  create mode 100644 t/t4013/diff.diff-tree_-R_--stat_--compact-summary_initial_mode
