@@ -2,84 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-1.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 12DCE1F404
-	for <e@80x24.org>; Tue, 27 Feb 2018 18:14:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B0BE81F404
+	for <e@80x24.org>; Tue, 27 Feb 2018 18:14:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751539AbeB0SOJ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Feb 2018 13:14:09 -0500
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:39336 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751455AbeB0SOI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Feb 2018 13:14:08 -0500
-Received: by mail-wr0-f194.google.com with SMTP id w77so25815960wrc.6
-        for <git@vger.kernel.org>; Tue, 27 Feb 2018 10:14:08 -0800 (PST)
+        id S1751568AbeB0SOc (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Feb 2018 13:14:32 -0500
+Received: from mail-pf0-f173.google.com ([209.85.192.173]:33133 "EHLO
+        mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751062AbeB0SOb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Feb 2018 13:14:31 -0500
+Received: by mail-pf0-f173.google.com with SMTP id q13so8282882pff.0
+        for <git@vger.kernel.org>; Tue, 27 Feb 2018 10:14:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=ZeFYkH0etC3OgAitm6bt/EU95uMNo4G0/c5Y68y/nVo=;
-        b=VwC2SN3w2o65BAuS9ynYlWkWEsK3beivg/yjw9NS4aFjoEYbi4Ac3XhlxUrqySb5cR
-         ZNSpPVi1FVQAQeLLZ7Zm+AOl4HqcY+GYeqoTRg5/meSPDhUR2T13VPOUazt8pLmLF5HH
-         Zh7f5/hI9cpXVAHUcga+uue60eIkAhqfY5FWGQv0BHlVGriUcauT/ewkf9TP5630uTTJ
-         Jv7pJkoPPzP0VzfDa7fygxLnQL6j4c7nZMLBXyLgLmKy2JlPr5UxTeOaXRl1yHFJTzI/
-         aAOSfU6EkEYT0amp2C6aV6WVI79HuZO/xUe1SX6batjD+94jk4rtheBSXURVZZvByZau
-         wS9w==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=wNNYUl9jk6xUK/yVdHw31hwgwoH8aVDtPRdvt2UmpC8=;
+        b=IMbPXvErhAkNlyiD2nxT/CVECHQfHLP28b5iZ9vbIiY4QLyxzMeSKPuuXELqNn4LLk
+         WeuTKo9nRi5LY6EtmFhobE1N6iQSAddbbCp0DCXH31BsHP7Tuj+aWOVof3pDIH51e67S
+         r5LhcUFqL6Je8ISnBhSgztTl6V5Qpsdzj6JSuN3pCrO2N6hfFmGXrUXBrgf6d7UxFfDU
+         N4z5vLitnYjCFxpPI3TyzcyS52Hzkdl8Mj3ZrJCmyPEd7SkX6aQd2z2HITJnBpUpZRPF
+         RYp17+VukAdx/Fw1MmvTXnovu+G7hd1woZgvGiqlEotRq+7nxmaX5Pavo2yK7bKEE9fe
+         0FUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=ZeFYkH0etC3OgAitm6bt/EU95uMNo4G0/c5Y68y/nVo=;
-        b=Ct99FsOl9KAyeG3KBU3w2abrFW02DqEHd2vsAoC+SHv+/G+ytVQDo0QhBXO3J5NR5+
-         chQD9C+a8AAQ+mA8nsw4DfuH9E8QoJ1cNXITXKtrifncCJZY6+fFLv6DSj2tpjKIp3bY
-         zg733Z2p5zlmx5m0PWuxDuMQ7Fo/6EelN2jAAvZo+2GcI6zk7oZ7mibcT1doLb5zUAG6
-         ysdWL7VvZ0dQ4Ioa+5uipv60UH3z+ocvg7DijzGmYQlxlxlG+wi8qk5chIzPzF33ihO+
-         /tMzkeHL5QzxIggRqTq2QPq7CHqn3PQB8nc67nn29KconWNe0Vc2rPlvipCNkJXxXJfN
-         eoMg==
-X-Gm-Message-State: APf1xPA9TSM9cJLmWjBQZf1eouxH8rwDg5fRrePf7hbcf7gf8llpi6B9
-        CpG2/klerH6Yl283wRw9ksU=
-X-Google-Smtp-Source: AG47ELsX3TZUyfuwOvhEa1InMWKuHbAsYKIlqORd8e9Zg4tBHuOOyssTfmLRxwv211JXhPP6zu9LXw==
-X-Received: by 10.223.156.147 with SMTP id d19mr10864214wre.272.1519755246955;
-        Tue, 27 Feb 2018 10:14:06 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id a62sm114331wmh.40.2018.02.27.10.14.06
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=wNNYUl9jk6xUK/yVdHw31hwgwoH8aVDtPRdvt2UmpC8=;
+        b=pA/V31RkPSyPK5Lc78Tl9ivnpY8hGoqffGwE45q0qI3uQNtypaZseeR/m6dPj+p68N
+         8r6FhIgG9k6j6MxuilJFQgqSc5w3PUzkKezBl2FZTaVgcKIg9YVq9naob1f4Bz4eTUY3
+         EYe1UfN686qNbxLUjEScEvLTJ0TCOkGjxVSIN0ZxoLmJ6sqLpjYr5WdhXW2bmUDDYpZh
+         p8os15emmKdb2TDYpC8SJjVJHbWRyGNvL4UFL6J0ksk2TQjMWSPXSSN5VaK4ClqIitq0
+         uSOA8cjmALF1WqWdNjMy5ZOzPL/EwJfrAEmJNmYvxmyESxn2GGWbTVacQgG3UgCi/7jw
+         CZAA==
+X-Gm-Message-State: APf1xPAwJRBy5WKCWl4xQziDvuQiCVJPvNMk8OiJWKsg1NRFP1eJRaoK
+        mqzFIr330xZvLbD6Wz/MEcOb66Mt4oU=
+X-Google-Smtp-Source: AH8x227U/toORA92156QnWYcJMPS8w+wCnFTAZoYIQ0vLFOmwGdMh60XOXSFNz3eTbp8I1qQDFtgsw==
+X-Received: by 10.99.109.79 with SMTP id i76mr11571241pgc.402.1519755270844;
+        Tue, 27 Feb 2018 10:14:30 -0800 (PST)
+Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
+        by smtp.gmail.com with ESMTPSA id p9sm21814193pff.173.2018.02.27.10.14.29
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 27 Feb 2018 10:14:06 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Sergey Organov <sorganov@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
-        git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>,
-        Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [RFC] Rebasing merges: a jorney to the ultimate solution (Road Clear)
-References: <87y3jtqdyg.fsf@javad.com>
-        <bbe64321-4d3a-d3fe-8bb9-58b600fabf35@gmail.com>
-        <nycvar.QRO.7.76.6.1802270051470.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <87zi3u4pd0.fsf@javad.com>
-Date:   Tue, 27 Feb 2018 10:14:05 -0800
-In-Reply-To: <87zi3u4pd0.fsf@javad.com> (Sergey Organov's message of "Tue, 27
-        Feb 2018 14:57:15 +0300")
-Message-ID: <xmqqbmgaqp02.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        Tue, 27 Feb 2018 10:14:29 -0800 (PST)
+Date:   Tue, 27 Feb 2018 10:14:28 -0800
+From:   Brandon Williams <bmwill@google.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     git@vger.kernel.org, sbeller@google.com, peff@peff.net,
+        gitster@pobox.com, stolee@gmail.com, git@jeffhostetler.com,
+        pclouds@gmail.com
+Subject: Re: [PATCH v3 02/35] pkt-line: introduce struct packet_reader
+Message-ID: <20180227181428.GB209668@google.com>
+References: <20180125235838.138135-1-bmwill@google.com>
+ <20180207011312.189834-1-bmwill@google.com>
+ <20180207011312.189834-3-bmwill@google.com>
+ <20180213004937.GB42272@aiede.svl.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180213004937.GB42272@aiede.svl.corp.google.com>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sergey Organov <sorganov@gmail.com> writes:
+On 02/12, Jonathan Nieder wrote:
+> [...]
+> > --- a/pkt-line.h
+> > +++ b/pkt-line.h
+> > @@ -111,6 +111,64 @@ char *packet_read_line_buf(char **src_buf, size_t *src_len, int *size);
+> >   */
+> >  ssize_t read_packetized_to_strbuf(int fd_in, struct strbuf *sb_out);
+> >  
+> > +struct packet_reader {
+> > +	/* source file descriptor */
+> > +	int fd;
+> > +
+> > +	/* source buffer and its size */
+> > +	char *src_buffer;
+> > +	size_t src_len;
+> 
+> Can or should this be a strbuf?
+> 
+> > +
+> > +	/* buffer that pkt-lines are read into and its size */
+> > +	char *buffer;
+> > +	unsigned buffer_size;
+> 
+> Likewise.
+> 
 
-> You've already bit this poor thingy to death. Please rather try your
-> teeth on the proposed Trivial Merge (TM) method.
+This struct is setup to be a drop in replacement for the existing
+read_packet() family of functions.  Because of this I tried to make the
+interface as similar as possible to make it easy to convert to using it
+as well as having no need to clean anything up (because the struct is
+really just a wrapper and doesn't own anything).
 
-Whatever you do, do *NOT* call any part of your proposal "trivial
-merge", unless you are actually using the term to mean what Git
-calls "trivial merge".  The phrase has an established meaning in Git
-and your attempt to abuse it to mean something entirely different is
-adding unnecessary hindrance for other people to understand what you
-want to perform.
+-- 
+Brandon Williams
