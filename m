@@ -2,127 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DD6321F404
-	for <e@80x24.org>; Tue, 27 Feb 2018 18:09:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 12DCE1F404
+	for <e@80x24.org>; Tue, 27 Feb 2018 18:14:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751464AbeB0SJk (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Feb 2018 13:09:40 -0500
-Received: from mail-yb0-f171.google.com ([209.85.213.171]:35709 "EHLO
-        mail-yb0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750746AbeB0SJj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Feb 2018 13:09:39 -0500
-Received: by mail-yb0-f171.google.com with SMTP id v135-v6so6838251ybe.2
-        for <git@vger.kernel.org>; Tue, 27 Feb 2018 10:09:39 -0800 (PST)
+        id S1751539AbeB0SOJ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Feb 2018 13:14:09 -0500
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:39336 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751455AbeB0SOI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Feb 2018 13:14:08 -0500
+Received: by mail-wr0-f194.google.com with SMTP id w77so25815960wrc.6
+        for <git@vger.kernel.org>; Tue, 27 Feb 2018 10:14:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=ujguNxiePRzZbcjq1BloUWtkb8t9dAQvHVUCLoIM7Fk=;
-        b=fkxPzkPgIB6ycp0sh52e4IgASHJMdoRNZCIQA3/XSRXxCOXL04W0AFsEV6+hYIVlbZ
-         w10Fy4vBKbJUp6E+qBUzvRk1FJxeEuuPDAiwD13NbDL/e2xZ/dYCGWMTkBcw9l+zDggJ
-         N3WH0DXuqnlvIkH++ZJf0PULQ8m1gXF5MzjX3TlUN2/Q03i3Zz8tAichgl3nKMWE7vQS
-         0ObywBJyB9HXv+IQZis36iv85KyNAMLzDF7dV9O3soxhojBmsdAQS7VnAPXJH6qQIe/7
-         DhvgUC+ycShttLkf+hRe2cGZEHwq8sYZv/aWYtiCNIExooTiKkiH4Cy0QwxlJp6iuLHm
-         yHVw==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=ZeFYkH0etC3OgAitm6bt/EU95uMNo4G0/c5Y68y/nVo=;
+        b=VwC2SN3w2o65BAuS9ynYlWkWEsK3beivg/yjw9NS4aFjoEYbi4Ac3XhlxUrqySb5cR
+         ZNSpPVi1FVQAQeLLZ7Zm+AOl4HqcY+GYeqoTRg5/meSPDhUR2T13VPOUazt8pLmLF5HH
+         Zh7f5/hI9cpXVAHUcga+uue60eIkAhqfY5FWGQv0BHlVGriUcauT/ewkf9TP5630uTTJ
+         Jv7pJkoPPzP0VzfDa7fygxLnQL6j4c7nZMLBXyLgLmKy2JlPr5UxTeOaXRl1yHFJTzI/
+         aAOSfU6EkEYT0amp2C6aV6WVI79HuZO/xUe1SX6batjD+94jk4rtheBSXURVZZvByZau
+         wS9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=ujguNxiePRzZbcjq1BloUWtkb8t9dAQvHVUCLoIM7Fk=;
-        b=Yeu6Antyfm4VCjF8bN4App065CI6UMBYVS0WCCiKL9vFFyCHBcL97sPtjlurUdpuRv
-         je6a7pKY8skgQpg8ewcKWgyOzEnCFhyIVCoCb8zofa1PZt/p3J8o/ncPfiX677kelt2m
-         JSE9GB0utstdwzFj4I/nAgpDRTbQzx2WMarOjNYcOV/3H63A+5W90BkGojCRHBfHNfyQ
-         NcyGn2KaBEn04i9xL2fjhl9jNXNGHl1Ew/53/KGudI3nvpQ015HxoJg8totpJXTmc7n4
-         OQyHdcKZus2MNVOJI8sdzt7Y13Gm5sxcNoQofRJVt8PdgdH5v4YyGBGA+c3+oKfXVJmF
-         LaUQ==
-X-Gm-Message-State: APf1xPABR64lX9EY4cUreZ7sjt1IuvhFNAKFEsCDJge/bWcwNT2o9SJY
-        9tDbFQt8saQkvS6MFZOqk2n9F7QDuCNJdOc97oJ+Bw02/jc=
-X-Google-Smtp-Source: AG47ELvG+wjeDL/Yz+NDYtSKcx852fVLmGgRd8lowVHnXzll9WHQK0up5gOEpm6jKRkpIe+B3Tau1foOb8LbcIGdL0A=
-X-Received: by 2002:a25:3781:: with SMTP id e123-v6mr464735yba.247.1519754978528;
- Tue, 27 Feb 2018 10:09:38 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=ZeFYkH0etC3OgAitm6bt/EU95uMNo4G0/c5Y68y/nVo=;
+        b=Ct99FsOl9KAyeG3KBU3w2abrFW02DqEHd2vsAoC+SHv+/G+ytVQDo0QhBXO3J5NR5+
+         chQD9C+a8AAQ+mA8nsw4DfuH9E8QoJ1cNXITXKtrifncCJZY6+fFLv6DSj2tpjKIp3bY
+         zg733Z2p5zlmx5m0PWuxDuMQ7Fo/6EelN2jAAvZo+2GcI6zk7oZ7mibcT1doLb5zUAG6
+         ysdWL7VvZ0dQ4Ioa+5uipv60UH3z+ocvg7DijzGmYQlxlxlG+wi8qk5chIzPzF33ihO+
+         /tMzkeHL5QzxIggRqTq2QPq7CHqn3PQB8nc67nn29KconWNe0Vc2rPlvipCNkJXxXJfN
+         eoMg==
+X-Gm-Message-State: APf1xPA9TSM9cJLmWjBQZf1eouxH8rwDg5fRrePf7hbcf7gf8llpi6B9
+        CpG2/klerH6Yl283wRw9ksU=
+X-Google-Smtp-Source: AG47ELsX3TZUyfuwOvhEa1InMWKuHbAsYKIlqORd8e9Zg4tBHuOOyssTfmLRxwv211JXhPP6zu9LXw==
+X-Received: by 10.223.156.147 with SMTP id d19mr10864214wre.272.1519755246955;
+        Tue, 27 Feb 2018 10:14:06 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id a62sm114331wmh.40.2018.02.27.10.14.06
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 27 Feb 2018 10:14:06 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Sergey Organov <sorganov@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
+        git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>,
+        Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [RFC] Rebasing merges: a jorney to the ultimate solution (Road Clear)
+References: <87y3jtqdyg.fsf@javad.com>
+        <bbe64321-4d3a-d3fe-8bb9-58b600fabf35@gmail.com>
+        <nycvar.QRO.7.76.6.1802270051470.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        <87zi3u4pd0.fsf@javad.com>
+Date:   Tue, 27 Feb 2018 10:14:05 -0800
+In-Reply-To: <87zi3u4pd0.fsf@javad.com> (Sergey Organov's message of "Tue, 27
+        Feb 2018 14:57:15 +0300")
+Message-ID: <xmqqbmgaqp02.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 2002:a25:cfcb:0:0:0:0:0 with HTTP; Tue, 27 Feb 2018 10:09:38
- -0800 (PST)
-In-Reply-To: <20180227095846.9238-1-pclouds@gmail.com>
-References: <20180226103030.26900-1-pclouds@gmail.com> <20180227095846.9238-1-pclouds@gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 27 Feb 2018 10:09:38 -0800
-Message-ID: <CAGZ79ka5MEk89+1MxR5Fsjg8PSSRQWehxKCNcacA3be9+pQ9+Q@mail.gmail.com>
-Subject: Re: [PATCH v2 0/4] Delete ignore_env member in struct repository
-To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Cc:     Brandon Williams <bmwill@google.com>, git <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 27, 2018 at 1:58 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =
-<pclouds@gmail.com> wrote:
-> v2 fixes the incorrect use of consecutive getenv() and adds a comment
-> to clarify the role of old_gitdir
->
-> Interdiff:
->
-> diff --git a/environment.c b/environment.c
-> index 95de419de8..47c6e31559 100644
-> --- a/environment.c
-> +++ b/environment.c
-> @@ -14,6 +14,7 @@
->  #include "fmt-merge-msg.h"
->  #include "commit.h"
->  #include "object-store.h"
-> +#include "argv-array.h"
->
->  int trust_executable_bit =3D 1;
->  int trust_ctime =3D 1;
-> @@ -148,18 +149,34 @@ static char *expand_namespace(const char *raw_names=
-pace)
->         return strbuf_detach(&buf, NULL);
->  }
->
-> +/* Wrapper of getenv() that returns a strdup value. This value is kept
-> + * in argv to be freed later.
-> + */
+Sergey Organov <sorganov@gmail.com> writes:
 
-/* comment style, see also Erics reply */
+> You've already bit this poor thingy to death. Please rather try your
+> teeth on the proposed Trivial Merge (TM) method.
 
-I do not understand why we need to use an argv_array here?
-I see that the push calls xstrdup and then puts it into the array.
-So to me this looks like a clever way that we can easily free them all
-at once using the predefined argv_array_clear() after calling
-repo_set_gitdir.
-
-That makes sense, though is confusing at first; I would have expected
-a set_gitdir_args_clear() function that just frees all its strings, whether=
- they
-are NULL or not.
-
-But given that we are clever with not pushing onto the argv_array in case t=
-he
-getenv returns NULL, this seems to be less work in the usual case of no
-env variables set.
-
-Ok, I think I like it.
-
-> +static const char *getenv_safe(struct argv_array *argv, const char *name=
-)
-
-I would have expected that we already have such a (or similar) helper
-in wrapper.c, but it turns out we always take care of getenv manually,
-and we do not have a wrapper yet.
-
-So only the comment style remains as a nit.
-
-Thanks,
-Stefan
+Whatever you do, do *NOT* call any part of your proposal "trivial
+merge", unless you are actually using the term to mean what Git
+calls "trivial merge".  The phrase has an established meaning in Git
+and your attempt to abuse it to mean something entirely different is
+adding unnecessary hindrance for other people to understand what you
+want to perform.
