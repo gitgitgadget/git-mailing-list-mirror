@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D2DBD1F404
-	for <e@80x24.org>; Tue, 27 Feb 2018 21:30:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7EF121F404
+	for <e@80x24.org>; Tue, 27 Feb 2018 21:31:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751851AbeB0Vaz (ORCPT <rfc822;e@80x24.org>);
+        id S1751856AbeB0Va5 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Feb 2018 16:30:57 -0500
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:36051 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751825AbeB0Vaz (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 27 Feb 2018 16:30:55 -0500
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:43864 "EHLO
-        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751839AbeB0Vaw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Feb 2018 16:30:52 -0500
-Received: by mail-wr0-f193.google.com with SMTP id u49so258182wrc.10
-        for <git@vger.kernel.org>; Tue, 27 Feb 2018 13:30:52 -0800 (PST)
+Received: by mail-wm0-f67.google.com with SMTP id 188so1288535wme.1
+        for <git@vger.kernel.org>; Tue, 27 Feb 2018 13:30:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Sf/0JRipMIvQtGg+TlUaVLiKDUPNiuju8T5nMs/Q+vs=;
-        b=YCFt5Rw5RdlPq4J1q+hGTn6Bx6hr8Z1vau7TsSWkRsxmXmQeM8usHCIaHV7Y060KUE
-         y/IKp2Xu/K1RPHApeqP36P3IHp9VRDrxLoGUuESlv8sc2a1PKZMFH3MKus03GK/3LWQs
-         CLoG2eC0G6GEdadujBBoQW3VHrfbjTnML8yKNL6NYlZEHkjxAn0oP6ZBQL+TeeWgT1aK
-         kvblwSt1/lVexmCrREO5tTukmy3fHFN4kubWmwEkt2/OkYCn++0TGfCGzBzamcbii+bM
-         sIE/8XZIpiGfgxXhrmOx+DgT92kkpf1o9YZnE14G720BnEjS5Dz/uzek+03a5+yo63Q2
-         R12Q==
+        bh=prQneit6WTuIEJ2GV5w8PnZJvuBVk5cEoarGz5KQ0as=;
+        b=fzz27UWQWGtOnbKFvIcU/GsiS0rksGQi+F5Ywe9LwQeJBPpiV20lN96R5Lp7FQ7F0t
+         wR8qfBA2ufacsVp/gVkG4K/hi2OZaQxd9B/LnbCzJsgYF1GaFjGJ/344naG45J1OkE+z
+         XNRTry1a1Z8BxLjc4lyb/0eVnlCWhvDfsnWEsE75Jio+I+tzuldb4zTl1t8HOk9cwun3
+         y1knz262DMBuwMW6pRCd1EQkoV4pEClWIbfnWusJbBhOoq4tM2AaiiRdyLbLHYlFH+qE
+         DdgqbFHSZTLI8UVz/55mJM0wPRGhf+4h29I/mJu0BwkieK/JK4Ol7DomNqIgeVKy6uA5
+         DGAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Sf/0JRipMIvQtGg+TlUaVLiKDUPNiuju8T5nMs/Q+vs=;
-        b=P4fMnJj/nXV6AQuv24F6viz7GQLDDSEnAa/tp+hODlY54v/JbgKn6FVa48IeZxNEY6
-         LNJzsi7kt6eLxDyIzY4hQMBoyE1oWIWrJMz01ZvsNX9lVvu7m2wB055XvOGi+O7cACCB
-         UEjmTrKsBfzPByq+KV8wo4EK6VHTW4eCp0T8uTo/2mY7USeCBGxxMt2OUYVEmqsYZtKx
-         vFdrT0Np0Pc+UNfl8LlCeFl0u2/BY2+f3estRTetdYdCOhFlcvk0Y9hO84eLf/UESC3f
-         QBWlEolxlKBiPblc5ZKShzCH+3/lmpQfBoWxHRyOXX3ZJ7fjXKRlguXGiZZmV7LFuX1g
-         6h9A==
-X-Gm-Message-State: APf1xPDZ3onsfdLRK7OBC5SuN/B/QfRKqbfQ+1jslLdkzLO9Ta5W8xSC
-        28ereRhelHjZ9XeMPV7w9sEpPofq
-X-Google-Smtp-Source: AH8x2271VBfaq4p6DoJroopl2lwQO3AD8b8h74Vl0muwwDqURem4pCqI9siMxZTE0FC9XzAffBM/1Q==
-X-Received: by 10.223.192.76 with SMTP id c12mr13359370wrf.177.1519767051305;
-        Tue, 27 Feb 2018 13:30:51 -0800 (PST)
+        bh=prQneit6WTuIEJ2GV5w8PnZJvuBVk5cEoarGz5KQ0as=;
+        b=IQypx45OROr6A/kSTrlNSpdkMKhg0pvLJhPkjNYgTaF9TohD6E4EA//A/TSiWpS6T3
+         ZgGBMZNXoBWyPpNoKy7K4a4VIrSdXa7hg8AoIkYpH8zKAp3Wvx52+lfrreZpvCw61TZY
+         YZQ01QE6dIw3eQLWfzvwwGb3zjiblgkZWNbybJTAqQ5S2DXWB2KmJTSjJlHXyhaAY7M3
+         sFLr83dkPu0TnRRJMaNt5ux+KVpBDBH8NEfRABgjUdoNT3dar32cyLnM0vMcOoYwQ5tZ
+         kcxqvIDp55pu+ymRS3eNw+Xmxo73BtbJo5gZczRRj7vTdhjVQap8koxV9d6F51Ayt34t
+         JSag==
+X-Gm-Message-State: APf1xPAbWQ/Hirf5nH0AB/DbFbM6jw5hneFcfNVwcjTe2MtnWgtqJqDR
+        eqwHUN6Ek3/LIWKGJhUmr01LIBVv
+X-Google-Smtp-Source: AG47ELuxYxtP+0dT/UoJ8H/1j5H9X+cJk4LzIXE0trgZl71/4vl5RHRQ7/gQfAQNhx/NRRbapZ6B9g==
+X-Received: by 10.28.214.144 with SMTP id n138mr2880154wmg.126.1519767054076;
+        Tue, 27 Feb 2018 13:30:54 -0800 (PST)
 Received: from localhost.localdomain ([2a02:aa16:5782:c100:c938:fbb7:46f8:2405])
-        by smtp.gmail.com with ESMTPSA id t91sm126888wrc.21.2018.02.27.13.30.50
+        by smtp.gmail.com with ESMTPSA id t91sm126888wrc.21.2018.02.27.13.30.52
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 27 Feb 2018 13:30:50 -0800 (PST)
+        Tue, 27 Feb 2018 13:30:53 -0800 (PST)
 From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 4/5] merge: always roll back lock in `checkout_fast_forward()`
-Date:   Tue, 27 Feb 2018 22:30:12 +0100
-Message-Id: <8d2a1da0ad699c885b6ef335633c038ab7e354c4.1519763396.git.martin.agren@gmail.com>
+Subject: [PATCH 5/5] sequencer: do not roll back lockfile unnecessarily
+Date:   Tue, 27 Feb 2018 22:30:13 +0100
+Message-Id: <d1dbf0b0a4742d8afeabd3acb0848e679c88eb50.1519763396.git.martin.agren@gmail.com>
 X-Mailer: git-send-email 2.16.2.246.ga4ee44448f
 In-Reply-To: <cover.1519763396.git.martin.agren@gmail.com>
 References: <cover.1519763396.git.martin.agren@gmail.com>
@@ -66,49 +66,69 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This function originated in builtin/merge.c. It was moved to merge.c in
-commit db699a8a1f (Move try_merge_command and checkout_fast_forward to
-libgit.a, 2012-10-26), but was used from sequencer.c even before that.
+If `commit_lock_file()` or `hold_lock_file_for_update()` fail, there is
+no need to call `rollback_lock_file()` on the lockfile. It doesn't hurt
+either, but it does make different callers in this file inconsistent,
+which might be confusing.
 
-If a problem occurs, the function returns without rolling back the
-lockfile. Teach it to do so.
+While at it, remove a trailing '.' from a recurring error message.
 
 Signed-off-by: Martin Ågren <martin.agren@gmail.com>
 ---
- merge.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ sequencer.c | 18 ++++++------------
+ 1 file changed, 6 insertions(+), 12 deletions(-)
 
-diff --git a/merge.c b/merge.c
-index 195b578700..f06a4773d4 100644
---- a/merge.c
-+++ b/merge.c
-@@ -113,17 +113,23 @@ int checkout_fast_forward(const struct object_id *head,
- 	setup_unpack_trees_porcelain(&opts, "merge");
- 
- 	trees[nr_trees] = parse_tree_indirect(head);
--	if (!trees[nr_trees++])
-+	if (!trees[nr_trees++]) {
-+		rollback_lock_file(&lock_file);
- 		return -1;
-+	}
- 	trees[nr_trees] = parse_tree_indirect(remote);
--	if (!trees[nr_trees++])
-+	if (!trees[nr_trees++]) {
-+		rollback_lock_file(&lock_file);
- 		return -1;
-+	}
- 	for (i = 0; i < nr_trees; i++) {
- 		parse_tree(trees[i]);
- 		init_tree_desc(t+i, trees[i]->buffer, trees[i]->size);
+diff --git a/sequencer.c b/sequencer.c
+index e6bac4692a..0e6d04e4ce 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -303,10 +303,8 @@ static int write_message(const void *buf, size_t len, const char *filename,
+ 		rollback_lock_file(&msg_file);
+ 		return error_errno(_("could not write eol to '%s'"), filename);
  	}
--	if (unpack_trees(nr_trees, t, &opts))
-+	if (unpack_trees(nr_trees, t, &opts)) {
-+		rollback_lock_file(&lock_file);
- 		return -1;
-+	}
- 	if (write_locked_index(&the_index, &lock_file, COMMIT_LOCK))
- 		return error(_("unable to write new index file"));
+-	if (commit_lock_file(&msg_file) < 0) {
+-		rollback_lock_file(&msg_file);
+-		return error(_("failed to finalize '%s'."), filename);
+-	}
++	if (commit_lock_file(&msg_file) < 0)
++		return error(_("failed to finalize '%s'"), filename);
+ 
  	return 0;
+ }
+@@ -1585,10 +1583,8 @@ static int save_head(const char *head)
+ 	ssize_t written;
+ 
+ 	fd = hold_lock_file_for_update(&head_lock, git_path_head_file(), 0);
+-	if (fd < 0) {
+-		rollback_lock_file(&head_lock);
++	if (fd < 0)
+ 		return error_errno(_("could not lock HEAD"));
+-	}
+ 	strbuf_addf(&buf, "%s\n", head);
+ 	written = write_in_full(fd, buf.buf, buf.len);
+ 	strbuf_release(&buf);
+@@ -1597,10 +1593,8 @@ static int save_head(const char *head)
+ 		return error_errno(_("could not write to '%s'"),
+ 				   git_path_head_file());
+ 	}
+-	if (commit_lock_file(&head_lock) < 0) {
+-		rollback_lock_file(&head_lock);
+-		return error(_("failed to finalize '%s'."), git_path_head_file());
+-	}
++	if (commit_lock_file(&head_lock) < 0)
++		return error(_("failed to finalize '%s'"), git_path_head_file());
+ 	return 0;
+ }
+ 
+@@ -1724,7 +1718,7 @@ static int save_todo(struct todo_list *todo_list, struct replay_opts *opts)
+ 			todo_list->buf.len - offset) < 0)
+ 		return error_errno(_("could not write to '%s'"), todo_path);
+ 	if (commit_lock_file(&todo_lock) < 0)
+-		return error(_("failed to finalize '%s'."), todo_path);
++		return error(_("failed to finalize '%s'"), todo_path);
+ 
+ 	if (is_rebase_i(opts)) {
+ 		const char *done_path = rebase_path_done();
 -- 
 2.16.2.246.ga4ee44448f
 
