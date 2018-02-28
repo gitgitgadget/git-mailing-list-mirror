@@ -7,163 +7,83 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 241751F404
-	for <e@80x24.org>; Wed, 28 Feb 2018 00:29:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2B7CC1F404
+	for <e@80x24.org>; Wed, 28 Feb 2018 00:30:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751682AbeB1A3Y (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Feb 2018 19:29:24 -0500
-Received: from mail-wm0-f51.google.com ([74.125.82.51]:36855 "EHLO
-        mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751646AbeB1A3X (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Feb 2018 19:29:23 -0500
-Received: by mail-wm0-f51.google.com with SMTP id 188so1868104wme.1
-        for <git@vger.kernel.org>; Tue, 27 Feb 2018 16:29:23 -0800 (PST)
+        id S1751733AbeB1Aar (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Feb 2018 19:30:47 -0500
+Received: from mail-wm0-f48.google.com ([74.125.82.48]:37961 "EHLO
+        mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751590AbeB1Aaq (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Feb 2018 19:30:46 -0500
+Received: by mail-wm0-f48.google.com with SMTP id z9so1845149wmb.3
+        for <git@vger.kernel.org>; Tue, 27 Feb 2018 16:30:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=WpInps/LyX0jDKH9FIEJrAvn+VQcISQNXrmM2Fao+F0=;
-        b=AqWaXNI3Pn1w5icbRnmAAEnLFIc7VdYzl4S2Tez+InNCtDsLvbBKsFNnQPYinaNcAi
-         HQNXScVWwNKXY3cgaD4vdpxFnbuWV9Jj7uW38s/Muy7Tc8zy/TIATypSPNjE+HC2bdNT
-         eOMKRegs3FwvryuS+Xd+1NBTH6xGMZEtE8RrcIxydk2Pp1ign4UzenA7RD1HpTFyuXop
-         U6MuIdAjBPluiYFbWLOIiKOsutxqvL7agwNIIsChjePaTaFgSM+qZbpmv+3MABVO6qiy
-         0jkFpSYYfCzGAu64Sxwam11gF7TB1KR6E4yAnrKQLYjnoobzK8yFYhTq7+aqtdMCd8qY
-         /QDA==
+        bh=5LiZG9FUMhLOiBnCfn9net0Ti/ElVVFhjYTM4MMMUIA=;
+        b=ThlTUVXOiW8dusKIGfeGmyGLpTsHBgFHtn8F2UyjYUpg0LDhKxDKd+cPTIHzoa+Zyj
+         WmOro17vqvYTEBRL88jzw9MK1jg+fITRO8PZx5VmfxImHDsoIa5z2tBMqAAQQ4S/R8GD
+         amzJV0yDn4Aw+Y6w9y9dtpV23hX2xUMqaCxAuf++fOp4ztd8sMh4vI4tmTGurVx/U5P4
+         ET49gSHA59dbYuxTleClHv3flGT2K2g9JllL/GQXb6jfaz5icqYYpqdumCk37vs2geXb
+         C6/zAe0xihj+kqo+sBYft2d3GxIuieyjCH0oWZ2klpprUXZJGnwMPLx9peC4WmRGF+oj
+         5KrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=WpInps/LyX0jDKH9FIEJrAvn+VQcISQNXrmM2Fao+F0=;
-        b=jLQ11JQDUJKm/oZeuNdm+H5vsfNniYEdyFZa83FTHHzD29r5LbfCPE5IVhARWOh01u
-         QJBGnE9TXX+cMvXACFGjM4Hn+4XVnxUrg/0rmcWS13CzYO++YICmQx0iIgZG+RClwctN
-         OTQdVrQmUzYjLdsa/He0SWTB7JCZBTKGH6Z1nl0u0fC4mBtn0jmJHRyCv7eX8qMsrNDR
-         GjAdEoTXO5fhOaV2v8nR010fpsTHSCgYpZOXslZv/QCNBJ4jdhbmd9pdnK0K5w4YUr0f
-         W/qtQIYj4jp0buM3zv01vyV7zt00TTvU3mxFXNOVuAKwPqO1lWyNijlkW7vPKrcfQF9R
-         9jPQ==
-X-Gm-Message-State: APf1xPD+pkz7JRWqJJ784sF0YchC6DGzl1i+ZEGX+k33Q1d1zmhfWhUv
-        feS4e2by8XaF7VpYcODSueQv1SnfrB51cJrVoXw=
-X-Google-Smtp-Source: AH8x225GFnoeMpeB7fZz9vLA7sB+cQmHbqCDSm/uFJ5GtNuk54XPSpLHV0ocF2IpU5NpiqMmuFuKZgemvmLM8N2w06Y=
-X-Received: by 10.80.139.5 with SMTP id l5mr21065531edl.265.1519777762336;
- Tue, 27 Feb 2018 16:29:22 -0800 (PST)
+        bh=5LiZG9FUMhLOiBnCfn9net0Ti/ElVVFhjYTM4MMMUIA=;
+        b=QXLDw6no23yOasl4lPjAZKpa4n5uffe8d257IvRQyqwiEc+humzM4ANGHQckijS1Qg
+         1jXSSimOOH1ISVTEvJ6fdZeoINSXDqZEEncgry6a6UAdoKtKSf6VNRXHdXjNy9BupjqQ
+         SC1OhYXbZzfI5YPZdyKb4X50sCUsQHEB0lUeyGbOcWC+MbQRCY42nG+qb3VRbYrMhEQK
+         /+sV2hLvUucMaXljBLuJxb1mzxgu1+MEmE4UF/aEmftQ9LY+wSJVYDY81VGGUcR/I+NI
+         M1hkgsMipoQZYeZ821+dE7Dc3wfikj7PXICc5MKk5MR4CkqeMMAAm0g7tg8WC8cx/V3Y
+         2OEQ==
+X-Gm-Message-State: APf1xPDt3WWC3kboB9D9TOSjJEUnTkm6s2XporIlTpaLOj3IeelEWh88
+        xI2UcSvWGmFNFQI6/03MrDHjcOQsoBGpDSt7apk=
+X-Google-Smtp-Source: AG47ELuwxKBQxVGh5c4/KwOkLpAcJjFy5fd3Y12qAJbVVBiVTOwvZSdQVb3Y6UayC8Kmvin9ZQMhBdJh3DmJBYjsFJA=
+X-Received: by 10.80.232.69 with SMTP id k5mr15079407edn.133.1519777845384;
+ Tue, 27 Feb 2018 16:30:45 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.80.139.133 with HTTP; Tue, 27 Feb 2018 16:29:01 -0800 (PST)
-In-Reply-To: <nycvar.QRO.7.76.6.1802271718090.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+Received: by 10.80.139.133 with HTTP; Tue, 27 Feb 2018 16:30:24 -0800 (PST)
+In-Reply-To: <xmqqbmgaqp02.fsf@gitster-ct.c.googlers.com>
 References: <87y3jtqdyg.fsf@javad.com> <bbe64321-4d3a-d3fe-8bb9-58b600fabf35@gmail.com>
  <nycvar.QRO.7.76.6.1802270051470.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
- <CA+P7+xq8UUcLWomUi=PS_hTKfJd3dMAxMmhioDS1bixwcmKAqw@mail.gmail.com> <nycvar.QRO.7.76.6.1802271718090.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+ <87zi3u4pd0.fsf@javad.com> <xmqqbmgaqp02.fsf@gitster-ct.c.googlers.com>
 From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Tue, 27 Feb 2018 16:29:01 -0800
-Message-ID: <CA+P7+xrXy1wCJ6D=3h_db93wLTzj9HGF6M6ptLXgEnSMW9KAwg@mail.gmail.com>
+Date:   Tue, 27 Feb 2018 16:30:24 -0800
+Message-ID: <CA+P7+xpNhEF0=QoR71v5Y=nc39OL4XKX36xXYjP1Kn_+DUCf_Q@mail.gmail.com>
 Subject: Re: [RFC] Rebasing merges: a jorney to the ultimate solution (Road Clear)
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Igor Djordjevic <igor.d.djordjevic@gmail.com>,
-        Sergey Organov <sorganov@gmail.com>,
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Sergey Organov <sorganov@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
         Git mailing list <git@vger.kernel.org>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Junio C Hamano <gitster@pobox.com>
+        Johannes Sixt <j6t@kdbg.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 27, 2018 at 8:21 AM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi Jake,
+On Tue, Feb 27, 2018 at 10:14 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Sergey Organov <sorganov@gmail.com> writes:
 >
-> On Mon, 26 Feb 2018, Jacob Keller wrote:
+>> You've already bit this poor thingy to death. Please rather try your
+>> teeth on the proposed Trivial Merge (TM) method.
 >
->> On Mon, Feb 26, 2018 at 4:07 PM, Johannes Schindelin
->> <Johannes.Schindelin@gmx.de> wrote:
->> >
->> > On Tue, 20 Feb 2018, Igor Djordjevic wrote:
->> >
->> >> I`m really interested in this topic, which seems to (try to) address the
->> >> only "bad feeling" I had with rebasing merges - being afraid of silently
->> >> losing amendments by actually trying to "replay" the merge (where
->> >> additional and possibly important context is missing), instead of really
->> >> "rebasing" it (somehow).
->> >
->> > If those amendments are what you are worried about, why not address them
->> > specifically?
->> >
->> > In other words, rather than performing the equivalent of
->> >
->> >         git show <merge>^! | git apply
->> >
->> > (which would of course completely ignore if the rewritten <merge>^2
->> > dropped a patch, amended a patch, or even added a new patch), what you
->> > really want is to figure out what changes the user made when merging, and
->> > what merge strategy was used to begin with.
->> >
->> > To see what I mean, look at the output of `git show 0fd90daba8`: it shows
->> > how conflicts were resolved. By necessity, this is more complicated than a
->> > simple diff: it is *not* as simple as taking a diff between two revisions
->> > and applying that diff to a third revision. There were (at least) three
->> > revisions involved in the original merge commit, and recreating that merge
->> > commit faithfully means to represent the essence of the merge commit
->> > faithfully enough to be able to replay it on a new set of at least three
->> > revisions.  That can be simplified to two-way diffs only in very, very
->> > special circumstances, and in all other cases this simplification will
->> > simply fall on its nose.
->> >
->> > If the proposed solution was to extend `git apply` to process combined
->> > diffs, I would agree that we're on to something. That is not the proposed
->> > solution, though.
->> >
->> > In short: while I am sympathetic to the desire to keep things simple,
->> > the idea to somehow side-step replaying the original merge seems to be
->> > *prone* to be flawed. Any system that cannot accommodate
->> > dropped/changed/added commits on either side of a merge is likely to be
->> > too limited to be useful.
->> >
->>
->>
->> The reason Sergey's solution works is because he cherry picks the
->> merge using each parent first, and then merges the result of those. So
->> each branch of the merge gets one, and then you merge the result of
->> those cherry-picks. This preservers amendments and changes properly,
->> and should result in a good solution.
->
-> I saw your patch trying to add a minimal example, and I really want to run
-> away screaming.
->
-> Do you have any way to describe the idea in a simple, 3-5 lines long
-> paragraph?
->
-> So far, I just know that it is some sort of confusing criss-cross
-> cherry-picking and merging and stuff, but nothing in those steps shouts
-> out to me what the *idea* is.
->
+> Whatever you do, do *NOT* call any part of your proposal "trivial
+> merge", unless you are actually using the term to mean what Git
+> calls "trivial merge".  The phrase has an established meaning in Git
+> and your attempt to abuse it to mean something entirely different is
+> adding unnecessary hindrance for other people to understand what you
+> want to perform.
 
-Sergey's posted explained it more in detail, at
-https://public-inbox.org/git/87y3jtqdyg.fsf@javad.com/
+Agreed, I think we need better terminology here, the current words for
+(TM) are definitely *not* trivial merges. Same for "angel merge", I
+don't think that term really works well either.
 
-I was mostly just attempting to re-create it in a test case to show
-that it could work.
-
-> If it would be something like "recreate the old merge, with merge
-> conflicts and all, then generate the diff to the actual tree of the merge
-> commit, then apply that to the newly-generated merge", I would understand.
->
-
-It's more or less:
-
-Rebase each parent, then cherry-pick -m<N> the original merge to that
-parent, then you merge the result of each cherry-pick, then use the
-resulting final merged tree to create the merge pointing at the real
-parents instead of the cherry-pick merges.
-
-> I would still suspect that -s ours would be a hard nut for that method,
-> but I would understand that idea.
->
-
-The goal of the process isn't to know or understand the "-s ours"
-strategy, but simply re-create the contents of the original merge
-faithfully, while still preserving the changes done when rebasing the
-side branches. Thus it should re-create the contents generated by "-s
-ours" the first time, but it doesn't need to do or know anything
-special about how the content was created.
-
-> Thanks,
-> Dscho
+The goal of the process is to split the merge apart to its components
+for each side branch and then bring them back together after applying
+them to the newly rebased branches.
