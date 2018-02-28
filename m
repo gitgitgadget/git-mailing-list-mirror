@@ -2,154 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B7C951F404
-	for <e@80x24.org>; Wed, 28 Feb 2018 01:08:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B7C9A1F404
+	for <e@80x24.org>; Wed, 28 Feb 2018 01:11:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751646AbeB1BIZ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Feb 2018 20:08:25 -0500
-Received: from mail-pg0-f51.google.com ([74.125.83.51]:43944 "EHLO
-        mail-pg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751139AbeB1BIZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Feb 2018 20:08:25 -0500
-Received: by mail-pg0-f51.google.com with SMTP id e9so312884pgs.10
-        for <git@vger.kernel.org>; Tue, 27 Feb 2018 17:08:24 -0800 (PST)
+        id S1751516AbeB1BLH (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Feb 2018 20:11:07 -0500
+Received: from mail-ot0-f196.google.com ([74.125.82.196]:40388 "EHLO
+        mail-ot0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751117AbeB1BLG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Feb 2018 20:11:06 -0500
+Received: by mail-ot0-f196.google.com with SMTP id l12so746337otj.7
+        for <git@vger.kernel.org>; Tue, 27 Feb 2018 17:11:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=dM070hPEEtxbIZT7CSkwr/k8XskxS5oXkmZBTXIPuKA=;
-        b=nLmHguUPSdFUFwhUqjc7eO5B5lubm/pLKKRWbndHHqVaEFgqLhELH7w9wHbYh9HtfR
-         Ccnbx/Ujmx1Yq41rpieTq0cn63ZdKQro1P2owWGGuwAFtMaAyP0iYRVlf9nbidVE/IFR
-         ngqrcKzBOccOGI6TeyMgPKKv8CDb1Hb0PgpuK4a+rHHIk3J+4eLSicaqgXsgQVBczDD1
-         5vRFtcJAI7FtVcQZNii8LpKAsoqu8AbRiAKrtHMiIOWVSPwT3L4/7G18zS9Q+HZiPKXl
-         GLOE9o/s90iIBI+dzmizabt2lHBhEY/bixpRew7CEAVvRYPQczbDGRznOULlb9AgZfEo
-         6QZg==
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=BSBffkQ1LknSVg53hoDyzdfwMne8MDDBRKtnwpWw5V4=;
+        b=V2R4TW5/ZBq1ZbnAQrTkMQDRGoFsGzHj+UsQTZiRMA01lKkY5CwlGXpQ83Pb8twNkT
+         lYXP0wP2+F5scYpUtRZKzmnIAzkpDUf9N9hcLM1Jo8fuxIm5LbnGYl4QWvWkC+nRH3Qh
+         GxxwL3bl3YM/dw18Nfkj9ZuAgZgKADtAk/U/UZQL+N9cj5JXWtUPr9gATxy4D24W1lV7
+         Bhu3c4q9EoOqt0MGzPymZzHt4TntMx0WUDoFKz4MX08wBzFkc0HN89rFEBsv3G/2Yzj0
+         SJnchZx2iKDvaxpm5uWWgREirCnS5hMW4bBxfZunUS56zYznQyQtlHkmYglfwyfAClOK
+         V2NA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=dM070hPEEtxbIZT7CSkwr/k8XskxS5oXkmZBTXIPuKA=;
-        b=kUpoU6A5vomEqahAjXGkleW0CHbDt/PdP4gdIuIMln8oDuec4IIqWnyQTq3Gp/LZA5
-         6YC6Ux4KD11J1FVzXw2Vu0gUz+uJuUFta0YEVR9iHASOvXZii3n8yn/oxgbIxL2JJZqF
-         lG/6A5tHISo/jNQseuR1oUx3tvbGZFwgTm/eWLkI3AzleOlUH8lrX6qDTzcqigER3UIm
-         EVpkeTlj9aw8LL/FMfmSVA5Dyxo0yuzKWrQElzgOt8djhVRJRUsHTwF/UKytxR4qUDof
-         stDZLd/vowS16RP7YzLpXuuGhxRAg2GfhA3gt0PUj0hfH6c7/IOx4lha0047ArhCrEt1
-         kJZw==
-X-Gm-Message-State: APf1xPANXN5sJHfkaDkYe5ZkoIL+0fpY1oTa3tqZEBoad59GsCzznREQ
-        Sua2f2iCf+cZvlVc8OmAnbGT7g==
-X-Google-Smtp-Source: AH8x224K4fYv1DTjTLPZZ1uN+pmdRksGhvw9hPxPUCHta23aBqtzdrXCMzMGrbCpSRv8p19TebPRrg==
-X-Received: by 10.99.66.65 with SMTP id p62mr12480098pga.378.1519780104238;
-        Tue, 27 Feb 2018 17:08:24 -0800 (PST)
-Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
-        by smtp.gmail.com with ESMTPSA id 12sm466907pfr.147.2018.02.27.17.08.22
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 27 Feb 2018 17:08:23 -0800 (PST)
-Date:   Tue, 27 Feb 2018 17:08:21 -0800
-From:   Brandon Williams <bmwill@google.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     git@vger.kernel.org, sbeller@google.com, peff@peff.net,
-        gitster@pobox.com, stolee@gmail.com, git@jeffhostetler.com,
-        pclouds@gmail.com
-Subject: Re: [PATCH v3 29/35] pkt-line: add packet_buf_write_len function
-Message-ID: <20180228010821.GB45342@google.com>
-References: <20180125235838.138135-1-bmwill@google.com>
- <20180207011312.189834-1-bmwill@google.com>
- <20180207011312.189834-30-bmwill@google.com>
- <20180227231145.GF174036@aiede.svl.corp.google.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=BSBffkQ1LknSVg53hoDyzdfwMne8MDDBRKtnwpWw5V4=;
+        b=os7Mtib5x4hSfaJW/ic/YGtZvuANGuOF/OxNNbv2fUhD3L/XIhj2tA+c+PJcMXQBUO
+         KgKIMH1rR2fT8wWpuC6ou4ZwJWgpWWNfAb/g85iOR42rXh415HtCZPQctO/slDL/IcGR
+         U4Z9a0ECQVnN9EI/LyUFVQMG1hvXjFwmfsN/VRsr3cX14H3NgsLGhE72AO3+qaF7L4kw
+         a2rZWf3ygWDa1BlgYHELL4YfmdKPGMKW7XwKzY3TLsmNg1Qj/Vnbifm/jniShrBI4mdu
+         YaJz8WxRMZ9ArD2QC5M2WF676bst2qDPVD4MjpiaIWz95lGFFYhqTWylS0K3BTX26gt8
+         v/yQ==
+X-Gm-Message-State: APf1xPBqKXqxOaFoWwOynnWRd7WP5GQqgrr9vFgiSlmOi8yrR+bOvE5v
+        /ddp0IOeKiimYFOAGN9ru45XjaDb53/zXK5/Iu8=
+X-Google-Smtp-Source: AG47ELtCQQAVuXISt/xrTu0B8yTqDaKAqHZkyC6r/UgIAQ2/uaA4oXG1X+CdyMoFOOToDE4hhiPgpMA8RaL7AgQBCgc=
+X-Received: by 10.157.85.214 with SMTP id z22mr12285429oti.75.1519780266275;
+ Tue, 27 Feb 2018 17:11:06 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180227231145.GF174036@aiede.svl.corp.google.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+Received: by 10.74.25.140 with HTTP; Tue, 27 Feb 2018 17:10:35 -0800 (PST)
+In-Reply-To: <20180228010233.GA45342@google.com>
+References: <20180228005059.GA251290@aiede.svl.corp.google.com> <20180228010233.GA45342@google.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Wed, 28 Feb 2018 08:10:35 +0700
+Message-ID: <CACsJy8Cn2hcodoR8ksRBY9qf7MmJaP+KAzYqv6seeR9s-Be8Hw@mail.gmail.com>
+Subject: Re: [PATCH] protocol: treat unrecognized protocol.version setting as 0
+To:     Brandon Williams <bmwill@google.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 02/27, Jonathan Nieder wrote:
-> Brandon Williams wrote:
-> 
-> > Add the 'packet_buf_write_len()' function which allows for writing an
-> > arbitrary length buffer into a 'struct strbuf' and formatting it in
-> > packet-line format.
-> 
-> Makes sense.
-> 
-> [...]
-> > --- a/pkt-line.h
-> > +++ b/pkt-line.h
-> > @@ -26,6 +26,7 @@ void packet_buf_flush(struct strbuf *buf);
-> >  void packet_buf_delim(struct strbuf *buf);
-> >  void packet_write(int fd_out, const char *buf, size_t size);
-> >  void packet_buf_write(struct strbuf *buf, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
-> > +void packet_buf_write_len(struct strbuf *buf, const char *data, size_t len);
-> 
-> I wonder if we should rename packet_buf_write to something like
-> packet_buf_writef.  Right now there's a kind of confusing collection of
-> functions without much symmetry.
-> 
-> Alternatively, the _buf_ ones could become strbuf_* functions:
-> 
-> 	strbuf_add_packet(&buf, data, len);
-> 	strbuf_addf_packet(&buf, fmt, ...);
-> 
-> That would make it clearer that these append to buf.
-> 
-> I'm just thinking out loud.  For this series, the API you have here
-> looks fine, even if it is a bit inconsistent.  (In other words, even
-> if you agree with me, this would probably be best addressed as a patch
-> on top.)
+On Wed, Feb 28, 2018 at 8:02 AM, Brandon Williams <bmwill@google.com> wrote:
+> On 02/27, Jonathan Nieder wrote:
+>> If I share my .gitconfig or .git/config file between multiple machines
+>> (or between multiple Git versions on a single machine) and set
+>>
+>>       [protocol]
+>>               version = 2
+>>
+>> then running "git fetch" with a Git version that does not support
+>> protocol v2 errors out with
+>>
+>>       fatal: unknown value for config 'protocol.version': 2
+>>
+>> In the spirit of v1.7.6-rc0~77^2~1 (Improve error handling when
+>> parsing dirstat parameters, 2011-04-29), it is better to (perhaps
+>> after warning the user) ignore the unrecognized protocol version.
+>> After all, future Git versions might add even more protocol versions,
+>> and using two different Git versions with the same Git repo, machine,
+>> or home directory should not cripple the older Git version just
+>> because of a parameter that is only understood by a more recent Git
+>> version.
 
-Yeah I agree that an api change is needed, but yeah it can be done on
-top of this series.
-
-> 
-> [...]
-> > --- a/pkt-line.c
-> > +++ b/pkt-line.c
-> > @@ -215,6 +215,22 @@ void packet_buf_write(struct strbuf *buf, const char *fmt, ...)
-> >  	va_end(args);
-> >  }
-> >  
-> > +void packet_buf_write_len(struct strbuf *buf, const char *data, size_t len)
-> > +{
-> > +	size_t orig_len, n;
-> > +
-> > +	orig_len = buf->len;
-> > +	strbuf_addstr(buf, "0000");
-> > +	strbuf_add(buf, data, len);
-> > +	n = buf->len - orig_len;
-> > +
-> > +	if (n > LARGE_PACKET_MAX)
-> > +		die("protocol error: impossibly long line");
-> 
-> Could the error message describe the long line (e.g.
-> 
-> 		...impossibly long line %.*s...", 256, data);
-> 
-
-I was reusing the error msg as it appears in another part of this file.
-
-> )?
-> 
-> > +
-> > +	set_packet_header(&buf->buf[orig_len], n);
-> > +	packet_trace(buf->buf + orig_len + 4, n - 4, 1);
-> 
-> Could do, more simply:
-> 
-> 	packet_trace(data, len, 1);
-
-I'll change this.
-
-> 
-> Thanks,
-> Jonathan
-
+I wonder if it's better to specify multiple versions. If v2 is not
+recognized by this git but v0 is, then it can pick that up. But if you
+explicitly tell it to choose between v2 and v3 only and it does not
+understand either, then it dies. Not sure if this is a good idea
+though.
 -- 
-Brandon Williams
+Duy
