@@ -2,72 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F13091F404
-	for <e@80x24.org>; Wed, 28 Feb 2018 12:59:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8A9451F404
+	for <e@80x24.org>; Wed, 28 Feb 2018 13:21:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752572AbeB1M71 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Feb 2018 07:59:27 -0500
-Received: from mail-lf0-f52.google.com ([209.85.215.52]:34494 "EHLO
-        mail-lf0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752417AbeB1M70 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Feb 2018 07:59:26 -0500
-Received: by mail-lf0-f52.google.com with SMTP id l191so3378439lfe.1
-        for <git@vger.kernel.org>; Wed, 28 Feb 2018 04:59:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:from:date:message-id:subject:to;
-        bh=QeE+pDJRLUwsP+NMtNJSgG7VPoZHkGnfV+P5amQ2fDU=;
-        b=f74v7GzsjeCOnIS4gACwujLxpiZLozg9RuDnzffSFCa6mddlPNj2uJcvvD5NEEjGxE
-         OzUOIlh+ToGY+mEWWc9lA0z7pvsg5/JCFLAzK3IhZVu3ZDn5pltttRtuMNVjlotRpS9k
-         eWx+m+S6UNNx030rVedTw8mdPTqPiq1CnGMinX31QEQYc9gRHT17SJfLfgM5DyBYoV+I
-         YKFoUL3kHEB+/z7YuT3KAyAWzjED0umUNfmRVIRY+wwzhkg/Lqs3JzJHHYmuynZAhBfo
-         ETkibyHuana8GGJEal8D67cC+fWUpf5RWlG3RDmGm/EECnucP3OZprWZZ/c2aB5HWNze
-         oiYQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
-         :to;
-        bh=QeE+pDJRLUwsP+NMtNJSgG7VPoZHkGnfV+P5amQ2fDU=;
-        b=Hjena8q4Ww4WXTaMiznu/GqPMBNd+oba+LOsLBIHva93QS48mzqJIuczUjQntRdhob
-         V0S7iLLgCTZ8gQrjIlVWDGCFGdBOQ6hLJ0LXdzm61estwxa2VPjEZXA5xixdLQuEn6HU
-         /CNJIZ9AZK678yol7nT2KDT/W6lkh9Yk4kFLOSoeRZ3wZeQNklknixNrea5IMxWYHYXv
-         cYzFfibC44q26xTbWNZV/Uk/7G3etsL+skmKISKE7Fxg4mekbEbPNZvCYdXa2PNdfVgx
-         /rDkrw3t/N8PBHqXqFXfSFsGnS7pk2+lT53O6mCADm2VSk5POcSEpYFV1bnaOXASsbTJ
-         IOKQ==
-X-Gm-Message-State: APf1xPDUkwA5B2w0zQtuQUhtEJkZY5f66h09pUeE3WGYPIvBUAouBPer
-        ukpOsmaOjDQYtzHv6Fv2mKzc1nE69OAqfJFPOmyWUAt3
-X-Google-Smtp-Source: AH8x227rOhu6Gg0to0UgoRLFpljzijf8PDdsX9+vfH7trRza5FpnFDZWI9x2ny03rvZFQaM37uAUGk225CAo6BHHX6M=
-X-Received: by 10.46.77.197 with SMTP id c66mr13446677ljd.116.1519822765413;
- Wed, 28 Feb 2018 04:59:25 -0800 (PST)
+        id S1752453AbeB1NVT (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Feb 2018 08:21:19 -0500
+Received: from cloud.peff.net ([104.130.231.41]:40578 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1752325AbeB1NVT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Feb 2018 08:21:19 -0500
+Received: (qmail 445 invoked by uid 109); 28 Feb 2018 13:21:18 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 28 Feb 2018 13:21:18 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 1708 invoked by uid 111); 28 Feb 2018 13:22:08 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 28 Feb 2018 08:22:08 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 28 Feb 2018 08:21:16 -0500
+Date:   Wed, 28 Feb 2018 08:21:16 -0500
+From:   Jeff King <peff@peff.net>
+To:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+Cc:     Lars Schneider <larsxschneider@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Lars Schneider <lars.schneider@autodesk.com>,
+        git <git@vger.kernel.org>, Johannes Sixt <j6t@kdbg.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        ramsay@ramsayjones.plus.com, Johannes.Schindelin@gmx.de
+Subject: Re: [PATCH v7 0/7] convert: add support for different encodings
+Message-ID: <20180228132116.GA32272@sigill.intra.peff.net>
+References: <19EDC192-0D83-4762-AC6A-81F7D693475A@gmail.com>
+ <xmqqbmgfvf2y.fsf@gitster-ct.c.googlers.com>
+ <xmqq7er3tqjq.fsf@gitster-ct.c.googlers.com>
+ <FDF4DEB8-E71A-4BFC-9437-678C8F65BBDC@gmail.com>
+ <20180226014445.GB8677@sigill.intra.peff.net>
+ <20180226173533.GA7877@tor.lan>
+ <20180226204635.GB12598@sigill.intra.peff.net>
+ <20180227210517.GA17555@tor.lan>
+ <20180227212537.GA6899@sigill.intra.peff.net>
+ <20180228082005.GA16857@tor.lan>
 MIME-Version: 1.0
-Received: by 10.25.80.67 with HTTP; Wed, 28 Feb 2018 04:59:24 -0800 (PST)
-From:   Birger Skogeng Pedersen <birgersp@gmail.com>
-Date:   Wed, 28 Feb 2018 13:59:24 +0100
-X-Google-Sender-Auth: W4-l6Ei_T_sXdQC8BOKKxBpSg78
-Message-ID: <CAGr--=Jgk==eQ4H8hiOU5x_P53gugXStORkFfTH6iPUrm43VRQ@mail.gmail.com>
-Subject: [FEATURE] git-gui: Staging path(s) should re-select a new path in
- "Unstaged Changes"
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20180228082005.GA16857@tor.lan>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When a path is selected in "Unstaged Changes", it can be staged
-(obviously). When it is staged, the path goes to the "Staged Changes"
-list, and no (new) path is selected. I propose that this action should
-re-select a new path, from the list of paths in "Unstaged Changes".
+On Wed, Feb 28, 2018 at 09:20:05AM +0100, Torsten Bögershausen wrote:
 
-Steps to reproduce (in git-gui):
-1. Open git-gui in a repository which has two or more uncommited, changed files.
-2. Select a path in the list of "Unstaged Changes"
-3. Click CTRL/CMD+T to stage the file.
-4. Observe how no (new) path is selected, forcing you to re-select
-another path if you want to stage it.
+> >   2. auto-detect utf-16 (your patch)
+> >      - Just Works for existing repositories storing utf-16
+> > 
+> >      - carries some risk of kicking in when people would like it not to
+> >        (e.g., when they really do want a binary patch that can be
+> >        applied).
+> 
+> The binary patch is still supported, but that detail may need some more explanation
+> in the commit message. Please see  t4066-diff-encoding.sh
+
+Yeah, but if you don't have binary-patches enabled we'd generate a bogus
+patch. Which, granted, without that you wouldn't be able to apply the
+patch either. But somehow it feels funny to me to generate something
+that _looks_ like a patch but you can't actually apply.
+
+I also think we'd want a plan for this to be used consistently in other
+diff-like tools. E.g., "git blame" uses textconv for the starting file
+content, and it would be nice for this to kick in then, too. Ditto for
+things like grep, pickaxe, etc.
+
+I have some patches that reuse some of the textconv infrastructure for
+this, which should mostly make it "just work" everywhere. They need a
+little more polishing before I post them, but you can take a look at:
+
+  https://github.com/peff/git.git jk/textconv-utf16
+
+if you want.
+
+-Peff
