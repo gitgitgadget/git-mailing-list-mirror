@@ -2,106 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 645EB1F404
-	for <e@80x24.org>; Wed, 28 Feb 2018 23:30:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CABAC1F404
+	for <e@80x24.org>; Wed, 28 Feb 2018 23:39:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965033AbeB1Xab (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Feb 2018 18:30:31 -0500
-Received: from mail-yb0-f174.google.com ([209.85.213.174]:46579 "EHLO
-        mail-yb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S964903AbeB1Xa2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Feb 2018 18:30:28 -0500
-Received: by mail-yb0-f174.google.com with SMTP id e142-v6so1497710ybc.13
-        for <git@vger.kernel.org>; Wed, 28 Feb 2018 15:30:28 -0800 (PST)
+        id S965021AbeB1XjS (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Feb 2018 18:39:18 -0500
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:42302 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965002AbeB1XjR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Feb 2018 18:39:17 -0500
+Received: by mail-wr0-f193.google.com with SMTP id k9so4210329wre.9
+        for <git@vger.kernel.org>; Wed, 28 Feb 2018 15:39:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=+poClxX04enNDj8wW2RMFPl17URZHSatldIg49K6LAk=;
-        b=tydWFAY+Afj2+WP2QG8DJzCbzTaiBm5ijBjugrh8Iv9nrz98VctDTD07y2NACD26+Q
-         pq4rGlppu0UOT5nfTHGMvaeusR0U9p+hVnF3yV9vJ7HDLlLcMd9GjM3HZAGjIy1YGR/k
-         Tw2QN2pMgnv0gQvKSwFpDDl4hBS75Eh8+azoksINUgHOdoV3F3ZQsYnRPJLsUzwbGqTt
-         2Zkd84HeW7+WODzIKkUaD0/0ruhKuR806ctc35hs1B3iwFxgRQdPop3Ozmij3gSPieHL
-         rVwGhER2352qWH2y01i06zVpH6CnR/wbvlkC8+aspsjuQ3otNMjdCe8AbVmRmXsTU24A
-         DgUA==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=cP186785BsarmyQV1vfjmmxda9K2l87i2VfM+1Og3JY=;
+        b=Tt8guVhW7cmaX3eBoe9RVcrOnezNLt4Yz+WnePl7LSyv1CADLezy1KL9JU1baRGViW
+         kDvambNWLsolIAyMJS6P5Ol8tb9xVJI5IITWXjIhp8r/zubWrErPRC21aSbTvjIP/AxF
+         K3gQkve6SmmsG+xN+zIvWGAeidCMWtAJ+WeuNJdIvkWnEDPtvYFjmlFLlTWHjFK63Kp9
+         2C8RPzwLWqXbkmx1riw8zb3Ezx7H5qEODRes97/gSLWNkt3+9pesxR1MhX5MRQgYFP8S
+         Ud9vPch4R+t+gFs040AMJXProaJ+gKflGMa28WSXHZKMzf4TcToPL2YlzTPRT7AR9Gd9
+         dUlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=+poClxX04enNDj8wW2RMFPl17URZHSatldIg49K6LAk=;
-        b=q18YUenTDCgzHlFO4csp0QjsJLexoMn63EVbLxoSdzYmaujvgCMPE3NHKSQWQuaxke
-         CQ1Uapah8uN/AfNCFlIt08qn1ZSRkQCVA8guLtWfLhC7CpePW8+eTXIKL1JXILUuWDJi
-         wbykBpDroY6F6lk+uCBYDYhtGngJquDpgJhwmTI18/vU4NChcmfHB7anDj9U5ym/uApF
-         s9LMSsnbxJkwjt//j4mnXmVg80EYTB8VcBeWCYC2AORXadRT//L+JkICZdxzR8cyfqDK
-         f+AxQgwDXHXJGB68tD20lJIs7V95IalHe2UlIv8H5gSsWMgBBnngzttb/T1iiS0jaTtL
-         L/6g==
-X-Gm-Message-State: APf1xPCv+8O2niOa0fgAC8SwfjAuDhYwxKx0z9b5vsCrcqlTOL+XBYiF
-        S/cDGJPC/rDVLqtIZwCmU58tbttZL8jP/CrPfRJMDz6wM/A=
-X-Google-Smtp-Source: AG47ELueTHjTzrv10NF8hu7C7nJL/DyGlOvgccpmnKOZ4eDQnWkyVknMjrGwe/raisdoLkzpHdFt67gztyHzcIoLTm4=
-X-Received: by 2002:a25:7d42:: with SMTP id y63-v6mr13669994ybc.307.1519860627674;
- Wed, 28 Feb 2018 15:30:27 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=cP186785BsarmyQV1vfjmmxda9K2l87i2VfM+1Og3JY=;
+        b=rXCAxpFukzpoEVxKmg8IM4rbEg1vOJSshl3ftMfXglH+pZRDadKQGBh72Q4jDsI50C
+         3W0bHkvCFXcDIE9r8D9PyrAZji5cQKl88NGBzhNAuXH20VTb6aJhFbwD/d/11ZbeMEQc
+         MRRaQ9g0Ykc7fFfBUz7FAurCjFmjTptOQcq4D40G/cA/RW1lexiOuaFDj4woPZhU0abH
+         NZiZxPRmiiKhnGKUu+MpsBR2i+e8q6dmIf+NFT7vlB4srrYlhDRf2lgzoDkVPzBHNTFU
+         1FuNrwXzqTUpbK2yArBMDorMcDHMie02HC7sWQAfP6z6zI09iGSDTFU79SYu2HqlgpJ1
+         vZCg==
+X-Gm-Message-State: APf1xPDecDeNkYHZ/ZRon5LrPSoFrXt2cVU0AmcKpawcRNPQJRD9v7s8
+        hS6P8g7mdSqFYMnPEep9ZDs=
+X-Google-Smtp-Source: AH8x225O2ERZKCGocC+ne+MSjcDvmWXaCxcyxJD3wXeIyiym/R6khpJACtt70pshIs3ugTKlvD7Lgw==
+X-Received: by 10.223.164.221 with SMTP id h29mr18906916wrb.259.1519861155933;
+        Wed, 28 Feb 2018 15:39:15 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id u48sm2555867wrb.85.2018.02.28.15.39.15
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 28 Feb 2018 15:39:15 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2] commit: run git gc --auto just before the pre-commit hook
+References: <xmqqzi3siw88.fsf@gitster-ct.c.googlers.com>
+        <20180228230425.14952-1-avarab@gmail.com>
+Date:   Wed, 28 Feb 2018 15:39:15 -0800
+In-Reply-To: <20180228230425.14952-1-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
+ =?utf-8?B?IEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Wed, 28 Feb 2018 23:04:25 +0000")
+Message-ID: <xmqqmuzsit0c.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 2002:a25:cfcb:0:0:0:0:0 with HTTP; Wed, 28 Feb 2018 15:30:27
- -0800 (PST)
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 28 Feb 2018 15:30:27 -0800
-Message-ID: <CAGZ79ka6PXgs+JDicaQYWYSKgEthj0A-2bBaRcdp_0T2H+sREA@mail.gmail.com>
-Subject: The case for two trees in a commit ("How to make rebase less modal")
-To:     git <git@vger.kernel.org>
-Cc:     Sergey Organov <sorganov@gmail.com>, igor.d.djordjevic@gmail.com,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-$ git hash-object --stdin -w -t commit <<EOF
-tree c70b4a33a0089f15eb3b38092832388d75293e86
-parent 105d5b91138ced892765a84e771a061ede8d63b8
-author Stefan Beller <sbeller@google.com> 1519859216 -0800
-committer Stefan Beller <sbeller@google.com> 1519859216 -0800
-tree 5495266479afc9a4bd9560e9feac465ed43fa63a
-test commit
-EOF
-19abfc3bf1c5d782045acf23abdf7eed81e16669
-$ git fsck |grep 19abfc3bf1c5d782045acf23abdf7eed81e16669
-$
+Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
 
-So it is technically possible to create a commit with two tree entries
-and fsck is not complaining.
+>> Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
+>>
+>>> Change the behavior of git-commit back to what it was back in
+>>> d4bb43ee27 ("Invoke "git gc --auto" from commit, merge, am and
+>>> rebase.", 2007-09-05) when it was git-commit.sh.
+>>
+>> ... which was to run it just before post-commit.  Do I retitle this
+>> patch before queuing?
+>
+> Do'h. Of course I screw up something simple like that, sorry. This v2
+> fixes it, and I also rephrased the commit message a bit (more commas &
+> full-stops).
 
-But why would I want to do that?
+I guess I still need to retitle it ;-) But that can happen tomorrow
+(I have the previous one with local fixes that pretty much matches
+v2 modulo the body of the log message on 'pu', ready to be pushed
+out).
 
-There are multiple abstraction levels in Git, I think of them as follows:
-* data structures / object model
-* plumbing
-* porcelain commands to manipulate the repo "at small scale", e.g.
-create a commit/tag
-* porcelain to modify the repo "at larger scale", such as rebase,
-cherrypicking, reverting
-  involving more than 1 commit.
+> I wonder if it would also be a good idea to run git gc --auto on "git
+> push". It itself won't create any objects, but it would be a nice
+> proxy in many cases for picking up anything else we missed due to
+> various object writing commands that won't run --auto.
 
-These large scale operations involving multiple commits however
-are all modal in its nature. Before doing anything else, you have to
-finish or abort the rebase or you need expert knowledge how to
-go otherwise.
+Before "push" starts producing a pack might be a good optimization,
+as reading from a packed repository is often more performant than a
+repository full of loose objects.
 
-During the rebase there might be a hard to resolve conflict, which
-you may not want to resolve right now, but defer to later.  Deferring a
-conflict is currently impossible, because precisely one tree is recorded.
-
-If we had multiple trees possible in a commit, then all these large scale
-operations would stop being modal and you could just record the unresolved
-merge conflict instead; to come back later and fix it up later.
-
-I'd be advocating for having multiple trees in a commit
-possible locally; it might be a bad idea to publish such trees.
-
-Opinions or other use cases?
-
-Thanks,
-Stefan
