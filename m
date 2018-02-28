@@ -3,115 +3,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C139E1F404
-	for <e@80x24.org>; Wed, 28 Feb 2018 17:42:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8BC971F404
+	for <e@80x24.org>; Wed, 28 Feb 2018 17:44:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933484AbeB1Rme (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Feb 2018 12:42:34 -0500
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:52574 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933649AbeB1Rma (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Feb 2018 12:42:30 -0500
-Received: by mail-wm0-f65.google.com with SMTP id t3so6601731wmc.2
-        for <git@vger.kernel.org>; Wed, 28 Feb 2018 09:42:30 -0800 (PST)
+        id S932487AbeB1RoJ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Feb 2018 12:44:09 -0500
+Received: from mail-pl0-f45.google.com ([209.85.160.45]:43607 "EHLO
+        mail-pl0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752900AbeB1RoG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Feb 2018 12:44:06 -0500
+Received: by mail-pl0-f45.google.com with SMTP id f23-v6so1929786plr.10
+        for <git@vger.kernel.org>; Wed, 28 Feb 2018 09:44:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=pZm4yD1W+nyHiMwmf1rBJkruJ3yxBzjeAn1TTNyR3tw=;
-        b=j0Nlr/HVMriVPyGlqEI/CIaTXHfHMnOpBmXC7XpCWnE4HEglfqPomT9mJs5/70DyKl
-         OGwX44QTBGAacFpIlCjpwF+pYIL6oEPHsDwZ+OY4IGpB0lkFanFMqkDpZ9/kZRjZ7JvV
-         HgKSbZtkl23yiijiaFmNQz7Lt+35IqHvLdQvzm1XHwgaOwums8aiCw7Zhx0lXpQM+66m
-         A/FM8bnazb6gceUp2Fm32p/fqjTExteSwua6z6VGzvuS77w8Ycw9LlKGqYROrop8uhqC
-         C45PvDc+xbOpVShH2PudR8/9tLirob4d+m7T6wHrAYDqvwms1PgjCvDPkEQ/AFbH2jow
-         wd8w==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=JBHFGeBBTZkZ2kES3iMReppZNP2/opZubghmG2myc+w=;
+        b=eed8aSff/BCihTl8kxliUxiVdDNKxC+r6H+LzlZ7VffZNyx6iDHdAtDd0kM2j4HKkg
+         2RH9EEungaGYBBKwA+Cqbs70FriIFlZJOzJPy3GTl1nYY44LY5jnkzFCej7k1WCpa/SY
+         2OoUUMO3+zLIiQwEHTBaDODUqO+pWwtIplsmi6lwvzRUPZIWz4/C2M1L+IyWrcJ8vIja
+         pMX6e0iu1ovk0Cakt/FVU+GHE9/8oOZ7Jq3q/+CImwb7XkCAclpV50j0/EgYeFoOfu61
+         JecJWTsO7WsVnNvsOIK7Y9LCHLHdNomlXkY7mmMbue3z9yl0WlbgePBu+o9HwIg/I0Z3
+         X9ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=pZm4yD1W+nyHiMwmf1rBJkruJ3yxBzjeAn1TTNyR3tw=;
-        b=ghDTsZaZDmsMHXRPW3+Kl1keefbof7IxbX1HEG8OtrYOcq5v2WCPyxjjHmyBiphs5f
-         CPo4LX+SftWyhZezFGIDCxCo344Rz92eWcIYN1ki+8FWltfdMnZWfOfH8C+LtaUkA7ld
-         llIFpHe98H1jWPm6Yyy/jL2ywSyhPE8SCbfcK13TtLEjBmxwzGpk0yfuYPPU3lKLze1f
-         jc2+pRBkJQvK6UrQWFz4rCBm6+jEc/b40fHnI8mQxMT1VWCMXH3f/qJdL8onPAtlP0DR
-         3LEgAU0i1/Eg0QyWQYtKylbQX13UoXiYC9/u0HUSZea8NEAvaiXKU7KS5szpmpj2v+Gm
-         d92A==
-X-Gm-Message-State: APf1xPAVXdE/0UozPU0YviP6I7wzJBQbJqiGLfZ0DcFK6G2lo42Daq9q
-        HCWBWubf+IdLmIPF8E1IFHxe6290
-X-Google-Smtp-Source: AG47ELsywA0nQmv7VUtSizxqdW02AuNZNicJ2L/fsk+zZGL5D0r4qAFfQTnBz827oEKsXFJApCHLGQ==
-X-Received: by 10.28.111.145 with SMTP id c17mr11337078wmi.74.1519839748701;
-        Wed, 28 Feb 2018 09:42:28 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id i49sm2390426wra.44.2018.02.28.09.42.27
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=JBHFGeBBTZkZ2kES3iMReppZNP2/opZubghmG2myc+w=;
+        b=TyEnP8gpqlna9BN86gjEhCD8yjTB9MRAos1I0BbjygVyYjtD3Ns0I3E/7YHvOcBAam
+         FggEOnKEQRsJc5gHqT1xMW/ccR4DS13dwuFg6oOn84Qyp1Z2fGpQ5k+puDzHyuhU3imT
+         fsEKMqw1t89kLpu4hEFn1lWqrG5pjVqqt/w9+zHixtB29UslHvYVje2qGA5An9dTCFsT
+         GqPOlmEObSuXr2m6nvvSbq2tCNEMpIJbgqarBC0dbZgEAe9MqNEuYgZbNuWqLWU1P3Nd
+         zqel3DUH/2EU1jBD4ISL7FrafmtlVKg6ZPrxmGo3m3AHiYWJQ3DkG3cpoosB2w8IPJgJ
+         IyRA==
+X-Gm-Message-State: APf1xPBMHyvjYFGaKnZN+EPcz/bUUh/OWU6VIih9XeJUOr19wN5m+oD4
+        VcJkpMKRaCoBKtBRZvp22/o=
+X-Google-Smtp-Source: AH8x224Lv/cHDRaYKI0xTiEP8kGwFKrgCThFnjmzXYHWR/38dCRzGCDwJrS5a+t1g8vxMv8MGNLUUw==
+X-Received: by 2002:a17:902:6c4f:: with SMTP id h15-v6mr18816974pln.435.1519839845553;
+        Wed, 28 Feb 2018 09:44:05 -0800 (PST)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id t8sm3695759pgr.21.2018.02.28.09.44.04
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 28 Feb 2018 09:42:27 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Lars Schneider <lars.schneider@autodesk.com>,
-        git <git@vger.kernel.org>, Johannes Sixt <j6t@kdbg.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        ramsay@ramsayjones.plus.com, Johannes.Schindelin@gmx.de
-Subject: Re: [PATCH v7 0/7] convert: add support for different encodings
-References: <19EDC192-0D83-4762-AC6A-81F7D693475A@gmail.com>
-        <xmqqbmgfvf2y.fsf@gitster-ct.c.googlers.com>
-        <xmqq7er3tqjq.fsf@gitster-ct.c.googlers.com>
-        <FDF4DEB8-E71A-4BFC-9437-678C8F65BBDC@gmail.com>
-        <20180226014445.GB8677@sigill.intra.peff.net>
-        <20180226173533.GA7877@tor.lan>
-        <20180226204635.GB12598@sigill.intra.peff.net>
-        <20180227210517.GA17555@tor.lan>
-        <20180227212537.GA6899@sigill.intra.peff.net>
-        <20180228082005.GA16857@tor.lan>
-        <20180228132116.GA32272@sigill.intra.peff.net>
-Date:   Wed, 28 Feb 2018 09:42:27 -0800
-In-Reply-To: <20180228132116.GA32272@sigill.intra.peff.net> (Jeff King's
-        message of "Wed, 28 Feb 2018 08:21:16 -0500")
-Message-ID: <xmqqfu5lm2nw.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        Wed, 28 Feb 2018 09:44:04 -0800 (PST)
+Date:   Wed, 28 Feb 2018 09:44:02 -0800
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     "Randall S. Becker" <rsbecker@nexbridge.com>
+Cc:     'demerphq' <demerphq@gmail.com>, 'Jeff King' <peff@peff.net>,
+        'Eric Wong' <e@80x24.org>, 'Git' <git@vger.kernel.org>,
+        'Joachim Schmitz' <jojo@schmitz-digital.de>,
+        =?iso-8859-1?Q?'=C6var_Arnfj=F6r=F0?= Bjarmason' 
+        <avarab@gmail.com>
+Subject: Re: [Problem] test_must_fail makes possibly questionable assumptions
+ about exit_code.
+Message-ID: <20180228174402.GC251290@aiede.svl.corp.google.com>
+References: <005501d3b025$c0057ce0$401076a0$@nexbridge.com>
+ <20180228001616.GJ174036@aiede.svl.corp.google.com>
+ <20180228040718.GA9043@whir>
+ <20180228050034.GA373@sigill.intra.peff.net>
+ <20180228074251.GA11673@dcvr>
+ <20180228074918.GA32127@sigill.intra.peff.net>
+ <CANgJU+V3fmhdsD8Q2NgV+RF3dbRdASV-Qwbp-agGjm6Y-PUCEw@mail.gmail.com>
+ <003901d3b0b7$0a144280$1e3cc780$@nexbridge.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <003901d3b0b7$0a144280$1e3cc780$@nexbridge.com>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Randall S. Becker wrote:
 
->> The binary patch is still supported, but that detail may need some more explanation
->> in the commit message. Please see  t4066-diff-encoding.sh
->
-> Yeah, but if you don't have binary-patches enabled we'd generate a bogus
-> patch. Which, granted, without that you wouldn't be able to apply the
-> patch either. But somehow it feels funny to me to generate something
-> that _looks_ like a patch but you can't actually apply.
+> The problem is actually in git code in its test suite that uses perl
+> inline, not in my test code itself. The difficulty I'm having is
+> placing this appropriate so that the signal handler gets used
+> throughout the test suite including in the perl -e invocations. This
+> is more a lack of my own understanding of plumbing of git test
+> framework rather than of using or coding perl.
 
-True.  And at least you _could_ apply a properly formatted binary
-patch to the original.
+Can you elaborate with an example?  My understanding was that
+test_must_fail is only for running git.  If a test is running perl and
+wants to check its exit code, the test is supposed to use !, not
+test_must_fail.
 
-> I also think we'd want a plan for this to be used consistently in other
-> diff-like tools. E.g., "git blame" uses textconv for the starting file
-> content, and it would be nice for this to kick in then, too. Ditto for
-> things like grep, pickaxe, etc.
+t/README backs me up:
 
-You probably do not want to limit your thinking to the generation
-side.  It is entirely plausible to have "we deal with diff in this
-encoding X" in addition to "the in-repo encoding for this project is
-this encoding Y" and "the working tree encoding for this path is Z"
-and allow them to interact in "git diff | git apply" pipeline.
+ - use '! git cmd' when you want to make sure the git command exits
+   with failure in a controlled way by calling "die()".  Instead,
+   use 'test_must_fail git cmd'.  This will signal a failure if git
+   dies in an unexpected way (e.g. segfault).
 
-"diff/format-patch --stdout/etc." on the upstream would first iconv
-Y to X and feed the contents in X to xdiff machinery, which is sent
-down the pipe and received by apply, which reads the preimage from
-the disk or from the repository.  If doing "apply" without
-"--cached/--index", the preimage data from the disk would go through
-iconv Z to X.  If doing "apply --cached/--index", the preimage data
-from the repo would go through iconv Y to X.  The incoming patch is
-in X, so we apply, and the resulting postimage will be re-encoded in
-Z in the working tree and Y in the repository.
+   On the other hand, don't use test_must_fail for running regular
+   platform commands; just use '! cmd'.  We are not in the business
+   of verifying that the world given to us sanely works.
 
+So I don't consider the initial issue you raised a test issue at all!
+It's a bug in the git commands, and a fix for it should not be
+specific to the test suite.
+
+And now it sounds like there is a second issue: the test suite is
+overusing test_must_fail in some context and that needs to be fixed as
+well.
+
+Thanks,
+Jonathan
