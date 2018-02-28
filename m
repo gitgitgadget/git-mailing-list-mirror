@@ -2,95 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C01E51F404
-	for <e@80x24.org>; Wed, 28 Feb 2018 00:59:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7F4241F404
+	for <e@80x24.org>; Wed, 28 Feb 2018 01:02:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751654AbeB1A7J (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Feb 2018 19:59:09 -0500
-Received: from mail-oi0-f50.google.com ([209.85.218.50]:38557 "EHLO
-        mail-oi0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751566AbeB1A7I (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Feb 2018 19:59:08 -0500
-Received: by mail-oi0-f50.google.com with SMTP id 123so571450oig.5
-        for <git@vger.kernel.org>; Tue, 27 Feb 2018 16:59:08 -0800 (PST)
+        id S1751689AbeB1BCh (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Feb 2018 20:02:37 -0500
+Received: from mail-pl0-f41.google.com ([209.85.160.41]:40421 "EHLO
+        mail-pl0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751663AbeB1BCg (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Feb 2018 20:02:36 -0500
+Received: by mail-pl0-f41.google.com with SMTP id i6-v6so490810plt.7
+        for <git@vger.kernel.org>; Tue, 27 Feb 2018 17:02:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=9sqlkX08Vv3t9a0Q7JdUNe1MI/pMvFqtM7kRe6g/TeY=;
-        b=l0ZS8vLFkelgKEBw8EB9kskc8jQitNgMBhMxMyF6PxxFUpg22XFf689sqsPJhvToAi
-         liQR7aifLVPyi4mbgf0AvFXl70ps0BMdsxX4olZk2s4ueQwvzOhuSJdjgGG+F8KbVIUx
-         Vi+y+HE1e6OgN0LIM/hs32j2U6eckS9FjAkyq1jKojUZ4uZs363aECs/4CWqTKSrQbsP
-         Nkl/1i32Eb8IdgCQ7RrxieCvonM7lYLTPL7TWDl5CjeI+wMXxTnnkqSEB+40M9oXfrDQ
-         3Ov/nYtBT0h7GoULuq+PDfsyb9n9QlOIO0kgQ4m7cl/vQ/wH2qJs5YuoSfndgLA8LhMw
-         KKJg==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=Nb5WtTG8MtknMI0KgHxxz6JgBjhbccTj6ee1vJFDvDk=;
+        b=YmC1r59PnPs2N+j0Q5sVJP/VJDxBFsgXK3RNiiOZepJg+LLUevoCGd20Zop7Z5gSBY
+         LUe0heAhPWFUOWXyAvkyJzNalFXzcdWnVc/1xSmZC1i27ehtDllEe0V/MiK5areQ2vgF
+         aTpz6MV0qDh0NQlYQ0V0A/Ayx7IqMNkvidmOoDNxie1I9lcJECOeyHe5nPIC0/ViNU49
+         0sNbT/WhrgTSCvLOVw0HtTLD7bwMsf3JoStleHOEoKp+Pf5DIk1eO6wzuEgaTp/MXcwG
+         H9sTYR5cZaTyclqJOJNBaSZE7F9Dey4YqC6n5CF1unn656bOd7JWR7vyzXRptUv1h/xq
+         LOQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=9sqlkX08Vv3t9a0Q7JdUNe1MI/pMvFqtM7kRe6g/TeY=;
-        b=Z8HEfiJvwdzW09EXlcTQkH9kILq5uzEO9BXm3fyrOaxlWaOW5tkZBIUaGL7ujLhMbt
-         SZJOMjhEeyqgOrjLVnvsNBvTTe/tWuBAoelBYo6RuWunYUWECSTp33zZwzmvFQWPCpdQ
-         3nyUddcInx2nL1gqxvYg3Pu6USHqsApfHwHmKeEMRVyNsrho6XpU7IWVFg8HC+D3zQKB
-         XkVijcT51xBz/hyZcue1RMhkHHUczx5NdO2ZbSchJP1uvP4yk0vmM2brB7OzC2kxY66Z
-         mBA7MWNDyHrR0uPuFtmpNkJvnvYKh0g3EydpZHKL8qVYH2wwOK2j+GDa3KNdLIV+Pab9
-         SSpg==
-X-Gm-Message-State: APf1xPCLg0yEK0RQ7X4TodWiI1PRPWEZ6jsW2xfBpsXFAMjNmE1QUMuO
-        LtJGBdzLBwNS8+af48wtwLlO691XKXqv+EyLRNQ=
-X-Google-Smtp-Source: AG47ELuSyD3TAdW4jOsOGaoy2IHQD/iXxGmmjQkHvfUJYVEO3t1umcuYDx+oyMYxa1I6zJhTDgwE+hqJXs10UvlXtzE=
-X-Received: by 10.202.206.71 with SMTP id e68mr10780248oig.34.1519779548014;
- Tue, 27 Feb 2018 16:59:08 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=Nb5WtTG8MtknMI0KgHxxz6JgBjhbccTj6ee1vJFDvDk=;
+        b=t7GEBj8G1AWE531Tmh8AexAyrkDsA+haCNbx8TufP8yI00txD7JlQNbkCcfCnIZ53o
+         3xzcCNnT3wx6XBoVHdKuO+m4BmCIiYnSM7Y8uViIN9Z+lps0/0FetH4Fsv0PhWna2oBe
+         GuGQPfB+CFk1ONGnS7dmau/x1mlAwTpVPnTOCreqMESHehixjo4OtZMDwwfTwKp7/mMx
+         FdsmeRktQvoo6gkK6WsO27hrBWu5+OqWkFsiKj2B33RS62a026o3dzCVejgiY4qelFZO
+         xc9VxBCol8lEI5czGHdVcy7ICzZT9itgPKDG9xaJNVB4XBF+0vjbMkhBwewkqZ1Hj67C
+         kgPA==
+X-Gm-Message-State: APf1xPD+77Q5Vq5dZUQIbsZW+G+8Ocpi7UXE+2q6YFUwyyfU7+r7XYXp
+        /Vwp42kSeSFJic2+3uGr0LAXOgEbitk=
+X-Google-Smtp-Source: AH8x2258+5dlAdeCSJRQO5IVJQT5v9BqXXvnD6MftA4q7dye9v+wc2DCLb6DVI0Auqko8uk/BiTXAw==
+X-Received: by 2002:a17:902:2e04:: with SMTP id q4-v6mr15932172plb.22.1519779755715;
+        Tue, 27 Feb 2018 17:02:35 -0800 (PST)
+Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
+        by smtp.gmail.com with ESMTPSA id b5sm374962pgc.13.2018.02.27.17.02.34
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 27 Feb 2018 17:02:34 -0800 (PST)
+Date:   Tue, 27 Feb 2018 17:02:33 -0800
+From:   Brandon Williams <bmwill@google.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: Re: [PATCH] protocol: treat unrecognized protocol.version setting as
+ 0
+Message-ID: <20180228010233.GA45342@google.com>
+References: <20180228005059.GA251290@aiede.svl.corp.google.com>
 MIME-Version: 1.0
-Received: by 10.74.25.140 with HTTP; Tue, 27 Feb 2018 16:58:37 -0800 (PST)
-In-Reply-To: <20180227201250.GL209668@google.com>
-References: <20180226103030.26900-1-pclouds@gmail.com> <20180227095846.9238-1-pclouds@gmail.com>
- <20180227095846.9238-4-pclouds@gmail.com> <20180227201250.GL209668@google.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 28 Feb 2018 07:58:37 +0700
-Message-ID: <CACsJy8DhZLo2KsA5uYoqJvmJXPz3Gri7Vcpi4huG5pNQW1xLUw@mail.gmail.com>
-Subject: Re: [PATCH v2 3/4] sha1_file.c: move delayed getenv(altdb) back to setup_git_env()
-To:     Brandon Williams <bmwill@google.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Stefan Beller <sbeller@google.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180228005059.GA251290@aiede.svl.corp.google.com>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 28, 2018 at 3:12 AM, Brandon Williams <bmwill@google.com> wrote=
-:
-> On 02/27, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
->> diff --git a/repository.c b/repository.c
->> index 7654b8ada9..e326f0fcbc 100644
->> --- a/repository.c
->> +++ b/repository.c
->> @@ -61,6 +61,8 @@ void repo_set_gitdir(struct repository *repo,
->>       repo_set_commondir(repo, o->shared_root);
->>       expand_base_dir(&repo->objects.objectdir, o->object_dir,
->>                       repo->commondir, "objects");
->> +     free(repo->objects.alternate_db);
->> +     repo->objects.alternate_db =3D xstrdup_or_null(o->alternate_db);
->
-> Just a note that this only works because the object store is embedded in
-> the repository struct, it isn't a pointer to an object store.
+On 02/27, Jonathan Nieder wrote:
+> If I share my .gitconfig or .git/config file between multiple machines
+> (or between multiple Git versions on a single machine) and set
+> 
+> 	[protocol]
+> 		version = 2
+> 
+> then running "git fetch" with a Git version that does not support
+> protocol v2 errors out with
+> 
+> 	fatal: unknown value for config 'protocol.version': 2
+> 
+> In the spirit of v1.7.6-rc0~77^2~1 (Improve error handling when
+> parsing dirstat parameters, 2011-04-29), it is better to (perhaps
+> after warning the user) ignore the unrecognized protocol version.
+> After all, future Git versions might add even more protocol versions,
+> and using two different Git versions with the same Git repo, machine,
+> or home directory should not cripple the older Git version just
+> because of a parameter that is only understood by a more recent Git
+> version.
+> 
+> So ignore the unrecognized value.  It may be useful for spell checking
+> (for instance, if I put "version = v1" intending "version = 1") to
+> warn about such settings, but this patch does not, since at least in
+> these early days for protocol v2 it is expected for configurations
+> that want to opportunistically use protocol v2 if available not to be
+> unusual.
+> 
+> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+> ---
+> Google has been running with a patch like this internally for a while,
+> since we have been changing the protocol.version number to a new value
+> like 20180226 each time a minor tweak to the protocolv2 RFC occured.
+> 
+> The bit I have doubts about is whether to warn.  What do you think?
 
-It is possible to make it work even if object store is not embedded
-though. From my point of view, this function is about "give me
-$GIT_DIR and optionally the where all other parts are, if you ignore
-default repo layout and tear the repository apart". We could
-initialize the object store later when it's created and pass the
-relevant paths to it. Exactly where it's safe to "create and
-initialize object store" is harder to see now because the whole main
-repo setup is spread out over many many functions.
---=20
-Duy
+Patch looks good to me.  And I don't have a strong preference either way
+for whether to warn or not.
+
+
+-- 
+Brandon Williams
