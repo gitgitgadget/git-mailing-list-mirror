@@ -7,131 +7,147 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B5A261F404
-	for <e@80x24.org>; Wed, 28 Feb 2018 00:44:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 844DD1F404
+	for <e@80x24.org>; Wed, 28 Feb 2018 00:51:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751656AbeB1AoM (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Feb 2018 19:44:12 -0500
-Received: from mail-vk0-f67.google.com ([209.85.213.67]:44013 "EHLO
-        mail-vk0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751117AbeB1AoM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Feb 2018 19:44:12 -0500
-Received: by mail-vk0-f67.google.com with SMTP id p189so449200vkd.10
-        for <git@vger.kernel.org>; Tue, 27 Feb 2018 16:44:11 -0800 (PST)
+        id S1751521AbeB1AvI (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Feb 2018 19:51:08 -0500
+Received: from mail-pf0-f169.google.com ([209.85.192.169]:37164 "EHLO
+        mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751117AbeB1AvH (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Feb 2018 19:51:07 -0500
+Received: by mail-pf0-f169.google.com with SMTP id s24so315693pfm.4
+        for <git@vger.kernel.org>; Tue, 27 Feb 2018 16:51:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=CgP3DT7esy+lzMP+21rrwy8ryrTMAFbtzAghDFKiMnI=;
-        b=gyZfS0D+bbpZCbhgpXB1yCX0NMHhhcu22VMw8r8+oKAGEur4T9gqtT78ucE3VOnn21
-         B+baRvwQjkJkCV9L3bYMGLa8QAM7Zc3NqmM6DWn8tBP9xruaVeaAKn0ncWUhyGedriW1
-         BhGyXEOH7Hn9t3jPTlht6evOdnJlMexCD7pnjCy/ghq+FJIVy9Oz6TL8p4YUFoI7CiZn
-         V3AtUQhn0R9ThdnoslENKBwHOfAv1Cbpmhxck3pt6yM/LYZ0r3VuEGN6cG/E04CG9R0Y
-         tor/zg4Jm+1KrnQyCgu9OdYPyze2uomWKypFMktGj+bNGCS/O9hVNSxz6M63s/Eivhkb
-         R52A==
+        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
+         :user-agent;
+        bh=Bm4XSJuldxC2Ng/L1z+pETw/6xZxv6ZOMK0i9nN60EM=;
+        b=dPz5GcddxW/YYkIR0vD8lCEWVRGhDRDCjWKYgiPJLHq9uADk/C6P6+P9RZKuCerzZQ
+         gGWmRbqjYHa1yx9Jf5VLyhIFnUg/re+a7lP5Z59u6eJ+H8teS4uM2VRt5v8IXVumIxN3
+         BpY4W93xtBqmQJWWag1B8qZ+yf2XZPZ90tmjQF35IV9Z94kLcUt5dLgeoCIlhFC7Udtz
+         FKGdGFYDYA41xEyOjjFzIrEaZrUb8BteKC/2cZgD5+3q/x8psjhAMBe1Q7PFoFNwvBzK
+         WHlwMq2+bmCwsxrx/FjlTJDyTk17dRS2k8b6Qw5wx7uSjOYk0SS5R6EtM946oC3NxHvN
+         aR4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=CgP3DT7esy+lzMP+21rrwy8ryrTMAFbtzAghDFKiMnI=;
-        b=RvR5+UM5LDH+jdVSGHmPjjVllNrB1drRAUqr87Kdkld4yWbk41fH9TWV4J4wXOggdg
-         a3xZzP6ahLm+ZsQSOgTOeclIuoV4MtH2zJtKk1NhBYLh9r3rpFcwYJlt6hs3knRqYxes
-         J27VCTxxrYmevTZmEn+xaVckmRHArhrwTbBoXvimp0KY841IS74uv6bozGg2vNslhFAH
-         GVIKCmSc3YuBREic22O8XrsTO1AyC0J1nb8/CnuybwEZ2tkxJuQpWYapgbWszVgiDwE0
-         Q27xB6TZgAlOAmkeRWkDx4tbDQFk885vwImYZ77aXmRjywuiGZxTJf5nMBbQRvGDL+5b
-         B0sg==
-X-Gm-Message-State: APf1xPAzL4i137j2X39dmTxaVPZWXIwsUldRXak+YV+JISK17CUefPJu
-        uDvv4R02dgmisYryy3e6fR7RBLecNcH7FV6dpw0=
-X-Google-Smtp-Source: AG47ELsSbkod+eZ6r1bC5lcGtbc9KdvUQlhJB9qf4U8q1CSq7yEq3iFga+I2ueOqr1BjzKR3UE/kHlzxb7fGU9GHoZE=
-X-Received: by 10.31.223.135 with SMTP id w129mr12739545vkg.48.1519778651350;
- Tue, 27 Feb 2018 16:44:11 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=Bm4XSJuldxC2Ng/L1z+pETw/6xZxv6ZOMK0i9nN60EM=;
+        b=qbvET7/06mqCEL7bq8DjylPNpZwMdqjkT7yfqB0yhh+PV4hmTDdiIGubvUvv8/+vCu
+         WMb/x9bTKbXbBnMXXsMMun809wADOzNRtPkkRIg/deLJu90nyG23nZHR1VYbPSpXQQ3u
+         8qbLVxD0Z5Ij1lCbbvlKpIhOgkFamDhEZyJKNpPgtVYftqv+P8N8qh3WDeREmw4mm/mH
+         fBfjV7PrEbdM4sJYfxOqeLKFYH9eIhGtao+HjBvjPp2uU7KeA5kPo+Ekt/mrB2poBIcE
+         5POSfJsDz0gBg1A1fpmCg+V8PHxekVgBzsoZxFJMP/iXNj1XILDY8JnTXlOplD3aX3KX
+         6QPQ==
+X-Gm-Message-State: APf1xPAkz32vDGWo9ouxjlIbKYCBdLOJdxhY0m83x3YnnZNke5n84qTN
+        z+luacwcz5oeizOtfb2RQiabNgHv
+X-Google-Smtp-Source: AH8x226vueJo4K7lXhwY11DyKGsEFwECLW3GXM4qkMAYgUQq4msu1S1FvaF1qjoElxiSvb3gks64qg==
+X-Received: by 10.98.86.151 with SMTP id h23mr15716249pfj.79.1519779066131;
+        Tue, 27 Feb 2018 16:51:06 -0800 (PST)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id n67sm453008pfh.150.2018.02.27.16.51.05
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 27 Feb 2018 16:51:05 -0800 (PST)
+Date:   Tue, 27 Feb 2018 16:50:59 -0800
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Brandon Williams <bmwill@google.com>, Jeff King <peff@peff.net>
+Subject: [PATCH] protocol: treat unrecognized protocol.version setting as 0
+Message-ID: <20180228005059.GA251290@aiede.svl.corp.google.com>
 MIME-Version: 1.0
-Received: by 10.159.59.233 with HTTP; Tue, 27 Feb 2018 16:44:10 -0800 (PST)
-In-Reply-To: <xmqqlgfep1x7.fsf@gitster-ct.c.googlers.com>
-References: <20180223233951.11154-1-szeder.dev@gmail.com> <20180223233951.11154-5-szeder.dev@gmail.com>
- <xmqqlgfep1x7.fsf@gitster-ct.c.googlers.com>
-From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Date:   Wed, 28 Feb 2018 01:44:10 +0100
-Message-ID: <CAM0VKjmxT=KE4OR5KtkWx0Tk=ddBjWt6HQn=BGgXaxm4NTmA0Q@mail.gmail.com>
-Subject: Re: [PATCH 04/11] t3030-merge-recursive: don't check the stderr of a subshell
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git mailing list <git@vger.kernel.org>, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 27, 2018 at 10:17 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
->
->> +             git read-tree -i -m $c3 2>actual-err &&
->> +             test_must_be_empty expected-err &&
->> +             git update-index --ignore-missing --refresh 2>>actual-err =
-&&
->> +             test_must_be_empty expected-err &&
->> +             git merge-recursive $c0 -- $c3 $c7 2>>actual-err &&
->> +             test_must_be_empty expected-err &&
->> +             git ls-files -s >actual-files 2>>actual-err &&
->> +             test_must_be_empty expected-err
->
-> Also, with the error output of individual steps tested like this
-> (assuming that test-must-be-empty checks are to be done on
-> the actual-err file, not ecpected-err that nobody creates), I do not
-> see a point in appending to the file.  So perhaps squash this in?
+If I share my .gitconfig or .git/config file between multiple machines
+(or between multiple Git versions on a single machine) and set
 
-Agreed again.
+	[protocol]
+		version = 2
 
+then running "git fetch" with a Git version that does not support
+protocol v2 errors out with
 
->  t/t3030-merge-recursive.sh | 22 +++++++++++-----------
->  1 file changed, 11 insertions(+), 11 deletions(-)
->
-> diff --git a/t/t3030-merge-recursive.sh b/t/t3030-merge-recursive.sh
-> index cbeea1cf94..3563e77b37 100755
-> --- a/t/t3030-merge-recursive.sh
-> +++ b/t/t3030-merge-recursive.sh
-> @@ -526,13 +526,13 @@ test_expect_success 'merge-recursive w/ empty work =
-tree - ours has rename' '
->                 export GIT_INDEX_FILE &&
->                 mkdir "$GIT_WORK_TREE" &&
->                 git read-tree -i -m $c7 2>actual-err &&
-> -               test_must_be_empty expected-err &&
-> +               test_must_be_empty actual-err &&
->                 git update-index --ignore-missing --refresh 2>actual-err =
-&&
-> -               test_must_be_empty expected-err &&
-> +               test_must_be_empty actual-err &&
->                 git merge-recursive $c0 -- $c7 $c3 2>actual-err &&
-> -               test_must_be_empty expected-err &&
-> +               test_must_be_empty actual-err &&
->                 git ls-files -s >actual-files 2>actual-err &&
-> -               test_must_be_empty expected-err
-> +               test_must_be_empty actual-err
->         ) &&
->         cat >expected-files <<-EOF &&
->         100644 $o3 0    b/c
-> @@ -551,13 +551,13 @@ test_expect_success 'merge-recursive w/ empty work =
-tree - theirs has rename' '
->                 export GIT_INDEX_FILE &&
->                 mkdir "$GIT_WORK_TREE" &&
->                 git read-tree -i -m $c3 2>actual-err &&
-> -               test_must_be_empty expected-err &&
-> -               git update-index --ignore-missing --refresh 2>>actual-err=
- &&
-> -               test_must_be_empty expected-err &&
-> -               git merge-recursive $c0 -- $c3 $c7 2>>actual-err &&
-> -               test_must_be_empty expected-err &&
-> -               git ls-files -s >actual-files 2>>actual-err &&
-> -               test_must_be_empty expected-err
-> +               test_must_be_empty actual-err &&
-> +               git update-index --ignore-missing --refresh 2>actual-err =
-&&
-> +               test_must_be_empty actual-err &&
-> +               git merge-recursive $c0 -- $c3 $c7 2>actual-err &&
-> +               test_must_be_empty actual-err &&
-> +               git ls-files -s >actual-files 2>actual-err &&
-> +               test_must_be_empty actual-err
->         ) &&
->         cat >expected-files <<-EOF &&
->         100644 $o3 0    b/c
+	fatal: unknown value for config 'protocol.version': 2
+
+In the spirit of v1.7.6-rc0~77^2~1 (Improve error handling when
+parsing dirstat parameters, 2011-04-29), it is better to (perhaps
+after warning the user) ignore the unrecognized protocol version.
+After all, future Git versions might add even more protocol versions,
+and using two different Git versions with the same Git repo, machine,
+or home directory should not cripple the older Git version just
+because of a parameter that is only understood by a more recent Git
+version.
+
+So ignore the unrecognized value.  It may be useful for spell checking
+(for instance, if I put "version = v1" intending "version = 1") to
+warn about such settings, but this patch does not, since at least in
+these early days for protocol v2 it is expected for configurations
+that want to opportunistically use protocol v2 if available not to be
+unusual.
+
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+Google has been running with a patch like this internally for a while,
+since we have been changing the protocol.version number to a new value
+like 20180226 each time a minor tweak to the protocolv2 RFC occured.
+
+The bit I have doubts about is whether to warn.  What do you think?
+
+Thanks,
+Jonathan
+
+ protocol.c             |  8 ++------
+ t/t5700-protocol-v1.sh | 12 ++++++++++++
+ 2 files changed, 14 insertions(+), 6 deletions(-)
+
+diff --git a/protocol.c b/protocol.c
+index 43012b7eb6..ce9c634a3a 100644
+--- a/protocol.c
++++ b/protocol.c
+@@ -17,12 +17,8 @@ enum protocol_version get_protocol_version_config(void)
+ 	const char *value;
+ 	if (!git_config_get_string_const("protocol.version", &value)) {
+ 		enum protocol_version version = parse_protocol_version(value);
+-
+-		if (version == protocol_unknown_version)
+-			die("unknown value for config 'protocol.version': %s",
+-			    value);
+-
+-		return version;
++		if (version != protocol_unknown_version)
++			return version;
+ 	}
+ 
+ 	return protocol_v0;
+diff --git a/t/t5700-protocol-v1.sh b/t/t5700-protocol-v1.sh
+index ba86a44eb1..c35767ab01 100755
+--- a/t/t5700-protocol-v1.sh
++++ b/t/t5700-protocol-v1.sh
+@@ -31,6 +31,18 @@ test_expect_success 'clone with git:// using protocol v1' '
+ 	grep "clone< version 1" log
+ '
+ 
++test_expect_success 'unrecognized protocol versions fall back to v0' '
++	GIT_TRACE_PACKET=1 git -c protocol.version=9999 \
++		clone "$GIT_DAEMON_URL/parent" v9999 2>log &&
++
++	git -C daemon_child log -1 --format=%s >actual &&
++	git -C "$daemon_parent" log -1 --format=%s >expect &&
++	test_cmp expect actual &&
++
++	# Client requested and server responded using protocol v0
++	! grep version log
++'
++
+ test_expect_success 'fetch with git:// using protocol v1' '
+ 	test_commit -C "$daemon_parent" two &&
+ 
+-- 
+2.16.2.395.g2e18187dfd
+
