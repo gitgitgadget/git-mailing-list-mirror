@@ -3,88 +3,123 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B62941F404
-	for <e@80x24.org>; Wed, 28 Feb 2018 19:09:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E0F211F404
+	for <e@80x24.org>; Wed, 28 Feb 2018 19:19:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933160AbeB1TJx (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Feb 2018 14:09:53 -0500
-Received: from mail-wr0-f178.google.com ([209.85.128.178]:39131 "EHLO
-        mail-wr0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932439AbeB1TJx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Feb 2018 14:09:53 -0500
-Received: by mail-wr0-f178.google.com with SMTP id w77so3575206wrc.6
-        for <git@vger.kernel.org>; Wed, 28 Feb 2018 11:09:52 -0800 (PST)
+        id S933647AbeB1TTj (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Feb 2018 14:19:39 -0500
+Received: from mail-pl0-f52.google.com ([209.85.160.52]:38603 "EHLO
+        mail-pl0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933272AbeB1TTf (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Feb 2018 14:19:35 -0500
+Received: by mail-pl0-f52.google.com with SMTP id d4-v6so2105114pll.5
+        for <git@vger.kernel.org>; Wed, 28 Feb 2018 11:19:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=r2uP3wtI739OnYYmgPpVrGEVnncZE0Ih7eY/TSQNHus=;
-        b=LlOxNnikpS6GsEl8mljPBHG7mKCYAH62XOXoZA6VNuC/HW6IPQZKYvNeq2EwkOa8ZU
-         3KwiecSq3Os+jgBWoDs5eQjbMQ9wdWbXEbVi5oFSU4bmy5vVEcIlOta5AwfgV0B3P9Ah
-         Gej3Jur8YGxVnkuXU9BtmWKzineJkIVghoyjsJ+LZVLuCmf6Pe6eIa37VUmNhaTjRelU
-         cqbryf/LXRaIHYmx6nxSQZgt8qMFpnpBa8fy8xxwPE/C8HkdBreEmOz4IJvVvVmw0Bc8
-         15xyjQHfmOHCF5RrQV2SHWr6s/QpzmZsiGWmxC7uS5vs2O5dnR4fqZPmJ33FGHINSvi5
-         0Lqw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=or+t7b0M0mgS+8DcZFIk7/EcHho9tyZIXk6cBi48Okk=;
+        b=HzjS5ny18P+8i+RNiJx6gX4Kqt/VRzd8pcN8YnDir3FGHQXAAC0VBpQMXbH/DAAWNr
+         tR8eUfmYTiDuQtT9hsd/kB4u41hzvUqV8Cuu+0eMcZabWnoUCuRRsp7+4WMCf48mhnAe
+         EYFWie3sE13G9uRfa7qh7wai42gDo0FpwW60nWaiZScZWEp77ZDYyu3ETtoUs+c34VS/
+         8giiDUxHcUIA431uBhaAJA0F340o7RHhJ8YzUDeBKdKdk/jgurh1ZsV2LZUOpeVXI9wr
+         1vtGkjMH5xzHj6ydKO/MAp9eCM7F0WyQ91BDIfV9eeXoJsLi3lShiykHkI4lNfFAQbtv
+         Cv5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=r2uP3wtI739OnYYmgPpVrGEVnncZE0Ih7eY/TSQNHus=;
-        b=UqPt+ezDE3hgsGaFlM81vvgNZ/xD6jOV/KLOEmVCDQiU+Cs0/UhhnMQf57R+DyJz8m
-         m7jqlqB/GnB0jnvLhVByPrhlV1RzQgRCDtd2SlzvffJgYIq5+mIyPyh5yOksmgyxk9U2
-         NB62AXh+gk7Dfg07EU2Aa8dwStndO7POPlDAk4CjTf6uPDgwSv6rIsJUPVBFd6pRDbXi
-         xXufVXLwBVaJKHA0emHoRcgL+48LIRWOZasKpq2WO1ymumtHeUdBS9WpZdj/qjtSzoAn
-         2av8O6TaMzmHyfdKLEH8g7wf8mrgZkdEQQk4sOc8F6/jQqfDU9lc+4Wz7lamspKLcTlT
-         t2IA==
-X-Gm-Message-State: APf1xPDhUpBVBfHrAJXTnmxkYqt0Ir44P4EhpcGEwfAT0TNp00LVhVw1
-        ZiCZFvTTc6tXHlPHpYle83fmccq5
-X-Google-Smtp-Source: AH8x225kB8VyCjIJ7BT9LJLt8szasdL6xQp+gkAops5RFg/lLc8u7TDFKuO3/MuTVwJs11NsUk1fWQ==
-X-Received: by 10.223.133.140 with SMTP id 12mr16070803wrt.192.1519844991510;
-        Wed, 28 Feb 2018 11:09:51 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id x10sm2186783wrc.64.2018.02.28.11.09.50
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=or+t7b0M0mgS+8DcZFIk7/EcHho9tyZIXk6cBi48Okk=;
+        b=R4sIG+fyg58oPemJlxEEy3WRPD46tJkxTaVMB8W1PsswibVxduWYe0RT6h441I6H7d
+         GDT/s8o+Njo2dZV7dZu2KFpB0VeoxetaERt2b16Upc1uU8Ns+4eYkLNxLQX6+OGxW9Kx
+         dt5R94wIFX2VfnoZV8+WMmUdifhPXDn+Bn86FnNnBE9aw/aYxYOircD8Bl1nKIw8E57B
+         6NitK0urRE9id8QjH7y6MT59UVzeB6HOuROq/9H1baD3GQsJtJhUAgT957pn4N6oJ2yj
+         ZVxtI5lXxM+fmj2k4z/uoAZDr5Cjosb+s2zOQbxlYhKvT2QL/DHl+jW0Zf7h4Qua5TB0
+         qKtQ==
+X-Gm-Message-State: APf1xPBcmG9IHOXaqwRFzbW8cGOQ3Xe3xlwY+zWyaWwPZTez4xVOKKeB
+        itg3LDgzADdf8A5sOpBx1YU=
+X-Google-Smtp-Source: AH8x225IEDCPmWWj860KZQZWKUD9OB4kYyOiOc7QrKzjSaCsGJTeQIQHvTgSbdn4kmLs6VVf2aQauw==
+X-Received: by 2002:a17:902:694c:: with SMTP id k12-v6mr18746700plt.133.1519845574487;
+        Wed, 28 Feb 2018 11:19:34 -0800 (PST)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id b88sm5077512pfd.108.2018.02.28.11.19.33
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 28 Feb 2018 11:09:50 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
+        Wed, 28 Feb 2018 11:19:33 -0800 (PST)
+Date:   Wed, 28 Feb 2018 11:19:31 -0800
+From:   Jonathan Nieder <jrnieder@gmail.com>
 To:     Stefan Beller <sbeller@google.com>
-Cc:     Duy Nguyen <pclouds@gmail.com>, git <git@vger.kernel.org>
-Subject: Re: [PATCH 00/11] Moving global state into the repository object (part 2)
+Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
+        Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH 00/11] Moving global state into the repository object
+ (part 2)
+Message-ID: <20180228191931.GF251290@aiede.svl.corp.google.com>
 References: <20180228010608.215505-1-sbeller@google.com>
-        <20180228021530.GA20625@duynguyen.dek-tpc.internal>
-        <xmqqy3jdknar.fsf@gitster-ct.c.googlers.com>
-        <CAGZ79kaurxM+Daa43ZQ_LCn6HbiaXex_NtO73g2ip70RUpjM7A@mail.gmail.com>
-Date:   Wed, 28 Feb 2018 11:09:50 -0800
-In-Reply-To: <CAGZ79kaurxM+Daa43ZQ_LCn6HbiaXex_NtO73g2ip70RUpjM7A@mail.gmail.com>
-        (Stefan Beller's message of "Wed, 28 Feb 2018 10:59:05 -0800")
-Message-ID: <xmqq371lkk1t.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+ <xmqq371lm1zd.fsf@gitster-ct.c.googlers.com>
+ <CAGZ79kaDVrn6Qw_xsdyBST6XfJMXs43qDWx8jY2J9VsXwDKm5Q@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kaDVrn6Qw_xsdyBST6XfJMXs43qDWx8jY2J9VsXwDKm5Q@mail.gmail.com>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+Hi,
 
-> On Wed, Feb 28, 2018 at 9:59 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> Duy Nguyen <pclouds@gmail.com> writes:
->>
->>> Looking at the full-series diff though, it makes me wonder if we
->>> should keep prepare_packed_git() private (i.e. how we initialize the
->>> object store, packfile included, is a private matter). How about
->>> something like this on top?
->>
->> Yup, that looks cleaner.
+Stefan Beller wrote:
+> On Wed, Feb 28, 2018 at 9:57 AM, Junio C Hamano <gitster@pobox.com> wrote:
+
+>> Wait a minute.  Is that topic ever shown to work well together with
+>> other topics in flight and are now ready to be built upon?  I had an
+>> impression that it is just starting to get serious reviews.
 >
-> I agree that it looks cleaner. So we plan on just putting
-> it on top of that series?
+> And I had the impression the serious reviews were done and fine;
+> the only issue would be demonstrating its working fine with other
+> series, where I was also worrying about conflicts with
+> brians series. And to address that, I'd just send series in small sizes.
 
-We tend to avoid "oops, that was wrong and here is a band aid on
-top" for things that are still mushy, so it would be preferrable to
-get it fixed inline, especially if there are more changes to the
-other parts of the series coming.
+Some of the patches looked cooked to me and others still do not look
+cooked yet.  I marked the former with Reviewed-by.  In general, a few
+things can help to make the process easier for me:
+
+ 1. Giving a quick reply to a review to say how the comments were
+    resolved, sometimes even with a resend of that one patch to
+    illustrate.  That way the conversation can continue and the
+    individual patch can get to a reviewed state faster, without
+    having to chase between different rerolls of the entire series.
+
+    This also has an effect of making the review process more
+    collaborative: perhaps after seeing how you address their
+    comments, a reviewer may have another idea that they suggest via a
+    patch to squash in, etc.
+
+ 2. In a reroll, summarizing the result of previous reviews by
+    including acks as appropriate and Reviewed-by if a reviewer
+    granted it.  This helps with reviewing the reroll since it tells
+    people where to focus their attention.
+
+[...]
+> Is there anything that a contributor can help with that eases
+> refactoring series in flight?
+
+For helping reviewers, see above.
+
+For helping Junio, what I've seen people occasionally do is to locally
+run a "trial merge" against next and pu and see what semantic or
+lexical conflicts arise.  In the cover letter you can describe these
+and give Junio advice to make applying the patch easier for him.
+
+[...]
+> Sorry for the miscommunication, though,
+
+FWIW, even though part 1 doesn't look done to me yet, it looks *close*
+to done, and I was happy to see the sneak peek at part 2.
+
+Thanks,
+Jonathan
