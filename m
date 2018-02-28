@@ -7,53 +7,52 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3FD551F404
-	for <e@80x24.org>; Wed, 28 Feb 2018 23:24:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B3C351F404
+	for <e@80x24.org>; Wed, 28 Feb 2018 23:24:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965025AbeB1XY0 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Feb 2018 18:24:26 -0500
-Received: from mail-yb0-f201.google.com ([209.85.213.201]:47532 "EHLO
-        mail-yb0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965020AbeB1XYT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Feb 2018 18:24:19 -0500
-Received: by mail-yb0-f201.google.com with SMTP id c3-v6so2371506ybl.14
-        for <git@vger.kernel.org>; Wed, 28 Feb 2018 15:24:19 -0800 (PST)
+        id S965030AbeB1XYb (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Feb 2018 18:24:31 -0500
+Received: from mail-yb0-f202.google.com ([209.85.213.202]:33265 "EHLO
+        mail-yb0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965014AbeB1XYW (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Feb 2018 18:24:22 -0500
+Received: by mail-yb0-f202.google.com with SMTP id q130-v6so2389962ybb.0
+        for <git@vger.kernel.org>; Wed, 28 Feb 2018 15:24:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=p8vESToyThfFpn15IVaKW/EDMpAadbVDww8jC4wpTHg=;
-        b=r4BygSQ11TnoF3gno9NQ2aDa7uZm/1mOmChTsJkvVhgBPYdXOsKqo7kpzZayT0TOZk
-         TzZEBzfXgsAu7uOXe+BTIOtE46XoawgoBeX8bL5Ftd6bI6mq9auZMC9fNVyedWS3ou2x
-         G4K7iZCB9DeSsUYPm34tWGvQ7+T1VP+qWH+Vzo/9YNlnS0dlXSXqzk3Qm7TlVIp5HJ5A
-         fVqORtzbI0xidzQ5d8glv+DHDJ3Tw/pQLffoOZGskh6wnSrYCFBEb2AKMFcFjPocBsry
-         E87oxTfNUENzn6/KQg4s4DU5BFJ0R6c/WAMBZ4uMH4AbFOj86cyAgt2ysZuc1hRbSXTw
-         C31Q==
+        bh=JBdCjctMGoDxDvjvZrQ/HK9SapU45AmwY7YIoEtiBg8=;
+        b=tpitPnCgWjdbaDSAC6X7XeoEGzG0jQpASRUhkP5DNCBehs4kqLwTvNJKXcgP7mbiS8
+         l9LLogtH7VPFPQ147wh3hNWe29OKOGoYRVXRIYKJOkJvC1FJj5wX6LBgMspqE9oSUbdQ
+         KXANCj4aZPSpDYBXqrRzHG+F8LhwAhTEePc8pV9afkilOBMiimAwq8z3QI24qv7H0Ena
+         wv/Z+UngkoaVJzL8VxuwjP+++2W3lgieU52VSjlF7EpRx2lKZR9xcmlXS8abWToFtF31
+         jekiF9hBHeUI+7zt5VxV1b4y8yyexTE/n//biZtJFqCtSQh44+cxlTQqxJKT4pMa/3y0
+         X0Zw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=p8vESToyThfFpn15IVaKW/EDMpAadbVDww8jC4wpTHg=;
-        b=XOAwQwIi1Q/1zckDi2nXO5t9bELmgQFQlq1oG9of3Uk6SfOFFtb37iF8J2XY+BRbEW
-         zmMqf8fAmDxvZjUirVPWcLPLT5kLL/sbpLM2YJCoSxVklIZfe0+EH9adkTxOQJWcHJiv
-         rqdOQf5u4ltnmALQfwT5dY/ZbnFUHn96Z4k3bKYfmul4lFkvn3zlb62WsC4h1Yni2mIg
-         ZLsGhzHEib2Mvn6wrv2F2mK2WZqwHNnsQNh2CDuZ8vuxodlzTMwjujASwsIBRnqAMgmq
-         S4ancq2x2llD2dPQH6z4DtRtzQhokuxOfErpZoDx4vChM8Ko8B+sPNE6X65td3OM4O//
-         7XFQ==
-X-Gm-Message-State: APf1xPDVKucuANEqqIp6lQwlKRNKc8cXtJIxS/fiR8pF37pzn0sBBZ/D
-        1iyzJ++vIQ7VM99NhU9mDYe3ie9g2On3Jqy/4q0g+An3cCXS4wg+vWp9Hl9/gXAB1/RPWpJR9D2
-        wST9vAD6cowVJxeaaIVu/EKVTKYqZTBZT228i/lBm5NQD/7+kIIilm8IbGg==
-X-Google-Smtp-Source: AH8x226Bhqr8uTaorzsGu8YosLjKK4lnNOdtJi5esk7k/wVvaaYt/6KMaSH5QjBTQjrWV3jG90gZzi0De28=
+        bh=JBdCjctMGoDxDvjvZrQ/HK9SapU45AmwY7YIoEtiBg8=;
+        b=ugEMJ8R0euE6W2B0gBX2ru4vqDcdbHd0qC5++ydzhUSXEa99QMLYQnu6tXzYyQlud8
+         bsUqWVzwYWU2CmSaKcWSYzq8IBR5uKBlNlSLdlGt7O6ISAznVB+JA2+bBUqPrXU/CkIP
+         PMij46xlqhZ5bfCWefWVZYbLB+aTjxpAAcg35y9sGu/0Ae55msN0JrAmvzmFNDLMWbQL
+         OHjoi8ZeygerKXepwyHCCVgnKZg+6I2lNBS8gFGfK+4v7r7OF1RC8wwFA5gM9xGJMY5K
+         o54Z9+xsfTo9T74ZhmkDOZt+sM2Uao4yUZ1NlkAp+KkJ2JL6TzMr99qjlYSzMFkK7Dgu
+         eN5w==
+X-Gm-Message-State: APf1xPD2py3rMsegXkSFkCoci6asxXY7ROO/gbW2wF0a1jofajqsdGkh
+        W43+ZXVwQQrCRWzptTQrgaK+01YqWoyUsNRs/ddxNnKl1Eh5ZoBTjKMnFqzSNUaUaW7ZNB7DSLA
+        w+F4gk08ric48PESRiG/SVtAkreIPB+0L6OQmeakBzFfY58c6P7nkKLq5Jg==
+X-Google-Smtp-Source: AG47ELvPOE3Ssbhx6iGpz/rjAUdyXIOT6bOpxEymmceSNrQYfLG0Qf2IZXnWJoQvZsiROz8q8dEe96Dz7po=
 MIME-Version: 1.0
-X-Received: by 10.129.2.9 with SMTP id 9mr10619776ywc.146.1519860258859; Wed,
- 28 Feb 2018 15:24:18 -0800 (PST)
-Date:   Wed, 28 Feb 2018 15:22:40 -0800
+X-Received: by 2002:a25:1603:: with SMTP id 3-v6mr9997705ybw.7.1519860261543;
+ Wed, 28 Feb 2018 15:24:21 -0800 (PST)
+Date:   Wed, 28 Feb 2018 15:22:41 -0800
 In-Reply-To: <20180228232252.102167-1-bmwill@google.com>
-Message-Id: <20180228232252.102167-24-bmwill@google.com>
+Message-Id: <20180228232252.102167-25-bmwill@google.com>
 References: <20180207011312.189834-1-bmwill@google.com> <20180228232252.102167-1-bmwill@google.com>
 X-Mailer: git-send-email 2.16.1.107.gffe1b9127
-Subject: [PATCH v4 23/35] connect: refactor git_connect to only get the
- protocol version once
+Subject: [PATCH v4 24/35] connect: don't request v2 when pushing
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     git@jeffhostetler.com, gitster@pobox.com, jrnieder@gmail.com,
@@ -65,123 +64,81 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Instead of having each builtin transport asking for which protocol
-version the user has configured in 'protocol.version' by calling
-`get_protocol_version_config()` multiple times, factor this logic out
-so there is just a single call at the beginning of `git_connect()`.
+In order to be able to ship protocol v2 with only supporting fetch, we
+need clients to not issue a request to use protocol v2 when pushing
+(since the client currently doesn't know how to push using protocol v2).
+This allows a client to have protocol v2 configured in
+`protocol.version` and take advantage of using v2 for fetch and falling
+back to using v0 when pushing while v2 for push is being designed.
 
-This will be helpful in the next patch where we can have centralized
-logic which determines if we need to request a different protocol
-version than what the user has configured.
+We could run into issues if we didn't fall back to protocol v2 when
+pushing right now.  This is because currently a server will ignore a request to
+use v2 when contacting the 'receive-pack' endpoint and fall back to
+using v0, but when push v2 is rolled out to servers, the 'receive-pack'
+endpoint will start responding using v2.  So we don't want to get into a
+state where a client is requesting to push with v2 before they actually
+know how to push using v2.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- connect.c | 27 +++++++++++++++------------
- 1 file changed, 15 insertions(+), 12 deletions(-)
+ connect.c              |  8 ++++++++
+ t/t5702-protocol-v2.sh | 24 ++++++++++++++++++++++++
+ 2 files changed, 32 insertions(+)
 
 diff --git a/connect.c b/connect.c
-index 66a9443c8..a0bfcdf4f 100644
+index a0bfcdf4f..32284d050 100644
 --- a/connect.c
 +++ b/connect.c
-@@ -1035,6 +1035,7 @@ static enum ssh_variant determine_ssh_variant(const char *ssh_command,
-  */
- static struct child_process *git_connect_git(int fd[2], char *hostandport,
- 					     const char *path, const char *prog,
-+					     enum protocol_version version,
- 					     int flags)
- {
- 	struct child_process *conn;
-@@ -1073,10 +1074,10 @@ static struct child_process *git_connect_git(int fd[2], char *hostandport,
- 		    target_host, 0);
- 
- 	/* If using a new version put that stuff here after a second null byte */
--	if (get_protocol_version_config() > 0) {
-+	if (version > 0) {
- 		strbuf_addch(&request, '\0');
- 		strbuf_addf(&request, "version=%d%c",
--			    get_protocol_version_config(), '\0');
-+			    version, '\0');
- 	}
- 
- 	packet_write(fd[1], request.buf, request.len);
-@@ -1092,14 +1093,14 @@ static struct child_process *git_connect_git(int fd[2], char *hostandport,
-  */
- static void push_ssh_options(struct argv_array *args, struct argv_array *env,
- 			     enum ssh_variant variant, const char *port,
--			     int flags)
-+			     enum protocol_version version, int flags)
- {
- 	if (variant == VARIANT_SSH &&
--	    get_protocol_version_config() > 0) {
-+	    version > 0) {
- 		argv_array_push(args, "-o");
- 		argv_array_push(args, "SendEnv=" GIT_PROTOCOL_ENVIRONMENT);
- 		argv_array_pushf(env, GIT_PROTOCOL_ENVIRONMENT "=version=%d",
--				 get_protocol_version_config());
-+				 version);
- 	}
- 
- 	if (flags & CONNECT_IPV4) {
-@@ -1152,7 +1153,8 @@ static void push_ssh_options(struct argv_array *args, struct argv_array *env,
- 
- /* Prepare a child_process for use by Git's SSH-tunneled transport. */
- static void fill_ssh_args(struct child_process *conn, const char *ssh_host,
--			  const char *port, int flags)
-+			  const char *port, enum protocol_version version,
-+			  int flags)
- {
- 	const char *ssh;
- 	enum ssh_variant variant;
-@@ -1186,14 +1188,14 @@ static void fill_ssh_args(struct child_process *conn, const char *ssh_host,
- 		argv_array_push(&detect.args, ssh);
- 		argv_array_push(&detect.args, "-G");
- 		push_ssh_options(&detect.args, &detect.env_array,
--				 VARIANT_SSH, port, flags);
-+				 VARIANT_SSH, port, version, flags);
- 		argv_array_push(&detect.args, ssh_host);
- 
- 		variant = run_command(&detect) ? VARIANT_SIMPLE : VARIANT_SSH;
- 	}
- 
- 	argv_array_push(&conn->args, ssh);
--	push_ssh_options(&conn->args, &conn->env_array, variant, port, flags);
-+	push_ssh_options(&conn->args, &conn->env_array, variant, port, version, flags);
- 	argv_array_push(&conn->args, ssh_host);
- }
- 
-@@ -1214,6 +1216,7 @@ struct child_process *git_connect(int fd[2], const char *url,
- 	char *hostandport, *path;
- 	struct child_process *conn;
+@@ -1218,6 +1218,14 @@ struct child_process *git_connect(int fd[2], const char *url,
  	enum protocol protocol;
-+	enum protocol_version version = get_protocol_version_config();
+ 	enum protocol_version version = get_protocol_version_config();
  
++	/*
++	 * NEEDSWORK: If we are trying to use protocol v2 and we are planning
++	 * to perform a push, then fallback to v0 since the client doesn't know
++	 * how to push yet using v2.
++	 */
++	if (version == protocol_v2 && !strcmp("git-receive-pack", prog))
++		version = protocol_v0;
++
  	/* Without this we cannot rely on waitpid() to tell
  	 * what happened to our children.
-@@ -1228,7 +1231,7 @@ struct child_process *git_connect(int fd[2], const char *url,
- 		printf("Diag: path=%s\n", path ? path : "NULL");
- 		conn = NULL;
- 	} else if (protocol == PROTO_GIT) {
--		conn = git_connect_git(fd, hostandport, path, prog, flags);
-+		conn = git_connect_git(fd, hostandport, path, prog, version, flags);
- 	} else {
- 		struct strbuf cmd = STRBUF_INIT;
- 		const char *const *var;
-@@ -1271,12 +1274,12 @@ struct child_process *git_connect(int fd[2], const char *url,
- 				strbuf_release(&cmd);
- 				return NULL;
- 			}
--			fill_ssh_args(conn, ssh_host, port, flags);
-+			fill_ssh_args(conn, ssh_host, port, version, flags);
- 		} else {
- 			transport_check_allowed("file");
--			if (get_protocol_version_config() > 0) {
-+			if (version > 0) {
- 				argv_array_pushf(&conn->env_array, GIT_PROTOCOL_ENVIRONMENT "=version=%d",
--						 get_protocol_version_config());
-+						 version);
- 			}
- 		}
- 		argv_array_push(&conn->args, cmd.buf);
+ 	 */
+diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
+index 4365ac273..e3a7c09d4 100755
+--- a/t/t5702-protocol-v2.sh
++++ b/t/t5702-protocol-v2.sh
+@@ -95,6 +95,30 @@ test_expect_success 'pull with git:// using protocol v2' '
+ 	grep "fetch< version 2" log
+ '
+ 
++test_expect_success 'push with git:// and a config of v2 does not request v2' '
++	test_when_finished "rm -f log" &&
++
++	# Till v2 for push is designed, make sure that if a client has
++	# protocol.version configured to use v2, that the client instead falls
++	# back and uses v0.
++
++	test_commit -C daemon_child three &&
++
++	# Push to another branch, as the target repository has the
++	# master branch checked out and we cannot push into it.
++	GIT_TRACE_PACKET="$(pwd)/log" git -C daemon_child -c protocol.version=2 \
++		push origin HEAD:client_branch &&
++
++	git -C daemon_child log -1 --format=%s >actual &&
++	git -C "$daemon_parent" log -1 --format=%s client_branch >expect &&
++	test_cmp expect actual &&
++
++	# Client requested to use protocol v2
++	! grep "push> .*\\\0\\\0version=2\\\0$" log &&
++	# Server responded using protocol v2
++	! grep "push< version 2" log
++'
++
+ stop_git_daemon
+ 
+ # Test protocol v2 with 'file://' transport
 -- 
 2.16.2.395.g2e18187dfd-goog
 
