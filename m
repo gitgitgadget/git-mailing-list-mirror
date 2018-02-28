@@ -2,152 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 844DD1F404
-	for <e@80x24.org>; Wed, 28 Feb 2018 00:51:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C01E51F404
+	for <e@80x24.org>; Wed, 28 Feb 2018 00:59:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751521AbeB1AvI (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Feb 2018 19:51:08 -0500
-Received: from mail-pf0-f169.google.com ([209.85.192.169]:37164 "EHLO
-        mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751117AbeB1AvH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Feb 2018 19:51:07 -0500
-Received: by mail-pf0-f169.google.com with SMTP id s24so315693pfm.4
-        for <git@vger.kernel.org>; Tue, 27 Feb 2018 16:51:07 -0800 (PST)
+        id S1751654AbeB1A7J (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Feb 2018 19:59:09 -0500
+Received: from mail-oi0-f50.google.com ([209.85.218.50]:38557 "EHLO
+        mail-oi0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751566AbeB1A7I (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Feb 2018 19:59:08 -0500
+Received: by mail-oi0-f50.google.com with SMTP id 123so571450oig.5
+        for <git@vger.kernel.org>; Tue, 27 Feb 2018 16:59:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=Bm4XSJuldxC2Ng/L1z+pETw/6xZxv6ZOMK0i9nN60EM=;
-        b=dPz5GcddxW/YYkIR0vD8lCEWVRGhDRDCjWKYgiPJLHq9uADk/C6P6+P9RZKuCerzZQ
-         gGWmRbqjYHa1yx9Jf5VLyhIFnUg/re+a7lP5Z59u6eJ+H8teS4uM2VRt5v8IXVumIxN3
-         BpY4W93xtBqmQJWWag1B8qZ+yf2XZPZ90tmjQF35IV9Z94kLcUt5dLgeoCIlhFC7Udtz
-         FKGdGFYDYA41xEyOjjFzIrEaZrUb8BteKC/2cZgD5+3q/x8psjhAMBe1Q7PFoFNwvBzK
-         WHlwMq2+bmCwsxrx/FjlTJDyTk17dRS2k8b6Qw5wx7uSjOYk0SS5R6EtM946oC3NxHvN
-         aR4Q==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=9sqlkX08Vv3t9a0Q7JdUNe1MI/pMvFqtM7kRe6g/TeY=;
+        b=l0ZS8vLFkelgKEBw8EB9kskc8jQitNgMBhMxMyF6PxxFUpg22XFf689sqsPJhvToAi
+         liQR7aifLVPyi4mbgf0AvFXl70ps0BMdsxX4olZk2s4ueQwvzOhuSJdjgGG+F8KbVIUx
+         Vi+y+HE1e6OgN0LIM/hs32j2U6eckS9FjAkyq1jKojUZ4uZs363aECs/4CWqTKSrQbsP
+         Nkl/1i32Eb8IdgCQ7RrxieCvonM7lYLTPL7TWDl5CjeI+wMXxTnnkqSEB+40M9oXfrDQ
+         3Ov/nYtBT0h7GoULuq+PDfsyb9n9QlOIO0kgQ4m7cl/vQ/wH2qJs5YuoSfndgLA8LhMw
+         KKJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=Bm4XSJuldxC2Ng/L1z+pETw/6xZxv6ZOMK0i9nN60EM=;
-        b=qbvET7/06mqCEL7bq8DjylPNpZwMdqjkT7yfqB0yhh+PV4hmTDdiIGubvUvv8/+vCu
-         WMb/x9bTKbXbBnMXXsMMun809wADOzNRtPkkRIg/deLJu90nyG23nZHR1VYbPSpXQQ3u
-         8qbLVxD0Z5Ij1lCbbvlKpIhOgkFamDhEZyJKNpPgtVYftqv+P8N8qh3WDeREmw4mm/mH
-         fBfjV7PrEbdM4sJYfxOqeLKFYH9eIhGtao+HjBvjPp2uU7KeA5kPo+Ekt/mrB2poBIcE
-         5POSfJsDz0gBg1A1fpmCg+V8PHxekVgBzsoZxFJMP/iXNj1XILDY8JnTXlOplD3aX3KX
-         6QPQ==
-X-Gm-Message-State: APf1xPAkz32vDGWo9ouxjlIbKYCBdLOJdxhY0m83x3YnnZNke5n84qTN
-        z+luacwcz5oeizOtfb2RQiabNgHv
-X-Google-Smtp-Source: AH8x226vueJo4K7lXhwY11DyKGsEFwECLW3GXM4qkMAYgUQq4msu1S1FvaF1qjoElxiSvb3gks64qg==
-X-Received: by 10.98.86.151 with SMTP id h23mr15716249pfj.79.1519779066131;
-        Tue, 27 Feb 2018 16:51:06 -0800 (PST)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id n67sm453008pfh.150.2018.02.27.16.51.05
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 27 Feb 2018 16:51:05 -0800 (PST)
-Date:   Tue, 27 Feb 2018 16:50:59 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Brandon Williams <bmwill@google.com>, Jeff King <peff@peff.net>
-Subject: [PATCH] protocol: treat unrecognized protocol.version setting as 0
-Message-ID: <20180228005059.GA251290@aiede.svl.corp.google.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=9sqlkX08Vv3t9a0Q7JdUNe1MI/pMvFqtM7kRe6g/TeY=;
+        b=Z8HEfiJvwdzW09EXlcTQkH9kILq5uzEO9BXm3fyrOaxlWaOW5tkZBIUaGL7ujLhMbt
+         SZJOMjhEeyqgOrjLVnvsNBvTTe/tWuBAoelBYo6RuWunYUWECSTp33zZwzmvFQWPCpdQ
+         3nyUddcInx2nL1gqxvYg3Pu6USHqsApfHwHmKeEMRVyNsrho6XpU7IWVFg8HC+D3zQKB
+         XkVijcT51xBz/hyZcue1RMhkHHUczx5NdO2ZbSchJP1uvP4yk0vmM2brB7OzC2kxY66Z
+         mBA7MWNDyHrR0uPuFtmpNkJvnvYKh0g3EydpZHKL8qVYH2wwOK2j+GDa3KNdLIV+Pab9
+         SSpg==
+X-Gm-Message-State: APf1xPCLg0yEK0RQ7X4TodWiI1PRPWEZ6jsW2xfBpsXFAMjNmE1QUMuO
+        LtJGBdzLBwNS8+af48wtwLlO691XKXqv+EyLRNQ=
+X-Google-Smtp-Source: AG47ELuSyD3TAdW4jOsOGaoy2IHQD/iXxGmmjQkHvfUJYVEO3t1umcuYDx+oyMYxa1I6zJhTDgwE+hqJXs10UvlXtzE=
+X-Received: by 10.202.206.71 with SMTP id e68mr10780248oig.34.1519779548014;
+ Tue, 27 Feb 2018 16:59:08 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.9.2 (2017-12-15)
+Received: by 10.74.25.140 with HTTP; Tue, 27 Feb 2018 16:58:37 -0800 (PST)
+In-Reply-To: <20180227201250.GL209668@google.com>
+References: <20180226103030.26900-1-pclouds@gmail.com> <20180227095846.9238-1-pclouds@gmail.com>
+ <20180227095846.9238-4-pclouds@gmail.com> <20180227201250.GL209668@google.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Wed, 28 Feb 2018 07:58:37 +0700
+Message-ID: <CACsJy8DhZLo2KsA5uYoqJvmJXPz3Gri7Vcpi4huG5pNQW1xLUw@mail.gmail.com>
+Subject: Re: [PATCH v2 3/4] sha1_file.c: move delayed getenv(altdb) back to setup_git_env()
+To:     Brandon Williams <bmwill@google.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Stefan Beller <sbeller@google.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If I share my .gitconfig or .git/config file between multiple machines
-(or between multiple Git versions on a single machine) and set
+On Wed, Feb 28, 2018 at 3:12 AM, Brandon Williams <bmwill@google.com> wrote=
+:
+> On 02/27, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+>> diff --git a/repository.c b/repository.c
+>> index 7654b8ada9..e326f0fcbc 100644
+>> --- a/repository.c
+>> +++ b/repository.c
+>> @@ -61,6 +61,8 @@ void repo_set_gitdir(struct repository *repo,
+>>       repo_set_commondir(repo, o->shared_root);
+>>       expand_base_dir(&repo->objects.objectdir, o->object_dir,
+>>                       repo->commondir, "objects");
+>> +     free(repo->objects.alternate_db);
+>> +     repo->objects.alternate_db =3D xstrdup_or_null(o->alternate_db);
+>
+> Just a note that this only works because the object store is embedded in
+> the repository struct, it isn't a pointer to an object store.
 
-	[protocol]
-		version = 2
-
-then running "git fetch" with a Git version that does not support
-protocol v2 errors out with
-
-	fatal: unknown value for config 'protocol.version': 2
-
-In the spirit of v1.7.6-rc0~77^2~1 (Improve error handling when
-parsing dirstat parameters, 2011-04-29), it is better to (perhaps
-after warning the user) ignore the unrecognized protocol version.
-After all, future Git versions might add even more protocol versions,
-and using two different Git versions with the same Git repo, machine,
-or home directory should not cripple the older Git version just
-because of a parameter that is only understood by a more recent Git
-version.
-
-So ignore the unrecognized value.  It may be useful for spell checking
-(for instance, if I put "version = v1" intending "version = 1") to
-warn about such settings, but this patch does not, since at least in
-these early days for protocol v2 it is expected for configurations
-that want to opportunistically use protocol v2 if available not to be
-unusual.
-
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
-Google has been running with a patch like this internally for a while,
-since we have been changing the protocol.version number to a new value
-like 20180226 each time a minor tweak to the protocolv2 RFC occured.
-
-The bit I have doubts about is whether to warn.  What do you think?
-
-Thanks,
-Jonathan
-
- protocol.c             |  8 ++------
- t/t5700-protocol-v1.sh | 12 ++++++++++++
- 2 files changed, 14 insertions(+), 6 deletions(-)
-
-diff --git a/protocol.c b/protocol.c
-index 43012b7eb6..ce9c634a3a 100644
---- a/protocol.c
-+++ b/protocol.c
-@@ -17,12 +17,8 @@ enum protocol_version get_protocol_version_config(void)
- 	const char *value;
- 	if (!git_config_get_string_const("protocol.version", &value)) {
- 		enum protocol_version version = parse_protocol_version(value);
--
--		if (version == protocol_unknown_version)
--			die("unknown value for config 'protocol.version': %s",
--			    value);
--
--		return version;
-+		if (version != protocol_unknown_version)
-+			return version;
- 	}
- 
- 	return protocol_v0;
-diff --git a/t/t5700-protocol-v1.sh b/t/t5700-protocol-v1.sh
-index ba86a44eb1..c35767ab01 100755
---- a/t/t5700-protocol-v1.sh
-+++ b/t/t5700-protocol-v1.sh
-@@ -31,6 +31,18 @@ test_expect_success 'clone with git:// using protocol v1' '
- 	grep "clone< version 1" log
- '
- 
-+test_expect_success 'unrecognized protocol versions fall back to v0' '
-+	GIT_TRACE_PACKET=1 git -c protocol.version=9999 \
-+		clone "$GIT_DAEMON_URL/parent" v9999 2>log &&
-+
-+	git -C daemon_child log -1 --format=%s >actual &&
-+	git -C "$daemon_parent" log -1 --format=%s >expect &&
-+	test_cmp expect actual &&
-+
-+	# Client requested and server responded using protocol v0
-+	! grep version log
-+'
-+
- test_expect_success 'fetch with git:// using protocol v1' '
- 	test_commit -C "$daemon_parent" two &&
- 
--- 
-2.16.2.395.g2e18187dfd
-
+It is possible to make it work even if object store is not embedded
+though. From my point of view, this function is about "give me
+$GIT_DIR and optionally the where all other parts are, if you ignore
+default repo layout and tear the repository apart". We could
+initialize the object store later when it's created and pass the
+relevant paths to it. Exactly where it's safe to "create and
+initialize object store" is harder to see now because the whole main
+repo setup is spread out over many many functions.
+--=20
+Duy
