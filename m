@@ -2,115 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D0C9F1F576
-	for <e@80x24.org>; Wed, 28 Feb 2018 11:10:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 133A11F576
+	for <e@80x24.org>; Wed, 28 Feb 2018 11:11:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752195AbeB1LKa (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Feb 2018 06:10:30 -0500
-Received: from smtp-out-1.talktalk.net ([62.24.135.65]:59345 "EHLO
-        smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751552AbeB1LK3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Feb 2018 06:10:29 -0500
-Received: from [192.168.2.201] ([92.22.16.137])
-        by smtp.talktalk.net with SMTP
-        id qzcxeK3n6AruKqzcyeKYd7; Wed, 28 Feb 2018 11:10:28 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1519816228;
-        bh=mDm+GMRhXKVoZwkGt0i+9tQ73ece1JrAVB2n0+ymNOo=;
-        h=Reply-To:Subject:From:To:Cc:References:Date:In-Reply-To;
-        b=fUDQCdF/8HfbnFcq2waisNR954xn6jwm/4JjLIXQ2D/nVom8NGv1LqQ+JKs5KjLm6
-         diJiXLogGZ7xqqwztcjbuTPrQhwwwMWBtu+YKZ7OltUL37fcx8EsHm4N+eMiTHkFXT
-         cWpWxomGNGg+xi9uLLEs+2I83JWS/dIzkWn81N3o=
-X-Originating-IP: [92.22.16.137]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=br5i+nSi c=1 sm=1 tr=0 a=nWy375ASyxHoIYnPohIYMA==:117
- a=nWy375ASyxHoIYnPohIYMA==:17 a=IkcTkHD0fZMA:10 a=nN7BH9HXAAAA:8
- a=Ascsb8iJODw7nMzjqzwA:9 a=QEXdDO2ut3YA:10
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3 4/9] t3701: don't hard code sha1 hash values
-From:   Phillip Wood <phillip.wood@talktalk.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        "Brian M. Carlson" <sandals@crustytoothpaste.net>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <20180213104408.9887-1-phillip.wood@talktalk.net>
- <20180227110404.16816-1-phillip.wood@talktalk.net>
- <20180227110404.16816-5-phillip.wood@talktalk.net>
- <xmqqinainjfy.fsf@gitster-ct.c.googlers.com>
- <454d7edf-6331-2ca9-8113-de383aa5df4a@talktalk.net>
-Message-ID: <a44c4432-ea10-bf0b-7014-bebee13eef3c@talktalk.net>
-Date:   Wed, 28 Feb 2018 11:10:27 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
+        id S1752205AbeB1LLY (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Feb 2018 06:11:24 -0500
+Received: from cloud.peff.net ([104.130.231.41]:40478 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1751899AbeB1LLX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Feb 2018 06:11:23 -0500
+Received: (qmail 24225 invoked by uid 109); 28 Feb 2018 11:11:23 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 28 Feb 2018 11:11:23 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 1041 invoked by uid 111); 28 Feb 2018 11:12:12 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 28 Feb 2018 06:12:12 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 28 Feb 2018 06:11:21 -0500
+Date:   Wed, 28 Feb 2018 06:11:21 -0500
+From:   Jeff King <peff@peff.net>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: Reduce pack-objects memory footprint?
+Message-ID: <20180228111121.GA8925@sigill.intra.peff.net>
+References: <20180228092722.GA25627@ash>
+ <20180228101757.GA11803@sigill.intra.peff.net>
+ <CACsJy8Bg_oNj7mJ2PE5AWQ2awf434R9fHXQq-OxA3_0wJN16vw@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <454d7edf-6331-2ca9-8113-de383aa5df4a@talktalk.net>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfP6fLj9Z4Dq0edW+OB54Z5DORmaWRs/hCSpc1OU4Xwp0i+r90ZeyAlX9N1V2ADrVSsRFo7rnfmt3UdVZkc6oT57cPeILrOy8EYPCEV4KkfhicPCJ4bt6
- X5NarGReweKlPDrAgpPBDX/A2P1yrlYOJolesNM2fJon9YRCVR4rr0DIo9bEhC+e4u9abzpJuB8aRwwbR3dIy0rOeznO/IqDuWoCC6H5dFlUwDZbUbUFYrRA
- +Sv0AgCEYGV50kW6iqn60yYvTJdwaTUy4EmdtUd13pYQrr5xbmB54WhWubFp5H6mPoz1sgda7IpwqB0SUjo29SahHtDQ3ojHjlsYTyxCP48=
+Content-Disposition: inline
+In-Reply-To: <CACsJy8Bg_oNj7mJ2PE5AWQ2awf434R9fHXQq-OxA3_0wJN16vw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 28/02/18 11:03, Phillip Wood wrote:
-> On 27/02/18 22:42, Junio C Hamano wrote:
->> Phillip Wood <phillip.wood@talktalk.net> writes:
->>
->>>  t/t3701-add-interactive.sh | 30 ++++++++++++++++++++----------
->>>  1 file changed, 20 insertions(+), 10 deletions(-)
->>>
->>> diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
->>> index bdd1f292a9..46d655038f 100755
->>> --- a/t/t3701-add-interactive.sh
->>> +++ b/t/t3701-add-interactive.sh
->>> @@ -10,6 +10,16 @@ then
->>>  	test_done
->>>  fi
->>>  
->>> +diff_cmp () {
->>> +	for x
->>> +	do
->>> +		sed  -e '/^index/s/[0-9a-f]*[1-9a-f][0-9a-f]*\.\./1234567../' \
->>> +		     -e '/^index/s/\.\.[0-9a-f]*[1-9a-f][0-9a-f]*/..9abcdef/' \
->>> +		     "$x" >"$x.filtered"
->>
->> Interesting ;-)  You require .. and on the left hand side you want
->> to see a run of hexdec with at least one non-zero hexdigit, which is
->> filtered to fixed-length 1234567; right hand side is the same deal.
->>
->> Which sounds like a reasonable way to future-proof the comparison.
->>
->> If 7 zeros are expected in the result, and the actual output had 8
->> zeros, the filter does not touch either so they compare differently,
->> which is somewhat unfortunate.  Perhaps something like
-> 
-> Ah, good point
-> 
->> 	/^index/s/^00*\.\./0000000../
->> 	/^index/s/\([^0-9a-f]\)00*\.\./\10000000../
->> 	/^index/s/\.\.00*$/..0000000/
->> 	/^index/s/\.\.00*\([^0-9a-f]\)/..0000000\1/
->>
->> after the above two patterns help?
-> 
-> Yeah, something like that though matching the beginning and end of the
-> line for the beginning and end of the hashes wont work. I'll reroll with
-> something similar
+On Wed, Feb 28, 2018 at 05:58:50PM +0700, Duy Nguyen wrote:
 
-Thinking about it some more, just using your last three patterns should
-do the job. - I'll test and reroll.
-
-> Thanks
+> > Yeah, the per object memory footprint is not great. Around 100 million
+> > objects it becomes pretty ridiculous. I started to dig into it a year or
+> > three ago when I saw such a case, but it turned out to be something that
+> > we could prune.
 > 
-> Phillip
-> 
+> We could? What could we prune?
 
+Sorry, I just meant that my 100 million-object case turned out not to
+need all those objects, and I was able to prune it down. No code fixes
+came out of it. ;)
+
+> > The torvalds/linux fork network has ~23 million objects,
+> > so it's probably 7-8 GB of book-keeping. Which is gross, but 64GB in a
+> > server isn't uncommon these days.
+> 
+> I wonder if we could just do book keeping for some but not all objects
+> because all objects simply do not scale. Say we have a big pack of
+> many GBs, could we keep the 80% of its bottom untouched, register the
+> top 20% (mostly non-blobs, and some more blobs as delta base) for
+> repack? We copy the bottom part to the new pack byte-by-byte, then
+> pack-objects rebuilds the top part with objects from other sources.
+
+Yes, though I think it would take a fair bit of surgery to do
+internally. And some features (like bitmap generation) just wouldn't
+work at all.
+
+I suspect you could simulate it, though, by just packing your subset
+with pack-objects (feeding it directly without using "--revs") and then
+catting the resulting packfiles together with a fixed-up header.
+
+At one point I played with a "fast pack" that would just cat packfiles
+together. My goal was to make cases with 10,000 packs workable by
+creating one lousy pack, and then repacking that lousy pack with a
+"real" repack. In the end I abandoned it in favor of fixing the
+performance problems from trying to make a real pack of 10,000 packs. :)
+
+But I might be able to dig it up if you want to experiment in that
+direction.
+
+> They are 32 bytes per entry, so it should take less than object_entry.
+> I briefly wondered if we should fall back to external rev-list too,
+> just to free that memory.
+> 
+> So about 200 MB for those objects (or maybe more for commits). Add 256
+> MB delta cache on top, it's still a bit far from 1.7G. There's
+> something I'm still missing.
+
+Are you looking at RSS or heap? Keep in mind that you're mmap-ing what's
+probably a 1GB packfile on disk. If you're under memory pressure that
+won't all stay resident, but some of it will be counted in RSS.
+
+> Pity we can't do the same for 'struct object'. Most of the time we
+> have a giant .idx file with most hashes. We could look up in both
+> places: the hash table in object.c, and the idx file, to find an
+> object. Then those objects that are associated with .idx file will not
+> need "oid" field (needed to as key for the hash table). But I see no
+> way to make that change.
+
+Yeah, that would be pretty invasive, I think. I also wonder if it would
+perform worse due to cache effects.
+
+-Peff
