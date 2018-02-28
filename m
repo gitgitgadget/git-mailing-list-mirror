@@ -3,90 +3,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 623221F404
-	for <e@80x24.org>; Wed, 28 Feb 2018 19:02:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 437F11F404
+	for <e@80x24.org>; Wed, 28 Feb 2018 19:08:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932355AbeB1TCn (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Feb 2018 14:02:43 -0500
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:36537 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932088AbeB1TCm (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Feb 2018 14:02:42 -0500
-Received: by mail-wr0-f196.google.com with SMTP id v111so3568359wrb.3
-        for <git@vger.kernel.org>; Wed, 28 Feb 2018 11:02:41 -0800 (PST)
+        id S933023AbeB1TIN (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Feb 2018 14:08:13 -0500
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:40473 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932365AbeB1TIM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Feb 2018 14:08:12 -0500
+Received: by mail-wr0-f194.google.com with SMTP id o76so3574062wrb.7
+        for <git@vger.kernel.org>; Wed, 28 Feb 2018 11:08:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=W+ewCIUu0Hq2qxFYo/22XdDw4IjQ3E/T69w0FVkVD+o=;
-        b=UqZwnLw038KYGiIuOwn3M8yOxEXf0SFqOsisIQg0XozPs4483/xHVYnznkjRC1RL1u
-         O0yZj5c9qQ5yDZ3wONRkgQi2Zea0R/Kam4qlqY/4fIExnqDnSNge1m/3nZfILr6Ic6VE
-         cRkQNCLUarXIRRkykR0PoVOQf9zFEVQFruhFoZViieTNVesHSolVBPFiC7L2n80rkLzx
-         5TipvrHnaSx4Lq3uy86x4YnuLnal7vWkgueOxCGZNhxVvQ3lVeGGdgj1MAW2bbUeHasG
-         sKAMsgxwJLpmf/TIX7oXv69bqmITUWaUzO8zMX93uuosZGDFLyou1ftYbhZBlJteUPhH
-         NDZw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=YcPiUeZ2Ym9FKyWLmrdEgNyrHnOpUdVoY7meORXPSEA=;
+        b=GJL/EN3ZgI0jAlgz5n33lmLFxlJqo93hjOrNHtNW6VtPwxv+lHTZCORaWyVTnPxVoc
+         lmkS9t1ALKnOd1y46StYq5IQVgcmsOWpGyJErbqwvEwvjUjVumY613ATtIwiZ4Qb8fHh
+         OSoRUhhioqi3vjKaw+RGzegzXRBOF6hpudvYci7Cd3LTC3dTDZmNKYCsAE+4+ZnKMr33
+         oWRiCOYrX0dkJh2sSGa+y011gF0OdkWzd5SQI6PZvQ2IH/ylyhmuQA0tnq5q2obiGyDJ
+         3ZlWKID1xUvgEs744+2T96DX2dpIMUa8+sTOUSGXUS8Jluw2bpagt7Bd/pDbc8AX1tu1
+         BewA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=W+ewCIUu0Hq2qxFYo/22XdDw4IjQ3E/T69w0FVkVD+o=;
-        b=UvoH15gwnYLfkiHT6V27JCH0Qp7fkrMDIanWeERIywmzZgBRcFh85rt6ltE5jMzNuK
-         h1AM4oUURuMhuIJqBOOQq/r5wIfJS8v5ZunXCAn4zr4aIj2zqfgfDEpM+42QlqtuLrQn
-         rO7MkywIzLjCI8Jc6euPB/1RgByW2B14NaOuj/8L4EVODzoH/EJl/r6X4Bj7Y/74t5mn
-         v8AFu1jEpg3OY7s8/nPZxUEhWSkvwVmL01RO6ryJ7P5cdCbMSBE1Ejp9wPDonPAHR6+1
-         B7ZJs7++EXXCFTIf+rr23ddKvcS1GV0l41qF3GWOBUXjIN+SadBoO5e9Gu5NheEinXlU
-         LEew==
-X-Gm-Message-State: APf1xPDqOVSkYQ9RxgFkPKB9xQ5qO907oAHy4ir40cN0BRQPMgZ6jjtl
-        eKu50+Qd1zSCwzfiXlM/UMk=
-X-Google-Smtp-Source: AH8x227z2aEa6mbmpmWInJabGwNT8n61mtWTtmMQ6x7hCA/Y79HeCwysONa8IpuwNBfgXXkl5Lob4w==
-X-Received: by 10.223.160.67 with SMTP id l3mr15667316wrl.201.1519844560660;
-        Wed, 28 Feb 2018 11:02:40 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id v9sm2028443wre.8.2018.02.28.11.02.40
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 28 Feb 2018 11:02:40 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org, pclouds@gmail.com
-Subject: Re: [PATCH 00/11] Moving global state into the repository object (part 2)
-References: <20180228010608.215505-1-sbeller@google.com>
-        <xmqq371lm1zd.fsf@gitster-ct.c.googlers.com>
-Date:   Wed, 28 Feb 2018 11:02:39 -0800
-In-Reply-To: <xmqq371lm1zd.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Wed, 28 Feb 2018 09:57:10 -0800")
-Message-ID: <xmqq7eqxkkds.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=YcPiUeZ2Ym9FKyWLmrdEgNyrHnOpUdVoY7meORXPSEA=;
+        b=JK5Y1AIIFap7FQZ3Tyg8VoRCHBuo/j4AsSJFnuVoY0+fOdGaHaAjCwb1nQAA3SoisD
+         b5dG8KLSPPbh17PwtvgOo7kZI7PsjGGUFaAsZ7cx4mE1xkH4HgsstIcPNhA4uRF5bea2
+         hUNHp97nxR7ZPUUg0958sMVfC80Q3qwhquTLE20Gwf6Vik3duJAKRCsADxibbHYSJYS7
+         Nge2EnEl+rABhGfCXsik3BFjx1gkP/TPzOMyil2yUGAxNVcmtDNKnBrinX7LVm2jdQCh
+         OAraZFwT/ElBxnvSsMJtdnwp96taRKgp5EZHJZD2GNBPMXyCytiw8IRZiDoWfpHYyZ8v
+         bTrg==
+X-Gm-Message-State: APf1xPBifJtPmzAA1SkWbrBN7QSOQ7zL1Gethczb0VRsegIL/Z8YX0gC
+        CY0ejePlgmjz3TarD5c14TFlWM3N
+X-Google-Smtp-Source: AH8x227AFHUF0r9r/j7h05erKsyTJ1rYGzkVXULBxWOuHzbyo0CStGPjhdGQBGI36g8juxPSIcgnHg==
+X-Received: by 10.223.151.140 with SMTP id s12mr17355645wrb.37.1519844891041;
+        Wed, 28 Feb 2018 11:08:11 -0800 (PST)
+Received: from localhost.localdomain ([2a02:aa16:5782:c100:c938:fbb7:46f8:2405])
+        by smtp.gmail.com with ESMTPSA id p76sm2832609wmb.19.2018.02.28.11.08.09
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 28 Feb 2018 11:08:09 -0800 (PST)
+From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+Subject: [PATCH v2 0/5] roll back locks in various code paths
+Date:   Wed, 28 Feb 2018 20:07:53 +0100
+Message-Id: <cover.1519843916.git.martin.agren@gmail.com>
+X-Mailer: git-send-email 2.16.2.246.ga4ee44448f
+In-Reply-To: <CAN0heSqmWAN=rCO8busGtb0xNPiB5H_jkL664qH8xasPq1Sy0A@mail.gmail.com>
+References: <CAN0heSqmWAN=rCO8busGtb0xNPiB5H_jkL664qH8xasPq1Sy0A@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+This is v2 of my series to always release locks. As before, there's a
+conflict with pu, where the correct resolution is to take my version of
+the conflicting hunk.
 
-> Stefan Beller <sbeller@google.com> writes:
->
->> This applies on top of origin/sb/object-store and is the continuation of
->> that series, adding the repository as a context argument to functions.
->
-> Wait a minute.  Is that topic ever shown to work well together with
-> other topics in flight and are now ready to be built upon?  I had an
-> impression that it is just starting to get serious reviews.  
->
-> Sorry, but I am behind ;-)
+The only difference to v1 is in patch 3. I'll follow up with a patch to
+address the confusing pattern which Peff mentioned and which fooled me
+when I prepared v1.
 
-OK, so I finally picked up the last round, which wasn't even in my
-private build.  I had the previous round but hadn't convinced myself
-that my conflict resolution with other topics in flight that were
-still mushy was correct, so it was out of 'pu', but at least it was
-in my tree, so that is where my impression came from.
+Martin
 
-I saw that the way a list-head in a repository is initialized has
-been revamped in v4, which looked sensible.  Will merge it to 'pu'
-so that I can pick up the ignore-env removal from Duy.
+Martin Ågren (5):
+  sequencer: make lockfiles non-static
+  sequencer: always roll back lock in `do_recursive_merge()`
+  merge-recursive: always roll back lock in `merge_recursive_generic()`
+  merge: always roll back lock in `checkout_fast_forward()`
+  sequencer: do not roll back lockfile unnecessarily
+
+ merge-recursive.c |  5 ++++-
+ merge.c           | 12 +++++++++---
+ sequencer.c       | 32 ++++++++++++++------------------
+ 3 files changed, 27 insertions(+), 22 deletions(-)
+
+-- 
+2.16.2.246.ga4ee44448f
 
