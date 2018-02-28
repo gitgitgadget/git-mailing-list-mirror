@@ -7,71 +7,66 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CB5471F404
-	for <e@80x24.org>; Wed, 28 Feb 2018 16:18:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A163F1F404
+	for <e@80x24.org>; Wed, 28 Feb 2018 16:22:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934962AbeB1QSp (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Feb 2018 11:18:45 -0500
-Received: from mail-wm0-f44.google.com ([74.125.82.44]:35296 "EHLO
-        mail-wm0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932702AbeB1QSm (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Feb 2018 11:18:42 -0500
-Received: by mail-wm0-f44.google.com with SMTP id x7so6152265wmc.0
-        for <git@vger.kernel.org>; Wed, 28 Feb 2018 08:18:41 -0800 (PST)
+        id S933348AbeB1QW2 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Feb 2018 11:22:28 -0500
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:51078 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932516AbeB1QW0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Feb 2018 11:22:26 -0500
+Received: by mail-wm0-f67.google.com with SMTP id w128so6179265wmw.0
+        for <git@vger.kernel.org>; Wed, 28 Feb 2018 08:22:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=tfUSM7tFil6Ug4+2ARcgqR/qQLBRFPwk0rMb3hUBpSg=;
-        b=mtSPBdEd2kvVsC/JGuUW5nwUs5dHxs2BzfARg0Qm3IpIn0ANTYDr/BUD0QdSoPq0Or
-         ozBVP3lIXY1ZZR1qzFhMB3Q2YkdMJIA7ZiYIw2lxh41JbtZ+9x6IrzFYkfe5GtqkykkV
-         ALtYTz6gArSnwX3xdqo7+/P31zBQsqd4Vp8QS0/0Rjp6yqN/DOs/5twg3cdqCC0WANvm
-         vSfalMdzo29QDpoP9c/afG1U8sWY0cj9E1SWNP2OjPJtyNlqXsUowUjGn11WMx9OtHIk
-         rK7mPVB5F/D/2rYmcNJ7c3PHYwViAh1CPJuDr4mhoafFZTyvUw9kOYyxaHFCX39aKmKU
-         Hhwg==
+        bh=S2YSX0+qnwRaRcXTI020grcG3Af3n0Mc3VUmOhbnGJg=;
+        b=R4YoARj1LdT3FvW0kyn/rnHCZZTO9y1ibSWmPQfqlRRF6SI1CpQiOrXERLuTDKVTF9
+         VcJiA4awGesnkabR9eXVAQr7cJIGElere9TZAQH1kyJ0hseNxnmWxFLOhk2+v5m33l8u
+         z7ttaO4eqN0JYWNtmNG2+qhKySJ/R9xMduRLvS6hY+zY36MwmXXwDiC0wUV0wF4ZSj6a
+         v4Qm6S4hTYu0evRf1WykKfuTXV1b9R0BAdnwRTUZ3wBiffjBB2CZEgk0gmdvLY10wSb3
+         Zct02rinRVPgmvfKz2wqCWQraDLl30koa4Mf3azyubWCB22sxGbV06VsSlbbbxescb59
+         wtvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=tfUSM7tFil6Ug4+2ARcgqR/qQLBRFPwk0rMb3hUBpSg=;
-        b=rQO2uf4oHp21dodAhXtkB7aVTjK8h1LpcjC7geYaIR3kNH1InjTFArUe0JP3vZB4an
-         tIp1eYDE0kaKa3cRq4c3JH/GoqpV13444wyTK0cr2Do5g/oHjnyxmqRPpJ5gyW8qeleg
-         qWBWnOMg9a9MazrdxrLEmRfIxGt8VgLx9t0r8F0iZ9qQXTurjxQWLS2E3WFCY3cEuavC
-         T4ror3wNXfkyu4Vry7laB+DA/w3nczS5JeyjGNAKzzbGpOM1fvpFm90Lp//cmtPFaOY/
-         4oreDxwu5A6fmiEOYLEGhj7q1LsvpVTiquF2OcgNQ3hW003jw5tB91/gjWMeSwn6jyrx
-         Vl2w==
-X-Gm-Message-State: AElRT7HmuBfXFpz7GpYTD3yknLtwD9URpZginKcM3feyNLf8Tz8Ia/x/
-        LwcHgvHbKXdfEk37UgNlOCU=
-X-Google-Smtp-Source: AG47ELs+CVIT1qHZANAcl8dwvMqSQpc2bNVxjmLyELsKQZ+pPhqMR846pi7KNGA33bNMWYlBGV2hnw==
-X-Received: by 10.28.12.79 with SMTP id 76mr1670143wmm.116.1519834720213;
-        Wed, 28 Feb 2018 08:18:40 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id h50sm4083136wrf.65.2018.02.28.08.18.37
+        bh=S2YSX0+qnwRaRcXTI020grcG3Af3n0Mc3VUmOhbnGJg=;
+        b=fi7gFsvTIP5XpdNxoKfsV8qxJ0I5zK4NN3O/3x4nuY1+OtovJ63DfoXBTvLZGh6601
+         A4zWYp0c+Sqpyuz6jNwbmIjSdqHTOlFygKcLYkznKpjiyGCNC+3yKP0Q9pct1PCuK9WQ
+         nRwIFUma24kP4o/AKHVx1JLJ3CDq5AdmX6QnyYg6g6iw3ECzAU1p0NEnp8nb/REaGwwR
+         FY0hiIv0iJMUuSBoOSW4yNnC8+pOR8XsT0y9J0uGiE9UhKbhOV3ScPZ01FL4cobOBw1z
+         4xRfg5g/GZ8Dt3JLZyMAooMXhSzKW+eJ2nW6L6HjZ/oiJl6iPGM5sAtTQYxMrhelzu40
+         exkw==
+X-Gm-Message-State: APf1xPAqpBQbFHZzJTn4cL5aJnJKuA8cM+iNHyMvkX6beKRvtql6YtWr
+        pm5c0jhv0gkCfyfB21A7G+s=
+X-Google-Smtp-Source: AG47ELs50MCpAbM7Nyvj6UPdUPneVAYdjsI9hs+i97nE9Q3WntM177IHdsnWP2mipbtVxK+d+L4Asw==
+X-Received: by 10.28.170.205 with SMTP id t196mr8345289wme.42.1519834945290;
+        Wed, 28 Feb 2018 08:22:25 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id c1sm2242925wmh.1.2018.02.28.08.22.24
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 28 Feb 2018 08:18:38 -0800 (PST)
+        Wed, 28 Feb 2018 08:22:24 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Jeff King <peff@peff.net>,
-        GIT Mailing-list <git@vger.kernel.org>
-Subject: Re: [PATCH 2/2] t5556: replace test_i18ngrep with a simple grep
-References: <d0e6c6cf-7166-bef6-f179-c4e6acf7b0ac@ramsayjones.plus.com>
-        <xmqq3726t11d.fsf@gitster-ct.c.googlers.com>
-        <69c7dc21-fb52-5982-f7d8-04518d06db6c@ramsayjones.plus.com>
-        <xmqqvaf1qqcx.fsf@gitster-ct.c.googlers.com>
-        <20180213100437.15685-1-szeder.dev@gmail.com>
-        <xmqqr2porf4z.fsf@gitster-ct.c.googlers.com>
-        <20180213172603.GA10062@sigill.intra.peff.net>
-        <xmqqeflorc9m.fsf@gitster-ct.c.googlers.com>
-        <xmqq371mqjce.fsf@gitster-ct.c.googlers.com>
-        <xmqq4lm2ozq3.fsf@gitster-ct.c.googlers.com>
-        <192d4ee4-dbdd-3e47-b45c-8d1f7b69b9af@ramsayjones.plus.com>
-        <CAM0VKj=hbT_m21ssF+nedVDrfNiYHu8wd9mUD55mAdNgmnZSgA@mail.gmail.com>
-        <ffc3d3dc-6d21-4273-5362-cbf32e7e4e59@ramsayjones.plus.com>
-Date:   Wed, 28 Feb 2018 08:18:37 -0800
-In-Reply-To: <ffc3d3dc-6d21-4273-5362-cbf32e7e4e59@ramsayjones.plus.com>
-        (Ramsay Jones's message of "Wed, 28 Feb 2018 15:33:51 +0000")
-Message-ID: <xmqqo9k9m6jm.fsf@gitster-ct.c.googlers.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Eric Wong <e@80x24.org>, Jonathan Nieder <jrnieder@gmail.com>,
+        "Randall S. Becker" <rsbecker@nexbridge.com>, git@vger.kernel.org,
+        'Joachim Schmitz' <jojo@schmitz-digital.de>,
+        =?utf-8?B?w4Z2YXIgQXJuZmo=?= =?utf-8?B?w7Zyw7A=?= Bjarmason 
+        <avarab@gmail.com>
+Subject: Re: [Problem] test_must_fail makes possibly questionable assumptions about exit_code.
+References: <005501d3b025$c0057ce0$401076a0$@nexbridge.com>
+        <20180228001616.GJ174036@aiede.svl.corp.google.com>
+        <20180228040718.GA9043@whir>
+        <20180228050034.GA373@sigill.intra.peff.net>
+        <20180228074251.GA11673@dcvr>
+        <20180228074918.GA32127@sigill.intra.peff.net>
+Date:   Wed, 28 Feb 2018 08:22:24 -0800
+In-Reply-To: <20180228074918.GA32127@sigill.intra.peff.net> (Jeff King's
+        message of "Wed, 28 Feb 2018 02:49:18 -0500")
+Message-ID: <xmqqk1uxm6db.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -80,25 +75,41 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
+Jeff King <peff@peff.net> writes:
 
->> However, I'm not sure about the authorship and taking credit for the
->> patch.  We ended up taking my patch, sure, but I think Ramsay did all
->> the real hard work, i.e. writing the commit message and, most
->> importantly, realizing that something is wrong with that '...| sort' at
->> the end of the line.
+> You're right. I cut down my example too much and dropped the necessary
+> eval magic. Try this:
 >
-> No, the patch and the credit are yours, I was just trying to
-> help out and get the patches moving forward. At most, I would
-> think a 'Helped-by:' would be sufficient to note my input.
+> -- >8 --
+> SIG{__DIE__} = sub {
+>   CORE::die @_ if $^S || !defined($^S);
+>   print STDERR "fatal: @_";
+>   exit 128;
+> };
+>
+> eval {
+>   die "inside eval";
+> };
+> print "eval status: $@" if $@;
+>
+> die "outside eval";
+> -- 8< --
+>
+> Running that should produce:
+>
+> $ perl foo.pl; echo $?
+> eval status: inside eval at foo.pl line 8.
+> fatal: outside eval at foo.pl line 12.
+> 128
+>
+> It may be getting a little too black-magic, though. Embedding in an eval
+> is at least straightforward, if a bit more invasive.
 
-OK.
+I briefly wondered if this affects die that are called by code that
+we did not write (i.e. from core or cpan via "use/require"), but (1)
+we do want this to affect them, so that we die with status code
+known to us, and (2) the way this uses CORE::die or exit depending
+on the surrounding 'eval' would "fool" their uses just like we want
+it to fool our uses, which is exactly what we want.
 
-
-> [BTW, my 'Signed-off-by:' on that patch was in the spirit of
-> the dco section b. - again I wasn't quite sure ...]
-
-I take your "wasn't" to imply that by now you are a bit more sure?
-It was a perfectly fine "I am passing it along" sign-off.
-
-Thanks, both.
+So, it looks like a good "black magic" ;-).
