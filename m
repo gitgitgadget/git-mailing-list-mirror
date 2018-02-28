@@ -7,117 +7,163 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2C47E1FAE2
-	for <e@80x24.org>; Wed, 28 Feb 2018 00:16:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 241751F404
+	for <e@80x24.org>; Wed, 28 Feb 2018 00:29:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751896AbeB1AQT (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Feb 2018 19:16:19 -0500
-Received: from mail-pf0-f176.google.com ([209.85.192.176]:34530 "EHLO
-        mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751891AbeB1AQT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Feb 2018 19:16:19 -0500
-Received: by mail-pf0-f176.google.com with SMTP id j20so285153pfi.1
-        for <git@vger.kernel.org>; Tue, 27 Feb 2018 16:16:19 -0800 (PST)
+        id S1751682AbeB1A3Y (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Feb 2018 19:29:24 -0500
+Received: from mail-wm0-f51.google.com ([74.125.82.51]:36855 "EHLO
+        mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751646AbeB1A3X (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Feb 2018 19:29:23 -0500
+Received: by mail-wm0-f51.google.com with SMTP id 188so1868104wme.1
+        for <git@vger.kernel.org>; Tue, 27 Feb 2018 16:29:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=fFDiuCdcdiUJmAbCx7e17ZQjrePQIobGQKLlF93v0IQ=;
-        b=lICA+3DnPF8/3/URbrGb+g1XXBOxiwISnANrVZyWNH8obijPlSvKKrn2HN4sVoNWq8
-         2a12rjJnoRDB3zgAXTKY9gqUvx1ogEUD61btF6Y827xuPZAXAsDy1ggXjYrC+fecjsmA
-         NuFGVtaw16jHPOIrvi2lIqeYDqqOP16etWkU6ofA0ugNMO0J5zKNk5zIxo2R8eRX6V+K
-         PInD4n6z3QVabWXiyMQfecjJvoBdYb2FBhY7suUYTHJdUtbC7VfGPDZqINfSHv8/I+VT
-         ABSfHzzVJe3aplZ5Mk1Zx87jPV/u1RyvUlelTlqIHT5JkMYPHM6EawVmJGmApqcOycQh
-         zFGA==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=WpInps/LyX0jDKH9FIEJrAvn+VQcISQNXrmM2Fao+F0=;
+        b=AqWaXNI3Pn1w5icbRnmAAEnLFIc7VdYzl4S2Tez+InNCtDsLvbBKsFNnQPYinaNcAi
+         HQNXScVWwNKXY3cgaD4vdpxFnbuWV9Jj7uW38s/Muy7Tc8zy/TIATypSPNjE+HC2bdNT
+         eOMKRegs3FwvryuS+Xd+1NBTH6xGMZEtE8RrcIxydk2Pp1ign4UzenA7RD1HpTFyuXop
+         U6MuIdAjBPluiYFbWLOIiKOsutxqvL7agwNIIsChjePaTaFgSM+qZbpmv+3MABVO6qiy
+         0jkFpSYYfCzGAu64Sxwam11gF7TB1KR6E4yAnrKQLYjnoobzK8yFYhTq7+aqtdMCd8qY
+         /QDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=fFDiuCdcdiUJmAbCx7e17ZQjrePQIobGQKLlF93v0IQ=;
-        b=R+kMikQh/vfKyEYbSHSK2ljfhQneQiZn329f2IiuIfWSoreVxpmpyww/JyozdVV3XQ
-         e0Yvmw3hwEE1GtCmpMdIdq0+8TTpLW1hXqzGwQjINGIee+irgshIHgFHmdBQZxL9MXni
-         NbXbHjatK8Eqmrr4aSZcjn9gvWxJDQIys/CftgLIxe6W355d6vGY8LajKXrjQSae74YR
-         v1L2cl4DvV+DWdwfnP02ZeKyR++VSlo8UYSLYeyzC5b9b8MnHxEnOqhmaK35YcZx5chh
-         pXRmdlUfeGftAMGYa238mz/vB9a86sxsUd2HWgCZjWWcsFUxqcb4NoDSXT/X39TViFnu
-         l51Q==
-X-Gm-Message-State: APf1xPDI6sAj6MjQ+WY0bCxFcvi/CVjqeJaSGMz5e8737DBqZtJoncs2
-        8mn5N97TqxjltFFivx7Bcd4=
-X-Google-Smtp-Source: AH8x227cF+KRmNczMf4Wo11Kt/JUIs0M93EFhF7hGRooomPS9qUW3wE3Jn6JmCQfiEDL+ZsWorohiw==
-X-Received: by 10.98.242.65 with SMTP id y1mr15445586pfl.232.1519776978456;
-        Tue, 27 Feb 2018 16:16:18 -0800 (PST)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id k66sm384023pfb.123.2018.02.27.16.16.17
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 27 Feb 2018 16:16:17 -0800 (PST)
-Date:   Tue, 27 Feb 2018 16:16:16 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     "Randall S. Becker" <rsbecker@nexbridge.com>
-Cc:     git@vger.kernel.org, 'Joachim Schmitz' <jojo@schmitz-digital.de>,
-        Eric Wong <e@80x24.org>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Subject: Re: [Problem] test_must_fail makes possibly questionable assumptions
- about exit_code.
-Message-ID: <20180228001616.GJ174036@aiede.svl.corp.google.com>
-References: <005501d3b025$c0057ce0$401076a0$@nexbridge.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=WpInps/LyX0jDKH9FIEJrAvn+VQcISQNXrmM2Fao+F0=;
+        b=jLQ11JQDUJKm/oZeuNdm+H5vsfNniYEdyFZa83FTHHzD29r5LbfCPE5IVhARWOh01u
+         QJBGnE9TXX+cMvXACFGjM4Hn+4XVnxUrg/0rmcWS13CzYO++YICmQx0iIgZG+RClwctN
+         OTQdVrQmUzYjLdsa/He0SWTB7JCZBTKGH6Z1nl0u0fC4mBtn0jmJHRyCv7eX8qMsrNDR
+         GjAdEoTXO5fhOaV2v8nR010fpsTHSCgYpZOXslZv/QCNBJ4jdhbmd9pdnK0K5w4YUr0f
+         W/qtQIYj4jp0buM3zv01vyV7zt00TTvU3mxFXNOVuAKwPqO1lWyNijlkW7vPKrcfQF9R
+         9jPQ==
+X-Gm-Message-State: APf1xPD+pkz7JRWqJJ784sF0YchC6DGzl1i+ZEGX+k33Q1d1zmhfWhUv
+        feS4e2by8XaF7VpYcODSueQv1SnfrB51cJrVoXw=
+X-Google-Smtp-Source: AH8x225GFnoeMpeB7fZz9vLA7sB+cQmHbqCDSm/uFJ5GtNuk54XPSpLHV0ocF2IpU5NpiqMmuFuKZgemvmLM8N2w06Y=
+X-Received: by 10.80.139.5 with SMTP id l5mr21065531edl.265.1519777762336;
+ Tue, 27 Feb 2018 16:29:22 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <005501d3b025$c0057ce0$401076a0$@nexbridge.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+Received: by 10.80.139.133 with HTTP; Tue, 27 Feb 2018 16:29:01 -0800 (PST)
+In-Reply-To: <nycvar.QRO.7.76.6.1802271718090.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <87y3jtqdyg.fsf@javad.com> <bbe64321-4d3a-d3fe-8bb9-58b600fabf35@gmail.com>
+ <nycvar.QRO.7.76.6.1802270051470.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+ <CA+P7+xq8UUcLWomUi=PS_hTKfJd3dMAxMmhioDS1bixwcmKAqw@mail.gmail.com> <nycvar.QRO.7.76.6.1802271718090.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Tue, 27 Feb 2018 16:29:01 -0800
+Message-ID: <CA+P7+xrXy1wCJ6D=3h_db93wLTzj9HGF6M6ptLXgEnSMW9KAwg@mail.gmail.com>
+Subject: Re: [RFC] Rebasing merges: a jorney to the ultimate solution (Road Clear)
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Igor Djordjevic <igor.d.djordjevic@gmail.com>,
+        Sergey Organov <sorganov@gmail.com>,
+        Git mailing list <git@vger.kernel.org>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-
-Randall S. Becker wrote:
-
-> After months of arguing with some platform developers on this subject, the
-> perl spec was held over my head repeatedly about a few lines that are
-> causing issues. The basic problem is this line (test-lib-functions.sh, line
-> 633, still in ffa952497)
+On Tue, Feb 27, 2018 at 8:21 AM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi Jake,
 >
->>        elif test $exit_code -gt 129 && test $exit_code -le 192
->>       then
->>               echo >&2 "test_must_fail: died by signal $(($exit_code - 128)):
+> On Mon, 26 Feb 2018, Jacob Keller wrote:
 >
-> According to the perl spec http://perldoc.perl.org/functions/die.html, die
-> basically takes whatever errno is, mods it with 256 and there you go. EBADF
-> is what is used when perl reads from stdin and calls die - that's standard
-> perl. In most systems, you end up with something useful, when EBADF is 9.
-> But when it is 4009, you get a garbage answer (4009 mod 256 a.k.a. 169).
-> However, only 128-165 are technically reserved for signals, rather than all
-> the way up to 192, which may be true in some places but not everywhere.
+>> On Mon, Feb 26, 2018 at 4:07 PM, Johannes Schindelin
+>> <Johannes.Schindelin@gmx.de> wrote:
+>> >
+>> > On Tue, 20 Feb 2018, Igor Djordjevic wrote:
+>> >
+>> >> I`m really interested in this topic, which seems to (try to) address the
+>> >> only "bad feeling" I had with rebasing merges - being afraid of silently
+>> >> losing amendments by actually trying to "replay" the merge (where
+>> >> additional and possibly important context is missing), instead of really
+>> >> "rebasing" it (somehow).
+>> >
+>> > If those amendments are what you are worried about, why not address them
+>> > specifically?
+>> >
+>> > In other words, rather than performing the equivalent of
+>> >
+>> >         git show <merge>^! | git apply
+>> >
+>> > (which would of course completely ignore if the rewritten <merge>^2
+>> > dropped a patch, amended a patch, or even added a new patch), what you
+>> > really want is to figure out what changes the user made when merging, and
+>> > what merge strategy was used to begin with.
+>> >
+>> > To see what I mean, look at the output of `git show 0fd90daba8`: it shows
+>> > how conflicts were resolved. By necessity, this is more complicated than a
+>> > simple diff: it is *not* as simple as taking a diff between two revisions
+>> > and applying that diff to a third revision. There were (at least) three
+>> > revisions involved in the original merge commit, and recreating that merge
+>> > commit faithfully means to represent the essence of the merge commit
+>> > faithfully enough to be able to replay it on a new set of at least three
+>> > revisions.  That can be simplified to two-way diffs only in very, very
+>> > special circumstances, and in all other cases this simplification will
+>> > simply fall on its nose.
+>> >
+>> > If the proposed solution was to extend `git apply` to process combined
+>> > diffs, I would agree that we're on to something. That is not the proposed
+>> > solution, though.
+>> >
+>> > In short: while I am sympathetic to the desire to keep things simple,
+>> > the idea to somehow side-step replaying the original merge seems to be
+>> > *prone* to be flawed. Any system that cannot accommodate
+>> > dropped/changed/added commits on either side of a merge is likely to be
+>> > too limited to be useful.
+>> >
+>>
+>>
+>> The reason Sergey's solution works is because he cherry picks the
+>> merge using each parent first, and then merges the result of those. So
+>> each branch of the merge gets one, and then you merge the result of
+>> those cherry-picks. This preservers amendments and changes properly,
+>> and should result in a good solution.
 >
-> The advice (I'm putting that nicely) I received was to use exit so that the
-> result is predictable - unlikely to be useful in the 15K test suites in git.
+> I saw your patch trying to add a minimal example, and I really want to run
+> away screaming.
+>
+> Do you have any way to describe the idea in a simple, 3-5 lines long
+> paragraph?
+>
+> So far, I just know that it is some sort of confusing criss-cross
+> cherry-picking and merging and stuff, but nothing in those steps shouts
+> out to me what the *idea* is.
+>
 
-The fundamental thing is the actual Git commands, not the tests in the
-testsuite, no?
+Sergey's posted explained it more in detail, at
+https://public-inbox.org/git/87y3jtqdyg.fsf@javad.com/
 
-In the rest of git, die() makes a command exit with status 128.  The
-trouble here is that our code in Perl is assuming the same meaning for
-die() but using perl's die builtin instead.  That suggests a few
-options:
+I was mostly just attempting to re-create it in a test case to show
+that it could work.
 
- a) We could override the meaning of die() in Git.pm.  This feels
-    ugly but if it works, it would be a very small patch.
+> If it would be something like "recreate the old merge, with merge
+> conflicts and all, then generate the diff to the actual tree of the merge
+> commit, then apply that to the newly-generated merge", I would understand.
+>
 
- b) We could forbid use of die() and use some git_die() instead (but
-    with a better name) for our own error handling.
+It's more or less:
 
- c) We could have a special different exit code convention for
-    commands written in Perl.  And then change expectations whenever a
-    command is rewritten in C.  As you might expect, I don't like this
-    option.
+Rebase each parent, then cherry-pick -m<N> the original merge to that
+parent, then you merge the result of each cherry-pick, then use the
+resulting final merged tree to create the merge pointing at the real
+parents instead of the cherry-pick merges.
 
- d) We could wrap each command in an eval {...} block to convert the
-    result from die() to exit 128.
+> I would still suspect that -s ours would be a hard nut for that method,
+> but I would understand that idea.
+>
 
-Option (b) feels simplest to me.
+The goal of the process isn't to know or understand the "-s ours"
+strategy, but simply re-create the contents of the original merge
+faithfully, while still preserving the changes done when rebasing the
+side branches. Thus it should re-create the contents generated by "-s
+ours" the first time, but it doesn't need to do or know anything
+special about how the content was created.
 
-Thoughts?
-
-Thanks,
-Jonathan
+> Thanks,
+> Dscho
