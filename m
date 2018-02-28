@@ -2,157 +2,138 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 49EB61F404
-	for <e@80x24.org>; Wed, 28 Feb 2018 20:25:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 909401F404
+	for <e@80x24.org>; Wed, 28 Feb 2018 20:46:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934341AbeB1UZS (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Feb 2018 15:25:18 -0500
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:39522 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934119AbeB1UZR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Feb 2018 15:25:17 -0500
-Received: by mail-wm0-f67.google.com with SMTP id i3so6094271wmi.4
-        for <git@vger.kernel.org>; Wed, 28 Feb 2018 12:25:16 -0800 (PST)
+        id S934774AbeB1Uqq (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Feb 2018 15:46:46 -0500
+Received: from mail-pg0-f53.google.com ([74.125.83.53]:34932 "EHLO
+        mail-pg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934682AbeB1Uqp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Feb 2018 15:46:45 -0500
+Received: by mail-pg0-f53.google.com with SMTP id l131so1407955pga.2
+        for <git@vger.kernel.org>; Wed, 28 Feb 2018 12:46:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=sey5Kta1ROE841e9LD1nEo91OoudLj5BPzHKX/OLRnk=;
-        b=VgtBXo25Prpu+lQiyCWPoapyUu5bSzTejbEk3J2kbxIBBXOoASUQkYOL131GzceMgT
-         iH+cAExSobcQtjx4R3D+evIBk1G8w4AY48MiOB9GqRiWfTJnn94VIGGZydijBSX+b9PG
-         Y6YKGpJWkbGRy7B/c36lwngF6JIkRF9GkYMJZ/173ZwBkgTqpGRC+xsLmp4dtfSwOqHR
-         nIuKBC9wlEIy2uCUMqK6VdfinkCa4Edjq+z7+A0Q+DY7C8zWRkbOTDkEKQ1pcE0pCK7X
-         peXaBnuVSc8I3ijOKpVB65wzhlJzOKKX5R5at0MS3yjc8LsailSyPX9lZAZZLwp3lMWU
-         6MJw==
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=YQ65c//akoq+J3j98maW6osYjX9q6w0DYnyyXaV7qsE=;
+        b=EB6Li9QnEZlDiILrQHIH7JsmzLIFeaKwhICCMFPP7wwlFaJGukmc6Jn1B38HvnbTFY
+         zKP7wmBrtPEM3p9lQRExww9Xq2EBcYkbUdHS4Vbcr4tml3DxRQhmwIykbU8F6qT2cmgm
+         Ry0YUA4byrFGRMwqcT1E+de63JlIRGE1tloxn5D+6tM6JSI7mmXb9bpKRXykPFAYYq0h
+         5W7a0uHs6ezmOp5wRoCWYU75KYfFDvgvNLph59/Qe/I44R+9elrQCc2Zku1+u8EIqp4H
+         orTJiJdPvtRaFrnTIYpp6MeRU/iaeYyacU1TWQnfm+F7PGYYFQEVKLZ8W9yzR8KwP8JC
+         7pGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=sey5Kta1ROE841e9LD1nEo91OoudLj5BPzHKX/OLRnk=;
-        b=rLDrdmzMVBFdIs0VOpVWfKdQMb4A1MLxy5H0yw6JBE18ywN3rMcP42k7sQNGJY12Zv
-         SS6iOqiAMkYmDwMZLfcIdY3P1Xfb1XbwpHUa9XvsxpkR/T1n5bdIbLjRKTVrY0eotre/
-         zOf2HHyWpEE9CFUCAQVQiKS2NOGjckbHBar/Y0O4QW0AG3ptTlPBtEisoC6Kt+AINEYq
-         wIQODsrXR3xpe1xTvia/d6D8b577J8uQpIKnyPkPRg//W2s8sSXGRflAcyeUU0H6Ro2J
-         euN6rBcZ53rsHUuruxu5rCyuuKlYViPJMs1tHxGtFgz8DJM3Pqp3BRh3aCbP+Zzg+Ojj
-         H0IA==
-X-Gm-Message-State: APf1xPDAocclJ3tb1PPA1GEPH92gLUFYHYLklatFjzjJS5A2IRCmWM/h
-        /O7eTyPJJibNYW9QxnG7wgg=
-X-Google-Smtp-Source: AG47ELvNLDqoLKlOfKFOWVAiUwQbWQdUO0YfriDGlHPhSCIPFTPiy0oiY+voqfEVxrbsO4F9scmyJw==
-X-Received: by 10.28.1.208 with SMTP id 199mr15046277wmb.26.1519849515507;
-        Wed, 28 Feb 2018 12:25:15 -0800 (PST)
-Received: from [192.168.5.102] (cable-24-135-61-30.dynamic.sbb.rs. [24.135.61.30])
-        by smtp.gmail.com with ESMTPSA id q9sm1390559wrf.11.2018.02.28.12.25.14
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 28 Feb 2018 12:25:14 -0800 (PST)
-Subject: Re: [RFC] Rebasing merges: a jorney to the ultimate solution (Road
- Clear)
-To:     Sergey Organov <sorganov@gmail.com>
-Cc:     Git mailing list <git@vger.kernel.org>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Junio C Hamano <gitster@pobox.com>
-References: <87y3jtqdyg.fsf@javad.com>
- <bbe64321-4d3a-d3fe-8bb9-58b600fabf35@gmail.com>
- <nycvar.QRO.7.76.6.1802270051470.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
- <CA+P7+xq8UUcLWomUi=PS_hTKfJd3dMAxMmhioDS1bixwcmKAqw@mail.gmail.com>
- <nycvar.QRO.7.76.6.1802271718090.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
- <4d7f3406-b206-cc22-87df-85700d6a03d9@gmail.com>
- <33da31e9-9101-475d-8901-4b6b3df2f29d@gmail.com>
- <940d959d-151d-68dd-0f13-320ebad0d75b@gmail.com> <87606hoflx.fsf@javad.com>
-From:   Igor Djordjevic <igor.d.djordjevic@gmail.com>
-Message-ID: <0ac3a3fd-4053-e32e-75ed-8829f22c2e1f@gmail.com>
-Date:   Wed, 28 Feb 2018 21:25:07 +0100
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
-MIME-Version: 1.0
-In-Reply-To: <87606hoflx.fsf@javad.com>
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=YQ65c//akoq+J3j98maW6osYjX9q6w0DYnyyXaV7qsE=;
+        b=XFqEo27HlSl37n6FXJL1unZ+DF7c016FLnDNjFEAST4DZVMWlCUg0LXFsYb1876Q55
+         wf3pEITp1VHk8HBlsPUvEEApcWKkuJ0TodpTkQghw1ufzLy/hHoWEMel9I+pIo75X6a5
+         wkk47WO8Za2+PpWFo+IjNTc3wFZ29nwEwdnwMQ8r1eqmXTzJYmhOb4GoJEUavRNrOf4P
+         cz2G3v4LJBd8VkiO9CLNe7Eq8Z2Yd1Tz7Wm+LmWUhR62ncwK4CUZpxfNshGMMBA5ltlm
+         Zj7M75SXARf7odTJQ8n5drJ9AuTORe94+0oohamcMR4Hb4xb2plMEH6nVAst5L5q7VBd
+         pHmw==
+X-Gm-Message-State: APf1xPALhrLzhuAN18yPMSKRtphnEyxdlqY2rvLdQEf7r+UARhJo0SlZ
+        U5XKZG7cYRLzDQlrUkecShY=
+X-Google-Smtp-Source: AH8x2241I2WYN7sCz8WkbtxRAlcGYU4Xx4zlXwQi+huiv5CFS8eZPQjQHgR+5hynjDIlg1FFxPbfpQ==
+X-Received: by 10.98.149.138 with SMTP id c10mr19133365pfk.143.1519850805260;
+        Wed, 28 Feb 2018 12:46:45 -0800 (PST)
+Received: from shfh2bkyy1.ads.autodesk.com (adsknateur.autodesk.com. [132.188.32.100])
+        by smtp.gmail.com with ESMTPSA id m15sm5919228pfi.65.2018.02.28.12.46.41
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 28 Feb 2018 12:46:44 -0800 (PST)
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [PATCH v7 0/7] convert: add support for different encodings
+From:   Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <20180227212537.GA6899@sigill.intra.peff.net>
+Date:   Wed, 28 Feb 2018 21:46:39 +0100
+Cc:     =?utf-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Lars Schneider <lars.schneider@autodesk.com>,
+        git <git@vger.kernel.org>, Johannes Sixt <j6t@kdbg.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        ramsay@ramsayjones.plus.com, Johannes.Schindelin@gmx.de
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <88BE70FC-B809-490C-ADB2-ABA5D9EBF0D4@gmail.com>
+References: <DC552BF4-3E87-41E0-BF92-4BA9633D374E@gmail.com> <20180216165815.GA4681@tor.lan> <19EDC192-0D83-4762-AC6A-81F7D693475A@gmail.com> <xmqqbmgfvf2y.fsf@gitster-ct.c.googlers.com> <xmqq7er3tqjq.fsf@gitster-ct.c.googlers.com> <FDF4DEB8-E71A-4BFC-9437-678C8F65BBDC@gmail.com> <20180226014445.GB8677@sigill.intra.peff.net> <20180226173533.GA7877@tor.lan> <20180226204635.GB12598@sigill.intra.peff.net> <20180227210517.GA17555@tor.lan> <20180227212537.GA6899@sigill.intra.peff.net>
+To:     Jeff King <peff@peff.net>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Sergey,
 
-On 28/02/2018 06:19, Sergey Organov wrote:
-> 
-> > > (3) ---X1---o---o---o---o---o---X2
-> > >        |\                       |\
-> > >        | A1---A2---A3---U1      | A1'--A2'--A3'--U1'
-> > >        |             \          |
-> > >        |              M         |
-> > >        |             /          |
-> > >        \-B1---B2---B3---U2      \-B1'--B2'--B3'--U2'
-> > >
-> >
-> > Meh, I hope I`m rushing it now, but for example, if we had decided to 
-> > drop commit A2 during an interactive rebase (so losing A2' from 
-> > diagram above), wouldn`t U2' still introduce those changes back, once 
-> > U1' and U2' are merged, being incorrect/unwanted behavior...? :/
-> 
-> I think the method will handle this nicely.
+> On 27 Feb 2018, at 22:25, Jeff King <peff@peff.net> wrote:
+>=20
+> On Tue, Feb 27, 2018 at 10:05:17PM +0100, Torsten B=C3=B6gershausen =
+wrote:
+>=20
+> Of the three solutions, I think the relative merits are something like
+> this:
+>=20
+>  1. baked-in textconv (my patch)
+>=20
+>     - reuses an existing diff feature, so minimal code and not likely =
+to
+>       break things
+>=20
+>     - requires people to add a .gitattributes entry
+>=20
+>     - needs work to make bare-repo .gitattributes work (though I think
+>       this would be useful for other features, too)
+>=20
+>     - has a run-time cost at each diff to do the conversion
+>=20
+>     - may sometimes annoy people when it doesn't kick in (e.g.,
+>       emailed patches from format-patch won't have a readable diff)
+>=20
+>     - doesn't combine with other custom-diff config (e.g., utf-16
+>       storing C code should still use diff=3Dc funcname rules, but
+>       wouldn't with my patch)
+>=20
+>  2. auto-detect utf-16 (your patch)
+>     - Just Works for existing repositories storing utf-16
+>=20
+>     - carries some risk of kicking in when people would like it not to
+>       (e.g., when they really do want a binary patch that can be
+>       applied).
+>=20
+>       I think it would probably be OK if this kicked in only when
+>       ALLOW_TEXTCONV is set (the default for porcelain), and --binary
+>       is not (i.e., when we would otherwise just say "binary
+>       files differ").
+>=20
+>     - similar to (1), carries a run-time cost for each diff, and users
+>       may sometimes still see binary diffs
+>=20
+>  3. w-t-e (Lars's patch)
+>=20
+>     - requires no server-side modifications; the diff is plain vanilla
+>=20
+>     - works everywhere you diff, plumbing and porcelain
+>=20
+>     - does require people to add a .gitattributes entry
+>=20
+>     - run-time cost is per-checkout, not per-diff
+>=20
+> So I can see room for (3) to co-exist alongside the others. Between =
+(1)
+> and (2), I think (2) is probably the better direction.
 
-That`s what I thought as well. And then I made a test. And then the 
-test broke... Now, might be the test was flawed in the first place, 
-but thinking about it a bit more, it does seem to make sense not to 
-handle this case nicely :/
+Thanks for the great summary! I agree they could co-exist and people
+could use whatever works best for them.
 
-> When you "drop" A2, will A3' change, or stay intact?
+I'll incorporate Eric's feedback and send a w-t-e v9 soonish.
 
-When you "drop" commit A2 from rebasing, patch (diff) A3' does stay 
-the same - but resulting tree (snapshot) after applying it does not.
+- Lars
 
-By removing commit A2 from your rebase, you`re saying that changes 
-introduced in that commit shouldn`t ever happen in the rebased tree, 
-so trees/snapshots of all rebased commits coming after dropped A2 
-will have these changes missing, in comparison to trees of original 
-commits they`re being rebased from.
 
-> If it changes, say, to A3'', the U1' will change to U1'', and the method
-> will propagate the change automatically.
-> 
-> If it A3' doesn't change, then there are no changes to take.
-
-All true, but note what I wrote in the original message - the issue 
-of dropping A2 is not U1, but U2, and that one doesn`t change.
-
-In this case, U1' will correctly represent U1 rebased on top of A3' 
-(where A2 is now missing), no problem there.
-
-But on the other end, as U2 holds changes between original merge and 
-B3 (being A1, A2, A3 and evil-merge M), it will also still hold 
-changes introduced by original A2.
-
-Rebasing it onto B3' brings all these changes along, and once merged 
-with U1' to produce "rebased" merge it unexpectedly introduces 
-supposedly dropped commit A2 changes in their full glory.
-
-Yes, considering this situation a conflict, as originally proposed, 
-by simply noticing that U1' and U2' differ, helps this to fail 
-loudly without doing the wrong thing.
-
-But U1' and U2' are really to be expected to stay the same in 
-non-interactive rebase case only, where it doesn`t help interactive 
-rebase case at all if it is to fail most of the time (where U1' and 
-U2' don`t have to be, but should be expected to possibly be different).
-
-So while your original proposal currently seems like it could be 
-working nicely for non-interactive rebase (and might be some simpler 
-interactive ones), now hitting/acknowledging its first real use 
-limit, my additional quick attempt[1] just tries to aid pretty 
-interesting case of complicated interactive rebase, too, where we 
-might be able to do better as well, still using you original proposal 
-as a base idea :)
-
-Regards, Buga
-
-[1] https://public-inbox.org/git/8829c395-fb84-2db0-9288-f7b28fa0d0d1@gmail.com/
