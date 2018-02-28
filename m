@@ -7,95 +7,102 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 20D2A1F404
-	for <e@80x24.org>; Wed, 28 Feb 2018 00:37:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 759EF1F404
+	for <e@80x24.org>; Wed, 28 Feb 2018 00:42:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751784AbeB1AhG (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Feb 2018 19:37:06 -0500
-Received: from mail-wm0-f41.google.com ([74.125.82.41]:54050 "EHLO
-        mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751463AbeB1AhG (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Feb 2018 19:37:06 -0500
-Received: by mail-wm0-f41.google.com with SMTP id t74so1841228wme.3
-        for <git@vger.kernel.org>; Tue, 27 Feb 2018 16:37:05 -0800 (PST)
+        id S1751801AbeB1AmI (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Feb 2018 19:42:08 -0500
+Received: from mail-ua0-f169.google.com ([209.85.217.169]:36274 "EHLO
+        mail-ua0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751518AbeB1AmH (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Feb 2018 19:42:07 -0500
+Received: by mail-ua0-f169.google.com with SMTP id i15so478657uak.3
+        for <git@vger.kernel.org>; Tue, 27 Feb 2018 16:42:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=r6OaqeSsyXSr49P58SdNKu6yg4Dhe9XwjUm/lt311Cw=;
-        b=Dm9W3J7m7Cb2k606UE5POLlJy2bHko59JyaU+90LRXLpI1zvrKFi1jxA4Z58tR3wkk
-         6ESI9dozFF8Yw/WRb0zTpqDLFa6CMAeWVhVkPLLl8V97HBB7lC5UbZkG88GicLuAkjUx
-         sxQk+TFIu+jBuUSgMEm2oLmE55ajj2vWuqJ8yYyddwSklTZXLpD9ENhHQCmcY31hVwaS
-         kskeM+O6vnXTHoD8+L3sH8G4x1nlvbHfdpFXCFqb9yAOjyatP7rfAmw3V9rAtNnywZCF
-         Mwv6dmF6utscsseZxwoSTMhZUOAIhX4tvu/07lnBEzxC7YYFKmLYDvLSDXRcTdqT7cgL
-         F+xQ==
+         :cc:content-transfer-encoding;
+        bh=8/H7yH9H/Dj95MzLXZU/RklETIZtPVwmsJBhwJ8Sc1g=;
+        b=GIW3y5aRXRF+6ozbtOH4zz1FB6ZasoYxwsHmt7jxJSyRXYvu4hZ2aGHCtzV1KGjOW/
+         7+PzY6yUDqx5i07d3ZAYe4wUQstB7MZGCMSYPoQRmzc6ycwcnZT/eYGKNnO7lao/DT2j
+         4ktE7E4bbmiZREZ4R1zIHow5kYlBhzKVfiiv891eQm5XpBe5AzjiZGfgbW9L+pyykK4b
+         NS64s97etxJGFZ9TOTGcIYuCtfa3Ou2/6TIUmEFKKzEwJmSswC1bMQXQ7FkdPzega3G0
+         wABMT8h1c5muNEAU3tjwXKL7tPPh2d0XygBoFZ9en6s/GMlVLL3dI+IO2uNYAuy89f9r
+         ++PA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=r6OaqeSsyXSr49P58SdNKu6yg4Dhe9XwjUm/lt311Cw=;
-        b=J4F5oa0NF8HZXbqsvUsai3kxY1bL4HWJlTnn6YzsAmjuI9vR58AM/dJnq5oRiaXHhP
-         +/P9mjH2cKSIBDyazG5IjpJct62zVW2/P7UfAOFM/+7Bbl3xIxGxrzNS10gJt+vv9hGy
-         xPFg5iV+rY0XVDwiS+ejcre7SUgMNj/sDwHzoM/kV51DpUNmaY3ow/ayYMd7MpQmjzzW
-         LIWLr3e0Ly6Y3m+fig5FQcI1adNYXQsufFYtcfoSlB7dlSZysyzetIwCy2O0gdMvYjcs
-         l/Kf91+mu/GmfL0/koJnG4cu1G1YvYmhNbPA4EAs9yofXgvlaObtpRvt3p2YRPNd5TRr
-         AARw==
-X-Gm-Message-State: APf1xPA50N9WUdfRdg2W4BZ+fDeLvT1/3Y6vDdnpRpPMToYpccC9Gv1S
-        ca+YRmRVIY0qSLepBXTjPYMFIpOpijDodB3X+Bs=
-X-Google-Smtp-Source: AG47ELsC4a8c/LodcZCOr+rwJeq7siiMa5pRG6tnvBDv7NMuXT6ZeGyM859uWKXStlP6hRCiZORAz1nuop14Vm8hQUw=
-X-Received: by 10.80.232.69 with SMTP id k5mr15097562edn.133.1519778224874;
- Tue, 27 Feb 2018 16:37:04 -0800 (PST)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=8/H7yH9H/Dj95MzLXZU/RklETIZtPVwmsJBhwJ8Sc1g=;
+        b=FWDYv8X2c0cVwPvFPwTaNMPyqRQ3zmyjxNk1lJ/hwLUB0J02EVfzHvPBZ6H0kHS7z6
+         xBGpfnM04GdbEdm0vh3IQnlGVxCUZFTgYZLxQf8iLauwIY8b6RK+PFGXzr0+Rww4kMck
+         lCY3dxL51QViYp1oL7g0u6gQ5qWURaYfg3EBrufNxgh6QVGrQwa86b5j92B2bqTtVmaI
+         nBHaJaFnF/OmhNGepC11RLC06cmsoFlC4TuepawCfU1u41e5wMv6Jbd20daXCN5a5KH1
+         y3fA8wjvwc14onfncsMcrtgmVAXnu/lVzQfTViTPD4fAk/GS9bZdqzYMKtGiRyZaRqTl
+         cqsQ==
+X-Gm-Message-State: APf1xPDeNFdccVot/ut1OojgQs/sxHE3oQ9IyEqZPghGEm5o/q0cKHVv
+        y81jXC1oAebUgDcF0eKuOPfNZZuJFt83ljVXLCw=
+X-Google-Smtp-Source: AG47ELsBYVZJvgbHFJAZZchCOetiEHDgTp7xtaLhrU40A/r2th+8Xt2naL6M3Mu1RJ2NHaA1iKIK/qgppSKO096wwlg=
+X-Received: by 10.159.59.229 with SMTP id y37mr10890630uah.48.1519778526837;
+ Tue, 27 Feb 2018 16:42:06 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.80.139.133 with HTTP; Tue, 27 Feb 2018 16:36:44 -0800 (PST)
-In-Reply-To: <940d959d-151d-68dd-0f13-320ebad0d75b@gmail.com>
-References: <87y3jtqdyg.fsf@javad.com> <bbe64321-4d3a-d3fe-8bb9-58b600fabf35@gmail.com>
- <nycvar.QRO.7.76.6.1802270051470.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
- <CA+P7+xq8UUcLWomUi=PS_hTKfJd3dMAxMmhioDS1bixwcmKAqw@mail.gmail.com>
- <nycvar.QRO.7.76.6.1802271718090.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
- <4d7f3406-b206-cc22-87df-85700d6a03d9@gmail.com> <33da31e9-9101-475d-8901-4b6b3df2f29d@gmail.com>
- <940d959d-151d-68dd-0f13-320ebad0d75b@gmail.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Tue, 27 Feb 2018 16:36:44 -0800
-Message-ID: <CA+P7+xrzxYSE0OyL8uyF+ErwfWFEgcqnHmaciwWkK-76sQ6ktw@mail.gmail.com>
-Subject: Re: [RFC] Rebasing merges: a jorney to the ultimate solution (Road Clear)
-To:     Igor Djordjevic <igor.d.djordjevic@gmail.com>
-Cc:     Git mailing list <git@vger.kernel.org>,
-        Sergey Organov <sorganov@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Junio C Hamano <gitster@pobox.com>
+Received: by 10.159.59.233 with HTTP; Tue, 27 Feb 2018 16:42:06 -0800 (PST)
+In-Reply-To: <192d4ee4-dbdd-3e47-b45c-8d1f7b69b9af@ramsayjones.plus.com>
+References: <d0e6c6cf-7166-bef6-f179-c4e6acf7b0ac@ramsayjones.plus.com>
+ <xmqq3726t11d.fsf@gitster-ct.c.googlers.com> <69c7dc21-fb52-5982-f7d8-04518d06db6c@ramsayjones.plus.com>
+ <xmqqvaf1qqcx.fsf@gitster-ct.c.googlers.com> <20180213100437.15685-1-szeder.dev@gmail.com>
+ <xmqqr2porf4z.fsf@gitster-ct.c.googlers.com> <20180213172603.GA10062@sigill.intra.peff.net>
+ <xmqqeflorc9m.fsf@gitster-ct.c.googlers.com> <xmqq371mqjce.fsf@gitster-ct.c.googlers.com>
+ <xmqq4lm2ozq3.fsf@gitster-ct.c.googlers.com> <192d4ee4-dbdd-3e47-b45c-8d1f7b69b9af@ramsayjones.plus.com>
+From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Date:   Wed, 28 Feb 2018 01:42:06 +0100
+Message-ID: <CAM0VKj=hbT_m21ssF+nedVDrfNiYHu8wd9mUD55mAdNgmnZSgA@mail.gmail.com>
+Subject: Re: [PATCH 2/2] t5556: replace test_i18ngrep with a simple grep
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        GIT Mailing-list <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 27, 2018 at 3:40 PM, Igor Djordjevic
-<igor.d.djordjevic@gmail.com> wrote:
-> On 27/02/2018 20:59, Igor Djordjevic wrote:
+On Wed, Feb 28, 2018 at 12:47 AM, Ramsay Jones
+<ramsay@ramsayjones.plus.com> wrote:
+>
+>
+> On 27/02/18 22:05, Junio C Hamano wrote:
+>> Junio C Hamano <gitster@pobox.com> writes:
 >>
->> (3) ---X1---o---o---o---o---o---X2
->>        |\                       |\
->>        | A1---A2---A3---U1      | A1'--A2'--A3'--U1'
->>        |             \          |
->>        |              M         |
->>        |             /          |
->>        \-B1---B2---B3---U2      \-B1'--B2'--B3'--U2'
+>>> OK, somehow I had the version from Ramsay on a topic branch that was
+>>> not merged to 'pu'.  Here is the replacement for 2/2 I'd be queuing.
+>>>
+>>> We'd need SZEDER to sign it off (optionally correcting mistakes in
+>>> the log message) if we are going with this solution.
+>>>
+>>> Thanks.
 >>
+>> I guess I missed Ramsay's v2 which already did this
+>>
+>> <550fb3f4-8d25-c5c4-0ecd-3a4e61ea13f4@ramsayjones.plus.com>
 >
-> Meh, I hope I`m rushing it now, but for example, if we had decided to
-> drop commit A2 during an interactive rebase (so losing A2' from
-> diagram above), wouldn`t U2' still introduce those changes back, once
-> U1' and U2' are merged, being incorrect/unwanted behavior...? :/
+> Yes, and as I said in the cover letter, I wasn't too sure that
+> I had passed that patch along correctly. ;-)
 >
-> p.s. Looks like Johannes already elaborated on this in the meantime,
-> let`s see... (goes reading that other e-mail[1])
+>> so I'll use that version.  We still want sign-off from Szeder,
+>> though.
 >
-> [1] https://public-inbox.org/git/nycvar.QRO.7.76.6.1802272330290.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz/
+> I would be happy with either version, or maybe Szeder would like
+> to tweak the commit message. In any event, it would be good to
+> get sign-off from Szeder.
 
+Certainly, here you go:
 
-In that case, the method won't work well at all, so I think we need a
-different approach.
+Signed-off-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
 
-Thanks,
-Jake
+However, I'm not sure about the authorship and taking credit for the
+patch.  We ended up taking my patch, sure, but I think Ramsay did all
+the real hard work, i.e. writing the commit message and, most
+importantly, realizing that something is wrong with that '...| sort' at
+the end of the line.
