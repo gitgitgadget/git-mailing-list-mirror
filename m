@@ -2,80 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 71D9B1F404
-	for <e@80x24.org>; Wed, 28 Feb 2018 18:59:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 623221F404
+	for <e@80x24.org>; Wed, 28 Feb 2018 19:02:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932414AbeB1S7I (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Feb 2018 13:59:08 -0500
-Received: from mail-yw0-f171.google.com ([209.85.161.171]:42711 "EHLO
-        mail-yw0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932088AbeB1S7H (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Feb 2018 13:59:07 -0500
-Received: by mail-yw0-f171.google.com with SMTP id u84so1173634ywg.9
-        for <git@vger.kernel.org>; Wed, 28 Feb 2018 10:59:07 -0800 (PST)
+        id S932355AbeB1TCn (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Feb 2018 14:02:43 -0500
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:36537 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932088AbeB1TCm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Feb 2018 14:02:42 -0500
+Received: by mail-wr0-f196.google.com with SMTP id v111so3568359wrb.3
+        for <git@vger.kernel.org>; Wed, 28 Feb 2018 11:02:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=1dAAKWErFy77/u1sBGpQzVC9YamrSbETZL/u2RjZ200=;
-        b=FaDfJYrFBnu1JC9UZlarSI31C8VUUAIufrhQZEQN2gCnIlucTqEG8mt2z7Do3m9uCL
-         gQBSdRnZt9KRYW9UagqGGrusrdhct/PBvnt/rC9wCRH4ldmLx6KxJnp5aWRimf4BaSf5
-         SQuDqNStPfsZHTtgvhsuAOFDgDDGzbTldtI7QIYmVbf1aFcTTEfFHayoerRAA3ZJFPmU
-         nXQK2NIL6LfFVGxzKuvt5psRx2zzQx3ZiC4OBJCmJ8S4AvxNhQEJxfKIsuxNAmnp5j+v
-         JlhQf7zepsnBsqaXYIZ47N/SN9ohtBNaYfQeH1kFSQ0iSa6SY3SsMRe3ubmjm+39G6Oy
-         h3ZQ==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=W+ewCIUu0Hq2qxFYo/22XdDw4IjQ3E/T69w0FVkVD+o=;
+        b=UqZwnLw038KYGiIuOwn3M8yOxEXf0SFqOsisIQg0XozPs4483/xHVYnznkjRC1RL1u
+         O0yZj5c9qQ5yDZ3wONRkgQi2Zea0R/Kam4qlqY/4fIExnqDnSNge1m/3nZfILr6Ic6VE
+         cRkQNCLUarXIRRkykR0PoVOQf9zFEVQFruhFoZViieTNVesHSolVBPFiC7L2n80rkLzx
+         5TipvrHnaSx4Lq3uy86x4YnuLnal7vWkgueOxCGZNhxVvQ3lVeGGdgj1MAW2bbUeHasG
+         sKAMsgxwJLpmf/TIX7oXv69bqmITUWaUzO8zMX93uuosZGDFLyou1ftYbhZBlJteUPhH
+         NDZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=1dAAKWErFy77/u1sBGpQzVC9YamrSbETZL/u2RjZ200=;
-        b=Mx1Rc6Zbz8jY+irOVXuTv4tJc4vh0q/J2Hg9b6hNDcCKsntdHZcR1y9zjnZDVI49nS
-         Vu4HX3rbjtALObGdKXSBIXfEo8f2QG7cC63GPISQhNR2XQ6hWJLUyBGHxMKNroTAvi8b
-         n965xO/2uACelaR5hf3qD2/XupMsdNcS6TISmTag3nKtZoXPx6VFJh/YPW8v/nMHIueI
-         hLveaJLDOB5QR1lLbblxRRB2yTsUVGT2UJZEJiehbNuuh4VXrUdrF79r15pFu+DvdPo9
-         I56JHfwzMyQdHlArbnV+OBnJoPWmJEw64wpMyhMbDTVPuGABCU7VAHyufzDwA927gNWn
-         +ffg==
-X-Gm-Message-State: APf1xPB268UpwVV0Efxh3Y/6o2zIIQchzV6pzPDVK+3KU6yn5SqPcOGv
-        09P7SrI5cqaB/K7Hb30P0pVXs1H7OWN0thqm61NpLw==
-X-Google-Smtp-Source: AG47ELvxRMz61FGEtB8ZMTG/wePw9dgdnKjjQbozIO+rdlVJ5Ryrh6u5tjI0rzqZllH0t1E2w871o5+UQTvZXFmdMPE=
-X-Received: by 10.129.196.74 with SMTP id s10mr12613879ywj.33.1519844346251;
- Wed, 28 Feb 2018 10:59:06 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=W+ewCIUu0Hq2qxFYo/22XdDw4IjQ3E/T69w0FVkVD+o=;
+        b=UvoH15gwnYLfkiHT6V27JCH0Qp7fkrMDIanWeERIywmzZgBRcFh85rt6ltE5jMzNuK
+         h1AM4oUURuMhuIJqBOOQq/r5wIfJS8v5ZunXCAn4zr4aIj2zqfgfDEpM+42QlqtuLrQn
+         rO7MkywIzLjCI8Jc6euPB/1RgByW2B14NaOuj/8L4EVODzoH/EJl/r6X4Bj7Y/74t5mn
+         v8AFu1jEpg3OY7s8/nPZxUEhWSkvwVmL01RO6ryJ7P5cdCbMSBE1Ejp9wPDonPAHR6+1
+         B7ZJs7++EXXCFTIf+rr23ddKvcS1GV0l41qF3GWOBUXjIN+SadBoO5e9Gu5NheEinXlU
+         LEew==
+X-Gm-Message-State: APf1xPDqOVSkYQ9RxgFkPKB9xQ5qO907oAHy4ir40cN0BRQPMgZ6jjtl
+        eKu50+Qd1zSCwzfiXlM/UMk=
+X-Google-Smtp-Source: AH8x227z2aEa6mbmpmWInJabGwNT8n61mtWTtmMQ6x7hCA/Y79HeCwysONa8IpuwNBfgXXkl5Lob4w==
+X-Received: by 10.223.160.67 with SMTP id l3mr15667316wrl.201.1519844560660;
+        Wed, 28 Feb 2018 11:02:40 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id v9sm2028443wre.8.2018.02.28.11.02.40
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 28 Feb 2018 11:02:40 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git@vger.kernel.org, pclouds@gmail.com
+Subject: Re: [PATCH 00/11] Moving global state into the repository object (part 2)
+References: <20180228010608.215505-1-sbeller@google.com>
+        <xmqq371lm1zd.fsf@gitster-ct.c.googlers.com>
+Date:   Wed, 28 Feb 2018 11:02:39 -0800
+In-Reply-To: <xmqq371lm1zd.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Wed, 28 Feb 2018 09:57:10 -0800")
+Message-ID: <xmqq7eqxkkds.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 2002:a25:cfcb:0:0:0:0:0 with HTTP; Wed, 28 Feb 2018 10:59:05
- -0800 (PST)
-In-Reply-To: <xmqqy3jdknar.fsf@gitster-ct.c.googlers.com>
-References: <20180228010608.215505-1-sbeller@google.com> <20180228021530.GA20625@duynguyen.dek-tpc.internal>
- <xmqqy3jdknar.fsf@gitster-ct.c.googlers.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 28 Feb 2018 10:59:05 -0800
-Message-ID: <CAGZ79kaurxM+Daa43ZQ_LCn6HbiaXex_NtO73g2ip70RUpjM7A@mail.gmail.com>
-Subject: Re: [PATCH 00/11] Moving global state into the repository object
- (part 2)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Duy Nguyen <pclouds@gmail.com>, git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 28, 2018 at 9:59 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Duy Nguyen <pclouds@gmail.com> writes:
->
->> Looking at the full-series diff though, it makes me wonder if we
->> should keep prepare_packed_git() private (i.e. how we initialize the
->> object store, packfile included, is a private matter). How about
->> something like this on top?
->
-> Yup, that looks cleaner.
+Junio C Hamano <gitster@pobox.com> writes:
 
-I agree that it looks cleaner. So we plan on just putting
-it on top of that series?
+> Stefan Beller <sbeller@google.com> writes:
+>
+>> This applies on top of origin/sb/object-store and is the continuation of
+>> that series, adding the repository as a context argument to functions.
+>
+> Wait a minute.  Is that topic ever shown to work well together with
+> other topics in flight and are now ready to be built upon?  I had an
+> impression that it is just starting to get serious reviews.  
+>
+> Sorry, but I am behind ;-)
 
-Thanks for the help on refactoring,
-Stefan
+OK, so I finally picked up the last round, which wasn't even in my
+private build.  I had the previous round but hadn't convinced myself
+that my conflict resolution with other topics in flight that were
+still mushy was correct, so it was out of 'pu', but at least it was
+in my tree, so that is where my impression came from.
+
+I saw that the way a list-head in a repository is initialized has
+been revamped in v4, which looked sensible.  Will merge it to 'pu'
+so that I can pick up the ignore-env removal from Duy.
+
