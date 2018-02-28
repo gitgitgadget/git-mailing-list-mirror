@@ -2,100 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CD0741F404
-	for <e@80x24.org>; Wed, 28 Feb 2018 18:17:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 726B71F404
+	for <e@80x24.org>; Wed, 28 Feb 2018 18:21:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932830AbeB1SQ7 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Feb 2018 13:16:59 -0500
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:38508 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932673AbeB1SQX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Feb 2018 13:16:23 -0500
-Received: by mail-wm0-f66.google.com with SMTP id z9so6797764wmb.3
-        for <git@vger.kernel.org>; Wed, 28 Feb 2018 10:16:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=3mDShPnDXM93gg9aOfOeM8G9L5kzGnejJHcLHYqLcMk=;
-        b=Pima0ltt0q7knWSceeLJs+IWwbuKNbF07cG24HmJ16qcoV8Ebsh+9O54vfwVCcySLq
-         JqlSiEr0hhyNkD3FguF/JQx7Et1NK0X10FsgaJofrngzSocDyNabHPR2bRxuoz2zCYPz
-         z/xNWZjeCfP6QGdxN26eobXbUf73TANvc2cNXCxM27MCcymj4TYDYVL6+EUBRg6u9Ptc
-         aJWpRR3CwW9RsN0vakmxsfTJqscXw5B9ZsvPrIOjlnWUAwZdOKVVLSzFEsXGX+1IJq3z
-         JUQ1DhQlGbe9WhOCYL2TSX+I1Eh9YdohLyf55ODpHH1RCdFx7dGUnQsXyWhzS8M2TnsE
-         K6wg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=3mDShPnDXM93gg9aOfOeM8G9L5kzGnejJHcLHYqLcMk=;
-        b=p0MzCkGXeafzvsV5alDOi9WlnkWoh5JHUMw0xoU60ZE0MYRGBpvdF+8fWPKzEJianA
-         h8nZKnznX7XlBUtl06jPH5q0mrlCDMXFj1kYOwZmzIHmESw9C1ONtwjb47IayiVSITBg
-         y6aoCZxtLFIjRzDHVHaCOKoBlpVUSL4L4YOsjXOhyM+8YnInjDNH0lvU9VQWQHMxmJIZ
-         ArWwmbbedsXGhLz8TmnzGiqlyi+D12WQL4u/14U7+2iQHW01CHH/v4N8pOww9ZpzUgMc
-         L9UoF6CD9qyl/y998KC89QHRSRlTP/7O2p620H00GFJnCW9U95GsFAcsJSsaNNFUmGTx
-         Jmyw==
-X-Gm-Message-State: APf1xPB0zP6R5zKKahHOyL4ohnBJxFIOHZtP3QNAKR09QOnyFmREyFpB
-        LJz2ElE60Un1PkhrbaYf3qj+UFRp
-X-Google-Smtp-Source: AG47ELvJgYyngJFFjDpss1yQN3VdvQrxl9aP8HcncAEeM5d0pkuFylEVkBcX2Xs63vcXZYb1Z0iXkQ==
-X-Received: by 10.28.183.9 with SMTP id h9mr12945577wmf.99.1519841782502;
-        Wed, 28 Feb 2018 10:16:22 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id 62sm2327579wrf.24.2018.02.28.10.16.21
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 28 Feb 2018 10:16:21 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Adam Borowski <kilobyte@angband.pl>
-Cc:     git@vger.kernel.org, Miklos Vajna <vmiklos@suse.cz>
-Subject: Re: [PATCH] hooks/pre-auto-gc-battery: allow gc to run on non-laptops
-References: <20180228044807.1000-1-kilobyte@angband.pl>
-Date:   Wed, 28 Feb 2018 10:16:21 -0800
-In-Reply-To: <20180228044807.1000-1-kilobyte@angband.pl> (Adam Borowski's
-        message of "Wed, 28 Feb 2018 05:48:07 +0100")
-Message-ID: <xmqqpo4pkmiy.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S932325AbeB1SVp (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Feb 2018 13:21:45 -0500
+Received: from elephants.elehost.com ([216.66.27.132]:37321 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932126AbeB1SVo (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Feb 2018 13:21:44 -0500
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id w1SILWiC005016
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Wed, 28 Feb 2018 13:21:33 -0500 (EST)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     "'Jonathan Nieder'" <jrnieder@gmail.com>
+Cc:     "'demerphq'" <demerphq@gmail.com>, "'Jeff King'" <peff@peff.net>,
+        "'Eric Wong'" <e@80x24.org>, "'Git'" <git@vger.kernel.org>,
+        "'Joachim Schmitz'" <jojo@schmitz-digital.de>,
+        "=?iso-8859-1?Q?'=C6var_Arnfj=F6r=F0_Bjarmason'?=" <avarab@gmail.com>
+References: <005501d3b025$c0057ce0$401076a0$@nexbridge.com> <20180228001616.GJ174036@aiede.svl.corp.google.com> <20180228040718.GA9043@whir> <20180228050034.GA373@sigill.intra.peff.net> <20180228074251.GA11673@dcvr> <20180228074918.GA32127@sigill.intra.peff.net> <CANgJU+V3fmhdsD8Q2NgV+RF3dbRdASV-Qwbp-agGjm6Y-PUCEw@mail.gmail.com> <003901d3b0b7$0a144280$1e3cc780$@nexbridge.com> <20180228174402.GC251290@aiede.svl.corp.google.com>
+In-Reply-To: <20180228174402.GC251290@aiede.svl.corp.google.com>
+Subject: RE: [Problem] test_must_fail makes possibly questionable assumptions about exit_code.
+Date:   Wed, 28 Feb 2018 13:21:27 -0500
+Message-ID: <005901d3b0c0$f5acd370$e1067a50$@nexbridge.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain;
+        charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AQJEpadERfpX5LkwuayU7lmWnKekrgHW5ptIArDwK6kB6BkubwJEbisnAR6VsxoBc3aoQAIARwqYArfRsxKiWDxbEA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Adam Borowski <kilobyte@angband.pl> writes:
+On February 28, 2018 12:44 PM, Jonathan Nieder wrote:
+> Randall S. Becker wrote:
+> 
+> > The problem is actually in git code in its test suite that uses perl
+> > inline, not in my test code itself. The difficulty I'm having is
+> > placing this appropriate so that the signal handler gets used
+> > throughout the test suite including in the perl -e invocations. This
+> > is more a lack of my own understanding of plumbing of git test
+> > framework rather than of using or coding perl.
+> 
+> Can you elaborate with an example?  My understanding was that
+> test_must_fail is only for running git.  If a test is running perl and
+wants to
+> check its exit code, the test is supposed to use !, not test_must_fail.
+> 
+> t/README backs me up:
+> 
+>  - use '! git cmd' when you want to make sure the git command exits
+>    with failure in a controlled way by calling "die()".  Instead,
+>    use 'test_must_fail git cmd'.  This will signal a failure if git
+>    dies in an unexpected way (e.g. segfault).
+> 
+>    On the other hand, don't use test_must_fail for running regular
+>    platform commands; just use '! cmd'.  We are not in the business
+>    of verifying that the world given to us sanely works.
+> 
+> So I don't consider the initial issue you raised a test issue at all!
+> It's a bug in the git commands, and a fix for it should not be specific to
+the
+> test suite.
+> 
+> And now it sounds like there is a second issue: the test suite is
+overusing
+> test_must_fail in some context and that needs to be fixed as well.
 
-> Desktops and servers tend to have no power sensor, thus on_ac_power returns
-> 255 ("unknown").
->
-> If that tool returns "unknown", there's no point in querying other sources
-> as it already queried them, and is smarter than us (can handle multiple
-> adapters).
+Have a look at a recent t1404 as a sample. Line 615 is the one causing the
+platform grief, because it triggers a 'die'. However, the particular test
+case #54, had no difference on platform with test_must_fail or !, which has
+the same underlying EBADF completion after digging and digging.
 
-The explanation talks about the exit status 255 being special and
-serves to signal "there is no point continuing, and it is OK to
-assume we are not on batttery", while the code says that anything
-but exit status 1 can be treated as such.  Which is correct?
+not ok 52 - delete fails cleanly if packed-refs file is locked
+#
+#               prefix=refs/locked-packed-refs &&
+#               # Set up a reference with differing loose and packed
+versions:
+#               git update-ref $prefix/foo $C &&
+#               git pack-refs --all &&
+#               git update-ref $prefix/foo $D &&
+#               git for-each-ref $prefix >unchanged &&
+#               # Now try to delete it while the `packed-refs` lock is held:
+#               : >.git/packed-refs.lock &&
+#               test_when_finished "rm -f .git/packed-refs.lock" &&
+#               ! git update-ref -d $prefix/foo >out 2>err &&
+#               git for-each-ref $prefix >actual &&
+#               test_i18ngrep "Unable to create $Q.*packed-refs.lock$Q: File
+exists" err &&
+#               test_cmp unchanged actual
+#
 
-> Reported by: Xin Li <delphij@google.com>
-> Signed-off-by: Adam Borowski <kilobyte@angband.pl>
-> ---
->  contrib/hooks/pre-auto-gc-battery | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/contrib/hooks/pre-auto-gc-battery b/contrib/hooks/pre-auto-gc-battery
-> index 6a2cdebdb..7ba78c4df 100755
-> --- a/contrib/hooks/pre-auto-gc-battery
-> +++ b/contrib/hooks/pre-auto-gc-battery
-> @@ -17,7 +17,7 @@
->  # ln -sf /usr/share/git-core/contrib/hooks/pre-auto-gc-battery \
->  #	hooks/pre-auto-gc
->  
-> -if test -x /sbin/on_ac_power && /sbin/on_ac_power
-> +if test -x /sbin/on_ac_power && (/sbin/on_ac_power;test $? -ne 1)
->  then
->  	exit 0
->  elif test "$(cat /sys/class/power_supply/AC/online 2>/dev/null)" = 1
