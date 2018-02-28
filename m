@@ -7,104 +7,101 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 806F71F404
-	for <e@80x24.org>; Wed, 28 Feb 2018 23:25:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 645EB1F404
+	for <e@80x24.org>; Wed, 28 Feb 2018 23:30:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S964965AbeB1XZS (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Feb 2018 18:25:18 -0500
-Received: from mail-yb0-f202.google.com ([209.85.213.202]:47531 "EHLO
-        mail-yb0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965000AbeB1XYF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Feb 2018 18:24:05 -0500
-Received: by mail-yb0-f202.google.com with SMTP id c3-v6so2371251ybl.14
-        for <git@vger.kernel.org>; Wed, 28 Feb 2018 15:24:05 -0800 (PST)
+        id S965033AbeB1Xab (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Feb 2018 18:30:31 -0500
+Received: from mail-yb0-f174.google.com ([209.85.213.174]:46579 "EHLO
+        mail-yb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S964903AbeB1Xa2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Feb 2018 18:30:28 -0500
+Received: by mail-yb0-f174.google.com with SMTP id e142-v6so1497710ybc.13
+        for <git@vger.kernel.org>; Wed, 28 Feb 2018 15:30:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=mime-version:date:in-reply-to:message-id:references:subject:from:to
-         :cc;
-        bh=cgmZDgLILJVRyFAffvM4nEjVehePKbZPsU9uA/8bn8c=;
-        b=iVYQpaLM1u+2w+xdM2bByamQFqK1jvHdtZ87/JmOzqMHQ/RyEkCr1zq+hMCwOipM4X
-         ha5rRj4ogkSfnPot9k4JsvKvCl93TITe5rNwnaV80XuEBbFh+1dFG+Wpdt+uAVr50GhR
-         asA7PGjma4hy23ooxlaWb6nbvH9VO/Lmh/BtLexuphIF/NcEwQBu68dJElIbof/zaLVY
-         jQAqQwL3HUuyWUv/5MxH+U6je7574kE+lIuYt3PL/QIf93264ZJVmnK2bKN6AhV69TU0
-         FYoIHEFItJ0iVzw4kf7MwrzeSZZ7FtWWHj8nuQEut2DftvKt0qawZEZ42RQUNTf6za1o
-         MVtg==
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=+poClxX04enNDj8wW2RMFPl17URZHSatldIg49K6LAk=;
+        b=tydWFAY+Afj2+WP2QG8DJzCbzTaiBm5ijBjugrh8Iv9nrz98VctDTD07y2NACD26+Q
+         pq4rGlppu0UOT5nfTHGMvaeusR0U9p+hVnF3yV9vJ7HDLlLcMd9GjM3HZAGjIy1YGR/k
+         Tw2QN2pMgnv0gQvKSwFpDDl4hBS75Eh8+azoksINUgHOdoV3F3ZQsYnRPJLsUzwbGqTt
+         2Zkd84HeW7+WODzIKkUaD0/0ruhKuR806ctc35hs1B3iwFxgRQdPop3Ozmij3gSPieHL
+         rVwGhER2352qWH2y01i06zVpH6CnR/wbvlkC8+aspsjuQ3otNMjdCe8AbVmRmXsTU24A
+         DgUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:date:in-reply-to:message-id
-         :references:subject:from:to:cc;
-        bh=cgmZDgLILJVRyFAffvM4nEjVehePKbZPsU9uA/8bn8c=;
-        b=Lx+cwzO4a4R1WYkgvxGPxpJZUvOnHwk27K0C/XtwG4pOvRHtFQygzbyHHMBRjl/2vn
-         RaXdoW/TS039Mwq/zbAQM+fMBwFWkAnxGq1X75pdinO5hZTBLC+Uu6Mc89MrdNKW3G3B
-         8PitflfLZFRuis9e29JJT53Ep6uQ3D6c8/nDf6Le1tpeyhT1ZYdgBbXpSWd+R6o+P2HD
-         38PjAGG5TDgHq/HUn/2oVE9anEcyHSLVX4AnfV7oe/hRmXcaZl8jOx2ec8oi4QqGtBBt
-         90WT2jIGfHSt17hYO4GlaEkJIOdwKABglA2muF6Xe4B7QajuSNV4XRVh8A/CL/ts6mqP
-         5PLg==
-X-Gm-Message-State: APf1xPACnNd+XQsWiX0F+OkqK4Z3t6XLs3NTkmp8z5khKK53iNImvfk/
-        9pRtVP6Tojm9W8ZSwAdzGcStRJrxjqlYau0vm+nfYUYgIfO6g4T8RcLt9f32A3jooFn/iJHeUGA
-        AeJROjXO/rqCS9GVLighWn4igCdOXmhnlHDBMAMBncqTPJCQtE3GK8U2F7Q==
-X-Google-Smtp-Source: AG47ELv7EBAiYyVk95zp+W45hopAmlPsewY/gmvJWc1cMGy+ioL1/iWu+aY598P3Gt4EdV8aAteriCNEEyg=
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=+poClxX04enNDj8wW2RMFPl17URZHSatldIg49K6LAk=;
+        b=q18YUenTDCgzHlFO4csp0QjsJLexoMn63EVbLxoSdzYmaujvgCMPE3NHKSQWQuaxke
+         CQ1Uapah8uN/AfNCFlIt08qn1ZSRkQCVA8guLtWfLhC7CpePW8+eTXIKL1JXILUuWDJi
+         wbykBpDroY6F6lk+uCBYDYhtGngJquDpgJhwmTI18/vU4NChcmfHB7anDj9U5ym/uApF
+         s9LMSsnbxJkwjt//j4mnXmVg80EYTB8VcBeWCYC2AORXadRT//L+JkICZdxzR8cyfqDK
+         f+AxQgwDXHXJGB68tD20lJIs7V95IalHe2UlIv8H5gSsWMgBBnngzttb/T1iiS0jaTtL
+         L/6g==
+X-Gm-Message-State: APf1xPCv+8O2niOa0fgAC8SwfjAuDhYwxKx0z9b5vsCrcqlTOL+XBYiF
+        S/cDGJPC/rDVLqtIZwCmU58tbttZL8jP/CrPfRJMDz6wM/A=
+X-Google-Smtp-Source: AG47ELueTHjTzrv10NF8hu7C7nJL/DyGlOvgccpmnKOZ4eDQnWkyVknMjrGwe/raisdoLkzpHdFt67gztyHzcIoLTm4=
+X-Received: by 2002:a25:7d42:: with SMTP id y63-v6mr13669994ybc.307.1519860627674;
+ Wed, 28 Feb 2018 15:30:27 -0800 (PST)
 MIME-Version: 1.0
-X-Received: by 2002:a25:d90d:: with SMTP id q13-v6mr9940032ybg.39.1519860245259;
- Wed, 28 Feb 2018 15:24:05 -0800 (PST)
-Date:   Wed, 28 Feb 2018 15:22:35 -0800
-In-Reply-To: <20180228232252.102167-1-bmwill@google.com>
-Message-Id: <20180228232252.102167-19-bmwill@google.com>
-References: <20180207011312.189834-1-bmwill@google.com> <20180228232252.102167-1-bmwill@google.com>
-X-Mailer: git-send-email 2.16.1.107.gffe1b9127
-Subject: [PATCH v4 18/35] fetch: pass ref patterns when fetching
-From:   Brandon Williams <bmwill@google.com>
-To:     git@vger.kernel.org
-Cc:     git@jeffhostetler.com, gitster@pobox.com, jrnieder@gmail.com,
-        pclouds@gmail.com, peff@peff.net, sbeller@google.com,
-        stolee@gmail.com, Brandon Williams <bmwill@google.com>
+Received: by 2002:a25:cfcb:0:0:0:0:0 with HTTP; Wed, 28 Feb 2018 15:30:27
+ -0800 (PST)
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 28 Feb 2018 15:30:27 -0800
+Message-ID: <CAGZ79ka6PXgs+JDicaQYWYSKgEthj0A-2bBaRcdp_0T2H+sREA@mail.gmail.com>
+Subject: The case for two trees in a commit ("How to make rebase less modal")
+To:     git <git@vger.kernel.org>
+Cc:     Sergey Organov <sorganov@gmail.com>, igor.d.djordjevic@gmail.com,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Construct a list of ref patterns to be passed to
-'transport_get_remote_refs()' from the refspec to be used during the
-fetch.  This list of ref patterns will be used to allow the server to
-filter the ref advertisement when communicating using protocol v2.
+$ git hash-object --stdin -w -t commit <<EOF
+tree c70b4a33a0089f15eb3b38092832388d75293e86
+parent 105d5b91138ced892765a84e771a061ede8d63b8
+author Stefan Beller <sbeller@google.com> 1519859216 -0800
+committer Stefan Beller <sbeller@google.com> 1519859216 -0800
+tree 5495266479afc9a4bd9560e9feac465ed43fa63a
+test commit
+EOF
+19abfc3bf1c5d782045acf23abdf7eed81e16669
+$ git fsck |grep 19abfc3bf1c5d782045acf23abdf7eed81e16669
+$
 
-Signed-off-by: Brandon Williams <bmwill@google.com>
----
- builtin/fetch.c | 16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+So it is technically possible to create a commit with two tree entries
+and fsck is not complaining.
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 850382f55..695fafe06 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -332,11 +332,25 @@ static struct ref *get_ref_map(struct transport *transport,
- 	struct ref *rm;
- 	struct ref *ref_map = NULL;
- 	struct ref **tail = &ref_map;
-+	struct argv_array ref_patterns = ARGV_ARRAY_INIT;
- 
- 	/* opportunistically-updated references: */
- 	struct ref *orefs = NULL, **oref_tail = &orefs;
- 
--	const struct ref *remote_refs = transport_get_remote_refs(transport, NULL);
-+	const struct ref *remote_refs;
-+
-+	for (i = 0; i < refspec_count; i++) {
-+		if (!refspecs[i].exact_sha1) {
-+			if (refspecs[i].pattern)
-+				argv_array_push(&ref_patterns, refspecs[i].src);
-+			else
-+				expand_ref_pattern(&ref_patterns, refspecs[i].src);
-+		}
-+	}
-+
-+	remote_refs = transport_get_remote_refs(transport, &ref_patterns);
-+
-+	argv_array_clear(&ref_patterns);
- 
- 	if (refspec_count) {
- 		struct refspec *fetch_refspec;
--- 
-2.16.2.395.g2e18187dfd-goog
+But why would I want to do that?
 
+There are multiple abstraction levels in Git, I think of them as follows:
+* data structures / object model
+* plumbing
+* porcelain commands to manipulate the repo "at small scale", e.g.
+create a commit/tag
+* porcelain to modify the repo "at larger scale", such as rebase,
+cherrypicking, reverting
+  involving more than 1 commit.
+
+These large scale operations involving multiple commits however
+are all modal in its nature. Before doing anything else, you have to
+finish or abort the rebase or you need expert knowledge how to
+go otherwise.
+
+During the rebase there might be a hard to resolve conflict, which
+you may not want to resolve right now, but defer to later.  Deferring a
+conflict is currently impossible, because precisely one tree is recorded.
+
+If we had multiple trees possible in a commit, then all these large scale
+operations would stop being modal and you could just record the unresolved
+merge conflict instead; to come back later and fix it up later.
+
+I'd be advocating for having multiple trees in a commit
+possible locally; it might be a bad idea to publish such trees.
+
+Opinions or other use cases?
+
+Thanks,
+Stefan
