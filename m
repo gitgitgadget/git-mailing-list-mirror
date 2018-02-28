@@ -2,179 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 822F01F404
-	for <e@80x24.org>; Wed, 28 Feb 2018 18:12:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CD0741F404
+	for <e@80x24.org>; Wed, 28 Feb 2018 18:17:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932120AbeB1SMF (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Feb 2018 13:12:05 -0500
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:45544 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752465AbeB1SME (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Feb 2018 13:12:04 -0500
-Received: by mail-pg0-f66.google.com with SMTP id i133so1234018pgc.12
-        for <git@vger.kernel.org>; Wed, 28 Feb 2018 10:12:04 -0800 (PST)
+        id S932830AbeB1SQ7 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Feb 2018 13:16:59 -0500
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:38508 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932673AbeB1SQX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Feb 2018 13:16:23 -0500
+Received: by mail-wm0-f66.google.com with SMTP id z9so6797764wmb.3
+        for <git@vger.kernel.org>; Wed, 28 Feb 2018 10:16:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=6ykzvpvnBAkLjxp3HPlWiCFjR2a+DgYdfw2APHfkv9w=;
-        b=O6NSa+C+t+QpAXBeP7pGpAgYEHmkhQ/5zL/Odesc9n2cmWDgJmpOadbxfgC5zqNEcP
-         PihQr24PO8vnC0WA7kY2TxoVHxMFwoMGWIMwxcCSm+MP1EGGTxAC0xJTWFiiMCmoWcoq
-         zjD2ZgdBAaMiIde/negXiBT00h9Vxhu34uWz5ZsobwVbqMXhyHM9BlsZ8A/Xm9AQJr8R
-         iaL2k87K9+lRvQHQHKqB7gtgQvIh3WULeqLcKZUfzQLubwTEPqH++2/aVOdjm4+2IC66
-         P4YhgZWhYZ8yPDZxideBWmfVHTnqUKFdx9kSBvG5wmF31ffDxEONSgrXHNQeLbUksQQP
-         5/5w==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=3mDShPnDXM93gg9aOfOeM8G9L5kzGnejJHcLHYqLcMk=;
+        b=Pima0ltt0q7knWSceeLJs+IWwbuKNbF07cG24HmJ16qcoV8Ebsh+9O54vfwVCcySLq
+         JqlSiEr0hhyNkD3FguF/JQx7Et1NK0X10FsgaJofrngzSocDyNabHPR2bRxuoz2zCYPz
+         z/xNWZjeCfP6QGdxN26eobXbUf73TANvc2cNXCxM27MCcymj4TYDYVL6+EUBRg6u9Ptc
+         aJWpRR3CwW9RsN0vakmxsfTJqscXw5B9ZsvPrIOjlnWUAwZdOKVVLSzFEsXGX+1IJq3z
+         JUQ1DhQlGbe9WhOCYL2TSX+I1Eh9YdohLyf55ODpHH1RCdFx7dGUnQsXyWhzS8M2TnsE
+         K6wg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=6ykzvpvnBAkLjxp3HPlWiCFjR2a+DgYdfw2APHfkv9w=;
-        b=ENDfrnk8d8VzegP01VlbO4YQhQxiT0f4AX5dP30OlbEzlKVZhvOapoMRIPkxPwaVlF
-         xR4sE76ccT4WQhkQSpMp/vbQdx6as1VbgRXVJr4ZkJhZcgHevs3WEGg0RWQMYyLVW5kc
-         A0d3Glm+kr09cf1jXdta6v6IZTNaII/Pa/G8iqu7mDLtT+LsuECmMdfTjm0nyLZBlgBV
-         x9bECysro7+EjcW+MdES5w0h48vQjapJ39Aa+2GNJiJlI7YfwEbjZCJ6WZi3GGbU1uPy
-         877MMiSsynaJIWMwcCWCDd3H3uFSP3ZcwPbFcBIkUdg56x1JDEbJ96El1kt7HI8y+7P4
-         /j/g==
-X-Gm-Message-State: APf1xPA2ggvngbdDIUuhtoVi74Olmp9NLdelKa9oP1b7UgmwjUZKLasQ
-        cmZC5FrN98ePkLwjS4ZG64KuWA==
-X-Google-Smtp-Source: AH8x224zpMFYe+mRhRtWNVVlXWndoMnAE5XyY2SHBprxzulnN+/0OMFxCAsxx2CTX1EkmuWGGGCOBw==
-X-Received: by 10.101.96.212 with SMTP id r20mr14951858pgv.139.1519841523646;
-        Wed, 28 Feb 2018 10:12:03 -0800 (PST)
-Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
-        by smtp.gmail.com with ESMTPSA id y124sm3896919pgb.29.2018.02.28.10.12.02
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=3mDShPnDXM93gg9aOfOeM8G9L5kzGnejJHcLHYqLcMk=;
+        b=p0MzCkGXeafzvsV5alDOi9WlnkWoh5JHUMw0xoU60ZE0MYRGBpvdF+8fWPKzEJianA
+         h8nZKnznX7XlBUtl06jPH5q0mrlCDMXFj1kYOwZmzIHmESw9C1ONtwjb47IayiVSITBg
+         y6aoCZxtLFIjRzDHVHaCOKoBlpVUSL4L4YOsjXOhyM+8YnInjDNH0lvU9VQWQHMxmJIZ
+         ArWwmbbedsXGhLz8TmnzGiqlyi+D12WQL4u/14U7+2iQHW01CHH/v4N8pOww9ZpzUgMc
+         L9UoF6CD9qyl/y998KC89QHRSRlTP/7O2p620H00GFJnCW9U95GsFAcsJSsaNNFUmGTx
+         Jmyw==
+X-Gm-Message-State: APf1xPB0zP6R5zKKahHOyL4ohnBJxFIOHZtP3QNAKR09QOnyFmREyFpB
+        LJz2ElE60Un1PkhrbaYf3qj+UFRp
+X-Google-Smtp-Source: AG47ELvJgYyngJFFjDpss1yQN3VdvQrxl9aP8HcncAEeM5d0pkuFylEVkBcX2Xs63vcXZYb1Z0iXkQ==
+X-Received: by 10.28.183.9 with SMTP id h9mr12945577wmf.99.1519841782502;
+        Wed, 28 Feb 2018 10:16:22 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id 62sm2327579wrf.24.2018.02.28.10.16.21
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 28 Feb 2018 10:12:02 -0800 (PST)
-Date:   Wed, 28 Feb 2018 10:12:01 -0800
-From:   Brandon Williams <bmwill@google.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, jonathantanmy@google.com,
-        sbeller@google.com, sunshine@sunshineco.com
-Subject: Re: [PATCH v3 0/4] Delete ignore_env member in struct repository
-Message-ID: <20180228181201.GA87122@google.com>
-References: <20180227095846.9238-1-pclouds@gmail.com>
- <20180228013727.13815-1-pclouds@gmail.com>
+        Wed, 28 Feb 2018 10:16:21 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Adam Borowski <kilobyte@angband.pl>
+Cc:     git@vger.kernel.org, Miklos Vajna <vmiklos@suse.cz>
+Subject: Re: [PATCH] hooks/pre-auto-gc-battery: allow gc to run on non-laptops
+References: <20180228044807.1000-1-kilobyte@angband.pl>
+Date:   Wed, 28 Feb 2018 10:16:21 -0800
+In-Reply-To: <20180228044807.1000-1-kilobyte@angband.pl> (Adam Borowski's
+        message of "Wed, 28 Feb 2018 05:48:07 +0100")
+Message-ID: <xmqqpo4pkmiy.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20180228013727.13815-1-pclouds@gmail.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 02/28, Nguyễn Thái Ngọc Duy wrote:
-> v3 fixes comment style. Also since Brandon raised a question about
-> shared_root, it's obviously not a good name, so I renamed it to
-> commondir.
+Adam Borowski <kilobyte@angband.pl> writes:
 
-Thanks, its a bit clearer and more consistent with the rest of the
-terminology we already have :)
+> Desktops and servers tend to have no power sensor, thus on_ac_power returns
+> 255 ("unknown").
+>
+> If that tool returns "unknown", there's no point in querying other sources
+> as it already queried them, and is smarter than us (can handle multiple
+> adapters).
 
-> 
-> I still keep the delete patch 2/4, but I move the repo_setup_env()
-> deletion back to 1/4 so all env logic is in one patch (the
-> introduction of new helper functions in 1/4 and deletion in 2/4 are
-> still diff noise if 2/4 is completely merged back).
-> 
-> Interdiff:
-> 
-> diff --git a/environment.c b/environment.c
-> index 47c6e31559..b2128c1188 100644
-> --- a/environment.c
-> +++ b/environment.c
-> @@ -149,7 +149,8 @@ static char *expand_namespace(const char *raw_namespace)
->  	return strbuf_detach(&buf, NULL);
->  }
->  
-> -/* Wrapper of getenv() that returns a strdup value. This value is kept
-> +/*
-> + * Wrapper of getenv() that returns a strdup value. This value is kept
->   * in argv to be freed later.
->   */
->  static const char *getenv_safe(struct argv_array *argv, const char *name)
-> @@ -170,7 +171,7 @@ void setup_git_env(const char *git_dir)
->  	struct set_gitdir_args args = { NULL };
->  	struct argv_array to_free = ARGV_ARRAY_INIT;
->  
-> -	args.shared_root = getenv_safe(&to_free, GIT_COMMON_DIR_ENVIRONMENT);
-> +	args.commondir = getenv_safe(&to_free, GIT_COMMON_DIR_ENVIRONMENT);
->  	args.object_dir = getenv_safe(&to_free, DB_ENVIRONMENT);
->  	args.graft_file = getenv_safe(&to_free, GRAFT_ENVIRONMENT);
->  	args.index_file = getenv_safe(&to_free, INDEX_ENVIRONMENT);
-> diff --git a/repository.c b/repository.c
-> index c555dacad2..4f44384dde 100644
-> --- a/repository.c
-> +++ b/repository.c
-> @@ -27,15 +27,15 @@ static void expand_base_dir(char **out, const char *in,
->  }
->  
->  static void repo_set_commondir(struct repository *repo,
-> -			       const char *shared_root)
-> +			       const char *commondir)
->  {
->  	struct strbuf sb = STRBUF_INIT;
->  
->  	free(repo->commondir);
->  
-> -	if (shared_root) {
-> +	if (commondir) {
->  		repo->different_commondir = 1;
-> -		repo->commondir = xstrdup(shared_root);
-> +		repo->commondir = xstrdup(commondir);
->  		return;
->  	}
->  
-> @@ -58,7 +58,7 @@ void repo_set_gitdir(struct repository *repo,
->  	repo->gitdir = xstrdup(gitfile ? gitfile : root);
->  	free(old_gitdir);
->  
-> -	repo_set_commondir(repo, o->shared_root);
-> +	repo_set_commondir(repo, o->commondir);
->  	expand_base_dir(&repo->objects.objectdir, o->object_dir,
->  			repo->commondir, "objects");
->  	free(repo->objects.alternate_db);
-> diff --git a/repository.h b/repository.h
-> index 07e8971428..e05a77a099 100644
-> --- a/repository.h
-> +++ b/repository.h
-> @@ -81,7 +81,7 @@ struct repository {
->  extern struct repository *the_repository;
->  
->  struct set_gitdir_args {
-> -	const char *shared_root;
-> +	const char *commondir;
->  	const char *object_dir;
->  	const char *graft_file;
->  	const char *index_file;
-> 
-> Nguyễn Thái Ngọc Duy (4):
->   repository.c: move env-related setup code back to environment.c
->   repository.c: delete dead functions
->   sha1_file.c: move delayed getenv(altdb) back to setup_git_env()
->   repository: delete ignore_env member
-> 
->  cache.h        |  2 +-
->  environment.c  | 31 +++++++++++++++++--
->  object-store.h |  5 ++-
->  object.c       |  1 +
->  repository.c   | 84 ++++++++++++++++++++++++--------------------------
->  repository.h   | 21 +++++++------
->  setup.c        |  3 +-
->  sha1_file.c    |  6 +---
->  8 files changed, 87 insertions(+), 66 deletions(-)
-> 
-> -- 
-> 2.16.1.399.g632f88eed1
-> 
+The explanation talks about the exit status 255 being special and
+serves to signal "there is no point continuing, and it is OK to
+assume we are not on batttery", while the code says that anything
+but exit status 1 can be treated as such.  Which is correct?
 
--- 
-Brandon Williams
+> Reported by: Xin Li <delphij@google.com>
+> Signed-off-by: Adam Borowski <kilobyte@angband.pl>
+> ---
+>  contrib/hooks/pre-auto-gc-battery | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/contrib/hooks/pre-auto-gc-battery b/contrib/hooks/pre-auto-gc-battery
+> index 6a2cdebdb..7ba78c4df 100755
+> --- a/contrib/hooks/pre-auto-gc-battery
+> +++ b/contrib/hooks/pre-auto-gc-battery
+> @@ -17,7 +17,7 @@
+>  # ln -sf /usr/share/git-core/contrib/hooks/pre-auto-gc-battery \
+>  #	hooks/pre-auto-gc
+>  
+> -if test -x /sbin/on_ac_power && /sbin/on_ac_power
+> +if test -x /sbin/on_ac_power && (/sbin/on_ac_power;test $? -ne 1)
+>  then
+>  	exit 0
+>  elif test "$(cat /sys/class/power_supply/AC/online 2>/dev/null)" = 1
