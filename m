@@ -2,104 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 941071F404
-	for <e@80x24.org>; Wed, 28 Feb 2018 18:51:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 11D801F404
+	for <e@80x24.org>; Wed, 28 Feb 2018 18:56:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752997AbeB1Sv4 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Feb 2018 13:51:56 -0500
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:38603 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752790AbeB1Svz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Feb 2018 13:51:55 -0500
-Received: by mail-pf0-f194.google.com with SMTP id d26so1370530pfn.5
-        for <git@vger.kernel.org>; Wed, 28 Feb 2018 10:51:55 -0800 (PST)
+        id S932090AbeB1S4K (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Feb 2018 13:56:10 -0500
+Received: from mail-yb0-f179.google.com ([209.85.213.179]:34138 "EHLO
+        mail-yb0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753137AbeB1S4I (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Feb 2018 13:56:08 -0500
+Received: by mail-yb0-f179.google.com with SMTP id e3-v6so1224476ybk.1
+        for <git@vger.kernel.org>; Wed, 28 Feb 2018 10:56:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Yu1UF49M0kAkbAxf3O04jRqbhTp9QXQCgO0bAJ10pK4=;
-        b=R8cjJmyUa9eNHB+GZVgX1C7lDxreiWf5JvxoGrraqX0O2SsZqpZh/xSn0VsRuEnZTy
-         CH/l1ky2nh2e08F/uGaPPE4NVF8e5Ez9mcK3GgjpXCBpnmQEPWSzlSISsYm1iPB+/dNg
-         2dzCXZrBAZxDn+JM+J/dBPBmNgvuNif3T8EQPd1LLdJpxvBMLvpmMJ1fpRS6XZ2tz4NY
-         kq13G+hPWHei0cY01sBOI34W8xs9LnG0utTDvPYYEG/MvQ4jzMpiVXCPIXZMRE6m+6Ee
-         CM90hYw/56bi3qJuXl7lfTYj2GbbvFdBb+EQJQXJMhhfecOMoEZA4GCmzHqPLDet+CnJ
-         gUQw==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=O/v/W+LYmZIOUZ24k07ir4ctZb6/HSqeaGIV4Cydg2M=;
+        b=v1hHe6f00bIguKnT+j243AidsJtbtIL36NyLqyC0XH/SwIivXptQ93Hb4C6zgoxSJ7
+         Gc9bl9fw0qPRsGCXWwvkB9F5pXEwU3n9c82ogWeOY0oIzOUDwXdnpDTW4IwMKGaG5WKC
+         5cI/cj9hrYFmd93CZH/on3b9Ro48PmekFWSa1kbcnYMkvn9RtHdt0FWwghU9wV2cmfWk
+         iqX6/zZYe0yNCCw3I9O/rRUdeKQGxyMS0FroIJuYPN3EDJhoxRkL8mdIGQNkFMgeGock
+         bNg/Pch6UpzlTSLABuO8PgRln9DZ+Dpt2lXNLrqvGW3gEe9Nx/f5SDDqbdhvyNest+Fk
+         TAYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Yu1UF49M0kAkbAxf3O04jRqbhTp9QXQCgO0bAJ10pK4=;
-        b=nDbdoOCHh07XAPO9ayyxe4pnwJNTpk/xglDZk0nTXPOFR9k611FgF/GrKHFMXYE0dZ
-         IE9bQpaOsiL/IH9SRhZ886iw9P1qTLPbp9HK+BY3oLnbOXEd52IHvQCUDik3ahC3NxH6
-         HfvlMfxc5EI86X7+Cx8p9+/zJzDQPsVdBqO55wjVTovVHr6/XqJLahVp2ZmtKLXm/ya6
-         lJFu2b0TESviq4ACbJP9xvwgqBz61JYatkqpk1+PZqLO7yK66Czd3OrHuEKRcM5QHNpx
-         Rs5G7A3c8eCPv6m1t8Dv63qbR5mliq/aU2nf0O67RjDNfrfJcC6BKZi5U/gzgkAGeL/y
-         lzpA==
-X-Gm-Message-State: APf1xPAWN8lf6gCWotDKrfr9+jfxcKWBz+vzLA+gL9ZmMDlJUvD5vmKz
-        +fhDMWD8zulkUh5D6hDoLtA=
-X-Google-Smtp-Source: AH8x224Iy5ycHK2A31/y7t9xO3oF9NGNTLaJfAON2oSnK/v0Hbr658fRomPJ029hl5IlHyLB6qV1hQ==
-X-Received: by 10.98.91.5 with SMTP id p5mr18670348pfb.163.1519843914384;
-        Wed, 28 Feb 2018 10:51:54 -0800 (PST)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id 205sm4505172pfy.117.2018.02.28.10.51.53
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 28 Feb 2018 10:51:54 -0800 (PST)
-Date:   Wed, 28 Feb 2018 10:51:52 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     "Randall S. Becker" <rsbecker@nexbridge.com>
-Cc:     'demerphq' <demerphq@gmail.com>, 'Jeff King' <peff@peff.net>,
-        'Eric Wong' <e@80x24.org>, 'Git' <git@vger.kernel.org>,
-        'Joachim Schmitz' <jojo@schmitz-digital.de>,
-        =?iso-8859-1?Q?'=C6var_Arnfj=F6r=F0?= Bjarmason' 
-        <avarab@gmail.com>
-Subject: Re: [Problem] test_must_fail makes possibly questionable assumptions
- about exit_code.
-Message-ID: <20180228185152.GE251290@aiede.svl.corp.google.com>
-References: <005501d3b025$c0057ce0$401076a0$@nexbridge.com>
- <20180228001616.GJ174036@aiede.svl.corp.google.com>
- <20180228040718.GA9043@whir>
- <20180228050034.GA373@sigill.intra.peff.net>
- <20180228074251.GA11673@dcvr>
- <20180228074918.GA32127@sigill.intra.peff.net>
- <CANgJU+V3fmhdsD8Q2NgV+RF3dbRdASV-Qwbp-agGjm6Y-PUCEw@mail.gmail.com>
- <003901d3b0b7$0a144280$1e3cc780$@nexbridge.com>
- <20180228174402.GC251290@aiede.svl.corp.google.com>
- <005901d3b0c0$f5acd370$e1067a50$@nexbridge.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=O/v/W+LYmZIOUZ24k07ir4ctZb6/HSqeaGIV4Cydg2M=;
+        b=IAeNZCEiqMRh+PAS9HkIwGr8sptRmkLUCdP7Ic2bdwdDw9RgE9ckX0w/QLJV6GKaqe
+         y8+gesm/rDA2Z8nG47Dohma7yjTNu6Tn4VzQ8d4GUe65rwRKQdK4FDtrhUkKanHKE1iZ
+         xjf7IME1iHBIgS24MaKdikhVfUXgYbrDHKgm2G09xhZhof7mvmvenm67jrkdEMCqRYaT
+         ud0H0187lpPQRc/JASGcM4kJY1y4iLlRH1uu0ZG6WMj0f7Xpkf+hpOJo4bOPtNS946AP
+         WR3/36NIVQgU9fPFzTgjhW6ijK8ejJ//wxq1Qbg+c4yAWsDZVHa4ezezHYDVmOknM+B5
+         O0rQ==
+X-Gm-Message-State: APf1xPBw5uBrfwVDhkWl53G7Q4fRwTP3stmQR5peoOX09XKbyVnbn0fE
+        fGP+bKkxEPimzAH4qMRTj6i+xqjY2GeRscVutCpY4Q==
+X-Google-Smtp-Source: AG47ELs6qN09+CV5eIyYO8XI4W5bzMyQTGgZBoLxF6L9xrSsEj+CNf/1fcTHaRAgDfGOtccUfd5GQB45i5/j/PKajQA=
+X-Received: by 2002:a25:d9d6:: with SMTP id q205-v6mr12489995ybg.515.1519844167888;
+ Wed, 28 Feb 2018 10:56:07 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <005901d3b0c0$f5acd370$e1067a50$@nexbridge.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+Received: by 2002:a25:cfcb:0:0:0:0:0 with HTTP; Wed, 28 Feb 2018 10:56:07
+ -0800 (PST)
+In-Reply-To: <xmqq371lm1zd.fsf@gitster-ct.c.googlers.com>
+References: <20180228010608.215505-1-sbeller@google.com> <xmqq371lm1zd.fsf@gitster-ct.c.googlers.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 28 Feb 2018 10:56:07 -0800
+Message-ID: <CAGZ79kaDVrn6Qw_xsdyBST6XfJMXs43qDWx8jY2J9VsXwDKm5Q@mail.gmail.com>
+Subject: Re: [PATCH 00/11] Moving global state into the repository object
+ (part 2)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git <git@vger.kernel.org>, Duy Nguyen <pclouds@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Randall S. Becker wrote:
-> On February 28, 2018 12:44 PM, Jonathan Nieder wrote:
->> Randall S. Becker wrote:
+On Wed, Feb 28, 2018 at 9:57 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
+>
+>> This applies on top of origin/sb/object-store and is the continuation of
+>> that series, adding the repository as a context argument to functions.
+>
+> Wait a minute.  Is that topic ever shown to work well together with
+> other topics in flight and are now ready to be built upon?  I had an
+> impression that it is just starting to get serious reviews.
 
->>> The problem is actually in git code in its test suite that uses perl
->>> inline, not in my test code itself.
-[...]
->> Can you elaborate with an example?  My understanding was that
->> test_must_fail is only for running git.
-[...]
-> Have a look at a recent t1404 as a sample. Line 615 is the one causing the
-> platform grief, because it triggers a 'die'. However, the particular test
-> case #54, had no difference on platform with test_must_fail or !, which has
-> the same underlying EBADF completion after digging and digging.
+And I had the impression the serious reviews were done and fine;
+the only issue would be demonstrating its working fine with other
+series, where I was also worrying about conflicts with
+brians series. And to address that, I'd just send series in small sizes.
 
-Sorry to be dense: what I see on that line is
+> Sorry, but I am behind ;-)
 
-	test_must_fail git update-ref -d $prefix/foo >out 2>err &&
+Is there anything that a contributor can help with that eases
+refactoring series in flight?
 
-How is perl involved?
+Personally I find these refactorings not as rewarding as new
+features or fixing bugs, and additionally the risk of conflict
+rises, whereby the maintainer is likely to push back to the contributor
+to "please rebase", and rebasing with just textual conflicts is also
+not rewarding.
 
-Puzzled,
-Jonathan
+Is there anything process wise that we can do to make refactoring
+easier for contributors?
+
+Sorry for the miscommunication, though,
+
+Thanks,
+Stefan
