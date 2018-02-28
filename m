@@ -2,114 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7A6441F404
-	for <e@80x24.org>; Wed, 28 Feb 2018 15:34:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ECE701F404
+	for <e@80x24.org>; Wed, 28 Feb 2018 15:37:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932878AbeB1Pd7 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Feb 2018 10:33:59 -0500
-Received: from avasout04.plus.net ([212.159.14.19]:57970 "EHLO
-        avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932230AbeB1Pdy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Feb 2018 10:33:54 -0500
-Received: from [10.0.2.15] ([80.189.70.162])
-        by smtp with ESMTPA
-        id r3jreW3wubfBDr3jseQg7l; Wed, 28 Feb 2018 15:33:52 +0000
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.3 cv=F4V5iJpN c=1 sm=1 tr=0
- a=zzlqjQC3YyNvDZl/Gy+4mg==:117 a=zzlqjQC3YyNvDZl/Gy+4mg==:17
- a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=ybZZDoGAAAAA:8 a=pGLkceISAAAA:8
- a=uWZAkBzQyb7RnwYv9-IA:9 a=yoHSg3uWGdrYdID-:21 a=0qIWBEY5YMm0OLqj:21
- a=QEXdDO2ut3YA:10 a=yJM6EZoI5SlJf8ks9Ge_:22 a=0RhZnL1DYvcuLYC8JZ5M:22
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH 2/2] t5556: replace test_i18ngrep with a simple grep
-To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        GIT Mailing-list <git@vger.kernel.org>
-References: <d0e6c6cf-7166-bef6-f179-c4e6acf7b0ac@ramsayjones.plus.com>
- <xmqq3726t11d.fsf@gitster-ct.c.googlers.com>
- <69c7dc21-fb52-5982-f7d8-04518d06db6c@ramsayjones.plus.com>
- <xmqqvaf1qqcx.fsf@gitster-ct.c.googlers.com>
- <20180213100437.15685-1-szeder.dev@gmail.com>
- <xmqqr2porf4z.fsf@gitster-ct.c.googlers.com>
- <20180213172603.GA10062@sigill.intra.peff.net>
- <xmqqeflorc9m.fsf@gitster-ct.c.googlers.com>
- <xmqq371mqjce.fsf@gitster-ct.c.googlers.com>
- <xmqq4lm2ozq3.fsf@gitster-ct.c.googlers.com>
- <192d4ee4-dbdd-3e47-b45c-8d1f7b69b9af@ramsayjones.plus.com>
- <CAM0VKj=hbT_m21ssF+nedVDrfNiYHu8wd9mUD55mAdNgmnZSgA@mail.gmail.com>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <ffc3d3dc-6d21-4273-5362-cbf32e7e4e59@ramsayjones.plus.com>
-Date:   Wed, 28 Feb 2018 15:33:51 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
+        id S932819AbeB1Phz (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Feb 2018 10:37:55 -0500
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:52562 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932726AbeB1Phx (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Feb 2018 10:37:53 -0500
+Received: by mail-wm0-f65.google.com with SMTP id t3so5810347wmc.2
+        for <git@vger.kernel.org>; Wed, 28 Feb 2018 07:37:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=nCaBjhCvVdN0liZD4Cp/3dM92xwpJ8JIIlSLfqNWHk4=;
+        b=Kk3dfg8x6bjHd1xnM9f+ovoK2OTmI/+uPho/1/4Ce28eM+GPhwov/pgs5ZSMbktKUx
+         sBtKMy68+18YRvQJ5RaQMWywbJuw2XbTuwsxZb2RrlpyGyMWiktfg4kbdXTIy7YVSdzY
+         EtvOdvtv9xZzllVxIKp/zaUw5VvBcgSNrVKF2gPBf+XIDKXlshVaGHsMCFEXL/+lr7rW
+         gOowGjJItKEqu1ijDefdeDIU4qaZyhIUgBP81HNEAyTy/uHBf8hTgGW8BMHTtX3CEmZh
+         ETl0Njbn6uGvgfYB4R4GgosKAZD3g5movAjokrJFkgCypB8xauiUdt5gq1GdPZVGohd0
+         AkVg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=nCaBjhCvVdN0liZD4Cp/3dM92xwpJ8JIIlSLfqNWHk4=;
+        b=Eb5JOL27dnmdBRcbuaSo7EZl2QlfnOro/jVboaluFJoSB9poBAHqd7JeqRQ7er0xef
+         8OcM2R/u3tYiswdTv7fHFb1qWTD4RuTRkOxvzttb48959qWwwnH9fYYqT4r5KwyZRETY
+         PryBd3TRU5I4Ovr80FKzLm4yYGrszDizTZoxL7SEpgh8rNmvBbVOsM+FuU240BVbM9Xc
+         JwApnVkVnIr+XzGt+LOEeig33XlnwEOwOx4iR6oQtzpuPDinwjioXo5JolIqESqFYkpV
+         YoAQtaDkfSo9hIaV9Bk9MW5v2DeX4Iv5joiA1fpXz7NGHiwnyl+bx1EtoTvKD9BSVjjX
+         CH+A==
+X-Gm-Message-State: APf1xPD9HEOnqnn8OgLWQwOBJczLMpIjxe3nSltBI1pK1u2lhC0MwXd8
+        LGl9kM64WMHlopwd2a28npq+z8C0
+X-Google-Smtp-Source: AG47ELvOQ0d7HcJq0I/29PpcZhs2zUotHRV4BHs1bjyflrprtut1W4pH+j1UKgjrP8sP623fNdCfIg==
+X-Received: by 10.28.231.6 with SMTP id e6mr15693464wmh.51.1519832271258;
+        Wed, 28 Feb 2018 07:37:51 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id w134sm2054274wmd.45.2018.02.28.07.37.50
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 28 Feb 2018 07:37:50 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Phillip Wood <phillip.wood@talktalk.net>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        "Brian M. Carlson" <sandals@crustytoothpaste.net>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v3 2/9] t3701: indent here documents
+References: <20180213104408.9887-1-phillip.wood@talktalk.net>
+        <20180227110404.16816-1-phillip.wood@talktalk.net>
+        <20180227110404.16816-3-phillip.wood@talktalk.net>
+        <xmqqo9kanjrk.fsf@gitster-ct.c.googlers.com>
+        <12a03e03-640e-90c8-0ac8-14807a1834c9@talktalk.net>
+Date:   Wed, 28 Feb 2018 07:37:50 -0800
+In-Reply-To: <12a03e03-640e-90c8-0ac8-14807a1834c9@talktalk.net> (Phillip
+        Wood's message of "Wed, 28 Feb 2018 11:00:21 +0000")
+Message-ID: <xmqqsh9lm8fl.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <CAM0VKj=hbT_m21ssF+nedVDrfNiYHu8wd9mUD55mAdNgmnZSgA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfKOI05UuyKZFWgOmmSxkGYzCBaGy9CPmFbeDTHxCn4u4sUvplFter/mnZ0S7Gd4DrE42ia1kg+KiHkwiDPybwfxqUG3pziD1ee3mRujHh00Tnsr8d8hT
- RY1CxdeotcQlMj/peju/DB4k5sSqpAfWXjdQnx91mI9L9zPuWuxb3/QqTp+BY4gsh0CBKWO3zJNskA==
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Phillip Wood <phillip.wood@talktalk.net> writes:
 
+> Is there an easy way for contributors to compare the branch they post to
+> what ends up it pu?
 
-On 28/02/18 00:42, SZEDER Gábor wrote:
-> On Wed, Feb 28, 2018 at 12:47 AM, Ramsay Jones
-> <ramsay@ramsayjones.plus.com> wrote:
->>
->>
->> On 27/02/18 22:05, Junio C Hamano wrote:
->>> Junio C Hamano <gitster@pobox.com> writes:
->>>
->>>> OK, somehow I had the version from Ramsay on a topic branch that was
->>>> not merged to 'pu'.  Here is the replacement for 2/2 I'd be queuing.
->>>>
->>>> We'd need SZEDER to sign it off (optionally correcting mistakes in
->>>> the log message) if we are going with this solution.
->>>>
->>>> Thanks.
->>>
->>> I guess I missed Ramsay's v2 which already did this
->>>
->>> <550fb3f4-8d25-c5c4-0ecd-3a4e61ea13f4@ramsayjones.plus.com>
->>
->> Yes, and as I said in the cover letter, I wasn't too sure that
->> I had passed that patch along correctly. ;-)
->>
->>> so I'll use that version.  We still want sign-off from Szeder,
->>> though.
->>
->> I would be happy with either version, or maybe Szeder would like
->> to tweak the commit message. In any event, it would be good to
->> get sign-off from Szeder.
-> 
-> Certainly, here you go:
-> 
-> Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+Distributed work is pretty much symmetric, so it can be done the
+same way as one would review a rerolled series by another co-worker.
 
-Thanks!
+ $ git log --oneline --first-parent origin/master..origin/pu
 
-> However, I'm not sure about the authorship and taking credit for the
-> patch.  We ended up taking my patch, sure, but I think Ramsay did all
-> the real hard work, i.e. writing the commit message and, most
-> importantly, realizing that something is wrong with that '...| sort' at
-> the end of the line.
+would show merges of topic branches, so you can find the tip of the
+topic of your earlier submission (it would be one $commit^2; call
+that $topic).  origin/master..$topic would be the one branch
+(i.e. what is in 'pu') to be compared.
 
-No, the patch and the credit are yours, I was just trying to
-help out and get the patches moving forward. At most, I would
-think a 'Helped-by:' would be sufficient to note my input.
+The other branch to be compared is what you sent the previous one
+out of, or the new version of the patches.
 
-[BTW, my 'Signed-off-by:' on that patch was in the spirit of
-the dco section b. - again I wasn't quite sure ...]
+To compare two branches, git://github.com/trast/tbdiff is one of the
+easier way.  
 
-ATB,
-Ramsay Jones
+Before I learned about the tool, I used to "format-patch --stdout"
+on both branches, and ran "diff -u" between them, as a crude measure;
+it was more useful for spotting typofixes in the log messages than
+code changes, before I got good at reading diff of diffs ;-).
+
+Also, tentatively rebasing the two branches on a common base, and
+then doing "git diff $oldtopic~$N $newtopic~$N" or something like
+that for varying value of $N (and N==0 is a good way for final
+sanity checks).
+
 
 
