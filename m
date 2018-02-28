@@ -2,140 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0856E1F404
-	for <e@80x24.org>; Wed, 28 Feb 2018 12:11:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 418971F404
+	for <e@80x24.org>; Wed, 28 Feb 2018 12:50:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752412AbeB1MLE (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Feb 2018 07:11:04 -0500
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:51507 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752263AbeB1MK6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Feb 2018 07:10:58 -0500
-Received: by mail-wm0-f67.google.com with SMTP id h21so4567718wmd.1
-        for <git@vger.kernel.org>; Wed, 28 Feb 2018 04:10:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Q35kZS6zJlPPhYHVC2txjLZmNmhhtJZPz5xuKOyjZWg=;
-        b=gfogL9Lzck1Xxog6P2DWzcBdwEQpjk5aggdnsjzxwm7q/61OJ1Le3fO9HwZj6EAVxO
-         SgJEM7A55kYP4g0xhPsRm1KvfwHSmvRYFpvwQUq52rsb4XgK0GU5gReoih3Cc+XpaLVt
-         1FIGJxnoEIyQUGtvBNhrqz0RGPx4d6d/glm760Fd8S8upuB6Q7GgC0ELRtGatzRuRGmM
-         JzPd4c9YaJjMIeLu3yZQOw4RgN1ylVfierH9f+ZIeWfcb539w56+A29V2uJlGLv6nCK0
-         qQZFLS7k9AcNsPuEQfkLedyp00BYk/8+iAA53NKHq6x6vLQ3cR91dtBNPdpEZiLVLQC+
-         6Bdw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
-         :in-reply-to:references;
-        bh=Q35kZS6zJlPPhYHVC2txjLZmNmhhtJZPz5xuKOyjZWg=;
-        b=RKT7mPXUgdb+17VJmHvy1QCmhG/r4rl3++cKX9JomH8V1jZ6iOHQgs5BwYZTmg8dL2
-         fdpp6Qu5e5xla80fdR7bKTnKMJTXCOIvd6TbNN6mrYcqu6IB65hcM/Ya6az7Ye0dY42F
-         rVL/XXDXYzhMY4ia6sd/Ev23yh40if91MyGFK2YwE9KzK5+TiLPx7eeRP0z8vfBapC7f
-         yWBj81fpOkUKxuYjvFLioBVuO6WJMQYSu98Hb+aVs7scrDEGfonszb19PMYI2h4vNKAr
-         rfc/P8rfKhdy9h7TzkzeoxP+qkrm7zy/tGMERmmnW/nW7PcvH0dwr25abCZ4n70iSpZZ
-         slTA==
-X-Gm-Message-State: APf1xPAoZ9QInSLnGH44Tg2Ft0rvDx4mId1jAYGTzWnJhYsMnnJ9AAii
-        cRH4+fCDXRs3U3zOR0HI6mkGuzej
-X-Google-Smtp-Source: AH8x226L4abBSGzUTA7XUfVbewnDbLB/kxzWqiJhyTCJsqOZsP9yLzEnGd3Ct77QiEYaxlePj5scZw==
-X-Received: by 10.80.153.221 with SMTP id n29mr23443324edb.303.1519819857117;
-        Wed, 28 Feb 2018 04:10:57 -0800 (PST)
-Received: from birger-Dell-T1700.hials.no ([2001:700:1200:5104:cdf6:208f:9062:c587])
-        by smtp.gmail.com with ESMTPSA id x44sm1704876ede.7.2018.02.28.04.10.55
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 28 Feb 2018 04:10:56 -0800 (PST)
-From:   Birger Skogeng Pedersen <birgersp@gmail.com>
+        id S1752503AbeB1Mud (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Feb 2018 07:50:33 -0500
+Received: from mail.aegee.org ([144.76.142.78]:49739 "EHLO mail.aegee.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752195AbeB1Muc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Feb 2018 07:50:32 -0500
+X-Greylist: delayed 371 seconds by postgrey-1.27 at vger.kernel.org; Wed, 28 Feb 2018 07:50:32 EST
+Authentication-Results: aegeeserv.aegee.org; auth=pass (PLAIN) smtp.auth=didopalauzov
+DKIM-Filter: OpenDKIM Filter v2.10.3 mail.aegee.org w1SCkb6R017166
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=aegee.org; s=k4096;
+        t=1519821998; i=dkim+MSA-tls@aegee.org; r=y;
+        bh=Bcn+6gJkM0ypx2DQeSSbnCeErxuvhF+SumcXA2TPFvQ=;
+        h=To:From:Subject:Date;
+        b=c+gQiPNgPlNJEMRqGr43R6tHk8qKIdPWWQrtkNLYEUFg/0q58JozwX2DyIrfg1+Fq
+         Rol3eXU0eN0PAkNtZNFfulEW/ejeSS8HQTP8L5nzzVllaTBRqIjbsnJvJvcPflLyqq
+         AEOXKLhxzYLHnSKvAWl9VRv8zOxRyM6YcoWLaPKKZf7x+E/gPPSbx2CLzY/Ji6cmrF
+         KEDfaA3hEEg4NzWfpJAI/TEHkGyGEMfQ/O5ABigeO3f3qt52NichSLgxEa2gBAXsRz
+         i03WTk4RZaWHYd8OHvCTEqXncJAHbB2JwMYBFVGBJZgW2BIHbkGHTDShCC2XwlChL0
+         x3tUPnlmFQ358kyfQsaIJwyVA+F0CEjbsIwFSIX4O0WE+qXUDdFt0z43MXCMusxplK
+         ikdYB8THJaNJZspjSagySXwY7PbsgCJC/sHBHMTCM5ovtPqwbDU6VBlpfmRq/GkJP7
+         a7EZ2+txm+LTfhdBeI03hj/vxJocOaDZffn3FKSXCAJsJlGPxb7WEKuJ3XObtJJlR6
+         P9ORD2Tly6cHdXMTIdusr6IyVHwI1LxUOUEEl7ZwF+jmq/KDLDRKxfmLFknerO74C7
+         msT5V8l5A1LZqAgNbw3H87HvUrNhS6l++y8+yt0jGl6TO8n3UdC7jZRPFXltyL11JX
+         sqtyjR13E3tUjcZDziiWoXNI=
+Authentication-Results: mail.aegee.org/w1SCkb6R017166; dkim=none
+Received: from [10.128.8.92] (port-87-193-154-82.static.qsc.de [87.193.154.82])
+        (authenticated bits=0)
+        by mail.aegee.org (8.15.2/8.15.2) with ESMTPSA id w1SCkb6R017166
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO)
+        for <git@vger.kernel.org>; Wed, 28 Feb 2018 12:46:38 GMT
 To:     git@vger.kernel.org
-Cc:     Birger Skogeng Pedersen <birgersp@gmail.com>
-Subject: [PATCH] git-gui: Add hotkeys to change focus between ui widgets
-Date:   Wed, 28 Feb 2018 13:10:52 +0100
-Message-Id: <20180228121052.10642-1-birgersp@gmail.com>
-X-Mailer: git-send-email 2.16.2.268.g7f9c27f2f
-In-Reply-To: <CAGr--=LZ9TSM9v0SZOi_mj1t8se0Ck-nDHkwum3kC8uz9HKW6A@mail.gmail.com>
-References: <CAGr--=LZ9TSM9v0SZOi_mj1t8se0Ck-nDHkwum3kC8uz9HKW6A@mail.gmail.com>
+From:   =?UTF-8?B?0JTQuNC70Y/QvSDQn9Cw0LvQsNGD0LfQvtCy?= 
+        <dilyan.palauzov@aegee.org>
+Subject: Worktree silently deleted on git fetch/gc/log
+Message-ID: <aa98f187-4b1a-176d-2a1b-826c995776cd@aegee.org>
+Date:   Wed, 28 Feb 2018 13:44:19 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.6.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Virus-Scanned: clamav-milter 0.99.3 at mail.aegee.org
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The user cannot change focus between the list of files, the diff view
-and the commit message widgets without using the mouse (clicking either of
-the four widgets ).
+Hello,
 
-Hotkeys CTRL/CMD+number (1-4) now focuses the first file of either the
-"Unstaged Changes" or "Staged Changes", the diff view or the
-commit message dialog widgets, respectively. This enables the user to
-select/unselect files, view the diff and create a commit in git-gui
-using keyboard-only.
+with git 2.16.2 I have two repositories:
 
-Signed-off-by: Birger Skogeng Pedersen <birgersp@gmail.com>
----
- git-gui/git-gui.sh | 37 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 37 insertions(+)
+A (branch master) and
+B (branch g) which is a worktree of the first.
 
-diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
-index 91c00e648..f96c0a6b8 100755
+This has always forked fine until yesterday, when I did:
 
-(This is my first patch ever, any feedback is highly appreciated)
+/git/B g>$ git fetch
+remote: Counting objects: 29, done.
+remote: Compressing objects: 100% (6/6), done.
+remote: Total 29 (delta 19), reused 25 (delta 19), pack-reused 4
+Unpacking objects: 100% (29/29), done.
+ From https://...
+    13e4c55a0..02655d5fb  g -> origin/g
+    c37a3ca25..bc7888511  master -> origin/master
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+/git/B g<>$ git log -p origin/g
+fatal: Not a git repository: /git/A/.git/worktrees/B
+/git/B$
 
---- a/git-gui/git-gui.sh
-+++ b/git-gui/git-gui.sh
-@@ -2664,6 +2664,38 @@ proc show_less_context {} {
- 	}
- }
- 
-+proc select_first_path {w} {
-+	global file_lists last_clicked selected_paths
-+	if {[llength $file_lists($w)] > 0} {
-+		focus $w
-+		set last_clicked [list $w 1]
-+		set path [lindex $file_lists($w) 0]
-+		array unset selected_paths
-+		set selected_paths($path) 1
-+		show_diff $path $w
-+	}
-+}
-+
-+proc select_first_unstaged_changes_path {} {
-+	global ui_workdir
-+	select_first_path $ui_workdir
-+}
-+
-+proc select_first_staged_changes_path {} {
-+	global ui_index
-+	select_first_path $ui_index
-+}
-+
-+proc focus_diff {} {
-+	global ui_diff
-+	focus $ui_diff
-+}
-+
-+proc focus_commit_message {} {
-+	global ui_comm
-+	focus $ui_comm
-+}
-+
- ######################################################################
- ##
- ## ui construction
-@@ -3876,6 +3908,11 @@ foreach i [list $ui_index $ui_workdir] {
- }
- unset i
- 
-+bind . <$M1B-Key-1> {select_first_unstaged_changes_path}
-+bind . <$M1B-Key-2> {select_first_staged_changes_path}
-+bind . <$M1B-Key-3> {focus_diff}
-+bind . <$M1B-Key-4> {focus_commit_message}
-+
- set file_lists($ui_index) [list]
- set file_lists($ui_workdir) [list]
- 
--- 
-2.16.2.268.g7f9c27f2f
+Please note that on the second last prompt there is <>, so that git-prompt has found the neccessary information and this was this was later deleted - by 'gc' or 'log'.
 
+I guess somebody who knows the code in detail can easily fix this.
+
+What would be the procedure to restore the /git/A/.git/worktrees/B structure?
+
+Kind regards
+   Dilyan
