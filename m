@@ -2,138 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 909401F404
-	for <e@80x24.org>; Wed, 28 Feb 2018 20:46:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9FD6F1F404
+	for <e@80x24.org>; Wed, 28 Feb 2018 20:50:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934774AbeB1Uqq (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Feb 2018 15:46:46 -0500
-Received: from mail-pg0-f53.google.com ([74.125.83.53]:34932 "EHLO
-        mail-pg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934682AbeB1Uqp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Feb 2018 15:46:45 -0500
-Received: by mail-pg0-f53.google.com with SMTP id l131so1407955pga.2
-        for <git@vger.kernel.org>; Wed, 28 Feb 2018 12:46:45 -0800 (PST)
+        id S934785AbeB1Uue (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Feb 2018 15:50:34 -0500
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:53326 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934682AbeB1Uua (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Feb 2018 15:50:30 -0500
+Received: by mail-wm0-f65.google.com with SMTP id t74so7612236wme.3
+        for <git@vger.kernel.org>; Wed, 28 Feb 2018 12:50:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=YQ65c//akoq+J3j98maW6osYjX9q6w0DYnyyXaV7qsE=;
-        b=EB6Li9QnEZlDiILrQHIH7JsmzLIFeaKwhICCMFPP7wwlFaJGukmc6Jn1B38HvnbTFY
-         zKP7wmBrtPEM3p9lQRExww9Xq2EBcYkbUdHS4Vbcr4tml3DxRQhmwIykbU8F6qT2cmgm
-         Ry0YUA4byrFGRMwqcT1E+de63JlIRGE1tloxn5D+6tM6JSI7mmXb9bpKRXykPFAYYq0h
-         5W7a0uHs6ezmOp5wRoCWYU75KYfFDvgvNLph59/Qe/I44R+9elrQCc2Zku1+u8EIqp4H
-         orTJiJdPvtRaFrnTIYpp6MeRU/iaeYyacU1TWQnfm+F7PGYYFQEVKLZ8W9yzR8KwP8JC
-         7pGQ==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=Ket9aDDsYQ6mjwB0UXyHgXhbkNlekJSV0GqtgGGTUyw=;
+        b=uIWtXn61EZiZ+qJ/W0mhSOBow8jUr8F7wKFWSpopPIJFnjdojA4nRS15kak4ikgqCi
+         OkJ9m/w1PgtEN/mzAdGfonq8YJJyUoUUUEYXwvg9UpyFKLjk9Oi2JpSDVE2Fajmwu6tM
+         PljsbA11mNL2iGHJXXlG11h5SJUDCAO+X91R/hoEbU1f/V052sOVVeGybKXuKrT1697a
+         a5pFGtIY6r19qjMrUMa7KaGwiNStgpflgQ2SxfK9y/9CAj4j2VtMj6Lr+Wr4acLCqQgS
+         jOA9z97z89V55Br7GmHe8daZiH9Bv3inabASiSjnN5YbBWg4sGP4v9JdRghSpBx/RjLr
+         heiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=YQ65c//akoq+J3j98maW6osYjX9q6w0DYnyyXaV7qsE=;
-        b=XFqEo27HlSl37n6FXJL1unZ+DF7c016FLnDNjFEAST4DZVMWlCUg0LXFsYb1876Q55
-         wf3pEITp1VHk8HBlsPUvEEApcWKkuJ0TodpTkQghw1ufzLy/hHoWEMel9I+pIo75X6a5
-         wkk47WO8Za2+PpWFo+IjNTc3wFZ29nwEwdnwMQ8r1eqmXTzJYmhOb4GoJEUavRNrOf4P
-         cz2G3v4LJBd8VkiO9CLNe7Eq8Z2Yd1Tz7Wm+LmWUhR62ncwK4CUZpxfNshGMMBA5ltlm
-         Zj7M75SXARf7odTJQ8n5drJ9AuTORe94+0oohamcMR4Hb4xb2plMEH6nVAst5L5q7VBd
-         pHmw==
-X-Gm-Message-State: APf1xPALhrLzhuAN18yPMSKRtphnEyxdlqY2rvLdQEf7r+UARhJo0SlZ
-        U5XKZG7cYRLzDQlrUkecShY=
-X-Google-Smtp-Source: AH8x2241I2WYN7sCz8WkbtxRAlcGYU4Xx4zlXwQi+huiv5CFS8eZPQjQHgR+5hynjDIlg1FFxPbfpQ==
-X-Received: by 10.98.149.138 with SMTP id c10mr19133365pfk.143.1519850805260;
-        Wed, 28 Feb 2018 12:46:45 -0800 (PST)
-Received: from shfh2bkyy1.ads.autodesk.com (adsknateur.autodesk.com. [132.188.32.100])
-        by smtp.gmail.com with ESMTPSA id m15sm5919228pfi.65.2018.02.28.12.46.41
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 28 Feb 2018 12:46:44 -0800 (PST)
-Content-Type: text/plain; charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH v7 0/7] convert: add support for different encodings
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <20180227212537.GA6899@sigill.intra.peff.net>
-Date:   Wed, 28 Feb 2018 21:46:39 +0100
-Cc:     =?utf-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Lars Schneider <lars.schneider@autodesk.com>,
-        git <git@vger.kernel.org>, Johannes Sixt <j6t@kdbg.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        ramsay@ramsayjones.plus.com, Johannes.Schindelin@gmx.de
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <88BE70FC-B809-490C-ADB2-ABA5D9EBF0D4@gmail.com>
-References: <DC552BF4-3E87-41E0-BF92-4BA9633D374E@gmail.com> <20180216165815.GA4681@tor.lan> <19EDC192-0D83-4762-AC6A-81F7D693475A@gmail.com> <xmqqbmgfvf2y.fsf@gitster-ct.c.googlers.com> <xmqq7er3tqjq.fsf@gitster-ct.c.googlers.com> <FDF4DEB8-E71A-4BFC-9437-678C8F65BBDC@gmail.com> <20180226014445.GB8677@sigill.intra.peff.net> <20180226173533.GA7877@tor.lan> <20180226204635.GB12598@sigill.intra.peff.net> <20180227210517.GA17555@tor.lan> <20180227212537.GA6899@sigill.intra.peff.net>
-To:     Jeff King <peff@peff.net>
-X-Mailer: Apple Mail (2.3124)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=Ket9aDDsYQ6mjwB0UXyHgXhbkNlekJSV0GqtgGGTUyw=;
+        b=NYVMRQSUcjcoLrCZKYccSv1JXxPB6MhFQ1HFx+OqmbWOFDSI+e+FIaVDnx5BxSE8uM
+         HiOpMYu0KN5RL1MVbd9UbSZNTjKEMHYcM7bdublAEkeBNHIZvjmT6GJeQQmVLRhjsIdI
+         4uaDKJlcCv0vpdiujwX6GIHa6fZ5rn33aNijlS24LQjF5X+nqpM4DWl4LCZGiFI5ml0a
+         pgkVBw/E4YPkQhJDidqoY2CciXWJ0uNBjkYosI7NUKK5b1E9YlaHkgRHlkgJqctWyOPE
+         8z+3Y3BJVcba+yRRnySJCbyHp2V7qQiiyG1UwANw5xaOU/8TNeesHYAT9HcIqlfcvUr+
+         XuwQ==
+X-Gm-Message-State: APf1xPDjRuSkeliCn34XpIT3srEKmPM/B0fCK46Wd/eOgwRJqBjW8I7l
+        nCPeCTo00s3gmuAU2NAkp0Q=
+X-Google-Smtp-Source: AH8x225+tOxKIi1cKAfCp1Zj10z3Uz6mCl0m094mZ3Zacb8E4LjIGi26oSaAiPKddipRApxR6mxvYA==
+X-Received: by 10.28.126.20 with SMTP id z20mr14667902wmc.152.1519851029252;
+        Wed, 28 Feb 2018 12:50:29 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id h197sm2149037wmd.17.2018.02.28.12.50.28
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 28 Feb 2018 12:50:28 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Derrick Stolee <dstolee@microsoft.com>
+Cc:     git@vger.kernel.org, peff@peff.net, stolee@gmail.com,
+        christian.couder@gmail.com
+Subject: Re: [PATCH v2] sha1_name: fix uninitialized memory errors
+References: <20180226204151.GA12598@sigill.intra.peff.net>
+        <20180227114704.193145-1-dstolee@microsoft.com>
+Date:   Wed, 28 Feb 2018 12:50:28 -0800
+In-Reply-To: <20180227114704.193145-1-dstolee@microsoft.com> (Derrick Stolee's
+        message of "Tue, 27 Feb 2018 06:47:04 -0500")
+Message-ID: <xmqqy3jckfe3.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Derrick Stolee <dstolee@microsoft.com> writes:
 
-> On 27 Feb 2018, at 22:25, Jeff King <peff@peff.net> wrote:
->=20
-> On Tue, Feb 27, 2018 at 10:05:17PM +0100, Torsten B=C3=B6gershausen =
-wrote:
->=20
-> Of the three solutions, I think the relative merits are something like
-> this:
->=20
->  1. baked-in textconv (my patch)
->=20
->     - reuses an existing diff feature, so minimal code and not likely =
-to
->       break things
->=20
->     - requires people to add a .gitattributes entry
->=20
->     - needs work to make bare-repo .gitattributes work (though I think
->       this would be useful for other features, too)
->=20
->     - has a run-time cost at each diff to do the conversion
->=20
->     - may sometimes annoy people when it doesn't kick in (e.g.,
->       emailed patches from format-patch won't have a readable diff)
->=20
->     - doesn't combine with other custom-diff config (e.g., utf-16
->       storing C code should still use diff=3Dc funcname rules, but
->       wouldn't with my patch)
->=20
->  2. auto-detect utf-16 (your patch)
->     - Just Works for existing repositories storing utf-16
->=20
->     - carries some risk of kicking in when people would like it not to
->       (e.g., when they really do want a binary patch that can be
->       applied).
->=20
->       I think it would probably be OK if this kicked in only when
->       ALLOW_TEXTCONV is set (the default for porcelain), and --binary
->       is not (i.e., when we would otherwise just say "binary
->       files differ").
->=20
->     - similar to (1), carries a run-time cost for each diff, and users
->       may sometimes still see binary diffs
->=20
->  3. w-t-e (Lars's patch)
->=20
->     - requires no server-side modifications; the diff is plain vanilla
->=20
->     - works everywhere you diff, plumbing and porcelain
->=20
->     - does require people to add a .gitattributes entry
->=20
->     - run-time cost is per-checkout, not per-diff
->=20
-> So I can see room for (3) to co-exist alongside the others. Between =
-(1)
-> and (2), I think (2) is probably the better direction.
+> diff --git a/sha1_name.c b/sha1_name.c
+> index 611c7d24dd..a041d8d24f 100644
+> --- a/sha1_name.c
+> +++ b/sha1_name.c
+> @@ -547,15 +547,15 @@ static void find_abbrev_len_for_pack(struct packed_git *p,
+>  	 */
+>  	mad->init_len = 0;
+>  	if (!match) {
+> -		nth_packed_object_oid(&oid, p, first);
+> -		extend_abbrev_len(&oid, mad);
+> +		if (nth_packed_object_oid(&oid, p, first))
+> +			extend_abbrev_len(&oid, mad);
+>  	} else if (first < num - 1) {
+> -		nth_packed_object_oid(&oid, p, first + 1);
+> -		extend_abbrev_len(&oid, mad);
+> +		if (nth_packed_object_oid(&oid, p, first + 1))
+> +			extend_abbrev_len(&oid, mad);
+>  	}
+>  	if (first > 0) {
+> -		nth_packed_object_oid(&oid, p, first - 1);
+> -		extend_abbrev_len(&oid, mad);
+> +		if (nth_packed_object_oid(&oid, p, first - 1))
+> +			extend_abbrev_len(&oid, mad);
+>  	}
+>  	mad->init_len = mad->cur_len;
+>  }
 
-Thanks for the great summary! I agree they could co-exist and people
-could use whatever works best for them.
-
-I'll incorporate Eric's feedback and send a w-t-e v9 soonish.
-
-- Lars
-
+I do not think they are wrong, but aren't the latter two somewhat
+redundant?  "num" is p->num_objects, and we call (first+1)th element
+only after we see (first < num - 1), i.e. first+1 < num, and the
+access to (first-1)th is done only when first > 0.  The first one,
+i.e. when first points at where we _would_ find it if it existed,
+can access "first" that could be p->num_objects, so the change there
+makes sense, though.
 
