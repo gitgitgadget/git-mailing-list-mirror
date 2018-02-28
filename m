@@ -7,113 +7,102 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 684081F404
-	for <e@80x24.org>; Wed, 28 Feb 2018 01:06:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6C84F1F404
+	for <e@80x24.org>; Wed, 28 Feb 2018 01:06:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751830AbeB1BGQ (ORCPT <rfc822;e@80x24.org>);
+        id S1751836AbeB1BGR (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Feb 2018 20:06:17 -0500
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:36002 "EHLO
+        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751813AbeB1BGQ (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 27 Feb 2018 20:06:16 -0500
-Received: from mail-pl0-f66.google.com ([209.85.160.66]:35551 "EHLO
-        mail-pl0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751587AbeB1BGP (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Feb 2018 20:06:15 -0500
-Received: by mail-pl0-f66.google.com with SMTP id bb3-v6so502639plb.2
-        for <git@vger.kernel.org>; Tue, 27 Feb 2018 17:06:15 -0800 (PST)
+Received: by mail-pg0-f65.google.com with SMTP id i14so319764pgv.3
+        for <git@vger.kernel.org>; Tue, 27 Feb 2018 17:06:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=BTjWt1u+ytvMOwStnefJ1Xy0H09yw6zMq77nrsLBnCQ=;
-        b=rX2+ECQOCZDoZX8UFaRIwu9RM2n/p7MwolgM6jIkXlh01HkY6ZzHPMMYyNYV8DtIiU
-         0BRKdhb91DFmjlUWci2qFlA30WlR/qB2PNjK+/J2mfgPkz3jIxqDcMEXXnfHAeumyv3u
-         zJeN+Zr1tJSYH+YFyGkGrUtejScHlUtyASDBntAafpOA1LGg/RbSFOL+yDQbhow9D4Jh
-         b10vSLI/igVTnUdjfLNULbfqDAlj4TnhTDdwbi1zTEZeE4/0TvttFjDTrtb3jz2xwK/q
-         Nh8Ors4vW4GAOYxbHxDni8AsAu5bKxFDbw2vVgrjBDU5nn0eJC0QvU+WdVt7aeG/RC5m
-         H1uA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=KUxn4RHlMjfnJXzsI0vhsobdQmo8CTmrmVrTT+tC0cU=;
+        b=j3NHFgsrk2qiGCDDbwVO9Y9saNi5/R3a6dQMvba2CdKBbHrjriK+8BJ9jDLSZg2NNV
+         LgWwiCkXKEycnSIPSVTmoel9Dx9pIwA259n0pPKKx3UQjKDz1hPE7RMLIG7xgev3+YfL
+         k+SgsLQwxnm70RH27WFvOpl5P5IjWSltKVOLu8X4LZNpLzx8YPVb17lN9HhF0jm24exw
+         XIF5eCBRm+OUOAsXXPaOwUYybcvfTmpKwJOwLtsfw7JFS57KQ4x9rpG8eQHBrIQC464F
+         32X618/5LZJ/eJOuUPgtSe1g0Y8mKWG8z+xtGuGncZpruedQG/Tm750dnHnzS1IMUGCx
+         0BBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=BTjWt1u+ytvMOwStnefJ1Xy0H09yw6zMq77nrsLBnCQ=;
-        b=dL5zkwrLoyr5RZ+2EP6ufA9Z+GGpIE+Xe6q3SSwawMm+EWF/Q+igaA4f7ZE8BpRgHF
-         GlOIcRi/l82yjnUKnECrdiF2CCUahOK2gBUbKRJFPw78xx0qlc030uMK1MTojsbyI2zx
-         MHL1Nj+T9YFuZDjLJnXcj0HVn/3rl/gsoXxbS9is/2PleRG3bk4HcOxW/iGB94nOprbc
-         LqwoCvG5gXBfgxgEMYOlyU6VNVQ84Hm3Dw5HntXcYhFK2smO1HY8qQRCB8jms1MCmPB3
-         OuXvRQ510HSwM6FFyAxr/EvsJlwRnkh/+ilQnjrlWNXGb2MRWsFen6q4op8N+cZa/h75
-         SqXQ==
-X-Gm-Message-State: APf1xPC7OSPhyXiic07SW6l948CDY7qggIrWTKrFKH8OvLknTiZXYDW8
-        RriD05lrzOyzU4uW90mt0BMK9E06Ptw=
-X-Google-Smtp-Source: AG47ELudZnRUvVpO/+L33T4mYzO/dHYRF01pWjo9FKROPTRnZRZndX/4klYN8iswbYXcq0Vob9sH5g==
-X-Received: by 2002:a17:902:7c07:: with SMTP id x7-v6mr9802841pll.150.1519779973986;
-        Tue, 27 Feb 2018 17:06:13 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=KUxn4RHlMjfnJXzsI0vhsobdQmo8CTmrmVrTT+tC0cU=;
+        b=hNCtT+3pkCRvcoar+RuGBbOe9sdYHICFEggIxngwy2rKpZUAmlF39o5hebD9OBzVjo
+         GBDgtiPo4NQi1abKr66zXJYneaddOgqoy6tZGfHRvRqhn2BQJ8FksW36MwGS94lMxZzL
+         uWqBsYJA8h1HQQ+75915QTy4x/tDRjmelip/6WS9v3bZ+8DEQO/gfEzO0WFFoWwKJOxg
+         WcbQqDsjl521X8/QWDxY5gBKuV7z1WQvx6Nb/eZQbqo2pbSiuORMltqnhu8qx7O5Hjha
+         KBLEpPIxmjKTrbbNb4/j7CN5JMGGwRPP1vlJ8N5qUNgC2oHh0GlWpb7Jp8ZKF5+rqm/n
+         MEKA==
+X-Gm-Message-State: APf1xPAUr+sPsNZLpDt2ZGrg1N4p5rgwu2q1RPy0J/eXpdTLsWzeI5SZ
+        CxOuKIJLlnasj12BMn2hP1GtSzLKGV0=
+X-Google-Smtp-Source: AH8x227Ontr5qn8X45vdYplQ7lPmYyd7F0gLqrqmIyNolPipVsEEUtDnarOvHaTzooJ+9Ik0/vSCYg==
+X-Received: by 10.98.64.146 with SMTP id f18mr16011189pfd.30.1519779975491;
+        Tue, 27 Feb 2018 17:06:15 -0800 (PST)
 Received: from localhost ([2620:0:100e:422:ea58:fa52:fa77:9b41])
-        by smtp.gmail.com with ESMTPSA id r29sm477675pfj.99.2018.02.27.17.06.13
+        by smtp.gmail.com with ESMTPSA id 5sm486667pfh.133.2018.02.27.17.06.14
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 27 Feb 2018 17:06:13 -0800 (PST)
+        Tue, 27 Feb 2018 17:06:14 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
 Cc:     pclouds@gmail.com, Stefan Beller <sbeller@google.com>
-Subject: [PATCH 00/11] Moving global state into the repository object (part 2)
-Date:   Tue, 27 Feb 2018 17:05:57 -0800
-Message-Id: <20180228010608.215505-1-sbeller@google.com>
+Subject: [PATCH 01/11] packfile: allow prepare_packed_git_mru to handle arbitrary repositories
+Date:   Tue, 27 Feb 2018 17:05:58 -0800
+Message-Id: <20180228010608.215505-2-sbeller@google.com>
 X-Mailer: git-send-email 2.16.2.395.g2e18187dfd-goog
+In-Reply-To: <20180228010608.215505-1-sbeller@google.com>
+References: <20180228010608.215505-1-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This applies on top of origin/sb/object-store and is the continuation of
-that series, adding the repository as a context argument to functions.
+This conversion was done without the #define trick used in the earlier
+series refactoring to have better repository access, because this function
+is easy to review, as all lines are converted and it has only one caller
 
-This series focusses on packfile handling, exposing (re)prepare_packed_git
-and find_pack_entry to a repository argument.
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ packfile.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-Looking at the diffstat of "Delete ignore_env member in struct repository"[1]
-and "Fix initializing the_hash_algo"[2], which also build on origin/sb/object-store, 
-this series looks rather orthogonal to those, so I would not a lot of merge
-conflicts.
-
-[1] https://public-inbox.org/git/20180227095846.9238-1-pclouds@gmail.com/
-[2] https://public-inbox.org/git/20180225111840.16421-1-pclouds@gmail.com/
-
-The third series (after this one) will focus on object replacement,
-such that we can migrate sha1_object_info_extended at the end of the
-third series.
-
-Thanks,
-Stefan
-
-Stefan Beller (11):
-  packfile: allow prepare_packed_git_mru to handle arbitrary
-    repositories
-  packfile: allow rearrange_packed_git to handle arbitrary repositories
-  packfile: allow install_packed_git to handle arbitrary repositories
-  packfile: add repository argument to prepare_packed_git_one
-  packfile: add repository argument to prepare_packed_git
-  packfile: add repository argument to reprepare_packed_git
-  packfile: allow prepare_packed_git_one to handle arbitrary
-    repositories
-  packfile: allow prepare_packed_git to handle arbitrary repositories
-  packfile: allow reprepare_packed_git to handle arbitrary repositories
-  packfile: add repository argument to find_pack_entry
-  packfile: allow find_pack_entry to handle arbitrary repositories
-
- builtin/count-objects.c  |  2 +-
- builtin/fsck.c           |  2 +-
- builtin/gc.c             |  4 +--
- builtin/pack-objects.c   |  2 +-
- builtin/pack-redundant.c |  2 +-
- builtin/receive-pack.c   |  3 +-
- bulk-checkin.c           |  3 +-
- fast-import.c            |  4 +--
- fetch-pack.c             |  3 +-
- http-backend.c           |  2 +-
- http.c                   |  2 +-
- pack-bitmap.c            |  2 +-
- packfile.c               | 72 +++++++++++++++++++---------------------
- packfile.h               | 12 ++++---
- server-info.c            |  2 +-
- sha1_file.c              |  8 ++---
- sha1_name.c              |  4 +--
- 17 files changed, 66 insertions(+), 63 deletions(-)
-
+diff --git a/packfile.c b/packfile.c
+index ccfe084642b..b844b653265 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -873,14 +873,14 @@ static void rearrange_packed_git(void)
+ 		set_next_packed_git, sort_pack);
+ }
+ 
+-static void prepare_packed_git_mru(void)
++static void prepare_packed_git_mru(struct repository *r)
+ {
+ 	struct packed_git *p;
+ 
+-	INIT_LIST_HEAD(&the_repository->objects.packed_git_mru);
++	INIT_LIST_HEAD(&r->objects.packed_git_mru);
+ 
+-	for (p = the_repository->objects.packed_git; p; p = p->next)
+-		list_add_tail(&p->mru, &the_repository->objects.packed_git_mru);
++	for (p = r->objects.packed_git; p; p = p->next)
++		list_add_tail(&p->mru, &r->objects.packed_git_mru);
+ }
+ 
+ void prepare_packed_git(void)
+@@ -894,7 +894,7 @@ void prepare_packed_git(void)
+ 	for (alt = the_repository->objects.alt_odb_list; alt; alt = alt->next)
+ 		prepare_packed_git_one(alt->path, 0);
+ 	rearrange_packed_git();
+-	prepare_packed_git_mru();
++	prepare_packed_git_mru(the_repository);
+ 	the_repository->objects.packed_git_initialized = 1;
+ }
+ 
 -- 
 2.16.2.395.g2e18187dfd-goog
 
