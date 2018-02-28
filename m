@@ -7,52 +7,53 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3196B1F404
-	for <e@80x24.org>; Wed, 28 Feb 2018 23:23:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E1BAF1F404
+	for <e@80x24.org>; Wed, 28 Feb 2018 23:23:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S964934AbeB1XXV (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Feb 2018 18:23:21 -0500
-Received: from mail-yw0-f202.google.com ([209.85.161.202]:52638 "EHLO
-        mail-yw0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S964912AbeB1XXT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Feb 2018 18:23:19 -0500
-Received: by mail-yw0-f202.google.com with SMTP id y196so2365967ywg.19
-        for <git@vger.kernel.org>; Wed, 28 Feb 2018 15:23:18 -0800 (PST)
+        id S964973AbeB1XXZ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Feb 2018 18:23:25 -0500
+Received: from mail-yb0-f201.google.com ([209.85.213.201]:45502 "EHLO
+        mail-yb0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S964912AbeB1XXW (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Feb 2018 18:23:22 -0500
+Received: by mail-yb0-f201.google.com with SMTP id w1-v6so2360155ybm.12
+        for <git@vger.kernel.org>; Wed, 28 Feb 2018 15:23:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=IlSos3BgVMlHlmcsi5j3RGjeBreIKMl5Xh6LJ2E36Bo=;
-        b=JhuM8joaU+rjeVuNg2UG4DsmTfbMxHKjZcMczvCtCeotZLwEXx4zRkDp2lKJE0ZqWb
-         EZeB8f16RohMsehYS88dCJ+47LuHdEztqh14pQLGbTe9ZyT2Ml1WWwlUqebU4dTdVzTK
-         xzNW6TaGdhOBhWEdAp0B/raz+bjr4/YXrXUDPJ1EYRfpbColPRih4uReIppEGtGYJUk9
-         7jMSkQ8yzHkK5QYHKEsfNBIGhw55vA9DHhQwngbG9hk6AHnanOYP3hxGSvTJTJ8cMZt7
-         gv4RqEvOpYa592pQ+2wEo4VKUWaMMkuJGrc6jCi2IQ8+1BTPzgU0TvWBJcjwZJHmG3+t
-         3g7A==
+        bh=MIi1D2KxnKV9r62Zkjt8ZnXC7zwWIwQmDbKixAbYflQ=;
+        b=tlnCh14f1JhIWGGIH0MeGmxd7H+h3VSt/IlU9HtsNrSWG+VxziOVVAQ+DMDE1bcboV
+         r6lvM0TmkzR8INoC+gwy0GGRjUGTmb2GYLtmHYpWTUkFZEKGyjT7wvW1RZq2cHpFhQ/d
+         J7Rc3dNSn8UOHRe9UBGVvY4iaQKtMNs9WDcamtBZq1SHA5gtZ9W7adoOlY2zc9Om8Cbh
+         evJ4wQGKXQq6OTYoXLpvJXs+B9Cbohvw7rUWEIY5165UkwjIANFlzuow3eK3++eXajia
+         dS38BilRKQOEBOSzpopfyb0ZYBq45yKYaATQVYNX1CcsvzKeaabofqqvYNcL2w/abh/X
+         hB0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=IlSos3BgVMlHlmcsi5j3RGjeBreIKMl5Xh6LJ2E36Bo=;
-        b=r8Au3pez7SLxEaB/nEMbimmSgAHljLcchMhE+RHpGFTjjXMNaPzkoWpbOoiMTQ6WSO
-         Ujg1kzf7kcUS0YElu5ndQuSUe+vlxY/n6+mNCvq+7K0XNFMEhcVlixvp/89Vxa2X/Et+
-         sCCUEPFckK9Kj0egyxVNIsqHeqR/3D24C3Sc9ZNSS3y/hXke4FLlyU1M2POYIvkAPwJ0
-         isJfiSOGnO3P5rpXaeO0c5x+6g4CpQocwM3VmVyiLtoAsxBIdYWTN5T+OEAOyFdIQPNl
-         6SIpvjND/HRDBOgQZDJlnmQgtlexiG2RynceEYrrgrAj96yTZHL81IZ8UCTA8Y71Ecbd
-         6jjg==
-X-Gm-Message-State: APf1xPC5MyfEcAZJOdwKsVmxq7LKV85w4sz7sD4pPEOG9NQ756bVyRzT
-        I836ASYvaWcXWzMNa02GFrrJd3JU+4iLrwY6iMcgSDryAAt2EGIHnkvpxhrK0Kgjmat6b0ig7WG
-        VoiJIHyBsrjlZ9Z3S+wUE9tff5ECvm4h4PxMnkDXaSetFV3enxvwj/HFA1g==
-X-Google-Smtp-Source: AG47ELvc6aD5bx+QnIhSKXAiIOr5GVK6ZpQ6k6HeHwOF/T9pcf7hvdE9KldljDsq8sxdmTLuv1tTFfGUgnQ=
+        bh=MIi1D2KxnKV9r62Zkjt8ZnXC7zwWIwQmDbKixAbYflQ=;
+        b=MhqswU/TDFqHoZ0Nj/AWshXxZdSWQqgi3qTfRB6eiRnA4IyHdyI3aNrXyqZ5J8wxg6
+         xQEGGf+x7lw4qiXDkLskbK9G/M57LfOMtIvUn9ZWMmOBepSFd1bYX3l1JLtp5B6CIsnz
+         d3ejLstgQeFkCZYQs2RSawaurAk/jV8xp+r0IrpJGjBfYeoKczQHRnPyc5lPqbjl1TCZ
+         e6roQzJ0F0SAcFFvmfdMM6fp6Xhdm9Dmhad/+9naAPaH8N5IvT8iL6mdKhukBdtOTYYd
+         rrIgSd5ewYtJtN+yONAK96NCu7Ht0Np+xDRS8f3mw+oLJYEZTPj3ESLLiYD/6SMhqLUN
+         s0Kg==
+X-Gm-Message-State: APf1xPB7gyBxMtSGaQUbQooJTUi9WNGWMizE77REtXjU1sucfpnW4jEp
+        qokdXDX750AeSdlnGwhGbhXMKTCWE37PiUD97G4S5qNcGGapsRooomWO4UERsLLaQ+TX2jowm5Q
+        oI0tzlhkoOFvqB3SlVZkbOiglvvyoGrFZ07s8osMrLwmJb5BsPFRLrDrf/g==
+X-Google-Smtp-Source: AH8x225nTBnKx9MQ1ZE6p2aEDIVLoMdd3QV9w41weLnZHkzW9bENp8w3QGBl2hcCNIs+kJ6SI3ilGB/meRs=
 MIME-Version: 1.0
-X-Received: by 2002:a25:cb0c:: with SMTP id b12-v6mr6614111ybg.76.1519860198204;
- Wed, 28 Feb 2018 15:23:18 -0800 (PST)
-Date:   Wed, 28 Feb 2018 15:22:18 -0800
+X-Received: by 10.13.247.133 with SMTP id h127mr10060923ywf.113.1519860201014;
+ Wed, 28 Feb 2018 15:23:21 -0800 (PST)
+Date:   Wed, 28 Feb 2018 15:22:19 -0800
 In-Reply-To: <20180228232252.102167-1-bmwill@google.com>
-Message-Id: <20180228232252.102167-2-bmwill@google.com>
+Message-Id: <20180228232252.102167-3-bmwill@google.com>
 References: <20180207011312.189834-1-bmwill@google.com> <20180228232252.102167-1-bmwill@google.com>
 X-Mailer: git-send-email 2.16.1.107.gffe1b9127
-Subject: [PATCH v4 01/35] pkt-line: introduce packet_read_with_status
+Subject: [PATCH v4 02/35] pkt-line: allow peeking a packet line without
+ consuming it
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     git@jeffhostetler.com, gitster@pobox.com, jrnieder@gmail.com,
@@ -64,134 +65,156 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The current pkt-line API encodes the status of a pkt-line read in the
-length of the read content.  An error is indicated with '-1', a flush
-with '0' (which can be confusing since a return value of '0' can also
-indicate an empty pkt-line), and a positive integer for the length of
-the read content otherwise.  This doesn't leave much room for allowing
-the addition of additional special packets in the future.
-
-To solve this introduce 'packet_read_with_status()' which reads a packet
-and returns the status of the read encoded as an 'enum packet_status'
-type.  This allows for easily identifying between special and normal
-packets as well as errors.  It also enables easily adding a new special
-packet in the future.
+Sometimes it is advantageous to be able to peek the next packet line
+without consuming it (e.g. to be able to determine the protocol version
+a server is speaking).  In order to do that introduce 'struct
+packet_reader' which is an abstraction around the normal packet reading
+logic.  This enables a caller to be able to peek a single line at a time
+using 'packet_reader_peek()' and having a caller consume a line by
+calling 'packet_reader_read()'.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- pkt-line.c | 55 ++++++++++++++++++++++++++++++++++++++++--------------
- pkt-line.h | 16 ++++++++++++++++
- 2 files changed, 57 insertions(+), 14 deletions(-)
+ pkt-line.c | 59 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ pkt-line.h | 58 +++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 117 insertions(+)
 
 diff --git a/pkt-line.c b/pkt-line.c
-index 2827ca772..08e5ba44c 100644
+index 08e5ba44c..6307fa4a3 100644
 --- a/pkt-line.c
 +++ b/pkt-line.c
-@@ -280,28 +280,34 @@ static int packet_length(const char *linelen)
- 	return (val < 0) ? val : (val << 8) | hex2chr(linelen + 2);
- }
- 
--int packet_read(int fd, char **src_buf, size_t *src_len,
--		char *buffer, unsigned size, int options)
-+enum packet_read_status packet_read_with_status(int fd, char **src_buffer,
-+						size_t *src_len, char *buffer,
-+						unsigned size, int *pktlen,
-+						int options)
- {
--	int len, ret;
-+	int len;
- 	char linelen[4];
- 
--	ret = get_packet_data(fd, src_buf, src_len, linelen, 4, options);
--	if (ret < 0)
--		return ret;
-+	if (get_packet_data(fd, src_buffer, src_len, linelen, 4, options) < 0)
-+		return PACKET_READ_EOF;
-+
- 	len = packet_length(linelen);
--	if (len < 0)
-+
-+	if (len < 0) {
- 		die("protocol error: bad line length character: %.4s", linelen);
--	if (!len) {
-+	} else if (!len) {
- 		packet_trace("0000", 4, 0);
--		return 0;
-+		return PACKET_READ_FLUSH;
-+	} else if (len < 4) {
-+		die("protocol error: bad line length %d", len);
+@@ -404,3 +404,62 @@ ssize_t read_packetized_to_strbuf(int fd_in, struct strbuf *sb_out)
  	}
+ 	return sb_out->len - orig_len;
+ }
 +
- 	len -= 4;
--	if (len >= size)
-+	if ((unsigned)len >= size)
- 		die("protocol error: bad line length %d", len);
--	ret = get_packet_data(fd, src_buf, src_len, buffer, len, options);
--	if (ret < 0)
--		return ret;
++/* Packet Reader Functions */
++void packet_reader_init(struct packet_reader *reader, int fd,
++			char *src_buffer, size_t src_len,
++			int options)
++{
++	memset(reader, 0, sizeof(*reader));
 +
-+	if (get_packet_data(fd, src_buffer, src_len, buffer, len, options) < 0)
-+		return PACKET_READ_EOF;
- 
- 	if ((options & PACKET_READ_CHOMP_NEWLINE) &&
- 	    len && buffer[len-1] == '\n')
-@@ -309,7 +315,28 @@ int packet_read(int fd, char **src_buf, size_t *src_len,
- 
- 	buffer[len] = 0;
- 	packet_trace(buffer, len, 0);
--	return len;
-+	*pktlen = len;
-+	return PACKET_READ_NORMAL;
++	reader->fd = fd;
++	reader->src_buffer = src_buffer;
++	reader->src_len = src_len;
++	reader->buffer = packet_buffer;
++	reader->buffer_size = sizeof(packet_buffer);
++	reader->options = options;
 +}
 +
-+int packet_read(int fd, char **src_buffer, size_t *src_len,
-+		char *buffer, unsigned size, int options)
++enum packet_read_status packet_reader_read(struct packet_reader *reader)
 +{
-+	int pktlen;
++	if (reader->line_peeked) {
++		reader->line_peeked = 0;
++		return reader->status;
++	}
 +
-+	switch (packet_read_with_status(fd, src_buffer, src_len, buffer, size,
-+					&pktlen, options)) {
++	reader->status = packet_read_with_status(reader->fd,
++						 &reader->src_buffer,
++						 &reader->src_len,
++						 reader->buffer,
++						 reader->buffer_size,
++						 &reader->pktlen,
++						 reader->options);
++
++	switch (reader->status) {
 +	case PACKET_READ_EOF:
-+		pktlen = -1;
++		reader->pktlen = -1;
++		reader->line = NULL;
 +		break;
 +	case PACKET_READ_NORMAL:
++		reader->line = reader->buffer;
 +		break;
 +	case PACKET_READ_FLUSH:
-+		pktlen = 0;
++		reader->pktlen = 0;
++		reader->line = NULL;
 +		break;
 +	}
 +
-+	return pktlen;
- }
- 
- static char *packet_read_line_generic(int fd,
++	return reader->status;
++}
++
++enum packet_read_status packet_reader_peek(struct packet_reader *reader)
++{
++	/* Only allow peeking a single line */
++	if (reader->line_peeked)
++		return reader->status;
++
++	/* Peek a line by reading it and setting peeked flag */
++	packet_reader_read(reader);
++	reader->line_peeked = 1;
++	return reader->status;
++}
 diff --git a/pkt-line.h b/pkt-line.h
-index 3dad583e2..0be691116 100644
+index 0be691116..f2edfae9a 100644
 --- a/pkt-line.h
 +++ b/pkt-line.h
-@@ -65,6 +65,22 @@ int write_packetized_from_buf(const char *src_in, size_t len, int fd_out);
- int packet_read(int fd, char **src_buffer, size_t *src_len, char
- 		*buffer, unsigned size, int options);
+@@ -112,6 +112,64 @@ char *packet_read_line_buf(char **src_buf, size_t *src_len, int *size);
+  */
+ ssize_t read_packetized_to_strbuf(int fd_in, struct strbuf *sb_out);
  
-+/*
-+ * Read a packetized line into a buffer like the 'packet_read()' function but
-+ * returns an 'enum packet_read_status' which indicates the status of the read.
-+ * The number of bytes read will be assigined to *pktlen if the status of the
-+ * read was 'PACKET_READ_NORMAL'.
-+ */
-+enum packet_read_status {
-+	PACKET_READ_EOF = -1,
-+	PACKET_READ_NORMAL,
-+	PACKET_READ_FLUSH,
-+};
-+enum packet_read_status packet_read_with_status(int fd, char **src_buffer,
-+						size_t *src_len, char *buffer,
-+						unsigned size, int *pktlen,
-+						int options);
++struct packet_reader {
++	/* source file descriptor */
++	int fd;
 +
- /*
-  * Convenience wrapper for packet_read that is not gentle, and sets the
-  * CHOMP_NEWLINE option. The return value is NULL for a flush packet,
++	/* source buffer and its size */
++	char *src_buffer;
++	size_t src_len;
++
++	/* buffer that pkt-lines are read into and its size */
++	char *buffer;
++	unsigned buffer_size;
++
++	/* options to be used during reads */
++	int options;
++
++	/* status of the last read */
++	enum packet_read_status status;
++
++	/* length of data read during the last read */
++	int pktlen;
++
++	/* the last line read */
++	const char *line;
++
++	/* indicates if a line has been peeked */
++	int line_peeked;
++};
++
++/*
++ * Initialize a 'struct packet_reader' object which is an
++ * abstraction around the 'packet_read_with_status()' function.
++ */
++extern void packet_reader_init(struct packet_reader *reader, int fd,
++			       char *src_buffer, size_t src_len,
++			       int options);
++
++/*
++ * Perform a packet read and return the status of the read.
++ * The values of 'pktlen' and 'line' are updated based on the status of the
++ * read as follows:
++ *
++ * PACKET_READ_ERROR: 'pktlen' is set to '-1' and 'line' is set to NULL
++ * PACKET_READ_NORMAL: 'pktlen' is set to the number of bytes read
++ *		       'line' is set to point at the read line
++ * PACKET_READ_FLUSH: 'pktlen' is set to '0' and 'line' is set to NULL
++ */
++extern enum packet_read_status packet_reader_read(struct packet_reader *reader);
++
++/*
++ * Peek the next packet line without consuming it and return the status.
++ * The next call to 'packet_reader_read()' will perform a read of the same line
++ * that was peeked, consuming the line.
++ *
++ * Peeking multiple times without calling 'packet_reader_read()' will return
++ * the same result.
++ */
++extern enum packet_read_status packet_reader_peek(struct packet_reader *reader);
++
+ #define DEFAULT_PACKET_MAX 1000
+ #define LARGE_PACKET_MAX 65520
+ #define LARGE_PACKET_DATA_MAX (LARGE_PACKET_MAX - 4)
 -- 
 2.16.2.395.g2e18187dfd-goog
 
