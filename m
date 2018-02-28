@@ -3,80 +3,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A163F1F404
-	for <e@80x24.org>; Wed, 28 Feb 2018 16:22:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7F2271FAE3
+	for <e@80x24.org>; Wed, 28 Feb 2018 16:46:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933348AbeB1QW2 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Feb 2018 11:22:28 -0500
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:51078 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932516AbeB1QW0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Feb 2018 11:22:26 -0500
-Received: by mail-wm0-f67.google.com with SMTP id w128so6179265wmw.0
-        for <git@vger.kernel.org>; Wed, 28 Feb 2018 08:22:26 -0800 (PST)
+        id S1753193AbeB1QqZ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Feb 2018 11:46:25 -0500
+Received: from mail-it0-f48.google.com ([209.85.214.48]:52989 "EHLO
+        mail-it0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753173AbeB1QqX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Feb 2018 11:46:23 -0500
+Received: by mail-it0-f48.google.com with SMTP id k135so4213686ite.2
+        for <git@vger.kernel.org>; Wed, 28 Feb 2018 08:46:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=S2YSX0+qnwRaRcXTI020grcG3Af3n0Mc3VUmOhbnGJg=;
-        b=R4YoARj1LdT3FvW0kyn/rnHCZZTO9y1ibSWmPQfqlRRF6SI1CpQiOrXERLuTDKVTF9
-         VcJiA4awGesnkabR9eXVAQr7cJIGElere9TZAQH1kyJ0hseNxnmWxFLOhk2+v5m33l8u
-         z7ttaO4eqN0JYWNtmNG2+qhKySJ/R9xMduRLvS6hY+zY36MwmXXwDiC0wUV0wF4ZSj6a
-         v4Qm6S4hTYu0evRf1WykKfuTXV1b9R0BAdnwRTUZ3wBiffjBB2CZEgk0gmdvLY10wSb3
-         Zct02rinRVPgmvfKz2wqCWQraDLl30koa4Mf3azyubWCB22sxGbV06VsSlbbbxescb59
-         wtvQ==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=9h3TBOqPMQohH0qKgQBVFriCIV/ZUxMVkVtDsidi7M4=;
+        b=o2NzhZyBEkgnh/poC2shIvWPW8Aet2Bp8TVYypPHuUZYxHHkrBoWUT0zi4F5Q4MVBD
+         Yuq6MeQzc6lAWeR42wiOjZvaLD4QewmgA0aRol1s1/gH/iMkthqmg1uzuIFq5THpP+ZR
+         hQvH+e6gXn2ay5FO23RN8XzWLfMjoC+uCIhq9clnqw+OePdUhBCQIWvregwa/1yVWL+m
+         Zh99ulwRNoEp8LTelFBH8mvXP8GkatQSZMDJ8iIvzAxJUfr4NOGu6UpSbiOJblHG7DDB
+         oYVhZAPEBBRDVkiPTHEBBp72iKKhPy5UDLZQrW1YwBU7dotlsxIVoKepT1RCs/DAuAk4
+         zREg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=S2YSX0+qnwRaRcXTI020grcG3Af3n0Mc3VUmOhbnGJg=;
-        b=fi7gFsvTIP5XpdNxoKfsV8qxJ0I5zK4NN3O/3x4nuY1+OtovJ63DfoXBTvLZGh6601
-         A4zWYp0c+Sqpyuz6jNwbmIjSdqHTOlFygKcLYkznKpjiyGCNC+3yKP0Q9pct1PCuK9WQ
-         nRwIFUma24kP4o/AKHVx1JLJ3CDq5AdmX6QnyYg6g6iw3ECzAU1p0NEnp8nb/REaGwwR
-         FY0hiIv0iJMUuSBoOSW4yNnC8+pOR8XsT0y9J0uGiE9UhKbhOV3ScPZ01FL4cobOBw1z
-         4xRfg5g/GZ8Dt3JLZyMAooMXhSzKW+eJ2nW6L6HjZ/oiJl6iPGM5sAtTQYxMrhelzu40
-         exkw==
-X-Gm-Message-State: APf1xPAqpBQbFHZzJTn4cL5aJnJKuA8cM+iNHyMvkX6beKRvtql6YtWr
-        pm5c0jhv0gkCfyfB21A7G+s=
-X-Google-Smtp-Source: AG47ELs50MCpAbM7Nyvj6UPdUPneVAYdjsI9hs+i97nE9Q3WntM177IHdsnWP2mipbtVxK+d+L4Asw==
-X-Received: by 10.28.170.205 with SMTP id t196mr8345289wme.42.1519834945290;
-        Wed, 28 Feb 2018 08:22:25 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id c1sm2242925wmh.1.2018.02.28.08.22.24
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 28 Feb 2018 08:22:24 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=9h3TBOqPMQohH0qKgQBVFriCIV/ZUxMVkVtDsidi7M4=;
+        b=opnozRJqtBmfaBg1MN7ZPQauh4ciuqK66QGNTFObHG02pWMECA1Z5uVTGNr79hYHig
+         bRMkG7oZaeJAmlyGZVwJd01zl2zUdxtmopc9iX1Cmbq/LHNxF6gw7t92ufRl2wiVl8G0
+         Mk/9Ey4XhEt7UhsJ7UhFyyB3ogDnbqrTbm+dbW7OC8MRsvounSOKD5mIp8dNXgRD/go7
+         OK3VZP2GyQ5c+rDUEGKjW459zsLS0p29Usn9yIXxwBJgDSGWQJZtoUVelCgS8KyxhlIL
+         t2O7QLnj1dWhGkcHWURXouxxlzWcPKdk+snJnI7+FLfBhM13znbQUZvFNN6EEeaN/ZIo
+         txPg==
+X-Gm-Message-State: APf1xPA9KgjiYMPwOfUCFohtDC10FDmnDuoq1B/tz6J/PBqMxzqHzALx
+        gpxX4CqwSml9MSBgUQwcEIsrG61geeoHsJoFpbw=
+X-Google-Smtp-Source: AH8x224ZrhVVeQ1m2lJTXPVJuA7nyz+36KzxAPDO1f2TPUeK8otgLpasQPhVgd2HrffLGN7tvdnyitM940qUIIpkzhQ=
+X-Received: by 10.36.112.196 with SMTP id f187mr21042324itc.122.1519836383186;
+ Wed, 28 Feb 2018 08:46:23 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.107.137.144 with HTTP; Wed, 28 Feb 2018 08:46:22 -0800 (PST)
+In-Reply-To: <20180228074918.GA32127@sigill.intra.peff.net>
+References: <005501d3b025$c0057ce0$401076a0$@nexbridge.com>
+ <20180228001616.GJ174036@aiede.svl.corp.google.com> <20180228040718.GA9043@whir>
+ <20180228050034.GA373@sigill.intra.peff.net> <20180228074251.GA11673@dcvr> <20180228074918.GA32127@sigill.intra.peff.net>
+From:   demerphq <demerphq@gmail.com>
+Date:   Wed, 28 Feb 2018 17:46:22 +0100
+Message-ID: <CANgJU+V3fmhdsD8Q2NgV+RF3dbRdASV-Qwbp-agGjm6Y-PUCEw@mail.gmail.com>
+Subject: Re: [Problem] test_must_fail makes possibly questionable assumptions
+ about exit_code.
 To:     Jeff King <peff@peff.net>
 Cc:     Eric Wong <e@80x24.org>, Jonathan Nieder <jrnieder@gmail.com>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>, git@vger.kernel.org,
-        'Joachim Schmitz' <jojo@schmitz-digital.de>,
-        =?utf-8?B?w4Z2YXIgQXJuZmo=?= =?utf-8?B?w7Zyw7A=?= Bjarmason 
-        <avarab@gmail.com>
-Subject: Re: [Problem] test_must_fail makes possibly questionable assumptions about exit_code.
-References: <005501d3b025$c0057ce0$401076a0$@nexbridge.com>
-        <20180228001616.GJ174036@aiede.svl.corp.google.com>
-        <20180228040718.GA9043@whir>
-        <20180228050034.GA373@sigill.intra.peff.net>
-        <20180228074251.GA11673@dcvr>
-        <20180228074918.GA32127@sigill.intra.peff.net>
-Date:   Wed, 28 Feb 2018 08:22:24 -0800
-In-Reply-To: <20180228074918.GA32127@sigill.intra.peff.net> (Jeff King's
-        message of "Wed, 28 Feb 2018 02:49:18 -0500")
-Message-ID: <xmqqk1uxm6db.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        "Randall S. Becker" <rsbecker@nexbridge.com>,
+        Git <git@vger.kernel.org>,
+        Joachim Schmitz <jojo@schmitz-digital.de>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
-
+On 28 February 2018 at 08:49, Jeff King <peff@peff.net> wrote:
+> On Wed, Feb 28, 2018 at 07:42:51AM +0000, Eric Wong wrote:
+>
+>> > > >  a) We could override the meaning of die() in Git.pm.  This feels
+>> > > >     ugly but if it works, it would be a very small patch.
+>> > >
+>> > > Unlikely to work since I think we use eval {} to trap exceptions
+>> > > from die.
+>> > >
+>> > > >  b) We could forbid use of die() and use some git_die() instead (but
+>> > > >     with a better name) for our own error handling.
+>> > >
+>> > > Call sites may be dual-use: "die" can either be caught by an
+>> > > eval or used to show an error message to the user.
+>>
+>> <snip>
+>>
+>> > > >  d) We could wrap each command in an eval {...} block to convert the
+>> > > >     result from die() to exit 128.
+>> > >
+>> > > I prefer option d)
+>> >
+>> > FWIW, I agree with all of that. You can do (d) without an enclosing eval
+>> > block by just hooking the __DIE__ handler, like:
+>> >
+>> > $SIG{__DIE__} = sub {
+>> >   print STDERR "fatal: @_\n";
+>> >   exit 128;
+>> > };
+>>
+>> Looks like it has the same problems I pointed out with a) and b).
+>
 > You're right. I cut down my example too much and dropped the necessary
 > eval magic. Try this:
 >
@@ -86,30 +109,17 @@ Jeff King <peff@peff.net> writes:
 >   print STDERR "fatal: @_";
 >   exit 128;
 > };
->
-> eval {
->   die "inside eval";
-> };
-> print "eval status: $@" if $@;
->
-> die "outside eval";
-> -- 8< --
->
-> Running that should produce:
->
-> $ perl foo.pl; echo $?
-> eval status: inside eval at foo.pl line 8.
-> fatal: outside eval at foo.pl line 12.
-> 128
->
-> It may be getting a little too black-magic, though. Embedding in an eval
-> is at least straightforward, if a bit more invasive.
 
-I briefly wondered if this affects die that are called by code that
-we did not write (i.e. from core or cpan via "use/require"), but (1)
-we do want this to affect them, so that we die with status code
-known to us, and (2) the way this uses CORE::die or exit depending
-on the surrounding 'eval' would "fool" their uses just like we want
-it to fool our uses, which is exactly what we want.
+FWIW, this doesn't need to use CORE::die like that unless you have
+code that overrides die() or CORE::GLOBAL::die, which would be pretty
+unusual.
 
-So, it looks like a good "black magic" ;-).
+die() within $SIG{__DIE__} is special cased not to trigger $SIG{__DIE__} again.
+
+Of course it doesn't hurt, but it might make a perl hacker do a double
+take why you are doing it. Maybe add a comment like
+
+# using CORE::die to armor against overridden die()
+
+cheers,
+Yves
