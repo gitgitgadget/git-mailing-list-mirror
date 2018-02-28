@@ -2,93 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7BB421F404
-	for <e@80x24.org>; Wed, 28 Feb 2018 21:31:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A6AC21F404
+	for <e@80x24.org>; Wed, 28 Feb 2018 21:32:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935093AbeB1Vb1 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Feb 2018 16:31:27 -0500
-Received: from mail-lf0-f49.google.com ([209.85.215.49]:38812 "EHLO
-        mail-lf0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934866AbeB1VbZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Feb 2018 16:31:25 -0500
-Received: by mail-lf0-f49.google.com with SMTP id i80so5716251lfg.5
-        for <git@vger.kernel.org>; Wed, 28 Feb 2018 13:31:24 -0800 (PST)
+        id S935004AbeB1VcX (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Feb 2018 16:32:23 -0500
+Received: from mail-wr0-f175.google.com ([209.85.128.175]:36567 "EHLO
+        mail-wr0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934860AbeB1VcW (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Feb 2018 16:32:22 -0500
+Received: by mail-wr0-f175.google.com with SMTP id v111so3963641wrb.3
+        for <git@vger.kernel.org>; Wed, 28 Feb 2018 13:32:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=to:cc:from:subject:message-id:date:user-agent:mime-version
-         :content-language:content-transfer-encoding;
-        bh=JfLy1q5XnnxH9sfd2RMwVvNxuEUaqnFFvVDX/fP6OXY=;
-        b=Zvuh56jeoYzA5/4ts5tmmV21zVVXXxdZGGYUrUZ4HUMSkYAuGsQ238CR0wC+3MIFSY
-         Xn9nhymqk2RFSsXjkF5QAwopmPdaWMGW4tG208OsErb34BMVstg53CnyChQPdmR579IN
-         B8mFOAv/suHoyZaHt0ygWRlpGHiME4DHM56KVs9v14QDcH6Yxfk7FiEeuRGUNE3At7Cr
-         DC7jHqhBHwWYqD7uWRCRUZC4HJKtTy+3jGuSqHgGsqET/CPiuRGracnLG8528Su7EAKT
-         na8OeEzXHDLSqmAwlKR9QxWfXX3rYaxjpm1X1gspxzNo8RT523wnG3ZyJYm2zwCPmLlu
-         vztw==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=haItMqMA0FFQAxRpouBLM3+AU/zRah1hVSel/314yfU=;
+        b=Db3ge7c+NSuqfLJ+NJCPZ/g2ii6CMYuK0nvl5bykSW17d9R7rCp9b0CtTOArPYwby2
+         J4ovvkr4RA98t0tDVadFvonevGAeMSNytY9djfIhNAi3dySeIWRIm4GDrSHil5nNlFut
+         +iQK5LRh6BG9o0AVLaowWUOwQYBl03pPfqsR1gVCWlDY9Fj+uh++yq0sbz+NrDmFo6OB
+         4pdDARKwuih3o4SZuZUlv78n7aWYXGr2YkU1zvRG/hjB/u+QhpuRIKEv6J50byqsu5fJ
+         OItCmo31NIzfb0Qq1Iqa62mv9wW7qgiYKBBGFNjU3E+ffaWdHMfGlxB1WfkLetXe1iaX
+         r8Cg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:to:cc:from:subject:message-id:date:user-agent
-         :mime-version:content-language:content-transfer-encoding;
-        bh=JfLy1q5XnnxH9sfd2RMwVvNxuEUaqnFFvVDX/fP6OXY=;
-        b=DFXjCcBLGxKmY91cugEu3/lffDX8pWn7ZFxPxIMTNVAnG34vNiTqdLEWE/fKf0NFjD
-         CksiPI7gPV9CVWSyO7qXLqKOgb4YW7Yk3u3HRxTYa/g/6EVzUEFadnmVwq6cVlmcQrWM
-         YW7KjNF/WocfVrMEm9NhAT+/p6Q7P+YdcE3MJRS5Jie4wSr40bcbOhELfrXRDD09ic0c
-         cIMBUQ2D7Qzh0eSLAwwHWTnb7x2J1A7FhiRXF2021J5KhPCAmQ0cd3gh3rGjzGS6LU2y
-         ERW7JUvF9AWrMotBnkKptZWnRQhBZQGsHU+gyHLJJEGHVFsk4jnO6Pu7xBG50BuMILxX
-         rLbw==
-X-Gm-Message-State: APf1xPDtEqa0asWu+PvbGcuQTKYAWTMFp1BjUcp+niWV8GCkPSjENS2D
-        C25L7kwVJAyO4ZFfrF90nDbdNl2W
-X-Google-Smtp-Source: AG47ELu8fnLy4Pcpwwq1tCiZC95SgfosGQYhQvBdBZIVLQLn6tE/yGkwA63RqfhVtQwS7TOT/3zIzA==
-X-Received: by 10.25.92.1 with SMTP id q1mr14771932lfb.126.1519853483245;
-        Wed, 28 Feb 2018 13:31:23 -0800 (PST)
-Received: from [192.168.20.21] ([89.113.128.32])
-        by smtp.gmail.com with ESMTPSA id s12sm547979ljs.92.2018.02.28.13.31.22
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=haItMqMA0FFQAxRpouBLM3+AU/zRah1hVSel/314yfU=;
+        b=mFO/KkROOLxF33qpUK/a/zNhr2KMCsJFIxt3AGvOZSd5YlYURGVEHwiDZ0mAG0j6Uc
+         d2zLExshL3F+Z/bPQ9FoF6jdMYfn/gmnqu8XMkufuU5a7HDnwes7QIVRTAhEo39dHz/H
+         ZfkaL+f9I5+IFbem783b/wjkjMKDJyxY1b4pNpA5F8Uq/w8Zl49tNsActLtkInV1o6ad
+         UNtGnGEKb0mh6U7MpekfVM9OPDIHzX2uGVoSmOoAmTyO7LlmcgWuMw4fRbLjjL1qCF9g
+         DK5bR81QbdaQlJYI4BEZmpKBfoHYX4R1SwSM5+Y3J0RgIsN0PoMEEl5OiBwYTfMXt2yn
+         sfnQ==
+X-Gm-Message-State: APf1xPBpeug7VNfwgth3vjV3Oc/VDWp7VpWAJFCswuGWTGHvfV8IBnY0
+        HhnvVC5T9PWCluyxw2dRIuEYRNfU
+X-Google-Smtp-Source: AH8x226Qaw5iElkSC9cgSqd9WjKeDG1bvWwEiUOxjykikOoGtfu4Gtu5KilFwVGGeQg1Be6Or6yNtA==
+X-Received: by 10.223.138.130 with SMTP id y2mr16147508wry.242.1519853540867;
+        Wed, 28 Feb 2018 13:32:20 -0800 (PST)
+Received: from [192.168.0.104] (AToulouse-658-1-45-219.w86-221.abo.wanadoo.fr. [86.221.52.219])
+        by smtp.gmail.com with ESMTPSA id p76sm3110759wmb.19.2018.02.28.13.32.18
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 28 Feb 2018 13:31:22 -0800 (PST)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-From:   Andrei Rybak <rybak.a.v@gmail.com>
-Subject: Obsolete instruction in SubmittingPatches?
-Message-ID: <48b5c506-6882-81e2-35f6-7d040bfc6017@gmail.com>
-Date:   Thu, 1 Mar 2018 00:31:21 +0300
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+        Wed, 28 Feb 2018 13:32:19 -0800 (PST)
+Subject: Re: [GSoC][PATCH] userdiff: add built-in pattern for golang
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>
+References: <20180228172906.30582-1-alban.gruin@gmail.com>
+ <CAPig+cTOv+jAQHA8p76MHcbbvv4SAs4y_1BxeRpexWwTT4+8hA@mail.gmail.com>
+From:   Alban Gruin <alban.gruin@gmail.com>
+Message-ID: <763c5ee4-0bee-7f76-1e2a-4ad07a813e29@gmail.com>
+Date:   Wed, 28 Feb 2018 22:31:46 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
  Thunderbird/52.6.0
 MIME-Version: 1.0
+In-Reply-To: <CAPig+cTOv+jAQHA8p76MHcbbvv4SAs4y_1BxeRpexWwTT4+8hA@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Language: fr-FR
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+>> diff --git a/userdiff.c b/userdiff.c
+>> @@ -38,6 +38,15 @@ IPATTERN("fortran",
+>> +PATTERNS("golang",
+>> +        /* Functions */
+>> +        "^[ \t]*(func[ \t]*.*(\\{[ \t]*)?)\n"
+> 
+> Why is the brace (and possible following whitespace) optional?
+> Considering that the language demands that the brace be on the same
+> line, I'd think the brace should be mandatory.
+> 
 
-It seems to me that this part of Documentation/SubmittingPatches is
-not actual nowadays:
+I did this to support non-standard formatting. It's a niche case though,
+maybe we could only support the standard formatting and modify the doc
+to reflect this change.
 
-  After the list reached a consensus that it is a good idea to apply the
-  patch, re-send it with "To:" set to the maintainer{1} and "cc:" the
-  list{2} for inclusion.
+> I suppose you made whitespace after 'func' optional to be able to
+> recognize a method (which hasn't been gofmt'd):
+> 
+>     func(x *X) name {
+> 
+> rather than the more typical:
+> 
+>     func (x *X) name {
+> 
+> I wonder if it would make sense to tighten the expression to recognize
+> functions and methods as distinct cases:
+> 
+>     function: mandatory whitespace following 'func'
+>     method: optional whitespace but mandatory '(' following 'func'
+> 
+> Your current expression could accidentally match:
+> 
+>     /*
+>       Fish like to have
+>       functors for lunch {
+>       just like eels}.
+>     */
+> 
+> but, even the suggested tighter expression could "accidentally" match
+> example code in a comment block anyhow, so I guess it probably doesn't
+> matter much in practice.
+> 
 
-From what I observe in the mailing list, most patches are sent with
-"To:" set to mailing list (or re-sent with increasing version) , as per
-previous paragraph in the guidelines [1].  Then, after the topic is
-reviewed and the [PATCH v<last>] series receives a thumbs up from a
-number of people, the maintainer--Junio C Hamano--replies with an email
-containing something along the lines of "This change is in good
-shape.  Thanks, will queue.", which makes me think that the re-send
-is not actually needed.
-
-Is this part of guidelines obsolete, or am I not understanding this
-correctly?
-
-[1] "Send your patch with "To:" set to the mailing list, with "cc:"
-    listing people who are involved in the area you are touching"
-
---
-Best regards, Andrei Rybak
+Same as before, I did this to support non-standard formatting.
