@@ -7,112 +7,77 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 77FE01F576
-	for <e@80x24.org>; Wed, 28 Feb 2018 09:39:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 120CD1F576
+	for <e@80x24.org>; Wed, 28 Feb 2018 09:40:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752082AbeB1JjB (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Feb 2018 04:39:01 -0500
-Received: from mail-ot0-f196.google.com ([74.125.82.196]:40344 "EHLO
-        mail-ot0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752015AbeB1Ji7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Feb 2018 04:38:59 -0500
-Received: by mail-ot0-f196.google.com with SMTP id l12so1646808otj.7
-        for <git@vger.kernel.org>; Wed, 28 Feb 2018 01:38:59 -0800 (PST)
+        id S1752296AbeB1JkT (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Feb 2018 04:40:19 -0500
+Received: from mail-ot0-f171.google.com ([74.125.82.171]:41486 "EHLO
+        mail-ot0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752289AbeB1JkS (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Feb 2018 04:40:18 -0500
+Received: by mail-ot0-f171.google.com with SMTP id w38so1642177ota.8
+        for <git@vger.kernel.org>; Wed, 28 Feb 2018 01:40:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=h5qQ7HYY7p37NxCJDqVZbyirAGRd2ooKoH2VOmb+L/o=;
-        b=RHyODf/47wSRbwRz+Dx/BPON/vjzYMH7mRtevm1YL1lvGcWoAEk14nUOeSrkDwNKmk
-         IQTgg8QTUfgEtQK+rwZNHT/XDHcdbBs2Hfh2gSW3D5mz0D4/t0QMT3HQFGgkI/MgwcLv
-         /cCV206ovO3BcGeeLiC3bdiFn1CvQ7nXtMv7Y3kRqj2rqAeE3c4x4gpaccmzFV6qRA1r
-         BB2aA4GuX/jEsWLxNVghQH1/uCaA4bLbExeJ6kJ9CX42KUQPzgpasjTXFo7COyTAzN+a
-         QiOq8btghUHjDARQfrdQjIwXtuFkluvcBkHfOKpoNzSt16iBewNqntGhjaxq597WkNPO
-         DGbg==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=YwU7h3eOmePHyeO4aeetpq7OtIF4EmcfSqhO4luop6A=;
+        b=B6Kze0Omvbml6TbsE82zUovrDKuK2Zqh0MYJXYMEUZIKlYD+lDQ/I0dyfsOhP11uz6
+         Fr+3H0Ts/+CxGke6kRubSi8e2GB+++yrIL4QyGxoum3MpIF77QINw2/y4WUb1IcwA4X4
+         YtpZL7Bpc7nPuQOD7AM7DVcl6s3uQw0WE46hQ2+vpYsglSyWeqdR65cxe7+u35TLnfPt
+         CYlAl7fWujNVfnYHwrC9kd/bBAcqS8iQ1UbayHJix4SbntS9l6Kpy275f1rAICLYrqyc
+         P6/g3j+6e0RJSFDmKIpnSpqMToD1KbEihHCsVfRrFpUCKkLeEMoPMGPyYXBXC6n42qOJ
+         13Pg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=h5qQ7HYY7p37NxCJDqVZbyirAGRd2ooKoH2VOmb+L/o=;
-        b=Do6ore3BZPscAMyT2XpwoIHJmiadGOTrHxIc4uqogII50QngNw52U4DmqLCQoN18Hk
-         ST3K0wDIuTJJWLDMKFerycnNXKOIVWiOIW+bZSQqZ4SiGocQYxQph5S4X0475FqgKMta
-         cDhCqKiFQjzUu5oQ2asidWjUyJ3jRC1urn43yWhKoWy1Uw7JDPySm0q2fwskvjmuSpZT
-         U+YvzIBHuutUCWdB/Z5MLncwL8MN0lK+bYmRdGJlSxB3ins/j8APBhWYvebDCDkkHZvo
-         /1H1jOb+/Tm0S+T8dBW2PDHGxyGiq+19ba/3139Fdpl3xFIWfbVqiX1ifmMW5s6aMfE1
-         zAdw==
-X-Gm-Message-State: APf1xPD6Q26ao6Gxe+m6BAbMfAIQBLmjtDAi6RnZkdXmmH2hB7ukrf/z
-        79Dh1ptWMSSThAkMm6cVdq7TLbUyZ6hf8pGWR6k=
-X-Google-Smtp-Source: AG47ELsIuOisYiTPqquP50TPuQSRXOdpEtbbXOlabLuMBYkro33UR1vWpr6uFmNq3dtsDb0wUjrkUT/ZgUAMKtbWGkk=
-X-Received: by 10.157.81.92 with SMTP id u28mr12937178oti.152.1519810739374;
- Wed, 28 Feb 2018 01:38:59 -0800 (PST)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=YwU7h3eOmePHyeO4aeetpq7OtIF4EmcfSqhO4luop6A=;
+        b=pxn6Y4PF8p+sPp9O94pvmZs+2duJIohNpREKZc43TijTtgayhPbpl1x5jv/zVo8yUI
+         hNujKl+2P0sVLh6WM9fCRaBQk6rh3vyH++YbUinjcgjoovbSntYCOD9yIMQahaeFO/vQ
+         rM3whNGeXyyTFrJgbLjYTg45aLGNm1TjkLaRyDkcizO5cgiffXI7qb1/Kp6iCnJ490TZ
+         xBSufVtGyqL+biHHPfchh4cx+yJs/pMY+bD9py8Fqoz17J2rXc16qsZH/tjynrhEpRZr
+         MZVKJoDucIWa3sCck4703PDnvQg19npHrlZHUK7+hBQTqwuUyYV7yju5f+c2uvtqRrq1
+         gpzQ==
+X-Gm-Message-State: APf1xPCCLO481DOop9PheJ0RaztxLOLuWmGp7bDlHyHRas+upx3MQmyj
+        KK891Nu31/C0VN++Q34/naPFR5z7ZGk1405b+KQ=
+X-Google-Smtp-Source: AG47ELuCQwZj20GsOa95VniRmYk8Ifx/aLJAEYhQwOqPvMh2XT/cFDJH9M4CAQ6INz3JlZayA9XZLhyCNuwNv29/KsE=
+X-Received: by 10.157.85.214 with SMTP id z22mr13034802oti.75.1519810817566;
+ Wed, 28 Feb 2018 01:40:17 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.74.25.140 with HTTP; Wed, 28 Feb 2018 01:38:28 -0800 (PST)
-In-Reply-To: <20180227020111.GG4620@genre.crustytoothpaste.net>
-References: <20180225211212.477570-1-sandals@crustytoothpaste.net>
- <20180225211212.477570-6-sandals@crustytoothpaste.net> <CACsJy8AnTp1kzwUbAY_9XKg=A6Mo0gUa8o_dimx=+c1rFqu16w@mail.gmail.com>
- <20180227020111.GG4620@genre.crustytoothpaste.net>
+Received: by 10.74.25.140 with HTTP; Wed, 28 Feb 2018 01:39:47 -0800 (PST)
+In-Reply-To: <20180227202423.GD174036@aiede.svl.corp.google.com>
+References: <1519762664-16889-1-git-send-email-marten.kongstad@gmail.com> <20180227202423.GD174036@aiede.svl.corp.google.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 28 Feb 2018 16:38:28 +0700
-Message-ID: <CACsJy8DyrMqNYU7W_cB3U7EEfWUrzWOWx7zGa078EBE38u8Pdw@mail.gmail.com>
-Subject: Re: [PATCH v2 05/36] resolve-undo: convert struct resolve_undo_info
- to object_id
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Patryk Obara <patryk.obara@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Eric Sunshine <sunshine@sunshineco.com>
+Date:   Wed, 28 Feb 2018 16:39:47 +0700
+Message-ID: <CACsJy8CnxYyH2-diTXJXxkNH5i8MkpgK+6xQ9yrXro+bc_bgfg@mail.gmail.com>
+Subject: Re: [PATCH] docs/pretty-formats: fix typo '% <(<N>)' -> '%<|(<N>)'
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     =?UTF-8?Q?M=C3=A5rten_Kongstad?= <marten.kongstad@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 27, 2018 at 9:01 AM, brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
-> On Mon, Feb 26, 2018 at 06:25:24PM +0700, Duy Nguyen wrote:
->> On Mon, Feb 26, 2018 at 4:11 AM, brian m. carlson
->> <sandals@crustytoothpaste.net> wrote:
->> > @@ -44,7 +44,7 @@ void resolve_undo_write(struct strbuf *sb, struct string_list *resolve_undo)
->> >                 for (i = 0; i < 3; i++) {
->> >                         if (!ui->mode[i])
->> >                                 continue;
->> > -                       strbuf_add(sb, ui->sha1[i], 20);
->> > +                       strbuf_add(sb, ui->oid[i].hash, the_hash_algo->rawsz);
->> >                 }
->> >         }
->> >  }
->> > @@ -89,7 +89,7 @@ struct string_list *resolve_undo_read(const char *data, unsigned long size)
->> >                                 continue;
->> >                         if (size < 20)
->> >                                 goto error;
->> > -                       hashcpy(ui->sha1[i], (const unsigned char *)data);
->> > +                       hashcpy(ui->oid[i].hash, (const unsigned char *)data);
->> >                         size -= 20;
->> >                         data += 20;
->> >                 }
+On Wed, Feb 28, 2018 at 3:24 AM, Jonathan Nieder <jrnieder@gmail.com> wrote=
+:
+> M=C3=A5rten Kongstad wrote:
 >
-> It looks like I may have missed a conversion there.  I'll fix that in a
-> reroll.
->
->> Here we see the same pattern again, but this time the @@ lines give
->> better context: these are actually hash I/O. Maybe it's about time we
->> add
+>> Remove erroneous space between % and < in '% <(<N>)'.
 >>
->> int oidwrite(char *, size_t , const struct object_id *);
->> // optionally, void strbuf_addoid(struct strbuf *, const struct object_id *);
->> int oidread(struct object_id *, const char *, size_t);
->>
->> for conversion from between an object_id in memory and on disk? It
->> would probably be a straight memcpy for all hash algorithms so we
->> don't really need new function pointers in git_hash_algo for this.
+>> Signed-off-by: M=C3=A5rten Kongstad <marten.kongstad@gmail.com>
+>> ---
+>>  Documentation/pretty-formats.txt | 2 +-
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> I don't have a strong opinion about adding those or not adding them; if
-> people think it makes the code cleaner to read, I'm happy to add them.
-> It would probably makes sense to make them inline if we do, so that the
-> compiler can optimize them best.
+> Looks correct to me.  The space was introduced in v1.8.3-rc0~22^2
+> (pretty: support %>> that steals trailing spaces, 2013-04-19) and
+> appears to be a plain typo.  Thanks for fixing it.
 
-FWIW I'm totally ok with a memcpy(&oid.hash, ..., rawsz); here and not
-adding oidread/oidwrite. It's probably best to not adding them this
-early anyway. We can always grep memcpy.*rawsz and refactor later.
--- 
+Yeah definitely a good change.
+--=20
 Duy
