@@ -7,58 +7,63 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 233861F404
-	for <e@80x24.org>; Wed, 28 Feb 2018 17:53:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6E1511F404
+	for <e@80x24.org>; Wed, 28 Feb 2018 17:55:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934662AbeB1RxQ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Feb 2018 12:53:16 -0500
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:38728 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933898AbeB1RxO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Feb 2018 12:53:14 -0500
-Received: by mail-wr0-f194.google.com with SMTP id n7so3352093wrn.5
-        for <git@vger.kernel.org>; Wed, 28 Feb 2018 09:53:14 -0800 (PST)
+        id S934548AbeB1RzJ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Feb 2018 12:55:09 -0500
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:35884 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933542AbeB1RzG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Feb 2018 12:55:06 -0500
+Received: by mail-wm0-f68.google.com with SMTP id 188so6699871wme.1
+        for <git@vger.kernel.org>; Wed, 28 Feb 2018 09:55:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=kbKIuexI9a2aZ4p9LbAY+DLsXGLoL6nY25cHzXm/o9k=;
-        b=o9H3EiyN5TaPc0QiermP8Xgw/yB0hZz74yTJ3FFAKZOxSgPX+l1MS4iMp8SsEceCHe
-         1XXllOxWqqPJMwNQztWHsCWj5zk1Ki+jGgDl+Hc6EhvP8nmHATggWiMvdytAa3TzYWk+
-         /6e6LkWcihLsOLijmH26wF0+/B5h0GEJUm7Rdfi+2fCkhPphVqXmKMWOdK1xqKEhnelB
-         MY4ZfDOHOeRGtx08AK5CrSFIEuj4ffO3Q24JlY+qNzKphVMAoO6jL9u3DGAgQPO1+m/V
-         CF3S0FLaW5uPCbnbLMp3ILItxoXZnXNesPL64XalFJImIPVm3kT6rsqhaI6tjIh7uw49
-         AVMg==
+        bh=g7TBrjkZUT0NlCEB45Ey3XNWHIe262bf60DpQQznM5o=;
+        b=TDsRoYZRLct77kuk12gVe4xYaGfAy39VbdXjdYJvw2u9oGmTxttmZl1ZkOSCpaGcoI
+         X17qNkGz0HHX1zSotJOq3mend1u7fMp6N7HwsVBHdl+JUAWxYzAzvg+xddW5nEjy/MeH
+         zx3NbtlqTbu7AEXWzL45H3cUd4Xv92NeTSFQBOlXOOa0y1Vr+mQMeHQ1+b2qkGte53Ih
+         LUIRhU/+xoSIhHe0Mmr/kC9oscK3dIWEgaAgv8jVSlZ0KDO0AOROjVoWSdIPqD1DJX+T
+         7UvPzaX54HbxE5csJX3lNl4zS8qe+KVIY8YZm+LCDEW2Lvw9s9tWv3JyoGoo6zGfMwlT
+         /eDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=kbKIuexI9a2aZ4p9LbAY+DLsXGLoL6nY25cHzXm/o9k=;
-        b=ByzywZolEnh1rewgVY3Bc3u1Yg6v68isBdTe4xErBMYFSzkofXtnnXWSGtHgABt40M
-         RCLAeg1bdl1M95H3UWeYXgdsi4L6xx+TMNYutZ0KaLAkuOafZ2Oek/FfvGWTLixheHSq
-         zTPh7HiIqQyPBYMrvGsAH0mxeOUgVxkeaiCevZnWmRTtlnhKICyyhpW7799AYcPTlOhT
-         14c4RAHaNdSnXy91AsXdkKYIM/OXPdFwCRLhWd55vvZZIvV6sx8fxHpy6wCt4CxvTgSJ
-         zwROmhigulyBUx2nzVBVe2uVkLp7BTzfcbmykNWpP1zYE+qCNzr4nqTowRa53/ZSXT+2
-         BsSQ==
-X-Gm-Message-State: APf1xPDg3KADRwu4R1ZyWsv7BfVAfQA/uCGx2A3ll0TYSWMTZAkBHzu+
-        oZ/6ttO7xSZLVY1sXQEf7xg=
-X-Google-Smtp-Source: AH8x227qv6RjBjZy/S8SW2kGxXE1ScWIGXLs/JZIuwhwwRwpG4veWO5nmmsTo/3ZbG7vPogyuWnxeg==
-X-Received: by 10.223.187.19 with SMTP id r19mr16136796wrg.110.1519840393135;
-        Wed, 28 Feb 2018 09:53:13 -0800 (PST)
+        bh=g7TBrjkZUT0NlCEB45Ey3XNWHIe262bf60DpQQznM5o=;
+        b=uglMdZerqGaLWdPvaWQ3z/IghER87hSZlgkgB94oaPC/snyuFkJ4kULgEBVHcuyqdM
+         ZjqNn5rt7g9R3J3k+5gxsljxgy9/6q8TmIwEjVuibTF0qhhDMup7sFv3P89U1D4b2nMs
+         IA2oxdP1MXntT+80jl75lNSB1QZfdg8bX+IeT4pd0ooLh6Y2osFKTpU8TqMAwe+SwXnt
+         CXtO8yfPaDA57iUvogewtJuLlteZVpxD7s6VOyA8+IHW0Ias8xAp6UygswkXirnq12UV
+         A3kZtqk4GRXAqB1GGVzBULQXR5SpMRavAKKTPzlYNjEg2kCoMUjV+z1OvrW24vBJzFuC
+         DHKw==
+X-Gm-Message-State: APf1xPA3U3+KWkLr+eGC74sMp+EHc+4Yc2xXJ2pcfpxqqo3fAAV7W6Bo
+        Q40d3I0L6uLXFDQGZ8T8/co=
+X-Google-Smtp-Source: AG47ELsMVc9Hqkg2LchDBLJHcU8KGYp9/BnmgKuo8VlGhmlMstnwmTbURcr74z6GdfCOKlOpeXgaRw==
+X-Received: by 10.28.126.198 with SMTP id z189mr13693538wmc.135.1519840504979;
+        Wed, 28 Feb 2018 09:55:04 -0800 (PST)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id g7sm1924612wrb.78.2018.02.28.09.53.12
+        by smtp.gmail.com with ESMTPSA id g84sm4002342wmf.38.2018.02.28.09.55.04
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 28 Feb 2018 09:53:12 -0800 (PST)
+        Wed, 28 Feb 2018 09:55:04 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     git@vger.kernel.org, Brandon Williams <bmwill@google.com>,
+Cc:     Duy Nguyen <pclouds@gmail.com>,
+        Brandon Williams <bmwill@google.com>,
+        Git Mailing List <git@vger.kernel.org>,
         Jeff King <peff@peff.net>
 Subject: Re: [PATCH] protocol: treat unrecognized protocol.version setting as 0
 References: <20180228005059.GA251290@aiede.svl.corp.google.com>
-Date:   Wed, 28 Feb 2018 09:53:11 -0800
-In-Reply-To: <20180228005059.GA251290@aiede.svl.corp.google.com> (Jonathan
-        Nieder's message of "Tue, 27 Feb 2018 16:50:59 -0800")
-Message-ID: <xmqqbmg9m260.fsf@gitster-ct.c.googlers.com>
+        <20180228010233.GA45342@google.com>
+        <CACsJy8Cn2hcodoR8ksRBY9qf7MmJaP+KAzYqv6seeR9s-Be8Hw@mail.gmail.com>
+        <20180228012207.GB251290@aiede.svl.corp.google.com>
+Date:   Wed, 28 Feb 2018 09:55:03 -0800
+In-Reply-To: <20180228012207.GB251290@aiede.svl.corp.google.com> (Jonathan
+        Nieder's message of "Tue, 27 Feb 2018 17:22:07 -0800")
+Message-ID: <xmqq7eqxm22w.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -69,30 +74,54 @@ X-Mailing-List: git@vger.kernel.org
 
 Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> If I share my .gitconfig or .git/config file between multiple machines
-> (or between multiple Git versions on a single machine) and set
+>> I wonder if it's better to specify multiple versions. If v2 is not
+>> recognized by this git but v0 is, then it can pick that up. But if you
+>> explicitly tell it to choose between v2 and v3 only and it does not
+>> understand either, then it dies. Not sure if this is a good idea
+>> though.
 >
-> 	[protocol]
-> 		version = 2
->
-> then running "git fetch" with a Git version that does not support
-> protocol v2 errors out with
->
-> 	fatal: unknown value for config 'protocol.version': 2
->
-> In the spirit of v1.7.6-rc0~77^2~1 (Improve error handling when
-> parsing dirstat parameters, 2011-04-29), it is better to (perhaps
-> after warning the user) ignore the unrecognized protocol version.
+> Interesting thought.  Something roughly like this (on top of the patch
+> this is a reply to)?
 
-I do not agree with the analogy at all.  
+I am OK with that, i.e. allow the user to tell us what is acceptable
+and pick from them, as long as the blind "we do not know so let's
+fall back to v0" is removed.
 
-Showing dirstat with different tweaks than the user expected to see
-is a local and read-only thing.  Talking to the other side over a
-protocol the user explicitly wanted to avoid (e.g. imagine the case
-where your upstream's protocol version 1 implementation is
-critically buggy and you want to use version 2 if you talk with
-them) by accident is a more grave error, possibly affecting the
-other side that you may not have enough power to recover from
-(e.g. damaging the remote repository to which you only have push
-access and not interactive shell).
 
+
+>
+> diff --git i/protocol.c w/protocol.c
+> index ce9c634a3a..6aa8857a11 100644
+> --- i/protocol.c
+> +++ w/protocol.c
+> @@ -1,4 +1,5 @@
+>  #include "cache.h"
+> +#include "string-list.h"
+>  #include "config.h"
+>  #include "protocol.h"
+>  
+> @@ -14,14 +15,18 @@ static enum protocol_version parse_protocol_version(const char *value)
+>  
+>  enum protocol_version get_protocol_version_config(void)
+>  {
+> -	const char *value;
+> -	if (!git_config_get_string_const("protocol.version", &value)) {
+> -		enum protocol_version version = parse_protocol_version(value);
+> -		if (version != protocol_unknown_version)
+> -			return version;
+> +	const struct string_list *values;
+> +	const struct string_list_item *value;
+> +	enum protocol_version result = protocol_v0;
+> +
+> +	values = git_config_get_value_multi("protocol.version");
+> +	for_each_string_list_item(value, values) {
+> +		enum protocol_version v = parse_protocol_version(value->string);
+> +		if (v != protocol_unknown_version)
+> +			result = v;
+>  	}
+>  
+> -	return protocol_v0;
+> +	return result;
+>  }
+>  
+>  enum protocol_version determine_protocol_version_server(void)
