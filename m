@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 67E0C1F404
-	for <e@80x24.org>; Wed, 28 Feb 2018 01:06:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C12DC1F404
+	for <e@80x24.org>; Wed, 28 Feb 2018 01:06:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751946AbeB1BGl (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Feb 2018 20:06:41 -0500
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:45250 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751516AbeB1BG1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Feb 2018 20:06:27 -0500
-Received: by mail-pg0-f66.google.com with SMTP id i133so309711pgc.12
-        for <git@vger.kernel.org>; Tue, 27 Feb 2018 17:06:27 -0800 (PST)
+        id S1751906AbeB1BGk (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Feb 2018 20:06:40 -0500
+Received: from mail-pl0-f68.google.com ([209.85.160.68]:35572 "EHLO
+        mail-pl0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751631AbeB1BG3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Feb 2018 20:06:29 -0500
+Received: by mail-pl0-f68.google.com with SMTP id bb3-v6so503004plb.2
+        for <git@vger.kernel.org>; Tue, 27 Feb 2018 17:06:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=JTYivMu/7/3Co6XH/cUxJpcZJyefynKraGlYWbQLK/w=;
-        b=CgZQsV/oZ5/+dEdHtQTdCpOY/eiObWxqVocswOTkivBQzGC36ewGAq5I+Pynf9W5FB
-         gLelgDk/s+itVCBqAt9xp8r1tEnCKk7zhZPIl9I+PEs1tMTD26Pa/HuZtV5xw8baYNGe
-         UYL0Pk6AxZ3v2wemCK37zmEWFr+uOpipYhVrf205idYSEq0rvlaV/7Th/9Mswi7KhoMa
-         5Rj7Z45IyNR1yAszHhfeWs6af626ApeStSqv2hXsrJEFjkK8xDy1D1bpb5/fmCMf41rr
-         LqmqaCJUEqHK6RkU7ijJCZ2tedhXRdHSlBKrLCSaQC1DL0eyHJyUiJBFGPtQCnecsmjF
-         aYBg==
+        bh=xQk16MRp7Gp4hEhC4Qu0p6Tj69APVnE89RgIf9x8IvQ=;
+        b=SXtGsiWvNmYp7V8Jncl6Qi2fwZL8F5Ipjjru0RjGhInTjvlp99k+Vn5tvLiulZHvTP
+         +2xIjcR3P7IA/IqjKnMWm1JH5fw1Xfkhv3CW8MyaT07sVLn0FVdxhDBFXykWDbe83VAZ
+         Ao0h575fAPiL9zrc5DZi364VRxz9tmYquCkxwLJAWI8oULs11VHBa3x8kkpKluAC13+F
+         je4Y+vVjWPVypD3SlP2nFlT2WbMdQhjatrZBbiK5qh6K2Uh02JYxItbBPBynmvM62Jo7
+         ZBpCh88Syp9BBBssIr07mEJ32UiFpklnFkS9BeJ5LV/NtUoAiMP0aa2TJDEGYITHKLCC
+         0lHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=JTYivMu/7/3Co6XH/cUxJpcZJyefynKraGlYWbQLK/w=;
-        b=Z+XB2caAGWikYSnmCN8ppMcuD7+UPZNmuatW6r5Z03ZilQ11TDuGbeLw/f759Slje9
-         Z+d4EVrYodiHWheGGy2HkZ6VT9reis18ozic9pLntd58z+8DSDMAR+0UZcsR7MZFs0fj
-         XwsLRSRrmmsaKiBwXS8mEa644lSRcYWXnWNhZUmuvUMWIGT7FsaAnyuhs2nWFF5OMIYO
-         QfSUg9PqJxcabykSqMSijsFU754Wp3yRjbsIyEXW1ivmFJx9oESUa5gyA7KRVGQpHV/p
-         cc6KjrQ5WcoK8Ok56y3T36GxV4UwPbJAn3mJULscYcvnl2Yov9275ZpzzJNorGliKfJu
-         u4VA==
-X-Gm-Message-State: APf1xPDtvKSg/uJCkEUiMoC4K6x9TPKq5NqP59eDhfe04SnmkRqO+FF9
-        YYhI7WX2n8Ss/EFy/cO44ajsbd0h8rQ=
-X-Google-Smtp-Source: AH8x225i+Gzrv+xh0VyIU+tleCsA6zGoY+RCf5EZkG4z/aBD7RkH219Q/BL0G7iXTQcUB7xyOAZiZA==
-X-Received: by 10.101.73.141 with SMTP id r13mr12742425pgs.161.1519779986729;
-        Tue, 27 Feb 2018 17:06:26 -0800 (PST)
+        bh=xQk16MRp7Gp4hEhC4Qu0p6Tj69APVnE89RgIf9x8IvQ=;
+        b=ipB6doapyNDBMfuWfZ5o9dUW/Oy9P7EWLmU+h8puWd5PqAI0EzKlI6vGjtNQa/iG6a
+         VTCUQO0GnJ0Rv76JAeqB6rcH0HS9zBVvQPleOODQJwSwtV051nwViDPvkiyAQUyENG+e
+         Sh+GvVkCqGSPgbu3xGyb/7Px2zmEsI6Iu48T7bi8qp+NDI2JE/vg2unyvzSoTk91hE8v
+         yzJ5yTV9QOJa2JgY0Lzo4gcEa6WrKYE7jlH9g0ahFngar4WBdjfwZy8eRyQvX2fffioB
+         mSDQXfbJzbWgKPHaXwnBP0ALHfdVMunXVvIVHB5AWaf0Zf/qn7wPloU43UNd0335SYy0
+         2adg==
+X-Gm-Message-State: APf1xPAQnn0uH9x0yKARU3i4gx7Qpo3HyC0iQqhjjk9Q041/GmyDSAB6
+        BqJwBhOYwesjxJVvZec+9Ly6B6FxW5o=
+X-Google-Smtp-Source: AH8x224xiKr3hlHRIu/bnOIaRqhfXKFR+MU+fcBC9FzKcIKMpdpk2HjKKfybHVJDDRmrvPHseenBqQ==
+X-Received: by 2002:a17:902:ba95:: with SMTP id k21-v6mr16411002pls.111.1519779988134;
+        Tue, 27 Feb 2018 17:06:28 -0800 (PST)
 Received: from localhost ([2620:0:100e:422:ea58:fa52:fa77:9b41])
-        by smtp.gmail.com with ESMTPSA id p79sm467033pfi.115.2018.02.27.17.06.25
+        by smtp.gmail.com with ESMTPSA id j64sm525082pfe.68.2018.02.27.17.06.27
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 27 Feb 2018 17:06:26 -0800 (PST)
+        Tue, 27 Feb 2018 17:06:27 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
 Cc:     pclouds@gmail.com, Stefan Beller <sbeller@google.com>
-Subject: [PATCH 09/11] packfile: allow reprepare_packed_git to handle arbitrary repositories
-Date:   Tue, 27 Feb 2018 17:06:06 -0800
-Message-Id: <20180228010608.215505-10-sbeller@google.com>
+Subject: [PATCH 10/11] packfile: add repository argument to find_pack_entry
+Date:   Tue, 27 Feb 2018 17:06:07 -0800
+Message-Id: <20180228010608.215505-11-sbeller@google.com>
 X-Mailer: git-send-email 2.16.2.395.g2e18187dfd-goog
 In-Reply-To: <20180228010608.215505-1-sbeller@google.com>
 References: <20180228010608.215505-1-sbeller@google.com>
@@ -62,46 +62,91 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+While at it move the documentation to the header and mention which pack
+files are searched.
+
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- packfile.c | 8 ++++----
- packfile.h | 3 +--
- 2 files changed, 5 insertions(+), 6 deletions(-)
+ packfile.c  | 8 ++------
+ packfile.h  | 7 ++++++-
+ sha1_file.c | 6 +++---
+ 3 files changed, 11 insertions(+), 10 deletions(-)
 
 diff --git a/packfile.c b/packfile.c
-index 9a3efc01555..b12fc0789e0 100644
+index b12fc0789e0..e16f8252233 100644
 --- a/packfile.c
 +++ b/packfile.c
-@@ -898,11 +898,11 @@ void prepare_packed_git(struct repository *r)
- 	r->objects.packed_git_initialized = 1;
+@@ -1835,11 +1835,7 @@ static int fill_pack_entry(const unsigned char *sha1,
+ 	return 1;
  }
  
--void reprepare_packed_git_the_repository(void)
-+void reprepare_packed_git(struct repository *r)
+-/*
+- * Iff a pack file contains the object named by sha1, return true and
+- * store its location to e.
+- */
+-int find_pack_entry(const unsigned char *sha1, struct pack_entry *e)
++int find_pack_entry_the_repository(const unsigned char *sha1, struct pack_entry *e)
  {
--	the_repository->objects.approximate_object_count_valid = 0;
--	the_repository->objects.packed_git_initialized = 0;
--	prepare_packed_git(the_repository);
-+	r->objects.approximate_object_count_valid = 0;
-+	r->objects.packed_git_initialized = 0;
-+	prepare_packed_git(r);
+ 	struct list_head *pos;
+ 
+@@ -1860,7 +1856,7 @@ int find_pack_entry(const unsigned char *sha1, struct pack_entry *e)
+ int has_sha1_pack(const unsigned char *sha1)
+ {
+ 	struct pack_entry e;
+-	return find_pack_entry(sha1, &e);
++	return find_pack_entry(the_repository, sha1, &e);
  }
  
- unsigned long unpack_object_header_buffer(const unsigned char *buf,
+ int has_pack_index(const unsigned char *sha1)
 diff --git a/packfile.h b/packfile.h
-index 9142866c8ae..99f4741bd95 100644
+index 99f4741bd95..feeabd6f031 100644
 --- a/packfile.h
 +++ b/packfile.h
-@@ -35,8 +35,7 @@ extern struct packed_git *parse_pack_index(unsigned char *sha1, const char *idx_
- extern void (*report_garbage)(unsigned seen_bits, const char *path);
+@@ -120,7 +120,12 @@ extern int packed_object_info(struct packed_git *pack, off_t offset, struct obje
+ extern void mark_bad_packed_object(struct packed_git *p, const unsigned char *sha1);
+ extern const struct packed_git *has_packed_and_bad(const unsigned char *sha1);
  
- extern void prepare_packed_git(struct repository *r);
--#define reprepare_packed_git(r) reprepare_packed_git_##r()
--extern void reprepare_packed_git_the_repository(void);
-+extern void reprepare_packed_git(struct repository *r);
- extern void install_packed_git(struct repository *r, struct packed_git *pack);
+-extern int find_pack_entry(const unsigned char *sha1, struct pack_entry *e);
++/*
++ * Iff a pack file in the given repository contains the object named by sha1,
++ * return true and store its location to e.
++ */
++#define find_pack_entry(r, s, e) find_pack_entry_##r(s, e)
++extern int find_pack_entry_the_repository(const unsigned char *sha1, struct pack_entry *e);
  
- /*
+ extern int has_sha1_pack(const unsigned char *sha1);
+ 
+diff --git a/sha1_file.c b/sha1_file.c
+index 0b9fefaaf02..d498b3e90b9 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -1273,7 +1273,7 @@ int sha1_object_info_extended(const unsigned char *sha1, struct object_info *oi,
+ 	}
+ 
+ 	while (1) {
+-		if (find_pack_entry(real, &e))
++		if (find_pack_entry(the_repository, real, &e))
+ 			break;
+ 
+ 		/* Most likely it's a loose object. */
+@@ -1282,7 +1282,7 @@ int sha1_object_info_extended(const unsigned char *sha1, struct object_info *oi,
+ 
+ 		/* Not a loose object; someone else may have just packed it. */
+ 		reprepare_packed_git(the_repository);
+-		if (find_pack_entry(real, &e))
++		if (find_pack_entry(the_repository, real, &e))
+ 			break;
+ 
+ 		/* Check if it is a missing object */
+@@ -1662,7 +1662,7 @@ static int freshen_loose_object(const unsigned char *sha1)
+ static int freshen_packed_object(const unsigned char *sha1)
+ {
+ 	struct pack_entry e;
+-	if (!find_pack_entry(sha1, &e))
++	if (!find_pack_entry(the_repository, sha1, &e))
+ 		return 0;
+ 	if (e.p->freshened)
+ 		return 1;
 -- 
 2.16.2.395.g2e18187dfd-goog
 
