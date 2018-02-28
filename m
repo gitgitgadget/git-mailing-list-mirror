@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8772C1F404
-	for <e@80x24.org>; Wed, 28 Feb 2018 23:24:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1A79E1F404
+	for <e@80x24.org>; Wed, 28 Feb 2018 23:24:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965035AbeB1XYi (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Feb 2018 18:24:38 -0500
-Received: from mail-yb0-f202.google.com ([209.85.213.202]:44475 "EHLO
-        mail-yb0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S964933AbeB1XYg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Feb 2018 18:24:36 -0500
-Received: by mail-yb0-f202.google.com with SMTP id t18-v6so2372793ybb.11
-        for <git@vger.kernel.org>; Wed, 28 Feb 2018 15:24:35 -0800 (PST)
+        id S965040AbeB1XYo (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Feb 2018 18:24:44 -0500
+Received: from mail-yw0-f202.google.com ([209.85.161.202]:57092 "EHLO
+        mail-yw0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S964929AbeB1XYd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Feb 2018 18:24:33 -0500
+Received: by mail-yw0-f202.google.com with SMTP id i1so2346176ywm.23
+        for <git@vger.kernel.org>; Wed, 28 Feb 2018 15:24:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=59CMT2PcXKc92mwvdi32NyIw2ppYZTYVpKRotxiTnCA=;
-        b=i6U5IEGAkLABWE2YLSrgANKnlzdfpj90lz2E2lU7J9alAeg42z2R4ICMvv72r9MyIZ
-         n3fly9W0Ops/BtieAi07aFy4MGS+td4KpzZ1bCjd8ykANNdahg78DckIFCB8FG1UFjB+
-         aZw5QjuSUJchPpCeBzWyZP5OslFQLPJN+bKxY7OI0eN0vZzpRmR0QQSA2XX8JTLm33c0
-         BmGcybjnKYjnP1MnhUyp1nyRoKB1A+LBCzb6iYFS3yT860DVF+TiUPWOX9JLWt1CA3Xz
-         Tq9fytG+tw17YFjvHjxZhz1Pr09MiCdTlMsptSrQzufRnBWMm3p9BaqhLGs5Iw1vP4TK
-         UVmw==
+        bh=WVvlVMKBcAFt1YLqCMrzRxb3prg374m3xU1qgGVo+b0=;
+        b=E1VotrqPOpyJwzyzyGFgjDdMb7uUn11fENisKPBXlKnt/WbFMEHO69PAUzZKF29NGM
+         rP0Mik56p+7UPAguQ30f7+wPZHf9gd05ozZ7gZa4XQBmSEwhAcAy/8HXJqQyj+u3qPc9
+         62xVztPIL58pkoignFutY0Tox8pl58OhUQVP1Ngvsg4CXJJm4nA63JG7YtgZwk3dnb6H
+         fpmoBbQ8cCpIpFKoxXu5WLgTP3nA/AsKaD40UOvAk8qyk6bhnvvPfspmpYjhCT4C0p1x
+         tdsaZbRy8w0/nSfgfzgDOYZpSoPIc5gVBz/itcXtihupjiGelSiWvRIsiCVoTscOMLTL
+         aYYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=59CMT2PcXKc92mwvdi32NyIw2ppYZTYVpKRotxiTnCA=;
-        b=USn/nmGI5cGquHsQJJlfcKNO75nqU91ogCDhePTe/AUGYqrKVAZ1ZX9/tPJoqPZUJT
-         YkuSDsOQqlDz5GtaT5+L1zGyN+GfFPu6fkItkLOrsl0ednC7Snyp0BOtTvrYHLejrQwV
-         udsdN2l+zM7lHBiVGs8+Xau1OVGTX80sT5msvVJfoGDORKfa5MRxU7tMkg1+aHMZVjJQ
-         o5FzYe/oriA0z8mpYtz/dxsZ6/1y8cuorcG8m7SW1e38I7ZfcIJwLQxH7H/zu/V4BQFY
-         JbBFLXYcYY5cs09bR31f/OmQztOvI6UQqrvLc2fasTD46n8hIQu2uIhCUAD8IQWjb3bX
-         spWQ==
-X-Gm-Message-State: APf1xPAt2ZElc/LyKVd8eyjOWO5+GGdmqjHBh26gCPqUC49fMa89Pcc5
-        1B0CcLljQNZDmsZinOWHy4N27gTS8uh6pQXxEHfLWH8iwoc7pgMv2NHmmZ5+K9dsheSbmAllgDb
-        sqZj/6nrXoCo9vD7u4HTGlreRls6TznFuiN0cC2lAjKthPP+JtkroK82CrQ==
-X-Google-Smtp-Source: AG47ELun7rRmkQUXcuWwbm6dRx6R85wPfRWJKwJawLcFQzeHZ+xPprm3wrJm9ObrJe/klKu+5SLMVYur4ag=
+        bh=WVvlVMKBcAFt1YLqCMrzRxb3prg374m3xU1qgGVo+b0=;
+        b=ii2p9cF18G5XY03PVr0eFQZuzh7XBRDLvSAXiXINS5uxLBhxJt0WZSIsy4eCPR3QYY
+         k5Vbx8HGbqhsYLUJSKvpsZIYtCv5OBeJRA+VNx8RXo2fOmVvNhfFDSHwPNPja4TM5O8u
+         H+500s0dzAyuo/m8YRwNyHPWjuswRqeSO8SpJ9ng6RJcfTjA/bhLMxW821kOIfYmZVTC
+         3mULFa4uzh/5RkBbH9TUgyApOT17XF67TXRblxuA/3cg95EvwYAGJUcWk3Ylu85tthXw
+         figz8QxWyp6L5oIAWd7keb9O8bNh2r7OU785boxuKBRKVdz2pA8BCUfyfzF19WyW5XIs
+         zCAA==
+X-Gm-Message-State: APf1xPC5XWVsKaomVJp4qH935yQN4R2FpEA7ge65/s3O72Hnex9UnuQh
+        hzO2Ild5lNnFhJXKD5mBtdx8AZspxdAJXaG92YKVAbLD/n2HQbs3yIkt2h/8BhkVD9aUvZbqFjW
+        MsWG82Ry6MhewUBUWmLMp5tUIJVWWKL60koV2A+PfT0OLzVkw75Gyi10MuQ==
+X-Google-Smtp-Source: AG47ELt4x6FF8g8EuMbSmtt5pGFV++evAZsnk2NnlKwBrRamrkHBM2Nv2KCHiaaMP9i88SzEvXJmPgCDkYM=
 MIME-Version: 1.0
-X-Received: by 2002:a25:bad0:: with SMTP id a16-v6mr6652592ybk.72.1519860275324;
- Wed, 28 Feb 2018 15:24:35 -0800 (PST)
-Date:   Wed, 28 Feb 2018 15:22:46 -0800
+X-Received: by 2002:a25:c583:: with SMTP id v125-v6mr1227312ybe.53.1519860272640;
+ Wed, 28 Feb 2018 15:24:32 -0800 (PST)
+Date:   Wed, 28 Feb 2018 15:22:45 -0800
 In-Reply-To: <20180228232252.102167-1-bmwill@google.com>
-Message-Id: <20180228232252.102167-30-bmwill@google.com>
+Message-Id: <20180228232252.102167-29-bmwill@google.com>
 References: <20180207011312.189834-1-bmwill@google.com> <20180228232252.102167-1-bmwill@google.com>
 X-Mailer: git-send-email 2.16.1.107.gffe1b9127
-Subject: [PATCH v4 29/35] remote-curl: create copy of the service name
+Subject: [PATCH v4 28/35] pkt-line: add packet_buf_write_len function
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     git@jeffhostetler.com, gitster@pobox.com, jrnieder@gmail.com,
@@ -64,48 +64,55 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Make a copy of the service name being requested instead of relying on
-the buffer pointed to by the passed in 'const char *' to remain
-unchanged.
-
-Currently, all service names are string constants, but a subsequent
-patch will introduce service names from external sources.
+Add the 'packet_buf_write_len()' function which allows for writing an
+arbitrary length buffer into a 'struct strbuf' and formatting it in
+packet-line format.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- remote-curl.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ pkt-line.c | 16 ++++++++++++++++
+ pkt-line.h |  1 +
+ 2 files changed, 17 insertions(+)
 
-diff --git a/remote-curl.c b/remote-curl.c
-index dae8a4a48..4086aa733 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -165,7 +165,7 @@ static int set_option(const char *name, const char *value)
+diff --git a/pkt-line.c b/pkt-line.c
+index 87a24bd17..5223e24e2 100644
+--- a/pkt-line.c
++++ b/pkt-line.c
+@@ -215,6 +215,22 @@ void packet_buf_write(struct strbuf *buf, const char *fmt, ...)
+ 	va_end(args);
  }
  
- struct discovery {
--	const char *service;
-+	char *service;
- 	char *buf_alloc;
- 	char *buf;
- 	size_t len;
-@@ -257,6 +257,7 @@ static void free_discovery(struct discovery *d)
- 		free(d->shallow.oid);
- 		free(d->buf_alloc);
- 		free_refs(d->refs);
-+		free(d->service);
- 		free(d);
- 	}
- }
-@@ -343,7 +344,7 @@ static struct discovery *discover_refs(const char *service, int for_push)
- 		warning(_("redirecting to %s"), url.buf);
- 
- 	last= xcalloc(1, sizeof(*last_discovery));
--	last->service = service;
-+	last->service = xstrdup(service);
- 	last->buf_alloc = strbuf_detach(&buffer, &last->len);
- 	last->buf = last->buf_alloc;
- 
++void packet_buf_write_len(struct strbuf *buf, const char *data, size_t len)
++{
++	size_t orig_len, n;
++
++	orig_len = buf->len;
++	strbuf_addstr(buf, "0000");
++	strbuf_add(buf, data, len);
++	n = buf->len - orig_len;
++
++	if (n > LARGE_PACKET_MAX)
++		die("protocol error: impossibly long line");
++
++	set_packet_header(&buf->buf[orig_len], n);
++	packet_trace(data, len, 1);
++}
++
+ int write_packetized_from_fd(int fd_in, int fd_out)
+ {
+ 	static char buf[LARGE_PACKET_DATA_MAX];
+diff --git a/pkt-line.h b/pkt-line.h
+index 3f836f01a..4f97ae3e5 100644
+--- a/pkt-line.h
++++ b/pkt-line.h
+@@ -26,6 +26,7 @@ void packet_buf_flush(struct strbuf *buf);
+ void packet_buf_delim(struct strbuf *buf);
+ void packet_write(int fd_out, const char *buf, size_t size);
+ void packet_buf_write(struct strbuf *buf, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
++void packet_buf_write_len(struct strbuf *buf, const char *data, size_t len);
+ int packet_flush_gently(int fd);
+ int packet_write_fmt_gently(int fd, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
+ int write_packetized_from_fd(int fd_in, int fd_out);
 -- 
 2.16.2.395.g2e18187dfd-goog
 
