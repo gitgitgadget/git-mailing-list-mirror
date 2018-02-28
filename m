@@ -2,57 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 499611F404
-	for <e@80x24.org>; Wed, 28 Feb 2018 23:23:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 881EE1F404
+	for <e@80x24.org>; Wed, 28 Feb 2018 23:23:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S964974AbeB1XXa (ORCPT <rfc822;e@80x24.org>);
+        id S964977AbeB1XXf (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Feb 2018 18:23:35 -0500
+Received: from mail-qk0-f201.google.com ([209.85.220.201]:54116 "EHLO
+        mail-qk0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S964944AbeB1XXa (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 28 Feb 2018 18:23:30 -0500
-Received: from mail-ot0-f201.google.com ([74.125.82.201]:53619 "EHLO
-        mail-ot0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S964971AbeB1XXY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Feb 2018 18:23:24 -0500
-Received: by mail-ot0-f201.google.com with SMTP id 73so2308495oth.20
-        for <git@vger.kernel.org>; Wed, 28 Feb 2018 15:23:24 -0800 (PST)
+Received: by mail-qk0-f201.google.com with SMTP id n189so3149995qkc.20
+        for <git@vger.kernel.org>; Wed, 28 Feb 2018 15:23:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=9XsmeCCBk7e6wwN5WA7TJlpnWt0G2XiYH7b/hUURf1M=;
-        b=l8mLEIeZgLv71J8MmfDnADRIwj4S5gru194jKi0d15+DLauwtLVrHC8BBcCeBVohJ/
-         Bp8u4SJ6cfqw0R9Ga9TkX5gwChsJ/zU9OliAHpPdJ84VUPuNKU4umZdnTeOJ0u/jnJYi
-         uiNstPaVmMJqgGmy0QNOklRIUlUhU/jKZ9sWktIl2u2dzkU0GXA4P0Bx6dRcY4t2xHOR
-         tO788kS1GW+ZY2pLTp/ICRY9ULhMPzpOnSWQKssk4SnG0J0V/qEcZZt+tCjsA5tjCvle
-         zsoMB9FSMVvOq0Fl7WrAee4MwWp4uRKNqovyz7Gy0Arc1KaE6qyAwTr3N3C2PG/LNazH
-         8qAg==
+        bh=X9ADGDzFFbRhAC+ORIUhQNZ0jJiw4QU1qJ8xIzEiuww=;
+        b=vEeJy6OV3UbHxWsLS7F2pEW25cD8febcckJgu46JtkprIrlNpktR+yOdMtMJurbUPk
+         16VvqNkPxx/HB/G6nM3Jwvv8HzgF4FWTcBaDtkjwBdYI8yx7TMYGQLqSRhuniAGTZVkA
+         FaoIMDn+sixXq2O+qOdvnIlXGR9acv1TuMUfhZvyfmh3PbHIsyoyxDbyDp42bwIgOw+X
+         I/zSZcpIkrLq+UphcIJMu1uejAa/RNEL5vjmKdUngizrw841LrXyAVjYPdGCRYFpPFco
+         w4vvbEtz/C6tGbi4otrhUzkyDHzdauRGKsaRrW2G+qUChNagB3vrnhvZYDV0xg+nosBh
+         E9Cw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=9XsmeCCBk7e6wwN5WA7TJlpnWt0G2XiYH7b/hUURf1M=;
-        b=JE84+/S+Puy1llAnDwJ+/8zpeqRFHQVie3FOahDYb4oIk4mpLpHuuA9D/IVOfvepxb
-         smn9BPfHLKGVyX2uUccHT6NnKVBaicZRpIrvLezaOVo41ppQnEw3sBr0wbQuYijDGnMy
-         X5ehiZw1hNo/6xTDU4ywEM49+CIODaNHPC13T8faqE1dY0QTF3vAuEudM9+tKsCbKGsR
-         tgHHiRq4aTVJh5olqgm/irVe+Ca8ZZP/RC04iyJIHamC0XL8tE0SX0pWeZNp+obig9K+
-         Os51uJSd3mm2Bqi6xZaofL2SLmZDYVzAz3e286jMSRxU+nPDVl0YIneA5+t3ObdaRMnv
-         WUhg==
-X-Gm-Message-State: APf1xPC6sc0YH/89e2cukYLjR5SA+PomdKSJshlUJo9m3v30lbHu6apn
-        ANKhtP/0AGVpkyqcA6JiF+ZDJsHAidsV/XFPgwnUbyTfaEAX1HRm1NqsC3RHGsP9dKSDUW9tUwB
-        ShjTHGh1zn9wB9uk17k+Q70j+TEtAMejOsVYNVa93blq7KOPGvU64xe6Dlg==
-X-Google-Smtp-Source: AG47ELuD+BxV7Vurds0gvRq9rqSwN2qKTii0I0WOWbFUY0xu/4zQEM+fVvfsedTavf+PjGlzC0KsAWLow4E=
+        bh=X9ADGDzFFbRhAC+ORIUhQNZ0jJiw4QU1qJ8xIzEiuww=;
+        b=GPtzTRU9blx6zr/n05qh/us+5zgYzXfMS9aDUYnHvVxgekWQehuNFZ3ot06Y54FMWg
+         nJKR18Orp5pUrxKdLw0arBBmzIS0b1oQxZC0gZ6jZwSAOlceOzIIn7px66LPBZ+FXT+E
+         TpTTYV4TQx2QtPNu033t6EexV3YDdI2bMSXYL6hYFCHlDlaDjqAoCq/+4+dWKKFfiaBb
+         x9w5G2vIzWi2xQEjhCdCRjV/ifGH2aZMw7D1UDWRm3bDHKUKg3yQIse5+YpREqSn0A2W
+         l4La7efjXafgepwmo3hCm7Oj5Xb8vOedgRZ/7SZBUqzEVX6H8WIeQzM+JTiUJU9D4PwM
+         ltWg==
+X-Gm-Message-State: APf1xPB4flkKAPFE63E5yfNMEAoPffCiqHS9VsR45OpBRw44DB5mfZg5
+        ouW2NCDdiqUo+7180o4xy/HIB7pbGzb84hKtgkE3lWNgpFZ84pucFohGYBaM3qroS/XgknCbdzW
+        YatZcQwRzfMy/h+jbRGofqxVPkwWEfrsn1W0DSrSg0aODArDkLkUDnTt+Zg==
+X-Google-Smtp-Source: AG47ELt+/ICzPU+gft3yv2079dgOEpHpjLL2dswxMCyzbhVRjQNTNyt7rnpzjRRV46VsSiv+xDJ3a90ysL4=
 MIME-Version: 1.0
-X-Received: by 10.157.27.70 with SMTP id l64mr6712937otl.74.1519860203724;
- Wed, 28 Feb 2018 15:23:23 -0800 (PST)
-Date:   Wed, 28 Feb 2018 15:22:20 -0800
+X-Received: by 10.55.81.2 with SMTP id f2mr14544565qkb.10.1519860209154; Wed,
+ 28 Feb 2018 15:23:29 -0800 (PST)
+Date:   Wed, 28 Feb 2018 15:22:22 -0800
 In-Reply-To: <20180228232252.102167-1-bmwill@google.com>
-Message-Id: <20180228232252.102167-4-bmwill@google.com>
+Message-Id: <20180228232252.102167-6-bmwill@google.com>
 References: <20180207011312.189834-1-bmwill@google.com> <20180228232252.102167-1-bmwill@google.com>
 X-Mailer: git-send-email 2.16.1.107.gffe1b9127
-Subject: [PATCH v4 03/35] pkt-line: add delim packet support
+Subject: [PATCH v4 05/35] upload-pack: factor out processing lines
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     git@jeffhostetler.com, gitster@pobox.com, jrnieder@gmail.com,
@@ -64,105 +64,151 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-One of the design goals of protocol-v2 is to improve the semantics of
-flush packets.  Currently in protocol-v1, flush packets are used both to
-indicate a break in a list of packet lines as well as an indication that
-one side has finished speaking.  This makes it particularly difficult
-to implement proxies as a proxy would need to completely understand git
-protocol instead of simply looking for a flush packet.
-
-To do this, introduce the special deliminator packet '0001'.  A delim
-packet can then be used as a deliminator between lists of packet lines
-while flush packets can be reserved to indicate the end of a response.
-
-Documentation for how this packet will be used in protocol v2 will
-included in a future patch.
+Factor out the logic for processing shallow, deepen, deepen_since, and
+deepen_not lines into their own functions to simplify the
+'receive_needs()' function in addition to making it easier to reuse some
+of this logic when implementing protocol_v2.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- pkt-line.c | 17 +++++++++++++++++
- pkt-line.h |  3 +++
- 2 files changed, 20 insertions(+)
+ upload-pack.c | 113 +++++++++++++++++++++++++++++++++-----------------
+ 1 file changed, 74 insertions(+), 39 deletions(-)
 
-diff --git a/pkt-line.c b/pkt-line.c
-index 6307fa4a3..87a24bd17 100644
---- a/pkt-line.c
-+++ b/pkt-line.c
-@@ -91,6 +91,12 @@ void packet_flush(int fd)
- 	write_or_die(fd, "0000", 4);
+diff --git a/upload-pack.c b/upload-pack.c
+index 2ad73a98b..1e8a9e1ca 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -724,6 +724,75 @@ static void deepen_by_rev_list(int ac, const char **av,
+ 	packet_flush(1);
  }
  
-+void packet_delim(int fd)
++static int process_shallow(const char *line, struct object_array *shallows)
 +{
-+	packet_trace("0001", 4, 1);
-+	write_or_die(fd, "0001", 4);
++	const char *arg;
++	if (skip_prefix(line, "shallow ", &arg)) {
++		struct object_id oid;
++		struct object *object;
++		if (get_oid_hex(arg, &oid))
++			die("invalid shallow line: %s", line);
++		object = parse_object(&oid);
++		if (!object)
++			return 1;
++		if (object->type != OBJ_COMMIT)
++			die("invalid shallow object %s", oid_to_hex(&oid));
++		if (!(object->flags & CLIENT_SHALLOW)) {
++			object->flags |= CLIENT_SHALLOW;
++			add_object_array(object, NULL, shallows);
++		}
++		return 1;
++	}
++
++	return 0;
 +}
 +
- int packet_flush_gently(int fd)
++static int process_deepen(const char *line, int *depth)
++{
++	const char *arg;
++	if (skip_prefix(line, "deepen ", &arg)) {
++		char *end = NULL;
++		*depth = (int)strtol(arg, &end, 0);
++		if (!end || *end || *depth <= 0)
++			die("Invalid deepen: %s", line);
++		return 1;
++	}
++
++	return 0;
++}
++
++static int process_deepen_since(const char *line, timestamp_t *deepen_since, int *deepen_rev_list)
++{
++	const char *arg;
++	if (skip_prefix(line, "deepen-since ", &arg)) {
++		char *end = NULL;
++		*deepen_since = parse_timestamp(arg, &end, 0);
++		if (!end || *end || !deepen_since ||
++		    /* revisions.c's max_age -1 is special */
++		    *deepen_since == -1)
++			die("Invalid deepen-since: %s", line);
++		*deepen_rev_list = 1;
++		return 1;
++	}
++	return 0;
++}
++
++static int process_deepen_not(const char *line, struct string_list *deepen_not, int *deepen_rev_list)
++{
++	const char *arg;
++	if (skip_prefix(line, "deepen-not ", &arg)) {
++		char *ref = NULL;
++		struct object_id oid;
++		if (expand_ref(arg, strlen(arg), &oid, &ref) != 1)
++			die("git upload-pack: ambiguous deepen-not: %s", line);
++		string_list_append(deepen_not, ref);
++		free(ref);
++		*deepen_rev_list = 1;
++		return 1;
++	}
++	return 0;
++}
++
+ static void receive_needs(void)
  {
- 	packet_trace("0000", 4, 1);
-@@ -105,6 +111,12 @@ void packet_buf_flush(struct strbuf *buf)
- 	strbuf_add(buf, "0000", 4);
- }
+ 	struct object_array shallows = OBJECT_ARRAY_INIT;
+@@ -745,49 +814,15 @@ static void receive_needs(void)
+ 		if (!line)
+ 			break;
  
-+void packet_buf_delim(struct strbuf *buf)
-+{
-+	packet_trace("0001", 4, 1);
-+	strbuf_add(buf, "0001", 4);
-+}
+-		if (skip_prefix(line, "shallow ", &arg)) {
+-			struct object_id oid;
+-			struct object *object;
+-			if (get_oid_hex(arg, &oid))
+-				die("invalid shallow line: %s", line);
+-			object = parse_object(&oid);
+-			if (!object)
+-				continue;
+-			if (object->type != OBJ_COMMIT)
+-				die("invalid shallow object %s", oid_to_hex(&oid));
+-			if (!(object->flags & CLIENT_SHALLOW)) {
+-				object->flags |= CLIENT_SHALLOW;
+-				add_object_array(object, NULL, &shallows);
+-			}
++		if (process_shallow(line, &shallows))
+ 			continue;
+-		}
+-		if (skip_prefix(line, "deepen ", &arg)) {
+-			char *end = NULL;
+-			depth = strtol(arg, &end, 0);
+-			if (!end || *end || depth <= 0)
+-				die("Invalid deepen: %s", line);
++		if (process_deepen(line, &depth))
+ 			continue;
+-		}
+-		if (skip_prefix(line, "deepen-since ", &arg)) {
+-			char *end = NULL;
+-			deepen_since = parse_timestamp(arg, &end, 0);
+-			if (!end || *end || !deepen_since ||
+-			    /* revisions.c's max_age -1 is special */
+-			    deepen_since == -1)
+-				die("Invalid deepen-since: %s", line);
+-			deepen_rev_list = 1;
++		if (process_deepen_since(line, &deepen_since, &deepen_rev_list))
+ 			continue;
+-		}
+-		if (skip_prefix(line, "deepen-not ", &arg)) {
+-			char *ref = NULL;
+-			struct object_id oid;
+-			if (expand_ref(arg, strlen(arg), &oid, &ref) != 1)
+-				die("git upload-pack: ambiguous deepen-not: %s", line);
+-			string_list_append(&deepen_not, ref);
+-			free(ref);
+-			deepen_rev_list = 1;
++		if (process_deepen_not(line, &deepen_not, &deepen_rev_list))
+ 			continue;
+-		}
 +
- static void set_packet_header(char *buf, const int size)
- {
- 	static char hexchar[] = "0123456789abcdef";
-@@ -298,6 +310,9 @@ enum packet_read_status packet_read_with_status(int fd, char **src_buffer,
- 	} else if (!len) {
- 		packet_trace("0000", 4, 0);
- 		return PACKET_READ_FLUSH;
-+	} else if (len == 1) {
-+		packet_trace("0001", 4, 0);
-+		return PACKET_READ_DELIM;
- 	} else if (len < 4) {
- 		die("protocol error: bad line length %d", len);
- 	}
-@@ -331,6 +346,7 @@ int packet_read(int fd, char **src_buffer, size_t *src_len,
- 		break;
- 	case PACKET_READ_NORMAL:
- 		break;
-+	case PACKET_READ_DELIM:
- 	case PACKET_READ_FLUSH:
- 		pktlen = 0;
- 		break;
-@@ -443,6 +459,7 @@ enum packet_read_status packet_reader_read(struct packet_reader *reader)
- 	case PACKET_READ_NORMAL:
- 		reader->line = reader->buffer;
- 		break;
-+	case PACKET_READ_DELIM:
- 	case PACKET_READ_FLUSH:
- 		reader->pktlen = 0;
- 		reader->line = NULL;
-diff --git a/pkt-line.h b/pkt-line.h
-index f2edfae9a..3f836f01a 100644
---- a/pkt-line.h
-+++ b/pkt-line.h
-@@ -20,8 +20,10 @@
-  * side can't, we stay with pure read/write interfaces.
-  */
- void packet_flush(int fd);
-+void packet_delim(int fd);
- void packet_write_fmt(int fd, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
- void packet_buf_flush(struct strbuf *buf);
-+void packet_buf_delim(struct strbuf *buf);
- void packet_write(int fd_out, const char *buf, size_t size);
- void packet_buf_write(struct strbuf *buf, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
- int packet_flush_gently(int fd);
-@@ -75,6 +77,7 @@ enum packet_read_status {
- 	PACKET_READ_EOF = -1,
- 	PACKET_READ_NORMAL,
- 	PACKET_READ_FLUSH,
-+	PACKET_READ_DELIM,
- };
- enum packet_read_status packet_read_with_status(int fd, char **src_buffer,
- 						size_t *src_len, char *buffer,
+ 		if (!skip_prefix(line, "want ", &arg) ||
+ 		    get_oid_hex(arg, &oid_buf))
+ 			die("git upload-pack: protocol error, "
 -- 
 2.16.2.395.g2e18187dfd-goog
 
