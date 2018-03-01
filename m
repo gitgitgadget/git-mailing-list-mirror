@@ -7,62 +7,62 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 551561F404
-	for <e@80x24.org>; Thu,  1 Mar 2018 20:30:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7D9D41F404
+	for <e@80x24.org>; Thu,  1 Mar 2018 20:31:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1161572AbeCAUaC (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Mar 2018 15:30:02 -0500
-Received: from mail-wm0-f44.google.com ([74.125.82.44]:36702 "EHLO
-        mail-wm0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1161563AbeCAUaA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Mar 2018 15:30:00 -0500
-Received: by mail-wm0-f44.google.com with SMTP id 188so14577081wme.1
-        for <git@vger.kernel.org>; Thu, 01 Mar 2018 12:30:00 -0800 (PST)
+        id S1161616AbeCAUa6 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Mar 2018 15:30:58 -0500
+Received: from mail-wm0-f41.google.com ([74.125.82.41]:35853 "EHLO
+        mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1161584AbeCAUa5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Mar 2018 15:30:57 -0500
+Received: by mail-wm0-f41.google.com with SMTP id 188so14582137wme.1
+        for <git@vger.kernel.org>; Thu, 01 Mar 2018 12:30:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=A8y/di7Cax83/LXJHQQ3/goWs4UohXATxsYFXsOndds=;
-        b=ZASGA8QuZ0A7QQFw73J/SjmOETRdJWq5Ax6O6q37K5wQ0S4TxDxRSDMTnlEpoJwkSb
-         25IPxhBHcZMEV7ODRLtHsVA4GzFc/BKKe/jX20tU3F5Ctswb1R7Z4p1F0+L0i9L/tBtq
-         CAY+Xg0uqt5yyuOhqgpL18ztBwVqZW7GNiWEVM3G/AUK987XaEzLT2AtbFgmbVBuHcnD
-         PMDpa9Yzi+T6NwiCmD9VgQ8VtzG5cORBYDWcqDfRdv7tPafroYyP0qdOqMYmZGWE+lcu
-         mzxuYCbO+NftEoHJO+T1t6nnHa+sDSXo882NEiip+tLRzlskeBdo9ZpOMWmceESy7sAn
-         YkdA==
+        bh=i/Xxe3/1Di8kt7GP+bLtJnkcQ4dCY8VXyhbrxsS/7Ss=;
+        b=rtWxQuaH8n4hDlJYsAqKwIOmIlTHpcjuozlwiSqHAptcgPjto50cr4sqgnHKOQIUrO
+         uaRxViupVSu5Wi6f1K34I56Nz3eZ0eBtYbH266xjSQ4n1wcZdbS1gtsIny+YGPTfF+yv
+         5THBg64KiVbwlXPJaemoeErT6DbWosRCA8Vf3Kxzy/MHPSOSHW3RGCKOn4wdiKBFyb0L
+         tFPr+hA6MDNA1Eho4VwORa7+zJZVIvAlcfQCFTJgsbckD6TagOM05wWlzY6mhOfpZLvn
+         R8Kak3HLzVPwwSSvX4CbO11az+HoVkUuc/YWPkiyyJ6IaZ8XSffq1+v06lb+NWxcyc77
+         9fVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=A8y/di7Cax83/LXJHQQ3/goWs4UohXATxsYFXsOndds=;
-        b=aUBkIi0KM9QB3R9cCnMGb+obzZ08g2U00ADgc82JsLwDtJ0ZcSOTsHNo4PLwb2xzPy
-         LC2blQTeHbydaOHNE2aZRbGhIWUF1By/Tajg8P6hk4fXvnMUYEU1V+K7jgv4m3RBjzgM
-         FZP64fc7KvI/g62LyZNuKLUYsJKByvugxQZx3d08ZY+91XMP3BZJyUBDVAVB96GBuAX3
-         6AQNCFfXWGDNV0A+O4fvYCFl4QKkl7GZNWzxJIcVutN5r8oEeEDVKAwPPMDCF1yXrrq+
-         lVdsptSTUjLiMJghQ8KJeDhhfk8Sfft1WluFOo6qgLfEPoSGeAy4aqhXpD9ET/rSkw2p
-         6Hag==
-X-Gm-Message-State: AElRT7Hn+PGqI4ACmyKRuejPTMiK49ZzgjINLjcZqMby/U0TYFNC7uJe
-        x0iRTJzd2PR2FrVIoT7m7O8=
-X-Google-Smtp-Source: AG47ELtAstcmwJCcWAK6dGVhXlLdNBKSJ5W99MmlxGb0KUHZ5e37fFdQ63ae14izWXL6YPLNF//YTQ==
-X-Received: by 10.28.184.21 with SMTP id i21mr3002107wmf.94.1519936199013;
-        Thu, 01 Mar 2018 12:29:59 -0800 (PST)
+        bh=i/Xxe3/1Di8kt7GP+bLtJnkcQ4dCY8VXyhbrxsS/7Ss=;
+        b=UoSPCswlQld6QUxVAVF+QUf/6TtNFoz67SVKh7KUTIJuKS79xudZDXpcS99j8fQSqP
+         N0/uO3WgfXeRSaRKf9f772obwZfqSc3u9YUtWNZZoFJG7YlGGJs/7MzCDsQYxu9VArKh
+         5x+Xr1IPwzZ91kj0ncdrtL21RkbnLFeVCyMLmmdvX2PNlVEV9g7IRHaC0i7qONZEx0eM
+         DRlAUcT5VmpP/s2i/spH+nJGOTyChsADL3k9rYyQSYcolRlDKcgi57p0xhPZl8EOwrIW
+         7YxqM/PEPgsq/7uOXDoVthMetqpQjkhUKvRBdyowT3n99OJZtH4+2x89f77IVRdZFpr2
+         aYng==
+X-Gm-Message-State: APf1xPC1ARRfwsbUb6Tq9IszfOA66wL4FuR5PKctcIvw7TRPsa5ps7yW
+        68LdCtbpMj99s6OGJtfs+x4Uq3Pd
+X-Google-Smtp-Source: AG47ELsloCQBWiCNykjTcnwNNTpV5r4bSs1FvTS2oh7Tr5FXiaHbM46vvmbvGUEF0BR8ojqhTK4NDg==
+X-Received: by 10.28.66.130 with SMTP id k2mr2622722wmi.15.1519936256020;
+        Thu, 01 Mar 2018 12:30:56 -0800 (PST)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id o204sm5050057wma.1.2018.03.01.12.29.58
+        by smtp.gmail.com with ESMTPSA id s26sm41730wrb.10.2018.03.01.12.30.55
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 01 Mar 2018 12:29:58 -0800 (PST)
+        Thu, 01 Mar 2018 12:30:55 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Phillip Wood <phillip.wood@talktalk.net>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         "Brian M. Carlson" <sandals@crustytoothpaste.net>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v4 8/9] add -p: fix counting when splitting and coalescing
+Subject: Re: [PATCH v4 9/9] add -p: don't rely on apply's '--recount' option
 References: <20180213104408.9887-1-phillip.wood@talktalk.net>
         <20180301105103.24268-1-phillip.wood@talktalk.net>
-        <20180301105103.24268-9-phillip.wood@talktalk.net>
-Date:   Thu, 01 Mar 2018 12:29:58 -0800
-In-Reply-To: <20180301105103.24268-9-phillip.wood@talktalk.net> (Phillip
-        Wood's message of "Thu, 1 Mar 2018 10:51:02 +0000")
-Message-ID: <xmqqsh9jfsjd.fsf@gitster-ct.c.googlers.com>
+        <20180301105103.24268-10-phillip.wood@talktalk.net>
+Date:   Thu, 01 Mar 2018 12:30:54 -0800
+In-Reply-To: <20180301105103.24268-10-phillip.wood@talktalk.net> (Phillip
+        Wood's message of "Thu, 1 Mar 2018 10:51:03 +0000")
+Message-ID: <xmqqo9k7fsht.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -73,21 +73,9 @@ X-Mailing-List: git@vger.kernel.org
 
 Phillip Wood <phillip.wood@talktalk.net> writes:
 
-> @@ -887,8 +892,8 @@ sub merge_hunk {
->  	$o_cnt = $n_cnt = 0;
->  	for ($i = 1; $i < @{$prev->{TEXT}}; $i++) {
->  		my $line = $prev->{TEXT}[$i];
-> -		if ($line =~ /^\+/) {
-> -			$n_cnt++;
-> +		if ($line =~ /^[+\\]/) {
-> +			$n_cnt++ if ($line =~ /^\+/);
->  			push @line, $line;
->  			next;
->  		}
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>
+> Now that add -p counts patches properly it should be possible to turn
+> off the '--recount' option when invoking 'git apply'
 
-Hmmmm, the logic may be correct, but this looks like a result of
-attempting to minimize the number of changed lines and ending up
-with a less-than-readble code.  "If the line begins with a plus or
-backslash, do these things, the first of which is done only when
-the line begins with a plus."  The same comment for the other hunk
-that counts the $this side.
+Sounds good ;-)
