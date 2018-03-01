@@ -6,72 +6,55 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 880B41F576
-	for <e@80x24.org>; Thu,  1 Mar 2018 07:36:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 458EF1F576
+	for <e@80x24.org>; Thu,  1 Mar 2018 07:39:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935414AbeCAHgc (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Mar 2018 02:36:32 -0500
-Received: from cloud.peff.net ([104.130.231.41]:42306 "HELO cloud.peff.net"
+        id S934917AbeCAHi6 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Mar 2018 02:38:58 -0500
+Received: from cloud.peff.net ([104.130.231.41]:42320 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S935251AbeCAHgb (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Mar 2018 02:36:31 -0500
-Received: (qmail 15893 invoked by uid 109); 1 Mar 2018 07:36:30 -0000
+        id S933286AbeCAHi6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Mar 2018 02:38:58 -0500
+Received: (qmail 15976 invoked by uid 109); 1 Mar 2018 07:38:57 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 01 Mar 2018 07:36:30 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 01 Mar 2018 07:38:57 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 12555 invoked by uid 111); 1 Mar 2018 07:37:20 -0000
+Received: (qmail 12577 invoked by uid 111); 1 Mar 2018 07:39:47 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 01 Mar 2018 02:37:20 -0500
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 01 Mar 2018 02:39:47 -0500
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 01 Mar 2018 02:36:29 -0500
-Date:   Thu, 1 Mar 2018 02:36:29 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 01 Mar 2018 02:38:56 -0500
+Date:   Thu, 1 Mar 2018 02:38:56 -0500
 From:   Jeff King <peff@peff.net>
-To:     demerphq <demerphq@gmail.com>
-Cc:     "Randall S. Becker" <rsbecker@nexbridge.com>,
-        Eric Wong <e@80x24.org>, Jonathan Nieder <jrnieder@gmail.com>,
-        Git <git@vger.kernel.org>,
-        Joachim Schmitz <jojo@schmitz-digital.de>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [Problem] test_must_fail makes possibly questionable assumptions
- about exit_code.
-Message-ID: <20180301073629.GC31079@sigill.intra.peff.net>
-References: <005501d3b025$c0057ce0$401076a0$@nexbridge.com>
- <20180228001616.GJ174036@aiede.svl.corp.google.com>
- <20180228040718.GA9043@whir>
- <20180228050034.GA373@sigill.intra.peff.net>
- <20180228074251.GA11673@dcvr>
- <20180228074918.GA32127@sigill.intra.peff.net>
- <000501d3b0a4$29162a80$7b427f80$@nexbridge.com>
- <CANgJU+VYkmUhJT=CHQ4HTqoV4gWhr9P4-65BfrY-RWgwJJhEUA@mail.gmail.com>
+To:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 0/5] roll back locks in various code paths
+Message-ID: <20180301073855.GD31079@sigill.intra.peff.net>
+References: <CAN0heSqmWAN=rCO8busGtb0xNPiB5H_jkL664qH8xasPq1Sy0A@mail.gmail.com>
+ <cover.1519843916.git.martin.agren@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CANgJU+VYkmUhJT=CHQ4HTqoV4gWhr9P4-65BfrY-RWgwJJhEUA@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <cover.1519843916.git.martin.agren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 28, 2018 at 05:51:14PM +0100, demerphq wrote:
+On Wed, Feb 28, 2018 at 08:07:53PM +0100, Martin Ågren wrote:
 
-> I would look into putting it into a module and then using the PERL5OPT
-> environment var to have it loaded automagically in any of your perl
-> scripts.
+> This is v2 of my series to always release locks. As before, there's a
+> conflict with pu, where the correct resolution is to take my version of
+> the conflicting hunk.
 > 
-> For instance if you put that code into a module called Git/DieTrap.pm
-> 
-> then you could do:
-> 
-> PERL5OPT=-MGit::DieTrap
-> 
-> In your test setup code assuming you have some. Then you don't need to
-> change any of your scripts just the test runner framework.
+> The only difference to v1 is in patch 3. I'll follow up with a patch to
+> address the confusing pattern which Peff mentioned and which fooled me
+> when I prepared v1.
 
-That's a clever trick.
-
-It's not clear to me though if we just want to tweak the programs run in
-the test scripts in order to get test_must_fail to stop complaining, or
-if we consider the unusual exit codes from our perl-based Git programs
-to be an error that should be fixed for real use, too.
+This looks good to me. And I'm glad my rambling helped find something
+useful. ;)
 
 -Peff
