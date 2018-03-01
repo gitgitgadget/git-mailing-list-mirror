@@ -2,76 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5D9B21F404
-	for <e@80x24.org>; Thu,  1 Mar 2018 14:29:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B6FC01F404
+	for <e@80x24.org>; Thu,  1 Mar 2018 14:39:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1031565AbeCAO27 convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Thu, 1 Mar 2018 09:28:59 -0500
-Received: from elephants.elehost.com ([216.66.27.132]:24724 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1031397AbeCAO2q (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Mar 2018 09:28:46 -0500
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id w21ESbrN053250
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Thu, 1 Mar 2018 09:28:38 -0500 (EST)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'Jeff King'" <peff@peff.net>, "'demerphq'" <demerphq@gmail.com>
-Cc:     "'Eric Wong'" <e@80x24.org>,
-        "'Jonathan Nieder'" <jrnieder@gmail.com>,
-        "'Git'" <git@vger.kernel.org>,
-        "'Joachim Schmitz'" <jojo@schmitz-digital.de>,
-        "=?utf-8?Q?'=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason'?=" 
-        <avarab@gmail.com>
-References: <005501d3b025$c0057ce0$401076a0$@nexbridge.com> <20180228001616.GJ174036@aiede.svl.corp.google.com> <20180228040718.GA9043@whir> <20180228050034.GA373@sigill.intra.peff.net> <20180228074251.GA11673@dcvr> <20180228074918.GA32127@sigill.intra.peff.net> <000501d3b0a4$29162a80$7b427f80$@nexbridge.com> <CANgJU+VYkmUhJT=CHQ4HTqoV4gWhr9P4-65BfrY-RWgwJJhEUA@mail.gmail.com> <20180301073629.GC31079@sigill.intra.peff.net>
-In-Reply-To: <20180301073629.GC31079@sigill.intra.peff.net>
-Subject: RE: [Problem] test_must_fail makes possibly questionable assumptions about exit_code.
-Date:   Thu, 1 Mar 2018 09:28:31 -0500
-Message-ID: <001d01d3b169$95f4b0c0$c1de1240$@nexbridge.com>
-MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQJEpadERfpX5LkwuayU7lmWnKekrgHW5ptIArDwK6kB6BkubwJEbisnAR6VsxoCg3sX4gJMApEJAnNK9haiUNie0A==
+        id S1031283AbeCAOjK (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Mar 2018 09:39:10 -0500
+Received: from mail-wm0-f49.google.com ([74.125.82.49]:34770 "EHLO
+        mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1031184AbeCAOjJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Mar 2018 09:39:09 -0500
+Received: by mail-wm0-f49.google.com with SMTP id a20so31302686wmd.1
+        for <git@vger.kernel.org>; Thu, 01 Mar 2018 06:39:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=VCKuRNQ5MSAFOTQP7Sz5K3YqzT7VV3X9SJJTwVeJKYc=;
+        b=nIUCqw6ZNE3XzS9JmI36GBhHolOXym+An5whGpL2ZXQS2v1oSEWowkjI0hKiS9ZXvo
+         g3AgJTLEu+PITt9QrvhUykHeYK7SlhtZ6dddxcJiStYAdHUWzJQYiOL+eKSKqgBo5XOG
+         j2mDEaCv+pwrPaUVQ/+RUfi7m/ngsJkFOGG5XoiWLIrftZSDg67QK0BIYwqSxW9fdktS
+         04+vPaRiWUGeVYGnUvSRJOKEcIxyG6oi4H8hm6InJzHXkUcGL1SDY6RhhM+Ep87fxjlU
+         UHubfP9n2aNj1GQJYyqfOxhzz8CQFmbUd8ggVYVZMSFqr8UR/H3e8jLJr89YwLv+q/7O
+         Yf5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
+         :in-reply-to:references;
+        bh=VCKuRNQ5MSAFOTQP7Sz5K3YqzT7VV3X9SJJTwVeJKYc=;
+        b=K/w8IeQGlUHR+s8xSVzAIf65Q/6fsNEwEYDx6x/rCaYW9o4lUuDG/M59jKjhp7I/Xd
+         xHLYV45kQtX9k+0gljAtJHNaZU7YSeXmVAw+ktHcV7uYEyLRykGZCWGiemCgPEg52z5m
+         GDZA8KlJIvpW9YK+yMQFnVoQzguVcYhdRgkJ0BhkfUgREoZ0n3XOTCOpTVJZTnplpL5R
+         B1LiJt0QD4HUDCooygZeT9mLyJmqqZFtMhtaHtxbypYhr0rRmBExSQaUnnVbMvVEx1eY
+         u9E+Upaw+McwarLq2Sa5p/U/PjkBQqQLcLGxrg8MxIZD3zi5OUhg/YLej8rlv9QKA05n
+         1pZQ==
+X-Gm-Message-State: APf1xPBBmnvVLJSBGxUjN+WdHmEKCbzZ7SKkN4J3xs1b5hV40O+ODEOS
+        x2f25D/zZXHR1YCukZ9yODUp9zQ7
+X-Google-Smtp-Source: AG47ELvvUaBaQRtivgq7lRwoUIeybVba4JKq9bIMgwJ/HLNIc9bGIP0nQmDb3xWnbIgfnuiLMlHNHw==
+X-Received: by 10.80.151.105 with SMTP id d38mr3102688edb.79.1519915147811;
+        Thu, 01 Mar 2018 06:39:07 -0800 (PST)
+Received: from birger-Dell-T1700.hials.no ([2001:700:1200:5104:f593:cb86:c151:ca05])
+        by smtp.gmail.com with ESMTPSA id k5sm4362761edc.3.2018.03.01.06.39.06
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 01 Mar 2018 06:39:06 -0800 (PST)
+From:   Birger Skogeng Pedersen <birgersp@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Birger Skogeng Pedersen <birgersp@gmail.com>
+Subject: [PATCH] git-gui: bind CTRL/CMD+numpad ENTER to do_commit
+Date:   Thu,  1 Mar 2018 15:39:04 +0100
+Message-Id: <20180301143904.28652-1-birgersp@gmail.com>
+X-Mailer: git-send-email 2.16.2.268.g7f9c27f2f.dirty
+In-Reply-To: <CAGr--=LxMtz5RRP4742u3VsrADRsWARE2SitCSOWATySOn2LcQ@mail.gmail.com>
+References: <CAGr--=LxMtz5RRP4742u3VsrADRsWARE2SitCSOWATySOn2LcQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On March 1, 2018 2:36 AM, Jeff King wrote:
-> On Wed, Feb 28, 2018 at 05:51:14PM +0100, demerphq wrote:
-> 
-> > I would look into putting it into a module and then using the PERL5OPT
-> > environment var to have it loaded automagically in any of your perl
-> > scripts.
-> >
-> > For instance if you put that code into a module called Git/DieTrap.pm
-> >
-> > then you could do:
-> >
-> > PERL5OPT=-MGit::DieTrap
-> >
-> > In your test setup code assuming you have some. Then you don't need to
-> > change any of your scripts just the test runner framework.
-> 
-> That's a clever trick.
-> 
-> It's not clear to me though if we just want to tweak the programs run in the
-> test scripts in order to get test_must_fail to stop complaining, or if we
-> consider the unusual exit codes from our perl-based Git programs to be an
-> error that should be fixed for real use, too.
+---
+ git-gui/git-gui.sh | 1 +
+ 1 file changed, 1 insertion(+)
 
-I'm living unusual exit code IRL all the time. So "fixed for real", is what I'm looking for. So if we were to do that, where is the best place to insert a fix - my original question - that would be permanent in the main git test code. Or perhaps this needs to be in the main code itself.
-
-Cheers,
-Randall
+diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
+index 91c00e648..6de74ce63 100755
+--- a/git-gui/git-gui.sh
++++ b/git-gui/git-gui.sh
+@@ -3867,6 +3867,7 @@ bind .   <$M1B-Key-equal> {show_more_context;break}
+ bind .   <$M1B-Key-plus> {show_more_context;break}
+ bind .   <$M1B-Key-KP_Add> {show_more_context;break}
+ bind .   <$M1B-Key-Return> do_commit
++bind .   <$M1B-Key-KP_Enter> do_commit
+ foreach i [list $ui_index $ui_workdir] {
+ 	bind $i <Button-1>       { toggle_or_diff click %W %x %y; break }
+ 	bind $i <$M1B-Button-1>  { add_one_to_selection %W %x %y; break }
+-- 
+2.16.2.268.g7f9c27f2f.dirty
 
