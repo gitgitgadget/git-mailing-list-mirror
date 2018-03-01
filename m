@@ -7,108 +7,121 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2A1C21F576
-	for <e@80x24.org>; Thu,  1 Mar 2018 08:17:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EB4201FAE2
+	for <e@80x24.org>; Thu,  1 Mar 2018 09:00:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935164AbeCAIRB (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Mar 2018 03:17:01 -0500
-Received: from mail-io0-f179.google.com ([209.85.223.179]:39291 "EHLO
-        mail-io0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934985AbeCAIRA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Mar 2018 03:17:00 -0500
-Received: by mail-io0-f179.google.com with SMTP id b34so6236451ioj.6
-        for <git@vger.kernel.org>; Thu, 01 Mar 2018 00:17:00 -0800 (PST)
+        id S966637AbeCAJAr (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Mar 2018 04:00:47 -0500
+Received: from mail-pl0-f65.google.com ([209.85.160.65]:39505 "EHLO
+        mail-pl0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965361AbeCAJAp (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Mar 2018 04:00:45 -0500
+Received: by mail-pl0-f65.google.com with SMTP id s13-v6so3277524plq.6
+        for <git@vger.kernel.org>; Thu, 01 Mar 2018 01:00:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Ag0Z8tSshOe2trEwCGze8w6quEaJfKeLA3VCogFe3mE=;
-        b=N4lw/g/LqoVgLghrRFcdbN8uz+Wpy4xYjqNomx1tQ+2eSugosSKpmmFmYki8JFJWBN
-         GLpjHMSc1qLtuf0SjaC45E66FfgWGBx24sTHg9zsWtYJFa+MAariMRmapRf9tIP87HBx
-         tJO9oqHl9ERS/ZRV64q4Ko/Ykm/aQ/crMiUXKSAgpiiSp3NkmA/O546kxFSy0wkmkxHF
-         /zeBONrvQ1D4OkYIwWzBtxlnEg5s3gGZ4EOs7wQy/XLW7vZPwzIerD+d1da+3szpMZXn
-         8fKDq+QwJ2+BORkSOKW5IWNEvVZqQYVx08f7CbgMdzHfzqPK1hbtdRhTLgMOiDUY+KwJ
-         h2Ng==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=Fq7cuMS0uMIckGPWaYfUpGTNcfKGypCm7w4cbW9ZbFI=;
+        b=qG0NPrvnwm8cEo5cas7WB+555C3Z69G3pD+Se1Wu2cjRS9eZW0riuGRPtsQpz+SW7x
+         J9tZcgKVwQNxf2WuP/iTXpaL/k2YwUf/8A1myc5IoOtmm6uBu31fFCLXEM6ecpMYcFg8
+         Rj5lomOYQWZUKH0pN757k/Avh7aAkyQ+eV5/Atpw72EQtXHsRg1p1dIitB1CfknH92Wf
+         sVBzI41pkAnyvELYZfBsuYBbZdClacXgZuv6JnP9xThgWFQpGPe4Lyld/cxWY9dFoYyU
+         4KTLHXC1X+QjpWTTE/b+Ni6PULKOLzMywumQWlA28DGpZq8dqbcnnSsIcFOD3duF9XLN
+         idQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Ag0Z8tSshOe2trEwCGze8w6quEaJfKeLA3VCogFe3mE=;
-        b=AUtnwiGNovQXkfCl/GSrAWzvxhpYThyzMZLj6uaL8AZtNG/RySBIcxZV9wxiSGa2dO
-         sEJaUOpWOkGwOUCpgKcEcBGunJFWUpzp7idbsGuMc13OXwYPbwHlfAzRxTkMCA3tAj7H
-         kftGcwoc4sdviBocwCbPy3ushnlSXdg0OzenakcnWjYZLsS3/6jm2LSRHZkfJ4itKgZA
-         P/NreP3TAnYCA4DwKKgMYYwrPQquQb7d+0XjnJMYngBxdtpfcYCSKI6pv7NP4J+e5TWG
-         KxrI9VSuHRG2vE5t1j4sAOB/Am9tYg3DI+qIOyXRocMOWIiX+mPMosapYwWMCk9zvh0s
-         /m5w==
-X-Gm-Message-State: AElRT7FzejiwT4Gl6qkb0RahNhJ6ZpXNMPjyJEARfjZrPdiHkXruIwhW
-        ee3Q94hNQ5IJ+BVGqsRh6gi+j64/srTy0Qi9/xs=
-X-Google-Smtp-Source: AG47ELuwsiUSXUYtl2lyEJAiGS8CPkF+xsHoM4tjap+5bAGx9+zNIXfRAibqmLiP3ZqwLd9UlmNsv1AeGbcIDtMsW98=
-X-Received: by 10.107.13.73 with SMTP id 70mr1003666ion.7.1519892219648; Thu,
- 01 Mar 2018 00:16:59 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=Fq7cuMS0uMIckGPWaYfUpGTNcfKGypCm7w4cbW9ZbFI=;
+        b=Oe43NYX//K0Jeum7XZd9du8yYN2zkB3PKUqhdlZqlwYhIb11bFIx+lYzgwdj9k4iEE
+         R26dr4TE//oBKfMkARltYNqQSfDPE/8bbnn7RmnyroT582sjXIHwQ9Rvy67D/fu7BNAa
+         HCCpzDUjrm90tKKdZ+FABBFtnZjyPrSeKuB35xEH2m6uqr7++aVX/1vlcvHT6CTkx9zw
+         y8GUzJhIX0IwL6YmToYxkB1vC6GZ1j+o/JJULSKnWtOyqTxnJVEILrIe/mlyRStN/t6p
+         x86B5vHtDaucg/8ea/A6Ii9S2h/PFF++4td4puIaBYnETtohIeDVZnEcRpVvv86BpZJI
+         yXXA==
+X-Gm-Message-State: APf1xPDeqGDgPzwPx0RvD7RkUI81KqGfLn1VXFnO4mOUFtzaP2q1kN46
+        aE4DnXOGs7xBhY+W05FJwxQT9g==
+X-Google-Smtp-Source: AG47ELuLDZEsBg23Oo6kVMScvcLipiy5x50licputzwe3JA9W4khfdDuZxq81TS6jd5VxaO3VpXqBg==
+X-Received: by 2002:a17:902:bc85:: with SMTP id bb5-v6mr1254589plb.425.1519894845365;
+        Thu, 01 Mar 2018 01:00:45 -0800 (PST)
+Received: from ash ([171.232.93.137])
+        by smtp.gmail.com with ESMTPSA id 73sm3379916pfz.165.2018.03.01.01.00.42
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 01 Mar 2018 01:00:44 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Thu, 01 Mar 2018 16:00:39 +0700
+Date:   Thu, 1 Mar 2018 16:00:39 +0700
+From:   Duy Nguyen <pclouds@gmail.com>
+To:     Eric Wong <e@80x24.org>
+Cc:     git@vger.kernel.org
+Subject: Re: Reduce pack-objects memory footprint?
+Message-ID: <20180301090039.GA19167@ash>
+References: <20180228092722.GA25627@ash>
+ <20180228182233.GC15256@dcvr>
 MIME-Version: 1.0
-Received: by 10.107.137.144 with HTTP; Thu, 1 Mar 2018 00:16:58 -0800 (PST)
-In-Reply-To: <20180301073629.GC31079@sigill.intra.peff.net>
-References: <005501d3b025$c0057ce0$401076a0$@nexbridge.com>
- <20180228001616.GJ174036@aiede.svl.corp.google.com> <20180228040718.GA9043@whir>
- <20180228050034.GA373@sigill.intra.peff.net> <20180228074251.GA11673@dcvr>
- <20180228074918.GA32127@sigill.intra.peff.net> <000501d3b0a4$29162a80$7b427f80$@nexbridge.com>
- <CANgJU+VYkmUhJT=CHQ4HTqoV4gWhr9P4-65BfrY-RWgwJJhEUA@mail.gmail.com> <20180301073629.GC31079@sigill.intra.peff.net>
-From:   demerphq <demerphq@gmail.com>
-Date:   Thu, 1 Mar 2018 09:16:58 +0100
-Message-ID: <CANgJU+XiT6iuABL=95mGvdEbV7xMK6-mwOs4OO1Apvyp9KGqOA@mail.gmail.com>
-Subject: Re: [Problem] test_must_fail makes possibly questionable assumptions
- about exit_code.
-To:     Jeff King <peff@peff.net>
-Cc:     "Randall S. Becker" <rsbecker@nexbridge.com>,
-        Eric Wong <e@80x24.org>, Jonathan Nieder <jrnieder@gmail.com>,
-        Git <git@vger.kernel.org>,
-        Joachim Schmitz <jojo@schmitz-digital.de>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180228182233.GC15256@dcvr>
+X-Clacks-Overhead: GNU Terry Pratchett
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 1 March 2018 at 08:36, Jeff King <peff@peff.net> wrote:
-> On Wed, Feb 28, 2018 at 05:51:14PM +0100, demerphq wrote:
->
->> I would look into putting it into a module and then using the PERL5OPT
->> environment var to have it loaded automagically in any of your perl
->> scripts.
->>
->> For instance if you put that code into a module called Git/DieTrap.pm
->>
->> then you could do:
->>
->> PERL5OPT=-MGit::DieTrap
->>
->> In your test setup code assuming you have some. Then you don't need to
->> change any of your scripts just the test runner framework.
->
-> That's a clever trick.
->
-> It's not clear to me though if we just want to tweak the programs run in
-> the test scripts in order to get test_must_fail to stop complaining, or
-> if we consider the unusual exit codes from our perl-based Git programs
-> to be an error that should be fixed for real use, too.
+On Wed, Feb 28, 2018 at 06:22:33PM +0000, Eric Wong wrote:
+> Duy Nguyen <pclouds@gmail.com> wrote:
+> > which saves 12 bytes (or another 74 MB). 222 MB total is plenty of
+> > space to keep some file cache from being evicted.
+> 
+> Nice!  I can definitely benefit from lower memory usage when
+> packing.  Fwiw, I use pahole with other projects to help find
+> packing opportunities:
+> 
+> 	git://git.kernel.org/pub/scm/devel/pahole/pahole.git
 
-Yeah, that is a decision you guys need to make, I am not familiar
-enough with the issues to make any useful comment.
+Yes it's a wonderful tool.
 
-But I wanted to say that I will bring this subject up on perl5porters,
-the exit code triggered by a die is a regular cause of trouble for
-more than just you guys, and maybe we can get it changed for the
-future. Nevertheless even if there was consensus it can be changed it
-will take years before it is widely distributed enough to be useful to
-you. :-(
+> > @@ -14,11 +26,10 @@ struct object_entry {
+> >  	void *delta_data;	/* cached delta (uncompressed) */
+> >  	unsigned long delta_size;	/* delta data size (uncompressed) */
+> >  	unsigned long z_delta_size;	/* delta data size (compressed) */
+> > -	enum object_type type;
+> > -	enum object_type in_pack_type;	/* could be delta */
+> >  	uint32_t hash;			/* name hint hash */
+> > -	unsigned int in_pack_pos;
+> >  	unsigned char in_pack_header_size;
+> > +	unsigned type:3;	 /* enum object_type */
+> > +	unsigned in_pack_type:3; /* enum object_type - could be delta */
+> 
+> For C99 compilers, enums can be bitfields.  I introduced the
+> following macro into Ruby a few weeks ago to remain compatible
+> with non-C99 compilers:
+> 
+> /*
+>  * For declaring bitfields out of non-unsigned int types:
+>  *   struct date {
+>  *      BITFIELD(enum months) month:4;
+>  *      ...
+>  *   };
+>  */
+> #if defined(__STDC_VERSION__) && (__STDC_VERSION__ >= 199901L)
+> # define BITFIELD(type) type
+> #else
+> # define BITFIELD(type) unsigned int
+> #endif
 
-Ill be bold and say sorry on the behalf of the perl committers for
-this. Perl is so old sometimes things that used to make sense don't
-make sense anymore.
+I tried this and got
 
-cheers,
-Yves
+In file included from builtin/pack-objects.c:20:0:
+./pack-objects.h:49:19: l?i: ?type? is narrower than values of its type [-Werror]
+  enum object_type type:TYPE_BITS;
+                   ^~~~
 
--- 
-perl -Mre=debug -e "/just|another|perl|hacker/"
+The compiler is not wrong. What it does not realize is pack-objects
+code never uses out-of-range values (OBJ_BAD and OBJ_ANY) but I don't
+see how I could suppress this warning. So I went back to non-enum
+bitfields.
+
+--
+Duy
