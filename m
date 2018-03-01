@@ -7,82 +7,117 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1AE111F404
-	for <e@80x24.org>; Thu,  1 Mar 2018 06:18:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B79531F576
+	for <e@80x24.org>; Thu,  1 Mar 2018 07:25:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966309AbeCAGSm (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Mar 2018 01:18:42 -0500
-Received: from mail-pl0-f53.google.com ([209.85.160.53]:40031 "EHLO
-        mail-pl0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S966207AbeCAGSl (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Mar 2018 01:18:41 -0500
-Received: by mail-pl0-f53.google.com with SMTP id i6-v6so3092901plt.7
-        for <git@vger.kernel.org>; Wed, 28 Feb 2018 22:18:41 -0800 (PST)
+        id S966470AbeCAHZa (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Mar 2018 02:25:30 -0500
+Received: from mail-wm0-f47.google.com ([74.125.82.47]:37190 "EHLO
+        mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S966450AbeCAHZ3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Mar 2018 02:25:29 -0500
+Received: by mail-wm0-f47.google.com with SMTP id 139so9628639wmn.2
+        for <git@vger.kernel.org>; Wed, 28 Feb 2018 23:25:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=3K7TATqxpcTBuvST7h0AsU57KsFRZ5kIr+9nHj+NCwE=;
-        b=TofSB4W/pbKD+C7Z/QSgg+pAJ2s0buOGb1sVKuSO+3QKLW+zYgnz4QeukI9GvfJ88h
-         hQVssnQgZ/l/nK9s30spiKZYeDC3cft6DeI/HHEeV8DwicFkTKCtD77lU5q0oFn6lMSR
-         UP5HJAvSVOu/ipERwR7JAt9LgifKOd7/UQmh2OFdjV0XnPDOxWqiH/01S/9exT1UHipu
-         BCq2E6uC9uQLIQppeEmO+BkKQcwAU4qIHrHsLM99uoZlfyNDy8wxIzrLqRxwPVRjheRO
-         OvMoEgaP6tP0889Mkvkn7hUcyt1y+L8M52nKiawh5pbpo1nLhesaxC3JqZNaN2HEy6D2
-         INDA==
+         :cc;
+        bh=3VZzoCI2OLDxlY0Z50gLk+FXY9MpxdDuWu8SJQ7kFJA=;
+        b=QJYrhKZt+O4hcdau1574WT3uT//s1C4S1PVcZFXUV2rRHPUE8dtAJ29VsdyLsrKc9q
+         Tt/d485ehLtoZkAaJi99+D0S9Mn+guGcYse4wgYnHvyaCT8Eg7VcTeOf4M/9fCiP7SDf
+         8iugu5N8Ha7peeIpoDHG4aMb9ZZGS+DcgDVmBdmKBsVS6KQfcndSpmuW3IV66pncX8zW
+         CLfP+x7rn4s+L4enAXm9Q//ZTRqkinIQDSwwoWLERM56sWHMfH//8sp6AKyttdSNFFcb
+         iTJImOkKPEP9mrkp5cJYz3sL7IOLJwO/luksDzOaHr6Joi+8vthUGYlnpc+n9uUNC89l
+         Axjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=3K7TATqxpcTBuvST7h0AsU57KsFRZ5kIr+9nHj+NCwE=;
-        b=Pap4Dexp7u7BqLJuRlE1V+sX5RIeit7nZOuE2dngdLlVLd1zxSpZfFE/oLw7TLY7ql
-         Oye+pprC+kqTr7ZCJBE2Y2TQb6HJ5U5OIFAAHm2tnOuyva6JDGINU5kRVpyDIuL3eSeS
-         qrilYcyjVaPRdRzSnVC1MRJm6rI27eL+Feh60LU1fB/8WMO+tTrocrs5nCvbyqWACe5C
-         db6GaC9+CSQ3nSp32zc6HB3PW3hzFK6noXFUHl9RAsjU9G4Sx6QmnA6s13uGc5p08QW9
-         64T0VvozsW8UArZOpiuGdmwWJpzi8YpFzrcLkvtdmLvnyIEbO5+SFnqtNZFZrhOmy8pL
-         zHAg==
-X-Gm-Message-State: APf1xPCfOmLvDs98FwDchgnTAz3ZT828+84UN6DF0YSZlGn4R2SA/n78
-        zJ5HjB+oUeeC4frZHJGFxV++/BUtHYCKX7InjABOVtA8
-X-Google-Smtp-Source: AG47ELv3WTOgLL5Ufjvw2Fm5iExgAdQG2uIMLIfMOQHlr7feOGY/24QQluz8PsmsfMf9iY74i0daDtzd+e0n9YCpuwQ=
-X-Received: by 2002:a17:902:b117:: with SMTP id q23-v6mr874615plr.58.1519885121308;
- Wed, 28 Feb 2018 22:18:41 -0800 (PST)
+         :message-id:subject:to:cc;
+        bh=3VZzoCI2OLDxlY0Z50gLk+FXY9MpxdDuWu8SJQ7kFJA=;
+        b=rqVjSgf1v4qs4C5cz//HO2pxbyAErbKaxId29FTXF+KqAzC+R8zdyyOIwi/4EgUGzR
+         ue/EaGgHVf8ANT4J1pI082vdbT4GSeTDvvFIUWsshgntNoLG7O98fYCM/18TzhTQ4CMZ
+         V6YJnwXH/Hj6dVvcWtG1VgwkNLuIEUjDGvMAahq5/B1HRrMJVjmHKoRomBOXNnlg4A6+
+         krF8ugd9ZwVDzt/UqZxF0LkbUhqW2AJn4sqsCfAeeAT0Jni9y7ojKpd1aiVYcTEzHgSY
+         rBo3n4NQ4uq1ovLzjS+adNfqUTJUtAdtX1dsTTa+lqeFwGkiOXSyZogb1s9iZbjYL0xx
+         +AMA==
+X-Gm-Message-State: APf1xPDgq5NBaatkt3J6DcmVfLpwadyB1qWzbT6d674dH8nCzpKZRkNt
+        JtfWb2CpjBABjJarM//Xc8bi6sP8z+6MaNdGb2E=
+X-Google-Smtp-Source: AG47ELvG39q6Mx5leqXH0uYWGtXgbA6488TsKRWdVc3znXeqw1Ue5a9ZFupFZeZMvl45Y+FFHM+x8nJgiQMlie/tXHI=
+X-Received: by 10.80.139.5 with SMTP id l5mr1563252edl.265.1519889127652; Wed,
+ 28 Feb 2018 23:25:27 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.236.191.144 with HTTP; Wed, 28 Feb 2018 22:18:40 -0800 (PST)
-In-Reply-To: <xmqqr2p4itvh.fsf@gitster-ct.c.googlers.com>
-References: <cover.1519843916.git.martin.agren@gmail.com> <20180228195809.9145-1-martin.agren@gmail.com>
- <xmqqr2p4itvh.fsf@gitster-ct.c.googlers.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Thu, 1 Mar 2018 07:18:40 +0100
-Message-ID: <CAN0heSpcaR3bzHuD3AG48p8DagD_HDY8kVxYNctS1Qhoopcvqg@mail.gmail.com>
-Subject: Re: [PATCH v2 0/5] roll back locks in various code paths
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>
+Received: by 10.80.139.133 with HTTP; Wed, 28 Feb 2018 23:25:07 -0800 (PST)
+In-Reply-To: <CAGZ79ka6PXgs+JDicaQYWYSKgEthj0A-2bBaRcdp_0T2H+sREA@mail.gmail.com>
+References: <CAGZ79ka6PXgs+JDicaQYWYSKgEthj0A-2bBaRcdp_0T2H+sREA@mail.gmail.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Wed, 28 Feb 2018 23:25:07 -0800
+Message-ID: <CA+P7+xpB36t7WHpYOa+8wc7kLY7ES_bVEnSHPYHJ50gJ03uQBw@mail.gmail.com>
+Subject: Re: The case for two trees in a commit ("How to make rebase less modal")
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git <git@vger.kernel.org>, Sergey Organov <sorganov@gmail.com>,
+        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 1 March 2018 at 00:20, Junio C Hamano <gitster@pobox.com> wrote:
-> Martin =C3=85gren <martin.agren@gmail.com> writes:
+On Wed, Feb 28, 2018 at 3:30 PM, Stefan Beller <sbeller@google.com> wrote:
+> $ git hash-object --stdin -w -t commit <<EOF
+> tree c70b4a33a0089f15eb3b38092832388d75293e86
+> parent 105d5b91138ced892765a84e771a061ede8d63b8
+> author Stefan Beller <sbeller@google.com> 1519859216 -0800
+> committer Stefan Beller <sbeller@google.com> 1519859216 -0800
+> tree 5495266479afc9a4bd9560e9feac465ed43fa63a
+> test commit
+> EOF
+> 19abfc3bf1c5d782045acf23abdf7eed81e16669
+> $ git fsck |grep 19abfc3bf1c5d782045acf23abdf7eed81e16669
+> $
 >
->> A further upshot of this patch is that `active_cache_changed`, which is
->> defined as `the_index.cache_changed`, now only has a few users left.
+> So it is technically possible to create a commit with two tree entries
+> and fsck is not complaining.
 >
-> I am undecided if this is a *good* thing.  In a few codepaths where
-> we make a speculative update to the on-disk index file, I find that
-> the explicit mention of active_cache_changed clarifies what is going
-> on.  Perhaps once my (and other old timers') eyes get used to this
-> new SKIP_IF_UNCHANGED symbol, it would start serving the same
-> purpose ;-)
+> But why would I want to do that?
+>
+> There are multiple abstraction levels in Git, I think of them as follows:
+> * data structures / object model
+> * plumbing
+> * porcelain commands to manipulate the repo "at small scale", e.g.
+> create a commit/tag
+> * porcelain to modify the repo "at larger scale", such as rebase,
+> cherrypicking, reverting
+>   involving more than 1 commit.
+>
+> These large scale operations involving multiple commits however
+> are all modal in its nature. Before doing anything else, you have to
+> finish or abort the rebase or you need expert knowledge how to
+> go otherwise.
+>
+> During the rebase there might be a hard to resolve conflict, which
+> you may not want to resolve right now, but defer to later.  Deferring a
+> conflict is currently impossible, because precisely one tree is recorded.
+>
 
-Right, you might say that this trades one symbol for another. What I
-meant was, we only have a few "active_cache_changed" and soon (TM) they
-might all be "the_index.cache_changed" or "index->cache_changed" and the
-macro could be retired. My understanding of the history is limited, but
-I was under the impression that this was like a transition macro (albeit
-a very old one!).
+How does this let you defer a conflict? A future commit which modified
+blobs in that tree wouldn't know what version of the trees/blobs to
+actually use? Clearly future commits could record their own trees, but
+how would they generate the "correct" tree?
 
-Martin
+Maybe I am missing something here?
+
+Thanks,
+Jake
+
+> If we had multiple trees possible in a commit, then all these large scale
+> operations would stop being modal and you could just record the unresolved
+> merge conflict instead; to come back later and fix it up later.
+>
+> I'd be advocating for having multiple trees in a commit
+> possible locally; it might be a bad idea to publish such trees.
+>
+> Opinions or other use cases?
+>
+> Thanks,
+> Stefan
