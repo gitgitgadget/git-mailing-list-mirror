@@ -7,121 +7,95 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EB4201FAE2
-	for <e@80x24.org>; Thu,  1 Mar 2018 09:00:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 24D601F576
+	for <e@80x24.org>; Thu,  1 Mar 2018 09:11:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966637AbeCAJAr (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Mar 2018 04:00:47 -0500
-Received: from mail-pl0-f65.google.com ([209.85.160.65]:39505 "EHLO
+        id S966765AbeCAJLV (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Mar 2018 04:11:21 -0500
+Received: from mail-pl0-f65.google.com ([209.85.160.65]:40465 "EHLO
         mail-pl0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965361AbeCAJAp (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Mar 2018 04:00:45 -0500
-Received: by mail-pl0-f65.google.com with SMTP id s13-v6so3277524plq.6
-        for <git@vger.kernel.org>; Thu, 01 Mar 2018 01:00:45 -0800 (PST)
+        with ESMTP id S966696AbeCAJLQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Mar 2018 04:11:16 -0500
+Received: by mail-pl0-f65.google.com with SMTP id i6-v6so3289954plt.7
+        for <git@vger.kernel.org>; Thu, 01 Mar 2018 01:11:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Fq7cuMS0uMIckGPWaYfUpGTNcfKGypCm7w4cbW9ZbFI=;
-        b=qG0NPrvnwm8cEo5cas7WB+555C3Z69G3pD+Se1Wu2cjRS9eZW0riuGRPtsQpz+SW7x
-         J9tZcgKVwQNxf2WuP/iTXpaL/k2YwUf/8A1myc5IoOtmm6uBu31fFCLXEM6ecpMYcFg8
-         Rj5lomOYQWZUKH0pN757k/Avh7aAkyQ+eV5/Atpw72EQtXHsRg1p1dIitB1CfknH92Wf
-         sVBzI41pkAnyvELYZfBsuYBbZdClacXgZuv6JnP9xThgWFQpGPe4Lyld/cxWY9dFoYyU
-         4KTLHXC1X+QjpWTTE/b+Ni6PULKOLzMywumQWlA28DGpZq8dqbcnnSsIcFOD3duF9XLN
-         idQQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=+CrW8HigdFwSeZAUQ44cdaix6gm6zOJGxlLxROjtR0g=;
+        b=dRSl9nZs5ATSPy49hg9gC68+CMJeQ8EHmeG8jI5H6LR5DhunD6QQdhz7WKjmBOhYBn
+         QI47ro458jkJgkV+IZnpwj39IR8vJT8CtxCkuLBXqEC3tfXsd/BFiU2CojLahJTvJbfq
+         upby0qjgtGlycf3r5IqEKrXqK73/jHtUJ1xbCevsFFsHcdH3U+GT9myVLmdWTb6beRWq
+         OWwWjbeSLYuHz/wreT0Y5QY36DPMN8ldfwdFNE5LnsMfsYuo/ZNRkBnLfVvqGJ9EqchX
+         jo7dvwyhCICkvjTuodsSjG5s+ycKFi9iOXrWqeHKhLT9/DVHj3z7Hltvns+jsCULy5OW
+         iITQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Fq7cuMS0uMIckGPWaYfUpGTNcfKGypCm7w4cbW9ZbFI=;
-        b=Oe43NYX//K0Jeum7XZd9du8yYN2zkB3PKUqhdlZqlwYhIb11bFIx+lYzgwdj9k4iEE
-         R26dr4TE//oBKfMkARltYNqQSfDPE/8bbnn7RmnyroT582sjXIHwQ9Rvy67D/fu7BNAa
-         HCCpzDUjrm90tKKdZ+FABBFtnZjyPrSeKuB35xEH2m6uqr7++aVX/1vlcvHT6CTkx9zw
-         y8GUzJhIX0IwL6YmToYxkB1vC6GZ1j+o/JJULSKnWtOyqTxnJVEILrIe/mlyRStN/t6p
-         x86B5vHtDaucg/8ea/A6Ii9S2h/PFF++4td4puIaBYnETtohIeDVZnEcRpVvv86BpZJI
-         yXXA==
-X-Gm-Message-State: APf1xPDeqGDgPzwPx0RvD7RkUI81KqGfLn1VXFnO4mOUFtzaP2q1kN46
-        aE4DnXOGs7xBhY+W05FJwxQT9g==
-X-Google-Smtp-Source: AG47ELuLDZEsBg23Oo6kVMScvcLipiy5x50licputzwe3JA9W4khfdDuZxq81TS6jd5VxaO3VpXqBg==
-X-Received: by 2002:a17:902:bc85:: with SMTP id bb5-v6mr1254589plb.425.1519894845365;
-        Thu, 01 Mar 2018 01:00:45 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=+CrW8HigdFwSeZAUQ44cdaix6gm6zOJGxlLxROjtR0g=;
+        b=IMFGWMZiWjmDBcFgUbZ+WYdzDEJpfv1qxZRJLLL/4TGmM/6jM3oWW8V6aIrelbv6ig
+         X5Ms6SurCiPnlTfzWSyRrZqh56ARTEhVVHmqrt3MxyBgW25+yNLK3BAmTX706X+4x+x9
+         falkkuxyclSIrd8PzUMThKCwYLLvyR0ueog4yX6gmpSzlM1vQOChbmkvUyTPBc/udnOp
+         a/q0+cQrR0ZX5iGuCvcfeeUbki/J80yeoktDKj4fYqiXhVl+Dkmv/hd6a3zCjWJhdtXj
+         +kZY22QOrwIrVIVz535owFoIzMwVv1REnS+WXFWVC5d4Cf69YWEWyVv+fAdYvylgM6/k
+         IQCQ==
+X-Gm-Message-State: APf1xPCNV3LEusiNnbMMb8Ux2EoQkMUEEvnz/6h4061eab9KDSbFCJdl
+        tFU8CSaMtHJOVoiguMyX1CtdyQ==
+X-Google-Smtp-Source: AG47ELtHVyWL/5nCc3o/RVk6cYpApjgZ6XtQOVnpzI4sT3XSJl7Re2vHuPfuC0YQeq4PxfRvXXop+Q==
+X-Received: by 2002:a17:902:a512:: with SMTP id s18-v6mr1275168plq.296.1519895475471;
+        Thu, 01 Mar 2018 01:11:15 -0800 (PST)
 Received: from ash ([171.232.93.137])
-        by smtp.gmail.com with ESMTPSA id 73sm3379916pfz.165.2018.03.01.01.00.42
+        by smtp.gmail.com with ESMTPSA id m190sm5509390pga.42.2018.03.01.01.11.12
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 01 Mar 2018 01:00:44 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Thu, 01 Mar 2018 16:00:39 +0700
-Date:   Thu, 1 Mar 2018 16:00:39 +0700
-From:   Duy Nguyen <pclouds@gmail.com>
-To:     Eric Wong <e@80x24.org>
-Cc:     git@vger.kernel.org
-Subject: Re: Reduce pack-objects memory footprint?
-Message-ID: <20180301090039.GA19167@ash>
+        Thu, 01 Mar 2018 01:11:14 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Thu, 01 Mar 2018 16:11:09 +0700
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>, Eric Wong <e@80x24.org>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+Subject: [PATCH 01/11] pack-objects: document holes in struct object_entry.h
+Date:   Thu,  1 Mar 2018 16:10:42 +0700
+Message-Id: <20180301091052.32267-2-pclouds@gmail.com>
+X-Mailer: git-send-email 2.16.1.435.g8f24da2e1a
+In-Reply-To: <20180301091052.32267-1-pclouds@gmail.com>
 References: <20180228092722.GA25627@ash>
- <20180228182233.GC15256@dcvr>
+ <20180301091052.32267-1-pclouds@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180228182233.GC15256@dcvr>
-X-Clacks-Overhead: GNU Terry Pratchett
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 28, 2018 at 06:22:33PM +0000, Eric Wong wrote:
-> Duy Nguyen <pclouds@gmail.com> wrote:
-> > which saves 12 bytes (or another 74 MB). 222 MB total is plenty of
-> > space to keep some file cache from being evicted.
-> 
-> Nice!  I can definitely benefit from lower memory usage when
-> packing.  Fwiw, I use pahole with other projects to help find
-> packing opportunities:
-> 
-> 	git://git.kernel.org/pub/scm/devel/pahole/pahole.git
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ pack-objects.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-Yes it's a wonderful tool.
+diff --git a/pack-objects.h b/pack-objects.h
+index 03f1191659..720a8e8756 100644
+--- a/pack-objects.h
++++ b/pack-objects.h
+@@ -28,6 +28,7 @@ struct object_entry {
+ 	unsigned tagged:1; /* near the very tip of refs */
+ 	unsigned filled:1; /* assigned write-order */
+ 
++	/* XXX 28 bits hole, try to pack */
+ 	/*
+ 	 * State flags for depth-first search used for analyzing delta cycles.
+ 	 *
+@@ -40,6 +41,7 @@ struct object_entry {
+ 		DFS_DONE
+ 	} dfs_state;
+ 	int depth;
++	/* size: 136, padding: 4 */
+ };
+ 
+ struct packing_data {
+-- 
+2.16.1.435.g8f24da2e1a
 
-> > @@ -14,11 +26,10 @@ struct object_entry {
-> >  	void *delta_data;	/* cached delta (uncompressed) */
-> >  	unsigned long delta_size;	/* delta data size (uncompressed) */
-> >  	unsigned long z_delta_size;	/* delta data size (compressed) */
-> > -	enum object_type type;
-> > -	enum object_type in_pack_type;	/* could be delta */
-> >  	uint32_t hash;			/* name hint hash */
-> > -	unsigned int in_pack_pos;
-> >  	unsigned char in_pack_header_size;
-> > +	unsigned type:3;	 /* enum object_type */
-> > +	unsigned in_pack_type:3; /* enum object_type - could be delta */
-> 
-> For C99 compilers, enums can be bitfields.  I introduced the
-> following macro into Ruby a few weeks ago to remain compatible
-> with non-C99 compilers:
-> 
-> /*
->  * For declaring bitfields out of non-unsigned int types:
->  *   struct date {
->  *      BITFIELD(enum months) month:4;
->  *      ...
->  *   };
->  */
-> #if defined(__STDC_VERSION__) && (__STDC_VERSION__ >= 199901L)
-> # define BITFIELD(type) type
-> #else
-> # define BITFIELD(type) unsigned int
-> #endif
-
-I tried this and got
-
-In file included from builtin/pack-objects.c:20:0:
-./pack-objects.h:49:19: l?i: ?type? is narrower than values of its type [-Werror]
-  enum object_type type:TYPE_BITS;
-                   ^~~~
-
-The compiler is not wrong. What it does not realize is pack-objects
-code never uses out-of-range values (OBJ_BAD and OBJ_ANY) but I don't
-see how I could suppress this warning. So I went back to non-enum
-bitfields.
-
---
-Duy
