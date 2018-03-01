@@ -2,86 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+X-Spam-Status: No, score=-2.2 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 589EC1F404
-	for <e@80x24.org>; Thu,  1 Mar 2018 18:08:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 875CE1F404
+	for <e@80x24.org>; Thu,  1 Mar 2018 18:09:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1033748AbeCASIG (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Mar 2018 13:08:06 -0500
-Received: from mail-wr0-f195.google.com ([209.85.128.195]:43309 "EHLO
-        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1033196AbeCASIF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Mar 2018 13:08:05 -0500
-Received: by mail-wr0-f195.google.com with SMTP id u49so7515204wrc.10
-        for <git@vger.kernel.org>; Thu, 01 Mar 2018 10:08:05 -0800 (PST)
+        id S1033800AbeCASJK (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Mar 2018 13:09:10 -0500
+Received: from mail-qt0-f170.google.com ([209.85.216.170]:36150 "EHLO
+        mail-qt0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1033196AbeCASJJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Mar 2018 13:09:09 -0500
+Received: by mail-qt0-f170.google.com with SMTP id c7so8708315qtn.3
+        for <git@vger.kernel.org>; Thu, 01 Mar 2018 10:09:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=3k1V7ph/s+Hz/9V/n58C0YEQGg8/n3YUkE2cRVqhqb8=;
-        b=JY8OUy8h+3DpFjHK9NjbaswekZjVZN1EvMBk/5NetJZZr30qBFpyiDZ4yEO02xVMOx
-         p6wbqg80bwuB6DLW0sOnS4q8EOZeagJuXbSU+Ko6lO70h3Rx7gpWNNfp1oV1mbyAyjuR
-         hkrcVv37w5dtyEBq8vRvzfj4o4BZaXk3s5NM6s2biEdsUHo09ohFcSakrj6qT83A6a9L
-         btDmJja9e5AZCdl88FIQG9SPXrbLpwc0lUjRqFG5tqq9oCw4d7m5Hz9LEq2rJE/zA936
-         XORFEqirdqMQ88v4kT7LIOZmkwQtMMM+YN3oh0VmigV6XYaEPP0DNKd0WkcHyJiGvmC5
-         F3EA==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-transfer-encoding;
+        bh=Rn4TMyYgrUqFL4WQ/LEe0Gr3AkdvFWxgJ1yKJgANU9M=;
+        b=LSDE0W7tG0mi1S/z1fVjvZEUx4bFqZVfRpDw0rKmhzqJr4kCUrptdLp8boHa2TC1S8
+         972jB69NBLoDjKJykJYFznKbNlztvDexNhCMOhqamWf+BpE9XSkA5+EhLQ5Zz2vGtF7R
+         AylyaF1YPEIuY6iE8tX4KE7Dbp9cTA+xywrv8LCOzNENyRUdTlMT2SH6U74eZ+0xO0nb
+         7KzFLXF2pX6hANV1vTVCdWvlS7cFg/UsB+PevS2zh3fYMqomxbg/qZtGu4v8cWmz3OLq
+         Ozf3zR8VEg4WUHV+5MmhaFRyJW8n8d8bMDuYG0ghkS/k8+W12BoBGnY3ESUb/1oDAGEc
+         2qGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=3k1V7ph/s+Hz/9V/n58C0YEQGg8/n3YUkE2cRVqhqb8=;
-        b=XPyYDgHZSvyL5pGBZGE7TdxDzXoeRVKUUcmoVazPdsF2b50Z0l3NnSh2/Zyv6ctFNW
-         YQbkxr6IuPZPuDG74RCPxSzBiw4EsAlU00mxBDBUiPuR9RuV4ZxkLb58EUfVRF7wGH8Q
-         jIoXd6d8/geY3gaTfkJscCgIi+PxqbibotpOnlAcycHUnV22PuZl9+u/olUTZSDYbKMl
-         blcSjiRIqI9kZxQ3y8ozb148LJ8dITmsOd2kuRD9hgJWo3W/xwvYo8lMR/jHnVE/yUSC
-         Z7eEuNExCArLzgC4ZZj/AQpkrfTZ0ld09BwyIt2fLzO0gt8BOP2RtPwVcEqBRJWehi6c
-         boRg==
-X-Gm-Message-State: APf1xPAzinOPGO3TtFlZmssykIuj/0ezK9QXSwhiPvhsar9wni+oQxS4
-        KaASriWJtolLYIuEDO2xrYc=
-X-Google-Smtp-Source: AG47ELt0dO1iEHbdnTcvAV6orPRbY9BoAxWmaEDTAgTUbHOikM+rKlEgjCk9L/kbotZ1KgCkEglWxA==
-X-Received: by 10.223.185.24 with SMTP id k24mr2861822wrf.83.1519927684294;
-        Thu, 01 Mar 2018 10:08:04 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id y8sm4539420wmb.48.2018.03.01.10.08.03
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 01 Mar 2018 10:08:03 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Eric Wong <e@80x24.org>
-Subject: Re: [PATCH 09/11] pack-objects: refer to delta objects by index instead of pointer
-References: <20180228092722.GA25627@ash>
-        <20180301091052.32267-1-pclouds@gmail.com>
-        <20180301091052.32267-10-pclouds@gmail.com>
-Date:   Thu, 01 Mar 2018 10:08:03 -0800
-In-Reply-To: <20180301091052.32267-10-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
- =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
-        Duy"'s message of "Thu, 1 Mar 2018 16:10:50 +0700")
-Message-ID: <xmqqvaefhdoc.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=Rn4TMyYgrUqFL4WQ/LEe0Gr3AkdvFWxgJ1yKJgANU9M=;
+        b=tDm//jSQkWfcNFLU60zUyvqFQVic6XeqauFZR9Rm2t2NyUfQutp9Hj0pHSbHtzCQJx
+         mZx44OjwyMjpLyeG23yIRbCixTRM8LD5FhZDZhQU/z0CwTt0UjTtxaEigWLOM3m3iXd4
+         J2a1KpgjmeaohnoZNBdgCJ8vwk61qnGu9gSQXK55J39TGWBEJ4jV6r8NYwIgLUrnevKJ
+         325YIBA00JKeavTUBh45j6Q9jKJwXas+z3sGSToJSSOjei/ALbvWvgm8tVZ/wBKLd7dY
+         8cJYoEarwJPUJ7aJWFIRwWWMxDM9Kvnx5x+yMFb8pGTMXi69KgceJpgroPtKDjPN2Ikw
+         YHrA==
+X-Gm-Message-State: AElRT7EiJ2D0C7aSKKahD7PU5jyj1nACm6yts6vne0TPDdnkYkvEzROs
+        V/9fj7HMTCqE3Az6vRmYlWdPvOH+j2vpWlYhlV3sGA==
+X-Google-Smtp-Source: AG47ELtMGPeFqvKsath1WW60MmsMRPnqprWeCXSVzA/QOBEOPNqeVTudf8knJD1lCsbXiicJX9jerXhWV/S8q+v5j+4=
+X-Received: by 10.200.12.198 with SMTP id o6mr4157448qti.246.1519927748603;
+ Thu, 01 Mar 2018 10:09:08 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Received: by 10.12.142.14 with HTTP; Thu, 1 Mar 2018 10:09:08 -0800 (PST)
+In-Reply-To: <aa98f187-4b1a-176d-2a1b-826c995776cd@aegee.org>
+References: <aa98f187-4b1a-176d-2a1b-826c995776cd@aegee.org>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Thu, 1 Mar 2018 13:09:08 -0500
+X-Google-Sender-Auth: 1s0rcFOzuaHiWj7C6UbUkUrxXYg
+Message-ID: <CAPig+cSGJhNR8dapLXN0TU8ZpTqi7m6OQf_cCGmHc9FLGcwNyg@mail.gmail.com>
+Subject: Re: Worktree silently deleted on git fetch/gc/log
+To:     =?UTF-8?B?0JTQuNC70Y/QvSDQn9Cw0LvQsNGD0LfQvtCy?= 
+        <dilyan.palauzov@aegee.org>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
-
-> Notice that packing_data::nr_objects is uint32_t, we could only handle
-> maximum 4G objects and can address all of them with an uint32_t. If we
-> use a pointer here, we waste 4 bytes on 64 bit architecture.
+On Wed, Feb 28, 2018 at 7:44 AM, =D0=94=D0=B8=D0=BB=D1=8F=D0=BD =D0=9F=D0=
+=B0=D0=BB=D0=B0=D1=83=D0=B7=D0=BE=D0=B2
+<dilyan.palauzov@aegee.org> wrote:
+> A (branch master) and
+> B (branch g) which is a worktree of the first.
 >
-> Convert these delta pointers to indexes. Since we need to handle NULL
-> pointers as well, the index is shifted by one [1].
+> /git/B g>$ git fetch
+> [...]
+> From https://...
+>    13e4c55a0..02655d5fb  g -> origin/g
+>    c37a3ca25..bc7888511  master -> origin/master
+> Auto packing the repository in background for optimum performance.
+> See "git help gc" for manual housekeeping.
+> /git/B g<>$ git log -p origin/g
+> fatal: Not a git repository: /git/A/.git/worktrees/B
+> /git/B$
+>
+> Please note that on the second last prompt there is <>, so that git-promp=
+t
+> has found the neccessary information and this was this was later deleted =
+-
+> by 'gc' or 'log'.
+>
+> What would be the procedure to restore the /git/A/.git/worktrees/B
+> structure?
 
-Makes perfect sense.
+Can you show us (via 'cat') the content of the following files?
 
-I do not think losing 1 slot out of possible 4G is a regression,
-unlike the 256 packfile limit 07/11 imposes.
+/git/B/.git
+/git/A/.git/worktrees/b/HEAD
+/git/A/.git/worktrees/b/commondir
+/git/A/.git/worktrees/b/gitdir
