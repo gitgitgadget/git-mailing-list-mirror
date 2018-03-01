@@ -2,83 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B6FC01F404
-	for <e@80x24.org>; Thu,  1 Mar 2018 14:39:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 455C21F404
+	for <e@80x24.org>; Thu,  1 Mar 2018 14:49:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1031283AbeCAOjK (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Mar 2018 09:39:10 -0500
-Received: from mail-wm0-f49.google.com ([74.125.82.49]:34770 "EHLO
-        mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1031184AbeCAOjJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Mar 2018 09:39:09 -0500
-Received: by mail-wm0-f49.google.com with SMTP id a20so31302686wmd.1
-        for <git@vger.kernel.org>; Thu, 01 Mar 2018 06:39:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=VCKuRNQ5MSAFOTQP7Sz5K3YqzT7VV3X9SJJTwVeJKYc=;
-        b=nIUCqw6ZNE3XzS9JmI36GBhHolOXym+An5whGpL2ZXQS2v1oSEWowkjI0hKiS9ZXvo
-         g3AgJTLEu+PITt9QrvhUykHeYK7SlhtZ6dddxcJiStYAdHUWzJQYiOL+eKSKqgBo5XOG
-         j2mDEaCv+pwrPaUVQ/+RUfi7m/ngsJkFOGG5XoiWLIrftZSDg67QK0BIYwqSxW9fdktS
-         04+vPaRiWUGeVYGnUvSRJOKEcIxyG6oi4H8hm6InJzHXkUcGL1SDY6RhhM+Ep87fxjlU
-         UHubfP9n2aNj1GQJYyqfOxhzz8CQFmbUd8ggVYVZMSFqr8UR/H3e8jLJr89YwLv+q/7O
-         Yf5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
-         :in-reply-to:references;
-        bh=VCKuRNQ5MSAFOTQP7Sz5K3YqzT7VV3X9SJJTwVeJKYc=;
-        b=K/w8IeQGlUHR+s8xSVzAIf65Q/6fsNEwEYDx6x/rCaYW9o4lUuDG/M59jKjhp7I/Xd
-         xHLYV45kQtX9k+0gljAtJHNaZU7YSeXmVAw+ktHcV7uYEyLRykGZCWGiemCgPEg52z5m
-         GDZA8KlJIvpW9YK+yMQFnVoQzguVcYhdRgkJ0BhkfUgREoZ0n3XOTCOpTVJZTnplpL5R
-         B1LiJt0QD4HUDCooygZeT9mLyJmqqZFtMhtaHtxbypYhr0rRmBExSQaUnnVbMvVEx1eY
-         u9E+Upaw+McwarLq2Sa5p/U/PjkBQqQLcLGxrg8MxIZD3zi5OUhg/YLej8rlv9QKA05n
-         1pZQ==
-X-Gm-Message-State: APf1xPBBmnvVLJSBGxUjN+WdHmEKCbzZ7SKkN4J3xs1b5hV40O+ODEOS
-        x2f25D/zZXHR1YCukZ9yODUp9zQ7
-X-Google-Smtp-Source: AG47ELvvUaBaQRtivgq7lRwoUIeybVba4JKq9bIMgwJ/HLNIc9bGIP0nQmDb3xWnbIgfnuiLMlHNHw==
-X-Received: by 10.80.151.105 with SMTP id d38mr3102688edb.79.1519915147811;
-        Thu, 01 Mar 2018 06:39:07 -0800 (PST)
-Received: from birger-Dell-T1700.hials.no ([2001:700:1200:5104:f593:cb86:c151:ca05])
-        by smtp.gmail.com with ESMTPSA id k5sm4362761edc.3.2018.03.01.06.39.06
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 01 Mar 2018 06:39:06 -0800 (PST)
-From:   Birger Skogeng Pedersen <birgersp@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Birger Skogeng Pedersen <birgersp@gmail.com>
-Subject: [PATCH] git-gui: bind CTRL/CMD+numpad ENTER to do_commit
-Date:   Thu,  1 Mar 2018 15:39:04 +0100
-Message-Id: <20180301143904.28652-1-birgersp@gmail.com>
-X-Mailer: git-send-email 2.16.2.268.g7f9c27f2f.dirty
-In-Reply-To: <CAGr--=LxMtz5RRP4742u3VsrADRsWARE2SitCSOWATySOn2LcQ@mail.gmail.com>
-References: <CAGr--=LxMtz5RRP4742u3VsrADRsWARE2SitCSOWATySOn2LcQ@mail.gmail.com>
+        id S1031514AbeCAOtp (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Mar 2018 09:49:45 -0500
+Received: from cloud.peff.net ([104.130.231.41]:42918 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1031346AbeCAOto (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Mar 2018 09:49:44 -0500
+Received: (qmail 4346 invoked by uid 109); 1 Mar 2018 14:49:44 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 01 Mar 2018 14:49:44 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 17467 invoked by uid 111); 1 Mar 2018 14:50:33 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 01 Mar 2018 09:50:33 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 01 Mar 2018 09:49:42 -0500
+Date:   Thu, 1 Mar 2018 09:49:42 -0500
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org, Eric Wong <e@80x24.org>
+Subject: Re: [PATCH 07/11] pack-objects: move in_pack out of struct
+ object_entry
+Message-ID: <20180301144942.GA837@sigill.intra.peff.net>
+References: <20180228092722.GA25627@ash>
+ <20180301091052.32267-1-pclouds@gmail.com>
+ <20180301091052.32267-8-pclouds@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20180301091052.32267-8-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
----
- git-gui/git-gui.sh | 1 +
- 1 file changed, 1 insertion(+)
+On Thu, Mar 01, 2018 at 04:10:48PM +0700, Nguyễn Thái Ngọc Duy wrote:
 
-diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
-index 91c00e648..6de74ce63 100755
---- a/git-gui/git-gui.sh
-+++ b/git-gui/git-gui.sh
-@@ -3867,6 +3867,7 @@ bind .   <$M1B-Key-equal> {show_more_context;break}
- bind .   <$M1B-Key-plus> {show_more_context;break}
- bind .   <$M1B-Key-KP_Add> {show_more_context;break}
- bind .   <$M1B-Key-Return> do_commit
-+bind .   <$M1B-Key-KP_Enter> do_commit
- foreach i [list $ui_index $ui_workdir] {
- 	bind $i <Button-1>       { toggle_or_diff click %W %x %y; break }
- 	bind $i <$M1B-Button-1>  { add_one_to_selection %W %x %y; break }
--- 
-2.16.2.268.g7f9c27f2f.dirty
+> Instead of using 8 bytes (on 64 bit arch) to store a pointer to a
+> pack. Use an index isntead since the number of packs should be
+> relatively small.
+> 
+> This limits the number of packs we can handle to 256 (still
+> unreasonably high for a repo to work well). If you have more than 256
+> packs, you'll need an older version of Git to repack first.
 
+I overall like the direction of this series, but I think this one is
+just too much. While you definitely shouldn't have a ton of packs, this
+leaves the user with no real escape hatch. And 256 isn't actually that
+many packs.
+
+-Peff
