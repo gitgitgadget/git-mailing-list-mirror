@@ -7,60 +7,59 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 78B721F404
-	for <e@80x24.org>; Thu,  1 Mar 2018 18:41:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 31F581F404
+	for <e@80x24.org>; Thu,  1 Mar 2018 18:44:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1033980AbeCASlZ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Mar 2018 13:41:25 -0500
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:33434 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1033831AbeCASlY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Mar 2018 13:41:24 -0500
-Received: by mail-wr0-f194.google.com with SMTP id v18so6989774wrv.0
-        for <git@vger.kernel.org>; Thu, 01 Mar 2018 10:41:24 -0800 (PST)
+        id S1034030AbeCASoy (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Mar 2018 13:44:54 -0500
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:52710 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1034000AbeCASou (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Mar 2018 13:44:50 -0500
+Received: by mail-wm0-f67.google.com with SMTP id t3so14010547wmc.2
+        for <git@vger.kernel.org>; Thu, 01 Mar 2018 10:44:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=Juq9M7k+6jaxJ0/xnWzOWZnsyJ5WM9vR2AHHVYO9X64=;
-        b=ZLrMbexIU4gNW6no37aI+fJ8P7AT766zfcIgbHgj64CjKlIa/UL37mgB/Twj6fgJzc
-         3KFymjIuUoZ4vYO5rpwoCWdLyAOJQHq31/aY635iCieKZz+v8HusZgBHxlNgjtTRqq44
-         FVn5AwNLsvJUazJ1zab57rvOvfPZF9t0lItqeqPPof+7K9Id7q2YQs9TvjC3c0VGSGKK
-         4pfkwy8Wiq1U2F7+bczx2CholeRUiMbXH7o0Z/F+gnxswMHqOwhIxtZLcshBfA5vW9oc
-         RXeELxIksrwFHkVY1pp3GWdXfs1lLiKXjdxjq0vjy5P4dPQMy0NvEVYV+unOZx2T9U4V
-         EZ6g==
+        bh=9gcRly+wVhCh1mZJSd7jzD5LKUbE1MxizTfuREk4Z80=;
+        b=f6VvfPFYeMw/vVsOyRsxPdqzCt9JEw/dt1PaHVbTjFQwkRSyK6fiCc6DyuO2SJ/+Dh
+         /4RME8HZpX+43NpfM/Olw1kKGnmVc677je1k9Rb5T5VzMF3PCFimBOgAW8xuR7dcEIA3
+         WA32Ph7zJq8THe98ObSXi3l5tze2g5EJ8WCw1xWi0HI4magbKyZF10zsA1JBQMvuXu6R
+         EUSTsOfIDNPBQPk1tFg4G0nO4wpp9xW5YPcGwS+eyJg+QApWAVdGPotP6HZ04VJ3FgSs
+         /PHbK2g+HkBfiYdVZXEv12brgdev+tXEay68vZDOjpVIIZO0DZXHJwqMFaxGHcZBTOWN
+         ZZlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=Juq9M7k+6jaxJ0/xnWzOWZnsyJ5WM9vR2AHHVYO9X64=;
-        b=s5LtF8dxECxovEN7UzTPRD980xLm0BmCYXZw1lvnD1pMI2CnuFuU3nnRUc8Jj9yKhg
-         KEAR6IPokDylMq/V5sNCXd2WyVoYxi7lJUBJOf2rbRQIlzGPEwyvBOIrfYQpH1sEqBCj
-         BiUwETVEYJ4GPk8ga+7vBcZwtlC+FOyHMXeauOhQ0k6i82IFtTJ+Pf8I9GDy8dMDCrV9
-         0nG6xOECM4mjB9VtVtmp/5qxbvmy4a0Ob2fVa8NV8Au0K3V+kJs6dq+CVAetMsDnqr+1
-         QUCxnj27Pdxms+eG1NqT1zPbEGlQIaslzqLWKaCb4BS7YYZbmMqp+vfLydj6yACFhlcL
-         CPsw==
-X-Gm-Message-State: APf1xPCoTHMcav52R8DSuRAYzzg+xnZto6bR38cRZ0Jx8JSdlRqw/Pxu
-        P0eDxQte9cDsrfNXvaBez1E=
-X-Google-Smtp-Source: AG47ELuSuzazeko4jD07L+GkhqCIlqhCNuVo14YugD1SPtjQSS90zEpEQXJHBnoFJHbYCSbvrzIujw==
-X-Received: by 10.223.176.201 with SMTP id j9mr2860084wra.210.1519929683250;
-        Thu, 01 Mar 2018 10:41:23 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id p21sm4722878wmc.43.2018.03.01.10.41.22
+        bh=9gcRly+wVhCh1mZJSd7jzD5LKUbE1MxizTfuREk4Z80=;
+        b=W/Xk90waIACwdL98t1Me3GseEYSVn+uX9Yi2//u8tzGWPvdmkCEw0oA/hybdgBwYWS
+         c+EiOHvBsiwBUzj502XOoiqcWLoGFvhsvGmXk+f5qCHlaqZnmZRul/DZr0qedF/5elwg
+         f/mwUU6/WcxrbET0XMaAmG/+XZ/6UeTbn02jUW99hTonNmEzoA3aiwm1W+rKXAF6oRMG
+         BkaROzqwCKHL+fmomtUbrihE3cNHYwrXkkFBW+Ehhsxfregmc38TvpF7WwPAtF7aurJ3
+         G0cm53rEMMGtXvyrjJb2blb33+iZyfEv3bQ+RGk24qr/bBvQOP544u6MkPwdokimov2u
+         NoZg==
+X-Gm-Message-State: APf1xPD1+fGWL3w6G1Ga3mLLWb5lsVn/9JnEg0ztI095EDvsITziFpzY
+        paIVg2K76wML6U/atx3h+i4=
+X-Google-Smtp-Source: AG47ELt4grfTsN2EX8Yv6FyKmLhXHQhose2gal24QNlTuJghH8H6guRGFqnAvwbZFaJ0JHpJyWw+7g==
+X-Received: by 10.28.191.193 with SMTP id o62mr2583124wmi.113.1519929889290;
+        Thu, 01 Mar 2018 10:44:49 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id q11sm5527970wrb.74.2018.03.01.10.44.48
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 01 Mar 2018 10:41:22 -0800 (PST)
+        Thu, 01 Mar 2018 10:44:48 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org, git@jeffhostetler.com, jrnieder@gmail.com,
-        pclouds@gmail.com, peff@peff.net, sbeller@google.com,
-        stolee@gmail.com
-Subject: Re: [PATCH v4 00/35] protocol version 2
-References: <20180207011312.189834-1-bmwill@google.com>
-        <20180228232252.102167-1-bmwill@google.com>
-Date:   Thu, 01 Mar 2018 10:41:22 -0800
-In-Reply-To: <20180228232252.102167-1-bmwill@google.com> (Brandon Williams's
-        message of "Wed, 28 Feb 2018 15:22:17 -0800")
-Message-ID: <xmqqlgfbhc4t.fsf@gitster-ct.c.googlers.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git <git@vger.kernel.org>, Sergey Organov <sorganov@gmail.com>,
+        igor.d.djordjevic@gmail.com,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: The case for two trees in a commit ("How to make rebase less modal")
+References: <CAGZ79ka6PXgs+JDicaQYWYSKgEthj0A-2bBaRcdp_0T2H+sREA@mail.gmail.com>
+Date:   Thu, 01 Mar 2018 10:44:48 -0800
+In-Reply-To: <CAGZ79ka6PXgs+JDicaQYWYSKgEthj0A-2bBaRcdp_0T2H+sREA@mail.gmail.com>
+        (Stefan Beller's message of "Wed, 28 Feb 2018 15:30:27 -0800")
+Message-ID: <xmqqh8pzhbz3.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -69,35 +68,28 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Brandon Williams <bmwill@google.com> writes:
+Stefan Beller <sbeller@google.com> writes:
 
-> Lots of changes since v3 (well more than between v2 and v3).  Thanks for
-> all of the reviews on the last round, the series is getting more
-> polished.
+> $ git hash-object --stdin -w -t commit <<EOF
+> tree c70b4a33a0089f15eb3b38092832388d75293e86
+> parent 105d5b91138ced892765a84e771a061ede8d63b8
+> author Stefan Beller <sbeller@google.com> 1519859216 -0800
+> committer Stefan Beller <sbeller@google.com> 1519859216 -0800
+> tree 5495266479afc9a4bd9560e9feac465ed43fa63a
+> test commit
+> EOF
+> 19abfc3bf1c5d782045acf23abdf7eed81e16669
+> $ git fsck |grep 19abfc3bf1c5d782045acf23abdf7eed81e16669
+> $
 >
->  * Eliminated the "# service" line from the response from an HTTP
->    server.  This means that the response to a v2 request is exactly the
->    same regardless of which transport you use!  Docs for this have been
->    added as well.
->  * Changed how ref-patterns work with the `ls-refs` command.  Instead of
->    using wildmatch all patterns must either match exactly or they can
->    contain a single '*' character at the end to mean that the prefix
->    must match.  Docs for this have also been added.
->  * Lots of updates to the docs.  Including documenting the
->    `stateless-connect` remote-helper command used by remote-curl to
->    handle the http transport.
->  * Fixed a number of bugs with the `fetch` command, one of which didn't
->    use objects from configured alternates.
+> So it is technically possible to create a commit with two tree entries
+> and fsck is not complaining.
 
-I noticed that this round is built on top of v2.16.0-rc0.  It
-certainly makes it easier to compare against the previous round
-which was built on top of that old commit and it is very much
-appreciated that a reroll does not involve pointless rebases.
+The second one is merely a random unauthorized header that is not
+interpreted in any way by Git.  It is merely being confusing by
+starting with "tree " and having 40-hex after it, but the 40-hex
+does not get interpreted as an object name, and does not participate
+in reachability computation (i.e. packing, pruning and fsck).
 
-For those who are helping from sidelines, it may be ehlpful to
-mention where in the history this was developed on, though, as
-applying these on the current 'master' has a handful of small
-conflicts.
-
-Thanks, will replace and will comment on individual patches as
-needed.
+There is not much difference between that and a line of trailer in
+the commit log message (other than this one is less discoverable).
