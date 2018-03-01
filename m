@@ -2,100 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CABAC1F404
-	for <e@80x24.org>; Wed, 28 Feb 2018 23:39:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5ED1D1F404
+	for <e@80x24.org>; Thu,  1 Mar 2018 01:15:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965021AbeB1XjS (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Feb 2018 18:39:18 -0500
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:42302 "EHLO
-        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965002AbeB1XjR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Feb 2018 18:39:17 -0500
-Received: by mail-wr0-f193.google.com with SMTP id k9so4210329wre.9
-        for <git@vger.kernel.org>; Wed, 28 Feb 2018 15:39:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=cP186785BsarmyQV1vfjmmxda9K2l87i2VfM+1Og3JY=;
-        b=Tt8guVhW7cmaX3eBoe9RVcrOnezNLt4Yz+WnePl7LSyv1CADLezy1KL9JU1baRGViW
-         kDvambNWLsolIAyMJS6P5Ol8tb9xVJI5IITWXjIhp8r/zubWrErPRC21aSbTvjIP/AxF
-         K3gQkve6SmmsG+xN+zIvWGAeidCMWtAJ+WeuNJdIvkWnEDPtvYFjmlFLlTWHjFK63Kp9
-         2C8RPzwLWqXbkmx1riw8zb3Ezx7H5qEODRes97/gSLWNkt3+9pesxR1MhX5MRQgYFP8S
-         Ud9vPch4R+t+gFs040AMJXProaJ+gKflGMa28WSXHZKMzf4TcToPL2YlzTPRT7AR9Gd9
-         dUlQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=cP186785BsarmyQV1vfjmmxda9K2l87i2VfM+1Og3JY=;
-        b=rXCAxpFukzpoEVxKmg8IM4rbEg1vOJSshl3ftMfXglH+pZRDadKQGBh72Q4jDsI50C
-         3W0bHkvCFXcDIE9r8D9PyrAZji5cQKl88NGBzhNAuXH20VTb6aJhFbwD/d/11ZbeMEQc
-         MRRaQ9g0Ykc7fFfBUz7FAurCjFmjTptOQcq4D40G/cA/RW1lexiOuaFDj4woPZhU0abH
-         NZiZxPRmiiKhnGKUu+MpsBR2i+e8q6dmIf+NFT7vlB4srrYlhDRf2lgzoDkVPzBHNTFU
-         1FuNrwXzqTUpbK2yArBMDorMcDHMie02HC7sWQAfP6z6zI09iGSDTFU79SYu2HqlgpJ1
-         vZCg==
-X-Gm-Message-State: APf1xPDecDeNkYHZ/ZRon5LrPSoFrXt2cVU0AmcKpawcRNPQJRD9v7s8
-        hS6P8g7mdSqFYMnPEep9ZDs=
-X-Google-Smtp-Source: AH8x225O2ERZKCGocC+ne+MSjcDvmWXaCxcyxJD3wXeIyiym/R6khpJACtt70pshIs3ugTKlvD7Lgw==
-X-Received: by 10.223.164.221 with SMTP id h29mr18906916wrb.259.1519861155933;
-        Wed, 28 Feb 2018 15:39:15 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id u48sm2555867wrb.85.2018.02.28.15.39.15
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 28 Feb 2018 15:39:15 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2] commit: run git gc --auto just before the pre-commit hook
-References: <xmqqzi3siw88.fsf@gitster-ct.c.googlers.com>
-        <20180228230425.14952-1-avarab@gmail.com>
-Date:   Wed, 28 Feb 2018 15:39:15 -0800
-In-Reply-To: <20180228230425.14952-1-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
- =?utf-8?B?IEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Wed, 28 Feb 2018 23:04:25 +0000")
-Message-ID: <xmqqmuzsit0c.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S965466AbeCABPO (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Feb 2018 20:15:14 -0500
+Received: from avasout04.plus.net ([212.159.14.19]:60312 "EHLO
+        avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965379AbeCABPN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Feb 2018 20:15:13 -0500
+Received: from [10.0.2.15] ([80.189.70.162])
+        by smtp with ESMTPA
+        id rCoQeXCVNbfBDrCoSeQxvS; Thu, 01 Mar 2018 01:15:12 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.3 cv=F4V5iJpN c=1 sm=1 tr=0
+ a=zzlqjQC3YyNvDZl/Gy+4mg==:117 a=zzlqjQC3YyNvDZl/Gy+4mg==:17
+ a=IkcTkHD0fZMA:10 a=1XWaLZrsAAAA:8 a=uVD6To77mxPmLAvuhhMA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+Subject: Re: The case for two trees in a commit ("How to make rebase less
+ modal")
+To:     Stefan Beller <sbeller@google.com>, git <git@vger.kernel.org>
+Cc:     Sergey Organov <sorganov@gmail.com>, igor.d.djordjevic@gmail.com,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <CAGZ79ka6PXgs+JDicaQYWYSKgEthj0A-2bBaRcdp_0T2H+sREA@mail.gmail.com>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <a2c44a68-9fc6-5998-6d84-aba73ea65a61@ramsayjones.plus.com>
+Date:   Thu, 1 Mar 2018 01:15:10 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.6.0
 MIME-Version: 1.0
+In-Reply-To: <CAGZ79ka6PXgs+JDicaQYWYSKgEthj0A-2bBaRcdp_0T2H+sREA@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfAWuuStBPZ/TA3oLVPOiuzH3L5yUuhuL9j3TOcaWtUYpZrNnj9dZ5R/W7stU3XT2mwTXG8x3+GzXosG5eq1MeWD+0f7HKkb3s6KugjSOqiunfuniHGUa
+ qFFp2FUXfP3dZUD36aERTQFY7T2NAqcbdneiRtH1yQ/X3pU0ES/fd8UbgqSd4MPwrXYSBHf3LKzysQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
 
->> Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
->>
->>> Change the behavior of git-commit back to what it was back in
->>> d4bb43ee27 ("Invoke "git gc --auto" from commit, merge, am and
->>> rebase.", 2007-09-05) when it was git-commit.sh.
->>
->> ... which was to run it just before post-commit.  Do I retitle this
->> patch before queuing?
->
-> Do'h. Of course I screw up something simple like that, sorry. This v2
-> fixes it, and I also rephrased the commit message a bit (more commas &
-> full-stops).
 
-I guess I still need to retitle it ;-) But that can happen tomorrow
-(I have the previous one with local fixes that pretty much matches
-v2 modulo the body of the log message on 'pu', ready to be pushed
-out).
+On 28/02/18 23:30, Stefan Beller wrote:
+> $ git hash-object --stdin -w -t commit <<EOF
+> tree c70b4a33a0089f15eb3b38092832388d75293e86
+> parent 105d5b91138ced892765a84e771a061ede8d63b8
+> author Stefan Beller <sbeller@google.com> 1519859216 -0800
+> committer Stefan Beller <sbeller@google.com> 1519859216 -0800
+> tree 5495266479afc9a4bd9560e9feac465ed43fa63a
+> test commit
+> EOF
+> 19abfc3bf1c5d782045acf23abdf7eed81e16669
+> $ git fsck |grep 19abfc3bf1c5d782045acf23abdf7eed81e16669
+> $
+> 
+> So it is technically possible to create a commit with two tree entries
+> and fsck is not complaining.
 
-> I wonder if it would also be a good idea to run git gc --auto on "git
-> push". It itself won't create any objects, but it would be a nice
-> proxy in many cases for picking up anything else we missed due to
-> various object writing commands that won't run --auto.
+Hmm, it's a while since I looked at that code, but I don't think
+you have a commit with two trees - the second 'tree <sha1>' line
+is just part of the commit message, isn't it?
 
-Before "push" starts producing a pack might be a good optimization,
-as reading from a packed repository is often more performant than a
-repository full of loose objects.
+ATB,
+Ramsay Jones
 
