@@ -2,179 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+X-Spam-Status: No, score=-2.2 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7A7081F404
-	for <e@80x24.org>; Thu,  1 Mar 2018 20:14:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E1EC41F404
+	for <e@80x24.org>; Thu,  1 Mar 2018 20:14:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1161494AbeCAUOj (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Mar 2018 15:14:39 -0500
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:51981 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1161420AbeCAUOh (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Mar 2018 15:14:37 -0500
-Received: by mail-wm0-f66.google.com with SMTP id h21so14469308wmd.1
-        for <git@vger.kernel.org>; Thu, 01 Mar 2018 12:14:37 -0800 (PST)
+        id S1161490AbeCAUO5 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Mar 2018 15:14:57 -0500
+Received: from mail-qk0-f172.google.com ([209.85.220.172]:33045 "EHLO
+        mail-qk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1161420AbeCAUO4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Mar 2018 15:14:56 -0500
+Received: by mail-qk0-f172.google.com with SMTP id f25so9236630qkm.0
+        for <git@vger.kernel.org>; Thu, 01 Mar 2018 12:14:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=5Eb6Tu7ABlhxStX+0lv6lCXCwSE8UIwoGqqJOmPXEMc=;
-        b=GpWrdT5l1TQDUkjfS8qvQldXUYAV+EervwijlUl2vD2uU7aUP/zh+971jiYWvBqqwT
-         RPq+Cc9eDplUD8jkA/qDBP29su1yFc8kzXNAxsJ2CIpAt5+xN/9WCQWCsjG1wwIcGHu8
-         0hmFTzpCBp0mxRw4VLMBEK8y+X3Kdt45rzqvd1acZeBukkDqAQzUTOpzTuZkxkmiZEgt
-         +veWYFlAeWSFG+h2akLzJQAR27h8Q5XLODrM0nvoG3Ezj0mws2RetCPbVgN1840M/rUP
-         srEJJo7njM9AalK9G9IDIcCALzZiHTxMM/2kGW7NOtCtQ1bc/3qit8pdaJHwgGAC4RXp
-         pkCg==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-transfer-encoding;
+        bh=SIS9iI0Wwow3F+4RUGIrNdbw6ZO/ZkyRnSu4cZgLvYo=;
+        b=b0GqOtZ+65lGQ6nOx0iXjLXdlGL8l6KXjwJtE3k24htIcVUm2A63GBgZ5hqARnu/IF
+         QKo334VjGfVdtKSqZ8iW2MDz3E/hAdmRQKdMVuLRqRNdz7gITB5sZOPw0pI3HlKs+IeE
+         sswlW+fWkPDSJwSnW21i7dYytXF/zMek5HRxLDfwRwuMYXDXv2fzY81Am5R0OphxfiSa
+         R/9xfTiAairXfSXLK9S3dgoNIcizTGi/rGZpc4JEgAZzlVeH6XoABzLw/FPO3BAj1SYi
+         2ywY/iHwBzz3Hf4Kk5ZwtoKB79W9rcBUVIOMC5SosEFHzrQbOeCFBlFC8lhCJgw6Er8g
+         o/sQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=5Eb6Tu7ABlhxStX+0lv6lCXCwSE8UIwoGqqJOmPXEMc=;
-        b=XPdcUy65NqW1D2jgmSqe+iZqOsljBQnE0vZkSedrte00Bu6klUy5uAcAA9C9f0imSp
-         OnTH8xTHNOob14odmw5GuV5z1mALIMVa0yt02pwBusZfCR+IeB93FqPxm1Wn6G4PPMDJ
-         OKBf8rOAUc4lao5t9T0QbuLve+HOU3Rr7ZYArIZSdzR2UO86JVvW306HO0cb4PYo/3Rv
-         y89fxX9qfUdXbNZXBfX1nWFXNr/Be6IaGb/xeEO6jzKWLwgYoDFCUPP+bRUC3+02l7WT
-         RG2W1OLhFzqMgpnmcbBRvVqgvK5+LSH4xQTrjbcH+TGHYej+iI3nrf2UJgpS4+W7Agot
-         T2Gg==
-X-Gm-Message-State: AElRT7HYcSOmEDlyKMM3ReUGN4lNpDzyrS4wn5/W2lTyqTLAZmi8kWek
-        vpuxJBu+3gmu2h1sCjc2YgA=
-X-Google-Smtp-Source: AG47ELtPUq5P/2rh0jORHr+EniY0ZDYZ7dvUPF0IJsQg0Q2kzwo+pW7nsAe9oGMhMUz/OPqyRfOe1A==
-X-Received: by 10.28.122.11 with SMTP id v11mr2607022wmc.38.1519935275776;
-        Thu, 01 Mar 2018 12:14:35 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id a14sm4686132wrf.22.2018.03.01.12.14.33
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 01 Mar 2018 12:14:33 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Phillip Wood <phillip.wood@talktalk.net>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        "Brian M. Carlson" <sandals@crustytoothpaste.net>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v4 7/9] add -p: calculate offset delta for edited patches
-References: <20180213104408.9887-1-phillip.wood@talktalk.net>
-        <20180301105103.24268-1-phillip.wood@talktalk.net>
-        <20180301105103.24268-8-phillip.wood@talktalk.net>
-Date:   Thu, 01 Mar 2018 12:14:33 -0800
-In-Reply-To: <20180301105103.24268-8-phillip.wood@talktalk.net> (Phillip
-        Wood's message of "Thu, 1 Mar 2018 10:51:01 +0000")
-Message-ID: <xmqqwoyvft92.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=SIS9iI0Wwow3F+4RUGIrNdbw6ZO/ZkyRnSu4cZgLvYo=;
+        b=gepFUrH3tQc4M04k7cwB7xs9PZNH/oMQeGcp9l06XwSqDNiYcrcjTlDE7Bc6X5Vk9t
+         Dy4IXZmqKI/qRGtOFzgZhsCufd3MNcbxBnORDJZwiVYREPQfGoClwWEx6EhHhTMZy/1f
+         Jg53d3mm4EqxVUKOsoQpvafsGXXz5Wvt/Wic3WGFQr90pVSC4Q69zWB8/9MwOX2YwKZx
+         mv5luvcnDN4grVv6B3yZLFKa0eL+1Z/aC1U2U6aYo69ZmEqhhNjoc0jWZAZ3jVtRB5IT
+         h+E2YIU2xTxxs5NuWouz8NzYVFRxVzC7E52omepzR2B0xVYFOe9ayVJ3MCdLQSPbsblc
+         dKlA==
+X-Gm-Message-State: AElRT7GTUwwMAfXdLJV22HJaup9oeGuvmPaybC3fttZTn3jPeCW7so2p
+        mRUFfd0rV1qBE9X0zsenKIfcVuAn9Tby9gYLqvJgwg==
+X-Google-Smtp-Source: AG47ELvmyDk+xoi4aywVYyFisN2RfAmW24n20/Rf2CTKY3wepSmcllcUZ27rOx8a/2Q0tuna3IOWlbgrqGe8UQcaD/Y=
+X-Received: by 10.55.32.2 with SMTP id g2mr4703799qkg.176.1519935296153; Thu,
+ 01 Mar 2018 12:14:56 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Received: by 10.12.142.14 with HTTP; Thu, 1 Mar 2018 12:14:55 -0800 (PST)
+In-Reply-To: <adf7a7a0-3571-5b68-5d15-30a9067e3826@aegee.org>
+References: <aa98f187-4b1a-176d-2a1b-826c995776cd@aegee.org>
+ <CAPig+cSGJhNR8dapLXN0TU8ZpTqi7m6OQf_cCGmHc9FLGcwNyg@mail.gmail.com> <adf7a7a0-3571-5b68-5d15-30a9067e3826@aegee.org>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Thu, 1 Mar 2018 15:14:55 -0500
+X-Google-Sender-Auth: YIhpiW5EnyDK9uPe2QQVFIZ6T0w
+Message-ID: <CAPig+cTPFSbT7WxyoNEOSg=3Ft1pVzkgieGp44kHnZ9=NbYsqg@mail.gmail.com>
+Subject: Re: Worktree silently deleted on git fetch/gc/log
+To:     =?UTF-8?B?0JTQuNC70Y/QvSDQn9Cw0LvQsNGD0LfQvtCy?= 
+        <dilyan.palauzov@aegee.org>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Phillip Wood <phillip.wood@talktalk.net> writes:
+On Thu, Mar 1, 2018 at 2:24 PM, =D0=94=D0=B8=D0=BB=D1=8F=D0=BD =D0=9F=D0=B0=
+=D0=BB=D0=B0=D1=83=D0=B7=D0=BE=D0=B2
+<dilyan.palauzov@aegee.org> wrote:
+> /git/A/.git/worktrees/b/ is missing - that is the point.
+> /git/B/,git wasn't modified since the worktree was created, cat:
+> gitdir: /git/A/.git/worktrees/b
 
-> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->
-> Recount the number of preimage and postimage lines in a hunk after it
-> has been edited so any change in the number of insertions or deletions
-> can be used to adjust the offsets of subsequent hunks. If an edited
-> hunk is subsequently split then the offset correction will be lost. It
-> would be possible to fix this if it is a problem, however the code
-> here is still an improvement on the status quo for the common case
-> where an edited hunk is applied without being split.
->
-> This is also a necessary step to removing '--recount' and
-> '--allow-overlap' from the invocation of 'git apply'. Before
-> '--recount' can be removed the splitting and coalescing counting needs
-> to be fixed to handle a missing newline at the end of a file. In order
-> to remove '--allow-overlap' there needs to be i) some way of verifying
-> the offset data in the edited hunk (probably by correlating the
-> preimage (or postimage if the patch is going to be applied in reverse)
-> lines of the edited and unedited versions to see if they are offset or
-> if any leading/trailing context lines have been removed) and ii) a way of
-> dealing with edited hunks that change context lines that are shared
-> with neighbouring hunks.
->
-> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-> ---
+I'll assume that the lowercase 'b' was a typo in your email (as it was
+in mine), and that the real content is "gitdir:
+/git/A/.git/worktrees/B".
 
-Thanks for clear description of what is going on in the series.
+You should be able to get back to a working state like this:
 
-> diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-> index 7a0a5896bb..0df0c2aa06 100755
-> --- a/git-add--interactive.perl
-> +++ b/git-add--interactive.perl
-> @@ -938,13 +938,19 @@ sub coalesce_overlapping_hunks {
->  						parse_hunk_header($text->[0]);
->  		unless ($_->{USE}) {
->  			$ofs_delta += $o_cnt - $n_cnt;
-> +			# If this hunk has been edited then subtract
-> +			# the delta that is due to the edit.
-> +			$_->{OFS_DELTA} and $ofs_delta -= $_->{OFS_DELTA};
+% cd /git/A/
+% mkdir -p .git/worktrees/B
+% echo 'ref: refs/heads/g' >.git/worktrees/B/HEAD
+% echo ../.. >.git/worktrees/B/commondir
+% echo /git/B/.git >.git/worktrees/B/gitdir
 
-The pattern
+% cd /git/B/
+% git reset
 
-	<<conditional>> and <<statement with side effect>>;
-
-is something you are newly introducing to this script.  I am not
-sure if we want to see them.  I somehow find them harder to read
-than the more straight-forward and naïve
-
-	if (<<conditional>>) {
-		<<statement with side effect>>;
-	}
-
-
-> +		# If this hunk was edited then adjust the offset delta
-> +		# to reflect the edit.
-> +		$_->{OFS_DELTA} and $ofs_delta += $_->{OFS_DELTA};
-
-Likewise.
-
-> +sub recount_edited_hunk {
-> +	local $_;
-> +	my ($oldtext, $newtext) = @_;
-> +	my ($o_cnt, $n_cnt) = (0, 0);
-> +	for (@{$newtext}[1..$#{$newtext}]) {
-> +		my $mode = substr($_, 0, 1);
-> +		if ($mode eq '-') {
-> +			$o_cnt++;
-> +		} elsif ($mode eq '+') {
-> +			$n_cnt++;
-> +		} elsif ($mode eq ' ') {
-> +			$o_cnt++;
-> +			$n_cnt++;
-> +		}
-> +	}
-> +	my ($o_ofs, undef, $n_ofs, undef) =
-> +					parse_hunk_header($newtext->[0]);
-> +	$newtext->[0] = format_hunk_header($o_ofs, $o_cnt, $n_ofs, $n_cnt);
-> +	my (undef, $orig_o_cnt, undef, $orig_n_cnt) =
-> +					parse_hunk_header($oldtext->[0]);
-> +	# Return the change in the number of lines inserted by this hunk
-> +	return $orig_o_cnt - $orig_n_cnt - $o_cnt + $n_cnt;
-> +}
-
-OK.
-
-> @@ -1114,25 +1144,32 @@ sub prompt_yesno {
->  }
->  
->  sub edit_hunk_loop {
-> -	my ($head, $hunk, $ix) = @_;
-> -	my $text = $hunk->[$ix]->{TEXT};
-> +	my ($head, $hunks, $ix) = @_;
-> +	my $hunk = $hunks->[$ix];
-> +	my $text = $hunk->{TEXT};
-> ...
-> +		$newhunk->{OFS_DELTA} = recount_edited_hunk($text, $newtext);
-> +		# If this hunk has already been edited then add the
-> +		# offset delta of the previous edit to get the real
-> +		# delta from the original unedited hunk.
-> +		$hunk->{OFS_DELTA} and
-> +				$newhunk->{OFS_DELTA} += $hunk->{OFS_DELTA};
-
-Ahh, good point.
-
+As far as I know, there isn't any code in Git which would
+automatically remove the .git/worktrees/B directory, so it's not clear
+how that happened.
