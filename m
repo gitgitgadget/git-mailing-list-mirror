@@ -2,96 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD,
-	UNPARSEABLE_RELAY shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ADD7F1F404
-	for <e@80x24.org>; Thu,  1 Mar 2018 17:23:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 062AE1F404
+	for <e@80x24.org>; Thu,  1 Mar 2018 17:29:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1033393AbeCARXh (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Mar 2018 12:23:37 -0500
-Received: from mail-wr0-f172.google.com ([209.85.128.172]:45116 "EHLO
-        mail-wr0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1033238AbeCARXg (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Mar 2018 12:23:36 -0500
-Received: by mail-wr0-f172.google.com with SMTP id p104so7374320wrc.12
-        for <git@vger.kernel.org>; Thu, 01 Mar 2018 09:23:35 -0800 (PST)
+        id S1033436AbeCAR3j (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Mar 2018 12:29:39 -0500
+Received: from mail-lf0-f51.google.com ([209.85.215.51]:44382 "EHLO
+        mail-lf0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1033044AbeCAR3h (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Mar 2018 12:29:37 -0500
+Received: by mail-lf0-f51.google.com with SMTP id v9so9404476lfa.11
+        for <git@vger.kernel.org>; Thu, 01 Mar 2018 09:29:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=BqIe73rwXVDZTTdK7SgdcHlqGvArEtBCZONEv6j5RLg=;
+        b=iHg05mxjKHIxFwbT7wCDKMOt0c8uM5DBSP5Ku2cRvZyvVXmoZ6x28i70bx3syD0IlB
+         ccm+pvBIrtkcbRyIdSRc1I9FdBRCdQPxNIgGulIajZKmJK3GxcMNqxv0UhLiVwPbpJLP
+         KttAP8fh0IX45VnZZk3YDZzc7KOtmCnvxAjcxwg20S4XKdXZiR6fXX9SmQTqfD3abjjp
+         ND7CMe8VfXcp5IoPeiNqd8tZiyMkNBApl8lMeK3fge5kh144PqJBS3oBBYlSu0KFbZVk
+         8A/DPkNnW2cOkfhS2DXClasAH1SSVHT44R9dU4sJprXwk2bjcbIelTjakqytsVgVA4Zm
+         HMvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version;
-        bh=RmagcYc5sQsdujXAQqpPFfGIV5K/3Ifwf3IUPWvCXak=;
-        b=iFncmUDX02GcxZsUalvJ6RqBCOKN7nBspxteIOk05TT0GSM51hE01HCDJjm7xngWts
-         IJ9FNddWNR2cF8EKMg9JRSshqAouMt3bt4zqn9WqefgQaWbtfubZurFT2HO/M9pz896q
-         mgoxi1GoevcSbCrnz4izaje27Zy5XmaX1ClqLqzhf5+Pb2eci3xP9+bUzekMNRfZv6VI
-         ewnEVUUYswTiK/uiQBr7hf4NbwRHunkxiWI4eTGwu0GCbpIv4oICOKRJicHTic6jJIZe
-         4LHyLt1D2FqSpA+tfF7k4K01z76fFyjDzehk4E2yoKXWdks9YMydMGESQMFmaAjm1D06
-         kvNA==
-X-Gm-Message-State: APf1xPD2a0lVhFThmahrwQDd5tkEgzLGJJS+cZFDnWaCaVYjDuU+IK3f
-        0MXtRZ9oRqIQyHmCo/RQ5dmDEA==
-X-Google-Smtp-Source: AG47ELvolMLXgJtPRYb/UGz0vG9cmlXjMjay9A+Dbi6XNt80gYCsKxzoqZ2KuNed7sjLnKHmQLAdwA==
-X-Received: by 10.223.135.232 with SMTP id c37mr2344263wrc.168.1519925014463;
-        Thu, 01 Mar 2018 09:23:34 -0800 (PST)
-Received: from juno.home.vuxu.org ([2001:4ca0:0:f224:a288:b4ff:fea1:ce50])
-        by smtp.gmail.com with ESMTPSA id x190sm6453713wme.27.2018.03.01.09.23.33
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 01 Mar 2018 09:23:33 -0800 (PST)
-Received: from localhost (juno.home.vuxu.org [local])
-        by juno.home.vuxu.org (OpenSMTPD) with ESMTPA id cf9472b3;
-        Thu, 1 Mar 2018 17:23:33 +0000 (UTC)
-From:   Leah Neukirchen <leah@vuxu.org>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=BqIe73rwXVDZTTdK7SgdcHlqGvArEtBCZONEv6j5RLg=;
+        b=Q7hMrM8ZiWNh5tGclLDx6ImGzUG3CJ/w3vhSdvnuFL5KPYb0zttVCP4pNUUa8kZZkJ
+         pCOgjdAfQLXVwi4Te6CWvm5QH9+BQzKq8TjOaTWCT5DY+wEIhdgr/1dhzagRdkz3H0Un
+         ONhVJGAi1dzYMkBBCAxM0wUSL1vLinPiDm871k3kr/eR1S+xoiwvP6oeA9JqT45DauCp
+         a6Ejbi30jxo+Co4iRE/x5yFbWG26S+CQUztpRDeDVjzRBJXV88mf3CTOq4UHoUbkLmd4
+         lddn0EZb61xARG/MJB/bMBskLvZ1jtwDjdhIHdo/DivUrRFNgtbLEgYQR1mzM3336cQi
+         WSng==
+X-Gm-Message-State: AElRT7FoNtMYmJn/muTTcu3EHEw+90ufnW+EGdG5kNHw9fT/+zDHi3bJ
+        039O4ttZpdw568ln7ibFZryw+EmQ
+X-Google-Smtp-Source: AG47ELuNyChTFztU894DndXsnp0PDXk9TAFslPdi0AmZqDiQJBUwp3wb5CkN5KudhR6HVQMcnP9xUQ==
+X-Received: by 10.25.222.207 with SMTP id i76mr1761804lfl.133.1519925376254;
+        Thu, 01 Mar 2018 09:29:36 -0800 (PST)
+Received: from [192.168.20.21] ([89.113.128.32])
+        by smtp.gmail.com with ESMTPSA id q63sm951627ljq.17.2018.03.01.09.29.34
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 01 Mar 2018 09:29:34 -0800 (PST)
+Subject: Re: Obsolete instruction in SubmittingPatches?
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [RFC PATCH] color: respect the $NO_COLOR convention
-References: <87zi3reoez.fsf@gmail.com>
-        <xmqqefl3iuvx.fsf@gitster-ct.c.googlers.com>
-Date:   Thu, 01 Mar 2018 18:23:33 +0100
-In-Reply-To: <xmqqefl3iuvx.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Thu, 01 Mar 2018 09:10:58 -0800")
-Message-ID: <87efl3emlm.fsf@vuxu.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.3 (gnu/linux)
+References: <48b5c506-6882-81e2-35f6-7d040bfc6017@gmail.com>
+ <xmqqd10okcfu.fsf@gitster-ct.c.googlers.com>
+From:   Andrei Rybak <rybak.a.v@gmail.com>
+Message-ID: <927e3166-9c60-fca5-ab41-f6d38380c1b1@gmail.com>
+Date:   Thu, 1 Mar 2018 20:29:34 +0300
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.6.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <xmqqd10okcfu.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On 01.03.2018 0:54, Junio C Hamano wrote:
+> Andrei Rybak <rybak.a.v@gmail.com> writes:
+> 
+>> Is this part of guidelines obsolete, or am I not understanding this
+>> correctly?
+> 
+> I am merely being nice (but only on "time-permitting" basis).
+> 
 
-> Leah Neukirchen <leah@vuxu.org> writes:
->
->> NO_COLOR (http://no-color.org/) is a comprehensive approach to disable
->> colors by default for all tools:
->
-> The list of software that supports that "convention" is, eh,
-> respectable.  Is it really a "convention" yet, or yet another thing
-> the user needs to worry about?
-
-You are right in calling this out an emerging new thing, but the
-second list of that page proves that it will be useful to settle on a
-common configuration, and my hope is by getting a few popular projects
-on board, others will soon follow.  It certainly is easy to implement,
-and rather unintrusive.  Users which don't know about this feature are
-completely unaffected.
-
->>  	if (color_stdout_is_tty < 0)
->>  		color_stdout_is_tty = isatty(1);
->>  	if (color_stdout_is_tty || (pager_in_use() && pager_use_color)) {
->
-> According to no-color.org's FAQ #2, NO_COLOR should affect only the
-> "default" behaviour, and should stay back if there is an explicit
-> end-user configuration (or command line override).  And this helper
-> function is called only from want_color() when their is no such
-> higher precedence setting, which is in line with the recommendation.
->
-> Which is good.
-
-Yes, I took care of that.  Should this also be tested?  It doesn't
-quite fit into the setting of t4026-color.sh I think.
-
-Thanks,
--- 
-Leah Neukirchen  <leah@vuxu.org>  http://leah.zone
+Does that mean that the integration of a series is easier, when there is
+a re-send?
