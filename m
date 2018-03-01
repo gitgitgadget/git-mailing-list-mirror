@@ -7,61 +7,59 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CABCF1F404
-	for <e@80x24.org>; Thu,  1 Mar 2018 21:25:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 34AB31F404
+	for <e@80x24.org>; Thu,  1 Mar 2018 21:43:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1161971AbeCAVZj (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Mar 2018 16:25:39 -0500
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:40025 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1161816AbeCAVZg (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Mar 2018 16:25:36 -0500
-Received: by mail-wm0-f66.google.com with SMTP id t6so14880977wmt.5
-        for <git@vger.kernel.org>; Thu, 01 Mar 2018 13:25:36 -0800 (PST)
+        id S1162050AbeCAVnf (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Mar 2018 16:43:35 -0500
+Received: from mail-wr0-f177.google.com ([209.85.128.177]:33921 "EHLO
+        mail-wr0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1161761AbeCAVne (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Mar 2018 16:43:34 -0500
+Received: by mail-wr0-f177.google.com with SMTP id m5so8107142wrg.1
+        for <git@vger.kernel.org>; Thu, 01 Mar 2018 13:43:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=MmPJ6y/nIBAdO7oWYmFofRv6WI0fF4A89x+GsneaI+c=;
-        b=ihrbyC+6Ube/jhYJthjLDnUKUNf/7ss1/LsmrpGL5MkEaTRdVN4qShDfDLZb70K0d+
-         UzUR2er13YQ9eURzE7/cTBqVj59zEHFxoeyB6a8dEhiWDuBv/btE30Zxpo+Pa4duIx9j
-         lwoEThY5zwKbYG5w7idBHiWL6dr2UEVTQhKETdWbec1zoIAR39m9iIdN7xSdpwQTYnWR
-         dMy+bbJAq0zVzpvxxQ235zSBFzaatw4ghPE0JkQCUd+msiXd6GicbjzLLeF27oQaI+oN
-         BDcunecaNe51aRkfACraw9NiORnCEOkW4lvKlpLuMQ+uudy3cuu68otngJIX8zhzhZj8
-         gnKA==
+        bh=fN5WGYLuVJSci9iDCvMNpWKyL9zCm3AeY9T0Twk3H7o=;
+        b=lyRPkjyvvEb+W8blnohHK4TEn0ZWcU8QvR5eJpFVaXBY8V8GguCXltVWt09RZtZDIR
+         vlgrv+jXEGyOOCDh67X0QGEHYr0dpjpKRSw0uy9KnCqQ3+hSv/1ldb51Zabweo5uDhik
+         vs0DwiajsT+XxUwtwYYQjGGxoA0mXwgjpzY0MTKmHEwFrZCU/bkdOkmD/6VI1LBRYRkI
+         uL9+C7H3kyVHEnFu28QnLZ+HHOtXISB7lLVtPBV4B5TKynXnMCvgg05QDhxy8Rg0A+zm
+         a3lT95cSbI7D+4QvdoEGno4koZFy4pLf22F98nR+EuhfX0qMQn0kcJrH7wRbCZaHRhU3
+         jYhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=MmPJ6y/nIBAdO7oWYmFofRv6WI0fF4A89x+GsneaI+c=;
-        b=RdZ0PykPWV2/NT40swW89r4vWs8M+KZrUetvIDpoY1u/x7Xsqcw1bwa9E3X1USMWDi
-         0gh8Dol1HZDssaWLFNcf4CqdV/s0UtEgr5uRZpVf+3O+/irzCK0x6HhC6IhKpvvHOXvI
-         EjkfKskS88gMcSUaDXgyJtwRtDZxGIaTzJGF/vGJwO+0HDdmfOmN4F7G83MHk4DmtulN
-         jA1bS7MkbIGGsyoF/SKNbWwEnxqd2LUdfE4qTc4sPRVYHiSBIeFig/0nXjKpcf+OwHBv
-         CjjVqGoT/cr5PbWec15shZ4sZv8LgVzw5fTYpbrxJLqC67GbMYV/NWxGTwOUT5E2R/3q
-         nfAA==
-X-Gm-Message-State: AElRT7FhsOwgM7ijan+43zbU/63wedmiH3s0zn0hLlENV2JWU4iVvbAA
-        SMK4dDPJirfuAGwE4ITJFQAoEaJl
-X-Google-Smtp-Source: AG47ELuCCoLog2xGRfay6K0dlKUx67tibGrWrXQGCtpDssaRXIMgDABregcvWxu5TtIqnxfQIUxNSQ==
-X-Received: by 10.28.171.10 with SMTP id u10mr2902526wme.108.1519939533771;
-        Thu, 01 Mar 2018 13:25:33 -0800 (PST)
+        bh=fN5WGYLuVJSci9iDCvMNpWKyL9zCm3AeY9T0Twk3H7o=;
+        b=qZQt6CGAkEubG+AsKubB0NNDtqQggPrr1dUGZJRePcUV6cFN9YJOsKNKH8qwoxktKj
+         IjpbBumKJZBDCmTdhJDigZqGu20sce2gaCsYYMZRg34hMh9/cEL1e687YdK+V3cfXfAv
+         m8onDLnLyK28xih1JS9Ws7ep/u6nhCxoWzTnJGHxlYX2mcDwknztZOcyH/33OGpcMGoR
+         QKkN03HvE7epAe2di8TqQqjWWOOHOcuKvu4bLB5cLyJyYODF6ryFrIzIISrjHxz93XQy
+         zX0+39rlATsrVGNt3iNtfYxBZ73lbmIQq/Sw7Xrl4yWWWejDF8RBS7YQMNcyfJAcDnKZ
+         ltOw==
+X-Gm-Message-State: APf1xPB7FgKHmoivFJDT7IzNaQXHq/oryojSxa//eToe1DSoy3BNI3C5
+        ZDnPi6n/r0B0K7PdnsO91+c=
+X-Google-Smtp-Source: AG47ELsssTUjlpEoEJXedvVotYHazEy3aIyZ4IkHin/lWfY5u3IhtnCVoxcLeFPSqfaKbg/GVuAaHw==
+X-Received: by 10.223.156.206 with SMTP id h14mr2831189wre.281.1519940612751;
+        Thu, 01 Mar 2018 13:43:32 -0800 (PST)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id o9sm5740785wrf.43.2018.03.01.13.25.33
+        by smtp.gmail.com with ESMTPSA id 62sm5144521wrf.24.2018.03.01.13.43.31
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 01 Mar 2018 13:25:33 -0800 (PST)
+        Thu, 01 Mar 2018 13:43:32 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org, git@jeffhostetler.com, jrnieder@gmail.com,
-        pclouds@gmail.com, peff@peff.net, sbeller@google.com,
-        stolee@gmail.com
-Subject: Re: [PATCH v4 06/35] transport: use get_refs_via_connect to get refs
-References: <20180207011312.189834-1-bmwill@google.com>
-        <20180228232252.102167-1-bmwill@google.com>
-        <20180228232252.102167-7-bmwill@google.com>
-Date:   Thu, 01 Mar 2018 13:25:32 -0800
-In-Reply-To: <20180228232252.102167-7-bmwill@google.com> (Brandon Williams's
-        message of "Wed, 28 Feb 2018 15:22:23 -0800")
-Message-ID: <xmqqy3jbebeb.fsf@gitster-ct.c.googlers.com>
+To:     Andrei Rybak <rybak.a.v@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Obsolete instruction in SubmittingPatches?
+References: <48b5c506-6882-81e2-35f6-7d040bfc6017@gmail.com>
+        <xmqqd10okcfu.fsf@gitster-ct.c.googlers.com>
+        <927e3166-9c60-fca5-ab41-f6d38380c1b1@gmail.com>
+Date:   Thu, 01 Mar 2018 13:43:31 -0800
+In-Reply-To: <927e3166-9c60-fca5-ab41-f6d38380c1b1@gmail.com> (Andrei Rybak's
+        message of "Thu, 1 Mar 2018 20:29:34 +0300")
+Message-ID: <xmqqtvtzeakc.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -70,15 +68,25 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Brandon Williams <bmwill@google.com> writes:
+Andrei Rybak <rybak.a.v@gmail.com> writes:
 
-> Remove code duplication and use the existing 'get_refs_via_connect()'
-> function to retrieve a remote's heads in 'fetch_refs_via_pack()' and
-> 'git_transport_push()'.
+> On 01.03.2018 0:54, Junio C Hamano wrote:
+>> Andrei Rybak <rybak.a.v@gmail.com> writes:
+>> 
+>>> Is this part of guidelines obsolete, or am I not understanding this
+>>> correctly?
+>> 
+>> I am merely being nice (but only on "time-permitting" basis).
 >
-> Signed-off-by: Brandon Williams <bmwill@google.com>
-> ---
->  transport.c | 18 ++++--------------
->  1 file changed, 4 insertions(+), 14 deletions(-)
+> Does that mean that the integration of a series is easier, when there is
+> a re-send?
 
-Nice ;-)
+When I am not interested in a topic, or there are other reviewers
+who are more qualified and are interested in the topic than I am,
+the protocol to require the final "Here is a verbatim final resend,
+the only difference from what was reviewed is the reviewed-by's from
+the reviewers." will let me completely ignore the topic while it is
+being discussed (as long as I trust the judgment of these reviewers).
+
+Otherwise I'd need to keep track of the progress of the discussion
+on each and every topic, which is often impossible.
