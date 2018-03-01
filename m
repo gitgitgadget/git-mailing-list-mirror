@@ -7,47 +7,48 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3E5D01F576
-	for <e@80x24.org>; Thu,  1 Mar 2018 10:51:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A430D1F576
+	for <e@80x24.org>; Thu,  1 Mar 2018 10:51:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S967605AbeCAKvt (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Mar 2018 05:51:49 -0500
-Received: from smtp-out-3.talktalk.net ([62.24.135.67]:54132 "EHLO
+        id S967609AbeCAKvw (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Mar 2018 05:51:52 -0500
+Received: from smtp-out-3.talktalk.net ([62.24.135.67]:32655 "EHLO
         smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S967588AbeCAKvY (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S967579AbeCAKvY (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 1 Mar 2018 05:51:24 -0500
 Received: from lindisfarne.localdomain ([92.22.16.137])
         by smtp.talktalk.net with SMTP
-        id rLnoeYfgY59cnrLnwexaFp; Thu, 01 Mar 2018 10:51:16 +0000
+        id rLnoeYfgY59cnrLnwexaFu; Thu, 01 Mar 2018 10:51:17 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1519901476;
-        bh=t1EalJxdhDGW0EtXvC+ie8737VVuchZVG1Ps6AZUfyY=;
+        s=cmr1711; t=1519901477;
+        bh=9wAHtahnsOH2w01XKwYm7IlTk4+dwWlZDg33ZH5Qmk4=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:Reply-To;
-        b=XzGsKd2zkxMz8vHk5sUaR8ENrUunLkrYHAcKAggqvzfEP8qv6wwMqEEEhjrIPel/4
-         0gF9bBXg+/ee+dFovxTY13xcck/j77pQzeuHVT8w6vHWXC9h7R5MCRxjj7S/yYuESJ
-         v1FQeBTLj2nqwozcYiYpge4Ob7IancnsPH2DzBfY=
+        b=Brd9MW5JET74+RUF5hzW11fAzDGwRd6u9FX7EyLyvqeXShi1xQRILgqG/+3AzClBG
+         WjGNJcuT+iRUDlK0MNvpZUHn6rV1L1DVU5slM8gllPB3RmlaD+SYnt0Pi6+uid+gBH
+         zSL9mDwyeDIktOOhlQIeKq5t20eMcsRc0JnEA6Mo=
 X-Originating-IP: [92.22.16.137]
 X-Spam: 0
 X-OAuthority: v=2.3 cv=Yr8hubQX c=1 sm=1 tr=0 a=nWy375ASyxHoIYnPohIYMA==:117
- a=nWy375ASyxHoIYnPohIYMA==:17 a=evINK-nbAAAA:8 a=ZreZE-04bYjqTV0VtXMA:9
- a=JKJlppc6-rsBzady:21 a=EXMGWyDDmFWXYRiX:21 a=RfR_gqz1fSpA9VikTjo0:22
+ a=nWy375ASyxHoIYnPohIYMA==:17 a=evINK-nbAAAA:8 a=ybZZDoGAAAAA:8
+ a=TQO8FCMgGYcQxHoYvoMA:9 a=GvWkX6MdpQk4SUrl:21 a=Z-JS3JWn8hL6a7Zp:21
+ a=RfR_gqz1fSpA9VikTjo0:22 a=0RhZnL1DYvcuLYC8JZ5M:22
 From:   Phillip Wood <phillip.wood@talktalk.net>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Junio C Hamano <gitster@pobox.com>,
         "Brian M. Carlson" <sandals@crustytoothpaste.net>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH v4 3/9] t3701: use test_write_lines and write_script
-Date:   Thu,  1 Mar 2018 10:50:57 +0000
-Message-Id: <20180301105103.24268-4-phillip.wood@talktalk.net>
+Subject: [PATCH v4 4/9] t3701: don't hard code sha1 hash values
+Date:   Thu,  1 Mar 2018 10:50:58 +0000
+Message-Id: <20180301105103.24268-5-phillip.wood@talktalk.net>
 X-Mailer: git-send-email 2.16.1
 In-Reply-To: <20180301105103.24268-1-phillip.wood@talktalk.net>
 References: <20180213104408.9887-1-phillip.wood@talktalk.net>
  <20180301105103.24268-1-phillip.wood@talktalk.net>
 Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
-X-CMAE-Envelope: MS4wfKSFMI/ThWJT3biNBLltZSxS9gDFo5kfjrujSVOwhVpxlCqtzFRO7KpSi1hlGoS3frA9inEf4gn0HEbr2R3Wzv36OY6ElDqw8zy3uut/+otOALsgG/HP
- 23JbP9nHXcdddelUie5ybRPwdp5Ge0ZLvD27cBQP0w8zr7U/pLCA1bbBDGYVuFvN8v2Uo5LrR+y1Y4geDfNYLVzD0HFjgnxFmntgbtqWEZv4JytY49IPsR5O
- R98QtaUJgEMujo0qzkFkmwKz+GvkZyPriyEnGZfkmzXr86NaB5vtmo2yXE2AXZ/6+aID8oRFUr44lr1G2Z1QjOggDvno9+Hdy9BWd0wgzlE=
+X-CMAE-Envelope: MS4wfGBkoTsGcgFjx0FvrAMkMajVRFyEVexd8ddU+A2DFRvBpJNJok7ee53VHSak87LhfqT2k5f3lVPd6hBLfc2ZiW4Ul/qOkGKFOS9PU2z7dhZVc0+gLYjL
+ +8SzHpGzISsfbX9D9q5s4woEn8mLCMfwhUw+vbV0gQP/EUwpyzRn2pSh7Hh2thBUD37svb6orzBpiGtAmQe9haSIhjEut5LN+43Yne4qwfjqdQVCtjcpf8We
+ Ob5AW667mKFSu99J7T/ITfbxVUIEc4shBIlXsCbOQZzjOddr4q6gXiydcCHsFULEeI6pRh9Nqs0tVwOOA0zTnacPhpK4tqnLGK5fsqCzApk=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -55,91 +56,141 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-Simplify things slightly by using the above helpers.
+Use a filter when comparing diffs to fix the value of non-zero hashes
+in diff index lines so we're not hard coding sha1 hash values in the
+expected output. This makes it easier to change the expected output if
+a test is edited as we don't need to worry about the exact hash value
+and means the tests will work when the hash algorithm is transitioned
+away from sha1.
 
+Thanks-to: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
 
 Notes:
-    changes since v2
-     - fixed use of test_set_editor to match what was in pu
+    changes since v3:
+     - fix zero hash values to seven digits
+    changes since v2:
+     - fix hash values in index lines rather than removing the line
+     - reworded commit message
 
- t/t3701-add-interactive.sh | 33 +++++----------------------------
- 1 file changed, 5 insertions(+), 28 deletions(-)
+ t/t3701-add-interactive.sh | 33 +++++++++++++++++++++++----------
+ 1 file changed, 23 insertions(+), 10 deletions(-)
 
 diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-index 3130dafcf0..836ce346ed 100755
+index 836ce346ed..f95714230b 100755
 --- a/t/t3701-add-interactive.sh
 +++ b/t/t3701-add-interactive.sh
-@@ -87,13 +87,8 @@ test_expect_success 'setup expected' '
- 	EOF
- '
+@@ -10,6 +10,19 @@ then
+ 	test_done
+ fi
  
--test_expect_success 'setup fake editor' '
--	>fake_editor.sh &&
--	chmod a+x fake_editor.sh &&
--	test_set_editor "$(pwd)/fake_editor.sh"
--'
--
- test_expect_success 'dummy edit works' '
-+	test_set_editor : &&
++diff_cmp () {
++	for x
++	do
++		sed  -e '/^index/s/[0-9a-f]*[1-9a-f][0-9a-f]*\.\./1234567../' \
++		     -e '/^index/s/\.\.[0-9a-f]*[1-9a-f][0-9a-f]*/..9abcdef/' \
++		     -e '/^index/s/ 00*\.\./ 0000000../' \
++		     -e '/^index/s/\.\.00*$/..0000000/' \
++		     -e '/^index/s/\.\.00* /..0000000 /' \
++		     "$x" >"$x.filtered"
++	done
++	test_cmp "$1.filtered" "$2.filtered"
++}
++
+ test_expect_success 'setup (initial)' '
+ 	echo content >file &&
+ 	git add file &&
+@@ -35,7 +48,7 @@ test_expect_success 'setup expected' '
+ test_expect_success 'diff works (initial)' '
+ 	(echo d; echo 1) | git add -i >output &&
+ 	sed -ne "/new file/,/content/p" <output >diff &&
+-	test_cmp expected diff
++	diff_cmp expected diff
+ '
+ test_expect_success 'revert works (initial)' '
+ 	git add file &&
+@@ -72,7 +85,7 @@ test_expect_success 'setup expected' '
+ test_expect_success 'diff works (commit)' '
+ 	(echo d; echo 1) | git add -i >output &&
+ 	sed -ne "/^index/,/content/p" <output >diff &&
+-	test_cmp expected diff
++	diff_cmp expected diff
+ '
+ test_expect_success 'revert works (commit)' '
+ 	git add file &&
+@@ -91,7 +104,7 @@ test_expect_success 'dummy edit works' '
+ 	test_set_editor : &&
  	(echo e; echo a) | git add -p &&
  	git diff > diff &&
- 	test_cmp expected diff
-@@ -110,12 +105,10 @@ test_expect_success 'setup patch' '
+-	test_cmp expected diff
++	diff_cmp expected diff
  '
  
- test_expect_success 'setup fake editor' '
--	echo "#!$SHELL_PATH" >fake_editor.sh &&
--	cat >>fake_editor.sh <<-\EOF &&
-+	write_script "fake_editor.sh" <<-\EOF &&
- 	mv -f "$1" oldpatch &&
- 	mv -f patch "$1"
- 	EOF
--	chmod a+x fake_editor.sh &&
- 	test_set_editor "$(pwd)/fake_editor.sh"
+ test_expect_success 'setup patch' '
+@@ -159,7 +172,7 @@ test_expect_success 'setup expected' '
+ test_expect_success 'real edit works' '
+ 	(echo e; echo n; echo d) | git add -p &&
+ 	git diff >output &&
+-	test_cmp expected output
++	diff_cmp expected output
  '
  
-@@ -302,18 +295,12 @@ test_expect_success 'deleting an empty file' '
+ test_expect_success 'skip files similarly as commit -a' '
+@@ -171,7 +184,7 @@ test_expect_success 'skip files similarly as commit -a' '
+ 	git reset &&
+ 	git commit -am commit &&
+ 	git diff >expected &&
+-	test_cmp expected output &&
++	diff_cmp expected output &&
+ 	git reset --hard HEAD^
+ '
+ rm -f .gitignore
+@@ -248,7 +261,7 @@ test_expect_success 'add first line works' '
+ 	git apply patch &&
+ 	(echo s; echo y; echo y) | git add -p file &&
+ 	git diff --cached > diff &&
+-	test_cmp expected diff
++	diff_cmp expected diff
+ '
+ 
+ test_expect_success 'setup expected' '
+@@ -271,7 +284,7 @@ test_expect_success 'deleting a non-empty file' '
+ 	rm non-empty &&
+ 	echo y | git add -p non-empty &&
+ 	git diff --cached >diff &&
+-	test_cmp expected diff
++	diff_cmp expected diff
+ '
+ 
+ test_expect_success 'setup expected' '
+@@ -290,7 +303,7 @@ test_expect_success 'deleting an empty file' '
+ 	rm empty &&
+ 	echo y | git add -p empty &&
+ 	git diff --cached >diff &&
+-	test_cmp expected diff
++	diff_cmp expected diff
+ '
  
  test_expect_success 'split hunk setup' '
- 	git reset --hard &&
--	for i in 10 20 30 40 50 60
--	do
--		echo $i
--	done >test &&
-+	test_write_lines 10 20 30 40 50 60 >test &&
- 	git add test &&
- 	test_tick &&
- 	git commit -m test &&
- 
--	for i in 10 15 20 21 22 23 24 30 40 50 60
--	do
--		echo $i
--	done >test
-+	test_write_lines 10 15 20 21 22 23 24 30 40 50 60 >test
+@@ -355,7 +368,7 @@ test_expect_success 'patch mode ignores unmerged entries' '
+ 	+changed
+ 	EOF
+ 	git diff --cached >diff &&
+-	test_cmp expected diff
++	diff_cmp expected diff
  '
  
- test_expect_success 'split hunk "add -p (edit)"' '
-@@ -334,17 +321,7 @@ test_expect_success 'split hunk "add -p (edit)"' '
+ test_expect_success TTY 'diffs can be colorized' '
+@@ -384,7 +397,7 @@ test_expect_success 'patch-mode via -i prompts for files' '
+ 
+ 	echo test >expect &&
+ 	git diff --cached --name-only >actual &&
+-	test_cmp expect actual
++	diff_cmp expect actual
  '
  
- test_expect_failure 'split hunk "add -p (no, yes, edit)"' '
--	cat >test <<-\EOF &&
--	5
--	10
--	20
--	21
--	30
--	31
--	40
--	50
--	60
--	EOF
-+	test_write_lines 5 10 20 21 30 31 40 50 60 >test &&
- 	git reset &&
- 	# test sequence is s(plit), n(o), y(es), e(dit)
- 	# q n q q is there to make sure we exit at the end.
+ test_expect_success 'add -p handles globs' '
 -- 
 2.16.1
 
