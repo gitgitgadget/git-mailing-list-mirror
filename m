@@ -2,97 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.2 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 875CE1F404
-	for <e@80x24.org>; Thu,  1 Mar 2018 18:09:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 820321FAE4
+	for <e@80x24.org>; Thu,  1 Mar 2018 18:14:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1033800AbeCASJK (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Mar 2018 13:09:10 -0500
-Received: from mail-qt0-f170.google.com ([209.85.216.170]:36150 "EHLO
-        mail-qt0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1033196AbeCASJJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Mar 2018 13:09:09 -0500
-Received: by mail-qt0-f170.google.com with SMTP id c7so8708315qtn.3
-        for <git@vger.kernel.org>; Thu, 01 Mar 2018 10:09:09 -0800 (PST)
+        id S1033829AbeCASOd (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Mar 2018 13:14:33 -0500
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:35708 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1033762AbeCASOc (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Mar 2018 13:14:32 -0500
+Received: by mail-wm0-f65.google.com with SMTP id x7so13913421wmc.0
+        for <git@vger.kernel.org>; Thu, 01 Mar 2018 10:14:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-transfer-encoding;
-        bh=Rn4TMyYgrUqFL4WQ/LEe0Gr3AkdvFWxgJ1yKJgANU9M=;
-        b=LSDE0W7tG0mi1S/z1fVjvZEUx4bFqZVfRpDw0rKmhzqJr4kCUrptdLp8boHa2TC1S8
-         972jB69NBLoDjKJykJYFznKbNlztvDexNhCMOhqamWf+BpE9XSkA5+EhLQ5Zz2vGtF7R
-         AylyaF1YPEIuY6iE8tX4KE7Dbp9cTA+xywrv8LCOzNENyRUdTlMT2SH6U74eZ+0xO0nb
-         7KzFLXF2pX6hANV1vTVCdWvlS7cFg/UsB+PevS2zh3fYMqomxbg/qZtGu4v8cWmz3OLq
-         Ozf3zR8VEg4WUHV+5MmhaFRyJW8n8d8bMDuYG0ghkS/k8+W12BoBGnY3ESUb/1oDAGEc
-         2qGg==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=7iOR7hKeb8se+w0VP44lj2S3eOZgMUGvJkcA5qzWQOw=;
+        b=Q6R+kfKATfhg+R5ExHR6nVtqqiAbvdSnX1n/Wwd6xT539w0TT+7aBT0B2e1ORPSFLU
+         NzoCWQes1pzgCnYbcy+AeQvmILpK5ej3/BMu8yTAf7/ufpsfTW90ddgtWK3JaW47Zwu/
+         114m1Wx8Ies7tpZadcW8OlT0t+Fvn7G1p4A0s8t8s20dErhbaTt+9KMUJvajnPFvv8ou
+         uTHyIzaOQcoVC3l5IkpvZQ7m8R2i1eerUbYJkSE2INWGnEDvac7wW289sS01+cX43+Id
+         QHDvo89cOMWOhLcvLVtPtTRMhoOvR7j5jUqV70xYdigJBTrb4L8sPq2O6iYvwR0HIl+d
+         pzpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=Rn4TMyYgrUqFL4WQ/LEe0Gr3AkdvFWxgJ1yKJgANU9M=;
-        b=tDm//jSQkWfcNFLU60zUyvqFQVic6XeqauFZR9Rm2t2NyUfQutp9Hj0pHSbHtzCQJx
-         mZx44OjwyMjpLyeG23yIRbCixTRM8LD5FhZDZhQU/z0CwTt0UjTtxaEigWLOM3m3iXd4
-         J2a1KpgjmeaohnoZNBdgCJ8vwk61qnGu9gSQXK55J39TGWBEJ4jV6r8NYwIgLUrnevKJ
-         325YIBA00JKeavTUBh45j6Q9jKJwXas+z3sGSToJSSOjei/ALbvWvgm8tVZ/wBKLd7dY
-         8cJYoEarwJPUJ7aJWFIRwWWMxDM9Kvnx5x+yMFb8pGTMXi69KgceJpgroPtKDjPN2Ikw
-         YHrA==
-X-Gm-Message-State: AElRT7EiJ2D0C7aSKKahD7PU5jyj1nACm6yts6vne0TPDdnkYkvEzROs
-        V/9fj7HMTCqE3Az6vRmYlWdPvOH+j2vpWlYhlV3sGA==
-X-Google-Smtp-Source: AG47ELtMGPeFqvKsath1WW60MmsMRPnqprWeCXSVzA/QOBEOPNqeVTudf8knJD1lCsbXiicJX9jerXhWV/S8q+v5j+4=
-X-Received: by 10.200.12.198 with SMTP id o6mr4157448qti.246.1519927748603;
- Thu, 01 Mar 2018 10:09:08 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=7iOR7hKeb8se+w0VP44lj2S3eOZgMUGvJkcA5qzWQOw=;
+        b=fuW0RfTFWO/d8v+R6sVksHbnD3gCQNCicAZv3IeTKRrrlF7OJqfDx/z+b81SCuEsvn
+         5M/eRB1TaCAnYUqsMW0UEZQ6m0tud9U4ysnbneWrma1z6nemtwGG7p2i0QW9py2sFVfL
+         fN1yi3NaZ1HtusIOysGtevZAAP/xYkSi/VmtJat8WN8rwJgIOS0VJUR3855nzFqhr6QG
+         ZtUqAEJrmJ6QBQUOJkiOeOSj/AxsajNesdkQKgE+sIdKukkuMcHzAo4XnNPubParMuvk
+         zqgDu6Y52DS5eElCZH3nYq+yYWSxrWDsEg8EbMqGQCHqC6TbUqcOBT3OMFOUL83h0VmN
+         6i4A==
+X-Gm-Message-State: AElRT7FJp1K+sWLPAwbWwT2TIcF6rN23X/5x7QtNyWY6/4Tkh4Grm/xA
+        ANF5o12ur55dGa3WXP4t71E=
+X-Google-Smtp-Source: AG47ELtdz4Bu8Q72CUoHa/KolRpMMlrsCEvXrvPOsUeOrwvPShSA2qLC7Ye0l1ihN3C1Wogev4NeYQ==
+X-Received: by 10.28.32.202 with SMTP id g193mr2304556wmg.99.1519928070784;
+        Thu, 01 Mar 2018 10:14:30 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id 63sm4248291wmd.17.2018.03.01.10.14.29
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 01 Mar 2018 10:14:30 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Eric Wong <e@80x24.org>
+Subject: Re: [PATCH/RFC 1/1] gc --auto: exclude the largest giant pack in low-memory config
+References: <20180228092722.GA25627@ash>
+        <20180301092046.2769-1-pclouds@gmail.com>
+        <20180301092046.2769-2-pclouds@gmail.com>
+Date:   Thu, 01 Mar 2018 10:14:29 -0800
+In-Reply-To: <20180301092046.2769-2-pclouds@gmail.com> (=?utf-8?B?Ik5ndXk=?=
+ =?utf-8?B?4buFbiBUaMOhaSBOZ+G7jWM=?=
+        Duy"'s message of "Thu, 1 Mar 2018 16:20:46 +0700")
+Message-ID: <xmqqpo4nhddm.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.12.142.14 with HTTP; Thu, 1 Mar 2018 10:09:08 -0800 (PST)
-In-Reply-To: <aa98f187-4b1a-176d-2a1b-826c995776cd@aegee.org>
-References: <aa98f187-4b1a-176d-2a1b-826c995776cd@aegee.org>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 1 Mar 2018 13:09:08 -0500
-X-Google-Sender-Auth: 1s0rcFOzuaHiWj7C6UbUkUrxXYg
-Message-ID: <CAPig+cSGJhNR8dapLXN0TU8ZpTqi7m6OQf_cCGmHc9FLGcwNyg@mail.gmail.com>
-Subject: Re: Worktree silently deleted on git fetch/gc/log
-To:     =?UTF-8?B?0JTQuNC70Y/QvSDQn9Cw0LvQsNGD0LfQvtCy?= 
-        <dilyan.palauzov@aegee.org>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 28, 2018 at 7:44 AM, =D0=94=D0=B8=D0=BB=D1=8F=D0=BD =D0=9F=D0=
-=B0=D0=BB=D0=B0=D1=83=D0=B7=D0=BE=D0=B2
-<dilyan.palauzov@aegee.org> wrote:
-> A (branch master) and
-> B (branch g) which is a worktree of the first.
->
-> /git/B g>$ git fetch
-> [...]
-> From https://...
->    13e4c55a0..02655d5fb  g -> origin/g
->    c37a3ca25..bc7888511  master -> origin/master
-> Auto packing the repository in background for optimum performance.
-> See "git help gc" for manual housekeeping.
-> /git/B g<>$ git log -p origin/g
-> fatal: Not a git repository: /git/A/.git/worktrees/B
-> /git/B$
->
-> Please note that on the second last prompt there is <>, so that git-promp=
-t
-> has found the neccessary information and this was this was later deleted =
--
-> by 'gc' or 'log'.
->
-> What would be the procedure to restore the /git/A/.git/worktrees/B
-> structure?
+Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
 
-Can you show us (via 'cat') the content of the following files?
+> pack-objects could be a big memory hog especially on large repos,
+> everybody knows that. The suggestion to stick a .keep file on the
+> largest pack to avoid this problem is also known for a long time.
 
-/git/B/.git
-/git/A/.git/worktrees/b/HEAD
-/git/A/.git/worktrees/b/commondir
-/git/A/.git/worktrees/b/gitdir
+Yup, but not that it is not "largest" per-se.  The thing being large
+is a mere consequence that it is the base pack that holds the bulk
+of older parts of the history (e.g. the one that you obtained via
+the initial clone).
+
+> Let's do the suggestion automatically instead of waiting for people to
+> come to Git mailing list and get the advice. When a certain condition
+> is met, gc --auto create a .keep file temporary before repack is run,
+> then remove it afterward.
+>
+> gc --auto does this based on an estimation of pack-objects memory
+> usage and whether that fits in one third of system memory (the
+> assumption here is for desktop environment where there are many other
+> applications running).
+>
+> Since the estimation may be inaccurate and that 1/3 threshold is
+> arbitrary, give the user a finer control over this mechanism as well:
+> if the largest pack is larger than gc.bigPackThreshold, it's kept.
+
+If this is a transient mechanism during a single gc session, it
+would be far more preferrable if we can find a way to do this
+without actually having a .keep file on the filesystem.
+
