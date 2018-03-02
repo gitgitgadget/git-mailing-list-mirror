@@ -2,75 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 98DD71F404
-	for <e@80x24.org>; Fri,  2 Mar 2018 17:30:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 419A71F404
+	for <e@80x24.org>; Fri,  2 Mar 2018 17:39:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1428112AbeCBRac (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Mar 2018 12:30:32 -0500
-Received: from mail-pf0-f179.google.com ([209.85.192.179]:33878 "EHLO
-        mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1424482AbeCBRaa (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Mar 2018 12:30:30 -0500
-Received: by mail-pf0-f179.google.com with SMTP id j20so4280785pfi.1
-        for <git@vger.kernel.org>; Fri, 02 Mar 2018 09:30:29 -0800 (PST)
+        id S1946783AbeCBRjq (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Mar 2018 12:39:46 -0500
+Received: from mail-pl0-f43.google.com ([209.85.160.43]:43383 "EHLO
+        mail-pl0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1165061AbeCBRjo (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Mar 2018 12:39:44 -0500
+Received: by mail-pl0-f43.google.com with SMTP id f23-v6so6077870plr.10
+        for <git@vger.kernel.org>; Fri, 02 Mar 2018 09:39:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=kg3zb8BO2QRjiuZYnN5zS/pX3pAOAi5oShlI4N1Uy90=;
-        b=ks1GIiwSQFxkYqWvilnihhEvWD+glz3zxhb17lc5puEpBpzIU3XkrykA+5wdrKFxG0
-         6c9yeJ3I7yvXptl3FPl082cpOTENVLNY9JOD/BDF/1xQJP03YFx18vNEd+R3aR47r/ZH
-         ZFikhWSIj0r1Z1zmi2dXUJfTVJsqNwBLbi+WgldBlfTBAiE1JAcN5z4vmhKzc2BLSIwI
-         CDCCwa2QHQlZwV/o+r/YgLLOs3ScYsqe/NP50RdqCejzTp4w1tFX2NxvOYM9ICUvGT20
-         qrxrRp1Z8t9Z9Fn9kiXYDaGxapW9wFzNC7CzpmX75kYtfiwxXbxCzRjJbRsBbHs2nJ2F
-         46bQ==
+        d=gmail.com; s=20161025;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=vBWQogRUx2AlcJ33OiprxWbOcUk+d4jxBpLrEfwXQyo=;
+        b=aXi8XNePXNTeKGJ+4p/Ju2Fa5vzMJb73qMrcYnEa3qZzs7TZ0qNCGqZFApcFSAX3S6
+         S9/Ct0WdfuMxEWUhP9yYHlJ7x7JiC/BUlupqUmJRdU6gMHwCkRjEvXn8vIk9JAA9tJ5J
+         cefyGcFvLZzzAHGSnsQOlHZ/YPV9oKdhE+YKdp+B52HX6DYXTsphXmnhTxG0lY0n4FW1
+         poWSRoCPkMwpc2/7WDBBEvjc7iu44v6LJ+YVl9tzKhtk31m9rEmpeJqoCC6ygcZgMwNl
+         LAE7VnfV7MLA4HzpDN0Yuz+C/7V2iVibz0yOOc7d+XdNVYwmMtBiJo9BsdHkgEfG8BQU
+         XuyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=kg3zb8BO2QRjiuZYnN5zS/pX3pAOAi5oShlI4N1Uy90=;
-        b=C4XH9MazrynLm9ZnS1lIGO5c3AXkfbeGC28D1+N4P6VLIuXQzCHrXdb+jB946e2rDH
-         JArGDwIkHisw4tNtMFqv5D+nsSe5C2xgxsYysknWOu3MX0lDEGlhIgsAil8vWgSdK3ep
-         hNBmSH7dCHt/lKDf7AtkGMpyXnsapDnj5cWPpuzn8tv/H29vXHV2QtlSmR85LS0Ug8oQ
-         X2VbNqc8aPeoTzG7wW6cvjexQrLMA+9my/2bvXTplT8kbcDOYxPSO9+aq3KSmc1HnjEq
-         2PAbR7SY3nb3fUh7M1JxC/pQdV9v8dP1/O4Qa4ZavqGR3WUU8yeeBnjaEL3/pYqMFR6H
-         pKYg==
-X-Gm-Message-State: APf1xPAur01mgd9NiIJnOmVbM3kw0rbwi8fhP8NaFaIQ9NLkz2q2QiOB
-        EwWqVv4g3KO77HbNrZYEySLuNtfpJ4k3fskCafg=
-X-Google-Smtp-Source: AG47ELvgpHm3N2o1oo2/2p7+owoEcSdBORA6dfavS33ioBbsxhGnzifYkPlrFeL+I7ithUmX+KXd2DHarC0SvAi1HEk=
-X-Received: by 10.99.124.7 with SMTP id x7mr5078449pgc.356.1520011829442; Fri,
- 02 Mar 2018 09:30:29 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.236.137.23 with HTTP; Fri, 2 Mar 2018 09:30:28 -0800 (PST)
-In-Reply-To: <20180302104232.GA11074@sigill.intra.peff.net>
-References: <CAD-Jur+6m1SjqHVWBxW5HnTjutSVrkP+dEXdYmFHzoUf0FGdNA@mail.gmail.com>
- <20180302104232.GA11074@sigill.intra.peff.net>
-From:   Sam Kuper <sam.kuper@uclmail.net>
-Date:   Fri, 2 Mar 2018 17:30:28 +0000
-X-Google-Sender-Auth: NMc8Mgoz4q_FS2cfJTnURumibdA
-Message-ID: <CAD-JurJLDSzf7_A0ZGWPYGyRiSnHWSpUrVEd9_+N1J7BamMM=Q@mail.gmail.com>
-Subject: Re: Bug report: "Use of uninitialized value $_ in print"
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=vBWQogRUx2AlcJ33OiprxWbOcUk+d4jxBpLrEfwXQyo=;
+        b=Q+j/HZlZ92qwDRu3xYPryEUlR5h1VXDGzB10e/hZvSRCtgTtegpJjjIKkRGTPrHRo2
+         vjoi2qeS9itMAo2FdaEYJbOFDmIVNhw9aTBeGUpReRJdWnRb4vc1cRQ+Voemd8t7wZqu
+         L7WQ16mwAmWyMRk4UjQNAkburPbjTJVqomC7PCd6xqDNrQhirDgnAsT2FmJLhKyuVOqR
+         aTMQjZV9ZJSYY+ASUG3NxZFywS7FbLocgr/Kt2AR1afMe60ZO7WHWz54xWcBJrfsA5i1
+         meylmEV5u6yzQ2s0l+cGGWckoEnSca4+doDKZLZvig9DhkMBB2E5ubgRIP1SBYTXT4uK
+         vvAw==
+X-Gm-Message-State: APf1xPChKjCbPxah33nmYJiGxa9Dm5iyNOdsRdWzIBcZulehWJGKjSJF
+        o6rmFvpK7McQNAcpibWL9Ro=
+X-Google-Smtp-Source: AG47ELuJcQjLHdU2KHYunHixKBtEVsgufMxj0SlnJPpUhCifGE8+eaKFCwf1RsGsq0PJ46tmIT1e5Q==
+X-Received: by 2002:a17:902:6b04:: with SMTP id o4-v6mr5993550plk.260.1520012383766;
+        Fri, 02 Mar 2018 09:39:43 -0800 (PST)
+Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
+        by smtp.gmail.com with ESMTPSA id u79sm16580436pfi.186.2018.03.02.09.39.42
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 02 Mar 2018 09:39:42 -0800 (PST)
+Content-Type: text/plain; charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: What's cooking in git.git (Mar 2018, #01; Thu, 1)
+From:   Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <xmqqsh9icsh1.fsf@gitster-ct.c.googlers.com>
+Date:   Fri, 2 Mar 2018 18:39:39 +0100
+Cc:     =?utf-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Git mailing list <git@vger.kernel.org>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <3C32011B-30E5-4E63-8692-5D598430DC99@gmail.com>
+References: <xmqqpo4ne8ud.fsf@gitster-ct.c.googlers.com> <CAM0VKjmRT-vdyxsXTk1FB4BMLc8z6968kapqyqx5djKof5hQFg@mail.gmail.com> <xmqqwoyucsom.fsf@gitster-ct.c.googlers.com> <xmqqsh9icsh1.fsf@gitster-ct.c.googlers.com>
+To:     Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 02/03/2018, Jeff King <peff@peff.net> wrote:
-> Unfortunately, I don't think there's an easy way to do what you want
-> (show word-diffs but apply the full diff).
 
-Oh :(
+> On 02 Mar 2018, at 18:11, Junio C Hamano <gitster@pobox.com> wrote:
+>=20
+> Junio C Hamano <gitster@pobox.com> writes:
+>=20
+>> SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
+>>=20
+>>> On Thu, Mar 1, 2018 at 11:20 PM, Junio C Hamano <gitster@pobox.com> =
+wrote:
+>>>=20
+>>>> * sg/travis-build-during-script-phase (2018-01-08) 1 commit
+>>>> - travis-ci: build Git during the 'script' phase
+>>>>=20
+>>>> Stalled for too long without any response; will discard.
+>>>=20
+>>> I still think this is a good change as-is and it does make checking =
+the
+>>> results of Travis CI builds easier.  The issue Lars raised in [1] is =
+in
+>>> my opinion a non-issue [2] in practice and Lars hasn't yet disagreed
+>>> with that.
+>>=20
+>> OK, so I simply misread the discussion and did not realize that it
+>> reached a conclusion?  If that's the case, good ;-).  Thanks.
+>=20
+> OK, I think I now understand what happened.  I misread the "fold"
+> discussion and thought we were still exploring the possibility, to
+> avoid showing uninteresting zero-status case to the users.
+>=20
+> If we do not care about that part, then it seems that the discussion
+> thread is complete.  Let's move on.
 
-That would be a *very* useful feature to have, especially where
-multiple small (e.g. single character or single word) changes are
-sprinkled throughout a large file.
+All good with me. I just wanted explain my reasoning for the initial
+implementation. I do understand Szeder's reasoning too and I am OK
+with the change.
 
-Should I start a separate thread for this as a feature request?
+Thanks for improving the TravisCI integration Szeder!
+
+- Lars=
