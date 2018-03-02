@@ -2,88 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ABB991F576
-	for <e@80x24.org>; Fri,  2 Mar 2018 10:19:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 270D31F576
+	for <e@80x24.org>; Fri,  2 Mar 2018 10:23:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1426264AbeCBKTV (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Mar 2018 05:19:21 -0500
-Received: from mail-oi0-f54.google.com ([209.85.218.54]:40368 "EHLO
-        mail-oi0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1424224AbeCBKTQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Mar 2018 05:19:16 -0500
-Received: by mail-oi0-f54.google.com with SMTP id c12so6681322oic.7
-        for <git@vger.kernel.org>; Fri, 02 Mar 2018 02:19:16 -0800 (PST)
+        id S1946063AbeCBKXY (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Mar 2018 05:23:24 -0500
+Received: from mail-qt0-f181.google.com ([209.85.216.181]:43958 "EHLO
+        mail-qt0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1426303AbeCBKXV (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Mar 2018 05:23:21 -0500
+Received: by mail-qt0-f181.google.com with SMTP id d26so11252936qtk.10
+        for <git@vger.kernel.org>; Fri, 02 Mar 2018 02:23:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=diamand.org; s=google;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=YgrdX+Tuw+HeEQjDOyLa2SBnSL0+v5kKBc/V1PAQsZg=;
-        b=CKYS77bR+MhrDyRJHMQBwexo5gN6Iz4YL6rsctCWows2fk0QLT2T1rztpP8xSA6GEB
-         7jhewY8LwaWunwoYQSXrxuEZXUjc3N5Ewb8S6Xso+B1cxn/n0SAWd2QdKlbqemo/pdKn
-         vF/G/trH2KpTvoxADTEi+4Z8SxbnckDA7v/eYcHsv2x4DL2opPJW/S6lt4kVl+zcBgqH
-         0pDwSpZTZZRn4pZIy0Hnrbs/berbCd6pgJYohWV91408gSAEKE034YR17NTxoWm3QaUH
-         zI6WvA5dS1sDIXDTRl0gXBRayriSq9Cb1CM1dHJslBB0MZiF1c/NeOZfhz5LwMOakvze
-         jokg==
+         :cc:content-transfer-encoding;
+        bh=ww4OtJzyUh9axxoDAyQsIZFJAuzDNYnO6WnGnEbVmxA=;
+        b=RJNuV4qjR+aLHLgH2Zg2se6t4g8Aonh4t9YuyFZA8Stl6ULJ/H0Oy6KQ5y9MUxTg5v
+         P28Liz8X/FvzzJh/I8uh6TvaBuwLJEDpqZAVP+lrm0gABWxB9sN2sDW9YvF8kkQUkY2P
+         gUs8bLsA7qw8jhdo0QUe6o+35K9zknjsOJ+uk=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=YgrdX+Tuw+HeEQjDOyLa2SBnSL0+v5kKBc/V1PAQsZg=;
-        b=UeFv7ZeFco6uioYmPooXVaI7wg23Ve5jp/6sNXUU9ukd55dBEn/HRu8EJ2JWiuZWT7
-         4G7lBR6bw+mQ1MlObP7EJmInNkV7Pd58/fSSK1Wh7uEuQg0JNfb7q9uNJUb8UknSU3Cr
-         rZCLy17ibW6gJLacPX2laWHJo8WfH0SEbwYS/ZHS8R8etHbe/7Y5XGmUJV0UckIFPi7o
-         9vq0azYNZgXee6tZod03h3t7iXULXS6kDuMreNtj30aCNF6hGBKcs1T3Cw9K+Ku2BEuJ
-         jDfjf7PdMKvDCaxWoVj7PWD4JncOTAR7SuKT6r67cZI/7exMawjGOBCw0KMSeoe4ZRAJ
-         eJnA==
-X-Gm-Message-State: AElRT7ELZeH8APF15pTC+7G6oLPa1aNTS9VpJ/aeWFGW/2JPV+YYqXwu
-        X38yY0kOWXee334ETOzLkiF5sNQis3IBBubU1gcy0Q==
-X-Google-Smtp-Source: AG47ELtWbRqJ+AgjwBNXqpTrhojZzCclevQPmux38VU5RpauG35dJZPMSbFLqOZZtOJtbU/cHJn4+qR4iwjaVIiixsk=
-X-Received: by 10.202.212.147 with SMTP id l141mr3454366oig.32.1519985956049;
- Fri, 02 Mar 2018 02:19:16 -0800 (PST)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=ww4OtJzyUh9axxoDAyQsIZFJAuzDNYnO6WnGnEbVmxA=;
+        b=jFq1eI4qY2XkRefPbhDGCvsrku/YpGND9sR/yKVsfk6fqWhgUM8SRwqNd5aUgLGuEh
+         xNLfcMfUaGPzOPZQZWBz+N7D5mjCSqYQnEdziXcIuV0OMtQMQZHWhHbLoD0h8oZ/ye4W
+         b7SQvRMf76aU4cRs568vG6HwyntKq26W8WmmAgXl/3lFtwBPbkxg6JWjxHuh3KtM5yfz
+         oiYjuY8IsARsk+gImIvHwd688e1Jy1LNF+YmRcEfmuDK4t4IXEUM8Jugsgfy0UHDFlhT
+         +LPCow3pPmGl3IcIl1/LOmxb8TU84iCenJII0RaPVplEEIWYr6Ulke0OkZqb4lThlnhr
+         icXQ==
+X-Gm-Message-State: AElRT7G95n3BG3O5/0VdHDayEZyAc4stbGn13wr0QwFaNqCsbB2LdwNz
+        zVuVo2JQ+OoyHnnrWJE6ChlzPbskvPAIcmP1rz8exQ==
+X-Google-Smtp-Source: AG47ELtkDMwgfSeOdrYcctri51b/E9SStqx8D2LMGqRvucluZlzXLLMvg8SlcxfwoU+zlszLTrdRob6rZ3wXNhhIl6E=
+X-Received: by 10.200.44.114 with SMTP id e47mr7570426qta.59.1519986200764;
+ Fri, 02 Mar 2018 02:23:20 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.74.25.140 with HTTP; Fri, 2 Mar 2018 02:18:45 -0800 (PST)
-In-Reply-To: <20180228092722.GA25627@ash>
-References: <20180228092722.GA25627@ash>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Fri, 2 Mar 2018 17:18:45 +0700
-Message-ID: <CACsJy8AzP9HLc02LbSxBvNM6Dg4FsgRt57SgaNFyT5TBPRq-Zw@mail.gmail.com>
-Subject: Re: Reduce pack-objects memory footprint?
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Jeff King <peff@peff.net>, Eric Wong <e@80x24.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Received: by 10.200.36.141 with HTTP; Fri, 2 Mar 2018 02:23:20 -0800 (PST)
+In-Reply-To: <xmqqpo4ne8ud.fsf@gitster-ct.c.googlers.com>
+References: <xmqqpo4ne8ud.fsf@gitster-ct.c.googlers.com>
+From:   Luke Diamand <luke@diamand.org>
+Date:   Fri, 2 Mar 2018 10:23:20 +0000
+Message-ID: <CAE5ih7_ooDMqVtTMoQ70s5XCkncr04HY0JkqSp1UmKQeG81oaA@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Mar 2018, #01; Thu, 1)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Users <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 28, 2018 at 4:27 PM, Duy Nguyen <pclouds@gmail.com> wrote:
-> linux-2.6.git current has 6483999 objects. "git gc" on my poor laptop
-> consumes 1.7G out of 4G RAM, pushing lots of data to swap and making
-> all apps nearly unusuable (granted the problem is partly Linux I/O
-> scheduler too). So I wonder if we can reduce pack-objects memory
-> footprint a bit.
+On 1 March 2018 at 22:20, Junio C Hamano <gitster@pobox.com> wrote:
+> Here are the topics that have been cooking.  Commits prefixed with
+> '-' are only in 'pu' (proposed updates) while commits prefixed with
+> '+' are in 'next'.  The ones marked with '.' do not appear in any of
+> the integration branches, but I am still holding onto them.
+>
+> You can find the changes described here in the integration branches
+> of the repositories listed at
+>
+>     http://git-blame.blogspot.com/p/git-public-repositories.html
+>
+> --------------------------------------------------
+> --------------------------------------------------
+> [New Topics]
+>
+>
+> * ld/p4-unshelve (2018-02-22) 1 commit
+>  - git-p4: add unshelve command
+>
+>  "git p4" learned to "unshelve" shelved commit from P4.
+>
+>  Will merge to 'next'.
 
-Next low hanging fruit item:
+The unshelve change should be left off next for now.
 
-struct revindex_entry {
-        off_t offset;
-        unsigned int nr;
-};
+The problem with it is that it can't easily find a sensible consistent
+point prior to the shelved changelist to generate the diff from (P4
+has no concept of a tree revision). So you can end up "unshelving" and
+pickup not only the shelved changelist, but also a bunch of
+intervening changes (or the effect of some missing changelists). That
+can be quite surprising.
 
-We need on entry per object, so 6.5M objects * 16 bytes = 104 MB. If
-we break this struct apart and store two arrays of offset and nr in
-struct packed_git, we save 4 bytes per struct, 26 MB total.
+This is actually pretty close to the behaviour of P4 unshelve itself,
+which does somewhat the same thing. From the p4 manual page:
 
-It's getting low but every megabyte counts for me, and it does not
-look like breaking this struct will make horrible code (we recreate
-the struct at find_pack_revindex()) so I'm going to do this too unless
-someone objects. There will be slight performance regression due to
-cache effects, but hopefully it's ok.
--- 
-Duy
+https://www.perforce.com/perforce/doc.current/manuals/cmdref/Content/CmdRef=
+/p4_unshelve.html
+
+   " Unshelving copies the shelved files into the user=E2=80=99s workspace =
+as
+they existed when they were shelved. (For example, a file open for
+edit when shelved will also be open for edit in the unshelving user=E2=80=
+=99s
+workspace.)"
+
+There's a better change which I posted which adds a "git p4
+format-change" command which uses the diffs from Perforce. I think
+that has a better chance of working properly. I had some review
+comments which I need to take, after which it could be a candidate for
+next.
+
+It _might_ though be possible to resurrect the unshelve code by doing
+something like extracting the previous versions  of the files (which
+is kind of doable) and then constructing a temporary branch in git to
+do the comparison against. Sounds pretty nasty though.
+
+Thanks
+Luke
