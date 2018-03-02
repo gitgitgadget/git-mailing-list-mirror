@@ -2,79 +2,335 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C5E971F576
-	for <e@80x24.org>; Fri,  2 Mar 2018 10:57:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 17C311F576
+	for <e@80x24.org>; Fri,  2 Mar 2018 11:26:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1426786AbeCBK5S (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Mar 2018 05:57:18 -0500
-Received: from cloud.peff.net ([104.130.231.41]:44088 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1426710AbeCBK5N (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Mar 2018 05:57:13 -0500
-Received: (qmail 8209 invoked by uid 109); 2 Mar 2018 10:57:12 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 02 Mar 2018 10:57:12 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 27324 invoked by uid 111); 2 Mar 2018 10:58:02 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 02 Mar 2018 05:58:02 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 02 Mar 2018 05:57:10 -0500
-Date:   Fri, 2 Mar 2018 05:57:10 -0500
-From:   Jeff King <peff@peff.net>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Eric Wong <e@80x24.org>
-Subject: Re: [PATCH 00/11] Reduce pack-objects memory footprint
-Message-ID: <20180302105710.GE11074@sigill.intra.peff.net>
-References: <20180228092722.GA25627@ash>
- <20180301091052.32267-1-pclouds@gmail.com>
- <87y3jbdiof.fsf@evledraar.gmail.com>
- <CACsJy8Bvtk_rKJ34F_PmBD5F2WN4L8ecug5dQX8-gt8i1owy3Q@mail.gmail.com>
+        id S1427268AbeCBL0Z (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Mar 2018 06:26:25 -0500
+Received: from smtp-out-1.talktalk.net ([62.24.135.65]:56561 "EHLO
+        smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1427120AbeCBL0U (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Mar 2018 06:26:20 -0500
+X-Greylist: delayed 491 seconds by postgrey-1.27 at vger.kernel.org; Fri, 02 Mar 2018 06:26:20 EST
+Received: from barra ([92.22.16.137])
+        by smtp.talktalk.net with SMTP
+        id rihSe8E5vGrhCrihSer0Wv; Fri, 02 Mar 2018 11:18:07 +0000
+X-Originating-IP: [92.22.16.137]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=SORsqtnH c=1 sm=1 tr=0 a=nWy375ASyxHoIYnPohIYMA==:117
+ a=nWy375ASyxHoIYnPohIYMA==:17 a=IkcTkHD0fZMA:10 a=v2DPQv5-lfwA:10
+ a=uyjnO2GwoVaYvBn_5t8A:9 a=QEXdDO2ut3YA:10
+To:     Igor Djordjevic <igor.d.djordjevic@gmail.com>,
+        Sergey Organov <sorganov@gmail.com>
+Date:   Fri, 02 Mar 2018 11:17:21 -0000
+Subject: Re: [RFC] Rebasing merges: a jorney to the ultimate solution(RoadClear)
+Envelope-To: gitster@pobox.com,j6t@kdbg.org,Johannes.Schindelin@gmx.de,jacob.keller@gmail.com,git@vger.kernel.org,sorganov@gmail.com,igor.d.djordjevic@gmail.com
+References: <87y3jtqdyg.fsf@javad.com> <bbe64321-4d3a-d3fe-8bb9-58b600fabf35@gmail.com> <nycvar.QRO.7.76.6.1802270051470.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <CA+P7+xq8UUcLWomUi=PS_hTKfJd3dMAxMmhioDS1bixwcmKAqw@mail.gmail.com> <nycvar.QRO.7.76.6.1802271718090.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <4d7f3406-b206-cc22-87df-85700d6a03d9@gmail.com> <33da31e9-9101-475d-8901-4b6b3df2f29d@gmail.com> <940d959d-151d-68dd-0f13-320ebad0d75b@gmail.com> <87606hoflx.fsf@javad.com> <0ac3a3fd-4053-e32e-75ed-8829f22c2e1f@gmail.com> <87a7vss6ax.fsf@javad.com> <f1a960dc-cc5c-e7b0-10b6-39e5516655b3@gmail.com>
+CC:     Git mailing list <git@vger.kernel.org>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Junio C Hamano <gitster@pobox.com>
+Message-ID: <ed4d2b30-2dea-740b-6283-973c798f619d@philandanna.no-ip.org>
+From:   "Phillip Wood" <phil@philandanna.no-ip.org>
+Received: from [192.168.2.201] (lindisfarne.local [192.168.2.201])
+        by barra; Fri, 02 Mar 2018 11:17:23 -0000
+Reply-To: phillip.wood@dunelm.org.uk
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.6.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CACsJy8Bvtk_rKJ34F_PmBD5F2WN4L8ecug5dQX8-gt8i1owy3Q@mail.gmail.com>
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfGwG68DJtaDnRSi2m14/vqH7lZhR8pZAUVvuZvEkMI4Cns5AIlXTk+FyucAfWq2DJcFi7gghLap/WQlnP7q250eaimP+2kE8R/LbBcVIwRjvNF45xGmM
+ ei+fyqYgd+VwNl47yXIjH1x1lrwWB4vpNNpOMv1eM/pmO0fyRLTcAiZ/
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 02, 2018 at 07:14:01AM +0700, Duy Nguyen wrote:
 
-> > We have a big repo, and this gets repacked on 6-8GB of memory on dev
-> > KVMs, so we're under a fair bit of memory pressure. git-gc slows things
-> > down a lot.
-> >
-> > It would be really nice to have something that made it use drastically
-> > less memory at the cost of less efficient packs. Is the property that
+On 02/03/18 01:16, Igor Djordjevic wrote:
 > 
-> Ahh.. less efficient. You may be more interested in [1] then. It
-> avoids rewriting the base pack. Without the base pack, book keeping
-> becomes much much cheaper.
+> Hi Sergey,
 > 
-> We still read every single byte in all packs though (I think, unless
-> you use pack-bitmap) and this amount of I/O affect the rest of the
-> system too. Perhaps reducing core.packedgitwindowsize might make it
-> friendlier to the OS, I don't know.
+> On 01/03/2018 06:39, Sergey Organov wrote:
+>>
+>>>> (3) ---X1---o---o---o---o---o---X2
+>>>>        |\                       |\
+>>>>        | A1---A2---A3---U1      | A1'--A2'--A3'--U1'
+>>>>        |             \          |
+>>>>        |              M         |
+>>>>        |             /          |
+>>>>        \-B1---B2---B3---U2      \-B1'--B2'--B3'--U2'
+>>>>
+>>>
+>>> Meh, I hope I`m rushing it now, but for example, if we had decided to 
+>>> drop commit A2 during an interactive rebase (so losing A2' from 
+>>> diagram above), wouldn`t U2' still introduce those changes back, once 
+>>> U1' and U2' are merged, being incorrect/unwanted behavior...? :/
+>>>
+>>> [...]
+>>
+>> Yeah, I now see it myself. I'm sorry for being lazy and not inspecting
+>> this more carefully in the first place.
+> 
+> No problem, that`s why we`re discussing it, and I`m glad we`re 
+> aligned now, so we can move forward :)
+> 
+>>> So while your original proposal currently seems like it could be 
+>>> working nicely for non-interactive rebase (and might be some simpler 
+>>> interactive ones), now hitting/acknowledging its first real use 
+>>> limit, my additional quick attempt[1] just tries to aid pretty 
+>>> interesting case of complicated interactive rebase, too, where we 
+>>> might be able to do better as well, still using you original proposal 
+>>> as a base idea :)
+>>
+>> Yes, thank you for pushing me back to reality! :-) The work and thoughts
+>> you are putting into solving the puzzle are greatly appreciated!
+> 
+> You`re welcome, and I am enjoying it :)
+> 
+>> Thinking about it overnight, I now suspect that original proposal had a
+>> mistake in the final merge step. I think that what you did is a way to
+>> fix it, and I want to try to figure what exactly was wrong in the
+>> original proposal and to find simpler way of doing it right.
+>>
+>> The likely solution is to use original UM as a merge-base for final
+>> 3-way merge of U1' and U2', but I'm not sure yet. Sounds pretty natural
+>> though, as that's exactly UM from which both U1' and U2' have diverged
+>> due to rebasing and other history editing.
+> 
+> Yes, this might be it...! ;)
+> 
+> To prove myself it works, I`ve assembled a pretty crazy `-s ours`  
+> merge interactive rebase scenario, and it seems this passes the test, 
+> ticking all the check boxes (I could think of) :P
 
-Yes, the ".keep" thing is actually quite expensive. We still do a
-complete rev-list to find all the objects we want, and then for each
-object say "is this in a pack with .keep?". And worse, the mru doesn't
-help there because even if we find it in the first pack, we have to keep
-looking to see if it's _another_ pack.
+It is interesting to think what it means to faithfully rebase a '-s
+ours' merge. In your example the rebase does not introduce any new
+changes into branch B that it doesn't introduce to branch A. Had it
+added a fixup to branch B1 for example or if the topology was more
+complex so that B ended up with some other changes that the rebase did
+not introduce into A, then M' would contain those extra changes whereas
+'--recreate-merges' with '-s ours' (once it supports it) would not.
 
-There are probably some low-hanging optimizations there (e.g., only
-looking in the .keep packs if that's all we're looking for; we may even
-do that already).
+> 
+> Let`s see our starting situation:
+> 
+>  (0) ---X8--B2'--X9 (master)
+>         |\
+>         | A1---A2---A3 (A)
+>         |             \
+>         |              M (topic)
+>         |             /
+>         \-B1---B2---B3 (B)
+> 
+> 
+> Here, merge commit M is done with `-s ours` (obsoleting branch "B"), 
+> plus amended to make it an "evil merge", where a commit B2 from 
+> obsoleted branch "B" is cherry picked to "master".
+> 
+> Now, we want to rebase "topic" (M) onto updated "master" (X9), but to 
+> make things more interesting, we`ll do it interactively, with some 
+> amendments, drops, additions and even more cherry-picks!
+> 
+> This is what the final result looks like:
+> 
+>  (1) ---X8--B2'--X9 (master)
+>                  |\
+>                  | A12--A2'---B3' (A)
+>                  |             \
+>                  |              M' (topic)
+>                  |             /
+>                  \-B1'--B3'---B4  (B)
+> 
+> 
+> During interactive rebase, on branch "A", we amended A1 into A12, 
+> dropped A3 and cherry-picked B3. On branch "B", B4 is added, B2' being 
+> omitted automatically as already present in "master".
+> 
+> So... In comparison to original merge commit M, rebased merge commit 
+> M' is expected to:
+> 
+>  - Add X9, from updated "master"
+>  - Have A1 changed to A12, due to A12 commit amendment
+>  - Keep A2, rebased as A2'
+>  - Remove A3, due to dropped A3 commit
+>  - Keep amendment from original (evil) merge commit M
+>  - Miss B1' like M does B, due to original `-s ours` merge strategy
+>  - Add B2, cherry-picked as B2' into "master"
+>  - Add B3, cherry-picked as B3' into "A"
+>  - Add B4, added to "B"
+>  - Most important, provide safety mechanism to "fail loud", being 
+>    aware of non-trivial things going on, allowing to stop for user 
+>    inspection/decision
+> 
+> 
+> There, I hope I didn`t miss any expectation. And, it _seems_ to work 
+> exactly as expected :D
+> 
+> Not to leave this to imagination only, and hopefully helping others 
+> to get to speed and possibly discuss this, pointing to still possible 
+> flaws, I`m adding a demo script[1], showing how this exact example 
+> works.
+> 
+> Note that script _is_ coined to avoid rebase conflicts, as they`re not 
+> currently important for the point to be made here.
+> 
+> In real life, except for usual possibility for conflicts during 
+> commit rebasing, we might experience _three_ possible conflict 
+> situations once "rebased" merge itself is to be created - two when 
+> rebasing each of temporary merge helper commits, and one on the 
+> "rebased" merge itself. This is something where we might think about 
+> user experience, not introducing (too much) confusion...
+> 
+> Regards, Buga
+> 
+> [1] Demonstration script:
+> -- >8 --
+> #!/bin/sh
+> 
+> # rm -rf ./.git
+> # rm -f ./test.txt
+> 
+> git init
+> 
+> touch ./test.txt
+> git add -- test.txt
+> 
+> # prepare repository
+> for i in {1..8}
+> do
+> 	echo X$i >>test.txt
+> 	git commit -am "X$i"
+> done
+> 
+> # prepare branch A
+> git checkout -b A
+> sed -i '2iA1' test.txt
+> git commit -am "A1"
+> sed -i '4iA2' test.txt
+> git commit -am "A2"
+> sed -i '6iA3' test.txt
+> git commit -am "A3"
+> 
+> # prepare branch B
+> git checkout -b B master
+> sed -i '5iB1' test.txt
+> git commit -am "B1"
+> sed -i '7iB2' test.txt
+> git commit -am "B2"
+> sed -i '9iB3' test.txt
+> git commit -am "B3"
+> 
+> git checkout -b topic A
+> git merge -s ours --no-commit B # merge A and B with `-s ours`
+> sed -i '8iM' test.txt           # amend merge commit ("evil merge")
+> git commit -am "M"
+> git tag original-merge
+> 
+> # master moves on...
+> git checkout master
+> git cherry-pick B^     # cherry-pick B2 into master
+> sed -i "1iX9" test.txt # add X9
+> git commit -am "X9"
+> 
+> # (0) ---X8--B2'--X9 (master)
+> #        |\
+> #        | A1---A2---A3 (A)
+> #        |             \
+> #        |              M (topic)
+> #        |             /
+> #        \-B1---B2---B3 (B)
+> 
+> # simple/naive demonstration of proposed merge rebasing logic
+> # using described new approach, preserving merge commit manual
+> # amendments, testing `-s ours` merge with cherry-picking from
+> # obsoleted part, but still respecting interactively rebased
+> # added/modified/dropped/cherry-picked commits :)
+> 
+> git checkout A
+> git cherry-pick -m1 original-merge # prepare temporary helper commit U1
+> git tag U1
+> git reset --hard HEAD^^            # drop U1 and A3 from A
+> sed -i '/A1/c\A12' test.txt        # amend A1 to A12
+> git commit -a --amend --no-edit
+> git rebase master                  # rebase A onto master
+> git cherry-pick B                  # cherry-pick B3 into A
+> git cherry-pick U1                 # "rebase" temporary helper commit U1
+> git tag U1-prime
+> 
+> git checkout B
+> git cherry-pick -m2 original-merge # prepare temporary helper commit U2
+> git tag U2
+> git reset --hard HEAD^             # drop U2 from B
+> git rebase master                  # rebase B onto master
+> sed -i '12iB4' test.txt            # add B4
+> git commit -am "B4"
+> git cherry-pick U2                 # "rebase" temporary helper commit U2
+> git tag U2-prime
+> 
+> git branch -f topic A
+> git checkout topic
+> # merge rebased temporary commits U1' and U2',
+> # using original merge commit as a merge base,
+> # producing "rebased" merge commit M'
+> git read-tree -m --aggressive original-merge A B
+> git merge-index -o git-merge-one-file -a
+> 
+> # recognize complex stuff going on during rebasing merge commit,
+> # allowing user to inspect result, edit, and continue or abort
+> git diff --quiet U1-prime U2-prime
+> if test $? -ne 0
+> then
+> 	# PLACEHOLDER
+> 	# chance to inspect result, like:
+> 	git diff original-merge
+> 	# edit if needed, continue or abort
+> fi
+> 
+> # drop rebased temporary commits U1' and U2'
+> git branch -f A A^
+> git branch -f B B^
+> 
+> # record branches A and B as parents of "rebased" merge commit M',
+> # updating topic branch
+> git update-ref refs/heads/topic "$(git show -s --format=%B original-merge | git commit-tree "$(git write-tree)" -p "$(git rev-parse A)" -p "$(git rev-parse B)")"
+> git tag angel-merge
+> 
+> # (1) ---X8--B2'--X9 (master)
+> #                 |\
+> #                 | A12--A2'---B3' (A)
+> #                 |             \
+> #                 |              M' (topic)
+> #                 |             /
+> #                 \-B1'--B3'---B4  (B)
+> 
+> # show resulting graph
+> # echo
+> # git log --all --decorate --oneline --graph
+> 
+> # in comparison to original merge commit M, rebased merge commit 
+> # M' is expected to:
+> #
+> # - Add X9, from updated "master"
+> # - Have A1 changed to A12, due to A12 commit amendment
+> # - Keep A2, rebased as A2'
+> # - Remove A3, due to dropped A3 commit
+> # - Keep amendment from original (evil) merge commit M
+> # - Miss B1' like M does B, due to original `-s ours` merge strategy
+> # - Add B2, cherry-picked as B2' into "master"
+> # - Add B3, cherry-picked as B3' into "A"
+> # - Add B4, added to "B"
+> #
+> # echo
+> # echo 'diff original-merge angel-merge:'
+> # git diff original-merge angel-merge
+> 
 
-But I think fundamentally you'd do much better to generate the partial
-list of objects outside of pack-objects entirely, and then just feed it
-to pack-objects without using "--revs".
-
--Peff
