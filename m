@@ -2,372 +2,223 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1A8491F404
-	for <e@80x24.org>; Fri,  2 Mar 2018 12:36:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 580D31F404
+	for <e@80x24.org>; Fri,  2 Mar 2018 13:38:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1422819AbeCBMgz (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Mar 2018 07:36:55 -0500
-Received: from smtp-out-2.talktalk.net ([62.24.135.66]:25896 "EHLO
-        smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1422749AbeCBMgw (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Mar 2018 07:36:52 -0500
-Received: from [192.168.2.201] ([92.22.16.137])
-        by smtp.talktalk.net with SMTP
-        id rjvcerjk3XdHHrjvceFpV4; Fri, 02 Mar 2018 12:36:50 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1519994210;
-        bh=UIkZIDuI6rgDkpFnV1isyry9+QNqm4ZFLgRtHBqLnSo=;
-        h=Reply-To:Subject:From:To:Cc:References:Date:In-Reply-To;
-        b=b+aCshaBRuuTPKc0L9E34u6tQPS9njSaBPPx9QrGA7msI9rI6I4rquPjMU/58saej
-         cQqP0cwbaqg5x1+GEhX64sKb7njfZpVDw21SX0y9qbR0CE7zA1xmnojnPJQLIDMGYu
-         Wl4UySQZ+TZhdABo/BRF4t9Z71nfZ9J3efd0UPCU=
-X-Originating-IP: [92.22.16.137]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=JaySU3CV c=1 sm=1 tr=0 a=nWy375ASyxHoIYnPohIYMA==:117
- a=nWy375ASyxHoIYnPohIYMA==:17 a=IkcTkHD0fZMA:10 a=EE0ZI395Ekm634Aoh9sA:9
- a=QEXdDO2ut3YA:10
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [RFC] Rebasing merges: a jorney to the ultimate
- solution(RoadClear)
-From:   Phillip Wood <phillip.wood@talktalk.net>
-To:     Igor Djordjevic <igor.d.djordjevic@gmail.com>,
-        Sergey Organov <sorganov@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Cc:     Git mailing list <git@vger.kernel.org>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Junio C Hamano <gitster@pobox.com>
-References: <87y3jtqdyg.fsf@javad.com>
- <bbe64321-4d3a-d3fe-8bb9-58b600fabf35@gmail.com>
- <nycvar.QRO.7.76.6.1802270051470.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
- <CA+P7+xq8UUcLWomUi=PS_hTKfJd3dMAxMmhioDS1bixwcmKAqw@mail.gmail.com>
- <nycvar.QRO.7.76.6.1802271718090.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
- <4d7f3406-b206-cc22-87df-85700d6a03d9@gmail.com>
- <33da31e9-9101-475d-8901-4b6b3df2f29d@gmail.com>
- <940d959d-151d-68dd-0f13-320ebad0d75b@gmail.com> <87606hoflx.fsf@javad.com>
- <0ac3a3fd-4053-e32e-75ed-8829f22c2e1f@gmail.com> <87a7vss6ax.fsf@javad.com>
- <f1a960dc-cc5c-e7b0-10b6-39e5516655b3@gmail.com>
- <ed4d2b30-2dea-740b-6283-973c798f619d@philandanna.no-ip.org>
-Message-ID: <1298a701-a860-a675-83d7-72f29e14cd2b@talktalk.net>
-Date:   Fri, 2 Mar 2018 12:36:48 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
+        id S1424450AbeCBNie (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Mar 2018 08:38:34 -0500
+Received: from mail-qk0-f179.google.com ([209.85.220.179]:44232 "EHLO
+        mail-qk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1424391AbeCBNic (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Mar 2018 08:38:32 -0500
+Received: by mail-qk0-f179.google.com with SMTP id v124so11878681qkh.11
+        for <git@vger.kernel.org>; Fri, 02 Mar 2018 05:38:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=WaftYcQqvGlsoV30rl7mzlyMaZR5zuWAZhDlhCWoZVc=;
+        b=AmiM5c3H3T5bQLqwVYhTyGHjjIuIcJKdO5FI6lCyLH0pbXVNzXIQUy4Z1iGYPkP1dq
+         5i5Mdp4SF2ZDRwtx8O1IepYb3TnAm7w2GkTyf3cdfgB58dfRD9EtJrWVpqO2YISmv5tF
+         TtVG640depbl9pJA0T5UBUXXAS/TOpe1FITLoEl1fhXgpXdMTnvesD+12K77N0PPfxJL
+         0TnuUFJP5BWaoKz7scAwk8lHcj31iJAlGC3XzB+jN/1B8/lXQnSfgikNs6Le0TvbJTpV
+         n8keDlTJsVVy3BOu7P58u/maYH/jn/7EWRPGG455g4INnQnRGdlac4Cn4Tal6wTL7k8T
+         nXog==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=WaftYcQqvGlsoV30rl7mzlyMaZR5zuWAZhDlhCWoZVc=;
+        b=EbHDwDZWOW64/Yu4rkRfMp+c/cd1JzNyEQF4f122EMidF1L2xDZ3lMAlM731UBYZPs
+         8u99AFdKJGeNNcpSVsZzj5FQ05Ogf1hXXRoonx8VeaEZRrpKubEt0EOTbJ8Y6dCst7Y5
+         Oyp/j3Ndl/1O67DG9s8RGP1yms2WZLOTQD3uNUoxw45OTHWzqvC9/ID26KCGT4KQh1tO
+         QeAKiE/nztFPIV8dy7EGpVR/tIlWxz3Uik6XzPu2epAt1lw0B+bR9ecTmRbnbCd1gxw2
+         hWWX9yWWqZz9N+mhoVJXvMG5V5kl1QJ8bwMTXh3c+z3w5/ZYjWM7qRrYMgMusomgBjx4
+         /3NQ==
+X-Gm-Message-State: AElRT7FW8cLyco06Co0LPO8/6UdEHOuhoswdLUptR/2MG1PMmNp+kitC
+        boGQvCN9pn9+PG+//zHqiQA=
+X-Google-Smtp-Source: AG47ELsB7zjFT0b+SGf+EkKxAr/7KU6WIYdoLu1XZ2B0CxEpTLZOLTT7Eu8m4STtOxpiFszsgT6hDw==
+X-Received: by 10.55.56.74 with SMTP id f71mr8172125qka.16.1519997911594;
+        Fri, 02 Mar 2018 05:38:31 -0800 (PST)
+Received: from [172.22.150.178] ([98.122.163.216])
+        by smtp.gmail.com with ESMTPSA id 58sm4583598qtm.51.2018.03.02.05.38.30
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 02 Mar 2018 05:38:30 -0800 (PST)
+Subject: Re: [RFC] Contributing to Git (on Windows)
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <176408fc-3645-66d3-2aa3-30ca3fa723e7@gmail.com>
+ <20180302044409.GC238112@aiede.svl.corp.google.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <c53cc179-8102-76a4-1b04-a1107e75e790@gmail.com>
+Date:   Fri, 2 Mar 2018 08:38:29 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:59.0) Gecko/20100101
+ Thunderbird/59.0
 MIME-Version: 1.0
-In-Reply-To: <ed4d2b30-2dea-740b-6283-973c798f619d@philandanna.no-ip.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
+In-Reply-To: <20180302044409.GC238112@aiede.svl.corp.google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfFGLfh6Yfa7k9yJfQuICPek8Lj6etU4bUdiLN3qcTQz0za7W3a5zT9YgKZcGF9DBSbutKX/lrzhDZpEE64N6nY/E0HEyfo+1VQkfY7hXwe08Qn5jd4HU
- 4sl4qYPlf8ARbgTL9IP/scZnDV1XTA02mJuwXkzxrT1oYSE9q15mWq7rblwRizwi3GkU44ponpaaTE2v0JGuMFc0OB2cag3AhJ3vKpyTzJlhQlgAwLjll/IH
- V5jYE25juCdQcgYCKlGod6n4Pytefn1oWdFJ7yMXNOexU2f+3V5flDFF8KNgEr1JzpY/UCu3hwm7tC3VotH76Q+UihdRs9xLjNS6Mr9dM9EKn0FcUQoLOJSX
- f7ft/m+NsHDGdxPj6hPbGl3nJ8fmjdPV+rBiElcrXZLmCJG4vzI=
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 02/03/18 11:17, Phillip Wood wrote:
-> 
-> On 02/03/18 01:16, Igor Djordjevic wrote:
->>
->> Hi Sergey,
->>
->> On 01/03/2018 06:39, Sergey Organov wrote:
->>>
->>>>> (3) ---X1---o---o---o---o---o---X2
->>>>>        |\                       |\
->>>>>        | A1---A2---A3---U1      | A1'--A2'--A3'--U1'
->>>>>        |             \          |
->>>>>        |              M         |
->>>>>        |             /          |
->>>>>        \-B1---B2---B3---U2      \-B1'--B2'--B3'--U2'
->>>>>
->>>>
->>>> Meh, I hope I`m rushing it now, but for example, if we had decided to 
->>>> drop commit A2 during an interactive rebase (so losing A2' from 
->>>> diagram above), wouldn`t U2' still introduce those changes back, once 
->>>> U1' and U2' are merged, being incorrect/unwanted behavior...? :/
->>>>
->>>> [...]
->>>
->>> Yeah, I now see it myself. I'm sorry for being lazy and not inspecting
->>> this more carefully in the first place.
->>
->> No problem, that`s why we`re discussing it, and I`m glad we`re 
->> aligned now, so we can move forward :)
->>
->>>> So while your original proposal currently seems like it could be 
->>>> working nicely for non-interactive rebase (and might be some simpler 
->>>> interactive ones), now hitting/acknowledging its first real use 
->>>> limit, my additional quick attempt[1] just tries to aid pretty 
->>>> interesting case of complicated interactive rebase, too, where we 
->>>> might be able to do better as well, still using you original proposal 
->>>> as a base idea :)
->>>
->>> Yes, thank you for pushing me back to reality! :-) The work and thoughts
->>> you are putting into solving the puzzle are greatly appreciated!
->>
->> You`re welcome, and I am enjoying it :)
->>
->>> Thinking about it overnight, I now suspect that original proposal had a
->>> mistake in the final merge step. I think that what you did is a way to
->>> fix it, and I want to try to figure what exactly was wrong in the
->>> original proposal and to find simpler way of doing it right.
->>>
->>> The likely solution is to use original UM as a merge-base for final
->>> 3-way merge of U1' and U2', but I'm not sure yet. Sounds pretty natural
->>> though, as that's exactly UM from which both U1' and U2' have diverged
->>> due to rebasing and other history editing.
->>
->> Yes, this might be it...! ;)
->>
->> To prove myself it works, I`ve assembled a pretty crazy `-s ours`  
->> merge interactive rebase scenario, and it seems this passes the test, 
->> ticking all the check boxes (I could think of) :P
+On 3/1/2018 11:44 PM, Jonathan Nieder wrote:
+> Hi,
+>
+> Derrick Stolee wrote:
+>
+>> Now, we'd like to make that document publicly available. These steps are
+>> focused on a Windows user, so we propose putting them in the
+>> git-for-windows/git repo under CONTRIBUTING.md. I have a pull request open
+>> for feedback [1]. I'll read comments on that PR or in this thread.
+> Thanks!  I wonder if we can put this in the standard Documentation/
+> directory as well.  E.g. the Windows CONTRIBUTING.md could say say
+> "See Documentation/Contributing-On-Windows.md" so that the bulk of the
+> text would not have to be git-for-windows specific.
 
-Hi Igor
+That's a good idea. After this review stabilizes, I'll send a patch to 
+add the windows-specific instructions as you recommend.
 
-> It is interesting to think what it means to faithfully rebase a '-s
-> ours' merge.
-I should have explained that I mean is a faithful rebase one that
-adheres to the semantics of '-s ours' (i.e. ignores any changes in the
-side branch) or one that merges new changes from the side branch into
-the content of the original merge? In your example you add B4 to B. If
-M' preserves the semantics of '-s ours' then it will not contain the
-changes in B4. I think your result does (correct me if I'm wrong) so it
-is preserving the content of the original merge rather than the
-semantics of it.
+What precedent do we have for referencing forks like git-for-windows/git?
 
-Best Wishes
+>
+> [...]
+>> +++ b/CONTRIBUTING.md
+>> @@ -0,0 +1,401 @@
+>> +How to Contribute to Git for Windows
+>> +====================================
+> Would it make sense for this to be checked in with LF instead of CRLF
+> line endings, so that clones use the user's chosen / platform native
+> line ending?  The .gitattributes file could include
+>
+> 	/CONTRIBUTING.md text
+>
+> so that line ending conversion takes place even if the user hasn't
+> enabled core.autocrlf.
 
-Phillip
+Oops! I turned off the CRLF munging in my repo because I had an issue 
+with a script somewhere, but forgot to turn it back on again. Thanks for 
+checking this.
 
-(ignore the rest of what I wrote earlier I don't think it's correct)
- In your example the rebase does not introduce any new
-> changes into branch B that it doesn't introduce to branch A. Had it
-> added a fixup to branch B1 for example or if the topology was more
-> complex so that B ended up with some other changes that the rebase did
-> not introduce into A, then M' would contain those extra changes whereas
-> '--recreate-merges' with '-s ours' (once it supports it) would not.
-> 
->>
->> Let`s see our starting situation:
->>
->>  (0) ---X8--B2'--X9 (master)
->>         |\
->>         | A1---A2---A3 (A)
->>         |             \
->>         |              M (topic)
->>         |             /
->>         \-B1---B2---B3 (B)
->>
->>
->> Here, merge commit M is done with `-s ours` (obsoleting branch "B"), 
->> plus amended to make it an "evil merge", where a commit B2 from 
->> obsoleted branch "B" is cherry picked to "master".
->>
->> Now, we want to rebase "topic" (M) onto updated "master" (X9), but to 
->> make things more interesting, we`ll do it interactively, with some 
->> amendments, drops, additions and even more cherry-picks!
->>
->> This is what the final result looks like:
->>
->>  (1) ---X8--B2'--X9 (master)
->>                  |\
->>                  | A12--A2'---B3' (A)
->>                  |             \
->>                  |              M' (topic)
->>                  |             /
->>                  \-B1'--B3'---B4  (B)
->>
->>
->> During interactive rebase, on branch "A", we amended A1 into A12, 
->> dropped A3 and cherry-picked B3. On branch "B", B4 is added, B2' being 
->> omitted automatically as already present in "master".
->>
->> So... In comparison to original merge commit M, rebased merge commit 
->> M' is expected to:
->>
->>  - Add X9, from updated "master"
->>  - Have A1 changed to A12, due to A12 commit amendment
->>  - Keep A2, rebased as A2'
->>  - Remove A3, due to dropped A3 commit
->>  - Keep amendment from original (evil) merge commit M
->>  - Miss B1' like M does B, due to original `-s ours` merge strategy
->>  - Add B2, cherry-picked as B2' into "master"
->>  - Add B3, cherry-picked as B3' into "A"
->>  - Add B4, added to "B"
->>  - Most important, provide safety mechanism to "fail loud", being 
->>    aware of non-trivial things going on, allowing to stop for user 
->>    inspection/decision
->>
->>
->> There, I hope I didn`t miss any expectation. And, it _seems_ to work 
->> exactly as expected :D
->>
->> Not to leave this to imagination only, and hopefully helping others 
->> to get to speed and possibly discuss this, pointing to still possible 
->> flaws, I`m adding a demo script[1], showing how this exact example 
->> works.
->>
->> Note that script _is_ coined to avoid rebase conflicts, as they`re not 
->> currently important for the point to be made here.
->>
->> In real life, except for usual possibility for conflicts during 
->> commit rebasing, we might experience _three_ possible conflict 
->> situations once "rebased" merge itself is to be created - two when 
->> rebasing each of temporary merge helper commits, and one on the 
->> "rebased" merge itself. This is something where we might think about 
->> user experience, not introducing (too much) confusion...
->>
->> Regards, Buga
->>
->> [1] Demonstration script:
->> -- >8 --
->> #!/bin/sh
->>
->> # rm -rf ./.git
->> # rm -f ./test.txt
->>
->> git init
->>
->> touch ./test.txt
->> git add -- test.txt
->>
->> # prepare repository
->> for i in {1..8}
->> do
->> 	echo X$i >>test.txt
->> 	git commit -am "X$i"
->> done
->>
->> # prepare branch A
->> git checkout -b A
->> sed -i '2iA1' test.txt
->> git commit -am "A1"
->> sed -i '4iA2' test.txt
->> git commit -am "A2"
->> sed -i '6iA3' test.txt
->> git commit -am "A3"
->>
->> # prepare branch B
->> git checkout -b B master
->> sed -i '5iB1' test.txt
->> git commit -am "B1"
->> sed -i '7iB2' test.txt
->> git commit -am "B2"
->> sed -i '9iB3' test.txt
->> git commit -am "B3"
->>
->> git checkout -b topic A
->> git merge -s ours --no-commit B # merge A and B with `-s ours`
->> sed -i '8iM' test.txt           # amend merge commit ("evil merge")
->> git commit -am "M"
->> git tag original-merge
->>
->> # master moves on...
->> git checkout master
->> git cherry-pick B^     # cherry-pick B2 into master
->> sed -i "1iX9" test.txt # add X9
->> git commit -am "X9"
->>
->> # (0) ---X8--B2'--X9 (master)
->> #        |\
->> #        | A1---A2---A3 (A)
->> #        |             \
->> #        |              M (topic)
->> #        |             /
->> #        \-B1---B2---B3 (B)
->>
->> # simple/naive demonstration of proposed merge rebasing logic
->> # using described new approach, preserving merge commit manual
->> # amendments, testing `-s ours` merge with cherry-picking from
->> # obsoleted part, but still respecting interactively rebased
->> # added/modified/dropped/cherry-picked commits :)
->>
->> git checkout A
->> git cherry-pick -m1 original-merge # prepare temporary helper commit U1
->> git tag U1
->> git reset --hard HEAD^^            # drop U1 and A3 from A
->> sed -i '/A1/c\A12' test.txt        # amend A1 to A12
->> git commit -a --amend --no-edit
->> git rebase master                  # rebase A onto master
->> git cherry-pick B                  # cherry-pick B3 into A
->> git cherry-pick U1                 # "rebase" temporary helper commit U1
->> git tag U1-prime
->>
->> git checkout B
->> git cherry-pick -m2 original-merge # prepare temporary helper commit U2
->> git tag U2
->> git reset --hard HEAD^             # drop U2 from B
->> git rebase master                  # rebase B onto master
->> sed -i '12iB4' test.txt            # add B4
->> git commit -am "B4"
->> git cherry-pick U2                 # "rebase" temporary helper commit U2
->> git tag U2-prime
->>
->> git branch -f topic A
->> git checkout topic
->> # merge rebased temporary commits U1' and U2',
->> # using original merge commit as a merge base,
->> # producing "rebased" merge commit M'
->> git read-tree -m --aggressive original-merge A B
->> git merge-index -o git-merge-one-file -a
->>
->> # recognize complex stuff going on during rebasing merge commit,
->> # allowing user to inspect result, edit, and continue or abort
->> git diff --quiet U1-prime U2-prime
->> if test $? -ne 0
->> then
->> 	# PLACEHOLDER
->> 	# chance to inspect result, like:
->> 	git diff original-merge
->> 	# edit if needed, continue or abort
->> fi
->>
->> # drop rebased temporary commits U1' and U2'
->> git branch -f A A^
->> git branch -f B B^
->>
->> # record branches A and B as parents of "rebased" merge commit M',
->> # updating topic branch
->> git update-ref refs/heads/topic "$(git show -s --format=%B original-merge | git commit-tree "$(git write-tree)" -p "$(git rev-parse A)" -p "$(git rev-parse B)")"
->> git tag angel-merge
->>
->> # (1) ---X8--B2'--X9 (master)
->> #                 |\
->> #                 | A12--A2'---B3' (A)
->> #                 |             \
->> #                 |              M' (topic)
->> #                 |             /
->> #                 \-B1'--B3'---B4  (B)
->>
->> # show resulting graph
->> # echo
->> # git log --all --decorate --oneline --graph
->>
->> # in comparison to original merge commit M, rebased merge commit 
->> # M' is expected to:
->> #
->> # - Add X9, from updated "master"
->> # - Have A1 changed to A12, due to A12 commit amendment
->> # - Keep A2, rebased as A2'
->> # - Remove A3, due to dropped A3 commit
->> # - Keep amendment from original (evil) merge commit M
->> # - Miss B1' like M does B, due to original `-s ours` merge strategy
->> # - Add B2, cherry-picked as B2' into "master"
->> # - Add B3, cherry-picked as B3' into "A"
->> # - Add B4, added to "B"
->> #
->> # echo
->> # echo 'diff original-merge angel-merge:'
->> # git diff original-merge angel-merge
->>
-> 
+>
+> [...]
+>> +    The SDK uses a different credential manager, so you may still want to use Visual Studio
+>> +    or normal Git Bash for interacting with your remotes.  Alternatively, use SSH rather
+>> +    than HTTPS and avoid credential manager problems.
+> Where can I read more about the problems in question?
+
+I'll try to see if we can elaborate here. The Git for Windows client 
+ships with Git Credential Manager for Windows [1] but the SDK does not. 
+At the very least, credential interactions are not the same and you do 
+not have access to the credentials stored in Windows Credential Manager.
+
+[1] https://github.com/Microsoft/Git-Credential-Manager-for-Windows
+
+>
+> [...]
+>> +Many new contributors ask: What should I start working on?
+>> +
+>> +One way to win big with the maintainer of an open-source project is to look at the
+>> +[issues page](https://github.com/git-for-windows/git/issues) and see if there are any issues that
+>> +you can fix quickly, or if anything catches your eye.
+> <shameless plug>You can also look at https://crbug.com/git for non
+> Windows-specific issues.  And you can look at recent user questions
+> on the mailing list: https://public-inbox.org/git
+>
+> [...]
+>> +If you are adding new functionality, you may need to create low-level tests by creating
+>> +helper commands that test a very limited action. These commands are stored in `t/helpers`.
+>> +When adding a helper, be sure to add a line to `t/Makefile` and to the `.gitignore` for the
+>> +binary file you add. The Git community prefers functional tests using the full `git`
+>> +executable, so be sure the test helper is required.
+> Maybe s/low-level/unit/?
+>
+> [...]
+>> +Read [`t/README`](https://github.com/git/git/blob/master/t/README) for more details.
+> Forgive my ignorance: does github flavored markdown allow relative
+> links?  (I.e., could this say [`t/README`](t/README)?)
+>
+> [...]
+>> +You can also set certain environment variables to help test the performance on different
+>> +repositories or with more repetitions. The full list is available in
+>> +[the `t/perf/README` file](https://github.com/git/git/blob/master/t/perf/README),
+> Likewise.
+>
+> [...]
+>> +Test Your Changes on Linux
+>> +--------------------------
+>> +
+>> +It can be important to work directly on the [core Git codebase](https://github.com/git/git),
+>> +such as a recent commit into the `master` or `next` branch that has not been incorporated
+>> +into Git for Windows. Also, it can help to run functional and performance tests on your
+>> +code in Linux before submitting patches to the Linux-focused mailing list.
+> I'm surprised at this advice.  Does it actually come up?  When I was
+> on Mac I never worried about this, nor when I was on Windows.
+>
+> I'm personally happy to review patches that haven't been tested on
+> Linux, though it's of course even nicer if the patch author mentions
+> what platforms they've tested on.
+>
+> Maybe this can be reframed to refer specifically to cases where you've
+> modified some Linux platform-specific code (e.g. to add a new feature
+> to run-command.c)?
+
+I recently had a bug in my local copy of the commit-graph patch that was 
+only caught by our Mac OSX automated builds: I was passing the 
+edge-value for a parent into a lookup to get an octopus edge from the 
+graph, but I forgot to drop the most-significant bit. This cast the 
+"uint32_t" silently into an "int" but since we multiplied by 4 somehow 
+the Windows and Linux compilers turned this into a left-shift while Mac 
+did not and failed during my test.
+
+Now this is an example of something that probably would have been caught 
+in review, but stuff gets through.
+
+The Windows/Linux boundary is usually enough to catch the platform 
+differences, but they do catch things that you wouldn't think are 
+platform-specific.
+
+>
+> [...]
+>> +When preparing your patch, it is important to put yourself in the shoes of the maintainer.
+> ... and in the shoes of other users and developers working with Git down
+> the line who will interact with the patch later!
+>
+> Actually, the maintainer is one of the least important audiences for a
+> commit message.  But may 'the maintainer' is a stand-in for 'the
+> project' here?
+
+Stand-in for "the community" yeah.
+
+>
+> [...]
+>> +* Make sure the commits are signed off using `git commit (-s|--signoff)`. This means that you
+>> +  testify to be allowed to contribute your changes, in particular that if you did this on company
+>> +  time, said company approved to releasing your work as Open Source under the GNU Public License v2.
+> Can this either point to or quote the relevant legal text from
+> Documentation/SubmittingPatches?  It feels dangerous (in the sense of,
+> potentially leading to misunderstandings and major future pain) to ask
+> people to sign off without them knowing exactly what that means.
+
++1 thanks.
+
+>
+> The rest also looks nice.  Thanks for working on this.
+>
+> Sincerely,
+> Jonathan
+
+Thanks for the feedback.
+
+-Stolee
 
