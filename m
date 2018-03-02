@@ -7,102 +7,70 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 586961F404
-	for <e@80x24.org>; Fri,  2 Mar 2018 17:28:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 98DD71F404
+	for <e@80x24.org>; Fri,  2 Mar 2018 17:30:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1427769AbeCBR2U (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Mar 2018 12:28:20 -0500
-Received: from mail-pl0-f50.google.com ([209.85.160.50]:42764 "EHLO
-        mail-pl0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1424524AbeCBR2O (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Mar 2018 12:28:14 -0500
-Received: by mail-pl0-f50.google.com with SMTP id 93-v6so6052358plc.9
-        for <git@vger.kernel.org>; Fri, 02 Mar 2018 09:28:14 -0800 (PST)
+        id S1428112AbeCBRac (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Mar 2018 12:30:32 -0500
+Received: from mail-pf0-f179.google.com ([209.85.192.179]:33878 "EHLO
+        mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1424482AbeCBRaa (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Mar 2018 12:30:30 -0500
+Received: by mail-pf0-f179.google.com with SMTP id j20so4280785pfi.1
+        for <git@vger.kernel.org>; Fri, 02 Mar 2018 09:30:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlemail.com; s=20161025;
         h=mime-version:sender:in-reply-to:references:from:date:message-id
          :subject:to:cc;
-        bh=JKNjJQLMmBYftEooP4AB4NM2IrAC2UnIUqBYkWsa46I=;
-        b=LPtAeEi8fDC9Rnl6gE34U7gtcPRmuGRA84vQgK9C7dyYoIEqcxKbqBdTjwOYWWXk9M
-         01yw1Bpj9cmEiO4K3qEGGf2uhdcIIwfYYjt6S0dbmMEHA74O+GWXcAH2AB5eFX0qhleV
-         4BlcpopUWxv14H3VQihD70cDR7jiUIigRRe0TajYxRIbLTBPr2yU7IUxY1VLABTvfm1q
-         r4r17JiZi+EIiRNzgTW3HxUWqyOsyQGh9bCX/MIyYhr1esh5+gUTIWbx/jZ8C0yA9fUl
-         MBTd/tOifU/YSjhI/F9WSThSf9fPLzqKoys6+8b7fiOBTWlEGIoKcrCOLa1iwYm9BXK/
-         NQlw==
+        bh=kg3zb8BO2QRjiuZYnN5zS/pX3pAOAi5oShlI4N1Uy90=;
+        b=ks1GIiwSQFxkYqWvilnihhEvWD+glz3zxhb17lc5puEpBpzIU3XkrykA+5wdrKFxG0
+         6c9yeJ3I7yvXptl3FPl082cpOTENVLNY9JOD/BDF/1xQJP03YFx18vNEd+R3aR47r/ZH
+         ZFikhWSIj0r1Z1zmi2dXUJfTVJsqNwBLbi+WgldBlfTBAiE1JAcN5z4vmhKzc2BLSIwI
+         CDCCwa2QHQlZwV/o+r/YgLLOs3ScYsqe/NP50RdqCejzTp4w1tFX2NxvOYM9ICUvGT20
+         qrxrRp1Z8t9Z9Fn9kiXYDaGxapW9wFzNC7CzpmX75kYtfiwxXbxCzRjJbRsBbHs2nJ2F
+         46bQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
          :date:message-id:subject:to:cc;
-        bh=JKNjJQLMmBYftEooP4AB4NM2IrAC2UnIUqBYkWsa46I=;
-        b=pjlsgJnZ8YY18O5aB8KvYAtdnIZWTu1McU1msBlGtKJTmJXZ69gAh6X1uCDgXHX0Me
-         Pv/tnbjMxgOUV7nCRuUMJCPbaEleB59aaw/EOgMOXDLK0SZ3xfJHCQbz3qmZp6IM8aFu
-         dT9daF+VJxpKRwPkJGYOsLGwFwpvqvecXRWbFaNPFcepS4vUYWjpd0ywb5yrJFdBmz9S
-         eNfoa4dGeTCkv2NB1RwKtEnyp8iyUOT5aLXrEzOtovZ8IfkYUdUdGwAoXjwDa/3eEnWj
-         PQweYd/JWBSzvcbDWy2T92PVC/ZSDrJtMsDaBUt17nPDsY5zB7rtiWSdmVJZj4JRX1zM
-         VJJQ==
-X-Gm-Message-State: APf1xPDcJ9kFm/zkv7nMJJj9+rBqfxGalx1S0RS/OOZeuMEkwF/wqQd5
-        FGl+CIDn8p4vJgm1IoKzdHGazbmCtypMzgEjTEo=
-X-Google-Smtp-Source: AG47ELtNFqHS+dMa0To2PqFc77tKSNX1zMCnJDw9R5TYR6b8SUALQi8VUfu1WFusUruysmc61AehypP1vn4e86ueaEI=
-X-Received: by 2002:a17:902:5203:: with SMTP id z3-v6mr6008854plh.392.1520011694265;
- Fri, 02 Mar 2018 09:28:14 -0800 (PST)
+        bh=kg3zb8BO2QRjiuZYnN5zS/pX3pAOAi5oShlI4N1Uy90=;
+        b=C4XH9MazrynLm9ZnS1lIGO5c3AXkfbeGC28D1+N4P6VLIuXQzCHrXdb+jB946e2rDH
+         JArGDwIkHisw4tNtMFqv5D+nsSe5C2xgxsYysknWOu3MX0lDEGlhIgsAil8vWgSdK3ep
+         hNBmSH7dCHt/lKDf7AtkGMpyXnsapDnj5cWPpuzn8tv/H29vXHV2QtlSmR85LS0Ug8oQ
+         X2VbNqc8aPeoTzG7wW6cvjexQrLMA+9my/2bvXTplT8kbcDOYxPSO9+aq3KSmc1HnjEq
+         2PAbR7SY3nb3fUh7M1JxC/pQdV9v8dP1/O4Qa4ZavqGR3WUU8yeeBnjaEL3/pYqMFR6H
+         pKYg==
+X-Gm-Message-State: APf1xPAur01mgd9NiIJnOmVbM3kw0rbwi8fhP8NaFaIQ9NLkz2q2QiOB
+        EwWqVv4g3KO77HbNrZYEySLuNtfpJ4k3fskCafg=
+X-Google-Smtp-Source: AG47ELvgpHm3N2o1oo2/2p7+owoEcSdBORA6dfavS33ioBbsxhGnzifYkPlrFeL+I7ithUmX+KXd2DHarC0SvAi1HEk=
+X-Received: by 10.99.124.7 with SMTP id x7mr5078449pgc.356.1520011829442; Fri,
+ 02 Mar 2018 09:30:29 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.236.137.23 with HTTP; Fri, 2 Mar 2018 09:28:13 -0800 (PST)
-In-Reply-To: <20180302070434.GG238112@aiede.svl.corp.google.com>
+Received: by 10.236.137.23 with HTTP; Fri, 2 Mar 2018 09:30:28 -0800 (PST)
+In-Reply-To: <20180302104232.GA11074@sigill.intra.peff.net>
 References: <CAD-Jur+6m1SjqHVWBxW5HnTjutSVrkP+dEXdYmFHzoUf0FGdNA@mail.gmail.com>
- <20180302070434.GG238112@aiede.svl.corp.google.com>
+ <20180302104232.GA11074@sigill.intra.peff.net>
 From:   Sam Kuper <sam.kuper@uclmail.net>
-Date:   Fri, 2 Mar 2018 17:28:13 +0000
-X-Google-Sender-Auth: Z7zk-_ddfy16d2uhJitFS_a1XyE
-Message-ID: <CAD-Jur+juVNte7vJOi-iJYwPhbkoQOne9PTyRLD+skL_1=PgCQ@mail.gmail.com>
+Date:   Fri, 2 Mar 2018 17:30:28 +0000
+X-Google-Sender-Auth: NMc8Mgoz4q_FS2cfJTnURumibdA
+Message-ID: <CAD-JurJLDSzf7_A0ZGWPYGyRiSnHWSpUrVEd9_+N1J7BamMM=Q@mail.gmail.com>
 Subject: Re: Bug report: "Use of uninitialized value $_ in print"
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 02/03/2018, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Is this reproducible for you?
-
-Yes. It seems to occur consistently, given the same input.
-
-> Do you have more details about how I can reproduce it?
-
-Unfortunately, the particular git repo I encountered it on is private,
-otherwise I would point you to it.
-
-I haven't attempted to create a MWE. Am I correct that doing so is now
-not needed, in the light of Jeff King's email below?
-
-
-> What arch are you on?  What perl version do you use?  Can you report
-> this using "reportbug git"?
-
-All perfectly decent questions. For a modicum of security/privacy, I
-would prefer to avoid answering them unless necessary.
-
-Am I right in thinking that these answers are no longer needed, in the
-light of Jeff King's email below?
-
-
-
 On 02/03/2018, Jeff King <peff@peff.net> wrote:
->   3. Your invocation in particular is a problem because it uses
->      --word-diff, which will not have a one-to-one line correspondence
->      with the bare diff.
->
->      add--interactive handles pretty-printing by running the diff
->      command twice: once with no special options, and once with
->      "--color" and piped through the diffFilter. It assumes that the two
->      match each other line for line, so it shows you the "DISPLAY"
->      variant, but then ultimately applies the "TEXT" variant.
->
-> And that last one is the cause of the errors you see:
->
->> Use of uninitialized value $_ in print at
->> /usr/lib/git-core/git-add--interactive line 1371, <STDIN> line 74.
->
-> The "DISPLAY" run for your case generates fewer lines than the "TEXT"
-> run, and we complain on trying to show those extra lines.
+> Unfortunately, I don't think there's an easy way to do what you want
+> (show word-diffs but apply the full diff).
+
+Oh :(
+
+That would be a *very* useful feature to have, especially where
+multiple small (e.g. single character or single word) changes are
+sprinkled throughout a large file.
+
+Should I start a separate thread for this as a feature request?
