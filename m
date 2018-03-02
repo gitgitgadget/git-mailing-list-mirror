@@ -2,84 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A9B9A1F576
-	for <e@80x24.org>; Fri,  2 Mar 2018 10:49:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 833D91F576
+	for <e@80x24.org>; Fri,  2 Mar 2018 10:54:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1946391AbeCBKsz (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Mar 2018 05:48:55 -0500
-Received: from smtp-out-2.talktalk.net ([62.24.135.66]:45685 "EHLO
-        smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1946382AbeCBKsr (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Mar 2018 05:48:47 -0500
-Received: from [192.168.2.201] ([92.22.16.137])
-        by smtp.talktalk.net with SMTP
-        id riF3erV0BXdHHriF3eFkFd; Fri, 02 Mar 2018 10:48:46 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1519987726;
-        bh=e5QsAU9JpYDpVbBjUUT2M4f/KAkUMCNUn6Eq++yhf0o=;
-        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=SUw6GKceydE7qhCJVXGE7O88wTvuoPbaVYuBCi4w72jyzMKNkzcsomHxF80Up8tS7
-         sv05lmXNKr1EmB4IjUq+LvATyGgh8Zez7AsadPJ6lGYNFFb8Ma8++F/w23r/+2AWm/
-         ihTjFqS6a9EAH7MnTf+bujDGUIYzojQSFzvTfDfg=
-X-Originating-IP: [92.22.16.137]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=JaySU3CV c=1 sm=1 tr=0 a=nWy375ASyxHoIYnPohIYMA==:117
- a=nWy375ASyxHoIYnPohIYMA==:17 a=IkcTkHD0fZMA:10 a=nN7BH9HXAAAA:8
- a=7t9S2b2KNLOXVdy-_kYA:9 a=QEXdDO2ut3YA:10
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v4 8/9] add -p: fix counting when splitting and coalescing
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        "Brian M. Carlson" <sandals@crustytoothpaste.net>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <20180213104408.9887-1-phillip.wood@talktalk.net>
- <20180301105103.24268-1-phillip.wood@talktalk.net>
- <20180301105103.24268-9-phillip.wood@talktalk.net>
- <xmqqsh9jfsjd.fsf@gitster-ct.c.googlers.com>
-From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <b094e133-75bb-04ee-64b1-af7019a436f0@talktalk.net>
-Date:   Fri, 2 Mar 2018 10:48:45 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
+        id S1423919AbeCBKyR (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Mar 2018 05:54:17 -0500
+Received: from cloud.peff.net ([104.130.231.41]:44066 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1423832AbeCBKyI (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Mar 2018 05:54:08 -0500
+Received: (qmail 7972 invoked by uid 109); 2 Mar 2018 10:54:07 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 02 Mar 2018 10:54:07 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 27245 invoked by uid 111); 2 Mar 2018 10:54:57 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 02 Mar 2018 05:54:57 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 02 Mar 2018 05:54:06 -0500
+Date:   Fri, 2 Mar 2018 05:54:06 -0500
+From:   Jeff King <peff@peff.net>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>, Eric Wong <e@80x24.org>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: Reduce pack-objects memory footprint?
+Message-ID: <20180302105405.GD11074@sigill.intra.peff.net>
+References: <20180228092722.GA25627@ash>
+ <CACsJy8AzP9HLc02LbSxBvNM6Dg4FsgRt57SgaNFyT5TBPRq-Zw@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <xmqqsh9jfsjd.fsf@gitster-ct.c.googlers.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfAlcBpitO4+Ow70mlTLczMEofJTAFV61v/csv3mGXZSO8orVfNO2UUGDpk+lMs9Cf62OXAyidLspiyTCShntn2QucjOYoG6blvRNFVHN4Faps1u/3vuR
- JzVqCA8cq7WUs/iAOggXwo8an9qscbe003VpGI6e5ELLyE6nOc/40m6U8FwTlIRvkWQf2LrU85B2hlmtdVZiYGLBAIFvlatU4GMaEKU16hK1akFBJYlPHTVH
- na00Wrzb6DlGJyfz9mUP8foq3WxE3Gb2tUoLSlzMO94KUMBmutyXbYbXXeHirTU0LmZmkBjYJ2loP6RsXgRcr6t1EUDwJKtfsUFaXV6ZcRY=
+Content-Disposition: inline
+In-Reply-To: <CACsJy8AzP9HLc02LbSxBvNM6Dg4FsgRt57SgaNFyT5TBPRq-Zw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 01/03/18 20:29, Junio C Hamano wrote:
-> Phillip Wood <phillip.wood@talktalk.net> writes:
+On Fri, Mar 02, 2018 at 05:18:45PM +0700, Duy Nguyen wrote:
+
+> On Wed, Feb 28, 2018 at 4:27 PM, Duy Nguyen <pclouds@gmail.com> wrote:
+> > linux-2.6.git current has 6483999 objects. "git gc" on my poor laptop
+> > consumes 1.7G out of 4G RAM, pushing lots of data to swap and making
+> > all apps nearly unusuable (granted the problem is partly Linux I/O
+> > scheduler too). So I wonder if we can reduce pack-objects memory
+> > footprint a bit.
 > 
->> @@ -887,8 +892,8 @@ sub merge_hunk {
->>  	$o_cnt = $n_cnt = 0;
->>  	for ($i = 1; $i < @{$prev->{TEXT}}; $i++) {
->>  		my $line = $prev->{TEXT}[$i];
->> -		if ($line =~ /^\+/) {
->> -			$n_cnt++;
->> +		if ($line =~ /^[+\\]/) {
->> +			$n_cnt++ if ($line =~ /^\+/);
->>  			push @line, $line;
->>  			next;
->>  		}
+> Next low hanging fruit item:
 > 
-> Hmmmm, the logic may be correct, but this looks like a result of
-> attempting to minimize the number of changed lines and ending up
-> with a less-than-readble code.  "If the line begins with a plus or
-> backslash, do these things, the first of which is done only when
-> the line begins with a plus."  The same comment for the other hunk
-> that counts the $this side.
+> struct revindex_entry {
+>         off_t offset;
+>         unsigned int nr;
+> };
 > 
-Right, I'll re-roll with a separate clause for the "\ No new line .." lines.
+> We need on entry per object, so 6.5M objects * 16 bytes = 104 MB. If
+> we break this struct apart and store two arrays of offset and nr in
+> struct packed_git, we save 4 bytes per struct, 26 MB total.
+> 
+> It's getting low but every megabyte counts for me, and it does not
+> look like breaking this struct will make horrible code (we recreate
+> the struct at find_pack_revindex()) so I'm going to do this too unless
+> someone objects. There will be slight performance regression due to
+> cache effects, but hopefully it's ok.
+
+Maybe you will prove me wrong, but I don't think splitting them is going
+to work. The point of the revindex_entry is that we sort the (offset,nr)
+tuple as a unit.
+
+Or are you planning to sort it, and then copy the result into two
+separate arrays? I think that would work, but it sounds kind of nasty
+(arcane code, and extra CPU work for systems that don't care about the
+26MB).
+
+-Peff
