@@ -2,99 +2,63 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.3 required=3.0 tests=BAYES_00,BODY_URI_ONLY,
+	HEADER_FROM_DIFFERENT_DOMAINS,PI_EMPTY_SUBJ,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 071A11F404
-	for <e@80x24.org>; Fri,  2 Mar 2018 02:56:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E2CBC1F404
+	for <e@80x24.org>; Fri,  2 Mar 2018 03:25:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1164449AbeCBC4I (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Mar 2018 21:56:08 -0500
-Received: from avasout01.plus.net ([84.93.230.227]:48031 "EHLO
-        avasout01.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1164430AbeCBC4H (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Mar 2018 21:56:07 -0500
-Received: from [10.0.2.15] ([80.189.70.162])
-        by smtp with ESMTPA
-        id rardeQQ32yLu5rareeuisA; Fri, 02 Mar 2018 02:56:06 +0000
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.3 cv=QqtwI26d c=1 sm=1 tr=0
- a=zzlqjQC3YyNvDZl/Gy+4mg==:117 a=zzlqjQC3YyNvDZl/Gy+4mg==:17
- a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=LzoTUGzMI8N1yiqeNaQA:9 a=QEXdDO2ut3YA:10
- a=yJM6EZoI5SlJf8ks9Ge_:22
-X-AUTH: ramsayjones@:2500
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     ungureanupaulsebastian@gmail.com,
-        GIT Mailing-list <git@vger.kernel.org>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH 2/2] parse-options: remove the unused parse_opt_commits()
- function
-Message-ID: <1b5dcc90-896b-9a45-e1eb-c7ee946a2105@ramsayjones.plus.com>
-Date:   Fri, 2 Mar 2018 02:56:05 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfA728RDXJfRo7TBYwX+77APd2t8nKn8/R5t7jozSxxfD8uJ6Ioj3tnsAwCfsZaUIjjWaDoA/Py88OAqmeLjDmHljJBfi9jf0crr905wEHf+BIFbf5z6W
- oMXQcGb6AblA40HZDjxnz678iLmxF1kRBirJEhvFqTUnH49N1HGnbGfbeE7dK/voulI11R0fVemI9g==
+        id S1164159AbeCBDZH convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Thu, 1 Mar 2018 22:25:07 -0500
+Received: from gateway24.websitewelcome.com ([192.185.51.253]:27614 "EHLO
+        gateway24.websitewelcome.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1164129AbeCBDZG (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 1 Mar 2018 22:25:06 -0500
+X-Greylist: delayed 1322 seconds by postgrey-1.27 at vger.kernel.org; Thu, 01 Mar 2018 22:25:06 EST
+Received: from cm13.websitewelcome.com (cm13.websitewelcome.com [100.42.49.6])
+        by gateway24.websitewelcome.com (Postfix) with ESMTP id C08011D8B2
+        for <git@vger.kernel.org>; Thu,  1 Mar 2018 21:03:03 -0600 (CST)
+Received: from gator3173.hostgator.com ([198.57.247.137])
+        by cmsmtp with SMTP
+        id rayNeA1rB84eYrayNeDbkn; Thu, 01 Mar 2018 21:03:03 -0600
+Received: from 1-175-68-80.dynamic-ip.hinet.net ([1.175.68.80]:56184 helo=mail.suncityschool.in)
+        by gator3173.hostgator.com with esmtpa (Exim 4.89_1)
+        (envelope-from <aditi@suncityschool.in>)
+        id 1erayL-002UkW-90
+        for git@vger.kernel.org; Thu, 01 Mar 2018 21:03:02 -0600
+From:   "William Broady" <wbgte@suncityschool.in>
+Content-Type: text/plain;
+        charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Mime-Version: 1.0 (1.0)
+Subject: 
+Message-Id: <849B985C-06DC-485F-FE44-B5C6EB58FA0C@suncityschool.in>
+Date:   Fri, 2 Mar 2018 03:05:17 +0000
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Reply-To: "William Broady" <wbgter@suncityschool.in>
+X-Mailer: iPhone Mail (14E304)
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - gator3173.hostgator.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - suncityschool.in
+X-BWhitelist: no
+X-Source-IP: 1.175.68.80
+X-Source-L: No
+X-Exim-ID: 1erayL-002UkW-90
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: 1-175-68-80.dynamic-ip.hinet.net (mail.suncityschool.in) [1.175.68.80]:56184
+X-Source-Auth: aditi@suncityschool.in
+X-Email-Count: 14
+X-Source-Cap: c3VuY2l0eTtzdW5jaXR5O2dhdG9yMzE3My5ob3N0Z2F0b3IuY29t
+X-Local-Domain: yes
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-Commit fcfba37337 ('ref-filter: make "--contains <id>" less chatty if
-<id> is invalid', 2018-02-23), removed the last use of the callback
-function parse_opt_commits(). Remove this function declaration and
-definition, since it is now dead code.
-
-Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
----
- parse-options-cb.c | 16 ----------------
- parse-options.h    |  1 -
- 2 files changed, 17 deletions(-)
-
-diff --git a/parse-options-cb.c b/parse-options-cb.c
-index c6679cb2c..c7320a73f 100644
---- a/parse-options-cb.c
-+++ b/parse-options-cb.c
-@@ -78,22 +78,6 @@ int parse_opt_verbosity_cb(const struct option *opt, const char *arg,
- 	return 0;
- }
- 
--int parse_opt_commits(const struct option *opt, const char *arg, int unset)
--{
--	struct object_id oid;
--	struct commit *commit;
--
--	if (!arg)
--		return -1;
--	if (get_oid(arg, &oid))
--		return error("malformed object name %s", arg);
--	commit = lookup_commit_reference(&oid);
--	if (!commit)
--		return error("no such commit %s", arg);
--	commit_list_insert(commit, opt->value);
--	return 0;
--}
--
- int parse_opt_object_name(const struct option *opt, const char *arg, int unset)
- {
- 	struct object_id oid;
-diff --git a/parse-options.h b/parse-options.h
-index 4b4734f2e..2b8378ac1 100644
---- a/parse-options.h
-+++ b/parse-options.h
-@@ -224,7 +224,6 @@ extern int parse_opt_expiry_date_cb(const struct option *, const char *, int);
- extern int parse_opt_color_flag_cb(const struct option *, const char *, int);
- extern int parse_opt_verbosity_cb(const struct option *, const char *, int);
- extern int parse_opt_object_name(const struct option *, const char *, int);
--extern int parse_opt_commits(const struct option *, const char *, int);
- extern int parse_opt_tertiary(const struct option *, const char *, int);
- extern int parse_opt_string_list(const struct option *, const char *, int);
- extern int parse_opt_noop_cb(const struct option *, const char *, int);
--- 
-2.16.0
+hi    http://bit.ly/2oxaeuW   William Broady
