@@ -7,56 +7,59 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BA8CB1F576
-	for <e@80x24.org>; Sat,  3 Mar 2018 09:30:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3FB861F576
+	for <e@80x24.org>; Sat,  3 Mar 2018 09:34:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751957AbeCCJaE (ORCPT <rfc822;e@80x24.org>);
-        Sat, 3 Mar 2018 04:30:04 -0500
-Received: from mail-qk0-f196.google.com ([209.85.220.196]:33504 "EHLO
-        mail-qk0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751894AbeCCJaD (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 3 Mar 2018 04:30:03 -0500
-Received: by mail-qk0-f196.google.com with SMTP id f25so15031461qkm.0
-        for <git@vger.kernel.org>; Sat, 03 Mar 2018 01:30:02 -0800 (PST)
+        id S1751990AbeCCJeJ (ORCPT <rfc822;e@80x24.org>);
+        Sat, 3 Mar 2018 04:34:09 -0500
+Received: from mail-qk0-f193.google.com ([209.85.220.193]:42473 "EHLO
+        mail-qk0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751894AbeCCJeI (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 3 Mar 2018 04:34:08 -0500
+Received: by mail-qk0-f193.google.com with SMTP id b130so14977837qkg.9
+        for <git@vger.kernel.org>; Sat, 03 Mar 2018 01:34:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:sender:in-reply-to:references:from:date:message-id
          :subject:to:cc:content-transfer-encoding;
-        bh=teOzROGJ8RFnJPHI6Oi2bRctHGJT0NYgrAG/X4HVHiM=;
-        b=uu47An3KE/5YBuFHZCgECAyEN7kebUJAGtYy1zvNaIYwm/TZcvZKYkZQgawi2voq8i
-         F36MOqdDCAZzioPZVwSGoVQ+yD1ReKWPS4LKLOkjSiLXcudKHHrH5yOBZljxV9bYplBN
-         +AuccN4qMWX/0R2iwVFV2szxR1HVBgECOPOQqkpADI09AoR20KcKNAeDYBFAEdsfbFl8
-         ew7XwqXRgXq+rVLYYYGRzzG5c/l/JNj34MIfE8X5Jukzwja/VbdMnRwENadwHvk8FLgA
-         V3+dHRveJVqhIuyiPOtR4JPcbCg0BiSmAM555VCQGjHEn32gkiLyifYwDJiWu2rdXXL4
-         c6Cw==
+        bh=+hDodEdR+gJ4SbdJPqAG2Im7xU/4Fq3R/FZ/NRBhrHo=;
+        b=R5oRVngUG0Jch2Dg6981skkSRNbBYR5WuRIMwve8erGVGWkx78wiOm0Irq/E1N6LH4
+         3eFtyeIexBPsEu17KeA8QD8mY7mxWpCVPha2FnXZBvQahNCtcVdiXE4re9snKwHHKWMQ
+         ZMLkHEPYPoiMEEexwLS0Sx01QYrQexSnY73xiejAKlrt1l7/YC5YOfxH5GVagNrcv4/2
+         id06hwnuMhhTKz+U6O1zb9Ml4HIFUH1Ut44rD9iWc9dxSbFr8niEMfGVLCPte2wC8tpo
+         DE1gZqqHnZNp1vOZdVYsNa6ts/0S4AKMWXyq1fAOQOV67cmU/BXP6H2Rl4BVE36ZHS0J
+         Fmsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
          :date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=teOzROGJ8RFnJPHI6Oi2bRctHGJT0NYgrAG/X4HVHiM=;
-        b=nRfzpc/VwP1Pn3jY7o5A3DiuJlDP2bAHFXwU5fV1+GSafXv6PyWKaXh2sp9nHSmoxK
-         UZSVSqfzP63obqLoCc04GwPMEacG2gdRvVUm9JGGpu+4FjQXTb59iDYUo0K4v2zffm5n
-         eXGXBSWRarqhhIJoFZcKgGOwNMsLBSmd6bU5/yYIc6BzcJYC30a7MfAx7J0TXFtp6KqU
-         my/mljfRnY9ZEGkVdlKDZhrDTLPASTh/A0vGAyhUZjEd2Q6AxdPynLsFdpZQFSZFRudI
-         zXLfMbJT0JHOQn8iXMf4XDQBz1XfmKdwKgAUH78ZcdW7t4J4yHKxFtTR0aIgpLJsZeld
-         MXzA==
-X-Gm-Message-State: AElRT7Hrof6H0pFC2H9IIky0tNDrc06vM3Cwte2pT4urkp8aGu5GmW83
-        DBBByYaT09Kl2pP0QlJ8EujeumIs0DQHyhXsT5s=
-X-Google-Smtp-Source: AG47ELvwdfgq3SN14QVT6j8w+TBORKbbJxEbjaDnqGgKmp0+a1ZIXHFGa7hF4A2yvWdM7jLYhliIEIdij4EP1gXeCHg=
-X-Received: by 10.55.134.133 with SMTP id i127mr12568921qkd.275.1520069402200;
- Sat, 03 Mar 2018 01:30:02 -0800 (PST)
+        bh=+hDodEdR+gJ4SbdJPqAG2Im7xU/4Fq3R/FZ/NRBhrHo=;
+        b=ar7ng02MOg18YW4893lQMb/gNXM7WP7554+2WwQPvkf0Ywg+q9zoWv+IUaD8nlsKHU
+         mbnB5bDXSSAS362xVNtrtCc6i2mkexJWByYBHRKbiwnQY0P0X/Fkyw2MCArkpHWGzCIo
+         JSne6fre8wY++Pv4HFkVMGOaRmIeGjtgxReUYRWOxP29BocjcyI1bW01l44Bmr5FsMFf
+         LZkkX26YZKW3jClMYyxxhAUv25w1rhVfpdU4RuzfDZC/1CMZs1rYQgzybwP/rChcqPuJ
+         DdQN9SIbYJmWxa6TV36syFizVQ8heZuXi+ztDUMeb3L0+AXFuqUByq/GFF0nqA2j1PJD
+         3S5w==
+X-Gm-Message-State: AElRT7E5F8oWt2PDVScRQCbYlHe6hp4nynkSn7gaUcs/MFa17WbI0l0d
+        RQk9D3lffEVJEevJZwKVZazmtMXw9ZC2BFiGxmABkg==
+X-Google-Smtp-Source: AG47ELujWcU7rbGrWs8OJlwIrspAfgwYeYXU+17Yak46zWKhDdvVpv/Mxh07oh2gBC64BoYdawkHg5tHh8jC6gWB7+k=
+X-Received: by 10.55.88.7 with SMTP id m7mr12774036qkb.133.1520069647951; Sat,
+ 03 Mar 2018 01:34:07 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.12.142.14 with HTTP; Sat, 3 Mar 2018 01:30:01 -0800 (PST)
-In-Reply-To: <20180303033918.15751-4-pclouds@gmail.com>
-References: <20180303033918.15751-1-pclouds@gmail.com> <20180303033918.15751-4-pclouds@gmail.com>
+Received: by 10.12.142.14 with HTTP; Sat, 3 Mar 2018 01:34:07 -0800 (PST)
+In-Reply-To: <20180303092307.3796-2-pclouds@gmail.com>
+References: <20180303092307.3796-1-pclouds@gmail.com> <20180303092307.3796-2-pclouds@gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sat, 3 Mar 2018 04:30:01 -0500
-X-Google-Sender-Auth: 5hJkBuvWpw1ekQbs1WnXxSQqxkE
-Message-ID: <CAPig+cQG8yEqunNUjoEAPY-W9+TtzWADhgjdL6udnyrG0YEOVg@mail.gmail.com>
-Subject: Re: [PATCH 3/3] worktree prune: improve prune logic when worktree is moved
+Date:   Sat, 3 Mar 2018 04:34:07 -0500
+X-Google-Sender-Auth: 5ZqbTtP9quwnUyfP3mgXbX4mniQ
+Message-ID: <CAPig+cQP1ABWJUPW1BOTUxvsJ_aO_zsinxkuCOjyWYVOTKHR0g@mail.gmail.com>
+Subject: Re: [PATCH 1/2] completion: don't set PARSE_OPT_NOCOMPLETE on --rerere-autoupdate
 To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
         <pclouds@gmail.com>
-Cc:     Git List <git@vger.kernel.org>
+Cc:     Git List <git@vger.kernel.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
@@ -64,54 +67,16 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 2, 2018 at 10:39 PM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =
-<pclouds@gmail.com> wrote:
-> Worktree manual move support is actually gone in 618244e160 (worktree:
-> stop supporting moving worktrees manually - 2016-01-22). Before that,
-> this gitdir could be updated often when the worktree is accessed. That
-> keeps the worktree from being pruned by this logic.
+On Sat, Mar 3, 2018 at 4:23 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <=
+pclouds@gmail.com> wrote:
+> There is not a strong reason to hide this option, and git-merge already
+> completes this one. Let's allow to complete this for all commands (and
+> let git-completion.bash do the suppressing if neede).
 
-I had a bit of trouble digesting this paragraph. Possible rewrite:
+s/neede/needed/
 
-    Automatic detection of worktree relocation by a user (via 'mv',
-    for instance) was removed by 618244e160 (worktree: stop supporting
-    moving worktrees manually - 2016-01-22). Prior to that,
-    .git/worktrees/<tag>/gitdir was updated whenever the worktree was
-    accessed in order to let the pruning logic know that the worktree
-    was "active" even if it disappeared for a while (due to being
-    located on removable media, for instance).
-
-> "git worktree move" is coming so we don't really need this, but since
-> it's easy to do, perhaps we could keep supporting manual worktree move a
-> bit longer. Notice that when a worktree is active, the "index" file
-> should be updated pretty often in common case. The logic is updated to
-> check for index mtime to see if the worktree is alive.
-
-Seems like a reasonable approximation of the pre-618244e160 way things work=
-ed.
-
+> This makes --rerere-autoupdate completable for am, cherry-pick and
+> revert.
+>
 > Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.c=
 om>
-> ---
-> diff --git a/builtin/worktree.c b/builtin/worktree.c
-> @@ -101,6 +101,9 @@ static int prune_worktree(const char *id, struct strb=
-uf *reason)
->         if (!file_exists(path)) {
->                 free(path);
->                 if (st.st_mtime <=3D expire) {
-
-This st.st_mtime is that of 'gitdir'...
-
-> +                       if (!stat(git_path("worktrees/%s/index", id), &st=
-) &&
-> +                           st.st_mtime > expire)
-
-...and this st.st_mtime is of 'index'.
-
-I wonder if it the 'gitdir' mtime check is really that useful anymore
-considering that 'index' mtime will almost certainly be more recent.
-
-> +                               return 0;
->                         strbuf_addf(reason, _("Removing worktrees/%s: git=
-dir file points to non-existent location"), id);
->                         return 1;
