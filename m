@@ -2,295 +2,332 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5F2151F404
-	for <e@80x24.org>; Sat,  3 Mar 2018 18:27:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B7F501F404
+	for <e@80x24.org>; Sat,  3 Mar 2018 21:10:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752127AbeCCS1b (ORCPT <rfc822;e@80x24.org>);
-        Sat, 3 Mar 2018 13:27:31 -0500
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:46367 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751827AbeCCS13 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 3 Mar 2018 13:27:29 -0500
-Received: by mail-pg0-f65.google.com with SMTP id r26so5129948pgv.13
-        for <git@vger.kernel.org>; Sat, 03 Mar 2018 10:27:29 -0800 (PST)
+        id S1752305AbeCCVKA (ORCPT <rfc822;e@80x24.org>);
+        Sat, 3 Mar 2018 16:10:00 -0500
+Received: from mail-wm0-f44.google.com ([74.125.82.44]:35510 "EHLO
+        mail-wm0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752129AbeCCVJ7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 3 Mar 2018 16:09:59 -0500
+Received: by mail-wm0-f44.google.com with SMTP id x7so8899870wmc.0
+        for <git@vger.kernel.org>; Sat, 03 Mar 2018 13:09:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=SfQ2kQqxybjbKfwkTxk+Ek/vzlZbZqP4Bwn7ZeuaX/g=;
-        b=p9to2drSowc+8SBTrncbho7TKz1kQjOwCh8VXq8KsWij3GS0AFbKDRSjwOYH+4CIlT
-         PTyCno4dPYY2kMJiJfRTGt4XH5tz09K0ZmRo9PBluDgQ0yAyEL0IvG8VCgSbwqPOb6QY
-         5Y/ddXa7nO6Eq7y6eeCjPbbLpC/urpRrtYwZcr5L9J12buUjEnHs5TboIGugHW2LCzas
-         ncfy8qY3f9N2mlwc+feOnVhJPj/L4trCSYGF066Jfryd4pnJDaoBT/GEpmag+MUwfmlQ
-         XdnyVzKhgwV6EaKApD8k31v1vlsDjaSTQQqD1eOiFKhaIu3OsPkOr8USbs8Nh3+mmuIl
-         aZDg==
+        h=from:to:cc:subject:date:message-id;
+        bh=m+Ms0O/0PvI9yBd1YI/3yrr0aTsJ9vPqVctcN6lPN4M=;
+        b=HDvjWVMNrjEp7k76PUCNwBHsoI5sHEAaQa3U2+JzPIeELYbyc9xxE3Au9UaShD8hRW
+         sbsRLL/uuZPbd8KJxyVqX1WNthyKoDHXlLWoIIOUJULKleOFYB4rQb442mLQVSWCku2F
+         yRHJRwa/Nn4M8LHGK/+GwzGJgqHGGTOpbyleslG5YG08OsPVwY7LreQz9Tt/++qzz1KV
+         QATe63oHd3nrB30kP/+ZOsjbl/thiZWNPOLgcjr4e/cnd1sKh/tDps+p5vG5y4h4Gmi4
+         xHk2ufsM2HI7OBqAVg+/PIO0KI147iS7XGfvb2oJt8tUPAFSXehv2cUnhHDHZIfZEH91
+         IRYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=SfQ2kQqxybjbKfwkTxk+Ek/vzlZbZqP4Bwn7ZeuaX/g=;
-        b=qxkR4FydU88hzflsmZJX2WJL5/wkbfISRU4vBZEV8pOGwSuyA6y3SEK1dYlEzLo8o6
-         VYDsg6fk0KZpQzN/v8BAm6XTOwJ/F/XyA8kwN3Z7M3wbMCvRnk5P7W+sfHlwHlYelB66
-         jpi0XMRTeZdXy9+StMk1Bmln0+e+n6jkNhz62gWr+8E/f42rfGCS2t9ShQN56eeI5tv1
-         anKMc6onlVmssUyzc3gadO9UDp2PgbF5xSkh8g51s6FGCOxZ8nL4W5PgreJJyML1K2eF
-         oEMT4AHL8zyzkE94IddM9Ialj+Fzg3F6rRX9vRsB9NBbl2HZ0GYYsrZj/zVpZc5ELE82
-         qAHQ==
-X-Gm-Message-State: APf1xPBXBQGEfsyIMIGmDkK+2bt0KPkhDvxYDzRTghOhD01vYoLB/hiP
-        v1lDQCys4SiSt1Cf63FOuQE=
-X-Google-Smtp-Source: AG47ELvqhUVN+Ls/pHGVlQWeZVNAu7Fx0b1dJ1V6u7RqtqtwpU1IrZ2ak0tOxH0qmjEfcFmaCh6RtA==
-X-Received: by 10.101.72.199 with SMTP id o7mr7857939pgs.303.1520101648737;
-        Sat, 03 Mar 2018 10:27:28 -0800 (PST)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id z79sm18559754pfa.139.2018.03.03.10.27.27
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 03 Mar 2018 10:27:27 -0800 (PST)
-Date:   Sat, 3 Mar 2018 10:27:23 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [RFC] Contributing to Git (on Windows)
-Message-ID: <20180303182723.GA76934@aiede.svl.corp.google.com>
-References: <176408fc-3645-66d3-2aa3-30ca3fa723e7@gmail.com>
- <20180302044409.GC238112@aiede.svl.corp.google.com>
- <xmqq606ee89v.fsf@gitster-ct.c.googlers.com>
- <nycvar.QRO.7.76.6.1803031721590.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.1803031721590.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=m+Ms0O/0PvI9yBd1YI/3yrr0aTsJ9vPqVctcN6lPN4M=;
+        b=HoP6rxeIbCo7/Kh+Rxsy68xmpkH0WFh8TEcWEgdvUi9H80ysrRu4R7BNnFVJ2HAmAb
+         ArdauNsVCDbiSPBsJJQph2BfJRkzYBAf4HYuhf1L+/mTXNfcjRsy3qJyJXhRM45jclAO
+         COsb4zrF7Yt/brI/2QfKUKhvgu5s07oRp4vBYIjO/YZ+edojHgY71RKIyC5WRXJrJ/+j
+         Qv3Bg2Zl7FsWX0XMCLjh6KQVoPGsccMnbkf60xVrt+CNJ/8ZX2bFaSEGtepEUQun3jhf
+         VyKE1D+qDBkIM2E6+yojpqktYMy6HYSlkcNG8U+aGphf9V1QVNrVie+7EcAfBaf1vUwz
+         mGRg==
+X-Gm-Message-State: AElRT7F+7YU1+vZHGvmnwGOQdJCVnRbKFEA1bxrrElE+kXlvmokNcoHk
+        vgRVxsLGGyShq4hsF/B1kxTDCKM9
+X-Google-Smtp-Source: AG47ELskwd1bXsVe+yal3BiQ27L6f2Vp/FwxHHt21PiN8hFXp2GKmTLMjsJLGz8j4mYlodyE1ajtmA==
+X-Received: by 10.28.87.211 with SMTP id l202mr4212864wmb.32.1520111397857;
+        Sat, 03 Mar 2018 13:09:57 -0800 (PST)
+Received: from localhost.localdomain (5-13-157-86.residential.rdsnet.ro. [5.13.157.86])
+        by smtp.gmail.com with ESMTPSA id p104sm12791967wrb.47.2018.03.03.13.09.56
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 03 Mar 2018 13:09:56 -0800 (PST)
+From:   Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
+Subject: [GSoC][PATCH v3] Make options that expect object ids less chatty if id is invalid
+Date:   Sat,  3 Mar 2018 23:09:38 +0200
+Message-Id: <20180303210938.32474-1-ungureanupaulsebastian@gmail.com>
+X-Mailer: git-send-email 2.16.2.346.g22874a30c
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Dscho,
+Usually, the usage should be shown only if the user does not know what
+options are available. If the user specifies an invalid value, the user
+is already aware of the available options. In this case, there is no
+point in displaying the usage anymore.
 
-Johannes Schindelin wrote:
->> Jonathan Nieder <jrnieder@gmail.com> writes:
->>> Dereck Stolee wrote:
+This patch applies to "git tag --contains", "git branch --contains",
+"git branch --points-at", "git for-each-ref --contains" and many more.
 
->>>> +Test Your Changes on Linux
->>>> +--------------------------
->>>> +
->>>> +It can be important to work directly on the [core Git
->>>> codebase](https://github.com/git/git), +such as a recent commit into
->>>> the `master` or `next` branch that has not been incorporated +into
->>>> Git for Windows. Also, it can help to run functional and performance
->>>> tests on your +code in Linux before submitting patches to the
->>>> Linux-focused mailing list.
->>>
->>> I'm surprised at this advice.  Does it actually come up?
->
-> Yes.
->
-> I personally set up the automated builds on Windows, Linux and macOS for
-> our team, and as a rule we always open an internal Pull Request on our
-> topic branches as we develop them, and you would probably not believe the
-> number of issues we caught before sending the patches to this list. Issues
-> including
-[nice list snipped]
+Signed-off-by: Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
+---
+ builtin/update-index.c        |  2 +
+ parse-options.c               | 13 +++--
+ parse-options.h               |  1 +
+ t/t0040-parse-options.sh      |  9 ++--
+ t/t3404-rebase-interactive.sh |  2 +-
+ t/t3502-cherry-pick-merge.sh  |  8 +--
+ t/tcontains.sh                | 92 +++++++++++++++++++++++++++++++++++
+ 7 files changed, 111 insertions(+), 16 deletions(-)
+ create mode 100755 t/tcontains.sh
 
-Thanks for explaining.  I still am going to push back on the wording
-here, and here is why:
+diff --git a/builtin/update-index.c b/builtin/update-index.c
+index 58d1c2d28..eeee1c170 100644
+--- a/builtin/update-index.c
++++ b/builtin/update-index.c
+@@ -1060,6 +1060,8 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
+ 		switch (parseopt_state) {
+ 		case PARSE_OPT_HELP:
+ 			exit(129);
++		case PARSE_OPT_ERROR:
++			exit(1);
+ 		case PARSE_OPT_NON_OPTION:
+ 		case PARSE_OPT_DONE:
+ 		{
+diff --git a/parse-options.c b/parse-options.c
+index d02eb8b01..eee401662 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -434,7 +434,6 @@ int parse_options_step(struct parse_opt_ctx_t *ctx,
+ 		       const char * const usagestr[])
+ {
+ 	int internal_help = !(ctx->flags & PARSE_OPT_NO_INTERNAL_HELP);
+-	int err = 0;
+ 
+ 	/* we must reset ->opt, unknown short option leave it dangling */
+ 	ctx->opt = NULL;
+@@ -459,7 +458,7 @@ int parse_options_step(struct parse_opt_ctx_t *ctx,
+ 			ctx->opt = arg + 1;
+ 			switch (parse_short_opt(ctx, options)) {
+ 			case -1:
+-				goto show_usage_error;
++				return PARSE_OPT_ERROR;
+ 			case -2:
+ 				if (ctx->opt)
+ 					check_typos(arg + 1, options);
+@@ -472,7 +471,7 @@ int parse_options_step(struct parse_opt_ctx_t *ctx,
+ 			while (ctx->opt) {
+ 				switch (parse_short_opt(ctx, options)) {
+ 				case -1:
+-					goto show_usage_error;
++					return PARSE_OPT_ERROR;
+ 				case -2:
+ 					if (internal_help && *ctx->opt == 'h')
+ 						goto show_usage;
+@@ -504,7 +503,7 @@ int parse_options_step(struct parse_opt_ctx_t *ctx,
+ 			goto show_usage;
+ 		switch (parse_long_opt(ctx, arg + 2, options)) {
+ 		case -1:
+-			goto show_usage_error;
++			return PARSE_OPT_ERROR;
+ 		case -2:
+ 			goto unknown;
+ 		}
+@@ -517,10 +516,8 @@ int parse_options_step(struct parse_opt_ctx_t *ctx,
+ 	}
+ 	return PARSE_OPT_DONE;
+ 
+- show_usage_error:
+-	err = 1;
+  show_usage:
+-	return usage_with_options_internal(ctx, usagestr, options, 0, err);
++	return usage_with_options_internal(ctx, usagestr, options, 0, 0);
+ }
+ 
+ int parse_options_end(struct parse_opt_ctx_t *ctx)
+@@ -543,6 +540,8 @@ int parse_options(int argc, const char **argv, const char *prefix,
+ 	case PARSE_OPT_NON_OPTION:
+ 	case PARSE_OPT_DONE:
+ 		break;
++	case PARSE_OPT_ERROR:
++		exit(1);
+ 	default: /* PARSE_OPT_UNKNOWN */
+ 		if (ctx.argv[0][1] == '-') {
+ 			error("unknown option `%s'", ctx.argv[0] + 2);
+diff --git a/parse-options.h b/parse-options.h
+index af711227a..c77bb3b4f 100644
+--- a/parse-options.h
++++ b/parse-options.h
+@@ -188,6 +188,7 @@ enum {
+ 	PARSE_OPT_HELP = -1,
+ 	PARSE_OPT_DONE,
+ 	PARSE_OPT_NON_OPTION,
++	PARSE_OPT_ERROR,
+ 	PARSE_OPT_UNKNOWN
+ };
+ 
+diff --git a/t/t0040-parse-options.sh b/t/t0040-parse-options.sh
+index 0c2fc81d7..8af12e8a1 100755
+--- a/t/t0040-parse-options.sh
++++ b/t/t0040-parse-options.sh
+@@ -162,9 +162,9 @@ test_expect_success 'long options' '
+ '
+ 
+ test_expect_success 'missing required value' '
+-	test_expect_code 129 test-parse-options -s &&
+-	test_expect_code 129 test-parse-options --string &&
+-	test_expect_code 129 test-parse-options --file
++	test_expect_code 1 test-parse-options -s &&
++	test_expect_code 1 test-parse-options --string &&
++	test_expect_code 1 test-parse-options --file
+ '
+ 
+ cat >expect <<\EOF
+@@ -214,7 +214,7 @@ test_expect_success 'unambiguously abbreviated option with "="' '
+ '
+ 
+ test_expect_success 'ambiguously abbreviated option' '
+-	test_expect_code 129 test-parse-options --strin 123
++	test_expect_code 1 test-parse-options --strin 123
+ '
+ 
+ test_expect_success 'non ambiguous option (after two options it abbreviates)' '
+@@ -291,6 +291,7 @@ test_expect_success 'OPT_CALLBACK() and OPT_BIT() work' '
+ test_expect_success 'OPT_CALLBACK() and callback errors work' '
+ 	test_must_fail test-parse-options --no-length >output 2>output.err &&
+ 	test_i18ncmp expect output &&
++	>expect.err &&
+ 	test_i18ncmp expect.err output.err
+ '
+ 
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index ef2887bd8..e6a0766f8 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -921,7 +921,7 @@ test_expect_success 'rebase -i --exec without <CMD>' '
+ 	set_fake_editor &&
+ 	test_must_fail git rebase -i --exec 2>tmp &&
+ 	sed -e "1d" tmp >actual &&
+-	test_must_fail git rebase -h >expected &&
++	>expected &&
+ 	test_cmp expected actual &&
+ 	git checkout master
+ '
+diff --git a/t/t3502-cherry-pick-merge.sh b/t/t3502-cherry-pick-merge.sh
+index b1602718f..157cbcdb2 100755
+--- a/t/t3502-cherry-pick-merge.sh
++++ b/t/t3502-cherry-pick-merge.sh
+@@ -34,10 +34,10 @@ test_expect_success setup '
+ test_expect_success 'cherry-pick -m complains of bogus numbers' '
+ 	# expect 129 here to distinguish between cases where
+ 	# there was nothing to cherry-pick
+-	test_expect_code 129 git cherry-pick -m &&
+-	test_expect_code 129 git cherry-pick -m foo b &&
+-	test_expect_code 129 git cherry-pick -m -1 b &&
+-	test_expect_code 129 git cherry-pick -m 0 b
++	test_expect_code 1 git cherry-pick -m &&
++	test_expect_code 1 git cherry-pick -m foo b &&
++	test_expect_code 1 git cherry-pick -m -1 b &&
++	test_expect_code 1 git cherry-pick -m 0 b
+ '
+ 
+ test_expect_success 'cherry-pick a non-merge with -m should fail' '
+diff --git a/t/tcontains.sh b/t/tcontains.sh
+new file mode 100755
+index 000000000..4856111ff
+--- /dev/null
++++ b/t/tcontains.sh
+@@ -0,0 +1,92 @@
++#!/bin/sh
++
++test_description='Test "contains" argument behavior'
++
++. ./test-lib.sh
++
++test_expect_success 'setup ' '
++	git init . &&
++	echo "this is a test" >file &&
++	git add -A &&
++	git commit -am "tag test" &&
++	git tag "v1.0" &&
++	git tag "v1.1"
++'
++
++test_expect_success 'tag --contains <existent_tag>' '
++	git tag --contains "v1.0" >actual &&
++	grep "v1.0" actual &&
++	grep "v1.1" actual
++'
++
++test_expect_success 'tag --contains <inexistent_tag>' '
++	test_must_fail git tag --contains "notag" 2>actual &&
++	test_i18ngrep "error" actual
++'
++
++test_expect_success 'tag --no-contains <existent_tag>' '
++	git tag --no-contains "v1.1" >actual &&
++	test_line_count = 0 actual
++'
++
++test_expect_success 'tag --no-contains <inexistent_tag>' '
++	test_must_fail git tag --no-contains "notag" 2>actual &&
++	test_i18ngrep "error" actual
++'
++
++test_expect_success 'tag usage error' '
++	test_must_fail git tag --noopt 2>actual &&
++	test_i18ngrep "usage" actual
++'
++
++test_expect_success 'branch --contains <existent_commit>' '
++	git branch --contains "master" >actual &&
++	test_i18ngrep "master" actual
++'
++
++test_expect_success 'branch --contains <inexistent_commit>' '
++	test_must_fail git branch --no-contains "nocommit" 2>actual &&
++	test_i18ngrep "error" actual
++'
++
++test_expect_success 'branch --no-contains <existent_commit>' '
++	git branch --no-contains "master" >actual &&
++	test_line_count = 0 actual
++'
++
++test_expect_success 'branch --no-contains <inexistent_commit>' '
++	test_must_fail git branch --no-contains "nocommit" 2>actual &&
++	test_i18ngrep "error" actual
++'
++
++test_expect_success 'branch usage error' '
++	test_must_fail git branch --noopt 2>actual &&
++	test_i18ngrep "usage" actual
++'
++
++test_expect_success 'for-each-ref --contains <existent_object>' '
++	git for-each-ref --contains "master" >actual &&
++	test_line_count = 3 actual
++'
++
++test_expect_success 'for-each-ref --contains <inexistent_object>' '
++	test_must_fail git for-each-ref --no-contains "noobject" 2>actual &&
++	test_i18ngrep "error" actual
++'
++
++test_expect_success 'for-each-ref --no-contains <existent_object>' '
++	git for-each-ref --no-contains "master" >actual &&
++	test_line_count = 0 actual
++'
++
++test_expect_success 'for-each-ref --no-contains <inexistent_object>' '
++	test_must_fail git for-each-ref --no-contains "noobject" 2>actual &&
++	test_i18ngrep "error" actual
++'
++
++test_expect_success 'for-each-ref usage error' '
++	test_must_fail git for-each-ref --noopt 2>actual &&
++	test_i18ngrep "usage" actual
++'
++
++test_done
+-- 
+2.16.2.346.g22874a30c
 
- 1. Approximately 1/2 of the differences you describe apply to Mac as
-    well as Windows.  The advice certainly does not apply on Mac.
-
-    You might object: Mac readers would not be reading this text!  But
-    that is not how humans work: if project documentation (e.g. the
-    CONTRIBUTING.md on GitHub!) says that the project is Linux-focused
-    and if you don't test on Linux then you might as well not bother,
-    then people are going to believe it.
-
- 2. It is not unusual for Linux users to make portability mistakes that
-    are quickly pointed out on list.  If anything, the advice to test on
-    other platforms should apply to contributors on Linux even more.
-    This happens especially often to new contributors, who sometimes use
-    bashisms, etc that get quickly pointed out.
-
- 3. I do not *want* Git to be a Linux-focused project; I want the code
-    to perform well on all popular platforms and for people not to be
-    afraid to make it so.
-
-    If the docs say that all we care about is Linux, then people are
-    likely to be too scared to do the necessary and valuable work of
-    making it work well on Mac, Windows, etc.  The actual mix of
-    contributors doesn't bear it out anyway: a large number of
-    contributors are already on Mac or Windows.
-
-Fortunately this is pretty straightforward to fix in the doc: it could
-say something like "to the multi-platform focused mailing list", for
-example.
-
-[...]
-> To my chagrin, this idea of making most of the boring stuff (and I include
-> formatting in that category, but I am probably special in that respect) as
-> automatable, and as little of an issue for review as possible, leaving
-> most brain cycles to work on the correctness of the patches instead, did
-> not really receive a lot of traction on this mailing list.
-
-Huh?  I'm confident that this is a pretty widely supported idea within
-the Git project.
-
-I get the feeling you must have misread something or misinterpreted a
-different response.
-
-[...]
-> No, this advice comes straight from my personal observation that the
-> reviewers on the Git mailing list are Linux-centric.
-
-Hopefully the clarifications and suggestions higher in this message
-help.  If they don't, then I'm nervous about our ability to understand
-each other.
-
-[...]
-> Now, how reasonable do I think it is to ask those contributors to purchase
-> an Apple machine to test their patches on macOS (you cannot just download
-> an .iso nor would it be legal to run a macOS VM on anything but Apple
-> hardware)? You probably guessed my answer: not at all.
-
-Agreed, this is something that needs to be automated (and not via a
-CONTRIBUTING.md file).  As a stopgap, having a section in the
-contribution instructions about testing using Windows's Linux
-subsystem is a valuable thing, and thanks for that; I never meant to
-imply otherwise.
-
-[...]
-> On Fri, 2 Mar 2018, Junio C Hamano wrote:
-
->> In fact, portability issues in a patch originally written for a platform
->> is rather quickly discovered if the original platform is more minor than
->> the others, so while it is good advice to test your ware before you make
->> it public, singling out the portability issues may not add much value.
->> The fewer number of obvious bugs remaining, the fewer number of
->> iterations it would take for a series to get in a good shape.
-[...]
-> For you, Junio, however, the task *now* is to put yourself into the shoes
-> of a Computer Science student in their 2nd year who wants to become an
-> Open Source contributor and is a little afraid to talk directly to "the
-> core committers", and quite scared what negative feedback they might
-> receive.
->
-> "What if they say my code is not good enough?"
-
-Sure, though there is something implied in what is Junio is saying
-that is useful for such people.
-
-It is patience.  It is the message that if you miss a portability bug,
-we won't be disappointed in you, and it in fact happens all the time
-to the best of contributors.
-
-If there's a straightforward way to convey that in the text, I agree
-with Junio that it's worth conveying.
-
-[...]
->>>> +When preparing your patch, it is important to put yourself in the
->>>> shoes of the maintainer.
->>>
->>> ... and in the shoes of other users and developers working with Git down
->>> the line who will interact with the patch later!
->>>
->>> Actually, the maintainer is one of the least important audiences for a
->>> commit message.  But may 'the maintainer' is a stand-in for 'the
->>> project' here?
-[...]
-> Is this not missing the point of this sentence? Those "senior reviewers"
-> also put themselves into the shoes of the maintainer, because considering
-> future readers is kind of the typical responsibility of the maintainer.
-
-Only in the sense that what the project does is to "maintain".
-(Aside: is developing, deploying, supporting users part of
-maintenance?  I don't actually think so!  We can call it that if you
-like, though.).
-
-To put this discussion on a more practical footing: I see new
-contributors confusing the maintainer for the audience for their
-changes all the time, and it hurts them.  They get some useful (and
-some unuseful, sadly) replies from the project and none from the
-maintainer and they end up confused: does this mean that the person
-that matters doesn't even care about my patch?
-
-Clarifying that the audience is *not* the maintainer can help.
-
-I would not be surprised if the Git for Windows project works
-differently: maybe you have the time, inclination, and ability to
-respond to every contributor directly early in the process.  There's
-nothing wrong with that, and it probably helps to make the process
-easier for contributors with this particular confusion.  Having a
-single person that is ready to talk to them and can stand in for what
-the entire project needs can make their life easier.
-
-But that's not sustainable in the Git project.  Larger projects either
-need multiple maintainers or a decrease in scope of the maintainer's
-role.  Junio uses the latter, which seems fine to me.
-
-Even something as simple as s/maintainer/maintainers/ would make this
-text less misleading for people contributing to upstream Git.
-
-[...]
->>>> +* Make sure the commits are signed off using `git commit
->>>> (-s|--signoff)`. This means that you testify to be allowed to
->>>> contribute your changes, in particular that if you did this on
->>>> company time, said company approved to releasing your work as Open
->>>> Source under the GNU Public License v2.
->>>
->>> Can this either point to or quote the relevant legal text from
->>> Documentation/SubmittingPatches?  It feels dangerous (in the sense of,
->>> potentially leading to misunderstandings and major future pain) to ask
->>> people to sign off without them knowing exactly what that means.
->>
->> When you can point at an existing test in legal context, it is safer
->> to do so rather than attempting to "rephrase" it yourself (unless
->> you are a lawyer, of course, in which case you can assess the best
->> course of action yourself).
->
-> Please note: Documentation/SubmittingPatches is not a legal text. At least
-> I have not seen any accredited lawyer commenting on the validity of this
-> document, or how much sense it makes.
-
-This seems to reflect a misunderstanding of how law works, at least in
-the United States.
-
-I don't know how one would define what a legal text means.  I assume
-you mean "a contract", and I certainly don't care to evaluate whether
-some particular text is a contract: I am not a lawyer.
-
-But there are all kinds of other actions or words with legal
-implications:
-
- - promises
- - injuries
- - etc, etc, etc
-
-Basically anything someone ever does has potential legal implications.
-
-The developer's certificate of origin has been reviewed by plenty of
-lawyers.  You can have your own lawyers review it too if you like.
-
-That's all side-stepping what I was saying, which is that it's bad for
-the project for people to be signing off without knowing what it
-means.
-
-[...]
-> Even so, Git for Windows' own wiki
-> (https://github.com/git-for-windows/git/wiki/Good-commits) links to a
-> particular version of Documentation/SubmittingPatches so that it can
-> specifically mark the DCO:
->
-> https://github.com/git/git/blob/v2.8.1/Documentation/SubmittingPatches#L234-L286
-
-Great.  That's the sort of thing I'm asking for in this new
-contributors document.  Why in the world is it useful to push back
-against such a request?
-
-Confused,
-Jonathan
