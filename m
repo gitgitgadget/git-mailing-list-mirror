@@ -7,58 +7,58 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6B43D1F404
-	for <e@80x24.org>; Sat,  3 Mar 2018 03:39:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 302211F404
+	for <e@80x24.org>; Sat,  3 Mar 2018 03:39:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751890AbeCCDja (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Mar 2018 22:39:30 -0500
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:38410 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751309AbeCCDj3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Mar 2018 22:39:29 -0500
-Received: by mail-pf0-f194.google.com with SMTP id d26so4816149pfn.5
-        for <git@vger.kernel.org>; Fri, 02 Mar 2018 19:39:29 -0800 (PST)
+        id S932082AbeCCDjf (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Mar 2018 22:39:35 -0500
+Received: from mail-pl0-f68.google.com ([209.85.160.68]:34449 "EHLO
+        mail-pl0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932079AbeCCDje (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Mar 2018 22:39:34 -0500
+Received: by mail-pl0-f68.google.com with SMTP id u13-v6so6798052plq.1
+        for <git@vger.kernel.org>; Fri, 02 Mar 2018 19:39:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=MJz7mVRxhzQWWUmY2VKUxiDi3HsGM0cUBxYxgx3CYYw=;
-        b=U76JqdwZ1n4gey+gB8J8WmdECbhymVRqrpyHp5dGlc6EJjIV+x+pXZ8bJ/hRT/B6gq
-         GWuzc613BlHnD6unjp1Oa5lnSNfOzakAzgEg5OVYyqdoLlwM08HM330KjgTiguDr/L+p
-         lzCxz2iVmJPBL/izkglmB9FYMiPPuln1J19nHAELwu6sBSHTmPsEY8VY/gbm/yIV+fG7
-         SsOErmSloDHN1eXa6xX33ttK6Ey+5+lQd752TbFMVA9r3b2xNt0hBfM9tnCHJy+aAGqP
-         V6pYouo+NEST2t5iqgmf153+XlYy5SHCh9y9mjnUeLzQYx17ci0EtRQWCCkXePTLHUYR
-         2uSA==
+        bh=SOexYiPbUmIAPfzfY6+wtGwGckGHYKN8PQQGQdgmnUA=;
+        b=FJp/ydhD/9afqNwThAEqYtQ/EZo6kA9jkaKZwVijooJCMFxVHjrght5UknhJy1QME/
+         zpbG01fYFr/qdrqmxCC9gLZ5ZkmhOvj4SMHtHvmuYY9z2TLJqgo/sPY0VUJP2gfWvC97
+         BbUMLswb72CMzRU8jpPdT/Pvj/gOaQdi0NrJkC8xFEXyVtFIJJzQi3JNnuvU+FQUfqjU
+         Q0iII/XOlOVdjxpZgZqoegEL1Ucff0oJRzwFDh8uFQG8ZHG9oWG1YH6FouZ8LedgqFBj
+         BLcmm/ZXLDcqnkvMAC5dlfI5gDhGHwr/3UyUW+uNPCbGajqu5KtE9ZER1BCoUHJtZFsc
+         6Ofw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=MJz7mVRxhzQWWUmY2VKUxiDi3HsGM0cUBxYxgx3CYYw=;
-        b=KkCmJgnFzq3nM4toYZULCzq0WryIH4qHI0ht8iLEzZKAwJ02Rffi2eJOsNzjivXBmN
-         Mto4oG3XxpYhplAUV8NRPmDMOtTp6AbKyqko93Tpbj7OUDCDcKBXfBlODzdEDPUwR1gS
-         waoK+PAtA0Py4nrrKdsdfgWulTqFdP0Q9uoZ1J5Z3PudyvEdd0C26C3kEQXfOduJxyQx
-         IU9x8SxOb6OAaz+qmZG/SN4K22+x18dYc8rUu1GmiEMe3lgQB44M7mcIC73g/ig8UJ7b
-         vhKAPmVkbbjp5ntlDyqojSHIObjwjKQRHBpddWBwkLMlUnknxzDdXU41Qix1HJQmm9xb
-         OMpA==
-X-Gm-Message-State: APf1xPADnY+wrsjDnqTgrX6ZOGv/l1XGZl2K2LTDPZ0OobYfIa8iQWG3
-        omysEViTnWo5+gpYAF/dAb9MFg==
-X-Google-Smtp-Source: AG47ELve3xZzFCU7HWIWnMNwiUEjmhJS6H8shaZ3R0qW4rC7KbFPB/s6/YWJaMRZsvtM0hvishxnXg==
-X-Received: by 10.101.82.69 with SMTP id q5mr6188987pgp.259.1520048368873;
-        Fri, 02 Mar 2018 19:39:28 -0800 (PST)
+        bh=SOexYiPbUmIAPfzfY6+wtGwGckGHYKN8PQQGQdgmnUA=;
+        b=laS6/5DJFUK2k3iD0b8uwHvCmh8t0lCo49frNNOh//9ZC0G6keYAVBoAEf3VAw+dvD
+         7CFB5ku3hxMowH8V97jVaT7sXWgWgCSExiZBfWxgq/rK5BsoADC8OGx4DmZBG/xrIxJo
+         afckrzyShiLs44/mvw4va+D6d2kUSrXs//qcZ1pCQMGM1x+WMkjULdh84SjJbtlvulc+
+         0kOy4hSXXk0xCDUb3HVe8W4EMpDKHxvHTYdZhKW855iDxsLPOMwMQk+9rGfgLXrTa7C0
+         hshwMUYeuDseT5Q1JAtQaPZiLZ13lT5XvQtpPWxAygwMRMlOn98KA8qoO8nzt9zbLZi4
+         aldA==
+X-Gm-Message-State: APf1xPDToqAGvTrnVojRKaH2Uf1DtsTIPRcefgfZpqfxzxU7RB0zPEtA
+        +nS7ceK/RPrDS5L+iyBlepm3AQ==
+X-Google-Smtp-Source: AG47ELvnU8bYRP/+3TC1Qyi13UtsPXD3MDI231yYpeAHIk/C+7qWeCZF5/tsuVgBqa/+kUHjsFeErg==
+X-Received: by 2002:a17:902:a588:: with SMTP id az8-v6mr7335451plb.10.1520048373540;
+        Fri, 02 Mar 2018 19:39:33 -0800 (PST)
 Received: from ash ([171.232.93.137])
-        by smtp.gmail.com with ESMTPSA id j23sm1843412pfi.78.2018.03.02.19.39.26
+        by smtp.gmail.com with ESMTPSA id a67sm11951360pgc.6.2018.03.02.19.39.30
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 02 Mar 2018 19:39:28 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Sat, 03 Mar 2018 10:39:24 +0700
+        Fri, 02 Mar 2018 19:39:33 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Sat, 03 Mar 2018 10:39:29 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 1/3] gc.txt: more details about what gc does
-Date:   Sat,  3 Mar 2018 10:39:16 +0700
-Message-Id: <20180303033918.15751-2-pclouds@gmail.com>
+Subject: [PATCH 2/3] worktree: delete dead code
+Date:   Sat,  3 Mar 2018 10:39:17 +0700
+Message-Id: <20180303033918.15751-3-pclouds@gmail.com>
 X-Mailer: git-send-email 2.16.1.435.g8f24da2e1a
 In-Reply-To: <20180303033918.15751-1-pclouds@gmail.com>
 References: <20180303033918.15751-1-pclouds@gmail.com>
@@ -70,48 +70,62 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+This "link" was a feature in early iterations of multiple worktree
+functionality but for some reason it was dropped. Since nobody creates
+this "link", there's no need to check it.
+
+This is mostly used to let the user moves a worktree manually [1]. If
+you move a worktree within the same file system, this hard link count
+lets us know the worktree is still there even if we don't know where it
+is.
+
+We're having proper worktree move support now and don't need this
+anymore.
+
+[1] 23af91d102 (prune: strategies for linked checkouts - 2014-11-30)
+
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- Documentation/git-gc.txt | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ Documentation/gitrepository-layout.txt | 5 -----
+ builtin/worktree.c                     | 8 --------
+ 2 files changed, 13 deletions(-)
 
-diff --git a/Documentation/git-gc.txt b/Documentation/git-gc.txt
-index 571b5a7e3c..862c931104 100644
---- a/Documentation/git-gc.txt
-+++ b/Documentation/git-gc.txt
-@@ -15,8 +15,9 @@ DESCRIPTION
- -----------
- Runs a number of housekeeping tasks within the current repository,
- such as compressing file revisions (to reduce disk space and increase
--performance) and removing unreachable objects which may have been
--created from prior invocations of 'git add'.
-+performance), removing unreachable objects which may have been
-+created from prior invocations of 'git add', packing refs, pruning
-+reflog, rerere or stale working trees.
+diff --git a/Documentation/gitrepository-layout.txt b/Documentation/gitrepository-layout.txt
+index c60bcad44a..e85148f05e 100644
+--- a/Documentation/gitrepository-layout.txt
++++ b/Documentation/gitrepository-layout.txt
+@@ -275,11 +275,6 @@ worktrees/<id>/locked::
+ 	or manually by `git worktree prune`. The file may contain a string
+ 	explaining why the repository is locked.
  
- Users are encouraged to run this task on a regular basis within
- each repository to maintain good disk space utilization and good
-@@ -59,6 +60,10 @@ then existing packs (except those marked with a `.keep` file)
- are consolidated into a single pack by using the `-A` option of
- 'git repack'. Setting `gc.autoPackLimit` to 0 disables
- automatic consolidation of packs.
-++
-+If `git gc --auto` goes ahead because of either too loose objects or
-+packs, all other housekeeping tasks (e.g. rerere, working trees,
-+reflog...) will also be be performed.
- 
- --prune=<date>::
- 	Prune loose objects older than date (default is 2 weeks ago,
-@@ -133,6 +138,9 @@ The optional configuration variable `gc.pruneExpire` controls how old
- the unreferenced loose objects have to be before they are pruned.  The
- default is "2 weeks ago".
- 
-+The optional gc.worktreePruneExpire controls how old a stale working
-+tree before `git worktree prune` deletes it. The default is "3 months
-+ago".
- 
- Notes
- -----
+-worktrees/<id>/link::
+-	If this file exists, it is a hard link to the linked .git
+-	file. It is used to detect if the linked repository is
+-	manually removed.
+-
+ SEE ALSO
+ --------
+ linkgit:git-init[1],
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index 4e7c98758f..60440c4106 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -99,15 +99,7 @@ static int prune_worktree(const char *id, struct strbuf *reason)
+ 	}
+ 	path[len] = '\0';
+ 	if (!file_exists(path)) {
+-		struct stat st_link;
+ 		free(path);
+-		/*
+-		 * the repo is moved manually and has not been
+-		 * accessed since?
+-		 */
+-		if (!stat(git_path("worktrees/%s/link", id), &st_link) &&
+-		    st_link.st_nlink > 1)
+-			return 0;
+ 		if (st.st_mtime <= expire) {
+ 			strbuf_addf(reason, _("Removing worktrees/%s: gitdir file points to non-existent location"), id);
+ 			return 1;
 -- 
 2.16.1.435.g8f24da2e1a
 
