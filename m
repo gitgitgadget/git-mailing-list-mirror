@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D08861F404
-	for <e@80x24.org>; Sat,  3 Mar 2018 15:39:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5311D1F404
+	for <e@80x24.org>; Sat,  3 Mar 2018 15:39:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752168AbeCCPjG (ORCPT <rfc822;e@80x24.org>);
-        Sat, 3 Mar 2018 10:39:06 -0500
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:34995 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752125AbeCCPjE (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 3 Mar 2018 10:39:04 -0500
-Received: by mail-wm0-f66.google.com with SMTP id x7so8076589wmc.0
-        for <git@vger.kernel.org>; Sat, 03 Mar 2018 07:39:03 -0800 (PST)
+        id S1752182AbeCCPjO (ORCPT <rfc822;e@80x24.org>);
+        Sat, 3 Mar 2018 10:39:14 -0500
+Received: from mail-wr0-f174.google.com ([209.85.128.174]:42647 "EHLO
+        mail-wr0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752164AbeCCPjJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 3 Mar 2018 10:39:09 -0500
+Received: by mail-wr0-f174.google.com with SMTP id k9so12939086wre.9
+        for <git@vger.kernel.org>; Sat, 03 Mar 2018 07:39:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=JouuYjn542WcFafN5jPJFBj8d0q57B2Xdv4FD1iSKKg=;
-        b=qM6cVbj43jQWqdlgTMtJzP4VqAhwZ2hBZVnbBirWuP+yNtwUr53XRh7c/aYC8fI5YO
-         PwhH9ObalfwngEKWlbUStTMy6JXK1Rh7+mNA8jb42vfW+2ivIDhZ/vLQwUTr4ZgGomYg
-         7mEamN2d4I5Erny3z9/XLwlkGJgzkQqNNRLw03Kq3h+wNXla1xrpuBMAEdPNISYzhFN4
-         pigUDMkGUs+8mBQK9avqB1oSmge6wTCFLOi0qBFSpJ2kVueujeEh12XT3wAwVzE+pO4m
-         +QnjCoOrRJa20/RJ1+giinA3SUr+AUQOXGI9WQUwRPP5WNuBaNoaa0JVrmH12PSE98Bz
-         C/hg==
+        bh=1+C3cOgcpDFgnT4zHDL3yNbgh+0207NBARsjEpCJHX0=;
+        b=KNVdQwX/ZXqHWHTPUkYBQpZpBuJ0dLE5GTElntaUrsDY/P953cmek23ja5jrQbxu5m
+         jclNTTY0xjmDSYuZtxpPHV71ptqZjbxQ62l3JkzYLxfRGsKJgumTpel+k50VsskTpezc
+         /Y5CrnIz4OfETiUF4v5yfzHKC4/QFFOk/sZDOEMfbjm/4PDKxVU35PuwCZyVBm+HImTo
+         II+yrxOySvnQJPkdzFj6hmwyLiRHQ1Em9PsOiLrDuyaSGNT9iqaOXdV+drhLvUBFET2d
+         9OOSLAYqzcRMQvacF9mrlXhxNlEDVYRsydL5v2NfAyTe91aW5arpPsUvOcrERlIfWLEI
+         /nPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=JouuYjn542WcFafN5jPJFBj8d0q57B2Xdv4FD1iSKKg=;
-        b=JwXkx70J0GNpzou0jP/Ow6ukW/kcUb0cPWinKUKoVFBvaZMGQnpb38LyuhftqR+PJq
-         iyUHgKzsKc3zL8XAfYDNR/RoN4fG9vSw2HWxDbrtT9GzziliKbE+fcczmGZf367BcE/6
-         cLahELpdeKwGHtRgorHWCgI9hp8hrxlUlVb2p2FUBNoVi3XVqfA9qQ5duSLBUmopkToC
-         hZpV0J/BcdJO2kKI8s6Jc73YqkRvzwK6H9n7tqLdYney+frlbO+Q9J5Ef2JKt9WQRC47
-         smnTjoZs/7M7DP08vm7dH4/srrq7y4qiYkC4lMDDHsIEmmRuoGT0Kpp+pQV6grRucaOs
-         vItA==
-X-Gm-Message-State: AElRT7GPa8PvYsqN+I00wTLYswQdbQqwUV4RmJimj5f9LB5nqUgN7yQP
-        J5zI1NyO2P9vvgdnPGHdCXBZRwyO
-X-Google-Smtp-Source: AG47ELtUlkEi2BMAneas/X9RXkQUVdWOZWhNXOA7MlM/surGBRgwtvRU6MXmL7zf+646NwK0/iE2Fg==
-X-Received: by 10.28.154.213 with SMTP id c204mr3922448wme.64.1520091540897;
-        Sat, 03 Mar 2018 07:39:00 -0800 (PST)
+        bh=1+C3cOgcpDFgnT4zHDL3yNbgh+0207NBARsjEpCJHX0=;
+        b=e4HfULWo29wb2aqnt1VTEBSW8M2ApXMFiLyDmPiNrZ/w6+kI80dCuDg8q9rDgcB6Np
+         Gs+xDU/sDLXAKCv63IIreub4haPgGAuDioiSdgaZrj+CViudUNGzXLnnjuijY0YnCCkG
+         bllv8RYoNPyOBhEev/5kGXaW8DAqnyjV39raCexn2M9kIwGAH41S2ZJowL3F0a/HFGbd
+         S43C6g8dCA5esZ1OINUIXpdErkilDZs9M5wmz1Fbs6MoKAVAl3xR2yQItzXdw6Nc5Yh0
+         dgIGixnRU3sIYN0h9obLsKrtEUjlMFBxIiRtWpempeBpgwR36SRwHGMOPB9aS0hsd6em
+         XSWQ==
+X-Gm-Message-State: APf1xPASUBgLcokI5TfR2vL/UAltBVSfefyB0MGDj+aZXxnGW9J3njn/
+        xoD2c6OpVb/I7bBaKiPuONPGWn/m
+X-Google-Smtp-Source: AG47ELvFM4pGkRUiXJLVJ/xP+HJSGskhJan7+UdvNzk+wXgkczJD3+s0xoJCK/khEKFVojb3FJOL5Q==
+X-Received: by 10.223.171.247 with SMTP id s110mr7998225wrc.106.1520091547901;
+        Sat, 03 Mar 2018 07:39:07 -0800 (PST)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id y1sm6899379wrh.80.2018.03.03.07.38.58
+        by smtp.gmail.com with ESMTPSA id y1sm6899379wrh.80.2018.03.03.07.39.06
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 03 Mar 2018 07:38:59 -0800 (PST)
+        Sat, 03 Mar 2018 07:39:07 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -65,9 +65,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 03/13] Git.pm: add the "use warnings" pragma
-Date:   Sat,  3 Mar 2018 15:38:07 +0000
-Message-Id: <20180303153817.20270-4-avarab@gmail.com>
+Subject: [PATCH v3 06/13] git-send-email: unconditionally use Net::{SMTP,Domain}
+Date:   Sat,  3 Mar 2018 15:38:10 +0000
+Message-Id: <20180303153817.20270-7-avarab@gmail.com>
 X-Mailer: git-send-email 2.15.1.424.g9478a66081
 In-Reply-To: <20180303153817.20270-1-avarab@gmail.com>
 References: <20180303153817.20270-1-avarab@gmail.com>
@@ -81,36 +81,88 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Amend Git.pm to load the "warnings" pragma like the rest of the code
-in perl/ in addition to the existing "strict" pragma. This is
-considered the bare minimum best practice in Perl.
+The Net::SMTP and Net::Domain were both first released with perl
+v5.7.3[1], since my d48b284183 ("perl: bump the required Perl version
+to 5.8 from 5.6.[21]", 2010-09-24) we've depended on 5.8, so there's
+no reason to conditionally require them anymore.
 
-Ever since this code was introduced in b1edc53d06 ("Introduce
-Git.pm (v4)", 2006-06-24) it's only been using "strict", not
-"warnings".
+This conditional loading was initially added in
+87840620fd ("send-email: only 'require' instead of 'use' Net::SMTP",
+2006-06-01) for Net::SMTP and 134550fe21 ("git-send-email.perl - try
+to give real name of the calling host to HELO/EHLO", 2010-03-14) for
+Net::Domain, both of which predate the hard dependency on 5.8.
 
-This leaves contrib/buildsystems/Generators/{QMake,VCproj}.pm and
-contrib/mw-to-git/Git/Mediawiki.pm without "use warnings". Amending
-those would be a sensible follow-up change, but I don't have an easy
-way to test those so I'm not changing them.
+Since they're guaranteed to be installed now let's "use" them
+instead. The cost of loading them both is trivial given what
+git-send-email does (~15ms on my system), and it's better to not defer
+any potential loading errors until runtime.
+
+This patch is better viewed with -w, which shows that the only change
+in the last two hunks is removing the "if eval" wrapper block.
+
+1. $ parallel 'corelist {}' ::: Net::{SMTP,Domain}
+   Data for 2015-02-14
+   Net::SMTP was first released with perl v5.7.3
+
+   Data for 2015-02-14
+   Net::Domain was first released with perl v5.7.3
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- perl/Git.pm | 1 +
- 1 file changed, 1 insertion(+)
+ git-send-email.perl | 24 +++++++++++-------------
+ 1 file changed, 11 insertions(+), 13 deletions(-)
 
-diff --git a/perl/Git.pm b/perl/Git.pm
-index 99e5d943af..7ec16e6dde 100644
---- a/perl/Git.pm
-+++ b/perl/Git.pm
-@@ -9,6 +9,7 @@ package Git;
+diff --git a/git-send-email.perl b/git-send-email.perl
+index bbf4deaa0d..d5a4826a1c 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -31,6 +31,8 @@ use Cwd qw(abs_path cwd);
+ use Git;
+ use Git::I18N;
+ use Git::Mail::Address;
++use Net::Domain ();
++use Net::SMTP ();
  
- use 5.008;
- use strict;
-+use warnings;
+ Getopt::Long::Configure qw/ pass_through /;
  
+@@ -1143,10 +1145,8 @@ sub valid_fqdn {
+ sub maildomain_net {
+ 	my $maildomain;
  
- BEGIN {
+-	if (eval { require Net::Domain; 1 }) {
+-		my $domain = Net::Domain::domainname();
+-		$maildomain = $domain if valid_fqdn($domain);
+-	}
++	my $domain = Net::Domain::domainname();
++	$maildomain = $domain if valid_fqdn($domain);
+ 
+ 	return $maildomain;
+ }
+@@ -1154,17 +1154,15 @@ sub maildomain_net {
+ sub maildomain_mta {
+ 	my $maildomain;
+ 
+-	if (eval { require Net::SMTP; 1 }) {
+-		for my $host (qw(mailhost localhost)) {
+-			my $smtp = Net::SMTP->new($host);
+-			if (defined $smtp) {
+-				my $domain = $smtp->domain;
+-				$smtp->quit;
++	for my $host (qw(mailhost localhost)) {
++		my $smtp = Net::SMTP->new($host);
++		if (defined $smtp) {
++			my $domain = $smtp->domain;
++			$smtp->quit;
+ 
+-				$maildomain = $domain if valid_fqdn($domain);
++			$maildomain = $domain if valid_fqdn($domain);
+ 
+-				last if $maildomain;
+-			}
++			last if $maildomain;
+ 		}
+ 	}
+ 
 -- 
 2.15.1.424.g9478a66081
 
