@@ -2,121 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2D31E1F404
-	for <e@80x24.org>; Sat,  3 Mar 2018 12:32:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 003DB1F404
+	for <e@80x24.org>; Sat,  3 Mar 2018 12:52:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751814AbeCCMcT (ORCPT <rfc822;e@80x24.org>);
-        Sat, 3 Mar 2018 07:32:19 -0500
-Received: from mail-vk0-f66.google.com ([209.85.213.66]:34225 "EHLO
-        mail-vk0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751721AbeCCMcS (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 3 Mar 2018 07:32:18 -0500
-Received: by mail-vk0-f66.google.com with SMTP id z190so7288933vkg.1
-        for <git@vger.kernel.org>; Sat, 03 Mar 2018 04:32:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=VGuViHItKCruq5amQkIMUibSIMpyvUGXr/rostwxxqk=;
-        b=aZKa5CBvyuIrLD1xnWQ6oyCnfUlMHHuBymvaGK5bfJPYc4fZQ6nYsE43KlNm2SjhvT
-         4Gj2DBLT4oZ35ibIzw5d9rM9uva3UIzl3xZaw4dDwj0TdkQ1UQmawk1hcggpd1CNWMFl
-         NHsywC92OZDN2UcLXEO/CbiA7KIIOXZY6iJJe5g4ophNeBLjAgtyMpaJ0jJZZqp0/Jes
-         YN14F/uNtIZRNlIwsLkLxhENt55t1bUng4gnDrOycoyMoN/BhI4FaYEm9s4RbGU3ltqJ
-         ZYrnAC8fmpDL/8DCbce2bGh41EhTZ9IpgHXv7Cxy0fN19cUoMhP+nawKsaWUs1mnadx7
-         SF5g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=VGuViHItKCruq5amQkIMUibSIMpyvUGXr/rostwxxqk=;
-        b=ftnl5AsqK7hytRed0oe+9GN8qyeL1z+XRLafYg4droCibwi3yDpzFv22ot6B3ruNG2
-         vHsLGEuDV6fvmRjpaboVpbaLRxIHoo04zjqzG+5LlfEb7PqfTg1R/CnQWvVtqtk+JWw7
-         wFUmPuzmEZmf5qD40/AHA8+x0MZK/LBFaZ5mz1P52VrllAy/z5eDZXZylMs25so/qFqr
-         8ANxZbM9LXjcF4mRhZJsG6onFhDFf+ikbSodsaEmcKlb1kMu2+n/Kn0OGpDHLOqz6vcr
-         YhWdgzEDHPrhTufYVjhFLl5gxRz0BCYR90vEb2qWiLUt2uHqKdjZfZP4HtXHAQN2I1gU
-         u1Yw==
-X-Gm-Message-State: APf1xPCm09hi4Dqu7LDJH9/H4jacUjVqZp3lTxlviK3001v887xSBOQi
-        4PBe+lt0GHz+WEBxc7FIRDihccr/zEWjkc11nf6Eww==
-X-Google-Smtp-Source: AG47ELssIDV+VPgf3l35BCvH+FYMYQA0V7ET2l301IRNCX42Hr8ARDFAgoVhAZ13Y0e6I4bLoJIQnq6gNvh2bHU8WEg=
-X-Received: by 10.31.78.68 with SMTP id c65mr5855582vkb.58.1520080337321; Sat,
- 03 Mar 2018 04:32:17 -0800 (PST)
+        id S1752004AbeCCMwU (ORCPT <rfc822;e@80x24.org>);
+        Sat, 3 Mar 2018 07:52:20 -0500
+Received: from mout.web.de ([212.227.17.12]:56593 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751896AbeCCMwU (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 3 Mar 2018 07:52:20 -0500
+Received: from macce.local ([195.198.252.176]) by smtp.web.de (mrweb103
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0LrK0u-1eiAUg2us8-0134ux; Sat, 03
+ Mar 2018 13:52:10 +0100
+To:     olyatelezhnaya@gmail.com, christian.couder@gmail.com,
+        Jeff King <peff@peff.net>,
+        Git Mailing List <git@vger.kernel.org>
+From:   =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Subject: t006 broken under Mac OS
+Message-ID: <f711d7ea-b3a0-82c4-6700-5ec285c91115@web.de>
+Date:   Sat, 3 Mar 2018 13:52:05 +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:52.0)
+ Gecko/20100101 Thunderbird/52.6.0
 MIME-Version: 1.0
-Received: by 10.159.59.233 with HTTP; Sat, 3 Mar 2018 04:32:16 -0800 (PST)
-In-Reply-To: <20180303092307.3796-3-pclouds@gmail.com>
-References: <20180303092307.3796-1-pclouds@gmail.com> <20180303092307.3796-3-pclouds@gmail.com>
-From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Date:   Sat, 3 Mar 2018 13:32:16 +0100
-Message-ID: <CAM0VKj=Kgw5Yh50HjdoD_OteF0n8C-pJo9z09x6jEPQt1w+96A@mail.gmail.com>
-Subject: Re: [PATCH 2/2] completion: simplify _git_notes
-To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Cc:     Git mailing list <git@vger.kernel.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:qauxK/sY28EDPE1yBDsaSAaIVV7nXaS318FOj1e0XvNOjkg8sZE
+ 2HGqUo+GhLrVktz9RnwG2BYwVOB5SiYxnm4aGHaaxhDSXNf25/ckxx+bL8v9awtjcqgGwkz
+ 8tooP+sqWEQ3y7phlTJncpI/k7JXvyH1MAyyEshgbMIh28RAr6IlztGl04Qm3sZ5PfE2II7
+ Dkppvapb8y0gVY3pexWAg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:2dE7HrojTWw=:MyZP/1Tl/KDpdJFDj58Wa2
+ 47Q4n9+YjhtYCXy0syTCFIVqURIp55Q0bH/Zbp9TNfNLhCDxyuYilN18l1Xbj3s+Gu83PQFSD
+ xsIuokVCHkCvbI+uz6zat3opA6dROx7EjyFIEs3IE6MvwItguUCLKKSlJUwTUS9TjDw+8GRlu
+ eEMaY2TZuXoMpTAmlNSh5DHGZmi6e+dY4FoYwTw3aJ4kKWQGfSIA9+GZR/ctlZ3chPQd7lCdB
+ xVK9lh7sR8L9B0Ec4o8+d26ZELk0MCRs6wsBvudzy8Xtp0WfOlxLh/E8CzzCtlQBg9VnNMKqv
+ aeEcm3y9qx+FuIk5RZliTXPlGMiibB9c9t9wyZEGfTOlFnrmysG9mkFjgus9bTMBC0tGjalAB
+ xtkqW0U7C8c8w68dmqEdIzlYNUCPNX59h6Qw2BilmOCJaa5vSitLHoI5KPNsvF1iCvbsXyJtg
+ 9VWMMcF7Yz/JQyoz73+fiXfi8+nQN2bouepqmf5XoP0Py69VgqUA0ugi06RWJdhCm06CyHGLv
+ 4RmCIzPRY6pkukrxsOIaZjJlnoINoteFOgmtvewR5+N0oMjynXGDgSceKxKzFa8cqXjv/TCq7
+ vZDfKsd8hyQ7mbtjFhBp/oFbfSVuQ33uNeLdYY63DI1hs0T1eEJFK3REKgKjhgIUxvBtwj7JD
+ QFAIlTLelh/pgpQpSnbpk0YQ5nEBA2/yN7259ERR3kSXrU1KUVp9H4FXPLlaYoKYms+c239Cb
+ fM/SVlXGDULWgkm+rsZSUITTXWLhkNAbHmlUddnwnf6mHUQCCzZ53stw3oY0j2FZLRhmlATUE
+ q+/RKIuCae7RLTTQ9751cliVm4HIm1EyeIn1Elc611x9Le5ANo=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Mar 3, 2018 at 10:23 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =
-<pclouds@gmail.com> wrote:
-> This also adds completion for 'git notes remove' with two options:
-> --ignore-missing and --stdin.
->
-> For some strange reason, 'git notes undefined --<tab>' completes --ref
-> without even running --git-completion-helper.
+Hej,
+Beside that t1006 has a broken indentation (mixed spaces and TABs at
+ the beginning of the line, I get 4 errors here under Mac OS:
 
-There is nothing strange about it.  _git_notes() first looks for the
-presence of any subcommands on the command line, and if it doesn't find
-any, it will list 'git notes's subcommands and options for completion.
-And it does so by running '__gitcomp "$subcommands --ref"'
+not ok 15 - Check %(refname) gives empty output
+not ok 36 - Check %(refname) gives empty output
+not ok 58 - Check %(refname) gives empty output
+not ok 89 - Check %(refname) gives empty output
 
-> But since this is an error
-> case (and we're not doing anything destructive, it's probably ok for now)
 
-I agree; and it matches the behaviour before the patch.
+Running with debug and verbose shows that the empty files are not empty.
+The characters in the non-empty file are outside the ASCII range,
+so I copy  the stuff in here after running `od -c`  on the log file.
+And I don't have a clue, where this stuff comes from - but I get different
+"crap" with each run - seams as if there is a read behind a buffer ?
 
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.c=
-om>
-> ---
->  contrib/completion/git-completion.bash | 15 ++-------------
->  1 file changed, 2 insertions(+), 13 deletions(-)
->
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/=
-git-completion.bash
-> index c310b241d3..ab80f4e6e8 100644
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -1836,19 +1836,8 @@ _git_notes ()
->         add,--reedit-message=3D*|append,--reedit-message=3D*)
->                 __git_complete_refs --cur=3D"${cur#*=3D}"
->                 ;;
-> -       add,--*)
-> -               __gitcomp_builtin notes_add
-> -               ;;
-> -       append,--*)
-> -               __gitcomp_builtin notes_append
-> -               ;;
-> -       copy,--*)
-> -               __gitcomp_builtin notes_copy
-> -               ;;
-> -       prune,--*)
-> -               __gitcomp_builtin notes_prune
-> -               ;;
-> -       prune,*)
-> +       *,--*)
-> +               __gitcomp_builtin notes_$subcommand
->                 ;;
->         *)
->                 case "$prev" in
-> --
-> 2.16.1.435.g8f24da2e1a
->
+
+
+15:
+0006000    0  \n   @   @       -   1       +   1       @   @  \n   -  \n
+0006020    + 361   r   0 360 024 254  \n   n   o   t       o   k       1
+0006040    5       -       C   h   e   c   k       %   (   r   e   f   n
+0006060    a   m   e   )       g   i   v   e   s       e   m   p   t   y
+0006100        o   u   t   p   u   t  \n   #  \t  \n   #  \t  \t   e   c
+
+
+36:
+0016220    -   1       +   1       @   @  \n   -  \n   + 225   x   <   e
+0016240  240   @  \n   n   o   t       o   k       3   6       -       C
+0016260    h   e   c   k       %   (   r   e   f   n   a   m   e   )
+0016300    g   i   v   e   s       e   m   p   t   y       o   u   t   p
+0016320    u   t  \n   #  \t  \n   #  \t  \t   e   c   h   o       "   $
+
+58:
+0027120   \n   @   @       -   1       +   1       @   @  \n   -  \n   +
+0027140  302 206  \a   4 220 311  \n   n   o   t       o   k       5   8
+0027160        -       C   h   e   c   k       %   (   r   e   f   n   a
+0027200    m   e   )       g   i   v   e   s       e   m   p   t   y
+0027220    o   u   t   p   u   t  \n   #  \t  \n   #  \t  \t   e   c   h
+
+89:
+0043160    0   0   0  \n   @   @       -   1       +   1       @   @  \n
+0043200    -  \n   +   p 034 276 034   !   ;  \n   n   o   t       o   k
+0043220        8   9       -       C   h   e   c   k       %   (   r   e
+0043240    f   n   a   m   e   )       g   i   v   e   s       e   m   p
+0043260    t   y       o   u   t   p   u   t  \n   #  \t  \n   #  \t  \t
