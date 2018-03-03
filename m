@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6FF241FAE2
-	for <e@80x24.org>; Sat,  3 Mar 2018 02:47:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DF3ED1F404
+	for <e@80x24.org>; Sat,  3 Mar 2018 02:47:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965204AbeCCCrr (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Mar 2018 21:47:47 -0500
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:39720 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965062AbeCCCrq (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Mar 2018 21:47:46 -0500
-Received: by mail-pg0-f67.google.com with SMTP id w16so3621240pgv.6
-        for <git@vger.kernel.org>; Fri, 02 Mar 2018 18:47:46 -0800 (PST)
+        id S965207AbeCCCrx (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Mar 2018 21:47:53 -0500
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:46469 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965205AbeCCCrw (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Mar 2018 21:47:52 -0500
+Received: by mail-pf0-f193.google.com with SMTP id z10so4766314pfh.13
+        for <git@vger.kernel.org>; Fri, 02 Mar 2018 18:47:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=wucAVc3CN/koghXX364FSgRGOdP86nD1tiVGBGWYnOY=;
-        b=Nf8b0eZwqlgWp7h4t5b8Zo/1asNwH6ukwe3HTjEqLXjU37DLbvrRAcTA2zDjKziMuj
-         3/i9+FZulWxeUxvxkTkwqLrQGRn/WeG/FKyDZ/RDLp9NssX66XXNcc7m257SxGoIhUsp
-         GsAnXOnqY91mXdYoCglUmOt1w1+8OsCLc1qQBmvtIUm0Njyls38uSB3txT97+heMGUFC
-         v1jDR1tAdg0QIzbY6/kFZeNDDmf5QAoVkZ5d1c7Oz3rd6b7sIO/NnRrx14LaPnubvrc0
-         JTRcTlY/lQjPeB8mNUsP51Lx8n9pBP747H95TKM/fE+NVJG5kPAH9+NdNdh8xWljvpv8
-         IY6A==
+        bh=MttltKY1sUKyt04Zsc2ojPUc28ReDULXJG6IQaXTFUk=;
+        b=pUIMIwj+q0/vnulVRfX5qOrGA0tZkff2yKlw3m5osZm832s9G/0y7Dg3Wlv0FBjgBr
+         a1xYDGy2LPY6vmIEM2Re3K4wIp1osDf+NOqcPfFcBOOnwA1UFawdnnPA5icbJ8SY7K0+
+         N9obk9K0GtG9QMqxUVDRhRV/wzK4QLiJZWGPk9HBUr3i/rGh6T+uIP2hsBq0N+lJQ6gD
+         blTt2r0jNdpUGU10rqAzE9/fNAjExOG/xv32SSWRujWBQaE9bAiRNWOWIJUWbEkquFfF
+         TukrhCsESCXwPS9iB9DevgFtJvNHBp1kCtQbOsVVoIwOj9AkdEW/UbVjcrTYd0xdGHuI
+         9h/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=wucAVc3CN/koghXX364FSgRGOdP86nD1tiVGBGWYnOY=;
-        b=CDP3zpk5nwecGWsM3BPu6ZlzpFfoeSos87olopQTUpIurrfcD5O+j1awyP0ruotJvI
-         RmiRyUu914x8z20iny7B9pdhiIEkEeK2PMA0GNzSC+IRx447Nlo5Sc6MaD0RVLk7sxce
-         T05F9EOzx1+j13vFQ0skxcIt5yAUAhc2fdE+iOvStpz8QJHVQZEqC7qW6SONtwBBBUZr
-         bYm3SNLeaAud40BQhw8oV5bivec+NgtvFPTp7dE8lcn8Eu+6midST0ieiCkucaMRzYDU
-         E5O4gWlHefh9rbTqQfsYKBuYFlPrewO2y37yMOrqZEy9VMfEvCsMn+B/P7qYjd5fooTd
-         MV0Q==
-X-Gm-Message-State: APf1xPAg++kwF9K/6plsMiwHJc06ktj86YATyLWXJCG2YGlo4X2PbZAJ
-        g7uuoIsVyOGfgfuAumt4VArdHg==
-X-Google-Smtp-Source: AG47ELty21tiNy2Fu9utWmZcLTYfF97DxArSbEzskFVNzx+gL1p3J410Hldf7TkZXllo1oQXzWrMtA==
-X-Received: by 10.101.97.26 with SMTP id z26mr6220064pgu.44.1520045265784;
-        Fri, 02 Mar 2018 18:47:45 -0800 (PST)
+        bh=MttltKY1sUKyt04Zsc2ojPUc28ReDULXJG6IQaXTFUk=;
+        b=Juyb0hmAgWtBzUlheA/ft4Nhng2wbeMFYGBn4uXTO1A9Ue+Q5w53wrmH5DnQgztQhn
+         taO4N2iEeUwWxe+bkeUB/IYNEDRhdThECoEaTqQTwxlhwodUsIh3GmLtNK9tjiS2BKfA
+         qyLFCFdCl097rusRzaOrfEbcL/ThchnJ7rQR4XqfkPL8rI6wPZpvCnPWhicHq2dRjq33
+         qzChT2oVmm6qbaQrZRal3FRy8ZvqTvopDfC2kdAZ7xjLGlkjt6Qra30+j0MdA3DBQMTt
+         VwsVl+5NYkJ8GgFS3BkSBk+UCyCdtxVl5gfPN4x9F8LgjPR6DfadKVPQpBDcvX5lG1BS
+         xJaw==
+X-Gm-Message-State: APf1xPAlrAxNsbvdhAWOm1MwuX/zU38hUVOozHpZnNyS7A418uioWaXB
+        zhPBk6Rzjjs92d+e/gzSYSmaBg==
+X-Google-Smtp-Source: AG47ELsr1lvo1nDl22o+nhiCP8J0BpX4UIkARhWofX00EHqRzJxUYspH+pUtNLj1TgBn5YYUE6+x+g==
+X-Received: by 10.98.200.80 with SMTP id z77mr7500101pff.85.1520045271023;
+        Fri, 02 Mar 2018 18:47:51 -0800 (PST)
 Received: from ash ([171.232.93.137])
-        by smtp.gmail.com with ESMTPSA id t63sm16386029pfj.44.2018.03.02.18.47.42
+        by smtp.gmail.com with ESMTPSA id p16sm15308620pfd.77.2018.03.02.18.47.47
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 02 Mar 2018 18:47:45 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Sat, 03 Mar 2018 09:47:41 +0700
+        Fri, 02 Mar 2018 18:47:50 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Sat, 03 Mar 2018 09:47:46 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         <avarab@gmail.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH/RFC v2 6/9] pack-objects: move in_pack_pos out of struct object_entry
-Date:   Sat,  3 Mar 2018 09:47:03 +0700
-Message-Id: <20180303024706.31465-7-pclouds@gmail.com>
+Subject: [PATCH/RFC v2 7/9] pack-objects: move in_pack out of struct object_entry
+Date:   Sat,  3 Mar 2018 09:47:04 +0700
+Message-Id: <20180303024706.31465-8-pclouds@gmail.com>
 X-Mailer: git-send-email 2.16.1.435.g8f24da2e1a
 In-Reply-To: <20180303024706.31465-1-pclouds@gmail.com>
 References: <20180301091052.32267-1-pclouds@gmail.com>
@@ -74,137 +74,272 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This field is only need for pack-bitmap, which is an optional
-feature. Move it to a separate array that is only allocated when
-pack-bitmap is used (it's not freed in the same way that objects[] is
-not). This saves us 8 bytes in struct object_entry.
+Instead of using 8 bytes (on 64 bit arch) to store a pointer to a
+pack. Use an index isntead since the number of packs should be
+relatively small.
+
+This limits the number of packs we can handle to 16k. For now if you hit
+16k pack files limit, pack-objects will simply fail [1].
+
+This technically saves 7 bytes. But we don't see any of that in
+practice due to padding. The saving becomes real when we pack this
+struct tighter later.
+
+[1] The escape hatch is .keep file to limit the non-kept pack files
+    below 16k limit. Then you can go for another pack-objects run to
+    combine another 16k pack files. Repeat until you're satisfied.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- builtin/pack-objects.c | 3 ++-
- pack-bitmap-write.c    | 8 +++++---
- pack-bitmap.c          | 2 +-
- pack-bitmap.h          | 4 +++-
- pack-objects.h         | 8 ++++++--
- 5 files changed, 17 insertions(+), 8 deletions(-)
+ Documentation/git-pack-objects.txt |  9 +++++
+ builtin/pack-objects.c             | 59 +++++++++++++++++++++++-------
+ cache.h                            |  1 +
+ pack-objects.h                     | 18 ++++++++-
+ 4 files changed, 71 insertions(+), 16 deletions(-)
 
+diff --git a/Documentation/git-pack-objects.txt b/Documentation/git-pack-objects.txt
+index 3503c9e3e6..b8d936ccf5 100644
+--- a/Documentation/git-pack-objects.txt
++++ b/Documentation/git-pack-objects.txt
+@@ -269,6 +269,15 @@ Unexpected missing object will raise an error.
+ 	locally created objects [without .promisor] and objects from the
+ 	promisor remote [with .promisor].)  This is used with partial clone.
+ 
++LIMITATIONS
++-----------
++
++This command could only handle 16384 existing pack files at a time.
++If you have more than this, you need to exclude some pack files with
++".keep" file and --honor-pack-keep option, to combine 16k pack files
++in one, then remove these .keep files and run pack-objects one more
++time.
++
+ SEE ALSO
+ --------
+ linkgit:git-rev-list[1]
 diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index cfd97da7db..7bb5544883 100644
+index 7bb5544883..5818bf73ca 100644
 --- a/builtin/pack-objects.c
 +++ b/builtin/pack-objects.c
-@@ -878,7 +878,8 @@ static void write_pack_file(void)
- 
- 			if (write_bitmap_index) {
- 				bitmap_writer_set_checksum(oid.hash);
--				bitmap_writer_build_type_index(written_list, nr_written);
-+				bitmap_writer_build_type_index(
-+					&to_pack, written_list, nr_written);
- 			}
- 
- 			finish_tmp_packfile(&tmpname, pack_tmp_name,
-diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
-index e01f992884..1360a93311 100644
---- a/pack-bitmap-write.c
-+++ b/pack-bitmap-write.c
-@@ -48,7 +48,8 @@ void bitmap_writer_show_progress(int show)
- /**
-  * Build the initial type index for the packfile
-  */
--void bitmap_writer_build_type_index(struct pack_idx_entry **index,
-+void bitmap_writer_build_type_index(struct packing_data *to_pack,
-+				    struct pack_idx_entry **index,
- 				    uint32_t index_nr)
+@@ -367,7 +367,7 @@ static unsigned long write_no_reuse_object(struct hashfile *f, struct object_ent
+ static off_t write_reuse_object(struct hashfile *f, struct object_entry *entry,
+ 				unsigned long limit, int usable_delta)
  {
- 	uint32_t i;
-@@ -57,12 +58,13 @@ void bitmap_writer_build_type_index(struct pack_idx_entry **index,
- 	writer.trees = ewah_new();
- 	writer.blobs = ewah_new();
- 	writer.tags = ewah_new();
-+	ALLOC_ARRAY(to_pack->in_pack_pos, to_pack->nr_objects);
+-	struct packed_git *p = entry->in_pack;
++	struct packed_git *p = IN_PACK(&to_pack, entry);
+ 	struct pack_window *w_curs = NULL;
+ 	struct revindex_entry *revidx;
+ 	off_t offset;
+@@ -478,7 +478,7 @@ static off_t write_object(struct hashfile *f,
  
- 	for (i = 0; i < index_nr; ++i) {
- 		struct object_entry *entry = (struct object_entry *)index[i];
- 		enum object_type real_type;
- 
--		entry->in_pack_pos = i;
-+		IN_PACK_POS(to_pack, entry) = i;
- 
- 		switch (entry->type) {
- 		case OBJ_COMMIT:
-@@ -147,7 +149,7 @@ static uint32_t find_object_pos(const unsigned char *sha1)
- 			"(object %s is missing)", sha1_to_hex(sha1));
+ 	if (!reuse_object)
+ 		to_reuse = 0;	/* explicit */
+-	else if (!entry->in_pack)
++	else if (!IN_PACK(&to_pack, entry))
+ 		to_reuse = 0;	/* can't reuse what we don't have */
+ 	else if (entry->type == OBJ_REF_DELTA || entry->type == OBJ_OFS_DELTA)
+ 				/* check_object() decided it for us ... */
+@@ -1024,7 +1024,7 @@ static int want_object_in_pack(const struct object_id *oid,
+ 	if (*found_pack) {
+ 		want = want_found_object(exclude, *found_pack);
+ 		if (want != -1)
+-			return want;
++			goto done;
  	}
  
--	return entry->in_pack_pos;
-+	return IN_PACK_POS(writer.to_pack, entry);
+ 	list_for_each(pos, &packed_git_mru) {
+@@ -1047,11 +1047,27 @@ static int want_object_in_pack(const struct object_id *oid,
+ 			if (!exclude && want > 0)
+ 				list_move(&p->mru, &packed_git_mru);
+ 			if (want != -1)
+-				return want;
++				goto done;
+ 		}
+ 	}
+ 
+-	return 1;
++	want = 1;
++done:
++	if (want && *found_pack && !(*found_pack)->index) {
++		struct packed_git *p = *found_pack;
++
++		if (to_pack.in_pack_count >= (1 << OE_IN_PACK_BITS))
++			die(_("too many packs to handle in one go. "
++			      "Please add .keep files to exclude\n"
++			      "some pack files and keep the number "
++			      "of non-kept files below %d."),
++			    1 << OE_IN_PACK_BITS);
++
++		p->index = to_pack.in_pack_count++;
++		to_pack.in_pack[p->index] = p;
++	}
++
++	return want;
  }
  
- static void show_object(struct object *object, const char *name, void *data)
-diff --git a/pack-bitmap.c b/pack-bitmap.c
-index 9270983e5f..f21479fe16 100644
---- a/pack-bitmap.c
-+++ b/pack-bitmap.c
-@@ -1032,7 +1032,7 @@ int rebuild_existing_bitmaps(struct packing_data *mapping,
- 		oe = packlist_find(mapping, sha1, NULL);
- 
- 		if (oe)
--			reposition[i] = oe->in_pack_pos + 1;
-+			reposition[i] = IN_PACK_POS(mapping, oe) + 1;
+ static void create_object_entry(const struct object_id *oid,
+@@ -1074,7 +1090,9 @@ static void create_object_entry(const struct object_id *oid,
+ 	else
+ 		nr_result++;
+ 	if (found_pack) {
+-		entry->in_pack = found_pack;
++		if (found_pack->index <= 0)
++			die("BUG: found_pack should be NULL instead of having non-positive index");
++		entry->in_pack_idx = found_pack->index;
+ 		entry->in_pack_offset = found_offset;
  	}
  
- 	rebuild = bitmap_new();
-diff --git a/pack-bitmap.h b/pack-bitmap.h
-index 3742a00e14..5ded2f139a 100644
---- a/pack-bitmap.h
-+++ b/pack-bitmap.h
-@@ -44,7 +44,9 @@ int rebuild_existing_bitmaps(struct packing_data *mapping, khash_sha1 *reused_bi
+@@ -1399,8 +1417,8 @@ static void cleanup_preferred_base(void)
  
- void bitmap_writer_show_progress(int show);
- void bitmap_writer_set_checksum(unsigned char *sha1);
--void bitmap_writer_build_type_index(struct pack_idx_entry **index, uint32_t index_nr);
-+void bitmap_writer_build_type_index(struct packing_data *to_pack,
-+				    struct pack_idx_entry **index,
-+				    uint32_t index_nr);
- void bitmap_writer_reuse_bitmaps(struct packing_data *to_pack);
- void bitmap_writer_select_commits(struct commit **indexed_commits,
- 		unsigned int indexed_commits_nr, int max_bitmaps);
+ static void check_object(struct object_entry *entry)
+ {
+-	if (entry->in_pack) {
+-		struct packed_git *p = entry->in_pack;
++	if (IN_PACK(&to_pack, entry)) {
++		struct packed_git *p = IN_PACK(&to_pack, entry);
+ 		struct pack_window *w_curs = NULL;
+ 		const unsigned char *base_ref = NULL;
+ 		struct object_entry *base_entry;
+@@ -1535,14 +1553,16 @@ static int pack_offset_sort(const void *_a, const void *_b)
+ {
+ 	const struct object_entry *a = *(struct object_entry **)_a;
+ 	const struct object_entry *b = *(struct object_entry **)_b;
++	const struct packed_git *a_in_pack = IN_PACK(&to_pack, a);
++	const struct packed_git *b_in_pack = IN_PACK(&to_pack, b);
+ 
+ 	/* avoid filesystem trashing with loose objects */
+-	if (!a->in_pack && !b->in_pack)
++	if (!a_in_pack && !b_in_pack)
+ 		return oidcmp(&a->idx.oid, &b->idx.oid);
+ 
+-	if (a->in_pack < b->in_pack)
++	if (a_in_pack < b_in_pack)
+ 		return -1;
+-	if (a->in_pack > b->in_pack)
++	if (a_in_pack > b_in_pack)
+ 		return 1;
+ 	return a->in_pack_offset < b->in_pack_offset ? -1 :
+ 			(a->in_pack_offset > b->in_pack_offset);
+@@ -1578,7 +1598,7 @@ static void drop_reused_delta(struct object_entry *entry)
+ 
+ 	oi.sizep = &entry->size;
+ 	oi.typep = &type;
+-	if (packed_object_info(entry->in_pack, entry->in_pack_offset, &oi) < 0) {
++	if (packed_object_info(IN_PACK(&to_pack, entry), entry->in_pack_offset, &oi) < 0) {
+ 		/*
+ 		 * We failed to get the info from this pack for some reason;
+ 		 * fall back to sha1_object_info, which may find another copy.
+@@ -1848,8 +1868,8 @@ static int try_delta(struct unpacked *trg, struct unpacked *src,
+ 	 * it, we will still save the transfer cost, as we already know
+ 	 * the other side has it and we won't send src_entry at all.
+ 	 */
+-	if (reuse_delta && trg_entry->in_pack &&
+-	    trg_entry->in_pack == src_entry->in_pack &&
++	if (reuse_delta && IN_PACK(&to_pack, trg_entry) &&
++	    IN_PACK(&to_pack, trg_entry) == IN_PACK(&to_pack, src_entry) &&
+ 	    !src_entry->preferred_base &&
+ 	    trg_entry->in_pack_type != OBJ_REF_DELTA &&
+ 	    trg_entry->in_pack_type != OBJ_OFS_DELTA)
+@@ -2958,6 +2978,16 @@ static int option_parse_unpack_unreachable(const struct option *opt,
+ 	return 0;
+ }
+ 
++static void init_in_pack_mapping(struct packing_data *to_pack)
++{
++	/* let IN_PACK() return NULL if in_pack_idx is zero */
++	to_pack->in_pack[to_pack->in_pack_count++] = NULL;
++	/*
++	 * the rest is lazily initialized only for packs that we want
++	 * in want_object_in_pack().
++	 */
++}
++
+ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
+ {
+ 	int use_internal_rev_list = 0;
+@@ -3190,6 +3220,7 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
+ 			}
+ 		}
+ 	}
++	init_in_pack_mapping(&to_pack);
+ 
+ 	if (progress)
+ 		progress_state = start_progress(_("Counting objects"), 0);
+diff --git a/cache.h b/cache.h
+index 862bdff83a..b90feb3802 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1635,6 +1635,7 @@ extern struct packed_git {
+ 	int index_version;
+ 	time_t mtime;
+ 	int pack_fd;
++	int index;		/* for builtin/pack-objects.c */
+ 	unsigned pack_local:1,
+ 		 pack_keep:1,
+ 		 freshened:1,
 diff --git a/pack-objects.h b/pack-objects.h
-index fb2a3c8f48..737e89b665 100644
+index 737e89b665..83d91a0765 100644
 --- a/pack-objects.h
 +++ b/pack-objects.h
-@@ -4,6 +4,9 @@
+@@ -3,10 +3,14 @@
+ 
  #define OE_DFS_STATE_BITS 2
  #define OE_DEPTH_BITS 12
++#define OE_IN_PACK_BITS 14
  
-+#define IN_PACK_POS(to_pack, obj) \
-+	(to_pack)->in_pack_pos[(struct object_entry *)(obj) - (to_pack)->objects]
+ #define IN_PACK_POS(to_pack, obj) \
+ 	(to_pack)->in_pack_pos[(struct object_entry *)(obj) - (to_pack)->objects]
+ 
++#define IN_PACK(to_pack, obj) \
++	(to_pack)->in_pack[(obj)->in_pack_idx]
 +
  /*
   * State flags for depth-first search used for analyzing delta cycles.
   *
-@@ -31,7 +34,6 @@ struct object_entry {
- 	unsigned long delta_size;	/* delta data size (uncompressed) */
+@@ -20,10 +24,14 @@ enum dfs_state {
+ 	DFS_NUM_STATES
+ };
+ 
++/*
++ * The size of struct nearly determines pack-objects's memory
++ * consumption. This struct is packed tight for that reason. When you
++ * add or reorder something in this struct, think a bit about this.
++ */
+ struct object_entry {
+ 	struct pack_idx_entry idx;
+ 	unsigned long size;	/* uncompressed size */
+-	struct packed_git *in_pack;	/* already in pack */
+ 	off_t in_pack_offset;
+ 	struct object_entry *delta;	/* delta base object */
+ 	struct object_entry *delta_child; /* deltified objects who bases me */
+@@ -35,6 +43,7 @@ struct object_entry {
  	unsigned long z_delta_size;	/* delta data size (compressed) */
  	uint32_t hash;			/* name hint hash */
--	unsigned int in_pack_pos;
  	unsigned char in_pack_header_size; /* note: spare bits available! */
++	unsigned in_pack_idx:OE_IN_PACK_BITS;	/* already in pack */
  	unsigned type:TYPE_BITS;
  	unsigned in_pack_type:TYPE_BITS; /* could be delta */
-@@ -46,7 +48,7 @@ struct object_entry {
+ 	unsigned preferred_base:1; /*
+@@ -46,9 +55,12 @@ struct object_entry {
+ 	unsigned tagged:1; /* near the very tip of refs */
+ 	unsigned filled:1; /* assigned write-order */
  	unsigned dfs_state:OE_DFS_STATE_BITS;
++
++	/* XXX 8 bits hole, try to pack */
++
  	unsigned depth:OE_DEPTH_BITS;
  
--	/* size: 120, bit_padding: 8 bits */
-+	/* size: 112, bit_padding: 8 bits */
+-	/* size: 112, bit_padding: 8 bits */
++	/* size: 112, padding: 4, bit_padding: 18 bits */
  };
  
  struct packing_data {
-@@ -55,6 +57,8 @@ struct packing_data {
- 
- 	int32_t *index;
+@@ -59,6 +71,8 @@ struct packing_data {
  	uint32_t index_size;
-+
-+	unsigned int *in_pack_pos;
+ 
+ 	unsigned int *in_pack_pos;
++	int in_pack_count;
++	struct packed_git *in_pack[1 << OE_IN_PACK_BITS];
  };
  
  struct object_entry *packlist_alloc(struct packing_data *pdata,
