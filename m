@@ -2,56 +2,68 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CEF821F576
-	for <e@80x24.org>; Sat,  3 Mar 2018 10:01:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1E7FE1F576
+	for <e@80x24.org>; Sat,  3 Mar 2018 10:03:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752003AbeCCKBJ (ORCPT <rfc822;e@80x24.org>);
-        Sat, 3 Mar 2018 05:01:09 -0500
-Received: from smtprelay01.ispgateway.de ([80.67.31.28]:44876 "EHLO
-        smtprelay01.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751908AbeCCKBJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 3 Mar 2018 05:01:09 -0500
-X-Greylist: delayed 1011 seconds by postgrey-1.27 at vger.kernel.org; Sat, 03 Mar 2018 05:01:08 EST
-Received: from [91.113.179.170] (helo=[192.168.92.26])
-        by smtprelay01.ispgateway.de with esmtpsa (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128)
-        (Exim 4.89)
-        (envelope-from <marc.strapetz@syntevo.com>)
-        id 1es3iA-0003fR-Q3
-        for git@vger.kernel.org; Sat, 03 Mar 2018 10:44:14 +0100
-From:   Marc Strapetz <marc.strapetz@syntevo.com>
-Subject: git stash push -u always warns "pathspec '...' did not match any
- files"
-To:     git@vger.kernel.org
-Message-ID: <349f9369-b799-4f7b-bda1-33bcbd7ea067@syntevo.com>
-Date:   Sat, 3 Mar 2018 10:44:14 +0100
-User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
+        id S1752004AbeCCKDA (ORCPT <rfc822;e@80x24.org>);
+        Sat, 3 Mar 2018 05:03:00 -0500
+Received: from cloud.peff.net ([104.130.231.41]:45556 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1751908AbeCCKC7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 3 Mar 2018 05:02:59 -0500
+Received: (qmail 23550 invoked by uid 109); 3 Mar 2018 10:02:59 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 03 Mar 2018 10:02:59 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 4559 invoked by uid 111); 3 Mar 2018 10:03:48 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Sat, 03 Mar 2018 05:03:48 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 03 Mar 2018 05:02:56 -0500
+Date:   Sat, 3 Mar 2018 05:02:56 -0500
+From:   Jeff King <peff@peff.net>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Dorian Taylor <dorian.taylor.lists@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Brandon Williams <bmwill@google.com>
+Subject: Re: [PATCH] smart-http: document flush after "# service" line
+Message-ID: <20180303100256.GA21033@sigill.intra.peff.net>
+References: <4F85B1C3-9B5B-4D7C-8907-B728C18A70CD@gmail.com>
+ <20180221221516.GA7944@sigill.intra.peff.net>
+ <89E9DF80-F811-4F7A-AA35-0F52F1180BAF@gmail.com>
+ <20180222053722.GB133592@aiede.svl.corp.google.com>
+ <614A9A36-9DE3-4A85-BFA8-8380C4AC21B8@gmail.com>
+ <20180222100840.GD12442@sigill.intra.peff.net>
+ <xmqqbmggx063.fsf@gitster-ct.c.googlers.com>
+ <01B07AA7-B2A4-4A81-B1F0-E2EC3D6BFBF9@gmail.com>
+ <20180303052708.GF27689@sigill.intra.peff.net>
+ <CAPig+cT4NhhZNaYYXZL3dqvVn++KrNSL1bQRtdPt4RqfPexAnA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Df-Sender: bWFyYy5zdHJhcGV0ekBzeW50ZXZvLmNvbQ==
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAPig+cT4NhhZNaYYXZL3dqvVn++KrNSL1bQRtdPt4RqfPexAnA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Reproducible in a test repository with following steps:
+On Sat, Mar 03, 2018 at 03:28:47AM -0500, Eric Sunshine wrote:
 
-$ touch untracked
-$ git stash push -u -- untracked
-Saved working directory and index state WIP on master: 0096475 init
-fatal: pathspec 'untracked' did not match any files
-error: unrecognized input
+> On Sat, Mar 3, 2018 at 12:27 AM, Jeff King <peff@peff.net> wrote:
+> > Subject: smart-http: document flush after "# service" line
+> >
+> > The http-protocol.txt spec fails to mention that a flush
+> > packet comes in the smart server response after sending any
+> > the "service" header.
+> 
+> "any the"?
 
-The file is stashed correctly, though.
+Oops, should just be "the".
 
-Tested with Git 2.16.2 on Linux and Windows.
-
--Marc
-
-	
+-Peff
