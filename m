@@ -2,113 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DAA751F576
-	for <e@80x24.org>; Sat,  3 Mar 2018 09:23:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BA8CB1F576
+	for <e@80x24.org>; Sat,  3 Mar 2018 09:30:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751935AbeCCJXc (ORCPT <rfc822;e@80x24.org>);
-        Sat, 3 Mar 2018 04:23:32 -0500
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:37945 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751566AbeCCJXb (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 3 Mar 2018 04:23:31 -0500
-Received: by mail-pg0-f66.google.com with SMTP id l24so4775393pgc.5
-        for <git@vger.kernel.org>; Sat, 03 Mar 2018 01:23:31 -0800 (PST)
+        id S1751957AbeCCJaE (ORCPT <rfc822;e@80x24.org>);
+        Sat, 3 Mar 2018 04:30:04 -0500
+Received: from mail-qk0-f196.google.com ([209.85.220.196]:33504 "EHLO
+        mail-qk0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751894AbeCCJaD (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 3 Mar 2018 04:30:03 -0500
+Received: by mail-qk0-f196.google.com with SMTP id f25so15031461qkm.0
+        for <git@vger.kernel.org>; Sat, 03 Mar 2018 01:30:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=3UMErGo8xVCeeh30NhLakF3DkswrZqYTT6qYDDRJ9vE=;
-        b=sD4DLUsIgPRk6KyWQ4W82YHZSYXv4fSgrDmsh2Ik2mWD5Judtc0s6Nb9UxuS0DyvNM
-         ZsPKJzcD73TrcYmZEPJm8ujxFaTnloif7e1f64N2KShZ+q6RN7voCIWC2stDLOLRZHEc
-         0For8FuPDGR3hn+k6H7tse2acAQhSA33rHgBQp8K9ZiyBRTjLq/JVch51pt5BRbBeLH4
-         nNM4HeYkoosa9Lv0kE7TIVatLB9RURP0Agzr/ZUAahI7c33mGbt3je5Lg9bd1rVdjqeH
-         MFMmS8BKV8jdP9DjIqY7TUolte91BWlbz3KIrQ7T9x9s4tc4BplHAmlUR53MNBnqxRsd
-         AJ9A==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-transfer-encoding;
+        bh=teOzROGJ8RFnJPHI6Oi2bRctHGJT0NYgrAG/X4HVHiM=;
+        b=uu47An3KE/5YBuFHZCgECAyEN7kebUJAGtYy1zvNaIYwm/TZcvZKYkZQgawi2voq8i
+         F36MOqdDCAZzioPZVwSGoVQ+yD1ReKWPS4LKLOkjSiLXcudKHHrH5yOBZljxV9bYplBN
+         +AuccN4qMWX/0R2iwVFV2szxR1HVBgECOPOQqkpADI09AoR20KcKNAeDYBFAEdsfbFl8
+         ew7XwqXRgXq+rVLYYYGRzzG5c/l/JNj34MIfE8X5Jukzwja/VbdMnRwENadwHvk8FLgA
+         V3+dHRveJVqhIuyiPOtR4JPcbCg0BiSmAM555VCQGjHEn32gkiLyifYwDJiWu2rdXXL4
+         c6Cw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=3UMErGo8xVCeeh30NhLakF3DkswrZqYTT6qYDDRJ9vE=;
-        b=okQh5xQU08/+anBmw9ZUX3pfqAyDsWMcxCZNuv3aFmUjb77o9kwsjI1+FUb+vEyB8c
-         LOnPbxxhT0OLvNwuwAai+j0oZTGdbaweM2uQLDOT875XIDr3OV6lzNWtlamP6TmOyat7
-         mNUAHqywfoeNLQB1PB5B5WL2wqjucWtyuFpqEtcMmm32wmTv/JlLU1bjVl1mPpN8BKg6
-         V0IBJmVwvFLdOFHldYimcn2YdOZO+Ato9vU890EGStbd3yO6COQiSz8mvRRF4MsG71Qd
-         AMNmvmDqk6zdzFKQB3d7j0xjsZV8kxqhDKqIGhZRSFuBcz/wqTGcjiG0zxdZF0mlbaIT
-         2QiA==
-X-Gm-Message-State: APf1xPDV0L2eztRepVuZmkhJP4yOBA6c+cp/FzGoTp6+f3xhOKF6rMoI
-        W0WIgSFbwBzuQ5Nop9fpbeHG6w==
-X-Google-Smtp-Source: AG47ELsx1GRCkvsVC4Ozm7/3rgZDojBFxCeYqjj1baa/Q1wpK6hRSk5wz+AXEeKjQHinf/ayFY/jgQ==
-X-Received: by 10.101.69.4 with SMTP id n4mr6906088pgq.184.1520069010572;
-        Sat, 03 Mar 2018 01:23:30 -0800 (PST)
-Received: from ash ([171.232.93.137])
-        by smtp.gmail.com with ESMTPSA id y1sm3129642pge.78.2018.03.03.01.23.27
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 03 Mar 2018 01:23:30 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Sat, 03 Mar 2018 16:23:25 +0700
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     git@vger.kernel.org
-Cc:     avarab@gmail.com, gitster@pobox.com, sunshine@sunshineco.com,
-        szeder.dev@gmail.com,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-Subject: [PATCH 2/2] completion: simplify _git_notes
-Date:   Sat,  3 Mar 2018 16:23:07 +0700
-Message-Id: <20180303092307.3796-3-pclouds@gmail.com>
-X-Mailer: git-send-email 2.16.1.435.g8f24da2e1a
-In-Reply-To: <20180303092307.3796-1-pclouds@gmail.com>
-References: <20180303092307.3796-1-pclouds@gmail.com>
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=teOzROGJ8RFnJPHI6Oi2bRctHGJT0NYgrAG/X4HVHiM=;
+        b=nRfzpc/VwP1Pn3jY7o5A3DiuJlDP2bAHFXwU5fV1+GSafXv6PyWKaXh2sp9nHSmoxK
+         UZSVSqfzP63obqLoCc04GwPMEacG2gdRvVUm9JGGpu+4FjQXTb59iDYUo0K4v2zffm5n
+         eXGXBSWRarqhhIJoFZcKgGOwNMsLBSmd6bU5/yYIc6BzcJYC30a7MfAx7J0TXFtp6KqU
+         my/mljfRnY9ZEGkVdlKDZhrDTLPASTh/A0vGAyhUZjEd2Q6AxdPynLsFdpZQFSZFRudI
+         zXLfMbJT0JHOQn8iXMf4XDQBz1XfmKdwKgAUH78ZcdW7t4J4yHKxFtTR0aIgpLJsZeld
+         MXzA==
+X-Gm-Message-State: AElRT7Hrof6H0pFC2H9IIky0tNDrc06vM3Cwte2pT4urkp8aGu5GmW83
+        DBBByYaT09Kl2pP0QlJ8EujeumIs0DQHyhXsT5s=
+X-Google-Smtp-Source: AG47ELvwdfgq3SN14QVT6j8w+TBORKbbJxEbjaDnqGgKmp0+a1ZIXHFGa7hF4A2yvWdM7jLYhliIEIdij4EP1gXeCHg=
+X-Received: by 10.55.134.133 with SMTP id i127mr12568921qkd.275.1520069402200;
+ Sat, 03 Mar 2018 01:30:02 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Received: by 10.12.142.14 with HTTP; Sat, 3 Mar 2018 01:30:01 -0800 (PST)
+In-Reply-To: <20180303033918.15751-4-pclouds@gmail.com>
+References: <20180303033918.15751-1-pclouds@gmail.com> <20180303033918.15751-4-pclouds@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Sat, 3 Mar 2018 04:30:01 -0500
+X-Google-Sender-Auth: 5hJkBuvWpw1ekQbs1WnXxSQqxkE
+Message-ID: <CAPig+cQG8yEqunNUjoEAPY-W9+TtzWADhgjdL6udnyrG0YEOVg@mail.gmail.com>
+Subject: Re: [PATCH 3/3] worktree prune: improve prune logic when worktree is moved
+To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This also adds completion for 'git notes remove' with two options:
---ignore-missing and --stdin.
+On Fri, Mar 2, 2018 at 10:39 PM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =
+<pclouds@gmail.com> wrote:
+> Worktree manual move support is actually gone in 618244e160 (worktree:
+> stop supporting moving worktrees manually - 2016-01-22). Before that,
+> this gitdir could be updated often when the worktree is accessed. That
+> keeps the worktree from being pruned by this logic.
 
-For some strange reason, 'git notes undefined --<tab>' completes --ref
-without even running --git-completion-helper. But since this is an error
-case (and we're not doing anything destructive, it's probably ok for now)
+I had a bit of trouble digesting this paragraph. Possible rewrite:
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- contrib/completion/git-completion.bash | 15 ++-------------
- 1 file changed, 2 insertions(+), 13 deletions(-)
+    Automatic detection of worktree relocation by a user (via 'mv',
+    for instance) was removed by 618244e160 (worktree: stop supporting
+    moving worktrees manually - 2016-01-22). Prior to that,
+    .git/worktrees/<tag>/gitdir was updated whenever the worktree was
+    accessed in order to let the pruning logic know that the worktree
+    was "active" even if it disappeared for a while (due to being
+    located on removable media, for instance).
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index c310b241d3..ab80f4e6e8 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1836,19 +1836,8 @@ _git_notes ()
- 	add,--reedit-message=*|append,--reedit-message=*)
- 		__git_complete_refs --cur="${cur#*=}"
- 		;;
--	add,--*)
--		__gitcomp_builtin notes_add
--		;;
--	append,--*)
--		__gitcomp_builtin notes_append
--		;;
--	copy,--*)
--		__gitcomp_builtin notes_copy
--		;;
--	prune,--*)
--		__gitcomp_builtin notes_prune
--		;;
--	prune,*)
-+	*,--*)
-+		__gitcomp_builtin notes_$subcommand
- 		;;
- 	*)
- 		case "$prev" in
--- 
-2.16.1.435.g8f24da2e1a
+> "git worktree move" is coming so we don't really need this, but since
+> it's easy to do, perhaps we could keep supporting manual worktree move a
+> bit longer. Notice that when a worktree is active, the "index" file
+> should be updated pretty often in common case. The logic is updated to
+> check for index mtime to see if the worktree is alive.
 
+Seems like a reasonable approximation of the pre-618244e160 way things work=
+ed.
+
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.c=
+om>
+> ---
+> diff --git a/builtin/worktree.c b/builtin/worktree.c
+> @@ -101,6 +101,9 @@ static int prune_worktree(const char *id, struct strb=
+uf *reason)
+>         if (!file_exists(path)) {
+>                 free(path);
+>                 if (st.st_mtime <=3D expire) {
+
+This st.st_mtime is that of 'gitdir'...
+
+> +                       if (!stat(git_path("worktrees/%s/index", id), &st=
+) &&
+> +                           st.st_mtime > expire)
+
+...and this st.st_mtime is of 'index'.
+
+I wonder if it the 'gitdir' mtime check is really that useful anymore
+considering that 'index' mtime will almost certainly be more recent.
+
+> +                               return 0;
+>                         strbuf_addf(reason, _("Removing worktrees/%s: git=
+dir file points to non-existent location"), id);
+>                         return 1;
