@@ -7,119 +7,86 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 11B0E1F404
-	for <e@80x24.org>; Sat,  3 Mar 2018 01:46:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0D72D1F404
+	for <e@80x24.org>; Sat,  3 Mar 2018 01:52:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965062AbeCCBqQ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Mar 2018 20:46:16 -0500
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:42583 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S964973AbeCCBqP (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Mar 2018 20:46:15 -0500
-Received: by mail-pg0-f66.google.com with SMTP id y8so4478230pgr.9
-        for <git@vger.kernel.org>; Fri, 02 Mar 2018 17:46:15 -0800 (PST)
+        id S965089AbeCCBwG (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Mar 2018 20:52:06 -0500
+Received: from mail-ot0-f194.google.com ([74.125.82.194]:37369 "EHLO
+        mail-ot0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965064AbeCCBwF (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Mar 2018 20:52:05 -0500
+Received: by mail-ot0-f194.google.com with SMTP id t2so10433694otj.4
+        for <git@vger.kernel.org>; Fri, 02 Mar 2018 17:52:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=6EnFYNuRFeMkb6C2eMc7Fm1NPUShTT+q+vyPkqKfTzs=;
-        b=XKTkCWooeaso3wWbkfXdNot3OZWuzfe5S2E6nOp8wctOPrgeUf2rVl+Po7oH+NZWZw
-         cNEQHrN4ZYyNQPNCtH2432rgTUtQ8EChEBTpgqMXzLEL921O1XK3qwp5tY3nr5WPm4NY
-         miIdneDi0SZLdoa/GyquzKNk/dBJZlHzugq/segj5sn3I31IpfAgn5fHk+bN28lGOTzX
-         TIpAdpElYvTKCXCH2bARmEc05hzKwmt3c34rlahSbzACmsqOYv053whHU4REOcx2fSbb
-         G94/a5VIMsUFbj54vW9IvEPzAH3guK4IMn3okzmQr7c82nYXTrtxovlUmOz539n4Zqcx
-         g98A==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=lgcvcJ7yH9Z/cpa75WbHEHEDWnzss2/tFI4eUdiZxRQ=;
+        b=XfeV22Y9GerpS+Ku0XUy0nPsGLo7wQnZKhnxpATIlA+SJgZKwItpRJO56Qq2h/CdCR
+         ScOTHzda2g4fg4j2RwZLIvnC5FSELJk7Zwkq5YTFU2XoWGyQWfvCV+B6AxgWKuco/pAZ
+         ONnk8DyAMZHmbueBsEF5GcmxbwqULv6ZLSoXhUmsAqP5q1GydWVmWzN01aL4rI+QfxCr
+         Wz9A44k4OlB8OMPyEYKNAL0kw/a5jI7nOQ5yVpBCmzJGppAhG5hyfyQzYqE2UDLliEuh
+         LbsNjd/PsL/1NHOYOYuNuBW9IDc2L2WWceLq+MOu+Kyv6HfS5v6LRFmT9b/ulRECUNDW
+         7kVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=6EnFYNuRFeMkb6C2eMc7Fm1NPUShTT+q+vyPkqKfTzs=;
-        b=BP8eyCP4L/LmQ6C8TpmcSR1m8dTz559G2CGVl9FQAtsDmFvjCVkYGwMOej+yFmb+Ey
-         P31+8LyviJvZ3jNRte1aJ7fVXIXlIgIME4Xl2f1YgdhlLK/EaC1ksNQYZJEX9CCKlcHp
-         8IkuMFwCAklCqcacABygxm8LFPENPIUS3/+ogxfgQu5DTwoyldkiTMeftnR8HXOgj6dP
-         Mxt4+R/inMkCa2BlbgWCCuHHx/zXj6jwvo9m+umiE3Z4KrKMSyqSRHEh7RaFkGs1cQl6
-         o6eS7Lx3sB3mSYkLLIMyWUIuS8+4cUiHrSkYcxpxQKfuWsC/iGrSWlqoUhwUL/6WOpIg
-         6taw==
-X-Gm-Message-State: APf1xPATf/yP1AAd9fNXY0uifO8y0Z1nbY36TA+41yIfWJOct2VWAsEd
-        Sgra1JSy1qz4dTN7Xc8ZFN94Vw==
-X-Google-Smtp-Source: AG47ELvgryV4lsCxsDeADsyCFTRjNjh77Me9kT3bXTUEOg+FH4UpVCZOFfgWIlZLC3XzYGm3yjwHxg==
-X-Received: by 10.101.64.10 with SMTP id f10mr5859595pgp.171.1520041574199;
-        Fri, 02 Mar 2018 17:46:14 -0800 (PST)
-Received: from ash ([171.232.93.137])
-        by smtp.gmail.com with ESMTPSA id y1sm1261155pge.78.2018.03.02.17.46.11
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 02 Mar 2018 17:46:13 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Sat, 03 Mar 2018 08:46:09 +0700
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-Subject: [PATCH] travis-ci: enable more warnings on travis linux-gcc job
-Date:   Sat,  3 Mar 2018 08:46:05 +0700
-Message-Id: <20180303014605.10603-1-pclouds@gmail.com>
-X-Mailer: git-send-email 2.16.1.435.g8f24da2e1a
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=lgcvcJ7yH9Z/cpa75WbHEHEDWnzss2/tFI4eUdiZxRQ=;
+        b=ayrLRFcEckwGzrNVR11/vr5FhKrYeZ9gVGc7+ZemNrcyBIxHk47KUoRMfaR7LfXXQ4
+         vbyDxDBBl210qF3N8P/ect5xwWOlGEx/mNt7B3WTNgx0TCa9XuZSqoIrnnqcsgbKcJZw
+         1X5EPx+sL9wRchU8vKqaf5usGM9NYXCb7aO4Z9ClK4rnb0Wz++97oI8tkbCoJAtjV0Cx
+         KYKVqwi3C3HasroWwfCPTUWngbrmV7ttQfyVrnJU+B2ce1bM2BEm0I/OPo6wuI+LoEIP
+         NBL4aRcbgdY1UIwoS+C7yebCoOlQzy9tmAdosAJV8V7NEaPqhOJelx+vXSx+0w37SVKa
+         kOwQ==
+X-Gm-Message-State: AElRT7FV7xnqn5SnsMmo1ZiTn0dkG3WlYn2QwFjyGV/eWRF0UlK4yCok
+        aiyekLrjXawGanDJm+9fMUrmBdFB2XDUT8sSWuY=
+X-Google-Smtp-Source: AG47ELuXxccQN1TL/v/XXr8AeHRGVoqmqYYwpnqbxGSbWb5BiMlucxkBovX42GuW3Ctv8rMtGf1x4u1+jEDlxt8+pQc=
+X-Received: by 10.157.54.152 with SMTP id h24mr2814135otc.173.1520041925269;
+ Fri, 02 Mar 2018 17:52:05 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Received: by 10.74.25.140 with HTTP; Fri, 2 Mar 2018 17:51:34 -0800 (PST)
+In-Reply-To: <xmqqfu5nqrf8.fsf@gitster-ct.c.googlers.com>
+References: <20180214180814.GA139458@google.com> <20180223095640.25876-1-pclouds@gmail.com>
+ <20180223095640.25876-3-pclouds@gmail.com> <20180223222950.GK6619@genre.crustytoothpaste.net>
+ <CACsJy8AUvAv61wM5hnvhyCaOd_oKmMbhAyDGJ9pmkiSu_WveZQ@mail.gmail.com> <xmqqfu5nqrf8.fsf@gitster-ct.c.googlers.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Sat, 3 Mar 2018 08:51:34 +0700
+Message-ID: <CACsJy8Dpzj2XoaC6WjahKPiOhpY9i9iAPwPjmDmw1aFwbEw2OA@mail.gmail.com>
+Subject: Re: [PATCH 2/2] Revert "repository: pre-initialize hash algo pointer"
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Git Mailing List <git@vger.kernel.org>,
+        Brandon Williams <bmwill@google.com>,
+        Stefan Beller <sbeller@google.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We have DEVELOPER config to enable more warnings, but since we can't set
-a fixed gcc version to all devs, that has to be a bit more conservative.
-On travis, we know almost exact version to be used (bumped to 6.x for
-more warnings), we could be more aggressive.
+On Tue, Feb 27, 2018 at 6:09 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Duy Nguyen <pclouds@gmail.com> writes:
+>
+>> Yes that's the intention. But after writing cover letter for v2 and
+>> sending it out, it looks to me that this thing must stay until all our
+>> code is converted to using the_hash_algo (I don't know if there are
+>> more to convert or it's finished already). So an alternative is we do
+>> the opposite: default to GIT_HASH_SHA1, but when an env variable is
+>> set, reset it back to NULL. This env variable will _always_ be set by
+>> the test suite to help us catch problems.
+>
+> If we were to do the "do not blindly initialize and always
+> initialize explicitly for debugging" (which I doubt is a good
+> direction to go in), then what you outlined above certainly is a
+> less evil way to do so than what the patch under discussion did, I
+> would think.
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- .travis.yml     |  3 +++
- ci/run-build.sh | 15 +++++++++++++++
- 2 files changed, 18 insertions(+)
+So v3 [1] should be in good condition to go to 'pu', I think?
 
-diff --git a/.travis.yml b/.travis.yml
-index 4684b3f4f3..273b1d508a 100644
---- a/.travis.yml
-+++ b/.travis.yml
-@@ -16,10 +16,13 @@ compiler:
- 
- addons:
-   apt:
-+    sources:
-+    - ubuntu-toolchain-r-test
-     packages:
-     - language-pack-is
-     - git-svn
-     - apache2
-+    - gcc-6
- 
- matrix:
-   include:
-diff --git a/ci/run-build.sh b/ci/run-build.sh
-index 4f940d1032..04e163359c 100755
---- a/ci/run-build.sh
-+++ b/ci/run-build.sh
-@@ -5,4 +5,19 @@
- 
- . ${0%/*}/lib-travisci.sh
- 
-+if [ "$jobname" = linux-gcc ]; then
-+	gcc-6 --version
-+	cat >config.mak <<-EOF
-+	CC=gcc-6
-+	CFLAGS = -g -O2 -Wall
-+	CFLAGS += -Wextra
-+	CFLAGS += -Wmissing-prototypes
-+	CFLAGS += -Wno-empty-body
-+	CFLAGS += -Wno-maybe-uninitialized
-+	CFLAGS += -Wno-missing-field-initializers
-+	CFLAGS += -Wno-sign-compare
-+	CFLAGS += -Wno-unused-function
-+	CFLAGS += -Wno-unused-parameter
-+	EOF
-+fi
- make --jobs=2
+[1] https://public-inbox.org/git/20180225111840.16421-1-pclouds@gmail.com/
 -- 
-2.16.1.435.g8f24da2e1a
-
+Duy
