@@ -2,70 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 200951F404
-	for <e@80x24.org>; Sat,  3 Mar 2018 14:22:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1FE3C1F404
+	for <e@80x24.org>; Sat,  3 Mar 2018 14:27:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751989AbeCCOWL convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Sat, 3 Mar 2018 09:22:11 -0500
-Received: from elephants.elehost.com ([216.66.27.132]:23293 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751885AbeCCOWL (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 3 Mar 2018 09:22:11 -0500
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from pangea (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id w23EM4Cr061835
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Sat, 3 Mar 2018 09:22:05 -0500 (EST)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "=?UTF-8?Q?'Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy'?=" 
-        <pclouds@gmail.com>, <git@vger.kernel.org>
-Cc:     "'Eric Sunshine'" <sunshine@sunshineco.us>
-References: <20180303033918.15751-1-pclouds@gmail.com>
-In-Reply-To: <20180303033918.15751-1-pclouds@gmail.com>
-Subject: RE: [PATCH 0/3] git worktree prune improvements
-Date:   Sat, 3 Mar 2018 09:21:56 -0500
-Message-ID: <002601d3b2fa$ff6df240$fe49d6c0$@nexbridge.com>
+        id S1751898AbeCCO1u (ORCPT <rfc822;e@80x24.org>);
+        Sat, 3 Mar 2018 09:27:50 -0500
+Received: from cloud.peff.net ([104.130.231.41]:45880 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1751863AbeCCO1t (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 3 Mar 2018 09:27:49 -0500
+Received: (qmail 3424 invoked by uid 109); 3 Mar 2018 14:27:50 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 03 Mar 2018 14:27:50 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 6535 invoked by uid 111); 3 Mar 2018 14:28:39 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Sat, 03 Mar 2018 09:28:39 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 03 Mar 2018 09:27:47 -0500
+Date:   Sat, 3 Mar 2018 09:27:47 -0500
+From:   Jeff King <peff@peff.net>
+To:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+Cc:     Junio C Hamano <gitster@pobox.com>, olyatelezhnaya@gmail.com,
+        christian.couder@gmail.com, Git Mailing List <git@vger.kernel.org>
+Subject: Re: t006 broken under Mac OS
+Message-ID: <20180303142747.GA28218@sigill.intra.peff.net>
+References: <f711d7ea-b3a0-82c4-6700-5ec285c91115@web.de>
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQFFfQpmgu8o94Yllw79o2IlTbccBqTa+NBA
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <f711d7ea-b3a0-82c4-6700-5ec285c91115@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On March 2, 2018 10:39 PM, Nguy?n Thái Ng?c Duy wrote:
-> This is something we could do to improve the situation when a user manually
-> moves a worktree and not follow the update process (we have had the first
-> reported case [1]). Plus a bit cleanup in gc.
+On Sat, Mar 03, 2018 at 01:52:05PM +0100, Torsten Bögershausen wrote:
+
+> Beside that t1006 has a broken indentation (mixed spaces and TABs at
+>  the beginning of the line, I get 4 errors here under Mac OS:
 > 
-> I think this is something we should do until we somehow make the user
-> aware that the worktree is broken as soon as they move a worktree
-> manually. But there's some more work to get there.
+> not ok 15 - Check %(refname) gives empty output
+> not ok 36 - Check %(refname) gives empty output
+> not ok 58 - Check %(refname) gives empty output
+> not ok 89 - Check %(refname) gives empty output
 > 
-> [1] http://public-inbox.org/git/%3Caa98f187-4b1a-176d-2a1b-
-> 826c995776cd@aegee.org%3E
+> 
+> Running with debug and verbose shows that the empty files are not empty.
+> The characters in the non-empty file are outside the ASCII range,
+> so I copy  the stuff in here after running `od -c`  on the log file.
+> And I don't have a clue, where this stuff comes from - but I get different
+> "crap" with each run - seams as if there is a read behind a buffer ?
 
-I wonder whether the OT thread discussion about branch annotation may have some value here. For some repositories I manage, I have received questions about whether there was some way to know that a branch in the clone was associated with a worktree "at any point in the past", which, once the worktree has been pruned, is not derivable in a formal computational sense - there may be specific conditions where it is. Perhaps, if that line of development moves forward, that we should considering annotating the worktree-created branch to help with our pruning process and to identify where the branch originated.
+Yeah, I think the ref_array_item.refname flex-parameter is not valid.
+This is the same issue Ramsay mentioned in:
 
-Just a thought.
+  https://public-inbox.org/git/58b2bdcd-d621-fd21-ab4d-6a9478319b19@ramsayjones.plus.com/
 
-Cheers,
-Randall
+Junio, I think it probably makes sense to eject ot/cat-batch-format from
+pu for now. That series is on pause for a bit while Olga works on some
+other refactoring, and it's causing problems for people who test pu
+regularly.
 
--- Brief whoami:
-  NonStop developer since approximately NonStop(211288444200000000)
-  UNIX developer since approximately 421664400
--- In my real life, I talk too much.
-
-
-
+-Peff
