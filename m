@@ -6,86 +6,77 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7ACB71F404
-	for <e@80x24.org>; Sat,  3 Mar 2018 04:24:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DE8ED1F404
+	for <e@80x24.org>; Sat,  3 Mar 2018 04:26:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751634AbeCCEYI (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Mar 2018 23:24:08 -0500
-Received: from cloud.peff.net ([104.130.231.41]:45202 "HELO cloud.peff.net"
+        id S1750924AbeCCE0B (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Mar 2018 23:26:01 -0500
+Received: from cloud.peff.net ([104.130.231.41]:45228 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751608AbeCCEYH (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Mar 2018 23:24:07 -0500
-Received: (qmail 2984 invoked by uid 109); 3 Mar 2018 04:24:07 -0000
+        id S1750775AbeCCE0B (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Mar 2018 23:26:01 -0500
+Received: (qmail 3104 invoked by uid 109); 3 Mar 2018 04:26:01 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 03 Mar 2018 04:24:07 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 03 Mar 2018 04:26:01 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 2874 invoked by uid 111); 3 Mar 2018 04:24:57 -0000
+Received: (qmail 2900 invoked by uid 111); 3 Mar 2018 04:26:50 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 02 Mar 2018 23:24:57 -0500
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 02 Mar 2018 23:26:50 -0500
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 02 Mar 2018 23:24:05 -0500
-Date:   Fri, 2 Mar 2018 23:24:05 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 02 Mar 2018 23:25:59 -0500
+Date:   Fri, 2 Mar 2018 23:25:59 -0500
 From:   Jeff King <peff@peff.net>
 To:     Brandon Williams <bmwill@google.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
-        sbeller@google.com, gitster@pobox.com, stolee@gmail.com,
-        git@jeffhostetler.com, pclouds@gmail.com
-Subject: Re: [PATCH v3 04/35] upload-pack: convert to a builtin
-Message-ID: <20180303042405.GA27689@sigill.intra.peff.net>
-References: <20180207011312.189834-1-bmwill@google.com>
- <20180207011312.189834-5-bmwill@google.com>
- <20180221134422.2386e1aca39fe673235590e7@google.com>
- <20180222095833.GC12442@sigill.intra.peff.net>
- <20180222180715.GB185096@google.com>
- <20180222181400.GA19035@sigill.intra.peff.net>
- <20180222193814.GA256918@aiede.svl.corp.google.com>
- <20180222201940.GB23561@sigill.intra.peff.net>
- <20180222202150.GA23985@sigill.intra.peff.net>
- <20180223210904.GB234838@google.com>
+Cc:     Stefan Beller <sbeller@google.com>, git <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v3 11/35] test-pkt-line: introduce a packet-line test
+ helper
+Message-ID: <20180303042558.GB27689@sigill.intra.peff.net>
+References: <20180125235838.138135-1-bmwill@google.com>
+ <20180207011312.189834-1-bmwill@google.com>
+ <20180207011312.189834-12-bmwill@google.com>
+ <CAGZ79kbrm2Ei=spoDbjrwVFoF+mi0AAsXNLDBgCozFVoXM6+1w@mail.gmail.com>
+ <20180223212231.GC234838@google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20180223210904.GB234838@google.com>
+In-Reply-To: <20180223212231.GC234838@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 23, 2018 at 01:09:04PM -0800, Brandon Williams wrote:
+On Fri, Feb 23, 2018 at 01:22:31PM -0800, Brandon Williams wrote:
 
-> > By the way, any decision here would presumably need to be extended to
-> > git-serve, etc. The current property is that it's safe to fetch from an
-> > untrusted repository, even over ssh. If we're keeping that for protocol
-> > v1, we'd want it to apply to protocol v2, as well.
+> On 02/22, Stefan Beller wrote:
+> > On Tue, Feb 6, 2018 at 5:12 PM, Brandon Williams <bmwill@google.com> wrote:
+> > 
+> > > +static void pack_line(const char *line)
+> > > +{
+> > > +       if (!strcmp(line, "0000") || !strcmp(line, "0000\n"))
+> > 
+> > From our in-office discussion:
+> > v1/v0 packs pktlines twice in http, which is not possible to
+> > construct using this test helper when using the same string
+> > for the packed and unpacked representation of flush and delim packets,
+> > i.e. test-pkt-line --pack $(test-pkt-line --pack 0000) would produce
+> > '0000' instead of '00090000\n'.
+> > To fix it we'd have to replace the unpacked versions of these pkts to
+> > something else such as "FLUSH" "DELIM".
+> > 
+> > However as we do not anticipate the test helper to be used in further
+> > tests for v0, this ought to be no big issue.
+> > Maybe someone else cares though?
 > 
-> This may be more complicated.  Right now (for backward compatibility)
-> all fetches for v2 are issued to the upload-pack endpoint. So even
-> though I've introduced git-serve it doesn't have requests issued to it
-> and no requests can be issued to it currently (support isn't added to
-> http-backend or git-daemon).  This just means that the command already
-> exists to make it easy for testing specific v2 stuff and if we want to
-> expose it as an endpoint (like when we have a brand new server command
-> that is completely incompatible with v1) its already there and support
-> just needs to be plumbed in.
-> 
-> This whole notion of treating upload-pack differently from receive-pack
-> has bad consequences for v2 though.  The idea for v2 is to be able to
-> run any number of commands via the same endpoint, so at the end of the
-> day the endpoint you used is irrelevant.  So you could issue both fetch
-> and push commands via the same endpoint in v2 whether its git-serve,
-> receive-pack, or upload-pack.  So really, like Jonathan has said
-> elsewhere, we need to figure out how to be ok with having receive-pack
-> and upload-pack builtins, or having neither of them builtins, because it
-> doesn't make much sense for v2 to straddle that line.
+> I'm going to punt and say, if someone cares enough they can update this
+> test-helper when they want to use it for v1/v0 stuff.
 
-It seems like it would be OK if the whole code path of git-serve
-invoking upload-pack happened without being a builtin, even if it would
-be possible to run a builtin receive-pack from that same (non-builtin)
-git-serve.
-
-Remember that the client is driving the whole operation here, and we can
-assume that git-serve is operating on the client's behalf. So a client
-who chooses not to trigger receive-pack would be fine.
+I recently add packetize and depacketize helpers for testing v0 streams;
+see 4414a15002 (t/lib-git-daemon: add network-protocol helpers,
+2018-01-24). Is it worth folding these together?
 
 -Peff
