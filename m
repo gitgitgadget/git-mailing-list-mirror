@@ -7,59 +7,60 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 598171F576
-	for <e@80x24.org>; Sat,  3 Mar 2018 11:38:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4C3FD1F576
+	for <e@80x24.org>; Sat,  3 Mar 2018 11:38:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932101AbeCCLi0 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 3 Mar 2018 06:38:26 -0500
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:42418 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932087AbeCCLiZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 3 Mar 2018 06:38:25 -0500
-Received: by mail-pg0-f67.google.com with SMTP id y8so4862390pgr.9
-        for <git@vger.kernel.org>; Sat, 03 Mar 2018 03:38:25 -0800 (PST)
+        id S932106AbeCCLib (ORCPT <rfc822;e@80x24.org>);
+        Sat, 3 Mar 2018 06:38:31 -0500
+Received: from mail-pl0-f68.google.com ([209.85.160.68]:38530 "EHLO
+        mail-pl0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932087AbeCCLia (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 3 Mar 2018 06:38:30 -0500
+Received: by mail-pl0-f68.google.com with SMTP id m22-v6so3677778pls.5
+        for <git@vger.kernel.org>; Sat, 03 Mar 2018 03:38:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=XbMfB8eoWRIV8J3D5I2a5W80CwPomJpVV8qdzSot4ms=;
-        b=p9oS6CkRr0szNl8lwZHKuHfLOXkipe0MYlIdV5yZnkbWjTvCoS84nZ+lDoaa1JHr50
-         6fpB3JHoYcSuNZp9V0neVv7yYJRl+xWc3OnIFfMuz9ues0/akCvjn2bFsFSX7V1NXI61
-         O0/gzTT9DdAISlQXu0vCWrfMbrHknfe5blB0wN8AyjCykSf3zsRu2kY0Jh4kSXbgpYbe
-         kgad31dF0n5NgfwoqiizTca03HshGigGxcKIXydgrI/xXk5i5Qp9PRry1zmH9EKdZe6l
-         Bn51xtgRgEZoj/9jcsCg58H4DfPhTY79NUeOcyThGSY8Xe4qw58Knn+ILZRy0VkeYCjR
-         JdTQ==
+        bh=fULQkOlUXZqxSwItAWHYsDD6v6V8TKrdlAhvA0qFgFQ=;
+        b=No/rhXwYH13xfDIKMPdOzW6HqAs3hYe0b3zV9dovxPLZGMe5HVlbsIvKTDa6Pyg9Zk
+         gWfwgkJiHK/YBOxdLu13G5pnDnJf6d8259K+gBZjtLDmPK6SINpktrm/8cV+ds0TPMox
+         JkB1xPDzsEC5VzPz9ycktneiYUImT50gFHXzfWE+1bAa2J6rppaab6wkdf1WMuXUKSdC
+         IjpEckVhWoa9fny5iutbfBPDRk62ufINYb0SH16oiB7+IPAHuox9ctC9Hni86fn0hME8
+         whdvAIyZ0DLplv54p28AaEdARoUUQMg6Z9jKz65jSzJ4eJ9Y31eekpZfdXz4dEI8i7OQ
+         7UeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=XbMfB8eoWRIV8J3D5I2a5W80CwPomJpVV8qdzSot4ms=;
-        b=AMOBU+zmJxOsnYEnomAvFkxvq6u/wJtCeBhWSTW+qyKllZhEtqm6281GoJg0P7AS38
-         Y964817TOPTTAgEJZrljacqCSfiM4b2ll/S3AQB035AVxUDojtl1R72NnWweK/i1+5wu
-         cLsHX88P2f7AzS9XHStPvJZ2vDVRUoDdDn/TLZtetsX7wPhu5BuX9GinGRCZzuTOUTWt
-         hrhpGg8SwY8N/LDym+cz8AQ0td0GzLAPzhMHc7rgz3vz8kzjqyI0y0twQCdDapu1neZq
-         omyReVD8nWHL/MbnQfDD/jKbZEMywSQfC53v/c5zYIin60ekclUNVOUognK7ucRZ2r28
-         7Kew==
-X-Gm-Message-State: APf1xPAsgswWd2qK+FkPEnBH2DRvz3hnYd+giwQcihMzx1811EUjAhGp
-        Qtd4WMrCZYyga1nhRUnUz4n0VQ==
-X-Google-Smtp-Source: AG47ELvvNzXOj9TEk44KPz5GdyyfRDQzK0LwNPFKkmP4/Wtj5LVqV5nQbYDN4Ah5FqxuOWAEQJw/EA==
-X-Received: by 10.98.249.10 with SMTP id o10mr8781315pfh.222.1520077105057;
-        Sat, 03 Mar 2018 03:38:25 -0800 (PST)
+        bh=fULQkOlUXZqxSwItAWHYsDD6v6V8TKrdlAhvA0qFgFQ=;
+        b=LTcMsCUtY7nxDYs4tC29rlvaE4WgqP3LaqHYBNJ2XApyl+Mt0XxkqM9IUmx3xa/W8B
+         OmVaINPe0MlSVarXlVkorMfAXKArCqaDtF12oGQSs6HpyfEYzs0WpzBr8cheuDSuHmMI
+         qtSjKmEdq9gwrifk6FIQeBSwrv5hvJWXGrVgos8JAWX+TsF+F8PUGiPHjiHekUH8t4Up
+         xoIUzmqSqHATFwQz/yYWR5gIPkAPbGOFz7Wk5tpeEG0E2lNDz8LBG/Ve9sbASTUv792k
+         7WzYD6oZaktmQnM9VFyNgE+vjfYLd7s5sC2jrVMGkEUNc5BzYzlzL2ta3vRKSFJrRb+y
+         xgwQ==
+X-Gm-Message-State: APf1xPAYWxL2cMb7pbANFSuV40WQeQTUmKl27NLBivCkEAYQFhV90/q7
+        KjLAaKZvXZ3j0UUEvg7tBPCWbA==
+X-Google-Smtp-Source: AG47ELsIxDkh2dAEtHwc5jVgSf87nIW0D6G5Fnca16rdvTTAkm5ovuWdMib9/3BkuhbEsytoLUwzGA==
+X-Received: by 2002:a17:902:bc3:: with SMTP id 61-v6mr8121540plr.398.1520077109823;
+        Sat, 03 Mar 2018 03:38:29 -0800 (PST)
 Received: from ash ([171.232.93.137])
-        by smtp.gmail.com with ESMTPSA id f11sm17064370pfa.166.2018.03.03.03.38.22
+        by smtp.gmail.com with ESMTPSA id n66sm16508404pfn.111.2018.03.03.03.38.26
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 03 Mar 2018 03:38:24 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Sat, 03 Mar 2018 18:38:20 +0700
+        Sat, 03 Mar 2018 03:38:29 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Sat, 03 Mar 2018 18:38:25 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Stefan Beller <sbeller@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 20/44] sha1_file: allow prepare_alt_odb to handle arbitrary repositories
-Date:   Sat,  3 Mar 2018 18:36:13 +0700
-Message-Id: <20180303113637.26518-21-pclouds@gmail.com>
+Subject: [PATCH 21/44] sha1_file: add repository argument to sha1_file_name
+Date:   Sat,  3 Mar 2018 18:36:14 +0700
+Message-Id: <20180303113637.26518-22-pclouds@gmail.com>
 X-Mailer: git-send-email 2.16.1.435.g8f24da2e1a
 In-Reply-To: <20180303113637.26518-1-pclouds@gmail.com>
 References: <CACsJy8DWrNzZM1K2vkx2XiETdAR5WhwXEdPijsxd0ZD4Lj=tZw@mail.gmail.com>
@@ -74,54 +75,153 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Stefan Beller <sbeller@google.com>
 
+Add a repository argument to allow sha1_file_name callers to be more
+specific about which repository to handle. This is a small mechanical
+change; it doesn't change the implementation to handle repositories
+other than the_repository yet.
+
+As with the previous commits, use a macro to catch callers passing a
+repository other than the_repository at compile time.
+
+While at it, move the declaration to object-store.h, where it should
+be easier to find.
+
 Signed-off-by: Stefan Beller <sbeller@google.com>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- object-store.h |  3 +--
- sha1_file.c    | 12 +++++-------
- 2 files changed, 6 insertions(+), 9 deletions(-)
+ cache.h        |  6 ------
+ http-walker.c  |  3 ++-
+ http.c         |  5 ++---
+ object-store.h |  7 +++++++
+ sha1_file.c    | 10 +++++-----
+ 5 files changed, 16 insertions(+), 15 deletions(-)
 
+diff --git a/cache.h b/cache.h
+index d3429a0d48..cbec0ecd23 100644
+--- a/cache.h
++++ b/cache.h
+@@ -961,12 +961,6 @@ extern void check_repository_format(void);
+ #define DATA_CHANGED    0x0020
+ #define TYPE_CHANGED    0x0040
+ 
+-/*
+- * Put in `buf` the name of the file in the local object database that
+- * would be used to store a loose object with the specified sha1.
+- */
+-extern void sha1_file_name(struct strbuf *buf, const unsigned char *sha1);
+-
+ /*
+  * Return an abbreviated sha1 unique within this repository's object database.
+  * The result will be at least `len` characters long, and will be NUL
+diff --git a/http-walker.c b/http-walker.c
+index 07c2b1af82..2c33969123 100644
+--- a/http-walker.c
++++ b/http-walker.c
+@@ -1,4 +1,5 @@
+ #include "cache.h"
++#include "repository.h"
+ #include "commit.h"
+ #include "walker.h"
+ #include "http.h"
+@@ -545,7 +546,7 @@ static int fetch_object(struct walker *walker, unsigned char *sha1)
+ 		ret = error("File %s has bad hash", hex);
+ 	} else if (req->rename < 0) {
+ 		struct strbuf buf = STRBUF_INIT;
+-		sha1_file_name(&buf, req->sha1);
++		sha1_file_name(the_repository, &buf, req->sha1);
+ 		ret = error("unable to write sha1 filename %s", buf.buf);
+ 		strbuf_release(&buf);
+ 	}
+diff --git a/http.c b/http.c
+index 31755023a4..df9dbea59c 100644
+--- a/http.c
++++ b/http.c
+@@ -2246,7 +2246,7 @@ struct http_object_request *new_http_object_request(const char *base_url,
+ 	hashcpy(freq->sha1, sha1);
+ 	freq->localfile = -1;
+ 
+-	sha1_file_name(&filename, sha1);
++	sha1_file_name(the_repository, &filename, sha1);
+ 	snprintf(freq->tmpfile, sizeof(freq->tmpfile),
+ 		 "%s.temp", filename.buf);
+ 
+@@ -2395,8 +2395,7 @@ int finish_http_object_request(struct http_object_request *freq)
+ 		unlink_or_warn(freq->tmpfile);
+ 		return -1;
+ 	}
+-
+-	sha1_file_name(&filename, freq->sha1);
++	sha1_file_name(the_repository, &filename, freq->sha1);
+ 	freq->rename = finalize_object_file(freq->tmpfile, filename.buf);
+ 	strbuf_release(&filename);
+ 
 diff --git a/object-store.h b/object-store.h
-index 20ba136c1f..141455b5b2 100644
+index 141455b5b2..f09acfbf5b 100644
 --- a/object-store.h
 +++ b/object-store.h
-@@ -24,8 +24,7 @@ struct alternate_object_database {
- 	 */
- 	char path[FLEX_ARRAY];
- };
--#define prepare_alt_odb(r) prepare_alt_odb_##r()
--void prepare_alt_odb_the_repository(void);
-+void prepare_alt_odb(struct repository *r);
- char *compute_alternate_path(const char *path, struct strbuf *err);
- typedef int alt_odb_fn(struct alternate_object_database *, void *);
- int foreach_alt_odb(alt_odb_fn, void*);
+@@ -115,4 +115,11 @@ struct raw_object_store {
+ void raw_object_store_init(struct raw_object_store *o);
+ void raw_object_store_clear(struct raw_object_store *o);
+ 
++/*
++ * Put in `buf` the name of the file in the local object database that
++ * would be used to store a loose object with the specified sha1.
++ */
++#define sha1_file_name(r, b, s) sha1_file_name_##r(b, s)
++void sha1_file_name_the_repository(struct strbuf *buf, const unsigned char *sha1);
++
+ #endif /* OBJECT_STORE_H */
 diff --git a/sha1_file.c b/sha1_file.c
-index f34eb69e39..a3e4ef4253 100644
+index a3e4ef4253..e06d62a451 100644
 --- a/sha1_file.c
 +++ b/sha1_file.c
-@@ -673,17 +673,15 @@ int foreach_alt_odb(alt_odb_fn fn, void *cb)
- 	return r;
+@@ -323,7 +323,7 @@ static void fill_sha1_path(struct strbuf *buf, const unsigned char *sha1)
+ 	}
  }
  
--void prepare_alt_odb_the_repository(void)
-+void prepare_alt_odb(struct repository *r)
+-void sha1_file_name(struct strbuf *buf, const unsigned char *sha1)
++void sha1_file_name_the_repository(struct strbuf *buf, const unsigned char *sha1)
  {
--	if (the_repository->objects.alt_odb_tail)
-+	if (r->objects.alt_odb_tail)
- 		return;
+ 	strbuf_addstr(buf, get_object_directory());
+ 	strbuf_addch(buf, '/');
+@@ -713,7 +713,7 @@ static int check_and_freshen_local(const unsigned char *sha1, int freshen)
+ 	static struct strbuf buf = STRBUF_INIT;
  
--	the_repository->objects.alt_odb_tail =
--			&the_repository->objects.alt_odb_list;
--	link_alt_odb_entries(the_repository, the_repository->objects.alternate_db,
--			     PATH_SEP, NULL, 0);
-+	r->objects.alt_odb_tail = &r->objects.alt_odb_list;
-+	link_alt_odb_entries(r, r->objects.alternate_db, PATH_SEP, NULL, 0);
+ 	strbuf_reset(&buf);
+-	sha1_file_name(&buf, sha1);
++	sha1_file_name(the_repository, &buf, sha1);
  
--	read_info_alternates(the_repository, get_object_directory(), 0);
-+	read_info_alternates(r, r->objects.objectdir, 0);
+ 	return check_and_freshen_file(buf.buf, freshen);
  }
+@@ -874,7 +874,7 @@ static int stat_sha1_file(const unsigned char *sha1, struct stat *st,
+ 	static struct strbuf buf = STRBUF_INIT;
  
- /* Returns 1 if we have successfully freshened the file, 0 otherwise. */
+ 	strbuf_reset(&buf);
+-	sha1_file_name(&buf, sha1);
++	sha1_file_name(the_repository, &buf, sha1);
+ 	*path = buf.buf;
+ 
+ 	if (!lstat(*path, st))
+@@ -903,7 +903,7 @@ static int open_sha1_file(const unsigned char *sha1, const char **path)
+ 	static struct strbuf buf = STRBUF_INIT;
+ 
+ 	strbuf_reset(&buf);
+-	sha1_file_name(&buf, sha1);
++	sha1_file_name(the_repository, &buf, sha1);
+ 	*path = buf.buf;
+ 
+ 	fd = git_open(*path);
+@@ -1588,7 +1588,7 @@ static int write_loose_object(const unsigned char *sha1, char *hdr, int hdrlen,
+ 	static struct strbuf filename = STRBUF_INIT;
+ 
+ 	strbuf_reset(&filename);
+-	sha1_file_name(&filename, sha1);
++	sha1_file_name(the_repository, &filename, sha1);
+ 
+ 	fd = create_tmpfile(&tmp_file, filename.buf);
+ 	if (fd < 0) {
 -- 
 2.16.1.435.g8f24da2e1a
 
