@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 263C21F404
-	for <e@80x24.org>; Sat,  3 Mar 2018 23:58:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 390771F404
+	for <e@80x24.org>; Sat,  3 Mar 2018 23:59:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932258AbeCCX6w (ORCPT <rfc822;e@80x24.org>);
-        Sat, 3 Mar 2018 18:58:52 -0500
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:33724 "EHLO
+        id S932304AbeCCX66 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 3 Mar 2018 18:58:58 -0500
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:42363 "EHLO
         mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751839AbeCCX6u (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1751961AbeCCX6u (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 3 Mar 2018 18:58:50 -0500
-Received: by mail-wr0-f196.google.com with SMTP id v18so13006139wrv.0
-        for <git@vger.kernel.org>; Sat, 03 Mar 2018 15:58:49 -0800 (PST)
+Received: by mail-wr0-f196.google.com with SMTP id k9so13624151wre.9
+        for <git@vger.kernel.org>; Sat, 03 Mar 2018 15:58:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=CokmmyrMbKlBI60oPMoC1g27/ompc5aMaIrhpc2KN80=;
-        b=Y4C+WHshGlhynBvPPFx7zPoBvsDAawsIFswKI+p1xwGbS2Sn5XVeoCQidBHEqRt5Ev
-         wE0fBrI9SmwX364qWUV3RZA5MFOqVooDRPWcfnwdruRJuY4TolT7iU2KG0GG3ETcHbGA
-         YlpboXCL9HHABvxBAUdR1qkXzux4IF9zbck2Tl1qnfNU63SmOEVP9d3+Yn0Kt9VU+8oM
-         C63/PS0Z0awRRpudYFdjIQUbbP0e239EwRfme/5h8gPxxSaVTu8EfgMJ4uUDdSHx6DQP
-         9BubGj2X73bf2HCbno2qUhMPhQBof+YXU0gycIJCnjSLJTIucoJVrS7ehKAyC/EpjE1f
-         oLXw==
+        bh=Q5QaWhtR7ppwpMXDEI14XsCIltUsQxN5iV/tHNC91vc=;
+        b=hscQ3lDXEdm5nQvMAgGq6vFzi9DPcD7quDO/yruwJfKT7uWHC7zcVvAhKZag2kIYHI
+         5BIYymaNdQ8cji+MrjIKp8CdUg+q1QvCeBga83DNHGV3mSr0YgYGFTqdBELOGVlVCiW0
+         JjUDo0xRd3aCEPXO57WcmfSjfftN+a/jlBw6mHo4GbnWNTtFbNRrL1u3pRcSV3zCI0/p
+         QFs70giUwMPg/Q2voOSNgo+LkpHVLb/ZCwkefL+6O1BopS41GeKocDTrnhHY2MzeXz7a
+         iTR9l7CRuvKGCHZTlbL6vrVXQ5gFX90ABkI70Qct5Va9kK6O8mM/zTw8GCWEqKepg27t
+         OWUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=CokmmyrMbKlBI60oPMoC1g27/ompc5aMaIrhpc2KN80=;
-        b=MPTesUbsxf7gCcywSzhlSc3H7PN1seBVHAOPcM7yY7rMVqDbAicYk3dcbvq3/5QnZp
-         0tteY1/Z762BDeQj1gHo+bpiUoDelZcO04F46MYEe27EzbCmyzsZJCvCPUz0JaWQgkmG
-         aVRzcRi37kgV0s+7gifUnCoEQAHahM7csCtfbh057ohZWrSZHo7xkFnkB6RK6wXGZKUZ
-         pbmrdro0SsTK6t/eDJRH38ghFV4erV32nI/F2njcq5SOwIadPaYbitUomH/u+kj5/7Ky
-         dJj9SO/0u9GZv9TDaChRC43lZoMbN1Iq2EI/2PmGVQ3Ao/3RZfTGihNt4z1b3KVOHZXT
-         1EiA==
-X-Gm-Message-State: APf1xPD4997nJ4zv1jNOXOWMT9e5yvNFAlzbcbyYetzRNUJg+DsuRj20
-        qDu4CTjiIwHAXhBoHF5RGcCVayLA
-X-Google-Smtp-Source: AG47ELtwC84tgIbyP3YgwyVv7Rb3yS6u87Okcp4QRZa824emOWKsse25WiUaOssDqauMfoZfq2Y10g==
-X-Received: by 10.223.185.82 with SMTP id b18mr8341954wrg.180.1520121528324;
-        Sat, 03 Mar 2018 15:58:48 -0800 (PST)
+        bh=Q5QaWhtR7ppwpMXDEI14XsCIltUsQxN5iV/tHNC91vc=;
+        b=YhybOVEz2HUYpoKw+Pq3MwmR5nh4Xr/dVIHp+0L/Ra2fksc7rZyqYgwTy5ZK+zuFdx
+         JOr0jbbs8usqvB7w7VlPDulAKB6JxFR4RNPiKzMCgMrZdJoEckEg6OkBqQkUlEqXB+1c
+         7Lau+oJavNzwLY07+0nzLSZNd+NQ8Sf5L5sOGCn5XoCWhvBFciWVyhtw6Yf6ZhzhHg9+
+         +1UT1p1FBgkWK9WSNJWu/qfR+JKPOo/bS6xN5MevbY9Sl9NtyrP7bSWfADrxJiUR+ypS
+         qIZ4bpFjBypc/d19nSVcfv4gRciPfnJF5ZI5pWcJN3y/285NJAwNYfOLI21fY405+9+7
+         VQZg==
+X-Gm-Message-State: APf1xPCRuAwhuIF1nZOGrbGy5/tdNapT+1pM26sADEcy0HKruBvWKe6n
+        /sSNDYF4N+2GiN7PU0Ia0nzCg9Tg
+X-Google-Smtp-Source: AG47ELuq4782at+mSWezy7d0HOLj1ofZxnBiAHX1/kJhEDk/ijlop6llxe+938YHBrCRJtpjMStMfA==
+X-Received: by 10.223.179.211 with SMTP id x19mr8538413wrd.175.1520121529289;
+        Sat, 03 Mar 2018 15:58:49 -0800 (PST)
 Received: from greyhound.Speedport_W_724V_Typ_A_05011603_05_028 (p200300CA5BEF8278E01D0E043582A547.dip0.t-ipconnect.de. [2003:ca:5bef:8278:e01d:e04:3582:a547])
-        by smtp.gmail.com with ESMTPSA id o94sm14657793wrc.7.2018.03.03.15.58.46
+        by smtp.gmail.com with ESMTPSA id m190sm5677403wmb.6.2018.03.03.15.58.46
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
         Sat, 03 Mar 2018 15:58:46 -0800 (PST)
 Received: from cc by greyhound.Speedport_W_724V_Typ_A_05011603_05_028 with local (Exim 4.89)
         (envelope-from <cc@localhost>)
-        id 1esH37-00023B-NC; Sun, 04 Mar 2018 00:58:45 +0100
+        id 1esH37-00023F-OO; Sun, 04 Mar 2018 00:58:45 +0100
 From:   Christian Ludwig <chrissicool@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Christian Ludwig <chrissicool@gmail.com>
-Subject: [PATCH v3 1/2] send-email: Rename variable for clarity
-Date:   Sun,  4 Mar 2018 00:58:13 +0100
-Message-Id: <20180303235814.7241-2-chrissicool@gmail.com>
+Subject: [PATCH v3 2/2] send-email: Support separate Reply-To address
+Date:   Sun,  4 Mar 2018 00:58:14 +0100
+Message-Id: <20180303235814.7241-3-chrissicool@gmail.com>
 X-Mailer: git-send-email 2.16.2
 In-Reply-To: <20180303235814.7241-1-chrissicool@gmail.com>
 References: <20180303235814.7241-1-chrissicool@gmail.com>
@@ -65,138 +65,150 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The SMTP protocol has both, the 'Reply-To' and the 'In-Reply-To' header
-fields. We only use the latter. To avoid confusion, rename the variable
-for it.
+In some projects contributions from groups are only accepted from a
+common group email address. But every individual may want to receive
+replies to her own personal address. That's what we have 'Reply-To'
+headers for in SMTP. So introduce an optional '--reply-to' command
+line option.
+
+This patch re-uses the $reply_to variable. This could break
+out-of-tree patches!
 
 Signed-off-by: Christian Ludwig <chrissicool@gmail.com>
 ---
- git-send-email.perl | 38 +++++++++++++++++++-------------------
- 1 file changed, 19 insertions(+), 19 deletions(-)
+ Documentation/git-send-email.txt       |  5 +++++
+ contrib/completion/git-completion.bash |  2 +-
+ git-send-email.perl                    | 18 +++++++++++++++++-
+ t/t9001-send-email.sh                  |  2 ++
+ 4 files changed, 25 insertions(+), 2 deletions(-)
 
+diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
+index 8060ea35c..71ef97ba9 100644
+--- a/Documentation/git-send-email.txt
++++ b/Documentation/git-send-email.txt
+@@ -84,6 +84,11 @@ See the CONFIGURATION section for `sendemail.multiEdit`.
+ 	the value of GIT_AUTHOR_IDENT, or GIT_COMMITTER_IDENT if that is not
+ 	set, as returned by "git var -l".
+ 
++--reply-to=<address>::
++	Specify the address where replies from recipients should go to.
++	Use this if replies to messages should go to another address than what
++	is specified with the --from parameter.
++
+ --in-reply-to=<identifier>::
+ 	Make the first mail (or all the mails with `--no-thread`) appear as a
+ 	reply to the given Message-Id, which avoids breaking threads to
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index c7d5c7af2..4805b92ba 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -2081,7 +2081,7 @@ _git_send_email ()
+ 			--compose --confirm= --dry-run --envelope-sender
+ 			--from --identity
+ 			--in-reply-to --no-chain-reply-to --no-signed-off-by-cc
+-			--no-suppress-from --no-thread --quiet
++			--no-suppress-from --no-thread --quiet --reply-to
+ 			--signed-off-by-cc --smtp-pass --smtp-server
+ 			--smtp-server-port --smtp-encryption= --smtp-user
+ 			--subject --suppress-cc= --suppress-from --thread --to
 diff --git a/git-send-email.perl b/git-send-email.perl
-index d0dcc6d7f..9eb12b5ba 100755
+index 9eb12b5ba..707ec9eb7 100755
 --- a/git-send-email.perl
 +++ b/git-send-email.perl
-@@ -167,13 +167,13 @@ my $re_encoded_word = qr/=\?($re_token)\?($re_token)\?($re_encoded_text)\?=/;
+@@ -57,6 +57,7 @@ git send-email --dump-aliases
+     --[no-]cc               <str>  * Email Cc:
+     --[no-]bcc              <str>  * Email Bcc:
+     --subject               <str>  * Email "Subject:"
++    --reply-to              <str>  * Email "Reply-To:"
+     --in-reply-to           <str>  * Email "In-Reply-To:"
+     --[no-]xmailer                 * Add "X-Mailer:" header (default).
+     --[no-]annotate                * Review each patch that will be sent in an editor.
+@@ -167,7 +168,7 @@ my $re_encoded_word = qr/=\?($re_token)\?($re_token)\?($re_encoded_text)\?=/;
  
  # Variables we fill in automatically, or via prompting:
  my (@to,$no_to,@initial_to,@cc,$no_cc,@initial_cc,@bcclist,$no_bcc,@xh,
--	$initial_reply_to,$initial_subject,@files,
-+	$initial_in_reply_to,$initial_subject,@files,
+-	$initial_in_reply_to,$initial_subject,@files,
++	$initial_in_reply_to,$reply_to,$initial_subject,@files,
  	$author,$sender,$smtp_authpass,$annotate,$use_xmailer,$compose,$time);
  
  my $envelope_sender;
- 
- # Example reply to:
--#$initial_reply_to = ''; #<20050203173208.GA23964@foobar.com>';
-+#$initial_in_reply_to = ''; #<20050203173208.GA23964@foobar.com>';
- 
- my $repo = eval { Git->repository() };
- my @repo = $repo ? ($repo) : ();
-@@ -315,7 +315,7 @@ die __("--dump-aliases incompatible with other options\n")
-     if !$help and $dump_aliases and @ARGV;
+@@ -316,6 +317,7 @@ die __("--dump-aliases incompatible with other options\n")
  $rc = GetOptions(
  		    "sender|from=s" => \$sender,
--                    "in-reply-to=s" => \$initial_reply_to,
-+                    "in-reply-to=s" => \$initial_in_reply_to,
+                     "in-reply-to=s" => \$initial_in_reply_to,
++		    "reply-to=s" => \$reply_to,
  		    "subject=s" => \$initial_subject,
  		    "to=s" => \@initial_to,
  		    "to-cmd=s" => \$to_cmd,
-@@ -677,7 +677,7 @@ if ($compose) {
- 
+@@ -678,6 +680,7 @@ if ($compose) {
  	my $tpl_sender = $sender || $repoauthor || $repocommitter || '';
  	my $tpl_subject = $initial_subject || '';
--	my $tpl_reply_to = $initial_reply_to || '';
-+	my $tpl_in_reply_to = $initial_in_reply_to || '';
+ 	my $tpl_in_reply_to = $initial_in_reply_to || '';
++	my $tpl_reply_to = $reply_to || '';
  
  	print $c <<EOT1, Git::prefix_lines("GIT: ", __ <<EOT2), <<EOT3;
  From $tpl_sender # This line is ignored.
-@@ -690,7 +690,7 @@ Clear the body content if you don't wish to send a summary.
+@@ -689,6 +692,7 @@ for the patch you are writing.
+ Clear the body content if you don't wish to send a summary.
  EOT2
  From: $tpl_sender
++Reply-To: $tpl_reply_to
  Subject: $tpl_subject
--In-Reply-To: $tpl_reply_to
-+In-Reply-To: $tpl_in_reply_to
+ In-Reply-To: $tpl_in_reply_to
  
- EOT3
- 	for my $f (@files) {
-@@ -729,7 +729,7 @@ EOT3
- 		$sender = delete($parsed_email{'From'});
- 	}
+@@ -731,6 +735,9 @@ EOT3
  	if ($parsed_email{'In-Reply-To'}) {
--		$initial_reply_to = delete($parsed_email{'In-Reply-To'});
-+		$initial_in_reply_to = delete($parsed_email{'In-Reply-To'});
+ 		$initial_in_reply_to = delete($parsed_email{'In-Reply-To'});
  	}
++	if ($parsed_email{'Reply-To'}) {
++		$reply_to = delete($parsed_email{'Reply-To'});
++	}
  	if ($parsed_email{'Subject'}) {
  		$initial_subject = delete($parsed_email{'Subject'});
-@@ -912,16 +912,16 @@ sub expand_one_alias {
- @initial_cc = process_address_list(@initial_cc);
- @bcclist = process_address_list(@bcclist);
- 
--if ($thread && !defined $initial_reply_to && $prompting) {
--	$initial_reply_to = ask(
-+if ($thread && !defined $initial_in_reply_to && $prompting) {
-+	$initial_in_reply_to = ask(
- 		__("Message-ID to be used as In-Reply-To for the first email (if any)? "),
- 		default => "",
- 		valid_re => qr/\@.*\./, confirm_only => 1);
- }
--if (defined $initial_reply_to) {
--	$initial_reply_to =~ s/^\s*<?//;
--	$initial_reply_to =~ s/>?\s*$//;
--	$initial_reply_to = "<$initial_reply_to>" if $initial_reply_to ne '';
-+if (defined $initial_in_reply_to) {
-+	$initial_in_reply_to =~ s/^\s*<?//;
-+	$initial_in_reply_to =~ s/>?\s*$//;
-+	$initial_in_reply_to = "<$initial_in_reply_to>" if $initial_in_reply_to ne '';
+ 		print $c2 "Subject: " .
+@@ -924,6 +931,12 @@ if (defined $initial_in_reply_to) {
+ 	$initial_in_reply_to = "<$initial_in_reply_to>" if $initial_in_reply_to ne '';
  }
  
++if (defined $reply_to) {
++	$reply_to =~ s/^\s+|\s+$//g;
++	($reply_to) = expand_aliases($reply_to);
++	$reply_to = sanitize_address($reply_to);
++}
++
  if (!defined $smtp_server) {
-@@ -941,7 +941,7 @@ if ($compose && $compose > 0) {
- }
- 
- # Variables we set as part of the loop over files
--our ($message_id, %mail, $subject, $reply_to, $references, $message,
-+our ($message_id, %mail, $subject, $in_reply_to, $references, $message,
- 	$needs_confirm, $message_num, $ask_default);
- 
- sub extract_valid_address {
-@@ -1350,9 +1350,9 @@ Message-Id: $message_id
- 	if ($use_xmailer) {
- 		$header .= "X-Mailer: git-send-email $gitversion\n";
- 	}
--	if ($reply_to) {
-+	if ($in_reply_to) {
- 
--		$header .= "In-Reply-To: $reply_to\n";
-+		$header .= "In-Reply-To: $in_reply_to\n";
+ 	my @sendmail_paths = qw( /usr/sbin/sendmail /usr/lib/sendmail );
+ 	push @sendmail_paths, map {"$_/sendmail"} split /:/, $ENV{PATH};
+@@ -1355,6 +1368,9 @@ Message-Id: $message_id
+ 		$header .= "In-Reply-To: $in_reply_to\n";
  		$header .= "References: $references\n";
  	}
++	if ($reply_to) {
++		$header .= "Reply-To: $reply_to\n";
++	}
  	if (@xh) {
-@@ -1529,8 +1529,8 @@ EOF
- 	return 1;
- }
+ 		$header .= join("\n", @xh) . "\n";
+ 	}
+diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+index 19601fb54..e80eacbb1 100755
+--- a/t/t9001-send-email.sh
++++ b/t/t9001-send-email.sh
+@@ -224,6 +224,7 @@ Message-Id: MESSAGE-ID-STRING
+ X-Mailer: X-MAILER-STRING
+ In-Reply-To: <unique-message-id@example.com>
+ References: <unique-message-id@example.com>
++Reply-To: Reply <reply@example.com>
  
--$reply_to = $initial_reply_to;
--$references = $initial_reply_to || '';
-+$in_reply_to = $initial_in_reply_to;
-+$references = $initial_in_reply_to || '';
- $subject = $initial_subject;
- $message_num = 0;
- 
-@@ -1740,9 +1740,9 @@ foreach my $t (@files) {
- 
- 	# set up for the next message
- 	if ($thread && $message_was_sent &&
--		($chain_reply_to || !defined $reply_to || length($reply_to) == 0 ||
-+		($chain_reply_to || !defined $in_reply_to || length($in_reply_to) == 0 ||
- 		$message_num == 1)) {
--		$reply_to = $message_id;
-+		$in_reply_to = $message_id;
- 		if (length $references > 0) {
- 			$references .= "\n $message_id";
- 		} else {
+ Result: OK
+ EOF
+@@ -316,6 +317,7 @@ test_expect_success $PREREQ 'Show all headers' '
+ 		--dry-run \
+ 		--suppress-cc=sob \
+ 		--from="Example <from@example.com>" \
++		--reply-to="Reply <reply@example.com>" \
+ 		--to=to@example.com \
+ 		--cc=cc@example.com \
+ 		--bcc=bcc@example.com \
 -- 
 2.16.2
 
