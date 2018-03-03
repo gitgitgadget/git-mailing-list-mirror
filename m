@@ -2,87 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CB6A91F404
-	for <e@80x24.org>; Sat,  3 Mar 2018 03:58:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7ACB71F404
+	for <e@80x24.org>; Sat,  3 Mar 2018 04:24:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751331AbeCCD6f (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Mar 2018 22:58:35 -0500
-Received: from vimdzpsp-hrel01.bluewin.ch ([195.186.122.112]:55860 "EHLO
-        hrel.lb.bluewin.ch" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750992AbeCCD6e (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Mar 2018 22:58:34 -0500
-X-Greylist: delayed 363 seconds by postgrey-1.27 at vger.kernel.org; Fri, 02 Mar 2018 22:58:34 EST
-Received: from mail04.atomia.hostcenter.com ([193.246.38.125])
-        by vimdzpsp-hrel01.bluewin.ch Swisscom AG with SMTP
-        id ryDmeCKBbAOhTryDmeq61Z; Sat, 03 Mar 2018 04:52:30 +0100
-X-Bluewin-Spam-Analysis: v=2.1 cv=SsRdkK60 c=1 sm=1 tr=0
- a=eYUwbiWHISHKGgmtDMNxyg==:117 a=npegw5Bk5GAsnUtkcYB2eQ==:17
- a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=v2DPQv5-lfwA:10
- a=lLlk2TKHjMu_FdTcPdAA:9
-X-Bluewin-Spam-Score: 0.00
-Received: from localhost (localhost [127.0.0.1])
-        by mail04.atomia.hostcenter.com (Postfix) with ESMTP id 2633767D73
-        for <git@vger.kernel.org>; Sat,  3 Mar 2018 04:52:30 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at mail04
-Received: from mail04.atomia.hostcenter.com ([127.0.0.1])
-        by localhost (mail04.atomia.hostcenter.com [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id RAL66y66NyuP for <git@vger.kernel.org>;
-        Sat,  3 Mar 2018 04:52:26 +0100 (CET)
-Received: from ASUSPC (unknown [196.75.224.184])
-        (Authenticated sender: abdox@angelditesti.com)
-        by mail04.atomia.hostcenter.com (Postfix) with ESMTPA id 60FC067D68
-        for <git@vger.kernel.org>; Sat,  3 Mar 2018 04:52:25 +0100 (CET)
-thread-index: AdOyoxLehO2uc7ElTDap8rStpWIMlg==
-Thread-Topic: =?UTF-8?B?W0lEXSAtIFszOTQ4NV0gW1JFXSAtIFtOb3RpY2UhXQ====?=
-X-Hostcenter-Original-From: "alex" <abdox@angelditesti.com>
-From:   "alex" <abdox@angelditesti.com>
-X-Hostcenter-Forward-From: <git@vger.kernel.org>
-To:     <git@vger.kernel.org>
-Subject: =?UTF-8?B?W0lEXSAtIFszOTQ4NV0gW1JFXSAtIFtOb3RpY2UhXQ====?=
-Date:   Sat, 3 Mar 2018 04:52:38 +0100
-Message-ID: <FC5A3DFAA70F4077A34973BA76753683@ASUSPC>
+        id S1751634AbeCCEYI (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Mar 2018 23:24:08 -0500
+Received: from cloud.peff.net ([104.130.231.41]:45202 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1751608AbeCCEYH (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Mar 2018 23:24:07 -0500
+Received: (qmail 2984 invoked by uid 109); 3 Mar 2018 04:24:07 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 03 Mar 2018 04:24:07 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 2874 invoked by uid 111); 3 Mar 2018 04:24:57 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 02 Mar 2018 23:24:57 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 02 Mar 2018 23:24:05 -0500
+Date:   Fri, 2 Mar 2018 23:24:05 -0500
+From:   Jeff King <peff@peff.net>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
+        sbeller@google.com, gitster@pobox.com, stolee@gmail.com,
+        git@jeffhostetler.com, pclouds@gmail.com
+Subject: Re: [PATCH v3 04/35] upload-pack: convert to a builtin
+Message-ID: <20180303042405.GA27689@sigill.intra.peff.net>
+References: <20180207011312.189834-1-bmwill@google.com>
+ <20180207011312.189834-5-bmwill@google.com>
+ <20180221134422.2386e1aca39fe673235590e7@google.com>
+ <20180222095833.GC12442@sigill.intra.peff.net>
+ <20180222180715.GB185096@google.com>
+ <20180222181400.GA19035@sigill.intra.peff.net>
+ <20180222193814.GA256918@aiede.svl.corp.google.com>
+ <20180222201940.GB23561@sigill.intra.peff.net>
+ <20180222202150.GA23985@sigill.intra.peff.net>
+ <20180223210904.GB234838@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft CDO for Windows 2000
-Content-Class: urn:content-classes:message
-Importance: normal
-X-MimeOLE: Produced By Microsoft MimeOLE V6.1.7600.16385
-X-CMAE-Envelope: MS4wfDBUagrSKIWFmsQ5aq+OjN3rZ+svsXlIJcN+y9gXmRPwH/AoCJABw/8GweONmp7GmBYjWo3QzN5rpsKmx9mLB4GlrSvo2Yl7WyoZh+8jmdVagPT0Nd2N
- ImtFqzwWws0x5c9+r/eFW7wwUHHXAlMin+iX/lvqx+J8pLvz2j5o8rUSqivCthRBYoFL2YsZEcjare2Y9ZoiuA0S7XA/jUiE5Dc=
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20180223210904.GB234838@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-PayPal
+On Fri, Feb 23, 2018 at 01:09:04PM -0800, Brandon Williams wrote:
 
-Dear,
+> > By the way, any decision here would presumably need to be extended to
+> > git-serve, etc. The current property is that it's safe to fetch from an
+> > untrusted repository, even over ssh. If we're keeping that for protocol
+> > v1, we'd want it to apply to protocol v2, as well.
+> 
+> This may be more complicated.  Right now (for backward compatibility)
+> all fetches for v2 are issued to the upload-pack endpoint. So even
+> though I've introduced git-serve it doesn't have requests issued to it
+> and no requests can be issued to it currently (support isn't added to
+> http-backend or git-daemon).  This just means that the command already
+> exists to make it easy for testing specific v2 stuff and if we want to
+> expose it as an endpoint (like when we have a brand new server command
+> that is completely incompatible with v1) its already there and support
+> just needs to be plumbed in.
+> 
+> This whole notion of treating upload-pack differently from receive-pack
+> has bad consequences for v2 though.  The idea for v2 is to be able to
+> run any number of commands via the same endpoint, so at the end of the
+> day the endpoint you used is irrelevant.  So you could issue both fetch
+> and push commands via the same endpoint in v2 whether its git-serve,
+> receive-pack, or upload-pack.  So really, like Jonathan has said
+> elsewhere, we need to figure out how to be ok with having receive-pack
+> and upload-pack builtins, or having neither of them builtins, because it
+> doesn't make much sense for v2 to straddle that line.
 
+It seems like it would be OK if the whole code path of git-serve
+invoking upload-pack happened without being a builtin, even if it would
+be possible to run a builtin receive-pack from that same (non-builtin)
+git-serve.
 
+Remember that the client is driving the whole operation here, and we can
+assume that git-serve is operating on the client's behalf. So a client
+who chooses not to trigger receive-pack would be fine.
 
-YoursaccountshassBeenslimited!
-
-
-
--To getsbacksintosyourspaypalsaccount,syousneedstosconfirmsyoursidentity.
-
--it'sseasy !
-
-
-
-1. Clicksonstheslinksbelow.
-
-2. Confirmsthatsyou'resthesownersofsthesaccount,sandsthensfollowsthesinstructions.
-
-Confirm Your account
-
-
-
-Sincerely
-
-,
+-Peff
