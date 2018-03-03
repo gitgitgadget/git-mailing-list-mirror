@@ -7,60 +7,59 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B92F41F576
-	for <e@80x24.org>; Sat,  3 Mar 2018 11:37:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6BA671FAE2
+	for <e@80x24.org>; Sat,  3 Mar 2018 11:37:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751994AbeCCLhv (ORCPT <rfc822;e@80x24.org>);
-        Sat, 3 Mar 2018 06:37:51 -0500
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:33343 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751811AbeCCLhv (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 3 Mar 2018 06:37:51 -0500
-Received: by mail-pg0-f67.google.com with SMTP id g12so4870172pgs.0
-        for <git@vger.kernel.org>; Sat, 03 Mar 2018 03:37:50 -0800 (PST)
+        id S932075AbeCCLh4 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 3 Mar 2018 06:37:56 -0500
+Received: from mail-pl0-f67.google.com ([209.85.160.67]:46653 "EHLO
+        mail-pl0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751811AbeCCLhz (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 3 Mar 2018 06:37:55 -0500
+Received: by mail-pl0-f67.google.com with SMTP id y8-v6so7175636pll.13
+        for <git@vger.kernel.org>; Sat, 03 Mar 2018 03:37:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ensloDOURfJkWUL+nHffZ1qAUgGXqw4QfbQKVaDY1Bg=;
-        b=dY2Meubop4Hc3h0lPXPxvt/gmQRl+hD8Xny694EIH9FeBO0NyzcyJnSNxanrSzC6mY
-         HnUWX/QB0jUKIQrNcUun59HiR4R81PXEPjleWwCaoR831y+/s404rtSNKsnmtPmUrikx
-         UVa/rjWQM8J3yDwUmkfDBFu8ZtFWBDpp6vlqNpOlUTPsvMwGXiVy5ITFBJcwATiP3BJ1
-         zXTYFqGWXX+UUuYxKrZNyzxWtWV2vaKAMv62r+zQYZcpU6K01wVnKDZsersXKt0OTYa7
-         pcOUclT7q++tULcBHnj0uMpdOWhgFEKx4m9gF4RRtajNWLTgwiBA3vYzD/LXgSHYWaop
-         2zWw==
+        bh=vGLF50FCA/JkN0bhlNPXmacLm7WZqgHZzNd90tGfr7A=;
+        b=lIQmZ1uvAdZ2kTd6t6VIyztzW9vlJ78e2831awmYY+FaLKovyezIjIcKGY7DZic2C7
+         ukDW14PtXsTrHpR4VsLxYMD8/8qhCJQbxYRb83GCQ9Cu+cE4UsglIvKsjMGZv6ApKl+I
+         LvhR7kLaP+wcVhJm63rBaKUvcNvqNnj3rXxRn9flQNBgaqYYyhSHL44jQCMfdp00giDy
+         MlMiecKCcAqjsh64WnHl4nw0bo9uHEdX0q8QQxt0k0RYjhx5M8L2H7L4Z07Yw9xOHnve
+         6y/DHMRdHWnCwlF8HOaikUO6dfWNV5nx/P1Han3Q62V4DQQFHgP2E+QhLCX538fxaEa2
+         bw4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ensloDOURfJkWUL+nHffZ1qAUgGXqw4QfbQKVaDY1Bg=;
-        b=TmfYKlR5xNLEOOhfJxXof5TB+DQQpdZN808vQ1Kkmy4v6QIk1qtdM9qvQtmPeboHQX
-         7YJetdSg6L/bWVOEeq0XPXRbKKR3rQN3mSsV0K12LsYKCH2fotBI6naT1L6jLOA/L7cI
-         jlFr1jidTF3h/Xd10eDifrUJeBP5sJzHZT5YHNTJwvUZ3jcBtgIEMjFy6TXgws6+Xrq1
-         5/YHXtgqxikgko7JsZfBfYpC5+J2OJt5h393mTxgZPj12M3vkugzM2So0k6VR0u+GUFK
-         6HAVEkdawS5ixZsUtxMmtB+65XEfDbjRqBik8MsnVLBB3iInqkJvGXvehODMXNo0jpYE
-         NYJA==
-X-Gm-Message-State: APf1xPAxPHoTGdMI2fD+lKZjEfm8saHZtGojd/w+cVV24pxnDdojYZ7U
-        vmTtbSI2dSgXYvfE4ur1bmAm0w==
-X-Google-Smtp-Source: AG47ELus/89Ka+5nFHj0+RIm620jOhggDdEwgi1Dz1BP6L/3mBy/GJeskV087sPBwaIlBns1UflOnw==
-X-Received: by 10.101.81.8 with SMTP id f8mr6967113pgq.13.1520077070361;
-        Sat, 03 Mar 2018 03:37:50 -0800 (PST)
+        bh=vGLF50FCA/JkN0bhlNPXmacLm7WZqgHZzNd90tGfr7A=;
+        b=iGaKW8XtpS0tUVVq+0p8iH6WeO0BVyCTvA2zojFVhUqgkMKi0O3z+J+sP+i7UdXNhS
+         I9rlT0q7szfRQDouq7Ac0C1JVRskNaR7/3LkUAnkDsKwrcnYqQ+M7nvlR8pU7EiWuU+Q
+         SPCnVY1X9+6F5Z8iAShuDWy7nK+Sr1a2izWAB5euSc0vmqZl5vtt05wv+iyjOU6LOnb9
+         ubXqEEdnrAiMt7AAw2kU6V87+KvQL0XByraNdCWIvEP1f+VAUL4lhgPP3SbjUF1TMqGo
+         +TMFjMPXr+D3U+qmsZpttZGtB6Lx0l0uReMzXSqGV8ySVpSuYrzNCl6ongrqszYCBUvi
+         TiQA==
+X-Gm-Message-State: APf1xPCE9EqVg8eTj5Mtc/QrB5NEMl1pFpOg5tl1qd5mRv+elnCQWz5K
+        OyY9d2TGobYxCIpQp0TEAp+CTw==
+X-Google-Smtp-Source: AG47ELsU2OaknNYea4qOqw0ytjRD3kj+2vUu0ZtRB65AUI46e3PEYazLD5l7qVIXOp77NXDW50R+Rg==
+X-Received: by 2002:a17:902:aa43:: with SMTP id c3-v6mr8022364plr.357.1520077075062;
+        Sat, 03 Mar 2018 03:37:55 -0800 (PST)
 Received: from ash ([171.232.93.137])
-        by smtp.gmail.com with ESMTPSA id i186sm17780765pfg.25.2018.03.03.03.37.47
+        by smtp.gmail.com with ESMTPSA id 5sm19778925pfh.133.2018.03.03.03.37.52
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 03 Mar 2018 03:37:49 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Sat, 03 Mar 2018 18:37:45 +0700
+        Sat, 03 Mar 2018 03:37:54 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Sat, 03 Mar 2018 18:37:50 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Stefan Beller <sbeller@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 13/44] pack: move approximate object count to object store
-Date:   Sat,  3 Mar 2018 18:36:06 +0700
-Message-Id: <20180303113637.26518-14-pclouds@gmail.com>
+Subject: [PATCH 14/44] sha1_file: add raw_object_store argument to alt_odb_usable
+Date:   Sat,  3 Mar 2018 18:36:07 +0700
+Message-Id: <20180303113637.26518-15-pclouds@gmail.com>
 X-Mailer: git-send-email 2.16.1.435.g8f24da2e1a
 In-Reply-To: <20180303113637.26518-1-pclouds@gmail.com>
 References: <CACsJy8DWrNzZM1K2vkx2XiETdAR5WhwXEdPijsxd0ZD4Lj=tZw@mail.gmail.com>
@@ -75,83 +74,50 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Stefan Beller <sbeller@google.com>
 
-The approximate_object_count() function maintains a rough count of
-objects in a repository to estimate how long object name abbreviates
-should be.  Object names are scoped to a repository and the
-appropriate length may differ by repository, so the object count
-should not be global.
+Add a raw_object_store to alt_odb_usable to be more specific about which
+repository to act on. The choice of the repository is delegated to its
+only caller link_alt_odb_entry.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- object-store.h |  8 ++++++++
- packfile.c     | 11 +++++------
- 2 files changed, 13 insertions(+), 6 deletions(-)
+ sha1_file.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/object-store.h b/object-store.h
-index b954396615..56ed4bd9e9 100644
---- a/object-store.h
-+++ b/object-store.h
-@@ -93,6 +93,14 @@ struct raw_object_store {
- 	struct alternate_object_database *alt_odb_list;
- 	struct alternate_object_database **alt_odb_tail;
- 
-+	/*
-+	 * A fast, rough count of the number of objects in the repository.
-+	 * These two fields are not meant for direct access. Use
-+	 * approximate_object_count() instead.
-+	 */
-+	unsigned long approximate_object_count;
-+	unsigned approximate_object_count_valid : 1;
-+
- 	/*
- 	 * Whether packed_git has already been populated with this repository's
- 	 * packs.
-diff --git a/packfile.c b/packfile.c
-index caeab0f68c..ce4cd7d5c9 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -802,8 +802,6 @@ static void prepare_packed_git_one(char *objdir, int local)
- 	strbuf_release(&path);
- }
- 
--static int approximate_object_count_valid;
--
+diff --git a/sha1_file.c b/sha1_file.c
+index 4c9635dada..77c099dadd 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -346,7 +346,9 @@ static const char *alt_sha1_path(struct alternate_object_database *alt,
  /*
-  * Give a fast, rough count of the number of objects in the repository. This
-  * ignores loose objects completely. If you have a lot of them, then either
-@@ -813,8 +811,8 @@ static int approximate_object_count_valid;
+  * Return non-zero iff the path is usable as an alternate object database.
   */
- unsigned long approximate_object_count(void)
+-static int alt_odb_usable(struct strbuf *path, const char *normalized_objdir)
++static int alt_odb_usable(struct raw_object_store *o,
++			  struct strbuf *path,
++			  const char *normalized_objdir)
  {
--	static unsigned long count;
--	if (!approximate_object_count_valid) {
-+	if (!the_repository->objects.approximate_object_count_valid) {
-+		unsigned long count;
- 		struct packed_git *p;
+ 	struct alternate_object_database *alt;
  
- 		prepare_packed_git();
-@@ -824,8 +822,9 @@ unsigned long approximate_object_count(void)
- 				continue;
- 			count += p->num_objects;
- 		}
-+		the_repository->objects.approximate_object_count = count;
+@@ -362,7 +364,7 @@ static int alt_odb_usable(struct strbuf *path, const char *normalized_objdir)
+ 	 * Prevent the common mistake of listing the same
+ 	 * thing twice, or object directory itself.
+ 	 */
+-	for (alt = the_repository->objects.alt_odb_list; alt; alt = alt->next) {
++	for (alt = o->alt_odb_list; alt; alt = alt->next) {
+ 		if (!fspathcmp(path->buf, alt->path))
+ 			return 0;
  	}
--	return count;
-+	return the_repository->objects.approximate_object_count;
- }
+@@ -414,7 +416,7 @@ static int link_alt_odb_entry(const char *entry, const char *relative_base,
+ 	while (pathbuf.len && pathbuf.buf[pathbuf.len - 1] == '/')
+ 		strbuf_setlen(&pathbuf, pathbuf.len - 1);
  
- static void *get_next_packed_git(const void *p)
-@@ -900,7 +899,7 @@ void prepare_packed_git(void)
- 
- void reprepare_packed_git(void)
- {
--	approximate_object_count_valid = 0;
-+	the_repository->objects.approximate_object_count_valid = 0;
- 	the_repository->objects.packed_git_initialized = 0;
- 	prepare_packed_git();
- }
+-	if (!alt_odb_usable(&pathbuf, normalized_objdir)) {
++	if (!alt_odb_usable(&the_repository->objects, &pathbuf, normalized_objdir)) {
+ 		strbuf_release(&pathbuf);
+ 		return -1;
+ 	}
 -- 
 2.16.1.435.g8f24da2e1a
 
