@@ -2,109 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0E6101FAE2
-	for <e@80x24.org>; Sun,  4 Mar 2018 02:57:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 748A01F404
+	for <e@80x24.org>; Sun,  4 Mar 2018 03:03:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751819AbeCDC5l (ORCPT <rfc822;e@80x24.org>);
-        Sat, 3 Mar 2018 21:57:41 -0500
-Received: from mail-ot0-f196.google.com ([74.125.82.196]:36668 "EHLO
-        mail-ot0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751756AbeCDC5k (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 3 Mar 2018 21:57:40 -0500
-Received: by mail-ot0-f196.google.com with SMTP id 108so12094976otv.3
-        for <git@vger.kernel.org>; Sat, 03 Mar 2018 18:57:40 -0800 (PST)
+        id S1751779AbeCDDDt (ORCPT <rfc822;e@80x24.org>);
+        Sat, 3 Mar 2018 22:03:49 -0500
+Received: from mail-qt0-f175.google.com ([209.85.216.175]:39802 "EHLO
+        mail-qt0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751686AbeCDDDs (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 3 Mar 2018 22:03:48 -0500
+Received: by mail-qt0-f175.google.com with SMTP id n9so1728942qtk.6
+        for <git@vger.kernel.org>; Sat, 03 Mar 2018 19:03:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=sbMVa4YOuuoL3O+TK8cCFrJvXWeSLNzA+YCL7v7I+Ug=;
-        b=bWMFhPNj4r5vuXhcigN+foSvh+p0XQ5/fSaSRqUL+iX4zXhimzzMNMn555e/KNoVpW
-         cUlkGZyIEAIrHmXDeGniiPIkRwYpaiKOuyxrYUqEIHQ/WUYN8VvYWCSBTu9V1MfTOKby
-         Vh5STZoAhSVAIaN85lJ1IOhxXEH4tKcwcO3gp1XtDdg2IV82O5fm5ATDQPYrTXJIUalz
-         TFRll2ZMUuEjYV/nH65BvIJPiMWT53fBXjKV0iLEXYFsBIHNTFEKXU03unqOrb5DQJqs
-         rl+JpaneiJZ+6XZDHVGuLTFutnvAmnxFlxoaSrMLN/Yk4Nu24+inciIXZFnqpLLoviSU
-         Vw9g==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-transfer-encoding;
+        bh=F+Cb6cqAkA4D7cUKz5K6q7f0AXb3GK1akONaPT0sQfs=;
+        b=FUmSzm6yLSOlm3gR0tsuHGIK8daeV5jJHePH2mZE87JVOaruL7e23flbodgJjwOUCz
+         qgWxraO9GQ8f2JlMGqNTAj5gX5qPnJqyzNEtgHE5c66MkSJuRGgaIW4wOd7zCUoycB5m
+         n9QrY4BJnmfKX+LQecl/H4iIaFJt7lF8MFZ5A3mdUhEJjJxebrVGR0xNVb/FGouEquzG
+         DR0pJfqwS6IqF+PyIA1F+AnemT27jOjtRdHjQxwvDcKU75Hy7sN/0ms1TD+8TGLEE5V8
+         Ga6/wJPJ2CNLNKsEJtYCKaVApRbRwIOCr4BYApuvov4VMcRLtSkLtkqpw9MRoFR27rKr
+         88Wg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=sbMVa4YOuuoL3O+TK8cCFrJvXWeSLNzA+YCL7v7I+Ug=;
-        b=qW2OwNkf/5xIKPExKazkWNPiaQiZXEO3n+8UkFr40ACZgOwIqE/YHenPp3NuTicb66
-         WlgfDGC2vWpiYJhAs3Vzfbh0rNSutXYzGX0MBtqFYkeZJtvQgtkfBoZhBPPsrI8XcsdO
-         BP7QVLJy+u+SWJqqoZld+70swQPa/6jzd4V4Gh6jpQF4838OKr7roCbKtMo79HWbxsdv
-         emeqXWVkOH7WgpKDcJw8NaJYdPo2Mahk1zwNQqRPrxF4tZnLkkV+8/YODHeK+76FA+nd
-         BidqeuYMtq+ColOxSYhQvl6tBK8Qq5p5lV0+Nf1xcevhxt/5p5t1j5P99ldq0XIB+gMJ
-         7I0Q==
-X-Gm-Message-State: AElRT7FplHL11ji3KXHkphWmUCreoXJJroliytZI3/Ep5k9FeDFy1t8A
-        4QDSHb7LwVp3iB+bTJZspq99oVF40wC46PgvfF5UPg==
-X-Google-Smtp-Source: AG47ELuI+pMyT5tzgnbgIi4kEU9dBdtNWpKo53J06rNFDRI/I9r8eqW8Zylf0v5o8QCcd0DtTV3iR4WWQPWLCwqy7kU=
-X-Received: by 10.157.53.10 with SMTP id o10mr7111553otc.283.1520132259831;
- Sat, 03 Mar 2018 18:57:39 -0800 (PST)
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=F+Cb6cqAkA4D7cUKz5K6q7f0AXb3GK1akONaPT0sQfs=;
+        b=ATM/Dn8Pzy+FO9t8geVrdRHDLJ/aiozMVs7cCGVLhAYMywtBIpMptIaw4tEV218Or1
+         MM0Mr7+sptZzD/WTCBB94Ls1iS+N8Dn/HtGJEy/n3q7l6a6gPoX3PVaVJFTdGIFEz3Ok
+         9U4teMEatjd9QGxz6eGJ2sn3l2aNhcSBUpXMqCV2n0Ic0FxMhbUaJ3C0u2BRE1HOeNrT
+         nsyWT7j6Q1NWK54ODLajTp05sSCCiqEZI17bumeVp8xw1ESj1vMd7+e+QiydCJT0bDL8
+         a2IXJFipPeXUuGk1oOpyYOTsHdFRQUpEm4BlFAlrYASbPzhUZsXKtdR8tV5mCB3D7v3F
+         j9Jw==
+X-Gm-Message-State: AElRT7EnfDYSqdbfGF6Vm9nr45YdPK2JALR9gr9tkKrOKrOPAoEwqJ6q
+        jkxEeA14f3ZbmtBEwfT3qYlYRvUwjviFycGtSxY=
+X-Google-Smtp-Source: AG47ELtuvcEpL2Z3ic+CuOpPIh2wk7GFU4acQPuVpFni6DqOy6FYhLuvKt0LAlpxUcC2bVSgzvHO9feUHsC02nkWCq4=
+X-Received: by 10.200.12.198 with SMTP id o6mr15719536qti.246.1520132627687;
+ Sat, 03 Mar 2018 19:03:47 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.74.76.9 with HTTP; Sat, 3 Mar 2018 18:57:39 -0800 (PST)
-In-Reply-To: <CAPig+cTyZAFx486Y9LrQuaK0qMnQEGD3U55sk9Vvyb_TgDz5tQ@mail.gmail.com>
-References: <20180303034803.21589-1-dorabpatel@gmail.com> <CAPig+cR=adC_Ok=FJw2APaLahXX_v1ix4ufEJyBhED5ruXaQxA@mail.gmail.com>
- <CAE09B1+XXJvrOucHwehUGk=Taio7sirfOh5gq7KGs4iZSpK=vQ@mail.gmail.com> <CAPig+cTyZAFx486Y9LrQuaK0qMnQEGD3U55sk9Vvyb_TgDz5tQ@mail.gmail.com>
-From:   Dorab Patel <dorabpatel@gmail.com>
-Date:   Sat, 3 Mar 2018 18:57:39 -0800
-Message-ID: <CAE09B1Ky1_PKWq17Nm_Uc9sZn7khycR0aK2Z3AHnyjYoPMy8Qg@mail.gmail.com>
-Subject: Re: [PATCH] git.el: handle default excludesfile properly
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Alexandre Julliard <julliard@winehq.org>
+Received: by 10.12.142.14 with HTTP; Sat, 3 Mar 2018 19:03:47 -0800 (PST)
+In-Reply-To: <20180303113637.26518-38-pclouds@gmail.com>
+References: <CACsJy8DWrNzZM1K2vkx2XiETdAR5WhwXEdPijsxd0ZD4Lj=tZw@mail.gmail.com>
+ <20180303113637.26518-1-pclouds@gmail.com> <20180303113637.26518-38-pclouds@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Sat, 3 Mar 2018 22:03:47 -0500
+X-Google-Sender-Auth: ZSawSl1FyC0hXA98CUOaTpLgSJQ
+Message-ID: <CAPig+cQEZawtD+XR9KbSfyJNynh3M1pe4KMXWCc2FeyzgycvhA@mail.gmail.com>
+Subject: Re: [PATCH 37/44] packfile: add repository argument to prepare_packed_git
+To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <sbeller@google.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks for reviewing and locating the commits.
+On Sat, Mar 3, 2018 at 6:36 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <=
+pclouds@gmail.com> wrote:
+> Add a repository argument to allow prepare_packed_git callers to
+> be more specific about which repository to handle. See c28d027a52c
+> (sha1_file: add repository argument to link_alt_odb_entry, 2018-02-20)
+> for an explanation of the #define trick.
 
-OK, I'll re-roll and add the relevant commits. It may take some time.
+Object c28d027a52c doesn't exist. Most likely it was a reference to a
+change existing only in 'pu' which got replaced by a later revision of
+the series.
 
-Should I just send the revised patch as a separate thread (with the
-relevant commits and history)?
-
-On Sat, Mar 3, 2018 at 6:12 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Sat, Mar 3, 2018 at 8:36 PM, Dorab Patel <dorabpatel@gmail.com> wrote:
->> Correct me if I'm wrong, but my understanding, from
->> https://git-scm.com/docs/gitignore, is that $HOME/.gitignore is used
->> only if it is specified as the value of core.excludesfile in
->> ~/.gitconfig. It is not used by default. If that is so, then the
->> proposed (and original) code works. The changes I am proposing handle
->> the default case, when core.excludesfile is not specified.
->
-> You're right. I must have set core.excludesfile so long ago that I
-> forgot about it and assumed $HOME/.gitignore was consulted by default.
->
->> Looking deeper into how the function git-get-exclude-files is used, I
->> see that it is only being called from git-run-ls-files-with-excludes.
->> So, perhaps, a better (or additional) fix might be to add the
->> parameter "--exclude-standard" in the call to git-run-ls-files from
->> within git-run-ls-files-with-excludes. And remove the need for
->> get-get-exclude-files altogether.  Presumably, "--exclude-standard"
->> handles the default case with/without XDG_CONFIG_HOME correctly. The
->> question I'd have then is: why didn't the original author use that
->> option? Either I'm missing something? Or the option was added later,
->> after the original code was written? Or something else?
->
-> Using --exclude-standard rather than --exclude-from and retiring
-> git-get-exclude-files() makes sense to me.
->
-> As for why the original author didn't use --exclude-standard, project
-> history tells us that. In particular, git-get-exclude-files() was
-> implemented by 274e13e0e9 (git.el: Take into account the
-> core.excludesfile config option., 2007-07-31), whereas
-> --exclude-standard was introduced by 8e7b07c8a7 (git-ls-files: add
-> --exclude-standard, 2007-11-15), three and a half months later.
->
-> If you do re-roll to use --exclude-standard, then it would be good for
-> your commit message to explain this history, citing the relevant
-> commits.
->
-> Thanks.
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.c=
+om>
