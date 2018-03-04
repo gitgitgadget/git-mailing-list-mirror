@@ -2,118 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 099951F576
-	for <e@80x24.org>; Sun,  4 Mar 2018 10:17:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 784391F576
+	for <e@80x24.org>; Sun,  4 Mar 2018 10:44:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752646AbeCDKRP (ORCPT <rfc822;e@80x24.org>);
-        Sun, 4 Mar 2018 05:17:15 -0500
-Received: from mout.web.de ([212.227.17.11]:54291 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751844AbeCDKRN (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 4 Mar 2018 05:17:13 -0500
-Received: from macce.local ([195.198.252.176]) by smtp.web.de (mrweb103
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MXYWA-1fExGK2niQ-00WV3D; Sun, 04
- Mar 2018 11:16:55 +0100
-Subject: Re: [PATCH v7 0/7] convert: add support for different encodings
-To:     Jeff King <peff@peff.net>
-Cc:     Lars Schneider <larsxschneider@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Lars Schneider <lars.schneider@autodesk.com>,
-        git <git@vger.kernel.org>, Johannes Sixt <j6t@kdbg.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        ramsay@ramsayjones.plus.com, Johannes.Schindelin@gmx.de
-References: <19EDC192-0D83-4762-AC6A-81F7D693475A@gmail.com>
- <xmqqbmgfvf2y.fsf@gitster-ct.c.googlers.com>
- <xmqq7er3tqjq.fsf@gitster-ct.c.googlers.com>
- <FDF4DEB8-E71A-4BFC-9437-678C8F65BBDC@gmail.com>
- <20180226014445.GB8677@sigill.intra.peff.net> <20180226173533.GA7877@tor.lan>
- <20180226204635.GB12598@sigill.intra.peff.net>
- <20180227210517.GA17555@tor.lan>
- <20180227212537.GA6899@sigill.intra.peff.net>
- <20180228082005.GA16857@tor.lan>
- <20180228132116.GA32272@sigill.intra.peff.net>
-From:   =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Message-ID: <567f22b7-4ac5-573e-4b41-d6dbba0d7610@web.de>
-Date:   Sun, 4 Mar 2018 11:16:52 +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:52.0)
- Gecko/20100101 Thunderbird/52.6.0
+        id S1752602AbeCDKod (ORCPT <rfc822;e@80x24.org>);
+        Sun, 4 Mar 2018 05:44:33 -0500
+Received: from smtprelay01.ispgateway.de ([80.67.29.23]:43260 "EHLO
+        smtprelay01.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751844AbeCDKoc (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 4 Mar 2018 05:44:32 -0500
+X-Greylist: delayed 89811 seconds by postgrey-1.27 at vger.kernel.org; Sun, 04 Mar 2018 05:44:32 EST
+Received: from [91.113.179.170] (helo=[192.168.92.26])
+        by smtprelay01.ispgateway.de with esmtpsa (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128)
+        (Exim 4.89)
+        (envelope-from <marc.strapetz@syntevo.com>)
+        id 1esR81-0002EN-Fi; Sun, 04 Mar 2018 11:44:29 +0100
+Subject: Re: git stash push -u always warns "pathspec '...' did not match any
+ files"
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+Cc:     git@vger.kernel.org
+References: <349f9369-b799-4f7b-bda1-33bcbd7ea067@syntevo.com>
+ <20180303154654.GH2130@hank>
+From:   Marc Strapetz <marc.strapetz@syntevo.com>
+Message-ID: <08d765ec-b2d7-7087-fca5-2eecefcef9cf@syntevo.com>
+Date:   Sun, 4 Mar 2018 11:44:30 +0100
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.6.0
 MIME-Version: 1.0
-In-Reply-To: <20180228132116.GA32272@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <20180303154654.GH2130@hank>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:yUpAc8Cmiq3Qn2nzp4bsCJ/n5KmDJ6Gyqx/UyeRvUT1J7NWvEto
- Uo2NDZl7H0o62M1CqgouvHFXu45stl9cekNUHb33J8LrX3CyT7dztOPhB79azQK54DsF25N
- GuaOgv+yTNqshtJ8QelSltyBiRzqpx9V4143vXBWX0DaF8HXbk0P4L/CN6dh5jQKMwmjoWj
- BzO3Zx7AanqIQb7F49Rzg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:qA0spFFa/hU=:LUbqsbXsT5CaBSXld/kQR+
- Vv1lmdTIVTS+8fKPz9cRIYPbKRP09aerPlnkm7DZFQN/uknYkZwyiGDl4xuXxrgC70wpO5T9c
- L9iohngNba8Nf2BoogZDwYGZZSIfcq3raF2OpQFf27qcF37GZuah7gzMN/8laoCDCrCamyWN5
- L+lczGOOntP4Cf3B3+Kk4kK0iLHKOqd8TkiqibKUqkIi65LTzGwhH6ti8WK0pmZQ0k8SxqvIM
- DZ55KP9XI33CjzEQgsg3Bb8TkBivznio6UrWs8BycS8QLjJEM4DsAx5IVM8Vu/x5x1285W0fO
- vY+Sk+l964pfJULCpNMEy9KoJLttHzcINHRKQA/JHsgQ86JJum7GzeRLphqEkX8EBhXSG8xFx
- rb5CcLDfKGdP07LdIrDHrcstPbfA+XBAnUgiefSxR8je6wvoash+EsjSHYGKl9gWycIkNzFQY
- n0DAutL67iBYHfO7eyenS/YRPRcOSnmDcUtbLfRRZB8xjT8YcBigeqT32qBwPSGhnU/jKbwT4
- yMAJ0xKMeQvKm7j50b427wzja837kXGMj6BW3BM2O/eIEESZijGD9dVDZrDISpNOsx3sr1suv
- oJMbDfgotDmErK5Wr9wrxBrinhkh1VSy5sLAM0IxhzQJbuY1f77EntDg25obfCgdFtmXNnIry
- tb2A+wOAdcw2+TGmH2F1nhpXnmsptVBj0rPP58nAkM7/f8ASLS0dgk/CIXCNIYCcadWl4c7Wp
- eyFtaYJ6yZlF3gpF4jVR1zFEUin/wnRvKmcIlHC2rDxicdmEUGSTVxxsIxxvtnt8wg2H0siop
- uIny0iX0WHZ3E1cJeD2VvdbJ4KtHjclh3kV6+iAEYs5KHRzDzA=
+Content-Transfer-Encoding: 7bit
+X-Df-Sender: bWFyYy5zdHJhcGV0ekBzeW50ZXZvLmNvbQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2018-02-28 14:21, Jeff King wrote:
-> On Wed, Feb 28, 2018 at 09:20:05AM +0100, Torsten Bögershausen wrote:
-> 
->>>   2. auto-detect utf-16 (your patch)
->>>      - Just Works for existing repositories storing utf-16
->>>
->>>      - carries some risk of kicking in when people would like it not to
->>>        (e.g., when they really do want a binary patch that can be
->>>        applied).
+On 03.03.2018 16:46, Thomas Gummerer wrote:
+> On 03/03, Marc Strapetz wrote:
+>> Reproducible in a test repository with following steps:
 >>
->> The binary patch is still supported, but that detail may need some more explanation
->> in the commit message. Please see  t4066-diff-encoding.sh
+>> $ touch untracked
+>> $ git stash push -u -- untracked
+>> Saved working directory and index state WIP on master: 0096475 init
+>> fatal: pathspec 'untracked' did not match any files
+>> error: unrecognized input
+>>
+>> The file is stashed correctly, though.
+>>
+>> Tested with Git 2.16.2 on Linux and Windows.
 > 
-> Yeah, but if you don't have binary-patches enabled we'd generate a bogus
-> patch. Which, granted, without that you wouldn't be able to apply the
-> patch either. But somehow it feels funny to me to generate something
-> that _looks_ like a patch but you can't actually apply.
-> 
-> I also think we'd want a plan for this to be used consistently in other
-> diff-like tools. E.g., "git blame" uses textconv for the starting file
-> content, and it would be nice for this to kick in then, too. Ditto for
-> things like grep, pickaxe, etc.
-> 
-> I have some patches that reuse some of the textconv infrastructure for
-> this, which should mostly make it "just work" everywhere. They need a
-> little more polishing before I post them, but you can take a look at:
-> 
->   https://github.com/peff/git.git jk/textconv-utf16
-> 
-> if you want.
-> 
-> -Peff
-> 
+> Thanks for the bug report and the reproduction recipe.  The following
+> patch should fix it:
 
-Thanks for your work (I actually found some time to take look)
+Thanks, I can confirm that the misleading warning message is fixed.
 
-I am looking at the code to put 2 or 3 things on top of it:
-- test case(s)
-- documentation
-- teach diff to add a line "b is converted to UTF-8 from UTF-16"
-- teach apply to reads & understands the encoding line and throws
-  in a "reencode_string_len() like your patch does
+What I've noticed now is that when using -u option, Git won't warn if 
+the pathspec is actually not matching a file. Also, an empty stash may 
+be created. For example:
 
-This would keep "git diff | git apply" happy.
-All in all the changes do not look too invasive, at least from my point of view.
+$ git stash push -u -- nonexisting
+Saved working directory and index state WIP on master: 171081d initial 
+import
 
+I would probably expect to see an error message as for:
 
+$ git stash push -- nonexisting
+error: pathspec 'nonexisting' did not match any file(s) known to git.
+Did you forget to 'git add'?
+
+That said, this is no problem for us, because I know that the paths I'm 
+providing to "git stash push" do exist. I just wanted to point out.
+
+-Marc
 
