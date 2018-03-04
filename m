@@ -7,97 +7,88 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1E0281F404
-	for <e@80x24.org>; Sun,  4 Mar 2018 02:12:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D32941F404
+	for <e@80x24.org>; Sun,  4 Mar 2018 02:19:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751819AbeCDCM4 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 3 Mar 2018 21:12:56 -0500
-Received: from mail-qk0-f174.google.com ([209.85.220.174]:41307 "EHLO
-        mail-qk0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751309AbeCDCMz (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 3 Mar 2018 21:12:55 -0500
-Received: by mail-qk0-f174.google.com with SMTP id w142so16705807qkb.8
-        for <git@vger.kernel.org>; Sat, 03 Mar 2018 18:12:54 -0800 (PST)
+        id S1751733AbeCDCTL (ORCPT <rfc822;e@80x24.org>);
+        Sat, 3 Mar 2018 21:19:11 -0500
+Received: from mail-qt0-f196.google.com ([209.85.216.196]:39113 "EHLO
+        mail-qt0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751309AbeCDCTK (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 3 Mar 2018 21:19:10 -0500
+Received: by mail-qt0-f196.google.com with SMTP id n9so1675307qtk.6
+        for <git@vger.kernel.org>; Sat, 03 Mar 2018 18:19:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=/aYYy/oKeyFzleVzD35mjOPo8YXMcDNdmFOsX7VP1Tk=;
-        b=LxZfwIC3fP9OX/m5UBijpii1ey5d9dT/zIzrTrdFdCJ1V9roJpHsvTGllC7fC+nbXF
-         26SYmq5s+4G2LhMw1sTrYTtPTaB6HPcnII38vSTuS+NBCrWKtCCVb/g8LUTKBK1ylQQf
-         euqauBMREPYt57LphC5Q7F3kqSoSQ7Asqf/DnDCPFbEfwbrA4jUDnwfYasQeYj3nq5iv
-         C5zU6jmPKDOUIucO6CIDmAzaKBgQf5PpJ9ztVZ9p4UHpe7dahhmvpX15UWQSEnpdbSnq
-         xwcwELm3yspIVbLTQADNa6bV7f6NkoA4jOcHETFj4+m/yhdTVEYCldhzPjuWblXRd4NR
-         Y8Wg==
+         :subject:to:cc:content-transfer-encoding;
+        bh=rzJOWunxwf5Xtiaq/jNMUrX4G8sGYfJFSpzNjartGPQ=;
+        b=RycZlRJySzetMZiRZMKiX4B6VQx8eTPqf2iIVsXI095yyzukIxRBJWwgKMQh3aAwiQ
+         mjZXKI1vp0FZe2flnzCl+pngmi6J4/AzUbCZ7uIgkjQXIPTXiaduwfCVhnvIjF3nyLCc
+         mzkEy5+h6WqBz34Hlh+1i4qS9420b2jNk6fzUxh2BsJGwoSLr0eZvZ061my2ZvtVl4wU
+         H2/gmf2c0z2T8BzDWTRrVREnTQ95NRvRowFmbQTN5GHf6RfhktmIcl7HF/GoLapj5syK
+         sGzYxlsXtesaj/gGna9xrt+aZ8WU1qmi5/s3SRcOTI2G4duMDs8T9zyLbycn/ZBs6Zzt
+         urCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=/aYYy/oKeyFzleVzD35mjOPo8YXMcDNdmFOsX7VP1Tk=;
-        b=EpSrrDvuhPVlr0fhqDsJs/O5ArEtaehzUqSF3YimiVe7eVY3AkpTg74yNKpAnoDK06
-         VtJ6ewM3V8Qhfojed69Ez+Fya4YAK26ZbVCDQvJ0HxdC+Hss8MFZqZTxONr76f24sGlP
-         L2OMDH0DOR0guvF+g6Dg6PocTc42PZ7H/xTw2GVPCVY/wRa3dyIcMrtXdpyqla+4BhI9
-         FKcVx+9pXfnVGF/FctAL+T+G3TtpadT16m0UiIEFieCIHx8IVqEe4yw/M/JeGQS2lwwT
-         zM4Q0TjlksQ49r6P5Vqb0CLdR68yLeQ7F4rEon+E0jCSNFirrLX+5t+QFOTWlmljhqjT
-         NSXw==
-X-Gm-Message-State: AElRT7GWrhzLj0YbRPzEKJs6l3c6Id2YxGYJxH4u1l1YDcCsYeZgxvqB
-        QSxhwi7kr4sNIpjUKvRm9Fe+rXnIbWEUcMgbVDY=
-X-Google-Smtp-Source: AG47ELsECApFzA53nVb5DuLTnc9XZPUBeZ1Wf9LW3m6KVKMf0OOFCrE6Cf4qF8XEBAY9v2cPHtqPlAP5Eq9SRttnQL0=
-X-Received: by 10.55.134.133 with SMTP id i127mr15850387qkd.275.1520129574419;
- Sat, 03 Mar 2018 18:12:54 -0800 (PST)
+         :date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=rzJOWunxwf5Xtiaq/jNMUrX4G8sGYfJFSpzNjartGPQ=;
+        b=WTDGdghO1/97QhoxoKFEXwjGpkq9V+ybxu+8liMxDhUpMLuVz200ZIbfGgXf5s8FKC
+         8ZaAizAcdLS4qC4MniND8g5iD9W5a45OwiWohEUVPP1BM0M4naneyfUYGHc9W+VJgVgT
+         IRrFV889g7wQbspM2NHJQJYVmP8r6yP9bfds2XlcpCiOkkysxDB3aLtSfqVqmgwOGCOE
+         2X+tDlZz/prNkIig0SvuSBubXlf5/KEPVwoS+A021RP6077TviyAh4Z5MPY0P6SYHykO
+         6Uo9D4SrnfBeUsgg7JhOyJEn3fG/4xVHRWhCtf9d4Qmfk3KQoRzhBFAHO8j48uBIl9UQ
+         7Beg==
+X-Gm-Message-State: AElRT7EudCj4ATJC215smJcQVShoN0av9XIOx0+T/Kj1L2PRNdnKhgKS
+        GbUePOgpxIjPy9xU2G6T0iqWoq2AqxwRMDQL5Y0=
+X-Google-Smtp-Source: AG47ELsSzMp2QsrmdL2/0bGzHk7+ZzHG+hQQnz1Pcy04lipfgfBVzyHNw7kjSzSWUODA/zCH4ya89czWlD26IpGRhDI=
+X-Received: by 10.200.12.198 with SMTP id o6mr15613637qti.246.1520129949929;
+ Sat, 03 Mar 2018 18:19:09 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.12.142.14 with HTTP; Sat, 3 Mar 2018 18:12:53 -0800 (PST)
-In-Reply-To: <CAE09B1+XXJvrOucHwehUGk=Taio7sirfOh5gq7KGs4iZSpK=vQ@mail.gmail.com>
-References: <20180303034803.21589-1-dorabpatel@gmail.com> <CAPig+cR=adC_Ok=FJw2APaLahXX_v1ix4ufEJyBhED5ruXaQxA@mail.gmail.com>
- <CAE09B1+XXJvrOucHwehUGk=Taio7sirfOh5gq7KGs4iZSpK=vQ@mail.gmail.com>
+Received: by 10.12.142.14 with HTTP; Sat, 3 Mar 2018 18:19:09 -0800 (PST)
+In-Reply-To: <20180303113637.26518-7-pclouds@gmail.com>
+References: <CACsJy8DWrNzZM1K2vkx2XiETdAR5WhwXEdPijsxd0ZD4Lj=tZw@mail.gmail.com>
+ <20180303113637.26518-1-pclouds@gmail.com> <20180303113637.26518-7-pclouds@gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sat, 3 Mar 2018 21:12:53 -0500
-X-Google-Sender-Auth: toujMhhOL1s_EjYnSouu5ZWeqfI
-Message-ID: <CAPig+cTyZAFx486Y9LrQuaK0qMnQEGD3U55sk9Vvyb_TgDz5tQ@mail.gmail.com>
-Subject: Re: [PATCH] git.el: handle default excludesfile properly
-To:     Dorab Patel <dorabpatel@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Alexandre Julliard <julliard@winehq.org>
+Date:   Sat, 3 Mar 2018 21:19:09 -0500
+X-Google-Sender-Auth: rDljYi15FGZIBNqs4Z9rQgo8AFU
+Message-ID: <CAPig+cRV7eRWMdONVNrFwF86Zbw=_hY-L354MNT54wwazjJRgA@mail.gmail.com>
+Subject: Re: [PATCH 06/44] repository: introduce raw object store field
+To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <sbeller@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Mar 3, 2018 at 8:36 PM, Dorab Patel <dorabpatel@gmail.com> wrote:
-> Correct me if I'm wrong, but my understanding, from
-> https://git-scm.com/docs/gitignore, is that $HOME/.gitignore is used
-> only if it is specified as the value of core.excludesfile in
-> ~/.gitconfig. It is not used by default. If that is so, then the
-> proposed (and original) code works. The changes I am proposing handle
-> the default case, when core.excludesfile is not specified.
+On Sat, Mar 3, 2018 at 6:35 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <=
+pclouds@gmail.com> wrote:
+> The raw object store field will contain any objects needed for
+> access to objects in a given repository.
+>
+> This patch introduces the raw object store and populates it with the
+> `objectdir`, which used to be part of the repository struct.
+>
+> As the struct gains members, we'll also populate the function to clear
+> the memory for these members.
+>
+> In a later we'll introduce a struct object_parser, that will complement
 
-You're right. I must have set core.excludesfile so long ago that I
-forgot about it and assumed $HOME/.gitignore was consulted by default.
+s/In a later/Later,/
 
-> Looking deeper into how the function git-get-exclude-files is used, I
-> see that it is only being called from git-run-ls-files-with-excludes.
-> So, perhaps, a better (or additional) fix might be to add the
-> parameter "--exclude-standard" in the call to git-run-ls-files from
-> within git-run-ls-files-with-excludes. And remove the need for
-> get-get-exclude-files altogether.  Presumably, "--exclude-standard"
-> handles the default case with/without XDG_CONFIG_HOME correctly. The
-> question I'd have then is: why didn't the original author use that
-> option? Either I'm missing something? Or the option was added later,
-> after the original code was written? Or something else?
-
-Using --exclude-standard rather than --exclude-from and retiring
-git-get-exclude-files() makes sense to me.
-
-As for why the original author didn't use --exclude-standard, project
-history tells us that. In particular, git-get-exclude-files() was
-implemented by 274e13e0e9 (git.el: Take into account the
-core.excludesfile config option., 2007-07-31), whereas
---exclude-standard was introduced by 8e7b07c8a7 (git-ls-files: add
---exclude-standard, 2007-11-15), three and a half months later.
-
-If you do re-roll to use --exclude-standard, then it would be good for
-your commit message to explain this history, citing the relevant
-commits.
-
-Thanks.
+> the object parsing in a repository struct: The raw object parser is the
+> layer that will provide access to raw object content, while the higher
+> level object parser code will parse raw objects and keeps track of
+> parenthood and other object relationships using 'struct object'.
+> For now only add the lower level to the repository struct.
+>
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.c=
+om>
