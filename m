@@ -7,85 +7,129 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 62D1F1F404
-	for <e@80x24.org>; Sun,  4 Mar 2018 04:34:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E9E441F404
+	for <e@80x24.org>; Sun,  4 Mar 2018 05:33:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751819AbeCDEe4 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 3 Mar 2018 23:34:56 -0500
-Received: from mail-qt0-f195.google.com ([209.85.216.195]:34987 "EHLO
-        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751756AbeCDEez (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 3 Mar 2018 23:34:55 -0500
-Received: by mail-qt0-f195.google.com with SMTP id z14so16723061qti.2
-        for <git@vger.kernel.org>; Sat, 03 Mar 2018 20:34:55 -0800 (PST)
+        id S1751427AbeCDF1a (ORCPT <rfc822;e@80x24.org>);
+        Sun, 4 Mar 2018 00:27:30 -0500
+Received: from mail-io0-f194.google.com ([209.85.223.194]:43795 "EHLO
+        mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751140AbeCDF13 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 4 Mar 2018 00:27:29 -0500
+Received: by mail-io0-f194.google.com with SMTP id l12so14636903ioc.10
+        for <git@vger.kernel.org>; Sat, 03 Mar 2018 21:27:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=QnNGENYkxjuclJdy9fOXNOiYxNEWvhNgT0LRQdd7DrA=;
-        b=iQf3Fzk6TvmfrzMal7IfYnDXF9LUsV58zjwNJ+uI/+mXhuGLvGhEP6MrMjMwGmAm7r
-         ddqdWD8IzHazldF8Z7JJr3q2mcWY5Lw8ejkGJqBk+n+3wpJ1k3R0+Zw/who67LH+gDuG
-         cgwnVWakV6Q2ge2q/IWncBYITcjhmt1dUBQFV2ZUg2Iczbkg1v+7FRwxb/i2U3HmmX0C
-         7CPfhkVGqum6uauMu6Gz1Qx/4zOusVP/EiXOtDjHlQsZ3S6RMblQeQ+3sfSBArz1VNgh
-         tdVLYqjT7bLrOYfuC1qCLLiMFBlEz+7+04VaqoibC/vzTbc9km5zr7H78gvePTnESegq
-         2/WQ==
+        h=sender:from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=Bc1Y5DQHmpnqbfyghQY/ZXS7VaW8CTcvD13sXDEEp14=;
+        b=siFR2IhkQLSx3K+/KoKeJgjQVniIes0NKs2InY4kmRvrbLHdfIvYUt3KY9eEo1sT7c
+         1IqlC7IUTzuIjqR9uprW+Hx+5q8nUXrZpEtpj8VMhaYBXSUmu1CDFPBdtJDIzlpMxAN7
+         deyNIT+9c7UnMmzG9PKYRR/UqpywKMpVLi7LsOKwvYSs4jflytWa/7a1H472oCJE+g3E
+         lCP1CVq34SQqm0t37/735yA6yhRYz8L7eVWM6HtzDFvMr70UC8uFYIFx19MupqbU6BwH
+         gXtAymy4UrzqdoJ0GNH/56V1TDKwpLXsd5v7JPSpTfwbIL4g2Ch5u5hJ+eGkO05rHCJb
+         4C8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=QnNGENYkxjuclJdy9fOXNOiYxNEWvhNgT0LRQdd7DrA=;
-        b=k6U3r8HtqvPW8mNLfZmQFc+0DHT0gGLKvKfxeqCt62sEfW2VnVhkXBlVliELPNoZ/p
-         4x+0LFnxmfy+UnZvWa/Lacs3410GupTprhqHGPSphH1ZYltysZVxtW0K5cQYCW4bywtS
-         0CGGT7SIh5cwlKrdXljYLqAP4EX7Jw8XmwOK79bMVIYheKnShBuvw8tL9Xxgl3obbQC0
-         WtOUYHzxUkpysq9gZr7whcQYr0q/3G1Uqta+olEykA5nWQzVwvcj4EaF9BpbgeRY1qDN
-         d2fPRG1gtYrAbO18HOI1XAsopXyHM2Urm7t//depY4Wj58cfgXvtdkSrlB1tkV615AcX
-         N+0w==
-X-Gm-Message-State: AElRT7HgTDLrz83OaW8VweaIAueWX52ygMF9TaOTvdPuF3Dx+W7rOUTJ
-        zhtqetFNJzefEanYG0PJGaJ5xYVWUOANroHYIKY=
-X-Google-Smtp-Source: AG47ELvi3n696L6xhjlwq7kJPDBxTLh9xaFk4jGtG6QzoLzP4nBPb+eHaQW+5R7bON7LttjGGS48YrUEB61xCVbJDpI=
-X-Received: by 10.200.6.5 with SMTP id d5mr16723453qth.205.1520138094931; Sat,
- 03 Mar 2018 20:34:54 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.12.142.14 with HTTP; Sat, 3 Mar 2018 20:34:54 -0800 (PST)
-In-Reply-To: <CAE09B1Ky1_PKWq17Nm_Uc9sZn7khycR0aK2Z3AHnyjYoPMy8Qg@mail.gmail.com>
-References: <20180303034803.21589-1-dorabpatel@gmail.com> <CAPig+cR=adC_Ok=FJw2APaLahXX_v1ix4ufEJyBhED5ruXaQxA@mail.gmail.com>
- <CAE09B1+XXJvrOucHwehUGk=Taio7sirfOh5gq7KGs4iZSpK=vQ@mail.gmail.com>
- <CAPig+cTyZAFx486Y9LrQuaK0qMnQEGD3U55sk9Vvyb_TgDz5tQ@mail.gmail.com> <CAE09B1Ky1_PKWq17Nm_Uc9sZn7khycR0aK2Z3AHnyjYoPMy8Qg@mail.gmail.com>
+        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
+         :in-reply-to:references;
+        bh=Bc1Y5DQHmpnqbfyghQY/ZXS7VaW8CTcvD13sXDEEp14=;
+        b=a2ecBYBDCxjJJDXJf1Pmc2NSKHF4Fke0peIUNKF90GpNzzUptiWwx8ORsYy8LeoFOk
+         v+454BPGiv1wqlEOCSEDuqBqF79wXG4G+iAPo7CLiIY6H7lUfbXdsB0j3hqPNticXBIl
+         tyl6Ua+l3ejyPVqzWv1ZQnkS5t/OeaKUUB/ziL7rh0Ur982NwkuLk+dxgxXsVpfw/xus
+         03T6pAHf9gDVXWysrlxU+p7gD4JINSBSPFAeTHTJlClS6zKXfjefM/DHOTstvJV7VM1X
+         mIqldfqEQb+hus3PNR1sxBb7+ssX418eP01jmMMlmEibaHpM8rU4Ia3bdM5O1e2M/FC4
+         G0vQ==
+X-Gm-Message-State: AElRT7GbOr9xC8RqCfbDylB1uOYNR89kytHBKHShoD07UNlcY0t6DWfw
+        /M2MqPZOOVqdLDXZmsQy4bfafA==
+X-Google-Smtp-Source: AG47ELvd/DzlVIieMTjd2wl/m11lbsLL1+HAuvBuvHn92k0k4o2BpYjxN6wDP83oaTHs8UuxG+GF2Q==
+X-Received: by 10.107.178.70 with SMTP id b67mr13205076iof.55.1520141249000;
+        Sat, 03 Mar 2018 21:27:29 -0800 (PST)
+Received: from localhost.localdomain (user-12l2cs3.cable.mindspring.com. [69.81.51.131])
+        by smtp.gmail.com with ESMTPSA id 62sm6106033iow.35.2018.03.03.21.27.27
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Sat, 03 Mar 2018 21:27:28 -0800 (PST)
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sat, 3 Mar 2018 23:34:54 -0500
-X-Google-Sender-Auth: -_XmEhKam11GvyZc2QaBDs4d4R4
-Message-ID: <CAPig+cRgBXj+XfT=iq1osxtEA+2dQpnjOTBkwJa94COHM-t9BQ@mail.gmail.com>
-Subject: Re: [PATCH] git.el: handle default excludesfile properly
-To:     Dorab Patel <dorabpatel@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Alexandre Julliard <julliard@winehq.org>
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     Duy Nguyen <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH] t2028: fix minor error and issues in newly-added "worktree move" tests
+Date:   Sun,  4 Mar 2018 00:26:47 -0500
+Message-Id: <20180304052647.26614-1-sunshine@sunshineco.com>
+X-Mailer: git-send-email 2.16.2.660.g709887971b
+In-Reply-To: <20180212094940.23834-1-pclouds@gmail.com>
+References: <20180212094940.23834-1-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Mar 3, 2018 at 9:57 PM, Dorab Patel <dorabpatel@gmail.com> wrote:
-> Thanks for reviewing and locating the commits.
->
-> OK, I'll re-roll and add the relevant commits. It may take some time.
->
-> Should I just send the revised patch as a separate thread (with the
-> relevant commits and history)?
+Recently-added "git worktree move" tests include a minor error and a few
+small issues. Specifically:
 
-That would work. You can use "git format-patch -v2 ..." to mark the
-patch as "[PATCH v2]", and "git send-email
---in-reply-to=20180303034803.21589-1-dorabpatel@gmail.com ..." to tie
-it back to this thread when you send it.
+* checking non-existence of wrong file ("source" instead of
+  "destination")
 
-As a an aid to reviewers, it's a good idea to add commentary
-explaining what changed since v1 and provide a link back to v1, like
-this[1]. Place the commentary below the "---" line following your
-sign-off.
+* unneeded redirect (">empty")
 
-(One more minor comment: etiquette on this list is to avoid top-posting [2].)
+* unused variable ("toplevel")
 
-Thanks.
+* restoring a worktree location by means of a separate test somewhat
+  distant from the test which moved it rather than using
+  test_when_finished() to restore it in a self-contained fashion
 
-[1]: https://public-inbox.org/git/20180303034803.21589-1-dorabpatel@gmail.com/
-[2]: https://lkml.org/lkml/2005/1/11/111
+Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+---
+
+This patch is built atop nd/worktree-move-reboot in 'next'.
+
+I didn't get around to doing a proper review of nd/worktree-move-reboot
+v2 [1] until after it had graduated to 'next'. Although v2 fixed all the
+issues identified in my review of v1 [2], it introduced a few minor
+issues of its own. This patch addresses those issues.
+
+[1]: https://public-inbox.org/git/20180212094940.23834-1-pclouds@gmail.com/
+[2]: https://public-inbox.org/git/20180124095357.19645-1-pclouds@gmail.com/
+
+ t/t2028-worktree-move.sh | 10 +++-------
+ 1 file changed, 3 insertions(+), 7 deletions(-)
+
+diff --git a/t/t2028-worktree-move.sh b/t/t2028-worktree-move.sh
+index 082368d8c6..d70d13dabe 100755
+--- a/t/t2028-worktree-move.sh
++++ b/t/t2028-worktree-move.sh
+@@ -75,7 +75,7 @@ test_expect_success 'move worktree' '
+ 	git worktree move source destination &&
+ 	test_path_is_missing source &&
+ 	git worktree list --porcelain | grep "^worktree.*/destination" &&
+-	! git worktree list --porcelain | grep "^worktree.*/source" >empty &&
++	! git worktree list --porcelain | grep "^worktree.*/source" &&
+ 	git -C destination log --format=%s >actual2 &&
+ 	echo init >expected2 &&
+ 	test_cmp expected2 actual2
+@@ -86,10 +86,10 @@ test_expect_success 'move main worktree' '
+ '
+ 
+ test_expect_success 'move worktree to another dir' '
+-	toplevel="$(pwd)" &&
+ 	mkdir some-dir &&
+ 	git worktree move destination some-dir &&
+-	test_path_is_missing source &&
++	test_when_finished "git worktree move some-dir/destination destination" &&
++	test_path_is_missing destination &&
+ 	git worktree list --porcelain | grep "^worktree.*/some-dir/destination" &&
+ 	git -C some-dir/destination log --format=%s >actual2 &&
+ 	echo init >expected2 &&
+@@ -100,10 +100,6 @@ test_expect_success 'remove main worktree' '
+ 	test_must_fail git worktree remove .
+ '
+ 
+-test_expect_success 'move some-dir/destination back' '
+-	git worktree move some-dir/destination destination
+-'
+-
+ test_expect_success 'remove locked worktree' '
+ 	git worktree lock destination &&
+ 	test_when_finished "git worktree unlock destination" &&
+-- 
+2.16.2.660.g709887971b
+
