@@ -7,115 +7,81 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ADCAE1FAE2
-	for <e@80x24.org>; Sun,  4 Mar 2018 11:31:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8C0F91F404
+	for <e@80x24.org>; Sun,  4 Mar 2018 17:09:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752659AbeCDL1X (ORCPT <rfc822;e@80x24.org>);
-        Sun, 4 Mar 2018 06:27:23 -0500
-Received: from mail-wr0-f195.google.com ([209.85.128.195]:42029 "EHLO
-        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752582AbeCDL1W (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 4 Mar 2018 06:27:22 -0500
-Received: by mail-wr0-f195.google.com with SMTP id k9so14353084wre.9
-        for <git@vger.kernel.org>; Sun, 04 Mar 2018 03:27:21 -0800 (PST)
+        id S1752008AbeCDRJ1 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 4 Mar 2018 12:09:27 -0500
+Received: from mail-qt0-f178.google.com ([209.85.216.178]:42233 "EHLO
+        mail-qt0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751962AbeCDRJ0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 4 Mar 2018 12:09:26 -0500
+Received: by mail-qt0-f178.google.com with SMTP id t6so17769936qtn.9
+        for <git@vger.kernel.org>; Sun, 04 Mar 2018 09:09:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=A/qb/c/nHl3s0f7tBGOarwE26aVCg/B6Oo6buXqx2t8=;
-        b=TBn1jIwTe4NPRCgp+BgioFtMK+RXdjSXDGhetcXllTT5jQYURWmxQIxRjFQt0rSFDH
-         gMXE80sQTcSwyhdplfZ9MV63o3GdRFNjbqGGg6F5NL4zBqmKZQ13bk37Ugr26bETaXTS
-         rRs1kKu0Wggdn9qUpu5L4CySUgsWNLkO5kcKI9P11802OkSJ56pIvdokUFFk/UTanZTm
-         XDQ9FmJnb6sp3H5H0+m7eyHTMixe1bcJ+CG6YZ4TXcu3t8u7aj9XTUcwjvMvb5AX+6HG
-         CGNn/ur/eA0V2MimIsTjtSbwuwSpLeW2V7kUpQjQIcEx7r43vFQos8Tz8w9IgFM1ymY6
-         LQWw==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=vsTBua9sXPwjfNRKRXict/vXemuAm7VaobDlrXvNTvM=;
+        b=Ce0cQIrifKrJVk0Si/N8/SGm+EimXhUD+CldXgqWn1FSZu0Ph3RtxpW1kbMxKBMp1J
+         yyCQ6p99/0npUHzkCwxitPHyRg/YsW/Gx8Q7Kgg9D5feq+JDTwny4SfMJKAau7gK5dkt
+         IH4UcxYjmvjsDPGRfBKfLw8/tOiR6q+jeB9iDWiNHgnZsBsY46hPuYEToMSGT3AwLxwB
+         Ut5yWgUQJck6gB0A/ap65zGBOuFYsaFPSZA5eTQkiEoLrMC6MvLydb1lV4C027vl96nt
+         cbU7pFZ1McUSFty99U65xoStsCGl87sChbLzE56+ayTXpAXU2ocVaeyvusrJqh6M71Lx
+         KorA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=A/qb/c/nHl3s0f7tBGOarwE26aVCg/B6Oo6buXqx2t8=;
-        b=iH42vJDIWzDldwtUIqv3BB+OVRws9yaYNan5apy/NxUq8dgE7Y4A5rbidFIG2ltNr2
-         sGSgr/ExWhDUMmvufuUdiv7dERYXszZye71M8Q4L9kNGTk11eIpG9i0J3KSkIZsDM34S
-         b+vHeJqidc0rznvM8rLQovicZN7LPBbjX8VBJy9ifxJ8Zj1ZfY/acHqRqi+ksKsDSsq3
-         xmGClwLxtTiHCMDGNWTFfWMIlESQE0Cft+MEG7seieIIipJmVhLVLIzDZo1OuTADqqio
-         7wCYQ2eglkrv9LiaqZbcIRpnLK4cHI2g8G+Y9AkPLAqzzEN5CjXSjrcLVxXLR7T2nL16
-         wdiw==
-X-Gm-Message-State: APf1xPB9jTIli358hKIjkTAcY9fM2EaWfF6UCLg/ZPSnqC7Df/81giQw
-        IH/JN/QCwEUv6BGQAjNLFj8R9A==
-X-Google-Smtp-Source: AG47ELsLPhICcaPf8m+XoVZPhN7IkrhJVPFpqxPpuDhAHDbClFXegISFGsbzcKGfvvreQnD2DGWTEg==
-X-Received: by 10.223.185.82 with SMTP id b18mr9419865wrg.180.1520162840522;
-        Sun, 04 Mar 2018 03:27:20 -0800 (PST)
-Received: from arrakeen.fritz.box ([2001:a62:81d:ab01:5fe:bb85:ada6:d63b])
-        by smtp.gmail.com with ESMTPSA id o94sm16684005wrc.7.2018.03.04.03.27.19
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 04 Mar 2018 03:27:19 -0800 (PST)
-From:   Andreas Heiduk <asheiduk@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Eric Wong <e@80x24.org>, Andreas Heiduk <asheiduk@gmail.com>
-Subject: [PATCH 2/2] git-svn: allow empty email-address in authors-prog and authors-file
-Date:   Sun,  4 Mar 2018 12:22:37 +0100
-Message-Id: <20180304112237.19254-2-asheiduk@gmail.com>
-X-Mailer: git-send-email 2.16.2
-In-Reply-To: <20180304112237.19254-1-asheiduk@gmail.com>
-References: <20180304112237.19254-1-asheiduk@gmail.com>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=vsTBua9sXPwjfNRKRXict/vXemuAm7VaobDlrXvNTvM=;
+        b=V8JcKcggLcKsQW5U0gDnRSQzwuRTH3vEV3hjRG1bwo/aSvtmSO8b2ZNEINogI7VMt1
+         0BO5Kcoapy818ofSp1PgBvLXUJaYhPUXJuQwKjaN5JgNSKExXSEopDw8fy4o5Sr8O6AA
+         gGgp6QHXKAgneTEWj+YUiBe9nP/Oolv4C/8jGM7Mq5NdaVfxK0gSZYSgyYrWwaZ+9ltl
+         DNVWJSkYNjYwPiQM2IfKGoJ3r/TbGmIVcM2XJIkr4b0WaLSuQviuXQJGi5Gl7Inu0+H1
+         uvquVZ2Lb/1lIjT12ySJWa1wtRmYAoUI9FgU46vmZTXsQOCKmcf6/67kcID3wjXRVkzB
+         GmBQ==
+X-Gm-Message-State: AElRT7HvPUidrwtQFyeluTyrdODAaEqoCDqIE2OqkQpSjY/Q6j40HVGi
+        OEJ3TW6oyu3IMOWXBmAlYTUeo9guNG0ZuhD1/JouBJLR
+X-Google-Smtp-Source: AG47ELvVuW5ix9PaF//v2yaAnk3MJ8JXYP9Eu3vmzI4Ni7IW0dQvSOlVtOmqBrHdU3J76KpasiSjA6NGlAHhBfL+zAE=
+X-Received: by 10.200.11.70 with SMTP id m6mr18790630qti.95.1520183365784;
+ Sun, 04 Mar 2018 09:09:25 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.200.67.84 with HTTP; Sun, 4 Mar 2018 09:09:25 -0800 (PST)
+From:   Larry Hunter <larhun.it@gmail.com>
+Date:   Sun, 4 Mar 2018 18:09:25 +0100
+Message-ID: <CAL+2DvQZ2V9c5Tmn8KCoDOuioOiBsGJspSTVin4qw1oFO2QAwA@mail.gmail.com>
+Subject: [Bug] git log --show-signature print extra carriage return ^M
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The email address in --authors-file and --authors-prog can be empty but
-git-svn translated it into a syntethic email address in the form
-$USERNAME@$REPO_UUID. Now git-svn behaves like git-commit: If the email
-is explicitly set to the empty string, the commit does not contain
-an email address.
+There is bug using "git log --show-signature" in my installation
 
-Signed-off-by: Andreas Heiduk <asheiduk@gmail.com>
----
- perl/Git/SVN.pm | 13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
+    git 2.16.2.windows.1
+    gpg (GnuPG) 2.2.4
+    libgcrypt 1.8.2
 
-diff --git a/perl/Git/SVN.pm b/perl/Git/SVN.pm
-index bc4eed3d75..b0a340b294 100644
---- a/perl/Git/SVN.pm
-+++ b/perl/Git/SVN.pm
-@@ -1482,7 +1482,6 @@ sub call_authors_prog {
- 	}
- 	if ($author =~ /^\s*(.+?)\s*<(.*)>\s*$/) {
- 		my ($name, $email) = ($1, $2);
--		$email = undef if length $2 == 0;
- 		return [$name, $email];
- 	} else {
- 		die "Author: $orig_author: $::_authors_prog returned "
-@@ -2020,8 +2019,8 @@ sub make_log_entry {
- 		remove_username($full_url);
- 		$log_entry{metadata} = "$full_url\@$r $uuid";
- 		$log_entry{svm_revision} = $r;
--		$email ||= "$author\@$uuid";
--		$commit_email ||= "$author\@$uuid";
-+		$email //= "$author\@$uuid";
-+		$commit_email //= "$author\@$uuid";
- 	} elsif ($self->use_svnsync_props) {
- 		my $full_url = canonicalize_url(
- 			add_path_to_url( $self->svnsync->{url}, $self->path )
-@@ -2029,15 +2028,15 @@ sub make_log_entry {
- 		remove_username($full_url);
- 		my $uuid = $self->svnsync->{uuid};
- 		$log_entry{metadata} = "$full_url\@$rev $uuid";
--		$email ||= "$author\@$uuid";
--		$commit_email ||= "$author\@$uuid";
-+		$email //= "$author\@$uuid";
-+		$commit_email //= "$author\@$uuid";
- 	} else {
- 		my $url = $self->metadata_url;
- 		remove_username($url);
- 		my $uuid = $self->rewrite_uuid || $self->ra->get_uuid;
- 		$log_entry{metadata} = "$url\@$rev " . $uuid;
--		$email ||= "$author\@" . $uuid;
--		$commit_email ||= "$author\@" . $uuid;
-+		$email //= "$author\@" . $uuid;
-+		$commit_email //= "$author\@" . $uuid;
- 	}
- 	$log_entry{name} = $name;
- 	$log_entry{email} = $email;
--- 
-2.16.2
+that prints (with colors) an extra ^M (carriage return?) at the end of
+the gpg lines. As an example, the output of "git log --show-signature
+HEAD" looks like:
 
+    $ git log --show-signature HEAD
+    commit 46c490188ebd216f20c454ee61108e51b481844e (HEAD -> master)
+    gpg: Signature made 03/04/18 16:53:06 ora solare Europa occidentale^M
+    gpg:                using RSA key ...^M
+    gpg: Good signature from "..." [ultimate]^M
+    Author: ... <...>
+    Date:   Sun Mar 4 16:53:06 2018 +0100
+    ...
+
+To help find a fix, I tested the command "git verify-commit HEAD" that
+prints (without colors) the same lines without extra ^M characters.
+
+    $ git verify-commit HEAD
+    gpg: Signature made 03/04/18 16:53:06 ora solare Europa occidentale
+    gpg:                using RSA key ...
+    gpg: Good signature from "..." [ultimate]
+
+Thanks,
+Larry
