@@ -2,123 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CE7821F576
-	for <e@80x24.org>; Mon,  5 Mar 2018 10:59:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7761C1F404
+	for <e@80x24.org>; Mon,  5 Mar 2018 12:16:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752390AbeCEK7S (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Mar 2018 05:59:18 -0500
-Received: from smtp-out-1.talktalk.net ([62.24.135.65]:61173 "EHLO
-        smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751824AbeCEK7R (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Mar 2018 05:59:17 -0500
-Received: from [192.168.2.201] ([92.22.16.137])
-        by smtp.talktalk.net with SMTP
-        id snpreF8x5GrhCsnpresP5M; Mon, 05 Mar 2018 10:59:16 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1520247556;
-        bh=TdR6uTFpFZdl7S1eKab7gOEm6RI4UT06d+5MI4aHTdg=;
-        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=JmwTp70zwaDcKgh/8q73BN6V+NYh9X0DLwmWfDA2cRwJ18dUTetCWCj4ROCyyE5KY
-         1rYxd4BoCk/ruMeCa2aHALUX1Do9FTju+GEsrJ2sJWzx5F+sMpDX4Cw5UJTTTadcOo
-         qW5z3Kk1U+kK9Ps97TMRWtzeUsG75YoeBZnz0dqI=
-X-Originating-IP: [92.22.16.137]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=SORsqtnH c=1 sm=1 tr=0 a=nWy375ASyxHoIYnPohIYMA==:117
- a=nWy375ASyxHoIYnPohIYMA==:17 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8
- a=qNF6B9H7PPbY0lHX4IgA:9 a=QEXdDO2ut3YA:10
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v4 4/9] t3701: don't hard code sha1 hash values
-To:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        "Brian M. Carlson" <sandals@crustytoothpaste.net>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <20180213104408.9887-1-phillip.wood@talktalk.net>
- <20180301105103.24268-1-phillip.wood@talktalk.net>
- <20180301105103.24268-5-phillip.wood@talktalk.net>
- <20180302155528.12106-1-szeder.dev@gmail.com>
- <xmqqa7vqe9xn.fsf@gitster-ct.c.googlers.com>
-From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <bb6be000-7a62-7ad5-0b59-90a75fd6dca9@talktalk.net>
-Date:   Mon, 5 Mar 2018 10:59:15 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
+        id S933542AbeCEMQe (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Mar 2018 07:16:34 -0500
+Received: from mail-oi0-f67.google.com ([209.85.218.67]:35568 "EHLO
+        mail-oi0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933036AbeCEMQd (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Mar 2018 07:16:33 -0500
+Received: by mail-oi0-f67.google.com with SMTP id x10so11843739oig.2
+        for <git@vger.kernel.org>; Mon, 05 Mar 2018 04:16:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=vBtK70qpNbyjEKeefQQmLcy+OGj0+J9Ou8VRuo78kmE=;
+        b=liSanPN5o0X2imnZjazdM9RTcS7eOHm0P9dijAH6bl8rjVUqxbxAdfRj3dH2e2LMgw
+         /XTGcWMh8zuWMgcZ1/7A4eTQf+MPBLknPdDg/WfsEw0rRJorsk1eoUAIoNR96/e+Avpy
+         v9qM0UhnSWW2AEAV1qDRJb/xboDQyG9HGgF7RC/h4RJiAPXQmNElKWW2W5lo7s/HMwtv
+         19nPdhLvn1QEya4FBnodl1eWATb/fc3JyVxrCABlOd3Gc3yvLVucBWy+7sE12nsp8M4D
+         j5zo1kDKhLGVelQrkrNskSnu3UyH6EloIC/S9eWcTTVY+6tzQ/slvw2dQCqdejGjOBmL
+         pKDQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=vBtK70qpNbyjEKeefQQmLcy+OGj0+J9Ou8VRuo78kmE=;
+        b=fNwNbYi6Qvd5w1ZWQp6Uj4uVj2R7w313hUtgL/gj/oevVbYDb4zgua+Z6o+vmTnHaR
+         byHsBmhx5lGL5vBLIP9HEnLjW4122NaqjmbmBHJFT/ntm2WLt2vE5pFJqz4BH3mnJsiN
+         XOt7CtOvhH2EaodUyRawRgDpiLuChyQCWbFVaWvsM6nukyR02pZX0jeNOFgA25VHfnCi
+         xNgrUr0fxuvvfr4HIngYw+wKGjNKCZ5n0lPmKE7+nIDz+seUZCUYQ0jV5tERFVyuK1am
+         HyR52mjndEvQsV3oxzmvg1e3KOy4k1JtrMWLxxCvetbVw/ZvlklgpVYF1t3sJJRzPMRt
+         zFvQ==
+X-Gm-Message-State: AElRT7GmcuSaf50fCgmm8hVkN7gTFIdWpefCObYBZaEdXbpdEPs7bhlu
+        CDDhRh76n+4s7ya1nKgBFtusnYUNYSG7K0IslRk=
+X-Google-Smtp-Source: AG47ELtaI3fRFW+f73Il7yosMSje3GnJE9I84kKMGtXK2GIGt6wDTaU5z5SRtzycGU767JuNQ4knxnnqEfqx7+rSxFU=
+X-Received: by 10.202.212.147 with SMTP id l141mr9885378oig.32.1520252192453;
+ Mon, 05 Mar 2018 04:16:32 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <xmqqa7vqe9xn.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfA48x+d3tNtSz+QhqNHFIVxWkOT00+pTNrZUErCp5hZ26aowKQJlqIqQyZ944aHQHx4Iacb2lxa8SbJFFXx2TftD28tmBaksbEX+rHpYlgU/YgLGJQiy
- xMq/FcJVoOVE84N6PQuuCYe9l8yw7/dezObA94ZE3uAc/IPA3wfW34RNbiC9s18CyvZ1kB2WTUYKtFWxxHrbfCzxlRMvvRu6aq+lrzxwXUjZKKnV3AzmdA77
- a/TEd/iY0OIBTqy3SYaODKIn7tEAKOt2hrUonc19GffNYjnA8Om6wXyySBi6VI4dhHjCl5tplRqlfAw6KEt7Ld1awuaa+zow1lxcJewhv71d92+UbEmzJZEw
- 7TaOYziq
+Received: by 10.74.25.140 with HTTP; Mon, 5 Mar 2018 04:16:02 -0800 (PST)
+In-Reply-To: <002601d3b2fa$ff6df240$fe49d6c0$@nexbridge.com>
+References: <20180303033918.15751-1-pclouds@gmail.com> <002601d3b2fa$ff6df240$fe49d6c0$@nexbridge.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Mon, 5 Mar 2018 19:16:02 +0700
+Message-ID: <CACsJy8BvJPpR9hNcBoTze2fDhgWJ4Ya3u9YG5uNY8nu4_qRsVw@mail.gmail.com>
+Subject: Re: [PATCH 0/3] git worktree prune improvements
+To:     "Randall S. Becker" <rsbecker@nexbridge.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Eric Sunshine <sunshine@sunshineco.us>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 02/03/18 16:09, Junio C Hamano wrote:
-> SZEDER Gábor <szeder.dev@gmail.com> writes:
-> 
->>> +diff_cmp () {
->>> +	for x
->>> +	do
->>> +		sed  -e '/^index/s/[0-9a-f]*[1-9a-f][0-9a-f]*\.\./1234567../' \
->>> +		     -e '/^index/s/\.\.[0-9a-f]*[1-9a-f][0-9a-f]*/..9abcdef/' \
->>> +		     -e '/^index/s/ 00*\.\./ 0000000../' \
->>> +		     -e '/^index/s/\.\.00*$/..0000000/' \
->>> +		     -e '/^index/s/\.\.00* /..0000000 /' \
->>> +		     "$x" >"$x.filtered"
->>> +	done
->>> +	test_cmp "$1.filtered" "$2.filtered"
->>> +}
+On Sat, Mar 3, 2018 at 9:21 PM, Randall S. Becker
+<rsbecker@nexbridge.com> wrote:
+> On March 2, 2018 10:39 PM, Nguy?n Th=C3=A1i Ng?c Duy wrote:
+>> This is something we could do to improve the situation when a user manua=
+lly
+>> moves a worktree and not follow the update process (we have had the firs=
+t
+>> reported case [1]). Plus a bit cleanup in gc.
 >>
->> t3701 is not the only test script comparing diffs, many other
->> tests do so:
+>> I think this is something we should do until we somehow make the user
+>> aware that the worktree is broken as soon as they move a worktree
+>> manually. But there's some more work to get there.
 >>
->>   $ git grep 'diff --git' t/ |wc -l
->>   835
->>
->> It's totally inaccurate, but a good ballpark figure.
->>
->> I think this function should be a widely available test helper
->> function in 'test-lib-functions.sh', perhaps renamed to
->> 'test_cmp_diff', so those other tests could use it as well.
-> 
-> I am on the fence.  
-> 
-> The above does not redact enough (e.g. rename/copy score should be
-> redacted while comparing) to serve as a generic filter.
-> 
-> We could certainly extend it when we make code in other tests use
-> the helper, but then we can do the moving to test-lib-functions when
-> that happens, too.
-> 
-> Those who will be writing new tests that need to compare two diff
-> outputs are either (1) people who are careful and try to find
-> existing tests that do the same, to locate the helper we already
-> have to be reused in theirs, or (2) people who don't and roll their
-> own.  The latter camp cannot be helped either way, but the former
-> will run "git grep 'diff --git' t/" and find the helper whether it
-> is in this script or in test-lib-functions, I would think.
-> 
-> So, I certainly do not mind a reroll to move it to a more generic
-> place, but I do not think I would terribly mind if we leave it in
-> its current place, later to be moved by the first new caller that
-> wants to use it from outside this script.
-> 
+>> [1] http://public-inbox.org/git/%3Caa98f187-4b1a-176d-2a1b-
+>> 826c995776cd@aegee.org%3E
+>
+> I wonder whether the OT thread discussion about branch annotation may hav=
+e some value here. For some repositories I manage, I have received question=
+s about whether there was some way to know that a branch in the clone was a=
+ssociated with a worktree "at any point in the past", which, once the workt=
+ree has been pruned, is not derivable in a formal computational sense - the=
+re may be specific conditions where it is. Perhaps, if that line of develop=
+ment moves forward, that we should considering annotating the worktree-crea=
+ted branch to help with our pruning process and to identify where the branc=
+h originated.
+>
 
-I did wonder about putting this function in a library when I first wrote
-it but decided to wait and see if it is useful instead. As Junio points
-out it would need to be improved to act as a generic filter, so I'll
-take the easy option and leave it where it is at the moment.
-
-Best Wishes
-
-Phillip
+I think for pruning, we already have that information. If a branch is
+associated to a worktree, its HEAD must say so and we must not prune
+anything reachable from _any_ HEAD. I made that mistake actually.
+Still in process of fixing it (and fsck).
+--=20
+Duy
