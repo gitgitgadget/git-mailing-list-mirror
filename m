@@ -2,145 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-1.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
 	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 215F01F404
-	for <e@80x24.org>; Mon,  5 Mar 2018 16:55:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7A5671F404
+	for <e@80x24.org>; Mon,  5 Mar 2018 17:01:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751590AbeCEQz3 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Mar 2018 11:55:29 -0500
-Received: from mout.gmx.net ([212.227.15.18]:39139 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751462AbeCEQz2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Mar 2018 11:55:28 -0500
-Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MQ2Wx-1eokWb37w3-005Is6; Mon, 05
- Mar 2018 17:55:26 +0100
-Date:   Mon, 5 Mar 2018 17:55:26 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Birger Skogeng Pedersen <birgersp@gmail.com>
-cc:     git@vger.kernel.org
-Subject: Re: [PATCH] git-gui: Add hotkeys to change focus between ui
- widgets
-In-Reply-To: <20180228121052.10642-1-birgersp@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1803051749060.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <CAGr--=LZ9TSM9v0SZOi_mj1t8se0Ck-nDHkwum3kC8uz9HKW6A@mail.gmail.com> <20180228121052.10642-1-birgersp@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1751989AbeCERBc (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Mar 2018 12:01:32 -0500
+Received: from mail-pg0-f54.google.com ([74.125.83.54]:42066 "EHLO
+        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751852AbeCERBb (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Mar 2018 12:01:31 -0500
+Received: by mail-pg0-f54.google.com with SMTP id y8so7055138pgr.9
+        for <git@vger.kernel.org>; Mon, 05 Mar 2018 09:01:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=fjocAOLr+z1S6J+GQnbKF2nJ55Zk4hBZtlA1bUgjt20=;
+        b=nR5lpXJXG1Cc6ihazbHnBPlHgOnGs1AeYA/dyFaCLpmq/lIRy/4ZIyAjV3zm0yubYx
+         CMz1mBXKeDuf4cktNB4KQrePRFi+HrfHREFAkMNJnX60V1yY91WnB7Z1lyzFy0P9U/Bv
+         ca604SDgJyIFhXHd+DJ/UPeVhMaYQyN35mijaqoYbUQsGoFH/juUNN0YpFrjB0Ls/eKU
+         d3XL/IwUxExA0tLNAiDH5FwLsPnIQaL9qhCbC71Ppx3KTD7/Bi0lvISK3ATc0k2mYfBO
+         zTA4DVdtY19P7TUKjwV4caiYfSQgOZbNxB6hE85iGOx5Jl9kbVp6IAB3fHVBVFpsjsny
+         zXvQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=fjocAOLr+z1S6J+GQnbKF2nJ55Zk4hBZtlA1bUgjt20=;
+        b=VRk1lI6fNZTqoZQBM32n4XSPFMuOTG509bddq/5IMeKgCWF3ITRGZ+FZwpmWcA539B
+         Ntk/gmF6LUrFxFmi9Hp+ZbNigPrMiOkq+IYF7uRwiylHLNAeP+YI0e0GbVafqUmGDbxC
+         wRDXbm7IYlBVU69gJyZs6gKCDniaF43FiIKBbiFH+y5wB+Hmy9NItRBTbMbjsvXxK621
+         OABj4MZ5VA92UO6vqCri84kZQSkkoNybINmvuUOWXpQ7bmlBjCY7wNzUzwa/AofM735T
+         TQ/J7zM5iU0m/MAV+W/Kp9JRC2OX33wRJ2xyd5U6sWy0J14hzD+VAkirvdPA5fVKmv1j
+         wghA==
+X-Gm-Message-State: APf1xPBJpEfO6K0BXUIAWO6sYNTQpElK0U/AOwXai0lkQd+SFijoI0ub
+        gA6dsJQOt/aOUvkgHSNEpDu0z83Cnwo=
+X-Google-Smtp-Source: AG47ELuGSMbPF4xM7B2b4p56dQSMhIE1LN8JGjS9EMuysz7ESADizFK5hUAcrjf91Ac2G8VEghGXPA==
+X-Received: by 10.98.27.10 with SMTP id b10mr16035268pfb.121.1520269290386;
+        Mon, 05 Mar 2018 09:01:30 -0800 (PST)
+Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
+        by smtp.gmail.com with ESMTPSA id g67sm19444509pgc.60.2018.03.05.09.01.29
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 05 Mar 2018 09:01:29 -0800 (PST)
+Date:   Mon, 5 Mar 2018 09:01:27 -0800
+From:   Brandon Williams <bmwill@google.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Subject: Re: Contributor Summit planning
+Message-ID: <20180305170127.GA72475@google.com>
+References: <20180303103010.GA21068@sigill.intra.peff.net>
+ <20180303103957.GA24498@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:LrpKIxxI4KbWUKW1LV5D2l+T/GYO7MC8P7pds99m/oYhmldJ5N7
- jFlSD13OP90rxWfDX1WjnmHSv6FYXfvo4cAgGQfAGA4OizHf5Iv7QXl9EcjXQPLF63OXKtI
- jp3q6DWqOYhqaeHY5wIEAIC5ZfyxPw1KIDutgK4mgKRIkvTD+fV45oXEbCiR9ESERCPDS4o
- Xoo6VPuIxRJGRfDdaJ1AQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Fus8W84PRa0=:BhTDu95yPc+v+mhV/5MOKp
- WO4Y1d64+DJNn9UMgJ3GVHo9i629EijdRM7Gcw4V/bhKNZ08bI0lLsmhjzQqXyc423J/AuaOH
- a1myDXMsaeftsalDGzrdQqXjNDczjGbm/oHfIv5eYp7R0kcZPK8BNw5uy7c6U6/7M+JoeTKu+
- JffZcfpe7zG0ouPI5X99Z1zSMMe6n2XRLXd2xhItUl9ZbppQ0wy1U0GTRpp2sJ/ld15JbrMPD
- BlXXnSXBR86lUUfvxNhypGLm9G5i7hcc5CpjjvWeMvqaz2tvXS0LdOQS1lp8P1pf6Wfi+7mbT
- ChG4BZonoVbwUwBWTq/1YlqfEfu2VbDPQn7HrIBB8n7DWjMlTQluykZhM3iF/DaxBL8JgKkN8
- B8KUYH0fTyo/wWISO/UJ0HHo6rlO78bosXzgDCtkLknQRHaIeuAQIFxYpSRflgz1so5LJTv4+
- 26A6vqnlod1hjAeXQ/6QKD/mYP8S+voT0Rs/lALPhUKsg/DAnkqBVpi/yRYZJIwCE5WM0mfAT
- 0CeoF9UZAquoMS97KXz1SlM9P7BX2qB1sBp8I0i4ZQBk/ExYE+nX06JmPefE9h52VbK0UZYLR
- 3afxogVJIq3C1NgrASvgVSIacdN4kHXzYSkGRbUiVZ5T1FRgXiRj6H/TL9dBG+5pfeffxQMog
- pQ71RHQxUu6DfS+S68giGlOBjAOudyHivKEzl/MfjeKfoaUSZfL+ZPARo+Y3ZMH9LFKFlQ52S
- hKoGxslvdCAhP8a+FNtheVy6KK6Y2bLWFk6n73wzSdJH4z5K/4hTdtdBOEHhwS1PtncK9hp2L
- kTze/hArk516mYmrohJvriTlLjl/uLuyLF1V3Ci3hzGMNDp9N5KlnAAMfbtB1IP44xe3cw3
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180303103957.GA24498@sigill.intra.peff.net>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Birger,
-
-On Wed, 28 Feb 2018, Birger Skogeng Pedersen wrote:
-
-> The user cannot change focus between the list of files, the diff view
-> and the commit message widgets without using the mouse (clicking either of
-> the four widgets ).
+On 03/03, Jeff King wrote:
+> On Sat, Mar 03, 2018 at 05:30:10AM -0500, Jeff King wrote:
 > 
-> Hotkeys CTRL/CMD+number (1-4) now focuses the first file of either the
-> "Unstaged Changes" or "Staged Changes", the diff view or the
-> commit message dialog widgets, respectively. This enables the user to
-> select/unselect files, view the diff and create a commit in git-gui
-> using keyboard-only.
-
-I like this!
-
-> diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
-> index 91c00e648..f96c0a6b8 100755
+> > As in past years, I plan to run it like an unconference. Attendees are
+> > expected to bring topics for group discussion. Short presentations are
+> > also welcome. We'll put the topics on a whiteboard in the morning, and
+> > pick whichever ones people are interested in.
+> > 
+> > Feel free to reply to this thread if you want to make plans or discuss
+> > any proposed topics before the summit. Input or questions from
+> > non-attendees is welcome here.
 > 
-> (This is my first patch ever, any feedback is highly appreciated)
+> I'll plan to offer two topics:
+> 
+>  - a round-up of the current state and past year's activities of Git as
+>    a member project of Software Freedom Conservancy
+> 
+>  - some updates on the state of the git-scm.com since my report last
+>    year
+> 
+> As with last year, I'll try to send a written report to the list for
+> those who aren't at the summit in person.
 
-I am not an expert in Tcl/Tk, but I'll do my best to comment on this
-patch.
+Thanks for kicking things off!
 
-> --- a/git-gui/git-gui.sh
-> +++ b/git-gui/git-gui.sh
-> @@ -2664,6 +2664,38 @@ proc show_less_context {} {
->  	}
->  }
->  
-> +proc select_first_path {w} {
-> +	global file_lists last_clicked selected_paths
-> +	if {[llength $file_lists($w)] > 0} {
-> +		focus $w
-> +		set last_clicked [list $w 1]
-> +		set path [lindex $file_lists($w) 0]
-> +		array unset selected_paths
-> +		set selected_paths($path) 1
-> +		show_diff $path $w
-> +	}
-> +}
+Since I've been working on protocol stuff I'd like to spend a bit of
+time discussing protocol v2 :)
 
-Do you think there is a way to focus on the last-selected path? That would
-make this feature even more convenient, I think.
-
-I am not sure that this information is still there if switching back from
-another component...
-
-> +proc select_first_unstaged_changes_path {} {
-> +	global ui_workdir
-> +	select_first_path $ui_workdir
-> +}
-> +
-> +proc select_first_staged_changes_path {} {
-> +	global ui_index
-> +	select_first_path $ui_index
-> +}
-> +
-> +proc focus_diff {} {
-> +	global ui_diff
-> +	focus $ui_diff
-> +}
-> +
-> +proc focus_commit_message {} {
-> +	global ui_comm
-> +	focus $ui_comm
-> +}
-> +
->  ######################################################################
->  ##
->  ## ui construction
-> @@ -3876,6 +3908,11 @@ foreach i [list $ui_index $ui_workdir] {
->  }
->  unset i
->  
-> +bind . <$M1B-Key-1> {select_first_unstaged_changes_path}
-> +bind . <$M1B-Key-2> {select_first_staged_changes_path}
-> +bind . <$M1B-Key-3> {focus_diff}
-> +bind . <$M1B-Key-4> {focus_commit_message}
-> +
->  set file_lists($ui_index) [list]
->  set file_lists($ui_workdir) [list]
-
-Looks good!
-
-We are currently without an active Git GUI maintainer, so I hope that
-Junio (the Git maintainer) will pick this up.
-
-Ciao,
-Johannes
+-- 
+Brandon Williams
