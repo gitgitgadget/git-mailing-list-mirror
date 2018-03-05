@@ -7,84 +7,76 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0C8E31F404
-	for <e@80x24.org>; Mon,  5 Mar 2018 22:15:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 35E581F404
+	for <e@80x24.org>; Mon,  5 Mar 2018 22:21:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753093AbeCEWPw (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Mar 2018 17:15:52 -0500
-Received: from mail-it0-f49.google.com ([209.85.214.49]:52008 "EHLO
-        mail-it0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752508AbeCEWPw (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Mar 2018 17:15:52 -0500
-Received: by mail-it0-f49.google.com with SMTP id u66so11334590ith.1
-        for <git@vger.kernel.org>; Mon, 05 Mar 2018 14:15:51 -0800 (PST)
+        id S932243AbeCEWVw (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Mar 2018 17:21:52 -0500
+Received: from mail-wm0-f45.google.com ([74.125.82.45]:52021 "EHLO
+        mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752508AbeCEWVv (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Mar 2018 17:21:51 -0500
+Received: by mail-wm0-f45.google.com with SMTP id h21so18991403wmd.1
+        for <git@vger.kernel.org>; Mon, 05 Mar 2018 14:21:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=5X3YgVb36FdMZXN+Jc5txErL8E3yt8ZMxtnXznI33Uc=;
-        b=llVrjKTwwWgnUGSR1cW2wo1oonp5haCMGuD1bvX6rXujJ9sTxv0+UDTMx55XZcvB+m
-         0BOhMxRqoSd/crigf5a+ddmeSgzKxkmJ95nfVzibuq5wFPeS7/3pk1Q6MFAjLIe4x9/i
-         2sNNAK+rfH0RmhK2CPQnLJrFE5bR6GOwUKP/HAStaabnsYJTx1mqLB3yNkjfwCJEx4yb
-         sEkB7LeB2k7kNjt0u0ZYa0CoTUFpy3kicJem/2Np+dsOXWA0aQLwEQAKmBXNxsVNkwzr
-         Q4Ga4p27SwFXph/7BXkU9geNpI/S+Pt4v4OVK6QrvCkToXn0Y4od5/VCRrFpIPi8LS/d
-         cuRg==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=IuiNicqmGdblxPeLG6CfSuFk0am1nsV/GXek4ykDdU0=;
+        b=TaZ2T8N7ey/ruRNhdBrFiR6bBza/wpXnv9G8Lxn/znQU31/s+err3NtXvEk+nSPmnv
+         0bftrkp1zaKa9c8xdOFWvGTPTEdbb4JRuqBU5vj5E9rECs3nKh+/kiy4QrN4Wcqcjmph
+         KG7dl/WmdbmLHsR0Bf9fl6/qKHvW2qn5JvmbPLjAQXRDyaHeFVAoz877MNRlhrYRcizX
+         y0K3kyCmV7mUN7JAQZgkjaTiFnZYHo1jw5YBCHkpSjcGCn0J0PqeN3hrwOJNMs7Fnq/b
+         SfrTFVdx7rzZp49aYGrsXZJL+qnT2oTYoUGjxq8HBXxCVDJDz6t8WZtab3tbZRC9NVrM
+         23xQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=5X3YgVb36FdMZXN+Jc5txErL8E3yt8ZMxtnXznI33Uc=;
-        b=onbvUFNu+IXFRtk5Kwr7qPAMMfkSMKs96T31rkVNjXD9fJ8AQ30l6fm4DHJD1b0AZw
-         gDFPGFaCcj6vekqmbvXYv6HYretIeUUzTuet/rg06iJTO3095j7osGJuFPQGxmNuMdoH
-         wLb/oJwbbOrESSrWOa4Ya+07vBxGyiGAdjXMJqVtsPm0TMzr1nZwpPRjkrOUFmK6EGg8
-         rQEpX20nCxLPbYHT4NphgkQs+/mYm2KWW2Bu1SFYg1ie69gTv+uQhOgYTZyq1x47n6Vq
-         YNww9G8KgSkXZlZhJhscNYsqQTOYrPg52bSYXFKQBhp9YjoUw9LlDgVjAYS/sDXdPYPr
-         WyyQ==
-X-Gm-Message-State: AElRT7EcSCdAq6Ab/8JvrsGceVYZ8yd6XegZH8/eA6vRJCZPXILH8iWK
-        E59dlji11fQFjZeRDBwftfTd5VoRDKq1FnoQ69g=
-X-Google-Smtp-Source: AG47ELsoR4deOtOW+PPE6yiSbcGPHLhVObMvy9JSeJ/XysYzKWAhU1vOTlkXcQhfM82KSzp8i2hlllcF4TI5eiLZoDA=
-X-Received: by 10.36.67.1 with SMTP id s1mr956483itb.145.1520288151535; Mon,
- 05 Mar 2018 14:15:51 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=IuiNicqmGdblxPeLG6CfSuFk0am1nsV/GXek4ykDdU0=;
+        b=ULG4kIJxYDc2ixHeXld8OdfMYouSmjkvTBMeLk1t/Eq/bWiERNLbNMzJoWYCu9Q03C
+         7Jqi3/lvyMEsdK19xr1ZyI817yZJjDQNg2CLeY2FddL294h0IFKg7Tyv3dKgwXc8bsUv
+         gPOkbcAvmzFqEPzuaAmoX0cBS0Bvg/QQNjWePqDCdZfYWECL64jouu4hRb5GySc/NwNR
+         HUxiVYaNjLhmcaUs5WoYXVZkuwcVuwQgn2HUOtEDGVIO1YL34AjlHznDmIX4bE6Y8DFI
+         MXee5eui0QLKNKWord6ET9YmrPFUWiG8hmoQm/fhZ4I0uWdYfWT4YzQZ9kdl1fUVTIBS
+         0Uzg==
+X-Gm-Message-State: APf1xPANqQOaNQkC2yhjeEaNBp7Hkf/ogadzirNbNJwpb+8dyROdqrvW
+        kOXgH6Mzr1xbBFkt+2/79xM=
+X-Google-Smtp-Source: AG47ELsB+gDS4u2EyzYbuZgS+rcWpBdJxB7qSQi49bMSaOvN9s9/YIWqUPhZPEMW5U/Tmb7zNxT2fA==
+X-Received: by 10.80.179.55 with SMTP id q52mr19858354edd.75.1520288510253;
+        Mon, 05 Mar 2018 14:21:50 -0800 (PST)
+Received: from evledraar (178-84-79-100.dynamic.upc.nl. [178.84.79.100])
+        by smtp.gmail.com with ESMTPSA id h9sm10865453edi.79.2018.03.05.14.21.48
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 05 Mar 2018 14:21:49 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Subject: Ad-hoc pre contributor summit dinner & drinks on the 6th
+References: <20180303103010.GA21068@sigill.intra.peff.net>
+User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 1.1.0
+In-reply-to: <20180303103010.GA21068@sigill.intra.peff.net>
+Date:   Mon, 05 Mar 2018 23:21:48 +0100
+Message-ID: <874llunoxv.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Received: by 10.107.133.69 with HTTP; Mon, 5 Mar 2018 14:15:30 -0800 (PST)
-In-Reply-To: <xmqqbmg2898w.fsf@gitster-ct.c.googlers.com>
-References: <20180303055715.GH27689@sigill.intra.peff.net> <20180303055849.GB15952@sigill.intra.peff.net>
- <878tb6nr6u.fsf@evledraar.gmail.com> <xmqqbmg2898w.fsf@gitster-ct.c.googlers.com>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Mon, 5 Mar 2018 23:15:30 +0100
-Message-ID: <CACBZZX5H2aiswHNkWVrva20vaEQqN0GGBTidM1htksY6Q3at2w@mail.gmail.com>
-Subject: Re: [PATCH 2/2] add--interactive: detect bogus diffFilter output
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>,
-        Sam Kuper <sam.kuper@uclmail.net>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 5, 2018 at 11:09 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
->
->> On Sat, Mar 03 2018, Jeff King jotted:
->>
->>> +    if (@colored && @colored !=3D @diff) {
->>
->> nit: should just be:
->>
->>     if (@colored !=3D @diff) {
->>
->> It's not possible for @arrays in scalar context to be undefined.
->
-> It is true that @array can not be undef, but your rewrite I think is
-> wrong.
->
-> The first "do the comparison only @colored is true" is not about
-> definedness.  It is "@colored can be an empty array when the user is
-> not using separate 'show these colored lines to the end user, feed
-> these noncolored lines to git-apply command' feature, so @colored=3D=3D0
-> and @diff > 0 is perfectly fine".
 
-Yes, sorry for the noise. I misread the intent of the code.
+On Sat, Mar 03 2018, Jeff King jotted:
+
+> The rest of this email is all logistics for attendees, so if you're not
+> coming, you can stop reading. :)
+
+I'll be arriving in BCN around 17:00 tomorrow. If someone wants to grab
+pre-dinner beer or dinner, preferably in the Eixample district (just
+across the street from the conference venue) before or at Spanish dinner
+time (around 21-22) add me on WhatsApp @ +31 611 763 987.
+
+If there's more than one person interested I'll create a WhatsApp group
+for it so we can keep adding people. Or reply here if you prefer E-Mail,
+but I'm thinking subscribers to the ML who aren't there tomorrow will
+thank us...
