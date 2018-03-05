@@ -3,79 +3,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 438F91F404
-	for <e@80x24.org>; Mon,  5 Mar 2018 21:50:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7031F1F404
+	for <e@80x24.org>; Mon,  5 Mar 2018 21:54:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932630AbeCEVuh (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Mar 2018 16:50:37 -0500
-Received: from mail-wm0-f46.google.com ([74.125.82.46]:54328 "EHLO
-        mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932571AbeCEVuf (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Mar 2018 16:50:35 -0500
-Received: by mail-wm0-f46.google.com with SMTP id z81so18863885wmb.4
-        for <git@vger.kernel.org>; Mon, 05 Mar 2018 13:50:35 -0800 (PST)
+        id S1753107AbeCEVyK (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Mar 2018 16:54:10 -0500
+Received: from mail-pf0-f179.google.com ([209.85.192.179]:36070 "EHLO
+        mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752931AbeCEVyJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Mar 2018 16:54:09 -0500
+Received: by mail-pf0-f179.google.com with SMTP id 68so7831320pfx.3
+        for <git@vger.kernel.org>; Mon, 05 Mar 2018 13:54:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=BMAsrMEZbQ6elTzLbc8P1AWKKuGnpnTevdD4FZCzIzo=;
-        b=ekCj6huPaVk9Ox1+or8D9QIcxQTF4uLXbBTZiTqsl9Z9OGpgWpbk9/mhts6y8enbzU
-         2AW1MRBgGo68JwrHrFx/qXacl9wlv/xnpGvH0QThxTKrYz+gcCJJ62JLrClYeOjU3rU4
-         v9GLKPjTIuVPWUcpRaRhQ0S7uezBYk3HDxvRNosLOLkYgRPfetATpn5W6SsIqXHNrd1V
-         A0w95w2ZpyVPzXHbLFF9iAcd5Tx78eiA8DdNLeyEjLKYBaAGNFQdOcKw6yRbYJElHzU5
-         ub+VFzePtJrKEgMis8SvtruWkxV2Tk1OpRAENety6UAMuG4Ojh6V3H2VNiPspb46LVKB
-         Rp4w==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=AiUkV+MDWZlvdT1ctk7VU6ukCzvzaTn/VQsNfcmkDnU=;
+        b=c/8glBJn+Af0u8000c8HB2p+cP7xA4J8n/EPYUCSHlZ58595b+8d/vRALwMasx/3L8
+         0o4X3YmjFp5vUvgacMZbA7NXpkD0fFt2XypI9LW7nlFgxb6aaRrq3MwEWwXf4uL5iCjm
+         nteOHhZ0sXRhlSAA5+jHI7AZQgx324xRYuaFJ2xQ5FcpfoAuaLXTLH65aasmNhUZsMdz
+         1iVLTM1Zcq16WokEjS5XXJFmH/UIUsPuWG2DE3t+GVKwXTTFLvcvSQsYGy12B8oivnTB
+         oznCwWQd70/XwoWEOQQKpi4YUoDLHthFqbnzMQ7v+BCA+0IfRDX+fBecwso0qNAphY/0
+         Bwlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=BMAsrMEZbQ6elTzLbc8P1AWKKuGnpnTevdD4FZCzIzo=;
-        b=FKN05/1ALiLraI5mWvj/eDIT9lT6Egbq4flL4THCd5FgTXHAtW+KXRwq92Q9BV45r7
-         PzIbL0mWHFTDNbwoYZNKd1GEJ9xT/6XzN+hKhuWsBNnhpi++nCZgFfyRFXfELId/F9sA
-         9cw6o4ieHAsnPMbCegwBlTdfqMv/fLiEgO9Tix+wdw24jGZ+lJhmb0fveILM174itssc
-         yOOTUtu6UR0bKFmMQ2BHGqTHLeOkNQerMl0DnOD/Gh8IK5XhKYnLm3FGUdjP83qtpdbu
-         yvtuaJVzReLs6yweKGlL2zljz9jKb7D8enOsESxhjP9G0EGPGIsn1as70S3/1pUunJ0C
-         GPpA==
-X-Gm-Message-State: AElRT7H4aN1AQkiclMUeGAsUVsnfNZGpJKxsyBHQUud5DiVa4StpZZ8x
-        B7C7wnYivST49wNmMBfxYDM=
-X-Google-Smtp-Source: AG47ELs5QQnp25QPVWXra9fsvFtcV2kdcgTSg9q9WlfTeEvgHRqvbn1k+WGRl/Vozc+SreeoxNxabQ==
-X-Received: by 10.28.106.18 with SMTP id f18mr9490182wmc.51.1520286633905;
-        Mon, 05 Mar 2018 13:50:33 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id w29sm13609411wra.84.2018.03.05.13.50.33
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=AiUkV+MDWZlvdT1ctk7VU6ukCzvzaTn/VQsNfcmkDnU=;
+        b=ObwAn4oQ7I5LzQXTCBlls82BsbapWw+pIfhOVc8TTc+z/rQ282CfleGap/Ow7Wdxeh
+         GrHV+CLqUyhtPH3FLn4p2T8JjnrLve7kaaPdmtByFU6kdJjflalosEJna1xzTUi9Z9Kn
+         uZnywM1ex06rPAr5zVBk3P5VvZmfqsac9VkvLMjjTgzVxWINN366atFpmUEsrek1CnIN
+         DI7P52PZvArJ+rl4PbZqnMyjHA3H1IBwPdQhr5dMkM+ZZrQgOQItwX71p+/FujMIP2Da
+         hSKQFZuz1q//7WhpUTD+q6Kit8DxLMmSH94W/vXH20cN9ckqrPRAl7wwO/ntk5BOuiiB
+         CfmQ==
+X-Gm-Message-State: APf1xPD8nIZkCoU7S8NGwnrD4mB4LlSihRhehMGMo58p8k64nIm7MBkm
+        bXiy6/4OWzcMG91SJaOsJpoMdLde
+X-Google-Smtp-Source: AG47ELsPu/X6rRW3LV4kbIp2ZBcT/ictcel0VE0eiMGL4ZWi42kOCtPvty7FzDgGb5MzzmPssmFwyg==
+X-Received: by 10.98.147.27 with SMTP id b27mr16739168pfe.145.1520286848584;
+        Mon, 05 Mar 2018 13:54:08 -0800 (PST)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id m68sm18027030pfk.107.2018.03.05.13.54.07
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 05 Mar 2018 13:50:33 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     lars.schneider@autodesk.com
-Cc:     git@vger.kernel.org, tboegi@web.de, j6t@kdbg.org,
-        sunshine@sunshineco.com, peff@peff.net,
-        ramsay@ramsayjones.plus.com, Johannes.Schindelin@gmx.de,
-        Lars Schneider <larsxschneider@gmail.com>
-Subject: Re: [PATCH v9 6/8] convert: check for detectable errors in UTF encodings
-References: <20180304201418.60958-1-lars.schneider@autodesk.com>
-        <20180304201418.60958-7-lars.schneider@autodesk.com>
-Date:   Mon, 05 Mar 2018 13:50:32 -0800
-In-Reply-To: <20180304201418.60958-7-lars.schneider@autodesk.com> (lars
-        schneider's message of "Sun, 4 Mar 2018 21:14:16 +0100")
-Message-ID: <xmqqfu5e8a53.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        Mon, 05 Mar 2018 13:54:07 -0800 (PST)
+Date:   Mon, 5 Mar 2018 13:54:05 -0800
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Sam Kuper <sam.kuper@uclmail.net>, git@vger.kernel.org
+Subject: Re: Bug report: "Use of uninitialized value $_ in print"
+Message-ID: <20180305215405.GG28067@aiede.svl.corp.google.com>
+References: <CAD-Jur+6m1SjqHVWBxW5HnTjutSVrkP+dEXdYmFHzoUf0FGdNA@mail.gmail.com>
+ <20180302070434.GG238112@aiede.svl.corp.google.com>
+ <20180302104608.GB11074@sigill.intra.peff.net>
+ <xmqq1sh2e7w1.fsf@gitster-ct.c.googlers.com>
+ <20180302165543.GA4616@sigill.intra.peff.net>
+ <xmqqo9k6csan.fsf@gitster-ct.c.googlers.com>
+ <20180303055715.GH27689@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20180303055715.GH27689@sigill.intra.peff.net>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-lars.schneider@autodesk.com writes:
+Jeff King wrote:
+> On Fri, Mar 02, 2018 at 09:15:44AM -0800, Junio C Hamano wrote:
+>> Jeff King <peff@peff.net> writes:
 
-> +static int validate_encoding(const char *path, const char *enc,
-> +		      const char *data, size_t len, int die_on_error)
-> +{
-> +	if (!memcmp("UTF-", enc, 4)) {
+>>> That's probably a reasonable sanity check, but I think we need to abort
+>>> and not just have a too-small DISPLAY array. Because later code like the
+>>> hunk-splitting is going to assume that there's a 1:1 line
+>>> correspondence. We definitely don't want to end up in a situation where
+>>> we show one thing but apply another.
+>>
+>> Yes, agreed completely.
+>
+> Let's add this sanity check while we're thinking about it. Here's a
+> series.
+>
+>   [1/2]: t3701: add a test for interactive.diffFilter
+>   [2/2]: add--interactive: detect bogus diffFilter output
+>
+>  git-add--interactive.perl  |  8 ++++++++
+>  t/t3701-add-interactive.sh | 20 ++++++++++++++++++++
+>  2 files changed, 28 insertions(+)
 
-Does the caller already know that enc is sufficiently long that
-using memcmp is safe?
+With or without the tweak Ævar Arnfjörð Bjarmason suggested,
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+
+Thanks.  It's probably also worth adding Sam's reported-by to patch 2/2:
+Reported-by: Sam Kuper <sam.kuper@uclmail.net>
