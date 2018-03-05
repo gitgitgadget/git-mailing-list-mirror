@@ -3,108 +3,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8A8701F404
-	for <e@80x24.org>; Mon,  5 Mar 2018 17:30:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7D1A41F404
+	for <e@80x24.org>; Mon,  5 Mar 2018 17:42:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751835AbeCERaH (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Mar 2018 12:30:07 -0500
-Received: from mout.gmx.net ([212.227.17.21]:36133 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751462AbeCERaG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Mar 2018 12:30:06 -0500
-Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LlqNY-1eJqAI0dWa-00ZLyp; Mon, 05
- Mar 2018 18:29:58 +0100
-Date:   Mon, 5 Mar 2018 18:29:56 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Igor Djordjevic <igor.d.djordjevic@gmail.com>
-cc:     phillip.wood@dunelm.org.uk, Sergey Organov <sorganov@gmail.com>,
-        Git mailing list <git@vger.kernel.org>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC] Rebasing merges: a jorney to the ultimate solution (Road
- Clear)
-In-Reply-To: <872944c4-ca97-9f55-a424-86d1e3299a22@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1803051812330.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <87y3jtqdyg.fsf@javad.com> <bbe64321-4d3a-d3fe-8bb9-58b600fabf35@gmail.com> <nycvar.QRO.7.76.6.1802270051470.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <CA+P7+xq8UUcLWomUi=PS_hTKfJd3dMAxMmhioDS1bixwcmKAqw@mail.gmail.com>
- <nycvar.QRO.7.76.6.1802271718090.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <4d7f3406-b206-cc22-87df-85700d6a03d9@gmail.com> <33da31e9-9101-475d-8901-4b6b3df2f29d@gmail.com> <940d959d-151d-68dd-0f13-320ebad0d75b@gmail.com> <87606hoflx.fsf@javad.com>
- <0ac3a3fd-4053-e32e-75ed-8829f22c2e1f@gmail.com> <87a7vss6ax.fsf@javad.com> <6c8749ca-ec5d-b4b7-f1a0-50d9ad2949a5@talktalk.net> <872944c4-ca97-9f55-a424-86d1e3299a22@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1752480AbeCERmr (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Mar 2018 12:42:47 -0500
+Received: from mail-lf0-f50.google.com ([209.85.215.50]:41297 "EHLO
+        mail-lf0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751723AbeCERmq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Mar 2018 12:42:46 -0500
+Received: by mail-lf0-f50.google.com with SMTP id m69so24384854lfe.8
+        for <git@vger.kernel.org>; Mon, 05 Mar 2018 09:42:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:from:date:message-id:subject:to:cc;
+        bh=Hs0zlxHhzb/klztOqcWmPzy0MEpAclsEDEJZfkeXA10=;
+        b=dq8dGgKHGBVrNHp7hiWq/GYGcFpB1JUi9kqCGHyz5TJp04UjZchS2sCTjyOt3HIEsx
+         81eQufxODXObFRZ3zZzCW1gu/EeQ8dWdYeio764n2wgItEFnUyIrNKGfM49M0QnyEUaD
+         +EpRvS0TXp/2JQpCm2u6i4F7SwYCKz7R/ZTnkYeeodpiwuvChYgtNRF9qF3T55NJ1grD
+         20wJ3gVJ7O45V04SOsye19l2+5VLXSu8kuaib4Yuo0gk+qzAzL+tE9KtdzrnS7cUhgrD
+         ic2DCg6IxrJabJvrsvD19USP3dF+hmgoAFdrEj2AxMzc3ZasQezeIlr5wzO6uU19+1D4
+         KT9Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
+         :to:cc;
+        bh=Hs0zlxHhzb/klztOqcWmPzy0MEpAclsEDEJZfkeXA10=;
+        b=dAHHGkaqr+Y3C9QO+GH2QY3+KEbEZDKoos9sMExFqQcDyNOVlt8NTVyTuUYoy84Gts
+         zzFxuhgnC0KnZXue+i4YG1w1eRm9LsTFRT8/nRxiAuie7oSVjCykPqfV5fOtH5WdawUD
+         6aWwez3JFihcehXKGegm1fjetJdVcq6EDo7AzzfTIFzabJfh1B/0BYT9DvRDTQ+8E0SE
+         0LMU4qZb3WEwl0txs7YUJod7uITt9WksOM+TNwGFhtAZzW0dSrczapuvxZWV05R/aVrR
+         JREYJbYR9os0IOmeYkVe3R86Q8sGYsgDHjkzZo9gJ8yI2eQ+x5GbeycOk2Xm6vD9fpoo
+         qbZw==
+X-Gm-Message-State: AElRT7Ft3yNz+FTWoY1iYNm2NL6+JKa1bi8nQtP4HmwFyU7PJFwzUS43
+        dIRr+8d27fOdajiDuLVVmpg3mCkp4Apu/3CQ21w=
+X-Google-Smtp-Source: AG47ELu/FP+YsAng7Kna9FSptd5LL8qBt3lQPHyhvaRpckhhFPRazT7woDQlWSAvoLHFb+ZGcugSaE5zR+s6xNdIsps=
+X-Received: by 10.25.34.81 with SMTP id i78mr10161227lfi.50.1520271764864;
+ Mon, 05 Mar 2018 09:42:44 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:goCqZyrDoAvYKkgfLCPD92bVUpbP91PA7Usv1I2Ek8bSgTmTwaZ
- VtHdeKru65qStgjwp3rRP0JU9DIOg270PicsWKP4pSym721+xA6qFCUoYAJ1gU6SNTmrPWh
- zpwfZOZXXwzkTODH8HfnG+U/FjZiYdljnmBDWF8QGtdG4ASlWc97yxkTNhwzt4lbYUMLHur
- 5BIuNDbcQ+ux960IXm4yA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:+smDwABje8Y=:SIGlzbzlGtpyUAeqvyBiUL
- CrJOYK2OlAkNlKwllUPxwk+Z4spHv7A8I0hhJLpWFZbDoYHYWFMwW/S1LEnRXfcuxmkZMfCXW
- 7iKxkqtlf0g8F4nKBPr2JnGaJLw3k5Eu4Cpq8F3Yg2/CZn499yitIZhe5V2kJq5Q/TY8Ufn8y
- V+9nBsHq+TOP5khVl07UukN03uMgIUyXml741UzQTmfhPE0lUu/s/lvOBhFjytOX9kSZJwrAl
- BRti80MIvKvlBZEJwPqmD0+2te128hjUSxX9WejeMnMvg58LtweSZ0G1pT4+yO/XGg58T/WCT
- aXNGrRGqZJZWse8dQZL3NRv9xCLZCg4oz7Y0D7RJBQczBG+hspqmcrBWnh9cNxNm2JiKb/ms2
- KfghDwiqM1PQ0AVW4q1W/Y9mvVoAQiBUrYZstSsu1bhfnOcvF2VGfjyCYiAUBRPFrdGzttykU
- tNBZFePb3mrIZ8FlJC4ZB+WdTGgS5IT7e+WjPHTYMLEOkDkjm3/z8BUyk1dm4vsVePKZ8FZ4M
- Rzwic00lDCwk0MumHnsSzdzs3gCajw89LZWCFGS2iFFHqJoMCND9NzPMfNbeXnA4M9RbBf7rD
- N8pHM97drSGk/qAkSt0ncvMpv8o95iVnycFlciYfL+OaQWe6ra4aZJKV7mcA8PhLBUunOwrVE
- SWKiFtk3EpHTELtP44N0IW+v2dfze9mO4HIWxjic1kjv35zKxIDfJBD8otlRIPnmnxMnWHBcx
- ugjzhGH5zrbLwecA1/RhP3SUakrrtoYW6yKlZGl3D/rB6Co6Mvfxpj9aG5h+LHlCNIWY9aktk
- MqI3FsJtDGV2OFZ4wVn8BefMQEQFO6kN4IOFcikun8LskQtduu70/+cQdyYZ1Ip3nAKSWdG
+Received: by 10.25.80.67 with HTTP; Mon, 5 Mar 2018 09:42:44 -0800 (PST)
+From:   Birger Skogeng Pedersen <birgersp@gmail.com>
+Date:   Mon, 5 Mar 2018 18:42:44 +0100
+X-Google-Sender-Auth: zmRiF5wVM8p9N1bawZn4WKPxEOs
+Message-ID: <CAGr--=+77Ny31TkWp3zE6MYBxAo1zwZsqxmzbXb_8RU86NcPPw@mail.gmail.com>
+Subject: Re: [FEATURE] git-gui: Staging path(s) should re-select a new path in
+ "Unstaged Changes"
+To:     Birger Skogeng Pedersen <birgersp@gmail.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Buga,
+My apologies.
 
-On Sat, 3 Mar 2018, Igor Djordjevic wrote:
+Seems there was some error causing this, I see now that paths are
+automatically re-selected by default. Can't reproduce the error.
 
-> By the way, is there documentation for `git merge-recursive` 
-> anywhere, besides the code itself...? :$
+Please disregard this thread.
 
-I am not aware of any. The commit message adding the command is not very
-illuminating (https://github.com/git-for-windows/git/commit/720d150c4):
 
-    Add a new merge strategy by Fredrik Kuivinen.
-
-    I really wanted to try this out, instead of asking for an adjustment
-    to the 'git merge' driver and waiting.  For now the new strategy is
-    called 'fredrik' and not in the list of default strategies to be tried.
-
-    The script wants Python 2.4 so this commit also adjusts Debian and RPM
-    build procecure files.
-
-Digging through https://public-inbox.org/git/ during that time frame comes
-up with this hit, though:
-
-https://public-inbox.org/git/20050907164734.GA20198@c165.ib.student.liu.se/
-
-which is still not a good documentation of the algorithm. You can probably
-dig further yourself, but I think I can describe it very quickly here:
-
-To merge two commits recursively, you first have to find their "merge
-bases". If there was an obvious branch point, then that is the merge base.
-But when you start a branch off of master, then work a bit, then merge
-master, you already have two merge bases.
-
-The trick about the recursive merge is to reduce the number of merge bases
-iteratively to one. It does that by taking two merge bases, and performing
-a recursive merge on them, which generates a "virtual" commit, the
-condensed merge base. That one is then merged recursively with the next
-merge base, until there is only one left.
-
-A recursive merge of two commits with exactly one merge base is simply a
-three-way merge.
-
-I vaguely remember that there was something funny about the order in which
-order you want to process the merge bases: if you did it in one
-(chronological) direction, it worked beautifully, in the other direction
-it would generate tons of merge conflicts or something like that.
-
-Ciao,
-Johannes
+Birger
