@@ -2,130 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BE59D1F404
-	for <e@80x24.org>; Mon,  5 Mar 2018 14:00:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AFA2F1F404
+	for <e@80x24.org>; Mon,  5 Mar 2018 14:29:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933337AbeCEOAV (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Mar 2018 09:00:21 -0500
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:50292 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932563AbeCEOAU (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Mar 2018 09:00:20 -0500
-Received: by mail-wm0-f67.google.com with SMTP id w128so16090400wmw.0
-        for <git@vger.kernel.org>; Mon, 05 Mar 2018 06:00:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=yaE0J+fBP9QwbCKLX/0sLh8heV4NrUrCXYz/yb/Bd58=;
-        b=mSlEDaecCNGS0FJnLJjTUPwHw2QmRQakmU/2GA8mHLHy+kRPMiXcUKrGVq/8qz/3NG
-         Vmp1yjGLuocsxDhG9lQRVm6KdbzLIDpcb3WMOfwqbV7m5nXkiTYUu6f8FCUpvOt5mbd7
-         q7kjiw36waf/wd8YZU1wS/2BZn8NS1YWpB1lbyVlBFSO7tNH7Wn7jOB1UofnxVzzryjc
-         9qEzVvuLCRpla6Qigswm4LAP2nvB2cUF2mNH/McewdoJxeoBjsd9ED1pukrh3VZ6NrDO
-         VO4ebgnRVcs9JBCc6F3d0tpk8e2I7jmKJvCNxiJawwkfYVmniHEVCJyHSJhFEjYFdCqa
-         R9gQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=yaE0J+fBP9QwbCKLX/0sLh8heV4NrUrCXYz/yb/Bd58=;
-        b=OtJV3Quw7wCV2K0E88P3TQm7WW0kiuJQFhBwJXPj/TBzdnLZD3+PN9MJuqo+7x/Zcw
-         TfX0o2Vni+rj+eRD1YRkZiQymyiSo8OBlh554rLiOdR9zE7el5mcrLZXB80xzE0tmfau
-         hE8+l/8HgppvPaCS6tlqSS9UdNaH8VS14j0MwYddEVon1g6pArLNuz/g1Ks2+kFKFfgs
-         JGydd3Eww2eMERbGL90SKpi8sU5cypVbweAe5Ljpv7TDJRg0rjBcttdgf27R9dxih+6x
-         OPW+svBK+/FazMhCIg8NAOBwb15PlfcMWYSS3dqc8xSIkIYdqawY6/cEyFP8I31LSEOP
-         48dQ==
-X-Gm-Message-State: APf1xPCEVohv2YFGwPqvOD+FnnPXFzOYPa7UdSsLuTT2NkVcP4HCboQN
-        UpVXzEz/PZwDx4o1MuH2nYp14bl6
-X-Google-Smtp-Source: AG47ELsxoFnwoqlFJLFi2bYZPPQeNwT7u5ZLd1H/egWNYNvbErBNbwhPit4YG5q/UYGEwDnTP8j0dg==
-X-Received: by 10.80.154.6 with SMTP id o6mr18804642edb.146.1520258419179;
-        Mon, 05 Mar 2018 06:00:19 -0800 (PST)
-Received: from evledraar (178-84-79-100.dynamic.upc.nl. [178.84.79.100])
-        by smtp.gmail.com with ESMTPSA id l60sm5195907edl.15.2018.03.05.06.00.17
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 05 Mar 2018 06:00:18 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Eric Wong <e@80x24.org>
-Subject: Re: [PATCH/RFC 1/1] gc --auto: exclude the largest giant pack in low-memory config
-References: <20180228092722.GA25627@ash> <20180301092046.2769-1-pclouds@gmail.com> <20180301092046.2769-2-pclouds@gmail.com>
-User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 1.1.0
-In-reply-to: <20180301092046.2769-2-pclouds@gmail.com>
-Date:   Mon, 05 Mar 2018 15:00:16 +0100
-Message-ID: <87bmg2oc5r.fsf@evledraar.gmail.com>
+        id S1751764AbeCEO3U (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Mar 2018 09:29:20 -0500
+Received: from mout.gmx.net ([212.227.17.22]:39367 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751389AbeCEO3T (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Mar 2018 09:29:19 -0500
+Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LfC4q-1eM1O125Rg-00okCK; Mon, 05
+ Mar 2018 15:29:17 +0100
+Date:   Mon, 5 Mar 2018 15:29:16 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+To:     Larry Hunter <larhun.it@gmail.com>
+cc:     git@vger.kernel.org
+Subject: Re: [Bug] git log --show-signature print extra carriage return ^M
+In-Reply-To: <CAL+2DvQZ2V9c5Tmn8KCoDOuioOiBsGJspSTVin4qw1oFO2QAwA@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1803051457570.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <CAL+2DvQZ2V9c5Tmn8KCoDOuioOiBsGJspSTVin4qw1oFO2QAwA@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:TSf5qbP/9XNpXPvaQlPSlQzQMDJRs6NF+VrmJXtVS6SrP0zltiz
+ 5l5t8lADfNhssiZ1ZkMjjmmUS48VKizK2cIg84LjKLXPjETHqmbGjsGZ9j9b9S97MXzXLM4
+ tpfZ/LRQdBrxOIVc/Jbjm7v2TaRazskgPB2507C6QE6q7vT/Q7iMWnaWT0uObTb7h/rRj95
+ CD+Vc6l7hMxHyCs7Nsxqw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:NaRzXxFjZfA=:spHGV2TEWSC4opecrMtJhJ
+ +EE+wfqqQf0Z7D5uH6g52zJS3xNU01fKBleIUnzoQPqaHgNH7MSVkavavdCKfDnEOD+F4VW7m
+ CsSMOQTVgRu7/c/owSF8h/JM7+4F2LebnjvFHIRyLZ4mDVcZpR4+WZzvDb6xgor1BQuXpIDeL
+ n/xeqRSS3MpZBO7SbyH0yHsa1OoJNGwVAQpCQfUDPEN/INLPlJkeA7Vq1ZiF9tjJIDN873v6E
+ k+tih1Uva+YSVIRHJkLzrF6yPGCcer4LM0cLcXifVxruB0azozru7swleFXwgTyFqY7rAkHtE
+ BfUGcIVBJ3sBf/769fIoqLUeX/HaLcIEbIwLcJieGjq8kL96oOdZOZ2sCYRbaM4rQE4m0hGNY
+ lQTXlWNgDC+VY08+IJCfsSyASdA38C77vSslN5Ky7lpe4UO2T03tIlUpmWRhq7PJ4DTsKtLwU
+ j/e4LXlrVyvH620p51Wft2yzQRl0PkMd2tzsCyZH8SuatyyJsOSYGg4B1ooob7GrrHagnhIoY
+ ++ckNkc1tjGZ7b1UCkkrgkvnD37wvX/hocNzG25DTFk1oOmjIU6gi9z/GENgJ986cmE9j/SCf
+ 1XEmnowJ7+TrdYhv1SyJNLLx12Qu1iORnkDEYqGCY9OziOlHDMU1oio4arMVRR0KoXq4PeS8a
+ cVwqwVZ60iTt+gQCeF3tguEfcEBOkBF5cRrfYe8sV/0nvRcckokenpOBb9XwT1w3LMdIis8IN
+ 4Idnjwz2miiBsoFZXxh8lcS6nGG7laF9kAy52ikYQzzOuUEPM7He3swkccyCaqTRQnPCCLsme
+ aWMOOQc9h1qkLe3V5tpEx/35AyBwIyUgzgIGk3nmPjSh4aClfmskTf+EbbWWZ6+MoqphsD5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Larry,
 
-On Thu, Mar 01 2018, Nguyễn Thái Ngọc Duy jotted:
+On Sun, 4 Mar 2018, Larry Hunter wrote:
 
-> pack-objects could be a big memory hog especially on large repos,
-> everybody knows that. The suggestion to stick a .keep file on the
-> largest pack to avoid this problem is also known for a long time.
->
-> Let's do the suggestion automatically instead of waiting for people to
-> come to Git mailing list and get the advice. When a certain condition
-> is met, gc --auto create a .keep file temporary before repack is run,
-> then remove it afterward.
->
-> gc --auto does this based on an estimation of pack-objects memory
-> usage and whether that fits in one third of system memory (the
-> assumption here is for desktop environment where there are many other
-> applications running).
->
-> Since the estimation may be inaccurate and that 1/3 threshold is
-> arbitrary, give the user a finer control over this mechanism as well:
-> if the largest pack is larger than gc.bigPackThreshold, it's kept.
+> There is bug using "git log --show-signature" in my installation
+> 
+>     git 2.16.2.windows.1
+>     gpg (GnuPG) 2.2.4
+>     libgcrypt 1.8.2
 
-This is very promising. Saves lots of memory on my ad-hoc testing of
-adding a *.keep file on an in-house repo.
+The gpg.exe shipped in Git for Windows should say something like this:
 
-> +	if (big_pack_threshold)
-> +		return pack->pack_size >= big_pack_threshold;
-> +
-> +	/* First we have to scan through at least one pack */
-> +	mem_want = pack->pack_size + pack->index_size;
-> +	/* then pack-objects needs lots more for book keeping */
-> +	mem_want += sizeof(struct object_entry) * nr_objects;
-> +	/*
-> +	 * internal rev-list --all --objects takes up some memory too,
-> +	 * let's say half of it is for blobs
-> +	 */
-> +	mem_want += sizeof(struct blob) * nr_objects / 2;
-> +	/*
-> +	 * and the other half is for trees (commits and tags are
-> +	 * usually insignificant)
-> +	 */
-> +	mem_want += sizeof(struct tree) * nr_objects / 2;
-> +	/* and then obj_hash[], underestimated in fact */
-> +	mem_want += sizeof(struct object *) * nr_objects;
-> +	/*
-> +	 * read_sha1_file() (either at delta calculation phase, or
-> +	 * writing phase) also fills up the delta base cache
-> +	 */
-> +	mem_want += delta_base_cache_limit;
-> +	/* and of course pack-objects has its own delta cache */
-> +	mem_want += max_delta_cache_size;
+	$ gpg --version
+	gpg (GnuPG) 1.4.22
+	Copyright (C) 2015 Free Software Foundation, Inc.
+	License GPLv3+: GNU GPL version 3 or later
+	<http://gnu.org/licenses/gpl.html>
+	This is free software: you are free to change and redistribute it.
+	There is NO WARRANTY, to the extent permitted by law.
 
-I'm not familiar enough with this part to say, but isn't this assuming a
-lot about the distribution of objects in a way that will cause is not to
-repack in some pathological cases?
+	Home: ~/.gnupg
+	Supported algorithms:
+	Pubkey: RSA, RSA-E, RSA-S, ELG-E, DSA
+	Cipher: IDEA, 3DES, CAST5, BLOWFISH, AES, AES192, AES256, TWOFISH,
+		CAMELLIA128, CAMELLIA192, CAMELLIA256
+	Hash: MD5, SHA1, RIPEMD160, SHA256, SHA384, SHA512, SHA224
+	Compression: Uncompressed, ZIP, ZLIB, BZIP2
 
-Probably worth documenting...
+Therefore, the GNU Privacy Guard version you use is not the one shipped
+and supported by the Git for Windows project.
 
-> +	/* Only allow 1/3 of memory for pack-objects */
-> +	mem_have = total_ram() / 3;
+> that prints (with colors) an extra ^M (carriage return?) at the end of
+> the gpg lines. As an example, the output of "git log --show-signature
+> HEAD" looks like:
+> 
+>     $ git log --show-signature HEAD
+>     commit 46c490188ebd216f20c454ee61108e51b481844e (HEAD -> master)
+>     gpg: Signature made 03/04/18 16:53:06 ora solare Europa occidentale^M
+>     gpg:                using RSA key ...^M
+>     gpg: Good signature from "..." [ultimate]^M
+>     Author: ... <...>
+>     Date:   Sun Mar 4 16:53:06 2018 +0100
+>     ...
+> 
+> To help find a fix, I tested the command "git verify-commit HEAD" that
+> prints (without colors) the same lines without extra ^M characters.
+> 
+>     $ git verify-commit HEAD
+>     gpg: Signature made 03/04/18 16:53:06 ora solare Europa occidentale
+>     gpg:                using RSA key ...
+>     gpg: Good signature from "..." [ultimate]
 
-Would be great to have this be a configurable variable, so you could set
-it to e.g. 33% (like here), 50% etc.
+My guess is that the latter command simply does not go through the pager
+while the former does.
+
+Do you see the ^M in the output of `git -p verify-commit HEAD`?
+
+Ciao,
+Johannes
