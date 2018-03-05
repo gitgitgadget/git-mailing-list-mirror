@@ -7,38 +7,36 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BE0631F404
-	for <e@80x24.org>; Mon,  5 Mar 2018 17:12:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A97351F404
+	for <e@80x24.org>; Mon,  5 Mar 2018 17:12:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752154AbeCERLz (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Mar 2018 12:11:55 -0500
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:59030 "EHLO
+        id S1752526AbeCERMC (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Mar 2018 12:12:02 -0500
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:43278 "EHLO
         mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751590AbeCERLw (ORCPT
+        by vger.kernel.org with ESMTP id S1751779AbeCERLw (ORCPT
         <rfc822;git@vger.kernel.org>); Mon, 5 Mar 2018 12:11:52 -0500
-Received: from pps.filterd (m0131697.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w25H9ate025642;
+Received: from pps.filterd (m0096528.ppops.net [127.0.0.1])
+        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w25H2lTP032286;
         Mon, 5 Mar 2018 09:11:26 -0800
 Authentication-Results: palantir.com;
         spf=softfail smtp.mailfrom=newren@gmail.com
 Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
-        by mx0a-00153501.pphosted.com with ESMTP id 2gftenb07j-1;
+        by mx0a-00153501.pphosted.com with ESMTP id 2gfsfqk1w8-1;
         Mon, 05 Mar 2018 09:11:26 -0800
-Received: from mxw1.palantir.com (new-smtp.yojoe.local [172.19.0.45])
-        by smtp-transport.yojoe.local (Postfix) with ESMTP id 2C62F2215E15;
+Received: from mxw1.palantir.com (smtp.yojoe.local [172.19.0.45])
+        by smtp-transport.yojoe.local (Postfix) with ESMTP id 2252E2215E11;
         Mon,  5 Mar 2018 09:11:26 -0800 (PST)
 Received: from newren2-linux.yojoe.local (newren2-linux.dyn.yojoe.local [10.100.68.32])
-        by smtp.yojoe.local (Postfix) with ESMTP id 22FB92CDEED;
+        by smtp.yojoe.local (Postfix) with ESMTP id 1B51A2CDEA7;
         Mon,  5 Mar 2018 09:11:26 -0800 (PST)
 From:   Elijah Newren <newren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Somebody <somebody@ex.com>, Elijah Newren <newren@gmail.com>
-Subject: [RFC PATCH 1/5] Add testcases for improved file collision conflict handling
-Date:   Mon,  5 Mar 2018 09:11:21 -0800
-Message-Id: <20180305171125.22331-2-newren@gmail.com>
+Subject: [RFC PATCH 0/5] Improve path collision conflict resolutions
+Date:   Mon,  5 Mar 2018 09:11:20 -0800
+Message-Id: <20180305171125.22331-1-newren@gmail.com>
 X-Mailer: git-send-email 2.16.0.41.g6a66043158
-In-Reply-To: <20180305171125.22331-1-newren@gmail.com>
-References: <20180305171125.22331-1-newren@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 X-Proofpoint-SPF-Result: softfail
@@ -49,258 +47,180 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorit
  malwarescore=0 suspectscore=4 phishscore=0 bulkscore=0 spamscore=0
  clxscore=1034 lowpriorityscore=0 mlxscore=0 impostorscore=0
  mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1711220000 definitions=main-1803050200
+ scancount=1 engine=8.0.1-1711220000 definitions=main-1803050199
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Adds testcases dealing with file collisions for the following types of
-conflicts:
+This series improves conflict resolutions for conflict types that involve
+two (possibly entirely unrelated) files colliding at the same path.  Thes=
+e
+conflict types are:
   * add/add
   * rename/add
   * rename/rename(2to1)
-These tests include expectations for proposed smarter behavior which has
-not yet been implemented and thus are currently expected to fail.
-Subsequent commits will correct that and explain the new behavior.
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- t/t6042-merge-rename-corner-cases.sh | 220 +++++++++++++++++++++++++++++=
-++++++
- 1 file changed, 220 insertions(+)
+Improving these conflict types has some subtle (though significant)
+performance ramifications, but for now, I am just concentrating on
+providing the user with better information for their conflict resolution.
+Performance considerations will be addressed in a future patch series.
 
-diff --git a/t/t6042-merge-rename-corner-cases.sh b/t/t6042-merge-rename-=
-corner-cases.sh
-index 411550d2b6..a6c151ef95 100755
---- a/t/t6042-merge-rename-corner-cases.sh
-+++ b/t/t6042-merge-rename-corner-cases.sh
-@@ -575,4 +575,224 @@ test_expect_success 'rename/rename/add-dest merge s=
-till knows about conflicting
- 	test ! -f c
- '
-=20
-+test_conflicts_with_adds_and_renames() {
-+	test $1 !=3D 0 && side1=3Drename || side1=3Dadd
-+	test $2 !=3D 0 && side2=3Drename || side2=3Dadd
-+
-+	# Setup:
-+	#          L
-+	#         / \
-+	#   master   ?
-+	#         \ /
-+	#          R
-+	#
-+	# Where:
-+	#   Both L and R have files named 'three-unrelated' and
-+	#   'three-related' which collide (i.e. 4 files colliding at two
-+	#   pathnames).  Each of the colliding files could have been
-+	#   involved in a rename, in which case there was a file named
-+	#   'one-[un]related' or 'two-[un]related' that was modified on the
-+	#   opposite side of history and renamed into the collision on this
-+	#   side of history.
-+	#
-+	# Questions for both sets of collisions:
-+	#   1) The index should contain both a stage 2 and stage 3 entry
-+	#      for the colliding file.  Does it?
-+	#   2) When renames are involved, the content merges are clean, so
-+	#      the index should reflect the content merges, not merely the
-+	#      version of the colliding file from the prior commit.  Does
-+	#      it?
-+	#
-+	# Questions for three-unrelated:
-+	#   3) There should be files in the worktree named
-+	#      'three-unrelated~HEAD' and 'three-unrelated~R^0' with the
-+	#      (content-merged) version of 'three-unrelated' from the
-+	#      appropriate side of the merge.  Are they present?
-+	#   4) There should be no file named 'three-unrelated' in the
-+	#      working tree.  That'd make it too likely that users would
-+	#      use it instead of carefully looking at both
-+	#      three-unrelated~HEAD and three-unrelated~R^0.  Is it
-+	#      correctly missing?
-+	#
-+	# Questions for three-related:
-+	#   3) There should be a file in the worktree named three-related
-+	#      containing the two-way merged contents of the content-merged
-+	#      versions of three-related from each of the two colliding
-+	#      files.  Is it present?
-+	#   4) There should not be any three-related~* files in the working
-+	#      tree.
-+	test_expect_success "setup simple $side1/$side2 conflict" '
-+		test_create_repo simple_${side1}_${side2} &&
-+		(
-+			cd simple_${side1}_${side2} &&
-+
-+			# Create a simple file with 10 lines
-+			ten=3D"0 1 2 3 4 5 6 7 8 9" &&
-+			for i in $ten
-+			do
-+				echo line $i in a sample file
-+			done >unrelated1_v1 &&
-+			# Create a 2nd version of same file with one more line
-+			cat unrelated1_v1 >unrelated1_v2 &&
-+			echo another line >>unrelated1_v2 &&
-+
-+			# Create an unrelated simple file with 10 lines
-+			for i in $ten
-+			do
-+				echo line $i in another sample file
-+			done >unrelated2_v1 &&
-+			# Create a 2nd version of same file with one more line
-+			cat unrelated2_v1 >unrelated2_v2 &&
-+			echo another line >>unrelated2_v2 &&
-+
-+			# Create some related files now
-+			for i in $ten
-+			do
-+				echo Random base content line $i
-+			done >related1_v1 &&
-+			cp -a related1_v1 related1_v2 &&
-+			echo modification >>related1_v2 &&
-+
-+			cp -a related1_v1 related2_v1 &&
-+			echo more stuff >>related2_v1 &&
-+			cp -a related2_v1 related2_v2 &&
-+			echo yet more stuff >>related2_v2 &&
-+
-+			# Use a tag to record both these files for simple
-+			# access, and clean out these untracked files
-+			git tag unrelated1_v1 `git hash-object -w unrelated1_v1` &&
-+			git tag unrelated1_v2 `git hash-object -w unrelated1_v2` &&
-+			git tag unrelated2_v1 `git hash-object -w unrelated2_v1` &&
-+			git tag unrelated2_v2 `git hash-object -w unrelated2_v2` &&
-+			git tag related1_v1 `git hash-object -w related1_v1` &&
-+			git tag related1_v2 `git hash-object -w related1_v2` &&
-+			git tag related2_v1 `git hash-object -w related2_v1` &&
-+			git tag related2_v2 `git hash-object -w related2_v2` &&
-+			git clean -f &&
-+
-+			# Setup merge-base, consisting of files named "one-*"
-+			# and "two-*" if renames were involved.
-+			touch irrelevant_file &&
-+			git add irrelevant_file &&
-+			if [ $side1 =3D=3D "rename" ]; then
-+				git show unrelated1_v1 >one-unrelated &&
-+				git add one-unrelated
-+				git show related1_v1 >one-related &&
-+				git add one-related
-+			fi &&
-+			if [ $side2 =3D=3D "rename" ]; then
-+				git show unrelated2_v1 >two-unrelated &&
-+				git add two-unrelated
-+				git show related2_v1 >two-related &&
-+				git add two-related
-+			fi &&
-+			test_tick && git commit -m initial &&
-+
-+			git branch L &&
-+			git branch R &&
-+
-+			# Handle the left side
-+			git checkout L &&
-+			if [ $side1 =3D=3D "rename" ]; then
-+				git mv one-unrelated three-unrelated
-+				git mv one-related   three-related
-+			else
-+				git show unrelated1_v2 >three-unrelated &&
-+				git add three-unrelated
-+				git show related1_v2 >three-related &&
-+				git add three-related
-+			fi &&
-+			if [ $side2 =3D=3D "rename" ]; then
-+				git show unrelated2_v2 >two-unrelated &&
-+				git add two-unrelated
-+				git show related2_v2 >two-related &&
-+				git add two-related
-+			fi &&
-+			test_tick && git commit -m L &&
-+
-+			# Handle the right side
-+			git checkout R &&
-+			if [ $side1 =3D=3D "rename" ]; then
-+				git show unrelated1_v2 >one-unrelated &&
-+				git add one-unrelated
-+				git show related1_v2 >one-related &&
-+				git add one-related
-+			fi &&
-+			if [ $side2 =3D=3D "rename" ]; then
-+				git mv two-unrelated three-unrelated
-+				git mv two-related three-related
-+			else
-+				git show unrelated2_v2 >three-unrelated &&
-+				git add three-unrelated
-+				git show related2_v2 >three-related &&
-+				git add three-related
-+			fi &&
-+			test_tick && git commit -m R
-+		)
-+	'
-+
-+	test_expect_failure "check simple $side1/$side2 conflict" '
-+		(
-+			cd simple_${side1}_${side2} &&
-+
-+			git checkout L^0 &&
-+
-+			# Merge must fail; there is a conflict
-+			test_must_fail git merge -s recursive R^0 &&
-+
-+			# Make sure the index has the right number of entries
-+			git ls-files -s >out &&
-+			test_line_count =3D 5 out &&
-+			git ls-files -u >out &&
-+			test_line_count =3D 4 out &&
-+
-+			# Nothing should have touched irrelevant_file
-+			git rev-parse >actual \
-+				:0:irrelevant_file \
-+				:2:three-unrelated :3:three-unrelated \
-+				:2:three-related   :3:three-related   &&
-+			git rev-parse >expected \
-+				master:irrelevant_file \
-+				unrelated1_v2      unrelated2_v2 \
-+				related1_v2        related2_v2   &&
-+
-+			# Ensure we have the correct number of untracked files
-+			git ls-files -o >out &&
-+			test_line_count =3D 5 out &&
-+
-+			# Make sure each file (with merging if rename
-+			# involved) is present in the working tree for the
-+			# user to work with.
-+			git hash-object >actual \
-+				three-unrelated~HEAD three-unrelated~R^0 &&
-+			git rev-parse >expected \
-+				unrelated1_v2        unrelated2_v2 &&
-+
-+			# "three-unrelated" should not exist because there is
-+			# no reason to give preference to either
-+			# three-unrelated~HEAD or three-unrelated~R^0
-+			test_path_is_missing three-unrelated &&
-+
-+			# Make sure we have the correct merged contents for
-+			# three-related
-+			git show related1_v1 >expected &&
-+			cat <<EOF >>expected &&
-+<<<<<<< HEAD
-+modification
-+=3D=3D=3D=3D=3D=3D=3D
-+more stuff
-+yet more stuff
-+>>>>>>> R^0
-+EOF
-+
-+			test_cmp expected three-related
-+		)
-+	'
-+}
-+
-+test_conflicts_with_adds_and_renames 1 1
-+test_conflicts_with_adds_and_renames 1 0
-+test_conflicts_with_adds_and_renames 0 1
-+test_conflicts_with_adds_and_renames 0 0
-+
- test_done
+Before mentioning the improvements, it may be worth noting that these thr=
+ee
+types are actually more similar than might at first be apparent: for the
+cases involving renames, any trace of the rename-source path is deleted
+from both the index and the working copy (modulo a small technicality
+mentioned in patch 2), leaving just the question of how to represent two
+colliding files in both the index and the working copy for all three case=
+s.
+
+There are three important changes this patch series introduces:
+
+  1) Consolidating the code for these three types of conflict resolutions
+     into a single function that all three code paths can call.
+
+  2) Doing content merges for a rename before looking at the path collisi=
+on
+     between a rename and some other file.  In particular (in what I most
+     suspect others might have an objection to from this series), record
+     that content-merged file -- which may have conflict markers -- in th=
+e
+     index at the appropriate higher stage.
+
+  3) Smarter behavior for recording the conflict in the working tree: fir=
+st
+     checking whether the two colliding files are similar, and then based
+     on that, deciding whether to handle the path collision via a two-way
+     merge of the different files or to instead record the two different
+     files at separate temporary paths.
+
+In more detail:
+
+1)
+
+The consolidation seems fairly self-explanatory, but it had a bigger effe=
+ct
+than you'd expect: it made it clear that the rename/add conflict resoluti=
+on
+is broken in multiple ways, and it also made it easier to reason about wh=
+at
+_should_ be done for rename/add conflicts (something I had struggled with
+when I looked at that particular conflict type in the past).  See patch 3
+for more details.
+
+Sidenote: I was kind of surprised that rename/add could have been broken
+for this long, unnoticed.  Does no one ever hit that conflict in real lif=
+e?
+It looks like we did not have very good test coverage for rename/add
+conflicts; a brief search seems to show that we only had a few testcases
+triggering that conflict type, and all of them were added by me.  Patch 1
+tries to address the testcase problem by adding some tests that try to
+check the index and working copy more strictly for all three conflict
+types.
+
+2)
+
+Previously, rename/rename(2to1) conflict resolution for the colliding pat=
+h
+would just accept the index changes made by unpack_trees(), meaning that
+each of the higher order stages in the index for the path collision would
+implicitly ignore any changes to each renamed file from the other side of
+history.  Since, as noted above, all traces of the rename-source path wer=
+e
+removed from both the index and the working tree, this meant that the ind=
+ex
+was missing information about changes to such files.  If the user tried t=
+o
+resolve the conflict using the index rather than the working copy, they
+would end up with a silent loss of changes.
+
+I "fixed" this by doing the three-way content merge for each renamed-file=
+,
+and then recorded THAT in the index at either stage 2 or 3 as appropriate=
+.
+Since that merge might have conflict markers, that could mean recording i=
+n
+the index a file with conflict markers as though it were a given side.
+(See patch 2 for a more detailed explanation.)  I figure this might be th=
+e
+most controversial change I made.  I can think of a few alternatives, but=
+ I
+liked all of them less.  Opinions?
+
+This change did not require any significant changes to the testsuite; the
+difference between the old and new behavior was essentially untested.
+
+(rename/add was even worse: not recording _any_ higher order stages in th=
+e
+index, and thus partially hiding the fact that the path was involved in a
+conflict at all.)
+
+3)
+
+Given the similarity between the conflict types, the big question for
+handling the conflict in the working tree was whether the two colliding
+files should be two-way merged and recorded in place (as add/add does,
+which seems to be preferable if the two files are similar), or whether th=
+e
+two files should be recorded into separate files (as rename/add and
+rename/rename(2to1) do, which seems to be preferable if the two files are
+dissimilar).  The code handling the different types of conflicts appear t=
+o
+have been written with different assumptions about whether the colliding
+files would be similar.
+
+But, rather than make an assumption about whether the two files will be
+similar, why not just check and then make the best choice based on that?
+Thus, this code makes use of estimate_similarity(), and uses that to deci=
+de
+whether to do a two-way content merge or writing unrelated files out to
+differently named temporary files.
+
+This logical change did require changing one to two dozen testcases in th=
+e
+testsuite; I think this is more logical behavior and that the testcases
+were toy examples utilized to test other things, but maybe someone else h=
+as
+an argument for why add/add conflicts should always be two-way merged
+regardless of file dissimilarity?
+
+
+Other notes:
+
+This series builds on en/rename-directory-detection; there are too many
+conflicts to resolve if I tried to just base on master.
+
+
+Elijah Newren (5):
+  Add testcases for improved file collision conflict handling
+  merge-recursive: new function for better colliding conflict
+    resolutions
+  merge-recursive: fix rename/add conflict handling
+  merge-recursive: improve handling for rename/rename(2to1) conflicts
+  merge-recursive: improve handling for add/add conflicts
+
+ diff.h                               |   4 +
+ diffcore-rename.c                    |   6 +-
+ merge-recursive.c                    | 383 +++++++++++++++++++++++------=
+------
+ t/t2023-checkout-m.sh                |   2 +-
+ t/t3418-rebase-continue.sh           |  27 ++-
+ t/t3504-cherry-pick-rerere.sh        |  19 +-
+ t/t4200-rerere.sh                    |  12 +-
+ t/t6020-merge-df.sh                  |   4 +-
+ t/t6024-recursive-merge.sh           |  35 ++--
+ t/t6025-merge-symlinks.sh            |   9 +-
+ t/t6031-merge-filemode.sh            |   4 +-
+ t/t6036-recursive-corner-cases.sh    |  19 +-
+ t/t6042-merge-rename-corner-cases.sh | 212 ++++++++++++++++++-
+ t/t6043-merge-rename-directories.sh  |  15 +-
+ t/t7060-wtstatus.sh                  |   1 +
+ t/t7064-wtstatus-pv2.sh              |   4 +-
+ t/t7506-status-submodule.sh          |  11 +-
+ t/t7610-mergetool.sh                 |  28 +--
+ 18 files changed, 588 insertions(+), 207 deletions(-)
+
 --=20
-2.16.0.41.g6a66043158
+2.16.0.41.g7fdc8a0834
 
