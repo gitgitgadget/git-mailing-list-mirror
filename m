@@ -7,71 +7,130 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8169B1F404
-	for <e@80x24.org>; Mon,  5 Mar 2018 12:32:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E076D1F404
+	for <e@80x24.org>; Mon,  5 Mar 2018 12:49:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933902AbeCEMcY (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Mar 2018 07:32:24 -0500
-Received: from mail-vk0-f44.google.com ([209.85.213.44]:42035 "EHLO
-        mail-vk0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933540AbeCEMcX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Mar 2018 07:32:23 -0500
-Received: by mail-vk0-f44.google.com with SMTP id y127so9640894vky.9
-        for <git@vger.kernel.org>; Mon, 05 Mar 2018 04:32:23 -0800 (PST)
+        id S934958AbeCEMtC (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Mar 2018 07:49:02 -0500
+Received: from mail-wm0-f52.google.com ([74.125.82.52]:50181 "EHLO
+        mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934287AbeCEMs5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Mar 2018 07:48:57 -0500
+Received: by mail-wm0-f52.google.com with SMTP id w128so15621097wmw.0
+        for <git@vger.kernel.org>; Mon, 05 Mar 2018 04:48:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=3Sw+AY40Mx2oVRrEk36GSrYn1pHHkoeamOLzFnZTyC8=;
-        b=b0ZNUJHui0Jmaj65k3yM64Lv29DIrBUICsZ6JNrkkZdvbBkOi5n7sWj7tdebQo2T6g
-         n8rkrkzbcpoi/IIWXntENUzuLpklImRZ9m2srJjtgO57l8vZBpLHqHxQuBXfWYB9tSkF
-         qmwlm3nVMQQiPdY4tt7A6vEfEWmPwKVfDrQQFpsMAUqLK4AkZLRDK/pS0H39X8TQWoTQ
-         AzTNdju2d3adPjE2mEME8C36rhh+nh1tM0GxwYJf6KfaUS0lFRAy0/WqnAfSHEyHAe4m
-         akCAowM9OD4RauhZZM5RPX8JUAD5YDkJqtSE2sQy1kByAM6FavqEVGylyNxhOs2V/G75
-         ldhA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=hc/tyxzHglcAbQiP9pOM4ShsmryEOgH+risdZeiaxmg=;
+        b=gIXXL7YEaU99qJPfsSMSYX0lgw3jmYUnM+jTCwZ79wmtiTFnT1aUW599leqvwbHaWg
+         gaQSiUEUgaxcDFGBVun7RCPfGdfkEXEvDVqsap9x1EXjHtmZxF297B04yPy0vhK/kC8K
+         jYbP0UHnsxsouACYsjq9I+ZR78dxWDjyL1JSJK8/bJHNn+qUjcrkNLUGz1D6tMNF4Ubh
+         u/7A/oyev/Pfq2vsJ+ycl8TDNhhOiw5AkRRyMOxHff5XsfvF4Bkd0F1QlBmo+mEnmXSM
+         f4m8Igh1jno0TfYeYK5JuzRgO9QvYufe0fGiazLwezagMGHbP7mmTttd2qTjQNcAqXbP
+         ifwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=3Sw+AY40Mx2oVRrEk36GSrYn1pHHkoeamOLzFnZTyC8=;
-        b=nlCd/d573/r1Bn2qaW/DHUdO8b0exFZxvttGv2LvsAhl6WfaTZjoYqOG8dUc2OPdUG
-         sZXvZQKMobfO96osI/NIg73TcYtGp1hgqRpzXoagC/8672sEMVrFN8I5qNJwoIi+R2yk
-         loRfX+cjG+KIy2+qCz3S69QP8rw1LCy+2H7HjHOlSwdTk7fZopE/bK7YtrF3Cv5+9bTL
-         e3CaznY8xXg/dxAOJc/iVPdyPOpxjuY5ux/2RsNMX8G3l+8xSu9p7piK6gYVouoFinVI
-         asVfCFTMX7/3UXpkvpm8n4oMfM1GLqXMW2yee8VbpX1HWDaqIUffkEYGBkzD03e673yR
-         XjFw==
-X-Gm-Message-State: APf1xPD5YeUTjycUNyEiXZekvbEmBazDUVG2I2yZ70Z0JMDXartP8Pb3
-        YjwY2YDYBhtQPx676O0VCOTGhiK4Dvz4DQgF6cs=
-X-Google-Smtp-Source: AG47ELuI2BvmQhchOcVCHW4MCPxsNtCHlR5JB/T3Mac1w3Iw7QMZBN4yCYAX0jt9g9VHIb4OgOtIHGZbizRw0DfsZ3s=
-X-Received: by 10.31.51.73 with SMTP id z70mr9646454vkz.2.1520253142729; Mon,
- 05 Mar 2018 04:32:22 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=hc/tyxzHglcAbQiP9pOM4ShsmryEOgH+risdZeiaxmg=;
+        b=NwmnusUcM0TXcdJYNYCH/XHjRjq3zU+H5CkV+jOyFgadO0ijxvpFkpLOj0OKl6Fj61
+         qr6vjmZaFer0AFPJkFdH7X9PoYNQeWqrQgpi1ZDOFIO6V/OubtthEFTSMP9OcxS5seGs
+         N8yXM4mNWvsXdtuQz/1DF4Qd64tw6hxGk7vp4jg4xbRRt2FdixGgemSR1M3bBpQzE8mS
+         1DVCCX08NIm5RPW5LjfVeTPk7iMZkr+tJCAHvbALWoHqcSM+vnj+oKMd3b8YXlhVx9oP
+         Gj2F1L0q4Z/8p9zGcwZD8M/gcaHZkDVi937KDfyKu/sr+gymMU9ZF/y2XjUrDzWCEx4t
+         yq3Q==
+X-Gm-Message-State: AElRT7GZk+7j98Jd/lYDdLkm1l9PqfuM+/gNTBcnS9KxN+fUTocf+gwH
+        0uuHR40z4sk6vS0eeHyy1lc=
+X-Google-Smtp-Source: AG47ELsPgpp+j7hhMUphvBquRbwmJJgoMQRJrpJ+56oa5oIzRtKHhX0aKjwxo9yCVGva4bKg0UXBOA==
+X-Received: by 10.28.69.93 with SMTP id s90mr8109886wma.29.1520254136117;
+        Mon, 05 Mar 2018 04:48:56 -0800 (PST)
+Received: from localhost.localdomain (x4db272cf.dyn.telefonica.de. [77.178.114.207])
+        by smtp.gmail.com with ESMTPSA id q77sm8267170wme.41.2018.03.05.04.48.54
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 05 Mar 2018 04:48:55 -0800 (PST)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org, Duy Nguyen <pclouds@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] t2028: fix minor error and issues in newly-added "worktree move" tests
+Date:   Mon,  5 Mar 2018 13:48:48 +0100
+Message-Id: <20180305124848.7272-1-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.16.2.512.g74dde89aed
+In-Reply-To: <20180304052647.26614-1-sunshine@sunshineco.com>
+References: <20180212094940.23834-1-pclouds@gmail.com> <20180304052647.26614-1-sunshine@sunshineco.com>
 MIME-Version: 1.0
-Received: by 10.159.59.233 with HTTP; Mon, 5 Mar 2018 04:32:22 -0800 (PST)
-In-Reply-To: <bb6be000-7a62-7ad5-0b59-90a75fd6dca9@talktalk.net>
-References: <20180213104408.9887-1-phillip.wood@talktalk.net>
- <20180301105103.24268-1-phillip.wood@talktalk.net> <20180301105103.24268-5-phillip.wood@talktalk.net>
- <20180302155528.12106-1-szeder.dev@gmail.com> <xmqqa7vqe9xn.fsf@gitster-ct.c.googlers.com>
- <bb6be000-7a62-7ad5-0b59-90a75fd6dca9@talktalk.net>
-From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Date:   Mon, 5 Mar 2018 13:32:22 +0100
-Message-ID: <CAM0VKjkNqMrQKXh4KgtvhSzdENDoDOQwGqxLtsYhbm3SMnPLRw@mail.gmail.com>
-Subject: Re: [PATCH v4 4/9] t3701: don't hard code sha1 hash values
-To:     Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        "Brian M. Carlson" <sandals@crustytoothpaste.net>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 5, 2018 at 11:59 AM, Phillip Wood <phillip.wood@talktalk.net> wrote:
-> I did wonder about putting this function in a library when I first wrote
-> it but decided to wait and see if it is useful instead. As Junio points
-> out it would need to be improved to act as a generic filter, so I'll
-> take the easy option and leave it where it is at the moment.
+> Recently-added "git worktree move" tests include a minor error and a few
+> small issues. Specifically:
+> 
+> * checking non-existence of wrong file ("source" instead of
+>   "destination")
+> 
+> * unneeded redirect (">empty")
+> 
+> * unused variable ("toplevel")
+> 
+> * restoring a worktree location by means of a separate test somewhat
+>   distant from the test which moved it rather than using
+>   test_when_finished() to restore it in a self-contained fashion
 
-Makes sense.  I just pointed it out, because I could have used it
-already in its current form for a test I was working on last week.
+There is one more issue in these tests.
+ 
+
+> diff --git a/t/t2028-worktree-move.sh b/t/t2028-worktree-move.sh
+> index 082368d8c6..d70d13dabe 100755
+> --- a/t/t2028-worktree-move.sh
+> +++ b/t/t2028-worktree-move.sh
+> @@ -75,7 +75,7 @@ test_expect_success 'move worktree' '
+>  	git worktree move source destination &&
+>  	test_path_is_missing source &&
+>  	git worktree list --porcelain | grep "^worktree.*/destination" &&
+> -	! git worktree list --porcelain | grep "^worktree.*/source" >empty &&
+> +	! git worktree list --porcelain | grep "^worktree.*/source" &&
+
+The main purpose of this test script is to test the 'git worktree'
+command, but these pipes hide its exit code.
+Could you please save 'git worktree's output into an intermediate
+file, and run 'grep' on the file's contents?
+
+This also applies to two other tests in this test script.
+
+>  	git -C destination log --format=%s >actual2 &&
+>  	echo init >expected2 &&
+>  	test_cmp expected2 actual2
+> @@ -86,10 +86,10 @@ test_expect_success 'move main worktree' '
+>  '
+>  
+>  test_expect_success 'move worktree to another dir' '
+> -	toplevel="$(pwd)" &&
+>  	mkdir some-dir &&
+>  	git worktree move destination some-dir &&
+> -	test_path_is_missing source &&
+> +	test_when_finished "git worktree move some-dir/destination destination" &&
+> +	test_path_is_missing destination &&
+>  	git worktree list --porcelain | grep "^worktree.*/some-dir/destination" &&
+>  	git -C some-dir/destination log --format=%s >actual2 &&
+>  	echo init >expected2 &&
+> @@ -100,10 +100,6 @@ test_expect_success 'remove main worktree' '
+>  	test_must_fail git worktree remove .
+>  '
+>  
+> -test_expect_success 'move some-dir/destination back' '
+> -	git worktree move some-dir/destination destination
+> -'
+> -
+>  test_expect_success 'remove locked worktree' '
+>  	git worktree lock destination &&
+>  	test_when_finished "git worktree unlock destination" &&
+> -- 
+> 2.16.2.660.g709887971b
+> 
+> 
