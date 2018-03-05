@@ -3,105 +3,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 627731F404
-	for <e@80x24.org>; Mon,  5 Mar 2018 21:18:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 782AF1F404
+	for <e@80x24.org>; Mon,  5 Mar 2018 21:19:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752719AbeCEVSg (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Mar 2018 16:18:36 -0500
-Received: from mail-ua0-f193.google.com ([209.85.217.193]:35042 "EHLO
-        mail-ua0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752063AbeCEVSf (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Mar 2018 16:18:35 -0500
-Received: by mail-ua0-f193.google.com with SMTP id c40so3010904uae.2
-        for <git@vger.kernel.org>; Mon, 05 Mar 2018 13:18:35 -0800 (PST)
+        id S1753028AbeCEVTP (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Mar 2018 16:19:15 -0500
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:38670 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752953AbeCEVTO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Mar 2018 16:19:14 -0500
+Received: by mail-wm0-f65.google.com with SMTP id z9so18271874wmb.3
+        for <git@vger.kernel.org>; Mon, 05 Mar 2018 13:19:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=QiYNW+U8RueSCym2IHk6hQY4o96mrxmDa7ZkS/ntl5U=;
-        b=UoSuDwhky030y1wfe69dU6kZMDiSmfau3EvEBZBwy4S23uOOeR1+Iczkt9yv4yDx8O
-         HtO4kPB36ZB2oA8nZgt0FqMSx7bclWluyfaViyn68CauoIflUpJXeaGl35xJyrFvJsH+
-         TxG0px/bq23W2DsJvmgfG12PKoNH/yGvjcaCWt+xvToiN85pPqW6KsQrVIBxTyufIioV
-         ZEI1CCznjY8u32wkzkBYh+VaG5SyKKmIUFwaZPgS65MFuToT3ymzTcDCHQhjdBPYRM4e
-         OxKZ0gFJg6PHPlCTcVMmkUmDW1VxZbkLDhp4G/c5w+Ch8+X/o5rTvD8W6B4CWlkjSBRa
-         x//A==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=Va+B03UZK5GnBDh/e2ovL03Qo19D80UXuwLkkZqpwq0=;
+        b=nS/t6eepIJw6wKFZnzXWpifEvhcsGl/eG111zcXJaYl9yGZXsYRX7liZbekfTCG8rT
+         milTnpGwit/9MB9gk1IBuzvgPdIA0l+IGGkwkFmgc9Npu+LuEGTOljh39ZMndBWXKcMJ
+         WrjqLqaCtOiOWTmzVZAey4KmHmGTcrstvFbC76kGNuQKuB9rZPlDGhVpXK5s16xSLgUE
+         eXprWkUscyza29659ANR60bWOXnF6u2Od/457ltT/YBMEarXqgdohGLgW68S2BmMNn3r
+         OJfkeldqSZiKuKwJ4iCZeja88Igq6sLSMym0a5F1eNzdYflci5qULHe/acs0FvSRdDie
+         9gEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=QiYNW+U8RueSCym2IHk6hQY4o96mrxmDa7ZkS/ntl5U=;
-        b=oO6Xtbeh8dwF2Ey1163kU/3ryNISaMP0i9PivfWPyCLGj4tS+vgVeJHNEWCBLrFmNn
-         tDnecPaOD7wcydHBwPsBhHxAcL/Sci/KZcYZinxy4irKZGJTc8GfhBZoGfgh4VHX1yDC
-         GeuICwTv3hdP3e7uMSLN5bo/HRi5VtcSUYUfxhWzBNTQHlKko74QrwKdMkHc4N9/Etw3
-         CHSyAxIOgADKcRZf8OJ5qh+/P/UQB0m+ayke+W/Ldu85sCI656/+XygjfuF/zuP7NsXO
-         6YgQlaqSzn6xHFJOOtoYnnbDjY/cJGGZv2enocENv8A2Ir80bq+gZ5QhP4+snj0SQ7pL
-         2vJA==
-X-Gm-Message-State: APf1xPAxxAfUei9umYJgQI+x9z+BOu13vvU9z6zEfHElOi1SJlX8qcrF
-        g959L0oq5r8IExUWUXvxwuZFI33m8CY269N/TmQ=
-X-Google-Smtp-Source: AG47ELsLEW+i5a5coJdUfkaUMda1z33X/BiGPHCikIMoeVXpOx5ydVJr2ECLE7sEYsKSqcHoa+uoUHjeT3FoBvp2moY=
-X-Received: by 10.176.69.204 with SMTP id u70mr11757693uau.39.1520284714912;
- Mon, 05 Mar 2018 13:18:34 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.159.59.233 with HTTP; Mon, 5 Mar 2018 13:18:34 -0800 (PST)
-In-Reply-To: <20180303071259.GB17312@sigill.intra.peff.net>
-References: <20180223233951.11154-1-szeder.dev@gmail.com> <20180303071259.GB17312@sigill.intra.peff.net>
-From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Date:   Mon, 5 Mar 2018 22:18:34 +0100
-Message-ID: <CAM0VKjmaL16M87SVt9xh3nrHBT49Gygr7=9RqvfxA6E9D6OzmA@mail.gmail.com>
-Subject: Re: [PATCH 00/11] Make the test suite pass with '-x' and /bin/sh
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=Va+B03UZK5GnBDh/e2ovL03Qo19D80UXuwLkkZqpwq0=;
+        b=bN/hgC1/V+Ch7+amIuXNeHEhr4IJH0E64uJR/fbYwHUjYJQIUNNaEZVmJk/rkvV6qp
+         HYfBhrOqs3mD/JbVvwFQ5lzcg6UI/yHl7osJgis5tg0RJQ2XflFSZQjpSZtBjUKU91mM
+         6Lu/DvC0l2kkNAwHlGFGNrta+tAeckbGppYhttKjnK+RV8NXMW/yQQwmVoS0e8p/UwO8
+         H1+Rh5HtHCezS2DwscIdgiqmepRtU9o48zg2d4YHrWc9fDIvTX/MibRSGFLA5jUopUYk
+         yJx9sNwbeSGqxTi7qygYMGd5yerJrX/0CYcnCLtFDgs4srOjdow2c/hNCMph929gyoNR
+         hrjA==
+X-Gm-Message-State: AElRT7H3dVBfwB23qjxliCowCP4B8NSk12LEizY9JUASqxAF+rRWPacr
+        G7d2fblDmcOgd/oZp2WT3/E=
+X-Google-Smtp-Source: AG47ELvUkFA6IED4+9XzoN4m4DDC/UXLpiQiVzOlyboEiZSrVp69avl15GlsX8t4SVwKkR2wym7k9w==
+X-Received: by 10.28.136.18 with SMTP id k18mr10079220wmd.111.1520284753306;
+        Mon, 05 Mar 2018 13:19:13 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id u22sm13523102wrf.86.2018.03.05.13.19.12
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 05 Mar 2018 13:19:12 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
-Cc:     Git mailing list <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Cc:     git@vger.kernel.org, Damien =?utf-8?Q?Mari=C3=A9?= <damien@dam.io>
+Subject: Re: [PATCH v3] run-command: add hint when a hook is ignored
+References: <xmqqh8vcx1nh.fsf@gitster.mtv.corp.google.com>
+        <0102015ef0ba0273-ed29c030-7cdc-4535-a411-6cc443bd5f43-000000@eu-west-1.amazonses.com>
+        <xmqqy3ojpr9f.fsf@gitster.mtv.corp.google.com>
+        <xmqqmv4ymc7w.fsf@gitster.mtv.corp.google.com>
+        <20180103083145.GA7049@sigill.intra.peff.net>
+        <xmqqk1wwcd2w.fsf@gitster.mtv.corp.google.com>
+        <20180303071613.GC17312@sigill.intra.peff.net>
+Date:   Mon, 05 Mar 2018 13:19:12 -0800
+In-Reply-To: <20180303071613.GC17312@sigill.intra.peff.net> (Jeff King's
+        message of "Sat, 3 Mar 2018 02:16:13 -0500")
+Message-ID: <xmqqo9k28blb.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Mar 3, 2018 at 8:12 AM, Jeff King <peff@peff.net> wrote:
-> On Sat, Feb 24, 2018 at 12:39:40AM +0100, SZEDER G=C3=A1bor wrote:
+Jeff King <peff@peff.net> writes:
+
+>> True.  The user could tell the server operator to rename them or
+>> remove them because they are not doing anything useful, but then
+>> as long as everybody knows they are not doing anything, it is OK
+>> to leave that sleeping dog lie, as they are not doing anything
+>> harmful anyway.
+>> 
+>> That brings us one step further back to question if the hints are
+>> useful in the first place, though ;-).
 >
->> The first patch is the most important: with a couple of well-placed file
->> descriptor redirections it ensures that the stderr of the test helper
->> functions running git commands only contain the stderr of the tested
->> command, thereby resolving over 90% of the failures resulting from
->> running the test suite with '-x' and /bin/sh.
->
-> I dunno. It seems like this requires a lot of caveats for people using
-> subshells and shell functions, and I suspect it's going to be an
-> on-going maintenance burden.
+> Yes, that last paragraph definitely crossed my mind. Do we have an
+> opinion on doing anything here? (E.g., declaring the hints not worth the
+> trouble and reverting them versus just living with it)?
 
-After finally figuring out the redirections in the first patch, I was
-quite surprised by how few failing tests remained.  We only gathered 28
-such tests over all these years; if it continues at this rate, that
-probably won't be that much of a burden.  And the second patch provides
-an escape hatch, should it ever be needed.
-
-The current situation, however, is a burden much more frequently,
-because the idiosyncrasies of TEST_SHELL_PATH and/or '--verbose-log' pop
-up whenever trying to run any test script with '-x' that has such a test
-in it.
-
-I think this is the right tradeoff.
-
-> That said, I'm not opposed if you want to do the work to try to get the
-> whole test-suite clean, and we can see how it goes from there. It
-> shouldn't be hurting anything, I don't think, aside from some
-> mysterious-looking redirects (but your commit messages seem to explain
-> it, so anybody can dig).
->
-> Does it make descriptor 7 magical, and something that scripts should
-> avoid touching? That would mean we have 2 magical descriptors now.
-
-Tests can still use fd 7 as long as they don't intend to attach it
-directly to that particular git command that is run inside one of these
-test helper functions.
-
-I settled on fd 7 because that fd is already used as stderr for the
-'test_pause' and 'debug' helper functions and it isn't used in any of
-our tests.
+I am tempted to declare that the "hints" was not a good idea and
+suggest reverting them.
