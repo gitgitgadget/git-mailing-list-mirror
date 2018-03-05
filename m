@@ -2,99 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-1.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 341DB1F404
-	for <e@80x24.org>; Mon,  5 Mar 2018 19:14:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C94DC1F404
+	for <e@80x24.org>; Mon,  5 Mar 2018 19:35:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932538AbeCETOA (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Mar 2018 14:14:00 -0500
-Received: from mail-wr0-f169.google.com ([209.85.128.169]:37875 "EHLO
-        mail-wr0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932182AbeCETN5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Mar 2018 14:13:57 -0500
-Received: by mail-wr0-f169.google.com with SMTP id z12so18463891wrg.4
-        for <git@vger.kernel.org>; Mon, 05 Mar 2018 11:13:57 -0800 (PST)
+        id S1752722AbeCETfK (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Mar 2018 14:35:10 -0500
+Received: from mail-pl0-f47.google.com ([209.85.160.47]:34050 "EHLO
+        mail-pl0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751880AbeCETfJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Mar 2018 14:35:09 -0500
+Received: by mail-pl0-f47.google.com with SMTP id u13-v6so10277968plq.1
+        for <git@vger.kernel.org>; Mon, 05 Mar 2018 11:35:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=ROMFnTpoaPoJY0eH9Vd4KGHoAr7HBwcFUvIG1wRALeI=;
-        b=CTNETmGN9YjsivwItFgnwQjIRa84KvT3L39QkccGwPL33OmJiJ9ywQut8DUFNISdfw
-         f/tcsR1d38okOE6BkiKy6hAq8PA68/PhA9sd8JwKDNg3LnmUbW3HBFJ6MCkv3V+dEzvy
-         cj3vDc19yQngiMUuEkNahRhiajmryyzp8qxOPxa6YdfQhUAGz+XNSAq5lDqH6y5h8cyI
-         76FmtY+KJfrfWSPnKtFb9HfLfl7DmapdR/TEv6fN+iu5uSMAP3n/d3MgImlTtmVb/z6z
-         bNiNw/k3GKg7XM3t6hOsnKUPF4dQULkUOXEU6EvJ4r6reoacY77JS/C3opf2JKPMbj8+
-         ht7A==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=mqrNUXiD3DPZTDqfM3Yw5AC3jtmNGt+8OCOXg/6+Syc=;
+        b=chXkpaTKnenpBkZVNCMuNlMPJ8/qQJYxj53dqFsfP99y7SAWKetOzZstJJnDlk4y/X
+         X3ABBxWnpm3FpmVA1qwV3HKfxERNkKGvKIDrUSHC6fyFLxb8t7a/BIw2PI2A1/DdG7sx
+         uIMjLn1+AGYadgq0DlqLDnzTEWlA3QOVPKNVPJFHCLJlsmoibg7fU0695HbPb9qDHwAm
+         hHHKa0RRBOhG0J+AVz8jQ64ZQGQctDDmp1UHz4SrCK3Js7/jkQAcyTvfJfyu+FwYpTDT
+         /gC603w8imPWwWTb4irP8aFT8NloiyU6Zx/WeynUAN3YcA7VNCF3yDzwPsYOcl8AmsHP
+         CUIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=ROMFnTpoaPoJY0eH9Vd4KGHoAr7HBwcFUvIG1wRALeI=;
-        b=DqHFp2B0aZKoAxb9lLU+GtS/su9J699ITJMJ9gPmxbsRgs7308ryE8/N9UAbdHwrSS
-         D2c1JzNuyFW164To6f2XO5fBOUX4qm5I9o8XVQ4Eonqm5fTC/X2V/4pxBlXZnuCaGXrb
-         ackd8Y4KPqjfmHlgP+bR4k6V+2yW2SSrLx4atVitkCi18dDZtHp5fcYHl69XMnq3MOn3
-         qnCwohjpP4G7A80CTcXaiUsfW5a/7DcSVkKUacRqn5tXe+n0+MLdEaDmTadONFlZGf97
-         elhLfmIXqhb7GuYajuH4vD9bmVicMqZ8SrAWvibYBAt8fMiJYElbmzwqacuExnSZc+X0
-         f7Bw==
-X-Gm-Message-State: APf1xPDUqFNQHVvUPJcm8f/x8b3UtEyQQgdKUMSmSECnhA9WSHwSTqf4
-        FPs2soWn+jRRoZNClKLzz9M=
-X-Google-Smtp-Source: AG47ELvqFEfLkhfjyzOmw+bU+9bTQl035/Wn6aO6no9PHegupw4WiNgaWjfw0XMLRPHlzdH32DmsBA==
-X-Received: by 10.223.133.214 with SMTP id 22mr14260074wru.130.1520277236120;
-        Mon, 05 Mar 2018 11:13:56 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id w74sm13589785wmd.1.2018.03.05.11.13.55
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=mqrNUXiD3DPZTDqfM3Yw5AC3jtmNGt+8OCOXg/6+Syc=;
+        b=coJS5wkhFisY8C808wCj0HXehmduldsXhT9ffDUq5jXSFMvGiTAL+r+Zn52hGQCww1
+         sT9E+IprOKTa9x/8bwMXf5poCLorKFJb+8Z1XvNr4wMolHfjyzqRO8xK0X6BNaDXt3/k
+         AfgJjSK7kT5RouDs0wmA7K2nec31JR9IQHTOntyVVJAsfT4DrohHbO9jdnQWgKMSDiig
+         o3g3azj7DOah+h6gF1QBxcXQMUdK6PkzbcKTM8R9mfQWx60sjzIPUx0u8vsMmH+n4/Bp
+         OioIdics+qOUq5A+pdSrUjYCUO3X6gK2nuT7O+Femxm7bhssxixoXz9Ire59CertLPd0
+         /GTQ==
+X-Gm-Message-State: APf1xPCCXZ+EAIgNVHiZ+wx1LPk3YUT/Uc01riSjuI2QGWxeaFQpxYQh
+        NZR1ltrnAOtTrOdj4r7HBa8AUTPMAAU=
+X-Google-Smtp-Source: AG47ELtShxAB79YfroCY5mzuZLct0B/v65DY3XkLgcd97MD+InI7uZIdvaRw2kb5m14oZLp92JMgIQ==
+X-Received: by 2002:a17:902:9883:: with SMTP id s3-v6mr13830539plp.96.1520278508811;
+        Mon, 05 Mar 2018 11:35:08 -0800 (PST)
+Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
+        by smtp.gmail.com with ESMTPSA id v186sm25622459pfb.5.2018.03.05.11.35.07
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 05 Mar 2018 11:13:55 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 00/44] reroll nd/remove-ignore-env.. sb/object-store and sb/packfiles..
-References: <CACsJy8DWrNzZM1K2vkx2XiETdAR5WhwXEdPijsxd0ZD4Lj=tZw@mail.gmail.com>
-        <20180303113637.26518-1-pclouds@gmail.com>
-Date:   Mon, 05 Mar 2018 11:13:55 -0800
-In-Reply-To: <20180303113637.26518-1-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
- =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
-        Duy"'s message of "Sat, 3 Mar 2018 18:35:53 +0700")
-Message-ID: <xmqq371e9vyk.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        Mon, 05 Mar 2018 11:35:07 -0800 (PST)
+Date:   Mon, 5 Mar 2018 11:35:06 -0800
+From:   Brandon Williams <bmwill@google.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org, git@jeffhostetler.com, gitster@pobox.com,
+        jrnieder@gmail.com, pclouds@gmail.com, peff@peff.net,
+        sbeller@google.com, stolee@gmail.com
+Subject: Re: [PATCH v4 34/35] remote-curl: implement stateless-connect command
+Message-ID: <20180305193506.GB162172@google.com>
+References: <20180207011312.189834-1-bmwill@google.com>
+ <20180228232252.102167-1-bmwill@google.com>
+ <20180228232252.102167-35-bmwill@google.com>
+ <nycvar.QRO.7.76.6.1803022106030.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <nycvar.QRO.7.76.6.1803022106030.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
+On 03/02, Johannes Schindelin wrote:
+> Hi Brandon,
+> 
+> On Wed, 28 Feb 2018, Brandon Williams wrote:
+> 
+> > diff --git a/remote-curl.c b/remote-curl.c
+> > index 66a53f74b..3f882d766 100644
+> > --- a/remote-curl.c
+> > +++ b/remote-curl.c
+> > @@ -188,7 +188,12 @@ static struct ref *parse_git_refs(struct discovery *heads, int for_push)
+> > [...]
+> > +static size_t proxy_in(char *buffer, size_t eltsize,
+> > +		       size_t nmemb, void *userdata)
+> > +{
+> > +	size_t max;
+> > +	struct proxy_state *p = userdata;
+> > +	size_t avail = p->request_buffer.len - p->pos;
+> > +
+> > +
+> > +	if (eltsize != 1)
+> > +		BUG("curl read callback called with size = %zu != 1", eltsize);
+> 
+> The format specified %z is not actually portable. Please use PRIuMAX and
+> cast to (uintmax_t) instead.
+> 
+> This breaks the Windows build of `pu` (before that, there was still a test
+> failure that I did not have the time to chase down).
 
-> 01/44 - 05/44: nd/remove-ignore-env-field
->
->   This series is moved up top. After this the patch that touch
->   alternate-db in sha1_file.c looks natural because no env is involved
->   anymore
+Oh sorry, Looks like Junio put a patch ontop in pu to fix this.  I'll
+squash that fix into this patch.
 
-Yes, I do like having this upfront and being able to merge it before
-having to wait for the rest of the huge pile.
+Thanks for catching this.
 
->   I also take this opportunity to introduce a new patch 01/44 to avoid
->   struct initialization that makes it hard to read and update. Later
->   patches are also simplified thanks to this.
->
-> 06/44 - 32/44: sb/object-store
->
->   06/44 is updated to introduce raw_object_store_init() instead of
->   RAW_OBJECT_STORE_INIT macro. This function is now used to initialize
->   both main repo and submodule ones.
->
->   10/44 (moving "packed_git") also introduces two new access wrapper
->   get_packed_git() and get_packed_git_mru()
+> 
+> Ciao,
+> Dscho
 
-I haven't studied individual patches in this round for these, but
-the interdiff you show below looks quite sensible.
-
-Thanks, will take a bit deeper look at the rest.
+-- 
+Brandon Williams
