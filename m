@@ -2,95 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 335F01F404
-	for <e@80x24.org>; Mon,  5 Mar 2018 18:13:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6EDCD1F404
+	for <e@80x24.org>; Mon,  5 Mar 2018 18:22:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752700AbeCESNh (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Mar 2018 13:13:37 -0500
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:44662 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751935AbeCESNg (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Mar 2018 13:13:36 -0500
-Received: by mail-pf0-f194.google.com with SMTP id 17so7541839pfw.11
-        for <git@vger.kernel.org>; Mon, 05 Mar 2018 10:13:36 -0800 (PST)
+        id S1752150AbeCESV7 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Mar 2018 13:21:59 -0500
+Received: from mail-pl0-f54.google.com ([209.85.160.54]:36019 "EHLO
+        mail-pl0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751275AbeCESV6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Mar 2018 13:21:58 -0500
+Received: by mail-pl0-f54.google.com with SMTP id 61-v6so10152278plf.3
+        for <git@vger.kernel.org>; Mon, 05 Mar 2018 10:21:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=google.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=wiEwSNHumtnsJRXfNj9xdLv4y29c08lYhIKUBzBYSRg=;
-        b=i2ByrsLIBhDstrl3Fwzkv0dZSAXY6XNMay1vCKVA+pkL+pfZ0AyAn9l8kwXgirl3Om
-         M/WkdPjDXQA1CWTaKyZ7dIHTpCKfx1Sr7gR/e31jXWgltvx/0l+9qomWQx+T+f3XXGxJ
-         6C72o8uWw7mqSWHUxY3tbRTE1WDgAWi5T4qE58lT64i4eH8hG6KbUDAS729AUZeSzi1w
-         oRaVm2IBdwbYa7cuBMcA310PE8p0j7fr3AqQkFXtdH1hv+V7u4cUN3mfi05NsY5l/xAi
-         ziXXxdsG+tS3Dk7sG1GErE1twP3vKHoonKlJPO7yIecf7t3kk5KQ6w3jmouDkwmmnokS
-         lG3w==
+        bh=SwVfM5Fe6N+ju3a1d1A4GUTz2WEk5g9tkjuEdY4m8NI=;
+        b=hbiLnhlyfwm28SRsduUx1NLzZ3eHvy1DRGDvaR/qC4XU7SHggb1rCd48Vbj1EWMqvq
+         pBZVm2DIiiJphZRnH6erUnVEaP0FMiESaxwCOuXr1EhhEncjhgcLdMXmWwmrv2y+7ev3
+         8jAMSd8nQyRtpjUUwSNNwRbrcR+KkOGd1bzFX8+z1y8uZGFrkfoGH+u6WOIcHOL1vYY4
+         OU09vxBjp1WevNMIXKgQcKcJuAqWeYYWNKNcLJsxXUPPXQ8gCauudKvN+hijkJU45NhE
+         zxXYlr9lHL2DI4yM3BuTDjR529NzdnycHuKKBTBdPVF2UnenmPeqkVMxv33TzGVJXnVo
+         y6ew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=wiEwSNHumtnsJRXfNj9xdLv4y29c08lYhIKUBzBYSRg=;
-        b=l7KFA8irDuQg6J7YOfgUq7KGRU4IL6ubNHKiI6qDOnXkZ46G4m24GaAzKAWBEP3Qja
-         VatLk4+MRy+bQaHYNQ04ybsjYc3P2JBVaLalZoShwgJ79g78FRh12rnj1brsa9VkXPjD
-         C5iLC8+9Yc4HVdRLH0+eN04mtDJGrGroZUXCwSbD3yknrL887jCkbB+ag8syMRZVdtJA
-         MZRl5r13Yvc0Bj0xSBRhqrKK0XJZ6PYD538ftH8dhJ+Gghdt1gNyxnfSpZ8Ojpgmx209
-         VI93enc3dwQeBNG+iw6n0xD3BPYfqr863KmcTKYVZjs6VyYH7bH3Fk+FQKQ6IbNjaiD3
-         rYZQ==
-X-Gm-Message-State: APf1xPCx+eIkv3ouXhmQdM1PAWbZO4cnSq6bAi4MmoJIQKNB/ViDHJXs
-        DwR5AovyAJ77XNuZi0LnKTs=
-X-Google-Smtp-Source: AG47ELs9nZing0tKIVWoW0lAAAWmQEyQFsoGRUUvd4FIEJfwSt6ZWyRz79B2Q1D54mskaan4jSF1nw==
-X-Received: by 10.99.6.85 with SMTP id 82mr12680692pgg.181.1520273615437;
-        Mon, 05 Mar 2018 10:13:35 -0800 (PST)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id i11sm19727477pgq.34.2018.03.05.10.13.34
+        bh=SwVfM5Fe6N+ju3a1d1A4GUTz2WEk5g9tkjuEdY4m8NI=;
+        b=hJAD7x5CNDiguQDNOiPUsG5UX9mpYo33dyuy6v+FpAYCzJcZJw4C3qPDUbW9hrLzk3
+         3a+/p/VT5aOSKLV2H3Jz2YAr7Rts/qvQrA86O+nTg/zkFD7FdJXpJJbAbVxCP3ClLnc/
+         JcyLY+n8HqEZyOSmco9CpoDi7cCo+wyUm4DYq+jMjyBASgiTbfFr6sEYA05SJMgIUkDT
+         NJmuh4h+G0759UUrZMXDLQJ7xD6KPwaT8K3gi9Zy4vws+Ry7EiOo4owPY+eR10X/ny8W
+         7F2QL8ONDtPIj3pnyDI4oxALGgbhBOXjkug2rYgTzgbBmAEgArWbSGao39zXMTCbEzpA
+         9sNA==
+X-Gm-Message-State: APf1xPDdMxbwDcphIfN0LxRr1W8uLlHsJZQoXQ7j33Q/mJkpQK84gtT2
+        VQ8E4sW/k/ay3bUhUC8Evv34SA==
+X-Google-Smtp-Source: AG47ELs9f3QciwBYQUenMGloZ5fN72/9RxtklsoZKrHni+4Ef12q2SGBR0Y6KyngUKNZmiw8Z6y67w==
+X-Received: by 2002:a17:902:3124:: with SMTP id w33-v6mr14305495plb.119.1520274117272;
+        Mon, 05 Mar 2018 10:21:57 -0800 (PST)
+Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
+        by smtp.gmail.com with ESMTPSA id z6sm11587645pfe.187.2018.03.05.10.21.55
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 05 Mar 2018 10:13:34 -0800 (PST)
-Date:   Mon, 5 Mar 2018 10:13:33 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [RFC] Contributing to Git (on Windows)
-Message-ID: <20180305181333.GB28067@aiede.svl.corp.google.com>
-References: <176408fc-3645-66d3-2aa3-30ca3fa723e7@gmail.com>
- <20180302044409.GC238112@aiede.svl.corp.google.com>
- <xmqq606ee89v.fsf@gitster-ct.c.googlers.com>
- <nycvar.QRO.7.76.6.1803031721590.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
- <20180303182723.GA76934@aiede.svl.corp.google.com>
- <663f3fef-30bc-8900-6070-80ac96cccff0@gmail.com>
+        Mon, 05 Mar 2018 10:21:56 -0800 (PST)
+Date:   Mon, 5 Mar 2018 10:21:55 -0800
+From:   Brandon Williams <bmwill@google.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, git@jeffhostetler.com, gitster@pobox.com,
+        jrnieder@gmail.com, pclouds@gmail.com, sbeller@google.com,
+        stolee@gmail.com
+Subject: Re: [PATCH v4 13/35] ls-refs: introduce ls-refs server command
+Message-ID: <20180305182155.GB72475@google.com>
+References: <20180207011312.189834-1-bmwill@google.com>
+ <20180228232252.102167-1-bmwill@google.com>
+ <20180228232252.102167-14-bmwill@google.com>
+ <20180303044338.GD27689@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <663f3fef-30bc-8900-6070-80ac96cccff0@gmail.com>
+In-Reply-To: <20180303044338.GD27689@sigill.intra.peff.net>
 User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee wrote:
->>>>> Dereck Stolee wrote:
->
-> nit: s/Dereck/Derrick/ Is my outgoing email name misspelled, or do you have
-> a misspelled contact info for me?
+On 03/02, Jeff King wrote:
+> On Wed, Feb 28, 2018 at 03:22:30PM -0800, Brandon Williams wrote:
+> 
+> > +static void add_pattern(struct pattern_list *patterns, const char *pattern)
+> > +{
+> > +	struct ref_pattern p;
+> > +	const char *wildcard;
+> > +
+> > +	p.pattern = strdup(pattern);
+> 
+> xstrdup?
+> 
+> > +	wildcard = strchr(pattern, '*');
+> > +	if (wildcard) {
+> > +		p.wildcard_pos = wildcard - pattern;
+> > +	} else {
+> > +		p.wildcard_pos = -1;
+> > +	}
+> 
+> Hmm, so this would accept stuff like "refs/heads/*/foo" but quietly
+> ignore the "/foo" part.
 
-A manual typo.  Sorry about that.
+Yeah that's true...this should probably not do that.  Since
+"refs/heads/*/foo" violates what the spec is, really this should error
+out as an invalid pattern.
 
-[... a bunch snipped ...]
-> I have a habit of being too loose in language around lawyer-speak. I should
-> not have attempted to summarize what "Signed-off-by:" means and will use
-> that helpful link for the description instead.
+> 
+> It also accepts "refs/h*" to get "refs/heads" and "refs/hello".  I think
+> it's worth going for the most-restrictive thing to start with, since
+> that enables a lot more server operations without worrying about
+> breaking compatibility.
 
-No worries.  I make that kind of mistake all the time but just thought
-it worth pointing out.
+And just to clarify what do you see as being the most-restrictive case
+of patterns that would should use?
 
-BTW, thanks again for writing and submitting this document.  It can't
-land soon enough. :)
-
-Jonathan
+-- 
+Brandon Williams
