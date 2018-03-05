@@ -7,36 +7,38 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A97351F404
-	for <e@80x24.org>; Mon,  5 Mar 2018 17:12:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 501A21F404
+	for <e@80x24.org>; Mon,  5 Mar 2018 17:12:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752526AbeCERMC (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Mar 2018 12:12:02 -0500
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:43278 "EHLO
+        id S1752177AbeCERMB (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Mar 2018 12:12:01 -0500
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:59032 "EHLO
         mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751779AbeCERLw (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 5 Mar 2018 12:11:52 -0500
-Received: from pps.filterd (m0096528.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w25H2lTP032286;
+        by vger.kernel.org with ESMTP id S1751818AbeCERLx (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 5 Mar 2018 12:11:53 -0500
+Received: from pps.filterd (m0131697.ppops.net [127.0.0.1])
+        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w25H9StV025556;
         Mon, 5 Mar 2018 09:11:26 -0800
 Authentication-Results: palantir.com;
         spf=softfail smtp.mailfrom=newren@gmail.com
 Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
-        by mx0a-00153501.pphosted.com with ESMTP id 2gfsfqk1w8-1;
+        by mx0a-00153501.pphosted.com with ESMTP id 2gftenb07m-1;
         Mon, 05 Mar 2018 09:11:26 -0800
-Received: from mxw1.palantir.com (smtp.yojoe.local [172.19.0.45])
-        by smtp-transport.yojoe.local (Postfix) with ESMTP id 2252E2215E11;
+Received: from mxw1.palantir.com (new-smtp.yojoe.local [172.19.0.45])
+        by smtp-transport.yojoe.local (Postfix) with ESMTP id 4E3522215E1E;
         Mon,  5 Mar 2018 09:11:26 -0800 (PST)
 Received: from newren2-linux.yojoe.local (newren2-linux.dyn.yojoe.local [10.100.68.32])
-        by smtp.yojoe.local (Postfix) with ESMTP id 1B51A2CDEA7;
+        by smtp.yojoe.local (Postfix) with ESMTP id 4586E2CDE69;
         Mon,  5 Mar 2018 09:11:26 -0800 (PST)
 From:   Elijah Newren <newren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Somebody <somebody@ex.com>, Elijah Newren <newren@gmail.com>
-Subject: [RFC PATCH 0/5] Improve path collision conflict resolutions
-Date:   Mon,  5 Mar 2018 09:11:20 -0800
-Message-Id: <20180305171125.22331-1-newren@gmail.com>
+Subject: [RFC PATCH 4/5] merge-recursive: improve handling for rename/rename(2to1) conflicts
+Date:   Mon,  5 Mar 2018 09:11:24 -0800
+Message-Id: <20180305171125.22331-5-newren@gmail.com>
 X-Mailer: git-send-email 2.16.0.41.g6a66043158
+In-Reply-To: <20180305171125.22331-1-newren@gmail.com>
+References: <20180305171125.22331-1-newren@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 X-Proofpoint-SPF-Result: softfail
@@ -44,183 +46,202 @@ X-Proofpoint-SPF-Record: v=spf1 redirect=_spf.google.com
 X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,, definitions=2018-03-05_07:,,
  signatures=0
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 suspectscore=4 phishscore=0 bulkscore=0 spamscore=0
+ malwarescore=0 suspectscore=15 phishscore=0 bulkscore=0 spamscore=0
  clxscore=1034 lowpriorityscore=0 mlxscore=0 impostorscore=0
  mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1711220000 definitions=main-1803050199
+ scancount=1 engine=8.0.1-1711220000 definitions=main-1803050200
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This series improves conflict resolutions for conflict types that involve
-two (possibly entirely unrelated) files colliding at the same path.  Thes=
-e
-conflict types are:
-  * add/add
-  * rename/add
-  * rename/rename(2to1)
+This makes the rename/rename(2to1) conflicts use the new
+handle_file_collision() function.  Since that function was based
+originally on the rename/rename(2to1) handling code, the main
+differences here are in what was added.  In particular:
 
-Improving these conflict types has some subtle (though significant)
-performance ramifications, but for now, I am just concentrating on
-providing the user with better information for their conflict resolution.
-Performance considerations will be addressed in a future patch series.
+  * If the two colliding files are similar, instead of being stored
+    at collide_path~HEAD and collide_path~MERGE, the files are two-way
+    merged and recorded at collide_path.
+  * Instead of recording the version of the renamed file that existed
+    on the renamed side in the index (thus ignoring any changes that
+    were made to the file on the side of history without the rename),
+    we do a three-way content merge on the renamed path, then store
+    that at either stage 2 or stage 3.
+  * Note that if either of the three-way content merges done for each
+    rename have conflicts, we do NOT try to estimate the similarity of
+    the resulting two files and just automatically consider them to be
+    dissimilar.  This is done to avoid foisting conflicts-of-conflicts
+    on the user.
 
-Before mentioning the improvements, it may be worth noting that these thr=
-ee
-types are actually more similar than might at first be apparent: for the
-cases involving renames, any trace of the rename-source path is deleted
-from both the index and the working copy (modulo a small technicality
-mentioned in patch 2), leaving just the question of how to represent two
-colliding files in both the index and the working copy for all three case=
-s.
-
-There are three important changes this patch series introduces:
-
-  1) Consolidating the code for these three types of conflict resolutions
-     into a single function that all three code paths can call.
-
-  2) Doing content merges for a rename before looking at the path collisi=
-on
-     between a rename and some other file.  In particular (in what I most
-     suspect others might have an objection to from this series), record
-     that content-merged file -- which may have conflict markers -- in th=
-e
-     index at the appropriate higher stage.
-
-  3) Smarter behavior for recording the conflict in the working tree: fir=
-st
-     checking whether the two colliding files are similar, and then based
-     on that, deciding whether to handle the path collision via a two-way
-     merge of the different files or to instead record the two different
-     files at separate temporary paths.
-
-In more detail:
-
-1)
-
-The consolidation seems fairly self-explanatory, but it had a bigger effe=
-ct
-than you'd expect: it made it clear that the rename/add conflict resoluti=
-on
-is broken in multiple ways, and it also made it easier to reason about wh=
-at
-_should_ be done for rename/add conflicts (something I had struggled with
-when I looked at that particular conflict type in the past).  See patch 3
-for more details.
-
-Sidenote: I was kind of surprised that rename/add could have been broken
-for this long, unnoticed.  Does no one ever hit that conflict in real lif=
-e?
-It looks like we did not have very good test coverage for rename/add
-conflicts; a brief search seems to show that we only had a few testcases
-triggering that conflict type, and all of them were added by me.  Patch 1
-tries to address the testcase problem by adding some tests that try to
-check the index and working copy more strictly for all three conflict
-types.
-
-2)
-
-Previously, rename/rename(2to1) conflict resolution for the colliding pat=
-h
-would just accept the index changes made by unpack_trees(), meaning that
-each of the higher order stages in the index for the path collision would
-implicitly ignore any changes to each renamed file from the other side of
-history.  Since, as noted above, all traces of the rename-source path wer=
-e
-removed from both the index and the working tree, this meant that the ind=
-ex
-was missing information about changes to such files.  If the user tried t=
-o
-resolve the conflict using the index rather than the working copy, they
-would end up with a silent loss of changes.
-
-I "fixed" this by doing the three-way content merge for each renamed-file=
-,
-and then recorded THAT in the index at either stage 2 or 3 as appropriate=
-.
-Since that merge might have conflict markers, that could mean recording i=
-n
-the index a file with conflict markers as though it were a given side.
-(See patch 2 for a more detailed explanation.)  I figure this might be th=
-e
-most controversial change I made.  I can think of a few alternatives, but=
- I
-liked all of them less.  Opinions?
-
-This change did not require any significant changes to the testsuite; the
-difference between the old and new behavior was essentially untested.
-
-(rename/add was even worse: not recording _any_ higher order stages in th=
-e
-index, and thus partially hiding the fact that the path was involved in a
-conflict at all.)
-
-3)
-
-Given the similarity between the conflict types, the big question for
-handling the conflict in the working tree was whether the two colliding
-files should be two-way merged and recorded in place (as add/add does,
-which seems to be preferable if the two files are similar), or whether th=
-e
-two files should be recorded into separate files (as rename/add and
-rename/rename(2to1) do, which seems to be preferable if the two files are
-dissimilar).  The code handling the different types of conflicts appear t=
-o
-have been written with different assumptions about whether the colliding
-files would be similar.
-
-But, rather than make an assumption about whether the two files will be
-similar, why not just check and then make the best choice based on that?
-Thus, this code makes use of estimate_similarity(), and uses that to deci=
-de
-whether to do a two-way content merge or writing unrelated files out to
-differently named temporary files.
-
-This logical change did require changing one to two dozen testcases in th=
-e
-testsuite; I think this is more logical behavior and that the testcases
-were toy examples utilized to test other things, but maybe someone else h=
-as
-an argument for why add/add conflicts should always be two-way merged
-regardless of file dissimilarity?
-
-
-Other notes:
-
-This series builds on en/rename-directory-detection; there are too many
-conflicts to resolve if I tried to just base on master.
-
-
-Elijah Newren (5):
-  Add testcases for improved file collision conflict handling
-  merge-recursive: new function for better colliding conflict
-    resolutions
-  merge-recursive: fix rename/add conflict handling
-  merge-recursive: improve handling for rename/rename(2to1) conflicts
-  merge-recursive: improve handling for add/add conflicts
-
- diff.h                               |   4 +
- diffcore-rename.c                    |   6 +-
- merge-recursive.c                    | 383 +++++++++++++++++++++++------=
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+ merge-recursive.c                    | 101 +++++------------------------=
 ------
- t/t2023-checkout-m.sh                |   2 +-
- t/t3418-rebase-continue.sh           |  27 ++-
- t/t3504-cherry-pick-rerere.sh        |  19 +-
- t/t4200-rerere.sh                    |  12 +-
- t/t6020-merge-df.sh                  |   4 +-
- t/t6024-recursive-merge.sh           |  35 ++--
- t/t6025-merge-symlinks.sh            |   9 +-
- t/t6031-merge-filemode.sh            |   4 +-
- t/t6036-recursive-corner-cases.sh    |  19 +-
- t/t6042-merge-rename-corner-cases.sh | 212 ++++++++++++++++++-
- t/t6043-merge-rename-directories.sh  |  15 +-
- t/t7060-wtstatus.sh                  |   1 +
- t/t7064-wtstatus-pv2.sh              |   4 +-
- t/t7506-status-submodule.sh          |  11 +-
- t/t7610-mergetool.sh                 |  28 +--
- 18 files changed, 588 insertions(+), 207 deletions(-)
+ t/t6042-merge-rename-corner-cases.sh |   2 +-
+ 2 files changed, 14 insertions(+), 89 deletions(-)
 
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 403c0006dc..96f0e9cee2 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -657,27 +657,6 @@ static int update_stages(struct merge_options *opt, =
+const char *path,
+ 	return 0;
+ }
+=20
+-static int update_stages_for_stage_data(struct merge_options *opt,
+-					const char *path,
+-					const struct stage_data *stage_data)
+-{
+-	struct diff_filespec o, a, b;
+-
+-	o.mode =3D stage_data->stages[1].mode;
+-	oidcpy(&o.oid, &stage_data->stages[1].oid);
+-
+-	a.mode =3D stage_data->stages[2].mode;
+-	oidcpy(&a.oid, &stage_data->stages[2].oid);
+-
+-	b.mode =3D stage_data->stages[3].mode;
+-	oidcpy(&b.oid, &stage_data->stages[3].oid);
+-
+-	return update_stages(opt, path,
+-			     is_null_oid(&o.oid) ? NULL : &o,
+-			     is_null_oid(&a.oid) ? NULL : &a,
+-			     is_null_oid(&b.oid) ? NULL : &b);
+-}
+-
+ static void update_entry(struct stage_data *entry,
+ 			 struct diff_filespec *o,
+ 			 struct diff_filespec *a,
+@@ -1615,7 +1594,6 @@ static int conflict_rename_rename_2to1(struct merge=
+_options *o,
+ 	char *path =3D c1->path; /* =3D=3D c2->path */
+ 	struct merge_file_info mfi_c1;
+ 	struct merge_file_info mfi_c2;
+-	int ret;
+=20
+ 	output(o, 1, _("CONFLICT (rename/rename): "
+ 	       "Rename %s->%s in %s. "
+@@ -1623,9 +1601,6 @@ static int conflict_rename_rename_2to1(struct merge=
+_options *o,
+ 	       a->path, c1->path, ci->branch1,
+ 	       b->path, c2->path, ci->branch2);
+=20
+-	remove_file(o, 1, a->path, o->call_depth || would_lose_untracked(a->pat=
+h));
+-	remove_file(o, 1, b->path, o->call_depth || would_lose_untracked(b->pat=
+h));
+-
+ 	if (merge_file_special_markers(o, a, c1, &ci->ren1_other,
+ 				       o->branch1, c1->path,
+ 				       o->branch2, ci->ren1_other.path, &mfi_c1) ||
+@@ -1634,66 +1609,11 @@ static int conflict_rename_rename_2to1(struct mer=
+ge_options *o,
+ 				       o->branch2, c2->path, &mfi_c2))
+ 		return -1;
+=20
+-	if (o->call_depth) {
+-		/*
+-		 * If mfi_c1.clean && mfi_c2.clean, then it might make
+-		 * sense to do a two-way merge of those results.  But, I
+-		 * think in all cases, it makes sense to have the virtual
+-		 * merge base just undo the renames; they can be detected
+-		 * again later for the non-recursive merge.
+-		 */
+-		remove_file(o, 0, path, 0);
+-		ret =3D update_file(o, 0, &mfi_c1.oid, mfi_c1.mode, a->path);
+-		if (!ret)
+-			ret =3D update_file(o, 0, &mfi_c2.oid, mfi_c2.mode,
+-					  b->path);
+-	} else {
+-		char *new_path1 =3D unique_path(o, path, ci->branch1);
+-		char *new_path2 =3D unique_path(o, path, ci->branch2);
+-		output(o, 1, _("Renaming %s to %s and %s to %s instead"),
+-		       a->path, new_path1, b->path, new_path2);
+-		if (was_dirty(o, path))
+-			output(o, 1, _("Refusing to lose dirty file at %s"),
+-			       path);
+-		else if (would_lose_untracked(path))
+-			/*
+-			 * Only way we get here is if both renames were from
+-			 * a directory rename AND user had an untracked file
+-			 * at the location where both files end up after the
+-			 * two directory renames.  See testcase 10d of t6043.
+-			 */
+-			output(o, 1, _("Refusing to lose untracked file at "
+-				       "%s, even though it's in the way."),
+-			       path);
+-		else
+-			remove_file(o, 0, path, 0);
+-		ret =3D update_file(o, 0, &mfi_c1.oid, mfi_c1.mode, new_path1);
+-		if (!ret)
+-			ret =3D update_file(o, 0, &mfi_c2.oid, mfi_c2.mode,
+-					  new_path2);
+-		/*
+-		 * unpack_trees() actually populates the index for us for
+-		 * "normal" rename/rename(2to1) situtations so that the
+-		 * correct entries are at the higher stages, which would
+-		 * make the call below to update_stages_for_stage_data
+-		 * unnecessary.  However, if either of the renames came
+-		 * from a directory rename, then unpack_trees() will not
+-		 * have gotten the right data loaded into the index, so we
+-		 * need to do so now.  (While it'd be tempting to move this
+-		 * call to update_stages_for_stage_data() to
+-		 * apply_directory_rename_modifications(), that would break
+-		 * our intermediate calls to would_lose_untracked() since
+-		 * those rely on the current in-memory index.  See also the
+-		 * big "NOTE" in update_stages()).
+-		 */
+-		if (update_stages_for_stage_data(o, path, ci->dst_entry1))
+-			ret =3D -1;
+-
+-		free(new_path2);
+-		free(new_path1);
+-	}
+-
+-	return ret;
++	return handle_file_collision(o, path, a->path, b->path,
++				     ci->branch1, ci->branch2,
++				     &mfi_c1.oid, mfi_c1.mode,
++				     &mfi_c2.oid, mfi_c2.mode,
++				     !mfi_c1.clean || !mfi_c2.clean);
+ }
+=20
+ /*
+@@ -3075,9 +2995,14 @@ static int process_entry(struct merge_options *o,
+ 				clean_merge =3D -1;
+ 			break;
+ 		case RENAME_TWO_FILES_TO_ONE:
+-			clean_merge =3D 0;
+-			if (conflict_rename_rename_2to1(o, conflict_info))
+-				clean_merge =3D -1;
++			/*
++			 * Probably unclean merge, but if the two renamed
++			 * files merge cleanly and the two resulting files
++			 * can then be two-way merged cleanly, I guess it's
++			 * a clean merge?
++			 */
++			clean_merge =3D conflict_rename_rename_2to1(o,
++								  conflict_info);
+ 			break;
+ 		default:
+ 			entry->processed =3D 0;
+diff --git a/t/t6042-merge-rename-corner-cases.sh b/t/t6042-merge-rename-=
+corner-cases.sh
+index a6c151ef95..cf5ea5a0f9 100755
+--- a/t/t6042-merge-rename-corner-cases.sh
++++ b/t/t6042-merge-rename-corner-cases.sh
+@@ -358,7 +358,7 @@ test_expect_success 'setup rename/rename (2to1) + mod=
+ify/modify' '
+ 	git init &&
+=20
+ 	printf "1\n2\n3\n4\n5\n" >a &&
+-	printf "5\n4\n3\n2\n1\n" >b &&
++	printf "9\n8\n7\n6\n5\n" >b &&
+ 	git add a b &&
+ 	git commit -m A &&
+ 	git tag A &&
 --=20
-2.16.0.41.g7fdc8a0834
+2.16.0.41.g6a66043158
 
