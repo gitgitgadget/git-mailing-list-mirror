@@ -7,60 +7,61 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A67041F404
-	for <e@80x24.org>; Mon,  5 Mar 2018 02:24:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1055A1F404
+	for <e@80x24.org>; Mon,  5 Mar 2018 02:38:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752218AbeCECYW (ORCPT <rfc822;e@80x24.org>);
-        Sun, 4 Mar 2018 21:24:22 -0500
-Received: from mail-wr0-f169.google.com ([209.85.128.169]:44361 "EHLO
-        mail-wr0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752025AbeCECYV (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 4 Mar 2018 21:24:21 -0500
-Received: by mail-wr0-f169.google.com with SMTP id v65so15635797wrc.11
-        for <git@vger.kernel.org>; Sun, 04 Mar 2018 18:24:20 -0800 (PST)
+        id S932583AbeCECgl (ORCPT <rfc822;e@80x24.org>);
+        Sun, 4 Mar 2018 21:36:41 -0500
+Received: from mail-wr0-f173.google.com ([209.85.128.173]:45843 "EHLO
+        mail-wr0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932417AbeCECgk (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 4 Mar 2018 21:36:40 -0500
+Received: by mail-wr0-f173.google.com with SMTP id p104so15649597wrc.12
+        for <git@vger.kernel.org>; Sun, 04 Mar 2018 18:36:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=7OlDgnyYmwrl0AujRkPP59CauSQ5GrxlaZNvZbxMYwY=;
-        b=mNGh7+A6VXV8TgrP7O860MUtjI4i7zGqPoED+QGD5OrteRBljSOrCho/E8eTbL9e61
-         zWsZ8kY7jbUnejlQukBchu259FliJG4u6rSPhBydRd1dkoKQyFTbDQ67MslV/nxc4hEv
-         8PJXOCa+7/o5uSisUdTLfKtEO5/AVpUvwo0pa7bVusGB7yagvfALY/Qv4YecWZpG3iiZ
-         CMNDr99t+NC1/iAl2j3zZbrb6S0N4aP1PopLciP+ngCD1n7l9WvYjFnPTbZ0tMdhyPxw
-         Bn9TGzriUOvhmCRKqyw/9c1x8rq7x9h/Xpn38I3ZOagnx2EUyD4dZrAub5qmDoRe6oLr
-         1zbg==
+        bh=9sWy3nxQC7ct/K2QerlI/aac7QWb/hdusj709+Sh+aM=;
+        b=vC1HAeOb0/n577zup3LDBta4ctWisxVmDqnFBUHb6/r1Ml6Eo1qajIHwmILvQFzQW4
+         mzsXGoaCYlqpXHrLCRdHHzizCfqL/h4THFgFFE0oAAaWpy+b1t6X3kGs6FSNfAWal8uC
+         mEMUUaDGizuRKrKga2wFtDOtn5zGPYES/tR2Llqpf0euVQxulQ30zTR5QqcfIAhtXJzt
+         /pRYdIOqAHGEO7LfCOYP0OyUdJ2WvXxVYwamv5898oU6eEEbWN8l2IEfamDcdjXQZnUs
+         BBul95JO3j31zMOL+4epSiz9Oc0wskCjqkALy/6FD9VIhf3wSO6Tq+DZ/VYUXY2ecYpX
+         GuNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=7OlDgnyYmwrl0AujRkPP59CauSQ5GrxlaZNvZbxMYwY=;
-        b=qV8l1x71NMw++RShRoa6FTzzEnEQj3h7Eiwz1rkuSwBiJLsgobL4YnAk/3JhC85tMZ
-         y/OZl3BFMVno+OlCkOSbAggA5Ryp70hNaPvZN7vuROQ1+2A7sct4amu5jqd7WZt74wSk
-         s6WZGxsYECvYarwiYgF3wfwoYFlsoh4jXFyTKPQbJ5i77iXWiQeC5qE2Wb12mu5fLyT6
-         3z8p9alq7Q4s04WWf4sM8aKdMWsQrQ/Z4xv+bO7rR4b572/chnFe++PbBOc84KUP7kKp
-         0DZ/EvAbeN/fpDZg4HZQUMgXCltYMjugtBT1wAMbzEfbHnbzxGOBjyMho2kkphhkiG4m
-         9hIg==
-X-Gm-Message-State: APf1xPAKy/kip8x5j09END2v4sJJD2rojLqpCBq2hGL23Zg12MigT1fS
-        4iulCtsSGlO3/qYxtwAQiKE=
-X-Google-Smtp-Source: AG47ELskbnkxyWdXqSwmPSduc1Pp24Xab9yrKzMhmBuJoEKOk/mmi7iYsn8lUDAkIhAzv2oZ5SQZhQ==
-X-Received: by 10.223.195.23 with SMTP id n23mr9281023wrf.126.1520216659932;
-        Sun, 04 Mar 2018 18:24:19 -0800 (PST)
+        bh=9sWy3nxQC7ct/K2QerlI/aac7QWb/hdusj709+Sh+aM=;
+        b=S5yEweYsWU03fLTWcN9Ueln1I2zliU/3MCqWOVfHN0pZxZLSs95VasCz+IRp2cebXz
+         nbxev+aktNygnrvH6xPBb1TBL2qSFFEyM85Fti6dQjxr2kp6d7QPZILzUuRQek4uZItX
+         EjFnxHLih/EnyD68O9oi8l82I7lAtGw2lnumZtS62pcjFVWq5jZvkwzMcTUpbGloEpd6
+         ZZOOwrnO3WKEeswmLWxna7sE9B9HBZtFawHTiSneB4zdk2tPVrTVM91bv33t6pJFftEF
+         oSyPvSU9uLwUdTrfMTrSt9oEJYVzD9uw3DI6afp69A8qLnXGp61jEjVsywEapSHDeL6O
+         wM+w==
+X-Gm-Message-State: APf1xPDJN/b8fv1DsBUUxQtGZ7giN6Rqs4a99H4Pc5NrnyUtnfwg2wTh
+        nC/UwkPUPietIIwO/HrG55k=
+X-Google-Smtp-Source: AG47ELuglfj+3KBF4ZD4+/6nSZrBXXmB317vC0/oGhvh8C0OeoRYA+tvSeoQNHMSRiVU8JoFxqMO0g==
+X-Received: by 10.223.134.205 with SMTP id 13mr12392184wry.283.1520217398675;
+        Sun, 04 Mar 2018 18:36:38 -0800 (PST)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id d8sm5718670wmd.20.2018.03.04.18.24.19
+        by smtp.gmail.com with ESMTPSA id m187sm9469370wmg.0.2018.03.04.18.36.37
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 04 Mar 2018 18:24:19 -0800 (PST)
+        Sun, 04 Mar 2018 18:36:37 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     Leah Neukirchen <leah@vuxu.org>, git@vger.kernel.org
-Subject: Re: [RFC PATCH] color: respect the $NO_COLOR convention
-References: <87zi3reoez.fsf@gmail.com>
-        <xmqqefl3iuvx.fsf@gitster-ct.c.googlers.com> <87efl3emlm.fsf@vuxu.org>
-        <xmqq8tbbhayi.fsf@gitster-ct.c.googlers.com>
-        <20180304223925.GA808005@genre.crustytoothpaste.net>
-Date:   Sun, 04 Mar 2018 18:24:18 -0800
-In-Reply-To: <20180304223925.GA808005@genre.crustytoothpaste.net> (brian
-        m. carlson's message of "Sun, 4 Mar 2018 22:39:25 +0000")
-Message-ID: <xmqqvaeb9s4t.fsf@gitster-ct.c.googlers.com>
+To:     Dorab Patel <dorabpatel@gmail.com>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>,
+        Alexandre Julliard <julliard@winehq.org>
+Subject: Re: [PATCH] git.el: handle default excludesfile properly
+References: <20180303034803.21589-1-dorabpatel@gmail.com>
+        <CAPig+cR=adC_Ok=FJw2APaLahXX_v1ix4ufEJyBhED5ruXaQxA@mail.gmail.com>
+        <CAE09B1+XXJvrOucHwehUGk=Taio7sirfOh5gq7KGs4iZSpK=vQ@mail.gmail.com>
+Date:   Sun, 04 Mar 2018 18:36:37 -0800
+In-Reply-To: <CAE09B1+XXJvrOucHwehUGk=Taio7sirfOh5gq7KGs4iZSpK=vQ@mail.gmail.com>
+        (Dorab Patel's message of "Sat, 3 Mar 2018 17:36:51 -0800")
+Message-ID: <xmqqr2oz9rka.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -69,25 +70,26 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+Dorab Patel <dorabpatel@gmail.com> writes:
 
-> As a note, turning off color can improve accessibility for some people.
-> I have a co-worker who has deuteranomaly and virtually all colored text
-> at the terminal poses readability problems.  It would be beneficial if
-> he could just set NO_COLOR=1 in his environment and have everything just
-> work.
->
-> For this reason, I'm in favor of taking this patch, assuming it comes
-> with tests.
+> Looking deeper into how the function git-get-exclude-files is used, I
+> see that it is only being called from git-run-ls-files-with-excludes.
+> So, perhaps, a better (or additional) fix might be to add the
+> parameter "--exclude-standard" in the call to git-run-ls-files from
+> within git-run-ls-files-with-excludes. And remove the need for
+> get-get-exclude-files altogether.
 
-Oh, I agree 100% the world would be a better place if there already
-is an established way to turn off all colors, instead of having to
-run around and setting tool specific configuration like LS_COLORS
-etc. for 42 different tools one uses during one's daily life.  I
-just am not getting the feeling this no-color.org's effort is the
-one.  We already have a way specific to our project already (i.e.
-configuration variables), so if we adopt NO_COLOR but other people
-do not universally support it (and they support something else),
-we'd end up having to maintain yet another knob that only a handful
-of projects understand forever, and that is where my reluctance
-comes from.
+It is absolutely the right thing to depend on --exclude-standard, I
+would think, so that we do not have to worry about details like XDG
+paths and such.  Thanks for working that out between both of you.
+
+Having said that, I am sorry to say that I am not sure if the copy
+we have is the one to be patched, so I would appreciate if Alexandre
+(cc'ed) can clarify the situation.  The last change done to our copy
+of the script is from 2012, and I do not know if Alexandre is still
+taking care of it here but the script is so perfect that there was
+no need to update it for the past 5 years and we haven't seen an
+update, or the caninical copy is now being maintained elsewhere and
+we only have a stale copy, or what.
+
+Thanks.
