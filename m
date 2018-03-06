@@ -2,182 +2,143 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2E47F1F404
-	for <e@80x24.org>; Tue,  6 Mar 2018 04:02:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 059221F404
+	for <e@80x24.org>; Tue,  6 Mar 2018 04:39:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753024AbeCFECl (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Mar 2018 23:02:41 -0500
-Received: from mail-wr0-f174.google.com ([209.85.128.174]:35980 "EHLO
-        mail-wr0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752866AbeCFECk (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Mar 2018 23:02:40 -0500
-Received: by mail-wr0-f174.google.com with SMTP id v111so19472263wrb.3
-        for <git@vger.kernel.org>; Mon, 05 Mar 2018 20:02:39 -0800 (PST)
+        id S1753026AbeCFEjg (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Mar 2018 23:39:36 -0500
+Received: from mail-pg0-f53.google.com ([74.125.83.53]:36393 "EHLO
+        mail-pg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752162AbeCFEjg (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Mar 2018 23:39:36 -0500
+Received: by mail-pg0-f53.google.com with SMTP id i14so7847523pgv.3
+        for <git@vger.kernel.org>; Mon, 05 Mar 2018 20:39:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=Xy4Q2UZuigkl/9sQ7H/tJAERsfBtt0pZ0F8oBneYu5I=;
-        b=b2ryyzApVDIW7+fhLWuvPU/8XjQ1eSw4Ms/Ysf+xdUDtb84B8Ro/mvSeMMcjOrgDvZ
-         9spmM2yHtITrDAbKDdy3Ky5GK8HQ92WE1mfbeT8AZy+hS42DyOd5KmwrZWme7lEU+FW7
-         KD4Ljzf8wIZo0FGw2xw93XFvZVrz+DSpLDhrRdFZEhoXHFl0F/P//+ns3mr15RwUZKf8
-         5lzQT61hwHrjBZuInkS7TKTZWl1XDDx2pt3oSwNuoyzCtph7Q8r4DjA/5MvG4Unflncj
-         cbflF+d+cJ7ZnOms1bmWBM/6l/G/7vgbXn1UJg3dM4kn+QUd7Zs6XrJ/iVHYc0Lr0ESe
-         umIA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=R9p8uL+uc59KjArZsUGTtJBDms1LE0Nbb61VO76AWcM=;
+        b=CP+2m2zdQYn//KjB155991Gp71M2gtU5adLCNeBQZe077E6cLPGQVqPc3aT5HfD6wI
+         op2+frgWYb28t4WaVYouYGOUgVcHaCf3DnMcxja9OwQmF2En5+C3sLV238fF0eK6LVTR
+         JytC3+0Dp8uIrUFUaNyZ938s90BRBOOIfQp7Zb5Un8tllxiB5qBckcHDwGp1FZjw9aHk
+         Dr8MLmum3GsY46YJWzkv3rCY6SENuvvyva+Gu3AQuBCmxEOw63l2eRcTRVZTf64mV+cM
+         6+OulezesbulWEReA4HptY0W34rKzy/UeTjUFRpGmRrWDfbmTet+fzo+L1bT5LPU7KR5
+         qTGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=Xy4Q2UZuigkl/9sQ7H/tJAERsfBtt0pZ0F8oBneYu5I=;
-        b=nDp7V5OUN9TJqjdZYXmfo+Ctxr/7RbTwTZtDSIzDvP9jMXDso2qB+zhraB0LhDI8zj
-         a58PQO/bP6NzBDHWzovwOoQd/O08/yf7CGUosHRUcoZI0MWwKxZJQG5BAIDTbCdhbclm
-         Kx8VNLmID9JPa/wRdrUuPG48O3BRIpsO2Sh/U2ewyr3KG5cnmufXaWwy67huSNscqjZf
-         nDk3axiGqzB5tM758k53gQ+w9X9obnjeeeKi1SMD0ixTHl1m8eTsQVjxf8yecCZTPnMO
-         46l6q7slUKaa2ZfvZOh6ukEsC9E5qLBI0vSnBBW7yefn1lra//UrrOn409qn9J/Gyuze
-         +6RQ==
-X-Gm-Message-State: APf1xPAud5XiTAA3dcwghhstlaob2l8yfDNiM2pFRvatmWoyCAVvCC5K
-        xT0maFS5l2qbFvXqFeH39ZlIwO9/Sb8=
-X-Google-Smtp-Source: AG47ELt91lbeGmQBw8oG5mta8HvdvzVFY5xJhafJUn9i9KRs1PCQtWESfR5Ox2lGRZtAo8yiJFvL1A==
-X-Received: by 10.223.166.103 with SMTP id k94mr13525600wrc.237.1520308959164;
-        Mon, 05 Mar 2018 20:02:39 -0800 (PST)
-Received: from [192.168.5.102] (cable-24-135-61-30.dynamic.sbb.rs. [24.135.61.30])
-        by smtp.gmail.com with ESMTPSA id m55sm18479806wrf.38.2018.03.05.20.02.37
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 05 Mar 2018 20:02:38 -0800 (PST)
-Subject: Re: [PATCH v5 00/12] rebase -i: offer to recreate merge commits
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
-        Philip Oakley <philipoakley@iee.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <cover.1518307771.git.johannes.schindelin@gmx.de>
- <cover.1519680483.git.johannes.schindelin@gmx.de>
-From:   Igor Djordjevic <igor.d.djordjevic@gmail.com>
-Message-ID: <bc9f82fb-fd18-ee45-36a4-921a1381b32e@gmail.com>
-Date:   Tue, 6 Mar 2018 05:02:28 +0100
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
-MIME-Version: 1.0
-In-Reply-To: <cover.1519680483.git.johannes.schindelin@gmx.de>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=R9p8uL+uc59KjArZsUGTtJBDms1LE0Nbb61VO76AWcM=;
+        b=IONJrofa23ZCiNzMvI+7Znp1vaN6flVgW4qaXC5173GgDs2Rp59miUT3sW0JVE8hza
+         PTKgbvKww1QU2ppK5xsKvUh8E0gIm11F40CtRQUGCCi2d8HLlkQequF8XUEoMg0Hbnyh
+         EIwh7oBEO9M5K6hBtVa8LOSFFyKiuJfDRZy6eWN3hAMRa+lhwXV38wcJ+D3vqbMQBIrT
+         DJVFXSxtAhzXWs5pCJ6VmyQmSzYTraxwDO7EdfHwhaN0sZHBYa8VmFozJaXqauSa4u1T
+         ESnjs3NJG7vrYg/IyKtWo5MGlW+BH3kd2mNdY2n9JzAEM5/QKn2eNiDFvIkYe27tTq8/
+         xTGQ==
+X-Gm-Message-State: APf1xPBzfsr4heen1T5FF94P8qdQAYaMe6KoCAGUeOtgkwFfyGBQQvbq
+        4ZPlhPeoIcecUnfXBIwDxqNnhvKE
+X-Google-Smtp-Source: AG47ELsBVJFMKmCEr/JTGBHpKBYSrvc1K7JHhameaiLmW99PFJqGw8wy8D/OFcj9ZP/FoX0Arww9fQ==
+X-Received: by 10.98.69.196 with SMTP id n65mr17712437pfi.29.1520311175245;
+        Mon, 05 Mar 2018 20:39:35 -0800 (PST)
+Received: from Dorabs-iMac.com (cpe-23-242-199-161.socal.res.rr.com. [23.242.199.161])
+        by smtp.gmail.com with ESMTPSA id q20sm25330098pgc.84.2018.03.05.20.39.33
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 05 Mar 2018 20:39:34 -0800 (PST)
+From:   Dorab Patel <dorabpatel@gmail.com>
+To:     Git List <git@vger.kernel.org>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Alexandre Julliard <julliard@winehq.org>,
+        Dorab Patel <dorabpatel@gmail.com>
+Subject: [PATCH v2] git.el: handle default excludesfile properly
+Date:   Mon,  5 Mar 2018 20:38:46 -0800
+Message-Id: <20180306043846.33733-1-dorabpatel@gmail.com>
+X-Mailer: git-send-email 2.16.2
+In-Reply-To: <20180303034803.21589-1-dorabpatel@gmail.com>
+References: <20180303034803.21589-1-dorabpatel@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Johannes,
+The previous version only looked at core.excludesfile for locating the
+excludesfile.  So, when core.excludesfile was not defined, it did not
+use the relevant default locations for the global excludes file.
 
-On 26/02/2018 22:29, Johannes Schindelin wrote:
-> 
-> Once upon a time, I dreamt of an interactive rebase that would not
-> flatten branch structure, but instead recreate the commit topology
-> faithfully.
-> 
-> My original attempt was --preserve-merges, but that design was so
-> limited that I did not even enable it in interactive mode.
-> 
-> Subsequently, it *was* enabled in interactive mode, with the predictable
-> consequences: as the --preserve-merges design does not allow for
-> specifying the parents of merge commits explicitly, all the new commits'
-> parents are defined *implicitly* by the previous commit history, and
-> hence it is *not possible to even reorder commits*.
-> 
-> This design flaw cannot be fixed. Not without a complete re-design, at
-> least. This patch series offers such a re-design.
-> 
-> Think of --recreate-merges as "--preserve-merges done right".
+The issue is in git-get-exclude-files().  Investigation shows that
+git-get-exclude-files() is only called from
+git-run-ls-files-with-excludes().  Modifying
+git-run-ls-files-with-excludes() to use the "--exclude-standard"
+option to git-run-ls-files() obviates the need for
+git-get-exclude-files() altogether, which is now removed.  In
+addition, the "--exclude-per-directory" option to git-run-ls-files()
+is used only when git-per-dir-ignore-file is not the default
+(.gitignore), since the default case is handled by the
+"--exclude-standard" option.
 
-First of all, thanks for this wonderful improvement to existing `git 
-rebase` functionality, I`m really excited to have this in the mainline! :)
+Looking at the history shows that git-get-exclude-files() was
+implemented by commit 274e13e0e9 (git.el: Take into account the
+core.excludesfile config option., 2007-07-31), whereas the
+"--exclude-standard" option was introduced by commit 8e7b07c8a7
+(git-ls-files: add --exclude-standard, 2007-11-15), three and a half
+months later.  This explains why the "--exclude-standard" option was
+not used in the original code.
 
-But in the light of "--preserve-merges done right", I would like to 
-hear your opinion on a topic that might be considered more or less 
-important, and thus tackled in a few different ways... :$
+Signed-off-by: Dorab Patel <dorabpatel@gmail.com>
+---
 
-Rebasing amended merges :( Even though documentation is quite clear 
-about merge conflicts and manual amendments not recreated 
-automatically, this might be considered quite an issue (a bug, even), 
-as even in case of non-interactive rebase, amended content will be 
-dropped - and even worse, it all happens silently, without alerting 
-the user (for whom we presume to know what he`s doing, I guess).
+Notes:
+    The original patch[1] V1 attempted to add code to
+    git-get-exclude-files() to handle the case when core.excludesfile was
+    not defined.  This involved code to check for the env variable
+    XDG_CONFIG_HOME and related processing to find the value of the
+    default excludesfile.  Further investigation showed that using the
+    "--exclude-standard" option to git-run-ls-files-with-excludes()
+    already does similar processing.  Hence the V2 patch uses the
+    "--exclude-standard" option and does away with
+    git-get-exclude-files().
+    
+    [1] https://public-inbox.org/git/20180303034803.21589-1-dorabpatel@gmail.com/
 
-Now, might be this is considered the least interesting use case, in 
-comparison to all the power of more serious interactive rebases, but 
-I would argue it could be the one most used by less adventurous users 
-that would simply like to stay up-to-date with upstream, rebasing their 
-current work on top of it (think `git pull --rebase=recreate`, even).
+ contrib/emacs/git.el | 21 ++++++---------------
+ 1 file changed, 6 insertions(+), 15 deletions(-)
 
-As it currently is, and that was the case with `--preserve-merges`, 
-too, this will cause them to silently lose their work (amended merge 
-content). And while documentation is clear about it, these might be 
-less knowledgeable users, too, and thus potentially be the ones we 
-should (try to) protect even more, if possible.
+diff --git a/contrib/emacs/git.el b/contrib/emacs/git.el
+index 97919f2d7..cef42f1de 100644
+--- a/contrib/emacs/git.el
++++ b/contrib/emacs/git.el
+@@ -755,22 +755,13 @@ Return the list of files that haven't been handled."
+       (setq unmerged-files (nreverse unmerged-files))  ;; assume it is sorted already
+       (git-set-filenames-state status unmerged-files 'unmerged))))
+ 
+-(defun git-get-exclude-files ()
+-  "Get the list of exclude files to pass to git-ls-files."
+-  (let (files
+-        (config (git-config "core.excludesfile")))
+-    (when (file-readable-p ".git/info/exclude")
+-      (push ".git/info/exclude" files))
+-    (when (and config (file-readable-p config))
+-      (push config files))
+-    files))
+-
+ (defun git-run-ls-files-with-excludes (status files default-state &rest options)
+-  "Run git-ls-files on FILES with appropriate --exclude-from options."
+-  (let ((exclude-files (git-get-exclude-files)))
+-    (apply #'git-run-ls-files status files default-state "--directory" "--no-empty-directory"
+-           (concat "--exclude-per-directory=" git-per-dir-ignore-file)
+-           (append options (mapcar (lambda (f) (concat "--exclude-from=" f)) exclude-files)))))
++  "Run git-ls-files on FILES with appropriate exclude options."
++  (apply #'git-run-ls-files status files default-state
++	 "--directory" "--no-empty-directory" "--exclude-standard"
++	 (append (unless (string-equal git-per-dir-ignore-file ".gitignore") ; handled by --exclude-standard
++		   (list (concat "--exclude-per-directory=" git-per-dir-ignore-file)))
++		 options)))
+ 
+ (defun git-update-status-files (&optional files mark-files)
+   "Update the status of FILES from the index.
+-- 
+2.16.2
 
-Now, in the light of that other, ongoing "merge rebasing" topic[1], 
-it seems we really might be able to do much better, actually 
-_rebasing_ merges (and keeping manual conflict resolutions/amendments), 
-instead of _recreating_ them (and silently loosing content), and doing 
-so reliably (or stopping for possible user inspection, but not silently 
-doing the wrong thing, even if documented).
-
-This concerns non-interactive rebase the most, but I have ideas on 
-making it aligned with interactive one, too, where user could 
-actually decide whether to rebase or (re)create the merge (rebase 
-becoming the default, intuitively aligned with non-interactive rebase).
-
-But before elaborating, I would like to hear your opinion on whether 
-you find it worth to pursue that goal here, before `--recreate-merges` 
-hits the mainstream, or it might be just fine as a possible later
-improvement, too (if accepted, that is).
-
-My main concern, and why I raised the question inside this topic in 
-the first place, is default behavior. With `--recreate-merges` just 
-being introduced, we have no backwards compatibility to think about, 
-being a unique chance to make default behave as needed (not to say 
-"correct", even), and might be really ticking one more of 
-"--preserve-merges done right" boxes, and could be a pretty important 
-one, too.
-
-But once this becomes widely available, I guess it will be hard to 
-improve (fix?) this merge rebasing silent content losing behavior 
-(even if we would acknowledge it as a bug), without introducing 
-additional options - and without a possibility to make possibly 
-"right" behavior a default one, thus further complicating user 
-experience.
-
-So, I wanted to hear your stance on this :(
-
-Knowing how much this means to you, it is really not my wish to drag 
-this topic further, and if you find it that we`re good here as it is, 
-I wouldn`t have any objections - I guess later new `--rebase-merges` 
-option is a possibility, too, might be a wrapper around 
-`--recreate-merges`, but with actual merge rebasing being a default 
-(where merge recreation would still be possible, too)...
-
-Otherwise, if you have any interest in it now, I can further elaborate 
-what I`m thinking about, where it might help improve both user 
-experience and rebase possibilities, for what might not be too much 
-extra work... hopefully :P
-
-Whatever ends up being your response, I`m really grateful for your 
-work on this matter so far, and thank you for everything you did.
-
-p.s. lol, now that I said it, and after writing all this, I might 
-actually even like the idea of (later) having `--rebase-merges` 
-alongside `--recreate-merges`, too, each one clearly communicating 
-its default mode of operation - rebase merges vs. recreate merges... 
-as one might rightfully expect ;) Eh :P
-
-Regards, Buga
-
-[1] https://public-inbox.org/git/87y3jtqdyg.fsf@javad.com/
