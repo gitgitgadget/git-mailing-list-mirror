@@ -2,128 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CE2D81F404
-	for <e@80x24.org>; Tue,  6 Mar 2018 20:55:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 945B51F404
+	for <e@80x24.org>; Tue,  6 Mar 2018 21:03:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753868AbeCFUzO (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Mar 2018 15:55:14 -0500
-Received: from mail-qt0-f172.google.com ([209.85.216.172]:37328 "EHLO
-        mail-qt0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753466AbeCFUzN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Mar 2018 15:55:13 -0500
-Received: by mail-qt0-f172.google.com with SMTP id r16so9446qtm.4
-        for <git@vger.kernel.org>; Tue, 06 Mar 2018 12:55:13 -0800 (PST)
+        id S1753821AbeCFVDI (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Mar 2018 16:03:08 -0500
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:34603 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753512AbeCFVDH (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Mar 2018 16:03:07 -0500
+Received: by mail-wm0-f68.google.com with SMTP id a20so19773622wmd.1
+        for <git@vger.kernel.org>; Tue, 06 Mar 2018 13:03:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=ar/6aUbL/UqpFo2rUcI/LcwCehoNnvNcjyk+Ayg88As=;
-        b=lobxQry41nnBbC8ARYGPpSQAZIVuob6j8PhX+wsF7J9Ps69q8LgcgPB0bV31oevA2H
-         uE4CJSDD9JK3TRUOnwjeG/ru+OSuSM3/kB4ebrglkzKeiLJUBZOK3Hf9yV0i+oPp4JyD
-         lk0xq5l/MPkco4e6l/KxRbGhMa/NZx61SR5fC5fLowRQCLxTeMR1tFt3nyBALYSKFIKH
-         ZaZMuJpmI57pboWAN6jYlpUqApOW/Vc13IoIuhUo1aRpvhqxR+ohSIrHGlQ8UdT2MF9d
-         re0CVlyS3uTWiCUV/b74wGvYdd06JdNRL87ZUuly5lBtH+U316xn53DssLbXC69hvB0V
-         emBg==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=3/KeF44ioAnBpRVkFPwtrwdSNpkqhHjafD6bgSm0Qak=;
+        b=W7i2PjwyiKWTFyUzLV8k40TzMU6Xj0PJD2P+vHVuo8pghymBmPPuXELqbFU+twt0v3
+         F5VEZDEfrY4Ugi4BdR8cxzLVKgc1SP2tpjA1s/p+KgwcTFZTZzj9Rlfny3zV4j5TIr4/
+         79kqFbVEpcGo+Mtz646Zc3smfFixM7n0ipjCzyD+YweOWOAFxHizYMG/oxu9WOFkR6WE
+         RbLZKwo2tr8g5HPVd97gJxLhYzl+P8V4NeKYyiLu5rz7TBoDV2EHEYtj+3sp6u8hGl7K
+         jLOoWJKMJajNJiQshTcKyW4gk0KTpSvnnjPIVnFs0WQcHpe/awdBJpccprGzF6fLol41
+         UYQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=ar/6aUbL/UqpFo2rUcI/LcwCehoNnvNcjyk+Ayg88As=;
-        b=bNwEMDVfLSRucGVTNYFCEsXcQ1OgmnmbsEr0lM8k3aB7UIfIciw1Hblx+8ENrxLuUj
-         UVii6LsqmnOe+uOzhJUn5QrvVZk9kl09GqLunf+I4/T1IMoJsBWQJurnVwNqULOJHCia
-         wHbfGwb9fZ00rPqhPURPsD6F0iHTyUCodq13pHLbfFsXMXrP/Vd9kyMuTTIpnzkanFCn
-         +ybBHv9rJDqafU850LSdXYJA8RmIIPSJ2Q+H4+rcf5k0sfnkjNwdinlzrq0gdvaYoPL8
-         dudp216oUl6VkZnqp/8+Z/98cI7LFJXIjgxnBQO26wmdVd29BPLlb0sk77/UZNFF4GJi
-         1oLA==
-X-Gm-Message-State: AElRT7GVOUbFTFO81wXXKliWK7B5VDk0Bgaa3OglZ0Hyxc6I5y7lg5ZW
-        Po7RyxazSeKKhujkguihcPgE3I4pNzGdLgQQ2Yc=
-X-Google-Smtp-Source: AG47ELtV9nHVQWKJ/RcHHlE5GvLDKt6duc0pwqEo8ItgHXxK0c08oy4EWvCO1kE6HxUV7nINS8tgLlIl8AP9ZWGrBN4=
-X-Received: by 10.237.62.233 with SMTP id o38mr29246699qtf.3.1520369712819;
- Tue, 06 Mar 2018 12:55:12 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=3/KeF44ioAnBpRVkFPwtrwdSNpkqhHjafD6bgSm0Qak=;
+        b=TGE3ZQUHYnEucJXZaZpBWhHHGAD4POIr+waFozSFvLjSrNyv94gAn4ibLcpV/X3o1R
+         z/brcyDwAiLutkVix8y6dX4SPiYDUz6NXTBLd0A3QJRZiuloflFbe3S7OvkrbitI/Sh3
+         QhqTKTz/ImUR6vY1V0WAVvPzUnT+KuKWgzp4vorWjXxfLMgnOT1gnrc/IotHuTyUiHsM
+         52sarKaVkKFhc9YPp46WG0joHRtON+7CsGkJ0ZGuRF5pbpzbIGAVJpWSTXKlj4Nrfd9D
+         BW9x1IvY6hAt0AJOEXstVUllDs+28M96rv8Vmhxs1rLYFulwAsGR69s7o5oCgxtNeTCk
+         smqg==
+X-Gm-Message-State: AElRT7FkQsy8H6mY3DO778xe5Z99j3FzTo1Tv9wS9dvO42hCBebzOsS6
+        FNiWdCYDHACSHTX9IMG4jeg=
+X-Google-Smtp-Source: AG47ELvOO56Ub6jU0p5JKZBOc+do7yiBLKlr/jIKYpDjZolPPJ8awW/fYli08/oHN2lsz8NLgHGwwg==
+X-Received: by 10.28.148.130 with SMTP id w124mr12473568wmd.124.1520370185974;
+        Tue, 06 Mar 2018 13:03:05 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id n64sm10505358wmd.11.2018.03.06.13.03.04
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 06 Mar 2018 13:03:05 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Igor Djordjevic <igor.d.djordjevic@gmail.com>
+Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Git Mailing List <git@vger.kernel.org>,
+        Gustavo Leite <gustavoleite.ti@gmail.com>
+Subject: Re: [PATCH v2 0/3] add -p: select individual hunk lines
+References: <20180219113619.26566-1-phillip.wood@talktalk.net>
+        <20180306101750.18794-1-phillip.wood@talktalk.net>
+        <64005dad-ec23-892c-4270-b01cae74f663@gmail.com>
+Date:   Tue, 06 Mar 2018 13:03:04 -0800
+In-Reply-To: <64005dad-ec23-892c-4270-b01cae74f663@gmail.com> (Igor
+        Djordjevic's message of "Tue, 6 Mar 2018 21:19:15 +0100")
+Message-ID: <xmqqr2ow3ojb.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.12.142.14 with HTTP; Tue, 6 Mar 2018 12:55:12 -0800 (PST)
-In-Reply-To: <20180304201418.60958-7-lars.schneider@autodesk.com>
-References: <20180304201418.60958-1-lars.schneider@autodesk.com> <20180304201418.60958-7-lars.schneider@autodesk.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 6 Mar 2018 15:55:12 -0500
-X-Google-Sender-Auth: YzxeYJLNkMh_2ruk1DzSGmzcUkA
-Message-ID: <CAPig+cSoka-yBTYBz42JGQTyCH7LDWnToeOvdZfG0_64o9QnBQ@mail.gmail.com>
-Subject: Re: [PATCH v9 6/8] convert: check for detectable errors in UTF encodings
-To:     Lars Schneider <lars.schneider@autodesk.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-        Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Lars Schneider <larsxschneider@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Mar 4, 2018 at 3:14 PM,  <lars.schneider@autodesk.com> wrote:
-> Check that new content is valid with respect to the user defined
-> 'working-tree-encoding' attribute.
->
-> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
-> ---
-> diff --git a/convert.c b/convert.c
-> @@ -266,6 +266,53 @@ static int will_convert_lf_to_crlf(size_t len, struct text_stat *stats,
-> +static int validate_encoding(const char *path, const char *enc,
-> +                     const char *data, size_t len, int die_on_error)
-> +{
-> +       if (!memcmp("UTF-", enc, 4)) {
-> +               [...]
-> +               if (has_prohibited_utf_bom(enc, data, len)) {
-> +                       [...]
-> +                       if (die_on_error)
-> +                               die(error_msg, path, enc);
-> +                       else {
-> +                               return error(error_msg, path, enc);
-> +                       }
-> +               } [...]
-> +       return 0;
-> +}
-> @@ -291,6 +338,9 @@ static int encode_to_git(const char *path, const char *src, size_t src_len,
-> +       if (validate_encoding(path, enc, src, src_len, die_on_error))
-> +               return 0;
+Igor Djordjevic <igor.d.djordjevic@gmail.com> writes:
 
-There could be a cleaner separation of responsibilities here which, as
-a nice side-effect, would eliminate the repeated "if (die_on_error)
-die(...); else return error(...);" pattern. Rather than passing a
-'die_on_error' flag to validate_encoding(), it could accept a 'strbuf
-*err' to populate in case of error:
+> A small nitpick - I see you use phrasing like "select lines", where 
+> the other commands usually talk about "staging", instead, so "stage 
+> lines" might be more aligned with the existing text.
 
-    static int validate_encoding(..., struct strbuf *err)
-    {
-        if validation error:
-            populate 'err'
-            return -1;
-        return 0
-    }
+Isn't this machinery shared across "add -p" and "reset -p"?  What is
+done to the selected lines when you are using this UI while running
+"reset -p"?  I hope it is not "staging".  If the interface only
+"selects lines" and what is done to the selected lines depends on
+what operation is using this backend, then the current phrasing is
+perfectly fine and saying "staging" makes it actively worse.
 
-and let the caller be responsible for deciding how to handle failure:
-
-    struct strbuf err = STRBUF_INIT;
-    ...
-    if (validate_encoding(..., &err)) {
-        if (die_on_error)
-            die(err.buf);
-        else {
-            error(err.buf);
-            strbuf_release(&err);
-            return 0;
-        }
-    }
-
-Not necessarily worth a re-roll, but perhaps a cleanup someone could
-submit at some point if interested.
-
->         dst = reencode_string_len(src, src_len, default_encoding, enc,
->                                   &dst_len);
