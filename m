@@ -2,140 +2,205 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 792931F404
-	for <e@80x24.org>; Tue,  6 Mar 2018 18:12:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2D2531F404
+	for <e@80x24.org>; Tue,  6 Mar 2018 18:26:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753507AbeCFSMZ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Mar 2018 13:12:25 -0500
-Received: from mout.gmx.net ([212.227.17.20]:49491 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750817AbeCFSMX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Mar 2018 13:12:23 -0500
-Received: from [10.59.3.43] ([77.210.250.197]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MNf1y-1em64g45k2-007AjW; Tue, 06
- Mar 2018 19:12:17 +0100
-Date:   Tue, 6 Mar 2018 19:12:16 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Phillip Wood <phillip.wood@dunelm.org.uk>
-cc:     Igor Djordjevic <igor.d.djordjevic@gmail.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Sergey Organov <sorganov@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC] Rebasing merges: a jorney to the ultimate
- solution(RoadClear)
-In-Reply-To: <1580e48a-be44-38dd-79af-8a2a31c5712e@talktalk.net>
-Message-ID: <nycvar.QRO.7.76.6.1803061812090.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <87y3jtqdyg.fsf@javad.com> <bbe64321-4d3a-d3fe-8bb9-58b600fabf35@gmail.com> <nycvar.QRO.7.76.6.1802270051470.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <CA+P7+xq8UUcLWomUi=PS_hTKfJd3dMAxMmhioDS1bixwcmKAqw@mail.gmail.com>
- <nycvar.QRO.7.76.6.1802271718090.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <4d7f3406-b206-cc22-87df-85700d6a03d9@gmail.com> <33da31e9-9101-475d-8901-4b6b3df2f29d@gmail.com> <940d959d-151d-68dd-0f13-320ebad0d75b@gmail.com> <87606hoflx.fsf@javad.com>
- <0ac3a3fd-4053-e32e-75ed-8829f22c2e1f@gmail.com> <87a7vss6ax.fsf@javad.com> <f1a960dc-cc5c-e7b0-10b6-39e5516655b3@gmail.com> <ed4d2b30-2dea-740b-6283-973c798f619d@philandanna.no-ip.org> <1298a701-a860-a675-83d7-72f29e14cd2b@talktalk.net>
- <CA+P7+xpgChuvh_vsPktBkOEhF=MjJh1n_3jD0-n4d67j9kYqzw@mail.gmail.com> <ee809701-a6d8-157d-09cd-cebbf2e949ec@gmail.com> <1580e48a-be44-38dd-79af-8a2a31c5712e@talktalk.net>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1753071AbeCFS0C (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Mar 2018 13:26:02 -0500
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:52682 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753308AbeCFS0B (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Mar 2018 13:26:01 -0500
+Received: by mail-wm0-f67.google.com with SMTP id t3so28273wmc.2
+        for <git@vger.kernel.org>; Tue, 06 Mar 2018 10:26:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=S2kcdgoBP3bfNsINxmAccWab4blIPTGa299e1B6fu0o=;
+        b=oEAGmFcpdIs6GHLMWjTMdRA0HP3XllgoG04mOjBhypiLauWvA8n3jLr+eE1B6XDtY9
+         wo8bZA9KNI8gXMX92VDEIoH0AWL+dUZo8bZVdHKlM1BUAPTIOQ3qFBCawB4G3NlBtzTP
+         vAHpDGakpo9ilUrAldeACQplECCqZ4v3B/y4rVU32UESGpIGbMAHO6TMMwrSKwHVOQB+
+         Js2PNH2Dm3Nmknvx2J8uFSd4nImZdeugOxw1qrO0KiR47cahkt1rAGAu7Br6ujVo+CrI
+         9nFr1NxXokf/MP3eEoGVKf4fRxSg674yot/tTrNv7tt+OT+uTuZqAwig4PL7SWjua4Uy
+         wa2w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=S2kcdgoBP3bfNsINxmAccWab4blIPTGa299e1B6fu0o=;
+        b=Ln92JcKlDhz/pK032mx1Cecazn4LRjMLwevt1G6K/gnFOk7T3tnS4j3kOWVFrqU/e+
+         ppQ6y3iXhgFVzVL4lCqX6ETwL7TPpxM5ciJ1943kWUqPS1/65HUb0wIXAxTytj+k1bcL
+         s1iN/F8YjdJsp1YIh+eMbudGqqZ0nH7N/PjQGxcKWwmKW1i5NcMtQKhR40ELtf0WZnDT
+         6Jx1mDBA5bEeMaLu3JFhr7hHpI30cAFmtwPVk9Y0xyBjKGovC+Z97xZm60DL8SZAkLLQ
+         jA91+jqhnL7eep0Q/dh7uEKwRUUVM8KceRXHHfZrsflO9PwgL8QmA8lXfHm7SYZ0O4+S
+         2KXw==
+X-Gm-Message-State: AElRT7H7qM5EFZNhxFMMwVT4gUTpuUQlBY06eDcCZSZMp1C0GCpCrJDn
+        qQBiGOcTGCWQLM5OeXgZgPY=
+X-Google-Smtp-Source: AG47ELsEHvcof8vP+w8PI4JUo6Dm4hBYQu2TUzC4tN8WnDMjMTwLwsmuAW6CJnelAnOmSgDkWlikkg==
+X-Received: by 10.28.1.208 with SMTP id 199mr12009876wmb.26.1520360759672;
+        Tue, 06 Mar 2018 10:25:59 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id l22sm19699645wre.52.2018.03.06.10.25.58
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 06 Mar 2018 10:25:59 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     e@80x24.org, git@vger.kernel.org, peff@peff.net,
+        =?utf-8?B?w4Z2YXIg?= =?utf-8?B?QXJuZmrDtnLDsA==?= Bjarmason 
+        <avarab@gmail.com>
+Subject: Re: [PATCH v2 2/5] repack: add --keep-pack option
+References: <20180301092046.2769-1-pclouds@gmail.com>
+        <20180306104158.6541-1-pclouds@gmail.com>
+        <20180306104158.6541-3-pclouds@gmail.com>
+Date:   Tue, 06 Mar 2018 10:25:58 -0800
+In-Reply-To: <20180306104158.6541-3-pclouds@gmail.com> (=?utf-8?B?Ik5ndXk=?=
+ =?utf-8?B?4buFbiBUaMOhaSBOZ+G7jWM=?=
+        Duy"'s message of "Tue, 6 Mar 2018 17:41:55 +0700")
+Message-ID: <xmqq1sgx5adl.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:bp1dUqlY+PGPwj7mQapF9Xrhtbc4lmI3B2+KLV8JRAtxeM7if5w
- ZsUfKOVP4FNTh7vCk3Y7gUJWKvRApcjVbJoHlwIMCgUJUUUqcX0+aDldIbOryadvflmI62Q
- 8qwmSWCXzWs9g24VAUj25X8DmdiuxT8E9L0S/re80wlWs17ZMjE2zpgOpud0kDqsuN2F3Dd
- w9ybjQI7a8bzDWzH+2R1Q==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:0gCRFjE4wmY=:BsFc/6B4QMgDv1n4aXfsx4
- MRlZnGVTF/M2/kxeCsJ44xxbMwPAygelYbg1PG4MUE7c1Ba4KrZZWX7dE9uyVKP87Jg1mI/sa
- RnbBtj1FSsRCMAxlpF/eytYRQyAI6oQs1QkTuYkY+MqE37P4BVsk843c8YviXsNkhyc9U+aoj
- 0S52vfboEVaVjcG/peC2TjEEW/AsYf67JG4X1DrQznWSfsPFwrkLzJ8y7WFO+9Wo40qns2jWO
- Vh2X3Jf13IRlmRG4MuTmmfYV5Z35oO/1T/ZSahIWQ2DyF4X3Iy+x6PTuV8nlwESv1ua8Zejny
- 1UI/cjGnNx53CbYn4h/VUeL+2MYzrCfCgctQ44+Pfab9yI/sJ2VaF2I6oUF7UezZGGXs/Ge85
- hYScGiJ8hnl+DWnBYEVrByaK6UdCP3KomdCaRusFNI3u531lxqIZFUetBWVzkoiTXyTnqqLWy
- g0bfUJPTztepRmHtKNJYjxsPZq9gR8DL3h7vHjG61SXFpnvIaNFii2fG5YLrRFhcXuBWhliqj
- dO9amVyW7tIy3XsRe6D9NN3vWsR+Fu39tqtQifBtpmgdOjgRSY2uNv05zsBX3udG3xFGxyAwF
- b3UJTGEnq5yn/4XOEy/yh/jhFlEudbZgC3CoYTDp7EWHxX67Fj1z1OOMfEMtelwia5P/3nnAV
- SueK4QOJLTHbTEjCn3MTJ/1RbNNgqxK7zRAqCW1U3CQdyd3T0ttc3uZftRMk0bWwqtw9DX46o
- l4WV9PCEMtyKsTqh7RmUKINw+pCxF8qXWyjhgRrb4SioB6loPdvq/ndvQ55sYfSH5SJzxPhGg
- GeLayDxk7vTL+Be9zqHXyKY4pB6gKPz/jXrn61DdjvReWNNTkw=
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip & Buga,
+Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
 
-On Tue, 6 Mar 2018, Phillip Wood wrote:
+> +--keep-pack=<pack name>::
+> +	Ignore the given pack. This is the equivalent of having
+> +	`.keep` file on the pack. Implies `--honor-pack-keep`.
+> +
 
-> On 02/03/18 23:33, Igor Djordjevic wrote:
-> > 
-> > [...]
-> > Otherwise, I would be interested to learn how context/semantics 
-> > guessing could provide a better default action (without introducing 
-> > more complexity for might not be much benefit, if any).
-> 
-> I don't think its possible to guess the semantics of the original merge
-> as users can use custom merge strategies and amend the result. It would
-> be possible to detect and unamended '-s ours' merge but special casing
-> that may end up causing users more confusion rather than helping them.
+A few questions I am not sure how I would answer:
 
-FWIW I agree.
+ - Do we want to have this listed in the SYNOPSIS section, too?
 
-My original plan was to always merge recursively and suggest to use `exec`
-commands if anything else is needed.
+ - We would want to make the SP in "<pack name>" consistent with
+   the dash in "<missing-action>" in the same document; which way do
+   we make it uniform?
 
-But now with that excellent new idea to perform successive three-way
-merges of the original merge commit with the new tips, using the old tips
-as merge base, I am considering to change that.
+ - Is this description clear enough to convey that we allow more
+   than one instance of this option specified, and the pack names
+   accumulate?
 
-There is a big problem here, though: consistency. See below for more
-musings about that.
+ - Are there use cases where we want to _ignore_ on-disk ".keep" and
+   only honor the ones given via the "--keep-pack" options?
 
-> > And I guess being consistent is pretty important, too - if you add new
-> > content during merge rebase, it should always show up in the merge,
-> > period. 
-> 
-> Yes, that should make it easy for the user to know what to expect from
-> rebase.
+ - Is this description clear enough to convey that <pack name> is
+   just the filename part (i.e. "pack-[0-9a-f]{40}.pack") in our
+   local $GIT_OBJECT_DIRECTORY/pack/ and not a full path to the
+   packfile?  I think that design is sensible, simplifies the
+   implementation and reduces mistakes.
 
-Indeed. We have seen time and time again that consistent behavior is the
-only thing that lets us adhere to the Law of Least Surprise.
+> +static void add_extra_kept_packs(const struct string_list *names)
+> +{
+> +	struct packed_git *p;
+> +
+> +	if (!names->nr)
+> +		return;
+> +
+> +	prepare_packed_git();
+> +	for (p = packed_git; p; p = p->next) {
+> +		const char *name = basename(p->pack_name);
+> +		int i;
+> +
+> +		if (!p->pack_local)
+> +			continue;
+> +
+> +		for (i = 0; i < names->nr; i++) {
+> +			if (fspathcmp(name, names->items[i].string))
+> +				continue;
+> +
+> +			p->pack_keep = 1;
+> +			ignore_packed_keep = 1;
+> +			break;
+> +		}
+> +	}
+> +}
 
-And here lies the rub: do we really want to let `merge -C <commit>` behave
-completely differently than `merge`? Granted, in one case we provide a
-template merge commit, in the other case, we do not. And the idea is
-already to behave differently, although that difference only extends to
-the commit message so far.
+OK.
 
-But given the benefit (i.e. that the strategy to transform the original
-merge commit into the new merge commit), I am willing to run that risk,
-especially since I foresee only few users wanting to create new merge
-commits from scratch using the `merge` todo command.
+> diff --git a/builtin/repack.c b/builtin/repack.c
+> index 7bdb40142f..6a1dade0e1 100644
+> --- a/builtin/repack.c
+> +++ b/builtin/repack.c
+> @@ -86,7 +86,8 @@ static void remove_pack_on_signal(int signo)
+>   * have a corresponding .keep or .promisor file. These packs are not to
+>   * be kept if we are going to pack everything into one file.
+>   */
+> -static void get_non_kept_pack_filenames(struct string_list *fname_list)
+> +static void get_non_kept_pack_filenames(struct string_list *fname_list,
+> +					const struct string_list *extra_keep)
+>  {
+>  	DIR *dir;
+>  	struct dirent *e;
+> @@ -97,6 +98,14 @@ static void get_non_kept_pack_filenames(struct string_list *fname_list)
+>  
+>  	while ((e = readdir(dir)) != NULL) {
+>  		size_t len;
+> +		int i;
+> +
+> +		for (i = 0;i < extra_keep->nr; i++)
 
-Of course, even then we need to be careful: the user might have
-*changed* or *moved* the original `merge` command. For example, if the
-merge command read:
+Style: SP after ';' before 'i'.
 
-	merge -C deadbee cafecafe bedbedbed
+> +			if (!fspathcmp(e->d_name, extra_keep->items[i].string))
+> +				break;
+> +		if (extra_keep->nr > 0 && i < extra_keep->nr)
+> +			continue;
+> +
+>  		if (!strip_suffix(e->d_name, ".pack", &len))
+>  			continue;
 
-and the user switched the order of the merged branches into
+> diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
+> index 38247afbec..553d907d34 100755
+> --- a/t/t7700-repack.sh
+> +++ b/t/t7700-repack.sh
+> @@ -196,5 +196,24 @@ test_expect_success 'objects made unreachable by grafts only are kept' '
+>  	git cat-file -t $H1
+>  '
+>  
+> +test_expect_success 'repack --keep-pack' '
+> +	test_create_repo keep-pack &&
+> +	(
+> +		cd keep-pack &&
+> +		for cmit in one two three four; do
+> +			test_commit $cmit &&
+> +			git repack -d
+> +		done &&
 
-	merge -C deadbee bedbedbed cafecafe
+Style: replace "; " before do with LF followed by a few HT.
 
-we would have to detect the changed order of the arguments so that we
-could still find the original branch tips.
+This 'for' loop would not exit and report error if an early
+test_commit or "git repack -d" fails, would it?
 
-But the user might also have changed the branch(es) to merge completely,
-in which case we might not even be able to find original branch tips.
+> +		( cd .git/objects/pack && ls *.pack ) >pack-list &&
+> +		test_line_count = 4 pack-list &&
+> +		KEEP1=`head -n1 pack-list` &&
+> +		KEEP4=`tail -n1 pack-list` &&
 
-My preferred solution would be to let the `merge` command figure out
-whether the passed arguments correspond to the rewritten versions of the
-original merge parents. And only in that case would we use the fancy
-strategy, in all other cases we would fall back to performing a regular
-recursive (or octopus) merge.
+Style: $()
 
-How does that sound?
+> +		git repack -a -d --keep-pack $KEEP1 --keep-pack $KEEP4 &&
+> +		ls .git/objects/pack/*.pack >new-counts &&
+> +		test_line_count = 3 new-counts &&
+> +		git fsck
 
-It will be slightly inconsistent. But in a defendable way, I think.
+One important invariant for this new feature is that $KEEP1 and
+$KEEP4 will both appear in new-counts file, no?  Rename new-counts
+to new-pack-list and inspect the contents, not just line count,
+perhaps?
 
-Ciao,
-Dscho
+> +	)
+> +'
+> +
+>  test_done
