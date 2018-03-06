@@ -2,106 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B27DD1F404
-	for <e@80x24.org>; Tue,  6 Mar 2018 19:23:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 62F781F404
+	for <e@80x24.org>; Tue,  6 Mar 2018 19:28:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932147AbeCFTXs (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Mar 2018 14:23:48 -0500
-Received: from mail-qt0-f196.google.com ([209.85.216.196]:44114 "EHLO
-        mail-qt0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752055AbeCFTXr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Mar 2018 14:23:47 -0500
-Received: by mail-qt0-f196.google.com with SMTP id g60so25883240qtd.11
-        for <git@vger.kernel.org>; Tue, 06 Mar 2018 11:23:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=51bACso2GB4HpFA5lw+u5boSSaFKz3R5qhyxBw5AfgY=;
-        b=AlkKhcTslqkfG8xXV86OtK5HPvsij3NXKcWX1k+4DhSJoE5GD2S2fJzG3KvGwyD56Z
-         z1CmI0F4QRFlWeQcjr4Y1Iu/XTtKWh0PJLaoinW33euUTG7+Evby3hfN2Ee6nyKdVT1u
-         VobFTsrQxv5w1NuwsYjYFKtCwx4mhJ+MXdYGQib4WuN0fhM+WBd7MX+vvNRTueI4piwq
-         dHyw/PTpDMxNg5Qspai9U2RS1lEEa23mUmgW7St0VK66eLJB08fUxUXVd4Mt0tI8HxT5
-         jHXfxlOEJkfyh0Ft+wcvwNWWDBduNIrSKFV76+PP2+lbnn21QMCKBD8Qr2YUE9WsYmQU
-         UZhA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=51bACso2GB4HpFA5lw+u5boSSaFKz3R5qhyxBw5AfgY=;
-        b=OL07V1k1YLZBWxaK+OQwE1ksMgI/CNJxgW1HgM25EcBat2P1NMI8PyBwZzBoSmRQGO
-         xwQlDlBzBTYq5RMXI7WYrRcc5CyJ3kgO+ILvqKpnRUBgbVoPOMOdqZkS6MxVFeIIyISk
-         I+9l+o4Rw6jR9zafZ+Gf7lBc4Ffc8KLB7EZvexy2eU/UECJXr9FrAloaFCktnTH++ZJW
-         m+k5NU/AXpMC/66SzlFuNjI+BiQ2q+qlFd10JuIr5VeKToQw0zg88e2nQY4/wzX0MgTi
-         Di4RARN5OT277St6tamDS/sQezvrZ5kRbmIFrmkrobE0XP6i/eNXh8GjNF4rxCM1lqXX
-         fz3Q==
-X-Gm-Message-State: AElRT7Haiz+SJYqS7QlKJANecT6X0X5szqHBdpd3/UaOKOqTFiOLqn/I
-        /eI/hV0W1uHl0SNqddkUFpQI7xO9rlWwYeOKH7U=
-X-Google-Smtp-Source: AG47ELsR4V1qTzMbycHeGWhtZN4To2/bLXWA7Pc3Mw+l/oxYK2FUt22HTRx5ZfVjxR+KiY8I31tT7ZG4yvK0USDlD9s=
-X-Received: by 10.200.28.8 with SMTP id a8mr22964193qtk.280.1520364227170;
- Tue, 06 Mar 2018 11:23:47 -0800 (PST)
+        id S933270AbeCFT14 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Mar 2018 14:27:56 -0500
+Received: from mx1.riseup.net ([198.252.153.129]:56525 "EHLO mx1.riseup.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S933101AbeCFT1y (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Mar 2018 14:27:54 -0500
+X-Greylist: delayed 441 seconds by postgrey-1.27 at vger.kernel.org; Tue, 06 Mar 2018 14:27:54 EST
+Received: from cotinga.riseup.net (cotinga-pn.riseup.net [10.0.1.164])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (Client CN "*.riseup.net", Issuer "COMODO RSA Domain Validation Secure Server CA" (verified OK))
+        by mx1.riseup.net (Postfix) with ESMTPS id D67EB1A0A90
+        for <git@vger.kernel.org>; Tue,  6 Mar 2018 11:20:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=riseup.net; s=squak;
+        t=1520364032; bh=J78XI3LfDmTLgiNBEMsCfxpr0IBowPzKGBX0kbeZ1tQ=;
+        h=Date:From:To:Subject:From;
+        b=cX244VCDhASnBcYI2Kiup3pYW0LStmxVaIJJ2xGE3SKeDJtOoWqSfB11P8pTSSQd5
+         AX1QCASv5P3s5qGIEIMB8EMel6J50u3SnTexB/Ij2aY82/WqUFuW3ZgrSpg15EsyJy
+         X6zC7y2//Tb8oqLCti3x0gNWm2tdeoye1wDMLABM=
+X-Riseup-User-ID: DDFB3719A56FA886C112F1E4120310BA097A036AA8772F048900E43CB0DE5116
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+         by cotinga.riseup.net with ESMTPSA id 3DE72865A0
+        for <git@vger.kernel.org>; Tue,  6 Mar 2018 11:20:32 -0800 (PST)
+Date:   Tue, 6 Mar 2018 14:20:17 -0500
+From:   Sean Behan <seanwbehan@riseup.net>
+To:     git@vger.kernel.org
+Subject: Bug: moving submodules that have submodules inside them causes a
+ fatal error in git status
+Message-ID: <20180306192017.GA5797@riseup.net>
 MIME-Version: 1.0
-Received: by 10.12.142.14 with HTTP; Tue, 6 Mar 2018 11:23:46 -0800 (PST)
-In-Reply-To: <1520337165-sup-4504@x1c>
-References: <1520337165-sup-4504@x1c>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 6 Mar 2018 14:23:46 -0500
-X-Google-Sender-Auth: vDzfWViDfUOYI5O0TDMT_g8fLWQ
-Message-ID: <CAPig+cRYsf161-Xomw7daj8XdEBxZAEQQRdOn4krRTpSAFkPOw@mail.gmail.com>
-Subject: Re: [PATCH] xdiff: improve trimming preprocessing
-To:     Jun Wu <quark@fb.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="5vNYLRcllDrimb99"
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 6, 2018 at 6:53 AM, Jun Wu <quark@fb.com> wrote:
-> xdiff-interface trims common suffix if ctxlen is 0. Teach it to also
-> trim common prefix, and trim less lines if ctxlen > 0. So it can benefit
-> the default diff command, as seen by profiling: [...]
 
-A few comments (below) based upon a quick scan of the patch...
+--5vNYLRcllDrimb99
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-> Signed-off-by: Jun Wu <quark@fb.com>
-> ---
-> diff --git a/t/t4066-diff-trimming.sh b/t/t4066-diff-trimming.sh
-> @@ -0,0 +1,49 @@
-> +test_expect_success 'setup' '
-> +  printf "x\n%.0s" {1..1000} >a &&
-> +  printf "x\n%.0s" {1..1001} >b &&
-> +  cat >c <<EOF1 && cat >d <<EOF2 &&\
-> +  printf "x%.0s" {1..934} >>c &&\
-> +  printf "x%.0s" {1..934} >>d # pad common suffix to 1024 bytes
+Hello,
 
-The expression {x..y} is not portable to non-POSIX shells.
+I encountered this error when moving some submodules in vim, basically if you
+have a submodule that has submodules inside it and you try to move it you'll
+encouter a fatal error with `git status`. I have a pastebin example of this
+here: https://ptpb.pw/5g9-/bash
 
-> +test_expect_success 'git diff -U0 shifts hunk towards the end' '
-> +       test_expect_code 1 git diff -U0 --no-index a b |\
-> +    fgrep "@@ -1000,0 +1001 @@" &&
-> +       test_expect_code 1 git diff -U0 --no-index b a |\
-> +    fgrep "@@ -1001 +1000,0 @@"
-> +'
+Appologies if this is an invalid bug report.
 
-Style: Mix of tabs and spaces for indentation. Please indent only with
-tabs throughout the patch.
+I'm running Git version: 2.16.2 (Debian Unstable)
 
-> diff --git a/xdiff-interface.c b/xdiff-interface.c
-> @@ -101,42 +101,64 @@ static int xdiff_outf(void *priv_, mmbuffer_t *mb, int nbuf)
-> +static void trim_common(mmfile_t *a, mmfile_t *b, long reserved,
-> +                       xdemitconf_t *xecfg)
->  {
-> +       /* prefix - need line count for xecfg->ptrimmed */
-> +       for (i = 0; ++i < smaller && *ap == *bp;) {
-> +               lines += (*ap == '\n');
-> +               ap++, bp++;
+--
 
-Is there a good reason for not placing 'ap++, bp++' directly in the 'for'?
+Sean Behan
 
-    for (i = 0; ++i < smaller && *ap == *bp; ap++, bp++)
+--5vNYLRcllDrimb99
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEqrfkzcfAOXOnlTsZmSkJCkGZyZMFAlqe6eEACgkQmSkJCkGZ
+yZP5nQ//aOD9vmgNoxbtQhHHl6xShkUI/H5YWh9021Siik2mASG7MIz69xDUNb1q
+TJeHCXBGLk04ngNPVuLAwdSH/Sma5qcaYzoGcRmED4Pv5RNX/IeZ6BHdAzbJEbga
+u/oh6Ii1IDqHmi0t4ghPVndlrPnuinHiZMbvScA4fMhfEkrJsjkaFZcSs2boLKP1
+GKRs9FlezEOCHyFcdE4UM/wGMQW0ZZiMspq/N1XEyjuE54GZEeMRyUCGcHZnn5xL
+1fcC7EqOPm/uvhKq8ZYKXZlz0B/7N0+dSnXJUArG6feQZ7BYYOy4FSE+fAvRoeKa
+hMWjeyvlEsckK+4gq4N96D6FAtEJ5NLuP+UAAsDpFP6lLFLVMymZy17Te6Q2pDmg
+wCvvGDbhyODR9zmQAD6xJHDzNSeywHFRsBX9W+Kb2yiN5WS6YtxXf22cyNNyC6e3
+9OWTi7Z9gzNxH3n9f6PaH7EnsJZL1xviMfpI+mZSWR70c1bN/1XNya31Wo68S2gK
+hg5CpIbYFORcKRd9GK4KHLBL0pb0f10cuHKhXCIdLPruFj16+7E2q7aXqRwri4Xe
+Bjjikss8aWzjDZzyv4ATkLC3anpE2LTLgZR6ovf+lqgfeIQaSlPuJfIAtf6+qBK/
+ecdYN2GIBaYJ/HTPmO0FfZTpNNlAAYSYTG/fTfIO4rppFWI1+6c=
+=NMm3
+-----END PGP SIGNATURE-----
+
+--5vNYLRcllDrimb99--
