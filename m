@@ -2,150 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 89E321F404
-	for <e@80x24.org>; Tue,  6 Mar 2018 20:42:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C68591F404
+	for <e@80x24.org>; Tue,  6 Mar 2018 20:50:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753821AbeCFUmh (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Mar 2018 15:42:37 -0500
-Received: from mail-qt0-f193.google.com ([209.85.216.193]:40291 "EHLO
-        mail-qt0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753504AbeCFUmg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Mar 2018 15:42:36 -0500
-Received: by mail-qt0-f193.google.com with SMTP id y6so26185315qtm.7
-        for <git@vger.kernel.org>; Tue, 06 Mar 2018 12:42:36 -0800 (PST)
+        id S1753747AbeCFUuc (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Mar 2018 15:50:32 -0500
+Received: from mail-wr0-f195.google.com ([209.85.128.195]:42498 "EHLO
+        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753504AbeCFUub (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Mar 2018 15:50:31 -0500
+Received: by mail-wr0-f195.google.com with SMTP id k9so22313571wre.9
+        for <git@vger.kernel.org>; Tue, 06 Mar 2018 12:50:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=yPHlM+ShLXsDd3vUb41/I+wt4PgOr3uxipAbQg6Kjv4=;
-        b=W3LVvke8nuMsxJB2N9hTz5RddzJuGC734kAZCJaiLIPFSZjoOPn1o13BiOd3rjUAM3
-         p4Vy3soaE4YulcBQON5hp2rTcZwhaOQJ6yzdQ43AODOzFrCAa95kxKyq3L82xCHXeQ70
-         Kf3sULspZLecBw4IJxldj58Y+dwv23spH8ZQ8DngTiUDVpp84NKznBaOT3EXFBoPu3lI
-         9KqV7zd6LXP+rSKGX9+rZ0BvnEy/cZ1xflo4HG7XnuvbuiuGCGN9uDR9U+sebSu2sUfG
-         9AzMc/NzJdSPkaJnJB5u91msCguRolCztBRjjkk9j0osplKtccVVPfLC7EFBlXp6S018
-         ALHw==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=ZCB1VQIP5oHtvYU8Zz+L2H5BF2XOagnuK6EGasN4Dpk=;
+        b=apWvqBOkgHHsWRQsAAOcnpEPd2FrKSxMvjl/4b3BOcByVL3R8szbUZeuG9QIklQsZQ
+         7ZWeWPW4/lKoKOiga1DQpn7ptn1F+cIQyT+dsVobttMu8eWK4NEWFGnJH02YRdkzokAl
+         h0LBFmi9O8HDVshToJvLrRoJjGIEOEwAnKdv5qG2/zRWbtOFhj1m+Ts6eCIf+2DI/JFB
+         C3lC/X+jUD0A7FOSc/hjAB4bsdOpAJOASwDLG/p3i0DBxd41K0W9xrHBIPxuVXhh2y/z
+         42NcbVxu5c5MRS9OP6mT+px70Ig7kjCKR1BxbLhNmc4hnUdkIAMPvwC7MAz3nL+NT02l
+         z80g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=yPHlM+ShLXsDd3vUb41/I+wt4PgOr3uxipAbQg6Kjv4=;
-        b=ls7khXr/lEYTDdGrX5oOdnBeXmuVmXIXB/rVVYsDnPrp9YJkJI74n1UMWTwiWHmXp2
-         oHoWwWsRAYPsJuoBz4nSZxwths8HmUwTzLtYUloMAZFvnw2svSjnCDzUoWnPmfNa0b/M
-         RjHguJY4ICWHPpPvzrZ5xlGo3KxNNz2XjXG8yX6bIhoR1csXYE7OPbc40+J8HP1CLjT4
-         nun8h6nec6p81Y9fo3fzmBC5Z6gA9aey4+zPNtnaLjVYjANeHxqdAV0Lf0+94l7r1DiH
-         H85VwF182iXMLyJ2Ziv1XrcNE8X8uswr+TLPpp0iM23TG+jRh+BcQUIafr+plFpVTZWH
-         H2ow==
-X-Gm-Message-State: AElRT7Gck+8vyUsQdMPo2W+U9bbvwL0g0OPWxudc6YpDr854Gok/rnTw
-        Jg6RRr83Wg8rhpf0SMyXnlZC9nxPMnBnU0lhjlA=
-X-Google-Smtp-Source: AG47ELuqgvaS5f/BEoqcTCoovvwZoNFWRSyzZlmb17l35iS5vMyfK/ncPTj9wnOElFHHUTtsDW+nXvl0/Ghx+8AM4ec=
-X-Received: by 10.200.6.5 with SMTP id d5mr31218841qth.205.1520368955778; Tue,
- 06 Mar 2018 12:42:35 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.12.142.14 with HTTP; Tue, 6 Mar 2018 12:42:35 -0800 (PST)
-In-Reply-To: <20180304201418.60958-6-lars.schneider@autodesk.com>
-References: <20180304201418.60958-1-lars.schneider@autodesk.com> <20180304201418.60958-6-lars.schneider@autodesk.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 6 Mar 2018 15:42:35 -0500
-X-Google-Sender-Auth: yPgNS9YjLBPewtdNC6ch72eecVQ
-Message-ID: <CAPig+cTOpBODeoHV=+4-4MEjKM=pUrZSa=BEmHh4mVP=xPpFCA@mail.gmail.com>
-Subject: Re: [PATCH v9 5/8] convert: add 'working-tree-encoding' attribute
-To:     Lars Schneider <lars.schneider@autodesk.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-        Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=ZCB1VQIP5oHtvYU8Zz+L2H5BF2XOagnuK6EGasN4Dpk=;
+        b=JQQxcBNa7nlFPz+UplA73CnsYdZNzR8r/1cdSKZPgheo9DzvIwAPWRVkjR6eqPZ3Kt
+         i9xF3JPSKYWAofe1LesP9BsbsE3C+ysR1mBzn9Hq2v45w1+fmyrjut97b1ZUbG+WNw47
+         LmxXqUr8hAeigPMj5hXhGcKFARhBRJbWZ45cihsNEzgD/rVIF1/HuKUQCVNrtU53jk3H
+         bQeEEIheCnBrZaCQ8Ue32VsKN1SfMH0EOsdtIxwOhOmWbunPmYGqS8nMncN3Aij7UXbM
+         7MO2HmKcq5T345/l5yKaUF96qH5FiJ6c+bQ5rp3OHaKpBDpUHtE6xn/0jnLFP3HpY9U7
+         Va3w==
+X-Gm-Message-State: APf1xPDgu2vUeBlTgfHLpUIjbQ1eKNNSrj79Ievc+XD0QgLYY4G1MGp2
+        qjR60vEk5cJ/xis5VCPHcE6/eqab
+X-Google-Smtp-Source: AG47ELtpp1P7BLSdt8bf9rfM7O4rjto9zXxecKYv+L67pgBCUE28oZLT8uTuONp6Aeb9wlCH7++UfA==
+X-Received: by 10.223.156.206 with SMTP id h14mr15928112wre.281.1520369429980;
+        Tue, 06 Mar 2018 12:50:29 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id n29sm3897637wmi.32.2018.03.06.12.50.28
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 06 Mar 2018 12:50:29 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     lars.schneider@autodesk.com
+Cc:     git@vger.kernel.org, tboegi@web.de, j6t@kdbg.org,
+        sunshine@sunshineco.com, peff@peff.net,
+        ramsay@ramsayjones.plus.com, Johannes.Schindelin@gmx.de,
         Lars Schneider <larsxschneider@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH v9 4/8] utf8: add function to detect a missing UTF-16/32 BOM
+References: <20180304201418.60958-1-lars.schneider@autodesk.com>
+        <20180304201418.60958-5-lars.schneider@autodesk.com>
+Date:   Tue, 06 Mar 2018 12:50:28 -0800
+In-Reply-To: <20180304201418.60958-5-lars.schneider@autodesk.com> (lars
+        schneider's message of "Sun, 4 Mar 2018 21:14:14 +0100")
+Message-ID: <xmqqvae92ajv.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Mar 4, 2018 at 3:14 PM,  <lars.schneider@autodesk.com> wrote:
-> Git recognizes files encoded with ASCII or one of its supersets (e.g.
-> UTF-8 or ISO-8859-1) as text files. All other encodings are usually
-> interpreted as binary and consequently built-in Git text processing
-> tools (e.g. 'git diff') as well as most Git web front ends do not
-> visualize the content.
-> [...]
-> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
-> ---
-> diff --git a/convert.c b/convert.c
-> @@ -978,6 +1051,25 @@ static int ident_to_worktree(const char *path, const char *src, size_t len,
-> +static const char *git_path_check_encoding(struct attr_check_item *check)
+lars.schneider@autodesk.com writes:
+
+> +int is_missing_required_utf_bom(const char *enc, const char *data, size_t len)
 > +{
-> +       [...]
-> +       /*
-> +        * Ensure encoding names are always upper case (e.g. UTF-8) to
-> +        * simplify subsequent string comparisons.
-> +        */
-> +       return xstrdup_toupper(value);
-
-xstrdup_toupper() allocates memory...
-
+> +	return (
+> +	   !strcmp(enc, "UTF-16") &&
+> +	   !(has_bom_prefix(data, len, utf16_be_bom, sizeof(utf16_be_bom)) ||
+> +	     has_bom_prefix(data, len, utf16_le_bom, sizeof(utf16_le_bom)))
+> +	) || (
+> +	   !strcmp(enc, "UTF-32") &&
+> +	   !(has_bom_prefix(data, len, utf32_be_bom, sizeof(utf32_be_bom)) ||
+> +	     has_bom_prefix(data, len, utf32_le_bom, sizeof(utf32_le_bom)))
+> +	);
 > +}
-> @@ -1033,6 +1125,7 @@ struct conv_attrs {
->         enum crlf_action attr_action; /* What attr says */
->         enum crlf_action crlf_action; /* When no attr is set, use core.autocrlf */
->         int ident;
-> +       const char *working_tree_encoding; /* Supported encoding or default encoding if NULL */
 
-...which is assigned to 'const char *'...
+These strcmp() calls seem inconsistent with the principle embodied
+by utf8.c::fallback_encoding(), i.e. "be lenient to what we accept",
+and make the interface uneven.  I am wondering if we also want to
+complain when the user gave us "utf16" and there is no byte order
+mark in the contents, for example?  Also "UTF16" or other spelling
+the platform may support but this code fails to recognise will go
+unchecked.
 
->  };
-> @@ -1064,6 +1158,7 @@ static void convert_attrs(struct conv_attrs *ca, const char *path)
->                         else if (eol_attr == EOL_CRLF)
->                                 ca->crlf_action = CRLF_TEXT_CRLF;
->                 }
-> +               ca->working_tree_encoding = git_path_check_encoding(ccheck + 5);
+Which actually may be a feature, not a bug, to be able to bypass
+this check---I dunno.
 
-...by this code, and eventually leaked.
+The same comment applies to the previous step.
 
-It's too bad it isn't cleaned up (freed), but looking at the callers,
-fixing this leak would be mildly noisy (though not particularly
-invasive). How much do we care about this leak?
-
->         } else {
->                 ca->drv = NULL;
->                 ca->crlf_action = CRLF_UNDEFINED;
-> diff --git a/t/t0028-working-tree-encoding.sh b/t/t0028-working-tree-encoding.sh
-> @@ -0,0 +1,135 @@
-> +test_expect_success 'check $GIT_DIR/info/attributes support' '
-> +       test_when_finished "rm -f test.utf8.raw test.utf32.raw test.utf32.git" &&
-
-It seems weird to be cleaning up files this test didn't create
-(test.utf8.raw and test.utf32.raw).
-
-> +       test_when_finished "git reset --hard HEAD" &&
-> +
-> +       echo "*.utf32 text working-tree-encoding=utf-32" >.git/info/attributes &&
-> +       git add test.utf32 &&
-> +
-> +       git cat-file -p :test.utf32 >test.utf32.git &&
-> +       test_cmp_bin test.utf8.raw test.utf32.git
-> +'
-> +
-> +test_expect_success 'check unsupported encodings' '
-> +       test_when_finished "rm -f err.out" &&
-> +       test_when_finished "git reset --hard HEAD" &&
-
-Resetting to HEAD here is an important cleanup action, but tests don't
-usually clean up files such as 'err.out' since such detritus doesn't
-usually impact subsequent tests negatively. (Just an observation; no
-re-roll needed.)
-
-> +       echo "*.nothing text working-tree-encoding=" >>.gitattributes &&
-> +       printf "nothing" >t.nothing &&
-> +       git add t.nothing &&
-> +
-> +       echo "*.garbage text working-tree-encoding=garbage" >>.gitattributes &&
-> +       printf "garbage" >t.garbage &&
-> +       test_must_fail git add t.garbage 2>err.out &&
-> +       test_i18ngrep "fatal: failed to encode" err.out
-> +'
