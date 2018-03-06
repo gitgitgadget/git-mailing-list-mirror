@@ -2,95 +2,174 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 80C851F404
-	for <e@80x24.org>; Tue,  6 Mar 2018 21:33:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B8BEE1F404
+	for <e@80x24.org>; Tue,  6 Mar 2018 22:13:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753994AbeCFVdM (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Mar 2018 16:33:12 -0500
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:55464 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753904AbeCFVdL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Mar 2018 16:33:11 -0500
-Received: by mail-wm0-f68.google.com with SMTP id q83so934439wme.5
-        for <git@vger.kernel.org>; Tue, 06 Mar 2018 13:33:11 -0800 (PST)
+        id S1754138AbeCFWNc (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Mar 2018 17:13:32 -0500
+Received: from mail-pl0-f53.google.com ([209.85.160.53]:41222 "EHLO
+        mail-pl0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754003AbeCFWNb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Mar 2018 17:13:31 -0500
+Received: by mail-pl0-f53.google.com with SMTP id d9-v6so121870plo.8
+        for <git@vger.kernel.org>; Tue, 06 Mar 2018 14:13:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:from:to:cc:references:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=+0lNX4AdF5xVWqhR88+5oWiKkuLJg8AgctV5MmXHNPo=;
-        b=QIu1+TLTlG8EBxM/mTC685AYPBaSl0Jt88KBkvIh/7ChZcmEZTPU0WdA15uzvYsC/J
-         wj/DhNN2goKiCanJGJyGEcR5yy5ggCtJTOVkAfEuo6JHkdv1RAdF1mUTCqfFjt2T7e85
-         fajwRhV0CQtjw4kliz1qIbA9eDtyacpgeTj81TgA4+2PNLsT5tlPLN2rQD7XSZ72xmUd
-         oTJ+FZ6R1gwhIi1pCrYwbQ8cK85Q7b03TFUB3shanMJhsBMHfMYpx6Gpzii/UM+PDuUY
-         5KWlMGvE0UKtE+Gu/T8pX3fYeDUpNpAgsh7Y91irRvOEWBpkFdz1jOhtXTKtNFGohXmi
-         RwDw==
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=QQTkgosCm20cBrqEjZ2CBIjn8BE4cQofBKPjM5s5E44=;
+        b=HEY0Nr1o3qOdLkM+scPcHTya9mAbIysE6eOp7Rn4KdzyPgB/ool7KkhrxuSQMZvpcw
+         5/JGlgzuCsuUQl7Wqiohk5hfEn0GG44eux2otaNDRgT9imY47VbLMAgyX4i8l8ZYK9K0
+         e0UnO0dpVTnhAJPaHSwdFPVNsAeaSqhMHJiJq8yZ9cKtr9I6lPotlvLGtgL84jB2oJ0O
+         mXsp2wdU9QDx7v+yyDhTK6haN/wPDewsQ02RWrjpodIpAaKzNCr1n67vKnmTpaVYtLwp
+         C5c1lC3DTSQDB3OOlhCcs9FZmooKZXInzGtQ/ZWGNneKAL9rn+XozmkoN8RJuIzoEWi6
+         mnNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=+0lNX4AdF5xVWqhR88+5oWiKkuLJg8AgctV5MmXHNPo=;
-        b=IrDzUxl/VgeKqyFBvNrpfsAbVj5iPqDYO1WEfHp1zqGGIkU3eW3HLelN8VjiNtXR4a
-         C3s2l2ebv3lIa9YZ5/Yws15c25Etw09+JCDO6CMsom7cUybteBcnKmbyhb0FTByRulYR
-         5xpgS32jHBuLhK/IpMytrGSa0fNhLbF9MJdoc5OsYI4Vlv60p7w62kRuz8+Ucg4k1/lS
-         qL0uz4T5L+RkGorMm7wF+bo12UhYL4L+wFSLxB8cXxj4MQWPRbRZyhOa/H2y4e+qMCyu
-         fSXdYNC+VUEC6V3eIJ+fqE0/rgJTPj3piv0wL1OXaCc0FjUXrNcQWnlFQOQtVW15XmcT
-         bwvA==
-X-Gm-Message-State: AElRT7G5Mt5QP2GgrpPDT/ONJhjRA6wodL0Rqq1qsqVG8GJ0Onfw8Ink
-        MkdoXBEAux6Du0E70AcDttE=
-X-Google-Smtp-Source: AG47ELselrBKH1ve9mj6KzkbrXWT5dcORqWgZU1kpCGGw4NR3oDzEJdlN1JKmYad30glFg/oxQo84Q==
-X-Received: by 10.28.74.130 with SMTP id n2mr9392135wmi.22.1520371990435;
-        Tue, 06 Mar 2018 13:33:10 -0800 (PST)
-Received: from [192.168.5.102] (cable-24-135-61-30.dynamic.sbb.rs. [24.135.61.30])
-        by smtp.gmail.com with ESMTPSA id 7sm36371508wry.18.2018.03.06.13.33.09
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 06 Mar 2018 13:33:09 -0800 (PST)
-Subject: Re: [PATCH v2 1/3] add -p: select individual hunk lines
-From:   Igor Djordjevic <igor.d.djordjevic@gmail.com>
-To:     Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Git Mailing List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Gustavo Leite <gustavoleite.ti@gmail.com>
-References: <20180219113619.26566-1-phillip.wood@talktalk.net>
- <20180306101750.18794-1-phillip.wood@talktalk.net>
- <20180306101750.18794-2-phillip.wood@talktalk.net>
- <a6f70938-0834-8109-6b94-d93639bb6d0c@gmail.com>
-Message-ID: <4328de01-f3e7-7cc4-5ed2-8b90da2fa94e@gmail.com>
-Date:   Tue, 6 Mar 2018 22:33:00 +0100
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
-MIME-Version: 1.0
-In-Reply-To: <a6f70938-0834-8109-6b94-d93639bb6d0c@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=QQTkgosCm20cBrqEjZ2CBIjn8BE4cQofBKPjM5s5E44=;
+        b=AqQI8G5sR2L8El8fEVGY+S7rCyokMFW1Jts65uJzG6/u06BQVMtXAq0bWAzAn7WYpc
+         FhckzEA5U0dpGm99zCdLRahnJNM3SLbwkQNa0ghtpyAGtDkVQjtdLBv/hSTJB3dOg8No
+         iE7978gb1wX0nMjxnpk6q3QVW7TdMcyHKuRy+/pRgvt35iHfsMEDeg15V+SQbYZsP4Vi
+         2TWHKLr7nYPXFZoY/mayCxJEEC8ffMhdHIuixNetKmqtU2hJh5g4M07MfhGtcXimL6ap
+         O4YD5oNPCjdNV85s8aloeqV7Y/DonQlH3jEVfGvtKrhCSGo2fNJhJB3BwlLkg2fxluAx
+         jtrw==
+X-Gm-Message-State: APf1xPDFcAIrSP7/dH6UUOdF2mrun9HBWj2IuJHFCbtdXi/JZKfslitT
+        +Z1Ux7WywKkL3qkNBPSCLfw=
+X-Google-Smtp-Source: AG47ELsX7XbHp+H19WJTubg/bL+RqJDjnLFlxUE/n7RDIpuXKxwp08V0oQveFEkcOBGeL3aJhvXwfw==
+X-Received: by 2002:a17:902:7294:: with SMTP id d20-v6mr16473286pll.43.1520374410849;
+        Tue, 06 Mar 2018 14:13:30 -0800 (PST)
+Received: from neu8r3hm32.ads.autodesk.com (adsknateur.autodesk.com. [132.188.32.100])
+        by smtp.gmail.com with ESMTPSA id h26sm24508159pgv.22.2018.03.06.14.13.27
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 06 Mar 2018 14:13:30 -0800 (PST)
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [PATCH v9 5/8] convert: add 'working-tree-encoding' attribute
+From:   Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <CAPig+cTOpBODeoHV=+4-4MEjKM=pUrZSa=BEmHh4mVP=xPpFCA@mail.gmail.com>
+Date:   Tue, 6 Mar 2018 23:13:24 +0100
+Cc:     Lars Schneider <lars.schneider@autodesk.com>,
+        Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+        Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <570D707A-DD9E-4397-8155-E8B3C3D09760@gmail.com>
+References: <20180304201418.60958-1-lars.schneider@autodesk.com> <20180304201418.60958-6-lars.schneider@autodesk.com> <CAPig+cTOpBODeoHV=+4-4MEjKM=pUrZSa=BEmHh4mVP=xPpFCA@mail.gmail.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 06/03/2018 21:29, Igor Djordjevic wrote:
-> 
-> > diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-> > index f83e7450ad..a273b41e95 100755
-> > --- a/git-add--interactive.perl
-> > +++ b/git-add--interactive.perl
-> > 
-> > [...]
-> > 
-> > @@ -1255,6 +1382,7 @@ j - leave this hunk undecided, see next undecided hunk
-> >  J - leave this hunk undecided, see next hunk
-> >  k - leave this hunk undecided, see previous undecided hunk
-> >  K - leave this hunk undecided, see previous hunk
-> > +l - select hunk lines to use
-> 
-> s/select hunk lines to use/stage hunk lines/
 
-I was wrong here - in the context of Junio`s remark, I now think this 
-might even belong to context-aware "help_patch_modes" instead, 
-phrased accordingly in there (stage/stash/unstage... etc.).
+> On 06 Mar 2018, at 21:42, Eric Sunshine <sunshine@sunshineco.com> =
+wrote:
+>=20
+> On Sun, Mar 4, 2018 at 3:14 PM,  <lars.schneider@autodesk.com> wrote:
+>> Git recognizes files encoded with ASCII or one of its supersets (e.g.
+>> UTF-8 or ISO-8859-1) as text files. All other encodings are usually
+>> interpreted as binary and consequently built-in Git text processing
+>> tools (e.g. 'git diff') as well as most Git web front ends do not
+>> visualize the content.
+>> [...]
+>> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
+>> ---
+>> diff --git a/convert.c b/convert.c
+>> @@ -978,6 +1051,25 @@ static int ident_to_worktree(const char *path, =
+const char *src, size_t len,
+>> +static const char *git_path_check_encoding(struct attr_check_item =
+*check)
+>> +{
+>> +       [...]
+>> +       /*
+>> +        * Ensure encoding names are always upper case (e.g. UTF-8) =
+to
+>> +        * simplify subsequent string comparisons.
+>> +        */
+>> +       return xstrdup_toupper(value);
+>=20
+> xstrdup_toupper() allocates memory...
+>=20
+>> +}
+>> @@ -1033,6 +1125,7 @@ struct conv_attrs {
+>>        enum crlf_action attr_action; /* What attr says */
+>>        enum crlf_action crlf_action; /* When no attr is set, use =
+core.autocrlf */
+>>        int ident;
+>> +       const char *working_tree_encoding; /* Supported encoding or =
+default encoding if NULL */
+>=20
+> ...which is assigned to 'const char *'...
+>=20
+>> };
+>> @@ -1064,6 +1158,7 @@ static void convert_attrs(struct conv_attrs =
+*ca, const char *path)
+>>                        else if (eol_attr =3D=3D EOL_CRLF)
+>>                                ca->crlf_action =3D CRLF_TEXT_CRLF;
+>>                }
+>> +               ca->working_tree_encoding =3D =
+git_path_check_encoding(ccheck + 5);
+>=20
+> ...by this code, and eventually leaked.
+>=20
+> It's too bad it isn't cleaned up (freed), but looking at the callers,
+> fixing this leak would be mildly noisy (though not particularly
+> invasive). How much do we care about this leak?
+
+Hmm. You are right. That was previously handled by the encoding struct=20=
+
+linked list that I removed in this iteration. I forgot about that aspect =
+:/
+I don't like it leaking. I think I would like to reintroduce the linked
+list. This way every encoding is only once in memory. What do you think?
+
+
+>>        } else {
+>>                ca->drv =3D NULL;
+>>                ca->crlf_action =3D CRLF_UNDEFINED;
+>> diff --git a/t/t0028-working-tree-encoding.sh =
+b/t/t0028-working-tree-encoding.sh
+>> @@ -0,0 +1,135 @@
+>> +test_expect_success 'check $GIT_DIR/info/attributes support' '
+>> +       test_when_finished "rm -f test.utf8.raw test.utf32.raw =
+test.utf32.git" &&
+>=20
+> It seems weird to be cleaning up files this test didn't create
+> (test.utf8.raw and test.utf32.raw).
+
+Agreed.
+
+
+>> +       test_when_finished "git reset --hard HEAD" &&
+>> +
+>> +       echo "*.utf32 text working-tree-encoding=3Dutf-32" =
+>.git/info/attributes &&
+>> +       git add test.utf32 &&
+>> +
+>> +       git cat-file -p :test.utf32 >test.utf32.git &&
+>> +       test_cmp_bin test.utf8.raw test.utf32.git
+>> +'
+>> +
+>> +test_expect_success 'check unsupported encodings' '
+>> +       test_when_finished "rm -f err.out" &&
+>> +       test_when_finished "git reset --hard HEAD" &&
+>=20
+> Resetting to HEAD here is an important cleanup action, but tests don't
+> usually clean up files such as 'err.out' since such detritus doesn't
+> usually impact subsequent tests negatively. (Just an observation; no
+> re-roll needed.)
+
+OK. I'll fix it if I reroll.
+
+- Lars=
