@@ -2,117 +2,131 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F0D751F404
-	for <e@80x24.org>; Tue,  6 Mar 2018 22:39:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 208FA1F404
+	for <e@80x24.org>; Tue,  6 Mar 2018 22:42:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754228AbeCFWjW (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Mar 2018 17:39:22 -0500
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:39162 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754209AbeCFWjW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Mar 2018 17:39:22 -0500
-Received: by mail-pg0-f68.google.com with SMTP id e3so111775pga.6
-        for <git@vger.kernel.org>; Tue, 06 Mar 2018 14:39:22 -0800 (PST)
+        id S1754151AbeCFWmp (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Mar 2018 17:42:45 -0500
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:34012 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753868AbeCFWmo (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Mar 2018 17:42:44 -0500
+Received: by mail-wr0-f193.google.com with SMTP id o8so261680wra.1
+        for <git@vger.kernel.org>; Tue, 06 Mar 2018 14:42:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=aesyozrVGZW7yzaFyAUhU98NxK6tie0WIUV5WkcyAYk=;
-        b=G7+nkpYvpxfNsRWMXpFMiqmWeu1dZCcTfAfQ/vFWTJQ0/f5D3e0Sa0h+xaB5gaXOqt
-         SW4kGSxf/y6vn2jGwjhOi5/lksnV/YkMcoQnsdyMEoppSmdcEV7ASatoDVBPqbCo0R4f
-         EsQEjbWItxp2Ri60BOoqSzosBV5jduVaCtktdKMR5Hgnlfy3NMCku3ltipyuj6TGMP53
-         Nx4VR8gZHZZIQXfLiP7Gq2mX7rP/SWazjqxZCBZL6gXrFvZYWGrlLbD9y2eu5soX7bPC
-         +AlTrqk+qPJnmrpgJ3kYsO5FE1WMnhOCZkIGnrRS2ZyDCr3ujwfTuVCItH8KJEKmBSaN
-         kyRg==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=AIMHNcvqQiD2whg+T0+tovgPj3MSrVntKnQDriZl6wk=;
+        b=sEEnNWSItuwL4+TWsmkPUCN+KVxSw6gYl0vq2rMhs9HZ4iVN562KCNTGWYCuenu6Ou
+         caUO6ntZUHzoFk2VK9RZ8wpi/a3yFhsBpngIatSSoAdUjmROPuhJAnxl/+15/FO2KPBy
+         2mEZvukCgc3d/itI3L3P5DiGvqrfJwaiDpRsuDsEb4Qu+AzT7ZNpj7X1yt/aWRj76Rjn
+         A6VmfdPrvN7U1kbjQKeY3WWnYAte9ngvEvNgRYskD/G3Ckd1yYXGWXahCkt5yza2VoEz
+         SGtN3tROec8mF68GdOEOWkgkuVtyZLJnWDrdIx9d/QzPkPeA4qe+m93XHy/jUkWjvf+x
+         tRTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=aesyozrVGZW7yzaFyAUhU98NxK6tie0WIUV5WkcyAYk=;
-        b=LdW/uvhqTvAuJObWc1WpizPb+ZsHFZ6nsjoUnevJgRKqhHO8gKtm8pW3e/W6k2t4YK
-         G784/ho8LDGZipcFDEyEQiVlNlu2BdOVwzoAhpuUVbQWC9IejZhuHN/AOCag503HI8GR
-         y5Eum8NsvAWNZKNjwGj7BeF17LD1ccVreYfINu4Y37RYm0fseJfyhH5eRpqV55VX9jV/
-         FzuudMTwaAj5DL3bnhNZ8G8WtZYhpH59GpeIBHdwyM8d5s0/DQuEaNvtnWYk75RHn4g0
-         zhObQKVCHAGsSMfAis7rW8k4iwLnVh7jRR5ClThSYKgNsEXSOtEkxeaoALCwB7XQ11ZC
-         v7Kw==
-X-Gm-Message-State: APf1xPAPyZXbMoQHxrv7kV6lFrtXdkXMHa1Mznr6ctpY4mZFr0A/SueV
-        t1Dx0k+pgfSmGiqok6o1IbG6x6Zf
-X-Google-Smtp-Source: AG47ELsv27k0u/z7w4WG8qWkr5X1oHYeLurG1CsGd1rhDX+/uRtS3UvG76b6JSMal6F+XdAjIRoRjw==
-X-Received: by 10.98.237.12 with SMTP id u12mr20265851pfh.72.1520375961693;
-        Tue, 06 Mar 2018 14:39:21 -0800 (PST)
-Received: from neu8r3hm32.ads.autodesk.com (adsknateur.autodesk.com. [132.188.32.100])
-        by smtp.gmail.com with ESMTPSA id n26sm2012140pfk.94.2018.03.06.14.39.18
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 06 Mar 2018 14:39:21 -0800 (PST)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH v9 4/8] utf8: add function to detect a missing UTF-16/32 BOM
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <xmqqvae92ajv.fsf@gitster-ct.c.googlers.com>
-Date:   Tue, 6 Mar 2018 23:39:16 +0100
-Cc:     lars.schneider@autodesk.com, git@vger.kernel.org, tboegi@web.de,
-        j6t@kdbg.org, sunshine@sunshineco.com, peff@peff.net,
-        ramsay@ramsayjones.plus.com, Johannes.Schindelin@gmx.de
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <0DCED348-C6DB-49B2-8C0A-E4E1F485B255@gmail.com>
-References: <20180304201418.60958-1-lars.schneider@autodesk.com> <20180304201418.60958-5-lars.schneider@autodesk.com> <xmqqvae92ajv.fsf@gitster-ct.c.googlers.com>
-To:     Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3124)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=AIMHNcvqQiD2whg+T0+tovgPj3MSrVntKnQDriZl6wk=;
+        b=jr0NTWguBgl1i/ulPd1EPvtdOfLsQKXtiDnPRBAh4m7b+TXPyDTq7kJGopybxJQYPN
+         J3Spn9qbY99l7dion5W+Bi1FeAblRKDxmW0UEsEotb4kcPcpwH0ZAv6DLmZCAsYFRjon
+         Iay2XeIH40pCd5L/KbzYUjXfQ4RjJF0dWP7AC2KOl6cR7wht5vW3BVgT+aw3bFAch/wc
+         kYjn1aw9jhfaMfCzsp2tgVCrM07Nn4l1BYEtkvsh7UzBTkbF0Tu2jsA9akLmCSBoqc/a
+         yCI/rj+doTCZtQnhlor8XUCVYjX6sLwM4oNCouFCmGZoLAU62eveKUgHSBpWFAnwwJdt
+         GhIw==
+X-Gm-Message-State: APf1xPBR2rJYP/NScvBV7uL1r1pUjIHUYCzDKAoDde0WjOd0oLJfRrXu
+        5CVKEgFI94+YDmZEF7yiQVQ=
+X-Google-Smtp-Source: AG47ELv5l8Gz4cAzdlR2if+fiaB3wb3unVMLfTw00NBFCW3yRX321tgl5L9AQaG0kUd0pNPzbXaWWg==
+X-Received: by 10.223.160.147 with SMTP id m19mr18520063wrm.32.1520376162294;
+        Tue, 06 Mar 2018 14:42:42 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id f142sm11073137wme.15.2018.03.06.14.42.41
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 06 Mar 2018 14:42:41 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Git mailing list <git@vger.kernel.org>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 2/2] completion: simplify _git_notes
+References: <20180303092307.3796-1-pclouds@gmail.com>
+        <20180303092307.3796-3-pclouds@gmail.com>
+        <CAM0VKjmmF2t=B2s3rJoKmO3j6Bk5d6PEfCV==ONRGMcdUMLFpQ@mail.gmail.com>
+Date:   Tue, 06 Mar 2018 14:42:40 -0800
+In-Reply-To: <CAM0VKjmmF2t=B2s3rJoKmO3j6Bk5d6PEfCV==ONRGMcdUMLFpQ@mail.gmail.com>
+        ("SZEDER =?utf-8?Q?G=C3=A1bor=22's?= message of "Sat, 3 Mar 2018 14:09:17
+ +0100")
+Message-ID: <xmqqd10g3jxb.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+SZEDER Gábor <szeder.dev@gmail.com> writes:
 
-> On 06 Mar 2018, at 21:50, Junio C Hamano <gitster@pobox.com> wrote:
->=20
-> lars.schneider@autodesk.com writes:
->=20
->> +int is_missing_required_utf_bom(const char *enc, const char *data, =
-size_t len)
->> +{
->> +	return (
->> +	   !strcmp(enc, "UTF-16") &&
->> +	   !(has_bom_prefix(data, len, utf16_be_bom, =
-sizeof(utf16_be_bom)) ||
->> +	     has_bom_prefix(data, len, utf16_le_bom, =
-sizeof(utf16_le_bom)))
->> +	) || (
->> +	   !strcmp(enc, "UTF-32") &&
->> +	   !(has_bom_prefix(data, len, utf32_be_bom, =
-sizeof(utf32_be_bom)) ||
->> +	     has_bom_prefix(data, len, utf32_le_bom, =
-sizeof(utf32_le_bom)))
->> +	);
->> +}
->=20
-> These strcmp() calls seem inconsistent with the principle embodied
-> by utf8.c::fallback_encoding(), i.e. "be lenient to what we accept",
-> and make the interface uneven. I am wondering if we also want to
-> complain when the user gave us "utf16" and there is no byte order
-> mark in the contents, for example?
+> There is a minor behaviour change here, though.  This
+>
+>   prune,*)
+>     ;;
+>
+> case arm ensured that we don't list refs for 'git notes prune <TAB>',
+> because it doesn't accept them (and then we take our usual fallback and
+> let Bash complete filenames;  yeah, 'git notes prune' doesn't accept
+> filenames either, but, as I said, that's our usual fallback when we
+> can't offer anything for completion).
+>
+> This patch removes that case arm, and refs will be offered for 'git
+> notes prune <TAB>'.
+>
+>> +       *,--*)
+>> +               __gitcomp_builtin notes_$subcommand
+>>                 ;;
+>>         *)
+>>                 case "$prev" in
 
-Well, if I use stricmp() then I don't need to call and cleanup
-xstrdup_toupper() as discussed with Eric [1]. Is there a case
-insensitive starts_with() method?
+I have this tentatively queued on the topic.  Can we wrap the topic
+up and move it forward, instead of leaving it (and other topics)
+hanging around and causing conflicts with other topics in flight,
+please?
 
-[1] =
-https://public-inbox.org/git/CAPig+cQE0pKs-AMvh4GndyCXBMnx=3D70jPpDM6K4jJT=
-e-74FecQ@mail.gmail.com/
+Thanks.
 
 
->  Also "UTF16" or other spelling
-> the platform may support but this code fails to recognise will go
-> unchecked.
+Subject: [PATCH] SQUASH???
 
-That is true. However, I would assume all iconv implementations use the
-same encoding names for UTF encodings, no? That means UTF16 would never =
-be
-valid. Would you agree?
+By Szeder <CAM0VKjmmF2t=B2s3rJoKmO3j6Bk5d6PEfCV==ONRGMcdUMLFpQ@mail.gmail.com>
+---
+ contrib/completion/git-completion.bash | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-- Lars=
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index ab80f4e6e8..5f7495cda3 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1836,6 +1836,11 @@ _git_notes ()
+ 	add,--reedit-message=*|append,--reedit-message=*)
+ 		__git_complete_refs --cur="${cur#*=}"
+ 		;;
++	prune,--*)
++		__gitcomp_builtin notes_prune
++		;;
++	prune,*)
++		;;
+ 	*,--*)
+ 		__gitcomp_builtin notes_$subcommand
+ 		;;
+-- 
+2.16.2-345-g7e31236f65
+
