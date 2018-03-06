@@ -7,62 +7,58 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EF19E1F404
-	for <e@80x24.org>; Tue,  6 Mar 2018 19:28:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6896F1F404
+	for <e@80x24.org>; Tue,  6 Mar 2018 19:30:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753898AbeCFT2G (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Mar 2018 14:28:06 -0500
-Received: from mail-wm0-f42.google.com ([74.125.82.42]:51161 "EHLO
-        mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753868AbeCFT2E (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Mar 2018 14:28:04 -0500
-Received: by mail-wm0-f42.google.com with SMTP id w128so385563wmw.0
-        for <git@vger.kernel.org>; Tue, 06 Mar 2018 11:28:03 -0800 (PST)
+        id S933312AbeCFTau (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Mar 2018 14:30:50 -0500
+Received: from mail-wr0-f176.google.com ([209.85.128.176]:36436 "EHLO
+        mail-wr0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753560AbeCFT3q (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Mar 2018 14:29:46 -0500
+Received: by mail-wr0-f176.google.com with SMTP id v111so22116522wrb.3
+        for <git@vger.kernel.org>; Tue, 06 Mar 2018 11:29:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=SzWKe04pQpYPTzUzvmfcMgTjOJDfYxdxei7eAK+NO3A=;
-        b=f5rHxGEXZC/9Z2YhjuxztTeajgeylXzQvxeLFhK90ZL8gngjJX39/H18N7vtfk9wHw
-         1jqnZ1s2Ny3c+Hp/F1WrqQK704TuP1SygZMuseu8ZqfTD8TETMrcaA+E+oKvY3xvEUJL
-         DutwrVDr32EP+IB2GqKXVqnwgobMhCbUeiUj207vEZkoBwSoReU/Wu19wBM4jeZh7vlo
-         jbcaFlIT0vDXJ/rsPoj+NI+gugCF2vB92eU0CuHPBIk/HL9otTZODUmJTtm4sfWHf6YE
-         WCUE7zawDYQ3+UJvTaV3EnMijLC128KG7qDm36yooH2bM8VGxlJsHrx+VowPt6Wm4niA
-         ixCg==
+        bh=7xDn64toh3heXf9xomSJe2/3G4zfnFPlqx9NSPFIOjg=;
+        b=WD4PyvaJgmZJvzQBgR744c+ohU0hT4INU52EKIjvyPcxroksaxjigFrxmdQkBaZnKf
+         nD2BBCtD9jwfOivVX0xgcH9vyM+hPuVFqK5jYC1b8fJySpeuiaGtdwx6Uvm5eOpyYwFd
+         ANn2r99G7HNNNIJ1dCGeiJEIryx36+sO/QIlBu58pNPaPv7lpvOE7ZWEGp0l/hbToVFU
+         /JYjUSEK7w8yFY7JTSvf746mFhpqW0MJOWEbBAPH9mwPxUG0xu0xs6wEY0eeun1qPDTQ
+         SPD7byvdArM1JVWsNl6/oNtb6ep+rPqf6ilYQOQrurYQ+tvseAHnMlT9svUD/AL4Tq6g
+         iK/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=SzWKe04pQpYPTzUzvmfcMgTjOJDfYxdxei7eAK+NO3A=;
-        b=Utdh7YNKFjWNlEsX1ATVmsclPJ4Yyb9BnGho7kR2LNyLyOwv/UWjnebjTlZph6D3it
-         Eqrm8Mu1lxHX9QIY37/tyadxWSpbgHfvHjnqvEecxdimIZa3RaTuRfSGKTKvnq2uXcXr
-         s7z5I/3UZSXmt3u94LngvcVPj/2TUMFuxZvg9/1A+NH41kNjn79fFHdrq2IymujnHDlZ
-         HzWsu7TaMxNuB/q/JPW0/vy9gkSzwujQdHa0m6BQB4sfUIm3xcdd7LMkei12sxBelfGg
-         m2JKEjHD3rqNBu2c2V9c9o7ZBUwUuhq+0I30oO47ceF33QuRthglHKnpuLUrhbDZHn9+
-         jdyw==
-X-Gm-Message-State: AElRT7E101Yc3S/5Bu7BsaWP3IDuDFChETii7WkOCZQ0bfLKKT5fIlUZ
-        E2yK40PuL5kq2pzcoRAF5WxjhmNn
-X-Google-Smtp-Source: AG47ELsVyu24PGT489//NBle5ZIAdhcJWLmi9ygcmabUFgGKkq3C7FJHTvbDRDV0TIWIZO7PhQrpTg==
-X-Received: by 10.28.31.215 with SMTP id f206mr3823095wmf.68.1520364482429;
-        Tue, 06 Mar 2018 11:28:02 -0800 (PST)
+        bh=7xDn64toh3heXf9xomSJe2/3G4zfnFPlqx9NSPFIOjg=;
+        b=BZK8Lc5DnyWRCJ756xHCjV5snyEIynVt4b6Zj6qckBSF5GwSnTXINA6NuZ9wN8Go6u
+         zFijFfVxbRdG1gnuwQZUFYdF/Py36/KzhpQqKUcSRd7htvAFxw296dXtdOM9ezgcuja4
+         MS3+2+NPjk2eNw0/BWfN6jhlcIJKYDbDGH2JHDsMZRw4u35AVpQLFPgtV70QBzOyiwyc
+         qrk7ELmdw9z6AvaEEJ/Q5VlT+ptlFSmluDR6f8wgGcL+TxAzU4KE6ltXwbzRT8S4RuZ/
+         4PPgAS6XvMpW+n6EOKwY4bCT4irVI5UeyQ1Fun2Ca0vpeu0bxMNfRz/WmMLz7UdzFrJz
+         2SVQ==
+X-Gm-Message-State: APf1xPBJIM6Al5XSutBKZoihsJfzfHtuyv1WNSLgpgVe1Ixr9wK7mJyV
+        gXUKfBKQrRkb4HJGk0mUWDU=
+X-Google-Smtp-Source: AG47ELsB5hvQJA2pcOgsbdg7nzexNTVK8t/IxVrRyZpxHlOY0GylEKZc8xIlp/V5koISQM7CHN2pnw==
+X-Received: by 10.223.128.201 with SMTP id 67mr16475807wrl.131.1520364585300;
+        Tue, 06 Mar 2018 11:29:45 -0800 (PST)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id a1sm15970515wra.41.2018.03.06.11.28.01
+        by smtp.gmail.com with ESMTPSA id 4sm8775141wmz.31.2018.03.06.11.29.44
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 06 Mar 2018 11:28:01 -0800 (PST)
+        Tue, 06 Mar 2018 11:29:44 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Birger Skogeng Pedersen <birgersp@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Git List <git@vger.kernel.org>
-Subject: Re: [PATCH] git-gui: Add hotkeys to change focus between ui widgets
-References: <CAGr--=LZ9TSM9v0SZOi_mj1t8se0Ck-nDHkwum3kC8uz9HKW6A@mail.gmail.com>
-        <20180228121052.10642-1-birgersp@gmail.com>
-        <nycvar.QRO.7.76.6.1803051749060.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <CAGr--=+cAbd=8NDu5M8dbeWn=uoevhJjSvN+bgfDPWjA=V0KnQ@mail.gmail.com>
-Date:   Tue, 06 Mar 2018 11:28:01 -0800
-In-Reply-To: <CAGr--=+cAbd=8NDu5M8dbeWn=uoevhJjSvN+bgfDPWjA=V0KnQ@mail.gmail.com>
-        (Birger Skogeng Pedersen's message of "Tue, 6 Mar 2018 15:35:21
-        +0100")
-Message-ID: <xmqqbmg13sxq.fsf@gitster-ct.c.googlers.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Jun Wu <quark@fb.com>, git <git@vger.kernel.org>
+Subject: Re: [PATCH] xdiff: improve trimming preprocessing
+References: <1520337165-sup-4504@x1c>
+        <CAPig+cRYsf161-Xomw7daj8XdEBxZAEQQRdOn4krRTpSAFkPOw@mail.gmail.com>
+Date:   Tue, 06 Mar 2018 11:29:44 -0800
+In-Reply-To: <CAPig+cRYsf161-Xomw7daj8XdEBxZAEQQRdOn4krRTpSAFkPOw@mail.gmail.com>
+        (Eric Sunshine's message of "Tue, 6 Mar 2018 14:23:46 -0500")
+Message-ID: <xmqq7eqp3suv.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -71,36 +67,15 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Birger Skogeng Pedersen <birgersp@gmail.com> writes:
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-> Thanks for the feedback.
->
-> On Mon, Mar 5, 2018 at 5:55 PM, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
->> Do you think there is a way to focus on the last-selected path? That would
->> make this feature even more convenient, I think.
->
-> Yes, good idea. I'll implement it and create a second version.
+> On Tue, Mar 6, 2018 at 6:53 AM, Jun Wu <quark@fb.com> wrote:
+>> xdiff-interface trims common suffix if ctxlen is 0. Teach it to also
+>> trim common prefix, and trim less lines if ctxlen > 0. So it can benefit
+>> the default diff command, as seen by profiling: [...]
 
-Please make it a patch against the main git-gui project, not against
-our tree.  That is, your patch text would look like this:
+I vaguely recall that we have tried this in the distant past, found
+that it produced incorrect result, and that is why we limit the
+optimization for no-context case.
 
-    diff --git a/git-gui.sh b/git-gui.sh
-    index 5bc21b878d..39e80ebafa 100755
-    --- a/git-gui.sh
-    +++ b/git-gui.sh
-    @@ -3843,6 +3843,7 @@ bind .   <$M1B-Key-equal> {show_more_context;break}
-     bind .   <$M1B-Key-plus> {show_more_context;break}
-     bind .   <$M1B-Key-KP_Add> {show_more_context;break}
-     bind .   <$M1B-Key-Return> do_commit
-    +bind .   <$M1B-Key-KP_Enter> do_commit
-     foreach i [list $ui_index $ui_workdir] {
-            bind $i <Button-1>       { toggle_or_diff click %W %x %y; break }
-            bind $i <$M1B-Button-1>  { add_one_to_selection %W %x %y; break }
-
-We've seen three patches to git-gui from three different people in
-the past week.  The project seems to be abandoned and we need to
-find a volunteer (or a few) to take it over, it seems.  In the
-meantime I have blindly been picking and queuing git-gui changes
-but because I am not even a casual user of it, I know I will not do
-a good job maintaining it in the longer term.
+Does anybody have an archive reference?
