@@ -2,102 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9014C1F404
-	for <e@80x24.org>; Tue,  6 Mar 2018 22:22:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 033901FAE2
+	for <e@80x24.org>; Tue,  6 Mar 2018 22:24:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754052AbeCFWWM (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Mar 2018 17:22:12 -0500
-Received: from mail-qk0-f175.google.com ([209.85.220.175]:44411 "EHLO
-        mail-qk0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753805AbeCFWWL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Mar 2018 17:22:11 -0500
-Received: by mail-qk0-f175.google.com with SMTP id v124so289375qkh.11
-        for <git@vger.kernel.org>; Tue, 06 Mar 2018 14:22:11 -0800 (PST)
+        id S1754066AbeCFWYy (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Mar 2018 17:24:54 -0500
+Received: from mail-wm0-f44.google.com ([74.125.82.44]:39360 "EHLO
+        mail-wm0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753923AbeCFWYx (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Mar 2018 17:24:53 -0500
+Received: by mail-wm0-f44.google.com with SMTP id i3so1093967wmi.4
+        for <git@vger.kernel.org>; Tue, 06 Mar 2018 14:24:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=cntuYqVTy2iFX7s8RMW8EdjGWaB+gzKLgnstVGI3U7Q=;
-        b=Edz4Jxek1aR6f9JRrul9+OABbmekp8WapaQxowOGsMbpZqHsWb9B40P+UauYs8XV9l
-         o1b2fcJG9fC/UiE8FHR0zRt4pPGrgTRggCRsFiGnTBoXo9G7SEYlRUS59+hRv+EQHpd/
-         zBqsHOTFjg+p6ElkS05IKxi+diOOoDPU39taKOSs92TSSRVXJ5jn5Ev+8aS+KR7s8Pqk
-         LhvxACT2o+b1NPuKaFbM2oKiQawDctSiLOlIxmgw5zenTg7ujWAsK48aKGKuqIdILFzn
-         uAUMi0xe50jg2GnUXu9qvDqZgn0Dq7Q5XGGIMcgL6XDDfHdlzlCZEjysUd2wAHhO6gei
-         n0Cw==
+        h=subject:from:to:cc:references:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=UhtUvvzFGONxDlOXIxpW6lQtTnX1Dfm0oU007wspQWM=;
+        b=TSQh2gb7N9hR5EaEXWD2E2PGi/LxxTCAoneILNBkEd4YT8WE4xh9IJSAiF4Fgo2vyC
+         FMQ0FUWADEO/+Z/aR51KzVzbi7bwSJ1EI4tSK2tolHWh4dIGsBeOzmIvUNM8lcbN9WpC
+         6HXTA847iWpI2Q2cxnINmJC6Tr0UVJblMNvPG/41PRccIPVgrdwvtEWJv3wcvhjrywcg
+         XC7mOhvvzQUGya1Oh6sLi5hOcotlEWKbzkR3J0Z4NveYNcgzy3umWhtSyhQCuQzJpAZU
+         PZtEcTfc6NIH9NnQgB5HsvtftGgGImsW6HE0AxUuTnP/D/ESyE0ZMNEvNXoRXZdLz5j/
+         +qjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=cntuYqVTy2iFX7s8RMW8EdjGWaB+gzKLgnstVGI3U7Q=;
-        b=nh4PfREeEBVMTnIpYh9ioSLYIoUKvtjAujzq4m5f4gBFJM0jjBK40hGpbOxWdhMGpe
-         94j/qUJxSZ0ErdPKaTKirbHjbeKk6gdMjCv0WBcA0ASLb6ZNhgFjXle9w2pyV5wnpWmN
-         g0xrS/KhSkRZ8tw3/StKpuNTHoIy4Fg5hovNP1ynTQxyCqziuEsNY8GkUDxAJgw/u/Df
-         Sdgg5azPdt3xN0g6Dnuklmcj+8CVmTvs2U//C5VhjDvPtD0wNDgF4MUmVIvC8wrkeA6m
-         /JH6tkH3RQqdaOfsS8dAFA1lm9aaomKr634cZlznBupPcVBBxSXFvxBkqtUmC4CN7div
-         8OBA==
-X-Gm-Message-State: AElRT7GYDHT77TrpGL/xK2lCX3rXJ1tOCbA1GDGmWarqT31z/Pl42EM5
-        PPif0fyUNnXji8CepsH+Q27a9UK4uLFms8nG6hQ=
-X-Google-Smtp-Source: AG47ELt8dTD8F2vO+7+t3LbaPBLLuFaX/SsJycAVa3i1pj+/o2SfM+ulczTC7UK3QUpgFdoEcJMXzjzw0pullYIlXaU=
-X-Received: by 10.55.133.131 with SMTP id h125mr30925708qkd.79.1520374930838;
- Tue, 06 Mar 2018 14:22:10 -0800 (PST)
+        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=UhtUvvzFGONxDlOXIxpW6lQtTnX1Dfm0oU007wspQWM=;
+        b=i3cBH1HYotpEpJPYJ9pVPNV9aSGULgoGpWWUvQW5sHMkYFvs6L+5yRlME13Taa/tZK
+         Mk05MIuH9bkUZw0ZE/lTaLMl7XzpTfxzE5p6HBqG3++ZtqMRP703QH4utoD30hQJD276
+         p7YQkyOcC9+Hw6bhNfzWPDbq6NTgwQMoKNGUUyj6J11T5sZrqgeMoYl8axz6cT0eRvFT
+         ldArsNMtHBD7ctI818zNcluy/DO+DIq+t1JnK/Hmar/EybwRqKvbx3WpSbkF2m/HrEIS
+         AKJBDwiJFF+z7sCLhKDqS/rG4vuS9zqoG0kFGCQ2X9vN3pRWkuvqxpCS1j6TSNTVz3Y8
+         3YgQ==
+X-Gm-Message-State: AElRT7ElS2v1j+IuNR9LtI+oVPpA61lOguS94RZDfXhSWmzwGFUOGujF
+        Qx17yE7iqegaZsyvBz1AgEeWlyKG
+X-Google-Smtp-Source: AG47ELtPKXYV8jWmrTFBFL49VCg6/i90BqXodppXyxExieb+PxbYPIq3WYFKf0mAMz6KeFN4sxrpmg==
+X-Received: by 10.80.222.207 with SMTP id d15mr15832087edl.76.1520375092297;
+        Tue, 06 Mar 2018 14:24:52 -0800 (PST)
+Received: from ?IPv6:2001:a62:81d:ab01:a179:2207:8321:ce13? ([2001:a62:81d:ab01:a179:2207:8321:ce13])
+        by smtp.googlemail.com with ESMTPSA id z4sm4453478edm.44.2018.03.06.14.24.50
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 06 Mar 2018 14:24:51 -0800 (PST)
+Subject: Re: [PATCH 2/2] git-svn: allow empty email-address in authors-prog
+ and authors-file
+From:   Andreas Heiduk <asheiduk@gmail.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git Mailing List <git@vger.kernel.org>, Eric Wong <e@80x24.org>
+References: <20180304112237.19254-1-asheiduk@gmail.com>
+ <20180304112237.19254-2-asheiduk@gmail.com>
+ <CAPig+cQTpbj6q_s_pX2HjmpYF4W+5wKH7YLQQdZTiMPfK4G2Ng@mail.gmail.com>
+ <CAFhHFBysKuDO9H4yJtnC6MJ+Jih5q4RsfwHTCsRXhXknapp4xg@mail.gmail.com>
+Message-ID: <426e019a-cfb2-0e3a-b9b4-9d94f4f79312@gmail.com>
+Date:   Tue, 6 Mar 2018 23:24:50 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.6.0
 MIME-Version: 1.0
-Received: by 10.12.142.14 with HTTP; Tue, 6 Mar 2018 14:22:10 -0800 (PST)
-In-Reply-To: <570D707A-DD9E-4397-8155-E8B3C3D09760@gmail.com>
-References: <20180304201418.60958-1-lars.schneider@autodesk.com>
- <20180304201418.60958-6-lars.schneider@autodesk.com> <CAPig+cTOpBODeoHV=+4-4MEjKM=pUrZSa=BEmHh4mVP=xPpFCA@mail.gmail.com>
- <570D707A-DD9E-4397-8155-E8B3C3D09760@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 6 Mar 2018 17:22:10 -0500
-X-Google-Sender-Auth: jwx2aDXrDMowNX537F15ChtZnbg
-Message-ID: <CAPig+cQE0pKs-AMvh4GndyCXBMnx=70jPpDM6K4jJTe-74FecQ@mail.gmail.com>
-Subject: Re: [PATCH v9 5/8] convert: add 'working-tree-encoding' attribute
-To:     Lars Schneider <larsxschneider@gmail.com>
-Cc:     Lars Schneider <lars.schneider@autodesk.com>,
-        Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-        Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <CAFhHFBysKuDO9H4yJtnC6MJ+Jih5q4RsfwHTCsRXhXknapp4xg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 6, 2018 at 5:13 PM, Lars Schneider <larsxschneider@gmail.com> wrote:
->> On 06 Mar 2018, at 21:42, Eric Sunshine <sunshine@sunshineco.com> wrote:
->> On Sun, Mar 4, 2018 at 3:14 PM,  <lars.schneider@autodesk.com> wrote:
->>> +       return xstrdup_toupper(value);
+Am 05.03.2018 um 10:37 schrieb Andreas Heiduk:
+> 2018-03-05 2:42 GMT+01:00 Eric Sunshine <sunshine@sunshineco.com>:
+>> On Sun, Mar 4, 2018 at 6:22 AM, Andreas Heiduk <asheiduk@gmail.com> wrote:
+>>> ---
+>>> diff --git a/perl/Git/SVN.pm b/perl/Git/SVN.pm
+>>> @@ -1482,7 +1482,6 @@ sub call_authors_prog {
+>>>         }
+>>>         if ($author =~ /^\s*(.+?)\s*<(.*)>\s*$/) {
+>>>                 my ($name, $email) = ($1, $2);
+>>> -               $email = undef if length $2 == 0;
+>>>                 return [$name, $email];
 >>
->> xstrdup_toupper() allocates memory...
+>> Mental note: existing behavior intentionally makes $email undefined if
+>> not present in $author; revised behavior leaves it defined.
+> 
+> But only if the data comes from authors-prog. authors-file is unaffected.
+> 
 >>
->>> +       const char *working_tree_encoding; /* Supported encoding or default encoding if NULL */
+>>>         } else {
+>>>                 die "Author: $orig_author: $::_authors_prog returned "
+>>> @@ -2020,8 +2019,8 @@ sub make_log_entry {
+>>>                 remove_username($full_url);
+>>>                 $log_entry{metadata} = "$full_url\@$r $uuid";
+>>>                 $log_entry{svm_revision} = $r;
+>>> -               $email ||= "$author\@$uuid";
+>>> -               $commit_email ||= "$author\@$uuid";
+>>> +               $email //= "$author\@$uuid";
+>>> +               $commit_email //= "$author\@$uuid";
 >>
->> ...which is assigned to 'const char *'...
->>
->>> +               ca->working_tree_encoding = git_path_check_encoding(ccheck + 5);
->>
->> ...by this code, and eventually leaked.
->>
->> It's too bad it isn't cleaned up (freed), but looking at the callers,
->> fixing this leak would be mildly noisy (though not particularly
->> invasive). How much do we care about this leak?
->
-> Hmm. You are right. That was previously handled by the encoding struct
-> linked list that I removed in this iteration. I forgot about that aspect :/
-> I don't like it leaking. I think I would like to reintroduce the linked
-> list. This way every encoding is only once in memory. What do you think?
+>> With the revised behavior (above), $email is unconditionally defined,
+>> so these //= expressions will _never_ assign "$author\@$uuid" to
+>> $email. Am I reading that correctly? If so, then isn't this now just
+>> dead code? Wouldn't it be clearer to remove these lines altogether?
+> 
+> The olf behaviour still kicks in if
+>  - neither authors-file nor authors-prog is used
+>  - only authors-file is used
+> 
+>> I see from reading the code that there is a "if (!defined $email)"
+>> earlier in the function which becomes misleading with this change. I'd
+>> have expected the patch to modify that, as well.
+> 
+> I will look into that one later.
 
-It's subjective, but I find the use of a linked-list just for the
-purpose of not leaking these strings unnecessarily confusing.
+I don't want to let that slip through the cracks: The `if` statement
+still makes a difference if:
 
-If I was doing it, I'd probably add a conv_attrs_free() function and
-call it from each function allocates a 'struct conv_attrs' (including
-calling it before early returns -- which prompted my earlier comment
-about it being a "mildly noisy" fix).
+ - neither ` --authors-prog` nor `--authors-file` is active,
+ - but `--use-log-author` is active and
+ - the commit at hand does not contain a `From:` or `Signed-off-by:`
+   trailer.
+
+In that case the result was and still is `$user <$user>` for the author
+and `$user <$user@$uuid>` for the comitter. That doesn't make sense to
+me but doesn't concern me right now.
