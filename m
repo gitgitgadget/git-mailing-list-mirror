@@ -2,129 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 033901FAE2
-	for <e@80x24.org>; Tue,  6 Mar 2018 22:24:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F0D751F404
+	for <e@80x24.org>; Tue,  6 Mar 2018 22:39:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754066AbeCFWYy (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Mar 2018 17:24:54 -0500
-Received: from mail-wm0-f44.google.com ([74.125.82.44]:39360 "EHLO
-        mail-wm0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753923AbeCFWYx (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Mar 2018 17:24:53 -0500
-Received: by mail-wm0-f44.google.com with SMTP id i3so1093967wmi.4
-        for <git@vger.kernel.org>; Tue, 06 Mar 2018 14:24:53 -0800 (PST)
+        id S1754228AbeCFWjW (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Mar 2018 17:39:22 -0500
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:39162 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754209AbeCFWjW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Mar 2018 17:39:22 -0500
+Received: by mail-pg0-f68.google.com with SMTP id e3so111775pga.6
+        for <git@vger.kernel.org>; Tue, 06 Mar 2018 14:39:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:from:to:cc:references:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=UhtUvvzFGONxDlOXIxpW6lQtTnX1Dfm0oU007wspQWM=;
-        b=TSQh2gb7N9hR5EaEXWD2E2PGi/LxxTCAoneILNBkEd4YT8WE4xh9IJSAiF4Fgo2vyC
-         FMQ0FUWADEO/+Z/aR51KzVzbi7bwSJ1EI4tSK2tolHWh4dIGsBeOzmIvUNM8lcbN9WpC
-         6HXTA847iWpI2Q2cxnINmJC6Tr0UVJblMNvPG/41PRccIPVgrdwvtEWJv3wcvhjrywcg
-         XC7mOhvvzQUGya1Oh6sLi5hOcotlEWKbzkR3J0Z4NveYNcgzy3umWhtSyhQCuQzJpAZU
-         PZtEcTfc6NIH9NnQgB5HsvtftGgGImsW6HE0AxUuTnP/D/ESyE0ZMNEvNXoRXZdLz5j/
-         +qjg==
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=aesyozrVGZW7yzaFyAUhU98NxK6tie0WIUV5WkcyAYk=;
+        b=G7+nkpYvpxfNsRWMXpFMiqmWeu1dZCcTfAfQ/vFWTJQ0/f5D3e0Sa0h+xaB5gaXOqt
+         SW4kGSxf/y6vn2jGwjhOi5/lksnV/YkMcoQnsdyMEoppSmdcEV7ASatoDVBPqbCo0R4f
+         EsQEjbWItxp2Ri60BOoqSzosBV5jduVaCtktdKMR5Hgnlfy3NMCku3ltipyuj6TGMP53
+         Nx4VR8gZHZZIQXfLiP7Gq2mX7rP/SWazjqxZCBZL6gXrFvZYWGrlLbD9y2eu5soX7bPC
+         +AlTrqk+qPJnmrpgJ3kYsO5FE1WMnhOCZkIGnrRS2ZyDCr3ujwfTuVCItH8KJEKmBSaN
+         kyRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=UhtUvvzFGONxDlOXIxpW6lQtTnX1Dfm0oU007wspQWM=;
-        b=i3cBH1HYotpEpJPYJ9pVPNV9aSGULgoGpWWUvQW5sHMkYFvs6L+5yRlME13Taa/tZK
-         Mk05MIuH9bkUZw0ZE/lTaLMl7XzpTfxzE5p6HBqG3++ZtqMRP703QH4utoD30hQJD276
-         p7YQkyOcC9+Hw6bhNfzWPDbq6NTgwQMoKNGUUyj6J11T5sZrqgeMoYl8axz6cT0eRvFT
-         ldArsNMtHBD7ctI818zNcluy/DO+DIq+t1JnK/Hmar/EybwRqKvbx3WpSbkF2m/HrEIS
-         AKJBDwiJFF+z7sCLhKDqS/rG4vuS9zqoG0kFGCQ2X9vN3pRWkuvqxpCS1j6TSNTVz3Y8
-         3YgQ==
-X-Gm-Message-State: AElRT7ElS2v1j+IuNR9LtI+oVPpA61lOguS94RZDfXhSWmzwGFUOGujF
-        Qx17yE7iqegaZsyvBz1AgEeWlyKG
-X-Google-Smtp-Source: AG47ELtPKXYV8jWmrTFBFL49VCg6/i90BqXodppXyxExieb+PxbYPIq3WYFKf0mAMz6KeFN4sxrpmg==
-X-Received: by 10.80.222.207 with SMTP id d15mr15832087edl.76.1520375092297;
-        Tue, 06 Mar 2018 14:24:52 -0800 (PST)
-Received: from ?IPv6:2001:a62:81d:ab01:a179:2207:8321:ce13? ([2001:a62:81d:ab01:a179:2207:8321:ce13])
-        by smtp.googlemail.com with ESMTPSA id z4sm4453478edm.44.2018.03.06.14.24.50
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 06 Mar 2018 14:24:51 -0800 (PST)
-Subject: Re: [PATCH 2/2] git-svn: allow empty email-address in authors-prog
- and authors-file
-From:   Andreas Heiduk <asheiduk@gmail.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git Mailing List <git@vger.kernel.org>, Eric Wong <e@80x24.org>
-References: <20180304112237.19254-1-asheiduk@gmail.com>
- <20180304112237.19254-2-asheiduk@gmail.com>
- <CAPig+cQTpbj6q_s_pX2HjmpYF4W+5wKH7YLQQdZTiMPfK4G2Ng@mail.gmail.com>
- <CAFhHFBysKuDO9H4yJtnC6MJ+Jih5q4RsfwHTCsRXhXknapp4xg@mail.gmail.com>
-Message-ID: <426e019a-cfb2-0e3a-b9b4-9d94f4f79312@gmail.com>
-Date:   Tue, 6 Mar 2018 23:24:50 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
-MIME-Version: 1.0
-In-Reply-To: <CAFhHFBysKuDO9H4yJtnC6MJ+Jih5q4RsfwHTCsRXhXknapp4xg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=aesyozrVGZW7yzaFyAUhU98NxK6tie0WIUV5WkcyAYk=;
+        b=LdW/uvhqTvAuJObWc1WpizPb+ZsHFZ6nsjoUnevJgRKqhHO8gKtm8pW3e/W6k2t4YK
+         G784/ho8LDGZipcFDEyEQiVlNlu2BdOVwzoAhpuUVbQWC9IejZhuHN/AOCag503HI8GR
+         y5Eum8NsvAWNZKNjwGj7BeF17LD1ccVreYfINu4Y37RYm0fseJfyhH5eRpqV55VX9jV/
+         FzuudMTwaAj5DL3bnhNZ8G8WtZYhpH59GpeIBHdwyM8d5s0/DQuEaNvtnWYk75RHn4g0
+         zhObQKVCHAGsSMfAis7rW8k4iwLnVh7jRR5ClThSYKgNsEXSOtEkxeaoALCwB7XQ11ZC
+         v7Kw==
+X-Gm-Message-State: APf1xPAPyZXbMoQHxrv7kV6lFrtXdkXMHa1Mznr6ctpY4mZFr0A/SueV
+        t1Dx0k+pgfSmGiqok6o1IbG6x6Zf
+X-Google-Smtp-Source: AG47ELsv27k0u/z7w4WG8qWkr5X1oHYeLurG1CsGd1rhDX+/uRtS3UvG76b6JSMal6F+XdAjIRoRjw==
+X-Received: by 10.98.237.12 with SMTP id u12mr20265851pfh.72.1520375961693;
+        Tue, 06 Mar 2018 14:39:21 -0800 (PST)
+Received: from neu8r3hm32.ads.autodesk.com (adsknateur.autodesk.com. [132.188.32.100])
+        by smtp.gmail.com with ESMTPSA id n26sm2012140pfk.94.2018.03.06.14.39.18
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 06 Mar 2018 14:39:21 -0800 (PST)
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [PATCH v9 4/8] utf8: add function to detect a missing UTF-16/32 BOM
+From:   Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <xmqqvae92ajv.fsf@gitster-ct.c.googlers.com>
+Date:   Tue, 6 Mar 2018 23:39:16 +0100
+Cc:     lars.schneider@autodesk.com, git@vger.kernel.org, tboegi@web.de,
+        j6t@kdbg.org, sunshine@sunshineco.com, peff@peff.net,
+        ramsay@ramsayjones.plus.com, Johannes.Schindelin@gmx.de
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <0DCED348-C6DB-49B2-8C0A-E4E1F485B255@gmail.com>
+References: <20180304201418.60958-1-lars.schneider@autodesk.com> <20180304201418.60958-5-lars.schneider@autodesk.com> <xmqqvae92ajv.fsf@gitster-ct.c.googlers.com>
+To:     Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 05.03.2018 um 10:37 schrieb Andreas Heiduk:
-> 2018-03-05 2:42 GMT+01:00 Eric Sunshine <sunshine@sunshineco.com>:
->> On Sun, Mar 4, 2018 at 6:22 AM, Andreas Heiduk <asheiduk@gmail.com> wrote:
->>> ---
->>> diff --git a/perl/Git/SVN.pm b/perl/Git/SVN.pm
->>> @@ -1482,7 +1482,6 @@ sub call_authors_prog {
->>>         }
->>>         if ($author =~ /^\s*(.+?)\s*<(.*)>\s*$/) {
->>>                 my ($name, $email) = ($1, $2);
->>> -               $email = undef if length $2 == 0;
->>>                 return [$name, $email];
->>
->> Mental note: existing behavior intentionally makes $email undefined if
->> not present in $author; revised behavior leaves it defined.
-> 
-> But only if the data comes from authors-prog. authors-file is unaffected.
-> 
->>
->>>         } else {
->>>                 die "Author: $orig_author: $::_authors_prog returned "
->>> @@ -2020,8 +2019,8 @@ sub make_log_entry {
->>>                 remove_username($full_url);
->>>                 $log_entry{metadata} = "$full_url\@$r $uuid";
->>>                 $log_entry{svm_revision} = $r;
->>> -               $email ||= "$author\@$uuid";
->>> -               $commit_email ||= "$author\@$uuid";
->>> +               $email //= "$author\@$uuid";
->>> +               $commit_email //= "$author\@$uuid";
->>
->> With the revised behavior (above), $email is unconditionally defined,
->> so these //= expressions will _never_ assign "$author\@$uuid" to
->> $email. Am I reading that correctly? If so, then isn't this now just
->> dead code? Wouldn't it be clearer to remove these lines altogether?
-> 
-> The olf behaviour still kicks in if
->  - neither authors-file nor authors-prog is used
->  - only authors-file is used
-> 
->> I see from reading the code that there is a "if (!defined $email)"
->> earlier in the function which becomes misleading with this change. I'd
->> have expected the patch to modify that, as well.
-> 
-> I will look into that one later.
 
-I don't want to let that slip through the cracks: The `if` statement
-still makes a difference if:
+> On 06 Mar 2018, at 21:50, Junio C Hamano <gitster@pobox.com> wrote:
+>=20
+> lars.schneider@autodesk.com writes:
+>=20
+>> +int is_missing_required_utf_bom(const char *enc, const char *data, =
+size_t len)
+>> +{
+>> +	return (
+>> +	   !strcmp(enc, "UTF-16") &&
+>> +	   !(has_bom_prefix(data, len, utf16_be_bom, =
+sizeof(utf16_be_bom)) ||
+>> +	     has_bom_prefix(data, len, utf16_le_bom, =
+sizeof(utf16_le_bom)))
+>> +	) || (
+>> +	   !strcmp(enc, "UTF-32") &&
+>> +	   !(has_bom_prefix(data, len, utf32_be_bom, =
+sizeof(utf32_be_bom)) ||
+>> +	     has_bom_prefix(data, len, utf32_le_bom, =
+sizeof(utf32_le_bom)))
+>> +	);
+>> +}
+>=20
+> These strcmp() calls seem inconsistent with the principle embodied
+> by utf8.c::fallback_encoding(), i.e. "be lenient to what we accept",
+> and make the interface uneven. I am wondering if we also want to
+> complain when the user gave us "utf16" and there is no byte order
+> mark in the contents, for example?
 
- - neither ` --authors-prog` nor `--authors-file` is active,
- - but `--use-log-author` is active and
- - the commit at hand does not contain a `From:` or `Signed-off-by:`
-   trailer.
+Well, if I use stricmp() then I don't need to call and cleanup
+xstrdup_toupper() as discussed with Eric [1]. Is there a case
+insensitive starts_with() method?
 
-In that case the result was and still is `$user <$user>` for the author
-and `$user <$user@$uuid>` for the comitter. That doesn't make sense to
-me but doesn't concern me right now.
+[1] =
+https://public-inbox.org/git/CAPig+cQE0pKs-AMvh4GndyCXBMnx=3D70jPpDM6K4jJT=
+e-74FecQ@mail.gmail.com/
+
+
+>  Also "UTF16" or other spelling
+> the platform may support but this code fails to recognise will go
+> unchecked.
+
+That is true. However, I would assume all iconv implementations use the
+same encoding names for UTF encodings, no? That means UTF16 would never =
+be
+valid. Would you agree?
+
+- Lars=
