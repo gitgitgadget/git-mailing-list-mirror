@@ -2,152 +2,232 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8DFC91F404
-	for <e@80x24.org>; Tue,  6 Mar 2018 00:10:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 605E61F404
+	for <e@80x24.org>; Tue,  6 Mar 2018 00:19:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932767AbeCFAKj (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Mar 2018 19:10:39 -0500
-Received: from mail-oi0-f46.google.com ([209.85.218.46]:37561 "EHLO
-        mail-oi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932243AbeCFAKi (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Mar 2018 19:10:38 -0500
-Received: by mail-oi0-f46.google.com with SMTP id f186so13522984oig.4
-        for <git@vger.kernel.org>; Mon, 05 Mar 2018 16:10:38 -0800 (PST)
+        id S932720AbeCFAT3 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Mar 2018 19:19:29 -0500
+Received: from mail-wr0-f172.google.com ([209.85.128.172]:44802 "EHLO
+        mail-wr0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932458AbeCFAT2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Mar 2018 19:19:28 -0500
+Received: by mail-wr0-f172.google.com with SMTP id v65so19133025wrc.11
+        for <git@vger.kernel.org>; Mon, 05 Mar 2018 16:19:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc
-         :content-transfer-encoding;
-        bh=bqDdaQRSNT9SxayepU1CsxCvn0v2Y4FxZN1xxFr/QFc=;
-        b=d/BtmKhU2lnnjE0N9GoYQvRwu5iJ7aH0h/+WaQyz0yT/jElx/4aPLG7rnUGJstbtXY
-         oYsymqv6N40QfiTWX+GaUEH+B1jP/omNjO56g0MkRYFLjEARBJ8BNMhIYYg9wUU5aDJi
-         kp3MXyOTQHjIxsm627CClNs0gJDW9TnEIKb9k5XK8I/4uo+bEnrCC+74xU5e1kO7FPpr
-         6XIsUppEN/wiRVS7eu4EvOGycxJUlm6Xwcgxi0XhNJdxsAR9RHqTLIdRuW28r+QgRrLU
-         d8zCVejVx6GsMi4e0xqALkyeFHHUtC562lZaxUhI1GS8q95Nn+tFHrC4HtTpbNw3FbH+
-         PU3Q==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=AR7jwqB8MCDWQnb76EjEdRMx7IjU9SfOMRZBKfuP8bQ=;
+        b=nZB4PB+sx/2nUBHq2Qrwbm0CzIyuhOdlEGDxyueWpIK3/3G1AxiPzmT07RtG0U7y94
+         JOPhT49IpoycAq7u4MQpxX15LK113wy0V1Ld0HRqc8soPKHBeivD3TP6H8WeeoJ8JGcg
+         TKPguvxwritLVGFGW5OmfsnrUinAF8NkPcS7Tt0HocjBc33Y34zQ41cxDAh8Ps1adoIt
+         +MX9YQ2ls0TY//ZP1Wa6iWF/NKEfmn0WQQRnuZAFI6Cd6aRE5k0ua1YHOT8tEYQdbtd9
+         pdU5HBTjSUfIhASsv0hMsh26OqJtMPZvR/kBNlinbuucCA9UtPenDQFNfhZ9jlXvCeDP
+         gqug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc
-         :content-transfer-encoding;
-        bh=bqDdaQRSNT9SxayepU1CsxCvn0v2Y4FxZN1xxFr/QFc=;
-        b=gyk/u+3A/5Bx2U7tlxdzqpWTD3n9TPfukTRa/NiD0HbL0/h5fRG9OOvAbVQhbdwaAk
-         BHtVsOqofpLmP/wzcVnXIrD3Majx9n+qrVeQIK2RMXrjIoqrl1lW3nQPsw4vyDIIWdtq
-         81AM1D1qeXH92dw9hhsbgeEJYhhnW0w5lvsQsy5Jm/xLAnAALZP5PpGdO/Q489o7i4Dt
-         3xjEGZQ53OaDnH/XkFiZAfPoySn6HweaWgoxDeiD6Xi2YB3pmLQ1K2hSYT1KGrzNk3x1
-         5cVKcFQODbXzczI8ubguEWg88zV1WOBf6irwefx5VjXMvgzsHT9YkcsL6eofzwlmY9Ed
-         l2vQ==
-X-Gm-Message-State: APf1xPCGE9oeQBCCNGjkMB28MK2V7K8/z9M4N++JRhSYhcZ0rFAYuFcp
-        tj8w2CSZtryNg4rfCAdQZqnaAIZMvED6X+WeOi8=
-X-Google-Smtp-Source: AG47ELsuIAtbP10jRi0SlQTgG4Fg3XbUtso/QlS4ZZ3SpUIux4wXNisopL/ROCKTiIkYH58u8qHox9oIYnsvf/t+/Ik=
-X-Received: by 10.202.206.71 with SMTP id e68mr11164123oig.34.1520295037659;
- Mon, 05 Mar 2018 16:10:37 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=AR7jwqB8MCDWQnb76EjEdRMx7IjU9SfOMRZBKfuP8bQ=;
+        b=NP+gUS9bsrsxkr8/CDNQY8MnNvxWGQyaBA9bjAz+FpT1GdpxM8o6xtPfJv++X8Fw7Q
+         Vrw9WOr6kn/hQTyeVU7G3IIxc+t9ivZI1/lFkfj0e815GOL1axuMQFyrQhNrRzFOTi0o
+         6V4fTUyqCCqLFdtzCQr74Hn9qcGLCEdI8p08YUkgcSN+G9dDot/ADhnvAtuOGgLO/Rkr
+         fdt05q2SNLil4zUtrwoRVtBjVxSkf/FniZ7c4kfg8IA0jJgFmZGP7IpBRLU2upPVj7oT
+         IKS8MjLDiwITO6xDrQqxUMJ4tf6jKqpfiRjE5RF2yuTc906n2VPPPdj8NSUFbWtjbz9+
+         9d4w==
+X-Gm-Message-State: AElRT7FiSuDzF2HaMhIe12UUD5/zF7rZlninXjoBaFh9f8dtBZeC60gl
+        ebVBLGQ2UTbtChQLq/Z/lmA=
+X-Google-Smtp-Source: AG47ELtxYPWuFUIuu9NRtw2qfH6clamNWAZOjt3S9Rz+g4M7JbZLO3R6oEZ2LRpgUOqkHWgTT0XHOg==
+X-Received: by 10.223.186.18 with SMTP id o18mr6331593wrg.158.1520295566651;
+        Mon, 05 Mar 2018 16:19:26 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id v75sm32571573wrb.76.2018.03.05.16.19.25
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 05 Mar 2018 16:19:26 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [GSoC][PATCH v3] Make options that expect object ids less chatty if id is invalid
+References: <20180303210938.32474-1-ungureanupaulsebastian@gmail.com>
+Date:   Mon, 05 Mar 2018 16:19:25 -0800
+In-Reply-To: <20180303210938.32474-1-ungureanupaulsebastian@gmail.com>
+        (Paul-Sebastian Ungureanu's message of "Sat, 3 Mar 2018 23:09:38
+        +0200")
+Message-ID: <xmqqzi3m6ooi.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.74.25.140 with HTTP; Mon, 5 Mar 2018 16:10:07 -0800 (PST)
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 6 Mar 2018 07:10:07 +0700
-Message-ID: <CACsJy8BySv+EWSY8-Uwzf3o14dP8NdpcPTa7Bh2c2wtJ3jny1w@mail.gmail.com>
-Subject: Re: [PATCH/RFC 1/1] gc --auto: exclude the largest giant pack in
- low-memory config
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Eric Wong <e@80x24.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 5, 2018 at 9:00 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
->
-> On Thu, Mar 01 2018, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy jotted:
->
->> pack-objects could be a big memory hog especially on large repos,
->> everybody knows that. The suggestion to stick a .keep file on the
->> largest pack to avoid this problem is also known for a long time.
->>
->> Let's do the suggestion automatically instead of waiting for people to
->> come to Git mailing list and get the advice. When a certain condition
->> is met, gc --auto create a .keep file temporary before repack is run,
->> then remove it afterward.
->>
->> gc --auto does this based on an estimation of pack-objects memory
->> usage and whether that fits in one third of system memory (the
->> assumption here is for desktop environment where there are many other
->> applications running).
->>
->> Since the estimation may be inaccurate and that 1/3 threshold is
->> arbitrary, give the user a finer control over this mechanism as well:
->> if the largest pack is larger than gc.bigPackThreshold, it's kept.
->
-> This is very promising. Saves lots of memory on my ad-hoc testing of
-> adding a *.keep file on an in-house repo.
+Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com> writes:
 
-The good news for you is when we run external rev-list on top of this,
-memory consumption seems even better (and I think even peak memory
-should be a bit lower too, but I'll need to verify that).
-
->> +     if (big_pack_threshold)
->> +             return pack->pack_size >=3D big_pack_threshold;
->> +
->> +     /* First we have to scan through at least one pack */
->> +     mem_want =3D pack->pack_size + pack->index_size;
->> +     /* then pack-objects needs lots more for book keeping */
->> +     mem_want +=3D sizeof(struct object_entry) * nr_objects;
->> +     /*
->> +      * internal rev-list --all --objects takes up some memory too,
->> +      * let's say half of it is for blobs
->> +      */
->> +     mem_want +=3D sizeof(struct blob) * nr_objects / 2;
->> +     /*
->> +      * and the other half is for trees (commits and tags are
->> +      * usually insignificant)
->> +      */
->> +     mem_want +=3D sizeof(struct tree) * nr_objects / 2;
->> +     /* and then obj_hash[], underestimated in fact */
->> +     mem_want +=3D sizeof(struct object *) * nr_objects;
->> +     /*
->> +      * read_sha1_file() (either at delta calculation phase, or
->> +      * writing phase) also fills up the delta base cache
->> +      */
->> +     mem_want +=3D delta_base_cache_limit;
->> +     /* and of course pack-objects has its own delta cache */
->> +     mem_want +=3D max_delta_cache_size;
+> Usually, the usage should be shown only if the user does not know what
+> options are available. If the user specifies an invalid value, the user
+> is already aware of the available options. In this case, there is no
+> point in displaying the usage anymore.
 >
-> I'm not familiar enough with this part to say, but isn't this assuming a
-> lot about the distribution of objects in a way that will cause is not to
-> repack in some pathological cases?
-
-Yeah this assumes a "normal" case. When the estimation is really off,
-either we exclude the base pack or repack everything unnecessarily,
-but we always repack. A wrong decision here can only affect
-performance, not correctness.
-
-There's one case I probably should address though. This "exclude the
-base pack" will create two packs in the end, one big and one small.
-But if the second pack is getting as big as the first one, it's time
-we merge both into one.
-
-> Probably worth documenting...
+> This patch applies to "git tag --contains", "git branch --contains",
+> "git branch --points-at", "git for-each-ref --contains" and many more.
 >
->> +     /* Only allow 1/3 of memory for pack-objects */
->> +     mem_have =3D total_ram() / 3;
->
-> Would be great to have this be a configurable variable, so you could set
-> it to e.g. 33% (like here), 50% etc.
+> Signed-off-by: Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
+> ---
 
-Hmm.. isn't gc.bigPackThreshold enough? I mean in a controlled
-environment, you probably already know how much ram is available, and
-much of this estimation is based on pack size (well the number of
-objects in the pack) anyway, you could avoid all this heuristics by
-saying "when the base pack is larger than 1GB, always exclude it in
-repack". This estimation should only needed when people do not
-configure anything (and still expect reasonable defaults). Or when you
-plan multiple 'gc' runs on the same machine?
---=20
-Duy
+I am guessing that this was sent as a replacement for fcfba373
+("ref-filter: make "--contains <id>" less chatty if <id> is
+invalid", 2018-02-23) that was merged to 'next' at 9623d681 ("Merge
+branch 'ps/contains-id-error-message' into next", 2018-02-27).
+
+In general, we do not drop and replace what is already merged to
+'next' with a new version; once a topic is merged to 'next', we go
+incremental and further refinements are made on top instead.
+
+I however strongly suspect that the approach taken by this round is
+a lot better, and it is sufficiently different that an "incremental"
+that applies on top of the previous patches would essentially revert
+them and builds what we see in this message afresh.
+
+So I am tempted to revert the previous one out of 'next' and then
+treat this one as if it were a new/different topic.
+
+
+> diff --git a/builtin/update-index.c b/builtin/update-index.c
+> index 58d1c2d28..eeee1c170 100644
+> --- a/builtin/update-index.c
+> +++ b/builtin/update-index.c
+> @@ -1060,6 +1060,8 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
+>  		switch (parseopt_state) {
+>  		case PARSE_OPT_HELP:
+>  			exit(129);
+> +		case PARSE_OPT_ERROR:
+> +			exit(1);
+
+OK, so things like
+
+	$ git update-index --index-version
+	$ git update-index --index-version NOT_AN_INTEGER
+
+used to give the full usage (just like your primary and original
+focus that was what "tag --contains" etc. did), but with this
+change, they just throw an error and stop.  I guess this is a very
+good thing ;-)
+
+Also the exit status is changed from 129 to 1.  It is not clear if
+that is a desirable change (I am not yet saying we shouldn't change
+it, though).  Calling scripts probably only care about non-zero ness
+of the exit status, so this change probably does not hurt people in
+practice, I guess.
+
+> @@ -504,7 +503,7 @@ int parse_options_step(struct parse_opt_ctx_t *ctx,
+>  			goto show_usage;
+>  		switch (parse_long_opt(ctx, arg + 2, options)) {
+>  		case -1:
+> -			goto show_usage_error;
+> +			return PARSE_OPT_ERROR;
+
+An error return -1 from parse_long_opt() unfortunately includes the
+case where the given string is ambiguous.  The test-parse-options
+command in t/helpers e.g. has --string and --string2 option, that
+take a string argument, so "test-parse-options --stri" says "error:
+Ambigous option: stri (could be --string or --string2)", and without
+this patch, it goes on to show the usage help.  With the patch,
+however, we no longer get the help, and I think that is a regression;
+the user likely wants to see the help text that describes these two
+potential options to decide between the two.
+
+Of course, "test-parse-options --string" fails with "error: options
+`string' requires a value" and stops without the usage help---and
+that is definitely an improvement.
+
+Taking these together, I _think_ this patch is moving things in the
+right direction, in that it allows callers of parse_options_step()
+to tell "user knew what option s/he wanted, and sufficient error
+message has already be given" and "user gave us a nonsense option
+and would be helped by usage text" cases apart by introducing a new
+value PARSE_OPT_ERROR, but in order to be able to correctly give
+PARSE_OPT_ERROR back to the caller, parse_long_opt() and
+parse_short_opt() (possibly, but I didn't check) would need a bit of
+tweak to help their callers in this function.
+
+>  test_expect_success 'non ambiguous option (after two options it abbreviates)' '
+> @@ -291,6 +291,7 @@ test_expect_success 'OPT_CALLBACK() and OPT_BIT() work' '
+>  test_expect_success 'OPT_CALLBACK() and callback errors work' '
+>  	test_must_fail test-parse-options --no-length >output 2>output.err &&
+>  	test_i18ncmp expect output &&
+> +	>expect.err &&
+>  	test_i18ncmp expect.err output.err
+>  '
+
+The way the existing script sets test vectors up is not that great,
+but this "expect.err" file is created by getting the usage output at
+the very beginning of the test (into "expect") and a few tests refer
+to it, expecting it to have the usage help (see check_unknown_i18n
+helper).  We should treat its contents as a constant, and shouldn't
+touch it like this.  Instead, perhaps do
+
+	test_must_fail ... 2>actual.err &&
+	test_must_be_empty actual.err
+
+here.
+
+> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+> index ef2887bd8..e6a0766f8 100755
+> --- a/t/t3404-rebase-interactive.sh
+> +++ b/t/t3404-rebase-interactive.sh
+> @@ -921,7 +921,7 @@ test_expect_success 'rebase -i --exec without <CMD>' '
+>  	set_fake_editor &&
+>  	test_must_fail git rebase -i --exec 2>tmp &&
+>  	sed -e "1d" tmp >actual &&
+> -	test_must_fail git rebase -h >expected &&
+> +	>expected &&
+>  	test_cmp expected actual &&
+>  	git checkout master
+>  '
+
+This used to test
+
+ - "git rebase -i --exec" fails (due to lack of <cmd>).
+
+ - its error output is of no interest--expected to be some "error"
+   message that talks about the lack of <cmd>.
+
+ - after that first line of the error message, the remainder must be
+   the usage help.
+
+With the change, the third point is no longer the case.  I wonder if
+we want to change the second point above to more actively test that
+we get the error about the lack of <cmd>, e.g. something like
+
+	...
+	set_fake_editor &&
+	test_must_fail git rebase -i --exec 2>actual &&
+	test_i18ngrep "requires a value" actual
+	...
+
+> diff --git a/t/t3502-cherry-pick-merge.sh b/t/t3502-cherry-pick-merge.sh
+> index b1602718f..157cbcdb2 100755
+> --- a/t/t3502-cherry-pick-merge.sh
+> +++ b/t/t3502-cherry-pick-merge.sh
+> @@ -34,10 +34,10 @@ test_expect_success setup '
+>  test_expect_success 'cherry-pick -m complains of bogus numbers' '
+>  	# expect 129 here to distinguish between cases where
+>  	# there was nothing to cherry-pick
+> -	test_expect_code 129 git cherry-pick -m &&
+> -	test_expect_code 129 git cherry-pick -m foo b &&
+> -	test_expect_code 129 git cherry-pick -m -1 b &&
+> -	test_expect_code 129 git cherry-pick -m 0 b
+> +	test_expect_code 1 git cherry-pick -m &&
+> +	test_expect_code 1 git cherry-pick -m foo b &&
+> +	test_expect_code 1 git cherry-pick -m -1 b &&
+> +	test_expect_code 1 git cherry-pick -m 0 b
+
+The comment in the pre-context is something to ponder on.  Perhaps
+we would want to find a way to do this change without affecting the
+exit status code.
