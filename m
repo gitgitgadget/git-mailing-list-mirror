@@ -2,95 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 336391F404
-	for <e@80x24.org>; Tue,  6 Mar 2018 23:01:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1EAA41F404
+	for <e@80x24.org>; Tue,  6 Mar 2018 23:04:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932892AbeCFXBB (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Mar 2018 18:01:01 -0500
-Received: from mail-pl0-f43.google.com ([209.85.160.43]:36000 "EHLO
-        mail-pl0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932604AbeCFXBA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Mar 2018 18:01:00 -0500
-Received: by mail-pl0-f43.google.com with SMTP id 61-v6so198034plf.3
-        for <git@vger.kernel.org>; Tue, 06 Mar 2018 15:01:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=wLu5qgFFJHGa3mchY62rmvB/u57GJepAOPNpV2xZgNI=;
-        b=SRdlXfIpAgzmBN9S/lP8By46DJpq9keF2gu8Ea5rYmN2kdqM1MjNpTkTu5IF968yQ/
-         juOIsrrhTf9psaVF4scQadufZR5UZ9x/UvzfgcE6t7BSeTTr1Tg9K8MpLEtoZoC3cS6J
-         jRTBmJBRCpoccoswU7qWOjacNbjM8zok+YOlfzQwcYQ2f8Qyg0yckiP/IEc/fa+4OEt0
-         8fdV5xDMszysXd26p00NVM9FtgE472wj0HVURrt+OH+OKNk55FMjGU7ogWVueqU6sdhq
-         +Ydi0wCqa6GXmQcXpnM48u/llb58XojXDGtjOKP5QGTzj+I/6etkU/LvsI8avEOXklIh
-         lDFg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=wLu5qgFFJHGa3mchY62rmvB/u57GJepAOPNpV2xZgNI=;
-        b=awNtfETZ2E2E5Uply0AaL63nnLBU3Hgm03cJMS6HyPC6pF18a4KIYac+Q+gGVb9aJV
-         9NSH6YicEQmPDOVVuhj/c1L8c3fEUL/r9Tz4EKLlqYnen2itV5JUX5JcA5WwINKumWj9
-         +LSPPgUe5wrb5ZeEUXEO6Nvborwuplt4z2U8Upr2OfieDKIa8BXotsn5+m0ok6r+xN4g
-         Pb+er17P1EfwdSya7hXJIwr9+N0hJG/B0+YWQgAF8/LvnSBfmThi4kiJ03tdDgsjNydC
-         G11TEL494fy2c5kIUtXRg0zMoodhbyDg69PZKGvDUpJfwDXhcVLBPUPizWJdFeUEjkzg
-         2ojA==
-X-Gm-Message-State: APf1xPBoIR1IB8OA9ZL78anGuFokorsIOQDa+cLWoDnesvtXU6s3YlOf
-        6b+SxQZAaMsrIVrGuz2XI/s=
-X-Google-Smtp-Source: AG47ELsp26IpQ0suDq2fD2YvawulyI89pINdWKdQ8OjPhQxvm++KoE/Gw3ByeERY7KJZCSyP6HtR/w==
-X-Received: by 2002:a17:902:4201:: with SMTP id g1-v6mr18199904pld.62.1520377259852;
-        Tue, 06 Mar 2018 15:00:59 -0800 (PST)
-Received: from neu8r3hm32.ads.autodesk.com (adsknateur.autodesk.com. [132.188.32.100])
-        by smtp.gmail.com with ESMTPSA id k83sm37638234pfg.110.2018.03.06.15.00.56
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 06 Mar 2018 15:00:59 -0800 (PST)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH v9 4/8] utf8: add function to detect a missing UTF-16/32 BOM
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <xmqq8tb43jfe.fsf@gitster-ct.c.googlers.com>
-Date:   Wed, 7 Mar 2018 00:00:54 +0100
-Cc:     lars.schneider@autodesk.com, git@vger.kernel.org, tboegi@web.de,
-        j6t@kdbg.org, sunshine@sunshineco.com, peff@peff.net,
-        ramsay@ramsayjones.plus.com, Johannes.Schindelin@gmx.de
-Content-Transfer-Encoding: 7bit
-Message-Id: <CF78BB76-B42C-4A83-B18C-3FBAB0339346@gmail.com>
-References: <20180304201418.60958-1-lars.schneider@autodesk.com> <20180304201418.60958-5-lars.schneider@autodesk.com> <xmqqvae92ajv.fsf@gitster-ct.c.googlers.com> <0DCED348-C6DB-49B2-8C0A-E4E1F485B255@gmail.com> <xmqq8tb43jfe.fsf@gitster-ct.c.googlers.com>
-To:     Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3124)
+        id S932448AbeCFXE0 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Mar 2018 18:04:26 -0500
+Received: from cloud.peff.net ([104.130.231.41]:49530 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S932078AbeCFXEZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Mar 2018 18:04:25 -0500
+Received: (qmail 17082 invoked by uid 109); 6 Mar 2018 23:04:25 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 06 Mar 2018 23:04:25 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 10257 invoked by uid 111); 6 Mar 2018 23:05:16 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.3)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 06 Mar 2018 18:05:16 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 07 Mar 2018 00:04:21 +0100
+Date:   Wed, 7 Mar 2018 00:04:21 +0100
+From:   Jeff King <peff@peff.net>
+To:     git@vger.kernel.org
+Subject: git-scm.com update
+Message-ID: <20180306230419.GA1373@sigill.intra.peff.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Last year I reported on the state of the git-scm.com website:
 
-> On 06 Mar 2018, at 23:53, Junio C Hamano <gitster@pobox.com> wrote:
-> 
-> Lars Schneider <larsxschneider@gmail.com> writes:
-> 
->>> Also "UTF16" or other spelling
->>> the platform may support but this code fails to recognise will go
->>> unchecked.
->> 
->> That is true. However, I would assume all iconv implementations use the
->> same encoding names for UTF encodings, no? That means UTF16 would never be
->> valid. Would you agree?
-> 
-> After seeing "UTF16" and others in "iconv -l | grep -i utf" output,
-> I am not sure what you mean by "Would you agree?"  People can say in
-> their .gitattributes file that this path is in "UTF16" without dash
-> and that is what will be fed to this coe, no?
+  https://public-inbox.org/git/20170202023349.7fopb3a6pc6dkcmd@sigill.intra.peff.net/
 
-On macOS I don't see UTF16... but I just checked on my Linux box and
-there it is. Consequently, we need to check both versions: with and
-without dash.
+There was a little bit of public discussion, and I privately got
+approximately one zillion offers to host the site or otherwise help with
+it. Thank you to everybody who responded.
 
-I'll reroll ASAP (I try to do it first thing in the morning).
+Here's an update on what happened since then:
 
-Thanks,
-Lars
+ - we now have a small group of maintainers able to triage incoming bug
+   reports and patches, and generate some fixes. Thanks especially to
+   Jean-Noël Avila, Pedro Rijo, and Samuel Lijin for their work over the
+   past year.
+
+ - we resolved most of the performance issues. These were partly due to
+   some inefficient database queries, but mostly it was resolved with
+   lots and lots of caching.
+
+   The main problem, it turned out, is just that we get a _lot_ of hits.
+   Like 5-6 million requests per day (that's individual HTTP requests;
+   analytics report that we get close to 200,000 unique visitors on any
+   given weekday).
+
+   Details on the caching are in the architecture document below.
+
+ - the site remains a rails app. This is probably overkill, but it was
+   the path of least resistance to keep it one. Converting to a static
+   site would require at least some grunt-work, but also figuring out
+   some solution for the site-wide search. There's no immediate plan to
+   move to anything else.
+
+ - previously the site was being paid for by GitHub (and was tied to
+   GitHub's Heroku account). We could have continued that indefinitely,
+   but I wanted to move it to a community-owned account. That happened
+   (details in the architecture document).
+
+   Rather than ask for money from GitHub or elsewhere to cover hosting
+   costs (which would have been easy -- we had quite a few offers!), I
+   instead approached the companies whose services we're using to host
+   the site and asked for direct sponsorship. Every one of them was
+   happy to oblige, and Heroku in particular was helpful with migrating
+   the site to the new account. So we're currently receiving free
+   service from Heroku, Cloudflare, and Bonsai.
+
+ - I've written up a few documents about how the site is organized. One
+   higher-level page on the site for bug reporters, etc:
+
+     https://github.com/git/git-scm.com/pull/1172/files
+
+   and one more detailed architecture document:
+
+     https://github.com/git/git-scm.com/blob/master/ARCHITECTURE.md
+
+So at this point I think the site is in reasonably good shape going
+forward. One of the long-standing issues is that the design is not very
+responsive, and looks bad on phones and tablets. Jason Long, who did
+much of the original site design, is working on a visual refresh that
+should fix this and update some of the messier and outdated parts of the
+CSS and related tooling. The plan is to have the refresh running
+alongside the production site soon, so that we can gather feedback and
+iterate from there.
+
+-Peff
