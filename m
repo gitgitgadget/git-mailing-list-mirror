@@ -2,125 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 824DA1F576
-	for <e@80x24.org>; Tue,  6 Mar 2018 10:16:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E887F1F576
+	for <e@80x24.org>; Tue,  6 Mar 2018 10:18:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932071AbeCFKQ2 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Mar 2018 05:16:28 -0500
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:37617 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750864AbeCFKQ1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Mar 2018 05:16:27 -0500
-Received: by mail-pg0-f66.google.com with SMTP id y26so8088480pgv.4
-        for <git@vger.kernel.org>; Tue, 06 Mar 2018 02:16:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=edyG/xTj6hXkCEXNgfjwyap31K4ITCwDJR7U4ZSaSIk=;
-        b=KbLY+Ea3U1Vh7dw0r5ZsUZ+15kofrdal120HXqja8bEg8oPTaqncwpbcPY6QTV7fAQ
-         Q5sik1PT6BMB7fKSCSuVpJnjvKYYa5ILXgtWP3P5X0vhZL6ssGo1M5EHEc2s94fTenK9
-         FSNQ35/qwW7KbQF2Ci0MHoxnkD27Ddu5K76vhD3G5XrKYs+6kmAPZxQ8iBdlwZ+3LmW9
-         I+zzfbYJgy7baR9LzwIME20PMN9p5fF3Pl6AO20uolzv325UL0wIrbzBIIoy+yc63czO
-         2T18b1xXltXRI/Y7Cksf2Ne1ABPEYXT518t+Ur+MDQHC1/wXYD4Y/d9gKJ2fWzI5lwzf
-         vi6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=edyG/xTj6hXkCEXNgfjwyap31K4ITCwDJR7U4ZSaSIk=;
-        b=YzSprv1nCBtBXrb6n5+a6Ch+BT6XtbfV8jbyAf2sWdZqXSVzp5OefufggU3uecanLi
-         kP7IuMJalkQpD599Gtwtgyqv+RQTZZ741Zh0OTpJqT02c0LIpYoeVEtiZ+ByAzC/pbnH
-         xd19ZdK3H5UCkfGuv+jBMqNqgOluh+EXNfMtPzyHqUyurvPfQOXkDJXea2+xt7h2PD++
-         Pyp5rc2ZWcxuyUFf/a/Nar26+2K7j32Qu5+2LuH4H341rX+YZ8rRHBbSkdktRDi8t7D4
-         vPS6cFotFAFOi/1jlkn59r3t72se1ZongVy0PvTEt7V/TcCQYfbD8cCscIXn9Nf5oba9
-         zaUQ==
-X-Gm-Message-State: APf1xPDNNAOFB/jf0aexTGrxkDOjWHd5pQLQOEIXYScBZZalvAYtR+d0
-        HiQJkWVu+YweA95LimM5KKzwhA==
-X-Google-Smtp-Source: AG47ELsG6fOQC1ebW9h/LaXRyq3V4Bhj4lY+eUdzut1ov8np7oZYsoV8ARoyXRC000an4lgv2lfacg==
-X-Received: by 10.101.74.135 with SMTP id b7mr14788370pgu.260.1520331387045;
-        Tue, 06 Mar 2018 02:16:27 -0800 (PST)
-Received: from ash ([27.78.177.129])
-        by smtp.gmail.com with ESMTPSA id p6sm29481454pfg.183.2018.03.06.02.16.24
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 06 Mar 2018 02:16:26 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Tue, 06 Mar 2018 17:16:22 +0700
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     git@vger.kernel.org
+        id S932624AbeCFKSD (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Mar 2018 05:18:03 -0500
+Received: from smtp-out-5.talktalk.net ([62.24.135.69]:58991 "EHLO
+        smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750947AbeCFKSB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Mar 2018 05:18:01 -0500
+Received: from lindisfarne.localdomain ([92.22.16.137])
+        by smtp.talktalk.net with SMTP
+        id t9fNelwjTlYtpt9fTexEqF; Tue, 06 Mar 2018 10:17:59 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1520331479;
+        bh=M6nco/dDdJtzeZINIU5NdAnRFXqrBuFYDfIDz4ypg4o=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:Reply-To;
+        b=DzYSG5YLRWRSuPQap5g0hqpCfiuW/OkE0rJiorDgYv3weNRmuGR9/jG7cf6JgrJG6
+         Do5sGmEkNGFTq6WxvIdosGcWqRenrOnklg10QJBdvReAVYRHlx8IqwDyqADrLXkzJz
+         L+oUazGuhMOcl1BYjVpTaQbYar4uKRQKt9ddwCHA=
+X-Originating-IP: [92.22.16.137]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=JZeSU3CV c=1 sm=1 tr=0 a=nWy375ASyxHoIYnPohIYMA==:117
+ a=nWy375ASyxHoIYnPohIYMA==:17 a=evINK-nbAAAA:8 a=AYlvAQ_5uU6KR0DxsCcA:9
+ a=7Zwj6sZBwVKJAoWSPKxL6X1jA+E=:19 a=oPOlmhkpbYbxQVkh:21 a=Wx_OaTHVyFH6t0yk:21
+ a=RfR_gqz1fSpA9VikTjo0:22
+From:   Phillip Wood <phillip.wood@talktalk.net>
+To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-Subject: [PATCH 2/2] object.h: realign object flag allocation comment
-Date:   Tue,  6 Mar 2018 17:16:15 +0700
-Message-Id: <20180306101615.5173-2-pclouds@gmail.com>
-X-Mailer: git-send-email 2.16.2.784.gb291bd247e
-In-Reply-To: <20180306101615.5173-1-pclouds@gmail.com>
-References: <20180306101615.5173-1-pclouds@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Gustavo Leite <gustavoleite.ti@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: [PATCH v2 2/3] add -p: allow line selection to be inverted
+Date:   Tue,  6 Mar 2018 10:17:49 +0000
+Message-Id: <20180306101750.18794-3-phillip.wood@talktalk.net>
+X-Mailer: git-send-email 2.16.2
+In-Reply-To: <20180306101750.18794-1-phillip.wood@talktalk.net>
+References: <20180219113619.26566-1-phillip.wood@talktalk.net>
+ <20180306101750.18794-1-phillip.wood@talktalk.net>
+Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
+X-CMAE-Envelope: MS4wfHYtYQHf2D2GAnHM+e11lwl8xMn9Crl2cm1YQUWX/LAbZ/AhaaSzdkNGr5+k+/ko/oJc7hZ8tZpuibDZJod/rl6u6fnMyUzk+nL/NocA0xjhi98qXgr2
+ deig4AhCdeBwu+nqpmT5/K8WECR5hZQhLPu+jiR3+1bHE1lDm12UwcMshYXknsw5m35I+cp6KOXmt2RldOLGEladkklhM1pQApuf2mEcOrupTcGAXnrNuHQv
+ oQkLkAaJ9UeR/2i0vT6OtiWskmM1f36ZfoFnqiosNlbRNfKwThc3NsGGYdwHAifN
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Some new path names are too long and eat into the graph part. Move the
-graph 9 columns to the right to avoid this.
+From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+If the list of lines to be selected begins with '^' select all the
+lines except the ones listed.
+
+Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
- object.h | 32 ++++++++++++++++----------------
- 1 file changed, 16 insertions(+), 16 deletions(-)
+ Documentation/git-add.txt  |  3 ++-
+ git-add--interactive.perl  | 17 ++++++++++++++++-
+ t/t3701-add-interactive.sh |  2 +-
+ 3 files changed, 19 insertions(+), 3 deletions(-)
 
-diff --git a/object.h b/object.h
-index 15901d2901..6f56a86937 100644
---- a/object.h
-+++ b/object.h
-@@ -28,22 +28,22 @@ struct object_array {
- #define TYPE_BITS   3
- /*
-  * object flag allocation:
-- * revision.h:      0---------10                                26
-- * fetch-pack.c:    0----5
-- * walker.c:        0-2
-- * upload-pack.c:       4       11----------------19
-- * builtin/blame.c:               12-13
-- * bisect.c:                               16
-- * bundle.c:                               16
-- * http-push.c:                            16-----19
-- * commit.c:                               16-----19
-- * sha1_name.c:                                     20
-- * list-objects-filter.c:                             21
-- * builtin/fsck.c:  0--3
-- * builtin/index-pack.c:                            2021
-- * builtin/pack-objects.c:                          20
-- * builtin/reflog.c:          10--12
-- * builtin/unpack-objects.c:                        2021
-+ * revision.h:               0---------10                                26
-+ * fetch-pack.c:             0----5
-+ * walker.c:                 0-2
-+ * upload-pack.c:                4       11----------------19
-+ * builtin/blame.c:                        12-13
-+ * bisect.c:                                        16
-+ * bundle.c:                                        16
-+ * http-push.c:                                     16-----19
-+ * commit.c:                                        16-----19
-+ * sha1_name.c:                                              20
-+ * list-objects-filter.c:                                      21
-+ * builtin/fsck.c:           0--3
-+ * builtin/index-pack.c:                                     2021
-+ * builtin/pack-objects.c:                                   20
-+ * builtin/reflog.c:                   10--12
-+ * builtin/unpack-objects.c:                                 2021
-  */
- #define FLAG_BITS  27
+diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
+index ad33fda9a2..0e2c11e97b 100644
+--- a/Documentation/git-add.txt
++++ b/Documentation/git-add.txt
+@@ -341,7 +341,8 @@ If you press "l" then the hunk will be reprinted with each insertion
+ or deletion labelled with a number and you will be prompted to enter
+ which lines you wish to select. Individual line numbers should be
+ separated by a space or comma, to specify a range of lines use a dash
+-between them.
++between them. To invert the selection prefix it with "\^" so "^3-5,8"
++will select everything except lines 3, 4, 5 and 8.
+ +
+ After deciding the fate for all hunks, if there is any hunk
+ that was chosen, the index is updated with the selected hunks.
+diff --git a/git-add--interactive.perl b/git-add--interactive.perl
+index a273b41e95..6fa3d0a87c 100755
+--- a/git-add--interactive.perl
++++ b/git-add--interactive.perl
+@@ -1085,9 +1085,21 @@ sub check_hunk_label {
+ sub parse_hunk_selection {
+ 	local $_;
+ 	my ($hunk, $line) = @_;
+-	my $max_label = $hunk->{MAX_LABEL};
++	my ($max_label, $invert) = ($hunk->{MAX_LABEL}, undef);
+ 	my @selected = (0) x ($max_label + 1);
+ 	my @fields = split(/[,\s]+/, $line);
++	if ($fields[0] =~ /^\^(.*)/) {
++		$invert = 1;
++		if ($1 ne '') {
++			$fields[0] = $1;
++		} else {
++			shift @fields;
++			unless (@fields) {
++				error_msg __("no lines to invert\n");
++				return undef;
++			}
++		}
++	}
+ 	for (@fields) {
+ 		if (/^([0-9]*)-([0-9]*)$/) {
+ 			if ($1 eq '' and $2 eq '') {
+@@ -1110,6 +1122,9 @@ sub parse_hunk_selection {
+ 			return undef;
+ 		}
+ 	}
++	if ($invert) {
++		@selected = map { !$_ } @selected;
++	}
+ 	return \@selected;
+ }
  
+diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
+index 65c8c3354b..89c0e73f2b 100755
+--- a/t/t3701-add-interactive.sh
++++ b/t/t3701-add-interactive.sh
+@@ -410,7 +410,7 @@ test_expect_success 'setup expected diff' '
+ '
+ 
+ test_expect_success 'can reset individual lines of patch' '
+-	printf "%s\n" l 2 |
++	printf "%s\n" l "^1 3" |
+ 	EDITOR=: git reset -p 2>error &&
+ 	test_must_be_empty error &&
+ 	git diff --cached HEAD >actual &&
 -- 
-2.16.2.784.gb291bd247e
+2.16.2
 
