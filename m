@@ -2,90 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 673481F404
-	for <e@80x24.org>; Tue,  6 Mar 2018 21:05:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AC6FE1F404
+	for <e@80x24.org>; Tue,  6 Mar 2018 21:16:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753785AbeCFVFk (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Mar 2018 16:05:40 -0500
-Received: from mail-qk0-f170.google.com ([209.85.220.170]:41601 "EHLO
-        mail-qk0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752931AbeCFVFj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Mar 2018 16:05:39 -0500
-Received: by mail-qk0-f170.google.com with SMTP id w142so36484qkb.8
-        for <git@vger.kernel.org>; Tue, 06 Mar 2018 13:05:39 -0800 (PST)
+        id S932147AbeCFVQG (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Mar 2018 16:16:06 -0500
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:36288 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753070AbeCFVQG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Mar 2018 16:16:06 -0500
+Received: by mail-wr0-f194.google.com with SMTP id v111so63185wrb.3
+        for <git@vger.kernel.org>; Tue, 06 Mar 2018 13:16:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=etAH955r3W9Xmv2DcY5e3j7w/ZPENrC+4WMxejqlXak=;
-        b=ONVESOiSDJ8zngdOebmW/NFhYKXvS8TkxyNAdbARppVVbAZgN93vJjoy59YJmmX/Zw
-         X58cLkVFMWmA7ThNXxaqvU05ZVCrhurSslzlTw/sc/qUlcPZDNnsK29x+ka5cBxyCiTi
-         LblLv0w7rW5ro+QRyr/9k2mrsWDA03+stbvGZFxFAEB0D1ytXycJDyaYsg4VAEpqH0Ko
-         8houyV27IWQLAsipinSZO1qsphFCJXX7sUJv+QNryPl9/eXIdhbjid0Nt2wb3sRmo28D
-         5vQN0k/YQpcZQekHOr5sdcQHNnW3KJtaZSSSiEPrLutEInz0xs6eIjC8nS4WnZB0hrAp
-         RPIQ==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=e33lSBSXxu42HielKDXHEiE0Qg3U9fYtc2umrD4nE+A=;
+        b=WJGFdvJwggSVBJUfWv0Je5QLQKFBER2BAKyYs42zKFABT6cssvU1xQxkdaN+PVr9Mi
+         RVW8k2BjhCT9WG/oFqmLEBiZwqLVl5EapCZ836IPYEs+L7KsjdQcmvM0cL9chZeai6bm
+         /7BSHFuzJrVSwaysgqlld0Suly4HZ2/b6FYvXOW7TQl6ugwzDAL7kJ2O8EM880yS2wuf
+         fG3OuwQ/CE3LfdVjENBj/8nQpnyIL9NcTpVXqyzWXE9Qf2b7mW/GQeMW3U4QzHZCbVjf
+         5NZ6jrSKSBSxETXFNsk8vMN1iR/NN3b+HnB6kOEkekJzlUjZE4waV4/83zuo/asA1RHm
+         ewMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=etAH955r3W9Xmv2DcY5e3j7w/ZPENrC+4WMxejqlXak=;
-        b=qHBg/QlhJGJGMjhz1lrhJCp5qWbJgb5Wi+9xiAONvVypEKoMjXjxiX4hdIa+CgGk9x
-         BvXO/rmiiBBvrCo5WAAiuPwJ7iwk7GGiaZZuWrET44hiXaQPHxg9OpzjONf/SkcD/llZ
-         o7lS3mfxBpHxizDOxXdlXMtiWtsUEqpOTOMQ2LjMeRnTutjqd9sbFhxXhKdARW1XTZJV
-         m89R3HkA0gnmsZaIE8EH0JsdVP/HTT+70kf8MhNAm2sbcrurw8RWb+LommwRZJRInSKy
-         AE23xyTYUpvH2SGM8l/5Hoyyt8ihm/x+jKb5GM4OmJXKqp33thClcqNMVsD6I1QU1Ibc
-         cGuA==
-X-Gm-Message-State: AElRT7GDlaqHDNnC0yDq+fbljKG1Td2zEahTdGWmDPvEktzCkZ3j3KhS
-        ET2MpCn87Hk4ytEAC7lX7Uwsh3fo/WcyHkyQdTQ=
-X-Google-Smtp-Source: AG47ELsE0fvVC2kb+VBDVHqdTQS4hpzH98i4O4FQ98VKTD/GqY+zSktcglJOBOnRWH0xCEzTZNDNbPFAHeTDs6IWwPg=
-X-Received: by 10.55.133.131 with SMTP id h125mr30583334qkd.79.1520370338500;
- Tue, 06 Mar 2018 13:05:38 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=e33lSBSXxu42HielKDXHEiE0Qg3U9fYtc2umrD4nE+A=;
+        b=Lh/YrleoXTxUhF7h3jPZKwzlZmiovQbE1EXRbFpL3nvYioag1zYInwFolKNJsdEa/O
+         9UirgKLQEC0t/EzZp8F9ZrELR43qNEFZtdXvOD86FwwWGvOpFfwVKv8af6fOukslHkGY
+         7u0lEo9OcHE+HQjdTPlUtdP7xaQxdShPO9PCGtzK2NqgajgXLl8Igvw8ZSIuh6NETRkm
+         6mew51lfaPyMmxkhmf0xeDLZA0cbLOB3UYT8LzyyjV5KYDpRASWdtLOfBa0NSbSuOXyC
+         QtprpYt45gYixysDxhT39QssinpouoD1kQ44JA7Wz+LL5qw9W0jod0cCqhy3wNqc7INd
+         mLiQ==
+X-Gm-Message-State: APf1xPBz1LjxkI64Y0OtWv81ODqqN9073oK/NSl6ZKsScATIBdw5/QgU
+        efPkNruDKMiSujfmB2knkuY=
+X-Google-Smtp-Source: AG47ELs6bGoPEC7zvvHRNlKsr1THIudF6qxbMQFxzOnEYVy7pD1sXcNYMjNTeTidLzp4e5kPXQMDkQ==
+X-Received: by 10.223.133.182 with SMTP id 51mr15697304wrt.226.1520370964345;
+        Tue, 06 Mar 2018 13:16:04 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id h188sm9525462wmf.23.2018.03.06.13.16.03
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 06 Mar 2018 13:16:03 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [GSoC][PATCH v4] Make options that expect object ids less chatty if id is invalid
+References: <20180306193116.23876-1-ungureanupaulsebastian@gmail.com>
+Date:   Tue, 06 Mar 2018 13:16:03 -0800
+In-Reply-To: <20180306193116.23876-1-ungureanupaulsebastian@gmail.com>
+        (Paul-Sebastian Ungureanu's message of "Tue, 6 Mar 2018 21:31:16
+        +0200")
+Message-ID: <xmqqlgf43nxo.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.12.142.14 with HTTP; Tue, 6 Mar 2018 13:05:38 -0800 (PST)
-In-Reply-To: <20180304201418.60958-1-lars.schneider@autodesk.com>
-References: <20180304201418.60958-1-lars.schneider@autodesk.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 6 Mar 2018 16:05:38 -0500
-X-Google-Sender-Auth: fqWN4rlj7zATfVi8yH-vGTfKIC4
-Message-ID: <CAPig+cTZGVqWSUpRuHdGwDEq5FBwzpW4j=v_1VXe_Z2+YCTrOQ@mail.gmail.com>
-Subject: Re: [PATCH v9 0/8] convert: add support for different encodings
-To:     Lars Schneider <lars.schneider@autodesk.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-        Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Lars Schneider <larsxschneider@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Mar 4, 2018 at 3:14 PM,  <lars.schneider@autodesk.com> wrote:
-> Changes since v8: [...]
+Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com> writes:
+
+> Usually, the usage should be shown only if the user does not know what
+> options are available. If the user specifies an invalid value, the user
+> is already aware of the available options. In this case, there is no
+> point in displaying the usage anymore.
 >
-> Thanks a lot Eric for your great review! I think I fixed everything you
-> objected with one exception. You noticed that the current code only
-> checks for BOMs corresponding to the declared size (16 or 32 bits) [1].
-> I understand your point of view and I agree that any BOM in these cases
-> is *most likely* an error. However, according to the spec it might
-> still be valid. The comments on my related question on StackOverflow
-> seem to support that view [2]. Therefore, I would like to leave it as
-> it is in this series. If it turns out to be a problem in practice, then
-> I am happy to change it later. OK for you?
+> This patch applies to "git tag --contains", "git branch --contains",
+> "git branch --points-at", "git for-each-ref --contains" and many more.
+>
+> Signed-off-by: Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
+> ---
 
-Fine. As this is not a correctness issue with the conversion itself,
-but rather an attempt to detect misconfiguration by the user, it can
-always be revisited later if someone comes up with a more solid
-argument that one interpretation is more correct than the other.
+I notice that this version changes the way the case where an
+unbiguous long option is given, compared to the previous one is
+handled.  And I recall that that single case is what I happened to
+have noticed during my review of the previous one, in which I was
+not trying to be exhausitive.  
 
-I did leave a few review comments on v9, but I don't think any are
-necessarily worth a re-roll. If anything, and if they seem actionable,
-then perhaps a patch or two atop the series could address them (at
-some point).
+I kind of find it surprising that the one single case I happened to
+have noticed is the only one that needed special treatment.  Did you
+go though all the codepath and made sure that the ones that still
+return -1 (not -2 and not -3) to parse_options_step() are all OK (in
+other words, I was just lucky) or does this version change only the
+"ambiguous" case, simply because that was the only one I noticed in
+my review (in other words, this may still not be sufficient)?
+
+Just double checking.
+
+The changes to existing tests have become a lot less noisy, compared
+to the previous one, which is probably a good thing.
+
+Thanks.
