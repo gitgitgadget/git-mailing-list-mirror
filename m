@@ -2,101 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EF0681F404
-	for <e@80x24.org>; Tue,  6 Mar 2018 06:10:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E1EDB1F576
+	for <e@80x24.org>; Tue,  6 Mar 2018 06:29:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750769AbeCFGKK (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Mar 2018 01:10:10 -0500
-Received: from mail4.protonmail.ch ([185.70.40.27]:14054 "EHLO
-        mail4.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750723AbeCFGKJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Mar 2018 01:10:09 -0500
-Date:   Tue, 06 Mar 2018 01:09:58 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=urandom.co.uk;
-        s=protonmail; t=1520316607;
-        bh=Os1AxbnggGUIJepGBaXcZzFGOJQ3KmuT/lRBzBe7zt4=;
-        h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:
-         Feedback-ID:From;
-        b=YwBfeAJSNi/2JgriwaqZpangqSfmnfJad2iv1Dz1yoaB61gGg/qQlipF/8cGef/Ds
-         GuryZxRzhpdWCmrkklx8ORqA8MR6MJVEvdNEfJ87YgEj5729ux1rZQIg1PTZ+w4d2M
-         SNV4oCqDsdeiIlSaxprzP/K7ZiQiM23hUNvprUXI=
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-From:   Colin Arnott <colin@urandom.co.uk>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Reply-To: Colin Arnott <colin@urandom.co.uk>
-Subject: Re: [PATCH] http.c: shell command evaluation for extraheader
-Message-ID: <-mpHjLv0pGYld30rBagku1GYfPM2FqZQubWD4rHt2K_uijQg0ehMjeBnZgr4K77zc2E4HAlm3eqNtP7-lXzhR8o7udP0TdNHMJK7WRauzmk=@urandom.co.uk>
-In-Reply-To: <nycvar.QRO.7.76.6.1803051437000.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <CngnTUCx1pVSyKUzINZV972DlD_JMH53F-L2PZtx0_RKMiwXYY4f2UzDPeJaC5fL-6oJBXAxQ5f0OC76I_fagEWxch5csI716N7bQDh3gR8=@urandom.co.uk>
- <nycvar.QRO.7.76.6.1803051437000.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-Feedback-ID: yOOU7P6jxO77HcrFw4SgItADp6aEzrzaBrsweNUU3GchxkXYtI8xYBc21P-ZUn-yQhUSAkQaHpx8GP3vtEZa9g==:Ext:ProtonMail
+        id S1750782AbeCFG3I (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Mar 2018 01:29:08 -0500
+Received: from cloud.peff.net ([104.130.231.41]:48408 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1750723AbeCFG3I (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Mar 2018 01:29:08 -0500
+Received: (qmail 13942 invoked by uid 109); 6 Mar 2018 06:29:08 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 06 Mar 2018 06:29:08 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 1305 invoked by uid 111); 6 Mar 2018 06:29:59 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.3)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 06 Mar 2018 01:29:59 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 06 Mar 2018 07:29:02 +0100
+Date:   Tue, 6 Mar 2018 07:29:02 +0100
+From:   Jeff King <peff@peff.net>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Brandon Williams <bmwill@google.com>, git@vger.kernel.org,
+        sbeller@google.com, gitster@pobox.com, stolee@gmail.com,
+        git@jeffhostetler.com, pclouds@gmail.com
+Subject: Re: [PATCH v3 12/35] serve: introduce git-serve
+Message-ID: <20180306062901.GA3522@sigill.intra.peff.net>
+References: <20180125235838.138135-1-bmwill@google.com>
+ <20180207011312.189834-1-bmwill@google.com>
+ <20180207011312.189834-13-bmwill@google.com>
+ <20180222093327.GA12442@sigill.intra.peff.net>
+ <20180223214557.GF234838@google.com>
+ <20180303043338.GC27689@sigill.intra.peff.net>
+ <20180305184321.GC72475@google.com>
+ <20180305205254.GC5953@sigill.intra.peff.net>
+ <20180305213649.GF28067@aiede.svl.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20180305213649.GF28067@aiede.svl.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes,
+On Mon, Mar 05, 2018 at 01:36:49PM -0800, Jonathan Nieder wrote:
 
-On March 5, 2018 1:47 PM, Johannes Schindelin <Johannes.Schindelin@gmx.de> =
-wrote:
+> > I agree that would be a lot more pleasant for adding protocol features.
+> > But I just worry that the stateful protocols get a lot less efficient.
+> > I'm having trouble coming up with an easy reproduction, but my
+> > recollection is that http has some nasty corner cases, because each
+> > round of "have" lines sent to the server has to summarize the previous
+> > conversation. So you can get a case where the client's requests keep
+> > getting bigger and bigger during the negotiation (and eventually getting
+> > large enough to cause problems).
+> 
+> That's not so much a corner case as just how negotiation works over
+> http.
 
-> As the credential-helper is already intended for sensitive data, and as i=
-t
-> already allows to interact with a helper, I would strongly assume that it
-> would make more sense to try to extend that feature (instead of the simpl=
-e
-> extraHeader one).
+Sure. What I meant more was "there are corner cases where it gets out of
+control and doesn't work".
 
-To confirm you are suggesting that the credential struct, defined in creden=
-tial.h, be extended to include a headers array, like so:
---- a/credential.h
-+++ b/credential.h
-@@ -15,6 +15,7 @@ struct credential {
-        char *protocol;
-        char *host;
-        char *path;
-+       char **headers
- };
-=20
- #define CREDENTIAL_INIT { STRING_LIST_INIT_DUP }
+I have had to give the advice in the past "if your fetch over http
+doesn't work, try it over ssh". If we change the ssh protocol to be
+stateless, too, then that closes that escape hatch.
 
-> This would also help alleviate all the quoting/dequoting issues involved
-> with shell scripting.
->=20
-> Besides, the http.extraHeader feature was designed to accommodate all
-> kinds of extra headers, not only authentication ones (and indeed, the
-> authentication was only intended for use in build agents, where both
-> environment and logging can be controlled rather tightly).
+I haven't had to give that advice for a while, though. Maybe tweaks to
+the parameters or just larger buffers have made the problem go away over
+the years?
 
-I realise that my examples are scoped for auth, but I can conceive of other=
- mutating headers that are not explicitly authentication related, and could=
- benefit from shell execution before fetch, pull, push actions.
+> We want to do better (e.g. see [1]) but that's a bigger change than
+> the initial protocol v2.
+> 
+> As Brandon explained it to me, we really do want to use stateless-rpc
+> semantics by default, since that's just better for maintainability.
+> Instead of having two protocols, one that is sane and one that
+> struggles to hoist that into stateless-rpc, there would be one
+> stateless baseline plus capabilities to make use of state.
 
-> I also see that in your implementation, only the extraHeader value is
-> evaluated, without any access to the rest of the metadata (such as URL,
-> and optionally specified user).
->
-> It would probably get a little more complicated than a shell script to
-> write a credential-helper that will always be asked to generate an
-> authentication, but I think even a moderate-level Perl script could be
-> used for that, and it would know the URL and user for which the
-> credentials are intended...
+Yes, I think that would be a nice end-game. It just wasn't clear to me
+where we'd be in the interim.
 
-You are correct; the scope provided by http.<url>.* is enough to meet my us=
-e cases, however I agree the lack of access to metadata limits what can be =
-done within in the context of the shell, and makes the case for a credentia=
-l-helper implementation stronger. I think there is something to be said abo=
-ut the simplicity and user-friendliness of allowing shell scripts for semi-=
-complex config options, but authentication is a task that should be handled=
- well and centrally, thus extending the credential-api makes sense.
-
-=E2=80=8BWithout Wax,
-Colin Arnott=E2=80=8B
+-Peff
