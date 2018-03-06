@@ -2,165 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D772E1F576
-	for <e@80x24.org>; Tue,  6 Mar 2018 10:36:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 664721F576
+	for <e@80x24.org>; Tue,  6 Mar 2018 10:42:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753423AbeCFKgE (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Mar 2018 05:36:04 -0500
-Received: from smtp-out-5.talktalk.net ([62.24.135.69]:29299 "EHLO
-        smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750897AbeCFKgD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Mar 2018 05:36:03 -0500
-Received: from [192.168.2.201] ([92.22.16.137])
-        by smtp.talktalk.net with SMTP
-        id t9wuelzXdlYtpt9wvexFcW; Tue, 06 Mar 2018 10:36:02 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1520332562;
-        bh=48CMf2+up7iYlMS0rBsxqBiafY7Va3nwlw6ZFRvRjag=;
-        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=ZwkLQbA3PcRk90yISSI2dlzMBlMTBlrpXQCiuLoCL2nz8Wpy0SO3otrtOzZdU55C5
-         h4QTdmgBx/MlO8cdmdNAxq59hD/Yks9g6JFTEvOd2DZwidXNL0BNbuFwV8UoGyhdrw
-         iD9eAwhpU46cdnZA5Od59kwi5pd+An6ZQQ8UO0iI=
-X-Originating-IP: [92.22.16.137]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=JZeSU3CV c=1 sm=1 tr=0 a=nWy375ASyxHoIYnPohIYMA==:117
- a=nWy375ASyxHoIYnPohIYMA==:17 a=IkcTkHD0fZMA:10 a=5rxgeBVgAAAA:8
- a=pGLkceISAAAA:8 a=61VgBTjE2_26F9_T0SkA:9 a=QEXdDO2ut3YA:10
- a=PwKx63F5tFurRwaNxrlG:22
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [RFC] Rebasing merges: a jorney to the ultimate
- solution(RoadClear)
-To:     Igor Djordjevic <igor.d.djordjevic@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     Jacob Keller <jacob.keller@gmail.com>,
-        Sergey Organov <sorganov@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Junio C Hamano <gitster@pobox.com>
-References: <87y3jtqdyg.fsf@javad.com>
- <bbe64321-4d3a-d3fe-8bb9-58b600fabf35@gmail.com>
- <nycvar.QRO.7.76.6.1802270051470.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
- <CA+P7+xq8UUcLWomUi=PS_hTKfJd3dMAxMmhioDS1bixwcmKAqw@mail.gmail.com>
- <nycvar.QRO.7.76.6.1802271718090.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
- <4d7f3406-b206-cc22-87df-85700d6a03d9@gmail.com>
- <33da31e9-9101-475d-8901-4b6b3df2f29d@gmail.com>
- <940d959d-151d-68dd-0f13-320ebad0d75b@gmail.com> <87606hoflx.fsf@javad.com>
- <0ac3a3fd-4053-e32e-75ed-8829f22c2e1f@gmail.com> <87a7vss6ax.fsf@javad.com>
- <f1a960dc-cc5c-e7b0-10b6-39e5516655b3@gmail.com>
- <ed4d2b30-2dea-740b-6283-973c798f619d@philandanna.no-ip.org>
- <1298a701-a860-a675-83d7-72f29e14cd2b@talktalk.net>
- <CA+P7+xpgChuvh_vsPktBkOEhF=MjJh1n_3jD0-n4d67j9kYqzw@mail.gmail.com>
- <ee809701-a6d8-157d-09cd-cebbf2e949ec@gmail.com>
-From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <1580e48a-be44-38dd-79af-8a2a31c5712e@talktalk.net>
-Date:   Tue, 6 Mar 2018 10:36:00 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
+        id S1753393AbeCFKmU (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Mar 2018 05:42:20 -0500
+Received: from mail-pl0-f66.google.com ([209.85.160.66]:38087 "EHLO
+        mail-pl0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750897AbeCFKmT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Mar 2018 05:42:19 -0500
+Received: by mail-pl0-f66.google.com with SMTP id m22-v6so8099471pls.5
+        for <git@vger.kernel.org>; Tue, 06 Mar 2018 02:42:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=+5ReWo4J9ZwpWjfLTP9BQKLMr4M48OjCw44BI94gFYo=;
+        b=hqgfskiFpc0eSFeZA1piGtRQQmzefOCEim6/LZnNWypE+k7vmMVcmV9FE1xjs9njzr
+         XU5T0jj5RHpolh4pVjZ8YN4RHD2SHQSVWtIvp/2HFltpApts49o7b/oEanSbYKzYp2vu
+         Xva3TyftB47uOtzMMsmIJMmPVDmv2NoWxGrVrhyWUs0QzcksyZ/RuXDGM2bS+jxnmsTb
+         pppVtuvGgwfE9XzcRl0hjViqSD64HXFeBc9KnWWN+jN+LnXCI2e4AK+4fFmyOTfFaDWU
+         CVPmx6EcyimWc8vXWRCwlhUYAmaXq+m6VnMPrrtbTx8X6acav0/F6TbgnW5aOkiLyxwp
+         WfZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=+5ReWo4J9ZwpWjfLTP9BQKLMr4M48OjCw44BI94gFYo=;
+        b=StgAlgn1e+iPIJQ7juNwTcdkp7pBjbisn4IgV3pZ/MI1ToDM6BGUEG67YHkLEtqkzU
+         0pRmDw/fxso43Uny0ZTPKHdi79kWq1u78D3wOpqKQslz953q2VmMi+7gNnE+DTP77565
+         kOzlaXDJ7vpqfxpCao4+Auu9c2T/KZx0opSKD3sxaDiRYkxDGRIuenzzTfsJDYl+0Rrz
+         43FV75MwNPjtTXdTVlB5D5Wyl/qXrlEadhdgeveVvwpLr8kkOGorhnEAOUeld1GaV9J1
+         4fWIqbIwH12x45kc/CIcMF1KKaQKSCUQhORcHdDxxZt+nUdYDXm6vzdOBwJP59Q/3xZm
+         OQYQ==
+X-Gm-Message-State: APf1xPC7VR+dTOKHIFexd8n0rXo9CmBA9ecKtRSjvJA05yXODiaLStYZ
+        MGuidda4DeZyc/sSNHmiv7I=
+X-Google-Smtp-Source: AG47ELtGFiyJtes27+12/kWG8oCR0sxDdN54iSPIxoigRn1iAY7we0TkgjGV1fg00NWZUFItwcynMQ==
+X-Received: by 2002:a17:902:28c4:: with SMTP id f62-v6mr16148057plb.411.1520332939090;
+        Tue, 06 Mar 2018 02:42:19 -0800 (PST)
+Received: from ash ([27.78.177.129])
+        by smtp.gmail.com with ESMTPSA id i1sm33572901pfi.116.2018.03.06.02.42.15
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 06 Mar 2018 02:42:18 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Tue, 06 Mar 2018 17:42:14 +0700
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     pclouds@gmail.com
+Cc:     e@80x24.org, git@vger.kernel.org, peff@peff.net,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v2 0/5] Avoid expensive 'repack -ad' in gc --auto
+Date:   Tue,  6 Mar 2018 17:41:53 +0700
+Message-Id: <20180306104158.6541-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.16.2.784.gb291bd247e
+In-Reply-To: <20180301092046.2769-1-pclouds@gmail.com>
+References: <20180301092046.2769-1-pclouds@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <ee809701-a6d8-157d-09cd-cebbf2e949ec@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfKLnFbLAv+3eU4keqnf+Q0JAAloLW4yE2jV8/u1rEVgdkNAJV6MW3DHypKlIS0SpkO2Zs2qgjHN+rbmSXpp7m0NlAlhwWoxMumGjGbtP3sS8fklZ4c3O
- DN0LDp0EC3VUHSZOtT37E9bFDP7sp6uN1XBOodpsq86EBlY34N5CsQpz8qVtfX/bZ4PGH+aSelLBwzzCELLaExknBnBViusBNr24T9dgnAzmRxwU+yK3vd3f
- BL3X9o72syhV8WQc3xqOtQYjj3bYcI2TuVko9cCPWUGmkmRIPxuH88KsW5oJXFdNb73Y+rQIZ5eRb9j2dHyAQQeiJ2RdSp6Xq35GxK/99TP2gEFXiP6t/pDK
- H3oZZPfQ8JyQh4lM6rVKzJTUwT1BMPjXiKy4d2OEtkXCg72N6E+Y91K8tXUmwpI35CzCnA1D
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 02/03/18 23:33, Igor Djordjevic wrote:
-> Hi Phillip,
-> 
->> On Fri, Mar 2, 2018 at 4:36 AM, Phillip Wood wrote:
->>>
->>>> It is interesting to think what it means to faithfully rebase a '-s
->>>> ours' merge.
->>>
->>> I should have explained that I mean is a faithful rebase one that
->>> adheres to the semantics of '-s ours' (i.e. ignores any changes in the
->>> side branch) or one that merges new changes from the side branch into
->>> the content of the original merge? In your example you add B4 to B. If
->>> M' preserves the semantics of '-s ours' then it will not contain the
->>> changes in B4. I think your result does (correct me if I'm wrong) so it
->>> is preserving the content of the original merge rather than the
->>> semantics of it.
-> 
-> Yeah, I understood what you mean, and I see you noticed that B4 
-> commit, for which I did anticipate possibly bringing up a discussion 
-> like this ;)
-> 
-> I agree with Jake here, my thoughts exactly (what I wrote in that 
-> other subthread[1], too):
-> 
-> On 02/03/2018 17:02, Jacob Keller wrote:
->>
->> We only have the content, and we don't know the semantics (nor, I
->> think, should we attempt to understand or figure out the semantics).
-> 
-> Hmm, I wanted to elaborate a bit here, but that sentence seems to 
-> summarize the pure essence of it, and whatever I write looks like 
-> just repeating the same stuff again...
-> 
-> That`s just it. And stopping to give the user a chance to 
-> review/amend the result, where he might decide he actually did want 
-> something else - so all good.
-> 
-> Otherwise, I would be interested to learn how context/semantics 
-> guessing could provide a better default action (without introducing 
-> more complexity for might not be much benefit, if any).
+I'm pretty happy with this now. Like v1, this is about not touching
+the giant base pack when doing background gc. This saves about 2/3 of
+memory, which in turn should improve performance if you're under
+memory pressure.
 
-I don't think its possible to guess the semantics of the original merge
-as users can use custom merge strategies and amend the result. It would
-be possible to detect and unamended '-s ours' merge but special casing
-that may end up causing users more confusion rather than helping them.
+v2 changes:
 
-> But in the end, I guess we can just discuss the "most sane default" 
-> to present to the user (introduce or obsolete that new commit B4, in 
-> the discussed example[2]), as we should definitely stop for amending 
-> anyway, not proceeding automatically whenever U1' != U2'.
+- the core idea remains the same, mem_have is increased to half total
+  memory though. I figure including the whole mmap'd pack in the
+  memory estimation may be a bit much, which is why I make this
+  change.
+- no creating .keep files temporarily
+- the config key is renamed gc.bigBasePackThreshold (named after
+  core.bigFileThreshold)
+- note that if you set gc.bigFileThreshold, then normal gc (without
+  --auto) can trigger this mode too.
+- you can also control this with --[no-]keep-base-pack
+- documents and tests
+- some more progress output improvements
 
-I can see the reason for that but I'm concerned that it might get
-annoying with an interactive rebase as it would stop whenever one of the
-commits on a topic branch that is a parent of a merge gets amended.
-(squashing and reordering existing commits on a topic branch would be OK
-though)
+I'm _not_ doing external rev-list in this series though. I found out
+that we have added more and more stuff in the internal rev-list code
+path over the year and simply running
 
-> Oh, and what about situations where we introduce new or drop existing 
-> branches (which should be possible with new `--recreate-merges`)...? 
-> "Preserving old branch semantics" may have even less sense here - the 
-> (possibly heavily reorganized) content is the only thing we have, 
-> where context will (and should) be provided by the user.
+    git rev-list .... | git pack-objects
 
-In this scheme there is now way to change the parents of a merge so
-preserving the old branch sementics is well defined. If the user wants
-to change the parents of the merge then this scheme wont help them.
+will break stuff (the test suite first for example). I will do it
+because it does help. But it will take some time.
 
-> And I guess being consistent is pretty important, too - if you add 
-> new content during merge rebase, it should always show up in the 
-> merge, period. 
+PS. This conflicts with sb/packfiles-in-repository on 'pu' because I
+introduced new references to the global variable "packed_git" and
+prepare_packed_git(). Resolving this should be simple though:
 
-Yes, that should make it easy for the user to know what to expect from
-rebase.
+- drop prepare_packed_git()
+- replace packed_git with get_packed_git(the_repository)
 
-> It seems pretty confusing to find out one of the 
-> branches "declared special" (even more if it`s based on uncertain 
-> guess-work), so when you add something to it it`s just "swallowed", 
-> as the whole branch is always obsoleted, for now and ever.
-> 
-> I might even see a value in such behavior, but only as a conscious 
-> user action, not something done automatically... I guess? :)
-> 
-> Regards, Buga
-> 
-> [1] https://public-inbox.org/git/f26cdbe2-1bc3-02ff-7b99-12a6ebab5a70@gmail.com/
-> [2] https://public-inbox.org/git/f1a960dc-cc5c-e7b0-10b6-39e5516655b3@gmail.com/
-> 
+Nguyễn Thái Ngọc Duy (5):
+  fixup! Add a test showing that 'git repack' throws away grafted-away
+    parents
+  repack: add --keep-pack option
+  gc --auto: exclude base pack if not enough mem to "repack -ad"
+  pack-objects: show some progress when counting kept objects
+  pack-objects: display progress in get_object_details()
+
+ Documentation/config.txt           |   7 ++
+ Documentation/git-gc.txt           |  13 +++
+ Documentation/git-pack-objects.txt |   4 +
+ Documentation/git-repack.txt       |   4 +
+ builtin/gc.c                       | 153 +++++++++++++++++++++++++++--
+ builtin/pack-objects.c             |  51 ++++++++--
+ builtin/repack.c                   |  23 ++++-
+ config.mak.uname                   |   1 +
+ git-compat-util.h                  |   4 +
+ pack-objects.h                     |   2 +
+ t/t6500-gc.sh                      |  29 ++++++
+ t/t7700-repack.sh                  |  21 +++-
+ 12 files changed, 295 insertions(+), 17 deletions(-)
+
+-- 
+2.16.2.784.gb291bd247e
 
