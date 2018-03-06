@@ -2,111 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F3A411F404
-	for <e@80x24.org>; Tue,  6 Mar 2018 16:57:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 115D91F404
+	for <e@80x24.org>; Tue,  6 Mar 2018 17:03:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753932AbeCFQ4s (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Mar 2018 11:56:48 -0500
-Received: from mail-wr0-f195.google.com ([209.85.128.195]:34462 "EHLO
-        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753927AbeCFQ4o (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Mar 2018 11:56:44 -0500
-Received: by mail-wr0-f195.google.com with SMTP id o8so10158263wra.1
-        for <git@vger.kernel.org>; Tue, 06 Mar 2018 08:56:43 -0800 (PST)
+        id S1753344AbeCFRDg (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Mar 2018 12:03:36 -0500
+Received: from mail-pl0-f45.google.com ([209.85.160.45]:35810 "EHLO
+        mail-pl0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752055AbeCFRDf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Mar 2018 12:03:35 -0500
+Received: by mail-pl0-f45.google.com with SMTP id w22-v6so999083pll.2
+        for <git@vger.kernel.org>; Tue, 06 Mar 2018 09:03:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=7G55P4Qk/7vlyP8mvECfVzzwhags6YyajQNt6K8rCQU=;
-        b=NBLRhBNRwJuuM3IWTXdak1kZ4UgXH4yAWoTpzfHRZhBlrHGgwDdhObMNXuTd5+eVz7
-         3gBeElwS+VqJPA/zm1/w4Sn1u7f2VuDVThpImbqLiC+g1iHK1BRmBkQG5rS0sAv+uHwG
-         zpykxoF1igGcLcEDaxiMa/o5uXNlkOx8tOzSFVva1ofSeJPnwluhWdb1r6DrBQHUz++C
-         kgcPUquMerxbHsMcdkk7XDI9oUrq1KwezmyS8u1Jl/Ihj2AaV2DeF9uNP0YFjtPoEwul
-         dETbJA04l1ecAd7aDMTA2a32elJANMJGpohd/A1eazMcDotxiNWquqvtqViXwaFxiuyY
-         xDQg==
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=iiYbTR/RZLgNVCfSU4/SLP3wHGggAr7hTruoGOG+y28=;
+        b=ISQQbSW8GG6NHvskV+RFfLyTmixYOv0Zls8nPBPyy+0Ib+S2Qxj44VlkFd1L2H3r6p
+         grvAD3e9TX4hWpgsFyy9BB5vqLPk82gka+bsDwiPPSWp51HhoNzw5Lm4ygWJD9arWgAJ
+         Lhsp4v+PuhEvIy16mIKRLugAWzPIs6X85Mnx7lf76vUaZ77jI/oS4fhhRUxH4FE6dm8T
+         UgR4mqo2Rt8bEx+OqjTG3oL8j0IdaC+BCv0icwnwF1/7KmK4ROt/ZdzVwRSP2YpTtHJo
+         xAoW/7enQAcu1pcYvoHf2IY5rio7BhWQKTT/KYsIpKrd9w0iYqKaCceaoM372yJwLvoe
+         4hKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=7G55P4Qk/7vlyP8mvECfVzzwhags6YyajQNt6K8rCQU=;
-        b=tgdzXl1hwiE5ioyM/96uMxUiF0j6vH+7Q/3sXDQ2uA26XsthcT9GaYvB/avzyCFOq2
-         nj/6pcvTu6uaWVhHkmMG+1dY7cNdZOT5WnaovsHuHDfiCeQ+tdcuLzwiHEj1Kyl95n30
-         b0nMXPEXHYBHidQ/qzosjpbbUtELakkG7VWKtzt88126xI/YBtx02T+oa4uf/U2vx2wH
-         aUAN9KjLCJkgllUHoKG3nkRcB1znOKl8RXzV0RowlytCLkfUcIWEOLhE7eKAo23/uIlN
-         kQ9HQJKOwXB/3SktIxxQ+MELULVUpAR+R7+gbvbYz5TfWQ8CITxlMH+RjIlcsFRIWqz7
-         KF8w==
-X-Gm-Message-State: APf1xPAYwcuTDd8Jrg1lBcFmGP+ZRlAxrsYnLerE7NY5MgCYv1LkibqX
-        ZKiFgBevAYejRvc3MIWKrhs=
-X-Google-Smtp-Source: AG47ELufbMsxrNdZZsUiv/DO56MDLCrcWagB6xxnoB110iCrl3sfg5F6GqCOKctDiRgUCNGnDmCKwQ==
-X-Received: by 10.223.190.17 with SMTP id n17mr15510728wrh.189.1520355402793;
-        Tue, 06 Mar 2018 08:56:42 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id m129sm9812345wma.44.2018.03.06.08.56.39
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 06 Mar 2018 08:56:40 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Phillip Wood <phillip.wood@talktalk.net>
-Cc:     Sergey Organov <sorganov@gmail.com>,
-        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
-        phillip.wood@dunelm.org.uk, Git mailing list <git@vger.kernel.org>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [RFC] Rebasing merges: a jorney to the ultimate solution (Road Clear)
-References: <87y3jtqdyg.fsf@javad.com>
-        <bbe64321-4d3a-d3fe-8bb9-58b600fabf35@gmail.com>
-        <nycvar.QRO.7.76.6.1802270051470.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <CA+P7+xq8UUcLWomUi=PS_hTKfJd3dMAxMmhioDS1bixwcmKAqw@mail.gmail.com>
-        <nycvar.QRO.7.76.6.1802271718090.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <4d7f3406-b206-cc22-87df-85700d6a03d9@gmail.com>
-        <33da31e9-9101-475d-8901-4b6b3df2f29d@gmail.com>
-        <940d959d-151d-68dd-0f13-320ebad0d75b@gmail.com>
-        <87606hoflx.fsf@javad.com>
-        <0ac3a3fd-4053-e32e-75ed-8829f22c2e1f@gmail.com>
-        <87a7vss6ax.fsf@javad.com>
-        <6c8749ca-ec5d-b4b7-f1a0-50d9ad2949a5@talktalk.net>
-        <872944c4-ca97-9f55-a424-86d1e3299a22@gmail.com>
-        <87h8pvm7zz.fsf@javad.com>
-        <ebc73962-8dff-520c-e19d-8fcc1ef63ab0@talktalk.net>
-Date:   Tue, 06 Mar 2018 08:56:39 -0800
-In-Reply-To: <ebc73962-8dff-520c-e19d-8fcc1ef63ab0@talktalk.net> (Phillip
-        Wood's message of "Tue, 6 Mar 2018 10:52:36 +0000")
-Message-ID: <xmqqwoyp5eig.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=iiYbTR/RZLgNVCfSU4/SLP3wHGggAr7hTruoGOG+y28=;
+        b=btbw3rqI1aI3rR7S8bloiQ1sMEntd7Ao9LZUhaM3hTUmfydEMYPLdVBQ5wx95hfQdf
+         hx2MslK6xHQBbkGdm/VHLTWKLOzTnJsIoMNNG3ykzVDuhtYFS1nZ8XL4+wBAyFNeaSrS
+         o3eFEcOgt0XKiB3QLFBwjFa7NksnrlpZXkh2XATiQjMZS3rkFELHepUHjgC2fZoe/Lbg
+         +GDr8+j0g9oKbz0n+ChSsz+gtdeppIeyfmVjz4iC2LwWRXckEcPBHurh+jaCUHYh6vBp
+         lwlNKEPXZ48ezUojOxt8wF4/2ubN+liLV2ZcHhwFD8xahya8JoEOGrbpNaeSgvqiPl3L
+         4XWA==
+X-Gm-Message-State: APf1xPC8XrYek8deRvbKkkNfiHjVXauJjwz5DlNZUSfN6+s5m5J5Mpzb
+        xGa2Sn6GMRJMGwXENIdKhx4=
+X-Google-Smtp-Source: AG47ELsLpPhW+GCnauvc7XxWv8NFzK3rc6sYAIteW30tPQwb1C+u1OyejzVi5yNNPuuabXzBJjEdUA==
+X-Received: by 2002:a17:902:b2c6:: with SMTP id x6-v6mr17215660plw.285.1520355814987;
+        Tue, 06 Mar 2018 09:03:34 -0800 (PST)
+Received: from neu8r3hm32.ads.autodesk.com (adsknateur.autodesk.com. [132.188.32.100])
+        by smtp.gmail.com with ESMTPSA id a6sm10586919pgq.82.2018.03.06.09.03.31
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 06 Mar 2018 09:03:34 -0800 (PST)
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [PATCH v9 6/8] convert: check for detectable errors in UTF encodings
+From:   Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <xmqqvaea6lpn.fsf@gitster-ct.c.googlers.com>
+Date:   Tue, 6 Mar 2018 18:03:29 +0100
+Cc:     Lars Schneider <lars.schneider@autodesk.com>,
+        git <git@vger.kernel.org>,
+        =?utf-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Jeff King <peff@peff.net>, ramsay@ramsayjones.plus.com,
+        Johannes.Schindelin@gmx.de
+Content-Transfer-Encoding: 7bit
+Message-Id: <A4240C40-A3DF-45DB-88A6-125FB2D3CE15@gmail.com>
+References: <20180304201418.60958-1-lars.schneider@autodesk.com> <20180304201418.60958-7-lars.schneider@autodesk.com> <xmqqfu5e8a53.fsf@gitster-ct.c.googlers.com> <55633B6F-EB6E-42D6-8E58-79158A99774A@gmail.com> <xmqqvaea6lpn.fsf@gitster-ct.c.googlers.com>
+To:     Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Phillip Wood <phillip.wood@talktalk.net> writes:
 
-> I wonder if just having a predicable result rather than forcing the
-> rebase to stop if the user just squashes a fixup commit into a topic
-> branch that is the parent of a merge might be more convenient in practice.
+> On 06 Mar 2018, at 02:23, Junio C Hamano <gitster@pobox.com> wrote:
+> 
+> Lars Schneider <larsxschneider@gmail.com> writes:
+> 
+>>> On 05 Mar 2018, at 22:50, Junio C Hamano <gitster@pobox.com> wrote:
+>>> 
+>>> lars.schneider@autodesk.com writes:
+>>> 
+>>>> +static int validate_encoding(const char *path, const char *enc,
+>>>> +		      const char *data, size_t len, int die_on_error)
+>>>> +{
+>>>> +	if (!memcmp("UTF-", enc, 4)) {
+>>> 
+>>> Does the caller already know that enc is sufficiently long that
+>>> using memcmp is safe?
+>> 
+>> No :-(
+>> 
+>> Would you be willing to squash that in?
+>> 
+>>    if (strlen(enc) > 4 && !memcmp("UTF-", enc, 4)) {
+>> 
+>> I deliberately used "> 4" as plain "UTF-" is not even valid.
+> 
+> I'd rather not.  The code does not have to even look at 6th and
+> later bytes in the enc[] even if it wanted to reject "UTF-" followed
+> by nothing, but use of strlen() forces it to look at everything.
+> 
+> Stepping back, shouldn't
+> 
+> 	if (starts_with(enc, "UTF-") 
+> 
+> be sufficient?  If you really care about the case where "UTF-" alone
+> comes here, you could write
+> 
+> 	if (starts_with(enc, "UTF-") && enc[4])
+> 
+> but I do not think "&& enc[4]" is even needed.  The functions called
+> from this block would not consider "UTF-" alone as something valid
+> anyway, so with that "&& enf[4]" we would be piling more code only
+> for invalid/rare case.
 
-Unless I am misunderstanding what you are saying, that is pretty
-much what I have automated for my daily rebuild of the 'pu' branch
+Agreed, "if (starts_with(enc, "UTF-"))" is sufficient. Can you squash
+that in? Thanks for pointing me to starts_with() as I forgot about this
+function!
 
-Non-textual semantic conflicts are made (in the best case just once)
-as a separate commit on top of mechanical auto-merge whose focus is
-predictability (rather than cleverness) done by Git, and then that
-separate commit is kept outside the history.  When replaying these
-merges to rebuild the 'pu' branch, after resetting the tip to
-'master', each topic is merged mechanically, and if such a fix-up
-commit is present, "cherry-pick --no-commit" applies it and then
-"commit --amend --no-edit" to adjust the merge.  I find it quite
-valuable to have a separate record of what "evil" non-mechanical
-adjustment was done, which I know won't be lost in the noise when
-these merges need to be redone daily or more often.
-
-The Appendix in Documentation/howto/maintain-git.txt talks about
-this process.  You can see what topics have such merge-fix defined
-by peeking https://github.com/gitster/git/ repository.
-
+- Lars
