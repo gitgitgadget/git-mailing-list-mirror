@@ -2,115 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C0B9B1F404
-	for <e@80x24.org>; Tue,  6 Mar 2018 18:02:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 284C41F404
+	for <e@80x24.org>; Tue,  6 Mar 2018 18:12:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753957AbeCFSB4 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Mar 2018 13:01:56 -0500
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:35734 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753654AbeCFSBy (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Mar 2018 13:01:54 -0500
-Received: by mail-wm0-f68.google.com with SMTP id x7so23877956wmc.0
-        for <git@vger.kernel.org>; Tue, 06 Mar 2018 10:01:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=6mE/wBCOr/wY2yHVDFXULC2yVMcrjgpRt2w8jSSYj9Q=;
-        b=OApNATRljWtGKkKDW6zDaDVTZ9SljeP6/ydjhDbVExCQf3lY112xFD2NAMiMb8qjGF
-         3LGTLvhwobdWoY1G8Bq6BpBNifo05ZfTW2BsYueQyH8gSZq2AFVvvGVl3tWFp7Z2PZuS
-         tAITbi69JVJXiptSHD5A/abqS14g2VTu9JXmkxSGKPQoHdZA6voyJhqezbPMbD2pKwAU
-         qlXR7nVZYDPaWyyzGNqGUalH9SvwZH/JkgQVqbk+A5qaGbAOq3idddC7hamstoMTW7Kr
-         LYcWAjPVL4zdMvZfUrzM1yHtyLzGx+XowLKS294HyKuMqlr9+b5XwaWyiX/HTrpHT0Nn
-         rI1w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=6mE/wBCOr/wY2yHVDFXULC2yVMcrjgpRt2w8jSSYj9Q=;
-        b=cnknOCEGZL7Miu54aX/fi/pG1PGaGkd5r2mutQqdcWUfGTuuqXi7gd9YbYA31d2SG6
-         XJhNcCKNrVT1iqBKCVrHHotBVu5izXG7mq1YqaZ1ffHac5VT3x/QmsgiKPiFVQRR8PhY
-         AFWj4ym5LawZOM2umO8jM36BNscehCNhS/zF/+PcX/tU+nUAbSU22NU9BxQY32N0HGFT
-         1xU1NR+oCjaQvpWR1e9roFksfZ3rdb1/0LYR3DnPpBsRCQfCZHvlTDphsJS9UNLugk5M
-         tbYdFzJ+6D8khoJvSnDjk/M0vjKKdjFqR2afwwkSYnGXoTSBS/cF73HXzLwl8eyiluzC
-         YWOA==
-X-Gm-Message-State: AElRT7H0Lvx0RMR9tW8Go3sp0AMDcT+0/jO5ATkEohQKMsUGGpbWVsWl
-        iE43BTFIHL0OvU2HYWJmZDRciUPU
-X-Google-Smtp-Source: AG47ELu8UubJaGf9soNAKo87/c8lQCI/PXGGIjjcESPPmzCSfEcBolGFxOV9hLmYqe372N0A79VQFA==
-X-Received: by 10.28.130.1 with SMTP id e1mr11530444wmd.45.1520359312738;
-        Tue, 06 Mar 2018 10:01:52 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id g96sm14638561wrd.73.2018.03.06.10.01.51
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 06 Mar 2018 10:01:51 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     e@80x24.org, git@vger.kernel.org, peff@peff.net,
-        =?utf-8?B?w4Z2YXIg?= =?utf-8?B?QXJuZmrDtnLDsA==?= Bjarmason 
-        <avarab@gmail.com>
-Subject: Re: [PATCH v2 1/5] fixup! Add a test showing that 'git repack' throws away grafted-away parents
-References: <20180301092046.2769-1-pclouds@gmail.com>
-        <20180306104158.6541-1-pclouds@gmail.com>
-        <20180306104158.6541-2-pclouds@gmail.com>
-Date:   Tue, 06 Mar 2018 10:01:51 -0800
-In-Reply-To: <20180306104158.6541-2-pclouds@gmail.com> (=?utf-8?B?Ik5ndXk=?=
- =?utf-8?B?4buFbiBUaMOhaSBOZ+G7jWM=?=
-        Duy"'s message of "Tue, 6 Mar 2018 17:41:54 +0700")
-Message-ID: <xmqqo9k15bhs.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1753065AbeCFSMV (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Mar 2018 13:12:21 -0500
+Received: from mout.gmx.net ([212.227.17.21]:52357 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750817AbeCFSMT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Mar 2018 13:12:19 -0500
+Received: from [10.59.3.43] ([77.210.250.197]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LnlmV-1eBwYu2ifH-00hsIt; Tue, 06
+ Mar 2018 19:12:12 +0100
+Date:   Tue, 6 Mar 2018 19:12:10 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+To:     phillip.wood@dunelm.org.uk
+cc:     Igor Djordjevic <igor.d.djordjevic@gmail.com>,
+        Sergey Organov <sorganov@gmail.com>,
+        Git mailing list <git@vger.kernel.org>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC] Rebasing merges: a jorney to the ultimate solution (Road
+ Clear)
+In-Reply-To: <1c912980-8ce8-6281-fa99-040a5e3e1103@talktalk.net>
+Message-ID: <nycvar.QRO.7.76.6.1803061829460.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <87y3jtqdyg.fsf@javad.com> <bbe64321-4d3a-d3fe-8bb9-58b600fabf35@gmail.com> <nycvar.QRO.7.76.6.1802270051470.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <CA+P7+xq8UUcLWomUi=PS_hTKfJd3dMAxMmhioDS1bixwcmKAqw@mail.gmail.com>
+ <nycvar.QRO.7.76.6.1802271718090.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <4d7f3406-b206-cc22-87df-85700d6a03d9@gmail.com> <33da31e9-9101-475d-8901-4b6b3df2f29d@gmail.com> <940d959d-151d-68dd-0f13-320ebad0d75b@gmail.com> <87606hoflx.fsf@javad.com>
+ <0ac3a3fd-4053-e32e-75ed-8829f22c2e1f@gmail.com> <87a7vss6ax.fsf@javad.com> <6c8749ca-ec5d-b4b7-f1a0-50d9ad2949a5@talktalk.net> <872944c4-ca97-9f55-a424-86d1e3299a22@gmail.com> <1c912980-8ce8-6281-fa99-040a5e3e1103@talktalk.net>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:6Nw6QruK5OsLrgaBRDOEFHw1uo433sRWGaBfyUmKpbzmy3sc9Q2
+ PtJDBRxUdZWDJuOKewTvluDmheGNafmwHOWSk+CuofhXK28EKAxigoz68MfArnHzxhkIdzF
+ cCLM42pdNJKx4IIyaj98rUDKlm01X3PCBzrTU0I3LOjdA8anVAuFXAKTPta0iateuOHTg/B
+ nrjDEYuZTL5Sugi4CScCQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:PRtyKdgNEXc=:uL+c9E+OAXLhX6TTap/zPm
+ uRPlU9Ir01Ut+dkB9p3QExX0fAdvaPnDYzDwNAB6TzlAF5WeDZEySqV1l+091kR+7J4FCnHgo
+ 1bdnLEJgYVf6m2b4LfGQedxWlJldjDXMPZ1MDo+nPBlno9FQLinz5jYlHs+NaOO1j11yEVTuS
+ QvBMGMRnIsrlsXCU66kwZ4HwFKLy1LoIDtt38wJPTcmjHMwbimouhjo+w6Yjyhz8MY8O1M89b
+ Iw33qyFOx9UKjo/+djPx+KuX1lixoT11nRq46HsHTAgiFq5+IhduREvto+ABAvTeF9lgt/j5E
+ 2pcvejFg3UnJZGHag2O4REB7DsIgb3w1UEYV0IKLCm2vyrfO3rEzORyZIRugQJCAlI97zBmZL
+ hSspXH3KCr+/KPS88IEZqlkhwRpf7V3ct4RzgKzW61yxCJFdp7kEizzB3SDbGmMFhn02M7/HJ
+ am8mw6I3/Trv0Ozx6EiHzcoNcQLH/1dHU7VEqwG/E+8fTl4cOVVyucswAOh/e6RR6jYX3d6do
+ J55H+rTxLomKUm3KcSa8tFiY7lzt6CUR6LYN1ynJcUEm2wcI+zW+G0JX6XXqvX0QjyHUxseTf
+ E+UqRFOS7WQ51no0EKLkzdBjf3E1QyRAlLXq6cN8YW6Pvgh9QkZCnMNMmaE4VUM8SuriVAxBJ
+ AO4yHTlkdjerf/dU+6c8CG/WzkubIRiIQHKGLdf/roHfAK1PPWf2D6jugVlXwYSEp6SAvuyvc
+ +lo92VHZvyUgDhzbtDZnioDRYWFSHoj32xN3gifb3bJfWaIXxDLDyf8GhYJUBnn53Mngp70Gn
+ +8QMaiE7D4Gv6Lf/tK8dzy0ZZjUxKPJd26vYjV46VbgG/X/Gak=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
+Hi Phillip,
 
-> The closing quote of a test body by convention is always at the start
-> of line.
->
-> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-> ---
+On Tue, 6 Mar 2018, Phillip Wood wrote:
 
-Obviously correct.  While the title may technically be correct, the
-original commit is age old that we won't be amending it anyway, and
-it is not very helpful not to say which aspect of the original is
-being fixed up.  Perhaps something like:
+> On 03/03/18 00:29, Igor Djordjevic wrote:
+> > 
+> > On 02/03/2018 12:31, Phillip Wood wrote:
+> >>
+> >>> Thinking about it overnight, I now suspect that original proposal
+> >>> had a mistake in the final merge step. I think that what you did is
+> >>> a way to fix it, and I want to try to figure what exactly was wrong
+> >>> in the original proposal and to find simpler way of doing it right.
+> >>>
+> >>> The likely solution is to use original UM as a merge-base for final
+> >>> 3-way merge of U1' and U2', but I'm not sure yet. Sounds pretty
+> >>> natural though, as that's exactly UM from which both U1' and U2'
+> >>> have diverged due to rebasing and other history editing.
+> >>
+> >> Hi Sergey, I've been following this discussion from the sidelines,
+> >> though I haven't had time to study all the posts in this thread in
+> >> detail. I wonder if it would be helpful to think of rebasing a merge
+> >> as merging the changes in the parents due to the rebase back into the
+> >> original merge. So for a merge M with parents A B C that are rebased
+> >> to A' B' C' the rebased merge M' would be constructed by (ignoring
+> >> shell quoting issues)
+> >>
+> >> git checkout --detach M
+> >> git merge-recursive A -- M A'
+> >> tree=$(git write-tree)
+> >> git merge-recursive B -- $tree B'
+> >> tree=$(git write-tree)
+> >> git merge-recursive C -- $tree C'
+> >> tree=$(git write-tree)
+> >> M'=$(git log --pretty=%B -1 M | git commit-tree -pA' -pB' -pC')
+> >>
+> >> This should pull in all the changes from the parents while preserving
+> >> any evil conflict resolution in the original merge. It superficially
+> >> reminds me of incremental merging [1] but it's so long since I looked at
+> >> that I'm not sure if there are any significant similarities.
+> >>
+> >> [1] https://github.com/mhagger/git-imerge
+> > 
+> > Interesting, from quick test[3], this seems to produce the same 
+> > result as that other test I previously provided[2], where temporary 
+> > commits U1' and U2' are finally merged with original M as a base :)
+> > 
+> > Just that this looks like even more straight-forward approach...?
+> > 
+> > The only thing I wonder of here is how would we check if the 
+> > "rebased" merge M' was "clean", or should we stop for user amendment? 
+> > With that other approach Sergey described, we have U1'==U2' to test with.
+> 
+> I think (though I haven't rigorously proved to myself) that in the
+> absence of conflicts this scheme has well defined semantics (the merges
+> can be commuted), so the result should be predicable from the users
+> point of view so maybe it could just offer an option to stop.
 
-    t7700: have closing quote of a test at the beginning of line
+I am not so sure that the result is independent of the order of the
+merges. In other words, I am not necessarily certain that it is impossible
+to concoct A,A',B,B' commits where merging B'/B before A'/A has a
+different result than merging A'/A before B'/B.
 
-    1ec64827 ("Add a test showing that 'git repack' throws away
-    grafted-away parents", 2009-07-23) added this test but indented
-    the closing quote by mistake.
+Remember, when constructing counter-examples to hypotheses, those
+counter-examples do not really *have* to make sense on their own. For
+example, A' could introduce *completely different* changes from A, and the
+same is true for B' and B.
 
-if we really cared documenting where the blame lies, but I do not
-think it is quite worth it; anybody who cares deeply can ask "git
-blame" about it, so I'll just retitle and use your original log
-message body.
+I could imagine, for example, that using a ton of consecutive empty lines,
+and using patches that insert something into these empty lines (and are
+thusly inherently ambiguous when said set of empty lines has changed),
+could even introduce a merge conflict in one order, but no conflict in the
+other.
 
-Thanks.
+Even so, I think that merging in the order of the parents makes the most
+sense, and that using that strategy makes sense, too, because you really
+have to try hard to make it fail.
 
->  t/t7700-repack.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
-> index 6061a04147..38247afbec 100755
-> --- a/t/t7700-repack.sh
-> +++ b/t/t7700-repack.sh
-> @@ -194,7 +194,7 @@ test_expect_success 'objects made unreachable by grafts only are kept' '
->  	git reflog expire --expire=$test_tick --expire-unreachable=$test_tick --all &&
->  	git repack -a -d &&
->  	git cat-file -t $H1
-> -	'
-> +'
->  
->  test_done
+Ciao,
+Dscho
