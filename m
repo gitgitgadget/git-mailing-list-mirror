@@ -2,89 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 62F781F404
-	for <e@80x24.org>; Tue,  6 Mar 2018 19:28:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EF19E1F404
+	for <e@80x24.org>; Tue,  6 Mar 2018 19:28:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933270AbeCFT14 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Mar 2018 14:27:56 -0500
-Received: from mx1.riseup.net ([198.252.153.129]:56525 "EHLO mx1.riseup.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S933101AbeCFT1y (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Mar 2018 14:27:54 -0500
-X-Greylist: delayed 441 seconds by postgrey-1.27 at vger.kernel.org; Tue, 06 Mar 2018 14:27:54 EST
-Received: from cotinga.riseup.net (cotinga-pn.riseup.net [10.0.1.164])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (Client CN "*.riseup.net", Issuer "COMODO RSA Domain Validation Secure Server CA" (verified OK))
-        by mx1.riseup.net (Postfix) with ESMTPS id D67EB1A0A90
-        for <git@vger.kernel.org>; Tue,  6 Mar 2018 11:20:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=riseup.net; s=squak;
-        t=1520364032; bh=J78XI3LfDmTLgiNBEMsCfxpr0IBowPzKGBX0kbeZ1tQ=;
-        h=Date:From:To:Subject:From;
-        b=cX244VCDhASnBcYI2Kiup3pYW0LStmxVaIJJ2xGE3SKeDJtOoWqSfB11P8pTSSQd5
-         AX1QCASv5P3s5qGIEIMB8EMel6J50u3SnTexB/Ij2aY82/WqUFuW3ZgrSpg15EsyJy
-         X6zC7y2//Tb8oqLCti3x0gNWm2tdeoye1wDMLABM=
-X-Riseup-User-ID: DDFB3719A56FA886C112F1E4120310BA097A036AA8772F048900E43CB0DE5116
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-         by cotinga.riseup.net with ESMTPSA id 3DE72865A0
-        for <git@vger.kernel.org>; Tue,  6 Mar 2018 11:20:32 -0800 (PST)
-Date:   Tue, 6 Mar 2018 14:20:17 -0500
-From:   Sean Behan <seanwbehan@riseup.net>
-To:     git@vger.kernel.org
-Subject: Bug: moving submodules that have submodules inside them causes a
- fatal error in git status
-Message-ID: <20180306192017.GA5797@riseup.net>
+        id S1753898AbeCFT2G (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Mar 2018 14:28:06 -0500
+Received: from mail-wm0-f42.google.com ([74.125.82.42]:51161 "EHLO
+        mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753868AbeCFT2E (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Mar 2018 14:28:04 -0500
+Received: by mail-wm0-f42.google.com with SMTP id w128so385563wmw.0
+        for <git@vger.kernel.org>; Tue, 06 Mar 2018 11:28:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=SzWKe04pQpYPTzUzvmfcMgTjOJDfYxdxei7eAK+NO3A=;
+        b=f5rHxGEXZC/9Z2YhjuxztTeajgeylXzQvxeLFhK90ZL8gngjJX39/H18N7vtfk9wHw
+         1jqnZ1s2Ny3c+Hp/F1WrqQK704TuP1SygZMuseu8ZqfTD8TETMrcaA+E+oKvY3xvEUJL
+         DutwrVDr32EP+IB2GqKXVqnwgobMhCbUeiUj207vEZkoBwSoReU/Wu19wBM4jeZh7vlo
+         jbcaFlIT0vDXJ/rsPoj+NI+gugCF2vB92eU0CuHPBIk/HL9otTZODUmJTtm4sfWHf6YE
+         WCUE7zawDYQ3+UJvTaV3EnMijLC128KG7qDm36yooH2bM8VGxlJsHrx+VowPt6Wm4niA
+         ixCg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=SzWKe04pQpYPTzUzvmfcMgTjOJDfYxdxei7eAK+NO3A=;
+        b=Utdh7YNKFjWNlEsX1ATVmsclPJ4Yyb9BnGho7kR2LNyLyOwv/UWjnebjTlZph6D3it
+         Eqrm8Mu1lxHX9QIY37/tyadxWSpbgHfvHjnqvEecxdimIZa3RaTuRfSGKTKvnq2uXcXr
+         s7z5I/3UZSXmt3u94LngvcVPj/2TUMFuxZvg9/1A+NH41kNjn79fFHdrq2IymujnHDlZ
+         HzWsu7TaMxNuB/q/JPW0/vy9gkSzwujQdHa0m6BQB4sfUIm3xcdd7LMkei12sxBelfGg
+         m2JKEjHD3rqNBu2c2V9c9o7ZBUwUuhq+0I30oO47ceF33QuRthglHKnpuLUrhbDZHn9+
+         jdyw==
+X-Gm-Message-State: AElRT7E101Yc3S/5Bu7BsaWP3IDuDFChETii7WkOCZQ0bfLKKT5fIlUZ
+        E2yK40PuL5kq2pzcoRAF5WxjhmNn
+X-Google-Smtp-Source: AG47ELsVyu24PGT489//NBle5ZIAdhcJWLmi9ygcmabUFgGKkq3C7FJHTvbDRDV0TIWIZO7PhQrpTg==
+X-Received: by 10.28.31.215 with SMTP id f206mr3823095wmf.68.1520364482429;
+        Tue, 06 Mar 2018 11:28:02 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id a1sm15970515wra.41.2018.03.06.11.28.01
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 06 Mar 2018 11:28:01 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Birger Skogeng Pedersen <birgersp@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Git List <git@vger.kernel.org>
+Subject: Re: [PATCH] git-gui: Add hotkeys to change focus between ui widgets
+References: <CAGr--=LZ9TSM9v0SZOi_mj1t8se0Ck-nDHkwum3kC8uz9HKW6A@mail.gmail.com>
+        <20180228121052.10642-1-birgersp@gmail.com>
+        <nycvar.QRO.7.76.6.1803051749060.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        <CAGr--=+cAbd=8NDu5M8dbeWn=uoevhJjSvN+bgfDPWjA=V0KnQ@mail.gmail.com>
+Date:   Tue, 06 Mar 2018 11:28:01 -0800
+In-Reply-To: <CAGr--=+cAbd=8NDu5M8dbeWn=uoevhJjSvN+bgfDPWjA=V0KnQ@mail.gmail.com>
+        (Birger Skogeng Pedersen's message of "Tue, 6 Mar 2018 15:35:21
+        +0100")
+Message-ID: <xmqqbmg13sxq.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="5vNYLRcllDrimb99"
-Content-Disposition: inline
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Birger Skogeng Pedersen <birgersp@gmail.com> writes:
 
---5vNYLRcllDrimb99
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+> Thanks for the feedback.
+>
+> On Mon, Mar 5, 2018 at 5:55 PM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+>> Do you think there is a way to focus on the last-selected path? That would
+>> make this feature even more convenient, I think.
+>
+> Yes, good idea. I'll implement it and create a second version.
 
-Hello,
+Please make it a patch against the main git-gui project, not against
+our tree.  That is, your patch text would look like this:
 
-I encountered this error when moving some submodules in vim, basically if you
-have a submodule that has submodules inside it and you try to move it you'll
-encouter a fatal error with `git status`. I have a pastebin example of this
-here: https://ptpb.pw/5g9-/bash
+    diff --git a/git-gui.sh b/git-gui.sh
+    index 5bc21b878d..39e80ebafa 100755
+    --- a/git-gui.sh
+    +++ b/git-gui.sh
+    @@ -3843,6 +3843,7 @@ bind .   <$M1B-Key-equal> {show_more_context;break}
+     bind .   <$M1B-Key-plus> {show_more_context;break}
+     bind .   <$M1B-Key-KP_Add> {show_more_context;break}
+     bind .   <$M1B-Key-Return> do_commit
+    +bind .   <$M1B-Key-KP_Enter> do_commit
+     foreach i [list $ui_index $ui_workdir] {
+            bind $i <Button-1>       { toggle_or_diff click %W %x %y; break }
+            bind $i <$M1B-Button-1>  { add_one_to_selection %W %x %y; break }
 
-Appologies if this is an invalid bug report.
-
-I'm running Git version: 2.16.2 (Debian Unstable)
-
---
-
-Sean Behan
-
---5vNYLRcllDrimb99
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCgAdFiEEqrfkzcfAOXOnlTsZmSkJCkGZyZMFAlqe6eEACgkQmSkJCkGZ
-yZP5nQ//aOD9vmgNoxbtQhHHl6xShkUI/H5YWh9021Siik2mASG7MIz69xDUNb1q
-TJeHCXBGLk04ngNPVuLAwdSH/Sma5qcaYzoGcRmED4Pv5RNX/IeZ6BHdAzbJEbga
-u/oh6Ii1IDqHmi0t4ghPVndlrPnuinHiZMbvScA4fMhfEkrJsjkaFZcSs2boLKP1
-GKRs9FlezEOCHyFcdE4UM/wGMQW0ZZiMspq/N1XEyjuE54GZEeMRyUCGcHZnn5xL
-1fcC7EqOPm/uvhKq8ZYKXZlz0B/7N0+dSnXJUArG6feQZ7BYYOy4FSE+fAvRoeKa
-hMWjeyvlEsckK+4gq4N96D6FAtEJ5NLuP+UAAsDpFP6lLFLVMymZy17Te6Q2pDmg
-wCvvGDbhyODR9zmQAD6xJHDzNSeywHFRsBX9W+Kb2yiN5WS6YtxXf22cyNNyC6e3
-9OWTi7Z9gzNxH3n9f6PaH7EnsJZL1xviMfpI+mZSWR70c1bN/1XNya31Wo68S2gK
-hg5CpIbYFORcKRd9GK4KHLBL0pb0f10cuHKhXCIdLPruFj16+7E2q7aXqRwri4Xe
-Bjjikss8aWzjDZzyv4ATkLC3anpE2LTLgZR6ovf+lqgfeIQaSlPuJfIAtf6+qBK/
-ecdYN2GIBaYJ/HTPmO0FfZTpNNlAAYSYTG/fTfIO4rppFWI1+6c=
-=NMm3
------END PGP SIGNATURE-----
-
---5vNYLRcllDrimb99--
+We've seen three patches to git-gui from three different people in
+the past week.  The project seems to be abandoned and we need to
+find a volunteer (or a few) to take it over, it seems.  In the
+meantime I have blindly been picking and queuing git-gui changes
+but because I am not even a casual user of it, I know I will not do
+a good job maintaining it in the longer term.
