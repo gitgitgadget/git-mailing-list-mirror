@@ -7,140 +7,128 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 574DB1F576
-	for <e@80x24.org>; Tue,  6 Mar 2018 10:18:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 636C41F576
+	for <e@80x24.org>; Tue,  6 Mar 2018 10:22:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932629AbeCFKSH (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Mar 2018 05:18:07 -0500
-Received: from smtp-out-5.talktalk.net ([62.24.135.69]:2529 "EHLO
+        id S1753154AbeCFKWY (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Mar 2018 05:22:24 -0500
+Received: from smtp-out-5.talktalk.net ([62.24.135.69]:11787 "EHLO
         smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751113AbeCFKSB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Mar 2018 05:18:01 -0500
-Received: from lindisfarne.localdomain ([92.22.16.137])
+        with ESMTP id S1752908AbeCFKWX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Mar 2018 05:22:23 -0500
+Received: from [192.168.2.201] ([92.22.16.137])
         by smtp.talktalk.net with SMTP
-        id t9fNelwjTlYtpt9fTexEqJ; Tue, 06 Mar 2018 10:18:00 +0000
+        id t9jhelxQtlYtpt9jhexF0T; Tue, 06 Mar 2018 10:22:22 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1520331480;
-        bh=rsb0tX6yo+3HGEQPHhFswLB/qI0XdA4sTBECuL1+mF4=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:Reply-To;
-        b=jHgxVY5B71/1K/6p3hBUeaRwCMme5dXFf9lnguDqE8HH/0y/aTzBXfIkauEpusMSw
-         XCHGKw6xZEefZRoEfUWVRYhIOS0jrPYI9VJYJHRzHP+/UNPOeXRmgfgA3giAd/IFGU
-         TwI/8A6MjHVm2TicXQNuNP447FQ44FHZyaN5FL1Y=
+        s=cmr1711; t=1520331742;
+        bh=t+445vQlajbqoTa8IPu+apqEmEY3g0YARncC9Hvh83Y=;
+        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=i5GF42h0f6dIhFELMit3+ZfxDnw1xHPTozbrSihvoaBOiLG45vBZBrF/B1H52hiZk
+         dUrFSFhdTd/b7IsRrSWZxyeoyKFwI3VSK2w4EWPvjJaDota03xVS2kZqO1B/vMLWKz
+         ZksUnlP2eQw2ZgZQwec9g6xLJZtpK9QjT20WJGp0=
 X-Originating-IP: [92.22.16.137]
 X-Spam: 0
 X-OAuthority: v=2.3 cv=JZeSU3CV c=1 sm=1 tr=0 a=nWy375ASyxHoIYnPohIYMA==:117
- a=nWy375ASyxHoIYnPohIYMA==:17 a=evINK-nbAAAA:8 a=7PuQ9dypriAC8fFJya0A:9
- a=7Zwj6sZBwVKJAoWSPKxL6X1jA+E=:19 a=jl7oZPXPbMuOGlJn:21 a=hKPZ34yjrIDJDwPR:21
- a=RfR_gqz1fSpA9VikTjo0:22
+ a=nWy375ASyxHoIYnPohIYMA==:17 a=IkcTkHD0fZMA:10 a=VwQbUJbxAAAA:8
+ a=pGLkceISAAAA:8 a=q3880xPEMou4M2AT50MA:9 a=QEXdDO2ut3YA:10
+ a=AjGcO6oz07-iQ99wixmX:22
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 1/2] completion: don't set PARSE_OPT_NOCOMPLETE on
+ --rerere-autoupdate
+To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, git@vger.kernel.org
+Cc:     avarab@gmail.com, gitster@pobox.com, sunshine@sunshineco.com,
+        szeder.dev@gmail.com
+References: <20180303092307.3796-1-pclouds@gmail.com>
+ <20180303092307.3796-2-pclouds@gmail.com>
 From:   Phillip Wood <phillip.wood@talktalk.net>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Gustavo Leite <gustavoleite.ti@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH v2 3/3] add -p: optimize line selection for short hunks
-Date:   Tue,  6 Mar 2018 10:17:50 +0000
-Message-Id: <20180306101750.18794-4-phillip.wood@talktalk.net>
-X-Mailer: git-send-email 2.16.2
-In-Reply-To: <20180306101750.18794-1-phillip.wood@talktalk.net>
-References: <20180219113619.26566-1-phillip.wood@talktalk.net>
- <20180306101750.18794-1-phillip.wood@talktalk.net>
-Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
-X-CMAE-Envelope: MS4wfBsxIT5P2V301LDp5ZRvFA47QaHyQt9xcG5XP8LbqX3I1+m749gP7+WzVVMOhYE0tlMPN1pGNtOVVWSlPVIaYKNFi92fFQOBvzez8Hrhm4+RzZj/JkbX
- bt+c4+wH5eFVzYL+20VYFm3d0j9v9/kDynJOOrt88Y904m4UnergQfet9eyeGG4xQcrs9ADPIc8HEDEuxjOoAoYg74hiO9eQVsksXGd1cHsFfieiZO99Jc+S
- IWqfHEHeJWPTqyBJ1+hNAC/DLvbeOTzAaknPNp2NnLTVLTrc86T/h11JGm7FlWc5
+Message-ID: <623faa67-7072-3d72-e784-5380e204f570@talktalk.net>
+Date:   Tue, 6 Mar 2018 10:22:21 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.6.0
+MIME-Version: 1.0
+In-Reply-To: <20180303092307.3796-2-pclouds@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 8bit
+X-CMAE-Envelope: MS4wfIhqVX/6MI0KDBuO8exQCRqJCuBVMw8WLJekKRyIi9e5HL7zEX4lgahPFkq7gp80jIRYa/b6bByDe7P7WExM3GmR26CP6SRfpRFB3YD/d02AIs6u53yZ
+ nUXDHpf581zm9ZiygUu+EZnU0N4yNXO7rpsA4sDwshyt1x+L0s5ibYDLweRqSusd0/96NcdNCfn3X44QujtgVdodHQ7pGE8OgiBv+Ffxqp6T1BcA3sLa8+eR
+ /2EAieGkXN+rj7fInRrvfnKaBuTnsoTzNUHwqkEosj3EZoflT9XiEhiKRNiu3Z34UZdn9VYgU7YRn978dvyTDvQfn4gC1e7gHwmyURRuYeA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+On 03/03/18 09:23, Nguyễn Thái Ngọc Duy wrote:
+> 
+> There is not a strong reason to hide this option, and git-merge already
+> completes this one. Let's allow to complete this for all commands (and
+> let git-completion.bash do the suppressing if neede).
+> 
+> This makes --rerere-autoupdate completable for am, cherry-pick and
+> revert.
+> 
 
-If there are fewer than ten changes in a hunk then make spaces
-optional when selecting individual lines. This means that for short
-hunks one can just type -357 to stage lines 1, 2, 3, 5 & 7.
+This is slightly off topic as it doesn't use OPT_RERERE_AUTOUPDATE but
+it looks[1] as if rebase is missing completion for --rerere-autoupdate
+(and --signoff which is definitely off topic)
 
-Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
----
- Documentation/git-add.txt  |  3 ++-
- git-add--interactive.perl  | 30 ++++++++++++++++++++++++++++++
- t/t3701-add-interactive.sh |  2 +-
- 3 files changed, 33 insertions(+), 2 deletions(-)
+Best Wishes
 
-diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
-index 0e2c11e97b..d52acfc722 100644
---- a/Documentation/git-add.txt
-+++ b/Documentation/git-add.txt
-@@ -340,7 +340,8 @@ patch::
- If you press "l" then the hunk will be reprinted with each insertion
- or deletion labelled with a number and you will be prompted to enter
- which lines you wish to select. Individual line numbers should be
--separated by a space or comma, to specify a range of lines use a dash
-+separated by a space or comma (these can be omitted if there are fewer
-+than ten labelled lines), to specify a range of lines use a dash
- between them. To invert the selection prefix it with "\^" so "^3-5,8"
- will select everything except lines 3, 4, 5 and 8.
- +
-diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index 6fa3d0a87c..9a6bcd5085 100755
---- a/git-add--interactive.perl
-+++ b/git-add--interactive.perl
-@@ -1082,6 +1082,33 @@ sub check_hunk_label {
- 	return 1;
- }
- 
-+sub split_hunk_selection {
-+	local $_;
-+	my @fields = @_;
-+	my @ret;
-+	for (@fields) {
-+		if (/^(-[0-9])(.*)/) {
-+			push @ret, $1;
-+			$_ = $2;
-+		}
-+		while ($_ ne '') {
-+			if (/^[0-9]-$/) {
-+				push @ret, $_;
-+				last;
-+			} elsif (/^([0-9](?:-[0-9])?)(.*)/) {
-+				push @ret, $1;
-+				$_ = $2;
-+			} else {
-+				error_msg sprintf
-+				    __("invalid hunk line '%s'\n"),
-+				    substr($_, 0, 1);
-+				return ();
-+			}
-+		}
-+	}
-+	return @ret;
-+}
-+
- sub parse_hunk_selection {
- 	local $_;
- 	my ($hunk, $line) = @_;
-@@ -1100,6 +1127,9 @@ sub parse_hunk_selection {
- 			}
- 		}
- 	}
-+	if ($max_label < 10) {
-+		@fields = split_hunk_selection(@fields) or return undef;
-+	}
- 	for (@fields) {
- 		if (/^([0-9]*)-([0-9]*)$/) {
- 			if ($1 eq '' and $2 eq '') {
-diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-index 89c0e73f2b..d3bce154da 100755
---- a/t/t3701-add-interactive.sh
-+++ b/t/t3701-add-interactive.sh
-@@ -410,7 +410,7 @@ test_expect_success 'setup expected diff' '
- '
- 
- test_expect_success 'can reset individual lines of patch' '
--	printf "%s\n" l "^1 3" |
-+	printf "%s\n" l ^13 |
- 	EDITOR=: git reset -p 2>error &&
- 	test_must_be_empty error &&
- 	git diff --cached HEAD >actual &&
--- 
-2.16.2
+Phillip
+
+[1]
+https://git.kernel.org/pub/scm/git/git.git/tree/contrib/completion/git-completion.bash#n2010
+
+
+> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+> ---
+>  contrib/completion/git-completion.bash | 3 +--
+>  parse-options.h                        | 4 ++--
+>  rerere.h                               | 3 +--
+>  3 files changed, 4 insertions(+), 6 deletions(-)
+> 
+> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+> index 0ddf40063b..c310b241d3 100644
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -1754,8 +1754,7 @@ _git_merge ()
+>  
+>  	case "$cur" in
+>  	--*)
+> -		__gitcomp_builtin merge "--rerere-autoupdate
+> -				--no-rerere-autoupdate
+> +		__gitcomp_builtin merge "--no-rerere-autoupdate
+>  				--no-commit --no-edit --no-ff
+>  				--no-log --no-progress
+>  				--no-squash --no-stat
+> diff --git a/parse-options.h b/parse-options.h
+> index 0ba08691e6..ab1cc362bf 100644
+> --- a/parse-options.h
+> +++ b/parse-options.h
+> @@ -148,8 +148,8 @@ struct option {
+>  #define OPT_STRING_LIST(s, l, v, a, h) \
+>  				    { OPTION_CALLBACK, (s), (l), (v), (a), \
+>  				      (h), 0, &parse_opt_string_list }
+> -#define OPT_UYN(s, l, v, h, f)      { OPTION_CALLBACK, (s), (l), (v), NULL, \
+> -				      (h), PARSE_OPT_NOARG|(f), &parse_opt_tertiary }
+> +#define OPT_UYN(s, l, v, h)         { OPTION_CALLBACK, (s), (l), (v), NULL, \
+> +				      (h), PARSE_OPT_NOARG, &parse_opt_tertiary }
+>  #define OPT_DATE(s, l, v, h) \
+>  	{ OPTION_CALLBACK, (s), (l), (v), N_("time"),(h), 0,	\
+>  	  parse_opt_approxidate_cb }
+> diff --git a/rerere.h b/rerere.h
+> index 5e5a312e4c..c2961feaaa 100644
+> --- a/rerere.h
+> +++ b/rerere.h
+> @@ -37,7 +37,6 @@ extern void rerere_clear(struct string_list *);
+>  extern void rerere_gc(struct string_list *);
+>  
+>  #define OPT_RERERE_AUTOUPDATE(v) OPT_UYN(0, "rerere-autoupdate", (v), \
+> -	N_("update the index with reused conflict resolution if possible"), \
+> -	PARSE_OPT_NOCOMPLETE)
+> +	N_("update the index with reused conflict resolution if possible"))
+>  
+>  #endif
+> 
 
