@@ -2,105 +2,131 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7E57D1F404
-	for <e@80x24.org>; Wed,  7 Mar 2018 21:11:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9CA841F404
+	for <e@80x24.org>; Wed,  7 Mar 2018 21:41:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754806AbeCGVLq (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Mar 2018 16:11:46 -0500
-Received: from mail-ot0-f195.google.com ([74.125.82.195]:38186 "EHLO
-        mail-ot0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754052AbeCGVLo (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Mar 2018 16:11:44 -0500
-Received: by mail-ot0-f195.google.com with SMTP id 95so3438610ote.5
-        for <git@vger.kernel.org>; Wed, 07 Mar 2018 13:11:43 -0800 (PST)
+        id S1754877AbeCGVlH (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Mar 2018 16:41:07 -0500
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:54942 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754745AbeCGVlG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Mar 2018 16:41:06 -0500
+Received: by mail-wm0-f66.google.com with SMTP id z81so7526525wmb.4
+        for <git@vger.kernel.org>; Wed, 07 Mar 2018 13:41:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=SvX1TF9mSq7sIuySNkol1bCXLhmfHKmq00bPcnGHV+0=;
-        b=iMVB15RP4lEPnFXrXG2zvTv9oHIKfC6/GmKtKE69s0k/a2iFzE8NgfIWX/dh0SEPYO
-         gZKI2xDFNUDhjVQNPvgD7RLvoyMdyLnnbVseb7NDRsCmaa+2Byyft31jKKbTKtOqWlJc
-         zaeMAOI/H51kfOESlvB3M3umKlcrOXMS7MAFmAELZvIzxxOgPYyzxfXTXG3H8xBXo+/T
-         LTIN/3FPxRqbYaum6en0RK+8Tp9xfXCGSaaJkI5SQeJTS5cZIlXhKiVKUHs2HhAP9a+f
-         LJBRdXPAuMKZnIhSwus87EzQNKz9AuRRm/+fD3x03inu96Iyk5VTVraaRYl8/rvxFLnj
-         dbAA==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=ZUpvy6UXwGt2qQ3PcNYqsWR67owtLo4SsOhKPVBCjmg=;
+        b=GxlOpFzPXLl3vPwhSLxIGkpoxN25Hqt60bqughRIw1o4qJeGY7qxQbx/S7A3InxRP1
+         vZS6nVaw8pu2Afg9orZFDCBlINoSIp/RyAzgNKCasuCskQO9V/bnSM91BOnH3zp0HGjn
+         79pYizkYngDywB7AVjuEMqkjJzuFzvsmiCN6aEQaMkRVwT+yjcDAO568lrdx4O+TNDw3
+         auJGS87m4coim4X+xSv9EZ02Jj9+f8zOc+gYbPWPVPrZPsJ95IV03UZYT4Qt0Cs4IGBJ
+         WEp8sbBHS1CRgKbOhk6Ig107jQDw80RNiL/6SGuNckXGgqQgWy97IuthsCtTjvFp1Owk
+         G7+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=SvX1TF9mSq7sIuySNkol1bCXLhmfHKmq00bPcnGHV+0=;
-        b=ViQurPD4KXhqZXmwjgUyal9o3UpGzoUbAxbpsH3zfp8pXpmvpAU3wziTnsATSKsbF5
-         ODAnVef9UU4pYI4OjR/zKmSfIfNsVrxvJdJeB/JcHtPF57sMxcSwQUtoGTgE66dAFeV5
-         JY95frxwUC2JYbDXXYn3uXNcU6nXRDQU16I9eqoZAhFZzurAQkHNty1U45HD+emoxn5c
-         vl7OegyMEuP47OiroA6177NC2nMJsy6swdnehAT4hpQXfFUfhIBze4wZFgbxmkpsr3Jn
-         RLfBjlfibuKvUYzQUmNhPMjKpYz70sDhsHspa9LE3z6JqMXuKEwDqA9Mqmn3QaPtJC/I
-         c4JQ==
-X-Gm-Message-State: APf1xPBVwi3+OjzBV1uAWBBQjqzf+nnrfUMmzK9SJkb8BgDWFlUqApj7
-        pfkoctcOE+3Cr6MQR+6BCgBX0A==
-X-Google-Smtp-Source: AG47ELtO/JD/i3Vrv7lm1PV8V+DANonPKPONrFp2/5DgKZUoqsZpg1G4kkLH6nLvDMAsVef6TmsNMQ==
-X-Received: by 10.157.71.25 with SMTP id a25mr17539929otf.42.1520457102812;
-        Wed, 07 Mar 2018 13:11:42 -0800 (PST)
-Received: from M1075.tabletopmedia.com ([12.193.167.218])
-        by smtp.googlemail.com with ESMTPSA id u2sm5689457otf.69.2018.03.07.13.11.41
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 07 Mar 2018 13:11:41 -0800 (PST)
-From:   Robert Dailey <rcdailey.lists@gmail.com>
-X-Google-Original-From: Robert Dailey <rcdailey@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <stefanbeller@gmail.com>,
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=ZUpvy6UXwGt2qQ3PcNYqsWR67owtLo4SsOhKPVBCjmg=;
+        b=O7suEp+SCFTETVs/XloR6AN8KVCQUfwD2Yif337hWAMwjMIoO72KkHL2Q/rjQM9kd4
+         VPVTF3LT3KO1gNJWyUCUAAAi8tBafTPPOSPrlqQmK7gsoZZSfoNF5OcM0vfR6YUh9jNG
+         m5Piga8ufV5jG5PQrTNQ/XgUiyWxxZHjki4b4KSNMhfbcX1kc5HMIFXVKCxCn5O+JHQh
+         KlmrGYcJCFwRsb27454AZLVQTnaBcxaG8g+gPgR0WJny+4gV6n+ofQD0iGEoirsaUw0r
+         GXxyNf1fKWCm1FAEgPIzkPTbue6XU6qMtgngz4Pd8tFOupG31s6ut0GzCgf00wgco/bK
+         kPFA==
+X-Gm-Message-State: AElRT7FLOMwfKcPteHm96eFt6Gq6nrWgPwKZ/iCZ9JS7Oe3MKSej02Gd
+        pP/PeZK3p1AkifZluzKpcXhEL89JUNc=
+X-Google-Smtp-Source: AG47ELsX3HoZ2Hr+b+7ZMyvFGiDjkbyvtTzdLvgJB/E8XvMeocPldm+Dc+GKMD0FX9p46OidTYgF2g==
+X-Received: by 10.28.160.26 with SMTP id j26mr14577675wme.76.1520458864894;
+        Wed, 07 Mar 2018 13:41:04 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id p104sm25355436wrb.47.2018.03.07.13.41.02
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 07 Mar 2018 13:41:02 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Robert Dailey <rcdailey.lists@gmail.com>
+Cc:     git@vger.kernel.org, Stefan Beller <stefanbeller@gmail.com>,
         Brandon Williams <bmwill@google.com>
-Subject: [PATCH] Support long format for log-based submodule diff
-Date:   Wed,  7 Mar 2018 15:11:40 -0600
-Message-Id: <20180307211140.19272-1-rcdailey@gmail.com>
-X-Mailer: git-send-email 2.13.1.windows.2
+Subject: Re: [PATCH] Support long format for log-based submodule diff
+References: <20180307211140.19272-1-rcdailey@gmail.com>
+Date:   Wed, 07 Mar 2018 13:41:01 -0800
+In-Reply-To: <20180307211140.19272-1-rcdailey@gmail.com> (Robert Dailey's
+        message of "Wed, 7 Mar 2018 15:11:40 -0600")
+Message-ID: <xmqqefkvzhqq.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I am experimenting with a version of submodule diff (using log style)
-that prints the commits brought in from merges, while excluding the
-merge commits themselves. This is useful in cases where a merge commit's
-summary does not fully explain the changes being merged (for example,
-for longer-lived branches).
+Robert Dailey <rcdailey.lists@gmail.com> writes:
 
-I could have gone through the effort to make this more configurable, but
-before doing that level of work I wanted to get some discussion going to
-understand first if this is a useful change and second how it should be
-configured. For example, we could allow:
+> I could have gone through the effort to make this more configurable, but
+> before doing that level of work I wanted to get some discussion going to
+> understand first if this is a useful change and second how it should be
+> configured. For example, we could allow:
+>
+> $ git diff --submodule=long-log
+>
+> Or a supplementary option such as:
+>
+> $ git diff --submodule=log --submodule-log-detail=(long|short)
+>
+> I'm not sure what makes sense here. I welcome thoughts/discussion and
+> will provide follow-up patches.
 
-$ git diff --submodule=long-log
+My quick looking around reveals that prepare_submodule_summary() is
+called only by show_submodule_summary(), which in turn is called
+only from builtin_diff() in a codepath like this:
 
-Or a supplementary option such as:
+	if (o->submodule_format == DIFF_SUBMODULE_LOG &&
+	    (!one->mode || S_ISGITLINK(one->mode)) &&
+	    (!two->mode || S_ISGITLINK(two->mode))) {
+		show_submodule_summary(o, one->path ? one->path : two->path,
+				&one->oid, &two->oid,
+				two->dirty_submodule);
+		return;
+	} else if (o->submodule_format == DIFF_SUBMODULE_INLINE_DIFF &&
+		   (!one->mode || S_ISGITLINK(one->mode)) &&
+		   (!two->mode || S_ISGITLINK(two->mode))) {
+		show_submodule_inline_diff(o, one->path ? one->path : two->path,
+				&one->oid, &two->oid,
+				two->dirty_submodule);
+		return;
+	}
 
-$ git diff --submodule=log --submodule-log-detail=(long|short)
+It looks like introducing a new value to o->submodule_format (enum
+diff_submodule_format defined in diff.h) would be one natural way to
+extend this codepath, at least to me from a quick glance.
 
-I'm not sure what makes sense here. I welcome thoughts/discussion and
-will provide follow-up patches.
+It also looks to me that the above may become far easier to read if
+the common "are we dealing with a filepair <one, two> that involves
+submodules?" check in the above if/else if cascade is factored out,
+perhaps like this as a preliminary clean-up step, before adding a
+new value:
 
-Signed-off-by: Robert Dailey <rcdailey@gmail.com>
----
- submodule.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+	if ((!one->mode || S_ISGITLINK(one->mode)) &&
+	    (!two->mode || S_ISGITLINK(two->mode))) {
+		switch (o->submodule_format) {
+		case DIFF_SUBMODULE_LOG:
+			... do the "log" thing ...
+			return;
+		case DIFF_SUBMODULE_INLINE_DIFF:
+			... do the "inline" thing ...
+			return;
+		default:
+			break;
+		}
+	}
 
-diff --git a/submodule.c b/submodule.c
-index 2967704317..a0a62ad7bd 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -428,7 +428,8 @@ static int prepare_submodule_summary(struct rev_info *rev, const char *path,
- 	init_revisions(rev, NULL);
- 	setup_revisions(0, NULL, rev, NULL);
- 	rev->left_right = 1;
--	rev->first_parent_only = 1;
-+	rev->max_parents = 1;
-+	rev->first_parent_only = 0;
- 	left->object.flags |= SYMMETRIC_LEFT;
- 	add_pending_object(rev, &left->object, path);
- 	add_pending_object(rev, &right->object, path);
--- 
-2.13.1.windows.2
-
+Then the place to add a new format would be trivially obvious,
+i.e. just add a new case arm to call a new function to give the
+summary.
