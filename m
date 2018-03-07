@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 904D01F404
-	for <e@80x24.org>; Wed,  7 Mar 2018 01:05:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CBD491F404
+	for <e@80x24.org>; Wed,  7 Mar 2018 01:05:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933209AbeCGBFi (ORCPT <rfc822;e@80x24.org>);
+        id S933409AbeCGBFk (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Mar 2018 20:05:40 -0500
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:41946 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933236AbeCGBFi (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 6 Mar 2018 20:05:38 -0500
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:37380 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933236AbeCGBFf (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Mar 2018 20:05:35 -0500
-Received: by mail-pf0-f196.google.com with SMTP id h11so273647pfn.4
-        for <git@vger.kernel.org>; Tue, 06 Mar 2018 17:05:35 -0800 (PST)
+Received: by mail-pf0-f194.google.com with SMTP id f80so267215pfa.8
+        for <git@vger.kernel.org>; Tue, 06 Mar 2018 17:05:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=JKHhAmDQcIDO0cKl5dHWW6ThqPKMG2vhJxpuVdqyLqE=;
-        b=SBE3RKdfLW3xPZ3H7gGTFDVDyAeocfimmGxv06sy31P9AQipiuGhx/MGtRn9ZMeIo3
-         XoFznxndiVNs4jBx3VSCvmvAPyL/lMlmCxtx2TFMqvFmV8Ksv2fi6h4e81HatAhxueCT
-         ursL6RH5qyWZU9nnSe2oD9hjfFO8k9rMiysEoqmoTQIUbMrZwYQJ09r3kuJ5V30GWhLF
-         jyzOPGLbAkX7FmfhlI0BNV0dN6r0Zc7BwLT14aWez3DhvYZD9U3zmDAwymNAfuGh47qy
-         nXsRN3gBMddjppZOGhoAnDoF6nF5PB5rD0PQ4LYSpDriVUAY1Rrh+DDGbTbRMTD4xKdg
-         lXUw==
+        bh=2wS18nULXuaSUYM6X1lxgluOmuv7M0NXiSA8a2M1NOU=;
+        b=dhQpC4gDMp5iifxjU4CgFLGQfsaImlOchx8ZWHmwCgE4fGbSq+ia3dhXHcCH71jR8H
+         MJ/5aZi1kgt7QfngB5l46Kh4qXHo1l/mf7TXpHrGNHIOoUgDRU538k8ikofefhLIzPya
+         SzYrpXHHKkb25uI0u6/U2tMxLwNZrexEIxEHJdmNffF+JucK1eRHCgYuwMK6tjuM51a/
+         bwPpCIFiIVjQW6k+xAb4tR/y/EFPrf7rL45Vcm2gy28NLvoXabdcEsQaNiSZDzfQQ5ST
+         E4OJU7LwyQ5bFSQV3I+xKpWRa9biUhamzlF4P83Q60q/0dhSA4Zxrpo5Bi+QTTRs2MTC
+         XSWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=JKHhAmDQcIDO0cKl5dHWW6ThqPKMG2vhJxpuVdqyLqE=;
-        b=qg9gPS+ec0l450J1Uansz2osJjhfc6ERWPWl9gFnLmqrghgcN2er0EcbjeM9uM13Oj
-         VL8t6mm806qmt7/qDBThFgNwHIW97q+d4UMLr0TB6syc7QaINmPB680IVQPa7Tzz/hSb
-         Fg8+Ur7EjtF3nAzcUdzcTRkZJXd07wXqd0/rg+sD2EYhDCp+nvm+7J9mqZTZYkmBkA8o
-         qhqrtpswFOTqX6s14hG8+sJgu/Y8kTFe/xXaOUTDFWmuUWT4vLTQ7H9mN7+de1h56DJh
-         LgVqPuraLVX9B68TDRPWDqMMu39dv5t4hW4vxlvYQ7DW9ZXU5xSs2KScxL9IDcXJTBVN
-         OcJA==
-X-Gm-Message-State: AElRT7FUCMTdJcMRGOmbakr10F2puZbWs6so9Mz8nJuK2nWgfHl1Ya+U
-        NOXVPLWwo0eeViHh0oeMBEf+iw==
-X-Google-Smtp-Source: AG47ELsiDfzC9WSl4U2Or0JoCcHoq7RgB1gp6/WTeN4P/fMOcqDvHLx979jF/ACOSzNw/kAizXcqnw==
-X-Received: by 10.98.14.79 with SMTP id w76mr12878743pfi.1.1520384735050;
-        Tue, 06 Mar 2018 17:05:35 -0800 (PST)
+        bh=2wS18nULXuaSUYM6X1lxgluOmuv7M0NXiSA8a2M1NOU=;
+        b=OvNYqn6clRyTTLZy3EwPIKPsGK2lWUS5TANsw+NfTo37ry0aoUUfI0mNsAZldtZuoG
+         ez2pQ4j1x4xMR56X/0ZTu2CuSlVQjJ9kfL2tBiwkmY2SE631FMBbiBu6yfcTMzdisgx+
+         6teYsyvyDoY6aQ3CZDmcfm1NqdZIvlieQ+cyb902FJH3FJIC75fZQsZuS7tkpQ8I+8H3
+         FfHGcjuZRpBv3pENzU/kVDxl5iDR02pqjT28b1SfpZuhwORTYxL8B+wGV95Ci3Edya1A
+         mIpIR7NTzZsoB5bQlmFldqleBTj3Dx687vAkYAm5xLZElserPVuchBAb/lsCA3Rf6Pfb
+         NCQw==
+X-Gm-Message-State: APf1xPD7s700sOFQCSdI/pMCZ8RVCbtgoR86qrxK8eVrz18q/nfxFp0G
+        6QKXUXLPebJ3eZ4bYhWQKFE=
+X-Google-Smtp-Source: AG47ELv97pQHRDu/Y60hoJ4DeLS3/KLvFZh4Ztby4hF5ZM7TWB/28d5J8ttnM4lx6gvSAYQJvApI7A==
+X-Received: by 10.101.75.199 with SMTP id p7mr17160152pgr.0.1520384738034;
+        Tue, 06 Mar 2018 17:05:38 -0800 (PST)
 Received: from duynguyen.dek-tpc.internal ([14.161.14.188])
-        by smtp.gmail.com with ESMTPSA id p10sm27664133pgd.28.2018.03.06.17.05.32
+        by smtp.gmail.com with ESMTPSA id p10sm27664133pgd.28.2018.03.06.17.05.35
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 06 Mar 2018 17:05:34 -0800 (PST)
+        Tue, 06 Mar 2018 17:05:37 -0800 (PST)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     avarab@gmail.com, git@vger.kernel.org, gitster@pobox.com,
         sunshine@sunshineco.com, szeder.dev@gmail.com,
         phillip.wood@talktalk.net
-Subject: [PATCH v2 2/4] completion: simplify _git_notes
-Date:   Wed,  7 Mar 2018 08:05:02 +0700
-Message-Id: <20180307010504.9289-3-pclouds@gmail.com>
+Subject: [PATCH v2 3/4] completion: complete --{reuse,reedit}-message= for all notes subcmds
+Date:   Wed,  7 Mar 2018 08:05:03 +0700
+Message-Id: <20180307010504.9289-4-pclouds@gmail.com>
 X-Mailer: git-send-email 2.16.2.785.g429c04a1b9
 In-Reply-To: <20180307010504.9289-1-pclouds@gmail.com>
 References: <20180303092307.3796-1-pclouds@gmail.com>
@@ -70,40 +70,33 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This also adds completion for 'git notes remove' and 'git notes edit'.
+The new subcommand that takes these options is 'git notes edit'. Just
+accept the options from subcommands since we handle them the same way
+in builtin/notes.c anyway. If a user does
+
+    git prune --reuse-message=...
+
+just let the command catches that error when it's executed.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- contrib/completion/git-completion.bash | 14 +++-----------
- 1 file changed, 3 insertions(+), 11 deletions(-)
+ contrib/completion/git-completion.bash | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 0d858cacce..37bf4a64d3 100644
+index 37bf4a64d3..dc3ec43b65 100644
 --- a/contrib/completion/git-completion.bash
 +++ b/contrib/completion/git-completion.bash
-@@ -1836,19 +1836,11 @@ _git_notes ()
- 	add,--reedit-message=*|append,--reedit-message=*)
+@@ -1832,8 +1832,7 @@ _git_notes ()
+ 			;;
+ 		esac
+ 		;;
+-	add,--reuse-message=*|append,--reuse-message=*|\
+-	add,--reedit-message=*|append,--reedit-message=*)
++	*,--reuse-message=*|*,--reedit-message=*)
  		__git_complete_refs --cur="${cur#*=}"
  		;;
--	add,--*)
--		__gitcomp_builtin notes_add
--		;;
--	append,--*)
--		__gitcomp_builtin notes_append
--		;;
--	copy,--*)
--		__gitcomp_builtin notes_copy
--		;;
--	prune,--*)
--		__gitcomp_builtin notes_prune
-+	*,--*)
-+		__gitcomp_builtin notes_$subcommand
- 		;;
- 	prune,*)
-+		# this command does not take a ref, do not complete it
- 		;;
- 	*)
- 		case "$prev" in
+ 	*,--*)
 -- 
 2.16.2.785.g429c04a1b9
 
