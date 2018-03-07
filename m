@@ -7,81 +7,63 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4CA611F404
-	for <e@80x24.org>; Wed,  7 Mar 2018 18:20:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4B4651F404
+	for <e@80x24.org>; Wed,  7 Mar 2018 18:38:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754279AbeCGSUF (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Mar 2018 13:20:05 -0500
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:40027 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753168AbeCGSUE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Mar 2018 13:20:04 -0500
-Received: by mail-wm0-f66.google.com with SMTP id t6so6496491wmt.5
-        for <git@vger.kernel.org>; Wed, 07 Mar 2018 10:20:04 -0800 (PST)
+        id S1754491AbeCGSih (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Mar 2018 13:38:37 -0500
+Received: from mail-wr0-f180.google.com ([209.85.128.180]:43729 "EHLO
+        mail-wr0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753934AbeCGSig (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Mar 2018 13:38:36 -0500
+Received: by mail-wr0-f180.google.com with SMTP id u49so3188033wrc.10
+        for <git@vger.kernel.org>; Wed, 07 Mar 2018 10:38:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=nboMftfXmq5H0tb9q4Myzwp99jt4YSLgQmiL5D9bLt8=;
-        b=JP7RdyH8Xw1J3CbZ/1edwOuFmYcqugEUYcOjx18ot0mdOdM/rV8G3Fs5EBtsKKqPwE
-         g7kcOJX7s1+MlfVqeCF7jqy0tTZntEFuInrNMD43n1B/07R4raglSzUp9bGfMExWHfK7
-         P/kG/w87/H8Fiz537nO6rxO7EgmziHV+ujKA2N7iChZ5WWznBIPvroG7IvasF8H5IkrJ
-         R6dbBJ7P5UbRoi6eJKzSB7/u6VADL6uLJW0YbKe/VmXDMuKuuIHCB62xv0cnvUQTGjkx
-         DHa1EA+pRd4hObW4q2DNvI4wI4Scs4JwzEiYnbm9NKe/SwOkGTgr/xDCHwvWgFOAFS5U
-         mhkA==
+        bh=sEl9Fd/FwiGdaKZE1pPzAhrMM1saoOjQaR2jJQgCYI4=;
+        b=pZoTvGY7gc7wGQie1x/RscVDZeIronqhM+5KaOiOfnzUlWap+y9JNUD9pFErAlF+cM
+         mdLwD3yUVeMwpHqEvuyMqwGtxsA4jB8qlYotTmH8RdsEl3fUcfNvXoVhdk2d26YLnJ3O
+         NFY1rlvhMaMOIgarUpGVJ6nR8RnrRDiliO68huIc4RPnlA5n44tqTbbs+Msthd70G0UU
+         D4+84HJ+ZumAi093xj3OVDMCIvxk3KBn4C4FxWFfeCAqFegT+LC3+kH7OsDS3fNfDOWS
+         Xu4Tb/mmbbJVR7qDO7xh2hvgs2xSLYPtUqnO2oCHHC9yGl8/SR5gPkQdi0InHBzqThKD
+         6bvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=nboMftfXmq5H0tb9q4Myzwp99jt4YSLgQmiL5D9bLt8=;
-        b=pE/c+EJBB15cCxCuCAYWIExKF3DHdWD6ptuDPqpZlB6p6+kg0KdkilHQScO2ENTw0W
-         e6tInkSs3VeyB4XEaPkmt+hvUUJmgUNTTA/DGSRPklaZ0/F8bso2xwicbQxnJ0shpxGV
-         Rqv4Q/1QGMP4TFZU/BvOnlsdscUKhH1kGocXAZk0GenhLdHHGlxUqoYci0baEqo6Vn8q
-         eBxMl/2dRMV3BVaSP3RqnHbaX9wZ94P4KFXc9rstoxLxvaIQH2QmLWNprHNekvIfC6/7
-         QW1LR64pP2WlrfMnJyCj7sl+xxBK+Le0yqSNL6bnt8Pt8ROWG0tXrY2GnRt3ZeJWiH0n
-         ztMw==
-X-Gm-Message-State: AElRT7E9u7pNM5558cW9iFpnF2/xzCaa7gJfcV2lDSjmpZFCYsRT+gCF
-        LgC1IaGA5Cy60eKYRh1EIhA=
-X-Google-Smtp-Source: AG47ELunbsOwHeIBcXWS4xBNuiSqf9grcmjTCth0dTJMvOdRZ2AjU1+FuBl95nzvVxyFoaFVhO/AXg==
-X-Received: by 10.28.9.19 with SMTP id 19mr16817047wmj.114.1520446802865;
-        Wed, 07 Mar 2018 10:20:02 -0800 (PST)
+        bh=sEl9Fd/FwiGdaKZE1pPzAhrMM1saoOjQaR2jJQgCYI4=;
+        b=juHP39tNMGwZmFr3eL1hPmG9OzFOl96Jr9Vok+yFCr7uVXxJ7+qM80Ut3DH+MNbtO3
+         FVOXa+4yB6iSB3C3jxGyIXCmMP5KsPktwuWmsBiRmQDj8dfwvoNRT7YvxfVmsFCj4aAj
+         nkoPNqaMqiEm7URjyI+ojrAg+LdjGEivzASklGmd/n6DvDjrzDMTkSqH0xP4jrfGC2sQ
+         8p+TsT7fIYNh6YELwTMmmK4bu8azl9ll/8Hx7KLOVJPghEEPtslZ5xG0WPlvNJVozIfL
+         NS17POuaXA9a3oR2zRf65l4XYq9rHXs4yTlnHB3j8VEZsX2mS05xlLELF3/umUPiERkH
+         Opqg==
+X-Gm-Message-State: APf1xPCUgKEqW/U8Tcq/5dwBY4eIi2NzZwpdo1ri40nLKwQ1VqCDmTTc
+        xGzb0gQSYdI1poad5YeFUdawK1UMC5w=
+X-Google-Smtp-Source: AG47ELsyf8aSv3zAAJEHMiH3e3mBgz30K29vIKMNKtCqIonUaKrK1Zkn6ZmE2JwabZD1wmhf+eR31g==
+X-Received: by 10.223.182.156 with SMTP id j28mr19778008wre.66.1520447914403;
+        Wed, 07 Mar 2018 10:38:34 -0800 (PST)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id s2sm15374214wmf.0.2018.03.07.10.20.01
+        by smtp.gmail.com with ESMTPSA id 1sm5768685wmj.35.2018.03.07.10.38.33
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 07 Mar 2018 10:20:01 -0800 (PST)
+        Wed, 07 Mar 2018 10:38:33 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Sergey Organov <sorganov@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [RFC] Rebasing merges: a jorney to the ultimate solution(RoadClear)
-References: <87y3jtqdyg.fsf@javad.com>
-        <nycvar.QRO.7.76.6.1802270051470.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <CA+P7+xq8UUcLWomUi=PS_hTKfJd3dMAxMmhioDS1bixwcmKAqw@mail.gmail.com>
-        <nycvar.QRO.7.76.6.1802271718090.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <4d7f3406-b206-cc22-87df-85700d6a03d9@gmail.com>
-        <33da31e9-9101-475d-8901-4b6b3df2f29d@gmail.com>
-        <940d959d-151d-68dd-0f13-320ebad0d75b@gmail.com>
-        <87606hoflx.fsf@javad.com>
-        <0ac3a3fd-4053-e32e-75ed-8829f22c2e1f@gmail.com>
-        <87a7vss6ax.fsf@javad.com>
-        <f1a960dc-cc5c-e7b0-10b6-39e5516655b3@gmail.com>
-        <ed4d2b30-2dea-740b-6283-973c798f619d@philandanna.no-ip.org>
-        <1298a701-a860-a675-83d7-72f29e14cd2b@talktalk.net>
-        <CA+P7+xpgChuvh_vsPktBkOEhF=MjJh1n_3jD0-n4d67j9kYqzw@mail.gmail.com>
-        <ee809701-a6d8-157d-09cd-cebbf2e949ec@gmail.com>
-        <1580e48a-be44-38dd-79af-8a2a31c5712e@talktalk.net>
-        <nycvar.QRO.7.76.6.1803061812090.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <xmqqzi3k23fu.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1803070804440.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-Date:   Wed, 07 Mar 2018 10:20:00 -0800
-In-Reply-To: <nycvar.QRO.7.76.6.1803070804440.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        (Johannes Schindelin's message of "Wed, 7 Mar 2018 08:09:57 +0100
-        (STD)")
-Message-ID: <xmqqh8pr21f3.fsf@gitster-ct.c.googlers.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Eric Wong <e@80x24.org>, Git Mailing List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH v2 3/5] gc --auto: exclude base pack if not enough mem to "repack -ad"
+References: <20180301092046.2769-1-pclouds@gmail.com>
+        <20180306104158.6541-1-pclouds@gmail.com>
+        <20180306104158.6541-4-pclouds@gmail.com>
+        <xmqqfu5d3tbn.fsf@gitster-ct.c.googlers.com>
+        <CACsJy8C2j2dLozhHf4zE--KYPZ2VjOW2tobmczh3rf6L==Q1vw@mail.gmail.com>
+Date:   Wed, 07 Mar 2018 10:38:33 -0800
+In-Reply-To: <CACsJy8C2j2dLozhHf4zE--KYPZ2VjOW2tobmczh3rf6L==Q1vw@mail.gmail.com>
+        (Duy Nguyen's message of "Wed, 7 Mar 2018 17:48:59 +0700")
+Message-ID: <xmqqd10f20k6.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -90,19 +72,92 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Duy Nguyen <pclouds@gmail.com> writes:
 
->> OK, does this mean we want to wait before merging the "recreate
->> merge" topic down to 'next'?  For more than a few weeks, it has been
->> slated for 'next'.
+>>> +Set environment variable `GIT_TRACE` in order to see the memory usage
+>>> +estimation in `git gc --auto` that determines whether the base pack is
+>>> +kept.
+>>
+>> This is somewhat a puzzling use of trace.  It sounds more like a way
+>> to find out "how" memory usage estimation is done and arriving at a
+>> wrong value for those who want to debug the feature.
 >
-> Maybe a few more days.
-> ...
-> I want to discuss this in the other subthread, though.
+> Yeah. I'm not sure if this estimation could be really problematic that
+> people need to debug this way. A cleaner way (if we think people will
+> need this often) is just add a new option in "git gc" to report this
+> estimation breakdown and do nothing else.
 
-If we are talking about a drastic change, a few more days may not be
-sufficient, but we are not in a hurry, as this already sounds like a
-2.18 material anyway.  As you made it clear that it is OK not to
-merge the current one for now, my objective of asking the question
-is already satisfied ;-)
+Actually after reading the implementation and seeing what it does, I
+personally do not have any problem with the way GIT_TRACE is used
+for this purpose in this patch.  I am not sure how interesting the
+information given by that codepath in real life; it looks even less
+intereseting than say what comes out of "verify-pack --stat".
 
+>> This is finding the largest pack.
+>
+> The discussion on .keep files raises one question for me, what if the
+> largest pack already has a .keep file, do we still consider it the
+> base pack, or should we find the next largest non-kept pack?
+>
+> I'm guessing we keep things simple here and ignore .keep files.
+
+I agree that it is a sensible design decision.
+
+>>> +#elif defined(GIT_WINDOWS_NATIVE)
+>>> +     MEMORYSTATUSEX memInfo;
+>>> +
+>>> +     memInfo.dwLength = sizeof(MEMORYSTATUSEX);
+>>> +     if (GlobalMemoryStatusEx(&memInfo))
+>>> +             return memInfo;ullTotalPhys;
+>>
+>> Is this legal C in Microsoft land?
+>
+> That's the problem with writing code without a way to test it. At
+> least travis helped catch a compiler bug on mac.
+>
+> I'm torn between just #error here and let Windows/Mac guys implement
+> it (which they may scream "too much work, I don't wanna") but if I
+> help write something first, yes things are potentially broken and need
+> verification from those guys. I guess I'll just fix this up and hope
+> non-linux guys do the rest.
+
+Yup, we all collaborate and help in ways each of us can.  None of us
+can be expected to do any more than that ;-)
+
+>> I wonder if the above should go somewhere under compat/ without
+>> ifdef but split into separate files for individual archs (I do not
+>> know the answer to this question).
+>
+> My first choice too. I chose this way after seeing online_cpus()
+> thread-utils.c. Not sure which way is best either.
+
+OK.
+
+>> But to those who say "packs larger than this value is too big" via
+>> configuration, keeping only the largest of these above-threshold
+>> packs would look counter-intuitive, wouldn't it, I wonder?
+>
+> I think I'll just clarify this in the document. There may be a use
+> case for keeping multiple large packs, but I don't see it (*). We can
+> deal with it when it comes.
+
+When the project's history grows too much, a large pack that holds
+its first 10 years of stuff, together with another one that holds
+its second 20 years of stuff, may both be larger than the threshold
+and want to be kept.  If we pick only the largest one, we would
+explode the other one and repack together with loose objects.
+
+But realistically, those who would want to control the way in which
+their repository is packed to such a degree are very likely to add
+".keep" files to these two packfiles themselves, so the above would
+probably not a concern.  Perhaps we shouldn't do the "automatically
+pick the largest one and exclude from repacking" when there is a
+packfile that is marked with ".keep"?
+
+> The use of super large gc.bigBasePackThreshold to disable this keeping
+> base pack is intended. But I can't go too high here it may break
+> limits on 32 bit platforms. And 2g sounds really arbitrary.
+
+You could use 42m instead to clarify that it really is an arbitrary
+threshold that was chosen only for the purpose of this test perhaps?
+;-)
