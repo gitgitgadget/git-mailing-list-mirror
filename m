@@ -7,155 +7,117 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,
 	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5A5D11F576
-	for <e@80x24.org>; Wed,  7 Mar 2018 06:59:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DCE681F576
+	for <e@80x24.org>; Wed,  7 Mar 2018 07:04:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751032AbeCGG66 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Mar 2018 01:58:58 -0500
-Received: from mout.gmx.net ([212.227.17.20]:39643 "EHLO mout.gmx.net"
+        id S1751177AbeCGHEt (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Mar 2018 02:04:49 -0500
+Received: from mout.gmx.net ([212.227.17.21]:59359 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750989AbeCGG66 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Mar 2018 01:58:58 -0500
-Received: from [192.168.1.106] ([88.26.243.156]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MgbvP-1f4pBu3X3n-00O1y7; Wed, 07
- Mar 2018 07:58:51 +0100
-Date:   Wed, 7 Mar 2018 07:58:43 +0100 (STD)
+        id S1751074AbeCGHEn (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Mar 2018 02:04:43 -0500
+Received: from [192.168.1.106] ([88.26.243.156]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LhSfM-1eOaMm0eTA-00mZKH; Wed, 07
+ Mar 2018 08:04:37 +0100
+Date:   Wed, 7 Mar 2018 08:04:30 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Sergey Organov <sorganov@gmail.com>
-cc:     phillip.wood@dunelm.org.uk,
-        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
+To:     Igor Djordjevic <igor.d.djordjevic@gmail.com>
+cc:     phillip.wood@dunelm.org.uk, Sergey Organov <sorganov@gmail.com>,
         Git mailing list <git@vger.kernel.org>,
         Jacob Keller <jacob.keller@gmail.com>,
         Johannes Sixt <j6t@kdbg.org>,
         Junio C Hamano <gitster@pobox.com>
 Subject: Re: [RFC] Rebasing merges: a jorney to the ultimate solution (Road
  Clear)
-In-Reply-To: <87h8pscw0r.fsf@javad.com>
-Message-ID: <nycvar.QRO.7.76.6.1803070756550.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+In-Reply-To: <77349f89-16c5-8f14-10da-e15381d11dc1@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1803070803360.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
 References: <87y3jtqdyg.fsf@javad.com> <bbe64321-4d3a-d3fe-8bb9-58b600fabf35@gmail.com> <nycvar.QRO.7.76.6.1802270051470.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <CA+P7+xq8UUcLWomUi=PS_hTKfJd3dMAxMmhioDS1bixwcmKAqw@mail.gmail.com>
  <nycvar.QRO.7.76.6.1802271718090.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <4d7f3406-b206-cc22-87df-85700d6a03d9@gmail.com> <33da31e9-9101-475d-8901-4b6b3df2f29d@gmail.com> <940d959d-151d-68dd-0f13-320ebad0d75b@gmail.com> <87606hoflx.fsf@javad.com>
- <0ac3a3fd-4053-e32e-75ed-8829f22c2e1f@gmail.com> <87a7vss6ax.fsf@javad.com> <6c8749ca-ec5d-b4b7-f1a0-50d9ad2949a5@talktalk.net> <872944c4-ca97-9f55-a424-86d1e3299a22@gmail.com> <1c912980-8ce8-6281-fa99-040a5e3e1103@talktalk.net>
- <nycvar.QRO.7.76.6.1803061829460.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <87h8pscw0r.fsf@javad.com>
+ <0ac3a3fd-4053-e32e-75ed-8829f22c2e1f@gmail.com> <87a7vss6ax.fsf@javad.com> <6c8749ca-ec5d-b4b7-f1a0-50d9ad2949a5@talktalk.net> <872944c4-ca97-9f55-a424-86d1e3299a22@gmail.com> <nycvar.QRO.7.76.6.1803051812330.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+ <77349f89-16c5-8f14-10da-e15381d11dc1@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:xlGwX4/OJCd89Yj6V35etAbPu4kfoyDZlimuBcMuJ7rVfZLFnUh
- Aj8xOpmr5+uX0JTMJ1yMQ+A0+v9skIZDCiLIeEuTNMhZRYj9MBENp0tJXSTL6ctEWrJFQIq
- bsB4pqGKECKVj/7KKbsNleeBHzu2Sr06+zkifqRFViwBIT6ldh2cmcZ27VXdSQD/GIZ/TCi
- rqfOKNSdFhuvI/dF+LKYA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:idjDOnou2Sk=:W7lE8qxBpfF6c15OQBiBrc
- i8utJGY6tuwaIcmvZQuXTduNBnCvVVu/gayWDYWiux5vbXSufrWLS6YPnRFTDCfoqKKIenJTh
- i/kvFxeiEJVLMZAgUfySO1GJccyT5aOzzmhPWOByPYsEd7AvI4dx4/4E2JdLn2ysuRkUMiai1
- HjMVIrXYVTR020+dF0tNQRTJKOExyXi7z1L7DdRoRgbGijPAlAxZqmZK86TkhtCccWU7Sx+UN
- vzyikF6chwRWnwkVeSPdupoM58bwtFDfRZwUUDtYKl+NIhMfKCUOauzb2oNNGLbviOz/lc0jV
- FBWb9vH61lcIbQmc1677Q93PrPO5giM7vUFNCfUsUQGWxY1VGzve6paO/MY/pkGwHfx3t8gu5
- SAMHxGXaqdGyC4gqF0TAt/u8F/JytsMN+jWa9Gzg7XyUekxLjyBCXDZ4Zu9urUN4Mya6lJuxG
- 2MThgJlCrFvPqSM98OqGpAm2Je/flym0m5wm6WaqpSnUCYYcVV/yqQhX0QwYrzscxQa405l6f
- FN7tBdYI8+jrfWONMtGOjkzBPzNmRMFIRc6paEnjptGJmaCe55kxXRJ15KjsJTiGFUzLw2Z66
- mkMOiK/TpWjs5jIsVTJW20gqPC+bIVo5IbdmJxrMRzVtgl+l/KgX94cBhfiqTFolmR1MSv/4c
- lgKf93rXz/LSOaLhmppCp/Vl2YeioorvcUXkWnuesF84ifTlonpsithTnQKVzNvzASojupXp4
- eJI8z1/f5JD+73mPkyw4iVDIKULf78kX8i3368zkNqwd+iSHxFJCRa2Sdry4wlSIY5tUz+fB8
- oMvN682HvSeH4U8ShTcOIlfcZpKpQVnDzJeXWWVwdsEiSDLFMQ=
+X-Provags-ID: V03:K0:ebFi+voIWkvjSAxPtBk68rmLKS3e8L0qxIJM+zdq34C5wAja6VY
+ 2yAAr1jgV3vLI1nZGxaZh+3jF4nFOdEUc0DjDbtEOxAF0OpiGbICAvCDJTTmFFaOelo2dVu
+ S3TLZSSBj6KIbwIJ2kCM8R8LpbZ07JzZ9MxtOWR26ShUDSBKi1Giw+/+/BMElFtQvQFJRca
+ rKq93azho51RQ/AodAGLA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:HDUbbjhHQrY=:Cl7Iz9zmxot8XZuJ72Pby+
+ nK43wPUXfsb2xFp6pUVLY06FUFBul9Ez3QCF2+1TAxw5pekrkjV8QjETmjNZ9ne5tgaoH/iv/
+ FoMsdq7pSCQOT/1KJeIP/AqGu7vNgR6FUUue3fNeviNk45JmIBGOm/RKY5XvPLafl2XVAN5WD
+ NBeKMdPjo6rTd2RE+FacRwHxnrbmzkmO4+OnktCgMl9uwJy3rSGDQVFTFbeb4gHqkbYP/GusB
+ XBGa3U90sfi/9r1zigpAXLkViNC8o9kmRGafCi+nwhgE0Iubx/bIjkfk+AaBnn6MeQyd+9qUL
+ SXxT4+j9qJSpAt9y0VHrkXmfePb9qg7jJ77A6H2r4+OgoGrbG+ReLlIPzayXIGYQtfRlPLpwI
+ 0SWrWjOAmcF7cd769PSuDpO0hyc3wydJJDDy8N8Sev15akGcWzZnYX5BUNU5LhtHZimDX5mO6
+ W2u87fEZw5P1RnZdJRlMVHRH+wBN9k+zYTmBNDFnmktBajHJLfmzQV7Rf2h6NbJK6VBgPdEVS
+ pFBS/M6hAyEPUe3kgawkDeqVVk/yeHFR3E8zaSVVNXlCh11xE/wMkjjya/ERUXwd0F+Mi7WxM
+ 5mmhc9kXsfQ1LhoLjFFAYOp/oOm7a6Xv3tmjSutVFBqTF4xrnMmOP8rVkFTQzNO2A5tyKPFG7
+ t1qsq4UGPi2k6040hbOk/y581If7H86dwL/a2Cy/6blIW/VMH+XZ85HR4EvVcksoWgpHqups8
+ ixG7q2zJ//0cIVSsk2JCpVa/4EX1qeXVhhoDGg/7t9xxEOPiTmwiAtjsfsCoeCOjbp9BtSUFv
+ 8SP8H1Voa44DINHaeCT4m2n2fL8/cf/EDbfU0PdpRt/6G1lr4Y=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Sergey,
+Hi Buga,
 
-On Wed, 7 Mar 2018, Sergey Organov wrote:
+On Wed, 7 Mar 2018, Igor Djordjevic wrote:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> On 05/03/2018 18:29, Johannes Schindelin wrote:
+> > 
+> > > By the way, is there documentation for `git merge-recursive`
+> > > anywhere, besides the code itself...? :$
+> > 
+> > I am not aware of any. The commit message adding the command is not very
+> > illuminating (https://github.com/git-for-windows/git/commit/720d150c4):
+> > 
+> >     Add a new merge strategy by Fredrik Kuivinen.
+> > 
+> >     I really wanted to try this out, instead of asking for an adjustment
+> >     to the 'git merge' driver and waiting.  For now the new strategy is
+> >     called 'fredrik' and not in the list of default strategies to be tried.
+> > 
+> >     The script wants Python 2.4 so this commit also adjusts Debian and RPM
+> >     build procecure files.
+> > 
+> > Digging through https://public-inbox.org/git/ during that time frame comes
+> > up with this hit, though:
+> > 
+> > https://public-inbox.org/git/20050907164734.GA20198@c165.ib.student.liu.se/
+> > 
+> > which is still not a good documentation of the algorithm. You can probably
+> > dig further yourself, but I think I can describe it very quickly here:
+> > 
+> > To merge two commits recursively, you first have to find their "merge
+> > bases". If there was an obvious branch point, then that is the merge base.
+> > But when you start a branch off of master, then work a bit, then merge
+> > master, you already have two merge bases.
+> > 
+> > The trick about the recursive merge is to reduce the number of merge bases
+> > iteratively to one. It does that by taking two merge bases, and performing
+> > a recursive merge on them, which generates a "virtual" commit, the
+> > condensed merge base. That one is then merged recursively with the next
+> > merge base, until there is only one left.
+> > 
+> > A recursive merge of two commits with exactly one merge base is simply a
+> > three-way merge.
+> > 
+> > I vaguely remember that there was something funny about the order in which
+> > order you want to process the merge bases: if you did it in one
+> > (chronological) direction, it worked beautifully, in the other direction
+> > it would generate tons of merge conflicts or something like that.
 > 
-> > On Tue, 6 Mar 2018, Phillip Wood wrote:
-> >
-> >> On 03/03/18 00:29, Igor Djordjevic wrote:
-> >> > 
-> >> > On 02/03/2018 12:31, Phillip Wood wrote:
-> >> >>
-> >> >>> Thinking about it overnight, I now suspect that original proposal
-> >> >>> had a mistake in the final merge step. I think that what you did is
-> >> >>> a way to fix it, and I want to try to figure what exactly was wrong
-> >> >>> in the original proposal and to find simpler way of doing it right.
-> >> >>>
-> >> >>> The likely solution is to use original UM as a merge-base for final
-> >> >>> 3-way merge of U1' and U2', but I'm not sure yet. Sounds pretty
-> >> >>> natural though, as that's exactly UM from which both U1' and U2'
-> >> >>> have diverged due to rebasing and other history editing.
-> >> >>
-> >> >> Hi Sergey, I've been following this discussion from the sidelines,
-> >> >> though I haven't had time to study all the posts in this thread in
-> >> >> detail. I wonder if it would be helpful to think of rebasing a merge
-> >> >> as merging the changes in the parents due to the rebase back into the
-> >> >> original merge. So for a merge M with parents A B C that are rebased
-> >> >> to A' B' C' the rebased merge M' would be constructed by (ignoring
-> >> >> shell quoting issues)
-> >> >>
-> >> >> git checkout --detach M
-> >> >> git merge-recursive A -- M A'
-> >> >> tree=$(git write-tree)
-> >> >> git merge-recursive B -- $tree B'
-> >> >> tree=$(git write-tree)
-> >> >> git merge-recursive C -- $tree C'
-> >> >> tree=$(git write-tree)
-> >> >> M'=$(git log --pretty=%B -1 M | git commit-tree -pA' -pB' -pC')
-> >> >>
-> >> >> This should pull in all the changes from the parents while preserving
-> >> >> any evil conflict resolution in the original merge. It superficially
-> >> >> reminds me of incremental merging [1] but it's so long since I looked at
-> >> >> that I'm not sure if there are any significant similarities.
-> >> >>
-> >> >> [1] https://github.com/mhagger/git-imerge
-> >> > 
-> >> > Interesting, from quick test[3], this seems to produce the same 
-> >> > result as that other test I previously provided[2], where temporary 
-> >> > commits U1' and U2' are finally merged with original M as a base :)
-> >> > 
-> >> > Just that this looks like even more straight-forward approach...?
-> >> > 
-> >> > The only thing I wonder of here is how would we check if the 
-> >> > "rebased" merge M' was "clean", or should we stop for user amendment? 
-> >> > With that other approach Sergey described, we have U1'==U2' to test with.
-> >> 
-> >> I think (though I haven't rigorously proved to myself) that in the
-> >> absence of conflicts this scheme has well defined semantics (the merges
-> >> can be commuted), so the result should be predicable from the users
-> >> point of view so maybe it could just offer an option to stop.
-> >
-> > I am not so sure that the result is independent of the order of the
-> > merges. In other words, I am not necessarily certain that it is impossible
-> > to concoct A,A',B,B' commits where merging B'/B before A'/A has a
-> > different result than merging A'/A before B'/B.
-> >
-> > Remember, when constructing counter-examples to hypotheses, those
-> > counter-examples do not really *have* to make sense on their own. For
-> > example, A' could introduce *completely different* changes from A, and the
-> > same is true for B' and B.
-> >
-> > I could imagine, for example, that using a ton of consecutive empty lines,
-> > and using patches that insert something into these empty lines (and are
-> > thusly inherently ambiguous when said set of empty lines has changed),
-> > could even introduce a merge conflict in one order, but no conflict in the
-> > other.
-> >
-> > Even so, I think that merging in the order of the parents makes the most
-> > sense, and that using that strategy makes sense, too, because you really
-> > have to try hard to make it fail.
+> Thanks, this is very informative (together with the linked discussion).
 > 
-> Alternatively, consider to adopt the original approach that has none of
-> these issues as it uses exactly the same method for rebasing merge
-> commits that you are already using for rebasing simple commits, not to
-> mention the advantage of the built-in consistency check.
+> Not remembering seeing this before, I wasn`t really sure if this was 
+> some undocumented core Git (plumbing?) utility (used withing Git 
+> itself, too), or just a leftover (yet still useful) sample tool.
 
-Surely I misunderstand?
+You raise a good point. The "recursive merge" is not really documented
+properly. Maybe you can enhance my vague description and provide a patch
+for Documentation/technical/?
 
-How can your approach -- which relies *very much* on having the original
-parent commits -- not *require* that consistency check?
-
-What would your approach (that still has no satisfyingly trivial
-explanation, in my mind) do if somebody edited a `merge` command and let
-it merge a completely unrelated commit?
-
-Ciao,
-Johannes
+Thanks,
+Dscho
