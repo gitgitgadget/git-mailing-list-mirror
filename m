@@ -2,145 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 371BF1F576
-	for <e@80x24.org>; Wed,  7 Mar 2018 07:26:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5A13E1FAE2
+	for <e@80x24.org>; Wed,  7 Mar 2018 09:36:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751067AbeCGH0y (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Mar 2018 02:26:54 -0500
-Received: from mout.gmx.net ([212.227.15.19]:53009 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750989AbeCGH0x (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Mar 2018 02:26:53 -0500
-Received: from [192.168.1.106] ([88.26.243.156]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Mb7pT-1f884m0uct-00KkuE; Wed, 07
- Mar 2018 08:26:44 +0100
-Date:   Wed, 7 Mar 2018 08:26:32 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Igor Djordjevic <igor.d.djordjevic@gmail.com>
-cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Sergey Organov <sorganov@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC] Rebasing merges: a jorney to the ultimate
- solution(RoadClear)
-In-Reply-To: <754e2735-1288-9a8d-c8bd-ab39cf733812@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1803070810550.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <87y3jtqdyg.fsf@javad.com> <nycvar.QRO.7.76.6.1802270051470.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <CA+P7+xq8UUcLWomUi=PS_hTKfJd3dMAxMmhioDS1bixwcmKAqw@mail.gmail.com> <nycvar.QRO.7.76.6.1802271718090.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
- <4d7f3406-b206-cc22-87df-85700d6a03d9@gmail.com> <33da31e9-9101-475d-8901-4b6b3df2f29d@gmail.com> <940d959d-151d-68dd-0f13-320ebad0d75b@gmail.com> <87606hoflx.fsf@javad.com> <0ac3a3fd-4053-e32e-75ed-8829f22c2e1f@gmail.com> <87a7vss6ax.fsf@javad.com>
- <f1a960dc-cc5c-e7b0-10b6-39e5516655b3@gmail.com> <ed4d2b30-2dea-740b-6283-973c798f619d@philandanna.no-ip.org> <1298a701-a860-a675-83d7-72f29e14cd2b@talktalk.net> <CA+P7+xpgChuvh_vsPktBkOEhF=MjJh1n_3jD0-n4d67j9kYqzw@mail.gmail.com> <ee809701-a6d8-157d-09cd-cebbf2e949ec@gmail.com>
- <1580e48a-be44-38dd-79af-8a2a31c5712e@talktalk.net> <nycvar.QRO.7.76.6.1803061812090.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <754e2735-1288-9a8d-c8bd-ab39cf733812@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1751154AbeCGJgK (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Mar 2018 04:36:10 -0500
+Received: from mail-qk0-f179.google.com ([209.85.220.179]:33166 "EHLO
+        mail-qk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751090AbeCGJgK (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Mar 2018 04:36:10 -0500
+Received: by mail-qk0-f179.google.com with SMTP id f25so1856882qkm.0
+        for <git@vger.kernel.org>; Wed, 07 Mar 2018 01:36:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=eETLiuYE4XQmJ44F63HK+IKyql2fuwLPNMKWRzvcvGw=;
+        b=N7Ay2NFa8kcROzCcHPK4GGy9rKZxOnnPQWB9onJSfvvYNxynoSLavJf3RgG6z3pJvd
+         QO1ZKT83nWZPwOdWZLymis+1deoACBrpO7d02o4q1Tf2Mkxmu+PpCq2z7UWSKAFftibV
+         evsGgGK618avWvaIbPrsuA/nR610WzoKg7hOvWUCwQu6jpSIoVy6oaBtnBIJZcwjdXbK
+         ae1dqJLRDMnP2RAHxW5ZTu0x9kPA5RdmpQmnluLqNx1j9xO868HCm7fSZdu77OPF1h8v
+         /+e1Mc6H6Mxx7MdxPMeitzev/savgDLrTd9koLzqcPhz8mailBBR3EGguJMZwTIR3wZ/
+         iwEQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=eETLiuYE4XQmJ44F63HK+IKyql2fuwLPNMKWRzvcvGw=;
+        b=RuiuflBE+029mtp7pizySKF5GMHp4YT1iAlh94J6sBhKD5BQtkrFP0qargE2tO4Dr/
+         ZDkrLHl0eySF4cz5kfR4sJhVVTFSoC5DB1TJb6qhXeunfCdTMa95KKAbRE4Ghq7IYCTM
+         PHuVmZ+uD+yU+lCucK/pvLIh7DAIYuMlZ2EDbPxfkLvH93ZsSfGTySdPfnD9Xzf+w/Vh
+         ygNHGXD2DraFtq/WqRbQLEXFEyEgm1+nmEqjNDZkOj11feK6RpIukq/8+zmP32rEd1Cr
+         c4/eqba/Na1Xm6L2sLqXRDyq6UJOh5WsOylWBzyMRoWGP6OBvFlbtJv2U7ic8potWW0i
+         Scxw==
+X-Gm-Message-State: AElRT7Fry5wHPytsZFY31DbHaQ5lief+SrAGFuZDjfbG/O6znyiutGMm
+        roDYPn7wrBA5cgrkqnN5bE2h1TdHNbtkpU6HlA3udQ==
+X-Google-Smtp-Source: AG47ELvhr6ETjE5CaON16M60NwLVsCdgbzRgIsWfkwFtZyIhc60bYXZzWS641jbkJZTxppaQBnPkGswCm5uWLGci5uw=
+X-Received: by 10.55.134.133 with SMTP id i127mr32918843qkd.275.1520415369341;
+ Wed, 07 Mar 2018 01:36:09 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:4GM32dP5BfRY7G1ISoWA0MUqklozJyi90ZIK4zFrfqEVfmqqQde
- VHc4fjwqTl2uUBwd8zrGkg2NqzZwT3hXNg0pWWYQwJcbVgsOBcN8us2qdGjbBxIW6QE5MU6
- CBb4H9A2SS1m4GWzWMKPIMzc3CbpzmygCeWxdmNuOAuGyqk2HCcaemeWp6XG7e9ovTUst3v
- g2NXf4PJ1GQxdimVyuOQg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:unpMP+qYhT0=:DPxaPBvvh6nDIWUQ5JMkLx
- 1RBnWivVGufBeTKgEzMw5GbFClSq5ZNkLC4xiXtymOHGXjvn8Fxq/Co/uiKb9bgHQeK/GRm7t
- bqn05g/fiddpVi0BiUI5/2R23w6F8a1vy4jEDKrx8hWKiLx6WB/7cisFrsIW8E759SmOVLJ54
- g83rRFutSqvAnIf/H43loQyCg5UPz/tbCUyWBVNgXgOtjWS/IRapAIiHBBkr2gohoGRCV4F04
- NJiQK3GTygKOk0JrAvLbCgwlqMpeGcSHKgnxkLEFccnHsDQs+PY2i107CFzaD8lpnZgW7xixn
- MYDNSIIW0LNqTDCiBDFWjZ4LkY8P1AtZqdTdPQrnBLjJfOGrtXvLEfmFW9E90di/O90xPElgw
- 0FpTT4MU+oT5D6KKjAd14kqAt1ZLWLzlkKqbJa/wW4Po9BlmDcEhiDXnOZUGLEc5MjlVTHHeG
- 5f/IIrSMBd5sbWyZeYNGYYocwQDlqs510jdWenYVQeaSwo/npWkbaBJzHqsA1HHXfMA54qJEo
- Fy3qpqF/gTo+h9f9ihiGSFWd72665xb/ziuTjSA74+9T8lbNwaftbYXzDY0T0F/FiPRZc4E/U
- 1e1Cty/wmHTxrkKypIio0bRqG+juKns38TdnJ+6XbAlCcU5UCylcW3FzNlgDdhHrlwgLp0Yu3
- 5wqpJVw52hY/IuIuFFBBqvI1LwEK1x7LE+t/Iat27QQRWroDbWYQX5W/Pm5abomy81oPPIsaf
- zC5bta2/QrIhKTth33TYwQlCiHH0Vade0Pqrc0orpwERJA5wYjwFGVKVrqIBOT8JKMhjzJsYp
- s2xoftt5dOf5x+b7OQV+8r2SyKyoqNKnjxMXm33D7MN6GeIZbk=
+Received: by 10.12.142.14 with HTTP; Wed, 7 Mar 2018 01:36:08 -0800 (PST)
+In-Reply-To: <1520370729-sup-3241@x1c>
+References: <1520337165-sup-4504@x1c> <CAPig+cRYsf161-Xomw7daj8XdEBxZAEQQRdOn4krRTpSAFkPOw@mail.gmail.com>
+ <1520370729-sup-3241@x1c>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Wed, 7 Mar 2018 04:36:08 -0500
+X-Google-Sender-Auth: QOxy-rAYEIvQMAcgzf4VULx95wA
+Message-ID: <CAPig+cToTv063z-HB=8Y9LkpbqQaKCVJG_nU0Qd7O9ZdJY-p6g@mail.gmail.com>
+Subject: Re: [PATCH] xdiff: improve trimming preprocessing
+To:     Jun Wu <quark@fb.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Buga,
+On Tue, Mar 6, 2018 at 6:05 PM, Jun Wu <quark@fb.com> wrote:
+> Excerpts from Eric Sunshine's message of 2018-03-06 14:23:46 -0500:
+>> On Tue, Mar 6, 2018 at 6:53 AM, Jun Wu <quark@fb.com> wrote:
+>> > +  printf "x%.0s" {1..934} >>d # pad common suffix to 1024 bytes
+>>
+>> The expression {x..y} is not portable to non-POSIX shells.
+>
+> Is there a recommended way to generate a repetitive string?
+> Maybe `seq 1000 | sed 's/.*/x/'` ?
 
-On Tue, 6 Mar 2018, Igor Djordjevic wrote:
+That seems reasonable, although you'd want to use the test suite's
+more portable test_seq rather than seq.
 
-> On 06/03/2018 19:12, Johannes Schindelin wrote:
-> > 
-> > > > And I guess being consistent is pretty important, too - if you add new
-> > > > content during merge rebase, it should always show up in the merge,
-> > > > period. 
-> > >
-> > > Yes, that should make it easy for the user to know what to expect from
-> > > rebase.
-> > 
-> > [...]
-> > 
-> > It will be slightly inconsistent. But in a defendable way, I think.
-> 
-> I like where this discussion is heading, and here`s what I thought 
-> about it :)
-> 
-> [...]
-> 
-> Here`s a twist - not letting `merge` trying to be too smart by 
-> figuring out whether passed arguments correspond to rewritten 
-> versions of the original merge parents (which would be too 
-> restrictive, too, I`m afraid), but just be explicit about it, instead!
+>> > +       /* prefix - need line count for xecfg->ptrimmed */
+>> > +       for (i = 0; ++i < smaller && *ap == *bp;) {
+>> > +               lines += (*ap == '\n');
+>> > +               ap++, bp++;
+>>
+>> Is there a good reason for not placing 'ap++, bp++' directly in the 'for'?
+>
+> "lines += (*ap == '\n');" needs the "ap" before adding. Alternatives are
+>
+>     for (i = 0; ++i < smaller && *ap == *bp; ) /* 1 */
+>         lines += (*ap++, *bp++) == '\n';
+>
+>     for (i = 0; ++i < smaller && *ap == *bp; ap++, bp++) /* 2 */
+>         lines += (*(ap - 1) == '\n');
+>
+> Maybe will pick /* 1 */ to make the code shorter.
 
-That's the missing piece, I think.
+I was thinking specifically about #2 when asking the question. The
+reason I asked is that, as one reading the code, the
+not-quite-idiomatic loop made me stop and wonder if something special
+was going on which wasn't obvious at a glance.
 
-> So, it could be something like:
-> 
-> 	merge -C deadbee 123abc:cafecafe 234bcd:bedbedbed
+And, apparently, I'm still wondering since I'm not groking what you mean by:
 
-I like where this is heading, too, but I do not think that we can do this
-on a per-MERGE_HEAD basis. The vast majority of merge commits, in
-practice, have two parents. So the `merge` command would actually only
-have one revision to merge (because HEAD is the implicit first parent). So
-that is easy.
+    "lines += (*ap == '\n');" needs the "ap" before adding
 
-But as soon as you go octopus, you can either perform an octopus merge, or
-rebase the original merge commit. You cannot really mix and match here.
-
-Unless we reimplement the octopus merge (which works quite a bit
-differently from the "rebase merge commit" strategy, even if it is
-incremental, too), which has its own challenges: if there are merge
-conflicts before merging the last MERGE_HEAD, the octopus merge will exit
-with status 2, telling you "Should not be doing an octopus.". While we
-will want to keep merge conflict markers and continue with the "rebase the
-original merge commit" strategy.
-
-And it would slam the door shut for adding support for *other* merge
-strategies to perform a more-than-two-parents merge.
-
-Also, I do not think that it makes a whole lot of sense in practice to let
-users edit what will be used for "original parent". If the user wants to
-do complicated stuff, they can already do that, via `exec`. The `merge`
-command really should be about facilitating common workflows, guiding the
-user to what is sane.
-
-Currently my favorite idea is to introduce a new flag: -R (for "rebase the
-original merge commit"). It would look like this:
-
-	merge -R -C <original-merge> <merge-head> # <oneline>
-
-This flag would of course trigger the consistency check (does the number
-of parents of the original merge commit agree with the parameter list? Was
-an original merge commit specified to begin with?), and it would not fall
-back to the recursive merge, but error out if that check failed.
-
-Side note: I wonder whether we really need to perform the additional check
-that ensures that the <merge-head> refers to the rewritten version of the
-original merge commit's parent.
-
-Second side note: if we can fast-forward, currently we prefer that, and I
-think we should keep that behavior with -R, too.
-
-If the user wants to force a new merge, they simply remove that -R flag.
-
-What do you think?
-
-Ciao,
-Dscho
+It's quite possible that I'm being dense and overlooking something
+blindingly obvious.
