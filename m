@@ -3,229 +3,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4D2391F404
-	for <e@80x24.org>; Wed,  7 Mar 2018 14:34:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7106B1F404
+	for <e@80x24.org>; Wed,  7 Mar 2018 14:36:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751284AbeCGOeM (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Mar 2018 09:34:12 -0500
-Received: from mail.javad.com ([54.86.164.124]:44427 "EHLO mail.javad.com"
+        id S1753807AbeCGOgR (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Mar 2018 09:36:17 -0500
+Received: from mout.web.de ([217.72.192.78]:34623 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751176AbeCGOeK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Mar 2018 09:34:10 -0500
-Received: from osv (unknown [89.175.180.246])
-        by mail.javad.com (Postfix) with ESMTPSA id 810923E896;
-        Wed,  7 Mar 2018 14:34:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1520433249;
-        bh=v+P3upeQkJwtmDHNqLO0LEk87UbvH1NMA2VLW6Qjxpw=; l=5455;
-        h=Received:From:To:Subject;
-        b=lrgWKAZKz5iQu8twC3X4DTa4PbNY4GZqK8+y3LuvCx+WhRqBb7OKFBi2VejXJYL1c
-         9qAUTgp6gWAxd8tvxBMuaO4f2uKzooXjuKa1IFAZjXdi92eOXzF7Wj3AJ6cWPGAub7
-         Xaqnb84NrWkkcXnCZ0LjuG68jGvAazBNKzGjkkZM=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1520433249;
-        bh=v+P3upeQkJwtmDHNqLO0LEk87UbvH1NMA2VLW6Qjxpw=; l=5455;
-        h=Received:From:To:Subject;
-        b=lrgWKAZKz5iQu8twC3X4DTa4PbNY4GZqK8+y3LuvCx+WhRqBb7OKFBi2VejXJYL1c
-         9qAUTgp6gWAxd8tvxBMuaO4f2uKzooXjuKa1IFAZjXdi92eOXzF7Wj3AJ6cWPGAub7
-         Xaqnb84NrWkkcXnCZ0LjuG68jGvAazBNKzGjkkZM=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1520433249;
-        bh=v+P3upeQkJwtmDHNqLO0LEk87UbvH1NMA2VLW6Qjxpw=; l=5455;
-        h=Received:From:To:Subject;
-        b=lrgWKAZKz5iQu8twC3X4DTa4PbNY4GZqK8+y3LuvCx+WhRqBb7OKFBi2VejXJYL1c
-         9qAUTgp6gWAxd8tvxBMuaO4f2uKzooXjuKa1IFAZjXdi92eOXzF7Wj3AJ6cWPGAub7
-         Xaqnb84NrWkkcXnCZ0LjuG68jGvAazBNKzGjkkZM=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1520433249;
-        bh=v+P3upeQkJwtmDHNqLO0LEk87UbvH1NMA2VLW6Qjxpw=; l=5455;
-        h=Received:From:To:Subject;
-        b=lrgWKAZKz5iQu8twC3X4DTa4PbNY4GZqK8+y3LuvCx+WhRqBb7OKFBi2VejXJYL1c
-         9qAUTgp6gWAxd8tvxBMuaO4f2uKzooXjuKa1IFAZjXdi92eOXzF7Wj3AJ6cWPGAub7
-         Xaqnb84NrWkkcXnCZ0LjuG68jGvAazBNKzGjkkZM=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1520433249;
-        bh=v+P3upeQkJwtmDHNqLO0LEk87UbvH1NMA2VLW6Qjxpw=; l=5455;
-        h=Received:From:To:Subject;
-        b=lrgWKAZKz5iQu8twC3X4DTa4PbNY4GZqK8+y3LuvCx+WhRqBb7OKFBi2VejXJYL1c
-         9qAUTgp6gWAxd8tvxBMuaO4f2uKzooXjuKa1IFAZjXdi92eOXzF7Wj3AJ6cWPGAub7
-         Xaqnb84NrWkkcXnCZ0LjuG68jGvAazBNKzGjkkZM=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1520433249;
-        bh=v+P3upeQkJwtmDHNqLO0LEk87UbvH1NMA2VLW6Qjxpw=; l=5455;
-        h=Received:From:To:Subject;
-        b=lrgWKAZKz5iQu8twC3X4DTa4PbNY4GZqK8+y3LuvCx+WhRqBb7OKFBi2VejXJYL1c
-         9qAUTgp6gWAxd8tvxBMuaO4f2uKzooXjuKa1IFAZjXdi92eOXzF7Wj3AJ6cWPGAub7
-         Xaqnb84NrWkkcXnCZ0LjuG68jGvAazBNKzGjkkZM=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1520433249;
-        bh=v+P3upeQkJwtmDHNqLO0LEk87UbvH1NMA2VLW6Qjxpw=; l=5455;
-        h=Received:From:To:Subject;
-        b=lrgWKAZKz5iQu8twC3X4DTa4PbNY4GZqK8+y3LuvCx+WhRqBb7OKFBi2VejXJYL1c
-         9qAUTgp6gWAxd8tvxBMuaO4f2uKzooXjuKa1IFAZjXdi92eOXzF7Wj3AJ6cWPGAub7
-         Xaqnb84NrWkkcXnCZ0LjuG68jGvAazBNKzGjkkZM=
-Authentication-Results: mail.javad.com;
-        spf=pass (sender IP is 89.175.180.246) smtp.mailfrom=osv@javad.com smtp.helo=osv
-Received-SPF: pass (mail.javad.com: connection is authenticated)
-Received: from osv by osv with local (Exim 4.84_2)
-        (envelope-from <osv@osv.gnss.ru>)
-        id 1eta8t-0001Dj-Fi; Wed, 07 Mar 2018 17:34:07 +0300
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     phillip.wood@dunelm.org.uk,
-        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
-        Git mailing list <git@vger.kernel.org>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC] Rebasing merges: a jorney to the ultimate solution (Road Clear)
-References: <87y3jtqdyg.fsf@javad.com>
-        <bbe64321-4d3a-d3fe-8bb9-58b600fabf35@gmail.com>
-        <nycvar.QRO.7.76.6.1802270051470.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <CA+P7+xq8UUcLWomUi=PS_hTKfJd3dMAxMmhioDS1bixwcmKAqw@mail.gmail.com>
-        <nycvar.QRO.7.76.6.1802271718090.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <4d7f3406-b206-cc22-87df-85700d6a03d9@gmail.com>
-        <33da31e9-9101-475d-8901-4b6b3df2f29d@gmail.com>
-        <940d959d-151d-68dd-0f13-320ebad0d75b@gmail.com>
-        <87606hoflx.fsf@javad.com>
-        <0ac3a3fd-4053-e32e-75ed-8829f22c2e1f@gmail.com>
-        <87a7vss6ax.fsf@javad.com>
-        <6c8749ca-ec5d-b4b7-f1a0-50d9ad2949a5@talktalk.net>
-        <872944c4-ca97-9f55-a424-86d1e3299a22@gmail.com>
-        <1c912980-8ce8-6281-fa99-040a5e3e1103@talktalk.net>
-        <nycvar.QRO.7.76.6.1803061829460.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <87h8pscw0r.fsf@javad.com>
-        <nycvar.QRO.7.76.6.1803070756550.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-Date:   Wed, 07 Mar 2018 17:34:07 +0300
-In-Reply-To: <nycvar.QRO.7.76.6.1803070756550.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        (Johannes Schindelin's message of "Wed, 7 Mar 2018 07:58:43 +0100
-        (STD)")
-Message-ID: <87ina8ymxs.fsf@javad.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+        id S1751211AbeCGOgQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Mar 2018 09:36:16 -0500
+Received: from [192.168.178.36] ([79.237.251.165]) by smtp.web.de (mrweb101
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0LmcnP-1eJQPR0gFv-00aIQ1; Wed, 07
+ Mar 2018 15:36:10 +0100
+Subject: Re: [PATCH] xdiff: improve trimming preprocessing
+To:     Eric Sunshine <sunshine@sunshineco.com>, Jun Wu <quark@fb.com>
+Cc:     git <git@vger.kernel.org>
+References: <1520337165-sup-4504@x1c>
+ <CAPig+cRYsf161-Xomw7daj8XdEBxZAEQQRdOn4krRTpSAFkPOw@mail.gmail.com>
+ <1520370729-sup-3241@x1c>
+ <CAPig+cToTv063z-HB=8Y9LkpbqQaKCVJG_nU0Qd7O9ZdJY-p6g@mail.gmail.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <35faf81e-b604-d5b5-be51-bfe5cb9ec4cc@web.de>
+Date:   Wed, 7 Mar 2018 15:36:06 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.6.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <CAPig+cToTv063z-HB=8Y9LkpbqQaKCVJG_nU0Qd7O9ZdJY-p6g@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:3uDS1x8bcLW39OylMekY8rj2zBG4kUIxcbFIclxToSaYPdSY2OA
+ eeq/J32SY+7SvG3EF9lRJhennFvY7XC0XVJLO1lmQNVPtKdfbWJbpug9hmlhPtO1jxbORT4
+ s0EN9Skxyyi2DVuUvQVGQkQYRaTgeKjvF+HbH59AzJ6Sad1RRf5aqn7lq7SaCmdcUzuV87N
+ +XLBFpOz0FLfkEtZYW82g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:ieBmyt368OA=:QU+nTmhtSjMKokdAjmdYZQ
+ fsQSGRIJUDRa1qT8ttuZ8sr6s+ewxuqHUWO67VCLUTl/NR5lOovAMVJQ4vq3RTZNBLdn1UPd6
+ TnSzDUtPBAGQswzU6JMRYzgCW9izZ2N/0p2qNVkOlqeKDdJNaHiz/o3PehMou/QIQsxtndl3e
+ bUnk3xT1zRqRffItCnEyIxw2OtqJ+fSg68i8j6ry7udUMHitwLsf75dTGr3ZPZs9ps8HUB11I
+ JNi1LxkQ5XgEoea3xlQO+oVSat0TqcNcgYrpBwVoOE3Ac6pTFwq+mrX9NRNsPL/X3F09/8HX4
+ mRnDLuNqENMmTA8WI7efYYiZ8POssvuaS2/yfAMusWw/Y0am/LWmQBqOr8ipoobThSsz+EMWE
+ WyipofICa+WwW+dCukzK+fcKl4AzajVc8zDi8qzi09kUx0vi6WISHc36NaE3ZtEAy6fjkU8+6
+ UFC/VyR8cT5mXBqt1AIZX6Ps4TccGjW2HTmVVPMcIof5KmqLOAoCp3YDnqRS+OMJMAVOe93+u
+ 4NlbhhcPfUl52hZS8JLDuW9feuSwe24vftccGR/Cc4W0E2UmCY5LliPKp9kmaIDA1o6eomb00
+ OQWNd4wG+ahPh10ZlHyM6RK4xpje8lO3rxf5bOGtJUtKFh+ilLP/0K7kZdGDeK7zU0qW+HN6g
+ qb0gPkjIY1mrh+yC09PpkoTxQDXyexiXMwI/yGd6IOQD7Lw752c/Xj9E1DNZLN0e75x3zX7NX
+ MMrBw0HfH0mtmHfGPeZN61p5wZGKlMhwKVTN7onPrJtQ6+akpMuXRUxWvOYz8NqGxsaTX6L2l
+ N66YtWPAbddJjzEWT5Pa8Px0F533L4kI1ze8XkPe2NMzqTc/sA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Am 07.03.2018 um 10:36 schrieb Eric Sunshine:
+> On Tue, Mar 6, 2018 at 6:05 PM, Jun Wu <quark@fb.com> wrote:
+>> Excerpts from Eric Sunshine's message of 2018-03-06 14:23:46 -0500:
+>>> On Tue, Mar 6, 2018 at 6:53 AM, Jun Wu <quark@fb.com> wrote:
+>>>> +  printf "x%.0s" {1..934} >>d # pad common suffix to 1024 bytes
+>>>
+>>> The expression {x..y} is not portable to non-POSIX shells.
+>>
+>> Is there a recommended way to generate a repetitive string?
+>> Maybe `seq 1000 | sed 's/.*/x/'` ?
+> 
+> That seems reasonable, although you'd want to use the test suite's
+> more portable test_seq rather than seq.
 
-> Hi Sergey,
->
-> On Wed, 7 Mar 2018, Sergey Organov wrote:
->
->> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->> 
->> > On Tue, 6 Mar 2018, Phillip Wood wrote:
->> >
->> >> On 03/03/18 00:29, Igor Djordjevic wrote:
->> >> > 
->> >> > On 02/03/2018 12:31, Phillip Wood wrote:
->> >> >>
->> >> >>> Thinking about it overnight, I now suspect that original proposal
->> >> >>> had a mistake in the final merge step. I think that what you did is
->> >> >>> a way to fix it, and I want to try to figure what exactly was wrong
->> >> >>> in the original proposal and to find simpler way of doing it right.
->> >> >>>
->> >> >>> The likely solution is to use original UM as a merge-base for final
->> >> >>> 3-way merge of U1' and U2', but I'm not sure yet. Sounds pretty
->> >> >>> natural though, as that's exactly UM from which both U1' and U2'
->> >> >>> have diverged due to rebasing and other history editing.
->> >> >>
->> >> >> Hi Sergey, I've been following this discussion from the sidelines,
->> >> >> though I haven't had time to study all the posts in this thread in
->> >> >> detail. I wonder if it would be helpful to think of rebasing a merge
->> >> >> as merging the changes in the parents due to the rebase back into the
->> >> >> original merge. So for a merge M with parents A B C that are rebased
->> >> >> to A' B' C' the rebased merge M' would be constructed by (ignoring
->> >> >> shell quoting issues)
->> >> >>
->> >> >> git checkout --detach M
->> >> >> git merge-recursive A -- M A'
->> >> >> tree=$(git write-tree)
->> >> >> git merge-recursive B -- $tree B'
->> >> >> tree=$(git write-tree)
->> >> >> git merge-recursive C -- $tree C'
->> >> >> tree=$(git write-tree)
->> >> >> M'=$(git log --pretty=%B -1 M | git commit-tree -pA' -pB' -pC')
->> >> >>
->> >> >> This should pull in all the changes from the parents while preserving
->> >> >> any evil conflict resolution in the original merge. It superficially
->> >> >> reminds me of incremental merging [1] but it's so long since I looked at
->> >> >> that I'm not sure if there are any significant similarities.
->> >> >>
->> >> >> [1] https://github.com/mhagger/git-imerge
->> >> > 
->> >> > Interesting, from quick test[3], this seems to produce the same 
->> >> > result as that other test I previously provided[2], where temporary 
->> >> > commits U1' and U2' are finally merged with original M as a base :)
->> >> > 
->> >> > Just that this looks like even more straight-forward approach...?
->> >> > 
->> >> > The only thing I wonder of here is how would we check if the 
->> >> > "rebased" merge M' was "clean", or should we stop for user amendment? 
->> >> > With that other approach Sergey described, we have U1'==U2' to test with.
->> >> 
->> >> I think (though I haven't rigorously proved to myself) that in the
->> >> absence of conflicts this scheme has well defined semantics (the merges
->> >> can be commuted), so the result should be predicable from the users
->> >> point of view so maybe it could just offer an option to stop.
->> >
->> > I am not so sure that the result is independent of the order of the
->> > merges. In other words, I am not necessarily certain that it is impossible
->> > to concoct A,A',B,B' commits where merging B'/B before A'/A has a
->> > different result than merging A'/A before B'/B.
->> >
->> > Remember, when constructing counter-examples to hypotheses, those
->> > counter-examples do not really *have* to make sense on their own. For
->> > example, A' could introduce *completely different* changes from A, and the
->> > same is true for B' and B.
->> >
->> > I could imagine, for example, that using a ton of consecutive empty lines,
->> > and using patches that insert something into these empty lines (and are
->> > thusly inherently ambiguous when said set of empty lines has changed),
->> > could even introduce a merge conflict in one order, but no conflict in the
->> > other.
->> >
->> > Even so, I think that merging in the order of the parents makes the most
->> > sense, and that using that strategy makes sense, too, because you really
->> > have to try hard to make it fail.
->> 
->> Alternatively, consider to adopt the original approach that has none of
->> these issues as it uses exactly the same method for rebasing merge
->> commits that you are already using for rebasing simple commits, not to
->> mention the advantage of the built-in consistency check.
->
-> Surely I misunderstand?
->
-> How can your approach -- which relies *very much* on having the original
-> parent commits -- not *require* that consistency check?
+You could also use Perl's repetition operator (x):
 
-I don't understand what you mean, sorry. Could you please point me
-to the *require* you talk about in the original proposal?
+	perl -e "print \"x\" x 934" >>d
 
-> What would your approach (that still has no satisfyingly trivial
-> explanation, in my mind)
+It is a single command (only one fork()/exec()), simple, produces no
+extra newline characters and it's already used e.g. in
+t5300-pack-object.sh.
 
-Here is one-liner: rebase sides of the merge commit and then 3-way
-merge them, using original merge commit as merge base.
-
-> do if somebody edited a `merge` command and let it merge a completely
-> unrelated commit?
-
-Don't see a problem, sorry. The method should still work, provided you have
-original merge commit and two new parents for the new merge.
-
-You rebase sides of original merge to the new parents, then 3-way merge
-the results using original merge as base.
-
-Once again, if you can rebase simple commit, the method allows to rebase
-the merge either.
-
--- Sergey
+René
