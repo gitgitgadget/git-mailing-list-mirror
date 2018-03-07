@@ -2,158 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EA0151F404
-	for <e@80x24.org>; Wed,  7 Mar 2018 13:27:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D15E31FAE3
+	for <e@80x24.org>; Wed,  7 Mar 2018 13:50:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754418AbeCGN1W (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Mar 2018 08:27:22 -0500
-Received: from mail.javad.com ([54.86.164.124]:57299 "EHLO mail.javad.com"
+        id S1751176AbeCGNuJ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Mar 2018 08:50:09 -0500
+Received: from mout.gmx.net ([212.227.17.22]:54065 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754279AbeCGN1V (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Mar 2018 08:27:21 -0500
-Received: from osv (unknown [89.175.180.246])
-        by mail.javad.com (Postfix) with ESMTPSA id 2C8F43E8AB;
-        Wed,  7 Mar 2018 13:27:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1520429240;
-        bh=4LNAZApKvdMEdY/fOtCcZ/q4toW4mYvuWsppB582jVY=; l=1892;
-        h=Received:From:To:Subject;
-        b=WyqNqdk4N1HGazUCSAQCYzcaezTA4Sh79FJOZnmQfz/sBOED8e5iJgQmBkLFCTHLo
-         4TrXNYZ1Riu4MXaH4qIeLyneqBECsyuHk9Tbyr8bOxx7s0Ny4fkp8CT9rmflb0OUN6
-         TuXgh2ITnRRywKCBDrGzAfBeM9FKk1s9WFmGYEVc=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1520429240;
-        bh=4LNAZApKvdMEdY/fOtCcZ/q4toW4mYvuWsppB582jVY=; l=1892;
-        h=Received:From:To:Subject;
-        b=WyqNqdk4N1HGazUCSAQCYzcaezTA4Sh79FJOZnmQfz/sBOED8e5iJgQmBkLFCTHLo
-         4TrXNYZ1Riu4MXaH4qIeLyneqBECsyuHk9Tbyr8bOxx7s0Ny4fkp8CT9rmflb0OUN6
-         TuXgh2ITnRRywKCBDrGzAfBeM9FKk1s9WFmGYEVc=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1520429240;
-        bh=4LNAZApKvdMEdY/fOtCcZ/q4toW4mYvuWsppB582jVY=; l=1892;
-        h=Received:From:To:Subject;
-        b=WyqNqdk4N1HGazUCSAQCYzcaezTA4Sh79FJOZnmQfz/sBOED8e5iJgQmBkLFCTHLo
-         4TrXNYZ1Riu4MXaH4qIeLyneqBECsyuHk9Tbyr8bOxx7s0Ny4fkp8CT9rmflb0OUN6
-         TuXgh2ITnRRywKCBDrGzAfBeM9FKk1s9WFmGYEVc=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1520429240;
-        bh=4LNAZApKvdMEdY/fOtCcZ/q4toW4mYvuWsppB582jVY=; l=1892;
-        h=Received:From:To:Subject;
-        b=WyqNqdk4N1HGazUCSAQCYzcaezTA4Sh79FJOZnmQfz/sBOED8e5iJgQmBkLFCTHLo
-         4TrXNYZ1Riu4MXaH4qIeLyneqBECsyuHk9Tbyr8bOxx7s0Ny4fkp8CT9rmflb0OUN6
-         TuXgh2ITnRRywKCBDrGzAfBeM9FKk1s9WFmGYEVc=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1520429240;
-        bh=4LNAZApKvdMEdY/fOtCcZ/q4toW4mYvuWsppB582jVY=; l=1892;
-        h=Received:From:To:Subject;
-        b=WyqNqdk4N1HGazUCSAQCYzcaezTA4Sh79FJOZnmQfz/sBOED8e5iJgQmBkLFCTHLo
-         4TrXNYZ1Riu4MXaH4qIeLyneqBECsyuHk9Tbyr8bOxx7s0Ny4fkp8CT9rmflb0OUN6
-         TuXgh2ITnRRywKCBDrGzAfBeM9FKk1s9WFmGYEVc=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1520429240;
-        bh=4LNAZApKvdMEdY/fOtCcZ/q4toW4mYvuWsppB582jVY=; l=1892;
-        h=Received:From:To:Subject;
-        b=WyqNqdk4N1HGazUCSAQCYzcaezTA4Sh79FJOZnmQfz/sBOED8e5iJgQmBkLFCTHLo
-         4TrXNYZ1Riu4MXaH4qIeLyneqBECsyuHk9Tbyr8bOxx7s0Ny4fkp8CT9rmflb0OUN6
-         TuXgh2ITnRRywKCBDrGzAfBeM9FKk1s9WFmGYEVc=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1520429240;
-        bh=4LNAZApKvdMEdY/fOtCcZ/q4toW4mYvuWsppB582jVY=; l=1892;
-        h=Received:From:To:Subject;
-        b=WyqNqdk4N1HGazUCSAQCYzcaezTA4Sh79FJOZnmQfz/sBOED8e5iJgQmBkLFCTHLo
-         4TrXNYZ1Riu4MXaH4qIeLyneqBECsyuHk9Tbyr8bOxx7s0Ny4fkp8CT9rmflb0OUN6
-         TuXgh2ITnRRywKCBDrGzAfBeM9FKk1s9WFmGYEVc=
-Authentication-Results: mail.javad.com;
-        spf=pass (sender IP is 89.175.180.246) smtp.mailfrom=osv@javad.com smtp.helo=osv
-Received-SPF: pass (mail.javad.com: connection is authenticated)
-Received: from osv by osv with local (Exim 4.84_2)
-        (envelope-from <osv@osv.gnss.ru>)
-        id 1etZ6E-000196-HX; Wed, 07 Mar 2018 16:27:18 +0300
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>,
-        Junio C Hamano <gitster@pobox.com>,
+        id S1751150AbeCGNuI (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Mar 2018 08:50:08 -0500
+Received: from [172.16.5.73] ([84.88.84.116]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LaGfK-1eP8Wk20eE-00m15P; Wed, 07
+ Mar 2018 14:50:00 +0100
+Date:   Wed, 7 Mar 2018 14:50:00 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+To:     Igor Djordjevic <igor.d.djordjevic@gmail.com>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Jacob Keller <jacob.keller@gmail.com>,
-        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
+        Stefan Beller <sbeller@google.com>,
+        Philip Oakley <philipoakley@iee.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
         Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [RFC v2] Rebasing merges: a jorney to the ultimate solution (Road Clear)
-References: <87y3jtqdyg.fsf@javad.com> <87r2oxe3o1.fsf@javad.com>
-        <nycvar.QRO.7.76.6.1803070742580.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-Date:   Wed, 07 Mar 2018 16:27:18 +0300
-In-Reply-To: <nycvar.QRO.7.76.6.1803070742580.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        (Johannes Schindelin's message of "Wed, 7 Mar 2018 07:46:17 +0100
-        (STD)")
-Message-ID: <87vae8yq15.fsf@javad.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+Subject: Re: [PATCH v5 00/12] rebase -i: offer to recreate merge commits
+In-Reply-To: <bc9f82fb-fd18-ee45-36a4-921a1381b32e@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1803071445510.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <cover.1518307771.git.johannes.schindelin@gmx.de> <cover.1519680483.git.johannes.schindelin@gmx.de> <bc9f82fb-fd18-ee45-36a4-921a1381b32e@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:MvuDqj1lQ5SMshhFD8RwG9bXtHpRoVvo/8bbj7vTJSuQm8mNMW1
+ epaZeXYhvFVPNhpKbytD4Cc30QcoBqbu+S4Bn3ypeIg7t52q96fuUZgqvQlEJFNDPfzTsTV
+ RSdfp02H9AK1Xv2D6P7lOpLSmkXJQATiu14D2jG885VQmpOXJFRDExJSW8K+HYrgwsAz6Mz
+ P0lNQHwC2sKuFM8YTC7jw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:PUlN/WSrTUc=:fYGl3ybOYK6j+RV5G/3zKg
+ nK4HwWxJVB1p7dkeW2n+s7mrrxwcTESAOaJRop0dFQkobuqg0qnDlnEDyCyp4lFQEnrbG1tLh
+ dDW2xXUFDvlmseO/bS/O/wQBwwg27mU4T+8AkQ5a9eXpLUsHh6vQPLk3nZgth1V/hFKLN+61N
+ YZ5MtE/fapEHj8BQghycsBUwsJc7rqerxLOMiq+HRQxcUdNmhofN/2VBI+6LN5kL5WvOY7Ae6
+ LSY1r4yVl80EGdXn9HanhHQF/uAAhCg1Sx7hyNLhdMmocgN25kKCihYK2HfSIALdyopMICW80
+ +6S+Mj2L3fJebB5JZMGeLzp2NZY6USR3Gprd0v9+KgC4efruPFMi4MWweBE4YHj04RigoJIFR
+ 6uOE619atOEtpcYf+vB/i9k3Ht1x8PUk8+71ANEZWEGOBjfjkg++G9uz+SHiQdtxL0bZ97oDV
+ YC4Ns+MmfW0WGNoD98YdABZeadgtNYLsuhCRd/W+J6s78bCwAwMhT7DPbJvDUWGs37VZwhXHq
+ 2D11U1kW28Yp6dftuFaPc7kYael6DRWeaKSfE1ETz5oMIpvZblyf/adM1iX2cBuCEcOZLy5Pw
+ 6ntxa9shtaO8I/GhYbkjGm0nY5MDKbjXaxcN+4jF1EfF+GJIuZzGIW88NquAF6LIogA+dNeWt
+ DoH4oX80vzcoo2wZjpz8725wAuxCydAbk6IfmawzKV4uEywl0uEJitC/q8i24s7O2wK0FRaSl
+ uTeheWOxSAcUmRMj3ST/G8y5HaeGeb01jBin+EmA8GFydGCzxNo4hyTzh+SlgTmM1Ma9v+u+G
+ DGa30llL2ib7zyzTL93sXwfw5UrGcbupp2wgI+wBU9ga0xzsM4=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Johannes,
+Hi Buga,
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Tue, 6 Mar 2018, Igor Djordjevic wrote:
 
-> Hi Sergey,
+> [...]
 >
-> On Tue, 6 Mar 2018, Sergey Organov wrote:
->
->> This is v2 of my "Rebasing merges" proposal.
->
-> Didn't we settle on Phillip's "perform successive three-way merges between
-> the original merge commit and the new tips with the old tips as base"
-> strategy?
+> But before elaborating, I would like to hear your opinion on whether you
+> find it worth to pursue that goal here, before `--recreate-merges` hits
+> the mainstream, or it might be just fine as a possible later
+> improvement, too (if accepted, that is).
 
-It seems you did, dunno exactly why.
+As I suggested in another sub-thread, I think the best way forward is to
+use your idea to make the 'rebase original merge commits' strategy
+explicit.
 
-The main problem with this decision is that we still don't see how and
-when to stop for user amendment using this method. OTOH, the original
-has this issue carefully discussed.
+That would not actually hold up the current --recreate-merges patch
+series, but would mean to provide an add-on patch series to add support
+for `merge -R` and then use that from the generated todo list.
 
-> It has the following advantages:
->
-> - it is *very simple* to describe
+For implementation detail reasons, it may actually make sense to integrate
+those patches into the --recreate-merges patch series, though. Should not
+be hard (except during GitMerge).
 
-The original is as simple if not simpler:
+> p.s. lol, now that I said it, and after writing all this, I might 
+> actually even like the idea of (later) having `--rebase-merges` 
+> alongside `--recreate-merges`, too, each one clearly communicating 
+> its default mode of operation - rebase merges vs. recreate merges... 
+> as one might rightfully expect ;) Eh :P
 
-"rebase sides of the merge commit and then three-way merge them back
-using original merge commit as base"
+Hehe...
 
-No problems with octopuses, and no virtual merge bases of recursive
-merges to reason about.
-
-> - it is *very easy* to reason about, once it is pointed out that rebases
->   and merges result in the same trees.
-
-The original is as easy to reason about, if not easier, especially
-as recursive merge strategy is not being used there in new ways.
-
-I honestly don't see any advantages of Phillip's method over the
-original, except personal preferences. At the same time, I have no
-objection of using it either, provided consistency check problem is
-solved there as well.
-
->
-> ... and BTW...
->
->> 3. I now use "True Merge" name instead of former "Trivial Merge", to
->>    avoid confusion with what Git documentation calls "trivial merge",
->>    thanks to Junio C Hamano <gitster@pobox.com> for pointing this out.
->
-> "True Merge" is probably also a candidate for improvement. If what you
-> refer to is a "true" merge, that means all others are "untrue"
-> merges???
-
-[d]evil merges, obviously.
-
-Seriously, it's pure history joint. Just "joint' will do.
-
--- Sergey
+Ciao,
+Dscho
