@@ -7,36 +7,36 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3F72D1F404
-	for <e@80x24.org>; Wed,  7 Mar 2018 17:31:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B83A11F404
+	for <e@80x24.org>; Wed,  7 Mar 2018 17:31:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933352AbeCGRbG (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Mar 2018 12:31:06 -0500
-Received: from mail-by2nam03on0136.outbound.protection.outlook.com ([104.47.42.136]:27224
+        id S933516AbeCGRbL (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Mar 2018 12:31:11 -0500
+Received: from mail-by2nam03on0116.outbound.protection.outlook.com ([104.47.42.116]:51485
         "EHLO NAM03-BY2-obe.outbound.protection.outlook.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1751241AbeCGRa6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Mar 2018 12:30:58 -0500
+        id S1754551AbeCGRbB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Mar 2018 12:31:01 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=autodesk.com;
  s=selector1; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
- bh=0FhNnc8vDSDGItH1ynWJkeHjAoBB3b49PCehSQPXGUw=;
- b=pnhHuidZ2WebR5b0dIDN3t7mJ6LxKrUjaoSo/hJxWMUNokP/jHk0NAhTBWIHNDnYPvl+PsDVO6ROLGrEbO2GT89oK96i71g9wz9Tx0ex+JBWyWoZ2xPCE3gR5W0QCwCBo9CXjhKELKZfOssnbgjNqvx2ql1ixF/LD0zcQ6uGIBo=
+ bh=DJhjCRjehD0LnL3cVHomSGo8ket+C0AxHmdPWvbRDKk=;
+ b=Gg2sC6lA3FM2zLp2YltTwwIl5RmzqyvEdd1f/MrmTFzCK1h8/ToO9oV8TZJI8pBGN/9k3Hbtv982SgbUY6NTmCziYt/USbdzKAGT/M4sPRwwezLfCsUY/n2/gOTqH5e21KYQOHR1au4NndD5pMmhMA0d5m6/rAS1ea2aoahynp0=
 Authentication-Results: spf=none (sender IP is )
  smtp.mailfrom=lars.schneider@autodesk.com; 
 Received: from neu8r3hm32.ads.autodesk.com (132.188.32.100) by
  MWHP136MB0014.NAMP136.PROD.OUTLOOK.COM (2603:10b6:320:1c::21) with Microsoft
  SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P256) id 15.20.548.15; Wed, 7
- Mar 2018 17:30:53 +0000
+ Mar 2018 17:30:57 +0000
 From:   lars.schneider@autodesk.com
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, tboegi@web.de, j6t@kdbg.org,
         sunshine@sunshineco.com, peff@peff.net,
         ramsay@ramsayjones.plus.com, Johannes.Schindelin@gmx.de,
         Lars Schneider <larsxschneider@gmail.com>
-Subject: [PATCH v10 2/9] strbuf: add xstrdup_toupper()
-Date:   Wed,  7 Mar 2018 18:30:19 +0100
-Message-Id: <20180307173026.30058-3-lars.schneider@autodesk.com>
+Subject: [PATCH v10 3/9] strbuf: add a case insensitive starts_with()
+Date:   Wed,  7 Mar 2018 18:30:20 +0100
+Message-Id: <20180307173026.30058-4-lars.schneider@autodesk.com>
 X-Mailer: git-send-email 2.16.2
 In-Reply-To: <20180307173026.30058-1-lars.schneider@autodesk.com>
 References: <20180307173026.30058-1-lars.schneider@autodesk.com>
@@ -48,48 +48,48 @@ X-ClientProxiedBy: CO1PR15CA0083.namprd15.prod.outlook.com
  (2603:10b6:320:1c::21)
 X-MS-PublicTrafficType: Email
 X-MS-Office365-Filtering-HT: Tenant
-X-MS-Office365-Filtering-Correlation-Id: 25d0f55f-39fb-4be9-3ab0-08d584512fbe
+X-MS-Office365-Filtering-Correlation-Id: 5bdddfa3-3499-43f1-7174-08d5845131db
 X-Microsoft-Antispam: UriScan:;BCL:0;PCL:0;RULEID:(7020095)(4652020)(48565401081)(5600026)(4604075)(4534165)(4627221)(201703031133081)(201702281549075)(2017052603328)(7153060)(7193020);SRVR:MWHP136MB0014;
-X-Microsoft-Exchange-Diagnostics: 1;MWHP136MB0014;3:EQDg3aTQp//kQ0J6evTGTQuvmYb6U1cMgdxp6LkNhi0EP2iRBlNOakeu/gePc/A9WyR9X8/yO9IgxH8yA+GxKiLSU3k0CPP/fijuCNgP50iAKS8/DYE/w1qytv7zWGCpIuIe5gpeaUF3Ys1JgxElLG+DoqwOMko0dRHG7fDRlIQFCpqODeZTw1i57NA9xHtXSs/6USTuWX9Nyw3ubpHwMEIKIz2H+NffQykLbKbaPAPAoqVpj/HrUsb+WGrzml5W;25:6wsdXrzJ64jtq3gpHTH3oMTyKHABuy/s94OXuuR8Esu94ntkrIXnzeMI+gQLhZB2Li11Uaf80wUZJC+E3auZrUz2eBVvJmS504G9bKVLz20UCp4dYGX5rhUNU5nLFvGbAuM4BkoLuEFcml9e2dgCeYStNZHP43sJkPw+yDVpO2A2KemHxu+NTo7ReVRE0uqSFK86v+XFWNKZkYfVaBKcGyHvtV/qil6wy0dXaP+o9c/AZnvtUxrYZvZGLrk4YKh/dPHhgvglk6gLp9sjttj7UpvycjCsj7Nqph42ot1+CD9axypsWh8g7PXepVJlbbSAWNokvSaWFNVQLlzO4AcQEw==;31:2uXAi8jvyfIjM84noIi+pY/9XKsL2vQWsruk62ya8jBdLL+dhTXYI8djv9MrLJq8LIGAqt4spE9U+c746S4nkPwZkZZi731gz1tajapBwWdPVme9wrtRVJq5k92H2GSmOabIUrdoGt2dVR19vLlml44ifeM+nbNpDYPAKVLqXCoMtvRqWrRavX0iJsUFUHqH6MKUgYQHWloUL+KtqAL0mLX6Ue07aBm/vfn1bCzm//Y=
+X-Microsoft-Exchange-Diagnostics: 1;MWHP136MB0014;3:UEYEH88HOcJNABV7JPj8Aj2y/BYcyw2vbxm+YV7IsEujgw4jrCUVDRSCL/+RzP6XKuoq3ovodnlzpG2Kk8XOMiLbCKTwATP1kzrzwrqlHKUZbl1gg7VFUTQebTgDyNgJ0pVxv2fdg2o2lCq4qZfN/zlUXI0krOIAPf+DhCY7G8ms6P9cqHyFkFB8/aVI2plU/4fu8Xq5gOWesJqEzaJKcnTXc7JOy04f8oDnv3++VJF4vGmmoNLtPKywuBgp9L5F;25:kSPn4NTzXYpEYn6vFUMgA9Aj9mhR/Bh1hWwLJtZCQqHfnJJuHX9hk6RRNiPotE+mNxpkpULppNyoSawmVcW5F3be2GPc8kd15FxJZHugmxyn20mI31IXySSYYFqF6eSF3bxFQ2Q4H3tL3aR86FOlgPzgxy7QbkwdnWEpKUdnxie6VW25QAs7bfgxFykDSHbupdIfaMsw6D9xg8vgtF43/z1iHmW+ssK/QV/Cb0DmwBvpZJYhQgvHsUHMzDSo2UVPVUElepaNcfLDQ5TYhBXw/JhcQdNCzt5jBYmVipRqmY5DBVNZfPJolBwTTq9U5FTmkfqQk3Mm5OBKHvjiXqgcDg==;31:wP955ijk4LL7dqZrV5NRr57+Z2bYOZ+1jpEXWQDLKgjBaX1F93QggXpithPmnLDaoK7KMCj0P1KT823dgxeKfEorUESf5V2cTzCX+UA7rtk/vOOtAZEm5CfwPECg/h/0oFmZIUwtaneaeSl7mQ9lauvDfsD+59krnAmOTHbQKREjaD+rIhYMQljqQq6iOgzz9AMU/vMzPhYUAvNcBKWXKfqncNfv7JrSN1Hw7VXLh54=
 X-MS-TrafficTypeDiagnostic: MWHP136MB0014:
-X-Microsoft-Exchange-Diagnostics: 1;MWHP136MB0014;20:MTFYruwFqlk39299zcHUkgbd5QUflsgMK6+sjGRVsLZ6EJS6DoWQRhTzNrMBBSqI/nSDY6fUAxSWg7N1ZZdiCEusksEhUX1Jq8mnBmefCaUj3hKdt8lX2tsOHmwNG01OUHVjX6aQPExgyIHQSjI6N+8c7HhFjaoGH7vs/9sWElvI6qUQ6ux1/7JTcvKnNcDVW+rWAemYd26Nx4zu0mY7Twi/DRXg1ZghqnjxWSBiRSYJ3FlGppW5MsoRJLSvvbIFbFt+bFf5GdKhp5r6DoxwASQ71gx5feYHcus6xOr8k16lBLm6M7rhA4eqXKbrK/4XpJZgP8aSfgnlJiRWRVEr9uAFiz09JBRivJLfRa5QJm7fpN/AjAuXCwIQDCs/WBJfSmXvi6zaa7z2rZVR78DrimzgWJeW5Wpq2lLJ38Vb+Cupez+j5tjEyIWGVyfAskKX2JnFyXwUy3Fy7SKBqzJm3u81adbofU9ND4QA1uBRhttgX/funPPj8I2+CgXkkfLDmMK7wDHlAZ3qbGAxqCtdlBgTVf7WSwFO9HuIUSNQld36HQyKLyh77eoDUBA93WUnPACA237VgTfbiMA9rhSvHhIbL4ez2r3N7etdvapqCfs=;4:lovv+kQRn7tqtss9rtfAb+iRRH4Lb18XwfBQeAqM4PShbRfMMQCQT4rw9ysd4wW2Ecs1zRq/Lw+LPsyM8a+8ERjOXLploLu2obMToCum3MFXKvxloeevbZzFtU2FxLRvqwj7SWcaQC/aFVpsza/eIpuyOHGyREOkpTMQs1R7xcTaaK/Tg4G8w4gF0TnPSTcyXdy+Ho/nXhphLfWhV/jEbFTCB4f2GX7T70mSCokLKayMJZX1JpIBCrY7fbMxPB3bckhDg576+FbbFcX+/RNV4IvQ67LZ4nUHr32P1HiG7h8AYssz7U4KcQXdJWqm41ej
-X-Microsoft-Antispam-PRVS: <MWHP136MB00140329FDB63DD81D2F2193E8D80@MWHP136MB0014.NAMP136.PROD.OUTLOOK.COM>
+X-Microsoft-Exchange-Diagnostics: 1;MWHP136MB0014;20:dhgED4WazpMB+AmQ5lurWdp9YZUZh+jVEQJlT9qELuEF1ioQ1KYHLBoE40IcR0O9MLvAJFriQptRxW9HawY0SiROFl7WkxJFUsptKdAmVmuIi/+HvoftuBegZ+217IwtmOCn0c+faJhDgDGmCeSaGYyu2D+lr7bZ6QaJSa6lGGuxW/gI4Ri9sTVs8b+eJ8t5Tpm8HsdB/mc6860WVK1DucYrcl8DRP2nLHoVJyKhCJFYZ+oxde52NNj0jlWeC+QeaB3Bawb6PwTntJ/KMDSRtef7HQwLrM5b72GsU3RYvQoOROsubh2uKmYlGUUzh9JcA0RgG8nvGYBPPM9mtRYSBSfjScupjvYjRtywl1tQbto7vv8PRC7dYwUxBv4JtlFxZwhD9khvZOey7zRmYT5Nx6bKNIJB7OX9Yb39c4q3SAA42sEpiTXAsdBQJ3nIA7CrAGtwiZXrPvesCWYCTyK9hgOZDnG7U937YCBY2DkboMH+/oZoXTtiGFvc/y74sRgYfFCsDr+dOYes4vLjuXQMbdCcbzlY3WaN7L9rirkwGCL2QwerKNYleuZIX+5Cu2Fl0cFftK9Qz+gV50fOc5bc8k5waw29GPr9uoT1HOApiDU=;4:QvZyyPg3l3rL2XttFJyOLxs6V2Z38EIot1TjFbZhnZy2ST8Cd4D9H6SOggA30dPLWIgGBEAGrkVPFMp8qJagKHwfbmcWChBExynsMVhyuWE49P7aK47ru1XulHjTeBL7zovbjX/HWoB63FDqGvalRYHm6j5t6ZsTBeugpKsstaqTmtvjlfvMH8ONm/seQKHAhLE5WUJrFJ4AR9ur+c7oqjlm1ED1GztgRuF8HMhijyfap1X4sIeL8vWxOKnkpt/VPkkI7T0JFSdFX9GSfR0O4taZumOFqimG+9fDtaxFGiLAjf2FB5onCCmvLa/dXVHh
+X-Microsoft-Antispam-PRVS: <MWHP136MB001498BEDC7E29BD7E4B632DE8D80@MWHP136MB0014.NAMP136.PROD.OUTLOOK.COM>
 X-Exchange-Antispam-Report-Test: UriScan:(85827821059158);
 X-Exchange-Antispam-Report-CFA-Test: BCL:0;PCL:0;RULEID:(8211001083)(6040501)(2401047)(5005006)(8121501046)(93006095)(93001095)(10201501046)(3231220)(944501244)(52105095)(3002001)(6055026)(6041288)(20161123564045)(20161123562045)(20161123560045)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(20161123558120)(6072148)(201708071742011);SRVR:MWHP136MB0014;BCL:0;PCL:0;RULEID:;SRVR:MWHP136MB0014;
 X-Forefront-PRVS: 0604AFA86B
 X-Forefront-Antispam-Report: SFV:NSPM;SFS:(10019020)(39860400002)(396003)(39380400002)(346002)(366004)(376002)(199004)(189003)(68736007)(36756003)(53936002)(9686003)(16586007)(16526019)(186003)(6486002)(4326008)(26005)(316002)(8666007)(386003)(8656006)(39060400002)(76176011)(52116002)(7696005)(51416003)(97736004)(25786009)(50466002)(2361001)(2351001)(105586002)(85782001)(50226002)(575784001)(86362001)(478600001)(6666003)(2950100002)(6916009)(2906002)(8676002)(7736002)(48376002)(106356001)(5660300001)(305945005)(81156014)(8936002)(81166006)(66066001)(47776003)(3846002)(6116002)(1076002)(85772001);DIR:OUT;SFP:1102;SCL:1;SRVR:MWHP136MB0014;H:neu8r3hm32.ads.autodesk.com;FPR:;SPF:None;PTR:InfoNoRecords;A:1;MX:1;LANG:en;
 Received-SPF: None (protection.outlook.com: autodesk.com does not designate
  permitted sender hosts)
-X-Microsoft-Exchange-Diagnostics: =?us-ascii?Q?1;MWHP136MB0014;23:rk3mpEH6WmMsK3uRl32zOSI5NX2ii86g9r50rRDTv?=
- =?us-ascii?Q?P88U4lLzWKB4XX8SjGVCr89lsbeNvqqe5RwY4wLnn4adrJnX8NCXi2jxbHg+?=
- =?us-ascii?Q?RfEEpKoYi2L6TWgmjAuuduOvBuzxPVnKSo18CqNF4vOQsHLx6SIXKk8QEvQ8?=
- =?us-ascii?Q?dW8AtvlT39Tk3spVdsfGjS5TD29GxaxL64O3PNulhixYd9hwLj3mSChlOg2g?=
- =?us-ascii?Q?UaB2xWJCenBu9+gtcYU+/vbll6GWpkhGLpNAigus3p5Nl9OpddlqNQTtos8I?=
- =?us-ascii?Q?/KifX0h3fYi4DmwF0lXmHJDrTRkK4NQfubOhFQ1o3E6yizneztgw2CjVgvMs?=
- =?us-ascii?Q?xAR4qnNtzK758h4qvfL98DbwJdHmzT5wur6UgH9jQRjTz9R9334MYEM1TxwA?=
- =?us-ascii?Q?MnE3zcnvG0T/zygu3jDf5DAqI0dQWM32+ogEqlykej80vwFgAumJI7NeWg6B?=
- =?us-ascii?Q?oPEmrMFbSZGWIBwYhkSStYrRaiH1q8stbeLL6JS7K0i7PG6t9MFVs3CN5fAW?=
- =?us-ascii?Q?gcrmF43VKC5odp/hBpw/sI/k+3xFbuvtlC5HPTBIgf41Vp3vPMZyqpZaZAF0?=
- =?us-ascii?Q?5UAXsvcns3mY7BvtXsrNdbXuopoSkmnzcWYy/FJGAiT+tH5c0WlIcLK665gV?=
- =?us-ascii?Q?S8HOLAEu7NAUE+PIxhsjUF4CeppXA6dp6R7nuaxLL+fVp5xpfOg8GTCI4wEZ?=
- =?us-ascii?Q?6V96wzF4/bvALhNc3J0i55vCt+nWtOx0SDY+h4c36GoDqcp1baHfuvwJnrey?=
- =?us-ascii?Q?AMa/V4Xs4ZC/747HAR5yl9sKPJ/KfmgbyNzQv/s6q4P4aKZgHKYJqJB5e/tY?=
- =?us-ascii?Q?vmBcuB+3eQH6XzR0/Yx9dRKrydAh8eEB3KpFZmH5Ygauzf+oNB2HfN9EsZzq?=
- =?us-ascii?Q?vfaFHiehYz/peTUqA3JGxNbfD2HX0IsFZ7lnrqTwDqumsqUdowhQ286R0V2z?=
- =?us-ascii?Q?Ov3gEA9Mn5z59/g7xFxX4dh5LRsWCow8LbfK9a9ImWarVAIjpOUDfsHILpgB?=
- =?us-ascii?Q?8yxhNNy+4MRSmzZPOz3TjK0Wrvxn3NQ5afQx+5QaBnzmlVbUCtIwK9mVhqjm?=
- =?us-ascii?Q?H98IweZD6O6byXqCqX5pZR/ocO/1cImHzhMUl2/j6W9EnJwXcU/iNg9drdNM?=
- =?us-ascii?Q?xcUQkFbfV+lsixY1k3bNmNJLwtjpNugSyjubD9NiF/5UKJcPlhUJ9EdJ+YDV?=
- =?us-ascii?Q?jSTm7jjGrnKzN5xGuCQ54B8RTCxVLvZbES1kzJF366RADT/TqvlXZ+nNC7Gb?=
- =?us-ascii?Q?a+5Ml+vEZk27Xa6sxCv8+77gEYfUee9pDByEWBwlGBZr2mo4Tc7NdSxUOqIJ?=
- =?us-ascii?B?Zz09?=
-X-Microsoft-Antispam-Message-Info: psmpC/sKC08cjA5ifrr5dBFbFrnlHmlhUdB1EqehupwUaQSyXTRPLiXyE5iL3hnIQCD+2YNmyGKKzqrQi5D632EL5NciEstIp+sRwfXzDVNp4jP2F0NPkNydiFRqAs4a2lVF4gDN5lF2clqkD+44RZocAO39ZjNpHs32saF8XhWecNl8nPCsuW+xgiA4YWIg
-X-Microsoft-Exchange-Diagnostics: 1;MWHP136MB0014;6:5DNGwsooo3XgywpNbNoWyPLPN884PdN4kw2DWfIH9seezQVjiaRKYO2E2/Cd5BjtMWXPreO5+CI4LZanHsaXBf+yxXJGeyOTuLkUCt5T1TfB41cnFvcQDuWqjr0mYqyfXaiKplO0oeBHN2ln/a8sZoNd9EJ+qdWs2whMANxmKrNpdC6zQRmcuAkITXrh7zKpbR+jO+BKefqL5cHFzAvl5JaiLZ1O0jPKTMZ9Du4n6qjV0zEDUGs7sqO9nLd0HgIOdJ3FItzN16Ka66iE2sPCMHVxj9Hbi9eCuWDqoUWMnd2imjq9aDjSyYLfiek49PFpe4AIDKp5FgYSf+sjoztUgq2MpBXQG0JzdancX2Yvufo=;5:c7mSLumKV8Taa7C2pPqYHCUcnJ+lgxvwohQRodYDmc98bB+OgaydNlvVvKDpleRA3otBTWZ2KBFAMDlmEuaEFMMhU4nxUBp48syC3zFdrPhrwL/8JwtwaY+OpfuPnOo6khc0Dpv+zVJi7Cfv7aj7+4sIQ5H9CiTaqnOAkLm2pqo=;24:26Uilgd/jDXpRmZrBxKpxPDbNYKtro/13tkb4kcmG821hXdeww48V6bLMDAhyzz1tAzyhjtEDB8fAsv2hctsZyExnz1x4r1ZKWOKSLU0GTo=;7:zcYIKPLbbyjhvFjmGzfScvY63zgg/bE/uy2vAyIeB8c2zv6hypvWW3ylVqrNV9jgQLCaiHwKDvgP81wz+/NSGH2gn1H9DnYSmpc80xz8Q5l2+C3KB+yndUn4434BgvDtqruuGqJD3pfbUm+TrxSRi09zeA2KnZakCRVD+oFF0MoVxPpyA9pnskHSue/hE4U2ZJQCer7e1Xkd4yy2grES2vflWEQ8+0JJAQad772QSrZ1sZVdB8QND6NLjzLRfYLe
+X-Microsoft-Exchange-Diagnostics: =?us-ascii?Q?1;MWHP136MB0014;23:k869o+9uwSudLrKmJSI54l4L/EbqmTBDXZzGAMwxq?=
+ =?us-ascii?Q?b/FvNa8oq3/oslP53u29DNHAeOEqBonDA70zLkcY1Pt2bB2o8WTT6m4a6g4b?=
+ =?us-ascii?Q?mCNfUQYODCByG6yK/lk4UF3CpaGYrh7uvg5ZVDw+V6dQ1x8PtxpMF9BsSqIN?=
+ =?us-ascii?Q?JdQb2nGaSOW5nHtnfOanfM3ohxiK1NVTROSXNWZ3HTyLd9lW+B0CPEwdYrmR?=
+ =?us-ascii?Q?kxfw+pRSIa+E1ZyVlA5iUsxHnNxpnaItHrEr/YMgCCLm91ACSaJ49nz0H2My?=
+ =?us-ascii?Q?oAqAJ4BJJvaHa+HqoM4j83LCK1Gae1zQ9ksqMMikEl2LI3G0YpO9bSMefqJH?=
+ =?us-ascii?Q?KHN/9j6GDnYOZ4uotiBjIiL+3jQM1stPe4tWoHA0+hGAzxEy05sRO766eiqc?=
+ =?us-ascii?Q?AOmHRL+CDAH4GrOVRYCG+g+gAU8YhOpAIoguUriet3VopReXGVaDgzUzLnsn?=
+ =?us-ascii?Q?F/GzbuYR7HHjvx5DAVRBaupW8/AgIokMelTvN+OirIT+0ZHKbR8ZHJBq5dmC?=
+ =?us-ascii?Q?pGtaP1Nuuv3TdotsETeHfokYTYECLm7BXeFIJSwBg3TEJ8XJ1mrja+TNALB4?=
+ =?us-ascii?Q?cblDqwPAraH10FCZe6QZ8fRVp2INP+X3RhRBAUgLFd08/xENh8+mI0RsfIVS?=
+ =?us-ascii?Q?M4k6B7U3IGxpe/1jmkKgDrtZxHWlnSjPHMQ2gYr8XCRmZBdMA3Qvnr+sOqgO?=
+ =?us-ascii?Q?tgQC2dLNDGQ2tvPpICtUbAhG/meITFKoIzSRKIoI7utJXpxWSVfjnV3CwCq1?=
+ =?us-ascii?Q?mTjvjLaJ05Yg4zkMq3CPG1D4uLDag6ApZJePnYY0F1DYYcJsPqNnPfd8GeVk?=
+ =?us-ascii?Q?VXVKUEzsjEDQE9dYffX5MFj58BP22lo2r6sKTTWRzUyZ1y1XCKF2UrKKt8se?=
+ =?us-ascii?Q?biawiFYAwImzDR9Vt+3UQDdnZ+YjC+eQzEXVhRk0AcHRtYd4OhWRKBT/ssTr?=
+ =?us-ascii?Q?2Qj1HCbx4NPDF1gV/smh5wWmDqP0/mp31EYIZO5s7qJ85FjxEoloS1NMGr7C?=
+ =?us-ascii?Q?HzlloTdsrZSeQNMWmJTMXJ0LbuNDhuF9WIXcUiUAjns+NE2snpS/WDQ9PwkO?=
+ =?us-ascii?Q?HQIHKEHbeqkoD5TFIb4h3I42FqKM7d4g3nd9BVqtVgOhUn7kBrIr80hmQgAP?=
+ =?us-ascii?Q?Q8MD2KdPn3K7IVIGJOOlmyYhfubbpJ7rMVkuo7TcekdT/kiXcUiYYoz8gIog?=
+ =?us-ascii?Q?uL0s90+Am4OvCLnVHAQExlsXZ9if5ZPPOsFQNbeZPmB1nezDasxnH1qCyvFK?=
+ =?us-ascii?Q?hKa1kL6qB4Kq/aZu98dWVOVOdkYl90QHppb+mYdVQwUul4iszCy/lQ4RJiSY?=
+ =?us-ascii?B?QT09?=
+X-Microsoft-Antispam-Message-Info: 5OebI1BGRx/DVHNuIFcr8GGBaPN2VLWC3CxkLVHQ9DgtdH/1p1mYzYf5f9We3z0Vpy9uWiCqGdm5nasx1iOH7mOe3ofu2irr/dTSqO8ENcBoDOhLPG0cT+NtViAYsiW6COqCg8ODZMzbO2FXT2QmpbmZPgNhEawtTiWJAymUG19xGfzfA4bxuHtj7jhxKtUm
+X-Microsoft-Exchange-Diagnostics: 1;MWHP136MB0014;6:yZnrftBjMXOO2ayoLH2R8my05tM6fogTKm2qb52ircvC1dxateuSyvPz296ZvGDGmku/70pTvaA5hU4BadNFuUmd6j1RK6czcNXzvyl91ne4++/S0PYW3MsBj4NsnDVxc4ucLERAqr7FCb7o3A4DQTHnFnoTFs77uYNkL40KErJqdNbNDOEf2XrdY5acAieY97vEqa2k4DQ7sRgekCCenqN+q+TlZ4vizvH8CmGU/45B1R3iwNtYbWgT4lDSq+L6s2sWcZf0dkfGdfKD4AxOd+33FdIUxeXFo94tiql78ME342XF4/W10p7H7HMeqtdDjrlrFN3mkjAZ0N5SoEkkfhAfgYpu/ICx+TvcI6HyYd0=;5:KwQUMUwD42CfkkdoTrLbmZ58Nnu0tgkuz05Q46bEpX6yqSCtBrE6BbkETS2/jU+nOkv4PCx2CwH4dgSyQclB4R0GnwAbfgdRH2Rder4r3W++JD0bG7Voepwc1um5DTA8CJeWUAoLXbY/DTy8y1LfBu6SSBPm1Che86WMVvbGyxw=;24:n4zHgidQ15H5NgRG43fRk+c0d11LkYmYaslqqkYH1pOb/rbjA6UOgW14D4+4Rg+sx2xJ7CfmqVrAlTAfq8xcBqbXEVi3PXgua9DKah48hJg=;7:v9/uF3EiUj1i376tH4sAHIZDbUjdA3S3AUfOBcUuNW/4h2tAzMBGZJ2lNk7sj3ZB6WRyWu9CdtjwE8Z+ePYXPyQ+X5seqUvKi5EUCNHAjABz1m20WyobggKCX4e18SsvOcm/Re3mneoBAaFZg8cTRdF1XIxMzNHACmZJgNm4KVfaPbc2SS5ABrKWM/jmJ1w6SS3cLskbWBT/bEsVrh86KRFYw3l2R4PUGTSiefcuN2kTqGD+8b3M1PlYBVHNs1B+
 SpamDiagnosticOutput: 1:99
 SpamDiagnosticMetadata: NSPM
 X-OriginatorOrg: autodesk.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Mar 2018 17:30:53.6631 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 25d0f55f-39fb-4be9-3ab0-08d584512fbe
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Mar 2018 17:30:57.8662 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5bdddfa3-3499-43f1-7174-08d5845131db
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 67bff79e-7f91-4433-a8e5-c9252d2ddc1d
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: MWHP136MB0014
@@ -100,52 +100,49 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Lars Schneider <larsxschneider@gmail.com>
 
-Create a copy of an existing string and make all characters upper case.
-Similar xstrdup_tolower().
+Check in a case insensitive manner if one string is a prefix of another
+string.
 
 This function is used in a subsequent commit.
 
 Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
 ---
- strbuf.c | 12 ++++++++++++
- strbuf.h |  1 +
- 2 files changed, 13 insertions(+)
+ git-compat-util.h | 1 +
+ strbuf.c          | 9 +++++++++
+ 2 files changed, 10 insertions(+)
 
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 68b2ad531e..f648da0c11 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -455,6 +455,7 @@ extern void (*get_warn_routine(void))(const char *warn, va_list params);
+ extern void set_die_is_recursing_routine(int (*routine)(void));
+ 
+ extern int starts_with(const char *str, const char *prefix);
++extern int startscase_with(const char *str, const char *prefix);
+ 
+ /*
+  * If the string "str" begins with the string found in "prefix", return 1.
 diff --git a/strbuf.c b/strbuf.c
-index 55b7daeb35..b635f0bdc4 100644
+index b635f0bdc4..5779a2d591 100644
 --- a/strbuf.c
 +++ b/strbuf.c
-@@ -784,6 +784,18 @@ char *xstrdup_tolower(const char *string)
- 	return result;
+@@ -11,6 +11,15 @@ int starts_with(const char *str, const char *prefix)
+ 			return 0;
  }
  
-+char *xstrdup_toupper(const char *string)
++int startscase_with(const char *str, const char *prefix)
 +{
-+	char *result;
-+	size_t len, i;
-+
-+	len = strlen(string);
-+	result = xmallocz(len);
-+	for (i = 0; i < len; i++)
-+		result[i] = toupper(string[i]);
-+	return result;
++	for (; ; str++, prefix++)
++		if (!*prefix)
++			return 1;
++		else if (tolower(*str) != tolower(*prefix))
++			return 0;
 +}
 +
- char *xstrvfmt(const char *fmt, va_list ap)
+ int skip_to_optional_arg_default(const char *str, const char *prefix,
+ 				 const char **arg, const char *def)
  {
- 	struct strbuf buf = STRBUF_INIT;
-diff --git a/strbuf.h b/strbuf.h
-index 14c8c10d66..df7ced53ed 100644
---- a/strbuf.h
-+++ b/strbuf.h
-@@ -607,6 +607,7 @@ __attribute__((format (printf,2,3)))
- extern int fprintf_ln(FILE *fp, const char *fmt, ...);
- 
- char *xstrdup_tolower(const char *);
-+char *xstrdup_toupper(const char *);
- 
- /**
-  * Create a newly allocated string using printf format. You can do this easily
 -- 
 2.16.2
 
