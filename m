@@ -7,61 +7,61 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4BF0B1F404
-	for <e@80x24.org>; Wed,  7 Mar 2018 19:49:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6BA8F1F404
+	for <e@80x24.org>; Wed,  7 Mar 2018 19:59:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965858AbeCGTtc (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Mar 2018 14:49:32 -0500
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:50478 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965718AbeCGTt3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Mar 2018 14:49:29 -0500
-Received: by mail-wm0-f67.google.com with SMTP id w128so7111356wmw.0
-        for <git@vger.kernel.org>; Wed, 07 Mar 2018 11:49:29 -0800 (PST)
+        id S965758AbeCGT7t (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Mar 2018 14:59:49 -0500
+Received: from mail-wr0-f182.google.com ([209.85.128.182]:34872 "EHLO
+        mail-wr0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965521AbeCGT7s (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Mar 2018 14:59:48 -0500
+Received: by mail-wr0-f182.google.com with SMTP id l43so3424315wrc.2
+        for <git@vger.kernel.org>; Wed, 07 Mar 2018 11:59:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=gsgPVy4E+ef3umE3P+Pun0TEuiz+NekKzBtwc8LlNv4=;
-        b=FGzl/uizoAyQlxmrDpFM9L6Ns99YqyYmbgpW2LMqigSOKwzraH2CgjeZVrA2HBhlhd
-         mprq+NvN6r+mN3hrea6CKNnx7+b04SF0hKKWOhrnm0rUJOieGcNsJIALPo0m3ysf4zXV
-         /i3a3Wp9o1zqAXmW1MjRmoee2z18AOLCXyex2jB9MghcU4ENcDFgAVio1Sfkm50WvXdt
-         iNkiHruuVH+w9afsrLhcHQlB5cK0FDZdep0UoHmoWt9sdbO7ZX+oPCiqUZWNDv1z0Hty
-         1UDB/jLRjMQ0EO4I8l9Ogzk6Zekd+wEeUX3zYttbd/givZ/LcEGfPlqSyrT0WeJpnmO8
-         LOVA==
+        bh=8GTvaz7/jKbDaR02+20Z2q4JYckMjG9gxGa0r7xMJK0=;
+        b=I+6Uk5RHXJY3tnkgQmgnAUTLJh42JndFQNs/24VbTHz7LP+xqJ6m9ZbZ6DuMV1Y0V+
+         QvEOFN2TXr3xN+6lqUHHAr52gYuhe4qT7iuQpJvybha/nE3MNdKE1u5+R6NuULgG0cE8
+         aD2ccoefGIYmjidOyDKitfi6dqjFu5z+uHRhd1pCeX4XVIkEta5pRP5Io5aE/V9hx+7n
+         YxqzRfOXUGwYQe4AwFbuZq+HDVm9cJLToCUH5riVuE18MyB2BUsOYikNyuTbZaxkwivy
+         rXSTAmPseVpTUWVq6scAMoX0BBjK30XoeC9kYa3OPSmWE3bd9MuMrbiMTvywKQE1fHIw
+         Avzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=gsgPVy4E+ef3umE3P+Pun0TEuiz+NekKzBtwc8LlNv4=;
-        b=YteG5xchH/kjQiYyGsOouEtEIPSeljrqPvnLuakGKArnVzafsot3XiYJ8/dcfO45UZ
-         WO5UnVWQBcpWuX72tiVk/bvvSPCew2ix18R+p2FuoR0b+I3kVGo3otxY1v9ZjVm9EL8/
-         YcNnnrH5Dzt0XESTfRsLxPNrcJMgtwMoHny2bHum4eHTVS4Ujq6GBzK1grv6RayZhikS
-         1dnJvjG4y0v+dlo5XQ5E903s/menRyXVo5UwJL8dIKopUHSOeuO5h6dQfwQ45hk57l4h
-         IEHLNRFh3FYMDUtBcrvAh8FMjvDtYPL/X72NwLwC+slwOu8TbcCgWH0pw5AOzI0Hlgra
-         gqsw==
-X-Gm-Message-State: AElRT7EKdtA8b8w4n2C6aAKNJOKp3S7ivxqmTMGGRPboTZAZsIpLjJGW
-        mNlU/v6JLKOwLeURaBFIECA=
-X-Google-Smtp-Source: AG47ELtWepnkMgzI/cGr3vNFU5johK0w1lMgLHAMS51xSlfx0bW0zn7S1KbWeM5rRsADukraOxgJ7Q==
-X-Received: by 10.28.164.196 with SMTP id n187mr14081665wme.141.1520452168227;
-        Wed, 07 Mar 2018 11:49:28 -0800 (PST)
+        bh=8GTvaz7/jKbDaR02+20Z2q4JYckMjG9gxGa0r7xMJK0=;
+        b=YBsmPPM4UKsNG3uFp/gF61UREVCerChjzE6f/WnyUWUC7K2VtDajUvCOtOwKjVTsv9
+         yNbSrAMHP09I7VmqgCHD+GKkFrZgDVb8brGNC53HuvCC/TUyNprlED87+geLGdCld3PA
+         0nszkc/HTcBCdGtK8it1TUJI65JApfb2YWCjHgGYK7oxZrJPWfhrJSxhBKWrQHIrA3ke
+         mnGcz2zba3agr3sfVtwhj+kLo5pSL3XZHQPdJFJKuHROcBUHxbLCP74kHaGtbPdBd8wX
+         6raDMXr9lDJc9HHXOG9i7fMXpLFYFNUt+1XyWt/Joh97SNpg2QafHIniyGasY5fIDw09
+         lzLQ==
+X-Gm-Message-State: APf1xPBCsay3zCkd2e7TCIq/qRtvnjKyNnz14fTvmQDtuMNFi3EK472z
+        2ZEhJ/2p6afefPnwgu+mkcQ=
+X-Google-Smtp-Source: AG47ELtBmstYoSZExYIRGBgLIel4+qLtDbvh4WmBFsZViVSGwu27G7scq3eZ0YdrADAJ60UTHcglPA==
+X-Received: by 10.223.132.103 with SMTP id 94mr19480489wrf.275.1520452786633;
+        Wed, 07 Mar 2018 11:59:46 -0800 (PST)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id b45sm20601008wrb.79.2018.03.07.11.49.27
+        by smtp.gmail.com with ESMTPSA id k11sm23111764wre.81.2018.03.07.11.59.45
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 07 Mar 2018 11:49:27 -0800 (PST)
+        Wed, 07 Mar 2018 11:59:45 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     lars.schneider@autodesk.com
 Cc:     git@vger.kernel.org, tboegi@web.de, j6t@kdbg.org,
         sunshine@sunshineco.com, peff@peff.net,
         ramsay@ramsayjones.plus.com, Johannes.Schindelin@gmx.de,
         Lars Schneider <larsxschneider@gmail.com>
-Subject: Re: [PATCH v10 7/9] convert: check for detectable errors in UTF encodings
+Subject: Re: [PATCH v10 9/9] convert: add round trip check based on 'core.checkRoundtripEncoding'
 References: <20180307173026.30058-1-lars.schneider@autodesk.com>
-        <20180307173026.30058-8-lars.schneider@autodesk.com>
-Date:   Wed, 07 Mar 2018 11:49:27 -0800
-In-Reply-To: <20180307173026.30058-8-lars.schneider@autodesk.com> (lars
-        schneider's message of "Wed, 7 Mar 2018 18:30:24 +0100")
-Message-ID: <xmqqr2ovzmwo.fsf@gitster-ct.c.googlers.com>
+        <20180307173026.30058-10-lars.schneider@autodesk.com>
+Date:   Wed, 07 Mar 2018 11:59:45 -0800
+In-Reply-To: <20180307173026.30058-10-lars.schneider@autodesk.com> (lars
+        schneider's message of "Wed, 7 Mar 2018 18:30:26 +0100")
+Message-ID: <xmqqmuzjzmfi.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -72,49 +72,42 @@ X-Mailing-List: git@vger.kernel.org
 
 lars.schneider@autodesk.com writes:
 
-> +static int validate_encoding(const char *path, const char *enc,
-> +		      const char *data, size_t len, int die_on_error)
+> +static int check_roundtrip(const char* enc_name)
+
+The asterisk sticks to the variable, not type.
+
 > +{
-> +	/* We only check for UTF here as UTF?? can be an alias for UTF-?? */
-> +	if (startscase_with(enc, "UTF")) {
-> +		/*
-> +		 * Check for detectable errors in UTF encodings
-> +		 */
-> +		if (has_prohibited_utf_bom(enc, data, len)) {
-> +			const char *error_msg = _(
-> +				"BOM is prohibited in '%s' if encoded as %s");
+> +	/*
+> +	 * check_roundtrip_encoding contains a string of space and/or
+> +	 * comma separated encodings (eg. "UTF-16, ASCII, CP1125").
+> +	 * Search for the given encoding in that string.
+> +	 */
+> +	const char *found = strcasestr(check_roundtrip_encoding, enc_name);
+> +	const char *next;
+> +	int len;
+> +	if (!found)
+> +		return 0;
+> +	next = found + strlen(enc_name);
+> +	len = strlen(check_roundtrip_encoding);
+> +	return (found && (
 > +			/*
-> +			 * This advice is shown for UTF-??BE and UTF-??LE encodings.
-> +			 * We cut off the last two characters of the encoding name
-> +			 # to generate the encoding name suitable for BOMs.
+> +			 * check that the found encoding is at the
+> +			 * beginning of check_roundtrip_encoding or
+> +			 * that it is prefixed with a space or comma
 > +			 */
+> +			found == check_roundtrip_encoding || (
+> +				found > check_roundtrip_encoding &&
+> +				(*(found-1) == ' ' || *(found-1) == ',')
+> +			)
 
-Yuck.  The code pretends to abstract away the details in a helper
-has_prohibited_x() yet the caller still knows quite a lot.
+The second line is unneeded, as we know a non-NULL found either
+points at check_roundtrip_encoding or somewhere to the right, and
+the first test already checked the "points exactly at" case.
 
-> +			const char *advise_msg = _(
-> +				"The file '%s' contains a byte order "
-> +				"mark (BOM). Please use %s as "
-> +				"working-tree-encoding.");
-> +			char *upper_enc = xstrdup_toupper(enc);
-> +			upper_enc[strlen(upper_enc)-2] = '\0';
-> +			advise(advise_msg, path, upper_enc);
-> +			free(upper_enc);
-
-I think this up-casing is more problematic than without, not from
-the point of view of the internal code, but from the point of view
-of the end user experience.  When the user writes utf16le or
-utf-16le and the data does not trigger the BOM check, we are likely
-to successfully convert it.  I do not see the merit of suggesting
-UTF16 or UTF-16 in such a case, over telling them to just drop the
-byte-order suffix from the encoding names (i.e. utf16 or utf-16).
-
-If you are trying to force/nudge people in the direction of
-canonical way of spelling things (which may not be a bad idea), then
-"utf16le" as the original input would want to result in "UTF-16"
-with dash in the advise, no?
-
-On the other hand, if we are not enforcing such a policy decision
-but merely explaining a way to work around this check, then it may
-be better to give a variant with the smaller difference from the
-original (i.e. without up-casing).
+This is defined to be a comma separated list, so it is unnecessary
+to accept <cre,en> == <"FOO, SHIFT-JIS, BAR", "SHIFT-JIS">; if you
+allow SP, perhaps "isspace(found[-1]) || found[-1] == ','" to also
+allow HT may also be appropriate.  I think "comma or whitespace
+separated list" is fine; in any case, the comment near the beginning
+of this function does not match new text in Documentation/config.txt
+added by this patch.
