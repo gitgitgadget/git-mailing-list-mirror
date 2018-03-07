@@ -2,83 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 58E661F404
-	for <e@80x24.org>; Wed,  7 Mar 2018 22:57:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 488A91F404
+	for <e@80x24.org>; Wed,  7 Mar 2018 22:59:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934286AbeCGW5n (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Mar 2018 17:57:43 -0500
-Received: from mail-wr0-f171.google.com ([209.85.128.171]:42328 "EHLO
-        mail-wr0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934135AbeCGW5m (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Mar 2018 17:57:42 -0500
-Received: by mail-wr0-f171.google.com with SMTP id k9so3807709wre.9
-        for <git@vger.kernel.org>; Wed, 07 Mar 2018 14:57:41 -0800 (PST)
+        id S933858AbeCGW7C (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Mar 2018 17:59:02 -0500
+Received: from mail-wm0-f45.google.com ([74.125.82.45]:39553 "EHLO
+        mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754500AbeCGW7B (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Mar 2018 17:59:01 -0500
+Received: by mail-wm0-f45.google.com with SMTP id i3so7665041wmi.4
+        for <git@vger.kernel.org>; Wed, 07 Mar 2018 14:59:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=46yftvOjvhM8eEWGjqBqkNNiWLxAYtc/6zagQjIomeQ=;
-        b=CePW5N/pgpESEz+GrQxB/dxHYZAKGZYPnF5lnBjOYFopa4N4HBWAswHQhphHG8Ldbe
-         0oWUW/B19L0tgMYTJwARhHqWKojjqM7aywMUNL0+2KDRCmDhVlsIui0FgLfIlSNVBVpe
-         KYLug7RiR18ricwZMkLW9FGwmQGRqqxYbPghqENcgXlCeLqP2PnXXE4AUMhj4cfKIC28
-         cE8SkMd6tSljJia0EuMzEs1YWYmQaYr5Qo0kc6NOeWQ1lQOePaThapb4v1lvJBJ6kmNC
-         0gNyzv17HAgGeNzZtad2hKWG1Jpv4h+zk8Lyjckkv712xK8O0SsRbeVYQDVGGgA7I3As
-         ITRw==
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=QgLkAbr4ZDVEYWWFW8uJ+z0+R3tvXpB3r0DiPE42L8M=;
+        b=am5fajtCH0HIrmN3THUeHH5e/LvS8T+Nd85Zcaasb7ylGpwpwpOaID/bE5WAvGZQTM
+         Y3hIYzERqUcG/JPkbiIjl07HKvuw6umu8QFjfAcITj9WnT2ZWJcHk1DMGQc4wW7dYIL4
+         5aCSZEoP2kla/tK+Kl6ortlsUO2kCpZTSweLa9rZlpUjuwECUpKn0Z84zyM7W02Rcli6
+         J5LHUY5vcVwGAjBYoCutVvPL85dyoPjfAiXq3a9w7KICHor9j0VQsI+72H2spkAnGXBb
+         nKuBEBwSXsIrrEFssIVyYiYDzUp/3m1OE7o+PyRgZDhmp2zSBX5nHcMaGMd4DZ1OOzm/
+         Rg3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=46yftvOjvhM8eEWGjqBqkNNiWLxAYtc/6zagQjIomeQ=;
-        b=IoQgTLM/vq5yi7imkRjEZtthvQ390UTORefQjHQOQG6EjRKXiphUyC6zZe37UJT/oD
-         r8kCoZoJVEgKvYZte5wrg4YG4wd+9TZDTj5i29703ZDNQgBlV86ZTZN0sCUBrJbxMady
-         HCxawMLJtZofVjMVTY2nMyGlbDuW+SPX/3fU4EKVS+6/V8UND236EmHjOgwt0TaXo2//
-         4ZuNEJI4czeLAVh76OOMElgpFNr9wUEREcDKMLQZhAzGt7SctOqjb293ergaeVRK13hH
-         zxT2edsNPPZCF2knHANw+24gQXZ5ggGcW6+mGIVFP7MfcFq0VrRoF39SbddSFvD9cwnj
-         8eCQ==
-X-Gm-Message-State: APf1xPB1BSqhdwE9rIkMlEd967JZRm8Hns50wgMKCxooZbvODM4MUj3V
-        NCOSsfkuWiSS6ndGzzJ8/HY=
-X-Google-Smtp-Source: AG47ELukt0ECSBm/KnXE97BKR00UDlUdMou8DY1xg5li/KU4cuxnfzP2MJ45H2JrML8mSYEeiMu/yw==
-X-Received: by 10.223.163.157 with SMTP id l29mr20112843wrb.239.1520463460937;
-        Wed, 07 Mar 2018 14:57:40 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id t135sm11867550wmt.44.2018.03.07.14.57.40
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 07 Mar 2018 14:57:40 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Lars Schneider <larsxschneider@gmail.com>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Lars Schneider <lars.schneider@autodesk.com>,
-        Git List <git@vger.kernel.org>,
-        Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-        Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v10 6/9] convert: add 'working-tree-encoding' attribute
-References: <20180307173026.30058-1-lars.schneider@autodesk.com>
-        <20180307173026.30058-7-lars.schneider@autodesk.com>
-        <CAPig+cSvC1a5EaDfFZdJU74mZz84M=CkeOJLSDxFdXKcJYyzEw@mail.gmail.com>
-        <66370A41-A048-44E7-9BF8-4631C50AAE63@gmail.com>
-Date:   Wed, 07 Mar 2018 14:57:40 -0800
-In-Reply-To: <66370A41-A048-44E7-9BF8-4631C50AAE63@gmail.com> (Lars
-        Schneider's message of "Wed, 7 Mar 2018 23:56:33 +0100")
-Message-ID: <xmqqr2ovxzmj.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=QgLkAbr4ZDVEYWWFW8uJ+z0+R3tvXpB3r0DiPE42L8M=;
+        b=JeELSNllet58bCXAYOL+ni8BCdpqxMcP734PTmSZvB6hprWVn8cJYoD+zX4tE2ETdS
+         dQovqz1/HCSpILMwVuF4VMwGD0crl4MUszIwDxTgfVEc9w2DTnkTqR5fqPAXRNXDfxGv
+         yMJhMUulhjoRqzHvPDcAzXQSONJI6pag/psYzP8kILsf9v5AgGLxInFmkChq1klNIvpo
+         fb9X+tWWNHQzgcs4dY4fTkMc4+eBYUuWE4dbsRxIV+Z/octZCOl2vFU14bPz2uxSIiUg
+         OE9JPQ8N8tXzYEgwX7ePcJxiBBnzNzHjOIn416DxA+mMHe4gTkGeE4bL59LU+jBI+ocD
+         z6Tw==
+X-Gm-Message-State: AElRT7G0xm8KQa9MUxxnS3oreavFrRMcqdY08tXf/D2leSZAAShbfPJ/
+        1iZjx44YEo/6gz/YwmyggG8=
+X-Google-Smtp-Source: AG47ELsHtkSHgzlKdnExzlM90quc55nGow1e8kxAVVoi0nFaJFHXn6GR4xNyTyxxFdJB3KD5KsLkpw==
+X-Received: by 10.28.17.77 with SMTP id 74mr15562684wmr.67.1520463540543;
+        Wed, 07 Mar 2018 14:59:00 -0800 (PST)
+Received: from [10.6.133.146] (135.red-80-28-119.staticip.rima-tde.net. [80.28.119.135])
+        by smtp.gmail.com with ESMTPSA id 8sm17746231wmf.13.2018.03.07.14.58.59
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 07 Mar 2018 14:59:00 -0800 (PST)
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [PATCH v10 9/9] convert: add round trip check based on 'core.checkRoundtripEncoding'
+From:   Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <xmqqzi3jxzus.fsf@gitster-ct.c.googlers.com>
+Date:   Wed, 7 Mar 2018 23:58:58 +0100
+Cc:     lars.schneider@autodesk.com, git@vger.kernel.org, tboegi@web.de,
+        j6t@kdbg.org, sunshine@sunshineco.com, peff@peff.net,
+        ramsay@ramsayjones.plus.com, Johannes.Schindelin@gmx.de
+Content-Transfer-Encoding: 7bit
+Message-Id: <F974DE28-D4EE-4BC6-9AE8-BF5F79FACC86@gmail.com>
+References: <20180307173026.30058-1-lars.schneider@autodesk.com> <20180307173026.30058-10-lars.schneider@autodesk.com> <xmqqmuzjzmfi.fsf@gitster-ct.c.googlers.com> <40C38F6A-E536-4C7E-981F-B15746C103B5@gmail.com> <xmqqzi3jxzus.fsf@gitster-ct.c.googlers.com>
+To:     Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Lars Schneider <larsxschneider@gmail.com> writes:
 
-> Nice catch. What do you think about this solution using is_encoding_utf8()
-> from utf.c?
+> On 07 Mar 2018, at 23:52, Junio C Hamano <gitster@pobox.com> wrote:
+> 
+> Lars Schneider <larsxschneider@gmail.com> writes:
+> 
+>> I don't think HT makes too much sense. However, isspace() is nice
+>> and I will use it. Being more permissive on the inputs should hurt.
+> 
+> You are being incoherent in these three sentences.  If you want to
+> be more strict and only allow SP, then isspace() is already too
+> broad, as it does allow HT (and even CR and LF).
 
-That helper was invented exactly for a case like this, I would
-think.
+I meant "Being more permissive on the inputs shouldN'T hurt." :-)
+
+
+> I do think HT makes just as much sense as SP, though, so if you use
+> isspace(), that would be perfectly fine.
+
+OK!
+
+- Lars
+
