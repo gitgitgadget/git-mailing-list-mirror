@@ -2,92 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D15E31FAE3
-	for <e@80x24.org>; Wed,  7 Mar 2018 13:50:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5B5681F404
+	for <e@80x24.org>; Wed,  7 Mar 2018 13:57:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751176AbeCGNuJ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Mar 2018 08:50:09 -0500
-Received: from mout.gmx.net ([212.227.17.22]:54065 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751150AbeCGNuI (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Mar 2018 08:50:08 -0500
-Received: from [172.16.5.73] ([84.88.84.116]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LaGfK-1eP8Wk20eE-00m15P; Wed, 07
- Mar 2018 14:50:00 +0100
-Date:   Wed, 7 Mar 2018 14:50:00 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Igor Djordjevic <igor.d.djordjevic@gmail.com>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
-        Philip Oakley <philipoakley@iee.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v5 00/12] rebase -i: offer to recreate merge commits
-In-Reply-To: <bc9f82fb-fd18-ee45-36a4-921a1381b32e@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1803071445510.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <cover.1518307771.git.johannes.schindelin@gmx.de> <cover.1519680483.git.johannes.schindelin@gmx.de> <bc9f82fb-fd18-ee45-36a4-921a1381b32e@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1751220AbeCGN5O (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Mar 2018 08:57:14 -0500
+Received: from mail-wr0-f172.google.com ([209.85.128.172]:39817 "EHLO
+        mail-wr0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751151AbeCGN5N (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Mar 2018 08:57:13 -0500
+Received: by mail-wr0-f172.google.com with SMTP id w77so2264831wrc.6
+        for <git@vger.kernel.org>; Wed, 07 Mar 2018 05:57:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=to:from:subject:message-id:date:user-agent:mime-version
+         :content-transfer-encoding:content-language;
+        bh=CQvllIo1iugGOu3ExX3nKv8wW1n1h0WSBa6GJD0zV8g=;
+        b=FDP3vgaeEZ+bC4E4g9IotFCa4mO1fGob/pUilGxwvaBezTAe2SMsJ8V/m7r8y6VPjl
+         V0GJLsxo1P0XPgx+j4wv4NfXLo23CBzBVircJuuMKzhJprUPWTI+z/AGUjGXK1bgqKq4
+         7MWdH3qCqRRJgx/N1wMndcIr6dbSWNog784Jp4dcN9ODoeZ+MHeyOE3855VUl4YeE3nr
+         bbAk6nPKxsoOwj/eF6g46VGVKZ7CUlA4pe88E9vlnxlguf3nFuTHHGRUSwo/TMtUmtdz
+         QdHWZUxG4+tBvNL3O5kYJJIZrI5dnTpJVykzronsRlNJ0fyqoDUBRNwErdsC+qP1gLSP
+         TwTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
+         :mime-version:content-transfer-encoding:content-language;
+        bh=CQvllIo1iugGOu3ExX3nKv8wW1n1h0WSBa6GJD0zV8g=;
+        b=mktbIu5q89d9CNQsOx6xiNFuefo3rQXrCofHls/u+gYpe2rwr0I9Zz2nG0cPxJyI0V
+         3cT1tEqdlaF7YQqbLvM2PMB8m2jvVfkDZcPQi6zQZHUx4P88TBPwOf0V8FfmP4Zsr3z3
+         KIm10HbhkJSh/Do07X8XF6R/nAzgC2+9tPbPQDBTCj46olVutCEh7pGfEYzgtqGcQIBH
+         xPgIkufoOAi7JOzVyROc4c+k/SWVQZK/aWw/Y8nVAfCTkyVSQkn5YC+plKwL28ctNHZX
+         mU3Fs1j3RwRFD1PVp0tvkBOdROJLkTFSv/lcoy/bcHfLgW1nZA+lZSSFLhniUdzGaOby
+         oSbw==
+X-Gm-Message-State: APf1xPBukmhMdej8JdKmugF3IXFoF9wNvno6HzUdwRi9Gy9jtxlIZkC0
+        HuruQWh0P5lEKM7aZm7eVSSne6ol
+X-Google-Smtp-Source: AG47ELsfLo67Zt0nT8bTpGABkAE/EuZdQNiH+r9f4LjyamSYvPSrjgy9PobroD4M0UqhV/UYlU/s4w==
+X-Received: by 10.223.152.228 with SMTP id w91mr18290323wrb.74.1520431031444;
+        Wed, 07 Mar 2018 05:57:11 -0800 (PST)
+Received: from [172.16.4.30] ([84.88.84.116])
+        by smtp.gmail.com with ESMTPSA id m7sm41611798wrm.35.2018.03.07.05.57.09
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 07 Mar 2018 05:57:10 -0800 (PST)
+To:     git@vger.kernel.org
+From:   Derrick Stolee <stolee@gmail.com>
+Subject: Partial Clone: Commands that could be problematic
+Message-ID: <04927620-c5ea-ee70-2104-4a5a7a994e33@gmail.com>
+Date:   Wed, 7 Mar 2018 08:57:07 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:59.0) Gecko/20100101
+ Thunderbird/59.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:MvuDqj1lQ5SMshhFD8RwG9bXtHpRoVvo/8bbj7vTJSuQm8mNMW1
- epaZeXYhvFVPNhpKbytD4Cc30QcoBqbu+S4Bn3ypeIg7t52q96fuUZgqvQlEJFNDPfzTsTV
- RSdfp02H9AK1Xv2D6P7lOpLSmkXJQATiu14D2jG885VQmpOXJFRDExJSW8K+HYrgwsAz6Mz
- P0lNQHwC2sKuFM8YTC7jw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:PUlN/WSrTUc=:fYGl3ybOYK6j+RV5G/3zKg
- nK4HwWxJVB1p7dkeW2n+s7mrrxwcTESAOaJRop0dFQkobuqg0qnDlnEDyCyp4lFQEnrbG1tLh
- dDW2xXUFDvlmseO/bS/O/wQBwwg27mU4T+8AkQ5a9eXpLUsHh6vQPLk3nZgth1V/hFKLN+61N
- YZ5MtE/fapEHj8BQghycsBUwsJc7rqerxLOMiq+HRQxcUdNmhofN/2VBI+6LN5kL5WvOY7Ae6
- LSY1r4yVl80EGdXn9HanhHQF/uAAhCg1Sx7hyNLhdMmocgN25kKCihYK2HfSIALdyopMICW80
- +6S+Mj2L3fJebB5JZMGeLzp2NZY6USR3Gprd0v9+KgC4efruPFMi4MWweBE4YHj04RigoJIFR
- 6uOE619atOEtpcYf+vB/i9k3Ht1x8PUk8+71ANEZWEGOBjfjkg++G9uz+SHiQdtxL0bZ97oDV
- YC4Ns+MmfW0WGNoD98YdABZeadgtNYLsuhCRd/W+J6s78bCwAwMhT7DPbJvDUWGs37VZwhXHq
- 2D11U1kW28Yp6dftuFaPc7kYael6DRWeaKSfE1ETz5oMIpvZblyf/adM1iX2cBuCEcOZLy5Pw
- 6ntxa9shtaO8I/GhYbkjGm0nY5MDKbjXaxcN+4jF1EfF+GJIuZzGIW88NquAF6LIogA+dNeWt
- DoH4oX80vzcoo2wZjpz8725wAuxCydAbk6IfmawzKV4uEywl0uEJitC/q8i24s7O2wK0FRaSl
- uTeheWOxSAcUmRMj3ST/G8y5HaeGeb01jBin+EmA8GFydGCzxNo4hyTzh+SlgTmM1Ma9v+u+G
- DGa30llL2ib7zyzTL93sXwfw5UrGcbupp2wgI+wBU9ga0xzsM4=
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Buga,
+We discussed partial clone today during the contributor's summit. There 
+were some concerns about some commands that would cause over-hydration 
+of blobs that need server requests to resolve.
 
-On Tue, 6 Mar 2018, Igor Djordjevic wrote:
+GVFS blocks "fsck", "gc", "prune", "repack", "submodule", and "worktree" 
+[1]. I promised I would include this list. There are a few limitations 
+on the arguments of the other commands, as seen in that code. These 
+commands that are blocked are already handled in partial clone with the 
+"promisor" pattern. The "worktree" limitation is only due to the 
+file-system virtualization layer of GVFS.
 
-> [...]
->
-> But before elaborating, I would like to hear your opinion on whether you
-> find it worth to pursue that goal here, before `--recreate-merges` hits
-> the mainstream, or it might be just fine as a possible later
-> improvement, too (if accepted, that is).
+We discussed commands like "git grep" that sometimes look at the working 
+directory and sometimes crawls trees. That is a command that should be 
+considered for batching object downloads, limiting the command to 
+"hydrated" blobs, or limiting to a sparse checkout.
 
-As I suggested in another sub-thread, I think the best way forward is to
-use your idea to make the 'rebase original merge commits' strategy
-explicit.
+Thanks,
 
-That would not actually hold up the current --recreate-merges patch
-series, but would mean to provide an add-on patch series to add support
-for `merge -R` and then use that from the generated todo list.
+-Stolee
 
-For implementation detail reasons, it may actually make sense to integrate
-those patches into the --recreate-merges patch series, though. Should not
-be hard (except during GitMerge).
+[1] 
+https://github.com/Microsoft/GVFS/blob/2db0c030eb257beebf8e17f1c2ce72ffb166f533/GVFS/GVFS.Hooks/Program.cs#L120-L137
 
-> p.s. lol, now that I said it, and after writing all this, I might 
-> actually even like the idea of (later) having `--rebase-merges` 
-> alongside `--recreate-merges`, too, each one clearly communicating 
-> its default mode of operation - rebase merges vs. recreate merges... 
-> as one might rightfully expect ;) Eh :P
-
-Hehe...
-
-Ciao,
-Dscho
