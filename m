@@ -7,63 +7,64 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4B4651F404
-	for <e@80x24.org>; Wed,  7 Mar 2018 18:38:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E63831FAE3
+	for <e@80x24.org>; Wed,  7 Mar 2018 18:40:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754491AbeCGSih (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Mar 2018 13:38:37 -0500
-Received: from mail-wr0-f180.google.com ([209.85.128.180]:43729 "EHLO
-        mail-wr0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753934AbeCGSig (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Mar 2018 13:38:36 -0500
-Received: by mail-wr0-f180.google.com with SMTP id u49so3188033wrc.10
-        for <git@vger.kernel.org>; Wed, 07 Mar 2018 10:38:35 -0800 (PST)
+        id S1751234AbeCGSk3 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Mar 2018 13:40:29 -0500
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:37311 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751241AbeCGSk1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Mar 2018 13:40:27 -0500
+Received: by mail-wr0-f194.google.com with SMTP id z12so3206456wrg.4
+        for <git@vger.kernel.org>; Wed, 07 Mar 2018 10:40:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=sEl9Fd/FwiGdaKZE1pPzAhrMM1saoOjQaR2jJQgCYI4=;
-        b=pZoTvGY7gc7wGQie1x/RscVDZeIronqhM+5KaOiOfnzUlWap+y9JNUD9pFErAlF+cM
-         mdLwD3yUVeMwpHqEvuyMqwGtxsA4jB8qlYotTmH8RdsEl3fUcfNvXoVhdk2d26YLnJ3O
-         NFY1rlvhMaMOIgarUpGVJ6nR8RnrRDiliO68huIc4RPnlA5n44tqTbbs+Msthd70G0UU
-         D4+84HJ+ZumAi093xj3OVDMCIvxk3KBn4C4FxWFfeCAqFegT+LC3+kH7OsDS3fNfDOWS
-         Xu4Tb/mmbbJVR7qDO7xh2hvgs2xSLYPtUqnO2oCHHC9yGl8/SR5gPkQdi0InHBzqThKD
-         6bvw==
+        bh=NCmJ5FOls/G/KUUgHlKzBuN8+qIOjESfHfeAG7b4yD0=;
+        b=Tb5BaJWIQ2OgGIVOIc0ap+OkWHewP42GEvImt8ZuWV5YRUnvJ+AdVLDPQJrFSko9zp
+         o5QWzg8z42cCouYM5xIDOFcrkHYnYmF8gKceu4oS7YLLIBRVYSoP9DzohyKkuwp7MQdH
+         Q1QhSXKrlh4oSkVq0cS8cpprTqgsM6LmEd+U0g6AFQ1XbevqpNKkMpHTwpSxmi9NiCyw
+         Yi2kOJgOoHRfBl/tln1YPUgl6x+JCeZs/n5eIZviudcNNfxBGAxO2sUfQzjGW4Ms7sim
+         fFK/6CcllRml1YbAuns8Z0jkirDNyCBaNfu2Jvu0IR2+29KbAkKYj4zG9bzCeSwOCpGz
+         VaVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=sEl9Fd/FwiGdaKZE1pPzAhrMM1saoOjQaR2jJQgCYI4=;
-        b=juHP39tNMGwZmFr3eL1hPmG9OzFOl96Jr9Vok+yFCr7uVXxJ7+qM80Ut3DH+MNbtO3
-         FVOXa+4yB6iSB3C3jxGyIXCmMP5KsPktwuWmsBiRmQDj8dfwvoNRT7YvxfVmsFCj4aAj
-         nkoPNqaMqiEm7URjyI+ojrAg+LdjGEivzASklGmd/n6DvDjrzDMTkSqH0xP4jrfGC2sQ
-         8p+TsT7fIYNh6YELwTMmmK4bu8azl9ll/8Hx7KLOVJPghEEPtslZ5xG0WPlvNJVozIfL
-         NS17POuaXA9a3oR2zRf65l4XYq9rHXs4yTlnHB3j8VEZsX2mS05xlLELF3/umUPiERkH
-         Opqg==
-X-Gm-Message-State: APf1xPCUgKEqW/U8Tcq/5dwBY4eIi2NzZwpdo1ri40nLKwQ1VqCDmTTc
-        xGzb0gQSYdI1poad5YeFUdawK1UMC5w=
-X-Google-Smtp-Source: AG47ELsyf8aSv3zAAJEHMiH3e3mBgz30K29vIKMNKtCqIonUaKrK1Zkn6ZmE2JwabZD1wmhf+eR31g==
-X-Received: by 10.223.182.156 with SMTP id j28mr19778008wre.66.1520447914403;
-        Wed, 07 Mar 2018 10:38:34 -0800 (PST)
+        bh=NCmJ5FOls/G/KUUgHlKzBuN8+qIOjESfHfeAG7b4yD0=;
+        b=p9TFkwpA7mGpXcfqFHGvU5bI1rFrfJPN5IZH8Oe1fT1qlOsw6mg6GCDhZeZMr33cpU
+         LXJ41CNOLSPNyKTc5tpypQFG2vCp+veGzJBB1EiW8TayKkXwDlCUvir1Sw/C1Tsw8J9O
+         tRxJFC+Zqu+tHhlNqvqJoQ5+4ShUnnXPyzmQl/ITIwADxSLr74aFHZpE39sdF0mOBnIM
+         C6sL2vDkWitPIYcpb0J5gfxjnevdi3cVpAyIY69w797mly4BXGcl5R0n7jzjUukAwYRO
+         nus+N/wPBy6vu2SCfS22uQcB1EGbVHmBW/lTY6uXgvyZP9JygljnhZJtiv3kWS5aKujl
+         2EGQ==
+X-Gm-Message-State: AElRT7GAA3qhL2eD6dHwNG7k0BzJxfdjiG0Zj7flI2NC+KDf/gZoGcE2
+        Twr+glrr68nxt6TyA6jA4oSuitQvKGk=
+X-Google-Smtp-Source: AG47ELvjZS8VLeAbfTyurAKYFRuioUgl68xPq8mD8pVArKk2H/B+EB+RzZs/H1xNnXp7cTj3r1XGSA==
+X-Received: by 10.223.193.73 with SMTP id w9mr13113075wre.101.1520448026100;
+        Wed, 07 Mar 2018 10:40:26 -0800 (PST)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id 1sm5768685wmj.35.2018.03.07.10.38.33
+        by smtp.gmail.com with ESMTPSA id b9sm20657263wrh.68.2018.03.07.10.40.25
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 07 Mar 2018 10:38:33 -0800 (PST)
+        Wed, 07 Mar 2018 10:40:25 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Eric Wong <e@80x24.org>, Git Mailing List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        e@80x24.org, git@vger.kernel.org, peff@peff.net,
+        =?utf-8?B?w4Z2YXIg?= =?utf-8?B?QXJuZmrDtnLDsA==?= Bjarmason 
+        <avarab@gmail.com>
 Subject: Re: [PATCH v2 3/5] gc --auto: exclude base pack if not enough mem to "repack -ad"
 References: <20180301092046.2769-1-pclouds@gmail.com>
         <20180306104158.6541-1-pclouds@gmail.com>
         <20180306104158.6541-4-pclouds@gmail.com>
-        <xmqqfu5d3tbn.fsf@gitster-ct.c.googlers.com>
-        <CACsJy8C2j2dLozhHf4zE--KYPZ2VjOW2tobmczh3rf6L==Q1vw@mail.gmail.com>
-Date:   Wed, 07 Mar 2018 10:38:33 -0800
-In-Reply-To: <CACsJy8C2j2dLozhHf4zE--KYPZ2VjOW2tobmczh3rf6L==Q1vw@mail.gmail.com>
-        (Duy Nguyen's message of "Wed, 7 Mar 2018 17:48:59 +0700")
-Message-ID: <xmqqd10f20k6.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1803071140130.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+Date:   Wed, 07 Mar 2018 10:40:24 -0800
+In-Reply-To: <nycvar.QRO.7.76.6.1803071140130.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        (Johannes Schindelin's message of "Wed, 7 Mar 2018 11:48:45 +0100
+        (STD)")
+Message-ID: <xmqq8tb320h3.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -72,92 +73,14 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Duy Nguyen <pclouds@gmail.com> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
->>> +Set environment variable `GIT_TRACE` in order to see the memory usage
->>> +estimation in `git gc --auto` that determines whether the base pack is
->>> +kept.
->>
->> This is somewhat a puzzling use of trace.  It sounds more like a way
->> to find out "how" memory usage estimation is done and arriving at a
->> wrong value for those who want to debug the feature.
->
-> Yeah. I'm not sure if this estimation could be really problematic that
-> people need to debug this way. A cleaner way (if we think people will
-> need this often) is just add a new option in "git gc" to report this
-> estimation breakdown and do nothing else.
+> Junio, may I ask you to put this into a SQUASH??? commit so that the
+> Windows build no longer fails?
 
-Actually after reading the implementation and seeing what it does, I
-personally do not have any problem with the way GIT_TRACE is used
-for this purpose in this patch.  I am not sure how interesting the
-information given by that codepath in real life; it looks even less
-intereseting than say what comes out of "verify-pack --stat".
+Thanks for a reminder; I also spotted it (I first thought I screwed
+up in my editor while reviewing and then went back to the original
+on the list) and sent out a response, but then by that time I was
+already far into the day's integration cycle.
 
->> This is finding the largest pack.
->
-> The discussion on .keep files raises one question for me, what if the
-> largest pack already has a .keep file, do we still consider it the
-> base pack, or should we find the next largest non-kept pack?
->
-> I'm guessing we keep things simple here and ignore .keep files.
-
-I agree that it is a sensible design decision.
-
->>> +#elif defined(GIT_WINDOWS_NATIVE)
->>> +     MEMORYSTATUSEX memInfo;
->>> +
->>> +     memInfo.dwLength = sizeof(MEMORYSTATUSEX);
->>> +     if (GlobalMemoryStatusEx(&memInfo))
->>> +             return memInfo;ullTotalPhys;
->>
->> Is this legal C in Microsoft land?
->
-> That's the problem with writing code without a way to test it. At
-> least travis helped catch a compiler bug on mac.
->
-> I'm torn between just #error here and let Windows/Mac guys implement
-> it (which they may scream "too much work, I don't wanna") but if I
-> help write something first, yes things are potentially broken and need
-> verification from those guys. I guess I'll just fix this up and hope
-> non-linux guys do the rest.
-
-Yup, we all collaborate and help in ways each of us can.  None of us
-can be expected to do any more than that ;-)
-
->> I wonder if the above should go somewhere under compat/ without
->> ifdef but split into separate files for individual archs (I do not
->> know the answer to this question).
->
-> My first choice too. I chose this way after seeing online_cpus()
-> thread-utils.c. Not sure which way is best either.
-
-OK.
-
->> But to those who say "packs larger than this value is too big" via
->> configuration, keeping only the largest of these above-threshold
->> packs would look counter-intuitive, wouldn't it, I wonder?
->
-> I think I'll just clarify this in the document. There may be a use
-> case for keeping multiple large packs, but I don't see it (*). We can
-> deal with it when it comes.
-
-When the project's history grows too much, a large pack that holds
-its first 10 years of stuff, together with another one that holds
-its second 20 years of stuff, may both be larger than the threshold
-and want to be kept.  If we pick only the largest one, we would
-explode the other one and repack together with loose objects.
-
-But realistically, those who would want to control the way in which
-their repository is packed to such a degree are very likely to add
-".keep" files to these two packfiles themselves, so the above would
-probably not a concern.  Perhaps we shouldn't do the "automatically
-pick the largest one and exclude from repacking" when there is a
-packfile that is marked with ".keep"?
-
-> The use of super large gc.bigBasePackThreshold to disable this keeping
-> base pack is intended. But I can't go too high here it may break
-> limits on 32 bit platforms. And 2g sounds really arbitrary.
-
-You could use 42m instead to clarify that it really is an arbitrary
-threshold that was chosen only for the purpose of this test perhaps?
-;-)
+Will queue a SQUASH??? at the tip.
