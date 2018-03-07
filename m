@@ -2,105 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3F5901F404
-	for <e@80x24.org>; Wed,  7 Mar 2018 23:19:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E8F1B1F404
+	for <e@80x24.org>; Wed,  7 Mar 2018 23:34:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934385AbeCGXTs (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Mar 2018 18:19:48 -0500
-Received: from mail-wr0-f175.google.com ([209.85.128.175]:35210 "EHLO
-        mail-wr0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934362AbeCGXTr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Mar 2018 18:19:47 -0500
-Received: by mail-wr0-f175.google.com with SMTP id l43so3869019wrc.2
-        for <git@vger.kernel.org>; Wed, 07 Mar 2018 15:19:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=CtiIV3j4pB0qeZTkd0bmZ11eMAW+xbhniIGJWd2G88o=;
-        b=i6Bm74YD3dZvw/I8POnpkDVtOhQ33VF0QkAH8gEasJMKAh6lv3doq+KQb4TVJnL2Ch
-         V1nxjnTg0i8zwPvZTedmCYOcEkXzTb1Hc4lSQsjhUcMUDcsgsML7QCWgjAvSax7covFd
-         mPtUS0ux06JXbF2BmMm83kONStVWPi5POO76YawAMdPWiw7C/GPNN5Oi5SDFcuCIMR6k
-         PuP4YSbp23GCvsNuSUnxa6lDQk77z7009E7FNi3TJH8tPQ0MkLFeP7O250WTbFNsq7R/
-         dED1bJJNpZHOku/Oro3ZcGXtr5FcFhQG+swZhGNuyW/AUgYWYbgfGd8DBQeM+9vdSh+C
-         mJag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=CtiIV3j4pB0qeZTkd0bmZ11eMAW+xbhniIGJWd2G88o=;
-        b=uSY+PfBllZDbhWAF3B6FS3x5NYJi9MZyqVSUXcXeWc1oEr4obuhYBuNnPMkVSeioZT
-         RSLLclbPOCRyu/zQf9bi5rlyOpxxdo1n6PyODo0Upq4/q7Ytduat3uNpR/p17c3dXKbo
-         fi3vkJL+TT1mQpgLv/28O6bYrt0Zm4d8SVAtFiT4eK6WTeJMRNItYbS9t8X1WXWBi+HO
-         7HN73R9haQIeBDVOLAQdGysgArQVDtYd7bI87aGtxigzESPpXGhpkKcdLdUm87REptTy
-         kGErRXdNdR6EWowT0WbF0ZDfVSXjIrSGgQcuFQ7GOhctBJDQ0tVKPtv0iOLn68zqa3zf
-         IqCA==
-X-Gm-Message-State: APf1xPBm8dTxbY03y7Q6F1gmr7ftXs4NSd/2B1LAU34qxCBZttjjr0Z3
-        8uJr8NgJBnHEAPZIHDzihZU=
-X-Google-Smtp-Source: AG47ELt2auq1RK3/sbfqIxnO/4Pv4W9A7Ealihy222G6NpATaECebTM2F2lax1GRDEVBfOtsu1d8KQ==
-X-Received: by 10.223.156.208 with SMTP id h16mr22111799wre.123.1520464786585;
-        Wed, 07 Mar 2018 15:19:46 -0800 (PST)
-Received: from [10.6.133.146] (135.red-80-28-119.staticip.rima-tde.net. [80.28.119.135])
-        by smtp.gmail.com with ESMTPSA id b136sm14243997wme.34.2018.03.07.15.19.45
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 07 Mar 2018 15:19:46 -0800 (PST)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH v10 7/9] convert: check for detectable errors in UTF encodings
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <xmqqvae7xznk.fsf@gitster-ct.c.googlers.com>
-Date:   Thu, 8 Mar 2018 00:19:44 +0100
-Cc:     Lars Schneider <lars.schneider@autodesk.com>,
-        git <git@vger.kernel.org>,
-        =?utf-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-        Johannes Sixt <j6t@kdbg.org>, sunshine@sunshineco.com,
-        peff@peff.net, ramsay@ramsayjones.plus.com,
-        Johannes.Schindelin@gmx.de
-Content-Transfer-Encoding: 7bit
-Message-Id: <4465AF18-EBE8-4BA3-8F95-B51630A41B86@gmail.com>
-References: <20180307173026.30058-1-lars.schneider@autodesk.com> <20180307173026.30058-8-lars.schneider@autodesk.com> <xmqqr2ovzmwo.fsf@gitster-ct.c.googlers.com> <B001E8E2-9C98-4136-87A3-4425C50E90DB@gmail.com> <xmqqa7vjzfcp.fsf@gitster-ct.c.googlers.com> <766B302C-446B-4730-A5D9-909C6FCF6A84@gmail.com> <xmqqvae7xznk.fsf@gitster-ct.c.googlers.com>
+        id S1754987AbeCGXeS (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Mar 2018 18:34:18 -0500
+Received: from mail.netzguerilla.net ([217.11.57.120]:53113 "EHLO
+        mail.netzguerilla.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754983AbeCGXeR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Mar 2018 18:34:17 -0500
+Received: from localhost (localhost [127.0.0.1])
+        by mail.netzguerilla.net (Postfix) with ESMTP id 6FEF9100019;
+        Thu,  8 Mar 2018 00:34:16 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at netzguerilla.net
+Received: from mail.netzguerilla.net ([IPv6:2a00:1828:2000:612::25])
+        by localhost (sal.netzguerilla.net [IPv6:::1]) (amavisd-new, port 10024)
+        with ESMTP id hajAy-ff9ZtO; Thu,  8 Mar 2018 00:34:15 +0100 (CET)
+Received: from [IPv6:2003:dd:ff29:a301:1c94:69ca:ad13:165a] (p200300DDFF29A3011C9469CAAD13165A.dip0.t-ipconnect.de [IPv6:2003:dd:ff29:a301:1c94:69ca:ad13:165a])
+        by mail.netzguerilla.net (Postfix) with ESMTPSA id D4705100012;
+        Thu,  8 Mar 2018 00:34:14 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=projektwerkstatt.de;
+        s=fckp; t=1520465654;
+        bh=PU3r2kIAmul/wYAemF6Jn60Ph83qfyxwiCznZEcQF64=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=aSgL5gYaK5cBgRSrKudqU7LCmHtRCeIrNJgI3i1uudpYDM8a+x7wCJBIs8HNYLIbU
+         savkfNBmHftvljiP5PjVjwkehYjjfZJz0u/3H+Mg3ve+HGo2rqyNL0hyh0KYPbbJEq
+         M68YVOr+MhW/idm6i0fKsu8eCINBD3hSfNxrinKJys/qQbjMkBSdTWGunomxv30YTd
+         KjYvHrOU6hy5eRC7MLn59fdwQc/o+KE8navL6cEiNxDsG2d5VBn3nQRsmBiLU5F7AJ
+         yJV/UEFAXB3NgXhXQcxkiXHZh/+zbX7Z+j4oBkG0BSvpRS7yR2PG81UEPeU9le2AyT
+         I7Hou7wU1QsZA==
+Subject: Re: git help clone: questions
 To:     Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3124)
+Cc:     git@vger.kernel.org
+References: <6ea2b41f-37c3-8540-4763-7688f56fe202@projektwerkstatt.de>
+ <xmqqinaa6l3b.fsf@gitster-ct.c.googlers.com>
+ <81c78c4f-b690-d06c-bb7d-9c65e33777b5@projektwerkstatt.de>
+ <xmqq4llrzer5.fsf@gitster-ct.c.googlers.com>
+From:   kalle <kalle@projektwerkstatt.de>
+Message-ID: <725671ac-0a36-cd9e-c605-6ffdcb7e9a33@projektwerkstatt.de>
+Date:   Thu, 8 Mar 2018 00:34:14 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.1.1
+MIME-Version: 1.0
+In-Reply-To: <xmqq4llrzer5.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: de-DE
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-> On 07 Mar 2018, at 23:57, Junio C Hamano <gitster@pobox.com> wrote:
+
+Am 07.03.2018 um 23:45 schrieb Junio C Hamano:
+> kalle <kalle@projektwerkstatt.de> writes:
 > 
-> Lars Schneider <larsxschneider@gmail.com> writes:
+>> Am 06.03.2018 um 02:36 schrieb Junio C Hamano:
+>>> kalle <kalle@projektwerkstatt.de> writes:
+>>>
+>>>> -In the explanation of the option --reference: shouldn't there be
+>>>> written '<repository>' instead of  'reference repository'?
+>>>
+>>> "Shouldn't X be Y?" is not an effective way to communicate; it
+>>> solicits a "no, the current one is fine." without any explanation.
+>>>
+>>> If you think X should be Y for some reason, please say "I think X
+>>> should be Y BECAUSE Z" instead.  Without stating why you think
+>>> differently from what those who wrote the current text, it is hard
+>>> for people to respond either with "Yeah, you're right---I agree
+>>> with Z" or with "No, Z does not hold because..."
+>>>
+>> I wrote this, because when it is written about 'reference repository', I
+>> consider it not totally clear, which repository is meant, as the option
+>> '--reference <repository>' only names one as <repository>.
+>> For reasons of clearness, I now propose writing "reference repository
+>> <repository>".
 > 
->> At this point I thought it would make sense to make the advised
->> encoding name uppercase in both situations. OK with you?
+> I do not have particularly a strong opinion, but I think it is very
+> sensible to call the value given to the option "--reference" with a
+> phrase that is not just "repository".
+i agree and didn't state this. i proposed to add <repository>.
+<repository> could also be named <reference-repository>.
 > 
-> In the endgame, if upcased and properly dashed form is always used,
-> that would be good (if we are enforcing the policy, which I am not
-> onboard 100% but it's your code and I do not care too strongly about
-> it).  I do not see much point in an interim step that only upcases
-> without doing the dash insertion.
+> As the command line of "clone" must name one repository (i.e. the
+> one which we clone from), and its "--reference" option must name
+> another repository as its value (i.e. the one that we borrow from in
+> order to reduce the object transfer), calling both <repository>
+> makes it easier to confuse readers
 
-I would like to advise the dashed form as this seems to be the
-canonical form and it avoids cross platform issues. My macOS
-iconv does not support the form without dashes.
+you made my point
 
-Would this approach work for you?
+ unless the writer carefully makes
+> sure that <repository> in the desription is unambiguous and it is
+> clear which one of these two repositories is being discussed by the
+> context.>
+> I just re-read the existing Documentation/git-clone.txt and looked
+> for "reference".  All uses of "reference repository" in the prose
+> made sense and I found it would not be an improvement if any of them
+> is replaced with just "repository". 
 
-			const char *advise_msg = _(
-				"The file '%s' contains a byte order "
-				"mark (BOM). Please use UTF-%s as "
-				"working-tree-encoding.");
-			const char *stripped;
-			char *upper = xstrdup_toupper(enc);
-			upper[strlen(upper)-2] = '\0';
-			skip_prefix(upper, "UTF-", &stripped) ||
-			skip_prefix(stripped, "UTF", &stripped);
-			advise(advise_msg, path, stripped);
+This was never my proposal, though.
 
-Thanks,
-Lars
+ It may be helpful to add
+> something like:
+> 
+> 	 --reference[-if-able] <repository>::
+> 	+	Define a repository (reference repository) to borrow
+> 	+	objects from.  
+> 		If the reference repository is on the local machine,
+> 		...
+> 
+> to define which repository we mean by that term, though.
+> 
+
+in all, it was just meant as a quite small proposal for me. i also don't
+have any strong opinion about it.
+greetings,
+kalle
