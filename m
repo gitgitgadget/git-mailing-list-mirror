@@ -2,105 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5A13E1FAE2
-	for <e@80x24.org>; Wed,  7 Mar 2018 09:36:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 782301FAE2
+	for <e@80x24.org>; Wed,  7 Mar 2018 10:02:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751154AbeCGJgK (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Mar 2018 04:36:10 -0500
-Received: from mail-qk0-f179.google.com ([209.85.220.179]:33166 "EHLO
-        mail-qk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751090AbeCGJgK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Mar 2018 04:36:10 -0500
-Received: by mail-qk0-f179.google.com with SMTP id f25so1856882qkm.0
-        for <git@vger.kernel.org>; Wed, 07 Mar 2018 01:36:09 -0800 (PST)
+        id S1751151AbeCGKBf (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Mar 2018 05:01:35 -0500
+Received: from mail-ot0-f169.google.com ([74.125.82.169]:44797 "EHLO
+        mail-ot0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751127AbeCGKBe (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Mar 2018 05:01:34 -0500
+Received: by mail-ot0-f169.google.com with SMTP id 79so1511766oth.11
+        for <git@vger.kernel.org>; Wed, 07 Mar 2018 02:01:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=eETLiuYE4XQmJ44F63HK+IKyql2fuwLPNMKWRzvcvGw=;
-        b=N7Ay2NFa8kcROzCcHPK4GGy9rKZxOnnPQWB9onJSfvvYNxynoSLavJf3RgG6z3pJvd
-         QO1ZKT83nWZPwOdWZLymis+1deoACBrpO7d02o4q1Tf2Mkxmu+PpCq2z7UWSKAFftibV
-         evsGgGK618avWvaIbPrsuA/nR610WzoKg7hOvWUCwQu6jpSIoVy6oaBtnBIJZcwjdXbK
-         ae1dqJLRDMnP2RAHxW5ZTu0x9kPA5RdmpQmnluLqNx1j9xO868HCm7fSZdu77OPF1h8v
-         /+e1Mc6H6Mxx7MdxPMeitzev/savgDLrTd9koLzqcPhz8mailBBR3EGguJMZwTIR3wZ/
-         iwEQ==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=iRX7BMMb+9I26N0Z+dlh/bxiQ+WJTJ8ETKBLKui/7Es=;
+        b=JxM8BTFUwit2iyyMelralrLIBKwM6GEA37hzk1IS7N2c1fjk33KJyk9zVADXfaLHnk
+         Cdx4AZqKYA+jRTmifeBh5w33VM0m7cSS729qPsxq6njR771TNsJKbNqaGAJQq0VLDx4G
+         0r/Q8sa9ir3IEtyMDgFD2XhgdGUoKFckYpCy6Tc1TfcdWy1+PIURca/6fB+pCuCUx8Bm
+         cxVySZvSrrScjjMQ6Ml4XUHBSJHTke+FoBJPAjD6ybDG9zoDpa2PMlpNjtCaN2XeNbMN
+         h2HdraW7LRTuPLyBgfaOOQ3CPlU1iZMDtQ1fYzEA6kV82TDR3RLsLHpP9SSwqIdMFZ4U
+         j15w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=eETLiuYE4XQmJ44F63HK+IKyql2fuwLPNMKWRzvcvGw=;
-        b=RuiuflBE+029mtp7pizySKF5GMHp4YT1iAlh94J6sBhKD5BQtkrFP0qargE2tO4Dr/
-         ZDkrLHl0eySF4cz5kfR4sJhVVTFSoC5DB1TJb6qhXeunfCdTMa95KKAbRE4Ghq7IYCTM
-         PHuVmZ+uD+yU+lCucK/pvLIh7DAIYuMlZ2EDbPxfkLvH93ZsSfGTySdPfnD9Xzf+w/Vh
-         ygNHGXD2DraFtq/WqRbQLEXFEyEgm1+nmEqjNDZkOj11feK6RpIukq/8+zmP32rEd1Cr
-         c4/eqba/Na1Xm6L2sLqXRDyq6UJOh5WsOylWBzyMRoWGP6OBvFlbtJv2U7ic8potWW0i
-         Scxw==
-X-Gm-Message-State: AElRT7Fry5wHPytsZFY31DbHaQ5lief+SrAGFuZDjfbG/O6znyiutGMm
-        roDYPn7wrBA5cgrkqnN5bE2h1TdHNbtkpU6HlA3udQ==
-X-Google-Smtp-Source: AG47ELvhr6ETjE5CaON16M60NwLVsCdgbzRgIsWfkwFtZyIhc60bYXZzWS641jbkJZTxppaQBnPkGswCm5uWLGci5uw=
-X-Received: by 10.55.134.133 with SMTP id i127mr32918843qkd.275.1520415369341;
- Wed, 07 Mar 2018 01:36:09 -0800 (PST)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=iRX7BMMb+9I26N0Z+dlh/bxiQ+WJTJ8ETKBLKui/7Es=;
+        b=gPuZusDHpzuHIuE7c9YJvS/mUTzwL6CqlnmiCb6GOnWJ+krCxlVVXBZUgVPxYc/n/n
+         TnrRwiaiWDubZajSA0M74/eMv36ocKcn4sfHSeCDXal9iIfTu/8V9bl4eom01fb4Hghy
+         le4ALT2gAr707qS/x1d8WugQBf98ZpbcFmO9bXo2nQ24HWJY4otdxNcYGBJbVzOMv5mW
+         Dh1ZHvM43Go5BlVWct0ABfjJ2ZxwjDUGkTb8P5u+aw56YYLp6ViaX2AEz49HZyko9v8H
+         S5H0KeRLdBO4NJMKdCB00Sd4kVOdLj5VvSgGpVvau2GPv7r6pvw/l8S2vJl2njoSVV3g
+         VUlg==
+X-Gm-Message-State: AElRT7HYZrbJsFST2E7RJxAQL4htMmYyiyO8VP8YJ17Bt2PB99nxotWA
+        gZr2FRXDrb8z46WcZcv02gFqIGJ8YuATgCrpjWg=
+X-Google-Smtp-Source: AG47ELuLvnzpV1l1nXur9m03EbTMs1TU07Io05xyGOfrLYuDpTfo0y07Pk1t1Ujqw5sAH/w7vK7RUYOSe6vHhj+59w8=
+X-Received: by 10.157.85.214 with SMTP id z22mr15947504oti.75.1520416893504;
+ Wed, 07 Mar 2018 02:01:33 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.12.142.14 with HTTP; Wed, 7 Mar 2018 01:36:08 -0800 (PST)
-In-Reply-To: <1520370729-sup-3241@x1c>
-References: <1520337165-sup-4504@x1c> <CAPig+cRYsf161-Xomw7daj8XdEBxZAEQQRdOn4krRTpSAFkPOw@mail.gmail.com>
- <1520370729-sup-3241@x1c>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 7 Mar 2018 04:36:08 -0500
-X-Google-Sender-Auth: QOxy-rAYEIvQMAcgzf4VULx95wA
-Message-ID: <CAPig+cToTv063z-HB=8Y9LkpbqQaKCVJG_nU0Qd7O9ZdJY-p6g@mail.gmail.com>
-Subject: Re: [PATCH] xdiff: improve trimming preprocessing
-To:     Jun Wu <quark@fb.com>
-Cc:     git <git@vger.kernel.org>
+Received: by 10.74.25.140 with HTTP; Wed, 7 Mar 2018 02:01:02 -0800 (PST)
+In-Reply-To: <CAPig+cRGMEjVbJZKXOskN6=5zchisx7UuwW9ZKGwoq5GQZQ_rw@mail.gmail.com>
+References: <aa98f187-4b1a-176d-2a1b-826c995776cd@aegee.org>
+ <CAPig+cSGJhNR8dapLXN0TU8ZpTqi7m6OQf_cCGmHc9FLGcwNyg@mail.gmail.com>
+ <adf7a7a0-3571-5b68-5d15-30a9067e3826@aegee.org> <CAPig+cTPFSbT7WxyoNEOSg=3Ft1pVzkgieGp44kHnZ9=NbYsqg@mail.gmail.com>
+ <CACsJy8BUKCG-yiYX3ouMVa44iEo0swHpTkhW3ho_T0PCP81DSw@mail.gmail.com>
+ <b34d74fa-f4c7-fb4a-49df-cd7ebd996d95@aegee.org> <CACsJy8CXEKG+WNdSPOWF7JDzPXidSRWZZ5zkdMW3N3Dg8SGW_Q@mail.gmail.com>
+ <CAPig+cRGMEjVbJZKXOskN6=5zchisx7UuwW9ZKGwoq5GQZQ_rw@mail.gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Wed, 7 Mar 2018 17:01:02 +0700
+Message-ID: <CACsJy8CCHzysHM4pJpY1Xz-8QLzRF5zj=+cjNifsHRCMUci8Fg@mail.gmail.com>
+Subject: Re: Worktree silently deleted on git fetch/gc/log
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     =?UTF-8?B?0JTQuNC70Y/QvSDQn9Cw0LvQsNGD0LfQvtCy?= 
+        <dilyan.palauzov@aegee.org>, Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 6, 2018 at 6:05 PM, Jun Wu <quark@fb.com> wrote:
-> Excerpts from Eric Sunshine's message of 2018-03-06 14:23:46 -0500:
->> On Tue, Mar 6, 2018 at 6:53 AM, Jun Wu <quark@fb.com> wrote:
->> > +  printf "x%.0s" {1..934} >>d # pad common suffix to 1024 bytes
->>
->> The expression {x..y} is not portable to non-POSIX shells.
+On Sat, Mar 3, 2018 at 5:05 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> I can't presently think of a reason why gitdir needed/used an absolute
+> or normalized path. Was it because there was some need to compare such
+> paths?
+
+No, we need to re-normalize paths before comparing anyway to be safe.
+I don't think I had any special reason for using absolute path either,
+except that dealing with it is a bit easier than relative one.
+
+>> If we stored relative path in ".git" file at least, the worktree would
+>> immediately fail after the user moves either the linked checkout, or
+>> the main one. This should send a loud and clear signal to the user
+>> "something has gone horribly" and hopefully make them connect it to
+>> the last rename and undo that. "git gc" would have near zero chance to
+>> kick in and destroy stale worktrees.
 >
-> Is there a recommended way to generate a repetitive string?
-> Maybe `seq 1000 | sed 's/.*/x/'` ?
-
-That seems reasonable, although you'd want to use the test suite's
-more portable test_seq rather than seq.
-
->> > +       /* prefix - need line count for xecfg->ptrimmed */
->> > +       for (i = 0; ++i < smaller && *ap == *bp;) {
->> > +               lines += (*ap == '\n');
->> > +               ap++, bp++;
->>
->> Is there a good reason for not placing 'ap++, bp++' directly in the 'for'?
+> It would detect if the main or linked worktree moved up or down one or
+> more directory levels or elsewhere.
 >
-> "lines += (*ap == '\n');" needs the "ap" before adding. Alternatives are
+> It would not detect if the worktree directory was merely renamed.
+
+True. We can be a bit more aggressive and check it anyway at command
+startup (once we can peek into the main .git dir, we know where this
+linked worktree is supposed to be). Or perhaps we can do this in "gc
+--auto" (even though gc may end up not doing any maintenance job).
+This command is usually called on heavy commands, adding one more
+check should not hurt.
+
+> Still, detecting some cases of breakage early may be better than not
+> detecting breakage at all.
 >
->     for (i = 0; ++i < smaller && *ap == *bp; ) /* 1 */
->         lines += (*ap++, *bp++) == '\n';
->
->     for (i = 0; ++i < smaller && *ap == *bp; ap++, bp++) /* 2 */
->         lines += (*(ap - 1) == '\n');
->
-> Maybe will pick /* 1 */ to make the code shorter.
+> Another idea may be to store the worktree's own normalized/absolute
+> path as a second line in its .git file. It could then immediately
+> detect any manual movement or renaming of itself. A minor concern,
+> though, is if there are any external tools reading that file directly
+> since they could be confused by the second line. Of course, such tools
+> hopefully would be using "git rev-parse --git-dir", so maybe it
+> wouldn't be a big deal. On the other hand, older versions of Git
+> itself would be confused by the second line, so perhaps the idea isn't
+> viable.
 
-I was thinking specifically about #2 when asking the question. The
-reason I asked is that, as one reading the code, the
-not-quite-idiomatic loop made me stop and wonder if something special
-was going on which wasn't obvious at a glance.
-
-And, apparently, I'm still wondering since I'm not groking what you mean by:
-
-    "lines += (*ap == '\n');" needs the "ap" before adding
-
-It's quite possible that I'm being dense and overlooking something
-blindingly obvious.
+Yeah I'm a bit hesitant to break that file format. Many tools ignore
+our programs and peek inside anyway, I think magit is one of them.
+-- 
+Duy
