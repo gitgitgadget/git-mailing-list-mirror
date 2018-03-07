@@ -2,64 +2,158 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 974BF1F404
-	for <e@80x24.org>; Wed,  7 Mar 2018 13:17:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EA0151F404
+	for <e@80x24.org>; Wed,  7 Mar 2018 13:27:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753949AbeCGNRC (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Mar 2018 08:17:02 -0500
-Received: from mout.gmx.net ([212.227.15.15]:39851 "EHLO mout.gmx.net"
+        id S1754418AbeCGN1W (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Mar 2018 08:27:22 -0500
+Received: from mail.javad.com ([54.86.164.124]:57299 "EHLO mail.javad.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751156AbeCGNRB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Mar 2018 08:17:01 -0500
-Received: from [172.16.5.73] ([84.88.84.116]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LtZcC-1ejQ1E0nCu-010tiu; Wed, 07
- Mar 2018 14:16:56 +0100
-Date:   Wed, 7 Mar 2018 14:16:57 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Siddhartha Mishra <sidm1999@gmail.com>
-cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [GSoC] [PATCH] travis-ci: added clang static analysis
-In-Reply-To: <CAMOtk6BafDOX6PkOs=KVPp5rf1wF3Zq9ZWMAiKgw+EN2KTsndg@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1803071416350.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <20180305200400.3769-1-sidm1999@gmail.com> <xmqqpo4i6lj0.fsf@gitster-ct.c.googlers.com> <CAMOtk6BafDOX6PkOs=KVPp5rf1wF3Zq9ZWMAiKgw+EN2KTsndg@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1754279AbeCGN1V (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Mar 2018 08:27:21 -0500
+Received: from osv (unknown [89.175.180.246])
+        by mail.javad.com (Postfix) with ESMTPSA id 2C8F43E8AB;
+        Wed,  7 Mar 2018 13:27:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1520429240;
+        bh=4LNAZApKvdMEdY/fOtCcZ/q4toW4mYvuWsppB582jVY=; l=1892;
+        h=Received:From:To:Subject;
+        b=WyqNqdk4N1HGazUCSAQCYzcaezTA4Sh79FJOZnmQfz/sBOED8e5iJgQmBkLFCTHLo
+         4TrXNYZ1Riu4MXaH4qIeLyneqBECsyuHk9Tbyr8bOxx7s0Ny4fkp8CT9rmflb0OUN6
+         TuXgh2ITnRRywKCBDrGzAfBeM9FKk1s9WFmGYEVc=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1520429240;
+        bh=4LNAZApKvdMEdY/fOtCcZ/q4toW4mYvuWsppB582jVY=; l=1892;
+        h=Received:From:To:Subject;
+        b=WyqNqdk4N1HGazUCSAQCYzcaezTA4Sh79FJOZnmQfz/sBOED8e5iJgQmBkLFCTHLo
+         4TrXNYZ1Riu4MXaH4qIeLyneqBECsyuHk9Tbyr8bOxx7s0Ny4fkp8CT9rmflb0OUN6
+         TuXgh2ITnRRywKCBDrGzAfBeM9FKk1s9WFmGYEVc=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1520429240;
+        bh=4LNAZApKvdMEdY/fOtCcZ/q4toW4mYvuWsppB582jVY=; l=1892;
+        h=Received:From:To:Subject;
+        b=WyqNqdk4N1HGazUCSAQCYzcaezTA4Sh79FJOZnmQfz/sBOED8e5iJgQmBkLFCTHLo
+         4TrXNYZ1Riu4MXaH4qIeLyneqBECsyuHk9Tbyr8bOxx7s0Ny4fkp8CT9rmflb0OUN6
+         TuXgh2ITnRRywKCBDrGzAfBeM9FKk1s9WFmGYEVc=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1520429240;
+        bh=4LNAZApKvdMEdY/fOtCcZ/q4toW4mYvuWsppB582jVY=; l=1892;
+        h=Received:From:To:Subject;
+        b=WyqNqdk4N1HGazUCSAQCYzcaezTA4Sh79FJOZnmQfz/sBOED8e5iJgQmBkLFCTHLo
+         4TrXNYZ1Riu4MXaH4qIeLyneqBECsyuHk9Tbyr8bOxx7s0Ny4fkp8CT9rmflb0OUN6
+         TuXgh2ITnRRywKCBDrGzAfBeM9FKk1s9WFmGYEVc=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1520429240;
+        bh=4LNAZApKvdMEdY/fOtCcZ/q4toW4mYvuWsppB582jVY=; l=1892;
+        h=Received:From:To:Subject;
+        b=WyqNqdk4N1HGazUCSAQCYzcaezTA4Sh79FJOZnmQfz/sBOED8e5iJgQmBkLFCTHLo
+         4TrXNYZ1Riu4MXaH4qIeLyneqBECsyuHk9Tbyr8bOxx7s0Ny4fkp8CT9rmflb0OUN6
+         TuXgh2ITnRRywKCBDrGzAfBeM9FKk1s9WFmGYEVc=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1520429240;
+        bh=4LNAZApKvdMEdY/fOtCcZ/q4toW4mYvuWsppB582jVY=; l=1892;
+        h=Received:From:To:Subject;
+        b=WyqNqdk4N1HGazUCSAQCYzcaezTA4Sh79FJOZnmQfz/sBOED8e5iJgQmBkLFCTHLo
+         4TrXNYZ1Riu4MXaH4qIeLyneqBECsyuHk9Tbyr8bOxx7s0Ny4fkp8CT9rmflb0OUN6
+         TuXgh2ITnRRywKCBDrGzAfBeM9FKk1s9WFmGYEVc=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1520429240;
+        bh=4LNAZApKvdMEdY/fOtCcZ/q4toW4mYvuWsppB582jVY=; l=1892;
+        h=Received:From:To:Subject;
+        b=WyqNqdk4N1HGazUCSAQCYzcaezTA4Sh79FJOZnmQfz/sBOED8e5iJgQmBkLFCTHLo
+         4TrXNYZ1Riu4MXaH4qIeLyneqBECsyuHk9Tbyr8bOxx7s0Ny4fkp8CT9rmflb0OUN6
+         TuXgh2ITnRRywKCBDrGzAfBeM9FKk1s9WFmGYEVc=
+Authentication-Results: mail.javad.com;
+        spf=pass (sender IP is 89.175.180.246) smtp.mailfrom=osv@javad.com smtp.helo=osv
+Received-SPF: pass (mail.javad.com: connection is authenticated)
+Received: from osv by osv with local (Exim 4.84_2)
+        (envelope-from <osv@osv.gnss.ru>)
+        id 1etZ6E-000196-HX; Wed, 07 Mar 2018 16:27:18 +0300
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [RFC v2] Rebasing merges: a jorney to the ultimate solution (Road Clear)
+References: <87y3jtqdyg.fsf@javad.com> <87r2oxe3o1.fsf@javad.com>
+        <nycvar.QRO.7.76.6.1803070742580.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+Date:   Wed, 07 Mar 2018 16:27:18 +0300
+In-Reply-To: <nycvar.QRO.7.76.6.1803070742580.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        (Johannes Schindelin's message of "Wed, 7 Mar 2018 07:46:17 +0100
+        (STD)")
+Message-ID: <87vae8yq15.fsf@javad.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:QizMwgkoK4A8b/mQO+d97kBXNK+PxfrW+G38N/XffPRcxsc4LBX
- GPptQwQg9KqnnETxrlfPM2XUvF7SZXPO3VduGnRlmvIkUPdAVM+oHqrPWZil0ObCNKV7MfJ
- rvmhd0M7096fUDt3WkTJHClKbLKKDTUhHoukV3CSFp9CGxMod9dUzkZ3YBtJqbm0sTOoiB2
- 8VR4RX6UWQenBiM+RPp+Q==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:k309/jwv0c4=:hP37rV6jo3g4WRK75XxHX3
- b0Tdb36wZyYsvvI2u7zlSa44AH8F4HhScwh0UPu0v1v4wGvoi2a63YZ2yyGnN+TRY66ZBxuU/
- 4K2SilxR37tDwO+I1/KeM52rEX8g6he0Lc9duXYr6lIPcZXw5+zStVecOHJFOTyxEjFD2a0rv
- nXdHosJm/cd1SszEc1tKTqXphl6dehbQ2EgsN1YnvP6EaVLpr3w5BcLnAW/YdyVONvYSIYcwG
- Dm7JTEdJSOSZRW3cOjo09x10kmdmPCHzRrdcQCWVXKBzsOTrBdNjSNkE/jyu6wn9YKM1c7HhF
- Lk9g/T6gTjNzyGIysqJz+7ph+KPkIi6mCoYjz/xcBYF7MzbW6CBi2HSRGfzjMcNKN4hf7xnNu
- JfJ59fKvLb3hsReiEp9IXVP+Of8HcpSHRP/RjO93XMUMLjfG+RVtQ8FvPBZhkxdQa0Kb7bmNI
- uxCLtmg8M1VjzyXvsPK7R208+gDXcihtQsQQf5Z9jPSTM3T8jGlt9t2A4uD97MWtEIf6vfXCQ
- tcYDdRT0/4DY7h8ghEAvbCuQ+1y/gPJE2LK/in5W8/XNhKsyTTsGnL5fjwY3S4hkKrwrXZq06
- KohEQFhcrSSDiHlg4lxngYKuKjQv82h6pwr7H1FXTYo/+K+RuDKNkCHbDeT688AviCTixfXSn
- uHOclhs4qW1GZ6CfRiqzIGRaF/1fTakxcywc++xxRbgcvZDK+mqZEef/yBhlgELEI8D5LYpGA
- EpPCLqhPXOFofNZZpZBBhCJdKGRv6prtneEC30+VeMF93f43VJM/69FQRBwGPifCcLVl6+kvA
- OxxUV/fVwpDvPpFuZNES+huoY5N4ShPE4zd9fiCHtNAu7DwO+4=
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hi Johannes,
 
-On Tue, 6 Mar 2018, Siddhartha Mishra wrote:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> Are there any other glaring issues you see in the code?
+> Hi Sergey,
+>
+> On Tue, 6 Mar 2018, Sergey Organov wrote:
+>
+>> This is v2 of my "Rebasing merges" proposal.
+>
+> Didn't we settle on Phillip's "perform successive three-way merges between
+> the original merge commit and the new tips with the old tips as base"
+> strategy?
 
-The rest looks good to me!
+It seems you did, dunno exactly why.
 
-Ciao,
-Johannes
+The main problem with this decision is that we still don't see how and
+when to stop for user amendment using this method. OTOH, the original
+has this issue carefully discussed.
+
+> It has the following advantages:
+>
+> - it is *very simple* to describe
+
+The original is as simple if not simpler:
+
+"rebase sides of the merge commit and then three-way merge them back
+using original merge commit as base"
+
+No problems with octopuses, and no virtual merge bases of recursive
+merges to reason about.
+
+> - it is *very easy* to reason about, once it is pointed out that rebases
+>   and merges result in the same trees.
+
+The original is as easy to reason about, if not easier, especially
+as recursive merge strategy is not being used there in new ways.
+
+I honestly don't see any advantages of Phillip's method over the
+original, except personal preferences. At the same time, I have no
+objection of using it either, provided consistency check problem is
+solved there as well.
+
+>
+> ... and BTW...
+>
+>> 3. I now use "True Merge" name instead of former "Trivial Merge", to
+>>    avoid confusion with what Git documentation calls "trivial merge",
+>>    thanks to Junio C Hamano <gitster@pobox.com> for pointing this out.
+>
+> "True Merge" is probably also a candidate for improvement. If what you
+> refer to is a "true" merge, that means all others are "untrue"
+> merges???
+
+[d]evil merges, obviously.
+
+Seriously, it's pure history joint. Just "joint' will do.
+
+-- Sergey
