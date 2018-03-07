@@ -2,92 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BFC091F404
-	for <e@80x24.org>; Wed,  7 Mar 2018 21:56:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F167B1F404
+	for <e@80x24.org>; Wed,  7 Mar 2018 22:06:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934062AbeCGV4v (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Mar 2018 16:56:51 -0500
-Received: from mail-wr0-f182.google.com ([209.85.128.182]:45793 "EHLO
-        mail-wr0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933780AbeCGV4u (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Mar 2018 16:56:50 -0500
-Received: by mail-wr0-f182.google.com with SMTP id p104so3676248wrc.12
-        for <git@vger.kernel.org>; Wed, 07 Mar 2018 13:56:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:subject:to:message-id:date:user-agent:mime-version
-         :content-language:content-transfer-encoding;
-        bh=gdLrnqOXVuOWZEzlB6Je4O13XaIbrSVKXWpOKjCrcjU=;
-        b=geu3Lc+Bm56NDXqI8ecXs7zoxJfCq895ss8lOS6baUHmfK0AltYF7xoT3AeJMHTJSf
-         Xm0g44rMtzxPNFYqA7TLonZejIVtBhP6faIDc2NpFVqjVymd6BtSFfiJmOsReOCWL6Dh
-         AW1x/ybZx08b6N2uBVImFp0x+GLlrWjWNikdJO5k1adZZo/YhespHNZhNHc8JErdRIQi
-         0PkR9lrTkaNMR50qgkQx/cjmtvdAllavPf7f0bq/TmCm0UBDHKIL2JGfZRahIVT1N5xv
-         JWg8WwMDlSVUKJRePtaI5OfkUCi5+p2NQQGALJQIID58fSHGihORmVt8k9qKVe4RwDaU
-         8yrg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:subject:to:message-id:date:user-agent
-         :mime-version:content-language:content-transfer-encoding;
-        bh=gdLrnqOXVuOWZEzlB6Je4O13XaIbrSVKXWpOKjCrcjU=;
-        b=HZDW/+EeEkV3BCitTuzvNDxp1QW4Cq3ilhRC7ymhh74bKdUJiYhbwnrLqEyTwidvex
-         gZlC1AsdS0nWqRT/4TkyTSEP3lflIN/BjiStDrxbMe3hQLwEm3Be7vlLkt04162ffsbp
-         okt4LdE9J0Z/Z/3J2czLb9BZ3viHbZ+aJKV7iuolK743aCNh8xs7A3FSQh6c4o/gwEts
-         kbA6uKuAQ6mZaCfwuM5FxXR4DwsdumLeOUwrtLpiwkElWePZkNd2e121cMYIRLqJlCLd
-         EQ0nAUlS2ngVAEDl3V3B8ATOe7vwwIhGraNIG/YeUgkRaxLtbtUmbZOdld2lqeTVAwKJ
-         RRKA==
-X-Gm-Message-State: APf1xPAP76PsQnwELDY9/glgu7wMyaKP9xCv8EMnyeZPIRn8Fiu3Vvg0
-        Ycz6wqdoQYv4TGf0Nxn0IfjAJpAq
-X-Google-Smtp-Source: AG47ELst3wIkKF+PXGiqm7bTW3i/+AJ2FQqIh9V6nXUEcYFMqj+KkJA1GAEzaTbZeMS4d8qCqkSOsw==
-X-Received: by 10.223.191.6 with SMTP id p6mr19707950wrh.247.1520459809432;
-        Wed, 07 Mar 2018 13:56:49 -0800 (PST)
-Received: from [192.168.0.104] (AToulouse-658-1-177-54.w86-199.abo.wanadoo.fr. [86.199.164.54])
-        by smtp.gmail.com with ESMTPSA id 142sm15268309wmq.47.2018.03.07.13.56.48
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 07 Mar 2018 13:56:48 -0800 (PST)
-From:   Alban Gruin <alban.gruin@gmail.com>
-Subject: [GSoC] Questions about "convert interactive rebase to C"
-To:     Git List <git@vger.kernel.org>
-Message-ID: <43904e83-4ada-a550-430d-b70364bdc567@gmail.com>
-Date:   Wed, 7 Mar 2018 22:56:48 +0100
+        id S933418AbeCGWG4 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Mar 2018 17:06:56 -0500
+Received: from mail.netzguerilla.net ([217.11.57.120]:55375 "EHLO
+        mail.netzguerilla.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933251AbeCGWGz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Mar 2018 17:06:55 -0500
+Received: from localhost (localhost [127.0.0.1])
+        by mail.netzguerilla.net (Postfix) with ESMTP id 69A9D100019;
+        Wed,  7 Mar 2018 23:06:54 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at netzguerilla.net
+Received: from mail.netzguerilla.net ([IPv6:2a00:1828:2000:612::25])
+        by localhost (sal.netzguerilla.net [IPv6:::1]) (amavisd-new, port 10024)
+        with ESMTP id Gv-ZmAk_ahLK; Wed,  7 Mar 2018 23:06:53 +0100 (CET)
+Received: from [IPv6:2003:dd:ff29:a301:1c94:69ca:ad13:165a] (p200300DDFF29A3011C9469CAAD13165A.dip0.t-ipconnect.de [IPv6:2003:dd:ff29:a301:1c94:69ca:ad13:165a])
+        by mail.netzguerilla.net (Postfix) with ESMTPSA id 0ACEE100012;
+        Wed,  7 Mar 2018 23:06:52 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=projektwerkstatt.de;
+        s=fckp; t=1520460413;
+        bh=ChToORyThJR2Lvyh0WwNy53wH29TKM54CoXta8AjWss=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=KTflPAzH9NFwo0vmRaENHkib07pZ1D1TWqhgj56BnsSIdMdkAZg2R3AwS0b8Px372
+         xFQ/BtbMgwxPJa6vRKwoRAnk56WFwXOWXJlZKojV5GgwGtKGTuIDuYhLEUyD4isTSO
+         mxlKZy0JFJ5A5B79Sgs4KoZX88RYaE6Tr+GhXNvpZKhdzuRIjCS3fQXkpJHvZziDPc
+         eXxcmm8rifK5LTi9ky4n1sjyECx29APR9Vimt3waCU9PEc9VEdldHN0t3mwG98qguw
+         tTBCrod2MYdvdSi4DN75pCH3YZDBXNS1nfvm5Lfe2vcaZorBoz8c5cj4zkENlVlvKX
+         Mo6gTnxNSJO7A==
+Subject: Re: man gittutorial: patch proposal
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     git@vger.kernel.org
+References: <d34357b0-45a4-d22b-9a53-1a376addbd53@projektwerkstatt.de>
+ <20180305232531.GH28067@aiede.svl.corp.google.com>
+From:   kalle <kalle@projektwerkstatt.de>
+Message-ID: <add4c7a8-eeda-6388-e417-7b24bde397e4@projektwerkstatt.de>
+Date:   Wed, 7 Mar 2018 23:06:45 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
+ Thunderbird/52.1.1
 MIME-Version: 1.0
+In-Reply-To: <20180305232531.GH28067@aiede.svl.corp.google.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: fr-FR
-Content-Transfer-Encoding: 8bit
+Content-Language: de-DE
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+hello.
+1.I understood, that verbose commands are quoted in ` ' or ' '. While
+the points I changed are not verbose commands. Therefore I didn't see
+any sense in them. Because of the different quoting ways (e.g. `merge`),
+I thought that someone didn't understand the quoting concept. But it
+could also be me...
 
-I was reading the email related to the "convert interactive rebase to C"
-idea[1], and I have a few questions about it:
+2.yes please. I will read this section.
 
-> So the first goal would be to retire git-rebase--interactive.sh. For that
-> to happen, --root needs to be supported first.
+kalle
 
-Combining rebase -i and --root seems to work fine, am I mistaking? Is
-there still work to be done here?
-
-
-> And then the
-> command-line option parsing needs to be moved to rebase--helper, too.
-
-rebase--helper was originally made for rebase--interactive, and it is
-still the only script that uses it, according to git-grep.  If someone
-rewrites rebase--interactive in C, why parse the command line in
-rebase--helper instead of retiring it? Is there other plans that I missed?
-
-Regards, Alban.
-
-
-[1]
-https://public-inbox.org/git/alpine.DEB.2.20.1609021432070.129229@virtualbox/
+Am 06.03.2018 um 00:25 schrieb Jonathan Nieder:
+> Hi,
+> 
+> kalle wrote:
+> 
+>> see attachment.
+> 
+> Thanks for writing.  A few questions:
+> 
+>  1. Can you say a little more about the rationale for this change?
+>     E.g. is the current formatting sending a confusing message?  Is the
+>     current formatting intending to use '' as quotes and using italics
+>     instead?  If so, should this use "" to fix it?
+> 
+>  2. May we forge your sign-off? See the section "Certify your work"
+>     in Documentation/SubmittingPatches for more about what this means.
+> 
+> Thanks,
+> Jonathan
+> 
