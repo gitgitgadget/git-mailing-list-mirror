@@ -2,175 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5A7691F404
-	for <e@80x24.org>; Wed,  7 Mar 2018 18:04:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4CA611F404
+	for <e@80x24.org>; Wed,  7 Mar 2018 18:20:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754066AbeCGSEr (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Mar 2018 13:04:47 -0500
-Received: from mail-qt0-f173.google.com ([209.85.216.173]:34080 "EHLO
-        mail-qt0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753168AbeCGSEq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Mar 2018 13:04:46 -0500
-Received: by mail-qt0-f173.google.com with SMTP id l25so3720783qtj.1
-        for <git@vger.kernel.org>; Wed, 07 Mar 2018 10:04:45 -0800 (PST)
+        id S1754279AbeCGSUF (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Mar 2018 13:20:05 -0500
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:40027 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753168AbeCGSUE (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Mar 2018 13:20:04 -0500
+Received: by mail-wm0-f66.google.com with SMTP id t6so6496491wmt.5
+        for <git@vger.kernel.org>; Wed, 07 Mar 2018 10:20:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=9+tC5fctH9yzoT3Gck1Q+HpPArI2hH56HPh6IrLVVSQ=;
-        b=l2E66kK1LR4++0nCegGwMbG93mOy3i+GXtLzTfA/bh8EtiyiQWjQTuQTLsEA3Vt/vx
-         /XKGD57ViXoemG8RGI0P5M+gFOnXrwmXwDMjNZHXd/5axKwOdhAMaDtSeJAQKA5U5lNb
-         lDILCHCi2lqlkgV1K6v1W+pp150mEVMiW9fcv7fSPvM4uvhv/tCatPmToQkZ2Uz+N64B
-         477wHk/s1zuaw1d519+Ej1dmceP1bJQNsxaJgx5udM2dpBvq6qeBJiOKYPGyXS2vs8m8
-         +DnUFVh5/jG1ueMYe26rQWWQQCeDqytmbF0KF4flxY/QcYzS2fmlzQWkUwHiVSsCLV9B
-         kIfA==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=nboMftfXmq5H0tb9q4Myzwp99jt4YSLgQmiL5D9bLt8=;
+        b=JP7RdyH8Xw1J3CbZ/1edwOuFmYcqugEUYcOjx18ot0mdOdM/rV8G3Fs5EBtsKKqPwE
+         g7kcOJX7s1+MlfVqeCF7jqy0tTZntEFuInrNMD43n1B/07R4raglSzUp9bGfMExWHfK7
+         P/kG/w87/H8Fiz537nO6rxO7EgmziHV+ujKA2N7iChZ5WWznBIPvroG7IvasF8H5IkrJ
+         R6dbBJ7P5UbRoi6eJKzSB7/u6VADL6uLJW0YbKe/VmXDMuKuuIHCB62xv0cnvUQTGjkx
+         DHa1EA+pRd4hObW4q2DNvI4wI4Scs4JwzEiYnbm9NKe/SwOkGTgr/xDCHwvWgFOAFS5U
+         mhkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=9+tC5fctH9yzoT3Gck1Q+HpPArI2hH56HPh6IrLVVSQ=;
-        b=IPLmUI8PcNy5k9B4ibTDtrihpf5OS/GK6UX2Z3XFX3f+FymyDCIbaWVjBqpLfT4JwY
-         rJH5CTP+fH+mxQhyNcJKclRvqSqd/9ISPivAv6ESc2o11tSbQcbGlnrCkue1bB6tu4T6
-         SEEGNM27yVPxK9AhVbx4EWEtZm7BdXl15+HvzE4MZvKSCxJ6rbZ9PctbxZASYxdhx7vk
-         1qcy7plS0KAJVoLXMkatBCnYKb/PI0DP4afjAjs4LpCiGqINMFYhFYunPhT9apHeA2Hv
-         31IQGCYtNVGE0Ji/iueTbEb/Wo1XVY0Kqbzc+Vfm/2FZgjFH2S2hKcGVOLpFkJgcqHKR
-         yNtw==
-X-Gm-Message-State: AElRT7FhWjd5da40MxGoJbakXFmuIlFkjI7Js7/XDR4RU+3dVL8yfLmf
-        d1V4vMHr5SrdSHwPlZUNcd8N10l8Zmg5ciGI+B4=
-X-Google-Smtp-Source: AG47ELuDXIk9Sza7sBu6Em/O0OPpcu9FGTmlVfTi3GQPv7Q0z9FZ0UvceRYUpCE5cTiNBfrGI4HmKAbdJyipRT8kaSc=
-X-Received: by 10.237.62.233 with SMTP id o38mr34021050qtf.3.1520445885298;
- Wed, 07 Mar 2018 10:04:45 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=nboMftfXmq5H0tb9q4Myzwp99jt4YSLgQmiL5D9bLt8=;
+        b=pE/c+EJBB15cCxCuCAYWIExKF3DHdWD6ptuDPqpZlB6p6+kg0KdkilHQScO2ENTw0W
+         e6tInkSs3VeyB4XEaPkmt+hvUUJmgUNTTA/DGSRPklaZ0/F8bso2xwicbQxnJ0shpxGV
+         Rqv4Q/1QGMP4TFZU/BvOnlsdscUKhH1kGocXAZk0GenhLdHHGlxUqoYci0baEqo6Vn8q
+         eBxMl/2dRMV3BVaSP3RqnHbaX9wZ94P4KFXc9rstoxLxvaIQH2QmLWNprHNekvIfC6/7
+         QW1LR64pP2WlrfMnJyCj7sl+xxBK+Le0yqSNL6bnt8Pt8ROWG0tXrY2GnRt3ZeJWiH0n
+         ztMw==
+X-Gm-Message-State: AElRT7E9u7pNM5558cW9iFpnF2/xzCaa7gJfcV2lDSjmpZFCYsRT+gCF
+        LgC1IaGA5Cy60eKYRh1EIhA=
+X-Google-Smtp-Source: AG47ELunbsOwHeIBcXWS4xBNuiSqf9grcmjTCth0dTJMvOdRZ2AjU1+FuBl95nzvVxyFoaFVhO/AXg==
+X-Received: by 10.28.9.19 with SMTP id 19mr16817047wmj.114.1520446802865;
+        Wed, 07 Mar 2018 10:20:02 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id s2sm15374214wmf.0.2018.03.07.10.20.01
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 07 Mar 2018 10:20:01 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Sergey Organov <sorganov@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [RFC] Rebasing merges: a jorney to the ultimate solution(RoadClear)
+References: <87y3jtqdyg.fsf@javad.com>
+        <nycvar.QRO.7.76.6.1802270051470.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        <CA+P7+xq8UUcLWomUi=PS_hTKfJd3dMAxMmhioDS1bixwcmKAqw@mail.gmail.com>
+        <nycvar.QRO.7.76.6.1802271718090.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        <4d7f3406-b206-cc22-87df-85700d6a03d9@gmail.com>
+        <33da31e9-9101-475d-8901-4b6b3df2f29d@gmail.com>
+        <940d959d-151d-68dd-0f13-320ebad0d75b@gmail.com>
+        <87606hoflx.fsf@javad.com>
+        <0ac3a3fd-4053-e32e-75ed-8829f22c2e1f@gmail.com>
+        <87a7vss6ax.fsf@javad.com>
+        <f1a960dc-cc5c-e7b0-10b6-39e5516655b3@gmail.com>
+        <ed4d2b30-2dea-740b-6283-973c798f619d@philandanna.no-ip.org>
+        <1298a701-a860-a675-83d7-72f29e14cd2b@talktalk.net>
+        <CA+P7+xpgChuvh_vsPktBkOEhF=MjJh1n_3jD0-n4d67j9kYqzw@mail.gmail.com>
+        <ee809701-a6d8-157d-09cd-cebbf2e949ec@gmail.com>
+        <1580e48a-be44-38dd-79af-8a2a31c5712e@talktalk.net>
+        <nycvar.QRO.7.76.6.1803061812090.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        <xmqqzi3k23fu.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1803070804440.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+Date:   Wed, 07 Mar 2018 10:20:00 -0800
+In-Reply-To: <nycvar.QRO.7.76.6.1803070804440.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        (Johannes Schindelin's message of "Wed, 7 Mar 2018 08:09:57 +0100
+        (STD)")
+Message-ID: <xmqqh8pr21f3.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.12.142.14 with HTTP; Wed, 7 Mar 2018 10:04:44 -0800 (PST)
-In-Reply-To: <20180307173026.30058-8-lars.schneider@autodesk.com>
-References: <20180307173026.30058-1-lars.schneider@autodesk.com> <20180307173026.30058-8-lars.schneider@autodesk.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 7 Mar 2018 13:04:44 -0500
-X-Google-Sender-Auth: P2KLpS3W0STgJwTMkWT8Zh3S7Yo
-Message-ID: <CAPig+cTsRufRNZbKJS-02fvbtaLB30FO3Em6HR_LZrsK+CfOjw@mail.gmail.com>
-Subject: Re: [PATCH v10 7/9] convert: check for detectable errors in UTF encodings
-To:     Lars Schneider <lars.schneider@autodesk.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-        Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Lars Schneider <larsxschneider@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 7, 2018 at 12:30 PM,  <lars.schneider@autodesk.com> wrote:
-> Check that new content is valid with respect to the user defined
-> 'working-tree-encoding' attribute.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+
+>> OK, does this mean we want to wait before merging the "recreate
+>> merge" topic down to 'next'?  For more than a few weeks, it has been
+>> slated for 'next'.
 >
-> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
-> ---
-> diff --git a/convert.c b/convert.c
-> @@ -266,6 +266,58 @@ static int will_convert_lf_to_crlf(size_t len, struct text_stat *stats,
-> +static int validate_encoding(const char *path, const char *enc,
-> +                     const char *data, size_t len, int die_on_error)
-> +{
-> +       /* We only check for UTF here as UTF?? can be an alias for UTF-?? */
-> +       if (startscase_with(enc, "UTF")) {
-> +               /*
-> +                * Check for detectable errors in UTF encodings
-> +                */
-> +               if (has_prohibited_utf_bom(enc, data, len)) {
-> +                       const char *error_msg = _(
-> +                               "BOM is prohibited in '%s' if encoded as %s");
-> +                       /*
-> +                        * This advice is shown for UTF-??BE and UTF-??LE encodings.
-> +                        * We cut off the last two characters of the encoding name
-> +                        # to generate the encoding name suitable for BOMs.
+> Maybe a few more days.
+> ...
+> I want to discuss this in the other subthread, though.
 
-s/#/*/
+If we are talking about a drastic change, a few more days may not be
+sufficient, but we are not in a hurry, as this already sounds like a
+2.18 material anyway.  As you made it clear that it is OK not to
+merge the current one for now, my objective of asking the question
+is already satisfied ;-)
 
-> +                        */
-> +                       const char *advise_msg = _(
-> +                               "The file '%s' contains a byte order "
-> +                               "mark (BOM). Please use %s as "
-> +                               "working-tree-encoding.");
-> +                       char *upper_enc = xstrdup_toupper(enc);
-> +                       upper_enc[strlen(upper_enc)-2] = '\0';
-
-Due to startscase_with(...,"UTF"), we know at this point that the
-string is at least 3 characters long, thus it's safe to back up by 2.
-Good.
-
-> +                       advise(advise_msg, path, upper_enc);
-> +                       free(upper_enc);
-> +                       if (die_on_error)
-> +                               die(error_msg, path, enc);
-> +                       else {
-> +                               return error(error_msg, path, enc);
-> +                       }
-> diff --git a/t/t0028-working-tree-encoding.sh b/t/t0028-working-tree-encoding.sh
-> @@ -62,6 +62,46 @@ test_expect_success 'check $GIT_DIR/info/attributes support' '
->  for i in 16 32
->  do
-> +       test_expect_success "check prohibited UTF-${i} BOM" '
-> +               test_when_finished "git reset --hard HEAD" &&
-> +
-> +               echo "*.utf${i}be text working-tree-encoding=utf-${i}be" >>.gitattributes &&
-> +               echo "*.utf${i}le text working-tree-encoding=utf-${i}le" >>.gitattributes &&
-
-v10 is checking only hyphenated lowercase encoding name; earlier
-versions checked uppercase. For better coverage, it would be nice to
-check several combinations: all uppercase, all lowercase, mixed case,
-hyphenated, not hyphenated.
-
-I'm not suggesting running all the tests repeatedly but rather just
-varying the format of the encoding name in these tests you're adding.
-For instance, the above could instead be:
-
-    echo "*.utf${i}be text working-tree-encoding=UTF-${i}be" >>.gitattributes &&
-    echo "*.utf${i}le text working-tree-encoding=utf${i}LE" >>.gitattributes &&
-
-or something.
-
-> +               # Here we add a UTF-16 (resp. UTF-32) files with BOM (big/little-endian)
-> +               # but we tell Git to treat it as UTF-16BE/UTF-16LE (resp. UTF-32).
-> +               # In these cases the BOM is prohibited.
-> +               cp bebom.utf${i}be.raw bebom.utf${i}be &&
-> +               test_must_fail git add bebom.utf${i}be 2>err.out &&
-> +               test_i18ngrep "fatal: BOM is prohibited .* utf-${i}be" err.out &&
-> +
-> +               cp lebom.utf${i}le.raw lebom.utf${i}be &&
-> +               test_must_fail git add lebom.utf${i}be 2>err.out &&
-> +               test_i18ngrep "fatal: BOM is prohibited .* utf-${i}be" err.out &&
-> +
-> +               cp bebom.utf${i}be.raw bebom.utf${i}le &&
-> +               test_must_fail git add bebom.utf${i}le 2>err.out &&
-> +               test_i18ngrep "fatal: BOM is prohibited .* utf-${i}le" err.out &&
-> +
-> +               cp lebom.utf${i}le.raw lebom.utf${i}le &&
-> +               test_must_fail git add lebom.utf${i}le 2>err.out &&
-> +               test_i18ngrep "fatal: BOM is prohibited .* utf-${i}le" err.out
-> +       '
-> +
-> +       test_expect_success "check required UTF-${i} BOM" '
-> +               test_when_finished "git reset --hard HEAD" &&
-> +
-> +               echo "*.utf${i} text working-tree-encoding=utf-${i}" >>.gitattributes &&
-
-This is another opportunity for checking a variation (case,
-hyphenation) of the encoding name rather than using only hyphenated
-lowercase.
-
-> +
-> +               cp nobom.utf${i}be.raw nobom.utf${i} &&
-> +               test_must_fail git add nobom.utf${i} 2>err.out &&
-> +               test_i18ngrep "fatal: BOM is required .* utf-${i}" err.out &&
-> +
-> +               cp nobom.utf${i}le.raw nobom.utf${i} &&
-> +               test_must_fail git add nobom.utf${i} 2>err.out &&
-> +               test_i18ngrep "fatal: BOM is required .* utf-${i}" err.out
-> +       '
