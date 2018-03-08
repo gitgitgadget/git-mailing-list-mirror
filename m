@@ -2,74 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E5F231F404
-	for <e@80x24.org>; Thu,  8 Mar 2018 04:10:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2B6BD1FAE2
+	for <e@80x24.org>; Thu,  8 Mar 2018 06:46:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933415AbeCHEKm (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Mar 2018 23:10:42 -0500
-Received: from mail-it0-f47.google.com ([209.85.214.47]:54262 "EHLO
-        mail-it0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750761AbeCHEKm (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Mar 2018 23:10:42 -0500
-Received: by mail-it0-f47.google.com with SMTP id w63so5984971ita.3
-        for <git@vger.kernel.org>; Wed, 07 Mar 2018 20:10:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=GNAa7ej07UCQcJXkFwvEW/2Wk6TSqmMhvSsNcRPZTBM=;
-        b=u6MCKJN9RKEd6+TTB/LK5Za+sVlr/nEOs7LQx5sjWHpdzBfbBV6YFUE/sRSW+dt+cR
-         IoF7WGaesd5NyQDBTjH9CPQ7WM2pNEAje+VzjIbx+7kXtW+ASwY21juglJ8mI7duhOnF
-         yn/MUmqylB+xCyry6uBiQAat6eBllWm6nSZDVr2z7oQIFnkezEhHzfhqR/Lm57Ov0ksV
-         qmR1CYEDaTw7ybwx9NliAaTWtRfuwiIOWY4r0u9DhypjzsV81Mt7P59JjAQvvA/33YAP
-         nj5CFSAtRJQmVu6Pn1yO7qmWrCPnJLqZzOBNh2ft0X7+OHk8pVKUgQo2jFa5W9JGOw5p
-         ssKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=GNAa7ej07UCQcJXkFwvEW/2Wk6TSqmMhvSsNcRPZTBM=;
-        b=W09iKQinfaxCa/OD+tlvCqs8B0tIBEpLQiO+nutvLUrt6horJTdPqfnPR7+Qn+u/i8
-         BDtQCb0qPfk6bLEb7dL8YdKEux8Hrc2//nVSvXciUDvTMpbL6siY4u8OIQVB+WnPTJeS
-         kgkp7JFQg+dnYSJejEhg55mMb+/t2k3NdnIpDdXtNK8zrTBE2CK2s14iCXCFhgxoYZNK
-         UZJXT/AmSX4VpRSMxTYFLrKqylAIKEVQn5RXtk0nOS2z32C54C8HQ3LXVrYwU6G2qi7n
-         pkVGXJLP3VqQq6YdOTHNkgoKLn4TSSBbvlEvdFCIo1qd3j1g+ierxYelPTkUgBDw4gQq
-         uzMQ==
-X-Gm-Message-State: AElRT7FOa3c+/L8P/tdQMKfrsUKaCO3LQEk517NuDNoc1do8WRis0B/Y
-        XLx+CD9zkWpwLZrFnwwsOIMI/SwOqUACGPrQGsXzAgq4
-X-Google-Smtp-Source: AG47ELthdoW2eG3Na3qKEDMbWP5rpYvyVHBTrqiwwRLRtH8uwS69D5uMWo9hbbXUIS9kjLg6rPsRAELGJzEs+dh/oiQ=
-X-Received: by 10.36.71.72 with SMTP id t69mr27445724itb.10.1520482241249;
- Wed, 07 Mar 2018 20:10:41 -0800 (PST)
+        id S935311AbeCHGqE (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Mar 2018 01:46:04 -0500
+Received: from mout.gmx.net ([212.227.15.19]:54211 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S935294AbeCHGqC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Mar 2018 01:46:02 -0500
+Received: from [192.168.1.64] ([88.26.243.156]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MTBsk-1f4Eul3iz8-00S8p9; Thu, 08
+ Mar 2018 07:45:54 +0100
+Date:   Thu, 8 Mar 2018 07:45:51 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+To:     Sergey Organov <sorganov@gmail.com>
+cc:     phillip.wood@dunelm.org.uk,
+        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
+        Git mailing list <git@vger.kernel.org>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC] Rebasing merges: a jorney to the ultimate solution (Road
+ Clear)
+In-Reply-To: <87ina8ymxs.fsf@javad.com>
+Message-ID: <nycvar.QRO.7.76.6.1803080741160.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <87y3jtqdyg.fsf@javad.com> <bbe64321-4d3a-d3fe-8bb9-58b600fabf35@gmail.com> <nycvar.QRO.7.76.6.1802270051470.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <CA+P7+xq8UUcLWomUi=PS_hTKfJd3dMAxMmhioDS1bixwcmKAqw@mail.gmail.com>
+ <nycvar.QRO.7.76.6.1802271718090.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <4d7f3406-b206-cc22-87df-85700d6a03d9@gmail.com> <33da31e9-9101-475d-8901-4b6b3df2f29d@gmail.com> <940d959d-151d-68dd-0f13-320ebad0d75b@gmail.com> <87606hoflx.fsf@javad.com>
+ <0ac3a3fd-4053-e32e-75ed-8829f22c2e1f@gmail.com> <87a7vss6ax.fsf@javad.com> <6c8749ca-ec5d-b4b7-f1a0-50d9ad2949a5@talktalk.net> <872944c4-ca97-9f55-a424-86d1e3299a22@gmail.com> <1c912980-8ce8-6281-fa99-040a5e3e1103@talktalk.net>
+ <nycvar.QRO.7.76.6.1803061829460.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <87h8pscw0r.fsf@javad.com> <nycvar.QRO.7.76.6.1803070756550.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <87ina8ymxs.fsf@javad.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Received: by 10.2.180.179 with HTTP; Wed, 7 Mar 2018 20:10:40 -0800 (PST)
-From:   ZhenTian <loooseleaves@gmail.com>
-Date:   Thu, 8 Mar 2018 12:10:40 +0800
-Message-ID: <CAGrdoOoviEvGjg6jC0_h-zi11-Le+vva6L_2Q4A_VMM03aDr0A@mail.gmail.com>
-Subject: I got a forced update after I run git pull --rebase
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:+W86WXd74TNcyubbXoRjF3U7S3YDLUEIL9QIDkT/PEgOIf6mvuN
+ cN9eMV/wBKQIxJKIHFz5OuJICC9maRFN3m5idbFSGy75soZ//+5Mzr0zByhPLCvKABCDDlO
+ drNFberIhyq4KmCoD7ZV+g0HVf3E+skEI4OoeTsOATMVHZqD4LJvjX6ZdbKJOdGEt3PCNZx
+ Juj/NnGzDL+4xclSdGUrg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:z6vD1gtY4lE=:YvyeJy9RXUN8m/rRrmX955
+ mqjItXF3wQb0LtQ+aInc1OG4EHLWqHOtjCyjIxUrvrMONsk2BNsUzricU7UdxceEkDBxCjQOW
+ 5ycoA37VDnnQ9/WAnUVmFZgDe+4o4A7L0/iL2gABdczaIfw6dhP50y4S5byYPRFzKhMNpwC13
+ 9mBSfdDekrwhzRMW6VRToJEiDBgLfbLZGl7ka091mhd/0Yy2szar4iNN6yZASSt2EA0oUfZ2f
+ uBfBs4eUeAaoqaNAFrVDwvtR4auGq4BeKs+yk7cj7HkdX40+pVL6Tsh8C6hhoqkLdRHPQT8z5
+ wZsrN47vl/QTX9NRmU1JkFz14tE8FF/TXYC3ufdsREKiZIx41GCGjJjShFrostXhi1h2ZvAiJ
+ eHXd/09S98wGoAySqiFINqp20zLR729FiTTCshQABtlmZezIQYjAVpoH1nyu+zhbpWBRgLQue
+ kMsZLwFP4MJokh+UDXQMcjpSN1WQLxDZGSy2Q2ZDJatGXm/cbDejfgHR4D+oiMMbcKWsEm6WN
+ k/UgK7/q8nE/VOZkTuxT8XZYH+WIARMfIjOv74IudNvAlIMz7qFvVqJgfYqWqsnPsnHVMzaVD
+ 0KM9lMBFJe+TQRxVqmCcEpBzCqVDtTfQ7qxZsddAhPiw3/dPKqiOgNBNzWWaA+fWUHDbQystX
+ tj/23FKemgyPaURO70pv+6FUQUBQlsPyU4G0H9SM5z52fbkcQ6iXj1O6D4iRNph9yzPANRy5u
+ pYKEsh5tXd6XKOZCtYNYHaX4MJtw7P7/vOgVM019wP2E5TsFTvgc/qRbW4+0G2euYOWge7eCG
+ P47hBY/Sx2lO09cPOz9emPEb0VVMS9AZG3m9gwYLjs/51Qh8Lg=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I can't reproduct my issue, this is my first time, but my colleague
-came across this issue several weeks ago.
+Hi Sergey,
 
-After I pushed my commit to git server without rejection. I run git
-pull --rebase, then I got a forced update, and my last commit is
-missing.
+On Wed, 7 Mar 2018, Sergey Organov wrote:
 
-I have asked a question on StackOverflow, there is more details about
-this issue: https://stackoverflow.com/questions/49164906/why-git-pull-rebase-results-a-forced-update
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > How can your approach -- which relies *very much* on having the
+> > original parent commits -- not *require* that consistency check?
+> 
+> I don't understand what you mean, sorry. Could you please point me to
+> the *require* you talk about in the original proposal?
 
-I have no idea about this.
+Imagine a todo list that contains this line
 
-I'm using Ubuntu 16.04.4 with Git 2.16.2, PyCharm IDE.
+	merge -C abcdef 123456
 
-----
-Sincerely,
-Tian Zhen
+and now the user edits it (this is an interactive rebase, after all),
+adding another merge head:
+
+	merge -C abcdef 987654 123456
+
+Now your strategy would have a serious problem: to find the original
+version of 987654. If there was one.
+
+> > What would your approach (that still has no satisfyingly trivial
+> > explanation, in my mind)
+> 
+> Here is one-liner: rebase sides of the merge commit and then 3-way
+> merge them, using original merge commit as merge base.
+
+But I already pointed out how that would undo a commit having been
+dropped.
+
+> > do if somebody edited a `merge` command and let it merge a completely
+> > unrelated commit?
+> 
+> Don't see a problem, sorry. The method should still work, provided you have
+> original merge commit and two new parents for the new merge.
+
+That is assuming a lot. That is exactly what this consistency check is
+for, that I mentioned earlier, and which you listed as a downside of
+Phillip's strategy (forgetting that your strategy has the same downside,
+so...).
+
+But I guess that you are still talking about the non-interactive version
+of the rebase, and missed that our conversation proceeded to the point
+where we want that same strategy to work *also* in the interactive version
+(and not have a completely different functionality depending whether you
+use --interactive or not)?
+
+Ciao,
+Johannes
