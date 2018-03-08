@@ -2,121 +2,213 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 980091F404
-	for <e@80x24.org>; Thu,  8 Mar 2018 16:30:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DD4D81F404
+	for <e@80x24.org>; Thu,  8 Mar 2018 17:19:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934386AbeCHQag (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Mar 2018 11:30:36 -0500
-Received: from mail-wr0-f195.google.com ([209.85.128.195]:46266 "EHLO
-        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933560AbeCHQaf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Mar 2018 11:30:35 -0500
-Received: by mail-wr0-f195.google.com with SMTP id m12so6274873wrm.13
-        for <git@vger.kernel.org>; Thu, 08 Mar 2018 08:30:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=KhkWKLPKZxY5sOkYEoZJibtyY3nsUIOBMIEoxDL9XJs=;
-        b=NYwzwXIe+EIgOA90spNLfeSXA5xfrZUQKF8v2sMdg+7KdX2aD5AvgShY/CyAmO7AUl
-         U9Vja0uCX164YHxBVg94LqBt0XcNiyrX5XGrjhIpnukPthpI61HUj6V4PgZdfTkWQgh7
-         RWLQcvURZ/rBWcmcPYONy96DllQg3xZBY8WGB3Dm8cjkkHqSSx1BgJRuoCxCy+nWgJA7
-         ETaJn75ae+qdKMMHUsjebKMjTJSK+Cpch6tt6SeqlGj+UUEmJfZ6R0RVXgWHFgL7F9W5
-         GQWJEVBH02xpa+W/2sV8FHJ2AM9R4X47SzZFsajT05ib7th4w9Pq0EdNwCUJrSA1OTCC
-         eSiQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=KhkWKLPKZxY5sOkYEoZJibtyY3nsUIOBMIEoxDL9XJs=;
-        b=XB9Hu08QqysoWio74js9VJzCVrfjmP6aGTVMb/+DvHRTmjnpOuYxOTQp5BQ6qeFw/w
-         TliivcjhpSernffEXysLwEB0CDv8FmYPXrl552Djwl6oTUY/L63fbbM2sLlcXy9hN97/
-         w/TkRPFJ7jpdtCRxAG3TkD/J0nII9sVml1JqH/WOP+In8bQppRkzithm3KbJCB7a/ad2
-         gxJoYRD/+5OFHthuGM8tqu6nL4whUemG5+MnD/NGMa1yHMbCDqDJymyPRWPJWUg5eWn1
-         Iuj8HS7Au1zclj1yQbYk5NPwe9cbwO2pFfwhKSo/Ha82C2XrhBRrwqocde3AWWDDGrpP
-         8tdA==
-X-Gm-Message-State: APf1xPBfHd7iTbF1TYg55tk0RA/NIFKkXp4wIh42ObS4TohuevT0qDVm
-        Jdt6iW/9U3lj7n1r9XdOlRo=
-X-Google-Smtp-Source: AG47ELs3tvhs6CimI378keCRpsBQHSA4ojsS+LJFMEj42drpXwq572hwVLjTHLFLAd3jPVRlZyYq1w==
-X-Received: by 10.223.174.194 with SMTP id y60mr22420932wrc.202.1520526633989;
-        Thu, 08 Mar 2018 08:30:33 -0800 (PST)
-Received: from [192.168.5.102] (cable-24-135-61-30.dynamic.sbb.rs. [24.135.61.30])
-        by smtp.gmail.com with ESMTPSA id p78sm21551978wmg.47.2018.03.08.08.30.32
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 08 Mar 2018 08:30:33 -0800 (PST)
-Subject: Re: [RFC] Rebasing merges: a jorney to the ultimate solution (Road
- Clear)
-To:     Sergey Organov <sorganov@gmail.com>,
-        Phillip Wood <phillip.wood@talktalk.net>
-Cc:     phillip.wood@dunelm.org.uk, Git mailing list <git@vger.kernel.org>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Junio C Hamano <gitster@pobox.com>
-References: <87y3jtqdyg.fsf@javad.com>
- <bbe64321-4d3a-d3fe-8bb9-58b600fabf35@gmail.com>
- <nycvar.QRO.7.76.6.1802270051470.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
- <CA+P7+xq8UUcLWomUi=PS_hTKfJd3dMAxMmhioDS1bixwcmKAqw@mail.gmail.com>
- <nycvar.QRO.7.76.6.1802271718090.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
- <4d7f3406-b206-cc22-87df-85700d6a03d9@gmail.com>
- <33da31e9-9101-475d-8901-4b6b3df2f29d@gmail.com>
- <940d959d-151d-68dd-0f13-320ebad0d75b@gmail.com> <87606hoflx.fsf@javad.com>
- <0ac3a3fd-4053-e32e-75ed-8829f22c2e1f@gmail.com> <87a7vss6ax.fsf@javad.com>
- <6c8749ca-ec5d-b4b7-f1a0-50d9ad2949a5@talktalk.net>
- <872944c4-ca97-9f55-a424-86d1e3299a22@gmail.com>
- <1c912980-8ce8-6281-fa99-040a5e3e1103@talktalk.net>
- <87r2oxfmwo.fsf@javad.com>
-From:   Igor Djordjevic <igor.d.djordjevic@gmail.com>
-Message-ID: <1abcbc94-44b1-f729-686f-58efba3f9dea@gmail.com>
-Date:   Thu, 8 Mar 2018 17:30:23 +0100
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:52.0) Gecko/20100101
+        id S933221AbeCHRT4 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Mar 2018 12:19:56 -0500
+Received: from mout.web.de ([212.227.17.11]:41941 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S932148AbeCHRTy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Mar 2018 12:19:54 -0500
+Received: from [192.168.178.36] ([79.237.251.165]) by smtp.web.de (mrweb101
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MF3nL-1es1Nz1Cjj-00GIBE; Thu, 08
+ Mar 2018 18:19:52 +0100
+Subject: Re: [PATCH] fetch-pack.c: use oidset to check existence of loose
+ object
+To:     Takuto Ikuta <tikuta@chromium.org>
+References: <20180308120639.109438-1-tikuta@chromium.org>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Cc:     git@vger.kernel.org
+Message-ID: <c97772f1-dc36-3f2c-b328-6d8bd480ff79@web.de>
+Date:   Thu, 8 Mar 2018 18:19:50 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
  Thunderbird/52.6.0
 MIME-Version: 1.0
-In-Reply-To: <87r2oxfmwo.fsf@javad.com>
+In-Reply-To: <20180308120639.109438-1-tikuta@chromium.org>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:1RQDBFHD9DsOo11h6Lu89uN7Um6rYIn00DNBeIDYKf5EcbGBpCa
+ s6rD+PpdoQRwPYJZ7vVs6hpPKhMswpnzn7yLEGM2P7MI4MLsBlDsgJjRHcdEW7//d8xvnzl
+ ZgR+vGjcfOCKN8bdD2a+Bj4VH/8kbGSV5UcxYoCQhTi2y2hBBMIriMvSjM44qz8lSx93amL
+ x9bsFNhBxwmF9/IUlLlBg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:iFTS+P+xVaI=:ysS0/uSd2x25ZPHGdaa5c5
+ jIVXAxnzxyw281EiYb8cnbGDUGhBe11Ji/YSsJ6Qs1LYgwufbZxfTXJI2GX1ZiK+QU+B7Ph+V
+ UCOMdKaNAwwSKyxXl/MaYkbD0+5p4H/DVR+bfLySqbTlsuAPir3+sNkqQE0KSJe5oy/noZToM
+ m2OXlADei5nevsN9x29o7bBQo1UT2p3X62L9En5Eqa1m++u01qlq4Ax/t1JnWpoYQ2IIqjbaU
+ /yX5/uYdWi2KY2vqXaxdsPk086vfMeJ2EjHHBUr4Ucd9dyDMRcWDlOrD9ASx5jerR4rK7mZlE
+ doLSvt8soa9rBklVGUL8+7bsJPrgnLt/ttltkEyFYQRn/++u2cCJp6F582SK9QcDc60J9FyXw
+ TRKb/WIT+TBztk+tbAjmKXMOPpSG6Gc6pKsRkkFXyABFL+2x1u/Hg5yqYoSQ4V9cRVKBTjkQb
+ 5mHjHSRJ5g5RD55MWOAMX25nOtnN7IlKPXgapdS1QQsqHxMvILOwGMC04spKeRYPe29Vuy9Ox
+ DxWpK2jb3aY8PI2SAvleXAX6/T3k6LDjlkKCfylhJznh5M/u/BOFe/rD3zWRK3hc00y0Hu6Ga
+ m7APcp8Ew9+VCWSClk9uIDVtVmXL5hKIhaUAOwsb9/iKUWRfVhDrPatv6B2IztaJI3Zu64HJf
+ GLdvk8vQZbBzmOa3gF8EVo8umZeE6TR7VlM/VQKToM4EXH55X6I1efq/hXWoRbASw1E3BL2+w
+ ZDO/k4SyinUbTSz9xHzuKqsivLW4miy7CaYJRY44/I8gP294TroBuN9E8nwtZlOOPEO+/pzxV
+ Z8CpQbpvRH+qdz2Qw+iB9mPrzov7CJded0CBYRDQycIMI1jRiU=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 06/03/2018 12:45, Sergey Organov wrote:
+Am 08.03.2018 um 13:06 schrieb Takuto Ikuta:
+> In repository having large number of refs, lstat for non-existing loose
+> objects makes `git fetch` slow.
 > 
-> > > The only thing I wonder of here is how would we check if the 
-> > > "rebased" merge M' was "clean", or should we stop for user amendment? 
-> > > With that other approach Sergey described, we have U1'==U2' to test with.
-> >
-> > I think (though I haven't rigorously proved to myself) that in the
-> > absence of conflicts this scheme has well defined semantics (the merges
-> > can be commuted), so the result should be predicable from the users
-> > point of view so maybe it could just offer an option to stop.
+> This patch stores existing loose objects in hashmap beforehand and use
+> it to check existence instead of using lstat.
 > 
-> Yes, hopefully it's predictable, but is it the intended one? We don't
-> know, so there is still some level of uncertainty.
+> With this patch, the number of lstat calls in `git fetch` is reduced
+> from 411412 to 13794 for chromium repository.
 > 
-> When in doubt, I try to find similar cases. There are two I'm aware of:
+> I took time stat of `git fetch` disabling quickfetch for chromium
+> repository 3 time on linux with SSD.
+> * with this patch
+> 8.105s
+> 8.309s
+> 7.640s
+> avg: 8.018s
 > 
-> 1. "git merge" just commits the result when there are no conflicts.
-> However, it supposedly has been run by the user just now, and thus user
-> can amend what he gets. That's effectively a stop for amendment from our
-> POV.
+> * master
+> 12.287s
+> 11.175s
+> 12.227s
+> avg: 11.896s
 > 
-> 2. When rebasing, "rerere", when fires, stages the changes, and rebasing
-> stops for amendment. For me "rerere" behavior is rather annoying (I've
-> never in fact amended what it prepared), but I always assumed there are
-> good reasons it behaves this way.
+> On my MacBook Air which has slower lstat.
+> * with this patch
+> 14.501s
 > 
-> Overall, to be consistent, it seems we do need to stop at U1' != U2', at
-> least by default. Additional options could be supported then to specify
-> user intentions, both on the command level and in the todo list,
-> provided it proves to be useful.
+> * master
+> 1m16.027s
 
-Just to say I agree with this, `if U1' == U2' then proceed else stop` 
-seems as a good sanity check.
+Nice improvement!
+
+> 
+> `git fetch` on slow disk will be improved largely.
+> 
+> Signed-off-by: Takuto Ikuta <tikuta@chromium.org>
+> ---
+>   cache.h      |  2 ++
+>   fetch-pack.c | 22 +++++++++++++++++++---
+>   sha1_file.c  |  3 +++
+>   3 files changed, 24 insertions(+), 3 deletions(-)
+> 
+> diff --git a/cache.h b/cache.h
+> index d06932ed0..db38db40e 100644
+> --- a/cache.h
+> +++ b/cache.h
+> @@ -1773,6 +1773,8 @@ struct object_info {
+>   #define OBJECT_INFO_SKIP_CACHED 4
+>   /* Do not retry packed storage after checking packed and loose storage */
+>   #define OBJECT_INFO_QUICK 8
+> +/* Do not check loose object */
+> +#define OBJECT_INFO_SKIP_LOOSE 16
+>   extern int sha1_object_info_extended(const unsigned char *, struct object_info *, unsigned flags);
+>   
+>   /*
+> diff --git a/fetch-pack.c b/fetch-pack.c
+> index d97461296..1658487f7 100644
+> --- a/fetch-pack.c
+> +++ b/fetch-pack.c
+> @@ -711,6 +711,15 @@ static void mark_alternate_complete(struct object *obj)
+>   	mark_complete(&obj->oid);
+>   }
+>   
+> +static int add_loose_objects_to_set(const struct object_id *oid,
+> +				    const char *path,
+> +				    void *data)
+> +{
+> +	struct oidset* set = (struct oidset*)(data);
+
+This cast is not needed (unlike in C++).  And the asterisk should be stuck
+to the variable, not the type (see Documentation/CodingGuidelines).
+
+> +	oidset_insert(set, oid);
+
+In fact, you could just put "data" in here instead of "set" (without a
+cast), with no loss in readability or safety.
+
+> +	return 0;
+> +}
+> +
+>   static int everything_local(struct fetch_pack_args *args,
+>   			    struct ref **refs,
+>   			    struct ref **sought, int nr_sought)
+> @@ -719,16 +728,21 @@ static int everything_local(struct fetch_pack_args *args,
+>   	int retval;
+>   	int old_save_commit_buffer = save_commit_buffer;
+>   	timestamp_t cutoff = 0;
+> +	struct oidset loose_oid_set = OIDSET_INIT;
+> +
+> +	for_each_loose_object(add_loose_objects_to_set, &loose_oid_set, 0);
+>   
+>   	save_commit_buffer = 0;
+>   
+>   	for (ref = *refs; ref; ref = ref->next) {
+>   		struct object *o;
+> +		unsigned int flag = OBJECT_INFO_QUICK;
+>   
+> -		if (!has_object_file_with_flags(&ref->old_oid,
+> -						OBJECT_INFO_QUICK))
+> -			continue;
+> +		if (!oidset_contains(&loose_oid_set, &ref->old_oid))
+> +			flag |= OBJECT_INFO_SKIP_LOOSE;
+>   
+> +		if (!has_object_file_with_flags(&ref->old_oid, flag))
+> +			continue;
+>   		o = parse_object(&ref->old_oid);
+>   		if (!o)
+>   			continue;
+> @@ -744,6 +758,8 @@ static int everything_local(struct fetch_pack_args *args,
+>   		}
+>   	}
+>   
+> +	oidset_clear(&loose_oid_set);
+> +
+
+This part looks fine to me.  (Except perhaps call the variable "flags"
+because you sometimes have two?)
+
+Why not include packed objects as well?  Probably because packs have
+indexes which can queried quickly to determine object existence, and
+because there are only few loose objects in typical repositories,
+right?
+
+A similar cache was introduced by cc817ca3ef (sha1_name: cache
+readdir(3) results in find_short_object_filename()) to speed up
+finding unambiguous shorts object hashes.  I wonder if it could be
+used here as well, but I don't see an easy way.
+
+>   	if (!args->no_dependents) {
+>   		if (!args->deepen) {
+>   			for_each_ref(mark_complete_oid, NULL);
+> diff --git a/sha1_file.c b/sha1_file.c
+> index 1b94f39c4..c903cbcec 100644
+> --- a/sha1_file.c
+> +++ b/sha1_file.c
+> @@ -1262,6 +1262,9 @@ int sha1_object_info_extended(const unsigned char *sha1, struct object_info *oi,
+>   		if (find_pack_entry(real, &e))
+>   			break;
+>   
+> +		if (flags & OBJECT_INFO_SKIP_LOOSE)
+> +			return -1;
+> +
+>   		/* Most likely it's a loose object. */
+>   		if (!sha1_loose_object_info(real, oi, flags))
+>   			return 0;
+> 
+
+This early return doesn't just skip checking loose objects.  It
+also skips reloading packs and fetching missing objects for
+partial clones.  That may not be a problem for fetch-pack, but
+it means the flag has a misleading name.  Do you get the same
+performance improvement if you make it only skip that
+sha1_loose_object_info() call?
+
+René
