@@ -2,60 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C84CA1F404
-	for <e@80x24.org>; Thu,  8 Mar 2018 21:49:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C327F1F404
+	for <e@80x24.org>; Thu,  8 Mar 2018 22:01:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750783AbeCHVtw (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Mar 2018 16:49:52 -0500
-Received: from mail-vk0-f66.google.com ([209.85.213.66]:39029 "EHLO
-        mail-vk0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750713AbeCHVtv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Mar 2018 16:49:51 -0500
-Received: by mail-vk0-f66.google.com with SMTP id f6so874024vkh.6
-        for <git@vger.kernel.org>; Thu, 08 Mar 2018 13:49:51 -0800 (PST)
+        id S1751232AbeCHWBl (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Mar 2018 17:01:41 -0500
+Received: from mail-qk0-f196.google.com ([209.85.220.196]:36396 "EHLO
+        mail-qk0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751024AbeCHWBg (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Mar 2018 17:01:36 -0500
+Received: by mail-qk0-f196.google.com with SMTP id d206so1497630qkb.3
+        for <git@vger.kernel.org>; Thu, 08 Mar 2018 14:01:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=3a1I2nkkh4wahCmBGXW5F+2BQolwY5xW82X9EpGWWbU=;
-        b=RrynIsvzuPi9lXWXO2M5LdKAlWxUIKUdrD3D+X9Utlp6/YUc0v8FAsgNO9OE9VWN7u
-         d9d+gSuGz2IdqUbHgLU7/xxw5+rNVHSzpLb/giageqAkLrHDxiJMrTKcjBitOFqzQVpN
-         /Hziuxx35RqueWWRs51WJSCX7NfxuLhAW3fF+yTCTQT/QhtbQa8GnlB4KWeoKT7U6MS+
-         E0CuUkmOlmXbRumpT3eaNZ6z798TBhl+goYdxymau3SSRYTLHFKZIdLqwGdXUnCg9daG
-         tg1zOOAo99qq9cWnVMs3Rycevuo01qwGsVmoaV98Tk3eLj4lf16c3vbJntDfTPbuZrz1
-         6rMg==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-transfer-encoding;
+        bh=gyF0ZrydYK+gUmBu43d8nufFe805xmklM8SXhJ1JzzE=;
+        b=ey2GgoPL6txn836OjUCYSJl1mXvzeUIyOANGWi4WSCPY9FipgP6IrQZPXmv8ChnASE
+         Surz2/nrW4FYDlK1CcC16Sv2nuI3cIsEHLXrceJelUE7hSmjNjpLVNdBSNRoI+/iO27g
+         UgRVPaUUeHVkd2qME0zKRnm2NIcRMNwMdHXhgd0ZwowQaaoOm/zhf335CrUwOKM6Zr6M
+         sc0yWm3iCgabxi0+4BHhTOj9Bky7h/UfNE6yVJpujEkFAeDoE3ahy2J4J47h8FqkCCjR
+         fVgKoQJnEzL8fY811jafRES4cFeRuu0owMxzDrD0dfIM3EJ2V/5mZK54RszL3UDt/Tia
+         HvfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=3a1I2nkkh4wahCmBGXW5F+2BQolwY5xW82X9EpGWWbU=;
-        b=FQbFnzp4zoGIRqZAuwXGD5Pl8mUHi/toAeFiHyiN09TB08tEtnzgIE24TXtXIDzkUe
-         nNOUHhRy79uuCV2Op100m69r2+tsqK3kf6wtEuLAlQlmGzNHaR4yNqn3QdQHLhEqJQEY
-         q9tWWmjo0tX48TARptxqMJRfLrcpjyhdjtu0KdClXJw5cSVX0amhrFOju6HaRFHb20E/
-         1UsiKQ+MQdN29/EPKXbHJXcnscAlKmPydW8jJSI2xrYtEV/iIkayCoQMhki2iJGg1AHG
-         gi7GNTXnZp/k7tlds8O3iW/d9cb8UZJLHe2NFX+Ve5Gx65NlJbJK0Xozb9WCgcXxs8Ns
-         supg==
-X-Gm-Message-State: AElRT7E11WZPB/A5pT6XVXh6IqxtiC2kb51ng0KulxzAk1EDRhudNyDM
-        mkr4yzkGsb5V++Q9TqLQSjjKQaIfZqmzNJzRrScVug==
-X-Google-Smtp-Source: AG47ELtFyoK9rb3r27A492vW9YhA+Taw3+yHw+nFYwWiJgaO/+YCTHLIwMFXDAgBNWhWDX5aE1qOejDot/g0TcLKi9M=
-X-Received: by 10.31.171.5 with SMTP id u5mr21135065vke.120.1520545790837;
- Thu, 08 Mar 2018 13:49:50 -0800 (PST)
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=gyF0ZrydYK+gUmBu43d8nufFe805xmklM8SXhJ1JzzE=;
+        b=uQCUlmX2iEms9wCo2HlBGJjLr+0cIAhrBPD1s+Rd8mPM9S4lG+1akEMioQ0yX+v3C4
+         euCUe/BmbZ0rXngipWKaXJRQDanM0v/AQwh/n2RGgiqr8aYXlvO12kg0UaB5B06RCpgj
+         ZDe1fOQOk/ZN+pMf/PAJuXGNn7zPRNLhGr2YNrNWi62eQoEZGJOViksp5i1mRqj63iSr
+         Kr+n8skU0t/g8L0riebwuq3w/XWQhJMbPTsDuCH6FjCIeYOm13+NtctiE6/mqjUsNTZo
+         sb8zNFTtMo8TLo06B1pluz24QJu5uY/T1op6x/mg5CCVv1tih9CACpKDMK5j0l54LAi2
+         oNXw==
+X-Gm-Message-State: AElRT7FZfPzf8HCBBTYQx1i8K8rMYEf1HsICiWlHRAxWzWvVFLXxoXDK
+        n5/oRQu1K8r+dxtqz3DChFAek6TcKKOrDTnTrnw=
+X-Google-Smtp-Source: AG47ELtdUm7wPe9ItV6YuXBawvoUWLwAXGbUnuat1IFz4c2K69gJwLF+ke7mSBW9nMHWv+SMbFzWdVDLiUbXQSj0mng=
+X-Received: by 10.55.203.67 with SMTP id d64mr39814974qkj.210.1520546494908;
+ Thu, 08 Mar 2018 14:01:34 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.159.59.233 with HTTP; Thu, 8 Mar 2018 13:49:50 -0800 (PST)
-In-Reply-To: <CAPig+cTtV2unsixsMCWytdJMiYYytgdvbavfENhBrwvXq_79Bw@mail.gmail.com>
+Received: by 10.12.142.14 with HTTP; Thu, 8 Mar 2018 14:01:34 -0800 (PST)
+In-Reply-To: <CAM0VKjmKcFVOLA-fFnSm=tVapa5qgUoU3Sa7RjSrqoHp5qXZiw@mail.gmail.com>
 References: <20180308123844.15163-1-szeder.dev@gmail.com> <20180308123844.15163-2-szeder.dev@gmail.com>
- <CAPig+cTtV2unsixsMCWytdJMiYYytgdvbavfENhBrwvXq_79Bw@mail.gmail.com>
-From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Date:   Thu, 8 Mar 2018 22:49:50 +0100
-Message-ID: <CAM0VKjmKcFVOLA-fFnSm=tVapa5qgUoU3Sa7RjSrqoHp5qXZiw@mail.gmail.com>
+ <CAPig+cTtV2unsixsMCWytdJMiYYytgdvbavfENhBrwvXq_79Bw@mail.gmail.com> <CAM0VKjmKcFVOLA-fFnSm=tVapa5qgUoU3Sa7RjSrqoHp5qXZiw@mail.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Thu, 8 Mar 2018 17:01:34 -0500
+X-Google-Sender-Auth: JuPB6sw4jQVrpontaOyidqKkpsE
+Message-ID: <CAPig+cRSDbFZ_C9opu3pr=m7HwFkeuoxUD_8Yqbd4XxX-W0cHg@mail.gmail.com>
 Subject: Re: [PATCH 1/2] t9400-git-cvsserver-server: don't rely on the output
  of 'test_cmp'
-To:     Eric Sunshine <sunshine@sunshineco.com>
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
 Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
@@ -65,53 +66,38 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 8, 2018 at 7:51 PM, Eric Sunshine <sunshine@sunshineco.com> wro=
-te:
-> On Thu, Mar 8, 2018 at 7:38 AM, SZEDER G=C3=A1bor <szeder.dev@gmail.com> =
-wrote:
-
->> Unroll that for loop, so we can check the files' contents the usual
->> way and rely on 'test_cmp's exit code failing the && chain.  Extract
->> updating a file via CVS and verifying its contents using 'test_cmp'
->> into a helper function requiring the file's name as parameter to avoid
->> much of the repetition resulting from unrolling the loop.
+On Thu, Mar 8, 2018 at 4:49 PM, SZEDER G=C3=A1bor <szeder.dev@gmail.com> wr=
+ote:
+> On Thu, Mar 8, 2018 at 7:51 PM, Eric Sunshine <sunshine@sunshineco.com> w=
+rote:
+>> An alternative approach used elsewhere in the test suite[1] would be
+>> simply to 'exit' if test_cmp fails:
+>>
+>>     for i in merge no-lf empty really-empty; do
+>>         GIT_CONFIG=3D"$git_config" cvs update -p "$i" >$i.out
+>>         test_cmp $i.out ../$i || exit 1
+>>     done &&
 >
-> An alternative approach used elsewhere in the test suite[1] would be
-> simply to 'exit' if test_cmp fails:
+> And it's right: 'exit' terminates the shell process it's invoked in,
+> i.e. the whole test script (well, unless it's invoked in a subshell)
+> without executing the remaining tests and the usual housekeeping and
+> reporting.
 >
->     for i in merge no-lf empty really-empty; do
->         GIT_CONFIG=3D"$git_config" cvs update -p "$i" >$i.out
->         test_cmp $i.out ../$i || exit 1
->     done &&
+> Consider the following test script:
 >
-> (And, like the existing patch, this removes the need for capturing
-> test_cmp's output into a "failures" file.)
->
-> [1]: For example, the "setup" test of t2204-add-ignored.sh.
+>   $ ./t9999-exit.sh
+>   FATAL: Unexpected exit with code 1
 
-But 't/README' sayeth:
+Sorry for the confusion. I meant "return 1" as used elsewhere in the
+test suite[1].
 
-    Don't:
-
-     - exit() within a <script> part.
-
-And it's right: 'exit' terminates the shell process it's invoked in,
-i.e. the whole test script (well, unless it's invoked in a subshell)
-without executing the remaining tests and the usual housekeeping and
-reporting.
-
-Consider the following test script:
-
-  -- >8 --
-
+--- >8 ---
 #!/bin/sh
-
-test_description=3D'exit 1?'
-
+test_description=3D'return 1?'
 . ./test-lib.sh
 
-test_expect_success 'exit 1' '
-        exit 1
+test_expect_success 'return 1' '
+        return 1
 '
 
 test_expect_success 'second test' '
@@ -119,18 +105,16 @@ test_expect_success 'second test' '
 '
 
 test_done
+--- >8 ---
 
-  -- >8 --
+$ ./t9977.sh
+not ok 1 - return 1
+#
+#         return 1
+#
+ok 2 - second test
+# failed 1 among 2 test(s)
+1..2
+$
 
-It's output:
-
-  $ ./t9999-exit.sh
-  FATAL: Unexpected exit with code 1
-  $ sed -e 's/exit 1/false/' -i t9999-exit.sh
-  $ ./t9999-exit.sh not ok 1 - false
-  #
-  #             false
-  #
-  ok 2 - second test
-  # failed 1 among 2 test(s)
-  1..2
+[1]: For example, the "setup" test of t4151-am-abort.sh.
