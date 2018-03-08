@@ -2,61 +2,58 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2B6BD1FAE2
-	for <e@80x24.org>; Thu,  8 Mar 2018 06:46:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 351D91FAE3
+	for <e@80x24.org>; Thu,  8 Mar 2018 07:01:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935311AbeCHGqE (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Mar 2018 01:46:04 -0500
-Received: from mout.gmx.net ([212.227.15.19]:54211 "EHLO mout.gmx.net"
+        id S935043AbeCHHBk (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Mar 2018 02:01:40 -0500
+Received: from mout.gmx.net ([212.227.15.18]:40339 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S935294AbeCHGqC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Mar 2018 01:46:02 -0500
+        id S1751741AbeCHHBV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Mar 2018 02:01:21 -0500
 Received: from [192.168.1.64] ([88.26.243.156]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MTBsk-1f4Eul3iz8-00S8p9; Thu, 08
- Mar 2018 07:45:54 +0100
-Date:   Thu, 8 Mar 2018 07:45:51 +0100 (STD)
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MK0ur-1evCSj0Ja1-001Q5O; Thu, 08
+ Mar 2018 08:01:13 +0100
+Date:   Thu, 8 Mar 2018 08:01:08 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
 To:     Sergey Organov <sorganov@gmail.com>
-cc:     phillip.wood@dunelm.org.uk,
-        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
-        Git mailing list <git@vger.kernel.org>,
+cc:     git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>,
+        Junio C Hamano <gitster@pobox.com>,
         Jacob Keller <jacob.keller@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC] Rebasing merges: a jorney to the ultimate solution (Road
- Clear)
-In-Reply-To: <87ina8ymxs.fsf@javad.com>
-Message-ID: <nycvar.QRO.7.76.6.1803080741160.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <87y3jtqdyg.fsf@javad.com> <bbe64321-4d3a-d3fe-8bb9-58b600fabf35@gmail.com> <nycvar.QRO.7.76.6.1802270051470.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <CA+P7+xq8UUcLWomUi=PS_hTKfJd3dMAxMmhioDS1bixwcmKAqw@mail.gmail.com>
- <nycvar.QRO.7.76.6.1802271718090.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <4d7f3406-b206-cc22-87df-85700d6a03d9@gmail.com> <33da31e9-9101-475d-8901-4b6b3df2f29d@gmail.com> <940d959d-151d-68dd-0f13-320ebad0d75b@gmail.com> <87606hoflx.fsf@javad.com>
- <0ac3a3fd-4053-e32e-75ed-8829f22c2e1f@gmail.com> <87a7vss6ax.fsf@javad.com> <6c8749ca-ec5d-b4b7-f1a0-50d9ad2949a5@talktalk.net> <872944c4-ca97-9f55-a424-86d1e3299a22@gmail.com> <1c912980-8ce8-6281-fa99-040a5e3e1103@talktalk.net>
- <nycvar.QRO.7.76.6.1803061829460.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <87h8pscw0r.fsf@javad.com> <nycvar.QRO.7.76.6.1803070756550.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <87ina8ymxs.fsf@javad.com>
+        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [RFC v2] Rebasing merges: a jorney to the ultimate solution
+ (Road Clear)
+In-Reply-To: <87vae7ykys.fsf@javad.com>
+Message-ID: <nycvar.QRO.7.76.6.1803080746460.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <87y3jtqdyg.fsf@javad.com> <87r2oxe3o1.fsf@javad.com> <nycvar.QRO.7.76.6.1803070742580.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <87vae8yq15.fsf@javad.com> <nycvar.QRO.7.76.6.1803071450511.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+ <87vae7ykys.fsf@javad.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:+W86WXd74TNcyubbXoRjF3U7S3YDLUEIL9QIDkT/PEgOIf6mvuN
- cN9eMV/wBKQIxJKIHFz5OuJICC9maRFN3m5idbFSGy75soZ//+5Mzr0zByhPLCvKABCDDlO
- drNFberIhyq4KmCoD7ZV+g0HVf3E+skEI4OoeTsOATMVHZqD4LJvjX6ZdbKJOdGEt3PCNZx
- Juj/NnGzDL+4xclSdGUrg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:z6vD1gtY4lE=:YvyeJy9RXUN8m/rRrmX955
- mqjItXF3wQb0LtQ+aInc1OG4EHLWqHOtjCyjIxUrvrMONsk2BNsUzricU7UdxceEkDBxCjQOW
- 5ycoA37VDnnQ9/WAnUVmFZgDe+4o4A7L0/iL2gABdczaIfw6dhP50y4S5byYPRFzKhMNpwC13
- 9mBSfdDekrwhzRMW6VRToJEiDBgLfbLZGl7ka091mhd/0Yy2szar4iNN6yZASSt2EA0oUfZ2f
- uBfBs4eUeAaoqaNAFrVDwvtR4auGq4BeKs+yk7cj7HkdX40+pVL6Tsh8C6hhoqkLdRHPQT8z5
- wZsrN47vl/QTX9NRmU1JkFz14tE8FF/TXYC3ufdsREKiZIx41GCGjJjShFrostXhi1h2ZvAiJ
- eHXd/09S98wGoAySqiFINqp20zLR729FiTTCshQABtlmZezIQYjAVpoH1nyu+zhbpWBRgLQue
- kMsZLwFP4MJokh+UDXQMcjpSN1WQLxDZGSy2Q2ZDJatGXm/cbDejfgHR4D+oiMMbcKWsEm6WN
- k/UgK7/q8nE/VOZkTuxT8XZYH+WIARMfIjOv74IudNvAlIMz7qFvVqJgfYqWqsnPsnHVMzaVD
- 0KM9lMBFJe+TQRxVqmCcEpBzCqVDtTfQ7qxZsddAhPiw3/dPKqiOgNBNzWWaA+fWUHDbQystX
- tj/23FKemgyPaURO70pv+6FUQUBQlsPyU4G0H9SM5z52fbkcQ6iXj1O6D4iRNph9yzPANRy5u
- pYKEsh5tXd6XKOZCtYNYHaX4MJtw7P7/vOgVM019wP2E5TsFTvgc/qRbW4+0G2euYOWge7eCG
- P47hBY/Sx2lO09cPOz9emPEb0VVMS9AZG3m9gwYLjs/51Qh8Lg=
+X-Provags-ID: V03:K0:g+V5dw9GTJ3r1m9NrLZN01vgyDSYglzZsqOsDo4onpn4mkNX+mV
+ kqCzgDn/LwPuksfcBbhD+H9eTIm67oa+xLxMWx5uBeb27yFRKvkU+jilpxxzMo5DyPXtzPa
+ SeWotlr3e2uC/VJu5V1RV0qaWO2et/P3WXasjenoUQggITsEu5yJ9uH7T02PKIMdlmkaciQ
+ fg/mAA0IEanpBwFE+gR5Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:CFpWzeNUFJ4=:2t52P+6uOwGPHVQ4E83mk8
+ XkefBjLwtKsbdojmh+N6p/bfqjzu9c70c3ZKxUZcKVRcWKhn91yGS2Tze98/ZiCCaX5F/D47e
+ kzbUfuXQqxIP8pM8ejkcUY6TPjyhs9CxPXpro9MdAbIai2Q+u/7pe7J6waQbXlKRiCWBgLV1n
+ u7BmQmFcjLFt6KcNTd3xLfu+LfcRmMGv6J6ELBugwhIdiHifB0n/x+7QIrQKofggoF/jotdVq
+ 8bI3wIRiMhAkHTt9fxIS7gJ9FAoKDbFl5W4wDSenZ21uos2iEhV8HhwAEIrU8eDBf175SVMHQ
+ lM9i1WW03uinhYYTaabacPTLECDjcgr8BatwmbmEQt/AS4VIyJyfH2+J2gBNX+303lTDIjVla
+ 0uqaIYL4t9L/RIYYjmVTI/Un/qrb/1GwlhAVEH3avI1lb1nuQOCH+vsw1cpARvMM7KZXnaQcS
+ Qaj1yJl5NRbF+Tc7BxRG/kIm3LaJYtdIb33uvwjMfCWsaNU2S+CLc3H2TuBp/5eFgRKrBCI0i
+ u0uyL2trGfa4Uj/bUxaIRKBYHMjEc54I0mm0XNcLp0qzOkX6FCAj6hFGFderGwBnZKP3Nh/3m
+ xlzvqYoGHgZa2pMCWfz2e11GVGfjIbb9+qZbo1osQlN236vOvUAsa3JdB4ilYyJlZrS2Awo5T
+ Q9+gR4PBUOUXCURdC9cBHFn6r5QBuIHw3HoXrBc847u9cVztdhFZc9fseLtdatYEVXRxIOWz6
+ quE987Pj7mBdx2zAUQIE79B1P1+NgB06g3biABYBQ1M9ZKJ9A2jsOmgRegfV8KoWMDs7lHAyt
+ BfqnXa9oMqAk2NGw1yiVALZA2sOrvCqliIEsYed1ELiRe/ZL44=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -67,50 +64,188 @@ Hi Sergey,
 On Wed, 7 Mar 2018, Sergey Organov wrote:
 
 > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> >
+> > On Wed, 7 Mar 2018, Sergey Organov wrote:
+> >
+> >> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> >> 
+> >> > On Tue, 6 Mar 2018, Sergey Organov wrote:
+> >> >
+> >> >> This is v2 of my "Rebasing merges" proposal.
+> >> >
+> >> > Didn't we settle on Phillip's "perform successive three-way merges
+> >> > between the original merge commit and the new tips with the old
+> >> > tips as base" strategy?
+> >> 
+> >> It seems you did, dunno exactly why.
+> >
+> > That is not true. You make it sound like I was the only one who liked
+> > this, and not Phillip and Buga, too.
+> >
+> > Are you interested in the best solution, or in your solution :-)
 > 
-> > How can your approach -- which relies *very much* on having the
-> > original parent commits -- not *require* that consistency check?
+> I'm interested in any that works, and only you say that those suggested
+> by Phillip is somehow superior. I still believe it's mine that superior,
+> even if slightly.
+
+That is misrepresenting what happened.
+
+First, you came up with a strategy. I pointed out shortcomings that
+implied that we cannot use it unchanged. Then, Buga fixed your strategy by
+using additional steps (making the process more complicated than before,
+still without a simple-enough explanation for my liking, fixing the
+shortcomings). Then, Phillip presented a super-simple strategy and Buga
+confirmed that it also fixes the shortcomings I pointed out.
+
+I am very excited that we finally found something that works *and* is easy
+to reason about.
+
+Let's focus on that strategy rather than going back to the strategy which
+has known flaws and only an unsatisfyingly complex explanation.
+
+> >> The main problem with this decision is that we still don't see how
+> >> and when to stop for user amendment using this method. OTOH, the
+> >> original has this issue carefully discussed.
+> >
+> > Why would we want to stop, unless there are merge conflicts?
 > 
-> I don't understand what you mean, sorry. Could you please point me to
-> the *require* you talk about in the original proposal?
+> There is somewhat lengthy discussion about it that you probably missed.
+> Not to repeat it, just see how 'rerere' works when it fires during
+> rebase, even with no conflicts.
 
-Imagine a todo list that contains this line
+I did not miss that discussion. My question was a follow-up: Why would we
+want to stop, unless there are merge conflicts?
 
-	merge -C abcdef 123456
-
-and now the user edits it (this is an interactive rebase, after all),
-adding another merge head:
-
-	merge -C abcdef 987654 123456
-
-Now your strategy would have a serious problem: to find the original
-version of 987654. If there was one.
-
-> > What would your approach (that still has no satisfyingly trivial
-> > explanation, in my mind)
+> >> > It has the following advantages:
+> >> >
+> >> > - it is *very simple* to describe
+> >> 
+> >> The original is as simple if not simpler:
+> >> 
+> >> "rebase sides of the merge commit and then three-way merge them back
+> >> using original merge commit as base"
+> >
+> > And that is also wrong, as I had proved already! Only Buga's addition made
+> > it robust against dropping/modifying commits, and that addition also makes
+> > it more complicated.
 > 
-> Here is one-liner: rebase sides of the merge commit and then 3-way
-> merge them, using original merge commit as merge base.
+> No. Get your facts straight. The [RFC v2] already fixed that original
+> mistake. Could you please finally read it?
 
-But I already pointed out how that would undo a commit having been
-dropped.
+I do not see Buga's additions, and it is still a lengthy document that is
+hard to understand.
 
-> > do if somebody edited a `merge` command and let it merge a completely
-> > unrelated commit?
+Phillip's alternative, in contrast, fit in at most two 80x25 pages and was
+intuitive (at least after seeing that the tree resulting from a merge is
+identical to the tree resulting from a rebase, once all merge conflicts
+are handled appropriately).
+
+> > And it still has no satisfactory simple explanation why it works.
 > 
-> Don't see a problem, sorry. The method should still work, provided you have
-> original merge commit and two new parents for the new merge.
+> It has. It's there in the [RFC v2]. You seem to be the only one who
+> doesn't get it. I suppose you just didn't bother to read.
 
-That is assuming a lot. That is exactly what this consistency check is
-for, that I mentioned earlier, and which you listed as a downside of
-Phillip's strategy (forgetting that your strategy has the same downside,
-so...).
+I tried to read it, and got lost in all those figures that really do not
+do anything to make this strategy obvious to me.
 
-But I guess that you are still talking about the non-interactive version
-of the rebase, and missed that our conversation proceeded to the point
-where we want that same strategy to work *also* in the interactive version
-(and not have a completely different functionality depending whether you
-use --interactive or not)?
+Granted, I now know *how* it works.
+
+I gave up understanding *why* it is supposed to work.
+
+With Phillip's mail, it only took me 5 minutes to get a rudimentary
+understanding why it works.
+
+> >> No problems with octopuses, and no virtual merge bases of recursive
+> >> merges to reason about.
+> >
+> > But those are no problems for Phillip's strategy, either!
+> 
+> I thought it was you who started to discuss virtual merge bases and
+> related problems, as well as how it's difficult to support octopus
+> merges, but it's fine with me if there are none of these problems.
+
+Yes, I started explaining virtual merge bases, and how they are used in
+the recursive merge. Because I was asked how the recursive merge works,
+and I happen to know how it works very intimately.
+
+> > So your point is...?
+> 
+> Still the same -- use what's better, the [RFC v2].
+
+I strongly disagree that your approach is superior. It is more complex,
+and still has no simple answer to the question "why is this supposed to do
+what I want it to do?"
+
+It does a lot of criss-crossing, and when I see that, I immediately
+suspect that it would lose information e.g. when commits were amended
+during the rebase. There are just way too many paths for obsolete changes
+to creep in again.
+
+> >> > - it is *very easy* to reason about, once it is pointed out that
+> >> > rebases and merges result in the same trees.
+> >> 
+> >> The original is as easy to reason about, if not easier, especially as
+> >> recursive merge strategy is not being used there in new ways.
+> >
+> > So do it. I still have to hear a single-sentence, clear and obvious
+> > explanation why it works.
+
+Please.
+
+> > And please do not describe why your original version works, because it
+> > does not work.
+> 
+> Original [RFC] didn't work because of rather simple mistake that I've
+> already admitted and fixed. [RFC v2] has got the fix. Read [RFC v2] and
+> get your facts straight.
+
+I don't care how many mistakes you made, and where the original ideas had
+to be enhanced. I am only interested in the outcome.
+
+We already have a nice, simple outcome, and to be quite honest: I find
+this discussion here a bit pointless. Why would I abandon a simple
+strategy that obviously works for a complex strategy where it still is not
+obvious under what circumstances it works, and why?
+
+> > Describe why the one amended with Buga's hack works.
+> 
+> It doesn't matter as these hacks are not needed anymore.
+
+So maybe you want to also describe the "interdiff", and not expect anybody
+to read two lengthy documents and figure out where the changes are.
+
+> >> I honestly don't see any advantages of Phillip's method over the
+> >> original, except personal preferences. At the same time, I have no
+> >> objection of using it either, provided consistency check problem is
+> >> solved there as well.
+> >
+> > Okay, let me reiterate then, because I do not want this point to be
+> > missed:
+> >
+> > Phillip's method is essentially merging the new tips into the original
+> > merge, pretending that the new tips were not rebased but merged into
+> > upstream.
+> >
+> > So it exploits the duality of the rebase and merge operation, which both
+> > result in identical trees (potentially after resolving merge
+> > conflicts).
+> >
+> > I cannot think of any such interpretation for your proposal augmented by
+> > Buga's fix-ups. And I haven't heard any such interpretation from your
+> > side, either.
+> 
+> No fix-ups or augmentations are needed. It was a mistake that has been
+> fixed in [RFC v2]. You've missed essential part of the discussion.
+> 
+> Read the [RFC v2], please:
+
+Okay, I am done here. If all my questions and all my concerns are answered
+with the suggestion to spend an hour pouring over a lengthy description of
+your strategy that is so much more complex than my preferred alternative,
+asking me to figure out from that long document what the answers to my
+questions are, then I respectfully decline. I do have other things to care
+about, too, and I will *not* spend an hour trying to figure out answers
+only because you refuse to give them directly.
 
 Ciao,
 Johannes
