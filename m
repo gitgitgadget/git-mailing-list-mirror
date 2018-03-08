@@ -2,197 +2,378 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DC9D01F404
-	for <e@80x24.org>; Thu,  8 Mar 2018 12:16:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 458FD1F404
+	for <e@80x24.org>; Thu,  8 Mar 2018 12:25:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754981AbeCHMQp (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Mar 2018 07:16:45 -0500
-Received: from smtp-out-2.talktalk.net ([62.24.135.66]:13850 "EHLO
-        smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751862AbeCHMQo (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Mar 2018 07:16:44 -0500
-Received: from [192.168.2.201] ([89.242.187.47])
-        by smtp.talktalk.net with SMTP
-        id tuTReKZ9IwheatuTRejWMA; Thu, 08 Mar 2018 12:16:42 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1520511402;
-        bh=9fm/UiKgZAYOwxP0VUjAwmnfjYc6YkK1gyTatkEx3I0=;
-        h=Reply-To:Subject:From:To:Cc:References:Date:In-Reply-To;
-        b=PxT9Nm829WbwNDum8nT2kUY3Sj8Bcq67eJzSFTvJcodGSENV3ga3sBqgyl+es5Ef3
-         LQdhcabAHqGtuvcVWgEsdkYC1DlwNhVNG2NzHZ7dIQtvgofaBM4u57BSkSxKSwuaiH
-         PetMlEIUGxmyZntSzI/ds7xLHlv9akWGasPlBGhs=
-X-Originating-IP: [89.242.187.47]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=ZJr5Z0zb c=1 sm=1 tr=0 a=xTMdeSjPtcrjTRwaJcecEQ==:117
- a=xTMdeSjPtcrjTRwaJcecEQ==:17 a=IkcTkHD0fZMA:10 a=Y3bEpHQy9W0PXTHyFQQA:9
- a=QEXdDO2ut3YA:10
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [RFC] Rebasing merges: a jorney to the ultimate
- solution(RoadClear)
-From:   Phillip Wood <phillip.wood@talktalk.net>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Igor Djordjevic <igor.d.djordjevic@gmail.com>
-Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Sergey Organov <sorganov@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Junio C Hamano <gitster@pobox.com>
-References: <87y3jtqdyg.fsf@javad.com>
- <nycvar.QRO.7.76.6.1802271718090.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
- <4d7f3406-b206-cc22-87df-85700d6a03d9@gmail.com>
- <33da31e9-9101-475d-8901-4b6b3df2f29d@gmail.com>
- <940d959d-151d-68dd-0f13-320ebad0d75b@gmail.com> <87606hoflx.fsf@javad.com>
- <0ac3a3fd-4053-e32e-75ed-8829f22c2e1f@gmail.com> <87a7vss6ax.fsf@javad.com>
- <f1a960dc-cc5c-e7b0-10b6-39e5516655b3@gmail.com>
- <ed4d2b30-2dea-740b-6283-973c798f619d@philandanna.no-ip.org>
- <1298a701-a860-a675-83d7-72f29e14cd2b@talktalk.net>
- <CA+P7+xpgChuvh_vsPktBkOEhF=MjJh1n_3jD0-n4d67j9kYqzw@mail.gmail.com>
- <ee809701-a6d8-157d-09cd-cebbf2e949ec@gmail.com>
- <1580e48a-be44-38dd-79af-8a2a31c5712e@talktalk.net>
- <nycvar.QRO.7.76.6.1803061812090.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
- <754e2735-1288-9a8d-c8bd-ab39cf733812@gmail.com>
- <nycvar.QRO.7.76.6.1803070810550.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
- <c5a5c2cc-6a11-440f-5b9b-964ae1ca07dd@talktalk.net>
-Message-ID: <483674f8-4097-a374-c8f3-cf56cbb92042@talktalk.net>
-Date:   Thu, 8 Mar 2018 12:16:41 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
+        id S1755553AbeCHMZe (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Mar 2018 07:25:34 -0500
+Received: from mail-wr0-f175.google.com ([209.85.128.175]:39129 "EHLO
+        mail-wr0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755460AbeCHMZd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Mar 2018 07:25:33 -0500
+Received: by mail-wr0-f175.google.com with SMTP id w77so5487071wrc.6
+        for <git@vger.kernel.org>; Thu, 08 Mar 2018 04:25:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=HwNvVGJKshYklC3CPJVa0iK8ZFHWtLyejgnBRiZ/7xw=;
+        b=F9hokVpmU2JcVLlx70XoxM0qG41JhU5EYbL+5pgyMso10TGUZZA8rS28le8SbKmsON
+         s3Bib0ISZqh371L3siZ5DS774U54vb7ymbm1YDvH9DN0nIP2aMA8RR9WTsjS70RbGlFr
+         IyTJwzLSBUt+ZnHz9Poza4Dqq1qxhKoYe0p8jGo3vbYFfd3fYxE4+5Q6Y3ImS/dfOZDM
+         GoHoz9TGp2wkRtp72QYN+oYRTVtaHSFvdmZD9YfO4qtiANQy3JOlN4kl3Q4tUyPN6uNF
+         le6zG3vM66pjIJc97V+gVT2YqnRsNiXn7JYUPtjaE9wA3sQJVXSKPXrZ0nyoEy3+/q4A
+         DRTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=HwNvVGJKshYklC3CPJVa0iK8ZFHWtLyejgnBRiZ/7xw=;
+        b=ERDhWidVJ4tRiN5wRke76qfqEDkvuKh4oaQc8Cvv7dpxGP1wD+HwKcVviuSHbF1e2y
+         4/D/vnhBUEwP6DWjfroj3p4J8T7tKd5MinlW9XZNpkbB8bsFfdPJivAIjdEkcVG5MnBR
+         ibLhOdsmf/H4e/rQB65XNs3VNsaA7+Ghw6nToWB7RwXvQq55NwDH2zyAzD0D2bjaJfK0
+         jPx7FNjcaO2iLGIIn+yHBHWbteNhpRtv9e6FXj4AKtByQcnEtnNAI2aKT9Szf73t3LBL
+         E1xVVWUYkuMiFa6DOfhAzdMZKu2R1LEZoN3ejt3htYGjIp1q2FjyqAD71//TXaRCFQ8R
+         hXsA==
+X-Gm-Message-State: APf1xPAkzkagBAojj85j5F8lWk0g+xHjDbzOoxAS2OyeFKYFdxIpq3/l
+        93NhtvbEbZezK62+dEfg7F8=
+X-Google-Smtp-Source: AG47ELv4yUZBRu/L2vAuycuDI0VO4P4+NkyhjoFsaCp/MGyou6lKABrO5DUrJfqBpx+Enos09Kc1WQ==
+X-Received: by 10.223.170.78 with SMTP id q14mr21640303wrd.271.1520511932156;
+        Thu, 08 Mar 2018 04:25:32 -0800 (PST)
+Received: from localhost.localdomain (x4db106d7.dyn.telefonica.de. [77.177.6.215])
+        by smtp.gmail.com with ESMTPSA id 198sm22597274wmg.8.2018.03.08.04.25.30
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 08 Mar 2018 04:25:31 -0800 (PST)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [RFC PATCH 1/5] Add testcases for improved file collision conflict handling
+Date:   Thu,  8 Mar 2018 13:25:23 +0100
+Message-Id: <20180308122523.14434-1-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.16.2.603.g180c1428f0
+In-Reply-To: <20180305171125.22331-2-newren@gmail.com>
+References: <20180305171125.22331-1-newren@gmail.com> <20180305171125.22331-2-newren@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <c5a5c2cc-6a11-440f-5b9b-964ae1ca07dd@talktalk.net>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfGDip+lYHKUTSIDs+/f4TBe7IwPuOXUf+XY42YjDhtZqQyn5MnOG07yp6ButZRScdCRKcuT0ocrg+e49kn81cX49GkFT+0cp0bPwbBrs3lMHklAOEgdD
- Blpvj54beJvNho2Zrb4/ZX4xEA6BpX6PlLCnr7GV61NjNGI6uVBDDot5Pb+VR3JtQA/yJob3+HG/R5Ryg+RYV7bLAu751E/0YCV63WueRDZ1jA7LPpOSybXr
- dcZXCBMYN7n1B6Efg+gJLgJAAIR+w1hUyaQRU9apWVEWNArUtbS6gFn5TMY/OdJPmQ+IhFk9urrIMJ9crXq+aU/ncmwsaLAxkTa8gXjrnpiy3vYPF6NP0y0N
- 90z4Gfb2/Th5GpWsAu9x6wcZ+wL/vxGbpBtw3jY+EV3bcgTlU4oTAECBLjSqwhutB6ArOllz
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 08/03/18 11:20, Phillip Wood wrote:
-> On 07/03/18 07:26, Johannes Schindelin wrote:
->> Hi Buga,
->>
->> On Tue, 6 Mar 2018, Igor Djordjevic wrote:
->>
->>> On 06/03/2018 19:12, Johannes Schindelin wrote:
->>>>
->>>>>> And I guess being consistent is pretty important, too - if you add new
->>>>>> content during merge rebase, it should always show up in the merge,
->>>>>> period. 
->>>>>
->>>>> Yes, that should make it easy for the user to know what to expect from
->>>>> rebase.
->>>>
->>>> [...]
->>>>
->>>> It will be slightly inconsistent. But in a defendable way, I think.
->>>
->>> I like where this discussion is heading, and here`s what I thought 
->>> about it :)
->>>
->>> [...]
->>>
->>> Here`s a twist - not letting `merge` trying to be too smart by 
->>> figuring out whether passed arguments correspond to rewritten 
->>> versions of the original merge parents (which would be too 
->>> restrictive, too, I`m afraid), but just be explicit about it, instead!
->>
->> That's the missing piece, I think.
->>
->>> So, it could be something like:
->>>
->>> 	merge -C deadbee 123abc:cafecafe 234bcd:bedbedbed
->>
->> I like where this is heading, too, but I do not think that we can do this
->> on a per-MERGE_HEAD basis. The vast majority of merge commits, in
->> practice, have two parents. So the `merge` command would actually only
->> have one revision to merge (because HEAD is the implicit first parent). So
->> that is easy.
->>
->> But as soon as you go octopus, you can either perform an octopus merge, or
->> rebase the original merge commit. You cannot really mix and match here.
->>
->> Unless we reimplement the octopus merge (which works quite a bit
->> differently from the "rebase merge commit" strategy, even if it is
->> incremental, too), which has its own challenges: if there are merge
->> conflicts before merging the last MERGE_HEAD, the octopus merge will exit
->> with status 2, telling you "Should not be doing an octopus.". While we
->> will want to keep merge conflict markers and continue with the "rebase the
->> original merge commit" strategy.
->>
->> And it would slam the door shut for adding support for *other* merge
->> strategies to perform a more-than-two-parents merge.
->>
->> Also, I do not think that it makes a whole lot of sense in practice to let
->> users edit what will be used for "original parent". If the user wants to
->> do complicated stuff, they can already do that, via `exec`. The `merge`
->> command really should be about facilitating common workflows, guiding the
->> user to what is sane.
->>
->> Currently my favorite idea is to introduce a new flag: -R (for "rebase the
->> original merge commit"). It would look like this:
->>
->> 	merge -R -C <original-merge> <merge-head> # <oneline>
->>
->> This flag would of course trigger the consistency check (does the number
->> of parents of the original merge commit agree with the parameter list? Was
->> an original merge commit specified to begin with?), and it would not fall
->> back to the recursive merge, but error out if that check failed.
->>
->> Side note: I wonder whether we really need to perform the additional check
->> that ensures that the <merge-head> refers to the rewritten version of the
->> original merge commit's parent.
->>
->> Second side note: if we can fast-forward, currently we prefer that, and I
->> think we should keep that behavior with -R, too.
+> Adds testcases dealing with file collisions for the following types of
+> conflicts:
+>   * add/add
+>   * rename/add
+>   * rename/rename(2to1)
+> These tests include expectations for proposed smarter behavior which has
+> not yet been implemented and thus are currently expected to fail.
+> Subsequent commits will correct that and explain the new behavior.
 > 
-> I think that would be a good idea to avoid unpleasant surprises.
+> Signed-off-by: Elijah Newren <newren@gmail.com>
+> ---
+>  t/t6042-merge-rename-corner-cases.sh | 220 +++++++++++++++++++++++++++++++++++
+>  1 file changed, 220 insertions(+)
+> 
+> diff --git a/t/t6042-merge-rename-corner-cases.sh b/t/t6042-merge-rename-corner-cases.sh
+> index 411550d2b6..a6c151ef95 100755
+> --- a/t/t6042-merge-rename-corner-cases.sh
+> +++ b/t/t6042-merge-rename-corner-cases.sh
+> @@ -575,4 +575,224 @@ test_expect_success 'rename/rename/add-dest merge still knows about conflicting
+>  	test ! -f c
+>  '
+>
+> +test_conflicts_with_adds_and_renames() {
+> +	test $1 != 0 && side1=rename || side1=add
+> +	test $2 != 0 && side2=rename || side2=add
 
-Oops that was referring to the first side note. I think fast forwarding
-is a good idea. I'm not so sure about checking that <merge-head> refers
-to the rewritten version of the original merge commit's parent any more
-though. Having thought some more, I think we would want to allow the
-user to rearrange a topic branch that is the parent of a merge and that
-would require allowing a different parent as the old parent could be
-dropped or swapped with another commit in the branch. I can't think of a
-way to mechanically check that the new parent is 'somehow derived from'
-the old one.
+For additonal context I'm going to quote the callsites of this
+function from the end of the test script:
 
->> If the user wants to force a new merge, they simply remove that -R flag.
->>
->> What do you think?
-> 
-> I did wonder about using 'pick <original-merge>' for rebasing merges and
-> keeping 'merge ...' for recreating them but I'm not sure if that is a
-> good idea. It has the advantage that the user cannot specify the wrong
-> parents for the merge to be rebased as 'git rebase' would work out if
-> the parents have been rebased, but maybe it's a bit magical to use pick
-> for merge commits. Also there isn't such a simple way for the user to go
-> from 'rabase this merge' to 'recreate this merge' as they'd have to
-> write the whole merge line themselves (though I guess something like
-> emacs' git-rebase.el would be able to help with that)
+> +test_conflicts_with_adds_and_renames 1 1
+> +test_conflicts_with_adds_and_renames 1 0
+> +test_conflicts_with_adds_and_renames 0 1
+> +test_conflicts_with_adds_and_renames 0 0
 
-Scrub that, it is too magical and I don't think it would work with
-rearranged commits - it's making the --preserve-merges mistake all over
-again. It's a shame to have 'merge' mean 'recreate the merge' and
-'rebase the merge' but I don't think there is an easy way round that.
+Instead of the two conditions at the beginning of the function and the
+1 and 0 sort-of magic numbers at the callsites, you could just pass
+the words "rename" and "add" as parameters to the function.  The
+callsites would be clearer and the function could start with two
+simple variable assignments side1=$1 ; side2=$2.
 
-> Best Wishes
-> 
-> Phillip
-> 
-> 
->> Ciao,
->> Dscho
->>
-> 
+Please feel free to dismiss this as bikeshedding: since the branches
+are called 'L' and 'R', maybe calling the variables $sideL and $sideR
+would match better the rest of the test?  Dunno.
 
+> +	# Setup:
+> +	#          L
+> +	#         / \
+> +	#   master   ?
+> +	#         \ /
+> +	#          R
+> +	#
+> +	# Where:
+> +	#   Both L and R have files named 'three-unrelated' and
+> +	#   'three-related' which collide (i.e. 4 files colliding at two
+> +	#   pathnames).  Each of the colliding files could have been
+> +	#   involved in a rename, in which case there was a file named
+> +	#   'one-[un]related' or 'two-[un]related' that was modified on the
+> +	#   opposite side of history and renamed into the collision on this
+> +	#   side of history.
+> +	#
+> +	# Questions for both sets of collisions:
+> +	#   1) The index should contain both a stage 2 and stage 3 entry
+> +	#      for the colliding file.  Does it?
+> +	#   2) When renames are involved, the content merges are clean, so
+> +	#      the index should reflect the content merges, not merely the
+> +	#      version of the colliding file from the prior commit.  Does
+> +	#      it?
+> +	#
+> +	# Questions for three-unrelated:
+> +	#   3) There should be files in the worktree named
+> +	#      'three-unrelated~HEAD' and 'three-unrelated~R^0' with the
+> +	#      (content-merged) version of 'three-unrelated' from the
+> +	#      appropriate side of the merge.  Are they present?
+> +	#   4) There should be no file named 'three-unrelated' in the
+> +	#      working tree.  That'd make it too likely that users would
+> +	#      use it instead of carefully looking at both
+> +	#      three-unrelated~HEAD and three-unrelated~R^0.  Is it
+> +	#      correctly missing?
+> +	#
+> +	# Questions for three-related:
+> +	#   3) There should be a file in the worktree named three-related
+> +	#      containing the two-way merged contents of the content-merged
+> +	#      versions of three-related from each of the two colliding
+> +	#      files.  Is it present?
+> +	#   4) There should not be any three-related~* files in the working
+> +	#      tree.
+> +	test_expect_success "setup simple $side1/$side2 conflict" '
+> +		test_create_repo simple_${side1}_${side2} &&
+> +		(
+> +			cd simple_${side1}_${side2} &&
+> +
+> +			# Create a simple file with 10 lines
+> +			ten="0 1 2 3 4 5 6 7 8 9" &&
+> +			for i in $ten
+> +			do
+> +				echo line $i in a sample file
+> +			done >unrelated1_v1 &&
+> +			# Create a 2nd version of same file with one more line
+> +			cat unrelated1_v1 >unrelated1_v2 &&
+
+'cp unrelated1_v1 unrelated1_v2', perhaps?
+
+> +			echo another line >>unrelated1_v2 &&
+> +
+> +			# Create an unrelated simple file with 10 lines
+> +			for i in $ten
+> +			do
+> +				echo line $i in another sample file
+> +			done >unrelated2_v1 &&
+> +			# Create a 2nd version of same file with one more line
+> +			cat unrelated2_v1 >unrelated2_v2 &&
+
+Likewise.
+
+> +			echo another line >>unrelated2_v2 &&
+> +
+> +			# Create some related files now
+> +			for i in $ten
+> +			do
+> +				echo Random base content line $i
+> +			done >related1_v1 &&
+> +			cp -a related1_v1 related1_v2 &&
+
+Wouldn't a "plain" 'cp', i.e. without '-a', be sufficient?
+
+> +			echo modification >>related1_v2 &&
+> +
+> +			cp -a related1_v1 related2_v1 &&
+> +			echo more stuff >>related2_v1 &&
+> +			cp -a related2_v1 related2_v2 &&
+> +			echo yet more stuff >>related2_v2 &&
+> +
+> +			# Use a tag to record both these files for simple
+> +			# access, and clean out these untracked files
+> +			git tag unrelated1_v1 `git hash-object -w unrelated1_v1` &&
+> +			git tag unrelated1_v2 `git hash-object -w unrelated1_v2` &&
+> +			git tag unrelated2_v1 `git hash-object -w unrelated2_v1` &&
+> +			git tag unrelated2_v2 `git hash-object -w unrelated2_v2` &&
+> +			git tag related1_v1 `git hash-object -w related1_v1` &&
+> +			git tag related1_v2 `git hash-object -w related1_v2` &&
+> +			git tag related2_v1 `git hash-object -w related2_v1` &&
+> +			git tag related2_v2 `git hash-object -w related2_v2` &&
+
+Style nit: please use $() for command substitutions instead of
+backticks.
+
+> +			git clean -f &&
+> +
+> +			# Setup merge-base, consisting of files named "one-*"
+> +			# and "two-*" if renames were involved.
+> +			touch irrelevant_file &&
+> +			git add irrelevant_file &&
+> +			if [ $side1 == "rename" ]; then
+
+Another style nit:
+
+        if test $side1 = "rename"
+        then
+                ...
+
+> +				git show unrelated1_v1 >one-unrelated &&
+> +				git add one-unrelated
+
+Broken && chain.
+Please check the subsequent if statements as well, there are more
+places where the && is missing.
+
+Also note that you can run 'git add one-unrelated one-related', i.e.
+add more than one file at once, sparing a couple of lines and git
+executions.
+
+> +				git show related1_v1 >one-related &&
+> +				git add one-related
+> +			fi &&
+> +			if [ $side2 == "rename" ]; then
+> +				git show unrelated2_v1 >two-unrelated &&
+> +				git add two-unrelated
+> +				git show related2_v1 >two-related &&
+> +				git add two-related
+> +			fi &&
+> +			test_tick && git commit -m initial &&
+> +
+> +			git branch L &&
+> +			git branch R &&
+> +
+> +			# Handle the left side
+> +			git checkout L &&
+> +			if [ $side1 == "rename" ]; then
+> +				git mv one-unrelated three-unrelated
+> +				git mv one-related   three-related
+> +			else
+> +				git show unrelated1_v2 >three-unrelated &&
+> +				git add three-unrelated
+> +				git show related1_v2 >three-related &&
+> +				git add three-related
+> +			fi &&
+> +			if [ $side2 == "rename" ]; then
+> +				git show unrelated2_v2 >two-unrelated &&
+> +				git add two-unrelated
+> +				git show related2_v2 >two-related &&
+> +				git add two-related
+> +			fi &&
+> +			test_tick && git commit -m L &&
+> +
+> +			# Handle the right side
+> +			git checkout R &&
+> +			if [ $side1 == "rename" ]; then
+> +				git show unrelated1_v2 >one-unrelated &&
+> +				git add one-unrelated
+> +				git show related1_v2 >one-related &&
+> +				git add one-related
+> +			fi &&
+> +			if [ $side2 == "rename" ]; then
+> +				git mv two-unrelated three-unrelated
+> +				git mv two-related three-related
+> +			else
+> +				git show unrelated2_v2 >three-unrelated &&
+> +				git add three-unrelated
+> +				git show related2_v2 >three-related &&
+> +				git add three-related
+> +			fi &&
+> +			test_tick && git commit -m R
+> +		)
+> +	'
+
+This setup test is enormous, and the conditions for the combination of
+the two sides and the add/rename conflicts are somewhat distracting.
+I don't know how it could be structured better/shorter/clearer...  I
+couldn't come up with anything useful during lunch.
+
+> +
+> +	test_expect_failure "check simple $side1/$side2 conflict" '
+> +		(
+> +			cd simple_${side1}_${side2} &&
+> +
+> +			git checkout L^0 &&
+> +
+> +			# Merge must fail; there is a conflict
+> +			test_must_fail git merge -s recursive R^0 &&
+> +
+> +			# Make sure the index has the right number of entries
+> +			git ls-files -s >out &&
+> +			test_line_count = 5 out &&
+> +			git ls-files -u >out &&
+> +			test_line_count = 4 out &&
+> +
+> +			# Nothing should have touched irrelevant_file
+> +			git rev-parse >actual \
+> +				:0:irrelevant_file \
+> +				:2:three-unrelated :3:three-unrelated \
+> +				:2:three-related   :3:three-related   &&
+> +			git rev-parse >expected \
+> +				master:irrelevant_file \
+> +				unrelated1_v2      unrelated2_v2 \
+> +				related1_v2        related2_v2   &&
+
+Missing 'test_cmp'?  The above lines write the files 'actual' and
+'expected', but they are never looked at.
+
+> +			# Ensure we have the correct number of untracked files
+> +			git ls-files -o >out &&
+> +			test_line_count = 5 out &&
+> +
+> +			# Make sure each file (with merging if rename
+> +			# involved) is present in the working tree for the
+> +			# user to work with.
+> +			git hash-object >actual \
+> +				three-unrelated~HEAD three-unrelated~R^0 &&
+> +			git rev-parse >expected \
+> +				unrelated1_v2        unrelated2_v2 &&
+
+Again, missing 'test_cmp'?
+
+> +			# "three-unrelated" should not exist because there is
+> +			# no reason to give preference to either
+> +			# three-unrelated~HEAD or three-unrelated~R^0
+> +			test_path_is_missing three-unrelated &&
+> +
+> +			# Make sure we have the correct merged contents for
+> +			# three-related
+> +			git show related1_v1 >expected &&
+> +			cat <<EOF >>expected &&
+> +<<<<<<< HEAD
+> +modification
+> +=======
+> +more stuff
+> +yet more stuff
+> +>>>>>>> R^0
+> +EOF
+
+You could use 'cat <<-EOF ....' and indent the here doc with tabs, so
+it won't look so out-of-place.  Or even '<<-\EOF' to indicate that
+there is nothing to be expanded in the here doc. 
+
+> +
+> +			test_cmp expected three-related
+> +		)
+> +	'
+> +}
+> +
+> +test_conflicts_with_adds_and_renames 1 1
+> +test_conflicts_with_adds_and_renames 1 0
+> +test_conflicts_with_adds_and_renames 0 1
+> +test_conflicts_with_adds_and_renames 0 0
+> +
+>  test_done
+> --
+> 2.16.0.41.g6a66043158
+> 
+> 
