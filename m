@@ -2,71 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 840811F404
-	for <e@80x24.org>; Thu,  8 Mar 2018 13:12:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E6C981F404
+	for <e@80x24.org>; Thu,  8 Mar 2018 14:22:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966222AbeCHNMv (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Mar 2018 08:12:51 -0500
-Received: from mail-oi0-f41.google.com ([209.85.218.41]:35851 "EHLO
-        mail-oi0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S935865AbeCHNMc (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Mar 2018 08:12:32 -0500
-Received: by mail-oi0-f41.google.com with SMTP id u73so4289614oie.3
-        for <git@vger.kernel.org>; Thu, 08 Mar 2018 05:12:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=CrQhRwCqwantg1ke6CFEpplG6tI/mZyxy5tqEEzSiHM=;
-        b=rIFUy74yWiOKko1RolMtl1op9YoOTj3fR8vZn2NIZG+ndJrs+mQlhJ3k9eIdWACvCF
-         PYUavzbR41HJWZls8Ze057ZNwJEHOZRSGrT017swppgM2WUUmQFPDtwt4+FLRNrUu5za
-         V/lff8mwLPAaaQLb3YqGMOI2v6AVzBkevTk3LHNrLt9tWGu8KJiLWpa6kxZlIvTda55J
-         cRkTkLHyoksc8sw4MjQtQqYfDA8iEHh+2m7+U+aoALrM+4EbuTKfTcFBLpOSufLsvlUh
-         YTlGHf48UFj8YUkdGhQfayjX+gJIrW9haKu0mqScVK3woeVFTwQmCkLAVNGUFy8Nv0uw
-         vllA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=CrQhRwCqwantg1ke6CFEpplG6tI/mZyxy5tqEEzSiHM=;
-        b=qYDJxyUFU5sWRHvjqGuGsqAfeRUxZilAVJaPzYETRjFy8COL5jCzuFWL0yJcNKbR/7
-         kCWen07vsY9wPUAy+GS7893fORyWc2SAPQIcsDlTh59b3k7DG/w9Asyj91HyQgZwUkLD
-         ovhrHDNmhorTF1qsvvw0iiAJy3q5iq5AZQmdYWxJGFwdkors16v9hiKQy8RWfNHM3N1E
-         NmrkzfOI9aHqkqKKc46EYcb4RLuqpv2YlEvy6l7BmVERcoM8jNUClqUF/0u5TNbnCBTY
-         thThFTHkPA5j9M9xhovJZffLC8fh30+OpXOJHCh/coK+nXmkPnqUARUrE0zq/4cUYcGZ
-         FMJQ==
-X-Gm-Message-State: AElRT7E2zO7DyDmFlnyUGwOQX9fuB9XHJnOw+veUR3xjkkt0c/v34rIi
-        Y5zS0sNxZaurKBoCqKLVhCU1On44BwGiQfa7gWuT9g==
-X-Google-Smtp-Source: AG47ELseSLXqsHElTwnaMocqapYwou0Hdq2q0kB12rFR9shtGr8G+ZDornlvhtmzckGqah34BbQ0o0Zoqqpwn1eYxhY=
-X-Received: by 10.202.102.83 with SMTP id a80mr17280156oic.35.1520514751666;
- Thu, 08 Mar 2018 05:12:31 -0800 (PST)
+        id S965421AbeCHOW3 convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Thu, 8 Mar 2018 09:22:29 -0500
+Received: from mga14.intel.com ([192.55.52.115]:2220 "EHLO mga14.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S964801AbeCHOW1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Mar 2018 09:22:27 -0500
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga005.fm.intel.com ([10.253.24.32])
+  by fmsmga103.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 08 Mar 2018 06:22:27 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.47,441,1515484800"; 
+   d="scan'208";a="209860637"
+Received: from fmsmsx108.amr.corp.intel.com ([10.18.124.206])
+  by fmsmga005.fm.intel.com with ESMTP; 08 Mar 2018 06:22:26 -0800
+Received: from fmsmsx116.amr.corp.intel.com (10.18.116.20) by
+ FMSMSX108.amr.corp.intel.com (10.18.124.206) with Microsoft SMTP Server (TLS)
+ id 14.3.319.2; Thu, 8 Mar 2018 06:22:26 -0800
+Received: from hasmsx112.ger.corp.intel.com (10.184.198.40) by
+ fmsmsx116.amr.corp.intel.com (10.18.116.20) with Microsoft SMTP Server (TLS)
+ id 14.3.319.2; Thu, 8 Mar 2018 06:22:26 -0800
+Received: from HASMSX109.ger.corp.intel.com ([169.254.3.252]) by
+ HASMSX112.ger.corp.intel.com ([169.254.11.127]) with mapi id 14.03.0319.002;
+ Thu, 8 Mar 2018 16:22:24 +0200
+From:   "Vromen, Tomer" <tomer.vromen@intel.com>
+To:     Junio C Hamano <gitster@pobox.com>
+CC:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: RE: Bug report: git-stash doesn't return correct status code
+Thread-Topic: Bug report: git-stash doesn't return correct status code
+Thread-Index: AQHTtleqZ3OCKXPgQ+aMAsqWU0GB6aPGZFQQ
+Date:   Thu, 8 Mar 2018 14:22:22 +0000
+Message-ID: <8ED425DE0F8BEC45AADD477A8872875788FB761D@hasmsx109.ger.corp.intel.com>
+References: <8ED425DE0F8BEC45AADD477A8872875788FB691C@hasmsx109.ger.corp.intel.com>
+        <xmqqzi3jzp91.fsf@gitster-ct.c.googlers.com>
+ <xmqqina7zji7.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqina7zji7.fsf@gitster-ct.c.googlers.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ctpclassification: CTP_NT
+x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL0ludGVsMyIsImlkIjoiYTFhY2U0MDctNTI0NS00MWNiLTg2NmItODJiM2RlM2VmYzRjIiwicHJvcHMiOlt7Im4iOiJDVFBDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiQ1RQX05UIn1dfV19LCJTdWJqZWN0TGFiZWxzIjpbXSwiVE1DVmVyc2lvbiI6IjE3LjIuNS4xOCIsIlRydXN0ZWRMYWJlbEhhc2giOiJcL0pqNkczbm5tXC9wZ0hcL05oQTlcL2x0cW95dWhhSnY0d1AxNVJEalZtWWJqK0JFNVBvRGFnSk94QWF2XC9IXC8wakcxIn0=
+dlp-product: dlpe-windows
+dlp-version: 11.0.0.116
+dlp-reaction: no-action
+x-originating-ip: [10.185.75.169]
+Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
-References: <xmqqtvts22za.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1803071333590.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
- <871sguorb5.fsf@evledraar.gmail.com>
-In-Reply-To: <871sguorb5.fsf@evledraar.gmail.com>
-From:   Daniel Jacques <dnj@google.com>
-Date:   Thu, 08 Mar 2018 13:12:20 +0000
-Message-ID: <CAD1RUU_EuLSo5fPjZe7v3882Tkx2Dymxn619smS-wuoejKyG+w@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Mar 2018, #02; Tue, 6)
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> It would be great to have this rebooted now that my perl cleanup efforts
-> have un-blocked this. Will be happy to help review & test the next
-> iteration.
+> But stepping back a bit, why do you even need stash save/pop around
+> "checkout -b new-feature-branch" (that implicitly branches at the
+> tip) in the first place?  
 
-Yes, I was just thinking the same thing. I wanted to make sure the Perl
-changes had landed, and I'm pleased to see that they have. I should have
-time in the next few days to rebase and put up a new version of the patch
-series. I'll keep you in the loop, and thanks for pinging!
+Sorry about that, I meant something like
+
+git stash && git checkout develop && git pull && git checkout -b new-feature-branch && git stash pop
+
+My point is that it is the user's expectation that "git stash" will push to the stash.
+Not pushing anything should be considered a failure.
+
+Tomer.
+
+-----Original Message-----
+From: Junio C Hamano [mailto:jch2355@gmail.com] On Behalf Of Junio C Hamano
+Sent: Wednesday, March 07, 2018 23:03
+To: Vromen, Tomer <tomer.vromen@intel.com>
+Cc: git@vger.kernel.org
+Subject: Re: Bug report: git-stash doesn't return correct status code
+
+Junio C Hamano <gitster@pobox.com> writes:
+
+> "Vromen, Tomer" <tomer.vromen@intel.com> writes:
+>
+>>> git stash && git checkout -b new-feature-branch && git stash pop
+>>
+>> This is useful when I realize that I want to open a new branch for my changes (that I haven't committed yet).
+>> However, I might have forgotten to save my changes in the editor, so git-stash will give this error:
+>>
+>> No local changes to save
+>
+> This is given with "say" and not with "die", as this is merely an
+> informational diagnosis.  The command did not find any erroneous
+> condition, the command did not fail to do anything it was supposed
+> to do, so the command exited with 0 status.
+
+I guess that is only half an answer.  If you really want to avoid
+creating the new branch when the working tree and the index are
+clean, you'd need to check that yourself before that three-command
+sequence.  In our shell script, we use these as such a check:
+
+	git update-index --refresh -q --ignore-submodules
+	git diff-files --quiet --ignore-submodules &&
+	git diff-index --cached --quiet --ignore-submodules HEAD --
+
+But stepping back a bit, why do you even need stash save/pop around
+"checkout -b new-feature-branch" (that implicitly branches at the
+tip) in the first place?  "checkout -b" that begins at the current
+HEAD does not touch the index nor the working tree and take the
+local changes with you to the new branch, so save/pop around it
+seems totally pointless.
+---------------------------------------------------------------------
+Intel Israel (74) Limited
+
+This e-mail and any attachments may contain confidential material for
+the sole use of the intended recipient(s). Any review or distribution
+by others is strictly prohibited. If you are not the intended
+recipient, please contact the sender and delete all copies.
+
