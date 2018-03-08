@@ -2,101 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7558F1F404
-	for <e@80x24.org>; Thu,  8 Mar 2018 17:28:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D9D481F404
+	for <e@80x24.org>; Thu,  8 Mar 2018 17:52:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966297AbeCHR17 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Mar 2018 12:27:59 -0500
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:52834 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932091AbeCHR14 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Mar 2018 12:27:56 -0500
-Received: by mail-wm0-f65.google.com with SMTP id t3so757233wmc.2
-        for <git@vger.kernel.org>; Thu, 08 Mar 2018 09:27:55 -0800 (PST)
+        id S936112AbeCHRwB (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Mar 2018 12:52:01 -0500
+Received: from mail-vk0-f43.google.com ([209.85.213.43]:33045 "EHLO
+        mail-vk0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S936048AbeCHRv6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Mar 2018 12:51:58 -0500
+Received: by mail-vk0-f43.google.com with SMTP id z130so379041vkd.0
+        for <git@vger.kernel.org>; Thu, 08 Mar 2018 09:51:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=XKBIchh3kQpBR+65Mc3UUdfE+j0Z4s0ARP5NFrZdnQA=;
-        b=Iq96PAJhqP3bin9RzO0eoaoD04uU802Q/kXdV7gJkSIfv4OFpny77Ht8VuVB/h6hlZ
-         eYK8ZA7rbQnWxATvCYEFN3CKVVALHMSKnYwNHUi5nayjCtxMtftVjSKF7CoNArCwKpmb
-         VOE2M3aqrnKXV+CTQ8JhnPRBK27wmjN6QplS7tlxUN0R9p4Z9o8oKIw4JlVIG9JZag4A
-         vIvhMdvmS7hja6gyDGu2mDyCXgF9w+UGR/fMwE6GLLuN+vZYRYB3Y12jLso0mPfHhFpH
-         l4VD8iiAxaogFlSh5/F/Yx2bZbHqc5CRSejqdlnSDXAoN+3lNBd0kmHfMbMGShmwfSxl
-         D+mw==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=DrRIAkBLbfBAuJTu0PzbRw3t/GjEUrCo4Hn3VPRwnO4=;
+        b=jXCZL8Mpvo2/cVI3t4qH1dDDvjxi2S7ybzDtO79M6+dT+th8R8kbV11BZxbmi8LQls
+         WlU2sokFKo8Hi2vCEDCH5ONA57iAFXoWw045TpqmMk1MGa/kq63jfE288qWoTyrd1QUj
+         ITM5kIAJDGMnsJW0dJNbe5umfB5tEH6EvpGtuH0wZ2XgoDVBVDpj0EHc/JmjLP75PLav
+         EFDdswpR/l5FSfbAXWxwCmvtIX9hw1eq0WpX2WrxCfTezRoSJoMw54cfBTwtEYZxTUBx
+         swxRKv7o1czUG7aslLbaXqRLYggIuLOBbv78VrM8onRvXJl9vvJzDLHte5h5vUM98t8w
+         /uSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=XKBIchh3kQpBR+65Mc3UUdfE+j0Z4s0ARP5NFrZdnQA=;
-        b=EDEHv1P3QxDatAq+FGCf41tuMELiJGHPCg4cIr9bX3RdUzPWlmzx0E5ijyZPYd8U3K
-         jSStU1v3evsB3ky0MlqqBA2qAFCU9M015tmY/xMU9ZSp10Lhyo0y2F5vdwAf7Wgc2J2d
-         aYvMQ6lwP3/msqvHb/QqNX3MpdbGpBRmGYddkuXKYgvGkXRAnkcG9GXuPjfr0DLIKwSj
-         00d92s9JcsQyPa6//GlXRBlaeUJUxu4UpMWwKFh9QFYsvx3cFsagksFG/1npY0FllZo0
-         zFmVzxdCmLp+OMiyYh3COdUV0uGy8MXJpY1WjVyu/B50x/iYHzAIQEOeYAzs8UW8YNbF
-         igtg==
-X-Gm-Message-State: AElRT7GQquGFBZXJEXicpd2WJKu6EXfKiEAkfoDYy7QvwTkpCar9ltcy
-        d4jU9BO4huK4YaAB2ONnCFA=
-X-Google-Smtp-Source: AG47ELtCfI6GkRhwu7tkxtw1whDi3vQ4B7QUYllKut9MXg/p5Th5RF8eNSaxDKtdEoNzv1eVPvB9Xw==
-X-Received: by 10.28.202.26 with SMTP id a26mr17759194wmg.45.1520530074636;
-        Thu, 08 Mar 2018 09:27:54 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id 1sm9488459wmj.35.2018.03.08.09.27.53
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 08 Mar 2018 09:27:53 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Alexandre Julliard <julliard@winehq.org>,
-        Dorab Patel <dorabpatel@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        David =?utf-8?Q?K=C3=A5gedal?= <davidk@lysator.liu.se>
-Subject: Re: [PATCH] git{,-blame}.el: remove old bitrotting Emacs code
-References: <87muzlwhb0.fsf@winehq.org>
-        <20180308094544.7286-1-avarab@gmail.com>
-Date:   Thu, 08 Mar 2018 09:27:53 -0800
-In-Reply-To: <20180308094544.7286-1-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
- =?utf-8?B?IEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Thu, 8 Mar 2018 09:45:44 +0000")
-Message-ID: <xmqq7eqmxysm.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=DrRIAkBLbfBAuJTu0PzbRw3t/GjEUrCo4Hn3VPRwnO4=;
+        b=Y72B8AOiFIF1c/Lonc6sYxLi9EA0xF6s2VSe6Re+AJE6GXnwJ/vUjotrWqPtc2wDOw
+         zjdhG7v6E7U6wBKjXu38l4wqfxVQao9ibRgm6FMWssJ8DVJY0UFtWLjgDBea/xOW4h/H
+         29vOJXgPUyvdrm7U1GFh/u06nJet3P/rpJJYnIraEBpt6Md+81TUzlwkfzbWXWjkCfCI
+         gnpDRrNn2Bne+n1UXMS7VWPEOZuScsBmNGXghO6ChOYXmpYOJ9lsOtHCXFM67J5oFzr3
+         XgDwHRFqy1Q8V+67UB4Rp7JEBJBlsO4tvkeQivNNyXmXRKs3vuLnIzWDNEiCz7KCOCyR
+         DJ6w==
+X-Gm-Message-State: APf1xPANdaA9RipJ8iYENnNMtowe2UqeWLfsN7O0/8FuWhOzStaqR1Dy
+        IKcW/avb9adt/wJN70oaMFh9f5w0Sb8BgJ/w2ws=
+X-Google-Smtp-Source: AG47ELu6lU+0ukDpMJR1zkaIb+efK/F/qbPLq/e2zeFOLUAXfB2sRGm5g3FhjGC2Rx2A3ox6RAaMIRCTJV0X7ayQyao=
+X-Received: by 10.31.204.5 with SMTP id c5mr19256122vkg.76.1520531517309; Thu,
+ 08 Mar 2018 09:51:57 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Received: by 10.176.1.49 with HTTP; Thu, 8 Mar 2018 09:51:56 -0800 (PST)
+In-Reply-To: <20180308122523.14434-1-szeder.dev@gmail.com>
+References: <20180305171125.22331-1-newren@gmail.com> <20180305171125.22331-2-newren@gmail.com>
+ <20180308122523.14434-1-szeder.dev@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Thu, 8 Mar 2018 09:51:56 -0800
+Message-ID: <CABPp-BGO1m=OAbUS8RUKdqP+8p-DokzbjGa3TcigmTSSa_r3-Q@mail.gmail.com>
+Subject: Re: [RFC PATCH 1/5] Add testcases for improved file collision
+ conflict handling
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
+Sweet!  Thanks for taking a look, and for spotting lots of
+improvements (and some really embarrassing errors).  I'll keep the
+fixes queued up while waiting for other feedback.  A few comments...
 
-> On Tue, Mar 06 2018, Alexandre Julliard jotted:
-> ...
->> I'd recommend that anybody still using it switch to Magit, which is
->> being actively maintained, and IMO superior to git.el in all respects.
->
-> I think at this point it's best to remove both of these modes from
-> being distributed with Git, per this patch.
->
->  contrib/emacs/.gitignore   |    1 -
->  contrib/emacs/Makefile     |   21 -
->  contrib/emacs/README       |   39 -
->  contrib/emacs/git-blame.el |  483 -------------
->  contrib/emacs/git.el       | 1704 --------------------------------------------
->  5 files changed, 2248 deletions(-)
->  delete mode 100644 contrib/emacs/.gitignore
->  delete mode 100644 contrib/emacs/Makefile
->  delete mode 100644 contrib/emacs/README
->  delete mode 100644 contrib/emacs/git-blame.el
->  delete mode 100644 contrib/emacs/git.el
+On Thu, Mar 8, 2018 at 4:25 AM, SZEDER G=C3=A1bor <szeder.dev@gmail.com> wr=
+ote:
 
-I agree with the overall direction.  The only difference between
-this and what I had in mind was if we want to leave README that says
-what you said in the log message.  That way, those who just got a
-new version of tarball and then wonder what happened to these
-scripts would save one trip to the Internet.
+> This setup test is enormous, and the conditions for the combination of
+> the two sides and the add/rename conflicts are somewhat distracting.
+> I don't know how it could be structured better/shorter/clearer...  I
+> couldn't come up with anything useful during lunch.
+
+Yeah.  :-(  It's part attempt to test these conflict types much more
+thoroughly than other tests in the testsuite do, and part attempt to
+keep the test setup consistent between the types to reflect the fact
+that I'm consolidating the conflict resolution into a single function
+as well.
+
+Two possible ideas:
+
+  * Split the tests for "*_unrelated" files and "*_related" files into
+separate tests (doubling the number of tests, but making each only
+deal with half the files.  That would make each setup function about
+half the size, though both check functions would be about as big as
+the original.
+
+  * Instead of programatically generated tests, just manually write
+out the tests for each of the four combinations (rename/rename,
+rename/add, add/rename, add/add).  That means four "copies" of fairly
+similar functions (and possible greater difficulty keeping things
+consistent if changes are requested), but does allow removal of the
+three different if-statements and thus makes each one easier to
+understand in isolation.
+
+Doing both would be possible as well.
+
+Personally, I'm much more in favor of the first idea than the second.
+I'm still kind of borderline about whether to make the change
+mentioned in the first idea, but if others feel that splitting would
+help a lot, I'm happy to look into either or both ideas.
+
+>> +                     cat <<EOF >>expected &&
+>> +<<<<<<< HEAD
+>> +modification
+>> +=3D=3D=3D=3D=3D=3D=3D
+>> +more stuff
+>> +yet more stuff
+>> +>>>>>>> R^0
+>> +EOF
+>
+> You could use 'cat <<-EOF ....' and indent the here doc with tabs, so
+> it won't look so out-of-place.  Or even '<<-\EOF' to indicate that
+> there is nothing to be expanded in the here doc.
+
+I just learned two new things about heredocs; I've wanted both of
+those things in the past, but didn't even think to check if they were
+possible.  Thanks for enlightening me.
