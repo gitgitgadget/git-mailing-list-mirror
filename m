@@ -2,66 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5978C1FAE2
-	for <e@80x24.org>; Thu,  8 Mar 2018 11:05:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A791A1FAE2
+	for <e@80x24.org>; Thu,  8 Mar 2018 11:05:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935224AbeCHLFf (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Mar 2018 06:05:35 -0500
-Received: from a7-19.smtp-out.eu-west-1.amazonses.com ([54.240.7.19]:46504
-        "EHLO a7-19.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1754837AbeCHLFe (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 8 Mar 2018 06:05:34 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=shh3fegwg5fppqsuzphvschd53n6ihuv; d=amazonses.com; t=1520507132;
-        h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-        bh=uQXpZnDPZgJGchPNoKfT6UldAelS6sxrzLjRnzt4Uy4=;
-        b=AXyc7SQw/+Rvb1JD/3X3lIqWTXjjmCZAlUpqUIRwvzwgWtcpIXDqGAP2haHV3YAl
-        K9lFSADBPEH6PfZtldKe8oZ2wHo2SC/q5Y9P+50CZXNtx0DMXwlZxXodXVaQ0sI9MkI
-        V706qGPsAytrknMeNmE49dbGZoLCLof5W6ifpzpI=
-From:   Thomas Levesque <thomas.levesque@gmail.com>
-To:     git@vger.kernel.org
-Message-ID: <0102016205499aff-6779e882-12d1-481e-8594-c02d72aa7165-000000@eu-west-1.amazonses.com>
-In-Reply-To: <CAPig+cTPMqf1hN-fsaAkdZwCEH94ZPYJbfSE_rcjFCoSobxK5Q@mail.gmail.com>
-References: <CAPig+cTPMqf1hN-fsaAkdZwCEH94ZPYJbfSE_rcjFCoSobxK5Q@mail.gmail.com>
-Subject: [PATCH] userdiff.c: Add C# async keyword in diff pattern
+        id S934957AbeCHLF5 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Mar 2018 06:05:57 -0500
+Received: from smtp-out-2.talktalk.net ([62.24.135.66]:49053 "EHLO
+        smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751758AbeCHLF4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Mar 2018 06:05:56 -0500
+Received: from [192.168.2.201] ([89.242.187.47])
+        by smtp.talktalk.net with SMTP
+        id ttMueKQPPwheattMwejU1z; Thu, 08 Mar 2018 11:05:54 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1520507154;
+        bh=qqB0mht7yl6MFcEPSXEo0c7frOQ5ZK/77zGGgIxAXlE=;
+        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=B0FtLtRfybghJHTqS4cDAL126qWHmntWK1MEFcXScfX3Wy+4wlDpS0D5V7sHVn5a8
+         PADNXgX9KOWEDLNzQWw2GDEkxptZ/kytEnIode/+9gxywCRb6L9TXe10iDjQQLJweB
+         daQfYHR9wstIKj2olvCAENTB43CWRdxwjMYQQOM4=
+X-Originating-IP: [89.242.187.47]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=ZJr5Z0zb c=1 sm=1 tr=0 a=xTMdeSjPtcrjTRwaJcecEQ==:117
+ a=xTMdeSjPtcrjTRwaJcecEQ==:17 a=IkcTkHD0fZMA:10 a=nN7BH9HXAAAA:8
+ a=evINK-nbAAAA:8 a=bERc_Jam3zfgHG585bgA:9 a=7Zwj6sZBwVKJAoWSPKxL6X1jA+E=:19
+ a=QEXdDO2ut3YA:10 a=SHUmGpGg8TAA:10 a=RfR_gqz1fSpA9VikTjo0:22
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2 2/3] add -p: allow line selection to be inverted
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Gustavo Leite <gustavoleite.ti@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <20180219113619.26566-1-phillip.wood@talktalk.net>
+ <20180306101750.18794-1-phillip.wood@talktalk.net>
+ <20180306101750.18794-3-phillip.wood@talktalk.net>
+ <xmqq371d3rjz.fsf@gitster-ct.c.googlers.com>
+From:   Phillip Wood <phillip.wood@talktalk.net>
+Message-ID: <6476d776-dbf7-09cf-1c65-e413798b9987@talktalk.net>
+Date:   Thu, 8 Mar 2018 11:05:52 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.6.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+In-Reply-To: <xmqq371d3rjz.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
 Content-Transfer-Encoding: 7bit
-Date:   Thu, 8 Mar 2018 11:05:32 +0000
-X-SES-Outgoing: 2018.03.08-54.240.7.19
-Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
+X-CMAE-Envelope: MS4wfO1uKYFC7G4HL+BwrOFZ/rGWcuh/hXGeb/MxSgv0T5bousgZCeYASf89G0V94+AET3LP6YzwFg9c0OCcSOZMFRvLpTcNfxv+LhVdRm6KyjAiwz3n85jY
+ igoLNRi7Tz3E/zbWwvO7PnfzQ96hfKGpL/2cNxVHf7XU6rbHv2N6yKUaBOe6USbA8svIDo+tWgGKzpE0xFOrdGFqgGEEOQDQTnIn8XO+g99JPY+qQQ7M4SyU
+ gxMryH6yzuaCUsI24WcB1Fg61NhkNx0s7lFvK/hv5/bW3OxgYLif9+mxt5iOygi0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently C# async methods are not shown in diff hunk headers. I just
-added the async keyword to the csharp method pattern so that they are
-properly detected.
+On 06/03/18 19:57, Junio C Hamano wrote:
+> Phillip Wood <phillip.wood@talktalk.net> writes:
+> 
+>> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>>
+>> If the list of lines to be selected begins with '^' select all the
+>> lines except the ones listed.
+> 
+> There is "# Input that begins with '-'; unchoose" in list_and_choose
+> helper.  Does it make things inconsistent to use '^' for negation
+> like this patch does with it?
+> 
+Hmm yes, I think it probably does (I've just checked and git clean also
+uses '-' for de-selection). I think I'll remove support for open-ended
+ranges on the left side (it's not so hard to type '1-n' instead of '-n')
+and use a leading '-' for inversion. I'm tempted to keep supporting 'n-'
+to mean everything from 'n' to the last line though.
 
-Signed-off-by: Thomas Levesque <thomas.levesque@gmail.com>
----
- userdiff.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Best Wishes
 
-diff --git a/userdiff.c b/userdiff.c
-index dbfb4e13cddce..b92caf42b27be 100644
---- a/userdiff.c
-+++ b/userdiff.c
-@@ -138,7 +138,7 @@ PATTERNS("csharp",
- 	 /* Keywords */
- 	 "!^[ \t]*(do|while|for|if|else|instanceof|new|return|switch|case|throw|catch|using)\n"
- 	 /* Methods and constructors */
--	 "^[ \t]*(((static|public|internal|private|protected|new|virtual|sealed|override|unsafe)[ \t]+)*[][<>@.~_[:alnum:]]+[ \t]+[<>@._[:alnum:]]+[ \t]*\\(.*\\))[ \t]*$\n"
-+	 "^[ \t]*(((static|public|internal|private|protected|new|virtual|sealed|override|unsafe|async)[ \t]+)*[][<>@.~_[:alnum:]]+[ \t]+[<>@._[:alnum:]]+[ \t]*\\(.*\\))[ \t]*$\n"
- 	 /* Properties */
- 	 "^[ \t]*(((static|public|internal|private|protected|new|virtual|sealed|override|unsafe)[ \t]+)*[][<>@.~_[:alnum:]]+[ \t]+[@._[:alnum:]]+)[ \t]*$\n"
- 	 /* Type definitions */
-
---
-https://github.com/git/git/pull/464
+Phillip
