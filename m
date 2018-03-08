@@ -2,97 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3235F1FAE2
-	for <e@80x24.org>; Thu,  8 Mar 2018 07:06:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1F8CD1FAE2
+	for <e@80x24.org>; Thu,  8 Mar 2018 08:11:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S964948AbeCHHGK (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Mar 2018 02:06:10 -0500
-Received: from mout.gmx.net ([212.227.17.21]:41597 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755414AbeCHHFx (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Mar 2018 02:05:53 -0500
-Received: from [192.168.1.64] ([88.26.243.156]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0Lb90f-1eE99U0G9x-00kfdM; Thu, 08
- Mar 2018 08:05:45 +0100
-Date:   Thu, 8 Mar 2018 08:05:41 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Phillip Wood <phillip.wood@talktalk.net>,
-        Sergey Organov <sorganov@gmail.com>,
+        id S935082AbeCHILi (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Mar 2018 03:11:38 -0500
+Received: from mail-wm0-f51.google.com ([74.125.82.51]:52230 "EHLO
+        mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755117AbeCHILh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Mar 2018 03:11:37 -0500
+Received: by mail-wm0-f51.google.com with SMTP id t3so9522385wmc.2
+        for <git@vger.kernel.org>; Thu, 08 Mar 2018 00:11:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=BeSMU9pFq8qLvKwojDc8q61H6O/z5s4v5odOgVJBgmc=;
+        b=HfolOShsO/I9LYNDT+STpk2tPYG/ROAq21uNz60N0KDVcxZBZ40QyC2MqKu/WWW2bV
+         IijvfdcrHhCBJjF6VSWaL+3UMNKX7ISr4eixGzvu0hYcuybOeaFHLEx+XTTas98mtqDb
+         rOML5zMciP3dmgt+TKEDBZkUtbL4y+c/28mxUGF8bxohvE4Sa7Ju9cF7tZ/iRzdmDeEg
+         WgWZ2SZOHR0IOB/Jg8W+tDe8OSJM/lDjHmGY3P/eEF784nP/voHB6PTBEj5HmnMx8PSc
+         1ZfT6DfAuSw64LtYQZoz81D6erk/IyG9/Eq2iH0Wzb2wDNz9cmAtJ2rDhkd7rFVSMt7b
+         gtpQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=BeSMU9pFq8qLvKwojDc8q61H6O/z5s4v5odOgVJBgmc=;
+        b=CeWnN9ILCRKCAbsOCRKdJhNWDilwQmda9kcGGHKspc8qX23gmuvPj2TY3yzj6adGS6
+         900MGRQm/1dm4BeYYirWaC8ererv8tg/nF1qVT+83fAv5CLtUgamL5wRtQJcl5s3fTVL
+         Nr/pTdCOgThIzpJX3FkFgEGu6LhgVznfXzQ2egLLoUleXvS5V/DaYmw7iaBP1lDcRWCy
+         EoEYBBc1xpyBGuv/J3fnRsrsNECtowPsyx81oM7PxWsTMEQGb/KEwV6MPcGbVzIK5VYr
+         p5bARPmYr0xosY11ywmovOmhtbhSFUSgXeRvAtjAkHsB7UcvNydtEqrnfD0pEXZi74Gg
+         pMnQ==
+X-Gm-Message-State: AElRT7EsJKrhaPUuy6V5OX1ALRdza1MRuzfEry/zoka2By6yG2glk+Eu
+        7YzJ9GkRUOv5mIoaxjr7ezAFaqgk
+X-Google-Smtp-Source: AG47ELs3XcL+i68/e+Gl4C0SFcuZ7lR1cS+p2sRvQu5RGkbqWXMvr50AqWhyAq24mWzFDk0dFke0sg==
+X-Received: by 10.28.67.65 with SMTP id q62mr15100394wma.110.1520496695573;
+        Thu, 08 Mar 2018 00:11:35 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id m15sm17766447wrb.58.2018.03.08.00.11.34
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 08 Mar 2018 00:11:34 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
         Igor Djordjevic <igor.d.djordjevic@gmail.com>,
-        phillip.wood@dunelm.org.uk, Git mailing list <git@vger.kernel.org>,
         Jacob Keller <jacob.keller@gmail.com>,
+        Sergey Organov <sorganov@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
         Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [RFC] Rebasing merges: a jorney to the ultimate solution (Road
- Clear)
-In-Reply-To: <xmqqwoyp5eig.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1803080804420.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <87y3jtqdyg.fsf@javad.com> <bbe64321-4d3a-d3fe-8bb9-58b600fabf35@gmail.com> <nycvar.QRO.7.76.6.1802270051470.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <CA+P7+xq8UUcLWomUi=PS_hTKfJd3dMAxMmhioDS1bixwcmKAqw@mail.gmail.com>
- <nycvar.QRO.7.76.6.1802271718090.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <4d7f3406-b206-cc22-87df-85700d6a03d9@gmail.com> <33da31e9-9101-475d-8901-4b6b3df2f29d@gmail.com> <940d959d-151d-68dd-0f13-320ebad0d75b@gmail.com> <87606hoflx.fsf@javad.com>
- <0ac3a3fd-4053-e32e-75ed-8829f22c2e1f@gmail.com> <87a7vss6ax.fsf@javad.com> <6c8749ca-ec5d-b4b7-f1a0-50d9ad2949a5@talktalk.net> <872944c4-ca97-9f55-a424-86d1e3299a22@gmail.com> <87h8pvm7zz.fsf@javad.com> <ebc73962-8dff-520c-e19d-8fcc1ef63ab0@talktalk.net>
- <xmqqwoyp5eig.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+Subject: Re: [RFC] Rebasing merges: a jorney to the ultimate solution(RoadClear)
+References: <87y3jtqdyg.fsf@javad.com>
+        <nycvar.QRO.7.76.6.1802271718090.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        <4d7f3406-b206-cc22-87df-85700d6a03d9@gmail.com>
+        <33da31e9-9101-475d-8901-4b6b3df2f29d@gmail.com>
+        <940d959d-151d-68dd-0f13-320ebad0d75b@gmail.com>
+        <87606hoflx.fsf@javad.com>
+        <0ac3a3fd-4053-e32e-75ed-8829f22c2e1f@gmail.com>
+        <87a7vss6ax.fsf@javad.com>
+        <f1a960dc-cc5c-e7b0-10b6-39e5516655b3@gmail.com>
+        <ed4d2b30-2dea-740b-6283-973c798f619d@philandanna.no-ip.org>
+        <1298a701-a860-a675-83d7-72f29e14cd2b@talktalk.net>
+        <CA+P7+xpgChuvh_vsPktBkOEhF=MjJh1n_3jD0-n4d67j9kYqzw@mail.gmail.com>
+        <ee809701-a6d8-157d-09cd-cebbf2e949ec@gmail.com>
+        <1580e48a-be44-38dd-79af-8a2a31c5712e@talktalk.net>
+        <nycvar.QRO.7.76.6.1803061812090.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        <xmqqzi3k23fu.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1803070804440.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        <xmqqh8pr21f3.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1803080801230.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+Date:   Thu, 08 Mar 2018 00:11:34 -0800
+In-Reply-To: <nycvar.QRO.7.76.6.1803080801230.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        (Johannes Schindelin's message of "Thu, 8 Mar 2018 08:03:32 +0100
+        (STD)")
+Message-ID: <xmqqfu5bx9zd.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:rJYD5xhDD9o+QFCxb8xmiCCndfapsiiT4acaOVfIS/3tBfcMbKQ
- AVFfXNNjf0ZP4h//7Hqv0+gVVcPIcCKSXdpifDNBs+a0RG0v7FlreSCr0N4G7XNaVM2YXty
- 9DZF8mJqE6OelreAYboCrE6ptFt2o6canhCe+w9X27E6u5fZfPZyHE0/QdSbG9GZjsCd6Me
- x2Quw0rNHM9xekfzRSZoQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:2dHq47Pjnaw=:+hmD2z3PJs/zLcfammULLT
- Sx6YpLx8B5TJ8H3dpYqdUQjiPwQsq4r1rRW/oLLJLd0AUyLrIUKzRBOHU22U6q4g7YZ/e5Y3t
- UpffnT1jkEE40w/TRpIfXgCeLhC+czLod72LtPpekTfi+HPmXuRlvUjN+//obuf9idQUzvl5U
- /vnkE0mvXqoUlvZGLqcXQwQXS4zYfxgijKECRc/iVKjb9KQWyJzMzmTGlRTLy1mB0pQIb5Yj4
- TFkfPAchqImkVO7yLvpEsu5Ge0JOZnDN6CGFVCrkTzPIRqWxuPqYMFWF/OIsnMruyK4ePx1q6
- g3czpS2MsETXMeUzI+STTEXUyOkOjCPYoaxMeuOjXi6zKLSE8kvh1c9/Xu4UW/N/sLaE3xtxI
- ly8Ho+NhURn4+bcRxN1ouJc/jxI0fpLLTv2RhggPsZ1ECpq7KW8MvHFgprdkZGpvQrKe/ddq1
- 1PjZ10B/7sIJEiqyIE59EEfXt3FduDAQKXnwOWG6J1aPd26KtUPP2LP90AYijj5Q254ZBnWUU
- FhEJe0+SajUYdMt+Yw+gDRokg/q1BbmGD666Wu66ipulSXctSf9kvEv9ZXeYDloJR44pJh/C6
- fQI/WNaGLmMIqUeN86+d2bX1Lr1TOvomlFHYJEXv1dsp/dl0TZj/92DuPNaCs+Yx9Ba45ykCO
- OqtoT2de+mmq0619EJVh2SK6VeJoyEXXNV0n3nibSUUXM/UrWo46w90KwLuTx7VuWNMBxeodo
- +fGbr+nwl8zgWvXFNJLnwKnTqXzRmybLOauc+uqn0qm/X4yd6myYHGsB21cuDyKMFYBxq+euQ
- kha9bc7BaT8Co9sZ/nsuB6FtK9VeePPX1DiZnq4BGP1NZsF/m0=
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-On Tue, 6 Mar 2018, Junio C Hamano wrote:
+>> If we are talking about a drastic change, a few more days may not be
+>> sufficient, but we are not in a hurry, as this already sounds like a
+>> 2.18 material anyway.
+>
+> It is not at all a drastic change. It will actually make the current patch
+> series better (simplifying the "can we fast-forward?" check).
+>
+> I just want to make sure that I already have Phillip's strategy working,
+> but it will be yet another topic branch on top of the topic branch that
+> will add support for octopus merges *after* the current --recreate-merges
+> topic branch ;-)
 
-> Phillip Wood <phillip.wood@talktalk.net> writes:
-> 
-> > I wonder if just having a predicable result rather than forcing the
-> > rebase to stop if the user just squashes a fixup commit into a topic
-> > branch that is the parent of a merge might be more convenient in
-> > practice.
-> 
-> Unless I am misunderstanding what you are saying, that is pretty much
-> what I have automated for my daily rebuild of the 'pu' branch
-> 
-> Non-textual semantic conflicts are made (in the best case just once)
-> as a separate commit on top of mechanical auto-merge whose focus is
-> predictability (rather than cleverness) done by Git, and then that
-> separate commit is kept outside the history.  When replaying these
-> merges to rebuild the 'pu' branch, after resetting the tip to
-> 'master', each topic is merged mechanically, and if such a fix-up
-> commit is present, "cherry-pick --no-commit" applies it and then
-> "commit --amend --no-edit" to adjust the merge.  I find it quite
-> valuable to have a separate record of what "evil" non-mechanical
-> adjustment was done, which I know won't be lost in the noise when
-> these merges need to be redone daily or more often.
+Oh, if the "not redoing the merge afresh, but attempt to reuse the
+previous merge" that was discussed is going to be done as an
+update/addition to the "redo the merge afresh" you already had in
+production forever (and I had in 'pu' for quite a while in various
+polished-ness during iteration), then I do prefer merging down what
+has already proven to be 'next' worthy without waiting for the
+discussion and your local verification of Phillip's new thing,
+especially given that you'll be giving an explicit control to the
+users which variant of "merge" insn will be used and the addition
+of the Phillip's thing won't be a backward-compatibility issue when
+it comes later.
 
-So essentially, you have something that `git rerere` would have learned,
-but as a commit?
+>> As you made it clear that it is OK not to merge the current one for now,
+>> my objective of asking the question is already satisfied ;-)
+>
+> Depending how much GitMerge will occupy my time, I hope to have something
+> polished by tomorrow.
 
-Might make sense to make that procedure more accessible to others, too ;-)
-I know that *I* would use it.
+My "for now" above was just for the coming few days.  Don't rush
+things, and use valuable in-person time wisely, and have fun.
 
-Ciao,
-Dscho
+Thanks.
+
