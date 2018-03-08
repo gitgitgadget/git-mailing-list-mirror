@@ -2,262 +2,180 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD,
-	UNWANTED_LANGUAGE_BODY shortcircuit=no autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3946A1FAE2
-	for <e@80x24.org>; Thu,  8 Mar 2018 11:43:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C2E181F404
+	for <e@80x24.org>; Thu,  8 Mar 2018 12:06:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966016AbeCHLnr (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Mar 2018 06:43:47 -0500
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:38817 "EHLO
+        id S1755494AbeCHMGv (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Mar 2018 07:06:51 -0500
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:43287 "EHLO
         mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965506AbeCHLnq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Mar 2018 06:43:46 -0500
-Received: by mail-pf0-f196.google.com with SMTP id d26so2231352pfn.5
-        for <git@vger.kernel.org>; Thu, 08 Mar 2018 03:43:46 -0800 (PST)
+        with ESMTP id S1755026AbeCHMGu (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Mar 2018 07:06:50 -0500
+Received: by mail-pf0-f196.google.com with SMTP id j2so2242304pff.10
+        for <git@vger.kernel.org>; Thu, 08 Mar 2018 04:06:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=jsv7LIyEwk678v/j/ubQgnDnjkapRkIH76/cJmn79b4=;
-        b=AxFshxV87SsQh1i8Qf0fHoBZWETCqxtfxOEq5GLnWJhNdmVc4TcR6CPsqPr5Vb7CA/
-         SjrKBcScjXjYvUma/Q7VYI8tyetG3ihNkJNKpqvSoDTNcil1SpFGsIJnGWAYLYxn2q+n
-         PWhFtslkh0cGx4QvTIHCynunFZwiykp2ZoEHgJt3OjItKoX4ZgukmSzvXquFUXJJutQr
-         CMsKjWTICdwH4qWp7WWCWgQTYk2W0xYWmGj4ItWf+eOPpatPPFnDDXzDPOqxGI62oZxU
-         5N9UkjJzBGLVsX76g7YYRfuoeLxQXjUiigy/R6P/erWWpQ1H26q7C2WEomtMCbgvNNvl
-         jMzg==
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=WcBVKMP79u56Ge9KnkCQAfCVxv/pGa0T2wKqQRtPHFE=;
+        b=Us9fQ7o/Gg3c+lGHe1XdU5N9OrSSSwk7M+50uQaS9UNW4f/3UZubaODUsJEJQetDxb
+         T3rKbmdcJ28LTMeRom+U7J7HqVGBKfSt0UwEv8aQKm1s+3YyBKKd0TcokdRvxAKDKYyO
+         O1HP3qnS2NrNwp0hcnMt59JTP8vs9y9gfdGBY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=jsv7LIyEwk678v/j/ubQgnDnjkapRkIH76/cJmn79b4=;
-        b=dMocQHpPTg7pwXvqk8ZdRCzaIng9WGCene6nVmeLj9UjyM+QejzGvwlTgOsOgSUCKw
-         T8jYg0J1S/R1X/uGNAE/440fnqNOW/uDVaItsO72/VRxBOjZu25GwK1uy+TBhH//lMsE
-         Oa2g4A8reBupHnom4bLVe6OvFQQ3AueTwqOq/1BKNRuEkqeqdUJ6mpvHeLJCA7ZP2Ud+
-         w8456j4YECwqaOK/HGRZc5a7aLge8PaNobTNGa2FRwtrdaymPem9bpXfvrHVKsYYa9h6
-         mh+CrJozaGZ7sdFr7te6um5thsxn3xbTjKVxArEEperftel+Nlhxr9B4rHOLs7IZ/MPw
-         mxlA==
-X-Gm-Message-State: APf1xPDZYRZ/cwLW3qNg+RXvtXeOwE/0tgBIE8u1OCCMV9u8kzltiZ5M
-        uL/Bj3RLcUoC078xwpog3QU=
-X-Google-Smtp-Source: AG47ELvptKXn65Rk7WLiKOAygRXFbGSsbsbqxAQSnUctUMj5wAe0r8FbOC2qGkvyDDuTfey0SzvLrw==
-X-Received: by 10.98.70.198 with SMTP id o67mr25814040pfi.173.1520509425914;
-        Thu, 08 Mar 2018 03:43:45 -0800 (PST)
-Received: from ash ([27.78.177.129])
-        by smtp.gmail.com with ESMTPSA id p3sm3591076pga.45.2018.03.08.03.43.42
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=WcBVKMP79u56Ge9KnkCQAfCVxv/pGa0T2wKqQRtPHFE=;
+        b=YBv8jtBfdI8hMc/3kMtgOrdf+OJGBi3RuqFCBigECY1hXEaFGiSWaJAL4JG5P2Z6lt
+         APdgmZPSOtkQJQmEiVINr4w+6kommPUpvotuOuT00Z9Y7gsRbWFFBa+Twr4saOhS4YZu
+         Cua2IUWj8qoWrLPLJVZCK6vTanludcu6eS2xx88oeDvSaW64XXu5w9gItzkfs2oFBzkt
+         QrrhnO3/Fmla9wNSE+foreFjBaNisjllwwGOfjZ0nJ8TUD0p6hNCPMv8FxmOiQLTDy5W
+         GF3r/gh3mBwNWCaEo4U7J0xLZkv6me3UdnV7qr7RyNZ5f2jmcsAlwCFhQQtFJwUgI6tz
+         +2Cg==
+X-Gm-Message-State: APf1xPBPK68yAN4FTuAkeXewo3Rj4ewyk1ADbWLzuj6+WoIKEOksXWr6
+        u3mybJtACaVnzq4Ag+o6kOrs3H6FTrY=
+X-Google-Smtp-Source: AG47ELuS7GO2VyuvyIbN02D2gHL+nIV4Jr2rbpdaLu2Lv2QECRmUtuje4MLabwc/dqIDWhrzkV/9bw==
+X-Received: by 10.98.49.135 with SMTP id x129mr25982502pfx.75.1520510809774;
+        Thu, 08 Mar 2018 04:06:49 -0800 (PST)
+Received: from tikuta.tok.corp.google.com ([2401:fa00:4:1002:bd1d:996:abff:29d])
+        by smtp.gmail.com with ESMTPSA id e83sm43335283pfk.148.2018.03.08.04.06.48
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 08 Mar 2018 03:43:45 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Thu, 08 Mar 2018 18:43:41 +0700
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     pclouds@gmail.com
-Cc:     avarab@gmail.com, e@80x24.org, git@vger.kernel.org,
-        gitster@pobox.com, peff@peff.net
-Subject: [PATCH/RFC v3 12/12] pack-objects: shrink delta_size field in struct object_entry
-Date:   Thu,  8 Mar 2018 18:42:32 +0700
-Message-Id: <20180308114232.10508-13-pclouds@gmail.com>
-X-Mailer: git-send-email 2.16.2.873.g32ff258c87
-In-Reply-To: <20180308114232.10508-1-pclouds@gmail.com>
-References: <20180303024706.31465-1-pclouds@gmail.com>
- <20180308114232.10508-1-pclouds@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Thu, 08 Mar 2018 04:06:49 -0800 (PST)
+From:   Takuto Ikuta <tikuta@chromium.org>
+To:     git@vger.kernel.org
+Cc:     Takuto Ikuta <tikuta@chromium.org>
+Subject: [PATCH] fetch-pack.c: use oidset to check existence of loose object
+Date:   Thu,  8 Mar 2018 21:06:39 +0900
+Message-Id: <20180308120639.109438-1-tikuta@chromium.org>
+X-Mailer: git-send-email 2.16.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Allowing a delta size of 64 bits is crazy. Shrink this field down to
-31 bits with one overflow bit.
+In repository having large number of refs, lstat for non-existing loose
+objects makes `git fetch` slow.
 
-If we encounter an existing delta larger than 2GB, we do not cache
-delta_size at all and will get the value from oe_size(), potentially
-from disk if it's larger than 4GB.
+This patch stores existing loose objects in hashmap beforehand and use
+it to check existence instead of using lstat.
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+With this patch, the number of lstat calls in `git fetch` is reduced
+from 411412 to 13794 for chromium repository.
+
+I took time stat of `git fetch` disabling quickfetch for chromium
+repository 3 time on linux with SSD.
+* with this patch
+8.105s
+8.309s
+7.640s
+avg: 8.018s
+
+* master
+12.287s
+11.175s
+12.227s
+avg: 11.896s
+
+On my MacBook Air which has slower lstat.
+* with this patch
+14.501s
+
+* master
+1m16.027s
+
+`git fetch` on slow disk will be improved largely.
+
+Signed-off-by: Takuto Ikuta <tikuta@chromium.org>
 ---
- builtin/pack-objects.c | 24 ++++++++++++++----------
- pack-objects.h         | 30 +++++++++++++++++++++++++-----
- 2 files changed, 39 insertions(+), 15 deletions(-)
+ cache.h      |  2 ++
+ fetch-pack.c | 22 +++++++++++++++++++---
+ sha1_file.c  |  3 +++
+ 3 files changed, 24 insertions(+), 3 deletions(-)
 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index db040e95db..0f65e0f243 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -30,10 +30,12 @@
- #include "packfile.h"
- 
- #define IN_PACK(obj) oe_in_pack(&to_pack, obj)
-+#define DELTA_SIZE(obj) oe_delta_size(&to_pack, obj)
- #define DELTA(obj) oe_delta(&to_pack, obj)
- #define DELTA_CHILD(obj) oe_delta_child(&to_pack, obj)
- #define DELTA_SIBLING(obj) oe_delta_sibling(&to_pack, obj)
- #define SET_DELTA(obj, val) oe_set_delta(&to_pack, obj, val)
-+#define SET_DELTA_SIZE(obj, val) oe_set_delta_size(&to_pack, obj, val)
- #define SET_DELTA_CHILD(obj, val) oe_set_delta_child(&to_pack, obj, val)
- #define SET_DELTA_SIBLING(obj, val) oe_set_delta_sibling(&to_pack, obj, val)
- 
-@@ -140,7 +142,7 @@ static void *get_delta(struct object_entry *entry)
- 		    oid_to_hex(&DELTA(entry)->idx.oid));
- 	delta_buf = diff_delta(base_buf, base_size,
- 			       buf, size, &delta_size, 0);
--	if (!delta_buf || delta_size != entry->delta_size)
-+	if (!delta_buf || delta_size != DELTA_SIZE(entry))
- 		die("delta size changed");
- 	free(buf);
- 	free(base_buf);
-@@ -291,14 +293,14 @@ static unsigned long write_no_reuse_object(struct hashfile *f, struct object_ent
- 		FREE_AND_NULL(entry->delta_data);
- 		entry->z_delta_size = 0;
- 	} else if (entry->delta_data) {
--		size = entry->delta_size;
-+		size = DELTA_SIZE(entry);
- 		buf = entry->delta_data;
- 		entry->delta_data = NULL;
- 		type = (allow_ofs_delta && DELTA(entry)->idx.offset) ?
- 			OBJ_OFS_DELTA : OBJ_REF_DELTA;
- 	} else {
- 		buf = get_delta(entry);
--		size = entry->delta_size;
-+		size = DELTA_SIZE(entry);
- 		type = (allow_ofs_delta && DELTA(entry)->idx.offset) ?
- 			OBJ_OFS_DELTA : OBJ_REF_DELTA;
- 	}
-@@ -1509,7 +1511,7 @@ static void check_object(struct object_entry *entry)
- 			 */
- 			entry->type = entry->in_pack_type;
- 			SET_DELTA(entry, base_entry);
--			entry->delta_size = oe_size(entry);
-+			SET_DELTA_SIZE(entry, oe_size(entry));
- 			entry->delta_sibling_idx = base_entry->delta_child_idx;
- 			SET_DELTA_CHILD(base_entry, entry);
- 			unuse_pack(&w_curs);
-@@ -1895,7 +1897,7 @@ static int try_delta(struct unpacked *trg, struct unpacked *src,
- 		max_size = trg_size/2 - 20;
- 		ref_depth = 1;
- 	} else {
--		max_size = trg_entry->delta_size;
-+		max_size = DELTA_SIZE(trg_entry);
- 		ref_depth = trg->depth;
- 	}
- 	max_size = (uint64_t)max_size * (max_depth - src->depth) /
-@@ -1966,10 +1968,12 @@ static int try_delta(struct unpacked *trg, struct unpacked *src,
- 	delta_buf = create_delta(src->index, trg->data, trg_size, &delta_size, max_size);
- 	if (!delta_buf)
- 		return 0;
-+	if (delta_size >= maximum_unsigned_value_of_type(uint32_t))
-+		return 0;
- 
- 	if (DELTA(trg_entry)) {
- 		/* Prefer only shallower same-sized deltas. */
--		if (delta_size == trg_entry->delta_size &&
-+		if (delta_size == DELTA_SIZE(trg_entry) &&
- 		    src->depth + 1 >= trg->depth) {
- 			free(delta_buf);
- 			return 0;
-@@ -1984,7 +1988,7 @@ static int try_delta(struct unpacked *trg, struct unpacked *src,
- 	free(trg_entry->delta_data);
- 	cache_lock();
- 	if (trg_entry->delta_data) {
--		delta_cache_size -= trg_entry->delta_size;
-+		delta_cache_size -= DELTA_SIZE(trg_entry);
- 		trg_entry->delta_data = NULL;
- 	}
- 	if (delta_cacheable(src_size, trg_size, delta_size)) {
-@@ -1997,7 +2001,7 @@ static int try_delta(struct unpacked *trg, struct unpacked *src,
- 	}
- 
- 	SET_DELTA(trg_entry, src_entry);
--	trg_entry->delta_size = delta_size;
-+	SET_DELTA_SIZE(trg_entry, delta_size);
- 	trg->depth = src->depth + 1;
- 
- 	return 1;
-@@ -2120,11 +2124,11 @@ static void find_deltas(struct object_entry **list, unsigned *list_size,
- 		if (entry->delta_data && !pack_to_stdout) {
- 			unsigned long size;
- 
--			size = do_compress(&entry->delta_data, entry->delta_size);
-+			size = do_compress(&entry->delta_data, DELTA_SIZE(entry));
- 			entry->z_delta_size = size;
- 			if (entry->z_delta_size == size) {
- 				cache_lock();
--				delta_cache_size -= entry->delta_size;
-+				delta_cache_size -= DELTA_SIZE(entry);
- 				delta_cache_size += entry->z_delta_size;
- 				cache_unlock();
- 			} else {
-diff --git a/pack-objects.h b/pack-objects.h
-index 0253df6cd4..f1a82bf9ac 100644
---- a/pack-objects.h
-+++ b/pack-objects.h
-@@ -5,6 +5,7 @@
- #define OE_DEPTH_BITS		12
- #define OE_IN_PACK_BITS		14
- #define OE_Z_DELTA_BITS		16
-+#define OE_DELTA_SIZE_BITS	31
+diff --git a/cache.h b/cache.h
+index d06932ed0..db38db40e 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1773,6 +1773,8 @@ struct object_info {
+ #define OBJECT_INFO_SKIP_CACHED 4
+ /* Do not retry packed storage after checking packed and loose storage */
+ #define OBJECT_INFO_QUICK 8
++/* Do not check loose object */
++#define OBJECT_INFO_SKIP_LOOSE 16
+ extern int sha1_object_info_extended(const unsigned char *, struct object_info *, unsigned flags);
  
  /*
-  * State flags for depth-first search used for analyzing delta cycles.
-@@ -73,9 +74,6 @@ struct object_entry {
- 	struct pack_idx_entry idx;
- 	/* object uncompressed size _if_ size_valid is true */
- 	uint32_t size_;
--
--	/* XXX 4 bytes hole, try to pack */
--
- 	off_t in_pack_offset;
- 	uint32_t delta_idx;	/* delta base object */
- 	uint32_t delta_child_idx; /* deltified objects who bases me */
-@@ -84,7 +82,10 @@ struct object_entry {
- 				     */
- 	uint32_t hash;			/* name hint hash */
- 	void *delta_data;	/* cached delta (uncompressed) */
--	unsigned long delta_size;	/* delta data size (uncompressed) */
-+	/* object uncompressed size _if_ size_valid is true */
-+	uint32_t size;
-+	uint32_t delta_size_:OE_DELTA_SIZE_BITS;	/* delta data size (uncompressed) */
-+	uint32_t delta_size_valid:1;
- 	unsigned char in_pack_header_size; /* note: spare bits available! */
- 	unsigned in_pack_idx:OE_IN_PACK_BITS;	/* already in pack */
- 	unsigned type:TYPE_BITS;
-@@ -109,7 +110,7 @@ struct object_entry {
- 	*/
- 	unsigned z_delta_size:OE_Z_DELTA_BITS;
- 
--	/* size: 88, bit_padding: 1 bits */
-+	/* size: 80, bit_padding: 1 bits */
- };
- 
- struct packing_data {
-@@ -296,4 +297,23 @@ static inline void oe_set_size(struct object_entry *e,
- 	e->size_valid = e->size_ == size;
+diff --git a/fetch-pack.c b/fetch-pack.c
+index d97461296..1658487f7 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -711,6 +711,15 @@ static void mark_alternate_complete(struct object *obj)
+ 	mark_complete(&obj->oid);
  }
  
-+static inline unsigned long oe_delta_size(struct packing_data *pack,
-+					  const struct object_entry *e)
++static int add_loose_objects_to_set(const struct object_id *oid,
++				    const char *path,
++				    void *data)
 +{
-+	if (e->delta_size_valid)
-+		return e->delta_size_;
-+	return oe_size(e);
++	struct oidset* set = (struct oidset*)(data);
++	oidset_insert(set, oid);
++	return 0;
 +}
 +
-+static inline void oe_set_delta_size(struct packing_data *pack,
-+				     struct object_entry *e,
-+				     unsigned long size)
-+{
-+	e->delta_size_ = size;
-+	e->delta_size_valid =e->delta_size_ == size;
-+	if (!e->delta_size_valid && size != oe_size(e))
-+		die("BUG: this can only happen in check_object() "
-+		    "where delta size is the same as entry size");
-+}
+ static int everything_local(struct fetch_pack_args *args,
+ 			    struct ref **refs,
+ 			    struct ref **sought, int nr_sought)
+@@ -719,16 +728,21 @@ static int everything_local(struct fetch_pack_args *args,
+ 	int retval;
+ 	int old_save_commit_buffer = save_commit_buffer;
+ 	timestamp_t cutoff = 0;
++	struct oidset loose_oid_set = OIDSET_INIT;
 +
- #endif
++	for_each_loose_object(add_loose_objects_to_set, &loose_oid_set, 0);
+ 
+ 	save_commit_buffer = 0;
+ 
+ 	for (ref = *refs; ref; ref = ref->next) {
+ 		struct object *o;
++		unsigned int flag = OBJECT_INFO_QUICK;
+ 
+-		if (!has_object_file_with_flags(&ref->old_oid,
+-						OBJECT_INFO_QUICK))
+-			continue;
++		if (!oidset_contains(&loose_oid_set, &ref->old_oid))
++			flag |= OBJECT_INFO_SKIP_LOOSE;
+ 
++		if (!has_object_file_with_flags(&ref->old_oid, flag))
++			continue;
+ 		o = parse_object(&ref->old_oid);
+ 		if (!o)
+ 			continue;
+@@ -744,6 +758,8 @@ static int everything_local(struct fetch_pack_args *args,
+ 		}
+ 	}
+ 
++	oidset_clear(&loose_oid_set);
++
+ 	if (!args->no_dependents) {
+ 		if (!args->deepen) {
+ 			for_each_ref(mark_complete_oid, NULL);
+diff --git a/sha1_file.c b/sha1_file.c
+index 1b94f39c4..c903cbcec 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -1262,6 +1262,9 @@ int sha1_object_info_extended(const unsigned char *sha1, struct object_info *oi,
+ 		if (find_pack_entry(real, &e))
+ 			break;
+ 
++		if (flags & OBJECT_INFO_SKIP_LOOSE)
++			return -1;
++
+ 		/* Most likely it's a loose object. */
+ 		if (!sha1_loose_object_info(real, oi, flags))
+ 			return 0;
 -- 
-2.16.2.873.g32ff258c87
+2.16.2
 
