@@ -2,114 +2,142 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4BE171F404
-	for <e@80x24.org>; Thu,  8 Mar 2018 16:01:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CCAE01F404
+	for <e@80x24.org>; Thu,  8 Mar 2018 16:05:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934237AbeCHQBe (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Mar 2018 11:01:34 -0500
-Received: from mail-lf0-f43.google.com ([209.85.215.43]:36005 "EHLO
-        mail-lf0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S935889AbeCHQBO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Mar 2018 11:01:14 -0500
-Received: by mail-lf0-f43.google.com with SMTP id e28-v6so78145lfc.3
-        for <git@vger.kernel.org>; Thu, 08 Mar 2018 08:01:14 -0800 (PST)
+        id S933415AbeCHQFQ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Mar 2018 11:05:16 -0500
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:34424 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754580AbeCHQFP (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Mar 2018 11:05:15 -0500
+Received: by mail-wr0-f193.google.com with SMTP id o8so6223400wra.1
+        for <git@vger.kernel.org>; Thu, 08 Mar 2018 08:05:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:from:date:message-id:subject:to;
-        bh=BYVvTSCn/MGVQtVvf219Q3qh/ihpSvTC3ryHaRd+mOg=;
-        b=dZYxMyDePcFm1//HNfEp3OSuz/vFG4Ufa8PBTDD80dl0xj2Cies+jlf0CIHTdCsKTt
-         fLhx0BwYlAZLgSUs19zkfwKhl+a8Cs70wf0h/XRIRyQtn1N5V+BSFaSpcNGvcnAtY03h
-         9S4F8Ow3e+1ppfpDUfajEOxocJwaMMfFAO151IsRygi1fc/D58V/+q2y17kFZIi+thxN
-         Dhe2/PF3ChFhYqBxQsbzItskTxW5oTEiE5zhbj4W5wTSckPpgjpJhtJPqDccBSZ5QfM/
-         KRDRUDrM1aNxr1dNlZ244ukXB/qAMPNnZuMJGRBaF/ENkdil5yT+llqXO8Z2Eaj77Inx
-         uhyg==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=eUxwLnmlwv0dPT1VgoOlJnXs4gQB0wvpqmZZc1Wzp3U=;
+        b=bEvNbZAuimAyfT1hTK0YOrMYoAlZWPyLK+e6DrCDD6UT5zGfBsp1uyt3Pja1cTriM2
+         ye2BoUhFAw7FGuD8rYOLr8jEI9I2AcKv8Z57V8usSjCpNvTem/VG4Yw7js2sWZCPEg9X
+         ah/AR6iaGfUfR5TSUHVijdbkXx90nioxAQV+X/9KIcJGia/yiDB8ABGU+xv28YILah1X
+         iJe+R0At018XOaxPGES4D3KbJMc/xyUI1zuW32mLqrKjhxtCOidmxfiZ4cIraooxmi+R
+         FKL2FIgFSfFTox+LZMD8N4z6IAjbgUSLVcYrqf/FMlGD+OxALU0XMMLI8QxSyUX5W8ua
+         fxlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
-         :to;
-        bh=BYVvTSCn/MGVQtVvf219Q3qh/ihpSvTC3ryHaRd+mOg=;
-        b=D3s+CG0bU8VWVT9WjyBrODGg5eivguFgGfw5tVylFXJDPRBsn35Fwlp1O9+AiABkCA
-         elTpRl6lIUQCGl3mS+5n3ANu3WLPcIZWppq4YQ4uhCu91UVNbFfGqxi+5vu8NkY87B6C
-         3ByX1jOYL0JNXqh/vm6IGad9wmu+8ubP32apErw+b6e5r01TaYOpdWd187KIBLMylbUK
-         unIHqzF8EwtthP1O/v3QHez44iTre5Ets79jOrzibG/Gcpd4AoAYT4/wXTDyGNM08m5L
-         jG7zlCeJisPtRYgLLiOcNxKbdAiny60w+9Sj+218qQOxx80tNKPlrZY/gfQhBsMDEZi9
-         LBlA==
-X-Gm-Message-State: APf1xPBavpViOJARmCgqBx5qxkyvm8tUMUgdk2tkfnqF9d8bFU1N5D7l
-        iRMsnVMiUk3PQwp1EZAtCQiKv2yivm7W4KsfTkj/bwmx
-X-Google-Smtp-Source: AG47ELu0PZZUs96wQc/JIJkKLo4GSh6wQWXOaIZzHGlooqO2X7kyZUJEgvDO4jfWnBs+kr4Deht6nouIMnZ1Y0yAI5k=
-X-Received: by 10.46.129.144 with SMTP id e16mr19737196ljg.94.1520524873025;
- Thu, 08 Mar 2018 08:01:13 -0800 (PST)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=eUxwLnmlwv0dPT1VgoOlJnXs4gQB0wvpqmZZc1Wzp3U=;
+        b=f9g8SnZqo7YeHbOqgFI71lrySLW5P3L9fZFx2PeH4twjo9MVjEXlZCdR2jYvxnJYFr
+         DOsBPvNJfv1nhXWyJgs52qbzPhi5QfxJn9QQOgQLUeegIRnKZIAjg7/YS3fAaf/OtECR
+         IrOm8b78BwOx0y+YpRP+LLsvA6uur8Eg7wJAbxO8aRmNS4ktoaqX6AJjC9XAtpVTXRuj
+         nVKYidA0X5lqP8rQRtcOvlFGQQR1W+75y822zZsASJ4CqsiQZXH082GTdXwMdE4spV1P
+         US16XPENYTtr+ehQKU2apf/kf6J0ZjfbBa+96a9oht49MMFQxHcFIviJbGiyupZhoh8A
+         giPA==
+X-Gm-Message-State: APf1xPCqPgb9hM9OZcxIWECdYOxtUg9j1fyWJRZ7TNro10itY8jMt70s
+        xXbsW3tmCxaOAPO8R/9eNnM=
+X-Google-Smtp-Source: AG47ELvIPg7zPB1yK1S8XytdTZ7uf0U0d0aAUXodQ12AoruXxIlH6WhvxN497vV8hrxfT3KUSO7RVw==
+X-Received: by 10.223.192.74 with SMTP id c10mr24652249wrf.145.1520525114275;
+        Thu, 08 Mar 2018 08:05:14 -0800 (PST)
+Received: from [192.168.5.102] (cable-24-135-61-30.dynamic.sbb.rs. [24.135.61.30])
+        by smtp.gmail.com with ESMTPSA id f127sm12210567wmg.46.2018.03.08.08.05.12
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 08 Mar 2018 08:05:13 -0800 (PST)
+Subject: Re: [RFC] Rebasing merges: a jorney to the ultimate
+ solution(RoadClear)
+To:     phillip.wood@dunelm.org.uk,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Jacob Keller <jacob.keller@gmail.com>,
+        Sergey Organov <sorganov@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Junio C Hamano <gitster@pobox.com>
+References: <87y3jtqdyg.fsf@javad.com>
+ <4d7f3406-b206-cc22-87df-85700d6a03d9@gmail.com>
+ <33da31e9-9101-475d-8901-4b6b3df2f29d@gmail.com>
+ <940d959d-151d-68dd-0f13-320ebad0d75b@gmail.com> <87606hoflx.fsf@javad.com>
+ <0ac3a3fd-4053-e32e-75ed-8829f22c2e1f@gmail.com> <87a7vss6ax.fsf@javad.com>
+ <f1a960dc-cc5c-e7b0-10b6-39e5516655b3@gmail.com>
+ <ed4d2b30-2dea-740b-6283-973c798f619d@philandanna.no-ip.org>
+ <1298a701-a860-a675-83d7-72f29e14cd2b@talktalk.net>
+ <CA+P7+xpgChuvh_vsPktBkOEhF=MjJh1n_3jD0-n4d67j9kYqzw@mail.gmail.com>
+ <ee809701-a6d8-157d-09cd-cebbf2e949ec@gmail.com>
+ <1580e48a-be44-38dd-79af-8a2a31c5712e@talktalk.net>
+ <nycvar.QRO.7.76.6.1803061812090.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+ <754e2735-1288-9a8d-c8bd-ab39cf733812@gmail.com>
+ <nycvar.QRO.7.76.6.1803070810550.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+ <c5a5c2cc-6a11-440f-5b9b-964ae1ca07dd@talktalk.net>
+ <483674f8-4097-a374-c8f3-cf56cbb92042@talktalk.net>
+From:   Igor Djordjevic <igor.d.djordjevic@gmail.com>
+Message-ID: <29bc6661-1d78-8f89-194e-1dcc9d88c34e@gmail.com>
+Date:   Thu, 8 Mar 2018 17:05:03 +0100
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.6.0
 MIME-Version: 1.0
-X-Google-Sender-Delegation: rcdailey@gmail.com
-Received: by 10.46.114.19 with HTTP; Thu, 8 Mar 2018 08:01:12 -0800 (PST)
-From:   Robert Dailey <rcdailey.lists@gmail.com>
-Date:   Thu, 8 Mar 2018 10:01:12 -0600
-X-Google-Sender-Auth: 6UwmiHjuXqz0H_CfEOp_JRyVPNs
-Message-ID: <CAHd499Axo7HFviUJavigTZ6BGZCkj9iOSeNVndu1oPivkPv+5Q@mail.gmail.com>
-Subject: Rename of file is causing changes to be lost
-To:     Git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <483674f8-4097-a374-c8f3-cf56cbb92042@talktalk.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I'm on Windows and core.ignorecase is set to 'true' when I clone/init
-a repository. I've got a branch where I started making changes to a
-file AND renamed it only to change its case. The changes I've made
-were significant enough that git no longer detects a rename, instead
-the files show up as "D" and "A" in git status (deleted then added).
-To correct this, I do an interactive rebase to add an additional
-commit before the first one to rename the file without changing it,
-and *then* allow the second commit to change the file. The goal is
-that rebase should detect the rename and automatically move the
-changes in the (now) second commit to the newly named file. Here's a
-MCVE (treat this as a script):
+On 08/03/2018 13:16, Phillip Wood wrote:
+> 
+> > Side note: I wonder whether we really need to perform the additional check
+> > that ensures that the <merge-head> refers to the rewritten version of the
+> > original merge commit's parent.
+> > 
+> > [...]
+> 
+> Oops that was referring to the first side note. I think fast forwarding
+> is a good idea. I'm not so sure about checking that <merge-head> refers
+> to the rewritten version of the original merge commit's parent any more
+> though. Having thought some more, I think we would want to allow the
+> user to rearrange a topic branch that is the parent of a merge and that
+> would require allowing a different parent as the old parent could be
+> dropped or swapped with another commit in the branch. I can't think of a
+> way to mechanically check that the new parent is 'somehow derived from'
+> the old one.
 
-#/bin/bash
-git init testgitrepo
-cd testgitrepo/
-git config core.ignorecase true # This is set by Windows for me, but
-hopefully will allow this to repro on linux. Didn't test linux though.
-echo "first change" > foo.txt
-git add . && git commit -m 'first change'
-git checkout -b topic
-echo "second change" > foo.txt
-git mv foo.txt FOO.txt
-git add . && git commit -m 'second change'
-git rebase -i master # Move line 1 to line 2, and put "x false" in line 1
-git mv foo.txt FOO.txt && git commit -m 'rename foo'
-git rebase --continue
-git mergetool
+Exactly, we must not depend on exact parent commits, but on parent 
+"branches" (so to say).
 
-After the rebase continue, you will get a conflict like so:
+And that is why I think explicit mapping would be pretty helpful (if 
+not the only approach).
 
-error: could not apply 527d208... second change
+> > I did wonder about using 'pick <original-merge>' for rebasing merges and
+> > keeping 'merge ...' for recreating them but I'm not sure if that is a
+> > good idea. It has the advantage that the user cannot specify the wrong
+> > parents for the merge to be rebased as 'git rebase' would work out if
+> > the parents have been rebased, but maybe it's a bit magical to use pick
+> > for merge commits. Also there isn't such a simple way for the user to go
+> > from 'rabase this merge' to 'recreate this merge' as they'd have to
+> > write the whole merge line themselves (though I guess something like
+> > emacs' git-rebase.el would be able to help with that)
+> 
+> Scrub that, it is too magical and I don't think it would work with
+> rearranged commits - it's making the --preserve-merges mistake all over
+> again. It's a shame to have 'merge' mean 'recreate the merge' and
+> 'rebase the merge' but I don't think there is an easy way round that.
 
-When you have resolved this problem, run "git rebase --continue".
-If you prefer to skip this patch, run "git rebase --skip" instead.
-To check out the original branch and stop rebasing, run "git rebase --abort".
+I actually like `pick` for _rebasing_ merge commits, as `pick` is 
+already used for rebasing non-merge commits, too, so it feels natural.
 
-Could not apply 527d208... second change
-CONFLICT (rename/delete): foo.txt deleted in 527d208... second change
-and renamed to FOO.txt in HEAD. Version HEAD of FOO.txt left in tree.
+Then `merge` is left to do what it is meant for - merging (or 
+"recreate the merge", in the given context).
 
-The last command, `git mergetool` runs, giving you the option to pick
-the Created (left) or Deleted (right) version of the file:
+I tried to outline a possible user interface in that other reply[1], 
+elaborating it a bit, too,
 
-Left: The file is created, but selecting this erases the changes from
-the "added" version on the remote (which is topic). Basically the
-rename of only case confused git, and we lost the changes on the
-remote version of the file
-Right: File is deleted. Changes are still lost.
+Regards, Buga
 
-The ideal outcome is that the changes from the "added" version of the
-file in the 2nd commit get carried over to the "renamed" version of
-the file, which when you compare the two are named exactly the same
-after the 1st commit is introduced. How can I solve this issue?
+[1] https://public-inbox.org/git/f3872fb9-01bc-b2f1-aee9-cfc0e4db77d6@gmail.com/
