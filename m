@@ -7,62 +7,62 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 189C01F404
-	for <e@80x24.org>; Fri,  9 Mar 2018 19:10:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4EF4C1F404
+	for <e@80x24.org>; Fri,  9 Mar 2018 19:10:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932087AbeCITK2 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Mar 2018 14:10:28 -0500
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:43504 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751192AbeCITK1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Mar 2018 14:10:27 -0500
-Received: by mail-wr0-f196.google.com with SMTP id a63so6382225wrc.10
-        for <git@vger.kernel.org>; Fri, 09 Mar 2018 11:10:26 -0800 (PST)
+        id S932524AbeCITKu (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Mar 2018 14:10:50 -0500
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:50512 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932183AbeCITKt (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Mar 2018 14:10:49 -0500
+Received: by mail-wm0-f65.google.com with SMTP id w128so5822571wmw.0
+        for <git@vger.kernel.org>; Fri, 09 Mar 2018 11:10:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=GVFH6mhklts6huUbUADoqlTmvP9gAzYzBcJ8rlGn57w=;
-        b=qddVFlH11jPJiPH6jtrWzDz4+fmasKKsN81+j5SocmzuTYAL1pj439ml9xGnufTbzt
-         ZY/twlmHjGWzYDcRKqCUxyrJ6EXlGc1d/KYLnD86k2ZEJeBGeQebHCPUsqwY1tc7Ak7O
-         MiPx7DaRmd5tU1IhxkK+dzEIiv0h9lF2yciQOocr3CBhmqGBw5f74nKu8LKJz19GfhvM
-         vY1Ut1PeNCkQdFkaIbV2/twGhtutz1NHSKEzEMbRavTbiiegUwLUip9B0kOPtmXTUOau
-         Z+4w09Vfag+dLWXvvMBsjcHsC5sdkHvi2Sag/nl7X+RWbFGSzS5+gRKB3w0RMsVFvR2/
-         yx1w==
+        h=sender:from:to:cc:subject:in-reply-to:references:user-agent:date
+         :message-id:mime-version;
+        bh=/0PUF4Vw//16840KKltCvU5su7jC07zZ2PihUC69Vng=;
+        b=OkTSsO1jlGq1YJAZRp+jZZ3Ib1PByLz7oND/NGvnUkDTqRBzK7ZnvreyxyT6NrNG1E
+         w/302dgkx1iFI6dsDe55qtwzbbIIGy7tKWEy+Uwp+RbiQPG+XAGPlIVjMZfMaY+YQIQr
+         5KY/W6V4Xg0zYhF4JgxXOihuIGsN3JRNAfQ4Icb+EcNFhtPBK5Zgx6r5Iscer881n9eG
+         AoM3jq1cmOhf52zlCdxEhJS+hQhearAJ3kJHYmSKuIwfilhX1lRG+r7tORoK7dE4FAr4
+         vCTS/aeu6Id3h9NYPJjBgs4EDKym6E8qAQ7FuYSscaSnsYvkDoAQi/aX99IJiluIBeB8
+         XzaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=GVFH6mhklts6huUbUADoqlTmvP9gAzYzBcJ8rlGn57w=;
-        b=nLbNRTbCjp3+eecnjgYFWuLwi22/5LTL7qpmh3Izecs5i/EFnMEQlPEWsn97FUfyyT
-         vsAvXNfTb4hPzWJ0FWJUd46wBG/YZacN2OXYxYulqlIvIVQSU0HrNb3HSJVBgKMOJDnM
-         VScRuGaLG+HRJKZSDUHb3wT1bRKcFqkP/J7jwyEXYu9xWoC47vnF0o/Xaos+wr7QNyou
-         ahR9AYW8QCzgUFgJDzQ5kxrbaQ7CBbDxjQLaHmWLUwjJRSXO6GWw0OvIl2x5WIfjs0S+
-         W8U1n2uYCftrGd8Jkt2O7IrzvSeQ1cTCNkmuoUxoyDS+tBcc5x3bhCfLGFTAOltWLQN7
-         StlA==
-X-Gm-Message-State: APf1xPC1gFQamKA3eby28VTAgWU+DBEphtZ5tPjcW8QrKJ91KowlDJ/l
-        aBSW/QiYeDph5YHX5zNRcLA=
-X-Google-Smtp-Source: AG47ELvgs0kzGxYCVoLOYDXe52x/zj/IUermKFQOCHQRi8lFIgeBbd2WEVxaDo+iNB4ci3W0YLQNCw==
-X-Received: by 10.223.151.101 with SMTP id r92mr27217837wrb.120.1520622625499;
-        Fri, 09 Mar 2018 11:10:25 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:cc:subject:in-reply-to:references
+         :user-agent:date:message-id:mime-version;
+        bh=/0PUF4Vw//16840KKltCvU5su7jC07zZ2PihUC69Vng=;
+        b=AG28TooJqnCRNJdDrMvG4Euva6WEmTt12mgf9pGZ20sDaSH8Qsj6HdBkyD7j8l1HB9
+         C3b1lxBjR1fT0qlT8WUxKNuWqBHFQ2o9FqFySGTDgqaz0X9mub4xupMfNPKXlukEcC4O
+         7ynuI5I2fENZ+6U0NHD+qD/l6IvEypHcn10SdoCF2XTmU5ZVZlMhiYLtKf287iVFooTZ
+         ZJ/Bs57muS3wjJ/hoXzmb04RbzxFvE3pJDEc1wAPpD+w+limnjmWMPsNaNSMfSZLBoSZ
+         hliuE9a++G49mAKIR6Q40zWcR+CVK3HAEzB+PRQbnZZG2zgpeUXa8gujk80tmHpFUfLy
+         bqXQ==
+X-Gm-Message-State: AElRT7FA3AxTelJdxTx5wp5qBjjZ/kTOkbQctWA8L+WeNAV2Ke9FHIf/
+        o0sujL3jCQ2BRvBAoJ+pBXo=
+X-Google-Smtp-Source: AG47ELvD2E9nlB2llp1L3vdf8Sdc4vU8H/WWCV5M9KEEVSVAaFtxzLnbyYuGJrxQC56svwhEhHiWow==
+X-Received: by 10.28.225.130 with SMTP id y124mr2792226wmg.60.1520622647767;
+        Fri, 09 Mar 2018 11:10:47 -0800 (PST)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id 56sm1995798wrx.39.2018.03.09.11.10.24
+        by smtp.gmail.com with ESMTPSA id 55sm1884538wrz.6.2018.03.09.11.10.47
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 09 Mar 2018 11:10:24 -0800 (PST)
+        Fri, 09 Mar 2018 11:10:47 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     lars.schneider@autodesk.com
 Cc:     git@vger.kernel.org, tboegi@web.de, j6t@kdbg.org,
         sunshine@sunshineco.com, peff@peff.net,
         ramsay@ramsayjones.plus.com, Johannes.Schindelin@gmx.de,
         pclouds@gmail.com, Lars Schneider <larsxschneider@gmail.com>
-Subject: Re: [PATCH v11 06/10] convert: add 'working-tree-encoding' attribute
+Subject: Re: [PATCH v11 07/10] convert: check for detectable errors in UTF encodings
+In-Reply-To: <20180309173536.62012-8-lars.schneider@autodesk.com> (lars
+        schneider's message of "Fri, 9 Mar 2018 18:35:33 +0100")
 References: <20180309173536.62012-1-lars.schneider@autodesk.com>
-        <20180309173536.62012-7-lars.schneider@autodesk.com>
-Date:   Fri, 09 Mar 2018 11:10:24 -0800
-In-Reply-To: <20180309173536.62012-7-lars.schneider@autodesk.com> (lars
-        schneider's message of "Fri, 9 Mar 2018 18:35:32 +0100")
-Message-ID: <xmqqmuzh5alb.fsf@gitster-ct.c.googlers.com>
+        <20180309173536.62012-8-lars.schneider@autodesk.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+Date:   Fri, 09 Mar 2018 11:10:46 -0800
+Message-ID: <xmqqlgf15akp.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
@@ -72,50 +72,11 @@ X-Mailing-List: git@vger.kernel.org
 
 lars.schneider@autodesk.com writes:
 
-> +static const char *default_encoding = "UTF-8";
-> +
-> ...
-> +static const char *git_path_check_encoding(struct attr_check_item *check)
-> +{
-> +	const char *value = check->value;
-> +
-> +	if (ATTR_UNSET(value) || !strlen(value))
-> +		return NULL;
-> +
-> +	if (ATTR_TRUE(value) || ATTR_FALSE(value)) {
-> +		error(_("working-tree-encoding attribute requires a value"));
-> +		return NULL;
-> +	}
+> +			const char *advise_msg = _(
+> +				"The file '%s' contains a byte order "
+> +				"mark (BOM). Please use %.6s as "
+> +				"working-tree-encoding.");
 
-Hmph, so we decide to be loud but otherwise ignore an undefined
-configuration?  Shouldn't we rather die instead to avoid touching
-the user data in unexpected ways?
+I know that this will go away in a later step, but why ".6"?
 
-> +
-> +	/* Don't encode to the default encoding */
-> +	if (!strcasecmp(value, default_encoding))
-> +		return NULL;
-
-Is this an optimization to avoid "recode one encoding to the same
-encoding" no-op overhead?  We already have the optimization in the
-same spirit in may existing codepaths that has nothing to do with
-w-t-e, and I think we should share the code.  Two pieces of thought
-comes to mind.
-
-One is a lot smaller in scale: Is same_encoding() sufficient for
-this callsite instead of strcasecmp()?
-
-The other one is a lot bigger: Looking at all the existing callers
-of same_encoding() that call reencode_string() when it returns false,
-would it make sense to drop same_encoding() and move the optimization
-to reencode_string() instead?
-
-I suspect that the answer to the smaller one is "yes, and even if
-not, it should be easy to enhance/extend same_encoding() to make it
-do what we want it to, and such a change will benefit even existing
-callers."  The answer to the larger one is likely "the optimization
-is not about skipping only reencode_string() call but other things
-are subtly different among callers of same_encoding(), so such a
-refactoring would not be all that useful."
-
-The above still holds for the code after 10/10 touches this part.
+> +			advise(advise_msg, path, enc);
