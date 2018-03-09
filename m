@@ -2,92 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5348C1F404
-	for <e@80x24.org>; Fri,  9 Mar 2018 19:04:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5A8BA1F404
+	for <e@80x24.org>; Fri,  9 Mar 2018 19:06:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932269AbeCITEk (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Mar 2018 14:04:40 -0500
-Received: from mail-wr0-f178.google.com ([209.85.128.178]:36538 "EHLO
-        mail-wr0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932069AbeCITEj (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Mar 2018 14:04:39 -0500
-Received: by mail-wr0-f178.google.com with SMTP id v111so9990257wrb.3
-        for <git@vger.kernel.org>; Fri, 09 Mar 2018 11:04:38 -0800 (PST)
+        id S932384AbeCITGJ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Mar 2018 14:06:09 -0500
+Received: from mail-wm0-f52.google.com ([74.125.82.52]:33688 "EHLO
+        mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932069AbeCITGI (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Mar 2018 14:06:08 -0500
+Received: by mail-wm0-f52.google.com with SMTP id s206so4680018wme.0
+        for <git@vger.kernel.org>; Fri, 09 Mar 2018 11:06:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=FzTF+4eOc9nmEPRfX6B7rIL3WswdY3tadd2k8mvUPlw=;
-        b=GJZhUUPMQKDkFR/kndS8+wm+m8scmY+nNl8YW+ZUa8lCxzJVNpdGEYK5XQwBk8RDmf
-         2QmP7C9lzcoql9BGZuEfzcLQyQ0BKj9Rtg3J7aB7kHFw7Fm+3s1EANRg8DYo9MITJeo6
-         40dO4Ax4f1QSLIv43fZIfUqtabK6EYVlcKG61ocU2zvloQuOC1RJNt8upSN2PsUYyjCX
-         QQFaV3fvVkcNpax+wxCHnkuYZuPR+NNC2E9o14faCSujGWFAvqQbNEpMfsB3ruKfugYA
-         C2RUlqjOC/StdPkJNPIxgGyk9Y8Bm2jGq8eV51uHVhi/Zgvx71UYSmMLhhlLD/j6Evvn
-         foZg==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=kOmwnSckBdzZU/fBOZn/8iDPjHdmn4LFAO+NktuqhLw=;
+        b=ax2ATz5h4vsd8CDvAtoghlxRQqCMwrZj9HktBPiyastO7NHeI5RWeAteQjrIeaK1Yp
+         m18PPbRalQi0yG+gdNE2ZbkSh3XIHd/NYVnd99d1O5dud63dKp0HcfxCgqmz4J/rm9+t
+         zo7LyZaXZv5wfnqzbWRAKxPWfYA45wifqcNPpaNEEfsSuLVE8yCuNe+kmPdXaBNPAi6w
+         bLxWujfGshgOh5Da1hfHg0mckRI5MVHPJ9i8sMRWaUSqmQLSfSnSHEnlY92+2PZzbKdg
+         DeM6GlHgZrfnLKbeXAoSD9Pklq33y3ZiWfeawZ/sNNJgKR9EyuqUSw9W0obGl/r7oj01
+         Ctow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=FzTF+4eOc9nmEPRfX6B7rIL3WswdY3tadd2k8mvUPlw=;
-        b=pZZ1iA4FEA+VCMWPtdKTiJ9MpchPYArNLiUGHkDmrL0T4LL3EyVDESPSIDJ8ucdJ2/
-         o9+CCD/4HIubGsWYGtJTrLrpBKOmkoSXLxkLdllejv2sEMbZWf9wMJ1OQINY3VH/90ZT
-         8gl4zi9uwPsdMGtopatP59dZHWgs87h7jpfpNziQ5CI2TjaYFXK6F9cTJp/IphW9g9Kc
-         3L4aJTXm5I2kMrlwl0PE0n3uwyG7fn12/FsTSh9yZ1rGCg7A3ma/QvUG170NjcQXq51L
-         5Ofge+Y6JG3ZgaRSK+ntG8+xlT7+8IVY7s0y0ylXfDIoeMy01sgJdpToWgqkrXhwogkR
-         glmQ==
-X-Gm-Message-State: APf1xPBc5v/9Xn5f/1IQzdO0O+hGX19vH9xcNJtu6+4hD4oClX9ViR7K
-        N76bRSyke+fFDJxJe3gQ3Yg=
-X-Google-Smtp-Source: AG47ELsLtl+CVVoPLVjcT5N5EwYwiFfTFdeZhH44/6NM0O8/UcNuMthfHyYiViA7QyMrhvG2ddMxKw==
-X-Received: by 10.223.131.38 with SMTP id 35mr26707438wrd.197.1520622277945;
-        Fri, 09 Mar 2018 11:04:37 -0800 (PST)
-Received: from slxbook4.fritz.box (p5DDB5BF6.dip0.t-ipconnect.de. [93.219.91.246])
-        by smtp.gmail.com with ESMTPSA id r128sm2008004wmf.37.2018.03.09.11.04.36
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 09 Mar 2018 11:04:37 -0800 (PST)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH v11 07/10] convert: check for detectable errors in UTF encodings
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <xmqqy3j15b2h.fsf@gitster-ct.c.googlers.com>
-Date:   Fri, 9 Mar 2018 20:04:34 +0100
-Cc:     lars.schneider@autodesk.com, git@vger.kernel.org, tboegi@web.de,
-        j6t@kdbg.org, sunshine@sunshineco.com, peff@peff.net,
-        ramsay@ramsayjones.plus.com, Johannes.Schindelin@gmx.de,
-        pclouds@gmail.com
-Content-Transfer-Encoding: 7bit
-Message-Id: <AB377212-0551-4DFF-A953-734DC847934B@gmail.com>
-References: <20180309173536.62012-1-lars.schneider@autodesk.com> <20180309173536.62012-8-lars.schneider@autodesk.com> <xmqqy3j15b2h.fsf@gitster-ct.c.googlers.com>
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=kOmwnSckBdzZU/fBOZn/8iDPjHdmn4LFAO+NktuqhLw=;
+        b=dqg+g81tohL0enL62XKNwSeODsQ8ahnlJ/GAkQ7Nql3NFTbRPR/h74s45vEvn90Kr1
+         rAkYNdz/jDQLpo/gHVk0NcJRfKxHWByqzljpCXdJdLXUQX27E/YORuxvnMqcGouPiVsm
+         31DOANScxr9ZFNjDzLfbeybUN5jWJJskWdTyvuvpKsphbxw0FEmXU07mbcuDdNqjnBNH
+         DnuKUg9o081BWa450+ds98/KID3LdicVf1IOT9xX5n4CcO2tBiTmGPx+T9UHmp8Fzv/K
+         XlRkoUw5s+5yPDSi5fE7y3kztirj2/e5CEZDTFJl1r3l78+DGyvYV62cUg1I1WIZCsJe
+         PWjQ==
+X-Gm-Message-State: APf1xPAoSRjtqC30/xGtBo4N/cfWABg7d7cvG37iRxcEFMddPv7YT6Go
+        opKRqZqQmc5XXEMquGDkXr0=
+X-Google-Smtp-Source: AG47ELtefju7Mc5xzkhLRYaQ9dEQugkZsZgjc2+03Byveoz+lmSa4IkXAkJJPlOS9R3RNwT4OVEZWQ==
+X-Received: by 10.80.245.136 with SMTP id u8mr39699008edm.8.1520622367171;
+        Fri, 09 Mar 2018 11:06:07 -0800 (PST)
+Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
+        by smtp.gmail.com with ESMTPSA id f6sm1199384edl.9.2018.03.09.11.06.05
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 09 Mar 2018 11:06:06 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3124)
+Cc:     Lars Schneider <larsxschneider@gmail.com>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Lars Schneider <lars.schneider@autodesk.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Jeff King <peff@peff.net>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v10 3/9] strbuf: add a case insensitive starts_with()
+References: <20180307173026.30058-1-lars.schneider@autodesk.com>
+        <20180307173026.30058-4-lars.schneider@autodesk.com>
+        <CACsJy8DWMmC9mvz783XQFHUopbVMH00LoqpW-CQunzg0qgiEEA@mail.gmail.com>
+        <xmqq4llq88ms.fsf@gitster-ct.c.googlers.com>
+        <7920610F-8B51-4E8F-83C6-7B29D0EBF852@gmail.com>
+        <xmqqmuzh6u8g.fsf@gitster-ct.c.googlers.com>
+User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 1.1.0
+In-reply-to: <xmqqmuzh6u8g.fsf@gitster-ct.c.googlers.com>
+Date:   Fri, 09 Mar 2018 20:06:05 +0100
+Message-ID: <87h8ppqdb6.fsf@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-> On 09 Mar 2018, at 20:00, Junio C Hamano <gitster@pobox.com> wrote:
-> 
-> lars.schneider@autodesk.com writes:
-> 
->> +			const char *advise_msg = _(
->> +				"The file '%s' contains a byte order "
->> +				"mark (BOM). Please use %.6s as "
->> +				"working-tree-encoding.");
-> 
-> I know that this will go away in a later step, but why ".6"?
+On Fri, Mar 09 2018, Junio C. Hamano jotted:
 
-I deleted the original comment in the rebase, sorry:
+> Lars Schneider <larsxschneider@gmail.com> writes:
+>
+>> I think following the boost lib makes most sense. Therefore,
+>> I would like to go with "istarts_with". OK with you?
+>
+> I don't care too deeply; if we took starts_with() from there, where
+> what we now want is defined as istarts_with(), then that sounds like
+> a good thing to do.
 
-    /*
-     * This advice is shown for UTF-??BE and UTF-??LE
-     * encodings. We truncate the encoding name to 6
-     * chars with %.6s to cut off the last two "byte
-     * order" characters.
-     */
+I don't care either, but just a note that we had this exact discussion
+around this time last year when I added a starts_with_icase() [1][2]
+which eventually got dropped.
 
-- Lars
+1. https://public-inbox.org/git/xmqqpohao2hw.fsf@gitster.mtv.corp.google.com/
+2. https://public-inbox.org/git/20170326121654.22035-4-avarab@gmail.com/
