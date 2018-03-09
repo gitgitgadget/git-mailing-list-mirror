@@ -2,84 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BC4C31F404
-	for <e@80x24.org>; Fri,  9 Mar 2018 15:07:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1C89C1F404
+	for <e@80x24.org>; Fri,  9 Mar 2018 15:54:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932092AbeCIPHX (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Mar 2018 10:07:23 -0500
-Received: from continuum.iocl.org ([217.140.74.2]:52086 "EHLO
-        continuum.iocl.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751102AbeCIPHW (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Mar 2018 10:07:22 -0500
-Received: (from krey@localhost)
-        by continuum.iocl.org (8.11.3/8.9.3) id w29F7Jb30743;
-        Fri, 9 Mar 2018 16:07:19 +0100
-Date:   Fri, 9 Mar 2018 16:07:19 +0100
-From:   Andreas Krey <a.krey@gmx.de>
-To:     git@vger.kernel.org
-Subject: git submodule update - reset instead of checkout?
-Message-ID: <20180309150719.GA30596@inner.h.apk.li>
-Mime-Version: 1.0
+        id S1751151AbeCIPyc (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Mar 2018 10:54:32 -0500
+Received: from mail-wm0-f42.google.com ([74.125.82.42]:55033 "EHLO
+        mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751096AbeCIPya (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Mar 2018 10:54:30 -0500
+Received: by mail-wm0-f42.google.com with SMTP id z81so4734227wmb.4
+        for <git@vger.kernel.org>; Fri, 09 Mar 2018 07:54:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=KbuamIHKK/qk1QxzoRYTiE7+1CPTCaJyk2S+Ry3Qbjs=;
+        b=f2JTdvLG36mUEtSeOwWNKz9bQCr3maBeAGpyuH2sVILcb/k+GskC1XNHvB3tHNLiaH
+         peKKlUCEWil5ni3nHDQGL1xq6OrzBPgXx5kRNig3GIxZFNZZ2mQkiOdBsEbPziAKjVGA
+         jNmYuxp2JTGvfMgmx19MlkZg08vEVcjzWIUzC2VQU3b0lk4E22fxr+vKVO6CDTi93VGt
+         tix8ptFZz6ZREyUqxfJ+aDO5/qSu/Ng8MV21Oi34sY96jwoYB+P9X4y2KXTfMcwL02Oz
+         3Fler4IEKrOZqIciTtkpEG6qy+YtY0+C2ozfl2RGKC5CBLxcgcpQ7ALxnhUEagO8vD2p
+         nvEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=KbuamIHKK/qk1QxzoRYTiE7+1CPTCaJyk2S+Ry3Qbjs=;
+        b=m2NnyU1IUh2Wi4fmzCsWI0PiUkuN9iTHmjTVncW0pDslm8QC2NnJjSUjLJ6lGW89v3
+         Kk83G1RtSGdc44+bS8+slLt4/o7qkHvu8JmzoKSyB0kJ4FLkcHW8lbus9m933SXL0L5N
+         EIOuHjRGhy8MrUulpIRinNlJXZT2kelNbkP6ncUcGK8Z7OFqXYZf1EOqbK7WRoZeU32/
+         uMGg+6kzWlIRM0Jk4PIpKLPyWfxPcA78IRkuDA5O/3qtgJRSFzMbOrGLC7cJ36afYfNt
+         iIjSXd3HwE4DIjACIsqWUouBsuJbaIdyrZEmf++Jx3sSCTRjtuCrq0Zep4JxZwIyOoNO
+         mQkg==
+X-Gm-Message-State: AElRT7FkidqmjbVr1p/xekyAEiq2exPsnz+Nuwq2P8pc6fLYJogS4w4n
+        o5xx8nm2Qb6ZSX/Q9JGOmVQ=
+X-Google-Smtp-Source: AG47ELss/hrHTWBb+vIFFxVEC58gN2wyKO0B20BqJLiUbhyNfl0v2CGRMqcF99ZLRI6vH42G80bLaA==
+X-Received: by 10.28.141.131 with SMTP id p125mr2450756wmd.0.1520610869298;
+        Fri, 09 Mar 2018 07:54:29 -0800 (PST)
+Received: from slxbook4.fritz.box (p5DDB50CB.dip0.t-ipconnect.de. [93.219.80.203])
+        by smtp.gmail.com with ESMTPSA id e17sm1197437wri.42.2018.03.09.07.54.27
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 09 Mar 2018 07:54:28 -0800 (PST)
 Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.4.2.1i
-X-message-flag: What did you expect to see here?
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [PATCH v10 3/9] strbuf: add a case insensitive starts_with()
+From:   Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <xmqq4llq88ms.fsf@gitster-ct.c.googlers.com>
+Date:   Fri, 9 Mar 2018 16:54:30 +0100
+Cc:     Duy Nguyen <pclouds@gmail.com>,
+        Lars Schneider <lars.schneider@autodesk.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        =?utf-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Jeff King <peff@peff.net>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Transfer-Encoding: 7bit
+Message-Id: <7920610F-8B51-4E8F-83C6-7B29D0EBF852@gmail.com>
+References: <20180307173026.30058-1-lars.schneider@autodesk.com> <20180307173026.30058-4-lars.schneider@autodesk.com> <CACsJy8DWMmC9mvz783XQFHUopbVMH00LoqpW-CQunzg0qgiEEA@mail.gmail.com> <xmqq4llq88ms.fsf@gitster-ct.c.googlers.com>
+To:     Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi everyone,
 
-I've been reading up on the current state of git submodules
-(our customer's customers want to use them, causing a slight
-groan from our customer).
+> On 09 Mar 2018, at 00:12, Junio C Hamano <gitster@pobox.com> wrote:
+> 
+> Duy Nguyen <pclouds@gmail.com> writes:
+> 
+>>> extern int starts_with(const char *str, const char *prefix);
+>>> +extern int startscase_with(const char *str, const char *prefix);
+>> 
+>> This name is a bit hard to read. Boost [1] goes with istarts_with. I
+>> wonder if it's better. If not I guess either starts_with_case or
+>> starts_case_with will improve readability.
+> 
+> starts_with_case() sounds quite strange even though
+> starts_with_icase() may make it clear that it is "a variant of
+> starts_with() function that ignores case".  I dunno.
+> dir.c::cmp_icase() takes the _icase suffix for not quite the way
+> that is consistent with that understanding, though.
 
-The usability thing I wonder about - with git submodule update,
-is it necessary to detach the head to the current (or upstream)
-head, instead of resetting the current branch to that state?
+I think following the boost lib makes most sense. Therefore,
+I would like to go with "istarts_with". OK with you?
 
-Primary interest in the question: Seeing 'detached head' scares
-almost everybody. To brainstorm:
-
-- as we can already use 'submodule update --remote' to update
-  to the remote head of a branch, it would be logical to have
-  that branch checked out locally (and unfortunately, potentially
-  have that branch's name conflict with the remote branch setup).
-
-- when developers more or less accidentally commit on the detached
-  head, all is not lost yet (I remember this being differently),
-  but if the next 'submodule update' just resets again, the commit
-  just made is still dropped, just as in the detached head state.
-
-- So, we'd need to have 'submodule update' act closer to the pull or
-  rebase counterparts and refuse to just lose commits (or uncommitted
-  changes).
-
-Having a checked-out branch in the submodule would have the advantage
-that I can 'just' push local commits. At the moment, doing that requires
-a relatively intricate dance, not at all similar to working in the
-base (parent) module.
-
-I'm working on hooks that automatically update the submodules after
-a commit change (merge, pull, checkout) in the parent module, but
-with the additional feature of (a) keeping a branch checked out
-and (b) avoid discarding local changes. Probably means I shouldn't
-invoke 'submodule update' at all, and deal with everyting myself.
-
-Any thoughs/comments/helpful hints?
-
-(Addional complexity: egit/jgit is in use as well, and the work model
-we will arrive at probabaly needs to work with the current egit.)
-
-- Andreas
-
--- 
-"Totally trivial. Famous last words."
-From: Linus Torvalds <torvalds@*.org>
-Date: Fri, 22 Jan 2010 07:29:21 -0800
+- Lars
