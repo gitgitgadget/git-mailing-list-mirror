@@ -2,86 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 27CAA1F404
-	for <e@80x24.org>; Fri,  9 Mar 2018 20:18:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A19E81F404
+	for <e@80x24.org>; Fri,  9 Mar 2018 20:23:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751227AbeCIUSK (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Mar 2018 15:18:10 -0500
-Received: from mail-qt0-f172.google.com ([209.85.216.172]:42163 "EHLO
-        mail-qt0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751192AbeCIUSJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Mar 2018 15:18:09 -0500
-Received: by mail-qt0-f172.google.com with SMTP id t6so12327084qtn.9
-        for <git@vger.kernel.org>; Fri, 09 Mar 2018 12:18:09 -0800 (PST)
+        id S1751249AbeCIUXA (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Mar 2018 15:23:00 -0500
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:33492 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932320AbeCIUW6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Mar 2018 15:22:58 -0500
+Received: by mail-wr0-f196.google.com with SMTP id v18so10161863wrv.0
+        for <git@vger.kernel.org>; Fri, 09 Mar 2018 12:22:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=WB+E1EwGRs92XNjareLmGoL1A1aXD2wc2MjMgqV9r50=;
-        b=T3h+NhTqJ4Y9u6q+wAfzdwl5OXxbFczU2oumSni8usenucKw6ZQNrFzBRpLq8JJjnQ
-         RC2fR5SIu77pf5RTokGPw1ctrjmo43ihDbLiPxjIUXg2Kajua40RQ6yx3MQu9W+aW4lB
-         lZe2wreCtV76vMwpDJ031+QZHsmsZbZOAZRGH9c6sVNvJpuT3FExy/eV0z+y8afAKmzh
-         5Bk8gg1R6xyqV/utmeQ9VNfCDQzKwf/vNXO4t7EncHnf3Ejdj0zZ1+QYgfxUazZZHmmg
-         6fLgvVHHh7MDCBUt7zq3e76zeA9+u6dCDxZDabZvz9IG6zytxh5BSG56z5q279M7p4Bs
-         KBMQ==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=Gsd6hE/DPLle20GffgSxKOgCmQnrp7Az/Hw/HzByt4E=;
+        b=Gb1tFRq3t1ieKb2ug8wnEfXB0080pxD6KNfKqZyM2Y9I8zHEByNLV6uKUW61EWbF8R
+         oaGM/Mb7zpsMX4mIxMQx2Wg5KJO5OxRsHt9MJgYCyyjMjhMJ/+Rkap6FOlCSFfiM6tUS
+         rGaOSpqMB/HFyBcRQ/voi/gZYqrxv16ww44VL5qfaNZSoqN3jvFoJSUf3qsoxNN+BqJo
+         TH32WvTNzEhuk+zUUpKaTUKpz5PFdmWGv3lnALyUAeWE8+PWz4JYFqOby7PRrNPgIxDr
+         YxbibCV3t97QwAJ6HWfgex+7on2ZYHWz6VQ/iSRA/kpQQisna82BU4ye1SUlj0lkmKyD
+         gaQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=WB+E1EwGRs92XNjareLmGoL1A1aXD2wc2MjMgqV9r50=;
-        b=OjEpFKyhaJUl0X5B8K2r52vzU69yWGV92rUC1U3W2ihyLl6NKND8Ro4UtRkvoLaepC
-         EhZv4tXHpALrJ/b8bsEKtRsRxkqeW4R6+BIoK1SHb4dEIdTkkTbuhLrazuz2OMhu0JJe
-         2uaXwuh13e2nwqOFRXCtSo/vsdX2y/Hkb6X2MZdj7QoAtI4VSWILhLZ/TiqTL+VaJFpS
-         NqTYNBQ7gT12Pigqurbog4QAldKYt89VY73TtRFdHu2CmkyT2XZDbGCy+73AzOOvCFmR
-         WT6qIKZDWD3/db09tc6ZJULcUNCcx6nD3h+hDn28XuOoNa8mU1ELPB5Xxwcsa/g+99/o
-         Bqmg==
-X-Gm-Message-State: AElRT7HJhgsOVmsJRTTltNceOkzg/QiswviTo7Ppkg7GzMC+l5UEAMVh
-        ty/q4RcHjvS31SQ65sThf47yN0sceilTnEpIRaw=
-X-Google-Smtp-Source: AG47ELvni6q57D1+lPyfzGvUwnt4jjlw71POhYLhZ9bfcarNFK2cNGUV/Ql3ug++CJoV3LNLOtjk6I4KtQsOodo6xPA=
-X-Received: by 10.200.36.189 with SMTP id s58mr43208797qts.0.1520626688911;
- Fri, 09 Mar 2018 12:18:08 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.12.142.14 with HTTP; Fri, 9 Mar 2018 12:18:08 -0800 (PST)
-In-Reply-To: <20180309173536.62012-11-lars.schneider@autodesk.com>
-References: <20180309173536.62012-1-lars.schneider@autodesk.com> <20180309173536.62012-11-lars.schneider@autodesk.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 9 Mar 2018 15:18:08 -0500
-X-Google-Sender-Auth: wn8QHxbkR1lsGtVue6X0HJeNjBs
-Message-ID: <CAPig+cTH7wmrBwiyBxr=D1g6dTw65ZRfGPX_ok2PYaMoGJk0Dg@mail.gmail.com>
-Subject: Re: [PATCH v11 10/10] convert: add round trip check based on 'core.checkRoundtripEncoding'
-To:     Lars Schneider <lars.schneider@autodesk.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=Gsd6hE/DPLle20GffgSxKOgCmQnrp7Az/Hw/HzByt4E=;
+        b=ITEAceyYcu3maeQ9Z0Dq8UMaDYwIJsACibKz2z+8w42cmokFbVJz0KApvSoWjMtnHy
+         maox9nFZ7ZcymX+W9ECX89uTkY0wYcortt60bkL7Wplf4ZznHyqljaHj5GKdKH358z04
+         zz8lw/ZWIFsTlivJNhJIjagZ+reOldg9V2kcvuCE8ZyWfBhys33lT4TMY/99xNPiEPpX
+         96TSAVEr+9MPxWpDnvImf0URDsu4YdP6mt6Sdt99pCz47pjzwknYVYpg5lJi43oYf1XW
+         I4+HeCZMUEH5C1Akdjj/8bkmceY0lZlqHx55lqGvMU84XXstESbulXHYdTP/NSsqHmuj
+         uSUQ==
+X-Gm-Message-State: APf1xPAaYzGhUu57nUa6ycpJhmk0bCec1GE9KlLf4nZEethlEJIiVxIq
+        ac0qKaEqXUN8h0EknGhfewI=
+X-Google-Smtp-Source: AG47ELsHKx8G9nCSFKi3HNZ/eQ9z2WmsQK4nfZUuWO/SwsdKevsZS+/t1Icocx+Bm24Qv/HmhFP3ig==
+X-Received: by 10.223.170.219 with SMTP id i27mr27004007wrc.107.1520626976939;
+        Fri, 09 Mar 2018 12:22:56 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id h188sm1792103wmf.37.2018.03.09.12.22.56
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 09 Mar 2018 12:22:56 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Lars Schneider <lars.schneider@autodesk.com>,
+        Git List <git@vger.kernel.org>,
+        Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
         Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkg?= =?utf-8?B?Tmfhu41j?= Duy 
         <pclouds@gmail.com>, Lars Schneider <larsxschneider@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH v11 10/10] convert: add round trip check based on 'core.checkRoundtripEncoding'
+References: <20180309173536.62012-1-lars.schneider@autodesk.com>
+        <20180309173536.62012-11-lars.schneider@autodesk.com>
+        <CAPig+cTH7wmrBwiyBxr=D1g6dTw65ZRfGPX_ok2PYaMoGJk0Dg@mail.gmail.com>
+Date:   Fri, 09 Mar 2018 12:22:55 -0800
+In-Reply-To: <CAPig+cTH7wmrBwiyBxr=D1g6dTw65ZRfGPX_ok2PYaMoGJk0Dg@mail.gmail.com>
+        (Eric Sunshine's message of "Fri, 9 Mar 2018 15:18:08 -0500")
+Message-ID: <xmqq1sgt578g.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 9, 2018 at 12:35 PM,  <lars.schneider@autodesk.com> wrote:
-> [...]
-> Add 'core.checkRoundtripEncoding', which contains a comma separated
-> list of encodings, to define for what encodings Git should check the
-> conversion round trip if they are used in the 'working-tree-encoding'
-> attribute.
-> [...]
-> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
-> ---
-> diff --git a/convert.c b/convert.c
-> @@ -1150,7 +1227,7 @@ static const char *git_path_check_encoding(struct attr_check_item *check)
->         /* Don't encode to the default encoding */
-> -       if (!strcasecmp(value, default_encoding))
-> +       if (is_encoding_utf8(value) && is_encoding_utf8(default_encoding))
->                 return NULL;
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-This change belongs in 6/10, not 10/10, methinks.
+> On Fri, Mar 9, 2018 at 12:35 PM,  <lars.schneider@autodesk.com> wrote:
+>> [...]
+>> Add 'core.checkRoundtripEncoding', which contains a comma separated
+>> list of encodings, to define for what encodings Git should check the
+>> conversion round trip if they are used in the 'working-tree-encoding'
+>> attribute.
+>> [...]
+>> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
+>> ---
+>> diff --git a/convert.c b/convert.c
+>> @@ -1150,7 +1227,7 @@ static const char *git_path_check_encoding(struct attr_check_item *check)
+>>         /* Don't encode to the default encoding */
+>> -       if (!strcasecmp(value, default_encoding))
+>> +       if (is_encoding_utf8(value) && is_encoding_utf8(default_encoding))
+>>                 return NULL;
+>
+> This change belongs in 6/10, not 10/10, methinks.
+
+It is actually worse than that, no?  When default_encoding is
+(somehow) configured not to be UTF-8, e.g. "Shift_JIS", we used to
+avoid converting from Shift_JIS to Shift_JIS, but the optimization
+no longer happens with this code.
+
+In any case, I think same_encoding() is probably a good thing to use
+here at step 6/10, so the point is moot, I guess.
