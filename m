@@ -2,101 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 780C31FAE2
-	for <e@80x24.org>; Fri,  9 Mar 2018 09:41:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1A82D1FAE2
+	for <e@80x24.org>; Fri,  9 Mar 2018 09:54:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750913AbeCIJlx (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Mar 2018 04:41:53 -0500
-Received: from mx3-rdu2.redhat.com ([66.187.233.73]:55410 "EHLO mx1.redhat.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1750742AbeCIJlw (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Mar 2018 04:41:52 -0500
-Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com [10.11.54.5])
-        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by mx1.redhat.com (Postfix) with ESMTPS id DB44E4023BB3;
-        Fri,  9 Mar 2018 09:41:51 +0000 (UTC)
-Received: from lacos-laptop-7.usersys.redhat.com (ovpn-120-44.rdu2.redhat.com [10.10.120.44])
-        by smtp.corp.redhat.com (Postfix) with ESMTP id E6BC56353C;
-        Fri,  9 Mar 2018 09:41:50 +0000 (UTC)
-Subject: Re: recent glob expansion breakage on Windows?
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     public git mailing list <git@vger.kernel.org>,
-        "Carsey, Jaben" <jaben.carsey@intel.com>,
-        git-for-windows@googlegroups.com
-References: <e0ba9fb9-056e-4979-415b-f8eca47e2490@redhat.com>
- <20180308220356.GA171451@aiede.svl.corp.google.com>
-From:   Laszlo Ersek <lersek@redhat.com>
-Message-ID: <3f8076fa-ead3-4034-2d41-364b72169873@redhat.com>
-Date:   Fri, 9 Mar 2018 10:41:50 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
+        id S1750966AbeCIJyi (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Mar 2018 04:54:38 -0500
+Received: from mail-oi0-f49.google.com ([209.85.218.49]:36848 "EHLO
+        mail-oi0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751025AbeCIJyh (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Mar 2018 04:54:37 -0500
+Received: by mail-oi0-f49.google.com with SMTP id u73so6562127oie.3
+        for <git@vger.kernel.org>; Fri, 09 Mar 2018 01:54:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=r//85C7wPDT32KlAQWTgc2rvc9psyOSvKT1Wam2BKA4=;
+        b=BHzbqvRaZ9a+NOMWRzhJraFvxH0UENKYFBuHhTOuNMjgE4bal6VPOSJFnj9hVnmo2s
+         cvdoJtGDELqisI21aCmOdVL6zE4dNrkyonrTwjGYuJuptxK4juDCJCQZKJPF/9HzSx3s
+         /chzzFGifDVH4JEiLbzyCUBl0n2DtgiJz9CUnlXwMmo1n1SdLLwa6jfk+5mM85zplzz7
+         W1m6ecpU6zZh7TG3JLd/CUZXOda2dukxvaU894fS+2+gQHhy5eKjFxEh2ziOYEvhWI7n
+         QrBQokTRBA2krN9exgKBZbrm9hXSWs6ctXtMy1O7WBRsp/44nBecuitshM3aUmhpfy2A
+         J4hw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=r//85C7wPDT32KlAQWTgc2rvc9psyOSvKT1Wam2BKA4=;
+        b=QwySPCx6ETEyEhJyD3ac/M14ThimsOZuEvgfrJEFgIii+X5/AJrr7VBGr29TeUnMuP
+         FOe8LBeURoiCyBUO0/bWwLszbiUEy+upxAwk/37G2rw85CzcvJcjFMKxUwNgNk331wr7
+         GvXiAMPqo7SFCl+D7/LH6422x1x93bL4tYow22kSj7M7t1YuIK6lxK/1uUXm7t2AsZe9
+         QwZORuwQ3jlj8pZmxkk38kh8BsPIOvvH6jt/K70Qq7sslVihsDly7ydTJJerPxS2v/Q5
+         pe+yaV7tE3XjMO2TGHZmeea9oSaNxXSQyh4jgGwONoN3s1wqsJc47vNaVcTQ0TK/wXHT
+         OF5A==
+X-Gm-Message-State: AElRT7FEMcchCDXA2XhadVh/oZn0DoHyG/QX8sWJE4+GrDWg4Qllp0hh
+        VWijZM70BzAJuefNjeNl25374kYby9Z+s1dKyXM=
+X-Google-Smtp-Source: AG47ELvQi9mcQx+0uBQa0NI4/5y/ejNm1hgjaTCmyd1pb926sohRM4t9ktL02ZU3QrIzclOAGRd+I7W5BTJAoQfXY5s=
+X-Received: by 10.202.83.129 with SMTP id h123mr19084550oib.228.1520589276659;
+ Fri, 09 Mar 2018 01:54:36 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20180308220356.GA171451@aiede.svl.corp.google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 2.79 on 10.11.54.5
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.11.55.7]); Fri, 09 Mar 2018 09:41:51 +0000 (UTC)
-X-Greylist: inspected by milter-greylist-4.5.16 (mx1.redhat.com [10.11.55.7]); Fri, 09 Mar 2018 09:41:51 +0000 (UTC) for IP:'10.11.54.5' DOMAIN:'int-mx05.intmail.prod.int.rdu2.redhat.com' HELO:'smtp.corp.redhat.com' FROM:'lersek@redhat.com' RCPT:''
+Received: by 10.74.25.140 with HTTP; Fri, 9 Mar 2018 01:54:05 -0800 (PST)
+In-Reply-To: <CAN0heSoKOoEikn8z799Xptje2Q2SE4BeAcvvXecPMNDCjBJ0+Q@mail.gmail.com>
+References: <xmqqtvts22za.fsf@gitster-ct.c.googlers.com> <CAN0heSoKOoEikn8z799Xptje2Q2SE4BeAcvvXecPMNDCjBJ0+Q@mail.gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Fri, 9 Mar 2018 16:54:05 +0700
+Message-ID: <CACsJy8B921X4GRT35vwHWNF=CKJRGhc+-hFeYyQ3Zc84aoSvfA@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Mar 2018, #02; Tue, 6)
+To:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 03/08/18 23:03, Jonathan Nieder wrote:
-> +git-for-windows
-> Hi,
-> 
-> Laszlo Ersek wrote:
-> 
->> Jaben reports that git-send-email is suddenly failing to expand the
->> "*.patch" glob for him, at the Windows CMD prompt:
+On Fri, Mar 9, 2018 at 1:15 PM, Martin =C3=85gren <martin.agren@gmail.com> =
+wrote:
+> On 7 March 2018 at 00:34, Junio C Hamano <gitster@pobox.com> wrote:
+>
+>> * ma/config-page-only-in-list-mode (2018-02-21) 3 commits
+>>  - config: change default of `pager.config` to "on"
+>>  - config: respect `pager.config` in list/get-mode only
+>>  - t7006: add tests for how git config paginates
 >>
->> ---------
->> E:\...>git send-email --suppress-cc=author --suppress-cc=self --suppress-cc=cc --suppress-cc=sob --dry-run *.patch
+>>  In a way similar to how "git tag" learned to honor the pager
+>>  setting only in the list mode, "git config" learned to ignore the
+>>  pager setting when it is used for setting values (i.e. when the
+>>  purpose of the operation is not to "show").
 >>
->> No patch files specified!
->> ---------
->>
->> Whereas, moving the same patch files to another subdir, and then passing
->> the subdir to git-send-email, works fine.
->>
->> I seem to have found some $^O based perl code in the git tree that
->> expands the glob manually (in place of the shell) on Windows -- however,
->> that code looks ancient ^W very stable, and doesn't seem to explain the
->> sudden breakage.
->>
->> Is it possible that a separate perl update on Jaben's Windows box is
->> causing this? Or does the breakage look consistent with a recent git change?
->>
->> Has anyone else reported something similar recently?
-> 
-> This reminds me of https://github.com/git-for-windows/git/issues/339.
-> There, Johannes Schindelin writes (about a different command):
-> 
-> | This is expected because neither PowerShell nor cmd.exe nor git.exe
-> | expand wildcards. Those examples you found were written with a shell
-> | in mind, and the shell expands wildcards (hence Git does not think
-> | it needs to).
-> 
-> That may or may not also apply to send-email.
+>>  Is this ready for 'next'?
+>
+> I am not aware of any open questions or issues. You thought out loud
+> about how the series was structured, in particular about introducing a
+> successful test, then redefining it, as opposed to introducing it as a
+> failing test, then making it succeed. I hope I managed to motivate my
+> choice better in v2 (which is what you have picked up).
+>
+> Duy wondered if it was sane to use a pager when we know that we are
+> "--get"-ing at most one config item. In v2, I addressed this by turning
+> on paging for a more careful selection of "--get"-ters.
 
-Thank you for the reference -- I can't say whether closing issue #339 as
-WONTFIX was justified or not, but it certainly seems inconsistent with
-Jaben's earlier experience (to my understanding), i.e. that git did
-expand the glob.
-
-> In what version did it work?
-
-Jaben, can you please answer that? (One version in which it is broken is
-2.14.1.windows.1.) Can you perhaps ask your teammates about their
-git/windows versions (assuming the *.patch glob is expanded correctly
-for them)?
-
-Thank you, Jonathan,
-Laszlo
+Yeah I got busy with stuff and didn't look at it. I've just checked
+what's in 'pu'. Looks good to me.
+--=20
+Duy
