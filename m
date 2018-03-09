@@ -7,61 +7,59 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F24931F404
-	for <e@80x24.org>; Fri,  9 Mar 2018 17:42:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2007E1FAE3
+	for <e@80x24.org>; Fri,  9 Mar 2018 18:00:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932282AbeCIRmZ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Mar 2018 12:42:25 -0500
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:37893 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932261AbeCIRmY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Mar 2018 12:42:24 -0500
-Received: by mail-wm0-f68.google.com with SMTP id z9so5269757wmb.3
-        for <git@vger.kernel.org>; Fri, 09 Mar 2018 09:42:24 -0800 (PST)
+        id S932216AbeCISAQ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Mar 2018 13:00:16 -0500
+Received: from mail-wr0-f177.google.com ([209.85.128.177]:45214 "EHLO
+        mail-wr0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751193AbeCISAP (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Mar 2018 13:00:15 -0500
+Received: by mail-wr0-f177.google.com with SMTP id h2so2538254wre.12
+        for <git@vger.kernel.org>; Fri, 09 Mar 2018 10:00:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=+dluF5BhmYOtl5jsT87BoQh3yQ8W/+I4HG1eL0UQD4U=;
-        b=Jfb2CXS2Y5cIETNOv4iXR7IBzG3A9pS40+GwoS8gNcjMsIKZQFVRFRIusyvniWkQ+O
-         v8XPSkTc+9pwINtu64rwPI8Nz9y/wm+rOelF+mSGAUIv70zumBZxU9KxoZqoJeeOPlnH
-         U/5dxLhLp4FfopCCnj5mQenScJxuBA5Dn41i6Kbbn6zngIQB0hc70TA5RYkGZhtcT7oY
-         Q5m7Y1zlan2OS6XJ0zBJzr2qzP/AVvlGO9I4mJzpACgAk0dmd5wFrn8y5WAQ3LA4DpWN
-         /dY9zVGx7gEhXNuGqCWJ7IFJ+G2EeTGyylyOlw6GZ03OkvLlFNdyKDnqL1ov5ku0eoqU
-         0smA==
+        bh=xYn9jrvy2tHjL+RsZU6Z3KIE3qNWWVTYs7R03kebV+0=;
+        b=necssNNeIjuM6Re2SdBwbInKI9zk/VsH0RE3UjwR0va1Ze5a6x5OV61djzA/hUOcOM
+         78IAthWQ0sg06hxAlUg1GKwR18N9/SSP3Y1kWI56zGDHNnq/SX0d8qtGkr4HjZIK+WJT
+         Yd44/5YcAAeAuUtk4rXMDTlWtLfquqUJBy8fKQXV1EfHdKzqYf9X6WCJ8jbxroj4kEEN
+         zW4S1evJFfpISs4/ZAEc6Gd5fhb0yeRkDiPVOw11YjU0gfGcpe38vQX8rHiUjPe7nD6m
+         aJ6eT4oO+cw5V2Blhzi390HkdNRe1Ew4EfiO1X7sGRl9af+ZkPrkOiKqicKtKZEhs0TZ
+         QEJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=+dluF5BhmYOtl5jsT87BoQh3yQ8W/+I4HG1eL0UQD4U=;
-        b=IIE+R8i4fsv9C1bQLnKc5MWpjxIb1oThtKUPIFl6YcuHgjye4P9thQPwz24DfFR0uZ
-         caa+wSBKw3qgS7v6apmZ9q+JCtXvnG6s91AJnSfcu2zIF1S+ioXq/nPMozytgm4Rq7tL
-         BAfWlEeOgLlM1sSsbRvdzbdbi+BiPPm/R17Q1VAIoftuIxQyQFWGO1UUxvTLTNnQxqcM
-         Uw+xfWM2pcokTvQkADOe893Vt8zxpobiOG4yTOk8CHRT3PYzdHW4LhMEh3IW8U+QCKRm
-         HKrNCRcaRPX2yZnVRRmziQrH7ycgknbzzDkcSY1Wfwg8dVyoY/oT4Z5mKZ+mkHY2u/fV
-         Ddcg==
-X-Gm-Message-State: AElRT7E1gPnz9hvjH5AKOrenosp5mGp8tKwvmwTNQCrOHSwryY+7bPXJ
-        IgnS7XEgIlS9wuMcU+GmBdw=
-X-Google-Smtp-Source: AG47ELvQn43tDUsvBC6XyBntTN/6b08azC8W0z+a5ypOh7tc0ePxJYQ7NhLcza7iRp2EBC6q1iP02Q==
-X-Received: by 10.28.194.2 with SMTP id s2mr2656992wmf.55.1520617343214;
-        Fri, 09 Mar 2018 09:42:23 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id k18sm1977422wmd.4.2018.03.09.09.42.22
+        bh=xYn9jrvy2tHjL+RsZU6Z3KIE3qNWWVTYs7R03kebV+0=;
+        b=GNM/qdVQr4cXo7LNLoZPnNauJIoNKF0jj/zRd6ITdHIZ2ZO5HYZsGQqF3DtkXkryX0
+         h1LrQ63JmDo85VsA1QViyNlYAJR1OCiowhk+eeNXhsZUXlgZNcFHQLKKAqGov28jLG3O
+         d5Bkk1K7vYyFnxWImOJaQVKCu82aAOM6CS/r/Ux1skmUuCPMwEOraaZ5ihAF6phd0OsG
+         v7PREQBhM13ElCIqf//wQIxw6EIPBJWWXWb4X5yRopljVbPkh9waEJ8JW7MqPVMklnyq
+         OglXULLnKn5eVYQH7keWmYwSuctHFJ5JW3SVHSpT9UEMfLpRiJ7vW0m8YCGpebiZqLLN
+         e5HA==
+X-Gm-Message-State: AElRT7GXfGaWjnaLuvpwE5Cc5MnapWULXGG3kf+KwpOS9pv4mf/tlxKq
+        MhhQGKbmh1KflXPBLOE+H3Y=
+X-Google-Smtp-Source: AG47ELuAX4kcvTOxgQmsozyEXljJhbu4FnkwHU4FZRZgb8veqFW99L2GY57pqMc58SyBMzaHyiC+ww==
+X-Received: by 10.223.136.164 with SMTP id f33mr12974610wrf.77.1520618413805;
+        Fri, 09 Mar 2018 10:00:13 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id f23sm1676247wra.51.2018.03.09.10.00.12
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 09 Mar 2018 09:42:22 -0800 (PST)
+        Fri, 09 Mar 2018 10:00:13 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Robert Dailey <rcdailey.lists@gmail.com>,
-        git <git@vger.kernel.org>,
-        Stefan Beller <stefanbeller@gmail.com>,
-        Brandon Williams <bmwill@google.com>
-Subject: Re: [PATCH] Support long format for log-based submodule diff
-References: <20180307211140.19272-1-rcdailey@gmail.com>
-        <CAGZ79kZk7N4zQUS1eMFMPTuPPuo5ViOeLj5hQHV=E+A=OO+D0w@mail.gmail.com>
-Date:   Fri, 09 Mar 2018 09:42:22 -0800
-In-Reply-To: <CAGZ79kZk7N4zQUS1eMFMPTuPPuo5ViOeLj5hQHV=E+A=OO+D0w@mail.gmail.com>
-        (Stefan Beller's message of "Fri, 9 Mar 2018 00:53:22 -0800")
-Message-ID: <xmqqina56t8h.fsf@gitster-ct.c.googlers.com>
+To:     Takuto Ikuta <tikuta@chromium.org>
+Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [PATCH] fetch-pack.c: use oidset to check existence of loose object
+References: <20180308120639.109438-1-tikuta@chromium.org>
+        <xmqqr2ouwgsd.fsf@gitster-ct.c.googlers.com>
+        <CALNjmMq9gvRzkoYCfXppTVTR5UtvmBZ_4hVuBLB0t7YzR36Wbg@mail.gmail.com>
+Date:   Fri, 09 Mar 2018 10:00:12 -0800
+In-Reply-To: <CALNjmMq9gvRzkoYCfXppTVTR5UtvmBZ_4hVuBLB0t7YzR36Wbg@mail.gmail.com>
+        (Takuto Ikuta's message of "Fri, 9 Mar 2018 23:12:06 +0900")
+Message-ID: <xmqqd10d6ser.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -70,56 +68,73 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+Takuto Ikuta <tikuta@chromium.org> writes:
 
->> $ git diff --submodule=log --submodule-log-detail=(long|short)
->>
->> I'm not sure what makes sense here. I welcome thoughts/discussion and
->> will provide follow-up patches.
+> Yes, I just wanted to say 'git fetch' invokes fetch-pack.
+> fetch-pack is skipped when running git fetch repeatedly while
+> remote has no update by quickfetch. So I disabled it to see the
+> performance of fetch-pack. In chromium repository, master branch
+> is updated several times in an hour, so git fetch invokes fetch-pack
+> in such frequency.
+
+I do understand that if you run "git fetch" against the same place
+in quick succession three times, the first one may cost a lot (not
+just that it has to do the everything_local() computation that you
+care about, it also has to actually do the network transfer), while
+the second and third ones that are done before anything new happens
+on the other end will not involve everything_local() overhead thanks
+to quickfetch.
+
+A "fetch" that is run against a remote that has nothing new, but
+still triggers everything_local() only because quickfetch is
+disabled, is an artificial case that has no relevance to the real
+world, I suspect, because the quickfetch optimization is to solve
+the "there is nothing to be done, still do_fetch_pack() spends so
+much cycles only to realize that it does not have anything to do,
+why?" issue.
+
+Isn't running the "git fetch" command with the "--dry-run" option
+many times in quick succession a lot closer to what you really want
+to measure, I wonder?  That way, your first fetch won't be touching
+the state of the local side to affect your second and subsequent
+fetches.
+
+>> In any case, do_fetch_pack() tries to see if all of the tip commits
+>> we are going to fetch exist locally, so when you are trying a fetch
+>> that grabs huge number of refs (by the way, it means that the first
+>> sentence of the proposed log message is not quite true---it is "When
+>> fetching a large number of refs", as it does not matter how many
+>> refs _we_ have, no?), everything_local() ends up making repeated
+>> calls to has_object_file_with_flags() to all of the refs.
 >
-> The case of merges is usually configured with --[no-]merges, or
-> --min-parents=<n>.
+> I fixed description by changing 'refs' to 'remote refs'. In my understanding,
+> git tries to check existence of remote refs even if we won't fetch such refs.
 
-But that is a knob that controls an irrelevant aspect of the detail
-in the context of this discussion, isn't it?  This code is about "to
-what degree the things that happened between two submodule commits
-in an adjacent pair of commits in the superproject are summarized?"
-and the current one unilaterally decides that something similar to
-what you would see in the output from "log --oneline --first-parent
---left-right" is sufficient, which is a position to heavily favour
-projects whose histories are very clean by either being:
+During fetch, everything_local() tries to mark common part by
+walking the refs the other side advertised upon the first contact,
+so it is correct that the number of checks is not reduced in a fetch
+that does not fetch many refs, but the number of remote-tracking refs
+you have has no effect, so I doubt such a rephrasing would make the
+description more understandable.  "When fetching from a repository
+with large number of refs" is probably what you want to say, no?
 
- (1) totally linear, each individual commit appearing on the
-     first-parent chain; or
+> Yes. But I think the default limit for the number of loose objects, 7000,
+> gives us small overhead when we do enumeration of all objects.
 
- (2) totally topic-branch based, everything appearing as merges of
-     a topic branch to the trunk
+Hmph, I didn't see the code that does the estimation of loose object
+count before starting to enumerate, though.
 
-The hack Robert illustrates below is to change it to stop favouring
-such projects with "clean" histories, and show "log --oneline
---no-merges --left-right".  When presented that way, clean histories
-of topic-branch based projects will suffer by losing conciseness,
-but clean histories of totally linear projects will still be shown
-the same way, and messy history that sometimes merges, sometimes
-merges mergy histories, and sometimes directly builds on the trunk
-will be shown as an enumeration of individual commits in a flat way
-by ignoring merges and not restricting the traversal to the first
-parent chains, which would appear more uniform than what the current
-code shows.
+>> Hmm, OBJECT_INFO_QUICK optimization was added in dfdd4afc
+>> ("sha1_file: teach sha1_object_info_extended more flags",
+>> 2017-06-21), but since 8b4c0103 ("sha1_file: support lazily fetching
+>> missing objects", 2017-12-08) it appears that passing
+>> OBJECT_INFO_QUICK down the codepath does not do anything
+>> interesting.  Jonathan (cc'ed), are all remaining hits from "git
+>> grep OBJECT_INFO_QUICK" all dead no-ops these days?
+>
+> Yes the flag is no-op now, but let me untouched the flag in this patch.
 
-I do not see a point in introducing --min/max-parents as a knob to
-control how the history is summarized.
+Yeah, I do not want you to be touching that in this change.  It is
+an independent/orthogonal clean-up.
 
-This is a strongly related tangent, but I wonder if we can and/or
-want to share more code with the codepath that prepares the log
-message for a merge.  It summarizes what happened on the side branch
-since it forked from the history it is joining back to (I think it
-is merge.c::shortlog() that computes this) and it is quite similar
-to what Robert wants to use for submodules here.  On the other hand,
-in a project _without_ submodule, if you are pulling history made by
-your lieutenant whose history is full of linear merges of topic
-branches to the mainline, it may not be a bad idea to allow
-fmt-merge-msg to alternatively show something similar to the "diff
---submodule=log" gives us, i.e. summarize the history of the side
-branch being merged by just listing the commits on the first-parent
-chain.  So I sense some opportunity for cross pollination here.
+Thanks.
