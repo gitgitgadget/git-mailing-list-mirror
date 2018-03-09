@@ -7,59 +7,60 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 985841F404
-	for <e@80x24.org>; Fri,  9 Mar 2018 19:11:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6C5061F404
+	for <e@80x24.org>; Fri,  9 Mar 2018 19:41:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932605AbeCITLQ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Mar 2018 14:11:16 -0500
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:55908 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932587AbeCITLN (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Mar 2018 14:11:13 -0500
-Received: by mail-wm0-f66.google.com with SMTP id q83so5783842wme.5
-        for <git@vger.kernel.org>; Fri, 09 Mar 2018 11:11:13 -0800 (PST)
+        id S932230AbeCITlm (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Mar 2018 14:41:42 -0500
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:33146 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932069AbeCITll (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Mar 2018 14:41:41 -0500
+Received: by mail-wr0-f193.google.com with SMTP id v18so10069940wrv.0
+        for <git@vger.kernel.org>; Fri, 09 Mar 2018 11:41:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:message-id:user-agent
-         :mime-version;
-        bh=F/jQUg+bfHqjQLUTK8nk62ptu0NXzr6zX8ULHyHcU5o=;
-        b=dxwp2P68awh64twxcUD232XJiI1+jAeZfDjWbw9LoNvXeIFxNn84P63Uzg2kfDy1qD
-         FJiTosGqv2FT+YveqvtXo8uQcS4/HK8mjVyPCpof8s1uwIAry847f7dgD+i3CUPopduM
-         43N1rdqdkFw77eWBjhxnlybYu6IKQL+zFrFjQrNJ/e5UbG+fXTTEJV/zKpH/ewVXBDpZ
-         sVxyn/DsbOXvvAHrYQRgMl6qhrvvLVDFiJLAQrq9+iZJ7JKN49tmbFuwpyTaaSsiPYGl
-         fpLslDai35xdd+LXHdqdOZpChzqvALTNzf9Tf4B+4NCKxW8VOC2FjxSi/i8vYmwP88W8
-         cblA==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=0QG3F8eXF5V40dFfS906vEQ1P+Bq6cstRVvcC1VIcBQ=;
+        b=Ml55gJoPjajfYTfQVdjOMzsIz6TAXTFG6WP3se1yHDXIomTa8fx8LurHZ1krT1xt3D
+         8x2wtrwEFujxEpqxSPwtN6i+gWLz1/0IeFN7by6HQCwwwVu/r47Zu6HI23ZcAN+NmkGj
+         kx5d3IXPPYRIXCNdkyCAPa8DFy+1+iiwhnwp43+MXHJrRwCjsEs8vpMe0byfDne4OT1Z
+         r+mESPIovDTPo8x5R2BRmfrgHrL4fILOJa/lo6387T8P99RBGBuQklrkBagNmkuJJnrS
+         u84nsukoUTQwbV6hLPGgSaTXgJJoc/o4T9G3a0v8sSEifJsB/BDYGNZierLpyKsoAwVJ
+         GElg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :message-id:user-agent:mime-version;
-        bh=F/jQUg+bfHqjQLUTK8nk62ptu0NXzr6zX8ULHyHcU5o=;
-        b=VS/xRqJUpWj0kd1i3GYw3xJGJP0oKkt11LAEey/TXH5L2rnSd42seb6ck6k+SPcwHn
-         0fqPJM8yHu05uJFQKq0hTnJVUyx/GAc++wel0AYvyl6rMHeZYE7WMwplyGK1M/MqMB+2
-         mVPrtWldYq74zs4VnVB8UeHgFCDzYF8qH/EZGWW04VLx8Y+W3sggSOabSvU5b7iCCmpZ
-         ixTb5XgvfcIOU4WO79pByTPYxty4P9l2q9Hu7pkHPszggzWV5P34S8kpAG62ZEV6lgHE
-         7IJKS1fSWTE/GdlOktHIh8hNBWbbalYwVJdpNj5f4c4XjuW5I2R+ei4IGb8b3sD0jmmr
-         GrSA==
-X-Gm-Message-State: AElRT7H8TtKjciqjYbbUpkn3l4BA0qiNR4pCT/G3MSbq/OfvtdmKVaAk
-        7pgbsC79mrd6YZ00722F2Oo=
-X-Google-Smtp-Source: AG47ELvDtfrtnljzQBuaaQL+lGTv8pIwtUqeHLet6n5SkilGlxJmN2ZzxjfYUzK7betb0Vs/XnMrdg==
-X-Received: by 10.28.241.15 with SMTP id p15mr2781991wmh.42.1520622672418;
-        Fri, 09 Mar 2018 11:11:12 -0800 (PST)
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=0QG3F8eXF5V40dFfS906vEQ1P+Bq6cstRVvcC1VIcBQ=;
+        b=YjFRM5V6kdwpRJfqAcsqWtKEbECZsyUiXFhubjR1BMZlklNMar/TxqbCpMuJf/KsWw
+         NS8SaiR9LCtlnY90uTk5bdJrr7ctn1NhtK5pjYV0fuoQSeL3GS1jaK1ULNtw3EGDnrTc
+         1rY5pS7fjX4jdGQYWLUy4pM9a4sz8Lg8EMSp3D1SyMLI25CiFAypVV2xwWEaX1GHd/O5
+         hVDjJWfFvNc0cf3kn0zvg9zSS0CFXrAGoBlB9BHv3UXVFlKSgCUyTmHk0PwYRLv09drs
+         5DTvRNEwRK1E5IH3sJ8SdqvT4dHsCI+jGnhJpL2YFdqph/sv38Gat3iqSoJ61+lE1Dmk
+         YUVw==
+X-Gm-Message-State: AElRT7FqJI96rpaANf8mg2i5avMysJMtMH6a4OxomNzdCRd7+yIRbWml
+        xfGRq/p5J5oRRjkt9FTw81k=
+X-Google-Smtp-Source: AG47ELubieF9Cs2rfBdxgKJivHqswdiTIcaQWmvRtQtwwPvaYJwenoEqLO0ripGMHv8wkZDRSWiRIA==
+X-Received: by 10.223.176.171 with SMTP id i40mr10807423wra.57.1520624499653;
+        Fri, 09 Mar 2018 11:41:39 -0800 (PST)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id j137sm1672068wmd.17.2018.03.09.11.11.11
+        by smtp.gmail.com with ESMTPSA id w17sm2116500wrb.12.2018.03.09.11.41.36
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 09 Mar 2018 11:11:11 -0800 (PST)
+        Fri, 09 Mar 2018 11:41:37 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     lars.schneider@autodesk.com
-Cc:     git@vger.kernel.org, tboegi@web.de, j6t@kdbg.org,
-        sunshine@sunshineco.com, peff@peff.net,
-        ramsay@ramsayjones.plus.com, Johannes.Schindelin@gmx.de,
-        pclouds@gmail.com, Lars Schneider <larsxschneider@gmail.com>
-Subject: Re: [PATCH v11 08/10] convert: advise canonical UTF encoding names
-References: <20180309173536.62012-1-lars.schneider@autodesk.com>
-        <20180309173536.62012-9-lars.schneider@autodesk.com>
-Date:   Fri, 09 Mar 2018 11:11:11 -0800
-Message-ID: <xmqqefkt5ak0.fsf@gitster-ct.c.googlers.com>
+To:     Takuto Ikuta <tikuta@chromium.org>
+Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [PATCH] fetch-pack.c: use oidset to check existence of loose object
+References: <20180308120639.109438-1-tikuta@chromium.org>
+        <xmqqr2ouwgsd.fsf@gitster-ct.c.googlers.com>
+        <CALNjmMq9gvRzkoYCfXppTVTR5UtvmBZ_4hVuBLB0t7YzR36Wbg@mail.gmail.com>
+        <xmqqd10d6ser.fsf@gitster-ct.c.googlers.com>
+Date:   Fri, 09 Mar 2018 11:41:36 -0800
+In-Reply-To: <xmqqd10d6ser.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Fri, 09 Mar 2018 10:00:12 -0800")
+Message-ID: <xmqqa7vh595b.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -68,56 +69,37 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-lars.schneider@autodesk.com writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> From: Lars Schneider <larsxschneider@gmail.com>
+>> Yes. But I think the default limit for the number of loose objects, 7000,
+>> gives us small overhead when we do enumeration of all objects.
 >
-> The canonical name of an UTF encoding has the format UTF, dash, number,
-> and an optionally byte order in upper case (e.g. UTF-8 or UTF-16BE).
-> Some iconv versions support alternative names without a dash or with
-> lower case characters.
->
-> To avoid problems between different iconv version always suggest the
-> canonical UTF names in advise messages.
->
-> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
-> ---
+> Hmph, I didn't see the code that does the estimation of loose object
+> count before starting to enumerate, though.
 
-I think it is probably better to squash this to earlier step,
-i.e. jumping straight to the endgame solution.
+Another thing the code could do to avoid negative consequences on
+projects that look quite different from yours (e.g. the other side
+does not have insane number of refs, but there are locally quite a
+few loose objects) is to count how many entries are on *refs list
+before we decide to enumerate all loose objects.  When the refs list
+is relatively shorter than the estimated number of loose objects
+(you can actually do the estimation based on sampling, or just rely
+on your assumed 7k), it may be a win _not_ to trigger the new code
+you are adding to this codepath with this patch.  I would imagine
+that the simplest implementaion may just count 
 
-> diff --git a/convert.c b/convert.c
-> index b80d666a6b..9a3ae7cce1 100644
-> --- a/convert.c
-> +++ b/convert.c
-> @@ -279,12 +279,20 @@ static int validate_encoding(const char *path, const char *enc,
->  				"BOM is prohibited in '%s' if encoded as %s");
->  			/*
->  			 * This advice is shown for UTF-??BE and UTF-??LE encodings.
-> +			 * We cut off the last two characters of the encoding name
-> +			 # to generate the encoding name suitable for BOMs.
->  			 */
+	for (ref = *refs, count = 0; ref && count++ < LIMIT; ref = ref->next)
+		;
+	use_oidset_optim = (LIMIT <= count);
+		
+assuming your "up to 7k loose objects" and then experimenting to
+determine the LIMIT which is a rough number of refs that makes the
+oidset optimization worthwhile.
 
-I somehow thought that I saw "s/#/*/" in somebody's response during
-the previous round?
+We need a bit better/descriptive name for the LIMIT, if we go that
+route, though.
 
->  			const char *advise_msg = _(
->  				"The file '%s' contains a byte order "
-> -				"mark (BOM). Please use %.6s as "
-> +				"mark (BOM). Please use UTF-%s as "
->  				"working-tree-encoding.");
-> -			advise(advise_msg, path, enc);
-> +			const char *stripped = "";
-> +			char *upper = xstrdup_toupper(enc);
-> +			upper[strlen(upper)-2] = '\0';
-> +			if (!skip_prefix(upper, "UTF-", &stripped))
-> +				skip_prefix(stripped, "UTF", &stripped);
-> +			advise(advise_msg, path, stripped);
-> +			free(upper);
+Thanks.
 
-If this codepath is ever entered with "enc" that does not begin with
-"UTF" (e.g. "Shift_JIS", which is impossible in the current code,
-but I'll talk about future-proofing here), then neither of these
-skip_prefix will trigger, and then you'd end up suggesting to use
-"UTF-" that is nonsense.  Perhaps initialize stripped to NULL and
-force advise to segv to catch such a programmer error?
+
+ 
