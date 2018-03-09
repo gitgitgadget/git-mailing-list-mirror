@@ -7,36 +7,36 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 127C71F404
-	for <e@80x24.org>; Fri,  9 Mar 2018 17:37:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D2CBD1F404
+	for <e@80x24.org>; Fri,  9 Mar 2018 17:37:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932440AbeCIRhN (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Mar 2018 12:37:13 -0500
+        id S932469AbeCIRhK (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Mar 2018 12:37:10 -0500
 Received: from mail-bn3nam01on0118.outbound.protection.outlook.com ([104.47.33.118]:2112
         "EHLO NAM01-BN3-obe.outbound.protection.outlook.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S932252AbeCIRg5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Mar 2018 12:36:57 -0500
+        id S932480AbeCIRhB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Mar 2018 12:37:01 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=autodesk.com;
  s=selector1; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
- bh=cYaIW1SMnmycb2s39diWQJNRqs6euGJuoJLO3ADUzM0=;
- b=ky9R3wmaXt2QJ71FeR7onLwUzMTdc3kkhaqDb6WbpFM6+8PSpjW5KIYk4KvsTkaf77hLITFAvxi31b2fdYbwk9aBKuDE91b2ZurjPajp4nwNs24KJ7PdF4wsNuL1YAvWObPPac2Dimq/TK76KdfoZk/C10zSKUw/bwixuO/5D4Y=
+ bh=AHTyyt84V3bmeacTSZljnxKvdoXdbm6ECq9M5jTMAEY=;
+ b=H1hv8/MNrGJViI0KaC2BpmYsWzZfS8Q6yVhaSZUyxTdvs8dO5Ocw+7q9S6ICwroZdoWf2e/9UrAwohedRvd3rgFYNcOEnCeI3sVazaJKwBFLp8+nN5rZs35zX39cO/bJ73+H+b3CEHBL5kgIBk4G/+XioomvWH6kD2b9D8RkI8Y=
 Authentication-Results: spf=none (sender IP is )
  smtp.mailfrom=lars.schneider@autodesk.com; 
 Received: from remr90mpm73.ads.autodesk.com (132.188.32.100) by
  MWHP136MB0015.NAMP136.PROD.OUTLOOK.COM (2603:10b6:320:1c::22) with Microsoft
  SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P256) id 15.20.548.15; Fri, 9
- Mar 2018 17:36:11 +0000
+ Mar 2018 17:36:25 +0000
 From:   lars.schneider@autodesk.com
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, tboegi@web.de, j6t@kdbg.org,
         sunshine@sunshineco.com, peff@peff.net,
         ramsay@ramsayjones.plus.com, Johannes.Schindelin@gmx.de,
         pclouds@gmail.com, Lars Schneider <larsxschneider@gmail.com>
-Subject: [PATCH v11 06/10] convert: add 'working-tree-encoding' attribute
-Date:   Fri,  9 Mar 2018 18:35:32 +0100
-Message-Id: <20180309173536.62012-7-lars.schneider@autodesk.com>
+Subject: [PATCH v11 10/10] convert: add round trip check based on 'core.checkRoundtripEncoding'
+Date:   Fri,  9 Mar 2018 18:35:36 +0100
+Message-Id: <20180309173536.62012-11-lars.schneider@autodesk.com>
 X-Mailer: git-send-email 2.16.2
 In-Reply-To: <20180309173536.62012-1-lars.schneider@autodesk.com>
 References: <20180309173536.62012-1-lars.schneider@autodesk.com>
@@ -48,49 +48,51 @@ X-ClientProxiedBy: CO2PR04CA0119.namprd04.prod.outlook.com
  (2603:10b6:320:1c::22)
 X-MS-PublicTrafficType: Email
 X-MS-Office365-Filtering-HT: Tenant
-X-MS-Office365-Filtering-Correlation-Id: e89f7c00-7ebc-45db-2bb3-08d585e44180
+X-MS-Office365-Filtering-Correlation-Id: bdbc4d63-7dcd-411b-42b4-08d585e449f0
 X-Microsoft-Antispam: UriScan:;BCL:0;PCL:0;RULEID:(7020095)(4652020)(48565401081)(5600026)(4604075)(4534165)(4627221)(201703031133081)(201702281549075)(2017052603328)(7153060)(7193020);SRVR:MWHP136MB0015;
-X-Microsoft-Exchange-Diagnostics: 1;MWHP136MB0015;3:XwjMusdooJARzeupAKlCdWDmDs9YbVOGDsvEGLt+fAvfzRkKpWIGeHlov2tIkd14L0s5NDA0NjaI9rZ8uJ2E4AiFIIcVMlkM6pY6SuB5ZOr5kX5j5f2ETHLaahjjCUQO0oz7A9QqxjjIGLi9Q2VGhcZMCVdfW8P0NC3M5k7bStzQj2yBHOUVuWjYg4djUEXEScT5d9Lb2FlURWNFiKNPLp8SsZhfZs/YzATM8HI0RvGNivN5Zg5avQifMvDxCQ5b;25:R1FsfVJ0xUk2UYPQW3FvfXHHrOLmQG0+5utr+dWCZY7R8umdPtl7PhY2QTQNdzxkTcH8+uXWB72IG3DidVU21x1kJrrzq4t9iqKTBR9Luy6e+qsVjizQGvawUTCilAALVH4zlQcyku4iq6XFzA5abWyPFI+Nnj3KkA6J0G4EOIkahxnJ042za2oTNa3o0PnPARIgeLyETt8HgXdzBtpXK/gNJbPcnUboAMyN+388qJgYBk5rbeQPgZeFP7Fv8hgvjyMTGVTTJTrLAkYF0pMXgVKaYJXpaOGq0CNxtBwp1Rd7PITsIzsm5LxO7NT+qunp2CAfJzd+ZinzV7JySpKliA==;31:K0WqwM322lOG9+vwFCa4N58HJaw3ArhoYVoXIVzsQdXstb9f+jyhJSXx6qhdIEgkjBBo5ANllgbSLQZT/h+1uVl9uuC53IEobzzDMIqKB7/6thA8T6FC1JzNJ5x2Rn7A5jLLQFJMBPVKzibD4U4IzFxifjXCdih0WQb0dD48w604n1by2Cp7M6ZC+TjSUj3H8WXtyUBL1PFPxTXZAmrlgo66Dl6ADSb+zR1cKu5YCxs=
+X-Microsoft-Exchange-Diagnostics: 1;MWHP136MB0015;3:UA8Yna0ZbLdfoLMt3rGCGH1EVpojdIqIcinDPTcvFX4ZthzjidkOoCzMwucdbTTVy/kM6RmxSoZeVCDyX5UZqjSTjmkDBYEQp/BYEvR0/5EkhVTmqsegCwT5mqSfZ19rOvgq5KGGpQsYpxMHFFTBtCajeD7+gBee7EAGbnUPZqG6rYMYzQtNlflH3DeQrw+DWjHGzZcKj2j/ocSxu59uiH0CYx2fJPmW3lz1rneO+38U4Z46aQrmC3qSlQBFpbw3;25:RKfkWabD2hyo7WvgJnFQoZmZGbq8wsLuO1H8vLcWwU3FC5hDMgQn8J9cRLd4Aaxnb8OF4XCAwuUUC0q+IxX3szZwBMth93XBWIl050gcBPAemyQxlBlspPfz3x+i9cVcahbknxOrFkQeKWBsoy9lKLGm+FEsaRW+PshCbBLc12XaT9wvZMs3l3JULbAgUetC84Vv7K3iE/30p3NT7Tmlg8F9LwbBItf30HUtTDW1Z0kK81sThQTVT4BJhgUeix0jt4SWpTYRcPg5OxacC336n2II3X3KbxO1+rX9izNGijOw00RV3mq14i8v3pU5kz8J6aP+Ehand+VcwO8EtezCkQ==;31:rSNJzctX8wov8Uu8JRdGt77yezd9dVso31V3ldgMZOY6O07QwoD2X1QxypYIHA0mzhS52SpMyT8L7PvEgAXKj+NvRG9qtuYbDRXZqOYDA1lQ8KmHWjzDpgizlipSM5FVF0jdnNP9+lClMCBoZjZ2TDZsdXdNBrHf4/4iknJl0NY2t0E4OyX1aRIIOFhfgPl3NZN0sM8NaFN14AVlay2ktPlsV0QWZT2HNcUif+Wac/4=
 X-MS-TrafficTypeDiagnostic: MWHP136MB0015:
-X-Microsoft-Exchange-Diagnostics: 1;MWHP136MB0015;20:iXoYQAjiDqtKl0FXaeR3cXsnj/Y1Er4FqEM9zyHNV0SBhsnLw9hq3qYws5hkw7t3n3mAwhQmhIs9HK3XOYaTvHm4rxhWe/GNn6/xrHpCk4UjZ/qPyiMb1LrHVcE9WMz6HPRho76/bzHmExhPpGGvYnpzyPVXZe2XdiV0s6eCEB/yHZtceTiUojqD9HYzvNS84zqQOuPLXBFwGrcSWH1IqjEtpOBHv4PSp1Lmcm32Q71GKI1lTpOo27dJKBO3ZYW3BDW4h4xZiXGE5n7COASTSliKqxaH4oJDH8wx0hzjnLy52dpeQMLE7xPL15DNH09OVId69c/1Xzjj9sYTlEuFOe/+nrLRkOuuPKsQSBPmEjOlNV2Hq2vTu+e1jZB4GmZoMr3U6H5z+G+bgBKvQMYbL4wgi+PhBtNI5PdxjDAUtMrDCKYykO4iOvzAeBil4VSBRPdiRdZhHkEpm8BcIi9yn1zzgwxRN/eZRNrvqjV4+9LfE9tawd2VWbAoGlSBp2mN1xQeZeWdSityoAagsZsTeE7zfqJgqa1znIsQ+OSxHPFhHVnXmO/V8wYI5C6x/b9aGqsoTmKMlQ3Jfy+o4tA30RusbFhyUA2ZmsoepAG+C1A=;4:a4HaHlEq6ZDQNq7SC4t3Vnlzt//7wA2IVx1JlzSnmDlxqgnZZGjWgojg5rW+tQdUea6lq/LQb7TNl9hQe/osHAPf0/jN0o1TSsv2uz34smsrzURidfUdR3iA5ALaTIP9TsqVMXxYwLDVXVFd5HP2XuNmHyPRjddgGqBMheqV25Sn/4R+gaF8dr6RxI7hdcl6HdHw41SXNLuvOnUpZrhx6F48M3Nt9CbHOHTTULb8Xopsd6x4Ty0D3iqFRPSdSJcuEtHJMekZ0d2WesDp5kvaflyHfH8pc1a4lN+9SFNUbWmKTlFulWGQsHnhzCp9pbpV
-X-Microsoft-Antispam-PRVS: <MWHP136MB0015255AE64C8BC6DA350808E8DE0@MWHP136MB0015.NAMP136.PROD.OUTLOOK.COM>
-X-Exchange-Antispam-Report-Test: UriScan:(85827821059158);
+X-Microsoft-Exchange-Diagnostics: 1;MWHP136MB0015;20:QyLERJdYgDlG1USvuYLNHcpYFqQ/TuxE89DUuhaZxTeRFPgdSIJi0J98EXHZ5Qd88QLqJMTECvWb5IG2Y3SKR5jhpuZYxepwBdrTsgOLNuOhhV7gsSTcJaD+g6mpXr1Ggbqv2GLGGnmMHKVEkFankXTZ8wvfuUoKsvD6UYl6HAyppT4zYwBmc+0mx3zkD6z4xbRG2R5bgukRn8HycL8P+1akTORBkzWGL1Im1T1AgEQEq1xHYcdqM+rZ8viXh5WmsDGGnhn3BrusGRdiZLRvxGFqpWZ7KUZIFwSqELaSrlqXNVneGi1WbQYBjRFT1MqDj1Jwc8+o+V3v0ZDxpDYEABUvZuOzUpxc00X/HB9AsffTQmKtruRgjWjbq5C6Otk1DYHs5Y8S2o3tsMlfk9B9WN4gZpN86N8txGH5wfB6nHjIl+kyZZ3csKjEEd1645yVopTkQr+siskoQs9UccZUIiMyZPlib/YFYH2VD6rUW5E9jUIucZ/nOzp4ivW1/Fb03+01tBT9hNSseAoynjB1ei+iNp+RPvHavG4A/kNRpQyOLPSCx6BVfJOB4ertcZ+uvN67i0wR1zakT0IevHUHszlicke+m3f743PpJ7odVfo=
+X-Microsoft-Antispam-PRVS: <MWHP136MB0015AB6E5DB703ED45FF3815E8DE0@MWHP136MB0015.NAMP136.PROD.OUTLOOK.COM>
+X-Exchange-Antispam-Report-Test: UriScan:(28532068793085)(85827821059158);
 X-Exchange-Antispam-Report-CFA-Test: BCL:0;PCL:0;RULEID:(8211001083)(6040522)(2401047)(8121501046)(5005006)(3231220)(944501244)(52105095)(10201501046)(93006095)(93001095)(3002001)(6055026)(6041310)(20161123564045)(20161123560045)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(20161123558120)(20161123562045)(6072148)(201708071742011);SRVR:MWHP136MB0015;BCL:0;PCL:0;RULEID:;SRVR:MWHP136MB0015;
+X-Microsoft-Exchange-Diagnostics: 1;MWHP136MB0015;4:M+syR/cexl/FxjIpRc3kPNyQicL8ZwpwiywCjZedQVrnbIU51//nIizMUnlbclLOjIbzZgbNMeRtPOI308iZB0QyxIZtknf5lylIqTiMisxOVVAfIBPy4vWt2q1/sjqckbYjNR0n1EqcmN7r9IrGiGTdOGNdLj0kIs4wWKF93G2wsZKWJ6IIcuTpLGyUu2GV61P80wXx2208WalsqAzofiPXqpYwX2yumJYJgyEHBB+Z5xhWLquzemmizUeTHftC/h/bUniKtrY4cQEAhy3qeE9qHkDumeLn9KQclJbouOAXyoHiFoO5uNHbZpjU36NDFjnLu0FmNnML0aqG5byy7KIA1m2HSkkMGj/NjoA027g=
 X-Forefront-PRVS: 0606BBEB39
-X-Forefront-Antispam-Report: SFV:NSPM;SFS:(10019020)(376002)(396003)(39860400002)(366004)(39380400002)(346002)(189003)(199004)(50226002)(76176011)(8656006)(7416002)(5890100001)(25786009)(45080400002)(106356001)(51416003)(8676002)(2351001)(6486002)(2361001)(386003)(105586002)(68736007)(8936002)(5660300001)(39060400002)(7696005)(52116002)(59450400001)(4326008)(50466002)(2906002)(48376002)(81156014)(81166006)(16586007)(6116002)(86362001)(575784001)(26005)(3846002)(85782001)(316002)(9686003)(186003)(97736004)(16526019)(8666007)(1076002)(53936002)(2950100002)(36756003)(6666003)(305945005)(47776003)(6916009)(478600001)(7736002)(66066001)(85772001);DIR:OUT;SFP:1102;SCL:1;SRVR:MWHP136MB0015;H:remr90mpm73.ads.autodesk.com;FPR:;SPF:None;PTR:InfoNoRecords;MX:1;A:1;LANG:en;
+X-Forefront-Antispam-Report: SFV:NSPM;SFS:(10019020)(376002)(396003)(39860400002)(366004)(39380400002)(346002)(189003)(199004)(50226002)(76176011)(8656006)(7416002)(5890100001)(25786009)(106356001)(51416003)(8676002)(2351001)(6486002)(2361001)(386003)(105586002)(68736007)(8936002)(5660300001)(39060400002)(7696005)(52116002)(59450400001)(4326008)(50466002)(2906002)(48376002)(81156014)(81166006)(16586007)(53376002)(6116002)(86362001)(575784001)(26005)(3846002)(85782001)(316002)(9686003)(6306002)(186003)(97736004)(16526019)(8666007)(1076002)(53936002)(2950100002)(36756003)(6666003)(305945005)(47776003)(6916009)(478600001)(7736002)(966005)(66066001)(85772001);DIR:OUT;SFP:1102;SCL:1;SRVR:MWHP136MB0015;H:remr90mpm73.ads.autodesk.com;FPR:;SPF:None;PTR:InfoNoRecords;MX:1;A:1;LANG:en;
 Received-SPF: None (protection.outlook.com: autodesk.com does not designate
  permitted sender hosts)
-X-Microsoft-Exchange-Diagnostics: =?us-ascii?Q?1;MWHP136MB0015;23:nmIBTl95JZNxxz1G3IvMIKp2Hkcp2GvUBwPM0e7Lu?=
- =?us-ascii?Q?xjA4/hEA6RHfQL7q6Z2bdo1SaXWcHeIn2Z4tt3ky+R0lQdmjXxlb6qJ+OrK1?=
- =?us-ascii?Q?9WwZehecSe3ij1AUclOzWv7kiOHNv2i7dA6eTN6/36fvOPIKrJJE3Hn9hChk?=
- =?us-ascii?Q?Rd0cBseKkbGbiC7RpYBm5AnE1Q0vjon4FO4xz48VXmwbBqpt/Zt1hUgDR65r?=
- =?us-ascii?Q?i2OhBCK2nSw+pZd3z9/cTL11qpIFaKm8zlXDOUOeA0S1s5XYt18qgWhZRqvB?=
- =?us-ascii?Q?BPnlGAvZSmtxzGV8NuE86dDdF82RxbvkNjyfOHvkU+aeaL/d5EV/z3z+8r5V?=
- =?us-ascii?Q?/EKq1F57J3imQ2pVzFt3SDEeImKBHQdi/hr1/6NUgQBS1QUTKV1/Zi0jI+RG?=
- =?us-ascii?Q?H9gViTQAHvB5yqRzt5D3+JW/ibXmMrA6wlWdmtLT26SbVv4noA8cfzXOqvhT?=
- =?us-ascii?Q?aoCVapf5T2HsrQR+0HR5YEAlO6nerIBN0uOct3Qok0BBKB+IT+TtzbI/WNYN?=
- =?us-ascii?Q?36Lu5h8CVID96LfLFoDPMqrydBDUmel845MHgk/EM6rPTB6u8w2MG6XwFPhT?=
- =?us-ascii?Q?h7TDxTHX7yr/Svh+citOrBrWPQqD5LpGQlp0Vn6YTNjaEYmUpVJJVGOg5skU?=
- =?us-ascii?Q?AeKPUzk1h+UlFQajmu0DZcRkaL88cEUfb8wlG7eF7b7lCrdjeqWn3hdG4ywV?=
- =?us-ascii?Q?PQtlUKOBtAfsFJCJR8JP2D9u24e9vuVl2Qmo9WHidwhlDMnDR+gzfmTqLz09?=
- =?us-ascii?Q?3qJM8o0ctonwwEb8p7Gf4b++nIXLjJEWEC2pNCSBmucsQgPzYhH7VBTPk3Y6?=
- =?us-ascii?Q?Ur1igScy8kW2+qB+T8Vf5kicT4PqRnwuzoG1eExmRSNj+GY7tn8wE/gTbphf?=
- =?us-ascii?Q?JzxKtZ9mGRL4FL9Flbj1kxsas1lhrKurztf4lD5X0Vu2Mhh2gpYHrNe0nlCa?=
- =?us-ascii?Q?uQ72aFbpMnN1q2dpKE4n67tpKrL64T34ar0fF69vXhGxEzv9VnHUXoAYakaW?=
- =?us-ascii?Q?6lOP0HMxf+OUi+bjhyUVXGilmv/eNPpu4KvQwDjp+YTDSXFpmj8Oer0eArG9?=
- =?us-ascii?Q?SQkfM7/fnq9koTyn32BMLRBVyUup0VDUUmQuo0wjnTvyhueDeN6NWdt+Iw+0?=
- =?us-ascii?Q?G8DiMoaCA14AKBOrDKooHy0M248WrSQNxKhGGwfAXwTm/MtXI+NbbJz99uqn?=
- =?us-ascii?Q?zzrsAZj1uiGounHAxF2R6QKvhi5SEaZIQQkIvt+S/WchPLkYYIW2v74/84jq?=
- =?us-ascii?Q?ztWAaNZtvkESBGDNupsX2QZU56VywTil6a2quC2Cg2fbRqnCRX0/aweFtbI9?=
- =?us-ascii?Q?W2um6BOV3QeZ8JDIXEUFDS2BKAbMqGYrM38qeG+eRRUxcTZk8nb0FKYQLP+J?=
- =?us-ascii?Q?H1qdJd7HF2EriiQjehI3YP61Tw=3D?=
-X-Microsoft-Antispam-Message-Info: DpKPlIqgC+GW0rWG6X4DuG521z6+WgSlO0B8x70iguv4C9qumDOajWY/ZMgNFzKWahnWFeshAULPd2Wxm1OXZmquEQny0rkSbJDBkk9ITqpuAmwUJR4UTQlj64hAP2NhaibvmaX475vsGIw5+VKVjv6n4Eu2xCPHFQltWBsTvlHRF/Wp7DuPFy8s+ROV2Ky1
-X-Microsoft-Exchange-Diagnostics: 1;MWHP136MB0015;6:p3ou52mJtqvq2O2dim3Ti8X9uMUlN5gy5yzVlfpWzPSnpG6TFikxftpF0fi/k1ix2Bktp2RmrW0yEqs+Ubtpi7DUHWRUAItKh0XnlmVySgV+S+oyYi1y4K+LYOh7dbrOqNIt0wc6x/0Q35n+gkDkdalqjnQcZ12TzmmJzENKub649cEhLd71qvKsUYj+OlAlCGEyOlfPtI2CbqBP8pZUKtwdbCwx/8zTXl22d1DoQaqn7Q3MBNVoZVLwItiELf7WBnbG44jcc3TSevqjCPjGCt8rjka2ZlwutyKCToBiPrhmmSfdszss2gxHcIe7ATMgOWrXen3wlW568A9Af+j7Pm8ZQExk1370DZLH57tlZQY=;5:fUJpIc5gZpQN5emO0OVGamgTdMsqNoX+JmaF2s27YIyc3m3ej1DM4wsJnFT/ungu+mER/6Vjw7hcbijTO/FPRqFPlDRgbaC7ebx+xUMmf1xUZUS8In374oVyOh35wWUguVQmUmLdVMeJboIlR0vHMtbRZCjgge+XAIYFwjpJ/M0=;24:a/M0hPCaaVP7mOmSklHuPqqe+VdRb6xINn5c0iFVbwVU+g7PWxbn87WV0UjgnYFyMn4kWePySrjVjsBXjXyvDR7OGdM+v1VGCKB5d+DokJQ=;7:n77JVDPPGCEbJP28Dr/12SlgoEIL9zMmlnsrIZYDXAy2zKWaOiGG8VsknCFBk7ttNJtFdEcXCuZL+6tsv6nS/1aVtTT7wALiWSaBzCnnQux/JvNH9asDnCyq1COoGPJtC+IAnsdj93rMwWnkv7Mmo6exdrhRmi+6jJU2MJbxoQs7UizvTSw4hN14qgzbTEkG0NEvCZ30RmzFUXfRiJMOU6ToRMQaIFa6hgSF7YwHEdGe5QuUHLO6D1XNFxBSKFdD
+X-Microsoft-Exchange-Diagnostics: =?us-ascii?Q?1;MWHP136MB0015;23:SlmK7LaPSFqxBf0lwmZH6L8gPwUDrrXasYm5Brztn?=
+ =?us-ascii?Q?CvLMHw7wtxgwjqgmONUQdNDBKnbdd3DQXAw+UM5BxcS5u6brfBgP7K7smbnt?=
+ =?us-ascii?Q?S937a10zu2CA5YOi7whjrg8bqPvcSN8BDeWMoY+D7N1BBWnlktlWGxK3DsDZ?=
+ =?us-ascii?Q?5lS94Pp6GSYJv9TrNVc3+MD2/9zZevojCU+Tfzh4mgqPQ11jEhg7oImkEGzI?=
+ =?us-ascii?Q?Vgkmnc3gxyAOTuR+LCFUIUn/oy8whW+7M9ltlWOlsVzOvEBz1Ug8ROO1ARUL?=
+ =?us-ascii?Q?a/V6NOjHrAasOIz1RWFavLB4NI84lCQGdwcUPwCGefAnsKkLC5dzWBRXCs9/?=
+ =?us-ascii?Q?yLc9XV2iJpjiLP+1pZnrpxEmsV34xhf721IMUinwovmlb00XiSz+6bF5oVQU?=
+ =?us-ascii?Q?dTMwLA1jXbS8YWFhVbPU48ZCh80w3NMg80EMypBMUJO9jphZ9xt8WS+DtuVT?=
+ =?us-ascii?Q?5zRF2uyeRPnLZ4vXNIHlzuIv4CDV0jK1zOBxB2YsEWGV0jYjgvzUF8uTxZBr?=
+ =?us-ascii?Q?9rJApYcyh5Bno6q8KVKrmlN7xBusSRtdeLNh1am7nxFp0z8a4dhWnAttPz2j?=
+ =?us-ascii?Q?Q5XKDe1nQ9J2hm+6i1ZKgu3976tMXpSUZEC0+ZRxzpY1IN8B5L+NJrvxRs7i?=
+ =?us-ascii?Q?ujxNko1ECheGpeECVGtz7cuiOtaJe54B4Af8aA3OxFoXnJ2RNWzYLCma58/p?=
+ =?us-ascii?Q?d4rK21vp6Glsgpmbr4ovBKPEFNrT8DEHN6PsYuBEIkQnv73Q4laK/TBIzrNZ?=
+ =?us-ascii?Q?waDE764mrS/K9dTfJNXBcEr7Oh8vnYdqOVIc+thbl9ygky3PdyZZd5PkynRo?=
+ =?us-ascii?Q?dOL67+qaY8W9KV5uKdxnVCqf1Ucl+cVXCS+QjFsaS8I7x7fbv7jBaJcwIgDt?=
+ =?us-ascii?Q?DSNzIBl8msz23AhU8T3QZUrcutIFID62rc88nBgqooCnIteQ6x0zXURqOK0p?=
+ =?us-ascii?Q?iZDUKUFhbozxQQdAaSIWQ8lX1zlvpevZX4Cvp+NVxWT2jaZmHU31unAPUg5R?=
+ =?us-ascii?Q?/Ig05HFMMDbceTiT+TXlRFlzioYPJ1o+qshNJB9C8cWw9u1Dc7zpq6AeAgdB?=
+ =?us-ascii?Q?OklgevQDPb9pvxgezZOdevja+apDgJbDHCjb8zybm9JA7sp2F2B7+r0CXtDz?=
+ =?us-ascii?Q?rXSuxShAh3VRYVl67W082qif+iOpc70nRqsiqr0jgv+3b+oWuIZKGb40g9Ks?=
+ =?us-ascii?Q?j9O2qrtytrOp/l207veiCU9xkUTGjgm6OkfLYqxM1VBBjUumslphRZSNb4DB?=
+ =?us-ascii?Q?l1NSZV5iNfYbW7u5ThRCfpqJzde9UXWL5qjz88QJAlNQQqVWO7llC71CxUjT?=
+ =?us-ascii?Q?2/fOgdQwbxBSnHbnEbOeQxSnOwaOUrPjfUXLqKfP7XVjrVohK0UK+hyb+uB/?=
+ =?us-ascii?Q?xTf0+z9EL8G3l0fS0G+swd2NPZ2zBzqUgoZJDVdxn5ON+OUak9bKSpbA8dTY?=
+ =?us-ascii?Q?xL/rVHEfA=3D=3D?=
+X-Microsoft-Antispam-Message-Info: uDb9Ver0k/XGVKL5ck1twXKkziTaCShkZqAo7DrF1NLyTk9Zzi8F8wawAK6J99imZyRmJdhq98ETVbdDRxADeCKKezCgKVyToqybzLIXxxmjxrHCg2xGkXt1CDSbHIaF9KSCJuZOqOarqMmz9Os/RSYtRVsLJrU+UR7ccWr9gPs0b1/no4qskmqEORu1xbd2
+X-Microsoft-Exchange-Diagnostics: 1;MWHP136MB0015;6:AYvMEeXSdi1EEAB4QVcPNax5lHq4NHkfE3YH0a5EyGoNR+R8gmtq/gA0lbSAxw4y9yqOtT2tg68+CAE+tngUw1LSntPAE8I2LYABhhzpbAoY2zMfJJ9MAJoV1g5TW43O2LQ4zLnu47A8N0unlruICxGcXQPET+kgpISwSgYs6T5FJ7p/bmHyGA+LZlPTW2rhN9dbdrSF1N8wrciWi9Aoi/eLkybHbqv2r9w4CBgTLfE52oAgQzeS0R8hSZYSnXAMQwW/p+y3zoM2dcRoWlp+1dD0DDsChMaLvMB8LMhCHaUCCx2zgaav8oooB5l0Hu1OB1s4Hb4gTVNyz1m0rZDoIxecIOHy6+D1tI97y1RDlrw=;5:/uoKK8vG76zqOcebRsLibL7uUyaw6inLi8TlQcz4QdhW08FjcTbgz4t0MulPwcNNaC4/1ep9Y3sG7xZcDGNUYC/j6VH9YvDKqd+E/xrGQEDh5cmV8KvIMHVzMaQD6BDlSGU0HkBmPHnpepUFfByN3DpfkgGOnvW87WlMRzIvR+I=;24:PwTo+TIr/rEBsX7rlwCl9VemjtKdfM4I/OD9ZGZxZjz9NKjk/bq8Nfoqrk1sHiWhIWgo3FIB2J3MhqpCSPftUybIxbug2wtI+NQNI0Fn3iI=;7:SXKeMhcwCWasUDuOnXTx9mL/rZ1a3flkomaXCXRbEwXdQevrL34afzi7s80AjvRIADpPtcfcyZhejyHGpF7CPgwqymyYmIkPZbP6SFNZK9Bk8pyso/x8XhxrLv+Ct8dGt/tOuYBKNZ3QYtaz8xUT76OZC3XdF5yltFVmBHPNEvm95k6hyw4TN4/T39cIPG5l4aMtuRWd357Kfy97eSNz3IwhQIbvWT5ictsiNb2Td0qkFyD+X3EHtCQIC3QP+AyB
 SpamDiagnosticOutput: 1:99
 SpamDiagnosticMetadata: NSPM
 X-OriginatorOrg: autodesk.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Mar 2018 17:36:11.1062 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: e89f7c00-7ebc-45db-2bb3-08d585e44180
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Mar 2018 17:36:25.6688 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: bdbc4d63-7dcd-411b-42b4-08d585e449f0
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 67bff79e-7f91-4433-a8e5-c9252d2ddc1d
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: MWHP136MB0015
@@ -101,481 +103,259 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Lars Schneider <larsxschneider@gmail.com>
 
-Git recognizes files encoded with ASCII or one of its supersets (e.g.
-UTF-8 or ISO-8859-1) as text files. All other encodings are usually
-interpreted as binary and consequently built-in Git text processing
-tools (e.g. 'git diff') as well as most Git web front ends do not
-visualize the content.
+UTF supports lossless conversion round tripping and conversions between
+UTF and other encodings are mostly round trip safe as Unicode aims to be
+a superset of all other character encodings. However, certain encodings
+(e.g. SHIFT-JIS) are known to have round trip issues [1].
 
-Add an attribute to tell Git what encoding the user has defined for a
-given file. If the content is added to the index, then Git converts the
-content to a canonical UTF-8 representation. On checkout Git will
-reverse the conversion.
+Add 'core.checkRoundtripEncoding', which contains a comma separated
+list of encodings, to define for what encodings Git should check the
+conversion round trip if they are used in the 'working-tree-encoding'
+attribute.
+
+Set SHIFT-JIS as default value for 'core.checkRoundtripEncoding'.
+
+[1] https://support.microsoft.com/en-us/help/170559/prb-conversion-problem-between-shift-jis-and-unicode
 
 Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
 ---
- Documentation/gitattributes.txt  |  80 ++++++++++++++++++++++
- convert.c                        | 114 ++++++++++++++++++++++++++++++-
- convert.h                        |   1 +
- sha1_file.c                      |   2 +-
- t/t0028-working-tree-encoding.sh | 144 +++++++++++++++++++++++++++++++++++++++
- 5 files changed, 339 insertions(+), 2 deletions(-)
- create mode 100755 t/t0028-working-tree-encoding.sh
+ Documentation/config.txt         |  6 +++
+ Documentation/gitattributes.txt  |  8 ++++
+ config.c                         |  5 +++
+ convert.c                        | 79 +++++++++++++++++++++++++++++++++++++++-
+ convert.h                        |  1 +
+ environment.c                    |  1 +
+ t/t0028-working-tree-encoding.sh | 39 ++++++++++++++++++++
+ 7 files changed, 138 insertions(+), 1 deletion(-)
 
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 0e25b2c92b..7dcac9b540 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -530,6 +530,12 @@ core.autocrlf::
+ 	This variable can be set to 'input',
+ 	in which case no output conversion is performed.
+ 
++core.checkRoundtripEncoding::
++	A comma and/or whitespace separated list of encodings that Git
++	performs UTF-8 round trip checks on if they are used in an
++	`working-tree-encoding` attribute (see linkgit:gitattributes[5]).
++	The default value is `SHIFT-JIS`.
++
+ core.symlinks::
+ 	If false, symbolic links are checked out as small plain files that
+ 	contain the link text. linkgit:git-update-index[1] and
 diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
-index 30687de81a..31a4f92840 100644
+index 31a4f92840..aa3deae392 100644
 --- a/Documentation/gitattributes.txt
 +++ b/Documentation/gitattributes.txt
-@@ -272,6 +272,86 @@ few exceptions.  Even though...
-   catch potential problems early, safety triggers.
+@@ -312,6 +312,14 @@ number of pitfalls:
+   internal contents as UTF-8 and try to convert it to UTF-16 on checkout.
+   That operation will fail and cause an error.
  
++- Reencoding content to non-UTF encodings can cause errors as the
++  conversion might not be UTF-8 round trip safe. If you suspect your
++  encoding to not be round trip safe, then add it to
++  `core.checkRoundtripEncoding` to make Git check the round trip
++  encoding (see linkgit:git-config[1]). SHIFT-JIS (Japanese character
++  set) is known to have round trip issues with UTF-8 and is checked by
++  default.
++
+ - Reencoding content requires resources that might slow down certain
+   Git operations (e.g 'git checkout' or 'git add').
  
-+`working-tree-encoding`
-+^^^^^^^^^^^^^^^^^^^^^^^
-+
-+Git recognizes files encoded in ASCII or one of its supersets (e.g.
-+UTF-8, ISO-8859-1, ...) as text files. Files encoded in certain other
-+encodings (e.g. UTF-16) are interpreted as binary and consequently
-+built-in Git text processing tools (e.g. 'git diff') as well as most Git
-+web front ends do not visualize the contents of these files by default.
-+
-+In these cases you can tell Git the encoding of a file in the working
-+directory with the `working-tree-encoding` attribute. If a file with this
-+attribute is added to Git, then Git reencodes the content from the
-+specified encoding to UTF-8. Finally, Git stores the UTF-8 encoded
-+content in its internal data structure (called "the index"). On checkout
-+the content is reencoded back to the specified encoding.
-+
-+Please note that using the `working-tree-encoding` attribute may have a
-+number of pitfalls:
-+
-+- Alternative Git implementations (e.g. JGit or libgit2) and older Git
-+  versions (as of March 2018) do not support the `working-tree-encoding`
-+  attribute. If you decide to use the `working-tree-encoding` attribute
-+  in your repository, then it is strongly recommended to ensure that all
-+  clients working with the repository support it.
-+
-+  For example, Microsoft Visual Studio resources files (`*.rc`) or
-+  PowerShell script files (`*.ps1`) are sometimes encoded in UTF-16.
-+  If you declare `*.ps1` as files as UTF-16 and you add `foo.ps1` with
-+  a `working-tree-encoding` enabled Git client, then `foo.ps1` will be
-+  stored as UTF-8 internally. A client without `working-tree-encoding`
-+  support will checkout `foo.ps1` as UTF-8 encoded file. This will
-+  typically cause trouble for the users of this file.
-+
-+  If a Git client, that does not support the `working-tree-encoding`
-+  attribute, adds a new file `bar.ps1`, then `bar.ps1` will be
-+  stored "as-is" internally (in this example probably as UTF-16).
-+  A client with `working-tree-encoding` support will interpret the
-+  internal contents as UTF-8 and try to convert it to UTF-16 on checkout.
-+  That operation will fail and cause an error.
-+
-+- Reencoding content requires resources that might slow down certain
-+  Git operations (e.g 'git checkout' or 'git add').
-+
-+Use the `working-tree-encoding` attribute only if you cannot store a file
-+in UTF-8 encoding and if you want Git to be able to process the content
-+as text.
-+
-+As an example, use the following attributes if your '*.ps1' files are
-+UTF-16 encoded with byte order mark (BOM) and you want Git to perform
-+automatic line ending conversion based on your platform.
-+
-+------------------------
-+*.ps1		text working-tree-encoding=UTF-16
-+------------------------
-+
-+Use the following attributes if your '*.ps1' files are UTF-16 little
-+endian encoded without BOM and you want Git to use Windows line endings
-+in the working directory. Please note, it is highly recommended to
-+explicitly define the line endings with `eol` if the `working-tree-encoding`
-+attribute is used to avoid ambiguity.
-+
-+------------------------
-+*.ps1		text working-tree-encoding=UTF-16LE eol=CRLF
-+------------------------
-+
-+You can get a list of all available encodings on your platform with the
-+following command:
-+
-+------------------------
-+iconv --list
-+------------------------
-+
-+If you do not know the encoding of a file, then you can use the `file`
-+command to guess the encoding:
-+
-+------------------------
-+file foo.ps1
-+------------------------
-+
-+
- `ident`
- ^^^^^^^
+diff --git a/config.c b/config.c
+index 1f003fbb90..d0ada9fcd4 100644
+--- a/config.c
++++ b/config.c
+@@ -1172,6 +1172,11 @@ static int git_default_core_config(const char *var, const char *value)
+ 		return 0;
+ 	}
  
++	if (!strcmp(var, "core.checkroundtripencoding")) {
++		check_roundtrip_encoding = xstrdup(value);
++		return 0;
++	}
++
+ 	if (!strcmp(var, "core.notesref")) {
+ 		notes_ref_name = xstrdup(value);
+ 		return 0;
 diff --git a/convert.c b/convert.c
-index b976eb968c..aa59ecfe49 100644
+index d739078016..c2d24882c1 100644
 --- a/convert.c
 +++ b/convert.c
-@@ -7,6 +7,7 @@
- #include "sigchain.h"
- #include "pkt-line.h"
- #include "sub-process.h"
-+#include "utf8.h"
- 
- /*
-  * convert.c - convert a file when checking it out and checking it in.
-@@ -265,6 +266,78 @@ static int will_convert_lf_to_crlf(size_t len, struct text_stat *stats,
- 
+@@ -347,6 +347,42 @@ static void trace_encoding(const char *context, const char *path,
+ 	strbuf_release(&trace);
  }
  
-+static const char *default_encoding = "UTF-8";
-+
-+static int encode_to_git(const char *path, const char *src, size_t src_len,
-+			 struct strbuf *buf, const char *enc, int conv_flags)
++static int check_roundtrip(const char *enc_name)
 +{
-+	char *dst;
-+	int dst_len;
-+	int die_on_error = conv_flags & CONV_WRITE_OBJECT;
-+
 +	/*
-+	 * No encoding is specified or there is nothing to encode.
-+	 * Tell the caller that the content was not modified.
++	 * check_roundtrip_encoding contains a string of comma and/or
++	 * space separated encodings (eg. "UTF-16, ASCII, CP1125").
++	 * Search for the given encoding in that string.
 +	 */
-+	if (!enc || (src && !src_len))
++	const char *found = strcasestr(check_roundtrip_encoding, enc_name);
++	const char *next;
++	int len;
++	if (!found)
 +		return 0;
++	next = found + strlen(enc_name);
++	len = strlen(check_roundtrip_encoding);
++	return (found && (
++			/*
++			 * check that the found encoding is at the
++			 * beginning of check_roundtrip_encoding or
++			 * that it is prefixed with a space or comma
++			 */
++			found == check_roundtrip_encoding || (
++				(isspace(found[-1]) || found[-1] == ',')
++			)
++		) && (
++			/*
++			 * check that the found encoding is at the
++			 * end of check_roundtrip_encoding or
++			 * that it is suffixed with a space or comma
++			 */
++			next == check_roundtrip_encoding + len || (
++				next < check_roundtrip_encoding + len &&
++				(isspace(next[0]) || next[0] == ',')
++			)
++		));
++}
 +
+ static const char *default_encoding = "UTF-8";
+ 
+ static int encode_to_git(const char *path, const char *src, size_t src_len,
+@@ -395,6 +431,47 @@ static int encode_to_git(const char *path, const char *src, size_t src_len,
+ 	}
+ 	trace_encoding("destination", path, default_encoding, dst, dst_len);
+ 
 +	/*
-+	 * Looks like we got called from "would_convert_to_git()".
-+	 * This means Git wants to know if it would encode (= modify!)
-+	 * the content. Let's answer with "yes", since an encoding was
-+	 * specified.
++	 * UTF supports lossless conversion round tripping [1] and conversions
++	 * between UTF and other encodings are mostly round trip safe as
++	 * Unicode aims to be a superset of all other character encodings.
++	 * However, certain encodings (e.g. SHIFT-JIS) are known to have round
++	 * trip issues [2]. Check the round trip conversion for all encodings
++	 * listed in core.checkRoundtripEncoding.
++	 *
++	 * The round trip check is only performed if content is written to Git.
++	 * This ensures that no information is lost during conversion to/from
++	 * the internal UTF-8 representation.
++	 *
++	 * Please note, the code below is not tested because I was not able to
++	 * generate a faulty round trip without an iconv error. Iconv errors
++	 * are already caught above.
++	 *
++	 * [1] http://unicode.org/faq/utf_bom.html#gen2
++	 * [2] https://support.microsoft.com/en-us/help/170559/prb-conversion-problem-between-shift-jis-and-unicode
 +	 */
-+	if (!buf && !src)
-+		return 1;
++	if (die_on_error && check_roundtrip(enc)) {
++		char *re_src;
++		int re_src_len;
 +
-+	dst = reencode_string_len(src, src_len, default_encoding, enc,
-+				  &dst_len);
-+	if (!dst) {
-+		/*
-+		 * We could add the blob "as-is" to Git. However, on checkout
-+		 * we would try to reencode to the original encoding. This
-+		 * would fail and we would leave the user with a messed-up
-+		 * working tree. Let's try to avoid this by screaming loud.
-+		 */
-+		const char* msg = _("failed to encode '%s' from %s to %s");
-+		if (die_on_error)
++		re_src = reencode_string_len(dst, dst_len,
++					     enc, default_encoding,
++					     &re_src_len);
++
++		trace_printf("Checking roundtrip encoding for %s...\n", enc);
++		trace_encoding("reencoded source", path, enc,
++			       re_src, re_src_len);
++
++		if (!re_src || src_len != re_src_len ||
++		    memcmp(src, re_src, src_len)) {
++			const char* msg = _("encoding '%s' from %s to %s and "
++					    "back is not the same");
 +			die(msg, path, enc, default_encoding);
-+		else {
-+			error(msg, path, enc, default_encoding);
-+			return 0;
 +		}
++
++		free(re_src);
 +	}
 +
-+	strbuf_attach(buf, dst, dst_len, dst_len + 1);
-+	return 1;
-+}
-+
-+static int encode_to_worktree(const char *path, const char *src, size_t src_len,
-+			      struct strbuf *buf, const char *enc)
-+{
-+	char *dst;
-+	int dst_len;
-+
-+	/*
-+	 * No encoding is specified or there is nothing to encode.
-+	 * Tell the caller that the content was not modified.
-+	 */
-+	if (!enc || (src && !src_len))
-+		return 0;
-+
-+	dst = reencode_string_len(src, src_len, enc, default_encoding,
-+				  &dst_len);
-+	if (!dst) {
-+		error("failed to encode '%s' from %s to %s",
-+			path, default_encoding, enc);
-+		return 0;
-+	}
-+
-+	strbuf_attach(buf, dst, dst_len, dst_len + 1);
-+	return 1;
-+}
-+
- static int crlf_to_git(const struct index_state *istate,
- 		       const char *path, const char *src, size_t len,
- 		       struct strbuf *buf,
-@@ -978,6 +1051,25 @@ static int ident_to_worktree(const char *path, const char *src, size_t len,
+ 	strbuf_attach(buf, dst, dst_len, dst_len + 1);
  	return 1;
  }
- 
-+static const char *git_path_check_encoding(struct attr_check_item *check)
-+{
-+	const char *value = check->value;
-+
-+	if (ATTR_UNSET(value) || !strlen(value))
-+		return NULL;
-+
-+	if (ATTR_TRUE(value) || ATTR_FALSE(value)) {
-+		error(_("working-tree-encoding attribute requires a value"));
-+		return NULL;
-+	}
-+
-+	/* Don't encode to the default encoding */
-+	if (!strcasecmp(value, default_encoding))
-+		return NULL;
-+
-+	return value;
-+}
-+
- static enum crlf_action git_path_check_crlf(struct attr_check_item *check)
- {
- 	const char *value = check->value;
-@@ -1033,6 +1125,7 @@ struct conv_attrs {
- 	enum crlf_action attr_action; /* What attr says */
- 	enum crlf_action crlf_action; /* When no attr is set, use core.autocrlf */
- 	int ident;
-+	const char *working_tree_encoding; /* Supported encoding or default encoding if NULL */
- };
- 
- static void convert_attrs(struct conv_attrs *ca, const char *path)
-@@ -1041,7 +1134,8 @@ static void convert_attrs(struct conv_attrs *ca, const char *path)
- 
- 	if (!check) {
- 		check = attr_check_initl("crlf", "ident", "filter",
--					 "eol", "text", NULL);
-+					 "eol", "text", "working-tree-encoding",
-+					 NULL);
- 		user_convert_tail = &user_convert;
- 		git_config(read_convert_config, NULL);
- 	}
-@@ -1064,6 +1158,7 @@ static void convert_attrs(struct conv_attrs *ca, const char *path)
- 			else if (eol_attr == EOL_CRLF)
- 				ca->crlf_action = CRLF_TEXT_CRLF;
- 		}
-+		ca->working_tree_encoding = git_path_check_encoding(ccheck + 5);
- 	} else {
- 		ca->drv = NULL;
- 		ca->crlf_action = CRLF_UNDEFINED;
-@@ -1144,6 +1239,13 @@ int convert_to_git(const struct index_state *istate,
- 		src = dst->buf;
- 		len = dst->len;
- 	}
-+
-+	ret |= encode_to_git(path, src, len, dst, ca.working_tree_encoding, conv_flags);
-+	if (ret && dst) {
-+		src = dst->buf;
-+		len = dst->len;
-+	}
-+
- 	if (!(conv_flags & CONV_EOL_KEEP_CRLF)) {
- 		ret |= crlf_to_git(istate, path, src, len, dst, ca.crlf_action, conv_flags);
- 		if (ret && dst) {
-@@ -1167,6 +1269,7 @@ void convert_to_git_filter_fd(const struct index_state *istate,
- 	if (!apply_filter(path, NULL, 0, fd, dst, ca.drv, CAP_CLEAN, NULL))
- 		die("%s: clean filter '%s' failed", path, ca.drv->name);
- 
-+	encode_to_git(path, dst->buf, dst->len, dst, ca.working_tree_encoding, conv_flags);
- 	crlf_to_git(istate, path, dst->buf, dst->len, dst, ca.crlf_action, conv_flags);
- 	ident_to_git(path, dst->buf, dst->len, dst, ca.ident);
- }
-@@ -1198,6 +1301,12 @@ static int convert_to_working_tree_internal(const char *path, const char *src,
- 		}
+@@ -1150,7 +1227,7 @@ static const char *git_path_check_encoding(struct attr_check_item *check)
  	}
  
-+	ret |= encode_to_worktree(path, src, len, dst, ca.working_tree_encoding);
-+	if (ret) {
-+		src = dst->buf;
-+		len = dst->len;
-+	}
-+
- 	ret_filter = apply_filter(
- 		path, src, len, -1, dst, ca.drv, CAP_SMUDGE, dco);
- 	if (!ret_filter && ca.drv && ca.drv->required)
-@@ -1664,6 +1773,9 @@ struct stream_filter *get_stream_filter(const char *path, const unsigned char *s
- 	if (ca.drv && (ca.drv->process || ca.drv->smudge || ca.drv->clean))
+ 	/* Don't encode to the default encoding */
+-	if (!strcasecmp(value, default_encoding))
++	if (is_encoding_utf8(value) && is_encoding_utf8(default_encoding))
  		return NULL;
  
-+	if (ca.working_tree_encoding)
-+		return NULL;
-+
- 	if (ca.crlf_action == CRLF_AUTO || ca.crlf_action == CRLF_AUTO_CRLF)
- 		return NULL;
- 
+ 	return value;
 diff --git a/convert.h b/convert.h
-index 65ab3e5167..1d9539ed0b 100644
+index 1d9539ed0b..765abfbd60 100644
 --- a/convert.h
 +++ b/convert.h
-@@ -12,6 +12,7 @@ struct index_state;
- #define CONV_EOL_RNDTRP_WARN  (1<<1) /* Warn if CRLF to LF to CRLF is different */
- #define CONV_EOL_RENORMALIZE  (1<<2) /* Convert CRLF to LF */
- #define CONV_EOL_KEEP_CRLF    (1<<3) /* Keep CRLF line endings as is */
-+#define CONV_WRITE_OBJECT     (1<<4) /* Content is written to the index */
+@@ -56,6 +56,7 @@ struct delayed_checkout {
+ };
  
- extern int global_conv_flags_eol;
- 
-diff --git a/sha1_file.c b/sha1_file.c
-index 6bc7c6ada9..e2f319d677 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -138,7 +138,7 @@ static int get_conv_flags(unsigned flags)
- 	if (flags & HASH_RENORMALIZE)
- 		return CONV_EOL_RENORMALIZE;
- 	else if (flags & HASH_WRITE_OBJECT)
--	  return global_conv_flags_eol;
-+		return global_conv_flags_eol | CONV_WRITE_OBJECT;
- 	else
- 		return 0;
- }
+ extern enum eol core_eol;
++extern char *check_roundtrip_encoding;
+ extern const char *get_cached_convert_stats_ascii(const struct index_state *istate,
+ 						  const char *path);
+ extern const char *get_wt_convert_stats_ascii(const char *path);
+diff --git a/environment.c b/environment.c
+index 10a32c20ac..5bae9131ad 100644
+--- a/environment.c
++++ b/environment.c
+@@ -50,6 +50,7 @@ int check_replace_refs = 1;
+ char *git_replace_ref_base;
+ enum eol core_eol = EOL_UNSET;
+ int global_conv_flags_eol = CONV_EOL_RNDTRP_WARN;
++char *check_roundtrip_encoding = "SHIFT-JIS";
+ unsigned whitespace_rule_cfg = WS_DEFAULT_RULE;
+ enum branch_track git_branch_track = BRANCH_TRACK_REMOTE;
+ enum rebase_setup_type autorebase = AUTOREBASE_NEVER;
 diff --git a/t/t0028-working-tree-encoding.sh b/t/t0028-working-tree-encoding.sh
-new file mode 100755
-index 0000000000..e492945a01
---- /dev/null
+index f68e282c5e..07089bba2e 100755
+--- a/t/t0028-working-tree-encoding.sh
 +++ b/t/t0028-working-tree-encoding.sh
-@@ -0,0 +1,144 @@
-+#!/bin/sh
-+
-+test_description='working-tree-encoding conversion via gitattributes'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'setup test files' '
-+	git config core.eol lf &&
-+
-+	text="hallo there!\ncan you read me?" &&
-+	echo "*.utf16 text working-tree-encoding=utf-16" >.gitattributes &&
-+	printf "$text" >test.utf8.raw &&
-+	printf "$text" | iconv -f UTF-8 -t UTF-16 >test.utf16.raw &&
-+	printf "$text" | iconv -f UTF-8 -t UTF-32 >test.utf32.raw &&
-+
-+	# Line ending tests
-+	printf "one\ntwo\nthree\n" >lf.utf8.raw &&
-+	printf "one\r\ntwo\r\nthree\r\n" >crlf.utf8.raw &&
-+
-+	# BOM tests
-+	printf "\0a\0b\0c"                         >nobom.utf16be.raw &&
-+	printf "a\0b\0c\0"                         >nobom.utf16le.raw &&
-+	printf "\376\777\0a\0b\0c"                 >bebom.utf16be.raw &&
-+	printf "\777\376a\0b\0c\0"                 >lebom.utf16le.raw &&
-+	printf "\0\0\0a\0\0\0b\0\0\0c"             >nobom.utf32be.raw &&
-+	printf "a\0\0\0b\0\0\0c\0\0\0"             >nobom.utf32le.raw &&
-+	printf "\0\0\376\777\0\0\0a\0\0\0b\0\0\0c" >bebom.utf32be.raw &&
-+	printf "\777\376\0\0a\0\0\0b\0\0\0c\0\0\0" >lebom.utf32le.raw &&
-+
-+	# Add only UTF-16 file, we will add the UTF-32 file later
-+	cp test.utf16.raw test.utf16 &&
-+	cp test.utf32.raw test.utf32 &&
-+	git add .gitattributes test.utf16 &&
-+	git commit -m initial
-+'
-+
-+test_expect_success 'ensure UTF-8 is stored in Git' '
-+	test_when_finished "rm -f test.utf16.git" &&
-+
-+	git cat-file -p :test.utf16 >test.utf16.git &&
-+	test_cmp_bin test.utf8.raw test.utf16.git
-+'
-+
-+test_expect_success 're-encode to UTF-16 on checkout' '
-+	test_when_finished "rm -f test.utf16.raw" &&
-+
-+	rm test.utf16 &&
-+	git checkout test.utf16 &&
-+	test_cmp_bin test.utf16.raw test.utf16
-+'
-+
-+test_expect_success 'check $GIT_DIR/info/attributes support' '
-+	test_when_finished "rm -f test.utf32.git" &&
+@@ -205,4 +205,43 @@ test_expect_success 'error if encoding garbage is already in Git' '
+ 	test_i18ngrep "error: BOM is required" err.out
+ '
+ 
++test_expect_success 'check roundtrip encoding' '
++	test_when_finished "rm -f roundtrip.shift roundtrip.utf16" &&
 +	test_when_finished "git reset --hard HEAD" &&
 +
-+	echo "*.utf32 text working-tree-encoding=utf-32" >.git/info/attributes &&
-+	git add test.utf32 &&
++	text="hallo there!\nroundtrip test here!" &&
++	printf "$text" | iconv -f UTF-8 -t SHIFT-JIS >roundtrip.shift &&
++	printf "$text" | iconv -f UTF-8 -t UTF-16 >roundtrip.utf16 &&
++	echo "*.shift text working-tree-encoding=SHIFT-JIS" >>.gitattributes &&
 +
-+	git cat-file -p :test.utf32 >test.utf32.git &&
-+	test_cmp_bin test.utf8.raw test.utf32.git
++	# SHIFT-JIS encoded files are round-trip checked by default...
++	GIT_TRACE=1 git add .gitattributes roundtrip.shift 2>&1 |
++		grep "Checking roundtrip encoding for SHIFT-JIS" &&
++	git reset &&
++
++	# ... unless we overwrite the Git config!
++	! GIT_TRACE=1 git -c core.checkRoundtripEncoding=garbage \
++		add .gitattributes roundtrip.shift 2>&1 |
++		grep "Checking roundtrip encoding for SHIFT-JIS" &&
++	git reset &&
++
++	# UTF-16 encoded files should not be round-trip checked by default...
++	! GIT_TRACE=1 git add roundtrip.utf16 2>&1 |
++		grep "Checking roundtrip encoding for UTF-16" &&
++	git reset &&
++
++	# ... unless we tell Git to check it!
++	GIT_TRACE=1 git -c core.checkRoundtripEncoding="UTF-16, UTF-32" \
++		add roundtrip.utf16 2>&1 |
++		grep "Checking roundtrip encoding for utf-16" &&
++	git reset &&
++
++	# ... unless we tell Git to check it!
++	# (here we also check that the casing of the encoding is irrelevant)
++	GIT_TRACE=1 git -c core.checkRoundtripEncoding="UTF-32, utf-16" \
++		add roundtrip.utf16 2>&1 |
++		grep "Checking roundtrip encoding for utf-16" &&
++	git reset
 +'
 +
-+for i in 16 32
-+do
-+	test_expect_success "eol conversion for UTF-${i} encoded files on checkout" '
-+		test_when_finished "rm -f crlf.utf${i}.raw lf.utf${i}.raw" &&
-+		test_when_finished "git reset --hard HEAD^" &&
-+
-+		cat lf.utf8.raw | iconv -f UTF-8 -t UTF-${i} >lf.utf${i}.raw &&
-+		cat crlf.utf8.raw | iconv -f UTF-8 -t UTF-${i} >crlf.utf${i}.raw &&
-+		cp crlf.utf${i}.raw eol.utf${i} &&
-+
-+		cat >expectIndexLF <<-EOF &&
-+			i/lf    w/-text attr/text             	eol.utf${i}
-+		EOF
-+
-+		git add eol.utf${i} &&
-+		git commit -m eol &&
-+
-+		# UTF-${i} with CRLF (Windows line endings)
-+		rm eol.utf${i} &&
-+		git -c core.eol=crlf checkout eol.utf${i} &&
-+		test_cmp_bin crlf.utf${i}.raw eol.utf${i} &&
-+
-+		# Although the file has CRLF in the working tree,
-+		# ensure LF in the index
-+		git ls-files --eol eol.utf${i} >actual &&
-+		test_cmp expectIndexLF actual &&
-+
-+		# UTF-${i} with LF (Unix line endings)
-+		rm eol.utf${i} &&
-+		git -c core.eol=lf checkout eol.utf${i} &&
-+		test_cmp_bin lf.utf${i}.raw eol.utf${i} &&
-+
-+		# The file LF in the working tree, ensure LF in the index
-+		git ls-files --eol eol.utf${i} >actual &&
-+		test_cmp expectIndexLF actual
-+	'
-+done
-+
-+test_expect_success 'check unsupported encodings' '
-+	test_when_finished "git reset --hard HEAD" &&
-+
-+	echo "*.set text working-tree-encoding" >>.gitattributes &&
-+	printf "set" >t.set &&
-+	git add t.set 2>err.out &&
-+	test_i18ngrep "error: working-tree-encoding attribute requires a value" err.out &&
-+
-+	echo "*.unset text -working-tree-encoding" >>.gitattributes &&
-+	printf "unset" >t.unset &&
-+	git add t.unset 2>err.out &&
-+	test_i18ngrep "error: working-tree-encoding attribute requires a value" err.out &&
-+
-+	echo "*.empty text working-tree-encoding=" >>.gitattributes &&
-+	printf "empty" >t.empty &&
-+	git add t.empty 2>err.out &&
-+	test_i18ngrep "error: working-tree-encoding attribute requires a value" err.out &&
-+
-+	echo "*.garbage text working-tree-encoding=garbage" >>.gitattributes &&
-+	printf "garbage" >t.garbage &&
-+	test_must_fail git add t.garbage 2>err.out &&
-+	test_i18ngrep "fatal: failed to encode" err.out
-+'
-+
-+test_expect_success 'error if encoding round trip is not the same during refresh' '
-+	BEFORE_STATE=$(git rev-parse HEAD) &&
-+	test_when_finished "git reset --hard $BEFORE_STATE" &&
-+
-+	# Add and commit a UTF-16 file but skip the "working-tree-encoding"
-+	# filter. Consequently, the in-repo representation is UTF-16 and not
-+	# UTF-8. This simulates a Git version that has no working tree encoding
-+	# support.
-+	echo "*.utf16le text working-tree-encoding=utf-16le" >.gitattributes &&
-+	echo "hallo" >nonsense.utf16le &&
-+	TEST_HASH=$(git hash-object --no-filters -w nonsense.utf16le) &&
-+	git update-index --add --cacheinfo 100644 $TEST_HASH nonsense.utf16le &&
-+	COMMIT=$(git commit-tree -p $(git rev-parse HEAD) -m "plain commit" $(git write-tree)) &&
-+	git update-ref refs/heads/master $COMMIT &&
-+
-+	test_must_fail git checkout HEAD^ 2>err.out &&
-+	test_i18ngrep "error: .* overwritten by checkout:" err.out
-+'
-+
-+test_done
+ test_done
 -- 
 2.16.2
 
