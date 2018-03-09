@@ -7,36 +7,36 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4E2381F404
-	for <e@80x24.org>; Fri,  9 Mar 2018 17:37:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 961101F404
+	for <e@80x24.org>; Fri,  9 Mar 2018 17:37:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932465AbeCIRg6 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Mar 2018 12:36:58 -0500
+        id S932478AbeCIRhH (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Mar 2018 12:37:07 -0500
 Received: from mail-bn3nam01on0113.outbound.protection.outlook.com ([104.47.33.113]:10015
         "EHLO NAM01-BN3-obe.outbound.protection.outlook.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S932165AbeCIRgy (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Mar 2018 12:36:54 -0500
+        id S932479AbeCIRhB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Mar 2018 12:37:01 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=autodesk.com;
  s=selector1; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
- bh=rupQgFN9SA1yHLnTEn7SiP2BqdvnAo+RgrUpsyJm6yo=;
- b=jkP2pLkhmpXPof+6xCGVnmRFHzG4KHXEiu1YBj5AIqMtNEDgBwBnK04Udrgb55lKi/PzCHR5uRraZaJT4rJZSBGxCNeJW+WDvmIVLQ2zSd0V/MuTfSct8MPTL3Ecb2a0Rj39VOMkpYNwRFked2QsaRFC5+mQrV1WPDzocQHCE5o=
+ bh=Tndy7DKAGVhUNfxXywm+/P11cb1rJLoekm8PDF9JtA0=;
+ b=Ar53uNh2UYXYLfCr67XledvTg3q/tcVkkPCXP1Ke1agTi3GoMvk+HPArpZ9Bwpn+HU6kBAUfSIoVI4O+o1tRIsiT79jr0dIR6vMCIPEd0zMqr/nv0L7TlVPRO17XfW97+a5W1HGaGXOHZtxyrKug7iR7gm+nemR6hPk8+KAKYkQ=
 Authentication-Results: spf=none (sender IP is )
  smtp.mailfrom=lars.schneider@autodesk.com; 
 Received: from remr90mpm73.ads.autodesk.com (132.188.32.100) by
  MWHP136MB0015.NAMP136.PROD.OUTLOOK.COM (2603:10b6:320:1c::22) with Microsoft
  SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P256) id 15.20.548.15; Fri, 9
- Mar 2018 17:35:56 +0000
+ Mar 2018 17:36:21 +0000
 From:   lars.schneider@autodesk.com
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, tboegi@web.de, j6t@kdbg.org,
         sunshine@sunshineco.com, peff@peff.net,
         ramsay@ramsayjones.plus.com, Johannes.Schindelin@gmx.de,
         pclouds@gmail.com, Lars Schneider <larsxschneider@gmail.com>
-Subject: [PATCH v11 03/10] strbuf: add a case insensitive starts_with()
-Date:   Fri,  9 Mar 2018 18:35:29 +0100
-Message-Id: <20180309173536.62012-4-lars.schneider@autodesk.com>
+Subject: [PATCH v11 09/10] convert: add tracing for 'working-tree-encoding' attribute
+Date:   Fri,  9 Mar 2018 18:35:35 +0100
+Message-Id: <20180309173536.62012-10-lars.schneider@autodesk.com>
 X-Mailer: git-send-email 2.16.2
 In-Reply-To: <20180309173536.62012-1-lars.schneider@autodesk.com>
 References: <20180309173536.62012-1-lars.schneider@autodesk.com>
@@ -48,48 +48,48 @@ X-ClientProxiedBy: CO2PR04CA0119.namprd04.prod.outlook.com
  (2603:10b6:320:1c::22)
 X-MS-PublicTrafficType: Email
 X-MS-Office365-Filtering-HT: Tenant
-X-MS-Office365-Filtering-Correlation-Id: 8283018a-3d2e-481a-2d0b-08d585e438a7
+X-MS-Office365-Filtering-Correlation-Id: d0bc82d3-c19f-4d32-bae8-08d585e44802
 X-Microsoft-Antispam: UriScan:;BCL:0;PCL:0;RULEID:(7020095)(4652020)(48565401081)(5600026)(4604075)(4534165)(4627221)(201703031133081)(201702281549075)(2017052603328)(7153060)(7193020);SRVR:MWHP136MB0015;
-X-Microsoft-Exchange-Diagnostics: 1;MWHP136MB0015;3:QxaQeNkb/uhyoQxhmXSNQa93W6SHr81RM9B4OT8pQy1Jy5TQEV687xQoDvX0E1WdtYubYo0StmRQY2YG39wnXC3Ds1t04o7jXBS4hDAiBmI5u50mVz4sVPwAJjYTRicls+JLBng889TAmPopRZqePAfh2OEplnGUOXxkZAfTj7XmRQHsmb8T2coLTHxB1z3Ea6x+CYP4CIPDM+Pb/KEyuxYEmcD7TTW0tCnOfa53NwhT3tTUYGR/Xvj/UfNj4Sy2;25:67XgPb7zLVvkZbwtiClwhMy2PcgYxCP40QDuFETy8Y2y8nXRQxcFEjktW72PO91vsH7sAyjiPAM/8yfT9z8aVZVy2zUP1rIpdq7nDlmSjPkpydTORMt6nW4sbGtq6m719vEXXt+tRmeSYkywcBHeaf1RQ0aw0l98iT6/90RSpLV0YZtfvK8MYBwqbrQUlA2nzbI84zaTECCyRgIn1mRHEXKWWQ0C6uodSDOsYVhkLZvs5b1Zc/oLogu3Qb/SIAelcbaafRR/JC9RU0Tr8NYjEVDc8jmCEsnX0qaamZdRa6g6fox/yTVD/BycuDTYN7YtyFb30rVuCjaAPHTJ7H3GCw==;31:RdlHKVVjpwdKkuJnUBmG7LBdJx0d9iY5CvcjgUcbGRExCQ290Mu6Kp+pOcZSFrRe2XCuHrMIwyuj9EvbRg2jlgRFFkSVm0yR16M6C6kwXJfaSOacjoSxS2g/eDPo0/7wW1nhd7VK8Gg/iIITC4YYqsYUYwMQMmm4CEIRPf9Z8XUaGvEyejCieLMPDps9RhHtKAcMS1nZaXeLvXIHVOQOj02BsxtlH0htN1nOqmVeDY0=
+X-Microsoft-Exchange-Diagnostics: 1;MWHP136MB0015;3:aZRkEq0DmJaEgITnqlNTEreirUBHAm0wjhGaSY3GvcNspdQUMGK48gDDSmLisBMgFM37gu5nvABGuiuK5EEptkBylpmMXy5QQRRmys3Frrp4Mg427CR7nWsWH1lAG7GrrlXVQQhi7FqsJZx5zv+YmNAYr8pOOO9bUqSRVBNAeQxsc67WUFCAh0IsywOnwSVhtdkt7WHDK4v4te5aFJ+JXvSe5ITqJuoJ7u2cA6uMYVFrTSsCImdpzXPaPgdBaa3/;25:1XbpeVjtOAi8pGOke/5oxsFfkgjZ9xq0Q1ZXtQj/50IwVj7eP4mcMNmRhPN0gXuNMxbwLo9TSNPPdULUJPO3epiM83+TCeA4GDw6lWO6ALTgeSsuNRD2NAN0DsxbJ2fxrJ2bxYczcgCGHJBN2rWg6qZR6h083fgQtrgQUXHoGYGkNg1syvuL9DdLVbz3vRaB29CiGQx+rdMS2IO5NKx4gKEaAlYGQXJ92HDXqUWOBrhXXQeEpFQl65p6osCcCyVfLwPYPeV4ZqampbjrAdm4sdrXIMl2A42yr5ba/UWb6VTKrfBr4DhSVYdIjPyx05/9/VMY+NNPd+J8aYN7P71aVA==;31:r5dmvljQnmpCni1WmhwlTjUYplSmBZ0VV35YC5lySNgOqPar4d4G/OJSFOf41bWHqMFLQ3ndUhvPlzUKn4b9i0G2Vxl0+tbWV97kVPKYVz3nvRDdx8QV0wCH4Z8SeNd/I8Ca3Kn7E5of7TN8cJTVS5QesOq/8P31LDmSDbgnLBplarOZRe1pyCg3IWY20NQ2aDcBefQ9Tz41Mg7BC0UlYFA+SQHlxjiuN6rP9LDZ6XQ=
 X-MS-TrafficTypeDiagnostic: MWHP136MB0015:
-X-Microsoft-Exchange-Diagnostics: 1;MWHP136MB0015;20:wt3UnOPaj8fjvXnrXcvOgYqoSxWpo8jFHb88z+dOgHssfnyY/r6/DL0pavzwEnWcmC/OIquew/OGjfyt9zOm6rBybp6YkYXIHeFqMzylJtJZTq6WD7EojGctuqJqMQ7U1LNnk5xLAGDGlCERFqkfVZvmQGeNDEhhPc8Yq2cjI+huO4LKCuY+c0WO2YcipLt9uS0Ki5NPgcsVFDI6uY3peX32Rwj+gVtKV2JQI9YakZBEOoo1Z9Tl+70UbGUo8xeifNMPMtgU9vJawmDDzXWhKOYknpk9/KehzyvvIzUQcFCUz0OnY36JK6UY9PY2DykT8cp0Wq6+2MpZXIKNAWM3OxJ5Ff6tkOVm+uc8acGKcJK7/MCL74ThnVSYv5hziZtFaqol/YjTEqEeJVzFfq0XDim+TwfTHvKEXGYnGK07o798dSLhhzVkMcumsl6bnEm4nssbEK5Tydnv61c5A0PPkqNe3e0t+H3z4OCZzvnVLln5dKB87u0r6HO0STLktLYGF3noJU692ss4qu0ryVORuqSN5QdLxwgRp3h3+oiJ962CKFMrCf+Q4aaQILs7wiFD7dAQc4d0K3ANMWlVl5aZof240+yx9eZZPQs1qvU1Ba8=;4:GDteDVO6za36iBWrOs/FimJADQacsj39KUcR2PhxVeG+Jzp7zdV/TjCoc5HD1zOwjTuJhIb1s++ezN61EuO1Gz3YJyL9gCW9fZS3JNqCnChzpwbVdArnHdsgQJBusxe0SlhlabYX5NuFwjsPaNYW+P6xkozHKbyGDK2EAawjwRik0fBPU0ZngiQTYGmwZBtft6dTxLy2X4EBRzMU4G67YbSef7ntk3TqIM29hcAh860gl4P6rOwiZwWrcZdXCvyyyHIuHLLsl9Ppmit3NkLajVw+Zdk/fclgTLfNrdNMBv/j+KvuJgiKkeZyZmP9NONF
-X-Microsoft-Antispam-PRVS: <MWHP136MB00157150C1C1212694C90B11E8DE0@MWHP136MB0015.NAMP136.PROD.OUTLOOK.COM>
+X-Microsoft-Exchange-Diagnostics: 1;MWHP136MB0015;20:+TqgMJ4Ar27pvW0cq4lazdvPCDKFJzs8P0zM44W1CUlF1OFMjzKrnG2J2JPTJ4Km4LVlLAdPW72cYWxbjaWUYFnXNLa26WHGQHWYSXBv+ZXpNPuX02938On3AGJ02SUwxXDAujKILdMceftI2hUGPdYDZd3llIjAKBB5lVGsaYiKlRLthd0nZSXAyPVXwfrKg5yYVZAiiQIyRgTA/uXs/ePyTB1iy2E5oRsPVYz3uaeI8H13T77I0muQ0kfICNxikEu+fYkM5KWKpdS+JXotXjcPAEPGwP/VOeG3Vseyka6qeLy1ArDh7+rdOgespzhzrCF0nJA/KSVtGtp0mdj2wwyygA2gIvZbJgx/fwNovGEDsnlDvpcMHhu1Ybva1oZmKHY/C7wWd86UsGmlJPkeKUEXGTZ/3JhExeGeGvhWKSPTTXh/feB3KAmCygiK4DtqkkMQMzFfeZiZa5NRPnY+TBV57VZOMXe7R+DHq1RmhkToT14dNaDmL9l+yt7NfyITLyvHHYkVTrWTxINSRE6fm3c2UCWub+B4fEeRbkNB2g7J2/+NM6JEvI0AQ5ij9eNUuswnNDpvyi9W/mgRkwFJT9qItr+HHYS2Chn2GpXaoKw=;4:ckTqZOi8zTto659vhz7XXWKBBlKtkX2ZiuFnH5mEFVIm67YYouRlY8OXrsmUchvPxmk7trhpDU64w1DDI1VFpyTRBysxUdXNyienc5oyBiGjMPE2Ox1TCNCsbsz5M65WiunqUXmrUmPYq41XndHtWkwWuhOSAxqaT1C54QbmYw116kI1+BLoG7G++ufT9/KXnXtxHhOAm4gokRl+6+4xvP55JURNE1/Ylt1/Ftp9SvbSxsyuWrhBE791djjG99ZxjPsjgXnhE3xc4hUr//UDCJhgxH7zdgqf7GcP5YGE2He4D75PDepSTwWpfHpJXV5J
+X-Microsoft-Antispam-PRVS: <MWHP136MB00155135D9B7031EEC5B2B0DE8DE0@MWHP136MB0015.NAMP136.PROD.OUTLOOK.COM>
 X-Exchange-Antispam-Report-Test: UriScan:(85827821059158);
 X-Exchange-Antispam-Report-CFA-Test: BCL:0;PCL:0;RULEID:(8211001083)(6040522)(2401047)(8121501046)(5005006)(3231220)(944501244)(52105095)(10201501046)(93006095)(93001095)(3002001)(6055026)(6041310)(20161123564045)(20161123560045)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(20161123558120)(20161123562045)(6072148)(201708071742011);SRVR:MWHP136MB0015;BCL:0;PCL:0;RULEID:;SRVR:MWHP136MB0015;
 X-Forefront-PRVS: 0606BBEB39
-X-Forefront-Antispam-Report: SFV:NSPM;SFS:(10019020)(376002)(396003)(39860400002)(366004)(39380400002)(346002)(189003)(199004)(50226002)(76176011)(8656006)(7416002)(25786009)(106356001)(51416003)(8676002)(2351001)(6486002)(2361001)(386003)(105586002)(68736007)(8936002)(5660300001)(39060400002)(7696005)(52116002)(4326008)(50466002)(2906002)(48376002)(81156014)(81166006)(16586007)(6116002)(86362001)(575784001)(26005)(3846002)(85782001)(316002)(9686003)(186003)(97736004)(16526019)(8666007)(1076002)(53936002)(2950100002)(36756003)(6666003)(305945005)(47776003)(6916009)(478600001)(7736002)(66066001)(85772001);DIR:OUT;SFP:1102;SCL:1;SRVR:MWHP136MB0015;H:remr90mpm73.ads.autodesk.com;FPR:;SPF:None;PTR:InfoNoRecords;MX:1;A:1;LANG:en;
+X-Forefront-Antispam-Report: SFV:NSPM;SFS:(10019020)(376002)(396003)(39860400002)(366004)(39380400002)(346002)(189003)(199004)(50226002)(76176011)(8656006)(7416002)(5890100001)(25786009)(106356001)(51416003)(8676002)(2351001)(6486002)(2361001)(386003)(105586002)(68736007)(8936002)(5660300001)(39060400002)(7696005)(52116002)(59450400001)(4326008)(50466002)(2906002)(48376002)(81156014)(81166006)(16586007)(6116002)(86362001)(26005)(3846002)(85782001)(316002)(9686003)(186003)(97736004)(16526019)(8666007)(1076002)(53936002)(2950100002)(36756003)(6666003)(305945005)(47776003)(6916009)(478600001)(7736002)(66066001)(85772001);DIR:OUT;SFP:1102;SCL:1;SRVR:MWHP136MB0015;H:remr90mpm73.ads.autodesk.com;FPR:;SPF:None;PTR:InfoNoRecords;MX:1;A:1;LANG:en;
 Received-SPF: None (protection.outlook.com: autodesk.com does not designate
  permitted sender hosts)
-X-Microsoft-Exchange-Diagnostics: =?us-ascii?Q?1;MWHP136MB0015;23:/rfOO9kYxORyEJjTBAhRDwC6OHLCOP3qsJHkemz+2?=
- =?us-ascii?Q?VUyFkH5JvZgwKqcbHzHzQHP4BxAg+ajAVuVN9kGlUG/ciKilvIU/ujNfNKz6?=
- =?us-ascii?Q?/s6cEPpEc61xZ/E+0pfTnLIa8XLHc8txoPxgIRUjrW2Ez0o72z4HgUrtNali?=
- =?us-ascii?Q?HlGE6FA7xIEZ60NPFlDQJM4YbDdI+mK/Slr3jZzs34NV4CbCWNyPyLEuWnvE?=
- =?us-ascii?Q?fofi5NSYviUzMTVe9gBRKF0E3dOrCZsGbU1FQTRJglRLaNDhRjUwZgiiZaBj?=
- =?us-ascii?Q?zapM31WKgKaBoBMpDdSZpW8EB7PM3gyQBQ4hOR6S4MrcK3VscN0Rp0gfCVWQ?=
- =?us-ascii?Q?4jDBYYEZ4wITlambNpBVjDaB2x81/K8k+oG2B/T0aoHvNSNiFCEy7UpWAYn3?=
- =?us-ascii?Q?VoaygkTnRm2jsc8RHpVR0RzPNZdpprTpxfzG5VJdlBXGaW/Okjt6R49zxlY6?=
- =?us-ascii?Q?z+tG0f8OtnByEPN/krwW55xMgkBe5ZyYaPnTHV6aioYA4U5+19K8AfNeMQyT?=
- =?us-ascii?Q?BPoHwiYgjh12Y7IdrgroLvrCKW7zJgFDFnkRhLu+tR23RsYCu6tnmuJKaWMz?=
- =?us-ascii?Q?dTlu51/FJ/am1GgC36drU7SiEzxzdlRzZ+5igToMt0KbHhaf8JvnvTl2nq52?=
- =?us-ascii?Q?I0bnnkrCpK78qmcikqkSV4BN4diRO3FDj1LGbgxvvAa6Vydla92H0OLLoKiU?=
- =?us-ascii?Q?IkO6juTS4fY/OtVk4/vcSBGyxZTXsBBLUh3dgDXb6yKwuUDuMQW970siWcFv?=
- =?us-ascii?Q?fllh/e2VmtGmS7l4zTyyvEV7XDmQeAJQAHyZUDAN96NcyQtfaB19M8jBpbAl?=
- =?us-ascii?Q?scamkm1Rndij1Sua8k96na33tB1UJTQnmwedlrBxy5u8K3rkCIvPrBcgnOcF?=
- =?us-ascii?Q?ZHIXDxfG6dxtBYcIlfcFBILCNFh09c1rA+lg6VUpF6yTTeIGCofPPmkQjSUj?=
- =?us-ascii?Q?+PXKKg42NLiBtW2PtR19YhzckX+tIaBhjICQrqelpRgDChqaL8wOL13g+sWO?=
- =?us-ascii?Q?wgcQHLBTUHtoYNtb6QhwoqZuAzmlEdY1gTbGORn3b8+05oHZ1VgKR9xmrTy4?=
- =?us-ascii?Q?ES/sGPUnnozwEraXF75xO3mc3GYaERfwCA7RuvX7h6FdXFp+To8vtbEDOj/Y?=
- =?us-ascii?Q?04I9YEhBfJBa+cOsjC4l6YBy25RDIv7AkMOasWJNSl+Iq27V6qoEtIw/DlQ8?=
- =?us-ascii?Q?hna8aMmprWD2peu/AVRhJhv969hAXhRcIitLWU7JZtfNrn5+6eGiJ8Icz2P1?=
- =?us-ascii?Q?gGdF3P/nF/HnGSn8ylmsehrwhIyj7LyYeTgzeg4Ca5f6B8Olcmw+VAjNjLmP?=
- =?us-ascii?Q?dbeVw5CiCpafrx92oqpgn0=3D?=
-X-Microsoft-Antispam-Message-Info: ebX1ZAcPk28qtUYzxGCoiRUrgpCG9byi/S1QAYjisnT8BkqOOJHq+WqZmCZfJkyjypCVcO9CbREdIP73QhtqZc+KON5djfxnKxQB38UYzH5qht7qwgJcZT6TC6yaZ8xlrao7CAwNc3eIS3IAsqWPV2TmyZgxtk34GfMBq0u7GyxkRkBypXXzaLaccI22f2Mn
-X-Microsoft-Exchange-Diagnostics: 1;MWHP136MB0015;6:UDFCr5ueLQ6ScK8qB7vgBUICdHjhgDBzq+ttx2K8TnPm2tFh+I+ufQ4qgV/8o/+ZqzgYuKBD5RXg8I+d0gr/eewReJcFLMdHZVQRzApsy/jzjAyw8Fuii1OBCJ3DVv2ctF8HGIqJ7c24bw7QgDSdyTcuF+dQb5F2DrvhF6XzO71LF/+4Zj9Nd8KBaws8IkCST/qznsPo+p92AJEf+Dpd59SzKJZaXQNtneRvilsFrmbFsoEd4MJHt9jySObSnQeXDNNHUNuTbN2n+IXtGq2nxB8t26+/O7izisZmCWCz6gcSpixr76+f3g01uUUverzLIjO9FcK4V1cjwsgILQTpuGVneYzeIj023hEIv93hAwA=;5:Qjv0YCt7sGvM2WKlfxk7XCn1P33S4F1C49zSXmULHov463PolEK4bYvEOqkqeL1nWGBjQdO/TprVS3GkOTUs/rhx0KC6F8kbCq04kOeVqWXDnVz/tOltTbm7gD7yis8ZWaQrRtmv4FXLXduwRN1Yht4ABVfV5V6iiK6bHLsfCbE=;24:EN3XafahlV7JrxMFR6VGy5RwEhTQH3hAzrSAbYscldWgMWBgYddSVreFt66CdtTJGLtWgrjwqJrPzecsJRoNJm8ouMkYI4iZY7dG9ZX0OgA=;7:FdzPPY1HsXw279b4TsFtgRE232kl6XUY2kvoqutqsdKnvE227FF/LEGQkrDH70Ll+3fICZuIKSWE0fVVFhhcNs5WP4mAYTkOxy69tQa8nxS2WEL0if+QNVTh486v4MTrdZgJpnBBe+XEQG5tMu0CqYqmbPcVNFXjKFVy543b8yCYDFpmV4beXjLTqSNvdVunj7TVXnrAf/0lPCUNVcPSnqp4zKDlAF5lfPlJxSV59YTgSRT9z7LiZ7wWVX0WG6Sk
+X-Microsoft-Exchange-Diagnostics: =?us-ascii?Q?1;MWHP136MB0015;23:tcsAfXqyy/Ei7A/i4uxNw5dyTeAEt8SdFj7hVHb2V?=
+ =?us-ascii?Q?trZ39aalcVnhFlELNlVlttaXpHElljEkSe/X1mraVOdhvo42kBU8NeAhwPKr?=
+ =?us-ascii?Q?115BclCpltKb1BvEsurkA+Hx+Eb2N9bJFLj+rPcs4Jc8ZFXLvFbHjW6dMB6W?=
+ =?us-ascii?Q?gjreUroqsOIEYOGrDdIijfw+nATzIh0sJSsstJBR+f+X4zI3m+vIdFIo9/bc?=
+ =?us-ascii?Q?wj7lREpzrjbtO97X0ETlh5IbcBhxjAoQl8Yd1dN+yKjZXO7ngnNDRWvprRq4?=
+ =?us-ascii?Q?oPKEk1rUgiBfwLvSDnHcmeSPff5TrZINbdEQpFBhg8MIuhwOGvrf7SziaaDX?=
+ =?us-ascii?Q?SIAH9mrNtzB0pqA1qhTaQ+rsaqRbqYLRfSj7vyjbGaYuUp2vILEe9snzr8OP?=
+ =?us-ascii?Q?a8hrsKoZ4QnOtKriQ3PqMaBc8sopyJ5xV3y58Lo9pdeSsMatlw5sQA7NJ9qI?=
+ =?us-ascii?Q?VCaaCsCfc0EYicUIdLlTuu24mQs1U1ilqLll8MZfM9cZZVWBK0FJl8jU55T/?=
+ =?us-ascii?Q?DSiwOCoPfixLUJMES8YYxB7LP3RB2J73Bfc1vsEVM8+gf2YUvwLdpeTFA6JF?=
+ =?us-ascii?Q?+0QXMHUWCSolnA6u/yCdGR4IeqxcePogmhkoYmi4e8eLU+fVZpjDIbxmx6QD?=
+ =?us-ascii?Q?QyXFM8BCSqud7HzFvJmN0Qw6P1NxNDzaWb1RIN9gWc/KjaAMLTDpygd1g6q0?=
+ =?us-ascii?Q?8ZXs8ou45rTAHW4R6WhiaeaMx/fnpdFnMqWCO8ry57lsukChDOvMLCcqAGgi?=
+ =?us-ascii?Q?2iHWXmEmS0FFaVMSxXp79LmkMt40PMzlYZqvxg6pvGSfjbkv0ruI3tZxRJQ+?=
+ =?us-ascii?Q?Br2dMjkvWRtaFHDA5MHASiaW3FFf2zP2muODHw5taitgoIggeQ+Oxa0OneYl?=
+ =?us-ascii?Q?FLVeDPZQ3f2BPfvfqhdYZMM67UJn9wKfy5k9RrCxgdq9a17JD6SgcCgaDMlH?=
+ =?us-ascii?Q?EXwDL03b/RnuhYv3oNXHbgB+GlQsxjfOsCOasNR0HT6JhKEzqOhXFMEXjMt9?=
+ =?us-ascii?Q?FKvgjERH+CNWGp9q2IChBKrswNuC3FWh7/unYAosHOCyW67JEsnbrcDMjuM2?=
+ =?us-ascii?Q?Euh0Zb0ysVV1q55dASglCsx7UpVhnoaUYwhANJDPUGdexiKK/cFnjTpWcACp?=
+ =?us-ascii?Q?AhBINRZpAwyBZxvzPIYEHIEjZxQPQL0hxIczcG4ReJNuwLAspJmqDYBb5q60?=
+ =?us-ascii?Q?cO5xZTXybcV3T1OUbanMLBLWlqZUNaTAlS0MX1x0Oo5S2bxRCKsUb75Cvd42?=
+ =?us-ascii?Q?8kHTJNxSVIeLp9kyIyYsI2VO+PI/oE4U/wwn3Src0JCxM5LLeNtjnfhDitQc?=
+ =?us-ascii?Q?QYCtS7bMH6IVWKmxHd21gpo/8Cb2fTUp1kxAXaKpK8p?=
+X-Microsoft-Antispam-Message-Info: R0ak3elG4I8gx+QCbkVX5T3Tos36CIQLxl47QP8ItZQKHXjJbSUf5bYWFeSSBt2Chy+93Jnrh4BO8xzh+yyqi2jNLGhCncelxK7dt3TsgPUs8XsxM50ne8I7DpWGGYBbDjI0ohw0RihYpU92LJg2cgHRukKywNFlbyTyHJrucWs0M0HhEYhRCXER4jxIenu3
+X-Microsoft-Exchange-Diagnostics: 1;MWHP136MB0015;6:Hconl/uzPgPS7JUHVnZP+vIyMrUrpen7i4Ld7XpMxVAycWGodkZkEaWOIr9SQqQQTf+iFF91TC/U69170RvWLsq68E7YyQ5CgHxSdwrcezxo3L6GZLlKo/+5b5h62G1AE1FENB6CaLqWBKfmfk8Bj5K5X45WrMvdx5Kr+VprhSRO7wj9VEOYQcxFRQpIo/foXoW5x+YpxE7EK96FGvZwwGHHL130HQr16RdfBC/OGwFKTXMo7519+OKE6Fp7MHEravMQGyzu+fsEKJt5AIx42IXiLaYFdNZTycVTpsP8HBq1G5+7gHGPSDFdR4rFE64DblIds0YN0G1JNVLVehqNa+33XLVI77Wer3GrUhlHp4g=;5:hIcJ+EGEzSk5vHFu0tFO+Wh5DBLpPKXihTwDeo+fB9Gr/chpwEZjyLO6NVzCeLrg+xRWdeElz3Bz2O90YjsLl2KVmxdPJJ46+hftdmAwZAi05aRsjsow/533w8UkeCnnhnIWBlIRB3cixyE00ZKpKSa/cGdL42YSp3qw7uoeJWg=;24:/fC6e+2SXkRF+ldsTudOztE3gfa/oZIHlRpyu74tuyjHvJtNqJN0z6xDiyKf5wuMb8Cwj/O4N+5hN4Zwnqd68uaoQcAeSaPihO25sWINaCM=;7:vbpMH9mv2ODnbNbNi/r7GnLIDXJySw7EuyhmnxvIEAYNeJJXv7OYCHBSyg9XncAdCAGSbtmQbq5/5i9d514j7UY48smFvye9/rA3rJjh49NpcqIcMGLA6+747PhcStauXA/C7osE8TrLPvlp3TTWfVuYxOfEvFACDPX8zHhjaYJr7DhgCYnz9feB/FrpFeXvnaTbcWnfZrI17qcc06p4ExXZ/Um8nI7a9fnuHYBPofwi0NTIYq2Eb3svvoj4JPJA
 SpamDiagnosticOutput: 1:99
 SpamDiagnosticMetadata: NSPM
 X-OriginatorOrg: autodesk.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Mar 2018 17:35:56.3092 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8283018a-3d2e-481a-2d0b-08d585e438a7
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Mar 2018 17:36:21.4500 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: d0bc82d3-c19f-4d32-bae8-08d585e44802
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 67bff79e-7f91-4433-a8e5-c9252d2ddc1d
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: MWHP136MB0015
@@ -100,49 +100,79 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Lars Schneider <larsxschneider@gmail.com>
 
-Check in a case insensitive manner if one string is a prefix of another
-string.
-
-This function is used in a subsequent commit.
+Add the GIT_TRACE_WORKING_TREE_ENCODING environment variable to enable
+tracing for content that is reencoded with the 'working-tree-encoding'
+attribute. This is useful to debug encoding issues.
 
 Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
 ---
- git-compat-util.h | 1 +
- strbuf.c          | 9 +++++++++
- 2 files changed, 10 insertions(+)
+ convert.c                        | 25 +++++++++++++++++++++++++
+ t/t0028-working-tree-encoding.sh |  2 ++
+ 2 files changed, 27 insertions(+)
 
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 68b2ad531e..95c9b34832 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -455,6 +455,7 @@ extern void (*get_warn_routine(void))(const char *warn, va_list params);
- extern void set_die_is_recursing_routine(int (*routine)(void));
- 
- extern int starts_with(const char *str, const char *prefix);
-+extern int istarts_with(const char *str, const char *prefix);
- 
- /*
-  * If the string "str" begins with the string found in "prefix", return 1.
-diff --git a/strbuf.c b/strbuf.c
-index b635f0bdc4..99812b8488 100644
---- a/strbuf.c
-+++ b/strbuf.c
-@@ -11,6 +11,15 @@ int starts_with(const char *str, const char *prefix)
- 			return 0;
+diff --git a/convert.c b/convert.c
+index 9a3ae7cce1..d739078016 100644
+--- a/convert.c
++++ b/convert.c
+@@ -324,6 +324,29 @@ static int validate_encoding(const char *path, const char *enc,
+ 	return 0;
  }
  
-+int istarts_with(const char *str, const char *prefix)
++static void trace_encoding(const char *context, const char *path,
++			   const char *encoding, const char *buf, size_t len)
 +{
-+	for (; ; str++, prefix++)
-+		if (!*prefix)
-+			return 1;
-+		else if (tolower(*str) != tolower(*prefix))
-+			return 0;
++	static struct trace_key coe = TRACE_KEY_INIT(WORKING_TREE_ENCODING);
++	struct strbuf trace = STRBUF_INIT;
++	int i;
++
++	strbuf_addf(&trace, "%s (%s, considered %s):\n", context, path, encoding);
++	for (i = 0; i < len && buf; ++i) {
++		strbuf_addf(
++			&trace,"| \e[2m%2i:\e[0m %2x \e[2m%c\e[0m%c",
++			i,
++			(unsigned char) buf[i],
++			(buf[i] > 32 && buf[i] < 127 ? buf[i] : ' '),
++			((i+1) % 8 && (i+1) < len ? ' ' : '\n')
++		);
++	}
++	strbuf_addchars(&trace, '\n', 1);
++
++	trace_strbuf(&coe, &trace);
++	strbuf_release(&trace);
 +}
 +
- int skip_to_optional_arg_default(const char *str, const char *prefix,
- 				 const char **arg, const char *def)
- {
+ static const char *default_encoding = "UTF-8";
+ 
+ static int encode_to_git(const char *path, const char *src, size_t src_len,
+@@ -352,6 +375,7 @@ static int encode_to_git(const char *path, const char *src, size_t src_len,
+ 	if (validate_encoding(path, enc, src, src_len, die_on_error))
+ 		return 0;
+ 
++	trace_encoding("source", path, enc, src, src_len);
+ 	dst = reencode_string_len(src, src_len, default_encoding, enc,
+ 				  &dst_len);
+ 	if (!dst) {
+@@ -369,6 +393,7 @@ static int encode_to_git(const char *path, const char *src, size_t src_len,
+ 			return 0;
+ 		}
+ 	}
++	trace_encoding("destination", path, default_encoding, dst, dst_len);
+ 
+ 	strbuf_attach(buf, dst, dst_len, dst_len + 1);
+ 	return 1;
+diff --git a/t/t0028-working-tree-encoding.sh b/t/t0028-working-tree-encoding.sh
+index 1bee7b9f71..f68e282c5e 100755
+--- a/t/t0028-working-tree-encoding.sh
++++ b/t/t0028-working-tree-encoding.sh
+@@ -4,6 +4,8 @@ test_description='working-tree-encoding conversion via gitattributes'
+ 
+ . ./test-lib.sh
+ 
++GIT_TRACE_WORKING_TREE_ENCODING=1 && export GIT_TRACE_WORKING_TREE_ENCODING
++
+ test_expect_success 'setup test files' '
+ 	git config core.eol lf &&
+ 
 -- 
 2.16.2
 
