@@ -7,62 +7,60 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4EF4C1F404
-	for <e@80x24.org>; Fri,  9 Mar 2018 19:10:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 985841F404
+	for <e@80x24.org>; Fri,  9 Mar 2018 19:11:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932524AbeCITKu (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Mar 2018 14:10:50 -0500
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:50512 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932183AbeCITKt (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Mar 2018 14:10:49 -0500
-Received: by mail-wm0-f65.google.com with SMTP id w128so5822571wmw.0
-        for <git@vger.kernel.org>; Fri, 09 Mar 2018 11:10:48 -0800 (PST)
+        id S932605AbeCITLQ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Mar 2018 14:11:16 -0500
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:55908 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932587AbeCITLN (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Mar 2018 14:11:13 -0500
+Received: by mail-wm0-f66.google.com with SMTP id q83so5783842wme.5
+        for <git@vger.kernel.org>; Fri, 09 Mar 2018 11:11:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:in-reply-to:references:user-agent:date
-         :message-id:mime-version;
-        bh=/0PUF4Vw//16840KKltCvU5su7jC07zZ2PihUC69Vng=;
-        b=OkTSsO1jlGq1YJAZRp+jZZ3Ib1PByLz7oND/NGvnUkDTqRBzK7ZnvreyxyT6NrNG1E
-         w/302dgkx1iFI6dsDe55qtwzbbIIGy7tKWEy+Uwp+RbiQPG+XAGPlIVjMZfMaY+YQIQr
-         5KY/W6V4Xg0zYhF4JgxXOihuIGsN3JRNAfQ4Icb+EcNFhtPBK5Zgx6r5Iscer881n9eG
-         AoM3jq1cmOhf52zlCdxEhJS+hQhearAJ3kJHYmSKuIwfilhX1lRG+r7tORoK7dE4FAr4
-         vCTS/aeu6Id3h9NYPJjBgs4EDKym6E8qAQ7FuYSscaSnsYvkDoAQi/aX99IJiluIBeB8
-         XzaQ==
+        h=sender:from:to:cc:subject:references:date:message-id:user-agent
+         :mime-version;
+        bh=F/jQUg+bfHqjQLUTK8nk62ptu0NXzr6zX8ULHyHcU5o=;
+        b=dxwp2P68awh64twxcUD232XJiI1+jAeZfDjWbw9LoNvXeIFxNn84P63Uzg2kfDy1qD
+         FJiTosGqv2FT+YveqvtXo8uQcS4/HK8mjVyPCpof8s1uwIAry847f7dgD+i3CUPopduM
+         43N1rdqdkFw77eWBjhxnlybYu6IKQL+zFrFjQrNJ/e5UbG+fXTTEJV/zKpH/ewVXBDpZ
+         sVxyn/DsbOXvvAHrYQRgMl6qhrvvLVDFiJLAQrq9+iZJ7JKN49tmbFuwpyTaaSsiPYGl
+         fpLslDai35xdd+LXHdqdOZpChzqvALTNzf9Tf4B+4NCKxW8VOC2FjxSi/i8vYmwP88W8
+         cblA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:in-reply-to:references
-         :user-agent:date:message-id:mime-version;
-        bh=/0PUF4Vw//16840KKltCvU5su7jC07zZ2PihUC69Vng=;
-        b=AG28TooJqnCRNJdDrMvG4Euva6WEmTt12mgf9pGZ20sDaSH8Qsj6HdBkyD7j8l1HB9
-         C3b1lxBjR1fT0qlT8WUxKNuWqBHFQ2o9FqFySGTDgqaz0X9mub4xupMfNPKXlukEcC4O
-         7ynuI5I2fENZ+6U0NHD+qD/l6IvEypHcn10SdoCF2XTmU5ZVZlMhiYLtKf287iVFooTZ
-         ZJ/Bs57muS3wjJ/hoXzmb04RbzxFvE3pJDEc1wAPpD+w+limnjmWMPsNaNSMfSZLBoSZ
-         hliuE9a++G49mAKIR6Q40zWcR+CVK3HAEzB+PRQbnZZG2zgpeUXa8gujk80tmHpFUfLy
-         bqXQ==
-X-Gm-Message-State: AElRT7FA3AxTelJdxTx5wp5qBjjZ/kTOkbQctWA8L+WeNAV2Ke9FHIf/
-        o0sujL3jCQ2BRvBAoJ+pBXo=
-X-Google-Smtp-Source: AG47ELvD2E9nlB2llp1L3vdf8Sdc4vU8H/WWCV5M9KEEVSVAaFtxzLnbyYuGJrxQC56svwhEhHiWow==
-X-Received: by 10.28.225.130 with SMTP id y124mr2792226wmg.60.1520622647767;
-        Fri, 09 Mar 2018 11:10:47 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id 55sm1884538wrz.6.2018.03.09.11.10.47
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :message-id:user-agent:mime-version;
+        bh=F/jQUg+bfHqjQLUTK8nk62ptu0NXzr6zX8ULHyHcU5o=;
+        b=VS/xRqJUpWj0kd1i3GYw3xJGJP0oKkt11LAEey/TXH5L2rnSd42seb6ck6k+SPcwHn
+         0fqPJM8yHu05uJFQKq0hTnJVUyx/GAc++wel0AYvyl6rMHeZYE7WMwplyGK1M/MqMB+2
+         mVPrtWldYq74zs4VnVB8UeHgFCDzYF8qH/EZGWW04VLx8Y+W3sggSOabSvU5b7iCCmpZ
+         ixTb5XgvfcIOU4WO79pByTPYxty4P9l2q9Hu7pkHPszggzWV5P34S8kpAG62ZEV6lgHE
+         7IJKS1fSWTE/GdlOktHIh8hNBWbbalYwVJdpNj5f4c4XjuW5I2R+ei4IGb8b3sD0jmmr
+         GrSA==
+X-Gm-Message-State: AElRT7H8TtKjciqjYbbUpkn3l4BA0qiNR4pCT/G3MSbq/OfvtdmKVaAk
+        7pgbsC79mrd6YZ00722F2Oo=
+X-Google-Smtp-Source: AG47ELvDtfrtnljzQBuaaQL+lGTv8pIwtUqeHLet6n5SkilGlxJmN2ZzxjfYUzK7betb0Vs/XnMrdg==
+X-Received: by 10.28.241.15 with SMTP id p15mr2781991wmh.42.1520622672418;
+        Fri, 09 Mar 2018 11:11:12 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id j137sm1672068wmd.17.2018.03.09.11.11.11
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 09 Mar 2018 11:10:47 -0800 (PST)
+        Fri, 09 Mar 2018 11:11:11 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     lars.schneider@autodesk.com
 Cc:     git@vger.kernel.org, tboegi@web.de, j6t@kdbg.org,
         sunshine@sunshineco.com, peff@peff.net,
         ramsay@ramsayjones.plus.com, Johannes.Schindelin@gmx.de,
         pclouds@gmail.com, Lars Schneider <larsxschneider@gmail.com>
-Subject: Re: [PATCH v11 07/10] convert: check for detectable errors in UTF encodings
-In-Reply-To: <20180309173536.62012-8-lars.schneider@autodesk.com> (lars
-        schneider's message of "Fri, 9 Mar 2018 18:35:33 +0100")
+Subject: Re: [PATCH v11 08/10] convert: advise canonical UTF encoding names
 References: <20180309173536.62012-1-lars.schneider@autodesk.com>
-        <20180309173536.62012-8-lars.schneider@autodesk.com>
+        <20180309173536.62012-9-lars.schneider@autodesk.com>
+Date:   Fri, 09 Mar 2018 11:11:11 -0800
+Message-ID: <xmqqefkt5ak0.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
-Date:   Fri, 09 Mar 2018 11:10:46 -0800
-Message-ID: <xmqqlgf15akp.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
@@ -72,11 +70,54 @@ X-Mailing-List: git@vger.kernel.org
 
 lars.schneider@autodesk.com writes:
 
-> +			const char *advise_msg = _(
-> +				"The file '%s' contains a byte order "
-> +				"mark (BOM). Please use %.6s as "
-> +				"working-tree-encoding.");
+> From: Lars Schneider <larsxschneider@gmail.com>
+>
+> The canonical name of an UTF encoding has the format UTF, dash, number,
+> and an optionally byte order in upper case (e.g. UTF-8 or UTF-16BE).
+> Some iconv versions support alternative names without a dash or with
+> lower case characters.
+>
+> To avoid problems between different iconv version always suggest the
+> canonical UTF names in advise messages.
+>
+> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
+> ---
 
-I know that this will go away in a later step, but why ".6"?
+I think it is probably better to squash this to earlier step,
+i.e. jumping straight to the endgame solution.
 
-> +			advise(advise_msg, path, enc);
+> diff --git a/convert.c b/convert.c
+> index b80d666a6b..9a3ae7cce1 100644
+> --- a/convert.c
+> +++ b/convert.c
+> @@ -279,12 +279,20 @@ static int validate_encoding(const char *path, const char *enc,
+>  				"BOM is prohibited in '%s' if encoded as %s");
+>  			/*
+>  			 * This advice is shown for UTF-??BE and UTF-??LE encodings.
+> +			 * We cut off the last two characters of the encoding name
+> +			 # to generate the encoding name suitable for BOMs.
+>  			 */
+
+I somehow thought that I saw "s/#/*/" in somebody's response during
+the previous round?
+
+>  			const char *advise_msg = _(
+>  				"The file '%s' contains a byte order "
+> -				"mark (BOM). Please use %.6s as "
+> +				"mark (BOM). Please use UTF-%s as "
+>  				"working-tree-encoding.");
+> -			advise(advise_msg, path, enc);
+> +			const char *stripped = "";
+> +			char *upper = xstrdup_toupper(enc);
+> +			upper[strlen(upper)-2] = '\0';
+> +			if (!skip_prefix(upper, "UTF-", &stripped))
+> +				skip_prefix(stripped, "UTF", &stripped);
+> +			advise(advise_msg, path, stripped);
+> +			free(upper);
+
+If this codepath is ever entered with "enc" that does not begin with
+"UTF" (e.g. "Shift_JIS", which is impossible in the current code,
+but I'll talk about future-proofing here), then neither of these
+skip_prefix will trigger, and then you'd end up suggesting to use
+"UTF-" that is nonsense.  Perhaps initialize stripped to NULL and
+force advise to segv to catch such a programmer error?
