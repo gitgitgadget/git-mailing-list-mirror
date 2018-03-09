@@ -7,61 +7,61 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2C5BC1F404
-	for <e@80x24.org>; Fri,  9 Mar 2018 23:07:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E97FB1F404
+	for <e@80x24.org>; Fri,  9 Mar 2018 23:21:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932520AbeCIXHX (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Mar 2018 18:07:23 -0500
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:50966 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932320AbeCIXHW (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Mar 2018 18:07:22 -0500
-Received: by mail-wm0-f67.google.com with SMTP id w128so6703726wmw.0
-        for <git@vger.kernel.org>; Fri, 09 Mar 2018 15:07:21 -0800 (PST)
+        id S932486AbeCIXVl (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Mar 2018 18:21:41 -0500
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:36637 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932358AbeCIXVk (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Mar 2018 18:21:40 -0500
+Received: by mail-wm0-f66.google.com with SMTP id 188so6590348wme.1
+        for <git@vger.kernel.org>; Fri, 09 Mar 2018 15:21:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-transfer-encoding;
-        bh=gCa02zcFyo6/sVkFRA9H18QJdBC1PblXl4YeDiGgMfw=;
-        b=Eslh5zbenGqZtvkSzF+7TNHTxs7C93eUJXmTW+3lggyJ3kSsDCsen18nPX3gdbmXkg
-         BV/JOSYGkWSDM/EVdyq+Lq6Vb7LmEej3rH8VlCruII1GgOpqnroTSbh6h8hSMoHTe1qQ
-         bS7leEppwdHUve9ZjtRzsTHa4wGlBAelWkIYv0ejWd5eo0dMrJPpkv/oIPmtXK+Yu8M7
-         YCTxAp6qpSMTdy9RJKMQK1nEnvrya03AgInLzzfbHu8BPpM/TSYiwbTwKobvWxjKLuVc
-         Uz9qXtUFoCB3KQlFNu0V5HPNzGJ4Vx4nbGghsOudqTrcjnVmuVZYSEa9Lo2iLDprlOAc
-         ocbw==
+        bh=Xt2VTmTWmy9VkZOOa7XEho33HuWzsgrhy0sBZhHwnYQ=;
+        b=ZdP9GfWtUvwKEuoUW5f88ZKdJeXfSRqrVU7Fb+FoTWPqwDQ/lqCi3YhDEdfGHjdg/x
+         phU3HmhTwQfMTBDsCxJ+KIc5Fx5V4AerMZ6CtmMENMeCu5b750YZw04COna6wpoVKVsy
+         uup00ePfViSgwQIHjkH06Z9zO15tzjOqNHq48yUZc+rQ/b5eNdf48gO+g+iK0vk3hRZv
+         PEZlbapK5khYBA6nRSbCFB496MsaRcrKRrqRaoRZ5ILKqO0ohGlMEm0qZZSxkgtZRyE9
+         qyXTWZ/ZrfY5rrVo9lPEpN391xSsN1/ZfdpIdIB1tPPpiW0QVsuanFQhrer5XxVfgWGk
+         M0Cg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version
          :content-transfer-encoding;
-        bh=gCa02zcFyo6/sVkFRA9H18QJdBC1PblXl4YeDiGgMfw=;
-        b=sZ3U6XewwXWLo+smT2aMuCeH/1UvdjJc9riiPbLD59+hxkdvcagrJq6nI3rlhwiHuf
-         FOZkt0wXz84gRSH/+nYVFy2+KRD6xblPq4e1hIJ0kMMvNrDIdirQH0IaEG2CXHwXGayY
-         IlpRHBYCNCR8dV/7cDHVsem972LYead6GrKDjgdezCZoT4fC9EHx+MWzt+DfD+i115QG
-         aKqGUXCLtXvkV+e2G/EvFKJV6RHD2paAqMrC1tE7p0u5DKMrT8VCr4VGJd0x4R9UACSY
-         QLmKxYUDHDwX0RD1Wv5wlQ4M9SecSY8ScB16zY4pYCxPvXQ9RCUPFZN8pt4PyZVO2eBF
-         NfAw==
-X-Gm-Message-State: AElRT7EH0O6tgGlASYGHKjyMyxy9+hV4M2hCFkJLwTeweAeNwZIMyuIA
-        eNsabsB0l/W2szuxa7H2O0Y=
-X-Google-Smtp-Source: AG47ELtTSzaZsYyYhuM9QHMmVuF9aXoWDWvpHxlIHN0Evv0hcpslPEa9c7hdiU9q+89yCzZmS/Jnpg==
-X-Received: by 10.28.186.66 with SMTP id k63mr332631wmf.156.1520636840729;
-        Fri, 09 Mar 2018 15:07:20 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id j89sm2170801wrj.92.2018.03.09.15.07.19
+        bh=Xt2VTmTWmy9VkZOOa7XEho33HuWzsgrhy0sBZhHwnYQ=;
+        b=G96tgQR0E8pwbIKfftNAsl1mipOBcdcR9fNuFxViTUuHRyFvXEiW/bdIjlEAAScuz3
+         8esl03Rk4OBJlkJy+OmuXIokuNRgOc2yviwISaRdEDJbUaRpeFu5to7yN1rG95BNRPQK
+         rstHhc6hxbgUIm7tmnLjwda3Mog9CnglZZSSFZtnGphozdWQKCCYFIMOo+VqhKHouNyh
+         z5+lQcH9TiZQ62RVDD7Ad5PRVFmEFzcJQaK0TwEg3JPGzf3RNeS1yOB5hH7Zb9aM4E4C
+         YQ7RJgfgd5vTVMdT9oFFPQvdKABz5hT9PAzREf3Bcd03XpTSN6yJ1l1MRPXOGLyikQp1
+         LN0Q==
+X-Gm-Message-State: AElRT7GsUA4sOquo0oLtVTDe1FD7+EvYobrD2xASbio/HAS7YFPuby/e
+        Kc6Qdq/fWAZKrPr4pUdH47g=
+X-Google-Smtp-Source: AG47ELs3PViQ7quRpvvOAXfN0mOPgrmUI8dNo50ra77BUXTTSDqw0zWU04E+CzO86AQL79czgQdPug==
+X-Received: by 10.28.167.208 with SMTP id q199mr375334wme.29.1520637699013;
+        Fri, 09 Mar 2018 15:21:39 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id d27sm2945622wrd.60.2018.03.09.15.21.38
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 09 Mar 2018 15:07:19 -0800 (PST)
+        Fri, 09 Mar 2018 15:21:38 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
 Cc:     avarab@gmail.com, e@80x24.org, git@vger.kernel.org, peff@peff.net
-Subject: Re: [PATCH/RFC v3 04/12] pack-objects: use bitfield for object_entry::depth
+Subject: Re: [PATCH/RFC v3 07/12] pack-objects: move in_pack out of struct object_entry
 References: <20180303024706.31465-1-pclouds@gmail.com>
         <20180308114232.10508-1-pclouds@gmail.com>
-        <20180308114232.10508-5-pclouds@gmail.com>
-Date:   Fri, 09 Mar 2018 15:07:19 -0800
-In-Reply-To: <20180308114232.10508-5-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
+        <20180308114232.10508-8-pclouds@gmail.com>
+Date:   Fri, 09 Mar 2018 15:21:38 -0800
+In-Reply-To: <20180308114232.10508-8-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
  =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
-        Duy"'s message of "Thu, 8 Mar 2018 18:42:24 +0700")
-Message-ID: <xmqqbmfw4zmg.fsf@gitster-ct.c.googlers.com>
+        Duy"'s message of "Thu, 8 Mar 2018 18:42:27 +0700")
+Message-ID: <xmqq60644yyl.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -73,15 +73,38 @@ X-Mailing-List: git@vger.kernel.org
 
 Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
 
-> +	Maximum value is 4095.
->   ...
-> +	if (depth > (1 << OE_DEPTH_BITS))
-> +		die(_("delta chain depth %d is greater than maximum limit %d"),
-> +		    depth, (1 << OE_DEPTH_BITS));
-> +
+> Instead of using 8 bytes (on 64 bit arch) to store a pointer to a
+> pack. Use an index isntead since the number of packs should be
+> relatively small.
+>
+> This limits the number of packs we can handle to 16k. For now if you hit
+> 16k pack files limit, pack-objects will simply fail [1].
+>
+> This technically saves 7 bytes. But we don't see any of that in
+> practice due to padding. The saving becomes real when we pack this
+> struct tighter later.
 
-Do I see an off-by-one here?  Ie.
+Somehow 7 and 16k do not add up.
 
-	if ((1 << OE_DEPATH_BITS) <= depth)
-		die("depth that is 4096 or deeper is too much");
+We use 8 bytes in the original code, and a solution that potentially
+saves 7 bytes would use only 1 byte instead of the original 8, which
+would allow us to index/identify 1<<8 == 256 packs, but for some reason
+we can handle up to 16k.
 
+> [1] The escape hatch is .keep file to limit the non-kept pack files
+>     below 16k limit. Then you can go for another pack-objects run to
+>     combine another 16k pack files. Repeat until you're satisfied.
+
+;-)
+
+> +static inline unsigned int oe_add_pack(struct packing_data *pack,
+> +				       struct packed_git *p)
+> +{
+> +	if (pack->in_pack_count >= (1 << OE_IN_PACK_BITS))
+> +		die(_("too many packs to handle in one go. "
+> +		      "Please add .keep files to exclude\n"
+> +		      "some pack files and keep the number "
+> +		      "of non-kept files below %d."),
+> +		    1 << OE_IN_PACK_BITS);
+
+OK.
