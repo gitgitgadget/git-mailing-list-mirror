@@ -2,63 +2,62 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F287E1FAE2
-	for <e@80x24.org>; Fri,  9 Mar 2018 11:20:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8C52E1F404
+	for <e@80x24.org>; Fri,  9 Mar 2018 13:04:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751054AbeCILUX (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Mar 2018 06:20:23 -0500
-Received: from mail-ua0-f172.google.com ([209.85.217.172]:39752 "EHLO
-        mail-ua0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750920AbeCILUV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Mar 2018 06:20:21 -0500
-Received: by mail-ua0-f172.google.com with SMTP id e25so1979833uam.6
-        for <git@vger.kernel.org>; Fri, 09 Mar 2018 03:20:21 -0800 (PST)
+        id S1751145AbeCINEa (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Mar 2018 08:04:30 -0500
+Received: from mail-ot0-f180.google.com ([74.125.82.180]:46113 "EHLO
+        mail-ot0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751106AbeCINE3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Mar 2018 08:04:29 -0500
+Received: by mail-ot0-f180.google.com with SMTP id g97so8571546otg.13
+        for <git@vger.kernel.org>; Fri, 09 Mar 2018 05:04:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=8CQK3PCfbypwXB5TdFTGAoQPBLhLEfPRPm5ylVhN/H0=;
-        b=WKoRVLn4YBPkSCpClrwAZMs4ZU9C9T7OqfmFA5vLsiQ0v0Xlw9rHnFwzfg/Qgqb4X+
-         NbGgCpw2/IZv8pEkZGj1ijMTEgJGkAUCAlAz4feE0+8vW9QoEzbufjuN/6IGKSzEOE4l
-         lJSod/N2r3QGea+Xvs+nCsvwib+d75Obi4x+UWMsWVmpVIkzKHQQ1lw1oRTX+bJcCupz
-         0kBBJK7aM1it/nrzRd0kuxbMJt69d0IprOapHYcDHTlv4TNYyrAmzBaE9bRp/eIfxwN8
-         O8tLqBoqkbA/62isx6vNtWdwr6xXOMIe2g3n2WQebglIK2wBKANzzGLkgOsDqFc1sUh6
-         OeEw==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-transfer-encoding;
+        bh=6tzaGmiXdjfp6ahFbuBfcR3/Spe25SGfUWs1qFp8DQE=;
+        b=OfTI6GhMTzXu2BsXQXef1jZ4aWBw8uYnBuH+LSdGfoEZ9p1xOzBVLcZaGfX9MNtueM
+         Y9s5oZoTu0Ih3wS527GdD/xSZZcG0iMAHggkQbeQXmCaDU04Aeravp0XKZoBB+tL/wE2
+         xjTzNrGx8zL+zgko+fY6GUlIfgMwY5HtGBdet/Rj6qWPNEspuxgonIIuMAjkEEG0TePu
+         IHeaMxHqVVMWHvUPU3JLAWjyKGwQzFdbGApO5BPR8+nuZc/w0FvO9fKxrFL9GSHLpdSc
+         r7gy3zLgjeFhHA4Z111wry5b7sn8myPbwuANQOwGw70V0bPoXHu7KK4P8c9SiTJGGTwG
+         R67Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=8CQK3PCfbypwXB5TdFTGAoQPBLhLEfPRPm5ylVhN/H0=;
-        b=fJB9i0kTSxqtD9awmw3uxmda9/IJr/Y7QE1RdFM9jIqPkIsmY8AB0AVb52TIddmkFx
-         AugR4A3SPrUogGgdyC2rWmbS0C9hoa3DcdmTH4SUtMmaUSWdoLBxKv91FwNJUyKLaU2h
-         Gjn8mQEaBTTSJzi1NJWh5ccYP6Ry35S8TYV2BLBBn4k3I3OSktxs3r7ZEP9LQhUuhgbO
-         yne6qyxnmcaP8/sqDOi0Lac1tKvqB/u2HhuZ6YBr/8Yyh8Q2oH9nb18fohlPy6fK+CA7
-         5YtLzyWOEtllonqLcf0rou8obvY6iDQ5y69ZWgWjnJHrFvKRhGQpF30ELXPwVU8lgG+O
-         giUg==
-X-Gm-Message-State: APf1xPB/3z/o9LU9znuBvpH2Dkw07huoOOx0MIJVQrb98mopKtVQ0QOx
-        wEWlBoUzcJpMRiXQV0O7OGfehNhCcC9mCpaZgSI=
-X-Google-Smtp-Source: AG47ELtJX1+XJEozh2W+412F8EnnFd82+zXn1Ar6zV1OONj+vdVGJJ3miYBKfFSdZegGrVtTU+eI41qX0Hype/9Jd1c=
-X-Received: by 10.176.16.27 with SMTP id f27mr21854092uab.196.1520594421246;
- Fri, 09 Mar 2018 03:20:21 -0800 (PST)
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=6tzaGmiXdjfp6ahFbuBfcR3/Spe25SGfUWs1qFp8DQE=;
+        b=YFhFxpX5Z7Cehu25xAcITpo/PopyBw0UkQXm9RMtdnYc8pMuXNwdrgotIPybrUBzRc
+         eom1V/t+Mc9XuxgE4PkatESlr5yBWQO3x6j2+aVkq4tdY1r2lisl99pBGAI3g7wp9a0r
+         YH0MZBUM1zvIViogbS2xLXB33yya4DJl2TFo4gOeltSZ9ON7dN6kfqcauvvR7J7q9F7Q
+         jIMYTNWHxt4lJBNXdE17C0dTbYPiuqPpk6aduLlGT15bSPcvSSYVZOsbvvkr7NOM/JTq
+         LKUnajTm1jNK+D9lITaIFSm/A/S0S4H94EIBSaEwcZdlWJW8Mj1pDjMZoczIyN9yvkHm
+         f1+g==
+X-Gm-Message-State: AElRT7FG4FsCWA1p8jVas4C5hB7OhHj4XAGG8vGyzWCmJhJiKSl5lhdm
+        KV1cmkR95f5mqsm1RUyYiaGr65qH2R9M9Fr7CWI=
+X-Google-Smtp-Source: AG47ELuph3/mZXUXUWR6TVIpatI3xUMatdxxSPim8N3bkDmaYZKev++86QC5Gj9wVcmG488nmeScB/Qy1hDSjgzOkYk=
+X-Received: by 10.157.39.138 with SMTP id c10mr22767554otb.132.1520600668823;
+ Fri, 09 Mar 2018 05:04:28 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.159.59.233 with HTTP; Fri, 9 Mar 2018 03:20:20 -0800 (PST)
-In-Reply-To: <xmqqvae66ske.fsf@gitster-ct.c.googlers.com>
-References: <CAPig+cRSDbFZ_C9opu3pr=m7HwFkeuoxUD_8Yqbd4XxX-W0cHg@mail.gmail.com>
- <20180308224458.5730-1-szeder.dev@gmail.com> <xmqqzi3i6t2v.fsf@gitster-ct.c.googlers.com>
- <CAM0VKjkkFR-zVQMMqp0pJn489bV1uqEHZkB8Mo789J0K+qO3vA@mail.gmail.com> <xmqqvae66ske.fsf@gitster-ct.c.googlers.com>
-From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Date:   Fri, 9 Mar 2018 12:20:20 +0100
-Message-ID: <CAM0VKjnfNBGd4BPXGbpGSTH_YW8dfX=19Lr-DCcS=B5BHp_nCg@mail.gmail.com>
-Subject: Re: [PATCH v1.1 1/2] t9400-git-cvsserver-server: don't rely on the
- output of 'test_cmp'
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git mailing list <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Eric Sunshine <sunshine@sunshineco.com>
+Received: by 10.157.52.162 with HTTP; Fri, 9 Mar 2018 05:04:28 -0800 (PST)
+In-Reply-To: <1520502026.23648.29.camel@hellion.org.uk>
+References: <P56D58$52E406B139FE9D3C295CB5ABAB5C8893@locati.it>
+ <87zi3inckw.fsf@evledraar.gmail.com> <1520502026.23648.29.camel@hellion.org.uk>
+From:   Michele Locati <michele@locati.it>
+Date:   Fri, 9 Mar 2018 14:04:28 +0100
+X-Google-Sender-Auth: zGK-7OMId0XFs0aRUXU0qWNAr_0
+Message-ID: <CAGen01hYG40jKQSu7ZJpb8TXROC74NfVXVT82wNjYqx1yKYD=w@mail.gmail.com>
+Subject: Re: How to use filter-branch with --state-branch?
+To:     Ian Campbell <ijc@hellion.org.uk>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
@@ -66,21 +65,43 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 9, 2018 at 12:44 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
-
->>> This makes "rm -f failures &&" unnecessary, no?
->>
->> Indeed, it does.
+2018-03-08 10:40 GMT+01:00 Ian Campbell <ijc@hellion.org.uk>:
 >
-> OK, no need to resend, as I'll amend it locally before queuing
-> (unless there is something else that needs updating, that is).
+> On Thu, 2018-03-08 at 10:25 +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason=
+ wrote:
+>
+> > > The first filter-branch call required 7168 steps, so did the second c=
+all...
+> > > I also tried without the --prune option of remote update (I had to ad=
+d
+> > > --force to the second filter-branch), but nothing changed.
+>
+> You can see an example of the usage in:
+>     https://git.kernel.org/pub/scm/linux/kernel/git/devicetree/devicetree=
+-rebasing.git/
+>
+> in the `scripts/` sub dir (flow is `cronjob` =E2=86=92 `filter.sh` =E2=86=
+=92 `git
+> filter-branch...`.
+>
+> I think the big difference is rather than `--all` you need to give it
+> the `previous..now` range since that is the update you wish to do
+> (first time around you just give it `now`).
+>
+> The devicetree-rebasing scripting arranges that by keeping the previous
+> in a separate branch.
+>
+> Ian.
 
-Thanks.
+Thank you for your quick reply, Ian.
 
-That 'rm' was unnecessary to begin with, because none of the previous
-tests wrote and left behind a file 'failures', ever.  Though one could
-argue that the original author was careful and added that 'rm failures'
-as a protection against future changes to previous tests...  Dunno, we
-are talking about a test that checked the stderr of 'test_cmp', so
-anything is possible :)
+Just a couple of questions:
+
+1. it seems to me it's not possible to process all the branches in one
+go. Am I right?
+
+2. Why do you have this line in filter.sh?
+`rm -f .git/refs/original/refs/heads/${UPSTREAM_REWRITTEN}`
+
+Thank you again,
+Michele
