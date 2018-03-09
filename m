@@ -2,126 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 83F761F404
-	for <e@80x24.org>; Fri,  9 Mar 2018 17:09:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 243851F404
+	for <e@80x24.org>; Fri,  9 Mar 2018 17:17:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751235AbeCIRJU (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Mar 2018 12:09:20 -0500
-Received: from mout.gmx.net ([212.227.15.19]:40869 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751166AbeCIRJO (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Mar 2018 12:09:14 -0500
-Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Ltr89-1eVDJX1rwD-011BfE; Fri, 09
- Mar 2018 18:09:06 +0100
-Date:   Fri, 9 Mar 2018 18:09:07 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Sergey Organov <sorganov@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [RFC] Rebasing merges: a jorney to the ultimate
- solution(RoadClear)
-In-Reply-To: <xmqqfu5bx9zd.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1803091759250.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <87y3jtqdyg.fsf@javad.com> <33da31e9-9101-475d-8901-4b6b3df2f29d@gmail.com> <940d959d-151d-68dd-0f13-320ebad0d75b@gmail.com> <87606hoflx.fsf@javad.com> <0ac3a3fd-4053-e32e-75ed-8829f22c2e1f@gmail.com> <87a7vss6ax.fsf@javad.com>
- <f1a960dc-cc5c-e7b0-10b6-39e5516655b3@gmail.com> <ed4d2b30-2dea-740b-6283-973c798f619d@philandanna.no-ip.org> <1298a701-a860-a675-83d7-72f29e14cd2b@talktalk.net> <CA+P7+xpgChuvh_vsPktBkOEhF=MjJh1n_3jD0-n4d67j9kYqzw@mail.gmail.com> <ee809701-a6d8-157d-09cd-cebbf2e949ec@gmail.com>
- <1580e48a-be44-38dd-79af-8a2a31c5712e@talktalk.net> <nycvar.QRO.7.76.6.1803061812090.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <xmqqzi3k23fu.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1803070804440.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
- <xmqqh8pr21f3.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1803080801230.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <xmqqfu5bx9zd.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S932070AbeCIRRC (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Mar 2018 12:17:02 -0500
+Received: from mail-ot0-f179.google.com ([74.125.82.179]:43224 "EHLO
+        mail-ot0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751184AbeCIRRC (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Mar 2018 12:17:02 -0500
+Received: by mail-ot0-f179.google.com with SMTP id m22so9319178otf.10
+        for <git@vger.kernel.org>; Fri, 09 Mar 2018 09:17:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to;
+        bh=JFF8tIcvY+cKDdAuB/wY7zE/SGyMD8dhGqT8Qx0wGe4=;
+        b=WYRQG2cuC2TCmuKyQtKhLpIHFqDz1tYV2DO/9yFeyoBD7VQjm6XPzfy+GI+RXAkIbu
+         WJgrwXSG9xKiL+UK9Z/ySsQBoaJayCcB9jeIDsh662Q/YE8GAwtR5VJXXPy8YQnyAA0f
+         OTCTpjKA2lYzA5kmJweFSSm2WRfFbeWTQ+HQL5M/q1kXqMroRcVkBaq6j9x7/4SZ3OGX
+         JSq/lOLvrLrFKbcQNc9PeU+SS0B3S9Axe6UC8+jPdWP+jdFCifqHQTG3UDRqdC0+82Vs
+         WrGIRfALHmAWnZT+Hp/VdJWYYfK09RKPxukHP+DN/CMntZQiiSFzTjNQuG8ANshB5D1T
+         ZbYA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to;
+        bh=JFF8tIcvY+cKDdAuB/wY7zE/SGyMD8dhGqT8Qx0wGe4=;
+        b=Y0bcCqnnvobLGtV5vgWlAdwCsuXZKaaWzbhkQtmQbIpHb+dSSrzQf06DrmBoGsWHYF
+         T8QOK7PlAjvhFhoyasgaPQN6MgcoyGh2MoB2swKWM4BCkmWhsn9JLwn59yuoAAjhL/c3
+         +GehjQ+yVdp5hXHjJ4/V9kflR5FxXRkNxdNb7BgeDapaDX3PBnMfYMIHhU7ktOisYq/O
+         5876Rq+Kc9NwgYYHaH8xvqyBlwG58lJld9/eqQk1alDGjrskOrzXSLRC3lkJkeUWiG/A
+         D31fb8cVw7PslqWVd5x4l8eptK2V5JJCaKJ0uvUGk2WSeJWlUeEEJ7LzyFz8k+mxj7wc
+         2xng==
+X-Gm-Message-State: AElRT7GIS1sZAoCknfVhmz/UT34CDps3grsrZSyVCzLlsBG9qXFOL5oh
+        tkMhd1nVnHaItYbMI0cKHeuOmXQjmPVAPXuq9rQ1YFvV
+X-Google-Smtp-Source: AG47ELscz3ldw5AgIv1azw3TuA7Rus8I+qM77i+e2xo8uoPdGe1ecweC/PR/IFnh1F/2nDmLynKfFFrQ9Tp3YAcEffU=
+X-Received: by 10.157.46.193 with SMTP id w59mr15881734ota.231.1520615821109;
+ Fri, 09 Mar 2018 09:17:01 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:KrLoqlIX1s9G84mJrSokoKe1eHKG6kIAih585fOdEj5+/kwMH3f
- dNn8a0DzKSsD/oPh56O/AFSouEiTT5YQOnD89PlN9ExaUJdGSEoBNuA5iFZ5cvo5PDuctYp
- m1UlWwU8FKIRuJPErxfIE1ek0Iq36LqElJiUW5sV1RRnBM760Ywt39pxa7w/ke2wNJY3Gx+
- cdGjrUvvYi97iOFf9LEWw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:UDyb5529Yfs=:k3+GSA5/0OZHN+VA7NriYY
- FquXTqiMc9a1a1mkqVjcNzw6GFX3WYEEP3MfuMVLk42Nt8ObMze5UKlTOmYysaztbY+ljEzQz
- 5hmnUhlk1oJFC3v74k2Jdkmh9pgEzJ18fclRJqdPs6IRRXoOYzSWfVz2dIUYB2jQX/HWpSS35
- 8R3lMXCibGeF80diiGpnTLlYQ+s5KF9xt2GKM8UYZFW1pfNgrM7V13LWFkZb+QCb7ICqFOLRs
- yieyp8JsSxUkJ5QlSq3AdHXAlbJblPBDO1RDqOY5goRAJ3YjRxF/7obGJqjOIflV90GRK/Ru9
- Ko+hFVPuxKA2cR0Idr7DcUgZ2Vln9PaHJLgf2/6Z9azlzrZGn2nejuhKkyB1SYyZjypmkl4pf
- 3XAILl+iYYdjtHENv4H/AbkcNOybvaO5/OgoMDK4NxA3OQ4U6Fe0XqCxZcgOn201xO5OJgpyy
- +z/mi4fWfrc7s2ZyayNvnoBrcDuhU9+256/2rOp2UXu7k0gLmIceLAD5uzcs+GBpfEz7DR/qk
- yeVawDqZlIN0/aHt+qIMeFNQVskblUveBw/60x0rQguU4y1XDEY7rWQ0DZ44FANxnjg0bqg+U
- Tl92ebEXlZmNXJgql24eLJXopUo6L9+6fbxxnl33a7sZLGedpdRbjv0eOxAPN0CRVS0FlnhZT
- 4IF/vUAMeJYx2cZNaMCLevD1SqaiitAexOeM/NKWubfw/SsZYFpzh8mbIS26VYH2s4yvEA5FM
- Vphb/GmJSR7xWSCyweR0dkostxu/wMiAGmH8FvdxfYeKFXrkjLoe3gD8b9lstPiSmuSRHmnpR
- 6pN2WU6sBWsaQoQZFkT4fDFhcJBIoYErYfsRDUNSpALh3svsHD6r+osojXk8UFfItotUVgt
+Received: by 10.157.52.162 with HTTP; Fri, 9 Mar 2018 09:17:00 -0800 (PST)
+In-Reply-To: <1520601834.2474.27.camel@hellion.org.uk>
+References: <P56D58$52E406B139FE9D3C295CB5ABAB5C8893@locati.it>
+ <87zi3inckw.fsf@evledraar.gmail.com> <1520502026.23648.29.camel@hellion.org.uk>
+ <CAGen01hYG40jKQSu7ZJpb8TXROC74NfVXVT82wNjYqx1yKYD=w@mail.gmail.com> <1520601834.2474.27.camel@hellion.org.uk>
+From:   Michele Locati <michele@locati.it>
+Date:   Fri, 9 Mar 2018 18:17:00 +0100
+X-Google-Sender-Auth: O-OwLK4YZPxyiN06IWhgj85C3wA
+Message-ID: <CAGen01iRQgxibxmc88ogvgk2_gq-DNNdHMs1N+BfoM5rwWasqA@mail.gmail.com>
+Subject: Re: How to use filter-branch with --state-branch?
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+2018-03-09 14:23 GMT+01:00 Ian Campbell <ijc@hellion.org.uk>:
+> On Fri, 2018-03-09 at 14:04 +0100, Michele Locati wrote:
+>> Just a couple of questions:
+>>
+>> 1. it seems to me it's not possible to process all the branches in one
+>> go. Am I right?
+>
+> I'm not sure, I've never done such a thing, in fact I didn't know you
+> could.
+>
+> Really all this feature does is record the `.git/rewrite-map` (or
+> whatever the correct name is) at the end of the rewrite and reinstate
+> it again the next time, so it shouldn't really interact with many of
+> the other options.
+>
+> My method for storeing "last version processed" in a branch does
+> conflict I suppose (since that branch would be rewritten) but that's an
+> artefact of the surrounding scaffolding -- you could equally well keep
+> the record in some file on the local system or in a non-branch-ish ref
+> (I guess).
+>
+>> 2. Why do you have this line in filter.sh?
+>> `rm -f .git/refs/original/refs/heads/${UPSTREAM_REWRITTEN}`
+>
+> TBH I'm not really sure. I originally wrote this patch many years ago,
+> it's just recently that I got around to upstreaming, so my memory is
+> more fuzzy than might be expected.
+>
+> I think perhaps I was trying to avoid this error:
+>
+>     A previous backup already exists in $orig_namespace
+>     Force overwriting the backup with -f"
+>
+> which comes if there is an existing backup (a safety feature in the
+> non-incremental case).
+>
+> Note quite sure why I didn't use `-f` as the message says, but I guess
+> because it forces other things too which I didn't want to do?
+>
+> Perhaps what I should have done is make that check conditional on the
+> use of --state-branch.
+>
+> I wonder if you could use the `original/refs/...` as the "last version
+> processed"? Would be a lot less manual messing around than what I do!
+>
+> Ian.
 
-On Thu, 8 Mar 2018, Junio C Hamano wrote:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> >> If we are talking about a drastic change, a few more days may not be
-> >> sufficient, but we are not in a hurry, as this already sounds like a
-> >> 2.18 material anyway.
-> >
-> > It is not at all a drastic change. It will actually make the current patch
-> > series better (simplifying the "can we fast-forward?" check).
-> >
-> > I just want to make sure that I already have Phillip's strategy working,
-> > but it will be yet another topic branch on top of the topic branch that
-> > will add support for octopus merges *after* the current --recreate-merges
-> > topic branch ;-)
-> 
-> Oh, if the "not redoing the merge afresh, but attempt to reuse the
-> previous merge" that was discussed is going to be done as an
-> update/addition to the "redo the merge afresh" you already had in
-> production forever (and I had in 'pu' for quite a while in various
-> polished-ness during iteration), then I do prefer merging down what
-> has already proven to be 'next' worthy without waiting for the
-> discussion and your local verification of Phillip's new thing,
-> especially given that you'll be giving an explicit control to the
-> users which variant of "merge" insn will be used and the addition
-> of the Phillip's thing won't be a backward-compatibility issue when
-> it comes later.
+I managed to get a general script that seems to work: see
+https://github.com/mlocati/incremental-git-filter-branch
 
-I would like to stress that the `--recreate-merges` functionality has
-*not* beed in production forever. It is a reimplementation in pure C of
-the Unix shell script that has been in production for five years
-(unchanged only for the last half year, the last critical fix happened in
-January last year).
+Thanks again, Ian.
 
-So I do see the value here to use `next` as test bed, and once the patch
-series will hit `next`, I will also merge it into Git for Windows (as an
-EXPERIMENTAL feature).
-
-As such, I am quite comfortable with refactoring a bit here and there, for
-example how to handle the case where a `merge` can be fast-forwarded.
-
-I think the changes I made in the last few days were an actual improvement
-to readability, even if the only reason for those changes was that I
-wanted to accommodate the "rebase merge commits" thing.
-
-FWIW I am fine with bumping this down to 2.18. I got a little bit of
-valuable feedback at GitMerge, e.g. that --recreate-merges does not (yet)
-have a mode where it can update refs corresponding to the rebased commits.
-(This could actually turn out to be independent of --recreate-merges,
-even).
-
-I already pushed out the updated branch, and it can be inspected at
-
-	https://github.com/git/git/pull/447
-
-The reason I did not send this out yet is that I want to give it a final
-look-over myself, so that I do not waste people's time again (as I did
-with that monster interdiff that was pretty bogus, too).
-
-Ciao,
-Dscho
+--
+Michele
