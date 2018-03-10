@@ -6,34 +6,34 @@ X-Spam-Status: No, score=0.6 required=3.0 tests=BAYES_20,FROM_NO_USER,
 	RCVD_IN_DNSWL_HI,TVD_PH_BODY_ACCOUNTS_PRE,T_RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3950D1FAE2
-	for <e@80x24.org>; Sat, 10 Mar 2018 10:23:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DE3CE1FAE2
+	for <e@80x24.org>; Sat, 10 Mar 2018 10:56:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751877AbeCJKXy convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Sat, 10 Mar 2018 05:23:54 -0500
-Received: from host121.bcc.gov.bd ([180.211.213.121]:33206 "EHLO
+        id S1752076AbeCJK4s convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Sat, 10 Mar 2018 05:56:48 -0500
+Received: from host121.bcc.gov.bd ([180.211.213.121]:58534 "EHLO
         zimbra121.bcc.gov.bd" rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org
-        with ESMTP id S1751012AbeCJKXy (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Mar 2018 05:23:54 -0500
+        with ESMTP id S1751974AbeCJK4r (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Mar 2018 05:56:47 -0500
 Received: from localhost (localhost [127.0.0.1])
-        by zimbra121.bcc.gov.bd (Postfix) with ESMTP id 9234899F7AE
-        for <git@vger.kernel.org>; Sat, 10 Mar 2018 16:23:47 +0600 (+06)
+        by zimbra121.bcc.gov.bd (Postfix) with ESMTP id 068799C3809
+        for <git@vger.kernel.org>; Sat, 10 Mar 2018 16:56:45 +0600 (+06)
 Received: from zimbra121.bcc.gov.bd ([127.0.0.1])
         by localhost (zimbra121.bcc.gov.bd [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id dTBcNVPxYFTe for <git@vger.kernel.org>;
-        Sat, 10 Mar 2018 16:23:46 +0600 (+06)
+        with ESMTP id O5WAlco5KGTI for <git@vger.kernel.org>;
+        Sat, 10 Mar 2018 16:56:44 +0600 (+06)
 Received: from localhost (localhost [127.0.0.1])
-        by zimbra121.bcc.gov.bd (Postfix) with ESMTP id C0F639C1F88
-        for <git@vger.kernel.org>; Sat, 10 Mar 2018 16:16:10 +0600 (+06)
-DKIM-Filter: OpenDKIM Filter v2.8.4 zimbra121.bcc.gov.bd C0F639C1F88
+        by zimbra121.bcc.gov.bd (Postfix) with ESMTP id 228729C384B
+        for <git@vger.kernel.org>; Sat, 10 Mar 2018 16:37:49 +0600 (+06)
+DKIM-Filter: OpenDKIM Filter v2.8.4 zimbra121.bcc.gov.bd 228729C384B
 X-Virus-Scanned: amavisd-new at zimbra121.bcc.gov.bd
 Received: from zimbra121.bcc.gov.bd ([127.0.0.1])
         by localhost (zimbra121.bcc.gov.bd [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id g6Av82nlworq for <git@vger.kernel.org>;
-        Sat, 10 Mar 2018 16:16:10 +0600 (+06)
+        with ESMTP id PeEOTTJQUJ3i for <git@vger.kernel.org>;
+        Sat, 10 Mar 2018 16:37:49 +0600 (+06)
 Received: from [10.20.6.19] (unknown [184.95.61.2])
-        by zimbra121.bcc.gov.bd (Postfix) with ESMTPSA id F1AC79C27A7
-        for <git@vger.kernel.org>; Sat, 10 Mar 2018 16:10:38 +0600 (+06)
+        by zimbra121.bcc.gov.bd (Postfix) with ESMTPSA id 24A7E99F289
+        for <git@vger.kernel.org>; Sat, 10 Mar 2018 16:27:18 +0600 (+06)
 Content-Type: text/plain; charset="iso-8859-1"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8BIT
@@ -41,8 +41,8 @@ Content-Description: Mail message body
 Subject: Attention
 To:     git@vger.kernel.org
 From:   "Webmail Service" <>
-Date:   Sat, 10 Mar 2018 06:40:37 -0430
-Message-Id: <20180310101038.F1AC79C27A7@zimbra121.bcc.gov.bd>
+Date:   Sat, 10 Mar 2018 06:57:16 -0430
+Message-Id: <20180310102719.24A7E99F289@zimbra121.bcc.gov.bd>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
