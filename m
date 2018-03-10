@@ -2,86 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1EFCF1F404
-	for <e@80x24.org>; Sat, 10 Mar 2018 15:55:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D26601F404
+	for <e@80x24.org>; Sat, 10 Mar 2018 16:50:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932439AbeCJPzL (ORCPT <rfc822;e@80x24.org>);
-        Sat, 10 Mar 2018 10:55:11 -0500
-Received: from mail-pl0-f68.google.com ([209.85.160.68]:34900 "EHLO
-        mail-pl0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932150AbeCJPzK (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Mar 2018 10:55:10 -0500
-Received: by mail-pl0-f68.google.com with SMTP id w22-v6so6908540pll.2
-        for <git@vger.kernel.org>; Sat, 10 Mar 2018 07:55:10 -0800 (PST)
+        id S1751147AbeCJQu1 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 10 Mar 2018 11:50:27 -0500
+Received: from mail-pf0-f182.google.com ([209.85.192.182]:38744 "EHLO
+        mail-pf0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750884AbeCJQu0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Mar 2018 11:50:26 -0500
+Received: by mail-pf0-f182.google.com with SMTP id d26so2566546pfn.5
+        for <git@vger.kernel.org>; Sat, 10 Mar 2018 08:50:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=9yMXDERL+EoylwsSscbLOvOf4O0AWZeP7DoX0bRdPSw=;
-        b=ngAMA5iN4dUTzO1s9h1+tVJQDCDbSdjT0q0Jt0EYGHumDw0mF9sWKh53rwxYpx3Im0
-         MKIqtWdq7hD0U/0zK1htRUrjd2B8rD94XztucAkIF5c6S2yTDakkaGkr/iKxSdMdg28k
-         tLPTUOtSHA3IGoodgCi97meqvYpiKHh2giros8hDPWRRrnyIk2Vhrl8telseWtAwggyz
-         VEfcw/qE1E/hb0UClenKhup+36cp4SrqaE61c9qlzglL/WRbtMWFMxYh/kV3bjMp73Cs
-         4jCNrFnKL7JSdsSktaSw/2PDVDf+MX6pPolk5jjp1QexBSdMCIVl+2+IrcZiejNl6zN6
-         nIbA==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=g6ySfheXUaIDE5J/lvzrEjr8Ok7W2KOTAXxSDjuv/U0=;
+        b=ZQGSRrdiCMs4BCWmK/9ayQmf6QX/LSUceLDzds0SQq8sONioWMhBOCOGxJq+dZ5LIr
+         dvdxf8UUh/H8qlEr232wGed+MKojMSw7pYGbcKqVrnuF2DOApV+lgnUuUq2cKvK9AWnz
+         kMgly/DLEjD96O+xd/bdS/F2s44iE+9+MAfVCXoQPUaSg/0L/r4mtdOOfpC3K/caqIIh
+         WQegBqB10zI5K74Sv7jsM/DnMZpHY6L7v3jg5jhBoySJY1+IsN0zuukCPhj7C5PkeD6L
+         9fUJJkc28FK7HB7kv1fylDFbNZuS7O4W2EMMok6pcxO2POnp2UhTX8E6ze1IbryEu7sK
+         QqHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=9yMXDERL+EoylwsSscbLOvOf4O0AWZeP7DoX0bRdPSw=;
-        b=Z+82yHTm41Vk6Q892LW6uSlO22zbWXY9xanDGXrvzU7XlwN3R4sK00WKYdcvXLIEsh
-         P1Njq0/JTutJg2RiANNfRAsN8HTb051XkJo4xMmz8G5a0QUbKD/2Aqv+WCLe3qsQhrvz
-         6bPlkoOPfISx5S+PGTnmIw6VscVb8ZwQTCuiCkjLIxxLaY/xg3P7y6ukJWvPtM2VRWV6
-         WQTAenRWCHYNgRCjfZ+6e2pkFmSfFr709uBn3r88gtQQsNOL2Wj67R54qU4dg1JuGnwk
-         Um1c5sPaMqldPPxUixovQPSjlzEJsau5IP/cxAVHPTIVNaIuYKLZ25NZ0CDMLZuIm0+d
-         ex8Q==
-X-Gm-Message-State: AElRT7GPiPCkIdQEbX8n8HSLePK9uwUyu5GSldgR0aFprmNll1mRUnde
-        6iRMqJ2pMxm/xyIbKHyLFRQrKscU
-X-Google-Smtp-Source: AG47ELsVplr9Q3phQ1JzRBI2nTJ4tPvZCEgICdKAqMKyuyrnFugcPaP4eyGciE4iipRqQ1Ntk4KEbw==
-X-Received: by 2002:a17:902:7593:: with SMTP id j19-v6mr2385310pll.408.1520697309443;
-        Sat, 10 Mar 2018 07:55:09 -0800 (PST)
-Received: from localhost.localdomain ([117.209.148.118])
-        by smtp.gmail.com with ESMTPSA id j25sm7795956pgn.92.2018.03.10.07.55.05
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 10 Mar 2018 07:55:08 -0800 (PST)
-From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-To:     Git mailing list <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v4 3/3] t/t3200: fix a typo in a test description
-Date:   Sat, 10 Mar 2018 21:24:16 +0530
-Message-Id: <20180310155416.21802-4-kaartic.sivaraam@gmail.com>
-X-Mailer: git-send-email 2.16.1.291.g4437f3f13
-In-Reply-To: <20180310155416.21802-1-kaartic.sivaraam@gmail.com>
-References: <20171102065407.25404-1-kaartic.sivaraam@gmail.com>
- <20180310155416.21802-1-kaartic.sivaraam@gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=g6ySfheXUaIDE5J/lvzrEjr8Ok7W2KOTAXxSDjuv/U0=;
+        b=ouEV8IvoOjuyT7Icv+hmp/c7C10XCdgLdz/EUobtjF52AXkUpwI9NwIP64Z6bLqKMp
+         TGxbyaeFTA70KB9kDq/FtE+crBgMBV1ua05QY606fXg5vTVXCncDAhioYs5FaFwD8xVE
+         MPFwPS/RkAiZI2HxmIOsOwXoUGC89JITLMC+i2wCl4OAKQylXDjA40cPpeIRKZfedQnw
+         sGW2pykg2eBFzmG9WLoekYYEjwu0JmaRw+I6sPU6k/q2a8V/RA6N7MVB3qymyxu/pJCE
+         ZYM1JDUUS3YRvC5AKhByNlWVisY6rLjiamCIvtnbcYc0Hag9FYpzXp/dBVYO2ZOaBUnu
+         qi0Q==
+X-Gm-Message-State: AElRT7FiP9EcFMTKdzsTm3Dy6jyDN7jmwXoLYMs6YPGRZDRd0zQKq9uK
+        TqQ1V/fPPJw6L/omG2tgGNvW/9Z38E30fUJn5dOdirNU
+X-Google-Smtp-Source: AG47ELv79z9k8+wgS9xKAAYO30jsgc8p+f7NXtrpUMswp0p1jUWn5MseQ+dI82D1+mVy5nIXTxxX+6YsG3XcaC1NQ98=
+X-Received: by 10.98.194.219 with SMTP id w88mr2500128pfk.26.1520700625611;
+ Sat, 10 Mar 2018 08:50:25 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.236.191.144 with HTTP; Sat, 10 Mar 2018 08:50:25 -0800 (PST)
+In-Reply-To: <20180310123058.31211-1-avarab@gmail.com>
+References: <xmqq7eqmxysm.fsf@gitster-ct.c.googlers.com> <20180310123058.31211-1-avarab@gmail.com>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Sat, 10 Mar 2018 17:50:25 +0100
+Message-ID: <CAN0heSp9UMd=t2ssCa7Ln2Gtm2b=EKzyQbDEJGG4Lm5YboF8xg@mail.gmail.com>
+Subject: Re: [PATCH v2] git{,-blame}.el: remove old bitrotting Emacs code
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Alexandre Julliard <julliard@winehq.org>,
+        Dorab Patel <dorabpatel@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
----
- t/t3200-branch.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On 10 March 2018 at 13:30, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@g=
+mail.com> wrote:
+> diff --git a/contrib/emacs/README b/contrib/emacs/README
+> index 82368bdbff..5a63109458 100644
+> --- a/contrib/emacs/README
+> +++ b/contrib/emacs/README
+> @@ -1,30 +1,24 @@
+> -This directory contains various modules for Emacs support.
+> +This directory used to contain various modules for Emacs support.
+>
+> -To make the modules available to Emacs, you should add this directory
+> -to your load-path, and then require the modules you want. This can be
+> -done by adding to your .emacs something like this:
+> +These were added shortly after Git was first released, since then
 
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index 503a88d02..6c0b7ea4a 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -528,7 +528,7 @@ test_expect_success 'git branch -c -f o/q o/p should work when o/p exists' '
- 	git branch -c -f o/q o/p
- '
- 
--test_expect_success 'git branch -c qq rr/qq should fail when r exists' '
-+test_expect_success 'git branch -c qq rr/qq should fail when rr exists' '
- 	git branch qq &&
- 	git branch rr &&
- 	test_must_fail git branch -c qq rr/qq
--- 
-2.16.1.291.g4437f3f13
+s/, since/. Since/ ?
 
+> +Emacs's own support for Git got better than what was offered by these
+> +modules, or was superseded by popular 3rd-party Git modes such as
+> +Magit.
+
+This somehow reads like "Emacs's own support ... was superseded ...".
+Maybe that's what you mean, but i'm not sure. Perhaps s/, was superseded
+by/. There are also/.
+
+>  * git.el:
+>
+> -  Status manager that displays the state of all the files of the
+> -  project, and provides easy access to the most frequently used git
+> -  commands. The user interface is as far as possible compatible with
+> -  the pcl-cvs mode. It can be started with `M-x git-status'.
+> +  Wrapper for "git status" that provided access to other git commands.
+> +
+> +  Modern alternatives to this are Magit, or the VC mode that ships
+> +  with Emacs.
+
+s/, or/ and/ ? My thinking: "A and B are modern alternatives", not "A or
+B are modern alternatives.".
+
+>  * git-blame.el:
+>
+> -  Emacs implementation of incremental git-blame.  When you turn it on
+> -  while viewing a file, the editor buffer will be updated by setting
+> -  the background of individual lines to a color that reflects which
+> -  commit it comes from.  And when you move around the buffer, a
+> -  one-line summary will be shown in the echo area.
+> +  A wrapper for "git blame" written before Emacs's own vc-annotate
+> +  mode learned to invoke git-blame, which can be done via C-x v g.
+
+Thanks for giving constructive hints. :-)
+
+Martin
