@@ -2,130 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4879F1FAE2
-	for <e@80x24.org>; Sat, 10 Mar 2018 11:52:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A91151F404
+	for <e@80x24.org>; Sat, 10 Mar 2018 12:28:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932147AbeCJLwe (ORCPT <rfc822;e@80x24.org>);
-        Sat, 10 Mar 2018 06:52:34 -0500
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:37404 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752270AbeCJLwc (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Mar 2018 06:52:32 -0500
-Received: by mail-wm0-f67.google.com with SMTP id 139so8254326wmn.2
-        for <git@vger.kernel.org>; Sat, 10 Mar 2018 03:52:32 -0800 (PST)
+        id S1752197AbeCJM2f (ORCPT <rfc822;e@80x24.org>);
+        Sat, 10 Mar 2018 07:28:35 -0500
+Received: from mail-wm0-f52.google.com ([74.125.82.52]:51713 "EHLO
+        mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752087AbeCJM2e (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Mar 2018 07:28:34 -0500
+Received: by mail-wm0-f52.google.com with SMTP id h21so8418618wmd.1
+        for <git@vger.kernel.org>; Sat, 10 Mar 2018 04:28:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=LsxBrai3zoO6CxXcgUJ/lbtiQQT2LmYlrKxHdwlTHx8=;
-        b=S63Z1xc8AV1gaHtANnJH6+enWGOaWwyU7ABI8y88eMZ377b0xzWq6uwVbMxe17AFgK
-         bSKprKlQAr2mYeizLQlsICnO/VhjvvuZ3rSH0QdxBdOGEzMNukT5OL0w4e6CurtmCVs1
-         cV7xxy+mb/5SDgOqqyYK+T1SR9DQmTqdrJPfPcpJ2Fnf8Y9AQeUkrnPaXTMWziMLj1Gv
-         w3m0EuY6dDw8o7L7KSmLfctg3TIl0TaNlYXFZ37b5/A98jB+zyXlaTGL807X0FSFYKZ1
-         WtDgMKGGxP2vUS+IA7i6kqi5BNX9LGvJaZtIHsi0da44VKmvUw/RxaP4fK9aYwX8Vw2h
-         cf2Q==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=GlXbO/pk2trmtFuRsJrNi0wtfXHIPYdX7xjQmCD8XoE=;
+        b=pieSQOioSVpnbgj0235zF3yRYqtNQFHUtiohpZIccdVeFJ8jPS98sHzJPWkX7KcOgO
+         bJFJCgPx59udNNV+FeOGEvWHJnrH8weavGqBuzP/S/AKA/Nse6QNoYX21EhMs15kINl4
+         8uFTAhn16jr5mwo+lQRlmuplkU2wzJs2vVwD4qCW9U2AGI5qeecW08XbODPtYQ6bdk2l
+         tt7XUpOyEyHb6vrMAtOUlHL+RxEtcd4jRgIBuNPVfzJRWvhntRN/NaMbB++9WsJN3bsl
+         b6kB9dvCkYltjhMVYrS2TDqM+jNLr5isPJZ41D0qacyrqHsVxQSO9zeYolv1OJQzpoY9
+         /FWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=LsxBrai3zoO6CxXcgUJ/lbtiQQT2LmYlrKxHdwlTHx8=;
-        b=PsjJ8xKdcJjo5Z4KZDY6DEaDpXcAA4t3iuWIVvHWeht7d9CywO+DgxqyLdMoCpGE5J
-         Xwt7IL5vAxUfKFbS7jP4oPSk7ccVHGbM+nwUpvFT3/LQWAkCIcDR5qytG3Nvp2jHLoVn
-         ZYPyEOLDKiS9s26xLigKAhQFug8eKW5+5rrSMn6CaSyDvluaG0JFWqa+3CIzFOpFUb04
-         YkW4hgIsMSQNr1+nGOcQTUfDPYoSS3Idmml5aeMCki70lgPUcQOL+ZdJxZPsSWZ16+az
-         hAxWmrf7QB2idiVbDxQVUiFD7kem9acBLuq9d6adwwQVv5NYT0KdOyWIvLa2sSXbc+Dx
-         wIEA==
-X-Gm-Message-State: AElRT7EgO5B98AEOX+povRoSHuPMdyWgc9Ct421kCHaDEZ5ryrnhnd0U
-        B9GHEpOKl5qGPaK1+ycHFGdcPZ/E
-X-Google-Smtp-Source: AG47ELu5DeyON4TlGkVSQIAFRDToZzU8e/XBCz/7ZzN+XA5g9qlktmfNisfVgYXi6YGWO5nlH3A0Mw==
-X-Received: by 10.28.92.208 with SMTP id q199mr944786wmb.91.1520682751381;
-        Sat, 10 Mar 2018 03:52:31 -0800 (PST)
-Received: from localhost.localdomain ([2a02:aa16:5782:c100:c938:fbb7:46f8:2405])
-        by smtp.gmail.com with ESMTPSA id s21sm2802147wra.45.2018.03.10.03.52.30
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 10 Mar 2018 03:52:30 -0800 (PST)
-From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-To:     git@vger.kernel.org
-Subject: [PATCH 3/3] shortlog: do not accept revisions when run outside repo
-Date:   Sat, 10 Mar 2018 12:52:12 +0100
-Message-Id: <78669e644b64fc10c34adb59717d2039f81cb092.1520680894.git.martin.agren@gmail.com>
-X-Mailer: git-send-email 2.16.2.246.ga4ee44448f
-In-Reply-To: <cover.1520680894.git.martin.agren@gmail.com>
-References: <cover.1520680894.git.martin.agren@gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=GlXbO/pk2trmtFuRsJrNi0wtfXHIPYdX7xjQmCD8XoE=;
+        b=j/JtQsM8uaiTDkqnZzbkSf0i+SGcdXgCVPiKtQVA5nt3gST78f6BicVJOFYbnjO46E
+         bMi/WnZ1J5YgIL+u/0LwPdgokGCoVm9ATQp8mywc/dEMmjUEU7L9Wld9ej+qVY4NJc5h
+         lHBnrLoZ01/FI4CLZ0SphSEOEmKyvEPHfpgtMC5dS83/7xZ+AfWmsQ0+ao6S3KXWiTXY
+         VrnU1DGhRPMthruVQFlHs/qx7fJhv0fFJQQ7+oOb88UK0RwZSqP1FoyyGgakI/u9MVmy
+         c9VsjAx2/V9Xng/en0m4C7x3pVx4dFudlYJ64gl8DgpXFHmYooUwW1p6GicCB15hHqgh
+         /g5Q==
+X-Gm-Message-State: AElRT7G0ek1ENGdrBFd/aIyXHFbGx1Bzo8ZshALE6vvtzUkQYpmJw8gk
+        OG9SXQkabwI5PE0eA6d9yiU=
+X-Google-Smtp-Source: AG47ELtUU1UnkpGfi3gCBrzVMWQDQzvk4XO8+qwaMjJP8sovpKknJHaPJPhq3zUOQcuEoxXGD6J+sA==
+X-Received: by 10.80.184.77 with SMTP id k13mr2780529ede.31.1520684913497;
+        Sat, 10 Mar 2018 04:28:33 -0800 (PST)
+Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
+        by smtp.gmail.com with ESMTPSA id z17sm3137462edz.35.2018.03.10.04.28.31
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sat, 10 Mar 2018 04:28:32 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     KES <kes-kes@yandex.ru>
+Cc:     git <git@vger.kernel.org>
+Subject: Re: Improve `git log -L` functionality
+References: <2051651520351198@web40j.yandex.ru> <3857311520679275@web8j.yandex.ru>
+User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 1.1.0
+In-reply-to: <3857311520679275@web8j.yandex.ru>
+Date:   Sat, 10 Mar 2018 13:28:30 +0100
+Message-ID: <87fu58qfm9.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If we are outside a repo and have any arguments left after
-option-parsing, `setup_revisions()` will try to do its job and
-something like this will happen:
 
-$ git shortlog v2.16.0..
-BUG: environment.c:183: git environment hasn't been setup
-Aborted (core dumped)
+On Sat, Mar 10 2018, KES jotted:
 
-The usage is wrong, but we could obviously handle this better. Note that
-commit abe549e179 (shortlog: do not require to run from inside a git
-repository, 2008-03-14) explicitly enabled `git shortlog` to run from
-outside a repo, since we do not need a repo for parsing data from stdin.
+> uh... seems nobody is interested in this functionality (
 
-Disallow left-over arguments when run from outside a repo. Another
-approach would be to disallow them when reading from stdin. However, our
-logic is currently the other way round: we check the number of revisions
-in order to decide whether we should read from stdin. (So yes, after
-this patch, we will still silently ignore stdin for confused usage such
-as `git log v2.15.0.. | git shortlog v2.16.0..`. But at least that does
-not crash.)
+I'm interested in this, and would review a patch to implement this.
 
-Signed-off-by: Martin Ågren <martin.agren@gmail.com>
----
- t/t4201-shortlog.sh | 5 +++++
- builtin/shortlog.c  | 6 ++++++
- 2 files changed, 11 insertions(+)
+Generally speaking when you send a "wouldn't it be neat if..." message
+to the Git mailing list a lot of people read it (including myself at the
+time), but don't find it useful to add anything to it.
 
-diff --git a/t/t4201-shortlog.sh b/t/t4201-shortlog.sh
-index da10478f5..78c5645a9 100755
---- a/t/t4201-shortlog.sh
-+++ b/t/t4201-shortlog.sh
-@@ -127,6 +127,11 @@ test_expect_success !MINGW 'shortlog can read --format=raw output' '
- 	test_cmp expect out
- '
- 
-+test_expect_success 'shortlog from non-git directory refuses revisions' '
-+	test_must_fail env GIT_DIR=non-existing git shortlog HEAD 2>out &&
-+	test_i18ngrep "no revisions can be given" out
-+'
-+
- test_expect_success 'shortlog should add newline when input line matches wraplen' '
- 	cat >expect <<\EOF &&
- A U Thor (2):
-diff --git a/builtin/shortlog.c b/builtin/shortlog.c
-index dc4af03fc..35e8c1ead 100644
---- a/builtin/shortlog.c
-+++ b/builtin/shortlog.c
-@@ -293,6 +293,12 @@ int cmd_shortlog(int argc, const char **argv, const char *prefix)
- parse_done:
- 	argc = parse_options_end(&ctx);
- 
-+	if (nongit && argc != 1) {
-+		error(_("no revisions can be given when running "
-+			"from outside a repository"));
-+		usage_with_options(shortlog_usage, options);
-+	}
-+
- 	if (setup_revisions(argc, argv, &rev, NULL) != 1) {
- 		error(_("unrecognized argument: %s"), argv[1]);
- 		usage_with_options(shortlog_usage, options);
--- 
-2.16.2.246.ga4ee44448f
+Sure, this feature as described would be neat if it existed, but without
+a patch there's not much to discuss.
 
+In particular the trade-offs of teaching the log machinery to somehow
+stitch together the worktree state without the user somehow getting the
+state into a tree may not be worth it, or it may be. We'd have to have a
+working patch to see.
+
+So if you're interested in working on this don't let the seeming lack of
+interest discourage you.
+
+> 06.03.2018, 17:46, "KES" <kes-kes@yandex.ru>:
+>> Hi.
+>> I want to `Trace the evolution of the line range`.
+>> And not committed change is sort of evolution and should be taken into account by -L option.
+>>
+>> Currently I MUST `stash save` change,
+>> look actual line number,
+>> trace evolution,
+>> `stash pop` to bring back current change.
+>>
+>> EXPECTED:
+>> Allow to use those line numbers which I see in my editor
+>> without excess `stash save/stash pop` commands
+>>
+>> If file has not committed change then this change maybe shown by `-L` as commit NOT COMMITTED YET
+>> If file staged 'commit STAGED'
+>>
+>> More description what is comming on:
+>> https://stackoverflow.com/q/49130112/4632019
