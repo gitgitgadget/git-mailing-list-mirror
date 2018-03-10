@@ -2,83 +2,157 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0076B1F404
-	for <e@80x24.org>; Sat, 10 Mar 2018 15:28:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 33CC51F404
+	for <e@80x24.org>; Sat, 10 Mar 2018 15:54:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932255AbeCJP2q convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Sat, 10 Mar 2018 10:28:46 -0500
-Received: from mail-by2nam03on0056.outbound.protection.outlook.com ([104.47.42.56]:35328
-        "EHLO NAM03-BY2-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S932162AbeCJP2p (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Mar 2018 10:28:45 -0500
-Received: from CY1PR02MB1399.namprd02.prod.outlook.com (10.161.171.148) by
- CY1PR02MB1962.namprd02.prod.outlook.com (10.166.189.144) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P256) id
- 15.20.548.13; Sat, 10 Mar 2018 15:28:43 +0000
-Received: from CY1PR02MB1399.namprd02.prod.outlook.com
- ([fe80::9a0:1fb3:e4bd:df81]) by CY1PR02MB1399.namprd02.prod.outlook.com
- ([fe80::9a0:1fb3:e4bd:df81%14]) with mapi id 15.20.0548.019; Sat, 10 Mar 2018
- 15:28:43 +0000
-From:   "NELSON, JOSHUA Y" <jynelson@email.sc.edu>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: [Feature request] Add config option to gpgsign IFF key is present
-Thread-Topic: [Feature request] Add config option to gpgsign IFF key is
- present
-Thread-Index: AQHTuIRYskh+adEmCUSB+LOceSAbpA==
-Date:   Sat, 10 Mar 2018 15:28:43 +0000
-Message-ID: <CY1PR02MB13991271133B3A6BD334328DF4DD0@CY1PR02MB1399.namprd02.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=jynelson@email.sc.edu; 
-x-originating-ip: [70.42.157.62]
-x-ms-publictraffictype: Email
-x-microsoft-exchange-diagnostics: 1;CY1PR02MB1962;7:/Csa5FnMqDvMyHTJeToUQunOsdGecJTbMNy54Z+V/82Qjb4ZQwhQOYqjsrPFmfsBpQwy9qNrv2JDA3UWO7Pduvuctd7CpjwMBvvt5M67bSkXPrI0TEuMfuFopA5HC/LDPixlUeX5qNkebXeFqOtbRm3ERPff21IhZnWHahBNpH4RQCd3ttcO/k0WG4T78/+56IDwDhuh2V2GJODaVxQ+zfCvyBq4g9z5McBC0S3G7priiUp/mvIWo9RCINsd1EAT
-x-ms-exchange-antispam-srfa-diagnostics: SSOS;
-x-ms-office365-filtering-correlation-id: 9b1358c5-5e16-4ca4-f343-08d5869b9bfb
-x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(7020095)(4652020)(8989060)(5600026)(4604075)(3008032)(4534165)(7168020)(4627221)(201703031133081)(201702281549075)(8990040)(2017052603328)(7167020)(7153060)(7193020);SRVR:CY1PR02MB1962;
-x-ms-traffictypediagnostic: CY1PR02MB1962:
-x-microsoft-antispam-prvs: <CY1PR02MB1962A3E179B1F3719739601DF4DD0@CY1PR02MB1962.namprd02.prod.outlook.com>
-x-exchange-antispam-report-test: UriScan:;
-x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(6040522)(2401047)(8121501046)(5005006)(93006095)(93001095)(10201501046)(3231220)(944501244)(52105095)(3002001)(6041310)(201703131423095)(201702281529075)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(20161123562045)(20161123564045)(20161123560045)(20161123558120)(6072148)(201708071742011);SRVR:CY1PR02MB1962;BCL:0;PCL:0;RULEID:;SRVR:CY1PR02MB1962;
-x-forefront-prvs: 06070568C5
-x-forefront-antispam-report: SFV:NSPM;SFS:(10009020)(346002)(396003)(366004)(376002)(39860400002)(39380400002)(189003)(199004)(51744003)(186003)(6506007)(102836004)(55236004)(7696005)(26005)(99286004)(345774005)(66066001)(478600001)(8676002)(1730700003)(81166006)(81156014)(105586002)(68736007)(3660700001)(8936002)(14454004)(316002)(786003)(6916009)(2906002)(74316002)(75432002)(2900100001)(6436002)(3280700002)(106356001)(5250100002)(3846002)(33656002)(97736004)(2501003)(5640700003)(6116002)(55016002)(5660300001)(9686003)(88552002)(7736002)(305945005)(2351001)(53346004)(86362001)(53936002)(25786009);DIR:OUT;SFP:1101;SCL:1;SRVR:CY1PR02MB1962;H:CY1PR02MB1399.namprd02.prod.outlook.com;FPR:;SPF:None;PTR:InfoNoRecords;MX:1;A:0;LANG:en;
-received-spf: None (protection.outlook.com: email.sc.edu does not designate
- permitted sender hosts)
-x-microsoft-antispam-message-info: NwQ+X8Xe4XhDw5pM5+UavINul7SfKct5iso1GSGHAC+QyUI55MTMkUHLFdHaq/lxWXt+KDpuYGJOadbGvkrDBCXkyC6ygrjfpRgQtvN06CREx8DS+V6QvhKFjyxgXFvpmji5pGjzoJjx52rmKS0E4JlvchHstlGqx7Sf0JTLw7fPTPIIokecsZnquz3ZwHL580xjFFMGwMO7tcWwRSTAN+PUQquNV3ED+BaHxAy8Jx2qSrnfQObr8Ef/uT9z9oAkXk+ZjX/dCkjWrmsa9aCWgaIxd62kvgrf3gtUvRZvLiCfOs38c8nEkvhc3NzD7l1/uJY9J31JjrMaGlBGv4zPbw==
-spamdiagnosticoutput: 1:99
-spamdiagnosticmetadata: NSPM
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: 8BIT
-MIME-Version: 1.0
-X-OriginatorOrg: email.sc.edu
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9b1358c5-5e16-4ca4-f343-08d5869b9bfb
-X-MS-Exchange-CrossTenant-originalarrivaltime: 10 Mar 2018 15:28:43.6732
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 4b2a4b19-d135-420e-8bb2-b1cd238998cc
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY1PR02MB1962
+        id S932417AbeCJPyx (ORCPT <rfc822;e@80x24.org>);
+        Sat, 10 Mar 2018 10:54:53 -0500
+Received: from mail-pl0-f67.google.com ([209.85.160.67]:36532 "EHLO
+        mail-pl0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932150AbeCJPyv (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Mar 2018 10:54:51 -0500
+Received: by mail-pl0-f67.google.com with SMTP id 61-v6so6906222plf.3
+        for <git@vger.kernel.org>; Sat, 10 Mar 2018 07:54:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=ipb1VrvDMv+OA81BGzJjUSohJokZBmcY8WhWTKW2kKw=;
+        b=qW9mElHmBpJH/r0yaFbKA6y4Mf+7tZgMokZui4ZEr0al+NW/UrtjyAX5MatE4/CLsj
+         tuPUx7hbywJ+NfMaAUfH3YtqpNZow8C3fmzzVdOQzx/JCP+NbW/Aa4aiCA6v93KFX8FM
+         /kZz7eUuv/cQE0ZOHCcDXI2wmA84ENFsj0Fn7jKuRaoA6z9akYonbl5LaI7mwcjg9tbg
+         M1axiXtx0484ik3xij3bG9KOgGFIX9ZAyJ1g4cUeTOY4TX9IeRHW6wOaf2q37Wdi4UsH
+         e8ODrIDponP8HhW/T9uMY52GZakFbgZa0fsy8/jiXmzB85c8i6PVbG2/qqajwDDvk8Wy
+         69fw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=ipb1VrvDMv+OA81BGzJjUSohJokZBmcY8WhWTKW2kKw=;
+        b=P98vdD5IwvIGvD45O5qZLxF6BcDopj/duiNdNhxZABL+uVXhzH3wzy6C+GgCgIz5E/
+         eRQ/qwDH4xy3h15Hxn52eygLl/kEpqhNt8h29c7Pg15IQ3KIatTNAXuCf0A4UyodLrxO
+         fvzn4WTqIvtrdJ8wpWk5YLXvIlqLdIBr+y1mfnHAlIyBgFvjsAoB4KLHz6pDClHDSdz+
+         AYAw9irTm/9svjuV4ZnSwwFXwJ03H61/MrDE61+fdBuorma5x5HkWEpr9qrmCjMLdEPH
+         7ZZJFeC1VM2b5ALCWm/aBULH3tbXgNmWt9Ew/yKUP4AtOGUqodoU/XjRCSYreDxUCSKJ
+         tIYQ==
+X-Gm-Message-State: AElRT7HB3TrIAJZSHdm+rja2q7fOhdD0Nuzwz6XWapXB1IhKxLH2i3PX
+        q/hGelGHTetP1EUjAHFy2ocl8ayl
+X-Google-Smtp-Source: AG47ELs8BQRVS+1oT6k/acAuhpJTWtkj4bblSnWF4bFMSMepX5+y5yxe7iqYZ7rCmmQ/We9NiY9NMA==
+X-Received: by 2002:a17:902:710e:: with SMTP id a14-v6mr2365947pll.291.1520697291077;
+        Sat, 10 Mar 2018 07:54:51 -0800 (PST)
+Received: from localhost.localdomain ([117.209.148.118])
+        by smtp.gmail.com with ESMTPSA id j25sm7795956pgn.92.2018.03.10.07.54.46
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 10 Mar 2018 07:54:50 -0800 (PST)
+From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+To:     Git mailing list <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH v4 0/3] give more useful error messages while renaming branch (reboot)
+Date:   Sat, 10 Mar 2018 21:24:13 +0530
+Message-Id: <20180310155416.21802-1-kaartic.sivaraam@gmail.com>
+X-Mailer: git-send-email 2.16.1.291.g4437f3f13
+In-Reply-To: <20171102065407.25404-1-kaartic.sivaraam@gmail.com>
+References: <20171102065407.25404-1-kaartic.sivaraam@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently, `commit.gpgsign` allows you to give either 'true' or 'false' as a value. If the key is not present, commits will fail:
+It's been a long time since the v3 of the patch. So, it's worth restating
+the reason behind this patch.
 
-```sh
-$ git commit -m "example"
-error: gpg failed to sign the data
-fatal: failed to write commit object
-```
+From v1 of this patch,
 
-I like to reuse my config file across several machines, some of which do not have my GPG key. Would it be possible to add an option to sign the commit only if the private key for `user.signingkey` is present? It could be named something like `commit.gpgsign=default-yes`.
+     In builtin/branch, the error messages weren't handled directly by the branch
+     renaming function and was left to the other function. Though this avoids
+     redundancy this gave unclear error messages in some cases. So, make
+     builtin/branch give more useful error messages.
 
-Thank you for your time,
-Joshua Nelson
+Changes since v3:
+
+ - Handled more error related to old branch name.
+
+ - Incorporated changes suggested in v3 which include using ';' as a sentence
+   connector instead 'and'.
+
+ - Error messages use the interpreted branch names (without the (refs/heads/ part).
+
+The unrelated cleanup patches which were in the previous versions have
+since been submitted as a separate series and have been merged into
+the codebase.
+
+The first two patches are related to the topic of this patch. The 3rd one
+is a little typo fix that I noticed on the way.
+
+This patch was based off 'master' and has been rebased to incorporate
+the new changes to 'master'. So, it generally should apply cleanly on
+'master'. Let me know if it doesn't.
+
+The sample input/output cases for this patch are as follows,
+
+	$ git branch
+	* master
+	  foo
+	  bar
+
+Before patch,
+
+	# Case 1: Trying to rename non-existent branch
+	$ git branch -m hypothet no_such_branch
+	error: refname refs/heads/hypothet not found
+	fatal: Branch rename failed
+
+	# Case 2: Trying to rename non-existent branch to an existing one
+	$ git branch -m hypothet master
+	fatal: A branch named 'master' already exists.
+
+	# Case 3: Trying to force update current branch
+	$ git branch -M foo master
+	fatal: Cannot force update the current branch.
+
+	# Case 4: Trying to force rename an in-existent branch with an invalid name
+	$ git branch -M hypothet ?123
+	fatal: '?123' is not a valid branch name.
+
+After patch,
+
+	# Case 1: Trying to rename non-existent branch
+	$ git branch -m hypothet no_such_branch
+	fatal: branch 'hypothet' doesn't exist
+
+	# Case 2: Trying to rename non-existent branch to an existing one
+	$ git branch -m hypothet master
+	fatal: branch 'hypothet' doesn't exist; branch 'master' already exists
+
+	# Case 3: Trying to force update current branch
+	$ git branch -M foo master
+	fatal: cannot force update the current branch
+
+	# Case 4: Trying to force rename an in-existent branch with an invalid name
+	$ git branch -M hypothet ?123
+	fatal: branch 'hypothet' doesn't exist; new branch name '?123' is invalid
+
+
+Note: Thanks to the strbuf API that made it possible to easily
+construct the composite error message strings!
+
+Kaartic Sivaraam (3):
+  branch: introduce dont_fail parameter for branchname validation
+  builtin/branch: give more useful error messages when renaming
+  t/t3200: fix a typo in a test description
+
+ branch.c           |  59 +++++++++++++-----------
+ branch.h           |  61 ++++++++++++++++++++-----
+ builtin/branch.c   | 111 ++++++++++++++++++++++++++++++++++++++-------
+ builtin/checkout.c |   5 +-
+ t/t3200-branch.sh  |   2 +-
+ 5 files changed, 181 insertions(+), 57 deletions(-)
+
+-- 
+2.16.1.291.g4437f3f13
+
