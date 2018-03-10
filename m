@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1F62E1F404
-	for <e@80x24.org>; Sat, 10 Mar 2018 12:35:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EC3A21F404
+	for <e@80x24.org>; Sat, 10 Mar 2018 12:47:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752191AbeCJMfS (ORCPT <rfc822;e@80x24.org>);
-        Sat, 10 Mar 2018 07:35:18 -0500
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:45028 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752166AbeCJMfR (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Mar 2018 07:35:17 -0500
-Received: by mail-pf0-f194.google.com with SMTP id 17so2404031pfw.11
-        for <git@vger.kernel.org>; Sat, 10 Mar 2018 04:35:17 -0800 (PST)
+        id S1752181AbeCJMq6 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 10 Mar 2018 07:46:58 -0500
+Received: from mail-pl0-f65.google.com ([209.85.160.65]:46506 "EHLO
+        mail-pl0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752136AbeCJMq5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Mar 2018 07:46:57 -0500
+Received: by mail-pl0-f65.google.com with SMTP id y8-v6so6731382pll.13
+        for <git@vger.kernel.org>; Sat, 10 Mar 2018 04:46:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Rdd9PzTXqzSrLPG54sAYKdx/O6/Yf7MoNiZdcVL1ClE=;
-        b=YBkDwdRvliw7iJJwXgF2d/XDUX3ELT6su2qC6urW3ohO6k2e+Tjokw4gWAUPMuMJml
-         DSTiYSI6WFZ7FHU8/GjBMdFOBSjMxkJ7od8s/NCZx07E/TCuaG7FcIhpjPUyKIDhn5B5
-         tPbXXE3Ol79Te+W1j+hKKcZYuYyonLtolxX5Y=
+        bh=Rq2+rcEdq8cu9v3Tz1r3HE2g2/2x/TDLtlzS5IGq2bw=;
+        b=BgglfUjPhz5oN9f6gRb+080zBNULMnfKOZA62csBdZlG5qFoGpOosz+5rrBHVAOFGw
+         NV/r+3HU8t0e2e4aTtR2/loju0OaZe1dYjDKDbTGOyHwz6Ag0DFF0he+8VcPb575fQC2
+         VmR0MaBkG4VXC7dm0EvZJXtuyWNrn7WkZi54g=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=Rdd9PzTXqzSrLPG54sAYKdx/O6/Yf7MoNiZdcVL1ClE=;
-        b=mUpJnoE1O8F3a95u7oOfbpspxQPQSyAmEaJ3TyJ1F6Nb2Z0Mqb70RlkHuywJRS7g4Z
-         gszasebNyb5TdyxGEJ4u1Miztt+KYwzUPJZsuU/IpOkJ6hEFdrbJmEGMZ6Py/AMe6Bxg
-         d/itTDCVGGxhdZKn0NMAe2iew2BOV5AEyRnUQdJm1GTjigimiIP+GRzf29N56sDE1MoL
-         /hhuKLvKAlxQQnOObCO+41ikuUV5YLCV0fWaOtkZyq3H6/m4xN7m2QOgDyQj6mS/e3h8
-         jQINN+suo4aMUSsTdnDdGFLANpwFTuwnJl3MJJRWsMaW1St3cxoUJWiz3+a0ZQZaIX9D
-         RG5g==
-X-Gm-Message-State: AElRT7HvQvbuW/rvoSzErMpV0MaDPviTstIG9HTxZ/+CKG63cQf1KnVO
-        3PdZcjvW0RKIzDLM8pNW+bfV12OPjNM=
-X-Google-Smtp-Source: AG47ELsjnUS9xMgh/SehWQLM86HvIRpRrhlhmK/xh8LARndyqB1ZAC9PPDTE5jmIPVMN0sIJhxmUDA==
-X-Received: by 10.101.87.132 with SMTP id b4mr1565407pgr.282.1520685317034;
-        Sat, 10 Mar 2018 04:35:17 -0800 (PST)
+        bh=Rq2+rcEdq8cu9v3Tz1r3HE2g2/2x/TDLtlzS5IGq2bw=;
+        b=RpanoZJk0K00ccWzTHkyfvGFOPIaD6rFNNjbbNAd1G2U309TXuT+Euu7/LydxkbB67
+         aU/RZHpxj2gxsH/72Co6DrZ5Lj5asB0TlErL9HC6aBRIrTNcxzPvsTxqMFK8d3jFu0iB
+         THQRwlBgqcGCDvqPUVwc6FdWPCDgjWOdCeV5pLx0apPx8EFC9GJg7ylXNd8lBY7b4G73
+         TlFpztsJKBe/PRYkBi0FL1R1VJKubG+JI94LNy1SFXX6zx719hopmmIhfNt1vdqixfdw
+         i+ltSmk8D3tSgJ+36xk4qYGBJhb+2QC6n99o/Ffmoc/k3ZNDMm0FBig5V49Y8az4MEfx
+         sXeg==
+X-Gm-Message-State: AElRT7FRjXGy3f8KUyJMjxjCI2Au+YR1rpc96xY+Nx7He6J9v6YKXj9n
+        8dPQBEFQYTDA9dPw8O5b/+z9mrOnZLE=
+X-Google-Smtp-Source: AG47ELt6sxW+sXZnlEVqYPCvxhKhZr8iAIn5VfTdv+hvHBsxuO6Rr+z1STEqbp88RbAA8fntZsoeJA==
+X-Received: by 2002:a17:902:67c8:: with SMTP id g8-v6mr2007529pln.106.1520686017025;
+        Sat, 10 Mar 2018 04:46:57 -0800 (PST)
 Received: from tikuta.tok.corp.google.com ([2401:fa00:4:1002:bd1d:996:abff:29d])
-        by smtp.gmail.com with ESMTPSA id b123sm7660789pfb.179.2018.03.10.04.35.15
+        by smtp.gmail.com with ESMTPSA id c15sm8426636pfm.114.2018.03.10.04.46.55
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 10 Mar 2018 04:35:16 -0800 (PST)
+        Sat, 10 Mar 2018 04:46:56 -0800 (PST)
 From:   Takuto Ikuta <tikuta@chromium.org>
 To:     git@vger.kernel.org
 Cc:     Takuto Ikuta <tikuta@chromium.org>
-Subject: [PATCH v4] fetch-pack.c: use oidset to check existence of loose object
-Date:   Sat, 10 Mar 2018 21:34:45 +0900
-Message-Id: <20180310123445.79609-1-tikuta@chromium.org>
+Subject: [PATCH v5] fetch-pack.c: use oidset to check existence of loose object
+Date:   Sat, 10 Mar 2018 21:46:43 +0900
+Message-Id: <20180310124643.82666-1-tikuta@chromium.org>
 X-Mailer: git-send-email 2.16.2
-In-Reply-To: <20180309132655.224308-1-tikuta@chromium.org>
-References: <20180309132655.224308-1-tikuta@chromium.org>
+In-Reply-To: <20180310123445.79609-1-tikuta@chromium.org>
+References: <20180310123445.79609-1-tikuta@chromium.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -74,8 +74,8 @@ With this patch, the number of lstat(2) calls in `git fetch` is reduced
 from 411412 to 13794 for chromium repository, it has more than 480000
 remote refs.
 
-I took time stat of `git fetch` disabling quickfetch, so that fetch-pack
-runs, for chromium repository 3 time on linux with SSD.
+I took time stat of `git fetch` when fetch-pack happens for chromium
+repository 3 times on linux with SSD.
 * with this patch
 8.105s
 8.309s
