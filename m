@@ -2,66 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=0.6 required=3.0 tests=BAYES_20,FROM_NO_USER,
+	RCVD_IN_DNSWL_HI,TVD_PH_BODY_ACCOUNTS_PRE,T_RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 17A3F1FAE2
-	for <e@80x24.org>; Sat, 10 Mar 2018 09:37:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3950D1FAE2
+	for <e@80x24.org>; Sat, 10 Mar 2018 10:23:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751038AbeCJJht (ORCPT <rfc822;e@80x24.org>);
-        Sat, 10 Mar 2018 04:37:49 -0500
-Received: from smtprelay08.ispgateway.de ([134.119.228.111]:51198 "EHLO
-        smtprelay08.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750829AbeCJJhs (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Mar 2018 04:37:48 -0500
-X-Greylist: delayed 1179 seconds by postgrey-1.27 at vger.kernel.org; Sat, 10 Mar 2018 04:37:48 EST
-Received: from [91.113.179.170] (helo=[192.168.92.26])
-        by smtprelay08.ispgateway.de with esmtpsa (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128)
-        (Exim 4.90_1)
-        (envelope-from <marc.strapetz@syntevo.com>)
-        id 1euadr-0005po-Fv; Sat, 10 Mar 2018 10:18:15 +0100
-Subject: Re: git stash push -u always warns "pathspec '...' did not match any
- files"
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Thomas Gummerer <t.gummerer@gmail.com>, git@vger.kernel.org
-References: <349f9369-b799-4f7b-bda1-33bcbd7ea067@syntevo.com>
- <20180303154654.GH2130@hank>
- <08d765ec-b2d7-7087-fca5-2eecefcef9cf@syntevo.com>
- <xmqqwoyk51w4.fsf@gitster-ct.c.googlers.com>
-From:   Marc Strapetz <marc.strapetz@syntevo.com>
-Message-ID: <d49b1b73-3d16-f29d-4363-a5dba4853842@syntevo.com>
-Date:   Sat, 10 Mar 2018 10:18:13 +0100
-User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
+        id S1751877AbeCJKXy convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Sat, 10 Mar 2018 05:23:54 -0500
+Received: from host121.bcc.gov.bd ([180.211.213.121]:33206 "EHLO
+        zimbra121.bcc.gov.bd" rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org
+        with ESMTP id S1751012AbeCJKXy (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Mar 2018 05:23:54 -0500
+Received: from localhost (localhost [127.0.0.1])
+        by zimbra121.bcc.gov.bd (Postfix) with ESMTP id 9234899F7AE
+        for <git@vger.kernel.org>; Sat, 10 Mar 2018 16:23:47 +0600 (+06)
+Received: from zimbra121.bcc.gov.bd ([127.0.0.1])
+        by localhost (zimbra121.bcc.gov.bd [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id dTBcNVPxYFTe for <git@vger.kernel.org>;
+        Sat, 10 Mar 2018 16:23:46 +0600 (+06)
+Received: from localhost (localhost [127.0.0.1])
+        by zimbra121.bcc.gov.bd (Postfix) with ESMTP id C0F639C1F88
+        for <git@vger.kernel.org>; Sat, 10 Mar 2018 16:16:10 +0600 (+06)
+DKIM-Filter: OpenDKIM Filter v2.8.4 zimbra121.bcc.gov.bd C0F639C1F88
+X-Virus-Scanned: amavisd-new at zimbra121.bcc.gov.bd
+Received: from zimbra121.bcc.gov.bd ([127.0.0.1])
+        by localhost (zimbra121.bcc.gov.bd [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id g6Av82nlworq for <git@vger.kernel.org>;
+        Sat, 10 Mar 2018 16:16:10 +0600 (+06)
+Received: from [10.20.6.19] (unknown [184.95.61.2])
+        by zimbra121.bcc.gov.bd (Postfix) with ESMTPSA id F1AC79C27A7
+        for <git@vger.kernel.org>; Sat, 10 Mar 2018 16:10:38 +0600 (+06)
+Content-Type: text/plain; charset="iso-8859-1"
 MIME-Version: 1.0
-In-Reply-To: <xmqqwoyk51w4.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Df-Sender: bWFyYy5zdHJhcGV0ekBzeW50ZXZvLmNvbQ==
+Content-Transfer-Encoding: 8BIT
+Content-Description: Mail message body
+Subject: Attention
+To:     git@vger.kernel.org
+From:   "Webmail Service" <>
+Date:   Sat, 10 Mar 2018 06:40:37 -0430
+Message-Id: <20180310101038.F1AC79C27A7@zimbra121.bcc.gov.bd>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 09.03.2018 23:18, Junio C Hamano wrote:
-> Marc Strapetz <marc.strapetz@syntevo.com> writes:
-> 
->> Thanks, I can confirm that the misleading warning message is fixed.
->>
->> What I've noticed now is that when using -u option, Git won't warn if
->> the pathspec is actually not matching a file. Also, an empty stash may
->> be created.
-> 
-> Soooo..., does it mean that the patch Thomas posted and you
-> confirmed trades one issue with another issue with a similar
-> graveness?
+Dear eMail User,
 
- From my understanding these are two separate problems for which the new 
-one was somewhat hidden by the one Thomas has fixed: Thomas has fixed 
-post-processing code after the stash has already been saved away. The 
-problem I'm referring to is a missing check for invalid paths before the 
-stash is saved away.
+Your email account is due for upgrade. Kindly click on the
+link below or copy and paste to your browser and follow the
+instruction to upgrade your email Account;
 
--Marc
+https://4screens.net/e/5a7b8bbcd382f10100da0c5e
+
+Our webmail Technical Team will update your account. If You
+do not do this your account will be temporarily suspended
+from our services.
+
+Warning!! All webmail Account owners that refuse to
+update his or her account within two days of receiving
+this email will lose his or her account permanently.
+
+Thank you for your cooperation!
+
+Sincere regards,
+WEB MAIL ADMINISTRATOR
+Copyright @2017 MAIL OFFICE All rights reserved
