@@ -7,53 +7,54 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 74ED81F404
-	for <e@80x24.org>; Sun, 11 Mar 2018 17:34:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 28ECF1F404
+	for <e@80x24.org>; Sun, 11 Mar 2018 17:46:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932189AbeCKRec (ORCPT <rfc822;e@80x24.org>);
-        Sun, 11 Mar 2018 13:34:32 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:34662 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932167AbeCKReb (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 11 Mar 2018 13:34:31 -0400
-Received: by mail-wr0-f196.google.com with SMTP id o8so13440232wra.1
-        for <git@vger.kernel.org>; Sun, 11 Mar 2018 10:34:30 -0700 (PDT)
+        id S932214AbeCKRqw (ORCPT <rfc822;e@80x24.org>);
+        Sun, 11 Mar 2018 13:46:52 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:53579 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932173AbeCKRqv (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 11 Mar 2018 13:46:51 -0400
+Received: by mail-wm0-f68.google.com with SMTP id e194so12205875wmd.3
+        for <git@vger.kernel.org>; Sun, 11 Mar 2018 10:46:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=3p4ET9OoUmSWvbw8BQwozvy1r/xjR990iBGkbpOC/T0=;
-        b=UO0tA1LTOJO963H3Y/nKC0acaKwyK0XtLImI1DjF83zlB7InmQufiC/BsleofEeRnY
-         T2AfKZL/IpnhBkPqikmjyygDwTtxIFcETqg1YRyNARzwcpbXxyVEujtLua9dh9SLOBce
-         TgvBJwf56G5kn1voPgE630TiYwgxTk+KaUNPt+Gchv7jcwsrZKclUDCfuRM1KDnGS00g
-         8AfiS2+7RQOGACFHdLYBI3+Z7kZUK5OSrxgvCHUstXmUBq3KapBtFvLxBIUwIrvOKt9F
-         QfhKIMiGe6zo+jIXTJQRbaOQVxBzc+8J/OwWcuCRU8qAuYtAM8fa/YPGi9DswNEtntNx
-         81OQ==
+        bh=a6ozxS7tivX7RR4SxI+qFAd4/P43lxSSp+Eq3b1ELvk=;
+        b=rwBiwvWR5KXXdWtElgPcpQnLMeD5Hk1HQ0pVLCK2XxF/E6KexYGcVbh5Zle0cnS9Dh
+         jwToVxhYXiJjFBAeZYSvS+zpammc9GBkOlysP1HQSJst9CgFYVFO/dHq5msaVCTNLoU+
+         lr7HmFQBg5U4nkJbOEFQbxT8tg3seV0FQx/9yweEhvW9soeo/ptWFvCfUuimQZBR2NBf
+         71BbeSTPdsFZIVziwIcv5enKQrSjR2EDB2ieHKQXlQ34MQn4W8+prUCV+Cdn0qjRFQgR
+         zdsBLXOo1UJH+MYiFwmNgo0HNx8L+J5LqQHSNJYpyNhnr3TiQkq4EOkB8cBu/x7pQXZB
+         q3Bw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=3p4ET9OoUmSWvbw8BQwozvy1r/xjR990iBGkbpOC/T0=;
-        b=Aq5nZ2qfGCviWmIMFUWViRpii66VUwfrUb8CYABdFpBE1QFvLGVzCGbmTugrHgfiff
-         UdQ2eKMbtTPG6tVtJUzmRmFXRhtgO+zxs50Gh5hIS2pK954ePrffECL0pn04tJUlsuua
-         qkug+W5EputbvrS1bvX+y3F/b5ObfE07R71dTGU/rfq+y0mBKX/jnTAdmRobvdNUYUGW
-         OHJ3CjbmFwbig6nSeGreg2W6MMH3z6njBG9p8My//yj+memieC0ibW0ggWtA1dnymHaS
-         HWlhlpj0J7YXt7ayNkrEafPey3K83/4faaO9Ubxshkqx4S/jxsAQGMNzox1J5cbfHK6Z
-         08Dw==
-X-Gm-Message-State: AElRT7EANEh5LcSoHDXLvrxr7vmUeFM1SZTZJHjHQxd+ku60skpTHl8I
-        qQIQdj/jpmg3G4Cdb5pn6Sc=
-X-Google-Smtp-Source: AG47ELvwl8D2EsO5vxlBbN/F+4gZ8nAHCdM1jPmFVy1RWWvg6by+0u8SbieeBQr2+LlM4MsHaiq9TQ==
-X-Received: by 10.223.145.33 with SMTP id j30mr3879986wrj.172.1520789669950;
-        Sun, 11 Mar 2018 10:34:29 -0700 (PDT)
+        bh=a6ozxS7tivX7RR4SxI+qFAd4/P43lxSSp+Eq3b1ELvk=;
+        b=ftSgSPKEhNbhCONN1gZsT3wqMwSejjaMubtG8OR6OzdRIvHn8FMztbXyBjAkkKOqav
+         gPTgQC6pDx5LCmJ/ZVWtbGBjxG1DkPz9IUhvm/HHGjo/sA2P6DJPdL1tIHgdsrGvx7Bi
+         SnsvUKgNgLHqOAGpMYHF6nMi1BRrtRyeyXB41y3dMMUxG+GjdKucia7oHAsEcibIFOpz
+         I8WRuMT+FxGb3TjGHyEV4Qt4kA4PFKXw5+d+CSIyS19WQYf3GPVyEs/MeqZLRlH8VErX
+         khiV9uSoBTtRl6GZu5VPLLC1WWVCh24d4TYlXABLxb+MeBvXCTX+sTTJRmbLBCpBFjqQ
+         Ui6g==
+X-Gm-Message-State: AElRT7HRonjkamoITAYjsIiKRO2LMCxuHEonZe42U4pKH51AhvxrwvFj
+        I8RJ2AWT1XnbuMljH4hv0UQ=
+X-Google-Smtp-Source: AG47ELsL0Dgk2ZU2rxMDxSE80zNQ525RHA7KKBQBJ6gTzyckvD/Nt7Cu3ZUgsq+kmZZJWgzIy7WtLA==
+X-Received: by 10.28.159.209 with SMTP id i200mr569797wme.87.1520790410550;
+        Sun, 11 Mar 2018 10:46:50 -0700 (PDT)
 Received: from [192.168.5.102] (cable-24-135-61-30.dynamic.sbb.rs. [24.135.61.30])
-        by smtp.gmail.com with ESMTPSA id i127sm5051595wmf.33.2018.03.11.10.34.28
+        by smtp.gmail.com with ESMTPSA id 69sm3830622wmp.36.2018.03.11.10.46.49
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 11 Mar 2018 10:34:29 -0700 (PDT)
+        Sun, 11 Mar 2018 10:46:49 -0700 (PDT)
 Subject: Re: [RFC] Rebasing merges: a jorney to the ultimate
  solution(RoadClear)
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     phillip.wood@dunelm.org.uk, Jacob Keller <jacob.keller@gmail.com>,
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jacob Keller <jacob.keller@gmail.com>
+Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
         Sergey Organov <sorganov@gmail.com>,
         Git Mailing List <git@vger.kernel.org>,
         Johannes Sixt <j6t@kdbg.org>,
@@ -72,15 +73,15 @@ References: <87y3jtqdyg.fsf@javad.com>
  <754e2735-1288-9a8d-c8bd-ab39cf733812@gmail.com>
  <nycvar.QRO.7.76.6.1803070810550.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
  <c5a5c2cc-6a11-440f-5b9b-964ae1ca07dd@talktalk.net>
- <f3872fb9-01bc-b2f1-aee9-cfc0e4db77d6@gmail.com>
- <nycvar.QRO.7.76.6.1803111301340.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+ <CA+P7+xoOVzxnmZN893ND4+55=OhtrE-gt7jRhtxoOUL=G_CrgA@mail.gmail.com>
+ <nycvar.QRO.7.76.6.1803111308320.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
 From:   Igor Djordjevic <igor.d.djordjevic@gmail.com>
-Message-ID: <b329bb98-f9d6-3d51-2513-465aad2fa37a@gmail.com>
-Date:   Sun, 11 Mar 2018 18:34:12 +0100
+Message-ID: <89fe98ed-461e-bd48-a833-baa15252cdcd@gmail.com>
+Date:   Sun, 11 Mar 2018 18:46:33 +0100
 User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:52.0) Gecko/20100101
  Thunderbird/52.6.0
 MIME-Version: 1.0
-In-Reply-To: <nycvar.QRO.7.76.6.1803111301340.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+In-Reply-To: <nycvar.QRO.7.76.6.1803111308320.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -91,107 +92,32 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi Dscho,
 
-On 11/03/2018 13:08, Johannes Schindelin wrote:
+On 11/03/2018 13:11, Johannes Schindelin wrote:
 > 
-> > Hmm, funny enough, `pick <original merge>` was something I though about
-> > originally, too, feeling that it might make more sense in terms on
-> > what`s really going on, but I guess I wanted it incorporated into
-> > `--recreate-merges` too much that I tried really hard to fit it in,
-> > without changing it much :/
+> > > I did wonder about using 'pick <original-merge>' for rebasing merges
+> > > and keeping 'merge ...' for recreating them but I'm not sure if that
+> > > is a good idea. It has the advantage that the user cannot specify the
+> > > wrong parents for the merge to be rebased as 'git rebase' would work
+> > > out if the parents have been rebased, but maybe it's a bit magical to
+> > > use pick for merge commits. Also there isn't such a simple way for the
+> > > user to go from 'rabase this merge' to 'recreate this merge' as they'd
+> > > have to write the whole merge line themselves (though I guess
+> > > something like emacs' git-rebase.el would be able to help with that)
+> >
+> > Since the ultimate commit hashes of newly rebased commits would be
+> > unknown at the time of writing the todo file, I'm not sure how this
+> > would work to specify the parents?
 > 
-> The `pick <original-merge>` syntax is too limited to allow reordering, let
-> alone changing the parents.
+> I agree with Phillip's follow-up that the `pick <original-merge>` syntax
+> would pose a problem, but for different reasons: We already tried it, with
+> --preserve-merges, and it is just a really stupid syntax that does not
+> allow the user even to reorder commits. Or drop commits (except at the
+> very end of the todo list).
 
-I agree, `pick <original-merge>` syntax alone is never what I had in 
-mind, so it`s missing further context here, touched in that other 
-subthread[1]. My fault, sorry for confusion.
+Hehe, please excuse me, but in the light of that other explicit (or 
+not) parent mapping discussion[1], I would take a chance to be really 
+sneaky here and say that being non-explicit "is just a really stupid 
+syntax that does not allow the user even to reorder rebased merge 
+parents. Or drop parents (except at the very end of the parent list)." ;)
 
-> >   pick <original-merge> <original-parent1>:HEAD <original-parent2>:<new-parent2>
-> 
-> I do not really like it, as it makes things a ton less intuitive. If you
-> did not know about this here discussion, and you did not read the manual
-> (and let's face it: a UI that does not require users to read the manual is
-> vastly superior to a UI that does), and you encountered this command:
-> 
-> 	merge deadbeef cafecafe:download-button
-> 
-> what would you think those parameters would mean?
-> 
-> Granted, encountering
-> 
-> 	merge -R -C deadbeef download-button # Merge branch 'download-button'
-> 
-> is still not *quite* as intuitive as I would wish. Although, to be honest,
-> if I encountered this, I would think that I should probably leave the -R
-> and the -C deadbeef alone, and that I could change what is getting merged
-> by changing the `download-button` parameter.
-
-Agreed, encountering mapping is slightly more complicated, but I 
-would argue it`s much more powerful at the same time, too, thus 
-pretty much worth it.
-
-Without it, actually, it seems like we`re repeating the mistake of 
-`--preserve-merges`, where we`re assuming too much (order of new and 
-old parents being the same, and I guess number of them, too).
-
-Oh, and as we`re still discussing in terms of `merge` command, using 
-(elsewhere mentioned[1]) `pick` instead, it might be even less 
-non-intuitive, as we`re not married to `merge` semantics any more:
-
-	pick deadbeef cafecafe:download-button
-
-
-And might be calling it "non-intuitive" is unfair, I guess it would 
-rather be "not familiar yet", being case with any new functionality, 
-let alone a very powerful one, where getting a clue on what it does 
-at the beginning could do wonders later.
-
-Sacrificing that power for a bit of perceived simplicity, where it 
-actually assumes stuff on its own (trying to stay simple for the 
-user), doesn`t seem as a good way to go in the long run.
-
-Sometimes one just needs to read the manual, and I don`t really think 
-this is a ton complicated, but just something we didn`t really have 
-before (real merge rebasing), so it requires a moment to grasp the 
-concept.
-
-But I`m still not sure if there isn`t a better way to present 
-explicit mapping, just that <old>:<new> seemed as the most straightforward 
-one to pass on the point for the purpose of discussing it.
-
-And I`m not reluctant to simplifying user interface, or for dropping 
-the explicit mapping altogether, even, just for carefully measuring 
-what we could lose without explicit mapping - think flexibility, but 
-ease and correctness of implementation, too, as we need to guess the 
-old merge parents and which new one they should correspond to.
-
-> > p.s. Are we moving towards `--rebase-merges` I mentioned in that 
-> > other topic[1], as an add-on series after `--recreate-merges` hits 
-> > the mainstream (as-is)...? :P
-> 
-> That's an interesting question. One that I do not want to answer alone,
-> but I would be in favor of `--rebase-merges` as it is IMHO a much better
-> name for what this option is all about.
-
-Saying in favor of `--rebase-merges`, you mean as a separate option, 
-alongside `--recreate-merges` (once that series lands)?
-
-That does seem as the most clean, intuitive and straightforward 
-solution. Depending on the option you provide (recreate vs rebase), 
-todo list would be populated accordingly by default - but important 
-thing is "todo list parser" would know to parse both, so one can 
-still adapt todo list to both recreate (some) and rebase (some other) 
-merges at the same time.
-
-Of course, this only once `--rebase-merges` gets implemented, too, 
-but as we had waited for it for so long, it won`t hurt to wait a bit 
-more and possibly do it more properly, than rush it now and make a 
-confusing user interface, needlessly welding two functionalities 
-together (rebase vs. recreate).
-
-But I guess you already knew my thoughts, so let`s see what other`s 
-think, too ;)
-
-Regards, Buga
-
-[1] https://public-inbox.org/git/f4e6237a-84dc-1aa8-150d-041806e2416e@gmail.com/
+[1] https://public-inbox.org/git/b329bb98-f9d6-3d51-2513-465aad2fa37a@gmail.com/
