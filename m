@@ -2,102 +2,159 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 76C1D1F404
-	for <e@80x24.org>; Mon, 12 Mar 2018 02:20:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 72A2C1F404
+	for <e@80x24.org>; Mon, 12 Mar 2018 02:28:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932430AbeCLCUG (ORCPT <rfc822;e@80x24.org>);
-        Sun, 11 Mar 2018 22:20:06 -0400
-Received: from mail-qk0-f194.google.com ([209.85.220.194]:38181 "EHLO
-        mail-qk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932419AbeCLCUF (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 11 Mar 2018 22:20:05 -0400
-Received: by mail-qk0-f194.google.com with SMTP id s198so9861266qke.5
-        for <git@vger.kernel.org>; Sun, 11 Mar 2018 19:20:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:subject:date:message-id:in-reply-to:references;
-        bh=NkPbo+icYHlIspwSjnS0fQzRcY3V6osgMq2EX1JhR5I=;
-        b=UUEs2hryR0ZaqR7pw8J95F0Y4xOpy5mXnikxAp5QStN5x4EDV+A342IZp+cqjmPdoV
-         HT8/EwgeO2acyIpqW/KLJtInWIYHHb9J21xIK4PdkoAaBmzKL/m6UQbDSdBOfip2pRmT
-         6MRVpNFsGUh+Xanhbic/QT/O8vafqGa+SMPzWOiwiCh6miSY17TNLeMyd95ny7IHmY/V
-         8s/16LO8dIKHeRRHuchomucutX97vN2NcPwmC7MzaCIEJmafGeR/1TgInlOaYPKkhjan
-         GvZKwG0NTIiA6ti4X3BruTJhv/WY9TO/Eqh0YNVdiYIiKrOED06Fk1W7HCc5xcLu06dx
-         51ug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
-         :references;
-        bh=NkPbo+icYHlIspwSjnS0fQzRcY3V6osgMq2EX1JhR5I=;
-        b=L3aTfgOyy0UNUVGlY5Ip0aB9CZgcSDnbmmYeKBIHmFx+u1lOTFfho4g+Es6I9dwfLN
-         lOsr+1PjJ59a3cvhXEfITrsc0S/KEA5isIYnwED3KFA8yjuGZtn39NOzjFixoW7k4t21
-         duT1ZPzzBAFS3iT1Xn9GOOUQvGJ2Y9FbjFXZXfLMu3Hei+YPPnAdaol0FD+f7DBupSPs
-         6HEbtRDxN6mWH3zz9YCQltfHOdy+UlEf1yKxGMqMqb+NiU3MRJVI6tj4woheKU3lkm28
-         g/zeHQ1XdlGUe6C3iW/4LvsrWqGCutsxaXdOt0D4mz8L8FkyUZt7zVFq8GlwnqUxbCDK
-         poWw==
-X-Gm-Message-State: AElRT7HR/nDrHYFD7NWAxWiulM5M2AwZm+z9h47yfgQ0YP14KHq+gsqU
-        8VVkJESyyjNgH+sj/9ZD3fxq5Q==
-X-Google-Smtp-Source: AG47ELtKPlSCCRfdoDqdTIm9JgV907r9oqLYhslaNeiAMJYKi9UAd3LDF0vffAwr94sFaJ4tyNN+/g==
-X-Received: by 10.55.8.147 with SMTP id 141mr4388304qki.228.1520821204781;
-        Sun, 11 Mar 2018 19:20:04 -0700 (PDT)
-Received: from viet-VPCEA32EG.hsd1.pa.comcast.net ([2601:4a:c102:100d:4cb9:45fc:db31:c0f9])
-        by smtp.gmail.com with ESMTPSA id 1sm2036697qtr.85.2018.03.11.19.20.04
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 11 Mar 2018 19:20:04 -0700 (PDT)
-From:   Viet Hung Tran <viethtran1620@gmail.com>
-To:     Git List <git@vger.kernel.org>
-Subject: [GSoC][PATCH] git-ci: use pylint to analyze the git-p4 code
-Date:   Sun, 11 Mar 2018 22:20:03 -0400
-Message-Id: <20180312022003.8844-1-viethtran1620@gmail.com>
-X-Mailer: git-send-email 2.16.2.440.gc6284da
-In-Reply-To: <20180312020812.7883-1-viethtran1620@gmail.com>
-References: <20180312020812.7883-1-viethtran1620@gmail.com>
+        id S932486AbeCLC2R (ORCPT <rfc822;e@80x24.org>);
+        Sun, 11 Mar 2018 22:28:17 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:34256 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S932420AbeCLC2P (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 11 Mar 2018 22:28:15 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 4CF266042E;
+        Mon, 12 Mar 2018 02:28:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1520821694;
+        bh=QaCzTnfEKMGYetPYwiGn6OksnVGDy/ZtvpMmdM71Nr8=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
+         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
+         In-Reply-To:References:Content-Type:Content-Disposition;
+        b=rhrkwDBoZ9LRh1wXP/76zw+s9UGVQX5mUX7SgbLkGtjzTeYNg0M+kJt0vvAvfoKAS
+         vJTHoUq7kVRs5a/0lmqjWd9N1qKfU5oAf6qsXmyJPkVSzjDJyTn43RDvt1Vni8fsy9
+         WoyBPMreXVO6V3jrcXQjYVOdNbmNA7IIO3Lj5UAye6xwdc9Ww3ZV+k/IX9ktfuR9Lg
+         lUomoAwmmas9R0vrgE2uyHvFAU1ikOZr7jNY0o9qYGViD0j0wr7QuR0Kp0D3MDug+0
+         bijjGLMbnys3EQn0TvRCKFdt7jLUyr/rp0EgVotIp7DyQkIDWAcipMfKOSp0nnfXoD
+         3tPYFRShOfeeYJta5mXB9/LQxz16AR1w1G0gO3Q0R9FDCVZXL0oJERe9XDR1049jE9
+         NH/caqW4UkqbBVIwsZvskCUGN0AV4eGaPV9EmDwVshxiOI+v4Uv+Jyc6w5qSPu36pI
+         NDhuWafvqZnwwxCYjovQEDBdIyfsV9rhgpTDO/20F9pA1gfi4fY
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>, Patryk Obara <patryk.obara@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH v3 01/36] bulk-checkin: convert index_bulk_checkin to struct object_id
+Date:   Mon, 12 Mar 2018 02:27:21 +0000
+Message-Id: <20180312022756.483934-2-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.16.2.660.g709887971b
+In-Reply-To: <20180312022756.483934-1-sandals@crustytoothpaste.net>
+References: <20180312022756.483934-1-sandals@crustytoothpaste.net>
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is my submission as a microproject for the Google Summer of code.
-I apologize for not setting the [GSoC] in my previous email
-at <20180312020855.7950-1-viethtran1620@gmail.com>.
-Please ignore it.
+Convert the index_bulk_checkin function, and the static functions it
+calls, to use pointers to struct object_id.
 
-Add a new job named Pylint to .travis.yml in order to analyze git-p4 Python code.
-Although Travis CI have yet to implement continuous integration for multiple
-languages. Python package can be installed using apt packages. From there, pylint can be
-installed using pip and used to analyze git-p4.py file.
-
-Signed-off-by: Viet Hung Tran <viethtran1620@gmail.com>
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- .travis.yml | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ bulk-checkin.c | 18 +++++++++---------
+ bulk-checkin.h |  2 +-
+ sha1_file.c    |  2 +-
+ 3 files changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/.travis.yml b/.travis.yml
-index 5f5ee4f3b..581d75319 100644
---- a/.travis.yml
-+++ b/.travis.yml
-@@ -46,6 +46,16 @@ matrix:
-         - docker
-       before_install:
-       script: ci/run-linux32-docker.sh
-+    - env: jobname=Pylint
-+      compiler:
-+      addons:
-+        apt:
-+          packages:
-+          - python
-+      before_install:
-+      install: pip install --user pylint
-+      script: pylint git-p4.py
-+      after_failure:
-     - env: jobname=StaticAnalysis
-       os: linux
-       compiler:
--- 
-2.16.2.440.gc6284da
-
+diff --git a/bulk-checkin.c b/bulk-checkin.c
+index 9d87eac07b..e5ce2a7954 100644
+--- a/bulk-checkin.c
++++ b/bulk-checkin.c
+@@ -60,17 +60,17 @@ static void finish_bulk_checkin(struct bulk_checkin_state *state)
+ 	reprepare_packed_git();
+ }
+ 
+-static int already_written(struct bulk_checkin_state *state, unsigned char sha1[])
++static int already_written(struct bulk_checkin_state *state, struct object_id *oid)
+ {
+ 	int i;
+ 
+ 	/* The object may already exist in the repository */
+-	if (has_sha1_file(sha1))
++	if (has_sha1_file(oid->hash))
+ 		return 1;
+ 
+ 	/* Might want to keep the list sorted */
+ 	for (i = 0; i < state->nr_written; i++)
+-		if (!hashcmp(state->written[i]->oid.hash, sha1))
++		if (!oidcmp(&state->written[i]->oid, oid))
+ 			return 1;
+ 
+ 	/* This is a new object we need to keep */
+@@ -186,7 +186,7 @@ static void prepare_to_stream(struct bulk_checkin_state *state,
+ }
+ 
+ static int deflate_to_pack(struct bulk_checkin_state *state,
+-			   unsigned char result_sha1[],
++			   struct object_id *result_oid,
+ 			   int fd, size_t size,
+ 			   enum object_type type, const char *path,
+ 			   unsigned flags)
+@@ -236,17 +236,17 @@ static int deflate_to_pack(struct bulk_checkin_state *state,
+ 		if (lseek(fd, seekback, SEEK_SET) == (off_t) -1)
+ 			return error("cannot seek back");
+ 	}
+-	the_hash_algo->final_fn(result_sha1, &ctx);
++	the_hash_algo->final_fn(result_oid->hash, &ctx);
+ 	if (!idx)
+ 		return 0;
+ 
+ 	idx->crc32 = crc32_end(state->f);
+-	if (already_written(state, result_sha1)) {
++	if (already_written(state, result_oid)) {
+ 		hashfile_truncate(state->f, &checkpoint);
+ 		state->offset = checkpoint.offset;
+ 		free(idx);
+ 	} else {
+-		hashcpy(idx->oid.hash, result_sha1);
++		oidcpy(&idx->oid, result_oid);
+ 		ALLOC_GROW(state->written,
+ 			   state->nr_written + 1,
+ 			   state->alloc_written);
+@@ -255,11 +255,11 @@ static int deflate_to_pack(struct bulk_checkin_state *state,
+ 	return 0;
+ }
+ 
+-int index_bulk_checkin(unsigned char *sha1,
++int index_bulk_checkin(struct object_id *oid,
+ 		       int fd, size_t size, enum object_type type,
+ 		       const char *path, unsigned flags)
+ {
+-	int status = deflate_to_pack(&state, sha1, fd, size, type,
++	int status = deflate_to_pack(&state, oid, fd, size, type,
+ 				     path, flags);
+ 	if (!state.plugged)
+ 		finish_bulk_checkin(&state);
+diff --git a/bulk-checkin.h b/bulk-checkin.h
+index fbd40fc98c..a85527318b 100644
+--- a/bulk-checkin.h
++++ b/bulk-checkin.h
+@@ -4,7 +4,7 @@
+ #ifndef BULK_CHECKIN_H
+ #define BULK_CHECKIN_H
+ 
+-extern int index_bulk_checkin(unsigned char sha1[],
++extern int index_bulk_checkin(struct object_id *oid,
+ 			      int fd, size_t size, enum object_type type,
+ 			      const char *path, unsigned flags);
+ 
+diff --git a/sha1_file.c b/sha1_file.c
+index 1b94f39c4c..6b887f8aaf 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -1892,7 +1892,7 @@ static int index_stream(struct object_id *oid, int fd, size_t size,
+ 			enum object_type type, const char *path,
+ 			unsigned flags)
+ {
+-	return index_bulk_checkin(oid->hash, fd, size, type, path, flags);
++	return index_bulk_checkin(oid, fd, size, type, path, flags);
+ }
+ 
+ int index_fd(struct object_id *oid, int fd, struct stat *st,
