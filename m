@@ -7,43 +7,43 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 032581F404
-	for <e@80x24.org>; Mon, 12 Mar 2018 02:29:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AE2D51F404
+	for <e@80x24.org>; Mon, 12 Mar 2018 02:29:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932661AbeCLC3U (ORCPT <rfc822;e@80x24.org>);
-        Sun, 11 Mar 2018 22:29:20 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:34414 "EHLO
+        id S932659AbeCLC3T (ORCPT <rfc822;e@80x24.org>);
+        Sun, 11 Mar 2018 22:29:19 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:34480 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S932420AbeCLC2l (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 11 Mar 2018 22:28:41 -0400
+        by vger.kernel.org with ESMTP id S932615AbeCLC2x (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 11 Mar 2018 22:28:53 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id C49EA610D8;
-        Mon, 12 Mar 2018 02:28:39 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id A8E32610E9;
+        Mon, 12 Mar 2018 02:28:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1520821720;
-        bh=NZDr6/26bngvizDKq4c7IGxNqgk4Ku/iXi15iDqx7h8=;
+        s=default; t=1520821728;
+        bh=ZOMRTkjIZA2tQ9jDV5KIdPTe9p+o6Z2ZB3qSVMXpsEU=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=gXWpdg837AILymJd89STjnALVDrTCyJyEFcNkKqAb9WqTk7im61Kd59cJLCjJiauU
-         9ghgf7qaQkv4hzFJqLwIkOVTIzFeows3oge93uyTtpvYsxjYyc0cN9EXH1nGnJuNba
-         q5gbWo/sOVoqzXK+YMxojWblpUX2B0fxicMGBsFGVBb7trdH2v54lw84d70KmwoITL
-         krcuMFENG5aET4bc97LBCHYIPdOldBQzuazRWJcQ92/yEhstq45rbdf4AHEnaWbD62
-         3IH3UCWAblxXGBhgXiQiVrb6pd6+1tu9r/Xh0XH/FKaO1fKwX8lZgzJiC02+gJ89kM
-         roUa/urhadKy3mvdI1Eo+wn69AdgeF2ySo/TxKxNlHdEmtFlzV7CTbc6CZBTc0b93z
-         OwG3ED2xUMmJQd7BxqKmKKAIj+rQENaU4fiaY8n5vOl5i5hrdcl+NvyFauND3yhJRg
-         D2waHnk/wqItIDGfWAkHyaORORPEMr8yowstoByEyCESEeHoLZb
+        b=qowx+KlXxM4JceafvbYHcgpj1rSrcLMAcIZVzGikRV8gdjcvV4krT04XR3T72h1m5
+         9igNzR0wO4gQr3USh+s3z/uMXTj/wGChwvPhWrdbr5BBUTvtqoWLY8erJ6Jcfl/8Xb
+         7vsJ6aGlaQuz5/ux3SRD1My6YgkWoaV0TQzY7c1zJyAPh+WcXl8Zh2Myw205mF6mmR
+         5xXPMqgAWDdrLK8Fwt5VVTBGKx8ujDWRAsBkaKgScjlopQxHggyTvCTLFXL0WG4t0o
+         c6rvE026L50QdiamdcFekjwZRfrE2shok98NM6YZYsdC7Bh8n809O8fwddrade6gZi
+         82xtCM/NNu0gcOig3bm+oaQmOwTfYVtLtl25mCYwbv4Y+Xr8jrDTmDnWlTQCxS24Vz
+         j1HAobWn8tdQEcuS5qFMnmIOZs+Yvg3A30QkQPcdvci3wh4yPb+ma2pdIHClKKFyAz
+         ROnNeGadstdRnfVc7MO1jT4XiMezyqnO2gLU0P77x2CQ+OWXy8p
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>, Patryk Obara <patryk.obara@gmail.com>,
         Jeff King <peff@peff.net>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v3 24/36] packfile: convert unpack_entry to struct object_id
-Date:   Mon, 12 Mar 2018 02:27:44 +0000
-Message-Id: <20180312022756.483934-25-sandals@crustytoothpaste.net>
+Subject: [PATCH v3 31/36] tree-walk: convert tree entry functions to object_id
+Date:   Mon, 12 Mar 2018 02:27:51 +0000
+Message-Id: <20180312022756.483934-32-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.16.2.660.g709887971b
 In-Reply-To: <20180312022756.483934-1-sandals@crustytoothpaste.net>
 References: <20180312022756.483934-1-sandals@crustytoothpaste.net>
@@ -53,68 +53,276 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert unpack_entry and read_object to use struct object_id.
----
- packfile.c | 22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+Convert get_tree_entry and find_tree_entry to take pointers to struct
+object_id.
 
-diff --git a/packfile.c b/packfile.c
-index 5f08aa0a14..3e31ad7a0c 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -1452,7 +1452,7 @@ struct unpack_entry_stack_ent {
- 	unsigned long size;
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+---
+ archive.c              |  4 ++--
+ blame.c                |  6 ++----
+ builtin/rm.c           |  2 +-
+ builtin/update-index.c |  2 +-
+ line-log.c             |  3 +--
+ match-trees.c          |  6 +++---
+ merge-recursive.c      | 12 ++++++------
+ notes.c                |  2 +-
+ sha1_name.c            |  7 +++----
+ tree-walk.c            | 20 ++++++++++----------
+ tree-walk.h            |  2 +-
+ 11 files changed, 31 insertions(+), 35 deletions(-)
+
+diff --git a/archive.c b/archive.c
+index da62b2f541..1ab62d426e 100644
+--- a/archive.c
++++ b/archive.c
+@@ -397,8 +397,8 @@ static void parse_treeish_arg(const char **argv,
+ 		unsigned int mode;
+ 		int err;
+ 
+-		err = get_tree_entry(tree->object.oid.hash, prefix,
+-				     tree_oid.hash, &mode);
++		err = get_tree_entry(&tree->object.oid, prefix, &tree_oid,
++				     &mode);
+ 		if (err || !S_ISDIR(mode))
+ 			die("current working directory is untracked");
+ 
+diff --git a/blame.c b/blame.c
+index 00b97c1898..cc2cc92944 100644
+--- a/blame.c
++++ b/blame.c
+@@ -80,7 +80,7 @@ static void verify_working_tree_path(struct commit *work_tree, const char *path)
+ 		struct object_id blob_oid;
+ 		unsigned mode;
+ 
+-		if (!get_tree_entry(commit_oid->hash, path, blob_oid.hash, &mode) &&
++		if (!get_tree_entry(commit_oid, path, &blob_oid, &mode) &&
+ 		    oid_object_info(&blob_oid, NULL) == OBJ_BLOB)
+ 			return;
+ 	}
+@@ -502,9 +502,7 @@ static int fill_blob_sha1_and_mode(struct blame_origin *origin)
+ {
+ 	if (!is_null_oid(&origin->blob_oid))
+ 		return 0;
+-	if (get_tree_entry(origin->commit->object.oid.hash,
+-			   origin->path,
+-			   origin->blob_oid.hash, &origin->mode))
++	if (get_tree_entry(&origin->commit->object.oid, origin->path, &origin->blob_oid, &origin->mode))
+ 		goto error_out;
+ 	if (oid_object_info(&origin->blob_oid, NULL) != OBJ_BLOB)
+ 		goto error_out;
+diff --git a/builtin/rm.c b/builtin/rm.c
+index 4a2fcca27b..974a7ef5bf 100644
+--- a/builtin/rm.c
++++ b/builtin/rm.c
+@@ -178,7 +178,7 @@ static int check_local_mod(struct object_id *head, int index_only)
+ 		 * way as changed from the HEAD.
+ 		 */
+ 		if (no_head
+-		     || get_tree_entry(head->hash, name, oid.hash, &mode)
++		     || get_tree_entry(head, name, &oid, &mode)
+ 		     || ce->ce_mode != create_ce_mode(mode)
+ 		     || oidcmp(&ce->oid, &oid))
+ 			staged_changes = 1;
+diff --git a/builtin/update-index.c b/builtin/update-index.c
+index 58d1c2d282..9625d1e10a 100644
+--- a/builtin/update-index.c
++++ b/builtin/update-index.c
+@@ -592,7 +592,7 @@ static struct cache_entry *read_one_ent(const char *which,
+ 	int size;
+ 	struct cache_entry *ce;
+ 
+-	if (get_tree_entry(ent->hash, path, oid.hash, &mode)) {
++	if (get_tree_entry(ent, path, &oid, &mode)) {
+ 		if (which)
+ 			error("%s: not in %s branch.", path, which);
+ 		return NULL;
+diff --git a/line-log.c b/line-log.c
+index cdc2257db5..ecdce08c4b 100644
+--- a/line-log.c
++++ b/line-log.c
+@@ -501,8 +501,7 @@ static void fill_blob_sha1(struct commit *commit, struct diff_filespec *spec)
+ 	unsigned mode;
+ 	struct object_id oid;
+ 
+-	if (get_tree_entry(commit->object.oid.hash, spec->path,
+-			   oid.hash, &mode))
++	if (get_tree_entry(&commit->object.oid, spec->path, &oid, &mode))
+ 		die("There is no path %s in the commit", spec->path);
+ 	fill_filespec(spec, &oid, 1, mode);
+ 
+diff --git a/match-trees.c b/match-trees.c
+index 0ca99d5162..10d6c39d47 100644
+--- a/match-trees.c
++++ b/match-trees.c
+@@ -269,7 +269,7 @@ void shift_tree(const struct object_id *hash1,
+ 		if (!*del_prefix)
+ 			return;
+ 
+-		if (get_tree_entry(hash2->hash, del_prefix, shifted->hash, &mode))
++		if (get_tree_entry(hash2, del_prefix, shifted, &mode))
+ 			die("cannot find path %s in tree %s",
+ 			    del_prefix, oid_to_hex(hash2));
+ 		return;
+@@ -296,12 +296,12 @@ void shift_tree_by(const struct object_id *hash1,
+ 	unsigned candidate = 0;
+ 
+ 	/* Can hash2 be a tree at shift_prefix in tree hash1? */
+-	if (!get_tree_entry(hash1->hash, shift_prefix, sub1.hash, &mode1) &&
++	if (!get_tree_entry(hash1, shift_prefix, &sub1, &mode1) &&
+ 	    S_ISDIR(mode1))
+ 		candidate |= 1;
+ 
+ 	/* Can hash1 be a tree at shift_prefix in tree hash2? */
+-	if (!get_tree_entry(hash2->hash, shift_prefix, sub2.hash, &mode2) &&
++	if (!get_tree_entry(hash2, shift_prefix, &sub2, &mode2) &&
+ 	    S_ISDIR(mode2))
+ 		candidate |= 2;
+ 
+diff --git a/merge-recursive.c b/merge-recursive.c
+index f58f13957e..85f8cbee99 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -370,12 +370,12 @@ static struct stage_data *insert_stage_data(const char *path,
+ {
+ 	struct string_list_item *item;
+ 	struct stage_data *e = xcalloc(1, sizeof(struct stage_data));
+-	get_tree_entry(o->object.oid.hash, path,
+-			e->stages[1].oid.hash, &e->stages[1].mode);
+-	get_tree_entry(a->object.oid.hash, path,
+-			e->stages[2].oid.hash, &e->stages[2].mode);
+-	get_tree_entry(b->object.oid.hash, path,
+-			e->stages[3].oid.hash, &e->stages[3].mode);
++	get_tree_entry(&o->object.oid, path,
++			&e->stages[1].oid, &e->stages[1].mode);
++	get_tree_entry(&a->object.oid, path,
++			&e->stages[2].oid, &e->stages[2].mode);
++	get_tree_entry(&b->object.oid, path,
++			&e->stages[3].oid, &e->stages[3].mode);
+ 	item = string_list_insert(entries, path);
+ 	item->util = e;
+ 	return e;
+diff --git a/notes.c b/notes.c
+index ce9a8f53f8..d25121a65d 100644
+--- a/notes.c
++++ b/notes.c
+@@ -1012,7 +1012,7 @@ void init_notes(struct notes_tree *t, const char *notes_ref,
+ 		return;
+ 	if (flags & NOTES_INIT_WRITABLE && read_ref(notes_ref, &object_oid))
+ 		die("Cannot use notes ref %s", notes_ref);
+-	if (get_tree_entry(object_oid.hash, "", oid.hash, &mode))
++	if (get_tree_entry(&object_oid, "", &oid, &mode))
+ 		die("Failed to read notes tree referenced by %s (%s)",
+ 		    notes_ref, oid_to_hex(&object_oid));
+ 
+diff --git a/sha1_name.c b/sha1_name.c
+index d129dc4f31..39e911c8ba 100644
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -1529,8 +1529,7 @@ static void diagnose_invalid_oid_path(const char *prefix,
+ 	if (is_missing_file_error(errno)) {
+ 		char *fullname = xstrfmt("%s%s", prefix, filename);
+ 
+-		if (!get_tree_entry(tree_oid->hash, fullname,
+-				    oid.hash, &mode)) {
++		if (!get_tree_entry(tree_oid, fullname, &oid, &mode)) {
+ 			die("Path '%s' exists, but not '%s'.\n"
+ 			    "Did you mean '%.*s:%s' aka '%.*s:./%s'?",
+ 			    fullname,
+@@ -1722,8 +1721,8 @@ static int get_oid_with_context_1(const char *name,
+ 					filename, oid->hash, &oc->symlink_path,
+ 					&oc->mode);
+ 			} else {
+-				ret = get_tree_entry(tree_oid.hash, filename,
+-						     oid->hash, &oc->mode);
++				ret = get_tree_entry(&tree_oid, filename, oid,
++						     &oc->mode);
+ 				if (ret && only_to_die) {
+ 					diagnose_invalid_oid_path(prefix,
+ 								   filename,
+diff --git a/tree-walk.c b/tree-walk.c
+index 521defdaa2..a60837c491 100644
+--- a/tree-walk.c
++++ b/tree-walk.c
+@@ -492,7 +492,7 @@ struct dir_state {
+ 	unsigned char sha1[20];
  };
  
--static void *read_object(const unsigned char *sha1, enum object_type *type,
-+static void *read_object(const struct object_id *oid, enum object_type *type,
- 			 unsigned long *size)
+-static int find_tree_entry(struct tree_desc *t, const char *name, unsigned char *result, unsigned *mode)
++static int find_tree_entry(struct tree_desc *t, const char *name, struct object_id *result, unsigned *mode)
  {
- 	struct object_info oi = OBJECT_INFO_INIT;
-@@ -1461,7 +1461,7 @@ static void *read_object(const unsigned char *sha1, enum object_type *type,
- 	oi.sizep = size;
- 	oi.contentp = &content;
- 
--	if (sha1_object_info_extended(sha1, &oi, 0) < 0)
-+	if (sha1_object_info_extended(oid->hash, &oi, 0) < 0)
- 		return NULL;
- 	return content;
- }
-@@ -1501,11 +1501,11 @@ void *unpack_entry(struct packed_git *p, off_t obj_offset,
- 			struct revindex_entry *revidx = find_pack_revindex(p, obj_offset);
- 			off_t len = revidx[1].offset - obj_offset;
- 			if (check_pack_crc(p, &w_curs, obj_offset, len, revidx->nr)) {
--				const unsigned char *sha1 =
--					nth_packed_object_sha1(p, revidx->nr);
-+				struct object_id oid;
-+				nth_packed_object_oid(&oid, p, revidx->nr);
- 				error("bad packed object CRC for %s",
--				      sha1_to_hex(sha1));
--				mark_bad_packed_object(p, sha1);
-+				      oid_to_hex(&oid));
-+				mark_bad_packed_object(p, oid.hash);
- 				data = NULL;
- 				goto out;
- 			}
-@@ -1588,16 +1588,16 @@ void *unpack_entry(struct packed_git *p, off_t obj_offset,
- 			 * of a corrupted pack, and is better than failing outright.
- 			 */
- 			struct revindex_entry *revidx;
--			const unsigned char *base_sha1;
-+			struct object_id base_oid;
- 			revidx = find_pack_revindex(p, obj_offset);
- 			if (revidx) {
--				base_sha1 = nth_packed_object_sha1(p, revidx->nr);
-+				nth_packed_object_oid(&base_oid, p, revidx->nr);
- 				error("failed to read delta base object %s"
- 				      " at offset %"PRIuMAX" from %s",
--				      sha1_to_hex(base_sha1), (uintmax_t)obj_offset,
-+				      oid_to_hex(&base_oid), (uintmax_t)obj_offset,
- 				      p->pack_name);
--				mark_bad_packed_object(p, base_sha1);
--				base = read_object(base_sha1, &type, &base_size);
-+				mark_bad_packed_object(p, base_oid.hash);
-+				base = read_object(&base_oid, &type, &base_size);
- 				external_base = base;
- 			}
+ 	int namelen = strlen(name);
+ 	while (t->size) {
+@@ -511,7 +511,7 @@ static int find_tree_entry(struct tree_desc *t, const char *name, unsigned char
+ 		if (cmp < 0)
+ 			break;
+ 		if (entrylen == namelen) {
+-			hashcpy(result, oid->hash);
++			oidcpy(result, oid);
+ 			return 0;
  		}
+ 		if (name[entrylen] != '/')
+@@ -519,27 +519,27 @@ static int find_tree_entry(struct tree_desc *t, const char *name, unsigned char
+ 		if (!S_ISDIR(*mode))
+ 			break;
+ 		if (++entrylen == namelen) {
+-			hashcpy(result, oid->hash);
++			oidcpy(result, oid);
+ 			return 0;
+ 		}
+-		return get_tree_entry(oid->hash, name + entrylen, result, mode);
++		return get_tree_entry(oid, name + entrylen, result, mode);
+ 	}
+ 	return -1;
+ }
+ 
+-int get_tree_entry(const unsigned char *tree_sha1, const char *name, unsigned char *sha1, unsigned *mode)
++int get_tree_entry(const struct object_id *tree_oid, const char *name, struct object_id *oid, unsigned *mode)
+ {
+ 	int retval;
+ 	void *tree;
+ 	unsigned long size;
+-	unsigned char root[20];
++	struct object_id root;
+ 
+-	tree = read_object_with_reference(tree_sha1, tree_type, &size, root);
++	tree = read_object_with_reference(tree_oid->hash, tree_type, &size, root.hash);
+ 	if (!tree)
+ 		return -1;
+ 
+ 	if (name[0] == '\0') {
+-		hashcpy(sha1, root);
++		oidcpy(oid, &root);
+ 		free(tree);
+ 		return 0;
+ 	}
+@@ -549,7 +549,7 @@ int get_tree_entry(const unsigned char *tree_sha1, const char *name, unsigned ch
+ 	} else {
+ 		struct tree_desc t;
+ 		init_tree_desc(&t, tree, size);
+-		retval = find_tree_entry(&t, name, sha1, mode);
++		retval = find_tree_entry(&t, name, oid, mode);
+ 	}
+ 	free(tree);
+ 	return retval;
+@@ -671,7 +671,7 @@ enum follow_symlinks_result get_tree_entry_follow_symlinks(unsigned char *tree_s
+ 
+ 		/* Look up the first (or only) path component in the tree. */
+ 		find_result = find_tree_entry(&t, namebuf.buf,
+-					      current_tree_oid.hash, mode);
++					      &current_tree_oid, mode);
+ 		if (find_result) {
+ 			goto done;
+ 		}
+diff --git a/tree-walk.h b/tree-walk.h
+index b6bd1b4ccf..4617deeb0e 100644
+--- a/tree-walk.h
++++ b/tree-walk.h
+@@ -79,7 +79,7 @@ struct traverse_info {
+ 	int show_all_errors;
+ };
+ 
+-int get_tree_entry(const unsigned char *, const char *, unsigned char *, unsigned *);
++int get_tree_entry(const struct object_id *, const char *, struct object_id *, unsigned *);
+ extern char *make_traverse_path(char *path, const struct traverse_info *info, const struct name_entry *n);
+ extern void setup_traverse_info(struct traverse_info *info, const char *base);
+ 
