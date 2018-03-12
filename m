@@ -8,104 +8,95 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C4ABA1F404
-	for <e@80x24.org>; Mon, 12 Mar 2018 12:56:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5707F1F404
+	for <e@80x24.org>; Mon, 12 Mar 2018 13:07:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751252AbeCLM4O (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Mar 2018 08:56:14 -0400
-Received: from mail.javad.com ([54.86.164.124]:40523 "EHLO mail.javad.com"
+        id S1751255AbeCLNHu (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Mar 2018 09:07:50 -0400
+Received: from mail.javad.com ([54.86.164.124]:46357 "EHLO mail.javad.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751104AbeCLM4N (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Mar 2018 08:56:13 -0400
+        id S1751104AbeCLNHt (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Mar 2018 09:07:49 -0400
 Received: from osv (unknown [89.175.180.246])
-        by mail.javad.com (Postfix) with ESMTPSA id C311E3E966;
-        Mon, 12 Mar 2018 12:56:12 +0000 (UTC)
+        by mail.javad.com (Postfix) with ESMTPSA id 11CA33E896;
+        Mon, 12 Mar 2018 13:07:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1520859373;
-        bh=8Y2S89mABPedPEvaO2HxCTYtT9yY/Bt6vfVui28ddoQ=; l=1528;
+        s=default; t=1520860068;
+        bh=/lqiWe8Q0uClhXPbG6ZuTU0NzyJlkk0cXHdTbbv2yFM=; l=746;
         h=Received:From:To:Subject;
-        b=W1nRqUWg+t5OUwdah1DUvS8hC7KeLa5vHx/m432dCuPf/IHq6oowJzs4CUjd0v4TH
-         X4HMo2SZJHM21KVKHd9SgfaM4jzyNqxWbMEBIyZ1axcrca/v9RLmNz4z+AdqZ06CFe
-         LJfWbsFLyRcPH8U+xwH+vk7QhLAk0I1Ui8hF9DEM=
+        b=ApkcAtI6ajyrx7pJKJCD8+BJfwveM/jVU2fECPsT+09N1SOricAaqexr5xGBMDME7
+         ceEqK9rLGY4RNu+emeK/sYZcjcYYmZ3JZvEzJKnXQFCbx/zog1deLu39TgOiGRNojq
+         O7Wt03ZiJHHrgAa4cmy37JcaakjXVuQ+FY4DOupc=
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1520859373;
-        bh=8Y2S89mABPedPEvaO2HxCTYtT9yY/Bt6vfVui28ddoQ=; l=1528;
+        s=default; t=1520860068;
+        bh=/lqiWe8Q0uClhXPbG6ZuTU0NzyJlkk0cXHdTbbv2yFM=; l=746;
         h=Received:From:To:Subject;
-        b=W1nRqUWg+t5OUwdah1DUvS8hC7KeLa5vHx/m432dCuPf/IHq6oowJzs4CUjd0v4TH
-         X4HMo2SZJHM21KVKHd9SgfaM4jzyNqxWbMEBIyZ1axcrca/v9RLmNz4z+AdqZ06CFe
-         LJfWbsFLyRcPH8U+xwH+vk7QhLAk0I1Ui8hF9DEM=
+        b=ApkcAtI6ajyrx7pJKJCD8+BJfwveM/jVU2fECPsT+09N1SOricAaqexr5xGBMDME7
+         ceEqK9rLGY4RNu+emeK/sYZcjcYYmZ3JZvEzJKnXQFCbx/zog1deLu39TgOiGRNojq
+         O7Wt03ZiJHHrgAa4cmy37JcaakjXVuQ+FY4DOupc=
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1520859373;
-        bh=8Y2S89mABPedPEvaO2HxCTYtT9yY/Bt6vfVui28ddoQ=; l=1528;
+        s=default; t=1520860068;
+        bh=/lqiWe8Q0uClhXPbG6ZuTU0NzyJlkk0cXHdTbbv2yFM=; l=746;
         h=Received:From:To:Subject;
-        b=W1nRqUWg+t5OUwdah1DUvS8hC7KeLa5vHx/m432dCuPf/IHq6oowJzs4CUjd0v4TH
-         X4HMo2SZJHM21KVKHd9SgfaM4jzyNqxWbMEBIyZ1axcrca/v9RLmNz4z+AdqZ06CFe
-         LJfWbsFLyRcPH8U+xwH+vk7QhLAk0I1Ui8hF9DEM=
+        b=ApkcAtI6ajyrx7pJKJCD8+BJfwveM/jVU2fECPsT+09N1SOricAaqexr5xGBMDME7
+         ceEqK9rLGY4RNu+emeK/sYZcjcYYmZ3JZvEzJKnXQFCbx/zog1deLu39TgOiGRNojq
+         O7Wt03ZiJHHrgAa4cmy37JcaakjXVuQ+FY4DOupc=
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1520859373;
-        bh=8Y2S89mABPedPEvaO2HxCTYtT9yY/Bt6vfVui28ddoQ=; l=1528;
+        s=default; t=1520860068;
+        bh=/lqiWe8Q0uClhXPbG6ZuTU0NzyJlkk0cXHdTbbv2yFM=; l=746;
         h=Received:From:To:Subject;
-        b=W1nRqUWg+t5OUwdah1DUvS8hC7KeLa5vHx/m432dCuPf/IHq6oowJzs4CUjd0v4TH
-         X4HMo2SZJHM21KVKHd9SgfaM4jzyNqxWbMEBIyZ1axcrca/v9RLmNz4z+AdqZ06CFe
-         LJfWbsFLyRcPH8U+xwH+vk7QhLAk0I1Ui8hF9DEM=
+        b=ApkcAtI6ajyrx7pJKJCD8+BJfwveM/jVU2fECPsT+09N1SOricAaqexr5xGBMDME7
+         ceEqK9rLGY4RNu+emeK/sYZcjcYYmZ3JZvEzJKnXQFCbx/zog1deLu39TgOiGRNojq
+         O7Wt03ZiJHHrgAa4cmy37JcaakjXVuQ+FY4DOupc=
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1520859373;
-        bh=8Y2S89mABPedPEvaO2HxCTYtT9yY/Bt6vfVui28ddoQ=; l=1528;
+        s=default; t=1520860068;
+        bh=/lqiWe8Q0uClhXPbG6ZuTU0NzyJlkk0cXHdTbbv2yFM=; l=746;
         h=Received:From:To:Subject;
-        b=W1nRqUWg+t5OUwdah1DUvS8hC7KeLa5vHx/m432dCuPf/IHq6oowJzs4CUjd0v4TH
-         X4HMo2SZJHM21KVKHd9SgfaM4jzyNqxWbMEBIyZ1axcrca/v9RLmNz4z+AdqZ06CFe
-         LJfWbsFLyRcPH8U+xwH+vk7QhLAk0I1Ui8hF9DEM=
+        b=ApkcAtI6ajyrx7pJKJCD8+BJfwveM/jVU2fECPsT+09N1SOricAaqexr5xGBMDME7
+         ceEqK9rLGY4RNu+emeK/sYZcjcYYmZ3JZvEzJKnXQFCbx/zog1deLu39TgOiGRNojq
+         O7Wt03ZiJHHrgAa4cmy37JcaakjXVuQ+FY4DOupc=
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1520859373;
-        bh=8Y2S89mABPedPEvaO2HxCTYtT9yY/Bt6vfVui28ddoQ=; l=1528;
+        s=default; t=1520860068;
+        bh=/lqiWe8Q0uClhXPbG6ZuTU0NzyJlkk0cXHdTbbv2yFM=; l=746;
         h=Received:From:To:Subject;
-        b=W1nRqUWg+t5OUwdah1DUvS8hC7KeLa5vHx/m432dCuPf/IHq6oowJzs4CUjd0v4TH
-         X4HMo2SZJHM21KVKHd9SgfaM4jzyNqxWbMEBIyZ1axcrca/v9RLmNz4z+AdqZ06CFe
-         LJfWbsFLyRcPH8U+xwH+vk7QhLAk0I1Ui8hF9DEM=
+        b=ApkcAtI6ajyrx7pJKJCD8+BJfwveM/jVU2fECPsT+09N1SOricAaqexr5xGBMDME7
+         ceEqK9rLGY4RNu+emeK/sYZcjcYYmZ3JZvEzJKnXQFCbx/zog1deLu39TgOiGRNojq
+         O7Wt03ZiJHHrgAa4cmy37JcaakjXVuQ+FY4DOupc=
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1520859373;
-        bh=8Y2S89mABPedPEvaO2HxCTYtT9yY/Bt6vfVui28ddoQ=; l=1528;
+        s=default; t=1520860068;
+        bh=/lqiWe8Q0uClhXPbG6ZuTU0NzyJlkk0cXHdTbbv2yFM=; l=746;
         h=Received:From:To:Subject;
-        b=W1nRqUWg+t5OUwdah1DUvS8hC7KeLa5vHx/m432dCuPf/IHq6oowJzs4CUjd0v4TH
-         X4HMo2SZJHM21KVKHd9SgfaM4jzyNqxWbMEBIyZ1axcrca/v9RLmNz4z+AdqZ06CFe
-         LJfWbsFLyRcPH8U+xwH+vk7QhLAk0I1Ui8hF9DEM=
+        b=ApkcAtI6ajyrx7pJKJCD8+BJfwveM/jVU2fECPsT+09N1SOricAaqexr5xGBMDME7
+         ceEqK9rLGY4RNu+emeK/sYZcjcYYmZ3JZvEzJKnXQFCbx/zog1deLu39TgOiGRNojq
+         O7Wt03ZiJHHrgAa4cmy37JcaakjXVuQ+FY4DOupc=
 Authentication-Results: mail.javad.com;
         spf=pass (sender IP is 89.175.180.246) smtp.mailfrom=osv@javad.com smtp.helo=osv
 Received-SPF: pass (mail.javad.com: connection is authenticated)
 Received: from osv by osv with local (Exim 4.84_2)
         (envelope-from <osv@osv.gnss.ru>)
-        id 1evMzq-0001Kl-Nq; Mon, 12 Mar 2018 15:56:10 +0300
+        id 1evNB4-0001Lz-Dy; Mon, 12 Mar 2018 16:07:46 +0300
 From:   Sergey Organov <sorganov@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Igor Djordjevic <igor.d.djordjevic@gmail.com>,
-        phillip.wood@dunelm.org.uk, Jacob Keller <jacob.keller@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC] Rebasing merges: a jorney to the ultimate solution(RoadClear)
-References: <87y3jtqdyg.fsf@javad.com> <87606hoflx.fsf@javad.com>
-        <0ac3a3fd-4053-e32e-75ed-8829f22c2e1f@gmail.com>
-        <87a7vss6ax.fsf@javad.com>
-        <f1a960dc-cc5c-e7b0-10b6-39e5516655b3@gmail.com>
-        <ed4d2b30-2dea-740b-6283-973c798f619d@philandanna.no-ip.org>
-        <1298a701-a860-a675-83d7-72f29e14cd2b@talktalk.net>
-        <CA+P7+xpgChuvh_vsPktBkOEhF=MjJh1n_3jD0-n4d67j9kYqzw@mail.gmail.com>
-        <ee809701-a6d8-157d-09cd-cebbf2e949ec@gmail.com>
-        <1580e48a-be44-38dd-79af-8a2a31c5712e@talktalk.net>
-        <nycvar.QRO.7.76.6.1803061812090.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <754e2735-1288-9a8d-c8bd-ab39cf733812@gmail.com>
-        <nycvar.QRO.7.76.6.1803070810550.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <c5a5c2cc-6a11-440f-5b9b-964ae1ca07dd@talktalk.net>
-        <483674f8-4097-a374-c8f3-cf56cbb92042@talktalk.net>
-        <29bc6661-1d78-8f89-194e-1dcc9d88c34e@gmail.com>
-        <nycvar.QRO.7.76.6.1803111256410.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <f4e6237a-84dc-1aa8-150d-041806e2416e@gmail.com>
-        <nycvar.QRO.7.76.6.1803121122390.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-Date:   Mon, 12 Mar 2018 15:56:10 +0300
-In-Reply-To: <nycvar.QRO.7.76.6.1803121122390.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        (Johannes Schindelin's message of "Mon, 12 Mar 2018 11:37:41 +0100
-        (STD)")
-Message-ID: <87h8plh2qd.fsf@javad.com>
+To:     Igor Djordjevic <igor.d.djordjevic@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [RFC v2] Rebasing merges: a jorney to the ultimate solution (Road Clear)
+References: <87y3jtqdyg.fsf@javad.com> <87r2oxe3o1.fsf@javad.com>
+        <nycvar.QRO.7.76.6.1803070742580.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        <87vae8yq15.fsf@javad.com>
+        <nycvar.QRO.7.76.6.1803071450511.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        <a0cc88d2-bfed-ce7b-1b3f-3c447d2b32da@gmail.com>
+        <4918cc79-79ba-5dd2-ea84-dc47db47d835@gmail.com>
+        <b11785bd-5c96-43c1-95d8-b28eccfd13c8@gmail.com>
+        <d29d3c0e-6473-0461-c8ea-02975ce4de14@gmail.com>
+        <nycvar.QRO.7.76.6.1803111644380.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        <6362804d-e204-a9e0-9ff0-51d8497ce921@gmail.com>
+Date:   Mon, 12 Mar 2018 16:07:46 +0300
+In-Reply-To: <6362804d-e204-a9e0-9ff0-51d8497ce921@gmail.com> (Igor
+        Djordjevic's message of "Sun, 11 Mar 2018 21:53:17 +0100")
+Message-ID: <87a7vdh271.fsf@javad.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -114,45 +105,23 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Johannes,
+Hi Buga,
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Igor Djordjevic <igor.d.djordjevic@gmail.com> writes:
 
-> Hi Buga,
->
-> On Sun, 11 Mar 2018, Igor Djordjevic wrote:
->
->> I agree with both of you that `pick <merge-commit>` is inflexible 
->> (not to say just plain wrong), but I never thought about it like that.
->> 
->> If we are to extract further mentioned explicit old:new merge 
->> parameter mapping to a separate discussion point, what we`re 
->> eventually left with is just replacing this:
->> 
->> 	merge -R -C <original--merge-commit> <merge-head>
->> 
->> ... with this:
->> 
->> 	pick <original--merge-commit> <merge-head>
->
-> I see where you are coming from.
->
-> I also see where users will be coming from. Reading a todo list in the
-> editor is as much documentation as it is a "program to execute". And I am
-> afraid that reading a command without even mentioning the term "merge"
-> once is pretty misleading in this setting.
->
-> And even from the theoretical point of view: cherry-picking non-merge
-> commits is *so much different* from "rebasing merge commits" as discussed
-> here, so much so that using the same command would be even more
-> misleading.
+> Hi Dscho,
 
-This last statement is plain wrong when applied to the method in the
-[RFC] you are replying to. Using the method in [RFC], "cherry-pick
-non-merge" is nothing more or less than reduced version of generic
-"cherry-pick merge", exactly as it should be.
+[...]
 
-Or, in other words, "cherry-pick merge" is generalization of
-"cherry-pick non-merge" to multiple parents.
+> I think the root of misunderstanding might be coming from the fact
+> that Sergey was mainly describing a general concept (without a
+> strictly defined implementation strategy, not being restricted to a
+> specific one), where Phillip came up with a solution that eventually
+> seems to use the same concept (as those transformations above should
+> show), but simplifying it further inside a concrete implementation.
+
+As a side-note, starting from sound general concept leaves a hope to
+end-up with something like Git, while starting from an implementation,
+however nice it is, gives a danger of ending-up with something like Bzr.
 
 -- Sergey
