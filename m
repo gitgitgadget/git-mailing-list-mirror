@@ -7,43 +7,43 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A3E571F404
-	for <e@80x24.org>; Mon, 12 Mar 2018 02:28:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 29DED1F404
+	for <e@80x24.org>; Mon, 12 Mar 2018 02:28:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932570AbeCLC22 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 11 Mar 2018 22:28:28 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:34304 "EHLO
+        id S932575AbeCLC2a (ORCPT <rfc822;e@80x24.org>);
+        Sun, 11 Mar 2018 22:28:30 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:34328 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S932420AbeCLC2V (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 11 Mar 2018 22:28:21 -0400
+        by vger.kernel.org with ESMTP id S932527AbeCLC22 (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 11 Mar 2018 22:28:28 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 5716A60998;
-        Mon, 12 Mar 2018 02:28:20 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 014D860B38;
+        Mon, 12 Mar 2018 02:28:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1520821700;
-        bh=dO+7MrnS+4YFt5SPcGs79SiY8BXBACMWl+JE4SYw44I=;
+        s=default; t=1520821707;
+        bh=c3K+uOW/fF//wL+e81N9gPnho16FV459lYVUa1jylfg=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=HmYmEwq+qD3OIYW8+Dz5jtdszELnl7DwB2qBOWdHCQt7CiU5Ides1PsY3FQtUb2OH
-         77g8TjgJ019/gc9e/OCpt0/WVgkN9NYy8cb3tOUB9Xeu7DT1aImrgYgnSeQVvDNsrv
-         PGVj1cQxndLcUN9qYgyHmQxPfZuZ2O57WDf1fExuCmtcdgfQC5SRNAlSwNtxfwEUXQ
-         t9wxCQFaKWH9cC4Pq3znL5PuSfL98VMeLQaHz0LMkzdeV6Ty1hiEKotJnG2Sg2hRl9
-         WJQuM7Y/2+fuh0x9Y17yyVPWTNr8BFo7OkVjRgHDWHou/PwshD17z+2qz76lkLgt2Z
-         PzdAvs0DOK7NjFKxE6lFDoynyCvCpFcSrKZQkW2iZv/fCfvMJZwKMenmE8gIgtNBBW
-         WFCZDZ9xtJcNG3wz0nTANV+epCMyFiTo3hl/H8bHKIfwVCGl8RvZuHX8z0P/pbDZhk
-         pHiQMXtVwIS8u5jyZNpPTIyAhLXFFvsOEHb18d5ojQs2S6XQu69
+        b=qunrtDlZrKcwbYDVadQD5HyltxLgtiypkl2DhP2m3m3rIctjLUyWXq9NFL4y5jjKS
+         5iYtoxXUcwQU0p29EJjX06daHcfJBE78p1tg+YijiniNlImEISfwVvk3kGwTGSpxOf
+         7Nb+75ExlWerRzX9j7IlfzE69t04zAR69defPndMMZEZmOrE7af4yfH/XlH+xgcB3K
+         46ZzTlbUm2thBvv7ET+/lklfwpttwac00SslPTrGpFR/uBouiwI9rThKM2ywEfEd6S
+         BNp8L+OS3lql4eo4vHoC9bkeDJGk+LcqJZfBFiQJu7x3eom10unE61FmiByTWnEb7O
+         qyOQyhbUWuEsYSoNsbfD8YdS/P1DjAPU88tJOVPJaOuJIULUSP4rDWK9Lsnge3GSck
+         c4qk/ttTUy8jgz+WXliSbIbdCYQyCebbJio5+/Bs8ORh0NogP/OJY0kaavOyHkj+wV
+         JqkNPk4pSFBlmmlFNbgwomPC12FgnNx87GAr83IXl9yypaci17X
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>, Patryk Obara <patryk.obara@gmail.com>,
         Jeff King <peff@peff.net>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v3 07/36] ref-filter: convert grab_objectname to struct object_id
-Date:   Mon, 12 Mar 2018 02:27:27 +0000
-Message-Id: <20180312022756.483934-8-sandals@crustytoothpaste.net>
+Subject: [PATCH v3 13/36] replace_object: convert struct replace_object to object_id
+Date:   Mon, 12 Mar 2018 02:27:33 +0000
+Message-Id: <20180312022756.483934-14-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.16.2.660.g709887971b
 In-Reply-To: <20180312022756.483934-1-sandals@crustytoothpaste.net>
 References: <20180312022756.483934-1-sandals@crustytoothpaste.net>
@@ -53,55 +53,70 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is necessary in order to convert find_unique_abbrev.
+Convert the two members of this struct to be instances of struct
+object_id.  Adjust the various functions in this file accordingly.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- ref-filter.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ replace_object.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/ref-filter.c b/ref-filter.c
-index 45fc56216a..dbe554dffa 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -737,18 +737,18 @@ static void *get_obj(const struct object_id *oid, struct object **obj, unsigned
- 	return buf;
- }
+diff --git a/replace_object.c b/replace_object.c
+index 3e49965d05..232e8b8550 100644
+--- a/replace_object.c
++++ b/replace_object.c
+@@ -8,8 +8,8 @@
+  * sha1.
+  */
+ static struct replace_object {
+-	unsigned char original[20];
+-	unsigned char replacement[20];
++	struct object_id original;
++	struct object_id replacement;
+ } **replace_object;
  
--static int grab_objectname(const char *name, const unsigned char *sha1,
-+static int grab_objectname(const char *name, const struct object_id *oid,
- 			   struct atom_value *v, struct used_atom *atom)
+ static int replace_object_alloc, replace_object_nr;
+@@ -17,7 +17,7 @@ static int replace_object_alloc, replace_object_nr;
+ static const unsigned char *replace_sha1_access(size_t index, void *table)
  {
- 	if (starts_with(name, "objectname")) {
- 		if (atom->u.objectname.option == O_SHORT) {
--			v->s = xstrdup(find_unique_abbrev(sha1, DEFAULT_ABBREV));
-+			v->s = xstrdup(find_unique_abbrev(oid->hash, DEFAULT_ABBREV));
- 			return 1;
- 		} else if (atom->u.objectname.option == O_FULL) {
--			v->s = xstrdup(sha1_to_hex(sha1));
-+			v->s = xstrdup(oid_to_hex(oid));
- 			return 1;
- 		} else if (atom->u.objectname.option == O_LENGTH) {
--			v->s = xstrdup(find_unique_abbrev(sha1, atom->u.objectname.length));
-+			v->s = xstrdup(find_unique_abbrev(oid->hash, atom->u.objectname.length));
- 			return 1;
- 		} else
- 			die("BUG: unknown %%(objectname) option");
-@@ -775,7 +775,7 @@ static void grab_common_values(struct atom_value *val, int deref, struct object
- 			v->s = xstrfmt("%lu", sz);
- 		}
- 		else if (deref)
--			grab_objectname(name, obj->oid.hash, v, &used_atom[i]);
-+			grab_objectname(name, &obj->oid, v, &used_atom[i]);
- 	}
+ 	struct replace_object **replace = table;
+-	return replace[index]->original;
++	return replace[index]->original.hash;
  }
  
-@@ -1455,7 +1455,7 @@ static void populate_value(struct ref_array_item *ref)
- 				v->s = xstrdup(buf + 1);
- 			}
- 			continue;
--		} else if (!deref && grab_objectname(name, ref->objectname.hash, v, atom)) {
-+		} else if (!deref && grab_objectname(name, &ref->objectname, v, atom)) {
- 			continue;
- 		} else if (!strcmp(name, "HEAD")) {
- 			if (atom->u.head && !strcmp(ref->refname, atom->u.head))
+ static int replace_object_pos(const unsigned char *sha1)
+@@ -29,7 +29,7 @@ static int replace_object_pos(const unsigned char *sha1)
+ static int register_replace_object(struct replace_object *replace,
+ 				   int ignore_dups)
+ {
+-	int pos = replace_object_pos(replace->original);
++	int pos = replace_object_pos(replace->original.hash);
+ 
+ 	if (0 <= pos) {
+ 		if (ignore_dups)
+@@ -59,14 +59,14 @@ static int register_replace_ref(const char *refname,
+ 	const char *hash = slash ? slash + 1 : refname;
+ 	struct replace_object *repl_obj = xmalloc(sizeof(*repl_obj));
+ 
+-	if (strlen(hash) != 40 || get_sha1_hex(hash, repl_obj->original)) {
++	if (get_oid_hex(hash, &repl_obj->original)) {
+ 		free(repl_obj);
+ 		warning("bad replace ref name: %s", refname);
+ 		return 0;
+ 	}
+ 
+ 	/* Copy sha1 from the read ref */
+-	hashcpy(repl_obj->replacement, oid->hash);
++	oidcpy(&repl_obj->replacement, oid);
+ 
+ 	/* Register new object */
+ 	if (register_replace_object(repl_obj, 1))
+@@ -113,7 +113,7 @@ const unsigned char *do_lookup_replace_object(const unsigned char *sha1)
+ 
+ 		pos = replace_object_pos(cur);
+ 		if (0 <= pos)
+-			cur = replace_object[pos]->replacement;
++			cur = replace_object[pos]->replacement.hash;
+ 	} while (0 <= pos);
+ 
+ 	return cur;
