@@ -2,171 +2,146 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9EEC41F404
-	for <e@80x24.org>; Mon, 12 Mar 2018 21:26:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 362991F404
+	for <e@80x24.org>; Mon, 12 Mar 2018 21:35:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932354AbeCLV0F (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Mar 2018 17:26:05 -0400
-Received: from mail-ua0-f171.google.com ([209.85.217.171]:40518 "EHLO
-        mail-ua0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932242AbeCLV0E (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Mar 2018 17:26:04 -0400
-Received: by mail-ua0-f171.google.com with SMTP id c14so7829993uak.7
-        for <git@vger.kernel.org>; Mon, 12 Mar 2018 14:26:03 -0700 (PDT)
+        id S932274AbeCLVf1 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Mar 2018 17:35:27 -0400
+Received: from mail-pl0-f43.google.com ([209.85.160.43]:39332 "EHLO
+        mail-pl0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932282AbeCLVfY (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Mar 2018 17:35:24 -0400
+Received: by mail-pl0-f43.google.com with SMTP id s13-v6so10093918plq.6
+        for <git@vger.kernel.org>; Mon, 12 Mar 2018 14:35:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=jT+6UU6n5zEqzusjMNBm8j92wpMJlIWhGuw5Zk2Bs7E=;
-        b=B8raCgtuC0gVltQ1l86QWuCEqckeHPjQSedNKtWSLHPmyGfA+Vo6T9LA28BhgYuiRn
-         ZC6LDH0zIc9r0LtENp1UNiPDXSrWkqZzO6wkzPUN9xDBNvAG1pVB4wezj9mZgf/A54na
-         RWSqHp2xM9qom/F16Id6l9FTn4n6ZCCLHGw2m1vYWY8LN6eEKO9f6E+8F64aIHJ/Y7ko
-         YGkWvFvwb1PDp3QwQxL3BrGrEOFJMD0NrHfnlCy+QvvKHT0CVVpML7X3PubhJvG9WVH1
-         cUm/+eZfxYX4OxUBZEkeONE9EIxtY3DAQjdjlVuIOPHoBVIywiAXp9poUFLVyXVFuBeE
-         2Alw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=omWw38AaBVLxCbHAb+OVERb0teKRaGiywn5aDx+NkE4=;
+        b=UgdWhmdsFomrll9p7CC77R/oBuMrrLRLuBrK3fk7iJl/QVblyeqHMfZepcIMGqY8qJ
+         b7FVMSKI9iwNimUUx8zcN9HikmHd4CHI3ilAfgbUM3Lbj+yxveZ4bTwcSpssZS9JyWD0
+         9R7QdvWIasAL2Wb0JlSC2ITu09qG35roGT7gZSuZEb7En/9TVQQM6b3sfx8+kLN3E2ft
+         XesT/bu46gPvnWOKhSlUb4m/Bx518PTsm4SYEJD9z58Mk08ZudUXpVRjV2BlgEZakEVn
+         tTm19KOvguru6RvCK0wcInUYHBERYhTGYQ4KReO9eDaJT7SD02RTPZGXawuYc5WrLUFI
+         4gUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=jT+6UU6n5zEqzusjMNBm8j92wpMJlIWhGuw5Zk2Bs7E=;
-        b=AvYoGqEeau7RRI0ArZeKa+3e9WOurjSqY3zHcZE4e06cKrdzqhtT4H34Y696scp5Q7
-         Lyrp2vxleVM+JQ3FIgh4JVGbe2OhD8HCupuK4N+AiWjD8+vjzQierGbSWKQ+cxrZ+5YQ
-         BI+OCyw4aG9KCG8ddF5ynK/g2SYgVd5/ktQ2+pGzzD/0q7mDx0e3jCbmipgJNlkJ+dnz
-         Dpnz/m2lHOeLxwdYYCIj21Cs0EoVmP1ngdSlxWwIB8COn8l5QPo7+ZlTejmDHS4zDVUA
-         QwKDOqwRtsrjEL3nFBLyo6thz387xfIu3kRmXZZE5huA77Uyh85HbGnSSEAqjYps3hnk
-         X+LA==
-X-Gm-Message-State: AElRT7HsRU2gFdjuzpZvymK7fX7DmgWlhsdw9bhYf0RJe+NrOsk7nF+z
-        1iKFlFEfuT4RqeyGKteFIZhKKIupPt05XEsA47I=
-X-Google-Smtp-Source: AG47ELsWe2YP3fpF/kq9reZlVj5idAagkPrT7liBrvw4JiJW6TsfqrUHbM+wcLkXVKhLzTnytp0qPIojGt5+PRhKddc=
-X-Received: by 10.159.63.11 with SMTP id h11mr7011436uaj.94.1520889963235;
- Mon, 12 Mar 2018 14:26:03 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.176.1.49 with HTTP; Mon, 12 Mar 2018 14:26:02 -0700 (PDT)
-In-Reply-To: <20180312184734.GA58506@aiede.svl.corp.google.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=omWw38AaBVLxCbHAb+OVERb0teKRaGiywn5aDx+NkE4=;
+        b=PVKXIKZWpaAdlGwRQJJNgEgKXltmHatMeP5y/pB0gSenBvDUPdCeKfqhsCoY8iVbHb
+         rEe+xZar7wnz73pTd2P2iOLd/gLxRh5bLMVr7QBTV84/a2vNyEmf7wsERsu4nVulTWjf
+         0CI2b4bPPHuckEzJ842+kb8fhkxu+U4PhbUCph2G+xzvCUgIoYgLiGlSS99DQN7XZd+Y
+         1OYTEzuW60skybr03OQMgGwp8x6QExZrQwF+TvQZti6wVD2oJryZnFbGb3oNaH4AfrCI
+         0zEjeuCCqVI6qabBuO2eLLqi9kFRlVBfcEky8QeFeobqrS4KvjCbYs6Uhm4Rra6dIjSH
+         +KkA==
+X-Gm-Message-State: AElRT7F17Ffp1chOtm76dNIAd2VKOF+kzwlcNDbqXz2BPX2yGE/tL0Sd
+        xZngMzx656Dh8oyW4HI8XkvKmga5
+X-Google-Smtp-Source: AG47ELvb3Pztk9fNZ5tYmckzHmqo/iiJ56h4jUSxqdgqqGHkdt/pUwFiKT0wpwquT4L0mKU/hM9O/g==
+X-Received: by 2002:a17:902:aa43:: with SMTP id c3-v6mr9457589plr.357.1520890523952;
+        Mon, 12 Mar 2018 14:35:23 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id c67sm19396893pfl.106.2018.03.12.14.35.23
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 12 Mar 2018 14:35:23 -0700 (PDT)
+Date:   Mon, 12 Mar 2018 14:35:21 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: Opinions on changing add/add conflict resolution?
+Message-ID: <20180312213521.GB58506@aiede.svl.corp.google.com>
 References: <CABPp-BEXcvgxcn4-OrDhjUpuOsGCJwE_XT+0eYOK4Ad_O5maOg@mail.gmail.com>
  <20180312184734.GA58506@aiede.svl.corp.google.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 12 Mar 2018 14:26:02 -0700
-Message-ID: <CABPp-BEdh+UOCpFn5Y1_RydR==dDHWTeNtBub+pPjH_06Ub28w@mail.gmail.com>
-Subject: Re: Opinions on changing add/add conflict resolution?
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+ <CABPp-BEdh+UOCpFn5Y1_RydR==dDHWTeNtBub+pPjH_06Ub28w@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CABPp-BEdh+UOCpFn5Y1_RydR==dDHWTeNtBub+pPjH_06Ub28w@mail.gmail.com>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hi again,
 
-Cool, thanks for taking a look!
+Elijah Newren wrote:
+> On Mon, Mar 12, 2018 at 11:47 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
 
-On Mon, Mar 12, 2018 at 11:47 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+>> Would this behavior be configurable or unconditional?  I suspect I
+>> would want it turned off in my own use.
+>>
+>> On the other hand, in the case of wild difference between the two
+>> files, skipping the two-way merge and just writing one of the versions
+>> to the worktree (like we do for binary files) sounds like something I
+>> would like in my own use.
 >
-> My immediate reaction is that it seems inconsistent with the rest of
-> merge behavior.  Why would add/add behave this way but edit/edit not
-> behave this way?
+> I think you just said the exact opposite thing in these last two
+> paragraphs; that you wouldn't want my proposed behavior and that you'd
+> want it.  I suspect that may mean that I misunderstood something you
+> said here.  Could you clarify?
 
-Fair enough.  I have two separate reasons for believing that edit/edit
-IS different than add/add; further, the current behavior for add/add
-is inconsistent with the rest of merge behavior on a different axis.
-I think it's helpful to get the motivation for my changes before
-trying to explain why those are different and before delving into the
-other inconsistency, so I'll add the explanation of this claim at the
-end of this email.
+Sorry for the lack of clarity.  My understanding was that the proposed
+behavior was to write two files:
 
-> Would this behavior be configurable or unconditional?  I suspect I
-> would want it turned off in my own use.
+	${path}~HEAD
+	${path}~MERGE
+
+My proposal is instead to write one file:
+
+	${path}
+
+with the content that would have gone to ${path}~HEAD.  This is what
+already happens when trying to merge binary files.
+
+[...]
+>> Can you add something more about the motivation to the commit message?
+>> E.g. is this about performance, interaction with some tools, to
+>> support some particular workflow, etc?
 >
-> On the other hand, in the case of wild difference between the two
-> files, skipping the two-way merge and just writing one of the versions
-> to the worktree (like we do for binary files) sounds like something I
-> would like in my own use.
+> To be honest, I'm a little unsure how without even more excessive and
+> repetitive wording across commits.
 
-I think you just said the exact opposite thing in these last two
-paragraphs; that you wouldn't want my proposed behavior and that you'd
-want it.  I suspect that may mean that I misunderstood something you
-said here.  Could you clarify?
+Simplest way IMHO is to just put the rationale in patch 5/5. :)  In
+other words, explain the rationale for the end-user facing change in the
+same patch that changes the end-user facing behavior.
 
-> Can you add something more about the motivation to the commit message?
-> E.g. is this about performance, interaction with some tools, to
-> support some particular workflow, etc?
+>                                     Let me attempt here, and maybe you
+> can suggest how to change my commit messages?
+>
+>   * When files are wildly dissimilar -- as you mentioned -- it'd be
+> easier for users to resolve conflicts if we wrote files out to
+> separate paths instead of two-way merging them.
 
-To be honest, I'm a little unsure how without even more excessive and
-repetitive wording across commits.  Let me attempt here, and maybe you
-can suggest how to change my commit messages?
+Today what we do (in both the wildly-dissimilar case and the
+less-dissimilar case) is write one proposed resolution to the worktree
+and put the competing versions in the index.  Tools like "git
+mergetool" are then able to pull the competing versions out of the
+index to allow showing them at the same time.
 
-  * When files are wildly dissimilar -- as you mentioned -- it'd be
-easier for users to resolve conflicts if we wrote files out to
-separate paths instead of two-way merging them.
-  * There is a weird inconsistency between handling of add/add,
-rename/add, and rename/rename(2to1).  I want this inconsistency fixed.
-  * There is a significant performance optimization possible for
-rename detection in git merge if we remove the above inconsistency and
-treat these conflict types the same.  (Actually, we only need them to
-be the same in the special case where a renamed file is unmodified on
-the un-renamed side of history, but I don't want to special case that
-situation because it sounds like a recipe for inconsistent results).
-  * If we insist on these conflict types being handled differently
-because there really is some important distinction between them, then
-I'm almost certain that build_fake_ancestor() and it's usage in
-am/rebase is broken/wrong.  This is because the usage of
-build_fake_ancestor(), as currently implemented, will cause
-mis-detection of one conflict type as another.
+My bias is that I've used VCSes before that wrote multiple competing
+files to the worktree and I have been happier with my experience
+resolving conflicts in git.  E.g. at any step I can run a build to try
+out the current proposed resolution, and there's less of a chance of
+accidentally commiting a ~HEAD file.
 
-> Thanks and hope that helps,
-> Jonathan
+[...]
+> There are three types of conflicts representing two (possibly
+> unrelated) files colliding at the same path: add/add, rename/add, and
+> rename/rename(2to1).  add/add does the two-way merge of the colliding
+> files, and the other two conflict types write the two colliding files
+> out to separate paths.
 
-As promised above, here are my reasons for believing that edit/edit IS
-fundamentally different than add/add for the behavior considered here,
-as well as my explanation of the weird inconsistency add/add currently
-has with the rest of merge behavior:
+Interesting.  I would be tempted to resolve this inconsistency the
+other way: by doing a half-hearted two-way merge (e.g. by picking one
+of the two versions of the colliding file) and marking the path as
+conflicted in the index.  That way it's more similar to edit/edit,
+too.
 
-==Reason 1==
-edit/edit means that ${path} existed in the merge base as well as both
-sides.  It is more likely than not that ${path} on each side is
-similar to the merge base and thus similar (though less so) to each
-other.  On the other hand, add/add means ${path} did NOT exist in the
-merge base.  Thus, we cannot use the same reason to believe they are
-similar.  The only reason we have to assume similarity is the
-filename, which, while a useful indicator, gives us a weird
-inconsistency within git for handling pathname collisions -- see
-"Weird inconsistency" below.
-
-==Reason 2==
-In merges, git does rename detection, but not copy or break detection.
-In particular, break detection is what would allow us to find out that
-the edited files are not similar to the original.  add/add conflicts
-automatically come to us "pre-broken" (is there a better term for
-knowing that two files are not paired?), though it is possible that
-they just happen to be similar and should be paired/joined.
-
-==Follow on to reason 2==
-Not doing break detection means we get e.g. rename/add-source cases
-wrong, so there are valid arguments for saying we should add break
-detection.  However, it would be computationally expensive and would
-require a fair amount of work re-thinking all the cases in
-merge-recursive to make sure we get rename-breaks right (there are
-FIXMEs and comments and testcases I added years ago to help someone
-along the path if they want to try).  Since rename/add-source just
-isn't a conflict type that occurs much (if it all) in real world
-repositories, the motivation to implement it is somewhat low.
-
-==Weird inconsistency git currently exhibits==
-There are three types of conflicts representing two (possibly
-unrelated) files colliding at the same path: add/add, rename/add, and
-rename/rename(2to1).  add/add does the two-way merge of the colliding
-files, and the other two conflict types write the two colliding files
-out to separate paths.  I think the motivation behind the current
-behavior was that add/add was written assuming filename-match implies
-similarity, and the other two were written assuming filename-match
-didn't imply anything and the files should be assumed dissimilar.
-That seems weird to me.  I think all three should behave the same
-(especially when the renamed file was unmodified on the un-renamed
-side of history, and likely whenever there is no content conflicts for
-the renamed file).
+Thanks,
+Jonathan
