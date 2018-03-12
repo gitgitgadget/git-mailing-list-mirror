@@ -2,186 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E3C911F404
-	for <e@80x24.org>; Mon, 12 Mar 2018 19:30:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2A6981F404
+	for <e@80x24.org>; Mon, 12 Mar 2018 21:16:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751389AbeCLTa1 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Mar 2018 15:30:27 -0400
-Received: from mail-wr0-f170.google.com ([209.85.128.170]:39715 "EHLO
-        mail-wr0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751333AbeCLTa0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Mar 2018 15:30:26 -0400
-Received: by mail-wr0-f170.google.com with SMTP id r66so9292571wrb.6
-        for <git@vger.kernel.org>; Mon, 12 Mar 2018 12:30:26 -0700 (PDT)
+        id S932268AbeCLVQk (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Mar 2018 17:16:40 -0400
+Received: from mail-vk0-f42.google.com ([209.85.213.42]:34475 "EHLO
+        mail-vk0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932242AbeCLVQj (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Mar 2018 17:16:39 -0400
+Received: by mail-vk0-f42.google.com with SMTP id z190so7203371vkg.1
+        for <git@vger.kernel.org>; Mon, 12 Mar 2018 14:16:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=oPms9SPpBQv2GWBmHZ+RoZIQl2fm43NW+6J8M2/3nMA=;
-        b=U0VXnt5CafGDytcZPhtyC0jQSE8PXFkQvJhI4idhNEtgQ5pKghIFDtBLMNEKmPhrsm
-         01Li/LNLAMAum4HcCxVm/CYD2Y0u1exs39U1rPRAmgfB3igZYqWoiDNG/QiLHl157E/E
-         5zIWanU7UYQSO3hMW5km8fTEUQrnx3p9o79VAxPSoNLela4MyWJ2zNNqq0jKpj45i3rD
-         fQF0gC3iWcFpZuLBHGZGE9njN04t0XNJ+M5mcjTVrrFgafX/24AqMuZdf8meGaY78BLI
-         rjM8bx7PcAuIaV05oFl9sKkRkg0AnuxPzrasyZ0L3yPYuu8e5jW4IkoyI/XfZiH37Dkk
-         3rqQ==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-transfer-encoding;
+        bh=kyZ34J4qUjQDnviK8LABpyHH2ckUy1+mrMUmyHNi098=;
+        b=W0AUWTnMOzdRT91IfUiMx8SRFu/jSBGSwD5Zub/ATW/eSDPxyR01rL1pjbxh93M03L
+         porN6qey5AiHZWF4W2nCocv2bB4pp+tQrmzQipgQB5blU69yGtCGcuBe4qmKai4eG8Lo
+         DY6+rqdvhSIsUiLh5tZiKr9NnJUTQmPvDYmDlcS+N+df0iPQy4Sqagdk4+C2HXaRdRA8
+         zK9n9LkUa7E2Asujifjbt/J78JGtwgMiNxgQSfCnLMn9gOyjs5//eM8nL+Oq6LzyuheD
+         hZy358YKTXJBq+PdHuH17UZgq00q5FVA0vi8OZNuIZRyegb2rs6nRFcFOkhRlIWySvdM
+         6acg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=oPms9SPpBQv2GWBmHZ+RoZIQl2fm43NW+6J8M2/3nMA=;
-        b=nh7tQOR1VIUtG7sIYr9jqcHUC7a0C26H8DZtnCj+i59tHEdM6U1u3UJjhD2Jr5ffG5
-         8oKk9xyqdPIUUKr8OvIY5jETF7tMgbi3HEsWWxL26nwBrpupEZofWY/uWnuSOR6DdEKL
-         1ZS2HrCATj5EsGhGKBGNGb7/KRva7OvW7uBnHLe+FsKR9HqJJi/ymTbhiqGw7FBVtFJl
-         80+OEnk3meZzQ3Bz9D+OnaC+RaCInj0tuUaSho+9NTomuauqhYxfcooIdjGbQxZvC+C4
-         2MM86mGNj27adCCyzaErjFztNVD8XM+3e1LSX64pNBu3WGIEI3B434ZZzhZVC4yD9mJd
-         3w1g==
-X-Gm-Message-State: AElRT7Hj9FfJ1kJywadeqdKu4KlRsAEWDgUeqNGLb75iFs1NdMglWlqK
-        fcy5L5xsZcRsrqk9F72KX0/lTdGg
-X-Google-Smtp-Source: AG47ELsje0e4Boes993MNfAIRPGZWI8W3rn3wRVZuo/8FYJHjBUAmOH34Cvt0hPgcpN0NiZslWs1Sw==
-X-Received: by 10.223.150.161 with SMTP id u30mr4455400wrb.151.1520883025374;
-        Mon, 12 Mar 2018 12:30:25 -0700 (PDT)
-Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
-        by smtp.gmail.com with ESMTPSA id q9sm10432472wrf.11.2018.03.12.12.30.23
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 12 Mar 2018 12:30:23 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     e@80x24.org, git@vger.kernel.org, peff@peff.net,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 3/5] gc --auto: exclude base pack if not enough mem to "repack -ad"
-References: <20180301092046.2769-1-pclouds@gmail.com> <20180306104158.6541-1-pclouds@gmail.com> <20180306104158.6541-4-pclouds@gmail.com>
-User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 1.1.0
-In-reply-to: <20180306104158.6541-4-pclouds@gmail.com>
-Date:   Mon, 12 Mar 2018 20:30:21 +0100
-Message-ID: <87a7vdqegi.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=kyZ34J4qUjQDnviK8LABpyHH2ckUy1+mrMUmyHNi098=;
+        b=i11DwnV18qhiXi5Qj18nKT9Frrd/AyIQ4gMAa9hUhmpPmY3hA4yYombInVVT5O94Hp
+         dDOZeYSZ8eglhebVQBZ/z665r8BppRWBFX+839XoV+RGJa7pynbooS7Ts0yJ5ZbLSJBt
+         twIqRdWAF+sgF8K8HnC4miKXrDKYQ8ZoKZF54uAw7h0Yx6d55r841VcDjH844DMbB9ta
+         uakUCkCgHaEASHqnQ7LhtnwlOuHM3JlGbwVi/3AE8ggvPpco+USPRUoYc1wt4X3Y65P+
+         SURa9xZaAIqPi7LeY/JU7qZSoFspLl48YudJqFNm7yx+CMAlcesxVYj1fCyW2VNyjcZm
+         bWgQ==
+X-Gm-Message-State: AElRT7ETECJVaKC37NRsg9V5mSj7aaiFBb8J+okeXyjwjIu3tGzk0HzO
+        E3exDQaocviW/vFEZnC5ROllBLdddAzW1o5B5iQ=
+X-Google-Smtp-Source: AG47ELsdf86C8qT1+d27tePPUejIsdU/v9b3Npi2O+LWxkHMd1mVMCoMgUMhP3YhzgPKT/XrKavEnnN6tqA01sGeWbg=
+X-Received: by 10.31.194.78 with SMTP id s75mr4241778vkf.118.1520889398437;
+ Mon, 12 Mar 2018 14:16:38 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Received: by 10.31.191.140 with HTTP; Mon, 12 Mar 2018 14:16:17 -0700 (PDT)
+In-Reply-To: <87bmftqg1n.fsf@evledraar.gmail.com>
+References: <20180301092046.2769-1-pclouds@gmail.com> <20180306104158.6541-1-pclouds@gmail.com>
+ <20180306104158.6541-4-pclouds@gmail.com> <xmqqfu5d3tbn.fsf@gitster-ct.c.googlers.com>
+ <CACsJy8C2j2dLozhHf4zE--KYPZ2VjOW2tobmczh3rf6L==Q1vw@mail.gmail.com>
+ <xmqqd10f20k6.fsf@gitster-ct.c.googlers.com> <87bmftqg1n.fsf@evledraar.gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+Date:   Mon, 12 Mar 2018 14:16:17 -0700
+X-Google-Sender-Auth: aFMCrA2lFdwuoekPp1eDK8Ps5qw
+Message-ID: <CAPc5daUcA8MVKH515gvDzUXBThq=8+EXouOQ2zxZGmp5YH5nfw@mail.gmail.com>
+Subject: Re: [PATCH v2 3/5] gc --auto: exclude base pack if not enough mem to
+ "repack -ad"
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Duy Nguyen <pclouds@gmail.com>, Eric Wong <e@80x24.org>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Tue, Mar 06 2018, Nguyễn Thái Ngọc Duy jotted:
-
-> pack-objects could be a big memory hog especially on large repos,
-> everybody knows that. The suggestion to stick a .keep file on the
-> giant base pack to avoid this problem is also known for a long time.
+On Mon, Mar 12, 2018 at 11:56 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+> As someone who expects to use this (although hopefully in slightly
+> modified form), it's very useful if we can keep the useful semantics in
+> gc.* config values without needing some external job finding repos and
+> creating *.keep files to get custom behavior.
 >
-> Let's do the suggestion automatically instead of waiting for people to
-> come to Git mailing list and get the advice. When a certain condition
-> is met, "gc --auto" tells "git repack" to keep the base pack around.
-> The end result would be two packs instead of one.
->
-> On linux-2.6.git, valgrind massif reports 1.6GB heap in "pack all"
-> case, and 535MB [1] in "pack all except the base pack" case. We save
-> roughly 1GB memory by excluding the base pack.
->
-> gc --auto decides to do this based on an estimation of pack-objects
-> memory usage, which is quite accurate at least for the heap part, and
-> whether that fits in half of system memory (the assumption here is for
-> desktop environment where there are many other applications running).
->
-> Since the estimation may be inaccurate and that 1/2 threshold is
-> really arbitrary, give the user a finer control over this mechanism:
-> if the largest pack is larger than gc.bigBasePackThreshold, it's kept.
->
-> PS. A big chunk of the remaining 535MB is the result of pack-objects
-> running rev-list internally. This will be dealt with when we could run
-> rev-list externally. Right now we can't because pack-objects internal
-> rev-list does more regarding unreachable objects, which cannot be done
-> by "git rev-list".
->
-> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-> ---
->  Documentation/config.txt |   7 ++
->  Documentation/git-gc.txt |  13 ++++
->  builtin/gc.c             | 153 +++++++++++++++++++++++++++++++++++++--
->  builtin/pack-objects.c   |   2 +-
->  config.mak.uname         |   1 +
->  git-compat-util.h        |   4 +
->  pack-objects.h           |   2 +
->  t/t6500-gc.sh            |  29 ++++++++
->  8 files changed, 204 insertions(+), 7 deletions(-)
->
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index f57e9cf10c..120cf6bac9 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -1549,6 +1549,13 @@ gc.autoDetach::
->  	Make `git gc --auto` return immediately and run in background
->  	if the system supports it. Default is true.
->
-> +gc.bigBasePackThreshold::
-> +	Make `git gc --auto` only enable `--keep-base-pack` when the
-> +	base pack's size is larger than this limit (in bytes).
-> +	Defaults to zero, which disables this check and lets
-> +	`git gc --auto` determine when to enable `--keep-base-pack`
-> +	based on memory usage.
-> +
+> E.g. I have the use-case of wanting to set this on servers that I know
+> are going to be used for cloning some big repos in user's ~ directory
+> manually, so if I can set something sensible in /etc/gitconfig that's
+> great, but it sucks a lot more to need to write some cronjob that goes
+> hunting for repos in those ~ directories and tweaks *.keep files.
 
-I'm really keen to use this (and would be happy to apply a patch on
-top), but want to get your thoughts first, see also my just-sent
-87bmftqg1n.fsf@evledraar.gmail.com
-(https://public-inbox.org/git/87bmftqg1n.fsf@evledraar.gmail.com/).
-
-The thing I'd like to change is that the underlying --keep-pack= takes a
-list of paths (good!), but then I think this patch needlessly
-complicates things by talking about "base packs" and having the
-implementation limitation that we only ever pass one --keep-pack down to
-pack-objects (bad!).
-
-Why don't we instead just have a gc.* variable that you can set to some
-size of pack that we'll always implicitly *.keep? That way I can
-e.g. clone a 5GB pack and set the limit to 2GB, then keep adding new
-content per the rules of gc.autoPackLimit, until I finally create a
-larger than 2GB pack, at that point I'll have 5GB, 2GB, and some smaller
-packs and loose objects.
-
-We already have pack.packSizeLimit, perhaps we could call this
-e.g. gc.keepPacksSize=2GB?
-
-Or is there a use-case for still having the concept of a "base" pack? Is
-it magic in some way? Maybe I'm missing something but I don't see why,
-we can just stop thinking about whether some one pack is larger than X,
-and consider all packs larger than X specially.
-
-But if we do maybe an extra gc.keepBasePack=true?
-
-Finally I wonder if there should be something equivalent to
-gc.autoPackLimit for this. I.e. with my proposed semantics above it's
-possible that we end up growing forever, i.e. I could have 1000 2GB
-packs and then 50 very small packs per gc.autoPackLimit.
-
-Maybe we need a gc.keepPackLimit=100 to deal with that, then e.g. if
-gc.keepPacksSize=2GB is set and we have 101 >= 2GB packs, we'd pick the
-two smallest one and not issue a --keep-pack for those, although then
-maybe our memory use would spike past the limit.
-
-I don't know, maybe we can leave that for later, but I'm quite keen to
-turn the top-level config variable into something that just considers
-size instead of "base" if possible, and it seems we're >95% of the way
-to that already with this patch.
-
-Finally, I don't like the way the current implementation conflates a
-"size" variable with auto detecting the size from memory, leaving no way
-to fallback to the auto-detection if you set it manually.
-
-I think we should split out the auto-memory behavior into another
-variable, and also make the currently hardcoded 50% of memory
-configurable.
-
-That way you could e.g. say you'd always like to keep 2GB packs, but if
-you happen to have ended up with a 1GB pack and it's time to repack, and
-you only have 500MB free memory on that system, it would keep the 1GB
-one until such time as we have more memory.
-
-Actually maybe that should be a "if we're that low on memory, forget
-about GC for now" config, but urgh, there's a lot of potential
-complexity to be handled here...
+Yeah, but that is exactly what I suggested, no? That is, if you don't do an=
+y
+specific marking to describe _which_ ones need to be kept, this new thing
+would kick in and pick the largest one and repack all others. If you choose
+to want more control, on the other hand, you can mark those packs you
+would want to keep, and this mechanism will not kick in to countermand
+your explicit settings done via those .keep files.
