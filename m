@@ -7,86 +7,71 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B0AA41FAE2
-	for <e@80x24.org>; Mon, 12 Mar 2018 10:15:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F33D41FAE2
+	for <e@80x24.org>; Mon, 12 Mar 2018 10:19:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752065AbeCLKPL (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Mar 2018 06:15:11 -0400
-Received: from mail-pl0-f53.google.com ([209.85.160.53]:37594 "EHLO
-        mail-pl0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751229AbeCLKPK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Mar 2018 06:15:10 -0400
-Received: by mail-pl0-f53.google.com with SMTP id w12-v6so9058043plp.4
-        for <git@vger.kernel.org>; Mon, 12 Mar 2018 03:15:10 -0700 (PDT)
+        id S1752065AbeCLKTk (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Mar 2018 06:19:40 -0400
+Received: from mail-pl0-f45.google.com ([209.85.160.45]:36452 "EHLO
+        mail-pl0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751802AbeCLKTj (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Mar 2018 06:19:39 -0400
+Received: by mail-pl0-f45.google.com with SMTP id 61-v6so9056650plf.3
+        for <git@vger.kernel.org>; Mon, 12 Mar 2018 03:19:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:subject:from:in-reply-to:date:cc
          :content-transfer-encoding:message-id:references:to;
-        bh=F1DqsG+QDfaJUpaaPrHUFpjkK+LnlLj+IS8c5LzgCys=;
-        b=EAiMu5BAtoJ+GnklXUrochNgor/DH8NLvM736lQNTJvqHzhK+1tGmX/4aSs1zSTnNd
-         xhhDjolxwlqhDU6Q8GTJgyn+Amf2SUZTCUdyVA/ZpqNleIp2nITiTqvZtXZmul2qFdCf
-         j4H50OAjn2eVmD8Y+UPjl5FnlJeXJcraIVSsBHSqLfSRfoITkR9zP5k6oGp+zixsIsb1
-         UJK32MnvpUxwMD2nhtMw2VtQ54PNTUiaTUT4mo23N6w+czVCkFqd623EcICgwGuFOZF0
-         eEStOS1PGEbpb0JNRKQ1qWbXSMzDcOt30WGwAa34CdGS8JmzLd3+1koyQ7zX5z0bBmI0
-         nUmw==
+        bh=1T3lFn7pkUCXFNaDz1lCrgRX/0qvwzmPvxd7PJYtXCw=;
+        b=Cn+2wmsP2MwZfBW8+CnvXPtwYvPPXnZOQ5BqpfsKX969bFdsL4dkTCCNf85QhwvVK5
+         bOJ2gifCOL/jOHfvswE0lYa0u2uHRfH8jYX1kzI18mEPpHJnRR2XgJjl4Sw44qe5T8gd
+         eSf7YsULJEgP0R/TfCSg3s2np3Sk+LYjHyBcTNV80GWqbgwSEOMhYVUfwgAG+vV1oA5N
+         s1IkU5pgoLfCNaODJifZYvrSuNarqDmatDSmb4v+MX9CSFRjaIY024gwcOxi5NvCcUNN
+         VOICEUI1knFVt50u4JOLgULC8h0oOAjvu2deltbhK3yvZjlsKuhZNBwpUhjVHo1l2s/x
+         oulA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
          :content-transfer-encoding:message-id:references:to;
-        bh=F1DqsG+QDfaJUpaaPrHUFpjkK+LnlLj+IS8c5LzgCys=;
-        b=iiON4q94FtcUprtAY3IPZTkyGFsTV96jwAlqHlCcG9+tdiPbWnMolyyl5PSZuCtX3Y
-         IqiVHv1c/LnsDW2fbJcAqCN8P+gtZj3795/qBzGXav2ZeViNUgHsDGhQGPhxDbeTMHfX
-         iVxpjL03Vz2odVpNHQfXspHPXSXEhAq1+ApNYeZWrAvYpaUM3NSnYN6Ufu/O7KO5tENh
-         8vl+7cGZagRMO+ybeF+JE8CoCf3lLF/peNfW/syL6Gg9Iwxjjj+o49xeIkYl8SdOAsHZ
-         HpFP+e5CpgTAJ16oa97delQMJG5y986vjvxyHPwyqj8tkmP4bB0/3YuNktaHJ/MbWCNT
-         FVhw==
-X-Gm-Message-State: AElRT7ECsyP/mHLtoRGHQObp3Rx3Ow2Fisp/i+VCW9cJBQagGwD6PNUh
-        zW8noinN3EFT/3Bmy+fjb7JhsnaF
-X-Google-Smtp-Source: AG47ELufzXQfR/6sBBkehFBtMpwhfeTi4IjdBzwh8XGIHAeIYhdHKDgNx17f2DaPHdrYz15yH/z6HQ==
-X-Received: by 2002:a17:902:8c91:: with SMTP id t17-v6mr7685093plo.233.1520849709613;
-        Mon, 12 Mar 2018 03:15:09 -0700 (PDT)
+        bh=1T3lFn7pkUCXFNaDz1lCrgRX/0qvwzmPvxd7PJYtXCw=;
+        b=ItA9GPkiX+87ZiBTgCH5PU6ZwtmHPaVbaOtZE4UQ98O9Ymq1xm6UBHErRN8IiZ8Eeh
+         o/eJ3OX7lv0rPWCVZUsO71V+093VOyABOzgWoi4020B3VyOBKTc5fkqE8Doj7lBUvdxs
+         nJeFC+io56UPkKW8umuza1wPEJt5NbV6SGOlEXwT5q7slDmOIdeKWJi274rInJYUQKpP
+         h4JpwmAuCOiZFzaYIx0xpHqSmS1TjZWDgEtKDnGUKdTDIRwI7Kyn7MmOIfpwL2QIgw0o
+         MWPvz/LRF2qcVMiHYh9JHn6iSbRHW3UErYxpjaFxqVlRNAUSonQrputhdCGnNo2Bi434
+         oHvw==
+X-Gm-Message-State: AElRT7EpqJN0/3lQFhFgjFM2rvXJDD77YFBieA76ezasc4+kLw727CPl
+        Df2g7xaxrVQ0hz+neMlmMH4=
+X-Google-Smtp-Source: AG47ELtLNHtwiRXrcq0ice/PjyDUPTZ8sNUMQB6SnLWAmExln/yJnlfs1CU74w+WTdBtVSM/3zUDyw==
+X-Received: by 2002:a17:902:5a89:: with SMTP id r9-v6mr6759225pli.173.1520849978999;
+        Mon, 12 Mar 2018 03:19:38 -0700 (PDT)
 Received: from remr90p0m5f.ads.autodesk.com (adsknateur.autodesk.com. [132.188.32.100])
-        by smtp.gmail.com with ESMTPSA id e83sm17642423pfk.148.2018.03.12.03.15.07
+        by smtp.gmail.com with ESMTPSA id x1sm16620126pfk.144.2018.03.12.03.19.37
         (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 12 Mar 2018 03:15:08 -0700 (PDT)
+        Mon, 12 Mar 2018 03:19:38 -0700 (PDT)
 Content-Type: text/plain; charset=us-ascii
 Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [GSoC][PATCH] git-ci: use pylint to analyze the git-p4 code
+Subject: Re: [GSoC] [PATCH] travis-ci: added clang static analysis
 From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <20180312022003.8844-1-viethtran1620@gmail.com>
-Date:   Mon, 12 Mar 2018 11:15:05 +0100
-Cc:     Git List <git@vger.kernel.org>
+In-Reply-To: <20180305200400.3769-1-sidm1999@gmail.com>
+Date:   Mon, 12 Mar 2018 11:19:35 +0100
+Cc:     Git List <git@vger.kernel.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <CC42B5EC-6594-45CB-9821-E1C0ECED354E@gmail.com>
-References: <20180312020812.7883-1-viethtran1620@gmail.com> <20180312022003.8844-1-viethtran1620@gmail.com>
-To:     Viet Hung Tran <viethtran1620@gmail.com>
+Message-Id: <89AEA176-2D3F-4271-958E-1C6BCC944842@gmail.com>
+References: <20180305200400.3769-1-sidm1999@gmail.com>
+To:     SiddharthaMishra <sidm1999@gmail.com>
 X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Viet,
+Hi,
 
-> On 12 Mar 2018, at 03:20, Viet Hung Tran <viethtran1620@gmail.com> =
-wrote:
->=20
-> This is my submission as a microproject for the Google Summer of code.
-> I apologize for not setting the [GSoC] in my previous email
-> at <20180312020855.7950-1-viethtran1620@gmail.com>.
-> Please ignore it.
+That looks interesting but I agree with Dscho that we should not limit
+this to master/maint.
 
-No worries :-)
-
-> Add a new job named Pylint to .travis.yml in order to analyze git-p4 =
-Python code.
-> Although Travis CI have yet to implement continuous integration for =
-multiple
-> languages. Python package can be installed using apt packages. =46rom =
-there, pylint can be
-> installed using pip and used to analyze git-p4.py file.
-
-That looks interesting!
 I assume you did run this on TravisCI already? Can you share a link?
 I assume you did find errors? Can we fix them or are there too many?
 If there are existing errors, how do we define a "successful" build?
@@ -94,34 +79,72 @@ If there are existing errors, how do we define a "successful" build?
 Thanks for working on this,
 Lars
 
+> On 05 Mar 2018, at 21:04, SiddharthaMishra <sidm1999@gmail.com> wrote:
 >=20
-> Signed-off-by: Viet Hung Tran <viethtran1620@gmail.com>
+> Added a job to run clang static code analysis on the master and maint =
+branch
+>=20
+> Signed-off-by: SiddharthaMishra <sidm1999@gmail.com>
 > ---
-> .travis.yml | 10 ++++++++++
-> 1 file changed, 10 insertions(+)
+> .travis.yml               | 17 ++++++++++++++++-
+> ci/run-static-analysis.sh |  9 ++++++++-
+> 2 files changed, 24 insertions(+), 2 deletions(-)
 >=20
 > diff --git a/.travis.yml b/.travis.yml
-> index 5f5ee4f3b..581d75319 100644
+> index 4684b3f4f..9b891d182 100644
 > --- a/.travis.yml
 > +++ b/.travis.yml
-> @@ -46,6 +46,16 @@ matrix:
->         - docker
+> @@ -48,7 +48,7 @@ matrix:
 >       before_install:
+>       before_script:
 >       script: ci/run-linux32-docker.sh
-> +    - env: jobname=3DPylint
-> +      compiler:
-> +      addons:
-> +        apt:
-> +          packages:
-> +          - python
-> +      before_install:
-> +      install: pip install --user pylint
-> +      script: pylint git-p4.py
-> +      after_failure:
->     - env: jobname=3DStaticAnalysis
+> -    - env: jobname=3DStaticAnalysis
+> +    - env: jobname=3DCocciStaticAnalysis
 >       os: linux
 >       compiler:
+>       addons:
+> @@ -59,6 +59,21 @@ matrix:
+>       before_script:
+>       script: ci/run-static-analysis.sh
+>       after_failure:
+> +    - if: branch IN (master, maint)
+> +      env: jobname=3DClangStaticAnalysis
+> +      os: linux
+> +      compiler:
+> +      add_ons:
+> +        apt:
+> +          sources:
+> +          - ubuntu-toolchain-r-test
+> +          - llvm-toolchain-trusty
+> +          packages:
+> +          - clang
+> +      before_install:
+> +      before_script:
+> +      script: ci/run-static-analysis.sh
+> +      after_failure:
+>     - env: jobname=3DDocumentation
+>       os: linux
+>       compiler:
+> diff --git a/ci/run-static-analysis.sh b/ci/run-static-analysis.sh
+> index fe4ee4e06..6ae032f54 100755
+> --- a/ci/run-static-analysis.sh
+> +++ b/ci/run-static-analysis.sh
+> @@ -5,6 +5,13 @@
+>=20
+> . ${0%/*}/lib-travisci.sh
+>=20
+> -make coccicheck
+> +case "$jobname" in
+> +ClangStaticAnalysis)
+> +	scan-build -analyze-headers --status-bugs make
+> +	;;
+> +CocciStaticAnalysis)
+> +	make coccicheck
+> +	;;
+> +esac
+>=20
+> save_good_tree
 > --=20
-> 2.16.2.440.gc6284da
+> 2.16.2.248.ge2408a6f7.dirty
 >=20
 
