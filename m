@@ -2,60 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 591A91FAE2
-	for <e@80x24.org>; Mon, 12 Mar 2018 10:46:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AB10B1F404
+	for <e@80x24.org>; Mon, 12 Mar 2018 12:05:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751247AbeCLKqH (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Mar 2018 06:46:07 -0400
-Received: from mout.gmx.net ([212.227.15.15]:54179 "EHLO mout.gmx.net"
+        id S1751315AbeCLMFI (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Mar 2018 08:05:08 -0400
+Received: from mail.javad.com ([54.86.164.124]:41964 "EHLO mail.javad.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750995AbeCLKqF (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Mar 2018 06:46:05 -0400
-Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LcShi-1eBreq1pvK-00jo0F; Mon, 12
- Mar 2018 11:45:58 +0100
-Date:   Mon, 12 Mar 2018 11:46:02 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+        id S1750967AbeCLMFH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Mar 2018 08:05:07 -0400
+Received: from osv (unknown [89.175.180.246])
+        by mail.javad.com (Postfix) with ESMTPSA id 816B33E896;
+        Mon, 12 Mar 2018 12:05:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1520856306;
+        bh=r7B+uVLAHplyruijeiVoeYWIJ2bvDwyOqRIuTxa2i9w=; l=3689;
+        h=Received:From:To:Subject;
+        b=rK9JZOSWiicMt8DO5u+2+1nwl+0wacrLnSBCkHKRHa5uoayHV3JreGMbezd/7bLF3
+         AuSx/AsaJ01VKXCt3df9t4LbmzJkp+aT6CX/lvmx1eih3mwLLf8/ZE+pJjuaUHn5oo
+         ElYuWRuh6u6l88S8ne3l4WT1rvGp7ltQ7vdjJOtM=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1520856306;
+        bh=r7B+uVLAHplyruijeiVoeYWIJ2bvDwyOqRIuTxa2i9w=; l=3689;
+        h=Received:From:To:Subject;
+        b=rK9JZOSWiicMt8DO5u+2+1nwl+0wacrLnSBCkHKRHa5uoayHV3JreGMbezd/7bLF3
+         AuSx/AsaJ01VKXCt3df9t4LbmzJkp+aT6CX/lvmx1eih3mwLLf8/ZE+pJjuaUHn5oo
+         ElYuWRuh6u6l88S8ne3l4WT1rvGp7ltQ7vdjJOtM=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1520856306;
+        bh=r7B+uVLAHplyruijeiVoeYWIJ2bvDwyOqRIuTxa2i9w=; l=3689;
+        h=Received:From:To:Subject;
+        b=rK9JZOSWiicMt8DO5u+2+1nwl+0wacrLnSBCkHKRHa5uoayHV3JreGMbezd/7bLF3
+         AuSx/AsaJ01VKXCt3df9t4LbmzJkp+aT6CX/lvmx1eih3mwLLf8/ZE+pJjuaUHn5oo
+         ElYuWRuh6u6l88S8ne3l4WT1rvGp7ltQ7vdjJOtM=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1520856306;
+        bh=r7B+uVLAHplyruijeiVoeYWIJ2bvDwyOqRIuTxa2i9w=; l=3689;
+        h=Received:From:To:Subject;
+        b=rK9JZOSWiicMt8DO5u+2+1nwl+0wacrLnSBCkHKRHa5uoayHV3JreGMbezd/7bLF3
+         AuSx/AsaJ01VKXCt3df9t4LbmzJkp+aT6CX/lvmx1eih3mwLLf8/ZE+pJjuaUHn5oo
+         ElYuWRuh6u6l88S8ne3l4WT1rvGp7ltQ7vdjJOtM=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1520856306;
+        bh=r7B+uVLAHplyruijeiVoeYWIJ2bvDwyOqRIuTxa2i9w=; l=3689;
+        h=Received:From:To:Subject;
+        b=rK9JZOSWiicMt8DO5u+2+1nwl+0wacrLnSBCkHKRHa5uoayHV3JreGMbezd/7bLF3
+         AuSx/AsaJ01VKXCt3df9t4LbmzJkp+aT6CX/lvmx1eih3mwLLf8/ZE+pJjuaUHn5oo
+         ElYuWRuh6u6l88S8ne3l4WT1rvGp7ltQ7vdjJOtM=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1520856306;
+        bh=r7B+uVLAHplyruijeiVoeYWIJ2bvDwyOqRIuTxa2i9w=; l=3689;
+        h=Received:From:To:Subject;
+        b=rK9JZOSWiicMt8DO5u+2+1nwl+0wacrLnSBCkHKRHa5uoayHV3JreGMbezd/7bLF3
+         AuSx/AsaJ01VKXCt3df9t4LbmzJkp+aT6CX/lvmx1eih3mwLLf8/ZE+pJjuaUHn5oo
+         ElYuWRuh6u6l88S8ne3l4WT1rvGp7ltQ7vdjJOtM=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1520856306;
+        bh=r7B+uVLAHplyruijeiVoeYWIJ2bvDwyOqRIuTxa2i9w=; l=3689;
+        h=Received:From:To:Subject;
+        b=rK9JZOSWiicMt8DO5u+2+1nwl+0wacrLnSBCkHKRHa5uoayHV3JreGMbezd/7bLF3
+         AuSx/AsaJ01VKXCt3df9t4LbmzJkp+aT6CX/lvmx1eih3mwLLf8/ZE+pJjuaUHn5oo
+         ElYuWRuh6u6l88S8ne3l4WT1rvGp7ltQ7vdjJOtM=
+Authentication-Results: mail.javad.com;
+        spf=pass (sender IP is 89.175.180.246) smtp.mailfrom=osv@javad.com smtp.helo=osv
+Received-SPF: pass (mail.javad.com: connection is authenticated)
+Received: from osv by osv with local (Exim 4.84_2)
+        (envelope-from <osv@osv.gnss.ru>)
+        id 1evMCN-0001Hg-VF; Mon, 12 Mar 2018 15:05:04 +0300
+From:   Sergey Organov <sorganov@gmail.com>
 To:     Igor Djordjevic <igor.d.djordjevic@gmail.com>
-cc:     phillip.wood@dunelm.org.uk, Jacob Keller <jacob.keller@gmail.com>,
-        Sergey Organov <sorganov@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC] Rebasing merges: a jorney to the ultimate
- solution(RoadClear)
-In-Reply-To: <b329bb98-f9d6-3d51-2513-465aad2fa37a@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1803121142550.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <87y3jtqdyg.fsf@javad.com> <940d959d-151d-68dd-0f13-320ebad0d75b@gmail.com> <87606hoflx.fsf@javad.com> <0ac3a3fd-4053-e32e-75ed-8829f22c2e1f@gmail.com> <87a7vss6ax.fsf@javad.com> <f1a960dc-cc5c-e7b0-10b6-39e5516655b3@gmail.com>
- <ed4d2b30-2dea-740b-6283-973c798f619d@philandanna.no-ip.org> <1298a701-a860-a675-83d7-72f29e14cd2b@talktalk.net> <CA+P7+xpgChuvh_vsPktBkOEhF=MjJh1n_3jD0-n4d67j9kYqzw@mail.gmail.com> <ee809701-a6d8-157d-09cd-cebbf2e949ec@gmail.com>
- <1580e48a-be44-38dd-79af-8a2a31c5712e@talktalk.net> <nycvar.QRO.7.76.6.1803061812090.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <754e2735-1288-9a8d-c8bd-ab39cf733812@gmail.com> <nycvar.QRO.7.76.6.1803070810550.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
- <c5a5c2cc-6a11-440f-5b9b-964ae1ca07dd@talktalk.net> <f3872fb9-01bc-b2f1-aee9-cfc0e4db77d6@gmail.com> <nycvar.QRO.7.76.6.1803111301340.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <b329bb98-f9d6-3d51-2513-465aad2fa37a@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [RFC v2] Rebasing merges: a jorney to the ultimate solution (Road Clear)
+References: <87y3jtqdyg.fsf@javad.com> <87r2oxe3o1.fsf@javad.com>
+        <nycvar.QRO.7.76.6.1803070742580.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        <87vae8yq15.fsf@javad.com>
+        <nycvar.QRO.7.76.6.1803071450511.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        <a0cc88d2-bfed-ce7b-1b3f-3c447d2b32da@gmail.com>
+        <nycvar.QRO.7.76.6.1803111324390.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        <d18a6e73-ce6f-b4aa-8ead-7aaabddf454d@gmail.com>
+Date:   Mon, 12 Mar 2018 15:05:03 +0300
+In-Reply-To: <d18a6e73-ce6f-b4aa-8ead-7aaabddf454d@gmail.com> (Igor
+        Djordjevic's message of "Sun, 11 Mar 2018 23:04:27 +0100")
+Message-ID: <87zi3dh53k.fsf@javad.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:nqDBojiiBXk4PT5ETvtuvNjBr0G88cn8MegLl/GIvMJmSpVMjYS
- vDZvphMc3/GQtPf/eo4R7TPbMIgu8puyz53uHgR8fh07zyGo6nFh4ZxZMIKwXm1OGvSUONg
- LX8CIcvD9FpRikGNJkkOywyI2EnmtRTr2tlwbtNnxpdxCVBGYTc5tjusa/Lj74MRHMNPv22
- kdNnTABkFuSpZGM4xKLTA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:WzSkXTNRe0E=:YBQn7281BQiLWMim5M7pkQ
- ths5ZoGVkGVi6yx3qt4O+rLlecxO5ZnFrkK2Ox/ULBjU46UtKBmqrRnj537FVvKo4uM52LDad
- Fca2xyH+KHjsbP9Y3G7Aefs25aDgKK1u1BGCuXZ+ynbgqjy1d6p8MxlO8xgxVY3oX7L7B5C3z
- 8LBc9TxdujSj1aHdjTSJFXA0pwfBd8DmNTrclMb5vujbxrARwA8eKyDNwj5EPaPmJdEaPFqHB
- 3iRtrtMK7i6Lugqtd9Ws1Tv8lrS0NCpqudDAcv9qqNF5Cjzs34RqRu93QRolqWkKRQ2XgyQ1M
- G7uWnnhkJ5WZRZWMD4Zv5zDCQktQQ8Xt5C6r2G5G91zkN2fIQpRJPU7q6x+EQPYH5gTzt3zxB
- 6UeOkJD+nDsOfwDv0sP/0Q+WjUWa0/Q7EChiN/RHLrPGiZ2wO1Hfdm2ZoqVD+9ZaEbrj41Vuf
- t6D28MbQ+vXNVs29MWie/1zuEsBn++/36T9eGWbfrugF+gSORRcFVitkBZN4kz/CphwtAoB9M
- R9ff8yB4WUNc7HeSVBBDbliyEjNfR1yo5uicMvEOolZtQlWl9hO/FgDtYCrN/CWE3MJyzw+QX
- 33fOmpRr8iuGhr5x7Ty0X/IJI9iXR4HPdp9hjT7rxIQ8XsY6Oyz/apQSawarz/F4nrK5F8/wG
- Mv6wqn7lmodoqmg1u2T+w/LnLhUHPV2uBKBtoBXzH6DL/SWLw0sIPGQArVOSlYWkAmeprjdJU
- GGJyuhY78TCvQeXz9tzDUQ4iAUR0hxzQvNTzG9BgAvs/yU1aLUlF6goPUVM+WLEHWz/hb8pBH
- oKxShhM7iuX/t9IBGLz7GCrsg738OwiOKRP7fJjKpBYYJ7XjMECxoZZ+XCRib3mtaDN7kmZ
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -63,26 +104,74 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi Buga,
 
-I just have two thoughts to contribute as answer, so please excuse the
-heavily cut quoted text:
+Igor Djordjevic <igor.d.djordjevic@gmail.com> writes:
 
-On Sun, 11 Mar 2018, Igor Djordjevic wrote:
+[...]
 
-> Sometimes one just needs to read the manual, and I don`t really think
-> this is a ton complicated, but just something we didn`t really have
-> before (real merge rebasing), so it requires a moment to grasp the
-> concept.
+> That said, *if* we decide we like temporary commit U1' == U2' consistency 
+> check (especially for non-interactive rebase, maybe), we can produce 
+> these after the fact for the sake of the check only.
 
-If that were the case, we would not keep getting bug reports about
---preserve-merges failing to reorder patches.
+I don't believe interactive vs. non-interactive split is actually
+helpful. I'd consider non-interactive just a special case of interactive
+when user didn't edit the todo list, nothing more. No special treatment
+should be required.
 
-> Saying in favor of `--rebase-merges`, you mean as a separate option,
-> alongside `--recreate-merges` (once that series lands)?
+For one, consistency checks in both modes has similar importance, even
+if only because there could be parts of history being interactively
+rebased which the user didn't intend to edit, nor actually edited during
+given session.
 
-No. I am against yet another option. The only reason I pollute the option
-name space further with --recreate-merges is that it would be confusing to
-users if the new mode was called --preserve-merges=v2 (but work *totally
-differently*).
+Now let me get back to pros and cons of the two approaches to rebasing
+merges we have. Below I still advocate my approach by further discussing
+the differences, but simultaneously I'd like to emphasize that whatever
+particular way of rebasing merges will finally be used, it will be a
+huge step forward and I'm glad I've raised the issue in the first place.
 
-Ciao,
-Dscho
+First, please consider the fact that my "rebase sides" method has yet
+another nice property: it reduces back to original "rebase the commit"
+operation when you apply it to a non-merge commit. In other words, it's
+true generalization on top of rebasing of simple commit.
+
+OTOH, Phillip's approach, when reduced to non-merge commit, still does a
+version of rebase, but very specific one, and in inverse manner. I.e.,
+rather than merging changes of the commit to be rebased into the new
+base, it merges changes introduced by the new base into the commit being
+rebased.
+
+One consequence is that when conflict occurs, Phillip's approach will
+give surprising order of ours vs theirs changes, inverted with respect
+to those of the usual rebase of non-merge commit, while my approach will
+give exact non-merge commit semantics. It could likely be fixed by
+slightly modifying Phillip's approach, but it will make its
+implementation more complex.
+
+Another consequence is that, provided my version is used, all options
+that tune "simple commit rebase" behavior will automagically work for
+rebasing merge commits, in exactly the same manner. OTOH, Phillip's
+approach, without special attention in implementation, will do the same
+thing no matter what -m -s, or -X options say.
+
+Yet another consequence is that my approach will likely result in better
+code reuse. Even though mine seems to be harder to implement stand-alone
+than Phillip's one, it should be actually easier to implement inside the
+"git rebase", as it will use exactly the same machinery that "git
+rebase" already uses to rebase simple commits, adding only final "git
+merge-recursive" (or "git merge-resolve", or "git merge-octopus", -- any
+of them  will do the job), which current implementation already performs
+as well, for re-creating merges from scratch.
+
+Second thought, unrelated to the above. To me it seems that my "rebasing
+sides" approach, being entirely symmetric, is cleaner than incremental
+merging suggested by Phillip, as with my approach one will still deal
+with branches independently, in the same way as for simple commits,
+until the single final merge operation. This comes with drawback of 1
+additional step in my approach when compared to the Phillip's one
+though, but then mine has definitely no issues with the exact order of
+merges.
+
+Overall, to me it seems that unmodified Phillip's approach will bring
+unnecessarily wide set of new user experiences, and fixing it will
+require some tricks in implementation, for no apparent reason.
+
+-- Sergey
