@@ -7,57 +7,65 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1ADC71F404
-	for <e@80x24.org>; Mon, 12 Mar 2018 02:08:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 76C1D1F404
+	for <e@80x24.org>; Mon, 12 Mar 2018 02:20:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932462AbeCLCIP (ORCPT <rfc822;e@80x24.org>);
-        Sun, 11 Mar 2018 22:08:15 -0400
-Received: from mail-qk0-f170.google.com ([209.85.220.170]:46398 "EHLO
-        mail-qk0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932419AbeCLCIO (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 11 Mar 2018 22:08:14 -0400
-Received: by mail-qk0-f170.google.com with SMTP id o184so4745100qkd.13
-        for <git@vger.kernel.org>; Sun, 11 Mar 2018 19:08:14 -0700 (PDT)
+        id S932430AbeCLCUG (ORCPT <rfc822;e@80x24.org>);
+        Sun, 11 Mar 2018 22:20:06 -0400
+Received: from mail-qk0-f194.google.com ([209.85.220.194]:38181 "EHLO
+        mail-qk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932419AbeCLCUF (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 11 Mar 2018 22:20:05 -0400
+Received: by mail-qk0-f194.google.com with SMTP id s198so9861266qke.5
+        for <git@vger.kernel.org>; Sun, 11 Mar 2018 19:20:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:subject:date:message-id;
-        bh=gj4oTawGUmPcgLHE1qMGJ7GqqLajXZoU8hpfCO82+Io=;
-        b=Md/UiwHyZUxW+oFDXaNpS7hA1/yfqGtqkDhwp1xHWWGOzfrB3oMTeAu5udJSsvtZex
-         G/Am+f4wa4nhs3rgFsobM8pfwjeTOEYC954/9WH31tOr4QSOYKAMztxPacLREED2uQy1
-         /65Ww5dVja96gx40HxF9PsR1Aq1djOBr0+HznlT/Fwg5ABrJlRJm3/pNwxkosoTK8noe
-         ZLfB1JbryGWy8zK9swqhmzC8y72I1xo8GaUhCwvGo3pLocalt15q2XuSfmmmE+l8BLaL
-         P44fRyFEDUKMxq23jjbEb1PM7qJOtGgvYDugXjz59NZgpOdBVGNZCk/Kw20ClzYuAqmb
-         efyA==
+        h=from:to:subject:date:message-id:in-reply-to:references;
+        bh=NkPbo+icYHlIspwSjnS0fQzRcY3V6osgMq2EX1JhR5I=;
+        b=UUEs2hryR0ZaqR7pw8J95F0Y4xOpy5mXnikxAp5QStN5x4EDV+A342IZp+cqjmPdoV
+         HT8/EwgeO2acyIpqW/KLJtInWIYHHb9J21xIK4PdkoAaBmzKL/m6UQbDSdBOfip2pRmT
+         6MRVpNFsGUh+Xanhbic/QT/O8vafqGa+SMPzWOiwiCh6miSY17TNLeMyd95ny7IHmY/V
+         8s/16LO8dIKHeRRHuchomucutX97vN2NcPwmC7MzaCIEJmafGeR/1TgInlOaYPKkhjan
+         GvZKwG0NTIiA6ti4X3BruTJhv/WY9TO/Eqh0YNVdiYIiKrOED06Fk1W7HCc5xcLu06dx
+         51ug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id;
-        bh=gj4oTawGUmPcgLHE1qMGJ7GqqLajXZoU8hpfCO82+Io=;
-        b=K1OfqDz8rngVIOOjMgDAISTLqggqrOVJT7c68QbbsbCrHI9oMn+OzHQlMDmE/ubblX
-         dmUaP3u7U4Taql9foLWOCeXsgz2cJ00LBt6B2dkma5aIbfygDQvuOehwbmRUN5cCszvr
-         jY24D6Y7sjBwADan0wDbOS1X4JuticAg0Nhp15/vOyVGl+jMWzBs6E5DoqBK1xFes2CY
-         6m0gOG//1mtnSqyJg6n5kWJKkc3PM8LQE1HmJptvqzRv9KEKYedCFlq1/HgbmsZOuay9
-         u5mG7xA8Q02vIJByaMBEoboA91r88+JR1Kn7wMckEu0zLXMoQRv5vYz5eSSZqFdfQaUZ
-         mVnQ==
-X-Gm-Message-State: AElRT7EbsHYyPwz8fgECNhRFq3Ip+5hkW3Bv3YGTSD/cxh80iy4m++6E
-        KZbmUEgRaXp9QsE8g9v27Vkt1Q==
-X-Google-Smtp-Source: AG47ELsJ+L1PGiu41e56voiMQ0VcrrUDWRdxIgEFa8w4KKePOEe9nbCfU1IS2v8OCmUFH0j3UeWLcg==
-X-Received: by 10.55.71.201 with SMTP id u192mr9117145qka.357.1520820494084;
-        Sun, 11 Mar 2018 19:08:14 -0700 (PDT)
+        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+         :references;
+        bh=NkPbo+icYHlIspwSjnS0fQzRcY3V6osgMq2EX1JhR5I=;
+        b=L3aTfgOyy0UNUVGlY5Ip0aB9CZgcSDnbmmYeKBIHmFx+u1lOTFfho4g+Es6I9dwfLN
+         lOsr+1PjJ59a3cvhXEfITrsc0S/KEA5isIYnwED3KFA8yjuGZtn39NOzjFixoW7k4t21
+         duT1ZPzzBAFS3iT1Xn9GOOUQvGJ2Y9FbjFXZXfLMu3Hei+YPPnAdaol0FD+f7DBupSPs
+         6HEbtRDxN6mWH3zz9YCQltfHOdy+UlEf1yKxGMqMqb+NiU3MRJVI6tj4woheKU3lkm28
+         g/zeHQ1XdlGUe6C3iW/4LvsrWqGCutsxaXdOt0D4mz8L8FkyUZt7zVFq8GlwnqUxbCDK
+         poWw==
+X-Gm-Message-State: AElRT7HR/nDrHYFD7NWAxWiulM5M2AwZm+z9h47yfgQ0YP14KHq+gsqU
+        8VVkJESyyjNgH+sj/9ZD3fxq5Q==
+X-Google-Smtp-Source: AG47ELtKPlSCCRfdoDqdTIm9JgV907r9oqLYhslaNeiAMJYKi9UAd3LDF0vffAwr94sFaJ4tyNN+/g==
+X-Received: by 10.55.8.147 with SMTP id 141mr4388304qki.228.1520821204781;
+        Sun, 11 Mar 2018 19:20:04 -0700 (PDT)
 Received: from viet-VPCEA32EG.hsd1.pa.comcast.net ([2601:4a:c102:100d:4cb9:45fc:db31:c0f9])
-        by smtp.gmail.com with ESMTPSA id i15sm3623605qta.18.2018.03.11.19.08.13
+        by smtp.gmail.com with ESMTPSA id 1sm2036697qtr.85.2018.03.11.19.20.04
         for <git@vger.kernel.org>
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 11 Mar 2018 19:08:13 -0700 (PDT)
+        Sun, 11 Mar 2018 19:20:04 -0700 (PDT)
 From:   Viet Hung Tran <viethtran1620@gmail.com>
 To:     Git List <git@vger.kernel.org>
-Subject: [PATCH] git-ci: use pylint to analyze the git-p4 code
-Date:   Sun, 11 Mar 2018 22:08:12 -0400
-Message-Id: <20180312020812.7883-1-viethtran1620@gmail.com>
+Subject: [GSoC][PATCH] git-ci: use pylint to analyze the git-p4 code
+Date:   Sun, 11 Mar 2018 22:20:03 -0400
+Message-Id: <20180312022003.8844-1-viethtran1620@gmail.com>
 X-Mailer: git-send-email 2.16.2.440.gc6284da
+In-Reply-To: <20180312020812.7883-1-viethtran1620@gmail.com>
+References: <20180312020812.7883-1-viethtran1620@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
+
+This is my submission as a microproject for the Google Summer of code.
+I apologize for not setting the [GSoC] in my previous email
+at <20180312020855.7950-1-viethtran1620@gmail.com>.
+Please ignore it.
 
 Add a new job named Pylint to .travis.yml in order to analyze git-p4 Python code.
 Although Travis CI have yet to implement continuous integration for multiple
