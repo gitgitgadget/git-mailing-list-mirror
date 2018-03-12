@@ -2,158 +2,146 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 769241F404
-	for <e@80x24.org>; Mon, 12 Mar 2018 22:19:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6A5661F404
+	for <e@80x24.org>; Mon, 12 Mar 2018 22:20:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751282AbeCLWTu (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Mar 2018 18:19:50 -0400
-Received: from mail-wm0-f44.google.com ([74.125.82.44]:34485 "EHLO
-        mail-wm0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751323AbeCLWTt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Mar 2018 18:19:49 -0400
-Received: by mail-wm0-f44.google.com with SMTP id a20so15437124wmd.1
-        for <git@vger.kernel.org>; Mon, 12 Mar 2018 15:19:48 -0700 (PDT)
+        id S1751390AbeCLWUK (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Mar 2018 18:20:10 -0400
+Received: from mail-pg0-f41.google.com ([74.125.83.41]:36615 "EHLO
+        mail-pg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751323AbeCLWUJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Mar 2018 18:20:09 -0400
+Received: by mail-pg0-f41.google.com with SMTP id i14so7120017pgv.3
+        for <git@vger.kernel.org>; Mon, 12 Mar 2018 15:20:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=A30VVWw4UFa787GrUy/ovOSL5b42gh93clJXCEDGM8Q=;
-        b=Rr44e7NoSSNS1e4p9upq7J8dpLbsV6I6BaCyHEE2z+wcVPY+r5H1u3i8cxFYJHgZgB
-         gQ9J7lNo8ult3b2ZpAmDxxAJW2tk3kO44KaUymuyGsJo1zrfUgR/NpjYcRG6FA+KbawV
-         zxAI2NPdhU591fVEufcUq/m02BXauDmvcxnCiffcDrpQt5EiDlxvXGk1JmKgZmAlL2yU
-         wi9MtS7x9zksSYIYajjPeUNf29LIhXjw486aF8V4BUYVx7RJRZV99JMyQy7ApKxAYt2C
-         CbF2QRZP566NdBb3oDs+Y0bOW3J7cGbz3owqAf2QJ4uBdlHyCnwqnqInw1ajJNLcjC99
-         I0Eg==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=LzAz/hWO776lvInD6Z1fEZY7svg5nwjxeLExPjRdpPA=;
+        b=hKubj16jNqHkNgjQkHSEPgUmvSgbfBRsVHf7mz3T+X3AXyWlx/MR/IDDxSGZ8gKcof
+         oAlU4a7Zzd6kTAdRXhYiX2Yrlay0fg31n+YprlDNn/g3txanzpHWwumCnjouBL8RC12J
+         DIBuDkpr/Bo/nvdPK/4SISBqWegM9PsuGltQv2zS8cko0XmDz0JRKD7TOiaU2bYTLdla
+         RY2d91wAhpqqfE8nw/X8rMpJ36j0ruvYFhHIdbbh18Gmw+cCjR9DOvxf+yaViBsIgUlv
+         nvpJUE7HDN8mYgefY/A4uAWzoKwk1eCGOPgbU94UTjiO+g6SOiW2pl6JV2IVrFowLilG
+         Gf0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=A30VVWw4UFa787GrUy/ovOSL5b42gh93clJXCEDGM8Q=;
-        b=HQ8K8VOin0GOQ21wl2136YkyknD5T9urCCkdC8SVTivQC7BBgbT4jDQHCiRHU5//U/
-         WGpTAkDnodEaQN39LVb/27+MmdhuZ4eRrWyLb2wCs1Bq3Pv15PZRyDNdR0Pj4zhEQi8B
-         2/3ypbeUYGW+rbinqZbyi5sE+GgM/pGY+DlPvbGsi3wN3Xyb+maGu1Nq2fu8U6GcD8dZ
-         g5rRJsjvTH3Hy73JYBn6ekCohtGWNsAwT2KogfPIS8ZgrKPbYtDTYEjHMJxeGlYp/IzX
-         DaIzt4tO7BnQmA8Wp2qYrVs8jAKr2o81RGuiLIBqnPeWRDVE0Uh4e/jMZBtrCxIIcAb5
-         5ndQ==
-X-Gm-Message-State: AElRT7FD0BPI8mB1kNa4annPCkQFrIu8PNe+IwcEVX50p4VWqWQBuajJ
-        yv//y+mS1CsmhdG67qSVotE=
-X-Google-Smtp-Source: AG47ELvFIcTrqWonn62h1CQIv+bNPU94KZFEHG7s35akP4vjHPfBNrZdq6ablcHVOcj12uQfrVXolQ==
-X-Received: by 10.28.114.8 with SMTP id n8mr6426491wmc.30.1520893187946;
-        Mon, 12 Mar 2018 15:19:47 -0700 (PDT)
-Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
-        by smtp.gmail.com with ESMTPSA id l8sm5624717wmf.39.2018.03.12.15.19.46
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=LzAz/hWO776lvInD6Z1fEZY7svg5nwjxeLExPjRdpPA=;
+        b=JBKLRqVR8v13fcHq38O4yqVK0YtSy8SvjSI9astIncVwUwSbQEDJit0lf4GnBcwbJN
+         FeZD9Cp7t5ZAmAf6n2HfnCg5QOydV5SfK5S6KfkZhFo0RhTZGLO8CLk3FxFlz7yDoUth
+         6sZMl73qml6Edp9dAyl6+XWGcKUzOjxlQs2nNqBqIBqR/42D7taYAUh+y7F4JtedvIgW
+         mIQVK6V4z8jq5TUDuyS7qNYvlSjWDp1gF9cL5z63UG4Z7pC4wTKGtW9XVCZU3XdRvtsH
+         j9wnrFp4BoiPTY7ouL3/zG5cLSnReXgHG3L+BZ0857LuMUbvrgRS04+TiezdAocW5cKR
+         CXrA==
+X-Gm-Message-State: AElRT7EvtDxx5PpxZO5XVurJJ4nTnTbJadTKOVUcDF+lUSKxxwDglvV1
+        lCsBG23mBCVjjpUTcdXpsXllHw==
+X-Google-Smtp-Source: AG47ELtS+1zG13+P+w14A6KDqOrGd4rFpRuopnGbP25IuUnUqCDpvVZvo7XAAjIFpkCyCx0eEm2Ing==
+X-Received: by 10.99.168.75 with SMTP id i11mr7782205pgp.420.1520893208895;
+        Mon, 12 Mar 2018 15:20:08 -0700 (PDT)
+Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
+        by smtp.gmail.com with ESMTPSA id n7sm15535229pgd.87.2018.03.12.15.20.07
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 12 Mar 2018 15:19:46 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: Opinions on changing add/add conflict resolution?
-References: <CABPp-BEXcvgxcn4-OrDhjUpuOsGCJwE_XT+0eYOK4Ad_O5maOg@mail.gmail.com>
-User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 1.1.0
-In-reply-to: <CABPp-BEXcvgxcn4-OrDhjUpuOsGCJwE_XT+0eYOK4Ad_O5maOg@mail.gmail.com>
-Date:   Mon, 12 Mar 2018 23:19:45 +0100
-Message-ID: <876061q6m6.fsf@evledraar.gmail.com>
+        Mon, 12 Mar 2018 15:20:08 -0700 (PDT)
+Date:   Mon, 12 Mar 2018 15:20:07 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, git@jeffhostetler.com, jrnieder@gmail.com,
+        pclouds@gmail.com, peff@peff.net, sbeller@google.com,
+        stolee@gmail.com
+Subject: Re: [PATCH v4 19/35] push: pass ref patterns when pushing
+Message-ID: <20180312222007.GD61720@google.com>
+References: <20180207011312.189834-1-bmwill@google.com>
+ <20180228232252.102167-1-bmwill@google.com>
+ <20180228232252.102167-20-bmwill@google.com>
+ <xmqqzi3q9ku6.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqzi3q9ku6.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 03/02, Junio C Hamano wrote:
+> Brandon Williams <bmwill@google.com> writes:
+> 
+> > Construct a list of ref patterns to be passed to 'get_refs_list()' from
+> > the refspec to be used during the push.  This list of ref patterns will
+> > be used to allow the server to filter the ref advertisement when
+> > communicating using protocol v2.
+> >
+> > Signed-off-by: Brandon Williams <bmwill@google.com>
+> > ---
+> >  transport.c | 26 +++++++++++++++++++++++++-
+> >  1 file changed, 25 insertions(+), 1 deletion(-)
+> 
+> When you are pushing 'master', we no longer hear what the other end
+> has at 'next', with this change, no?
+> 
+> In a project whose 'master' is extended primarily by merging topics
+> that have been cooking in 'next', old way of pushing would only have
+> transferred the merge commits and resulting trees but not bulk of
+> the blob data because they are all available on 'next', would it
+> make the object transfer far less efficient, I wonder?
+> 
+> I guess it is OK only because the push side of the current protocol
+> does not do common ancestor discovery exchange ;-)
 
-On Mon, Mar 12 2018, Elijah Newren jotted:
+Yep, though we've been throwing around ideas of adding that in push v2
+after we figure out a good way to improve negotiation with fetch.
 
-> Hi everyone,
->
-> I'd like to change add/add conflict resolution.  Currently when such a
-> conflict occurs (say at ${path}), git unconditionally does a two-way
-> merge of the two files and sticks the result in the working tree at
-> ${path}.
->
-> I would like to make it instead first check whether the two files are
-> similar; if they are, then do the two-way merge, but if they're not,
-> then instead write the two files out to separate paths (${path}~HEAD
-> and ${path}~$MERGE, while making sure that ${path} is removed from the
-> working copy).
->
-> Thoughts?
->
-> I have a patch series[1] with more details and other changes, but
-> wanted to especially get feedback on this issue even from folks that
-> didn't have enough time to read the patches or even the cover letter.
+> 
+> >
+> > diff --git a/transport.c b/transport.c
+> > index dfc603b36..bf7ba6879 100644
+> > --- a/transport.c
+> > +++ b/transport.c
+> > @@ -1026,11 +1026,35 @@ int transport_push(struct transport *transport,
+> >  		int porcelain = flags & TRANSPORT_PUSH_PORCELAIN;
+> >  		int pretend = flags & TRANSPORT_PUSH_DRY_RUN;
+> >  		int push_ret, ret, err;
+> > +		struct refspec *tmp_rs;
+> > +		struct argv_array ref_patterns = ARGV_ARRAY_INIT;
+> > +		int i;
+> >  
+> >  		if (check_push_refs(local_refs, refspec_nr, refspec) < 0)
+> >  			return -1;
+> >  
+> > -		remote_refs = transport->vtable->get_refs_list(transport, 1, NULL);
+> > +		tmp_rs = parse_push_refspec(refspec_nr, refspec);
+> > +		for (i = 0; i < refspec_nr; i++) {
+> > +			const char *pattern = NULL;
+> > +
+> > +			if (tmp_rs[i].dst)
+> > +				pattern = tmp_rs[i].dst;
+> > +			else if (tmp_rs[i].src && !tmp_rs[i].exact_sha1)
+> > +				pattern = tmp_rs[i].src;
+> > +
+> > +			if (pattern) {
+> > +				if (tmp_rs[i].pattern)
+> > +					argv_array_push(&ref_patterns, pattern);
+> > +				else
+> > +					expand_ref_pattern(&ref_patterns, pattern);
+> > +			}
+> > +		}
+> > +
+> > +		remote_refs = transport->vtable->get_refs_list(transport, 1,
+> > +							       &ref_patterns);
+> > +
+> > +		argv_array_clear(&ref_patterns);
+> > +		free_refspec(refspec_nr, tmp_rs);
+> >  
+> >  		if (flags & TRANSPORT_PUSH_ALL)
+> >  			match_flags |= MATCH_REFS_ALL;
 
-Does this mean that e.g. in this case of merging two files, one
-containing "foo" and one containing "bar":
-
-    (
-        rm -rf /tmp/test.git &&
-        git init /tmp/test.git &&
-        cd /tmp/test.git &&
-        echo foo >README &&
-        git add README &&
-        git commit -mfoo &&
-        git checkout --orphan trunk &&
-        git reset --hard &&
-        echo bar >README &&
-        git add README &&
-        git commit -mbar &&
-        git merge --allow-unrelated-histories master;
-        cat README
-    )
-
-That instead of getting:
-
-    <<<<<<< HEAD
-    bar
-    =======
-    foo
-    >>>>>>> master
-
-I'd now get these split into different files?
-
-I'm assuming by similarity you're talking about the same heuristic we
-apply for git diff -M, i.e. if "moving" a file would consider it
-removed/added instead of moved you'd want two files instead of the
-two-way merge.
-
-I don't mind this being a configurable option if you want it, but I
-don't think it should be on by default, reasons:
-
- 1) There's lots of cases where we totally screw up the "is this
-    similar?" check, in particular with small files.
-
-    E.g. let's say you have a config file like 'fs-path "/tmp/git"' and
-    in two branches you change that to 'fs-path "/opt/git"' and 'fs-path
-    "/var/git"'. The rename detection will think this these have nothing
-    to do with each other since they share no common lines, but to a
-    human reader they're really similar, and would make sense in the
-    context of resolving a bigger merge where /{opt,var}/git changes are
-    conflicting.
-
-    This is not some theoretical concern, there's lots of things that
-    e.g. use small 5-10 line config files to configure some app that
-    because of some combo of indentation changes and changing a couple
-    of lines will make git's rename detection totally give up, but to a
-    human reader they're 95% the same.
-
- 2) This will play havoc with already established merge tools on top of
-    git which a lot of users use instead of manually resolving these in
-    vi or whatever.
-
-    If we made this the default they'd need to to deal with this new
-    state, and even if it's not the default we'll have some confused
-    users wondering why Emacs Ediff or whatever isn't showing the right
-    thing because it isn't supporting this yet.
-
-So actually, given that last point in #2 I'm slightly negative on the
-whole thing, but maybe splitting it into some new format existing tools
-don't understand is compelling enough to justify the downstream breakage.
-
-I don't think we've ever documented the format we leave the tree in
-after a failed merge as equivalent to plumbing, but for the purposes of
-tools that build on top of git it really is.
+-- 
+Brandon Williams
