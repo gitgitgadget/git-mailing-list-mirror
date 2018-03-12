@@ -7,43 +7,43 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2860B1F404
-	for <e@80x24.org>; Mon, 12 Mar 2018 02:29:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 304451F404
+	for <e@80x24.org>; Mon, 12 Mar 2018 02:29:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932668AbeCLC3g (ORCPT <rfc822;e@80x24.org>);
-        Sun, 11 Mar 2018 22:29:36 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:34386 "EHLO
+        id S932555AbeCLC20 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 11 Mar 2018 22:28:26 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:34320 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S932578AbeCLC2e (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 11 Mar 2018 22:28:34 -0400
+        by vger.kernel.org with ESMTP id S932516AbeCLC2Y (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 11 Mar 2018 22:28:24 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 8F12E60B3C;
-        Mon, 12 Mar 2018 02:28:32 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 6166060988;
+        Mon, 12 Mar 2018 02:28:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1520821713;
-        bh=qhUobd0KoROnOBf2UM1vfUjpfv0W+4CYLcBP9f+eHSk=;
+        s=default; t=1520821702;
+        bh=oLTXwBkylHzwZoZr6HFZd41uJ86CYOw9jkj6GLkr+xM=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=p1jb81eyCD1mHQngANS3bpaiwnwIBAMGQpIZJc1SWp8iNC1QWxNDtY/M7dAGTAss5
-         rndWhkroIXuomxSo54/eDg3YF0VzaBDw360jOEQRoMlaIj9n2jYKSjUKd7elR7iKi/
-         kG5w7+ga9htPtUmG8lbX14YaXET6ftk9Uz7E19iEyLoZX0eyZvCRyQXSgG7SZYRrbC
-         xHtMksIJqeyZ+GmhfP+A1ajrG8siSnDf1wIfA0oLE731J3/a0Oi7scqhoF5XocmQbd
-         baLKe5Lu17Dmy8pgG+/72Q0Tr/TKN934VT583p/idEe4foLgIltU85F61jP6TWY8g2
-         JypRTDGUlOjOMpRnFR84FHogv9GioEj+e91qs05L0MtjoUMY49utoY1o6IMGRqWjew
-         bF3DoI1SYtGw6QZoEXb3S+rFSK7je0hbMprYkqmGjpE0SGOYvnspNh4J+Ff9QtZ5VI
-         zlx69Lkmrc3/62pE9s+NjDg8AkRdg/l41rxt4kJEf3xtGam26m/
+        b=AlXbCGiYRoh3MLFIhNccqmCPsrcxEPtI3Ww9zY57xqirHSxoXW94dR6YX2L9fWlZ3
+         2j/u9VkFchlRjbRdxfN0Ndh9UXVaDHEtgHaWJ8jYcuTlBtyxJXC8lk0wHCt02HOIPV
+         V7l65LRcEFQBpBK3dSBOfhGSKMpsjpgFFyrCx701uw/pIq3KpfatSZ/kGY9mQeZwHf
+         EPGDLQgIlucQ9nq8j5c549h0fpSg1WZTyyjb56z0Y/Dz8PvprYv5HL0abytQ6TYSFi
+         UK9LZqIGBJgrITpQvKSUKs9kiy5SDoSHBX1oLWEWChZ8maKPRQ9CkEWxbNnwTmwhcc
+         K47ljYbSAQFBU5ogKTw+VxCN4wqfbyz+ETdg39o4OJJpBKvj74hWcRtlssUQreB+Hl
+         x6vjaMGuxD+v2WuMqNGZmkxaYD6YmpjS8m1EORoyk0qe8cP/v39V4NfyoV3V/lCoI7
+         nvP6dfHO6F5WTPwavcK9gQ+Rn1TKIBmYscZdY9fjTptuAa1Ljt2
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>, Patryk Obara <patryk.obara@gmail.com>,
         Jeff King <peff@peff.net>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v3 17/36] builtin/index-pack: convert struct ref_delta_entry to object_id
-Date:   Mon, 12 Mar 2018 02:27:37 +0000
-Message-Id: <20180312022756.483934-18-sandals@crustytoothpaste.net>
+Subject: [PATCH v3 09/36] wt-status: convert struct wt_status_state to object_id
+Date:   Mon, 12 Mar 2018 02:27:29 +0000
+Message-Id: <20180312022756.483934-10-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.16.2.660.g709887971b
 In-Reply-To: <20180312022756.483934-1-sandals@crustytoothpaste.net>
 References: <20180312022756.483934-1-sandals@crustytoothpaste.net>
@@ -53,128 +53,78 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert this struct to use a member of type object_id.  Convert various
-static functions as well.
+Convert the various *_sha1 members to use struct object_id instead.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin/index-pack.c | 34 +++++++++++++++++-----------------
- 1 file changed, 17 insertions(+), 17 deletions(-)
+ wt-status.c | 12 ++++++------
+ wt-status.h |  6 +++---
+ 2 files changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 59878e70b8..9744175e23 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -58,7 +58,7 @@ struct ofs_delta_entry {
- };
- 
- struct ref_delta_entry {
--	unsigned char sha1[20];
-+	struct object_id oid;
- 	int obj_no;
- };
- 
-@@ -671,18 +671,18 @@ static void find_ofs_delta_children(off_t offset,
- 	*last_index = last;
- }
- 
--static int compare_ref_delta_bases(const unsigned char *sha1,
--				   const unsigned char *sha2,
-+static int compare_ref_delta_bases(const struct object_id *oid1,
-+				   const struct object_id *oid2,
- 				   enum object_type type1,
- 				   enum object_type type2)
+diff --git a/wt-status.c b/wt-status.c
+index 5c685b6165..78be89a422 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -1350,7 +1350,7 @@ static void show_cherry_pick_in_progress(struct wt_status *s,
+ 					const char *color)
  {
- 	int cmp = type1 - type2;
- 	if (cmp)
- 		return cmp;
--	return hashcmp(sha1, sha2);
-+	return oidcmp(oid1, oid2);
- }
- 
--static int find_ref_delta(const unsigned char *sha1, enum object_type type)
-+static int find_ref_delta(const struct object_id *oid, enum object_type type)
+ 	status_printf_ln(s, color, _("You are currently cherry-picking commit %s."),
+-			find_unique_abbrev(state->cherry_pick_head_sha1, DEFAULT_ABBREV));
++			find_unique_abbrev(state->cherry_pick_head_oid.hash, DEFAULT_ABBREV));
+ 	if (s->hints) {
+ 		if (has_unmerged(s))
+ 			status_printf_ln(s, color,
+@@ -1369,7 +1369,7 @@ static void show_revert_in_progress(struct wt_status *s,
+ 					const char *color)
  {
- 	int first = 0, last = nr_ref_deltas;
+ 	status_printf_ln(s, color, _("You are currently reverting commit %s."),
+-			 find_unique_abbrev(state->revert_head_sha1, DEFAULT_ABBREV));
++			 find_unique_abbrev(state->revert_head_oid.hash, DEFAULT_ABBREV));
+ 	if (s->hints) {
+ 		if (has_unmerged(s))
+ 			status_printf_ln(s, color,
+@@ -1490,9 +1490,9 @@ static void wt_status_get_detached_from(struct wt_status_state *state)
+ 	} else
+ 		state->detached_from =
+ 			xstrdup(find_unique_abbrev(cb.noid.hash, DEFAULT_ABBREV));
+-	hashcpy(state->detached_sha1, cb.noid.hash);
++	oidcpy(&state->detached_oid, &cb.noid);
+ 	state->detached_at = !get_oid("HEAD", &oid) &&
+-			     !hashcmp(oid.hash, state->detached_sha1);
++			     !oidcmp(&oid, &state->detached_oid);
  
-@@ -691,7 +691,7 @@ static int find_ref_delta(const unsigned char *sha1, enum object_type type)
- 		struct ref_delta_entry *delta = &ref_deltas[next];
- 		int cmp;
- 
--		cmp = compare_ref_delta_bases(sha1, delta->sha1,
-+		cmp = compare_ref_delta_bases(oid, &delta->oid,
- 					      type, objects[delta->obj_no].type);
- 		if (!cmp)
- 			return next;
-@@ -704,11 +704,11 @@ static int find_ref_delta(const unsigned char *sha1, enum object_type type)
- 	return -first-1;
- }
- 
--static void find_ref_delta_children(const unsigned char *sha1,
-+static void find_ref_delta_children(const struct object_id *oid,
- 				    int *first_index, int *last_index,
- 				    enum object_type type)
- {
--	int first = find_ref_delta(sha1, type);
-+	int first = find_ref_delta(oid, type);
- 	int last = first;
- 	int end = nr_ref_deltas - 1;
- 
-@@ -717,9 +717,9 @@ static void find_ref_delta_children(const unsigned char *sha1,
- 		*last_index = -1;
- 		return;
+ 	free(ref);
+ 	strbuf_release(&cb.buf);
+@@ -1551,13 +1551,13 @@ void wt_status_get_state(struct wt_status_state *state,
+ 	} else if (!stat(git_path_cherry_pick_head(), &st) &&
+ 			!get_oid("CHERRY_PICK_HEAD", &oid)) {
+ 		state->cherry_pick_in_progress = 1;
+-		hashcpy(state->cherry_pick_head_sha1, oid.hash);
++		oidcpy(&state->cherry_pick_head_oid, &oid);
  	}
--	while (first > 0 && !hashcmp(ref_deltas[first - 1].sha1, sha1))
-+	while (first > 0 && !oidcmp(&ref_deltas[first - 1].oid, oid))
- 		--first;
--	while (last < end && !hashcmp(ref_deltas[last + 1].sha1, sha1))
-+	while (last < end && !oidcmp(&ref_deltas[last + 1].oid, oid))
- 		++last;
- 	*first_index = first;
- 	*last_index = last;
-@@ -991,7 +991,7 @@ static struct base_data *find_unresolved_deltas_1(struct base_data *base,
- 						  struct base_data *prev_base)
- {
- 	if (base->ref_last == -1 && base->ofs_last == -1) {
--		find_ref_delta_children(base->obj->idx.oid.hash,
-+		find_ref_delta_children(&base->obj->idx.oid,
- 					&base->ref_first, &base->ref_last,
- 					OBJ_REF_DELTA);
+ 	wt_status_check_bisect(NULL, state);
+ 	if (!stat(git_path_revert_head(), &st) &&
+ 	    !get_oid("REVERT_HEAD", &oid)) {
+ 		state->revert_in_progress = 1;
+-		hashcpy(state->revert_head_sha1, oid.hash);
++		oidcpy(&state->revert_head_oid, &oid);
+ 	}
  
-@@ -1075,7 +1075,7 @@ static int compare_ref_delta_entry(const void *a, const void *b)
- 	const struct ref_delta_entry *delta_a = a;
- 	const struct ref_delta_entry *delta_b = b;
+ 	if (get_detached_from)
+diff --git a/wt-status.h b/wt-status.h
+index ea2456daf2..430770b854 100644
+--- a/wt-status.h
++++ b/wt-status.h
+@@ -118,9 +118,9 @@ struct wt_status_state {
+ 	char *branch;
+ 	char *onto;
+ 	char *detached_from;
+-	unsigned char detached_sha1[20];
+-	unsigned char revert_head_sha1[20];
+-	unsigned char cherry_pick_head_sha1[20];
++	struct object_id detached_oid;
++	struct object_id revert_head_oid;
++	struct object_id cherry_pick_head_oid;
+ };
  
--	return hashcmp(delta_a->sha1, delta_b->sha1);
-+	return oidcmp(&delta_a->oid, &delta_b->oid);
- }
- 
- static void resolve_base(struct object_entry *obj)
-@@ -1141,7 +1141,7 @@ static void parse_pack_objects(unsigned char *hash)
- 			ofs_delta++;
- 		} else if (obj->type == OBJ_REF_DELTA) {
- 			ALLOC_GROW(ref_deltas, nr_ref_deltas + 1, ref_deltas_alloc);
--			hashcpy(ref_deltas[nr_ref_deltas].sha1, ref_delta_oid.hash);
-+			oidcpy(&ref_deltas[nr_ref_deltas].oid, &ref_delta_oid);
- 			ref_deltas[nr_ref_deltas].obj_no = i;
- 			nr_ref_deltas++;
- 		} else if (!data) {
-@@ -1373,14 +1373,14 @@ static void fix_unresolved_deltas(struct hashfile *f)
- 
- 		if (objects[d->obj_no].real_type != OBJ_REF_DELTA)
- 			continue;
--		base_obj->data = read_sha1_file(d->sha1, &type, &base_obj->size);
-+		base_obj->data = read_sha1_file(d->oid.hash, &type, &base_obj->size);
- 		if (!base_obj->data)
- 			continue;
- 
--		if (check_sha1_signature(d->sha1, base_obj->data,
-+		if (check_sha1_signature(d->oid.hash, base_obj->data,
- 				base_obj->size, type_name(type)))
--			die(_("local object %s is corrupt"), sha1_to_hex(d->sha1));
--		base_obj->obj = append_obj_to_pack(f, d->sha1,
-+			die(_("local object %s is corrupt"), oid_to_hex(&d->oid));
-+		base_obj->obj = append_obj_to_pack(f, d->oid.hash,
- 					base_obj->data, base_obj->size, type);
- 		find_unresolved_deltas(base_obj);
- 		display_progress(progress, nr_resolved_deltas);
+ size_t wt_status_locate_end(const char *s, size_t len);
