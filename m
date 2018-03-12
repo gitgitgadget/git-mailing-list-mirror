@@ -2,149 +2,203 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F33D41FAE2
-	for <e@80x24.org>; Mon, 12 Mar 2018 10:19:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DDF461FAE2
+	for <e@80x24.org>; Mon, 12 Mar 2018 10:20:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752065AbeCLKTk (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Mar 2018 06:19:40 -0400
-Received: from mail-pl0-f45.google.com ([209.85.160.45]:36452 "EHLO
-        mail-pl0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751802AbeCLKTj (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Mar 2018 06:19:39 -0400
-Received: by mail-pl0-f45.google.com with SMTP id 61-v6so9056650plf.3
-        for <git@vger.kernel.org>; Mon, 12 Mar 2018 03:19:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=1T3lFn7pkUCXFNaDz1lCrgRX/0qvwzmPvxd7PJYtXCw=;
-        b=Cn+2wmsP2MwZfBW8+CnvXPtwYvPPXnZOQ5BqpfsKX969bFdsL4dkTCCNf85QhwvVK5
-         bOJ2gifCOL/jOHfvswE0lYa0u2uHRfH8jYX1kzI18mEPpHJnRR2XgJjl4Sw44qe5T8gd
-         eSf7YsULJEgP0R/TfCSg3s2np3Sk+LYjHyBcTNV80GWqbgwSEOMhYVUfwgAG+vV1oA5N
-         s1IkU5pgoLfCNaODJifZYvrSuNarqDmatDSmb4v+MX9CSFRjaIY024gwcOxi5NvCcUNN
-         VOICEUI1knFVt50u4JOLgULC8h0oOAjvu2deltbhK3yvZjlsKuhZNBwpUhjVHo1l2s/x
-         oulA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=1T3lFn7pkUCXFNaDz1lCrgRX/0qvwzmPvxd7PJYtXCw=;
-        b=ItA9GPkiX+87ZiBTgCH5PU6ZwtmHPaVbaOtZE4UQ98O9Ymq1xm6UBHErRN8IiZ8Eeh
-         o/eJ3OX7lv0rPWCVZUsO71V+093VOyABOzgWoi4020B3VyOBKTc5fkqE8Doj7lBUvdxs
-         nJeFC+io56UPkKW8umuza1wPEJt5NbV6SGOlEXwT5q7slDmOIdeKWJi274rInJYUQKpP
-         h4JpwmAuCOiZFzaYIx0xpHqSmS1TjZWDgEtKDnGUKdTDIRwI7Kyn7MmOIfpwL2QIgw0o
-         MWPvz/LRF2qcVMiHYh9JHn6iSbRHW3UErYxpjaFxqVlRNAUSonQrputhdCGnNo2Bi434
-         oHvw==
-X-Gm-Message-State: AElRT7EpqJN0/3lQFhFgjFM2rvXJDD77YFBieA76ezasc4+kLw727CPl
-        Df2g7xaxrVQ0hz+neMlmMH4=
-X-Google-Smtp-Source: AG47ELtLNHtwiRXrcq0ice/PjyDUPTZ8sNUMQB6SnLWAmExln/yJnlfs1CU74w+WTdBtVSM/3zUDyw==
-X-Received: by 2002:a17:902:5a89:: with SMTP id r9-v6mr6759225pli.173.1520849978999;
-        Mon, 12 Mar 2018 03:19:38 -0700 (PDT)
-Received: from remr90p0m5f.ads.autodesk.com (adsknateur.autodesk.com. [132.188.32.100])
-        by smtp.gmail.com with ESMTPSA id x1sm16620126pfk.144.2018.03.12.03.19.37
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 12 Mar 2018 03:19:38 -0700 (PDT)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [GSoC] [PATCH] travis-ci: added clang static analysis
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <20180305200400.3769-1-sidm1999@gmail.com>
-Date:   Mon, 12 Mar 2018 11:19:35 +0100
-Cc:     Git List <git@vger.kernel.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <89AEA176-2D3F-4271-958E-1C6BCC944842@gmail.com>
-References: <20180305200400.3769-1-sidm1999@gmail.com>
-To:     SiddharthaMishra <sidm1999@gmail.com>
-X-Mailer: Apple Mail (2.3124)
+        id S1752005AbeCLKUF (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Mar 2018 06:20:05 -0400
+Received: from mout.gmx.net ([212.227.15.15]:49319 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751344AbeCLKUE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Mar 2018 06:20:04 -0400
+Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M9JYE-1en7cw2TJm-00Cg8O; Mon, 12
+ Mar 2018 11:19:56 +0100
+Date:   Mon, 12 Mar 2018 11:20:00 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+To:     Igor Djordjevic <igor.d.djordjevic@gmail.com>
+cc:     Sergey Organov <sorganov@gmail.com>, git@vger.kernel.org,
+        Johannes Sixt <j6t@kdbg.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [RFC v2] Rebasing merges: a jorney to the ultimate solution
+ (Road Clear)
+In-Reply-To: <6362804d-e204-a9e0-9ff0-51d8497ce921@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1803121056400.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <87y3jtqdyg.fsf@javad.com> <87r2oxe3o1.fsf@javad.com> <nycvar.QRO.7.76.6.1803070742580.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <87vae8yq15.fsf@javad.com> <nycvar.QRO.7.76.6.1803071450511.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+ <a0cc88d2-bfed-ce7b-1b3f-3c447d2b32da@gmail.com> <4918cc79-79ba-5dd2-ea84-dc47db47d835@gmail.com> <b11785bd-5c96-43c1-95d8-b28eccfd13c8@gmail.com> <d29d3c0e-6473-0461-c8ea-02975ce4de14@gmail.com> <nycvar.QRO.7.76.6.1803111644380.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+ <6362804d-e204-a9e0-9ff0-51d8497ce921@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:GiOMvtOE+PHh54WQTaB0Q+JHbSW0R/sMDscTIszwz/Uu4rLF5D/
+ JLqJg8ERfFI9MNeXEeXCMUNmYkCJtKajPP4cfPON19UnOmELtTvTf/Cw9C2uC6qjmufHKzr
+ dF3BmeILgBrikFkptn4NDBBBVdKNozTChE0lzsExY/SD/vc7VtEY0wZf2Hj4NW/S5BWd1l4
+ J9JWhgqlMgPm0fFG3L0Ug==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:2yn8BY46tl8=:uah3SwXzH17z0i/M51VGcA
+ 8p1UDugvc34a75P9s9hxn3GE5h/1pLjbx8bujS5sLQPiEaUK6ECF1dyv2sGP6W7TLmz58ILeR
+ iBmnBz2rEgVM6e81K6Zn0ksIu0M8yc+uH1k2ZVgb5csvKJklSE6zn8TWybJ3hq9N+voKeYt5n
+ 4+6OY3OaozDe+mnYUU8KuEo7EmkQD1jRBEfky9PFxFBiOOqvCd+Ucj0DvE9W2IoRJ2gzTOwl7
+ sIO12HAFD0VtHiWxB+BXjuTctasMNuEhmt/pC8+IxUd00lt734ifWlv7kIaRZ+P8NiI8wsYpq
+ SQMb7zfx4h/bIhanmNecZ2dqf/+1pJwho6bnbveQe+lyQhNrCP6LeNlrFMuipnVlS3orHBv+y
+ Hp117ryp/+YwPv7c9XANdo//NMmxBlX2UDzTXYg5sl3CgCO0hvDmYY2EhS887mWeWt75i24Tc
+ OlzSqrwhaBRs1dap+9rw2BetHP7cK43Tl1CIAUHrTm8TXkfb/0MikVRsLG2PtFm/r1IVtwFo3
+ SgBiWA0dpyukfn8eEq3Xz5yAXC0E7XktCNYFP5vqbFqiTRrdoVXBCP/BpfkBC4RwcbLDyAsWx
+ j/2qt+wDo7PIO2ja1TRyOakd3r/ZTaG04+lKGx68j5zti6FeBV5LdlpRPA9Zn7KS/f6T/bAV1
+ 3DXj19kVAIETI9gVRbF93i2vjVefVa6dV4jBT6WB6j2haf/phSV460aCKiCmg9ZANi6Qnlpoj
+ ZwGUxYNKMtcaFlrdAx9jjjbyVQN4ENsbIewC/jbOIOpCrWJPo6rBY9s/qbHRLXIq2vIAY5Gd7
+ tfSiRBBeo7QarLnQxe48x9mkePM+/huGW4XQBx9O3aOcMxG7HhnWDBdSRa/XEN6nw2cXkvo
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hi Buga,
 
-That looks interesting but I agree with Dscho that we should not limit
-this to master/maint.
+On Sun, 11 Mar 2018, Igor Djordjevic wrote:
 
-I assume you did run this on TravisCI already? Can you share a link?
-I assume you did find errors? Can we fix them or are there too many?
-If there are existing errors, how do we define a "successful" build?
+> On 11/03/2018 16:47, Johannes Schindelin wrote:
+> > 
+> > > Having explained all this, I realized this is the same "essentially
+> > > merging the new tips into the original pretending that the new tips
+> > > were not rebased but merged into upstream" as Phillip`s one, just
+> > > that we have additional temporary commits U1 and U2 (as per
+> > > mentioned "patch theory") :)
+> > 
+> > But if the old tips had been merged into upstream (resulting in the
+> > new tips), then the merge bases would be *the old tips*.
+> 
+> Exactly, and that is what part you`ve cut out of the quote was 
+> showing :) By Phillip`s implementation, we would start with *old tips* 
+> as merge bases, indeed (old tips being U1 and U2 in this case),
 
-Thanks for working on this,
-Lars
+I really do not see how it would make sense to take the original merge
+commit as merge base in this scenario. It makes no *logical* sense: in
+which interpretation did you develop changes in two divergent directions
+from that merge commit?
 
-> On 05 Mar 2018, at 21:04, SiddharthaMishra <sidm1999@gmail.com> wrote:
->=20
-> Added a job to run clang static code analysis on the master and maint =
-branch
->=20
-> Signed-off-by: SiddharthaMishra <sidm1999@gmail.com>
-> ---
-> .travis.yml               | 17 ++++++++++++++++-
-> ci/run-static-analysis.sh |  9 ++++++++-
-> 2 files changed, 24 insertions(+), 2 deletions(-)
->=20
-> diff --git a/.travis.yml b/.travis.yml
-> index 4684b3f4f..9b891d182 100644
-> --- a/.travis.yml
-> +++ b/.travis.yml
-> @@ -48,7 +48,7 @@ matrix:
->       before_install:
->       before_script:
->       script: ci/run-linux32-docker.sh
-> -    - env: jobname=3DStaticAnalysis
-> +    - env: jobname=3DCocciStaticAnalysis
->       os: linux
->       compiler:
->       addons:
-> @@ -59,6 +59,21 @@ matrix:
->       before_script:
->       script: ci/run-static-analysis.sh
->       after_failure:
-> +    - if: branch IN (master, maint)
-> +      env: jobname=3DClangStaticAnalysis
-> +      os: linux
-> +      compiler:
-> +      add_ons:
-> +        apt:
-> +          sources:
-> +          - ubuntu-toolchain-r-test
-> +          - llvm-toolchain-trusty
-> +          packages:
-> +          - clang
-> +      before_install:
-> +      before_script:
-> +      script: ci/run-static-analysis.sh
-> +      after_failure:
->     - env: jobname=3DDocumentation
->       os: linux
->       compiler:
-> diff --git a/ci/run-static-analysis.sh b/ci/run-static-analysis.sh
-> index fe4ee4e06..6ae032f54 100755
-> --- a/ci/run-static-analysis.sh
-> +++ b/ci/run-static-analysis.sh
-> @@ -5,6 +5,13 @@
->=20
-> . ${0%/*}/lib-travisci.sh
->=20
-> -make coccicheck
-> +case "$jobname" in
-> +ClangStaticAnalysis)
-> +	scan-build -analyze-headers --status-bugs make
-> +	;;
-> +CocciStaticAnalysis)
-> +	make coccicheck
-> +	;;
-> +esac
->=20
-> save_good_tree
-> --=20
-> 2.16.2.248.ge2408a6f7.dirty
->=20
+Whereas if you use the old tips as merge bases, you can say very easily
+what those two directions were: one merged with other merge parents, the
+other direction rebased on top of upstream. There. Two divergent sets of
+changes that we want to reconcile ("merge"). Easy as apple pie.
 
+> where it further gets transformed as previously written:
+> 
+> > 	git merge-recursive U1 -- M U1'
+> > 	tree="$(git write-tree)"
+> > 	git merge-recursive U2 -- $tree U2'
+> > 	tree="$(git write-tree)"
+> > 
+> > ..., where we know U1 = U2 = M (in regards to trees), so this is the 
+> > same as:
+> > 
+> > 	git merge-recursive M -- M U1'
+> > 	tree="$(git write-tree)"
+> > 	git merge-recursive M -- $tree U2'
+> > 	tree="$(git write-tree)"
+> 
+> Here, `git merge-recursive M -- M U1'` simply equals to U1' tree 
+> (being a fast-forward merge), so we can write the two merges above as
+> a single merge, too:
+> 
+> > 	git merge-recursive M -- U1' U2'
+> > 	tree="$(git write-tree)"
+> > 
+> > ... which is exactly what Sergey`s (updated) approach suggests, 
+> > merging U1' and U2' with M as merge-base (and shown inside that 
+> > sample implementation script I provided[1]) :)
+> 
+> So from *old tips* being the rebased merge base (Phillip), we got to 
+> *old merge commit* being the rebased merge base (Sergey), or vice 
+> versa. Does this shed a bit more light on it now? Or you wanted to 
+> point out something else in the first place...?
+
+Okay, I'll trust you that these stunts show that the two strategies are
+equivalent as to what their results are.
+
+The biggest difference is that it is easy for me to see the motivation
+behind Phillip's strategy, whereas I am still puzzled why one would come
+up with a complicated strategy that splits merge commits and re-merges
+them later, and why it should work in general (I still suspect that this
+is not the case).
+
+Where "easy" meant that I had to spend 1h still to figure out why using
+the unrebased merge parents as merge bases. The same amount of time did
+not allow me to wrap my head around Sergey's verbose explanations.
+
+But I'll take your word for it that the strategies are equivalent, and go
+with the one that has both a simpler explanation (in my mind, at least),
+and an more robust implementation.
+
+> > I am still not sure for what scenarios Phillip's strategy is the same as
+> > Sergey's (updated) one, as the former strategy can do completely without
+> > temporary commits [...]
+> 
+> I think the root of misunderstanding might be coming from the fact 
+> that Sergey was mainly describing a general concept (without a 
+> strictly defined implementation strategy, not being restricted to a 
+> specific one), where Phillip came up with a solution that eventually 
+> seems to use the same concept (as those transformations above should 
+> show), but simplifying it further inside a concrete implementation.
+
+Well, Sergey started off by suggesting the "rebase the patch relatively to
+the first parent always" strategy, then came up with a long-ish email
+describing a different approach (which I slowly realize is related to the
+first strategy, and it would have been *much* appreciated if it was not
+left to the reader to figure that one out), then incorporated what I
+called your hack (again, no clear and concise description what changed,
+just throwing a bunch of big bones to the dogs with the next long-ish
+document).
+
+So I will not apologize for stopping to pay so much attention to that
+sub-thread at some point.
+
+> By saying that Phillip "simplified it", even though transformations
+> shown above might show different, I mean he managed to further decompose
+> what Sergey was aiming for, abstracting temporary commits U1 and U2 out
+> of the equation, thus making them optional, but not required.
+
+That is not how I read Phillip's mail. It was more like "how about this
+instead". And it was simple enough, with clear example how to implement
+it, that I thought about that single mail for an hour, until I was
+satisfied that the motivation behind this strategy is sound.
+
+Then you confirmed that it worked on your examples, and that's what
+settled the score here.
+
+> So, if easier to implement and reason about, I think what Phillip 
+> described is a way to go to produce the rebased merged commit - but 
+> in case we want to have that "clean rebased merge" check that U1' == 
+> U2' comparison does provide, as they should really be the same (tree 
+> wise) in simple (and the most used?) merge rebasing, we can do that 
+> after the fact, even.
+
+I do not know what that U1' == U2' check would buy us, as Phillip's
+strategy does not require rebasing the amendments *twice*.
+
+> Might be this check could be the most useful in non-interactive 
+> rebases, where rebased merge parents` trees could be expected to stay 
+> "balanced" more often (U1' == U2'), without interactive fiddling to 
+> "disbalance" them. I don`t know, just thinking out loud.
+
+Again, Phillip's strategy does not leave things to be "disbalanced".
+
+> > [...] and cannot introduce ambiguities when rebasing the
+> > changes introduced by M (i.e. the "amendmendts" we talked about).
+> 
+> Hmm, not following here, which ambiguities are we talking about?
+
+U1' vs U2' of course. Those are two things that can be different, even if
+they ideally would have identical trees.
+
+Phillip's strategy does not leave that room for ambiguity.
+
+Ciao,
+Dscho
