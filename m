@@ -2,105 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CAC1F1F404
-	for <e@80x24.org>; Mon, 12 Mar 2018 18:32:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 489341FAE3
+	for <e@80x24.org>; Mon, 12 Mar 2018 18:47:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932200AbeCLScb (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Mar 2018 14:32:31 -0400
-Received: from mail-wm0-f50.google.com ([74.125.82.50]:54399 "EHLO
-        mail-wm0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751312AbeCLSca (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Mar 2018 14:32:30 -0400
-Received: by mail-wm0-f50.google.com with SMTP id z81so18561123wmb.4
-        for <git@vger.kernel.org>; Mon, 12 Mar 2018 11:32:29 -0700 (PDT)
+        id S1751450AbeCLSrk (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Mar 2018 14:47:40 -0400
+Received: from mail-pl0-f42.google.com ([209.85.160.42]:46977 "EHLO
+        mail-pl0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751248AbeCLSrj (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Mar 2018 14:47:39 -0400
+Received: by mail-pl0-f42.google.com with SMTP id f5-v6so2266019plj.13
+        for <git@vger.kernel.org>; Mon, 12 Mar 2018 11:47:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=v6SGqdg9PCGI5pHKyyntGRU5ciMpNzFd8ZGvhS/rVD4=;
-        b=GvDOWtIRYy3NC5XYcRktBUZ9btzHyZg5TS2CefhZJvgVdorqHzU5XGNAJ38zUHiItu
-         xWtrdPlsEOAufUrVTqLx8E4lIJr1zNquSNHA58c7wzR49XR+CV6A+n/yjGJrExWDopZ7
-         C6yOpoSk/joe0XmxcERbSqdVUjOFbKflA+lNGhWM3awFWXU2H2p13GSOewLNQytIGf7+
-         CBFl1Jhc5WldCQkqv38FqhKw3Cc5DfjE3frEU/9vP9YAifo4qaVr217OOWgi4k4lOTa3
-         qNDaDGLYw0e6WlZ5r8Iuwav7tDRkY1VWgsbjidg80JYWh2Ge1fevDp1kN6SJx+425TP7
-         Js8w==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=IahPuxbwTSTAkfDK58eSKXekrnLpPJbsliQRjiwY/0M=;
+        b=fz3uYgNrNPuZb+WRKwtyiW4KVtkG+XxL/gBp8Dhwx/85UqAhVrmgrAtdSLSSuRViz+
+         2rJyZpC8j9T1k4zL52B/GQ2xAk11o7AhCv6rB32AxtflrV223cT7JVJlOW65mFKKO1Uo
+         wpQaAYFYrnxMI6iswcUJxVy1Cjm5OaxbAm/Wmsh4y80AaZfh2zPo3zeJjEdSEwgReOP3
+         6ntV2pQHTxfMGmsKRM8OYaUKUbAoDpawbTQHSMa0KKORlfL0aqhVwgYNYKDprfuVpaW4
+         e+bUthBY28nGPcme9EKPTPPgnA2C0YxhOIF8cxnwylXoylayW35/QwHS2F9HzbYL09wE
+         1msQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=v6SGqdg9PCGI5pHKyyntGRU5ciMpNzFd8ZGvhS/rVD4=;
-        b=V3+fTCwlZLxoq5KjWttDYXACORODVfiduxs1G75X3Hz8pyrlMjDiXUBofGzl6DgqNr
-         6y2uQ3EVjXH5PC1nTbU0GuhXqv5nNd8cvtzmPj8V60mR0McCqkWspCnNn7RCC/WSNaWc
-         YvTTX9jUKX+4D9Bq9irgG0C1GTEXkKFpefiytdAafUsnEn/JDIfDubnGxcEpEZXVMGib
-         6VkjiHQ/NzE6R/oNkxCmjPsw42CNfaPdzmvTq2vH328P3SSN8CuLlg0aZzjbxQRAC6hm
-         ZYKH9Gmdju76MJJsURwCGdf2Wh6njDDIgCLtT+ugyE4JABOWOE2cc0J7Yg0sivf9SxvB
-         8Lvw==
-X-Gm-Message-State: AElRT7E7q8wQlqgb8VEzNqFrabcuY4s+H2AHVRMNaBcROctGHiErAs3j
-        BJ7LWH93HEZcqXi5Nw5EsEI=
-X-Google-Smtp-Source: AG47ELtFu83FtbutJOx3HotKmp4OgReA0Atubg330HddCcS5HvorAbneV/anj0+oIv/OpCJuEsucxg==
-X-Received: by 10.28.93.82 with SMTP id r79mr6028087wmb.73.1520879549107;
-        Mon, 12 Mar 2018 11:32:29 -0700 (PDT)
-Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
-        by smtp.gmail.com with ESMTPSA id c5sm1766692wrb.47.2018.03.12.11.32.27
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=IahPuxbwTSTAkfDK58eSKXekrnLpPJbsliQRjiwY/0M=;
+        b=aOuBi490gxcVs9gzQWp5GqNZZQPRZnr6LXb06Lh9MYsZCDDZRLJmgnzUfnHtO0RpcM
+         tvkp0DbQ4KKfk/yGek7oPojLfwXNmc/hJKzbZ5Xq0JkGvquA4UQb2SoKoHiB0yTzfWMz
+         7ca3uoJhW5SwwmbkQpgjg/U4tfR/kLNMJc9X+m1LJb5Rxt/I1RgCNmk3DFqwtFpaW/HX
+         j9Dw6y8m80P52QXq2v2ndJFkMTUyVKKVMDj/2YdTj3PU5qeLgus/VW7mMMPXxTDCK94Y
+         pMe4Vy1hMPl3DD4eXV6kyYUlyLuHLSRdzwjrZw5EaJyfnKRqscdvkzWuhQwJTQWEkVaM
+         UE/g==
+X-Gm-Message-State: AElRT7G8AT6fsHjuAzXjMj8dnX4J98LxwZmXw8gnTrhb+IILIycBHWUh
+        RunTLpuSTbWBbC2bVG7iYvM=
+X-Google-Smtp-Source: AG47ELvG5UcZ8ABUzazKPF5hBa0zvV3xw2zQqwJk1IJmnQPn4U/7ypgDzE/pvSIWZVlmQDXWZcF+SQ==
+X-Received: by 2002:a17:902:7604:: with SMTP id k4-v6mr4441134pll.292.1520880459018;
+        Mon, 12 Mar 2018 11:47:39 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id w23sm21435731pfk.10.2018.03.12.11.47.38
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 12 Mar 2018 11:32:27 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     e@80x24.org, git@vger.kernel.org, peff@peff.net,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 4/5] pack-objects: show some progress when counting kept objects
-References: <20180301092046.2769-1-pclouds@gmail.com> <20180306104158.6541-1-pclouds@gmail.com> <20180306104158.6541-5-pclouds@gmail.com>
-User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 1.1.0
-In-reply-to: <20180306104158.6541-5-pclouds@gmail.com>
-Date:   Mon, 12 Mar 2018 19:32:26 +0100
-Message-ID: <87d109qh51.fsf@evledraar.gmail.com>
+        Mon, 12 Mar 2018 11:47:38 -0700 (PDT)
+Date:   Mon, 12 Mar 2018 11:47:34 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: Opinions on changing add/add conflict resolution?
+Message-ID: <20180312184734.GA58506@aiede.svl.corp.google.com>
+References: <CABPp-BEXcvgxcn4-OrDhjUpuOsGCJwE_XT+0eYOK4Ad_O5maOg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CABPp-BEXcvgxcn4-OrDhjUpuOsGCJwE_XT+0eYOK4Ad_O5maOg@mail.gmail.com>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi,
 
-On Tue, Mar 06 2018, Nguyễn Thái Ngọc Duy jotted:
+Elijah Newren wrote:
 
-> We only show progress when there are new objects to be packed. But
-> when --keep-pack is specified on the base pack, we will exclude most
-> of objects. This makes 'pack-objects' stay silent for a long time
-> while the counting phase is going.
+> Hi everyone,
 >
-> Let's show some progress whenever we visit an object instead. The
-> number of packed objects will be shown after if it's not the same as
-> the number of visited objects.
+> I'd like to change add/add conflict resolution.  Currently when such a
+> conflict occurs (say at ${path}), git unconditionally does a two-way
+> merge of the two files and sticks the result in the working tree at
+> ${path}.
 >
-> Since the meaning of this number has changed, use another word instead
-> of "Counting" to hint about the change.
+> I would like to make it instead first check whether the two files are
+> similar; if they are, then do the two-way merge, but if they're not,
+> then instead write the two files out to separate paths (${path}~HEAD
+> and ${path}~$MERGE, while making sure that ${path} is removed from the
+> working copy).
+>
+> Thoughts?
 
-Can you elaborate on how the meaning has changed? With/without this on
-linux.git I get:
+My immediate reaction is that it seems inconsistent with the rest of
+merge behavior.  Why would add/add behave this way but edit/edit not
+behave this way?
 
-With:
+Would this behavior be configurable or unconditional?  I suspect I
+would want it turned off in my own use.
 
-    Enumerating objects: 5901144, done.
-    Getting object details: 100% (5901145/5901145), done.
-    Delta compression using up to 8 threads.
+On the other hand, in the case of wild difference between the two
+files, skipping the two-way merge and just writing one of the versions
+to the worktree (like we do for binary files) sounds like something I
+would like in my own use.
 
-Without:
+Can you add something more about the motivation to the commit message?
+E.g. is this about performance, interaction with some tools, to
+support some particular workflow, etc?
 
-    Counting objects: 5901145, done.
-    Delta compression using up to 8 threads.
+Thanks and hope that helps,
+Jonathan
 
-So now we're seemingly off-by-one but otherwise doing the same thing?
-
-As for as user feedback goes we might as well have said "Reticulating
-splines", but I have some bias towards keeping the current "Counting
-objects..." phrasing. We ourselves have other docs referring to it that
-aren't changed by this patch, and there's
-e.g. https://githubengineering.com/counting-objects/ and lots of other
-3rd party docs that refer to this.
+> I have a patch series[1] with more details and other changes, but
+> wanted to especially get feedback on this issue even from folks that
+> didn't have enough time to read the patches or even the cover letter.
+>
+> Thanks,
+> Elijah
+>
+> [1] https://public-inbox.org/git/20180305171125.22331-1-newren@gmail.com/
