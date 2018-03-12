@@ -7,43 +7,43 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 197621F404
-	for <e@80x24.org>; Mon, 12 Mar 2018 02:28:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E2AC41F404
+	for <e@80x24.org>; Mon, 12 Mar 2018 02:28:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932543AbeCLC2W (ORCPT <rfc822;e@80x24.org>);
-        Sun, 11 Mar 2018 22:28:22 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:34292 "EHLO
+        id S932567AbeCLC21 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 11 Mar 2018 22:28:27 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:34314 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S932516AbeCLC2U (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 11 Mar 2018 22:28:20 -0400
+        by vger.kernel.org with ESMTP id S932527AbeCLC2W (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 11 Mar 2018 22:28:22 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 3748660988;
-        Mon, 12 Mar 2018 02:28:19 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 3B2B76099C;
+        Mon, 12 Mar 2018 02:28:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1520821699;
-        bh=GFvw1Zm/smV0MslkWiMXJnvpcwTumZcgd6oeaB5mIis=;
+        s=default; t=1520821701;
+        bh=+P0d2Wll80Cg/dxro3VKGywT1alchaK47Mhl31y+kQ4=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=WtHZkbOCskpkswnIfYpBswMhA88mXynYestWU7pQdQhwfXpUnwN1v6rJwJb7djXad
-         v8NcKdd4MVF23w3e1M2E5BlSZqZKiUqlZURlEL0GiwYP2nqQO2Y1yV+BVlXW8SSxnZ
-         t8tAJtpogWxRV3OPxx/hOXOPSvtp/ukG3p0QQzlQfbpHTwutFZ8kAdkB/nZN5UKKSg
-         exovMOut4oKTF84VBUR+PQXvZSWVN+X+PuV0WMyW80H5c2vv1VGVlhC+0e4VOCZir+
-         T/5xM5Luoy00QFG0huPQB8eSB5y/i4m/xH+uXvJ+D3n3ieKmjII0dT++Vv2nc0/8Oq
-         fgSUCT53A1tP7H8dho1FsBpN3pQPqRrG4fflbtkkd3Uew8CP8/skAD7eoPQwxzMyUH
-         J48hbxq+B6cPf3870VagrlnSoX/2PUpUbbYDblgM6tRpOY42/vK8gOjamRKlCzG/xv
-         K6USlPL4UP8MnyZ6GEeqaFzd0Xfpm7dSSpiDvK8MOsbnRQOJ8AZ
+        b=h/pVBqnJKdyfViICL/AX+NrtoGUsgmODtA9FpEWUXk4xmNO9cjrpJLIWilnncs4TL
+         AJdR2+RNDAk22ZM6mAn0XhjMMHSBn6j7tS7VjqU7hDBExnIZ32PV2NF8+9aodHrmUQ
+         llM0YFwDXSCREsuqvSZRhOdbie8dhpi2vKetc6Bz3FRrIhDArTonaF6VOUJRdgxi47
+         XHkaK5gHhcQ3/YF+gyGY+HW8oWhmAZzVMRUnSR5YWq/R+VsqpbcpuVeY5OEUjUFkYY
+         h5g9BXWosQFvRp8Wq6cu18T2nQQWTwr6dj1EkBfGf0EGeRljfiOGhaYBFW3L/pFPvg
+         jDv4NWX7pyC5uR+NPMNF0waNk3qAlTGR2jyEdfowuN95uJ8xmnspTWT0FzYi15tumh
+         YVGsJbwFxEVhiZ4kaz2eAq8xDkKAJSTalLqt62aECpxunc8mqVjbAXCRiFOhn88mtr
+         PckYlHi7NWTdMzboDbMFOgyoLVnc3R1KxuYyayNXHZwGpL2zwVk
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>, Patryk Obara <patryk.obara@gmail.com>,
         Jeff King <peff@peff.net>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v3 06/36] tree: convert read_tree_recursive to struct object_id
-Date:   Mon, 12 Mar 2018 02:27:26 +0000
-Message-Id: <20180312022756.483934-7-sandals@crustytoothpaste.net>
+Subject: [PATCH v3 08/36] strbuf: convert strbuf_add_unique_abbrev to use struct object_id
+Date:   Mon, 12 Mar 2018 02:27:28 +0000
+Message-Id: <20180312022756.483934-9-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.16.2.660.g709887971b
 In-Reply-To: <20180312022756.483934-1-sandals@crustytoothpaste.net>
 References: <20180312022756.483934-1-sandals@crustytoothpaste.net>
@@ -53,210 +53,258 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert the callback functions for read_tree_recursive to take a pointer
-to struct object_id.
+Convert the declaration and definition of strbuf_add_unique_abbrev to
+make it take a pointer to struct object_id.  Predeclare the struct in
+strbuf.h, as cache.h includes strbuf.h before it declares the struct,
+and otherwise the struct declaration would have the wrong scope.
+
+Apply the following semantic patch, along with the standard object_id
+transforms, to adjust the callers:
+
+@@
+expression E1, E2, E3;
+@@
+- strbuf_add_unique_abbrev(E1, E2.hash, E3);
++ strbuf_add_unique_abbrev(E1, &E2, E3);
+
+@@
+expression E1, E2, E3;
+@@
+- strbuf_add_unique_abbrev(E1, E2->hash, E3);
++ strbuf_add_unique_abbrev(E1, E2, E3);
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- archive.c          |  8 ++++----
- builtin/checkout.c |  4 ++--
- builtin/log.c      |  2 +-
- builtin/ls-tree.c  |  8 ++++----
- merge-recursive.c  |  2 +-
- tree.c             | 14 +++++++-------
- tree.h             |  2 +-
- 7 files changed, 20 insertions(+), 20 deletions(-)
+ builtin/checkout.c | 2 +-
+ builtin/fetch.c    | 8 ++++----
+ builtin/tag.c      | 2 +-
+ merge-recursive.c  | 2 +-
+ pretty.c           | 8 ++++----
+ strbuf.c           | 4 ++--
+ strbuf.h           | 8 +++++++-
+ submodule.c        | 4 ++--
+ transport.c        | 4 ++--
+ wt-status.c        | 6 +++---
+ 10 files changed, 27 insertions(+), 21 deletions(-)
 
-diff --git a/archive.c b/archive.c
-index 0b7b62af0c..e664cdb624 100644
---- a/archive.c
-+++ b/archive.c
-@@ -198,7 +198,7 @@ static int write_directory(struct archiver_context *c)
- 	return ret ? -1 : 0;
- }
- 
--static int queue_or_write_archive_entry(const unsigned char *sha1,
-+static int queue_or_write_archive_entry(const struct object_id *oid,
- 		struct strbuf *base, const char *filename,
- 		unsigned mode, int stage, void *context)
- {
-@@ -224,14 +224,14 @@ static int queue_or_write_archive_entry(const unsigned char *sha1,
- 
- 		if (check_attr_export_ignore(check))
- 			return 0;
--		queue_directory(sha1, base, filename,
-+		queue_directory(oid->hash, base, filename,
- 				mode, stage, c);
- 		return READ_TREE_RECURSIVE;
- 	}
- 
- 	if (write_directory(c))
- 		return -1;
--	return write_archive_entry(sha1, base->buf, base->len, filename, mode,
-+	return write_archive_entry(oid->hash, base->buf, base->len, filename, mode,
- 				   stage, context);
- }
- 
-@@ -303,7 +303,7 @@ static const struct archiver *lookup_archiver(const char *name)
- 	return NULL;
- }
- 
--static int reject_entry(const unsigned char *sha1, struct strbuf *base,
-+static int reject_entry(const struct object_id *oid, struct strbuf *base,
- 			const char *filename, unsigned mode,
- 			int stage, void *context)
- {
 diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 8f4dfb1046..8eb118201d 100644
+index 8eb118201d..5981e1a3ed 100644
 --- a/builtin/checkout.c
 +++ b/builtin/checkout.c
-@@ -66,7 +66,7 @@ static int post_checkout_hook(struct commit *old_commit, struct commit *new_comm
- 
- }
- 
--static int update_some(const unsigned char *sha1, struct strbuf *base,
-+static int update_some(const struct object_id *oid, struct strbuf *base,
- 		const char *pathname, unsigned mode, int stage, void *context)
+@@ -720,7 +720,7 @@ static int add_pending_uninteresting_ref(const char *refname,
+ static void describe_one_orphan(struct strbuf *sb, struct commit *commit)
  {
- 	int len;
-@@ -78,7 +78,7 @@ static int update_some(const unsigned char *sha1, struct strbuf *base,
- 
- 	len = base->len + strlen(pathname);
- 	ce = xcalloc(1, cache_entry_size(len));
--	hashcpy(ce->oid.hash, sha1);
-+	oidcpy(&ce->oid, oid);
- 	memcpy(ce->name, base->buf, base->len);
- 	memcpy(ce->name + base->len, pathname, len - base->len);
- 	ce->ce_flags = create_ce_flags(0) | CE_UPDATE;
-diff --git a/builtin/log.c b/builtin/log.c
-index 94ee177d56..32a744bfd2 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -541,7 +541,7 @@ static int show_tag_object(const struct object_id *oid, struct rev_info *rev)
- 	return 0;
- }
- 
--static int show_tree_object(const unsigned char *sha1,
-+static int show_tree_object(const struct object_id *oid,
- 		struct strbuf *base,
- 		const char *pathname, unsigned mode, int stage, void *context)
- {
-diff --git a/builtin/ls-tree.c b/builtin/ls-tree.c
-index ef965408e8..c613dd7b82 100644
---- a/builtin/ls-tree.c
-+++ b/builtin/ls-tree.c
-@@ -60,7 +60,7 @@ static int show_recursive(const char *base, int baselen, const char *pathname)
- 	return 0;
- }
- 
--static int show_tree(const unsigned char *sha1, struct strbuf *base,
-+static int show_tree(const struct object_id *oid, struct strbuf *base,
- 		const char *pathname, unsigned mode, int stage, void *context)
- {
- 	int retval = 0;
-@@ -94,7 +94,7 @@ static int show_tree(const unsigned char *sha1, struct strbuf *base,
- 			char size_text[24];
- 			if (!strcmp(type, blob_type)) {
- 				unsigned long size;
--				if (sha1_object_info(sha1, &size) == OBJ_BAD)
-+				if (sha1_object_info(oid->hash, &size) == OBJ_BAD)
- 					xsnprintf(size_text, sizeof(size_text),
- 						  "BAD");
- 				else
-@@ -103,11 +103,11 @@ static int show_tree(const unsigned char *sha1, struct strbuf *base,
- 			} else
- 				xsnprintf(size_text, sizeof(size_text), "-");
- 			printf("%06o %s %s %7s\t", mode, type,
--			       find_unique_abbrev(sha1, abbrev),
-+			       find_unique_abbrev(oid->hash, abbrev),
- 			       size_text);
- 		} else
- 			printf("%06o %s %s\t", mode, type,
--			       find_unique_abbrev(sha1, abbrev));
-+			       find_unique_abbrev(oid->hash, abbrev));
+ 	strbuf_addstr(sb, "  ");
+-	strbuf_add_unique_abbrev(sb, commit->object.oid.hash, DEFAULT_ABBREV);
++	strbuf_add_unique_abbrev(sb, &commit->object.oid, DEFAULT_ABBREV);
+ 	strbuf_addch(sb, ' ');
+ 	if (!parse_commit(commit))
+ 		pp_commit_easy(CMIT_FMT_ONELINE, commit, sb);
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index d32d94692c..aeafe63ba6 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -708,9 +708,9 @@ static int update_local_ref(struct ref *ref,
+ 	if (in_merge_bases(current, updated)) {
+ 		struct strbuf quickref = STRBUF_INIT;
+ 		int r;
+-		strbuf_add_unique_abbrev(&quickref, current->object.oid.hash, DEFAULT_ABBREV);
++		strbuf_add_unique_abbrev(&quickref, &current->object.oid, DEFAULT_ABBREV);
+ 		strbuf_addstr(&quickref, "..");
+-		strbuf_add_unique_abbrev(&quickref, ref->new_oid.hash, DEFAULT_ABBREV);
++		strbuf_add_unique_abbrev(&quickref, &ref->new_oid, DEFAULT_ABBREV);
+ 		if ((recurse_submodules != RECURSE_SUBMODULES_OFF) &&
+ 		    (recurse_submodules != RECURSE_SUBMODULES_ON))
+ 			check_for_new_submodule_commits(&ref->new_oid);
+@@ -723,9 +723,9 @@ static int update_local_ref(struct ref *ref,
+ 	} else if (force || ref->force) {
+ 		struct strbuf quickref = STRBUF_INIT;
+ 		int r;
+-		strbuf_add_unique_abbrev(&quickref, current->object.oid.hash, DEFAULT_ABBREV);
++		strbuf_add_unique_abbrev(&quickref, &current->object.oid, DEFAULT_ABBREV);
+ 		strbuf_addstr(&quickref, "...");
+-		strbuf_add_unique_abbrev(&quickref, ref->new_oid.hash, DEFAULT_ABBREV);
++		strbuf_add_unique_abbrev(&quickref, &ref->new_oid, DEFAULT_ABBREV);
+ 		if ((recurse_submodules != RECURSE_SUBMODULES_OFF) &&
+ 		    (recurse_submodules != RECURSE_SUBMODULES_ON))
+ 			check_for_new_submodule_commits(&ref->new_oid);
+diff --git a/builtin/tag.c b/builtin/tag.c
+index 8c493a569f..a5fc6c090f 100644
+--- a/builtin/tag.c
++++ b/builtin/tag.c
+@@ -293,7 +293,7 @@ static void create_reflog_msg(const struct object_id *oid, struct strbuf *sb)
+ 		strbuf_addstr(sb, rla);
+ 	} else {
+ 		strbuf_addstr(sb, "tag: tagging ");
+-		strbuf_add_unique_abbrev(sb, oid->hash, DEFAULT_ABBREV);
++		strbuf_add_unique_abbrev(sb, oid, DEFAULT_ABBREV);
  	}
- 	baselen = base->len;
- 	strbuf_addstr(base, pathname);
+ 
+ 	strbuf_addstr(sb, " (");
 diff --git a/merge-recursive.c b/merge-recursive.c
-index 6ff971f9a2..c886f2e9cd 100644
+index c886f2e9cd..f58f13957e 100644
 --- a/merge-recursive.c
 +++ b/merge-recursive.c
-@@ -335,7 +335,7 @@ struct tree *write_tree_from_memory(struct merge_options *o)
- 	return result;
- }
- 
--static int save_files_dirs(const unsigned char *sha1,
-+static int save_files_dirs(const struct object_id *oid,
- 		struct strbuf *base, const char *path,
- 		unsigned int mode, int stage, void *context)
- {
-diff --git a/tree.c b/tree.c
-index b224115e0f..1a0f03f520 100644
---- a/tree.c
-+++ b/tree.c
-@@ -10,7 +10,7 @@
- const char *tree_type = "tree";
- 
- static int read_one_entry_opt(struct index_state *istate,
--			      const unsigned char *sha1,
-+			      const struct object_id *oid,
- 			      const char *base, int baselen,
- 			      const char *pathname,
- 			      unsigned mode, int stage, int opt)
-@@ -31,16 +31,16 @@ static int read_one_entry_opt(struct index_state *istate,
- 	ce->ce_namelen = baselen + len;
- 	memcpy(ce->name, base, baselen);
- 	memcpy(ce->name + baselen, pathname, len+1);
--	hashcpy(ce->oid.hash, sha1);
-+	oidcpy(&ce->oid, oid);
- 	return add_index_entry(istate, ce, opt);
- }
- 
--static int read_one_entry(const unsigned char *sha1, struct strbuf *base,
-+static int read_one_entry(const struct object_id *oid, struct strbuf *base,
- 			  const char *pathname, unsigned mode, int stage,
- 			  void *context)
- {
- 	struct index_state *istate = context;
--	return read_one_entry_opt(istate, sha1, base->buf, base->len, pathname,
-+	return read_one_entry_opt(istate, oid, base->buf, base->len, pathname,
- 				  mode, stage,
- 				  ADD_CACHE_OK_TO_ADD|ADD_CACHE_SKIP_DFCHECK);
- }
-@@ -49,12 +49,12 @@ static int read_one_entry(const unsigned char *sha1, struct strbuf *base,
-  * This is used when the caller knows there is no existing entries at
-  * the stage that will conflict with the entry being added.
-  */
--static int read_one_entry_quick(const unsigned char *sha1, struct strbuf *base,
-+static int read_one_entry_quick(const struct object_id *oid, struct strbuf *base,
- 				const char *pathname, unsigned mode, int stage,
- 				void *context)
- {
- 	struct index_state *istate = context;
--	return read_one_entry_opt(istate, sha1, base->buf, base->len, pathname,
-+	return read_one_entry_opt(istate, oid, base->buf, base->len, pathname,
- 				  mode, stage,
- 				  ADD_CACHE_JUST_APPEND);
- }
-@@ -83,7 +83,7 @@ static int read_tree_1(struct tree *tree, struct strbuf *base,
- 				continue;
+@@ -228,7 +228,7 @@ static void output_commit_title(struct merge_options *o, struct commit *commit)
+ 		strbuf_addf(&o->obuf, "virtual %s\n",
+ 			merge_remote_util(commit)->name);
+ 	else {
+-		strbuf_add_unique_abbrev(&o->obuf, commit->object.oid.hash,
++		strbuf_add_unique_abbrev(&o->obuf, &commit->object.oid,
+ 					 DEFAULT_ABBREV);
+ 		strbuf_addch(&o->obuf, ' ');
+ 		if (parse_commit(commit) != 0)
+diff --git a/pretty.c b/pretty.c
+index f7ce490230..34fe891fc0 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -549,7 +549,7 @@ static void add_merge_info(const struct pretty_print_context *pp,
+ 		struct object_id *oidp = &parent->item->object.oid;
+ 		strbuf_addch(sb, ' ');
+ 		if (pp->abbrev)
+-			strbuf_add_unique_abbrev(sb, oidp->hash, pp->abbrev);
++			strbuf_add_unique_abbrev(sb, oidp, pp->abbrev);
+ 		else
+ 			strbuf_addstr(sb, oid_to_hex(oidp));
+ 		parent = parent->next;
+@@ -1156,7 +1156,7 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
+ 		return 1;
+ 	case 'h':		/* abbreviated commit hash */
+ 		strbuf_addstr(sb, diff_get_color(c->auto_color, DIFF_COMMIT));
+-		strbuf_add_unique_abbrev(sb, commit->object.oid.hash,
++		strbuf_add_unique_abbrev(sb, &commit->object.oid,
+ 					 c->pretty_ctx->abbrev);
+ 		strbuf_addstr(sb, diff_get_color(c->auto_color, DIFF_RESET));
+ 		return 1;
+@@ -1164,7 +1164,7 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
+ 		strbuf_addstr(sb, oid_to_hex(&commit->tree->object.oid));
+ 		return 1;
+ 	case 't':		/* abbreviated tree hash */
+-		strbuf_add_unique_abbrev(sb, commit->tree->object.oid.hash,
++		strbuf_add_unique_abbrev(sb, &commit->tree->object.oid,
+ 					 c->pretty_ctx->abbrev);
+ 		return 1;
+ 	case 'P':		/* parent hashes */
+@@ -1178,7 +1178,7 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
+ 		for (p = commit->parents; p; p = p->next) {
+ 			if (p != commit->parents)
+ 				strbuf_addch(sb, ' ');
+-			strbuf_add_unique_abbrev(sb, p->item->object.oid.hash,
++			strbuf_add_unique_abbrev(sb, &p->item->object.oid,
+ 						 c->pretty_ctx->abbrev);
  		}
+ 		return 1;
+diff --git a/strbuf.c b/strbuf.c
+index 5f138ed3c8..07309045ef 100644
+--- a/strbuf.c
++++ b/strbuf.c
+@@ -873,12 +873,12 @@ void strbuf_addftime(struct strbuf *sb, const char *fmt, const struct tm *tm,
+ 	strbuf_setlen(sb, sb->len + len);
+ }
  
--		switch (fn(entry.oid->hash, base,
-+		switch (fn(entry.oid, base,
- 			   entry.path, entry.mode, stage, context)) {
- 		case 0:
- 			continue;
-diff --git a/tree.h b/tree.h
-index 744e6dc2ac..e2a80be4ef 100644
---- a/tree.h
-+++ b/tree.h
-@@ -27,7 +27,7 @@ void free_tree_buffer(struct tree *tree);
- struct tree *parse_tree_indirect(const struct object_id *oid);
+-void strbuf_add_unique_abbrev(struct strbuf *sb, const unsigned char *sha1,
++void strbuf_add_unique_abbrev(struct strbuf *sb, const struct object_id *oid,
+ 			      int abbrev_len)
+ {
+ 	int r;
+ 	strbuf_grow(sb, GIT_SHA1_HEXSZ + 1);
+-	r = find_unique_abbrev_r(sb->buf + sb->len, sha1, abbrev_len);
++	r = find_unique_abbrev_r(sb->buf + sb->len, oid->hash, abbrev_len);
+ 	strbuf_setlen(sb, sb->len + r);
+ }
  
- #define READ_TREE_RECURSIVE 1
--typedef int (*read_tree_fn_t)(const unsigned char *, struct strbuf *, const char *, unsigned int, int, void *);
-+typedef int (*read_tree_fn_t)(const struct object_id *, struct strbuf *, const char *, unsigned int, int, void *);
+diff --git a/strbuf.h b/strbuf.h
+index 14c8c10d66..cd7ad898eb 100644
+--- a/strbuf.h
++++ b/strbuf.h
+@@ -70,6 +70,12 @@ struct strbuf {
+ extern char strbuf_slopbuf[];
+ #define STRBUF_INIT  { .alloc = 0, .len = 0, .buf = strbuf_slopbuf }
  
- extern int read_tree_recursive(struct tree *tree,
- 			       const char *base, int baselen,
++/*
++ * Predeclare this here, since cache.h includes this file before it defines the
++ * struct.
++ */
++struct object_id;
++
+ /**
+  * Life Cycle Functions
+  * --------------------
+@@ -539,7 +545,7 @@ extern void strbuf_list_free(struct strbuf **);
+  * the strbuf `sb`.
+  */
+ extern void strbuf_add_unique_abbrev(struct strbuf *sb,
+-				     const unsigned char *sha1,
++				     const struct object_id *oid,
+ 				     int abbrev_len);
+ 
+ /**
+diff --git a/submodule.c b/submodule.c
+index 12a2503fda..c210640d35 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -540,9 +540,9 @@ static void show_submodule_header(struct diff_options *o, const char *path,
+ 
+ output_header:
+ 	strbuf_addf(&sb, "Submodule %s ", path);
+-	strbuf_add_unique_abbrev(&sb, one->hash, DEFAULT_ABBREV);
++	strbuf_add_unique_abbrev(&sb, one, DEFAULT_ABBREV);
+ 	strbuf_addstr(&sb, (fast_backward || fast_forward) ? ".." : "...");
+-	strbuf_add_unique_abbrev(&sb, two->hash, DEFAULT_ABBREV);
++	strbuf_add_unique_abbrev(&sb, two, DEFAULT_ABBREV);
+ 	if (message)
+ 		strbuf_addf(&sb, " %s\n", message);
+ 	else
+diff --git a/transport.c b/transport.c
+index 00d48b5b56..87de35dd5e 100644
+--- a/transport.c
++++ b/transport.c
+@@ -367,7 +367,7 @@ static void print_ok_ref_status(struct ref *ref, int porcelain, int summary_widt
+ 		char type;
+ 		const char *msg;
+ 
+-		strbuf_add_unique_abbrev(&quickref, ref->old_oid.hash,
++		strbuf_add_unique_abbrev(&quickref, &ref->old_oid,
+ 					 DEFAULT_ABBREV);
+ 		if (ref->forced_update) {
+ 			strbuf_addstr(&quickref, "...");
+@@ -378,7 +378,7 @@ static void print_ok_ref_status(struct ref *ref, int porcelain, int summary_widt
+ 			type = ' ';
+ 			msg = NULL;
+ 		}
+-		strbuf_add_unique_abbrev(&quickref, ref->new_oid.hash,
++		strbuf_add_unique_abbrev(&quickref, &ref->new_oid,
+ 					 DEFAULT_ABBREV);
+ 
+ 		print_ref_status(type, quickref.buf, ref, ref->peer_ref, msg,
+diff --git a/wt-status.c b/wt-status.c
+index 66f4234af1..5c685b6165 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -1188,7 +1188,7 @@ static void abbrev_sha1_in_line(struct strbuf *line)
+ 		strbuf_trim(split[1]);
+ 		if (!get_oid(split[1]->buf, &oid)) {
+ 			strbuf_reset(split[1]);
+-			strbuf_add_unique_abbrev(split[1], oid.hash,
++			strbuf_add_unique_abbrev(split[1], &oid,
+ 						 DEFAULT_ABBREV);
+ 			strbuf_addch(split[1], ' ');
+ 			strbuf_reset(line);
+@@ -1422,7 +1422,7 @@ static char *get_branch(const struct worktree *wt, const char *path)
+ 		;
+ 	else if (!get_oid_hex(sb.buf, &oid)) {
+ 		strbuf_reset(&sb);
+-		strbuf_add_unique_abbrev(&sb, oid.hash, DEFAULT_ABBREV);
++		strbuf_add_unique_abbrev(&sb, &oid, DEFAULT_ABBREV);
+ 	} else if (!strcmp(sb.buf, "detached HEAD")) /* rebase */
+ 		goto got_nothing;
+ 	else			/* bisect */
+@@ -1459,7 +1459,7 @@ static int grab_1st_switch(struct object_id *ooid, struct object_id *noid,
+ 	if (!strcmp(cb->buf.buf, "HEAD")) {
+ 		/* HEAD is relative. Resolve it to the right reflog entry. */
+ 		strbuf_reset(&cb->buf);
+-		strbuf_add_unique_abbrev(&cb->buf, noid->hash, DEFAULT_ABBREV);
++		strbuf_add_unique_abbrev(&cb->buf, noid, DEFAULT_ABBREV);
+ 	}
+ 	return 1;
+ }
