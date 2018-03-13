@@ -2,149 +2,175 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D14861FAE2
-	for <e@80x24.org>; Tue, 13 Mar 2018 10:09:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 80F341FAE2
+	for <e@80x24.org>; Tue, 13 Mar 2018 10:16:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752393AbeCMKJS (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Mar 2018 06:09:18 -0400
-Received: from mail-wr0-f176.google.com ([209.85.128.176]:40342 "EHLO
-        mail-wr0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752181AbeCMKJR (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Mar 2018 06:09:17 -0400
-Received: by mail-wr0-f176.google.com with SMTP id m4so8063476wrb.7
-        for <git@vger.kernel.org>; Tue, 13 Mar 2018 03:09:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=fmF+vA8StZzsoMmuCw0QT/3cjvQd59iUit5GQqH+TZg=;
-        b=ol1kYrUKApVxCJYkfmfB/+xUyDGj7KG+x/AkBmg94FpmqoQUWd0wDvRYgh7M4tYGGG
-         cq88A/XmRQ3qg/hBnmdcqLFU16asjkGcpCt+RErJG93ZrgTYSornttzfftf81iJSVKSE
-         u341tuzPsj75qWhkaDlQ+KjfiS3DiDbJGdTImGGuXB+veXYmOXHCD2mhaFKEQIJB59C3
-         DzezH5UhtFAx//9fEpNeaIs0JGbWyo2wITdEkRSuvzfGQ6+owHJZiBzsxlo31ntW9w0x
-         gU+U7pcPj84kTQUxI015k7OZzeqZJBgnRIAfDAi3Er1K1NsLPwZZB0qUw/31Y9jjXXXw
-         fRLQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=fmF+vA8StZzsoMmuCw0QT/3cjvQd59iUit5GQqH+TZg=;
-        b=fErFD/C5MYVw4dgt2R8ykBuHlPBpJowJMwUSNASdbLb7pXdzd1Nl+p052Q3/oYS1xT
-         3bGof1C/onHYINzryfOduqo8ZqbW6Or9B8JXzebP51rFK41lzhunXT+J1pe2QwtHX0Qy
-         62QskTqT/s6vuyX3VHEa6+BGWcjkX7VSkzjDbxvxUdzmcmmU5zUgnUB6S46StrD+CdY6
-         dFAYEPgbCw3GZlZKRK9bIGlDcPsS6n8o/j4IWbPhIIB3D8LUXOUPXA483bimw5dsTvBR
-         mRBCVdlmonTa4wTWsFH7dWWxfXQqP3725dNa2mSmm30+Lqai71Q++K/kxD91D/l5JWjb
-         6k4w==
-X-Gm-Message-State: AElRT7EnXOwLFJI2yxP7/sbzXq+IK/Rg8Z+Sxmn+oybf2jreqoLDpo8M
-        CPvN8Np9VAVqheeX68reugc=
-X-Google-Smtp-Source: AG47ELutykxJFr10keon5FJnfAl2pL/qi+lqsVIR4m4iinxoD45lk/fJq6cUpez5A4IeUtLbd6TAkw==
-X-Received: by 10.80.165.84 with SMTP id z20mr258618edb.300.1520935756618;
-        Tue, 13 Mar 2018 03:09:16 -0700 (PDT)
-Received: from evledraar (proxy-gw-a.booking.com. [5.57.21.8])
-        by smtp.gmail.com with ESMTPSA id y14sm188977ede.18.2018.03.13.03.09.15
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 13 Mar 2018 03:09:15 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Michal Novotny <clime@redhat.com>
-Cc:     git@vger.kernel.org
-Subject: Re: allow "~" to be present in a tag name
-References: <CANT8FXTF41-4zvqvrEek262D8OZRhA4nsiPguyNTL9mwF1+mkg@mail.gmail.com> <873714qr7i.fsf@evledraar.gmail.com> <CANT8FXTT=5sGp9Wn4h5t=k4TiiADQrf--hDv5EmCx=KoGHgwXg@mail.gmail.com>
-User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 1.1.0
-In-reply-to: <CANT8FXTT=5sGp9Wn4h5t=k4TiiADQrf--hDv5EmCx=KoGHgwXg@mail.gmail.com>
-Date:   Tue, 13 Mar 2018 11:09:14 +0100
-Message-ID: <87zi3cp9rp.fsf@evledraar.gmail.com>
+        id S932542AbeCMKQj (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Mar 2018 06:16:39 -0400
+Received: from a7-18.smtp-out.eu-west-1.amazonses.com ([54.240.7.18]:45394
+        "EHLO a7-18.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1752401AbeCMKQh (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 13 Mar 2018 06:16:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=uku4taia5b5tsbglxyj6zym32efj7xqv; d=amazonses.com; t=1520936196;
+        h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
+        bh=/5BsmQeTIcwv1M7yw6v1/8pOcE4gytdmubPapo64uLY=;
+        b=GnfhfFwvzIntpiEPDPwxb45gh5wQhscTKnJRU+2dWPrzKt48lFTp7qfpMq0xYgWI
+        YHlCCa1mq7Tj9FJ3Ze15Rns+ICxtuMXVgsRNdHR8fZxefaP0q5DvgOm7KlHKuLqnuxH
+        V9fArs6y8cvETfC+vElxh5PAUp9O/WUCKSqFEM5U=
+From:   Olga Telezhnaya <olyatelezhnaya@gmail.com>
+To:     git@vger.kernel.org
+Message-ID: <010201621edc982f-92123a33-386b-4b94-be0c-f793856e6c16-000000@eu-west-1.amazonses.com>
+In-Reply-To: <010201621edc97a4-a4239b1e-86d2-4400-aaac-d81727710f4f-000000@eu-west-1.amazonses.com>
+References: <010201621edc97a4-a4239b1e-86d2-4400-aaac-d81727710f4f-000000@eu-west-1.amazonses.com>
+Subject: [RFC 3/4] ref-filter: change parsing function error handling
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 13 Mar 2018 10:16:36 +0000
+X-SES-Outgoing: 2018.03.13-54.240.7.18
+Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Continue removing any printing from ref-filter formatting logic,
+so that it could be more general.
 
-On Tue, Mar 13 2018, Michal Novotny jotted:
+Change the signature of parse_ref_filter_atom() by changing return value,
+adding previous return value to function parameter and also adding
+strbuf parameter for error message.
 
-> On Tue, Mar 13, 2018 at 10:07 AM, Ævar Arnfjörð Bjarmason
-> <avarab@gmail.com> wrote:
->>
->> On Tue, Mar 13 2018, Michal Novotny jotted:
->>
->>> Hello,
->>>
->>> currently, if I try to create a tag that has tilde "~"  in name, an
->>> error is raised. E.g.
->>>
->>> $ git tag rpkg-util-1.4~rc1
->>> fatal: 'rpkg-util-1.4~rc1' is not a valid tag name.
->>>
->>> Now, actually it would be very cool if tilde was allowed in a tag name
->>> because we would like to use it for tagging pre-releases of (not-only
->>> rpm) packages.
->>>
->>> Is there some deep technical reason why tilde cannot be present in a
->>> tag name? I tried that e.g.
->>
->> Yes, because a trailing tilde is part of git's rev syntax, see "man
->> git-rev-parse", or try in any repo:
->>
->>     git show HEAD
->>     git show HEAD~2
->>     git show HEAD^~2
->
-> Right, reading the man pages:
->
-> <rev>~<n>, e.g. master~3
->            A suffix ~<n> to a revision parameter means the commit
-> object that is the <n>th generation ancestor of the named commit
-> object, following only the first
->            parents. I.e.  <rev>~3 is equivalent to <rev>^^^ which is
-> equivalent to <rev>^1^1^1. See below for an illustration of the usage
-> of this form.
->
-> Would it be acceptable to disallow only ~<n> (<n> as [0-9]+) in a tag
-> name but allow ~[^0-9].*, i.e. if the immediately following symbol
-> after '~' is a letter, do not
-> interpret ~ as a special character. Could it work?
+Signed-off-by: Olga Telezhnaia <olyatelezhnaya@gmail.com>
+---
+ ref-filter.c | 45 ++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 32 insertions(+), 13 deletions(-)
 
-We could make that work, with some caveats:
+diff --git a/ref-filter.c b/ref-filter.c
+index 07bedc636398c..e146215bf1e64 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -397,7 +397,8 @@ struct atom_value {
+  * Used to parse format string and sort specifiers
+  */
+ static int parse_ref_filter_atom(const struct ref_format *format,
+-				 const char *atom, const char *ep)
++				 const char *atom, const char *ep, int *res,
++				 struct strbuf *err)
+ {
+ 	const char *sp;
+ 	const char *arg;
+@@ -406,14 +407,18 @@ static int parse_ref_filter_atom(const struct ref_format *format,
+ 	sp = atom;
+ 	if (*sp == '*' && sp < ep)
+ 		sp++; /* deref */
+-	if (ep <= sp)
+-		die(_("malformed field name: %.*s"), (int)(ep-atom), atom);
++	if (ep <= sp) {
++		strbuf_addf(err, _("malformed field name: %.*s"), (int)(ep-atom), atom);
++		return -1;
++	}
+ 
+ 	/* Do we have the atom already used elsewhere? */
+ 	for (i = 0; i < used_atom_cnt; i++) {
+ 		int len = strlen(used_atom[i].name);
+-		if (len == ep - atom && !memcmp(used_atom[i].name, atom, len))
+-			return i;
++		if (len == ep - atom && !memcmp(used_atom[i].name, atom, len)) {
++			*res = i;
++			return 0;
++		}
+ 	}
+ 
+ 	/*
+@@ -432,8 +437,10 @@ static int parse_ref_filter_atom(const struct ref_format *format,
+ 			break;
+ 	}
+ 
+-	if (ARRAY_SIZE(valid_atom) <= i)
+-		die(_("unknown field name: %.*s"), (int)(ep-atom), atom);
++	if (ARRAY_SIZE(valid_atom) <= i) {
++		strbuf_addf(err, _("unknown field name: %.*s"), (int)(ep-atom), atom);
++		return -1;
++	}
+ 
+ 	/* Add it in, including the deref prefix */
+ 	at = used_atom_cnt;
+@@ -458,7 +465,8 @@ static int parse_ref_filter_atom(const struct ref_format *format,
+ 		need_tagged = 1;
+ 	if (!strcmp(valid_atom[i].name, "symref"))
+ 		need_symref = 1;
+-	return at;
++	*res = at;
++	return 0;
+ }
+ 
+ static void quote_formatting(struct strbuf *s, const char *str, int quote_style)
+@@ -725,17 +733,20 @@ int verify_ref_format(struct ref_format *format)
+ 
+ 	format->need_color_reset_at_eol = 0;
+ 	for (cp = format->format; *cp && (sp = find_next(cp)); ) {
++		struct strbuf err = STRBUF_INIT;
+ 		const char *color, *ep = strchr(sp, ')');
+ 		int at;
+ 
+ 		if (!ep)
+ 			return error(_("malformed format string %s"), sp);
+ 		/* sp points at "%(" and ep points at the closing ")" */
+-		at = parse_ref_filter_atom(format, sp + 2, ep);
++		if (parse_ref_filter_atom(format, sp + 2, ep, &at, &err))
++			die("%s", err.buf);
+ 		cp = ep + 1;
+ 
+ 		if (skip_prefix(used_atom[at].name, "color:", &color))
+ 			format->need_color_reset_at_eol = !!strcmp(color, "reset");
++		strbuf_release(&err);
+ 	}
+ 	if (format->need_color_reset_at_eol && !want_color(format->use_color))
+ 		format->need_color_reset_at_eol = 0;
+@@ -2154,15 +2165,18 @@ int format_ref_array_item(struct ref_array_item *info,
+ 
+ 	for (cp = format->format; *cp && (sp = find_next(cp)); cp = ep + 1) {
+ 		struct atom_value *atomv;
++		struct strbuf err = STRBUF_INIT;
++		int pos;
+ 
+ 		ep = strchr(sp, ')');
+ 		if (cp < sp)
+ 			append_literal(cp, sp, &state);
+-		get_ref_atom_value(info,
+-				   parse_ref_filter_atom(format, sp + 2, ep),
+-				   &atomv);
++		if (parse_ref_filter_atom(format, sp + 2, ep, &pos, &err))
++			return -1;
++		get_ref_atom_value(info, pos, &atomv);
+ 		if (atomv->handler(atomv, &state, error_buf))
+ 			return -1;
++		strbuf_release(&err);
+ 	}
+ 	if (*cp) {
+ 		sp = cp + strlen(cp);
+@@ -2215,7 +2229,12 @@ static int parse_sorting_atom(const char *atom)
+ 	 */
+ 	struct ref_format dummy = REF_FORMAT_INIT;
+ 	const char *end = atom + strlen(atom);
+-	return parse_ref_filter_atom(&dummy, atom, end);
++	struct strbuf err = STRBUF_INIT;
++	int res;
++	if (parse_ref_filter_atom(&dummy, atom, end, &res, &err))
++		die("%s", err.buf);
++	strbuf_release(&err);
++	return res;
+ }
+ 
+ /*  If no sorting option is given, use refname to sort as default */
 
- 1) The syntax we've reserved for refnames is quite small, and my bias
-    at least would be to say you should just make a tag like
-    rpkg-util-1.4-rc1 instead (as e.g. git.git and linux.git do).
-
-    Carving out an exception like this also means we couldn't use
-    ~[^0-9].* for anything magical in the future.
-
-    But I think that's a rather small objection, we have other syntax
-    escape hatches, and we're unlikely to use ~[^0-9].* as some new
-    magic.
-
- 2) If we patch git to accept this, you'll be creating refs that aren't
-    inter-operable with previous versions of git.
-
-    This is a big deal. E.g. you'll happily create this special ref,
-    then try to push it to github, and they'll croak because that's an
-    invalid ref to them. Ditto some co-worker of yours who's using an
-    older version of git.
-
-    FWIW if you manually create such a tag e.g. for-each-ref will emit
-    'warning: ignoring ref with broken name' and just not show it.
-
->>
->> etc.
->>
->> Although I guess git could learn to disambiguate that form from the tag
->> you're trying to create.
->>
->>> git tag rpkg-util-1.4%rc1
->>>
->>> but percentage sign does not seem to be particular fitting for
->>> pre-release marking.
->>>
->>> Thank you
->>> clime
+--
+https://github.com/git/git/pull/466
