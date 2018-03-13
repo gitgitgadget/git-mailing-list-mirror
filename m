@@ -2,106 +2,179 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-0.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 72F891F404
-	for <e@80x24.org>; Tue, 13 Mar 2018 21:35:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 29E4B1F404
+	for <e@80x24.org>; Tue, 13 Mar 2018 21:36:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752541AbeCMVfq (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Mar 2018 17:35:46 -0400
-Received: from mail-pf0-f178.google.com ([209.85.192.178]:33528 "EHLO
-        mail-pf0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752375AbeCMVfp (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Mar 2018 17:35:45 -0400
-Received: by mail-pf0-f178.google.com with SMTP id q13so473104pff.0
-        for <git@vger.kernel.org>; Tue, 13 Mar 2018 14:35:45 -0700 (PDT)
+        id S932277AbeCMVgc (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Mar 2018 17:36:32 -0400
+Received: from mail-pl0-f48.google.com ([209.85.160.48]:43911 "EHLO
+        mail-pl0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752375AbeCMVgb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Mar 2018 17:36:31 -0400
+Received: by mail-pl0-f48.google.com with SMTP id f23-v6so557108plr.10
+        for <git@vger.kernel.org>; Tue, 13 Mar 2018 14:36:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
+        d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Ldro6Tid40Qw7KJsYbVRjLmYZklLgfWvXSbwrJdYfOU=;
-        b=cp+3soZhTJRCTe48vcHtW3qiDiT1j8kElZK00sE3kXWQ4Rd+ur1y5QHur0S2HxG+WA
-         IqFfWSkWHqfyoUVHEIj6r2im5o5nl4i8eFOAQTgAtwWF9A0/xir13AXGRb/0dfRzu5HB
-         BQUaRWImrmJHjayu9GZvqx8Oqrupw9VeR1VD4nkoAG/AKoUI3QaDeOf+u1jPkyU8xF/P
-         hZ0n9ixtNyhas6TMgK2fyf+l/p5xsRw/flkIsiY77VIMLiNv9yRSNq/yn9vKjZqAC24N
-         VDtqfOPXSA54Uk4+jfK2Pa9O9O/RCrWvmJ7xoywjFs8K176hH75XNPs96znpne1bRo1V
-         GktQ==
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=cashBcOJuH++5sKmhfogZySx+FNt+Sa5mv/lUcmVcnM=;
+        b=T1hcuOFsAz/7Q6DoiEp2jOKojSBnDy9e6T0f0FS2bs7Fc7cS9vDu8VNEe17smIlnAk
+         eBlK/TVQtrXPoye/No7e43KAMmqmcIx3qG96kjuNBv/avtwh8HS+kjZalceuTqX+nqT4
+         fpKjkW5Z0kVj/MIJggsN0987kEZNfO9KcQsqF4BqxRmHjREAzsLKOkR24D7rmBXT2PI0
+         EIUjSseezRMa1RjOzBw62rOgD4G35MYeadrtbg3g5e6pOs92eXi+5gcojfeSpnlmrEyV
+         mydLeh2BnWZ3+aewxxyoY3XqNhaoiX/EKpiJqSbW7NaVvyUkV9foj8kvs32tpKWrpBU/
+         lV3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Ldro6Tid40Qw7KJsYbVRjLmYZklLgfWvXSbwrJdYfOU=;
-        b=boDY6EPRFdSA598KjMqv/zvK1bIsnE1BcvUPWjyYgYmReYThUwk7qD+pvIM5AGb2ha
-         bVs0mor7nNyk8i4xXc63Qel4yF8SJoeaczG0y6LioO0HDpzTA4UicoY9+FOIygAz/h7y
-         USyqATQqRcCgh2ebToFFKq1mctC4ipCSiLJvN33XuJoJvjvbBG0UCDTQLAzqhzRv84Y4
-         IU0d0PxCEYjNxrct0QBqH4rpVPmPTwi1/m7Cz6kCAurxXrrxzIDEnHdhzl6i7FUb83jb
-         wkWvcyX//Z+30x6dmxmc8EBG+ZXk1a1tRdjtoP+Yhbe3B7Jk2JaIVNqjsl/ofbi+LCHW
-         H3QA==
-X-Gm-Message-State: AElRT7EkauX4MDoCdnR98ttWlDPeh/SRiwnpa+0WX38C6FF1OhldxNOR
-        LPAN9iWp7zLTLLOF+/BIstqI7g==
-X-Google-Smtp-Source: AG47ELtBtKiXgWPq+4uvTBJQw4iaAO8rPtE1A9hquVJrMoaHVvW+qSHxWdmsvAL3FjvrbkUxQk6S4A==
-X-Received: by 10.99.127.92 with SMTP id p28mr1677870pgn.305.1520976944875;
-        Tue, 13 Mar 2018 14:35:44 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
-        by smtp.gmail.com with ESMTPSA id m3sm1369037pgd.3.2018.03.13.14.35.43
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=cashBcOJuH++5sKmhfogZySx+FNt+Sa5mv/lUcmVcnM=;
+        b=k5du7FzRoxhdcJeUHjKtbPyLdtjcCLajpWHOYJUDxwQMTwV//h7rJGnvXAhpvC2QZr
+         UvAgHgX3mHnNqOBB7rI3NxILEIzal/lhyLwBleR6J4mGUiRfjjXcFSy45+PKgP7wssw0
+         uBDepO+Kf5fCK6HsFa/DsO09ug7boW4XLYYkBQnsNT/xkY32QNXR/zeAa1xgk/4XXVgK
+         /1SkRnB5UNdAPTCfca4DIAPLegcS6U8fiKDmq2Xo5j4XVYBFyEJhdpHkh2rBbHVSuQWb
+         SBAPVPcL+m8JuJXmlC9cRNoiJbUpbcFA4iNe+BmlJAnpY3iIz4H5b1zUqvh0g+Z9C1Xp
+         +1Yw==
+X-Gm-Message-State: AElRT7EewIXZpEvpvnnoTlFUTw1hO+F9KXuSU6rbTJqTNbuhl3qe6ZRT
+        EiiwH6+zMH4eqdUBrSbmBqQ=
+X-Google-Smtp-Source: AG47ELuUqw4+yO3LbYikae8CtJhoFo0C+LRegMcUWbdsIyc8JnVNc1eb9oujTbRcDQeob3Qbk+0twA==
+X-Received: by 2002:a17:902:bd4b:: with SMTP id b11-v6mr1827482plx.225.1520976990476;
+        Tue, 13 Mar 2018 14:36:30 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id s68sm1523537pgb.43.2018.03.13.14.36.29
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 13 Mar 2018 14:35:44 -0700 (PDT)
-Date:   Tue, 13 Mar 2018 14:35:42 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, git@jeffhostetler.com, jrnieder@gmail.com,
-        pclouds@gmail.com, peff@peff.net, sbeller@google.com,
-        stolee@gmail.com
-Subject: Re: [PATCH v4 12/35] serve: introduce git-serve
-Message-ID: <20180313213542.GE7638@google.com>
-References: <20180207011312.189834-1-bmwill@google.com>
- <20180228232252.102167-1-bmwill@google.com>
- <20180228232252.102167-13-bmwill@google.com>
- <xmqqzi3qb3if.fsf@gitster-ct.c.googlers.com>
+        Tue, 13 Mar 2018 14:36:30 -0700 (PDT)
+Date:   Tue, 13 Mar 2018 14:36:28 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Martin =?iso-8859-1?Q?=C5gren?= <martin.agren@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH 3/3] shortlog: do not accept revisions when run outside
+ repo
+Message-ID: <20180313213628.GB147135@aiede.svl.corp.google.com>
+References: <cover.1520680894.git.martin.agren@gmail.com>
+ <78669e644b64fc10c34adb59717d2039f81cb092.1520680894.git.martin.agren@gmail.com>
+ <20180313195640.GA147135@aiede.svl.corp.google.com>
+ <CAN0heSoP1oVWH0YAFNcL5LG_K7TsmKMAHUA_TiDacVdPtWjTZw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <xmqqzi3qb3if.fsf@gitster-ct.c.googlers.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAN0heSoP1oVWH0YAFNcL5LG_K7TsmKMAHUA_TiDacVdPtWjTZw@mail.gmail.com>
 User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 03/02, Junio C Hamano wrote:
-> Brandon Williams <bmwill@google.com> writes:
-> > +static int is_command(const char *key, struct protocol_capability **command)
-> > +{
-> > +	const char *out;
-> > +
-> > +	if (skip_prefix(key, "command=", &out)) {
-> > +		struct protocol_capability *cmd = get_capability(out);
-> > +
-> > +		if (!cmd || !cmd->advertise(the_repository, NULL) || !cmd->command)
-> > +			die("invalid command '%s'", out);
-> > +		if (*command)
-> > +			die("command already requested");
-> 
-> Shouldn't these two checks that lead to die the other way around?
-> When they give us "command=frotz" and we already have *command, it
-> would be an error whether we understand 'frotz' or not.
-> 
-> Who are the target audience of these "die"?  Are they meant to be
-> communicated back to the other side of the connection, or are they
-> only to be sent to the "server log"?
-> 
-> The latter one may want to say what two conflicting commands are in
-> the log message, perhaps?
+Martin Ågren wrote:
+> On 13 March 2018 at 20:56, Jonathan Nieder <jrnieder@gmail.com> wrote:
+>> Martin Ågren wrote:
 
-Yeah I'll switch the order of these checks as well as print out the two
-commands requested for better logging.
+>>>                                                       (So yes, after
+>>> this patch, we will still silently ignore stdin for confused usage such
+>>> as `git log v2.15.0.. | git shortlog v2.16.0..`. But at least that does
+>>> not crash.)
+>>
+>> I don't follow here.  Are you saying this command should notice that
+>> there is input in stdin?  How would it notice?
+>
+> I have no idea how it would notice (portably!) and the gain seems
+> minimal. I added this to keep the reader from wondering "but wait a
+> minute, doesn't that mean that we fail to catch this bad usage if we're
+> in a repo?". So my answer would be "yep, but it's not a huge problem".
+> Of course, my attempt to pre-emptively answer a question only provoked
+> another one. :-) I could phrase this better.
 
-> 
-> > +		*command = cmd;
-> 
+Ah, I think I see what I was missing.  Let me look again at the whole
+paragraph in context:
 
--- 
-Brandon Williams
+[...]
+>>> Disallow left-over arguments when run from outside a repo. Another
+>>> approach would be to disallow them when reading from stdin. However, our
+>>> logic is currently the other way round: we check the number of revisions
+>>> in order to decide whether we should read from stdin. (So yes, after
+>>> this patch, we will still silently ignore stdin for confused usage such
+>>> as `git log v2.15.0.. | git shortlog v2.16.0..`. But at least that does
+>>> not crash.)
+
+How about something like this?
+
+	Disallow left-over arguments when run from outside a repo.  This
+	way, such invalid usage is diagnosed correctly:
+
+		$ git shortlog v2.16.0..
+		error: [...]
+		[...]
+
+	while still permitting the piped form:
+
+		$ git -C ~/src/git log --pretty=short | git shortlog
+		A Large Angry SCM (15):
+		[...]
+
+	This cannot catch an incorrect usage that combines the piped and
+	<revs> forms:
+
+		$ git log --pretty=short | git shortlog v2.16.0..
+		Alban Gruin (1)
+		[...]
+
+	but (1) the operating system does not provide a straightforward
+	way to detect that and (2) at least it doesn't crash.
+
+That detail is mostly irrelevant to what the patch does, though.  I
+wouldn't expect git to be able to diagnose that third variant anyway.
+If we want to make the command less error-prone, I think a good path
+forward would be to introduce an explicit --stdin option.  So I'd be
+tempted to go with the short and sweet:
+
+	Disallow left-over arguments when run from outside a repo.
+
+[...]
+>>> +             error(_("no revisions can be given when running "
+>>> +                     "from outside a repository"));
+>>> +             usage_with_options(shortlog_usage, options);
+>>> +     }
+>>> +
+>>
+>> The error message is
+>>
+>>         error: no revisions can be given when running from outside a repository
+>>         usage: ...
+>>
+>> Do we need to dump usage here?  I wonder if a simple die() call would
+>> be easier for the user to act on.
+>
+> I can see an argument for "dumping the usage makes the error harder than
+> necessary to find". I mainly went for consistency. This ties into your
+> other observations below: what little consistency do we have and in
+> which direction do we want to push it...
+[...]
+> I think it would be a larger project to make these consistent. The one
+> I'm adding here is at least consistent with the other one in this file.
+
+Ah, thanks.  That makes sense.
+
+>> Separate from that, I wonder if the error message can be made a little
+>> shorter and clearer.  E.g.
+>>
+>>         fatal: shortlog <revs> can only be used inside a git repository
+>
+> Some grepping suggests we do not usually name the command ("shortlog
+> ..."), perhaps to play well with aliasing, nor do we use "such <syntax>"
+> very often, but it does happen. Quoting and allowing for options might
+> make this more correct, but perhaps less readable: "'shortlog [...]
+> <revs>' can only ...". Slightly better than what I had, "revisions can
+> only be given inside a git repository" would avoid some negating.
+
+Sounds good to me.
+
+Thanks,
+Jonathan
