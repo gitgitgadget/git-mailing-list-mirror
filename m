@@ -7,100 +7,128 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EABE61F404
-	for <e@80x24.org>; Tue, 13 Mar 2018 21:23:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A1E521F404
+	for <e@80x24.org>; Tue, 13 Mar 2018 21:27:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752800AbeCMVXQ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Mar 2018 17:23:16 -0400
-Received: from mail-pf0-f178.google.com ([209.85.192.178]:34909 "EHLO
-        mail-pf0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752375AbeCMVXO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Mar 2018 17:23:14 -0400
-Received: by mail-pf0-f178.google.com with SMTP id y186so454445pfb.2
-        for <git@vger.kernel.org>; Tue, 13 Mar 2018 14:23:14 -0700 (PDT)
+        id S1752591AbeCMV1N (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Mar 2018 17:27:13 -0400
+Received: from mail-pl0-f45.google.com ([209.85.160.45]:39822 "EHLO
+        mail-pl0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752375AbeCMV1M (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Mar 2018 17:27:12 -0400
+Received: by mail-pl0-f45.google.com with SMTP id s13-v6so552411plq.6
+        for <git@vger.kernel.org>; Tue, 13 Mar 2018 14:27:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=5XxooFHQh5MTMsAFqKFRFD/urZbjDdLOZt8ySvrfeKI=;
-        b=I0C/FwriN6agpNR3DNrWj1t5vlhHXMba/5ReWJeU4HXGiCbbMkD9m80ulA8L16JrZr
-         QwamAnl6BON2gDHkv3e8yQHRkzgfP5CVl4kjKaVr677uw1FECzHFhjY6QaHt+sZAlhJ/
-         4Lkeqdc2mAeZP6owmZbfEpWQ6iT7qzrBxNg69jLNTGqJ5qoUuEHYdPZA6T8lMazj5fE9
-         H2noMPb5p1G5GLMUyQSLDb9KJrr/9lP7guuUJYNS7Oyv/QbTBmFdtzlVF5rGHTJE93pd
-         q6nVZrCxN4LSBU2tNIcmWf3Ipa/MBuWMGjG3XJCK7zK8B/umDqlFHbEBOyDQkLaykCe3
-         krAg==
+        bh=1z5aIGi9HuD4m73PbsAhx7nvkXFgt6y5cLQo2YTRTdM=;
+        b=Q11MUNLdzZFVciZxrvjeZ2oXW54R1eJbTeTOiuPPtLgZJBrWsWooxGsNuvw0boDPbG
+         oEeNxy2l9JEzaL0+dnWWf2izxVZWPnkg69HMvOSIAsngisMPgF0t3k4sUN7WKKINkJg4
+         Kcldl7aYwMmCa6/P0O1wG4DS75Ff3ef8GIJclfqle2/0wc9CXq3nC/B2nGneFoWjEw8X
+         s0Vpm5eEZC6rNXneHjNqtnIIXlCSOhsL67m8cqqysNJDP5TaV2ytfqAKXkTMIo5q0pOe
+         W/tHkFxu5XtsTBbALx5ESDGaXlp+D28/3AxJofRDT7O8LEs4+zVE44u5MTXE+Frt0SrE
+         GECQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=5XxooFHQh5MTMsAFqKFRFD/urZbjDdLOZt8ySvrfeKI=;
-        b=hA/0TFTcwA3rH39TXuhu6zd8oVzOgayKYDuoMB07mQM3OAsojjUmtxBILUsbQmoSBc
-         o5/rVLCskIfsR9kEGtSTV99FffeR2wgAloUljCfrmZh+SfeBZ2WaN0GoVcGvsAMjBDUY
-         aGanD8sRnKkxKmo+PW3LrPTpMEx1g4fT86VImIaH8Pc2p3QNR/rsAW5TL3QkonJzmY+r
-         at3kK1LxyI3O0M0ymEdssNND/6z/K0zXVXxVYJEORYvfO0BefxCSlaZ5ckWo7awJ8Nqd
-         WuxBW1NaNTxG2u+Ey+hgIhsHNpmP30ZDU1+VvvGQk19ksCYI/pilO0fzXXBHq2XqoBtq
-         IRgw==
-X-Gm-Message-State: AElRT7FrE2NIAWqf0M89DQ1hIRAieyAIgRu+BN1SMajBkyzm/p/QWFLN
-        p4WHTjRN0D7tAUitLzTxsmLjLQ==
-X-Google-Smtp-Source: AG47ELtpKR9ng6dWftqhebYzXSAweX2k9wFE5gukbEw+CQsgpMr9znHROEkh0x6xwwGDEBTbGZq8mQ==
-X-Received: by 10.101.89.74 with SMTP id g10mr1615441pgu.415.1520976194011;
-        Tue, 13 Mar 2018 14:23:14 -0700 (PDT)
+        bh=1z5aIGi9HuD4m73PbsAhx7nvkXFgt6y5cLQo2YTRTdM=;
+        b=X0PVt9RElTPvbKNFygbCYdYqm3Vrexa5Ql6v7XGJ29jyKwar+ZX7Gg0z/vZOkLcFUY
+         Qg+iGyjwMRY6AOyzyIsv1aZQ/FLD4/IkGJTfJ6FEuH5r38rRZA0x7iKOXfTtvUu+NTP4
+         IesyYy+E0e9OiafXNEhli3M+yMYIHvQOUsyraMWVVfSDu2WqJYADebrpypLVd5f2cdrN
+         2TWewMEPi1wmSTrWoqx1v89PQLkxf23QNIXrvplZ01n/4DEUOGVzAUmTWy2I8jYBPVP9
+         f+yVO9fRBRMGiOqGyysaDIU0T3AjtUGXeZVzj5k0YxlADjAyGBRRFaETf3f5pUt5UThW
+         oa3w==
+X-Gm-Message-State: AElRT7EfeK3YvnOj8dyChN/2Khr5qw/V1+Sz/6/vxiDKdNDmqm1p7l5A
+        tdNWXNKly1pCNx4QlyRlhZWwJepIrCY=
+X-Google-Smtp-Source: AG47ELuyw6AEAACveHD5Zj8Q61e6wCANPvvl9GOANy3a9+dPdIkyhjfQxR58avt98FKZoQ4YMkHm3A==
+X-Received: by 2002:a17:902:d81:: with SMTP id 1-v6mr1805440plv.324.1520976431980;
+        Tue, 13 Mar 2018 14:27:11 -0700 (PDT)
 Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
-        by smtp.gmail.com with ESMTPSA id s89sm201191pfk.54.2018.03.13.14.23.12
+        by smtp.gmail.com with ESMTPSA id o3sm1600167pgp.18.2018.03.13.14.27.10
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 13 Mar 2018 14:23:13 -0700 (PDT)
-Date:   Tue, 13 Mar 2018 14:23:12 -0700
+        Tue, 13 Mar 2018 14:27:11 -0700 (PDT)
+Date:   Tue, 13 Mar 2018 14:27:10 -0700
 From:   Brandon Williams <bmwill@google.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, git@jeffhostetler.com, gitster@pobox.com,
-        jrnieder@gmail.com, pclouds@gmail.com, sbeller@google.com,
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, git@jeffhostetler.com, jrnieder@gmail.com,
+        pclouds@gmail.com, peff@peff.net, sbeller@google.com,
         stolee@gmail.com
 Subject: Re: [PATCH v4 13/35] ls-refs: introduce ls-refs server command
-Message-ID: <20180313212312.GC7638@google.com>
+Message-ID: <20180313212710.GD7638@google.com>
 References: <20180207011312.189834-1-bmwill@google.com>
  <20180228232252.102167-1-bmwill@google.com>
  <20180228232252.102167-14-bmwill@google.com>
- <20180303044338.GD27689@sigill.intra.peff.net>
- <20180305182155.GB72475@google.com>
- <20180305202813.GA5953@sigill.intra.peff.net>
+ <xmqqmuzqb2ph.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20180305202813.GA5953@sigill.intra.peff.net>
+In-Reply-To: <xmqqmuzqb2ph.fsf@gitster-ct.c.googlers.com>
 User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 03/05, Jeff King wrote:
-> On Mon, Mar 05, 2018 at 10:21:55AM -0800, Brandon Williams wrote:
+On 03/02, Junio C Hamano wrote:
+> Brandon Williams <bmwill@google.com> writes:
 > 
-> > > Hmm, so this would accept stuff like "refs/heads/*/foo" but quietly
-> > > ignore the "/foo" part.
-> > 
-> > Yeah that's true...this should probably not do that.  Since
-> > "refs/heads/*/foo" violates what the spec is, really this should error
-> > out as an invalid pattern.
+> > + ls-refs
+> > +---------
+> > +
+> > +`ls-refs` is the command used to request a reference advertisement in v2.
+> > +Unlike the current reference advertisement, ls-refs takes in arguments
+> > +which can be used to limit the refs sent from the server.
 > 
-> Yeah, that would be better, I think.
+> OK.
 > 
-> > > It also accepts "refs/h*" to get "refs/heads" and "refs/hello".  I think
-> > > it's worth going for the most-restrictive thing to start with, since
-> > > that enables a lot more server operations without worrying about
-> > > breaking compatibility.
-> > 
-> > And just to clarify what do you see as being the most-restrictive case
-> > of patterns that would should use?
+> > +Additional features not supported in the base command will be advertised
+> > +as the value of the command in the capability advertisement in the form
+> > +of a space separated list of features, e.g.  "<command>=<feature 1>
+> > +<feature 2>".
 > 
-> I mean only accepting "*" at a "/" boundary (or just allowing a trailing
-> slash to imply recursion, like "refs/heads/", or even just always
-> assuming recursion to allow "refs/heads").
+> Doesn't this explain the general convention that applies to any
+> command, not just ls-refs command?  As a part of ls-refs section,
+> <command> in the above explanation is always a constant "ls-refs",
+> right?
+> 
+> It is a bit unclear how <feature N> in the above description are
+> related to "arguments" in the following paragraph.  Do the server
+> that can show symref and peeled tags and that can limit the output
+> with ref-pattern advertise these three as supported features, i.e.
+> 
+> 	ls-refs=symrefs peel ref-pattern
+> 
+> or something?  Would there a case where a "feature" does not
+> correspond 1:1 to an argument to the command, and if so how would
+> the server and the client negotiate use of such a feature?
 
-For simplicity I'll change ref-patterns to be ref-prefixes where
-a ref must start_with() one of the provided ref-prefixes.  Clients won't
-send '*'s either but can send everything upto but not including the '*'
-as a prefix.
+I mention earlier in the document that the values of each capability are
+to be defined by the capability itself, so I'm just documenting what the
+value advertised means.  And a feature could mean a couple things and
+doesn't necessarily mean it affects the arguments which can be provided,
+and it definitely doesn't mean that each argument that can be provided
+must be advertised as a feature.  If you look at the patch that
+introduces shallow, the shallow feature adds lots of arguments that a
+client can that use in its request.
+
+> 
+> > +    ref-pattern <pattern>
+> > +	When specified, only references matching one of the provided
+> > +	patterns are displayed.  A pattern is either a valid refname
+> > +	(e.g.  refs/heads/master), in which a ref must match the pattern
+> > +	exactly, or a prefix of a ref followed by a single '*' wildcard
+> > +	character (e.g. refs/heads/*), in which a ref must have a prefix
+> > +	equal to the pattern up to the wildcard character.
+> 
+> I thought the recent concensus was left-anchored prefix match that
+> honors /-directory boundary, i.e. no explicit asterisk and just
+> saying "refs/heads" is enough to match "refs/heads" itself and
+> "refs/heads/master" but not "refs/headscarf"?
+
+I don't think there was a consensus at the time, but in the next
+revision I'll have them be prefixes instead of containing wildcards.
 
 -- 
 Brandon Williams
