@@ -2,170 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6D1E21F404
-	for <e@80x24.org>; Tue, 13 Mar 2018 20:47:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EABE61F404
+	for <e@80x24.org>; Tue, 13 Mar 2018 21:23:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753122AbeCMUra (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Mar 2018 16:47:30 -0400
-Received: from mail-pg0-f41.google.com ([74.125.83.41]:38162 "EHLO
-        mail-pg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753096AbeCMUr3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Mar 2018 16:47:29 -0400
-Received: by mail-pg0-f41.google.com with SMTP id a15so399186pgn.5
-        for <git@vger.kernel.org>; Tue, 13 Mar 2018 13:47:29 -0700 (PDT)
+        id S1752800AbeCMVXQ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Mar 2018 17:23:16 -0400
+Received: from mail-pf0-f178.google.com ([209.85.192.178]:34909 "EHLO
+        mail-pf0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752375AbeCMVXO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Mar 2018 17:23:14 -0400
+Received: by mail-pf0-f178.google.com with SMTP id y186so454445pfb.2
+        for <git@vger.kernel.org>; Tue, 13 Mar 2018 14:23:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=NeJsfLM7IhoP+p1IAROHwChI1qo3oFODBbMqymHYsqU=;
-        b=B8yURoA6YobEd1Wa+/zZkE4v780qnAWUpShSqzEakKmo2o+rmRildBn0czIbLN8K2u
-         oC7oIuTO6ZOagNrBXlG66xbcExWtPtsaZJ2Oqeuyq5p9WnDtS/39rzJ5Nd1HR0tHdq5V
-         oHfKMavXSFrv91uNkEbFMktuNjUlwezwU68Lv225p40Enmt/8nnVmdivXxhMJi/84Sib
-         5NgA4N2BFayIRh0SrhrO0KIf8GFQmZeRdtOmIhT3N8hYfyYNl6hdEnYe6jqmKK/kRjR9
-         a9p7cDbuFJ3PrluiHkmfCngMw3cG9IcRGUmAkCzu9hoacZo9ZlN1KY0rAR429JyRi2G6
-         H93w==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=5XxooFHQh5MTMsAFqKFRFD/urZbjDdLOZt8ySvrfeKI=;
+        b=I0C/FwriN6agpNR3DNrWj1t5vlhHXMba/5ReWJeU4HXGiCbbMkD9m80ulA8L16JrZr
+         QwamAnl6BON2gDHkv3e8yQHRkzgfP5CVl4kjKaVr677uw1FECzHFhjY6QaHt+sZAlhJ/
+         4Lkeqdc2mAeZP6owmZbfEpWQ6iT7qzrBxNg69jLNTGqJ5qoUuEHYdPZA6T8lMazj5fE9
+         H2noMPb5p1G5GLMUyQSLDb9KJrr/9lP7guuUJYNS7Oyv/QbTBmFdtzlVF5rGHTJE93pd
+         q6nVZrCxN4LSBU2tNIcmWf3Ipa/MBuWMGjG3XJCK7zK8B/umDqlFHbEBOyDQkLaykCe3
+         krAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=NeJsfLM7IhoP+p1IAROHwChI1qo3oFODBbMqymHYsqU=;
-        b=uXJzWjF44057JkYxJCxy36fgx86Wz9wb+VmCE+QqbZBcN9DEEbMWmSEhuj0/eHsS7l
-         bHB5nMxB6nyfHzFuad7sWlz85G6J+Jgz3+UPLJ88tOihuw3AKu34ifNniXunLeHSwfup
-         OK54CED9uh1uVYseLMirS+fJWxR2N4TmhsLuJHivCai9a4bk391bVhmA7XJGIhZso9Ri
-         5Jzg/ZLmq8QBit8zKbzvecv/C1ZQ/pSFiN5uAQqZbuUTwqalWPRPP9Bg+csoJhUIkoex
-         Yp2RF6NYZ9NbsrlYLxj9y+DfJhD570sQMu5Nui3jFAanJ1Wb4sUP3SVfaDh6ZWdOSO8t
-         IX0w==
-X-Gm-Message-State: AElRT7H1C4VKfAfnBUkYMyqdkQg7XcCsTCOCDBxdmOnu22D1FKQsuYBt
-        ahxqnu8ARnMbrw8ShDgtzlRfbizx46Lq2QAedF4=
-X-Google-Smtp-Source: AG47ELs0Y3RIEgU4vvptHwAlCejL1t/Tg/sOrDAMnQFBPkQpNRpN3dSx4d3WB1HxuZ0oaxD5tIZ4HUCDNIewoG1EaiE=
-X-Received: by 10.101.88.130 with SMTP id d2mr945362pgu.383.1520974049135;
- Tue, 13 Mar 2018 13:47:29 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=5XxooFHQh5MTMsAFqKFRFD/urZbjDdLOZt8ySvrfeKI=;
+        b=hA/0TFTcwA3rH39TXuhu6zd8oVzOgayKYDuoMB07mQM3OAsojjUmtxBILUsbQmoSBc
+         o5/rVLCskIfsR9kEGtSTV99FffeR2wgAloUljCfrmZh+SfeBZ2WaN0GoVcGvsAMjBDUY
+         aGanD8sRnKkxKmo+PW3LrPTpMEx1g4fT86VImIaH8Pc2p3QNR/rsAW5TL3QkonJzmY+r
+         at3kK1LxyI3O0M0ymEdssNND/6z/K0zXVXxVYJEORYvfO0BefxCSlaZ5ckWo7awJ8Nqd
+         WuxBW1NaNTxG2u+Ey+hgIhsHNpmP30ZDU1+VvvGQk19ksCYI/pilO0fzXXBHq2XqoBtq
+         IRgw==
+X-Gm-Message-State: AElRT7FrE2NIAWqf0M89DQ1hIRAieyAIgRu+BN1SMajBkyzm/p/QWFLN
+        p4WHTjRN0D7tAUitLzTxsmLjLQ==
+X-Google-Smtp-Source: AG47ELtpKR9ng6dWftqhebYzXSAweX2k9wFE5gukbEw+CQsgpMr9znHROEkh0x6xwwGDEBTbGZq8mQ==
+X-Received: by 10.101.89.74 with SMTP id g10mr1615441pgu.415.1520976194011;
+        Tue, 13 Mar 2018 14:23:14 -0700 (PDT)
+Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
+        by smtp.gmail.com with ESMTPSA id s89sm201191pfk.54.2018.03.13.14.23.12
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 13 Mar 2018 14:23:13 -0700 (PDT)
+Date:   Tue, 13 Mar 2018 14:23:12 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, git@jeffhostetler.com, gitster@pobox.com,
+        jrnieder@gmail.com, pclouds@gmail.com, sbeller@google.com,
+        stolee@gmail.com
+Subject: Re: [PATCH v4 13/35] ls-refs: introduce ls-refs server command
+Message-ID: <20180313212312.GC7638@google.com>
+References: <20180207011312.189834-1-bmwill@google.com>
+ <20180228232252.102167-1-bmwill@google.com>
+ <20180228232252.102167-14-bmwill@google.com>
+ <20180303044338.GD27689@sigill.intra.peff.net>
+ <20180305182155.GB72475@google.com>
+ <20180305202813.GA5953@sigill.intra.peff.net>
 MIME-Version: 1.0
-Received: by 10.236.191.144 with HTTP; Tue, 13 Mar 2018 13:47:28 -0700 (PDT)
-In-Reply-To: <20180313195640.GA147135@aiede.svl.corp.google.com>
-References: <cover.1520680894.git.martin.agren@gmail.com> <78669e644b64fc10c34adb59717d2039f81cb092.1520680894.git.martin.agren@gmail.com>
- <20180313195640.GA147135@aiede.svl.corp.google.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Tue, 13 Mar 2018 21:47:28 +0100
-Message-ID: <CAN0heSoP1oVWH0YAFNcL5LG_K7TsmKMAHUA_TiDacVdPtWjTZw@mail.gmail.com>
-Subject: Re: [PATCH 3/3] shortlog: do not accept revisions when run outside repo
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180305202813.GA5953@sigill.intra.peff.net>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 13 March 2018 at 20:56, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Hi,
->
-> Martin =C3=85gren wrote:
->
->>                                                       (So yes, after
->> this patch, we will still silently ignore stdin for confused usage such
->> as `git log v2.15.0.. | git shortlog v2.16.0..`. But at least that does
->> not crash.)
->
-> I don't follow here.  Are you saying this command should notice that
-> there is input in stdin?  How would it notice?
+On 03/05, Jeff King wrote:
+> On Mon, Mar 05, 2018 at 10:21:55AM -0800, Brandon Williams wrote:
+> 
+> > > Hmm, so this would accept stuff like "refs/heads/*/foo" but quietly
+> > > ignore the "/foo" part.
+> > 
+> > Yeah that's true...this should probably not do that.  Since
+> > "refs/heads/*/foo" violates what the spec is, really this should error
+> > out as an invalid pattern.
+> 
+> Yeah, that would be better, I think.
+> 
+> > > It also accepts "refs/h*" to get "refs/heads" and "refs/hello".  I think
+> > > it's worth going for the most-restrictive thing to start with, since
+> > > that enables a lot more server operations without worrying about
+> > > breaking compatibility.
+> > 
+> > And just to clarify what do you see as being the most-restrictive case
+> > of patterns that would should use?
+> 
+> I mean only accepting "*" at a "/" boundary (or just allowing a trailing
+> slash to imply recursion, like "refs/heads/", or even just always
+> assuming recursion to allow "refs/heads").
 
-I have no idea how it would notice (portably!) and the gain seems
-minimal. I added this to keep the reader from wondering "but wait a
-minute, doesn't that mean that we fail to catch this bad usage if we're
-in a repo?". So my answer would be "yep, but it's not a huge problem".
-Of course, my attempt to pre-emptively answer a question only provoked
-another one. :-) I could phrase this better.
+For simplicity I'll change ref-patterns to be ref-prefixes where
+a ref must start_with() one of the provided ref-prefixes.  Clients won't
+send '*'s either but can send everything upto but not including the '*'
+as a prefix.
 
->> --- a/builtin/shortlog.c
->> +++ b/builtin/shortlog.c
->> @@ -293,6 +293,12 @@ int cmd_shortlog(int argc, const char **argv, const=
- char *prefix)
->>  parse_done:
->>       argc =3D parse_options_end(&ctx);
->>
->> +     if (nongit && argc !=3D 1) {
->
-> Just curious: would argc ever be 0 here?  'argc <=3D 1' might be clearer.
-
-Hmm, good point. It "shouldn't" be 0, but I guess it's better to be safe
-than sorry. (We seem to have both constructs, in various places.)
-
->> +             error(_("no revisions can be given when running "
->> +                     "from outside a repository"));
->> +             usage_with_options(shortlog_usage, options);
->> +     }
->> +
->
-> The error message is
->
->         error: no revisions can be given when running from outside a repo=
-sitory
->         usage: ...
->
-> Do we need to dump usage here?  I wonder if a simple die() call would
-> be easier for the user to act on.
-
-I can see an argument for "dumping the usage makes the error harder than
-necessary to find". I mainly went for consistency. This ties into your
-other observations below: what little consistency do we have and in
-which direction do we want to push it...
-
-> Not about this patch: I was a little surprised to see 'error:' instead
-> of 'usage:' or 'fatal:'.  It turns out git is pretty inconsistent
-> about that: e.g. there is
->
->         error(_("no remote specified"));
->         usage_with_options(builtin_remote_setbranches_usage, options);
->
-> Some other callers just use usage_with_options without describing the
-> error.
-
-The other two approaches ("die" and "error and usage") can be argued
-for, but this one ("give usage") just seems wrong to me. I haven't
-looked for such a place in the code, and maybe they're "obvious", but it
-seems odd to just give the usage without any sort of hint about what was
-wrong.
-
->  check-attr has a private error_with_usage() helper to implement
-> the error() followed by usage_with_options() idiom.  Most callers just
-> use die(), like
->
->         die(_("'%s' cannot be used with %s"), "--merge", "--patch");
->
-> Documentation/technical/api-error-handling.txt says
->
->  - `usage` is for errors in command line usage.  After printing its
->    message, it exits with status 129.  (See also `usage_with_options`
->    in the link:api-parse-options.html[parse-options API].)
->
-> which is not prescriptive enough to help.
-
-I think it would be a larger project to make these consistent. The one
-I'm adding here is at least consistent with the other one in this file.
-
-> Separate from that, I wonder if the error message can be made a little
-> shorter and clearer.  E.g.
->
->         fatal: shortlog <revs> can only be used inside a git repository
-
-Some grepping suggests we do not usually name the command ("shortlog
-..."), perhaps to play well with aliasing, nor do we use "such <syntax>"
-very often, but it does happen. Quoting and allowing for options might
-make this more correct, but perhaps less readable: "'shortlog [...]
-<revs>' can only ...". Slightly better than what I had, "revisions can
-only be given inside a git repository" would avoid some negating.
-
-> Thanks and hope that helps,
-
-It does indeed. I'll give this another 24h and see what I come up with.
-I believe it will end up in a change to "<=3D 1", an improved error
-message and a clearer last few words in the commit message.
-
-Martin
+-- 
+Brandon Williams
