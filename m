@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 069901F404
-	for <e@80x24.org>; Tue, 13 Mar 2018 20:39:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5AB241F404
+	for <e@80x24.org>; Tue, 13 Mar 2018 20:40:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753095AbeCMUj4 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Mar 2018 16:39:56 -0400
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:35496 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752740AbeCMUjx (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Mar 2018 16:39:53 -0400
-Received: by mail-wr0-f194.google.com with SMTP id n12so2297273wra.2
-        for <git@vger.kernel.org>; Tue, 13 Mar 2018 13:39:53 -0700 (PDT)
+        id S1753134AbeCMUkD (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Mar 2018 16:40:03 -0400
+Received: from mail-wr0-f178.google.com ([209.85.128.178]:42977 "EHLO
+        mail-wr0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753122AbeCMUj6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Mar 2018 16:39:58 -0400
+Received: by mail-wr0-f178.google.com with SMTP id s18so2238839wrg.9
+        for <git@vger.kernel.org>; Tue, 13 Mar 2018 13:39:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=633XID1WlAcHPsfyvEhFqI0gYWjxCgLvRKS0bu1qfJw=;
-        b=VZwWhih6Y/vfE0DpKC+Jj3ALiCKRekviD/mg2RTvfYyxvRj113C8cQZjKCGUJCmTWa
-         PJSKAOmZB5C7EplJGqnTn7yIrTmTuBpflBc7UomB0cq3CWGm9Q1L5P3khqXNpxJhRcXh
-         UCh1k3QJP1FRS3dHpukmLEYY/Ad2jZAsrCUu/QlQ8ngYVrxeN5XZgoGPASNZKbkIuw7F
-         3G91gLpcKzsKyiIx4hlEz9v2jFH9Vo44S7KFdO1xUQ3hlgaBhPTm3VWVjBrdUEtMF4A3
-         oPlt5IY8Y88Ny2iGFPDVQpyGAzYD5bvQVqjC7jadYRqdjrWjIGwO9tt2Vj1gSbs4FeaK
-         Oyyw==
+        bh=g0t1z1fV/g/GeZYYkj/zeNQBK2/n18mW/uWcGlTs6PE=;
+        b=u7zZWcZ41m4t1X1tcxLLVRARDGDspqJ66q68RReXxKjnsBp3zvWEryDHmWfY+roTyy
+         Ik4lzXdKRrbN2c3w2jT9xdE0TeWXru5oh/jmoYgRzNxmkty3uVH3HSvXwBIaZn9COnuc
+         kH8olmo0P21a/VwOG4KJpyExjV1GmUR+jVy3+wOCQ9tzUL8txk+Un44t+C4Xz6V3fVpf
+         VRe1N39hE3eMKOwq2f0P7/S9qc/exKmpSl8GcufbCe/aQxjyWSzKapYIZaUDJnoIvRFo
+         bmrMa7nvJ0S/Rc8Tm2KZI7WhdL7/qVknxvTqj+C20Q3AoSPrFgUOZM4uhxDHMy2UuboD
+         6HMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=633XID1WlAcHPsfyvEhFqI0gYWjxCgLvRKS0bu1qfJw=;
-        b=qECIj4Zw4pFtN7irSOOEg7F3W7bp03FbcKXnJzU6hjmwXYxevaniXSapVmVhfEFMsS
-         T+CxLRosOEDrpoSL604mjAsU8DzoVyeC+l99rMBxMsjbDGb5SxCPs9jeaWFBnMchBUwc
-         p2jgWkd4qlk8Q3WAIxsvYQB23oHvSgxTLYssLMyjywA3hQgC7rFB+ssANGZimnb8sXD3
-         ziKJpW68j6X+UbyUvuxvJGnj8ptxXAb/tgBvMFMjQdP/bV079okSAw61jaEb5kjILDWF
-         hQUDSr4NcYFZWdWwta9DDSVtsWBXb7yu8WF7FiUbCph24TH+Mg3eLz7LDme9RjcDebd0
-         wF7w==
-X-Gm-Message-State: AElRT7Gy885JgtaCDgfj8J9Qlu9Y1XLq7reABnF+tsbaxlHnaPSgHJWH
-        mdZtpzK9JxlHgXCHxI0/QoX/4Ybd
-X-Google-Smtp-Source: AG47ELukwGXxLWNKljUAHZQzvEcAT4OvRanbuFhx7jSd6bf3aR801MzTTxZ/t7g4+JUQybbUM2SVIA==
-X-Received: by 10.223.151.129 with SMTP id s1mr1735325wrb.206.1520973592105;
-        Tue, 13 Mar 2018 13:39:52 -0700 (PDT)
+        bh=g0t1z1fV/g/GeZYYkj/zeNQBK2/n18mW/uWcGlTs6PE=;
+        b=pXWrws6BUkn4BWbGAysFpwLsExE3cTiCUg81742BlieqdLX/Et5Dls4CE2FZJvvZCH
+         Z+F70p72PGxFbNZRs2Z3WXI55t1RkWXU8MGoHDXwFXE2QB7fh1FkSGsaVaBA1cOZW6sD
+         UXp88M1fBOfQjR/+Jt/Jn/tEp3qwv26tXDzDRhclD5xKuU+QbuP1/9A7UbG3/ztJAQAH
+         u1HpDQROb9zDQ4h6isw4FiYp1moTEDJw0YF9TgWZGPmppI8+dS/3Fl3w7HG7c+Ja+D+4
+         U0vP+LMGM8mc95UuT8PJZ3vuYYawuA8py2MT8bApdtZeBOqw+y7T0jHxrq3axRp1/kuG
+         qjWw==
+X-Gm-Message-State: AElRT7Gxi2lPFVr+FpM9X2xcCqJbhFbBNAB7Vs1j0fbMN1WuSnzRuXdv
+        Ho+iy31IDRI9fgCxz9JKWyxWc+GF
+X-Google-Smtp-Source: AG47ELsPCD2C9VytrwAmMWoPhkJ/PYoLEbi00LjXvLcuwgfMVIc1+6AeiRliDToIiwu3nNShBQty8g==
+X-Received: by 10.223.146.102 with SMTP id 93mr1678537wrj.255.1520973596239;
+        Tue, 13 Mar 2018 13:39:56 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id m9sm1424203wrf.13.2018.03.13.13.39.50
+        by smtp.gmail.com with ESMTPSA id m9sm1424203wrf.13.2018.03.13.13.39.55
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 13 Mar 2018 13:39:51 -0700 (PDT)
+        Tue, 13 Mar 2018 13:39:55 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -61,9 +61,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Richard Clamp <richardc@unixbeard.net>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 1/3] Makefile: fix broken bindir_relative variable
-Date:   Tue, 13 Mar 2018 20:39:33 +0000
-Message-Id: <20180313203935.5084-2-avarab@gmail.com>
+Subject: [PATCH 3/3] Makefile: optionally symlink libexec/git-core binaries to bin/git
+Date:   Tue, 13 Mar 2018 20:39:35 +0000
+Message-Id: <20180313203935.5084-4-avarab@gmail.com>
 X-Mailer: git-send-email 2.15.1.424.g9478a66081
 In-Reply-To: <20180313203935.5084-1-avarab@gmail.com>
 References: <20180313203935.5084-1-avarab@gmail.com>
@@ -77,51 +77,128 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the bindir_relative variable to work like the other *_relative
-variables, which are computed as a function of the absolute
-path. Before this change, supplying e.g. bindir=/tmp/git/binaries to
-the Makefile would yield a bindir_relative of just "bin", as opposed
-to "binaries".
+Add a INSTALL_SYMLINKS option which if enabled, changes the default
+hardlink installation method to one where the relevant binaries in
+libexec/git-core are symlinked back to ../../bin, instead of being
+hardlinked.
 
-This logic was originally added back in 026fa0d5ad ("Move computation
-of absolute paths from Makefile to runtime (in preparation for
-RUNTIME_PREFIX)", 2009-01-18), then later in 971f85388f ("Makefile:
-make mandir, htmldir and infodir absolute", 2013-02-24) when
-more *_relative variables were added those new variables didn't have
-this bug, but bindir_relative was never fixed.
+This new option also overrides the behavior of the existing
+NO_*_HARDLINKS variables which in some cases would produce symlinks
+within to libexec/, e.g. "git-add" symlinked to "git" which would be
+copy of the "git" found in bin/, now "git-add" in libexec/ is always
+going to be symlinked to the "git" found in the bin/ directory.
 
-There is a small change in behavior here, which is that setting
-bindir_relative as an argument to the Makefile won't work anymore, I
-think that's fine, since this was always intended as an internal
-variable (e.g. INSTALL documents bindir=*, not bindir_relative=*).
+This option is being added because:
+
+ 1) I think it makes what we're doing a lot more obvious. E.g. I'd
+    never noticed that the libexec binaries were really just hardlinks
+    since e.g. ls(1) won't show that in any obvious way. You need to
+    start stat(1)-ing things and look at the inodes to see what's
+    going on.
+
+ 2) Some tools have very crappy support for hardlinks, e.g. the Git
+    shipped with GitLab is much bigger than it should be because
+    they're using a chef module that doesn't know about hardlinks, see
+    https://github.com/chef/omnibus/issues/827
+
+    I've also ran into other related issues that I think are explained
+    by this, e.g. compiling git with debugging and rpm refusing to
+    install a ~200MB git package with 2GB left on the FS, I think that
+    was because it doesn't consider hardlinks, just the sum of the
+    byte size of everything in the package.
+
+As for the implementation, the "../../bin" noted above will vary given
+some given some values of "../.." and "bin" depending on the depth of
+the gitexecdir relative to the destdir, and the "bindir" target,
+e.g. setting "bindir=/tmp/git/binaries gitexecdir=foo/bar/baz" will do
+the right thing and produce this result:
+
+    $ file /tmp/git/foo/bar/baz/git-add
+    /tmp/git/foo/bar/baz/git-add: symbolic link to ../../../binaries/git
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Makefile | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ Makefile | 46 +++++++++++++++++++++++++++++++---------------
+ 1 file changed, 31 insertions(+), 15 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index de4b8f0c02..b2f8f2b171 100644
+index ee0b6c8940..ac7616422d 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -468,8 +468,7 @@ ARFLAGS = rcs
- # This can help installing the suite in a relocatable way.
+@@ -329,6 +329,13 @@ all::
+ # when hardlinking a file to another name and unlinking the original file right
+ # away (some NTFS drivers seem to zero the contents in that scenario).
+ #
++# Define INSTALL_SYMLINKS if you prefer to have everything that can be
++# symlinked between bin/ and libexec/ to use relative symlinks between
++# the two. This option overrides NO_CROSS_DIRECTORY_HARDLINKS and
++# NO_INSTALL_HARDLINKS which will also use symlinking by indirection
++# within the same directory in some cases, INSTALL_SYMLINKS will
++# always symlink to the final target directly.
++#
+ # Define NO_CROSS_DIRECTORY_HARDLINKS if you plan to distribute the installed
+ # programs as a tar, where bin/ and libexec/ might be on different file systems.
+ #
+@@ -2594,35 +2601,44 @@ endif
  
- prefix = $(HOME)
--bindir_relative = bin
--bindir = $(prefix)/$(bindir_relative)
-+bindir = $(prefix)/bin
- mandir = $(prefix)/share/man
- infodir = $(prefix)/share/info
- gitexecdir = libexec/git-core
-@@ -486,6 +485,7 @@ lib = lib
- # DESTDIR =
- pathsep = :
+ 	bindir=$$(cd '$(DESTDIR_SQ)$(bindir_SQ)' && pwd) && \
+ 	execdir=$$(cd '$(DESTDIR_SQ)$(gitexec_instdir_SQ)' && pwd) && \
++	destdir_from_execdir_SQ=$$(echo '$(gitexecdir_relative_SQ)' | sed -e 's|[^/][^/]*|..|g') && \
+ 	{ test "$$bindir/" = "$$execdir/" || \
+ 	  for p in git$X $(filter $(install_bindir_programs),$(ALL_PROGRAMS)); do \
+ 		$(RM) "$$execdir/$$p" && \
+-		test -z "$(NO_INSTALL_HARDLINKS)$(NO_CROSS_DIRECTORY_HARDLINKS)" && \
+-		ln "$$bindir/$$p" "$$execdir/$$p" 2>/dev/null || \
+-		cp "$$bindir/$$p" "$$execdir/$$p" || exit; \
++		test -n "$(INSTALL_SYMLINKS)" && \
++		ln -s "$$destdir_from_execdir_SQ/$(bindir_relative_SQ)/$$p" "$$execdir/$$p" || \
++		{ test -z "$(NO_INSTALL_HARDLINKS)$(NO_CROSS_DIRECTORY_HARDLINKS)" && \
++		  ln "$$bindir/$$p" "$$execdir/$$p" 2>/dev/null || \
++		  cp "$$bindir/$$p" "$$execdir/$$p" || exit; } \
+ 	  done; \
+ 	} && \
+ 	for p in $(filter $(install_bindir_programs),$(BUILT_INS)); do \
+ 		$(RM) "$$bindir/$$p" && \
+-		test -z "$(NO_INSTALL_HARDLINKS)" && \
+-		ln "$$bindir/git$X" "$$bindir/$$p" 2>/dev/null || \
+-		ln -s "git$X" "$$bindir/$$p" 2>/dev/null || \
+-		cp "$$bindir/git$X" "$$bindir/$$p" || exit; \
++		test -n "$(INSTALL_SYMLINKS)" && \
++		ln -s "git$X" "$$bindir/$$p" || \
++		{ test -z "$(NO_INSTALL_HARDLINKS)" && \
++		  ln "$$bindir/git$X" "$$bindir/$$p" 2>/dev/null || \
++		  ln -s "git$X" "$$bindir/$$p" 2>/dev/null || \
++		  cp "$$bindir/git$X" "$$bindir/$$p" || exit; } \
+ 	done && \
+ 	for p in $(BUILT_INS); do \
+ 		$(RM) "$$execdir/$$p" && \
+-		test -z "$(NO_INSTALL_HARDLINKS)" && \
+-		ln "$$execdir/git$X" "$$execdir/$$p" 2>/dev/null || \
+-		ln -s "git$X" "$$execdir/$$p" 2>/dev/null || \
+-		cp "$$execdir/git$X" "$$execdir/$$p" || exit; \
++		test -n "$(INSTALL_SYMLINKS)" && \
++		ln -s "$$destdir_from_execdir_SQ/$(bindir_relative_SQ)/git$X" "$$execdir/$$p" || \
++		{ test -z "$(NO_INSTALL_HARDLINKS)" && \
++		  ln "$$execdir/git$X" "$$execdir/$$p" 2>/dev/null || \
++		  ln -s "git$X" "$$execdir/$$p" 2>/dev/null || \
++		  cp "$$execdir/git$X" "$$execdir/$$p" || exit; } \
+ 	done && \
+ 	remote_curl_aliases="$(REMOTE_CURL_ALIASES)" && \
+ 	for p in $$remote_curl_aliases; do \
+ 		$(RM) "$$execdir/$$p" && \
+-		test -z "$(NO_INSTALL_HARDLINKS)" && \
+-		ln "$$execdir/git-remote-http$X" "$$execdir/$$p" 2>/dev/null || \
+-		ln -s "git-remote-http$X" "$$execdir/$$p" 2>/dev/null || \
+-		cp "$$execdir/git-remote-http$X" "$$execdir/$$p" || exit; \
++		test -n "$(INSTALL_SYMLINKS)" && \
++		ln -s "git-remote-http$X" "$$execdir/$$p" || \
++		{ test -z "$(NO_INSTALL_HARDLINKS)" && \
++		  ln "$$execdir/git-remote-http$X" "$$execdir/$$p" 2>/dev/null || \
++		  ln -s "git-remote-http$X" "$$execdir/$$p" 2>/dev/null || \
++		  cp "$$execdir/git-remote-http$X" "$$execdir/$$p" || exit; } \
+ 	done && \
+ 	./check_bindir "z$$bindir" "z$$execdir" "$$bindir/git-add$X"
  
-+bindir_relative = $(patsubst $(prefix)/%,%,$(bindir))
- mandir_relative = $(patsubst $(prefix)/%,%,$(mandir))
- infodir_relative = $(patsubst $(prefix)/%,%,$(infodir))
- htmldir_relative = $(patsubst $(prefix)/%,%,$(htmldir))
 -- 
 2.15.1.424.g9478a66081
 
