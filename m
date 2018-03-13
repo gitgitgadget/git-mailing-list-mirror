@@ -2,84 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D4F901F404
-	for <e@80x24.org>; Tue, 13 Mar 2018 23:04:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D92261F404
+	for <e@80x24.org>; Tue, 13 Mar 2018 23:12:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752650AbeCMXEL (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Mar 2018 19:04:11 -0400
-Received: from mail-ua0-f171.google.com ([209.85.217.171]:42492 "EHLO
-        mail-ua0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751300AbeCMXEK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Mar 2018 19:04:10 -0400
-Received: by mail-ua0-f171.google.com with SMTP id b23so878177uak.9
-        for <git@vger.kernel.org>; Tue, 13 Mar 2018 16:04:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=9f48zz+36G3mzR/Dl8lb0wFsdNjcqq43D3DSKJZJoOg=;
-        b=OYaK5RkwwbvP76jKVAi4whOqUH8aSyGkOdpfP7QAu6q1ImJI6KDx04vj131RIFgEwZ
-         JS7fRsT1uSIJF2G2IZaDIzlpWstTERRxK7ELO4kUsOxWGvy2ma44Lnk0HhWvBEBIOdP+
-         DUok3p+jDoCjyzKhfUeaHAdZslc6WoBZEc94nbn0qmjDnKcAUFXoJAqsLXW24csJC3PE
-         uJueVa1Tkw5NQIkw5ZJhcsLHu53rBhAk5CJKoz0l/L6NxLbyC4Nu+FIW5OwgVBMinJMU
-         JEz1emyB246buc2LM3ha2OEkW59lMmID9IBJ0fz33AFNHp1lmman6I9/5Kl4M/YlYVRb
-         jEOQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=9f48zz+36G3mzR/Dl8lb0wFsdNjcqq43D3DSKJZJoOg=;
-        b=pSWTbHaUcYJ588UA8lUNOCEYb19/XdJW/jh0hqTQ1n0SgMfC4iiqAF+mQoPZFl5V4g
-         /UE64OUnNzp/YsWIEt83SyGgWcL/eSN5v4pC61w0UhRaQ8W/5onx+Onvyz6CFVZ2PYaF
-         /t1W+cfTv3vocMZWTlEpHsgBV8vozcE5E617wWfLJFj9XUEYGSNHNYy6It5xvOocO1cz
-         BkE0KI7Sx3bVk5SPQ53mOGKOsIK3jL3XxA96ZaJyNfryC96gzLYQF90zD9mbtbD7NqZF
-         5pqkvw/MxMU0pT9hsSdWcxlYaheUglRFkO9Shrh9XJAmyi2H0DG3QGP0sRTwAH6POP8T
-         wwSA==
-X-Gm-Message-State: AElRT7F1KFZ8TCVRFag6rnAyl8ukwm2hA4KIRfniBnJo2XL4R+wNliHU
-        Q1rUxY+Fp3PC6T7PgaY9KkZGUBwLAcIVk/k93/4=
-X-Google-Smtp-Source: AG47ELuX3ZVo06dMukcDMxtKcIDJXZE/AHwL1Uzkv9CvDuN4ebCGbD7D35vc2aJ2Dt5OdPL5fvHgoqir5r8NXy6sJ+E=
-X-Received: by 10.176.94.23 with SMTP id z23mr1919603uag.112.1520982249905;
- Tue, 13 Mar 2018 16:04:09 -0700 (PDT)
+        id S932330AbeCMXMZ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Mar 2018 19:12:25 -0400
+Received: from mga18.intel.com ([134.134.136.126]:64753 "EHLO mga18.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S932240AbeCMXMY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Mar 2018 19:12:24 -0400
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga003.fm.intel.com ([10.253.24.29])
+  by orsmga106.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 13 Mar 2018 16:12:24 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.47,466,1515484800"; 
+   d="scan'208";a="33608191"
+Received: from fmsmsx108.amr.corp.intel.com ([10.18.124.206])
+  by FMSMGA003.fm.intel.com with ESMTP; 13 Mar 2018 16:12:24 -0700
+Received: from fmsmsx111.amr.corp.intel.com (10.18.116.5) by
+ FMSMSX108.amr.corp.intel.com (10.18.124.206) with Microsoft SMTP Server (TLS)
+ id 14.3.319.2; Tue, 13 Mar 2018 16:12:24 -0700
+Received: from fmsmsx103.amr.corp.intel.com ([169.254.2.34]) by
+ fmsmsx111.amr.corp.intel.com ([169.254.12.79]) with mapi id 14.03.0319.002;
+ Tue, 13 Mar 2018 16:12:23 -0700
+From:   "Carsey, Jaben" <jaben.carsey@intel.com>
+To:     'Laszlo Ersek' <lersek@redhat.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+CC:     public git mailing list <git@vger.kernel.org>,
+        "git-for-windows@googlegroups.com" <git-for-windows@googlegroups.com>
+Subject: RE: recent glob expansion breakage on Windows?
+Thread-Topic: recent glob expansion breakage on Windows?
+Thread-Index: AQHTtyC/LRKOILKPS0CC9kg/0xzujqPHao8AgADC/gCABH1AUA==
+Date:   Tue, 13 Mar 2018 23:12:22 +0000
+Message-ID: <CB6E33457884FA40993F35157061515CA3C8FC64@FMSMSX103.amr.corp.intel.com>
+References: <e0ba9fb9-056e-4979-415b-f8eca47e2490@redhat.com>
+ <20180308220356.GA171451@aiede.svl.corp.google.com>
+ <3f8076fa-ead3-4034-2d41-364b72169873@redhat.com>
+In-Reply-To: <3f8076fa-ead3-4034-2d41-364b72169873@redhat.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL0ludGVsMyIsImlkIjoiMjg5ODhjN2MtMzc5Yy00NzZhLThmNDgtYmExZWNjYjAyMTI2IiwicHJvcHMiOlt7Im4iOiJDVFBDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiQ1RQX05UIn1dfV19LCJTdWJqZWN0TGFiZWxzIjpbXSwiVE1DVmVyc2lvbiI6IjE2LjUuOS4zIiwiVHJ1c3RlZExhYmVsSGFzaCI6ImxZcnFEN0txSWYxQUo1elAyU011aklXeFVzSlZkZng2OUZWQVY5WlJ4bkE9In0=
+x-ctpclassification: CTP_NT
+x-originating-ip: [10.1.200.106]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Received: by 10.176.3.241 with HTTP; Tue, 13 Mar 2018 16:04:09 -0700 (PDT)
-In-Reply-To: <xmqq7eqf1tc9.fsf@gitster-ct.c.googlers.com>
-References: <CABPp-BEXcvgxcn4-OrDhjUpuOsGCJwE_XT+0eYOK4Ad_O5maOg@mail.gmail.com>
- <20180312184734.GA58506@aiede.svl.corp.google.com> <CABPp-BEdh+UOCpFn5Y1_RydR==dDHWTeNtBub+pPjH_06Ub28w@mail.gmail.com>
- <CAPc5daVu8vv9RdGON8JiXEO3ycDVqQ38ySzZc-cpo+AQcAKXjA@mail.gmail.com>
- <CABPp-BF-LnGPx6vKzCNaFNi_fkxK-CpenatOVa2fvJRZHd0hZw@mail.gmail.com>
- <xmqqbmfr1uj3.fsf@gitster-ct.c.googlers.com> <CABPp-BGXdBJSi5EUyeom0PcgRXvwNy4EBA71MP3FZK9xsw-jdA@mail.gmail.com>
- <xmqq7eqf1tc9.fsf@gitster-ct.c.googlers.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 13 Mar 2018 16:04:09 -0700
-Message-ID: <CABPp-BEBvywrCAeLAe-LQ9XOJ=sKG0-vYJRrXYoHZebUM-kd7A@mail.gmail.com>
-Subject: Re: Opinions on changing add/add conflict resolution?
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 13, 2018 at 3:52 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Elijah Newren <newren@gmail.com> writes:
->
->> However, my question here about what to write to the working tree for
->> a rename/rename(2to1) conflict in one particular corner case still
->> remains.
->
-> Hmph, is it a bad idea to model this after what recursive merge
-> strategy does?  I think what is written out from that codepath to
-> the working tree has the nested conflict markers (with a bit of
-> tweak to the marker length, IIRC) in it.
-
-Oh, that's cool; I didn't know that.  It looks like that was
-introduced in commit d694a17986 ("ll-merge: use a longer conflict
-marker for internal merge", 2016-04-14).  That seems like a good idea;
-I'll go with that.  Thanks.
+SSBkbyBub3QgcmVtZW1iZXIgd2hhdCB2ZXJzaW9uIEkgd2FzIHVzaW5nIGJlZm9yZS4gIEkgYW0g
+c3VkZGVubHkgd29uZGVyaW5nIGlmIEkgcHJldmlvdXNseSBzZW50IHNpbmdsZSBwYXRjaGVzIGlu
+c3RlYWQgb2YgdXNpbmcgd2lsZGNhcmQgKHdoaWNoIHdvcmtzIGZpbmUpLiAgVGhlIG9ubHkgcGVy
+c29uIEkgaGF2ZSBmb3VuZCBkb2luZyBwYXRjaCBzZXJpZXMgaGVyZSBvbiB3aW5kb3dzIHVzZXMg
+dGhlIGRpcmVjdG9yeSBtZXRob2QgKHB1dCBwYXRjaCBmaWxlcyB0aGVyZSwgbGlzdCBkaXJlY3Rv
+cnkgbmFtZSBvbiBzZW5kLWVtYWlsIGNvbW1hbmQgbGluZSkuDQoNCkkgaGF2ZSB1cGRhdGVkIHRv
+IHRoZSAyLjE2LjIgdmVyc2lvbiBhbmQgSSBzZWUgdGhlIHNhbWUgaXNzdWVzLg0KDQotSmFiZW4N
+Cg0KPiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPiBGcm9tOiBMYXN6bG8gRXJzZWsgW21h
+aWx0bzpsZXJzZWtAcmVkaGF0LmNvbV0NCj4gU2VudDogRnJpZGF5LCBNYXJjaCAwOSwgMjAxOCAx
+OjQyIEFNDQo+IFRvOiBKb25hdGhhbiBOaWVkZXIgPGpybmllZGVyQGdtYWlsLmNvbT4NCj4gQ2M6
+IHB1YmxpYyBnaXQgbWFpbGluZyBsaXN0IDxnaXRAdmdlci5rZXJuZWwub3JnPjsgQ2Fyc2V5LCBK
+YWJlbg0KPiA8amFiZW4uY2Fyc2V5QGludGVsLmNvbT47IGdpdC1mb3Itd2luZG93c0Bnb29nbGVn
+cm91cHMuY29tDQo+IFN1YmplY3Q6IFJlOiByZWNlbnQgZ2xvYiBleHBhbnNpb24gYnJlYWthZ2Ug
+b24gV2luZG93cz8NCj4gSW1wb3J0YW5jZTogSGlnaA0KPiANCj4gT24gMDMvMDgvMTggMjM6MDMs
+IEpvbmF0aGFuIE5pZWRlciB3cm90ZToNCj4gPiArZ2l0LWZvci13aW5kb3dzDQo+ID4gSGksDQo+
+ID4NCj4gPiBMYXN6bG8gRXJzZWsgd3JvdGU6DQo+ID4NCj4gPj4gSmFiZW4gcmVwb3J0cyB0aGF0
+IGdpdC1zZW5kLWVtYWlsIGlzIHN1ZGRlbmx5IGZhaWxpbmcgdG8gZXhwYW5kIHRoZQ0KPiA+PiAi
+Ki5wYXRjaCIgZ2xvYiBmb3IgaGltLCBhdCB0aGUgV2luZG93cyBDTUQgcHJvbXB0Og0KPiA+Pg0K
+PiA+PiAtLS0tLS0tLS0NCj4gPj4gRTpcLi4uPmdpdCBzZW5kLWVtYWlsIC0tc3VwcHJlc3MtY2M9
+YXV0aG9yIC0tc3VwcHJlc3MtY2M9c2VsZiAtLXN1cHByZXNzLQ0KPiBjYz1jYyAtLXN1cHByZXNz
+LWNjPXNvYiAtLWRyeS1ydW4gKi5wYXRjaA0KPiA+Pg0KPiA+PiBObyBwYXRjaCBmaWxlcyBzcGVj
+aWZpZWQhDQo+ID4+IC0tLS0tLS0tLQ0KPiA+Pg0KPiA+PiBXaGVyZWFzLCBtb3ZpbmcgdGhlIHNh
+bWUgcGF0Y2ggZmlsZXMgdG8gYW5vdGhlciBzdWJkaXIsIGFuZCB0aGVuIHBhc3NpbmcNCj4gPj4g
+dGhlIHN1YmRpciB0byBnaXQtc2VuZC1lbWFpbCwgd29ya3MgZmluZS4NCj4gPj4NCj4gPj4gSSBz
+ZWVtIHRvIGhhdmUgZm91bmQgc29tZSAkXk8gYmFzZWQgcGVybCBjb2RlIGluIHRoZSBnaXQgdHJl
+ZSB0aGF0DQo+ID4+IGV4cGFuZHMgdGhlIGdsb2IgbWFudWFsbHkgKGluIHBsYWNlIG9mIHRoZSBz
+aGVsbCkgb24gV2luZG93cyAtLSBob3dldmVyLA0KPiA+PiB0aGF0IGNvZGUgbG9va3MgYW5jaWVu
+dCBeVyB2ZXJ5IHN0YWJsZSwgYW5kIGRvZXNuJ3Qgc2VlbSB0byBleHBsYWluIHRoZQ0KPiA+PiBz
+dWRkZW4gYnJlYWthZ2UuDQo+ID4+DQo+ID4+IElzIGl0IHBvc3NpYmxlIHRoYXQgYSBzZXBhcmF0
+ZSBwZXJsIHVwZGF0ZSBvbiBKYWJlbidzIFdpbmRvd3MgYm94IGlzDQo+ID4+IGNhdXNpbmcgdGhp
+cz8gT3IgZG9lcyB0aGUgYnJlYWthZ2UgbG9vayBjb25zaXN0ZW50IHdpdGggYSByZWNlbnQgZ2l0
+DQo+IGNoYW5nZT8NCj4gPj4NCj4gPj4gSGFzIGFueW9uZSBlbHNlIHJlcG9ydGVkIHNvbWV0aGlu
+ZyBzaW1pbGFyIHJlY2VudGx5Pw0KPiA+DQo+ID4gVGhpcyByZW1pbmRzIG1lIG9mIGh0dHBzOi8v
+Z2l0aHViLmNvbS9naXQtZm9yLXdpbmRvd3MvZ2l0L2lzc3Vlcy8zMzkuDQo+ID4gVGhlcmUsIEpv
+aGFubmVzIFNjaGluZGVsaW4gd3JpdGVzIChhYm91dCBhIGRpZmZlcmVudCBjb21tYW5kKToNCj4g
+Pg0KPiA+IHwgVGhpcyBpcyBleHBlY3RlZCBiZWNhdXNlIG5laXRoZXIgUG93ZXJTaGVsbCBub3Ig
+Y21kLmV4ZSBub3IgZ2l0LmV4ZQ0KPiA+IHwgZXhwYW5kIHdpbGRjYXJkcy4gVGhvc2UgZXhhbXBs
+ZXMgeW91IGZvdW5kIHdlcmUgd3JpdHRlbiB3aXRoIGEgc2hlbGwNCj4gPiB8IGluIG1pbmQsIGFu
+ZCB0aGUgc2hlbGwgZXhwYW5kcyB3aWxkY2FyZHMgKGhlbmNlIEdpdCBkb2VzIG5vdCB0aGluaw0K
+PiA+IHwgaXQgbmVlZHMgdG8pLg0KPiA+DQo+ID4gVGhhdCBtYXkgb3IgbWF5IG5vdCBhbHNvIGFw
+cGx5IHRvIHNlbmQtZW1haWwuDQo+IA0KPiBUaGFuayB5b3UgZm9yIHRoZSByZWZlcmVuY2UgLS0g
+SSBjYW4ndCBzYXkgd2hldGhlciBjbG9zaW5nIGlzc3VlICMzMzkgYXMNCj4gV09OVEZJWCB3YXMg
+anVzdGlmaWVkIG9yIG5vdCwgYnV0IGl0IGNlcnRhaW5seSBzZWVtcyBpbmNvbnNpc3RlbnQgd2l0
+aA0KPiBKYWJlbidzIGVhcmxpZXIgZXhwZXJpZW5jZSAodG8gbXkgdW5kZXJzdGFuZGluZyksIGku
+ZS4gdGhhdCBnaXQgZGlkDQo+IGV4cGFuZCB0aGUgZ2xvYi4NCj4gDQo+ID4gSW4gd2hhdCB2ZXJz
+aW9uIGRpZCBpdCB3b3JrPw0KPiANCj4gSmFiZW4sIGNhbiB5b3UgcGxlYXNlIGFuc3dlciB0aGF0
+PyAoT25lIHZlcnNpb24gaW4gd2hpY2ggaXQgaXMgYnJva2VuIGlzDQo+IDIuMTQuMS53aW5kb3dz
+LjEuKSBDYW4geW91IHBlcmhhcHMgYXNrIHlvdXIgdGVhbW1hdGVzIGFib3V0IHRoZWlyDQo+IGdp
+dC93aW5kb3dzIHZlcnNpb25zIChhc3N1bWluZyB0aGUgKi5wYXRjaCBnbG9iIGlzIGV4cGFuZGVk
+IGNvcnJlY3RseQ0KPiBmb3IgdGhlbSk/DQo+IA0KPiBUaGFuayB5b3UsIEpvbmF0aGFuLA0KPiBM
+YXN6bG8NCg==
