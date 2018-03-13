@@ -2,101 +2,157 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0DAC21F404
-	for <e@80x24.org>; Tue, 13 Mar 2018 16:00:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2ABB71F404
+	for <e@80x24.org>; Tue, 13 Mar 2018 16:10:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934521AbeCMQA1 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Mar 2018 12:00:27 -0400
-Received: from mail-pf0-f176.google.com ([209.85.192.176]:35666 "EHLO
-        mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933831AbeCMQAY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Mar 2018 12:00:24 -0400
-Received: by mail-pf0-f176.google.com with SMTP id y186so46054pfb.2
-        for <git@vger.kernel.org>; Tue, 13 Mar 2018 09:00:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=qOv6uV9S/SoayDlhZogoH3TXb/ZKKcSN/Z+uaNV6WvA=;
-        b=bKpyNrHCr4Yw4RWXTyl1vo3DT5MGOH9EVwPb0Ik3Cm/Ut999B9qVfxiYiwMhVPHAw1
-         F3bLTEGjR98iH0oA8ky6VE2zmoUcEdcQrbCxe6ZP8es0FnYx2I3Zy86jVzalFvBk3ul4
-         xqA2B+/pb51URA736itvpm7FpSOWH/STbEQV0wxliyIOmhpDqGwb3KWbrnbB74rtGiFR
-         jlhzplwNmdI67Pd3lR9VD41kHyOoYSG9y76GtfqsvOhxuSL7GegPaNDWekol6Dvh2oh4
-         +5fuR7jsbelc/5YB4UuAzvBCNxe9XlNaSmIOTKNBGgXfR+aK/cykBc351G19xef3/Za9
-         EJng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=qOv6uV9S/SoayDlhZogoH3TXb/ZKKcSN/Z+uaNV6WvA=;
-        b=mJkBhT9LDwH28P9q4FotHNb30bLJIl5d6TOu8yKGLJikgCjx/j8iAPQF/dMFSzK+VP
-         0N2ehc/+EVYX5Igl+9eOHV34/bS8eiwUxQo09GzA/GYpXVnk0qmsB5+OgqiGEKeKyG9u
-         HvO6KJVG2Hjpyfhx0srs9205989deheux+hpqyUWANIUI8KgTFg2X4eitKaFsylNR/aI
-         Lddmaku1WHIDezDdkIujfj4L+oSeyp+URAgotcDg87b1vIZnZENf6/CVpIjjQ5a6biW3
-         YVdv8icZzB90egW0ZHuZPEJqNIQ12mBUxmAN+yxC06OMNSfSrxkTZ9SrzP2o1YOemFPR
-         X0iw==
-X-Gm-Message-State: AElRT7G9DRWhuVTH4IOY+2BXrn6jtLZfgWWLj031GP9ENZy/3yRLvXDk
-        gG7u5E5vw7MFhCQBx4hjn1uwvwQBZUo=
-X-Google-Smtp-Source: AG47ELuOpi5CTY3kPt7Xvxgy47TCJOOx7cAKDyRI3XQ1l4H5ztV9M7MwxI6B+fX2hmOI31/wubZyrg==
-X-Received: by 10.101.76.71 with SMTP id l7mr912084pgr.192.1520956823287;
-        Tue, 13 Mar 2018 09:00:23 -0700 (PDT)
-Received: from twelve3.svl.corp.google.com ([2620:0:100e:422:ffac:c1d4:4bf7:bb93])
-        by smtp.gmail.com with ESMTPSA id z64sm1214829pfi.58.2018.03.13.09.00.21
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 13 Mar 2018 09:00:22 -0700 (PDT)
-Date:   Tue, 13 Mar 2018 09:00:20 -0700
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org, git@jeffhostetler.com, gitster@pobox.com,
-        jrnieder@gmail.com, pclouds@gmail.com, peff@peff.net,
-        sbeller@google.com, stolee@gmail.com
-Subject: Re: [PATCH v4 16/35] transport: convert transport_get_remote_refs
- to take a list of ref patterns
-Message-Id: <20180313090020.036f0314549cc23d9f71ce87@google.com>
-In-Reply-To: <20180228232252.102167-17-bmwill@google.com>
-References: <20180207011312.189834-1-bmwill@google.com>
-        <20180228232252.102167-1-bmwill@google.com>
-        <20180228232252.102167-17-bmwill@google.com>
-X-Mailer: Sylpheed 3.6.0 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+        id S933601AbeCMQKh (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Mar 2018 12:10:37 -0400
+Received: from mail.javad.com ([54.86.164.124]:56744 "EHLO mail.javad.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S932376AbeCMQKU (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Mar 2018 12:10:20 -0400
+Received: from osv (unknown [89.175.180.246])
+        by mail.javad.com (Postfix) with ESMTPSA id E850C3E968;
+        Tue, 13 Mar 2018 16:10:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1520957419;
+        bh=JzbNEbyhiKbppOzH84D1f1lAEkCaATgjIsTHHRhF36I=; l=1431;
+        h=Received:From:To:Subject;
+        b=foz6yk4hMogeirOB6GFDwGJCa9fWOxp8QEA8doChZ4sVXqMDLFbM2ixbD0Y1/FkgY
+         4AkFRvnb3cAs3WKyuRBc9nWoLTETJaFzIbH1X/SK4+4TtRNOrNZJ2TECdLH2HcunmP
+         2Hpo+i1BZLsOFM/YL1BDkH3kdQQr8ODcjWvbsKZc=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1520957419;
+        bh=JzbNEbyhiKbppOzH84D1f1lAEkCaATgjIsTHHRhF36I=; l=1431;
+        h=Received:From:To:Subject;
+        b=foz6yk4hMogeirOB6GFDwGJCa9fWOxp8QEA8doChZ4sVXqMDLFbM2ixbD0Y1/FkgY
+         4AkFRvnb3cAs3WKyuRBc9nWoLTETJaFzIbH1X/SK4+4TtRNOrNZJ2TECdLH2HcunmP
+         2Hpo+i1BZLsOFM/YL1BDkH3kdQQr8ODcjWvbsKZc=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1520957419;
+        bh=JzbNEbyhiKbppOzH84D1f1lAEkCaATgjIsTHHRhF36I=; l=1431;
+        h=Received:From:To:Subject;
+        b=foz6yk4hMogeirOB6GFDwGJCa9fWOxp8QEA8doChZ4sVXqMDLFbM2ixbD0Y1/FkgY
+         4AkFRvnb3cAs3WKyuRBc9nWoLTETJaFzIbH1X/SK4+4TtRNOrNZJ2TECdLH2HcunmP
+         2Hpo+i1BZLsOFM/YL1BDkH3kdQQr8ODcjWvbsKZc=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1520957419;
+        bh=JzbNEbyhiKbppOzH84D1f1lAEkCaATgjIsTHHRhF36I=; l=1431;
+        h=Received:From:To:Subject;
+        b=foz6yk4hMogeirOB6GFDwGJCa9fWOxp8QEA8doChZ4sVXqMDLFbM2ixbD0Y1/FkgY
+         4AkFRvnb3cAs3WKyuRBc9nWoLTETJaFzIbH1X/SK4+4TtRNOrNZJ2TECdLH2HcunmP
+         2Hpo+i1BZLsOFM/YL1BDkH3kdQQr8ODcjWvbsKZc=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1520957419;
+        bh=JzbNEbyhiKbppOzH84D1f1lAEkCaATgjIsTHHRhF36I=; l=1431;
+        h=Received:From:To:Subject;
+        b=foz6yk4hMogeirOB6GFDwGJCa9fWOxp8QEA8doChZ4sVXqMDLFbM2ixbD0Y1/FkgY
+         4AkFRvnb3cAs3WKyuRBc9nWoLTETJaFzIbH1X/SK4+4TtRNOrNZJ2TECdLH2HcunmP
+         2Hpo+i1BZLsOFM/YL1BDkH3kdQQr8ODcjWvbsKZc=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1520957419;
+        bh=JzbNEbyhiKbppOzH84D1f1lAEkCaATgjIsTHHRhF36I=; l=1431;
+        h=Received:From:To:Subject;
+        b=foz6yk4hMogeirOB6GFDwGJCa9fWOxp8QEA8doChZ4sVXqMDLFbM2ixbD0Y1/FkgY
+         4AkFRvnb3cAs3WKyuRBc9nWoLTETJaFzIbH1X/SK4+4TtRNOrNZJ2TECdLH2HcunmP
+         2Hpo+i1BZLsOFM/YL1BDkH3kdQQr8ODcjWvbsKZc=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1520957419;
+        bh=JzbNEbyhiKbppOzH84D1f1lAEkCaATgjIsTHHRhF36I=; l=1431;
+        h=Received:From:To:Subject;
+        b=foz6yk4hMogeirOB6GFDwGJCa9fWOxp8QEA8doChZ4sVXqMDLFbM2ixbD0Y1/FkgY
+         4AkFRvnb3cAs3WKyuRBc9nWoLTETJaFzIbH1X/SK4+4TtRNOrNZJ2TECdLH2HcunmP
+         2Hpo+i1BZLsOFM/YL1BDkH3kdQQr8ODcjWvbsKZc=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1520957419;
+        bh=JzbNEbyhiKbppOzH84D1f1lAEkCaATgjIsTHHRhF36I=; l=1431;
+        h=Received:From:To:Subject;
+        b=foz6yk4hMogeirOB6GFDwGJCa9fWOxp8QEA8doChZ4sVXqMDLFbM2ixbD0Y1/FkgY
+         4AkFRvnb3cAs3WKyuRBc9nWoLTETJaFzIbH1X/SK4+4TtRNOrNZJ2TECdLH2HcunmP
+         2Hpo+i1BZLsOFM/YL1BDkH3kdQQr8ODcjWvbsKZc=
+Authentication-Results: mail.javad.com;
+        spf=pass (sender IP is 89.175.180.246) smtp.mailfrom=osv@javad.com smtp.helo=osv
+Received-SPF: pass (mail.javad.com: connection is authenticated)
+Received: from osv by osv with local (Exim 4.84_2)
+        (envelope-from <osv@osv.gnss.ru>)
+        id 1evmVF-0002uM-7M; Tue, 13 Mar 2018 19:10:17 +0300
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Phillip Wood <phillip.wood@talktalk.net>
+Cc:     Igor Djordjevic <igor.d.djordjevic@gmail.com>,
+        phillip.wood@dunelm.org.uk, Git mailing list <git@vger.kernel.org>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC] Rebasing merges: a jorney to the ultimate solution (Road Clear)
+References: <87y3jtqdyg.fsf@javad.com>
+        <bbe64321-4d3a-d3fe-8bb9-58b600fabf35@gmail.com>
+        <nycvar.QRO.7.76.6.1802270051470.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        <CA+P7+xq8UUcLWomUi=PS_hTKfJd3dMAxMmhioDS1bixwcmKAqw@mail.gmail.com>
+        <nycvar.QRO.7.76.6.1802271718090.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        <4d7f3406-b206-cc22-87df-85700d6a03d9@gmail.com>
+        <33da31e9-9101-475d-8901-4b6b3df2f29d@gmail.com>
+        <940d959d-151d-68dd-0f13-320ebad0d75b@gmail.com>
+        <87606hoflx.fsf@javad.com>
+        <0ac3a3fd-4053-e32e-75ed-8829f22c2e1f@gmail.com>
+        <87a7vss6ax.fsf@javad.com>
+        <6c8749ca-ec5d-b4b7-f1a0-50d9ad2949a5@talktalk.net>
+Date:   Tue, 13 Mar 2018 19:10:17 +0300
+In-Reply-To: <6c8749ca-ec5d-b4b7-f1a0-50d9ad2949a5@talktalk.net> (Phillip
+        Wood's message of "Fri, 2 Mar 2018 11:31:02 +0000")
+Message-ID: <877eqgardi.fsf@javad.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 28 Feb 2018 15:22:33 -0800
-Brandon Williams <bmwill@google.com> wrote:
+Hi Phillip,
 
-> Convert 'transport_get_remote_refs()' to optionally take a list of ref
-> patterns.
-> 
-> Signed-off-by: Brandon Williams <bmwill@google.com>
+Phillip Wood <phillip.wood@talktalk.net> writes:
 
-[snip]
+[...]
 
-> -const struct ref *transport_get_remote_refs(struct transport *transport);
-> +/*
-> + * Retrieve refs from a remote.
-> + *
-> + * Optionally a list of ref patterns can be provided which can be sent to the
-> + * server (when communicating using protocol v2) to enable it to limit the ref
-> + * advertisement.  Since ref filtering is done on the server's end (and only
-> + * when using protocol v2), this can return refs which don't match the provided
-> + * ref_patterns.
-> + */
-> +const struct ref *transport_get_remote_refs(struct transport *transport,
-> +					    const struct argv_array *ref_patterns);
+> Hi Sergey, I've been following this discussion from the sidelines,
+> though I haven't had time to study all the posts in this thread in
+> detail. I wonder if it would be helpful to think of rebasing a merge as
+> merging the changes in the parents due to the rebase back into the
+> original merge. So for a merge M with parents A B C that are rebased to
+> A' B' C' the rebased merge M' would be constructed by (ignoring shell
+> quoting issues)
+>
+> git checkout --detach M
+> git merge-recursive A -- M A'
+> tree=$(git write-tree)
+> git merge-recursive B -- $tree B'
+> tree=$(git write-tree)
+> git merge-recursive C -- $tree C'
+> tree=$(git write-tree)
+> M'=$(git log --pretty=%B -1 M | git commit-tree -pA' -pB' -pC')
 
-Thanks for adding the documentation, but I think this should also go
-into the commit message. For example:
+I wonder if it's OK to exchange the order of heads in the first merge
+(also dropped C for brevity):
 
-    Teach transport_get_remote_refs() to accept a list of ref patterns,
-    which will be sent to the server for use in filtering when using
-    protocol v2. (This list will be ignored when not using protocol v2.)
+git checkout --detach A'
+git merge-recursive A -- A' M
+tree=$(git write-tree)
+git merge-recursive B -- $tree B'
+tree=$(git write-tree)
+M'=$(git log --pretty=%B -1 M | git commit-tree -pA' -pB')
+
+If so, don't the first 2 lines now read: "rebase (first parent of) M on
+top of A'"?
+
+If so, then it could be implemented so that it reduces back to regular
+rebase of non-merges when applied to a single-parent commit, similar to
+the method in the RFC, striking out one of advantages of the RFC.
+
+-- Sergey
