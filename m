@@ -2,146 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 33E0F1F404
-	for <e@80x24.org>; Tue, 13 Mar 2018 18:26:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 850C61F404
+	for <e@80x24.org>; Tue, 13 Mar 2018 18:36:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752163AbeCMS0O (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Mar 2018 14:26:14 -0400
-Received: from mail-pg0-f45.google.com ([74.125.83.45]:38948 "EHLO
-        mail-pg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751889AbeCMS0L (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Mar 2018 14:26:11 -0400
-Received: by mail-pg0-f45.google.com with SMTP id e3so221971pga.6
-        for <git@vger.kernel.org>; Tue, 13 Mar 2018 11:26:11 -0700 (PDT)
+        id S1752912AbeCMSgf (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Mar 2018 14:36:35 -0400
+Received: from mail-wr0-f175.google.com ([209.85.128.175]:38623 "EHLO
+        mail-wr0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752902AbeCMSgd (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Mar 2018 14:36:33 -0400
+Received: by mail-wr0-f175.google.com with SMTP id l8so1725643wrg.5
+        for <git@vger.kernel.org>; Tue, 13 Mar 2018 11:36:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to;
-        bh=6NrNqUlT4ZWcNeSzCaAaYhl0QHi+yFgFrHpqGsalEr8=;
-        b=oI5otIy4kjXfohrRtfvbc3XMIMV1/RdFPchkSR1mQoOC9zwyxYVKN2uGki4svi3DTn
-         9gdgsOgwCV1/DvZ7i2FNfNX4thY2qHFxY4KTKREAfwS5NdBA3Ty0+vJ6sgutCdToo2zx
-         VUIgvzbKO7VfLaR9A6KUbC2DCgzIfjKhWAJrWt3tAKoCvCGw3oPDp3bmL4Uv/a89O7at
-         eTBBWG+pjPAN5c1hqlN37d0cVWmT5dc5+VAylMaZvxA448I8rbnJJcjR25WUCQg7yc4w
-         0A68vgmiCCP43vp8pv1HGFaVEfsTAEnAgkmd5kYkvXL0attQLFjS94QnHBYuQmVep3ug
-         PMoQ==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=kgJgbqGP5b+WZiKHfuvnjmFyLoJYa1tUgeQCmILpUpo=;
+        b=r06YfqR5MrXNmm5U0uNRvX52yTmwIZuocxxiiwNTEKA5JvLJ4g3FrYWpD/tDWxm7c3
+         dFzKGXgR+sQwr81kGuaC5W/Hg8wwhWHg36bcR3IywxcpJBgwrb7vMQ4rhgmesg7/JNgc
+         g4GjWkHCwT5jlrXdMDJrcnnvF+3pBEvygyM0orD16WnuxThiy12bbYmCaaFK2DVT9bBF
+         z0Nu5ORRXQvFzpHdqLZk9N0v0WHPP9s2UKI7I7y31/BpqnMKMJbKa4pVbxGXzSEmDICH
+         LfMjYujAHK3lZ3nkAPtGdyXTd+5kOETe2FfE2HZHvBqKO54ag9XgsOS+ob52SDc9bgC5
+         ND3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to;
-        bh=6NrNqUlT4ZWcNeSzCaAaYhl0QHi+yFgFrHpqGsalEr8=;
-        b=WzrcNXC7O9RwN9CSLf7/T/iRP7PZGL9Ak+wrDWpVctuROwI3IKgkziOiuAEtQhllvz
-         b9wmGnKUCuQrfsR7onQYEx7RgQJU+MzATnYAyuDKv0795DWT1UiAqE4Bk1W8LhbYrvGZ
-         fXR7e9gC07T26ncOrcNpzhQ2X+eIN6FPuVgiFCpn9cZNxoJQHz3l1BDTyEsOgXZNUzdu
-         U89r12GzuInDvqcT98/ituw5sWxT/ps1d0W3DyIo7/s0rW9aBlDTFLNEPrZViZwnkM84
-         rQXwRFer/4hs8fdgYx0c4ZaqZ55f4D7poHsoQkzlp8RF/bY/YFFBlhd7dlS6aUEeefA4
-         30RQ==
-X-Gm-Message-State: AElRT7Ex/fuH0xjg0vyT6eYwBMGXJke6sVjmIpH9+L8zwH3cwIFvTKSz
-        GZf1SpIV3BMcTxgxb0fqtFRJzUTw
-X-Google-Smtp-Source: AG47ELtS3BpWb4TnGAz6qCYY6UcTf3YDBQ31YY5cw2RTIHnXlXnwHn9dS31c0kqMaXkL98cBaKNtLA==
-X-Received: by 10.101.81.135 with SMTP id h7mr1270400pgq.121.1520965570974;
-        Tue, 13 Mar 2018 11:26:10 -0700 (PDT)
-Received: from [192.168.206.100] ([117.209.160.202])
-        by smtp.gmail.com with ESMTPSA id j19sm1520422pfh.26.2018.03.13.11.26.07
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 13 Mar 2018 11:26:09 -0700 (PDT)
-Subject: Re: Bug, git rebase -i does not abort correctly
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-References: <CACsJy8Dzh5E8JUDkwFmYTwS6KgqGc_1rJBVsDCoC9EpcSShN2Q@mail.gmail.com>
- <1516953056.8886.3.camel@gmail.com>
- <CACsJy8DjXBv_HMbRFPjCLuYt-bk=Ec3VPKorXJ_SBJN8pDu=PQ@mail.gmail.com>
-From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Message-ID: <4305648a-9579-b961-6435-dde9c6fd3ba1@gmail.com>
-Date:   Tue, 13 Mar 2018 23:56:05 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=kgJgbqGP5b+WZiKHfuvnjmFyLoJYa1tUgeQCmILpUpo=;
+        b=VYa1N2LwkcPRLzZnqKStfxouItGlaDCGAGA4FvYFqjDYkRQaumtI4ELPfBNqbiYLYl
+         QTy3xl7umMVJh3gYGyKC/L2lr86No1aEDRsJwhm+xuydIqlzHrerBqF2vS+z8vy8fhhX
+         abBm4zsHnfCKzC9+glMBAdsyk46d0a7pgKRmEqvcwwI8NHm1TY8YN8vIu073SMVmO91+
+         vCESVKDPs5yZpMtyEyIBdB+C0BMmBr+KwWe4GkDD6GmZd2Kwsz7WkNxMLKr8eXlNulD2
+         9z8OOBUhf3+kNWmuXQ2yvhWc2HvBGuAdSOwf8LLvOTbJsQw7tGaOroSjyVvyUVNbk9YQ
+         rLaA==
+X-Gm-Message-State: AElRT7HR/mp0ZvB409m4qjm8bfdanwL5QLfact/+RWqNMW05um7k5pnh
+        5UznD/KR2TiAGBAf103dJAc=
+X-Google-Smtp-Source: AG47ELtOV8JaBvzvEx1pGbhGK2LHI8jQi108k/CayGdr6VM3PGz+AGQXzYVvdifrwJzt2QYx0wMrUQ==
+X-Received: by 10.28.143.148 with SMTP id r142mr1692630wmd.124.1520966192149;
+        Tue, 13 Mar 2018 11:36:32 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id y129sm929293wmg.5.2018.03.13.11.36.31
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 13 Mar 2018 11:36:31 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Daniel Jacques <dnj@google.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org
+Subject: Re: Why don't we symlink libexec/git-core/* to bin/git?
+References: <xmqqtvts22za.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1803071333590.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        <871sguorb5.fsf@evledraar.gmail.com>
+        <CAD1RUU_EuLSo5fPjZe7v3882Tkx2Dymxn619smS-wuoejKyG+w@mail.gmail.com>
+        <87y3iwp2z0.fsf@evledraar.gmail.com>
+Date:   Tue, 13 Mar 2018 11:36:31 -0700
+In-Reply-To: <87y3iwp2z0.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Tue, 13 Mar 2018 13:36:03 +0100")
+Message-ID: <xmqqfu533jrk.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <CACsJy8DjXBv_HMbRFPjCLuYt-bk=Ec3VPKorXJ_SBJN8pDu=PQ@mail.gmail.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="NAGGUAWeqlydYaYnwmTOeBc67Saj0vC33"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---NAGGUAWeqlydYaYnwmTOeBc67Saj0vC33
-Content-Type: multipart/mixed; boundary="5ZWZX9NI02GOZXfdKdYYL07EbFlOs2E5p";
- protected-headers="v1"
-From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-To: Duy Nguyen <pclouds@gmail.com>
-Cc: Git Mailing List <git@vger.kernel.org>
-Message-ID: <4305648a-9579-b961-6435-dde9c6fd3ba1@gmail.com>
-Subject: Re: Bug, git rebase -i does not abort correctly
-References: <CACsJy8Dzh5E8JUDkwFmYTwS6KgqGc_1rJBVsDCoC9EpcSShN2Q@mail.gmail.com>
- <1516953056.8886.3.camel@gmail.com>
- <CACsJy8DjXBv_HMbRFPjCLuYt-bk=Ec3VPKorXJ_SBJN8pDu=PQ@mail.gmail.com>
-In-Reply-To: <CACsJy8DjXBv_HMbRFPjCLuYt-bk=Ec3VPKorXJ_SBJN8pDu=PQ@mail.gmail.com>
+Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 
---5ZWZX9NI02GOZXfdKdYYL07EbFlOs2E5p
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-
-On Friday 26 January 2018 02:54 PM, Duy Nguyen wrote:
->=20
-> Sort of. It smells bad design to me when a mistake can easily become a
-> feature. But with your help, I think I should be able to disable this
-> feature on my local build. Thanks.
->=20
-
-In case you're still facing this issue, it just struck me recently that
-you could have a different alias for 'git rebase -i --onto'. In which
-case you could possibly avoid falling prey to the syntax issue ;-)
-Something like,
-
-	$ git config alias.rio 'rebase -i --onto'
+> Related to this, I came across this bug report
+> https://gitlab.com/gitlab-org/omnibus-gitlab/issues/3265 which is
+> wondering why we're installing N copies of the git binary, presumably
+> they're building with NO_INSTALL_HARDLINKS.
+> ...
+> But is there any reason anyone can think of for why we shouldn't be
+> figuring out the relative path and symlinking the two?
 
 
+There is no fundamental reason not to offer such an "install" method
+as an option; unless you count a more philosophical aversion to use
+symlinks due to (perceived) additional fragility, that is.
 
---=20
-Kaartic
-
-QUOTE
----
-
-=E2=80=9CThe most valuable person on any team is the person who makes eve=
-ryone
-else on the team more valuable, not the person who knows the most.=E2=80=9D=
-
-
-      - Joel Spolsky
-
-
---5ZWZX9NI02GOZXfdKdYYL07EbFlOs2E5p--
-
---NAGGUAWeqlydYaYnwmTOeBc67Saj0vC33
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQJPBAEBCAA5FiEEmrp5T6QugsbUnN0Nveda2sPWGWkFAlqoF70bHGthYXJ0aWMu
-c2l2YXJhYW1AZ21haWwuY29tAAoJEL3nWtrD1hlp0dQQAIwXPEdj+04P6isk46T2
-OuFhN+l6eot/b36lv0B9ndTNZg71CEhpGbH5m0KbQ7AE0D75hUpIAN8PJE09ONHF
-5t91Rw/SJuwCJHwtupmY61MnT1R6oywjMpH5nE9bqE79k8Rbr5heNhAbst+H0LjD
-VGijdY8z/2sJB9adHOWIS/bDKzvS9Xhto3QtiX3DcTgxVHtChys0+p0mkkDyG7iO
-76lWw2EYJsmsbgP/EMrV0sIV0gvhjG2tG3b0ilIMFd1/SxHpiowg6Q+xVOtpxCjB
-kLoAHQtiMKuZQ4O/0r+YpgUKFVIoiQEKdkgcY58jzXfFpmQzbkMqFZEGLwuk7h9q
-TvNjwENjWdYng94yCcgXCqp6r9X+eXFtpTpkPI5mQTuPVoaFXjO18KOMQfToRapB
-ct+pvcFkrLihqd5YDneTy2z0xHwQtA8xCO/3gB3ZBOynhE0Zlb6pEgKBaxi9EQR/
-eSM0UFynYjLxTcH6LXk5RlUm7VBqaJJ6mChQfHMAFspXnQdvQ1sW10kClk1BMn/z
-IKcGvbKWroYkiA4NMAIrnLQhHMxeE3fJ0BWCnZdSxpQR71DghooLpPSyStMbZ4oI
-2ZDfEtDWMORQmk6z7UcTThry48Eu4ygK6g41RYPzmwQwzrRmhB0TM7h5rMWUR+Um
-2FLdDunz4CiAMAOu9GHxHd/m
-=dQP3
------END PGP SIGNATURE-----
-
---NAGGUAWeqlydYaYnwmTOeBc67Saj0vC33--
+The resulting code may become messier than without, but as long as
+it is without the reasonable range for usual price we would pay for
+a new "feature", that would be tolerable, I guess.
