@@ -7,64 +7,64 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 290E61F404
-	for <e@80x24.org>; Tue, 13 Mar 2018 19:50:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 773AA1F404
+	for <e@80x24.org>; Tue, 13 Mar 2018 19:52:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752725AbeCMTus (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Mar 2018 15:50:48 -0400
-Received: from mail-pf0-f179.google.com ([209.85.192.179]:37678 "EHLO
-        mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751714AbeCMTuq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Mar 2018 15:50:46 -0400
-Received: by mail-pf0-f179.google.com with SMTP id h11so347436pfn.4
-        for <git@vger.kernel.org>; Tue, 13 Mar 2018 12:50:46 -0700 (PDT)
+        id S932445AbeCMTwY (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Mar 2018 15:52:24 -0400
+Received: from mail-pl0-f44.google.com ([209.85.160.44]:37071 "EHLO
+        mail-pl0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751714AbeCMTwX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Mar 2018 15:52:23 -0400
+Received: by mail-pl0-f44.google.com with SMTP id w12-v6so422547plp.4
+        for <git@vger.kernel.org>; Tue, 13 Mar 2018 12:52:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=CdeVTEpLvYpACA3SV69Pdi5Gkun9Z/mHS1MrSJ50Zl4=;
-        b=Vf3CDvmAZkzyJSdO2F7XB1ptatfoBW5Qkgs8SJqVwzuCROBpWKNzOj+WmCuQzBR+f3
-         B3WOuRACLnXNx6JppAGLC18wZlFgxA5fDs7l/wAok7us1aBEXgq9phX8cfbcYJRysnXo
-         21IKFc8JeS9ctnFXKzjBRJhmugtdiYMLooaIj3slqmWtIQxYe0GHHB6UIWhrgmgX/dKQ
-         sJ7apiB6nB23G2ujLRXayM0X0E331KHrMhVZf+9cK2LQfINpVN0UF9NrrvgQHluSGxDA
-         wOm4y2S2MTOqWtoCUmX/WHJalIseWXINht7UDfB9TEIQPpi+9viu/YC60pgIoiuqpT89
-         xXUQ==
+        bh=MpIHMREXNdA4Xy0D22ROPjtGp4SmZeOy/3NK7fxBrAA=;
+        b=HEsAOZkvVmal6VlB2XNa0ejOBdU4d6oYhPweDQJ4JWB8NVGldgK5vtmZTGEQlPT44s
+         a3bfR07ZcDmtco7tAMz+mEHxJPphF+FH66DkbolAquYgugUYkYSYjgjP6GtcD74ZLJfh
+         VVQaEL0XtLvYjwKHf3QGJJcA+ausW14noucBuwXqhzv/SAZzi7u5KA95xUL8Wo5HK/EE
+         DedPVlSV46KI467Krc6FvmnGRq06LWDpVpk7BlKiM/38iXqubDHmz24bR4Ge6lGGX5fu
+         4+ipVsRVrzd9GxDAUOJeXUAILuKXLXk//DX9NRLTwiM7DpWXD2BdFWuTAP2+b0pvUGG1
+         9fyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=CdeVTEpLvYpACA3SV69Pdi5Gkun9Z/mHS1MrSJ50Zl4=;
-        b=YzWIOKn6BKBCi5zCUG5WKAWFu+BR9JfqPQdIopEoqJQr+Avc+d8YzucS1RpbCfSa4T
-         SquQHOCj3qpAX8Djlw1RaNuY7t69OhZMTDGE/X2jYsMNgN+1k3rqWJt5Z10lQApSK2z3
-         1z2SPI0EHianB3EJp4NLCoHCJTpZHJBeHpw8qi5KuNivKFF/oNS1vyRWsE28SCaO0b2v
-         fFr+0FZ/JDWe5VJptCAW/Bp1WpnaBXjqaFfG3qJctXYvZrSUayaAT2vN8Nwv0463xi4/
-         cl2JtpKmnhHhcONuEZwyB4X+12ETy2pgkoedRD8Wl0D8HrUtFq5Csrk0ZKZCJGuwOKfe
-         MZEA==
-X-Gm-Message-State: AElRT7FIkLA9Mbn1Q906+uW5suhdp/pbEDQuDxuRbFO5r272jE9jtIs5
-        2JOrpECoHlXg617SpxyWWT6ZsTy81AY=
-X-Google-Smtp-Source: AG47ELvamU3x7vWBWV38OuCzGS9BuhtlyFKXimdgMnoq3Nb02xT/yfZUsySusPG891a8Gx4unbf3zw==
-X-Received: by 10.98.11.145 with SMTP id 17mr1729696pfl.150.1520970645997;
-        Tue, 13 Mar 2018 12:50:45 -0700 (PDT)
+        bh=MpIHMREXNdA4Xy0D22ROPjtGp4SmZeOy/3NK7fxBrAA=;
+        b=fby8fFHQz2PGxm+HevueaiUtNmagh0EEOt5YJ128wafkKqVuJHJPbTnVvA1aQNdrfU
+         T/SlEQU5NJwqibr8OG9+IgNqBp1s1LZgOGY/9iCdhFSUev7pqOhbwBlHiDzQdTdvAjQV
+         Sop1E8PgC2aVuVUFnQozLy0h8yvd/LbEAc09ItPUrt0eJIIJBIX06t5czeWCs76npWew
+         laSyz8fy1O0CNXo+hV9h3OAV3Ud8i3s/g0bggNwbPb4TFnxjETk1I8Db5gvroo8cKBjC
+         PFOsXcQWbF+sk5aWPb3rdMlLXEurpw3si2pnI1wH7aeauHYsS8LBATM4S+IFASQqjHvg
+         1wjQ==
+X-Gm-Message-State: AElRT7FcTFqnCEe4XKVhJWRABX84Zv7lq11STw+tFO9xvl9ZeRlytPLM
+        Jpgy+tW3m1h8EVlyYTrRqBhTQA==
+X-Google-Smtp-Source: AG47ELvpo3GRpr+2+exEMf1ByktM/HR7Wul4xV5oCWxMFwaRVpQbkAnLQqjQAMnm3k5w15MfShnedg==
+X-Received: by 2002:a17:902:20c9:: with SMTP id v9-v6mr1645796plg.41.1520970742250;
+        Tue, 13 Mar 2018 12:52:22 -0700 (PDT)
 Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
-        by smtp.gmail.com with ESMTPSA id g186sm1590252pfb.168.2018.03.13.12.50.44
+        by smtp.gmail.com with ESMTPSA id 76sm1929568pfm.124.2018.03.13.12.52.20
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 13 Mar 2018 12:50:45 -0700 (PDT)
-Date:   Tue, 13 Mar 2018 12:50:44 -0700
+        Tue, 13 Mar 2018 12:52:21 -0700 (PDT)
+Date:   Tue, 13 Mar 2018 12:52:20 -0700
 From:   Brandon Williams <bmwill@google.com>
 To:     Jonathan Tan <jonathantanmy@google.com>
 Cc:     git@vger.kernel.org, git@jeffhostetler.com, gitster@pobox.com,
         jrnieder@gmail.com, pclouds@gmail.com, peff@peff.net,
         sbeller@google.com, stolee@gmail.com
-Subject: Re: [PATCH v4 04/35] upload-pack: convert to a builtin
-Message-ID: <20180313195044.GA7638@google.com>
+Subject: Re: [PATCH v4 01/35] pkt-line: introduce packet_read_with_status
+Message-ID: <20180313195220.GB7638@google.com>
 References: <20180207011312.189834-1-bmwill@google.com>
  <20180228232252.102167-1-bmwill@google.com>
- <20180228232252.102167-5-bmwill@google.com>
- <20180313094022.6cbe51d765e2eec61e0cd04c@google.com>
+ <20180228232252.102167-2-bmwill@google.com>
+ <20180313123540.d6e416220329bdc172472dc6@google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20180313094022.6cbe51d765e2eec61e0cd04c@google.com>
+In-Reply-To: <20180313123540.d6e416220329bdc172472dc6@google.com>
 User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -72,22 +72,70 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On 03/13, Jonathan Tan wrote:
-> On Wed, 28 Feb 2018 15:22:21 -0800
+> On Wed, 28 Feb 2018 15:22:18 -0800
 > Brandon Williams <bmwill@google.com> wrote:
 > 
-> > In order to allow for code sharing with the server-side of fetch in
-> > protocol-v2 convert upload-pack to be a builtin.
-> > 
-> > Signed-off-by: Brandon Williams <bmwill@google.com>
+> > +	if (len < 0) {
+> >  		die("protocol error: bad line length character: %.4s", linelen);
+> > -	if (!len) {
+> > +	} else if (!len) {
+> >  		packet_trace("0000", 4, 0);
+> > -		return 0;
+> > +		return PACKET_READ_FLUSH;
+> > +	} else if (len < 4) {
+> > +		die("protocol error: bad line length %d", len);
+> >  	}
+> > +
+> >  	len -= 4;
+> > -	if (len >= size)
+> > +	if ((unsigned)len >= size)
+> >  		die("protocol error: bad line length %d", len);
 > 
-> I suggested updating the commit message in my previous review [1], but I
-> understand that my comment might have been lost in the ensuing long
-> discussion.
+> The cast to unsigned is safe, since len was at least 4 before "len -=
+> 4". I can't think of a better way to write this to make that more
+> obvious, though.
 > 
-> [1] https://public-inbox.org/git/20180221134422.2386e1aca39fe673235590e7@google.com/
+> > +/*
+> > + * Read a packetized line into a buffer like the 'packet_read()' function but
+> > + * returns an 'enum packet_read_status' which indicates the status of the read.
+> > + * The number of bytes read will be assigined to *pktlen if the status of the
+> > + * read was 'PACKET_READ_NORMAL'.
+> > + */
+> > +enum packet_read_status {
+> > +	PACKET_READ_EOF = -1,
+> > +	PACKET_READ_NORMAL,
+> > +	PACKET_READ_FLUSH,
+> > +};
+> > +enum packet_read_status packet_read_with_status(int fd, char **src_buffer,
+> > +						size_t *src_len, char *buffer,
+> > +						unsigned size, int *pktlen,
+> > +						int options);
+> 
+> jrnieder said in [1], referring to the definition of enum
+> packet_read_status:
+> 
+> > nit: do any callers treat the return value as a number?  It would be
+> > less magical if the numbering were left to the compiler (0, 1, 2).
 
-Your suggested change to the commit msg isn't quite accurate as you can
-already run "git-upload-pack --help" today.
+yeah i'll do this.
+
+> 
+> I checked the result of the entire patch set and the only callers seem
+> to be packet_read() (modified in this patch) and the
+> soon-to-be-introduced packet_reader_read(). So not only can the
+> numbering be left to the compiler, this function can (and should) be
+> marked static as well (and the enum definition moved to .c), since I
+> think that future development should be encouraged to use packet_reader.
+
+The enum definition can't be moved as its needed outside this file.
+
+> 
+> The commit message would also thus need to be rewritten, since this
+> becomes more of a refactoring into a function with a more precisely
+> specified return type, to be used both by the existing packet_read() and
+> a soon-to-be-introduced packet_reader_read().
+> 
+> [1] https://public-inbox.org/git/20180213002554.GA42272@aiede.svl.corp.google.com/
 
 -- 
 Brandon Williams
