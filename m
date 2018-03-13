@@ -7,113 +7,133 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 486AD1F404
-	for <e@80x24.org>; Tue, 13 Mar 2018 17:09:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 58C671F404
+	for <e@80x24.org>; Tue, 13 Mar 2018 17:22:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752020AbeCMRJE (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Mar 2018 13:09:04 -0400
-Received: from mail-vk0-f46.google.com ([209.85.213.46]:39743 "EHLO
-        mail-vk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751766AbeCMRJD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Mar 2018 13:09:03 -0400
-Received: by mail-vk0-f46.google.com with SMTP id f6so222105vkh.6
-        for <git@vger.kernel.org>; Tue, 13 Mar 2018 10:09:03 -0700 (PDT)
+        id S1751757AbeCMRWp (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Mar 2018 13:22:45 -0400
+Received: from mail-ua0-f172.google.com ([209.85.217.172]:44098 "EHLO
+        mail-ua0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751714AbeCMRWo (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Mar 2018 13:22:44 -0400
+Received: by mail-ua0-f172.google.com with SMTP id s92so244822uas.11
+        for <git@vger.kernel.org>; Tue, 13 Mar 2018 10:22:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=LrjQB17ATG0UFI1U5W0UF49snjDLPOOkatXMHxKNiqA=;
-        b=OFIuWmYnY9kTQOjJoY30xrJdcpGxB/zyT/2ZJBDA145Nf0prfJB0NeIFZYRrNSGhPn
-         NCUk+5NHFQvvTH5wodaP8bzsz3Xci8jaC8QDktdQwiNMxPgAZfWgBQAuEGASfW9sciIs
-         muiGS0OhNqKTa2bI0BrXzYg7wZOePkJKdX3OKGDFJYEgjnSQLlTu9XdkJ2XOLDCfxFSu
-         JpcAwwlguc5h+YqBc6ty5r9DHeOoTpO1t+cDSdPpbhSPMtp9oJaiKHRMpnbtA6skQKab
-         I0Tt51mFiyf5abIr+pByvtXTV9bq2y1GtXmzDq3cbaXwuX6/GzBsoDoDKHOrgSdOrONk
-         NXJA==
+         :cc;
+        bh=mujJKPTb7rZ11Tby1tA3/LHdkSRnWfn1R2sVm+eOiJo=;
+        b=lx+HcaUIwpZSqo/HeSO9V8TOYCIOQVynNT4iQR1jz1f0dZZG9OYHD/TmQB9Jwzxdhv
+         Hc127Z7ItsmPzRO13nHfNdYImkORVQqmPrQv6MLPT4PJ4XWKh1sNp8GsCyKHtZRdFTKG
+         YE2YdTXmrWVAAbmGFKzL03xeFMPM3GfbGKF2LvoOkS0kPXVdyIo4vESGDotx70+RF7N/
+         dcTd6iwdIzdbb32OOGB0OYWu40aQYOaL7sezhESxjAJuP7Mh9X2PNDueRM/42N348tdY
+         Hje7BLsePI9kwr81nP1vyvCBsbG0XPKaN3kagjDe1+0lIUSUFMD74Nwe9LewwKw0nwAi
+         w/Ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=LrjQB17ATG0UFI1U5W0UF49snjDLPOOkatXMHxKNiqA=;
-        b=ru19CK1vs2rVXfT7zIPC1CBl0s+s1U5en8Pc/fKT9Z80Ku6x+rdjSDKsgyfD/3e6AC
-         9L8sD1D7xnoyOOGYRMeFAYdVAogjI8/+j1iRNoxtnidqLLxpIha/RD3v7w73HUllPZJd
-         kPFxrk9S7WNk/8nQVack1x09tm/LgFSDoss5wjveabPYbsXiIPbUYxpyfIeJZnaW1VGp
-         Hxp4psrNyxr5ykGMAb+V+qtBBt1Tk/o6hfFE12yx75QSo130QH47WQMe+yzvvdn6BeIe
-         tNi0CqR3SZnJwWif4CYQx1h/fbln4AgjNmAWFDQuTxQ8JeNBur/cGNOiyfmGvFFKl3VM
-         eUyw==
-X-Gm-Message-State: AElRT7F5aajr2oFCTvXOyM0S0e9ISwsiYuvrsThgMdVk4PLMSohyU5Fn
-        0NqDtrxqzwCmI9desvF7pgzu4KbzlEt6K5Uf5oo=
-X-Google-Smtp-Source: AG47ELvIWguXH63rBXHZm1KgZEgIU3AbdKE7CDIjK+q4+pyYiGiX+0hHQRWTpbFDZj0lT6RKZmLcoZ2wPNPHg4ZXpT0=
-X-Received: by 10.31.115.197 with SMTP id o188mr1101733vkc.106.1520960942417;
- Tue, 13 Mar 2018 10:09:02 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=mujJKPTb7rZ11Tby1tA3/LHdkSRnWfn1R2sVm+eOiJo=;
+        b=XyZCrdZayAslmUgw1KGcm8BckGBnPZy8B8Zk1PyU51XxJl2P6toelOdUBp5Q1suJVh
+         6bsPaGzZvlpWziRdZsanE3iw+6EhzucgnGrRujGcoskZRJCJbEs2Q/yAYNOsvAhfwXK1
+         YvbDy3FPLQICgYaiG8AYKn15wnvcEaJyEY1n7ev6KozzfPDjJdoxC/uzjUVQ1j5galqi
+         FLa52E2pZI39G7tDvc2u0mrF7hXBssPY/YUl7gtMmen8Zds7Di+/T4Y6Mb40YohBaV4y
+         wZZBhGWWJZysKzj7sJse03glP4Cdeklzb2lrf54uqTN/1x+npqs2uONec12ZKPU/x0Fc
+         4xFw==
+X-Gm-Message-State: AElRT7FkRqrWMxCyGzHezWF/j/IJfkNwErWx3jWUJFUDg1gBcN2xXnOM
+        hOyYCSZeC7VJ/5CBkAKLc0AjhohqeHMvNSXbDNY=
+X-Google-Smtp-Source: AG47ELvc/gMXn3AZ1X0VRb3SD+ZEvdths2V9nfPONvMXrqgULuGBGtFmD4pV8Fn3fUQg07QyucWBED3kVrkzirOal0A=
+X-Received: by 10.159.63.11 with SMTP id h11mr1207001uaj.94.1520961763661;
+ Tue, 13 Mar 2018 10:22:43 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.176.3.241 with HTTP; Tue, 13 Mar 2018 10:09:01 -0700 (PDT)
-In-Reply-To: <871sgoqos3.fsf@evledraar.gmail.com>
+Received: by 10.176.3.241 with HTTP; Tue, 13 Mar 2018 10:22:42 -0700 (PDT)
+In-Reply-To: <CABPp-BE653uMpwN4zfCCP8teRGmZ6v5NEyASCR1PTvHhoMKE1w@mail.gmail.com>
 References: <CABPp-BEXcvgxcn4-OrDhjUpuOsGCJwE_XT+0eYOK4Ad_O5maOg@mail.gmail.com>
- <876061q6m6.fsf@evledraar.gmail.com> <CABPp-BHDOimDoLxWxS=BDOBkm6CUTrXTzD16=TSkWGN-HOiU2g@mail.gmail.com>
- <871sgoqos3.fsf@evledraar.gmail.com>
+ <20180312184734.GA58506@aiede.svl.corp.google.com> <CABPp-BEdh+UOCpFn5Y1_RydR==dDHWTeNtBub+pPjH_06Ub28w@mail.gmail.com>
+ <20180312213521.GB58506@aiede.svl.corp.google.com> <CABPp-BE653uMpwN4zfCCP8teRGmZ6v5NEyASCR1PTvHhoMKE1w@mail.gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 13 Mar 2018 10:09:01 -0700
-Message-ID: <CABPp-BEOi6GAoHUZyfcJdd-eLwPLoyRMOiS-J1dvkjqm7VGj9Q@mail.gmail.com>
+Date:   Tue, 13 Mar 2018 10:22:42 -0700
+Message-ID: <CABPp-BHDVqq4atmCw=WX4KkV1C-kGh0MubowevJBw6n=qF56nA@mail.gmail.com>
 Subject: Re: Opinions on changing add/add conflict resolution?
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 13, 2018 at 2:59 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
-> On Tue, Mar 13 2018, Elijah Newren jotted:
+On Mon, Mar 12, 2018 at 5:38 PM, Elijah Newren <newren@gmail.com> wrote:
+> I feel the analogy to merging binary files breaks down here in more
+> than one way:
 
->> However, I'm far more concerned with the three collision conflict types
->> having consistent behavior than I am with changing add/add conflict
->> handling.  And if your two concerns or Jonathan's concern would prevent =
-you
->> from wanting to use the new merge strategy (and possibly prevent it from
->> becoming the default in the future), I'd much rather just modify rename/=
-add
->> and rename/rename to behave like add/add.  Would that be more to your
->> liking?
+Actually, after mulling this over, I'm going to retract the "more
+than" piece of this sentence.  I'm trying to figure out how to retract
+more, but have only figured out one piece.  In particular...
+
+> 1)
 >
-> I don't really object to these changes, I don't know enough about this
-> area, I skimmed your patches and 90% of it is over my head (although I
-> could keep digging...).
+> Merging binary files is more complex than you suggest here.  In
+> particular, when creating a virtual merge base, the resolution chosen
+> is not the version of the file from HEAD, but the version of the file
+> from the merge base.  Nasty problems would result otherwise for the
+> recursive case.
 >
-> I'm just chiming in because it seems to me from upthread that you're
-> purely focusing on the use-case of the user of git who's using git at
-> the abstraction of using a dumb editor that doesn't do anything to help
-> them with conflict markers to resolve conflicts.
+> If we tried to match how merging binary files behaved, we run into the
+> problem that the colliding file conflict case has no common version of
+> the file from a merge base.  So the same strategy just doesn't apply.
+> The closest would be outright deleting both versions of the file for
+> the virtual merge base and punting to the outer merge to deal with it.
+> That might be okay, but seems really odd to me.  I feel like it'd
+> unnecessarily increase the number of conflicts users will see, though
+> maybe it wouldn't be horrible if this was only done when the files
+> were considered dissimilar anyway.
 
-Yeah, that's totally why I started this separate thread; I was worried
-the original would push away folks who weren't familiar enough with
-merge-recursive or were just overwhelmed by all the different changes
-and rationale, but I really wanted to get feedback on at least the
-piece that people were likely to hit in practice and would understand.
-Thanks for doing so; your, and Jonathan's, and Junio's comments have
-provided some good context.
+Thinking about this more, it really isn't that weird at all.  The code
+is already set up to use null_oid as the "original" version when
+creating a virtual merge base, going back to the content from a
+recursive merge base is a strategy used in multiple places in
+recursive cases, and null is precisely the version from the recursive
+merge base.  If two added files differ wildly, I don't think using
+null would increase the number of conflicts appreciably, if at all.
+So, the analogy to merging binary files holds just fine from this
+angle.
 
-> Also another caveat: Since these are new side-files what happens when
-> you're in a conflict and run `git clean -dxf`, are these new files wiped
-> away, or are they somehow known to the index?
+So, if we could figure out how to handle the higher numbers of paths
+for e.g. the rename/rename cases, then perhaps this is a strategy that
+could work.
 
-A git clean would wipe them out...and if that scares you (and I can
-totally see how it might), then rest assured that the situation is a
-whole lot worse: this isn't limited to rename/add and
-rename/rename(2to1) conflicts.  There are several paths in
-merge-recursive.c that call unique_path() to get a temporary filename
-that is in no way tracked in the index but which is used for storing
-content relevant to the merge.  These include directory/file
-conflicts, untracked files being in the way of putting a renamed file
-where it belongs, untracked files being in the way of a modify/delete,
-untracked files being in the way of simple adds on the other side of
-history, rename/rename(1to2)/add/add, and maybe others.  In all cases,
-a git clean is going to wipe out the files that were written to
-different temporary locations.
+>> Interesting.  I would be tempted to resolve this inconsistency the
+>> other way: by doing a half-hearted two-way merge (e.g. by picking one
+>> of the two versions of the colliding file) and marking the path as
+>> conflicted in the index.  That way it's more similar to edit/edit,
+>> too.
+>
+> Your proposal is underspecified; there are more complicated cases
+> where your wording could have different meanings.
+>
+<snip>
+> My question for your counter-proposal:
+> Do you record C1 or C2 as C?  Or do you record the version of C from
+> HEAD as C?  And what do you pick when creating a virtual merge base?
+>
+> Problems I see regardless of the choice in your counter-proposal:
+>   * If you choose C from HEAD, you are ignoring 3 other versions of
+> "C" (as opposed to just one other version when merging a binary file);
+> will the user recognize that and know how to look at all four
+> versions?
+>   * If you choose C1 or C2, the user will see conflict markers; will
+> the user recognize that this is only a _subset_ of the conflicts, and
+> that there's a lot of content that was completely ignored?
 
-My rewrite I'm trying to find time to work on would get rid of the
-code paths involving untracked files being in the way of other stuff,
-but would do nothing for the other cases.  I would love to get rid of
-all of them, but don't have a clue how to do so.
+>   * There is no "merge base of C1 and C2" to use for the virtual merge
+> base.  What will you use?
+
+For this last question, the answer is "null", and it works just fine.
+I don't yet have good answers to the other questions, though.  If
+someone else does, I'd love to hear it.
+
+
+Oh, and by the way Jonathan, thanks very much for your feedback and
+alternative ideas for consideration.  You gave me more angles to try
+to think about this problem from.
