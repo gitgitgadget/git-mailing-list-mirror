@@ -2,88 +2,174 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4F6051F404
-	for <e@80x24.org>; Tue, 13 Mar 2018 21:46:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 526C11F404
+	for <e@80x24.org>; Tue, 13 Mar 2018 21:49:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751543AbeCMVqs (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Mar 2018 17:46:48 -0400
-Received: from mail-wr0-f170.google.com ([209.85.128.170]:37778 "EHLO
-        mail-wr0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750910AbeCMVqr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Mar 2018 17:46:47 -0400
-Received: by mail-wr0-f170.google.com with SMTP id z12so2446408wrg.4
-        for <git@vger.kernel.org>; Tue, 13 Mar 2018 14:46:46 -0700 (PDT)
+        id S1752515AbeCMVt3 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Mar 2018 17:49:29 -0400
+Received: from mail-pg0-f52.google.com ([74.125.83.52]:47035 "EHLO
+        mail-pg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751401AbeCMVt2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Mar 2018 17:49:28 -0400
+Received: by mail-pg0-f52.google.com with SMTP id r26so451662pgv.13
+        for <git@vger.kernel.org>; Tue, 13 Mar 2018 14:49:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=BwBt6b2GTZRiZ8YC5DQVReQcs1gWS0QfGptOdFYVAdE=;
-        b=FxAJSyvdMujsL/5sDFvQb5/tlGJPG0xo3qglc0AZjHsLoKOYjg1FIohLDMs8KPjbuq
-         IjmqEQMpCHw54IsVH2NEqC9l/f/QPn2KagZVztrbf0ON+9Ez8rMOGjE//1Imbdb+w85A
-         il8CiHzgJZcC1txSZtfT7ISgQiGUNPE/slxqHm6vT8tJyrGTuoifmEaKd5dJY06CTBmm
-         0m/fLrdJMUHquOO0H1ELvE6Iy9Q/I4cGKLvkRDkYEK6VBOawNohJShaNSnTeXejOgAea
-         zcYnd8L8+HTJwOSFlW2GYRjnhTtpVSFQfgg/82zWic0f/2eXuKC2EEP6RSNejBJFDXNq
-         LnxQ==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=rXw/dE0bfj8fwirinwvPYTSleTEL4InFvn13r26EEGE=;
+        b=LG98evH0AttmYhr9DGNF8ZyROuOf4YRy3cSsWtEM6IudaR2j9/ELWBWk7P4zBoqeln
+         DDWnN1Y+/WtZTpJ4X+ft/4+bxx/6lQFbmqrzC+N/ZCYNpxnrk3LfR8TAnWfD9G7qWpkq
+         8DVpTND3ox0tCWFse57E1Ei8o4X1n8Vw0WLM0kUPVawPS6toZagHvrqmSnSEbu+8tfDd
+         nWP6Cey0epZTTBBJndMqFu/2kDHWnQ9dSY3gySR64oV4A1dShl0cZKrgq1tWa0qXSILP
+         ojI2F0Fan7UOdhgCe6m0EPTsAHHo/oHkp499g5DsaN34BKbJJ5DeHOyy17yO0XBV0tGE
+         /GjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=BwBt6b2GTZRiZ8YC5DQVReQcs1gWS0QfGptOdFYVAdE=;
-        b=OKrlkMibCJmzyq3Oa7TMcIC5Ss0qOb/OiZd6a3Pz7OiqdmILVIN/4hbmCAZFCS7N32
-         xCzwCO0SFhVV0Yf/1Ij69yR1LTdu/T/IuBbpp9f8x+znYSqn+1dabdrbPpy7gx4af6j+
-         ycytJzCtOF+aLr7NqHzcinI8vzs+hWVvj42EUWdu41xNL5ORi31ss2tRuvnVEzV5VQNv
-         ur7yKfLimHuNgfZGP5HC4u9ee4zcudJh4/RnyK4uZRmV2sBJhxxwq0VhaAqs9Azeanyg
-         I67ijD6meLohuQAsPYs1B18QLfkLJwYHSA0B2661pRZNmi/OnVJlB5S3Xceq+F4IcPIO
-         TJxg==
-X-Gm-Message-State: AElRT7F4z6uYTbBSbzl6UsNGiaQ11ozoJsM23aOQKWft39r2JhNtjq+B
-        iEt5yJEW6aJtDUjlM6A8800=
-X-Google-Smtp-Source: AG47ELvBc34IPWev/c1ts4T/tSSWgWeey10aAaa5UwJw8Ll18ZdNrnkmE4b4E0hYstvaSFApPgPXAQ==
-X-Received: by 10.223.153.230 with SMTP id y93mr1750999wrb.215.1520977605860;
-        Tue, 13 Mar 2018 14:46:45 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id x17sm1366645wrg.32.2018.03.13.14.46.44
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=rXw/dE0bfj8fwirinwvPYTSleTEL4InFvn13r26EEGE=;
+        b=Im+cDQaQXv7lQti05XEZBkw/4lOy1tcG5BqOwICTpMegL/vtSeQ52XUTtqzzmODjM8
+         3cjsyop6AV4x6Jd4RNbXOiCvpUf7/MCA08Pr+URhzpOsoIAk1XcFrbeSUhOiqN6QKD7/
+         QSNL5O4i6nPfzyWWsDMTtFFtTyIiCZ69kRMTjZN+127tSNNNZv3fN2SgSXmu8E5m+tRI
+         dJGZPjPC0hwbnVKOWcNGmaZ/GDSTjdYMr+KhpmEaE0CsqPWcJWcfbRrw8cP/v8ABJJOL
+         IBUi8PkYCLrMcRBip2G9yHYR38/ULJ19RXQkxHCncEnps5M4YetCAfaXcvZmdRenxLHs
+         4UAg==
+X-Gm-Message-State: AElRT7EIzfdR6yJysJ8uvmYAHA2/oJ3LUYsQR/+pWOB1QquM2JXxx/kr
+        CdJY+q4OBCWyGl7TIMdfh3IbA6/bgjE=
+X-Google-Smtp-Source: AG47ELtMqiVh8exsHE5F5P682TeI2rDp7M2T7dQVjtCoYO5SHOK5iZ1/FjGKpJdwPIiWsuWg/8/MLA==
+X-Received: by 10.99.113.94 with SMTP id b30mr1690735pgn.196.1520977767211;
+        Tue, 13 Mar 2018 14:49:27 -0700 (PDT)
+Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
+        by smtp.gmail.com with ESMTPSA id n14sm1992715pfj.154.2018.03.13.14.49.25
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 13 Mar 2018 14:46:45 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 3/3] shortlog: do not accept revisions when run outside repo
-References: <cover.1520680894.git.martin.agren@gmail.com>
-        <78669e644b64fc10c34adb59717d2039f81cb092.1520680894.git.martin.agren@gmail.com>
-Date:   Tue, 13 Mar 2018 14:46:44 -0700
-In-Reply-To: <78669e644b64fc10c34adb59717d2039f81cb092.1520680894.git.martin.agren@gmail.com>
-        ("Martin =?utf-8?Q?=C3=85gren=22's?= message of "Sat, 10 Mar 2018 12:52:12
- +0100")
-Message-ID: <xmqqo9jr1we3.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        Tue, 13 Mar 2018 14:49:26 -0700 (PDT)
+Date:   Tue, 13 Mar 2018 14:49:25 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, git@jeffhostetler.com, gitster@pobox.com,
+        jrnieder@gmail.com, pclouds@gmail.com, peff@peff.net,
+        sbeller@google.com, stolee@gmail.com
+Subject: Re: [PATCH v4 20/35] upload-pack: introduce fetch server command
+Message-ID: <20180313214925.GG7638@google.com>
+References: <20180207011312.189834-1-bmwill@google.com>
+ <20180228232252.102167-1-bmwill@google.com>
+ <20180228232252.102167-21-bmwill@google.com>
+ <20180313092003.109ce9254b376e7fdce338b0@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180313092003.109ce9254b376e7fdce338b0@google.com>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Martin Ågren <martin.agren@gmail.com> writes:
+On 03/13, Jonathan Tan wrote:
+> On Wed, 28 Feb 2018 15:22:37 -0800
+> Brandon Williams <bmwill@google.com> wrote:
+> 
+> > +    output = *section
+> > +    section = (acknowledgments | packfile)
+> > +	      (flush-pkt | delim-pkt)
+> > +
+> > +    acknowledgments = PKT-LINE("acknowledgments" LF)
+> > +		      (nak | *ack)
+> > +		      (ready)
+> > +    ready = PKT-LINE("ready" LF)
+> > +    nak = PKT-LINE("NAK" LF)
+> > +    ack = PKT-LINE("ACK" SP obj-id LF)
+> > +
+> > +    packfile = PKT-LINE("packfile" LF)
+> > +	       [PACKFILE]
+> 
+> I should have noticed this earlier, but "PACKFILE" is not defined anywhere -
+> it's probably better written as:
+> 
+>     *PKT-LINE(%x01-03 *%x00-ff)"
+> 
+> or something like that.
 
-> in order to decide whether we should read from stdin. (So yes, after
-> this patch, we will still silently ignore stdin for confused usage such
-> as `git log v2.15.0.. | git shortlog v2.16.0..`. But at least that does
-> not crash.)
+I'll document it as you described.
 
-    $ git log -p | git shortlog Documentation/
+> 
+> > +    acknowledgments section
+> > +	* Always begins with the section header "acknowledgments"
+> > +
+> > +	* The server will respond with "NAK" if none of the object ids sent
+> > +	  as have lines were common.
+> > +
+> > +	* The server will respond with "ACK obj-id" for all of the
+> > +	  object ids sent as have lines which are common.
+> > +
+> > +	* A response cannot have both "ACK" lines as well as a "NAK"
+> > +	  line.
+> > +
+> > +	* The server will respond with a "ready" line indicating that
+> > +	  the server has found an acceptable common base and is ready to
+> > +	  make and send a packfile (which will be found in the packfile
+> > +	  section of the same response)
+> > +
+> > +	* If the client determines that it is finished with negotiations
+> > +	  by sending a "done" line, the acknowledgments sections MUST be
+> > +	  omitted from the server's response.
+> > +
+> > +	* If the server has found a suitable cut point and has decided
+> > +	  to send a "ready" line, then the server can decide to (as an
+> > +	  optimization) omit any "ACK" lines it would have sent during
+> > +	  its response.  This is because the server will have already
+> > +	  determined the objects it plans to send to the client and no
+> > +	  further negotiation is needed.
+> > +
+> > +----
+> > +    packfile section
+> > +	* Always begins with the section header "packfile"
+> > +
+> > +	* The transmission of the packfile begins immediately after the
+> > +	  section header
+> > +
+> > +	* The data transfer of the packfile is always multiplexed, using
+> > +	  the same semantics of the 'side-band-64k' capability from
+> > +	  protocol version 1.  This means that each packet, during the
+> > +	  packfile data stream, is made up of a leading 4-byte pkt-line
+> > +	  length (typical of the pkt-line format), followed by a 1-byte
+> > +	  stream code, followed by the actual data.
+> > +
+> > +	  The stream code can be one of:
+> > +		1 - pack data
+> > +		2 - progress messages
+> > +		3 - fatal error message just before stream aborts
+> > +
+> > +	* This section is only included if the client has sent 'want'
+> > +	  lines in its request and either requested that no more
+> > +	  negotiation be done by sending 'done' or if the server has
+> > +	  decided it has found a sufficient cut point to produce a
+> > +	  packfile.
+> 
+> For both the sections, I think that the conditions for
+> inclusion/non-inclusion ("This section is only included if...") should
+> be the first point.
+> 
+> > +static void upload_pack_data_init(struct upload_pack_data *data)
+> > +{
+> > +	struct object_array wants = OBJECT_ARRAY_INIT;
+> > +	struct oid_array haves = OID_ARRAY_INIT;
+> > +
+> > +	memset(data, 0, sizeof(*data));
+> > +	data->wants = wants;
+> > +	data->haves = haves;
+> > +}
+> 
+> Any reason to use a initializer function instead of a static literal?
 
-is also a nonsense request.  When outside a repository, i.e.
+Its much cleaner and easier to read than it was when i was using an
+initializer.
 
-    $ git -C $path_to_repo | git shortlog Documentation/
-
-is not giving any revisions, so the error message should not say "no
-revisions can be given"---a nitpicky bug reporter would say "I gave
-no revisions, why are you complaining to me?"
-
+-- 
+Brandon Williams
