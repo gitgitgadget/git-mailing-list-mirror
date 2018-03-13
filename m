@@ -2,157 +2,163 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2ABB71F404
-	for <e@80x24.org>; Tue, 13 Mar 2018 16:10:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C48821F404
+	for <e@80x24.org>; Tue, 13 Mar 2018 16:20:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933601AbeCMQKh (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Mar 2018 12:10:37 -0400
-Received: from mail.javad.com ([54.86.164.124]:56744 "EHLO mail.javad.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932376AbeCMQKU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Mar 2018 12:10:20 -0400
-Received: from osv (unknown [89.175.180.246])
-        by mail.javad.com (Postfix) with ESMTPSA id E850C3E968;
-        Tue, 13 Mar 2018 16:10:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1520957419;
-        bh=JzbNEbyhiKbppOzH84D1f1lAEkCaATgjIsTHHRhF36I=; l=1431;
-        h=Received:From:To:Subject;
-        b=foz6yk4hMogeirOB6GFDwGJCa9fWOxp8QEA8doChZ4sVXqMDLFbM2ixbD0Y1/FkgY
-         4AkFRvnb3cAs3WKyuRBc9nWoLTETJaFzIbH1X/SK4+4TtRNOrNZJ2TECdLH2HcunmP
-         2Hpo+i1BZLsOFM/YL1BDkH3kdQQr8ODcjWvbsKZc=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1520957419;
-        bh=JzbNEbyhiKbppOzH84D1f1lAEkCaATgjIsTHHRhF36I=; l=1431;
-        h=Received:From:To:Subject;
-        b=foz6yk4hMogeirOB6GFDwGJCa9fWOxp8QEA8doChZ4sVXqMDLFbM2ixbD0Y1/FkgY
-         4AkFRvnb3cAs3WKyuRBc9nWoLTETJaFzIbH1X/SK4+4TtRNOrNZJ2TECdLH2HcunmP
-         2Hpo+i1BZLsOFM/YL1BDkH3kdQQr8ODcjWvbsKZc=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1520957419;
-        bh=JzbNEbyhiKbppOzH84D1f1lAEkCaATgjIsTHHRhF36I=; l=1431;
-        h=Received:From:To:Subject;
-        b=foz6yk4hMogeirOB6GFDwGJCa9fWOxp8QEA8doChZ4sVXqMDLFbM2ixbD0Y1/FkgY
-         4AkFRvnb3cAs3WKyuRBc9nWoLTETJaFzIbH1X/SK4+4TtRNOrNZJ2TECdLH2HcunmP
-         2Hpo+i1BZLsOFM/YL1BDkH3kdQQr8ODcjWvbsKZc=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1520957419;
-        bh=JzbNEbyhiKbppOzH84D1f1lAEkCaATgjIsTHHRhF36I=; l=1431;
-        h=Received:From:To:Subject;
-        b=foz6yk4hMogeirOB6GFDwGJCa9fWOxp8QEA8doChZ4sVXqMDLFbM2ixbD0Y1/FkgY
-         4AkFRvnb3cAs3WKyuRBc9nWoLTETJaFzIbH1X/SK4+4TtRNOrNZJ2TECdLH2HcunmP
-         2Hpo+i1BZLsOFM/YL1BDkH3kdQQr8ODcjWvbsKZc=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1520957419;
-        bh=JzbNEbyhiKbppOzH84D1f1lAEkCaATgjIsTHHRhF36I=; l=1431;
-        h=Received:From:To:Subject;
-        b=foz6yk4hMogeirOB6GFDwGJCa9fWOxp8QEA8doChZ4sVXqMDLFbM2ixbD0Y1/FkgY
-         4AkFRvnb3cAs3WKyuRBc9nWoLTETJaFzIbH1X/SK4+4TtRNOrNZJ2TECdLH2HcunmP
-         2Hpo+i1BZLsOFM/YL1BDkH3kdQQr8ODcjWvbsKZc=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1520957419;
-        bh=JzbNEbyhiKbppOzH84D1f1lAEkCaATgjIsTHHRhF36I=; l=1431;
-        h=Received:From:To:Subject;
-        b=foz6yk4hMogeirOB6GFDwGJCa9fWOxp8QEA8doChZ4sVXqMDLFbM2ixbD0Y1/FkgY
-         4AkFRvnb3cAs3WKyuRBc9nWoLTETJaFzIbH1X/SK4+4TtRNOrNZJ2TECdLH2HcunmP
-         2Hpo+i1BZLsOFM/YL1BDkH3kdQQr8ODcjWvbsKZc=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1520957419;
-        bh=JzbNEbyhiKbppOzH84D1f1lAEkCaATgjIsTHHRhF36I=; l=1431;
-        h=Received:From:To:Subject;
-        b=foz6yk4hMogeirOB6GFDwGJCa9fWOxp8QEA8doChZ4sVXqMDLFbM2ixbD0Y1/FkgY
-         4AkFRvnb3cAs3WKyuRBc9nWoLTETJaFzIbH1X/SK4+4TtRNOrNZJ2TECdLH2HcunmP
-         2Hpo+i1BZLsOFM/YL1BDkH3kdQQr8ODcjWvbsKZc=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1520957419;
-        bh=JzbNEbyhiKbppOzH84D1f1lAEkCaATgjIsTHHRhF36I=; l=1431;
-        h=Received:From:To:Subject;
-        b=foz6yk4hMogeirOB6GFDwGJCa9fWOxp8QEA8doChZ4sVXqMDLFbM2ixbD0Y1/FkgY
-         4AkFRvnb3cAs3WKyuRBc9nWoLTETJaFzIbH1X/SK4+4TtRNOrNZJ2TECdLH2HcunmP
-         2Hpo+i1BZLsOFM/YL1BDkH3kdQQr8ODcjWvbsKZc=
-Authentication-Results: mail.javad.com;
-        spf=pass (sender IP is 89.175.180.246) smtp.mailfrom=osv@javad.com smtp.helo=osv
-Received-SPF: pass (mail.javad.com: connection is authenticated)
-Received: from osv by osv with local (Exim 4.84_2)
-        (envelope-from <osv@osv.gnss.ru>)
-        id 1evmVF-0002uM-7M; Tue, 13 Mar 2018 19:10:17 +0300
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Phillip Wood <phillip.wood@talktalk.net>
-Cc:     Igor Djordjevic <igor.d.djordjevic@gmail.com>,
-        phillip.wood@dunelm.org.uk, Git mailing list <git@vger.kernel.org>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC] Rebasing merges: a jorney to the ultimate solution (Road Clear)
-References: <87y3jtqdyg.fsf@javad.com>
-        <bbe64321-4d3a-d3fe-8bb9-58b600fabf35@gmail.com>
-        <nycvar.QRO.7.76.6.1802270051470.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <CA+P7+xq8UUcLWomUi=PS_hTKfJd3dMAxMmhioDS1bixwcmKAqw@mail.gmail.com>
-        <nycvar.QRO.7.76.6.1802271718090.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <4d7f3406-b206-cc22-87df-85700d6a03d9@gmail.com>
-        <33da31e9-9101-475d-8901-4b6b3df2f29d@gmail.com>
-        <940d959d-151d-68dd-0f13-320ebad0d75b@gmail.com>
-        <87606hoflx.fsf@javad.com>
-        <0ac3a3fd-4053-e32e-75ed-8829f22c2e1f@gmail.com>
-        <87a7vss6ax.fsf@javad.com>
-        <6c8749ca-ec5d-b4b7-f1a0-50d9ad2949a5@talktalk.net>
-Date:   Tue, 13 Mar 2018 19:10:17 +0300
-In-Reply-To: <6c8749ca-ec5d-b4b7-f1a0-50d9ad2949a5@talktalk.net> (Phillip
-        Wood's message of "Fri, 2 Mar 2018 11:31:02 +0000")
-Message-ID: <877eqgardi.fsf@javad.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        id S933875AbeCMQUJ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Mar 2018 12:20:09 -0400
+Received: from mail-pf0-f171.google.com ([209.85.192.171]:47085 "EHLO
+        mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752150AbeCMQUG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Mar 2018 12:20:06 -0400
+Received: by mail-pf0-f171.google.com with SMTP id z10so59857pfh.13
+        for <git@vger.kernel.org>; Tue, 13 Mar 2018 09:20:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=Z/34f0syhBVpgJtOLKnUSfVc1+oQUeA23C3jUY+Hs/k=;
+        b=mAG8mpZNv2/JGSVHcNa45DC7kIHZDEvs2/ev8x13uJzRA58s+kmGBrzsnBnP5nh4ly
+         4aO6hUPLEYuS4fCmGoMXBJ2/Ec0yVJsj9uT7/qxanSDy61sN8nkLY/yHkSwWSoWOm1j8
+         adHItXerEB3GxzppfMdQMma1b16aLRnwwRDEVnwkPgnH2QKhBSjGmfAVmEOoLJ3UKjK3
+         T5sN7x3EBti/HVuxqFD/brFfbYoUIJNEm1ZV+cMJ5tq3mQzqDDwIeLYcp/xF7S3rNAV+
+         J1yoBbbgbumGw6sG4YUbcbiIqcgqAeafARyRtcSbpDrFaSTH2v4U9ho5IJm3Kh3lJTIO
+         XUmQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=Z/34f0syhBVpgJtOLKnUSfVc1+oQUeA23C3jUY+Hs/k=;
+        b=AVaL9Qk8Eu6UPX5oj8jhcZv19bh73cGfYc9QTU8VU0WvNv8WqfymFk2v4kLCwO4MvR
+         XiZDm1w+nYSufJ7nNhUJD07ljAtAL03YlNHaemT7UGux9U6jrk3ZXLM2IxwNn6UQbC83
+         qwszbtm7rjbGAgTWg1rVjyh/XPHGCoWm0tJqMbvfxfVIttLDD0aaKM67VeDy1P1QGBF3
+         4wMF61F885os1WzSscCEdE027N8N09dygTUza0LeDYG549zCICv7uFZQlrAyGR78a0E8
+         1n2iaAf4hJXC2Y4/edC9ESFNBBsyLDQF43e30ThdZ8IKJMaBTxSc0J9rnSVGPy/jIsho
+         L3Jg==
+X-Gm-Message-State: AElRT7Eh10LWFmFVXHPjrthalIa9fGDYBuERqVBDGUk93gmH/TLNhDgY
+        Zu9AoWPYK5R/wPaEPMDsaqIN8Q==
+X-Google-Smtp-Source: AG47ELsE0aoZM/LUtKzhY2zTgr7bk5bqPBS0g88V8QwcFTmBXoBUr9wM5DKzsk3Z4PDFLUcAq55iww==
+X-Received: by 10.99.100.6 with SMTP id y6mr956559pgb.254.1520958005848;
+        Tue, 13 Mar 2018 09:20:05 -0700 (PDT)
+Received: from twelve3.svl.corp.google.com ([2620:0:100e:422:ffac:c1d4:4bf7:bb93])
+        by smtp.gmail.com with ESMTPSA id z7sm906279pgp.55.2018.03.13.09.20.04
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 13 Mar 2018 09:20:04 -0700 (PDT)
+Date:   Tue, 13 Mar 2018 09:20:03 -0700
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git@vger.kernel.org, git@jeffhostetler.com, gitster@pobox.com,
+        jrnieder@gmail.com, pclouds@gmail.com, peff@peff.net,
+        sbeller@google.com, stolee@gmail.com
+Subject: Re: [PATCH v4 20/35] upload-pack: introduce fetch server command
+Message-Id: <20180313092003.109ce9254b376e7fdce338b0@google.com>
+In-Reply-To: <20180228232252.102167-21-bmwill@google.com>
+References: <20180207011312.189834-1-bmwill@google.com>
+        <20180228232252.102167-1-bmwill@google.com>
+        <20180228232252.102167-21-bmwill@google.com>
+X-Mailer: Sylpheed 3.6.0 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip,
+On Wed, 28 Feb 2018 15:22:37 -0800
+Brandon Williams <bmwill@google.com> wrote:
 
-Phillip Wood <phillip.wood@talktalk.net> writes:
+> +    output = *section
+> +    section = (acknowledgments | packfile)
+> +	      (flush-pkt | delim-pkt)
+> +
+> +    acknowledgments = PKT-LINE("acknowledgments" LF)
+> +		      (nak | *ack)
+> +		      (ready)
+> +    ready = PKT-LINE("ready" LF)
+> +    nak = PKT-LINE("NAK" LF)
+> +    ack = PKT-LINE("ACK" SP obj-id LF)
+> +
+> +    packfile = PKT-LINE("packfile" LF)
+> +	       [PACKFILE]
 
-[...]
+I should have noticed this earlier, but "PACKFILE" is not defined anywhere -
+it's probably better written as:
 
-> Hi Sergey, I've been following this discussion from the sidelines,
-> though I haven't had time to study all the posts in this thread in
-> detail. I wonder if it would be helpful to think of rebasing a merge as
-> merging the changes in the parents due to the rebase back into the
-> original merge. So for a merge M with parents A B C that are rebased to
-> A' B' C' the rebased merge M' would be constructed by (ignoring shell
-> quoting issues)
->
-> git checkout --detach M
-> git merge-recursive A -- M A'
-> tree=$(git write-tree)
-> git merge-recursive B -- $tree B'
-> tree=$(git write-tree)
-> git merge-recursive C -- $tree C'
-> tree=$(git write-tree)
-> M'=$(git log --pretty=%B -1 M | git commit-tree -pA' -pB' -pC')
+    *PKT-LINE(%x01-03 *%x00-ff)"
 
-I wonder if it's OK to exchange the order of heads in the first merge
-(also dropped C for brevity):
+or something like that.
 
-git checkout --detach A'
-git merge-recursive A -- A' M
-tree=$(git write-tree)
-git merge-recursive B -- $tree B'
-tree=$(git write-tree)
-M'=$(git log --pretty=%B -1 M | git commit-tree -pA' -pB')
+> +    acknowledgments section
+> +	* Always begins with the section header "acknowledgments"
+> +
+> +	* The server will respond with "NAK" if none of the object ids sent
+> +	  as have lines were common.
+> +
+> +	* The server will respond with "ACK obj-id" for all of the
+> +	  object ids sent as have lines which are common.
+> +
+> +	* A response cannot have both "ACK" lines as well as a "NAK"
+> +	  line.
+> +
+> +	* The server will respond with a "ready" line indicating that
+> +	  the server has found an acceptable common base and is ready to
+> +	  make and send a packfile (which will be found in the packfile
+> +	  section of the same response)
+> +
+> +	* If the client determines that it is finished with negotiations
+> +	  by sending a "done" line, the acknowledgments sections MUST be
+> +	  omitted from the server's response.
+> +
+> +	* If the server has found a suitable cut point and has decided
+> +	  to send a "ready" line, then the server can decide to (as an
+> +	  optimization) omit any "ACK" lines it would have sent during
+> +	  its response.  This is because the server will have already
+> +	  determined the objects it plans to send to the client and no
+> +	  further negotiation is needed.
+> +
+> +----
+> +    packfile section
+> +	* Always begins with the section header "packfile"
+> +
+> +	* The transmission of the packfile begins immediately after the
+> +	  section header
+> +
+> +	* The data transfer of the packfile is always multiplexed, using
+> +	  the same semantics of the 'side-band-64k' capability from
+> +	  protocol version 1.  This means that each packet, during the
+> +	  packfile data stream, is made up of a leading 4-byte pkt-line
+> +	  length (typical of the pkt-line format), followed by a 1-byte
+> +	  stream code, followed by the actual data.
+> +
+> +	  The stream code can be one of:
+> +		1 - pack data
+> +		2 - progress messages
+> +		3 - fatal error message just before stream aborts
+> +
+> +	* This section is only included if the client has sent 'want'
+> +	  lines in its request and either requested that no more
+> +	  negotiation be done by sending 'done' or if the server has
+> +	  decided it has found a sufficient cut point to produce a
+> +	  packfile.
 
-If so, don't the first 2 lines now read: "rebase (first parent of) M on
-top of A'"?
+For both the sections, I think that the conditions for
+inclusion/non-inclusion ("This section is only included if...") should
+be the first point.
 
-If so, then it could be implemented so that it reduces back to regular
-rebase of non-merges when applied to a single-parent commit, similar to
-the method in the RFC, striking out one of advantages of the RFC.
+> +static void upload_pack_data_init(struct upload_pack_data *data)
+> +{
+> +	struct object_array wants = OBJECT_ARRAY_INIT;
+> +	struct oid_array haves = OID_ARRAY_INIT;
+> +
+> +	memset(data, 0, sizeof(*data));
+> +	data->wants = wants;
+> +	data->haves = haves;
+> +}
 
--- Sergey
+Any reason to use a initializer function instead of a static literal?
