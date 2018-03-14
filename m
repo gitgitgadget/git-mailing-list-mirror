@@ -2,212 +2,164 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2F6CF1FAE2
-	for <e@80x24.org>; Wed, 14 Mar 2018 06:33:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 137CA1FAE2
+	for <e@80x24.org>; Wed, 14 Mar 2018 07:20:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753445AbeCNGd0 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Mar 2018 02:33:26 -0400
-Received: from mail-pl0-f65.google.com ([209.85.160.65]:33721 "EHLO
-        mail-pl0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751270AbeCNGdZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Mar 2018 02:33:25 -0400
-Received: by mail-pl0-f65.google.com with SMTP id c11-v6so1227816plo.0
-        for <git@vger.kernel.org>; Tue, 13 Mar 2018 23:33:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=bQ/TtmZF2d8/9h3NZpCHfiWuZSUY094+BfjDvB1YU5k=;
-        b=ioouRVHCvWkMnb+FllwumoIBEhPSUF/XfhTh3vg8xYrw2bcSZmVvmJ1blkFgJYB3tz
-         GGxlIn2nYnT6FKrMeG+kQNmVeHFyOLBLOtkSBNsqzxsn5+voEwDoEZiC1cXgnyDYDPd+
-         xaCJgquoxWiItvFF2uZLlKop6pcXr/ZaZHpow=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=bQ/TtmZF2d8/9h3NZpCHfiWuZSUY094+BfjDvB1YU5k=;
-        b=oPnYRq406I0xy2IkcrqrAdl0dWHDp8I7MtLH/HWEZgvTLQWpeRgiML9zuUucp5yykM
-         RGFAnD07GT3PFI+rDDrEqX3NyMF5+bG0lJA4MatqhF3t5JoeCisRQ/jVPYxh4XUxvIAs
-         xYNk1mCtOh9Fh9hiqeI7OwyozSzZItfVQwhkJrxi4Vu1jFvkQQN+TXcLU3owIAjQkoi7
-         xspglFDUEQCx1ECDNQcZKgAknZ4qz/9KbaKL/bULNpptXm/Fc5SKA5A60+EEm7I70HFf
-         2VbJcpLv36F2QMPa3S/RFaBxyyz3/qaXxWKwzopbuCdD/MU1s4ILaGBudgUAdo2dgrGZ
-         8Oiw==
-X-Gm-Message-State: AElRT7Gtc5OErI0D9JM0lBK+D3pZZ9H5PYKV2G1U1hikAyGNLpWqMY+G
-        l1oNzjFqcpqA9+TjFO1OfVwpmcsfIbU=
-X-Google-Smtp-Source: AG47ELucXVnSedWK/sNlqZWAyVxKwjZu2uNUaPfVWcQ9qFzcTLWGG7h9rU+9qLY/18YZKRLQ85Ua+Q==
-X-Received: by 2002:a17:902:904b:: with SMTP id w11-v6mr3053417plz.11.1521009204236;
-        Tue, 13 Mar 2018 23:33:24 -0700 (PDT)
-Received: from tikuta.tok.corp.google.com ([2401:fa00:4:1002:bd1d:996:abff:29d])
-        by smtp.gmail.com with ESMTPSA id d75sm3282509pga.38.2018.03.13.23.33.22
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 13 Mar 2018 23:33:23 -0700 (PDT)
-From:   Takuto Ikuta <tikuta@chromium.org>
-To:     git@vger.kernel.org, gitster@pobox.com
-Cc:     Takuto Ikuta <tikuta@chromium.org>
-Subject: [PATCH v7] fetch-pack.c: use oidset to check existence of loose object
-Date:   Wed, 14 Mar 2018 15:32:42 +0900
-Message-Id: <20180314063242.5759-1-tikuta@chromium.org>
-X-Mailer: git-send-email 2.16.2
-In-Reply-To: <20180314060511.257985-1-tikuta@chromium.org>
-References: <20180314060511.257985-1-tikuta@chromium.org>
+        id S1753291AbeCNHUs (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Mar 2018 03:20:48 -0400
+Received: from bsmtp3.bon.at ([213.33.87.17]:4982 "EHLO bsmtp3.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751470AbeCNHUr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Mar 2018 03:20:47 -0400
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp3.bon.at (Postfix) with ESMTPSA id 401NRc14cRz5tlK;
+        Wed, 14 Mar 2018 08:20:43 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id 685C33A1;
+        Wed, 14 Mar 2018 08:20:43 +0100 (CET)
+Subject: Re: [PATCH 3/3] Makefile: optionally symlink libexec/git-core
+ binaries to bin/git
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Daniel Jacques <dnj@google.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Steffen Prohaska <prohaska@zib.de>,
+        John Keeping <john@keeping.me.uk>, Stan Hu <stanhu@gmail.com>,
+        Richard Clamp <richardc@unixbeard.net>
+References: <20180313203935.5084-1-avarab@gmail.com>
+ <20180313203935.5084-4-avarab@gmail.com>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <1cabf9c0-674e-c2b3-9977-9c74b929a86d@kdbg.org>
+Date:   Wed, 14 Mar 2018 08:20:43 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.2
+MIME-Version: 1.0
+In-Reply-To: <20180313203935.5084-4-avarab@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When fetching from a repository with large number of refs, because to
-check existence of each refs in local repository to packed and loose
-objects, 'git fetch' ends up doing a lot of lstat(2) to non-existing
-loose form, which makes it slow.
+Am 13.03.2018 um 21:39 schrieb Ævar Arnfjörð Bjarmason:
+> Add a INSTALL_SYMLINKS option which if enabled, changes the default
+> hardlink installation method to one where the relevant binaries in
+> libexec/git-core are symlinked back to ../../bin, instead of being
+> hardlinked.
+> 
+> This new option also overrides the behavior of the existing
+> NO_*_HARDLINKS variables which in some cases would produce symlinks
+> within to libexec/, e.g. "git-add" symlinked to "git" which would be
+> copy of the "git" found in bin/, now "git-add" in libexec/ is always
+> going to be symlinked to the "git" found in the bin/ directory.
 
-Instead of making as many lstat(2) calls as the refs the remote side
-advertised to see if these objects exist in the loose form, first
-enumerate all the existing loose objects in hashmap beforehand and use
-it to check existence of them if the number of refs is larger than the
-number of loose objects.
+It is important to leave the default at hard-linking the binaries, 
+because on Windows symbolic links are second class citizens (they 
+require special privileges and there is a distinction between link 
+targets being files or directories). Hard links work well.
 
-With this patch, the number of lstat(2) calls in `git fetch` is reduced
-from 411412 to 13794 for chromium repository, it has more than 480000
-remote refs.
+> 
+> This option is being added because:
+> 
+>   1) I think it makes what we're doing a lot more obvious. E.g. I'd
+>      never noticed that the libexec binaries were really just hardlinks
+>      since e.g. ls(1) won't show that in any obvious way. You need to
+>      start stat(1)-ing things and look at the inodes to see what's
+>      going on.
+> 
+>   2) Some tools have very crappy support for hardlinks, e.g. the Git
+>      shipped with GitLab is much bigger than it should be because
+>      they're using a chef module that doesn't know about hardlinks, see
+>      https://github.com/chef/omnibus/issues/827
+> 
+>      I've also ran into other related issues that I think are explained
 
-I took time stat of `git fetch` when fetch-pack happens for chromium
-repository 3 times on linux with SSD.
-* with this patch
-8.105s
-8.309s
-7.640s
-avg: 8.018s
+s/ran/run/
 
-* master
-12.287s
-11.175s
-12.227s
-avg: 11.896s
+>      by this, e.g. compiling git with debugging and rpm refusing to
+>      install a ~200MB git package with 2GB left on the FS, I think that
+>      was because it doesn't consider hardlinks, just the sum of the
+>      byte size of everything in the package.
+> 
+> As for the implementation, the "../../bin" noted above will vary given
+> some given some values of "../.." and "bin" depending on the depth of
 
-On my MacBook Air which has slower lstat(2).
-* with this patch
-14.501s
+s/given some//
 
-* master
-1m16.027s
+> the gitexecdir relative to the destdir, and the "bindir" target,
+> e.g. setting "bindir=/tmp/git/binaries gitexecdir=foo/bar/baz" will do
+> the right thing and produce this result:
+> 
+>      $ file /tmp/git/foo/bar/baz/git-add
+>      /tmp/git/foo/bar/baz/git-add: symbolic link to ../../../binaries/git
+> 
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> ---
+>   Makefile | 46 +++++++++++++++++++++++++++++++---------------
+>   1 file changed, 31 insertions(+), 15 deletions(-)
+> 
+> diff --git a/Makefile b/Makefile
+> index ee0b6c8940..ac7616422d 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -329,6 +329,13 @@ all::
+>   # when hardlinking a file to another name and unlinking the original file right
+>   # away (some NTFS drivers seem to zero the contents in that scenario).
+>   #
+> +# Define INSTALL_SYMLINKS if you prefer to have everything that can be
+> +# symlinked between bin/ and libexec/ to use relative symlinks between
+> +# the two. This option overrides NO_CROSS_DIRECTORY_HARDLINKS and
 
-`git fetch` on slow disk will be improved largely.
+s/ between the two//
 
-Signed-off-by: Takuto Ikuta <tikuta@chromium.org>
----
- cache.h      |  2 ++
- fetch-pack.c | 45 ++++++++++++++++++++++++++++++++++++++++++---
- sha1_file.c  |  3 +++
- 3 files changed, 47 insertions(+), 3 deletions(-)
+> +# NO_INSTALL_HARDLINKS which will also use symlinking by indirection
+> +# within the same directory in some cases, INSTALL_SYMLINKS will
+> +# always symlink to the final target directly.
 
-diff --git a/cache.h b/cache.h
-index d06932ed0..6a72f54d7 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1773,6 +1773,8 @@ struct object_info {
- #define OBJECT_INFO_SKIP_CACHED 4
- /* Do not retry packed storage after checking packed and loose storage */
- #define OBJECT_INFO_QUICK 8
-+/* Do not check loose object */
-+#define OBJECT_INFO_IGNORE_LOOSE 16
- extern int sha1_object_info_extended(const unsigned char *, struct object_info *, unsigned flags);
- 
- /*
-diff --git a/fetch-pack.c b/fetch-pack.c
-index d97461296..2ea358861 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -711,6 +711,28 @@ static void mark_alternate_complete(struct object *obj)
- 	mark_complete(&obj->oid);
- }
- 
-+struct loose_object_iter {
-+	struct oidset *loose_object_set;
-+	struct ref *refs;
-+};
-+
-+/*
-+ *  If the number of refs is not larger than the number of loose objects,
-+ *  this function stops inserting.
-+ */
-+static int add_loose_objects_to_set(const struct object_id *oid,
-+				    const char *path,
-+				    void *data)
-+{
-+	struct loose_object_iter *iter = data;
-+	oidset_insert(iter->loose_object_set, oid);
-+	if (iter->refs == NULL)
-+		return 1;
-+
-+	iter->refs = iter->refs->next;
-+	return 0;
-+}
-+
- static int everything_local(struct fetch_pack_args *args,
- 			    struct ref **refs,
- 			    struct ref **sought, int nr_sought)
-@@ -719,16 +741,31 @@ static int everything_local(struct fetch_pack_args *args,
- 	int retval;
- 	int old_save_commit_buffer = save_commit_buffer;
- 	timestamp_t cutoff = 0;
-+	struct oidset loose_oid_set = OIDSET_INIT;
-+	int use_oidset = 0;
-+	struct loose_object_iter iter = {&loose_oid_set, *refs};
-+
-+	/* Enumerate all loose objects or know refs are not so many. */
-+	use_oidset = !for_each_loose_object(add_loose_objects_to_set,
-+					    &iter, 0);
- 
- 	save_commit_buffer = 0;
- 
- 	for (ref = *refs; ref; ref = ref->next) {
- 		struct object *o;
-+		unsigned int flags = OBJECT_INFO_QUICK;
- 
--		if (!has_object_file_with_flags(&ref->old_oid,
--						OBJECT_INFO_QUICK))
--			continue;
-+		if (use_oidset &&
-+		    !oidset_contains(&loose_oid_set, &ref->old_oid)) {
-+			/*
-+			 * I know this does not exist in the loose form,
-+			 * so check if it exists in a non-loose form.
-+			 */
-+			flags |= OBJECT_INFO_IGNORE_LOOSE;
-+		}
- 
-+		if (!has_object_file_with_flags(&ref->old_oid, flags))
-+			continue;
- 		o = parse_object(&ref->old_oid);
- 		if (!o)
- 			continue;
-@@ -744,6 +781,8 @@ static int everything_local(struct fetch_pack_args *args,
- 		}
- 	}
- 
-+	oidset_clear(&loose_oid_set);
-+
- 	if (!args->no_dependents) {
- 		if (!args->deepen) {
- 			for_each_ref(mark_complete_oid, NULL);
-diff --git a/sha1_file.c b/sha1_file.c
-index 1b94f39c4..c0a197947 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -1262,6 +1262,9 @@ int sha1_object_info_extended(const unsigned char *sha1, struct object_info *oi,
- 		if (find_pack_entry(real, &e))
- 			break;
- 
-+		if (flags & OBJECT_INFO_IGNORE_LOOSE)
-+			return -1;
-+
- 		/* Most likely it's a loose object. */
- 		if (!sha1_loose_object_info(real, oi, flags))
- 			return 0;
--- 
-2.16.2
+"the final target"? Do you mean "the git executable installed in 
+$bindir" or something like this?
 
+> +#
+>   # Define NO_CROSS_DIRECTORY_HARDLINKS if you plan to distribute the installed
+>   # programs as a tar, where bin/ and libexec/ might be on different file systems.
+>   #
+> @@ -2594,35 +2601,44 @@ endif
+>   
+>   	bindir=$$(cd '$(DESTDIR_SQ)$(bindir_SQ)' && pwd) && \
+>   	execdir=$$(cd '$(DESTDIR_SQ)$(gitexec_instdir_SQ)' && pwd) && \
+> +	destdir_from_execdir_SQ=$$(echo '$(gitexecdir_relative_SQ)' | sed -e 's|[^/][^/]*|..|g') && \
+>   	{ test "$$bindir/" = "$$execdir/" || \
+>   	  for p in git$X $(filter $(install_bindir_programs),$(ALL_PROGRAMS)); do \
+>   		$(RM) "$$execdir/$$p" && \
+> -		test -z "$(NO_INSTALL_HARDLINKS)$(NO_CROSS_DIRECTORY_HARDLINKS)" && \
+> -		ln "$$bindir/$$p" "$$execdir/$$p" 2>/dev/null || \
+> -		cp "$$bindir/$$p" "$$execdir/$$p" || exit; \
+> +		test -n "$(INSTALL_SYMLINKS)" && \
+> +		ln -s "$$destdir_from_execdir_SQ/$(bindir_relative_SQ)/$$p" "$$execdir/$$p" || \
+> +		{ test -z "$(NO_INSTALL_HARDLINKS)$(NO_CROSS_DIRECTORY_HARDLINKS)" && \
+> +		  ln "$$bindir/$$p" "$$execdir/$$p" 2>/dev/null || \
+> +		  cp "$$bindir/$$p" "$$execdir/$$p" || exit; } \
+
+I think that it is unnecessary to place the later options in {} brackets 
+because && and || have equal precedence in shell scripts. That is:
+
+	want symlinks? &&
+	make symlinks ||
+	want hard links? &&
+	make hard links ||
+	make copies ||
+	exit
+
+Of course, it means that when symlinking fails, it falls back to hard 
+links (if permitted) or copies, whichever works. But that also happens 
+with your version.
+
+(Ditto in the rest of the hunk, which I don't repeat here.)
+
+-- Hannes
