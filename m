@@ -2,58 +2,58 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2BECE1F404
-	for <e@80x24.org>; Wed, 14 Mar 2018 18:34:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 619C71F404
+	for <e@80x24.org>; Wed, 14 Mar 2018 18:34:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752306AbeCNSeS (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Mar 2018 14:34:18 -0400
-Received: from mail-qk0-f202.google.com ([209.85.220.202]:33795 "EHLO
-        mail-qk0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752540AbeCNScw (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Mar 2018 14:32:52 -0400
-Received: by mail-qk0-f202.google.com with SMTP id a22so2716270qkc.1
-        for <git@vger.kernel.org>; Wed, 14 Mar 2018 11:32:52 -0700 (PDT)
+        id S1752177AbeCNSeR (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Mar 2018 14:34:17 -0400
+Received: from mail-vk0-f73.google.com ([209.85.213.73]:48450 "EHLO
+        mail-vk0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751467AbeCNScz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Mar 2018 14:32:55 -0400
+Received: by mail-vk0-f73.google.com with SMTP id z186so2670769vkd.15
+        for <git@vger.kernel.org>; Wed, 14 Mar 2018 11:32:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=3KwKss0yiImv+LpOoBm6nnu/wpCXcvG9K6sVQ4IEBrQ=;
-        b=qPsnZmYDRRQKzVOyFo9PMmcranKZoTFK6gg6q4xDpiadcNqPnbL1NGpWqBlrOP5WdV
-         bJH2STSAE3Kezk+WUoN2ttyFTzo4bKBHsJw7KveWj3np5NmyZbci0KHCiH3gJG2b7DfL
-         pW51HtriEFbTcm4EQV10gtyWqjIJz6b00Kj+h63O2+PtWpI3ox53KoQMnSLYocgiEatA
-         KElmeN+RSZZ9/cb4o2EJxj6QRmEl64SHmRrV3WFF88KmBF2/15s2E0873sGOuKIfJBZe
-         V+upe/SjT6gftx4xmUmkDFUi4FPqO1WIEY1Qy2/6c2SpainDt17ght9T8bD41Or7DYS1
-         unkQ==
+        bh=1W4xBbqM1o45C/4bjSTbGa8R5NeK9wGH3y2+D6QFJ88=;
+        b=lMFssBYNJrH90NKxbCzg9STw8iUTyjxET5pDgn8shOCOdKMlTwjn7Lg6YUj6ntLQjD
+         IKhFVOZDAMfJLIKnAzCMBiEtAbjWPJi7qf+gb+RBZeLUL/2Ttt/IhmUFCjpg+m06VAjL
+         RYr1DzeNh0G4VvY4wZbWkidvonDtR+20xglmsdVzGzP9M1nOfbWmnNwTbVP9q1bjhBq+
+         iLtGLK7rqMYVpdWF5e9AX2TBs8zxxtWtXnr4J+Y5zwu2IebJO/AcSPmpU3se8Zh2chDC
+         IAv+5Fnw487+4A9qZzKmfOEgmXIwIYPyDoP57nqT7O3RxL4KB5YATkCNtKZRW2r8q0PK
+         a3bQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=3KwKss0yiImv+LpOoBm6nnu/wpCXcvG9K6sVQ4IEBrQ=;
-        b=MAVAfCisRM+9ygjiqEoiiWEZ4SEF4I4gEa1cefRSIWbFe+uyiMHgxLHo6jrv02Rtgz
-         NFGXNqVicodlBusJvev0SuKifLQFrPFFVerkocL4X9vQlnwQ5qwA8q2ulIV0DErkTcNe
-         S8/EnoHC9fH7HuMj2Dx7K1xzybdtccYqcqNrqpJ2wtOj86ohSOnzou1ar9H2meVMKTjI
-         U0lDnmhQqxLbijArI6m2Xg4UaGZoYl6cpVchUbPwWI3eNptFZp2QHUAg1c+T0g4oHTWF
-         7//2U2BPDOEW9jue7XtnE56DuSzl/PQkc0yqMZ9ve/KS0LTg/lTqPeapaBjzhK1CTVrf
-         PYCg==
-X-Gm-Message-State: AElRT7F3AVD+wrRTC3tQh3nXs4yXslh2Rc+V19NzEfYUjqmTqcOr4BTC
-        wKWXyTWvCRXAmtKeKs22VkC4/RVIlHmiEcLofOUfU+izklUhF5MsRrEOsleQ2SBfj8kx4KiK/TY
-        R5+qB/qYWcRh0Js+GvwXlFrqNvMmhHbKT7khshbe4EnjNFMfShPofR/DUdQ==
-X-Google-Smtp-Source: AG47ELtYIKtePd6eIeX9NQWQh2IVn8xqc3zT8D/pH2yoSyanWrXt9FRHCIJKzHYSME3qk+sNQkz6xo82V3w=
+        bh=1W4xBbqM1o45C/4bjSTbGa8R5NeK9wGH3y2+D6QFJ88=;
+        b=DzfZEept4RcqaiSCxob6DKcXyVTwAHMlQ9zH+2jdbXWQKT0+Z/96nQbely+HamiqAk
+         fSgrCE8avX16+DUj1zOmADSX5kZ00StadiH/JPWBRHPILcyJbGLiKl4Juytg2hfW9akR
+         /ynCg1DRKuIU/AhCJ5c1XwxWnBiFjuu/xOE7G4YBdhQO8zV/GH94PDes/kyv1GMvL4HD
+         EERYFOljJFtVRc5aKn4XDovKU3t3NyFZifzitlbMmneS4bBFm8/VXioaXNKHR001TvUH
+         UAXY7IH0+hajxSNHaOxVAhKNmfigdqbm/jJirpRv0eH8lOhlFx0d2pE3e2nXv0ZLR89o
+         puRg==
+X-Gm-Message-State: AElRT7HiqAPTjCTPtuK9L2kuy+ntslMj9i+4J9niInS0JPOQzvc4sIpr
+        DVuj4EK6yV5+eJNnikCHxua8Gno3HTez5tJI5c4fnOpMGUTJucyqlUn+IoaUswY6YVdCaF/d+94
+        lSfhuNdCm90GQrCcUEzr/qas4PlLequKTi3qHigeEmNiHgXafiEE6YKXgPQ==
+X-Google-Smtp-Source: AG47ELsXGyYDlkw0bRomyRGRLrEOSl2nHCabsm3HoaXB7Crm+f+YIQkBIp0uA5yg2vo0UDijtSvxS10Dt2U=
 MIME-Version: 1.0
-X-Received: by 10.200.97.9 with SMTP id a9mr3753371qtm.22.1521052371873; Wed,
- 14 Mar 2018 11:32:51 -0700 (PDT)
-Date:   Wed, 14 Mar 2018 11:31:52 -0700
+X-Received: by 10.31.226.132 with SMTP id z126mr2568711vkg.26.1521052374221;
+ Wed, 14 Mar 2018 11:32:54 -0700 (PDT)
+Date:   Wed, 14 Mar 2018 11:31:53 -0700
 In-Reply-To: <20180314183213.223440-1-bmwill@google.com>
-Message-Id: <20180314183213.223440-16-bmwill@google.com>
+Message-Id: <20180314183213.223440-17-bmwill@google.com>
 References: <20180314183213.223440-1-bmwill@google.com>
 X-Mailer: git-send-email 2.16.2.804.g6dcf76e118-goog
-Subject: [PATCH v5 15/35] transport: convert get_refs_list to take a list of
- ref prefixes
+Subject: [PATCH v5 16/35] transport: convert transport_get_remote_refs to take
+ a list of ref prefixes
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     git@jeffhostetler.com, gitster@pobox.com, jrnieder@gmail.com,
@@ -66,147 +66,124 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert the 'struct transport' virtual function 'get_refs_list()' to
-optionally take an argv_array of ref prefixes.  When communicating with
-a server using protocol v2 these ref prefixes can be sent when
-requesting a listing of their refs allowing the server to filter the
-refs it sends based on the sent prefixes.  This list will be ignored
-when not using protocol v2.
+Teach transport_get_remote_refs() to accept a list of ref prefixes,
+which will be sent to the server for use in filtering when using
+protocol v2. (This list will be ignored when not using protocol v2.)
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- transport-helper.c   |  5 +++--
- transport-internal.h | 11 ++++++++++-
- transport.c          | 18 +++++++++++-------
- 3 files changed, 24 insertions(+), 10 deletions(-)
+ builtin/clone.c     |  2 +-
+ builtin/fetch.c     |  4 ++--
+ builtin/ls-remote.c |  2 +-
+ builtin/remote.c    |  2 +-
+ transport.c         |  7 +++++--
+ transport.h         | 12 +++++++++++-
+ 6 files changed, 21 insertions(+), 8 deletions(-)
 
-diff --git a/transport-helper.c b/transport-helper.c
-index 5080150231..8774ab3013 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -1026,7 +1026,8 @@ static int has_attribute(const char *attrs, const char *attr) {
- 	}
- }
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 284651797e..6e77d993fa 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -1121,7 +1121,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	if (transport->smart_options && !deepen)
+ 		transport->smart_options->check_self_contained_and_connected = 1;
  
--static struct ref *get_refs_list(struct transport *transport, int for_push)
-+static struct ref *get_refs_list(struct transport *transport, int for_push,
-+				 const struct argv_array *ref_prefixes)
- {
- 	struct helper_data *data = transport->data;
- 	struct child_process *helper;
-@@ -1039,7 +1040,7 @@ static struct ref *get_refs_list(struct transport *transport, int for_push)
+-	refs = transport_get_remote_refs(transport);
++	refs = transport_get_remote_refs(transport, NULL);
  
- 	if (process_connect(transport, for_push)) {
- 		do_take_over(transport);
--		return transport->vtable->get_refs_list(transport, for_push);
-+		return transport->vtable->get_refs_list(transport, for_push, ref_prefixes);
- 	}
+ 	if (refs) {
+ 		mapped_refs = wanted_peer_refs(refs, refspec);
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 7bbcd26faf..850382f559 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -250,7 +250,7 @@ static void find_non_local_tags(struct transport *transport,
+ 	struct string_list_item *item = NULL;
  
- 	if (data->push && for_push)
-diff --git a/transport-internal.h b/transport-internal.h
-index 3c1a29d727..1cde6258a7 100644
---- a/transport-internal.h
-+++ b/transport-internal.h
-@@ -3,6 +3,7 @@
+ 	for_each_ref(add_existing, &existing_refs);
+-	for (ref = transport_get_remote_refs(transport); ref; ref = ref->next) {
++	for (ref = transport_get_remote_refs(transport, NULL); ref; ref = ref->next) {
+ 		if (!starts_with(ref->name, "refs/tags/"))
+ 			continue;
  
- struct ref;
- struct transport;
-+struct argv_array;
+@@ -336,7 +336,7 @@ static struct ref *get_ref_map(struct transport *transport,
+ 	/* opportunistically-updated references: */
+ 	struct ref *orefs = NULL, **oref_tail = &orefs;
  
- struct transport_vtable {
- 	/**
-@@ -17,11 +18,19 @@ struct transport_vtable {
- 	 * the transport to try to share connections, for_push is a
- 	 * hint as to whether the ultimate operation is a push or a fetch.
- 	 *
-+	 * If communicating using protocol v2 a list of prefixes can be
-+	 * provided to be sent to the server to enable it to limit the ref
-+	 * advertisement.  Since ref filtering is done on the server's end, and
-+	 * only when using protocol v2, this list will be ignored when not
-+	 * using protocol v2 meaning this function can return refs which don't
-+	 * match the provided ref_prefixes.
-+	 *
- 	 * If the transport is able to determine the remote hash for
- 	 * the ref without a huge amount of effort, it should store it
- 	 * in the ref's old_sha1 field; otherwise it should be all 0.
- 	 **/
--	struct ref *(*get_refs_list)(struct transport *transport, int for_push);
-+	struct ref *(*get_refs_list)(struct transport *transport, int for_push,
-+				     const struct argv_array *ref_prefixes);
+-	const struct ref *remote_refs = transport_get_remote_refs(transport);
++	const struct ref *remote_refs = transport_get_remote_refs(transport, NULL);
  
- 	/**
- 	 * Fetch the objects for the given refs. Note that this gets
+ 	if (refspec_count) {
+ 		struct refspec *fetch_refspec;
+diff --git a/builtin/ls-remote.c b/builtin/ls-remote.c
+index c4be98ab9e..c6e9847c5c 100644
+--- a/builtin/ls-remote.c
++++ b/builtin/ls-remote.c
+@@ -96,7 +96,7 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
+ 	if (uploadpack != NULL)
+ 		transport_set_option(transport, TRANS_OPT_UPLOADPACK, uploadpack);
+ 
+-	ref = transport_get_remote_refs(transport);
++	ref = transport_get_remote_refs(transport, NULL);
+ 	if (transport_disconnect(transport))
+ 		return 1;
+ 
+diff --git a/builtin/remote.c b/builtin/remote.c
+index d95bf904c3..d0b6ff6e29 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -862,7 +862,7 @@ static int get_remote_ref_states(const char *name,
+ 	if (query) {
+ 		transport = transport_get(states->remote, states->remote->url_nr > 0 ?
+ 			states->remote->url[0] : NULL);
+-		remote_refs = transport_get_remote_refs(transport);
++		remote_refs = transport_get_remote_refs(transport, NULL);
+ 		transport_disconnect(transport);
+ 
+ 		states->queried = 1;
 diff --git a/transport.c b/transport.c
-index ffc6b2614f..2e68010dd0 100644
+index 2e68010dd0..3f130518d2 100644
 --- a/transport.c
 +++ b/transport.c
-@@ -72,7 +72,9 @@ struct bundle_transport_data {
- 	struct bundle_header header;
- };
- 
--static struct ref *get_refs_from_bundle(struct transport *transport, int for_push)
-+static struct ref *get_refs_from_bundle(struct transport *transport,
-+					int for_push,
-+					const struct argv_array *ref_prefixes)
- {
- 	struct bundle_transport_data *data = transport->data;
- 	struct ref *result = NULL;
-@@ -189,7 +191,8 @@ static int connect_setup(struct transport *transport, int for_push)
- 	return 0;
+@@ -1138,10 +1138,13 @@ int transport_push(struct transport *transport,
+ 	return 1;
  }
  
--static struct ref *get_refs_via_connect(struct transport *transport, int for_push)
-+static struct ref *get_refs_via_connect(struct transport *transport, int for_push,
-+					const struct argv_array *ref_prefixes)
- {
- 	struct git_transport_data *data = transport->data;
- 	struct ref *refs = NULL;
-@@ -204,7 +207,8 @@ static struct ref *get_refs_via_connect(struct transport *transport, int for_pus
- 	data->version = discover_version(&reader);
- 	switch (data->version) {
- 	case protocol_v2:
--		get_remote_refs(data->fd[1], &reader, &refs, for_push, NULL);
-+		get_remote_refs(data->fd[1], &reader, &refs, for_push,
-+				ref_prefixes);
- 		break;
- 	case protocol_v1:
- 	case protocol_v0:
-@@ -250,7 +254,7 @@ static int fetch_refs_via_pack(struct transport *transport,
- 	args.update_shallow = data->options.update_shallow;
- 
- 	if (!data->got_remote_heads)
--		refs_tmp = get_refs_via_connect(transport, 0);
-+		refs_tmp = get_refs_via_connect(transport, 0, NULL);
- 
- 	switch (data->version) {
- 	case protocol_v2:
-@@ -568,7 +572,7 @@ static int git_transport_push(struct transport *transport, struct ref *remote_re
- 	int ret = 0;
- 
- 	if (!data->got_remote_heads)
--		get_refs_via_connect(transport, 1);
-+		get_refs_via_connect(transport, 1, NULL);
- 
- 	memset(&args, 0, sizeof(args));
- 	args.send_mirror = !!(flags & TRANSPORT_PUSH_MIRROR);
-@@ -1028,7 +1032,7 @@ int transport_push(struct transport *transport,
- 		if (check_push_refs(local_refs, refspec_nr, refspec) < 0)
- 			return -1;
- 
--		remote_refs = transport->vtable->get_refs_list(transport, 1);
-+		remote_refs = transport->vtable->get_refs_list(transport, 1, NULL);
- 
- 		if (flags & TRANSPORT_PUSH_ALL)
- 			match_flags |= MATCH_REFS_ALL;
-@@ -1137,7 +1141,7 @@ int transport_push(struct transport *transport,
- const struct ref *transport_get_remote_refs(struct transport *transport)
+-const struct ref *transport_get_remote_refs(struct transport *transport)
++const struct ref *transport_get_remote_refs(struct transport *transport,
++					    const struct argv_array *ref_prefixes)
  {
  	if (!transport->got_remote_refs) {
--		transport->remote_refs = transport->vtable->get_refs_list(transport, 0);
-+		transport->remote_refs = transport->vtable->get_refs_list(transport, 0, NULL);
+-		transport->remote_refs = transport->vtable->get_refs_list(transport, 0, NULL);
++		transport->remote_refs =
++			transport->vtable->get_refs_list(transport, 0,
++							 ref_prefixes);
  		transport->got_remote_refs = 1;
  	}
  
+diff --git a/transport.h b/transport.h
+index 731c78b679..83992a4257 100644
+--- a/transport.h
++++ b/transport.h
+@@ -178,7 +178,17 @@ int transport_push(struct transport *connection,
+ 		   int refspec_nr, const char **refspec, int flags,
+ 		   unsigned int * reject_reasons);
+ 
+-const struct ref *transport_get_remote_refs(struct transport *transport);
++/*
++ * Retrieve refs from a remote.
++ *
++ * Optionally a list of ref prefixes can be provided which can be sent to the
++ * server (when communicating using protocol v2) to enable it to limit the ref
++ * advertisement.  Since ref filtering is done on the server's end (and only
++ * when using protocol v2), this can return refs which don't match the provided
++ * ref_prefixes.
++ */
++const struct ref *transport_get_remote_refs(struct transport *transport,
++					    const struct argv_array *ref_prefixes);
+ 
+ int transport_fetch_refs(struct transport *transport, struct ref *refs);
+ void transport_unlock_pack(struct transport *transport);
 -- 
 2.16.2.804.g6dcf76e118-goog
 
