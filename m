@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1A22D1F404
-	for <e@80x24.org>; Wed, 14 Mar 2018 18:34:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 201211F404
+	for <e@80x24.org>; Wed, 14 Mar 2018 18:34:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752146AbeCNSel (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Mar 2018 14:34:41 -0400
-Received: from mail-ua0-f202.google.com ([209.85.217.202]:49509 "EHLO
-        mail-ua0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752343AbeCNScj (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Mar 2018 14:32:39 -0400
-Received: by mail-ua0-f202.google.com with SMTP id d3so2585604uae.16
-        for <git@vger.kernel.org>; Wed, 14 Mar 2018 11:32:38 -0700 (PDT)
+        id S1752345AbeCNScd (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Mar 2018 14:32:33 -0400
+Received: from mail-vk0-f74.google.com ([209.85.213.74]:47036 "EHLO
+        mail-vk0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752365AbeCNSc3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Mar 2018 14:32:29 -0400
+Received: by mail-vk0-f74.google.com with SMTP id u84so2684799vke.13
+        for <git@vger.kernel.org>; Wed, 14 Mar 2018 11:32:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=rYnaCDLMhOCjwbSZViYfblhc+Yoj+bmjBFBMj3B45n8=;
-        b=OG8L541Fay6tAu0nVW2AgLyLIlJswM7ykD2Zkho53t+IuxVVmcnsj2AIvPFUCLkcpJ
-         soBxMesCcdBqhnN8lZ6MQgxVl2BXqyhdUinqSXVmCTHhPsvcDFZ7k6U2b/BiZ/T83lKu
-         OHD02AbxlOsw0S/27OPjrywgPhxH/7e3i+uJIsx0uVp7xpjoLXY3D+TPYD5C9Kt59EyR
-         YEIXK2XjSi29cMiT8zwx+eza0lsRFX2752W1a5HehYYZ0jyONBMTtpKRsUkd7SiajYs8
-         2blR+o0nres/oUi1LCvBDrCFK6ZSW5J5FdPPnsYTWOLMRWpUc+PxD0ft7sGhRoWW80Hy
-         BstA==
+        bh=NFSIICGVr+1bS9hUnKD3wXVt5JiOfv0jsJj7nlb3wS4=;
+        b=JHDmq9SjTvnAButcSLk5F5IgkuKpXbnAvuhpyLmfwEV/UewEca5SZqbkylGlGcU/aB
+         q1oJvMiORalxo+H9bDnD3by9wK39ozKwV+zfBE0Sk6eSlHEGCiNJXUIv//p4gIf8lIfD
+         ch70Gi+BNyOzGjAaAW8fFcswfd3m9+Ukc/DfsFpGN1RfujNwf6V5om3Z+TAH0pBRkkRd
+         H/xKPhy0Ewt/Yfy3zk0boEDVriduCI8bA6ilKHBd2qU7bBEERKd1aGsQrM3gGJKXn8tK
+         3K/Zboqp2H4aCqHsrLl9nOtRgka/NpEKNB6OpR+8fbBTZ6DmUn7yCY3aBlNXvcXSL8SQ
+         BPWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=rYnaCDLMhOCjwbSZViYfblhc+Yoj+bmjBFBMj3B45n8=;
-        b=aQ3ZiSCoNypIM59Z6SZUhrEl0McxHu0wXOHRgvzonYWw4pQKTTKKkpr/wNi9LjsKfW
-         0X9wcPoO7LXyl0iKWC/3D0n1krypLEVAyry8IbeadFiPgTvEJkiXZ0YQDoBfLWeXIebn
-         tu8xogsPRbW/pFeC9k6A7JpyKF4vfEQInx6BXrKZdnk7Np5n2QL1ADi5ZjOlL1TinGxv
-         gtmsOam88EOOelgB8x2ZrvB4pvBreUzprwFE6f4E02owSLR47zv/f4K4pMvu5ezUF0Ig
-         7viO88SQhb+zq2ADYfIZjbGcFkEd9Xv40VmQIZ5chgcQMc28LoEyz9D98EWQ0c1fV1F9
-         nrwQ==
-X-Gm-Message-State: AElRT7Gbrq7JNhd2dIxLr5TkkSyr8wQMgsrKieh/Rllyj/Djz6z5UQAs
-        hY3ZWLuFn3BDdBFHhQ39404uUNXCjc/leGngX/jsE8NwyufjLoMGyC2mEbp9WcKSbxQUdKWiXRP
-        XPSkiVSYEUj71lyHSnlDr4uoS8AVDYZDpDJpG7VzJOku1PKfC+CtN3MkPJg==
-X-Google-Smtp-Source: AG47ELtyHaUXJ+fbfWa7LEoF74VCTOKiXO2hSYfISmeNYVfZfUlUk4H10vksqxgg0hSf3tO4vlOt6KOYT6E=
+        bh=NFSIICGVr+1bS9hUnKD3wXVt5JiOfv0jsJj7nlb3wS4=;
+        b=h6QOlyQe/77fX3UgNhg51fbbd4cfQ+Ju3umu1Ak8tBeLZxecl0fKp9PKAjWtnrpvv0
+         /Avlv+pRTKz7i+2XZYiy5QpNV7YFfaSRHnsDOI9cNyuUg4pnxOuM9KzKV8UySJomTuBF
+         rdNrk6UFgYshsplPFTDwUU5L7BCT0bsfPGlo0Rkwt2nCL1DCBTDZG4m0w4fl4TMVJwh+
+         yUhc9iRtrLHbbtvhfWe9GqG45jvPF/RzUhPk9Ph5dMqgW23pheaxQ4iKYusQvyqyimSx
+         pkkpIUjMwG6Xl6Nn2+rHAKeZ+sAhPIgP7yyHnjQ5Ne8XITV35czn8G+m1RIvlXwl6iCj
+         sCfw==
+X-Gm-Message-State: AElRT7GeE3giwGnzB6t1WGP13vuiv42RuPkdu7NG/NuIZKnWmMCZy7bu
+        dN1XcN53XhIDATIGJi5NO4U6SRMXhBwS02uckBveFUFSDXR/Z/g/fOPcurOeKLR0yGni7hX3tPu
+        lcbGESEFl38PJoP8kCTpMgYLZv/HrLsYK31J05ANt502sm3gSCqWWBONH/g==
+X-Google-Smtp-Source: AG47ELsivoCngJeeC744taLI6cNBosZkKk5NFECD9dcJdi1OecREk20i+7sXGd3qNfzmv0YdBixEVfHdOf4=
 MIME-Version: 1.0
-X-Received: by 10.176.89.174 with SMTP id g43mr2407372uad.4.1521052358337;
- Wed, 14 Mar 2018 11:32:38 -0700 (PDT)
-Date:   Wed, 14 Mar 2018 11:31:46 -0700
+X-Received: by 10.176.22.51 with SMTP id k48mr2556937uae.80.1521052349013;
+ Wed, 14 Mar 2018 11:32:29 -0700 (PDT)
+Date:   Wed, 14 Mar 2018 11:31:42 -0700
 In-Reply-To: <20180314183213.223440-1-bmwill@google.com>
-Message-Id: <20180314183213.223440-10-bmwill@google.com>
+Message-Id: <20180314183213.223440-6-bmwill@google.com>
 References: <20180314183213.223440-1-bmwill@google.com>
 X-Mailer: git-send-email 2.16.2.804.g6dcf76e118-goog
-Subject: [PATCH v5 09/35] transport: store protocol version
+Subject: [PATCH v5 05/35] upload-pack: factor out processing lines
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     git@jeffhostetler.com, gitster@pobox.com, jrnieder@gmail.com,
@@ -65,97 +65,151 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Once protocol_v2 is introduced requesting a fetch or a push will need to
-be handled differently depending on the protocol version.  Store the
-protocol version the server is speaking in 'struct git_transport_data'
-and use it to determine what to do in the case of a fetch or a push.
+Factor out the logic for processing shallow, deepen, deepen_since, and
+deepen_not lines into their own functions to simplify the
+'receive_needs()' function in addition to making it easier to reuse some
+of this logic when implementing protocol_v2.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- transport.c | 35 ++++++++++++++++++++++++++---------
- 1 file changed, 26 insertions(+), 9 deletions(-)
+ upload-pack.c | 113 +++++++++++++++++++++++++++++++++-----------------
+ 1 file changed, 74 insertions(+), 39 deletions(-)
 
-diff --git a/transport.c b/transport.c
-index 63c3dbab94..2378dcb38c 100644
---- a/transport.c
-+++ b/transport.c
-@@ -118,6 +118,7 @@ struct git_transport_data {
- 	struct child_process *conn;
- 	int fd[2];
- 	unsigned got_remote_heads : 1;
-+	enum protocol_version version;
- 	struct oid_array extra_have;
- 	struct oid_array shallow;
- };
-@@ -200,7 +201,8 @@ static struct ref *get_refs_via_connect(struct transport *transport, int for_pus
- 			   PACKET_READ_CHOMP_NEWLINE |
- 			   PACKET_READ_GENTLE_ON_EOF);
+diff --git a/upload-pack.c b/upload-pack.c
+index 2ad73a98b1..1e8a9e1caf 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -724,6 +724,75 @@ static void deepen_by_rev_list(int ac, const char **av,
+ 	packet_flush(1);
+ }
  
--	switch (discover_version(&reader)) {
-+	data->version = discover_version(&reader);
-+	switch (data->version) {
- 	case protocol_v1:
- 	case protocol_v0:
- 		get_remote_heads(&reader, &refs,
-@@ -221,7 +223,7 @@ static int fetch_refs_via_pack(struct transport *transport,
- {
- 	int ret = 0;
- 	struct git_transport_data *data = transport->data;
--	struct ref *refs;
-+	struct ref *refs = NULL;
- 	char *dest = xstrdup(transport->url);
- 	struct fetch_pack_args args;
- 	struct ref *refs_tmp = NULL;
-@@ -247,10 +249,18 @@ static int fetch_refs_via_pack(struct transport *transport,
- 	if (!data->got_remote_heads)
- 		refs_tmp = get_refs_via_connect(transport, 0);
- 
--	refs = fetch_pack(&args, data->fd, data->conn,
--			  refs_tmp ? refs_tmp : transport->remote_refs,
--			  dest, to_fetch, nr_heads, &data->shallow,
--			  &transport->pack_lockfile);
-+	switch (data->version) {
-+	case protocol_v1:
-+	case protocol_v0:
-+		refs = fetch_pack(&args, data->fd, data->conn,
-+				  refs_tmp ? refs_tmp : transport->remote_refs,
-+				  dest, to_fetch, nr_heads, &data->shallow,
-+				  &transport->pack_lockfile);
-+		break;
-+	case protocol_unknown_version:
-+		BUG("unknown protocol version");
++static int process_shallow(const char *line, struct object_array *shallows)
++{
++	const char *arg;
++	if (skip_prefix(line, "shallow ", &arg)) {
++		struct object_id oid;
++		struct object *object;
++		if (get_oid_hex(arg, &oid))
++			die("invalid shallow line: %s", line);
++		object = parse_object(&oid);
++		if (!object)
++			return 1;
++		if (object->type != OBJ_COMMIT)
++			die("invalid shallow object %s", oid_to_hex(&oid));
++		if (!(object->flags & CLIENT_SHALLOW)) {
++			object->flags |= CLIENT_SHALLOW;
++			add_object_array(object, NULL, shallows);
++		}
++		return 1;
 +	}
 +
- 	close(data->fd[0]);
- 	close(data->fd[1]);
- 	if (finish_connect(data->conn))
-@@ -549,7 +559,7 @@ static int git_transport_push(struct transport *transport, struct ref *remote_re
- {
- 	struct git_transport_data *data = transport->data;
- 	struct send_pack_args args;
--	int ret;
-+	int ret = 0;
- 
- 	if (!data->got_remote_heads)
- 		get_refs_via_connect(transport, 1);
-@@ -574,8 +584,15 @@ static int git_transport_push(struct transport *transport, struct ref *remote_re
- 	else
- 		args.push_cert = SEND_PACK_PUSH_CERT_NEVER;
- 
--	ret = send_pack(&args, data->fd, data->conn, remote_refs,
--			&data->extra_have);
-+	switch (data->version) {
-+	case protocol_v1:
-+	case protocol_v0:
-+		ret = send_pack(&args, data->fd, data->conn, remote_refs,
-+				&data->extra_have);
-+		break;
-+	case protocol_unknown_version:
-+		BUG("unknown protocol version");
++	return 0;
++}
++
++static int process_deepen(const char *line, int *depth)
++{
++	const char *arg;
++	if (skip_prefix(line, "deepen ", &arg)) {
++		char *end = NULL;
++		*depth = (int)strtol(arg, &end, 0);
++		if (!end || *end || *depth <= 0)
++			die("Invalid deepen: %s", line);
++		return 1;
 +	}
++
++	return 0;
++}
++
++static int process_deepen_since(const char *line, timestamp_t *deepen_since, int *deepen_rev_list)
++{
++	const char *arg;
++	if (skip_prefix(line, "deepen-since ", &arg)) {
++		char *end = NULL;
++		*deepen_since = parse_timestamp(arg, &end, 0);
++		if (!end || *end || !deepen_since ||
++		    /* revisions.c's max_age -1 is special */
++		    *deepen_since == -1)
++			die("Invalid deepen-since: %s", line);
++		*deepen_rev_list = 1;
++		return 1;
++	}
++	return 0;
++}
++
++static int process_deepen_not(const char *line, struct string_list *deepen_not, int *deepen_rev_list)
++{
++	const char *arg;
++	if (skip_prefix(line, "deepen-not ", &arg)) {
++		char *ref = NULL;
++		struct object_id oid;
++		if (expand_ref(arg, strlen(arg), &oid, &ref) != 1)
++			die("git upload-pack: ambiguous deepen-not: %s", line);
++		string_list_append(deepen_not, ref);
++		free(ref);
++		*deepen_rev_list = 1;
++		return 1;
++	}
++	return 0;
++}
++
+ static void receive_needs(void)
+ {
+ 	struct object_array shallows = OBJECT_ARRAY_INIT;
+@@ -745,49 +814,15 @@ static void receive_needs(void)
+ 		if (!line)
+ 			break;
  
- 	close(data->fd[1]);
- 	close(data->fd[0]);
+-		if (skip_prefix(line, "shallow ", &arg)) {
+-			struct object_id oid;
+-			struct object *object;
+-			if (get_oid_hex(arg, &oid))
+-				die("invalid shallow line: %s", line);
+-			object = parse_object(&oid);
+-			if (!object)
+-				continue;
+-			if (object->type != OBJ_COMMIT)
+-				die("invalid shallow object %s", oid_to_hex(&oid));
+-			if (!(object->flags & CLIENT_SHALLOW)) {
+-				object->flags |= CLIENT_SHALLOW;
+-				add_object_array(object, NULL, &shallows);
+-			}
++		if (process_shallow(line, &shallows))
+ 			continue;
+-		}
+-		if (skip_prefix(line, "deepen ", &arg)) {
+-			char *end = NULL;
+-			depth = strtol(arg, &end, 0);
+-			if (!end || *end || depth <= 0)
+-				die("Invalid deepen: %s", line);
++		if (process_deepen(line, &depth))
+ 			continue;
+-		}
+-		if (skip_prefix(line, "deepen-since ", &arg)) {
+-			char *end = NULL;
+-			deepen_since = parse_timestamp(arg, &end, 0);
+-			if (!end || *end || !deepen_since ||
+-			    /* revisions.c's max_age -1 is special */
+-			    deepen_since == -1)
+-				die("Invalid deepen-since: %s", line);
+-			deepen_rev_list = 1;
++		if (process_deepen_since(line, &deepen_since, &deepen_rev_list))
+ 			continue;
+-		}
+-		if (skip_prefix(line, "deepen-not ", &arg)) {
+-			char *ref = NULL;
+-			struct object_id oid;
+-			if (expand_ref(arg, strlen(arg), &oid, &ref) != 1)
+-				die("git upload-pack: ambiguous deepen-not: %s", line);
+-			string_list_append(&deepen_not, ref);
+-			free(ref);
+-			deepen_rev_list = 1;
++		if (process_deepen_not(line, &deepen_not, &deepen_rev_list))
+ 			continue;
+-		}
++
+ 		if (!skip_prefix(line, "want ", &arg) ||
+ 		    get_oid_hex(arg, &oid_buf))
+ 			die("git upload-pack: protocol error, "
 -- 
 2.16.2.804.g6dcf76e118-goog
 
