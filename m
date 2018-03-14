@@ -2,89 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5FE381F404
-	for <e@80x24.org>; Wed, 14 Mar 2018 19:47:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 585B21F404
+	for <e@80x24.org>; Wed, 14 Mar 2018 20:11:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932094AbeCNTq6 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Mar 2018 15:46:58 -0400
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:34861 "EHLO
-        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752227AbeCNTq4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Mar 2018 15:46:56 -0400
-Received: by mail-wr0-f193.google.com with SMTP id n12so6001297wra.2
-        for <git@vger.kernel.org>; Wed, 14 Mar 2018 12:46:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=tLn3GTTnqNHT6YknPAMdevv2bUuEMjmZXDV1Q3yBG0E=;
-        b=oYc40lEiTQTw7uNL3RBM99s/dntw1jHWWvuRG8r58vo3ewRT7iy7bVVMdQ8+Dm05xf
-         IWvVnvCbuejm25jtFZWmeNWaC7C1OMI14y7a4bUkp7dx7tyHxA+fORxZ4+KMb5FVMNZg
-         LZaMMuh+/meD7r5wob28EtoWKBpeEit4baOjud5FKPxmmgkcRb6wExsl6gLbSODUcYvX
-         FRjLW4pgxuUPEMW+M23aqBGl3e7RbLz3IiwEASFbwBRkKdGlL7OQrRDaXUdDPorgDLaY
-         pF04T6GHs5KIzaEx20S253rE46YmLtzCz6xmIVCz6U5+8t2oYrkZ5faT0cBo6cGTQCmz
-         YfiQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=tLn3GTTnqNHT6YknPAMdevv2bUuEMjmZXDV1Q3yBG0E=;
-        b=ock222Ef7yt5Oy406OqvDSsQy/Uy/TBB8lkl7fq2DF1EU5BZGVvDA7VzngKsvaqKCZ
-         996qaaPCI9hVb7CnaMvQmLedK61kQPBtddOn/fnxApLv20WEfSIoj1VqsXCO+jI0i/ny
-         xEUORkEnTtnFMHgd6vv4+GpKcCVcaIjNPTeVOUNsnHv85fsfoMaAlvAyp5Lh96V+1AP1
-         1DV0/ByVCrrAAlEC8ghU1Me/h0WcTavNEhDidAzdnaM467jV8SkzuGwvCvQPsXhpNT4n
-         F7W1YG98krTEb+6HAfJKz3W8sFAfUJ0CZPsttZDLbNdZXUXIg1DtrthzllWtYWfin5WX
-         NJUw==
-X-Gm-Message-State: AElRT7F6epUXgOPwCtEKlaiNeoHOd/JZl+s4SuB86Mh3Tnemr/kF3LN/
-        lIyA6ARBo0IZAfEqmgt/bkM=
-X-Google-Smtp-Source: AG47ELvcn9+ttuMNOUyfYiqs+xQJ/PflwBaIi3Hdam+CHqiRLoP5lJL6VCs6cXzdxsSketgLZ774BA==
-X-Received: by 10.223.160.42 with SMTP id k39mr5182659wrk.138.1521056814926;
-        Wed, 14 Mar 2018 12:46:54 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id k14sm2907791wrc.62.2018.03.14.12.46.54
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 14 Mar 2018 12:46:54 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Patryk Obara <patryk.obara@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v3 00/36] object_id part 12
-References: <20180312022756.483934-1-sandals@crustytoothpaste.net>
-        <xmqqtvtizjq9.fsf@gitster-ct.c.googlers.com>
-Date:   Wed, 14 Mar 2018 12:46:53 -0700
-In-Reply-To: <xmqqtvtizjq9.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Wed, 14 Mar 2018 09:48:30 -0700")
-Message-ID: <xmqqd106zbgy.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1751951AbeCNULG (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Mar 2018 16:11:06 -0400
+Received: from avasout04.plus.net ([212.159.14.19]:58656 "EHLO
+        avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751824AbeCNULE (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Mar 2018 16:11:04 -0400
+Received: from [10.0.2.15] ([80.189.70.162])
+        by smtp with ESMTPA
+        id wCjjeLNrCsD7bwCjke41pl; Wed, 14 Mar 2018 20:11:03 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.3 cv=CvORjEwD c=1 sm=1 tr=0
+ a=zzlqjQC3YyNvDZl/Gy+4mg==:117 a=zzlqjQC3YyNvDZl/Gy+4mg==:17
+ a=IkcTkHD0fZMA:10 a=7C2WyCFVwCjHCduJU-wA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+Subject: Re: [PATCH v6 00/14] Serialized Git Commit Graph
+To:     Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org
+Cc:     gitster@pobox.com, peff@peff.net, sbeller@google.com,
+        szeder.dev@gmail.com, git@jeffhostetler.com,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <1519698787-190494-1-git-send-email-dstolee@microsoft.com>
+ <20180314192736.70602-1-dstolee@microsoft.com>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <d55fb94e-1f79-f120-7f3f-190cacfa72be@ramsayjones.plus.com>
+Date:   Wed, 14 Mar 2018 20:10:59 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.6.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <20180314192736.70602-1-dstolee@microsoft.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfCom2UPdrMg66MYecT4UYTQoexs7uJh6jZLs1xWabn06KSY9Y2n7/Ll8aYIGmOGwIz0LCTvK6muYsJn/dyIL+PBN+VrcPwl/J9yVqL6G9FKQQtFhwYuR
+ +t8d0Kcw7y+ONd/a/wRU4oI+3TG6DOz9YS2yC9U4DrX7+fGGfqBUboBW
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
 
-> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
->
->> This is the twelfth in a series of patches to convert various parts of
->> the code to struct object_id.
->>
->> brian m. carlson (36):
->>   ...
-> As always, thanks for working on this.  
 
-There are a few topics that add new callsites to functions that are
-updated (e.g. find_unique_abbrev()), so I'll need to do a bit of the
-usual evil merging to coax this topic in.  Please holler if you spot
-my screw-up in what I'll push out in a few hours.
+On 14/03/18 19:27, Derrick Stolee wrote:
+> This v6 includes feedback around csum-file.c and the rename of hashclose()
+> to finalize_hashfile(). These are the first two commits of the series, so
+> they could be pulled out independently.
+> 
+> The only other change since v5 is that I re-ran the performance numbers
+> in "commit: integrate commit graph with commit parsing".
 
-Thanks.
+I haven't looked at v6 (I will wait for it to hit pu), but v5 is
+still causing sparse to complain.
+
+The diff given below (on top of current pu @9e418c7c9), fixes it
+for me. (Using a plain integer as a NULL pointer, in builtin/commit-
+graph.c, and the 'commit_graph' symbol should be file-local, in
+commit-graph.c).
+
+Thanks!
+
+ATB,
+Ramsay Jones
+
+-- >8 --
+diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
+index 62ac26e44..855df66bd 100644
+--- a/builtin/commit-graph.c
++++ b/builtin/commit-graph.c
+@@ -31,7 +31,7 @@ static struct opts_commit_graph {
+ 
+ static int graph_read(int argc, const char **argv)
+ {
+-	struct commit_graph *graph = 0;
++	struct commit_graph *graph = NULL;
+ 	char *graph_name;
+ 
+ 	static struct option builtin_commit_graph_read_options[] = {
+diff --git a/commit-graph.c b/commit-graph.c
+index 631edac4c..7b45fe85d 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -182,7 +182,7 @@ struct commit_graph *load_commit_graph_one(const char *graph_file)
+ }
+ 
+ /* global storage */
+-struct commit_graph *commit_graph = NULL;
++static struct commit_graph *commit_graph = NULL;
+ 
+ static void prepare_commit_graph_one(const char *obj_dir)
+ {
+
