@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 76F881F404
-	for <e@80x24.org>; Wed, 14 Mar 2018 18:33:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1CA601FAE3
+	for <e@80x24.org>; Wed, 14 Mar 2018 18:33:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752355AbeCNSdd (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Mar 2018 14:33:33 -0400
-Received: from mail-vk0-f73.google.com ([209.85.213.73]:47536 "EHLO
-        mail-vk0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752242AbeCNSda (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Mar 2018 14:33:30 -0400
-Received: by mail-vk0-f73.google.com with SMTP id n23so2673339vke.14
-        for <git@vger.kernel.org>; Wed, 14 Mar 2018 11:33:29 -0700 (PDT)
+        id S1752270AbeCNSd3 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Mar 2018 14:33:29 -0400
+Received: from mail-qk0-f202.google.com ([209.85.220.202]:39996 "EHLO
+        mail-qk0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752611AbeCNSdZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Mar 2018 14:33:25 -0400
+Received: by mail-qk0-f202.google.com with SMTP id z83so2686174qka.7
+        for <git@vger.kernel.org>; Wed, 14 Mar 2018 11:33:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=jVXVww5A5bn1Ppw0juUPt9s7aHF1mStWQ991AV7l9w4=;
-        b=DPat4sQxzIqq5EfA4wuwZTKZJVn2K2psS0A2EWTlePDUjrikdyuXJ+lOlo21v3K6q+
-         Ysqm5JnH6nouRN5izMk12gKctaFLxb0iJ6aW8mPJ7e97b+6bAWng8enayNQByuYfMcmR
-         IDF/N03CqZIAl5GW+ISAbJtW6nbEaxgyEHRAQuhbrcQXFFSGfQLhnB4a/AtuVVaEL0vb
-         KfHOsnXNx7hmFqA8qkbblecFiBX347mXmx+YNFsXc+9SzbrJOVukQ3y/djQBxSSx3P6I
-         EEQ9VYGJyxwJrtW4Dcxl/CEtOcK8qP1SsHu6elGP/wEOVYPuOFE+EEIPLPpwnJj0LA6H
-         AbyQ==
+        bh=pFPOgahYYmTpR0zYbEtapinckxWZTE+QUb6F4N5+RDs=;
+        b=m8U6FLNTGoJcQKVPauDyWrB1LSo/ijLwUPHfl8Yzw1fxtdzZEp8wsIUMm2qGjjBvGf
+         3mhDXmtRqWj9bGxGYIklXY6/z25RKHe0rlk5rw5kIHytQTvmA9TZgz3EV57Vq8FM5iL0
+         aRHOGFm/dNjTnby19qv5xi7PVq0dtg5l6fvWsex+a9LCxp+WmYrSe+jYEPtILd5nTJDd
+         MaKd8Kbbkjl0sx8XCT+b9flTi8A8gQwKMkywpXAFK/c/lj0wlfs7igZRljXby9zcnvpK
+         nRARk/RWJIIiYA4HI+zatlnGK74+oTrMgSPHZPsSYjUVGQ7UOtVnCxU96a+XT+iGohoI
+         xC6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=jVXVww5A5bn1Ppw0juUPt9s7aHF1mStWQ991AV7l9w4=;
-        b=bYlqx9G+EpODF0u7h+AggZR/aiJkBszKK9DvT6K7Ie8TmiStM5Q9tiTzzjobCI1/J/
-         PMCLP5Cqkrm26Q4YfR48n1UT+XKwS8pn+cvqtUeWLJ4cNO98U59cY+A13ji0k9xBTznS
-         oiKKHF23Z8H6GBgk5vFxR7ap4DUbRP8ES6QaQ7CZABbmk0CjIA4TAm5p/HGQJyID92cY
-         SL8P1ncis27ESx2Wx8Awv8QuegIvibJq36EcylSc1quWjuBmp3jP7I/juTPCksGmibmP
-         j/tuY5wwFrC18sW658sXUMnwvrsf7o/0bTBbRyvkRplbTrL1FCK10uk1vzM8WIsf2zI+
-         rD/A==
-X-Gm-Message-State: AElRT7F6jpdZjVpjt7pQqna1ABKGZYyIiKGqtc3m8S1M+5krNB51lwGv
-        QNgdigEWDMxoj6gqiZH+SJJGWZ231XqNX1jQfG3TL8e8nKO3F+a4TYWyWr+xJeblsu+OEKM6lxm
-        M+8avZ3c5MXe3mTYZHM7KO5VQogIO8f8LzVgi13dGLj1YquwSMB76pDUcFQ==
-X-Google-Smtp-Source: AG47ELslAusRwnbIsm9aGLMDFlthuN9qk6keBJPfmjIex51b9mkrXDDfiV7koPAOpPZdwXNj/ie75DKh/qk=
+        bh=pFPOgahYYmTpR0zYbEtapinckxWZTE+QUb6F4N5+RDs=;
+        b=ce11AlnE1n5At8usxEZQCSmPH6Eyl8Z7V5mnX0gwp/QWfv2/JIoFI0lAcvynMf4Ac2
+         FsQTxnB2iDK6p4lZwkJVcWmy4av7DD6waCmMVy5/JP2E1NuJ1JDBjkHUG3ViZjaxHV/7
+         ayGysuiv46dI6HOUqI1Gz0WyTsmpm10+dM5YZ1AggegBC+FtgaKpzYA1kk8ppCRqY1Ir
+         /fTNynV+5clKG/SovfkzNQpMZRfFAHDBN9rloW5mgCw5whAAGaYfYwdeCthc5dA1ndIF
+         8M4jjVudhQAVo2C7mBaDb3h9vMx+hCWy5uTahdv47hsXmeqGnLfKUpdFGog2wto4fgnw
+         v1NQ==
+X-Gm-Message-State: AElRT7HiD+DDLQBnp1uxbKVWixF4T3CrNpTTSOrViEf4q7vFWEzJpF3D
+        4Ut7gde5lTd6GT2Kay/taq3njgrDDQmGG6sTYsyAC9yc5kfC4yVhmZ6M/koRGbdCM/PoLhJVzNR
+        s2b/FMsg0YVMKQcpbM+gZ67KGa9n3u6+7dg806POxiozihgBwv6f4CItY5w==
+X-Google-Smtp-Source: AG47ELukoh0j7zo/wsUg3kR1J+6cJdULNXh7EIJua/xTx822eXo+O3S9KGY0/Xnn0435MO/Xvz6WfikV46E=
 MIME-Version: 1.0
-X-Received: by 10.159.54.36 with SMTP id r33mr2460088uad.2.1521052409415; Wed,
- 14 Mar 2018 11:33:29 -0700 (PDT)
-Date:   Wed, 14 Mar 2018 11:32:08 -0700
+X-Received: by 10.200.20.154 with SMTP id l26mr3588496qtj.26.1521052404735;
+ Wed, 14 Mar 2018 11:33:24 -0700 (PDT)
+Date:   Wed, 14 Mar 2018 11:32:06 -0700
 In-Reply-To: <20180314183213.223440-1-bmwill@google.com>
-Message-Id: <20180314183213.223440-32-bmwill@google.com>
+Message-Id: <20180314183213.223440-30-bmwill@google.com>
 References: <20180314183213.223440-1-bmwill@google.com>
 X-Mailer: git-send-email 2.16.2.804.g6dcf76e118-goog
-Subject: [PATCH v5 31/35] http: allow providing extra headers for http requests
+Subject: [PATCH v5 29/35] remote-curl: create copy of the service name
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     git@jeffhostetler.com, gitster@pobox.com, jrnieder@gmail.com,
@@ -65,52 +65,48 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a way for callers to request that extra headers be included when
-making http requests.
+Make a copy of the service name being requested instead of relying on
+the buffer pointed to by the passed in 'const char *' to remain
+unchanged.
+
+Currently, all service names are string constants, but a subsequent
+patch will introduce service names from external sources.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- http.c | 8 ++++++++
- http.h | 7 +++++++
- 2 files changed, 15 insertions(+)
+ remote-curl.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/http.c b/http.c
-index 5977712712..e1757d62b2 100644
---- a/http.c
-+++ b/http.c
-@@ -1723,6 +1723,14 @@ static int http_request(const char *url,
+diff --git a/remote-curl.c b/remote-curl.c
+index dae8a4a48d..4086aa733b 100644
+--- a/remote-curl.c
++++ b/remote-curl.c
+@@ -165,7 +165,7 @@ static int set_option(const char *name, const char *value)
+ }
  
- 	headers = curl_slist_append(headers, buf.buf);
+ struct discovery {
+-	const char *service;
++	char *service;
+ 	char *buf_alloc;
+ 	char *buf;
+ 	size_t len;
+@@ -257,6 +257,7 @@ static void free_discovery(struct discovery *d)
+ 		free(d->shallow.oid);
+ 		free(d->buf_alloc);
+ 		free_refs(d->refs);
++		free(d->service);
+ 		free(d);
+ 	}
+ }
+@@ -343,7 +344,7 @@ static struct discovery *discover_refs(const char *service, int for_push)
+ 		warning(_("redirecting to %s"), url.buf);
  
-+	/* Add additional headers here */
-+	if (options && options->extra_headers) {
-+		const struct string_list_item *item;
-+		for_each_string_list_item(item, options->extra_headers) {
-+			headers = curl_slist_append(headers, item->string);
-+		}
-+	}
-+
- 	curl_easy_setopt(slot->curl, CURLOPT_URL, url);
- 	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, headers);
- 	curl_easy_setopt(slot->curl, CURLOPT_ENCODING, "gzip");
-diff --git a/http.h b/http.h
-index f7bd3b26b0..4df4a25e1a 100644
---- a/http.h
-+++ b/http.h
-@@ -172,6 +172,13 @@ struct http_get_options {
- 	 * for details.
- 	 */
- 	struct strbuf *base_url;
-+
-+	/*
-+	 * If not NULL, contains additional HTTP headers to be sent with the
-+	 * request. The strings in the list must not be freed until after the
-+	 * request has completed.
-+	 */
-+	struct string_list *extra_headers;
- };
+ 	last= xcalloc(1, sizeof(*last_discovery));
+-	last->service = service;
++	last->service = xstrdup(service);
+ 	last->buf_alloc = strbuf_detach(&buffer, &last->len);
+ 	last->buf = last->buf_alloc;
  
- /* Return values for http_get_*() */
 -- 
 2.16.2.804.g6dcf76e118-goog
 
