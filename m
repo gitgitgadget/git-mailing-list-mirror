@@ -2,96 +2,136 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CEADE1F404
-	for <e@80x24.org>; Wed, 14 Mar 2018 17:31:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5BD491F404
+	for <e@80x24.org>; Wed, 14 Mar 2018 17:36:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751406AbeCNRbl (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Mar 2018 13:31:41 -0400
-Received: from mail-wr0-f176.google.com ([209.85.128.176]:44290 "EHLO
-        mail-wr0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751283AbeCNRbk (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Mar 2018 13:31:40 -0400
-Received: by mail-wr0-f176.google.com with SMTP id v65so5542839wrc.11
-        for <git@vger.kernel.org>; Wed, 14 Mar 2018 10:31:40 -0700 (PDT)
+        id S1751430AbeCNRg4 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Mar 2018 13:36:56 -0400
+Received: from mail-pg0-f45.google.com ([74.125.83.45]:44031 "EHLO
+        mail-pg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751131AbeCNRgz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Mar 2018 13:36:55 -0400
+Received: by mail-pg0-f45.google.com with SMTP id e9so1654957pgs.10
+        for <git@vger.kernel.org>; Wed, 14 Mar 2018 10:36:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=/4yQIuBvxvzJrL2MfmaAV1HnvXswvOL7UtWJLtK+9ec=;
-        b=MTTSS360RWj2aunpxvJTTT7byfiW2elH+7UwQfwWAerA3XLjMjhVtiFPT52gAUAcjt
-         AuO8Fl1YU4P4aFtwYMfriiyUXAeiI7eC44WX00dMxRSoEbJiyUlQPg5rGY9WqwnZVZBZ
-         WmCfHaa9rhypMV+ycch62fvgPwCF8+TgY5em9jiLrldk4nBozTxe+aW+kAeiCMrEYHTi
-         MSLj0N+bQjwz2hXkFiEWVvRh17v9bvKmsGL1zN63xLhchpqhDD0L19aN3Od5+BFmpA4Q
-         aA0uss9ZX4DGIOCoKhrbNkNfYEpTHNIJaYP44UTPdD5iFD6wE1zGtUo1NZPtQb+ttpQ5
-         o6NQ==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=0OkHvIOtpwyVfF543Yf/8ygbLKZz4iIKzNrB5Yf9D1k=;
+        b=mbgmP5SgbJHEZXSFt8KawgU8PBgmecXMxYoG+1W2XbtL3oRnGRQ+TLZobCB2wjJbTH
+         JHe1JS42I2EkrDioyGh+121+aTG0tch7NOEpRxFTGqk/KoLl73m5ddURvZ5nof8by+J4
+         E4IqnQM+7VSmnqXFhkYWBAEDIArQwSljVL8yrPIPvGU1JNPzqIOAq/tbZX7ZVaamaTTe
+         436KXLVyX7sqbY/IV/LWlv0frSsmwrgehkUOqnw0OOLaiBK2TGPhAkU88CMjcbv1LlVn
+         5JxAz7rfrVVQ8T/QnK341bpQI4dMAj99jEQRUB+CZleeiRS2vpQEiCQH9XYcEtW03Yh0
+         yESw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=/4yQIuBvxvzJrL2MfmaAV1HnvXswvOL7UtWJLtK+9ec=;
-        b=fWl8T0CWY25xR3uqOlWu79ozrJnegE+97T319481d/UOfXA4ks+xr8VsCXiA3agc0S
-         O6tOTe6mIM57XEiBOIaxz+XziF3PY3fWcGISsGuY3fyvi7ktE2opo8XXBWzmn056BPgD
-         Wec3oR6At9EIhMP7EuF+bTMy8AeeeFOdcp//6FcQd689G8zMb+t0Od0BIT0Qg55FT/WN
-         Zv5KOAklYb7IRX6J6rBsxi/YS+rF0TciOcsIen+MExDu9RYEN8woYkhFKqCg5AjxeIYK
-         Inlxz/J6FT/Z6g2Ca9nBSuQl+NVfypPERDfc24OIQNBFkvDYndN+CKE4wPxK+Eokjwoj
-         EHuw==
-X-Gm-Message-State: AElRT7HKdHcIx5DF0YoaVXKUsHee7hqpx09u6peuQ2JOLhGj8VIbxST3
-        /Rtag8P7upnbDILflJBp3Bo=
-X-Google-Smtp-Source: AG47ELtLDdNudupBGo+iFECrpM5oReRLpYrQsHmlUip62t6VmFIgNqfZHlkwJWShk1HJjEvnri0XDQ==
-X-Received: by 10.223.138.172 with SMTP id y41mr3769786wry.98.1521048699220;
-        Wed, 14 Mar 2018 10:31:39 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id 55sm4106209wrz.6.2018.03.14.10.31.38
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=0OkHvIOtpwyVfF543Yf/8ygbLKZz4iIKzNrB5Yf9D1k=;
+        b=l+IebsNVGYI8mnRH2sSnd6/sUcBtHZsuq2jYUr9gcY+RigdNKN4W3ewE1gwWTzRvFL
+         iRRJXqoQ3xdp29Y6Nujgf2PRo9lhkGj5HjMOMf3zxuorIXdVFGSz1t1+852HZT4R1Nxi
+         /zYw1IQMgwlh8BhHZgc1Smrqbr7RPZqTyYhKEawlrK6SyDt/JbUo0TFnyuF2bEdqlHw+
+         Q9ZtVKWqDrO+tSdMfuWWY6kCzU3bcsoP/elxAZB0bMsXbUzWfUApbZnFUYrTuI5K8bA7
+         S5xwje5jeyAAcXH2fYPLxR73tw3Mlk//ds2dgDbj/1P8/oTsz5i33ji3OWy24x2F5ejw
+         UvrA==
+X-Gm-Message-State: AElRT7GUCiMQ7eZIqGtY8VJMvpQLSet2rJQZklZwvzp9sDkMkx7CjbcN
+        0dUhvzILRs4VomjIv0RP2jzVZ1hqJ0w=
+X-Google-Smtp-Source: AG47ELshqYR2QBkkFeNT9KHxsbdEhvpjjRKTj0CN4Cj3rdQO9dkNGVWYUgC6UjfDQVjmwmzMIh7trg==
+X-Received: by 10.99.191.78 with SMTP id i14mr4229965pgo.95.1521049014400;
+        Wed, 14 Mar 2018 10:36:54 -0700 (PDT)
+Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
+        by smtp.gmail.com with ESMTPSA id y1sm5652853pgs.80.2018.03.14.10.36.52
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 14 Mar 2018 10:31:38 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Patryk Obara <patryk.obara@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v3 00/36] object_id part 12
-References: <20180312022756.483934-1-sandals@crustytoothpaste.net>
-Date:   Wed, 14 Mar 2018 10:31:37 -0700
-In-Reply-To: <20180312022756.483934-1-sandals@crustytoothpaste.net> (brian
-        m. carlson's message of "Mon, 12 Mar 2018 02:27:20 +0000")
-Message-ID: <xmqqlgeuzhqe.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        Wed, 14 Mar 2018 10:36:53 -0700 (PDT)
+Date:   Wed, 14 Mar 2018 10:36:52 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, git@jeffhostetler.com, gitster@pobox.com,
+        jrnieder@gmail.com, pclouds@gmail.com, peff@peff.net,
+        sbeller@google.com, stolee@gmail.com
+Subject: Re: [PATCH v4 27/35] transport-helper: introduce stateless-connect
+Message-ID: <20180314173652.GA135110@google.com>
+References: <20180207011312.189834-1-bmwill@google.com>
+ <20180228232252.102167-1-bmwill@google.com>
+ <20180228232252.102167-28-bmwill@google.com>
+ <20180313093044.69af995505d0508f8a044bff@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180313093044.69af995505d0508f8a044bff@google.com>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+On 03/13, Jonathan Tan wrote:
+> On Wed, 28 Feb 2018 15:22:44 -0800
+> Brandon Williams <bmwill@google.com> wrote:
+> 
+> > +'stateless-connect'::
+> > +	Experimental; for internal use only.
+> > +	Can attempt to connect to a remote server for communication
+> > +	using git's wire-protocol version 2.  This establishes a
+> > +	stateless, half-duplex connection.
+> > ++
+> > +Supported commands: 'stateless-connect'.
+> > +
+> >  'push'::
+> >  	Can discover remote refs and push local commits and the
+> >  	history leading up to them to new or existing remote refs.
+> > @@ -136,6 +144,14 @@ Capabilities for Fetching
+> >  +
+> >  Supported commands: 'connect'.
+> >  
+> > +'stateless-connect'::
+> > +	Experimental; for internal use only.
+> > +	Can attempt to connect to a remote server for communication
+> > +	using git's wire-protocol version 2.  This establishes a
+> > +	stateless, half-duplex connection.
+> > ++
+> > +Supported commands: 'stateless-connect'.
+> 
+> I don't think we should use the term "half-duplex" - from a search, it
+> means that both parties can use the wire but not simultaneously, which
+> is not strictly true. Might be better to just say "see the documentation
+> for the stateless-connect command for more information".
+> 
+> > +'stateless-connect' <service>::
+> > +	Experimental; for internal use only.
+> > +	Connects to the given remote service for communication using
+> > +	git's wire-protocol version 2.  This establishes a stateless,
+> > +	half-duplex connection.  Valid replies to this command are empty
+> > +	line (connection established), 'fallback' (no smart transport
+> > +	support, fall back to dumb transports) and just exiting with
+> > +	error message printed (can't connect, don't bother trying to
+> > +	fall back).  After line feed terminating the positive (empty)
+> > +	response, the output of the service starts.  Messages (both
+> > +	request and response) must be terminated with a single flush
+> > +	packet, allowing the remote helper to properly act as a proxy.
+> > +	After the connection ends, the remote helper exits.
+> > ++
+> > +Supported if the helper has the "stateless-connect" capability.
+> 
+> I'm not sure of the relevance of "allowing the remote helper to properly
+> act as a proxy" - this scheme does make it easier to implement proxies,
+> not for any party to start acting as one instead. I would write that
+> part as:
+> 
+>     Messages (both request and response) must consist of zero or more
+>     PKT-LINEs, terminating in a flush packet. The client must not expect
+>     the server to store any state in between request-response pairs.
+> 
+> (This covers the so-called "half-duplex" part and the "stateless" part.)
 
->     -+		buf += the_hash_algo->rawsz;
->     -+		size -= the_hash_algo->rawsz;
->     ++		memcpy(it->oid.hash, (const unsigned char*)buf, rawsz);
->     ++		buf += rawsz;
->     ++		size -= rawsz;
->       	}
+Thanks for helping wordsmith this, I'll update the docs based on these
+suggestions.
 
-Using memcpy() to stuff the hash[] field of oid structure with a
-bare byte array of rawsz bytes appears twice as a pattern in these
-patches.  I wonder if this is something we want to abstract behind
-the API, e.g.
-
-	size_t oidstuff_(struct object_id *oid, const unsigned char *buf)
-	{
-		size_t rawsz = the_hash_algo->rawsz;
-		memcpy(oid->hash, buf, rawsz);
-                return rawsz;
-	}
-
-It just felt a bit uneven to be using a bare-metal memcpy() when
-oidcpy() abstraction releaves the callers from having to be aware of
-the rawsz all the time.
-
+-- 
+Brandon Williams
