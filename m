@@ -2,91 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 641201F404
-	for <e@80x24.org>; Wed, 14 Mar 2018 21:56:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 809C91F404
+	for <e@80x24.org>; Wed, 14 Mar 2018 22:01:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751289AbeCNV4J (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Mar 2018 17:56:09 -0400
-Received: from avasout04.plus.net ([212.159.14.19]:35746 "EHLO
-        avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750779AbeCNV4I (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Mar 2018 17:56:08 -0400
-Received: from [10.0.2.15] ([80.189.70.162])
-        by smtp with ESMTPA
-        id wENSeLdDhsD7bwENTe46qb; Wed, 14 Mar 2018 21:56:07 +0000
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.3 cv=CvORjEwD c=1 sm=1 tr=0
- a=zzlqjQC3YyNvDZl/Gy+4mg==:117 a=zzlqjQC3YyNvDZl/Gy+4mg==:17
- a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=yBhdaeT2Iq6GER-ebPwA:9
- a=IrBGYhS9lLBEK1yT:21 a=FkKNdbij_UiL2GXW:21 a=QEXdDO2ut3YA:10
- a=yJM6EZoI5SlJf8ks9Ge_:22
-X-AUTH: ramsayjones@:2500
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, GIT Mailing-list <git@vger.kernel.org>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH] http: fix an unused variable warning for 'curl_no_proxy'
-Message-ID: <517c4210-c381-899e-b13a-00f8e4caba74@ramsayjones.plus.com>
-Date:   Wed, 14 Mar 2018 21:56:06 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
+        id S1751302AbeCNWBj (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Mar 2018 18:01:39 -0400
+Received: from mail-wr0-f195.google.com ([209.85.128.195]:37072 "EHLO
+        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750779AbeCNWBi (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Mar 2018 18:01:38 -0400
+Received: by mail-wr0-f195.google.com with SMTP id z12so6310247wrg.4
+        for <git@vger.kernel.org>; Wed, 14 Mar 2018 15:01:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=2YaOPhGJbOOz11oFb+485klz0PDd26UHcOZTpqR/xCg=;
+        b=WiCUncJ+ob+S2cCHL7nz6M2MiOpBgtyD+z/aOjoqBlKCyKNfwsC7ZwLXO/JGNizhfp
+         m/kWmzFLj3FFrwsT8fO4CKcWLwTSQ3m+BWlVWrXHPkopF3QAHyYxWhzdoU2tUM98aqqO
+         hKURLjwsQpIo9aeQZgoCntL6JRM+lVVJjTu7qPcV2B5RSQ6yp4K1Z9sinqavUxk09IxM
+         Hl09jtCzpXtmed5J9gL01wKmI1gijLcXZhl5zaglCeuh7Xn3oEFjqCRwr1I/2NmUiKkL
+         G2u3tqUFP+44lx+x+ugMIBPwQyhpi+OjsWOhsvH/k5v7jCFNzJ1KR8rREieUCrUv9Cx8
+         SEng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=2YaOPhGJbOOz11oFb+485klz0PDd26UHcOZTpqR/xCg=;
+        b=Zd8nUZ3j1+BIkjHF3WexKwc6YmApW9WDBhgIzjBwLjqeaI9Hwn3nUbobqwVWXJZige
+         w2VxdP4Zk39h2WVt+N9YNygoiwnhvBOA76aaqWktMOvAOMyM08iQ1dpPeGHdKjwthxao
+         lytcyw393UKgoOgkhLdOY4rKhepvhiMaHThAq7uBiBG2mszxoRp2+uKmT6kww/iAD0uh
+         gknrXXiEYWJ+Vzd1HmUfhpZ4wq+KGJM2JsUvQQjPahE0up/cw9Vj/zHA4rckOvCjtfxb
+         QyIX3gD8+ue6iG9yPppcCjLD6Td+J9VvtAptXQ1aYwIrg0qHF1rF7KmFdXY3tp2cY9p0
+         q5CA==
+X-Gm-Message-State: AElRT7GikOLG/bizpc/aYplbGf0SPL3IH3U8gq25PZVd23dwMHyCr1BK
+        riAp919COpi2V7cRJRkebA9Q2rs9
+X-Google-Smtp-Source: AG47ELsMmtbFT8grDq9CQmz5w82F1iyWdyraqadKaMzGIf2nRDNft2V50/KMuWZhgQXkJVo6Lb6OeQ==
+X-Received: by 10.223.136.248 with SMTP id g53mr4808612wrg.78.1521064897098;
+        Wed, 14 Mar 2018 15:01:37 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id 69sm2985230wmn.9.2018.03.14.15.01.36
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 14 Mar 2018 15:01:36 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git@vger.kernel.org, git@jeffhostetler.com, jrnieder@gmail.com,
+        pclouds@gmail.com, peff@peff.net, sbeller@google.com,
+        stolee@gmail.com, jonathantanmy@google.com
+Subject: Re: [PATCH v5 12/35] serve: introduce git-serve
+References: <20180314183213.223440-1-bmwill@google.com>
+        <20180314183213.223440-13-bmwill@google.com>
+Date:   Wed, 14 Mar 2018 15:01:36 -0700
+In-Reply-To: <20180314183213.223440-13-bmwill@google.com> (Brandon Williams's
+        message of "Wed, 14 Mar 2018 11:31:49 -0700")
+Message-ID: <xmqqsh92xqnz.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfMJ3+W/QlKN1PMV+mCgSRMvK65dDkfZBHAFPdiumOwbIlv7I+SsQ6jsj6v3zdc0Bvl7U94cQnM/md/gfnMUF2jZwPK5trhgGJKIZIblIgYDum508/mN6
- SbOuxZaYHiIGfJ65gEK1F68fjwnJcv+HxzgIgm+q85UQ2W2Jump1E/IDPXSfQ5Lc+fq3LGFtIvw+gQ==
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Brandon Williams <bmwill@google.com> writes:
 
-Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
----
+> Introduce git-serve, the base server for protocol version 2.
+> ...
+>  Documentation/Makefile                  |   1 +
+>  Documentation/technical/protocol-v2.txt | 174 +++++++++++++++++
 
-Hi Junio,
+asciidoc: ERROR: protocol-v2.txt: line 20: only book doctypes can contain level 0 sections
+asciidoc: ERROR: protocol-v2.txt: line 374: [blockdef-listing] missing closing delimiter
+Makefile:368: recipe for target 'technical/protocol-v2.html' failed
 
-I happened to be building git on an _old_ laptop earlier this evening
-and gcc complained, thus:
+I'll redo today's integration cycle to see if I can move this topic
+to a late part of 'pu', so that I can at least keep the part of 'pu'
+that is beyond what is in 'next' and still usable a bit larger.  The
+bw/protocol-v2 topic has been merged immediately above the topics
+that are already in 'next' for the past week or so, but I cannot
+afford to leave the build broken for majority of merges of 'pu'.
 
-      CC http.o
-  http.c:77:20: warning: ‘curl_no_proxy’ defined but not used [-Wunused-variable]
-   static const char *curl_no_proxy;
-                      ^
-The version of libcurl installed was 0x070f04. So, while it was fresh in my
-mind, I applied and tested this patch.
-
-ATB,
-Ramsay Jones
-
- http.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
-
-diff --git a/http.c b/http.c
-index 8c11156ae..a5bd5d62c 100644
---- a/http.c
-+++ b/http.c
-@@ -69,6 +69,9 @@ static const char *ssl_key;
- #if LIBCURL_VERSION_NUM >= 0x070908
- static const char *ssl_capath;
- #endif
-+#if LIBCURL_VERSION_NUM >= 0x071304
-+static const char *curl_no_proxy;
-+#endif
- #if LIBCURL_VERSION_NUM >= 0x072c00
- static const char *ssl_pinnedkey;
- #endif
-@@ -77,7 +80,6 @@ static long curl_low_speed_limit = -1;
- static long curl_low_speed_time = -1;
- static int curl_ftp_no_epsv;
- static const char *curl_http_proxy;
--static const char *curl_no_proxy;
- static const char *http_proxy_authmethod;
- static struct {
- 	const char *name;
--- 
-2.16.0
