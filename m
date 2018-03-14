@@ -2,57 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6567C1F404
-	for <e@80x24.org>; Wed, 14 Mar 2018 18:32:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7984C1F404
+	for <e@80x24.org>; Wed, 14 Mar 2018 18:33:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752640AbeCNScw (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Mar 2018 14:32:52 -0400
-Received: from mail-ot0-f202.google.com ([74.125.82.202]:47418 "EHLO
-        mail-ot0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752330AbeCNScu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Mar 2018 14:32:50 -0400
-Received: by mail-ot0-f202.google.com with SMTP id g36-v6so2229191ote.14
-        for <git@vger.kernel.org>; Wed, 14 Mar 2018 11:32:50 -0700 (PDT)
+        id S1752450AbeCNSc6 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Mar 2018 14:32:58 -0400
+Received: from mail-oi0-f74.google.com ([209.85.218.74]:43598 "EHLO
+        mail-oi0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751917AbeCNScs (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Mar 2018 14:32:48 -0400
+Received: by mail-oi0-f74.google.com with SMTP id j68so2146293oih.10
+        for <git@vger.kernel.org>; Wed, 14 Mar 2018 11:32:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=1qGnd+Mu0zUNuuhFq9AYFsin1g11vtpMWF09vZTwcuU=;
-        b=etMtmZoUWTJEiKjIG/15x3hXAMLX02nILx1OhQwfC6MC7wlfyQTEu5hupTSrtFu2m9
-         a9Lfud+Eq27cw0Ye39NzT9ZGNX4dNDO+DR5lzjzSpL1kH828RpnYfGA5PXuHNcHrk5MI
-         rlVSttfo9MrN4Gu3RpyPDvA0oAPunsOYuySg7Oxz8fH7+XFc2O3uXkk1rasTGjlgEQC9
-         XjXCyEUC0E171sWMy4Uuddt9wqf1tKd5TsMAd4eF5btTGVnKfgRBAKlrm5PBGD6DUlTT
-         BavU4E/Wk2HcEMOiF1cRUGgW1n48mSBVwr1FuRZzE6PQgpBX5hYJocAlG1hpOUIvWHGX
-         0XnQ==
+        bh=qrLawsSmhQapQIrlcZRaWV7MF1rVD4bAQgWpbl7XOyw=;
+        b=PStejuWjevjncOQp8IrxGQLhZzaabhsuQtvQEHJtJDZyWcyRZZ0XUjOXwHHwLKMrqz
+         38YcmR7Q/3H05hW5zA5wPZti1Xs5lQbft4IJi9Axkt4uxRdoPyVoc7JAabMcskbuyw/d
+         rb2IchBqg30iZOoqmRpgAz2WQL69IVH4pyEF2+gGkrIY0bzl0QWxyeAjjab6fQCyAWIH
+         65dwJBXriKcjAAl2AWaw2vRIcwnFjjDwr7w7FzSPYllg+f6LL3ncs8WUDt2osH/Nr21I
+         M41VMaz9KSqKpvRtsm2+TAv68cYZbiIQYHWTWeEXzFGaM3E9pJBd/HEDd5omnxLbYo4C
+         jssA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=1qGnd+Mu0zUNuuhFq9AYFsin1g11vtpMWF09vZTwcuU=;
-        b=qj3jH4Xk9PmDoFMhsM+cHMprNePBDdJnC8ucS4Vv1aA0AoUPYck4FbnvvuzvcI2N1x
-         x45OsUr8eq7BTmgtGML2hybQD6+FuagAsd2V74ICE/yDqFugGAvXGj5fn0Jb0Lh+QFZo
-         8nzceCK5m/yN0++lauaBEoviVZtOWFwnNEFRTaHpm/JwPZxyzsTZPMFbys/MKA54691q
-         0tS7PJzGw305tHRmXHsZcV6EHurhO+2TyAAXTV7x+HwwTObs8tr9DVV44sCdXsj2jFm3
-         1Eo66MQ54ryeXvZkeHe0dk0dH9EffNmHxjx02W39zaO7WD2QUvCkDbJ09P59LfnIuhdm
-         T0pw==
-X-Gm-Message-State: AElRT7H+6mJRyPA4UtiXAikxq3HrWRhWkmny9Adlurv523J1hFLIB40y
-        ZZT59LvD+yaBh31wnoKoegOGEJF1MNKhoBMf8Y03UGCEG3UpZiptv5vZ3xgw6G2T80LPERsAMa/
-        T9RlXeOdhS0V+qlyi/7PwiIl9YjlrPKl7eERHnvaGHy7yj+oaR6ECgu246g==
-X-Google-Smtp-Source: AG47ELueokSWTNJ0OjYhsxPDe2UO+pCrP/oCBWxcmPprzarb/GnxIA4BPKr5/WivgRVHlpAvyyyLfHbDyR0=
+        bh=qrLawsSmhQapQIrlcZRaWV7MF1rVD4bAQgWpbl7XOyw=;
+        b=isQPE+TY25Izl9SNtHe+rrz7Ke+84/jdWks2W69n2RcK8eG1VesAOBCmmKbmnDpsIr
+         r2XQKgbyYCA3gq3owoloQkgJhD598lgPMTYXCfD6XPTi8zd+xViWkSKyR1wwmSUTKBCj
+         Grb94fVj3BV8bmz6Rrdefy1DAYGIKRJPorgpsUxDDQ/qmiqMYGmyUTulYc/N//1QkTq8
+         txNHPMb1mGK5KbWxrI4UVXT1m1aFVp834d1HCdV+UDbVEYZUbQ3LanhUUm1EKdYtOosK
+         b7bU+6njoUd2hpcssCShnKUiQej1npl6gG4gSX2w09ILM/hrVtpAbntnDuJhjxJJiq+S
+         FfLA==
+X-Gm-Message-State: AElRT7G5nJ1fiYyEQMh7jeLMGSiKHv9iItoRuqt8VvdWTI3JGASRo8Of
+        KG8T8vS93Nk49OeuLhNW94IrDb1cvCdAEuZ12wcVoOUiAdQ7raQ2/WX1KNH7Fwrz1w4aWqp9LkR
+        D2MRSK45/W/5IeJF4zhrcd6JBkfb3FElPa5qvFRdAIhz+4xolWm1cX7TewA==
+X-Google-Smtp-Source: AG47ELuJzj3ljOu4XzdnIc4m+AkR0ZHs3roAS1g8n3uP2MIA95b7F7r4dRsrqRZ4mTVoULP1KtfriEsjMN8=
 MIME-Version: 1.0
-X-Received: by 10.157.51.153 with SMTP id u25mr2367208otc.39.1521052369568;
- Wed, 14 Mar 2018 11:32:49 -0700 (PDT)
-Date:   Wed, 14 Mar 2018 11:31:51 -0700
+X-Received: by 10.202.204.82 with SMTP id c79mr2491891oig.0.1521052367386;
+ Wed, 14 Mar 2018 11:32:47 -0700 (PDT)
+Date:   Wed, 14 Mar 2018 11:31:50 -0700
 In-Reply-To: <20180314183213.223440-1-bmwill@google.com>
-Message-Id: <20180314183213.223440-15-bmwill@google.com>
+Message-Id: <20180314183213.223440-14-bmwill@google.com>
 References: <20180314183213.223440-1-bmwill@google.com>
 X-Mailer: git-send-email 2.16.2.804.g6dcf76e118-goog
-Subject: [PATCH v5 14/35] connect: request remote refs using v2
+Subject: [PATCH v5 13/35] ls-refs: introduce ls-refs server command
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     git@jeffhostetler.com, gitster@pobox.com, jrnieder@gmail.com,
@@ -65,358 +65,352 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Teach the client to be able to request a remote's refs using protocol
-v2.  This is done by having a client issue a 'ls-refs' request to a v2
-server.
+Introduce the ls-refs server command.  In protocol v2, the ls-refs
+command is used to request the ref advertisement from the server.  Since
+it is a command which can be requested (as opposed to mandatory in v1),
+a client can sent a number of parameters in its request to limit the ref
+advertisement based on provided ref-prefixes.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- builtin/upload-pack.c  |  10 +--
- connect.c              | 138 +++++++++++++++++++++++++++++++++++++++--
- connect.h              |   2 +
- remote.h               |   6 ++
- t/t5702-protocol-v2.sh |  57 +++++++++++++++++
- transport.c            |   2 +-
- 6 files changed, 204 insertions(+), 11 deletions(-)
- create mode 100755 t/t5702-protocol-v2.sh
+ Documentation/technical/protocol-v2.txt |  31 +++++++
+ Makefile                                |   1 +
+ ls-refs.c                               |  96 ++++++++++++++++++++
+ ls-refs.h                               |  10 +++
+ serve.c                                 |   8 ++
+ t/t5701-git-serve.sh                    | 115 ++++++++++++++++++++++++
+ 6 files changed, 261 insertions(+)
+ create mode 100644 ls-refs.c
+ create mode 100644 ls-refs.h
 
-diff --git a/builtin/upload-pack.c b/builtin/upload-pack.c
-index 8d53e9794b..a757df8da0 100644
---- a/builtin/upload-pack.c
-+++ b/builtin/upload-pack.c
-@@ -5,6 +5,7 @@
- #include "parse-options.h"
- #include "protocol.h"
- #include "upload-pack.h"
-+#include "serve.h"
- 
- static const char * const upload_pack_usage[] = {
- 	N_("git upload-pack [<options>] <dir>"),
-@@ -16,6 +17,7 @@ int cmd_upload_pack(int argc, const char **argv, const char *prefix)
- 	const char *dir;
- 	int strict = 0;
- 	struct upload_pack_options opts = { 0 };
-+	struct serve_options serve_opts = SERVE_OPTIONS_INIT;
- 	struct option options[] = {
- 		OPT_BOOL(0, "stateless-rpc", &opts.stateless_rpc,
- 			 N_("quit after a single request/response exchange")),
-@@ -48,11 +50,9 @@ int cmd_upload_pack(int argc, const char **argv, const char *prefix)
- 
- 	switch (determine_protocol_version_server()) {
- 	case protocol_v2:
--		/*
--		 * fetch support for protocol v2 has not been implemented yet,
--		 * so ignore the request to use v2 and fallback to using v0.
--		 */
--		upload_pack(&opts);
-+		serve_opts.advertise_capabilities = opts.advertise_refs;
-+		serve_opts.stateless_rpc = opts.stateless_rpc;
-+		serve(&serve_opts);
- 		break;
- 	case protocol_v1:
- 		/*
-diff --git a/connect.c b/connect.c
-index 4b89b984c4..e42d779f71 100644
---- a/connect.c
-+++ b/connect.c
-@@ -12,9 +12,11 @@
- #include "sha1-array.h"
- #include "transport.h"
- #include "strbuf.h"
-+#include "version.h"
- #include "protocol.h"
- 
--static char *server_capabilities;
-+static char *server_capabilities_v1;
-+static struct argv_array server_capabilities_v2 = ARGV_ARRAY_INIT;
- static const char *parse_feature_value(const char *, const char *, int *);
- 
- static int check_ref(const char *name, unsigned int flags)
-@@ -62,6 +64,33 @@ static void die_initial_contact(int unexpected)
- 		      "and the repository exists."));
- }
- 
-+/* Checks if the server supports the capability 'c' */
-+int server_supports_v2(const char *c, int die_on_error)
+diff --git a/Documentation/technical/protocol-v2.txt b/Documentation/technical/protocol-v2.txt
+index 3a671497b2..422edf870e 100644
+--- a/Documentation/technical/protocol-v2.txt
++++ b/Documentation/technical/protocol-v2.txt
+@@ -172,3 +172,34 @@ printable ASCII characters except space (i.e., the byte range 32 < x <
+ "git/1.8.3.1"). The agent strings are purely informative for statistics
+ and debugging purposes, and MUST NOT be used to programmatically assume
+ the presence or absence of particular features.
++
++ ls-refs
++---------
++
++`ls-refs` is the command used to request a reference advertisement in v2.
++Unlike the current reference advertisement, ls-refs takes in arguments
++which can be used to limit the refs sent from the server.
++
++Additional features not supported in the base command will be advertised
++as the value of the command in the capability advertisement in the form
++of a space separated list of features: "<command>=<feature 1> <feature 2>"
++
++ls-refs takes in the following arguments:
++
++    symrefs
++	In addition to the object pointed by it, show the underlying ref
++	pointed by it when showing a symbolic ref.
++    peel
++	Show peeled tags.
++    ref-prefix <prefix>
++	When specified, only references having a prefix matching one of
++	the provided prefixes are displayed.
++
++The output of ls-refs is as follows:
++
++    output = *ref
++	     flush-pkt
++    ref = PKT-LINE(obj-id SP refname *(SP ref-attribute) LF)
++    ref-attribute = (symref | peeled)
++    symref = "symref-target:" symref-target
++    peeled = "peeled:" obj-id
+diff --git a/Makefile b/Makefile
+index 18c255428a..e50927cfb3 100644
+--- a/Makefile
++++ b/Makefile
+@@ -825,6 +825,7 @@ LIB_OBJS += list-objects-filter-options.o
+ LIB_OBJS += ll-merge.o
+ LIB_OBJS += lockfile.o
+ LIB_OBJS += log-tree.o
++LIB_OBJS += ls-refs.o
+ LIB_OBJS += mailinfo.o
+ LIB_OBJS += mailmap.o
+ LIB_OBJS += match-trees.o
+diff --git a/ls-refs.c b/ls-refs.c
+new file mode 100644
+index 0000000000..a06f12eca8
+--- /dev/null
++++ b/ls-refs.c
+@@ -0,0 +1,96 @@
++#include "cache.h"
++#include "repository.h"
++#include "refs.h"
++#include "remote.h"
++#include "argv-array.h"
++#include "ls-refs.h"
++#include "pkt-line.h"
++
++/*
++ * Check if one of the prefixes is a prefix of the ref.
++ * If no prefixes were provided, all refs match.
++ */
++static int ref_match(const struct argv_array *prefixes, const char *refname)
 +{
 +	int i;
 +
-+	for (i = 0; i < server_capabilities_v2.argc; i++) {
-+		const char *out;
-+		if (skip_prefix(server_capabilities_v2.argv[i], c, &out) &&
-+		    (!*out || *out == '='))
++	if (!prefixes->argc)
++		return 1; /* no restriction */
++
++	for (i = 0; i < prefixes->argc; i++) {
++		const char *prefix = prefixes->argv[i];
++
++		if (starts_with(refname, prefix))
 +			return 1;
 +	}
-+
-+	if (die_on_error)
-+		die("server doesn't support '%s'", c);
 +
 +	return 0;
 +}
 +
-+static void process_capabilities_v2(struct packet_reader *reader)
-+{
-+	while (packet_reader_read(reader) == PACKET_READ_NORMAL)
-+		argv_array_push(&server_capabilities_v2, reader->line);
++struct ls_refs_data {
++	unsigned peel;
++	unsigned symrefs;
++	struct argv_array prefixes;
++};
 +
-+	if (reader->status != PACKET_READ_FLUSH)
-+		die("expected flush after capabilities");
++static int send_ref(const char *refname, const struct object_id *oid,
++		    int flag, void *cb_data)
++{
++	struct ls_refs_data *data = cb_data;
++	const char *refname_nons = strip_namespace(refname);
++	struct strbuf refline = STRBUF_INIT;
++
++	if (!ref_match(&data->prefixes, refname))
++		return 0;
++
++	strbuf_addf(&refline, "%s %s", oid_to_hex(oid), refname_nons);
++	if (data->symrefs && flag & REF_ISSYMREF) {
++		struct object_id unused;
++		const char *symref_target = resolve_ref_unsafe(refname, 0,
++							       &unused,
++							       &flag);
++
++		if (!symref_target)
++			die("'%s' is a symref but it is not?", refname);
++
++		strbuf_addf(&refline, " symref-target:%s", symref_target);
++	}
++
++	if (data->peel) {
++		struct object_id peeled;
++		if (!peel_ref(refname, &peeled))
++			strbuf_addf(&refline, " peeled:%s", oid_to_hex(&peeled));
++	}
++
++	strbuf_addch(&refline, '\n');
++	packet_write(1, refline.buf, refline.len);
++
++	strbuf_release(&refline);
++	return 0;
 +}
 +
- enum protocol_version discover_version(struct packet_reader *reader)
- {
- 	enum protocol_version version = protocol_unknown_version;
-@@ -84,7 +113,7 @@ enum protocol_version discover_version(struct packet_reader *reader)
- 
- 	switch (version) {
- 	case protocol_v2:
--		die("support for protocol v2 not implemented yet");
-+		process_capabilities_v2(reader);
- 		break;
- 	case protocol_v1:
- 		/* Read the peeked version line */
-@@ -128,7 +157,7 @@ static void parse_one_symref_info(struct string_list *symref, const char *val, i
- static void annotate_refs_with_symref_info(struct ref *ref)
- {
- 	struct string_list symref = STRING_LIST_INIT_DUP;
--	const char *feature_list = server_capabilities;
-+	const char *feature_list = server_capabilities_v1;
- 
- 	while (feature_list) {
- 		int len;
-@@ -157,7 +186,7 @@ static void process_capabilities(const char *line, int *len)
- 	int nul_location = strlen(line);
- 	if (nul_location == *len)
- 		return;
--	server_capabilities = xstrdup(line + nul_location + 1);
-+	server_capabilities_v1 = xstrdup(line + nul_location + 1);
- 	*len = nul_location;
- }
- 
-@@ -292,6 +321,105 @@ struct ref **get_remote_heads(struct packet_reader *reader,
- 	return list;
- }
- 
-+/* Returns 1 when a valid ref has been added to `list`, 0 otherwise */
-+static int process_ref_v2(const char *line, struct ref ***list)
++int ls_refs(struct repository *r, struct argv_array *keys,
++	    struct packet_reader *request)
 +{
-+	int ret = 1;
-+	int i = 0;
-+	struct object_id old_oid;
-+	struct ref *ref;
-+	struct string_list line_sections = STRING_LIST_INIT_DUP;
-+	const char *end;
++	struct ls_refs_data data;
 +
-+	/*
-+	 * Ref lines have a number of fields which are space deliminated.  The
-+	 * first field is the OID of the ref.  The second field is the ref
-+	 * name.  Subsequent fields (symref-target and peeled) are optional and
-+	 * don't have a particular order.
-+	 */
-+	if (string_list_split(&line_sections, line, ' ', -1) < 2) {
-+		ret = 0;
-+		goto out;
++	memset(&data, 0, sizeof(data));
++
++	while (packet_reader_read(request) != PACKET_READ_FLUSH) {
++		const char *arg = request->line;
++		const char *out;
++
++		if (!strcmp("peel", arg))
++			data.peel = 1;
++		else if (!strcmp("symrefs", arg))
++			data.symrefs = 1;
++		else if (skip_prefix(arg, "ref-prefix ", &out))
++			argv_array_push(&data.prefixes, out);
 +	}
 +
-+	if (parse_oid_hex(line_sections.items[i++].string, &old_oid, &end) ||
-+	    *end) {
-+		ret = 0;
-+		goto out;
-+	}
-+
-+	ref = alloc_ref(line_sections.items[i++].string);
-+
-+	oidcpy(&ref->old_oid, &old_oid);
-+	**list = ref;
-+	*list = &ref->next;
-+
-+	for (; i < line_sections.nr; i++) {
-+		const char *arg = line_sections.items[i].string;
-+		if (skip_prefix(arg, "symref-target:", &arg))
-+			ref->symref = xstrdup(arg);
-+
-+		if (skip_prefix(arg, "peeled:", &arg)) {
-+			struct object_id peeled_oid;
-+			char *peeled_name;
-+			struct ref *peeled;
-+			if (parse_oid_hex(arg, &peeled_oid, &end) || *end) {
-+				ret = 0;
-+				goto out;
-+			}
-+
-+			peeled_name = xstrfmt("%s^{}", ref->name);
-+			peeled = alloc_ref(peeled_name);
-+
-+			oidcpy(&peeled->old_oid, &peeled_oid);
-+			**list = peeled;
-+			*list = &peeled->next;
-+
-+			free(peeled_name);
-+		}
-+	}
-+
-+out:
-+	string_list_clear(&line_sections, 0);
-+	return ret;
++	head_ref_namespaced(send_ref, &data);
++	for_each_namespaced_ref(send_ref, &data);
++	packet_flush(1);
++	argv_array_clear(&data.prefixes);
++	return 0;
 +}
-+
-+struct ref **get_remote_refs(int fd_out, struct packet_reader *reader,
-+			     struct ref **list, int for_push,
-+			     const struct argv_array *ref_prefixes)
-+{
-+	int i;
-+	*list = NULL;
-+
-+	if (server_supports_v2("ls-refs", 1))
-+		packet_write_fmt(fd_out, "command=ls-refs\n");
-+
-+	if (server_supports_v2("agent", 0))
-+		packet_write_fmt(fd_out, "agent=%s", git_user_agent_sanitized());
-+
-+	packet_delim(fd_out);
-+	/* When pushing we don't want to request the peeled tags */
-+	if (!for_push)
-+		packet_write_fmt(fd_out, "peel\n");
-+	packet_write_fmt(fd_out, "symrefs\n");
-+	for (i = 0; ref_prefixes && i < ref_prefixes->argc; i++) {
-+		packet_write_fmt(fd_out, "ref-prefix %s\n",
-+				 ref_prefixes->argv[i]);
-+	}
-+	packet_flush(fd_out);
-+
-+	/* Process response from server */
-+	while (packet_reader_read(reader) == PACKET_READ_NORMAL) {
-+		if (!process_ref_v2(reader->line, &list))
-+			die("invalid ls-refs response: %s", reader->line);
-+	}
-+
-+	if (reader->status != PACKET_READ_FLUSH)
-+		die("expected flush after ref listing");
-+
-+	return list;
-+}
-+
- static const char *parse_feature_value(const char *feature_list, const char *feature, int *lenp)
- {
- 	int len;
-@@ -336,7 +464,7 @@ int parse_feature_request(const char *feature_list, const char *feature)
- 
- const char *server_feature_value(const char *feature, int *len)
- {
--	return parse_feature_value(server_capabilities, feature, len);
-+	return parse_feature_value(server_capabilities_v1, feature, len);
- }
- 
- int server_supports(const char *feature)
-diff --git a/connect.h b/connect.h
-index cdb8979dce..8898d44952 100644
---- a/connect.h
-+++ b/connect.h
-@@ -16,4 +16,6 @@ extern int url_is_local_not_ssh(const char *url);
- struct packet_reader;
- extern enum protocol_version discover_version(struct packet_reader *reader);
- 
-+extern int server_supports_v2(const char *c, int die_on_error);
-+
- #endif
-diff --git a/remote.h b/remote.h
-index 2016461df9..368ba221cc 100644
---- a/remote.h
-+++ b/remote.h
-@@ -151,11 +151,17 @@ void free_refs(struct ref *ref);
- 
- struct oid_array;
- struct packet_reader;
-+struct argv_array;
- extern struct ref **get_remote_heads(struct packet_reader *reader,
- 				     struct ref **list, unsigned int flags,
- 				     struct oid_array *extra_have,
- 				     struct oid_array *shallow_points);
- 
-+/* Used for protocol v2 in order to retrieve refs from a remote */
-+extern struct ref **get_remote_refs(int fd_out, struct packet_reader *reader,
-+				    struct ref **list, int for_push,
-+				    const struct argv_array *ref_prefixes);
-+
- int resolve_remote_symref(struct ref *ref, struct ref *list);
- int ref_newer(const struct object_id *new_oid, const struct object_id *old_oid);
- 
-diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
-new file mode 100755
-index 0000000000..dc5f813beb
+diff --git a/ls-refs.h b/ls-refs.h
+new file mode 100644
+index 0000000000..b62877e8da
 --- /dev/null
-+++ b/t/t5702-protocol-v2.sh
-@@ -0,0 +1,57 @@
-+#!/bin/sh
++++ b/ls-refs.h
+@@ -0,0 +1,10 @@
++#ifndef LS_REFS_H
++#define LS_REFS_H
 +
-+test_description='test git wire-protocol version 2'
++struct repository;
++struct argv_array;
++struct packet_reader;
++extern int ls_refs(struct repository *r, struct argv_array *keys,
++		   struct packet_reader *request);
 +
-+TEST_NO_CREATE_REPO=1
++#endif /* LS_REFS_H */
+diff --git a/serve.c b/serve.c
+index 7ddcba9003..1cb5fb9b5b 100644
+--- a/serve.c
++++ b/serve.c
+@@ -4,8 +4,15 @@
+ #include "pkt-line.h"
+ #include "version.h"
+ #include "argv-array.h"
++#include "ls-refs.h"
+ #include "serve.h"
+ 
++static int always_advertise(struct repository *r,
++			    struct strbuf *value)
++{
++	return 1;
++}
 +
-+. ./test-lib.sh
-+
-+# Test protocol v2 with 'git://' transport
+ static int agent_advertise(struct repository *r,
+ 			   struct strbuf *value)
+ {
+@@ -46,6 +53,7 @@ struct protocol_capability {
+ 
+ static struct protocol_capability capabilities[] = {
+ 	{ "agent", agent_advertise, NULL },
++	{ "ls-refs", always_advertise, ls_refs },
+ };
+ 
+ static void advertise_capabilities(void)
+diff --git a/t/t5701-git-serve.sh b/t/t5701-git-serve.sh
+index affbad097d..d03e08eebd 100755
+--- a/t/t5701-git-serve.sh
++++ b/t/t5701-git-serve.sh
+@@ -8,6 +8,7 @@ test_expect_success 'test capability advertisement' '
+ 	cat >expect <<-EOF &&
+ 	version 2
+ 	agent=git/$(git version | cut -d" " -f3)
++	ls-refs
+ 	0000
+ 	EOF
+ 
+@@ -57,4 +58,118 @@ test_expect_success 'request invalid command' '
+ 	test_i18ngrep "invalid command" err
+ '
+ 
++# Test the basics of ls-refs
 +#
-+. "$TEST_DIRECTORY"/lib-git-daemon.sh
-+start_git_daemon --export-all --enable=receive-pack
-+daemon_parent=$GIT_DAEMON_DOCUMENT_ROOT_PATH/parent
-+
-+test_expect_success 'create repo to be served by git-daemon' '
-+	git init "$daemon_parent" &&
-+	test_commit -C "$daemon_parent" one
++test_expect_success 'setup some refs and tags' '
++	test_commit one &&
++	git branch dev master &&
++	test_commit two &&
++	git symbolic-ref refs/heads/release refs/heads/master &&
++	git tag -a -m "annotated tag" annotated-tag
 +'
 +
-+test_expect_success 'list refs with git:// using protocol v2' '
-+	test_when_finished "rm -f log" &&
++test_expect_success 'basics of ls-refs' '
++	test-pkt-line pack >in <<-EOF &&
++	command=ls-refs
++	0000
++	EOF
 +
-+	GIT_TRACE_PACKET="$(pwd)/log" git -c protocol.version=2 \
-+		ls-remote --symref "$GIT_DAEMON_URL/parent" >actual &&
++	cat >expect <<-EOF &&
++	$(git rev-parse HEAD) HEAD
++	$(git rev-parse refs/heads/dev) refs/heads/dev
++	$(git rev-parse refs/heads/master) refs/heads/master
++	$(git rev-parse refs/heads/release) refs/heads/release
++	$(git rev-parse refs/tags/annotated-tag) refs/tags/annotated-tag
++	$(git rev-parse refs/tags/one) refs/tags/one
++	$(git rev-parse refs/tags/two) refs/tags/two
++	0000
++	EOF
 +
-+	# Client requested to use protocol v2
-+	grep "git> .*\\\0\\\0version=2\\\0$" log &&
-+	# Server responded using protocol v2
-+	grep "git< version 2" log &&
-+
-+	git ls-remote --symref "$GIT_DAEMON_URL/parent" >expect &&
++	git serve --stateless-rpc <in >out &&
++	test-pkt-line unpack <out >actual &&
 +	test_cmp actual expect
 +'
 +
-+stop_git_daemon
++test_expect_success 'basic ref-prefixes' '
++	test-pkt-line pack >in <<-EOF &&
++	command=ls-refs
++	0001
++	ref-prefix refs/heads/master
++	ref-prefix refs/tags/one
++	0000
++	EOF
 +
-+# Test protocol v2 with 'file://' transport
-+#
-+test_expect_success 'create repo to be served by file:// transport' '
-+	git init file_parent &&
-+	test_commit -C file_parent one
-+'
++	cat >expect <<-EOF &&
++	$(git rev-parse refs/heads/master) refs/heads/master
++	$(git rev-parse refs/tags/one) refs/tags/one
++	0000
++	EOF
 +
-+test_expect_success 'list refs with file:// using protocol v2' '
-+	test_when_finished "rm -f log" &&
-+
-+	GIT_TRACE_PACKET="$(pwd)/log" git -c protocol.version=2 \
-+		ls-remote --symref "file://$(pwd)/file_parent" >actual &&
-+
-+	# Server responded using protocol v2
-+	grep "git< version 2" log &&
-+
-+	git ls-remote --symref "file://$(pwd)/file_parent" >expect &&
++	git serve --stateless-rpc <in >out &&
++	test-pkt-line unpack <out >actual &&
 +	test_cmp actual expect
 +'
 +
-+test_done
-diff --git a/transport.c b/transport.c
-index 83d9dd1df6..ffc6b2614f 100644
---- a/transport.c
-+++ b/transport.c
-@@ -204,7 +204,7 @@ static struct ref *get_refs_via_connect(struct transport *transport, int for_pus
- 	data->version = discover_version(&reader);
- 	switch (data->version) {
- 	case protocol_v2:
--		die("support for protocol v2 not implemented yet");
-+		get_remote_refs(data->fd[1], &reader, &refs, for_push, NULL);
- 		break;
- 	case protocol_v1:
- 	case protocol_v0:
++test_expect_success 'refs/heads prefix' '
++	test-pkt-line pack >in <<-EOF &&
++	command=ls-refs
++	0001
++	ref-prefix refs/heads/
++	0000
++	EOF
++
++	cat >expect <<-EOF &&
++	$(git rev-parse refs/heads/dev) refs/heads/dev
++	$(git rev-parse refs/heads/master) refs/heads/master
++	$(git rev-parse refs/heads/release) refs/heads/release
++	0000
++	EOF
++
++	git serve --stateless-rpc <in >out &&
++	test-pkt-line unpack <out >actual &&
++	test_cmp actual expect
++'
++
++test_expect_success 'peel parameter' '
++	test-pkt-line pack >in <<-EOF &&
++	command=ls-refs
++	0001
++	peel
++	ref-prefix refs/tags/
++	0000
++	EOF
++
++	cat >expect <<-EOF &&
++	$(git rev-parse refs/tags/annotated-tag) refs/tags/annotated-tag peeled:$(git rev-parse refs/tags/annotated-tag^{})
++	$(git rev-parse refs/tags/one) refs/tags/one
++	$(git rev-parse refs/tags/two) refs/tags/two
++	0000
++	EOF
++
++	git serve --stateless-rpc <in >out &&
++	test-pkt-line unpack <out >actual &&
++	test_cmp actual expect
++'
++
++test_expect_success 'symrefs parameter' '
++	test-pkt-line pack >in <<-EOF &&
++	command=ls-refs
++	0001
++	symrefs
++	ref-prefix refs/heads/
++	0000
++	EOF
++
++	cat >expect <<-EOF &&
++	$(git rev-parse refs/heads/dev) refs/heads/dev
++	$(git rev-parse refs/heads/master) refs/heads/master
++	$(git rev-parse refs/heads/release) refs/heads/release symref-target:refs/heads/master
++	0000
++	EOF
++
++	git serve --stateless-rpc <in >out &&
++	test-pkt-line unpack <out >actual &&
++	test_cmp actual expect
++'
++
+ test_done
 -- 
 2.16.2.804.g6dcf76e118-goog
 
