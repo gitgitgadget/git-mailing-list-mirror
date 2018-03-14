@@ -2,99 +2,178 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 585B21F404
-	for <e@80x24.org>; Wed, 14 Mar 2018 20:11:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 741DB1F404
+	for <e@80x24.org>; Wed, 14 Mar 2018 20:43:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751951AbeCNULG (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Mar 2018 16:11:06 -0400
-Received: from avasout04.plus.net ([212.159.14.19]:58656 "EHLO
-        avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751824AbeCNULE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Mar 2018 16:11:04 -0400
-Received: from [10.0.2.15] ([80.189.70.162])
-        by smtp with ESMTPA
-        id wCjjeLNrCsD7bwCjke41pl; Wed, 14 Mar 2018 20:11:03 +0000
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.3 cv=CvORjEwD c=1 sm=1 tr=0
- a=zzlqjQC3YyNvDZl/Gy+4mg==:117 a=zzlqjQC3YyNvDZl/Gy+4mg==:17
- a=IkcTkHD0fZMA:10 a=7C2WyCFVwCjHCduJU-wA:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
+        id S1751357AbeCNUnm (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Mar 2018 16:43:42 -0400
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:33847 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750950AbeCNUnl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Mar 2018 16:43:41 -0400
+Received: by mail-wr0-f194.google.com with SMTP id o8so6172363wra.1
+        for <git@vger.kernel.org>; Wed, 14 Mar 2018 13:43:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=HImR9nmrUfON7Cb6DfiTlb/PgDPjb06Jsh25ftQhwoI=;
+        b=sePBZcWlnix7HHuDJu8uPURnhyYWg8C7mF7/BEcDpFsRfPrzy1YPIQKgcr491s9J7x
+         3lpHggCadvWP1XePZeayNym8jnl5avg12gKm7+ggbnCWSqoTXD1TiBnVlTFxWmmJCUJx
+         WkugPzQ4GJHcj5dC8tCU2ZoKf2nRr2pVWhgFgnfmmkQsy9OYF2VW40aWeTMwlFR/6pD/
+         zz5j8sW8m+XRo8ICePoQOQWqkzgeA60Ynjy8VTYlj46vfhD/JWCDWsEg4ugHmzu2BRWt
+         x65N/hcLg2viZ6uDzRqZj20d5yPyet/8dR+InWCPKp/HyZdMdySuQmA8QMOLhT8YrFM+
+         fpdA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=HImR9nmrUfON7Cb6DfiTlb/PgDPjb06Jsh25ftQhwoI=;
+        b=Z2kLDUX3Jkk802/p63DUxxcrjmmK2TyF6r04krpdybQVGx6PHYKhjrs0nyzLT/uIky
+         nprG0WoypUs0KqZYOJZ5U1PdSb1EAQrMUwiJH01nF7cMkipfm+ahbNgX856Zge46aC+f
+         YEnp7K1TGGixkp/C5Q8jBHSOHi6Yr7iZ4dduDv+dUH/MQYyxdaa0tAF95ovvHi/Bs9o7
+         V/HxzoFhjI9Kbpr4GB4SUBFZHHNFxa7egrgWQRa3dZIuLsNeeF2AC7Mj1+CcMR14KqaA
+         oNz0INzqXT5V/jooL+bblzNwYKWIcNLldTODtepVtTv5pFrMJQMa/5KBKPTmPiocLivb
+         Gz5g==
+X-Gm-Message-State: AElRT7Gxfnj3TmBP6pNpvNxdwvTByZdcqL/pRdQt+e7qCfroMPHmh6X2
+        3Nkxu+uiUmoYIOCwkt+IM1o=
+X-Google-Smtp-Source: AG47ELsW1foYaOM31EHIiRf1bfs98n+Euc9jKDzdwJY7+wSJYjuGjFG5w68RipMIbWUJaNQjRtmisg==
+X-Received: by 10.223.134.12 with SMTP id 12mr4827899wrv.193.1521060219290;
+        Wed, 14 Mar 2018 13:43:39 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id 59sm3612714wro.57.2018.03.14.13.43.37
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 14 Mar 2018 13:43:37 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     git@vger.kernel.org, peff@peff.net, sbeller@google.com,
+        szeder.dev@gmail.com, ramsay@ramsayjones.plus.com,
+        git@jeffhostetler.com, Derrick Stolee <dstolee@microsoft.com>
 Subject: Re: [PATCH v6 00/14] Serialized Git Commit Graph
-To:     Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org
-Cc:     gitster@pobox.com, peff@peff.net, sbeller@google.com,
-        szeder.dev@gmail.com, git@jeffhostetler.com,
-        Derrick Stolee <dstolee@microsoft.com>
 References: <1519698787-190494-1-git-send-email-dstolee@microsoft.com>
- <20180314192736.70602-1-dstolee@microsoft.com>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <d55fb94e-1f79-f120-7f3f-190cacfa72be@ramsayjones.plus.com>
-Date:   Wed, 14 Mar 2018 20:10:59 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
+        <20180314192736.70602-1-dstolee@microsoft.com>
+Date:   Wed, 14 Mar 2018 13:43:37 -0700
+In-Reply-To: <20180314192736.70602-1-dstolee@microsoft.com> (Derrick Stolee's
+        message of "Wed, 14 Mar 2018 15:27:22 -0400")
+Message-ID: <xmqq605yz8ue.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20180314192736.70602-1-dstolee@microsoft.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfCom2UPdrMg66MYecT4UYTQoexs7uJh6jZLs1xWabn06KSY9Y2n7/Ll8aYIGmOGwIz0LCTvK6muYsJn/dyIL+PBN+VrcPwl/J9yVqL6G9FKQQtFhwYuR
- +t8d0Kcw7y+ONd/a/wRU4oI+3TG6DOz9YS2yC9U4DrX7+fGGfqBUboBW
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Derrick Stolee <stolee@gmail.com> writes:
 
-
-On 14/03/18 19:27, Derrick Stolee wrote:
 > This v6 includes feedback around csum-file.c and the rename of hashclose()
 > to finalize_hashfile(). These are the first two commits of the series, so
 > they could be pulled out independently.
-> 
+>
 > The only other change since v5 is that I re-ran the performance numbers
 > in "commit: integrate commit graph with commit parsing".
 
-I haven't looked at v6 (I will wait for it to hit pu), but v5 is
-still causing sparse to complain.
+Thanks.
 
-The diff given below (on top of current pu @9e418c7c9), fixes it
-for me. (Using a plain integer as a NULL pointer, in builtin/commit-
-graph.c, and the 'commit_graph' symbol should be file-local, in
-commit-graph.c).
+> Hopefully this version is ready to merge. I have several follow-up topics
+> in mind to submit soon after, including:
 
-Thanks!
+A few patches add trailing blank lines and other whitespace
+breakages, which will stop my "git merge" later to 'next' and down,
+as I have a pre-commit hook to catch them.
 
-ATB,
-Ramsay Jones
+Here is the output from my "git am -s" session.
 
--- >8 --
-diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
-index 62ac26e44..855df66bd 100644
---- a/builtin/commit-graph.c
-+++ b/builtin/commit-graph.c
-@@ -31,7 +31,7 @@ static struct opts_commit_graph {
- 
- static int graph_read(int argc, const char **argv)
- {
--	struct commit_graph *graph = 0;
-+	struct commit_graph *graph = NULL;
- 	char *graph_name;
- 
- 	static struct option builtin_commit_graph_read_options[] = {
-diff --git a/commit-graph.c b/commit-graph.c
-index 631edac4c..7b45fe85d 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -182,7 +182,7 @@ struct commit_graph *load_commit_graph_one(const char *graph_file)
- }
- 
- /* global storage */
--struct commit_graph *commit_graph = NULL;
-+static struct commit_graph *commit_graph = NULL;
- 
- static void prepare_commit_graph_one(const char *obj_dir)
- {
+Applying: csum-file: rename hashclose() to finalize_hashfile()
+Applying: csum-file: refactor finalize_hashfile() method
+.git/rebase-apply/patch:109: new blank line at EOF.
++
+warning: 1 line adds whitespace errors.
+Applying: commit-graph: add format document
+.git/rebase-apply/patch:175: new blank line at EOF.
++
+warning: 1 line adds whitespace errors.
+Applying: graph: add commit graph design document
+.git/rebase-apply/patch:42: new blank line at EOF.
++
+.git/rebase-apply/patch:109: new blank line at EOF.
++
+warning: 2 lines add whitespace errors.
+Applying: commit-graph: create git-commit-graph builtin
+.git/rebase-apply/patch:323: space before tab in indent.
+ 	fd = hold_lock_file_for_update(&lk, graph_name, 0);
+.git/rebase-apply/patch:334: space before tab in indent.
+ 		fd = hold_lock_file_for_update(&lk, graph_name, LOCK_DIE_ON_ERROR);
+.git/rebase-apply/patch:385: new blank line at EOF.
++
+.git/rebase-apply/patch:398: new blank line at EOF.
++
+warning: 2 lines applied after fixing whitespace errors.
+Applying: commit-graph: implement write_commit_graph()
+.git/rebase-apply/patch:138: indent with spaces.
+        cd "$TRASH_DIRECTORY/full" &&
+.git/rebase-apply/patch:144: indent with spaces.
+        cd "$TRASH_DIRECTORY/full" &&
+.git/rebase-apply/patch:154: indent with spaces.
+        cd "$TRASH_DIRECTORY/full" &&
+.git/rebase-apply/patch:160: indent with spaces.
+        cd "$TRASH_DIRECTORY/full" &&
+.git/rebase-apply/patch:197: indent with spaces.
+        cd "$TRASH_DIRECTORY/full" &&
+warning: squelched 6 whitespace errors
+warning: 10 lines applied after fixing whitespace errors.
+Applying: commit-graph: implement 'git-commit-graph write'
+Test number t5318 already taken
+.git/rebase-apply/patch:346: indent with spaces.
+        cd "$TRASH_DIRECTORY/full" &&
+.git/rebase-apply/patch:356: indent with spaces.
+        cd "$TRASH_DIRECTORY/full" &&
+.git/rebase-apply/patch:366: indent with spaces.
+        cd "$TRASH_DIRECTORY/full" &&
+.git/rebase-apply/patch:374: indent with spaces.
+        cd "$TRASH_DIRECTORY/full" &&
+.git/rebase-apply/patch:384: indent with spaces.
+        cd "$TRASH_DIRECTORY/bare" &&
+warning: 5 lines add whitespace errors.
+Applying: commit-graph: implement git commit-graph read
+Applying: commit-graph: add core.commitGraph setting
+Applying: commit-graph: close under reachability
+.git/rebase-apply/patch:302: indent with spaces.
+        cd "$TRASH_DIRECTORY/full" &&
+.git/rebase-apply/patch:310: indent with spaces.
+        cd "$TRASH_DIRECTORY/full" &&
+.git/rebase-apply/patch:321: indent with spaces.
+        cd "$TRASH_DIRECTORY/full" &&
+.git/rebase-apply/patch:331: indent with spaces.
+        cd "$TRASH_DIRECTORY/full" &&
+.git/rebase-apply/patch:341: indent with spaces.
+        cd "$TRASH_DIRECTORY/full" &&
+warning: squelched 2 whitespace errors
+warning: 7 lines add whitespace errors.
+Applying: commit: integrate commit graph with commit parsing
+.git/rebase-apply/patch:224: indent with spaces.
+        cd "$TRASH_DIRECTORY/full" &&
+.git/rebase-apply/patch:227: trailing whitespace.
+	graph_read_expect "9" "large_edges" 
+.git/rebase-apply/patch:234: indent with spaces.
+        cd "$TRASH_DIRECTORY" &&
+warning: 2 lines applied after fixing whitespace errors.
+Applying: commit-graph: read only from specific pack-indexes
+.git/rebase-apply/patch:196: indent with spaces.
+        cd "$TRASH_DIRECTORY/full" &&
+.git/rebase-apply/patch:209: indent with spaces.
+        cd "$TRASH_DIRECTORY" &&
+warning: 1 line applied after fixing whitespace errors.
+Applying: commit-graph: build graph from starting commits
+.git/rebase-apply/patch:148: indent with spaces.
+        cd "$TRASH_DIRECTORY/full" &&
+.git/rebase-apply/patch:158: indent with spaces.
+        cd "$TRASH_DIRECTORY" &&
+warning: 1 line applied after fixing whitespace errors.
+Applying: commit-graph: implement "--additive" option
 
