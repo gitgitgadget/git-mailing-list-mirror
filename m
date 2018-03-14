@@ -7,52 +7,53 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E01F41F404
-	for <e@80x24.org>; Wed, 14 Mar 2018 18:34:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2BECE1F404
+	for <e@80x24.org>; Wed, 14 Mar 2018 18:34:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752108AbeCNSeI (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Mar 2018 14:34:08 -0400
-Received: from mail-it0-f73.google.com ([209.85.214.73]:60180 "EHLO
-        mail-it0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750950AbeCNSdO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Mar 2018 14:33:14 -0400
-Received: by mail-it0-f73.google.com with SMTP id m37-v6so3607631iti.9
-        for <git@vger.kernel.org>; Wed, 14 Mar 2018 11:33:13 -0700 (PDT)
+        id S1752306AbeCNSeS (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Mar 2018 14:34:18 -0400
+Received: from mail-qk0-f202.google.com ([209.85.220.202]:33795 "EHLO
+        mail-qk0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752540AbeCNScw (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Mar 2018 14:32:52 -0400
+Received: by mail-qk0-f202.google.com with SMTP id a22so2716270qkc.1
+        for <git@vger.kernel.org>; Wed, 14 Mar 2018 11:32:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=/k6vmGViCp/b0NnmDxA3wEX3V5LmlaO5gD7ANlI9GMg=;
-        b=Kt2X5mz8Fdpu3FobysjhWoBGgqHrgGk+FYwP/bT38CgX06RF2rAQDtQ8cYNqzLLXyf
-         5yF5PkWA0Wxso3EaXvrkQsSucReNykvE6A0FWkYYzm+f9QhGJMUTgSPEKjAU7r5kDHfN
-         of16y0R2IqCagjvxvlhRmDGD6r9u+97lfi0ygVWRlIKxv6ugsKPyuqzSht1Ns3CVGRRW
-         qRvuERKEkV4kVmLhL1GV+xVEsr7mfOwu1nDED4oXsF/jI3NaK8nxHw2SfMHT4VAziEyK
-         yfMcj1bDnmzlJqUeTR+5h2GAb9z06MwEE/uOhNpmMjMBD5eEoC0hGE0Txw+7+Gpf0laq
-         OikQ==
+        bh=3KwKss0yiImv+LpOoBm6nnu/wpCXcvG9K6sVQ4IEBrQ=;
+        b=qPsnZmYDRRQKzVOyFo9PMmcranKZoTFK6gg6q4xDpiadcNqPnbL1NGpWqBlrOP5WdV
+         bJH2STSAE3Kezk+WUoN2ttyFTzo4bKBHsJw7KveWj3np5NmyZbci0KHCiH3gJG2b7DfL
+         pW51HtriEFbTcm4EQV10gtyWqjIJz6b00Kj+h63O2+PtWpI3ox53KoQMnSLYocgiEatA
+         KElmeN+RSZZ9/cb4o2EJxj6QRmEl64SHmRrV3WFF88KmBF2/15s2E0873sGOuKIfJBZe
+         V+upe/SjT6gftx4xmUmkDFUi4FPqO1WIEY1Qy2/6c2SpainDt17ght9T8bD41Or7DYS1
+         unkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=/k6vmGViCp/b0NnmDxA3wEX3V5LmlaO5gD7ANlI9GMg=;
-        b=WqbEC/5ttozNgxq8RTyr97NHwW+LBSsz80Rw/aLAV4fx/M0j9D5HHr2VzN0G5j6k2z
-         /ZDBAEz1AxPzcrjrfw0tnArXXCk+K2UPIp/hVfqzrpRlJLQwxGVami6w0Ydx/0m7BwMX
-         7CoKYEADn08rdrn8Oc3H+qVwGYMSIiQtBZlUBILSQZZLX6pbeTUAtQqjB+5X68X5pJse
-         mZxfPYL1XvhXLDtoPyweODsNEMmWcsnTtihkBz9D99MT+J1gmoSf9CLhvJVZU6chYEmj
-         FZ7mcpADdn2HJsT0N8EyT4GxTaEHAh0cjKm3iZiCC7vFNyIou06E4Kw9PCdOb5zgphBr
-         3iNw==
-X-Gm-Message-State: AElRT7Gu92NbTCWp7xWoC+X+EQROaIC1JuoncTPKxAOvpvxPw7rE7zgn
-        6BFnvmiY86pAIxLHLjuJGeOsUOu32VErN/OoBuGWtv+uN+LWZgRvZpHHKMpaaJwZs7Ol8U6uClj
-        cjCkE23c+xMWoGSYcLq1xOB+zkNEfU3zIoy1dxdMoehlJsB/Hohk/srLFjg==
-X-Google-Smtp-Source: AG47ELsVZ4YZ9OszQ7GygV/eCLdZJs/SHP56JQatYlBwCssGLGXjSDt9GuLwVpT0DSUiaBchEk4J/VcBTic=
+        bh=3KwKss0yiImv+LpOoBm6nnu/wpCXcvG9K6sVQ4IEBrQ=;
+        b=MAVAfCisRM+9ygjiqEoiiWEZ4SEF4I4gEa1cefRSIWbFe+uyiMHgxLHo6jrv02Rtgz
+         NFGXNqVicodlBusJvev0SuKifLQFrPFFVerkocL4X9vQlnwQ5qwA8q2ulIV0DErkTcNe
+         S8/EnoHC9fH7HuMj2Dx7K1xzybdtccYqcqNrqpJ2wtOj86ohSOnzou1ar9H2meVMKTjI
+         U0lDnmhQqxLbijArI6m2Xg4UaGZoYl6cpVchUbPwWI3eNptFZp2QHUAg1c+T0g4oHTWF
+         7//2U2BPDOEW9jue7XtnE56DuSzl/PQkc0yqMZ9ve/KS0LTg/lTqPeapaBjzhK1CTVrf
+         PYCg==
+X-Gm-Message-State: AElRT7F3AVD+wrRTC3tQh3nXs4yXslh2Rc+V19NzEfYUjqmTqcOr4BTC
+        wKWXyTWvCRXAmtKeKs22VkC4/RVIlHmiEcLofOUfU+izklUhF5MsRrEOsleQ2SBfj8kx4KiK/TY
+        R5+qB/qYWcRh0Js+GvwXlFrqNvMmhHbKT7khshbe4EnjNFMfShPofR/DUdQ==
+X-Google-Smtp-Source: AG47ELtYIKtePd6eIeX9NQWQh2IVn8xqc3zT8D/pH2yoSyanWrXt9FRHCIJKzHYSME3qk+sNQkz6xo82V3w=
 MIME-Version: 1.0
-X-Received: by 2002:a24:1943:: with SMTP id b64-v6mr1314741itb.5.1521052393151;
- Wed, 14 Mar 2018 11:33:13 -0700 (PDT)
-Date:   Wed, 14 Mar 2018 11:32:01 -0700
+X-Received: by 10.200.97.9 with SMTP id a9mr3753371qtm.22.1521052371873; Wed,
+ 14 Mar 2018 11:32:51 -0700 (PDT)
+Date:   Wed, 14 Mar 2018 11:31:52 -0700
 In-Reply-To: <20180314183213.223440-1-bmwill@google.com>
-Message-Id: <20180314183213.223440-25-bmwill@google.com>
+Message-Id: <20180314183213.223440-16-bmwill@google.com>
 References: <20180314183213.223440-1-bmwill@google.com>
 X-Mailer: git-send-email 2.16.2.804.g6dcf76e118-goog
-Subject: [PATCH v5 24/35] connect: don't request v2 when pushing
+Subject: [PATCH v5 15/35] transport: convert get_refs_list to take a list of
+ ref prefixes
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     git@jeffhostetler.com, gitster@pobox.com, jrnieder@gmail.com,
@@ -65,81 +66,147 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In order to be able to ship protocol v2 with only supporting fetch, we
-need clients to not issue a request to use protocol v2 when pushing
-(since the client currently doesn't know how to push using protocol v2).
-This allows a client to have protocol v2 configured in
-`protocol.version` and take advantage of using v2 for fetch and falling
-back to using v0 when pushing while v2 for push is being designed.
-
-We could run into issues if we didn't fall back to protocol v2 when
-pushing right now.  This is because currently a server will ignore a request to
-use v2 when contacting the 'receive-pack' endpoint and fall back to
-using v0, but when push v2 is rolled out to servers, the 'receive-pack'
-endpoint will start responding using v2.  So we don't want to get into a
-state where a client is requesting to push with v2 before they actually
-know how to push using v2.
+Convert the 'struct transport' virtual function 'get_refs_list()' to
+optionally take an argv_array of ref prefixes.  When communicating with
+a server using protocol v2 these ref prefixes can be sent when
+requesting a listing of their refs allowing the server to filter the
+refs it sends based on the sent prefixes.  This list will be ignored
+when not using protocol v2.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- connect.c              |  8 ++++++++
- t/t5702-protocol-v2.sh | 24 ++++++++++++++++++++++++
- 2 files changed, 32 insertions(+)
+ transport-helper.c   |  5 +++--
+ transport-internal.h | 11 ++++++++++-
+ transport.c          | 18 +++++++++++-------
+ 3 files changed, 24 insertions(+), 10 deletions(-)
 
-diff --git a/connect.c b/connect.c
-index a57a060dc4..54971166ac 100644
---- a/connect.c
-+++ b/connect.c
-@@ -1218,6 +1218,14 @@ struct child_process *git_connect(int fd[2], const char *url,
- 	enum protocol protocol;
- 	enum protocol_version version = get_protocol_version_config();
+diff --git a/transport-helper.c b/transport-helper.c
+index 5080150231..8774ab3013 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -1026,7 +1026,8 @@ static int has_attribute(const char *attrs, const char *attr) {
+ 	}
+ }
  
-+	/*
-+	 * NEEDSWORK: If we are trying to use protocol v2 and we are planning
-+	 * to perform a push, then fallback to v0 since the client doesn't know
-+	 * how to push yet using v2.
-+	 */
-+	if (version == protocol_v2 && !strcmp("git-receive-pack", prog))
-+		version = protocol_v0;
-+
- 	/* Without this we cannot rely on waitpid() to tell
- 	 * what happened to our children.
- 	 */
-diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
-index 4365ac2736..e3a7c09d4a 100755
---- a/t/t5702-protocol-v2.sh
-+++ b/t/t5702-protocol-v2.sh
-@@ -95,6 +95,30 @@ test_expect_success 'pull with git:// using protocol v2' '
- 	grep "fetch< version 2" log
- '
+-static struct ref *get_refs_list(struct transport *transport, int for_push)
++static struct ref *get_refs_list(struct transport *transport, int for_push,
++				 const struct argv_array *ref_prefixes)
+ {
+ 	struct helper_data *data = transport->data;
+ 	struct child_process *helper;
+@@ -1039,7 +1040,7 @@ static struct ref *get_refs_list(struct transport *transport, int for_push)
  
-+test_expect_success 'push with git:// and a config of v2 does not request v2' '
-+	test_when_finished "rm -f log" &&
-+
-+	# Till v2 for push is designed, make sure that if a client has
-+	# protocol.version configured to use v2, that the client instead falls
-+	# back and uses v0.
-+
-+	test_commit -C daemon_child three &&
-+
-+	# Push to another branch, as the target repository has the
-+	# master branch checked out and we cannot push into it.
-+	GIT_TRACE_PACKET="$(pwd)/log" git -C daemon_child -c protocol.version=2 \
-+		push origin HEAD:client_branch &&
-+
-+	git -C daemon_child log -1 --format=%s >actual &&
-+	git -C "$daemon_parent" log -1 --format=%s client_branch >expect &&
-+	test_cmp expect actual &&
-+
-+	# Client requested to use protocol v2
-+	! grep "push> .*\\\0\\\0version=2\\\0$" log &&
-+	# Server responded using protocol v2
-+	! grep "push< version 2" log
-+'
-+
- stop_git_daemon
+ 	if (process_connect(transport, for_push)) {
+ 		do_take_over(transport);
+-		return transport->vtable->get_refs_list(transport, for_push);
++		return transport->vtable->get_refs_list(transport, for_push, ref_prefixes);
+ 	}
  
- # Test protocol v2 with 'file://' transport
+ 	if (data->push && for_push)
+diff --git a/transport-internal.h b/transport-internal.h
+index 3c1a29d727..1cde6258a7 100644
+--- a/transport-internal.h
++++ b/transport-internal.h
+@@ -3,6 +3,7 @@
+ 
+ struct ref;
+ struct transport;
++struct argv_array;
+ 
+ struct transport_vtable {
+ 	/**
+@@ -17,11 +18,19 @@ struct transport_vtable {
+ 	 * the transport to try to share connections, for_push is a
+ 	 * hint as to whether the ultimate operation is a push or a fetch.
+ 	 *
++	 * If communicating using protocol v2 a list of prefixes can be
++	 * provided to be sent to the server to enable it to limit the ref
++	 * advertisement.  Since ref filtering is done on the server's end, and
++	 * only when using protocol v2, this list will be ignored when not
++	 * using protocol v2 meaning this function can return refs which don't
++	 * match the provided ref_prefixes.
++	 *
+ 	 * If the transport is able to determine the remote hash for
+ 	 * the ref without a huge amount of effort, it should store it
+ 	 * in the ref's old_sha1 field; otherwise it should be all 0.
+ 	 **/
+-	struct ref *(*get_refs_list)(struct transport *transport, int for_push);
++	struct ref *(*get_refs_list)(struct transport *transport, int for_push,
++				     const struct argv_array *ref_prefixes);
+ 
+ 	/**
+ 	 * Fetch the objects for the given refs. Note that this gets
+diff --git a/transport.c b/transport.c
+index ffc6b2614f..2e68010dd0 100644
+--- a/transport.c
++++ b/transport.c
+@@ -72,7 +72,9 @@ struct bundle_transport_data {
+ 	struct bundle_header header;
+ };
+ 
+-static struct ref *get_refs_from_bundle(struct transport *transport, int for_push)
++static struct ref *get_refs_from_bundle(struct transport *transport,
++					int for_push,
++					const struct argv_array *ref_prefixes)
+ {
+ 	struct bundle_transport_data *data = transport->data;
+ 	struct ref *result = NULL;
+@@ -189,7 +191,8 @@ static int connect_setup(struct transport *transport, int for_push)
+ 	return 0;
+ }
+ 
+-static struct ref *get_refs_via_connect(struct transport *transport, int for_push)
++static struct ref *get_refs_via_connect(struct transport *transport, int for_push,
++					const struct argv_array *ref_prefixes)
+ {
+ 	struct git_transport_data *data = transport->data;
+ 	struct ref *refs = NULL;
+@@ -204,7 +207,8 @@ static struct ref *get_refs_via_connect(struct transport *transport, int for_pus
+ 	data->version = discover_version(&reader);
+ 	switch (data->version) {
+ 	case protocol_v2:
+-		get_remote_refs(data->fd[1], &reader, &refs, for_push, NULL);
++		get_remote_refs(data->fd[1], &reader, &refs, for_push,
++				ref_prefixes);
+ 		break;
+ 	case protocol_v1:
+ 	case protocol_v0:
+@@ -250,7 +254,7 @@ static int fetch_refs_via_pack(struct transport *transport,
+ 	args.update_shallow = data->options.update_shallow;
+ 
+ 	if (!data->got_remote_heads)
+-		refs_tmp = get_refs_via_connect(transport, 0);
++		refs_tmp = get_refs_via_connect(transport, 0, NULL);
+ 
+ 	switch (data->version) {
+ 	case protocol_v2:
+@@ -568,7 +572,7 @@ static int git_transport_push(struct transport *transport, struct ref *remote_re
+ 	int ret = 0;
+ 
+ 	if (!data->got_remote_heads)
+-		get_refs_via_connect(transport, 1);
++		get_refs_via_connect(transport, 1, NULL);
+ 
+ 	memset(&args, 0, sizeof(args));
+ 	args.send_mirror = !!(flags & TRANSPORT_PUSH_MIRROR);
+@@ -1028,7 +1032,7 @@ int transport_push(struct transport *transport,
+ 		if (check_push_refs(local_refs, refspec_nr, refspec) < 0)
+ 			return -1;
+ 
+-		remote_refs = transport->vtable->get_refs_list(transport, 1);
++		remote_refs = transport->vtable->get_refs_list(transport, 1, NULL);
+ 
+ 		if (flags & TRANSPORT_PUSH_ALL)
+ 			match_flags |= MATCH_REFS_ALL;
+@@ -1137,7 +1141,7 @@ int transport_push(struct transport *transport,
+ const struct ref *transport_get_remote_refs(struct transport *transport)
+ {
+ 	if (!transport->got_remote_refs) {
+-		transport->remote_refs = transport->vtable->get_refs_list(transport, 0);
++		transport->remote_refs = transport->vtable->get_refs_list(transport, 0, NULL);
+ 		transport->got_remote_refs = 1;
+ 	}
+ 
 -- 
 2.16.2.804.g6dcf76e118-goog
 
