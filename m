@@ -2,98 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8215A1F404
-	for <e@80x24.org>; Wed, 14 Mar 2018 22:24:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 32F5F1F404
+	for <e@80x24.org>; Wed, 14 Mar 2018 22:41:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751480AbeCNWYd (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Mar 2018 18:24:33 -0400
-Received: from mail-pf0-f181.google.com ([209.85.192.181]:43611 "EHLO
-        mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751470AbeCNWYc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Mar 2018 18:24:32 -0400
-Received: by mail-pf0-f181.google.com with SMTP id j2so2030791pff.10
-        for <git@vger.kernel.org>; Wed, 14 Mar 2018 15:24:32 -0700 (PDT)
+        id S1751362AbeCNWlx (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Mar 2018 18:41:53 -0400
+Received: from mail-wr0-f195.google.com ([209.85.128.195]:33796 "EHLO
+        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750779AbeCNWlx (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Mar 2018 18:41:53 -0400
+Received: by mail-wr0-f195.google.com with SMTP id o8so6416567wra.1
+        for <git@vger.kernel.org>; Wed, 14 Mar 2018 15:41:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=X4ykaOMg4c4ZOr9Ao3aPtJQEF0pGi5A8SMLnu7DOjD4=;
-        b=Wgrm+NEn0fs3+S0JVD//+77/tignX16zIdLD1thQsHzYAGY3wroMjc5x9zwP2skl1C
-         mQKVfGZVF1wO/Iml6njTBKyIFIVwmkfMMt4C/sxeGtUDE8ENmSiNGEB6SgyfJybgrV7m
-         kopm2CJhDDC878IMa0XetPwnb9puYnN6G9wQhuXZthZavbwxzbm98f1IyqhjISRkKeM0
-         DrwFqasrlAvkTK+ixRlw9nutO15WrchUKm1x7dcuOnQ6qRudfoLk2hhdb2gSQlvE+i3J
-         VaJC/trkSYxgXs3s/cadRm38YeZBx7xUGejwoXRyrO9pJr3dndyzVw1w9WOAgasKPZst
-         Qnqw==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=EtRV2Ipnc+YRt/7nDBVrgrGA0vWT79cR04v+uTRXSJU=;
+        b=eO6BM4dJ0HpjOMa2+mzsjzZurnl5wJOuOXf57LgeJWMQ7VuiH1OtIP2Z/6EO3SwNit
+         gDFu+kCH23kiAU1mZGT58a1OIjrAKjcdxZDanXhVw57V9zhq7V0RcWxp4d+5r6IPmfD8
+         gf8+BS6qERQ6USCzdG/3wj9Cv+290CYG01V3q043EnjgSZnhVtMnfoM/6/OXu0JuQOVv
+         L/8eUlL6MxOFrRDcrLbUAA4rppkYkUaIDBHAmjjILaSbU86iGPOoQZFtc2Uk0naBbxHY
+         tcfmk3Ukg9HWQKB5rZKeicc2ZZkMOM2JHG9nzQpkHlcULgZqhUTl0nmQEP31GyuOlSeR
+         9N8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=X4ykaOMg4c4ZOr9Ao3aPtJQEF0pGi5A8SMLnu7DOjD4=;
-        b=MNwPI4QoSNrkmnb9OQFIyGWZyNDpQD5Oih1imMBGxRHwga1UKsCSbF5Fb24H62FTWZ
-         Bvd/T2o49e+3d6AWwzWVkEKGbKUQKCveZSf1369mjCjXB0WvQet3BMiMte3/sqqp/xVw
-         FOjTqIiJsbgF7xQmx7LW3PVy65YjNGTvnTTS7aGhh3gmovFxF8E1+0uakIyfTq3bCq2y
-         tOqhkJElW2Kn0UPZOOJpVsDDIf9fFSraBQD/OjrW7IhCkL9N5hsPei24fTxcsfYq2W2L
-         Uta5KR+XILV1Z3tsrAwHydKo5J8ZaSvSKNkwKZsrCz6/SMj4DM4XL7b6DF9oKcAah3L8
-         zSIQ==
-X-Gm-Message-State: AElRT7FClEbTl+GlS822dS8dNA9YWuIVYodfkK45NAYz1dpxfVGEEWND
-        SEd/5KOs2S37R5DuQdwg4xPm1A==
-X-Google-Smtp-Source: AG47ELsAEXpK6IXIfWwDzLLS8SUphowHhVOlwOiIP8HIr1xWbhx6I6Il36aaLi6kDQqdxAn/Ng9ifw==
-X-Received: by 10.98.225.2 with SMTP id q2mr5695773pfh.23.1521066271707;
-        Wed, 14 Mar 2018 15:24:31 -0700 (PDT)
-Received: from twelve3.svl.corp.google.com ([2620:0:100e:422:ffac:c1d4:4bf7:bb93])
-        by smtp.gmail.com with ESMTPSA id m9sm7330558pff.143.2018.03.14.15.24.30
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=EtRV2Ipnc+YRt/7nDBVrgrGA0vWT79cR04v+uTRXSJU=;
+        b=RyrHWUh/KvZucuEq04fY5BgLOvCwmCcMnJ8sDDuLRZxCABVQXrRnog6EV4mIbesJLy
+         63rFvquXoqs7ew36/sz/YMZtcFtMEykfIrZdYB+RW9qKiXlglW1IPcJ2yt8OUz29XL7E
+         JehzdRHCFciLV53/2RurnyxhCxZVoFxP3msQTDeTxtShkOKdMntzNklMDT0HaAVit5AA
+         xzMEDgceEePlkV2yVSC4Flyq3Bi8stD/q337E2lhHjKEDPBo8FS/r39skA8SfVAmuPFM
+         qL98IFjuc/ATT+PV0ilkww2FqYSOROIslK0+zibR0MqIT00Vx24AiKL4jhnernDoXwcv
+         WlYA==
+X-Gm-Message-State: AElRT7FV8NL9/mlTUmHsr5JMIa5D3/7UxV3gEFahInpCNOaPP2BKNjtG
+        +v/nkZfmjSxE3xB+9DLziOk=
+X-Google-Smtp-Source: AG47ELv8LCC+Ox8b7X3LLOEZhlDAby9UkX7pkRe/kDW/0rZfjUIhLSIlyXDyOszd0IpjVhTX0DwodQ==
+X-Received: by 10.223.179.211 with SMTP id x19mr5220481wrd.175.1521067311411;
+        Wed, 14 Mar 2018 15:41:51 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id a63sm4791435wrc.22.2018.03.14.15.41.50
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 14 Mar 2018 15:24:30 -0700 (PDT)
-Date:   Wed, 14 Mar 2018 15:24:29 -0700
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, git@jeffhostetler.com
-Subject: Re: [PATCH 2/2] fetch-pack: do not check links for partial fetch
-Message-Id: <20180314152429.df14adfb49b028e2e2a9001a@google.com>
-In-Reply-To: <xmqqwoyexqy4.fsf@gitster-ct.c.googlers.com>
-References: <cover.1521052825.git.jonathantanmy@google.com>
-        <cover.1521052825.git.jonathantanmy@google.com>
-        <c2f59866a1b1dc5f11713e1922eac2521ef98b07.1521052825.git.jonathantanmy@google.com>
-        <xmqqwoyexqy4.fsf@gitster-ct.c.googlers.com>
-X-Mailer: Sylpheed 3.6.0 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+        Wed, 14 Mar 2018 15:41:50 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org,
+        =?utf-8?Q?Micha=C5=82?= Kiedrowicz <michal.kiedrowicz@gmail.com>
+Subject: Re: [PATCH 0/3] Switch the default PCRE from v1 to v2 + configure fixes
+References: <20180311132609.32154-1-avarab@gmail.com>
+Date:   Wed, 14 Mar 2018 15:41:50 -0700
+In-Reply-To: <20180311132609.32154-1-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
+ =?utf-8?B?IEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Sun, 11 Mar 2018 13:26:06 +0000")
+Message-ID: <xmqqo9jqxosx.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 14 Mar 2018 14:55:31 -0700
-Junio C Hamano <gitster@pobox.com> wrote:
+Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
 
-> Jonathan Tan <jonathantanmy@google.com> writes:
-> 
-> > When doing a partial clone or fetch with transfer.fsckobjects=1, use the
-> > --fsck-objects instead of the --strict flag when invoking index-pack so
-> > that links are not checked, only objects. This is because incomplete
-> > links are expected when doing a partial clone or fetch.
-> 
-> It is expected that _some_ links are missing, but this makes me
-> wonder if we can do better than disabling the connectivity check
-> altogether.  Does "git fetch" lack sufficient information to attempt
-> the connectivity check, and when (and only when) it hits a broken
-> link, see if that is because the connectivity check traversal is
-> crossing a "partial" fetch boundary, or something along that line?
+> This small series makes USE_LIBPCRE=YesPlease mean
+> USE_LIBPCRE2=YesPlease, instead of USE_LIBPCRE1=YesPlease is it does
+> now. Along the way I fixed a couple of minor issues in the PCRE
+> detection in the autoconf script.
+>
+> Ævar Arnfjörð Bjarmason (3):
+>   configure: fix a regression in PCRE v1 detection
+>   configure: detect redundant --with-libpcre & --with-libpcre1
+>   Makefile: make USE_LIBPCRE=YesPlease mean v2, not v1
+>
+>  Makefile     | 26 +++++++++++++-------------
+>  configure.ac | 26 +++++++++++++++-----------
+>  2 files changed, 28 insertions(+), 24 deletions(-)
 
-Our only definition (currently) for the "partial" fetch boundary is
-whether an object in a promisor packfile (a packfile obtained from the
-promisor remote) references it, so I think that checking for crossing a
-"partial" fetch boundary does not add anything. This is because by that
-definition, any missing links observed from objects newly fetched from
-the promisor remote cross a "partial" fetch boundary (since all objects
-fetched in this way "promise" all objects that they refer to).
-
-But it is true that we might be able to do better in checking, for
-example, that a packfile fetched using a blob size limit contains all
-referenced trees (that is, only blobs are allowed to be missing).
+Makes sense.  Will queue.
