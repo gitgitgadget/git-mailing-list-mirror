@@ -2,102 +2,140 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A87E11F404
-	for <e@80x24.org>; Wed, 14 Mar 2018 17:49:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 389911F404
+	for <e@80x24.org>; Wed, 14 Mar 2018 18:22:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751353AbeCNRtD (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Mar 2018 13:49:03 -0400
-Received: from mail-wr0-f172.google.com ([209.85.128.172]:33776 "EHLO
-        mail-wr0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751000AbeCNRtC (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Mar 2018 13:49:02 -0400
-Received: by mail-wr0-f172.google.com with SMTP id z73so1379573wrb.0
-        for <git@vger.kernel.org>; Wed, 14 Mar 2018 10:49:01 -0700 (PDT)
+        id S1751394AbeCNSWs (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Mar 2018 14:22:48 -0400
+Received: from mail-qt0-f195.google.com ([209.85.216.195]:46301 "EHLO
+        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751131AbeCNSWq (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Mar 2018 14:22:46 -0400
+Received: by mail-qt0-f195.google.com with SMTP id m13so4450070qtg.13
+        for <git@vger.kernel.org>; Wed, 14 Mar 2018 11:22:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=PsipZN1xVzYxDh4k49wXM3Sj+1omsbZxXWx0rKD3jvA=;
-        b=I/bA6YLuuFwujvp6rkwh0Czr2xHxoPDS0DehSjNnYTva8W5LirP51J16UGjvchUst8
-         Kgmpqkwpskfa4UTJw3N7Jro97RP+OtMwWRgIdTDI92c6LyysYrrXAkak6+EY0Q/KQszc
-         iuoNdG4LtUnK3Muft8fKhYuqtZ+PkypE8tSzO2+Nk89gDNK644Bm/y8+OPPpqxbzqHPg
-         PwoxFw6NqxcxVWMOq5bf4QmLhoxrRjnlEAE+KXihc5ndUGdcfnVJ9SmMfcYfTGXk/SyP
-         nDguPaaKyeQ87WmYay3v/yewmV7u+Q0UMhfhyFMwc3ZeP4NTZ6ZrRSi8KlJrTswFCNc9
-         5+Mw==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-transfer-encoding;
+        bh=mv6YwBfIt5rTw+1yKu720DbOr8PsSooKsHwXL7nTgjY=;
+        b=tlu9ltdk7ubOIWDHq9/QbOnym+zO4torXkiKlU/mY7KVWn1rv6nAWVHdk11oe8SV/H
+         kh/U1yYREV4Te3YS52CrBDZ/tnJ8a9DoT1Lg3v5vQZIpjqbtTmIUOxYj75yzn7as1G7S
+         diwdKzu5nJEgmtZuv7+/2ZN+SIVK4smdv3I4WMMianwSQtNW4/4izONd7t7dCmKhMjoU
+         L58hDsXvMZi7ftBmhxIqmT4SJb1cF2C3HrAvd2DzgrvnUvyI09nSnC5cheFNRCFUZm0v
+         IV8V/DqQHYVgdMTCpxwKPUjxTSAeekhQfkNVtV9EfR+a6um29gfhimGsdS5qh4Us5jCi
+         7iQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=PsipZN1xVzYxDh4k49wXM3Sj+1omsbZxXWx0rKD3jvA=;
-        b=W1VBxpCbUmXt03gvukJBHwZl1JKxC3xAz1sp58aEzJ3meKFvPksSPkUe6ezFlcnQbp
-         2TRPfK4hqe6UG1hZ1BhJYCCIeRCEcfKJsn2LrMj/2mNBc9QzA+RuQujFv0HPBRhosBBb
-         /35ZF2rc/Oy+u6NVBA5I2Zf+WlRMY+UuMqfzHxMNc/ad/KGiHeX3CFhqwUhv2/Lk5n3l
-         az5PbHcbjtggN2c2iQMaBsLdCMfuI58YbAvTvF2C8ksE4Uybw0uUpgGobolB6OrbSNAm
-         QsBM545QodupSbVx9OvoZKH7F7X8RfF42pintwXda0/QQzt3Ox6CYEO0gdWxEsfweX4X
-         QTDg==
-X-Gm-Message-State: AElRT7GvgqjApSe2aW1Tgt3iOTlpz0eSoOxWgHvM/fGEAfpaDPed49fB
-        puVI2hRwT3Yd8UV2wLtvFS0=
-X-Google-Smtp-Source: AG47ELud+MayIaVMEEfm9FlL1qN6jmPNshUMQyp+JYBqpawJj7lFr+GCI8GyiqD+AvEHLRZgTZSG2A==
-X-Received: by 10.223.134.42 with SMTP id 39mr4778785wrv.10.1521049740762;
-        Wed, 14 Mar 2018 10:49:00 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id 9sm3089901wml.22.2018.03.14.10.49.00
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 14 Mar 2018 10:49:00 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Phillip Wood <phillip.wood@talktalk.net>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH 1/2] rebase: support --signoff with implicit rebase
-References: <20180314111127.14217-1-phillip.wood@talktalk.net>
-Date:   Wed, 14 Mar 2018 10:48:59 -0700
-In-Reply-To: <20180314111127.14217-1-phillip.wood@talktalk.net> (Phillip
-        Wood's message of "Wed, 14 Mar 2018 11:11:26 +0000")
-Message-ID: <xmqqh8pizgxg.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=mv6YwBfIt5rTw+1yKu720DbOr8PsSooKsHwXL7nTgjY=;
+        b=MhrS5IovXjxR4UnFCySjufxcXmj7ze6k1jdCYfKO3xCQ4Z50QbgaxaPG9krF004CvE
+         Lkl+zyhD0ytSn8PH6v98THOok17+mK4Uutetjrr2cSYe7COhFyyMN1IraDRnG6dqYld9
+         qBaB0ElT7ZolWtiz1Fk3LVPhJUkZIkSiAqEZGizXuijNCtW+h4i9M8JcoKq1uXy1xU0T
+         ZcoAe+7BCO65whr3+ea2GnxGVb2R3uxxmDNVcAVkwoI527khTIwuZkGAErnn0Avfrykm
+         tgRwmUf6q22C9RqxgcYCrg5UsI0rZn2k+Vd8DStnWY9PhDTV9cuLTgnU41OQWYEnuNAC
+         ndkA==
+X-Gm-Message-State: AElRT7FpWDDFJrB1Qr+iLr7vra76Ng/LgYLote2nOUXTE03Gafe43k1A
+        oEuJdoxL2+bGnpf1GawyKF3735vqujcyb293AAY=
+X-Google-Smtp-Source: AG47ELu2AbhQKZvxlIAxvsJawIiAty0tpaualzCBiY5qxBmIDWhIQQhIEXwP/CZv81WFETQOSSbkzrojpOfiyox0NU8=
+X-Received: by 10.200.50.174 with SMTP id z43mr8254040qta.250.1521051765997;
+ Wed, 14 Mar 2018 11:22:45 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.12.190.196 with HTTP; Wed, 14 Mar 2018 11:22:45 -0700 (PDT)
+In-Reply-To: <87zi3bdlo2.fsf@evledraar.gmail.com>
+References: <20180313201945.8409-1-predatoramigo@gmail.com>
+ <CAPig+cRPzyw525ODC4=-E7w=zbpbhVN2eqxSYDSLij5wfW8S_A@mail.gmail.com> <87zi3bdlo2.fsf@evledraar.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Wed, 14 Mar 2018 14:22:45 -0400
+X-Google-Sender-Auth: V9QuW3q8IiNjev0Kab6QaFPOZnY
+Message-ID: <CAPig+cTLCswg_=q5ybnyN3As4Au05q5eAcA7Prr643KCgZ0OAw@mail.gmail.com>
+Subject: Re: [GSoC] [PATCH] test: avoid pipes in git related commands for test suite
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Pratik Karki <predatoramigo@gmail.com>,
+        Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Phillip Wood <phillip.wood@talktalk.net> writes:
-
-> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+On Wed, Mar 14, 2018 at 5:57 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+> On Wed, Mar 14 2018, Eric Sunshine jotted:
+>> On Tue, Mar 13, 2018 at 4:19 PM, Pratik Karki <predatoramigo@gmail.com> =
+wrote:
+>>> -    'git diff-tree -r -M --name-status  HEAD^ HEAD | \
+>>> -     grep "^R100..*path0/COPYING..*path2/COPYING" &&
+>>> -     git diff-tree -r -M --name-status  HEAD^ HEAD | \
+>>> -     grep "^R100..*path0/README..*path2/README"'
+>>> +    'git diff-tree -r -M --name-status  HEAD^ HEAD >actual &&
+>>> +     grep "^R100..*path0/COPYING..*path2/COPYING" actual &&
+>>> +     git diff-tree -r -M --name-status  HEAD^ HEAD >actual &&
+>>> +     grep "^R100..*path0/README..*path2/README" actual'
+>>
+>> Although this "mechanical" transformation is technically correct, it
+>> is nevertheless wasteful. The exact same "git diff-tree ..." command
+>> is run twice, and both times output is captured to file 'actual',
+>> which makes the second invocation superfluous. Instead, a better
+>> transformation would be:
+>>
+>>     git diff-tree ... >actual &&
+>>     grep ... actual &&
+>>     grep ... actual
+>>
+> I think we have to be careful to not be overly picky with rejecting
+> mechanical transformations that fix bugs on the basis that while we're
+> at it the test could also be rewritten.
 >
-> This allows one to run 'git rebase --exec "make check" --signoff'
-> which is useful when preparing a patch series for publication and is
-> more convenient than doing the signoff with another --exec command.
-> This change also allows --root without --onto to work with --signoff
-> as well (--root with --onto was already supported). Note that the
-> failing test is due to a bug in 'rebase --root' when the root commit
-> is empty which will be fixed in the next commit.
+> I.e. this bug was there before, maybe we should purely focus on just
+> replacing the harmful pipe pattern that hides errors in this series and
+> leave rewriting the actual test logic for a later patch.
+
+Thanks for presenting an opposing opinion. While I understand your
+position, the reason for my suggested transformation is that if the
+patch already transformed the code in the way suggested, it would
+increase my confidence, as a reviewer, that the patch author had
+_studied_ and _understood_ the code. Increased confidence is
+especially important for mechanical transformations since -- as seen
+in the unsnipped review comment below -- blindly-applied mechanical
+transformations can be suboptimal or outright incorrect.
+
+It's also the sort of review comment I would make even to very
+seasoned project participants[1].
+
+[1]: https://public-inbox.org/git/CAPig+cQLmYQeRhPxvZHmY7gApnbE25H_KoSWs-Zj=
+uBo4BruimQ@mail.gmail.com/
+
+>>> -       test $(git cat-file commit refs/remotes/glob | \
+>>> -              grep "^parent " | wc -l) -eq 2
+>>> +       test $(git cat-file commit refs/remotes/glob >actual &&
+>>> +              grep "^parent " actual | wc -l) -eq 2
+>>
+>> This is not a great transformation. If "git cat-file" fails, then
+>> neither 'grep' nor 'wc' will run, and the result will be as if 'test'
+>> was called without an argument before "-eq". For example:
+>>
+>>     % test $(false >actual && grep "^parent " actual | wc -l) -eq 2
+>>     test: -eq: unary operator expected
+>>
+>> It would be better to run "git cat-file" outside of "test $(...)". For i=
+nstance:
+>>
+>>     git cat-file ... >actual &&
+>>     test $(grep ... actual | wc -l) -eq 2
+>>
+>> Alternately, you could take advantage of the test_line_count() helper fu=
+nction:
+>>
+>>     git cat-file ... >actual &&
+>>     grep ... actual >actual2 &&
+>>     test_line_count =3D 2 actual2
 >
-> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-> ---
-
-How important is the word "implicit" in the title?  Is it your
-intention to actively ignore --signoff when we fall into the
-rebase--interactive codepath explicitly?
-
-I offhand do not think of a strong reason why it is a bad idea to
-run "git rebase -i --signoff", turn a few "pick" to either "reword"
-or "edit", and then expect that the editor to edit log messages for
-these commits to add your sign-off when you start editing them.
-The "pick"s that are left as-is would also turn into doing an
-otherwise no-op "commit --amend -s", I guess.
-
-If you are teaching --signoff to the whole of "rebase--interactive",
-then "git rebase --help" needs a bit of update.
-
-    --signoff::
-            This flag is passed to 'git am' to sign off all the rebased
-            commits (see linkgit:git-am[1]). Incompatible with the
-            --interactive option.
-
+> In this case though as you rightly point out the rewrite is introducing
+> a regression, which should definitely be fixed.
