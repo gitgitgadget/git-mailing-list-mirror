@@ -2,294 +2,214 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 80C951FAE2
-	for <e@80x24.org>; Wed, 14 Mar 2018 07:21:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A6FC71FAE3
+	for <e@80x24.org>; Wed, 14 Mar 2018 07:30:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753350AbeCNHVw (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Mar 2018 03:21:52 -0400
-Received: from mail.javad.com ([54.86.164.124]:38971 "EHLO mail.javad.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750862AbeCNHVu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Mar 2018 03:21:50 -0400
-Received: from osv (unknown [89.175.180.246])
-        by mail.javad.com (Postfix) with ESMTPSA id B208F3E92E;
-        Wed, 14 Mar 2018 07:21:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1521012109;
-        bh=3hAkfzcOLdspfv1mAQggWGsvTeSS849Ij14PILLhn0M=; l=6213;
-        h=Received:From:To:Subject;
-        b=QaBnMTHuKihFUCw8fFBO/SjXLmsDLf1xSQyoUvbYhX9flnHcx6Jz37XESXCmIcMp1
-         /AYbR7HrZ/DCJ7+FBMy1QIye8WANoiJGJ5d+F/7Y6DNkuKR2cWcC94pFoYQbrgMyRk
-         s3hYFmjhrVuEKnRpy09BY5EC4V0nnyFUj8Qz7dfo=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1521012109;
-        bh=3hAkfzcOLdspfv1mAQggWGsvTeSS849Ij14PILLhn0M=; l=6213;
-        h=Received:From:To:Subject;
-        b=QaBnMTHuKihFUCw8fFBO/SjXLmsDLf1xSQyoUvbYhX9flnHcx6Jz37XESXCmIcMp1
-         /AYbR7HrZ/DCJ7+FBMy1QIye8WANoiJGJ5d+F/7Y6DNkuKR2cWcC94pFoYQbrgMyRk
-         s3hYFmjhrVuEKnRpy09BY5EC4V0nnyFUj8Qz7dfo=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1521012109;
-        bh=3hAkfzcOLdspfv1mAQggWGsvTeSS849Ij14PILLhn0M=; l=6213;
-        h=Received:From:To:Subject;
-        b=QaBnMTHuKihFUCw8fFBO/SjXLmsDLf1xSQyoUvbYhX9flnHcx6Jz37XESXCmIcMp1
-         /AYbR7HrZ/DCJ7+FBMy1QIye8WANoiJGJ5d+F/7Y6DNkuKR2cWcC94pFoYQbrgMyRk
-         s3hYFmjhrVuEKnRpy09BY5EC4V0nnyFUj8Qz7dfo=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1521012109;
-        bh=3hAkfzcOLdspfv1mAQggWGsvTeSS849Ij14PILLhn0M=; l=6213;
-        h=Received:From:To:Subject;
-        b=QaBnMTHuKihFUCw8fFBO/SjXLmsDLf1xSQyoUvbYhX9flnHcx6Jz37XESXCmIcMp1
-         /AYbR7HrZ/DCJ7+FBMy1QIye8WANoiJGJ5d+F/7Y6DNkuKR2cWcC94pFoYQbrgMyRk
-         s3hYFmjhrVuEKnRpy09BY5EC4V0nnyFUj8Qz7dfo=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1521012109;
-        bh=3hAkfzcOLdspfv1mAQggWGsvTeSS849Ij14PILLhn0M=; l=6213;
-        h=Received:From:To:Subject;
-        b=QaBnMTHuKihFUCw8fFBO/SjXLmsDLf1xSQyoUvbYhX9flnHcx6Jz37XESXCmIcMp1
-         /AYbR7HrZ/DCJ7+FBMy1QIye8WANoiJGJ5d+F/7Y6DNkuKR2cWcC94pFoYQbrgMyRk
-         s3hYFmjhrVuEKnRpy09BY5EC4V0nnyFUj8Qz7dfo=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1521012109;
-        bh=3hAkfzcOLdspfv1mAQggWGsvTeSS849Ij14PILLhn0M=; l=6213;
-        h=Received:From:To:Subject;
-        b=QaBnMTHuKihFUCw8fFBO/SjXLmsDLf1xSQyoUvbYhX9flnHcx6Jz37XESXCmIcMp1
-         /AYbR7HrZ/DCJ7+FBMy1QIye8WANoiJGJ5d+F/7Y6DNkuKR2cWcC94pFoYQbrgMyRk
-         s3hYFmjhrVuEKnRpy09BY5EC4V0nnyFUj8Qz7dfo=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1521012109;
-        bh=3hAkfzcOLdspfv1mAQggWGsvTeSS849Ij14PILLhn0M=; l=6213;
-        h=Received:From:To:Subject;
-        b=QaBnMTHuKihFUCw8fFBO/SjXLmsDLf1xSQyoUvbYhX9flnHcx6Jz37XESXCmIcMp1
-         /AYbR7HrZ/DCJ7+FBMy1QIye8WANoiJGJ5d+F/7Y6DNkuKR2cWcC94pFoYQbrgMyRk
-         s3hYFmjhrVuEKnRpy09BY5EC4V0nnyFUj8Qz7dfo=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1521012109;
-        bh=3hAkfzcOLdspfv1mAQggWGsvTeSS849Ij14PILLhn0M=; l=6213;
-        h=Received:From:To:Subject;
-        b=QaBnMTHuKihFUCw8fFBO/SjXLmsDLf1xSQyoUvbYhX9flnHcx6Jz37XESXCmIcMp1
-         /AYbR7HrZ/DCJ7+FBMy1QIye8WANoiJGJ5d+F/7Y6DNkuKR2cWcC94pFoYQbrgMyRk
-         s3hYFmjhrVuEKnRpy09BY5EC4V0nnyFUj8Qz7dfo=
-Authentication-Results: mail.javad.com;
-        spf=pass (sender IP is 89.175.180.246) smtp.mailfrom=osv@javad.com smtp.helo=osv
-Received-SPF: pass (mail.javad.com: connection is authenticated)
-Received: from osv by osv with local (Exim 4.84_2)
-        (envelope-from <osv@osv.gnss.ru>)
-        id 1ew0jK-0003ax-Jw; Wed, 14 Mar 2018 10:21:46 +0300
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Igor Djordjevic <igor.d.djordjevic@gmail.com>
-Cc:     Phillip Wood <phillip.wood@talktalk.net>,
-        phillip.wood@dunelm.org.uk, Git mailing list <git@vger.kernel.org>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC] Rebasing merges: a jorney to the ultimate solution (Road Clear)
-References: <87y3jtqdyg.fsf@javad.com>
-        <bbe64321-4d3a-d3fe-8bb9-58b600fabf35@gmail.com>
-        <nycvar.QRO.7.76.6.1802270051470.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <CA+P7+xq8UUcLWomUi=PS_hTKfJd3dMAxMmhioDS1bixwcmKAqw@mail.gmail.com>
-        <nycvar.QRO.7.76.6.1802271718090.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <4d7f3406-b206-cc22-87df-85700d6a03d9@gmail.com>
-        <33da31e9-9101-475d-8901-4b6b3df2f29d@gmail.com>
-        <940d959d-151d-68dd-0f13-320ebad0d75b@gmail.com>
-        <87606hoflx.fsf@javad.com>
-        <0ac3a3fd-4053-e32e-75ed-8829f22c2e1f@gmail.com>
-        <87a7vss6ax.fsf@javad.com>
-        <6c8749ca-ec5d-b4b7-f1a0-50d9ad2949a5@talktalk.net>
-        <877eqgardi.fsf@javad.com>
-        <3f2209e0-c560-5384-c589-3aa83615d688@gmail.com>
-Date:   Wed, 14 Mar 2018 10:21:46 +0300
-In-Reply-To: <3f2209e0-c560-5384-c589-3aa83615d688@gmail.com> (Igor
-        Djordjevic's message of "Wed, 14 Mar 2018 02:12:28 +0100")
-Message-ID: <87efkn6s1h.fsf@javad.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+        id S1753306AbeCNHaO (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Mar 2018 03:30:14 -0400
+Received: from mail-qk0-f180.google.com ([209.85.220.180]:36401 "EHLO
+        mail-qk0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751470AbeCNHaN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Mar 2018 03:30:13 -0400
+Received: by mail-qk0-f180.google.com with SMTP id d206so2460364qkb.3
+        for <git@vger.kernel.org>; Wed, 14 Mar 2018 00:30:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=xN9B3ic7rwJtE3AjCDa/GA4iSWEadKcLg/L/sTXEEqU=;
+        b=feKFi4LCQOS6mLloC5UjdCaDncsQURzSSTTktE02WY7uqfFyX14PMx7DAhoK+Sk/+A
+         qlF9GFXYCdOPmxYD37ONmDzz0gghhqdbkuUUaP2e5/dMTd0PhYefO66+reyxMFtQ8N3v
+         CYsPpLq2SPin+PnRyWbbqTHnB77CKz9kHJFeQD7cf/tySEf6zpm46U1q5julXiELyBQy
+         K3684HWbVTgkMOPLY0sYlUEQdAwTNDp8jrQxDG7/KLOKFUPTPdVnrgxABvyH97biiMXs
+         nB2DYCJXDfeCGIpBiNynR0lYYrTeNlDOT6SShzaPmNA3q5hLNcXM2e/7Ie0hMvbL7rlB
+         vT9g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=xN9B3ic7rwJtE3AjCDa/GA4iSWEadKcLg/L/sTXEEqU=;
+        b=V3oV68o3E2PRuuP0l+MeU9DCn7L1UnWezNEIbTHQYWwnpzge+zAY9PaxnP5iEqEw6u
+         d4aGfMOT2yVEcFs5z4F0cHwGpSrWeNyo7eDcoBF9IiBtCWgLPo877Dj/bnVTqL4Km+q9
+         lYrRlBZKHeKV3pER/t3/XILrzF8DnhmBoZPxZeaLiXZT4AOXZoN/G7ykLZ+Huxp6S+SE
+         uBrqfwxW6GlE+ey3HpV2c5voh/M7vhCl4TrWZLsoFlAg66MLc+rxtHWj8rN+JqFxSLJD
+         nocRVYgAiXs+q1CRaX38Xn2eMiigNswR/frEFxCqt7kjdT90c1MetMQmovV6xrKaN8n+
+         V+8g==
+X-Gm-Message-State: AElRT7FmgoVbWItMfXSUF6ZF9cwxQUGL5NrMUoiyFcnWCkzdJe2xXnVD
+        2hNbC2PZgDugHQs4XBZcZ4eii9ksq36ac6nj/xI=
+X-Google-Smtp-Source: AG47ELsdRCaLI3km7P1J3w8O6tXAgGLvCDuFW4LP2Bvtzy93PjUrKz0STVgH7MOzXBQxd9HCx7//NY7UmZjSJMzCsjs=
+X-Received: by 10.55.54.199 with SMTP id d190mr5193462qka.220.1521012612354;
+ Wed, 14 Mar 2018 00:30:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.12.190.196 with HTTP; Wed, 14 Mar 2018 00:30:11 -0700 (PDT)
+In-Reply-To: <20180313201945.8409-1-predatoramigo@gmail.com>
+References: <20180313201945.8409-1-predatoramigo@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Wed, 14 Mar 2018 03:30:11 -0400
+X-Google-Sender-Auth: EhRTITL_yULqCtCu0dbxA8cAjME
+Message-ID: <CAPig+cRPzyw525ODC4=-E7w=zbpbhVN2eqxSYDSLij5wfW8S_A@mail.gmail.com>
+Subject: Re: [GSoC] [PATCH] test: avoid pipes in git related commands for test suite
+To:     Pratik Karki <predatoramigo@gmail.com>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Buga,
+Thanks for the patch. See comments below...
 
-Igor Djordjevic <igor.d.djordjevic@gmail.com> writes:
-
-> Hi Sergey,
+On Tue, Mar 13, 2018 at 4:19 PM, Pratik Karki <predatoramigo@gmail.com> wrote:
+> This patch removes the necessity of pipes in git related commands for test suite.
 >
-> On 13/03/2018 17:10, Sergey Organov wrote:
->> 
->> > Hi Sergey, I've been following this discussion from the sidelines,
->> > though I haven't had time to study all the posts in this thread in
->> > detail. I wonder if it would be helpful to think of rebasing a merge as
->> > merging the changes in the parents due to the rebase back into the
->> > original merge. So for a merge M with parents A B C that are rebased to
->> > A' B' C' the rebased merge M' would be constructed by (ignoring shell
->> > quoting issues)
->> >
->> > git checkout --detach M
->> > git merge-recursive A -- M A'
->> > tree=$(git write-tree)
->> > git merge-recursive B -- $tree B'
->> > tree=$(git write-tree)
->> > git merge-recursive C -- $tree C'
->> > tree=$(git write-tree)
->> > M'=$(git log --pretty=%B -1 M | git commit-tree -pA' -pB' -pC')
->> 
->> I wonder if it's OK to exchange the order of heads in the first merge
->> (also dropped C for brevity):
->
-> It should be, being "left" or "right" hand side ("theirs" or "ours") 
-> of the three-way merge shouldn`t matter, they`re still both equally 
-> compared to the merge-base.
->
->> git checkout --detach A'
->> git merge-recursive A -- A' M
->> tree=$(git write-tree)
->> git merge-recursive B -- $tree B'
->> tree=$(git write-tree)
->> M'=$(git log --pretty=%B -1 M | git commit-tree -pA' -pB')
->> 
->> If so, don't the first 2 lines now read: "rebase (first parent of) M on
->> top of A'"?
->
-> Hmm, lol, yes...? :) So basically, this:
->
-> (1)	git checkout --detach M
-> 	git merge-recursive A -- M A'
-> 	tree=$(git write-tree)
-> 	...
->
-> ... is equivalent to this:
->
-> (2)	git checkout --detach A'
-> 	git merge-recursive A -- A' M
-> 	tree=$(git write-tree)
-> 	...
->
-> ..., being equivalent to this:
->
-> (3)	git checkout --detach A'
-> 	git cherry-pick -m 1 M
-> 	tree=$(git write-tree)
-> 	...
->
-> ..., where in all three cases that `$tree` is equivalent to U1' we 
-> discussed about so much already :)
+> Exit code of the upstream in a pipe is ignored so, it's use should be avoided. The fix for this is to write the output of the git command to a file and test the exit codes of both the commands being linked by pipe.
 
-Exactly, and thanks for noticing that it's actually U1', that happens to
-soon become rather handy, see below.
+Please wrap commit messages to fit in about 72 columns; this one is
+far too wide.
 
-> I tested it like this as well, slightly modifying previously sent out 
-> script (like this one[1]), and it still seems to be working ;) Nice!
+On the Git project, commit messages are written in imperative mood, as
+if telling the codebase to "do something". So, instead of writing
+"This patch removes...", you could word it "Remove..." or "Avoid...".
 
-Very nice of you, thanks!
+It's misleading to say that the patch "removes the _necessity_ of
+pipes" since pipes were not used out of necessity; they were probably
+just a convenience and seemed reasonable at the time, but later
+experience has shown that they can be problematic for the reason you
+give in the second paragraph.
 
-Yet another outcome of this transformation is that the fist step is now
-free to (and probably should) utilize all the options (-s, -X, etc.)
-that usual rebase has:
+Taking these observations into consideration, perhaps you could
+rewrite the commit message something like this:
 
-git-rebase-first-parent --onto A' M
-tree=$(git write-tree)
+    Avoid using pipes downstream of Git commands since the exit codes
+    of commands upstream of pipes get swallowed, thus potentially
+    hiding failure of those commands. Instead, capture Git command
+    output to a file apply the downstream command(s) to that file.
 
-where 'git-rebase-first-parent' is whatever machinery is currently being
-used to rebase simple non-merge commit.
+More comments below...
 
-[
+> Signed-off-by: Pratik Karki <predatoramigo@gmail.com>
+> ---
+> diff --git a/t/t7001-mv.sh b/t/t7001-mv.sh
+> @@ -116,10 +116,10 @@ test_expect_success \
+>  test_expect_success \
+>      'checking the commit' \
+> -    'git diff-tree -r -M --name-status  HEAD^ HEAD | \
+> -     grep "^R100..*path0/COPYING..*path2/COPYING" &&
+> -     git diff-tree -r -M --name-status  HEAD^ HEAD | \
+> -     grep "^R100..*path0/README..*path2/README"'
+> +    'git diff-tree -r -M --name-status  HEAD^ HEAD >actual &&
+> +     grep "^R100..*path0/COPYING..*path2/COPYING" actual &&
+> +     git diff-tree -r -M --name-status  HEAD^ HEAD >actual &&
+> +     grep "^R100..*path0/README..*path2/README" actual'
 
-Moreover, Phillip's method could further be transformed to what is in
-RFC, not that I think it should, see below. Just for the sake of
-completeness though, here is the essential missing transformation that
-makes Phillip's method symmetric, after which it becomes true special
-case of the RFC with particular rebase-first-parent implementation:
+Although this "mechanical" transformation is technically correct, it
+is nevertheless wasteful. The exact same "git diff-tree ..." command
+is run twice, and both times output is captured to file 'actual',
+which makes the second invocation superfluous. Instead, a better
+transformation would be:
 
-git checkout --detach A'
-git merge-recursive A -- A' M
-tree_U1'=$(git write-tree)
-git checkout --detach B'
-git merge-recursive B -- B' M
-tree_U2'=$(git write-tree)
-git merge-recursive M -- $tree_U1' $tree_U2'
-tree=$(git write-tree)
-M'=$(git log --pretty=%B -1 M | git commit-tree -pA' -pB')
+    git diff-tree ... >actual &&
+    grep ... actual &&
+    grep ... actual
 
-]
+The same observation applies to other transformations in this patch.
 
->
->> If so, then it could be implemented so that it reduces back to regular
->> rebase of non-merges when applied to a single-parent commit, similar to
->> the method in the RFC, striking out one of advantages of the RFC.
->
-> I guess so, but I think it now boils down only to what one finds 
-> easier to reason about even more.
+> diff --git a/t/t9104-git-svn-follow-parent.sh b/t/t9104-git-svn-follow-parent.sh
+> @@ -204,8 +204,8 @@ test_expect_success "follow-parent is atomic" '
+>  test_expect_success "track multi-parent paths" '
+>         svn_cmd cp -m "resurrect /glob" "$svnrepo"/r9270 "$svnrepo"/glob &&
+>         git svn multi-fetch &&
+> -       test $(git cat-file commit refs/remotes/glob | \
+> -              grep "^parent " | wc -l) -eq 2
+> +       test $(git cat-file commit refs/remotes/glob >actual &&
+> +              grep "^parent " actual | wc -l) -eq 2
+>         '
 
-I actually think there is more to it. It's incremental asymmetric nature
-of the Phillip's approach that I now find rather appealing and worth to
-be used in practice.
+This is not a great transformation. If "git cat-file" fails, then
+neither 'grep' nor 'wc' will run, and the result will be as if 'test'
+was called without an argument before "-eq". For example:
 
-While the RFC approach, being entirely symmetric, is nice from the POV
-of theory and reasoning, yet simple to implement, the actual user
-interface of Git is inherently asymmetric with respect to merges (one
-merges side-branch(es) to mainline), so asymmetric approach of the
-Phillip's method should give smoother user experience, even if only
-because of 1 less merge.
+    % test $(false >actual && grep "^parent " actual | wc -l) -eq 2
+    test: -eq: unary operator expected
 
-There are still 2 issues about the implementation that need to be
-discussed though:
+It would be better to run "git cat-file" outside of "test $(...)". For instance:
 
-1. Still inverted order of the second merge compared to RFC.
+    git cat-file ... >actual &&
+    test $(grep ... actual | wc -l) -eq 2
 
-It'd be simple to "fix" again, except I'm not sure it'd be better, and
-as there is no existing experiences with this step to follow, it
-probably should be left as in the original, where it means "merge the
-changes made in B' (w.r.t B) into our intermediate version of the
-resulting merge".
+Alternately, you could take advantage of the test_line_count() helper function:
 
-The original Phillip's version seems to better fit the asymmetry between
-mainline and side-branch handling.
+    git cat-file ... >actual &&
+    grep ... actual >actual2 &&
+    test_line_count = 2 actual2
 
-The actual difference will be only in the order of ours vs theirs in
-conflicts though, and thus it's not that critical.
+> diff --git a/t/t9110-git-svn-use-svm-props.sh b/t/t9110-git-svn-use-svm-props.sh
+> @@ -21,32 +21,32 @@ uuid=161ce429-a9dd-4828-af4a-52023f968c89
+>  test_expect_success 'verify metadata for /bar' "
+> -       git cat-file commit refs/remotes/bar | \
+> -          grep '^git-svn-id: $bar_url@12 $uuid$' &&
+> -       git cat-file commit refs/remotes/bar~1 | \
+> -          grep '^git-svn-id: $bar_url@11 $uuid$' &&
+> -       git cat-file commit refs/remotes/bar~2 | \
+> -          grep '^git-svn-id: $bar_url@10 $uuid$' &&
+> -       git cat-file commit refs/remotes/bar~3 | \
+> -          grep '^git-svn-id: $bar_url@9 $uuid$' &&
+> -       git cat-file commit refs/remotes/bar~4 | \
+> -          grep '^git-svn-id: $bar_url@6 $uuid$' &&
+> -       git cat-file commit refs/remotes/bar~5 | \
+> -          grep '^git-svn-id: $bar_url@1 $uuid$'
+> +       git cat-file commit refs/remotes/bar >actual &&
+> +          grep '^git-svn-id: $bar_url@12 $uuid$' actual &&
+> +       git cat-file commit refs/remotes/bar~1 >actual &&
+> +          grep '^git-svn-id: $bar_url@11 $uuid$' actual &&
+> +       git cat-file commit refs/remotes/bar~2 >actual &&
+> +          grep '^git-svn-id: $bar_url@10 $uuid$' actual &&
+> +       git cat-file commit refs/remotes/bar~3 >actual &&
+> +          grep '^git-svn-id: $bar_url@9 $uuid$' actual &&
+> +       git cat-file commit refs/remotes/bar~4 >actual &&
+> +          grep '^git-svn-id: $bar_url@6 $uuid$' actual &&
+> +       git cat-file commit refs/remotes/bar~5 >actual &&
+> +          grep '^git-svn-id: $bar_url@1 $uuid$' actual
+>         "
 
-2. The U1' == U2' consistency check in RFC that I still think is worth
-to be implemented.
+An indented line in the original shows that it is a continuation of
+the preceding line. However, in the revised code, that is not so, thus
+it probably makes sense to drop the indentation.
 
-In application to the method being discussed, we only need the check if
-the final merge went without conflicts, so the user was not already
-involved, and the check itself is then pretty simple:
+The same comment applies to several additional cases snipped from this reply.
 
- "proceed without stop only if $tree = $tree_U1'"
+> diff --git a/t/t9114-git-svn-dcommit-merge.sh b/t/t9114-git-svn-dcommit-merge.sh
+> index 50bca62de..c945c3758 100755
+> --- a/t/t9114-git-svn-dcommit-merge.sh
+> +++ b/t/t9114-git-svn-dcommit-merge.sh
+> @@ -68,7 +68,7 @@ test_debug 'gitk --all & sleep 1'
+>  test_expect_success 'verify pre-merge ancestry' "
+>         test x\$(git rev-parse --verify refs/heads/svn^2) = \
+>              x\$(git rev-parse --verify refs/heads/merge) &&
+> -       git cat-file commit refs/heads/svn^ | grep '^friend$'
+> +       git cat-file commit refs/heads/svn^ >actual && grep '^friend$' actual
+>         "
 
-Its equivalence to the U1' == U2' test in the RFC follows from the fact
-that if M' is non-conflicting merge of U1' and U2', then M' == U1' if
-and only if U2' == U1'.
+Style: split the line at the '&&'...
 
-Finally, here is a sketch of the implementation that I'd suggest to
-use:
+    git cat-file ... >actual &&
+    grep ... actual
 
-git-rebase-first-parent --onto A' M
-tree_U1'=$(git write-tree)
-git merge-recursive B -- $tree_U1' B'
-tree=$(git write-tree)
-M'=$(git log --pretty=%B -1 M | git commit-tree -pA' -pB')
-[ $conflicted_last_merge = "yes" ] ||
-  trees-match $tree_U1' $tree || 
-  stop-for-user-amendment
+The same comment applies to another test snipped from this reply.
 
-where 'git-rebase-first-parent' denotes whatever machinery is currently
-being used to rebase simple non-merge commit. Handy approximation of
-which for stand-alone scripting is:
+Aside: The current patch wants to solve the problem of exit code being
+swallowed down pipes, however, this and other tests are afflicted by a
+similar problem with $(...) also swallowing the exit code. A failure
+of "git rev-parse" could potentially go unnoticed inside "test
+x$(...)". Fixing that is outside the scope of the current patch,
+however, a follow-on patch to fix that problem (if you feel so
+inclined) might transform it something like this:
 
-git checkout --detach A' && git cherry-pick -m 1 M
-
-[As an interesting note, observe how, after all, that original Johannes
-Sixt's idea of rebasing of merge commit by cherry-picking its first
-parent is back there.]
-
--- Sergey
+    git rev-parse ... >rev1 &&
+    git rev-parse ... >rev2 &&
+    test_cmp rev1 rev2 &&
