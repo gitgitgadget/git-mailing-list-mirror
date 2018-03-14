@@ -7,121 +7,226 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9C49E1FAE2
-	for <e@80x24.org>; Wed, 14 Mar 2018 11:03:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 773301FAE3
+	for <e@80x24.org>; Wed, 14 Mar 2018 11:11:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751488AbeCNLDD (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Mar 2018 07:03:03 -0400
-Received: from smtp-out-3.talktalk.net ([62.24.135.67]:24831 "EHLO
+        id S1752004AbeCNLLr (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Mar 2018 07:11:47 -0400
+Received: from smtp-out-3.talktalk.net ([62.24.135.67]:58051 "EHLO
         smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751005AbeCNLDC (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Mar 2018 07:03:02 -0400
-Received: from [192.168.2.201] ([89.242.187.47])
+        with ESMTP id S1751729AbeCNLLg (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Mar 2018 07:11:36 -0400
+Received: from lindisfarne.localdomain ([89.242.187.47])
         by smtp.talktalk.net with SMTP
-        id w4BOeGmqwHCoww4BPesdhk; Wed, 14 Mar 2018 11:03:00 +0000
+        id w4JdeGnv5HCoww4JieseBU; Wed, 14 Mar 2018 11:11:34 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1521025380;
-        bh=Vb487fxAawMaeMtZICDLJqFsx9uQMBwcQoUaWl2V3tk=;
-        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=YL81k/Dj1lQSrwuCZSvNl34M/Jiwj9/8g2zD7qXn5iNsoIKkDPSnR0C+b/cuWzkw9
-         PhJHaFxbGqpLdR4c5LFwLZx+xyqTA5PkVjGeh7yzy4sczyRfxJjlWj0G6S+OUAcVVL
-         ViVE5cnq8ep92QRLZMNiyL24VG3OeEdy7HZeZljQ=
+        s=cmr1711; t=1521025895;
+        bh=k15dXNTFHvujzv+sphoBiX5iVE23wf1bQFmvvla0KwI=;
+        h=From:To:Cc:Subject:Date:Reply-To;
+        b=datB0rPsMujan57NoIOHPuYeT6HvW9yDIWs7uf7YwRojDd7sRZJhSP3ld5xSBOP4n
+         dHnKIlIGdFIh0SdPYqECMbBtGJDvhzWAGpY/KfMLvGghlj5DK3j1p+/7vf2xVLSHmz
+         VFim8RdPAL+9oKsFrEiFk/L6KbVxCnCWLNZ2Rrq4=
 X-Originating-IP: [89.242.187.47]
 X-Spam: 0
 X-OAuthority: v=2.3 cv=SfXZiMZu c=1 sm=1 tr=0 a=xTMdeSjPtcrjTRwaJcecEQ==:117
- a=xTMdeSjPtcrjTRwaJcecEQ==:17 a=IkcTkHD0fZMA:10 a=nN7BH9HXAAAA:8
- a=N5IzSbAmBNIq2Jeogc4A:9 a=7Zwj6sZBwVKJAoWSPKxL6X1jA+E=:19 a=QEXdDO2ut3YA:10
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 2/3] add -p: allow line selection to be inverted
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Gustavo Leite <gustavoleite.ti@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <20180219113619.26566-1-phillip.wood@talktalk.net>
- <20180306101750.18794-1-phillip.wood@talktalk.net>
- <20180306101750.18794-3-phillip.wood@talktalk.net>
- <xmqq371d3rjz.fsf@gitster-ct.c.googlers.com>
- <6476d776-dbf7-09cf-1c65-e413798b9987@talktalk.net>
- <xmqq371axxm5.fsf@gitster-ct.c.googlers.com>
- <ea4f645f-5cf2-ef84-24cf-fb585f96039d@talktalk.net>
- <xmqqsh942ayf.fsf@gitster-ct.c.googlers.com>
+ a=xTMdeSjPtcrjTRwaJcecEQ==:17 a=evINK-nbAAAA:8 a=qvPaiQwnwfsVToo98CAA:9
+ a=Y0-FZYADvyhzYL6V:21 a=cV3Wu-KFiwkUtIuk:21 a=RfR_gqz1fSpA9VikTjo0:22
 From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <59492efe-f455-1214-86e4-7a48bbe8f556@talktalk.net>
-Date:   Wed, 14 Mar 2018 11:02:58 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
-MIME-Version: 1.0
-In-Reply-To: <xmqqsh942ayf.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfG1xldWlJ/RPRnd9iCg7rxKmINzlMLnWU65RMkves842A8AmZEW1PiCYrXTRojNCSyaBMZvOziW48Wi31aSTeoQRl/T9u4XD1TP1i6lZWuENmzxQ8v/T
- iEn1iEHrJOcmdYaZIXxukDD56f64BJ7H6YiUxs/Z1BLqpi+/vBCLGhz6UO241u8azf2aNABKMN/rUO7oTbuK/0zOs+kyv+4LZ8L4i3Nt71HqZHpnPTxZ3qZz
- XhsWwiAp3n02pyvHN/nY/ltv18uAL3pY8aWPdfaungZvDw2pS1NcCTl4BKwzMdYS
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: [PATCH 1/2] rebase: support --signoff with implicit rebase
+Date:   Wed, 14 Mar 2018 11:11:26 +0000
+Message-Id: <20180314111127.14217-1-phillip.wood@talktalk.net>
+X-Mailer: git-send-email 2.16.2
+Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
+X-CMAE-Envelope: MS4wfPw2lDShVB0SbjC1iY/Q/3A6wXZ1C21OR1j89avALRs+n5YIREWdO1VM1SFupHoRROvf9gd4c9+z4tG/ng/Kdw/x+jExns/N2yDNK09YaMbW9MhrvA9U
+ p3KQ6LYdbLF/ufwfnICYXw437TpUscNOD51mNk5WtSI/MKKkYRvk2rmO/Z7w2q6lCAq5P/UeP/V0hIrjQnDgD5D92z33bk6hCzVI5jAbwljnlX8I1htStj22
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 13/03/18 16:32, Junio C Hamano wrote:
-> Phillip Wood <phillip.wood@talktalk.net> writes:
-> 
->> On 08/03/18 17:53, Junio C Hamano wrote:
->>> Phillip Wood <phillip.wood@talktalk.net> writes:
->>>
->>>> and use a leading '-' for inversion. I'm tempted to keep supporting 'n-'
->>>> to mean everything from 'n' to the last line though.
->>>
->>> Thanks for double checking.  It would be a better endgame to follow
->>> up with an update to existing "range selection" code to also support
->>> "n-", if you go that route.
->>>
->> I'm afraid I'm not sure exactly what you're suggesting. At the moment
->> the range selection code is in the first patch and supports incomplete
->> ranges. Are you suggesting that support for incomplete ranges should be
->> in a separate patch or have I misunderstood?
-> 
-> My observation of the situation behind my reasoning is:
-> 
->  - There is an existing UI that uses "-X" to mean "exclude what
->    matches X" and that was the reason why you decided to follow suit
->    instead of using "^X" for inversion of X.
-> 
->  - Such an existing UI would not have used "-X" to mean "the first
->    possible choice thru X".  You will lose that from your new thing
->    and you accepted that.
-> 
->  - It is likely (I did not check, though) that the existing UI would
->    not have used "Y-" to mean "starting from Y all the possible
->    choices thru to the end", but that is merely for symmetry with
->    the lack (inability to use) of "-X".  There is no fundamental
->    reason why "Y-" cannot mean that, and you are tempted to allow do
->    so in your new thing for the same reason.
-> 
-> So if we are going to have "N-" to mean "everything from N to the
-> last line", then the same "Starting at N to the end of the all the
-> possible choices" should be allowed in the existing UI (i.e. the one
-> that forced you to give up "^X" for the sake of consistency) for the
-> same consistency reasons, no?
-> 
-> For that, if you want to keep the "n-" you did in your first patch,
-> the most logical thing is to have a preparatory enhancement to teach
-> "N-" to list_and_choose(), and then build your series on top.  Or
-> you can do without such a change to list_and_choose() in your series,
-> in which case, you drop "n-" support and then at the very end after
-> the series settles, add "n-" support to the new code in this series
-> and to list_and_choose() at the same time in a follow-up patch.
-> 
-> 
-Thanks for taking the time to clarify that, I hadn't twigged you were
-talking about changing list_and_choose() before. I think it would make
-sense for that and 'git clean' to match the line selection with "n-". I
-just opened it up my editor to do that and was pleasantly surprised to
-discover that "n-" is already implemented for both list_and_choose() and
-'git clean' so there's nothing that needs doing on that front. I'll
-reroll this series with the other changes and send it later this week or
-next week
+From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-Best Wishes
+This allows one to run 'git rebase --exec "make check" --signoff'
+which is useful when preparing a patch series for publication and is
+more convenient than doing the signoff with another --exec command.
+This change also allows --root without --onto to work with --signoff
+as well (--root with --onto was already supported). Note that the
+failing test is due to a bug in 'rebase --root' when the root commit
+is empty which will be fixed in the next commit.
 
-Phillip
+Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+---
+ git-rebase--interactive.sh |  6 +++---
+ git-rebase.sh              | 26 +++++++++++++++++++++++++-
+ sequencer.c                |  6 ++++++
+ t/t3428-rebase-signoff.sh  | 32 ++++++++++++++++++++++++++++++++
+ 4 files changed, 66 insertions(+), 4 deletions(-)
+
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index 81c5b42875..4ea54fc1c4 100644
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -283,7 +283,7 @@ pick_one () {
+ 		pick_one_preserving_merges "$@" && return
+ 	output eval git cherry-pick $allow_rerere_autoupdate $allow_empty_message \
+ 			${gpg_sign_opt:+$(git rev-parse --sq-quote "$gpg_sign_opt")} \
+-			"$strategy_args" $empty_args $ff "$@"
++			$signoff "$strategy_args" $empty_args $ff "$@"
+ 
+ 	# If cherry-pick dies it leaves the to-be-picked commit unrecorded. Reschedule
+ 	# previous task so this commit is not lost.
+@@ -525,10 +525,10 @@ do_pick () {
+ 		# resolve before manually running git commit --amend then git
+ 		# rebase --continue.
+ 		git commit --allow-empty --allow-empty-message --amend \
+-			   --no-post-rewrite -n -q -C $sha1 &&
++			   --no-post-rewrite -n -q -C $sha1 $signoff &&
+ 			pick_one -n $sha1 &&
+ 			git commit --allow-empty --allow-empty-message \
+-				   --amend --no-post-rewrite -n -q -C $sha1 \
++				   --amend --no-post-rewrite -n -q -C $sha1 $signoff \
+ 				   ${gpg_sign_opt:+"$gpg_sign_opt"} ||
+ 				   die_with_patch $sha1 "$(eval_gettext "Could not apply \$sha1... \$rest")"
+ 	else
+diff --git a/git-rebase.sh b/git-rebase.sh
+index b353c33d41..40301756be 100755
+--- a/git-rebase.sh
++++ b/git-rebase.sh
+@@ -91,6 +91,7 @@ preserve_merges=
+ autosquash=
+ keep_empty=
+ allow_empty_message=
++signoff=
+ test "$(git config --bool rebase.autosquash)" = "true" && autosquash=t
+ case "$(git config --bool commit.gpgsign)" in
+ true)	gpg_sign_opt=-S ;;
+@@ -120,6 +121,10 @@ read_basic_state () {
+ 		allow_rerere_autoupdate="$(cat "$state_dir"/allow_rerere_autoupdate)"
+ 	test -f "$state_dir"/gpg_sign_opt &&
+ 		gpg_sign_opt="$(cat "$state_dir"/gpg_sign_opt)"
++	test -f "$state_dir"/signoff && {
++		signoff="$(cat "$state_dir"/signoff)"
++		force_rebase=t
++	}
+ }
+ 
+ write_basic_state () {
+@@ -134,6 +139,7 @@ write_basic_state () {
+ 	test -n "$allow_rerere_autoupdate" && echo "$allow_rerere_autoupdate" > \
+ 		"$state_dir"/allow_rerere_autoupdate
+ 	test -n "$gpg_sign_opt" && echo "$gpg_sign_opt" > "$state_dir"/gpg_sign_opt
++	test -n "$signoff" && echo "$signoff" >"$state_dir"/signoff
+ }
+ 
+ output () {
+@@ -329,7 +335,13 @@ do
+ 	--ignore-whitespace)
+ 		git_am_opt="$git_am_opt $1"
+ 		;;
+-	--committer-date-is-author-date|--ignore-date|--signoff|--no-signoff)
++	--signoff)
++		signoff=--signoff
++		;;
++	--no-signoff)
++		signoff=
++		;;
++	--committer-date-is-author-date|--ignore-date)
+ 		git_am_opt="$git_am_opt $1"
+ 		force_rebase=t
+ 		;;
+@@ -459,6 +471,18 @@ then
+ 	git_format_patch_opt="$git_format_patch_opt --progress"
+ fi
+ 
++if test -n "$signoff"
++then
++	test "$interactive_rebase" = explicit &&
++		die "$(gettext "error: interactive rebase does not support --signoff")"
++	test "$type" = merge &&
++		die "$(gettext "error: merge rebase does not support --signoff")"
++	test -n "$preserve_merges" &&
++		die "$(gettext "error: cannot combine '--signoff' with '--preserve-merges'")"
++	git_am_opt="$git_am_opt $signoff"
++	force_rebase=t
++fi
++
+ if test -z "$rebase_root"
+ then
+ 	case "$#" in
+diff --git a/sequencer.c b/sequencer.c
+index e9baaf59bd..311569e37d 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -127,6 +127,7 @@ static GIT_PATH_FUNC(rebase_path_rewritten_pending,
+ static GIT_PATH_FUNC(rebase_path_gpg_sign_opt, "rebase-merge/gpg_sign_opt")
+ static GIT_PATH_FUNC(rebase_path_orig_head, "rebase-merge/orig-head")
+ static GIT_PATH_FUNC(rebase_path_verbose, "rebase-merge/verbose")
++static GIT_PATH_FUNC(rebase_path_signoff, "rebase-merge/signoff")
+ static GIT_PATH_FUNC(rebase_path_head_name, "rebase-merge/head-name")
+ static GIT_PATH_FUNC(rebase_path_onto, "rebase-merge/onto")
+ static GIT_PATH_FUNC(rebase_path_autostash, "rebase-merge/autostash")
+@@ -2035,6 +2036,11 @@ static int read_populate_opts(struct replay_opts *opts)
+ 		if (file_exists(rebase_path_verbose()))
+ 			opts->verbose = 1;
+ 
++		if (file_exists(rebase_path_signoff())) {
++			opts->allow_ff = 0;
++			opts->signoff = 1;
++		}
++
+ 		read_strategy_opts(opts, &buf);
+ 		strbuf_release(&buf);
+ 
+diff --git a/t/t3428-rebase-signoff.sh b/t/t3428-rebase-signoff.sh
+index 2afb564701..2ff7f534e3 100755
+--- a/t/t3428-rebase-signoff.sh
++++ b/t/t3428-rebase-signoff.sh
+@@ -12,6 +12,13 @@ cat >file <<EOF
+ a
+ EOF
+ 
++# Expected commit message for initial commit after rebase --signoff
++cat >expected-initial-signed <<EOF
++Initial empty commit
++
++Signed-off-by: $(git var GIT_COMMITTER_IDENT | sed -e "s/>.*/>/")
++EOF
++
+ # Expected commit message after rebase --signoff
+ cat >expected-signed <<EOF
+ first
+@@ -43,4 +50,29 @@ test_expect_success 'rebase --no-signoff does not add a sign-off line' '
+ 	test_cmp expected-unsigned actual
+ '
+ 
++test_expect_success 'rebase --exec --signoff adds a sign-off line' '
++	test_when_finished "rm exec" &&
++	git commit --amend -m "first" &&
++	git rebase --exec "touch exec" --signoff HEAD^ &&
++	test_path_is_file exec &&
++	git cat-file commit HEAD | sed -e "1,/^\$/d" >actual &&
++	test_cmp expected-signed actual
++'
++
++test_expect_failure 'rebase --root --signoff adds a sign-off line' '
++	git commit --amend -m "first" &&
++	git rebase --root --keep-empty --signoff &&
++	git cat-file commit HEAD^ | sed -e "1,/^\$/d" >actual &&
++	test_cmp expected-initial-signed actual &&
++	git cat-file commit HEAD | sed -e "1,/^\$/d" >actual &&
++	test_cmp expected-signed actual
++'
++
++test_expect_success 'rebase -i --signoff fails' '
++	test_must_fail git rebase -i --signoff HEAD^
++'
++
++test_expect_success 'rebase -m --signoff fails' '
++	test_must_fail git rebase -m --signoff HEAD^
++'
+ test_done
+-- 
+2.16.2
+
