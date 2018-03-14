@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B95841F404
-	for <e@80x24.org>; Wed, 14 Mar 2018 19:28:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0C2521F404
+	for <e@80x24.org>; Wed, 14 Mar 2018 19:29:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751985AbeCNT2U (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Mar 2018 15:28:20 -0400
-Received: from mail-qk0-f195.google.com ([209.85.220.195]:37434 "EHLO
+        id S1751964AbeCNT2S (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Mar 2018 15:28:18 -0400
+Received: from mail-qk0-f195.google.com ([209.85.220.195]:41763 "EHLO
         mail-qk0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751000AbeCNT2L (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Mar 2018 15:28:11 -0400
-Received: by mail-qk0-f195.google.com with SMTP id y137so4759292qka.4
-        for <git@vger.kernel.org>; Wed, 14 Mar 2018 12:28:10 -0700 (PDT)
+        with ESMTP id S1751467AbeCNT2M (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Mar 2018 15:28:12 -0400
+Received: by mail-qk0-f195.google.com with SMTP id s78so4738478qkl.8
+        for <git@vger.kernel.org>; Wed, 14 Mar 2018 12:28:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=2mew0hau9xkqrOKkuwTFrx97FYun84aun3mpstSmViA=;
-        b=K52iMIBeUgsopPk9/9Ho0AF0DTN6YxjQTanPYwJ9cx1JT4IoawOZJzIPixxDGZagKP
-         PoT+oC6EIk1ZN5MEQS7UDSU8JN6blFusuRFVxqnikFROI65uC6YHqRen0WvuQDV/yUmc
-         RAp7G+7pWFf1elWLEDUMb25MS3l3jaKtlDDdDVuIegPIMadLlQejC2ATgCFMSRH+fBCh
-         xLSOTx5OTU96Aes6q5bnfDV3ILGzkMxOCzguDOlnXOXfSNNBfEPrBtRntKnmr0qCQfq3
-         Nf73Md2TFibTh6lMnKY4qpC7X05r+Uo7judukBDRN4ejyZmXqKRQl2Z0VkP4Pb8GTvlJ
-         5TQA==
+        bh=1WINyiScewAtA3edgrFSwkm3erxSa+PYZtZLy6p/26A=;
+        b=G3k+wBBEnM8TR0xjbd/0gs7NTAtaj9dpSefYlQwy/BY0lxtrcdrws3KRvVTMLREjtP
+         VsRoFOFjfe62TIYfTntg7nklIwHC2n8GJjBjGVHIsc+ubFrPkKv6e3b3DYmKBIVqCD4V
+         nRvduU3UmV+fDRnb4svMGemYXIcZaaMxUiL/7mefptxiLz5by9kePr69qqqOTzMntx7J
+         Gr4XdKzzZYevTSrkS3r1oVDZm/PNAgaFoEMySdLta2q6cD+PTI7iY8+aYym1Z4SF+wow
+         n1P7NP7fg2hFkIKELSG8X84M+pQnVLs/0bDgtKreY1lJH13pDTge61SF12O1PQaHuTYq
+         wRKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=2mew0hau9xkqrOKkuwTFrx97FYun84aun3mpstSmViA=;
-        b=hcX5BNQWJRi7E0eDONtApwqrVuVFm9KSrMz4A5r5FGLtlnIjqM7PNPjVKTggZjjWIn
-         eCZM5mhPDFMjuMOUPnGMCJfyXv+Pj8LruHalX0vBwqsLaNr/OeiRnFml9DXD0O9vEU1D
-         cOR4qBaz0NfMyhT03PmDYbWVxty1C3Mbz7OYizkU+A0yxGkohf6BYE+IMOewhvX5imb6
-         gK83wlN5HcqTr/BULQ9jIR29IkSfB986bWjCaas2ujQwuOr6/yiT10bhskylIfBSE12e
-         fcsZTGLw4igsHxvpvhqZkLF6cNTCJDHa+dmpX1AkNKuIZjzcoZzXrWfzyVVEHsYhIAuO
-         gRzA==
-X-Gm-Message-State: AElRT7F/tQRIZrZgBGRmCWmaZdxCu4QGZLOMkyFsSxXfz5AFWFlLjgAz
-        I8/tQWCrhtprqBC/yzDXV2E9h1vFixE=
-X-Google-Smtp-Source: AG47ELvLzj0hCEVjjHZZ5kFpNHNck9i31K+GwwJapJ5F0yo0BFM+bSvWWqFLW4kGb3Mz0p5R0+nPOw==
-X-Received: by 10.55.46.194 with SMTP id u185mr8353960qkh.63.1521055689302;
-        Wed, 14 Mar 2018 12:28:09 -0700 (PDT)
+        bh=1WINyiScewAtA3edgrFSwkm3erxSa+PYZtZLy6p/26A=;
+        b=PctUNcSyafAsIGmVvoixQ88pubXt5VIH5PNUV9ZrXP+D0isC4KSuJL0WnflLdowtVq
+         TP0AQ45DVRP+BTOjy6Dj1XKhUy9Tg/kxGtCu0wo3B73p+qylj7EyNec9caOXRbEZiX6p
+         C48lFuoUAFODnKrIycgfIVkEQ6jRyPv6NlFBmB1qc0j6uvlj79viFTLoqi7035+1Tf17
+         X7B4+CgBIUhxoeKaSExH2XBEPsxkbJ2M+sEVyKptzbM2lxv7RPSlo0m1t2Ffgrl4nrz/
+         RYRMncKxptwnzkDdYH5Ge9KkKhO93P6vTtQzTfe9/2reqyY/2cf2rOeWDbWUt2Kb60B1
+         o+uQ==
+X-Gm-Message-State: AElRT7GLk6dGtkIYyKMatbKWBaWQEQgZ4+gOTr037P3oBvqIByJ2dRhI
+        uwWqRGZahEUNaGJjgzVu74XAh9XDJds=
+X-Google-Smtp-Source: AG47ELt8X5IHLCqYYa1DxKk1TD56raW6dFN/fUah6TTeeDI8ye1fCm9cQhC0GnCPHBasMj5jVeBnbg==
+X-Received: by 10.55.217.70 with SMTP id u67mr8149342qki.294.1521055690931;
+        Wed, 14 Mar 2018 12:28:10 -0700 (PDT)
 Received: from stolee-linux-2.corp.microsoft.com ([2001:4898:8010:0:eb4a:5dff:fe0f:730f])
-        by smtp.gmail.com with ESMTPSA id q30sm2847395qte.10.2018.03.14.12.28.08
+        by smtp.gmail.com with ESMTPSA id q30sm2847395qte.10.2018.03.14.12.28.09
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 14 Mar 2018 12:28:08 -0700 (PDT)
+        Wed, 14 Mar 2018 12:28:10 -0700 (PDT)
 From:   Derrick Stolee <stolee@gmail.com>
 X-Google-Original-From: Derrick Stolee <dstolee@microsoft.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net, sbeller@google.com,
         szeder.dev@gmail.com, ramsay@ramsayjones.plus.com,
         git@jeffhostetler.com, Derrick Stolee <dstolee@microsoft.com>
-Subject: [PATCH v6 13/14] commit-graph: build graph from starting commits
-Date:   Wed, 14 Mar 2018 15:27:35 -0400
-Message-Id: <20180314192736.70602-14-dstolee@microsoft.com>
+Subject: [PATCH v6 14/14] commit-graph: implement "--additive" option
+Date:   Wed, 14 Mar 2018 15:27:36 -0400
+Message-Id: <20180314192736.70602-15-dstolee@microsoft.com>
 X-Mailer: git-send-email 2.14.1
 In-Reply-To: <20180314192736.70602-1-dstolee@microsoft.com>
 References: <1519698787-190494-1-git-send-email-dstolee@microsoft.com>
@@ -68,223 +68,166 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-Teach git-commit-graph to read commits from stdin when the
---stdin-commits flag is specified. Commits reachable from these
-commits are added to the graph. This is a much faster way to construct
-the graph than inspecting all packed objects, but is restricted to
-known tips.
-
-For the Linux repository, 700,000+ commits were added to the graph
-file starting from 'master' in 7-9 seconds, depending on the number
-of packfiles in the repo (1, 24, or 120).
+Teach git-commit-graph to add all commits from the existing
+commit-graph file to the file about to be written. This should be
+used when adding new commits without performing garbage collection.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- Documentation/git-commit-graph.txt | 14 +++++++++++++-
- builtin/commit-graph.c             | 27 +++++++++++++++++++++------
- commit-graph.c                     | 27 +++++++++++++++++++++++++--
- commit-graph.h                     |  4 +++-
- t/t5318-commit-graph.sh            | 13 +++++++++++++
- 5 files changed, 75 insertions(+), 10 deletions(-)
+ Documentation/git-commit-graph.txt | 10 ++++++++++
+ builtin/commit-graph.c             | 10 +++++++---
+ commit-graph.c                     | 17 ++++++++++++++++-
+ commit-graph.h                     |  3 ++-
+ t/t5318-commit-graph.sh            | 10 ++++++++++
+ 5 files changed, 45 insertions(+), 5 deletions(-)
 
 diff --git a/Documentation/git-commit-graph.txt b/Documentation/git-commit-graph.txt
-index b945510f0f..0710a68f2d 100644
+index 0710a68f2d..ccf5e203ce 100644
 --- a/Documentation/git-commit-graph.txt
 +++ b/Documentation/git-commit-graph.txt
-@@ -34,7 +34,13 @@ COMMANDS
- Write a commit graph file based on the commits found in packfiles.
- +
- With the `--stdin-packs` option, generate the new commit graph by
--walking objects only in the specified packfiles.
-+walking objects only in the specified packfiles. (Cannot be combined
-+with --stdin-commits.)
+@@ -41,6 +41,9 @@ With the `--stdin-commits` option, generate the new commit graph by
+ walking commits starting at the commits specified in stdin as a list
+ of OIDs in hex, one OID per line. (Cannot be combined with
+ --stdin-packs.)
 ++
-+With the `--stdin-commits` option, generate the new commit graph by
-+walking commits starting at the commits specified in stdin as a list
-+of OIDs in hex, one OID per line. (Cannot be combined with
-+--stdin-packs.)
++With the `--additive` option, include all commits that are present
++in the existing commit-graph file.
  
  'read'::
  
-@@ -58,6 +64,12 @@ $ git commit-graph write
- $ echo <pack-index> | git commit-graph write --stdin-packs
+@@ -70,6 +73,13 @@ $ echo <pack-index> | git commit-graph write --stdin-packs
+ $ git show-ref -s | git commit-graph write --stdin-commits
  ------------------------------------------------
  
-+* Write a graph file containing all reachable commits.
++* Write a graph file containing all commits in the current
++* commit-graph file along with those reachable from HEAD.
 ++
 +------------------------------------------------
-+$ git show-ref -s | git commit-graph write --stdin-commits
++$ git rev-parse HEAD | git commit-graph write --stdin-commits --additive
 +------------------------------------------------
 +
  * Read basic information from the commit-graph file.
  +
  ------------------------------------------------
 diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
-index eebca57e6f..1c7b7e72b0 100644
+index 1c7b7e72b0..d26a6d6de3 100644
 --- a/builtin/commit-graph.c
 +++ b/builtin/commit-graph.c
 @@ -8,7 +8,7 @@
  static char const * const builtin_commit_graph_usage[] = {
  	N_("git commit-graph [--object-dir <objdir>]"),
  	N_("git commit-graph read [--object-dir <objdir>]"),
--	N_("git commit-graph write [--object-dir <objdir>] [--stdin-packs]"),
-+	N_("git commit-graph write [--object-dir <objdir>] [--stdin-packs|--stdin-commits]"),
+-	N_("git commit-graph write [--object-dir <objdir>] [--stdin-packs|--stdin-commits]"),
++	N_("git commit-graph write [--object-dir <objdir>] [--additive] [--stdin-packs|--stdin-commits]"),
  	NULL
  };
  
-@@ -18,13 +18,14 @@ static const char * const builtin_commit_graph_read_usage[] = {
+@@ -18,7 +18,7 @@ static const char * const builtin_commit_graph_read_usage[] = {
  };
  
  static const char * const builtin_commit_graph_write_usage[] = {
--	N_("git commit-graph write [--object-dir <objdir>] [--stdin-packs]"),
-+	N_("git commit-graph write [--object-dir <objdir>] [--stdin-packs|--stdin-commits]"),
+-	N_("git commit-graph write [--object-dir <objdir>] [--stdin-packs|--stdin-commits]"),
++	N_("git commit-graph write [--object-dir <objdir>] [--additive] [--stdin-packs|--stdin-commits]"),
  	NULL
  };
  
- static struct opts_commit_graph {
+@@ -26,6 +26,7 @@ static struct opts_commit_graph {
  	const char *obj_dir;
  	int stdin_packs;
-+	int stdin_commits;
+ 	int stdin_commits;
++	int additive;
  } opts;
  
  static int graph_read(int argc, const char **argv)
-@@ -79,6 +80,8 @@ static int graph_write(int argc, const char **argv)
- {
- 	const char **pack_indexes = NULL;
- 	int packs_nr = 0;
-+	const char **commit_hex = NULL;
-+	int commits_nr = 0;
- 	const char **lines = NULL;
- 	int lines_nr = 0;
- 	int lines_alloc = 0;
-@@ -89,6 +92,8 @@ static int graph_write(int argc, const char **argv)
- 			N_("The object directory to store the graph")),
- 		OPT_BOOL(0, "stdin-packs", &opts.stdin_packs,
+@@ -94,6 +95,8 @@ static int graph_write(int argc, const char **argv)
  			N_("scan packfiles listed by stdin for commits")),
-+		OPT_BOOL(0, "stdin-commits", &opts.stdin_commits,
-+			N_("start walk at commits listed by stdin")),
+ 		OPT_BOOL(0, "stdin-commits", &opts.stdin_commits,
+ 			N_("start walk at commits listed by stdin")),
++		OPT_BOOL(0, "additive", &opts.additive,
++			N_("include all commits already in the commit-graph file")),
  		OPT_END(),
  	};
  
-@@ -96,10 +101,12 @@ static int graph_write(int argc, const char **argv)
- 			     builtin_commit_graph_write_options,
- 			     builtin_commit_graph_write_usage, 0);
- 
-+	if (opts.stdin_packs && opts.stdin_commits)
-+		die(_("cannot use both --stdin-commits and --stdin-packs"));
- 	if (!opts.obj_dir)
- 		opts.obj_dir = get_object_directory();
- 
--	if (opts.stdin_packs) {
-+	if (opts.stdin_packs || opts.stdin_commits) {
- 		struct strbuf buf = STRBUF_INIT;
- 		lines_nr = 0;
- 		lines_alloc = 128;
-@@ -110,13 +117,21 @@ static int graph_write(int argc, const char **argv)
- 			lines[lines_nr++] = strbuf_detach(&buf, NULL);
- 		}
- 
--		pack_indexes = lines;
--		packs_nr = lines_nr;
-+		if (opts.stdin_packs) {
-+			pack_indexes = lines;
-+			packs_nr = lines_nr;
-+		}
-+		if (opts.stdin_commits) {
-+			commit_hex = lines;
-+			commits_nr = lines_nr;
-+		}
- 	}
- 
- 	write_commit_graph(opts.obj_dir,
+@@ -131,7 +134,8 @@ static int graph_write(int argc, const char **argv)
  			   pack_indexes,
--			   packs_nr);
-+			   packs_nr,
-+			   commit_hex,
-+			   commits_nr);
+ 			   packs_nr,
+ 			   commit_hex,
+-			   commits_nr);
++			   commits_nr,
++			   opts.additive);
  
  	return 0;
  }
 diff --git a/commit-graph.c b/commit-graph.c
-index f0d7585ddb..9f1ba9bff6 100644
+index 9f1ba9bff6..6348bab82b 100644
 --- a/commit-graph.c
 +++ b/commit-graph.c
-@@ -531,7 +531,9 @@ static void close_reachable(struct packed_oid_list *oids)
- 
- void write_commit_graph(const char *obj_dir,
+@@ -533,7 +533,8 @@ void write_commit_graph(const char *obj_dir,
  			const char **pack_indexes,
--			int nr_packs)
-+			int nr_packs,
-+			const char **commit_hex,
-+			int nr_commits)
+ 			int nr_packs,
+ 			const char **commit_hex,
+-			int nr_commits)
++			int nr_commits,
++			int additive)
  {
  	struct packed_oid_list oids;
  	struct packed_commit_list commits;
-@@ -571,7 +573,28 @@ void write_commit_graph(const char *obj_dir,
- 			close_pack(p);
- 		}
- 		strbuf_release(&packname);
--	} else
+@@ -551,10 +552,24 @@ void write_commit_graph(const char *obj_dir,
+ 	oids.nr = 0;
+ 	oids.alloc = approximate_object_count() / 4;
+ 
++	if (additive) {
++		prepare_commit_graph_one(obj_dir);
++		if (commit_graph)
++			oids.alloc += commit_graph->num_commits;
 +	}
 +
-+	if (commit_hex) {
-+		for (i = 0; i < nr_commits; i++) {
-+			const char *end;
-+			struct object_id oid;
-+			struct commit *result;
-+
-+			if (commit_hex[i] && parse_oid_hex(commit_hex[i], &oid, &end))
-+				continue;
-+
-+			result = lookup_commit_reference_gently(&oid, 1);
-+
-+			if (result) {
-+				ALLOC_GROW(oids.list, oids.nr + 1, oids.alloc);
-+				oidcpy(&oids.list[oids.nr], &(result->object.oid));
-+				oids.nr++;
-+			}
+ 	if (oids.alloc < 1024)
+ 		oids.alloc = 1024;
+ 	ALLOC_ARRAY(oids.list, oids.alloc);
+ 
++	if (additive && commit_graph) {
++		for (i = 0; i < commit_graph->num_commits; i++) {
++			const unsigned char *hash = commit_graph->chunk_oid_lookup +
++				commit_graph->hash_len * i;
++			hashcpy(oids.list[oids.nr++].hash, hash);
 +		}
 +	}
 +
-+	if (!pack_indexes && !commit_hex)
- 		for_each_packed_object(add_packed_commits, &oids, 0);
- 
- 	close_reachable(&oids);
+ 	if (pack_indexes) {
+ 		struct strbuf packname = STRBUF_INIT;
+ 		int dirlen;
 diff --git a/commit-graph.h b/commit-graph.h
-index 65fe77075c..4c70281e70 100644
+index 4c70281e70..c10e436413 100644
 --- a/commit-graph.h
 +++ b/commit-graph.h
-@@ -38,7 +38,9 @@ struct commit_graph *load_commit_graph_one(const char *graph_file);
- 
- void write_commit_graph(const char *obj_dir,
+@@ -40,7 +40,8 @@ void write_commit_graph(const char *obj_dir,
  			const char **pack_indexes,
--			int nr_packs);
-+			int nr_packs,
-+			const char **commit_hex,
-+			int nr_commits);
+ 			int nr_packs,
+ 			const char **commit_hex,
+-			int nr_commits);
++			int nr_commits,
++			int additive);
  
  #endif
  
 diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
-index 5ab8b6975e..15b50b6282 100755
+index 15b50b6282..e3f1351e39 100755
 --- a/t/t5318-commit-graph.sh
 +++ b/t/t5318-commit-graph.sh
-@@ -177,6 +177,19 @@ test_expect_success 'build graph from latest pack with closure' '
- graph_git_behavior 'graph from pack, commit 8 vs merge 1' full commits/8 merge/1
- graph_git_behavior 'graph from pack, commit 8 vs merge 2' full commits/8 merge/2
+@@ -190,6 +190,16 @@ test_expect_success 'build graph from commits with closure' '
+ graph_git_behavior 'graph from commits, commit 8 vs merge 1' full commits/8 merge/1
+ graph_git_behavior 'graph from commits, commit 8 vs merge 2' full commits/8 merge/2
  
-+test_expect_success 'build graph from commits with closure' '
++test_expect_success 'build graph from commits additively' '
 +        cd "$TRASH_DIRECTORY/full" &&
-+	git tag -a -m "merge" tag/merge merge/2 &&
-+	git rev-parse tag/merge >commits-in &&
-+	git rev-parse merge/1 >>commits-in &&
-+	cat commits-in | git commit-graph write --stdin-commits &&
++	git rev-parse merge/3 | git commit-graph write --stdin-commits --additive &&
 +	test_path_is_file $objdir/info/commit-graph &&
-+	graph_read_expect "6"
++	graph_read_expect "10" "large_edges"
 +'
 +
-+graph_git_behavior 'graph from commits, commit 8 vs merge 1' full commits/8 merge/1
-+graph_git_behavior 'graph from commits, commit 8 vs merge 2' full commits/8 merge/2
++graph_git_behavior 'additive graph, commit 8 vs merge 1' full commits/8 merge/1
++graph_git_behavior 'additive graph, commit 8 vs merge 2' full commits/8 merge/2
 +
  test_expect_success 'setup bare repo' '
          cd "$TRASH_DIRECTORY" &&
