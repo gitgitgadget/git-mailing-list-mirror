@@ -2,133 +2,168 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E54021FAE2
-	for <e@80x24.org>; Wed, 14 Mar 2018 09:40:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 51FEA1FAE2
+	for <e@80x24.org>; Wed, 14 Mar 2018 09:57:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750908AbeCNJko (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Mar 2018 05:40:44 -0400
-Received: from mail-pl0-f47.google.com ([209.85.160.47]:36403 "EHLO
-        mail-pl0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751279AbeCNJkn (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Mar 2018 05:40:43 -0400
-Received: by mail-pl0-f47.google.com with SMTP id 61-v6so1419375plf.3
-        for <git@vger.kernel.org>; Wed, 14 Mar 2018 02:40:43 -0700 (PDT)
+        id S1751302AbeCNJ5i (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Mar 2018 05:57:38 -0400
+Received: from mail-wm0-f49.google.com ([74.125.82.49]:40102 "EHLO
+        mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750879AbeCNJ5h (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Mar 2018 05:57:37 -0400
+Received: by mail-wm0-f49.google.com with SMTP id t6so2794522wmt.5
+        for <git@vger.kernel.org>; Wed, 14 Mar 2018 02:57:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=ffMCYeiTfFwcFfbp2bocWejcrb89IpU25mf79xKmCPc=;
-        b=jGjsbr57NbJbzgj+pRSLaDUmWA3ec+bQ607RlJuATw1yJsNb2yTinVHcBnpgJ4t9hp
-         vdbLlWsy1BjMx+Yia6f3AHT33Icg9McddH0sosiyedNaAJ0B7A92CawhG9JRXtx4oRUA
-         GGmZ7Si6TJWy57LfbcS0jpsSoC1dL3hi87LynaJGM/157D/UHV57/zQGPPx5HdQ7LYv+
-         eBH9Pjmq3GvaAiTUAxhCRG3BTmNQZXs+ODlOmo8dZNg+DgaDMa+Ntc7HKjF+5lwml/Im
-         9JTL8uYf00tOrrBBCXnlmEFNKzjAPgR/FBa9UMvpC54WXJKqolXbS9lWSF4+LcMSjfdy
-         UTSQ==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=outsOVuj/jE22mGKEJ8LBdvuAh1+p+dD/gwZgWtNGQI=;
+        b=Xu+sNB7bWNNjWQtS+DUgGZoMmxFNCG7r6PBWD1KXEAC3fLI1GxSIVRxkzHpCSxJ5Cc
+         HRrTg1WLuge10vPx7V91opbCgT/WBcYtzq9pqQucTOztLvPmkTzTHgnDrFkb6+eww/34
+         kpsGI1TQvUxUpwogZe8tWfpmWBHKRTpTmXt5kv5trTZuvfjIfDfqIG4K/qy2wNk1kVei
+         J+uAFYHFsaFGfg/p9rgPrk4MCe9wbUt/Y5HLU/G3x7jtjK40V7vbLLM3giUJrO7pkzFz
+         nhM5wgI4Jhy6fgU3SLFJmtupHUyxswQelhy0YC47SpqlUkgTIVXzrS9PO6hewlhgQ844
+         M95g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=ffMCYeiTfFwcFfbp2bocWejcrb89IpU25mf79xKmCPc=;
-        b=XK6zDeUiZRmNVf/4CzASpma5ZU8gZzC4dYnhElv+LnjjiUasq8PgPY+N1GgYfX3soO
-         nv+3Y1BK8AmACPUrp+pPYIgFi9Xg1Cgb0qlcevETS19OhTfYMCsUCizszc55bRzbflS/
-         UONmeUC+g5E05FU4xalK8mCoBLO5W2Ig/Zs0tVMvfwoADzjSJP7UoWPIyRO09pDWMahZ
-         XsdwGQ1sXP4W9x+o+z7ARe3clpEB+Q5ek4GI01lxNYkTrIkF583jAdFeqVQKRCZACQas
-         LAFpIVWzUy13GnbYGfXtkmeS+BhoXOJxrQdZ/1mxtf2hWi1dlgrYDZDw+HD7REYyGWWr
-         ZTEw==
-X-Gm-Message-State: AElRT7ErFkMmYLTaHSfocur5hpZ6ooX4GsiQKvNrd69xBxu4xIfQZmAu
-        ZSQppdWbVAAEqMha3xJUqOg=
-X-Google-Smtp-Source: AG47ELuQVUQC5hp+qCrtBWSL36Gw2bEf5mQQ/y4Kdzq7LiXWYOakMXoCitW+B//lFsWpDfydg1kc/g==
-X-Received: by 2002:a17:902:7007:: with SMTP id y7-v6mr2961848plk.275.1521020442769;
-        Wed, 14 Mar 2018 02:40:42 -0700 (PDT)
-Received: from obe4l5qp12.ads.autodesk.com (adsknateur.autodesk.com. [132.188.32.100])
-        by smtp.gmail.com with ESMTPSA id m24sm4536270pfj.16.2018.03.14.02.40.41
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 14 Mar 2018 02:40:42 -0700 (PDT)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [git-sizer] Implications of a large commit object
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <CAMy9T_GdYjUm9DqcgrC=NxyTbZk_ep5rvAAK2J=zwhiSMyvaLA@mail.gmail.com>
-Date:   Wed, 14 Mar 2018 10:40:38 +0100
-Cc:     Git List <git@vger.kernel.org>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <BB908580-36C2-466D-AF05-6BFF7F5E4705@gmail.com>
-References: <953C263C-6ECA-46AC-849C-8D1A38378654@gmail.com> <CAMy9T_GdYjUm9DqcgrC=NxyTbZk_ep5rvAAK2J=zwhiSMyvaLA@mail.gmail.com>
-To:     mhagger@alum.mit.edu
-X-Mailer: Apple Mail (2.3124)
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=outsOVuj/jE22mGKEJ8LBdvuAh1+p+dD/gwZgWtNGQI=;
+        b=T3xry/tbx7V3f6nma0QOZ1dKGMHrWfrisEMnzQoixA8Xm/V/OzCmB/oH0kH0M9Xsce
+         S4urWslPeCXr/x+asSBX6ew/l2aFVXjwd4688pKmF7BR/WkteI05dH50UTTWAgoF/1jH
+         W/fZocr8HarNtTKFu0Di0oBF+DJCnKykwaqevJPpaLgM0dPqYEA/ncl2Dj/uA1GtPLko
+         JDtP//OnSuZeTbWR7pLvi0XYBFwG5qvQ41Pa9B6zgC0HY9Y8HPe870HT3r8NQ+Nma5yx
+         f6fk0SO/kfUKvwJTHtAiP8Votyh6m2PPvB0O1XrO/Gjzyp1IX5xyPklblzmYdb9zMmiW
+         TVZQ==
+X-Gm-Message-State: AElRT7Ft9OTRtd4pjetAGUWDMHCCtYtNGxZ9cxJKGf7yVJ4HIFjgyWed
+        7Yuarj4pgHaSeSreHPLG42E=
+X-Google-Smtp-Source: AG47ELvKvd6cbekBNDgIkugssH9vAMJb7FCEG39Zz96tYz5WuPA8yM1lEehO9d5UwHRCxbMepeIH9w==
+X-Received: by 10.80.159.133 with SMTP id c5mr1854019edf.221.1521021455564;
+        Wed, 14 Mar 2018 02:57:35 -0700 (PDT)
+Received: from evledraar (proxy-gw-a.booking.com. [5.57.21.8])
+        by smtp.gmail.com with ESMTPSA id v9sm1899603edi.16.2018.03.14.02.57.33
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 14 Mar 2018 02:57:33 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Pratik Karki <predatoramigo@gmail.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: [GSoC] [PATCH] test: avoid pipes in git related commands for test suite
+References: <20180313201945.8409-1-predatoramigo@gmail.com> <CAPig+cRPzyw525ODC4=-E7w=zbpbhVN2eqxSYDSLij5wfW8S_A@mail.gmail.com>
+User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 1.1.0
+In-reply-to: <CAPig+cRPzyw525ODC4=-E7w=zbpbhVN2eqxSYDSLij5wfW8S_A@mail.gmail.com>
+Date:   Wed, 14 Mar 2018 10:57:33 +0100
+Message-ID: <87zi3bdlo2.fsf@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-> On 14 Mar 2018, at 09:33, Michael Haggerty <mhagger@alum.mit.edu> =
-wrote:
->=20
-> On Wed, Mar 14, 2018 at 9:14 AM, Lars Schneider
-> <larsxschneider@gmail.com> wrote:
->> I am using Michael's fantastic Git repo analyzer tool "git-sizer" [*]
->> and it detected a very large commit of 7.33 MiB in my repo (see chart
->> below).
->>=20
->> This large commit is expected. I've imported that repo from another
->> version control system but excluded all binary files (e.g. images) =
-and
->> some 3rd party components as their history is not important [**]. =
-I've
->> reintroduced these files in the head commit again. This is where the
->> large commit came from.
->>=20
->> This repo is not used in production yet but I wonder if this kind of
->> approach can cause trouble down the line? Are there any relevant
->> implication of a single large commit like this in history?
->> [...]
->>=20
->> =
-#######################################################################
->> ## git-sizer output
->>=20
->> [...]
->> | Name                         | Value     | Level of concern         =
-      |
->> | ---------------------------- | --------- | =
------------------------------- |
->> [...]
->> | Biggest objects              |           |                          =
-      |
->> | * Commits                    |           |                          =
-      |
->> |   * Maximum size         [1] |  7.33 MiB | =
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! |
->> [...]
->=20
-> The "commit size" that is being referred to here is the size of the
-> actual commit object; i.e., the author name, parent commits, etc plus
-> the log message. So a huge commit probably means that you have a huge
-> log message. This has nothing to do with the number or sizes of the
-> files added by the commit.
->=20
-> Maybe your migration tool created a huge commit message, for example
-> listing each of the files that was changed.
+On Wed, Mar 14 2018, Eric Sunshine jotted:
 
+> Thanks for the patch. See comments below...
+>
+> On Tue, Mar 13, 2018 at 4:19 PM, Pratik Karki <predatoramigo@gmail.com> wrote:
+>> This patch removes the necessity of pipes in git related commands for test suite.
+>>
+>> Exit code of the upstream in a pipe is ignored so, it's use should be avoided. The fix for this is to write the output of the git command to a file and test the exit codes of both the commands being linked by pipe.
+>
+> Please wrap commit messages to fit in about 72 columns; this one is
+> far too wide.
+>
+> On the Git project, commit messages are written in imperative mood, as
+> if telling the codebase to "do something". So, instead of writing
+> "This patch removes...", you could word it "Remove..." or "Avoid...".
+>
+> It's misleading to say that the patch "removes the _necessity_ of
+> pipes" since pipes were not used out of necessity; they were probably
+> just a convenience and seemed reasonable at the time, but later
+> experience has shown that they can be problematic for the reason you
+> give in the second paragraph.
+>
+> Taking these observations into consideration, perhaps you could
+> rewrite the commit message something like this:
+>
+>     Avoid using pipes downstream of Git commands since the exit codes
+>     of commands upstream of pipes get swallowed, thus potentially
+>     hiding failure of those commands. Instead, capture Git command
+>     output to a file apply the downstream command(s) to that file.
+>
+> More comments below...
 
-D'oh! Of course. I was so focused on that commit with the large number =
-of
-files that I missed that. Looking at the reference [1] reveals the
-problem. Sorry for wasting your time!
+Makes sense.
 
+>> Signed-off-by: Pratik Karki <predatoramigo@gmail.com>
+>> ---
+>> diff --git a/t/t7001-mv.sh b/t/t7001-mv.sh
+>> @@ -116,10 +116,10 @@ test_expect_success \
+>>  test_expect_success \
+>>      'checking the commit' \
+>> -    'git diff-tree -r -M --name-status  HEAD^ HEAD | \
+>> -     grep "^R100..*path0/COPYING..*path2/COPYING" &&
+>> -     git diff-tree -r -M --name-status  HEAD^ HEAD | \
+>> -     grep "^R100..*path0/README..*path2/README"'
+>> +    'git diff-tree -r -M --name-status  HEAD^ HEAD >actual &&
+>> +     grep "^R100..*path0/COPYING..*path2/COPYING" actual &&
+>> +     git diff-tree -r -M --name-status  HEAD^ HEAD >actual &&
+>> +     grep "^R100..*path0/README..*path2/README" actual'
+>
+> Although this "mechanical" transformation is technically correct, it
+> is nevertheless wasteful. The exact same "git diff-tree ..." command
+> is run twice, and both times output is captured to file 'actual',
+> which makes the second invocation superfluous. Instead, a better
+> transformation would be:
+>
+>     git diff-tree ... >actual &&
+>     grep ... actual &&
+>     grep ... actual
+>
+> The same observation applies to other transformations in this patch.
 
-> AFAIK this won't cause Git itself any problems, but it's likely to be
-> inconvenient. For example, when you type `git log` and 7 million
-> characters page by. Or when you use some GUI tool to view your history
-> and it performs badly because it wasn't built to handle such enormous
-> commit messages.
+I think we have to be careful to not be overly picky with rejecting
+mechanical transformations that fix bugs on the basis that while we're
+at it the test could also be rewritten.
 
+I.e. this bug was there before, maybe we should purely focus on just
+replacing the harmful pipe pattern that hides errors in this series and
+leave rewriting the actual test logic for a later patch.
 
-Thank you,
-Lars
+>> diff --git a/t/t9104-git-svn-follow-parent.sh b/t/t9104-git-svn-follow-parent.sh
+>> @@ -204,8 +204,8 @@ test_expect_success "follow-parent is atomic" '
+>>  test_expect_success "track multi-parent paths" '
+>>         svn_cmd cp -m "resurrect /glob" "$svnrepo"/r9270 "$svnrepo"/glob &&
+>>         git svn multi-fetch &&
+>> -       test $(git cat-file commit refs/remotes/glob | \
+>> -              grep "^parent " | wc -l) -eq 2
+>> +       test $(git cat-file commit refs/remotes/glob >actual &&
+>> +              grep "^parent " actual | wc -l) -eq 2
+>>         '
+>
+> This is not a great transformation. If "git cat-file" fails, then
+> neither 'grep' nor 'wc' will run, and the result will be as if 'test'
+> was called without an argument before "-eq". For example:
+>
+>     % test $(false >actual && grep "^parent " actual | wc -l) -eq 2
+>     test: -eq: unary operator expected
+>
+> It would be better to run "git cat-file" outside of "test $(...)". For instance:
+>
+>     git cat-file ... >actual &&
+>     test $(grep ... actual | wc -l) -eq 2
+>
+> Alternately, you could take advantage of the test_line_count() helper function:
+>
+>     git cat-file ... >actual &&
+>     grep ... actual >actual2 &&
+>     test_line_count = 2 actual2
+
+In this case though as you rightly point out the rewrite is introducing
+a regression, which should definitely be fixed.
