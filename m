@@ -2,134 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3882B1F404
-	for <e@80x24.org>; Wed, 14 Mar 2018 21:55:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 641201F404
+	for <e@80x24.org>; Wed, 14 Mar 2018 21:56:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751892AbeCNVzf (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Mar 2018 17:55:35 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:50498 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750779AbeCNVze (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Mar 2018 17:55:34 -0400
-Received: by mail-wm0-f68.google.com with SMTP id w128so6889746wmw.0
-        for <git@vger.kernel.org>; Wed, 14 Mar 2018 14:55:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=vmE05UmFbTuwhelBPYSPoCjVkWjPwNggS3E/ltV5498=;
-        b=SszUuT3JRlIOn2Ac+lQdCzoVlIC51LIhbswfyNLWBjSRmV45TnEbmM3qh7/0+G0knk
-         aDYSUBZKmO5E0EEz2KteGQO3/X4xn+fpGxxR1PEhYG/oHwFUTvAPJhSUQYzJC/dlHAaZ
-         NQoXP3Tna6O/IRS4zIEEQp9DCNh9lcgk+PJvIaH9falUyOsGgTyt/oTOJqYTe9SfsbYE
-         2UiPJ7v8cZOdISPGGW/vnjrASDhVDEwLBa8nH90gbt5YuxBqST66tRrA+zilgQHRiLUe
-         ygzXIA5Mx/VFbhcQnoO9kvUuU6wtN9jTciSOP5+SCgmPWsjZeKMywZLG+yow6Yupks3q
-         EO0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=vmE05UmFbTuwhelBPYSPoCjVkWjPwNggS3E/ltV5498=;
-        b=HU2SMHcT5ZoPyqy1vZc+uCGNw4Kw/6p/gAgW6WNyXPabcWGq4sBNRSt3HtKon87+jP
-         AbijWiZr9j2CsTwHLDTsAPkwq30MbtsNQ6T9H1yH80XO+5eeBq3BaR+rim4dzMCGfQj6
-         az8mnuoLBKHfYbjb2KzTvqUz827WYFWsJCCbvW0bFrHK7/LlaYp5HrS7QQHU7wzzgjx3
-         mpkIu8v/MnIZcz7RHm4y1ZF4x1a0phmJPmAWOloaFFwJ+hQTMtR3aZJ4atrXMnsCw32+
-         6+UXq7gJx93r+vjWBylPsPrPUw90K0wPs7a8vJ/Dcb0VbUMfqK1L/Ihch+MxgCE6qVTZ
-         eBiA==
-X-Gm-Message-State: AElRT7HWVzxNxJcq8uEv+oPU59UvclkmCoTRDfuL4RmmjzJcpXxqZQSU
-        yK1dJCutLocEzxaMnDnZYXo=
-X-Google-Smtp-Source: AG47ELvrjRCS8kQVnnB/k7Pyqmoa8GV6poOttBBFM57MKpgnksLyzuxzCIvQF8qoUbV7AoQmp3GsrA==
-X-Received: by 10.28.23.143 with SMTP id 137mr3079203wmx.153.1521064533235;
-        Wed, 14 Mar 2018 14:55:33 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id j4sm4678998wrd.53.2018.03.14.14.55.32
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 14 Mar 2018 14:55:32 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, git@jeffhostetler.com
-Subject: Re: [PATCH 2/2] fetch-pack: do not check links for partial fetch
-References: <cover.1521052825.git.jonathantanmy@google.com>
-        <cover.1521052825.git.jonathantanmy@google.com>
-        <c2f59866a1b1dc5f11713e1922eac2521ef98b07.1521052825.git.jonathantanmy@google.com>
-Date:   Wed, 14 Mar 2018 14:55:31 -0700
-In-Reply-To: <c2f59866a1b1dc5f11713e1922eac2521ef98b07.1521052825.git.jonathantanmy@google.com>
-        (Jonathan Tan's message of "Wed, 14 Mar 2018 11:42:41 -0700")
-Message-ID: <xmqqwoyexqy4.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1751289AbeCNV4J (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Mar 2018 17:56:09 -0400
+Received: from avasout04.plus.net ([212.159.14.19]:35746 "EHLO
+        avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750779AbeCNV4I (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Mar 2018 17:56:08 -0400
+Received: from [10.0.2.15] ([80.189.70.162])
+        by smtp with ESMTPA
+        id wENSeLdDhsD7bwENTe46qb; Wed, 14 Mar 2018 21:56:07 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.3 cv=CvORjEwD c=1 sm=1 tr=0
+ a=zzlqjQC3YyNvDZl/Gy+4mg==:117 a=zzlqjQC3YyNvDZl/Gy+4mg==:17
+ a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=yBhdaeT2Iq6GER-ebPwA:9
+ a=IrBGYhS9lLBEK1yT:21 a=FkKNdbij_UiL2GXW:21 a=QEXdDO2ut3YA:10
+ a=yJM6EZoI5SlJf8ks9Ge_:22
+X-AUTH: ramsayjones@:2500
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, GIT Mailing-list <git@vger.kernel.org>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: [PATCH] http: fix an unused variable warning for 'curl_no_proxy'
+Message-ID: <517c4210-c381-899e-b13a-00f8e4caba74@ramsayjones.plus.com>
+Date:   Wed, 14 Mar 2018 21:56:06 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.6.0
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 8bit
+X-CMAE-Envelope: MS4wfMJ3+W/QlKN1PMV+mCgSRMvK65dDkfZBHAFPdiumOwbIlv7I+SsQ6jsj6v3zdc0Bvl7U94cQnM/md/gfnMUF2jZwPK5trhgGJKIZIblIgYDum508/mN6
+ SbOuxZaYHiIGfJ65gEK1F68fjwnJcv+HxzgIgm+q85UQ2W2Jump1E/IDPXSfQ5Lc+fq3LGFtIvw+gQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
 
-> When doing a partial clone or fetch with transfer.fsckobjects=1, use the
-> --fsck-objects instead of the --strict flag when invoking index-pack so
-> that links are not checked, only objects. This is because incomplete
-> links are expected when doing a partial clone or fetch.
+Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+---
 
-It is expected that _some_ links are missing, but this makes me
-wonder if we can do better than disabling the connectivity check
-altogether.  Does "git fetch" lack sufficient information to attempt
-the connectivity check, and when (and only when) it hits a broken
-link, see if that is because the connectivity check traversal is
-crossing a "partial" fetch boundary, or something along that line?
+Hi Junio,
 
->
-> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
-> ---
->  fetch-pack.c             | 13 +++++++++++--
->  t/t5616-partial-clone.sh | 11 +++++++++++
->  2 files changed, 22 insertions(+), 2 deletions(-)
->
-> diff --git a/fetch-pack.c b/fetch-pack.c
-> index d97461296..1d6117565 100644
-> --- a/fetch-pack.c
-> +++ b/fetch-pack.c
-> @@ -886,8 +886,17 @@ static int get_pack(struct fetch_pack_args *args,
->  	    ? fetch_fsck_objects
->  	    : transfer_fsck_objects >= 0
->  	    ? transfer_fsck_objects
-> -	    : 0)
-> -		argv_array_push(&cmd.args, "--strict");
-> +	    : 0) {
-> +		if (args->from_promisor)
-> +			/*
-> +			 * We cannot use --strict in index-pack because it
-> +			 * checks both broken objects and links, but we only
-> +			 * want to check for broken objects.
-> +			 */
-> +			argv_array_push(&cmd.args, "--fsck-objects");
-> +		else
-> +			argv_array_push(&cmd.args, "--strict");
-> +	}
->  
->  	cmd.in = demux.out;
->  	cmd.git_cmd = 1;
-> diff --git a/t/t5616-partial-clone.sh b/t/t5616-partial-clone.sh
-> index 29d863118..cee556536 100755
-> --- a/t/t5616-partial-clone.sh
-> +++ b/t/t5616-partial-clone.sh
-> @@ -143,4 +143,15 @@ test_expect_success 'manual prefetch of missing objects' '
->  	test_line_count = 0 observed.oids
->  '
->  
-> +test_expect_success 'partial clone with transfer.fsckobjects=1 uses index-pack --fsck-objects' '
-> +	git init src &&
-> +	test_commit -C src x &&
-> +	test_config -C src uploadpack.allowfilter 1 &&
-> +	test_config -C src uploadpack.allowanysha1inwant 1 &&
-> +
-> +	GIT_TRACE="$(pwd)/trace" git -c transfer.fsckobjects=1 \
-> +		clone --filter="blob:none" "file://$(pwd)/src" dst &&
-> +	grep "git index-pack.*--fsck-objects" trace
-> +'
-> +
->  test_done
+I happened to be building git on an _old_ laptop earlier this evening
+and gcc complained, thus:
+
+      CC http.o
+  http.c:77:20: warning: ‘curl_no_proxy’ defined but not used [-Wunused-variable]
+   static const char *curl_no_proxy;
+                      ^
+The version of libcurl installed was 0x070f04. So, while it was fresh in my
+mind, I applied and tested this patch.
+
+ATB,
+Ramsay Jones
+
+ http.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/http.c b/http.c
+index 8c11156ae..a5bd5d62c 100644
+--- a/http.c
++++ b/http.c
+@@ -69,6 +69,9 @@ static const char *ssl_key;
+ #if LIBCURL_VERSION_NUM >= 0x070908
+ static const char *ssl_capath;
+ #endif
++#if LIBCURL_VERSION_NUM >= 0x071304
++static const char *curl_no_proxy;
++#endif
+ #if LIBCURL_VERSION_NUM >= 0x072c00
+ static const char *ssl_pinnedkey;
+ #endif
+@@ -77,7 +80,6 @@ static long curl_low_speed_limit = -1;
+ static long curl_low_speed_time = -1;
+ static int curl_ftp_no_epsv;
+ static const char *curl_http_proxy;
+-static const char *curl_no_proxy;
+ static const char *http_proxy_authmethod;
+ static struct {
+ 	const char *name;
+-- 
+2.16.0
