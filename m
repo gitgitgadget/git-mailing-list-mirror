@@ -7,136 +7,111 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0A53B1F404
-	for <e@80x24.org>; Wed, 14 Mar 2018 00:07:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4DEF71F404
+	for <e@80x24.org>; Wed, 14 Mar 2018 00:38:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932649AbeCNAHq (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Mar 2018 20:07:46 -0400
-Received: from mail-pl0-f42.google.com ([209.85.160.42]:38390 "EHLO
-        mail-pl0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932511AbeCNAHp (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Mar 2018 20:07:45 -0400
-Received: by mail-pl0-f42.google.com with SMTP id m22-v6so759583pls.5
-        for <git@vger.kernel.org>; Tue, 13 Mar 2018 17:07:45 -0700 (PDT)
+        id S932710AbeCNAiV (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Mar 2018 20:38:21 -0400
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:34802 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932590AbeCNAiU (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Mar 2018 20:38:20 -0400
+Received: by mail-pg0-f66.google.com with SMTP id m15so646925pgc.1
+        for <git@vger.kernel.org>; Tue, 13 Mar 2018 17:38:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:content-transfer-encoding:in-reply-to
          :user-agent;
-        bh=ahLGeiZoBSqD/34MlrGGNmxnP54uQC8HBgpiFl1uAOk=;
-        b=P9WJQ25svGN1CPesBonCdoWThQmojQmx1N1tqhzGlqTquu8eDB1WDl3oT8GciCOZJF
-         sbrUL5x75necIpQaL49FN3bwx5rtVs1D3Wb58ZnP7RN6Il9Mf5fWzlQsUrAfnFbAt+1N
-         QGJdvL0HywueQu1TPm4MSoiu5SgkwumYF+KR8ddq9kQPiCvXOdwDH1BTZeG3hkCkRTR5
-         qzklmwTq0bnQWGn1U5G9beOnwu0DRIZCZ+J/CHD2hsClug7tJd0TAR3LsMnFATGDswLd
-         uocDEVd6f/uvOSu6umoDvP13dTY6wZRVJjg/gGqtwNLEFH9t2zhwJvRNwkPitXrXyWuY
-         3iDQ==
+        bh=hebtFnyxmjZI1+POSrnf+8NdyUBo6ku1AFkRKJbIulU=;
+        b=qKTGUBrJrtAlPx5/6LXURQGEge4ujFZivt0mFz1FHfPLpyR7Qe5wwxrdjqBY3wkjWq
+         65O1Ny834BSGYo8wJn22QTWmLkO5cq6GP1wjno7kVRWEyiHS/bGAG1P5w9RS/HLwKtfB
+         t7sLhN6TOqy5MpONDEiQQ3sq/J72ktryb7MDbxgCIHu/71irvZmdF4xFf9aqJBZKX8Yn
+         Mvn80tNLOIptIB0ksTmbbc4lS3IcCJbXLxVCBrP6+cXCQJQmeP7LE5R+Fe+770e5m9yl
+         Jk4TiU7M0MDJw9zFJZm8fRchGBIw2Qa5IH1KT5xLdkCQs2EdiTRXY0TTcfL/8ALaWXc5
+         jBLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:content-transfer-encoding
          :in-reply-to:user-agent;
-        bh=ahLGeiZoBSqD/34MlrGGNmxnP54uQC8HBgpiFl1uAOk=;
-        b=sWVvuV1K5KvDOpByJGSW5jlMAz6nMteGZTYQcgiETba8pdFCphW38v0XyCktf6q4/k
-         fI0u+P99yqzHxY2uoxPPav6XZZpKdhLMJXf+K2D4lhdQESWKJbU5rQMS6HPI8VlXC1wp
-         GlImC+OOyAlpjFnI3Iw3X3SeJN3dGojv/Fvso/Kur7tMeBU7YUPaGrD2jfZoxBk5Hoi+
-         hz3RBhH6+wDuQxyFSsPJeBvJxLggk5SybHo0qRTlcxzlje50WQUUhc24d5Ih6HR+Dhbr
-         2PTVhkhp2cCw8nDKQWr9g9mS98AeoqSxPPLIvuHgLk+xeHOP+o6CQPGTWs4f6OcMPTR6
-         bwjg==
-X-Gm-Message-State: AElRT7FOuduv70ajlfnmuZdoL+y65HY1S3s4J1EDB38Nj3vI4MyTRhTO
-        aKR0fbB7o8PJAGpTFN7uBYk=
-X-Google-Smtp-Source: AG47ELt7X6qMKRavL3a3NjxDdrYpGEaAEDZenuPMoP3JVAhN/dnaokmVmn6urG9Cb22b+UG8JRxeOg==
-X-Received: by 2002:a17:902:c1:: with SMTP id a59-v6mr2161372pla.284.1520986064991;
-        Tue, 13 Mar 2018 17:07:44 -0700 (PDT)
+        bh=hebtFnyxmjZI1+POSrnf+8NdyUBo6ku1AFkRKJbIulU=;
+        b=N9kQvX7LZZ6Vc1qCceehnVstpNELqwRLFuQpKgtTd8nYag2uHemV04w+Y1iIg1O6Vk
+         5+Ee3sJu4EQceKmQ88AjdqLmNBuD6uL8cFqhyNYG4pG2ahi7wCHQQz6WJeAfLz1wA178
+         ce5YNttXgyWYNaLLc3XdeKdOa06oblkSfxWXe6EkFPYzhZYW+mHo9BrGF8pY5JLP0zM6
+         lronR4Fp7qoE8eilXES/7HNEyDltirsCj6+lrwBeX5MP+mGtLy1jOaN7YWFx4uan1eDS
+         SlZyDJxsvErDM8Ik+QzBU2G9sRB+Qz2cpMRgZQa7m5nmquQ8kqStX8i48Vh2SGnL7mKp
+         f6yg==
+X-Gm-Message-State: AElRT7Fa8b52Nr/hm8rSOTWgz7pjXIBfAQQWTXfl1bn4THMOpnt93ia9
+        B6H8SmrXUKV6M6ZtTkU+1LOMV0Sf
+X-Google-Smtp-Source: AG47ELs3iG/l6Z8PHO43mioWSdYI5Iu4o1M4rkBuCFpWZXe4gTdyj2L/cuYq9zGP3aCSAr9iFXOObA==
+X-Received: by 10.101.67.137 with SMTP id m9mr1957508pgp.301.1520987899338;
+        Tue, 13 Mar 2018 17:38:19 -0700 (PDT)
 Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id n76sm2168942pfi.93.2018.03.13.17.07.44
+        by smtp.gmail.com with ESMTPSA id i127sm2148957pgc.12.2018.03.13.17.38.18
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 13 Mar 2018 17:07:44 -0700 (PDT)
-Date:   Tue, 13 Mar 2018 17:07:43 -0700
+        Tue, 13 Mar 2018 17:38:18 -0700 (PDT)
+Date:   Tue, 13 Mar 2018 17:38:16 -0700
 From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Michal Novotny <clime@redhat.com>
-Cc:     git@vger.kernel.org,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Subject: Re: allow "~" to be present in a tag name
-Message-ID: <20180314000742.GD147135@aiede.svl.corp.google.com>
-References: <CANT8FXTF41-4zvqvrEek262D8OZRhA4nsiPguyNTL9mwF1+mkg@mail.gmail.com>
+To:     Magne Land <magne.land@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] Documentation/githooks: Clarify the behavior of
+ post-checkout hook
+Message-ID: <20180314003816.GE147135@aiede.svl.corp.google.com>
+References: <0102016220f23987-d4661c81-cf6e-4c96-8487-acce6bb365c8-000000@eu-west-1.amazonses.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CANT8FXTF41-4zvqvrEek262D8OZRhA4nsiPguyNTL9mwF1+mkg@mail.gmail.com>
+In-Reply-To: <0102016220f23987-d4661c81-cf6e-4c96-8487-acce6bb365c8-000000@eu-west-1.amazonses.com>
 User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Michal,
+Hi,
 
-Michal Novotny wrote:
+Magne Land wrote:
 
-> currently, if I try to create a tag that has tilde "~"  in name, an
-> error is raised. E.g.
+> From: Magne Land <magne.land@appfolio.com>
 >
-> $ git tag rpkg-util-1.4~rc1
-> fatal: 'rpkg-util-1.4~rc1' is not a valid tag name.
+> This can happen when using 'git rebase -i’:
+> could not detach HEAD
+>
+> Based on discovering this Stack Overflow discussion:
+> https://stackoverflow.com/questions/25561485/git-rebase-i-with-squash-cannot-detach-head
+> ---
+>  Documentation/githooks.txt | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
 
-As Ævar mentioned, this is disallowed to prevent a collision with
-Git's revision specifying syntax.
+Thanks for investigating and writing this.
 
-While I'm sympathetic to wanting the tag name to match the version
-number used by the package manager, the line has to be drawn
-somewhere.  "git help check-ref-format" describes the current
-namespace:
+May we forge your sign-off?  See Documentation/SubmittingPatches
+section [[sign-off] 'Certify your work' for more about what this
+means.
 
-	Git imposes the following rules on how references are named:
+The above leaves one question unanswered: is this the *right* behavior
+for "git checkout" to have?  I.e. is it useful for "git checkout" to
+fail when the post-checkout hook fails, or would it be better for it
+to e.g. simply print a message and exit with status 0?
 
-	1. They can include slash / for hierarchical (directory)
-	   grouping, but no slash-separated component can begin with a
-	   dot . or end with the sequence .lock.
-
-	2. They must contain at least one /. This enforces the
-	   presence of a category like heads/, tags/ etc. but the
-	   actual names are not restricted. If the --allow-onelevel
-	   option is used, this rule is waived.
-
-	3. They cannot have two consecutive dots .. anywhere.
-
-	4. They cannot have ASCII control characters (i.e. bytes whose
-	   values are lower than \040, or \177 DEL), space, tilde ~,
-	   caret ^, or colon : anywhere.
-
-	5. They cannot have question-mark ?, asterisk *, or open
-	   bracket [ anywhere. See the --refspec-pattern option below
-	   for an exception to this rule.
-
-	6. They cannot begin or end with a slash / or contain multiple
-	   consecutive slashes (see the --normalize option below for
-	   an exception to this rule)
-
-	7. They cannot end with a dot ..
-
-	8. They cannot contain a sequence @{.
-
-	9. They cannot be the single character @.
-
-       10. They cannot contain a \.
-
-If anything, I suspect the current namespace is too wide.  For
-example, it has issues with Unicode normalization in filenames on some
-platforms, and it allows some potentially problematic characters like
-` and |.
-
-So my first instinct is to recommend that you apply some mapping
-between your packager manager's version syntax and Git's tag syntax
---- e.g. using -rc1 as Ævar suggested, or using urlencoding %7Erc1 as
-you hinted.
-
-That isn't to say that this would be impossible to loosen.  But my
-worry is that it's hard to decide where to draw the line: there are a
-number of sets of names that might want to be valid tags, and it is
-hard to say which are worth the complexity of expanding the set of
-valid ref names.  That's why my first reaction is to look around for
-another way to accomplish your goal.
+Not a rhetorical question: I'm asking because I don't know the answer.
+What do you think?
 
 Thanks,
 Jonathan
+
+> --- a/Documentation/githooks.txt
+> +++ b/Documentation/githooks.txt
+> @@ -166,7 +166,9 @@ worktree.  The hook is given three parameters: the ref of the previous HEAD,
+>  the ref of the new HEAD (which may or may not have changed), and a flag
+>  indicating whether the checkout was a branch checkout (changing branches,
+>  flag=1) or a file checkout (retrieving a file from the index, flag=0).
+> -This hook cannot affect the outcome of 'git checkout'.
+> +
+> +If this hook exits with a non-zero status, 'git checkout' will exit with the
+> +same status.
+>  
+>  It is also run after 'git clone', unless the --no-checkout (-n) option is
+>  used. The first parameter given to the hook is the null-ref, the second the
