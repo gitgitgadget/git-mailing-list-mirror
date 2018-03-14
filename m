@@ -3,105 +3,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 39B0A1F404
-	for <e@80x24.org>; Wed, 14 Mar 2018 21:33:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1FB4F1F404
+	for <e@80x24.org>; Wed, 14 Mar 2018 21:34:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751914AbeCNVdq (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Mar 2018 17:33:46 -0400
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:37045 "EHLO
-        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751835AbeCNVdn (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Mar 2018 17:33:43 -0400
-Received: by mail-wr0-f193.google.com with SMTP id z12so6254284wrg.4
-        for <git@vger.kernel.org>; Wed, 14 Mar 2018 14:33:43 -0700 (PDT)
+        id S1751394AbeCNVel (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Mar 2018 17:34:41 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:55279 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751168AbeCNVek (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Mar 2018 17:34:40 -0400
+Received: by mail-wm0-f65.google.com with SMTP id h76so6809180wme.4
+        for <git@vger.kernel.org>; Wed, 14 Mar 2018 14:34:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=s2tIIxTzM1m7+xMEUShKGD12XufNSfSKv2BK38vDcng=;
-        b=eqvN1yEBFluZbbPazv2QayIdbT/xBOX9OnKM/CQ3B9yYH7VkQwXUwdFWcuNnX7ryZf
-         mPKMAV6V+rGx7Dwx3oOqvZJ8NIErhbk38Bnw1lhBAyO7SnVpMJeQMCCj8WeYOfziHOm0
-         4DUWIV0R4xg0CIBvYdhBOPRHHVkWM8flmbWVmv5/lpKg9lynQpP9zXYyLnwFdbErtNN5
-         aBmTT5p6c8lAL0zQ4i7I8CC55/Q3CaNBJNXXjAFblHxsmF73Cw6JN1+AmLMf8HHIH9ic
-         1zGpcDAw7LMhgYJPiNLqpz7MPwT58jkQGogZqQf/HxJxgZ+NVC2MupR7iFEv8FTQjibB
-         nHig==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=8YjYCao4MuCJaDsnwi7E/vwnB+MVfLaPrFV6BPQIkWE=;
+        b=bJ3Tp/SUdYtxlviOm1vh4cT1kkBNMxALtqCHSkEmhDh34D+IEECcenzKY73ATpHdhM
+         /Gt2xZpPs7sALiY6v+PBUngs5h/2emTrEFeT0R8uXpCvlt56th5WiXoWYgYO4BoxJWQp
+         SYY/zmgQtdBzRWrC7nXTKfSIM8dX4nAXCx13WlHmw46DGYQ4akxRPKts8P/3dvuK0Ci8
+         furB8svroD0spjLqTS9WuSJ0Ym0qUyJ74puy7xceHCRRrCI3boPINukkiPkJTVRpGpdO
+         YmUJw1Hqk2SZFk/+GFRayzHj2DpW5nhEoTYNs87ox4flKftXI1gjvHdei2wk4BWMfs3a
+         xWRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=s2tIIxTzM1m7+xMEUShKGD12XufNSfSKv2BK38vDcng=;
-        b=rpY0Zks1WtqmO+cLXZ8J2/Qlr6gZDok9gEdHfQta3f//Ud2yWb1pnCeo7jbkQd6P8a
-         tlzWJHXheJYrG8EtdwFqRQmrUfGicEa4F1cjjxkTiFfcaucc0GlwIdKcbum3xThZDhMk
-         sN+gBL8VXgH1nMuXD3zwjHZ+ZjM+g6tQZ0/jkH9eqRWejuQFJS3y0eLmR1casByJAJFN
-         X0C+sNecZ0t60c60PaUPZTc2zh4tD4qeCaSgy+JHJdemmhIymp8wBOnj8QPedX+6abiE
-         l6i8bO+1FvI0cA5Bn6h6KqmW57zWRmZlZjEBPJV0JSFLKFTpsGgkIHxapBn2bnENRTiP
-         e5tQ==
-X-Gm-Message-State: AElRT7HFqYAMTyrx0Cs6a4x2lori09WsDiYeyTZx/GDa8sFfTKuIxlZu
-        GqkP6tx42hp2ObYVFjTyzpY=
-X-Google-Smtp-Source: AG47ELsijbexB0v5+dXlePx1U5YScqojJsC2jol2K6Lb0E6r0Oomz8WWqbZBurP4X3+NVO5BOHZY6A==
-X-Received: by 10.223.197.139 with SMTP id m11mr4982843wrg.198.1521063221981;
-        Wed, 14 Mar 2018 14:33:41 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id y68sm5394458wrb.73.2018.03.14.14.33.39
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 14 Mar 2018 14:33:40 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org, git@jeffhostetler.com, jrnieder@gmail.com,
-        pclouds@gmail.com, peff@peff.net, sbeller@google.com,
-        stolee@gmail.com, jonathantanmy@google.com
-Subject: Re: [PATCH v5 01/35] pkt-line: introduce packet_read_with_status
-References: <20180314183213.223440-1-bmwill@google.com>
-        <20180314183213.223440-2-bmwill@google.com>
-Date:   Wed, 14 Mar 2018 14:33:39 -0700
-In-Reply-To: <20180314183213.223440-2-bmwill@google.com> (Brandon Williams's
-        message of "Wed, 14 Mar 2018 11:31:38 -0700")
-Message-ID: <xmqq1sgmz6j0.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=8YjYCao4MuCJaDsnwi7E/vwnB+MVfLaPrFV6BPQIkWE=;
+        b=XPc482FnD67HFqmUbahEStbvLEAehK0RlfvIr2ABianA9dnk1hIn/moEr6ZcjhUe5f
+         Lou7HrruvOOtkZx09aY+YLAFqu9lup7kcWLnlHPiGAq470DH5vlWMVD54MihelgJwCQM
+         rPgHZOfpDtqzlbK7HxJBAqPe+VIR2F1OsAFwJ6BkKDR5EoSUj0wFL0GEGmclCENuct1x
+         p80pVPw49MXouYR678BYyiZg9lykJM8+NNQXHRvZN4H2TPqE5RgY5XUl/orS7Chb1qap
+         Gnb9mxGwi8Sk9NI7HBzEFiBL3NwdLbGGyJFFmBwf3DCfQcpTW2lhQiUkcUz3rsLqghcJ
+         ET0Q==
+X-Gm-Message-State: AElRT7FYbLaKClZ+A3i6w4ejfGlMcn9k0I4Egm43foCQ0CZEHb8nKbaZ
+        UKIeiOMCj3IFzJ7/JD9Jyv0GkQqa
+X-Google-Smtp-Source: AG47ELs8IFqa8pm8CTrwOLxohoiy3q0uWlkNo/oZ0cgkyAvqJ8bxdbBixSwBqFxTJITrB/GHIPvQjA==
+X-Received: by 10.28.197.140 with SMTP id v134mr2677094wmf.62.1521063278964;
+        Wed, 14 Mar 2018 14:34:38 -0700 (PDT)
+Received: from localhost.localdomain ([2a02:aa16:5782:c100:c938:fbb7:46f8:2405])
+        by smtp.gmail.com with ESMTPSA id 55sm5049688wrw.87.2018.03.14.14.34.37
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 14 Mar 2018 14:34:37 -0700 (PDT)
+From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v2 0/3] shortlog: disallow left-over arguments outside repo
+Date:   Wed, 14 Mar 2018 22:34:16 +0100
+Message-Id: <cover.1521062188.git.martin.agren@gmail.com>
+X-Mailer: git-send-email 2.16.2.246.ga4ee44448f
+In-Reply-To: <cover.1520680894.git.martin.agren@gmail.com>
+References: <cover.1520680894.git.martin.agren@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Brandon Williams <bmwill@google.com> writes:
+This is v2 of my attempt at stopping shortlog from BUG-ing when it is
+used incorrectly outside a repo. Thanks Jonathan and Junio for helpful
+comments.
 
-> +/*
-> + * Read a packetized line into a buffer like the 'packet_read()' function but
-> + * returns an 'enum packet_read_status' which indicates the status of the read.
-> + * The number of bytes read will be assigined to *pktlen if the status of the
-> + * read was 'PACKET_READ_NORMAL'.
-> + */
-> +enum packet_read_status {
-> +	PACKET_READ_EOF,
-> +	PACKET_READ_NORMAL,
-> +	PACKET_READ_FLUSH,
-> +};
+Patches 1 and 2 are identical to pu. The error message in patch 3 is now
+more general. The error condition on the other hand is a bit more
+specific, "argc > 1", to better match the intention and commit message.
 
-EOF was -1 and NORMAL was 0 in the previous round; do we need to
-read through all the invocations of functions that return this type
-and make sure there is no "while (such_a_function())" that used to see
-if we read NORMAL that is left un-updated?
+Martin
 
-I just have gone thru all the hits from
+Martin Ågren (3):
+  git-shortlog.txt: reorder usages
+  shortlog: add usage-string for stdin-reading
+  shortlog: disallow left-over arguments when run outside repo
 
- $ git grep -n -e packet_erad_with_status -e packet_reader_read -e packet_reader_peek
+ Documentation/git-shortlog.txt | 2 +-
+ t/t4201-shortlog.sh            | 5 +++++
+ builtin/shortlog.c             | 8 +++++++-
+ 3 files changed, 13 insertions(+), 2 deletions(-)
 
-There are a few
+-- 
+2.16.2.246.ga4ee44448f
 
-	switch (packet_reader_peek())
-
-which by definition we do not have to worry about.  Then majority of
-what could be problematic are of the form:
-
-	while (packet_reader_read() == PACKET_READ_NORMAL)
-
-and they were this way even in the previous version, so it seems
-quite alright.
-
-Will replace.  Thanks.
