@@ -7,129 +7,207 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 08D2B1FAE2
-	for <e@80x24.org>; Wed, 14 Mar 2018 06:27:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2F6CF1FAE2
+	for <e@80x24.org>; Wed, 14 Mar 2018 06:33:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753342AbeCNG11 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Mar 2018 02:27:27 -0400
-Received: from mail-wm0-f46.google.com ([74.125.82.46]:55739 "EHLO
-        mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751270AbeCNG10 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Mar 2018 02:27:26 -0400
-Received: by mail-wm0-f46.google.com with SMTP id q83so1771901wme.5
-        for <git@vger.kernel.org>; Tue, 13 Mar 2018 23:27:25 -0700 (PDT)
+        id S1753445AbeCNGd0 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Mar 2018 02:33:26 -0400
+Received: from mail-pl0-f65.google.com ([209.85.160.65]:33721 "EHLO
+        mail-pl0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751270AbeCNGdZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Mar 2018 02:33:25 -0400
+Received: by mail-pl0-f65.google.com with SMTP id c11-v6so1227816plo.0
+        for <git@vger.kernel.org>; Tue, 13 Mar 2018 23:33:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=fU4CQd3NJzv1oiTiwnWjqfeGNaEPys9P7UzoPJrZpbg=;
-        b=XebJC4K+Xpt3Q9ELxUd+RPyo3wH3m7Reo46cMt9LG6a1syOVHi9l0vrIweTwncpGNI
-         HAk/WC3fWIM1fiEtYTYRDg6M4m2jXo9G63EzfTDie/BHnI+dNrqyDtiUvgl9IwErP8pR
-         hGYEp0lYmHxxrY4bEH6qJgwA7aJnxx9kwf+8s=
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=bQ/TtmZF2d8/9h3NZpCHfiWuZSUY094+BfjDvB1YU5k=;
+        b=ioouRVHCvWkMnb+FllwumoIBEhPSUF/XfhTh3vg8xYrw2bcSZmVvmJ1blkFgJYB3tz
+         GGxlIn2nYnT6FKrMeG+kQNmVeHFyOLBLOtkSBNsqzxsn5+voEwDoEZiC1cXgnyDYDPd+
+         xaCJgquoxWiItvFF2uZLlKop6pcXr/ZaZHpow=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=fU4CQd3NJzv1oiTiwnWjqfeGNaEPys9P7UzoPJrZpbg=;
-        b=ShEltCUq2ZW3mw5y8GT2/xmjErnm0FIMnE2Zi7HuOH84WJYdIwu+kc2HcpIOZ4ZyAy
-         QGnPpBvlGI0ziNgsf8x1bDi7iEu5EZ00NuehW33x8ggacO5jfmDsOOqkrbatl1dq12vE
-         zcv9kdfE7UZ5n6wO4tvxi7bP+cMi09qAr16B13l89kmNn1eKp8hcUeamTxm6ek+dRElz
-         iphPmU/kL8kNyVlbBxybWpPlW6kPnQ8HA4Q/+HRO2v0J1pTNvZKC5S/kDciuZPimwPEp
-         EXogW6g7FeAXEVAxgLcEZnrb/VILu4pz2536ii24bFk+OqPPyKrIlmrjE9qsfopg3jLX
-         zwPw==
-X-Gm-Message-State: AElRT7GaEnQc8cQGuh0RYZ0MkhGBQb7exyK/dbWCN7oQJi94utFLr/RR
-        wSyQ7yMNcZoDPgDqDAJJLvxFrQnnYdk=
-X-Google-Smtp-Source: AG47ELvM8HdaicPNxmx0YaYNhHwbtpMEw3cqzmEpWoDRdb3SS40LZkvUXd4wJfBz/49ziGKeQ8EqRA==
-X-Received: by 10.80.245.73 with SMTP id w9mr1459997edm.230.1521008844442;
-        Tue, 13 Mar 2018 23:27:24 -0700 (PDT)
-Received: from mail-wm0-f44.google.com (mail-wm0-f44.google.com. [74.125.82.44])
-        by smtp.gmail.com with ESMTPSA id d49sm1676706edb.78.2018.03.13.23.27.23
-        for <git@vger.kernel.org>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=bQ/TtmZF2d8/9h3NZpCHfiWuZSUY094+BfjDvB1YU5k=;
+        b=oPnYRq406I0xy2IkcrqrAdl0dWHDp8I7MtLH/HWEZgvTLQWpeRgiML9zuUucp5yykM
+         RGFAnD07GT3PFI+rDDrEqX3NyMF5+bG0lJA4MatqhF3t5JoeCisRQ/jVPYxh4XUxvIAs
+         xYNk1mCtOh9Fh9hiqeI7OwyozSzZItfVQwhkJrxi4Vu1jFvkQQN+TXcLU3owIAjQkoi7
+         xspglFDUEQCx1ECDNQcZKgAknZ4qz/9KbaKL/bULNpptXm/Fc5SKA5A60+EEm7I70HFf
+         2VbJcpLv36F2QMPa3S/RFaBxyyz3/qaXxWKwzopbuCdD/MU1s4ILaGBudgUAdo2dgrGZ
+         8Oiw==
+X-Gm-Message-State: AElRT7Gtc5OErI0D9JM0lBK+D3pZZ9H5PYKV2G1U1hikAyGNLpWqMY+G
+        l1oNzjFqcpqA9+TjFO1OfVwpmcsfIbU=
+X-Google-Smtp-Source: AG47ELucXVnSedWK/sNlqZWAyVxKwjZu2uNUaPfVWcQ9qFzcTLWGG7h9rU+9qLY/18YZKRLQ85Ua+Q==
+X-Received: by 2002:a17:902:904b:: with SMTP id w11-v6mr3053417plz.11.1521009204236;
+        Tue, 13 Mar 2018 23:33:24 -0700 (PDT)
+Received: from tikuta.tok.corp.google.com ([2401:fa00:4:1002:bd1d:996:abff:29d])
+        by smtp.gmail.com with ESMTPSA id d75sm3282509pga.38.2018.03.13.23.33.22
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 13 Mar 2018 23:27:23 -0700 (PDT)
-Received: by mail-wm0-f44.google.com with SMTP id x7so1744851wmc.0
-        for <git@vger.kernel.org>; Tue, 13 Mar 2018 23:27:23 -0700 (PDT)
-X-Received: by 10.28.71.204 with SMTP id m73mr544921wmi.111.1521008843068;
- Tue, 13 Mar 2018 23:27:23 -0700 (PDT)
-MIME-Version: 1.0
-References: <20180309131136.219303-2-tikuta@chromium.org> <20180309132655.224308-1-tikuta@chromium.org>
- <xmqq606558k2.fsf@gitster-ct.c.googlers.com> <CALNjmMqBbZTFVRnc__wewWy3808n9J9xfgu8ZH-FWyWJKvqb9w@mail.gmail.com>
- <xmqqo9jr3lrt.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqo9jr3lrt.fsf@gitster-ct.c.googlers.com>
+        Tue, 13 Mar 2018 23:33:23 -0700 (PDT)
 From:   Takuto Ikuta <tikuta@chromium.org>
-Date:   Wed, 14 Mar 2018 06:26:46 +0000
-X-Gmail-Original-Message-ID: <CALNjmMqqa1i0=ekqQfNZ5DmA+h7mOGzZcF-RB1A6+Rm8vw80pQ@mail.gmail.com>
-Message-ID: <CALNjmMqqa1i0=ekqQfNZ5DmA+h7mOGzZcF-RB1A6+Rm8vw80pQ@mail.gmail.com>
-Subject: Re: [PATCH v3] fetch-pack.c: use oidset to check existence of loose object
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org, gitster@pobox.com
+Cc:     Takuto Ikuta <tikuta@chromium.org>
+Subject: [PATCH v7] fetch-pack.c: use oidset to check existence of loose object
+Date:   Wed, 14 Mar 2018 15:32:42 +0900
+Message-Id: <20180314063242.5759-1-tikuta@chromium.org>
+X-Mailer: git-send-email 2.16.2
+In-Reply-To: <20180314060511.257985-1-tikuta@chromium.org>
+References: <20180314060511.257985-1-tikuta@chromium.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-2018=E5=B9=B43=E6=9C=8814=E6=97=A5(=E6=B0=B4) 2:53 Junio C Hamano <gitster@=
-pobox.com>:
+When fetching from a repository with large number of refs, because to
+check existence of each refs in local repository to packed and loose
+objects, 'git fetch' ends up doing a lot of lstat(2) to non-existing
+loose form, which makes it slow.
 
-> Takuto Ikuta <tikuta@chromium.org> writes:
+Instead of making as many lstat(2) calls as the refs the remote side
+advertised to see if these objects exist in the loose form, first
+enumerate all the existing loose objects in hashmap beforehand and use
+it to check existence of them if the number of refs is larger than the
+number of loose objects.
 
-> >> During fetch, everything_local() tries to mark common part by
-> >> walking the refs the other side advertised upon the first contact,
-> >> so it is correct that the number of checks is not reduced in a fetch
-> >> that does not fetch many refs, but the number of remote-tracking refs
-> >> you have has no effect, so I doubt such a rephrasing would make the
-> >> description more understandable.  "When fetching from a repository
-> >> with large number of refs" is probably what you want to say, no?
-> >
-> > For refs existing in local repository, everything_local looks to be
-able to find
-> > corresponding object from packed or loose objects. And if it exists,
-> > I think, cost of lstat(2) is relatively smaller than other operations.
-> > But for remote refs, everything_local fails to find it from packed
-> > object (this check is fast)
-> > and it tries to find loose object by using lstat(2), and this fails and
-slow.
-> > My patch is to skip this lstat(2) to non-existing ref objects for
-repositories
-> > having large number of remote refs.
+With this patch, the number of lstat(2) calls in `git fetch` is reduced
+from 411412 to 13794 for chromium repository, it has more than 480000
+remote refs.
 
-> This still does not make sense to me, and I suspect that I am
-> misreading you.  In what sense are you using the word "repository"
-> and "remote refs"?
+I took time stat of `git fetch` when fetch-pack happens for chromium
+repository 3 times on linux with SSD.
+* with this patch
+8.105s
+8.309s
+7.640s
+avg: 8.018s
 
+* master
+12.287s
+11.175s
+12.227s
+avg: 11.896s
 
-Yes, I think I did not understand the terms correctly.
-I meant "repository" for repository in remote servers, and "remote refs" fo=
-r
-refs shown by `git ls-remote`.
+On my MacBook Air which has slower lstat(2).
+* with this patch
+14.501s
 
-> Imagine this situation.  I have a local repository A, I fetch from a
-> remote repository B but in my repository A, I do *not* use
-> remote-tracking refs to remember what the last values of refs at
-> repository B.  Now when I try to fetch a single ref from B into A,
-> many refs B advertises point at objects A has never heard about, and
-> that triggers many lstat(2) that yields ENOENT that is slow.  Your
-> patch is to optimize this so that we learn these objects do not
-> exist locally without running many lstat(2) to objects and helps
-> repositories (like my repository A) when fetching from a repository
-> with large number of refs (like the repository B).  It does not
-> matter how many "remote refs" receiving repository (e.g. my A) has,
-> and it does not matter how many "remote refs" sending repository
-> (e.g. my B) has---whether it is refs/remotes/origin/foo
-> (i.e. "remote") or refs/heads/foo (i.e. "local"), a ref at B that
-> points at an object that is missing at A will cause the same
-> lstat(2) at A without your change.
+* master
+1m16.027s
 
-> That is why I think "When fetching from a repository with large
-> number of refs" is what you meant, not "fetching into a repository
-> with large number of remote refs" nor "fetching from a repository
-> with large number of remote refs".
+`git fetch` on slow disk will be improved largely.
 
+Signed-off-by: Takuto Ikuta <tikuta@chromium.org>
+---
+ cache.h      |  2 ++
+ fetch-pack.c | 45 ++++++++++++++++++++++++++++++++++++++++++---
+ sha1_file.c  |  3 +++
+ 3 files changed, 47 insertions(+), 3 deletions(-)
 
-Thank you for explanation.
-And yes, that is exactly I want to do in my patch.
-Fixed description in v6.
+diff --git a/cache.h b/cache.h
+index d06932ed0..6a72f54d7 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1773,6 +1773,8 @@ struct object_info {
+ #define OBJECT_INFO_SKIP_CACHED 4
+ /* Do not retry packed storage after checking packed and loose storage */
+ #define OBJECT_INFO_QUICK 8
++/* Do not check loose object */
++#define OBJECT_INFO_IGNORE_LOOSE 16
+ extern int sha1_object_info_extended(const unsigned char *, struct object_info *, unsigned flags);
+ 
+ /*
+diff --git a/fetch-pack.c b/fetch-pack.c
+index d97461296..2ea358861 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -711,6 +711,28 @@ static void mark_alternate_complete(struct object *obj)
+ 	mark_complete(&obj->oid);
+ }
+ 
++struct loose_object_iter {
++	struct oidset *loose_object_set;
++	struct ref *refs;
++};
++
++/*
++ *  If the number of refs is not larger than the number of loose objects,
++ *  this function stops inserting.
++ */
++static int add_loose_objects_to_set(const struct object_id *oid,
++				    const char *path,
++				    void *data)
++{
++	struct loose_object_iter *iter = data;
++	oidset_insert(iter->loose_object_set, oid);
++	if (iter->refs == NULL)
++		return 1;
++
++	iter->refs = iter->refs->next;
++	return 0;
++}
++
+ static int everything_local(struct fetch_pack_args *args,
+ 			    struct ref **refs,
+ 			    struct ref **sought, int nr_sought)
+@@ -719,16 +741,31 @@ static int everything_local(struct fetch_pack_args *args,
+ 	int retval;
+ 	int old_save_commit_buffer = save_commit_buffer;
+ 	timestamp_t cutoff = 0;
++	struct oidset loose_oid_set = OIDSET_INIT;
++	int use_oidset = 0;
++	struct loose_object_iter iter = {&loose_oid_set, *refs};
++
++	/* Enumerate all loose objects or know refs are not so many. */
++	use_oidset = !for_each_loose_object(add_loose_objects_to_set,
++					    &iter, 0);
+ 
+ 	save_commit_buffer = 0;
+ 
+ 	for (ref = *refs; ref; ref = ref->next) {
+ 		struct object *o;
++		unsigned int flags = OBJECT_INFO_QUICK;
+ 
+-		if (!has_object_file_with_flags(&ref->old_oid,
+-						OBJECT_INFO_QUICK))
+-			continue;
++		if (use_oidset &&
++		    !oidset_contains(&loose_oid_set, &ref->old_oid)) {
++			/*
++			 * I know this does not exist in the loose form,
++			 * so check if it exists in a non-loose form.
++			 */
++			flags |= OBJECT_INFO_IGNORE_LOOSE;
++		}
+ 
++		if (!has_object_file_with_flags(&ref->old_oid, flags))
++			continue;
+ 		o = parse_object(&ref->old_oid);
+ 		if (!o)
+ 			continue;
+@@ -744,6 +781,8 @@ static int everything_local(struct fetch_pack_args *args,
+ 		}
+ 	}
+ 
++	oidset_clear(&loose_oid_set);
++
+ 	if (!args->no_dependents) {
+ 		if (!args->deepen) {
+ 			for_each_ref(mark_complete_oid, NULL);
+diff --git a/sha1_file.c b/sha1_file.c
+index 1b94f39c4..c0a197947 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -1262,6 +1262,9 @@ int sha1_object_info_extended(const unsigned char *sha1, struct object_info *oi,
+ 		if (find_pack_entry(real, &e))
+ 			break;
+ 
++		if (flags & OBJECT_INFO_IGNORE_LOOSE)
++			return -1;
++
+ 		/* Most likely it's a loose object. */
+ 		if (!sha1_loose_object_info(real, oi, flags))
+ 			return 0;
+-- 
+2.16.2
 
-Thanks.
