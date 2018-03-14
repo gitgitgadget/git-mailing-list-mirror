@@ -2,125 +2,160 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.9 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8D68C1F404
-	for <e@80x24.org>; Wed, 14 Mar 2018 13:44:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 18ABF1F404
+	for <e@80x24.org>; Wed, 14 Mar 2018 14:24:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751381AbeCNNoF (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Mar 2018 09:44:05 -0400
-Received: from mail-wr0-f173.google.com ([209.85.128.173]:39031 "EHLO
-        mail-wr0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750910AbeCNNoE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Mar 2018 09:44:04 -0400
-Received: by mail-wr0-f173.google.com with SMTP id k3so4803020wrg.6
-        for <git@vger.kernel.org>; Wed, 14 Mar 2018 06:44:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=kgANx74ji6ELhpFwcD8nn4bJSMXo6XGjRQYIx5PgKJ8=;
-        b=gxKUyxlYMr/pG1FiFtJ3O8KEvHVAPSzDwT/obqVx4pqNPoLi/p/oG5vinDwqn059i6
-         8S0jGVUjeIwjnK78KMY9f5GnY4lG9IzR3LPfhmUNoJTM1wJ2KKo0V2kRgSpNuEnfihs3
-         AWQRYWNGnyZZXRMppEzAWzjRiomQBd1Erxq+Q/MHUrK/zkCX+jD1vGdscOkIVj7Cm7dy
-         fKR2JXuJBs5Lb5driJNoEz8ewr1Q8c07j6B6FdlqaphrXFtYmT1Rqri4A0auLJY4poTG
-         q3EQXWjnlrXTMccuW08kpb5tcM7RgSSITpjYCSAlAUi+NV8OuoJ/SjQR1fBZWndNqUrl
-         4XOw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=kgANx74ji6ELhpFwcD8nn4bJSMXo6XGjRQYIx5PgKJ8=;
-        b=r8lwX8l1F8R6V+UrZKoaFQtzDtxwdfCy0k2m1EHyOYH0Q0CEKP0cEZmuZJwXASIz8n
-         k/r41ygrYUlq50ZbDhJTGSs+z2xGvz9DO+NrGeR1Bs2l4reuZoYggYbohUJQi96LC0L/
-         CoUHAzaAP8FhMdBGl4ZrMCnyrZ1pCVCE3muFvYQvG1MPrs7MBciOn9GTI5qFwTPZSbjd
-         W63PQm5JAfZKjuxqH+hGY06qBsl0WHVVtFUu9yfShJ5Zdjnv8xm1gWjuipMOXkZMzEPe
-         aw7Ck0fJCLgjOGQaGN4eIOL2aIlXBVTA3MXDk5iap9p0KG8PDRiG3o0vbgUys4xSXhym
-         Ztgg==
-X-Gm-Message-State: AElRT7H7QMgqKcNY66F2qTI2FUBpwMackL4H7HPW5j1yo+JpXWmGnnhE
-        FVk0NK5/jOCe94NaGlkK3wUfqx5sft6FxaPvqipWRA==
-X-Google-Smtp-Source: AG47ELsDgWZ9SaxP/vfFQCo2tg5v3cT0p6qcU8xAf/uC7frWVEYhmzULaAkJPWnUbgA5/R1IKCaJzjO7TedchrOl494=
-X-Received: by 10.223.133.182 with SMTP id 51mr3660871wrt.226.1521035042789;
- Wed, 14 Mar 2018 06:44:02 -0700 (PDT)
+        id S1751440AbeCNOYk (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Mar 2018 10:24:40 -0400
+Received: from mail.javad.com ([54.86.164.124]:52517 "EHLO mail.javad.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750827AbeCNOYj (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Mar 2018 10:24:39 -0400
+Received: from osv (unknown [89.175.180.246])
+        by mail.javad.com (Postfix) with ESMTPSA id 580983E89A;
+        Wed, 14 Mar 2018 14:24:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1521037478;
+        bh=e4mn7Nzo8ELTbus8fNby/zg4THNIWtV2MoC96LfFj0c=; l=1653;
+        h=Received:From:To:Subject;
+        b=fVNkCEsr2pOuABy07BdTh6mNvxl6fCjf5moASO3usYF5JRyXm3XJKyItGwp3H3XTt
+         FBGFpMcP8iB7jHhct/W5S4MvKRGcEquPYH3/rL8f35cmwYjvFuLBrBDWFl6w/Uf98T
+         DXLZwYUMy6Yc4bQsjNyvXT5e4CB+fAsrZNh9Jr4M=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1521037478;
+        bh=e4mn7Nzo8ELTbus8fNby/zg4THNIWtV2MoC96LfFj0c=; l=1653;
+        h=Received:From:To:Subject;
+        b=fVNkCEsr2pOuABy07BdTh6mNvxl6fCjf5moASO3usYF5JRyXm3XJKyItGwp3H3XTt
+         FBGFpMcP8iB7jHhct/W5S4MvKRGcEquPYH3/rL8f35cmwYjvFuLBrBDWFl6w/Uf98T
+         DXLZwYUMy6Yc4bQsjNyvXT5e4CB+fAsrZNh9Jr4M=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1521037478;
+        bh=e4mn7Nzo8ELTbus8fNby/zg4THNIWtV2MoC96LfFj0c=; l=1653;
+        h=Received:From:To:Subject;
+        b=fVNkCEsr2pOuABy07BdTh6mNvxl6fCjf5moASO3usYF5JRyXm3XJKyItGwp3H3XTt
+         FBGFpMcP8iB7jHhct/W5S4MvKRGcEquPYH3/rL8f35cmwYjvFuLBrBDWFl6w/Uf98T
+         DXLZwYUMy6Yc4bQsjNyvXT5e4CB+fAsrZNh9Jr4M=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1521037478;
+        bh=e4mn7Nzo8ELTbus8fNby/zg4THNIWtV2MoC96LfFj0c=; l=1653;
+        h=Received:From:To:Subject;
+        b=fVNkCEsr2pOuABy07BdTh6mNvxl6fCjf5moASO3usYF5JRyXm3XJKyItGwp3H3XTt
+         FBGFpMcP8iB7jHhct/W5S4MvKRGcEquPYH3/rL8f35cmwYjvFuLBrBDWFl6w/Uf98T
+         DXLZwYUMy6Yc4bQsjNyvXT5e4CB+fAsrZNh9Jr4M=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1521037478;
+        bh=e4mn7Nzo8ELTbus8fNby/zg4THNIWtV2MoC96LfFj0c=; l=1653;
+        h=Received:From:To:Subject;
+        b=fVNkCEsr2pOuABy07BdTh6mNvxl6fCjf5moASO3usYF5JRyXm3XJKyItGwp3H3XTt
+         FBGFpMcP8iB7jHhct/W5S4MvKRGcEquPYH3/rL8f35cmwYjvFuLBrBDWFl6w/Uf98T
+         DXLZwYUMy6Yc4bQsjNyvXT5e4CB+fAsrZNh9Jr4M=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1521037478;
+        bh=e4mn7Nzo8ELTbus8fNby/zg4THNIWtV2MoC96LfFj0c=; l=1653;
+        h=Received:From:To:Subject;
+        b=fVNkCEsr2pOuABy07BdTh6mNvxl6fCjf5moASO3usYF5JRyXm3XJKyItGwp3H3XTt
+         FBGFpMcP8iB7jHhct/W5S4MvKRGcEquPYH3/rL8f35cmwYjvFuLBrBDWFl6w/Uf98T
+         DXLZwYUMy6Yc4bQsjNyvXT5e4CB+fAsrZNh9Jr4M=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1521037478;
+        bh=e4mn7Nzo8ELTbus8fNby/zg4THNIWtV2MoC96LfFj0c=; l=1653;
+        h=Received:From:To:Subject;
+        b=fVNkCEsr2pOuABy07BdTh6mNvxl6fCjf5moASO3usYF5JRyXm3XJKyItGwp3H3XTt
+         FBGFpMcP8iB7jHhct/W5S4MvKRGcEquPYH3/rL8f35cmwYjvFuLBrBDWFl6w/Uf98T
+         DXLZwYUMy6Yc4bQsjNyvXT5e4CB+fAsrZNh9Jr4M=
+Authentication-Results: mail.javad.com;
+        spf=pass (sender IP is 89.175.180.246) smtp.mailfrom=osv@javad.com smtp.helo=osv
+Received-SPF: pass (mail.javad.com: connection is authenticated)
+Received: from osv by osv with local (Exim 4.84_2)
+        (envelope-from <osv@osv.gnss.ru>)
+        id 1ew7KW-000487-Lk; Wed, 14 Mar 2018 17:24:36 +0300
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Igor Djordjevic <igor.d.djordjevic@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC] Rebasing merges: a jorney to the ultimate solution(RoadClear)
+References: <87y3jtqdyg.fsf@javad.com>
+        <CA+P7+xq8UUcLWomUi=PS_hTKfJd3dMAxMmhioDS1bixwcmKAqw@mail.gmail.com>
+        <nycvar.QRO.7.76.6.1802271718090.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        <4d7f3406-b206-cc22-87df-85700d6a03d9@gmail.com>
+        <33da31e9-9101-475d-8901-4b6b3df2f29d@gmail.com>
+        <940d959d-151d-68dd-0f13-320ebad0d75b@gmail.com>
+        <87606hoflx.fsf@javad.com>
+        <0ac3a3fd-4053-e32e-75ed-8829f22c2e1f@gmail.com>
+        <87a7vss6ax.fsf@javad.com>
+        <f1a960dc-cc5c-e7b0-10b6-39e5516655b3@gmail.com>
+        <ed4d2b30-2dea-740b-6283-973c798f619d@philandanna.no-ip.org>
+        <1298a701-a860-a675-83d7-72f29e14cd2b@talktalk.net>
+        <CA+P7+xpgChuvh_vsPktBkOEhF=MjJh1n_3jD0-n4d67j9kYqzw@mail.gmail.com>
+        <ee809701-a6d8-157d-09cd-cebbf2e949ec@gmail.com>
+        <1580e48a-be44-38dd-79af-8a2a31c5712e@talktalk.net>
+        <nycvar.QRO.7.76.6.1803061812090.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        <754e2735-1288-9a8d-c8bd-ab39cf733812@gmail.com>
+        <nycvar.QRO.7.76.6.1803070810550.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        <2749ce78-8917-c821-6116-0c8d67b5e16e@gmail.com>
+Date:   Wed, 14 Mar 2018 17:24:36 +0300
+In-Reply-To: <2749ce78-8917-c821-6116-0c8d67b5e16e@gmail.com> (Igor
+        Djordjevic's message of "Thu, 8 Mar 2018 16:16:33 +0100")
+Message-ID: <87vadyd9az.fsf@javad.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.223.197.147 with HTTP; Wed, 14 Mar 2018 06:44:02 -0700 (PDT)
-In-Reply-To: <CAN0heSp-Vsvr95zc3J0iokRMJt74pxFH7OsoiR_3gnkMxpAAKw@mail.gmail.com>
-References: <CAL21BmkmXKzdwYHu1pNxuHhaxqei4ekVbutbuv2jmv6=GgcG_A@mail.gmail.com>
- <CAN0heSp-Vsvr95zc3J0iokRMJt74pxFH7OsoiR_3gnkMxpAAKw@mail.gmail.com>
-From:   =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
-        <olyatelezhnaya@gmail.com>
-Date:   Wed, 14 Mar 2018 16:44:02 +0300
-Message-ID: <CAL21BmkgeytOKJ64NRJwhvo4Bk19iOVxxi-sOu-LWdf5rFfurg@mail.gmail.com>
-Subject: Re: [RFC 0/4] ref-filter: remove printing from formatting logic
-To:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-2018-03-13 22:26 GMT+03:00 Martin =C3=85gren <martin.agren@gmail.com>:
-> Hi Olga
->
-> On 13 March 2018 at 11:25, =D0=9E=D0=BB=D1=8F =D0=A2=D0=B5=D0=BB=D0=B5=D0=
-=B6=D0=BD=D0=B0=D1=8F <olyatelezhnaya@gmail.com> wrote:
->> The main idea of the patch is, if you want to format the output by
->> ref-filter, you should have an ability to work with errors by yourself
->> if you want to.
->> So I decided not to touch signature of show_ref_array_item(), but to
->> move all printing (I mean errors) to it. So that we could invoke
->> format_ref_array_item() and be sure that we cold handle errors by
->> ourselves.
->>
->> The patch is not finished, but I decided to show it to you. There are
->> still many places where we could die in the middle of formatting
->> process. But, if you like the general idea, I will finish and re-send
->> it.
->>
->> Another question is about verify_ref_format(). Do we need to allow its
->> users also to manage errors by themselves? I left the old scenario,
->> printing everything in verify_ref_format() and die. If you have better
->> ideas, please share them.
->
-> I think it is a good idea to stop die-ing in "libgit". This seems like a
-> good way of achieving that, or isolating the issue. Do you have any
-> particular use-case for this, i.e., are you setting up the stage for a
-> patch "5" where you add a new user of one of these?
+Igor Djordjevic <igor.d.djordjevic@gmail.com> writes:
 
-Yes, I want to reuse formatting part in cat-file command. In cat-file
-sometimes we have an error but we want to continue our work and check
-all other sha1s. But, anyway, I find these changes useful not only for
-cat-file.
-
+> Hi Dscho,
 >
-> I do wonder whether a helper function to call strbuf_addstr() and return
-> -1 would be a good idea though. I mentioned it in patch 2, then with
-> patches 3 and 4, it started to seem like a reasonably good idea. It
-> would be a shame if this sort of "boilerplate" for handling errors could
-> have an impact on code clarity / obviousness.
+> On 07/03/2018 08:26, Johannes Schindelin wrote:
 
-I am also not sure if the code will be intuitive enough.
+[...]
 
+>> Second side note: if we can fast-forward, currently we prefer that, and I
+>> think we should keep that behavior with -R, too.
 >
-> Another issue is whether passing NULL for an error-strbuf should be a
-> way of saying "I don't care; die() so I do not have to". Well, right now
-> I guess passing NULL would indeed terminate the program. ;-) Such a
-> construct might be another reason for providing error_strbuf_addstr()...
-> Of course, it also means we keep die-ing in libgit..
->
-> I feel I'm just talking out loud. Maybe you find my input useful.
+> I agree.
 
-I do so! Thanks a lot.
-I fixed all that you mentioned, you could find new code here if you want:
-https://github.com/telezhnaya/git/commits/prepare
-I will not re-send it to the mailing list now. I want to finish the
-patch at first, there are still some die() calls.
-If anyone has other thoughts or ideas - please share them.
+I'm admittedly somewhat lost in the discussion, but are you talking
+fast-forward on _rebasing_ existing merge? Where would it go in any of
+the suggested algorithms of rebasing and why?
 
->
-> Martin
+I readily see how it can break merges. E.g., any "git merge --ff-only
+--no-ff" merge will magically disappear. So, even if somehow supported,
+fast-forward should not be performed by default during _rebasing_ of a
+merge.
+
+>> If the user wants to force a new merge, they simply remove that -R
+>> flag.
+
+Alternatively, they'd replace 'pick' with 'merge', as they already do
+for other actions. "A plurality is not to be posited without necessity".
+
+Please, _please_, don't use 'merge' command to 'pick' merge commits!
+It's utterly confusing!
+
+Thinking about it I've got an idea that what we actually need is
+--no-flatten flag that, when used alone, will just tell "git rebase" to
+stop flattening history, and which will be implicitly imposed by
+--recreate-merges (and --preserve-merges).
+
+Then the only thing the --recreate-merges will tune is to put 'merge'
+directives into the todo list for merge commits, exactly according to
+what its name suggests, while the default behavior will be to put 'pick'
+with suitable syntax into the todo. And arguments to the
+--recreate-merge will specify additional options for the 'merge'
+directive, obviously.
+
+-- Sergey
