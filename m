@@ -7,66 +7,61 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 600751F404
-	for <e@80x24.org>; Wed, 14 Mar 2018 16:08:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E7A571F404
+	for <e@80x24.org>; Wed, 14 Mar 2018 16:19:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751781AbeCNQIC (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Mar 2018 12:08:02 -0400
-Received: from mail-wm0-f53.google.com ([74.125.82.53]:51208 "EHLO
-        mail-wm0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751750AbeCNQIB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Mar 2018 12:08:01 -0400
-Received: by mail-wm0-f53.google.com with SMTP id h21so5099068wmd.1
-        for <git@vger.kernel.org>; Wed, 14 Mar 2018 09:08:00 -0700 (PDT)
+        id S1751755AbeCNQTB (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Mar 2018 12:19:01 -0400
+Received: from mail-wm0-f47.google.com ([74.125.82.47]:53853 "EHLO
+        mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751350AbeCNQTA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Mar 2018 12:19:00 -0400
+Received: by mail-wm0-f47.google.com with SMTP id e194so5157196wmd.3
+        for <git@vger.kernel.org>; Wed, 14 Mar 2018 09:19:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-transfer-encoding;
-        bh=KY03xd8FMNSLZZXUxJKEQU3r1mPEQqZN6nqeuf4mnc8=;
-        b=baMnRIuAGnAcwGPI43Q09gpNoIfHSCXyJj04T+ch0LJe6X4XoIS7eRPfyFeFOWOZr7
-         NX3rYGVFDbLCXdgLuCuBUvaoxr4ZWOAsIMhGU8/IpxaeN6NrJpsncAxaEoK85foDP/3q
-         jhe7OEqNdOx2eh3DO5ydIWmzJjG3y/z+BhoUTKtsF95X3zGIjYbbEdbrOjzAk38Hhtdd
-         oBS03nNTTQjEsO/zXVEeS/DXLM3lSjs6dl3ZAP9rxEZ+qWKgV4W29DPWjYYlhRknymtK
-         XoXypbTwVzKO71sS269XXx7YlKqE+xfx/4f6oHWuGk2+ejLJRwPsfD0m1SiAxafnvl/e
-         buuA==
+        bh=8QFEn6PGZBnWdayP5t7awB9F6KFKTQelCUJ69vI35nE=;
+        b=ctCNwSJdn/j88CuXHusWFw5vbWbhApwmIV2/3atP4fZ5jEmBrPdSTdZJskMTQDHHiG
+         Y/9e2Anw3rgvdtM6WgVkolIQSbjZv8SPxFmQcDKRJtZ3OHGkHa4aj0Dek2kL2yg+28Gc
+         DmBkzjsupdc1Ej5KqBFm5MkXL13oZm3lw6n8MMnxnVQOHW006XdHUyOZRLYVf5+s4r0m
+         DhngB+VcUnydxt50ZPLADoJuiNNtVyR8VgquLYBGwkdWjvovm+O/NT9G3zHcaRe07mKx
+         gwxSxQ17LXcj/iJAPzT+itq3K2QEWg7DrVRIgLtSi+j93A4ndAzqa/HN9VzMqgldMcoY
+         QM4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version
          :content-transfer-encoding;
-        bh=KY03xd8FMNSLZZXUxJKEQU3r1mPEQqZN6nqeuf4mnc8=;
-        b=d1hCWGCppPA/RNieXlwNrOuBYz1NwK2nJ/+pcCAQrNXjuOwB+h4qBfD/SNy0XN4lC+
-         ZIvCR+ULWX0R1LU5skFHkgDRuSbMtyQb1dOJJ2TXuORv6M4n7ONQrtBlOqvEMyXi5BOc
-         MkM7KUFwdRD2XvFYkf4CLB1uBq3QZm08ymeIwwvoB98gDB03jySIuHkD3vWShZdac/B9
-         3BHQxNNrycXmnmNKfFFxa6dkQ/km2onvMrBDL5UXQztBTq/s1F1WurfLu/Ph11LBaoBI
-         fDs6ogDRqqRdWJS9sa9Nd/fm3460ULhPkM3jNyVY8vOJ/kx+0H4QQ1xUzXrA1DzFDcYZ
-         IUJw==
-X-Gm-Message-State: AElRT7G/0BOJyZ2dtsJzhUGWxteeGmJ13W9dx0i/q/SBchnTWu253nWk
-        EO9hZ9/lj42gq5YnwQs9FOk=
-X-Google-Smtp-Source: AG47ELvH2qGvA0olD0/i47wR25nT7tYqH/PexoMqeXUPcm+tJhrbuybdfMKqgrSqyvyE2EvATXmlWw==
-X-Received: by 10.28.24.207 with SMTP id 198mr2338644wmy.113.1521043679516;
-        Wed, 14 Mar 2018 09:07:59 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id f23sm3564908wra.51.2018.03.14.09.07.58
+        bh=8QFEn6PGZBnWdayP5t7awB9F6KFKTQelCUJ69vI35nE=;
+        b=CGijMQPTttghFmkYfJECVWY9RBkqJukD7DctGBGBEPdi0OpDGRQLMR2+iZO5KXZmkp
+         UgfZiYxfGVufWYl2cFjP5LGxyTryKOj1o0L89mqUOhuhUmYnhgNVK9iQtg60u5E8m9QH
+         tUscozyGPDSpO1lNArfUnr0eWCCWYYyNK3ZKF4U3b1+a2SYhAgLKGec/Zp4eKT4jKmdf
+         Ry/mfpWNStsLgCdtWLfD3qssfcAKjztlJkiirFidoraMfnGDwhZDwr6PgUsmaoEdSzdG
+         BXLRul7rkKwAB2yosCCxonZ6Tb0AMPDQ4rgHjORi4DHFW14t8EL0YviMTY4weXFrTn8E
+         6/5g==
+X-Gm-Message-State: AElRT7GhQ+iEyFG/nTgaA6AS9S8Dlt8nuOUDFw/mVkmNdM9o7d96jAf7
+        YPAkEPyNAJlAcAHdvSVaINU=
+X-Google-Smtp-Source: AG47ELsJWvegtREuEfWfwxBDUGqeAb7vumXnRUmJCGWmm2tnXOTF8OqYmUpnJG7qqJ4638XxwLvUuA==
+X-Received: by 10.28.124.20 with SMTP id x20mr2054129wmc.62.1521044339024;
+        Wed, 14 Mar 2018 09:18:59 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id b7sm1359077wmg.41.2018.03.14.09.18.57
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 14 Mar 2018 09:07:58 -0700 (PDT)
+        Wed, 14 Mar 2018 09:18:57 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Daniel Jacques <dnj@google.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org
-Subject: Re: Why don't we symlink libexec/git-core/* to bin/git?
-References: <xmqqtvts22za.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1803071333590.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <871sguorb5.fsf@evledraar.gmail.com>
-        <CAD1RUU_EuLSo5fPjZe7v3882Tkx2Dymxn619smS-wuoejKyG+w@mail.gmail.com>
-        <87y3iwp2z0.fsf@evledraar.gmail.com>
-        <87woyfdkoi.fsf@evledraar.gmail.com>
-Date:   Wed, 14 Mar 2018 09:07:58 -0700
-In-Reply-To: <87woyfdkoi.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Wed, 14 Mar 2018 11:18:53 +0100")
-Message-ID: <xmqq37121vz5.fsf@gitster-ct.c.googlers.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     avarab@gmail.com, e@80x24.org, git@vger.kernel.org, peff@peff.net
+Subject: Re: [PATCH/RFC v3 08/12] pack-objects: refer to delta objects by index instead of pointer
+References: <20180303024706.31465-1-pclouds@gmail.com>
+        <20180308114232.10508-1-pclouds@gmail.com>
+        <20180308114232.10508-9-pclouds@gmail.com>
+Date:   Wed, 14 Mar 2018 09:18:57 -0700
+In-Reply-To: <20180308114232.10508-9-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
+ =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
+        Duy"'s message of "Thu, 8 Mar 2018 18:42:28 +0700")
+Message-ID: <xmqqy3iuzl3i.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -76,28 +71,25 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
 
-> Is the only reason we're still installing these binaries like git-add in
-> libexec for compatibility with some old installation where that was
-> added to the $PATH, shouldn't we (and I can write this patch) also have
-> a toggle for "I want the modern install method" which would not install
-> any of these binaries like git-add at all?
->
-> Then the libexec/ dir would only contain things that we really do need
-> the bin/git to dispatch to, like git-svn, git-bisect etc.
+> Notice that packing_data::nr_objects is uint32_t, we could only handle
+> maximum 4G objects and can address all of them with an uint32_t. If we
+> use a pointer here, we waste 4 bytes on 64 bit architecture.
 
-Removing them by default was proposed and failed; see this thread
-for example:
+Some things are left unsaid or left unclear and make readers stutter
+a bit while reading this paragraph.  We can address them with
+uint32_t only because we happen to have a linear array of all
+objects involved already, i.e. the pack->objects[] array.  The
+readers are forced to rephrase the above in their mind
 
-  https://public-inbox.org/git/7vr68b8q9p.fsf@gitster.siamese.dyndns.org/#t
+	... and each of them can be identified with an uint32_t.
+	Because we have all of these objects in pack->objects[], we
+	can replace the "delta" field in each object entry that
+	points at its delta base object with uint32_t index into
+	this array to save memory (on 64-bit arch, 8-byte pointer
+	gets shrunk to 4-byte uint).
 
-If a packager ships Git without these copies in libexec, that is not
-the Git that promised users that prepending the $(git --exec-path)
-aka GIT_EXEC_PATH to your $PATH is a valid way to preserve their
-older script.
+or something like that before understanding why this is a valid
+memory footprint optimization.
 
-I do not think anybody actually minds to have an option to omit them
-as long as the users understand the consequence (i.e. old promises
-broken) and know they are not affected (i.e. they do not have
-scripts that rely on the old promise).
