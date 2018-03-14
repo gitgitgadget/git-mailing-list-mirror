@@ -7,52 +7,53 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7F4E41F404
-	for <e@80x24.org>; Wed, 14 Mar 2018 18:33:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AFD011F404
+	for <e@80x24.org>; Wed, 14 Mar 2018 18:33:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752375AbeCNSdi (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Mar 2018 14:33:38 -0400
-Received: from mail-yw0-f201.google.com ([209.85.161.201]:36450 "EHLO
-        mail-yw0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751999AbeCNSdh (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Mar 2018 14:33:37 -0400
-Received: by mail-yw0-f201.google.com with SMTP id x67so4848400ywg.3
-        for <git@vger.kernel.org>; Wed, 14 Mar 2018 11:33:36 -0700 (PDT)
+        id S1752524AbeCNSdQ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Mar 2018 14:33:16 -0400
+Received: from mail-yw0-f202.google.com ([209.85.161.202]:38935 "EHLO
+        mail-yw0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752218AbeCNSdL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Mar 2018 14:33:11 -0400
+Received: by mail-yw0-f202.google.com with SMTP id t9so4777315ywg.6
+        for <git@vger.kernel.org>; Wed, 14 Mar 2018 11:33:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=r9gRMCkQ5hU5WTI0p6N7Td4ELETvxACFIky1F58TpfM=;
-        b=u09Bhb1vaVKW0EoKVXz+VGzgW4AqSDN4rhlv9JB8FrNFzeWtLQHPeLU30nmTdiYhnx
-         7Hf21BAkEsy6uIFhMTkyYSZcq1PPusJL9ofwquj3qQxicIz7hVdlTNMLDyIeDReFaad4
-         jmsHnmYcIy2StG7Z2/MmD3VwB7gtnHLsBXAERhbLibel9H64PyPc0IDQxM70zwyw3aqS
-         3jQ3q1wkCm2R4ZBTi4kVXwyNG+N0GPaAUCKFl7a5OwGVtCNAvRFjJWXCjyE6Smx/Xqar
-         MJbTFOs0I+EkhphnlzXQ52b5ftxDAG8xfpgjhOxOK2ZCSj9N6VOPhntt9GS6+2VsFVjO
-         IDFw==
+        bh=BT6Jhkn3j1st8CU/XrNxczI78VjFBwPbrgCC+KjlmIc=;
+        b=EHGlYrIn/cKYrd3wHyZqsvV2HSdKK0sxcuQSUuQMtQpLozfR8JcKUpqu+euG1OpfXM
+         JnpERzB2kUcrBY8qkQ4xDA06XRTGzPmknTtoRwcM6vFRs5YxJbRRbYLlrejTzCDj21Ik
+         3crcF6oMyXq03HgxL1kBRXN4QUSVxgJ1iOfH9h0hDbfVrKtirJ3s/qqXDa1K0PJsAz5u
+         lVHNDVf+Sq/DFEbQdi5JP1N4nCFhaAei38jjElh5GW7MoNEfJyWDSbsfQDEbxKXsZDaH
+         HHhAvPHx0p1HyqtdOXyVZ5gUkM4EkO/kg4ydh3xUyAJSSfPwkkz1VVo1Ygs6g7AS/XLP
+         98cA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=r9gRMCkQ5hU5WTI0p6N7Td4ELETvxACFIky1F58TpfM=;
-        b=XwnCMa41fpDqdQUaZ6YUEj+QL0i9hIf2YnyhMkFyXZ8x0KwOxrGvrfcdtI5OxUxwW0
-         FdRoALUN9B8FhC1kIaJbs6w+GHkBhvwrQ7aErAoj/beqlBqowQc2RXatWyjHS5I9UKpl
-         kHu6YoNTmSj8Xr96JRFge3N/+RIiKzlanf0qKAvzmBNxK9sgCStX3dXpqSilFgWu8Z7G
-         /MMTCHxwCU6panfePeKpKq2r1Ep1jCl8gWQb0uwsH2IZ4SWvIU/qRIktv+NzejYLYeho
-         e7cFrs1Fc0sG2u1l7LFoWa9AfUE3hHaqDrzb5lJkacFGy/DFEPNfXq2GNTb0kJC58vUw
-         UIBA==
-X-Gm-Message-State: AElRT7Es+OrXcw+Tr7o21KhqH3Eu9zH1mEoTJKP7dQd8sl5BrKsffXeO
-        10O+T8TduI0BJ+wJvwoclyL1hIYvicKNvJR/o5WISw0If1qPEwYluxDH+hnoBVpSzmoojJDYQY5
-        ECUT5ktm7fbtbCcioo9o3q4U8VJx07aYk/bpGzClBGRpnxKM4q1PQsLJfEw==
-X-Google-Smtp-Source: AG47ELs0w5nNLhiO3fvh8DU9tdi6tlQF3Q2h/rYD8CdMAbBNfBJQJwTJflwt6I2J1woHNDqkwseRYewOs6M=
+        bh=BT6Jhkn3j1st8CU/XrNxczI78VjFBwPbrgCC+KjlmIc=;
+        b=ItFj3r5mKJFwe7/teubhY5WemS/DFRRY10WJyjIRDKlIO/UcVMBiNL+GVTj68p/qkG
+         h6ShstQVIWjqeeSufXn1Wck+thVpXlbSMW3aZfEXS6v/O4UBpJDu3iCBQT7ws7l8hXk9
+         YYr/HRh0ku7p6BJ+lzRzL2Slv1VbSG46kX/MsuyVxW6fW8w0Pto4wEJIJsxciU3NywYy
+         dCDYNcgPM7rM3r/tibotBgLmGS7TQQJgLu37Q+eiN815kzKiMTmGKZTnnz0UwMfZt7f1
+         c54tIEUhK/ec3PfJN+pffcoZTuotyg0PRlO0i1mH5ULJ7SfWLULiiPlLgPqxyJ3U6/Z2
+         VrCA==
+X-Gm-Message-State: AElRT7FPUiZRLgTuhzqTnZYPw6r4AD5S2fXLTN1YAunTUPxxli9CCwem
+        sWiKIdizN2r1FCmAuvGctLP/wjUfuDQw8fQy1PyEiZc0s1ytymk+rRJ0xQQT2HxojNWlUJfOm+0
+        78/e3GH3kgyhimLF2SzAg5fnBjnfsKx6Uq624HTUz9nXWvIL0f9u+CJDzCQ==
+X-Google-Smtp-Source: AG47ELtD4BiaKNfS+8saua2CsqRiNFKRH/8jdpbD3jF5DDk3b97uAUxBztbwLMY1BMaJ3R0zG8HjhEbiLsY=
 MIME-Version: 1.0
-X-Received: by 10.13.215.137 with SMTP id z131mr2758635ywd.79.1521052416317;
- Wed, 14 Mar 2018 11:33:36 -0700 (PDT)
-Date:   Wed, 14 Mar 2018 11:32:11 -0700
+X-Received: by 10.129.145.201 with SMTP id i192mr2695260ywg.234.1521052390896;
+ Wed, 14 Mar 2018 11:33:10 -0700 (PDT)
+Date:   Wed, 14 Mar 2018 11:32:00 -0700
 In-Reply-To: <20180314183213.223440-1-bmwill@google.com>
-Message-Id: <20180314183213.223440-35-bmwill@google.com>
+Message-Id: <20180314183213.223440-24-bmwill@google.com>
 References: <20180314183213.223440-1-bmwill@google.com>
 X-Mailer: git-send-email 2.16.2.804.g6dcf76e118-goog
-Subject: [PATCH v5 34/35] remote-curl: implement stateless-connect command
+Subject: [PATCH v5 23/35] connect: refactor git_connect to only get the
+ protocol version once
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     git@jeffhostetler.com, gitster@pobox.com, jrnieder@gmail.com,
@@ -65,310 +66,123 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Teach remote-curl the 'stateless-connect' command which is used to
-establish a stateless connection with servers which support protocol
-version 2.  This allows remote-curl to act as a proxy, allowing the git
-client to communicate natively with a remote end, simply using
-remote-curl as a pass through to convert requests to http.
+Instead of having each builtin transport asking for which protocol
+version the user has configured in 'protocol.version' by calling
+`get_protocol_version_config()` multiple times, factor this logic out
+so there is just a single call at the beginning of `git_connect()`.
+
+This will be helpful in the next patch where we can have centralized
+logic which determines if we need to request a different protocol
+version than what the user has configured.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- remote-curl.c          | 207 ++++++++++++++++++++++++++++++++++++++++-
- t/t5702-protocol-v2.sh |  45 +++++++++
- 2 files changed, 251 insertions(+), 1 deletion(-)
+ connect.c | 27 +++++++++++++++------------
+ 1 file changed, 15 insertions(+), 12 deletions(-)
 
-diff --git a/remote-curl.c b/remote-curl.c
-index 66a53f74bb..87f5b77b29 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -188,7 +188,12 @@ static struct ref *parse_git_refs(struct discovery *heads, int for_push)
- 	heads->version = discover_version(&reader);
- 	switch (heads->version) {
- 	case protocol_v2:
--		die("support for protocol v2 not implemented yet");
-+		/*
-+		 * Do nothing.  This isn't a list of refs but rather a
-+		 * capability advertisement.  Client would have run
-+		 * 'stateless-connect' so we'll dump this capability listing
-+		 * and let them request the refs themselves.
-+		 */
- 		break;
- 	case protocol_v1:
- 	case protocol_v0:
-@@ -1085,6 +1090,202 @@ static void parse_push(struct strbuf *buf)
- 	free(specs);
+diff --git a/connect.c b/connect.c
+index 5bb9d34844..a57a060dc4 100644
+--- a/connect.c
++++ b/connect.c
+@@ -1035,6 +1035,7 @@ static enum ssh_variant determine_ssh_variant(const char *ssh_command,
+  */
+ static struct child_process *git_connect_git(int fd[2], char *hostandport,
+ 					     const char *path, const char *prog,
++					     enum protocol_version version,
+ 					     int flags)
+ {
+ 	struct child_process *conn;
+@@ -1073,10 +1074,10 @@ static struct child_process *git_connect_git(int fd[2], char *hostandport,
+ 		    target_host, 0);
+ 
+ 	/* If using a new version put that stuff here after a second null byte */
+-	if (get_protocol_version_config() > 0) {
++	if (version > 0) {
+ 		strbuf_addch(&request, '\0');
+ 		strbuf_addf(&request, "version=%d%c",
+-			    get_protocol_version_config(), '\0');
++			    version, '\0');
+ 	}
+ 
+ 	packet_write(fd[1], request.buf, request.len);
+@@ -1092,14 +1093,14 @@ static struct child_process *git_connect_git(int fd[2], char *hostandport,
+  */
+ static void push_ssh_options(struct argv_array *args, struct argv_array *env,
+ 			     enum ssh_variant variant, const char *port,
+-			     int flags)
++			     enum protocol_version version, int flags)
+ {
+ 	if (variant == VARIANT_SSH &&
+-	    get_protocol_version_config() > 0) {
++	    version > 0) {
+ 		argv_array_push(args, "-o");
+ 		argv_array_push(args, "SendEnv=" GIT_PROTOCOL_ENVIRONMENT);
+ 		argv_array_pushf(env, GIT_PROTOCOL_ENVIRONMENT "=version=%d",
+-				 get_protocol_version_config());
++				 version);
+ 	}
+ 
+ 	if (flags & CONNECT_IPV4) {
+@@ -1152,7 +1153,8 @@ static void push_ssh_options(struct argv_array *args, struct argv_array *env,
+ 
+ /* Prepare a child_process for use by Git's SSH-tunneled transport. */
+ static void fill_ssh_args(struct child_process *conn, const char *ssh_host,
+-			  const char *port, int flags)
++			  const char *port, enum protocol_version version,
++			  int flags)
+ {
+ 	const char *ssh;
+ 	enum ssh_variant variant;
+@@ -1186,14 +1188,14 @@ static void fill_ssh_args(struct child_process *conn, const char *ssh_host,
+ 		argv_array_push(&detect.args, ssh);
+ 		argv_array_push(&detect.args, "-G");
+ 		push_ssh_options(&detect.args, &detect.env_array,
+-				 VARIANT_SSH, port, flags);
++				 VARIANT_SSH, port, version, flags);
+ 		argv_array_push(&detect.args, ssh_host);
+ 
+ 		variant = run_command(&detect) ? VARIANT_SIMPLE : VARIANT_SSH;
+ 	}
+ 
+ 	argv_array_push(&conn->args, ssh);
+-	push_ssh_options(&conn->args, &conn->env_array, variant, port, flags);
++	push_ssh_options(&conn->args, &conn->env_array, variant, port, version, flags);
+ 	argv_array_push(&conn->args, ssh_host);
  }
  
-+/*
-+ * Used to represent the state of a connection to an HTTP server when
-+ * communicating using git's wire-protocol version 2.
-+ */
-+struct proxy_state {
-+	char *service_name;
-+	char *service_url;
-+	struct curl_slist *headers;
-+	struct strbuf request_buffer;
-+	int in;
-+	int out;
-+	struct packet_reader reader;
-+	size_t pos;
-+	int seen_flush;
-+};
-+
-+static void proxy_state_init(struct proxy_state *p, const char *service_name,
-+			     enum protocol_version version)
-+{
-+	struct strbuf buf = STRBUF_INIT;
-+
-+	memset(p, 0, sizeof(*p));
-+	p->service_name = xstrdup(service_name);
-+
-+	p->in = 0;
-+	p->out = 1;
-+	strbuf_init(&p->request_buffer, 0);
-+
-+	strbuf_addf(&buf, "%s%s", url.buf, p->service_name);
-+	p->service_url = strbuf_detach(&buf, NULL);
-+
-+	p->headers = http_copy_default_headers();
-+
-+	strbuf_addf(&buf, "Content-Type: application/x-%s-request", p->service_name);
-+	p->headers = curl_slist_append(p->headers, buf.buf);
-+	strbuf_reset(&buf);
-+
-+	strbuf_addf(&buf, "Accept: application/x-%s-result", p->service_name);
-+	p->headers = curl_slist_append(p->headers, buf.buf);
-+	strbuf_reset(&buf);
-+
-+	p->headers = curl_slist_append(p->headers, "Transfer-Encoding: chunked");
-+
-+	/* Add the Git-Protocol header */
-+	if (get_protocol_http_header(version, &buf))
-+		p->headers = curl_slist_append(p->headers, buf.buf);
-+
-+	packet_reader_init(&p->reader, p->in, NULL, 0,
-+			   PACKET_READ_GENTLE_ON_EOF);
-+
-+	strbuf_release(&buf);
-+}
-+
-+static void proxy_state_clear(struct proxy_state *p)
-+{
-+	free(p->service_name);
-+	free(p->service_url);
-+	curl_slist_free_all(p->headers);
-+	strbuf_release(&p->request_buffer);
-+}
-+
-+/*
-+ * CURLOPT_READFUNCTION callback function.
-+ * Attempts to copy over a single packet-line at a time into the
-+ * curl provided buffer.
-+ */
-+static size_t proxy_in(char *buffer, size_t eltsize,
-+		       size_t nmemb, void *userdata)
-+{
-+	size_t max;
-+	struct proxy_state *p = userdata;
-+	size_t avail = p->request_buffer.len - p->pos;
-+
-+
-+	if (eltsize != 1)
-+		BUG("curl read callback called with size = %"PRIuMAX" != 1",
-+		    (uintmax_t)eltsize);
-+	max = nmemb;
-+
-+	if (!avail) {
-+		if (p->seen_flush) {
-+			p->seen_flush = 0;
-+			return 0;
-+		}
-+
-+		strbuf_reset(&p->request_buffer);
-+		switch (packet_reader_read(&p->reader)) {
-+		case PACKET_READ_EOF:
-+			die("unexpected EOF when reading from parent process");
-+		case PACKET_READ_NORMAL:
-+			packet_buf_write_len(&p->request_buffer, p->reader.line,
-+					     p->reader.pktlen);
-+			break;
-+		case PACKET_READ_DELIM:
-+			packet_buf_delim(&p->request_buffer);
-+			break;
-+		case PACKET_READ_FLUSH:
-+			packet_buf_flush(&p->request_buffer);
-+			p->seen_flush = 1;
-+			break;
-+		}
-+		p->pos = 0;
-+		avail = p->request_buffer.len;
-+	}
-+
-+	if (max < avail)
-+		avail = max;
-+	memcpy(buffer, p->request_buffer.buf + p->pos, avail);
-+	p->pos += avail;
-+	return avail;
-+}
-+
-+static size_t proxy_out(char *buffer, size_t eltsize,
-+			size_t nmemb, void *userdata)
-+{
-+	size_t size;
-+	struct proxy_state *p = userdata;
-+
-+	if (eltsize != 1)
-+		BUG("curl read callback called with size = %"PRIuMAX" != 1",
-+		    (uintmax_t)eltsize);
-+	size = nmemb;
-+
-+	write_or_die(p->out, buffer, size);
-+	return size;
-+}
-+
-+/* Issues a request to the HTTP server configured in `p` */
-+static int proxy_request(struct proxy_state *p)
-+{
-+	struct active_request_slot *slot;
-+
-+	slot = get_active_slot();
-+
-+	curl_easy_setopt(slot->curl, CURLOPT_NOBODY, 0);
-+	curl_easy_setopt(slot->curl, CURLOPT_POST, 1);
-+	curl_easy_setopt(slot->curl, CURLOPT_URL, p->service_url);
-+	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, p->headers);
-+
-+	/* Setup function to read request from client */
-+	curl_easy_setopt(slot->curl, CURLOPT_READFUNCTION, proxy_in);
-+	curl_easy_setopt(slot->curl, CURLOPT_READDATA, p);
-+
-+	/* Setup function to write server response to client */
-+	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, proxy_out);
-+	curl_easy_setopt(slot->curl, CURLOPT_WRITEDATA, p);
-+
-+	if (run_slot(slot, NULL) != HTTP_OK)
-+		return -1;
-+
-+	return 0;
-+}
-+
-+static int stateless_connect(const char *service_name)
-+{
-+	struct discovery *discover;
-+	struct proxy_state p;
-+
-+	/*
-+	 * Run the info/refs request and see if the server supports protocol
-+	 * v2.  If and only if the server supports v2 can we successfully
-+	 * establish a stateless connection, otherwise we need to tell the
-+	 * client to fallback to using other transport helper functions to
-+	 * complete their request.
-+	 */
-+	discover = discover_refs(service_name, 0);
-+	if (discover->version != protocol_v2) {
-+		printf("fallback\n");
-+		fflush(stdout);
-+		return -1;
-+	} else {
-+		/* Stateless Connection established */
-+		printf("\n");
-+		fflush(stdout);
-+	}
-+
-+	proxy_state_init(&p, service_name, discover->version);
-+
-+	/*
-+	 * Dump the capability listing that we got from the server earlier
-+	 * during the info/refs request.
-+	 */
-+	write_or_die(p.out, discover->buf, discover->len);
-+
-+	/* Peek the next packet line.  Until we see EOF keep sending POSTs */
-+	while (packet_reader_peek(&p.reader) != PACKET_READ_EOF) {
-+		if (proxy_request(&p)) {
-+			/* We would have an err here */
-+			break;
-+		}
-+	}
-+
-+	proxy_state_clear(&p);
-+	return 0;
-+}
-+
- int cmd_main(int argc, const char **argv)
- {
- 	struct strbuf buf = STRBUF_INIT;
-@@ -1153,12 +1354,16 @@ int cmd_main(int argc, const char **argv)
- 			fflush(stdout);
+@@ -1214,6 +1216,7 @@ struct child_process *git_connect(int fd[2], const char *url,
+ 	char *hostandport, *path;
+ 	struct child_process *conn;
+ 	enum protocol protocol;
++	enum protocol_version version = get_protocol_version_config();
  
- 		} else if (!strcmp(buf.buf, "capabilities")) {
-+			printf("stateless-connect\n");
- 			printf("fetch\n");
- 			printf("option\n");
- 			printf("push\n");
- 			printf("check-connectivity\n");
- 			printf("\n");
- 			fflush(stdout);
-+		} else if (skip_prefix(buf.buf, "stateless-connect ", &arg)) {
-+			if (!stateless_connect(arg))
-+				break;
+ 	/* Without this we cannot rely on waitpid() to tell
+ 	 * what happened to our children.
+@@ -1228,7 +1231,7 @@ struct child_process *git_connect(int fd[2], const char *url,
+ 		printf("Diag: path=%s\n", path ? path : "NULL");
+ 		conn = NULL;
+ 	} else if (protocol == PROTO_GIT) {
+-		conn = git_connect_git(fd, hostandport, path, prog, flags);
++		conn = git_connect_git(fd, hostandport, path, prog, version, flags);
+ 	} else {
+ 		struct strbuf cmd = STRBUF_INIT;
+ 		const char *const *var;
+@@ -1271,12 +1274,12 @@ struct child_process *git_connect(int fd[2], const char *url,
+ 				strbuf_release(&cmd);
+ 				return NULL;
+ 			}
+-			fill_ssh_args(conn, ssh_host, port, flags);
++			fill_ssh_args(conn, ssh_host, port, version, flags);
  		} else {
- 			error("remote-curl: unknown command '%s' from git", buf.buf);
- 			return 1;
-diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
-index e3a7c09d4a..124063c2c4 100755
---- a/t/t5702-protocol-v2.sh
-+++ b/t/t5702-protocol-v2.sh
-@@ -201,4 +201,49 @@ test_expect_success 'ref advertisment is filtered during fetch using protocol v2
- 	! grep "refs/tags/three" log
- '
- 
-+# Test protocol v2 with 'http://' transport
-+#
-+. "$TEST_DIRECTORY"/lib-httpd.sh
-+start_httpd
-+
-+test_expect_success 'create repo to be served by http:// transport' '
-+	git init "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
-+	git -C "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" config http.receivepack true &&
-+	test_commit -C "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" one
-+'
-+
-+test_expect_success 'clone with http:// using protocol v2' '
-+	test_when_finished "rm -f log" &&
-+
-+	GIT_TRACE_PACKET="$(pwd)/log" GIT_TRACE_CURL="$(pwd)/log" git -c protocol.version=2 \
-+		clone "$HTTPD_URL/smart/http_parent" http_child &&
-+
-+	git -C http_child log -1 --format=%s >actual &&
-+	git -C "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" log -1 --format=%s >expect &&
-+	test_cmp expect actual &&
-+
-+	# Client requested to use protocol v2
-+	grep "Git-Protocol: version=2" log &&
-+	# Server responded using protocol v2
-+	grep "git< version 2" log
-+'
-+
-+test_expect_success 'fetch with http:// using protocol v2' '
-+	test_when_finished "rm -f log" &&
-+
-+	test_commit -C "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" two &&
-+
-+	GIT_TRACE_PACKET="$(pwd)/log" git -C http_child -c protocol.version=2 \
-+		fetch &&
-+
-+	git -C http_child log -1 --format=%s origin/master >actual &&
-+	git -C "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" log -1 --format=%s >expect &&
-+	test_cmp expect actual &&
-+
-+	# Server responded using protocol v2
-+	grep "git< version 2" log
-+'
-+
-+stop_httpd
-+
- test_done
+ 			transport_check_allowed("file");
+-			if (get_protocol_version_config() > 0) {
++			if (version > 0) {
+ 				argv_array_pushf(&conn->env_array, GIT_PROTOCOL_ENVIRONMENT "=version=%d",
+-						 get_protocol_version_config());
++						 version);
+ 			}
+ 		}
+ 		argv_array_push(&conn->args, cmd.buf);
 -- 
 2.16.2.804.g6dcf76e118-goog
 
