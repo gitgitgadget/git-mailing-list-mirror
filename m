@@ -7,119 +7,130 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 88B121F404
-	for <e@80x24.org>; Wed, 14 Mar 2018 21:35:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2B8071F404
+	for <e@80x24.org>; Wed, 14 Mar 2018 21:43:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751624AbeCNVe7 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Mar 2018 17:34:59 -0400
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:43860 "EHLO
-        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751168AbeCNVe6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Mar 2018 17:34:58 -0400
-Received: by mail-wr0-f193.google.com with SMTP id o1so6204048wro.10
-        for <git@vger.kernel.org>; Wed, 14 Mar 2018 14:34:58 -0700 (PDT)
+        id S1751414AbeCNVnh (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Mar 2018 17:43:37 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:51743 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750779AbeCNVng (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Mar 2018 17:43:36 -0400
+Received: by mail-wm0-f67.google.com with SMTP id h21so6793276wmd.1
+        for <git@vger.kernel.org>; Wed, 14 Mar 2018 14:43:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=lAYfzYFwl4A5ejscKUhsKc/elzewVRq+jIBhqTohhIE=;
-        b=qCGRcTrk9XZ8bgA1U88mXKZr8093ugAr6QPHZGlFSbcfRQonqrsJmeo483P+oYZb9M
-         ptFSGqI3BZDx6XCc/ViexDzT8EOAKjACvp/DN47tZuePunEk2BQkMxqLyfDmhozrYxw+
-         RJX2yXd5u+YZecBGb6P5ZhrCpMC98LAxZ5wEL/cQ5u4q0l5aVDsLqmyab3q4hE4AlQsk
-         B2PbOW+aeAMXDg2fHMZDTROR8idTbGqw83ipNHTPueOK9N0XruikWpIztvCj28m7HbH6
-         70XXtMEZNpPbz66Z4CoCJBF9H3cOyfo8cIuyTvNYi5+TxQzXVHp9qYKEHoDbf6k/rHUV
-         poIQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=BIO353On3MbGDRiwJweSx3Hchm38l8RzO20xVvAFsA4=;
+        b=M5H5tOX4ouMnoeLcd+U4a1G6Ol0lrBioxdycm6zRF6r0B3ufhS/8TsT3SW0S6njxe5
+         xZgBqzNUpnwKnyVzt+JLRvl7AG/RRoxMdO/3vl04SjRNuZNwcYmO3w+SyYSBWFQmiuhV
+         iF6UQ5bP2SpH7ymrj2ZvX3u5xT4VqJaYfUYNWd+8aoroec+q4DhZ5dKRhmz8T+BTLIAM
+         8uu42erJeCJDzPHm5unh4+EGhF3GH9m/zv5A6W7mwtu0cfP69Bwy+R3hx+I+5KfsWirt
+         WX7SJav8GgJs1zaS4HdNkIXxZTUm9N8DtvBUzZodbCH+JwIlgMLTUXZvlSqg4kvSuiSd
+         dy2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=lAYfzYFwl4A5ejscKUhsKc/elzewVRq+jIBhqTohhIE=;
-        b=tjgkMNCK/leUH4oUWAKNPt0eHxO84w6ByZYLuJJnfMQL3kDInO/5nXFemH+vd9PPP1
-         pZYJkTBNqCWIkIr3yjBstcZMrw794HcCIO8Hn172yp6miZeIM0YX2DMO4CGLQBe/3/2y
-         XP8+v8AUph7y2pTSSl5/Gf7uJccwQmKtJNdnQlL8iFOKxf1UTy1nBHh0Ef/NBor/Sl4U
-         m/+ryuV9tYDfuvPBXZUnKdc96aP+AfjxOW1ykp+8bxSYQUS/t0PY5pjHkmpdbQn0lozr
-         pgqnbhQN1LzOzKl+MEKEY0wwvRqKimROYo58fpkym9fjboeW6hyiOtRFwH5wI3v2NlwV
-         r4Yg==
-X-Gm-Message-State: AElRT7FbHUUr7wEWZ/YjXG4mmRGOdnQMaS5OyUoxkxJUa7pbzvdYLzKo
-        3CwAzs9sgLr6Gd2eckz3oMXM0jR4
-X-Google-Smtp-Source: AG47ELvczzBck3XrstA2bi14n2TwWzB2IWzyAtbtUUrQ/xOcWsrC4E4DEd2Y7ki0+yaVwUiRCvOOBw==
-X-Received: by 10.223.182.174 with SMTP id j46mr5246543wre.43.1521063297153;
-        Wed, 14 Mar 2018 14:34:57 -0700 (PDT)
-Received: from localhost.localdomain ([2a02:aa16:5782:c100:c938:fbb7:46f8:2405])
-        by smtp.gmail.com with ESMTPSA id 55sm5049688wrw.87.2018.03.14.14.34.55
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 14 Mar 2018 14:34:56 -0700 (PDT)
-From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
+         :references;
+        bh=BIO353On3MbGDRiwJweSx3Hchm38l8RzO20xVvAFsA4=;
+        b=QaBtXdF7CSeG+Dg5UBue8vdhXpICREV064H5cMaqCoS5Asnywklc6PM9lIy6uSS0pF
+         R/Ls6RAYfWh1m2YwMhMb722nakKTAsHmkM1P+NPBoUOSyrs2TlUja4lIeBwSPXcCbs9K
+         vl09wilUFY3kPcg5GXh42CJtoJxQzokVDA/pbF5BtH1A2IBiMf5LImIsiCIv4BN5Y1nj
+         cDmGz2RqAQ5m7cF1E0p9xXTGUX37+jWVOWUE6G1BbPs13H+D6y0E8Gjl8Ky/0Qrm57il
+         QK4zqQbLSW9kCKkEcgwq639gBKiG47g9VQ+MS9yYoXbzBh8iC2yFsCV7Y5gfMVk9Fl6I
+         CxBA==
+X-Gm-Message-State: AElRT7Em0LuQ6o78QxkjH+WZBkrVDkQRiyfE/bRgCjNWirH4D4LM993g
+        YHGg4unXJU8pCW/xkkPTcpH5+pCR
+X-Google-Smtp-Source: AG47ELs5PybW+RsXaFYHId0EbgWFcRkGTjaTiWSV8T3Qzwa+znnFe6YR8J1M6eAV5DKGmvRNyxyZxA==
+X-Received: by 10.28.191.70 with SMTP id p67mr3134132wmf.17.1521063814326;
+        Wed, 14 Mar 2018 14:43:34 -0700 (PDT)
+Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
+        by smtp.gmail.com with ESMTPSA id i66sm2908884wmd.0.2018.03.14.14.43.33
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 14 Mar 2018 14:43:33 -0700 (PDT)
+From:   Thomas Gummerer <t.gummerer@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 3/3] shortlog: disallow left-over arguments outside repo
-Date:   Wed, 14 Mar 2018 22:34:19 +0100
-Message-Id: <fa32e16aa01a46718c2fba665e8ab2c0c13bbcdf.1521062188.git.martin.agren@gmail.com>
-X-Mailer: git-send-email 2.16.2.246.ga4ee44448f
-In-Reply-To: <cover.1521062188.git.martin.agren@gmail.com>
-References: <cover.1520680894.git.martin.agren@gmail.com> <cover.1521062188.git.martin.agren@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Cc:     Marc Strapetz <marc.strapetz@syntevo.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>
+Subject: [PATCH v2 1/2] stash push: avoid printing errors
+Date:   Wed, 14 Mar 2018 21:46:41 +0000
+Message-Id: <20180314214642.22185-1-t.gummerer@gmail.com>
+X-Mailer: git-send-email 2.16.2.804.g6dcf76e11
+In-Reply-To: <20180310111215.GA14732@hank>
+References: <20180310111215.GA14732@hank>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If we are outside a repo and have any arguments left after
-option-parsing, `setup_revisions()` will try to do its job and
-something like this will happen:
+Currently 'git stash push -u -- <pathspec>' prints the following errors
+if <pathspec> only matches untracked files:
 
-$ git shortlog v2.16.0..
-BUG: environment.c:183: git environment hasn't been setup
-Aborted (core dumped)
+    fatal: pathspec 'untracked' did not match any files
+    error: unrecognized input
 
-The usage is wrong, but we could obviously handle this better. Note that
-commit abe549e179 (shortlog: do not require to run from inside a git
-repository, 2008-03-14) explicitly enabled `git shortlog` to run from
-outside a repo, since we do not need a repo for parsing data from stdin.
+This is because we first clean up the untracked files using 'git clean
+<pathspec>', and then use a command chain involving 'git add -u
+<pathspec>' and 'git apply' to clear the changes to files that are in
+the index and were stashed.
 
-Disallow left-over arguments when run from outside a repo.
+As the <pathspec> only includes untracked files that were already
+removed by 'git clean', the 'git add' call will barf, and so will 'git
+apply', as there are no changes that need to be applied.
 
-Signed-off-by: Martin Ågren <martin.agren@gmail.com>
+Fix this by making sure to only call this command chain if there are
+still files that match <pathspec> after the call to 'git clean'.
+
+Reported-by: Marc Strapetz <marc.strapetz@syntevo.com>
+Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
 ---
- t/t4201-shortlog.sh | 5 +++++
- builtin/shortlog.c  | 5 +++++
- 2 files changed, 10 insertions(+)
 
-diff --git a/t/t4201-shortlog.sh b/t/t4201-shortlog.sh
-index da10478f59..ff6649ed9a 100755
---- a/t/t4201-shortlog.sh
-+++ b/t/t4201-shortlog.sh
-@@ -127,6 +127,11 @@ test_expect_success !MINGW 'shortlog can read --format=raw output' '
- 	test_cmp expect out
+> Either way I'll try to address this as soon as I can get some
+> time to look at it.
+
+I finally got around to do this.  The fix (in the second patch) turns
+out to be fairly simple, I just forgot to pass the pathspec along to
+one function whene originally introducing the pathspec feature in git
+stash push (more explanation in the commit message for the patch
+itself).  Thanks Marc for reporting the two breakages!
+
+v2 also fixes a couple of typos in the first patch which I failed to
+notice when I sent it out last time.
+
+ git-stash.sh     | 2 +-
+ t/t3903-stash.sh | 7 +++++++
+ 2 files changed, 8 insertions(+), 1 deletion(-)
+
+diff --git a/git-stash.sh b/git-stash.sh
+index fc8f8ae640..058ad0bed8 100755
+--- a/git-stash.sh
++++ b/git-stash.sh
+@@ -320,7 +320,7 @@ push_stash () {
+ 			git clean --force --quiet -d $CLEAN_X_OPTION -- "$@"
+ 		fi
+ 
+-		if test $# != 0
++		if test $# != 0 && git ls-files --error-unmatch -- "$@" >/dev/null 2>/dev/null
+ 		then
+ 			git add -u -- "$@" |
+ 			git checkout-index -z --force --stdin
+diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
+index aefde7b172..fbfda4b243 100755
+--- a/t/t3903-stash.sh
++++ b/t/t3903-stash.sh
+@@ -1096,4 +1096,11 @@ test_expect_success 'stash -- <subdir> works with binary files' '
+ 	test_path_is_file subdir/untracked
  '
  
-+test_expect_success 'shortlog from non-git directory refuses extra arguments' '
-+	test_must_fail env GIT_DIR=non-existing git shortlog foo 2>out &&
-+	test_i18ngrep "too many arguments" out
++test_expect_success 'stash -u -- <untracked> doesnt print error' '
++	>untracked &&
++	git stash push -u -- untracked 2>actual &&
++	test_path_is_missing untracked &&
++	test_line_count = 0 actual
 +'
 +
- test_expect_success 'shortlog should add newline when input line matches wraplen' '
- 	cat >expect <<\EOF &&
- A U Thor (2):
-diff --git a/builtin/shortlog.c b/builtin/shortlog.c
-index dc4af03fca..3a823b3128 100644
---- a/builtin/shortlog.c
-+++ b/builtin/shortlog.c
-@@ -293,6 +293,11 @@ int cmd_shortlog(int argc, const char **argv, const char *prefix)
- parse_done:
- 	argc = parse_options_end(&ctx);
- 
-+	if (nongit && argc > 1) {
-+		error(_("too many arguments given outside repository"));
-+		usage_with_options(shortlog_usage, options);
-+	}
-+
- 	if (setup_revisions(argc, argv, &rev, NULL) != 1) {
- 		error(_("unrecognized argument: %s"), argv[1]);
- 		usage_with_options(shortlog_usage, options);
+ test_done
 -- 
-2.16.2.246.ga4ee44448f
+2.16.2.804.g6dcf76e11
 
