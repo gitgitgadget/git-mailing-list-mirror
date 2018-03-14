@@ -7,52 +7,53 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9787C1F404
-	for <e@80x24.org>; Wed, 14 Mar 2018 18:33:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 585D61F404
+	for <e@80x24.org>; Wed, 14 Mar 2018 18:33:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752164AbeCNSdC (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Mar 2018 14:33:02 -0400
-Received: from mail-qk0-f202.google.com ([209.85.220.202]:46615 "EHLO
-        mail-qk0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751901AbeCNSc7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Mar 2018 14:32:59 -0400
-Received: by mail-qk0-f202.google.com with SMTP id v68so2700517qki.13
-        for <git@vger.kernel.org>; Wed, 14 Mar 2018 11:32:59 -0700 (PDT)
+        id S1752503AbeCNSdB (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Mar 2018 14:33:01 -0400
+Received: from mail-it0-f73.google.com ([209.85.214.73]:35553 "EHLO
+        mail-it0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752218AbeCNSc5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Mar 2018 14:32:57 -0400
+Received: by mail-it0-f73.google.com with SMTP id n73-v6so3687326itg.0
+        for <git@vger.kernel.org>; Wed, 14 Mar 2018 11:32:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=5Ud7YE9bjhoZ+yIAi8MGxgUhxRuWfAfXX6ZykoFlZyY=;
-        b=I57Hy88Yd1PMR0O1iA2LIGvIZwuuI1T56mDXTHBpcHztR4lXeMifbJ5LrnEbW5g08h
-         GGAR//fUw9iGZxxDQYN3GokXC1K0Ic08O/bO0BOS9ZVVK8xTSCBP8YuLLPv1pHYtKHDI
-         k1B3qQ5z4Wq/Ib4Sf/9WKVLaLcudbi5SXHjN5T4UGgcnzIq+sRy2zXlSx9XHR9WUiQhh
-         HVR+3CEyI1PxZujUVuZwSt7d+hlU6+qMROtceFOLOzTpmJR9BD9CsGgoRMlmlc91ltbC
-         caP2EX9AoF8tPdQQ6SqkjaJZ7DzbwKC/GFK+8bfimu33Ohs+eUZ8jLQrbIzKp7BYP/OB
-         r7UA==
+        bh=X/YL8/ArG8Cb9ZH5w3fdLrlhpsSowuKY+j54Dws9VRo=;
+        b=uXg+YJGb1h5WlTTwtUEiWJoxPGggNTKrBCE0mVrkgc+VbwtCubhEEdXhK2dqeNBkrx
+         32tgrrsDD1TQzs5cCczA6DktR2KHxGRE3FNVxyw72wFsXKLADEG52aygvFawGmqDvhdT
+         QNt/P3k9wCdALPaA4MIOH2e5kiTJD19+zcxW7ZiZiyqGAiWj89kwVCag1XDQaY8szwBi
+         2hymO6DvTUyKd+6VjCOhTHizLeJSsWRwa611jBNNyK1pyLUUJhgxqg4JLqR3/aD0akEJ
+         hgFQuXZTBA00n1VE8CsPQdkHNExAtavCizTbci/tBIwbFYP9gVHDaQjSakVk8g+UCu6P
+         MiKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=5Ud7YE9bjhoZ+yIAi8MGxgUhxRuWfAfXX6ZykoFlZyY=;
-        b=hPQ6yzamlZj+sBDEIv20NSAgjMA5zEmoybrwHak6L9rlpwnJPcnqoSk7GlYi/lFDal
-         nH4m8gPbS48RiNl3wELc2ob4CdJFCrCPycHqpjidF3hHfzawI6F7BGbF/UHH97s9r994
-         RKGy93KbiyqYscswJ1zOb2eoH4c5qKWFNdQV6r++k6Wewf2uPlHTRNWycm9rBGDFpf/s
-         vsQZOj/pQGjnYZ18lJrNIaZJS8+bx17sS2CHVteQVL3oxbaM6LwmW3G4SKTbxjiAyHxG
-         xshkkVam6Navah9gs3uCV2+9zVkywnawue1qpHfCGAnM1Gr/mCU1aBi5L1Gr2Lbszlal
-         JZcw==
-X-Gm-Message-State: AElRT7GZ6mmGf5pUfvzvEbTvLjrjqe9Epx1Wdv1YOijACszx5NbbVaG3
-        4nWm1D7d5074EXt0WytyoJ4HsDD/0tfsY1CT6CfRB2t1QQtJnklXHbP1yw9AIA0Hh0+B/4B49pj
-        JuNr0H4CZAgiI71FoAfTDuEgIJl9wp22dxH01zbOU8gczjBL+9HVYCy3pyw==
-X-Google-Smtp-Source: AG47ELtvc07pzG/S8G1twhEbAJOeBkrdjxPWXjZxkFFxlOk+6dLxRu3MIgFKz8LyFgHUsqQ7gunRmP5b6VI=
+        bh=X/YL8/ArG8Cb9ZH5w3fdLrlhpsSowuKY+j54Dws9VRo=;
+        b=efhAbQNaFMjHIZa6/ck6KZCxq7XrU3W/RfjpNaTvBlgCAy8mnWbNCtQ0pIUS29vmzh
+         OJ0rfc9GlZWj99zm2tn4mi4Yd57osIgfJF1pTppQ13sOu4BNoIhSROVDLr7AjzviA0EY
+         yBrwhLx68j2b7sHZHbXB1Qzf2UkR0A2kNbTaQMD1LOPuwtB4VyTUEBoXbALBHNfy9Cok
+         IpziQEsTUPNFK6SLmt/Fx+LGNBhOrLAq5WZBHj3UXjeljATM8lHDiJ3fsa1i794GmpD4
+         5bwQcRAzqy4zCYtROj9ihwyq5GHmOK40e364T9nTbAigiuDyrjb3TOH4RPXLJwGVQIhm
+         X4aQ==
+X-Gm-Message-State: AElRT7EUE9WXAyNQXLQPn0uqt7RvHJQLcOl0sZKF3YoXDDq48uZq5Dv4
+        /yP3EzHOIPZ5V4rpwTkJSBmY5hfsJlwSlbgZ9Lmp9Iil4NTjiRJxzRsMh15OPrI+UrFT8uLEDVo
+        0y3dln26zs1pPOVK5RVFcof5XqtiYTS02NhL5uk6AniNBEFyNiAVhRYiZ3Q==
+X-Google-Smtp-Source: AG47ELvoSvwF96bSvB0XucSpf3ojSWBea0JpWtXPtR+WXCdpwfEnv+lkz3WtM8/o+91mylJconEEaZi75Wg=
 MIME-Version: 1.0
-X-Received: by 10.200.17.20 with SMTP id c20mr3743349qtj.55.1521052379026;
- Wed, 14 Mar 2018 11:32:59 -0700 (PDT)
-Date:   Wed, 14 Mar 2018 11:31:55 -0700
+X-Received: by 2002:a24:3a90:: with SMTP id m138-v6mr1332540itm.37.1521052376681;
+ Wed, 14 Mar 2018 11:32:56 -0700 (PDT)
+Date:   Wed, 14 Mar 2018 11:31:54 -0700
 In-Reply-To: <20180314183213.223440-1-bmwill@google.com>
-Message-Id: <20180314183213.223440-19-bmwill@google.com>
+Message-Id: <20180314183213.223440-18-bmwill@google.com>
 References: <20180314183213.223440-1-bmwill@google.com>
 X-Mailer: git-send-email 2.16.2.804.g6dcf76e118-goog
-Subject: [PATCH v5 18/35] fetch: pass ref prefixes when fetching
+Subject: [PATCH v5 17/35] ls-remote: pass ref prefixes when requesting a
+ remote's refs
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     git@jeffhostetler.com, gitster@pobox.com, jrnieder@gmail.com,
@@ -65,50 +66,159 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Construct a list of ref prefixes to be passed to
-'transport_get_remote_refs()' from the refspec to be used during the
-fetch.  This list of ref prefixes will be used to allow the server to
-filter the ref advertisement when communicating using protocol v2.
+Construct an argv_array of ref prefixes based on the patterns supplied
+via the command line and pass them to 'transport_get_remote_refs()' to
+be used when communicating protocol v2 so that the server can limit the
+ref advertisement based on those prefixes.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- builtin/fetch.c | 19 ++++++++++++++++++-
- 1 file changed, 18 insertions(+), 1 deletion(-)
+ builtin/ls-remote.c    | 15 +++++++++++++--
+ refs.c                 | 14 ++++++++++++++
+ refs.h                 |  7 +++++++
+ t/t5702-protocol-v2.sh | 26 ++++++++++++++++++++++++++
+ 4 files changed, 60 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 850382f559..8258bbf950 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -332,11 +332,28 @@ static struct ref *get_ref_map(struct transport *transport,
- 	struct ref *rm;
- 	struct ref *ref_map = NULL;
- 	struct ref **tail = &ref_map;
+diff --git a/builtin/ls-remote.c b/builtin/ls-remote.c
+index c6e9847c5c..4276bf97d5 100644
+--- a/builtin/ls-remote.c
++++ b/builtin/ls-remote.c
+@@ -2,6 +2,7 @@
+ #include "cache.h"
+ #include "transport.h"
+ #include "remote.h"
++#include "refs.h"
+ 
+ static const char * const ls_remote_usage[] = {
+ 	N_("git ls-remote [--heads] [--tags] [--refs] [--upload-pack=<exec>]\n"
+@@ -43,6 +44,7 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
+ 	int show_symref_target = 0;
+ 	const char *uploadpack = NULL;
+ 	const char **pattern = NULL;
 +	struct argv_array ref_prefixes = ARGV_ARRAY_INIT;
  
- 	/* opportunistically-updated references: */
- 	struct ref *orefs = NULL, **oref_tail = &orefs;
- 
--	const struct ref *remote_refs = transport_get_remote_refs(transport, NULL);
-+	const struct ref *remote_refs;
+ 	struct remote *remote;
+ 	struct transport *transport;
+@@ -74,8 +76,17 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
+ 	if (argc > 1) {
+ 		int i;
+ 		pattern = xcalloc(argc, sizeof(const char *));
+-		for (i = 1; i < argc; i++)
++		for (i = 1; i < argc; i++) {
++			const char *glob;
+ 			pattern[i - 1] = xstrfmt("*/%s", argv[i]);
 +
-+	for (i = 0; i < refspec_count; i++) {
-+		if (!refspecs[i].exact_sha1) {
-+			const char *glob = strchr(refspecs[i].src, '*');
++			glob = strchr(argv[i], '*');
 +			if (glob)
 +				argv_array_pushf(&ref_prefixes, "%.*s",
-+						 (int)(glob - refspecs[i].src),
-+						 refspecs[i].src);
++						 (int)(glob - argv[i]), argv[i]);
 +			else
-+				expand_ref_prefix(&ref_prefixes, refspecs[i].src);
++				expand_ref_prefix(&ref_prefixes, argv[i]);
 +		}
-+	}
-+
-+	remote_refs = transport_get_remote_refs(transport, &ref_prefixes);
-+
-+	argv_array_clear(&ref_prefixes);
+ 	}
  
- 	if (refspec_count) {
- 		struct refspec *fetch_refspec;
+ 	remote = remote_get(dest);
+@@ -96,7 +107,7 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
+ 	if (uploadpack != NULL)
+ 		transport_set_option(transport, TRANS_OPT_UPLOADPACK, uploadpack);
+ 
+-	ref = transport_get_remote_refs(transport, NULL);
++	ref = transport_get_remote_refs(transport, &ref_prefixes);
+ 	if (transport_disconnect(transport))
+ 		return 1;
+ 
+diff --git a/refs.c b/refs.c
+index 20ba82b434..cefbad2076 100644
+--- a/refs.c
++++ b/refs.c
+@@ -13,6 +13,7 @@
+ #include "tag.h"
+ #include "submodule.h"
+ #include "worktree.h"
++#include "argv-array.h"
+ 
+ /*
+  * List of all available backends
+@@ -501,6 +502,19 @@ int refname_match(const char *abbrev_name, const char *full_name)
+ 	return 0;
+ }
+ 
++/*
++ * Given a 'prefix' expand it by the rules in 'ref_rev_parse_rules' and add
++ * the results to 'prefixes'
++ */
++void expand_ref_prefix(struct argv_array *prefixes, const char *prefix)
++{
++	const char **p;
++	int len = strlen(prefix);
++
++	for (p = ref_rev_parse_rules; *p; p++)
++		argv_array_pushf(prefixes, *p, len, prefix);
++}
++
+ /*
+  * *string and *len will only be substituted, and *string returned (for
+  * later free()ing) if the string passed in is a magic short-hand form
+diff --git a/refs.h b/refs.h
+index 01be5ae32f..93b6dce944 100644
+--- a/refs.h
++++ b/refs.h
+@@ -139,6 +139,13 @@ int resolve_gitlink_ref(const char *submodule, const char *refname,
+  */
+ int refname_match(const char *abbrev_name, const char *full_name);
+ 
++/*
++ * Given a 'prefix' expand it by the rules in 'ref_rev_parse_rules' and add
++ * the results to 'prefixes'
++ */
++struct argv_array;
++void expand_ref_prefix(struct argv_array *prefixes, const char *prefix);
++
+ int expand_ref(const char *str, int len, struct object_id *oid, char **ref);
+ int dwim_ref(const char *str, int len, struct object_id *oid, char **ref);
+ int dwim_log(const char *str, int len, struct object_id *oid, char **ref);
+diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
+index dc5f813beb..562610fd25 100755
+--- a/t/t5702-protocol-v2.sh
++++ b/t/t5702-protocol-v2.sh
+@@ -32,6 +32,19 @@ test_expect_success 'list refs with git:// using protocol v2' '
+ 	test_cmp actual expect
+ '
+ 
++test_expect_success 'ref advertisment is filtered with ls-remote using protocol v2' '
++	test_when_finished "rm -f log" &&
++
++	GIT_TRACE_PACKET="$(pwd)/log" git -c protocol.version=2 \
++		ls-remote "$GIT_DAEMON_URL/parent" master >actual &&
++
++	cat >expect <<-EOF &&
++	$(git -C "$daemon_parent" rev-parse refs/heads/master)$(printf "\t")refs/heads/master
++	EOF
++
++	test_cmp actual expect
++'
++
+ stop_git_daemon
+ 
+ # Test protocol v2 with 'file://' transport
+@@ -54,4 +67,17 @@ test_expect_success 'list refs with file:// using protocol v2' '
+ 	test_cmp actual expect
+ '
+ 
++test_expect_success 'ref advertisment is filtered with ls-remote using protocol v2' '
++	test_when_finished "rm -f log" &&
++
++	GIT_TRACE_PACKET="$(pwd)/log" git -c protocol.version=2 \
++		ls-remote "file://$(pwd)/file_parent" master >actual &&
++
++	cat >expect <<-EOF &&
++	$(git -C file_parent rev-parse refs/heads/master)$(printf "\t")refs/heads/master
++	EOF
++
++	test_cmp actual expect
++'
++
+ test_done
 -- 
 2.16.2.804.g6dcf76e118-goog
 
