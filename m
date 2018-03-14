@@ -3,122 +3,133 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 88D691F404
-	for <e@80x24.org>; Wed, 14 Mar 2018 21:43:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3882B1F404
+	for <e@80x24.org>; Wed, 14 Mar 2018 21:55:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751452AbeCNVnl (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Mar 2018 17:43:41 -0400
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:42253 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750779AbeCNVnk (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Mar 2018 17:43:40 -0400
-Received: by mail-wr0-f194.google.com with SMTP id s18so6206054wrg.9
-        for <git@vger.kernel.org>; Wed, 14 Mar 2018 14:43:39 -0700 (PDT)
+        id S1751892AbeCNVzf (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Mar 2018 17:55:35 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:50498 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750779AbeCNVze (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Mar 2018 17:55:34 -0400
+Received: by mail-wm0-f68.google.com with SMTP id w128so6889746wmw.0
+        for <git@vger.kernel.org>; Wed, 14 Mar 2018 14:55:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=JImPYVETg0auxUiDNjFGn9IGwnSofmt8aMahUvsKNzI=;
-        b=oiAYC7LnpDmRjTVmtcLZpvYkh1Dy7IvEg8hFC6zb3RZx4Hl/q+K+6/YtoSX/Yi5xuX
-         8BPQIkhxrItw+5oFDASAdgPcauMxma/6yK1N0D6dVtMacuRhuLb01hgj2zh94+Pu7BsQ
-         AC5bgvivRhqqLSYrI11mqOaF1r88LgIP1r8tmqUIuzlqcAlW1a2DsjFaJUdFN1t2680C
-         CdCB64Ey8EUgoRG77BUHaYYcj4lGbzvVuLcqZBqmOgAKr8iailzaXLMueRQGsHKXehTL
-         vMLBip7PbZuWPyTjGy4RfwqyAhcVra+ADDs/yAHTvT4r2dVxLMkZfeBvTCwcilsTjnnC
-         /A+A==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=vmE05UmFbTuwhelBPYSPoCjVkWjPwNggS3E/ltV5498=;
+        b=SszUuT3JRlIOn2Ac+lQdCzoVlIC51LIhbswfyNLWBjSRmV45TnEbmM3qh7/0+G0knk
+         aDYSUBZKmO5E0EEz2KteGQO3/X4xn+fpGxxR1PEhYG/oHwFUTvAPJhSUQYzJC/dlHAaZ
+         NQoXP3Tna6O/IRS4zIEEQp9DCNh9lcgk+PJvIaH9falUyOsGgTyt/oTOJqYTe9SfsbYE
+         2UiPJ7v8cZOdISPGGW/vnjrASDhVDEwLBa8nH90gbt5YuxBqST66tRrA+zilgQHRiLUe
+         ygzXIA5Mx/VFbhcQnoO9kvUuU6wtN9jTciSOP5+SCgmPWsjZeKMywZLG+yow6Yupks3q
+         EO0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=JImPYVETg0auxUiDNjFGn9IGwnSofmt8aMahUvsKNzI=;
-        b=r28guZ0EKd0NNqwwrnKTruIp+j0Z1J2he88RSk+A3ECKEfUU0yi6EwVE7YDqW/rIx8
-         VI/eB9rHxSkYm7kvebmZUDRvUe2c2v7/wltxvnLGsYpdcO6Yl80DtX/3fg74iqMUwigk
-         KtddRNWWcINim9XBaubMscql5nrWmVxHUdOSyfZ1SpuyihpE3HiKXzIyoevJklS9y+aK
-         R/GoemZvOsgz05wvgV/YPbmeEiDRmQLf+F83gpwMCnCrduVj/iwzKlosg62siaEjJ7SV
-         pkNcsxipRDeuUsW8FCTb0rTlQE/7XYGfUqaHpNagQMgdLghxh27X5wODxX/x59zc3DkW
-         /05A==
-X-Gm-Message-State: AElRT7F+D8YCYWVAW8gtseSa8BHBWIuwSaSZAGbRY319HUMi1uUK5/Yl
-        aZUgjXW4WC4kQ4Dqo+qAGBdDPre5
-X-Google-Smtp-Source: AG47ELtOvCTZV91ivzrmzvckEadK5Zo7PN3c11PGTt+dA8hrtpO/qNdOHqHlDiwYXmqm1zGKCiKsRw==
-X-Received: by 10.223.133.214 with SMTP id 22mr5330575wru.130.1521063818796;
-        Wed, 14 Mar 2018 14:43:38 -0700 (PDT)
-Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
-        by smtp.gmail.com with ESMTPSA id u127sm3084966wmd.30.2018.03.14.14.43.37
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=vmE05UmFbTuwhelBPYSPoCjVkWjPwNggS3E/ltV5498=;
+        b=HU2SMHcT5ZoPyqy1vZc+uCGNw4Kw/6p/gAgW6WNyXPabcWGq4sBNRSt3HtKon87+jP
+         AbijWiZr9j2CsTwHLDTsAPkwq30MbtsNQ6T9H1yH80XO+5eeBq3BaR+rim4dzMCGfQj6
+         az8mnuoLBKHfYbjb2KzTvqUz827WYFWsJCCbvW0bFrHK7/LlaYp5HrS7QQHU7wzzgjx3
+         mpkIu8v/MnIZcz7RHm4y1ZF4x1a0phmJPmAWOloaFFwJ+hQTMtR3aZJ4atrXMnsCw32+
+         6+UXq7gJx93r+vjWBylPsPrPUw90K0wPs7a8vJ/Dcb0VbUMfqK1L/Ihch+MxgCE6qVTZ
+         eBiA==
+X-Gm-Message-State: AElRT7HWVzxNxJcq8uEv+oPU59UvclkmCoTRDfuL4RmmjzJcpXxqZQSU
+        yK1dJCutLocEzxaMnDnZYXo=
+X-Google-Smtp-Source: AG47ELvrjRCS8kQVnnB/k7Pyqmoa8GV6poOttBBFM57MKpgnksLyzuxzCIvQF8qoUbV7AoQmp3GsrA==
+X-Received: by 10.28.23.143 with SMTP id 137mr3079203wmx.153.1521064533235;
+        Wed, 14 Mar 2018 14:55:33 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id j4sm4678998wrd.53.2018.03.14.14.55.32
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 14 Mar 2018 14:43:37 -0700 (PDT)
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Marc Strapetz <marc.strapetz@syntevo.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH v2 2/2] stash push -u: don't create empty stash
-Date:   Wed, 14 Mar 2018 21:46:42 +0000
-Message-Id: <20180314214642.22185-2-t.gummerer@gmail.com>
-X-Mailer: git-send-email 2.16.2.804.g6dcf76e11
-In-Reply-To: <20180314214642.22185-1-t.gummerer@gmail.com>
-References: <20180310111215.GA14732@hank>
- <20180314214642.22185-1-t.gummerer@gmail.com>
+        Wed, 14 Mar 2018 14:55:32 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, git@jeffhostetler.com
+Subject: Re: [PATCH 2/2] fetch-pack: do not check links for partial fetch
+References: <cover.1521052825.git.jonathantanmy@google.com>
+        <cover.1521052825.git.jonathantanmy@google.com>
+        <c2f59866a1b1dc5f11713e1922eac2521ef98b07.1521052825.git.jonathantanmy@google.com>
+Date:   Wed, 14 Mar 2018 14:55:31 -0700
+In-Reply-To: <c2f59866a1b1dc5f11713e1922eac2521ef98b07.1521052825.git.jonathantanmy@google.com>
+        (Jonathan Tan's message of "Wed, 14 Mar 2018 11:42:41 -0700")
+Message-ID: <xmqqwoyexqy4.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When introducing the stash push feature, and thus allowing users to pass
-in a pathspec to limit the files that would get stashed in
-df6bba0937 ("stash: teach 'push' (and 'create_stash') to honor
-pathspec", 2017-02-28), this developer missed one place where the
-pathspec should be passed in.
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-Namely in the call to the 'untracked_files()' function in the
-'no_changes()' function.  This resulted in 'git stash push -u --
-<non-existant>' creating an empty stash when there are untracked files
-in the repository other that don't match the pathspec.
+> When doing a partial clone or fetch with transfer.fsckobjects=1, use the
+> --fsck-objects instead of the --strict flag when invoking index-pack so
+> that links are not checked, only objects. This is because incomplete
+> links are expected when doing a partial clone or fetch.
 
-As 'git stash' never creates empty stashes, this behaviour is wrong and
-confusing for users.  Instead it should just show a message "No local
-changes to save", and not create a stash.
+It is expected that _some_ links are missing, but this makes me
+wonder if we can do better than disabling the connectivity check
+altogether.  Does "git fetch" lack sufficient information to attempt
+the connectivity check, and when (and only when) it hits a broken
+link, see if that is because the connectivity check traversal is
+crossing a "partial" fetch boundary, or something along that line?
 
-Luckily the 'untracked_files()' function already correctly respects
-pathspecs that are passed to it, so the fix is simply to pass the
-pathspec along to the function.
-
-Reported-by: Marc Strapetz <marc.strapetz@syntevo.com>
-Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
----
- git-stash.sh     | 2 +-
- t/t3903-stash.sh | 6 ++++++
- 2 files changed, 7 insertions(+), 1 deletion(-)
-
-diff --git a/git-stash.sh b/git-stash.sh
-index 058ad0bed8..7a4ec98f6b 100755
---- a/git-stash.sh
-+++ b/git-stash.sh
-@@ -39,7 +39,7 @@ fi
- no_changes () {
- 	git diff-index --quiet --cached HEAD --ignore-submodules -- "$@" &&
- 	git diff-files --quiet --ignore-submodules -- "$@" &&
--	(test -z "$untracked" || test -z "$(untracked_files)")
-+	(test -z "$untracked" || test -z "$(untracked_files $@)")
- }
- 
- untracked_files () {
-diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-index fbfda4b243..5e7078c083 100755
---- a/t/t3903-stash.sh
-+++ b/t/t3903-stash.sh
-@@ -1103,4 +1103,10 @@ test_expect_success 'stash -u -- <untracked> doesnt print error' '
- 	test_line_count = 0 actual
- '
- 
-+test_expect_success 'stash -u -- <non-existant> shows no changes when there are none' '
-+	git stash push -u -- non-existant >actual &&
-+	echo "No local changes to save" >expect &&
-+	test_i18ncmp expect actual
-+'
-+
- test_done
--- 
-2.16.2.804.g6dcf76e11
-
+>
+> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+> ---
+>  fetch-pack.c             | 13 +++++++++++--
+>  t/t5616-partial-clone.sh | 11 +++++++++++
+>  2 files changed, 22 insertions(+), 2 deletions(-)
+>
+> diff --git a/fetch-pack.c b/fetch-pack.c
+> index d97461296..1d6117565 100644
+> --- a/fetch-pack.c
+> +++ b/fetch-pack.c
+> @@ -886,8 +886,17 @@ static int get_pack(struct fetch_pack_args *args,
+>  	    ? fetch_fsck_objects
+>  	    : transfer_fsck_objects >= 0
+>  	    ? transfer_fsck_objects
+> -	    : 0)
+> -		argv_array_push(&cmd.args, "--strict");
+> +	    : 0) {
+> +		if (args->from_promisor)
+> +			/*
+> +			 * We cannot use --strict in index-pack because it
+> +			 * checks both broken objects and links, but we only
+> +			 * want to check for broken objects.
+> +			 */
+> +			argv_array_push(&cmd.args, "--fsck-objects");
+> +		else
+> +			argv_array_push(&cmd.args, "--strict");
+> +	}
+>  
+>  	cmd.in = demux.out;
+>  	cmd.git_cmd = 1;
+> diff --git a/t/t5616-partial-clone.sh b/t/t5616-partial-clone.sh
+> index 29d863118..cee556536 100755
+> --- a/t/t5616-partial-clone.sh
+> +++ b/t/t5616-partial-clone.sh
+> @@ -143,4 +143,15 @@ test_expect_success 'manual prefetch of missing objects' '
+>  	test_line_count = 0 observed.oids
+>  '
+>  
+> +test_expect_success 'partial clone with transfer.fsckobjects=1 uses index-pack --fsck-objects' '
+> +	git init src &&
+> +	test_commit -C src x &&
+> +	test_config -C src uploadpack.allowfilter 1 &&
+> +	test_config -C src uploadpack.allowanysha1inwant 1 &&
+> +
+> +	GIT_TRACE="$(pwd)/trace" git -c transfer.fsckobjects=1 \
+> +		clone --filter="blob:none" "file://$(pwd)/src" dst &&
+> +	grep "git index-pack.*--fsck-objects" trace
+> +'
+> +
+>  test_done
