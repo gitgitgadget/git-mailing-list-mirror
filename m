@@ -4,60 +4,59 @@ X-Spam-Level:
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,LOTS_OF_MONEY,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1DC671F404
-	for <e@80x24.org>; Wed, 14 Mar 2018 19:28:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4DDD01F404
+	for <e@80x24.org>; Wed, 14 Mar 2018 19:28:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751969AbeCNT2H (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Mar 2018 15:28:07 -0400
-Received: from mail-qt0-f196.google.com ([209.85.216.196]:43624 "EHLO
-        mail-qt0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751917AbeCNT2E (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Mar 2018 15:28:04 -0400
-Received: by mail-qt0-f196.google.com with SMTP id s48so4699584qtb.10
-        for <git@vger.kernel.org>; Wed, 14 Mar 2018 12:28:04 -0700 (PDT)
+        id S1751470AbeCNT2G (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Mar 2018 15:28:06 -0400
+Received: from mail-qk0-f196.google.com ([209.85.220.196]:42209 "EHLO
+        mail-qk0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751901AbeCNT2C (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Mar 2018 15:28:02 -0400
+Received: by mail-qk0-f196.google.com with SMTP id b198so4750962qkg.9
+        for <git@vger.kernel.org>; Wed, 14 Mar 2018 12:28:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=79eGFZIEHgtfnO0uSPkRVUKzgRfnvdBKFutI6TTV8qg=;
-        b=i8pZfKD4/tQMZ4kAK3mZ/GCbeb1iTMT9AW4Y5tMculTL1s7yyHGWkFC2wcvXy+lU04
-         n0o8VewIef6WAmPH37F9FEcVxH+84gutjsA/I8K4CkOY7UFLNrf0K5xCGXCUByu5xfJD
-         f6LV3MCvfp33E+X83v/Tr606sBDqpSy4isqIkkJ8H5CDNUW3spE2SSpmEMgw6nE2+z7Y
-         0iNwxZzMTWxBcAX2RDAfVa3TuJ/xC3SZEmlLPJFRhB1q8YUr3dWB5cOESJkKdSfx471h
-         bmntbacbhuzI/8GKLn3UI56SCRNk24/saDz7svK3kXSj5/JNBV94fuQQbtT1TchE0PSW
-         V1DA==
+        bh=pO9udK7xk5XmQuHYIeQ6gonkAlrRebjHMoDdAHZblOo=;
+        b=vbhr1c5+zMovIT01lZrtNDCfVmVdRResIPoyyoqRHbIHChE3NBRTfpR1U9oVKjk2hi
+         1ZRmudwdlGNgKyGIBISs6xYoxaUKP7qKRX8Q34ZWwtHam8qH+mDlEhqzFqYKeUh4Ul/d
+         jGKeDpadXPGB1vZ3PJND4OdyRrbteddpij2pEMqdjzynqUB6mrDdnMCUWyKS74li8+S2
+         mhrhKMxku1ipGgqNi7y8eFy7MNUtSK1Smz0HlDMiBtQa37HhBE2bk6jwNW6B16+8tNtd
+         XWbZroDchdgIErsJ4mw/Sg+iKhShDg2V3Axhy/7Sn/JG6UK+usvxq7JuGdrMZVmHs/09
+         xf1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=79eGFZIEHgtfnO0uSPkRVUKzgRfnvdBKFutI6TTV8qg=;
-        b=p5tcqXFld50o4CAVaS5KVxjngrTW5HbzBCnvvLXEAnJIx6lLF9c9eGtIjeLOI6+DpD
-         Sw9zWskzNczUoWxOWT/Quln+fgn8e7Xp3r1wDYAcE6u4/FO+QAhwqs1BOySocRNgdjCQ
-         oUP84b4W3U72cqwnZx8YdyncMnLu8T9UDYRe1B86VKB0Occ4/UfZjJ0+gnGm3Tmzz+PS
-         iGpLYVvXPCshlNyWDGkc+hE17hHA05e5FisHBxgIdoamzd3tV7CAf+SQ9JXOcftdzJYa
-         17NYv+JcMHc41ja1sDerbA4UvunJs9c+jI9nvCR/U1BYwpc75srOIbtjCMWumt8aIgH0
-         FEDA==
-X-Gm-Message-State: AElRT7FyjxKu+nD9I3UcC5KEyWzegJV4qcwZa0KMN5PCkMKdYXJ+H10l
-        lgIEcwOv43xtgpKwvlEpzs8KN9X7Y6E=
-X-Google-Smtp-Source: AG47ELtAiG6WVSAuJadVbNuJaioqp7D/Z8+OReFtEFJg4VNKEuPtO2Dj4IGGwp9FqPVKdpctmdIqVg==
-X-Received: by 10.200.33.251 with SMTP id 56mr8511470qtz.1.1521055683283;
-        Wed, 14 Mar 2018 12:28:03 -0700 (PDT)
+        bh=pO9udK7xk5XmQuHYIeQ6gonkAlrRebjHMoDdAHZblOo=;
+        b=Fv5VtRG+1I0WM6UHwb4EU7+DisOOvEvjD6PcuRUNFF3hA4BoUKQu71A60rk0j4CRia
+         nJ5Dz7rYOUd1+GNtJHyL+0uCaVJyl7wlC2LM+3allcdYi5qY0AdENwXY7onPHBjDjjRQ
+         TxFzYsrqNjYF6Aur10ZCjl5mAzQ4o548nTXURA5Dt69HEfrWiVE+nPufD8oCt3xM+8c7
+         MwvelBdE7Q+VCkVx6YWal6Qbg4sSh0ktnalSHRu0x6rjnlIHlZI61QkcAMyZT+QhM98J
+         GpYDBGhvyLJi5Q4Y7wa4HyYW+O9XiuLn6nfD8Usw69W5kUm9AWoYIZz4rWfrJXWksKLm
+         lE1g==
+X-Gm-Message-State: AElRT7Hd5u/1WdQ8dMkFEKy/Uq5BOC5o/X3ROGj5BI8vMGpjdnVZbKp8
+        407f66E0ha4+fWtTc+o5SCY1ytCIbf0=
+X-Google-Smtp-Source: AG47ELv/95RDVSRUHOqakomKlBosYpVN9Zm1qzpjC2Qco96oJNDoyT/3/TML/wx/pV1MhdovPBGpOg==
+X-Received: by 10.55.215.16 with SMTP id m16mr8302770qki.303.1521055680589;
+        Wed, 14 Mar 2018 12:28:00 -0700 (PDT)
 Received: from stolee-linux-2.corp.microsoft.com ([2001:4898:8010:0:eb4a:5dff:fe0f:730f])
-        by smtp.gmail.com with ESMTPSA id q30sm2847395qte.10.2018.03.14.12.28.01
+        by smtp.gmail.com with ESMTPSA id q30sm2847395qte.10.2018.03.14.12.27.58
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 14 Mar 2018 12:28:02 -0700 (PDT)
+        Wed, 14 Mar 2018 12:28:00 -0700 (PDT)
 From:   Derrick Stolee <stolee@gmail.com>
 X-Google-Original-From: Derrick Stolee <dstolee@microsoft.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net, sbeller@google.com,
         szeder.dev@gmail.com, ramsay@ramsayjones.plus.com,
         git@jeffhostetler.com, Derrick Stolee <dstolee@microsoft.com>
-Subject: [PATCH v6 08/14] commit-graph: implement git commit-graph read
-Date:   Wed, 14 Mar 2018 15:27:30 -0400
-Message-Id: <20180314192736.70602-9-dstolee@microsoft.com>
+Subject: [PATCH v6 06/14] commit-graph: implement write_commit_graph()
+Date:   Wed, 14 Mar 2018 15:27:28 -0400
+Message-Id: <20180314192736.70602-7-dstolee@microsoft.com>
 X-Mailer: git-send-email 2.14.1
 In-Reply-To: <20180314192736.70602-1-dstolee@microsoft.com>
 References: <1519698787-190494-1-git-send-email-dstolee@microsoft.com>
@@ -69,403 +68,409 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-Teach git-commit-graph to read commit graph files and summarize their contents.
-
-Use the read subcommand to verify the contents of a commit graph file in the
-tests.
+Teach Git to write a commit graph file by checking all packed objects
+to see if they are commits, then store the file in the given object
+directory.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- Documentation/git-commit-graph.txt |  12 ++++
- builtin/commit-graph.c             |  56 +++++++++++++++
- commit-graph.c                     | 140 ++++++++++++++++++++++++++++++++++++-
- commit-graph.h                     |  23 ++++++
- t/t5318-commit-graph.sh            |  32 +++++++--
- 5 files changed, 257 insertions(+), 6 deletions(-)
+ Makefile       |   1 +
+ commit-graph.c | 359 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ commit-graph.h |   7 ++
+ 3 files changed, 367 insertions(+)
+ create mode 100644 commit-graph.c
+ create mode 100644 commit-graph.h
 
-diff --git a/Documentation/git-commit-graph.txt b/Documentation/git-commit-graph.txt
-index e688843808..51cb038f3d 100644
---- a/Documentation/git-commit-graph.txt
-+++ b/Documentation/git-commit-graph.txt
-@@ -9,6 +9,7 @@ git-commit-graph - Write and verify Git commit graph files
- SYNOPSIS
- --------
- [verse]
-+'git commit-graph read' <options> [--object-dir <dir>]
- 'git commit-graph write' <options> [--object-dir <dir>]
- 
- 
-@@ -33,6 +34,11 @@ COMMANDS
- Write a commit graph file based on the commits found in packfiles.
- Includes all commits from the existing commit graph file.
- 
-+'read'::
+diff --git a/Makefile b/Makefile
+index a928d4de66..49492c3e1c 100644
+--- a/Makefile
++++ b/Makefile
+@@ -771,6 +771,7 @@ LIB_OBJS += color.o
+ LIB_OBJS += column.o
+ LIB_OBJS += combine-diff.o
+ LIB_OBJS += commit.o
++LIB_OBJS += commit-graph.o
+ LIB_OBJS += compat/obstack.o
+ LIB_OBJS += compat/terminal.o
+ LIB_OBJS += config.o
+diff --git a/commit-graph.c b/commit-graph.c
+new file mode 100644
+index 0000000000..9bef691d9b
+--- /dev/null
++++ b/commit-graph.c
+@@ -0,0 +1,359 @@
++#include "cache.h"
++#include "config.h"
++#include "git-compat-util.h"
++#include "lockfile.h"
++#include "pack.h"
++#include "packfile.h"
++#include "commit.h"
++#include "object.h"
++#include "revision.h"
++#include "sha1-lookup.h"
++#include "commit-graph.h"
 +
-+Read a graph file given by the commit-graph file and output basic
-+details about the graph file. Used for debugging purposes.
++#define GRAPH_SIGNATURE 0x43475048 /* "CGPH" */
++#define GRAPH_CHUNKID_OIDFANOUT 0x4f494446 /* "OIDF" */
++#define GRAPH_CHUNKID_OIDLOOKUP 0x4f49444c /* "OIDL" */
++#define GRAPH_CHUNKID_DATA 0x43444154 /* "CDAT" */
++#define GRAPH_CHUNKID_LARGEEDGES 0x45444745 /* "EDGE" */
 +
- 
- EXAMPLES
- --------
-@@ -43,6 +49,12 @@ EXAMPLES
- $ git commit-graph write
- ------------------------------------------------
- 
-+* Read basic information from the commit-graph file.
-++
-+------------------------------------------------
-+$ git commit-graph read
-+------------------------------------------------
++#define GRAPH_DATA_WIDTH 36
 +
- 
- GIT
- ---
-diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
-index a9d61f649a..0e164becff 100644
---- a/builtin/commit-graph.c
-+++ b/builtin/commit-graph.c
-@@ -7,10 +7,16 @@
- 
- static char const * const builtin_commit_graph_usage[] = {
- 	N_("git commit-graph [--object-dir <objdir>]"),
-+	N_("git commit-graph read [--object-dir <objdir>]"),
- 	N_("git commit-graph write [--object-dir <objdir>]"),
- 	NULL
- };
- 
-+static const char * const builtin_commit_graph_read_usage[] = {
-+	N_("git commit-graph read [--object-dir <objdir>]"),
-+	NULL
++#define GRAPH_VERSION_1 0x1
++#define GRAPH_VERSION GRAPH_VERSION_1
++
++#define GRAPH_OID_VERSION_SHA1 1
++#define GRAPH_OID_LEN_SHA1 GIT_SHA1_RAWSZ
++#define GRAPH_OID_VERSION GRAPH_OID_VERSION_SHA1
++#define GRAPH_OID_LEN GRAPH_OID_LEN_SHA1
++
++#define GRAPH_OCTOPUS_EDGES_NEEDED 0x80000000
++#define GRAPH_PARENT_MISSING 0x7fffffff
++#define GRAPH_EDGE_LAST_MASK 0x7fffffff
++#define GRAPH_PARENT_NONE 0x70000000
++
++#define GRAPH_LAST_EDGE 0x80000000
++
++#define GRAPH_FANOUT_SIZE (4 * 256)
++#define GRAPH_CHUNKLOOKUP_WIDTH 12
++#define GRAPH_MIN_SIZE (5 * GRAPH_CHUNKLOOKUP_WIDTH + GRAPH_FANOUT_SIZE + \
++			GRAPH_OID_LEN + 8)
++
++
++static char *get_commit_graph_filename(const char *obj_dir)
++{
++	return xstrfmt("%s/info/commit-graph", obj_dir);
++}
++
++static void write_graph_chunk_fanout(struct hashfile *f,
++				     struct commit **commits,
++				     int nr_commits)
++{
++	int i, count = 0;
++	struct commit **list = commits;
++
++	/*
++	 * Write the first-level table (the list is sorted,
++	 * but we use a 256-entry lookup to be able to avoid
++	 * having to do eight extra binary search iterations).
++	 */
++	for (i = 0; i < 256; i++) {
++		while (count < nr_commits) {
++			if ((*list)->object.oid.hash[0] != i)
++				break;
++			count++;
++			list++;
++		}
++
++		hashwrite_be32(f, count);
++	}
++}
++
++static void write_graph_chunk_oids(struct hashfile *f, int hash_len,
++				   struct commit **commits, int nr_commits)
++{
++	struct commit **list = commits;
++	int count;
++	for (count = 0; count < nr_commits; count++, list++)
++		hashwrite(f, (*list)->object.oid.hash, (int)hash_len);
++}
++
++static const unsigned char *commit_to_sha1(size_t index, void *table)
++{
++	struct commit **commits = table;
++	return commits[index]->object.oid.hash;
++}
++
++static void write_graph_chunk_data(struct hashfile *f, int hash_len,
++				   struct commit **commits, int nr_commits)
++{
++	struct commit **list = commits;
++	struct commit **last = commits + nr_commits;
++	uint32_t num_extra_edges = 0;
++
++	while (list < last) {
++		struct commit_list *parent;
++		int edge_value;
++		uint32_t packedDate[2];
++
++		parse_commit(*list);
++		hashwrite(f, (*list)->tree->object.oid.hash, hash_len);
++
++		parent = (*list)->parents;
++
++		if (!parent)
++			edge_value = GRAPH_PARENT_NONE;
++		else {
++			edge_value = sha1_pos(parent->item->object.oid.hash,
++					      commits,
++					      nr_commits,
++					      commit_to_sha1);
++
++			if (edge_value < 0)
++				edge_value = GRAPH_PARENT_MISSING;
++		}
++
++		hashwrite_be32(f, edge_value);
++
++		if (parent)
++			parent = parent->next;
++
++		if (!parent)
++			edge_value = GRAPH_PARENT_NONE;
++		else if (parent->next)
++			edge_value = GRAPH_OCTOPUS_EDGES_NEEDED | num_extra_edges;
++		else {
++			edge_value = sha1_pos(parent->item->object.oid.hash,
++					      commits,
++					      nr_commits,
++					      commit_to_sha1);
++			if (edge_value < 0)
++				edge_value = GRAPH_PARENT_MISSING;
++		}
++
++		hashwrite_be32(f, edge_value);
++
++		if (edge_value & GRAPH_OCTOPUS_EDGES_NEEDED) {
++			do {
++				num_extra_edges++;
++				parent = parent->next;
++			} while (parent);
++		}
++
++		if (sizeof((*list)->date) > 4)
++			packedDate[0] = htonl(((*list)->date >> 32) & 0x3);
++		else
++			packedDate[0] = 0;
++
++		packedDate[1] = htonl((*list)->date);
++		hashwrite(f, packedDate, 8);
++
++		list++;
++	}
++}
++
++static void write_graph_chunk_large_edges(struct hashfile *f,
++					  struct commit **commits,
++					  int nr_commits)
++{
++	struct commit **list = commits;
++	struct commit **last = commits + nr_commits;
++	struct commit_list *parent;
++
++	while (list < last) {
++		int num_parents = 0;
++		for (parent = (*list)->parents; num_parents < 3 && parent;
++		     parent = parent->next)
++			num_parents++;
++
++		if (num_parents <= 2) {
++			list++;
++			continue;
++		}
++
++		/* Since num_parents > 2, this initializer is safe. */
++		for (parent = (*list)->parents->next; parent; parent = parent->next) {
++			int edge_value = sha1_pos(parent->item->object.oid.hash,
++						  commits,
++						  nr_commits,
++						  commit_to_sha1);
++
++			if (edge_value < 0)
++				edge_value = GRAPH_PARENT_MISSING;
++			else if (!parent->next)
++				edge_value |= GRAPH_LAST_EDGE;
++
++			hashwrite_be32(f, edge_value);
++		}
++
++		list++;
++	}
++}
++
++static int commit_compare(const void *_a, const void *_b)
++{
++	const struct object_id *a = (const struct object_id *)_a;
++	const struct object_id *b = (const struct object_id *)_b;
++	return oidcmp(a, b);
++}
++
++struct packed_commit_list {
++	struct commit **list;
++	int nr;
++	int alloc;
 +};
 +
- static const char * const builtin_commit_graph_write_usage[] = {
- 	N_("git commit-graph write [--object-dir <objdir>]"),
- 	NULL
-@@ -20,6 +26,54 @@ static struct opts_commit_graph {
- 	const char *obj_dir;
- } opts;
- 
-+static int graph_read(int argc, const char **argv)
++struct packed_oid_list {
++	struct object_id *list;
++	int nr;
++	int alloc;
++};
++
++static int add_packed_commits(const struct object_id *oid,
++			      struct packed_git *pack,
++			      uint32_t pos,
++			      void *data)
 +{
-+	struct commit_graph *graph = 0;
-+	char *graph_name;
++	struct packed_oid_list *list = (struct packed_oid_list*)data;
++	enum object_type type;
++	unsigned long size;
++	void *inner_data;
++	off_t offset = nth_packed_object_offset(pack, pos);
++	inner_data = unpack_entry(pack, offset, &type, &size);
++	FREE_AND_NULL(inner_data);
 +
-+	static struct option builtin_commit_graph_read_options[] = {
-+		OPT_STRING(0, "object-dir", &opts.obj_dir,
-+			N_("dir"),
-+			N_("The object directory to store the graph")),
-+		OPT_END(),
-+	};
++	if (type != OBJ_COMMIT)
++		return 0;
 +
-+	argc = parse_options(argc, argv, NULL,
-+			     builtin_commit_graph_read_options,
-+			     builtin_commit_graph_read_usage, 0);
-+
-+	if (!opts.obj_dir)
-+		opts.obj_dir = get_object_directory();
-+
-+	graph_name = get_commit_graph_filename(opts.obj_dir);
-+	graph = load_commit_graph_one(graph_name);
-+
-+	if (!graph)
-+		die("graph file %s does not exist", graph_name);
-+	FREE_AND_NULL(graph_name);
-+
-+	printf("header: %08x %d %d %d %d\n",
-+		ntohl(*(uint32_t*)graph->data),
-+		*(unsigned char*)(graph->data + 4),
-+		*(unsigned char*)(graph->data + 5),
-+		*(unsigned char*)(graph->data + 6),
-+		*(unsigned char*)(graph->data + 7));
-+	printf("num_commits: %u\n", graph->num_commits);
-+	printf("chunks:");
-+
-+	if (graph->chunk_oid_fanout)
-+		printf(" oid_fanout");
-+	if (graph->chunk_oid_lookup)
-+		printf(" oid_lookup");
-+	if (graph->chunk_commit_data)
-+		printf(" commit_metadata");
-+	if (graph->chunk_large_edges)
-+		printf(" large_edges");
-+	printf("\n");
++	ALLOC_GROW(list->list, list->nr + 1, list->alloc);
++	oidcpy(&(list->list[list->nr]), oid);
++	(list->nr)++;
 +
 +	return 0;
 +}
 +
- static int graph_write(int argc, const char **argv)
- {
- 	static struct option builtin_commit_graph_write_options[] = {
-@@ -60,6 +114,8 @@ int cmd_commit_graph(int argc, const char **argv, const char *prefix)
- 			     PARSE_OPT_STOP_AT_NON_OPTION);
- 
- 	if (argc > 0) {
-+		if (!strcmp(argv[0], "read"))
-+			return graph_read(argc, argv);
- 		if (!strcmp(argv[0], "write"))
- 			return graph_write(argc, argv);
- 	}
-diff --git a/commit-graph.c b/commit-graph.c
-index 9bef691d9b..2f2e2c7083 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -39,11 +39,149 @@
- 			GRAPH_OID_LEN + 8)
- 
- 
--static char *get_commit_graph_filename(const char *obj_dir)
-+char *get_commit_graph_filename(const char *obj_dir)
- {
- 	return xstrfmt("%s/info/commit-graph", obj_dir);
- }
- 
-+static struct commit_graph *alloc_commit_graph(void)
++void write_commit_graph(const char *obj_dir)
 +{
-+	struct commit_graph *g = xmalloc(sizeof(*g));
-+	memset(g, 0, sizeof(*g));
-+	g->graph_fd = -1;
++	struct packed_oid_list oids;
++	struct packed_commit_list commits;
++	struct hashfile *f;
++	uint32_t i, count_distinct = 0;
++	char *graph_name;
++	int fd;
++	struct lock_file lk = LOCK_INIT;
++	uint32_t chunk_ids[5];
++	uint64_t chunk_offsets[5];
++	int num_chunks;
++	int num_extra_edges;
++	struct commit_list *parent;
 +
-+	return g;
++	oids.nr = 0;
++	oids.alloc = approximate_object_count() / 4;
++
++	if (oids.alloc < 1024)
++		oids.alloc = 1024;
++	ALLOC_ARRAY(oids.list, oids.alloc);
++
++	for_each_packed_object(add_packed_commits, &oids, 0);
++
++	QSORT(oids.list, oids.nr, commit_compare);
++
++	count_distinct = 1;
++	for (i = 1; i < oids.nr; i++) {
++		if (oidcmp(&oids.list[i-1], &oids.list[i]))
++			count_distinct++;
++	}
++
++	if (count_distinct >= GRAPH_PARENT_MISSING)
++		die(_("the commit graph format cannot write %d commits"), count_distinct);
++
++	commits.nr = 0;
++	commits.alloc = count_distinct;
++	ALLOC_ARRAY(commits.list, commits.alloc);
++
++	num_extra_edges = 0;
++	for (i = 0; i < oids.nr; i++) {
++		int num_parents = 0;
++		if (i > 0 && !oidcmp(&oids.list[i-1], &oids.list[i]))
++			continue;
++
++		commits.list[commits.nr] = lookup_commit(&oids.list[i]);
++		parse_commit(commits.list[commits.nr]);
++
++		for (parent = commits.list[commits.nr]->parents;
++		     parent; parent = parent->next)
++			num_parents++;
++
++		if (num_parents > 2)
++			num_extra_edges += num_parents - 1;
++
++		commits.nr++;
++	}
++	num_chunks = num_extra_edges ? 4 : 3;
++
++	if (commits.nr >= GRAPH_PARENT_MISSING)
++		die(_("too many commits to write graph"));
++
++	graph_name = get_commit_graph_filename(obj_dir);
++ 	fd = hold_lock_file_for_update(&lk, graph_name, 0);
++
++	if (fd < 0) {
++		struct strbuf folder = STRBUF_INIT;
++		strbuf_addstr(&folder, graph_name);
++		strbuf_setlen(&folder, strrchr(folder.buf, '/') - folder.buf);
++
++		if (mkdir(folder.buf, 0777) < 0)
++			die_errno(_("cannot mkdir %s"), folder.buf);
++		strbuf_release(&folder);
++
++ 		fd = hold_lock_file_for_update(&lk, graph_name, LOCK_DIE_ON_ERROR);
++
++		if (fd < 0)
++			die_errno("unable to create '%s'", graph_name);
++	}
++
++	f = hashfd(lk.tempfile->fd, lk.tempfile->filename.buf);
++
++	hashwrite_be32(f, GRAPH_SIGNATURE);
++
++	hashwrite_u8(f, GRAPH_VERSION);
++	hashwrite_u8(f, GRAPH_OID_VERSION);
++	hashwrite_u8(f, num_chunks);
++	hashwrite_u8(f, 0); /* unused padding byte */
++
++	chunk_ids[0] = GRAPH_CHUNKID_OIDFANOUT;
++	chunk_ids[1] = GRAPH_CHUNKID_OIDLOOKUP;
++	chunk_ids[2] = GRAPH_CHUNKID_DATA;
++	if (num_extra_edges)
++		chunk_ids[3] = GRAPH_CHUNKID_LARGEEDGES;
++	else
++		chunk_ids[3] = 0;
++	chunk_ids[4] = 0;
++
++	chunk_offsets[0] = 8 + (num_chunks + 1) * GRAPH_CHUNKLOOKUP_WIDTH;
++	chunk_offsets[1] = chunk_offsets[0] + GRAPH_FANOUT_SIZE;
++	chunk_offsets[2] = chunk_offsets[1] + GRAPH_OID_LEN * commits.nr;
++	chunk_offsets[3] = chunk_offsets[2] + (GRAPH_OID_LEN + 16) * commits.nr;
++	chunk_offsets[4] = chunk_offsets[3] + 4 * num_extra_edges;
++
++	for (i = 0; i <= num_chunks; i++) {
++		uint32_t chunk_write[3];
++
++		chunk_write[0] = htonl(chunk_ids[i]);
++		chunk_write[1] = htonl(chunk_offsets[i] >> 32);
++		chunk_write[2] = htonl(chunk_offsets[i] & 0xffffffff);
++		hashwrite(f, chunk_write, 12);
++	}
++
++	write_graph_chunk_fanout(f, commits.list, commits.nr);
++	write_graph_chunk_oids(f, GRAPH_OID_LEN, commits.list, commits.nr);
++	write_graph_chunk_data(f, GRAPH_OID_LEN, commits.list, commits.nr);
++	write_graph_chunk_large_edges(f, commits.list, commits.nr);
++
++	finalize_hashfile(f, NULL, CSUM_HASH_IN_STREAM | CSUM_FSYNC);
++	commit_lock_file(&lk);
++
++	free(oids.list);
++	oids.alloc = 0;
++	oids.nr = 0;
 +}
 +
-+struct commit_graph *load_commit_graph_one(const char *graph_file)
-+{
-+	void *graph_map;
-+	const unsigned char *data, *chunk_lookup;
-+	size_t graph_size;
-+	struct stat st;
-+	uint32_t i;
-+	struct commit_graph *graph;
-+	int fd = git_open(graph_file);
-+	uint64_t last_chunk_offset;
-+	uint32_t last_chunk_id;
-+	uint32_t graph_signature;
-+	unsigned char graph_version, hash_version;
-+
-+	if (fd < 0)
-+		return NULL;
-+	if (fstat(fd, &st)) {
-+		close(fd);
-+		return NULL;
-+	}
-+	graph_size = xsize_t(st.st_size);
-+
-+	if (graph_size < GRAPH_MIN_SIZE) {
-+		close(fd);
-+		die("graph file %s is too small", graph_file);
-+	}
-+	graph_map = xmmap(NULL, graph_size, PROT_READ, MAP_PRIVATE, fd, 0);
-+	data = (const unsigned char *)graph_map;
-+
-+	graph_signature = ntohl(*(uint32_t*)data);
-+	if (graph_signature != GRAPH_SIGNATURE) {
-+		error("graph signature %X does not match signature %X",
-+		      graph_signature, GRAPH_SIGNATURE);
-+		goto cleanup_fail;
-+	}
-+
-+	graph_version = *(unsigned char*)(data + 4);
-+	if (graph_version != GRAPH_VERSION) {
-+		error("graph version %X does not match version %X",
-+		      graph_version, GRAPH_VERSION);
-+		goto cleanup_fail;
-+	}
-+
-+	hash_version = *(unsigned char*)(data + 5);
-+	if (hash_version != GRAPH_OID_VERSION) {
-+		error("hash version %X does not match version %X",
-+		      hash_version, GRAPH_OID_VERSION);
-+		goto cleanup_fail;
-+	}
-+
-+	graph = alloc_commit_graph();
-+
-+	graph->hash_len = GRAPH_OID_LEN;
-+	graph->num_chunks = *(unsigned char*)(data + 6);
-+	graph->graph_fd = fd;
-+	graph->data = graph_map;
-+	graph->data_len = graph_size;
-+
-+	last_chunk_id = 0;
-+	last_chunk_offset = 8;
-+	chunk_lookup = data + 8;
-+	for (i = 0; i < graph->num_chunks; i++) {
-+		uint32_t chunk_id = get_be32(chunk_lookup + 0);
-+		uint64_t chunk_offset1 = get_be32(chunk_lookup + 4);
-+		uint32_t chunk_offset2 = get_be32(chunk_lookup + 8);
-+		uint64_t chunk_offset = (chunk_offset1 << 32) | chunk_offset2;
-+		int chunk_repeated = 0;
-+
-+		chunk_lookup += GRAPH_CHUNKLOOKUP_WIDTH;
-+
-+		if (chunk_offset > graph_size - GIT_MAX_RAWSZ) {
-+			error("improper chunk offset %08x%08x", (uint32_t)(chunk_offset >> 32),
-+			      (uint32_t)chunk_offset);
-+			goto cleanup_fail;
-+		}
-+
-+		switch (chunk_id) {
-+		case GRAPH_CHUNKID_OIDFANOUT:
-+			if (graph->chunk_oid_fanout)
-+				chunk_repeated = 1;
-+			else
-+				graph->chunk_oid_fanout = (uint32_t*)(data + chunk_offset);
-+			break;
-+
-+		case GRAPH_CHUNKID_OIDLOOKUP:
-+			if (graph->chunk_oid_lookup)
-+				chunk_repeated = 1;
-+			else
-+				graph->chunk_oid_lookup = data + chunk_offset;
-+			break;
-+
-+		case GRAPH_CHUNKID_DATA:
-+			if (graph->chunk_commit_data)
-+				chunk_repeated = 1;
-+			else
-+				graph->chunk_commit_data = data + chunk_offset;
-+			break;
-+
-+		case GRAPH_CHUNKID_LARGEEDGES:
-+			if (graph->chunk_large_edges)
-+				chunk_repeated = 1;
-+			else
-+				graph->chunk_large_edges = data + chunk_offset;
-+			break;
-+		}
-+
-+		if (chunk_repeated) {
-+			error("chunk id %08x appears multiple times", chunk_id);
-+			goto cleanup_fail;
-+		}
-+
-+		if (last_chunk_id == GRAPH_CHUNKID_OIDLOOKUP)
-+		{
-+			graph->num_commits = (chunk_offset - last_chunk_offset)
-+					     / graph->hash_len;
-+		}
-+
-+		last_chunk_id = chunk_id;
-+		last_chunk_offset = chunk_offset;
-+	}
-+
-+	return graph;
-+
-+cleanup_fail:
-+	munmap(graph_map, graph_size);
-+	close(fd);
-+	exit(1);
-+}
-+
- static void write_graph_chunk_fanout(struct hashfile *f,
- 				     struct commit **commits,
- 				     int nr_commits)
 diff --git a/commit-graph.h b/commit-graph.h
-index 4cb3f12d33..8b4b0f9f04 100644
---- a/commit-graph.h
+new file mode 100644
+index 0000000000..4cb3f12d33
+--- /dev/null
 +++ b/commit-graph.h
-@@ -1,6 +1,29 @@
- #ifndef COMMIT_GRAPH_H
- #define COMMIT_GRAPH_H
- 
-+#include "git-compat-util.h"
+@@ -0,0 +1,7 @@
++#ifndef COMMIT_GRAPH_H
++#define COMMIT_GRAPH_H
 +
-+char *get_commit_graph_filename(const char *obj_dir);
++void write_commit_graph(const char *obj_dir);
 +
-+struct commit_graph {
-+	int graph_fd;
++#endif
 +
-+	const unsigned char *data;
-+	size_t data_len;
-+
-+	unsigned char hash_len;
-+	unsigned char num_chunks;
-+	uint32_t num_commits;
-+	struct object_id oid;
-+
-+	const uint32_t *chunk_oid_fanout;
-+	const unsigned char *chunk_oid_lookup;
-+	const unsigned char *chunk_commit_data;
-+	const unsigned char *chunk_large_edges;
-+};
-+
-+struct commit_graph *load_commit_graph_one(const char *graph_file);
-+
- void write_commit_graph(const char *obj_dir);
- 
- #endif
-diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
-index 43707ce5bb..03b75882a0 100755
---- a/t/t5318-commit-graph.sh
-+++ b/t/t5318-commit-graph.sh
-@@ -26,10 +26,28 @@ test_expect_success 'create commits and repack' '
- 	git repack
- '
- 
-+graph_read_expect() {
-+	OPTIONAL=""
-+	NUM_CHUNKS=3
-+	if test ! -z $2
-+	then
-+		OPTIONAL=" $2"
-+		NUM_CHUNKS=$((3 + $(echo "$2" | wc -w)))
-+	fi
-+	cat >expect <<- EOF
-+	header: 43475048 1 1 $NUM_CHUNKS 0
-+	num_commits: $1
-+	chunks: oid_fanout oid_lookup commit_metadata$OPTIONAL
-+	EOF
-+	git commit-graph read >output &&
-+	test_cmp expect output
-+}
-+
- test_expect_success 'write graph' '
-         cd "$TRASH_DIRECTORY/full" &&
- 	graph1=$(git commit-graph write) &&
--	test_path_is_file $objdir/info/commit-graph
-+	test_path_is_file $objdir/info/commit-graph &&
-+	graph_read_expect "3"
- '
- 
- test_expect_success 'Add more commits' '
-@@ -72,7 +90,8 @@ test_expect_success 'Add more commits' '
- test_expect_success 'write graph with merges' '
-         cd "$TRASH_DIRECTORY/full" &&
- 	git commit-graph write &&
--	test_path_is_file $objdir/info/commit-graph
-+	test_path_is_file $objdir/info/commit-graph &&
-+	graph_read_expect "10" "large_edges"
- '
- 
- test_expect_success 'Add one more commit' '
-@@ -99,13 +118,15 @@ test_expect_success 'Add one more commit' '
- test_expect_success 'write graph with new commit' '
-         cd "$TRASH_DIRECTORY/full" &&
- 	git commit-graph write &&
--	test_path_is_file $objdir/info/commit-graph
-+	test_path_is_file $objdir/info/commit-graph &&
-+	graph_read_expect "11" "large_edges"
- '
- 
- test_expect_success 'write graph with nothing new' '
-         cd "$TRASH_DIRECTORY/full" &&
- 	git commit-graph write &&
--	test_path_is_file $objdir/info/commit-graph
-+	test_path_is_file $objdir/info/commit-graph &&
-+	graph_read_expect "11" "large_edges"
- '
- 
- test_expect_success 'setup bare repo' '
-@@ -118,7 +139,8 @@ test_expect_success 'setup bare repo' '
- test_expect_success 'write graph in bare repo' '
-         cd "$TRASH_DIRECTORY/bare" &&
- 	git commit-graph write &&
--	test_path_is_file $baredir/info/commit-graph
-+	test_path_is_file $baredir/info/commit-graph &&
-+	graph_read_expect "11" "large_edges"
- '
- 
- test_done
 -- 
 2.14.1
 
