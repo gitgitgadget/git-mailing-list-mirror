@@ -2,106 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 840851F404
-	for <e@80x24.org>; Wed, 14 Mar 2018 17:02:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 93ECA1F404
+	for <e@80x24.org>; Wed, 14 Mar 2018 17:21:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752525AbeCNRCu (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Mar 2018 13:02:50 -0400
-Received: from mail-qk0-f175.google.com ([209.85.220.175]:47020 "EHLO
-        mail-qk0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752409AbeCNRCY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Mar 2018 13:02:24 -0400
-Received: by mail-qk0-f175.google.com with SMTP id o184so4198150qkd.13
-        for <git@vger.kernel.org>; Wed, 14 Mar 2018 10:02:24 -0700 (PDT)
+        id S1752171AbeCNRVw (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Mar 2018 13:21:52 -0400
+Received: from mail-io0-f193.google.com ([209.85.223.193]:43526 "EHLO
+        mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751508AbeCNRVt (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Mar 2018 13:21:49 -0400
+Received: by mail-io0-f193.google.com with SMTP id l12so5244548ioc.10
+        for <git@vger.kernel.org>; Wed, 14 Mar 2018 10:21:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-transfer-encoding:content-language;
-        bh=tZKNI3CwZKMe6Ejdf3zcXjGYwv0wX/gWIn0TeUuZGVk=;
-        b=uFlHFNoAhm/zJ0+xToDAHTOdxc/UGyy5ZJOOsSASkWMFINE5Jc3Sa/UoHWmovoY0Vk
-         OEcAA/cbkXnEfj8HAdFFMM4wK/SXAs1sL9Iwipvi16OkGvX6x74dCuJ4h7ReKiYE+e5N
-         /DdG0bJyH13HcARhbseLHIsT+C2oOdxmRs+CVt5Dj0hEzjI/OEOfc6OHQB7tFw5aVDw5
-         m9wS/Fxk4+r7SrjNkYZgnZ//JTh/yfGZbzCXj3r2XjB2hTMScrobHILveHCRHogkcOJQ
-         VFZDOxKJn7cOVTA+w0S31BZrHS1hWnblpSOxTjuf0vDHkqJIoBkphcAmTwSurIgkWRtm
-         iaEg==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-transfer-encoding;
+        bh=JGBID16XF/1gPgi98bA6/ax9C036uDSNhP7e6ftQ+x4=;
+        b=UBtWpm72iPcntQX+pVATGluN1B7AHPnOkIm8XGil8KaD3cu0oH8jK3j24RjgHHRcXZ
+         0Z5pA7R1NsdAsVCbMyaJDAez2gnQC/epszXZzQFHjEGDJhyXU7XSc7W4Zm1X3niHyT/j
+         f0ykU9LfNxlKae9a0uitmKVkuS7DvTpMDykCKC0pRZHkYV/FNE/sagDouSYhs7GaIgiU
+         auQkCgA8NuxQky9fQ8iXQ4IlxW1/RVo1OP0k86jmB6J0KIbNTTQlH/+38Jijt6t/UYcu
+         8fLk5yOaIsgS8vgN67oseoGqsYIn2MzspCBGXUyxXlu1VBt7Cf6f43kdRVDBwaftKjOP
+         DxMw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linux-foundation.org; s=google;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-transfer-encoding;
+        bh=JGBID16XF/1gPgi98bA6/ax9C036uDSNhP7e6ftQ+x4=;
+        b=WHMiAs0QPRTdx7DsrlfNjWE55R7veknlg0rClR+6ywQICyqqgspkcuCg3T9BSLuoAn
+         EtF+jBGDe+65CtWef5rO95pZU9pUZauu5OmKLDGG3EXV1Tz6qYN46uZI2hR/JjoZWnFC
+         ProMlNAWap12cKp5k+EBc2YidFt/6kQtHglI0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=tZKNI3CwZKMe6Ejdf3zcXjGYwv0wX/gWIn0TeUuZGVk=;
-        b=YuU0Ip1mOhX3MwWmaMT4fOHK45bAWUIG8v8DLNhhCKqt2Z4AceGuqvYWCl5WB49H2S
-         xSZogwGZyaKON9NNkl5pApKHjc9teTiDTIyuFGFtw8ZjDQYO345gnMHLOHijVXF8L6m7
-         JUDMm5fcW9hLlI6qaKWAtjzTN35susT6hdVUHZ/SGfDaSC1caUykOkzxtEdIzIrAhYXF
-         7DQUN1Pc5FJohE3scrq6/ooltyWWvU9D25I74tCdgO7cYqnvOlxN9No32AJOdS6hMpUD
-         M6lhVnQAELb3uRKiz15Cok39o3ZtYuFnLG94SssHlsC6p7gBfUv3zmE40wiv/JDxe0cy
-         NgSA==
-X-Gm-Message-State: AElRT7HsdhKyLq5zRMR0zjz7H0RY+XTfujGTu00+u95jp+mxWovJD1ed
-        e0DnRVPZ0Y/XC/DmA8QHgr4oY5wv
-X-Google-Smtp-Source: AG47ELvGO8IVC/bl8AolAYQ1/CGuCGBJgEck/Vl59NdYSM/rk6izqdN0b701/0fXpRvGVXf5vxrcuQ==
-X-Received: by 10.55.36.132 with SMTP id k4mr7707306qkk.68.1521046943228;
-        Wed, 14 Mar 2018 10:02:23 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:c4e6:7a22:56f1:df04? ([2001:4898:8010:0:ae1c:7a22:56f1:df04])
-        by smtp.gmail.com with ESMTPSA id o18sm2409615qto.8.2018.03.14.10.02.21
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 14 Mar 2018 10:02:22 -0700 (PDT)
-Subject: Re: How to debug a "git merge"?
-To:     Lars Schneider <larsxschneider@gmail.com>,
-        Git List <git@vger.kernel.org>
-References: <7895279B-9FB6-471B-A8BA-53315B265A51@gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <ddde09e9-0524-23f8-3585-ac00c2ec7f45@gmail.com>
-Date:   Wed, 14 Mar 2018 13:02:21 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=JGBID16XF/1gPgi98bA6/ax9C036uDSNhP7e6ftQ+x4=;
+        b=BWpL5Wt7YEXa1qkQIocUvGbjtjjLRiGoHiwd9T9vqV3sDFcsCun0Wf/+oa9wJdAOGq
+         dh3rY7WJPCEZim/LuEDt+Nw/Xil9KvmrZGEMDi/S5JPTPkIZJInYvqQia7n40Y254tRB
+         y623vMbieGTkiPnz63h55mEuHIjMIXYwYLzTbfiozeeGLNDwasM/at8ljRnjlU+kq5Ru
+         Gtka4AX598belCi3yikFxK/sHQTTyR0FRM6XhmHuWzccDIaKmLqHYPw0SWYVgPhN0qOc
+         Ks8qazuFmVO85pzCCRgwKVmVGZL02tANnfucGc5xu/7E4aC50RdhsGT/cMkbRQlkhnAE
+         BBjg==
+X-Gm-Message-State: AElRT7G4kotw7MWKKRxOKi4899MAQBQlUTVxsVUnO3IqyeWZEszTm5/q
+        oqLfRfmcB9+3bumeH4M55vcFdiwmLf3w55bApdrlJQ==
+X-Google-Smtp-Source: AG47ELuJgvnDw9chBf9QIemZwVoQDCa+smau7IC5oq/V/QgbFeEUdtOG4qAuEydwTu24LWWEbaTkekZvyIek0TNUQJw=
+X-Received: by 10.107.213.65 with SMTP id x1mr2254220ioc.203.1521048108630;
+ Wed, 14 Mar 2018 10:21:48 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <7895279B-9FB6-471B-A8BA-53315B265A51@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Received: by 10.107.132.21 with HTTP; Wed, 14 Mar 2018 10:21:48 -0700 (PDT)
+In-Reply-To: <87y3ivdkvp.fsf@evledraar.gmail.com>
+References: <20180313203935.5084-1-avarab@gmail.com> <20180313203935.5084-4-avarab@gmail.com>
+ <1cabf9c0-674e-c2b3-9977-9c74b929a86d@kdbg.org> <87y3ivdkvp.fsf@evledraar.gmail.com>
+From:   Linus Torvalds <torvalds@linux-foundation.org>
+Date:   Wed, 14 Mar 2018 10:21:48 -0700
+X-Google-Sender-Auth: tpmPx9U1tpdFVrxrLmce1lUal04
+Message-ID: <CA+55aFwU5fwWx2+DdBp=XCpG2Orx+rA8KxPVtGHxpgHAZs=h2Q@mail.gmail.com>
+Subject: Re: [PATCH 3/3] Makefile: optionally symlink libexec/git-core
+ binaries to bin/git
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Johannes Sixt <j6t@kdbg.org>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Daniel Jacques <dnj@google.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Steffen Prohaska <prohaska@zib.de>,
+        John Keeping <john@keeping.me.uk>, Stan Hu <stanhu@gmail.com>,
+        Richard Clamp <richardc@unixbeard.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 3/14/2018 12:56 PM, Lars Schneider wrote:
-> Hi,
+On Wed, Mar 14, 2018 at 3:14 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+> On Wed, Mar 14 2018, Johannes Sixt jotted:
+>>
+>> It is important to leave the default at hard-linking the binaries,
+>> because on Windows symbolic links are second class citizens (they
+>> require special privileges and there is a distinction between link
+>> targets being files or directories). Hard links work well.
 >
-> I am investigating a Git merge (a86dd40fe) in which an older version of
-> a file won over the newer version. I try to understand why this is the
-> case. I can reproduce the merge with the following commands:
-> $ git checkout -b test a02fa3303
-> $ GIT_MERGE_VERBOSITY=5 git merge --verbose c1b82995c
->
-> The merge actually generates a merge conflict but not for my
-> problematic file. The common ancestor of the two parents (merge base)
-> is b91161554.
->
-> The merge graph is not pretty (the committers don't have a clean
-> branching scheme) but I cannot spot a problem between the merge commit
-> and the common ancestor:
-> $ git log --graph --oneline a86dd40fe
+> Yeah makes sense. I just want to add this as an option, and think if
+> it's proven to be un-buggy we could probably turn it on by default on
+> the *nix's if people prefer that, but yeah, we'll definitely need the
+> uname detection.
 
-Have you tried `git log --graph --oneline --simplify-merges -- path` to 
-see what changes and merges involved the file? I find that view to be 
-very helpful (while the default history simplification can hide things). 
-In particular, if there was a change that was reverted in one side and 
-not another, we could find out.
+I definitely would prefer to make symlinks the default on unix.
 
-You could also use the "A...B" to check your two commits for merging, 
-and maybe add "--boundary".
+It's what we used to do (long long ago), and as you pointed out, it's
+a lot clearer what's going on too when you don't have to look at inode
+numbers and link counts.
 
->
-> Can you give me a hint how to debug this merge further? How can I
-> understand why Git picked a certain version of a file in a merge?
->
-> I am using Git 2.16.2 on Linux.
->
-> Thanks,
-> Lars
+Forcing hardlinking everywhere by default just because Windows
+filesystems suck donkey ass through a straw is not the right thing
+either.
 
+                Linus
