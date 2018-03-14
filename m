@@ -2,59 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 928681F404
-	for <e@80x24.org>; Wed, 14 Mar 2018 13:30:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 17BFB1F404
+	for <e@80x24.org>; Wed, 14 Mar 2018 13:36:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751624AbeCNNaH (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Mar 2018 09:30:07 -0400
-Received: from mail-wr0-f169.google.com ([209.85.128.169]:45104 "EHLO
-        mail-wr0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751470AbeCNNaG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Mar 2018 09:30:06 -0400
-Received: by mail-wr0-f169.google.com with SMTP id h2so4711107wre.12
-        for <git@vger.kernel.org>; Wed, 14 Mar 2018 06:30:05 -0700 (PDT)
+        id S1751508AbeCNNgg (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Mar 2018 09:36:36 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:51899 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751408AbeCNNgf (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Mar 2018 09:36:35 -0400
+Received: by mail-wm0-f68.google.com with SMTP id h21so4111028wmd.1
+        for <git@vger.kernel.org>; Wed, 14 Mar 2018 06:36:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=gU1xp3pVC8dA9yJqUuwoeH2+yqiW8uz8SilzHPy+9t0=;
-        b=Nvjh3ZHGLkKolPG9beyTlJc/WdBEaWHNwtSD+6FZPdrimyZzc82U+8u+j/fMJ5rnCv
-         jH3c98OwbG1QP1MHz6poOUAecTYaZvFbXJIKOsMZg3A4veycq2T44YYMQrp7IxxCRc2C
-         //56qdvUr7QUbouhsX6mHdY4j1AJH2oepFTeiazLOXXdJG+/FmPLkjbtLnIS0xi718yJ
-         Z4TabPc4rGRk8HFiIxuR49BihaSt03FDHzi8gT8f/8V+XkV61iAl90E7UJiWrD4PADy1
-         cWqOANHRtLexW9YbD0shAr/9MGIrulDm5rn7UOtQLL4qnAmJ1i6Goct+oYLcIQY9L+kz
-         2hPQ==
+        bh=D1odQwNKr6xgmWNIZyK38DhiKe/szA6N9Ikc6FewPog=;
+        b=BAsD1UhjuKeniZEgIgxbdcHNRECLKSGTSaCoDjyjYXTMd/EhBHUHOsz5QwQdB8f52L
+         oTg0i0qF0eGSEZcHvumgJ1IYa7QNPkv8eMHxCwn5ZWYKL2ZQLuuJQjR02H7RdUb5ndP8
+         39DxKaiHYiGIrGbR62jlBjQMkzwPmvZpNzdOAvEza0VGD5MKuXsuaBREJjeAPHvQq+Ej
+         zTgBTSfBo6POHEYIYOTRTFdFzDf8erjxA2q9v1PGETjDrx7mDgEBcbLHsWcv123L+Fl/
+         hGfhFH46gWJ1bv+WiOmgyg/fM3amJtUP0GIlX+YIBQdVtZm5b1OqguwPupabpeo2yeuS
+         vhtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=gU1xp3pVC8dA9yJqUuwoeH2+yqiW8uz8SilzHPy+9t0=;
-        b=cmfNFsmf+93vQvccCO0lESZw2tfNHiZHXMCLErT+yENMalBcTaBriJ/B7kmZuQoKCV
-         C/sZmBogkXT+AivqTTz/s8nugpYuG2R3BUmmRMB/FkyQ6rNXePCdS5r47QTIoGqlyieN
-         hD8poggF7xbcAsbkbPLuZ/ynVMDVaqA2asKFO5gvQI93mn7ny9pt/AQ8uLwPnQGUiDbE
-         mwL+kAfSuMsjv/09rbc4gSFArTJp/YBPkSrBjJM0F7fIh5bH5w5q/TTJbNBwiwyP3w0G
-         1kOD0OpmTvdAkY2KqhbgkGCYOuS8+4NTKIGElnrD0i7lfN+z+v6ZdbKoQbf+b2NjG+IM
-         WH/Q==
-X-Gm-Message-State: AElRT7HcEmlICSlzePfogh0nNLBr99hivVhiE5aAxeJY58hcLRFePzfr
-        a4d88CGPnRxttkmDifUlcFUJ3LABN4gPpkvbEIg=
-X-Google-Smtp-Source: AG47ELtWiNw+Qc8ioMX4pm7WRF6QYIF1is96Yzerby47ZfQeXPAcHXiHHPAxl6wjLdVzW+8Vqfz5tpvsD7P624KhXmY=
-X-Received: by 10.223.133.182 with SMTP id 51mr3622171wrt.226.1521034205019;
- Wed, 14 Mar 2018 06:30:05 -0700 (PDT)
+        bh=D1odQwNKr6xgmWNIZyK38DhiKe/szA6N9Ikc6FewPog=;
+        b=Njx6Siqrl5n/AIxsgSIBQslQyUa+5AdiraaS6QPFwm9lv5HuZU/I2BRc0ac9ENaj0H
+         D2wY2gTcF1/wzqGZZXRK3JGkVIP48jMmnhg0fN/pLHpQC2YtZm8CMt1GRLZVNH8NTsdm
+         RXs6wacwMiVd+BHcUdozOs3HDzwSl/CKZNX6eSDT8i2KCj3p/6HvgxWjlWpsDTtskU8Q
+         qoMDHxUSazlNaHdGfjAxtpkm9zZR8Tc64CEwqbMyHUu+0hI2UBHgJxTntKsGgpoIH0WF
+         /+08nF8ASiUY0nyi5KsCEGe4R0aBumhJKTlRXAhkw4GGz1Tz2d4rBH9Bt75no1NkmWEw
+         y9uw==
+X-Gm-Message-State: AElRT7FE/RI6Ih4BrPIN9CGvE0XXDrJzB6H8cy5YAlCHrR3BPK0bXR5F
+        QvNvMorv94Xd7sILYzC7qen5nVbo0cIoWXUtuzU=
+X-Google-Smtp-Source: AG47ELuDFTszXzeRckbde+nlD6ONUOE4yLoIMPx7tWQpzpGrOem/FlHXl7sjkq6gP692RIsLTP2y2AdBmpk/rrk7HvE=
+X-Received: by 10.28.58.199 with SMTP id h190mr1725861wma.119.1521034593892;
+ Wed, 14 Mar 2018 06:36:33 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.223.197.147 with HTTP; Wed, 14 Mar 2018 06:30:04 -0700 (PDT)
-In-Reply-To: <CAN0heSoJKxqSb0q5SR2SVfEzh6QjeiNNnESorZyYHTSC71jZuQ@mail.gmail.com>
+Received: by 10.223.197.147 with HTTP; Wed, 14 Mar 2018 06:36:33 -0700 (PDT)
+In-Reply-To: <CAN0heSrogCMT-8R4nht=_9syMNUfJe21BvZSVD4AUcf9PwN7rQ@mail.gmail.com>
 References: <010201621edc97a4-a4239b1e-86d2-4400-aaac-d81727710f4f-000000@eu-west-1.amazonses.com>
- <CAN0heSoJKxqSb0q5SR2SVfEzh6QjeiNNnESorZyYHTSC71jZuQ@mail.gmail.com>
+ <010201621edc982f-92123a33-386b-4b94-be0c-f793856e6c16-000000@eu-west-1.amazonses.com>
+ <CAN0heSrogCMT-8R4nht=_9syMNUfJe21BvZSVD4AUcf9PwN7rQ@mail.gmail.com>
 From:   =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
         <olyatelezhnaya@gmail.com>
-Date:   Wed, 14 Mar 2018 16:30:04 +0300
-Message-ID: <CAL21BmmQvjzpXGCjuHdPFiQ07P7VcV-E=mQbmM+35Y1u8acD6Q@mail.gmail.com>
-Subject: Re: [RFC 1/4] ref-filter: start adding strbufs with errors
+Date:   Wed, 14 Mar 2018 16:36:33 +0300
+Message-ID: <CAL21BmkPrgUtiuV=AMqnOwPX-aXdWU39CFLwGCAmMLvXBdLXWA@mail.gmail.com>
+Subject: Re: [RFC 3/4] ref-filter: change parsing function error handling
 To:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
@@ -64,156 +65,132 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-2018-03-13 22:12 GMT+03:00 Martin =C3=85gren <martin.agren@gmail.com>:
+2018-03-13 22:18 GMT+03:00 Martin =C3=85gren <martin.agren@gmail.com>:
 > On 13 March 2018 at 11:16, Olga Telezhnaya <olyatelezhnaya@gmail.com> wro=
 te:
->> This is a first step in removing any printing from
->> ref-filter formatting logic, so that it could be more general.
->> Everything would be the same for show_ref_array_item() users.
->> But, if you want to deal with errors by your own, you could invoke
->> format_ref_array_item(). It means that you need to print everything
->> (the result and errors) on your side.
+>> Continue removing any printing from ref-filter formatting logic,
+>> so that it could be more general.
 >>
->> This commit changes signature of format_ref_array_item() by adding
->> return value and strbuf parameter for errors, and fixes
->> its callers.
+>> Change the signature of parse_ref_filter_atom() by changing return value=
+,
+>> adding previous return value to function parameter and also adding
+>> strbuf parameter for error message.
 >
-> Minor nit: Maybe s/fixes its callers/adjusts its callers/. They are not
-> broken or need to be fixed. They were simply playing the game according
-> to the old rules, and now they need to learn the new ways. :-)
+> I think the current return value is always non-negative. Maybe it would
+> be easier to leave the return value as-is, except return negative on
+> error? Unless I am missing something?
 
-Agree.
+That's interesting. I like your idea, but let's see what other people think=
+.
+If others agree with us, I am ready to implement your solution.
 
 >
+>>
 >> Signed-off-by: Olga Telezhnaia <olyatelezhnaya@gmail.com>
 >> ---
->>  builtin/branch.c |  7 +++++--
->>  ref-filter.c     | 17 ++++++++++++-----
->>  ref-filter.h     |  7 ++++---
->>  3 files changed, 21 insertions(+), 10 deletions(-)
->>
->> diff --git a/builtin/branch.c b/builtin/branch.c
->> index 8dcc2ed058be6..f86709ca42d5e 100644
->> --- a/builtin/branch.c
->> +++ b/builtin/branch.c
->> @@ -391,7 +391,6 @@ static void print_ref_list(struct ref_filter *filter=
-, struct ref_sorting *sortin
->>         struct ref_array array;
->>         int maxwidth =3D 0;
->>         const char *remote_prefix =3D "";
->> -       struct strbuf out =3D STRBUF_INIT;
->
-> You move this variable into the loop to reduce its scope. At first I
-> suspected that this might mean we now start allocating+releasing in each
-> run of the loop, which might be a performance-regression. But it turns
-> out, we already did that, so this tightening of the scope has no such
-> downsides. :-) From the commit message, I wasn't expecting this move,
-> though. Maybe "While at it, reduce the scope of the out-variable."
-
-Added this to commit message. I just wanted to unify code style. I
-added another strbuf and tried to reduce its scope (not sure that it
-will cause a performance regression, I guess compiler is smart enough
-- but, who knows). I saw another strbuf, and I just decided to put
-them together. In my opinion, it's easier to read the code where
-variables are created in the smallest possible scope.
-But, anyway, you are right, I needed to mention that in the commit message.
-
->
->>         char *to_free =3D NULL;
->>
->>         /*
->> @@ -419,7 +418,10 @@ static void print_ref_list(struct ref_filter *filte=
-r, struct ref_sorting *sortin
->>         ref_array_sort(sorting, &array);
->>
->>         for (i =3D 0; i < array.nr; i++) {
->> -               format_ref_array_item(array.items[i], format, &out);
->> +               struct strbuf out =3D STRBUF_INIT;
->> +               struct strbuf err =3D STRBUF_INIT;
->> +               if (format_ref_array_item(array.items[i], format, &out, =
-&err))
->> +                       die("%s", err.buf);
->
-> Using "%s", good.
->
->>                 if (column_active(colopts)) {
->>                         assert(!filter->verbose && "--column and --verbo=
-se are incompatible");
->>                          /* format to a string_list to let print_columns=
-() do its job */
->> @@ -428,6 +430,7 @@ static void print_ref_list(struct ref_filter *filter=
-, struct ref_sorting *sortin
->>                         fwrite(out.buf, 1, out.len, stdout);
->>                         putchar('\n');
->>                 }
->> +               strbuf_release(&err);
->>                 strbuf_release(&out);
->>         }
+>>  ref-filter.c | 45 ++++++++++++++++++++++++++++++++-------------
+>>  1 file changed, 32 insertions(+), 13 deletions(-)
 >>
 >> diff --git a/ref-filter.c b/ref-filter.c
->> index 45fc56216aaa8..54fae00bdd410 100644
+>> index 07bedc636398c..e146215bf1e64 100644
 >> --- a/ref-filter.c
 >> +++ b/ref-filter.c
->> @@ -2118,9 +2118,10 @@ static void append_literal(const char *cp, const =
-char *ep, struct ref_formatting
->>         }
->>  }
->>
->> -void format_ref_array_item(struct ref_array_item *info,
->> +int format_ref_array_item(struct ref_array_item *info,
->>                            const struct ref_format *format,
->> -                          struct strbuf *final_buf)
->> +                          struct strbuf *final_buf,
->> +                          struct strbuf *error_buf)
+>> @@ -397,7 +397,8 @@ struct atom_value {
+>>   * Used to parse format string and sort specifiers
+>>   */
+>>  static int parse_ref_filter_atom(const struct ref_format *format,
+>> -                                const char *atom, const char *ep)
+>> +                                const char *atom, const char *ep, int *=
+res,
+>> +                                struct strbuf *err)
 >>  {
->>         const char *cp, *sp, *ep;
->>         struct ref_formatting_state state =3D REF_FORMATTING_STATE_INIT;
->> @@ -2148,19 +2149,25 @@ void format_ref_array_item(struct ref_array_item=
- *info,
->>                 resetv.s =3D GIT_COLOR_RESET;
->>                 append_atom(&resetv, &state);
->>         }
->> -       if (state.stack->prev)
->> -               die(_("format: %%(end) atom missing"));
->> +       if (state.stack->prev) {
->> +               strbuf_addstr(error_buf, _("format: %(end) atom missing"=
-));
+>>         const char *sp;
+>>         const char *arg;
+>> @@ -406,14 +407,18 @@ static int parse_ref_filter_atom(const struct ref_=
+format *format,
+>>         sp =3D atom;
+>>         if (*sp =3D=3D '*' && sp < ep)
+>>                 sp++; /* deref */
+>> -       if (ep <=3D sp)
+>> -               die(_("malformed field name: %.*s"), (int)(ep-atom), ato=
+m);
+>> +       if (ep <=3D sp) {
+>> +               strbuf_addf(err, _("malformed field name: %.*s"), (int)(=
+ep-atom), atom);
 >> +               return -1;
 >> +       }
->>         strbuf_addbuf(final_buf, &state.stack->output);
->>         pop_stack_element(&state.stack);
+>>
+>>         /* Do we have the atom already used elsewhere? */
+>>         for (i =3D 0; i < used_atom_cnt; i++) {
+>>                 int len =3D strlen(used_atom[i].name);
+>> -               if (len =3D=3D ep - atom && !memcmp(used_atom[i].name, a=
+tom, len))
+>> -                       return i;
+>> +               if (len =3D=3D ep - atom && !memcmp(used_atom[i].name, a=
+tom, len)) {
+>> +                       *res =3D i;
+>> +                       return 0;
+>> +               }
+>>         }
+>
+> If you did so, this hunk above would not need to be changed ...
+>
+>> @@ -458,7 +465,8 @@ static int parse_ref_filter_atom(const struct ref_fo=
+rmat *format,
+>>                 need_tagged =3D 1;
+>>         if (!strcmp(valid_atom[i].name, "symref"))
+>>                 need_symref =3D 1;
+>> -       return at;
+>> +       *res =3D at;
 >> +       return 0;
 >>  }
->>
->>  void show_ref_array_item(struct ref_array_item *info,
->>                          const struct ref_format *format)
->>  {
->>         struct strbuf final_buf =3D STRBUF_INIT;
->> +       struct strbuf error_buf =3D STRBUF_INIT;
->>
->> -       format_ref_array_item(info, format, &final_buf);
->> +       if (format_ref_array_item(info, format, &final_buf, &error_buf))
->> +               die("%s", error_buf.buf);
->>         fwrite(final_buf.buf, 1, final_buf.len, stdout);
->> +       strbuf_release(&error_buf);
 >
-> I think this `strbuf_release()` will never actually do anything. If we
-> get here, we had no error. But it makes sense (to me) to always be clear
-> about releasing this. In this case it is easy enough.
+> ... nor this one above ...
+>
+>>                 if (!ep)
+>>                         return error(_("malformed format string %s"), sp=
+);
+>>                 /* sp points at "%(" and ep points at the closing ")" */
+>> -               at =3D parse_ref_filter_atom(format, sp + 2, ep);
+>> +               if (parse_ref_filter_atom(format, sp + 2, ep, &at, &err)=
+)
+>> +                       die("%s", err.buf);
+>
+> And this would be more like "if (at < 0) die(...)".
+>
+>>         for (cp =3D format->format; *cp && (sp =3D find_next(cp)); cp =
+=3D ep + 1) {
+>>                 struct atom_value *atomv;
+>> +               struct strbuf err =3D STRBUF_INIT;
+>> +               int pos;
+>>
+>>                 ep =3D strchr(sp, ')');
+>>                 if (cp < sp)
+>>                         append_literal(cp, sp, &state);
+>> -               get_ref_atom_value(info,
+>> -                                  parse_ref_filter_atom(format, sp + 2,=
+ ep),
+>> -                                  &atomv);
+>> +               if (parse_ref_filter_atom(format, sp + 2, ep, &pos, &err=
+))
+>> +                       return -1;
+>> +               get_ref_atom_value(info, pos, &atomv);
+>>                 if (atomv->handler(atomv, &state, error_buf))
+>>                         return -1;
+>> +               strbuf_release(&err);
+>
+> This looks leaky: if we get an error, we've got something in the buffer
+> but we do not release it because we return early. Stepping back a bit, I
+> wonder why we do not do anything at all with "err". Stepping back a bit
+> more :-) I wonder if you could get rid of "err" and pass "error_buf" to
+> parse_ref_filter_atom() instead. Our caller would like to have access to
+> the error string?
 
-I was thinking same as you (I want to be sure that we release everything).
+Fully agree, I don't know why I decided to create one more buffer. Fixed.
 
 >
-> Possible counterargument: We might want this sort of "error-handling by
-> strbufs" to follow this simple rule: return an error if and only if you
-> add some error-string to the buffer. If this rule is universal enough,
-> it might be ok to skip releasing these sort of buffers if you do not
-> have an error.
-
-I just think that it's more intuitive to release everything in all
-cases, even if this line seems useless. Anyway, it's not super hard to
-remove this line in any moment, so I guess we could wait with this
-till the final review.
-
+> This ties back to my comment on the first patch -- "return negative if
+> and only if you add some error string to the buffer" might be a useful
+> rule?
 >
 > Martin
