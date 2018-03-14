@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 248191F404
-	for <e@80x24.org>; Wed, 14 Mar 2018 18:32:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D93171F404
+	for <e@80x24.org>; Wed, 14 Mar 2018 18:32:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752520AbeCNScg (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Mar 2018 14:32:36 -0400
-Received: from mail-vk0-f74.google.com ([209.85.213.74]:52182 "EHLO
-        mail-vk0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751714AbeCNSce (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Mar 2018 14:32:34 -0400
-Received: by mail-vk0-f74.google.com with SMTP id l81so2587703vkd.18
-        for <git@vger.kernel.org>; Wed, 14 Mar 2018 11:32:34 -0700 (PDT)
+        id S1752602AbeCNScn (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Mar 2018 14:32:43 -0400
+Received: from mail-io0-f201.google.com ([209.85.223.201]:54161 "EHLO
+        mail-io0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752588AbeCNScl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Mar 2018 14:32:41 -0400
+Received: by mail-io0-f201.google.com with SMTP id t27so3520082iob.20
+        for <git@vger.kernel.org>; Wed, 14 Mar 2018 11:32:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=kGTtnR5f4xVt28jHCdSL0LXD+W1agkn+474ffiKVgc0=;
-        b=QEA3tKcrFcvyMpyBtmaslPwILo58YfjysY2USzUggwtkaIBTmHQIOElegUT+4fyX9A
-         zWx+BstuizBtmONNAub1t0uJ/TEns/I4hWx+us//6yy9yacB0Y3a2cE+bamBIW5D+LU2
-         yjmN7uLJK484ezBT6nI5Ws8apsyLCQBXMyI+JAdPlDMGfgOoBnhoNwlQ8W4LHM3xYlJX
-         0x9PDpQ1eeKE6nodg1V0uNSR6jXhq8lAfzOYQdJ4Ys7VP2LD3tcnhC2MCM9fBOW0Rwk5
-         ozoVCk8ZH6hqR69BrID3ZTK4V42g0Rv32KxVvSvXUa8cFQrNndAK2LYNtM7fTXuFyqOF
-         2uTA==
+        bh=B5/zRxWjj/ESKrPKqKKq6HkXzJQDQtKN4I18zShM2HY=;
+        b=duIJRA6fksX9PIsNTpl0oc6A8YHxl7CPJsxtyONPHHpd+AlwYUqulObAIhAY6+pdh5
+         vqiZho0yI5rSzi9QcuSCYgeC4W8xa5xcKKDbeunrPAXqzZChie8Z75AW0WDEAkNJf/wm
+         rHBfpG8MBQaDT8l74EYKBjbpXIE/uoE7yGSeccocNo49ZlLoIkTdVJ7SClJxcfvMLnq4
+         9fMfOEOEkbI/qXE9H3k8YMfmwx6yFt/8AnvTaf5Gxhvyhx6xU4t3nmPteetf2VrHob0b
+         h2Bv4WJhmlWPbZY/1kFHbFM3CYv/B+j1jZatkmJaf/3OFl6pyq4R3PU7e9hvTQS9SVGy
+         /wOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=kGTtnR5f4xVt28jHCdSL0LXD+W1agkn+474ffiKVgc0=;
-        b=WRPhq1Oy2NNWWmx6N1SyfPhR4Hi7TNu6rJVD8CE1mc9+hjPUqFgdqqbEmmgzZDtg4n
-         ZRvshFEtvTfqTtHHrMIZQMysH47J9xQuo7AByVH6XOrj86HA/Q8jhjMuozZAkCW0Nfoh
-         f5XYOjVfuW3zYWYbUw7FLA8ur4fv4945CZhMP2rRy1Vx0vZmOsu6ku4+IrEgH+JRkSnd
-         yzXe/my9v8PXdKhfwcpmtwMpoaMHLklmGTWLFT2Aec0Nivqn89I/I7VtTWEFsXx5T5Xr
-         CEIAafmgsb+W0RSTvgnE5sfm5CyesT9v0akCl1Xa9slpFYz8MYqTpEMi9BQfAWQL52bh
-         LWiA==
-X-Gm-Message-State: AElRT7EJOWAtvQQZj6TtAFJZdvJ/cpCKToWb9jchjon8gyT0vCPpS4Tp
-        mSFgLJqkVOTOEXhTKqp5n2vrs9S+G+98f3R1xdiiTTl2746FYwO9qs61rWedz/j0a/LUv4Iqc2m
-        eYMy1RvMf/Lj1UTmS9Vl7T2IRaSgWFioSQ7gscXFc4rYklw4LibwH3Eg1bQ==
-X-Google-Smtp-Source: AG47ELsA5x1pqB1DjKZ2+Tr1y/3dDbyM6pvFq1liergjAB+S3ZoUwrxtSdOGY7sAJrILD9UApN3Bmyrgnkw=
+        bh=B5/zRxWjj/ESKrPKqKKq6HkXzJQDQtKN4I18zShM2HY=;
+        b=gSOONoHn/VaywjrenBTqTmwGGY3cyV2b7gVu4TphUhCniU6L5GBxxYWILOia815gjU
+         7Y2zneNYOzrQovSsMvUcrwF//ETlOq6PGrHFniszN8+k0851l2Vn6kFH8zemAGBHn1fc
+         q7olMRSR5FqYfZLrHVfbajyJuPAu8Au9gZ9oJmFMIagTN1gLTNNu92C9XjoDktya6t4w
+         ew/vdq1iVtqAtzoOFE8bRNrq1Xlo3fuLlfs5eI6CNhcLwYg3hkKbw+GlYQj+omr0iVa7
+         U/PVfD6g4P5NLJWV8ZT5Gm3gibBzOnzYw47WaJdqB6u0YgmgKX7uU96x82tgz0+hq0Ad
+         pIGw==
+X-Gm-Message-State: AElRT7F012QCwgiDHZQM3wbKIcGZz4g6tJLut12ysEguKQgyCnXPdUcn
+        tieKf6MYV0AH2d3YZTlUN6DdfGK1a6ranr5EGl+PtFS1ApVvsQrPOTqIP5jc3kynuMxuz8TblWw
+        olPgcPLA7vpYelfoP5aOFzVZa/dm6jY06Hfz8yjPQTXbH9OWt7O4SUHyTQQ==
+X-Google-Smtp-Source: AG47ELsw+b1+9lgYhY1hyzfNfx3BNcjk6WyNTCRhX/NXrW9AJ85mLqWNIQyJ/GJSPhqMGeP2FM7NqFlVEzo=
 MIME-Version: 1.0
-X-Received: by 10.159.50.106 with SMTP id y39mr102704uad.94.1521052353626;
- Wed, 14 Mar 2018 11:32:33 -0700 (PDT)
-Date:   Wed, 14 Mar 2018 11:31:44 -0700
+X-Received: by 10.36.73.66 with SMTP id z63mr1365572ita.14.1521052360555; Wed,
+ 14 Mar 2018 11:32:40 -0700 (PDT)
+Date:   Wed, 14 Mar 2018 11:31:47 -0700
 In-Reply-To: <20180314183213.223440-1-bmwill@google.com>
-Message-Id: <20180314183213.223440-8-bmwill@google.com>
+Message-Id: <20180314183213.223440-11-bmwill@google.com>
 References: <20180314183213.223440-1-bmwill@google.com>
 X-Mailer: git-send-email 2.16.2.804.g6dcf76e118-goog
-Subject: [PATCH v5 07/35] connect: convert get_remote_heads to use struct packet_reader
+Subject: [PATCH v5 10/35] protocol: introduce enum protocol_version value protocol_v2
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     git@jeffhostetler.com, gitster@pobox.com, jrnieder@gmail.com,
@@ -65,296 +65,171 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In order to allow for better control flow when protocol_v2 is introduced
-convert 'get_remote_heads()' to use 'struct packet_reader' to read
-packet lines.  This enables a client to be able to peek the first line
-of a server's response (without consuming it) in order to determine the
-protocol version its speaking and then passing control to the
-appropriate handler.
-
-This is needed because the initial response from a server speaking
-protocol_v0 includes the first ref, while subsequent protocol versions
-respond with a version line.  We want to be able to read this first line
-without consuming the first ref sent in the protocol_v0 case so that the
-protocol version the server is speaking can be determined outside of
-'get_remote_heads()' in a future patch.
+Introduce protocol_v2, a new value for 'enum protocol_version'.
+Subsequent patches will fill in the implementation of protocol_v2.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- connect.c | 173 ++++++++++++++++++++++++++++++------------------------
- 1 file changed, 95 insertions(+), 78 deletions(-)
+ builtin/fetch-pack.c   | 2 ++
+ builtin/receive-pack.c | 6 ++++++
+ builtin/send-pack.c    | 3 +++
+ builtin/upload-pack.c  | 7 +++++++
+ connect.c              | 3 +++
+ protocol.c             | 2 ++
+ protocol.h             | 1 +
+ remote-curl.c          | 3 +++
+ transport.c            | 9 +++++++++
+ 9 files changed, 36 insertions(+)
 
+diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
+index 85d4faf76c..b2374ddbbf 100644
+--- a/builtin/fetch-pack.c
++++ b/builtin/fetch-pack.c
+@@ -201,6 +201,8 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
+ 			   PACKET_READ_GENTLE_ON_EOF);
+ 
+ 	switch (discover_version(&reader)) {
++	case protocol_v2:
++		die("support for protocol v2 not implemented yet");
+ 	case protocol_v1:
+ 	case protocol_v0:
+ 		get_remote_heads(&reader, &ref, 0, NULL, &shallow);
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index b7ce7c7f52..3656e94fdb 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -1963,6 +1963,12 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
+ 		unpack_limit = receive_unpack_limit;
+ 
+ 	switch (determine_protocol_version_server()) {
++	case protocol_v2:
++		/*
++		 * push support for protocol v2 has not been implemented yet,
++		 * so ignore the request to use v2 and fallback to using v0.
++		 */
++		break;
+ 	case protocol_v1:
+ 		/*
+ 		 * v1 is just the original protocol with a version string,
+diff --git a/builtin/send-pack.c b/builtin/send-pack.c
+index 83cb125a68..b5427f75e3 100644
+--- a/builtin/send-pack.c
++++ b/builtin/send-pack.c
+@@ -263,6 +263,9 @@ int cmd_send_pack(int argc, const char **argv, const char *prefix)
+ 			   PACKET_READ_GENTLE_ON_EOF);
+ 
+ 	switch (discover_version(&reader)) {
++	case protocol_v2:
++		die("support for protocol v2 not implemented yet");
++		break;
+ 	case protocol_v1:
+ 	case protocol_v0:
+ 		get_remote_heads(&reader, &remote_refs, REF_NORMAL,
+diff --git a/builtin/upload-pack.c b/builtin/upload-pack.c
+index 2cb5cb35b0..8d53e9794b 100644
+--- a/builtin/upload-pack.c
++++ b/builtin/upload-pack.c
+@@ -47,6 +47,13 @@ int cmd_upload_pack(int argc, const char **argv, const char *prefix)
+ 		die("'%s' does not appear to be a git repository", dir);
+ 
+ 	switch (determine_protocol_version_server()) {
++	case protocol_v2:
++		/*
++		 * fetch support for protocol v2 has not been implemented yet,
++		 * so ignore the request to use v2 and fallback to using v0.
++		 */
++		upload_pack(&opts);
++		break;
+ 	case protocol_v1:
+ 		/*
+ 		 * v1 is just the original protocol with a version string,
 diff --git a/connect.c b/connect.c
-index c3a014c5ba..c82c90b7c3 100644
+index 0b111e62d7..4b89b984c4 100644
 --- a/connect.c
 +++ b/connect.c
-@@ -48,6 +48,12 @@ int check_ref_type(const struct ref *ref, int flags)
+@@ -83,6 +83,9 @@ enum protocol_version discover_version(struct packet_reader *reader)
+ 	}
  
- static void die_initial_contact(int unexpected)
- {
-+	/*
-+	 * A hang-up after seeing some response from the other end
-+	 * means that it is unexpected, as we know the other end is
-+	 * willing to talk to us.  A hang-up before seeing any
-+	 * response does not necessarily mean an ACL problem, though.
-+	 */
- 	if (unexpected)
- 		die(_("The remote end hung up upon initial contact"));
+ 	switch (version) {
++	case protocol_v2:
++		die("support for protocol v2 not implemented yet");
++		break;
+ 	case protocol_v1:
+ 		/* Read the peeked version line */
+ 		packet_reader_read(reader);
+diff --git a/protocol.c b/protocol.c
+index 43012b7eb6..5e636785d1 100644
+--- a/protocol.c
++++ b/protocol.c
+@@ -8,6 +8,8 @@ static enum protocol_version parse_protocol_version(const char *value)
+ 		return protocol_v0;
+ 	else if (!strcmp(value, "1"))
+ 		return protocol_v1;
++	else if (!strcmp(value, "2"))
++		return protocol_v2;
  	else
-@@ -56,6 +62,40 @@ static void die_initial_contact(int unexpected)
- 		      "and the repository exists."));
+ 		return protocol_unknown_version;
  }
+diff --git a/protocol.h b/protocol.h
+index 1b2bc94a8d..2ad35e433c 100644
+--- a/protocol.h
++++ b/protocol.h
+@@ -5,6 +5,7 @@ enum protocol_version {
+ 	protocol_unknown_version = -1,
+ 	protocol_v0 = 0,
+ 	protocol_v1 = 1,
++	protocol_v2 = 2,
+ };
  
-+static enum protocol_version discover_version(struct packet_reader *reader)
-+{
-+	enum protocol_version version = protocol_unknown_version;
-+
-+	/*
-+	 * Peek the first line of the server's response to
-+	 * determine the protocol version the server is speaking.
-+	 */
-+	switch (packet_reader_peek(reader)) {
-+	case PACKET_READ_EOF:
-+		die_initial_contact(0);
-+	case PACKET_READ_FLUSH:
-+	case PACKET_READ_DELIM:
-+		version = protocol_v0;
-+		break;
-+	case PACKET_READ_NORMAL:
-+		version = determine_protocol_version_client(reader->line);
-+		break;
-+	}
-+
-+	switch (version) {
-+	case protocol_v1:
-+		/* Read the peeked version line */
-+		packet_reader_read(reader);
-+		break;
-+	case protocol_v0:
-+		break;
-+	case protocol_unknown_version:
-+		BUG("unknown protocol version");
-+	}
-+
-+	return version;
-+}
-+
- static void parse_one_symref_info(struct string_list *symref, const char *val, int len)
- {
- 	char *sym, *target;
-@@ -109,60 +149,21 @@ static void annotate_refs_with_symref_info(struct ref *ref)
- 	string_list_clear(&symref, 0);
- }
- 
--/*
-- * Read one line of a server's ref advertisement into packet_buffer.
-- */
--static int read_remote_ref(int in, char **src_buf, size_t *src_len,
--			   int *responded)
-+static void process_capabilities(const char *line, int *len)
- {
--	int len = packet_read(in, src_buf, src_len,
--			      packet_buffer, sizeof(packet_buffer),
--			      PACKET_READ_GENTLE_ON_EOF |
--			      PACKET_READ_CHOMP_NEWLINE);
--	const char *arg;
--	if (len < 0)
--		die_initial_contact(*responded);
--	if (len > 4 && skip_prefix(packet_buffer, "ERR ", &arg))
--		die("remote error: %s", arg);
--
--	*responded = 1;
--
--	return len;
--}
--
--#define EXPECTING_PROTOCOL_VERSION 0
--#define EXPECTING_FIRST_REF 1
--#define EXPECTING_REF 2
--#define EXPECTING_SHALLOW 3
--
--/* Returns 1 if packet_buffer is a protocol version pkt-line, 0 otherwise. */
--static int process_protocol_version(void)
--{
--	switch (determine_protocol_version_client(packet_buffer)) {
--	case protocol_v1:
--		return 1;
--	case protocol_v0:
--		return 0;
--	default:
--		die("server is speaking an unknown protocol");
--	}
--}
--
--static void process_capabilities(int *len)
--{
--	int nul_location = strlen(packet_buffer);
-+	int nul_location = strlen(line);
- 	if (nul_location == *len)
- 		return;
--	server_capabilities = xstrdup(packet_buffer + nul_location + 1);
-+	server_capabilities = xstrdup(line + nul_location + 1);
- 	*len = nul_location;
- }
- 
--static int process_dummy_ref(void)
-+static int process_dummy_ref(const char *line)
- {
- 	struct object_id oid;
- 	const char *name;
- 
--	if (parse_oid_hex(packet_buffer, &oid, &name))
-+	if (parse_oid_hex(line, &oid, &name))
- 		return 0;
- 	if (*name != ' ')
- 		return 0;
-@@ -171,20 +172,20 @@ static int process_dummy_ref(void)
- 	return !oidcmp(&null_oid, &oid) && !strcmp(name, "capabilities^{}");
- }
- 
--static void check_no_capabilities(int len)
-+static void check_no_capabilities(const char *line, int len)
- {
--	if (strlen(packet_buffer) != len)
-+	if (strlen(line) != len)
- 		warning("Ignoring capabilities after first line '%s'",
--			packet_buffer + strlen(packet_buffer));
-+			line + strlen(line));
- }
- 
--static int process_ref(int len, struct ref ***list, unsigned int flags,
--		       struct oid_array *extra_have)
-+static int process_ref(const char *line, int len, struct ref ***list,
-+		       unsigned int flags, struct oid_array *extra_have)
- {
- 	struct object_id old_oid;
- 	const char *name;
- 
--	if (parse_oid_hex(packet_buffer, &old_oid, &name))
-+	if (parse_oid_hex(line, &old_oid, &name))
- 		return 0;
- 	if (*name != ' ')
- 		return 0;
-@@ -200,16 +201,17 @@ static int process_ref(int len, struct ref ***list, unsigned int flags,
- 		**list = ref;
- 		*list = &ref->next;
- 	}
--	check_no_capabilities(len);
-+	check_no_capabilities(line, len);
- 	return 1;
- }
- 
--static int process_shallow(int len, struct oid_array *shallow_points)
-+static int process_shallow(const char *line, int len,
-+			   struct oid_array *shallow_points)
- {
- 	const char *arg;
- 	struct object_id old_oid;
- 
--	if (!skip_prefix(packet_buffer, "shallow ", &arg))
-+	if (!skip_prefix(line, "shallow ", &arg))
- 		return 0;
- 
- 	if (get_oid_hex(arg, &old_oid))
-@@ -217,10 +219,17 @@ static int process_shallow(int len, struct oid_array *shallow_points)
- 	if (!shallow_points)
- 		die("repository on the other end cannot be shallow");
- 	oid_array_append(shallow_points, &old_oid);
--	check_no_capabilities(len);
-+	check_no_capabilities(line, len);
- 	return 1;
- }
- 
-+enum get_remote_heads_state {
-+	EXPECTING_FIRST_REF = 0,
-+	EXPECTING_REF,
-+	EXPECTING_SHALLOW,
-+	EXPECTING_DONE,
-+};
-+
  /*
-  * Read all the refs from the other end
-  */
-@@ -230,47 +239,55 @@ struct ref **get_remote_heads(int in, char *src_buf, size_t src_len,
- 			      struct oid_array *shallow_points)
- {
- 	struct ref **orig_list = list;
-+	int len = 0;
-+	enum get_remote_heads_state state = EXPECTING_FIRST_REF;
-+	struct packet_reader reader;
-+	const char *arg;
+diff --git a/remote-curl.c b/remote-curl.c
+index 9f6d07683d..dae8a4a48d 100644
+--- a/remote-curl.c
++++ b/remote-curl.c
+@@ -185,6 +185,9 @@ static struct ref *parse_git_refs(struct discovery *heads, int for_push)
+ 			   PACKET_READ_GENTLE_ON_EOF);
  
--	/*
--	 * A hang-up after seeing some response from the other end
--	 * means that it is unexpected, as we know the other end is
--	 * willing to talk to us.  A hang-up before seeing any
--	 * response does not necessarily mean an ACL problem, though.
--	 */
--	int responded = 0;
--	int len;
--	int state = EXPECTING_PROTOCOL_VERSION;
-+	packet_reader_init(&reader, in, src_buf, src_len,
-+			   PACKET_READ_CHOMP_NEWLINE |
-+			   PACKET_READ_GENTLE_ON_EOF);
-+
-+	discover_version(&reader);
+ 	switch (discover_version(&reader)) {
++	case protocol_v2:
++		die("support for protocol v2 not implemented yet");
++		break;
+ 	case protocol_v1:
+ 	case protocol_v0:
+ 		get_remote_heads(&reader, &list, for_push ? REF_NORMAL : 0,
+diff --git a/transport.c b/transport.c
+index 2378dcb38c..83d9dd1df6 100644
+--- a/transport.c
++++ b/transport.c
+@@ -203,6 +203,9 @@ static struct ref *get_refs_via_connect(struct transport *transport, int for_pus
  
- 	*list = NULL;
+ 	data->version = discover_version(&reader);
+ 	switch (data->version) {
++	case protocol_v2:
++		die("support for protocol v2 not implemented yet");
++		break;
+ 	case protocol_v1:
+ 	case protocol_v0:
+ 		get_remote_heads(&reader, &refs,
+@@ -250,6 +253,9 @@ static int fetch_refs_via_pack(struct transport *transport,
+ 		refs_tmp = get_refs_via_connect(transport, 0);
  
--	while ((len = read_remote_ref(in, &src_buf, &src_len, &responded))) {
-+	while (state != EXPECTING_DONE) {
-+		switch (packet_reader_read(&reader)) {
-+		case PACKET_READ_EOF:
-+			die_initial_contact(1);
-+		case PACKET_READ_NORMAL:
-+			len = reader.pktlen;
-+			if (len > 4 && skip_prefix(reader.line, "ERR ", &arg))
-+				die("remote error: %s", arg);
-+			break;
-+		case PACKET_READ_FLUSH:
-+			state = EXPECTING_DONE;
-+			break;
-+		case PACKET_READ_DELIM:
-+			die("invalid packet");
-+		}
-+
- 		switch (state) {
--		case EXPECTING_PROTOCOL_VERSION:
--			if (process_protocol_version()) {
--				state = EXPECTING_FIRST_REF;
--				break;
--			}
--			state = EXPECTING_FIRST_REF;
--			/* fallthrough */
- 		case EXPECTING_FIRST_REF:
--			process_capabilities(&len);
--			if (process_dummy_ref()) {
-+			process_capabilities(reader.line, &len);
-+			if (process_dummy_ref(reader.line)) {
- 				state = EXPECTING_SHALLOW;
- 				break;
- 			}
- 			state = EXPECTING_REF;
- 			/* fallthrough */
- 		case EXPECTING_REF:
--			if (process_ref(len, &list, flags, extra_have))
-+			if (process_ref(reader.line, len, &list, flags, extra_have))
- 				break;
- 			state = EXPECTING_SHALLOW;
- 			/* fallthrough */
- 		case EXPECTING_SHALLOW:
--			if (process_shallow(len, shallow_points))
-+			if (process_shallow(reader.line, len, shallow_points))
- 				break;
--			die("protocol error: unexpected '%s'", packet_buffer);
--		default:
--			die("unexpected state %d", state);
-+			die("protocol error: unexpected '%s'", reader.line);
-+		case EXPECTING_DONE:
-+			break;
- 		}
- 	}
+ 	switch (data->version) {
++	case protocol_v2:
++		die("support for protocol v2 not implemented yet");
++		break;
+ 	case protocol_v1:
+ 	case protocol_v0:
+ 		refs = fetch_pack(&args, data->fd, data->conn,
+@@ -585,6 +591,9 @@ static int git_transport_push(struct transport *transport, struct ref *remote_re
+ 		args.push_cert = SEND_PACK_PUSH_CERT_NEVER;
  
+ 	switch (data->version) {
++	case protocol_v2:
++		die("support for protocol v2 not implemented yet");
++		break;
+ 	case protocol_v1:
+ 	case protocol_v0:
+ 		ret = send_pack(&args, data->fd, data->conn, remote_refs,
 -- 
 2.16.2.804.g6dcf76e118-goog
 
