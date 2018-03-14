@@ -2,667 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 36BBB1F404
-	for <e@80x24.org>; Wed, 14 Mar 2018 03:29:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A607B1F404
+	for <e@80x24.org>; Wed, 14 Mar 2018 05:06:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933012AbeCND25 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Mar 2018 23:28:57 -0400
-Received: from mail-qt0-f170.google.com ([209.85.216.170]:40912 "EHLO
-        mail-qt0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753063AbeCND2y (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Mar 2018 23:28:54 -0400
-Received: by mail-qt0-f170.google.com with SMTP id y6so2032588qtm.7
-        for <git@vger.kernel.org>; Tue, 13 Mar 2018 20:28:54 -0700 (PDT)
+        id S1751000AbeCNFGK (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Mar 2018 01:06:10 -0400
+Received: from mail-pf0-f176.google.com ([209.85.192.176]:41371 "EHLO
+        mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750816AbeCNFGJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Mar 2018 01:06:09 -0400
+Received: by mail-pf0-f176.google.com with SMTP id f80so934311pfa.8
+        for <git@vger.kernel.org>; Tue, 13 Mar 2018 22:06:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:subject:date:message-id:in-reply-to:references;
-        bh=bi7ctrdXGzWUORfycZEla+vk8doLa55aaL/LBTLJ+6M=;
-        b=lCz2ljYI9wqDJ/bcU+Eq+3LTNB6oSbY2f0bv7w0w2zN4/JeW49KSbzfALrd1RYUmkh
-         8NOyG69r2TM+O1k78OKswJSf5NMgeHRetqKUnFHIw7l0TCwGCFpGQVfH6ZuHaeC+uuAZ
-         NKLJ6fqUYYkmbk1HX0KDUY/4fNd1eK7Y60eaKLCFdKYeAZCWibyv+tjb8L2ZAIhv5/OY
-         FUHnyul1X6iD8MZ1LDp7hcNcbSVSHtxaNejB4fhO/h/sWO4D7kzc2eJ29+c7OThJJ4ik
-         BjWHz5LLt+/VRIrfIUe6BYMnWCs6i2uD2QZ6T5NOStr5EiAD5TMNcOu4ieKmCwzyFjMm
-         Y6yg==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=cLWkdksLmosqTDwtNchRnHukm6KqrTvWBiHk1y+KmjA=;
+        b=ird2D7hVAIYUGpMhtokiJaEOK5s+8N2MpqItyLTdD0RCDTI2IrRmjlg9tyUH9cxAdC
+         UFD7qFjOPlbJKKju4lgHhi1FQttIjHu8/H7bZUgOSZdQnGwzQF3UekeltArHyj1o5u4n
+         nH7abbhe9DYwN3oPBX4haNtimkpIiYKtnAne6vVCG8kbekGmrjOO1TquOisHZIPhOjwN
+         AvsbjRDD10abFZfnNBHfjRrcKQ0XBTFmvO0Kp+O5x4y8vx/wEGxetrATFornEjPQPY+5
+         mQE0FroeQAv/QsnGSnU3R4h2T1bTdnO2JY+c3WWyNgpYieKSIKsmsp0CdrdY4uoPyeey
+         rMoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
-         :references;
-        bh=bi7ctrdXGzWUORfycZEla+vk8doLa55aaL/LBTLJ+6M=;
-        b=aDe+3wFclruUJlLZCQAlxgTYcsx62B9H7rh8SzUtMvkD3/XSmBdVcqSKZmRcSMQIt/
-         JGvvmtSsDhNczk9+h8cpJkyth8OJdFwoztdVruHgdfMueNeQ717/HnYNwWSioJrDs0Hj
-         T2Rzbwb8IeC3ycBpxSHnTH9rHRRdBSfVj8Q9qZwng3UlDmFfbJ1RMgG66Cwdqy4HaEPf
-         N0NEUpGs2C5dO8+wqBj+1WUUs90lOQhij5f1askncchqhlPnqhDS/hP7d7haF0/xULvW
-         OHdsSV8IRTIiWxLUKpFeHPFS9qvLS8FyUPBXN0fTHLHUFk2G6TmMVUMbsprSXvQoFKmM
-         Z8vw==
-X-Gm-Message-State: AElRT7HZnfJqBY36+tUPZ7r37csgf2fW1P0zLSOb5lh828YxL0/d4PXT
-        zH08WcAhEP4KV3MF5ByeiKamvWdK
-X-Google-Smtp-Source: AG47ELsNTmpaq68brD54smcZWcavkvVLEAHqjtbr+YaqR6UH+jMo1F4H7x8lBygU8BdVD+2vlySUzg==
-X-Received: by 10.237.56.234 with SMTP id k97mr4802279qte.35.1520998132839;
-        Tue, 13 Mar 2018 20:28:52 -0700 (PDT)
-Received: from viet-VPCEA32EG.hsd1.pa.comcast.net ([2601:4a:c102:100d:8071:bd5c:7727:4ae6])
-        by smtp.gmail.com with ESMTPSA id d129sm856866qkb.21.2018.03.13.20.28.52
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 13 Mar 2018 20:28:52 -0700 (PDT)
-From:   Viet Hung Tran <viethtran1620@gmail.com>
-To:     Git List <git@vger.kernel.org>
-Subject: [GSoC][PATCH 1/2] git-ci: add .pylintrc file
-Date:   Tue, 13 Mar 2018 23:28:50 -0400
-Message-Id: <20180314032851.11527-1-viethtran1620@gmail.com>
-X-Mailer: git-send-email 2.16.2.440.gc6284da
-In-Reply-To: <CAE5ih78HdDvN+x94H3Tzygis8QGROUe4B-yBubFH4simN2u9vQ@mail.gmail.com>
-References: <CAE5ih78HdDvN+x94H3Tzygis8QGROUe4B-yBubFH4simN2u9vQ@mail.gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=cLWkdksLmosqTDwtNchRnHukm6KqrTvWBiHk1y+KmjA=;
+        b=H3ihTn98AwdttTy4g0KB6Fxs3ZsXCpocR8DKgmC1Xz5uS573dVmel06G3Qrze1Bcyb
+         GQP49ETC8JB9qp21TKVuQe1XF6sUQZ3yUMWpkBaN9lsaiDiDa9ZU2gZOL1R54h2hplBQ
+         rDPdw65BAHSEewgMdJ219u11Vb9IcY9m8ECpU9e/ufYXi8ZhQRwnmyoM+gKW4sfTn7fB
+         Un4ifdeHZhhJERULYGFbNJyMYocuaD9QAd0q8/rwjFxJCTvY1UnYV7Ob6uhSkpKSJRpl
+         dFfdQmIcOVQpIRTS38z4hDMYvI3mhfTieSAEHGwHu7ZyLRwBP+XF3S5r+BqGqCreO/Du
+         TsSw==
+X-Gm-Message-State: AElRT7EbwKUTSrly0MDPWOHRrEPUlNG/f8ABMBW8b0jZOc7C/cC8xx58
+        Pvzb/pox7HGURW0AkullCKbBgegcF0T+NQVQtPA=
+X-Google-Smtp-Source: AG47ELu6eHTfAHNaGsMmT9OrmlOZE9+aNiY9G9LojZ4ntb/rWTD27Tcj3sWH4MRPxMfkLy/KgQj2O1WsvozLyeXY8+Y=
+X-Received: by 10.99.167.2 with SMTP id d2mr2554324pgf.408.1521003969057; Tue,
+ 13 Mar 2018 22:06:09 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.236.191.144 with HTTP; Tue, 13 Mar 2018 22:06:08 -0700 (PDT)
+In-Reply-To: <xmqqo9jr1we3.fsf@gitster-ct.c.googlers.com>
+References: <cover.1520680894.git.martin.agren@gmail.com> <78669e644b64fc10c34adb59717d2039f81cb092.1520680894.git.martin.agren@gmail.com>
+ <xmqqo9jr1we3.fsf@gitster-ct.c.googlers.com>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Wed, 14 Mar 2018 06:06:08 +0100
+Message-ID: <CAN0heSoDSf+3VmRowHmiTPDDzfdvUjQi+tjpPF6RW172ZE5BWw@mail.gmail.com>
+Subject: Re: [PATCH 3/3] shortlog: do not accept revisions when run outside repo
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello Mr. Diamand,
+On 13 March 2018 at 22:46, Junio C Hamano <gitster@pobox.com> wrote:
+> Martin =C3=85gren <martin.agren@gmail.com> writes:
+>
+>> in order to decide whether we should read from stdin. (So yes, after
+>> this patch, we will still silently ignore stdin for confused usage such
+>> as `git log v2.15.0.. | git shortlog v2.16.0..`. But at least that does
+>> not crash.)
+>
+>     $ git log -p | git shortlog Documentation/
+>
+> is also a nonsense request.  When outside a repository, i.e.
+>
+>     $ git -C $path_to_repo | git shortlog Documentation/
+>
+> is not giving any revisions, so the error message should not say "no
+> revisions can be given"---a nitpicky bug reporter would say "I gave
+> no revisions, why are you complaining to me?"
 
-I have added the .pylintrc configuration file into the repository.
-It still reports several warnings as you said. 
+Good point. I will see if I can make this similar to other places. Maybe
+something like "too many arguments given outside repository". Thanks.
 
-Here is the link for my build: https://travis-ci.org/VietHTran/git/jobs/353135582
-
-Do you think I should edit the .pylintrc in order for it to also ignore the 
-current warning? I included that edit in the [PATCH 2/2]. 
-
-Viet
-
-Signed-off-by: Viet Hung Tran <viethtran1620@gmail.com>
----
- .pylintrc | 577 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 577 insertions(+)
- create mode 100644 .pylintrc
-
-diff --git a/.pylintrc b/.pylintrc
-new file mode 100644
-index 000000000..0db42d646
---- /dev/null
-+++ b/.pylintrc
-@@ -0,0 +1,577 @@
-+[MASTER]
-+
-+# Specify a configuration file.
-+#rcfile=
-+
-+# Add files or directories to the blacklist. They should be base names, not
-+# paths.
-+ignore=
-+
-+# Pickle collected data for later comparisons.
-+persistent=no
-+
-+# List of plugins (as comma separated values of python modules names) to load,
-+# usually to register additional checkers.
-+load-plugins=
-+
-+# Use multiple processes to speed up Pylint.
-+# DO NOT CHANGE THIS VALUES >1 HIDE RESULTS!!!!!
-+jobs=1
-+
-+# Allow loading of arbitrary C extensions. Extensions are imported into the
-+# active Python interpreter and may run arbitrary code.
-+unsafe-load-any-extension=no
-+
-+# A comma-separated list of package or module names from where C extensions may
-+# be loaded. Extensions are loading into the active Python interpreter and may
-+# run arbitrary code
-+extension-pkg-whitelist=
-+
-+# Allow optimization of some AST trees. This will activate a peephole AST
-+# optimizer, which will apply various small optimizations. For instance, it can
-+# be used to obtain the result of joining multiple strings with the addition
-+# operator. Joining a lot of strings can lead to a maximum recursion error in
-+# Pylint and this flag can prevent that. It has one side effect, the resulting
-+# AST will be different than the one from reality.
-+optimize-ast=no
-+
-+
-+[MESSAGES CONTROL]
-+
-+# Only show warnings with the listed confidence levels. Leave empty to show
-+# all. Valid levels: HIGH, INFERENCE, INFERENCE_FAILURE, UNDEFINED
-+confidence=
-+
-+# Enable the message, report, category or checker with the given id(s). You can
-+# either give multiple identifier separated by comma (,) or put this option
-+# multiple time. See also the "--disable" option for examples.
-+disable=all
-+
-+enable=import-error,
-+       import-self,
-+       reimported,
-+       wildcard-import,
-+       misplaced-future,
-+       relative-import,
-+       deprecated-module,
-+       unpacking-non-sequence,
-+       invalid-all-object,
-+       undefined-all-variable,
-+       used-before-assignment,
-+       cell-var-from-loop,
-+       global-variable-undefined,
-+       redefined-builtin,
-+       redefine-in-handler,
-+       unused-import,
-+       unused-wildcard-import,
-+       global-variable-not-assigned,
-+       undefined-loop-variable,
-+       global-statement,
-+       global-at-module-level,
-+       bad-open-mode,
-+       redundant-unittest-assert,
-+       boolean-datetime,
-+       # Has common issues with our style due to
-+       # https://github.com/PyCQA/pylint/issues/210
-+       unused-variable
-+
-+# Things we'd like to enable someday:
-+# redefined-outer-name (requires a bunch of work to clean up our code first)
-+# undefined-variable (re-enable when pylint fixes https://github.com/PyCQA/pylint/issues/760)
-+# no-name-in-module (giving us spurious warnings https://github.com/PyCQA/pylint/issues/73)
-+# unused-argument (need to clean up or code a lot, e.g. prefix unused_?)
-+
-+# Things we'd like to try.
-+# Procedure:
-+# 1. Enable a bunch.
-+# 2. See if there's spurious ones; if so disable.
-+# 3. Record above.
-+# 4. Remove from this list.
-+       # deprecated-method,
-+       # anomalous-unicode-escape-in-string,
-+       # anomalous-backslash-in-string,
-+       # not-in-loop,
-+       # function-redefined,
-+       # continue-in-finally,
-+       # abstract-class-instantiated,
-+       # star-needs-assignment-target,
-+       # duplicate-argument-name,
-+       # return-in-init,
-+       # too-many-star-expressions,
-+       # nonlocal-and-global,
-+       # return-outside-function,
-+       # return-arg-in-generator,
-+       # invalid-star-assignment-target,
-+       # bad-reversed-sequence,
-+       # nonexistent-operator,
-+       # yield-outside-function,
-+       # init-is-generator,
-+       # nonlocal-without-binding,
-+       # lost-exception,
-+       # assert-on-tuple,
-+       # dangerous-default-value,
-+       # duplicate-key,
-+       # useless-else-on-loop,
-+       # expression-not-assigned,
-+       # confusing-with-statement,
-+       # unnecessary-lambda,
-+       # pointless-statement,
-+       # pointless-string-statement,
-+       # unnecessary-pass,
-+       # unreachable,
-+       # eval-used,
-+       # exec-used,
-+       # bad-builtin,
-+       # using-constant-test,
-+       # deprecated-lambda,
-+       # bad-super-call,
-+       # missing-super-argument,
-+       # slots-on-old-class,
-+       # super-on-old-class,
-+       # property-on-old-class,
-+       # not-an-iterable,
-+       # not-a-mapping,
-+       # format-needs-mapping,
-+       # truncated-format-string,
-+       # missing-format-string-key,
-+       # mixed-format-string,
-+       # too-few-format-args,
-+       # bad-str-strip-call,
-+       # too-many-format-args,
-+       # bad-format-character,
-+       # format-combined-specification,
-+       # bad-format-string-key,
-+       # bad-format-string,
-+       # missing-format-attribute,
-+       # missing-format-argument-key,
-+       # unused-format-string-argument,
-+       # unused-format-string-key,
-+       # invalid-format-index,
-+       # bad-indentation,
-+       # mixed-indentation,
-+       # unnecessary-semicolon,
-+       # lowercase-l-suffix,
-+       # fixme,
-+       # invalid-encoded-data,
-+       # unpacking-in-except,
-+       # import-star-module-level,
-+       # parameter-unpacking,
-+       # long-suffix,
-+       # old-octal-literal,
-+       # old-ne-operator,
-+       # backtick,
-+       # old-raise-syntax,
-+       # print-statement,
-+       # metaclass-assignment,
-+       # next-method-called,
-+       # dict-iter-method,
-+       # dict-view-method,
-+       # indexing-exception,
-+       # raising-string,
-+       # standarderror-builtin,
-+       # using-cmp-argument,
-+       # cmp-method,
-+       # coerce-method,
-+       # delslice-method,
-+       # getslice-method,
-+       # hex-method,
-+       # nonzero-method,
-+       # oct-method,
-+       # setslice-method,
-+       # apply-builtin,
-+       # basestring-builtin,
-+       # buffer-builtin,
-+       # cmp-builtin,
-+       # coerce-builtin,
-+       # old-division,
-+       # execfile-builtin,
-+       # file-builtin,
-+       # filter-builtin-not-iterating,
-+       # no-absolute-import,
-+       # input-builtin,
-+       # intern-builtin,
-+       # long-builtin,
-+       # map-builtin-not-iterating,
-+       # range-builtin-not-iterating,
-+       # raw_input-builtin,
-+       # reduce-builtin,
-+       # reload-builtin,
-+       # round-builtin,
-+       # unichr-builtin,
-+       # unicode-builtin,
-+       # xrange-builtin,
-+       # zip-builtin-not-iterating,
-+       # logging-format-truncated,
-+       # logging-too-few-args,
-+       # logging-too-many-args,
-+       # logging-unsupported-format,
-+       # logging-not-lazy,
-+       # logging-format-interpolation,
-+       # invalid-unary-operand-type,
-+       # unsupported-binary-operation,
-+       # no-member,
-+       # not-callable,
-+       # redundant-keyword-arg,
-+       # assignment-from-no-return,
-+       # assignment-from-none,
-+       # not-context-manager,
-+       # repeated-keyword,
-+       # missing-kwoa,
-+       # no-value-for-parameter,
-+       # invalid-sequence-index,
-+       # invalid-slice-index,
-+       # too-many-function-args,
-+       # unexpected-keyword-arg,
-+       # unsupported-membership-test,
-+       # unsubscriptable-object,
-+       # access-member-before-definition,
-+       # method-hidden,
-+       # assigning-non-slot,
-+       # duplicate-bases,
-+       # inconsistent-mro,
-+       # inherit-non-class,
-+       # invalid-slots,
-+       # invalid-slots-object,
-+       # no-method-argument,
-+       # no-self-argument,
-+       # unexpected-special-method-signature,
-+       # non-iterator-returned,
-+       # protected-access,
-+       # arguments-differ,
-+       # attribute-defined-outside-init,
-+       # no-init,
-+       # abstract-method,
-+       # signature-differs,
-+       # bad-staticmethod-argument,
-+       # non-parent-init-called,
-+       # super-init-not-called,
-+       # bad-except-order,
-+       # catching-non-exception,
-+       # bad-exception-context,
-+       # notimplemented-raised,
-+       # raising-bad-type,
-+       # raising-non-exception,
-+       # misplaced-bare-raise,
-+       # duplicate-except,
-+       # broad-except,
-+       # nonstandard-exception,
-+       # binary-op-exception,
-+       # bare-except,
-+       # not-async-context-manager,
-+       # yield-inside-async-function,
-+
-+# ...
-+[REPORTS]
-+
-+# Set the output format. Available formats are text, parseable, colorized, msvs
-+# (visual studio) and html. You can also give a reporter class, eg
-+# mypackage.mymodule.MyReporterClass.
-+output-format=parseable
-+
-+# Put messages in a separate file for each module / package specified on the
-+# command line instead of printing them on stdout. Reports (if any) will be
-+# written in a file name "pylint_global.[txt|html]".
-+files-output=no
-+
-+# Tells whether to display a full report or only the messages
-+reports=no
-+
-+# Python expression which should return a note less than 10 (10 is the highest
-+# note). You have access to the variables errors warning, statement which
-+# respectively contain the number of errors / warnings messages and the total
-+# number of statements analyzed. This is used by the global evaluation report
-+# (RP0004).
-+evaluation=10.0 - ((float(5 * error + warning + refactor + convention) / statement) * 10)
-+
-+# Template used to display messages. This is a python new-style format string
-+# used to format the message information. See doc for all details
-+#msg-template=
-+
-+
-+[LOGGING]
-+
-+# Logging modules to check that the string format arguments are in logging
-+# function parameter format
-+logging-modules=logging
-+
-+
-+[FORMAT]
-+
-+# Maximum number of characters on a single line.
-+max-line-length=100
-+
-+# Regexp for a line that is allowed to be longer than the limit.
-+ignore-long-lines=^\s*(# )?<?https?://\S+>?$
-+
-+# Allow the body of an if to be on the same line as the test if there is no
-+# else.
-+single-line-if-stmt=no
-+
-+# List of optional constructs for which whitespace checking is disabled. `dict-
-+# separator` is used to allow tabulation in dicts, etc.: {1  : 1,\n222: 2}.
-+# `trailing-comma` allows a space between comma and closing bracket: (a, ).
-+# `empty-line` allows space-only lines.
-+no-space-check=trailing-comma,dict-separator
-+
-+# Maximum number of lines in a module
-+max-module-lines=1000
-+
-+# String used as indentation unit. This is usually "    " (4 spaces) or "\t" (1
-+# tab).
-+indent-string='    '
-+
-+# Number of spaces of indent required inside a hanging  or continued line.
-+indent-after-paren=4
-+
-+# Expected format of line ending, e.g. empty (any line ending), LF or CRLF.
-+expected-line-ending-format=
-+
-+
-+[TYPECHECK]
-+
-+# Tells whether missing members accessed in mixin class should be ignored. A
-+# mixin class is detected if its name ends with "mixin" (case insensitive).
-+ignore-mixin-members=yes
-+
-+# List of module names for which member attributes should not be checked
-+# (useful for modules/projects where namespaces are manipulated during runtime
-+# and thus existing member attributes cannot be deduced by static analysis. It
-+# supports qualified module names, as well as Unix pattern matching.
-+ignored-modules=
-+
-+# List of classes names for which member attributes should not be checked
-+# (useful for classes with attributes dynamically set). This supports can work
-+# with qualified names.
-+ignored-classes=
-+
-+# List of members which are set dynamically and missed by pylint inference
-+# system, and so shouldn't trigger E1101 when accessed. Python regular
-+# expressions are accepted.
-+generated-members=
-+
-+
-+[VARIABLES]
-+
-+# Tells whether we should check for unused import in __init__ files.
-+init-import=no
-+
-+# A regular expression matching the name of dummy variables (i.e. expectedly
-+# not used).
-+dummy-variables-rgx=^_|^dummy
-+
-+# List of additional names supposed to be defined in builtins. Remember that
-+# you should avoid to define new builtins when possible.
-+additional-builtins=
-+
-+# List of strings which can identify a callback function by name. A callback
-+# name must start or end with one of those strings.
-+callbacks=cb_,_cb
-+
-+
-+[SIMILARITIES]
-+
-+# Minimum lines number of a similarity.
-+min-similarity-lines=4
-+
-+# Ignore comments when computing similarities.
-+ignore-comments=yes
-+
-+# Ignore docstrings when computing similarities.
-+ignore-docstrings=yes
-+
-+# Ignore imports when computing similarities.
-+ignore-imports=no
-+
-+
-+[SPELLING]
-+
-+# Spelling dictionary name. Available dictionaries: none. To make it working
-+# install python-enchant package.
-+spelling-dict=
-+
-+# List of comma separated words that should not be checked.
-+spelling-ignore-words=
-+
-+# A path to a file that contains private dictionary; one word per line.
-+spelling-private-dict-file=
-+
-+# Tells whether to store unknown words to indicated private dictionary in
-+# --spelling-private-dict-file option instead of raising a message.
-+spelling-store-unknown-words=no
-+
-+
-+[MISCELLANEOUS]
-+
-+# List of note tags to take in consideration, separated by a comma.
-+notes=FIXME,XXX,TODO
-+
-+
-+[BASIC]
-+
-+# List of builtins function names that should not be used, separated by a comma
-+bad-functions=map,filter,input
-+
-+# Good variable names which should always be accepted, separated by a comma
-+good-names=i,j,k,ex,Run,_
-+
-+# Bad variable names which should always be refused, separated by a comma
-+bad-names=foo,bar,baz,toto,tutu,tata
-+
-+# Colon-delimited sets of names that determine each other's naming style when
-+# the name regexes allow several styles.
-+name-group=
-+
-+# Include a hint for the correct naming format with invalid-name
-+include-naming-hint=no
-+
-+# Regular expression matching correct function names
-+function-rgx=[a-z_][a-z0-9_]{2,30}$
-+
-+# Naming hint for function names
-+function-name-hint=[a-z_][a-z0-9_]{2,30}$
-+
-+# Regular expression matching correct variable names
-+variable-rgx=[a-z_][a-z0-9_]{2,30}$
-+
-+# Naming hint for variable names
-+variable-name-hint=[a-z_][a-z0-9_]{2,30}$
-+
-+# Regular expression matching correct constant names
-+const-rgx=(([A-Z_][A-Z0-9_]*)|(__.*__))$
-+
-+# Naming hint for constant names
-+const-name-hint=(([A-Z_][A-Z0-9_]*)|(__.*__))$
-+
-+# Regular expression matching correct attribute names
-+attr-rgx=[a-z_][a-z0-9_]{2,30}$
-+
-+# Naming hint for attribute names
-+attr-name-hint=[a-z_][a-z0-9_]{2,30}$
-+
-+# Regular expression matching correct argument names
-+argument-rgx=[a-z_][a-z0-9_]{2,30}$
-+
-+# Naming hint for argument names
-+argument-name-hint=[a-z_][a-z0-9_]{2,30}$
-+
-+# Regular expression matching correct class attribute names
-+class-attribute-rgx=([A-Za-z_][A-Za-z0-9_]{2,30}|(__.*__))$
-+
-+# Naming hint for class attribute names
-+class-attribute-name-hint=([A-Za-z_][A-Za-z0-9_]{2,30}|(__.*__))$
-+
-+# Regular expression matching correct inline iteration names
-+inlinevar-rgx=[A-Za-z_][A-Za-z0-9_]*$
-+
-+# Naming hint for inline iteration names
-+inlinevar-name-hint=[A-Za-z_][A-Za-z0-9_]*$
-+
-+# Regular expression matching correct class names
-+class-rgx=[A-Z_][a-zA-Z0-9]+$
-+
-+# Naming hint for class names
-+class-name-hint=[A-Z_][a-zA-Z0-9]+$
-+
-+# Regular expression matching correct module names
-+module-rgx=(([a-z_][a-z0-9_]*)|([A-Z][a-zA-Z0-9]+))$
-+
-+# Naming hint for module names
-+module-name-hint=(([a-z_][a-z0-9_]*)|([A-Z][a-zA-Z0-9]+))$
-+
-+# Regular expression matching correct method names
-+method-rgx=[a-z_][a-z0-9_]{2,30}$
-+
-+# Naming hint for method names
-+method-name-hint=[a-z_][a-z0-9_]{2,30}$
-+
-+# Regular expression which should only match function or class names that do
-+# not require a docstring.
-+no-docstring-rgx=^_
-+
-+# Minimum line length for functions/classes that require docstrings, shorter
-+# ones are exempt.
-+docstring-min-length=-1
-+
-+
-+[ELIF]
-+
-+# Maximum number of nested blocks for function / method body
-+max-nested-blocks=5
-+
-+
-+[IMPORTS]
-+
-+# Deprecated modules which should not be used, separated by a comma
-+deprecated-modules=regsub,TERMIOS,Bastion,rexec
-+
-+# Create a graph of every (i.e. internal and external) dependencies in the
-+# given file (report RP0402 must not be disabled)
-+import-graph=
-+
-+# Create a graph of external dependencies in the given file (report RP0402 must
-+# not be disabled)
-+ext-import-graph=
-+
-+# Create a graph of internal dependencies in the given file (report RP0402 must
-+# not be disabled)
-+int-import-graph=
-+
-+
-+[DESIGN]
-+
-+# Maximum number of arguments for function / method
-+max-args=5
-+
-+# Argument names that match this expression will be ignored. Default to name
-+# with leading underscore
-+ignored-argument-names=_.*
-+
-+# Maximum number of locals for function / method body
-+max-locals=15
-+
-+# Maximum number of return / yield for function / method body
-+max-returns=6
-+
-+# Maximum number of branch for function / method body
-+max-branches=12
-+
-+# Maximum number of statements in function / method body
-+max-statements=50
-+
-+# Maximum number of parents for a class (see R0901).
-+max-parents=7
-+
-+# Maximum number of attributes for a class (see R0902).
-+max-attributes=7
-+
-+# Minimum number of public methods for a class (see R0903).
-+min-public-methods=2
-+
-+# Maximum number of public methods for a class (see R0904).
-+max-public-methods=20
-+
-+# Maximum number of boolean expressions in a if statement
-+max-bool-expr=5
-+
-+
-+[CLASSES]
-+
-+# List of method names used to declare (i.e. assign) instance attributes.
-+defining-attr-methods=__init__,__new__,setUp
-+
-+# List of valid names for the first argument in a class method.
-+valid-classmethod-first-arg=cls
-+
-+# List of valid names for the first argument in a metaclass class method.
-+valid-metaclass-classmethod-first-arg=mcs
-+
-+# List of member names, which should be excluded from the protected access
-+# warning.
-+exclude-protected=_asdict,_fields,_replace,_source,_make
-+
-+
-+[EXCEPTIONS]
-+
-+# Exceptions that will emit a warning when being caught. Defaults to
-+# "Exception"
-+overgeneral-exceptions=Exception
--- 
-2.16.2.440.gc6284da
-
+Martin
