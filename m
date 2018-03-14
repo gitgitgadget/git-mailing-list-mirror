@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D93171F404
-	for <e@80x24.org>; Wed, 14 Mar 2018 18:32:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B79D51F404
+	for <e@80x24.org>; Wed, 14 Mar 2018 18:32:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752602AbeCNScn (ORCPT <rfc822;e@80x24.org>);
+        id S1752609AbeCNScp (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Mar 2018 14:32:45 -0400
+Received: from mail-vk0-f73.google.com ([209.85.213.73]:47040 "EHLO
+        mail-vk0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752330AbeCNScn (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 14 Mar 2018 14:32:43 -0400
-Received: from mail-io0-f201.google.com ([209.85.223.201]:54161 "EHLO
-        mail-io0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752588AbeCNScl (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Mar 2018 14:32:41 -0400
-Received: by mail-io0-f201.google.com with SMTP id t27so3520082iob.20
-        for <git@vger.kernel.org>; Wed, 14 Mar 2018 11:32:41 -0700 (PDT)
+Received: by mail-vk0-f73.google.com with SMTP id u84so2685109vke.13
+        for <git@vger.kernel.org>; Wed, 14 Mar 2018 11:32:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=B5/zRxWjj/ESKrPKqKKq6HkXzJQDQtKN4I18zShM2HY=;
-        b=duIJRA6fksX9PIsNTpl0oc6A8YHxl7CPJsxtyONPHHpd+AlwYUqulObAIhAY6+pdh5
-         vqiZho0yI5rSzi9QcuSCYgeC4W8xa5xcKKDbeunrPAXqzZChie8Z75AW0WDEAkNJf/wm
-         rHBfpG8MBQaDT8l74EYKBjbpXIE/uoE7yGSeccocNo49ZlLoIkTdVJ7SClJxcfvMLnq4
-         9fMfOEOEkbI/qXE9H3k8YMfmwx6yFt/8AnvTaf5Gxhvyhx6xU4t3nmPteetf2VrHob0b
-         h2Bv4WJhmlWPbZY/1kFHbFM3CYv/B+j1jZatkmJaf/3OFl6pyq4R3PU7e9hvTQS9SVGy
-         /wOg==
+        bh=0WGJkxP899yiRgcibmJlszkdBRLO0nypPsCz7WqsSiU=;
+        b=ksaW16+10AEorh9208wzlQnscBxvC9PyvbAoZV8QvyAF/cuJcl0EM6rchl6WJIUvWf
+         ojGccTL9FMKLCSFVayMVF66JI25KyTB5Y90M8vl83SkJujvzVIM6mOmTLLNYwFE4nbvK
+         /mWp+InUgqr8oaHn6yKSHaGXuL4k3VFkWO+j1HVJJqxCT/zZK/Q19FxkEaNYIWKVTf7v
+         tUOjbSdP6v9+CymYRRIUyVvXhvJzhhWlYYvBAvd9TG4ePtMvUlbzkomZGtumdAaLDwf/
+         QZ+wcHvJpyVjdLFrUdyHPzgEvKJjqlVZ7h0cSbZLeP6JRZsNXJnMWuWfwQieYJKWDcXW
+         99QA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=B5/zRxWjj/ESKrPKqKKq6HkXzJQDQtKN4I18zShM2HY=;
-        b=gSOONoHn/VaywjrenBTqTmwGGY3cyV2b7gVu4TphUhCniU6L5GBxxYWILOia815gjU
-         7Y2zneNYOzrQovSsMvUcrwF//ETlOq6PGrHFniszN8+k0851l2Vn6kFH8zemAGBHn1fc
-         q7olMRSR5FqYfZLrHVfbajyJuPAu8Au9gZ9oJmFMIagTN1gLTNNu92C9XjoDktya6t4w
-         ew/vdq1iVtqAtzoOFE8bRNrq1Xlo3fuLlfs5eI6CNhcLwYg3hkKbw+GlYQj+omr0iVa7
-         U/PVfD6g4P5NLJWV8ZT5Gm3gibBzOnzYw47WaJdqB6u0YgmgKX7uU96x82tgz0+hq0Ad
-         pIGw==
-X-Gm-Message-State: AElRT7F012QCwgiDHZQM3wbKIcGZz4g6tJLut12ysEguKQgyCnXPdUcn
-        tieKf6MYV0AH2d3YZTlUN6DdfGK1a6ranr5EGl+PtFS1ApVvsQrPOTqIP5jc3kynuMxuz8TblWw
-        olPgcPLA7vpYelfoP5aOFzVZa/dm6jY06Hfz8yjPQTXbH9OWt7O4SUHyTQQ==
-X-Google-Smtp-Source: AG47ELsw+b1+9lgYhY1hyzfNfx3BNcjk6WyNTCRhX/NXrW9AJ85mLqWNIQyJ/GJSPhqMGeP2FM7NqFlVEzo=
+        bh=0WGJkxP899yiRgcibmJlszkdBRLO0nypPsCz7WqsSiU=;
+        b=FLQbXGuZdQSkb4MGaY7Km1w/2apm9uTBYeehft6Bdg+aitM4ymRQHeZw63DZSPsvgH
+         fH49xmHmUEqx6DjvE1SpkLuzEdxLwxJ9BYzVqktWUDWXpo5e6gtMUYdHLntleIr2ftNf
+         mymWxIzVcSM0NmSorX5HWLRaGhGoSIn6TfLL8oqDMC0CTpQ/aToVUdpojthiG8jnAJWL
+         rDA0kT7T8IPnYufBcxV9eT6384jVCVWskCMBmVMbLjiM8CgOxB0qxzKO+0bdzBVz/ySD
+         uQmbB07SNVaZnRcuO8vCjYZ8v89ePn6OeCnWPT9/UJK3QQ1LaabYxvXEqj1buAhFT9QK
+         Ybgw==
+X-Gm-Message-State: AElRT7EI370qnKGkKmxzmq1HSHhVadZzkpN9viUcUiDarfb76Qcijjiq
+        ewXiQGR62gUXjTACJL52hw/QDbHs8WDo5cVfMFPh3So0GugRcO4Eo6mDOup70FHNtQV3KFSpIrR
+        NlG2EbT7zsJqxomWssUT+N/0M3+NE1RQeuu3S2EWOZMkDWObGqu+Vr/Vz+A==
+X-Google-Smtp-Source: AG47ELvtVbL5nVWOHsAOt+8k8pkzAe56qiXGdfyDpk4OZnjv3bB+syMNsyrNT90D4HFBTWqaLMZYsvegy/g=
 MIME-Version: 1.0
-X-Received: by 10.36.73.66 with SMTP id z63mr1365572ita.14.1521052360555; Wed,
- 14 Mar 2018 11:32:40 -0700 (PDT)
-Date:   Wed, 14 Mar 2018 11:31:47 -0700
+X-Received: by 10.176.80.144 with SMTP id c16mr2384952uaa.19.1521052362941;
+ Wed, 14 Mar 2018 11:32:42 -0700 (PDT)
+Date:   Wed, 14 Mar 2018 11:31:48 -0700
 In-Reply-To: <20180314183213.223440-1-bmwill@google.com>
-Message-Id: <20180314183213.223440-11-bmwill@google.com>
+Message-Id: <20180314183213.223440-12-bmwill@google.com>
 References: <20180314183213.223440-1-bmwill@google.com>
 X-Mailer: git-send-email 2.16.2.804.g6dcf76e118-goog
-Subject: [PATCH v5 10/35] protocol: introduce enum protocol_version value protocol_v2
+Subject: [PATCH v5 11/35] test-pkt-line: introduce a packet-line test helper
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     git@jeffhostetler.com, gitster@pobox.com, jrnieder@gmail.com,
@@ -65,171 +65,98 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Introduce protocol_v2, a new value for 'enum protocol_version'.
-Subsequent patches will fill in the implementation of protocol_v2.
+Introduce a packet-line test helper which can either pack or unpack an
+input stream into packet-lines and writes out the result to stdout.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- builtin/fetch-pack.c   | 2 ++
- builtin/receive-pack.c | 6 ++++++
- builtin/send-pack.c    | 3 +++
- builtin/upload-pack.c  | 7 +++++++
- connect.c              | 3 +++
- protocol.c             | 2 ++
- protocol.h             | 1 +
- remote-curl.c          | 3 +++
- transport.c            | 9 +++++++++
- 9 files changed, 36 insertions(+)
+ Makefile                 |  1 +
+ t/helper/test-pkt-line.c | 64 ++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 65 insertions(+)
+ create mode 100644 t/helper/test-pkt-line.c
 
-diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
-index 85d4faf76c..b2374ddbbf 100644
---- a/builtin/fetch-pack.c
-+++ b/builtin/fetch-pack.c
-@@ -201,6 +201,8 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
- 			   PACKET_READ_GENTLE_ON_EOF);
- 
- 	switch (discover_version(&reader)) {
-+	case protocol_v2:
-+		die("support for protocol v2 not implemented yet");
- 	case protocol_v1:
- 	case protocol_v0:
- 		get_remote_heads(&reader, &ref, 0, NULL, &shallow);
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index b7ce7c7f52..3656e94fdb 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -1963,6 +1963,12 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
- 		unpack_limit = receive_unpack_limit;
- 
- 	switch (determine_protocol_version_server()) {
-+	case protocol_v2:
-+		/*
-+		 * push support for protocol v2 has not been implemented yet,
-+		 * so ignore the request to use v2 and fallback to using v0.
-+		 */
-+		break;
- 	case protocol_v1:
- 		/*
- 		 * v1 is just the original protocol with a version string,
-diff --git a/builtin/send-pack.c b/builtin/send-pack.c
-index 83cb125a68..b5427f75e3 100644
---- a/builtin/send-pack.c
-+++ b/builtin/send-pack.c
-@@ -263,6 +263,9 @@ int cmd_send_pack(int argc, const char **argv, const char *prefix)
- 			   PACKET_READ_GENTLE_ON_EOF);
- 
- 	switch (discover_version(&reader)) {
-+	case protocol_v2:
-+		die("support for protocol v2 not implemented yet");
-+		break;
- 	case protocol_v1:
- 	case protocol_v0:
- 		get_remote_heads(&reader, &remote_refs, REF_NORMAL,
-diff --git a/builtin/upload-pack.c b/builtin/upload-pack.c
-index 2cb5cb35b0..8d53e9794b 100644
---- a/builtin/upload-pack.c
-+++ b/builtin/upload-pack.c
-@@ -47,6 +47,13 @@ int cmd_upload_pack(int argc, const char **argv, const char *prefix)
- 		die("'%s' does not appear to be a git repository", dir);
- 
- 	switch (determine_protocol_version_server()) {
-+	case protocol_v2:
-+		/*
-+		 * fetch support for protocol v2 has not been implemented yet,
-+		 * so ignore the request to use v2 and fallback to using v0.
-+		 */
-+		upload_pack(&opts);
-+		break;
- 	case protocol_v1:
- 		/*
- 		 * v1 is just the original protocol with a version string,
-diff --git a/connect.c b/connect.c
-index 0b111e62d7..4b89b984c4 100644
---- a/connect.c
-+++ b/connect.c
-@@ -83,6 +83,9 @@ enum protocol_version discover_version(struct packet_reader *reader)
- 	}
- 
- 	switch (version) {
-+	case protocol_v2:
-+		die("support for protocol v2 not implemented yet");
-+		break;
- 	case protocol_v1:
- 		/* Read the peeked version line */
- 		packet_reader_read(reader);
-diff --git a/protocol.c b/protocol.c
-index 43012b7eb6..5e636785d1 100644
---- a/protocol.c
-+++ b/protocol.c
-@@ -8,6 +8,8 @@ static enum protocol_version parse_protocol_version(const char *value)
- 		return protocol_v0;
- 	else if (!strcmp(value, "1"))
- 		return protocol_v1;
-+	else if (!strcmp(value, "2"))
-+		return protocol_v2;
- 	else
- 		return protocol_unknown_version;
- }
-diff --git a/protocol.h b/protocol.h
-index 1b2bc94a8d..2ad35e433c 100644
---- a/protocol.h
-+++ b/protocol.h
-@@ -5,6 +5,7 @@ enum protocol_version {
- 	protocol_unknown_version = -1,
- 	protocol_v0 = 0,
- 	protocol_v1 = 1,
-+	protocol_v2 = 2,
- };
- 
- /*
-diff --git a/remote-curl.c b/remote-curl.c
-index 9f6d07683d..dae8a4a48d 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -185,6 +185,9 @@ static struct ref *parse_git_refs(struct discovery *heads, int for_push)
- 			   PACKET_READ_GENTLE_ON_EOF);
- 
- 	switch (discover_version(&reader)) {
-+	case protocol_v2:
-+		die("support for protocol v2 not implemented yet");
-+		break;
- 	case protocol_v1:
- 	case protocol_v0:
- 		get_remote_heads(&reader, &list, for_push ? REF_NORMAL : 0,
-diff --git a/transport.c b/transport.c
-index 2378dcb38c..83d9dd1df6 100644
---- a/transport.c
-+++ b/transport.c
-@@ -203,6 +203,9 @@ static struct ref *get_refs_via_connect(struct transport *transport, int for_pus
- 
- 	data->version = discover_version(&reader);
- 	switch (data->version) {
-+	case protocol_v2:
-+		die("support for protocol v2 not implemented yet");
-+		break;
- 	case protocol_v1:
- 	case protocol_v0:
- 		get_remote_heads(&reader, &refs,
-@@ -250,6 +253,9 @@ static int fetch_refs_via_pack(struct transport *transport,
- 		refs_tmp = get_refs_via_connect(transport, 0);
- 
- 	switch (data->version) {
-+	case protocol_v2:
-+		die("support for protocol v2 not implemented yet");
-+		break;
- 	case protocol_v1:
- 	case protocol_v0:
- 		refs = fetch_pack(&args, data->fd, data->conn,
-@@ -585,6 +591,9 @@ static int git_transport_push(struct transport *transport, struct ref *remote_re
- 		args.push_cert = SEND_PACK_PUSH_CERT_NEVER;
- 
- 	switch (data->version) {
-+	case protocol_v2:
-+		die("support for protocol v2 not implemented yet");
-+		break;
- 	case protocol_v1:
- 	case protocol_v0:
- 		ret = send_pack(&args, data->fd, data->conn, remote_refs,
+diff --git a/Makefile b/Makefile
+index b7ccc05fac..3b849c0607 100644
+--- a/Makefile
++++ b/Makefile
+@@ -669,6 +669,7 @@ TEST_PROGRAMS_NEED_X += test-mktemp
+ TEST_PROGRAMS_NEED_X += test-online-cpus
+ TEST_PROGRAMS_NEED_X += test-parse-options
+ TEST_PROGRAMS_NEED_X += test-path-utils
++TEST_PROGRAMS_NEED_X += test-pkt-line
+ TEST_PROGRAMS_NEED_X += test-prio-queue
+ TEST_PROGRAMS_NEED_X += test-read-cache
+ TEST_PROGRAMS_NEED_X += test-write-cache
+diff --git a/t/helper/test-pkt-line.c b/t/helper/test-pkt-line.c
+new file mode 100644
+index 0000000000..0f19e53c75
+--- /dev/null
++++ b/t/helper/test-pkt-line.c
+@@ -0,0 +1,64 @@
++#include "pkt-line.h"
++
++static void pack_line(const char *line)
++{
++	if (!strcmp(line, "0000") || !strcmp(line, "0000\n"))
++		packet_flush(1);
++	else if (!strcmp(line, "0001") || !strcmp(line, "0001\n"))
++		packet_delim(1);
++	else
++		packet_write_fmt(1, "%s", line);
++}
++
++static void pack(int argc, const char **argv)
++{
++	if (argc) { /* read from argv */
++		int i;
++		for (i = 0; i < argc; i++)
++			pack_line(argv[i]);
++	} else { /* read from stdin */
++		char line[LARGE_PACKET_MAX];
++		while (fgets(line, sizeof(line), stdin)) {
++			pack_line(line);
++		}
++	}
++}
++
++static void unpack(void)
++{
++	struct packet_reader reader;
++	packet_reader_init(&reader, 0, NULL, 0,
++			   PACKET_READ_GENTLE_ON_EOF |
++			   PACKET_READ_CHOMP_NEWLINE);
++
++	while (packet_reader_read(&reader) != PACKET_READ_EOF) {
++		switch (reader.status) {
++		case PACKET_READ_EOF:
++			break;
++		case PACKET_READ_NORMAL:
++			printf("%s\n", reader.line);
++			break;
++		case PACKET_READ_FLUSH:
++			printf("0000\n");
++			break;
++		case PACKET_READ_DELIM:
++			printf("0001\n");
++			break;
++		}
++	}
++}
++
++int cmd_main(int argc, const char **argv)
++{
++	if (argc < 2)
++		die("too few arguments");
++
++	if (!strcmp(argv[1], "pack"))
++		pack(argc - 2, argv + 2);
++	else if (!strcmp(argv[1], "unpack"))
++		unpack();
++	else
++		die("invalid argument '%s'", argv[1]);
++
++	return 0;
++}
 -- 
 2.16.2.804.g6dcf76e118-goog
 
