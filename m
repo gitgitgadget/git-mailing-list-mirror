@@ -2,95 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ACC3C1F404
-	for <e@80x24.org>; Thu, 15 Mar 2018 14:57:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A85091F404
+	for <e@80x24.org>; Thu, 15 Mar 2018 15:13:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752603AbeCOO5R (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Mar 2018 10:57:17 -0400
-Received: from mail-ot0-f177.google.com ([74.125.82.177]:36741 "EHLO
-        mail-ot0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752330AbeCOO5Q (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Mar 2018 10:57:16 -0400
-Received: by mail-ot0-f177.google.com with SMTP id 108-v6so7161222otv.3
-        for <git@vger.kernel.org>; Thu, 15 Mar 2018 07:57:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=YpyyUvlEbmvEvbjBaWI1vD148I7FmvM9g6xoq0FzZYw=;
-        b=NwtwkxdGKRP0h08iQ1mUfFYr+PoiLTlpPFslzl2YzR43u6scu1wqr0H/fxYmOmJCXI
-         fjdHD46XtHtoViV9cNjFOP8IWSwb3vZqh8Imgy2tcxlQXLiGbYyT6bWRlrWDnK8qvqyz
-         0+6KtA5mQJooGXY+O5o/IIlYvSrNG2D1Jen1grCskrh6dL312L8yBXqrj5vGmLuhim5d
-         0xLDWxmZUCJf76o7Ua+/ALQV08KdSrqJGC1v+12Azs9dMk20tEm3awg3t7V/2M0VJD2D
-         IFaX9bVbWSegCiAHGMlJVkJUlnckNLk63oPpMIwJDGyMpewq23JMP9k9Xtad/dW3KNze
-         Po2A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=YpyyUvlEbmvEvbjBaWI1vD148I7FmvM9g6xoq0FzZYw=;
-        b=iJbC9lUSsOr1VsfpLY0+l/ogu26mNAw8VFQ7lymqeRYpz0xpvFt0vcQhIZYoBsn8pQ
-         TARVlBu6QjNvSTmKko0+JV/HMOAbocVOl97HU9Ffs+J54/pWcHTiFd+a+5wh6ZrqaGsN
-         Yy0WR03YY+3F/C29jVN1zlczVrZuLfFCobk3W0qWMEqJs9SWeFMUQzrciW+KOsiJ1Z/C
-         gnCZsPHE5ZpW++HNm+Q88V6CezQk+hwKTZaycsyDhoPYWeZWPdFQ3DYnfZ596upi610+
-         R7zc7VJP4P0xfsFlouosb4LnN0KGYHx4GZ2Tj5MUeaRhbmebOz/sZDc9CAmF5GLYsYly
-         E78Q==
-X-Gm-Message-State: AElRT7GwGs4f9xoputhg6SvALUr/JUiQYkXKMOXf7mqTSAmZHvuaGALI
-        XH1L5KDXZru4oDTgpo/6ME2RpDQltEXQUsf3wUw=
-X-Google-Smtp-Source: AG47ELsUPtDmqLw1nNLWewVc1z54YN4+O2n8fOR1ysk+NDIk6MVGLNXbkJL/44afiry+sVDOsvHAVUrdnm6yYRi//2o=
-X-Received: by 10.157.40.18 with SMTP id m18mr5376093otb.245.1521125836244;
- Thu, 15 Mar 2018 07:57:16 -0700 (PDT)
+        id S1752673AbeCOPNI (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Mar 2018 11:13:08 -0400
+Received: from smtprelay03.ispgateway.de ([80.67.29.7]:52947 "EHLO
+        smtprelay03.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751502AbeCOPNH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Mar 2018 11:13:07 -0400
+X-Greylist: delayed 2023 seconds by postgrey-1.27 at vger.kernel.org; Thu, 15 Mar 2018 11:13:07 EDT
+Received: from [84.46.92.130] (helo=book.hvoigt.net)
+        by smtprelay03.ispgateway.de with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.90_1)
+        (envelope-from <hvoigt@hvoigt.net>)
+        id 1ewTs6-0005bz-8x; Thu, 15 Mar 2018 15:28:46 +0100
+Date:   Thu, 15 Mar 2018 15:28:43 +0100
+From:   Heiko Voigt <hvoigt@hvoigt.net>
+To:     Miklos Vajna <vmiklos@collabora.co.uk>
+Cc:     git@vger.kernel.org
+Subject: Re: submodule.<name>.ignore vs git add -u
+Message-ID: <20180315142843.GA2103@book.hvoigt.net>
+References: <20180312155924.elxjelkcriuwjdph@collabora.co.uk>
 MIME-Version: 1.0
-Received: by 2002:a9d:34a2:0:0:0:0:0 with HTTP; Thu, 15 Mar 2018 07:57:15
- -0700 (PDT)
-In-Reply-To: <20180315141220.GB27748@sigill.intra.peff.net>
-References: <20180315130359.6108-1-michele@locati.it> <20180315141220.GB27748@sigill.intra.peff.net>
-From:   Michele Locati <michele@locati.it>
-Date:   Thu, 15 Mar 2018 15:57:15 +0100
-X-Google-Sender-Auth: MiBBvnW0SO64pRc0bBd5ASm7yWM
-Message-ID: <CAGen01iZTs1FC3tsuMF9SAS0QcKxN0Sk1CPeZ+YNyh5X8sdgtg@mail.gmail.com>
-Subject: Re: [PATCH] filter-branch: return 2 when nothing to rewrite
-To:     Jeff King <peff@peff.net>
-Cc:     Michele Locati <michele@locati.it>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180312155924.elxjelkcriuwjdph@collabora.co.uk>
+User-Agent: Mutt/1.9.0 (2017-09-02)
+X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-2018-03-15 15:12 GMT+01:00 Jeff King <peff@peff.net>:
-> On Thu, Mar 15, 2018 at 02:03:59PM +0100, Michele Locati wrote:
->
->> Using the --state-branch option allows us to perform incremental filtering.
->> This may lead to having nothing to rewrite in subsequent filtering, so we need
->> a way to recognize this case.
->> So, let's exit with 2 instead of 1 when this "error" occurs.
->
-> That sounds like a good feature. It doesn't look like we use "2" for
-> anything else currently.
->
->> ---
->>  git-filter-branch.sh | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> This should probably get a mention in the manpage at
-> Documentation/git-filter-branch.txt, too.
+Hi,
 
+On Mon, Mar 12, 2018 at 04:59:25PM +0100, Miklos Vajna wrote:
+> Let's say I have a fairly simple submodule setup where I do 'git
+> checkout' inside the submodule to check out a different commit, so the
+> outer repo 'git diff' shows a submodule update.
+> 
+> In that case
+> 
+>         git config submodule.<name>.ignore all
+> 
+> makes 'git diff' or 'git commit -a' ignore the change in the outer repo,
+> but not 'git add -u'.
+> 
+> Reading the git-config documentation if this is intentional behavior,
+> I'm a bit confused. It specifies that:
+> 
+> - "git status" and the diff family: handle this setting
+> - git submodule commands: ignore this setting
+> 
+> So that about 'git add -u', is it expected that it ignores this setting
+> as well?
+> 
+> I guess either the doc should say 'git add -u' doesn't handle this
+> setting or 'git add -u' should handle it. Happy to try to make a patch
+> that does the later, but I though better ask first. :-)
 
-Yes, I agree it would be useful. What about this addition right after the
-"Remap to ancestor" section?
+Have a look here for a previous discussion.
 
-EXIT CODE
----------
+https://public-inbox.org/git/20131204221659.GA7326@sandbox-ub/
 
-In general, this command will fail with an exit status of `1` in case of errors.
-When the filter can't fine anything to rewrite, the exit status is `2`.
+I think I never got around finishing those patches, because the
+discussion died and there was no reply from the original poster asking
+for this.
 
+Maybe you could have a look at my original branch and whether that would
+be the behavior you expect. I had a look into porting those patches to
+the current master, but there are still some test failures.
 
---
-Michele
+You can see and test my current WIP branch here:
+
+https://github.com/hvoigt/git/commits/hv/fix_ignore_all_submodules_update1
+
+Cheers Heiko
