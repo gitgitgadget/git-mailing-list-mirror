@@ -2,81 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_BL_SPAMCOP_NET,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 48AFA1F404
-	for <e@80x24.org>; Thu, 15 Mar 2018 17:24:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 86FF71F404
+	for <e@80x24.org>; Thu, 15 Mar 2018 17:27:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751739AbeCORYS (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Mar 2018 13:24:18 -0400
-Received: from mout.gmx.net ([212.227.17.22]:57713 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751314AbeCORYR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Mar 2018 13:24:17 -0400
-Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LkBPy-1eKQxI3nac-00c5dB; Thu, 15
- Mar 2018 18:23:27 +0100
-Date:   Thu, 15 Mar 2018 18:23:12 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+        id S1752158AbeCOR1r (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Mar 2018 13:27:47 -0400
+Received: from mail-pl0-f53.google.com ([209.85.160.53]:46468 "EHLO
+        mail-pl0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752164AbeCOR1q (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Mar 2018 13:27:46 -0400
+Received: by mail-pl0-f53.google.com with SMTP id f5-v6so4160902plj.13
+        for <git@vger.kernel.org>; Thu, 15 Mar 2018 10:27:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=3ahZ/VcNEYtRdovcXTbDLMvPYP5fAi+nEXkOluTXf8k=;
+        b=cLOiE55j03jUk58Ie7668RRmGa3Y7PjDrNVMk7r5IEjiZ2RS2CdY4LQnoZsWnCRb3R
+         8Br9ZpNznR6HD20BVmBPbMvMyaqpFdJ1Twv6DRqkBva5qhxXAEI8EUBLMwtTUsF0tehH
+         2R2P6WUXtYBR0RDYJyHM5OLQI2988ZLHZ6BoBHiLICdy+/AJfFPkq4O2eRwE1lyGEc/N
+         QxJX1PL2hRQvumfrChbEweoLgVa7IyVY0BIymXkUguYTZyeE0TYTQ3Ok8ghh6RQzW2Tu
+         07Sn81Kk9mfotk7K55efN6n3E+RVNjd11e32Laxwl0dqwVZeBf/kPJIkKt6lHy4sWtch
+         ZKiA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=3ahZ/VcNEYtRdovcXTbDLMvPYP5fAi+nEXkOluTXf8k=;
+        b=mG3O0SzOqepduWmbhGqHZ7TsKpVK3F8nel1PsRAPt5D3iQKGLlOUlAne48EqaxckGi
+         V9MV5wBwwXw/R+czEuPjT1YQ82LscFkfKsJxWKJo+W5LRkFDIUNTU2D2F8fSNVP5w1IP
+         fihZ+I7zicehdubQBszyrfm90lV8AcJq9bU7woAHAsyS6/TGj3ZpWLNYa3TERw8pb4yS
+         MSCvioT+kVyKG0cBIObHpFrAte49ikgeuyug3EHHatfINtA2uN7/Z82vJBNao/efu2U1
+         Q5u7TvZYs8E46xG365UouPAVPZLPwrR6Hnps1QfGCbr+/uiUC4k//kOoU2RSWQNo1b7o
+         C8uw==
+X-Gm-Message-State: AElRT7GenggvRQxRh0Xd+aHpvxA71roUlPD8iZnsh1UOlukuxh34qkH/
+        VuvM8ow9vNF2V2uvjeMpoRaUYH8dak0=
+X-Google-Smtp-Source: AG47ELuR6At8KXoSN61WgHO4atb10J8A5boBO5HGqCShdEGWaJLJq43TZ9zVWoVog9d04I/T5n4UQQ==
+X-Received: by 2002:a17:902:788e:: with SMTP id q14-v6mr9211014pll.396.1521134865774;
+        Thu, 15 Mar 2018 10:27:45 -0700 (PDT)
+Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
+        by smtp.gmail.com with ESMTPSA id h67sm11570551pfk.184.2018.03.15.10.27.44
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 15 Mar 2018 10:27:44 -0700 (PDT)
+Date:   Thu, 15 Mar 2018 10:27:43 -0700
+From:   Brandon Williams <bmwill@google.com>
 To:     Junio C Hamano <gitster@pobox.com>
-cc:     Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org,
-        peff@peff.net, sbeller@google.com, szeder.dev@gmail.com,
-        ramsay@ramsayjones.plus.com, git@jeffhostetler.com,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v6 00/14] Serialized Git Commit Graph
-In-Reply-To: <xmqq605yz8ue.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1803151821270.64@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <1519698787-190494-1-git-send-email-dstolee@microsoft.com>        <20180314192736.70602-1-dstolee@microsoft.com> <xmqq605yz8ue.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+Cc:     git@vger.kernel.org, git@jeffhostetler.com, jrnieder@gmail.com,
+        pclouds@gmail.com, peff@peff.net, sbeller@google.com,
+        stolee@gmail.com, jonathantanmy@google.com
+Subject: Re: [PATCH v5 12/35] serve: introduce git-serve
+Message-ID: <20180315172743.GA174336@google.com>
+References: <20180314183213.223440-1-bmwill@google.com>
+ <20180314183213.223440-13-bmwill@google.com>
+ <xmqqsh92xqnz.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:52egCp5m7/2jKMIrzERXBYqeax/z/tG1dZrzxTxnc2ZrN0oEXq2
- kIFzjFWnzGqjeooDobby93hevRtmBPOkTpgea+w/7dyZfbLzqpo+K/N3B/FS5AYOdZxARPD
- mTRUkK5f1pqdJFVJYm+QrHmzQOnsyKg+UXNOjyWUnEQaajKTUq9G+xHn3DD85kgfUbcJ44+
- sdXyeQimp1VXCGoBjclcg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:kkriuCyn64w=:oR4ewyGuBQmxz4m1vZVMOl
- SDoToGN9te9weayoaHpMLY3dsGuHfBnbLadIqJj5VTF/wUmuHwXee8Uwe5o4eWhlRFKTfCcve
- baBhG5a+gHQ0Dk637nG3/zhZBrTANRzz98lPE7xowtrXvrZJX/fp4rddq6lnWhYu6y2kTImb2
- wSX35a+vdYkUAHvlhh4ksaA2tYYQaNrdH5LKV6aiawGHU79pwIRztp5XRdX4/bh6AEiq29Kbi
- eb39YXc4mG0aTKzspX6it1b3tNKoHmTuRdlfL8r9mOvT+rcvcqIihbnI+vYrDW/XL6t2GB9Ir
- RoJuwZ1hYXjdQeWT9utz8lcDrA5qOx+1gXdZAD49nExOIsuHhAzfPA2A6p8D1sOlhotMJyKeC
- mJYb/di2ZSSH7ejJl9ubcCAbTrFNXxrEP7AjxOHr3BOtnxIHmH8b1TBYI7lWJEXKq9jxKpp4p
- k2Lq0Y+0lVyuRi8CKt+Y8lVr13bs9H+0xkuSoxLO9q9CzqeGpRZDdZPOZCK6Lptlc9AVNKp/X
- 6KAASfU77s12JFmOXNLLHrjKSOqZIbBsMHVJsHG3PtbmQ+Kids8ontZAMzgnjD/Qtp8au++5c
- Zg2p+AA8vBe8y2/Jp9jAvE6WlLI1P4bv8CTw8XB5XPJNzxKhnL0AjOHbEgaDu0Jn/yIcq8CLE
- KKj0RnWiOUWOZ6tiBNeEEAwgWGt/cc1RTBILjKvTDeE88QBtB5teMLJJNKkAbeVBcGIIx4vXX
- sWaCh5xRi0xQSXTC8sHpb+m9M3VbI0G1vpaMvULdFf29DsrHiKeQAVllfsl+O0v6f5DXq5YtA
- 73dVDGzD1lxgghoi1s21aoTZx0mvlQKX6oOf5/nv3sGMifS8U8=
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqsh92xqnz.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
-
-On Wed, 14 Mar 2018, Junio C Hamano wrote:
-
-> A few patches add trailing blank lines and other whitespace
-> breakages, which will stop my "git merge" later to 'next' and down,
-> as I have a pre-commit hook to catch them.
-
-I wonder how you cope with the intentional "whitespace breakage" caused by
-a TAB after HS in my recreate-merges patch series...
-
-> Here is the output from my "git am -s" session.
+On 03/14, Junio C Hamano wrote:
+> Brandon Williams <bmwill@google.com> writes:
 > 
-> Applying: csum-file: rename hashclose() to finalize_hashfile()
-> Applying: csum-file: refactor finalize_hashfile() method
-> .git/rebase-apply/patch:109: new blank line at EOF.
+> > Introduce git-serve, the base server for protocol version 2.
+> > ...
+> >  Documentation/Makefile                  |   1 +
+> >  Documentation/technical/protocol-v2.txt | 174 +++++++++++++++++
+> 
+> asciidoc: ERROR: protocol-v2.txt: line 20: only book doctypes can contain level 0 sections
+> asciidoc: ERROR: protocol-v2.txt: line 374: [blockdef-listing] missing closing delimiter
+> Makefile:368: recipe for target 'technical/protocol-v2.html' failed
+> 
+> I'll redo today's integration cycle to see if I can move this topic
+> to a late part of 'pu', so that I can at least keep the part of 'pu'
+> that is beyond what is in 'next' and still usable a bit larger.  The
+> bw/protocol-v2 topic has been merged immediately above the topics
+> that are already in 'next' for the past week or so, but I cannot
+> afford to leave the build broken for majority of merges of 'pu'.
+> 
 
-Stolee, you definitely want to inspect those changes (`git log --check`
-was introduced to show you whitespace problems). If all of those
-whitespace issues are unintentional, you can fix them using `git rebase
---whitespace=fix` in the most efficient way.
+Turns out I don't know how to write properly formed asciidocs, sorry
+about that.  I fixed up the docs in my series locally and I'll send out
+a v5 in just a bit.
 
-Ciao,
-Dscho
+-- 
+Brandon Williams
