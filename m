@@ -7,36 +7,36 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6E92D1F404
-	for <e@80x24.org>; Thu, 15 Mar 2018 00:53:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7B4021F404
+	for <e@80x24.org>; Thu, 15 Mar 2018 01:05:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751428AbeCOAxX (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Mar 2018 20:53:23 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:35870 "EHLO
+        id S1751447AbeCOBFq (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Mar 2018 21:05:46 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:35896 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751357AbeCOAxW (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 14 Mar 2018 20:53:22 -0400
+        by vger.kernel.org with ESMTP id S1751390AbeCOBFp (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 14 Mar 2018 21:05:45 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 7F0DC60426;
-        Thu, 15 Mar 2018 00:53:20 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id BE31760426;
+        Thu, 15 Mar 2018 01:05:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1521075201;
-        bh=rLi2pEfWPzJwDN/tLHAWCijTEUlopkutogb4R98FFrE=;
+        s=default; t=1521075944;
+        bh=e+X6YwnBbZLf0Qwd4HL0LWvIXTY8RjaUqwY/QZwYIXA=;
         h=Date:From:To:Cc:Subject:References:Content-Type:
          Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
          Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
          Content-Type:Content-Disposition;
-        b=I2/SS9YmXLTqeP1g5RSgmfyuThAvB5JkYMR9d/SrA35ajx996svCTn3zyVEEEWckS
-         X/CC6oCDrXr3PeCOZbf7lWQa0j8deGcUdg9G8r7LO8Ga6Bj3s+ecjmceUtYkO4NDE0
-         /0zENhae8yESdEWuFZxSlzZdrv83PYAq8m8KKxkyn/fVyW/Iqks5IGhm3YE+yc+pu3
-         /U8slqWRs+mJbEmERdiQqehRnnCHK9z2Elc7zmMPpZ8FVTjCGRyuV8rdQ5itiLxgDS
-         CVqn4PODpB1dBOaJlz77OxYlSTfs4n+elKK6QUUiO+brA7r8fKF+lA9YMEHJyriZLf
-         nxh+aUVhy+UQ4QpM3AoVyHg0Xqbh3oe1VMKECJuDSYSgIHxnBx7TQ6pTAN8OklMJj1
-         uBiqy++6axU2usJqjRq4Q4KEDJ2DXE3Pp9ibwi2u1VV0DGmQBS6VN+TdwVHf6WjMH+
-         o5zvpsOBvr9lT4iwtM4yPwEj7N1giLfYnu1sR102ds3Kmzh18Po
-Date:   Thu, 15 Mar 2018 00:53:14 +0000
+        b=U40ieyKFL/ooLPW7zdF0R1O+6GU3RCMBtdI6v824TZ5eRNnDZ0UqEyN81BphOP0ZM
+         utRIblOipSLsFBRtIpOrUBYYs+h7N+LfAk0PI+v76NdIL/rzRVTHsAw5e1pE65JMbY
+         TvYalYsAlNjjgSrYyl+C5K0qT2xjV525hqXj+/ATyjf8QMYfkcomA22cnoelgyNVtz
+         pZhJS0cLZTzUCa1EzrVk+PnfQnouLKrQqhuCKQEbhTzKuPqDmJ71mltvSSOt2FS/o+
+         ebJhGQvjj/NYWXDF7WmPCRoPnPJ2cyNw27PEisoFvp/M4L8ViN8HmY3cuRO4PKlw0k
+         2E4x7J9vT99KvzXGHKo/xTElaQqoO2ZUVPeW9WZcb65L7nrrY53hGPd8+e5AIeBmKE
+         hoGYEVLH/oLlxbeNzx9mm00mHMpCnrjU5eAfJ4hELfgh1vIkgyab431g1wQ2kRnMzq
+         tV12QuK4GRkDOrEUCLsqoeoT3SeXctVQF95A8qnTGxxcBq04y/x
+Date:   Thu, 15 Mar 2018 01:05:39 +0000
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org,
@@ -45,19 +45,19 @@ Cc:     git@vger.kernel.org,
         Jeff King <peff@peff.net>,
         Eric Sunshine <sunshine@sunshineco.com>
 Subject: Re: [PATCH v3 00/36] object_id part 12
-Message-ID: <20180315005314.GB330384@genre.crustytoothpaste.net>
+Message-ID: <20180315010538.GC330384@genre.crustytoothpaste.net>
 Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
         Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
         =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
         Patryk Obara <patryk.obara@gmail.com>, Jeff King <peff@peff.net>,
         Eric Sunshine <sunshine@sunshineco.com>
 References: <20180312022756.483934-1-sandals@crustytoothpaste.net>
- <xmqqlgeuzhqe.fsf@gitster-ct.c.googlers.com>
+ <xmqqtvtizjq9.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="CUfgB8w4ZwR/yMy5"
+        protocol="application/pgp-signature"; boundary="6zdv2QT/q3FMhpsV"
 Content-Disposition: inline
-In-Reply-To: <xmqqlgeuzhqe.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqtvtizjq9.fsf@gitster-ct.c.googlers.com>
 X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
  4.15.0-1-amd64)
 User-Agent: Mutt/1.9.4 (2018-02-28)
@@ -68,64 +68,56 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---CUfgB8w4ZwR/yMy5
+--6zdv2QT/q3FMhpsV
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Mar 14, 2018 at 10:31:37AM -0700, Junio C Hamano wrote:
-> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+On Wed, Mar 14, 2018 at 09:48:30AM -0700, Junio C Hamano wrote:
+> As always, thanks for working on this. =20
 >=20
-> >     -+		buf +=3D the_hash_algo->rawsz;
-> >     -+		size -=3D the_hash_algo->rawsz;
-> >     ++		memcpy(it->oid.hash, (const unsigned char*)buf, rawsz);
-> >     ++		buf +=3D rawsz;
-> >     ++		size -=3D rawsz;
-> >       	}
+> After this series, what jumps at me out of output from
 >=20
-> Using memcpy() to stuff the hash[] field of oid structure with a
-> bare byte array of rawsz bytes appears twice as a pattern in these
-> patches.  I wonder if this is something we want to abstract behind
-> the API, e.g.
+>     git grep -e '[^0-9A-Za-z_][24]0[^0-9A-Za-z_]' -- '*.[ch]' \
+> 		':!*sha1*' ':!contrib/' ':!compat/'
 >=20
-> 	size_t oidstuff_(struct object_id *oid, const unsigned char *buf)
-> 	{
-> 		size_t rawsz =3D the_hash_algo->rawsz;
-> 		memcpy(oid->hash, buf, rawsz);
->                 return rawsz;
-> 	}
->=20
-> It just felt a bit uneven to be using a bare-metal memcpy() when
-> oidcpy() abstraction releaves the callers from having to be aware of
-> the rawsz all the time.
+> are code that parses the incoming patch in apply.c (where the full
+> blob object names used for binary patches are assumed to be in
+> SHA-1), builtin/pack-objects.c (where it has to know the current
+> file format of a packfile intimately) and diff.c (where it clips the
+> length to which the blob object names on the "index" lines are
+> abbreviated to).  Changing 40 in the last one to "the hex length of
+> the currently deployed hash" should be relatively uncontroversial.
 
-Duy suggested oidread and oidwrite, which I can certainly implement.
-I'm also comfortable with just keeping hashcpy around for these cases if
-we want.
+I have patches that hit several of these places, but not diff.c.  I'll
+probably pick that piece up next.
+
+By the way, thanks for a useful regex.  It's a little bit different
+than what I've been using, but provides a nice overview.
 --=20
 brian m. carlson / brian with sandals: Houston, Texas, US
 https://www.crustytoothpaste.net/~bmc | My opinion only
 OpenPGP: https://keybase.io/bk2204
 
---CUfgB8w4ZwR/yMy5
+--6zdv2QT/q3FMhpsV
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2.2.5 (GNU/Linux)
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlqpw/oACgkQv1NdgR9S
-9ouoPhAAuK2fIopQTrNCxvcR3yr4kav3L2rJ17SmsFqHfAVBOjObL7FLNoVYcWfU
-6cz0sz88Qbo2ae4DzLACYJIoagI/osMPLaDjoaiRQaaxBmkeVId72lR2AWif73Hs
-OX9bG/nW1d0UQWNEOVpGHxHdL5KiHVj7C23hDRMTYtitk7C/Oavq/KiGfoxAROs9
-zWj52d1e/FtBw+RmTc9237+FpqhqO32ahiyVWptPqEuaHRldhLR7aO6HpeawEkxc
-l6XYpgV+ASkCxpZgUvDtwUmTDQrZCCkvXysDRtZU2r7tCXs7olJibaVNJoLIDHIR
-tM5elgiY7sar8QxqKC4G4JsRz7+vmyt5bmsLttlsttC079DYGuMJBzakkNtujI/8
-Oa5oZwb5YxpsB2caAzXPX5mHYRnnRZ9+FB6lXjUdU4ayXx3D++AxbfeMVVPu/9PZ
-2RWFAwDGn9AytJQ/DvJ15aTAfnvHraZSxEHAQsHmDuo2SvO4R6bzijmYtIK8OTK7
-XApj8DO5F9xpZYyS7oUlb0B+emLIXj0uvu6jIUuKUboWcFGKQcCI0XQwVa5z5RFY
-PwsfmgGuikWL30bwz3BvLBwYrj1jwnfMMLn2HYNTBXs5eeqwqrY1t2nH43Tt+Wee
-PuCKZxBHQZtLrMtinjn6I/U9W/VisTnCksaAUUHTUPiq+g761/A=
-=OQH3
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlqpxuIACgkQv1NdgR9S
+9osNBhAAjpQOCBpfmdxQh7jUfqcYe81KWhjLLT44sXj0EJOouqy4lWkiuOnzckP9
+CZ4AL1XVgYZ7AaultsXG3eld+XjZlchdIwXaOzUYfjMX3D27vJRranh/WZzuVTzG
+vT1bvZeqLM7idrg+L9aaLWKE8lfJ6/jbIItyazBuL3ywpcCE50kQwjOP2EfxJhOj
+Bxo8EKAfA1RBgOxJN9REbPLXsWi3JbNlIZq+QlUNcnkaAU2ynIaMQWR5CvC6BW1s
+MIwOyMUlLRWjNqgc8ltvCRITG1EUDw1liFSfs/t9bSTQRfaZzlzytpMI87J/h53Y
+FJVMqzKRQqtiQKEyoQJWnTmxPsR5SZEvkKcD/X1TLREczvzTY8J1sFYuylEnryDa
+ORtFbzZ6OsIrxSlxfDBIXJYID1RA7/tUBCYidUzOC04nCMSLS/aef9lSg4glHXGR
+QfeRVyzaFiPCKwnmkwroBCx2OfCzXBf/igCrEIi/XARGN6Db0lfS0Gq3HZF6U7nn
+q822nagfRdbNVaMkVqOApMUT7zri5oSRlJLW+8Ts984ksuaHiOj6qVq/1vS500uq
+5qlqm6vDsUsIoC275XDLh5Wx48k+RQ70rrJeUIf4p0UKzBbrZSegeRtBrQxpXF2j
+dSFteJ6rz5LHa2Cue0ZKJCsaL/K5ubyRpiNxBIO7om0a5OpoxEE=
+=evXN
 -----END PGP SIGNATURE-----
 
---CUfgB8w4ZwR/yMy5--
+--6zdv2QT/q3FMhpsV--
