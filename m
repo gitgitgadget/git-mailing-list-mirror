@@ -2,109 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7B1E01F404
-	for <e@80x24.org>; Thu, 15 Mar 2018 21:05:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B3AC31F404
+	for <e@80x24.org>; Thu, 15 Mar 2018 21:23:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752372AbeCOVFn (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Mar 2018 17:05:43 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:44661 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752220AbeCOVFm (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Mar 2018 17:05:42 -0400
-Received: by mail-wr0-f196.google.com with SMTP id v65so9647514wrc.11
-        for <git@vger.kernel.org>; Thu, 15 Mar 2018 14:05:41 -0700 (PDT)
+        id S1751892AbeCOVXK (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Mar 2018 17:23:10 -0400
+Received: from mail-pg0-f49.google.com ([74.125.83.49]:42490 "EHLO
+        mail-pg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751774AbeCOVXJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Mar 2018 17:23:09 -0400
+Received: by mail-pg0-f49.google.com with SMTP id x2so3263846pgo.9
+        for <git@vger.kernel.org>; Thu, 15 Mar 2018 14:23:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=CDbk5ebA6N7yrLfkghCv+7CZTvxI5h0uOOONy1Wc2oo=;
-        b=QYq7bQDjy9Z7EUEF+U1XI++TxtBD7k/LjmQqiYQvFjdubyFyZvuoDqwKytasoJl1jI
-         anvTibk5/ebTt0MddWfkK8OpAALZDg/THAHyelAYnGNB3Ezi/yj+Cws7hxGNQYuW9tZo
-         uKBMnzDvM10Jj+ATf91Y2uroq0Io6yZt52rgLyuHF/g+RxPfBRejHAGf5mYpGFSeKTIk
-         b5rObGI+TMo3r42y1RDqqnacoXvLv+eJk5n7cUF2yOjJZ2PMz0rsNbsWwvljelteH2he
-         H6PoMLItt3tetEu0MPuxNh3h2yg6eytRRV6WU77B0xpY87QBBs7KgUjBgbmOKofptM8B
-         NyoA==
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=XVvzVdb5uvuV8dOCUDVpUjvHuq0rokl+FMCV8gxnFzE=;
+        b=RMIo//UWRwooq28CnXh2qh1Bm1RWpFrmmirIivyFAEgTvcJ1WqgIukGBcPXlnRKnub
+         3P6p1P/2tbTPbUPol94JfhBaLtPGVcL3VEqnzCT4c+tegBEY9521RzRA1ELoJbzkZUo8
+         +p5ERCR8bJ224pI7hUm/YfeFbGsyoUS4Vz71W2TpXYC4K5kaCXbh6NvM20RE6rHUfDQf
+         NETceViDM7Rz1u0bSCynn+yz5yG9STg6bVUVVvT6YmVm5e6/v1K00DR5wP4sx6WCjHe0
+         sCK7gkgMO1TOIwZlHyVZZ5zit/DTmmlavddlpxnWUlpeHB90qqAXzHSEY5Ibw3i4GtZ2
+         oUsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=CDbk5ebA6N7yrLfkghCv+7CZTvxI5h0uOOONy1Wc2oo=;
-        b=DbuFZTjUysYTGwnnAVf5Y5C3wn7W6x7C4KH4g+z/rcLNE4UX28wFE4xQT/V0YDA/3l
-         r9eWmbj2k1Cm+miFZS//lggVbeJe+Is7Hri6j9JuqAOtKQEECtXiBUdR9PJgPP0fQ+hQ
-         7gRI9W3u62/4zCKWAHAxzz4kC4VDz+2uBtHeksaBOIAnTizoLfMe6lakgCOjl5MRqLSo
-         vGcgmVhAzx5FfXKSJ3r+X54u7lUl7ddH2BWVmhAec+3kyY9Mp0Kor3P1kwKpzWelMTyt
-         AX83Z0jGYJun5EqWD49j2to8RWirMb4ZkG2l84nc8R4p7G/eBnOG6mU5zXSBHLQbgfvu
-         ysKg==
-X-Gm-Message-State: AElRT7Gorjeq66i55TWpW0ikWkHzBrCSqXVkUPMc1QXf6xFeCb+wDvG5
-        rdGnUkN0ZK2omkPmGCQhYCE41sWNioo=
-X-Google-Smtp-Source: AG47ELuXUg/xhOjw0U6csy6EzbG7sFEF7BbQWSWJYWMVMa8ha/8kExHzAo/CqC3iYp+GFXypXRcKZw==
-X-Received: by 10.223.193.69 with SMTP id w5mr7910047wre.42.1521147940745;
-        Thu, 15 Mar 2018 14:05:40 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id u18sm6655395wrb.36.2018.03.15.14.05.39
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 15 Mar 2018 14:05:39 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
-Cc:     Olga Telezhnaya <olyatelezhnaya@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH v2 5/5] ref-filter: get_ref_atom_value() error handling
-References: <0102016225e61cc2-0d0c05ef-b999-4bf2-88ac-db9840dd2a87-000000@eu-west-1.amazonses.com>
-        <20180315204709.1900787-1-martin.agren@gmail.com>
-Date:   Thu, 15 Mar 2018 14:05:39 -0700
-In-Reply-To: <20180315204709.1900787-1-martin.agren@gmail.com> ("Martin
-        =?utf-8?Q?=C3=85gren=22's?= message of "Thu, 15 Mar 2018 21:47:09 +0100")
-Message-ID: <xmqqd1053v8c.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=XVvzVdb5uvuV8dOCUDVpUjvHuq0rokl+FMCV8gxnFzE=;
+        b=WAovPnsAOVH1n3xXd/B1LPj57VSY0w5XMxizTK3zSikSuyEX9Hv7PiukzEV1zTUIBw
+         inQkoIvIiNUNrXQDMx1EpcSBvAPpLb/oSVei/B/Kg3u1Eqq5MhkJDXP0bo6T0VD+6fRL
+         fDfr1WyjvKfrNPgWOwCBK18v+nQfR0JW2raE3/S1DFauMcma0sfkJ5ys+WhYUNXLWFJP
+         pvMUuzUJwrqCjTmAYYAws0L82julSmBRa9gSQY44U34ZuF6scV2QePxVXrt0qPpzHkB9
+         NBXUD/pEsBI0KEXlsLxUywPK9Ws7lekX4cqQE8nV3jhdNL1KZUs5aLimyKLsbw2e8MSP
+         aMSQ==
+X-Gm-Message-State: AElRT7Frjd8+yUnFKcz5VFeVwmWmsdPOfj7NT47XVteuz9SMeERQQZgK
+        LOKJH1kE56Vv4bdfhWpVJLjgy2PG
+X-Google-Smtp-Source: AG47ELvkHxTiE1elVr4ogBQpWMXRvk4oZA+snxNR6shXotZLx9agJIKcO+unCsSIXDAt3or2Zs24Mw==
+X-Received: by 10.99.102.132 with SMTP id a126mr6436064pgc.385.1521148988814;
+        Thu, 15 Mar 2018 14:23:08 -0700 (PDT)
+Received: from rem2ua0031cfw.ads.autodesk.com (adsknateur.autodesk.com. [132.188.32.100])
+        by smtp.gmail.com with ESMTPSA id 191sm11759911pfv.167.2018.03.15.14.23.05
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 15 Mar 2018 14:23:07 -0700 (PDT)
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [PATCH v11 06/10] convert: add 'working-tree-encoding' attribute
+From:   Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <xmqqmuzh5alb.fsf@gitster-ct.c.googlers.com>
+Date:   Thu, 15 Mar 2018 22:23:03 +0100
+Cc:     lars.schneider@autodesk.com, git@vger.kernel.org, tboegi@web.de,
+        j6t@kdbg.org, sunshine@sunshineco.com, peff@peff.net,
+        ramsay@ramsayjones.plus.com, Johannes.Schindelin@gmx.de,
+        pclouds@gmail.com
+Content-Transfer-Encoding: 7bit
+Message-Id: <BA576CCC-CF0C-4D50-AFC8-5C8FC7F59697@gmail.com>
+References: <20180309173536.62012-1-lars.schneider@autodesk.com> <20180309173536.62012-7-lars.schneider@autodesk.com> <xmqqmuzh5alb.fsf@gitster-ct.c.googlers.com>
+To:     Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Martin Ågren <martin.agren@gmail.com> writes:
 
->>  static int grab_objectname(const char *name, const unsigned char *sha1,
->> -                          struct atom_value *v, struct used_atom *atom)
->> +                          struct atom_value *v, struct used_atom *atom,
->> +                          struct strbuf *err)
->>  {
+> On 09 Mar 2018, at 20:10, Junio C Hamano <gitster@pobox.com> wrote:
+> 
+> lars.schneider@autodesk.com writes:
+> 
+>> +static const char *default_encoding = "UTF-8";
+>> +
 >> ...
->> +               } else {
->> +                       strbuf_addstr(err, "BUG: unknown %(objectname) option");
->> +                       return -1;
->> +               }
->>         }
->>         return 0;
->>  }
->
-> This is interesting. This die() is never ever supposed to actually
-> trigger, except to allow a developer adding some new O_xxx-value to
-> quickly notice that they have forgotten to add code here.
+>> +static const char *git_path_check_encoding(struct attr_check_item *check)
+>> +{
+>> +	const char *value = check->value;
+>> +
+>> +	if (ATTR_UNSET(value) || !strlen(value))
+>> +		return NULL;
+>> +
+>> +	if (ATTR_TRUE(value) || ATTR_FALSE(value)) {
+>> +		error(_("working-tree-encoding attribute requires a value"));
+>> +		return NULL;
+>> +	}
+> 
+> Hmph, so we decide to be loud but otherwise ignore an undefined
+> configuration?  Shouldn't we rather die instead to avoid touching
+> the user data in unexpected ways?
 
-Yup, BUG() is meant for a case like this; the original code predates
-the BUG("message") which in turn predates the die("BUG: message")
-convention, I think.
+OK.
 
->>         default:
->> -               die("Eh?  Object of type %d?", obj->type);
->> +               strbuf_addf(err, "Eh?  Object of type %d?", obj->type);
->> +               return -1;
->>         }
->> +       return 0;
->>  }
->
-> This seems similar. The string here is quite sloppy, and I do not
-> believe that the author intended this to be user-visible. I believe this
-> is more like a very short way of saying "how could we possibly get
-> here??". It could also be written as die("BUG: unknown object type %d",
-> obj->type), or even better: BUG(...).
 
-Likewise.
+>> +
+>> +	/* Don't encode to the default encoding */
+>> +	if (!strcasecmp(value, default_encoding))
+>> +		return NULL;
+> 
+> Is this an optimization to avoid "recode one encoding to the same
+> encoding" no-op overhead?
+
+Correct.
+
+>  We already have the optimization in the
+> same spirit in may existing codepaths that has nothing to do with
+> w-t-e, and I think we should share the code.  Two pieces of thought
+> comes to mind.
+> 
+> One is a lot smaller in scale: Is same_encoding() sufficient for
+> this callsite instead of strcasecmp()?
+
+Yes!
+
+
+> The other one is a lot bigger: Looking at all the existing callers
+> of same_encoding() that call reencode_string() when it returns false,
+> would it make sense to drop same_encoding() and move the optimization
+> to reencode_string() instead?
+> 
+> I suspect that the answer to the smaller one is "yes, and even if
+> not, it should be easy to enhance/extend same_encoding() to make it
+> do what we want it to, and such a change will benefit even existing
+> callers."  The answer to the larger one is likely "the optimization
+> is not about skipping only reencode_string() call but other things
+> are subtly different among callers of same_encoding(), so such a
+> refactoring would not be all that useful."
+
+I agree. reencode_string() would need to signal 3 cases:
+1. reencode performed
+2. reencode not necessary
+3. reencode failed
+
+We could model "reencode not necessary" as "char *in == char *return".
+However, I think this should be tackled in a separate series.
+
+Thanks
+Lars
