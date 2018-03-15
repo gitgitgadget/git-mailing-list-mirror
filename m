@@ -7,96 +7,86 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5C1B81FAE2
-	for <e@80x24.org>; Thu, 15 Mar 2018 10:12:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3B5261FAE2
+	for <e@80x24.org>; Thu, 15 Mar 2018 10:18:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751639AbeCOKMC (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Mar 2018 06:12:02 -0400
-Received: from mout.gmx.net ([212.227.17.22]:43649 "EHLO mout.gmx.net"
+        id S1751828AbeCOKSj (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Mar 2018 06:18:39 -0400
+Received: from mout.gmx.net ([212.227.17.22]:47265 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751488AbeCOKMA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Mar 2018 06:12:00 -0400
-Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0Lb5Tp-1eCfuR2xeT-00kdPr; Thu, 15
- Mar 2018 11:11:50 +0100
-Date:   Thu, 15 Mar 2018 11:11:51 +0100 (STD)
+        id S1751762AbeCOKSh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Mar 2018 06:18:37 -0400
+Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MNf1y-1ey4v538nq-007A2b; Thu, 15
+ Mar 2018 11:18:33 +0100
+Date:   Thu, 15 Mar 2018 11:18:34 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Phillip Wood <phillip.wood@talktalk.net>,
-        Git Mailing List <git@vger.kernel.org>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
+To:     Phillip Wood <phillip.wood@dunelm.org.uk>
+cc:     Git Mailing List <git@vger.kernel.org>
 Subject: Re: [PATCH 1/2] rebase: support --signoff with implicit rebase
-In-Reply-To: <xmqqh8pizgxg.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1803151110340.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <20180314111127.14217-1-phillip.wood@talktalk.net> <xmqqh8pizgxg.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <20180314111127.14217-1-phillip.wood@talktalk.net>
+Message-ID: <nycvar.QRO.7.76.6.1803151112390.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <20180314111127.14217-1-phillip.wood@talktalk.net>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:aW5wG8DTuKQenOHQpsMZjJ5T7qZi9WDjW39Ltgc22i3v+6OAiSz
- 9P0aExjdU1gRROkNNb/kFuBaUrhjyCq2duVhBQdmzJ3zQiO4scsF+dPn4F5/b/D6IVT1muU
- 5sAeNzTh/3GqI1ZVETqd184lRS7URFWPFJaVgvF4IShA/Xm9cWbuxMG5G5HkVGGCNHN3GXj
- ywzO7Hu2ICz2wPqCJ6cHg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:uIuO0ugESog=:dVCoSL/QEw36chUSVS3Jeh
- +0Xtz42IdrFGaQ+fgFtKIktdb0jRQz/NblxWDZNs3FaWjY6YzUsDM0WB4DRZc6j333mlfcVEG
- NuKS3yixuvBkgmMXvB3cVvk7pZ5ZXm2tCHOrDlNbIJCVng07ojPFp6GnbBR4oj38MfmgThVcz
- yLrIKOUo1DdKGjSc3m+WZjl3XquJJrFupQDbz+nSsxPKtZ/NKck+Tz5q7wmosCaWIO+Ah3AzX
- Dl+uw/EmK9hR+5uKEFgP1NJ9nqZ/XsdCB7+cshdco1tDOpXhBmpejlAyNGqIqjUx97XSeV8gB
- Rpe3UsoqJJTR8isgmbbQuS581qhV+n7wrphFAlcJ/ABwK/xK59z8iRtn7bYNdGrErbuD0xofb
- MIl7tCOBhzeneVIOUmQWJofgI1eEKDN6qclXpYbnHHOd93vAwgemAHRVil9onSYGIwMMWX4vm
- fBFnZ1ObXUTy5/GI78l1pzuHmkMLjn5Mz0FBbVIvmnB3x8yyhL/GJM1k+E6Khtnm3Hw2WuJyr
- Rx2UcHS9en502aOQcon1F0mZ9P9htxaz3Ri+tUGiSv7/ZOPmoNLqXZtXIWlrYuM1/V4zwJ7yC
- T6p1O/AhKx9NO0GHikTPT0z/PXF+IiZu3NQhzJkHRAv38frV95ukHH+FZe/wmPe7Ucik1z1ve
- NKjhh0x/bHtlAGoKVF9WOfMBVtiOYBDUP1v9Kap/cmjN7hAL60AA41LzUIMtH9v09u9RJWV93
- i3mDMJJ2y3GzFARoPlkVLUI90YKUTJeVOYCXOxgtTeQ4dDLdetmb2HXwmjLJg5w72n/5X43j/
- XVpfENdx1i+0kHddDcr9SOqz5EqKOhPgrpQbY8Jq+L678ehHXM=
+X-Provags-ID: V03:K0:zVg3L+OtBYshq0Wipg6nvO/hyYNxGQt6tlka69wBhSRjX3/dftj
+ a8I7UX39yVGu645O5SKRrEO9SiwdX52W5PJTGkhvuYaSigV/IQOKLPBU5vPROhmXUzoSutb
+ ADZ8VABnz2V48l864+q3MkleVThBZdUaS6E9wP+/oprekUhz4WluViNuIKlYrzOJ9i54eBQ
+ 8vNtVUz2PeUCBGgfSAkHg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:kAEhPvUkxVM=:fxl5XHrh0UvjipqQ96l0fP
+ 4OeFYE/VwMXKs3fxfk8P4CuOPkWGyz/UACedd0SzEJunX5VMP7LF6HStutU+G0IVTizrxwov3
+ 7VR/p15IFf0jZnC3TROgvr3VkSul2jmoMvyvO4TS5ihNnV8ISIlSC9bWgBBbTmf13uaMtrKCY
+ jZGSyhrSsXjp1FF8Ws6xEnzgAgyuDAOzvE4OOKJrSujJebPrYNAzMIXRhgyiRjJWBJEMZw5DF
+ Mbg8CTOUrPRewSxzZhAeMoxk6Pm2uIwCUTts6zzmjwHNHswwjLe3DgxU5EUmhxNMGg5tE5/40
+ hdJWCDP9EgYNgajQjEBHcf27+6k5oC6idyXuirtwx5NMbsZUIGrm0KEOuJ4TmIdgvZFpkkYkf
+ rfAU80em2q89LTXWX6Rjj+0PPc4e3M6eJ+/YI7gQ5sFq7S/isXQPsxL6jy7W7/O4pmdcFX/ih
+ dF0M56AFk9dbLpmkvG5D8ZFHui5+wuyzxCZmVGPJ1+5ZyN6tsb8eB4DoxUjuJMRGLdElcYTwJ
+ Iu6vL2GZVIssI/tO6HYEEiyBAC61UPQA4HpjrhB1umWHR/Z6NO0y5tSOLsJxXCYf/Y4j0tWBw
+ Hx2bVMT+3ymOwPxvkKetfyg/xPSix/j6XxnJ31GFAYvqrVQl2OxA52K+rTMINMA1TplsTAuj5
+ 7eNX+4/Ku0b2jOe1FXeQ7eVwh+JWqBqUBjFsD9Zp+OlMpQIRIDYt19qSac4isD5ppoItzWUhF
+ hCVPo4+fmeqYAN2WCJa/qVD7+JZjI4knHS2Y6WJKmGgX4C2ZD2yYYRQb9w4ZEPh9L9dHg9JN7
+ EtTPne3rg9QetA46Z37ow4xOdiAbiMBrQnnHTKjD9gC9uT3scg=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Hi Phillip,
 
-On Wed, 14 Mar 2018, Junio C Hamano wrote:
+On Wed, 14 Mar 2018, Phillip Wood wrote:
 
-> Phillip Wood <phillip.wood@talktalk.net> writes:
-> 
-> > From: Phillip Wood <phillip.wood@dunelm.org.uk>
-> >
-> > This allows one to run 'git rebase --exec "make check" --signoff'
-> > which is useful when preparing a patch series for publication and is
-> > more convenient than doing the signoff with another --exec command.
-> > This change also allows --root without --onto to work with --signoff
-> > as well (--root with --onto was already supported). Note that the
-> > failing test is due to a bug in 'rebase --root' when the root commit
-> > is empty which will be fixed in the next commit.
-> >
-> > Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-> > ---
-> 
-> How important is the word "implicit" in the title?  Is it your
-> intention to actively ignore --signoff when we fall into the
-> rebase--interactive codepath explicitly?
+> diff --git a/git-rebase.sh b/git-rebase.sh
+> index b353c33d41..40301756be 100755
+> --- a/git-rebase.sh
+> +++ b/git-rebase.sh
+> @@ -459,6 +471,18 @@ then
+>  	git_format_patch_opt="$git_format_patch_opt --progress"
+>  fi
+>  
+> +if test -n "$signoff"
+> +then
+> +	test "$interactive_rebase" = explicit &&
+> +		die "$(gettext "error: interactive rebase does not support --signoff")"
+> +	test "$type" = merge &&
+> +		die "$(gettext "error: merge rebase does not support --signoff")"
+> +	test -n "$preserve_merges" &&
+> +		die "$(gettext "error: cannot combine '--signoff' with '--preserve-merges'")"
+> +	git_am_opt="$git_am_opt $signoff"
+> +	force_rebase=t
+> +fi
 
-The patch makes the explicit case fail ;-)
+I wonder whether we can have this change as a separate commit? Otherwise
+we would lump that change (--interactive --signoff was previously allowed
+but the --signoff was simply ignored) with the other changes...
 
-> I offhand do not think of a strong reason why it is a bad idea to
-> run "git rebase -i --signoff", turn a few "pick" to either "reword"
-> or "edit", and then expect that the editor to edit log messages for
-> these commits to add your sign-off when you start editing them.
-> The "pick"s that are left as-is would also turn into doing an
-> otherwise no-op "commit --amend -s", I guess.
-> 
-> If you are teaching --signoff to the whole of "rebase--interactive",
-> then "git rebase --help" needs a bit of update.
-> 
->     --signoff::
->             This flag is passed to 'git am' to sign off all the rebased
->             commits (see linkgit:git-am[1]). Incompatible with the
->             --interactive option.
+As I mentioned in my reply to Junio's comment, it'd be awesome if
+--interactive --signoff was supported (and likewise --merge --signoff),
+but it feels like an undue feature request to be dumped on you, so I'm
+fine with the patch series simply erroring out on those combinations.
 
-Good point. I'd actually be in favor of having all rebase modes support
---signoff, but I do not want to pile onto Phillip's workload.
+(I don't care about --preserve-merges anymore, as everybody knows by now.)
 
 Ciao,
 Dscho
