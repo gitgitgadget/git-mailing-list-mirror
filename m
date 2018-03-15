@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D7A321F404
-	for <e@80x24.org>; Thu, 15 Mar 2018 17:32:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 093D91F404
+	for <e@80x24.org>; Thu, 15 Mar 2018 17:33:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752625AbeCORcz (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Mar 2018 13:32:55 -0400
-Received: from mail-yw0-f201.google.com ([209.85.161.201]:42472 "EHLO
-        mail-yw0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752452AbeCORcw (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Mar 2018 13:32:52 -0400
-Received: by mail-yw0-f201.google.com with SMTP id g1so7681005ywb.9
-        for <git@vger.kernel.org>; Thu, 15 Mar 2018 10:32:52 -0700 (PDT)
+        id S1752633AbeCORc5 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Mar 2018 13:32:57 -0400
+Received: from mail-ua0-f201.google.com ([209.85.217.201]:41053 "EHLO
+        mail-ua0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751711AbeCORcu (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Mar 2018 13:32:50 -0400
+Received: by mail-ua0-f201.google.com with SMTP id w9so4589636uae.8
+        for <git@vger.kernel.org>; Thu, 15 Mar 2018 10:32:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=GglT8KRROHYOZCVFN94GSU9k0I6w7M6tdxSWic8vEVU=;
-        b=t+j386T8/FQ9fmspgezVfqjtPGwdF4KGO0FATtqUG0ZpbPqU0vyYpoEnpWqmPlJyYP
-         oE/uxmY6+nABH5bRclQd3nFGnAwBheLvylPJct1RKx+uLiwBq0akz4cOQJUHqZPIaszc
-         KiU7+o+N+SJtEFbVRHd4ExCE85vwPn7xliVWEE7ksMehHdhJ0ZtlJZ5Xo/hNQpW09fhC
-         qzj4EcXT6EjROnKKM1DxAkDzwosGxBSOieVdKwlqgxDGyXqwZdVdFFr+JUl8BsCQGKew
-         fCVat2intx+MF3/byo342IfyrDEOZVt2ZsdDZ2vxl6HVwj+NSSEaoeLQp7GbEz87SI8N
-         D+dw==
+        bh=CE+IVmWSlHtw8Cv8fPt1g83Xs1Hr1WxGRZhRApvhSOU=;
+        b=q3XwffNQo2stME5ZlQed3mrSx0Rm0Uy73BN8Yo0jlWW5EPbWgAoj5kDoA9nzrcAhWC
+         uHAN11qFoo+mzpF30wFCdeyb+/Z5Vyu8IWLml+ziP/BNFKarheF0ZPM0eJbFgmZfjo76
+         8ghrBMju1MZjGiR7m+S0uh4h38fsrXKrEhNn3i8U9eeg1wlr3b6T4nZTBld0dMC6n4Em
+         F5dcwvywIu5AgpcykAjS/5uxQPw8Y4KJDHk2XvlE99IHksrz8tXCiEwtdMsJinpSaAF5
+         zIJzeZp5k762XfRVanKkAxgWTbTfXwJ5OtAxoS0euzdDC9LqksiHGRipNjKrVQcQAtrb
+         amkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=GglT8KRROHYOZCVFN94GSU9k0I6w7M6tdxSWic8vEVU=;
-        b=VnvSMWAH0ZBFWlPjc6x/z2Cx62Mux0KdusPpTigLRE5Fu7iMH5k2UStDo8w40j9PBO
-         +UrBAu5MXqgo8koczVbkVuUy+TSB/bOATddW+tuW+4xPE6y39yc07xR2q42O7S0YTYSg
-         O4INjMzVt+HbdK27HiPg1eSDLOaUdi1pce6oMH/KIH0I1OfvogUbQ6+5UPya4EPKig3I
-         VkOol444DPpk3ddLrRu73zDRrOB/vJpc8NK8xWUfau+neBpu3+WZx6b+zZG+wUYn4YHG
-         Cvb3JfVlW/RdnjoYDVfPOHPza3s6mHcoPliPwG4V/m3UCnB+V2tZVLwyPLxQnVnDsP5s
-         OdCA==
-X-Gm-Message-State: AElRT7HF6sAi/ewScjsCBoh6JNVNY0xzy+DSWIrWn1Hmr1M0eR8l6Tud
-        qRj1lRoOfCheC/v5PJoe2TbmAenMTUMwbNBzSubp5ltbnoFJ6DE5Gj4Efo/nEQp6hUt+GZQLHxq
-        kU732KNpO8DB4PHsGu6WxWa9j+uwo6Z4+k82h4qaL/+2wBClACjzDuxieAw==
-X-Google-Smtp-Source: AG47ELuN0LR64RcDCA18DkqhN+hSKHEYKXE5QFNKMHKwL0jCV1o9i5GA0O4VVNsmiRxz4BElEi1DLuE3JOI=
+        bh=CE+IVmWSlHtw8Cv8fPt1g83Xs1Hr1WxGRZhRApvhSOU=;
+        b=jDg7SwQiGO7vDHuXh4kQ1MTxJFJ91ggGoOsuADk9nZjnnA+soUKm/6UZxm2ta9oa1G
+         5sbrtEaoFtfVsyIMDwW6ZT5MjhXmpdIFZfXLCQ9bc96x52s+VVDUi0EhQNXpvxo4Ushv
+         vNrBvWiG/u6MfftQZAIB1KPpoMnV3t9V2cMgvJkLciKcv1Cm8eWw2GhTsolP36BPLlFP
+         MzKhvivwGoIGX+CiBsEBJPTzoG1VfkYrYFMnFTITFMn4BjTP/eQN8MRboJbmuC0/gLuF
+         74rMHAvhMNJWy0cMIDlWfYtVSl0zB11qmAS/yjpcE9LYFlH/Spqn6IPG3mL0oLpoaGjI
+         HB6g==
+X-Gm-Message-State: AElRT7Gmj2hFt8mxyvyr/lYau1MpFVo4pCrRenfX86lv1IKg7i0XmuFY
+        n1Aq2I1QtcDQkCOnSs0wnPqVnuH0YDisLhTPLbX9oWu2gun5bgzmddFDLj3SRqJH1fXhVdCCWpt
+        AZMVV42/XZMXIha7+IkRu1sua6DrwRKPthqYIxNr/gPa6U+45NvlYU9oIJA==
+X-Google-Smtp-Source: AG47ELsxYWZzJ9SCqGfN/vTBNEoXRuSwp3oCFKBLxXNHUaTNiLzb1DjZRfaEhcQ1PExXSUINxlfxT0cnjA0=
 MIME-Version: 1.0
-X-Received: by 2002:a25:ba4c:: with SMTP id z12-v6mr4077573ybj.25.1521135171748;
- Thu, 15 Mar 2018 10:32:51 -0700 (PDT)
-Date:   Thu, 15 Mar 2018 10:31:34 -0700
+X-Received: by 10.176.76.137 with SMTP id y9mr3153950uaf.118.1521135169532;
+ Thu, 15 Mar 2018 10:32:49 -0700 (PDT)
+Date:   Thu, 15 Mar 2018 10:31:33 -0700
 In-Reply-To: <20180315173142.176023-1-bmwill@google.com>
-Message-Id: <20180315173142.176023-28-bmwill@google.com>
+Message-Id: <20180315173142.176023-27-bmwill@google.com>
 References: <20180314183213.223440-1-bmwill@google.com> <20180315173142.176023-1-bmwill@google.com>
 X-Mailer: git-send-email 2.16.2.804.g6dcf76e118-goog
-Subject: [PATCH v6 27/35] transport-helper: introduce stateless-connect
+Subject: [PATCH v6 26/35] transport-helper: refactor process_connect_service
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     git@jeffhostetler.com, gitster@pobox.com, jrnieder@gmail.com,
@@ -65,161 +65,118 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Introduce the transport-helper capability 'stateless-connect'.  This
-capability indicates that the transport-helper can be requested to run
-the 'stateless-connect' command which should attempt to make a
-stateless connection with a remote end.  Once established, the
-connection can be used by the git client to communicate with
-the remote end natively in a stateless-rpc manner as supported by
-protocol v2.  This means that the client must send everything the server
-needs in a single request as the client must not assume any
-state-storing on the part of the server or transport.
-
-If a stateless connection cannot be established then the remote-helper
-will respond in the same manner as the 'connect' command indicating that
-the client should fallback to using the dumb remote-helper commands.
-
-A future patch will implement the 'stateless-connect' capability in our
-http remote-helper (remote-curl) so that protocol v2 can be used using
-the http transport.
+A future patch will need to take advantage of the logic which runs and
+processes the response of the connect command on a remote helper so
+factor out this logic from 'process_connect_service()' and place it into
+a helper function 'run_connect()'.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- Documentation/gitremote-helpers.txt | 32 +++++++++++++++++++++++++++++
- transport-helper.c                  | 11 ++++++++++
- transport.c                         |  1 +
- transport.h                         |  6 ++++++
- 4 files changed, 50 insertions(+)
+ transport-helper.c | 67 ++++++++++++++++++++++++++--------------------
+ 1 file changed, 38 insertions(+), 29 deletions(-)
 
-diff --git a/Documentation/gitremote-helpers.txt b/Documentation/gitremote-helpers.txt
-index 4a584f3c5d..cd9b34d230 100644
---- a/Documentation/gitremote-helpers.txt
-+++ b/Documentation/gitremote-helpers.txt
-@@ -102,6 +102,14 @@ Capabilities for Pushing
- +
- Supported commands: 'connect'.
- 
-+'stateless-connect'::
-+	Experimental; for internal use only.
-+	Can attempt to connect to a remote server for communication
-+	using git's wire-protocol version 2.  See the documentation
-+	for the stateless-connect command for more information.
-++
-+Supported commands: 'stateless-connect'.
-+
- 'push'::
- 	Can discover remote refs and push local commits and the
- 	history leading up to them to new or existing remote refs.
-@@ -136,6 +144,14 @@ Capabilities for Fetching
- +
- Supported commands: 'connect'.
- 
-+'stateless-connect'::
-+	Experimental; for internal use only.
-+	Can attempt to connect to a remote server for communication
-+	using git's wire-protocol version 2.  See the documentation
-+	for the stateless-connect command for more information.
-++
-+Supported commands: 'stateless-connect'.
-+
- 'fetch'::
- 	Can discover remote refs and transfer objects reachable from
- 	them to the local object store.
-@@ -375,6 +391,22 @@ Supported if the helper has the "export" capability.
- +
- Supported if the helper has the "connect" capability.
- 
-+'stateless-connect' <service>::
-+	Experimental; for internal use only.
-+	Connects to the given remote service for communication using
-+	git's wire-protocol version 2.  Valid replies to this command
-+	are empty line (connection established), 'fallback' (no smart
-+	transport support, fall back to dumb transports) and just
-+	exiting with error message printed (can't connect, don't bother
-+	trying to fall back).  After line feed terminating the positive
-+	(empty) response, the output of the service starts.  Messages
-+	(both request and response) must consist of zero or more
-+	PKT-LINEs, terminating in a flush packet. The client must not
-+	expect the server to store any state in between request-response
-+	pairs.  After the connection ends, the remote helper exits.
-++
-+Supported if the helper has the "stateless-connect" capability.
-+
- If a fatal error occurs, the program writes the error message to
- stderr and exits. The caller should expect that a suitable error
- message has been printed if the child closes the connection without
 diff --git a/transport-helper.c b/transport-helper.c
-index 830f21f0a9..aecbc4a845 100644
+index 9677ead426..830f21f0a9 100644
 --- a/transport-helper.c
 +++ b/transport-helper.c
-@@ -12,6 +12,7 @@
- #include "argv-array.h"
- #include "refs.h"
- #include "transport-internal.h"
-+#include "protocol.h"
+@@ -545,14 +545,13 @@ static int fetch_with_import(struct transport *transport,
+ 	return 0;
+ }
  
- static int debug;
+-static int process_connect_service(struct transport *transport,
+-				   const char *name, const char *exec)
++static int run_connect(struct transport *transport, struct strbuf *cmdbuf)
+ {
+ 	struct helper_data *data = transport->data;
+-	struct strbuf cmdbuf = STRBUF_INIT;
+-	struct child_process *helper;
+-	int r, duped, ret = 0;
++	int ret = 0;
++	int duped;
+ 	FILE *input;
++	struct child_process *helper;
  
-@@ -26,6 +27,7 @@ struct helper_data {
- 		option : 1,
- 		push : 1,
- 		connect : 1,
-+		stateless_connect : 1,
- 		signed_tags : 1,
- 		check_connectivity : 1,
- 		no_disconnect_req : 1,
-@@ -188,6 +190,8 @@ static struct child_process *get_helper(struct transport *transport)
- 			refspecs[refspec_nr++] = xstrdup(arg);
- 		} else if (!strcmp(capname, "connect")) {
- 			data->connect = 1;
-+		} else if (!strcmp(capname, "stateless-connect")) {
-+			data->stateless_connect = 1;
- 		} else if (!strcmp(capname, "signed-tags")) {
- 			data->signed_tags = 1;
- 		} else if (skip_prefix(capname, "export-marks ", &arg)) {
-@@ -612,6 +616,13 @@ static int process_connect_service(struct transport *transport,
- 	if (data->connect) {
- 		strbuf_addf(&cmdbuf, "connect %s\n", name);
- 		ret = run_connect(transport, &cmdbuf);
-+	} else if (data->stateless_connect &&
-+		   (get_protocol_version_config() == protocol_v2) &&
-+		   !strcmp("git-upload-pack", name)) {
-+		strbuf_addf(&cmdbuf, "stateless-connect %s\n", name);
-+		ret = run_connect(transport, &cmdbuf);
-+		if (ret)
-+			transport->stateless_rpc = 1;
- 	}
+ 	helper = get_helper(transport);
  
- 	strbuf_release(&cmdbuf);
-diff --git a/transport.c b/transport.c
-index 9152a45b38..342db492ca 100644
---- a/transport.c
-+++ b/transport.c
-@@ -252,6 +252,7 @@ static int fetch_refs_via_pack(struct transport *transport,
- 		data->options.check_self_contained_and_connected;
- 	args.cloning = transport->cloning;
- 	args.update_shallow = data->options.update_shallow;
-+	args.stateless_rpc = transport->stateless_rpc;
+@@ -568,44 +567,54 @@ static int process_connect_service(struct transport *transport,
+ 	input = xfdopen(duped, "r");
+ 	setvbuf(input, NULL, _IONBF, 0);
  
- 	if (!data->got_remote_heads)
- 		refs_tmp = get_refs_via_connect(transport, 0, NULL);
-diff --git a/transport.h b/transport.h
-index 83992a4257..0e602d4d47 100644
---- a/transport.h
-+++ b/transport.h
-@@ -55,6 +55,12 @@ struct transport {
- 	 */
- 	unsigned cloning : 1;
- 
-+	/*
-+	 * Indicates that the transport is connected via a half-duplex
-+	 * connection and should operate in stateless-rpc mode.
-+	 */
-+	unsigned stateless_rpc : 1;
++	sendline(data, cmdbuf);
++	if (recvline_fh(input, cmdbuf))
++		exit(128);
++
++	if (!strcmp(cmdbuf->buf, "")) {
++		data->no_disconnect_req = 1;
++		if (debug)
++			fprintf(stderr, "Debug: Smart transport connection "
++				"ready.\n");
++		ret = 1;
++	} else if (!strcmp(cmdbuf->buf, "fallback")) {
++		if (debug)
++			fprintf(stderr, "Debug: Falling back to dumb "
++				"transport.\n");
++	} else {
++		die("Unknown response to connect: %s",
++			cmdbuf->buf);
++	}
++
++	fclose(input);
++	return ret;
++}
++
++static int process_connect_service(struct transport *transport,
++				   const char *name, const char *exec)
++{
++	struct helper_data *data = transport->data;
++	struct strbuf cmdbuf = STRBUF_INIT;
++	int ret = 0;
 +
  	/*
- 	 * These strings will be passed to the {pre, post}-receive hook,
- 	 * on the remote side, if both sides support the push options capability.
+ 	 * Handle --upload-pack and friends. This is fire and forget...
+ 	 * just warn if it fails.
+ 	 */
+ 	if (strcmp(name, exec)) {
+-		r = set_helper_option(transport, "servpath", exec);
++		int r = set_helper_option(transport, "servpath", exec);
+ 		if (r > 0)
+ 			warning("Setting remote service path not supported by protocol.");
+ 		else if (r < 0)
+ 			warning("Invalid remote service path.");
+ 	}
+ 
+-	if (data->connect)
++	if (data->connect) {
+ 		strbuf_addf(&cmdbuf, "connect %s\n", name);
+-	else
+-		goto exit;
+-
+-	sendline(data, &cmdbuf);
+-	if (recvline_fh(input, &cmdbuf))
+-		exit(128);
+-
+-	if (!strcmp(cmdbuf.buf, "")) {
+-		data->no_disconnect_req = 1;
+-		if (debug)
+-			fprintf(stderr, "Debug: Smart transport connection "
+-				"ready.\n");
+-		ret = 1;
+-	} else if (!strcmp(cmdbuf.buf, "fallback")) {
+-		if (debug)
+-			fprintf(stderr, "Debug: Falling back to dumb "
+-				"transport.\n");
+-	} else
+-		die("Unknown response to connect: %s",
+-			cmdbuf.buf);
++		ret = run_connect(transport, &cmdbuf);
++	}
+ 
+-exit:
+ 	strbuf_release(&cmdbuf);
+-	fclose(input);
+ 	return ret;
+ }
+ 
 -- 
 2.16.2.804.g6dcf76e118-goog
 
