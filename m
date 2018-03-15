@@ -7,53 +7,52 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 754531F404
-	for <e@80x24.org>; Thu, 15 Mar 2018 17:34:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5AFB41F404
+	for <e@80x24.org>; Thu, 15 Mar 2018 17:35:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752146AbeCORej (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Mar 2018 13:34:39 -0400
-Received: from mail-vk0-f73.google.com ([209.85.213.73]:34610 "EHLO
-        mail-vk0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751699AbeCORcX (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Mar 2018 13:32:23 -0400
-Received: by mail-vk0-f73.google.com with SMTP id r202so4742109vke.1
-        for <git@vger.kernel.org>; Thu, 15 Mar 2018 10:32:23 -0700 (PDT)
+        id S932252AbeCORfI (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Mar 2018 13:35:08 -0400
+Received: from mail-yw0-f202.google.com ([209.85.161.202]:47319 "EHLO
+        mail-yw0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752186AbeCORb5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Mar 2018 13:31:57 -0400
+Received: by mail-yw0-f202.google.com with SMTP id i204so7651906ywb.14
+        for <git@vger.kernel.org>; Thu, 15 Mar 2018 10:31:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=3KwKss0yiImv+LpOoBm6nnu/wpCXcvG9K6sVQ4IEBrQ=;
-        b=v5cCG6uXYMkfgXZqHmIEcjvbU65QUeu/RMNsr3KtazAEig4YAyomkqUHbmOdC9/oU1
-         wq+i9+dkJmJY3rldI4YXNjErBjOAwUqY//B4V9o0DASmNtNcxhdlM/4EOHx3I9OA5KB3
-         5y5GpASAHcZ1WJJ6dEUnAOTa4QRUkGFUnp+VzxHTtfTwZqh/3omYuH1y8RTCoWlIfeWZ
-         JLa0N1QUrolGYTv8i9DDJfbBBzOF3+2IQRK6SythT1eLGBsDf91E+sWS4GXTmETZpWK7
-         qm+HxXJF2dVMQ6xawsYT9nfKVlWA6XZxsNMmpq/NXHzDv1cXHCMx611d4bDxcU6uJNTg
-         hnVQ==
+        bh=9yt+hi0cOzkpXoovsJa0gnIESbhDewSu0PSZCY0aJr4=;
+        b=Lpm1Q6y4xPWUpleYN8efEny4fYGbA4o1L7P6vTS3rVaTiqFtFbNSJ2SN3Ey2YAiyOa
+         V93Eiy3u98/D5uZ9V45O2M6rMP254JlhXFGbp4+jSvabT61fE8HddMcM4R63vskmanJ5
+         zXvnWGLq5BMDRdSbpMwGue57siayVEolX3tqOrKiEYMpue725hD0nj92R3/7L2Nrtuph
+         2jveXrVPJOKuhVzdwvAo3E8B+qUAdra5Am0Ue5DG4KjzWo5UW7jdQTa3f4KZ3P1tvwdf
+         cvWUYrhV+PA+LHR0JwTkPnmm54HsFc87xDOi1LwitZ1+BqIpeB+il3k01MiUGvdhyi9Y
+         CBBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=3KwKss0yiImv+LpOoBm6nnu/wpCXcvG9K6sVQ4IEBrQ=;
-        b=etRJkyIcvhXIWYwD7PagYD3Qz9qDBEttubzuDDbpC0CgnScX25OApw8dfPQYOWJ6sR
-         xlbm+0vpRhdrstHDpiomffRo88kHFXGWoGWbk6l7fcNu6Nsfvelmm/w5uEA7fm/n3Ctx
-         MGWIxrx8ZfcZQpTgnuSKtCzvD/jE2DpQxIVL5i4KW7lSonKMJlSdwugTI9oZky4YtW/b
-         rKFZ6to/tTEeCeSPvFwwObXwOc4kI8ChpSnL8ZDd0AUvvKE8FF5k1XPdRcvPHGzpeR3B
-         TAWKbfsBtLS+pfg+PrXGQgqe2ws1lM6FvgBJKhLtb9shqEN5AK+UlwvHkQmqU7l1Q1gg
-         TOBQ==
-X-Gm-Message-State: AElRT7E8CAguZpdX4Z+nOq0WlpCAp9xXRKh5Z9QaUx/qbFFhRwFDqd7f
-        sgWx6MfstMA9CZB3cqevm71Rddt+6zuP2Zj+EbVkwpuU8IzRgJpPW4si7lBpgtORxcXmAMsUxZC
-        qllncwHmERYZsQIHLZ4IoengiJ77O8ieNqYq6jYSgjuOyUVjmpAeKzu13PQ==
-X-Google-Smtp-Source: AG47ELvuVMG+9mrg28NfaHevNKTWt3Rp/aBi8SEGWLEFY4ipmpvz3nAPh/dW/pSKcsiUJf0bdGKHg0QTZb4=
+        bh=9yt+hi0cOzkpXoovsJa0gnIESbhDewSu0PSZCY0aJr4=;
+        b=qsfDWY0Ddq/rA0qYS3TAJxQu1wzOSZskhIlqE4W7puZKLYNcriJKujnfcOJGpNJRGg
+         Tk2Fl/d67i4Z2enxS6Q88GBrEtlvhVkwnzXaHZ3c6dr0dw9RtIUlOMzWx+ffnBE21b7U
+         FvhU1+ePBYRsExTvzIcTariRq8uyq0LsNuN8+qoER7ZbXU9oZiMojYgI7RQDJmcc0kZi
+         fWPhAPH/MD2+sW5/LTScqlRL3U+sWPKLd5NV8DEFFd6nDeeXMMVz30quLiODVq+SM0NU
+         aOkESGwXBLgtEorjCaC+S6dpjm2chYukLy1X3G/CtVJnfOvjGNgTSwl2fvR+lsehI1Ea
+         lMEQ==
+X-Gm-Message-State: AElRT7HpfeMQpJkmUPLc4lix7+WTxAFItXTEbI7yFUlkfbIlO9PMyO5f
+        gPHd3/xRm6rz97mDHzVlRtT7BwN4mOhs4MjVcgER61bdpKCBOqVhTilDkewzRMaYaaBia4yDuZy
+        SpfUJpiNNXXwQpA5bIXpyWqguzH75KEobqxW6po5R0NASulLiuv8iaqnk5A==
+X-Google-Smtp-Source: AG47ELtLB7oIDNQzvqSbv3AkZnDUYECUIOLypklunNuIaLIt+wLrbsvIxPYCOpp3N3RBbgCLnHFjSG1pUVE=
 MIME-Version: 1.0
-X-Received: by 10.176.75.2 with SMTP id h2mr4078797uaf.14.1521135142894; Thu,
- 15 Mar 2018 10:32:22 -0700 (PDT)
-Date:   Thu, 15 Mar 2018 10:31:22 -0700
+X-Received: by 2002:a25:4142:: with SMTP id o63-v6mr4073626yba.39.1521135116576;
+ Thu, 15 Mar 2018 10:31:56 -0700 (PDT)
+Date:   Thu, 15 Mar 2018 10:31:11 -0700
 In-Reply-To: <20180315173142.176023-1-bmwill@google.com>
-Message-Id: <20180315173142.176023-16-bmwill@google.com>
+Message-Id: <20180315173142.176023-5-bmwill@google.com>
 References: <20180314183213.223440-1-bmwill@google.com> <20180315173142.176023-1-bmwill@google.com>
 X-Mailer: git-send-email 2.16.2.804.g6dcf76e118-goog
-Subject: [PATCH v6 15/35] transport: convert get_refs_list to take a list of
- ref prefixes
+Subject: [PATCH v6 04/35] upload-pack: convert to a builtin
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     git@jeffhostetler.com, gitster@pobox.com, jrnieder@gmail.com,
@@ -66,147 +65,319 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert the 'struct transport' virtual function 'get_refs_list()' to
-optionally take an argv_array of ref prefixes.  When communicating with
-a server using protocol v2 these ref prefixes can be sent when
-requesting a listing of their refs allowing the server to filter the
-refs it sends based on the sent prefixes.  This list will be ignored
-when not using protocol v2.
+In order to allow for code sharing with the server-side of fetch in
+protocol-v2 convert upload-pack to be a builtin.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- transport-helper.c   |  5 +++--
- transport-internal.h | 11 ++++++++++-
- transport.c          | 18 +++++++++++-------
- 3 files changed, 24 insertions(+), 10 deletions(-)
+ Makefile              |   3 +-
+ builtin.h             |   1 +
+ builtin/upload-pack.c |  67 ++++++++++++++++++++++++++
+ git.c                 |   1 +
+ upload-pack.c         | 107 ++++++++++--------------------------------
+ upload-pack.h         |  13 +++++
+ 6 files changed, 109 insertions(+), 83 deletions(-)
+ create mode 100644 builtin/upload-pack.c
+ create mode 100644 upload-pack.h
 
-diff --git a/transport-helper.c b/transport-helper.c
-index 5080150231..8774ab3013 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -1026,7 +1026,8 @@ static int has_attribute(const char *attrs, const char *attr) {
- 	}
- }
+diff --git a/Makefile b/Makefile
+index 1a9b23b679..b7ccc05fac 100644
+--- a/Makefile
++++ b/Makefile
+@@ -639,7 +639,6 @@ PROGRAM_OBJS += imap-send.o
+ PROGRAM_OBJS += sh-i18n--envsubst.o
+ PROGRAM_OBJS += shell.o
+ PROGRAM_OBJS += show-index.o
+-PROGRAM_OBJS += upload-pack.o
+ PROGRAM_OBJS += remote-testsvn.o
  
--static struct ref *get_refs_list(struct transport *transport, int for_push)
-+static struct ref *get_refs_list(struct transport *transport, int for_push,
-+				 const struct argv_array *ref_prefixes)
- {
- 	struct helper_data *data = transport->data;
- 	struct child_process *helper;
-@@ -1039,7 +1040,7 @@ static struct ref *get_refs_list(struct transport *transport, int for_push)
+ # Binary suffix, set to .exe for Windows builds
+@@ -909,6 +908,7 @@ LIB_OBJS += tree-diff.o
+ LIB_OBJS += tree.o
+ LIB_OBJS += tree-walk.o
+ LIB_OBJS += unpack-trees.o
++LIB_OBJS += upload-pack.o
+ LIB_OBJS += url.o
+ LIB_OBJS += urlmatch.o
+ LIB_OBJS += usage.o
+@@ -1026,6 +1026,7 @@ BUILTIN_OBJS += builtin/update-index.o
+ BUILTIN_OBJS += builtin/update-ref.o
+ BUILTIN_OBJS += builtin/update-server-info.o
+ BUILTIN_OBJS += builtin/upload-archive.o
++BUILTIN_OBJS += builtin/upload-pack.o
+ BUILTIN_OBJS += builtin/var.o
+ BUILTIN_OBJS += builtin/verify-commit.o
+ BUILTIN_OBJS += builtin/verify-pack.o
+diff --git a/builtin.h b/builtin.h
+index 42378f3aa4..f332a12574 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -231,6 +231,7 @@ extern int cmd_update_ref(int argc, const char **argv, const char *prefix);
+ extern int cmd_update_server_info(int argc, const char **argv, const char *prefix);
+ extern int cmd_upload_archive(int argc, const char **argv, const char *prefix);
+ extern int cmd_upload_archive_writer(int argc, const char **argv, const char *prefix);
++extern int cmd_upload_pack(int argc, const char **argv, const char *prefix);
+ extern int cmd_var(int argc, const char **argv, const char *prefix);
+ extern int cmd_verify_commit(int argc, const char **argv, const char *prefix);
+ extern int cmd_verify_tag(int argc, const char **argv, const char *prefix);
+diff --git a/builtin/upload-pack.c b/builtin/upload-pack.c
+new file mode 100644
+index 0000000000..2cb5cb35b0
+--- /dev/null
++++ b/builtin/upload-pack.c
+@@ -0,0 +1,67 @@
++#include "cache.h"
++#include "builtin.h"
++#include "exec_cmd.h"
++#include "pkt-line.h"
++#include "parse-options.h"
++#include "protocol.h"
++#include "upload-pack.h"
++
++static const char * const upload_pack_usage[] = {
++	N_("git upload-pack [<options>] <dir>"),
++	NULL
++};
++
++int cmd_upload_pack(int argc, const char **argv, const char *prefix)
++{
++	const char *dir;
++	int strict = 0;
++	struct upload_pack_options opts = { 0 };
++	struct option options[] = {
++		OPT_BOOL(0, "stateless-rpc", &opts.stateless_rpc,
++			 N_("quit after a single request/response exchange")),
++		OPT_BOOL(0, "advertise-refs", &opts.advertise_refs,
++			 N_("exit immediately after initial ref advertisement")),
++		OPT_BOOL(0, "strict", &strict,
++			 N_("do not try <directory>/.git/ if <directory> is no Git directory")),
++		OPT_INTEGER(0, "timeout", &opts.timeout,
++			    N_("interrupt transfer after <n> seconds of inactivity")),
++		OPT_END()
++	};
++
++	packet_trace_identity("upload-pack");
++	check_replace_refs = 0;
++
++	argc = parse_options(argc, argv, NULL, options, upload_pack_usage, 0);
++
++	if (argc != 1)
++		usage_with_options(upload_pack_usage, options);
++
++	if (opts.timeout)
++		opts.daemon_mode = 1;
++
++	setup_path();
++
++	dir = argv[0];
++
++	if (!enter_repo(dir, strict))
++		die("'%s' does not appear to be a git repository", dir);
++
++	switch (determine_protocol_version_server()) {
++	case protocol_v1:
++		/*
++		 * v1 is just the original protocol with a version string,
++		 * so just fall through after writing the version string.
++		 */
++		if (opts.advertise_refs || !opts.stateless_rpc)
++			packet_write_fmt(1, "version 1\n");
++
++		/* fallthrough */
++	case protocol_v0:
++		upload_pack(&opts);
++		break;
++	case protocol_unknown_version:
++		BUG("unknown protocol version");
++	}
++
++	return 0;
++}
+diff --git a/git.c b/git.c
+index c870b9719c..f71073dc8d 100644
+--- a/git.c
++++ b/git.c
+@@ -478,6 +478,7 @@ static struct cmd_struct commands[] = {
+ 	{ "update-server-info", cmd_update_server_info, RUN_SETUP },
+ 	{ "upload-archive", cmd_upload_archive },
+ 	{ "upload-archive--writer", cmd_upload_archive_writer },
++	{ "upload-pack", cmd_upload_pack },
+ 	{ "var", cmd_var, RUN_SETUP_GENTLY },
+ 	{ "verify-commit", cmd_verify_commit, RUN_SETUP },
+ 	{ "verify-pack", cmd_verify_pack },
+diff --git a/upload-pack.c b/upload-pack.c
+index d5de18127c..2ad73a98b1 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -6,7 +6,6 @@
+ #include "tag.h"
+ #include "object.h"
+ #include "commit.h"
+-#include "exec_cmd.h"
+ #include "diff.h"
+ #include "revision.h"
+ #include "list-objects.h"
+@@ -15,15 +14,10 @@
+ #include "sigchain.h"
+ #include "version.h"
+ #include "string-list.h"
+-#include "parse-options.h"
+ #include "argv-array.h"
+ #include "prio-queue.h"
+ #include "protocol.h"
+-
+-static const char * const upload_pack_usage[] = {
+-	N_("git upload-pack [<options>] <dir>"),
+-	NULL
+-};
++#include "upload-pack.h"
  
- 	if (process_connect(transport, for_push)) {
- 		do_take_over(transport);
--		return transport->vtable->get_refs_list(transport, for_push);
-+		return transport->vtable->get_refs_list(transport, for_push, ref_prefixes);
- 	}
+ /* Remember to update object flag allocation in object.h */
+ #define THEY_HAVE	(1u << 11)
+@@ -61,7 +55,6 @@ static int keepalive = 5;
+  * otherwise maximum packet size (up to 65520 bytes).
+  */
+ static int use_sideband;
+-static int advertise_refs;
+ static int stateless_rpc;
+ static const char *pack_objects_hook;
  
- 	if (data->push && for_push)
-diff --git a/transport-internal.h b/transport-internal.h
-index 3c1a29d727..1cde6258a7 100644
---- a/transport-internal.h
-+++ b/transport-internal.h
-@@ -3,6 +3,7 @@
- 
- struct ref;
- struct transport;
-+struct argv_array;
- 
- struct transport_vtable {
- 	/**
-@@ -17,11 +18,19 @@ struct transport_vtable {
- 	 * the transport to try to share connections, for_push is a
- 	 * hint as to whether the ultimate operation is a push or a fetch.
- 	 *
-+	 * If communicating using protocol v2 a list of prefixes can be
-+	 * provided to be sent to the server to enable it to limit the ref
-+	 * advertisement.  Since ref filtering is done on the server's end, and
-+	 * only when using protocol v2, this list will be ignored when not
-+	 * using protocol v2 meaning this function can return refs which don't
-+	 * match the provided ref_prefixes.
-+	 *
- 	 * If the transport is able to determine the remote hash for
- 	 * the ref without a huge amount of effort, it should store it
- 	 * in the ref's old_sha1 field; otherwise it should be all 0.
- 	 **/
--	struct ref *(*get_refs_list)(struct transport *transport, int for_push);
-+	struct ref *(*get_refs_list)(struct transport *transport, int for_push,
-+				     const struct argv_array *ref_prefixes);
- 
- 	/**
- 	 * Fetch the objects for the given refs. Note that this gets
-diff --git a/transport.c b/transport.c
-index ffc6b2614f..2e68010dd0 100644
---- a/transport.c
-+++ b/transport.c
-@@ -72,7 +72,9 @@ struct bundle_transport_data {
- 	struct bundle_header header;
- };
- 
--static struct ref *get_refs_from_bundle(struct transport *transport, int for_push)
-+static struct ref *get_refs_from_bundle(struct transport *transport,
-+					int for_push,
-+					const struct argv_array *ref_prefixes)
- {
- 	struct bundle_transport_data *data = transport->data;
- 	struct ref *result = NULL;
-@@ -189,7 +191,8 @@ static int connect_setup(struct transport *transport, int for_push)
+@@ -977,33 +970,6 @@ static int find_symref(const char *refname, const struct object_id *oid,
  	return 0;
  }
  
--static struct ref *get_refs_via_connect(struct transport *transport, int for_push)
-+static struct ref *get_refs_via_connect(struct transport *transport, int for_push,
-+					const struct argv_array *ref_prefixes)
+-static void upload_pack(void)
+-{
+-	struct string_list symref = STRING_LIST_INIT_DUP;
+-
+-	head_ref_namespaced(find_symref, &symref);
+-
+-	if (advertise_refs || !stateless_rpc) {
+-		reset_timeout();
+-		head_ref_namespaced(send_ref, &symref);
+-		for_each_namespaced_ref(send_ref, &symref);
+-		advertise_shallow_grafts(1);
+-		packet_flush(1);
+-	} else {
+-		head_ref_namespaced(check_ref, NULL);
+-		for_each_namespaced_ref(check_ref, NULL);
+-	}
+-	string_list_clear(&symref, 1);
+-	if (advertise_refs)
+-		return;
+-
+-	receive_needs();
+-	if (want_obj.nr) {
+-		get_common_commits();
+-		create_pack_file();
+-	}
+-}
+-
+ static int upload_pack_config(const char *var, const char *value, void *unused)
  {
- 	struct git_transport_data *data = transport->data;
- 	struct ref *refs = NULL;
-@@ -204,7 +207,8 @@ static struct ref *get_refs_via_connect(struct transport *transport, int for_pus
- 	data->version = discover_version(&reader);
- 	switch (data->version) {
- 	case protocol_v2:
--		get_remote_refs(data->fd[1], &reader, &refs, for_push, NULL);
-+		get_remote_refs(data->fd[1], &reader, &refs, for_push,
-+				ref_prefixes);
- 		break;
- 	case protocol_v1:
- 	case protocol_v0:
-@@ -250,7 +254,7 @@ static int fetch_refs_via_pack(struct transport *transport,
- 	args.update_shallow = data->options.update_shallow;
+ 	if (!strcmp("uploadpack.allowtipsha1inwant", var)) {
+@@ -1032,58 +998,35 @@ static int upload_pack_config(const char *var, const char *value, void *unused)
+ 	return parse_hide_refs_config(var, value, "uploadpack");
+ }
  
- 	if (!data->got_remote_heads)
--		refs_tmp = get_refs_via_connect(transport, 0);
-+		refs_tmp = get_refs_via_connect(transport, 0, NULL);
- 
- 	switch (data->version) {
- 	case protocol_v2:
-@@ -568,7 +572,7 @@ static int git_transport_push(struct transport *transport, struct ref *remote_re
- 	int ret = 0;
- 
- 	if (!data->got_remote_heads)
--		get_refs_via_connect(transport, 1);
-+		get_refs_via_connect(transport, 1, NULL);
- 
- 	memset(&args, 0, sizeof(args));
- 	args.send_mirror = !!(flags & TRANSPORT_PUSH_MIRROR);
-@@ -1028,7 +1032,7 @@ int transport_push(struct transport *transport,
- 		if (check_push_refs(local_refs, refspec_nr, refspec) < 0)
- 			return -1;
- 
--		remote_refs = transport->vtable->get_refs_list(transport, 1);
-+		remote_refs = transport->vtable->get_refs_list(transport, 1, NULL);
- 
- 		if (flags & TRANSPORT_PUSH_ALL)
- 			match_flags |= MATCH_REFS_ALL;
-@@ -1137,7 +1141,7 @@ int transport_push(struct transport *transport,
- const struct ref *transport_get_remote_refs(struct transport *transport)
+-int cmd_main(int argc, const char **argv)
++void upload_pack(struct upload_pack_options *options)
  {
- 	if (!transport->got_remote_refs) {
--		transport->remote_refs = transport->vtable->get_refs_list(transport, 0);
-+		transport->remote_refs = transport->vtable->get_refs_list(transport, 0, NULL);
- 		transport->got_remote_refs = 1;
+-	const char *dir;
+-	int strict = 0;
+-	struct option options[] = {
+-		OPT_BOOL(0, "stateless-rpc", &stateless_rpc,
+-			 N_("quit after a single request/response exchange")),
+-		OPT_BOOL(0, "advertise-refs", &advertise_refs,
+-			 N_("exit immediately after initial ref advertisement")),
+-		OPT_BOOL(0, "strict", &strict,
+-			 N_("do not try <directory>/.git/ if <directory> is no Git directory")),
+-		OPT_INTEGER(0, "timeout", &timeout,
+-			    N_("interrupt transfer after <n> seconds of inactivity")),
+-		OPT_END()
+-	};
+-
+-	packet_trace_identity("upload-pack");
+-	check_replace_refs = 0;
+-
+-	argc = parse_options(argc, argv, NULL, options, upload_pack_usage, 0);
+-
+-	if (argc != 1)
+-		usage_with_options(upload_pack_usage, options);
+-
+-	if (timeout)
+-		daemon_mode = 1;
+-
+-	setup_path();
+-
+-	dir = argv[0];
++	struct string_list symref = STRING_LIST_INIT_DUP;
+ 
+-	if (!enter_repo(dir, strict))
+-		die("'%s' does not appear to be a git repository", dir);
++	stateless_rpc = options->stateless_rpc;
++	timeout = options->timeout;
++	daemon_mode = options->daemon_mode;
+ 
+ 	git_config(upload_pack_config, NULL);
+ 
+-	switch (determine_protocol_version_server()) {
+-	case protocol_v1:
+-		/*
+-		 * v1 is just the original protocol with a version string,
+-		 * so just fall through after writing the version string.
+-		 */
+-		if (advertise_refs || !stateless_rpc)
+-			packet_write_fmt(1, "version 1\n");
+-
+-		/* fallthrough */
+-	case protocol_v0:
+-		upload_pack();
+-		break;
+-	case protocol_unknown_version:
+-		BUG("unknown protocol version");
++	head_ref_namespaced(find_symref, &symref);
++
++	if (options->advertise_refs || !stateless_rpc) {
++		reset_timeout();
++		head_ref_namespaced(send_ref, &symref);
++		for_each_namespaced_ref(send_ref, &symref);
++		advertise_shallow_grafts(1);
++		packet_flush(1);
++	} else {
++		head_ref_namespaced(check_ref, NULL);
++		for_each_namespaced_ref(check_ref, NULL);
  	}
++	string_list_clear(&symref, 1);
++	if (options->advertise_refs)
++		return;
  
+-	return 0;
++	receive_needs();
++	if (want_obj.nr) {
++		get_common_commits();
++		create_pack_file();
++	}
+ }
+diff --git a/upload-pack.h b/upload-pack.h
+new file mode 100644
+index 0000000000..a71e4dc7e2
+--- /dev/null
++++ b/upload-pack.h
+@@ -0,0 +1,13 @@
++#ifndef UPLOAD_PACK_H
++#define UPLOAD_PACK_H
++
++struct upload_pack_options {
++	int stateless_rpc;
++	int advertise_refs;
++	unsigned int timeout;
++	int daemon_mode;
++};
++
++void upload_pack(struct upload_pack_options *options);
++
++#endif /* UPLOAD_PACK_H */
 -- 
 2.16.2.804.g6dcf76e118-goog
 
