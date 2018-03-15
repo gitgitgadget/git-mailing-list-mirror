@@ -7,106 +7,77 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 792131FAE3
-	for <e@80x24.org>; Thu, 15 Mar 2018 16:52:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EC8F61F404
+	for <e@80x24.org>; Thu, 15 Mar 2018 16:54:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751673AbeCOQwI (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Mar 2018 12:52:08 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:33066 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751405AbeCOQwH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Mar 2018 12:52:07 -0400
-Received: by mail-wm0-f65.google.com with SMTP id s206so23979391wme.0
-        for <git@vger.kernel.org>; Thu, 15 Mar 2018 09:52:06 -0700 (PDT)
+        id S1750731AbeCOQyo (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Mar 2018 12:54:44 -0400
+Received: from mail-wm0-f41.google.com ([74.125.82.41]:37536 "EHLO
+        mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751755AbeCOQym (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Mar 2018 12:54:42 -0400
+Received: by mail-wm0-f41.google.com with SMTP id 139so11869390wmn.2
+        for <git@vger.kernel.org>; Thu, 15 Mar 2018 09:54:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=8jle3xmJ5Eg0lhqHnCEbsTe4VgXju3J9c2ed9rQW3rs=;
-        b=uSlugctIw19lS00ARR8G79CUmLHG1dfSHZNbRE6hXEP5amCNeynC+p2bsocQYgZedk
-         nyDqij1ZqcW571qt6GMdEGtjDGAOrymS7LYWqs2C6T2tTakyQc+Q8JysGNoPbytxSIf0
-         +kJJSnV1Cvvdt/ZeQp5Nm7muQuiv5niPR8MliNKOjVo6oG5LGkW4w/WvhaQny8ekLCiU
-         pyOZ+n8D7J2NqvHZ70aq1oTl6dA0SoOx30PH83yn+GpVxLjRbhWBempCZrmnBDYdASRz
-         VA49l5ABzLJN7OC74oOaEQSt1BLih/OUG6dpckfwQGiISmPBy3jYf2kKDHzSjk/bdwH2
-         jkzA==
+         :user-agent:mime-version;
+        bh=1YfJ0j2LUeRuVJyxh5ydF/Bg3o+bXnKf6RF+cJWf/fY=;
+        b=QdsK9PZG91Ve/ZEvuowzWxseh54DiNaE6imnxGhz+Wh2iapd9s9KDnwApkiKFTVwYt
+         lE4uKGCPihjRkvTTUCdMUgcBmgyLwsnLjKlhu09HOahO/3ErkFlj16rg8FDZrcACJ1le
+         Csx/7UstcNNVCoZxytCwnzlgeChq7uXdB4inzrdtOBPMLoFHs0lH9mtzGvJCjC/yeg6I
+         AXNZcrg4IL+ve0iGIAfmqovJGkjDfWNBrp7mXwwRIkifoNuLO6VyvbjNqXi3gagmDJht
+         PsPDBX4/JMfQKRjalEoyHeRN1TMcSJGrysDKYhgupZcIRezn1R/7/EfkXITA0+JNvE9Q
+         4vNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=8jle3xmJ5Eg0lhqHnCEbsTe4VgXju3J9c2ed9rQW3rs=;
-        b=hhOdOU8faE+EnxCEQ6K5ghxlL2VcnXqxWRKUVsztCPxOLqM1JOrpCAqzrzXwQnMA76
-         GhyQ5Fz6NKdekKenAFcv/c+3DSXvc4q1wtIJJcHj+ULWq0AQ9tuwS6hlcI1OrlmlsOrU
-         v8jj7oKMyF5tMqARsy9s4+C8iSVvmoiSXmVXeTDYhWmymvZgjL8dbS9Pumhff9qWZkLj
-         ZAkOLVnexMsOZJenXogDdisEHLJerGOSSe1D+sCly1zU8/6SRodVk4wPtbjI6cqNJHK5
-         ne/inQchMwSt+IAC6fGDEWdr8g6h5f8r7gu2AJrelBbufFMzOocFm6iwHq/vZMFomPtV
-         0pHw==
-X-Gm-Message-State: AElRT7EiHz0RqEA6FBSEQlBi29f3+DrJ5WMrNohtWNYFQaOzpCpe/UU/
-        T4PD6AdUHAE50jDts4nmF3At3tAW
-X-Google-Smtp-Source: AG47ELuPMtsjYXvGI3y+dNmP3Fzh7RNFgfq+u8VMaxTuolka5YFvTiD6df7q80uSbC57WQbpbmdbxg==
-X-Received: by 10.28.150.14 with SMTP id y14mr5712650wmd.5.1521132725859;
-        Thu, 15 Mar 2018 09:52:05 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=1YfJ0j2LUeRuVJyxh5ydF/Bg3o+bXnKf6RF+cJWf/fY=;
+        b=Y7Eiue2xqZUoHquWNtr8TQXoUjptByqSHhnzMNfQmecZ6/3vUdQs9E3DR7GVot2NVm
+         L893C+TKM7+fMdCzYPdVy+yqGzzcqEAVyWn5WeHGJuAbujxkll5FGERfYNVVFp21vNUl
+         U0+oxyxSZcyzx1tRqGvB5LhRhdrmHKeBlzLMfzgz8e+dPb4etdoKMj4CzeEkTbdglaH8
+         NoUlDqc6eO2sDDadzvhZgphzGnS/5oS7+/4BEtsgQEwzGshUSN8hhKuBDOWCLPo41O1x
+         0OhooZZQ4YxHjvLh2NX27I7cPgmSWXpFRmhwjI8Tk7BlmoX75E1rR97BFFDDX8kETSEj
+         GAgA==
+X-Gm-Message-State: AElRT7FATcXqVdAoywRGmoLBK05N9W7P8HNJvk80pl8Y4XPY6Y7oDToy
+        9KVXNGvfMHqng/12lZiSURC+fj0r
+X-Google-Smtp-Source: AG47ELtwnrwbqmnr7DuA6aVJkfjU798jbGqMNOam/aYbm3jZrwKL/vBGGSj3lxRYcdzlyuCbI3UxtA==
+X-Received: by 10.28.13.136 with SMTP id 130mr5767604wmn.123.1521132881247;
+        Thu, 15 Mar 2018 09:54:41 -0700 (PDT)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id y68sm8075828wrb.73.2018.03.15.09.52.05
+        by smtp.gmail.com with ESMTPSA id h20sm6337513wrf.65.2018.03.15.09.54.40
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 15 Mar 2018 09:52:05 -0700 (PDT)
+        Thu, 15 Mar 2018 09:54:40 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jake Stine <jake.stine@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [bug] git stash push {dir-pathspec} wipes untracked files
-References: <CABWk7R9xNDHJbbsMZbOyhcYXq-bD6Krvbw_mKDBJFALALS3AHA@mail.gmail.com>
-Date:   Thu, 15 Mar 2018 09:52:04 -0700
-In-Reply-To: <CABWk7R9xNDHJbbsMZbOyhcYXq-bD6Krvbw_mKDBJFALALS3AHA@mail.gmail.com>
-        (Jake Stine's message of "Thu, 15 Mar 2018 09:40:38 -0700")
-Message-ID: <xmqq1sgl703v.fsf@gitster-ct.c.googlers.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: What's cooking in git.git (Mar 2018, #03; Wed, 14)
+References: <xmqqefkm6s06.fsf@gitster-ct.c.googlers.com>
+        <CACsJy8D9-OaU5F+bugpgaPBPV_cdtqeYJ_5iYYMcrDj5d-9z5Q@mail.gmail.com>
+Date:   Thu, 15 Mar 2018 09:54:40 -0700
+In-Reply-To: <CACsJy8D9-OaU5F+bugpgaPBPV_cdtqeYJ_5iYYMcrDj5d-9z5Q@mail.gmail.com>
+        (Duy Nguyen's message of "Thu, 15 Mar 2018 07:30:53 +0100")
+Message-ID: <xmqqwoyd5lf3.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jake Stine <jake.stine@gmail.com> writes:
+Duy Nguyen <pclouds@gmail.com> writes:
 
-> Hi, I ran into what I believe is a bug today.  I’m using primarily Git
-> for Windows 2.16.2 and also reproduced the behavior on Git for Windows
-> 2.15.1 and Git 2.14.1 on Ubuntu:
+> On Thu, Mar 15, 2018 at 2:34 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> * nd/pack-objects-pack-struct (2018-03-05) 9 commits
+>> ...
+>>  Will merge to 'next'.
 >
-> Given any repository with at least one subdirectory:
+> Hold it. A reroll is coming. I'm a bit busy this week and can't really do much.
 >
-> 1.       Create some untracked files in the subdir
-> 2.       Modify a tracked file in the subdir
-> 3.       Execute `git stash push subdir`
-> 4.       The untracked files will be removed, without warning.
->
-> `git stash push` behaves as-expcted and does not touch untracked
-> files.  It’s only when a directory tree is specified as [pathspec]
-> that the problem occurs.
+>> * nd/worktree-prune (2018-03-06) 3 commits
+>> ...
+> Same.
 
-I wonder if this is the same as the topic on this thread.
-
-  https://public-inbox.org/git/CA+HNv10i7AvWXjrQjxxy1LNJTmhr7LE4TwxhHUYBiWtmJCOf_A@mail.gmail.com/
-
-What is curious is that the fix bba067d2 ("stash: don't delete
-untracked files that match pathspec", 2018-01-06) appeared first in
-2.16.2, on which Windows 2.16.2 is supposed to be built upon.
-
-> Here's the precise reproduction case executed on a linux box:
-
-This does not reproduce for me with v2.16.2-17-g38e79b1fda (the tip
-of 'maint'); I do not have an  install of vanilla v2.16.2 handy, but
-I suspect v2.16.2 would work just fine, too.
-
-> jake@jake-VirtualBox:~/woot$ git --version
-> git version 2.14.1
-> ...
-> The expected result is that when I do `ls subdir` the file
-> "untracked.txt" still exists.  Alternatively, git stash should warn me
-> before destroying my untracked files, and require I specify --force or
-> similar to invoke destructive behavior.
->
->
-> Thanks!
-> Jake Stine
+Thanks, quick responses like this message really helps.
