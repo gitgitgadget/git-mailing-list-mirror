@@ -7,108 +7,193 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A1EE81FAE3
-	for <e@80x24.org>; Thu, 15 Mar 2018 16:40:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1D0081F404
+	for <e@80x24.org>; Thu, 15 Mar 2018 16:44:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752489AbeCOQkm (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Mar 2018 12:40:42 -0400
-Received: from mail-qk0-f174.google.com ([209.85.220.174]:45359 "EHLO
-        mail-qk0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751497AbeCOQkl (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Mar 2018 12:40:41 -0400
-Received: by mail-qk0-f174.google.com with SMTP id s9so7959809qke.12
-        for <git@vger.kernel.org>; Thu, 15 Mar 2018 09:40:40 -0700 (PDT)
+        id S1751600AbeCOQol (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Mar 2018 12:44:41 -0400
+Received: from mail-lf0-f65.google.com ([209.85.215.65]:39860 "EHLO
+        mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751372AbeCOQok (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Mar 2018 12:44:40 -0400
+Received: by mail-lf0-f65.google.com with SMTP id f75-v6so11174447lfg.6
+        for <git@vger.kernel.org>; Thu, 15 Mar 2018 09:44:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=kBz+bRYmVm3s4skJF1ijqN3qiD/DT2OFPp0SxkBLj0s=;
-        b=EuQ2CuBUsrOpPTTc2ytLFSyLKTwsbiDD6crWIw8jRwID+LzCdbdf8DmEIm5Jg3ZAut
-         goCVapxZRDerqKwYb82AnwCwXlcLvKT3cSgFcmBJ35QSDoaxuPJNudx1aM0JujAwJMIP
-         SAWIDNtWop21BvTrOQuuudtNPK/MoTuGYeRsGfWklHCgPcSFdRpxN/MJXdUMzxULQ0rQ
-         gVNiRR2bfelrjCkFE9eCoh2jP3n+ono2YPlUSbrfW98IEIRuqQHC6cVFy3qtNoiVitMo
-         IX6ThsBoittlPnjmzOmlZFpfvNeZmGL2TmCfDgxOekTc4FlyE9d8rBYHN52R4cc4XS95
-         fEKQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=AVyGpDBwb0yV083WHy2y/DVTIaWYYvnue87UKflxLzs=;
+        b=FSUU4mu62ZRWVeCPKxWVnJviWoPKUMcWgHGj/qCkYXHydmDgT/JGy5YFzrBJGe7jNJ
+         WP9jqmVIz0WfGhINWvDc9LcDoKfui/Uy6K9k43PonFm/Hx+74Io4IBAqBnc3Ex2rKG49
+         ckZor9f5gh+uWpwkuTexCpP/o7+OFKvZK1aYUVALSgkBbPhGNSyTuvyJDbbvId4Phktx
+         8bR1dLOnOfqEkYqqLuVxy/ipOZ/0dgZoP8rSAex6tP1McFL1lIy2wctvB5VYh8aKHBTy
+         aC5km07Jrnfd2NT1Y6ZK45r0APctFXbhLBU/FMcWaJ5w1MxDg5v0yWZL04HQckGTDh9M
+         gE0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=kBz+bRYmVm3s4skJF1ijqN3qiD/DT2OFPp0SxkBLj0s=;
-        b=lnhK+YB48xtp3hDwhhXAHh/sPe0x7fUP9kspga4MPq9ILmGytGPiV3X24iKWZ1wKHo
-         zIYXKl8oduNYN58ZkJrwf6S2x+d9vfJZgoCdqpalT4xQJF74dLf4eqNCCb8KoHzzRGjT
-         RzkrW9CYvrkB0gtEc84fnfI/zCOYYqaR3J0n7WqekcZM/ZWEjgJqvbEoT/y3U1GOHbGy
-         WsmhfJhQ3NVhePHjakNUs107DjxrfGhbTbop/yx/wPWcynCikpM45tTH6XfO2vRNwiW1
-         wKVktEQ03yFiwtfs5FdeZ5pa/b2NqF/pLIoORZHMAVGtPvcV7u7t5JRCValbE6amLhTy
-         twCg==
-X-Gm-Message-State: AElRT7H8iFqvzn99II1lBpFMJ/nzCkyr8vLd4FSXUSTDWWeP0hwdg8ru
-        p5mSdV/gpmciBlwoE92uVtFYP2AI7Be/NNPUPqzuYQ==
-X-Google-Smtp-Source: AG47ELuygBhcdyVIfExRQdnC7+XmrXrr9r3HfDhdnhy8MqznWUZhrXBheycAOj7CicEgmCsg+WELWfQeaUTNTW7N7ew=
-X-Received: by 10.55.57.135 with SMTP id g129mr13414585qka.212.1521132039227;
- Thu, 15 Mar 2018 09:40:39 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=AVyGpDBwb0yV083WHy2y/DVTIaWYYvnue87UKflxLzs=;
+        b=g4YViTbtQPoJR3H8J9O7gnfTMzJBRWAQRVkL1/ACWy1TvpM/WRsd1nQMaCAaFKI9wM
+         +LVquc5YbOR+jp1VJ2rvChls8GN7dxsZli0KY/W9eFdUB5C5pvfNKKs55IWDfwZpWr2a
+         aBMGYB7ZFs6CKr49N+xGRhrNNJz699THA2JEdyxKvJSeQ7LxlJ6siz5YUsTkxaXEutQJ
+         pmGBkajNDN+oMqDCZ4xNJl6UwcGwRZtYyZANI/HKw6uCn8ingdHznUQfgX3xRCrXVbL/
+         vZw9GfqBebPw48X5bQMk9HBEBvAfCI34Kkb6Nz57ZV5XAc9HokX200kPLQaUy/mWfzjj
+         HK9Q==
+X-Gm-Message-State: AElRT7HDUGcSs7fSHMptlqWtHffxJh9FgmYPwP9D489qpR8erAD3Oqms
+        mdJcAXDhbDnx01JdKcU63Y6hwg==
+X-Google-Smtp-Source: AG47ELtOTrdTq0+RpBcdEe7Lm6WVSV3attAKta8cv81WDj4xXdH3fhqXNhZpkMg2aA34jYdHTz5J9Q==
+X-Received: by 2002:a19:ca41:: with SMTP id h1-v6mr2070265lfj.81.1521132278570;
+        Thu, 15 Mar 2018 09:44:38 -0700 (PDT)
+Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
+        by smtp.gmail.com with ESMTPSA id u24sm1037406lju.32.2018.03.15.09.44.36
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 15 Mar 2018 09:44:37 -0700 (PDT)
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     pclouds@gmail.com
+Cc:     git@vger.kernel.org, sunshine@sunshineco.com,
+        Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v2 0/3] git worktree prune improvements
+Date:   Thu, 15 Mar 2018 17:44:09 +0100
+Message-Id: <20180315164412.14697-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.16.2.903.gd04caf5039
+In-Reply-To: <20180303033918.15751-1-pclouds@gmail.com>
+References: <20180303033918.15751-1-pclouds@gmail.com>
 MIME-Version: 1.0
-Received: by 10.200.44.46 with HTTP; Thu, 15 Mar 2018 09:40:38 -0700 (PDT)
-From:   Jake Stine <jake.stine@gmail.com>
-Date:   Thu, 15 Mar 2018 09:40:38 -0700
-Message-ID: <CABWk7R9xNDHJbbsMZbOyhcYXq-bD6Krvbw_mKDBJFALALS3AHA@mail.gmail.com>
-Subject: [bug] git stash push {dir-pathspec} wipes untracked files
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi, I ran into what I believe is a bug today.  I=E2=80=99m using primarily =
-Git
-for Windows 2.16.2 and also reproduced the behavior on Git for Windows
-2.15.1 and Git 2.14.1 on Ubuntu:
+v2 fixes comments from Eric and rebases on 'master' since 'worktree
+move' has been merged. Commit messages are updated to reflect this.
 
-Given any repository with at least one subdirectory:
+There's one thing I didn't do is moving the new paragraph up [1]. I
+still feel this it's not right to put it there since it starts with
+'gc --auto' introduction, then goes to loose objects and packs.
+Inserting a note between the loose objects paragraph and the packs one
+does not make much sense.
 
-1.       Create some untracked files in the subdir
-2.       Modify a tracked file in the subdir
-3.       Execute `git stash push subdir`
-4.       The untracked files will be removed, without warning.
+Interdiff
 
-`git stash push` behaves as-expcted and does not touch untracked
-files.  It=E2=80=99s only when a directory tree is specified as [pathspec]
-that the problem occurs.
+-- 8< --
+diff --git a/Documentation/git-gc.txt b/Documentation/git-gc.txt
+index 862c931104..3126e0dd00 100644
+--- a/Documentation/git-gc.txt
++++ b/Documentation/git-gc.txt
+@@ -17,7 +17,7 @@ Runs a number of housekeeping tasks within the current repository,
+ such as compressing file revisions (to reduce disk space and increase
+ performance), removing unreachable objects which may have been
+ created from prior invocations of 'git add', packing refs, pruning
+-reflog, rerere or stale working trees.
++reflog, rerere metadata or stale working trees.
+ 
+ Users are encouraged to run this task on a regular basis within
+ each repository to maintain good disk space utilization and good
+@@ -46,14 +46,14 @@ OPTIONS
+ 	With this option, 'git gc' checks whether any housekeeping is
+ 	required; if not, it exits without performing any work.
+ 	Some git commands run `git gc --auto` after performing
+-	operations that could create many loose objects.
++	operations that could create many loose objects. Housekeeping
++	is required if there are too many loose objects or too many
++	packs in the repository.
+ +
+-Housekeeping is required if there are too many loose objects or
+-too many packs in the repository. If the number of loose objects
+-exceeds the value of the `gc.auto` configuration variable, then
+-all loose objects are combined into a single pack using
+-`git repack -d -l`.  Setting the value of `gc.auto` to 0
+-disables automatic packing of loose objects.
++If the number of loose objects exceeds the value of the `gc.auto`
++configuration variable, then all loose objects are combined into a
++single pack using `git repack -d -l`.  Setting the value of `gc.auto`
++to 0 disables automatic packing of loose objects.
+ +
+ If the number of packs exceeds the value of `gc.autoPackLimit`,
+ then existing packs (except those marked with a `.keep` file)
+@@ -61,9 +61,10 @@ are consolidated into a single pack by using the `-A` option of
+ 'git repack'. Setting `gc.autoPackLimit` to 0 disables
+ automatic consolidation of packs.
+ +
+-If `git gc --auto` goes ahead because of either too loose objects or
+-packs, all other housekeeping tasks (e.g. rerere, working trees,
+-reflog...) will also be be performed.
++If houskeeping is required due to many loose objects or packs, all
++other housekeeping tasks (e.g. rerere, working trees, reflog...) will
++be performed as well.
++
+ 
+ --prune=<date>::
+ 	Prune loose objects older than date (default is 2 weeks ago,
+@@ -138,9 +139,10 @@ The optional configuration variable `gc.pruneExpire` controls how old
+ the unreferenced loose objects have to be before they are pruned.  The
+ default is "2 weeks ago".
+ 
+-The optional gc.worktreePruneExpire controls how old a stale working
+-tree before `git worktree prune` deletes it. The default is "3 months
+-ago".
++Optional configuration variable `gc.worktreePruneExpire` controls how
++old a stale working tree should be before `git worktree prune` deletes
++it. Default is "3 months ago".
++
+ 
+ Notes
+ -----
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index 4d4404e97f..b1e8f0534c 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -100,10 +100,8 @@ static int prune_worktree(const char *id, struct strbuf *reason)
+ 	path[len] = '\0';
+ 	if (!file_exists(path)) {
+ 		free(path);
+-		if (st.st_mtime <= expire) {
+-			if (!stat(git_path("worktrees/%s/index", id), &st) &&
+-			    st.st_mtime > expire)
+-				return 0;
++		if (stat(git_path("worktrees/%s/index", id), &st) ||
++		    st.st_mtime <= expire) {
+ 			strbuf_addf(reason, _("Removing worktrees/%s: gitdir file points to non-existent location"), id);
+ 			return 1;
+ 		} else {
+diff --git a/t/t2026-worktree-prune.sh b/t/t2026-worktree-prune.sh
+index a0f1e3bb80..b7d6d5d45a 100755
+--- a/t/t2026-worktree-prune.sh
++++ b/t/t2026-worktree-prune.sh
+@@ -78,10 +78,9 @@ test_expect_success 'not prune locked checkout' '
+ 
+ test_expect_success 'not prune recent checkouts' '
+ 	test_when_finished rm -r .git/worktrees &&
+-	mkdir zz &&
+-	mkdir -p .git/worktrees/jlm &&
+-	echo "$(pwd)"/zz >.git/worktrees/jlm/gitdir &&
+-	rmdir zz &&
++	git worktree add jlm HEAD &&
++	test -d .git/worktrees/jlm &&
++	rm -rf jlm &&
+ 	git worktree prune --verbose --expire=2.days.ago &&
+ 	test -d .git/worktrees/jlm
+ '
+-- 8< --
 
-Here's the precise reproduction case executed on a linux box:
 
-jake@jake-VirtualBox:~/woot$ git --version
-git version 2.14.1
-jake@jake-VirtualBox:~/woot$ git config --global user.email jake.stine@gmai=
-l.com
-jake@jake-VirtualBox:~/woot$ git config --global user.name "Jake Stine"
-jake@jake-VirtualBox:~$ git init woot
-Initialized empty Git repository in /home/jake/woot/.git/
-jake@jake-VirtualBox:~$ cd woot
-jake@jake-VirtualBox:~/woot$ mkdir subdir
-jake@jake-VirtualBox:~/woot$ echo "test" > meh.txt
-jake@jake-VirtualBox:~/woot$ echo "test" > subdir/meh2.txt
-jake@jake-VirtualBox:~/woot$ git add meh.txt subdir/meh2.txt
-jake@jake-VirtualBox:~/woot$ git commit --message=3D"stash bug testing"
-jake@jake-VirtualBox:~/woot$ git commit --message=3D"stash bug testing"
-[master (root-commit) 2c05580] stash bug testing
- 2 files changed, 2 insertions(+)
- create mode 100644 meh.txt
- create mode 100644 subdir/meh2.txt
-jake@jake-VirtualBox:~/woot$ echo "test" > subdir/untracked.txt
-jake@jake-VirtualBox:~/woot$ echo "append" >> subdir/meh2.txt
-jake@jake-VirtualBox:~/woot$ git stash push subdir
-Saved working directory and index state WIP on master: 2c05580 stash bug te=
-sting
-jake@jake-VirtualBox:~/woot$ ls subdir
-meh2.txt
+[1] https://public-inbox.org/git/CAPig+cSo_n7y3-qDT92+NYspTB+yF+NUL19MLvfztLJ_qZhXnw@mail.gmail.com/
 
+Nguyễn Thái Ngọc Duy (3):
+  gc.txt: more details about what gc does
+  worktree: delete dead code
+  worktree prune: improve prune logic when worktree is moved
 
-The expected result is that when I do `ls subdir` the file
-"untracked.txt" still exists.  Alternatively, git stash should warn me
-before destroying my untracked files, and require I specify --force or
-similar to invoke destructive behavior.
+ Documentation/git-gc.txt               | 28 +++++++++++++++++---------
+ Documentation/gitrepository-layout.txt |  5 -----
+ builtin/worktree.c                     | 11 ++--------
+ t/t2026-worktree-prune.sh              |  7 +++----
+ 4 files changed, 24 insertions(+), 27 deletions(-)
 
+-- 
+2.16.2.903.gd04caf5039
 
-Thanks!
-Jake Stine
