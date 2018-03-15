@@ -2,114 +2,169 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-0.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 19A181F404
-	for <e@80x24.org>; Thu, 15 Mar 2018 17:28:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 348351F404
+	for <e@80x24.org>; Thu, 15 Mar 2018 17:31:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751854AbeCOR2v (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Mar 2018 13:28:51 -0400
-Received: from mail-pf0-f172.google.com ([209.85.192.172]:36854 "EHLO
-        mail-pf0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751748AbeCOR2u (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Mar 2018 13:28:50 -0400
-Received: by mail-pf0-f172.google.com with SMTP id 68so3088837pfx.3
-        for <git@vger.kernel.org>; Thu, 15 Mar 2018 10:28:50 -0700 (PDT)
+        id S1751687AbeCORbs (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Mar 2018 13:31:48 -0400
+Received: from mail-vk0-f73.google.com ([209.85.213.73]:43582 "EHLO
+        mail-vk0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750987AbeCORbr (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Mar 2018 13:31:47 -0400
+Received: by mail-vk0-f73.google.com with SMTP id b144so4584418vke.10
+        for <git@vger.kernel.org>; Thu, 15 Mar 2018 10:31:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=C3pYhrtsEyVW4dfyog2fkBvBIxA9UMKOSePlnCxliok=;
-        b=uxPE6vUSlSdMcoiZjkU9TqR9Hv3VB/Iff3tjmGXK2T6zAxWkZmub0BuJdy8xCzZbpr
-         TzbGSlIvVjOatoDIKz70ahdxaDv84LSHKDDzMfxdK+zz2q9pDlsrIdJ/A4jsxJOaP2i/
-         qN1PiII8WgTDTCe2OdCaOCMQCLHNg9rWot3FElksIOcwiyKRDJxpAVa+U5e8c/HVVBJK
-         dG+y54WZYUAP+TkX53O0eGkc+KZj1pJR5JVxvnTChMtvCGFsxS75BTLmZkuRRG9kVxqp
-         vHXqxPbUIzvh2qRNxx3KB+Vbc1rvH5MlD8GJJCqpWjGETC2Ax6/JiyVnpWV81VV2Itz9
-         XPNg==
+        h=mime-version:date:in-reply-to:message-id:references:subject:from:to
+         :cc;
+        bh=hkleRLhKQm+Q9O9tkMumyz6IZeW1b0fa4TkUS5j7yZo=;
+        b=JCbXsDfX8QA6pWSohy6t07VPlcrCHBDZ3E9UJiTS//wNWkq5Q2k5TeSrjFFL9TVUd4
+         hdjYfpTIjhFp+h0Tr0KP1ui/WPl4niynmnIx8NIIgIrUxcZJ/B21jo9SteDhJkuQRIbD
+         XeXxUrhH+HXr2oVwHkS8sZICjFVtwhf4qaebMZj33ujRey+3OMRHQSr8k02RYGieNlWa
+         a0KmlsJ81yEnPBzUogTuexSKRQIhxaPGJf6SLrzs6YzDsyQ++URUPPkwB9J+GTNYP/o6
+         mKYytJLhym7ZX3vMWpiKntgOvP2TrBAazziJzxa39TLl+ZIuUZA8KVIrIyvJPqNYWyBX
+         ToDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=C3pYhrtsEyVW4dfyog2fkBvBIxA9UMKOSePlnCxliok=;
-        b=LcOp1PfRIl4ivCC65TFYt505ACeUQtWAnjuZi6NUZJ0TIet//+EdJFqdU/70IGqkm+
-         WHOhhlK3joeEMvQLzd2Io8S/TwLCdM0t/cD2OqPbv02v91TZ30E0t5itu9jPPp9sfOde
-         pUgthOSZVgXHzM8PkdTfGNn/S3RKT20SJNW8H0YLx/u0JGyVaHXoSz8oiAqCafe2sYVi
-         Te6iHswNqIvb4Gxo9IhxrrK5ZcYz0/I6aRWiNTRs/fPahaIsW5IdNqMkjWpJjzi95uMS
-         9+P1a/CbnUDU9Sf2/kZiRxJaEQFtUrJTOVQ6cQcvFKb3lgznM+ACYx9myKeqfHQPMwQO
-         WLLw==
-X-Gm-Message-State: AElRT7EZY+H8S28IuqehFnI59l+QZ5c1bPfnT/ioYV1LpbzUXPWYv2sV
-        noM0Nd5CKw/GqObvyjIMfZp0NYnhOy8=
-X-Google-Smtp-Source: AG47ELt8fFDQgb0BNXG1ybznxpx0ltOKstDJvAA8/IydTMmUi5khXnm2jHbRWXe32x3A7AYev2WNVw==
-X-Received: by 10.98.157.199 with SMTP id a68mr5303509pfk.237.1521134929980;
-        Thu, 15 Mar 2018 10:28:49 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
-        by smtp.gmail.com with ESMTPSA id z6sm11048139pfe.9.2018.03.15.10.28.48
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 15 Mar 2018 10:28:49 -0700 (PDT)
-Date:   Thu, 15 Mar 2018 10:28:48 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, git@jeffhostetler.com, jrnieder@gmail.com,
-        pclouds@gmail.com, peff@peff.net, sbeller@google.com,
-        stolee@gmail.com, jonathantanmy@google.com
-Subject: Re: [PATCH v5 01/35] pkt-line: introduce packet_read_with_status
-Message-ID: <20180315172848.GB174336@google.com>
-References: <20180314183213.223440-1-bmwill@google.com>
- <20180314183213.223440-2-bmwill@google.com>
- <xmqq1sgmz6j0.fsf@gitster-ct.c.googlers.com>
+        h=x-gm-message-state:mime-version:date:in-reply-to:message-id
+         :references:subject:from:to:cc;
+        bh=hkleRLhKQm+Q9O9tkMumyz6IZeW1b0fa4TkUS5j7yZo=;
+        b=LdGgV0lqT+jd1jjei56muQI0TtXVBNlqmZUzbUWD11aFPg6Z2aR1wOwARVonGwFsLd
+         4jQh7un7voDHxoMRxccnksSiHPdn10RUJxvzCzLGpcgEu7PCL7ZZQDGuREaGnZ5RQW+r
+         +jjoCp6O06DqXUaCjUfcGDSHoUGo1USAZVkFCkVj31MYhWof/UR4bqYfh2IUhJbXa3Nk
+         6sPGrzivt+PLICR33i2QORiKflylkU6Q8uDsxG7hx74L7PYeYw8TOl3Z9AIFI1Asc3ep
+         BnjLBMCXD49j9A0ex9tlK3ZXDO6nNfqZlh+GvmjaEdfauxxlfBNNpS94yckqBCeAVgxU
+         INDw==
+X-Gm-Message-State: AElRT7Gac3NaGhdEnYDBGaaT5jJnmKGzIp5zlY6hvrEEDiFDBmcNuijG
+        uTEe4BFVJ3GfbJYLjjIKAkF8XyeETugGyhNZc/hM0Ap/D/l0afNYM4NnIh8HPuCJYCcNwr9L6Hb
+        v6pOFmOQkpsJ0GHc83peLXDlp9h/5W6NsBqEcbgb0kWUSfltGucRufJhPmQ==
+X-Google-Smtp-Source: AG47ELuaB0dLS+jjd/yQM48tFegzyY0AcxGpRXTZphpBlKkHVAePp4jq69gjp2GIfTgm85nHR1ife+s0oUI=
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq1sgmz6j0.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+X-Received: by 10.176.82.54 with SMTP id i51mr4112910uaa.29.1521135106991;
+ Thu, 15 Mar 2018 10:31:46 -0700 (PDT)
+Date:   Thu, 15 Mar 2018 10:31:07 -0700
+In-Reply-To: <20180314183213.223440-1-bmwill@google.com>
+Message-Id: <20180315173142.176023-1-bmwill@google.com>
+References: <20180314183213.223440-1-bmwill@google.com>
+X-Mailer: git-send-email 2.16.2.804.g6dcf76e118-goog
+Subject: [PATCH v6 00/35] protocol version 2
+From:   Brandon Williams <bmwill@google.com>
+To:     git@vger.kernel.org
+Cc:     git@jeffhostetler.com, gitster@pobox.com, jrnieder@gmail.com,
+        pclouds@gmail.com, peff@peff.net, sbeller@google.com,
+        stolee@gmail.com, jonathantanmy@google.com,
+        Brandon Williams <bmwill@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 03/14, Junio C Hamano wrote:
-> Brandon Williams <bmwill@google.com> writes:
-> 
-> > +/*
-> > + * Read a packetized line into a buffer like the 'packet_read()' function but
-> > + * returns an 'enum packet_read_status' which indicates the status of the read.
-> > + * The number of bytes read will be assigined to *pktlen if the status of the
-> > + * read was 'PACKET_READ_NORMAL'.
-> > + */
-> > +enum packet_read_status {
-> > +	PACKET_READ_EOF,
-> > +	PACKET_READ_NORMAL,
-> > +	PACKET_READ_FLUSH,
-> > +};
-> 
-> EOF was -1 and NORMAL was 0 in the previous round; do we need to
-> read through all the invocations of functions that return this type
-> and make sure there is no "while (such_a_function())" that used to see
-> if we read NORMAL that is left un-updated?
-> 
-> I just have gone thru all the hits from
-> 
->  $ git grep -n -e packet_erad_with_status -e packet_reader_read -e packet_reader_peek
-> 
-> There are a few
-> 
-> 	switch (packet_reader_peek())
-> 
-> which by definition we do not have to worry about.  Then majority of
-> what could be problematic are of the form:
-> 
-> 	while (packet_reader_read() == PACKET_READ_NORMAL)
-> 
-> and they were this way even in the previous version, so it seems
-> quite alright.
-> 
-> Will replace.  Thanks.
+Fixed the protocol-v2.txt technical document so that it builds when
+running "make doc".
 
-A reviewer in the previous round found that it was unnecessary to have
-EOF start at -1, so per their comments I got rid of that.
+Brandon Williams (35):
+  pkt-line: introduce packet_read_with_status
+  pkt-line: allow peeking a packet line without consuming it
+  pkt-line: add delim packet support
+  upload-pack: convert to a builtin
+  upload-pack: factor out processing lines
+  transport: use get_refs_via_connect to get refs
+  connect: convert get_remote_heads to use struct packet_reader
+  connect: discover protocol version outside of get_remote_heads
+  transport: store protocol version
+  protocol: introduce enum protocol_version value protocol_v2
+  test-pkt-line: introduce a packet-line test helper
+  serve: introduce git-serve
+  ls-refs: introduce ls-refs server command
+  connect: request remote refs using v2
+  transport: convert get_refs_list to take a list of ref prefixes
+  transport: convert transport_get_remote_refs to take a list of ref
+    prefixes
+  ls-remote: pass ref prefixes when requesting a remote's refs
+  fetch: pass ref prefixes when fetching
+  push: pass ref prefixes when pushing
+  upload-pack: introduce fetch server command
+  fetch-pack: perform a fetch using v2
+  fetch-pack: support shallow requests
+  connect: refactor git_connect to only get the protocol version once
+  connect: don't request v2 when pushing
+  transport-helper: remove name parameter
+  transport-helper: refactor process_connect_service
+  transport-helper: introduce stateless-connect
+  pkt-line: add packet_buf_write_len function
+  remote-curl: create copy of the service name
+  remote-curl: store the protocol version the server responded with
+  http: allow providing extra headers for http requests
+  http: don't always add Git-Protocol header
+  http: eliminate "# service" line when using protocol v2
+  remote-curl: implement stateless-connect command
+  remote-curl: don't request v2 when pushing
 
+ .gitignore                              |   1 +
+ Documentation/Makefile                  |   1 +
+ Documentation/gitremote-helpers.txt     |  32 ++
+ Documentation/technical/protocol-v2.txt | 395 +++++++++++++++
+ Makefile                                |   7 +-
+ builtin.h                               |   2 +
+ builtin/clone.c                         |   2 +-
+ builtin/fetch-pack.c                    |  20 +-
+ builtin/fetch.c                         |  21 +-
+ builtin/ls-remote.c                     |  15 +-
+ builtin/receive-pack.c                  |   6 +
+ builtin/remote.c                        |   2 +-
+ builtin/send-pack.c                     |  20 +-
+ builtin/serve.c                         |  30 ++
+ builtin/upload-pack.c                   |  74 +++
+ connect.c                               | 364 ++++++++++----
+ connect.h                               |   7 +
+ fetch-pack.c                            | 339 ++++++++++++-
+ fetch-pack.h                            |   4 +-
+ git.c                                   |   2 +
+ http-backend.c                          |   8 +-
+ http.c                                  |  25 +-
+ http.h                                  |   7 +
+ ls-refs.c                               |  96 ++++
+ ls-refs.h                               |  10 +
+ pkt-line.c                              | 133 ++++-
+ pkt-line.h                              |  78 +++
+ protocol.c                              |   2 +
+ protocol.h                              |   1 +
+ refs.c                                  |  14 +
+ refs.h                                  |   7 +
+ remote-curl.c                           | 280 ++++++++++-
+ remote.h                                |  11 +-
+ serve.c                                 | 257 ++++++++++
+ serve.h                                 |  15 +
+ t/helper/test-pkt-line.c                |  64 +++
+ t/t5701-git-serve.sh                    | 176 +++++++
+ t/t5702-protocol-v2.sh                  | 273 +++++++++++
+ transport-helper.c                      |  87 ++--
+ transport-internal.h                    |  11 +-
+ transport.c                             | 130 +++--
+ transport.h                             |  18 +-
+ upload-pack.c                           | 615 ++++++++++++++++++------
+ upload-pack.h                           |  23 +
+ 44 files changed, 3317 insertions(+), 368 deletions(-)
+ create mode 100644 Documentation/technical/protocol-v2.txt
+ create mode 100644 builtin/serve.c
+ create mode 100644 builtin/upload-pack.c
+ create mode 100644 ls-refs.c
+ create mode 100644 ls-refs.h
+ create mode 100644 serve.c
+ create mode 100644 serve.h
+ create mode 100644 t/helper/test-pkt-line.c
+ create mode 100755 t/t5701-git-serve.sh
+ create mode 100755 t/t5702-protocol-v2.sh
+ create mode 100644 upload-pack.h
+
+
+base-commit: 5be1f00a9a701532232f57958efab4be8c959a29
 -- 
-Brandon Williams
+2.16.2.804.g6dcf76e118-goog
+
