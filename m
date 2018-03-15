@@ -7,53 +7,52 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F361E1F404
-	for <e@80x24.org>; Thu, 15 Mar 2018 17:33:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 23A7C1F404
+	for <e@80x24.org>; Thu, 15 Mar 2018 17:33:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752629AbeCORdH (ORCPT <rfc822;e@80x24.org>);
+        id S1752643AbeCORdI (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Mar 2018 13:33:08 -0400
+Received: from mail-ua0-f201.google.com ([209.85.217.201]:46398 "EHLO
+        mail-ua0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751512AbeCORdH (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 15 Mar 2018 13:33:07 -0400
-Received: from mail-qk0-f201.google.com ([209.85.220.201]:44819 "EHLO
-        mail-qk0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751711AbeCORdA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Mar 2018 13:33:00 -0400
-Received: by mail-qk0-f201.google.com with SMTP id t27so4874047qki.11
-        for <git@vger.kernel.org>; Thu, 15 Mar 2018 10:32:59 -0700 (PDT)
+Received: by mail-ua0-f201.google.com with SMTP id y43so4736248uac.13
+        for <git@vger.kernel.org>; Thu, 15 Mar 2018 10:33:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=HWf7rp9Kd9JsKEnT01jiv+/+t2DwaLTapU2wnygV5V0=;
-        b=jktkbo65GkfX4uAVo9M/8OH7XS0Aq0NOrzMYPMy82NDW4/O7lLzp7g++GMwW9xhx3l
-         1ejWtVCzhFPYf0Jr5RA0SapuVxA0gGWjBJxJ25q42Yid1iDhzDJS4G/EOCJc29muxGAS
-         OF1TN9gWQ2ATUBHOygDKHZtcNlwV6es/eQYPHVevWlUuRmaklNL6eBKWGKbiPxAiWkxS
-         LM9Wy1MD9YRK2+RfNPRw1ihFjyFYUdgByWiPyJ+kLruQxtGMYqx9CD7Ic8bTvXIWymiY
-         JumQU1joap9ZYCdLX1Lg3IrnQFRVCzrrP/JlcpvGkjVaGyE/lHGnQ9P3o4PWjGBpfpiE
-         CqGw==
+        bh=Z5uSc2Jt2rHpWFVdH7LIveweR90wohnI6Rn8QpYlpkQ=;
+        b=O4tdFhTqrsonZRpSVELgq/JkrTbkbFYNtws0SOcFF/05NdFCon6BAXD9ZPIZs6etYB
+         IkQZLwc0CT3RngMmYRfgxDVlg5EWqwUz2kF5oGkXozQfGORAPaZ5i1BnHU7IOTzqvg16
+         3gzMD5mjGd+GvGCjca0BlcJzz6MFLPeJ5z7lXqC74Pd+imTsRKx+AfbEml9TIR0x09ZH
+         EpsalWIWr4GQgN/FYkTE94MBHAzCuH/rnKcXRvYa5i785H7MZY4OInK8q0OuYldVrleh
+         RWWJx/fUBIFPq62ULf6HGJYoL+AarjlMk8gASg4W78a/KQsH88DQUH+i4vca2IpncS32
+         Sm5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=HWf7rp9Kd9JsKEnT01jiv+/+t2DwaLTapU2wnygV5V0=;
-        b=P4sC6MgZL87dcxQvwc+N2hQuaSiIGioN3vIyaF9mZl4zTKIhT7jx1gXfJWt2lDNwQX
-         UcIiAhkv7J2S7gIVJMDEK3AZ+gLlLy/Hk/1V8CBKSWjjSrPEkMMfXYT3uapVcNcQlmye
-         6oOE8VRl1FB0zAmerVUW3xArwRLjtklPh151SrtFjiIXyccX2HBzmIWRDIogIRiVvCti
-         NKID2lUJdE31KfJ5JvZrgbmU3AkzUh2mB1i/6OyRW9S51S3dKRgdiu3CyaIV7sRJiXcv
-         5MJjQ3Hw+u2zoGWtN6TGsJKu2L15kuhsw3Xz5D2LWkIQx+/dxGUEiF2EO/EBpEsEiXtF
-         T8JA==
-X-Gm-Message-State: AElRT7ErJm5ue/zePSqaAPS3l2XcDndg+xfEREWwC7W8TDFy7Vhzu30I
-        ZZY8EftMPskpTzkVFX0i3C3nU2Zr5z9/Up0Km1wHt3j929IjhN5VewqWI8DLmvJmBU/vd/4Ru96
-        144wEVdt5vqGUHAwN3aJHpKlfJRRXjsU40OoFX/ucqxDWJMcafTYkFxwrXg==
-X-Google-Smtp-Source: AG47ELspSdrOicp/thbXuh5u9pJ/eqZI4wbK5utHFXoQmhb/DjXeGo0RO9zy0cLy3AFonvedSXIzvkkSd9s=
+        bh=Z5uSc2Jt2rHpWFVdH7LIveweR90wohnI6Rn8QpYlpkQ=;
+        b=QgMtHe1Fs1lJSQb1NtknwGaytv2ZNlpxAXHLEHNSbRc4EENwB6w6GAyPcLd4hRJkSW
+         ljjutkjxS44NOkM4f3mNnTDkhVfJNPhb4fpVzt0g1PqXUfRTIBtcpUkxYbEYMSoJ47OP
+         s/KC8CDKY9awCoFOiZSiubuHoTNvxdBDe8h8MHPlE37T61lQyLEwDYC09f1gDaD3ltfY
+         hclEGeYn3DxksX+Uj8RfiusbPEaAHDidWF9PXdx+So6BXQgTFevsszbuj7YU2A5a0cMl
+         W8symxTLLMNEZzlhffFH0uN4ofiOgm4VNUjHfQns0Oi8o4i3z44CS04Me/2DGHrz+IjQ
+         Ebzw==
+X-Gm-Message-State: AElRT7HG0PpqlkGwrkyOvGST+eb3wr9UO88vPTs6IjXIIk/RdcGvZdM0
+        /GF+KNm+aRlIimFb+yB0OBJUZAlNkgZ6Gg8FlUnPb9MmeWZs15r0V0SJqTXv0x3y60b+Jxi+UGb
+        DNc5Fv4dPHmVjIyq1ibnEfoGocxZuzJwsYj1++8tDqkkLdZdGvmxeEHyYfA==
+X-Google-Smtp-Source: AG47ELvhy3sBzdsil2FJRgx45bGjKrgVJKaDZuyGio+Hiey44Qhjg2nkNpo7EjiUCf6SADBo1bEPOZr9o84=
 MIME-Version: 1.0
-X-Received: by 10.200.14.129 with SMTP id v1mr6473785qti.14.1521135179363;
- Thu, 15 Mar 2018 10:32:59 -0700 (PDT)
-Date:   Thu, 15 Mar 2018 10:31:37 -0700
+X-Received: by 10.176.89.174 with SMTP id g43mr3956544uad.4.1521135186431;
+ Thu, 15 Mar 2018 10:33:06 -0700 (PDT)
+Date:   Thu, 15 Mar 2018 10:31:40 -0700
 In-Reply-To: <20180315173142.176023-1-bmwill@google.com>
-Message-Id: <20180315173142.176023-31-bmwill@google.com>
+Message-Id: <20180315173142.176023-34-bmwill@google.com>
 References: <20180314183213.223440-1-bmwill@google.com> <20180315173142.176023-1-bmwill@google.com>
 X-Mailer: git-send-email 2.16.2.804.g6dcf76e118-goog
-Subject: [PATCH v6 30/35] remote-curl: store the protocol version the server
- responded with
+Subject: [PATCH v6 33/35] http: eliminate "# service" line when using protocol v2
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     git@jeffhostetler.com, gitster@pobox.com, jrnieder@gmail.com,
@@ -66,38 +65,56 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Store the protocol version the server responded with when performing
-discovery.  This will be used in a future patch to either change the
-'Git-Protocol' header sent in subsequent requests or to determine if a
-client needs to fallback to using a different protocol version.
+When an http info/refs request is made, requesting that protocol v2 be
+used, don't send a "# service" line since this line is not part of the
+v2 spec.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- remote-curl.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ http-backend.c | 8 ++++++--
+ remote-curl.c  | 3 +++
+ 2 files changed, 9 insertions(+), 2 deletions(-)
 
+diff --git a/http-backend.c b/http-backend.c
+index f3dc218b2a..5d241e9109 100644
+--- a/http-backend.c
++++ b/http-backend.c
+@@ -10,6 +10,7 @@
+ #include "url.h"
+ #include "argv-array.h"
+ #include "packfile.h"
++#include "protocol.h"
+ 
+ static const char content_type[] = "Content-Type";
+ static const char content_length[] = "Content-Length";
+@@ -466,8 +467,11 @@ static void get_info_refs(struct strbuf *hdr, char *arg)
+ 		hdr_str(hdr, content_type, buf.buf);
+ 		end_headers(hdr);
+ 
+-		packet_write_fmt(1, "# service=git-%s\n", svc->name);
+-		packet_flush(1);
++
++		if (determine_protocol_version_server() != protocol_v2) {
++			packet_write_fmt(1, "# service=git-%s\n", svc->name);
++			packet_flush(1);
++		}
+ 
+ 		argv[0] = svc->name;
+ 		run_service(argv, 0);
 diff --git a/remote-curl.c b/remote-curl.c
-index 4086aa733b..c540358438 100644
+index b4e9db85bb..66a53f74bb 100644
 --- a/remote-curl.c
 +++ b/remote-curl.c
-@@ -171,6 +171,7 @@ struct discovery {
- 	size_t len;
- 	struct ref *refs;
- 	struct oid_array shallow;
-+	enum protocol_version version;
- 	unsigned proto_git : 1;
- };
- static struct discovery *last_discovery;
-@@ -184,7 +185,8 @@ static struct ref *parse_git_refs(struct discovery *heads, int for_push)
- 			   PACKET_READ_CHOMP_NEWLINE |
- 			   PACKET_READ_GENTLE_ON_EOF);
+@@ -396,6 +396,9 @@ static struct discovery *discover_refs(const char *service, int for_push)
+ 			;
  
--	switch (discover_version(&reader)) {
-+	heads->version = discover_version(&reader);
-+	switch (heads->version) {
- 	case protocol_v2:
- 		die("support for protocol v2 not implemented yet");
- 		break;
+ 		last->proto_git = 1;
++	} else if (maybe_smart &&
++		   last->len > 5 && starts_with(last->buf + 4, "version 2")) {
++		last->proto_git = 1;
+ 	}
+ 
+ 	if (last->proto_git)
 -- 
 2.16.2.804.g6dcf76e118-goog
 
