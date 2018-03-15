@@ -2,141 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B3AC31F404
-	for <e@80x24.org>; Thu, 15 Mar 2018 21:23:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 345E91F404
+	for <e@80x24.org>; Thu, 15 Mar 2018 21:51:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751892AbeCOVXK (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Mar 2018 17:23:10 -0400
-Received: from mail-pg0-f49.google.com ([74.125.83.49]:42490 "EHLO
-        mail-pg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751774AbeCOVXJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Mar 2018 17:23:09 -0400
-Received: by mail-pg0-f49.google.com with SMTP id x2so3263846pgo.9
-        for <git@vger.kernel.org>; Thu, 15 Mar 2018 14:23:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=XVvzVdb5uvuV8dOCUDVpUjvHuq0rokl+FMCV8gxnFzE=;
-        b=RMIo//UWRwooq28CnXh2qh1Bm1RWpFrmmirIivyFAEgTvcJ1WqgIukGBcPXlnRKnub
-         3P6p1P/2tbTPbUPol94JfhBaLtPGVcL3VEqnzCT4c+tegBEY9521RzRA1ELoJbzkZUo8
-         +p5ERCR8bJ224pI7hUm/YfeFbGsyoUS4Vz71W2TpXYC4K5kaCXbh6NvM20RE6rHUfDQf
-         NETceViDM7Rz1u0bSCynn+yz5yG9STg6bVUVVvT6YmVm5e6/v1K00DR5wP4sx6WCjHe0
-         sCK7gkgMO1TOIwZlHyVZZ5zit/DTmmlavddlpxnWUlpeHB90qqAXzHSEY5Ibw3i4GtZ2
-         oUsA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=XVvzVdb5uvuV8dOCUDVpUjvHuq0rokl+FMCV8gxnFzE=;
-        b=WAovPnsAOVH1n3xXd/B1LPj57VSY0w5XMxizTK3zSikSuyEX9Hv7PiukzEV1zTUIBw
-         inQkoIvIiNUNrXQDMx1EpcSBvAPpLb/oSVei/B/Kg3u1Eqq5MhkJDXP0bo6T0VD+6fRL
-         fDfr1WyjvKfrNPgWOwCBK18v+nQfR0JW2raE3/S1DFauMcma0sfkJ5ys+WhYUNXLWFJP
-         pvMUuzUJwrqCjTmAYYAws0L82julSmBRa9gSQY44U34ZuF6scV2QePxVXrt0qPpzHkB9
-         NBXUD/pEsBI0KEXlsLxUywPK9Ws7lekX4cqQE8nV3jhdNL1KZUs5aLimyKLsbw2e8MSP
-         aMSQ==
-X-Gm-Message-State: AElRT7Frjd8+yUnFKcz5VFeVwmWmsdPOfj7NT47XVteuz9SMeERQQZgK
-        LOKJH1kE56Vv4bdfhWpVJLjgy2PG
-X-Google-Smtp-Source: AG47ELvkHxTiE1elVr4ogBQpWMXRvk4oZA+snxNR6shXotZLx9agJIKcO+unCsSIXDAt3or2Zs24Mw==
-X-Received: by 10.99.102.132 with SMTP id a126mr6436064pgc.385.1521148988814;
-        Thu, 15 Mar 2018 14:23:08 -0700 (PDT)
-Received: from rem2ua0031cfw.ads.autodesk.com (adsknateur.autodesk.com. [132.188.32.100])
-        by smtp.gmail.com with ESMTPSA id 191sm11759911pfv.167.2018.03.15.14.23.05
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 15 Mar 2018 14:23:07 -0700 (PDT)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH v11 06/10] convert: add 'working-tree-encoding' attribute
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <xmqqmuzh5alb.fsf@gitster-ct.c.googlers.com>
-Date:   Thu, 15 Mar 2018 22:23:03 +0100
-Cc:     lars.schneider@autodesk.com, git@vger.kernel.org, tboegi@web.de,
-        j6t@kdbg.org, sunshine@sunshineco.com, peff@peff.net,
-        ramsay@ramsayjones.plus.com, Johannes.Schindelin@gmx.de,
-        pclouds@gmail.com
+        id S1751828AbeCOVv2 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Mar 2018 17:51:28 -0400
+Received: from avasout01.plus.net ([84.93.230.227]:48619 "EHLO
+        avasout01.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751466AbeCOVv1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Mar 2018 17:51:27 -0400
+Received: from [10.0.2.15] ([80.189.70.162])
+        by smtp with ESMTPA
+        id wamSeIuA4MLyGwamTexJ6W; Thu, 15 Mar 2018 21:51:26 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.3 cv=HInt6Llv c=1 sm=1 tr=0
+ a=zzlqjQC3YyNvDZl/Gy+4mg==:117 a=zzlqjQC3YyNvDZl/Gy+4mg==:17
+ a=IkcTkHD0fZMA:10 a=0T2KFXilnyIgIlDf_tMA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+Subject: Re: [PATCH v6 00/14] Serialized Git Commit Graph
+To:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org,
+        peff@peff.net, sbeller@google.com, szeder.dev@gmail.com,
+        git@jeffhostetler.com, Derrick Stolee <dstolee@microsoft.com>
+References: <1519698787-190494-1-git-send-email-dstolee@microsoft.com>
+ <20180314192736.70602-1-dstolee@microsoft.com>
+ <xmqq605yz8ue.fsf@gitster-ct.c.googlers.com>
+ <nycvar.QRO.7.76.6.1803151821270.64@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+ <xmqq37115ggs.fsf@gitster-ct.c.googlers.com>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <fd51a62f-42bb-b0ef-ebe3-d8e08b047777@ramsayjones.plus.com>
+Date:   Thu, 15 Mar 2018 21:51:24 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.6.0
+MIME-Version: 1.0
+In-Reply-To: <xmqq37115ggs.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
 Content-Transfer-Encoding: 7bit
-Message-Id: <BA576CCC-CF0C-4D50-AFC8-5C8FC7F59697@gmail.com>
-References: <20180309173536.62012-1-lars.schneider@autodesk.com> <20180309173536.62012-7-lars.schneider@autodesk.com> <xmqqmuzh5alb.fsf@gitster-ct.c.googlers.com>
-To:     Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3124)
+X-CMAE-Envelope: MS4wfHz9dYBJiIX21Hpw7LQRSaPRChNhwwFYPOs5saVayywGDuaa+qV5ynWCJaXuSAbh9aLTNgqBxppzp3Nr23YEQVHCEY2HTx7joODQGCyb4wBAR8PpHts5
+ X5ujQRGNg23etNUBywxvLrp4a4aiYcQgiAdZ9SR/c29E/39JM5Naf43W
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-> On 09 Mar 2018, at 20:10, Junio C Hamano <gitster@pobox.com> wrote:
+
+On 15/03/18 18:41, Junio C Hamano wrote:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> lars.schneider@autodesk.com writes:
+>> Stolee, you definitely want to inspect those changes (`git log --check`
+>> was introduced to show you whitespace problems). If all of those
+>> whitespace issues are unintentional, you can fix them using `git rebase
+>> --whitespace=fix` in the most efficient way.
 > 
->> +static const char *default_encoding = "UTF-8";
->> +
->> ...
->> +static const char *git_path_check_encoding(struct attr_check_item *check)
->> +{
->> +	const char *value = check->value;
->> +
->> +	if (ATTR_UNSET(value) || !strlen(value))
->> +		return NULL;
->> +
->> +	if (ATTR_TRUE(value) || ATTR_FALSE(value)) {
->> +		error(_("working-tree-encoding attribute requires a value"));
->> +		return NULL;
->> +	}
-> 
-> Hmph, so we decide to be loud but otherwise ignore an undefined
-> configuration?  Shouldn't we rather die instead to avoid touching
-> the user data in unexpected ways?
+> Another way that may be easier (depending on the way Derrick works)
+> is to fetch from me and start working from there, as if they were
+> the last set of commits that were sent to the list.  "git log
+> --first-parent --oneline master..pu" would show where the tip of the
+> topic is.
 
-OK.
+BTW, thanks for adding the 'SQUASH??? sparse fixes' on top of that
+branch - sparse is now quiet on the 'pu' branch. (The same can't
+be said of static-check.pl, but that is a different issue. ;-) ).
 
+Thanks!
 
->> +
->> +	/* Don't encode to the default encoding */
->> +	if (!strcasecmp(value, default_encoding))
->> +		return NULL;
-> 
-> Is this an optimization to avoid "recode one encoding to the same
-> encoding" no-op overhead?
+ATB,
+Ramsay Jones
 
-Correct.
-
->  We already have the optimization in the
-> same spirit in may existing codepaths that has nothing to do with
-> w-t-e, and I think we should share the code.  Two pieces of thought
-> comes to mind.
-> 
-> One is a lot smaller in scale: Is same_encoding() sufficient for
-> this callsite instead of strcasecmp()?
-
-Yes!
-
-
-> The other one is a lot bigger: Looking at all the existing callers
-> of same_encoding() that call reencode_string() when it returns false,
-> would it make sense to drop same_encoding() and move the optimization
-> to reencode_string() instead?
-> 
-> I suspect that the answer to the smaller one is "yes, and even if
-> not, it should be easy to enhance/extend same_encoding() to make it
-> do what we want it to, and such a change will benefit even existing
-> callers."  The answer to the larger one is likely "the optimization
-> is not about skipping only reencode_string() call but other things
-> are subtly different among callers of same_encoding(), so such a
-> refactoring would not be all that useful."
-
-I agree. reencode_string() would need to signal 3 cases:
-1. reencode performed
-2. reencode not necessary
-3. reencode failed
-
-We could model "reencode not necessary" as "char *in == char *return".
-However, I think this should be tackled in a separate series.
-
-Thanks
-Lars
