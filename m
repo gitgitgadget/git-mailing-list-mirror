@@ -7,36 +7,36 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 548F41F404
-	for <e@80x24.org>; Thu, 15 Mar 2018 22:58:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7B7B61F404
+	for <e@80x24.org>; Thu, 15 Mar 2018 22:58:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932839AbeCOW62 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Mar 2018 18:58:28 -0400
-Received: from mail-bl2nam02on0132.outbound.protection.outlook.com ([104.47.38.132]:45186
+        id S932885AbeCOW6h (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Mar 2018 18:58:37 -0400
+Received: from mail-bl2nam02on0103.outbound.protection.outlook.com ([104.47.38.103]:63072
         "EHLO NAM02-BL2-obe.outbound.protection.outlook.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S932806AbeCOW6Y (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Mar 2018 18:58:24 -0400
+        id S932841AbeCOW6d (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Mar 2018 18:58:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=autodesk.com;
  s=selector1; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
- bh=nXqFlot88YLp5+WpqisKmvuQp2mOAR0voCMOa3uiyuU=;
- b=Hq3nADRCElbbtfP5GU3+qWps3MLTfullepN/i6gXDoihq45nTzLSR+8wf9rCfNu5d2CUf0FNKMZ/ijkzVoZvoiKncliylMBStn59n5k51mG66K8SASAf/fyrCMrJQMiI2jObICVrkY/z1Da09zJCChToPd0Hdo9APQQM3zNvylk=
+ bh=FF3VFb4PHsb2koVRnedURI6srKSu6zq8ozGB3/TxVyY=;
+ b=HRT/2c16jEN37vR5IJmRI8pZk+PBGjyfd6HnYAMLS0GV8n4hAQo1xZxSRPSciLuKia0KNRB33gaOVfKhe7lMqMinR677G1Q4TQozcNG1/Bu2IYKv895CLDMRWwNVU0raQsXXwN2wTzlST067+Pdbkh/pj29qFxYuOQ9aB0CAZDM=
 Authentication-Results: spf=none (sender IP is )
  smtp.mailfrom=lars.schneider@autodesk.com; 
 Received: from rem2ua0031cfw.ads.autodesk.com (132.188.32.100) by
  MWHP136MB0014.NAMP136.PROD.OUTLOOK.COM (2603:10b6:320:1c::21) with Microsoft
  SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P256) id 15.20.548.15; Thu, 15
- Mar 2018 22:58:19 +0000
+ Mar 2018 22:58:25 +0000
 From:   lars.schneider@autodesk.com
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, tboegi@web.de, j6t@kdbg.org,
         sunshine@sunshineco.com, peff@peff.net,
         ramsay@ramsayjones.plus.com, Johannes.Schindelin@gmx.de,
         pclouds@gmail.com, Lars Schneider <larsxschneider@gmail.com>
-Subject: [PATCH v12 08/10] convert: check for detectable errors in UTF encodings
-Date:   Thu, 15 Mar 2018 23:57:44 +0100
-Message-Id: <20180315225746.18119-9-lars.schneider@autodesk.com>
+Subject: [PATCH v12 10/10] convert: add round trip check based on 'core.checkRoundtripEncoding'
+Date:   Thu, 15 Mar 2018 23:57:46 +0100
+Message-Id: <20180315225746.18119-11-lars.schneider@autodesk.com>
 X-Mailer: git-send-email 2.16.2
 In-Reply-To: <20180315225746.18119-1-lars.schneider@autodesk.com>
 References: <20180315225746.18119-1-lars.schneider@autodesk.com>
@@ -48,48 +48,51 @@ X-ClientProxiedBy: CO2PR04CA0095.namprd04.prod.outlook.com
  (2603:10b6:320:1c::21)
 X-MS-PublicTrafficType: Email
 X-MS-Office365-Filtering-HT: Tenant
-X-MS-Office365-Filtering-Correlation-Id: 2e319783-1b6a-42bd-1a89-08d58ac84070
+X-MS-Office365-Filtering-Correlation-Id: 32ac86a9-d86f-49e0-efe5-08d58ac84430
 X-Microsoft-Antispam: UriScan:;BCL:0;PCL:0;RULEID:(7020095)(4652020)(48565401081)(5600026)(4604075)(4534165)(4627221)(201703031133081)(201702281549075)(2017052603328)(7153060)(7193020);SRVR:MWHP136MB0014;
-X-Microsoft-Exchange-Diagnostics: 1;MWHP136MB0014;3:NbH8YNr7BftmHwn3b7oS5EQVWE9xnFPUp8d7oJTleIipQ8cQnjeIYqizUSlIvDuHc4pSqNVXF6POSUEUdOOWmj61sG8siKAOt7B809/9vZ7Dcy7xvVPgkDlhmKRKptwxTlI5CbEobBslliFLraEyv+LBUysxN8aUugTVlylFf6RIDIgEOoeSqBqFAaY2ChdA8nadAbNA/nf29bfrYm09wnqWWwxSDpvJmuAqgQK5pD9n/TXkKy9KtMzqL6gjIcJQ;25:3a8S9W5VIVfJs7vBgK9hqYB/w0a9po+RL3wvIEKENZXSHDWXpUUPS1uOouZDMQI9Yw6gj8JcneUvJRM/agUSKAyh8HPxQmZixsDZ45CVrWcF9bLFsnrGSqO6SCpSNxGBxK3WmM1m5OGY8gnRPriFzIMXtNGgNEpPwKb+byvkuRi+33rFddj3VAIvrWsS9xcyqu2t1mWC4EU9hUS+wauN+O/Ou+rDCwDUXUTRoel9szSYvK45tu/nNQUoU53z3FX1J6hw5DiuYpYnEC94rol0XVi8dk8rBPAJXUBrEf/MC/rBDbM0yUpofPsOwTvkIKFOrDquYv9LmnJ16WW9cGZ9aw==;31:ARR6VgaHgidffPEZ+3Bcaft3uAP2QDzfdWU9UeQb0eRJ0BcfVsynI4egI5Kai3IY6gouz4YffntE605dnNaRsDvmjwPx1PVdhlXkTrGq+MnyOAl7286fmi1mVZwU0PYaqVG4QloISw8vD7GtYBByo/sl2zfJgmamK/OpaDYjvjGsFwRiRl4no1x+LQpwLxIN6urAQzyLdAabZViZmnkOI/YSro7l+LU3Eyu9aYRYd4w=
+X-Microsoft-Exchange-Diagnostics: 1;MWHP136MB0014;3:QQQSWgGCdiQaY4q6juaQGLZqvtMzH50kwg/cOc9LxE7+pIE/AgL7c+9UlsgbGQPhD2lQjMX8MKheSZW8uEPhU/6/n05azIaS0VSMtFTYmi4qH2KqIvR0AqbjeS/38jl25m8WvLTIQmos8N2aFs9y3BF7cxAgZyjMCslKyaRIFOB9aK4JAindmel0Ky0Kr01FMjggCQq4Phb0UBXhWBEHebIkci0PwRJnLgJF1Y+9P+T0Dkjr680AeYWl5qkAjbXJ;25:O7CZS1yxFnaCCoqMKxk5AIuOqY1rsw7lrGNxkkfE2DZbrfufJR2MqTmRv5Chhmp4qsfccZouP2AFCF7KVK9NbyT+2BzJwLPIUvbKknZZrkx5yQE44ImbzxJq/ZDSVT+74tT0Io4G7/d1GyGRZBQI5c948jZ7o1/J4Q7Nt0KvlmdIH5vN8ZiwI0wONrnMCWzT6DqnSg39inFR+V1yjFHpOAmVvwyAxXxtUh8es9KKNfoOhh4/MoFU5dz/kIKP0wFU2jiCamTVMOHQOKlY9WZwPOkhoi7RgwYky4F1JO5SCC9sRxUIZYbF95W/h6xtyuSGtcxj1iSuGEZ4n0ZKv9R4bQ==;31:4lrHFaWjttmH5pU7mPZe1AAmpzBOCQ0UmE+eQW9d9HYgTUBonBLiFfCFdnFGUh6BnkCAgVqdhKHuGNc0RKTK7OYlNo5u6xeaei3PZcU+o2bbJSBkRB4e+kLuSAreBoMuUe8P5nOppWevDl4rW9Q2g50xSG/JWp4D6kVG8s0kHC0U7OEl4d+9dtFmcXnf+/B2EaBrYMw51q3afH1gQSeC9AP5B3uGPC94CN01pGNLMcc=
 X-MS-TrafficTypeDiagnostic: MWHP136MB0014:
-X-Microsoft-Exchange-Diagnostics: 1;MWHP136MB0014;20:2P+pf5RNF7UXBpigL4nq38iZ9npKBZrj2dH5JgQ8hJ4ERjkzad01hu0De9WM13Dbyd7vi60eEXtFFJlhvcO6dDVXTHu6Df4/F7PSeuj9dwgCXdXH3iFbfUBi2kXuioZvVP//FJM+sCLQw/L8M1W/P5yyTnE1HIFFdJEdW+yGv2mXEBxrp2tG1X6w6W6HRhJBiwQ+96OihWk5reQp60lhBEeIt/tGavpw/mVJ4eMQr1/AMm/2X3v07rLLT8RiJn58fDok8iJ2XzPYgpe5abvjuCVC+/czKBhRSQ4xnrutpqjyhJgWEoxbO7J+EvgajTPd2Mmj5xpxEeu5AqA+KlvARmWnAifITCIeLEwROG6oatvMNqHp2t3tgzO5/h2x27Fz5vkRwYr6KI8eBLJwbKU7qhbxZhTQwW/0CJZDAW83Ixg5d4TAq5+FuLhaXLhkxof/TmjU1eruyehikyaDZog+/9zeWcpFouRN4obxVAgwjPO3guHbcQMstSURfu/CDxqlFwlilbibWoUJD4+cJWpzlJ6tmy0Sn8lRmAQQaV9RIo+iVulqd/aPlUYqrubCjWiDcpvxTHbuDKe1EKYiwaOylDgjrO6SBIaIiEDagdU2JPY=;4:ioFOp8/XMStDsRhNdLU2PJAGt8ZzZHuLQXWC3k3eZ/A8MHciLEQ0xywRelDyVKeuAoq7+OFMrbja5dAbvi/21as8QIDkLLIAG1GcEbgLIHZ6QiYEs7hEUMJxRmEj8IZrF//fgCs5A/hTh2PKAO8ApCndMFPbVEgivIGSEwVP/fGs7wmbQhTzPeAAjqAGzji74RKVWYI9kWJs1BwUt7KTNEKaqPgHrGWaVadJU+qcsocdubfQfx/7VeQqxY/kwARFiAb70YuPZrQvYbApLnE27JykDiAAKh84Nz5xJmImveOTjPG5CFjQrzTLiYFa/LDP
-X-Microsoft-Antispam-PRVS: <MWHP136MB00141D0A1FA4774A4A1559DBE8D00@MWHP136MB0014.NAMP136.PROD.OUTLOOK.COM>
-X-Exchange-Antispam-Report-Test: UriScan:(85827821059158);
+X-Microsoft-Exchange-Diagnostics: 1;MWHP136MB0014;20:4Dg8gWvGShnQgT+P1/Pxet3Jin/mcimXcHKOD1UsJVXqtS+f32tCUiPOqCzgr0FJZ0uUTasBT+5HdmOdCdiqq6KshWz/YirB/t8z8BLAl9VWqKGEuzWARoKAUWwyKPvIp2rmaPKg5w+a5LlAHM6FgKNStxjTvbNSa+IF45XcvNvLaCJQ6CqXpuMN/Obs1C9lXAaHoRI4Ym6z+GmtmrBcylkx4J1q3Q2D/SBJz+MgNz30eVRtR0nJJuMNWoEEKXSxjck5u8X+IkaUhOCP3D6U9V1+IzawtbZ1X8pzxg7Nhojvmnw6W8tMzvt+0sKqr8ZyP62hfwt64u/RF4Zz0Ylrimxtt2Hvm+nxHNij+gvc7dMCSKBSsNs23eQUl6EASJ2kZhNLDZtv4bIjGxpCA++m3UMTU9Eyj8xBs6pOK+b9o1OKXfOLh5OLkSiyw75ns2SmCXNlfEWO4n+ReDgkG+Nwo98GeAH/B+lw3RwyHo2L6sagt2UM14trsl2e18IPZ8lvrJgFtZn8eshwDxzRB550Wxe82GwdQvRc1dPAL9GBSrsMhkTijNKoNJ1ON9YNhquw3G0yu1jQtAapYckXWwpW1FUOfnxWJpgMHOicd5b0vhQ=
+X-Microsoft-Antispam-PRVS: <MWHP136MB0014D748536B881BB5F490F1E8D00@MWHP136MB0014.NAMP136.PROD.OUTLOOK.COM>
+X-Exchange-Antispam-Report-Test: UriScan:(28532068793085)(85827821059158);
 X-Exchange-Antispam-Report-CFA-Test: BCL:0;PCL:0;RULEID:(8211001083)(6040522)(2401047)(8121501046)(5005006)(93006095)(93001095)(3002001)(10201501046)(3231221)(944501276)(52105095)(6055026)(6041310)(20161123562045)(20161123564045)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(20161123560045)(20161123558120)(6072148)(201708071742011);SRVR:MWHP136MB0014;BCL:0;PCL:0;RULEID:;SRVR:MWHP136MB0014;
+X-Microsoft-Exchange-Diagnostics: 1;MWHP136MB0014;4:qY0oJH0ZXdc+EB79hlYYVMUXnW+hI0BdBPIDjFs2NK3hkcI+p1CTV2a01cAOg18sK0EZmUCU+pRWT1hrqLclU6sDxi9XoChGrNWwM/HL8Kextci48tcY7ZW0Nts56Z/yhgXdVoPL46nxfQtjDk7M965/ZTSOU6ka99m2tkBj0+4nRSlyR035eg4aaQdoJmK7s/ItAJr311WMgcZuKr/WjwH7TeX27P3emt1UZ9GnyzdsU06/k3bjzn/zBFmqNhmAHsrf/QM/sKIfkSICTUCv+CaFQqYyNZJn1Rsy+Iv2Xj8vVBdTDcr0lwV/Ov8LGuFMAZphSKh5bCqHOTPH7sO7RDBDx12Pa4qXOEpXrILYWkM=
 X-Forefront-PRVS: 0612E553B4
-X-Forefront-Antispam-Report: SFV:NSPM;SFS:(10019020)(396003)(39860400002)(39380400002)(376002)(366004)(346002)(189003)(199004)(85782001)(81166006)(52116002)(53936002)(51416003)(76176011)(1076002)(39060400002)(16586007)(2361001)(8676002)(105586002)(47776003)(6486002)(2906002)(478600001)(106356001)(50226002)(81156014)(2351001)(26005)(4326008)(8936002)(2950100002)(6116002)(68736007)(3846002)(186003)(66066001)(8666007)(25786009)(59450400001)(48376002)(86362001)(386003)(6666003)(36756003)(6916009)(7696005)(5660300001)(97736004)(7736002)(305945005)(7416002)(316002)(16526019)(9686003)(50466002)(8656006)(85772001);DIR:OUT;SFP:1102;SCL:1;SRVR:MWHP136MB0014;H:rem2ua0031cfw.ads.autodesk.com;FPR:;SPF:None;PTR:InfoNoRecords;MX:1;A:1;LANG:en;
+X-Forefront-Antispam-Report: SFV:NSPM;SFS:(10019020)(396003)(39860400002)(39380400002)(376002)(366004)(346002)(189003)(199004)(85782001)(81166006)(52116002)(53936002)(51416003)(76176011)(1076002)(39060400002)(16586007)(2361001)(8676002)(105586002)(47776003)(6486002)(2906002)(478600001)(106356001)(50226002)(575784001)(81156014)(2351001)(26005)(4326008)(8936002)(2950100002)(6116002)(68736007)(3846002)(186003)(66066001)(8666007)(25786009)(59450400001)(48376002)(6306002)(86362001)(386003)(966005)(6666003)(36756003)(6916009)(7696005)(5660300001)(97736004)(7736002)(305945005)(7416002)(316002)(16526019)(53376002)(5890100001)(9686003)(50466002)(8656006)(85772001);DIR:OUT;SFP:1102;SCL:1;SRVR:MWHP136MB0014;H:rem2ua0031cfw.ads.autodesk.com;FPR:;SPF:None;PTR:InfoNoRecords;MX:1;A:1;LANG:en;
 Received-SPF: None (protection.outlook.com: autodesk.com does not designate
  permitted sender hosts)
-X-Microsoft-Exchange-Diagnostics: =?us-ascii?Q?1;MWHP136MB0014;23:DYqpjgY4lB3rl1/HmIaBptpcdwpGiXf8v59Z59AeK?=
- =?us-ascii?Q?r98A9yLBZd7KDL/SubLbohOUxdDk8AUiXRRfEGZk4kxUvQLtXubIndZjAYCS?=
- =?us-ascii?Q?i5uOPlDeACTfZYTHmy6ClC3VK3YO2VGtOu27WtmJPPU6AL+MNX/EaKifu2Hv?=
- =?us-ascii?Q?NbG55a8AwfTa9sJ59pXE6Jdq1NvXjfYt1Ex1MFs1LMMrqpaRaTOwzme4+3pp?=
- =?us-ascii?Q?vv5TrPts2eUWnXRH7djzkeoOkCsUseif30dzo0wMJ3qTLr98Jq4T3AVGMDo0?=
- =?us-ascii?Q?jL38ANVtDdG30EtJWU02/puTSB/sFM3CV6yTlgKN6+PtKeXNYNrKH8wnStJY?=
- =?us-ascii?Q?UwIgwonnZoctr82up9HL5sDMxQ0muvVdGxd4Rn8MBjyirMMDYDGRaEXqTkYn?=
- =?us-ascii?Q?pDubyB5sSe8TU2PV97xvWH2TY0snfLa+xz/ishGN5cPc4O9b60PV/TCPZC8+?=
- =?us-ascii?Q?fDIO139/K/qQWnHha5mEiV/HU0awM2WvDRbgLMJt6cvXY1k9vSCaErCcUNBL?=
- =?us-ascii?Q?lhWmExIoZCVP3NmskeSC/Jw+rgEZ6SGM01R7zupLF2nxX/vM2jPlDgv+VXME?=
- =?us-ascii?Q?qIOTLwXDTZl2eP6HZWrLPRKWnjRTvS5Xitz17kpZns07V/Y3y65V7gOS56l8?=
- =?us-ascii?Q?zDycg1ldSWDYr/E/xHz4Tz7ur0A1NaYO6uIxm2Ogxgol4vhDpB6Wx4Y5t5G5?=
- =?us-ascii?Q?gCYBi52Q5U+HXoXO+aCEqewsRfKifrcPblTbF//mkL/QrExENzV7Z2bktG2y?=
- =?us-ascii?Q?1DGLdfMZFjgqv1hQbRssMNWIMVCW9+0027OzLjN5gq3f5WvkCykcibRgThLv?=
- =?us-ascii?Q?UQg6WB4Lua+PJ6I/1Ezc2IxMOW7Rijy5CUKzlqH3oII8KvCM8phnZlBi3N2y?=
- =?us-ascii?Q?bS4iRyfU+Q6vMorQVO1Har8rSelFH5+35XpBOVHziykhs53dWJk0LcdB1fwO?=
- =?us-ascii?Q?HEQ1hsILwdSqJvyWj3gjSE5oEu2WcY9mGeUTYiT5sr6ixT3nBIVlj5MU0Fx/?=
- =?us-ascii?Q?i0D1jjerSlAOywnY4RNf/yaWo5A1gngCWdsv7LvwCjg9i32YnCSkSly8D+Dd?=
- =?us-ascii?Q?WaCj6ap88T0TzEpMJbe00rilQR2q0p5yfJC0Yp/eiabv5UqX1J4IgLh6o5M2?=
- =?us-ascii?Q?aSIiYGbbLStmGYpAt+jwwEE0m4l/UC+Y8mFfYykFvgbIoDAYFurX4fn0IYiO?=
- =?us-ascii?Q?CvoZHglLn/kxXH64kwokgDjMhYRXVYNaruVVXW60uGcx7gDLnMxndfjUiAyc?=
- =?us-ascii?Q?RpV/J6kOOehEPcwX3sS72Z0+sfgoVaw2kDSkFNx4ylaJmKCKHtC/FMWBceIA?=
- =?us-ascii?Q?IvoniMrDHQ9lHV/pLclM2Y=3D?=
-X-Microsoft-Antispam-Message-Info: ff2+WTdqCSbYBdD8AhrBVOPuTVQIMGhti6KlwJ7B2weTZ7O3XtwlRN1qGdXu7wSWbm+LMJuEEwpCRgL6Uwcd3lG5uh2cIqiFrF763axK7/nHS16GtGHjrBm62aacDGOVv0bY6WJxCvh3wIba7pwfRuvoXyyEW7pjHRAekSlHL0ylJC1SWI3ihwgT/3dg0v09
-X-Microsoft-Exchange-Diagnostics: 1;MWHP136MB0014;6:XhoERxDk41COosPt1flp73Id1QzKnoVfNSdwTrt5xjBClOzoVrECzEw1vvDsjmo1jaz9LRh8KkW9hk673XnnBq1ZtCkbyYXwA/MXedjkwrHFmEJSLqS5VqyOUoc1MDxtHattCaisIMgVY0ejGIsKDxg9g2Hn+TrpErj2BPBZlnYWwMq+8KL7meMHXdr7L1yOGBcoL3hxgMbaj1lBkqeMh+9kkPJq1O7cUw2CXBMvPD3C7LpZN1QRpdvm4QmhNnIuogee8CVKhIXxK58xVIHXmFYlmOZe2uajohFXVD/LQO4IxPkPS3mrMEJVO4ebrjMcfiUb//LXl0AGohovwJ5zx+o2sHWtCXaBf1aJJSn+/qM=;5:DXUMD8wzN0z7E8SsCcX7/iAR6MxMoBdXO4+2GBCLdy0IImkrpiBOrFRoTiQXZonWLvkFk1Rl6vKWwYTkTbUe3Uarbto+dc8MYygcgcCxR/h7qSjq+8eXzzkxlU0QS3jAU983cRe593Sj8JyRNM1K7Ypp/izy6klPMqznBmkXGYo=;24:zKEOZN9hPnrslsSA1zHlgh9FuhXWtztU4BrrAjw5Z1enYYGTCBGoaVUPF+ZUaP70QK6IR4j/0sbornwEMlV1xGS80Sg9E/4DjFVj6zwqFnk=;7:VxG0ztksEnhi05aZnR61mBF/ijvTH7G0u5A66Q+gxZuTowjVSj27TYO/NYtqLDftyOiAS1aXfyKEc6APWa0L8GC1OBpuvDmhd2uhpqvPRb7VKSgMvVBOeZP/m9FwsB47QzxJ6otV02iwHSzCSAnRVjrLkZi/eCCM9tBb/ni6WhX4BPMpf8PwxwtLFte7N9GrYHYq9cDwtOzjOVblkMIw7XFX6ljfTUNVAjE/TNQwIPLzU37/qyr9uGDA4h/cvFqr
+X-Microsoft-Exchange-Diagnostics: =?us-ascii?Q?1;MWHP136MB0014;23:RmriR6EnploMok9DBJAerqw5KjgZK8B2LEE21i+NY?=
+ =?us-ascii?Q?Vr0cypVuBUjiNpSSBTKQ+TJqiaJWoQ7bCDRtBsKctcKx+dORdMhbg599xtOd?=
+ =?us-ascii?Q?IUxbGug84DrREmfy2sUNsBeey90kiw7sXpGTKdAC2SyI8XRVv89Y4iWkUyKT?=
+ =?us-ascii?Q?GQYqsVJ4y8o2IdZgjVjg2tjJ42EeVWV3IOkdxVtuzzpT0zDBorhB5irw7VKx?=
+ =?us-ascii?Q?puAiUTbbDSofecPsvnuqK8AgYyStWoeKN00/Yrpku1ivtXf6k0eZcZrW6iu1?=
+ =?us-ascii?Q?NkAuxz2WjhadTuGSIWGGly04599Pc4fCtuWYlZH6tbzPisMsWsMghc9hihJl?=
+ =?us-ascii?Q?Fy9DL0gOWNKM1u4cZ/NqHhTlmr+bTAJWUszRn5PkBzdFlwVk/SXSLgvm+SeJ?=
+ =?us-ascii?Q?dXX/de5xT5SCO0tpcPH62j+I6nvNr4MEnq6D2F0kUZAdZZGm5rEv5SYYbFcR?=
+ =?us-ascii?Q?dLvUm+21Vuy+b0n4loyA+elEvsmzN7ANAFHblAiSNLh7Zrr3zDvULLkKjMbN?=
+ =?us-ascii?Q?Bptv3FG67Ri8UEEo8Gh0+CxdU5MdRH1izFkwdX3UMnp9MTPKpgP5Wab96g0K?=
+ =?us-ascii?Q?twJrDQa6hTjAQmlxm5xgIagUso2DyEEWxBuSUOOzU7s3JsnOGTPcdE83+YXv?=
+ =?us-ascii?Q?LnR16heahKNPkcDi81xE4TeptAshxFzRuAd5PaIyddn+YmXY34ke11SCQfgQ?=
+ =?us-ascii?Q?jf6uN2Wfq81Z5un5oFlmz9XMbz9VYiWcYi1sLSo862GgrHGtMFcvIkKcrq/x?=
+ =?us-ascii?Q?C3DAx646Rt/dHJqNhPUPtgs2zPVnsa8Z5//pCltxi6XbnIBiUZXPfVNfKulC?=
+ =?us-ascii?Q?1qvz+oeULUump/t6JxZDqzSdNPPrTxFSS89swMUJ2Rtcwj8o7CUtPk8nscxt?=
+ =?us-ascii?Q?dqCwpW02tv7+tD2SifflUzPbM+Bxpo1ZkhgCK2synNMW/ADrXIKsBz01/Svh?=
+ =?us-ascii?Q?IJIVvvIfE5PfgMlx2sI2r3bPzNYd1tVkaFcEYupyB69P49n62Y4rppTHOLdf?=
+ =?us-ascii?Q?+33nKe+CbH1Zp1wCq8KtHvp9DzBbLyCKBBQ0UgJskxVZwiFtv3WcwP9mR2EZ?=
+ =?us-ascii?Q?tt99u3rXDbnAteiSr6amt7RvP6YubLDgGqU/PMDJ4p1ph+W4Mg6u5gVC3WGh?=
+ =?us-ascii?Q?KTyOO5X9yTQqANASMWKo9O3PEuXKoYtlaThlRqNdieGSpiWfCr8aYcZNRh+2?=
+ =?us-ascii?Q?nyJJL3yVHk4tszKkRo2pNl9Cmh+q7DeFc/yOGFk/D5MeosXxIb7QRrOrZSsi?=
+ =?us-ascii?Q?vuazs2QKjf1J3Yy9+2y4wzeumW17xAZkhOBE/ZStpRGWOvhzAp1GRuqm7B1f?=
+ =?us-ascii?Q?S7+ICFDBB+cmqTHiflJLmE5wqecTw0Z7uyPlT0jZFFlO7zUTplko3gqGWMQA?=
+ =?us-ascii?Q?DnaDY4cvMtXcNF3t9ejfmBqpK/1PU8KJjCK2pwvnKl5+qh0i4LLkTnLaEPYN?=
+ =?us-ascii?Q?7U4z7GOQQ=3D=3D?=
+X-Microsoft-Antispam-Message-Info: ZpmFjAp1Eaf7Mo8eLRb8+D3DVQxXFrY6WAkwkdI1Pc898MatVdb1bYDyuO60NWP6BLNw65SVxqfl6QEf194wqgtypbIhonymYO24Kwdec9V+XLCu3hhzg4TBT+QkTKFNCQozueYIUJGWNlhvOufkALeL7usj20a64mfzaIMs2u9rq/ni61QBfQZZIGSvLbbN
+X-Microsoft-Exchange-Diagnostics: 1;MWHP136MB0014;6:pxKrUvloi86uZeuoLE+Ciy+LYcAOyx/a12J+ydXUFW1aIZQLhpbuEEQdaPUc4ZDXPNaALI3v9K9GGPEcf/LDdxSdsdUDj5Z8X/pqOp+gY/VQLN3J6CScX+vRSL7n9thNGIUVgjOi1s94QCXjsnwVoWhC0XXajzfSQbEUAULLV7utrwIOU5qbNPPWLxDxzUrCPExJ5bkqG7IEg0U70u3zGrgGeNfXNcFYLxgbEyL/QGxkAr1AFB98A92gUn06gvRHdT5ceBsB1uFPfBj4+q/Mj4REV3dHxTGUHBVPzudVig3lm/2HUjl6uGfhCvyOyshpZhnJeIHs3ASzSJ+SS2XT+jQx0iPWiaPcoTWOu6jIzr4=;5:U78soU6DkDXglfVIn/APv/JfywTWfgmys4KD3c1tRb24IsfgUJz+cgAQWLVyAsKiUrBwYbuKTSlen3x4X9NvyITXYZ9iGUq8Xz7TdchQV4M/dFfWjq44XrobqR8Mo92SL0MjnAKiQ0U3wpKuRnWze7VzCpxdIawVu1WK9ktyx2E=;24:EkerJZP0mcyBA2goTIg2fo1BWk4mTGtNMindot9/32mFm/fKZFySnGNG3Gnwl9huKDe6xnfqg8CwHMwuiEOH7Re2tcl5t9IO8dXdGPTBGn8=;7:FNI6KU7p+7mA4+IlNKpSo8yPmX4C2YftTjF9aHnp35GOlhGKssg8OAmxuO4g6zou3bZSim+91Lx+xpKTPQtiPQz1IiLALLJt/SLHoe9vUP2cgZNygf2568s1k8cC+ZTcKUG+zzmpunapNgjrMJBBK040gYwNaYlcaldDKKxdtzBy24POJS7wsG8CLfmNNBj92BbOKbaYdUr0bW4MAvDrgeuOxA5oot078GC4Iz5rioOEIzw8cjtfJ2LKNDMDgbXA
 SpamDiagnosticOutput: 1:99
 SpamDiagnosticMetadata: NSPM
 X-OriginatorOrg: autodesk.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Mar 2018 22:58:19.6661 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2e319783-1b6a-42bd-1a89-08d58ac84070
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Mar 2018 22:58:25.9786 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 32ac86a9-d86f-49e0-efe5-08d58ac84430
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 67bff79e-7f91-4433-a8e5-c9252d2ddc1d
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: MWHP136MB0014
@@ -100,169 +103,247 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Lars Schneider <larsxschneider@gmail.com>
 
-Check that new content is valid with respect to the user defined
-'working-tree-encoding' attribute.
+UTF supports lossless conversion round tripping and conversions between
+UTF and other encodings are mostly round trip safe as Unicode aims to be
+a superset of all other character encodings. However, certain encodings
+(e.g. SHIFT-JIS) are known to have round trip issues [1].
+
+Add 'core.checkRoundtripEncoding', which contains a comma separated
+list of encodings, to define for what encodings Git should check the
+conversion round trip if they are used in the 'working-tree-encoding'
+attribute.
+
+Set SHIFT-JIS as default value for 'core.checkRoundtripEncoding'.
+
+[1] https://support.microsoft.com/en-us/help/170559/prb-conversion-problem-between-shift-jis-and-unicode
 
 Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
 ---
- convert.c                        | 61 +++++++++++++++++++++++++++++++++++++++
- t/t0028-working-tree-encoding.sh | 62 ++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 123 insertions(+)
+ Documentation/config.txt         |  6 ++++
+ Documentation/gitattributes.txt  |  8 +++++
+ config.c                         |  5 +++
+ convert.c                        | 77 ++++++++++++++++++++++++++++++++++++++++
+ convert.h                        |  1 +
+ environment.c                    |  1 +
+ t/t0028-working-tree-encoding.sh | 39 ++++++++++++++++++++
+ 7 files changed, 137 insertions(+)
 
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 0e25b2c92b..7dcac9b540 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -530,6 +530,12 @@ core.autocrlf::
+ 	This variable can be set to 'input',
+ 	in which case no output conversion is performed.
+ 
++core.checkRoundtripEncoding::
++	A comma and/or whitespace separated list of encodings that Git
++	performs UTF-8 round trip checks on if they are used in an
++	`working-tree-encoding` attribute (see linkgit:gitattributes[5]).
++	The default value is `SHIFT-JIS`.
++
+ core.symlinks::
+ 	If false, symbolic links are checked out as small plain files that
+ 	contain the link text. linkgit:git-update-index[1] and
+diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
+index 31a4f92840..aa3deae392 100644
+--- a/Documentation/gitattributes.txt
++++ b/Documentation/gitattributes.txt
+@@ -312,6 +312,14 @@ number of pitfalls:
+   internal contents as UTF-8 and try to convert it to UTF-16 on checkout.
+   That operation will fail and cause an error.
+ 
++- Reencoding content to non-UTF encodings can cause errors as the
++  conversion might not be UTF-8 round trip safe. If you suspect your
++  encoding to not be round trip safe, then add it to
++  `core.checkRoundtripEncoding` to make Git check the round trip
++  encoding (see linkgit:git-config[1]). SHIFT-JIS (Japanese character
++  set) is known to have round trip issues with UTF-8 and is checked by
++  default.
++
+ - Reencoding content requires resources that might slow down certain
+   Git operations (e.g 'git checkout' or 'git add').
+ 
+diff --git a/config.c b/config.c
+index 1f003fbb90..d0ada9fcd4 100644
+--- a/config.c
++++ b/config.c
+@@ -1172,6 +1172,11 @@ static int git_default_core_config(const char *var, const char *value)
+ 		return 0;
+ 	}
+ 
++	if (!strcmp(var, "core.checkroundtripencoding")) {
++		check_roundtrip_encoding = xstrdup(value);
++		return 0;
++	}
++
+ 	if (!strcmp(var, "core.notesref")) {
+ 		notes_ref_name = xstrdup(value);
+ 		return 0;
 diff --git a/convert.c b/convert.c
-index 85e49741af..3cab4fa907 100644
+index ba6f2019a3..2a002af66d 100644
 --- a/convert.c
 +++ b/convert.c
-@@ -266,6 +266,64 @@ static int will_convert_lf_to_crlf(size_t len, struct text_stat *stats,
- 
+@@ -347,6 +347,42 @@ static void trace_encoding(const char *context, const char *path,
+ 	strbuf_release(&trace);
  }
  
-+static int validate_encoding(const char *path, const char *enc,
-+		      const char *data, size_t len, int die_on_error)
++static int check_roundtrip(const char *enc_name)
 +{
-+	/* We only check for UTF here as UTF?? can be an alias for UTF-?? */
-+	if (istarts_with(enc, "UTF")) {
-+		/*
-+		 * Check for detectable errors in UTF encodings
-+		 */
-+		if (has_prohibited_utf_bom(enc, data, len)) {
-+			const char *error_msg = _(
-+				"BOM is prohibited in '%s' if encoded as %s");
++	/*
++	 * check_roundtrip_encoding contains a string of comma and/or
++	 * space separated encodings (eg. "UTF-16, ASCII, CP1125").
++	 * Search for the given encoding in that string.
++	 */
++	const char *found = strcasestr(check_roundtrip_encoding, enc_name);
++	const char *next;
++	int len;
++	if (!found)
++		return 0;
++	next = found + strlen(enc_name);
++	len = strlen(check_roundtrip_encoding);
++	return (found && (
 +			/*
-+			 * This advice is shown for UTF-??BE and UTF-??LE encodings.
-+			 * We cut off the last two characters of the encoding name
-+			 * to generate the encoding name suitable for BOMs.
++			 * check that the found encoding is at the
++			 * beginning of check_roundtrip_encoding or
++			 * that it is prefixed with a space or comma
 +			 */
-+			const char *advise_msg = _(
-+				"The file '%s' contains a byte order "
-+				"mark (BOM). Please use UTF-%s as "
-+				"working-tree-encoding.");
-+			const char *stripped = NULL;
-+			char *upper = xstrdup_toupper(enc);
-+			upper[strlen(upper)-2] = '\0';
-+			if (!skip_prefix(upper, "UTF-", &stripped))
-+				skip_prefix(stripped, "UTF", &stripped);
-+			advise(advise_msg, path, stripped);
-+			free(upper);
-+			if (die_on_error)
-+				die(error_msg, path, enc);
-+			else {
-+				return error(error_msg, path, enc);
-+			}
-+
-+		} else if (is_missing_required_utf_bom(enc, data, len)) {
-+			const char *error_msg = _(
-+				"BOM is required in '%s' if encoded as %s");
-+			const char *advise_msg = _(
-+				"The file '%s' is missing a byte order "
-+				"mark (BOM). Please use UTF-%sBE or UTF-%sLE "
-+				"(depending on the byte order) as "
-+				"working-tree-encoding.");
-+			const char *stripped = NULL;
-+			char *upper = xstrdup_toupper(enc);
-+			if (!skip_prefix(upper, "UTF-", &stripped))
-+				skip_prefix(stripped, "UTF", &stripped);
-+			advise(advise_msg, path, stripped, stripped);
-+			free(upper);
-+			if (die_on_error)
-+				die(error_msg, path, enc);
-+			else {
-+				return error(error_msg, path, enc);
-+			}
-+		}
-+
-+	}
-+	return 0;
++			found == check_roundtrip_encoding || (
++				(isspace(found[-1]) || found[-1] == ',')
++			)
++		) && (
++			/*
++			 * check that the found encoding is at the
++			 * end of check_roundtrip_encoding or
++			 * that it is suffixed with a space or comma
++			 */
++			next == check_roundtrip_encoding + len || (
++				next < check_roundtrip_encoding + len &&
++				(isspace(next[0]) || next[0] == ',')
++			)
++		));
 +}
 +
  static const char *default_encoding = "UTF-8";
  
  static int encode_to_git(const char *path, const char *src, size_t src_len,
-@@ -291,6 +349,9 @@ static int encode_to_git(const char *path, const char *src, size_t src_len,
- 	if (!buf && !src)
- 		return 1;
+@@ -395,6 +431,47 @@ static int encode_to_git(const char *path, const char *src, size_t src_len,
+ 	}
+ 	trace_encoding("destination", path, default_encoding, dst, dst_len);
  
-+	if (validate_encoding(path, enc, src, src_len, die_on_error))
-+		return 0;
++	/*
++	 * UTF supports lossless conversion round tripping [1] and conversions
++	 * between UTF and other encodings are mostly round trip safe as
++	 * Unicode aims to be a superset of all other character encodings.
++	 * However, certain encodings (e.g. SHIFT-JIS) are known to have round
++	 * trip issues [2]. Check the round trip conversion for all encodings
++	 * listed in core.checkRoundtripEncoding.
++	 *
++	 * The round trip check is only performed if content is written to Git.
++	 * This ensures that no information is lost during conversion to/from
++	 * the internal UTF-8 representation.
++	 *
++	 * Please note, the code below is not tested because I was not able to
++	 * generate a faulty round trip without an iconv error. Iconv errors
++	 * are already caught above.
++	 *
++	 * [1] http://unicode.org/faq/utf_bom.html#gen2
++	 * [2] https://support.microsoft.com/en-us/help/170559/prb-conversion-problem-between-shift-jis-and-unicode
++	 */
++	if (die_on_error && check_roundtrip(enc)) {
++		char *re_src;
++		int re_src_len;
 +
- 	dst = reencode_string_len(src, src_len, default_encoding, enc,
- 				  &dst_len);
- 	if (!dst) {
++		re_src = reencode_string_len(dst, dst_len,
++					     enc, default_encoding,
++					     &re_src_len);
++
++		trace_printf("Checking roundtrip encoding for %s...\n", enc);
++		trace_encoding("reencoded source", path, enc,
++			       re_src, re_src_len);
++
++		if (!re_src || src_len != re_src_len ||
++		    memcmp(src, re_src, src_len)) {
++			const char* msg = _("encoding '%s' from %s to %s and "
++					    "back is not the same");
++			die(msg, path, enc, default_encoding);
++		}
++
++		free(re_src);
++	}
++
+ 	strbuf_attach(buf, dst, dst_len, dst_len + 1);
+ 	return 1;
+ }
+diff --git a/convert.h b/convert.h
+index 1d9539ed0b..765abfbd60 100644
+--- a/convert.h
++++ b/convert.h
+@@ -56,6 +56,7 @@ struct delayed_checkout {
+ };
+ 
+ extern enum eol core_eol;
++extern char *check_roundtrip_encoding;
+ extern const char *get_cached_convert_stats_ascii(const struct index_state *istate,
+ 						  const char *path);
+ extern const char *get_wt_convert_stats_ascii(const char *path);
+diff --git a/environment.c b/environment.c
+index 10a32c20ac..5bae9131ad 100644
+--- a/environment.c
++++ b/environment.c
+@@ -50,6 +50,7 @@ int check_replace_refs = 1;
+ char *git_replace_ref_base;
+ enum eol core_eol = EOL_UNSET;
+ int global_conv_flags_eol = CONV_EOL_RNDTRP_WARN;
++char *check_roundtrip_encoding = "SHIFT-JIS";
+ unsigned whitespace_rule_cfg = WS_DEFAULT_RULE;
+ enum branch_track git_branch_track = BRANCH_TRACK_REMOTE;
+ enum rebase_setup_type autorebase = AUTOREBASE_NEVER;
 diff --git a/t/t0028-working-tree-encoding.sh b/t/t0028-working-tree-encoding.sh
-index d67dbde1d4..1bb528b339 100755
+index 2ff7541b34..884f0878b1 100755
 --- a/t/t0028-working-tree-encoding.sh
 +++ b/t/t0028-working-tree-encoding.sh
-@@ -62,6 +62,52 @@ test_expect_success 'check $GIT_DIR/info/attributes support' '
- 
- for i in 16 32
- do
-+	test_expect_success "check prohibited UTF-${i} BOM" '
-+		test_when_finished "git reset --hard HEAD" &&
-+
-+		echo "*.utf${i}be text working-tree-encoding=utf-${i}be" >>.gitattributes &&
-+		echo "*.utf${i}le text working-tree-encoding=utf-${i}LE" >>.gitattributes &&
-+
-+		# Here we add a UTF-16 (resp. UTF-32) files with BOM (big/little-endian)
-+		# but we tell Git to treat it as UTF-16BE/UTF-16LE (resp. UTF-32).
-+		# In these cases the BOM is prohibited.
-+		cp bebom.utf${i}be.raw bebom.utf${i}be &&
-+		test_must_fail git add bebom.utf${i}be 2>err.out &&
-+		test_i18ngrep "fatal: BOM is prohibited .* utf-${i}be" err.out &&
-+		test_i18ngrep "use UTF-${i} as working-tree-encoding" err.out &&
-+
-+		cp lebom.utf${i}le.raw lebom.utf${i}be &&
-+		test_must_fail git add lebom.utf${i}be 2>err.out &&
-+		test_i18ngrep "fatal: BOM is prohibited .* utf-${i}be" err.out &&
-+		test_i18ngrep "use UTF-${i} as working-tree-encoding" err.out &&
-+
-+		cp bebom.utf${i}be.raw bebom.utf${i}le &&
-+		test_must_fail git add bebom.utf${i}le 2>err.out &&
-+		test_i18ngrep "fatal: BOM is prohibited .* utf-${i}LE" err.out &&
-+		test_i18ngrep "use UTF-${i} as working-tree-encoding" err.out &&
-+
-+		cp lebom.utf${i}le.raw lebom.utf${i}le &&
-+		test_must_fail git add lebom.utf${i}le 2>err.out &&
-+		test_i18ngrep "fatal: BOM is prohibited .* utf-${i}LE" err.out &&
-+		test_i18ngrep "use UTF-${i} as working-tree-encoding" err.out
-+	'
-+
-+	test_expect_success "check required UTF-${i} BOM" '
-+		test_when_finished "git reset --hard HEAD" &&
-+
-+		echo "*.utf${i} text working-tree-encoding=utf-${i}" >>.gitattributes &&
-+
-+		cp nobom.utf${i}be.raw nobom.utf${i} &&
-+		test_must_fail git add nobom.utf${i} 2>err.out &&
-+		test_i18ngrep "fatal: BOM is required .* utf-${i}" err.out &&
-+		test_i18ngrep "use UTF-${i}BE or UTF-${i}LE" err.out &&
-+
-+		cp nobom.utf${i}le.raw nobom.utf${i} &&
-+		test_must_fail git add nobom.utf${i} 2>err.out &&
-+		test_i18ngrep "fatal: BOM is required .* utf-${i}" err.out &&
-+		test_i18ngrep "use UTF-${i}BE or UTF-${i}LE" err.out
-+	'
-+
- 	test_expect_success "eol conversion for UTF-${i} encoded files on checkout" '
- 		test_when_finished "rm -f crlf.utf${i}.raw lf.utf${i}.raw" &&
- 		test_when_finished "git reset --hard HEAD^" &&
-@@ -139,4 +185,20 @@ test_expect_success 'error if encoding round trip is not the same during refresh
- 	test_i18ngrep "error: .* overwritten by checkout:" err.out
+@@ -203,4 +203,43 @@ test_expect_success 'error if encoding garbage is already in Git' '
+ 	test_i18ngrep "error: BOM is required" err.out
  '
  
-+test_expect_success 'error if encoding garbage is already in Git' '
-+	BEFORE_STATE=$(git rev-parse HEAD) &&
-+	test_when_finished "git reset --hard $BEFORE_STATE" &&
++test_expect_success 'check roundtrip encoding' '
++	test_when_finished "rm -f roundtrip.shift roundtrip.utf16" &&
++	test_when_finished "git reset --hard HEAD" &&
 +
-+	# Skip the UTF-16 filter for the added file
-+	# This simulates a Git version that has no checkoutEncoding support
-+	cp nobom.utf16be.raw nonsense.utf16 &&
-+	TEST_HASH=$(git hash-object --no-filters -w nonsense.utf16) &&
-+	git update-index --add --cacheinfo 100644 $TEST_HASH nonsense.utf16 &&
-+	COMMIT=$(git commit-tree -p $(git rev-parse HEAD) -m "plain commit" $(git write-tree)) &&
-+	git update-ref refs/heads/master $COMMIT &&
++	text="hallo there!\nroundtrip test here!" &&
++	printf "$text" | iconv -f UTF-8 -t SHIFT-JIS >roundtrip.shift &&
++	printf "$text" | iconv -f UTF-8 -t UTF-16 >roundtrip.utf16 &&
++	echo "*.shift text working-tree-encoding=SHIFT-JIS" >>.gitattributes &&
 +
-+	git diff 2>err.out &&
-+	test_i18ngrep "error: BOM is required" err.out
++	# SHIFT-JIS encoded files are round-trip checked by default...
++	GIT_TRACE=1 git add .gitattributes roundtrip.shift 2>&1 |
++		grep "Checking roundtrip encoding for SHIFT-JIS" &&
++	git reset &&
++
++	# ... unless we overwrite the Git config!
++	! GIT_TRACE=1 git -c core.checkRoundtripEncoding=garbage \
++		add .gitattributes roundtrip.shift 2>&1 |
++		grep "Checking roundtrip encoding for SHIFT-JIS" &&
++	git reset &&
++
++	# UTF-16 encoded files should not be round-trip checked by default...
++	! GIT_TRACE=1 git add roundtrip.utf16 2>&1 |
++		grep "Checking roundtrip encoding for UTF-16" &&
++	git reset &&
++
++	# ... unless we tell Git to check it!
++	GIT_TRACE=1 git -c core.checkRoundtripEncoding="UTF-16, UTF-32" \
++		add roundtrip.utf16 2>&1 |
++		grep "Checking roundtrip encoding for utf-16" &&
++	git reset &&
++
++	# ... unless we tell Git to check it!
++	# (here we also check that the casing of the encoding is irrelevant)
++	GIT_TRACE=1 git -c core.checkRoundtripEncoding="UTF-32, utf-16" \
++		add roundtrip.utf16 2>&1 |
++		grep "Checking roundtrip encoding for utf-16" &&
++	git reset
 +'
 +
  test_done
