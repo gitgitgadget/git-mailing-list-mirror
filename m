@@ -7,139 +7,157 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A3A901FAE2
-	for <e@80x24.org>; Thu, 15 Mar 2018 08:36:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 254AD1FAE2
+	for <e@80x24.org>; Thu, 15 Mar 2018 08:39:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751459AbeCOIg2 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Mar 2018 04:36:28 -0400
-Received: from mail-wm0-f50.google.com ([74.125.82.50]:35949 "EHLO
-        mail-wm0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751362AbeCOIg0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Mar 2018 04:36:26 -0400
-Received: by mail-wm0-f50.google.com with SMTP id i194so8752564wmg.1
-        for <git@vger.kernel.org>; Thu, 15 Mar 2018 01:36:25 -0700 (PDT)
+        id S1751708AbeCOIjk (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Mar 2018 04:39:40 -0400
+Received: from mail-wm0-f47.google.com ([74.125.82.47]:54886 "EHLO
+        mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751691AbeCOIjd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Mar 2018 04:39:33 -0400
+Received: by mail-wm0-f47.google.com with SMTP id h76so8840079wme.4
+        for <git@vger.kernel.org>; Thu, 15 Mar 2018 01:39:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=3KS1q1ME8AvuZsyl71bu+3SG8aHN3NVCi1jrkTSXzD8=;
-        b=LVpAsy/OsG0y7bFuwlfZmU9NKu27Z/6EuiqVgEpNoCnupAnqAXpv1M+/iVCUeomsUJ
-         nKFyGU3KHdY+lGzw0vqh7zkcecklJw1i7Mr9n4ActYLesiz90XyMHMJHBP8sNUrqN1Ln
-         OCkPanadjWY+bLEcuicbZ2JxmGyoYrPrkJRp2KTNYYlFE7FeYZjkq71ZPbb7IdKaTvyH
-         WfQ46E/opgiu9iJkr4oJ/qg+42gscuESxNemFARPQqaFjJJqz4k6bNYus8kyujRAHkTr
-         nvDwVZElf6gmbRKKpJF+50/CIgB8qvf3ehTpmLKWf/S7KZK5xQBck18xDNSMRRxe24R+
-         VKUA==
+         :message-id:mime-version:content-transfer-encoding;
+        bh=JftP5I/tCfvqs+VLns+BAQQxkoQUZIfpR4keoFzFvc0=;
+        b=EpD12MFlHL/gECx4bPJckp6RC8pgE+BM89oQqwoYGRsBAwP9MYUPxwp/AiohA5u+VH
+         +XVGJPApxwXFvzCR0YWm4CJOJsh020YGUP2vOwyeEF+X95bueyuL0zvHzGKiVEhdUYwh
+         fW7d4ef1Hwsgrr9XN/iIJIZ/aEGWOwWbDB9687GNMqDymZu4nnl1Ms1LukSGaf8EY8WA
+         +JOnspylbhdK7N97ZJmH5Vf7K2fB5KeLdCMosL3zx52ZxgDO4I473GEMiwODKtGztP0o
+         Kvmr9c1hTTD7FhjCn5VXsEegT3CggGpVPT4XXrqXStELPpiTKF4icwHsAlH7KgWd6r5B
+         Fkpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=3KS1q1ME8AvuZsyl71bu+3SG8aHN3NVCi1jrkTSXzD8=;
-        b=dPvRajIhfWgGJFryXpuKV+Lg5zRb6z31yMsVL8ktcFCulxfIpzjKBDic7fBPTofzSK
-         iAukPkRUdKUePjPsyfI3+Kyo+x95Guo7D9VbzdV39kZYuZfWegsr35dFVirJVBDRGdbl
-         /DXoIVdpwbCoRaLJLVKs4KV5/rhacqWBC/WYxOveQGvvX4AMSQE6cx5T0QRMzsh8bBFq
-         vSGwaJaRO0rLeb+eL4moPFbfilHquFItdPAV24sSm4z1T/SneUHEntXME/KGP7kvaqL/
-         O8+tUeNf+fMHEEwfGxPEXnE2rX3bvISMrUXCCn+hEmLjxd9jsTAhPBx4+QQYtFu70GMW
-         1HLQ==
-X-Gm-Message-State: AElRT7FtJmLW+eqy/yd+UYJVaaBqryNzaVq8VYcefM1vah2io4ocaJOd
-        RZSp9kss2PxNJXvPHwb4XoY=
-X-Google-Smtp-Source: AG47ELtMyhIRf4dfze7b0qgByRFhKhFRGl0IWucrIJAPqlVizfLANMEUlZKRWe43xCxi++EGh/aMQQ==
-X-Received: by 10.28.29.194 with SMTP id d185mr876169wmd.9.1521102984736;
-        Thu, 15 Mar 2018 01:36:24 -0700 (PDT)
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=JftP5I/tCfvqs+VLns+BAQQxkoQUZIfpR4keoFzFvc0=;
+        b=SXNyn2esF4hVS3+bOdv6WlTj3PlH6uOGKbKTHbuTxcNpd2j/qwIobssYmpyhG3xZe3
+         9fPd8J9uM9AvCo459U1v0sauEVkaIUf0bi7sN2YLqzl4XiGZ/LEmQl+7TPYY2I+mR1A8
+         fdcAo0kzLRGiRAx/qE1lRZx/nVQBN9/EVvk1b8PBuOBnK2LWAJiIQYYbglRWl2Z9QXlG
+         lyQokGC2q2mq2xZnGkgeEDII/KD6fP9W/DV5qs8HulaYx1/z+5LJcleWqunzaWqGo44/
+         1FNSNJBpqQAM7gzXIRk1mt1qodYhpMI/qVD+MrSEDTpglBXsNBh9SkW7c6Od1NOMHRNh
+         TwyA==
+X-Gm-Message-State: AElRT7GjZxGBBvbpsm8P87mie8L2Kh2F4ChEkF1G+Nt73bdNHW8pRLkH
+        DKrjATavSHA3q/okPIKh/AM=
+X-Google-Smtp-Source: AG47ELuiwmplviK3itrjp8c+zIBKfBwzCin4zLkUXuF+6OxRrSh6Onqa2GQPloXyHZ+5rmsJA3UumQ==
+X-Received: by 10.28.93.78 with SMTP id r75mr3641779wmb.110.1521103172312;
+        Thu, 15 Mar 2018 01:39:32 -0700 (PDT)
 Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
-        by smtp.gmail.com with ESMTPSA id z3sm4151512wme.3.2018.03.15.01.36.23
+        by smtp.gmail.com with ESMTPSA id h20sm5218170wrf.65.2018.03.15.01.39.29
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 15 Mar 2018 01:36:23 -0700 (PDT)
+        Thu, 15 Mar 2018 01:39:30 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Duy Nguyen <pclouds@gmail.com>,
-        Takuto Ikuta <tikuta@chromium.org>, git@jeffhostetler.com,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Ben Peart <benpeart@microsoft.com>
-Subject: Re: What's cooking in git.git (Mar 2018, #03; Wed, 14)
-References: <xmqqefkm6s06.fsf@gitster-ct.c.googlers.com>
+To:     Michal Novotny <clime@redhat.com>
+Cc:     git@vger.kernel.org
+Subject: Re: allow "~" to be present in a tag name
+References: <CANT8FXTF41-4zvqvrEek262D8OZRhA4nsiPguyNTL9mwF1+mkg@mail.gmail.com> <873714qr7i.fsf@evledraar.gmail.com> <CANT8FXTT=5sGp9Wn4h5t=k4TiiADQrf--hDv5EmCx=KoGHgwXg@mail.gmail.com> <87zi3cp9rp.fsf@evledraar.gmail.com>
 User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 1.1.0
-In-reply-to: <xmqqefkm6s06.fsf@gitster-ct.c.googlers.com>
-Date:   Thu, 15 Mar 2018 09:36:22 +0100
-Message-ID: <87r2olenw9.fsf@evledraar.gmail.com>
+In-reply-to: <87zi3cp9rp.fsf@evledraar.gmail.com>
+Date:   Thu, 15 Mar 2018 09:39:28 +0100
+Message-ID: <87po45enr3.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Thu, Mar 15 2018, Junio C. Hamano jotted:
+On Tue, Mar 13 2018, Ævar Arnfjörð Bjarmason jotted:
 
-> * ti/fetch-everything-local-optim (2018-03-14) 1 commit
->  - fetch-pack.c: use oidset to check existence of loose object
-
-Looks good to me, and great to have such an optimization in.
-
-> * ab/pcre-v2 (2018-03-14) 3 commits
+> On Tue, Mar 13 2018, Michal Novotny jotted:
 >
->  Will merge to 'next'.
+>> On Tue, Mar 13, 2018 at 10:07 AM, Ævar Arnfjörð Bjarmason
+>> <avarab@gmail.com> wrote:
+>>>
+>>> On Tue, Mar 13 2018, Michal Novotny jotted:
+>>>
+>>>> Hello,
+>>>>
+>>>> currently, if I try to create a tag that has tilde "~"  in name, an
+>>>> error is raised. E.g.
+>>>>
+>>>> $ git tag rpkg-util-1.4~rc1
+>>>> fatal: 'rpkg-util-1.4~rc1' is not a valid tag name.
+>>>>
+>>>> Now, actually it would be very cool if tilde was allowed in a tag name
+>>>> because we would like to use it for tagging pre-releases of (not-only
+>>>> rpm) packages.
+>>>>
+>>>> Is there some deep technical reason why tilde cannot be present in a
+>>>> tag name? I tried that e.g.
+>>>
+>>> Yes, because a trailing tilde is part of git's rev syntax, see "man
+>>> git-rev-parse", or try in any repo:
+>>>
+>>>     git show HEAD
+>>>     git show HEAD~2
+>>>     git show HEAD^~2
+>>
+>> Right, reading the man pages:
+>>
+>> <rev>~<n>, e.g. master~3
+>>            A suffix ~<n> to a revision parameter means the commit
+>> object that is the <n>th generation ancestor of the named commit
+>> object, following only the first
+>>            parents. I.e.  <rev>~3 is equivalent to <rev>^^^ which is
+>> equivalent to <rev>^1^1^1. See below for an illustration of the usage
+>> of this form.
+>>
+>> Would it be acceptable to disallow only ~<n> (<n> as [0-9]+) in a tag
+>> name but allow ~[^0-9].*, i.e. if the immediately following symbol
+>> after '~' is a letter, do not
+>> interpret ~ as a special character. Could it work?
 >
->[...]
+> We could make that work, with some caveats:
 >
-> * ab/perl-fixes (2018-03-05) 13 commits
+>  1) The syntax we've reserved for refnames is quite small, and my bias
+>     at least would be to say you should just make a tag like
+>     rpkg-util-1.4-rc1 instead (as e.g. git.git and linux.git do).
 >
->  Will merge to 'master'.
-
-Given 2.17-rc1 next Tuesday according to your calendar, what's the
-status of these two landing in 2.17?
-
-I'd like to annoy packagers with all this perl/ stuff in just one
-release instead of spreading out out over two, and without ab/perl-fixes
-they'll need another hack to avoid installing our Error.pm.
-
-The ab/pcre-v2 is less important, but given the minimal nature of it
-would be very nice to have in 2.17 as well so we get off the
-mostly-unmaintained v1 sooner than later.
-
-> * nd/repack-keep-pack (2018-03-07) 6 commits
->  - SQUASH???
->  - pack-objects: display progress in get_object_details()
->  - pack-objects: show some progress when counting kept objects
->  - gc --auto: exclude base pack if not enough mem to "repack -ad"
->  - repack: add --keep-pack option
->  - t7700: have closing quote of a test at the beginning of line
+>     Carving out an exception like this also means we couldn't use
+>     ~[^0-9].* for anything magical in the future.
 >
->  "git gc" in a large repository takes a lot of time as it considers
->  to repack all objects into one pack by default.  The command has
->  been taught to pretend as if the largest existing packfile is
->  marked with ".keep" so that it is left untouched while objects in
->  other packs and loose ones are repacked.
+>     But I think that's a rather small objection, we have other syntax
+>     escape hatches, and we're unlikely to use ~[^0-9].* as some new
+>     magic.
 >
->  Expecting a reroll.
->  cf. <CACsJy8BW_EtxQvgL=YrCXCQY7cEWCQxgfkeH=Gd=X=uVYhPJcw@mail.gmail.com>
->  Except for final finishing touches, this looked more-or-less ready
->  for 'next'.
+>  2) If we patch git to accept this, you'll be creating refs that aren't
+>     inter-operable with previous versions of git.
 >
+>     This is a big deal. E.g. you'll happily create this special ref,
+>     then try to push it to github, and they'll croak because that's an
+>     invalid ref to them. Ditto some co-worker of yours who's using an
+>     older version of git.
 >
+>     FWIW if you manually create such a tag e.g. for-each-ref will emit
+>     'warning: ignoring ref with broken name' and just not show it.
 
-As I noted in 87a7vdqegi.fsf@evledraar.gmail.com and
-877eqhq7ha.fsf@evledraar.gmail.com (both at:
-https://public-inbox.org/git/?q=87a7vdqegi.fsf%40evledraar.gmail.com) I
-think we should change the too-specific behavior here to be more generic
-(and am happy to do the work pending feedback from Duy on what he thinks
-about it).
+Not to beat this dead horse, but just for the list archive: FWIW there's
+other commands that'll just plain die if they find such a ref, e.g. git
+gc:
 
-I'm also interested to know from those at Microsoft (CC'd some) if the
-mechanism I've proposed is something closer to what they could
-eventually use to gc windows.git.
+    fatal: bad object refs/tags/foo~rc1
+    error: failed to run repack
 
-I know that now it doesn't GC now, and they have some side-channel
-mechanism for pre-deploying large (daily?) packs to clients, if it's
-adjusted as I suggest gc could be told not to touch packs of that size,
-leaving only stray small packs from "git pull" and loose objects to GC.
+So if we ever expand the scope of allowed refs we'd need to first adjust
+the setting and then wait a long time, least downgrading git hard break
+some commands.
 
-I may also have entirely misunderstood how it works, this is from brief
-in-person conversations at Git Merge.
-
-But as far as mainlining some of that eventually I think it would be
-good to get feedback on whether the mechanism I proposed would get in
-their way more or less than what Duy has, or be entirely irrelevant
-because they need something else.
-
-Thanks!
+>>>
+>>> etc.
+>>>
+>>> Although I guess git could learn to disambiguate that form from the tag
+>>> you're trying to create.
+>>>
+>>>> git tag rpkg-util-1.4%rc1
+>>>>
+>>>> but percentage sign does not seem to be particular fitting for
+>>>> pre-release marking.
+>>>>
+>>>> Thank you
+>>>> clime
