@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D47761F404
-	for <e@80x24.org>; Thu, 15 Mar 2018 17:33:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D7BA41F404
+	for <e@80x24.org>; Thu, 15 Mar 2018 17:33:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752652AbeCORdM (ORCPT <rfc822;e@80x24.org>);
+        id S1752657AbeCORdO (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Mar 2018 13:33:14 -0400
+Received: from mail-ua0-f202.google.com ([209.85.217.202]:56267 "EHLO
+        mail-ua0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751546AbeCORdM (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 15 Mar 2018 13:33:12 -0400
-Received: from mail-yw0-f201.google.com ([209.85.161.201]:50120 "EHLO
-        mail-yw0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751512AbeCORdJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Mar 2018 13:33:09 -0400
-Received: by mail-yw0-f201.google.com with SMTP id x204so7630795ywd.16
-        for <git@vger.kernel.org>; Thu, 15 Mar 2018 10:33:09 -0700 (PDT)
+Received: by mail-ua0-f202.google.com with SMTP id z6so4585395uad.22
+        for <git@vger.kernel.org>; Thu, 15 Mar 2018 10:33:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=r9gRMCkQ5hU5WTI0p6N7Td4ELETvxACFIky1F58TpfM=;
-        b=a+wbCSv/f4A5dokQzZ1+D0BnGwvmQwvKfCAMqUG69Cr9ng3ovJPNxqTMwD1XkCKYKr
-         BbfAyW8NsRqn0s5GzPxndX3mHo7keYQS2Jar9AGwk+jQCcYBBD9j6x85P7JxhgoveyP0
-         JR3SxiTcyy40ci1xsSb3dN+b6CmG2V5qf6BI6gR27tYWjpI940IASEUlr4ffMR2ECIY2
-         BfSRInHAr0pRDfXPPeBLTP7rxyMkk1ZAn8EuAei8Y3o1AcrJhWpIGpb1HMcE4kUcfRac
-         /8Pv9u8KtYFW1R1lh/DQfDDhXBR1UDtOlygBednKSrh4CKojNdMdhpEaIBGZCFYAH9XC
-         +FRA==
+        bh=Lt7L6e5s6ZQrhF/hyMvLHCcejf2qIXi5FwFiwkPsMV0=;
+        b=B0LbAlj0J/+DtLpC+T9d30v/nLhV/lARfjY5ttuZWBZ1S6+XyZBu3RgR2y0P2hIQsJ
+         laCIxAL2lW3ngADYntPKpXVHk9ews0bsfD75yYA6V0tWMDCXYpJ3trKO5DHC8jMTS7bc
+         5ovvDcGdf3CEfjbsco4H9mD2VoWiKzMkT11vc2ANSqg2hQA+YIAlgtv7ytbkHWVoVeOB
+         s3SPk766qGiU5IVuynya254BnprDO/QNcRDvcSIjrMpobC8qo9MJ9YcHqCoC4xWMSPnO
+         xN7LcI3cT+YBo5l4LyMT/QPlW76+mAtsKsVvxiYewnGd9/3/JqAmEQccLm1h44YKKF4w
+         cUmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=r9gRMCkQ5hU5WTI0p6N7Td4ELETvxACFIky1F58TpfM=;
-        b=UklquBY75VydH67L/Tvf+vRodai+KZqNtp+AxcS0Wbl0/KkELU3poOzzXX2JVtxESn
-         i2sfNn9f/KGMpw8ZfU1zA78f/jgraMp66iegKBofR64o4xk12H5Gq9Kx+oM+sgu5IGtJ
-         XYt8+qMwEoRpNRmCphtVum8EdMgxjSoltQ6rgeFb/JPsP5zkOuwDyQJq3xl70PlVRVz+
-         j6z4MGs+sqRLxwKhFFXyiJ/agQF8JZrU818zz0q9Nd+GVQGgULtZTjcwOdfQ5aTvGiuF
-         QK2zBl1T+9RCYsaG+DDX9/rJlVjR33OYuMl2L5x7opBfwc0NnMAlKArfCLSMoekdgEBO
-         3WEQ==
-X-Gm-Message-State: AElRT7GwxZtzvsyGgp2PU1fiFIZiTHQq4jE/tI77FhIKFhvwvh+QJN8I
-        IDERunre6/YPJbkzYa0d9sWExzLZZ2YTa4j6sG8fT4+FXlqfe31Q8mtj4FXsz8jc85c593MZsiE
-        7qocwa4zO06n4EEVx1eHhoqcxyP2Yez2FVe9kFYxStc2wppdwboopGQWbXw==
-X-Google-Smtp-Source: AG47ELuIDXry7AoeayLw2ABvnD3c5jEyaEHmYU5mC2uHELX4KACkeIGGpGly6bYsx354VCrkiN4hP1lJGzg=
+        bh=Lt7L6e5s6ZQrhF/hyMvLHCcejf2qIXi5FwFiwkPsMV0=;
+        b=IL7dZ+VdLbfcVSie67jwz36R1SIl3WusrfgFhago4I8Fll8sPaiLFBE4MkYKGwz2uf
+         JP4S5xUNBQdUeXScQ+iiCaCfZXcwcQObprO0vBaDptSwwll3PDm8gFT8rgBuMwTdNMSC
+         udVSuzv98QMnCkz5m4SSNsNlu+eUsBL25rnJK9Tzej34cFS9UIjj1zRhLUhbmzsH+yyK
+         4vg7M/Pzy5cG1qBQ9Y0lO/HfvcTkm4hgIPW+sXI58tpwQGHpgmLBH1qvu4PVnjauH89z
+         uBfPbiiGHSU1QM02BCPEsUno3N+civyBGXbu45n5W7MKsR99pF0htUWQYyv1BdDiPE7E
+         vJCg==
+X-Gm-Message-State: AElRT7E6nQMIZL54cJedypBuw31D1ubeCNpxqBvzXmyFrdRVvXT1B+ZS
+        8+CTfY04dUv+BySf+uRbi+1ZJLJw0+7nCba7+iCBpkzqyW7nNncqzOvOW86b8UXelOIGKgUvVxq
+        LkG9nHC0MVTyMgPe7uFqoonxA3iX68GF67hst/toE5WGiB2WWAEJXYdymng==
+X-Google-Smtp-Source: AG47ELu2j2zOO7420zAtcf9l67dR4lheZt/rpMwCk9Q2umbwFtVVffHrSVEm2S6wt3QhssbGeHsq/JcjysI=
 MIME-Version: 1.0
-X-Received: by 10.13.226.203 with SMTP id l194mr2482470ywe.198.1521135188989;
- Thu, 15 Mar 2018 10:33:08 -0700 (PDT)
-Date:   Thu, 15 Mar 2018 10:31:41 -0700
+X-Received: by 10.159.42.138 with SMTP id z10mr3757221uai.75.1521135191339;
+ Thu, 15 Mar 2018 10:33:11 -0700 (PDT)
+Date:   Thu, 15 Mar 2018 10:31:42 -0700
 In-Reply-To: <20180315173142.176023-1-bmwill@google.com>
-Message-Id: <20180315173142.176023-35-bmwill@google.com>
+Message-Id: <20180315173142.176023-36-bmwill@google.com>
 References: <20180314183213.223440-1-bmwill@google.com> <20180315173142.176023-1-bmwill@google.com>
 X-Mailer: git-send-email 2.16.2.804.g6dcf76e118-goog
-Subject: [PATCH v6 34/35] remote-curl: implement stateless-connect command
+Subject: [PATCH v6 35/35] remote-curl: don't request v2 when pushing
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     git@jeffhostetler.com, gitster@pobox.com, jrnieder@gmail.com,
@@ -65,309 +65,91 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Teach remote-curl the 'stateless-connect' command which is used to
-establish a stateless connection with servers which support protocol
-version 2.  This allows remote-curl to act as a proxy, allowing the git
-client to communicate natively with a remote end, simply using
-remote-curl as a pass through to convert requests to http.
+In order to be able to ship protocol v2 with only supporting fetch, we
+need clients to not issue a request to use protocol v2 when pushing
+(since the client currently doesn't know how to push using protocol v2).
+This allows a client to have protocol v2 configured in
+`protocol.version` and take advantage of using v2 for fetch and falling
+back to using v0 when pushing while v2 for push is being designed.
+
+We could run into issues if we didn't fall back to protocol v2 when
+pushing right now.  This is because currently a server will ignore a request to
+use v2 when contacting the 'receive-pack' endpoint and fall back to
+using v0, but when push v2 is rolled out to servers, the 'receive-pack'
+endpoint will start responding using v2.  So we don't want to get into a
+state where a client is requesting to push with v2 before they actually
+know how to push using v2.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- remote-curl.c          | 207 ++++++++++++++++++++++++++++++++++++++++-
- t/t5702-protocol-v2.sh |  45 +++++++++
- 2 files changed, 251 insertions(+), 1 deletion(-)
+ remote-curl.c          | 11 ++++++++++-
+ t/t5702-protocol-v2.sh | 24 ++++++++++++++++++++++++
+ 2 files changed, 34 insertions(+), 1 deletion(-)
 
 diff --git a/remote-curl.c b/remote-curl.c
-index 66a53f74bb..87f5b77b29 100644
+index 87f5b77b29..595447b16e 100644
 --- a/remote-curl.c
 +++ b/remote-curl.c
-@@ -188,7 +188,12 @@ static struct ref *parse_git_refs(struct discovery *heads, int for_push)
- 	heads->version = discover_version(&reader);
- 	switch (heads->version) {
- 	case protocol_v2:
--		die("support for protocol v2 not implemented yet");
-+		/*
-+		 * Do nothing.  This isn't a list of refs but rather a
-+		 * capability advertisement.  Client would have run
-+		 * 'stateless-connect' so we'll dump this capability listing
-+		 * and let them request the refs themselves.
-+		 */
- 		break;
- 	case protocol_v1:
- 	case protocol_v0:
-@@ -1085,6 +1090,202 @@ static void parse_push(struct strbuf *buf)
- 	free(specs);
- }
+@@ -322,6 +322,7 @@ static struct discovery *discover_refs(const char *service, int for_push)
+ 	struct discovery *last = last_discovery;
+ 	int http_ret, maybe_smart = 0;
+ 	struct http_get_options http_options;
++	enum protocol_version version = get_protocol_version_config();
  
-+/*
-+ * Used to represent the state of a connection to an HTTP server when
-+ * communicating using git's wire-protocol version 2.
-+ */
-+struct proxy_state {
-+	char *service_name;
-+	char *service_url;
-+	struct curl_slist *headers;
-+	struct strbuf request_buffer;
-+	int in;
-+	int out;
-+	struct packet_reader reader;
-+	size_t pos;
-+	int seen_flush;
-+};
-+
-+static void proxy_state_init(struct proxy_state *p, const char *service_name,
-+			     enum protocol_version version)
-+{
-+	struct strbuf buf = STRBUF_INIT;
-+
-+	memset(p, 0, sizeof(*p));
-+	p->service_name = xstrdup(service_name);
-+
-+	p->in = 0;
-+	p->out = 1;
-+	strbuf_init(&p->request_buffer, 0);
-+
-+	strbuf_addf(&buf, "%s%s", url.buf, p->service_name);
-+	p->service_url = strbuf_detach(&buf, NULL);
-+
-+	p->headers = http_copy_default_headers();
-+
-+	strbuf_addf(&buf, "Content-Type: application/x-%s-request", p->service_name);
-+	p->headers = curl_slist_append(p->headers, buf.buf);
-+	strbuf_reset(&buf);
-+
-+	strbuf_addf(&buf, "Accept: application/x-%s-result", p->service_name);
-+	p->headers = curl_slist_append(p->headers, buf.buf);
-+	strbuf_reset(&buf);
-+
-+	p->headers = curl_slist_append(p->headers, "Transfer-Encoding: chunked");
-+
-+	/* Add the Git-Protocol header */
-+	if (get_protocol_http_header(version, &buf))
-+		p->headers = curl_slist_append(p->headers, buf.buf);
-+
-+	packet_reader_init(&p->reader, p->in, NULL, 0,
-+			   PACKET_READ_GENTLE_ON_EOF);
-+
-+	strbuf_release(&buf);
-+}
-+
-+static void proxy_state_clear(struct proxy_state *p)
-+{
-+	free(p->service_name);
-+	free(p->service_url);
-+	curl_slist_free_all(p->headers);
-+	strbuf_release(&p->request_buffer);
-+}
-+
-+/*
-+ * CURLOPT_READFUNCTION callback function.
-+ * Attempts to copy over a single packet-line at a time into the
-+ * curl provided buffer.
-+ */
-+static size_t proxy_in(char *buffer, size_t eltsize,
-+		       size_t nmemb, void *userdata)
-+{
-+	size_t max;
-+	struct proxy_state *p = userdata;
-+	size_t avail = p->request_buffer.len - p->pos;
-+
-+
-+	if (eltsize != 1)
-+		BUG("curl read callback called with size = %"PRIuMAX" != 1",
-+		    (uintmax_t)eltsize);
-+	max = nmemb;
-+
-+	if (!avail) {
-+		if (p->seen_flush) {
-+			p->seen_flush = 0;
-+			return 0;
-+		}
-+
-+		strbuf_reset(&p->request_buffer);
-+		switch (packet_reader_read(&p->reader)) {
-+		case PACKET_READ_EOF:
-+			die("unexpected EOF when reading from parent process");
-+		case PACKET_READ_NORMAL:
-+			packet_buf_write_len(&p->request_buffer, p->reader.line,
-+					     p->reader.pktlen);
-+			break;
-+		case PACKET_READ_DELIM:
-+			packet_buf_delim(&p->request_buffer);
-+			break;
-+		case PACKET_READ_FLUSH:
-+			packet_buf_flush(&p->request_buffer);
-+			p->seen_flush = 1;
-+			break;
-+		}
-+		p->pos = 0;
-+		avail = p->request_buffer.len;
-+	}
-+
-+	if (max < avail)
-+		avail = max;
-+	memcpy(buffer, p->request_buffer.buf + p->pos, avail);
-+	p->pos += avail;
-+	return avail;
-+}
-+
-+static size_t proxy_out(char *buffer, size_t eltsize,
-+			size_t nmemb, void *userdata)
-+{
-+	size_t size;
-+	struct proxy_state *p = userdata;
-+
-+	if (eltsize != 1)
-+		BUG("curl read callback called with size = %"PRIuMAX" != 1",
-+		    (uintmax_t)eltsize);
-+	size = nmemb;
-+
-+	write_or_die(p->out, buffer, size);
-+	return size;
-+}
-+
-+/* Issues a request to the HTTP server configured in `p` */
-+static int proxy_request(struct proxy_state *p)
-+{
-+	struct active_request_slot *slot;
-+
-+	slot = get_active_slot();
-+
-+	curl_easy_setopt(slot->curl, CURLOPT_NOBODY, 0);
-+	curl_easy_setopt(slot->curl, CURLOPT_POST, 1);
-+	curl_easy_setopt(slot->curl, CURLOPT_URL, p->service_url);
-+	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, p->headers);
-+
-+	/* Setup function to read request from client */
-+	curl_easy_setopt(slot->curl, CURLOPT_READFUNCTION, proxy_in);
-+	curl_easy_setopt(slot->curl, CURLOPT_READDATA, p);
-+
-+	/* Setup function to write server response to client */
-+	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, proxy_out);
-+	curl_easy_setopt(slot->curl, CURLOPT_WRITEDATA, p);
-+
-+	if (run_slot(slot, NULL) != HTTP_OK)
-+		return -1;
-+
-+	return 0;
-+}
-+
-+static int stateless_connect(const char *service_name)
-+{
-+	struct discovery *discover;
-+	struct proxy_state p;
-+
-+	/*
-+	 * Run the info/refs request and see if the server supports protocol
-+	 * v2.  If and only if the server supports v2 can we successfully
-+	 * establish a stateless connection, otherwise we need to tell the
-+	 * client to fallback to using other transport helper functions to
-+	 * complete their request.
-+	 */
-+	discover = discover_refs(service_name, 0);
-+	if (discover->version != protocol_v2) {
-+		printf("fallback\n");
-+		fflush(stdout);
-+		return -1;
-+	} else {
-+		/* Stateless Connection established */
-+		printf("\n");
-+		fflush(stdout);
-+	}
-+
-+	proxy_state_init(&p, service_name, discover->version);
-+
-+	/*
-+	 * Dump the capability listing that we got from the server earlier
-+	 * during the info/refs request.
-+	 */
-+	write_or_die(p.out, discover->buf, discover->len);
-+
-+	/* Peek the next packet line.  Until we see EOF keep sending POSTs */
-+	while (packet_reader_peek(&p.reader) != PACKET_READ_EOF) {
-+		if (proxy_request(&p)) {
-+			/* We would have an err here */
-+			break;
-+		}
-+	}
-+
-+	proxy_state_clear(&p);
-+	return 0;
-+}
-+
- int cmd_main(int argc, const char **argv)
- {
- 	struct strbuf buf = STRBUF_INIT;
-@@ -1153,12 +1354,16 @@ int cmd_main(int argc, const char **argv)
- 			fflush(stdout);
+ 	if (last && !strcmp(service, last->service))
+ 		return last;
+@@ -338,8 +339,16 @@ static struct discovery *discover_refs(const char *service, int for_push)
+ 		strbuf_addf(&refs_url, "service=%s", service);
+ 	}
  
- 		} else if (!strcmp(buf.buf, "capabilities")) {
-+			printf("stateless-connect\n");
- 			printf("fetch\n");
- 			printf("option\n");
- 			printf("push\n");
- 			printf("check-connectivity\n");
- 			printf("\n");
- 			fflush(stdout);
-+		} else if (skip_prefix(buf.buf, "stateless-connect ", &arg)) {
-+			if (!stateless_connect(arg))
-+				break;
- 		} else {
- 			error("remote-curl: unknown command '%s' from git", buf.buf);
- 			return 1;
++	/*
++	 * NEEDSWORK: If we are trying to use protocol v2 and we are planning
++	 * to perform a push, then fallback to v0 since the client doesn't know
++	 * how to push yet using v2.
++	 */
++	if (version == protocol_v2 && !strcmp("git-receive-pack", service))
++		version = protocol_v0;
++
+ 	/* Add the extra Git-Protocol header */
+-	if (get_protocol_http_header(get_protocol_version_config(), &protocol_header))
++	if (get_protocol_http_header(version, &protocol_header))
+ 		string_list_append(&extra_headers, protocol_header.buf);
+ 
+ 	memset(&http_options, 0, sizeof(http_options));
 diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
-index e3a7c09d4a..124063c2c4 100755
+index 124063c2c4..56f7c3c326 100755
 --- a/t/t5702-protocol-v2.sh
 +++ b/t/t5702-protocol-v2.sh
-@@ -201,4 +201,49 @@ test_expect_success 'ref advertisment is filtered during fetch using protocol v2
- 	! grep "refs/tags/three" log
+@@ -244,6 +244,30 @@ test_expect_success 'fetch with http:// using protocol v2' '
+ 	grep "git< version 2" log
  '
  
-+# Test protocol v2 with 'http://' transport
-+#
-+. "$TEST_DIRECTORY"/lib-httpd.sh
-+start_httpd
-+
-+test_expect_success 'create repo to be served by http:// transport' '
-+	git init "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
-+	git -C "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" config http.receivepack true &&
-+	test_commit -C "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" one
-+'
-+
-+test_expect_success 'clone with http:// using protocol v2' '
++test_expect_success 'push with http:// and a config of v2 does not request v2' '
 +	test_when_finished "rm -f log" &&
++	# Till v2 for push is designed, make sure that if a client has
++	# protocol.version configured to use v2, that the client instead falls
++	# back and uses v0.
 +
-+	GIT_TRACE_PACKET="$(pwd)/log" GIT_TRACE_CURL="$(pwd)/log" git -c protocol.version=2 \
-+		clone "$HTTPD_URL/smart/http_parent" http_child &&
++	test_commit -C http_child three &&
++
++	# Push to another branch, as the target repository has the
++	# master branch checked out and we cannot push into it.
++	GIT_TRACE_PACKET="$(pwd)/log" git -C http_child -c protocol.version=2 \
++		push origin HEAD:client_branch &&
 +
 +	git -C http_child log -1 --format=%s >actual &&
-+	git -C "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" log -1 --format=%s >expect &&
++	git -C "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" log -1 --format=%s client_branch >expect &&
 +	test_cmp expect actual &&
 +
-+	# Client requested to use protocol v2
-+	grep "Git-Protocol: version=2" log &&
-+	# Server responded using protocol v2
-+	grep "git< version 2" log
++	# Client didnt request to use protocol v2
++	! grep "Git-Protocol: version=2" log &&
++	# Server didnt respond using protocol v2
++	! grep "git< version 2" log
 +'
 +
-+test_expect_success 'fetch with http:// using protocol v2' '
-+	test_when_finished "rm -f log" &&
 +
-+	test_commit -C "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" two &&
-+
-+	GIT_TRACE_PACKET="$(pwd)/log" git -C http_child -c protocol.version=2 \
-+		fetch &&
-+
-+	git -C http_child log -1 --format=%s origin/master >actual &&
-+	git -C "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" log -1 --format=%s >expect &&
-+	test_cmp expect actual &&
-+
-+	# Server responded using protocol v2
-+	grep "git< version 2" log
-+'
-+
-+stop_httpd
-+
+ stop_httpd
+ 
  test_done
 -- 
 2.16.2.804.g6dcf76e118-goog
