@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5AFB41F404
-	for <e@80x24.org>; Thu, 15 Mar 2018 17:35:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 05F9A1F404
+	for <e@80x24.org>; Thu, 15 Mar 2018 17:35:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932252AbeCORfI (ORCPT <rfc822;e@80x24.org>);
+        id S932240AbeCORfI (ORCPT <rfc822;e@80x24.org>);
         Thu, 15 Mar 2018 13:35:08 -0400
-Received: from mail-yw0-f202.google.com ([209.85.161.202]:47319 "EHLO
+Received: from mail-yw0-f202.google.com ([209.85.161.202]:33754 "EHLO
         mail-yw0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752186AbeCORb5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Mar 2018 13:31:57 -0400
-Received: by mail-yw0-f202.google.com with SMTP id i204so7651906ywb.14
-        for <git@vger.kernel.org>; Thu, 15 Mar 2018 10:31:57 -0700 (PDT)
+        with ESMTP id S1751508AbeCORb7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Mar 2018 13:31:59 -0400
+Received: by mail-yw0-f202.google.com with SMTP id d10so7696546ywe.0
+        for <git@vger.kernel.org>; Thu, 15 Mar 2018 10:31:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=9yt+hi0cOzkpXoovsJa0gnIESbhDewSu0PSZCY0aJr4=;
-        b=Lpm1Q6y4xPWUpleYN8efEny4fYGbA4o1L7P6vTS3rVaTiqFtFbNSJ2SN3Ey2YAiyOa
-         V93Eiy3u98/D5uZ9V45O2M6rMP254JlhXFGbp4+jSvabT61fE8HddMcM4R63vskmanJ5
-         zXvnWGLq5BMDRdSbpMwGue57siayVEolX3tqOrKiEYMpue725hD0nj92R3/7L2Nrtuph
-         2jveXrVPJOKuhVzdwvAo3E8B+qUAdra5Am0Ue5DG4KjzWo5UW7jdQTa3f4KZ3P1tvwdf
-         cvWUYrhV+PA+LHR0JwTkPnmm54HsFc87xDOi1LwitZ1+BqIpeB+il3k01MiUGvdhyi9Y
-         CBBg==
+        bh=NFSIICGVr+1bS9hUnKD3wXVt5JiOfv0jsJj7nlb3wS4=;
+        b=DCFFVz6rQFfo0jWVuAIhDg+8yKXWaVq/AV3EvEJBaDy+IZ+UQjVCuoGb8PU4upao/J
+         kJ2abjMfv/UikJnxeZKGYLLHWQE62bnt5tnoWK/LyJ2fqGS+Mlm6Rlwp8Ek0Um6c6Jbr
+         +gCNm20usUfvIM8ecBYLHUI+XNR2RexS1OtTpirSrzrJrBZFyZCR25k/eG0X2JAwF2BE
+         BuPB6ckOt8yOnRn8ISWTdEYOVINhyKaV0OPd81o/77Fq64+Zr0gq1YMPsbat84XDH3js
+         W/Ejj+4GNPs4YTrCuRXCEtWIQbuIOpkvtn1phAmBlgNl299rtocuK9NO9GH41Avb+M+a
+         yfCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=9yt+hi0cOzkpXoovsJa0gnIESbhDewSu0PSZCY0aJr4=;
-        b=qsfDWY0Ddq/rA0qYS3TAJxQu1wzOSZskhIlqE4W7puZKLYNcriJKujnfcOJGpNJRGg
-         Tk2Fl/d67i4Z2enxS6Q88GBrEtlvhVkwnzXaHZ3c6dr0dw9RtIUlOMzWx+ffnBE21b7U
-         FvhU1+ePBYRsExTvzIcTariRq8uyq0LsNuN8+qoER7ZbXU9oZiMojYgI7RQDJmcc0kZi
-         fWPhAPH/MD2+sW5/LTScqlRL3U+sWPKLd5NV8DEFFd6nDeeXMMVz30quLiODVq+SM0NU
-         aOkESGwXBLgtEorjCaC+S6dpjm2chYukLy1X3G/CtVJnfOvjGNgTSwl2fvR+lsehI1Ea
-         lMEQ==
-X-Gm-Message-State: AElRT7HpfeMQpJkmUPLc4lix7+WTxAFItXTEbI7yFUlkfbIlO9PMyO5f
-        gPHd3/xRm6rz97mDHzVlRtT7BwN4mOhs4MjVcgER61bdpKCBOqVhTilDkewzRMaYaaBia4yDuZy
-        SpfUJpiNNXXwQpA5bIXpyWqguzH75KEobqxW6po5R0NASulLiuv8iaqnk5A==
-X-Google-Smtp-Source: AG47ELtLB7oIDNQzvqSbv3AkZnDUYECUIOLypklunNuIaLIt+wLrbsvIxPYCOpp3N3RBbgCLnHFjSG1pUVE=
+        bh=NFSIICGVr+1bS9hUnKD3wXVt5JiOfv0jsJj7nlb3wS4=;
+        b=WKWXXirKVviD0M3kePjf+zVydwH+EeVNlKA80ms9/lhoLS20fQ+sN21L/ez6AC9c3P
+         38D6+Sph7gqKFpRQnjy8vFqU0ZaNXJagmZTz3FqE4KOmyuywovrbThektB3KmeoxvuCM
+         p37z+CJsUV4PJjwo+5E+Fxr/T0hi03UKgO8YtwCySWc4PVhXbm6N1LuuV0iXqSVqUKAY
+         g8PpUB3eL9eLL09z8Sg/QXEr04uSiCJnXVuO6HOzXG2ziXvm1/e/5C+KoPHcTWmfOcGz
+         T5kj9gudWVpYFammI4jDtJlNn6WtF3JQkes/q7m4FP8zFY8UVeerN/PXGy2Yvy3Q+/uR
+         AefQ==
+X-Gm-Message-State: AElRT7E6WQBwuA+TRu5G9mCCKz1IJxE3kcJyDy6E3DBCJ6kN6maaqN0i
+        TyG92wREBF2gIj55CCIDlC00AD0Bp8pvjsHgJc20JDXlJ349irTEUmnyJi+Yk0H/UGsoiyfuKeF
+        sVLalVpVcqV7VAhDQMfC7IgejTiECXjFOvV3Wcqi4U2Z4YddYlDUeqaC6nA==
+X-Google-Smtp-Source: AG47ELvBKZF8hdPAFUQVSgaHCIg7Pp8XSQQOJAoE+u0a0howUVBbwP7yzozgZb6wROCSBMr+TzfF6KAYuCk=
 MIME-Version: 1.0
-X-Received: by 2002:a25:4142:: with SMTP id o63-v6mr4073626yba.39.1521135116576;
- Thu, 15 Mar 2018 10:31:56 -0700 (PDT)
-Date:   Thu, 15 Mar 2018 10:31:11 -0700
+X-Received: by 10.129.41.9 with SMTP id p9mr3807791ywp.25.1521135118943; Thu,
+ 15 Mar 2018 10:31:58 -0700 (PDT)
+Date:   Thu, 15 Mar 2018 10:31:12 -0700
 In-Reply-To: <20180315173142.176023-1-bmwill@google.com>
-Message-Id: <20180315173142.176023-5-bmwill@google.com>
+Message-Id: <20180315173142.176023-6-bmwill@google.com>
 References: <20180314183213.223440-1-bmwill@google.com> <20180315173142.176023-1-bmwill@google.com>
 X-Mailer: git-send-email 2.16.2.804.g6dcf76e118-goog
-Subject: [PATCH v6 04/35] upload-pack: convert to a builtin
+Subject: [PATCH v6 05/35] upload-pack: factor out processing lines
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     git@jeffhostetler.com, gitster@pobox.com, jrnieder@gmail.com,
@@ -65,319 +65,151 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In order to allow for code sharing with the server-side of fetch in
-protocol-v2 convert upload-pack to be a builtin.
+Factor out the logic for processing shallow, deepen, deepen_since, and
+deepen_not lines into their own functions to simplify the
+'receive_needs()' function in addition to making it easier to reuse some
+of this logic when implementing protocol_v2.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- Makefile              |   3 +-
- builtin.h             |   1 +
- builtin/upload-pack.c |  67 ++++++++++++++++++++++++++
- git.c                 |   1 +
- upload-pack.c         | 107 ++++++++++--------------------------------
- upload-pack.h         |  13 +++++
- 6 files changed, 109 insertions(+), 83 deletions(-)
- create mode 100644 builtin/upload-pack.c
- create mode 100644 upload-pack.h
+ upload-pack.c | 113 +++++++++++++++++++++++++++++++++-----------------
+ 1 file changed, 74 insertions(+), 39 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 1a9b23b679..b7ccc05fac 100644
---- a/Makefile
-+++ b/Makefile
-@@ -639,7 +639,6 @@ PROGRAM_OBJS += imap-send.o
- PROGRAM_OBJS += sh-i18n--envsubst.o
- PROGRAM_OBJS += shell.o
- PROGRAM_OBJS += show-index.o
--PROGRAM_OBJS += upload-pack.o
- PROGRAM_OBJS += remote-testsvn.o
+diff --git a/upload-pack.c b/upload-pack.c
+index 2ad73a98b1..1e8a9e1caf 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -724,6 +724,75 @@ static void deepen_by_rev_list(int ac, const char **av,
+ 	packet_flush(1);
+ }
  
- # Binary suffix, set to .exe for Windows builds
-@@ -909,6 +908,7 @@ LIB_OBJS += tree-diff.o
- LIB_OBJS += tree.o
- LIB_OBJS += tree-walk.o
- LIB_OBJS += unpack-trees.o
-+LIB_OBJS += upload-pack.o
- LIB_OBJS += url.o
- LIB_OBJS += urlmatch.o
- LIB_OBJS += usage.o
-@@ -1026,6 +1026,7 @@ BUILTIN_OBJS += builtin/update-index.o
- BUILTIN_OBJS += builtin/update-ref.o
- BUILTIN_OBJS += builtin/update-server-info.o
- BUILTIN_OBJS += builtin/upload-archive.o
-+BUILTIN_OBJS += builtin/upload-pack.o
- BUILTIN_OBJS += builtin/var.o
- BUILTIN_OBJS += builtin/verify-commit.o
- BUILTIN_OBJS += builtin/verify-pack.o
-diff --git a/builtin.h b/builtin.h
-index 42378f3aa4..f332a12574 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -231,6 +231,7 @@ extern int cmd_update_ref(int argc, const char **argv, const char *prefix);
- extern int cmd_update_server_info(int argc, const char **argv, const char *prefix);
- extern int cmd_upload_archive(int argc, const char **argv, const char *prefix);
- extern int cmd_upload_archive_writer(int argc, const char **argv, const char *prefix);
-+extern int cmd_upload_pack(int argc, const char **argv, const char *prefix);
- extern int cmd_var(int argc, const char **argv, const char *prefix);
- extern int cmd_verify_commit(int argc, const char **argv, const char *prefix);
- extern int cmd_verify_tag(int argc, const char **argv, const char *prefix);
-diff --git a/builtin/upload-pack.c b/builtin/upload-pack.c
-new file mode 100644
-index 0000000000..2cb5cb35b0
---- /dev/null
-+++ b/builtin/upload-pack.c
-@@ -0,0 +1,67 @@
-+#include "cache.h"
-+#include "builtin.h"
-+#include "exec_cmd.h"
-+#include "pkt-line.h"
-+#include "parse-options.h"
-+#include "protocol.h"
-+#include "upload-pack.h"
-+
-+static const char * const upload_pack_usage[] = {
-+	N_("git upload-pack [<options>] <dir>"),
-+	NULL
-+};
-+
-+int cmd_upload_pack(int argc, const char **argv, const char *prefix)
++static int process_shallow(const char *line, struct object_array *shallows)
 +{
-+	const char *dir;
-+	int strict = 0;
-+	struct upload_pack_options opts = { 0 };
-+	struct option options[] = {
-+		OPT_BOOL(0, "stateless-rpc", &opts.stateless_rpc,
-+			 N_("quit after a single request/response exchange")),
-+		OPT_BOOL(0, "advertise-refs", &opts.advertise_refs,
-+			 N_("exit immediately after initial ref advertisement")),
-+		OPT_BOOL(0, "strict", &strict,
-+			 N_("do not try <directory>/.git/ if <directory> is no Git directory")),
-+		OPT_INTEGER(0, "timeout", &opts.timeout,
-+			    N_("interrupt transfer after <n> seconds of inactivity")),
-+		OPT_END()
-+	};
-+
-+	packet_trace_identity("upload-pack");
-+	check_replace_refs = 0;
-+
-+	argc = parse_options(argc, argv, NULL, options, upload_pack_usage, 0);
-+
-+	if (argc != 1)
-+		usage_with_options(upload_pack_usage, options);
-+
-+	if (opts.timeout)
-+		opts.daemon_mode = 1;
-+
-+	setup_path();
-+
-+	dir = argv[0];
-+
-+	if (!enter_repo(dir, strict))
-+		die("'%s' does not appear to be a git repository", dir);
-+
-+	switch (determine_protocol_version_server()) {
-+	case protocol_v1:
-+		/*
-+		 * v1 is just the original protocol with a version string,
-+		 * so just fall through after writing the version string.
-+		 */
-+		if (opts.advertise_refs || !opts.stateless_rpc)
-+			packet_write_fmt(1, "version 1\n");
-+
-+		/* fallthrough */
-+	case protocol_v0:
-+		upload_pack(&opts);
-+		break;
-+	case protocol_unknown_version:
-+		BUG("unknown protocol version");
++	const char *arg;
++	if (skip_prefix(line, "shallow ", &arg)) {
++		struct object_id oid;
++		struct object *object;
++		if (get_oid_hex(arg, &oid))
++			die("invalid shallow line: %s", line);
++		object = parse_object(&oid);
++		if (!object)
++			return 1;
++		if (object->type != OBJ_COMMIT)
++			die("invalid shallow object %s", oid_to_hex(&oid));
++		if (!(object->flags & CLIENT_SHALLOW)) {
++			object->flags |= CLIENT_SHALLOW;
++			add_object_array(object, NULL, shallows);
++		}
++		return 1;
 +	}
 +
 +	return 0;
 +}
-diff --git a/git.c b/git.c
-index c870b9719c..f71073dc8d 100644
---- a/git.c
-+++ b/git.c
-@@ -478,6 +478,7 @@ static struct cmd_struct commands[] = {
- 	{ "update-server-info", cmd_update_server_info, RUN_SETUP },
- 	{ "upload-archive", cmd_upload_archive },
- 	{ "upload-archive--writer", cmd_upload_archive_writer },
-+	{ "upload-pack", cmd_upload_pack },
- 	{ "var", cmd_var, RUN_SETUP_GENTLY },
- 	{ "verify-commit", cmd_verify_commit, RUN_SETUP },
- 	{ "verify-pack", cmd_verify_pack },
-diff --git a/upload-pack.c b/upload-pack.c
-index d5de18127c..2ad73a98b1 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -6,7 +6,6 @@
- #include "tag.h"
- #include "object.h"
- #include "commit.h"
--#include "exec_cmd.h"
- #include "diff.h"
- #include "revision.h"
- #include "list-objects.h"
-@@ -15,15 +14,10 @@
- #include "sigchain.h"
- #include "version.h"
- #include "string-list.h"
--#include "parse-options.h"
- #include "argv-array.h"
- #include "prio-queue.h"
- #include "protocol.h"
--
--static const char * const upload_pack_usage[] = {
--	N_("git upload-pack [<options>] <dir>"),
--	NULL
--};
-+#include "upload-pack.h"
- 
- /* Remember to update object flag allocation in object.h */
- #define THEY_HAVE	(1u << 11)
-@@ -61,7 +55,6 @@ static int keepalive = 5;
-  * otherwise maximum packet size (up to 65520 bytes).
-  */
- static int use_sideband;
--static int advertise_refs;
- static int stateless_rpc;
- static const char *pack_objects_hook;
- 
-@@ -977,33 +970,6 @@ static int find_symref(const char *refname, const struct object_id *oid,
- 	return 0;
- }
- 
--static void upload_pack(void)
--{
--	struct string_list symref = STRING_LIST_INIT_DUP;
--
--	head_ref_namespaced(find_symref, &symref);
--
--	if (advertise_refs || !stateless_rpc) {
--		reset_timeout();
--		head_ref_namespaced(send_ref, &symref);
--		for_each_namespaced_ref(send_ref, &symref);
--		advertise_shallow_grafts(1);
--		packet_flush(1);
--	} else {
--		head_ref_namespaced(check_ref, NULL);
--		for_each_namespaced_ref(check_ref, NULL);
--	}
--	string_list_clear(&symref, 1);
--	if (advertise_refs)
--		return;
--
--	receive_needs();
--	if (want_obj.nr) {
--		get_common_commits();
--		create_pack_file();
--	}
--}
--
- static int upload_pack_config(const char *var, const char *value, void *unused)
- {
- 	if (!strcmp("uploadpack.allowtipsha1inwant", var)) {
-@@ -1032,58 +998,35 @@ static int upload_pack_config(const char *var, const char *value, void *unused)
- 	return parse_hide_refs_config(var, value, "uploadpack");
- }
- 
--int cmd_main(int argc, const char **argv)
-+void upload_pack(struct upload_pack_options *options)
- {
--	const char *dir;
--	int strict = 0;
--	struct option options[] = {
--		OPT_BOOL(0, "stateless-rpc", &stateless_rpc,
--			 N_("quit after a single request/response exchange")),
--		OPT_BOOL(0, "advertise-refs", &advertise_refs,
--			 N_("exit immediately after initial ref advertisement")),
--		OPT_BOOL(0, "strict", &strict,
--			 N_("do not try <directory>/.git/ if <directory> is no Git directory")),
--		OPT_INTEGER(0, "timeout", &timeout,
--			    N_("interrupt transfer after <n> seconds of inactivity")),
--		OPT_END()
--	};
--
--	packet_trace_identity("upload-pack");
--	check_replace_refs = 0;
--
--	argc = parse_options(argc, argv, NULL, options, upload_pack_usage, 0);
--
--	if (argc != 1)
--		usage_with_options(upload_pack_usage, options);
--
--	if (timeout)
--		daemon_mode = 1;
--
--	setup_path();
--
--	dir = argv[0];
-+	struct string_list symref = STRING_LIST_INIT_DUP;
- 
--	if (!enter_repo(dir, strict))
--		die("'%s' does not appear to be a git repository", dir);
-+	stateless_rpc = options->stateless_rpc;
-+	timeout = options->timeout;
-+	daemon_mode = options->daemon_mode;
- 
- 	git_config(upload_pack_config, NULL);
- 
--	switch (determine_protocol_version_server()) {
--	case protocol_v1:
--		/*
--		 * v1 is just the original protocol with a version string,
--		 * so just fall through after writing the version string.
--		 */
--		if (advertise_refs || !stateless_rpc)
--			packet_write_fmt(1, "version 1\n");
--
--		/* fallthrough */
--	case protocol_v0:
--		upload_pack();
--		break;
--	case protocol_unknown_version:
--		BUG("unknown protocol version");
-+	head_ref_namespaced(find_symref, &symref);
 +
-+	if (options->advertise_refs || !stateless_rpc) {
-+		reset_timeout();
-+		head_ref_namespaced(send_ref, &symref);
-+		for_each_namespaced_ref(send_ref, &symref);
-+		advertise_shallow_grafts(1);
-+		packet_flush(1);
-+	} else {
-+		head_ref_namespaced(check_ref, NULL);
-+		for_each_namespaced_ref(check_ref, NULL);
- 	}
-+	string_list_clear(&symref, 1);
-+	if (options->advertise_refs)
-+		return;
- 
--	return 0;
-+	receive_needs();
-+	if (want_obj.nr) {
-+		get_common_commits();
-+		create_pack_file();
++static int process_deepen(const char *line, int *depth)
++{
++	const char *arg;
++	if (skip_prefix(line, "deepen ", &arg)) {
++		char *end = NULL;
++		*depth = (int)strtol(arg, &end, 0);
++		if (!end || *end || *depth <= 0)
++			die("Invalid deepen: %s", line);
++		return 1;
 +	}
- }
-diff --git a/upload-pack.h b/upload-pack.h
-new file mode 100644
-index 0000000000..a71e4dc7e2
---- /dev/null
-+++ b/upload-pack.h
-@@ -0,0 +1,13 @@
-+#ifndef UPLOAD_PACK_H
-+#define UPLOAD_PACK_H
 +
-+struct upload_pack_options {
-+	int stateless_rpc;
-+	int advertise_refs;
-+	unsigned int timeout;
-+	int daemon_mode;
-+};
++	return 0;
++}
 +
-+void upload_pack(struct upload_pack_options *options);
++static int process_deepen_since(const char *line, timestamp_t *deepen_since, int *deepen_rev_list)
++{
++	const char *arg;
++	if (skip_prefix(line, "deepen-since ", &arg)) {
++		char *end = NULL;
++		*deepen_since = parse_timestamp(arg, &end, 0);
++		if (!end || *end || !deepen_since ||
++		    /* revisions.c's max_age -1 is special */
++		    *deepen_since == -1)
++			die("Invalid deepen-since: %s", line);
++		*deepen_rev_list = 1;
++		return 1;
++	}
++	return 0;
++}
 +
-+#endif /* UPLOAD_PACK_H */
++static int process_deepen_not(const char *line, struct string_list *deepen_not, int *deepen_rev_list)
++{
++	const char *arg;
++	if (skip_prefix(line, "deepen-not ", &arg)) {
++		char *ref = NULL;
++		struct object_id oid;
++		if (expand_ref(arg, strlen(arg), &oid, &ref) != 1)
++			die("git upload-pack: ambiguous deepen-not: %s", line);
++		string_list_append(deepen_not, ref);
++		free(ref);
++		*deepen_rev_list = 1;
++		return 1;
++	}
++	return 0;
++}
++
+ static void receive_needs(void)
+ {
+ 	struct object_array shallows = OBJECT_ARRAY_INIT;
+@@ -745,49 +814,15 @@ static void receive_needs(void)
+ 		if (!line)
+ 			break;
+ 
+-		if (skip_prefix(line, "shallow ", &arg)) {
+-			struct object_id oid;
+-			struct object *object;
+-			if (get_oid_hex(arg, &oid))
+-				die("invalid shallow line: %s", line);
+-			object = parse_object(&oid);
+-			if (!object)
+-				continue;
+-			if (object->type != OBJ_COMMIT)
+-				die("invalid shallow object %s", oid_to_hex(&oid));
+-			if (!(object->flags & CLIENT_SHALLOW)) {
+-				object->flags |= CLIENT_SHALLOW;
+-				add_object_array(object, NULL, &shallows);
+-			}
++		if (process_shallow(line, &shallows))
+ 			continue;
+-		}
+-		if (skip_prefix(line, "deepen ", &arg)) {
+-			char *end = NULL;
+-			depth = strtol(arg, &end, 0);
+-			if (!end || *end || depth <= 0)
+-				die("Invalid deepen: %s", line);
++		if (process_deepen(line, &depth))
+ 			continue;
+-		}
+-		if (skip_prefix(line, "deepen-since ", &arg)) {
+-			char *end = NULL;
+-			deepen_since = parse_timestamp(arg, &end, 0);
+-			if (!end || *end || !deepen_since ||
+-			    /* revisions.c's max_age -1 is special */
+-			    deepen_since == -1)
+-				die("Invalid deepen-since: %s", line);
+-			deepen_rev_list = 1;
++		if (process_deepen_since(line, &deepen_since, &deepen_rev_list))
+ 			continue;
+-		}
+-		if (skip_prefix(line, "deepen-not ", &arg)) {
+-			char *ref = NULL;
+-			struct object_id oid;
+-			if (expand_ref(arg, strlen(arg), &oid, &ref) != 1)
+-				die("git upload-pack: ambiguous deepen-not: %s", line);
+-			string_list_append(&deepen_not, ref);
+-			free(ref);
+-			deepen_rev_list = 1;
++		if (process_deepen_not(line, &deepen_not, &deepen_rev_list))
+ 			continue;
+-		}
++
+ 		if (!skip_prefix(line, "want ", &arg) ||
+ 		    get_oid_hex(arg, &oid_buf))
+ 			die("git upload-pack: protocol error, "
 -- 
 2.16.2.804.g6dcf76e118-goog
 
