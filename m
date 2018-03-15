@@ -2,68 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 88D401F404
-	for <e@80x24.org>; Thu, 15 Mar 2018 16:25:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A1EE81FAE3
+	for <e@80x24.org>; Thu, 15 Mar 2018 16:40:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751881AbeCOQZF (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Mar 2018 12:25:05 -0400
-Received: from cloud.peff.net ([104.130.231.41]:58080 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1750987AbeCOQZA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Mar 2018 12:25:00 -0400
-Received: (qmail 30934 invoked by uid 109); 15 Mar 2018 16:25:00 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 15 Mar 2018 16:25:00 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 16420 invoked by uid 111); 15 Mar 2018 16:25:54 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 15 Mar 2018 12:25:54 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 15 Mar 2018 12:24:58 -0400
-Date:   Thu, 15 Mar 2018 12:24:58 -0400
-From:   Jeff King <peff@peff.net>
-To:     Michele Locati <michele@locati.it>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] filter-branch: return 2 when nothing to rewrite
-Message-ID: <20180315162457.GA31351@sigill.intra.peff.net>
-References: <20180315130359.6108-1-michele@locati.it>
- <20180315141220.GB27748@sigill.intra.peff.net>
- <xmqqa7v973b5.fsf@gitster-ct.c.googlers.com>
- <20180315154815.GA29874@sigill.intra.peff.net>
- <xmqq605x72qs.fsf@gitster-ct.c.googlers.com>
- <CAGen01hodC=z_74z+7fSSrx2kvPnSbOQaML9kBb9iO6xCvWHQA@mail.gmail.com>
+        id S1752489AbeCOQkm (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Mar 2018 12:40:42 -0400
+Received: from mail-qk0-f174.google.com ([209.85.220.174]:45359 "EHLO
+        mail-qk0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751497AbeCOQkl (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Mar 2018 12:40:41 -0400
+Received: by mail-qk0-f174.google.com with SMTP id s9so7959809qke.12
+        for <git@vger.kernel.org>; Thu, 15 Mar 2018 09:40:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=kBz+bRYmVm3s4skJF1ijqN3qiD/DT2OFPp0SxkBLj0s=;
+        b=EuQ2CuBUsrOpPTTc2ytLFSyLKTwsbiDD6crWIw8jRwID+LzCdbdf8DmEIm5Jg3ZAut
+         goCVapxZRDerqKwYb82AnwCwXlcLvKT3cSgFcmBJ35QSDoaxuPJNudx1aM0JujAwJMIP
+         SAWIDNtWop21BvTrOQuuudtNPK/MoTuGYeRsGfWklHCgPcSFdRpxN/MJXdUMzxULQ0rQ
+         gVNiRR2bfelrjCkFE9eCoh2jP3n+ono2YPlUSbrfW98IEIRuqQHC6cVFy3qtNoiVitMo
+         IX6ThsBoittlPnjmzOmlZFpfvNeZmGL2TmCfDgxOekTc4FlyE9d8rBYHN52R4cc4XS95
+         fEKQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=kBz+bRYmVm3s4skJF1ijqN3qiD/DT2OFPp0SxkBLj0s=;
+        b=lnhK+YB48xtp3hDwhhXAHh/sPe0x7fUP9kspga4MPq9ILmGytGPiV3X24iKWZ1wKHo
+         zIYXKl8oduNYN58ZkJrwf6S2x+d9vfJZgoCdqpalT4xQJF74dLf4eqNCCb8KoHzzRGjT
+         RzkrW9CYvrkB0gtEc84fnfI/zCOYYqaR3J0n7WqekcZM/ZWEjgJqvbEoT/y3U1GOHbGy
+         WsmhfJhQ3NVhePHjakNUs107DjxrfGhbTbop/yx/wPWcynCikpM45tTH6XfO2vRNwiW1
+         wKVktEQ03yFiwtfs5FdeZ5pa/b2NqF/pLIoORZHMAVGtPvcV7u7t5JRCValbE6amLhTy
+         twCg==
+X-Gm-Message-State: AElRT7H8iFqvzn99II1lBpFMJ/nzCkyr8vLd4FSXUSTDWWeP0hwdg8ru
+        p5mSdV/gpmciBlwoE92uVtFYP2AI7Be/NNPUPqzuYQ==
+X-Google-Smtp-Source: AG47ELuygBhcdyVIfExRQdnC7+XmrXrr9r3HfDhdnhy8MqznWUZhrXBheycAOj7CicEgmCsg+WELWfQeaUTNTW7N7ew=
+X-Received: by 10.55.57.135 with SMTP id g129mr13414585qka.212.1521132039227;
+ Thu, 15 Mar 2018 09:40:39 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAGen01hodC=z_74z+7fSSrx2kvPnSbOQaML9kBb9iO6xCvWHQA@mail.gmail.com>
+Received: by 10.200.44.46 with HTTP; Thu, 15 Mar 2018 09:40:38 -0700 (PDT)
+From:   Jake Stine <jake.stine@gmail.com>
+Date:   Thu, 15 Mar 2018 09:40:38 -0700
+Message-ID: <CABWk7R9xNDHJbbsMZbOyhcYXq-bD6Krvbw_mKDBJFALALS3AHA@mail.gmail.com>
+Subject: [bug] git stash push {dir-pathspec} wipes untracked files
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 15, 2018 at 05:18:59PM +0100, Michele Locati wrote:
+Hi, I ran into what I believe is a bug today.  I=E2=80=99m using primarily =
+Git
+for Windows 2.16.2 and also reproduced the behavior on Git for Windows
+2.15.1 and Git 2.14.1 on Ubuntu:
 
-> Great! So, I'm ready to update the patch, including the doc changes,
-> which will be
-> the one suggested by Jeff:
-> [...]
+Given any repository with at least one subdirectory:
 
-Sounds good.
+1.       Create some untracked files in the subdir
+2.       Modify a tracked file in the subdir
+3.       Execute `git stash push subdir`
+4.       The untracked files will be removed, without warning.
 
-> And yes, I'm a brand new contributor, so here's my question: how should I
-> send an updated patch? I can't find anything related to this in
-> https://github.com/git/git/blob/master/Documentation/SubmittingPatches
+`git stash push` behaves as-expcted and does not touch untracked
+files.  It=E2=80=99s only when a directory tree is specified as [pathspec]
+that the problem occurs.
 
-Usually you'd just send it in reply to the original thread with "[PATCH
-v2]" instead of just "[PATCH]" in the subject line.  If you're using
-format-patch or send-email, you should be able to just add "-v2" (and
---in-reply-to if you want to join the existing thread).
+Here's the precise reproduction case executed on a linux box:
 
-I thought SubmittingPatches discussed patch "re-rolls" like this, but I
-don't see any mention of it from a quick grep.
+jake@jake-VirtualBox:~/woot$ git --version
+git version 2.14.1
+jake@jake-VirtualBox:~/woot$ git config --global user.email jake.stine@gmai=
+l.com
+jake@jake-VirtualBox:~/woot$ git config --global user.name "Jake Stine"
+jake@jake-VirtualBox:~$ git init woot
+Initialized empty Git repository in /home/jake/woot/.git/
+jake@jake-VirtualBox:~$ cd woot
+jake@jake-VirtualBox:~/woot$ mkdir subdir
+jake@jake-VirtualBox:~/woot$ echo "test" > meh.txt
+jake@jake-VirtualBox:~/woot$ echo "test" > subdir/meh2.txt
+jake@jake-VirtualBox:~/woot$ git add meh.txt subdir/meh2.txt
+jake@jake-VirtualBox:~/woot$ git commit --message=3D"stash bug testing"
+jake@jake-VirtualBox:~/woot$ git commit --message=3D"stash bug testing"
+[master (root-commit) 2c05580] stash bug testing
+ 2 files changed, 2 insertions(+)
+ create mode 100644 meh.txt
+ create mode 100644 subdir/meh2.txt
+jake@jake-VirtualBox:~/woot$ echo "test" > subdir/untracked.txt
+jake@jake-VirtualBox:~/woot$ echo "append" >> subdir/meh2.txt
+jake@jake-VirtualBox:~/woot$ git stash push subdir
+Saved working directory and index state WIP on master: 2c05580 stash bug te=
+sting
+jake@jake-VirtualBox:~/woot$ ls subdir
+meh2.txt
 
--Peff
+
+The expected result is that when I do `ls subdir` the file
+"untracked.txt" still exists.  Alternatively, git stash should warn me
+before destroying my untracked files, and require I specify --force or
+similar to invoke destructive behavior.
+
+
+Thanks!
+Jake Stine
