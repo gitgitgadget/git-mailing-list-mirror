@@ -2,168 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2FA3D1F404
-	for <e@80x24.org>; Thu, 15 Mar 2018 06:00:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F0FCC1FAE2
+	for <e@80x24.org>; Thu, 15 Mar 2018 06:31:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751362AbeCOGAI (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Mar 2018 02:00:08 -0400
-Received: from mail.javad.com ([54.86.164.124]:50771 "EHLO mail.javad.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750726AbeCOGAG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Mar 2018 02:00:06 -0400
-Received: from osv (unknown [89.175.180.246])
-        by mail.javad.com (Postfix) with ESMTPSA id 98EA53E92E;
-        Thu, 15 Mar 2018 06:00:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1521093605;
-        bh=pUIjFZGMoO3gvDNtGyqb5A15EBvJMxPIZPECdUmer44=; l=2270;
-        h=Received:From:To:Subject;
-        b=leU/ITjG7yyZgY3xnb8g4LGIsirNMF7OXgrmr/gcD4VXOWHveqGUU0JP2Yd3XrD2o
-         2yIRvj4CWuCRuMO5oL8G8Ruy/3LQa/bFKLeXlNov907+AB842mc4K2I198z//t2wgT
-         EQ/XQeYhNV88eATM1YM0eJRKs4OUUSyvWU2voxLU=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1521093605;
-        bh=pUIjFZGMoO3gvDNtGyqb5A15EBvJMxPIZPECdUmer44=; l=2270;
-        h=Received:From:To:Subject;
-        b=leU/ITjG7yyZgY3xnb8g4LGIsirNMF7OXgrmr/gcD4VXOWHveqGUU0JP2Yd3XrD2o
-         2yIRvj4CWuCRuMO5oL8G8Ruy/3LQa/bFKLeXlNov907+AB842mc4K2I198z//t2wgT
-         EQ/XQeYhNV88eATM1YM0eJRKs4OUUSyvWU2voxLU=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1521093605;
-        bh=pUIjFZGMoO3gvDNtGyqb5A15EBvJMxPIZPECdUmer44=; l=2270;
-        h=Received:From:To:Subject;
-        b=leU/ITjG7yyZgY3xnb8g4LGIsirNMF7OXgrmr/gcD4VXOWHveqGUU0JP2Yd3XrD2o
-         2yIRvj4CWuCRuMO5oL8G8Ruy/3LQa/bFKLeXlNov907+AB842mc4K2I198z//t2wgT
-         EQ/XQeYhNV88eATM1YM0eJRKs4OUUSyvWU2voxLU=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1521093605;
-        bh=pUIjFZGMoO3gvDNtGyqb5A15EBvJMxPIZPECdUmer44=; l=2270;
-        h=Received:From:To:Subject;
-        b=leU/ITjG7yyZgY3xnb8g4LGIsirNMF7OXgrmr/gcD4VXOWHveqGUU0JP2Yd3XrD2o
-         2yIRvj4CWuCRuMO5oL8G8Ruy/3LQa/bFKLeXlNov907+AB842mc4K2I198z//t2wgT
-         EQ/XQeYhNV88eATM1YM0eJRKs4OUUSyvWU2voxLU=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1521093605;
-        bh=pUIjFZGMoO3gvDNtGyqb5A15EBvJMxPIZPECdUmer44=; l=2270;
-        h=Received:From:To:Subject;
-        b=leU/ITjG7yyZgY3xnb8g4LGIsirNMF7OXgrmr/gcD4VXOWHveqGUU0JP2Yd3XrD2o
-         2yIRvj4CWuCRuMO5oL8G8Ruy/3LQa/bFKLeXlNov907+AB842mc4K2I198z//t2wgT
-         EQ/XQeYhNV88eATM1YM0eJRKs4OUUSyvWU2voxLU=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1521093605;
-        bh=pUIjFZGMoO3gvDNtGyqb5A15EBvJMxPIZPECdUmer44=; l=2270;
-        h=Received:From:To:Subject;
-        b=leU/ITjG7yyZgY3xnb8g4LGIsirNMF7OXgrmr/gcD4VXOWHveqGUU0JP2Yd3XrD2o
-         2yIRvj4CWuCRuMO5oL8G8Ruy/3LQa/bFKLeXlNov907+AB842mc4K2I198z//t2wgT
-         EQ/XQeYhNV88eATM1YM0eJRKs4OUUSyvWU2voxLU=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1521093605;
-        bh=pUIjFZGMoO3gvDNtGyqb5A15EBvJMxPIZPECdUmer44=; l=2270;
-        h=Received:From:To:Subject;
-        b=leU/ITjG7yyZgY3xnb8g4LGIsirNMF7OXgrmr/gcD4VXOWHveqGUU0JP2Yd3XrD2o
-         2yIRvj4CWuCRuMO5oL8G8Ruy/3LQa/bFKLeXlNov907+AB842mc4K2I198z//t2wgT
-         EQ/XQeYhNV88eATM1YM0eJRKs4OUUSyvWU2voxLU=
-Authentication-Results: mail.javad.com;
-        spf=pass (sender IP is 89.175.180.246) smtp.mailfrom=osv@javad.com smtp.helo=osv
-Received-SPF: pass (mail.javad.com: connection is authenticated)
-Received: from osv by osv with local (Exim 4.84_2)
-        (envelope-from <osv@osv.gnss.ru>)
-        id 1ewLvn-0004zn-Hy; Thu, 15 Mar 2018 09:00:03 +0300
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Igor Djordjevic <igor.d.djordjevic@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC] Rebasing merges: a jorney to the ultimate solution(RoadClear)
-References: <87y3jtqdyg.fsf@javad.com>
-        <nycvar.QRO.7.76.6.1802271718090.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <4d7f3406-b206-cc22-87df-85700d6a03d9@gmail.com>
-        <33da31e9-9101-475d-8901-4b6b3df2f29d@gmail.com>
-        <940d959d-151d-68dd-0f13-320ebad0d75b@gmail.com>
-        <87606hoflx.fsf@javad.com>
-        <0ac3a3fd-4053-e32e-75ed-8829f22c2e1f@gmail.com>
-        <87a7vss6ax.fsf@javad.com>
-        <f1a960dc-cc5c-e7b0-10b6-39e5516655b3@gmail.com>
-        <ed4d2b30-2dea-740b-6283-973c798f619d@philandanna.no-ip.org>
-        <1298a701-a860-a675-83d7-72f29e14cd2b@talktalk.net>
-        <CA+P7+xpgChuvh_vsPktBkOEhF=MjJh1n_3jD0-n4d67j9kYqzw@mail.gmail.com>
-        <ee809701-a6d8-157d-09cd-cebbf2e949ec@gmail.com>
-        <1580e48a-be44-38dd-79af-8a2a31c5712e@talktalk.net>
-        <nycvar.QRO.7.76.6.1803061812090.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <754e2735-1288-9a8d-c8bd-ab39cf733812@gmail.com>
-        <nycvar.QRO.7.76.6.1803070810550.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <2749ce78-8917-c821-6116-0c8d67b5e16e@gmail.com>
-        <87vadyd9az.fsf@javad.com>
-        <d5e68db4-8006-2c0e-bc21-0b136503edd9@gmail.com>
-Date:   Thu, 15 Mar 2018 09:00:03 +0300
-In-Reply-To: <d5e68db4-8006-2c0e-bc21-0b136503edd9@gmail.com> (Igor
-        Djordjevic's message of "Thu, 15 Mar 2018 00:11:09 +0100")
-Message-ID: <87zi397uak.fsf@javad.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+        id S1751488AbeCOGb0 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Mar 2018 02:31:26 -0400
+Received: from mail-ot0-f173.google.com ([74.125.82.173]:34561 "EHLO
+        mail-ot0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750722AbeCOGbZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Mar 2018 02:31:25 -0400
+Received: by mail-ot0-f173.google.com with SMTP id v4-v6so2635815otj.1
+        for <git@vger.kernel.org>; Wed, 14 Mar 2018 23:31:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=z+q+5v/H7msLPr2PT66EkjhjEB5IMz//qnbTz7qotdo=;
+        b=TVuaQ6f+/PQNHRmpwavPl5UBr4R0Xsckdh7z/+QkepympVj5X/I5eNLxKobiGBTi7l
+         Scph20MAyvVhrZdQ9IPDvmfzSp+FGq5w+iT/itCGWdM6wJvNmFyFzZqA9Uvm+rL4uPK3
+         dWASXbJUl8aClG6u15M/UEnx8+5rp3TtVBy93muTbGv1hlXYFMC2IEeSDoNPPesFmA5r
+         2netUhz8Ati414cblVaA+k4Rpu4RQ1rffLxDP+VyZzYcgU62h3x6Mdm209Bw3vUv9tEz
+         xUBW3tWYexuyTMl66oeFv+mZjdVje6KCzEFAi5JzpmYg28kNUasrgayU0yNYtcY/c+5w
+         PjpQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=z+q+5v/H7msLPr2PT66EkjhjEB5IMz//qnbTz7qotdo=;
+        b=mZOJu2InD+jKannnUFxx4nt7ycYWyEh5aPjuoliHirIC8BvV8Yl7wB/iyWxkQci4KX
+         C2KfFkYH+faUgYLUHtGAfU35VUMehkI75E+txo3LVYxhPM01MH8ZYO2rtb8YrZ4B9o5r
+         vBJS8zWu2wfq3TL0FwbUZTcLvCBmQ6DgKqGdRefcwddA0Xhvb9U3X0T7rzyNVGA0nuyy
+         JLZJcTIXkdEMsmw79FtBpKFLOEYfDPXuSWlbSTMlonSNdp6VNtJBWuXa/tOfGCl/X6/f
+         XzG1cmvfdrMmjxzLgDb/OExPF5fYMihpzECG/j7m5Z59WjA5hmftUMq0JlEFFHYC/UKW
+         IeiA==
+X-Gm-Message-State: AElRT7ECLVfYLLobmZwQ5ekgfmnCXlPCif7jg5S3+qs0U6UPjIlNVfYv
+        cpSCPk4uoBqMIuqKkF/3/lYhbV9Ygvsy6njemQ4=
+X-Google-Smtp-Source: AG47ELtQuBdTOVdPIXRLyvVskSDDX3AeSjJb/hoe4zjzC00pM+oTszIrAM3CugdKyy6sX6U12MYGyxYsii4RCaMK0tM=
+X-Received: by 10.157.54.204 with SMTP id s12mr5000811otd.304.1521095483949;
+ Wed, 14 Mar 2018 23:31:23 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.74.154.146 with HTTP; Wed, 14 Mar 2018 23:30:53 -0700 (PDT)
+In-Reply-To: <xmqqefkm6s06.fsf@gitster-ct.c.googlers.com>
+References: <xmqqefkm6s06.fsf@gitster-ct.c.googlers.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Thu, 15 Mar 2018 07:30:53 +0100
+Message-ID: <CACsJy8D9-OaU5F+bugpgaPBPV_cdtqeYJ_5iYYMcrDj5d-9z5Q@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Mar 2018, #03; Wed, 14)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Buga,
-
-Igor Djordjevic <igor.d.djordjevic@gmail.com> writes:
-
-> On 14/03/2018 15:24, Sergey Organov wrote:
-[...]
->> Thinking about it I've got an idea that what we actually need is
->> --no-flatten flag that, when used alone, will just tell "git rebase" to
->> stop flattening history, and which will be implicitly imposed by
->> --recreate-merges (and --preserve-merges).
->> 
->> Then the only thing the --recreate-merges will tune is to put 'merge'
->> directives into the todo list for merge commits, exactly according to
->> what its name suggests, while the default behavior will be to put 'pick'
->> with suitable syntax into the todo. And arguments to the
->> --recreate-merge will specify additional options for the 'merge'
->> directive, obviously.
+On Thu, Mar 15, 2018 at 2:34 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> * nd/pack-objects-pack-struct (2018-03-05) 9 commits
+>  - pack-objects: reorder 'hash' to pack struct object_entry
+>  - pack-objects: refer to delta objects by index instead of pointer
+>  - pack-objects: move in_pack out of struct object_entry
+>  - pack-objects: move in_pack_pos out of struct object_entry
+>  - pack-objects: note about in_pack_header_size
+>  - pack-objects: use bitfield for object_entry::depth
+>  - pack-objects: use bitfield for object_entry::dfs_state
+>  - pack-objects: turn type and in_pack_type to bitfields
+>  - pack-objects: document holes in struct object_entry.h
 >
-> This seem to basically boil down to what I mentioned previously[2] 
-> through use of new `--rebase-merges` alongside `--recreate-merges`, just 
-> that you named it `--no-flatten` here, but the point is the same - and 
-> not something Johannes liked, "polluting" rebase option space further.
+>  "git pack-objects" needs to allocate tons of "struct object_entry"
+>  while doing its work, and shrinking its size helps the performance
+>  quite a bit.
+>
+>  Will merge to 'next'.
 
-Not quite so. The problem with --XXX-merges flags is that they do two
-things at once: they say _what_ to do and _how_ to do it. Clean UI
-designs usually have these things separate, and that's what I propose.
+Hold it. A reroll is coming. I'm a bit busy this week and can't really do much.
 
-The --[no-]flatten says _what_ (not) to do, and --recreate-merges says
-_how_ exactly it will be performed. In this model --no-flatten could
-have been called, say --preserve-shape, but not --rebase-merges.
+> * nd/worktree-prune (2018-03-06) 3 commits
+>  - worktree prune: improve prune logic when worktree is moved
+>  - worktree: delete dead code
+>  - gc.txt: more details about what gc does
+>
+>  The way "git worktree prune" worked internally has been simplified,
+>  by assuming how "git worktree move" moves an existing worktree to a
+>  different place.
+>
+>  Will merge to 'next'.
 
-To minimize pollution, the _how_ part could rather be made option value:
-
---no-flatten[=<strategy>]
-
-where <strategy> is 'rebase', 'remerge', etc.
-
-In this case we will need separate option to specify strategy options,
-if required, that will lead us to something similar to the set of merge
-strategies options.
-
-> I would agree with him, and settling onto `--rebase-merges` _instead_ of 
-> `--recreate-merges` seems as a more appropriate name, indeed, now that 
-> default behavior is actually merge commit rebasing and not recreating 
-> (recreating still being possible through user editing the todo list).
-
-I hope he'd be pleased to be able to say --no-flatten=remerge and get
-back his current mode of operation, that he obviously has a good use
-for.
-
--- Sergey
+Same.
+-- 
+Duy
