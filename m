@@ -2,129 +2,199 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 235331F404
-	for <e@80x24.org>; Fri, 16 Mar 2018 17:27:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A98F61F404
+	for <e@80x24.org>; Fri, 16 Mar 2018 17:27:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932507AbeCPR1N (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Mar 2018 13:27:13 -0400
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:39564 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932333AbeCPR1L (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Mar 2018 13:27:11 -0400
-Received: by mail-wr0-f194.google.com with SMTP id c24so656721wrc.6
-        for <git@vger.kernel.org>; Fri, 16 Mar 2018 10:27:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=Ek1cNNXGlprko4tEJQQUK7k4CknqLylWTvOoK2dZeGA=;
-        b=nil22Uuv5c/X1Em+XYROFQYuSTuqZs+uPOcKsIWr4eyVmMIBVl5yc/E9NPnPy4eyGz
-         d/s04DujNcycHPhTNvAMupOeNTar/aV5rrRo0bnGTjJ+GGIeLVL84G3BTNeM202i9mZF
-         Xyz2sxc3+e6vg8SD9E97Y5DVI55POm+rh5tHGwzRWorXT7n8blqdw1qbf+evwF54/LAn
-         IUDjeQy38s0vZnSSrXupSY+j0N07hS6Od6hVWpPeRf4MyNXBUrOlNmvY6cwJeoSM9XXK
-         SX3dSP3LCZjwagJhjzX+kuTlCYQGmpSEpyj+5eOqpMl/GGqEN8ZkEFyx5lcZDqNGWv0h
-         fKfw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=Ek1cNNXGlprko4tEJQQUK7k4CknqLylWTvOoK2dZeGA=;
-        b=HPvHnFTtrAwxlb4VX7OKtA0NJBTLpQ9zYJBN8trEvE/z9P0XW37lwTEj7fou1iQalX
-         /ZuDnNRkswUg87qWJE+4oeHdtobNHrNFQcaibBqIWeaFKd80sTtjclGR00GbCFCCDw/0
-         WIE5OF3Vuo4dKNCxevGfUUPgTaEyjVSINy1yu7j1LCD763BRm2+KRIzuDuhzBI7lI/o3
-         SjCPGbIjc7CgQyU+PJaV40gdV9fnEvuMiSQO2y+GIjAQ7mbgNglFIDEpz2YglKo7c1DJ
-         HQYWgq8rVU6+yHenbSQgBGFkOzerWVatIfwOW8zQHaovbs+NCIutNN/PZe3YDkkE1MNZ
-         +FaQ==
-X-Gm-Message-State: AElRT7EZnAhV6csyrSG77h0BEWNsfjVBiIngmS9RYvptNSArGpo3vAJU
-        M+KBHdo6sHzKJVAiq+ZVWEA=
-X-Google-Smtp-Source: AG47ELsUeuasJ3cJkKUNwky+ugPG+k9y/iebHzYoxufzA07+cx6DQoGcEKSCnyrppgllaQZXaLq5gw==
-X-Received: by 10.223.173.207 with SMTP id w73mr2497633wrc.234.1521221229084;
-        Fri, 16 Mar 2018 10:27:09 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id y6sm6649529wmy.16.2018.03.16.10.27.07
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 16 Mar 2018 10:27:08 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org,
-        peff@peff.net, sbeller@google.com, szeder.dev@gmail.com,
-        ramsay@ramsayjones.plus.com, git@jeffhostetler.com,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v6 00/14] Serialized Git Commit Graph
-References: <1519698787-190494-1-git-send-email-dstolee@microsoft.com>
-        <20180314192736.70602-1-dstolee@microsoft.com>
-        <xmqq605yz8ue.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1803151821270.64@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <xmqq37115ggs.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1803161249060.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-Date:   Fri, 16 Mar 2018 10:27:07 -0700
-In-Reply-To: <nycvar.QRO.7.76.6.1803161249060.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        (Johannes Schindelin's message of "Fri, 16 Mar 2018 12:50:59 +0100
-        (STD)")
-Message-ID: <xmqqpo442aok.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S932846AbeCPP2a (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Mar 2018 11:28:30 -0400
+Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:48004 "EHLO
+        alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1754320AbeCPP20 (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 16 Mar 2018 11:28:26 -0400
+X-AuditID: 12074414-ebbff70000000aea-00-5aabe2982819
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
+        (Client did not present a certificate)
+        by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 70.CA.02794.892EBAA5; Fri, 16 Mar 2018 11:28:25 -0400 (EDT)
+Received: from mail-lf0-f43.google.com (mail-lf0-f43.google.com [209.85.215.43])
+        (authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id w2GFSNOW010026
+        (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT)
+        for <git@vger.kernel.org>; Fri, 16 Mar 2018 11:28:24 -0400
+Received: by mail-lf0-f43.google.com with SMTP id a22-v6so15936856lfg.9
+        for <git@vger.kernel.org>; Fri, 16 Mar 2018 08:28:24 -0700 (PDT)
+X-Gm-Message-State: AElRT7EC6ZgegooVzEMuTda+2vYhVuYV7dumo6Uvn6nfKdV1I1qnUofx
+        javtkGHrcV+eLD4ZpqmlZSSY8tnzESDWecZRcBs=
+X-Google-Smtp-Source: AG47ELuu6fHpGWGsQfvKnbPyG2MKZ7vMJyTqwdyQiHgw5bk5FN2IpaAZfn3WQvCJ1ZJRLNYk6GwemMDzNdty/tJ0fBo=
+X-Received: by 10.46.137.71 with SMTP id b7mr1615704ljk.39.1521214102850; Fri,
+ 16 Mar 2018 08:28:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Reply-To: mhagger@alum.mit.edu
+Received: by 10.46.135.152 with HTTP; Fri, 16 Mar 2018 08:28:22 -0700 (PDT)
+From:   Michael Haggerty <mhagger@alum.mit.edu>
+Date:   Fri, 16 Mar 2018 16:28:22 +0100
+X-Gmail-Original-Message-ID: <CAMy9T_FaOdLP482YZcMX16mpy_EgM0ok1GKg45rE=X+HTGxSiQ@mail.gmail.com>
+Message-ID: <CAMy9T_FaOdLP482YZcMX16mpy_EgM0ok1GKg45rE=X+HTGxSiQ@mail.gmail.com>
+Subject: [ANNOUNCE] git-sizer: compute various size-related metrics for your
+ Git repository
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Lars Schneider <larsxschneider@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFuplleLIzCtJLcpLzFFi42IRYndR1J35aHWUwc8XghZdV7qZHBg9Pm+S
+        C2CM4rJJSc3JLEst0rdL4Mo43NDEXDDNpmLy9IPMDYxzVboYOTkkBEwk5iw/x9rFyMUhJLCD
+        SeLk499sEM4jJolHP/6wQzgTGSXuTV/HAtFSLjF512Qou0hi8eIpzBB2ocSivavYQWxeAUGJ
+        kzOfgNUICchJvNpwgxHC9pb4c3UJE4jNJqArsainGcxmEVCVeLD+HRPEnESJOXceMUPMCZBY
+        uGEpWK+wQKxE54zbYDUiAloSf1btBbOZgebsWXuQDcLWlGjd/pt9AqPQLCRnzEKSWsDItIpR
+        LjGnNFc3NzEzpzg1Wbc4OTEvL7VI10IvN7NELzWldBMjJFxFdjAeOSl3iFGAg1GJh9fiwuoo
+        IdbEsuLK3EOMkhxMSqK8zseBQnxJ+SmVGYnFGfFFpTmpxYcYJTiYlUR4LWcC5XhTEiurUovy
+        YVLSHCxK4rzfFqv7CQmkJ5akZqemFqQWwWRlODiUJHhrHwI1ChalpqdWpGXmlCCkmTg4QYbz
+        AA0PAKnhLS5IzC3OTIfIn2K05/g260EbM8efvSDy27TnQPLGi9dtzEIsefl5qVLivM8eALUJ
+        gLRllObBTYaloleM4kCPCvPuBRnOA0xjcLNfAa1lAlqbuW0FyNqSRISUVAOj9pWGJxsXn2U8
+        sFPzivfB3a5vVL7qri52WjE7MPxlTuHr1U3+6eaBD7t47hSmqX2YFCmdffHOxzabPbtMJru7
+        6N2MPGg7K1/V+LWgzq+zkUsFVlt/1lry6z9/43ujk+0CX87/7XqvuadVwWp98/aNbnHyCyYG
+        J+hvDAm14K/a9VZoY9izZA8vJZbijERDLeai4kQAoNT4jCADAAA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+What makes a Git repository unwieldy to work with and host? It turns
+out that the respository's on-disk size in gigabytes is only part of
+the story. From our experience at GitHub, repositories cause problems
+because of poor internal layout at least as often as because of their
+overall size. For example,
 
->> > Stolee, you definitely want to inspect those changes (`git log --check`
->> > was introduced to show you whitespace problems). If all of those
->> > whitespace issues are unintentional, you can fix them using `git rebase
->> > --whitespace=fix` in the most efficient way.
->> 
->> Another way that may be easier (depending on the way Derrick works)
->> is to fetch from me and start working from there, as if they were
->> the last set of commits that were sent to the list.  "git log
->> --first-parent --oneline master..pu" would show where the tip of the
->> topic is.
->
-> That is not really easier. We had that discussion before. Stolee would
-> have to remove your Signed-off-by: lines *manually*.
+* blobs or trees that are too large
+* large blobs that are modified frequently (e.g., database dumps)
+* large trees that are modified frequently
+* trees that expand to unreasonable size when checked out (e.g., "Git
+bombs" [2])
+* too many tiny Git objects
+* too many references
+* other oddities, such as giant octopus merges, super long reference
+names or file paths, huge commit messages, etc.
 
-In return, all the whitespace fixes (and other fixes if any) I did
-on my end can be reused free by the submitter, instead of having to
-redo it *manually*.
+`git-sizer` [1] is a new open-source tool that computes various
+size-related statistics for a Git repository and points out those that
+are likely to cause problems or inconvenience to its users.
 
-If a reroll of the series does not touch one specific commit, that
-commit can be left as-is; I do not see a need to remove anybody's
-sign-off or add yet another of your own, if the last two sign-offs
-are from you and your upstream maintainer, if you did not change
-anythning in what you got from the latter.  This depends on what
-tool is used to work on refinement, but with "rebase -i", you'd
-leave "pick" as "pick" and not "edit" or "reword" and it would do
-the right thing.
+I tried to make the output of `git-sizer` "opinionated" and easy to
+interpret. Example output for the Linux kernel is appended below. I
+also made it memory-efficient and resistant against git bombs.
 
-If you did refine, you get an editor when you record that
-refinement, so it is just a few key strokes, either "dd" or \C-k, to
-do that removal *manually*.  So I am not sure why you are making a
-mountain out of this molehill.
+I've written a blog post [3] about `git-sizer` with more explanation
+and examples, and the main project page [1] has a long README with
+some information about what the individual metrics mean and tips for
+fixing problems.
 
-If you do want to remove the last two sign-off (i.e. penultimate one
-by the author done during the initial submission, plus the last one
-by me), well, "rebase -i" is open source.  We can add features to
-the tool to help everybody collaborate better.  Extending changes
-like planned addition of --signoff by Phillip, it is not all that
-far-fetched to add a mechanism that notices a project-specific
-trailer rewrite rules in-tree and uses that in between each step to
-rewrite the trailer block of the commit message, for example, and
-the rule
+I also put quite a bit of effort into making `git-sizer` fast. It does
+its work (including figuring out path names for large objects) based
+on a single traversal of the repository history using `git rev-list
+--objects --reverse [...]`, followed by using the output of `git
+cat-file --batch` or `git cat-file --batch-check` to get information
+about individual objects.
 
-> I understand that it is a trade-off between time you have to spend and
-> that others have to spend, and since you do not scale, that trade-off has
-> to be in your favor.
+On that subject, let me share some more technical details. `git-sizer`
+is written in Go. I prototyped several ways of extracting object
+information, which is critical to the performance because `git-sizer`
+has to read all of the reachable non-blob objects in the repository.
+The results surprised me:
 
-That tradeoff may exist, but it does not weigh in the picture above
-at all.
+| Mechanism for accessing Git data                    | Time   |
+| --------------------------------------------------- | -----: |
+| `libgit2/git2go`                                    | 25.5 s |
+| `libgit2/git2go` with `ManagedTree` optimization    | 18.9 s |
+| `src-d/go-git`                                      | 63.0 s |
+| Git command line client                             |  6.6 s |
 
-Perhaps it is better to try to actually think of a way to work
-together better, instead of just whining.
+It was almost a factor of four faster to read and parse the output of
+Git plumbing commands (mainly `git for-each-ref`, `git rev-list
+--objects`, `git cat-file --batch-check`, and `git cat-file --batch`)
+than it was to use the Go bindings to libgit2. (I expect that part of
+the reason is that Go's peculiar stack layout makes it quite expensive
+to call out to C.) Even after Carlos Martin implemented an
+experimental `ManagedTree` optimization that removed the need to call
+C for every entry in a tree, it was still not competitive with the Git
+CLI. `go-git`, which is a Git implementation in pure Go, was even
+slower. So the final version of `git-sizer` calls `git` for accessing
+the repository.
+
+Feedback is welcome, including about the weightings [4] that I use to
+compute the "level of concern" of the various metrics.
+
+Have fun,
+Michael
+
+[1] https://github.com/github/git-sizer
+[2] https://kate.io/blog/git-bomb/
+[3] https://blog.github.com/2018-03-05-measuring-the-many-sizes-of-a-git-repository/
+[4] https://github.com/github/git-sizer/blob/2e9a30f241ac357f2af01d42f0dd51fbbbae4b0b/sizes/output.go#L330-L401
+
+$ git-sizer --verbose
+Processing blobs: 1652370
+Processing trees: 3396199
+Processing commits: 722647
+Matching commits to trees: 722647
+Processing annotated tags: 534
+Processing references: 539
+| Name                         | Value     | Level of concern               |
+| ---------------------------- | --------- | ------------------------------ |
+| Overall repository size      |           |                                |
+| * Commits                    |           |                                |
+|   * Count                    |   723 k   | *                              |
+|   * Total size               |   525 MiB | **                             |
+| * Trees                      |           |                                |
+|   * Count                    |  3.40 M   | **                             |
+|   * Total size               |  9.00 GiB | ****                           |
+|   * Total tree entries       |   264 M   | *****                          |
+| * Blobs                      |           |                                |
+|   * Count                    |  1.65 M   | *                              |
+|   * Total size               |  55.8 GiB | *****                          |
+| * Annotated tags             |           |                                |
+|   * Count                    |   534     |                                |
+| * References                 |           |                                |
+|   * Count                    |   539     |                                |
+|                              |           |                                |
+| Biggest objects              |           |                                |
+| * Commits                    |           |                                |
+|   * Maximum size         [1] |  72.7 KiB | *                              |
+|   * Maximum parents      [2] |    66     | ******                         |
+| * Trees                      |           |                                |
+|   * Maximum entries      [3] |  1.68 k   |                                |
+| * Blobs                      |           |                                |
+|   * Maximum size         [4] |  13.5 MiB | *                              |
+|                              |           |                                |
+| History structure            |           |                                |
+| * Maximum history depth      |   136 k   |                                |
+| * Maximum tag depth      [5] |     1     | *                              |
+|                              |           |                                |
+| Biggest checkouts            |           |                                |
+| * Number of directories  [6] |  4.38 k   | **                             |
+| * Maximum path depth     [7] |    13     | *                              |
+| * Maximum path length    [8] |   134 B   | *                              |
+| * Number of files        [9] |  62.3 k   | *                              |
+| * Total size of files    [9] |   747 MiB |                                |
+| * Number of symlinks    [10] |    40     |                                |
+| * Number of submodules       |     0     |                                |
+
+[1]  91cc53b0c78596a73fa708cceb7313e7168bb146
+[2]  2cde51fbd0f310c8a2c5f977e665c0ac3945b46d
+[3]  4f86eed5893207aca2c2da86b35b38f2e1ec1fc8
+(refs/heads/master:arch/arm/boot/dts)
+[4]  a02b6794337286bc12c907c33d5d75537c240bd0
+(refs/heads/master:drivers/gpu/drm/amd/include/asic_reg/vega10/NBIO/nbio_6_1_sh_mask.h)
+[5]  5dc01c595e6c6ec9ccda4f6f69c131c0dd945f8c (refs/tags/v2.6.11)
+[6]  1459754b9d9acc2ffac8525bed6691e15913c6e2
+(589b754df3f37ca0a1f96fccde7f91c59266f38a^{tree})
+[7]  78a269635e76ed927e17d7883f2d90313570fdbc
+(dae09011115133666e47c35673c0564b0a702db7^{tree})
+[8]  ce5f2e31d3bdc1186041fdfd27a5ac96e728f2c5 (refs/heads/master^{tree})
+[9]  532bdadc08402b7a72a4b45a2e02e5c710b7d626
+(e9ef1fe312b533592e39cddc1327463c30b0ed8d^{tree})
+[10] f29a5ea76884ac37e1197bef1941f62fda3f7b99
+(f5308d1b83eba20e69df5e0926ba7257c8dd9074^{tree})
