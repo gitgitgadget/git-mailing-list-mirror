@@ -2,109 +2,170 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9E1051F404
-	for <e@80x24.org>; Fri, 16 Mar 2018 20:24:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 988CB1F404
+	for <e@80x24.org>; Fri, 16 Mar 2018 20:32:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752077AbeCPUYE (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Mar 2018 16:24:04 -0400
-Received: from mail-by2nam01on0072.outbound.protection.outlook.com ([104.47.34.72]:28800
-        "EHLO NAM01-BY2-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1751672AbeCPUYD (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Mar 2018 16:24:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aei.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
- bh=maXOThHvG4mvio1qXL92eVXBEcecu2CXM9nMW0si1oc=;
- b=lCOdSsP/S+k3h0rTK951XTWjcLra6SQ7OO8CN+jIRPYDW/BxNqBGTBaZkiYuaiKYIV1QEyyN2soRXn1MsF+s+hu7fpfiV6s8rVIi9usrYvRd1HhkWd1BR9Q3Vur1R73cpLnDgNT7gRSEKLogGrh4YCk+waNsTX/8fo938PX+PkY=
-Received: from CY4PR02MB2262.namprd02.prod.outlook.com (10.169.181.15) by
- CY4PR02MB2245.namprd02.prod.outlook.com (10.169.181.10) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P256) id
- 15.20.567.14; Fri, 16 Mar 2018 20:24:01 +0000
-Received: from CY4PR02MB2262.namprd02.prod.outlook.com
- ([fe80::68ff:36cb:be97:49ee]) by CY4PR02MB2262.namprd02.prod.outlook.com
- ([fe80::68ff:36cb:be97:49ee%17]) with mapi id 15.20.0567.019; Fri, 16 Mar
- 2018 20:24:01 +0000
-From:   "Briggs, John" <JOHN.BRIGGS@aei.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-CC:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        "git-for-windows@googlegroups.com" <git-for-windows@googlegroups.com>
-Subject: RE: getting fatal error trying to open git gui
-Thread-Topic: getting fatal error trying to open git gui
-Thread-Index: AdO9WOQXVglR2Ht0QsiCtxNKgnqGlAACC9gAAADf8BA=
-Date:   Fri, 16 Mar 2018 20:24:01 +0000
-Message-ID: <CY4PR02MB2262A567EE2D2A54316BFE3FFFD70@CY4PR02MB2262.namprd02.prod.outlook.com>
-References: <CY4PR02MB22621DE7751427686029C1B3FFD70@CY4PR02MB2262.namprd02.prod.outlook.com>
- <20180316195756.GA151588@aiede.svl.corp.google.com>
-In-Reply-To: <20180316195756.GA151588@aiede.svl.corp.google.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-dg-ref: PG1ldGE+PGF0IG5tPSJib2R5LnR4dCIgcD0iYzpcdXNlcnNcamJyaWdnc1xhcHBkYXRhXHJvYW1pbmdcMDlkODQ5YjYtMzJkMy00YTQwLTg1ZWUtNmI4NGJhMjllMzViXG1zZ3NcbXNnLWY0ZjNmZDcxLTI5NTctMTFlOC1hOTA3LWQ0ODFkN2E2MmViNlxhbWUtdGVzdFxmNGYzZmQ3My0yOTU3LTExZTgtYTkwNy1kNDgxZDdhNjJlYjZib2R5LnR4dCIgc3o9IjgyNCIgdD0iMTMxNjU3MDU0MzkzNDE0Nzk3IiBoPSIxUVZHTE5jcjNLdDdQelNGVk1hOXY1RW84OXc9IiBpZD0iIiBibD0iMCIgYm89IjEiLz48L21ldGE+
-x-originating-ip: [8.39.233.75]
-x-ms-publictraffictype: Email
-x-microsoft-exchange-diagnostics: 1;CY4PR02MB2245;20:J5OT6hY7Z5LtDkr5z913Ndi6OdRLTXR1yeRVUu1k3Axwpitt5N059b4ixrSHxJHRlcxA3MguL92qr2goL6u78iUiA7frxPlnW2N6VH8lQyMcP/yaZN/0Y6ymuzp4Vp1tkKV/BebrdJWeGMtPdWpYQo76sRa8HhJU9o4/PehFPTQ=
-x-ms-exchange-antispam-srfa-diagnostics: SSOS;
-x-ms-office365-filtering-correlation-id: 9f925892-0ae7-4aac-16f3-08d58b7bdb09
-x-microsoft-antispam: UriScan:(215639381216008)(28748798796193);BCL:0;PCL:0;RULEID:(7020095)(4652020)(8989060)(5600026)(4604075)(3008032)(4534165)(4627221)(201703031133081)(201702281549075)(8990040)(2017052603328)(7153060)(7193020);SRVR:CY4PR02MB2245;
-x-ms-traffictypediagnostic: CY4PR02MB2245:
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=JOHN.BRIGGS@aei.com; 
-x-ms-exchange-orgnaization-bypassclutter: true
-x-microsoft-antispam-prvs: <CY4PR02MB2245212AC1C45E4E1BEDCD32FFD70@CY4PR02MB2245.namprd02.prod.outlook.com>
-x-exchange-antispam-report-test: UriScan:(215639381216008)(9452136761055)(85827821059158)(28748798796193);
-x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(8211001083)(6040522)(2401047)(8121501046)(5005006)(10201501046)(93006095)(93001095)(3002001)(3231221)(944501284)(52105095)(6041310)(20161123564045)(20161123562045)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(20161123560045)(20161123558120)(6072148)(201708071742011);SRVR:CY4PR02MB2245;BCL:0;PCL:0;RULEID:;SRVR:CY4PR02MB2245;
-x-forefront-prvs: 0613912E23
-x-forefront-antispam-report: SFV:NSPM;SFS:(10009020)(979002)(376002)(346002)(39830400003)(39380400002)(396003)(366004)(199004)(189003)(13464003)(3846002)(6116002)(2906002)(102836004)(6506007)(478600001)(1411001)(53546011)(186003)(3280700002)(26005)(106356001)(5660300001)(316002)(33656002)(2900100001)(3660700001)(5250100002)(105586002)(66066001)(76176011)(6916009)(7696005)(9686003)(229853002)(55016002)(2950100002)(7736002)(53936002)(81166006)(8676002)(4326008)(6436002)(8936002)(25786009)(81156014)(54906003)(97736004)(39060400002)(68736007)(72206003)(6246003)(305945005)(14454004)(99286004)(74316002)(86362001)(969003)(989001)(999001)(1009001)(1019001);DIR:OUT;SFP:1101;SCL:1;SRVR:CY4PR02MB2245;H:CY4PR02MB2262.namprd02.prod.outlook.com;FPR:;SPF:None;PTR:InfoNoRecords;A:1;MX:1;LANG:en;
-received-spf: None (protection.outlook.com: aei.com does not designate
- permitted sender hosts)
-x-microsoft-antispam-message-info: V+Tsf57GfPczzrWYM0Jaj6S0XWFRmRYVHyzh8vqtKEaROI754++yfWY/Ou1pzX2d4PpHZL88/UVKYz6Wwk47X0IpkyajOo8x3yof0JUc6HzIBuDlIw/xT1oyjbE8zjibtvEGUKBSN/P3v/BB9zMWNeGsXWMTrUToklQEgCanB5cMj2zK3v6PJEKKYeEUTee9qCYpA62S+Y32PHg/XbfVZpc3sL9SezBwupjtkw+BYJjSvEiCMCBWmX/9M9UXpO5mQO1EVn57kxRzffYGC6BFYVFE51tG875zXsSce5s63/PTEKpgzI3FmxpUx5AFtH1iIyJlun0jb3Ld9K0gu36v+w==
-spamdiagnosticoutput: 1:99
-spamdiagnosticmetadata: NSPM
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+        id S1752354AbeCPUcx (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Mar 2018 16:32:53 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:51364 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751837AbeCPUcw (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Mar 2018 16:32:52 -0400
+Received: by mail-wm0-f66.google.com with SMTP id h21so5330807wmd.1
+        for <git@vger.kernel.org>; Fri, 16 Mar 2018 13:32:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=4m9hw//2EYiOmNNGT9HshCzNDKWXPeoVPds/OZSJtao=;
+        b=FiKHKenTDT4emV0eplLGl5Jws068v3oDUC3X7JEjxDYeOoeXWKOi2b0QaVYNvhXPmJ
+         GQnRq/1Cp0tESp2XyxWk62EpJCThThSs+GYYRQLddE1QmNNJqcDfJzqAnbkNwt4jvK5S
+         1L3Qtyy69d7mouVxzAR8HYM/cSKO9bSpES/e6Knl7cdqD9+p6rdlbC3C3j9KmSU0zAsn
+         31syJ2zWl9G0mus8LmiwMRtI4trC4ae/m6mejdE6DZlMZ6aLRv0qviOx5jvgD1wOLJMv
+         Tbu56p+9KKeL4TjULDzTbYzZIz1g5hSn/41eLHYHJAFm8unEtV27dQxC4qGXLCRz8I7W
+         vpzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=4m9hw//2EYiOmNNGT9HshCzNDKWXPeoVPds/OZSJtao=;
+        b=gOwnX5Q2C5M20mmIp86t/QHlFwVfnVfp76RImldcrBnUeNe5ZavKskUOtWsx3Eh9Zg
+         EzoCYJlhQ9xtj310F08jSYFjsmwDl3zaCbMAPJCmQyvu50qJoSGNt0gOe9zpj7TPtpIk
+         39f+Tq36LvyIziSTfaygPJt6ePVhRDdqTKitFF/p6iCOn2/NoaPjb+0UUK+TkWyFPSdU
+         fF1/Y/lyhEbO/i4GPceBwo3DNs3Jg08jKDTK9Sq9aiIHrkm5M4eoxJJGkpTxKOaSnb4p
+         QaGrTUOUf7V3eW4bb3wV2BIBE27SAPn3y28kbg5MlU1opRIOs1ugXiBdBaGXnnkfxv09
+         rQGQ==
+X-Gm-Message-State: AElRT7HUXayaSYVPKZszn02TasFNy+VjTr10lnpVckwMGwbw942jQMou
+        HcueugbXqRFMKZAlENn9eiXQgKGC
+X-Google-Smtp-Source: AG47ELt1N1XN+qMC5FXncbMBwQ/bqC6CAZ68XyTfT6K4VZZB+eRmIP+zSLYqaO6MpifAAlPv8C7nTQ==
+X-Received: by 10.28.17.77 with SMTP id 74mr2731989wmr.67.1521232370531;
+        Fri, 16 Mar 2018 13:32:50 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id f23sm10148313wra.51.2018.03.16.13.32.49
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 16 Mar 2018 13:32:49 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     avarab@gmail.com, e@80x24.org, git@vger.kernel.org, peff@peff.net
+Subject: Re: [PATCH v4 01/11] pack-objects: a bit of document about struct object_entry
+References: <20180308114232.10508-1-pclouds@gmail.com>
+        <20180316183200.31014-1-pclouds@gmail.com>
+        <20180316183200.31014-2-pclouds@gmail.com>
+Date:   Fri, 16 Mar 2018 13:32:49 -0700
+In-Reply-To: <20180316183200.31014-2-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
+ =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
+        Duy"'s message of "Fri, 16 Mar 2018 19:31:50 +0100")
+Message-ID: <xmqqfu4z2232.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-X-OriginatorOrg: aei.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9f925892-0ae7-4aac-16f3-08d58b7bdb09
-X-MS-Exchange-CrossTenant-originalarrivaltime: 16 Mar 2018 20:24:01.3743
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: cfa7d515-0462-4766-8d7f-867b7825994a
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY4PR02MB2245
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Got it figured out. Git gui must be ran as administrator.
+Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
 
-John
-
------Original Message-----
-From: Jonathan Nieder <jrnieder@gmail.com>=20
-Sent: Friday, March 16, 2018 1:58 PM
-To: Briggs, John <JOHN.BRIGGS@aei.com>
-Cc: git@vger.kernel.org; git-for-windows@googlegroups.com
-Subject: Re: getting fatal error trying to open git gui
-
-Hi,
-
-Briggs, John wrote:
-
-> I just installed git for windows 10 and am getting "git-gui: fatal error"=
- "Cannot parse Git version string.
+> The role of this comment block becomes more important after we shuffle
+> fields around to shrink this struct. It will be much harder to see what
+> field is related to what.
 >
-> When I execute "git version" in the command prompt I get Git version=20
-> 2.16.2.windows.1
+> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+> ---
+>  pack-objects.h | 44 ++++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 44 insertions(+)
 >
-> Everything else seems to be working. How can I get the gui to work?
+> diff --git a/pack-objects.h b/pack-objects.h
+> index 03f1191659..85345a4af1 100644
+> --- a/pack-objects.h
+> +++ b/pack-objects.h
+> @@ -1,6 +1,50 @@
+>  #ifndef PACK_OBJECTS_H
+>  #define PACK_OBJECTS_H
+>  
+> +/*
+> + * basic object info
+> + * -----------------
+> + * idx.oid is filled up before delta searching starts. idx.crc32 and
+> + * is only valid after the object is written out and will be used for
 
-That's strange indeed.  Why is Git capitalized when you run "git version"?
+"and is"?
 
-Thanks,
-Jonathan
+> + * generating the index. idx.offset will be both gradually set and
+> + * used in writing phase (base objects get offset first, then deltas
+> + * refer to them)
+> + *
+> + * "size" is the uncompressed object size. Compressed size is not
+> + * cached (ie. raw data in a pack) but available via revindex.
+
+I am having a hard time understanding what "ie. raw data in a pack"
+is doing in that sentence.
+
+It is correct that compressed size is not cached; it does not even
+exist and the only way to know it is to compute it by reversing the
+.idx file (or actually uncompressing the compressed stream).
+
+Perhaps:
+
+    Compressed size of the raw data for an object in a pack is not
+    stored anywhere but is computed and made available when reverse
+    .idx is made.
+
+> + * "hash" contains a path name hash which is used for sorting the
+> + * delta list and also during delta searching. Once prepare_pack()
+> + * returns it's no longer needed.
+
+Hmm, that suggests an interesting optimization opportunity ;-)
+
+> + * source pack info
+> + * ----------------
+> + * The (in_pack, in_pack_offset, in_pack_header_size) tuple contains
+> + * the location of the object in the source pack, with or without
+> + * header.
+
+"with or without", meaning...?  An object in the source pack may or
+may not have any in_pack_header, in which case in_pack_header_size
+is zero, or something?  Not suggesting to rephrase (at least not
+yet), but trying to understand.
+
+> + * "type" and "in_pack_type" both describe object type. in_pack_type
+> + * may contain a delta type, while type is always the canonical type.
+> + *
+> + * deltas
+> + * ------
+> + * Delta links (delta, delta_child and delta_sibling) are created
+> + * reflect that delta graph from the source pack then updated or added
+> + * during delta searching phase when we find better deltas.
+
+Isn't anything missing after "are created"?  Perhaps "to"?
+
+> + *
+> + * delta_child and delta_sibling are last needed in
+> + * compute_write_order(). "delta" and "delta_size" must remain valid
+> + * at object writing phase in case the delta is not cached.
+
+True.  I thought child and sibling are only needed during write
+order computing, so there may be an optimization opportunity there.
+
+> + * If a delta is cached in memory and is compressed delta_data points
+
+s/compressed delta_data/compressed, delta_data/;
+
+> + * to the data and z_delta_size contains the compressed size. If it's
+> + * uncompressed [1], z_delta_size must be zero. delta_size is always
+> + * the uncompressed size and must be valid even if the delta is not
+> + * cached.
+> + *
+> + * [1] during try_delta phase we don't bother with compressing because
+> + * the delta could be quickly replaced with a better one.
+> + */
+>  struct object_entry {
+>  	struct pack_idx_entry idx;
+>  	unsigned long size;	/* uncompressed size */
