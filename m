@@ -2,76 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-1.9 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	RCVD_IN_BL_SPAMCOP_NET,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DC3D21FAE2
-	for <e@80x24.org>; Fri, 16 Mar 2018 11:49:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 07BEA1F42D
+	for <e@80x24.org>; Fri, 16 Mar 2018 11:51:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753236AbeCPLtJ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Mar 2018 07:49:09 -0400
-Received: from mout.gmx.net ([212.227.15.19]:50167 "EHLO mout.gmx.net"
+        id S1751981AbeCPLvj (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Mar 2018 07:51:39 -0400
+Received: from mout.gmx.net ([212.227.15.18]:57715 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751888AbeCPLtI (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Mar 2018 07:49:08 -0400
-Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MgKUo-1fJQnY0SrG-00Nf9X; Fri, 16
- Mar 2018 12:48:38 +0100
-Date:   Fri, 16 Mar 2018 12:48:24 +0100 (STD)
+        id S1751437AbeCPLvi (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Mar 2018 07:51:38 -0400
+Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M1W5x-1eceRM1DyL-00tXa9; Fri, 16
+ Mar 2018 12:51:21 +0100
+Date:   Fri, 16 Mar 2018 12:50:59 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Linus Torvalds <torvalds@linux-foundation.org>
-cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Johannes Sixt <j6t@kdbg.org>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Daniel Jacques <dnj@google.com>,
-        Steffen Prohaska <prohaska@zib.de>,
-        John Keeping <john@keeping.me.uk>, Stan Hu <stanhu@gmail.com>,
-        Richard Clamp <richardc@unixbeard.net>
-Subject: Re: [PATCH 3/3] Makefile: optionally symlink libexec/git-core binaries
- to bin/git
-In-Reply-To: <CA+55aFz6J2j_o0b1JfPSPUX0t3703oFtrpcot29_cgbKi7EnOg@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1803161248040.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <20180313203935.5084-1-avarab@gmail.com> <20180313203935.5084-4-avarab@gmail.com> <1cabf9c0-674e-c2b3-9977-9c74b929a86d@kdbg.org> <87y3ivdkvp.fsf@evledraar.gmail.com> <CA+55aFwU5fwWx2+DdBp=XCpG2Orx+rA8KxPVtGHxpgHAZs=h2Q@mail.gmail.com>
- <nycvar.QRO.7.76.6.1803151804390.64@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <CA+55aFz6J2j_o0b1JfPSPUX0t3703oFtrpcot29_cgbKi7EnOg@mail.gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org,
+        peff@peff.net, sbeller@google.com, szeder.dev@gmail.com,
+        ramsay@ramsayjones.plus.com, git@jeffhostetler.com,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v6 00/14] Serialized Git Commit Graph
+In-Reply-To: <xmqq37115ggs.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1803161249060.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <1519698787-190494-1-git-send-email-dstolee@microsoft.com> <20180314192736.70602-1-dstolee@microsoft.com> <xmqq605yz8ue.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1803151821270.64@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+ <xmqq37115ggs.fsf@gitster-ct.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:7fL3N9S53svnc76S9U9c7rDt9lw4upuD3pGMXVtmjU9zTqFytQY
- FPBJqzkUO4kqTpPmFqJN7+AgjxJEv3n4YdRMT37xpdcq/qXL2Bu2ubwfjOAKL/QvpvZK6x9
- Q19lQKzfFMzbujzmyExE6hsofKXJscA7T0JIRYNEQ/zjrPAn0pnWeQCHR5cvjrwhjlAqXqD
- 8oTZszdaAUNudpe8Q2rJA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:se+ydwj0rPE=:7KKsPHCyeFry9/xRcpoDqq
- RneplKBC59NYNuBFHY+cG4nnx481+084q+7suf4q98sftDY1XcuGrfOZHdydCr/L/+zRvkqbT
- xU5WLARuKk0JCu5lSHEOTkEJkPbp5emYJ22/a1VV+N1WgIcZG6v3vQpMTPPLYaA+pmP76fbdf
- Y7RTbuqhDTmZh9VgWZZNmUkP9WlfYAB3x9jFy5C3slcxN6RFLII97dkoWjdtUUvImWO8GgQdw
- hBzIIkVRwau7mHSIxlOigxv3KjNCsyXr32i84Rgl57uV/Ud2h3o63/w/wsb+MYHf/VDnZTIVv
- uofuArhSXYW6aJUFYXgC3ppaZahm5iTHHvPUs2bDNbrNIkabnY8gZFxK/EUhYMmk7d2IN4Qvf
- W9Dfh6AfiPxUo0aaCzdqnPgTA+Jppbm//CK5W6G0UJ0ZYitrwakr23bAfwkqJf+Ym0+yZj0I5
- 9h0HYHiYy2+kLpeUHCqytcpQ/+yp4xonA+Emugj88a7S+u6lYKFEVLM5aWSFC8AzfgF5PPHQP
- FncNTC7FZj5DL60wByFxW5eq2/+srAR8QXyvlRKIwqGZTiGT4rE/gxF6QTaIX7ycrC4Yv49ni
- P93SClM51YJRNEPYSuowFcdTIFJu9iQD2FdSdCLImsgGfBNmndEVxpNMkxPZ9u4a6n0Z2hYgS
- vK20/tge8FHWlNSqmuO1e0xjdJn7LGbe0CyXnGuS7mybSVpf5VE72S1c81z3UV2RMFqboTwyk
- bKTdLkfeDZInPx+go6qdR4GCCXZ24lh3SJhwK+mG2HNE6nM2c4W4h1Xfik5tIBpyiyfh+jwJS
- asYh98bCVs6uGAKuiKcsl72fqNQAwkIfiP0UlSri1/yqu9WVjY=
+X-Provags-ID: V03:K0:+XFhbNt9MWm/QOzozaxcfh00VTRXzWgEyX+4N1+QMj5+EcdyPn7
+ 2Hzft0WzRD+7c1iPpDqfVrCWZRYmnEP0fu+RZ/Af56EeJMoFG7hFv25FWYVZ8c6wEPMUnm+
+ DgQgd7J0H7JJzthVS+CvZPWJebkTmYparWHViahG0flxewux11LQve+58dMhF8/tgZCwRDI
+ yjgmGv3h1PWiCifAn0ISw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:F/hOqvqNGf8=:KOzltejCE35TD6Vsvu4RJV
+ 2O1Xsj5AnB+I1eclHIwsGw3UqonJXXC3uDKn936T8tRgao6gDG8XrP8ygMsrJQUs+tWZzTgpZ
+ OAob0E+caotSnzzuftx1NRx23EpbQ1juslv/czfrCZQhpWN3kin/I51s9PZaXJAPU3ST5gZyt
+ XYdMzrEOLqf5wWZp0FEHHclJ4CAIF2xpGdFK13NAuaxvqTh5g3Hj4I4sZS+wv9nBuXem+W9JL
+ dQ3zVStn2T/z5bon3ABSitCfOoGfmThM/EeMEz0/6Cp9z1kT3Jr/mSdm88aFExDO+agLuNplE
+ Nr7MYiMomGlbuN/fXVkSOMu/o7dfZn/WkPmVWNRTBsOiYnQdn3OrvQmy5fgZ07my2z2GqYiqb
+ ZWmYB9cFiyLgI7tbM380m8o0rHQic6yYJJm8Shq8JAl+VZh2ATtA1DSp2P9hNls+i+BQ0/gNl
+ LFVhvue3eCbva3ujkB0jPpCTybD1fmVoyXfbGZAcdOF/rOEOmUY6KSsTzY7rG1n5HNmTU0Bbe
+ Z5GwC+5f23sC3mghZkDIUoTIgpMdL16in8Y2nm9MvugDYroS8fJRJ1etNt+/TXYqRiqrTu1Ag
+ T1fCvgfKMCKlLsjQPi50W0mxb0vag+LonLqBA09t4Xl8PXYJ/toaZLSU9tXTZVRpXFHAnoDrL
+ s1Ae9aRmuSW3anE4nPQzPpyEoFUkvbVpGZsSfqS6m5sHRCPF5pUVag4pRvUtKD7Un2MxGlnfS
+ 4CJNRCW1pN/DBLAVb2uzkKujfvIINkRX8dDghiCNx5R39I72Bi788wtiQB2fSUM+B2lN4Mv46
+ fClRW99Ieecx4TaQHbq9Jk6iHcIbnelXBgIAwHzK9FanTMRemY=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Linus.
+Hi Junio,
 
-On Thu, 15 Mar 2018, Linus Torvalds wrote:
+On Thu, 15 Mar 2018, Junio C Hamano wrote:
 
-> We do end up still using the dashed form for certain things, but they
-> are already special-cased (ie things like "git-receive-pack" and
-> "git-shell" that very much get executed directly, and for fundamental
-> reasons).
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > Stolee, you definitely want to inspect those changes (`git log --check`
+> > was introduced to show you whitespace problems). If all of those
+> > whitespace issues are unintentional, you can fix them using `git rebase
+> > --whitespace=fix` in the most efficient way.
+> 
+> Another way that may be easier (depending on the way Derrick works)
+> is to fetch from me and start working from there, as if they were
+> the last set of commits that were sent to the list.  "git log
+> --first-parent --oneline master..pu" would show where the tip of the
+> topic is.
 
-Please do elaborate.
+That is not really easier. We had that discussion before. Stolee would
+have to remove your Signed-off-by: lines *manually*.
+
+I understand that it is a trade-off between time you have to spend and
+that others have to spend, and since you do not scale, that trade-off has
+to be in your favor.
+
+My hope is that we will eventually collaborate more effectively using Git
+itself, then those trade-offs will become a lot less involved because the
+overall cost will be a lot smaller.
 
 Ciao,
-Johannes
+Dscho
