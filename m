@@ -3,122 +3,129 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 786831F404
-	for <e@80x24.org>; Fri, 16 Mar 2018 20:02:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 55A831FAE2
+	for <e@80x24.org>; Fri, 16 Mar 2018 20:02:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752281AbeCPUBt (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Mar 2018 16:01:49 -0400
-Received: from mail-wr0-f169.google.com ([209.85.128.169]:34849 "EHLO
-        mail-wr0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751618AbeCPUBq (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Mar 2018 16:01:46 -0400
-Received: by mail-wr0-f169.google.com with SMTP id n12so12778706wra.2
-        for <git@vger.kernel.org>; Fri, 16 Mar 2018 13:01:45 -0700 (PDT)
+        id S1752183AbeCPUCJ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Mar 2018 16:02:09 -0400
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:43733 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751694AbeCPUCH (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Mar 2018 16:02:07 -0400
+Received: by mail-wr0-f196.google.com with SMTP id o1so12732995wro.10
+        for <git@vger.kernel.org>; Fri, 16 Mar 2018 13:02:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=lJhWfZSM82qcIj4gDtUWuOcrlsmZA768+khVNHc67CE=;
-        b=fvMiMXAfBmh1FklEeNVEbCitBTMYEZIj6ZxzKqHGGineWe44Tcnd4AW4cggoxcFmTO
-         T9wNpSWThZM/LRrLYdpgbHp7HU4aWd6zWa++3VrFr+DOvUeg2AOyAa9JrJyPfTx2R9o3
-         HMk1uryLYgr/4YiQbtpuSVdWLQUAEf4nSxJ0JacMS+/sACgck09NwplMIWSdJrrJSs52
-         yd1TZgHMs7xLJsPFlkEflJRPxix6gIsnP99LFo1BT08wKKWH85OQczCbq34Wdi2meIEW
-         bPmACJTKcBA94o6YPIPVQXuYfiRLAqPrDeRBKYdjXRtKMFcyy4aeFtE94E8oYHulkMuw
-         W2vw==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=CNI4U4zkLRNwCOGMGmvVa9guyH6b+fQ0u1/0NhpK8Pw=;
+        b=Rp2v5tUq1gE/OHG/j1aJGxlmhgYWA+wxJLx3Qx5Q8FlxtJb4RkkNG8gZo8aaew/zh+
+         1zfuIG8bzPhFhULC7lqVoV37sgzFhrs44N/79B2F0mO2VD0m8bDzkjUx9ancQef/FSkV
+         NGJH95JgufmaIwZLuaFbt3zSLfUkVaBd/2ZrYVpfKPVJhjr5aqKQh+Tl809fNk+bi8Lm
+         z/SAE5aZRNtA20zIVk1OIXGsTSXGT1fCUJFGKqaJCTNt46Rnz7kCVPnLTUW3iROsibOr
+         tyRxEsayWfb71GINCifKqMPsCVRF+h2bAHjkoqf4lDNbFWYoqKutx1z17GdjiVZ3yEDx
+         rkZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=lJhWfZSM82qcIj4gDtUWuOcrlsmZA768+khVNHc67CE=;
-        b=cCPvqH9xF7NjvcXnhvu113UBedeV/js2eyOmU5ngFDvaR79xzlQXC5Qm7Wy45OlJln
-         o5JSIh9Z+J7RxNu/jlnhod1hpdiv2bTEseFTLcsyKxk1GtTXNQzuhI2B2YIlVbtksnlr
-         QHFbsORRLGJNLLhakKjpmTx3ufSTZI6t/0a1ctJFTM1qq8HjkQhA21LCMAFIjgRe1r1f
-         NRHNDycyeK/6g4TDT6TFcpqGR7mzz4T72uBngLAsklV2l2eYpJ7wbT1s9Gn0gQZjYsqk
-         9At2JQtLVg11lIOHNIUmIKyLPglnDJjYAGABgYxMdvcsnTMOPI3HCJuUrDMN9LLw3TVZ
-         JRLw==
-X-Gm-Message-State: AElRT7FCm2iDpn8iE+Q0qkKPdiULN6OStLOExLhBRDuqMH9EdAc8khNl
-        6r71JId09gcsV4omSgpk5rg=
-X-Google-Smtp-Source: AG47ELslLPnwHlOvLvS1rhjvNnQlMHeAZCJDElxGl3r93ShAfiWFHuhZGcTdyux0nrTW1LjyJHapIg==
-X-Received: by 10.223.200.144 with SMTP id k16mr2866271wrh.282.1521230504826;
-        Fri, 16 Mar 2018 13:01:44 -0700 (PDT)
-Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
-        by smtp.gmail.com with ESMTPSA id d4sm7178537wmh.42.2018.03.16.13.01.43
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=CNI4U4zkLRNwCOGMGmvVa9guyH6b+fQ0u1/0NhpK8Pw=;
+        b=fI7yRqE54xUwlmfYkL3bIhF6qUX7BbR8BmYloUloSzTDdlFu004CDmUidzJ32fVquX
+         saCk3+qk1f65KUqDhuxneuaK7lE1UkhColPGLLhOzdPl23DkbAaANCnLf3TZwm1lvytB
+         e2YXcqBQVJBVtA0h74Uiz+TIHqh5+sK4CFKdq2UHjZ2iSR3toZ7KBajUyIPUqgc3V9ml
+         vN5gdBN7dCNeMC2ykJPY3kIo06U2kLQmQ3cl2bk/iBUVREDkWHspIA0AicvGyk18mrO8
+         YpjHPnFjS2fhQtJzH01GiArkDQnQ2ADMjV5l33TGvHOjVDLHYIb+U/1D836c2PSUoJiJ
+         ES8w==
+X-Gm-Message-State: AElRT7EQPQQu0AXJ1Yzd5fS+nE8rE4/DytnFc2xdFmjrtHas09gNwB2T
+        dUSD08OIHmNxE+30gBq7yHcJpTCn
+X-Google-Smtp-Source: AG47ELv8Uo7hCX71OjDyRw8xfZzbh8V0HAQdyjPH7CZyHIB99JOVKjWM3s/3MV2R5GU9LJA7nXmJ9Q==
+X-Received: by 10.223.226.14 with SMTP id j14mr2568348wri.17.1521229203773;
+        Fri, 16 Mar 2018 12:40:03 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id o47sm9750625wrc.7.2018.03.16.12.40.02
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 16 Mar 2018 13:01:43 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     mhagger@alum.mit.edu
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Lars Schneider <larsxschneider@gmail.com>
-Subject: Re: [ANNOUNCE] git-sizer: compute various size-related metrics for your Git repository
-References: <CAMy9T_FaOdLP482YZcMX16mpy_EgM0ok1GKg45rE=X+HTGxSiQ@mail.gmail.com>
-User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 1.1.0
-In-reply-to: <CAMy9T_FaOdLP482YZcMX16mpy_EgM0ok1GKg45rE=X+HTGxSiQ@mail.gmail.com>
-Date:   Fri, 16 Mar 2018 21:01:42 +0100
-Message-ID: <87370zeqmx.fsf@evledraar.gmail.com>
+        Fri, 16 Mar 2018 12:40:03 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     avarab@gmail.com, e@80x24.org, git@vger.kernel.org, peff@peff.net
+Subject: Re: [PATCH v4 08/11] pack-objects: shrink z_delta_size field in struct object_entry
+References: <20180308114232.10508-1-pclouds@gmail.com>
+        <20180316183200.31014-1-pclouds@gmail.com>
+        <20180316183200.31014-9-pclouds@gmail.com>
+Date:   Fri, 16 Mar 2018 12:40:02 -0700
+In-Reply-To: <20180316183200.31014-9-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
+ =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
+        Duy"'s message of "Fri, 16 Mar 2018 19:31:57 +0100")
+Message-ID: <xmqqr2oj24j1.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
 
-On Fri, Mar 16 2018, Michael Haggerty jotted:
-
-> What makes a Git repository unwieldy to work with and host? It turns
-> out that the respository's on-disk size in gigabytes is only part of
-> the story. From our experience at GitHub, repositories cause problems
-> because of poor internal layout at least as often as because of their
-> overall size. For example,
+> We only cache deltas when it's smaller than a certain limit. This limit
+> defaults to 1000 but save its compressed length in a 64-bit field.
+> Shrink that field down to 16 bits, so you can only cache 65kb deltas.
+> Larger deltas must be recomputed at when the pack is written down.
 >
-> * blobs or trees that are too large
-> * large blobs that are modified frequently (e.g., database dumps)
-> * large trees that are modified frequently
-> * trees that expand to unreasonable size when checked out (e.g., "Git
-> bombs" [2])
-> * too many tiny Git objects
-> * too many references
-> * other oddities, such as giant octopus merges, super long reference
-> names or file paths, huge commit messages, etc.
->
-> `git-sizer` [1] is a new open-source tool that computes various
-> size-related statistics for a Git repository and points out those that
-> are likely to cause problems or inconvenience to its users.
+> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+> ---
 
-This is a very useful tool. I've been using it to get insight into some
-bad repositories.
+>  		if (entry->delta_data && !pack_to_stdout) {
+> -			entry->z_delta_size = do_compress(&entry->delta_data,
+> -							  entry->delta_size);
+> -			cache_lock();
+> -			delta_cache_size -= entry->delta_size;
+> -			delta_cache_size += entry->z_delta_size;
+> -			cache_unlock();
+> +			unsigned long size;
+> +
+> +			size = do_compress(&entry->delta_data, entry->delta_size);
+> +			entry->z_delta_size = size;
+> +			if (entry->z_delta_size == size) {
 
-Suggestion for a thing to add to it, I don't have the time on the Go
-tuits:
+It is confusing to readers to write
 
-One thing that can make repositories very pathological is if the ratio
-of trees to commits is too low.
+	A = B;
+	if (A == B) {
+		/* OK, A was big enough */
+	} else {
+		/* No, B is too big to fit on A */
+	}
 
-I was dealing with a repo the other day that had several thousand files
-all in the same root directory, and no subdirectories.
+I actually was about to complain that you attempted an unrelated
+micro-optimization to skip cache_lock/unlock when delta_size and
+z_delta_size are the same, and made a typo.  Something like:
 
-This meant that doing `git log -- <file>` was very expensive. I wrote a
-bit about this on this related ticket the other day:
-https://gitlab.com/gitlab-org/gitlab-ce/issues/42104#note_54933512
+	size = do_compress(...);
+	if (size < (1 << OE_Z_DELTA_BITS)) {
+		entry->z_delta_size = size;
+		cache_lock();
+		...
+                cache_unlock();
+	} else {
+		FREE_AND_NULL(entry->delta_data);
+		entry->z_delta_size = 0;
+	}
 
-But it's not something where you can just say having more trees is
-better, because on the other end of the spectrume we can imagine a repo
-like linux.git where each file like COPYING instead exists at
-C/O/P/Y/I/N/G, that would also be pathological.
+would have saved me a few dozens of seconds of head-scratching.
 
-It would be very interesting to do some tests to see what the optimal
-value would be.
-
-I also suspect it's not really about the commit / tree ratio, but that
-you have some reasonable amount of nested trees per file, *and* that
-changes to them are reasonably spread out. I.e. it doesn't help if you
-have a doc/ and a src/ directory if 99% of your commits change src/, and
-if you're doing 'git log -- src/something.c'.
-
-Which is all a very long-winded way of saying that I don't know what the
-general rule is, but I have some suspicions, but having all your files
-in the root is definitely bad.
+> +				cache_lock();
+> +				delta_cache_size -= entry->delta_size;
+> +				delta_cache_size += entry->z_delta_size;
+> +				cache_unlock();
+> +			} else {
+> +				FREE_AND_NULL(entry->delta_data);
+> +				entry->z_delta_size = 0;
+> +			}
+>  		}
