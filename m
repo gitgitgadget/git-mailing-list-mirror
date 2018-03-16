@@ -2,138 +2,144 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4865B1F404
-	for <e@80x24.org>; Fri, 16 Mar 2018 22:08:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4117E1F404
+	for <e@80x24.org>; Fri, 16 Mar 2018 22:12:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752004AbeCPWI2 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Mar 2018 18:08:28 -0400
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:43511 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751319AbeCPWI1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Mar 2018 18:08:27 -0400
-Received: by mail-pf0-f194.google.com with SMTP id j2so4678420pff.10
-        for <git@vger.kernel.org>; Fri, 16 Mar 2018 15:08:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=ezv1io0CuUdaiFS416uiqYtzBFvz6huNHV/Ha+Xm704=;
-        b=E25wqItwTK3hj7Y/Vw0DW3na/fp3NMOC/Mavlk2KAKkIhFSsUxaz3XhEdB3xvfu1KZ
-         ttiX6KofAelo7yOc3hkTzWg5+0+kL06KzHuWO89iJ4uQ+Y3TNs4vn2yQkCmcMDY5TSYQ
-         ds3p7pm1cSJasYktqxODsrZ5Vrk9lNMVzSXduycmN/eeIPvFi74eCuOlN3+Xm8vy9qNR
-         LEDOolmknpHmx3VE870Cm7gOm7+uVCq9gTRGrFV/7O1808xCE8mSBd9p0sOyNXrD1Lby
-         SnmQHtawLvS9Xr8n8sOJgLdbDeDhdvWjLeKqQ5w3No+71eEBCU7S1Te8feuP9PyTaOSa
-         ETfw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ezv1io0CuUdaiFS416uiqYtzBFvz6huNHV/Ha+Xm704=;
-        b=odbgOfRRFNzRrKAs+4pOzH6AS8ez20oSE6EXTh9goFihc+DWXlTvHYQ5SluOlZIivX
-         GdDKz/mAPvxgYEfyr6cobKK98bw4Fzjlr0v6GuekhOHid6+nu16QpraRYkTONdIYWVsr
-         ADgByRBXlVeu/8+ISJn1rfOYuqhlB7zpbfSmoS6qvfCtmw4Ip6pvKndK8icxa3Mvh4Mb
-         SS4i7CL6XVDWdXLofL45fVNZric2YrtAiqNdgRoyBw7HNfwxZE7MD12PudT7T/TBcs5V
-         cAA0V56JHEHHyPljdh/dJGdntV4QusktKqjz/TWQdVep/bjTpADKw5TQofRuDl2tKDSV
-         EwTg==
-X-Gm-Message-State: AElRT7H7GZtciqEjTQ9v1SzHzUu8ING8uLMyqnv8kJN1V/3VNUUseVRV
-        tviPrNzpeF3fQ0YkSnhA/FQ=
-X-Google-Smtp-Source: AG47ELt5HW5nKw04d9Gyt18pLOcufr+24xxdty3yMzg0XcRaiPaNkL+iGEeIB3syF8u2j3hvdgN3fg==
-X-Received: by 10.101.78.5 with SMTP id r5mr2711831pgt.33.1521238106239;
-        Fri, 16 Mar 2018 15:08:26 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id n15sm4646716pfa.35.2018.03.16.15.08.25
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 16 Mar 2018 15:08:25 -0700 (PDT)
-Date:   Fri, 16 Mar 2018 15:08:24 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
+        id S1751448AbeCPWMN (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Mar 2018 18:12:13 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:64095 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750915AbeCPWML (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Mar 2018 18:12:11 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 757ABC64AE;
+        Fri, 16 Mar 2018 18:12:11 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
+        :cc:subject:message-id:references:mime-version:content-type
+        :in-reply-to; s=sasl; bh=gh9XnQHtTeCSkCIjz0htNAR+nbY=; b=SmdCii2
+        VvUIP+fkeyV0kqaC06OFQAaAGVuQiAIA0Yp0XhWb5FpN87fHH6XLl/kp5wGyjqEx
+        WMqmV7fh1MCP2V/rNQduJ1cAhT7Cw7rT8tMyHxxIxL3TPGLF/GxGkm2nJHlhJdvj
+        4cOY8MQ+pq00TBjkPENk0p4M2LqyK5SNMsck=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
+        :subject:message-id:references:mime-version:content-type
+        :in-reply-to; q=dns; s=sasl; b=sNcaCSwj0sEQz9jX+eMZqjQLiwn8pKq3/
+        ZzMKJFVoMEpsv05wa+pLjZrNA1M9kP11uj/2Ck6rYhTFtPQ5KYG31irN25KuOzuk
+        yBVnoUJy5LKIAGqr3chwKTu9j5sWTQO9E+aDVJYYIC05x7Sx+sjf1iuf4A8mBd8L
+        u2nVuc5BjA=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6D44FC64AD;
+        Fri, 16 Mar 2018 18:12:11 -0400 (EDT)
+Received: from zaya.teonanacatl.net (unknown [173.67.181.41])
+        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E9036C64AC;
+        Fri, 16 Mar 2018 18:12:10 -0400 (EDT)
+Date:   Fri, 16 Mar 2018 18:12:09 -0400
+From:   Todd Zullinger <tmz@pobox.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: Re: What's cooking in git.git (Mar 2018, #03; Wed, 14)
-Message-ID: <20180316220824.GC151588@aiede.svl.corp.google.com>
-References: <xmqqefkm6s06.fsf@gitster-ct.c.googlers.com>
- <20180316143124.5b22d70861344cbcbbad46dd@google.com>
- <xmqqh8pfzo1h.fsf@gitster-ct.c.googlers.com>
+Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, git-packagers@googlegroups.com,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] RelNotes: add details on Perl module changes
+Message-ID: <20180316221209.GT6611@zaya.teonanacatl.net>
+References: <xmqq7eqb3nct.fsf@gitster-ct.c.googlers.com>
+ <20180316220748.4279-1-tmz@pobox.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqh8pfzo1h.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+In-Reply-To: <20180316220748.4279-1-tmz@pobox.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
+X-Pobox-Relay-ID: 12E70B3A-2967-11E8-A11E-44CE1968708C-09356542!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+I wrote:
+> Document changes to core and non-core Perl module handling in 2.17.
 
-Junio C Hamano wrote:
-> Jonathan Tan <jonathantanmy@google.com> writes:
->> On Wed, 14 Mar 2018 18:34:49 -0700
->> Junio C Hamano <gitster@pobox.com> wrote:
+This should have:
 
->>> * sb/object-store (2018-03-05) 27 commits
->>
->> [snip list of commits]
->>
->>>  (this branch is used by sb/packfiles-in-repository; uses nd/remove-ignore-env-field.)
+Signed-off-by: Todd Zullinger <tmz@pobox.com>
+
+And perhaps also:
+
+Helped-by: Junio C Hamano <gitster@pobox.com>
+
+since I borrowed liberally from your initial text. :)
+
+> ---
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+>>> I haven't wordsmithed it fully, but it should say something along
+>>> the lines of ...
 >>>
->>>  Refactoring the internal global data structure to make it possible
->>>  to open multiple repositories, work with and then close them.
->>>
->>>  Rerolled by Duy on top of a separate preliminary clean-up topic.
->>>  The resulting structure of the topics looked very sensible.
->>>
->>>  Waiting for a follow-up discussion.
+>>>  Documentation/RelNotes/2.16.0.txt | 10 ++++++++++
+>>>  1 file changed, 10 insertions(+)
 >>
->> Would it be possible for this set to go in independently of
->> nd/remove-ignore-env-field? I understand that some patches might be
->> cleaner if ignore_env is first removed, but this patch set has already
->> undergone several rounds of review and (I think) is an improvement to
->> the codebase on its own.
->
-> I thought the "remove-ignore-env-field" thing is a quite small and
-> more-or-less straightforward improvements that would serve as a good
-> preparatory change to give a solid foundation to the object-store
-> topic.
->
-> I was hoping to hear quick Acks for remove-ignore-env (and also
-> Duy's reroll of their topics on it) from people involved in all the
-> related topics, so that we can advance them more-or-less at the same
-> time.
+>> Eh, of course the addition should go to 2.17 release notes ;-)  I
+>> just happened to be reviewing a topic forked earlier.
+> 
+> Maybe something like this?  I had intended to suggest a note about
+> NO_PERL_CPAN_FALLBACKS as well, so that's included too.  I don't know if that
+> should be expanded to provide more of a hint to users/packagers on platforms
+> where these modules are harder to install, letting them know that we now have
+> fallbacks to Error and Mail::Address.  That might allow scripts which were
+> previously excluded to be included on their platforms.
+> 
+>  Documentation/RelNotes/2.17.0.txt | 14 ++++++++++++++
+>  INSTALL                           |  3 ++-
+>  2 files changed, 16 insertions(+), 1 deletion(-)
+> 
+> diff --git a/Documentation/RelNotes/2.17.0.txt b/Documentation/RelNotes/2.17.0.txt
+> index c828d37345..085bf1dba1 100644
+> --- a/Documentation/RelNotes/2.17.0.txt
+> +++ b/Documentation/RelNotes/2.17.0.txt
+> @@ -75,6 +75,20 @@ Performance, Internal Implementation, Development Support etc.
+>   * The build procedure for perl/ part has been greatly simplified by
+>     weaning ourselves off of MakeMaker.
+>  
+> + * Perl 5.8 or greater has been required since Git 1.7.4 released in
+> +   2010, but we continued to assume some core modules may not exist and
+> +   used a conditional "eval { require <<module>> }"; we no longer do
+> +   this.  Some platforms (Fedora/RedHat/CentOS, for example) ship Perl
+> +   without all core modules by default (e.g. Digest::MD5, File::Temp,
+> +   File::Spec, Net::Domain, Net::SMTP).  Users on such platforms may
+> +   need to install these additional modules.
+> +
+> + * As a convenience, we install copies of Perl modules we require which
+> +   are not part of the core Perl distribution (e.g. Error and
+> +   Mail::Address).  Users and packagers whose operating system provides
+> +   these modules can set NO_PERL_CPAN_FALLBACKS to avoid installing the
+> +   bundled modules.
+> +
+>   * In preparation for implementing narrow/partial clone, the machinery
+>     for checking object connectivity used by gc and fsck has been
+>     taught that a missing object is OK when it is referenced by a
+> diff --git a/INSTALL b/INSTALL
+> index 60e515eaf7..c39006e8e7 100644
+> --- a/INSTALL
+> +++ b/INSTALL
+> @@ -126,7 +126,8 @@ Issues of note:
+>  	  Redhat/Fedora are reported to ship Perl binary package with some
+>  	  core modules stripped away (see http://lwn.net/Articles/477234/),
+>  	  so you might need to install additional packages other than Perl
+> -	  itself, e.g. Time::HiRes.
+> +	  itself, e.g. Digest::MD5, File::Spec, File::Temp, Net::Domain,
+> +	  Net::SMTP, and Time::HiRes.
+>  
+>  	- git-imap-send needs the OpenSSL library to talk IMAP over SSL if
+>  	  you are using libcurl older than 7.34.0.  Otherwise you can use
 
-I can go along with this for this series, but I want to explain why I
-am not thrilled with the process in general.
+-- 
+Todd
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The secret of life is honesty and fair dealing. If you can fake that,
+you've got it made.
+    -- Groucho Marx
 
-The series "Moving global state into the repository object (part 1)"
-had gone through three revisions with relatively minor changes between
-each and we were in the middle of reviewing the fourth.  In response
-to a series that comes after it, "(part 2)", Duy created
-nd/remove-ignore-env, a series that I quite like.
-
-But with this reroll, the result is:
-
- * The patches that have already been reviewed 3 times (in their
-   current incarnation; parts of this series have also appeared on
-   list earlier too) and we were in the middle of reviewing a fourth
-   time are now on a new base.
-
- * These three series, each of a manageable size, have been combined
-   into a larger series of 44 patches.
-
- * I have fears about when they're ever going to land and be part of
-   an API I can start making use of.
-
-So even though I agree with the goal and I like the improved
-initialization code, I am not happy.
-
-I would be happier with just the new initialization code being its own
-series that we can fast-track, then deal with part 1 separately on
-top, and then deal with part 2 after that.
-
-Thanks,
-Jonathan
