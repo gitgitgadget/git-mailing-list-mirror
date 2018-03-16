@@ -7,126 +7,79 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 535F01F404
-	for <e@80x24.org>; Fri, 16 Mar 2018 19:34:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0226C1F404
+	for <e@80x24.org>; Fri, 16 Mar 2018 19:58:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752603AbeCPTeQ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Mar 2018 15:34:16 -0400
-Received: from mail-lf0-f68.google.com ([209.85.215.68]:44563 "EHLO
-        mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751572AbeCPTeM (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Mar 2018 15:34:12 -0400
-Received: by mail-lf0-f68.google.com with SMTP id g203-v6so2502715lfg.11
-        for <git@vger.kernel.org>; Fri, 16 Mar 2018 12:34:12 -0700 (PDT)
+        id S1753227AbeCPT6b (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Mar 2018 15:58:31 -0400
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:42553 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751562AbeCPT63 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Mar 2018 15:58:29 -0400
+Received: by mail-pf0-f194.google.com with SMTP id a16so4555505pfn.9
+        for <git@vger.kernel.org>; Fri, 16 Mar 2018 12:58:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=aeBCdoJ6ccFgD+pFhvYjYLDdRCHx/audLFFx3Z3Lc0g=;
-        b=lAoT3VDEvmNxNDMOZmYJ4s/u2kFamyyWx1om7IKJq0U2y9n2UTOBF9jNYd0tDl4DAp
-         aFd26DzclHZctEXy0VzinAEMacM+vlaXMotdcQpxqIHR+jOgPV90Vb2S/YHWwxxQb5SQ
-         4KjChE58DJP2dfVjERJzluhuwim9QlHmuEFxU9BYOzFRX6gX6TBQlBZR8+vWaur/FP6o
-         R3Rw7CSf825VsDrgLzZedvEn6RLAkPOZzvPk+k3anW66K/REK40f6vMJJgrYUGWw2UhW
-         1O89vZHVMf+XToV8dmmvozEz4I0ONlub2zUxKbVnSp8pTdUA62Pr4lk1N6AOwv65LupG
-         ItYg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=loW/CM3F5UH0UKW+frry4m3zvTb6TMJvfoVBA/2oc3c=;
+        b=XuJ1yzCxNcHAqKolkol7UBYjduf/qfLxOZQScB00s7nQndyUpH5xDZGqx3vXNCX+3/
+         F69RIxIa3PXJHOMvUGZC/81lmLzQ2j1OAgHW6ikKmAMBGy1g7YjcX/HwVFFQDPQ7tWt+
+         mOowGmuLr0iP4Mz3dslLiWZMwKrEMwxQ9HEXr+ardKzSE8Pmk1l1fGnOnuPBnkAqGgBd
+         WvGEBfrlV+qYWl4th0iL6rSHTpNwuOurAVzGxaMwfKToi6yWHzlcjx7vYip/RbHTpwcC
+         rSaZnpV9NKMSc/ltp3IhIofIJBaBi/MvvC7miVbtKD4jbeZ2x+aa/G0bk10g7vKyLlPv
+         Pg5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=aeBCdoJ6ccFgD+pFhvYjYLDdRCHx/audLFFx3Z3Lc0g=;
-        b=JTTRLkKZr0yAtet8vt1v/vuUl6GCB1xuuLxlZjs9nHr26e/Z0WrHNmgJukUNw6Q3ZH
-         ynfn7bshT2HqwVXbuL63JtMW0ofGtdFbRhGobS1sSWNaGDiEqHgqjUFjCePK3UySpBbg
-         7bwZEnfvOsHWTE/G8FzrXAgUphAN+/5j3LNN0zXKXM2//w/aWm4IxQWubC0FclfLL/nz
-         24Zk2cXP9qdLNv6/EWOpN1oPG7dwWsHoVhwNoMtPSssz31r/6kB7j+LLuoTcG2wjh8cd
-         ZyaSuu5qSr4Od+f0Xs/SOckT08XA0GbzJPrEN7ukQKS7cEI+NWuR3k1Vwqf3SM3NMHf1
-         3HzA==
-X-Gm-Message-State: AElRT7GU1DPLXX6PGikqAErSMkNkKGisGrKXC7im82prBhsXh0eV/C9h
-        fOo7rJ3auYGCI0bVDVMRFTyBtg==
-X-Google-Smtp-Source: AG47ELsWHEQ2J+anBhE4tgZI3GToOOnlNH8qOc039umTloDl3RDL2T3saqdd1Ew5i4WIDiGE/uTmsw==
-X-Received: by 2002:a19:4402:: with SMTP id r2-v6mr1856566lfa.105.1521228851277;
-        Fri, 16 Mar 2018 12:34:11 -0700 (PDT)
-Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id 9sm1763747lju.64.2018.03.16.12.34.10
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 16 Mar 2018 12:34:10 -0700 (PDT)
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-Subject: [PATCH v2] travis-ci: enable more warnings on travis linux-gcc job
-Date:   Fri, 16 Mar 2018 20:33:55 +0100
-Message-Id: <20180316193355.20161-1-pclouds@gmail.com>
-X-Mailer: git-send-email 2.16.2.903.gd04caf5039
-In-Reply-To: <20180303014605.10603-1-pclouds@gmail.com>
-References: <20180303014605.10603-1-pclouds@gmail.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=loW/CM3F5UH0UKW+frry4m3zvTb6TMJvfoVBA/2oc3c=;
+        b=fhYfAdrkn0OA0Ekgnr0ZLTIbRrVJGh3/qvtGuy7r3Guxyu+2vTpc44L+ZeH3JIP7TU
+         9GJxHZZqgDpup6bCUV2DkFLQe4/fuZCRjCC1zuxplLXamuMnM2y0HaZ2oz77q41qvrYO
+         ZXELGKw9XHnR15atUlA8IQZuKnd0MPNg8C+igFFumsZeKxb/Pa+3RV5EUK281fRzVFLH
+         QDG/cEwRmQTiG6+9/elzqfpIsfq+1xiBgNpzZSZPyRxt0T4hgyHrFaa2l1fll0J6SpD2
+         UGBD+g+yqKJ3BzaIPsJfL+IEZghiFkJZQe0kxNjld7T0INWB6CRL+5+uavFkopqVh7L5
+         lxUg==
+X-Gm-Message-State: AElRT7GeOyxd6TcsAAX5Upve0cRScZ+EprUzOqMk5/jtQ5gQiARW90cs
+        cs6ZdFo+bATa6jKa81EvBCwiiktk
+X-Google-Smtp-Source: AG47ELswxMljSmop7wUL62nvn7pS0140oD4hRsp0J2eK5B9ptL9kcplmqV+MRo5rtr1nHYTWqr86nw==
+X-Received: by 10.99.109.139 with SMTP id i133mr2335978pgc.194.1521230309021;
+        Fri, 16 Mar 2018 12:58:29 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id s6sm14998587pgn.59.2018.03.16.12.58.28
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 16 Mar 2018 12:58:28 -0700 (PDT)
+Date:   Fri, 16 Mar 2018 12:57:56 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     "Briggs, John" <JOHN.BRIGGS@aei.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        git-for-windows@googlegroups.com
+Subject: Re: getting fatal error trying to open git gui
+Message-ID: <20180316195756.GA151588@aiede.svl.corp.google.com>
+References: <CY4PR02MB22621DE7751427686029C1B3FFD70@CY4PR02MB2262.namprd02.prod.outlook.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CY4PR02MB22621DE7751427686029C1B3FFD70@CY4PR02MB2262.namprd02.prod.outlook.com>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We have DEVELOPER config to enable more warnings, but since we can't set
-a fixed gcc version to all devs, that has to be a bit more conservative.
-On travis, we know almost exact version to be used (bumped to 6.x for
-more warnings), we could be more aggressive.
+Hi,
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- I still think it's a good thing to do. So here's the rebased version
- (v1 collides badly with another series, which has landed)
+Briggs, John wrote:
 
- .travis.yml               |  3 +++
- ci/run-build-and-tests.sh | 16 ++++++++++++++++
- 2 files changed, 19 insertions(+)
+> I just installed git for windows 10 and am getting "git-gui: fatal error" "Cannot parse Git version string.
+>
+> When I execute "git version" in the command prompt I get
+> Git version 2.16.2.windows.1
+>
+> Everything else seems to be working. How can I get the gui to work?
 
-diff --git a/.travis.yml b/.travis.yml
-index 5f5ee4f3bd..0b3c50f5e7 100644
---- a/.travis.yml
-+++ b/.travis.yml
-@@ -16,10 +16,13 @@ compiler:
- 
- addons:
-   apt:
-+    sources:
-+    - ubuntu-toolchain-r-test
-     packages:
-     - language-pack-is
-     - git-svn
-     - apache2
-+    - gcc-6
- 
- matrix:
-   include:
-diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
-index 3735ce413f..f6f346c468 100755
---- a/ci/run-build-and-tests.sh
-+++ b/ci/run-build-and-tests.sh
-@@ -7,6 +7,22 @@
- 
- ln -s "$cache_dir/.prove" t/.prove
- 
-+if [ "$jobname" = linux-gcc ]; then
-+	gcc-6 --version
-+	cat >config.mak <<-EOF
-+	CC=gcc-6
-+	CFLAGS = -g -O2 -Wall
-+	CFLAGS += -Wextra
-+	CFLAGS += -Wmissing-prototypes
-+	CFLAGS += -Wno-empty-body
-+	CFLAGS += -Wno-maybe-uninitialized
-+	CFLAGS += -Wno-missing-field-initializers
-+	CFLAGS += -Wno-sign-compare
-+	CFLAGS += -Wno-unused-function
-+	CFLAGS += -Wno-unused-parameter
-+	EOF
-+fi
-+
- make --jobs=2
- make --quiet test
- if test "$jobname" = "linux-gcc"
--- 
-2.16.2.903.gd04caf5039
+That's strange indeed.  Why is Git capitalized when you run
+"git version"?
 
+Thanks,
+Jonathan
