@@ -2,61 +2,69 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 192061F404
-	for <e@80x24.org>; Fri, 16 Mar 2018 14:08:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4A2BE1F404
+	for <e@80x24.org>; Fri, 16 Mar 2018 14:30:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752837AbeCPOIM (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Mar 2018 10:08:12 -0400
-Received: from mail-io0-f169.google.com ([209.85.223.169]:35623 "EHLO
-        mail-io0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752832AbeCPOIJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Mar 2018 10:08:09 -0400
-Received: by mail-io0-f169.google.com with SMTP id e7so2311544iof.2
-        for <git@vger.kernel.org>; Fri, 16 Mar 2018 07:08:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=h6YDpTPdRjQiDgdtjStU1ZL/uApcUGVfVf93DhrGgoY=;
-        b=TTSYjq2uiEUQLtNdsN3lIdrfbyVcfzNyquZZCvgf6YYqRJZ2cJkOrTQaJ3Ot05vysm
-         cmvCdvyzNeDyQ6hoaBEEHslDjM+S/7byFCbAcgrQUNeitMGS9S0zDBJ4Fjkdip6JZcfo
-         2kjxOnJVI0J+c5T3pHsc+d4a9EVuSlv50qZWoibuXywfdYZ5ctFzU9ms1wcmBxp/z3zM
-         0zxxw+IpLtk/P8ZyyKcmCBbI7lVSyOecY4uXrLhePcTS4emihE6n8RLPlAeuj13trjKC
-         8ThaqJmmDoQSHiqfAgxJvvcptEQ0X5DZLUVaRAa+VMN86H7RDAcMOKe7WuWeLnD4+UHg
-         fZxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=h6YDpTPdRjQiDgdtjStU1ZL/uApcUGVfVf93DhrGgoY=;
-        b=jItYSDVkkNnlKvrX6VeCOL/ZayzZzlU7/MgwcVvHrp9Ij9xyE8vKH0UcZ1TCQJ+K7n
-         11gIhCPhwdb5goVCIip/W/yiDaQL93qiJxD5JUq1LabzOcY9AZAAzaF2T6OOIofwhtKf
-         NfsfK39+Q7GPOqInyaRYk3rUgC+b7UbE5IPfwVnuQPQuVdRnrR+UAaRggAnE3Oi5rQJo
-         I6RTs9Uy4yQriU2McjM0TXSfn8lKIXXz7fuuLsTIPOCCbXBwdCAWqZmDw57/KDfMM1Qg
-         i48a9W9ekoJcfuSDLyhHIPmo+8nyTjkMdhzI/ChuarPqBmH+Hm7yO1A/zZ8T1257SSU6
-         TOkQ==
-X-Gm-Message-State: AElRT7GsiCxAM1Bfd9OvSBMWD4pDmvjXUHomjY5HZVpzxU3nIyVyo/7Y
-        XbJ7WPink/IUrqB8Rs0226D9wKNPFx4W430D5+oZzA==
-X-Google-Smtp-Source: AG47ELswB/mU9VO2/3e1MU1CuiclVFUl4uioRdpd3FsCUrpodrUCCSbktiRoMiVgGED0CtSBqsGxxeHM724mBPI5CzQ=
-X-Received: by 10.107.160.141 with SMTP id j135mr2023969ioe.124.1521209287523;
- Fri, 16 Mar 2018 07:08:07 -0700 (PDT)
+        id S1752292AbeCPOa0 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Mar 2018 10:30:26 -0400
+Received: from fallback6.mail.ru ([94.100.181.147]:53412 "EHLO
+        fallback.mail.ru" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751576AbeCPOaF (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Mar 2018 10:30:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bswap.ru; s=mailru;
+        h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date; bh=05xzw5uNam0uha8PAnkJ8DF3oyyyzGRLbhIr7K6QYBY=;
+        b=RMhsnvgunAxKJhfcldINsFzJyyfu0VuM4PoSdgMRTvfbK4wTyOwZpy0NW+aiL4jhBw5a3OzD0Pml8pdUn/8YpHfRQgHD5Oi59hHqHizcpeKaEbYtzHuUmhXM/L1frZltzeppDjtwPw8eGvO+XaVkvtQA45fr7QDB95NObLJNHU8=;
+Received: from [10.161.64.44] (port=53888 helo=smtp36.i.mail.ru)
+        by fallback6.mail.ru with esmtp (envelope-from <kostix@bswap.ru>)
+        id 1ewqMs-0001j0-Sk
+        for git@vger.kernel.org; Fri, 16 Mar 2018 17:30:02 +0300
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bswap.ru; s=mailru;
+        h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date; bh=05xzw5uNam0uha8PAnkJ8DF3oyyyzGRLbhIr7K6QYBY=;
+        b=RMhsnvgunAxKJhfcldINsFzJyyfu0VuM4PoSdgMRTvfbK4wTyOwZpy0NW+aiL4jhBw5a3OzD0Pml8pdUn/8YpHfRQgHD5Oi59hHqHizcpeKaEbYtzHuUmhXM/L1frZltzeppDjtwPw8eGvO+XaVkvtQA45fr7QDB95NObLJNHU8=;
+Received: by smtp36.i.mail.ru with esmtpa (envelope-from <kostix@bswap.ru>)
+        id 1ewqMq-0005Sc-Qz; Fri, 16 Mar 2018 17:30:01 +0300
+Date:   Fri, 16 Mar 2018 17:29:59 +0300
+From:   Konstantin Khomoutov <kostix@bswap.ru>
+To:     JYOTIK MAYUR <jyotikmayur7@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Help...!
+Message-ID: <20180316142959.gsuxmwobqgnu4l3u@tigra>
+References: <CAHotnZWvtfKxmJii9g3K2OHBEBkh-AiRSXbc7tfZiyNGuXk6jA@mail.gmail.com>
 MIME-Version: 1.0
-Received: by 10.192.228.74 with HTTP; Fri, 16 Mar 2018 07:08:07 -0700 (PDT)
-From:   JYOTIK MAYUR <jyotikmayur7@gmail.com>
-Date:   Fri, 16 Mar 2018 19:38:07 +0530
-Message-ID: <CAHotnZWvtfKxmJii9g3K2OHBEBkh-AiRSXbc7tfZiyNGuXk6jA@mail.gmail.com>
-Subject: Help...!
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAHotnZWvtfKxmJii9g3K2OHBEBkh-AiRSXbc7tfZiyNGuXk6jA@mail.gmail.com>
+User-Agent: NeoMutt/20170306 (1.8.0)
+X-7FA49CB5: 0D63561A33F958A5377F8FF4AFCFE81153FDDD2845A81FADA88E226A7A726124725E5C173C3A84C332C16DEEF88469492D41F2BB729FF4F30555CCFDA08FA3FAC4224003CC836476C0CAF46E325F83A50BF2EBBBDD9D6B0F05F538519369F3743B503F486389A921A5CC5B56E945C8DA
+X-Mailru-Sender: 3EA917A0E6524472E50B252446CEFEA43FE94EDA2273E6948C3AA81C4D5D4B97BAC7ED26ADC47234FD27B1545737DED76F53C80213D1719CB3360D9C94DE366A1CC4A9B39F20364B73395D515EC5B64AAE208404248635DF
+X-Mras: OK
+X-Mras: OK
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-i am working on a project that is git hosting website like GitHub. I
-am a student so i don't know much on how to make a website like GitHub
-so could please tell me what can be the appropriate steps to make a
-website like that(mostly the server part).
+On Fri, Mar 16, 2018 at 07:38:07PM +0530, JYOTIK MAYUR wrote:
+
+> i am working on a project that is git hosting website like GitHub. I
+> am a student so i don't know much on how to make a website like GitHub
+> so could please tell me what can be the appropriate steps to make a
+> website like that(mostly the server part).
+
+Sure, just study the code of the following projects:
+
+- Go: https://gitea.io/
+- C#: https://bonobogitserver.com/
+- Java: http://gitblit.com/
+
+Still, please note that this list deals with the development of Git,
+so your question clearly is off-topic here, so please refrain from
+asking such questions here.
+
+You could try https://www.reddit.com/r/git/ for a start.
+
