@@ -2,130 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 55A831FAE2
-	for <e@80x24.org>; Fri, 16 Mar 2018 20:02:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C957B1F404
+	for <e@80x24.org>; Fri, 16 Mar 2018 20:06:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752183AbeCPUCJ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Mar 2018 16:02:09 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:43733 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751694AbeCPUCH (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Mar 2018 16:02:07 -0400
-Received: by mail-wr0-f196.google.com with SMTP id o1so12732995wro.10
-        for <git@vger.kernel.org>; Fri, 16 Mar 2018 13:02:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=CNI4U4zkLRNwCOGMGmvVa9guyH6b+fQ0u1/0NhpK8Pw=;
-        b=Rp2v5tUq1gE/OHG/j1aJGxlmhgYWA+wxJLx3Qx5Q8FlxtJb4RkkNG8gZo8aaew/zh+
-         1zfuIG8bzPhFhULC7lqVoV37sgzFhrs44N/79B2F0mO2VD0m8bDzkjUx9ancQef/FSkV
-         NGJH95JgufmaIwZLuaFbt3zSLfUkVaBd/2ZrYVpfKPVJhjr5aqKQh+Tl809fNk+bi8Lm
-         z/SAE5aZRNtA20zIVk1OIXGsTSXGT1fCUJFGKqaJCTNt46Rnz7kCVPnLTUW3iROsibOr
-         tyRxEsayWfb71GINCifKqMPsCVRF+h2bAHjkoqf4lDNbFWYoqKutx1z17GdjiVZ3yEDx
-         rkZA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=CNI4U4zkLRNwCOGMGmvVa9guyH6b+fQ0u1/0NhpK8Pw=;
-        b=fI7yRqE54xUwlmfYkL3bIhF6qUX7BbR8BmYloUloSzTDdlFu004CDmUidzJ32fVquX
-         saCk3+qk1f65KUqDhuxneuaK7lE1UkhColPGLLhOzdPl23DkbAaANCnLf3TZwm1lvytB
-         e2YXcqBQVJBVtA0h74Uiz+TIHqh5+sK4CFKdq2UHjZ2iSR3toZ7KBajUyIPUqgc3V9ml
-         vN5gdBN7dCNeMC2ykJPY3kIo06U2kLQmQ3cl2bk/iBUVREDkWHspIA0AicvGyk18mrO8
-         YpjHPnFjS2fhQtJzH01GiArkDQnQ2ADMjV5l33TGvHOjVDLHYIb+U/1D836c2PSUoJiJ
-         ES8w==
-X-Gm-Message-State: AElRT7EQPQQu0AXJ1Yzd5fS+nE8rE4/DytnFc2xdFmjrtHas09gNwB2T
-        dUSD08OIHmNxE+30gBq7yHcJpTCn
-X-Google-Smtp-Source: AG47ELv8Uo7hCX71OjDyRw8xfZzbh8V0HAQdyjPH7CZyHIB99JOVKjWM3s/3MV2R5GU9LJA7nXmJ9Q==
-X-Received: by 10.223.226.14 with SMTP id j14mr2568348wri.17.1521229203773;
-        Fri, 16 Mar 2018 12:40:03 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id o47sm9750625wrc.7.2018.03.16.12.40.02
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 16 Mar 2018 12:40:03 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     avarab@gmail.com, e@80x24.org, git@vger.kernel.org, peff@peff.net
-Subject: Re: [PATCH v4 08/11] pack-objects: shrink z_delta_size field in struct object_entry
-References: <20180308114232.10508-1-pclouds@gmail.com>
-        <20180316183200.31014-1-pclouds@gmail.com>
-        <20180316183200.31014-9-pclouds@gmail.com>
-Date:   Fri, 16 Mar 2018 12:40:02 -0700
-In-Reply-To: <20180316183200.31014-9-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
- =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
-        Duy"'s message of "Fri, 16 Mar 2018 19:31:57 +0100")
-Message-ID: <xmqqr2oj24j1.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1751597AbeCPUGm (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Mar 2018 16:06:42 -0400
+Received: from cloud.peff.net ([104.130.231.41]:59826 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1751468AbeCPUGl (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Mar 2018 16:06:41 -0400
+Received: (qmail 7557 invoked by uid 109); 16 Mar 2018 20:06:41 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 16 Mar 2018 20:06:41 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 32473 invoked by uid 111); 16 Mar 2018 20:07:35 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 16 Mar 2018 16:07:35 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 16 Mar 2018 16:06:39 -0400
+Date:   Fri, 16 Mar 2018 16:06:39 -0400
+From:   Jeff King <peff@peff.net>
+To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Git mailing list <git@vger.kernel.org>,
+        Stefan Beller <sbeller@google.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        git@jeffhostetler.com, Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v6 00/14] Serialized Git Commit Graph
+Message-ID: <20180316200639.GA1845@sigill.intra.peff.net>
+References: <1519698787-190494-1-git-send-email-dstolee@microsoft.com>
+ <20180314192736.70602-1-dstolee@microsoft.com>
+ <878tasdpqo.fsf@evledraar.gmail.com>
+ <CAM0VKjknPZj-qHzf5nVr_RdHtB+pq2+APc1tesexP-eFSP9n_A@mail.gmail.com>
+ <xmqq370z3m5o.fsf@gitster-ct.c.googlers.com>
+ <CAM0VKjmVgiWsqo8rQWwP9+mEq0tLinc8xoUM=8XdMP3VTBwJxw@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAM0VKjmVgiWsqo8rQWwP9+mEq0tLinc8xoUM=8XdMP3VTBwJxw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
+On Fri, Mar 16, 2018 at 08:48:49PM +0100, SZEDER Gábor wrote:
 
-> We only cache deltas when it's smaller than a certain limit. This limit
-> defaults to 1000 but save its compressed length in a 64-bit field.
-> Shrink that field down to 16 bits, so you can only cache 65kb deltas.
-> Larger deltas must be recomputed at when the pack is written down.
->
-> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-> ---
+> I came up with a different explanation back then: we are only interested
+> in commit objects when creating the commit graph, and only a small-ish
+> fraction of all objects are commit objects, so the "enumerate objects in
+> packfiles" approach has to look at a lot more objects:
+> 
+>   # in my git fork
+>   $ git rev-list --all --objects |cut -d' ' -f1 |\
+>     git cat-file --batch-check='%(objecttype) %(objectsize)' >type-size
+>   $ grep -c ^commit type-size
+>   53754
+>   $ wc -l type-size
+>   244723 type-size
+> 
+> I.e. only about 20% of all objects are commit objects.
+> 
+> Furthermore, in order to look at an object it has to be zlib inflated
+> first, and since commit objects tend to be much smaller than trees and
+> especially blobs, there are a lot less bytes to inflate:
+> 
+>   $ grep ^commit type-size |cut -d' ' -f2 |avg
+>   34395730 / 53754 = 639
+>   $ cat type-size |cut -d' ' -f2 |avg
+>   3866685744 / 244723 = 15800
+> 
+> So a simple revision walk inflates less than 1% of the bytes that the
+> "enumerate objects packfiles" approach has to inflate.
 
->  		if (entry->delta_data && !pack_to_stdout) {
-> -			entry->z_delta_size = do_compress(&entry->delta_data,
-> -							  entry->delta_size);
-> -			cache_lock();
-> -			delta_cache_size -= entry->delta_size;
-> -			delta_cache_size += entry->z_delta_size;
-> -			cache_unlock();
-> +			unsigned long size;
-> +
-> +			size = do_compress(&entry->delta_data, entry->delta_size);
-> +			entry->z_delta_size = size;
-> +			if (entry->z_delta_size == size) {
+I don't think this is quite accurate. It's true that we have to
+_consider_ every object, but Git is smart enough not to inflate each one
+to find its type. For loose objects we just inflate the header. For
+packed objects, we either pick the type directly out of the packfile
+header (for a non-delta) or can walk the delta chain (without actually
+looking at the data bytes!) until we hit the base.
 
-It is confusing to readers to write
+So starting from scratch:
 
-	A = B;
-	if (A == B) {
-		/* OK, A was big enough */
-	} else {
-		/* No, B is too big to fit on A */
-	}
+  git cat-file --batch-all-objects --batch-check='%(objecttype) %(objectname)' |
+  grep ^commit |
+  cut -d' ' -f2 |
+  git cat-file --batch
 
-I actually was about to complain that you attempted an unrelated
-micro-optimization to skip cache_lock/unlock when delta_size and
-z_delta_size are the same, and made a typo.  Something like:
+is in the same ballpark for most repos as:
 
-	size = do_compress(...);
-	if (size < (1 << OE_Z_DELTA_BITS)) {
-		entry->z_delta_size = size;
-		cache_lock();
-		...
-                cache_unlock();
-	} else {
-		FREE_AND_NULL(entry->delta_data);
-		entry->z_delta_size = 0;
-	}
+  git rev-list --all |
+  git cat-file --batch
 
-would have saved me a few dozens of seconds of head-scratching.
+though in my timings the traversal is a little bit faster (and I'd
+expect that to remain the case when doing it all in a single process,
+since the traversal only follows commit links, whereas processing the
+object list has to do the type lookup for each object before deciding
+whether to inflate it).
 
-> +				cache_lock();
-> +				delta_cache_size -= entry->delta_size;
-> +				delta_cache_size += entry->z_delta_size;
-> +				cache_unlock();
-> +			} else {
-> +				FREE_AND_NULL(entry->delta_data);
-> +				entry->z_delta_size = 0;
-> +			}
->  		}
+I'm not sure, though, if that edge would remain for incremental updates.
+For instance, after we take in some new objects via "fetch", the
+traversal strategy would want to do something like:
+
+  git rev-list $new_tips --not --all |
+  git cat-file --batch
+
+whose performance will depend on the refs _currently_ in the repository,
+as we load them as UNINTERESTING tips for the walk. Whereas doing:
+
+  git show-index <.git/objects/pack/the-one-new-packfile.idx |
+  cut -d' ' -f2 |
+  git cat-file --batch-check='%(objecttype) %(objectname)' |
+  grep ^commit |
+  cut -d' ' -f2 |
+  git cat-file --batch
+
+always scales exactly with the size of the new objects (obviously that's
+kind of baroque and this would all be done internally, but I'm trying to
+demonstrate the algorithmic complexity). I'm not sure what the plan
+would be if we explode loose objects, though. ;)
+
+-Peff
