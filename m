@@ -2,104 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 257A51F404
-	for <e@80x24.org>; Fri, 16 Mar 2018 21:52:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4AC1A1F404
+	for <e@80x24.org>; Fri, 16 Mar 2018 22:08:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751618AbeCPVwO (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Mar 2018 17:52:14 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:33483 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751233AbeCPVwN (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Mar 2018 17:52:13 -0400
-Received: by mail-wr0-f196.google.com with SMTP id z73so8717369wrb.0
-        for <git@vger.kernel.org>; Fri, 16 Mar 2018 14:52:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=30FAc5e3ERXd9AdHLLr9AhC6SH2xIKRn1lb2spKfKVg=;
-        b=NvYI/X4bx7dIVlRssyYsMEb/gPHa12xTlzHckitBFGjCq5P9QIdovXHjx2UlQDgGKP
-         465x+CBw4kQx8kaAewFpedfsaWkyavhIilXXnAirbwI2wNk8CO/0Dl4zbTRmhyVbOIFD
-         iKraP0HXZWHL8pIuwdbA/zwVzgSmMcQUY066xlF5WfN1HRnnOtHiovlAiWjYKsNAz9RJ
-         yiIDdfKNWz4ANnxCBK0ME4KPGLAd9hY3QNmQ0VsUZO50tzyAK2r9z4JdtpqanQgpdXqe
-         8uoIZuVGraiM10VGOZr5X2IfqJtK6wt2GsssgBJT2Ab68wcG62TEOdp/b28Bakv4yLqs
-         Dp6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=30FAc5e3ERXd9AdHLLr9AhC6SH2xIKRn1lb2spKfKVg=;
-        b=sdQE6o9AWqU9ivgOxPP4TqOFAfGrAVv6a8jRgcHpwqgUajUS1ERU50zlOgLQz/YZzx
-         bxj+0j0hRB+YipTezjo8m6paPdhgQhvC2dvz+mNbQz2YDMIjFhpKqwCuUUQMm8oMA/1a
-         Y2QB6o0x6M+QbLyEYChuMMEMWQIRlJMD7VyQRVvcmiwjDYiDwKknIqMSzFRpR+I+7bEz
-         irl75Qgp5c6ApboX0pwccICt6yIFguV+a2kpvmyn2SMyjHVgw3YoUVw4PXZhXti9PDYi
-         HiMTkWVjfna5dHrCkhVmjQSD1WZJht/DKDekzOmry1moUveNk3k9hkqMof3GWQF2lGMW
-         SMvA==
-X-Gm-Message-State: AElRT7FH4DqSHjLennXQ7Ijnw9Sxvzh2UfHlR1ofuKHh6Qf9zf2JD8+r
-        9a1uKLwsszhDvLcZgv1mj2U=
-X-Google-Smtp-Source: AG47ELvfHIFkdW8mbBmTIIKkZey2y8lOPDchkJxajXnu4ngARRMQQLfk7/bd9b5cO/uAzRtCiwJ5RQ==
-X-Received: by 10.223.132.167 with SMTP id 36mr3080023wrg.227.1521237131501;
-        Fri, 16 Mar 2018 14:52:11 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id y111sm8932024wrc.0.2018.03.16.14.52.10
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 16 Mar 2018 14:52:10 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Mar 2018, #03; Wed, 14)
-References: <xmqqefkm6s06.fsf@gitster-ct.c.googlers.com>
-        <20180316143124.5b22d70861344cbcbbad46dd@google.com>
-Date:   Fri, 16 Mar 2018 14:52:10 -0700
-In-Reply-To: <20180316143124.5b22d70861344cbcbbad46dd@google.com> (Jonathan
-        Tan's message of "Fri, 16 Mar 2018 14:31:24 -0700")
-Message-ID: <xmqqh8pfzo1h.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        id S1752192AbeCPWHx (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Mar 2018 18:07:53 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54187 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751372AbeCPWHv (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Mar 2018 18:07:51 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E6DD0C634E;
+        Fri, 16 Mar 2018 18:07:50 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:date:message-id:in-reply-to; s=sasl; bh=wNFDtM6xa4EwFct
+        MF4Jknp0W+ms=; b=tcqNya3AjjXVZDBBdpeiXMhzvb4/QRAsGYNyIwf459HOLS8
+        /x90fr0ve/eqc76jij1FgO1I59O5dB+1p4mfp+vEMy4At8Ej+qEkSyxMbDJJuhrn
+        4XkPked6Va77i5JwZr2RiNnyNOB3D7QU9o90Gz13OptLGld2twHjObJahKAE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:date:message-id:in-reply-to; q=dns; s=sasl; b=pMz1iAhfc
+        qnGWSmwwfbFNe1qNw4/3g6Kf4BXUShM9XoMrzxDUMuptJMaIM09upB2h1inyFwcB
+        E5dsMeijl3dVp7AarMfy3wuVtyiJBhupiF5OUyWxU6r3Nm2erP/BsrqWE80RQDJT
+        EQR/9bS4p0gFRAGvkZs+AR8LWD7XcOTACM=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id DF585C634D;
+        Fri, 16 Mar 2018 18:07:50 -0400 (EDT)
+Received: from morphine.paradise.teonanacatl.net (unknown [47.202.85.221])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 29C8DC634C;
+        Fri, 16 Mar 2018 18:07:50 -0400 (EDT)
+From:   Todd Zullinger <tmz@pobox.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, git@vger.kernel.org,
+        git-packagers@googlegroups.com, linux-kernel@vger.kernel.org
+Subject: [PATCH] RelNotes: add details on Perl module changes
+Date:   Fri, 16 Mar 2018 18:07:48 -0400
+Message-Id: <20180316220748.4279-1-tmz@pobox.com>
+X-Mailer: git-send-email 2.17.0.rc0
+In-Reply-To: <xmqq7eqb3nct.fsf@gitster-ct.c.googlers.com>
+X-Pobox-Relay-ID: 779087D8-2966-11E8-A93C-44CE1968708C-09356542!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+Document changes to core and non-core Perl module handling in 2.17.
+---
+Junio C Hamano <gitster@pobox.com> writes:
 
-> On Wed, 14 Mar 2018 18:34:49 -0700
-> Junio C Hamano <gitster@pobox.com> wrote:
+>> I haven't wordsmithed it fully, but it should say something along
+>> the lines of ...
+>>
+>>  Documentation/RelNotes/2.16.0.txt | 10 ++++++++++
+>>  1 file changed, 10 insertions(+)
 >
->> * sb/object-store (2018-03-05) 27 commits
->
-> [snip list of commits]
->
->>  (this branch is used by sb/packfiles-in-repository; uses nd/remove-ignore-env-field.)
->> 
->>  Refactoring the internal global data structure to make it possible
->>  to open multiple repositories, work with and then close them.
->> 
->>  Rerolled by Duy on top of a separate preliminary clean-up topic.
->>  The resulting structure of the topics looked very sensible.
->> 
->>  Waiting for a follow-up discussion.
->
-> Would it be possible for this set to go in independently of
-> nd/remove-ignore-env-field? I understand that some patches might be
-> cleaner if ignore_env is first removed, but this patch set has already
-> undergone several rounds of review and (I think) is an improvement to
-> the codebase on its own.
+> Eh, of course the addition should go to 2.17 release notes ;-)  I
+> just happened to be reviewing a topic forked earlier.
 
-I thought the "remove-ignore-env-field" thing is a quite small and
-more-or-less straightforward improvements that would serve as a good
-preparatory change to give a solid foundation to the object-store
-topic.
+Maybe something like this?  I had intended to suggest a note about
+NO_PERL_CPAN_FALLBACKS as well, so that's included too.  I don't know if that
+should be expanded to provide more of a hint to users/packagers on platforms
+where these modules are harder to install, letting them know that we now have
+fallbacks to Error and Mail::Address.  That might allow scripts which were
+previously excluded to be included on their platforms.
 
-I was hoping to hear quick Acks for remove-ignore-env (and also
-Duy's reroll of their topics on it) from people involved in all the
-related topics, so that we can advance them more-or-less at the same
-time.
+ Documentation/RelNotes/2.17.0.txt | 14 ++++++++++++++
+ INSTALL                           |  3 ++-
+ 2 files changed, 16 insertions(+), 1 deletion(-)
 
+diff --git a/Documentation/RelNotes/2.17.0.txt b/Documentation/RelNotes/2.17.0.txt
+index c828d37345..085bf1dba1 100644
+--- a/Documentation/RelNotes/2.17.0.txt
++++ b/Documentation/RelNotes/2.17.0.txt
+@@ -75,6 +75,20 @@ Performance, Internal Implementation, Development Support etc.
+  * The build procedure for perl/ part has been greatly simplified by
+    weaning ourselves off of MakeMaker.
+ 
++ * Perl 5.8 or greater has been required since Git 1.7.4 released in
++   2010, but we continued to assume some core modules may not exist and
++   used a conditional "eval { require <<module>> }"; we no longer do
++   this.  Some platforms (Fedora/RedHat/CentOS, for example) ship Perl
++   without all core modules by default (e.g. Digest::MD5, File::Temp,
++   File::Spec, Net::Domain, Net::SMTP).  Users on such platforms may
++   need to install these additional modules.
++
++ * As a convenience, we install copies of Perl modules we require which
++   are not part of the core Perl distribution (e.g. Error and
++   Mail::Address).  Users and packagers whose operating system provides
++   these modules can set NO_PERL_CPAN_FALLBACKS to avoid installing the
++   bundled modules.
++
+  * In preparation for implementing narrow/partial clone, the machinery
+    for checking object connectivity used by gc and fsck has been
+    taught that a missing object is OK when it is referenced by a
+diff --git a/INSTALL b/INSTALL
+index 60e515eaf7..c39006e8e7 100644
+--- a/INSTALL
++++ b/INSTALL
+@@ -126,7 +126,8 @@ Issues of note:
+ 	  Redhat/Fedora are reported to ship Perl binary package with some
+ 	  core modules stripped away (see http://lwn.net/Articles/477234/),
+ 	  so you might need to install additional packages other than Perl
+-	  itself, e.g. Time::HiRes.
++	  itself, e.g. Digest::MD5, File::Spec, File::Temp, Net::Domain,
++	  Net::SMTP, and Time::HiRes.
+ 
+ 	- git-imap-send needs the OpenSSL library to talk IMAP over SSL if
+ 	  you are using libcurl older than 7.34.0.  Otherwise you can use
+-- 
+2.17.0.rc0
 
