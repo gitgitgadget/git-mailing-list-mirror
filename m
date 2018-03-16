@@ -2,155 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B2CD31F404
-	for <e@80x24.org>; Fri, 16 Mar 2018 20:49:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8655A1F404
+	for <e@80x24.org>; Fri, 16 Mar 2018 20:52:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751681AbeCPUts (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Mar 2018 16:49:48 -0400
-Received: from cloud.peff.net ([104.130.231.41]:59940 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1750826AbeCPUtr (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Mar 2018 16:49:47 -0400
-Received: (qmail 9094 invoked by uid 109); 16 Mar 2018 20:49:47 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 16 Mar 2018 20:49:47 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 465 invoked by uid 111); 16 Mar 2018 20:50:42 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 16 Mar 2018 16:50:42 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 16 Mar 2018 16:49:45 -0400
-Date:   Fri, 16 Mar 2018 16:49:45 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Git mailing list <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        git@jeffhostetler.com, Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v6 00/14] Serialized Git Commit Graph
-Message-ID: <20180316204945.GA12333@sigill.intra.peff.net>
-References: <1519698787-190494-1-git-send-email-dstolee@microsoft.com>
- <20180314192736.70602-1-dstolee@microsoft.com>
- <878tasdpqo.fsf@evledraar.gmail.com>
- <CAM0VKjknPZj-qHzf5nVr_RdHtB+pq2+APc1tesexP-eFSP9n_A@mail.gmail.com>
- <xmqq370z3m5o.fsf@gitster-ct.c.googlers.com>
+        id S1751630AbeCPUwr (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Mar 2018 16:52:47 -0400
+Received: from mail-pl0-f68.google.com ([209.85.160.68]:44761 "EHLO
+        mail-pl0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750915AbeCPUwq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Mar 2018 16:52:46 -0400
+Received: by mail-pl0-f68.google.com with SMTP id 9-v6so6594297ple.11
+        for <git@vger.kernel.org>; Fri, 16 Mar 2018 13:52:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=CG+Umk0ddhCnlfEVNJpVAZjOuZSoEuaKr7PjUIQ3nY0=;
+        b=Ib4XwFRzCscDuc3Nsl16ZhJ6Z9njQgREhQpcTUG4TQQAdXm1AN2QEAo/dPYUYLoDgA
+         cp2RNMaE12CsfPeb+ITPvbxioZ1ECKjj5GWw0jGDtkIBr1YoFNsrE2dNWWRQgla4OQjm
+         n2mCNmAazSqdaGepz219hcZ5VGTaGWI1DTEDtqlUY3VOJfLaeyypLakM5j67Qm6FPpTa
+         p/zbW8B2gKMre1d4fP3V30eu43QXDEOZsyGJLvu58icTRhKif9dOcYCNDHKpPrnBIRVc
+         H8b0k4FP8aBuPolUI4xhkdNWW/nFQyi4nmZWnXh1dZRxdpeO5Lde9V+YV9hsA8HlQjNf
+         Vf0Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=CG+Umk0ddhCnlfEVNJpVAZjOuZSoEuaKr7PjUIQ3nY0=;
+        b=j4YxTXOsUZVFGfA1fsZMRDsmyuskHKtnTrPyBB59rsHJEMRhHjDO4BSu626uzYlTkP
+         hpSa57WNzlKg+s0zy01jwuRJAyT/KI+V6wHz/7UmAyHS/BQxhPOzqNFFweMSqRO8RKdK
+         WzUXZZ82dCYRj5UU24e1mjtLBfCEEYEoBevLxCmpFGBo+TQiHWXmVa6D6sFT/dtvx1uX
+         6QG4nkHq0VHb+6br1I1AN7Ry1hX2e2uG4/o21lqDJ4PzYzLCY1irpJZjQFCXNPg0VmFy
+         FjNaMOrJjJXWYDVqrAb5o0g+IOeqUC/6XugjBmpyikkPY7DMRfLZZaQ2eB2DyJOdJZYg
+         x9vQ==
+X-Gm-Message-State: AElRT7Hos5fsItaaHgTJx+vnOOANcTmjJvpIkzAah1ltDFUa2TTuXSbb
+        9nQf7ZFZP3Q5snq4x5lOxXs=
+X-Google-Smtp-Source: AG47ELvqx0SkcS/QvePLFYlqDiffVrMeUYYVkYQsllHRa2DCJmWHUtFR6Xs5nHnFP3nmI4/PPN4iBw==
+X-Received: by 2002:a17:902:5066:: with SMTP id f35-v6mr3573683plh.14.1521233565436;
+        Fri, 16 Mar 2018 13:52:45 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id r1sm13459094pgq.41.2018.03.16.13.52.44
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 16 Mar 2018 13:52:45 -0700 (PDT)
+Date:   Fri, 16 Mar 2018 13:52:43 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     "Briggs, John" <JOHN.BRIGGS@aei.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "git-for-windows@googlegroups.com" <git-for-windows@googlegroups.com>
+Subject: Re: getting fatal error trying to open git gui
+Message-ID: <20180316205243.GB151588@aiede.svl.corp.google.com>
+References: <CY4PR02MB22621DE7751427686029C1B3FFD70@CY4PR02MB2262.namprd02.prod.outlook.com>
+ <20180316195756.GA151588@aiede.svl.corp.google.com>
+ <CY4PR02MB2262A567EE2D2A54316BFE3FFFD70@CY4PR02MB2262.namprd02.prod.outlook.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqq370z3m5o.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <CY4PR02MB2262A567EE2D2A54316BFE3FFFD70@CY4PR02MB2262.namprd02.prod.outlook.com>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 16, 2018 at 11:33:55AM -0700, Junio C Hamano wrote:
+Briggs, John wrote:
+> Jonathan Nieder wrote:
+>> Briggs, John wrote:
 
-> It is not so surprising that history walking runs rings around
-> enumerating objects in packfiles, if packfiles are built well.
-> 
-> A well-built packfile tends to has newer objects in base form and
-> has delta that goes in backward direction (older objects are
-> represented as delta against newer ones).  This helps warlking from
-> the tips of the history quite a bit, because your delta base cache
-> will tend to have the base object (i.e. objects in the newer part of
-> the history you just walked) that will be required to access the
-> "next" older part of the history more often than not.
-> 
-> Trying to read the objects in the pack in their object name order
-> would essentially mean reading them in a cryptgraphically random
-> order.  Half the time you will end up wanting to access an object
-> that is near the tip of a very deep delta chain even before you've
-> accessed any of the base objects in the delta chain.
+>>> I just installed git for windows 10 and am getting "git-gui: fatal
+>>> error" "Cannot parse Git version string.
+>>>
+>>> When I execute "git version" in the command prompt I get Git version
+>>> 2.16.2.windows.1
+>>>
+>>> Everything else seems to be working. How can I get the gui to work?
+>>
+>> That's strange indeed.  Why is Git capitalized when you run "git version"?
+>
+> Got it figured out. Git gui must be ran as administrator.
 
-I coincidentally was doing some experiments in this area a few weeks
-ago, and found a few things:
+Hm, that leaves me even more mystified.
 
-  1. The ordering makes a _huge_ difference for accessing trees and
-     blobs.
+Before v1.7.4-rc0~155^2~4 (git-gui: generic version trimming,
+2010-10-07), git-gui was not able to handle "git version" output like
+"git version 2.16.2.windows.1", but since then, it should have been
+able to cope fine with it.
 
-  2. Pack order (not pack-idx order) is actually the best order, since
-     it tends to follow the delta patterns (it's close to traversal
-     order, but packs delta families more tightly).
+I wonder: do you have multiple versions of git gui installed?
 
-  3. None of this really matters for commits, since we almost never
-     store them as deltas anyway.
-
-Here are a few experiments people can do themselves to demonstrate (my
-numbers here are all from linux.git, which is sort of a wort-case
-for bad ordering because its size stresses the default delta cache):
-
-  [every object in sha1 order: slow]
-  $ time git cat-file --batch-all-objects --batch >/dev/null
-  real	8m44.041s
-  user	8m31.359s
-  sys	0m12.262s
-
-  [every object from a traversal: faster, but --objects traversals are
-   actually CPU heavy due to all of the hash lookups for each tree. Note
-   not just wall-clock time but the CPU since it's split across two
-   processes]
-  $ time git rev-list --objects --all |
-         cut -d' ' -f2 |
-	 git cat-file --batch >/dev/null
-  real	1m2.667s
-  user	0m58.537s
-  sys	0m32.392s
-
-  [every object in pack order: fastest. This is due to skipping the
-   traversal overhead, and should use our delta cache quite efficiently.
-   I'm assuming a single pack and no loose objects here, but the
-   performance should generalize since accessing the "big" pack
-   dominates]
-  $ time git show-index <$(ls .git/objects/pack/*.idx) |
-         sort -n |
-         cut -d' ' -f2 |
-	 git cat-file --batch >/dev/null
-  real	0m51.718s
-  user	0m50.963s
-  sys	0m7.068s
-
-  [just commits, sha1 order: not horrible]
-  $ time git cat-file --batch-all-objects --batch-check='%(objecttype) %(objectname)' |
-         grep ^commit |
-	 cut -d' ' -f2 |
-	 git cat-file --batch >/dev/null
-  real	0m8.115s
-  user	0m14.033s
-  sys	0m1.170s
-
-  [just commits, pack order: slightly worse due to the extra piping, but
-   obviously that could be done more quickly internally]
-  $ time git show-index <$(ls .git/objects/pack/*.idx) |
-         sort -n |
-         cut -d' ' -f2 |
-	 git cat-file --batch-check='%(objecttype) %(objectname)' |
-         grep ^commit |
-	 cut -d' ' -f2 |
-	 git cat-file --batch >/dev/null
-  real	0m21.670s
-  user	0m24.867s
-  sys	0m9.600s
-
-  [and the reason is that hardly any commits get deltas]
-  $ git cat-file --batch-all-objects --batch-check='%(objecttype) %(deltabase)' |
-    grep ^commit >commits
-  $ wc -l commits
-  692596
-  $ grep -v '0000000000000000000000000000000000000000' commits | wc -l
-  18856
-
-For the purposes of this patch series, I don't think the order matters
-much, since we're only dealing with commits. For doing --batch-check, I
-think the sha1 ordering given by "cat-file --batch-all-objects" is
-convenient, and doesn't have a big impact on performance. But it's
-_awful_ for --batch. I think we may want to add a sorting option to just
-return the objects in the original packfile order.
-
--Peff
+Thanks,
+Jonathan
