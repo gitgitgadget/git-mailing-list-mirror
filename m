@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4FECE1FAE5
-	for <e@80x24.org>; Fri, 16 Mar 2018 18:32:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2A6441F404
+	for <e@80x24.org>; Fri, 16 Mar 2018 18:33:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752882AbeCPScw (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Mar 2018 14:32:52 -0400
-Received: from mail-lf0-f65.google.com ([209.85.215.65]:33344 "EHLO
-        mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752284AbeCPSct (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Mar 2018 14:32:49 -0400
-Received: by mail-lf0-f65.google.com with SMTP id x205-v6so16756731lfa.0
-        for <git@vger.kernel.org>; Fri, 16 Mar 2018 11:32:48 -0700 (PDT)
+        id S1752562AbeCPSc7 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Mar 2018 14:32:59 -0400
+Received: from mail-lf0-f67.google.com ([209.85.215.67]:38545 "EHLO
+        mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750991AbeCPScu (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Mar 2018 14:32:50 -0400
+Received: by mail-lf0-f67.google.com with SMTP id y2-v6so14615434lfc.5
+        for <git@vger.kernel.org>; Fri, 16 Mar 2018 11:32:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=9Lsdzb7g2t6Xz6GFw0t791o/NlTec2GUvRN8aaabOGg=;
-        b=P8ixOfGYx6YTZ8pAAN+gFc3/9qYj6OAkZkwfhrd5RqsHVJzyIth0H6PohL5S8reHxz
-         /sJ2stRVu+lUAXFd38mAGIqCA8k+W6CNiqTio9B8LML2ifJoAMXUagHkEF6IP9n3hG7e
-         wGRxgWexGrE3r00NXS6+4yR9GdRa3rGiSryEitFOXo3sIkVHbVapp9gtIkckb7AMT/Qb
-         ArKvbWTRpyCCYULlgaONJrAP0Oi4/kWEXhhAD4I140cSj5hFhLnQ13vBk5qSxcJGsErn
-         AdSAfjMYyssgI5V0g2fQwUZu8Qjx4ARz9P799NI/BXu06iT98pdLJcGLHh6ISAHPu/+l
-         EWEA==
+        bh=/w+dDITXJI+qx4xoOiDL6+MmX266Gk+lq8EqkdwiETM=;
+        b=OFP9Tc9dRg1sJyxQHMWirjDZqH1j0QYgeaNkYL0ADbjPradKCzemzfYxj8bUixAm7F
+         VyeJ9EOmB95kvBz+sAqzH38GVhWat+G9zmZ+wzo3abQz8lHM46WNJmoTsptW7PX0O9r5
+         NHdxdB7mLTiUgm+vWaMTWuPKBNNpBqeD7zrmHuGytvlUBRRHdJR5vVoYDUVeva8jtZ8g
+         vwoYg1ZO6+Lz8mcTYO8RbiKBBdMtJTfIxKCPndeowg613XTYhjjbdVyYyoGe3OKaDdVv
+         MOw/31Wrgdqj8AtfgWkIo6ncv9UePa3fhnQP6LkR5fHFcvlfHh/S+H9AYOyFPA/xSK1L
+         nAKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=9Lsdzb7g2t6Xz6GFw0t791o/NlTec2GUvRN8aaabOGg=;
-        b=mSbudYc+JRCdBajKZzcbhyyLVNxVUsEHpKJuMs6TOr79BJCXwHXChKK51TIM970O8E
-         eB33Tmwr+CV5g+qNalWYmUVDHYvUzcBbhOVG43kyW60QcPs3EUD6i+TT9KeTjBw0FKsA
-         Ovyp8pndO/9SRK1sVpAymFaiB5qABOpLQE4vpAE8j18HDIKS0132D2kqlLv44KgCTz27
-         H31RkGPDquqD1oWqFlTplqVc9+V6GzqEZO5JGPP+dHVlN3W8YMNk3iAqAVdQkyMT+w7z
-         niV/Ttq2CJI0iKk0iGHcZOiAUZJcyIGt4zYykL1YlikySZNgtyihuXSNas2bOt9KYrif
-         ztYQ==
-X-Gm-Message-State: AElRT7FJxu5SmsY/6+6xZ0Rn3+02BPTD2FdDpsctLAK5sDYf1BWRjMit
-        mThqGX7k7O59KQ5/8YSaCW+fcw==
-X-Google-Smtp-Source: AG47ELtVg9ilR/4/i9+u9roOWXlPI4ZLe+DI5FDc01cT0qOEb2bX7Ii0qr5FH5d2gjpTaoNL/yVqZg==
-X-Received: by 2002:a19:5c84:: with SMTP id u4-v6mr2076351lfi.14.1521225167392;
-        Fri, 16 Mar 2018 11:32:47 -0700 (PDT)
+        bh=/w+dDITXJI+qx4xoOiDL6+MmX266Gk+lq8EqkdwiETM=;
+        b=Vu303DtQQ0xbXVmv/+2FfwzDbEiRMwbHbPAndDPxAqnbXLqsB+D8PARpWeA8rIVaFC
+         ZjBJR+JrJvAp41wOJX/+R3Qcl+S+isj/DjxN/7fSyIJIkeJ9h59pTA+Av8vKRqDuXaxm
+         pTtq24ht/+hQD0Jbx5nLSYDE0XYbsWzfrkt7bTJBK8kSx1y7z77GpF4FsAlj4I4sphXU
+         fZ5tolBvQsDeu//YdJYN9lN37IUFXdYxHhfqMuUWXX3taFbBMKj84UecLLbjAiZxIkmT
+         GFenPdMJlQXrZthol4SUuOi77D5IDnzEb0VfONZCR/IOKEx4m07H4xnEKPQenSrej11y
+         gRPg==
+X-Gm-Message-State: AElRT7FvVnA67JdNey78SeFWdbXVxdCm3Rm7XOnjswTYSM2qat2srhE0
+        ScrU8TkJqA1W0+nduMrhiAE=
+X-Google-Smtp-Source: AG47ELuZbIKsCNdjiQXYkc+Ca8JIuQRubcnzeAtLFheNMoNPsnE/E+YlMTXKGwwbYbgZRKlFbV1nMw==
+X-Received: by 2002:a19:9e95:: with SMTP id h143-v6mr2216167lfe.129.1521225168779;
+        Fri, 16 Mar 2018 11:32:48 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id j199-v6sm1033275lfe.53.2018.03.16.11.32.45
+        by smtp.gmail.com with ESMTPSA id j199-v6sm1033275lfe.53.2018.03.16.11.32.47
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 16 Mar 2018 11:32:46 -0700 (PDT)
+        Fri, 16 Mar 2018 11:32:48 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     avarab@gmail.com, e@80x24.org, git@vger.kernel.org,
         gitster@pobox.com, peff@peff.net
-Subject: [PATCH v4 04/11] pack-objects: use bitfield for object_entry::depth
-Date:   Fri, 16 Mar 2018 19:31:53 +0100
-Message-Id: <20180316183200.31014-5-pclouds@gmail.com>
+Subject: [PATCH v4 05/11] pack-objects: move in_pack_pos out of struct object_entry
+Date:   Fri, 16 Mar 2018 19:31:54 +0100
+Message-Id: <20180316183200.31014-6-pclouds@gmail.com>
 X-Mailer: git-send-email 2.16.2.903.gd04caf5039
 In-Reply-To: <20180316183200.31014-1-pclouds@gmail.com>
 References: <20180308114232.10508-1-pclouds@gmail.com>
@@ -69,100 +69,139 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Because of struct packing from now on we can only handle max depth
-4095 (or even lower when new booleans are added in this struct). This
-should be ok since long delta chain will cause significant slow down
-anyway.
+This field is only need for pack-bitmap, which is an optional
+feature. Move it to a separate array that is only allocated when
+pack-bitmap is used (it's not freed in the same way that objects[] is
+not).
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- Documentation/config.txt           | 1 +
- Documentation/git-pack-objects.txt | 4 +++-
- Documentation/git-repack.txt       | 4 +++-
- builtin/pack-objects.c             | 4 ++++
- pack-objects.h                     | 5 ++---
- 5 files changed, 13 insertions(+), 5 deletions(-)
+ builtin/pack-objects.c |  3 ++-
+ pack-bitmap-write.c    |  8 +++++---
+ pack-bitmap.c          |  2 +-
+ pack-bitmap.h          |  4 +++-
+ pack-objects.h         | 16 +++++++++++++++-
+ 5 files changed, 26 insertions(+), 7 deletions(-)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index f57e9cf10c..9bd3f5a789 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -2412,6 +2412,7 @@ pack.window::
- pack.depth::
- 	The maximum delta depth used by linkgit:git-pack-objects[1] when no
- 	maximum depth is given on the command line. Defaults to 50.
-+	Maximum value is 4095.
- 
- pack.windowMemory::
- 	The maximum size of memory that is consumed by each thread
-diff --git a/Documentation/git-pack-objects.txt b/Documentation/git-pack-objects.txt
-index 81bc490ac5..3503c9e3e6 100644
---- a/Documentation/git-pack-objects.txt
-+++ b/Documentation/git-pack-objects.txt
-@@ -96,7 +96,9 @@ base-name::
- 	it too deep affects the performance on the unpacker
- 	side, because delta data needs to be applied that many
- 	times to get to the necessary object.
--	The default value for --window is 10 and --depth is 50.
-++
-+The default value for --window is 10 and --depth is 50. The maximum
-+depth is 4095.
- 
- --window-memory=<n>::
- 	This option provides an additional limit on top of `--window`;
-diff --git a/Documentation/git-repack.txt b/Documentation/git-repack.txt
-index ae750e9e11..25c83c4927 100644
---- a/Documentation/git-repack.txt
-+++ b/Documentation/git-repack.txt
-@@ -90,7 +90,9 @@ other objects in that pack they already have locally.
- 	space. `--depth` limits the maximum delta depth; making it too deep
- 	affects the performance on the unpacker side, because delta data needs
- 	to be applied that many times to get to the necessary object.
--	The default value for --window is 10 and --depth is 50.
-++
-+The default value for --window is 10 and --depth is 50. The maximum
-+depth is 4095.
- 
- --threads=<n>::
- 	This option is passed through to `git pack-objects`.
 diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 09f8b4ef3e..668eaf8cd7 100644
+index 668eaf8cd7..b281487b96 100644
 --- a/builtin/pack-objects.c
 +++ b/builtin/pack-objects.c
-@@ -3068,6 +3068,10 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 	if (pack_to_stdout != !base_name || argc)
- 		usage_with_options(pack_usage, pack_objects_options);
+@@ -879,7 +879,8 @@ static void write_pack_file(void)
  
-+	if (depth >= (1 << OE_DEPTH_BITS))
-+		die(_("delta chain depth %d is greater than maximum limit %d"),
-+		    depth, (1 << OE_DEPTH_BITS));
-+
- 	argv_array_push(&rp, "pack-objects");
- 	if (thin) {
- 		use_internal_rev_list = 1;
+ 			if (write_bitmap_index) {
+ 				bitmap_writer_set_checksum(oid.hash);
+-				bitmap_writer_build_type_index(written_list, nr_written);
++				bitmap_writer_build_type_index(
++					&to_pack, written_list, nr_written);
+ 			}
+ 
+ 			finish_tmp_packfile(&tmpname, pack_tmp_name,
+diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
+index fd11f08940..f7c897515b 100644
+--- a/pack-bitmap-write.c
++++ b/pack-bitmap-write.c
+@@ -48,7 +48,8 @@ void bitmap_writer_show_progress(int show)
+ /**
+  * Build the initial type index for the packfile
+  */
+-void bitmap_writer_build_type_index(struct pack_idx_entry **index,
++void bitmap_writer_build_type_index(struct packing_data *to_pack,
++				    struct pack_idx_entry **index,
+ 				    uint32_t index_nr)
+ {
+ 	uint32_t i;
+@@ -57,12 +58,13 @@ void bitmap_writer_build_type_index(struct pack_idx_entry **index,
+ 	writer.trees = ewah_new();
+ 	writer.blobs = ewah_new();
+ 	writer.tags = ewah_new();
++	ALLOC_ARRAY(to_pack->in_pack_pos, to_pack->nr_objects);
+ 
+ 	for (i = 0; i < index_nr; ++i) {
+ 		struct object_entry *entry = (struct object_entry *)index[i];
+ 		enum object_type real_type;
+ 
+-		entry->in_pack_pos = i;
++		oe_set_in_pack_pos(to_pack, entry, i);
+ 
+ 		switch (oe_type(entry)) {
+ 		case OBJ_COMMIT:
+@@ -147,7 +149,7 @@ static uint32_t find_object_pos(const unsigned char *sha1)
+ 			"(object %s is missing)", sha1_to_hex(sha1));
+ 	}
+ 
+-	return entry->in_pack_pos;
++	return oe_in_pack_pos(writer.to_pack, entry);
+ }
+ 
+ static void show_object(struct object *object, const char *name, void *data)
+diff --git a/pack-bitmap.c b/pack-bitmap.c
+index 9270983e5f..865d9ecc4e 100644
+--- a/pack-bitmap.c
++++ b/pack-bitmap.c
+@@ -1032,7 +1032,7 @@ int rebuild_existing_bitmaps(struct packing_data *mapping,
+ 		oe = packlist_find(mapping, sha1, NULL);
+ 
+ 		if (oe)
+-			reposition[i] = oe->in_pack_pos + 1;
++			reposition[i] = oe_in_pack_pos(mapping, oe) + 1;
+ 	}
+ 
+ 	rebuild = bitmap_new();
+diff --git a/pack-bitmap.h b/pack-bitmap.h
+index 3742a00e14..5ded2f139a 100644
+--- a/pack-bitmap.h
++++ b/pack-bitmap.h
+@@ -44,7 +44,9 @@ int rebuild_existing_bitmaps(struct packing_data *mapping, khash_sha1 *reused_bi
+ 
+ void bitmap_writer_show_progress(int show);
+ void bitmap_writer_set_checksum(unsigned char *sha1);
+-void bitmap_writer_build_type_index(struct pack_idx_entry **index, uint32_t index_nr);
++void bitmap_writer_build_type_index(struct packing_data *to_pack,
++				    struct pack_idx_entry **index,
++				    uint32_t index_nr);
+ void bitmap_writer_reuse_bitmaps(struct packing_data *to_pack);
+ void bitmap_writer_select_commits(struct commit **indexed_commits,
+ 		unsigned int indexed_commits_nr, int max_bitmaps);
 diff --git a/pack-objects.h b/pack-objects.h
-index 2bb1732098..50908d1f2d 100644
+index 50908d1f2d..dae160e7c2 100644
 --- a/pack-objects.h
 +++ b/pack-objects.h
-@@ -2,6 +2,7 @@
- #define PACK_OBJECTS_H
+@@ -78,7 +78,6 @@ struct object_entry {
+ 	unsigned in_pack_type:TYPE_BITS; /* could be delta */
+ 	unsigned type_valid:1;
+ 	uint32_t hash;			/* name hint hash */
+-	unsigned int in_pack_pos;
+ 	unsigned char in_pack_header_size;
+ 	unsigned preferred_base:1; /*
+ 				    * we do not pack this, but is available
+@@ -98,6 +97,8 @@ struct packing_data {
  
- #define OE_DFS_STATE_BITS	2
-+#define OE_DEPTH_BITS		12
- 
- /*
-  * State flags for depth-first search used for analyzing delta cycles.
-@@ -88,9 +89,7 @@ struct object_entry {
- 	unsigned tagged:1; /* near the very tip of refs */
- 	unsigned filled:1; /* assigned write-order */
- 	unsigned dfs_state:OE_DFS_STATE_BITS;
--
--	int depth;
--
-+	unsigned depth:OE_DEPTH_BITS;
+ 	int32_t *index;
+ 	uint32_t index_size;
++
++	unsigned int *in_pack_pos;
  };
  
- struct packing_data {
+ struct object_entry *packlist_alloc(struct packing_data *pdata,
+@@ -143,4 +144,17 @@ static inline void oe_set_type(struct object_entry *e,
+ 	e->type_ = (unsigned)type;
+ }
+ 
++static inline unsigned int oe_in_pack_pos(const struct packing_data *pack,
++					  const struct object_entry *e)
++{
++	return pack->in_pack_pos[e - pack->objects];
++}
++
++static inline void oe_set_in_pack_pos(const struct packing_data *pack,
++				      const struct object_entry *e,
++				      unsigned int pos)
++{
++	pack->in_pack_pos[e - pack->objects] = pos;
++}
++
+ #endif
 -- 
 2.16.2.903.gd04caf5039
 
