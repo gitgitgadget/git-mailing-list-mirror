@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D4AD21F404
-	for <e@80x24.org>; Fri, 16 Mar 2018 19:28:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2FD511F404
+	for <e@80x24.org>; Fri, 16 Mar 2018 19:28:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753180AbeCPT2T (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Mar 2018 15:28:19 -0400
-Received: from mail-lf0-f67.google.com ([209.85.215.67]:38732 "EHLO
+        id S1753150AbeCPT2S (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Mar 2018 15:28:18 -0400
+Received: from mail-lf0-f67.google.com ([209.85.215.67]:33554 "EHLO
         mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753082AbeCPT2P (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1753085AbeCPT2P (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 16 Mar 2018 15:28:15 -0400
-Received: by mail-lf0-f67.google.com with SMTP id y2-v6so14825125lfc.5
-        for <git@vger.kernel.org>; Fri, 16 Mar 2018 12:28:14 -0700 (PDT)
+Received: by mail-lf0-f67.google.com with SMTP id x205-v6so16968369lfa.0
+        for <git@vger.kernel.org>; Fri, 16 Mar 2018 12:28:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=If+xMZaell1+lPxaUxdlWrTiil9EPcmDJeblrxhImn0=;
-        b=nOrTtpTZCFENzMkAb5IfuZHeFtRr32Qtp1/cNhXL40r4FWV3QITwN+IXfWX5e2tkaC
-         P3zDpp4IEXRdwJRR4sArbjacVrmXWkqnR8Bu+MqoRu+p8Nucok6Ih8JuiRaXwq/roDXA
-         eb5o5LEP9xCcHWG6lS2VDA55Cr9VQ/NNQSKlzAOnXKkRlX8BRr1atgUIsV3siqSxnIl+
-         oFKJklquejZ8G0+G1ylQg14tntWmXnTaOX/MpmhG+22PKBywPBdf666RsQCuE7gfB9B8
-         GPFqOkEpfKaOvCZe2brfclGeXF52YmkayteOH1qK1+En8KVNaYEB+BwBMerrh9k85lMc
-         qKUw==
+        bh=PE+NKz/nQ96B5qPsWKsdIqCDqIDhEaxdBFcqjkGIxXE=;
+        b=fkXv1gejGCpUOtp2EVoIF15Bsdm6i2SKZCDV1rnz2kjezUqnZ6Wc7ELptXZoZGdl4+
+         lvlnubJ07y27rbaD18SnwS/0CvviPGs0mTHizCvtMKsvU/tZydQ02WTEm8xuUT+6ESlY
+         cNKUKNR9dNwRR+07+cJLE9KtE5svy2ds9l83PS+3OYpCJBKL5wWjxZ1Dw56L2ccj5MEA
+         +/tXT0mI+YLTlFZPrxHuBPc1wgUfiCkAvmzIMecofoYu1AWwtFeyaPj6AJpCLPSud6xd
+         2FuUkzzlr9XOIPCDzxXEG6/t4RHpvHWDl3kIXuM/tdpy4P8BLViLel/gym8Pqs5mI3+F
+         hneA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=If+xMZaell1+lPxaUxdlWrTiil9EPcmDJeblrxhImn0=;
-        b=hmYxm06a7yns8XFiv6VbG/z0EO01oIliGxSlLxY9DzqnRp7cEX6mCNzc1af2pEgZvo
-         r8dOaivBBApKZXg19T7cin+3m+YxpDbk8cKf0DpPkmEiuGjLcW5MTgqSlIYmOecU9pem
-         Mof6kyNvO7hmHXM6rh5PmtPKv07ngWQK8nvoQw+18Mklhm+UWln3b9tEYR5WcVFWbM9x
-         F6/jJmANFqg+edxxt6OTqnIbf+puOGDxai/UD370zFsuPXtxRL/2PcWDSUSmjv08m2kk
-         mJQ7/0RL5mq6MXkEAEyJ1YmUhiT2MePhaEkgXK4VH7oqgD8PMa7KCjbZo0PAqZxBgP+s
-         Rpkw==
-X-Gm-Message-State: AElRT7ENkiV5kDYiPUYKwgkMOGApRY5s/7/RO4DSIeKHPu6LpGXpN4Gu
-        UNvWwttTsxUc/YDfsl1F/fyQ9w==
-X-Google-Smtp-Source: AG47ELvXSPeQeYb1DDLmoP9fcIdP70uNxXX7jG1mRuXrN0e0iPya6qvShJ81DP3K+QAzZntcEtlAew==
-X-Received: by 2002:a19:15d9:: with SMTP id 86-v6mr2310001lfv.96.1521228493326;
-        Fri, 16 Mar 2018 12:28:13 -0700 (PDT)
+        bh=PE+NKz/nQ96B5qPsWKsdIqCDqIDhEaxdBFcqjkGIxXE=;
+        b=SsAGqe8MEM23QCSmaJGh7OJocbGZvot4d7YC4VwekQajKmQa3TfM+pvJ0vkQ3wg+xu
+         xE4Hqgn/KKdN/VNpXurhZc2QcWlpce29tS58umZ9Q6CZeRcoSV0D8V19OaP/v/vBbyMe
+         srlZXFJSndhqKSxNzZsgRqnzlQy1uyKnuWgwn2als6gwCGnclwELLt8Xk+ayjMzQ4QxO
+         ZNDYJUf5/MaYHxbuvHBEuqp+dmwsG3G8KjzVYGa/DZAfgi13QqEfVSvVRDvVa6MZAcmj
+         85MjN0reokiJy89GeaF3Q/O8awnneNL3tYNLyU2WK873Pv2xSanGZyb1J4gsDng07kCI
+         p6Mg==
+X-Gm-Message-State: AElRT7Ex/GAFeesZAUIde374k0/wZsn/L7huteJpmkaatN6MDuIQT9HZ
+        u9d10/I5UU3qHJRGd0B3GjQ=
+X-Google-Smtp-Source: AG47ELsx2xa9pquA7Ri4UaaOeDK+UEenQyri9JIDl3RyJ5EyaXNHMcUbHke4ocz2wsQlJnvmhAxHZw==
+X-Received: by 10.46.133.15 with SMTP id j15mr2285370lji.58.1521228494517;
+        Fri, 16 Mar 2018 12:28:14 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id h8sm1766085lja.41.2018.03.16.12.28.12
+        by smtp.gmail.com with ESMTPSA id h8sm1766085lja.41.2018.03.16.12.28.13
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 16 Mar 2018 12:28:12 -0700 (PDT)
+        Fri, 16 Mar 2018 12:28:13 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     avarab@gmail.com, e@80x24.org, git@vger.kernel.org,
         gitster@pobox.com, peff@peff.net
-Subject: [PATCH v3 6/7] pack-objects: show some progress when counting kept objects
-Date:   Fri, 16 Mar 2018 20:27:44 +0100
-Message-Id: <20180316192745.19557-7-pclouds@gmail.com>
+Subject: [PATCH v3 7/7] pack-objects: display progress in get_object_details()
+Date:   Fri, 16 Mar 2018 20:27:45 +0100
+Message-Id: <20180316192745.19557-8-pclouds@gmail.com>
 X-Mailer: git-send-email 2.16.2.903.gd04caf5039
 In-Reply-To: <20180316192745.19557-1-pclouds@gmail.com>
 References: <20180306104158.6541-1-pclouds@gmail.com>
@@ -69,81 +69,44 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We only show progress when there are new objects to be packed. But
-when --keep-pack is specified on the base pack, we will exclude most
-of objects. This makes 'pack-objects' stay silent for a long time
-while the counting phase is going.
+This code is mostly about reading object headers, which is cheap. But
+when the number of objects is very large (e.g. 6.5M on linux-2.6.git)
+and the system is under memory pressure, this could take some time (86
+seconds on my system).
 
-Let's show some progress whenever we visit an object instead. The
-number of packed objects will be shown after if it's not the same as
-the number of visited objects.
-
-Since the meaning of this number has changed, use another word instead
-of "Counting" to hint about the change.
+Show something during this time to let the user know pack-objects is
+still going strong.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- builtin/pack-objects.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ builtin/pack-objects.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
 diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 6abde6ec6d..f74e9117f7 100644
+index f74e9117f7..ac8f29dd52 100644
 --- a/builtin/pack-objects.c
 +++ b/builtin/pack-objects.c
-@@ -44,7 +44,7 @@ static const char *pack_usage[] = {
- static struct packing_data to_pack;
+@@ -1715,6 +1715,10 @@ static void get_object_details(void)
+ 	uint32_t i;
+ 	struct object_entry **sorted_by_offset;
  
- static struct pack_idx_entry **written_list;
--static uint32_t nr_result, nr_written;
-+static uint32_t nr_result, nr_written, nr_seen;
- 
- static int non_empty;
- static int reuse_delta = 1, reuse_object = 1;
-@@ -1094,6 +1094,8 @@ static int add_object_entry(const struct object_id *oid, enum object_type type,
- 	off_t found_offset = 0;
- 	uint32_t index_pos;
- 
-+	display_progress(progress_state, ++nr_seen);
++	if (progress)
++		progress_state = start_progress(_("Getting object details"),
++						to_pack.nr_objects);
 +
- 	if (have_duplicate_entry(oid, exclude, &index_pos))
- 		return 0;
- 
-@@ -1109,8 +1111,6 @@ static int add_object_entry(const struct object_id *oid, enum object_type type,
- 	create_object_entry(oid, type, pack_name_hash(name),
- 			    exclude, name && no_try_delta(name),
- 			    index_pos, found_pack, found_offset);
--
--	display_progress(progress_state, nr_result);
- 	return 1;
- }
- 
-@@ -1121,6 +1121,8 @@ static int add_object_entry_from_bitmap(const struct object_id *oid,
- {
- 	uint32_t index_pos;
- 
-+	display_progress(progress_state, ++nr_seen);
-+
- 	if (have_duplicate_entry(oid, 0, &index_pos))
- 		return 0;
- 
-@@ -1128,8 +1130,6 @@ static int add_object_entry_from_bitmap(const struct object_id *oid,
- 		return 0;
- 
- 	create_object_entry(oid, type, name_hash, 0, 0, index_pos, pack, offset);
--
--	display_progress(progress_state, nr_result);
- 	return 1;
- }
- 
-@@ -3210,7 +3210,7 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
+ 	sorted_by_offset = xcalloc(to_pack.nr_objects, sizeof(struct object_entry *));
+ 	for (i = 0; i < to_pack.nr_objects; i++)
+ 		sorted_by_offset[i] = to_pack.objects + i;
+@@ -1725,7 +1729,9 @@ static void get_object_details(void)
+ 		check_object(entry);
+ 		if (big_file_threshold < entry->size)
+ 			entry->no_try_delta = 1;
++		display_progress(progress_state, i + 1);
  	}
++	stop_progress(&progress_state);
  
- 	if (progress)
--		progress_state = start_progress(_("Counting objects"), 0);
-+		progress_state = start_progress(_("Enumerating objects"), 0);
- 	if (!use_internal_rev_list)
- 		read_object_list_from_stdin();
- 	else {
+ 	/*
+ 	 * This must happen in a second pass, since we rely on the delta
 -- 
 2.16.2.903.gd04caf5039
 
