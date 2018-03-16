@@ -2,87 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D2E2F1F404
-	for <e@80x24.org>; Fri, 16 Mar 2018 19:03:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5DBCD1F404
+	for <e@80x24.org>; Fri, 16 Mar 2018 19:14:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752430AbeCPTDw (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Mar 2018 15:03:52 -0400
-Received: from mail-by2nam01on0066.outbound.protection.outlook.com ([104.47.34.66]:57623
-        "EHLO NAM01-BY2-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1750826AbeCPTDv (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Mar 2018 15:03:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aei.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
- bh=yE4YNgg6EGQMQI4Qyqd5xLTjQX323ZdPayBhRQl1/vU=;
- b=Oit9EeGGFEfDv+kRjge8+rfv0y4LaxlW0Lz/WOQ60RxAm5rj11BYcXZTztVc0mgtYXXwxceNHIorBwykfVNRcy33rCUGJM1IzbZf6fVMp65n3Wp23hYhcoWNyysOUNrPwUbjFo1P3gCetGrwfPOapn3ptl6KvKEQa8ABJrdvXaA=
-Received: from CY4PR02MB2262.namprd02.prod.outlook.com (10.169.181.15) by
- CY4PR02MB2247.namprd02.prod.outlook.com (10.169.181.12) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P256) id
- 15.20.567.14; Fri, 16 Mar 2018 19:03:50 +0000
-Received: from CY4PR02MB2262.namprd02.prod.outlook.com
- ([fe80::68ff:36cb:be97:49ee]) by CY4PR02MB2262.namprd02.prod.outlook.com
- ([fe80::68ff:36cb:be97:49ee%17]) with mapi id 15.20.0567.019; Fri, 16 Mar
- 2018 19:03:50 +0000
-From:   "Briggs, John" <JOHN.BRIGGS@aei.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: getting fatal error trying to open git gui
-Thread-Topic: getting fatal error trying to open git gui
-Thread-Index: AdO9WOQXVglR2Ht0QsiCtxNKgnqGlA==
-Date:   Fri, 16 Mar 2018 19:03:49 +0000
-Message-ID: <CY4PR02MB22621DE7751427686029C1B3FFD70@CY4PR02MB2262.namprd02.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-dg-ref: PG1ldGE+PGF0IG5tPSJib2R5LnR4dCIgcD0iYzpcdXNlcnNcamJyaWdnc1xhcHBkYXRhXHJvYW1pbmdcMDlkODQ5YjYtMzJkMy00YTQwLTg1ZWUtNmI4NGJhMjllMzViXG1zZ3NcbXNnLWMwZjAwZGFkLTI5NGMtMTFlOC1hOTA3LWQ0ODFkN2E2MmViNlxhbWUtdGVzdFxjMGYwMGRhZi0yOTRjLTExZTgtYTkwNy1kNDgxZDdhNjJlYjZib2R5LnR4dCIgc3o9IjM1MiIgdD0iMTMxNjU3MDA2Mjc2MDkxMjM3IiBoPSJiK25meDk5VnpCTmV2bGdvZ1VwZDhMNkNueEk9IiBpZD0iIiBibD0iMCIgYm89IjEiLz48L21ldGE+
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=JOHN.BRIGGS@aei.com; 
-x-originating-ip: [8.39.233.75]
-x-ms-publictraffictype: Email
-x-microsoft-exchange-diagnostics: 1;CY4PR02MB2247;20:QuyI4MUov0vErsnl0ltpu8dF0rBMwGb05MCsGZbFVIP/vDTOMLRInVNKfHKywyikbC4bT3uAHgfOfkymYucM32jhMU24FgJytnF3GkplkgRsvCZaJXaIR7l4E1l1ODgS98D7c/7S5SR0F5TPjBsgdwjW6NeTWWcHz4LxwAAQ0RE=
-x-ms-exchange-antispam-srfa-diagnostics: SSOS;
-x-ms-office365-filtering-correlation-id: 746aa694-9314-4129-3de1-08d58b70a72e
-x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(7020095)(4652020)(8989060)(5600026)(4604075)(3008032)(4534165)(4627221)(201703031133081)(201702281549075)(8990040)(2017052603328)(7153060)(7193020);SRVR:CY4PR02MB2247;
-x-ms-traffictypediagnostic: CY4PR02MB2247:
-x-ms-exchange-orgnaization-bypassclutter: true
-x-microsoft-antispam-prvs: <CY4PR02MB2247227B533B4400DFDF293CFFD70@CY4PR02MB2247.namprd02.prod.outlook.com>
-x-exchange-antispam-report-test: UriScan:;
-x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(8211001083)(6040522)(2401047)(8121501046)(5005006)(10201501046)(93006095)(93001095)(3002001)(3231221)(944501244)(52105095)(6041310)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(20161123562045)(20161123560045)(20161123564045)(20161123558120)(6072148)(201708071742011);SRVR:CY4PR02MB2247;BCL:0;PCL:0;RULEID:;SRVR:CY4PR02MB2247;
-x-forefront-prvs: 0613912E23
-x-forefront-antispam-report: SFV:NSPM;SFS:(10009020)(39380400002)(346002)(396003)(39830400003)(366004)(376002)(189003)(199004)(6916009)(25786009)(316002)(72206003)(558084003)(8936002)(3660700001)(99286004)(186003)(102836004)(26005)(3280700002)(86362001)(6506007)(2906002)(97736004)(305945005)(74316002)(3846002)(7736002)(6116002)(9686003)(55016002)(53936002)(2501003)(5250100002)(2900100001)(106356001)(8676002)(81156014)(1730700003)(33656002)(6436002)(81166006)(5640700003)(2351001)(14454004)(478600001)(68736007)(5660300001)(105586002)(66066001)(7696005);DIR:OUT;SFP:1101;SCL:1;SRVR:CY4PR02MB2247;H:CY4PR02MB2262.namprd02.prod.outlook.com;FPR:;SPF:None;PTR:InfoNoRecords;MX:1;A:1;LANG:en;
-received-spf: None (protection.outlook.com: aei.com does not designate
- permitted sender hosts)
-x-microsoft-antispam-message-info: sd0xAuKAPGk4v6+UoiobXIQ1eR6NcaxDkGbrc1Bt3fz90PID3RDRSrsMe7xZTwy7MB1bEcBS2OL/gVdZyd2ikI05B1BsbNPTs71NVAigGZFKGDmJGWz98tvnAjp9ELKCHMwpE/+2YqjOAzE+4NF4tWPjPG3RA+mIbxlb7bDVSnInc8tpOAm26/z1yR64LCg/ej/fCTrTRDNfiJGutfjqmIqqea/ZIxmaKKzkULa25rpQRN83fgXoe6n3O+E88XZvkczYTJwBMFmtJwEA6c6R6ObXnhb5tGWOiPIknt2OW8zDvEBt0UsiVGg7LCauiPilL//4ozrGWDbrCw/V8HeRNA==
-spamdiagnosticoutput: 1:99
-spamdiagnosticmetadata: NSPM
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+        id S1753195AbeCPTOu (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Mar 2018 15:14:50 -0400
+Received: from mail-ot0-f169.google.com ([74.125.82.169]:45520 "EHLO
+        mail-ot0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752430AbeCPTOs (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Mar 2018 15:14:48 -0400
+Received: by mail-ot0-f169.google.com with SMTP id q5-v6so776716oth.12
+        for <git@vger.kernel.org>; Fri, 16 Mar 2018 12:14:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=3/3112mCvwZCBcwURSfVwGAf8jl2Cn00THCkZ5PcKg4=;
+        b=aTsI2CrkFBK5t4RNyZmtgSP04CBcJH9spujgsXkOA6TherQHWuFct3w1g/kdKV2o/T
+         v8LYxb5tVdlFJMsM8v/s8czGpzQvcv9Jm8WSU6yc/4F9aup9VwRtRbYLo3bKOrO7ct4G
+         XMBA4+33UONrh2aHAPs613/c5mUtD/GQ0gAXZ0kbefOs269HV9n0U+jfT7Dt7Usc7Dol
+         h+/HHZ+E3/XrAVPa+8mq/5KWLKEKlXcgaN6hJLUCWbQYbs1UtL8ggaTm3GXBXEgkfEns
+         MjrJkLSUkEeCKrTJHdyOSyPGvs2H3yf1oXECxGzsKSjL5AhVkig6UCfL8xWQCaPtjZy2
+         K2+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=3/3112mCvwZCBcwURSfVwGAf8jl2Cn00THCkZ5PcKg4=;
+        b=F9E0Z5p9t07y9tiXK4bfzKLZEsKnSCpHYxRn0YSvO1D+vF8zKmyg+PDiYSKQNID04Z
+         jlPRzSEIF3EK2WOderL/D9wQScNoVy1HuH/c6IzZgN+W1Jbr83EWJGyHW/4FmSeHBG0G
+         6Usrc7G+NtfdqonooQ9LuOwe6gFxcIVy9WAtloYJt9zytYgXV7To0SAEuE8uCdlzIRL3
+         mvO77m0w2TtagIcXAmeOjlbrkFPuVktgzHm5XjkxxL5ofW0+0iqEcRfd0ygeq6GczZ1U
+         tgaBjnVwB2KGjcqB7ggwyUqTCibzkizPsOaloWs9E9AhNDVVc3boFOS/4bELqHFWXhjo
+         8T8A==
+X-Gm-Message-State: AElRT7FhgYIMrV88yzxqqIyHR8yK3pKjOdCPkO3ZloIOo/PF5R4Y5ti+
+        I3/6cmuSqW2YtFt+0ArDBB1VY0Nl98uqWSY3doo=
+X-Google-Smtp-Source: AG47ELu9RZlnWegBwx+1p/2Ggwij/xrIDpBuo+TA1UlYmUfG0RrsMuR6DjIH6qMRLa/JkDuFZVk4PbHEJIdkRZubgzI=
+X-Received: by 2002:a9d:266a:: with SMTP id a97-v6mr2074185otb.14.1521227688118;
+ Fri, 16 Mar 2018 12:14:48 -0700 (PDT)
 MIME-Version: 1.0
-X-OriginatorOrg: aei.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 746aa694-9314-4129-3de1-08d58b70a72e
-X-MS-Exchange-CrossTenant-originalarrivaltime: 16 Mar 2018 19:03:49.8654
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: cfa7d515-0462-4766-8d7f-867b7825994a
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY4PR02MB2247
+Received: by 10.74.154.146 with HTTP; Fri, 16 Mar 2018 12:14:17 -0700 (PDT)
+In-Reply-To: <87d109qh51.fsf@evledraar.gmail.com>
+References: <20180301092046.2769-1-pclouds@gmail.com> <20180306104158.6541-1-pclouds@gmail.com>
+ <20180306104158.6541-5-pclouds@gmail.com> <87d109qh51.fsf@evledraar.gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Fri, 16 Mar 2018 20:14:17 +0100
+Message-ID: <CACsJy8BOR_YkUYONw0aofejTKuCaujRbfoea25xWMsHAT=OXuA@mail.gmail.com>
+Subject: Re: [PATCH v2 4/5] pack-objects: show some progress when counting
+ kept objects
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Eric Wong <e@80x24.org>, Git Mailing List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I just installed git for windows 10 and am getting "git-gui: fatal error" "=
-Cannot parse Git version string.
+On Mon, Mar 12, 2018 at 7:32 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+>
+> On Tue, Mar 06 2018, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy jotted:
+>
+>> We only show progress when there are new objects to be packed. But
+>> when --keep-pack is specified on the base pack, we will exclude most
+>> of objects. This makes 'pack-objects' stay silent for a long time
+>> while the counting phase is going.
+>>
+>> Let's show some progress whenever we visit an object instead. The
+>> number of packed objects will be shown after if it's not the same as
+>> the number of visited objects.
+>>
+>> Since the meaning of this number has changed, use another word instead
+>> of "Counting" to hint about the change.
+>
+> Can you elaborate on how the meaning has changed? With/without this on
+> linux.git I get:
+>
+> With:
+>
+>     Enumerating objects: 5901144, done.
+>     Getting object details: 100% (5901145/5901145), done.
+>     Delta compression using up to 8 threads.
+>
+> Without:
+>
+>     Counting objects: 5901145, done.
+>     Delta compression using up to 8 threads.
+>
+> So now we're seemingly off-by-one but otherwise doing the same thing?
 
-When I execute "git version" in the command prompt I get
-Git version 2.16.2.windows.1
+Yep, it's an off-by-one bug.
 
-Everything else seems to be working. How can I get the gui to work?
+> As for as user feedback goes we might as well have said "Reticulating
+> splines", but I have some bias towards keeping the current "Counting
+> objects..." phrasing. We ourselves have other docs referring to it that
+> aren't changed by this patch, and there's
+> e.g. https://githubengineering.com/counting-objects/ and lots of other
+> 3rd party docs that refer to this.
 
-John
+This is why I changed the phrase. The counting is now a bit different.
+Documents describing this exact phrase won't apply to the new version.
 
+The old way counts objects that will be packed. The new way simply
+counts objects that are visited. When you keep some packs, the number
+of objects you visit but not pack could be very high, while in normal
+case the two numbers should be the same (e.g. you pack everything you
+visit). I would prefer to print both values (e.g. "counting objects:
+<packed>/<visited>") but it's not possible with the current progress
+code.
+--=20
+Duy
