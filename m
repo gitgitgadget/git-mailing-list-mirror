@@ -2,107 +2,182 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DC6441F42D
-	for <e@80x24.org>; Fri, 16 Mar 2018 07:22:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C25941F42D
+	for <e@80x24.org>; Fri, 16 Mar 2018 07:31:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753212AbeCPHWl (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Mar 2018 03:22:41 -0400
-Received: from mail-wr0-f178.google.com ([209.85.128.178]:46238 "EHLO
-        mail-wr0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753200AbeCPHWk (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Mar 2018 03:22:40 -0400
-Received: by mail-wr0-f178.google.com with SMTP id m12so10571408wrm.13
-        for <git@vger.kernel.org>; Fri, 16 Mar 2018 00:22:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=yVLmP9GlAty7V1PwJ7XFXQe32/9qsKRf7zR2m2aaB1M=;
-        b=I+GDgEFWeR+eoKYi1CniBxboRg7HXbuSHWLDkZCac+v5+uYKXtMfW7RYk7/iytLSrW
-         SZVIH+ewJu2n45tI3ymLhk2UHmMlEy3/UQ7CMkKuUax1bUkXiBv4cg/t5i+1oL/Jbirr
-         ZUIiSeXerUQoF+PkKuLvM25i8ZFB0CeBMf7BINpD0S/Mz8gmAz3cC8e86fOdFie7UyVn
-         fquOx6529HQpvVsZDauXwoboq2Ft8Gw09BICJ1NI3HjY7j53NpzjdV1g/qwQ0lhHtTAn
-         fb87Ql+I7kSVdUaQLLmiXc41fqzMBrEE4eTYnGSzco78hcOiluqmcBnVYC1eTzdJt0xe
-         SsUw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=yVLmP9GlAty7V1PwJ7XFXQe32/9qsKRf7zR2m2aaB1M=;
-        b=o/SK39x8rMncSJCX0e8CQXGx+PhDGnF29Uvxuf4MEK3RF9Wny0g6XF6qhNry2sxHMo
-         gdcYo8YaCJTD6Uzd626xOYS2YR7Ep50H92xCekHU41d2BMFueSdsWMIMmBeoHrxNjqWO
-         TDtRxKsJJ2kTKXWR/llAWgWTGsL0yapz6acHZAT/pzFsDHgwUxPyoEcGL+Q4HAaEHtpH
-         pKv5WxRyILcNlCh8FgIfcA4A9Pqq1eoAVCdWnq6gJUfbuOwEXOdN9CabQdO3DvK0kVfi
-         NxhHKgPwr1KAkgadfpJsipXO3TFI11ByuyR5FUdn2NmE2zmz0ANy6PZReW5S+bFLnbKC
-         e+1A==
-X-Gm-Message-State: AElRT7FOTvyoSFQvCyd7JEYxuvlyka7G6RENICWvZZ+u2C4dZQVpO3nH
-        97VE0YA3iI67bC/Uh2T3C3ekDsqANAuU8l5Ez0M=
-X-Google-Smtp-Source: AG47ELvRHJtG2e8h1MkulmGBW9DK8JSnlif59lXYeDqoT012RpUl+YOkRvCfoBSVfSt7YxTc0a2yxjYJRF2GM7IHwVc=
-X-Received: by 10.223.136.13 with SMTP id d13mr601939wrd.271.1521184959041;
- Fri, 16 Mar 2018 00:22:39 -0700 (PDT)
+        id S1753163AbeCPHbj (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Mar 2018 03:31:39 -0400
+Received: from mail.javad.com ([54.86.164.124]:52517 "EHLO mail.javad.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751624AbeCPHbg (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Mar 2018 03:31:36 -0400
+Received: from osv (unknown [89.175.180.246])
+        by mail.javad.com (Postfix) with ESMTPSA id B18343E961;
+        Fri, 16 Mar 2018 07:31:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1521185494;
+        bh=O2gKyGdjE5PGnvUVFL/KJ7N0zuREgsImn/EaUqS0zcw=; l=2775;
+        h=Received:From:To:Subject;
+        b=Lrk7grrYS0f28mrJtwNuLHuPznth4weFh8FPPTF1sF5I+r1mrho4FB+I1FhYb7OJZ
+         ZYSxzUx1afNg28uTfMg1fFLDlcL0d/8ek06daZ34WUZKswIJGd5uNCZPTou2Of2CEd
+         ID2Vznp2MUKAE3U1CKvGMQwuu8qttoChm0WhUpJ8=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1521185494;
+        bh=O2gKyGdjE5PGnvUVFL/KJ7N0zuREgsImn/EaUqS0zcw=; l=2775;
+        h=Received:From:To:Subject;
+        b=Lrk7grrYS0f28mrJtwNuLHuPznth4weFh8FPPTF1sF5I+r1mrho4FB+I1FhYb7OJZ
+         ZYSxzUx1afNg28uTfMg1fFLDlcL0d/8ek06daZ34WUZKswIJGd5uNCZPTou2Of2CEd
+         ID2Vznp2MUKAE3U1CKvGMQwuu8qttoChm0WhUpJ8=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1521185494;
+        bh=O2gKyGdjE5PGnvUVFL/KJ7N0zuREgsImn/EaUqS0zcw=; l=2775;
+        h=Received:From:To:Subject;
+        b=Lrk7grrYS0f28mrJtwNuLHuPznth4weFh8FPPTF1sF5I+r1mrho4FB+I1FhYb7OJZ
+         ZYSxzUx1afNg28uTfMg1fFLDlcL0d/8ek06daZ34WUZKswIJGd5uNCZPTou2Of2CEd
+         ID2Vznp2MUKAE3U1CKvGMQwuu8qttoChm0WhUpJ8=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1521185494;
+        bh=O2gKyGdjE5PGnvUVFL/KJ7N0zuREgsImn/EaUqS0zcw=; l=2775;
+        h=Received:From:To:Subject;
+        b=Lrk7grrYS0f28mrJtwNuLHuPznth4weFh8FPPTF1sF5I+r1mrho4FB+I1FhYb7OJZ
+         ZYSxzUx1afNg28uTfMg1fFLDlcL0d/8ek06daZ34WUZKswIJGd5uNCZPTou2Of2CEd
+         ID2Vznp2MUKAE3U1CKvGMQwuu8qttoChm0WhUpJ8=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1521185494;
+        bh=O2gKyGdjE5PGnvUVFL/KJ7N0zuREgsImn/EaUqS0zcw=; l=2775;
+        h=Received:From:To:Subject;
+        b=Lrk7grrYS0f28mrJtwNuLHuPznth4weFh8FPPTF1sF5I+r1mrho4FB+I1FhYb7OJZ
+         ZYSxzUx1afNg28uTfMg1fFLDlcL0d/8ek06daZ34WUZKswIJGd5uNCZPTou2Of2CEd
+         ID2Vznp2MUKAE3U1CKvGMQwuu8qttoChm0WhUpJ8=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1521185494;
+        bh=O2gKyGdjE5PGnvUVFL/KJ7N0zuREgsImn/EaUqS0zcw=; l=2775;
+        h=Received:From:To:Subject;
+        b=Lrk7grrYS0f28mrJtwNuLHuPznth4weFh8FPPTF1sF5I+r1mrho4FB+I1FhYb7OJZ
+         ZYSxzUx1afNg28uTfMg1fFLDlcL0d/8ek06daZ34WUZKswIJGd5uNCZPTou2Of2CEd
+         ID2Vznp2MUKAE3U1CKvGMQwuu8qttoChm0WhUpJ8=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1521185494;
+        bh=O2gKyGdjE5PGnvUVFL/KJ7N0zuREgsImn/EaUqS0zcw=; l=2775;
+        h=Received:From:To:Subject;
+        b=Lrk7grrYS0f28mrJtwNuLHuPznth4weFh8FPPTF1sF5I+r1mrho4FB+I1FhYb7OJZ
+         ZYSxzUx1afNg28uTfMg1fFLDlcL0d/8ek06daZ34WUZKswIJGd5uNCZPTou2Of2CEd
+         ID2Vznp2MUKAE3U1CKvGMQwuu8qttoChm0WhUpJ8=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1521185494;
+        bh=O2gKyGdjE5PGnvUVFL/KJ7N0zuREgsImn/EaUqS0zcw=; l=2775;
+        h=Received:From:To:Subject;
+        b=Lrk7grrYS0f28mrJtwNuLHuPznth4weFh8FPPTF1sF5I+r1mrho4FB+I1FhYb7OJZ
+         ZYSxzUx1afNg28uTfMg1fFLDlcL0d/8ek06daZ34WUZKswIJGd5uNCZPTou2Of2CEd
+         ID2Vznp2MUKAE3U1CKvGMQwuu8qttoChm0WhUpJ8=
+Authentication-Results: mail.javad.com;
+        spf=pass (sender IP is 89.175.180.246) smtp.mailfrom=osv@javad.com smtp.helo=osv
+Received-SPF: pass (mail.javad.com: connection is authenticated)
+Received: from osv by osv with local (Exim 4.84_2)
+        (envelope-from <osv@osv.gnss.ru>)
+        id 1ewjps-0006ZM-1d; Fri, 16 Mar 2018 10:31:32 +0300
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Igor Djordjevic <igor.d.djordjevic@gmail.com>
+Cc:     Phillip Wood <phillip.wood@talktalk.net>,
+        phillip.wood@dunelm.org.uk, Git mailing list <git@vger.kernel.org>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC] Rebasing merges: a jorney to the ultimate solution (Road Clear)
+References: <87y3jtqdyg.fsf@javad.com>
+        <bbe64321-4d3a-d3fe-8bb9-58b600fabf35@gmail.com>
+        <nycvar.QRO.7.76.6.1802270051470.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        <CA+P7+xq8UUcLWomUi=PS_hTKfJd3dMAxMmhioDS1bixwcmKAqw@mail.gmail.com>
+        <nycvar.QRO.7.76.6.1802271718090.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        <4d7f3406-b206-cc22-87df-85700d6a03d9@gmail.com>
+        <33da31e9-9101-475d-8901-4b6b3df2f29d@gmail.com>
+        <940d959d-151d-68dd-0f13-320ebad0d75b@gmail.com>
+        <87606hoflx.fsf@javad.com>
+        <0ac3a3fd-4053-e32e-75ed-8829f22c2e1f@gmail.com>
+        <87a7vss6ax.fsf@javad.com>
+        <6c8749ca-ec5d-b4b7-f1a0-50d9ad2949a5@talktalk.net>
+        <877eqgardi.fsf@javad.com>
+        <3f2209e0-c560-5384-c589-3aa83615d688@gmail.com>
+        <87efkn6s1h.fsf@javad.com>
+        <de063fba-2882-6194-a889-ad3e9b6b02b9@gmail.com>
+        <87lget7p2g.fsf@javad.com>
+        <3dbf86bc-cae9-8d6c-a206-cac685938f3d@gmail.com>
+Date:   Fri, 16 Mar 2018 10:31:32 +0300
+In-Reply-To: <3dbf86bc-cae9-8d6c-a206-cac685938f3d@gmail.com> (Igor
+        Djordjevic's message of "Fri, 16 Mar 2018 00:08:07 +0100")
+Message-ID: <87vadw3297.fsf@javad.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.223.197.147 with HTTP; Fri, 16 Mar 2018 00:22:38 -0700 (PDT)
-In-Reply-To: <xmqq8tat3qgj.fsf@gitster-ct.c.googlers.com>
-References: <0102016225e61c34-50ab78f0-6fb6-4ece-acfe-da253bdce616-000000@eu-west-1.amazonses.com>
- <0102016225e61cb4-b59773de-d22e-42cd-909a-d7ce71646898-000000@eu-west-1.amazonses.com>
- <xmqq8tat3qgj.fsf@gitster-ct.c.googlers.com>
-From:   =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
-        <olyatelezhnaya@gmail.com>
-Date:   Fri, 16 Mar 2018 10:22:38 +0300
-Message-ID: <CAL21Bmk03kSaO8h+uQ9nB7DomAL0Ym+7jygTo7M-rv5OM2duzA@mail.gmail.com>
-Subject: Re: [PATCH v2 3/5] ref-filter: change parsing function error handling
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-2018-03-16 1:48 GMT+03:00 Junio C Hamano <gitster@pobox.com>:
-> Olga Telezhnaya <olyatelezhnaya@gmail.com> writes:
->
->> Continue removing any printing from ref-filter formatting logic,
->> so that it could be more general.
->
-> Hmm.
->
->> Change the signature of parse_ref_filter_atom() by changing return value,
->> adding previous return value to function parameter and also adding
->> strbuf parameter for error message.
->
-> This says what the patch changes, but it does not explain why it is
-> a good idea to return something with different meaning to the
-> callers (which of course forces us to update all callers so that
-> they pass &result pointer and check the value returned in the
-> variable), or more importantly what meaning the return value has and
-> how the callers are expected to use it.  While at it, it probably is
-> a good idea to explain what the original return value means.
->
->         The return value from parse_ref_filter_atom() used to be the
->         position the atom is found in the used_atom[] array; that
->         information is now returned in an integer pointed at by the
->         *res parameter.  The function now returns 0 for success and
->         -1 for failure.
->
-> or something like that.
->
-> Having said that, I wonder if a calling convention that does not
-> force callers to pass in a pointer-to-int may make more sense.
-> Because the original return value is an index into an array, we know
-> the normal return values are not negative.  An updated caller could
-> become like this instead:
->
->         pos = parse_ref_filter_atom(format, atom, ep, &err);
->         if (pos < 0)
->                 die("%s", err.buf);
->         ... original code that used 'pos' can stay as before ...
->
+Hi Buga,
 
-Martin also mentioned that, but I was not sure which solution is
-better. Great, thanks, I will fix that.
+Igor Djordjevic <igor.d.djordjevic@gmail.com> writes:
+
+> Hi Sergey,
+
+[...]
+
+>> As I said, putting myself on the user side, I'd prefer entirely separate
+>> first step of the algorithm, exactly as written, with its own conflict
+>> resolution, all running entirely the same way as it does with non-merge
+>> commits. I'm used to it and don't want to learn something new without
+>> necessity. I.e., I'd prefer to actually see it in two separate stages,
+>> like this:
+>> 
+>> Rebasing mainline of the merge...
+>> [.. possible conflicts resolution ..]
+>> Merging in changes to side branch(es)...
+>> [.. possible conflicts resolution ..]
+>> 
+>> And if the second stage gives non-trivial conflicts, I'd like to have a
+>> simple way to just do "merge -s ours <heads>" on top of already rebased
+>> mainline of the merge and go with it. Note that the latter is
+>> significantly different than re-merging everything from scratch, that
+>> would be the only choice with "all-in-one" approach, and it essentially
+>> gives me back those simple "rebase first parent and just record other
+>> parents" semantics when needed.
+>
+> I`m undecided here, and while I do see a point in what you`re saying, 
+> this being new to general public I dont`t think you being accustomed 
+> to it is a very strong argument :)
+
+Sure. It's mostly that having already familiar step separate seems to be
+a good idea, as well as resulting isolation of the new stuff, where I
+readily agree not to granulate it further. As if the latter actually
+makes any difference... Octopus merges? I mean, really?
+
+> Yes, having more steps would mean more power/options to the user, but 
+> more complexity to explain to and guide him through as well, not really 
+> sure where the line should be drawn - for the first time, at least.
+
+A good thing is that while it runs smoothly it still runs smoothly both
+ways.
+
+> Also note that, for example, in case side branch(es) dropped some 
+> commits (interactively or otherwise), first step alone would still 
+> reintroduce those dropped changes, thus later possible `merge -s ours 
+> <heads>` would be a pretty bad "evil merge" case and a wrong thing to 
+> do in general.
+
+Except that my presumption is that the second step has been run already
+and has stopped due to conflicts, so I see the conflicting result of
+dropping those commits on side branch(es), check the previous state of
+the right side of the conflicting merge, and decide those state, being
+the result of the fist step after possibly demanding conflicts
+resolution, is fine after all. Thus I just re-merge -x ours the
+branch(es), instead of re-merging everythig from scratch only to finally
+get back to the same result, be it evil or not, the hard way.
+
+-- Sergey
