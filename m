@@ -2,93 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9D7221F404
-	for <e@80x24.org>; Fri, 16 Mar 2018 20:59:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 38FEF1F404
+	for <e@80x24.org>; Fri, 16 Mar 2018 21:01:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751445AbeCPU7G (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Mar 2018 16:59:06 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:40754 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751269AbeCPU7F (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Mar 2018 16:59:05 -0400
-Received: by mail-wm0-f67.google.com with SMTP id t6so5387240wmt.5
-        for <git@vger.kernel.org>; Fri, 16 Mar 2018 13:59:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=pN8FqdBAZfVGgcrwC/zbCGUhmynAzeGhJT7Qo4HC6Ts=;
-        b=iF05nbi9uMNxmHyzePWZ3PPa+SQO2x0x4DadenopVm+xAP0g0FaVul0zhtCipWOBKI
-         YrEp0hGb8ulFemK7V2TnlVHr2URA475IPDKwFYl7uIhUllP8bgzrDdtzsWg7VN/yJQML
-         KeaoJLD9VSFZjHRF7hGNX5Gw1MmcmU7Frd7xefCdroCwdCQjd+SEBpmtrZWHTZ3Skt0o
-         PGZkCU8Xqszth23niy9NRjr5Zo6d7bfEQgLwrLSGSZAYmtYj/T3heHNQPDr4CUvQ/n00
-         LUjXgJ/mk1nIqDogeRKY/wrFNy1JAK5VMN3ndhbLhpL4bdzJDBdL/zohSdl25PvKmHBi
-         rt5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=pN8FqdBAZfVGgcrwC/zbCGUhmynAzeGhJT7Qo4HC6Ts=;
-        b=P0QTWBmLv269B4Pci5kzY4rqDrrLds6iy1IOfuqjVuj4CkUi7IvIXD6i3NRCLnqDVM
-         pOxahBWTACpU0ec32Ev9u49PUAg7WG2q/wuJiCjfhxUqFAhxi0gbUzNV91ktwsaazP42
-         7cxi0NYySxpf1gi5vjHQhBJ9DuZpl8VkuIHSc47DxV8bV1WCSEXCvJOk/PpdC4/Eozg9
-         yfl6rYjRy7cGQvmQiwMxEd48A7nomHaEW52nryCIzdtwKQ6Z1nBjozqA5CDNhhKJtG5j
-         CU8ZJu2bbS87SgZvA5oy8yJyXC4OL7iVZ6B8mhm6zoLJHGwSk/iQrV3Op5V61Qg72oa5
-         TQcw==
-X-Gm-Message-State: AElRT7G9/UHtJU4fp4o9hzsciqskwl3V8KCJMGuqhS3KZ10xAdsBTob6
-        +4zv0jZX2F9FH4QmcAH4rbnZUlFx
-X-Google-Smtp-Source: AG47ELuftmuXDRTkOZvCUFjM70aWgu4etgzkACksh0yrjeOMQosUIBBI/1D84BgLhYDzjct3b9cbVg==
-X-Received: by 10.28.6.205 with SMTP id 196mr3095488wmg.136.1521233943938;
-        Fri, 16 Mar 2018 13:59:03 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id g25sm8191311wmc.0.2018.03.16.13.59.03
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 16 Mar 2018 13:59:03 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     avarab@gmail.com, e@80x24.org, git@vger.kernel.org, peff@peff.net
-Subject: Re: [PATCH v4 07/11] pack-objects: refer to delta objects by index instead of pointer
-References: <20180308114232.10508-1-pclouds@gmail.com>
-        <20180316183200.31014-1-pclouds@gmail.com>
-        <20180316183200.31014-8-pclouds@gmail.com>
-Date:   Fri, 16 Mar 2018 13:59:02 -0700
-In-Reply-To: <20180316183200.31014-8-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
- =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
-        Duy"'s message of "Fri, 16 Mar 2018 19:31:56 +0100")
-Message-ID: <xmqq7eqb20vd.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1751437AbeCPVBV (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Mar 2018 17:01:21 -0400
+Received: from mail-by2nam01on0050.outbound.protection.outlook.com ([104.47.34.50]:45712
+        "EHLO NAM01-BY2-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1750921AbeCPVBU (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Mar 2018 17:01:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aei.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
+ bh=6VlJvGiCIZnGi9f0XdjqSzh5Ha2OM/g3l5oZAf8RXa8=;
+ b=m5TMW7DKFbdg9cV5GrImU8DD2D/ni1QL3ytbi9xRo+Uslmy14z2Mbg6gu8io5ARebff/uImW2wm2j18G1C/edEKhBuDaIgBQNkjVeW4Qj43YqG7Bd20M7okyzHkcE8H04k7HwxKfUJFFddKthBnbbpWeXjJyqlGRk2VHj+MhW6k=
+Received: from CY4PR02MB2262.namprd02.prod.outlook.com (10.169.181.15) by
+ CY4PR02MB3157.namprd02.prod.outlook.com (10.165.88.26) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P256) id
+ 15.20.588.14; Fri, 16 Mar 2018 21:01:17 +0000
+Received: from CY4PR02MB2262.namprd02.prod.outlook.com
+ ([fe80::68ff:36cb:be97:49ee]) by CY4PR02MB2262.namprd02.prod.outlook.com
+ ([fe80::68ff:36cb:be97:49ee%17]) with mapi id 15.20.0567.019; Fri, 16 Mar
+ 2018 21:01:17 +0000
+From:   "Briggs, John" <JOHN.BRIGGS@aei.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+CC:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "git-for-windows@googlegroups.com" <git-for-windows@googlegroups.com>
+Subject: RE: getting fatal error trying to open git gui
+Thread-Topic: getting fatal error trying to open git gui
+Thread-Index: AdO9WOQXVglR2Ht0QsiCtxNKgnqGlAACC9gAAADf8BAAAQndgAAAEKvQ
+Date:   Fri, 16 Mar 2018 21:01:17 +0000
+Message-ID: <CY4PR02MB2262A382E033B50B3800A69CFFD70@CY4PR02MB2262.namprd02.prod.outlook.com>
+References: <CY4PR02MB22621DE7751427686029C1B3FFD70@CY4PR02MB2262.namprd02.prod.outlook.com>
+ <20180316195756.GA151588@aiede.svl.corp.google.com>
+ <CY4PR02MB2262A567EE2D2A54316BFE3FFFD70@CY4PR02MB2262.namprd02.prod.outlook.com>
+ <20180316205243.GB151588@aiede.svl.corp.google.com>
+In-Reply-To: <20180316205243.GB151588@aiede.svl.corp.google.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-dg-ref: PG1ldGE+PGF0IG5tPSJib2R5LnR4dCIgcD0iYzpcdXNlcnNcamJyaWdnc1xhcHBkYXRhXHJvYW1pbmdcMDlkODQ5YjYtMzJkMy00YTQwLTg1ZWUtNmI4NGJhMjllMzViXG1zZ3NcbXNnLTI5ZDAyOGM3LTI5NWQtMTFlOC1hOTA3LWQ0ODFkN2E2MmViNlxhbWUtdGVzdFwyOWQwMjhjOS0yOTVkLTExZTgtYTkwNy1kNDgxZDdhNjJlYjZib2R5LnR4dCIgc3o9IjE1ODgiIHQ9IjEzMTY1NzA3Njc1NTEzNTYwNSIgaD0iNG5NMkRVL21RNHpqQThlM1o4V0hrVkRwd2VRPSIgaWQ9IiIgYmw9IjAiIGJvPSIxIi8+PC9tZXRhPg==
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=JOHN.BRIGGS@aei.com; 
+x-originating-ip: [8.39.233.75]
+x-ms-publictraffictype: Email
+x-microsoft-exchange-diagnostics: 1;CY4PR02MB3157;7:C1lEqvClCj7SmooHwdvFVDkNgu7qQ7gWHdpIVqgpRi4GXE9fHQu9HFBP7+w5pzGulh01wLtX7vYNQXXByM8LcPM+badqxuh91TITJYmuOjQXtiHoYj5Xf3bO85POVfTf6+9YhFbECsyggRhrXkwA+H6CU8ETIjNEkv0MVpVK3BWNcVTd8UUc1+BhaYn6pBY7wwbo1MMZy3gPk6JfbJtCTDI3nPjJ8mKtoMESuM6eLYFxJrvsmByvtgZzlmfKiTNP;20:xjQm5uVFIer4MLCwxMhBUBaUoQX7ip1wCCwzx4xqSjsP6ieu+RKZp69g/dyOWEbY7YsF18042nXh9/ga3SsICNns7HBsZpr0kHQRYDOV1FhJNs7tNryW0pySPGgd+jklpaeufS5gYwnU1GZVKKUTji6KwSxhQ2NeW1/VBD03X8c=
+x-ms-exchange-antispam-srfa-diagnostics: SSOS;
+x-ms-office365-filtering-correlation-id: 1ce40420-b03d-4b0b-8867-08d58b810ff1
+x-microsoft-antispam: UriScan:(215639381216008)(28748798796193);BCL:0;PCL:0;RULEID:(7020095)(4652020)(8989060)(5600026)(4604075)(3008032)(4534165)(4627221)(201703031133081)(201702281549075)(8990040)(2017052603328)(7153060)(7193020);SRVR:CY4PR02MB3157;
+x-ms-traffictypediagnostic: CY4PR02MB3157:
+x-ms-exchange-orgnaization-bypassclutter: true
+x-microsoft-antispam-prvs: <CY4PR02MB3157B2433B5EA75BA6DDD746FFD70@CY4PR02MB3157.namprd02.prod.outlook.com>
+x-exchange-antispam-report-test: UriScan:(215639381216008)(9452136761055)(85827821059158)(28748798796193);
+x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(8211001083)(6040522)(2401047)(8121501046)(5005006)(93006095)(93001095)(3231221)(944501244)(52105095)(3002001)(10201501046)(6041310)(20161123562045)(20161123564045)(20161123558120)(20161123560045)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(6072148)(201708071742011);SRVR:CY4PR02MB3157;BCL:0;PCL:0;RULEID:;SRVR:CY4PR02MB3157;
+x-forefront-prvs: 0613912E23
+x-forefront-antispam-report: SFV:NSPM;SFS:(10009020)(39380400002)(376002)(346002)(366004)(39850400004)(396003)(13464003)(199004)(189003)(377424004)(14454004)(106356001)(33656002)(99286004)(93886005)(26005)(72206003)(105586002)(54906003)(76176011)(2906002)(2950100002)(6506007)(6916009)(102836004)(316002)(97736004)(68736007)(7696005)(66066001)(478600001)(6116002)(3280700002)(186003)(3846002)(3660700001)(8676002)(5250100002)(39060400002)(7736002)(74316002)(2900100001)(6436002)(6246003)(229853002)(81156014)(81166006)(53546011)(8936002)(86362001)(1411001)(5660300001)(305945005)(55016002)(25786009)(53936002)(9686003)(4326008);DIR:OUT;SFP:1101;SCL:1;SRVR:CY4PR02MB3157;H:CY4PR02MB2262.namprd02.prod.outlook.com;FPR:;SPF:None;PTR:InfoNoRecords;A:1;MX:1;LANG:en;
+received-spf: None (protection.outlook.com: aei.com does not designate
+ permitted sender hosts)
+x-microsoft-antispam-message-info: ZiHP//TOKnVj5qHnMLnW+yLJnb+HP8PirsXyFlkG/f+RJHFCXRQEXtTuzM4/GsaQJTXmrADTRMWnPohA0SKRJ/aUQuOI6WRI7qz+ZCETT+XrtI0zlBX13LZUN/EPlrzXLi7RCS9a7LeZfNWsAZg09WKdn7yXgzH3b4mRMFejZyk8R4nB+UuQw9uTvjKhEHUvTdCCYm6NXV9qKbVTo0sfEaccxKSlBGwU3T5St5aHpIAPmI8TYku0titorNi93Ly/opDAwUeqYOigd1iEjqctQGG8SS3gsgwpjDcjpGDXGAuYhXexYksB9kKG32rwHzXBQ6SAgQfo+DAzfLEh+Rzn7A==
+spamdiagnosticoutput: 1:99
+spamdiagnosticmetadata: NSPM
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+X-OriginatorOrg: aei.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1ce40420-b03d-4b0b-8867-08d58b810ff1
+X-MS-Exchange-CrossTenant-originalarrivaltime: 16 Mar 2018 21:01:17.6385
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: cfa7d515-0462-4766-8d7f-867b7825994a
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY4PR02MB3157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
+No, it was a fresh install.  Plus file search reveals only one copy of the =
+file.
 
-> These delta pointers always point to elements in the objects[] array
-> in packing_data struct. We can only hold maximum 4GB of those objects
+I also noticed that I cannot use the file properties to run as administrato=
+r. I must right-click on Git GUI and select "More >> Run as administrator" =
+in the start menu. Even though I have "run as administrator" checked on bot=
+h shortcut and the program (or any combo of).
 
-4GB, as in "number of bytes"?  Or "We can hold 4 billion or so of
-those objects"?
+John
 
-> because the array length, nr_objects, is uint32_t. We could use
-> uint32_t indexes to address these elements instead of pointers. On
-> 64-bit architecture (8 bytes per pointer) this would save 4 bytes per
-> pointer.
+-----Original Message-----
+From: Jonathan Nieder <jrnieder@gmail.com>=20
+Sent: Friday, March 16, 2018 2:53 PM
+To: Briggs, John <JOHN.BRIGGS@aei.com>
+Cc: git@vger.kernel.org; git-for-windows@googlegroups.com
+Subject: Re: getting fatal error trying to open git gui
+
+Briggs, John wrote:
+> Jonathan Nieder wrote:
+>> Briggs, John wrote:
+
+>>> I just installed git for windows 10 and am getting "git-gui: fatal=20
+>>> error" "Cannot parse Git version string.
+>>>
+>>> When I execute "git version" in the command prompt I get Git version
+>>> 2.16.2.windows.1
+>>>
+>>> Everything else seems to be working. How can I get the gui to work?
+>>
+>> That's strange indeed.  Why is Git capitalized when you run "git version=
+"?
 >
-> Convert these delta pointers to indexes. Since we need to handle NULL
-> pointers as well, the index is shifted by one [1].
->
-> [1] This means we can only index 2^32-2 objects even though nr_objects
->     could contain 2^32-1 objects. It should not be a problem in
->     practice because when we grow objects[], nr_alloc would probably
->     blow up long before nr_objects hits the wall.
+> Got it figured out. Git gui must be ran as administrator.
 
+Hm, that leaves me even more mystified.
+
+Before v1.7.4-rc0~155^2~4 (git-gui: generic version trimming, 2010-10-07), =
+git-gui was not able to handle "git version" output like "git version 2.16.=
+2.windows.1", but since then, it should have been able to cope fine with it=
+.
+
+I wonder: do you have multiple versions of git gui installed?
+
+Thanks,
+Jonathan
