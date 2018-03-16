@@ -2,84 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_BL_SPAMCOP_NET,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EBB791F42D
-	for <e@80x24.org>; Fri, 16 Mar 2018 11:14:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DC3D21FAE2
+	for <e@80x24.org>; Fri, 16 Mar 2018 11:49:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753872AbeCPLOL (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Mar 2018 07:14:11 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:55026 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753865AbeCPLOK (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Mar 2018 07:14:10 -0400
-Received: by mail-wm0-f67.google.com with SMTP id h76so2333427wme.4;
-        Fri, 16 Mar 2018 04:14:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=G5GAnkjqtc7EkL/tXIHVNRyjzwa3RDtsWa6aMYd6kCQ=;
-        b=jtfnuaCAfRfl1+UnG26pXrkr6xeKLEkI0TfaA2KhB5hTDG1ZgupolbfpWBeOj2Zxhz
-         0rGeLMd0GlUUdoB3rJ9P9oJ3DGoWrzHLlvRWl36XePUZkdU7kZIjLArZt7P5LAKEx0Bg
-         bwhOuSeU3FSk5xaY2Ethx+sG6MZSd7SgsdRBF6PJV9jCTaqQpCv2Otu5fdN8w9QGLs+U
-         zB8aNyC8jhljFQX5yTOox2AfXZMfHYTYdA3TQv+sq3Rnp7vB+z1hvTRh7ai+iPStV80l
-         y9aNLQ1qpqtQrufjRE7knC7LElACC/D6rV1gTTQmHwWAZ8EDZbqoBNgbcbVXXE6QglHO
-         h2Jw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=G5GAnkjqtc7EkL/tXIHVNRyjzwa3RDtsWa6aMYd6kCQ=;
-        b=LFflvc/BpdwQSbJ470vwQJQqxQcaqW4mbcanrTGQEwhA+bxUINkXg4bQfE3fQwR0Eb
-         KfMPZSahijtMyJ8Co6CcOF/pfMhoTPIZjux4dqjPkLWBuv66TcJ0I3lw2zyBM2B7EUHf
-         Gk1uQM3l9zbJPHVrB/O5/dsxJ0phZo2BnKcIdfgApO7GTfQLRihHcGT3YSD/7pEtaZSj
-         GccAoMCirpDnkKtw7qKD9Z+hYPvQg7D0hO1MZKGj470AsAKSJZL0ouOi+Uqbxb5yDHKZ
-         /6r3cH88OGEKdfegH4BZcgRfu6Yue8EsjB577A3hfSfbX6KPdtMeN/wl5Zq090hSD/Zm
-         VyVA==
-X-Gm-Message-State: AElRT7Ho0aRv0VBn3Nrx4OxVhko1vVy4pbZCE1gBXs4fW3cdmE3aXqXn
-        Oh3qi7zwCI/4YEXKhnJOxAQ=
-X-Google-Smtp-Source: AG47ELsepo94XVYBZQmMFpAWXSuXnfUPAKGP4oKx74hOGtoTCLzvFscdVE4v7deumUCj3DLKlwGFQA==
-X-Received: by 10.80.137.80 with SMTP id f16mr1946011edf.206.1521198849280;
-        Fri, 16 Mar 2018 04:14:09 -0700 (PDT)
-Received: from evledraar (proxy-gw-a.booking.com. [5.57.21.8])
-        by smtp.gmail.com with ESMTPSA id h13sm3361136edi.91.2018.03.16.04.14.07
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 16 Mar 2018 04:14:07 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Linux Kernel <linux-kernel@vger.kernel.org>,
-        git-packagers@googlegroups.com
-Subject: Re: [ANNOUNCE] Git v2.17.0-rc0
-References: <xmqqwoyc3kir.fsf@gitster-ct.c.googlers.com>
-User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 1.1.0
-In-reply-to: <xmqqwoyc3kir.fsf@gitster-ct.c.googlers.com>
-Date:   Fri, 16 Mar 2018 12:14:06 +0100
-Message-ID: <87fu50e0ht.fsf@evledraar.gmail.com>
+        id S1753236AbeCPLtJ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Mar 2018 07:49:09 -0400
+Received: from mout.gmx.net ([212.227.15.19]:50167 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751888AbeCPLtI (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Mar 2018 07:49:08 -0400
+Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MgKUo-1fJQnY0SrG-00Nf9X; Fri, 16
+ Mar 2018 12:48:38 +0100
+Date:   Fri, 16 Mar 2018 12:48:24 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+To:     Linus Torvalds <torvalds@linux-foundation.org>
+cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Johannes Sixt <j6t@kdbg.org>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Daniel Jacques <dnj@google.com>,
+        Steffen Prohaska <prohaska@zib.de>,
+        John Keeping <john@keeping.me.uk>, Stan Hu <stanhu@gmail.com>,
+        Richard Clamp <richardc@unixbeard.net>
+Subject: Re: [PATCH 3/3] Makefile: optionally symlink libexec/git-core binaries
+ to bin/git
+In-Reply-To: <CA+55aFz6J2j_o0b1JfPSPUX0t3703oFtrpcot29_cgbKi7EnOg@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1803161248040.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <20180313203935.5084-1-avarab@gmail.com> <20180313203935.5084-4-avarab@gmail.com> <1cabf9c0-674e-c2b3-9977-9c74b929a86d@kdbg.org> <87y3ivdkvp.fsf@evledraar.gmail.com> <CA+55aFwU5fwWx2+DdBp=XCpG2Orx+rA8KxPVtGHxpgHAZs=h2Q@mail.gmail.com>
+ <nycvar.QRO.7.76.6.1803151804390.64@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <CA+55aFz6J2j_o0b1JfPSPUX0t3703oFtrpcot29_cgbKi7EnOg@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:7fL3N9S53svnc76S9U9c7rDt9lw4upuD3pGMXVtmjU9zTqFytQY
+ FPBJqzkUO4kqTpPmFqJN7+AgjxJEv3n4YdRMT37xpdcq/qXL2Bu2ubwfjOAKL/QvpvZK6x9
+ Q19lQKzfFMzbujzmyExE6hsofKXJscA7T0JIRYNEQ/zjrPAn0pnWeQCHR5cvjrwhjlAqXqD
+ 8oTZszdaAUNudpe8Q2rJA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:se+ydwj0rPE=:7KKsPHCyeFry9/xRcpoDqq
+ RneplKBC59NYNuBFHY+cG4nnx481+084q+7suf4q98sftDY1XcuGrfOZHdydCr/L/+zRvkqbT
+ xU5WLARuKk0JCu5lSHEOTkEJkPbp5emYJ22/a1VV+N1WgIcZG6v3vQpMTPPLYaA+pmP76fbdf
+ Y7RTbuqhDTmZh9VgWZZNmUkP9WlfYAB3x9jFy5C3slcxN6RFLII97dkoWjdtUUvImWO8GgQdw
+ hBzIIkVRwau7mHSIxlOigxv3KjNCsyXr32i84Rgl57uV/Ud2h3o63/w/wsb+MYHf/VDnZTIVv
+ uofuArhSXYW6aJUFYXgC3ppaZahm5iTHHvPUs2bDNbrNIkabnY8gZFxK/EUhYMmk7d2IN4Qvf
+ W9Dfh6AfiPxUo0aaCzdqnPgTA+Jppbm//CK5W6G0UJ0ZYitrwakr23bAfwkqJf+Ym0+yZj0I5
+ 9h0HYHiYy2+kLpeUHCqytcpQ/+yp4xonA+Emugj88a7S+u6lYKFEVLM5aWSFC8AzfgF5PPHQP
+ FncNTC7FZj5DL60wByFxW5eq2/+srAR8QXyvlRKIwqGZTiGT4rE/gxF6QTaIX7ycrC4Yv49ni
+ P93SClM51YJRNEPYSuowFcdTIFJu9iQD2FdSdCLImsgGfBNmndEVxpNMkxPZ9u4a6n0Z2hYgS
+ vK20/tge8FHWlNSqmuO1e0xjdJn7LGbe0CyXnGuS7mybSVpf5VE72S1c81z3UV2RMFqboTwyk
+ bKTdLkfeDZInPx+go6qdR4GCCXZ24lh3SJhwK+mG2HNE6nM2c4W4h1Xfik5tIBpyiyfh+jwJS
+ asYh98bCVs6uGAKuiKcsl72fqNQAwkIfiP0UlSri1/yqu9WVjY=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Linus.
 
-On Fri, Mar 16 2018, Junio C. Hamano jotted:
+On Thu, 15 Mar 2018, Linus Torvalds wrote:
 
->       gitweb: hard-depend on the Digest::MD5 5.8 module
+> We do end up still using the dashed form for certain things, but they
+> are already special-cased (ie things like "git-receive-pack" and
+> "git-shell" that very much get executed directly, and for fundamental
+> reasons).
 
-I've just noticed this now, but while this module is in 5.8 RedHat's
-butchered perl doesn't have it in the base system, thus this introduces
-the do-we-even-care regression that git's full test suite won't pass on
-a RedHat (or CentOS) base system, because the gitweb tests will fail to
-"use" Digest::MD5.
+Please do elaborate.
 
-I'm slightly leaning towards not caring about it, since there's no other
-perl distributor that does this sort of split-out of the core, and if
-you're on a RedHat system they're solving your package problems, so this
-really only impacts the edge case of git developers and redhat
-packagers, both of whom can just do "yum install -y perl-Digest-MD5" to
-fix it.
+Ciao,
+Johannes
