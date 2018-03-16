@@ -7,74 +7,79 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 865801F404
-	for <e@80x24.org>; Fri, 16 Mar 2018 21:34:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A349E1F404
+	for <e@80x24.org>; Fri, 16 Mar 2018 21:41:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751236AbeCPVeq (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Mar 2018 17:34:46 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:41191 "EHLO
+        id S1751623AbeCPVlW (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Mar 2018 17:41:22 -0400
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:42978 "EHLO
         mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750826AbeCPVep (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Mar 2018 17:34:45 -0400
-Received: by mail-wr0-f196.google.com with SMTP id f14so12911297wre.8
-        for <git@vger.kernel.org>; Fri, 16 Mar 2018 14:34:44 -0700 (PDT)
+        with ESMTP id S1750826AbeCPVlV (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Mar 2018 17:41:21 -0400
+Received: by mail-wr0-f196.google.com with SMTP id s18so12898027wrg.9
+        for <git@vger.kernel.org>; Fri, 16 Mar 2018 14:41:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=rxdi+G4W18dwAJklSUKZA4P+69eFmpowHAZ+E100HNY=;
-        b=mumOw5WdQPPpuWrqdTBhGBi2rSG/KWjsyf4guRnH0lgdPwBCPV8h9rGw0BR0NILqa1
-         TueF/CLlsLlD20zjWSi26yxE+TkPzYXs/kn9FFxJVrd5/3lnzutp4UdpWSzwfGalPe5L
-         UKKV1MlFcKBJnHFbQhPJF9N3cOPMc1h1iMvSJ0qXDlIitOsHZ/wphpct2JwSKlEvKG8+
-         GgcYXpjkF1gBo6PRTeidE6fnw/ghfKZ8FOA3OY9K9DHw/SLEfw5WbSdaEIyE7NxsI0gZ
-         mJlJ8ig5ljflwKhAP9AJqp2q2xgcds6HekOI0rtLiHOg2+cj62rGOj/+dfgllZekt5So
-         9/zA==
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=v6O6ySyEUgKhuKD9lyQ6TPP+U352Y2Flpxv+nOj9fQs=;
+        b=AUoOAnMB4Fl3B8DrIKe1Qld1cVpwcfGxdUBfWDfUwDmTjMk4apLP41tA9mhCMQ6UiZ
+         wdGIxJ+FhbwXL6qiqk/CCBSTFJK3SDbF22FLly96WpWWzE37/0BfOuZphfXi83AOBtGd
+         zTJqPnSxrEoVLQpKNc+8bq1V3pVyWUAFrUa8OnMs8P1IWDJO3rEUZ1P9xuE9caLTSb25
+         C4gZBCSSfGbSCJPADScRXiYq66rFtTuZdVxo4OKrwqFmu3BXgTL1aatYDb4pXMjYCNvL
+         3QlJWDyzaxCTsPpOL6lQa7eJVG4pUZCmnDwEoEDhF17r9ouKGGb1YNgqmkxApubh0EgC
+         DFtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=rxdi+G4W18dwAJklSUKZA4P+69eFmpowHAZ+E100HNY=;
-        b=PzMq07Ytx3DQRTRiQ9NVl2HoTJo/pPsDYWtpW94LBuxD04CLrz+9uuPqYt9dmXzOtg
-         lDkn7jBWHU2FffYY0yjrs3Ke/NJs+AXqQJvnHTrS/EnKznSTiHU3ueBuZVCbSs7Odhlq
-         vz4x7OD0E9kKtZ8yAIMHDttlICDdqC/6QJhPuJjr4fV3LTv9+ZZUNSBJQ/22LVrMxaJ7
-         M7C5hSSTb0AkFjLQgCCPYpFkC/k3Rh4ozkq1Rm5mHZdVBgOVsdRUd74N2dPVbXOrJJcM
-         tAk39qLmUe3Bf+EWC9pjIdQ3o8hnslP3kuYr73TAdB8HaTsGBeHseHND3n0zmBKm+nOi
-         aoMw==
-X-Gm-Message-State: AElRT7Gh3lUEa8HZ9I3m1Ysj0nmrQeFlFEJndY2LzbDzDgbz2kxqbtZv
-        iKql2voxRk2wemqFWFl7wgs=
-X-Google-Smtp-Source: AG47ELsE034n1OPmk9tl4vcX2ZXrrJeIPIJIOFbje9t5sTjK3YpgXGDovFf04e7VOzGUS528DH84vQ==
-X-Received: by 10.223.176.237 with SMTP id j42mr2947580wra.25.1521236083503;
-        Fri, 16 Mar 2018 14:34:43 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id w29sm8225187wra.84.2018.03.16.14.34.42
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=v6O6ySyEUgKhuKD9lyQ6TPP+U352Y2Flpxv+nOj9fQs=;
+        b=tn7weYln+ATFTbJeoTIwuo+JHcKa+9IEOBifPMtFkZNb4Eeu1Gk6KRNzSme7bdy3FY
+         6pIxBU2mE10z68fAi8Ki0mBrBVYB8t7Wqp3qCmCJmq0BOYoXDaZIaryD6smIJT1pFOU7
+         UVNI8Jwly/REDQzNhUwYfEoK8E4OCir6kKRHWBa/I/GhCb5lxqZ0uiGJ18Pvp9gLVHpb
+         DC1bg0lD9Xo1z3XqVXjjtp8Ds9rKTB9KZRne96Vidfn+5xSAHxZrlNZyExM665bx5Gla
+         TAV90tbIIWL1MllYMPpugi0kaqg3HNXiPJ5qtWjlB1F5siFUJiiYq21T9CvCILYT7K54
+         WbrQ==
+X-Gm-Message-State: AElRT7F4hQHXHvBDXl4XwvCLk0fDNGxbsb8NlMeFPqNejhA+kb9/lKD6
+        ZJn2KdcQ8STp1llbSQ/IcbQ=
+X-Google-Smtp-Source: AG47ELtcDSaYdpEeeLTvWYvb18hPklo5B0GofTcegDGZpiMPga6Bm5KshuDnI2V8xTIjtNVqg2ugVQ==
+X-Received: by 10.223.226.1 with SMTP id j1mr2842537wri.13.1521236479608;
+        Fri, 16 Mar 2018 14:41:19 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id 59sm1681903wrj.5.2018.03.16.14.41.18
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 16 Mar 2018 14:34:42 -0700 (PDT)
+        Fri, 16 Mar 2018 14:41:18 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     avarab@gmail.com, e@80x24.org, git@vger.kernel.org, peff@peff.net
-Subject: Re: [PATCH v4 09/11] pack-objects: shrink size field in struct object_entry
-References: <20180308114232.10508-1-pclouds@gmail.com>
-        <20180316183200.31014-1-pclouds@gmail.com>
-        <20180316183200.31014-10-pclouds@gmail.com>
-        <xmqqmuz7242v.fsf@gitster-ct.c.googlers.com>
-Date:   Fri, 16 Mar 2018 14:34:42 -0700
-In-Reply-To: <xmqqmuz7242v.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Fri, 16 Mar 2018 12:49:44 -0700")
-Message-ID: <xmqqpo43zoul.fsf@gitster-ct.c.googlers.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] format-patch: use --compact-summary instead of --summary
+References: <20180316200648.18256-1-pclouds@gmail.com>
+Date:   Fri, 16 Mar 2018 14:41:18 -0700
+In-Reply-To: <20180316200648.18256-1-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
+ =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
+        Duy"'s message of "Fri, 16 Mar 2018 21:06:48 +0100")
+Message-ID: <xmqqlgerzojl.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
 
-> Also, don't we want to use uintmax_t throughout the callchain?  How
-> would the code in this series work when your ulong is 32-bit?
+> For reviewers, a couple fewer lines from diffstat (either cover letter
+> or patches) is a good thing because there's less to read.
 
-My own answer to this question is "no conversion to uintmax_t, at
-least not in this series."  As long as the original code uses
-"unsigned long", this series also should, I think.
+I can certainly accept that there may be some reviewers who share
+that view, but me personally, I would rather have them outside the
+main diffstat section, so addition and removal of files that are
+rarer events do stand out.
+
+I guess people would not mind an option to use it, but they can
+already say "git format-patch --compact-summary $upstream..", so...
+
 
