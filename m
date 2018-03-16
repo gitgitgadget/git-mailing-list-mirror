@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E774C1FAE4
-	for <e@80x24.org>; Fri, 16 Mar 2018 19:28:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7DF041FAE2
+	for <e@80x24.org>; Fri, 16 Mar 2018 19:28:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753022AbeCPT2M (ORCPT <rfc822;e@80x24.org>);
+        id S1753096AbeCPT2P (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Mar 2018 15:28:15 -0400
+Received: from mail-lf0-f65.google.com ([209.85.215.65]:45662 "EHLO
+        mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751858AbeCPT2M (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 16 Mar 2018 15:28:12 -0400
-Received: from mail-lf0-f67.google.com ([209.85.215.67]:42489 "EHLO
-        mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751699AbeCPT2I (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Mar 2018 15:28:08 -0400
-Received: by mail-lf0-f67.google.com with SMTP id a22-v6so16932340lfg.9
-        for <git@vger.kernel.org>; Fri, 16 Mar 2018 12:28:07 -0700 (PDT)
+Received: by mail-lf0-f65.google.com with SMTP id h127-v6so16908741lfg.12
+        for <git@vger.kernel.org>; Fri, 16 Mar 2018 12:28:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=EDiS6pwX4VrBmTnvESLo8PQwlJZnB3M4U7ZIIHBf6OU=;
-        b=F73/8a6C7Iy7JCokUffXOQ+j3i+xz+aQMlQnTGOkeBLmJfVl+BzfuZWoJMCQZ6OPDI
-         KwWoFVFtFKiJAhuUzMBYO85tDtM8E2oNehvr5LBlbu8KT6YEASsm21Sd1rk02f9gfxDE
-         NPWS8/KT1++TeGaASRsxUI0uh6f1+R1nMEw8vy0NbcCcbeA0tA/QavXz1QrrWJ+izbe6
-         2MfveT03ah/4X/VDZkRcFqtaRw8v9Aq5FwZLis0saULAD2mRX9HHPVY8SbLaygRvLLiI
-         pWujm2O9DqBI+l+UXO7AW4s0aDyGHBGS2nGdUjl69P9aKJlR7nPUUcLqKbln+QZV96Cx
-         DElg==
+        bh=4dSO5jlV0By/5rNDfmPpGF55FonzI6XFi/Epk267ORc=;
+        b=LSvfFEhW81oFKzAbh+Ap9Gkv2L9v8OPvvoFTWR9HczFtAHVOyag25rTTbMJrJXymlA
+         SF8eNXfFyNhWbjgv4a6OFA+EL3BbfzGVLwqDF0ZBgKGXsrlDdsohp7QLlvm6fXAoqVq6
+         ynaPbiHCEp7lEg33kAdThnJG+1gmyqvG8e+mTQZ2zKSXP4fgPUwKWa+u0PJagoz4Y3vT
+         S9wzVW4+REOnTXT2zmnUL3CNZcuKMu9xfGTm7caDLMPwx830066SyNqezVMGO38UWVnK
+         ABWhE7Kqgd/CWbbrC0jdhluP13ljBAmVpXaAGY7rlHddTgJQHWEAbvuwmm+NN5bpafXW
+         6WrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=EDiS6pwX4VrBmTnvESLo8PQwlJZnB3M4U7ZIIHBf6OU=;
-        b=asIp3wXb7WgpCZmVMs08tyG6jYzj3HXNz2spru8M2oaYKscphIR2qhYXZE5IjMNIEu
-         /1LcihV9t2eMidRn+6VlQ/VmECmtYhDu8pDjfBuKBm0RdDSBoNwd3XWE7ftz3ETU5A2K
-         W/VimV2rLG43auMUVYM11e4pPrw9Rc6LIKiat3RudsByFXNQf+dU1/PmnwZLU52W5z66
-         xY2ekBFluIGK6SOPxDnPVke1xtSDl6y5W7YrNPhCvAFSnAhKk3ZLTBOsx2VxkhkZGMYE
-         CbImvxjYVyj2DAfxRoxH8qR0Of6xgagX98YU7LrIs5fY43q2CctmrQdwTzv6vxWlPPak
-         PYkg==
-X-Gm-Message-State: AElRT7FvTF9YA76WiceEFOKmJU+yH8QX6WZe0xIBYOY1xbZnssCxIVeD
-        XJyqtmfKa3tvNJibSYxmgm/lAA==
-X-Google-Smtp-Source: AG47ELvXaxDdcaoBFSaHML07eugC0L87Uu/NXDXfWG1rgu4kagAlv/A3bjmPAAuJwLH+tKi9pVbZIQ==
-X-Received: by 10.46.116.4 with SMTP id p4mr2238482ljc.101.1521228486323;
-        Fri, 16 Mar 2018 12:28:06 -0700 (PDT)
+        bh=4dSO5jlV0By/5rNDfmPpGF55FonzI6XFi/Epk267ORc=;
+        b=QGAr549GpHTIKVeZsgdS+c2jxDE2QJzE/SliA3bI6tYhbXcIN+LCQi+hHnpLJaFKp5
+         mRV4MQfQvcr215oUG0fSfBfXC7aSJRZ8DM70iP9OkaWJr7weP1iGrTVuEJzEqBzcPbqo
+         xhKPNP3nURBL4YE3ELBUwgct0KeXKW/sr4Xd1X9zdcUQyJ7/5VAVgcGEP0vjyy6JAM7y
+         F1fETCl3glKXvnwOHe9SvRfjNzZOopXB8dIS04piS4S1Ff6KocJ4tRLgbE3A2jcGl0UF
+         8SKVoXiGauMwjN9dgjBhcXSFNYwAu11bgCbHQRsBHDe8ERJ9IvjaNYGU4CxPCCxBwoMV
+         g8MQ==
+X-Gm-Message-State: AElRT7EwKus7n+JNP8rVtfLpZb6ByXgXxPz0tYiZAzZJywPvm57+opch
+        NRCD9BlIz0NtX8l+dkrHSl0=
+X-Google-Smtp-Source: AG47ELteY8TU6KnITrDgz2ax7qg7iT4PiI4aea9YqUB17tyJF3kMQQmCrPlYA+bDkHVdO01MY/5RLw==
+X-Received: by 2002:a19:9904:: with SMTP id b4-v6mr342448lfe.51.1521228490878;
+        Fri, 16 Mar 2018 12:28:10 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id h8sm1766085lja.41.2018.03.16.12.28.05
+        by smtp.gmail.com with ESMTPSA id h8sm1766085lja.41.2018.03.16.12.28.09
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 16 Mar 2018 12:28:05 -0700 (PDT)
+        Fri, 16 Mar 2018 12:28:09 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     avarab@gmail.com, e@80x24.org, git@vger.kernel.org,
         gitster@pobox.com, peff@peff.net
-Subject: [PATCH v3 1/7] repack: add --keep-pack option
-Date:   Fri, 16 Mar 2018 20:27:39 +0100
-Message-Id: <20180316192745.19557-2-pclouds@gmail.com>
+Subject: [PATCH v3 4/7] gc --auto: exclude base pack if not enough mem to "repack -ad"
+Date:   Fri, 16 Mar 2018 20:27:42 +0100
+Message-Id: <20180316192745.19557-5-pclouds@gmail.com>
 X-Mailer: git-send-email 2.16.2.903.gd04caf5039
 In-Reply-To: <20180316192745.19557-1-pclouds@gmail.com>
 References: <20180306104158.6541-1-pclouds@gmail.com>
@@ -69,345 +69,278 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We allow to keep existing packs by having companion .keep files. This
-is helpful when a pack is permanently kept. In the next patch, git-gc
-just wants to keep a pack temporarily, for one pack-objects
-run. git-gc can use --keep-pack for this use case.
+pack-objects could be a big memory hog especially on large repos,
+everybody knows that. The suggestion to stick a .keep file on the
+giant base pack to avoid this problem is also known for a long time.
 
-A note about why the pack_keep field cannot be reused and
-pack_keep_in_core has to be added. This is about the case when
---keep-pack is specified together with either --keep-unreachable or
---unpack-unreachable, but --honor-pack-keep is NOT specified.
+Recent patches add an option to do just this, but it has to be either
+configured or activated manually. This patch lets `git gc --auto`
+activate this mode automatically when it thinks `repack -ad` will use
+a lot of memory and start affecting the system due to swapping or
+flushing OS cache.
 
-In this case, we want to exclude objects from the packs specified on
-command line, not from ones with .keep files. If only one bit flag is
-used, we have to clear pack_keep on pack files with the .keep file.
+gc --auto decides to do this based on an estimation of pack-objects
+memory usage, which is quite accurate at least for the heap part, and
+whether that fits in half of system memory (the assumption here is for
+desktop environment where there are many other applications running).
 
-But we can't make any assumption about unreachable objects in .keep
-packs. If "pack_keep" field is false for .keep packs, we could
-potentially pull lots of unreachable objects into the new pack, or
-unpack them loose. The safer approach is ignore all packs with either
-.keep file or --keep-pack.
+This mechanism only kicks in if gc.bigBasePackThreshold is not configured.
+If it is, it is assumed that the user already knows what they want.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- Documentation/git-pack-objects.txt |  9 +++++-
- Documentation/git-repack.txt       |  9 +++++-
- builtin/pack-objects.c             | 48 ++++++++++++++++++++++++++----
- builtin/repack.c                   | 21 +++++++++++--
- cache.h                            |  1 +
- t/t7700-repack.sh                  | 25 ++++++++++++++++
- 6 files changed, 102 insertions(+), 11 deletions(-)
+ Documentation/git-gc.txt |  9 +++-
+ builtin/gc.c             | 99 +++++++++++++++++++++++++++++++++++++++-
+ builtin/pack-objects.c   |  2 +-
+ config.mak.uname         |  1 +
+ git-compat-util.h        |  4 ++
+ pack-objects.h           |  2 +
+ t/t6500-gc.sh            |  7 +++
+ 7 files changed, 120 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/git-pack-objects.txt b/Documentation/git-pack-objects.txt
-index 81bc490ac5..403524652a 100644
---- a/Documentation/git-pack-objects.txt
-+++ b/Documentation/git-pack-objects.txt
-@@ -12,7 +12,7 @@ SYNOPSIS
- 'git pack-objects' [-q | --progress | --all-progress] [--all-progress-implied]
- 	[--no-reuse-delta] [--delta-base-offset] [--non-empty]
- 	[--local] [--incremental] [--window=<n>] [--depth=<n>]
--	[--revs [--unpacked | --all]]
-+	[--revs [--unpacked | --all]] [--keep-pack=<pack-name>]
- 	[--stdout [--filter=<filter-spec>] | base-name]
- 	[--shallow] [--keep-true-parents] < object-list
+diff --git a/Documentation/git-gc.txt b/Documentation/git-gc.txt
+index 89f074f924..19b0d1741b 100644
+--- a/Documentation/git-gc.txt
++++ b/Documentation/git-gc.txt
+@@ -58,8 +58,13 @@ If the number of packs exceeds the value of `gc.autoPackLimit`,
+ then existing packs (except those marked with a `.keep` file
+ or over `gc.bigPackThreshold` limit)
+ are consolidated into a single pack by using the `-A` option of
+-'git repack'. Setting `gc.autoPackLimit` to 0 disables
+-automatic consolidation of packs.
++'git repack'.
++If the amount of memory is estimated not enough for `git repack` to
++run smoothly and `gc.bigPackThreshold` is not set, the largest
++pack will also be excluded (this is the equivalent of running `git gc`
++with `--keep-base-pack`).
++Setting `gc.autoPackLimit` to 0 disables automatic consolidation of
++packs.
  
-@@ -126,6 +126,13 @@ base-name::
- 	has a .keep file to be ignored, even if it would have
- 	otherwise been packed.
- 
-+--keep-pack=<pack-name>::
-+	This flag causes an object already in the given pack to be
-+	ignored, even if it would have otherwise been
-+	packed. `<pack-name>` is the the pack file name without
-+	leading directory (e.g. `pack-123.pack`). The option could be
-+	specified multiple times to keep multiple packs.
-+
- --incremental::
- 	This flag causes an object already in a pack to be ignored
- 	even if it would have otherwise been packed.
-diff --git a/Documentation/git-repack.txt b/Documentation/git-repack.txt
-index ae750e9e11..ce497d9d12 100644
---- a/Documentation/git-repack.txt
-+++ b/Documentation/git-repack.txt
-@@ -9,7 +9,7 @@ git-repack - Pack unpacked objects in a repository
- SYNOPSIS
- --------
- [verse]
--'git repack' [-a] [-A] [-d] [-f] [-F] [-l] [-n] [-q] [-b] [--window=<n>] [--depth=<n>] [--threads=<n>]
-+'git repack' [-a] [-A] [-d] [-f] [-F] [-l] [-n] [-q] [-b] [--window=<n>] [--depth=<n>] [--threads=<n>] [--keep-pack=<pack-name>]
- 
- DESCRIPTION
- -----------
-@@ -133,6 +133,13 @@ other objects in that pack they already have locally.
- 	with `-b` or `repack.writeBitmaps`, as it ensures that the
- 	bitmapped packfile has the necessary objects.
- 
-+--keep-pack=<pack-name>::
-+	Exclude the given pack from repacking. This is the equivalent
-+	of having `.keep` file on the pack. `<pack-name>` is the the
-+	pack file name without leading directory (e.g. `pack-123.pack`).
-+	The option could be specified multiple times to keep multiple
-+	packs.
-+
- --unpack-unreachable=<when>::
- 	When loosening unreachable objects, do not bother loosening any
- 	objects older than `<when>`. This can be used to optimize out
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 5c674b2843..7b9fe6c89f 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -28,6 +28,7 @@
+ --prune=<date>::
+ 	Prune loose objects older than date (default is 2 weeks ago,
+diff --git a/builtin/gc.c b/builtin/gc.c
+index 849f0821a9..c0f1922c24 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -20,6 +20,10 @@
  #include "argv-array.h"
- #include "list.h"
+ #include "commit.h"
  #include "packfile.h"
-+#include "dir.h"
++#include "pack.h"
++#include "pack-objects.h"
++#include "blob.h"
++#include "tree.h"
  
- static const char *pack_usage[] = {
- 	N_("git pack-objects --stdout [<options>...] [< <ref-list> | < <object-list>]"),
-@@ -53,7 +54,7 @@ static int pack_loose_unreachable;
- static int local;
- static int have_non_local_packs;
- static int incremental;
--static int ignore_packed_keep;
-+static int ignore_packed_keep, ignore_packed_keep_in_core;
- static int allow_ofs_delta;
- static struct pack_idx_option pack_idx_opts;
- static const char *base_name;
-@@ -982,13 +983,15 @@ static int want_found_object(int exclude, struct packed_git *p)
- 	 * Otherwise, we signal "-1" at the end to tell the caller that we do
- 	 * not know either way, and it needs to check more packs.
- 	 */
--	if (!ignore_packed_keep &&
-+	if (!ignore_packed_keep && !ignore_packed_keep_in_core &&
- 	    (!local || !have_non_local_packs))
- 		return 1;
+ #define FAILED_RUN "failed to run %s"
  
- 	if (local && !p->pack_local)
- 		return 0;
--	if (ignore_packed_keep && p->pack_local && p->pack_keep)
-+	if (p->pack_local &&
-+	    ((ignore_packed_keep && p->pack_keep) ||
-+	     (ignore_packed_keep_in_core && p->pack_keep_in_core)))
- 		return 0;
+@@ -40,6 +44,7 @@ static const char *gc_log_expire = "1.day.ago";
+ static const char *prune_expire = "2.weeks.ago";
+ static const char *prune_worktrees_expire = "3.months.ago";
+ static unsigned long big_pack_threshold;
++static unsigned long max_delta_cache_size = DEFAULT_DELTA_CACHE_SIZE;
  
- 	/* we don't know yet; keep looking for more packs */
-@@ -2677,7 +2680,7 @@ static void add_objects_in_unpacked_packs(struct rev_info *revs)
- 		struct object_id oid;
- 		struct object *o;
+ static struct argv_array pack_refs_cmd = ARGV_ARRAY_INIT;
+ static struct argv_array reflog = ARGV_ARRAY_INIT;
+@@ -128,6 +133,7 @@ static void gc_config(void)
+ 	git_config_get_expiry("gc.logexpiry", &gc_log_expire);
  
--		if (!p->pack_local || p->pack_keep)
-+		if (!p->pack_local || p->pack_keep || p->pack_keep_in_core)
- 			continue;
- 		if (open_pack_index(p))
- 			die("cannot open pack index");
-@@ -2739,7 +2742,8 @@ static int has_sha1_pack_kept_or_nonlocal(const struct object_id *oid)
- 	p = (last_found != (void *)1) ? last_found : packed_git;
+ 	git_config_get_ulong("gc.bigpackthreshold", &big_pack_threshold);
++	git_config_get_ulong("pack.deltacachesize", &max_delta_cache_size);
  
- 	while (p) {
--		if ((!p->pack_local || p->pack_keep) &&
-+		if ((!p->pack_local || p->pack_keep ||
-+				p->pack_keep_in_core) &&
- 			find_pack_entry_one(oid->hash, p)) {
- 			last_found = p;
- 			return 1;
-@@ -2782,7 +2786,7 @@ static void loosen_unused_packed_objects(struct rev_info *revs)
- 	struct object_id oid;
- 
- 	for (p = packed_git; p; p = p->next) {
--		if (!p->pack_local || p->pack_keep)
-+		if (!p->pack_local || p->pack_keep || p->pack_keep_in_core)
- 			continue;
- 
- 		if (open_pack_index(p))
-@@ -2809,6 +2813,7 @@ static int pack_options_allow_reuse(void)
- 	return pack_to_stdout &&
- 	       allow_ofs_delta &&
- 	       !ignore_packed_keep &&
-+	       !ignore_packed_keep_in_core &&
- 	       (!local || !have_non_local_packs) &&
- 	       !incremental;
+ 	git_config(git_default_config, NULL);
  }
-@@ -2917,6 +2922,33 @@ static void get_object_list(int ac, const char **av)
- 	oid_array_clear(&recent_objects);
+@@ -167,7 +173,8 @@ static int too_many_loose_objects(void)
+ 	return needed;
  }
  
-+static void add_extra_kept_packs(const struct string_list *names)
+-static void find_base_packs(struct string_list *packs, unsigned long limit)
++static struct packed_git *find_base_packs(struct string_list *packs,
++					  unsigned long limit)
+ {
+ 	struct packed_git *p, *base = NULL;
+ 
+@@ -186,6 +193,8 @@ static void find_base_packs(struct string_list *packs, unsigned long limit)
+ 
+ 	if (base)
+ 		string_list_append(packs, base->pack_name);
++
++	return base;
+ }
+ 
+ static int too_many_packs(void)
+@@ -211,6 +220,79 @@ static int too_many_packs(void)
+ 	return gc_auto_pack_limit < cnt;
+ }
+ 
++static uint64_t total_ram(void)
 +{
-+	struct packed_git *p;
++#if defined(HAVE_SYSINFO)
++	struct sysinfo si;
 +
-+	if (!names->nr)
-+		return;
++	if (!sysinfo(&si))
++		return si.totalram;
++#elif defined(HAVE_BSD_SYSCTL) && (defined(HW_MEMSIZE) || defined(HW_PHYSMEM))
++	int64_t physical_memory;
++	int mib[2];
++	size_t length;
 +
-+	prepare_packed_git();
-+	for (p = packed_git; p; p = p->next) {
-+		const char *name = basename(p->pack_name);
-+		int i;
++	mib[0] = CTL_HW;
++# if defined(HW_MEMSIZE)
++	mib[1] = HW_MEMSIZE;
++# else
++	mib[1] = HW_PHYSMEM;
++# endif
++	length = sizeof(int64_t);
++	if (!sysctl(mib, 2, &physical_memory, &length, NULL, 0))
++		return physical_memory;
++#elif defined(GIT_WINDOWS_NATIVE)
++	MEMORYSTATUSEX memInfo;
 +
-+		if (!p->pack_local)
-+			continue;
-+
-+		for (i = 0; i < names->nr; i++)
-+			if (!fspathcmp(name, names->items[i].string))
-+				break;
-+
-+		if (i < names->nr) {
-+			p->pack_keep_in_core = 1;
-+			ignore_packed_keep_in_core = 1;
-+			continue;
-+		}
-+	}
++	memInfo.dwLength = sizeof(MEMORYSTATUSEX);
++	if (GlobalMemoryStatusEx(&memInfo))
++		return memInfo.ullTotalPhys;
++#endif
++	return 0;
 +}
 +
- static int option_parse_index_version(const struct option *opt,
- 				      const char *arg, int unset)
++static uint64_t estimate_repack_memory(struct packed_git *pack)
++{
++	unsigned long nr_objects = approximate_object_count();
++	size_t os_cache, heap;
++
++	if (!pack || !nr_objects)
++		return 0;
++
++	/*
++	 * First we have to scan through at least one pack.
++	 * Assume enough room in OS file cache to keep the entire pack
++	 * or we may accidentally evict data of other processes from
++	 * the cache.
++	 */
++	os_cache = pack->pack_size + pack->index_size;
++	/* then pack-objects needs lots more for book keeping */
++	heap = sizeof(struct object_entry) * nr_objects;
++	/*
++	 * internal rev-list --all --objects takes up some memory too,
++	 * let's say half of it is for blobs
++	 */
++	heap += sizeof(struct blob) * nr_objects / 2;
++	/*
++	 * and the other half is for trees (commits and tags are
++	 * usually insignificant)
++	 */
++	heap += sizeof(struct tree) * nr_objects / 2;
++	/* and then obj_hash[], underestimated in fact */
++	heap += sizeof(struct object *) * nr_objects;
++	/* revindex is used also */
++	heap += sizeof(struct revindex_entry) * nr_objects;
++	/*
++	 * read_sha1_file() (either at delta calculation phase, or
++	 * writing phase) also fills up the delta base cache
++	 */
++	heap += delta_base_cache_limit;
++	/* and of course pack-objects has its own delta cache */
++	heap += max_delta_cache_size;
++
++	return os_cache + heap;
++}
++
+ static int keep_one_pack(struct string_list_item *item, void *data)
  {
-@@ -2956,6 +2988,7 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 	struct argv_array rp = ARGV_ARRAY_INIT;
- 	int rev_list_unpacked = 0, rev_list_all = 0, rev_list_reflog = 0;
- 	int rev_list_index = 0;
-+	struct string_list keep_pack_list = STRING_LIST_INIT_NODUP;
- 	struct option pack_objects_options[] = {
- 		OPT_SET_INT('q', "quiet", &progress,
- 			    N_("do not show progress meter"), 0),
-@@ -3022,6 +3055,8 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 			 N_("create packs suitable for shallow fetches")),
- 		OPT_BOOL(0, "honor-pack-keep", &ignore_packed_keep,
- 			 N_("ignore packs that have companion .keep file")),
-+		OPT_STRING_LIST(0, "keep-pack", &keep_pack_list, N_("name"),
-+				N_("ignore this pack")),
- 		OPT_INTEGER(0, "compression", &pack_compression_level,
- 			    N_("pack compression level")),
- 		OPT_SET_INT(0, "keep-true-parents", &grafts_replace_parents,
-@@ -3150,6 +3185,7 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 		progress = 2;
+ 	argv_array_pushf(&repack, "--keep-pack=%s", basename(item->string));
+@@ -256,6 +338,21 @@ static int need_to_gc(void)
  
- 	prepare_packed_git();
-+	add_extra_kept_packs(&keep_pack_list);
- 	if (ignore_packed_keep) {
- 		struct packed_git *p;
- 		for (p = packed_git; p; p = p->next)
-diff --git a/builtin/repack.c b/builtin/repack.c
-index 7bdb40142f..6c636e159e 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -86,7 +86,8 @@ static void remove_pack_on_signal(int signo)
-  * have a corresponding .keep or .promisor file. These packs are not to
-  * be kept if we are going to pack everything into one file.
+ 		if (big_pack_threshold)
+ 			find_base_packs(&keep_pack, big_pack_threshold);
++		else {
++			struct packed_git * p = find_base_packs(&keep_pack, 0);
++			uint64_t mem_have, mem_want;
++
++			mem_have = total_ram();
++			mem_want = estimate_repack_memory(p);
++
++			/*
++			 * Only allow 1/2 of memory for pack-objects, leave
++			 * the rest for the OS and other processes in the
++			 * system.
++			 */
++			if (!mem_have || mem_want < mem_have / 2)
++				string_list_clear(&keep_pack, 0);
++		}
+ 
+ 		add_repack_all_option(&keep_pack);
+ 		string_list_clear(&keep_pack, 0);
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 7b9fe6c89f..6abde6ec6d 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -79,7 +79,7 @@ static uint16_t write_bitmap_options;
+ static int exclude_promisor_objects;
+ 
+ static unsigned long delta_cache_size = 0;
+-static unsigned long max_delta_cache_size = 256 * 1024 * 1024;
++static unsigned long max_delta_cache_size = DEFAULT_DELTA_CACHE_SIZE;
+ static unsigned long cache_max_small_delta_size = 1000;
+ 
+ static unsigned long window_memory_limit = 0;
+diff --git a/config.mak.uname b/config.mak.uname
+index 6a1d0de0cc..ae9cbccec1 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -37,6 +37,7 @@ ifeq ($(uname_S),Linux)
+ 	HAVE_GETDELIM = YesPlease
+ 	SANE_TEXT_GREP=-a
+ 	FREAD_READS_DIRECTORIES = UnfortunatelyYes
++	BASIC_CFLAGS += -DHAVE_SYSINFO
+ endif
+ ifeq ($(uname_S),GNU/kFreeBSD)
+ 	HAVE_ALLOCA_H = YesPlease
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 68b2ad531e..a84b21986d 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -284,6 +284,10 @@ extern char *gitdirname(char *);
+ #include <openssl/err.h>
+ #endif
+ 
++#ifdef HAVE_SYSINFO
++# include <sys/sysinfo.h>
++#endif
++
+ /* On most systems <netdb.h> would have given us this, but
+  * not on some systems (e.g. z/OS).
   */
--static void get_non_kept_pack_filenames(struct string_list *fname_list)
-+static void get_non_kept_pack_filenames(struct string_list *fname_list,
-+					const struct string_list *extra_keep)
- {
- 	DIR *dir;
- 	struct dirent *e;
-@@ -97,6 +98,14 @@ static void get_non_kept_pack_filenames(struct string_list *fname_list)
+diff --git a/pack-objects.h b/pack-objects.h
+index 03f1191659..af4f46c026 100644
+--- a/pack-objects.h
++++ b/pack-objects.h
+@@ -1,6 +1,8 @@
+ #ifndef PACK_OBJECTS_H
+ #define PACK_OBJECTS_H
  
- 	while ((e = readdir(dir)) != NULL) {
- 		size_t len;
-+		int i;
++#define DEFAULT_DELTA_CACHE_SIZE (256 * 1024 * 1024)
 +
-+		for (i = 0; i < extra_keep->nr; i++)
-+			if (!fspathcmp(e->d_name, extra_keep->items[i].string))
-+				break;
-+		if (extra_keep->nr > 0 && i < extra_keep->nr)
-+			continue;
-+
- 		if (!strip_suffix(e->d_name, ".pack", &len))
- 			continue;
+ struct object_entry {
+ 	struct pack_idx_entry idx;
+ 	unsigned long size;	/* uncompressed size */
+diff --git a/t/t6500-gc.sh b/t/t6500-gc.sh
+index 4136681b47..96ca70f9cc 100755
+--- a/t/t6500-gc.sh
++++ b/t/t6500-gc.sh
+@@ -5,6 +5,13 @@ test_description='basic git gc tests
  
-@@ -148,7 +157,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 	struct string_list rollback = STRING_LIST_INIT_NODUP;
- 	struct string_list existing_packs = STRING_LIST_INIT_DUP;
- 	struct strbuf line = STRBUF_INIT;
--	int ext, ret, failed;
-+	int i, ext, ret, failed;
- 	FILE *out;
+ . ./test-lib.sh
  
- 	/* variables to be filled by option parsing */
-@@ -160,6 +169,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 	const char *depth = NULL;
- 	const char *threads = NULL;
- 	const char *max_pack_size = NULL;
-+	struct string_list keep_pack_list = STRING_LIST_INIT_NODUP;
- 	int no_reuse_delta = 0, no_reuse_object = 0;
- 	int no_update_server_info = 0;
- 	int quiet = 0;
-@@ -200,6 +210,8 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 				N_("maximum size of each packfile")),
- 		OPT_BOOL(0, "pack-kept-objects", &pack_kept_objects,
- 				N_("repack objects in packs marked with .keep")),
-+		OPT_STRING_LIST(0, "keep-pack", &keep_pack_list, N_("name"),
-+				N_("do not repack this pack")),
- 		OPT_END()
- 	};
- 
-@@ -230,6 +242,9 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 	argv_array_push(&cmd.args, "--keep-true-parents");
- 	if (!pack_kept_objects)
- 		argv_array_push(&cmd.args, "--honor-pack-keep");
-+	for (i = 0; i < keep_pack_list.nr; i++)
-+		argv_array_pushf(&cmd.args, "--keep-pack=%s",
-+				 keep_pack_list.items[i].string);
- 	argv_array_push(&cmd.args, "--non-empty");
- 	argv_array_push(&cmd.args, "--all");
- 	argv_array_push(&cmd.args, "--reflog");
-@@ -254,7 +269,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 		argv_array_push(&cmd.args, "--write-bitmap-index");
- 
- 	if (pack_everything & ALL_INTO_ONE) {
--		get_non_kept_pack_filenames(&existing_packs);
-+		get_non_kept_pack_filenames(&existing_packs, &keep_pack_list);
- 
- 		if (existing_packs.nr && delete_redundant) {
- 			if (unpack_unreachable) {
-diff --git a/cache.h b/cache.h
-index 21fbcc2414..42d700f3d8 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1635,6 +1635,7 @@ extern struct packed_git {
- 	int pack_fd;
- 	unsigned pack_local:1,
- 		 pack_keep:1,
-+		 pack_keep_in_core:1,
- 		 freshened:1,
- 		 do_not_close:1,
- 		 pack_promisor:1;
-diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
-index 38247afbec..05ae0de3aa 100755
---- a/t/t7700-repack.sh
-+++ b/t/t7700-repack.sh
-@@ -196,5 +196,30 @@ test_expect_success 'objects made unreachable by grafts only are kept' '
- 	git cat-file -t $H1
- '
- 
-+test_expect_success 'repack --keep-pack' '
-+	test_create_repo keep-pack &&
-+	(
-+		cd keep-pack &&
-+		test_commit one &&
-+		git repack -d &&
-+		test_commit two &&
-+		git repack -d &&
-+		test_commit three &&
-+		git repack -d &&
-+		test_commit four &&
-+		git repack -d &&
-+		( cd .git/objects/pack && ls *.pack ) >pack-list &&
-+		test_line_count = 4 pack-list &&
-+		KEEP1=$(head -n1 pack-list) &&
-+		KEEP4=$(tail -n1 pack-list) &&
-+		git repack -a -d --keep-pack $KEEP1 --keep-pack $KEEP4 &&
-+		ls .git/objects/pack/*.pack >new-counts &&
-+		grep -q $KEEP1 new-counts &&
-+		grep -q $KEEP4 new-counts &&
-+		test_line_count = 3 new-counts &&
-+		git fsck
-+	)
++test_expect_success 'setup' '
++	# do not let the amount of physical memory affects gc
++	# behavior, make sure we always pack everything to one pack by
++	# default
++	git config gc.bigPackThreshold 2g
 +'
 +
- test_done
- 
+ test_expect_success 'gc empty repository' '
+ 	git gc
+ '
 -- 
 2.16.2.903.gd04caf5039
 
