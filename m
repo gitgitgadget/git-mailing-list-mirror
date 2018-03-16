@@ -2,102 +2,155 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 27A261F404
-	for <e@80x24.org>; Fri, 16 Mar 2018 20:49:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B2CD31F404
+	for <e@80x24.org>; Fri, 16 Mar 2018 20:49:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751652AbeCPUtW (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Mar 2018 16:49:22 -0400
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:43502 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751449AbeCPUtV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Mar 2018 16:49:21 -0400
-Received: by mail-wr0-f194.google.com with SMTP id o1so12833741wro.10
-        for <git@vger.kernel.org>; Fri, 16 Mar 2018 13:49:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=0bW5Zcw6IZADjHV8NycW4jm7ju/0fJif7asN50MSIKE=;
-        b=ZkTCbFi3z0nggOLIui2v/P9gnLbymgX94ngIBmtikeY0dh4ZzfjtQMsJ+YUAAWvXXk
-         7xKychCXdL3licIh2GBGrGZj9idTpPLuQ3PaY7AIrZkCQZYd6LAWy72DsvsZCG1AJ+OD
-         XGmApn6rESijgg8j/Glqsd1tG4NgOy2PUZi+0GFE4np2moRqvlWjOwPgd850RHVx5/V8
-         3CFhZ7nT1DETfh2v5qqukbRouOK6RzrwFH/Na2aBf0nP+x2RsIHG2pmSj8degrRGXNvu
-         0jtR+vrmyu0DXlC8eldYI5nwIIlMD8SEXYViJj3GWhL+KPidTeqQDkPGc5jtvLY/iglU
-         08gQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=0bW5Zcw6IZADjHV8NycW4jm7ju/0fJif7asN50MSIKE=;
-        b=IISM5vKyq5zkUId2IkUDELNbhoguGSPbFbmeuL8GRM+y3Zf0/dVA4VZp2urlVvdj4d
-         FASaqJteLigFZRfPZIaVxfabtT17lqUCtg2OAOwiVcxfjpGlAn3dy1gDFONMpud8PqL0
-         MX7gvkG6Rm6vYuS4aeH/vidWadxG67eDbQ6fBSupELvcoJd4Wpdd+skrTpRWuMc1w8ND
-         NInbbjIzHVX5i3O1XgQfmvcF1lVOshXvxu7qkHVSM70oILLU1B1zV+CrVNtRWTmKOaly
-         c3IzAEgnsKlTnbHCMIOQzW2AHlF0mxIlEf2rRd7tGBOFjTW5H6wL4idcvPAGESiJ47Md
-         62Tg==
-X-Gm-Message-State: AElRT7FuPrJv+rbAjodrWiHPcyl6hedzkn8B8QfRYN0BAT7BopCXsHka
-        KDqY+can56VxgKaq88V84y4=
-X-Google-Smtp-Source: AG47ELviRRvePqgfhQ8MzUhpNEHoCx41nUzKc263M4Zpb1LT47zEl+qfauvqO827fUINq+z8yc3wZA==
-X-Received: by 10.223.160.195 with SMTP id n3mr2921455wrn.92.1521233360015;
-        Fri, 16 Mar 2018 13:49:20 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id 67sm2326159wmv.3.2018.03.16.13.49.19
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 16 Mar 2018 13:49:19 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     avarab@gmail.com, e@80x24.org, git@vger.kernel.org, peff@peff.net
-Subject: Re: [PATCH v4 02/11] pack-objects: turn type and in_pack_type to bitfields
-References: <20180308114232.10508-1-pclouds@gmail.com>
-        <20180316183200.31014-1-pclouds@gmail.com>
-        <20180316183200.31014-3-pclouds@gmail.com>
-Date:   Fri, 16 Mar 2018 13:49:18 -0700
-In-Reply-To: <20180316183200.31014-3-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
- =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
-        Duy"'s message of "Fri, 16 Mar 2018 19:31:51 +0100")
-Message-ID: <xmqqbmfn21bl.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1751681AbeCPUts (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Mar 2018 16:49:48 -0400
+Received: from cloud.peff.net ([104.130.231.41]:59940 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1750826AbeCPUtr (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Mar 2018 16:49:47 -0400
+Received: (qmail 9094 invoked by uid 109); 16 Mar 2018 20:49:47 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 16 Mar 2018 20:49:47 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 465 invoked by uid 111); 16 Mar 2018 20:50:42 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 16 Mar 2018 16:50:42 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 16 Mar 2018 16:49:45 -0400
+Date:   Fri, 16 Mar 2018 16:49:45 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Git mailing list <git@vger.kernel.org>,
+        Stefan Beller <sbeller@google.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        git@jeffhostetler.com, Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v6 00/14] Serialized Git Commit Graph
+Message-ID: <20180316204945.GA12333@sigill.intra.peff.net>
+References: <1519698787-190494-1-git-send-email-dstolee@microsoft.com>
+ <20180314192736.70602-1-dstolee@microsoft.com>
+ <878tasdpqo.fsf@evledraar.gmail.com>
+ <CAM0VKjknPZj-qHzf5nVr_RdHtB+pq2+APc1tesexP-eFSP9n_A@mail.gmail.com>
+ <xmqq370z3m5o.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Disposition: inline
+In-Reply-To: <xmqq370z3m5o.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
+On Fri, Mar 16, 2018 at 11:33:55AM -0700, Junio C Hamano wrote:
 
-> An extra field type_valid is added to carry the equivalent of OBJ_BAD
-> in the original "type" field. in_pack_type always contains a valid
-> type so we only need 3 bits for it.
-> ...
-> @@ -1570,7 +1576,7 @@ static void drop_reused_delta(struct object_entry *entry)
->  	entry->depth = 0;
->  
->  	oi.sizep = &entry->size;
-> -	oi.typep = &entry->type;
-> +	oi.typep = &type;
->  	if (packed_object_info(entry->in_pack, entry->in_pack_offset, &oi) < 0) {
->  		/*
->  		 * We failed to get the info from this pack for some reason;
-> @@ -1578,8 +1584,10 @@ static void drop_reused_delta(struct object_entry *entry)
->  		 * And if that fails, the error will be recorded in entry->type
+> It is not so surprising that history walking runs rings around
+> enumerating objects in packfiles, if packfiles are built well.
+> 
+> A well-built packfile tends to has newer objects in base form and
+> has delta that goes in backward direction (older objects are
+> represented as delta against newer ones).  This helps warlking from
+> the tips of the history quite a bit, because your delta base cache
+> will tend to have the base object (i.e. objects in the newer part of
+> the history you just walked) that will be required to access the
+> "next" older part of the history more often than not.
+> 
+> Trying to read the objects in the pack in their object name order
+> would essentially mean reading them in a cryptgraphically random
+> order.  Half the time you will end up wanting to access an object
+> that is near the tip of a very deep delta chain even before you've
+> accessed any of the base objects in the delta chain.
 
-This "entry->type" needs updating.
+I coincidentally was doing some experiments in this area a few weeks
+ago, and found a few things:
 
->  		 * and dealt with in prepare_pack().
->  		 */
-> -		entry->type = sha1_object_info(entry->idx.oid.hash,
-> -					       &entry->size);
-> +		oe_set_type(entry, sha1_object_info(entry->idx.oid.hash,
-> +						    &entry->size));
-> +	} else {
-> +		oe_set_type(entry, type);
->  	}
->  }
+  1. The ordering makes a _huge_ difference for accessing trees and
+     blobs.
+
+  2. Pack order (not pack-idx order) is actually the best order, since
+     it tends to follow the delta patterns (it's close to traversal
+     order, but packs delta families more tightly).
+
+  3. None of this really matters for commits, since we almost never
+     store them as deltas anyway.
+
+Here are a few experiments people can do themselves to demonstrate (my
+numbers here are all from linux.git, which is sort of a wort-case
+for bad ordering because its size stresses the default delta cache):
+
+  [every object in sha1 order: slow]
+  $ time git cat-file --batch-all-objects --batch >/dev/null
+  real	8m44.041s
+  user	8m31.359s
+  sys	0m12.262s
+
+  [every object from a traversal: faster, but --objects traversals are
+   actually CPU heavy due to all of the hash lookups for each tree. Note
+   not just wall-clock time but the CPU since it's split across two
+   processes]
+  $ time git rev-list --objects --all |
+         cut -d' ' -f2 |
+	 git cat-file --batch >/dev/null
+  real	1m2.667s
+  user	0m58.537s
+  sys	0m32.392s
+
+  [every object in pack order: fastest. This is due to skipping the
+   traversal overhead, and should use our delta cache quite efficiently.
+   I'm assuming a single pack and no loose objects here, but the
+   performance should generalize since accessing the "big" pack
+   dominates]
+  $ time git show-index <$(ls .git/objects/pack/*.idx) |
+         sort -n |
+         cut -d' ' -f2 |
+	 git cat-file --batch >/dev/null
+  real	0m51.718s
+  user	0m50.963s
+  sys	0m7.068s
+
+  [just commits, sha1 order: not horrible]
+  $ time git cat-file --batch-all-objects --batch-check='%(objecttype) %(objectname)' |
+         grep ^commit |
+	 cut -d' ' -f2 |
+	 git cat-file --batch >/dev/null
+  real	0m8.115s
+  user	0m14.033s
+  sys	0m1.170s
+
+  [just commits, pack order: slightly worse due to the extra piping, but
+   obviously that could be done more quickly internally]
+  $ time git show-index <$(ls .git/objects/pack/*.idx) |
+         sort -n |
+         cut -d' ' -f2 |
+	 git cat-file --batch-check='%(objecttype) %(objectname)' |
+         grep ^commit |
+	 cut -d' ' -f2 |
+	 git cat-file --batch >/dev/null
+  real	0m21.670s
+  user	0m24.867s
+  sys	0m9.600s
+
+  [and the reason is that hardly any commits get deltas]
+  $ git cat-file --batch-all-objects --batch-check='%(objecttype) %(deltabase)' |
+    grep ^commit >commits
+  $ wc -l commits
+  692596
+  $ grep -v '0000000000000000000000000000000000000000' commits | wc -l
+  18856
+
+For the purposes of this patch series, I don't think the order matters
+much, since we're only dealing with commits. For doing --batch-check, I
+think the sha1 ordering given by "cat-file --batch-all-objects" is
+convenient, and doesn't have a big impact on performance. But it's
+_awful_ for --batch. I think we may want to add a sorting option to just
+return the objects in the original packfile order.
+
+-Peff
