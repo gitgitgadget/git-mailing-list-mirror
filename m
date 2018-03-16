@@ -2,116 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5824C1F404
-	for <e@80x24.org>; Fri, 16 Mar 2018 16:28:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5466A1F404
+	for <e@80x24.org>; Fri, 16 Mar 2018 16:38:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752805AbeCPQ2l (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Mar 2018 12:28:41 -0400
-Received: from mail-pl0-f41.google.com ([209.85.160.41]:33685 "EHLO
-        mail-pl0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752666AbeCPQ2i (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Mar 2018 12:28:38 -0400
-Received: by mail-pl0-f41.google.com with SMTP id c11-v6so6212742plo.0
-        for <git@vger.kernel.org>; Fri, 16 Mar 2018 09:28:37 -0700 (PDT)
+        id S1753026AbeCPQil (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Mar 2018 12:38:41 -0400
+Received: from mail-ua0-f195.google.com ([209.85.217.195]:45766 "EHLO
+        mail-ua0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752753AbeCPQij (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Mar 2018 12:38:39 -0400
+Received: by mail-ua0-f195.google.com with SMTP id x17so499505uaj.12
+        for <git@vger.kernel.org>; Fri, 16 Mar 2018 09:38:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=hxTqgT89VNWLzOSoB8rIFY21B+9+cI8T4JMu3b06qNo=;
-        b=o7x3NEgOQKdih3eN13pB3jI48Q4BANqJq2syojgvQ5XXpItSbvicUYWn3PThQx6W+o
-         ZRM8csrgGQq2kQ+oMLppNTu5+hZi2YaFJ54/dqBdxSjQg4QhG4inPveiIprbTPVePnJ1
-         jaf3L9ImHbD2Y09viU00pmwvSfL2GKCz5R6/EPZ5dCdz2m3Hgto9fhN71rCNX9Stzh9i
-         eGlXhxnD9OztdBoGIwXi5m4xf+S9eof3DfPfa8ckdFSkTBaIs1C5dWHBrLeeh+UiQ2cl
-         gAfYLvPCxT3YlJaRf6j/OLOhIxTh4xVWl5AUMt0npcEvWdHpdCFNQoXDz4Gf8ZBMWt24
-         +vOQ==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=95nclwoDoABo9xHlDe7AKLMYfxYn6IOBq6lk+ZqqcCE=;
+        b=h6dhBPbIimHq4x2Ax8QrLs/4JCqAPiPhAKmLBhvlbJM8ctcBeunKMpa9HnQvZ3haHK
+         8cdlVDi6wA2gkpokh9T+VsSMNCKCsug0ROUtHM2Dp4c4A36fNXUf08x96IbqMo9S9mOx
+         dN+guzd/7TVjMOJQUJ0HEzOVZfL6kAZxaGz61ZoTaWc5Y55d05qkhvFAfEC3+bvfD/fN
+         ml9TSnJdmY7tMnhvlfSYqaX8+Ybtshpx9OcML0QxQ6tF4Pfqr5nE0SjNZjfG7DmsAsPu
+         APO2zwQYZ1CfnQ7/F9/AW0/P5uP2SO1vh9eyWVY8C/3qPaGkLyqkGppqcI91jjapGPqy
+         jgpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=hxTqgT89VNWLzOSoB8rIFY21B+9+cI8T4JMu3b06qNo=;
-        b=r9cD4NFRJpjLbA+j4w9fqcsOFaC42xi61meWQI7R/PrLk6oZE87NNdNXoHSevs0LEP
-         fN8dxF9nyyxuZI9PMjASGeQXJzJ03/WMpMMcK1y6q4Su36EEtIFXlWCxxv2VP6eNGYDM
-         tAUgPLImEuXmmfAVX/mFKdFH26oNIzbrKpldyod9S3Q3L4C4j62GxxXNtUYT8N8k0RD9
-         i1QNcnHR7hDotudd9bRse7LrUSuyiU/0y/rU/4/NofIZoFtx23NKnHVM/P9UtJ9JNGFU
-         gU0V3gVa13FXBAFR9BrVb15ss7X8iQEfeysCs5vNa/yXkfSDDZxlB8JoG0IXPSecsYnc
-         Vsrw==
-X-Gm-Message-State: AElRT7FqRF10kdy3HuEA3G5/emx/PfkMAf+2GpQ0L/z4Sr0wrIPOdkR/
-        bO52oHgEKE/0awv/46vRLCE=
-X-Google-Smtp-Source: AG47ELtpiW28clKRsQFIzNwpAodb6IebbZmV/cEmUaAtyZ2qWyRTIIfYWuYJp+tUN+fD6M7b+uIkLA==
-X-Received: by 2002:a17:902:d20a:: with SMTP id t10-v6mr2776244ply.123.1521217717588;
-        Fri, 16 Mar 2018 09:28:37 -0700 (PDT)
-Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id a3sm13143716pgw.10.2018.03.16.09.28.34
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 16 Mar 2018 09:28:36 -0700 (PDT)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=95nclwoDoABo9xHlDe7AKLMYfxYn6IOBq6lk+ZqqcCE=;
+        b=c6lpxjtoQCBnWZOcbZ8X7YxlS6iA5eOE6x1xv7QKbexYKNB8nkTCEZjUNLkhz38lk+
+         CUEwR2N3af5JMAVaMdrJ0vCi285PRQ1VbgvVSHt6W0Y4GawHNyXvuLbhh3F7kdWtUb6j
+         TcnjcE+m95Lp0eKOwNqbmRVwaqQY26ohTWk/7XIIrSJO3hvIPVFE0n3VgB+LDCcKoAOj
+         goXPY8TcQRYxFuw/GTmHW+uD3SxGucMSjLt0OWGDfPQ72ChwI8NlBudphDVSeIpyzPIh
+         kbDHsfaW2jrKVOkmOxrO04Q7y/VyPfBsdeEnjju1Bjf1ZpBzf1spUjtSe7SL9DjBedxC
+         TAVQ==
+X-Gm-Message-State: AElRT7Ee+Pam61P1hj2tNMleCxzFfKOZzUulIcIu6pUTRbsmEAxbaG7Y
+        +Pq1+tTmU71GLxFOJ5Ht1IFEHyBlfzyV5ha9XeA=
+X-Google-Smtp-Source: AG47ELt/Di0xqCQG5hmsol+OT9GDlGV+IusH+bGs3FJ2JBk/dLs95I/J05gwmtTRqVnZfLiXNRnOjAGKQWqZ9PXDyJg=
+X-Received: by 10.176.82.202 with SMTP id w10mr1826708uaw.31.1521218318165;
+ Fri, 16 Mar 2018 09:38:38 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.159.59.233 with HTTP; Fri, 16 Mar 2018 09:38:37 -0700 (PDT)
+In-Reply-To: <878tasdpqo.fsf@evledraar.gmail.com>
+References: <1519698787-190494-1-git-send-email-dstolee@microsoft.com>
+ <20180314192736.70602-1-dstolee@microsoft.com> <878tasdpqo.fsf@evledraar.gmail.com>
+From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Date:   Fri, 16 Mar 2018 17:38:37 +0100
+Message-ID: <CAM0VKjknPZj-qHzf5nVr_RdHtB+pq2+APc1tesexP-eFSP9n_A@mail.gmail.com>
 Subject: Re: [PATCH v6 00/14] Serialized Git Commit Graph
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <xmqq605yz8ue.fsf@gitster-ct.c.googlers.com>
-Date:   Fri, 16 Mar 2018 17:28:32 +0100
-Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Stefan Beller <sbeller@google.com>,
-        =?utf-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Derrick Stolee <stolee@gmail.com>,
+        Git mailing list <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        git@jeffhostetler.com, Derrick Stolee <dstolee@microsoft.com>,
-        Junio C Hamano <gitster@pobox.com>
+        git@jeffhostetler.com, Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <54BC2335-72B3-404E-AA4A-368DEB121C8E@gmail.com>
-References: <1519698787-190494-1-git-send-email-dstolee@microsoft.com> <20180314192736.70602-1-dstolee@microsoft.com> <xmqq605yz8ue.fsf@gitster-ct.c.googlers.com>
-To:     Derrick Stolee <stolee@gmail.com>
-X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Fri, Mar 16, 2018 at 4:06 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
 
-> On 14 Mar 2018, at 21:43, Junio C Hamano <gitster@pobox.com> wrote:
->=20
-> Derrick Stolee <stolee@gmail.com> writes:
->=20
->> This v6 includes feedback around csum-file.c and the rename of =
-hashclose()
->> to finalize_hashfile(). These are the first two commits of the =
-series, so
->> they could be pulled out independently.
->>=20
->> The only other change since v5 is that I re-ran the performance =
-numbers
->> in "commit: integrate commit graph with commit parsing".
->=20
-> Thanks.
->=20
->> Hopefully this version is ready to merge. I have several follow-up =
-topics
->> in mind to submit soon after, including:
->=20
-> A few patches add trailing blank lines and other whitespace
-> breakages, which will stop my "git merge" later to 'next' and down,
-> as I have a pre-commit hook to catch them.
+> I noticed that it takes a *long* time to generate the graph, on a bigger
+> repo I have it takes 20 minutes, and this is a repo where repack -A -d
+> itself takes 5-8 minutes, probably on the upper end of that with the
+> bitmap, but once you do that it's relatively snappy with --stdin-commits
+> --additive when I feed it the new commits.
+>
+> I don't have any need really to make this run in 10m instead of 20m,
+> just something I found interesting, i.e. how it compares to the repack
+> itself.
 
-@stolee:=20
+You should forget '--stdin-packs' and use '--stdin-commits' to generate
+the initial graph, it's much faster even without '--additive'[1].  See
 
-I run "git --no-pager diff --check $BASE_HASH...$HEAD_HASH" to detect
-these kinds of things. I run this as part of my "prepare patch" [1] =
-script
-which is inspired by a similar script originally written by Dscho.
+  https://public-inbox.org/git/CAM0VKj=3DwmkBNH=3DpsCRztXFrC13RiG1EaSw89Q6L=
+JaNsdJDEFHg@mail.gmail.com/
 
-Do you think it would make sense to mention (or even
-recommend) such a script in your awesome GfW CONTRIBUTING.md?
+I still think that the default behaviour for 'git commit-graph write'
+should simply walk history from all refs instead of enumerating all
+objects in all packfiles.
 
 
-- Lars
-
-
-[1] =
-https://github.com/larsxschneider/git-list-helper/blob/master/prepare-patc=
-h.sh#L71
-
-
+[1] - Please excuse the bikeshed: '--additive' is such a strange
+      sounding option name, at least for me.  '--append', perhaps?
