@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2F7831F42D
-	for <e@80x24.org>; Sat, 17 Mar 2018 07:55:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ABBBE1F42D
+	for <e@80x24.org>; Sat, 17 Mar 2018 07:55:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752151AbeCQHzl (ORCPT <rfc822;e@80x24.org>);
-        Sat, 17 Mar 2018 03:55:41 -0400
-Received: from mail-lf0-f65.google.com ([209.85.215.65]:35625 "EHLO
-        mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751871AbeCQHzf (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Mar 2018 03:55:35 -0400
-Received: by mail-lf0-f65.google.com with SMTP id t132-v6so18525956lfe.2
-        for <git@vger.kernel.org>; Sat, 17 Mar 2018 00:55:34 -0700 (PDT)
+        id S1752255AbeCQHzp (ORCPT <rfc822;e@80x24.org>);
+        Sat, 17 Mar 2018 03:55:45 -0400
+Received: from mail-lf0-f66.google.com ([209.85.215.66]:46697 "EHLO
+        mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752177AbeCQHzn (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Mar 2018 03:55:43 -0400
+Received: by mail-lf0-f66.google.com with SMTP id w16-v6so18466935lfc.13
+        for <git@vger.kernel.org>; Sat, 17 Mar 2018 00:55:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=GwzZ0F91MfAge1DDbABBDl2vuGNIlqbBKBkdvUusbOM=;
-        b=soZYt8bD+DKyfUSK2qfqfanhSU6F49C7sCAwheX89JCoIq4c5sA3oo5Tke1Uv2DOjP
-         pX+64BmW9IM1fGc5DXQJIb5DrlxgQzXCqWKMXHZHHzbx26LAQc8vHWv8TAxXI+UnSynE
-         7RtUk/mpqbsYO6pfpz6F0jEbC4x2Cy+a5J3Iodz4nvCvxgDjF/cbkQLYt3eiFxEQDB33
-         hhb4UC8Ju/ldUMpR1csAfxlS0f5FqoPHdMl7BRHzaRWztVhyZDtGp1xZHwYTNecMlH5H
-         yBBOFqyfXwoJf3Ms2JDeTfrI0bU/IHofe2zoXNi4L1rc8ux8YVPZJTxOg6rahsGgdHuW
-         l5Xw==
+        bh=/ah9WsGVcNoKp3MQPkV9RsS1LWg5+8U1qN6q6D/dysU=;
+        b=OepDOI8DY4w/X+P9pcv13UvzyxpUNAz4k+XRqmRjKFlriBuBP+sz+TbVMsBaSng6Wo
+         JsowO9SARtThbWjQxxFskgPKb/jme9/A70j3nYNy5h+xkcjaL+F24jiRWxl3TLY1Xnqy
+         A4Vi/cOqKTdayIFPr3Q/VR/3vD2yoHXAuAfIkIVBz4GkU+/xrjYfT7FuY4oT8ul2ckXt
+         201NbfZiBRGtEttahspFokcktSggZKqxFlCeipXSvSj0pgXZCKtzoF1d1id1oE+ogbLb
+         Z8C2mbGsu5rXGF94RjFrtG1i+OoY5/6wsy4pzQwHoKlpctwM0GGUd6gWEWrjZoqQ0tCy
+         BuuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=GwzZ0F91MfAge1DDbABBDl2vuGNIlqbBKBkdvUusbOM=;
-        b=glxU+WLZUnq+BxIjnf0GXRq4I95zcq4qzfZFbs0BUdynDPkuDVCK5oca2k5HXtgI2g
-         LJTUlY/vdHy7xk6DoIU4DfGIk9gAqfIJGs6DSXMa8tVjF3MGNPaDjHF1y8NL11IZKkBs
-         IwMUtlO9uPe7ixCXo4ORoA/uESO96cBuHM4e7V+vL6KztWQMS3o+z5O0T3IqP3zKyeNT
-         Fr1zuKKhIwRZU+4YMThOflJlXvkaHuB26FVMVgY+AHM6zLNv0rjqUAFzvZ/sPtI/oQb7
-         r7/s5r2SJwV7mPd0490njYxBZrZMgT+6frqHTz3vW6iouUmR00dQfSrqMJf5Y2HDFL/z
-         Bqyg==
-X-Gm-Message-State: AElRT7GdcgllgyG4GYNgEAIk6Nw3ULRDVZDVdMsNEVL0QNJAbYLmm/oD
-        O1enuaeSMht4CRp/Z7Y58d2s5w==
-X-Google-Smtp-Source: AG47ELu/XT7VFTMgFzXmVhbzCY9x1RPUG8H2h4BvS6uhYBnZoMYfTEpuMcIZpIJAj+mX+V/Y9PGyzg==
-X-Received: by 2002:a19:d945:: with SMTP id q66-v6mr3445723lfg.62.1521273333850;
-        Sat, 17 Mar 2018 00:55:33 -0700 (PDT)
+        bh=/ah9WsGVcNoKp3MQPkV9RsS1LWg5+8U1qN6q6D/dysU=;
+        b=cTsO+VaLO/5zocNYe4QRKhuouvzFzFlJ0H8wI8yv6Bj5e4Q0q0Fdt+IWb8ySHr7UuG
+         dDiLISOUnrZqsIE0+7KB9Ruhzbe31JvCegCmoJwdgPqarO9AtHzUyNjijLgr1WUoq1Ck
+         HpZhfMtdnhhbJmbb2dKQfm3hJhXUsRYGn4DhrmNsl9CC+sZHPc+ih8dFpYdxVuUB7TRs
+         Re7q4qnyr67tL7XNoIDqRxBDe/rfpVVEHu/vvAB9Q9i/Qi5PzSVN4FXEYbtC6DucJyVU
+         BznoLD6j1O+khHUCRPM0crbGdidKiVySyxh6xW/5ioPguTup9Gka1wrcHvmKFg9fVcK+
+         V/ZA==
+X-Gm-Message-State: AElRT7H5PZjuXvsOhGcFA77x2dczbsDIJxu5376NKuyuWV4Goz0VcGPH
+        RAZ05lGUKnqOjn7LOmXpA6FWCA==
+X-Google-Smtp-Source: AG47ELviJbCtQrGl7PpdU74PqwK3imRyOyxGZeKQjbI9EBAu/s75ZLc3iz/LddknLkIBq9KjW6MirA==
+X-Received: by 2002:a19:9a0a:: with SMTP id c10-v6mr3419997lfe.30.1521273341296;
+        Sat, 17 Mar 2018 00:55:41 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id s23sm170224ljd.5.2018.03.17.00.55.32
+        by smtp.gmail.com with ESMTPSA id s23sm170224ljd.5.2018.03.17.00.55.40
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 17 Mar 2018 00:55:33 -0700 (PDT)
+        Sat, 17 Mar 2018 00:55:40 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 03/36] t/helper: merge test-sha1 into test-tool
-Date:   Sat, 17 Mar 2018 08:53:48 +0100
-Message-Id: <20180317075421.22032-4-pclouds@gmail.com>
+Subject: [PATCH 10/36] t/helper: merge test-dump-cache-tree into test-tool
+Date:   Sat, 17 Mar 2018 08:53:55 +0100
+Message-Id: <20180317075421.22032-11-pclouds@gmail.com>
 X-Mailer: git-send-email 2.16.2.903.gd04caf5039
 In-Reply-To: <20180317075421.22032-1-pclouds@gmail.com>
 References: <20180317075421.22032-1-pclouds@gmail.com>
@@ -70,142 +70,114 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- Documentation/howto/recover-corrupted-object-harder.txt | 2 +-
- Makefile                                                | 4 ++--
- t/helper/test-sha1.c                                    | 3 ++-
- t/helper/test-sha1.sh                                   | 4 ++--
- t/helper/test-tool.c                                    | 1 +
- t/helper/test-tool.h                                    | 1 +
- t/lib-pack.sh                                           | 2 +-
- t/t0013-sha1dc.sh                                       | 2 +-
- 8 files changed, 11 insertions(+), 8 deletions(-)
+ Makefile                        | 2 +-
+ t/helper/test-dump-cache-tree.c | 3 ++-
+ t/helper/test-tool.c            | 1 +
+ t/helper/test-tool.h            | 1 +
+ t/t0090-cache-tree.sh           | 6 +++---
+ t/t1700-split-index.sh          | 2 +-
+ 6 files changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/Documentation/howto/recover-corrupted-object-harder.txt b/Documentation/howto/recover-corrupted-object-harder.txt
-index 9c4cd0915f..8994e2559e 100644
---- a/Documentation/howto/recover-corrupted-object-harder.txt
-+++ b/Documentation/howto/recover-corrupted-object-harder.txt
-@@ -80,7 +80,7 @@ valid pack like:
-     # now add our object data
-     cat object >>tmp.pack
-     # and then append the pack trailer
--    /path/to/git.git/test-sha1 -b <tmp.pack >trailer
-+    /path/to/git.git/t/helper/test-tool sha1 -b <tmp.pack >trailer
-     cat trailer >>tmp.pack
- ------------
- 
 diff --git a/Makefile b/Makefile
-index 416a8e39c1..3c0d0474af 100644
+index edd9c43982..991bafa6fb 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -653,6 +653,7 @@ X =
- PROGRAMS += $(patsubst %.o,git-%$X,$(PROGRAM_OBJS))
+@@ -658,10 +658,10 @@ TEST_BUILTINS_OBJS += test-ctype.o
+ TEST_BUILTINS_OBJS += test-date.o
+ TEST_BUILTINS_OBJS += test-delta.o
+ TEST_BUILTINS_OBJS += test-drop-caches.o
++TEST_BUILTINS_OBJS += test-dump-cache-tree.o
+ TEST_BUILTINS_OBJS += test-lazy-init-name-hash.o
+ TEST_BUILTINS_OBJS += test-sha1.o
  
- TEST_BUILTINS_OBJS += test-chmtime.o
-+TEST_BUILTINS_OBJS += test-sha1.o
- 
- TEST_PROGRAMS_NEED_X += test-ctype
- TEST_PROGRAMS_NEED_X += test-config
-@@ -684,7 +685,6 @@ TEST_PROGRAMS_NEED_X += test-regex
- TEST_PROGRAMS_NEED_X += test-revision-walking
- TEST_PROGRAMS_NEED_X += test-run-command
- TEST_PROGRAMS_NEED_X += test-scrap-cache-tree
--TEST_PROGRAMS_NEED_X += test-sha1
- TEST_PROGRAMS_NEED_X += test-sha1-array
- TEST_PROGRAMS_NEED_X += test-sigchain
- TEST_PROGRAMS_NEED_X += test-strcmp-offset
-@@ -2502,7 +2502,7 @@ t/helper/test-tool$X: $(patsubst %,t/helper/%,$(TEST_BUILTINS_OBJS))
- t/helper/test-%$X: t/helper/test-%.o GIT-LDFLAGS $(GITLIBS)
- 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) $(filter %.a,$^) $(LIBS)
- 
--check-sha1:: t/helper/test-sha1$X
-+check-sha1:: t/helper/test-tool$X
- 	t/helper/test-sha1.sh
- 
- SP_OBJ = $(patsubst %.o,%.sp,$(C_OBJ))
-diff --git a/t/helper/test-sha1.c b/t/helper/test-sha1.c
-index a1c13f54ec..afee24e027 100644
---- a/t/helper/test-sha1.c
-+++ b/t/helper/test-sha1.c
-@@ -1,6 +1,7 @@
+-TEST_PROGRAMS_NEED_X += test-dump-cache-tree
+ TEST_PROGRAMS_NEED_X += test-dump-fsmonitor
+ TEST_PROGRAMS_NEED_X += test-dump-split-index
+ TEST_PROGRAMS_NEED_X += test-dump-untracked-cache
+diff --git a/t/helper/test-dump-cache-tree.c b/t/helper/test-dump-cache-tree.c
+index ebf3aab22d..2697152e50 100644
+--- a/t/helper/test-dump-cache-tree.c
++++ b/t/helper/test-dump-cache-tree.c
+@@ -1,3 +1,4 @@
 +#include "test-tool.h"
  #include "cache.h"
+ #include "tree.h"
+ #include "cache-tree.h"
+@@ -54,7 +55,7 @@ static int dump_cache_tree(struct cache_tree *it,
+ 	return errs;
+ }
  
 -int cmd_main(int ac, const char **av)
-+int test_sha1(int ac, const char **av)
++int test_dump_cache_tree(int ac, const char **av)
  {
- 	git_SHA_CTX ctx;
- 	unsigned char sha1[20];
-diff --git a/t/helper/test-sha1.sh b/t/helper/test-sha1.sh
-index 750b95a0a1..84594885c7 100755
---- a/t/helper/test-sha1.sh
-+++ b/t/helper/test-sha1.sh
-@@ -1,7 +1,7 @@
- #!/bin/sh
- 
- dd if=/dev/zero bs=1048576 count=100 2>/dev/null |
--/usr/bin/time t/helper/test-sha1 >/dev/null
-+/usr/bin/time t/helper/test-tool sha1 >/dev/null
- 
- while read expect cnt pfx
- do
-@@ -11,7 +11,7 @@ do
- 			test -z "$pfx" || echo "$pfx"
- 			dd if=/dev/zero bs=1048576 count=$cnt 2>/dev/null |
- 			perl -pe 'y/\000/g/'
--		} | ./t/helper/test-sha1 $cnt
-+		} | ./t/helper/test-tool sha1 $cnt
- 	)
- 	if test "$expect" = "$actual"
- 	then
+ 	struct index_state istate;
+ 	struct cache_tree *another = cache_tree();
 diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
-index c22f300f5e..ca1f462cce 100644
+index 904e4103fd..9c56c169c2 100644
 --- a/t/helper/test-tool.c
 +++ b/t/helper/test-tool.c
-@@ -8,6 +8,7 @@ struct test_cmd {
- 
- static struct test_cmd cmds[] = {
- 	{ "chmtime", test_chmtime },
-+	{ "sha1", test_sha1 },
+@@ -13,6 +13,7 @@ static struct test_cmd cmds[] = {
+ 	{ "date", test_date },
+ 	{ "delta", test_delta },
+ 	{ "drop-caches", test_drop_caches },
++	{ "dump-cache-tree", test_dump_cache_tree },
+ 	{ "lazy-init-name-hash", test_lazy_init_name_hash },
+ 	{ "sha1", test_sha1 },
  };
- 
- int cmd_main(int argc, const char **argv)
 diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
-index 61ca4a7055..e7a2a7cb5b 100644
+index 1e96bf44a2..37e578b75e 100644
 --- a/t/helper/test-tool.h
 +++ b/t/helper/test-tool.h
-@@ -2,5 +2,6 @@
- #define __TEST_TOOL_H__
+@@ -7,6 +7,7 @@ int test_ctype(int argc, const char **argv);
+ int test_date(int argc, const char **argv);
+ int test_delta(int argc, const char **argv);
+ int test_drop_caches(int argc, const char **argv);
++int test_dump_cache_tree(int argc, const char **argv);
+ int test_lazy_init_name_hash(int argc, const char **argv);
+ int test_sha1(int argc, const char **argv);
  
- int test_chmtime(int argc, const char **argv);
-+int test_sha1(int argc, const char **argv);
+diff --git a/t/t0090-cache-tree.sh b/t/t0090-cache-tree.sh
+index adfd4f0b5e..f81e3deead 100755
+--- a/t/t0090-cache-tree.sh
++++ b/t/t0090-cache-tree.sh
+@@ -8,13 +8,13 @@ cache-tree extension.
+  . ./test-lib.sh
  
- #endif
-diff --git a/t/lib-pack.sh b/t/lib-pack.sh
-index 7509846571..501078249d 100644
---- a/t/lib-pack.sh
-+++ b/t/lib-pack.sh
-@@ -85,7 +85,7 @@ pack_obj () {
- 
- # Compute and append pack trailer to "$1"
- pack_trailer () {
--	test-sha1 -b <"$1" >trailer.tmp &&
-+	test-tool sha1 -b <"$1" >trailer.tmp &&
- 	cat trailer.tmp >>"$1" &&
- 	rm -f trailer.tmp
+ cmp_cache_tree () {
+-	test-dump-cache-tree | sed -e '/#(ref)/d' >actual &&
++	test-tool dump-cache-tree | sed -e '/#(ref)/d' >actual &&
+ 	sed "s/$_x40/SHA/" <actual >filtered &&
+ 	test_cmp "$1" filtered
  }
-diff --git a/t/t0013-sha1dc.sh b/t/t0013-sha1dc.sh
-index 6d655cb161..419f31a8f7 100755
---- a/t/t0013-sha1dc.sh
-+++ b/t/t0013-sha1dc.sh
-@@ -11,7 +11,7 @@ then
- fi
  
- test_expect_success 'test-sha1 detects shattered pdf' '
--	test_must_fail test-sha1 <"$TEST_DATA/shattered-1.pdf" 2>err &&
-+	test_must_fail test-tool sha1 <"$TEST_DATA/shattered-1.pdf" 2>err &&
- 	test_i18ngrep collision err &&
- 	grep 38762cf7f55934b34d179ae6a4c80cadccbb7f0a err
+ # We don't bother with actually checking the SHA1:
+-# test-dump-cache-tree already verifies that all existing data is
++# test-tool dump-cache-tree already verifies that all existing data is
+ # correct.
+ generate_expected_cache_tree_rec () {
+ 	dir="$1${1:+/}" &&
+@@ -47,7 +47,7 @@ test_cache_tree () {
+ 
+ test_invalid_cache_tree () {
+ 	printf "invalid                                  %s ()\n" "" "$@" >expect &&
+-	test-dump-cache-tree |
++	test-tool dump-cache-tree |
+ 	sed -n -e "s/[0-9]* subtrees//" -e '/#(ref)/d' -e '/^invalid /p' >actual &&
+ 	test_cmp expect actual
+ }
+diff --git a/t/t1700-split-index.sh b/t/t1700-split-index.sh
+index 4b5d443280..b778975de8 100755
+--- a/t/t1700-split-index.sh
++++ b/t/t1700-split-index.sh
+@@ -435,7 +435,7 @@ test_expect_success 'writing split index with null sha1 does not write cache tre
+ 	commit=$(git commit-tree $tree -p HEAD <msg) &&
+ 	git update-ref HEAD "$commit" &&
+ 	GIT_ALLOW_NULL_SHA1=1 git reset --hard &&
+-	(test-dump-cache-tree >cache-tree.out || true) &&
++	(test-tool dump-cache-tree >cache-tree.out || true) &&
+ 	test_line_count = 0 cache-tree.out
  '
+ 
 -- 
 2.16.2.903.gd04caf5039
 
