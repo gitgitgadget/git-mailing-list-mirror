@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B9D301F42D
-	for <e@80x24.org>; Sat, 17 Mar 2018 07:57:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 90AFA1F42D
+	for <e@80x24.org>; Sat, 17 Mar 2018 07:57:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752314AbeCQHzu (ORCPT <rfc822;e@80x24.org>);
+        id S1752723AbeCQH5B (ORCPT <rfc822;e@80x24.org>);
+        Sat, 17 Mar 2018 03:57:01 -0400
+Received: from mail-lf0-f68.google.com ([209.85.215.68]:38056 "EHLO
+        mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751832AbeCQHzu (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 17 Mar 2018 03:55:50 -0400
-Received: from mail-lf0-f67.google.com ([209.85.215.67]:41835 "EHLO
-        mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752177AbeCQHzq (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Mar 2018 03:55:46 -0400
-Received: by mail-lf0-f67.google.com with SMTP id m69-v6so18494190lfe.8
-        for <git@vger.kernel.org>; Sat, 17 Mar 2018 00:55:46 -0700 (PDT)
+Received: by mail-lf0-f68.google.com with SMTP id y2-v6so16399120lfc.5
+        for <git@vger.kernel.org>; Sat, 17 Mar 2018 00:55:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=qd529puwAMaaYSFngeGrb0wdNgig2HW7elv25uBlmh8=;
-        b=TZz8doLUeBSKSkwD1Fu5MOqTjQ/ET9pDoOXlnnR8LuyNQwuiSiS2yd3Q+aURXCcYUi
-         T13vNVnyLHNQC/z1nqMnJpsO43KAq5jDhcqq1Ln6jOkmqFNRbE2tuDVYRJ8nKfcQ2AR9
-         35ztgl3kBjohCnKC5d0ZvRSr+RgHYewWT5oDyzVMqzVWc482gs1ExUn4rDWTAzTKhJQV
-         R2LiTNMEvuFK1gn1DxEYi4vKsaemHZgRTZ3mSoHHCrVDtc2Io8pCML/QJXvRMIE9g5th
-         lDQDl6N8UPNkZtv7gtjvZg7u+rfoXE9xwhnmoeFOLoYR2DsWQ2baAmWT3vFleiPAzVuL
-         u/iA==
+        bh=2UN1YmByy3HY1O7MAakvLGJQp8mcvVlRrYbY1WvxWF4=;
+        b=PCLG4G5auFvjWoySEwLf3+4Wj7jZ0oVtItlo1TibN/7+h8So+r+AhnYrr2rPE2vY55
+         zDkh1NUK/uSgL1GvKTVDPMj+Syiiookc5/LjIx92vVVQ4DwlaF9Xnz8DLARu5sJ6V8aQ
+         nBLDT6MhQUn2jMb282bZKf4ed9SWSqxZRnl1XSNvaRRruaBKfzNBy7UAiDsH7+k7aMrz
+         xYhj0divo/kuPh+kobbgbzAOx8jSGz8EFXRiQ7RwmVVxInfPtzJljz9ayJwi9x82MDKW
+         3UfNcFwV6TmF035vCMzWXfPWjgGzHj7NtSIMS9wcguiCFmBq2frTGncULg1BcC5jyWnD
+         ctUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=qd529puwAMaaYSFngeGrb0wdNgig2HW7elv25uBlmh8=;
-        b=FFFQhW1vkew51obcbSdk1av71K2Afjg87eaU6egWpWGkTHskVsCE6zOAAO0J0hiijX
-         8j6UaXlnavPghOAzl5wHjWyhAqyOaPa/3TBjjD2w38sSP46zbrZWDsztloF5orfV1cPS
-         RAhtY4lmCVtmjC0K0Lt35vhGxeUIvOuRHz0PAJfZ8jEihCmdb47uexUtyJlnnxo4e1dX
-         RuAelgymZd+8ULcmrgNnqpZWJyDkAMlHn31NahCEkDlrrIS7kLnPTY6LMISr4KDs49jZ
-         zNCwkBiIAwGyEglUSK1R0TRQdaUll6cma33EwvImi/+uxX6hphrwQO8/acD8aZ6bBptj
-         dMRQ==
-X-Gm-Message-State: AElRT7EIhD8iS75BmqMthhvBhCuzGdhmZtYKExccr9mRrqJCxnidjDD2
-        T0fB8apHi+vnb/3mKJkbUKBJMw==
-X-Google-Smtp-Source: AG47ELusEDWxQhZkwncsqs8hLHAJSx0b+iOUsjKr08pU+CNEYroWalXe5fyU2gUJpSsyE2zL//Hv8Q==
-X-Received: by 2002:a19:4acc:: with SMTP id x195-v6mr3436983lfa.46.1521273345031;
-        Sat, 17 Mar 2018 00:55:45 -0700 (PDT)
+        bh=2UN1YmByy3HY1O7MAakvLGJQp8mcvVlRrYbY1WvxWF4=;
+        b=AqvArMVAE2qn7+W9G5/UroLqKxMbnOqPgt32CPxLmRs+eumqSQxuwuVQgzYtqV+sha
+         fATFd4sNo7chDEIm6hwoHvDqHXn+ITqEG/VbLhSdt5DqrjMg2YtYTMrnsyA/RVgvJSq2
+         H9eRGfK05H5anAZAwg1S1z/Zi+lgqeDqh9H3jhx+Ra50GGkp5QJ7YEUJBXycJQ1X61Ki
+         cajKfDQeoO12bdnikMb78vEAk7yqUYw/bb23G0xBirL9B1qNZBAvGBUQV7bah1rNfh2/
+         qxT9wECZRwz7r8pLla1rhZ4U0+d5O/X8Vmr0onNyqlO/vNcC+Y7QilYs8Sye+CIEc/D8
+         Ap8A==
+X-Gm-Message-State: AElRT7Er6YlwMEzLfFwTauTZM2jUpHgTfA71Rf5iWuBwmqUPp93UexAz
+        vKzuQ51VUDWZdw6pkovU++QQJA==
+X-Google-Smtp-Source: AG47ELu1QGXV+pmWhNHfKTVrYoKywJM6NfXaS45ws5a1ottIfg9auf7XZn89GffHHc84B1B1vLTp8g==
+X-Received: by 2002:a19:a809:: with SMTP id r9-v6mr3440097lfe.55.1521273349204;
+        Sat, 17 Mar 2018 00:55:49 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id s23sm170224ljd.5.2018.03.17.00.55.44
+        by smtp.gmail.com with ESMTPSA id s23sm170224ljd.5.2018.03.17.00.55.47
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 17 Mar 2018 00:55:44 -0700 (PDT)
+        Sat, 17 Mar 2018 00:55:48 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 14/36] t/helper: merge test-hashmap into test-tool
-Date:   Sat, 17 Mar 2018 08:53:59 +0100
-Message-Id: <20180317075421.22032-15-pclouds@gmail.com>
+Subject: [PATCH 17/36] t/helper: merge (unused) test-mergesort into test-tool
+Date:   Sat, 17 Mar 2018 08:54:02 +0100
+Message-Id: <20180317075421.22032-18-pclouds@gmail.com>
 X-Mailer: git-send-email 2.16.2.903.gd04caf5039
 In-Reply-To: <20180317075421.22032-1-pclouds@gmail.com>
 References: <20180317075421.22032-1-pclouds@gmail.com>
@@ -70,105 +70,73 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- Makefile                | 2 +-
- t/helper/test-hashmap.c | 5 +++--
- t/helper/test-tool.c    | 1 +
- t/helper/test-tool.h    | 1 +
- t/t0011-hashmap.sh      | 4 ++--
- 5 files changed, 8 insertions(+), 5 deletions(-)
+ Makefile                  | 2 +-
+ t/helper/test-mergesort.c | 3 ++-
+ t/helper/test-tool.c      | 1 +
+ t/helper/test-tool.h      | 1 +
+ 4 files changed, 5 insertions(+), 2 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index d0bc6cfecf..f6c3ddc703 100644
+index 6552a8f4ed..67f37b849e 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -662,13 +662,13 @@ TEST_BUILTINS_OBJS += test-dump-cache-tree.o
- TEST_BUILTINS_OBJS += test-dump-split-index.o
- TEST_BUILTINS_OBJS += test-example-decorate.o
- TEST_BUILTINS_OBJS += test-genrandom.o
-+TEST_BUILTINS_OBJS += test-hashmap.o
+@@ -666,13 +666,13 @@ TEST_BUILTINS_OBJS += test-hashmap.o
+ TEST_BUILTINS_OBJS += test-index-version.o
  TEST_BUILTINS_OBJS += test-lazy-init-name-hash.o
+ TEST_BUILTINS_OBJS += test-match-trees.o
++TEST_BUILTINS_OBJS += test-mergesort.o
  TEST_BUILTINS_OBJS += test-sha1.o
  
  TEST_PROGRAMS_NEED_X += test-dump-fsmonitor
  TEST_PROGRAMS_NEED_X += test-dump-untracked-cache
  TEST_PROGRAMS_NEED_X += test-fake-ssh
--TEST_PROGRAMS_NEED_X += test-hashmap
- TEST_PROGRAMS_NEED_X += test-index-version
  TEST_PROGRAMS_NEED_X += test-line-buffer
- TEST_PROGRAMS_NEED_X += test-match-trees
-diff --git a/t/helper/test-hashmap.c b/t/helper/test-hashmap.c
-index 9ae9281c07..6fc840ff72 100644
---- a/t/helper/test-hashmap.c
-+++ b/t/helper/test-hashmap.c
+-TEST_PROGRAMS_NEED_X += test-mergesort
+ TEST_PROGRAMS_NEED_X += test-mktemp
+ TEST_PROGRAMS_NEED_X += test-online-cpus
+ TEST_PROGRAMS_NEED_X += test-parse-options
+diff --git a/t/helper/test-mergesort.c b/t/helper/test-mergesort.c
+index 335cf6b626..31258e40d9 100644
+--- a/t/helper/test-mergesort.c
++++ b/t/helper/test-mergesort.c
 @@ -1,3 +1,4 @@
 +#include "test-tool.h"
- #include "git-compat-util.h"
- #include "hashmap.h"
- #include "strbuf.h"
-@@ -77,7 +78,7 @@ static unsigned int hash(unsigned int method, unsigned int i, const char *key)
+ #include "cache.h"
+ #include "mergesort.h"
  
- /*
-  * Test performance of hashmap.[ch]
-- * Usage: time echo "perfhashmap method rounds" | test-hashmap
-+ * Usage: time echo "perfhashmap method rounds" | test-tool hashmap
-  */
- static void perf_hashmap(unsigned int method, unsigned int rounds)
- {
-@@ -144,7 +145,7 @@ static void perf_hashmap(unsigned int method, unsigned int rounds)
-  *
-  * perfhashmap method rounds -> test hashmap.[ch] performance
-  */
+@@ -22,7 +23,7 @@ static int compare_strings(const void *a, const void *b)
+ 	return strcmp(x->text, y->text);
+ }
+ 
 -int cmd_main(int argc, const char **argv)
-+int test_hashmap(int argc, const char **argv)
++int test_mergesort(int argc, const char **argv)
  {
- 	struct strbuf line = STRBUF_INIT;
- 	struct hashmap map;
+ 	struct line *line, *p = NULL, *lines = NULL;
+ 	struct strbuf sb = STRBUF_INIT;
 diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
-index ce13108374..924d8c80f7 100644
+index cde9f16fc8..4206d96304 100644
 --- a/t/helper/test-tool.c
 +++ b/t/helper/test-tool.c
-@@ -17,6 +17,7 @@ static struct test_cmd cmds[] = {
- 	{ "dump-split-index", test_dump_split_index },
- 	{ "example-decorate", test_example_decorate },
- 	{ "genrandom", test_genrandom },
-+	{ "hashmap", test_hashmap },
+@@ -21,6 +21,7 @@ static struct test_cmd cmds[] = {
+ 	{ "index-version", test_index_version },
  	{ "lazy-init-name-hash", test_lazy_init_name_hash },
+ 	{ "match-trees", test_match_trees },
++	{ "mergesort", test_mergesort },
  	{ "sha1", test_sha1 },
  };
+ 
 diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
-index 6742558cb4..161f5becb7 100644
+index 937c408dcc..dff1b804cb 100644
 --- a/t/helper/test-tool.h
 +++ b/t/helper/test-tool.h
-@@ -11,6 +11,7 @@ int test_dump_cache_tree(int argc, const char **argv);
- int test_dump_split_index(int argc, const char **argv);
- int test_example_decorate(int argc, const char **argv);
- int test_genrandom(int argc, const char **argv);
-+int test_hashmap(int argc, const char **argv);
+@@ -15,6 +15,7 @@ int test_hashmap(int argc, const char **argv);
+ int test_index_version(int argc, const char **argv);
  int test_lazy_init_name_hash(int argc, const char **argv);
+ int test_match_trees(int argc, const char **argv);
++int test_mergesort(int argc, const char **argv);
  int test_sha1(int argc, const char **argv);
  
-diff --git a/t/t0011-hashmap.sh b/t/t0011-hashmap.sh
-index 9c217d948c..3f1f505e89 100755
---- a/t/t0011-hashmap.sh
-+++ b/t/t0011-hashmap.sh
-@@ -4,7 +4,7 @@ test_description='test hashmap and string hash functions'
- . ./test-lib.sh
- 
- test_hashmap() {
--	echo "$1" | test-hashmap $3 > actual &&
-+	echo "$1" | test-tool hashmap $3 > actual &&
- 	echo "$2" > expect &&
- 	test_cmp expect actual
- }
-@@ -232,7 +232,7 @@ test_expect_success 'grow / shrink' '
- 	echo value40 >> expect &&
- 	echo size >> in &&
- 	echo 64 39 >> expect &&
--	cat in | test-hashmap > out &&
-+	cat in | test-tool hashmap > out &&
- 	test_cmp expect out
- 
- '
+ #endif
 -- 
 2.16.2.903.gd04caf5039
 
