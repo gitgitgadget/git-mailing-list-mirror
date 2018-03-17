@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B61E61F42D
-	for <e@80x24.org>; Sat, 17 Mar 2018 07:56:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B4E141F42D
+	for <e@80x24.org>; Sat, 17 Mar 2018 07:56:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752533AbeCQH4G (ORCPT <rfc822;e@80x24.org>);
-        Sat, 17 Mar 2018 03:56:06 -0400
-Received: from mail-lf0-f65.google.com ([209.85.215.65]:32957 "EHLO
-        mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752467AbeCQH4D (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Mar 2018 03:56:03 -0400
-Received: by mail-lf0-f65.google.com with SMTP id x205-v6so18550280lfa.0
-        for <git@vger.kernel.org>; Sat, 17 Mar 2018 00:56:02 -0700 (PDT)
+        id S1752548AbeCQH4J (ORCPT <rfc822;e@80x24.org>);
+        Sat, 17 Mar 2018 03:56:09 -0400
+Received: from mail-lf0-f68.google.com ([209.85.215.68]:32965 "EHLO
+        mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752514AbeCQH4H (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Mar 2018 03:56:07 -0400
+Received: by mail-lf0-f68.google.com with SMTP id x205-v6so18550407lfa.0
+        for <git@vger.kernel.org>; Sat, 17 Mar 2018 00:56:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=5FsiXudfk+2n/yViR1l1cTzXFwViF8wjcyUocIrizPY=;
-        b=Nyu+2N7gGFb+/XEWmT30/Jk325K7ij24nZtaEpMO7Z7YcHu3SzpcDFg5aUbyD78eO8
-         DrEoL/lQkoX43EilUyahVoxV16SX4xaXls3lA8XlUp7oqKhVPWYqu1vdcoOSJbcMY9X6
-         KN32blNLAK9b1lnVCkHacMbb1Jlh739BtgrcEvvVmYVvKrPpYwVuRhwcuocqS3o/TBeq
-         3UMhknENWOSCKHregy4rTVmTwLhgwIXwZS8JB5YYOqy5wFdx4cs12Y/O++JAkei7NsiX
-         DEx7qCjN6qTW6BrgyYh5E50mPr/2j9J7FUJfCIAfcGJEuSMXCgU/dwDgVpdhzCNiQ1L/
-         KLZQ==
+        bh=3A5xdUUm8XlFUhzFghXee7Gc0mIHilOt/p50V3EoYtc=;
+        b=LnExwIQ1NjcFqrwtvjSBlmwxq1sVsRv0C0fwHWjvbXNyr10IlhK9ZblF81N2dcd9sZ
+         yjIYgJXbFzPsaDTiunAIILQtHVFZlf0Meba6fJ6aRE/WmSCvZeJ+6U4PPBe00P/Wujnh
+         nrQt0Ec9od8OJhxh7tWvl6QmS8JEwY7L83BwHS7kvbqREeOhAqUMmMrJ38nh02uo6a12
+         lE/o0AKapoEugLFCIkphltTZM+eUavRBXVaNCJEjGdeZDylKyTeGZDGOSO9OQvlWw2go
+         JvgQxls+cEY0er93DV/D9U4g1RfHJS7ZlXtKBlB1oWerjlIKuylVRZx83zE69/eVCG5Z
+         0UdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=5FsiXudfk+2n/yViR1l1cTzXFwViF8wjcyUocIrizPY=;
-        b=QX5ckqWZWaot4k0DrEHjyOxE1pf8bLxJlSWt6cnTZN7F8a5YBX/3sRv4kIWchXP90S
-         baogmEfQyagHmi7zs86fmRqABFxL0Un/ywMYUONoUnZLDIy9HFiD4UUcSuAEJoVy5hTk
-         ghlm5UzAFH2UIkenTI3Ij0PGGb6MAthOv0+ynObyTbDI7+JwpphbluG7s2kCv22bXthg
-         TStHGeIsSI322yr731SBJ0jbW4ZlLERf0ndkQpg2eHSd6L6eU+1bpFYU8Wy+djDNTbSG
-         Tr1EdnlBJheaY7mvJVXj4My7CisGBqxWyHLBulIEXyvBl0bkQnsENn2l7+nSVBAgXAll
-         L+NA==
-X-Gm-Message-State: AElRT7GnzrJXgrpoEkN5nB7u+aSv0ADbT8NWZTManAKIJHGBAIefN40/
-        9yhahKrSVfZLY9PAEGsKTQj8RQ==
-X-Google-Smtp-Source: AG47ELtDqpVesPTHdJBLKmOwzK1+utEh2ciKAgvAvK/hR+sIS2ND1LRANDsrMZowaNn5tfdI2Z68VA==
-X-Received: by 2002:a19:5789:: with SMTP id l131-v6mr3414311lfb.135.1521273361762;
-        Sat, 17 Mar 2018 00:56:01 -0700 (PDT)
+        bh=3A5xdUUm8XlFUhzFghXee7Gc0mIHilOt/p50V3EoYtc=;
+        b=AxOeFHSPubXM67SVMEYcoWH9ySpnDRjNtPnx8SuboxiMXr5Qlgw+8zulEGY1+r7+t6
+         J44r+WmlDp+5H5YUZWd3a2Td/Fp3HeKnZKYg6RI0gVnd+R7CAvawmC7jASxrzZXn6heg
+         Gi1rlTySZ/FkyIDqiT4t+bIULQx5trUevyyGYn9eB8I5kpWjBWdn89AY6D2MbF3DpCb6
+         adScfRMnKrgtaxlebsbQ09o23wAQe5GMpqDsL3qf33qqvbJeRNENnyh+inoPY/MrnjBG
+         jTQ2DS4rwrGhgNMCMMbxX5anCNCmxR/XwnNLHU+jCkRVHzgE+vUhWgfi2D7ZpC5YEZ0C
+         Y90w==
+X-Gm-Message-State: AElRT7G0Qqj8UD9w3NeS+REmfY90TQt0LRB9g0sfRKlUGas/IKmFkGaK
+        cwZnkE2TXUuhPc3p0gKAZ4CRdA==
+X-Google-Smtp-Source: AG47ELsVHi5KW1P1uBCC3B54kX5633PlGxRThR8dLRrmhoCOJ9PI619FZ9kZXXE3joY/GvhEp5O/Ew==
+X-Received: by 2002:a19:280e:: with SMTP id o14-v6mr3355562lfo.121.1521273365383;
+        Sat, 17 Mar 2018 00:56:05 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id s23sm170224ljd.5.2018.03.17.00.56.00
+        by smtp.gmail.com with ESMTPSA id s23sm170224ljd.5.2018.03.17.00.56.04
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 17 Mar 2018 00:56:01 -0700 (PDT)
+        Sat, 17 Mar 2018 00:56:04 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 28/36] t/helper: merge test-sha1-array into test-tool
-Date:   Sat, 17 Mar 2018 08:54:13 +0100
-Message-Id: <20180317075421.22032-29-pclouds@gmail.com>
+Subject: [PATCH 31/36] t/helper: merge test-string-list into test-tool
+Date:   Sat, 17 Mar 2018 08:54:16 +0100
+Message-Id: <20180317075421.22032-32-pclouds@gmail.com>
 X-Mailer: git-send-email 2.16.2.903.gd04caf5039
 In-Reply-To: <20180317075421.22032-1-pclouds@gmail.com>
 References: <20180317075421.22032-1-pclouds@gmail.com>
@@ -70,151 +70,158 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- Makefile                   |  2 +-
- t/helper/test-sha1-array.c |  3 ++-
- t/helper/test-tool.c       |  1 +
- t/helper/test-tool.h       |  1 +
- t/t0064-sha1-array.sh      | 16 ++++++++--------
- 5 files changed, 13 insertions(+), 10 deletions(-)
+ Makefile                    |  2 +-
+ t/helper/test-string-list.c |  3 ++-
+ t/helper/test-tool.c        |  1 +
+ t/helper/test-tool.h        |  1 +
+ t/perf/p0071-sort.sh        |  2 +-
+ t/t0063-string-list.sh      | 48 ++++++++++++++++++-------------------
+ 6 files changed, 30 insertions(+), 27 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index ba7c7d8a79..b50a0818a9 100644
+index 528a80b6a6..6819792c2b 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -677,6 +677,7 @@ TEST_BUILTINS_OBJS += test-regex.o
- TEST_BUILTINS_OBJS += test-revision-walking.o
- TEST_BUILTINS_OBJS += test-run-command.o
- TEST_BUILTINS_OBJS += test-scrap-cache-tree.o
-+TEST_BUILTINS_OBJS += test-sha1-array.o
+@@ -681,6 +681,7 @@ TEST_BUILTINS_OBJS += test-sha1-array.o
  TEST_BUILTINS_OBJS += test-sha1.o
+ TEST_BUILTINS_OBJS += test-sigchain.o
+ TEST_BUILTINS_OBJS += test-strcmp-offset.o
++TEST_BUILTINS_OBJS += test-string-list.o
  
  TEST_PROGRAMS_NEED_X += test-dump-fsmonitor
-@@ -685,7 +686,6 @@ TEST_PROGRAMS_NEED_X += test-fake-ssh
+ TEST_PROGRAMS_NEED_X += test-dump-untracked-cache
+@@ -688,7 +689,6 @@ TEST_PROGRAMS_NEED_X += test-fake-ssh
  TEST_PROGRAMS_NEED_X += test-line-buffer
  TEST_PROGRAMS_NEED_X += test-parse-options
  TEST_PROGRAMS_NEED_X += test-write-cache
--TEST_PROGRAMS_NEED_X += test-sha1-array
- TEST_PROGRAMS_NEED_X += test-sigchain
- TEST_PROGRAMS_NEED_X += test-strcmp-offset
- TEST_PROGRAMS_NEED_X += test-string-list
-diff --git a/t/helper/test-sha1-array.c b/t/helper/test-sha1-array.c
-index edfd52d82a..1e08598beb 100644
---- a/t/helper/test-sha1-array.c
-+++ b/t/helper/test-sha1-array.c
+-TEST_PROGRAMS_NEED_X += test-string-list
+ TEST_PROGRAMS_NEED_X += test-submodule-config
+ TEST_PROGRAMS_NEED_X += test-subprocess
+ TEST_PROGRAMS_NEED_X += test-svn-fe
+diff --git a/t/helper/test-string-list.c b/t/helper/test-string-list.c
+index 829ec3d7d2..4ad957c31c 100644
+--- a/t/helper/test-string-list.c
++++ b/t/helper/test-string-list.c
 @@ -1,3 +1,4 @@
 +#include "test-tool.h"
  #include "cache.h"
- #include "sha1-array.h"
+ #include "string-list.h"
  
-@@ -7,7 +8,7 @@ static int print_oid(const struct object_id *oid, void *data)
- 	return 0;
+@@ -41,7 +42,7 @@ static int prefix_cb(struct string_list_item *item, void *cb_data)
+ 	return starts_with(item->string, prefix);
  }
  
 -int cmd_main(int argc, const char **argv)
-+int test_sha1_array(int argc, const char **argv)
++int test_string_list(int argc, const char **argv)
  {
- 	struct oid_array array = OID_ARRAY_INIT;
- 	struct strbuf line = STRBUF_INIT;
+ 	if (argc == 5 && !strcmp(argv[1], "split")) {
+ 		struct string_list list = STRING_LIST_INIT_DUP;
 diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
-index f12f1ec5bb..54d62b8b32 100644
+index 7e684960e0..2e428825d5 100644
 --- a/t/helper/test-tool.c
 +++ b/t/helper/test-tool.c
-@@ -32,6 +32,7 @@ static struct test_cmd cmds[] = {
- 	{ "revision-walking", test_revision_walking },
- 	{ "run-command", test_run_command },
- 	{ "scrap-cache-tree", test_scrap_cache_tree },
-+	{ "sha1-array", test_sha1_array },
+@@ -36,6 +36,7 @@ static struct test_cmd cmds[] = {
  	{ "sha1", test_sha1 },
+ 	{ "sigchain", test_sigchain },
+ 	{ "strcmp-offset", test_strcmp_offset },
++	{ "string-list", test_string_list },
  };
  
+ int cmd_main(int argc, const char **argv)
 diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
-index 92504e951f..10d1322e0d 100644
+index 42ebb67af6..943d92452a 100644
 --- a/t/helper/test-tool.h
 +++ b/t/helper/test-tool.h
-@@ -26,6 +26,7 @@ int test_regex(int argc, const char **argv);
- int test_revision_walking(int argc, const char **argv);
- int test_run_command(int argc, const char **argv);
- int test_scrap_cache_tree(int argc, const char **argv);
-+int test_sha1_array(int argc, const char **argv);
+@@ -30,5 +30,6 @@ int test_sha1_array(int argc, const char **argv);
  int test_sha1(int argc, const char **argv);
+ int test_sigchain(int argc, const char **argv);
+ int test_strcmp_offset(int argc, const char **argv);
++int test_string_list(int argc, const char **argv);
  
  #endif
-diff --git a/t/t0064-sha1-array.sh b/t/t0064-sha1-array.sh
-index 50b31ffe75..67484502a0 100755
---- a/t/t0064-sha1-array.sh
-+++ b/t/t0064-sha1-array.sh
-@@ -18,7 +18,7 @@ test_expect_success 'ordered enumeration' '
- 	{
- 		echo20 append 88 44 aa 55 &&
- 		echo for_each_unique
--	} | test-sha1-array >actual &&
-+	} | test-tool sha1-array >actual &&
- 	test_cmp expect actual
+diff --git a/t/perf/p0071-sort.sh b/t/perf/p0071-sort.sh
+index 7c9a35a646..6e924f5fa3 100755
+--- a/t/perf/p0071-sort.sh
++++ b/t/perf/p0071-sort.sh
+@@ -16,7 +16,7 @@ test_perf 'sort(1)' '
  '
  
-@@ -28,7 +28,7 @@ test_expect_success 'ordered enumeration with duplicate suppression' '
- 		echo20 append 88 44 aa 55 &&
- 		echo20 append 88 44 aa 55 &&
- 		echo for_each_unique
--	} | test-sha1-array >actual &&
-+	} | test-tool sha1-array >actual &&
- 	test_cmp expect actual
+ test_perf 'string_list_sort()' '
+-	test-string-list sort <unsorted >actual
++	test-tool string-list sort <unsorted >actual
  '
  
-@@ -36,7 +36,7 @@ test_expect_success 'lookup' '
- 	{
- 		echo20 append 88 44 aa 55 &&
- 		echo20 lookup 55
--	} | test-sha1-array >actual &&
-+	} | test-tool sha1-array >actual &&
- 	n=$(cat actual) &&
- 	test "$n" -eq 1
+ test_expect_success 'string_list_sort() sorts like sort(1)' '
+diff --git a/t/t0063-string-list.sh b/t/t0063-string-list.sh
+index dbfc05ebdc..c6ee9f66b1 100755
+--- a/t/t0063-string-list.sh
++++ b/t/t0063-string-list.sh
+@@ -10,9 +10,9 @@ test_description='Test string list functionality'
+ test_split () {
+ 	cat >expected &&
+ 	test_expect_success "split $1 at $2, max $3" "
+-		test-string-list split '$1' '$2' '$3' >actual &&
++		test-tool string-list split '$1' '$2' '$3' >actual &&
+ 		test_cmp expected actual &&
+-		test-string-list split_in_place '$1' '$2' '$3' >actual &&
++		test-tool string-list split_in_place '$1' '$2' '$3' >actual &&
+ 		test_cmp expected actual
+ 	"
+ }
+@@ -61,31 +61,31 @@ test_split ":" ":" "-1" <<EOF
+ EOF
+ 
+ test_expect_success "test filter_string_list" '
+-	test "x-" = "x$(test-string-list filter - y)" &&
+-	test "x-" = "x$(test-string-list filter no y)" &&
+-	test yes = "$(test-string-list filter yes y)" &&
+-	test yes = "$(test-string-list filter no:yes y)" &&
+-	test yes = "$(test-string-list filter yes:no y)" &&
+-	test y1:y2 = "$(test-string-list filter y1:y2 y)" &&
+-	test y2:y1 = "$(test-string-list filter y2:y1 y)" &&
+-	test "x-" = "x$(test-string-list filter x1:x2 y)"
++	test "x-" = "x$(test-tool string-list filter - y)" &&
++	test "x-" = "x$(test-tool string-list filter no y)" &&
++	test yes = "$(test-tool string-list filter yes y)" &&
++	test yes = "$(test-tool string-list filter no:yes y)" &&
++	test yes = "$(test-tool string-list filter yes:no y)" &&
++	test y1:y2 = "$(test-tool string-list filter y1:y2 y)" &&
++	test y2:y1 = "$(test-tool string-list filter y2:y1 y)" &&
++	test "x-" = "x$(test-tool string-list filter x1:x2 y)"
  '
-@@ -45,7 +45,7 @@ test_expect_success 'lookup non-existing entry' '
- 	{
- 		echo20 append 88 44 aa 55 &&
- 		echo20 lookup 33
--	} | test-sha1-array >actual &&
-+	} | test-tool sha1-array >actual &&
- 	n=$(cat actual) &&
- 	test "$n" -lt 0
+ 
+ test_expect_success "test remove_duplicates" '
+-	test "x-" = "x$(test-string-list remove_duplicates -)" &&
+-	test "x" = "x$(test-string-list remove_duplicates "")" &&
+-	test a = "$(test-string-list remove_duplicates a)" &&
+-	test a = "$(test-string-list remove_duplicates a:a)" &&
+-	test a = "$(test-string-list remove_duplicates a:a:a:a:a)" &&
+-	test a:b = "$(test-string-list remove_duplicates a:b)" &&
+-	test a:b = "$(test-string-list remove_duplicates a:a:b)" &&
+-	test a:b = "$(test-string-list remove_duplicates a:b:b)" &&
+-	test a:b:c = "$(test-string-list remove_duplicates a:b:c)" &&
+-	test a:b:c = "$(test-string-list remove_duplicates a:a:b:c)" &&
+-	test a:b:c = "$(test-string-list remove_duplicates a:b:b:c)" &&
+-	test a:b:c = "$(test-string-list remove_duplicates a:b:c:c)" &&
+-	test a:b:c = "$(test-string-list remove_duplicates a:a:b:b:c:c)" &&
+-	test a:b:c = "$(test-string-list remove_duplicates a:a:a:b:b:b:c:c:c)"
++	test "x-" = "x$(test-tool string-list remove_duplicates -)" &&
++	test "x" = "x$(test-tool string-list remove_duplicates "")" &&
++	test a = "$(test-tool string-list remove_duplicates a)" &&
++	test a = "$(test-tool string-list remove_duplicates a:a)" &&
++	test a = "$(test-tool string-list remove_duplicates a:a:a:a:a)" &&
++	test a:b = "$(test-tool string-list remove_duplicates a:b)" &&
++	test a:b = "$(test-tool string-list remove_duplicates a:a:b)" &&
++	test a:b = "$(test-tool string-list remove_duplicates a:b:b)" &&
++	test a:b:c = "$(test-tool string-list remove_duplicates a:b:c)" &&
++	test a:b:c = "$(test-tool string-list remove_duplicates a:a:b:c)" &&
++	test a:b:c = "$(test-tool string-list remove_duplicates a:b:b:c)" &&
++	test a:b:c = "$(test-tool string-list remove_duplicates a:b:c:c)" &&
++	test a:b:c = "$(test-tool string-list remove_duplicates a:a:b:b:c:c)" &&
++	test a:b:c = "$(test-tool string-list remove_duplicates a:a:a:b:b:b:c:c:c)"
  '
-@@ -55,7 +55,7 @@ test_expect_success 'lookup with duplicates' '
- 		echo20 append 88 44 aa 55 &&
- 		echo20 append 88 44 aa 55 &&
- 		echo20 lookup 55
--	} | test-sha1-array >actual &&
-+	} | test-tool sha1-array >actual &&
- 	n=$(cat actual) &&
- 	test "$n" -ge 2 &&
- 	test "$n" -le 3
-@@ -66,7 +66,7 @@ test_expect_success 'lookup non-existing entry with duplicates' '
- 		echo20 append 88 44 aa 55 &&
- 		echo20 append 88 44 aa 55 &&
- 		echo20 lookup 66
--	} | test-sha1-array >actual &&
-+	} | test-tool sha1-array >actual &&
- 	n=$(cat actual) &&
- 	test "$n" -lt 0
- '
-@@ -76,7 +76,7 @@ test_expect_success 'lookup with almost duplicate values' '
- 		echo "append 5555555555555555555555555555555555555555" &&
- 		echo "append 555555555555555555555555555555555555555f" &&
- 		echo20 lookup 55
--	} | test-sha1-array >actual &&
-+	} | test-tool sha1-array >actual &&
- 	n=$(cat actual) &&
- 	test "$n" -eq 0
- '
-@@ -85,7 +85,7 @@ test_expect_success 'lookup with single duplicate value' '
- 	{
- 		echo20 append 55 55 &&
- 		echo20 lookup 55
--	} | test-sha1-array >actual &&
-+	} | test-tool sha1-array >actual &&
- 	n=$(cat actual) &&
- 	test "$n" -ge 0 &&
- 	test "$n" -le 1
+ 
+ test_done
 -- 
 2.16.2.903.gd04caf5039
 
