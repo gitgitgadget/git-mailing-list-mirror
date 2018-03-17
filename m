@@ -2,81 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EA6441F42D
-	for <e@80x24.org>; Sat, 17 Mar 2018 08:09:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D32731F42D
+	for <e@80x24.org>; Sat, 17 Mar 2018 08:17:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751832AbeCQIJH (ORCPT <rfc822;e@80x24.org>);
-        Sat, 17 Mar 2018 04:09:07 -0400
-Received: from mail-ot0-f194.google.com ([74.125.82.194]:36388 "EHLO
-        mail-ot0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751617AbeCQIJG (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Mar 2018 04:09:06 -0400
-Received: by mail-ot0-f194.google.com with SMTP id 108-v6so12669351otv.3
-        for <git@vger.kernel.org>; Sat, 17 Mar 2018 01:09:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=Rxfi1oXzlxxueHGPe38IuqMiR8j7o/zLGvLrn5B0EtE=;
-        b=dMPJAnwh8snBgZ+Rl/N3Qao4uRoH/jdPedUlMDTtiS+YDtlhsTjARpOnUyx7PxudG4
-         z4TJByp1z5zM7BTOHv6ld5igpzLWbhb1v++a4miinJQRIQoAnaiu6364UXGLhoMcaaHA
-         KnalOWAody+9AVX+vzTC8kJQ5tQjI7uWfLNvBOXP9LAdIurOstSI+d1Pkrcq+nCi4Oi5
-         aUxk6H/rJy6y0SzI1Y5usXtZo7P/au8Ci3Ne9wihS5IFmsy0SEMQNSoNouqc6332+syp
-         IfsI7zRelxPBjY4Xxec07muXlCbbfbX/fytRF2sjw0z87A8m0Rc5M9vsUz2iQvZl4S1G
-         Xifg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=Rxfi1oXzlxxueHGPe38IuqMiR8j7o/zLGvLrn5B0EtE=;
-        b=CthA1VC4Ro35qTK2Qgow1WLp+0soeorPHFqW/+zsUCAE/XrEa9wl0anc+LJUg1xDMF
-         pEuTEJQMYj+XVQ3HNqY5enCP8+t3AbgQh1gYasPGtkzDg8aRlP/rMBrwbKSsrdjpKCmN
-         udGV9NQqgFtxY+cmXjPTdp4Rp7NST7rtVmzWRNl8oh0+5DOnnkLJ3IcexPzBFnxA6pk8
-         uG+JDDfCMlr21iRxeBU+7I23arS287gRTm1D5m2u2mx+XRjzvzY1px5hfLx9WwqVloic
-         wCv5ItnHlzC4Ybu3ecB7cJGYTczf+XAuNMclaJEJF5F2BhpTcP51XAEtxLe1c/k7rDko
-         wQiw==
-X-Gm-Message-State: AElRT7GNHkDKCXLllw02YIL5Xqv401bKFJc2XgW5gaWWI1QFExjp05bW
-        yC5s4zjHsDGUpeaYY/LyNYBBhO61atYG5M7Ecl0=
-X-Google-Smtp-Source: AG47ELv86Yt9Efraz3E21Dz2ytWhtz+gbiduGALf0OCXJ2dxl7IEqmdRuz3c96wnGsJVSTR96VSrGbueHGoV4C/UyoU=
-X-Received: by 2002:a9d:ae9:: with SMTP id 96-v6mr3237538otq.75.1521274145820;
- Sat, 17 Mar 2018 01:09:05 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.74.154.146 with HTTP; Sat, 17 Mar 2018 01:08:35 -0700 (PDT)
-In-Reply-To: <xmqqlgerzojl.fsf@gitster-ct.c.googlers.com>
-References: <20180316200648.18256-1-pclouds@gmail.com> <xmqqlgerzojl.fsf@gitster-ct.c.googlers.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sat, 17 Mar 2018 09:08:35 +0100
-Message-ID: <CACsJy8DBDqin3xYk70A2HxrZ6AYJhd0V5dj98Ni+j8t0vdNGyQ@mail.gmail.com>
-Subject: Re: [PATCH] format-patch: use --compact-summary instead of --summary
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        id S1751768AbeCQIRr (ORCPT <rfc822;e@80x24.org>);
+        Sat, 17 Mar 2018 04:17:47 -0400
+Received: from mout.gmx.net ([212.227.15.15]:35379 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751617AbeCQIRq (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Mar 2018 04:17:46 -0400
+Received: from Sonnenschein.localdomain ([87.175.177.109]) by mail.gmx.com
+ (mrgmx001 [212.227.17.190]) with ESMTPSA (Nemesis) id
+ 0Lkwc9-1eMwni42RJ-00anbe; Sat, 17 Mar 2018 09:17:44 +0100
+From:   Clemens Buchacher <drizzd@gmx.net>
+To:     git@vger.kernel.org
+Cc:     manlio.perillo@gmail.com, johannes.schindelin@gmx.de,
+        Clemens Buchacher <drizzd@gmx.net>
+Subject: [PATCH 1/2] completion: improve ls-files filter performance
+Date:   Sat, 17 Mar 2018 09:17:03 +0100
+Message-Id: <1521274624-1370-1-git-send-email-drizzd@gmx.net>
+X-Mailer: git-send-email 2.7.4
+X-Provags-ID: V03:K0:ucEryXvipC6YcW/Cd4ubnzUs62Oswi4MO+79iMiSsUL9LbdsrlJ
+ gTmMjw3n0wn0jgJCIZK9UjsHsS6nZDMeXMpnUh982ppY/9O+dnWCK+y8uTEuYmizWFL6okg
+ BLivdV7KOqelS4SSpQM54oCsb0mDgcFimxGJfjUgytrLP2QPGKbuhtFjSy82aGcsF8rnfc4
+ qm9XC0vla44/ejfafjB4A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:nWeVgeMrqQg=:+AI26PWKmoS8s4XWd8ykoQ
+ 6gAecnGwfWP6+aOlwLJ2ARUtHTcGE/iGcgk8/TFTL83tbiV+V67jYqi/0G4yI3z59gQylfWiv
+ ur8kaCZZWsh90w7LG8odDuRNvex+3lOiULEup+p8sRenGZAAZr6I5qktt5lRmJfHVSeos2c5W
+ c7GR/4r+jB5qC/GWrR5j0qPUXDpGa9o/ZHP67Rb4Q5RhfGIcwRIQJI1OlPQGS0psZtPCevBuO
+ mXUwO5UF2r1SkOjLg1PoYBOmoNI5CbeSZH4yOFb/MrAscyP0pd0fRaxHTInxd3l01r4JAaENF
+ h2vCk7xUdgudclGvpUiHPAt6pJKZXKn6gWPVAQxfyab4hiNTIII/t6fxFp3JlTfOGModhfe7b
+ 6KrrRi/O4zY5/6B0EhcNAjS2WHy377rLKryYDS7MHlKLaKW9A30VWtp6T0zxG16bskiqVvP8f
+ 96fk1n51SkZku/lrBclolqxGk2S/o0IjnWM8lanw44Gu/JO7sDHKAhgrHyTELYWV0BliFKTmh
+ 8TZI/QlZxw7oMYY0gqomKNHFSOBtLt+qcU5xlCM89XjJqJFKSfKYVPwts8seMt7dXlptvH8H9
+ m/wtNkw2S3wE89FuS62nXK+9BE8hnYTJS/ihOcmgoSV3l3905kuJnHL4ag3KspJEMiQBOWYIB
+ +NoUJ52dmdzFT02zffm5OLBsHZ7dCvVHcqZdLkQVjNe6LZnumDSeCJbKsFet1qRtYaA6JAh4v
+ CqzgcmwTX4SPBdMjV/bPwKGk3igrEZIBm1Dq1LJZzdMio7ePHXr2DhVrJ6zzgV+oU0HKv2y23
+ s5EyUlAszwNHIvUj8KQ48DxufcvyA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 16, 2018 at 10:41 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
->
->> For reviewers, a couple fewer lines from diffstat (either cover letter
->> or patches) is a good thing because there's less to read.
->
-> I can certainly accept that there may be some reviewers who share
-> that view, but me personally, I would rather have them outside the
-> main diffstat section, so addition and removal of files that are
-> rarer events do stand out.
->
-> I guess people would not mind an option to use it, but they can
-> already say "git format-patch --compact-summary $upstream..", so...
+From the output of ls-files, we remove all but the leftmost path
+component and then we eliminate duplicates. We do this in a while loop,
+which is a performance bottleneck when the number of iterations is large
+(e.g. for 60000 files in linux.git).
 
-Good point. I can't negate --summary though. But that calls for another pat=
-ch.
---=20
-Duy
+$ COMP_WORDS=(git status -- ar) COMP_CWORD=3; time _git
+
+real    0m11.876s
+user    0m4.685s
+sys     0m6.808s
+
+Using an equivalent sed script improves performance significantly:
+
+$ COMP_WORDS=(git status -- ar) COMP_CWORD=3; time _git
+
+real    0m1.372s
+user    0m0.263s
+sys     0m0.167s
+
+The measurements were done with mingw64 bash, which is used by Git for
+Windows.
+
+Signed-off-by: Clemens Buchacher <drizzd@gmx.net>
+---
+ contrib/completion/git-completion.bash | 7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
+
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 6da95b8..e3ddf27 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -384,12 +384,7 @@ __git_index_files ()
+ 	local root="${2-.}" file
+ 
+ 	__git_ls_files_helper "$root" "$1" |
+-	while read -r file; do
+-		case "$file" in
+-		?*/*) echo "${file%%/*}" ;;
+-		*) echo "$file" ;;
+-		esac
+-	done | sort | uniq
++	sed -e '/^\//! s#/.*##' | sort | uniq
+ }
+ 
+ # Lists branches from the local repository.
+-- 
+2.7.4
+
