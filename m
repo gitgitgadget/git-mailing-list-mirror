@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A90721FAE2
-	for <e@80x24.org>; Sat, 17 Mar 2018 14:11:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C94311F404
+	for <e@80x24.org>; Sat, 17 Mar 2018 14:11:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753017AbeCQOK7 (ORCPT <rfc822;e@80x24.org>);
+        id S1752878AbeCQOLG (ORCPT <rfc822;e@80x24.org>);
+        Sat, 17 Mar 2018 10:11:06 -0400
+Received: from mail-lf0-f67.google.com ([209.85.215.67]:35155 "EHLO
+        mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752913AbeCQOK7 (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 17 Mar 2018 10:10:59 -0400
-Received: from mail-lf0-f65.google.com ([209.85.215.65]:33225 "EHLO
-        mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752662AbeCQOK6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Mar 2018 10:10:58 -0400
-Received: by mail-lf0-f65.google.com with SMTP id x205-v6so19351456lfa.0
-        for <git@vger.kernel.org>; Sat, 17 Mar 2018 07:10:57 -0700 (PDT)
+Received: by mail-lf0-f67.google.com with SMTP id t132-v6so19329514lfe.2
+        for <git@vger.kernel.org>; Sat, 17 Mar 2018 07:10:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=3e79hPnJ3+PWtCoSlt/jiSJ40dVjaXf5dyjhxyZbE0U=;
-        b=omYjXbxnmzukzUemwhwfr3JPh59o4W518YzryGlM8L2XIi1uoqR0+TXAaLxqh4lDMj
-         /6PGKbLUGi770rh6mBN1Z7q11i+BARDV4lUQz0tR1v17PQ8kF8l4qcAO6PerXYuW8Hwt
-         WWW4x2W1cZcDBQ0ktexL7eTl4JgJw61rxAEYTZTanA2ND9Ue1Fk0egrWFQ3M0EACR8cw
-         AHAovUo3KnED3ydOOgVlBRh3Bs1xKKe40EV4fLmiNUpdgQG6eTTxRsH7hafI2Zvnklk/
-         TnLhPvQV/56q2JJ6SHk6FoNB0X7bflsxIJabjRj3FBdN169KOrazef44nSa9M4B9VqUa
-         pMZg==
+        bh=0tIIlNeX2FNqmmhktr9FKU8FiuAXnrgUUNF7SWaUGfU=;
+        b=FTVl7vaVfsK/LM7CoM9xTw1lQgI3WZdcnri4Z+IodjY7BBFfIyXEdvNDpIoFWUJTm0
+         LuqJ2WpR9KrDQ7u9/3VhX4JBY6eDZEL3G9Rr1NbcegIZ7xBQe8UO43zEsqSwhszC+iwt
+         6y+XfFD7Mo9CPzfkYyxp08jfjiA1SnJcIe2+K0uYlwPjkNeGfdtKqPYHLJ83rjiiLN8w
+         1sVCwDJ/itgycPpEIJd/AJHRh5r9OY4ejJA215Tw3ora4aJaQncll4bB4nBpY0UMZqIj
+         N2jZS446sp2+wnz5UW+nBOlgozCkYFJgTgx+syE9Z7vJ9+ngiPU9BKu6WvBNzeyldZn+
+         RG9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=3e79hPnJ3+PWtCoSlt/jiSJ40dVjaXf5dyjhxyZbE0U=;
-        b=OzkzPuIQTw4KVnle3HQPZ/4gyrxiVDE8LANFLrZUYMB9yvmJRPcFVHZ80RYwlv4CL/
-         K7cArdfpvaiup5udcpbIRPH7Sb6jZ08FXq8jiKCr5aLe2d7MZ5Mk/s7kgclzkCZqHzYz
-         F6fk0y01vtExDC45PYps4abL+GeaT0LabKHndK6m+ySX3xdwfp2WaXHV+GeyxzIqS95j
-         wYjILTPNMaEUwLUPpaX2u3zbZg5BdZQizR124ePl2stFLNdboCjRSNn/+XMMEVV7yu/e
-         bE2mrx+ij2K3CuKVC4vyfWnULxvwXfHdfDoGsCYH89QgO+6cPx3Qb3ocAX422FIk3C+L
-         gz2A==
-X-Gm-Message-State: AElRT7E5cVZEecFKd64b5kJEpoOSOAD+dTxEduh4TT5vkQD6wNxPJSty
-        gC/nUWQ8hogAdx9JJMmm40w=
-X-Google-Smtp-Source: AG47ELsMlcLSbCN6chRqoJz0onF23oJR8/DAC5McFzBPEhnL8+fsG1yLK0qLWMi3vCXrgRQ7kSmOHg==
-X-Received: by 2002:a19:e59d:: with SMTP id i29-v6mr4189399lfk.66.1521295856577;
-        Sat, 17 Mar 2018 07:10:56 -0700 (PDT)
+        bh=0tIIlNeX2FNqmmhktr9FKU8FiuAXnrgUUNF7SWaUGfU=;
+        b=Qq+KLhgWCPvSWGfxyOGLSkPPWIogohmCTUWLZlb/NXd2fkpnPpkWu5QwmwQpZTdSQ9
+         0gPpIPQdSfXXVUWeOdeP5HazxPcocBpiyRDqtkTAuzUSaeGIEzeNGHqcb+fP7NNZ3UpB
+         Cc8qvYs7a1wdB1wCA80v/ebpM0Z38QhfZyvBAtqOzCJSb397pvESt+wWPZ66XJeiHBUO
+         0WmUUvfwT9G10KDw8BQjfSki2ZK6ZnXuvnN+xd6/D/+80eUe1OWwvYDHXgA9Wi8yuskf
+         ISZXK6WyPIFl//A+cDOAG0UNuyIcWQE5gQjHmU+IRfZXxo01wIALF8b0LKON/kqwa58o
+         Hh0Q==
+X-Gm-Message-State: AElRT7HYY1z4SU4SyW7DDslB850GDjr+yRw0BeHs6E0QaN53gw66Stp6
+        pJDEsZu7x7x3AtYpOw9pow0=
+X-Google-Smtp-Source: AG47ELvZoUjHFBlChZj8mq9lU5LxQA+P+Q0FSbC0BvEBBbyo4cAGgQUq2gzemRVKrv8qqCWUoh7mCA==
+X-Received: by 10.46.5.67 with SMTP id 64mr3795538ljf.120.1521295857826;
+        Sat, 17 Mar 2018 07:10:57 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id f7-v6sm625648lfb.2.2018.03.17.07.10.55
+        by smtp.gmail.com with ESMTPSA id f7-v6sm625648lfb.2.2018.03.17.07.10.56
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 17 Mar 2018 07:10:55 -0700 (PDT)
+        Sat, 17 Mar 2018 07:10:57 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     avarab@gmail.com, e@80x24.org, git@vger.kernel.org,
         gitster@pobox.com, peff@peff.net
-Subject: [PATCH v5 08/11] pack-objects: shrink z_delta_size field in struct object_entry
-Date:   Sat, 17 Mar 2018 15:10:30 +0100
-Message-Id: <20180317141033.21545-9-pclouds@gmail.com>
+Subject: [PATCH v5 09/11] pack-objects: shrink size field in struct object_entry
+Date:   Sat, 17 Mar 2018 15:10:31 +0100
+Message-Id: <20180317141033.21545-10-pclouds@gmail.com>
 X-Mailer: git-send-email 2.17.0.rc0.347.gf9cf61673a
 In-Reply-To: <20180317141033.21545-1-pclouds@gmail.com>
 References: <20180316183200.31014-1-pclouds@gmail.com>
@@ -69,93 +69,310 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We only cache deltas when it's smaller than a certain limit. This limit
-defaults to 1000 but save its compressed length in a 64-bit field.
-Shrink that field down to 16 bits, so you can only cache 65kb deltas.
-Larger deltas must be recomputed at when the pack is written down.
+It's very very rare that an uncompressd object is larger than 4GB
+(partly because Git does not handle those large files very well to
+begin with). Let's optimize it for the common case where object size
+is smaller than this limit.
+
+Shrink size field down to 32 bits [1] and one overflow bit. If the size
+is too large, we read it back from disk.
+
+Add two compare helpers that can take advantage of the overflow
+bit (e.g. if the file is 4GB+, chances are it's already larger than
+core.bigFileThreshold and there's no point in comparing the actual
+value).
+
+A small note about the conditional oe_set_size() in
+check_object(). Technically if we don't get a valid type, it's not
+wrong if we set uninitialized value "size" (we don't pre-initialize
+this and sha1_object_info will not assign anything when it fails to
+get the info).
+
+This how changes the writing code path slightly which emits different
+error messages (either way we die). One of our tests in t5530 depends
+on this specific error message. Let's just keep the test as-is and
+play safe by not assigning random value. That might trigger valgrind
+anyway.
+
+[1] it's actually already 32 bits on Windows
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- Documentation/config.txt |  3 ++-
- builtin/pack-objects.c   | 22 ++++++++++++++++------
- pack-objects.h           |  3 ++-
- 3 files changed, 20 insertions(+), 8 deletions(-)
+ builtin/pack-objects.c | 49 ++++++++++++++++++++++++++---------------
+ pack-objects.h         | 50 +++++++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 80 insertions(+), 19 deletions(-)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 9bd3f5a789..00fa824448 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -2449,7 +2449,8 @@ pack.deltaCacheLimit::
- 	The maximum size of a delta, that is cached in
- 	linkgit:git-pack-objects[1]. This cache is used to speed up the
- 	writing object phase by not having to recompute the final delta
--	result once the best match for all objects is found. Defaults to 1000.
-+	result once the best match for all objects is found.
-+	Defaults to 1000. Maximum value is 65535.
- 
- pack.threads::
- 	Specifies the number of threads to spawn when searching for best
 diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 379bd1ab92..71ca1ba2ce 100644
+index 71ca1ba2ce..887e12c556 100644
 --- a/builtin/pack-objects.c
 +++ b/builtin/pack-objects.c
-@@ -2105,12 +2105,19 @@ static void find_deltas(struct object_entry **list, unsigned *list_size,
- 		 * between writes at that moment.
- 		 */
- 		if (entry->delta_data && !pack_to_stdout) {
--			entry->z_delta_size = do_compress(&entry->delta_data,
--							  entry->delta_size);
--			cache_lock();
--			delta_cache_size -= entry->delta_size;
--			delta_cache_size += entry->z_delta_size;
--			cache_unlock();
-+			unsigned long size;
+@@ -274,7 +274,7 @@ static unsigned long write_no_reuse_object(struct hashfile *f, struct object_ent
+ 
+ 	if (!usable_delta) {
+ 		if (oe_type(entry) == OBJ_BLOB &&
+-		    entry->size > big_file_threshold &&
++		    oe_size_greater_than(entry, big_file_threshold) &&
+ 		    (st = open_istream(entry->idx.oid.hash, &type, &size, NULL)) != NULL)
+ 			buf = NULL;
+ 		else {
+@@ -384,12 +384,13 @@ static off_t write_reuse_object(struct hashfile *f, struct object_entry *entry,
+ 	unsigned char header[MAX_PACK_OBJECT_HEADER],
+ 		      dheader[MAX_PACK_OBJECT_HEADER];
+ 	unsigned hdrlen;
++	unsigned long entry_size = oe_size(entry);
+ 
+ 	if (DELTA(entry))
+ 		type = (allow_ofs_delta && DELTA(entry)->idx.offset) ?
+ 			OBJ_OFS_DELTA : OBJ_REF_DELTA;
+ 	hdrlen = encode_in_pack_object_header(header, sizeof(header),
+-					      type, entry->size);
++					      type, entry_size);
+ 
+ 	offset = entry->in_pack_offset;
+ 	revidx = find_pack_revindex(p, offset);
+@@ -406,7 +407,7 @@ static off_t write_reuse_object(struct hashfile *f, struct object_entry *entry,
+ 	datalen -= entry->in_pack_header_size;
+ 
+ 	if (!pack_to_stdout && p->index_version == 1 &&
+-	    check_pack_inflate(p, &w_curs, offset, datalen, entry->size)) {
++	    check_pack_inflate(p, &w_curs, offset, datalen, entry_size)) {
+ 		error("corrupt packed object for %s",
+ 		      oid_to_hex(&entry->idx.oid));
+ 		unuse_pack(&w_curs);
+@@ -1412,6 +1413,8 @@ static void cleanup_preferred_base(void)
+ 
+ static void check_object(struct object_entry *entry)
+ {
++	unsigned long size;
 +
-+			size = do_compress(&entry->delta_data, entry->delta_size);
-+			if (size < (1 << OE_Z_DELTA_BITS)) {
-+				entry->z_delta_size = size;
-+				cache_lock();
-+				delta_cache_size -= entry->delta_size;
-+				delta_cache_size += entry->z_delta_size;
-+				cache_unlock();
-+			} else {
-+				FREE_AND_NULL(entry->delta_data);
-+				entry->z_delta_size = 0;
-+			}
+ 	if (IN_PACK(entry)) {
+ 		struct packed_git *p = IN_PACK(entry);
+ 		struct pack_window *w_curs = NULL;
+@@ -1431,13 +1434,14 @@ static void check_object(struct object_entry *entry)
+ 		 */
+ 		used = unpack_object_header_buffer(buf, avail,
+ 						   &type,
+-						   &entry->size);
++						   &size);
+ 		if (used == 0)
+ 			goto give_up;
+ 
+ 		if (type < 0)
+ 			die("BUG: invalid type %d", type);
+ 		entry->in_pack_type = type;
++		oe_set_size(entry, size);
+ 
+ 		/*
+ 		 * Determine if this is a delta and if so whether we can
+@@ -1505,7 +1509,7 @@ static void check_object(struct object_entry *entry)
+ 			 */
+ 			oe_set_type(entry, entry->in_pack_type);
+ 			SET_DELTA(entry, base_entry);
+-			entry->delta_size = entry->size;
++			entry->delta_size = oe_size(entry);
+ 			entry->delta_sibling_idx = base_entry->delta_child_idx;
+ 			SET_DELTA_CHILD(base_entry, entry);
+ 			unuse_pack(&w_curs);
+@@ -1513,14 +1517,17 @@ static void check_object(struct object_entry *entry)
  		}
  
- 		/* if we made n a delta, and if n is already at max
-@@ -3089,6 +3096,9 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 	if (depth >= (1 << OE_DEPTH_BITS))
- 		die(_("delta chain depth %d is greater than maximum limit %d"),
- 		    depth, (1 << OE_DEPTH_BITS));
-+	if (cache_max_small_delta_size >= (1 << OE_Z_DELTA_BITS))
-+		die(_("pack.deltaCacheLimit is greater than maximum limit %d"),
-+		    1 << OE_Z_DELTA_BITS);
+ 		if (oe_type(entry)) {
++			unsigned long size;
++
++			size = get_size_from_delta(p, &w_curs,
++				entry->in_pack_offset + entry->in_pack_header_size);
+ 			/*
+ 			 * This must be a delta and we already know what the
+ 			 * final object type is.  Let's extract the actual
+ 			 * object size from the delta header.
+ 			 */
+-			entry->size = get_size_from_delta(p, &w_curs,
+-					entry->in_pack_offset + entry->in_pack_header_size);
+-			if (entry->size == 0)
++			oe_set_size(entry, size);
++			if (oe_size_less_than(entry, 1))
+ 				goto give_up;
+ 			unuse_pack(&w_curs);
+ 			return;
+@@ -1535,13 +1542,15 @@ static void check_object(struct object_entry *entry)
+ 		unuse_pack(&w_curs);
+ 	}
  
- 	argv_array_push(&rp, "pack-objects");
- 	if (thin) {
-diff --git a/pack-objects.h b/pack-objects.h
-index 0b831c8f12..63222a76b0 100644
---- a/pack-objects.h
-+++ b/pack-objects.h
-@@ -4,6 +4,7 @@
- #define OE_DFS_STATE_BITS	2
- #define OE_DEPTH_BITS		12
- #define OE_IN_PACK_BITS		14
-+#define OE_Z_DELTA_BITS		16
+-	oe_set_type(entry, sha1_object_info(entry->idx.oid.hash, &entry->size));
++	oe_set_type(entry, sha1_object_info(entry->idx.oid.hash, &size));
+ 	/*
+ 	 * The error condition is checked in prepare_pack().  This is
+ 	 * to permit a missing preferred base object to be ignored
+ 	 * as a preferred base.  Doing so can result in a larger
+ 	 * pack file, but the transfer will still take place.
+ 	 */
++	if (entry->type_valid)
++		oe_set_size(entry, size);
+ }
+ 
+ static int pack_offset_sort(const void *_a, const void *_b)
+@@ -1581,6 +1590,7 @@ static void drop_reused_delta(struct object_entry *entry)
+ 	unsigned *idx = &to_pack.objects[entry->delta_idx - 1].delta_child_idx;
+ 	struct object_info oi = OBJECT_INFO_INIT;
+ 	enum object_type type;
++	unsigned long size;
+ 
+ 	while (*idx) {
+ 		struct object_entry *oe = &to_pack.objects[*idx - 1];
+@@ -1593,7 +1603,7 @@ static void drop_reused_delta(struct object_entry *entry)
+ 	SET_DELTA(entry, NULL);
+ 	entry->depth = 0;
+ 
+-	oi.sizep = &entry->size;
++	oi.sizep = &size;
+ 	oi.typep = &type;
+ 	if (packed_object_info(IN_PACK(entry), entry->in_pack_offset, &oi) < 0) {
+ 		/*
+@@ -1603,10 +1613,11 @@ static void drop_reused_delta(struct object_entry *entry)
+ 		 * and dealt with in prepare_pack().
+ 		 */
+ 		oe_set_type(entry, sha1_object_info(entry->idx.oid.hash,
+-						    &entry->size));
++						    &size));
+ 	} else {
+ 		oe_set_type(entry, type);
+ 	}
++	oe_set_size(entry, size);
+ }
  
  /*
-  * State flags for depth-first search used for analyzing delta cycles.
-@@ -79,7 +80,7 @@ struct object_entry {
- 				     */
- 	void *delta_data;	/* cached delta (uncompressed) */
- 	unsigned long delta_size;	/* delta data size (uncompressed) */
--	unsigned long z_delta_size;	/* delta data size (compressed) */
-+	unsigned z_delta_size:OE_Z_DELTA_BITS;
- 	unsigned type_:TYPE_BITS;
- 	unsigned in_pack_type:TYPE_BITS; /* could be delta */
- 	unsigned type_valid:1;
+@@ -1746,7 +1757,7 @@ static void get_object_details(void)
+ 	for (i = 0; i < to_pack.nr_objects; i++) {
+ 		struct object_entry *entry = sorted_by_offset[i];
+ 		check_object(entry);
+-		if (big_file_threshold < entry->size)
++		if (oe_size_greater_than(entry, big_file_threshold))
+ 			entry->no_try_delta = 1;
+ 	}
+ 
+@@ -1775,6 +1786,8 @@ static int type_size_sort(const void *_a, const void *_b)
+ 	const struct object_entry *b = *(struct object_entry **)_b;
+ 	enum object_type a_type = oe_type(a);
+ 	enum object_type b_type = oe_type(b);
++	unsigned long a_size = oe_size(a);
++	unsigned long b_size = oe_size(b);
+ 
+ 	if (a_type > b_type)
+ 		return -1;
+@@ -1788,9 +1801,9 @@ static int type_size_sort(const void *_a, const void *_b)
+ 		return -1;
+ 	if (a->preferred_base < b->preferred_base)
+ 		return 1;
+-	if (a->size > b->size)
++	if (a_size > b_size)
+ 		return -1;
+-	if (a->size < b->size)
++	if (a_size < b_size)
+ 		return 1;
+ 	return a < b ? -1 : (a > b);  /* newest first */
+ }
+@@ -1877,7 +1890,7 @@ static int try_delta(struct unpacked *trg, struct unpacked *src,
+ 		return 0;
+ 
+ 	/* Now some size filtering heuristics. */
+-	trg_size = trg_entry->size;
++	trg_size = oe_size(trg_entry);
+ 	if (!DELTA(trg_entry)) {
+ 		max_size = trg_size/2 - 20;
+ 		ref_depth = 1;
+@@ -1889,7 +1902,7 @@ static int try_delta(struct unpacked *trg, struct unpacked *src,
+ 						(max_depth - ref_depth + 1);
+ 	if (max_size == 0)
+ 		return 0;
+-	src_size = src_entry->size;
++	src_size = oe_size(src_entry);
+ 	sizediff = src_size < trg_size ? trg_size - src_size : 0;
+ 	if (sizediff >= max_size)
+ 		return 0;
+@@ -2009,7 +2022,7 @@ static unsigned long free_unpacked(struct unpacked *n)
+ 	free_delta_index(n->index);
+ 	n->index = NULL;
+ 	if (n->data) {
+-		freed_mem += n->entry->size;
++		freed_mem += oe_size(n->entry);
+ 		FREE_AND_NULL(n->data);
+ 	}
+ 	n->entry = NULL;
+@@ -2459,7 +2472,7 @@ static void prepare_pack(int window, int depth)
+ 			 */
+ 			continue;
+ 
+-		if (entry->size < 50)
++		if (oe_size_less_than(entry, 50))
+ 			continue;
+ 
+ 		if (entry->no_try_delta)
+diff --git a/pack-objects.h b/pack-objects.h
+index 63222a76b0..9a4ed7fdbe 100644
+--- a/pack-objects.h
++++ b/pack-objects.h
+@@ -70,7 +70,9 @@ enum dfs_state {
+  */
+ struct object_entry {
+ 	struct pack_idx_entry idx;
+-	unsigned long size;	/* uncompressed size */
++	/* object uncompressed size _if_ size_valid is true */
++	uint32_t size_;
++	unsigned size_valid:1;
+ 	unsigned in_pack_idx:OE_IN_PACK_BITS;	/* already in pack */
+ 	off_t in_pack_offset;
+ 	uint32_t delta_idx;	/* delta base object */
+@@ -258,4 +260,50 @@ static inline void oe_set_delta_sibling(struct packing_data *pack,
+ 		e->delta_sibling_idx = 0;
+ }
+ 
++static inline unsigned long oe_size(const struct object_entry *e)
++{
++	if (e->size_valid) {
++		return e->size_;
++	} else {
++		unsigned long size;
++
++		sha1_object_info(e->idx.oid.hash, &size);
++		return size;
++	}
++}
++
++static inline int contains_in_32bits(unsigned long limit)
++{
++	uint32_t truncated_limit = (uint32_t)limit;
++
++	return limit == truncated_limit;
++}
++
++static inline int oe_size_less_than(const struct object_entry *e,
++				    unsigned long limit)
++{
++	if (e->size_valid)
++		return e->size_ < limit;
++	if (contains_in_32bits(limit))
++		return 1;
++	return oe_size(e) < limit;
++}
++
++static inline int oe_size_greater_than(const struct object_entry *e,
++				       unsigned long limit)
++{
++	if (e->size_valid)
++		return e->size_ > limit;
++	if (contains_in_32bits(limit))
++		return 0;
++	return oe_size(e) > limit;
++}
++
++static inline void oe_set_size(struct object_entry *e,
++			       unsigned long size)
++{
++	e->size_ = size;
++	e->size_valid = e->size_ == size;
++}
++
+ #endif
 -- 
 2.17.0.rc0.347.gf9cf61673a
 
