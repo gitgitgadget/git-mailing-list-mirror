@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 95F421F42D
-	for <e@80x24.org>; Sat, 17 Mar 2018 07:56:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2466E1F42D
+	for <e@80x24.org>; Sat, 17 Mar 2018 07:56:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752590AbeCQH4P (ORCPT <rfc822;e@80x24.org>);
-        Sat, 17 Mar 2018 03:56:15 -0400
-Received: from mail-lf0-f67.google.com ([209.85.215.67]:38087 "EHLO
-        mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752467AbeCQH4M (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Mar 2018 03:56:12 -0400
-Received: by mail-lf0-f67.google.com with SMTP id y2-v6so16399888lfc.5
-        for <git@vger.kernel.org>; Sat, 17 Mar 2018 00:56:12 -0700 (PDT)
+        id S1752625AbeCQH40 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 17 Mar 2018 03:56:26 -0400
+Received: from mail-lf0-f65.google.com ([209.85.215.65]:38078 "EHLO
+        mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751924AbeCQH4I (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Mar 2018 03:56:08 -0400
+Received: by mail-lf0-f65.google.com with SMTP id y2-v6so16399717lfc.5
+        for <git@vger.kernel.org>; Sat, 17 Mar 2018 00:56:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=vyXzy9iuuilb5OiDJ1pMlhgz3SwfcqWz/OQiMJv8tFU=;
-        b=I5xGsHBD5dX1lFRxmuNSrlFtP8uMOtDPJHNMTvSel0+o2hqhes+vL3isdizFMb49sW
-         wzy+/+1fSUP23k6bDMXbZN42595s/nqeXMkiVPQPaQBQnf8YPlP7eFRml/ZNpupg9AiL
-         8KfXI64Z7R4E0pVlmqlgQ9o5sOnC50bdVC5YxvLlyO+5uy0NV8VfRHrsMogUJ/TvSCxi
-         gYMwBOpcVqzWcgBAfYm3scBVfwD+Sn68zpwqIoBtQIfI97lr+RcPB3NN5xgn6IMGFadY
-         tPcJyJtxL3f4s1FnA3s2rnz0a9BcXR348Jl2XCQv3dJ5egNuWb2zoTmsn31caBg5BqM4
-         aQzg==
+        bh=5erZld0/AM2QR2+7Ad1BX3ZBQx7r3+koCd659C67wVE=;
+        b=hxqIjmJd98kLs1nKzsJO49QL56wFOki66nhkZKEaixnr6HBYBtmNJJDURhFdYMQIcu
+         GQc47Q1Jg1zswUFhJ98p9oXyQsFpVosJTXP7FQhrVJnW8b8vjsHRJBDHMBG81cQ+5Ro6
+         Gxrk7oUp0Fni+StPuPthX8164wgWROd/G2K9kmqacFIDLIb7PQ9Ux3JT2GGZZb3QymQy
+         M2yfCAKAB2W6nvatonKW5DeVci3OFgb6IzDQaoYHCTUglN+bTydd3J50fSYTHNETC0z8
+         dqBEBZaBkXyBLaMDRwnrhKBpU7qOpERVoC+XKLybyNskNmYFmN86Mbdhgyg9qGv6ZJTJ
+         Vi1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=vyXzy9iuuilb5OiDJ1pMlhgz3SwfcqWz/OQiMJv8tFU=;
-        b=NQRLoVn96mfS07afzYHS7uNt4R2ba1pOP4RVFD3xBtieuuuKDbFKQVVdz7JOSrxyxj
-         GRgGZRfgYegl8Ngjo90t8FH6O1JN7B8u80q/lGdNLNs/r6Ilmyz273s0BTzAPgr8hwFL
-         5p3jRSsyvpkWbbihs4L1O6lX70UqMgR6kYFi6U40OtFjZLEZbNZmXJK2U3eGnRI0jYSh
-         /DUin7jeDzLFUbituUwWx4VVpGGXufHvJMGbGW1lUQar3rBJjec69AdV770Gx3jtrg0m
-         TXZhJ0OyiAYAqhcgvA9os4r9gqgZajn8OH6BG1I+x4jSixAtwh6CvSe6N/xWKahf+DDL
-         I86A==
-X-Gm-Message-State: AElRT7HcmkYXSITFqDezKpmSJiyHn/RqjzEiIuzRo5W3P5icl8pRJ5np
-        3LQF7rVQC1nBVi72pAbDEMOoPQ==
-X-Google-Smtp-Source: AG47ELv3LCma4FVpw6S5ZLNdFd08PnJwe4WKiJAkvCEbuWzeod20rw7mPH3tIcVYbDYNP8GpiDZvPQ==
-X-Received: by 10.46.44.17 with SMTP id s17mr3413993ljs.149.1521273371157;
-        Sat, 17 Mar 2018 00:56:11 -0700 (PDT)
+        bh=5erZld0/AM2QR2+7Ad1BX3ZBQx7r3+koCd659C67wVE=;
+        b=cZXMhr+T/HO6/Lswn570EsfKvVCHPh0tYt/kDjYKZDnC6TvbTRYxSSC0/Gxbfy7Dcx
+         apYTLQiYQvzDvQh1fODcXbN4pIHlTrFiyqVgOnjJ3zM2pP3AoCOMV3KNMdv1enz4m1/H
+         vf7h7l9o8ZezQ0TdVYRmsa6YY9A4Z2RtJKwyv15tkFsxAnkE609zLuSMApmUDrFjLwaf
+         72WnPOVxhdggPE9A/SZazYZHt/C9m/EdQnDX2NUrztI+G2/jU9xYqLHoL5KaPXNNX95G
+         6CZgUDnM0EmtSmOUD4wi02HEvXnrDiAiGv+njXgnuMS34kudyuWRRuX1WBNLJDKdYWtW
+         fsuw==
+X-Gm-Message-State: AElRT7Fs0PwffIleVNCt6EgCvekem/wNxzgUiRnccEorWabaJjl46ny0
+        jTCuhi66vTLdOsTi2mq81EWP/A==
+X-Google-Smtp-Source: AG47ELscJGK5DoxMLIbqlNzOIkmbqvZsHhhgAZn0GnrCU6IRPO7d+hvYZiepQFhJ38prhbv5Mcvg4w==
+X-Received: by 10.46.12.73 with SMTP id o9mr3385204ljd.68.1521273366308;
+        Sat, 17 Mar 2018 00:56:06 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id s23sm170224ljd.5.2018.03.17.00.56.10
+        by smtp.gmail.com with ESMTPSA id s23sm170224ljd.5.2018.03.17.00.56.05
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 17 Mar 2018 00:56:10 -0700 (PDT)
+        Sat, 17 Mar 2018 00:56:05 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 36/36] t/helper: merge test-write-cache into test-tool
-Date:   Sat, 17 Mar 2018 08:54:21 +0100
-Message-Id: <20180317075421.22032-37-pclouds@gmail.com>
+Subject: [PATCH 32/36] t/helper: merge test-submodule-config into test-tool
+Date:   Sat, 17 Mar 2018 08:54:17 +0100
+Message-Id: <20180317075421.22032-33-pclouds@gmail.com>
 X-Mailer: git-send-email 2.16.2.903.gd04caf5039
 In-Reply-To: <20180317075421.22032-1-pclouds@gmail.com>
 References: <20180317075421.22032-1-pclouds@gmail.com>
@@ -70,84 +70,145 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- Makefile                    | 2 +-
- t/helper/test-tool.c        | 1 +
- t/helper/test-tool.h        | 1 +
- t/helper/test-write-cache.c | 3 ++-
- t/perf/p0007-write-cache.sh | 2 +-
- 5 files changed, 6 insertions(+), 3 deletions(-)
+ Makefile                         |  2 +-
+ t/helper/test-submodule-config.c |  3 ++-
+ t/helper/test-tool.c             |  1 +
+ t/helper/test-tool.h             |  1 +
+ t/t7411-submodule-config.sh      | 18 +++++++++---------
+ 5 files changed, 14 insertions(+), 11 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 2ab76c6838..8ad9a2a1a9 100644
+index 6819792c2b..c1dc9ff8d6 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -686,13 +686,13 @@ TEST_BUILTINS_OBJS += test-submodule-config.o
- TEST_BUILTINS_OBJS += test-subprocess.o
- TEST_BUILTINS_OBJS += test-urlmatch-normalization.o
- TEST_BUILTINS_OBJS += test-wildmatch.o
-+TEST_BUILTINS_OBJS += test-write-cache.o
+@@ -682,6 +682,7 @@ TEST_BUILTINS_OBJS += test-sha1.o
+ TEST_BUILTINS_OBJS += test-sigchain.o
+ TEST_BUILTINS_OBJS += test-strcmp-offset.o
+ TEST_BUILTINS_OBJS += test-string-list.o
++TEST_BUILTINS_OBJS += test-submodule-config.o
  
  TEST_PROGRAMS_NEED_X += test-dump-fsmonitor
  TEST_PROGRAMS_NEED_X += test-dump-untracked-cache
- TEST_PROGRAMS_NEED_X += test-fake-ssh
+@@ -689,7 +690,6 @@ TEST_PROGRAMS_NEED_X += test-fake-ssh
  TEST_PROGRAMS_NEED_X += test-line-buffer
  TEST_PROGRAMS_NEED_X += test-parse-options
--TEST_PROGRAMS_NEED_X += test-write-cache
+ TEST_PROGRAMS_NEED_X += test-write-cache
+-TEST_PROGRAMS_NEED_X += test-submodule-config
+ TEST_PROGRAMS_NEED_X += test-subprocess
  TEST_PROGRAMS_NEED_X += test-svn-fe
  TEST_PROGRAMS_NEED_X += test-tool
+diff --git a/t/helper/test-submodule-config.c b/t/helper/test-submodule-config.c
+index f23db3b19a..63c4b90e37 100644
+--- a/t/helper/test-submodule-config.c
++++ b/t/helper/test-submodule-config.c
+@@ -1,3 +1,4 @@
++#include "test-tool.h"
+ #include "cache.h"
+ #include "config.h"
+ #include "submodule-config.h"
+@@ -10,7 +11,7 @@ static void die_usage(int argc, const char **argv, const char *msg)
+ 	exit(1);
+ }
  
+-int cmd_main(int argc, const char **argv)
++int test_submodule_config(int argc, const char **argv)
+ {
+ 	const char **arg = argv;
+ 	int my_argc = argc;
 diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
-index ebf28859b4..e4c04cd593 100644
+index 2e428825d5..1b95f1b30b 100644
 --- a/t/helper/test-tool.c
 +++ b/t/helper/test-tool.c
-@@ -41,6 +41,7 @@ static struct test_cmd cmds[] = {
- 	{ "subprocess", test_subprocess },
- 	{ "urlmatch-normalization", test_urlmatch_normalization },
- 	{ "wildmatch", test_wildmatch },
-+	{ "write-cache", test_write_cache },
+@@ -37,6 +37,7 @@ static struct test_cmd cmds[] = {
+ 	{ "sigchain", test_sigchain },
+ 	{ "strcmp-offset", test_strcmp_offset },
+ 	{ "string-list", test_string_list },
++	{ "submodule-config", test_submodule_config },
  };
  
  int cmd_main(int argc, const char **argv)
 diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
-index b7c8272689..c0c2d1d18c 100644
+index 943d92452a..16a05993e5 100644
 --- a/t/helper/test-tool.h
 +++ b/t/helper/test-tool.h
-@@ -35,5 +35,6 @@ int test_submodule_config(int argc, const char **argv);
- int test_subprocess(int argc, const char **argv);
- int test_urlmatch_normalization(int argc, const char **argv);
- int test_wildmatch(int argc, const char **argv);
-+int test_write_cache(int argc, const char **argv);
+@@ -31,5 +31,6 @@ int test_sha1(int argc, const char **argv);
+ int test_sigchain(int argc, const char **argv);
+ int test_strcmp_offset(int argc, const char **argv);
+ int test_string_list(int argc, const char **argv);
++int test_submodule_config(int argc, const char **argv);
  
  #endif
-diff --git a/t/helper/test-write-cache.c b/t/helper/test-write-cache.c
-index b7ee039669..69de7f95aa 100644
---- a/t/helper/test-write-cache.c
-+++ b/t/helper/test-write-cache.c
-@@ -1,9 +1,10 @@
-+#include "test-tool.h"
- #include "cache.h"
- #include "lockfile.h"
+diff --git a/t/t7411-submodule-config.sh b/t/t7411-submodule-config.sh
+index 46c09c7765..0bde5850ac 100755
+--- a/t/t7411-submodule-config.sh
++++ b/t/t7411-submodule-config.sh
+@@ -41,7 +41,7 @@ test_expect_success 'configuration parsing with error' '
+ 	EOF
+ 	(
+ 		cd repo &&
+-		test_must_fail test-submodule-config "" s 2>actual &&
++		test_must_fail test-tool submodule-config "" s 2>actual &&
+ 		test_i18ngrep "bad config" actual
+ 	)
+ '
+@@ -55,7 +55,7 @@ EOF
  
- static struct lock_file index_lock;
+ test_expect_success 'test parsing and lookup of submodule config by path' '
+ 	(cd super &&
+-		test-submodule-config \
++		test-tool submodule-config \
+ 			HEAD^ a \
+ 			HEAD b \
+ 			HEAD^ submodule \
+@@ -67,7 +67,7 @@ test_expect_success 'test parsing and lookup of submodule config by path' '
  
--int cmd_main(int argc, const char **argv)
-+int test_write_cache(int argc, const char **argv)
- {
- 	int i, cnt = 1, lockfd;
- 	if (argc == 2)
-diff --git a/t/perf/p0007-write-cache.sh b/t/perf/p0007-write-cache.sh
-index 261fe92fd9..09595264f0 100755
---- a/t/perf/p0007-write-cache.sh
-+++ b/t/perf/p0007-write-cache.sh
-@@ -23,7 +23,7 @@ test_expect_success "setup repo" '
- 
- count=3
- test_perf "write_locked_index $count times ($nr_files files)" "
--	test-write-cache $count
-+	test-tool write-cache $count
- "
- 
- test_done
+ test_expect_success 'test parsing and lookup of submodule config by name' '
+ 	(cd super &&
+-		test-submodule-config --name \
++		test-tool submodule-config --name \
+ 			HEAD^ a \
+ 			HEAD a \
+ 			HEAD^ submodule \
+@@ -89,7 +89,7 @@ test_expect_success 'error in one submodule config lets continue' '
+ 		git add .gitmodules &&
+ 		mv .gitmodules.bak .gitmodules &&
+ 		git commit -m "add error" &&
+-		test-submodule-config \
++		test-tool submodule-config \
+ 			HEAD b \
+ 			HEAD submodule \
+ 				>actual &&
+@@ -100,7 +100,7 @@ test_expect_success 'error in one submodule config lets continue' '
+ test_expect_success 'error message contains blob reference' '
+ 	(cd super &&
+ 		sha1=$(git rev-parse HEAD) &&
+-		test-submodule-config \
++		test-tool submodule-config \
+ 			HEAD b \
+ 			HEAD submodule \
+ 				2>actual_err &&
+@@ -114,9 +114,9 @@ test_expect_success 'using different treeishs works' '
+ 		git tag new_tag &&
+ 		tree=$(git rev-parse HEAD^{tree}) &&
+ 		commit=$(git rev-parse HEAD^{commit}) &&
+-		test-submodule-config $commit b >expect &&
+-		test-submodule-config $tree b >actual.1 &&
+-		test-submodule-config new_tag b >actual.2 &&
++		test-tool submodule-config $commit b >expect &&
++		test-tool submodule-config $tree b >actual.1 &&
++		test-tool submodule-config new_tag b >actual.2 &&
+ 		test_cmp expect actual.1 &&
+ 		test_cmp expect actual.2
+ 	)
+@@ -130,7 +130,7 @@ test_expect_success 'error in history in fetchrecursesubmodule lets continue' '
+ 		git config --unset -f .gitmodules \
+ 			submodule.submodule.fetchrecursesubmodules &&
+ 		git commit -m "add error in fetchrecursesubmodules" &&
+-		test-submodule-config \
++		test-tool submodule-config \
+ 			HEAD b \
+ 			HEAD submodule \
+ 				>actual &&
 -- 
 2.16.2.903.gd04caf5039
 
