@@ -7,90 +7,110 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 29DBE1F42D
-	for <e@80x24.org>; Sat, 17 Mar 2018 11:33:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8BCCE1F42D
+	for <e@80x24.org>; Sat, 17 Mar 2018 12:00:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752432AbeCQLc7 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 17 Mar 2018 07:32:59 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:34971 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751829AbeCQLc6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Mar 2018 07:32:58 -0400
-Received: by mail-wm0-f66.google.com with SMTP id 5so7494038wmh.0
-        for <git@vger.kernel.org>; Sat, 17 Mar 2018 04:32:57 -0700 (PDT)
+        id S1751944AbeCQMAK (ORCPT <rfc822;e@80x24.org>);
+        Sat, 17 Mar 2018 08:00:10 -0400
+Received: from mail-ot0-f178.google.com ([74.125.82.178]:34365 "EHLO
+        mail-ot0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751591AbeCQMAJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Mar 2018 08:00:09 -0400
+Received: by mail-ot0-f178.google.com with SMTP id v4-v6so9810284otj.1
+        for <git@vger.kernel.org>; Sat, 17 Mar 2018 05:00:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=ys1mhquoGNFuwem90j8xSlpTMd+Iy0FJudYTutnoXEY=;
-        b=TFFHk5yUT8gMJVMRzROkdp5LjIxmCaBoLs+fW97ZKyhrY3zV2thWTjKtf0gBgDrYil
-         pg3vVHgDIqOuahkP5N4e5U0S6DEqefpJTrnUBi4PGW4kNut9+uqNEjDpI4THlQWwQhba
-         x1RDJEwithecpGvq4xwRLSw5NjmVQ7jr8Esf1vWL2yZ/m9XbmQiONrCtCETX1iVcr3+R
-         8OIwT8EKKmg62zjQsqCSiO5Yh3VDIvd6D3w2DJkJK4zCIRfLH0VqVah0j4nWNh6TA+Uw
-         9fj4XOT16SpOTXyH5g5gZks2X2L6K16+Uxa14jutw22HKEzc1+mqoBiH3mJkj+gLEvOD
-         L1Pg==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=aB/5k+ElXu+adLrFxPrPZEviwFLp4TjdJvypBDRIrpE=;
+        b=Q/FimrGqUk8GP0F1fb58dUyvE9kU1UjE19QErxWHQ5q7Wm+4CgsG6HYSH/gGUQucPz
+         syas1DEA3+CaM6Hux1Xk7lCnSOP6rssLM0hX6kf5ItS1/+nn/CJ11OgnA53v6u/DR6x4
+         lmWOO2i3rp7UQmC2PAYEOQLSTxrncerZVTfQCiqB3RR3TS4GnpkPGkJDBwLQXUGvAgnf
+         +jLwi7hB1rk9PfOTczzjhkR0IE1Xrvi0Mjos8owPTVBMFLWOPO6HA0pNlesryd8FV7Ls
+         u68MlQ8OU3CuPpBUlGj3fI9VxYM4K6Xgas4grCEBcN8fn/qYXXujjph04i+1T0x/dTSD
+         o4pw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ys1mhquoGNFuwem90j8xSlpTMd+Iy0FJudYTutnoXEY=;
-        b=U5mu85uTTzoS/IPdBvumie2JHiILK7S0Pf0jVNEMMN/fbETVOZa6at3/vSSlJkChKP
-         SqFSFEaFY2+owqC9OBNHhYz8CrSfhf9BTFQNU9VOttMzA6NokeeBnImoMmjLjXZ8EJDq
-         5p1Qf6vxyLpUB50wJy7p7GMUh+YaoVGr1hd5ZAQDNF+Xks6oyyEkiSe+QpchzSBK20Dq
-         D/v2VmHcC17K9mink/sjR39CQLho34PuIISR8xWuaQ1ybMqxqbzXezvyhCvVMm5QFbsa
-         +t+i2XRFrnZRixVAEEHb0lCzyzqB4mPxN6p6J5E+QmweATcpykknAsFaQo1EZnqCnnvn
-         Eyzg==
-X-Gm-Message-State: AElRT7EhSS4TEqv/BocGcrm1dDXLBz6l9CQ8Q0nfCkIBwqupJ6e2soTx
-        n1fIKDQPrm08dqPIJfLVuA4=
-X-Google-Smtp-Source: AG47ELtRJ8a6oniC6hjWEdyIZjvrI+NqaHVRdF4s0+oO63tiRgENazRgoN3WBbG9sP6Ts8gmskkrMw==
-X-Received: by 10.28.177.215 with SMTP id a206mr4051363wmf.142.1521286376976;
-        Sat, 17 Mar 2018 04:32:56 -0700 (PDT)
-Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
-        by smtp.gmail.com with ESMTPSA id a63sm13083014wrc.22.2018.03.17.04.32.55
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 17 Mar 2018 04:32:56 -0700 (PDT)
-Date:   Sat, 17 Mar 2018 11:36:12 +0000
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v4 0/3] stash push -u -- <pathspec> fixes
-Message-ID: <20180317113612.GD2224@hank>
-References: <20180316204306.862-1-t.gummerer@gmail.com>
- <20180316223715.108044-1-gitster@pobox.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=aB/5k+ElXu+adLrFxPrPZEviwFLp4TjdJvypBDRIrpE=;
+        b=qHHcWvfFQLhPlhBrIqKPrkpkzjueMs/44NfMMGpkEM+zJJe4zrtl+NKqlwWaCDRDTa
+         ydKzHhSeI1w+dHPfjvvGuVmdqEQVR2ZUVoON+e0GgNcohe+fHUC01J83yfw9k1FcZf7D
+         APAQMQTUtvIVGV3+3jwERK1znuu3As781BytPzKP/Ym87F7Kn3WwKFyAHpCKTap6Lv7H
+         dOU1WzDTeXNdu0bcMnsQr0FIC/hRhKiSTgbp3G5N7YzZ3orhRoqblL+A83FHHA9uFquH
+         ULAb50RwuvaMq7HsQBHXyGGXS61qpr4BlRpDkcU+KFmt7F5G66utNyq3aXoE9E2KYDIL
+         Pd1Q==
+X-Gm-Message-State: AElRT7GavMAMEgOLY4f6vBrMKlAu0R+SPn90QfizL41OpyQTvFQtHa0I
+        2d9D8BuNlmo699HknR2KaUHvJmHetMMSH3M94X4=
+X-Google-Smtp-Source: AG47ELuHQHPpzHpMzySpXtCsUHzKv096spPsaFUABcRYh49EHDamQI6JL68wWNPl87ZxC1edelxLiTlaMmxMJZ4QIxQ=
+X-Received: by 2002:a9d:2eac:: with SMTP id w41-v6mr3616951ota.152.1521288009363;
+ Sat, 17 Mar 2018 05:00:09 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180316223715.108044-1-gitster@pobox.com>
-User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
+Received: by 10.74.154.146 with HTTP; Sat, 17 Mar 2018 04:59:38 -0700 (PDT)
+In-Reply-To: <xmqqfu4z2232.fsf@gitster-ct.c.googlers.com>
+References: <20180308114232.10508-1-pclouds@gmail.com> <20180316183200.31014-1-pclouds@gmail.com>
+ <20180316183200.31014-2-pclouds@gmail.com> <xmqqfu4z2232.fsf@gitster-ct.c.googlers.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Sat, 17 Mar 2018 12:59:38 +0100
+Message-ID: <CACsJy8CVQBgs4s8VyQ2PoVx3kVv+n76ctwjCe_2YkLGiWd2r2A@mail.gmail.com>
+Subject: Re: [PATCH v4 01/11] pack-objects: a bit of document about struct object_entry
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Eric Wong <e@80x24.org>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 03/16, Junio C Hamano wrote:
-> Here is a preliminary fix for an earlier copy-pasto, plus two
-> patches from your v3.
+On Fri, Mar 16, 2018 at 9:32 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> +/*
+>> + * basic object info
+>> + * -----------------
+>> + * idx.oid is filled up before delta searching starts. idx.crc32 and
+>> + * is only valid after the object is written out and will be used for
+>
+> "and is"?
 
-Thanks for catching and fixing this!
+There was another field that I thought was only valid after blah blah.
+But it was wrong and I forgot to delete this "and" after deleting that
+field.
 
-> I tried to reduce the nesting level by swapping the order of if/elif
-> chain; please double check the logic to ensure I didn't make stupid
-> mistakes while doing so.
+>> + * "hash" contains a path name hash which is used for sorting the
+>> + * delta list and also during delta searching. Once prepare_pack()
+>> + * returns it's no longer needed.
+>
+> Hmm, that suggests an interesting optimization opportunity ;-)
 
-I looked over what you send, and the patches and the changes you made
-look good to me.
+Heh.. it does not reduce peak memory consumption though which is why
+I'm less interested in freeing it after prepare_pack().
 
-> Junio C Hamano (1):
->   stash: fix nonsense pipeline
-> 
-> Thomas Gummerer (2):
->   stash push: avoid printing errors
->   stash push -u: don't create empty stash
-> 
->  git-stash.sh     | 13 +++++++------
->  t/t3903-stash.sh | 22 ++++++++++++++++++++++
->  2 files changed, 29 insertions(+), 6 deletions(-)
-> 
-> -- 
-> 2.17.0-rc0
-> 
+>> + * source pack info
+>> + * ----------------
+>> + * The (in_pack, in_pack_offset, in_pack_header_size) tuple contains
+>> + * the location of the object in the source pack, with or without
+>> + * header.
+>
+> "with or without", meaning...?  An object in the source pack may or
+> may not have any in_pack_header, in which case in_pack_header_size
+> is zero, or something?  Not suggesting to rephrase (at least not
+> yet), but trying to understand.
+
+The location with the header (i.e. true beginning an object in a pack)
+or without/after the header so you are at the zlib stream, ready to
+inflate or reuse. I'll rephrase this a bit.
+
+>> + *
+>> + * delta_child and delta_sibling are last needed in
+>> + * compute_write_order(). "delta" and "delta_size" must remain valid
+>> + * at object writing phase in case the delta is not cached.
+>
+> True.  I thought child and sibling are only needed during write
+> order computing, so there may be an optimization opportunity there.
+
+See. I wrote all this for a reason. Somebody looking for low hang
+fruit can always find some ;-)
+-- 
+Duy
