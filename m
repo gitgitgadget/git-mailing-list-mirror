@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B4E141F42D
-	for <e@80x24.org>; Sat, 17 Mar 2018 07:56:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 24F241F42D
+	for <e@80x24.org>; Sat, 17 Mar 2018 07:56:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752548AbeCQH4J (ORCPT <rfc822;e@80x24.org>);
+        id S1752565AbeCQH4L (ORCPT <rfc822;e@80x24.org>);
+        Sat, 17 Mar 2018 03:56:11 -0400
+Received: from mail-lf0-f67.google.com ([209.85.215.67]:32966 "EHLO
+        mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752467AbeCQH4J (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 17 Mar 2018 03:56:09 -0400
-Received: from mail-lf0-f68.google.com ([209.85.215.68]:32965 "EHLO
-        mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752514AbeCQH4H (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Mar 2018 03:56:07 -0400
-Received: by mail-lf0-f68.google.com with SMTP id x205-v6so18550407lfa.0
-        for <git@vger.kernel.org>; Sat, 17 Mar 2018 00:56:06 -0700 (PDT)
+Received: by mail-lf0-f67.google.com with SMTP id x205-v6so18550479lfa.0
+        for <git@vger.kernel.org>; Sat, 17 Mar 2018 00:56:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=3A5xdUUm8XlFUhzFghXee7Gc0mIHilOt/p50V3EoYtc=;
-        b=LnExwIQ1NjcFqrwtvjSBlmwxq1sVsRv0C0fwHWjvbXNyr10IlhK9ZblF81N2dcd9sZ
-         yjIYgJXbFzPsaDTiunAIILQtHVFZlf0Meba6fJ6aRE/WmSCvZeJ+6U4PPBe00P/Wujnh
-         nrQt0Ec9od8OJhxh7tWvl6QmS8JEwY7L83BwHS7kvbqREeOhAqUMmMrJ38nh02uo6a12
-         lE/o0AKapoEugLFCIkphltTZM+eUavRBXVaNCJEjGdeZDylKyTeGZDGOSO9OQvlWw2go
-         JvgQxls+cEY0er93DV/D9U4g1RfHJS7ZlXtKBlB1oWerjlIKuylVRZx83zE69/eVCG5Z
-         0UdA==
+        bh=aaYTl5+Tq/v9Lmd1h+sIYXIpyZBsdwSW1Kd5gM6wSx4=;
+        b=JW5w+r/Lhf3e6wZWW8tHeLWpDExSa66yHVMuXQLljpVfNcwol3yAAnyE8x2Z2KhFt/
+         0P1p3VdHun9NHYosYad+VRD91W8nQFphvxSqau3NEdVhqJF7fmTNkOpHQFcM70go3mkr
+         XmivLjo3mV2Iafq+00ieSX5dN+MFE0FjX/jtMUSc9IOwVPKaPfL1M4sI2a2p/MM9tUmo
+         g/syi7P5xB5SrPjj/lFW3o2q5nLZjFC7fTyKZRmb+3p2n2by6DlLiWQv15eZ/+kG1tMz
+         MBKKD8WV3py7C2zZ6jVDsLPmxs9pGmepMIKdGPEQpJPP7xuka9tUDUbXkiroHm/mpT3H
+         4AOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=3A5xdUUm8XlFUhzFghXee7Gc0mIHilOt/p50V3EoYtc=;
-        b=AxOeFHSPubXM67SVMEYcoWH9ySpnDRjNtPnx8SuboxiMXr5Qlgw+8zulEGY1+r7+t6
-         J44r+WmlDp+5H5YUZWd3a2Td/Fp3HeKnZKYg6RI0gVnd+R7CAvawmC7jASxrzZXn6heg
-         Gi1rlTySZ/FkyIDqiT4t+bIULQx5trUevyyGYn9eB8I5kpWjBWdn89AY6D2MbF3DpCb6
-         adScfRMnKrgtaxlebsbQ09o23wAQe5GMpqDsL3qf33qqvbJeRNENnyh+inoPY/MrnjBG
-         jTQ2DS4rwrGhgNMCMMbxX5anCNCmxR/XwnNLHU+jCkRVHzgE+vUhWgfi2D7ZpC5YEZ0C
-         Y90w==
-X-Gm-Message-State: AElRT7G0Qqj8UD9w3NeS+REmfY90TQt0LRB9g0sfRKlUGas/IKmFkGaK
-        cwZnkE2TXUuhPc3p0gKAZ4CRdA==
-X-Google-Smtp-Source: AG47ELsVHi5KW1P1uBCC3B54kX5633PlGxRThR8dLRrmhoCOJ9PI619FZ9kZXXE3joY/GvhEp5O/Ew==
-X-Received: by 2002:a19:280e:: with SMTP id o14-v6mr3355562lfo.121.1521273365383;
-        Sat, 17 Mar 2018 00:56:05 -0700 (PDT)
+        bh=aaYTl5+Tq/v9Lmd1h+sIYXIpyZBsdwSW1Kd5gM6wSx4=;
+        b=bzzrjyfBMR6rqoN6bXmv+DR9Fl2s/OBLMNMeXNkTFVDI6V+dF+SY7NDdjY194EsZPH
+         529Irhdjz1SBwvMKw0UeO7DnQXXKm/FP4XmvtWmub+cB7U8OgtpXu/gLTOFHWD+53dMW
+         yQ3H2oU6+Q4+19ADdtrybWKAo6VyqxzMCO0ikEULVORtbQhEqegMYxxAGO+13b+XJEJr
+         iBKX9dhAWPY4gsICJeSpyzGZ2fd8sSbYvOKd6FU5wrWxpxQB+wEAY9HZF2jaKf0Irqy4
+         phEdOLVwuYNezGBbr/9xrsXTe7GU4SP36GUnjrshv30VQWoO+tb53nOxA5Gz2UyjsIV2
+         kLNw==
+X-Gm-Message-State: AElRT7FXGmIu6V1TseEv/gu5P+hfcseSYhNSSOwWZQ9g6tTqYvG5TY5P
+        cjVzeK5M9g6nWfy6F1ipjKLQuA==
+X-Google-Smtp-Source: AG47ELuSnQZVDLzh0DDraYcv+YFLBsDx+3XH2SCwuj4QouB3zo7tYz1bkdvbBSeNP47ozz0CHB52yw==
+X-Received: by 10.46.137.203 with SMTP id c11mr3346526ljk.61.1521273367256;
+        Sat, 17 Mar 2018 00:56:07 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id s23sm170224ljd.5.2018.03.17.00.56.04
+        by smtp.gmail.com with ESMTPSA id s23sm170224ljd.5.2018.03.17.00.56.06
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 17 Mar 2018 00:56:04 -0700 (PDT)
+        Sat, 17 Mar 2018 00:56:06 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 31/36] t/helper: merge test-string-list into test-tool
-Date:   Sat, 17 Mar 2018 08:54:16 +0100
-Message-Id: <20180317075421.22032-32-pclouds@gmail.com>
+Subject: [PATCH 33/36] t/helper: merge test-subprocess into test-tool
+Date:   Sat, 17 Mar 2018 08:54:18 +0100
+Message-Id: <20180317075421.22032-34-pclouds@gmail.com>
 X-Mailer: git-send-email 2.16.2.903.gd04caf5039
 In-Reply-To: <20180317075421.22032-1-pclouds@gmail.com>
 References: <20180317075421.22032-1-pclouds@gmail.com>
@@ -70,158 +70,83 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- Makefile                    |  2 +-
- t/helper/test-string-list.c |  3 ++-
- t/helper/test-tool.c        |  1 +
- t/helper/test-tool.h        |  1 +
- t/perf/p0071-sort.sh        |  2 +-
- t/t0063-string-list.sh      | 48 ++++++++++++++++++-------------------
- 6 files changed, 30 insertions(+), 27 deletions(-)
+ Makefile                   | 2 +-
+ t/helper/test-subprocess.c | 3 ++-
+ t/helper/test-tool.c       | 1 +
+ t/helper/test-tool.h       | 1 +
+ t/t1501-work-tree.sh       | 2 +-
+ 5 files changed, 6 insertions(+), 3 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 528a80b6a6..6819792c2b 100644
+index c1dc9ff8d6..893ea64ca2 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -681,6 +681,7 @@ TEST_BUILTINS_OBJS += test-sha1-array.o
- TEST_BUILTINS_OBJS += test-sha1.o
- TEST_BUILTINS_OBJS += test-sigchain.o
+@@ -683,6 +683,7 @@ TEST_BUILTINS_OBJS += test-sigchain.o
  TEST_BUILTINS_OBJS += test-strcmp-offset.o
-+TEST_BUILTINS_OBJS += test-string-list.o
+ TEST_BUILTINS_OBJS += test-string-list.o
+ TEST_BUILTINS_OBJS += test-submodule-config.o
++TEST_BUILTINS_OBJS += test-subprocess.o
  
  TEST_PROGRAMS_NEED_X += test-dump-fsmonitor
  TEST_PROGRAMS_NEED_X += test-dump-untracked-cache
-@@ -688,7 +689,6 @@ TEST_PROGRAMS_NEED_X += test-fake-ssh
+@@ -690,7 +691,6 @@ TEST_PROGRAMS_NEED_X += test-fake-ssh
  TEST_PROGRAMS_NEED_X += test-line-buffer
  TEST_PROGRAMS_NEED_X += test-parse-options
  TEST_PROGRAMS_NEED_X += test-write-cache
--TEST_PROGRAMS_NEED_X += test-string-list
- TEST_PROGRAMS_NEED_X += test-submodule-config
- TEST_PROGRAMS_NEED_X += test-subprocess
+-TEST_PROGRAMS_NEED_X += test-subprocess
  TEST_PROGRAMS_NEED_X += test-svn-fe
-diff --git a/t/helper/test-string-list.c b/t/helper/test-string-list.c
-index 829ec3d7d2..4ad957c31c 100644
---- a/t/helper/test-string-list.c
-+++ b/t/helper/test-string-list.c
-@@ -1,3 +1,4 @@
+ TEST_PROGRAMS_NEED_X += test-tool
+ TEST_PROGRAMS_NEED_X += test-urlmatch-normalization
+diff --git a/t/helper/test-subprocess.c b/t/helper/test-subprocess.c
+index 30c5765bfc..2699257663 100644
+--- a/t/helper/test-subprocess.c
++++ b/t/helper/test-subprocess.c
+@@ -1,7 +1,8 @@
 +#include "test-tool.h"
  #include "cache.h"
- #include "string-list.h"
- 
-@@ -41,7 +42,7 @@ static int prefix_cb(struct string_list_item *item, void *cb_data)
- 	return starts_with(item->string, prefix);
- }
+ #include "run-command.h"
  
 -int cmd_main(int argc, const char **argv)
-+int test_string_list(int argc, const char **argv)
++int test_subprocess(int argc, const char **argv)
  {
- 	if (argc == 5 && !strcmp(argv[1], "split")) {
- 		struct string_list list = STRING_LIST_INIT_DUP;
+ 	struct child_process cp = CHILD_PROCESS_INIT;
+ 	int nogit = 0;
 diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
-index 7e684960e0..2e428825d5 100644
+index 1b95f1b30b..49f4d6f901 100644
 --- a/t/helper/test-tool.c
 +++ b/t/helper/test-tool.c
-@@ -36,6 +36,7 @@ static struct test_cmd cmds[] = {
- 	{ "sha1", test_sha1 },
- 	{ "sigchain", test_sigchain },
+@@ -38,6 +38,7 @@ static struct test_cmd cmds[] = {
  	{ "strcmp-offset", test_strcmp_offset },
-+	{ "string-list", test_string_list },
+ 	{ "string-list", test_string_list },
+ 	{ "submodule-config", test_submodule_config },
++	{ "subprocess", test_subprocess },
  };
  
  int cmd_main(int argc, const char **argv)
 diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
-index 42ebb67af6..943d92452a 100644
+index 16a05993e5..eaf15cbd84 100644
 --- a/t/helper/test-tool.h
 +++ b/t/helper/test-tool.h
-@@ -30,5 +30,6 @@ int test_sha1_array(int argc, const char **argv);
- int test_sha1(int argc, const char **argv);
- int test_sigchain(int argc, const char **argv);
+@@ -32,5 +32,6 @@ int test_sigchain(int argc, const char **argv);
  int test_strcmp_offset(int argc, const char **argv);
-+int test_string_list(int argc, const char **argv);
+ int test_string_list(int argc, const char **argv);
+ int test_submodule_config(int argc, const char **argv);
++int test_subprocess(int argc, const char **argv);
  
  #endif
-diff --git a/t/perf/p0071-sort.sh b/t/perf/p0071-sort.sh
-index 7c9a35a646..6e924f5fa3 100755
---- a/t/perf/p0071-sort.sh
-+++ b/t/perf/p0071-sort.sh
-@@ -16,7 +16,7 @@ test_perf 'sort(1)' '
+diff --git a/t/t1501-work-tree.sh b/t/t1501-work-tree.sh
+index b07cb9140e..02cf2013fc 100755
+--- a/t/t1501-work-tree.sh
++++ b/t/t1501-work-tree.sh
+@@ -341,7 +341,7 @@ test_expect_success 'make_relative_path handles double slashes in GIT_DIR' '
+ 
+ test_expect_success 'relative $GIT_WORK_TREE and git subprocesses' '
+ 	GIT_DIR=repo.git GIT_WORK_TREE=repo.git/work \
+-	test-subprocess --setup-work-tree rev-parse --show-toplevel >actual &&
++	test-tool subprocess --setup-work-tree rev-parse --show-toplevel >actual &&
+ 	echo "$(pwd)/repo.git/work" >expected &&
+ 	test_cmp expected actual
  '
- 
- test_perf 'string_list_sort()' '
--	test-string-list sort <unsorted >actual
-+	test-tool string-list sort <unsorted >actual
- '
- 
- test_expect_success 'string_list_sort() sorts like sort(1)' '
-diff --git a/t/t0063-string-list.sh b/t/t0063-string-list.sh
-index dbfc05ebdc..c6ee9f66b1 100755
---- a/t/t0063-string-list.sh
-+++ b/t/t0063-string-list.sh
-@@ -10,9 +10,9 @@ test_description='Test string list functionality'
- test_split () {
- 	cat >expected &&
- 	test_expect_success "split $1 at $2, max $3" "
--		test-string-list split '$1' '$2' '$3' >actual &&
-+		test-tool string-list split '$1' '$2' '$3' >actual &&
- 		test_cmp expected actual &&
--		test-string-list split_in_place '$1' '$2' '$3' >actual &&
-+		test-tool string-list split_in_place '$1' '$2' '$3' >actual &&
- 		test_cmp expected actual
- 	"
- }
-@@ -61,31 +61,31 @@ test_split ":" ":" "-1" <<EOF
- EOF
- 
- test_expect_success "test filter_string_list" '
--	test "x-" = "x$(test-string-list filter - y)" &&
--	test "x-" = "x$(test-string-list filter no y)" &&
--	test yes = "$(test-string-list filter yes y)" &&
--	test yes = "$(test-string-list filter no:yes y)" &&
--	test yes = "$(test-string-list filter yes:no y)" &&
--	test y1:y2 = "$(test-string-list filter y1:y2 y)" &&
--	test y2:y1 = "$(test-string-list filter y2:y1 y)" &&
--	test "x-" = "x$(test-string-list filter x1:x2 y)"
-+	test "x-" = "x$(test-tool string-list filter - y)" &&
-+	test "x-" = "x$(test-tool string-list filter no y)" &&
-+	test yes = "$(test-tool string-list filter yes y)" &&
-+	test yes = "$(test-tool string-list filter no:yes y)" &&
-+	test yes = "$(test-tool string-list filter yes:no y)" &&
-+	test y1:y2 = "$(test-tool string-list filter y1:y2 y)" &&
-+	test y2:y1 = "$(test-tool string-list filter y2:y1 y)" &&
-+	test "x-" = "x$(test-tool string-list filter x1:x2 y)"
- '
- 
- test_expect_success "test remove_duplicates" '
--	test "x-" = "x$(test-string-list remove_duplicates -)" &&
--	test "x" = "x$(test-string-list remove_duplicates "")" &&
--	test a = "$(test-string-list remove_duplicates a)" &&
--	test a = "$(test-string-list remove_duplicates a:a)" &&
--	test a = "$(test-string-list remove_duplicates a:a:a:a:a)" &&
--	test a:b = "$(test-string-list remove_duplicates a:b)" &&
--	test a:b = "$(test-string-list remove_duplicates a:a:b)" &&
--	test a:b = "$(test-string-list remove_duplicates a:b:b)" &&
--	test a:b:c = "$(test-string-list remove_duplicates a:b:c)" &&
--	test a:b:c = "$(test-string-list remove_duplicates a:a:b:c)" &&
--	test a:b:c = "$(test-string-list remove_duplicates a:b:b:c)" &&
--	test a:b:c = "$(test-string-list remove_duplicates a:b:c:c)" &&
--	test a:b:c = "$(test-string-list remove_duplicates a:a:b:b:c:c)" &&
--	test a:b:c = "$(test-string-list remove_duplicates a:a:a:b:b:b:c:c:c)"
-+	test "x-" = "x$(test-tool string-list remove_duplicates -)" &&
-+	test "x" = "x$(test-tool string-list remove_duplicates "")" &&
-+	test a = "$(test-tool string-list remove_duplicates a)" &&
-+	test a = "$(test-tool string-list remove_duplicates a:a)" &&
-+	test a = "$(test-tool string-list remove_duplicates a:a:a:a:a)" &&
-+	test a:b = "$(test-tool string-list remove_duplicates a:b)" &&
-+	test a:b = "$(test-tool string-list remove_duplicates a:a:b)" &&
-+	test a:b = "$(test-tool string-list remove_duplicates a:b:b)" &&
-+	test a:b:c = "$(test-tool string-list remove_duplicates a:b:c)" &&
-+	test a:b:c = "$(test-tool string-list remove_duplicates a:a:b:c)" &&
-+	test a:b:c = "$(test-tool string-list remove_duplicates a:b:b:c)" &&
-+	test a:b:c = "$(test-tool string-list remove_duplicates a:b:c:c)" &&
-+	test a:b:c = "$(test-tool string-list remove_duplicates a:a:b:b:c:c)" &&
-+	test a:b:c = "$(test-tool string-list remove_duplicates a:a:a:b:b:b:c:c:c)"
- '
- 
- test_done
 -- 
 2.16.2.903.gd04caf5039
 
