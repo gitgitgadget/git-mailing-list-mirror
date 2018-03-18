@@ -7,62 +7,56 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9ABE01F404
-	for <e@80x24.org>; Sun, 18 Mar 2018 01:53:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 009FB1F404
+	for <e@80x24.org>; Sun, 18 Mar 2018 02:11:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752564AbeCRBnG (ORCPT <rfc822;e@80x24.org>);
-        Sat, 17 Mar 2018 21:43:06 -0400
-Received: from mail-qk0-f194.google.com ([209.85.220.194]:39672 "EHLO
-        mail-qk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752295AbeCRBnF (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Mar 2018 21:43:05 -0400
-Received: by mail-qk0-f194.google.com with SMTP id j73so7554409qke.6
-        for <git@vger.kernel.org>; Sat, 17 Mar 2018 18:43:05 -0700 (PDT)
+        id S1752359AbeCRCLJ (ORCPT <rfc822;e@80x24.org>);
+        Sat, 17 Mar 2018 22:11:09 -0400
+Received: from mail-qk0-f170.google.com ([209.85.220.170]:39403 "EHLO
+        mail-qk0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751450AbeCRCLI (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Mar 2018 22:11:08 -0400
+Received: by mail-qk0-f170.google.com with SMTP id j73so7582767qke.6
+        for <git@vger.kernel.org>; Sat, 17 Mar 2018 19:11:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:sender:in-reply-to:references:from:date:message-id
          :subject:to:cc:content-transfer-encoding;
-        bh=a5MJDx/rAYaGm+r7I/kKZdyLdNnPkXV6/UeqFcAT3Uw=;
-        b=j4xpZu/R/hqzm1SHYRYAg5bq2DIl7hTo9opmznFMjbqtwfmeDgEYEx+wcDiuqvn4Pn
-         Mve+umDmmmyeLzduyLfA4+m8+8crDzVCVDL7rJxSEgeF1T9aJ21/XE1Ld8ZrEFcJkiOv
-         flO2DnTvQZINCTCfAykqZNPKXs9suIx+YxL6V/ZUiO/60A/MA4bMPiwcz36XnnJ1onGa
-         jnlwheJiQ13jth7Gs6jUQb47HH3ZitigTQ2hbetp0Pr/KTn50KQuJzi8ockh1bQ546m/
-         YVNP/9L5a8SnKBqswqmVAqPHR2qPepIc0nH/3awBfiALxKp6vd5Nh9OpG2kYj7e15x0b
-         NFzA==
+        bh=34eQUBI12kqNnKWlVt+kk2ld3zboiYZjqZ0uKMtSKlM=;
+        b=pjbMYO2eAJOcFXLbzuXReTzGTLtON21IVPPEjS4rcAOMHB5Ssu4pJjOztDUkf+pbnP
+         377v53ivUs+DbZbt/1JWdME3tekZVxhZCLH49nJXXZxwh0g/A3JAkSK/K84AUt7zIWR6
+         ozweoVdXVu1eBHqhNiy8b4hqQJeFy/DMZC4/4nZqt3QUCc9pZWeSJ0r4zEKk8syzTzny
+         +bnRFp7do2sEoXdoR1/0u44JS9hUn/ooFJDtTU4SXM9oI2RBp4rYeK+UUTh/82YGpOwj
+         /AkdW0RDhcFMN+vhl1ZLIeM3YmlvTem9Adoy9T8Hoz2PbZS8FiqfbvNO2YIs4XYCZ930
+         zUDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
          :date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=a5MJDx/rAYaGm+r7I/kKZdyLdNnPkXV6/UeqFcAT3Uw=;
-        b=cziyjwaovHC0zSWico9lJ9Czk6TvIO97ckHEp3HXoL3ChuwwqEVn+vsI93yqycoeuA
-         F4UPzHWpMB/q/lheAfNUNcCSbZrmPXSqIvwYhAQIIuKEK3OUKu9S1jC0HPjks+KYnZsX
-         3yuuBI63QfDOBZOvMIecr8sFSnxQFfkI+0fN5bjCO6MKoyIz/aQ0KsmJij8pMImtt/Fe
-         8pLPBbmYviEHYAf5h7JLHfGrobuhJLl3/HN2aDAqFzwnA2Qx88EdtpI7LQxD+XW1emsZ
-         7/6g1bAlhH7mTDPKmcQ+yBv+A3rfTY9xtzx6iFrC4LkejioUTjeWchMlD4C0CLOZAOY8
-         Svvg==
-X-Gm-Message-State: AElRT7Gnc3X9XWzEC2iRcim9fR111J6aVaN/OMZRqEVYYEbDf30ObwdV
-        sqezeurs/mP5b4CkjUqZbjLwQDFCp3SUysRJLO0=
-X-Google-Smtp-Source: AG47ELtcXNPAoMgjkXxiyTiD4tXuRUDwSVvqvhDMpVsQJV4s5/r5gdh4YHjC3h9aKLqrV/313U3z1vbTNYnUE+cXMYM=
-X-Received: by 10.55.74.2 with SMTP id x2mr10540792qka.314.1521337384385; Sat,
- 17 Mar 2018 18:43:04 -0700 (PDT)
+        bh=34eQUBI12kqNnKWlVt+kk2ld3zboiYZjqZ0uKMtSKlM=;
+        b=lerApqYBXHeI18Ze+5r1McLmXwwnyRxMH0qakslwmC/rsxyaMmO7xqzoRZ5J7ZxWKQ
+         hyokd8ip5Ju6Pm+B021hXwPUwvKsQORza+ob4eVsi0Y3ekqVSgJhEQCszQj6ff62PyOV
+         mDV2gVi5Bg8IQdC+FNPg1FOTUA3QslaLXN5fwPdrTBVJkDPd6OMLzflnjJmB+dSRrd1J
+         9KgKSdpw33f51YJaz5uireqt7F0TPFxbj2OPrSauZc5ePjtrgzH4ywxoPnJ6Rb/STnff
+         kDtLEFJSLsoK8Tk4SMgk+2CcoFfoydOiydVRampHAE5f7biTkhbbfI+3svixtyo5/w0M
+         m64Q==
+X-Gm-Message-State: AElRT7HLMHzFXhPsjvkA8/ZtXMWFxW/cZQ1dQebSFWa3GNZEIidU3Tk7
+        tOCaaZC5RvzqVI3P+K+c9HuTT6ojdcoRPTh+xhQ=
+X-Google-Smtp-Source: AG47ELtATBeyZjAip1ZCyHkIXzuRIPECLB6xSlJRX0EKQU8d3RRLjkSI+4O60Vnk4+r2C2KOHv7GX1b+hKZa2mL+EtU=
+X-Received: by 10.55.120.66 with SMTP id t63mr10820465qkc.42.1521339067758;
+ Sat, 17 Mar 2018 19:11:07 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.12.190.196 with HTTP; Sat, 17 Mar 2018 18:43:03 -0700 (PDT)
-In-Reply-To: <20180317191138.GE2224@hank>
-References: <1520366804-28233-1-git-send-email-eddy.petrisor@gmail.com>
- <20180306202149.GA160269@aiede.svl.corp.google.com> <CAK0XTWdY6rfKu_s8Am6dh9njcFHqSAz_54PhW6V09DuGwE-h0g@mail.gmail.com>
- <20180316213323.GC2224@hank> <CAPig+cR5ncp9eMZ8krgy19A6g1Uqjx9dXTkus4r1QimD5Uwk0A@mail.gmail.com>
- <CAK0XTWcNySGgwgFgCPDnZ+m=2hfEgswHbJKYeu+LQfuQ9_=shQ@mail.gmail.com> <20180317191138.GE2224@hank>
+Received: by 10.12.190.196 with HTTP; Sat, 17 Mar 2018 19:11:07 -0700 (PDT)
+In-Reply-To: <20180317075421.22032-5-pclouds@gmail.com>
+References: <20180317075421.22032-1-pclouds@gmail.com> <20180317075421.22032-5-pclouds@gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sat, 17 Mar 2018 21:43:03 -0400
-X-Google-Sender-Auth: xj04YvbMaxdbR1JvmSRZhEVUBHs
-Message-ID: <CAPig+cRPkjDhedmvzuABCLD6+umsHP1w6ptw5BrezDx-gnWDfQ@mail.gmail.com>
-Subject: Re: [RFC PATCH] git-submodule.sh:cmd_update: if submodule branch
- exists, fetch that instead of default
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     =?UTF-8?Q?Eddy_Petri=C8=99or?= <eddy.petrisor@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>
+Date:   Sat, 17 Mar 2018 22:11:07 -0400
+X-Google-Sender-Auth: rqbAjZ-ICmsml8vdGF5Lkvbx80I
+Message-ID: <CAPig+cTSqxLTDoq3xGAmf1xCyCX0jvwyoSL5GApgaNg5PVPGGg@mail.gmail.com>
+Subject: Re: [PATCH 04/36] t/helper: merge test-lazy-init-name-hash into test-tool
+To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+Cc:     Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
@@ -70,49 +64,32 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Mar 17, 2018 at 3:11 PM, Thomas Gummerer <t.gummerer@gmail.com> wro=
-te:
-> On 03/17, Eddy Petri=C8=99or wrote:
->> vin., 16 mar. 2018, 23:44 Eric Sunshine <sunshine@sunshineco.com> a scri=
-s:
->> > It may be a disservice to remove mention of git-blame and git-shortlog
->> > since git-contacts may not be suitable for everyone. Instead, perhaps
->> > advertise git-contacts as a potentially simpler alternative to the
->> > already-mentioned git-blamd & git-shortlog?
->
-> Not sure how much of a disservice it would be.  I think of
-> SubmittingPatches as mostly a document for new git contributors, for
-> who I think we should make it as easy as possible to start
-> contributing.  Interpreting the output of 'git blame' and 'git
-> shortlog' feels like an extra hurdle for new contributors, especially
-> if someone is not familiar with the mailing list workflow.  I do
-> remember wondering exactly how I should interpret this when I sent my
-> first patches.
+On Sat, Mar 17, 2018 at 3:53 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =
+<pclouds@gmail.com> wrote:
+> diff --git a/cache.h b/cache.h
+> @@ -333,7 +333,7 @@ struct index_state {
+> -extern int test_lazy_init_name_hash(struct index_state *istate, int try_=
+threaded);
+> +extern int lazy_init_name_hash_for_testing(struct index_state *istate, i=
+nt try_threaded);
 
-Okay. Mentioning those commands (in addition to git-contacts) is an
-opportunity to educate newcomers to Git the tool (not just to git.git
-the project) about additional ways to engage in project spelunking. By
-"disservice", I meant that that educational opportunity is lost.
-Eddy's suggestion of reversing the order, thus mentioning git-contacts
-first is a good alternative.
+I get why you renamed this since the "main" function in the test
+program wants to be called 'test_lazy_init_name_hash'...
 
-However, perhaps this idea of educating newcomers to Git is misplaced
-in this context; such spelunking advice may be better suited to a
-general Git tutorial than to SubmittingPatches which is indeed
-specific to git.git. Given that reasoning, then my "disservice" view
-may be wrong.
+> diff --git a/t/helper/test-lazy-init-name-hash.c b/t/helper/test-lazy-ini=
+t-name-hash.c
+> @@ -9,6 +10,9 @@ static int perf;
+> +static int (*init_name_hash)(struct index_state *istate, int try_threade=
+d) =3D
+> +       lazy_init_name_hash_for_testing;
+> +
+> @@ -33,9 +37,9 @@ static void dump_run(void)
+>         if (single) {
+> -               test_lazy_init_name_hash(&the_index, 0);
+> +               init_name_hash(&the_index, 0);
 
->> > Also, would it make sense to mention Felipe's git-related[1] which is
->> > the original (and now more configurable) script from which
->> > git-contacts functionality was derived?
->
-> The reason I chose 'git contacts' over git-related is mainly that it
-> comes available with git.  Mentioning both again makes things harder
-> on new contributors who already have enough to think about when
-> submitting the patch.
->
-> I guess in the end it comes down to who we think the target of the
-> document is.  To me it was always people new to the project, which is
-> why I think the single command there makes sense.
-
-Fair enough.
+... but I'm having trouble understanding why this indirection through
+'init_name_hash' is used rather than just calling
+lazy_init_name_hash_for_testing() directly. Am I missing something
+obvious or is 'init_name_hash' just an unneeded artifact of an earlier
+iteration before the rename in cache.{c,h}?
