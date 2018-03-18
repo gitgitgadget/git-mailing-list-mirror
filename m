@@ -2,98 +2,167 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D890C1F404
-	for <e@80x24.org>; Sun, 18 Mar 2018 19:06:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0EF3D1F404
+	for <e@80x24.org>; Sun, 18 Mar 2018 20:16:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754121AbeCRTGM convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Sun, 18 Mar 2018 15:06:12 -0400
-Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:43266 "EHLO
-        alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751062AbeCRTGK (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 18 Mar 2018 15:06:10 -0400
-X-AuditID: 1207440e-1c1ff70000000b4f-59-5aaeb89fb0f6
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
-        (Client did not present a certificate)
-        by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id 99.52.02895.0A8BEAA5; Sun, 18 Mar 2018 15:06:08 -0400 (EDT)
-Received: from mail-lf0-f41.google.com (mail-lf0-f41.google.com [209.85.215.41])
-        (authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id w2IJ65W9023112
-        (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT)
-        for <git@vger.kernel.org>; Sun, 18 Mar 2018 15:06:07 -0400
-Received: by mail-lf0-f41.google.com with SMTP id f75-v6so22259894lfg.6
-        for <git@vger.kernel.org>; Sun, 18 Mar 2018 12:06:06 -0700 (PDT)
-X-Gm-Message-State: AElRT7EtWgr8h3h4I6LRvN2XIefI9Gqg8huKXPcgfZuQ/EYP4qP8tlYo
-        rr9Wue0b+7Fh4Uqa6E/k6Md4ShkyQCChjzQjWEo=
-X-Google-Smtp-Source: AG47ELvlM09GqPZ0h11U0looXqggUq6m75ENEyMNhV4GCU/lFZYssXTWgPA1e99tFuG8ox0DDR+NJ6FsiHdTWghIvcs=
-X-Received: by 2002:a19:a355:: with SMTP id m82-v6mr6007285lfe.54.1521399965521;
- Sun, 18 Mar 2018 12:06:05 -0700 (PDT)
+        id S1754520AbeCRUQ3 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 18 Mar 2018 16:16:29 -0400
+Received: from shout02.mail.de ([213.128.151.217]:34321 "EHLO shout02.mail.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1754579AbeCRUQM (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 18 Mar 2018 16:16:12 -0400
+X-Greylist: delayed 407 seconds by postgrey-1.27 at vger.kernel.org; Sun, 18 Mar 2018 16:16:11 EDT
+Received: from postfix02.mail.de (postfix02.bt.mail.de [10.0.121.126])
+        by shout02.mail.de (Postfix) with ESMTP id 2B15E6001B;
+        Sun, 18 Mar 2018 21:09:23 +0100 (CET)
+Received: from smtp02.mail.de (smtp02.bt.mail.de [10.0.121.212])
+        by postfix02.mail.de (Postfix) with ESMTP id 0F286C000E;
+        Sun, 18 Mar 2018 21:09:23 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mail.de;
+        s=mailde201610; t=1521403763;
+        bh=vb42Pgvb5A3JRvKf4ykt3QPreJWJbk4hbcaQ9drxrmw=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=T/Vno81SBoYGsNPxooR5IEOZ5aIDn7uLixJJKM4ysykYEjTlWlmhu/hqu+vAjrPd+
+         c1fmsNNKa0FlCGwUu6lJxSo8FredO3M/rTNzob1XGoL1BVUYPX22xgi+GyVQU6t3oS
+         UPJB6iv+hUafeVzTLf4OQnfCXNXqQaLUB+2iD8FI=
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by smtp02.mail.de (Postfix) with ESMTPSA id 5F873102E58;
+        Sun, 18 Mar 2018 21:09:22 +0100 (CET)
+Date:   Sun, 18 Mar 2018 21:09:08 +0100
+From:   Stefan Moch <stefanmoch@mail.de>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Simon Doodkin <helpmepro1@gmail.com>, git@vger.kernel.org,
+        Stefan Beller <sbeller@google.com>
+Subject: Re: feature-request: git "cp" like there is git mv.
+Message-ID: <20180318210908.3ed94777.stefanmoch@mail.de>
+In-Reply-To: <xmqqinb87f70.fsf@gitster-ct.c.googlers.com>
+References: <20171216013130.GB188893@aiede.mtv.corp.google.com>
+        <20171231191156.28359-1-stefanmoch@mail.de>
+        <xmqqinb87f70.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Reply-To: mhagger@alum.mit.edu
-Received: by 10.46.135.152 with HTTP; Sun, 18 Mar 2018 12:06:04 -0700 (PDT)
-In-Reply-To: <20180316212920.GD12333@sigill.intra.peff.net>
-References: <CAMy9T_FaOdLP482YZcMX16mpy_EgM0ok1GKg45rE=X+HTGxSiQ@mail.gmail.com>
- <87370zeqmx.fsf@evledraar.gmail.com> <20180316212920.GD12333@sigill.intra.peff.net>
-From:   Michael Haggerty <mhagger@alum.mit.edu>
-Date:   Sun, 18 Mar 2018 20:06:04 +0100
-X-Gmail-Original-Message-ID: <CAMy9T_FNW5ksx-zLJRb48A-Dt4KNikQ9zXmxDshbby40OSLuyw@mail.gmail.com>
-Message-ID: <CAMy9T_FNW5ksx-zLJRb48A-Dt4KNikQ9zXmxDshbby40OSLuyw@mail.gmail.com>
-Subject: Re: [ANNOUNCE] git-sizer: compute various size-related metrics for
- your Git repository
-To:     Jeff King <peff@peff.net>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Lars Schneider <larsxschneider@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrHKsWRmVeSWpSXmKPExsUixO6iqLtgx7oog4lHLC26rnQzOTB6fN4k
-        F8AYxWWTkpqTWZZapG+XwJXxZccGxoJF3BXTT5xkaWDs5Oxi5OSQEDCReHGila2LkYtDSGAH
-        k8Sixa+ZIJxHTBLvV39kgXAmMkosPDELqIwDqKVc4ttBYYjuIomG9TvYIewKiY/3lzKB2LwC
-        ghInZz5hAbGFBOQkXm24wQhhe0u0NZ4Di3MKWEvc394KNX8Zo8Sy10+YQRJsAroSi3qawQax
-        CKhKtPyezgKxIFHi2/qLUAsCJO5/7wIbKgwUf7PqMliviICsxPfDGxlBhjILrGGU+HrxNytI
-        gllAU6J1+292CFtbYtnC18wTGEVnITl2FpKyWUjKFjAyr2KUS8wpzdXNTczMKU5N1i1OTszL
-        Sy3SNdbLzSzRS00p3cQIiQi+HYzt62UOMQpwMCrx8EqUrY0SYk0sK67MPcQoycGkJMp7d/Oa
-        KCG+pPyUyozE4oz4otKc1OJDjBIczEoivAtb1kUJ8aYkVlalFuXDpKQ5WJTEedWWqPsJCaQn
-        lqRmp6YWpBbBZGU4OJQkeOdvB2oULEpNT61Iy8wpQUgzcXCCDOcBGr4FpIa3uCAxtzgzHSJ/
-        itGe49usB23MHH/2gshv054DyRsvXrcxC7Hk5eelSonzLgRpEwBpyyjNg5sMS3avGMWBHhXm
-        nQVSxQNMlHCzXwGtZQJa67N0DcjakkSElFQDY/AN4+AJ/6adZe/yeDlN0a/Vi1934r99p923
-        ScSuXSjW0M3ffyd+x8/NoUHGy7I7e/93LFjy4ECobRnL/63cjBWntxtuWxpVdVbB82RzmM3F
-        mdEOM3mXOc87MkO2V/pD5aMl1492fX+lUN+2dDtPikWwSz27j7WE4IW3XjkKNz/dP5l1YEnu
-        biWW4oxEQy3mouJEAI5uEvdRAwAA
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-purgate: clean
+X-purgate: This mail is considered clean (visit http://www.eleven.de for further information)
+X-purgate-type: clean
+X-purgate-Ad: Categorized by eleven eXpurgate (R) http://www.eleven.de
+X-purgate: This mail is considered clean (visit http://www.eleven.de for further information)
+X-purgate: clean
+X-purgate-size: 3108
+X-purgate-ID: 154282::1521403762-000006B1-CE4E6B11/0/0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 16, 2018 at 10:29 PM, Jeff King <peff@peff.net> wrote:
-> On Fri, Mar 16, 2018 at 09:01:42PM +0100, Ævar Arnfjörð Bjarmason wrote:
->> One thing that can make repositories very pathological is if the ratio
->> of trees to commits is too low.
->>
->> I was dealing with a repo the other day that had several thousand files
->> all in the same root directory, and no subdirectories.
->
-> We've definitely run into this problem before (CocoaPods/Specs, for
-> example). The metric that would hopefully show this off is "what is the
-> tree object with the most entries". Or possibly "what is the average
-> number of entries in a tree object".
+* Junio C Hamano <gitster@pobox.com> [2018-02-07T11:49:39-0800]:
+> Stefan Moch <stefanmoch@mail.de> writes:
+>=20
+> > * Jonathan Nieder <jrnieder@gmail.com> [2017-12-15T17:31:30-0800]: =20
+> >> This sounds like a reasonable thing to add.  See builtin/mv.c for
+> >> how "git mv" works if you're looking for inspiration.
+> >>=20
+> >> cmd_mv in that file looks rather long, so I'd also be happy if
+> >> someone interested refactors to break it into multiple
+> >> self-contained pieces for easier reading (git mostly follows
+> >> https://www.kernel.org/doc/html/latest/process/coding-style.html#funct=
+ions). =20
+> >
+> > I looked at builtin/mv.c and have a rough idea how to split it
+> > up to support both mv and cp commands.
+> >
+> > But first I noticed and removed a redundant check in cmd_mv,
+> > also added a test case to check if mv --dry-run does not move
+> > the file. =20
+>=20
+> I guess these two patches went unnoticed when posted at the end of
+> last year.  Reading them again, I think they are good changes.
 
-I find that the best metric for determining this sort of problem is
-"Overall repository size -> Trees -> Total tree entries". If you have
-a big directory that is being changed frequently, the *real* problem
-is that every commit has to rewrite the whole tree, with all of its
-many entries. So "Total tree entries" (or equivalently, the total tree
-size) skyrockets. And this means that a history traversal has to
-*expand* all of those trees again. So a repository that is problematic
-for this reason will have a very large number of tree entries.
+Thanks.
 
-If you want to detect a bad repository layout like this *before* it
-becomes a problem, then probably something like "average tree entries
-per commit" might be a good leading indicator of a problem.
+Are such redundant checks in general a pattern worth searching
+for and cleaning up globally? Or is this rather in the category
+of cleaning up only when noticed?
 
-Michael
+
+> As a no-op clean-up of a127331c ("mv: allow moving nested
+> submodules", 2016-04-19), the attached would also make sense, I
+> would think.
+>=20
+> Thanks.
+>=20
+>  builtin/mv.c | 7 ++++---
+>  1 file changed, 4 insertions(+), 3 deletions(-)
+>=20
+> diff --git a/builtin/mv.c b/builtin/mv.c
+> index 9662804d23..9cb07990fd 100644
+> --- a/builtin/mv.c
+> +++ b/builtin/mv.c
+> @@ -266,10 +266,11 @@ int cmd_mv(int argc, const char **argv, const
+> char *prefix) const char *src =3D source[i], *dst =3D destination[i];
+>  		enum update_mode mode =3D modes[i];
+>  		int pos;
+> -		if (show_only || verbose)
+> -			printf(_("Renaming %s to %s\n"), src, dst);
+> -		if (show_only)
+> +		if (show_only) {
+> +			if (verbose)
+> +				printf(_("Renaming %s to %s\n"),
+> src, dst); continue;
+> +		}
+>  		if (mode !=3D INDEX && rename(src, dst) < 0) {
+>  			if (ignore_errors)
+>  				continue;
+>=20
+
+As Stefan Beller already noted, this changes the printing
+behavior:
+<https://public-inbox.org/git/CAGZ79kbX4uhDpdp0kH=3D8+5tj_zLWZbtbMUb5WWtOeX=
+WRQz8K3Q@mail.gmail.com/>
+
+See also the output of
+
+    git mv -n
+    git mv -n -v
+    git mv -v
+
+
+without your patch:
+
+    $ git mv -n 1 2
+    Checking rename of '1' to '2'
+    Renaming 1 to 2
+    $ git mv -n -v 1 2
+    Checking rename of '1' to '2'
+    Renaming 1 to 2
+    $ git mv -v 1 2
+    Renaming 1 to 2
+
+
+and with your patch:
+
+    $ git mv -n 1 2
+    Checking rename of '1' to '2'
+    $ git mv -n -v 1 2
+    Checking rename of '1' to '2'
+    Renaming 1 to 2
+    $ git mv -v 1 2
+
+
+Having different outputs of =E2=80=9Cgit mv -n=E2=80=9D and =E2=80=9Cgit mv=
+ -n -v=E2=80=9D seems
+odd, but not necessarily wrong. However, =E2=80=9Cgit mv -v=E2=80=9D with no
+output at all, does not what the documentation says:
+
+       -v, --verbose
+           Report the names of files as they are moved.
+
+
