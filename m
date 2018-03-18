@@ -2,96 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3DD4C1F404
-	for <e@80x24.org>; Sun, 18 Mar 2018 18:21:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 934B01F404
+	for <e@80x24.org>; Sun, 18 Mar 2018 18:56:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754324AbeCRSVq (ORCPT <rfc822;e@80x24.org>);
-        Sun, 18 Mar 2018 14:21:46 -0400
-Received: from mail-it0-f52.google.com ([209.85.214.52]:40189 "EHLO
-        mail-it0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754301AbeCRSVp (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 18 Mar 2018 14:21:45 -0400
-Received: by mail-it0-f52.google.com with SMTP id y20-v6so7594480itc.5
-        for <git@vger.kernel.org>; Sun, 18 Mar 2018 11:21:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=EH5sOJ76WNYRTaIsdYMlumusVkDWcyjSQEZuJXFpK2I=;
-        b=HZl9/SCqGAq6foL2aKFE1nhwG83Ju1aLPJCBPzadUoahj2GKmorwLjKAURYt7RdYTy
-         4WAqNd8e8AquB6E0Vmt/WfZ9BZum8zIrbJr0hyH683fMs/YnVsQXBj/NhsOgPqzamowJ
-         6p/VhLMEPUYtAGysNqioeLpz46VLHtuORNAzaS0oVs1mZOvnUDT0dKHYftRUmDbEL8J9
-         bHI0WpMFcnqzPZa6WP3b7OBk6qe8DaEAFjaJE81gTToT9GVyQVo7JpG82kFOr0nuiQ3r
-         hPsRwUZRBdwiGn6OYRxAzx5qV68x9Chqf+IOuAwkqox8SOr/C/ho6xHj44nrZY9+OepZ
-         684w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=EH5sOJ76WNYRTaIsdYMlumusVkDWcyjSQEZuJXFpK2I=;
-        b=UKv6N/KSOLa5/+jETCm0Pobw6j9lRPBoCdoluJ4N+NuPV6Y5O2bchT54qx/9V9k51Z
-         GkFtjBbGRuLDNxQv4mkPJ5pOVFekLqCq4wxvX7K9PQYMGd79JYNWFUgJtO7PH2ZLTWF2
-         xKAGV1oh+K+dRzsvnS4ajRW753kDtuMz40MWzNCgylWJlyYovY4B7ZZC+gL95tWo14Py
-         Kdi047CCOoPRZbXssBI1/OvIEHIAB/sChkddLNo2gHfXJzEQWGPTwgh7h+aXYF2/znJU
-         MtgO3FbipXppeoUX8owHK3YZVPZMC4Q3uJb3rJf2RYQOfBhqvFy9JeZiGrnECP9dEbNh
-         P1LA==
-X-Gm-Message-State: AElRT7Fps3jUokQoRNs0wrrUl4ZIWgqThflqmLTY0W/z5grTmIaDVa25
-        Tr9GZiuTvZ4zfZFTc7lJfhsQ3fXjadMO0FWDpQnnYXJ6
-X-Google-Smtp-Source: AG47ELsDwu+iv4cPXOf5IfvCdE1g3mqXydQwsseEBvt/IxxQ/c+QQGHZSypHve5W9FGhRhfeWIJABUz6LVW6zavMoDA=
-X-Received: by 2002:a24:9794:: with SMTP id k142-v6mr6170181ite.40.1521397303726;
- Sun, 18 Mar 2018 11:21:43 -0700 (PDT)
+        id S1754026AbeCRS4z (ORCPT <rfc822;e@80x24.org>);
+        Sun, 18 Mar 2018 14:56:55 -0400
+Received: from avasout01.plus.net ([84.93.230.227]:58217 "EHLO
+        avasout01.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751062AbeCRS4x (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 18 Mar 2018 14:56:53 -0400
+Received: from [10.0.2.15] ([80.189.70.162])
+        by smtp with ESMTPA
+        id xdUBePc7dMLyGxdUCezFUA; Sun, 18 Mar 2018 18:56:52 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.3 cv=HInt6Llv c=1 sm=1 tr=0
+ a=zzlqjQC3YyNvDZl/Gy+4mg==:117 a=zzlqjQC3YyNvDZl/Gy+4mg==:17
+ a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8 a=V6HVuTh8x5wzoi1PcHkA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+Subject: Re: [PATCH] Makefile: detect compiler and enable more warnings in
+ DEVELOPER=1
+To:     Duy Nguyen <pclouds@gmail.com>, Jeff King <peff@peff.net>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+References: <20180317160832.GB15772@sigill.intra.peff.net>
+ <20180318081834.16081-1-pclouds@gmail.com>
+ <CACsJy8BOCpHiMxJ0K=_-WPf9b4yh0W0i3m9sAo5-Sk5fY9x1+A@mail.gmail.com>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <d30d131e-1cfe-fedb-4a45-7628615a7876@ramsayjones.plus.com>
+Date:   Sun, 18 Mar 2018 18:56:51 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.6.0
 MIME-Version: 1.0
-Received: by 10.79.146.25 with HTTP; Sun, 18 Mar 2018 11:21:43 -0700 (PDT)
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Sun, 18 Mar 2018 19:21:43 +0100
-Message-ID: <CAP8UFD35QP0jwQ22jfUaNgo92o3vG8bV5n=iYnmn1ichxndphg@mail.gmail.com>
-Subject: Draft of Git Rev News edition 37
-To:     git <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Jakub Narebski <jnareb@gmail.com>,
-        Markus Jansen <mja@jansen-preisler.de>,
-        Gabriel Alcaras <gabriel.alcaras@telecom-paristech.fr>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Hilco Wijbenga <hilco.wijbenga@gmail.com>,
-        Phillip Wood <phillip.wood@talktalk.net>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        William Chia <wchia@gitlab.com>,
-        Alex Vandiver <alexmv@dropbox.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <CACsJy8BOCpHiMxJ0K=_-WPf9b4yh0W0i3m9sAo5-Sk5fY9x1+A@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 8bit
+X-CMAE-Envelope: MS4wfA63EAcZ2gaCef2IRrb90oEX7xzDr2+wljpaOcOw2touK2CP7S/Pyp3I1d70q5MvafE2xg5KywHIBqwy4a2tU9FjoqAB+ePIVo4GNYzY6AY5vka6Qq7M
+ 8NfrLpo2dEuUbxcAbAdenkaaaVbhKeBrlrtnZeYyhZ75NB9LbRlkN5lCykiXhaWbQ/Lxj0rqpxB6FA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
 
-A draft of a new Git Rev News edition is available here:
 
-  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-37.md
+On 18/03/18 15:55, Duy Nguyen wrote:
+> On Sun, Mar 18, 2018 at 9:18 AM, Nguyễn Thái Ngọc Duy <pclouds@gmail.com> wrote:
+>> +ifneq ($(or $(filter gcc6,$(COMPILER_FEATURES)),$(filter clang4,$(COMPILER_FEATURES))),)
+>> +CFLAGS += -Wextra
+> 
+> Another thing we can add here is -Og instead of standard -O2 (or -O0
+> in my build), which is supported since gcc 4.8. clang seems to support
+> it too (mapped to -O1 at least for clang5) but I don't know what
+> version added that flag.
 
-Everyone is welcome to contribute in any section either by editing the
-above page on GitHub and sending a pull request, or by commenting on
-this GitHub issue:
+I've been doing a lot of compiling recently, using 10 'different'
+versions of clang and gcc ('different' if you count 64-bit and 32-bit
+compilers with the same version number as different!)
 
-  https://github.com/git/git.github.io/issues/279
+However, I can tell you that clang version 3.4 and 3.8.0 don't
+support -Og, but clang version 5.0.1 does.
 
-You can also reply to this email.
+ATB,
+Ramsay Jones
 
-In general all kinds of contribution, for example proofreading,
-suggestions for articles or links, help on the issues in GitHub, and
-so on, are very much appreciated.
 
-I tried to cc everyone who appears in this edition, but maybe I missed
-some people, sorry about that.
-
-Jakub, Markus, Gabriel and me plan to publish this edition on
-Wednesday March 21st.
-
-Thanks,
-Christian.
