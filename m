@@ -7,55 +7,53 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CBF0C1F404
-	for <e@80x24.org>; Sun, 18 Mar 2018 22:59:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 224E01F404
+	for <e@80x24.org>; Sun, 18 Mar 2018 23:02:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754992AbeCRW7d (ORCPT <rfc822;e@80x24.org>);
-        Sun, 18 Mar 2018 18:59:33 -0400
-Received: from mail-qt0-f194.google.com ([209.85.216.194]:34844 "EHLO
-        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754281AbeCRW7a (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 18 Mar 2018 18:59:30 -0400
-Received: by mail-qt0-f194.google.com with SMTP id s2so1094931qti.2
-        for <git@vger.kernel.org>; Sun, 18 Mar 2018 15:59:29 -0700 (PDT)
+        id S1754409AbeCRXCD (ORCPT <rfc822;e@80x24.org>);
+        Sun, 18 Mar 2018 19:02:03 -0400
+Received: from mail-qt0-f173.google.com ([209.85.216.173]:46504 "EHLO
+        mail-qt0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754026AbeCRXCC (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 18 Mar 2018 19:02:02 -0400
+Received: by mail-qt0-f173.google.com with SMTP id h4so10424703qtn.13
+        for <git@vger.kernel.org>; Sun, 18 Mar 2018 16:02:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:sender:in-reply-to:references:from:date:message-id
          :subject:to:cc:content-transfer-encoding;
-        bh=O41+7iwU2OoNxfXz4v9g8aMcxnbxhDeuxLd9UlI1svU=;
-        b=YnT4HZzNolWh0DU/g7X1aIhdyk1Q2+WVpzqLSkUoe8O7jRy4XBvOPfusz08XieIslN
-         tEDmRtgfhbznWYBvXm2v7GOUyIdnhq1xeiOQcLEvxblMNEoX0AYRpeuGnB6Fv0a28i7n
-         3AqJBhq5u3UzcXlOBPbknw1zWJU7nQ8nrcr4jvL7IL729JgmJV/YrquBcPfcw2+pvBN4
-         +aOSFlRJfWq8o2RVOkeLuUwHg8yC85mVEGVeuPwjOb7TBTN5AxUcNmllBxqGwDeT9AIr
-         k8qzMXJBudRoOH4BXme/XUbchjjNkG3Mv/WFXuI0uKbtaspYL4gm8wahqNqbtUlzSY8/
-         ZrIg==
+        bh=f6MSU7Mjp+i6fbu9UCMonxQPA56HqHRVR8SS3NqrNf8=;
+        b=eRCvwmDuMwYFyCcMfHk+Dvfzhqt1VbmTyhPotgsWAbJ1ZNqV7Ve3iD6qrvJziHUnpl
+         Cifn0PU6c0M0uLMFgHrWcQFH5ILHTli6tBDmBFeqJwX+YT0+OvslIguaNWyYO10oO8k0
+         X443PqXA+sR6LUYvvxZC4bfRSOjAzfVfnAfljTiuhlgza/PX7DDo+iz1FP20KAam+Hvx
+         1XUFlkwVfBd+wr26d1wBBLSXL5eUmuCGeEy9RvBQZVwkwK0zW43rmkoGkqk+WVlaAmYP
+         Xr0JRMGnILfgzV5473Vx6QeHddJ+3WMd9fAA9bltz5sp8r2acNXsOy3UUzwcNXMlK64i
+         2BMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
          :date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=O41+7iwU2OoNxfXz4v9g8aMcxnbxhDeuxLd9UlI1svU=;
-        b=BELEzry8hXAUMp28Qrq53tpnh1dWn2pVgQp5e63dOSpJsc+LtsOmrrD8C3EupVN/lA
-         EJYjx59RGTAD3CQEA7ys/X8ma87V/8d4sv7CxClAx+/zB2p/fyC3sQ/BIA8HFsckv7S9
-         vB2ScLdQUlnqBtOq0PnFEvlF+vvokoRO4grNCtH6Z0wHabFN7whtyP1e7MoLfnKkE4jM
-         7fnvkDtddD7gVQpHLnBP9Sf04CiK65y2nnLjSY2DXhWZXoE5fJtc3Qg4Q8rNPyIgib2C
-         zIukusK63FvNWDHoosrdyoIzrGhEhuk6JXADTvTIyYR7d51kZFyjMfBmoX3AhucGzVhv
-         /uaw==
-X-Gm-Message-State: AElRT7E0ganPlqkAZMo6dtosGHjPcVGCf2/Oo6oPDaO761kvRQcJBFZN
-        vlhHPRorRhFGeiQohA49Az5Nu+/fuPRJ+7Gfpds=
-X-Google-Smtp-Source: AG47ELujuqnWW98oAHxJY3GoATPTUooD0WxsSsxcu7sFkfjDgqR6ugzn0e/T90AacLhyNmqJ6fFmC37rVLgVxGvAvK8=
-X-Received: by 10.200.50.174 with SMTP id z43mr14556282qta.250.1521413969250;
- Sun, 18 Mar 2018 15:59:29 -0700 (PDT)
+        bh=f6MSU7Mjp+i6fbu9UCMonxQPA56HqHRVR8SS3NqrNf8=;
+        b=G2pwCebdZCT9XsNqYIrvf3NhNHUDvstvgRFDdisZDqsVCpizokFCzsojvb3GoT+xuc
+         qlIsSWGvTR8hkkdvpxJquJoymCeaPZu3Ah6L10sD7R2JwtYdQbHymuOK1yz4oVVkNgcQ
+         aTQHbWCsqFhx7B7yrg2AlSxWHYG+1Emgvb/yjYtl4R4Z0mD8/BxpFkHOUez2IGor4Xwo
+         2EjOz9vcono+NZd/8FswgwbkpatMdLQ6lxy2nHKWH3XkJ6JV5t+ZS2FEOfmnc0RkvRWy
+         eNVZcWAeAj1WQkoinoenwdF3B0GMOO8ug2BGmm5DN1qT+BYfUyz4Kg0hW9a1QWkclDrc
+         FrzA==
+X-Gm-Message-State: AElRT7Em8ZTSk1Hp2Jvw6YW43L5qnEwuojkZKB/CMtKnHlJAmbwCgenB
+        BYO7RRBoYbqyHJKDAGJVZdp04ACdKx/4BzsHe7U=
+X-Google-Smtp-Source: AG47ELtQxn9rIk2ahTMaovNCVQi5VdTX+i1L1SwmwrxJTtj4FXO19zv7MTU5IR1eTlen9czdCHBFqYcbixpD+ZznjW0=
+X-Received: by 10.237.56.136 with SMTP id k8mr15753227qte.154.1521414121487;
+ Sun, 18 Mar 2018 16:02:01 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.12.190.196 with HTTP; Sun, 18 Mar 2018 15:59:28 -0700 (PDT)
-In-Reply-To: <20180315164412.14697-4-pclouds@gmail.com>
+Received: by 10.12.190.196 with HTTP; Sun, 18 Mar 2018 16:02:00 -0700 (PDT)
+In-Reply-To: <20180315164412.14697-1-pclouds@gmail.com>
 References: <20180303033918.15751-1-pclouds@gmail.com> <20180315164412.14697-1-pclouds@gmail.com>
- <20180315164412.14697-4-pclouds@gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 18 Mar 2018 18:59:28 -0400
-X-Google-Sender-Auth: 6MeSWAvw1540TdpHk1fRttsox44
-Message-ID: <CAPig+cTwFCtNNJomC-8RHNYErkbZ821hm3mWGBXATedEcy44Jg@mail.gmail.com>
-Subject: Re: [PATCH v2 3/3] worktree prune: improve prune logic when worktree
- is moved
+Date:   Sun, 18 Mar 2018 19:02:00 -0400
+X-Google-Sender-Auth: krkp6Wy0q19eXkULsrEZAHAuofI
+Message-ID: <CAPig+cSgmpXdSiEGLGTZaSDKFXsWoH76OCJnf9xu3XWZJxUfRA@mail.gmail.com>
+Subject: Re: [PATCH v2 0/3] git worktree prune improvements
 To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
         <pclouds@gmail.com>
 Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
@@ -68,34 +66,17 @@ X-Mailing-List: git@vger.kernel.org
 
 On Thu, Mar 15, 2018 at 12:44 PM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy
 <pclouds@gmail.com> wrote:
-> Automatic detection of worktree relocation by a user (via 'mv', for
-> instance) was removed by 618244e160 (worktree: stop supporting moving
-> worktrees manually - 2016-01-22). Prior to that,
-> .git/worktrees/<tag>/gitdir was updated whenever the worktree was
-> accessed in order to let the pruning logic know that the worktree was
-> "active" even if it disappeared for a while (due to being located on
-> removable media, for instance).
+> v2 fixes comments from Eric and rebases on 'master' since 'worktree
+> move' has been merged. Commit messages are updated to reflect this.
 
-This is my fault since I suggested this rewrite[1], but other
-documentation calls this <id>, not <tag>, so: s/tag/id/
+Thanks. Aside from a couple minor commit message tweaks (not worth a
+re-roll), I didn't find anything else on which to comment on this
+version.
 
-(Again, not worth a re-roll; perhaps Junio can tweak it when queuing.)
+> There's one thing I didn't do is moving the new paragraph up [1]. I
+> still feel this it's not right to put it there since it starts with
+> 'gc --auto' introduction, then goes to loose objects and packs.
+> Inserting a note between the loose objects paragraph and the packs one
+> does not make much sense.
 
-> "git worktree move" has come so we don't really need this, but since
-> it's easy to do, perhaps we could keep supporting manual worktree move
-> a bit longer. Notice that when a worktree is active, the "index" file
-> should be updated pretty often in common case. The logic is updated to
-> check for index mtime to see if the worktree is alive.
->
-> The old logic of checking gitdir's mtime is dropped because nobody
-> updates it anyway. The new corner case is, if the index file does not
-> exist, we immediately remove the stale worktree. But if the "index"
-> file does not exist, you may have a bigger problem.
-
-Makes sense.
-
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.c=
-om>
-
-[1]: https://public-inbox.org/git/CAPig+cQG8yEqunNUjoEAPY-W9+TtzWADhgjdL6ud=
-nyrG0YEOVg@mail.gmail.com/
+Fair enough.
