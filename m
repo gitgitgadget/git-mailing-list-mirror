@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BD93E1F404
-	for <e@80x24.org>; Sun, 18 Mar 2018 14:25:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E69E11F404
+	for <e@80x24.org>; Sun, 18 Mar 2018 14:25:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754372AbeCROZy (ORCPT <rfc822;e@80x24.org>);
-        Sun, 18 Mar 2018 10:25:54 -0400
-Received: from mail-lf0-f67.google.com ([209.85.215.67]:39197 "EHLO
-        mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754327AbeCROZq (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 18 Mar 2018 10:25:46 -0400
-Received: by mail-lf0-f67.google.com with SMTP id f75-v6so21709721lfg.6
-        for <git@vger.kernel.org>; Sun, 18 Mar 2018 07:25:45 -0700 (PDT)
+        id S1754382AbeCROZ5 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 18 Mar 2018 10:25:57 -0400
+Received: from mail-lf0-f68.google.com ([209.85.215.68]:39202 "EHLO
+        mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754340AbeCROZu (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 18 Mar 2018 10:25:50 -0400
+Received: by mail-lf0-f68.google.com with SMTP id f75-v6so21709859lfg.6
+        for <git@vger.kernel.org>; Sun, 18 Mar 2018 07:25:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ffQbPhgh5cPelCybT1v1tQnYmvr9/QE4f1qxGyRGwFU=;
-        b=vZjkzLQRBtVFdU23vxajsf1wDYKyMqTB6cpX3DwKCccBthfzgiOVajkykTOzDD5d0T
-         W6b37n3S+XCbVLrag4hhpm5/aNwSEAF7WUR96/oo6pQpSKJri39JcNzMoCDpQb2ZsMKi
-         ZxXxlldbU+75vf1V/1Utvql3FzpGLdwtmwhroP4RXVKj5qnSUD0L8k860h+SV23eOM/y
-         pWmy5TMCJ3Ipy9NkF2fCxEU9OEO6IXRnReZx/JKNFbAugFuvimFpQfzsbZxBk4lfGgTv
-         nWKFlODRJDEAUh5e+4hK1ZZwgMEP4bOpoZWtQ7q0xqUncODgPBaOgcJJYaWs4Ey1T04J
-         zKoA==
+        bh=jjdBwZk/uRVbuib44j2M/r2BKmF+T0It1+mMJc34XVk=;
+        b=cNF8kz+pKZf1vxtFubCqxY1+rV/48Bpetkwggau1r1n4/RFkbSDBwYgyi0GL/nNP/6
+         HiR1G/m+gn+jOqGSfCzvQqEq0yYr4FNFj+9FIGPeYNLfukR/jzpMtm6W8HZzjZkjj2e+
+         DbXuILwVMIK2tRYCIycJ1aTIUhE7yZIP4baXqPDMp2lpeoBioJIiZX3BnODTb+70nclN
+         SaY/MbGItjCtxq5LLw0kkO5WvMpVLKvlIS3Z3mBxkCy9C6HCmieIcu8+kaveS51C8u3L
+         yG7xCslnfhwfbFD+u5QpG+K0eDINBEZfk3pWn+o9UfXzqZ48yvq25hzPuz+0wK0VFmwy
+         SkDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ffQbPhgh5cPelCybT1v1tQnYmvr9/QE4f1qxGyRGwFU=;
-        b=pcfCnfRhK7ocQqtMQVs73VkIh52D0+FVcuLD1ndmCTqpyR22St4VABb9tt3lE7o7Xm
-         VCPzxukFdvRCmsPL3V/JOZBg7LMAuP18pa4i3crJq6V/U2OYNWLPqgMoCU4r49fVGQeK
-         wiyEBUN077i0YWDcOLSo7O4fYi5GN+F+ILqn+Cf7+I9ZcZqibySaRpYmrSq60VBMCsTs
-         6GUMw5laRnsaZSm7wFOfGvdr/lFo+XkLzwI5Cee8tyP5PsBRTb7aC2eV4DOCLBvk79tG
-         K0QetW4vGmIN6yH/G3ltmubmNQQGgPZmlKhDQEtLYO6qwAlH6CoJ6AHhR094+PlAAtNz
-         BXFQ==
-X-Gm-Message-State: AElRT7EQCt8r7Gyn/LfNef7fjinPfyMwdX7NHom1duFALxiSt0MuOUk9
-        ujk60lUb5d1LWGELQrCWbL8=
-X-Google-Smtp-Source: AG47ELuT9jMFL7vM5SMIsGEdFRdN+oBpHq+9hxE3hcZg4I67dzcnJoQzpqMg4TtM9EUpcLq2eXy7Kw==
-X-Received: by 2002:a19:a705:: with SMTP id q5-v6mr5563355lfe.2.1521383145190;
-        Sun, 18 Mar 2018 07:25:45 -0700 (PDT)
+        bh=jjdBwZk/uRVbuib44j2M/r2BKmF+T0It1+mMJc34XVk=;
+        b=bL39YqogoJPyIdvSPQbBDWjoB59oeRjRVRLcgXbeyDHBXhK2BYuH/Fc61r27wZ7vv6
+         2V6S11NHc8HXZfLIfZRb7WwWF/szG4brEs4SLH04yKRWMeG0BnLhtryJ0lr1KyxYYQe8
+         4LsdNL6cG+cdcr8Tkzin4A35k7Bd/KmwTE8uLJi5oVzrP9e9x+b4Rg2GWcQlkwSrFXmu
+         ooQSvrvThH84vWDxVVuXAQ9vHVDGvvqGzItwZQo4RSnS3yvuIFWKDuV1uLNha44PYvD4
+         GcP/IA3MENErq4m3CrhGYUyeBN//PajjocjtJpSWINtAq2ulq6p2wkW5elpf0QHD30PL
+         vXlw==
+X-Gm-Message-State: AElRT7Fw7OyxDxZ0LV32VZrK33KoPFJv4hOSWO6fruLwm6n5YAuS3+7b
+        Op87WuvlR7lTVraEXsz8qms=
+X-Google-Smtp-Source: AG47ELvaGjnpNXj90FamBculLhBvPc4zSF0s/Ru6DIlK3z0/LT5tZ8ngxCTIT2iF6QIt3NGbaHlg9A==
+X-Received: by 2002:a19:519a:: with SMTP id g26-v6mr5664433lfl.50.1521383149359;
+        Sun, 18 Mar 2018 07:25:49 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id n24sm2551554ljg.22.2018.03.18.07.25.43
+        by smtp.gmail.com with ESMTPSA id n24sm2551554ljg.22.2018.03.18.07.25.48
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 18 Mar 2018 07:25:44 -0700 (PDT)
+        Sun, 18 Mar 2018 07:25:48 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     avarab@gmail.com, e@80x24.org, git@vger.kernel.org,
         gitster@pobox.com, peff@peff.net
-Subject: [PATCH v6 05/11] pack-objects: move in_pack_pos out of struct object_entry
-Date:   Sun, 18 Mar 2018 15:25:20 +0100
-Message-Id: <20180318142526.9378-6-pclouds@gmail.com>
+Subject: [PATCH v6 08/11] pack-objects: shrink z_delta_size field in struct object_entry
+Date:   Sun, 18 Mar 2018 15:25:23 +0100
+Message-Id: <20180318142526.9378-9-pclouds@gmail.com>
 X-Mailer: git-send-email 2.17.0.rc0.347.gf9cf61673a
 In-Reply-To: <20180318142526.9378-1-pclouds@gmail.com>
 References: <20180317141033.21545-1-pclouds@gmail.com>
@@ -69,139 +69,93 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This field is only need for pack-bitmap, which is an optional
-feature. Move it to a separate array that is only allocated when
-pack-bitmap is used (it's not freed in the same way that objects[] is
-not).
+We only cache deltas when it's smaller than a certain limit. This limit
+defaults to 1000 but save its compressed length in a 64-bit field.
+Shrink that field down to 16 bits, so you can only cache 65kb deltas.
+Larger deltas must be recomputed at when the pack is written down.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- builtin/pack-objects.c |  3 ++-
- pack-bitmap-write.c    |  8 +++++---
- pack-bitmap.c          |  2 +-
- pack-bitmap.h          |  4 +++-
- pack-objects.h         | 16 +++++++++++++++-
- 5 files changed, 26 insertions(+), 7 deletions(-)
+ Documentation/config.txt |  3 ++-
+ builtin/pack-objects.c   | 22 ++++++++++++++++------
+ pack-objects.h           |  3 ++-
+ 3 files changed, 20 insertions(+), 8 deletions(-)
 
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 9bd3f5a789..00fa824448 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -2449,7 +2449,8 @@ pack.deltaCacheLimit::
+ 	The maximum size of a delta, that is cached in
+ 	linkgit:git-pack-objects[1]. This cache is used to speed up the
+ 	writing object phase by not having to recompute the final delta
+-	result once the best match for all objects is found. Defaults to 1000.
++	result once the best match for all objects is found.
++	Defaults to 1000. Maximum value is 65535.
+ 
+ pack.threads::
+ 	Specifies the number of threads to spawn when searching for best
 diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 205e1f646c..e1244918a5 100644
+index b39234f7fb..372afe48c4 100644
 --- a/builtin/pack-objects.c
 +++ b/builtin/pack-objects.c
-@@ -879,7 +879,8 @@ static void write_pack_file(void)
+@@ -2105,12 +2105,19 @@ static void find_deltas(struct object_entry **list, unsigned *list_size,
+ 		 * between writes at that moment.
+ 		 */
+ 		if (entry->delta_data && !pack_to_stdout) {
+-			entry->z_delta_size = do_compress(&entry->delta_data,
+-							  entry->delta_size);
+-			cache_lock();
+-			delta_cache_size -= entry->delta_size;
+-			delta_cache_size += entry->z_delta_size;
+-			cache_unlock();
++			unsigned long size;
++
++			size = do_compress(&entry->delta_data, entry->delta_size);
++			if (size < (1 << OE_Z_DELTA_BITS)) {
++				entry->z_delta_size = size;
++				cache_lock();
++				delta_cache_size -= entry->delta_size;
++				delta_cache_size += entry->z_delta_size;
++				cache_unlock();
++			} else {
++				FREE_AND_NULL(entry->delta_data);
++				entry->z_delta_size = 0;
++			}
+ 		}
  
- 			if (write_bitmap_index) {
- 				bitmap_writer_set_checksum(oid.hash);
--				bitmap_writer_build_type_index(written_list, nr_written);
-+				bitmap_writer_build_type_index(
-+					&to_pack, written_list, nr_written);
- 			}
+ 		/* if we made n a delta, and if n is already at max
+@@ -3089,6 +3096,9 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
+ 	if (depth >= (1 << OE_DEPTH_BITS))
+ 		die(_("delta chain depth %d is greater than maximum limit %d"),
+ 		    depth, (1 << OE_DEPTH_BITS) - 1);
++	if (cache_max_small_delta_size >= (1 << OE_Z_DELTA_BITS))
++		die(_("pack.deltaCacheLimit is greater than maximum limit %d"),
++		    (1 << OE_Z_DELTA_BITS) - 1);
  
- 			finish_tmp_packfile(&tmpname, pack_tmp_name,
-diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
-index fd11f08940..f7c897515b 100644
---- a/pack-bitmap-write.c
-+++ b/pack-bitmap-write.c
-@@ -48,7 +48,8 @@ void bitmap_writer_show_progress(int show)
- /**
-  * Build the initial type index for the packfile
-  */
--void bitmap_writer_build_type_index(struct pack_idx_entry **index,
-+void bitmap_writer_build_type_index(struct packing_data *to_pack,
-+				    struct pack_idx_entry **index,
- 				    uint32_t index_nr)
- {
- 	uint32_t i;
-@@ -57,12 +58,13 @@ void bitmap_writer_build_type_index(struct pack_idx_entry **index,
- 	writer.trees = ewah_new();
- 	writer.blobs = ewah_new();
- 	writer.tags = ewah_new();
-+	ALLOC_ARRAY(to_pack->in_pack_pos, to_pack->nr_objects);
- 
- 	for (i = 0; i < index_nr; ++i) {
- 		struct object_entry *entry = (struct object_entry *)index[i];
- 		enum object_type real_type;
- 
--		entry->in_pack_pos = i;
-+		oe_set_in_pack_pos(to_pack, entry, i);
- 
- 		switch (oe_type(entry)) {
- 		case OBJ_COMMIT:
-@@ -147,7 +149,7 @@ static uint32_t find_object_pos(const unsigned char *sha1)
- 			"(object %s is missing)", sha1_to_hex(sha1));
- 	}
- 
--	return entry->in_pack_pos;
-+	return oe_in_pack_pos(writer.to_pack, entry);
- }
- 
- static void show_object(struct object *object, const char *name, void *data)
-diff --git a/pack-bitmap.c b/pack-bitmap.c
-index 9270983e5f..865d9ecc4e 100644
---- a/pack-bitmap.c
-+++ b/pack-bitmap.c
-@@ -1032,7 +1032,7 @@ int rebuild_existing_bitmaps(struct packing_data *mapping,
- 		oe = packlist_find(mapping, sha1, NULL);
- 
- 		if (oe)
--			reposition[i] = oe->in_pack_pos + 1;
-+			reposition[i] = oe_in_pack_pos(mapping, oe) + 1;
- 	}
- 
- 	rebuild = bitmap_new();
-diff --git a/pack-bitmap.h b/pack-bitmap.h
-index 3742a00e14..5ded2f139a 100644
---- a/pack-bitmap.h
-+++ b/pack-bitmap.h
-@@ -44,7 +44,9 @@ int rebuild_existing_bitmaps(struct packing_data *mapping, khash_sha1 *reused_bi
- 
- void bitmap_writer_show_progress(int show);
- void bitmap_writer_set_checksum(unsigned char *sha1);
--void bitmap_writer_build_type_index(struct pack_idx_entry **index, uint32_t index_nr);
-+void bitmap_writer_build_type_index(struct packing_data *to_pack,
-+				    struct pack_idx_entry **index,
-+				    uint32_t index_nr);
- void bitmap_writer_reuse_bitmaps(struct packing_data *to_pack);
- void bitmap_writer_select_commits(struct commit **indexed_commits,
- 		unsigned int indexed_commits_nr, int max_bitmaps);
+ 	argv_array_push(&rp, "pack-objects");
+ 	if (thin) {
 diff --git a/pack-objects.h b/pack-objects.h
-index 59407aae3c..4a11653657 100644
+index 594a213554..c12219385a 100644
 --- a/pack-objects.h
 +++ b/pack-objects.h
-@@ -79,7 +79,6 @@ struct object_entry {
+@@ -4,6 +4,7 @@
+ #define OE_DFS_STATE_BITS	2
+ #define OE_DEPTH_BITS		12
+ #define OE_IN_PACK_BITS		14
++#define OE_Z_DELTA_BITS		16
+ 
+ /*
+  * State flags for depth-first search used for analyzing delta cycles.
+@@ -79,7 +80,7 @@ struct object_entry {
+ 				     */
+ 	void *delta_data;	/* cached delta (uncompressed) */
+ 	unsigned long delta_size;	/* delta data size (uncompressed) */
+-	unsigned long z_delta_size;	/* delta data size (compressed) */
++	unsigned z_delta_size:OE_Z_DELTA_BITS;
+ 	unsigned type_:TYPE_BITS;
  	unsigned in_pack_type:TYPE_BITS; /* could be delta */
  	unsigned type_valid:1;
- 	uint32_t hash;			/* name hint hash */
--	unsigned int in_pack_pos;
- 	unsigned char in_pack_header_size;
- 	unsigned preferred_base:1; /*
- 				    * we do not pack this, but is available
-@@ -99,6 +98,8 @@ struct packing_data {
- 
- 	int32_t *index;
- 	uint32_t index_size;
-+
-+	unsigned int *in_pack_pos;
- };
- 
- struct object_entry *packlist_alloc(struct packing_data *pdata,
-@@ -144,4 +145,17 @@ static inline void oe_set_type(struct object_entry *e,
- 	e->type_ = (unsigned)type;
- }
- 
-+static inline unsigned int oe_in_pack_pos(const struct packing_data *pack,
-+					  const struct object_entry *e)
-+{
-+	return pack->in_pack_pos[e - pack->objects];
-+}
-+
-+static inline void oe_set_in_pack_pos(const struct packing_data *pack,
-+				      const struct object_entry *e,
-+				      unsigned int pos)
-+{
-+	pack->in_pack_pos[e - pack->objects] = pos;
-+}
-+
- #endif
 -- 
 2.17.0.rc0.347.gf9cf61673a
 
