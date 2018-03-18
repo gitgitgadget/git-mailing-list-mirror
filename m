@@ -2,240 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD,
-	UNWANTED_LANGUAGE_BODY shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 58E1B1F404
-	for <e@80x24.org>; Sun, 18 Mar 2018 14:26:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9DF5B1F404
+	for <e@80x24.org>; Sun, 18 Mar 2018 14:49:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754425AbeCRO0L (ORCPT <rfc822;e@80x24.org>);
-        Sun, 18 Mar 2018 10:26:11 -0400
-Received: from mail-lf0-f67.google.com ([209.85.215.67]:40969 "EHLO
-        mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754275AbeCROZx (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 18 Mar 2018 10:25:53 -0400
-Received: by mail-lf0-f67.google.com with SMTP id m69-v6so21693038lfe.8
-        for <git@vger.kernel.org>; Sun, 18 Mar 2018 07:25:52 -0700 (PDT)
+        id S1754205AbeCROtL (ORCPT <rfc822;e@80x24.org>);
+        Sun, 18 Mar 2018 10:49:11 -0400
+Received: from mail-wm0-f48.google.com ([74.125.82.48]:50929 "EHLO
+        mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754176AbeCROtK (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 18 Mar 2018 10:49:10 -0400
+Received: by mail-wm0-f48.google.com with SMTP id w128so10965864wmw.0
+        for <git@vger.kernel.org>; Sun, 18 Mar 2018 07:49:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=iepPw9xWtyYKqwROlSUswKdlPY5S9XJSV/5XlrH1umQ=;
-        b=FuieSqHmZWGf9fcIM8+SgO49cMXAP7+vMyIcpQRoKbzg01qJVxPBLrmkIF9+3nMTXj
-         /Ko3ruHFh4/0687uv5higiwNOA3oHE43cgYrQ7dACCljZDHscKAgxHdmPdtr+YM9FTdg
-         pPg0FjhNGxP9PCWOFfEcGkydwjMawJd705aENSfFWM8yVfBR9ArH/88sRi9ze9rVVv0j
-         ewUWJPMU5M9L1um+PqJ2u2AXFeJfwTp+ZtkLD8Va6s5ZFsKumi9L8lxXKtO6tIUb+iQH
-         b8zjSd4W5JmTbNv4jsh54opM59aHZIXEMeRoxJMWec7vgR4uMIrTZzK0G8dFcDSzS8k2
-         r4Dw==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=D5mj/peRTNgZMw/jAqz2Gdqp31wuH/DWc4FhiQyrU5o=;
+        b=aqe4eJly1uKFjWPQ1l+y/d1NBw56XyfE7YXPY0rod/shOwspilwOEKIUpmfslVsJge
+         kADiCYfMht5bws3P4XV9MPob6Pcv+NM62aQfL0cixB9wol2wm1anN8SHawa0/j3acxcN
+         rkpq456H/2kCUqrnveYWITpF3h6tsUNXvPHBHjL9NZWlmgsUEVFzv6qQeHQ51K9e9hM2
+         mTLUlzk8zeF4oy8rgnPYKBhMIROY4DDk4cJwc9w9syJoymFnmHFY9dbTMasGGoerQJKE
+         BsYRK1wVpWorqgffaXtzhPICHTySN5zFkw5AL6NiCCttW0XXFX8eeUGsBF14kjan0RUp
+         NUug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=iepPw9xWtyYKqwROlSUswKdlPY5S9XJSV/5XlrH1umQ=;
-        b=RRsmYATHdrgVgE3qkRhwTWMDSJpAeiFMzzYx6jlkxpVJgnCfNInZz5bfoarsU/S6bn
-         4eKMi9AgoGB8KpgFmtB/GoWpv2Dbrphmz0M/dEkkazTrVzLstzytn4F76Ar9eYIK9/Eu
-         NbqGVLZq8QCGObAxfd+yXBexxF/eqmKFJRp0FHcgEzAgWvhoju/JE49GVzVoDX0utpgn
-         3njvuUkb+FzqxLMt0BCyA/GTAQ6BpZSVGBO708lRqDTxHtfQ3azJC3cIBqLB5b4a+4sm
-         dxh8IiCrrOEpLJqbJo/xWIOpgVmk4QaheP0BN6XP+vZk0imrMe771vatQ0RLONzNkeRP
-         MNlw==
-X-Gm-Message-State: AElRT7EQQslR9q1Uz6lKVhlzMdfRyjQfDNX5Z2pLaW+tCxOlcPiYVkzk
-        yryQQmrcO3HxiXZ2w/ldqyY=
-X-Google-Smtp-Source: AG47ELvsFAjZGQCzGGuL36cI0ptfixCIpYVePq+GnejpkjIvd8bR0CDCc67RTMlbWksRbyQb9pF3Vw==
-X-Received: by 2002:a19:e418:: with SMTP id b24-v6mr5651305lfh.61.1521383151907;
-        Sun, 18 Mar 2018 07:25:51 -0700 (PDT)
-Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id n24sm2551554ljg.22.2018.03.18.07.25.50
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 18 Mar 2018 07:25:51 -0700 (PDT)
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     pclouds@gmail.com
-Cc:     avarab@gmail.com, e@80x24.org, git@vger.kernel.org,
-        gitster@pobox.com, peff@peff.net
-Subject: [PATCH v6 10/11] pack-objects: shrink delta_size field in struct object_entry
-Date:   Sun, 18 Mar 2018 15:25:25 +0100
-Message-Id: <20180318142526.9378-11-pclouds@gmail.com>
-X-Mailer: git-send-email 2.17.0.rc0.347.gf9cf61673a
-In-Reply-To: <20180318142526.9378-1-pclouds@gmail.com>
-References: <20180317141033.21545-1-pclouds@gmail.com>
- <20180318142526.9378-1-pclouds@gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=D5mj/peRTNgZMw/jAqz2Gdqp31wuH/DWc4FhiQyrU5o=;
+        b=neGKDVyeq53H5E0KNgQvCxNhOPYjS41EMSmGVCQlI44KxgoZPVJ4qG4HQPRcmKxYR9
+         GJaAwftKPl6r2zTX3DiAFP5QAI/2FlhNge3s1W4qTr3jqJAyUpmi4Mb9kdmTU2RGitLJ
+         jYa69n4yzIbOC0dCyRuflZlvXWocFTZJZ1GOHPOyYwaS4DrHnW7QnK/tQg2xbMslAT25
+         qgeFO5mjVuSupioDROxYFPmrI25KnqjBSJl0eKaomVjT2HmFe48FpMY4De0RN96zcWNq
+         SmB3m7kbF/Z2YYA8KJvHklCrG+GdZHbGrfhqRq4DcIWG0lwuMXN/n4wY68jTSk9JWyT9
+         zJLQ==
+X-Gm-Message-State: AElRT7FSNPAzmvLDqYwA9ibOS2rbZ/sAM9yyXbshjjof3E5cYeSgd9sw
+        k8dx+kWU3HCyng9tLESRBc3gyOJU
+X-Google-Smtp-Source: AG47ELsvuFfuvDgYND3/lqullGDfrtc/SP3V01iz4/pEdmvjbDgmnycfN6WHypfcoKSDmUmkqR/RvQ==
+X-Received: by 10.80.172.229 with SMTP id x92mr10258774edc.252.1521384549541;
+        Sun, 18 Mar 2018 07:49:09 -0700 (PDT)
+Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
+        by smtp.gmail.com with ESMTPSA id 58sm2568318edt.12.2018.03.18.07.49.08
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 18 Mar 2018 07:49:08 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     e@80x24.org, git@vger.kernel.org, gitster@pobox.com, peff@peff.net
+Subject: Re: [PATCH v6 09/11] pack-objects: shrink size field in struct object_entry
+References: <20180317141033.21545-1-pclouds@gmail.com> <20180318142526.9378-1-pclouds@gmail.com> <20180318142526.9378-10-pclouds@gmail.com>
+User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 1.1.0
+In-reply-to: <20180318142526.9378-10-pclouds@gmail.com>
+Date:   Sun, 18 Mar 2018 15:49:07 +0100
+Message-ID: <878tapcucc.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Allowing a delta size of 64 bits is crazy. Shrink this field down to
-31 bits with one overflow bit.
 
-If we find an existing delta larger than 2GB, we do not cache
-delta_size at all and will get the value from oe_size(), potentially
-from disk if it's larger than 4GB.
+On Sun, Mar 18 2018, Nguyễn Thái Ngọc Duy jotted:
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- builtin/pack-objects.c | 24 ++++++++++++++----------
- pack-objects.h         | 23 ++++++++++++++++++++++-
- 2 files changed, 36 insertions(+), 11 deletions(-)
+> It's very very rare that an uncompressedd object is larger than 4GB
 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 89ed4b5125..4406af640f 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -30,10 +30,12 @@
- #include "packfile.h"
- 
- #define IN_PACK(obj) oe_in_pack(&to_pack, obj)
-+#define DELTA_SIZE(obj) oe_delta_size(&to_pack, obj)
- #define DELTA(obj) oe_delta(&to_pack, obj)
- #define DELTA_CHILD(obj) oe_delta_child(&to_pack, obj)
- #define DELTA_SIBLING(obj) oe_delta_sibling(&to_pack, obj)
- #define SET_DELTA(obj, val) oe_set_delta(&to_pack, obj, val)
-+#define SET_DELTA_SIZE(obj, val) oe_set_delta_size(&to_pack, obj, val)
- #define SET_DELTA_CHILD(obj, val) oe_set_delta_child(&to_pack, obj, val)
- #define SET_DELTA_SIBLING(obj, val) oe_set_delta_sibling(&to_pack, obj, val)
- 
-@@ -140,7 +142,7 @@ static void *get_delta(struct object_entry *entry)
- 		    oid_to_hex(&DELTA(entry)->idx.oid));
- 	delta_buf = diff_delta(base_buf, base_size,
- 			       buf, size, &delta_size, 0);
--	if (!delta_buf || delta_size != entry->delta_size)
-+	if (!delta_buf || delta_size != DELTA_SIZE(entry))
- 		die("delta size changed");
- 	free(buf);
- 	free(base_buf);
-@@ -291,14 +293,14 @@ static unsigned long write_no_reuse_object(struct hashfile *f, struct object_ent
- 		FREE_AND_NULL(entry->delta_data);
- 		entry->z_delta_size = 0;
- 	} else if (entry->delta_data) {
--		size = entry->delta_size;
-+		size = DELTA_SIZE(entry);
- 		buf = entry->delta_data;
- 		entry->delta_data = NULL;
- 		type = (allow_ofs_delta && DELTA(entry)->idx.offset) ?
- 			OBJ_OFS_DELTA : OBJ_REF_DELTA;
- 	} else {
- 		buf = get_delta(entry);
--		size = entry->delta_size;
-+		size = DELTA_SIZE(entry);
- 		type = (allow_ofs_delta && DELTA(entry)->idx.offset) ?
- 			OBJ_OFS_DELTA : OBJ_REF_DELTA;
- 	}
-@@ -1509,7 +1511,7 @@ static void check_object(struct object_entry *entry)
- 			 */
- 			oe_set_type(entry, entry->in_pack_type);
- 			SET_DELTA(entry, base_entry);
--			entry->delta_size = oe_size(entry);
-+			SET_DELTA_SIZE(entry, oe_size(entry));
- 			entry->delta_sibling_idx = base_entry->delta_child_idx;
- 			SET_DELTA_CHILD(base_entry, entry);
- 			unuse_pack(&w_curs);
-@@ -1895,7 +1897,7 @@ static int try_delta(struct unpacked *trg, struct unpacked *src,
- 		max_size = trg_size/2 - 20;
- 		ref_depth = 1;
- 	} else {
--		max_size = trg_entry->delta_size;
-+		max_size = DELTA_SIZE(trg_entry);
- 		ref_depth = trg->depth;
- 	}
- 	max_size = (uint64_t)max_size * (max_depth - src->depth) /
-@@ -1966,10 +1968,12 @@ static int try_delta(struct unpacked *trg, struct unpacked *src,
- 	delta_buf = create_delta(src->index, trg->data, trg_size, &delta_size, max_size);
- 	if (!delta_buf)
- 		return 0;
-+	if (delta_size >= (1 << OE_DELTA_SIZE_BITS))
-+		return 0;
- 
- 	if (DELTA(trg_entry)) {
- 		/* Prefer only shallower same-sized deltas. */
--		if (delta_size == trg_entry->delta_size &&
-+		if (delta_size == DELTA_SIZE(trg_entry) &&
- 		    src->depth + 1 >= trg->depth) {
- 			free(delta_buf);
- 			return 0;
-@@ -1984,7 +1988,7 @@ static int try_delta(struct unpacked *trg, struct unpacked *src,
- 	free(trg_entry->delta_data);
- 	cache_lock();
- 	if (trg_entry->delta_data) {
--		delta_cache_size -= trg_entry->delta_size;
-+		delta_cache_size -= DELTA_SIZE(trg_entry);
- 		trg_entry->delta_data = NULL;
- 	}
- 	if (delta_cacheable(src_size, trg_size, delta_size)) {
-@@ -1997,7 +2001,7 @@ static int try_delta(struct unpacked *trg, struct unpacked *src,
- 	}
- 
- 	SET_DELTA(trg_entry, src_entry);
--	trg_entry->delta_size = delta_size;
-+	SET_DELTA_SIZE(trg_entry, delta_size);
- 	trg->depth = src->depth + 1;
- 
- 	return 1;
-@@ -2120,11 +2124,11 @@ static void find_deltas(struct object_entry **list, unsigned *list_size,
- 		if (entry->delta_data && !pack_to_stdout) {
- 			unsigned long size;
- 
--			size = do_compress(&entry->delta_data, entry->delta_size);
-+			size = do_compress(&entry->delta_data, DELTA_SIZE(entry));
- 			if (size < (1 << OE_Z_DELTA_BITS)) {
- 				entry->z_delta_size = size;
- 				cache_lock();
--				delta_cache_size -= entry->delta_size;
-+				delta_cache_size -= DELTA_SIZE(entry);
- 				delta_cache_size += entry->z_delta_size;
- 				cache_unlock();
- 			} else {
-diff --git a/pack-objects.h b/pack-objects.h
-index 0beedbc637..cbd5cf61ca 100644
---- a/pack-objects.h
-+++ b/pack-objects.h
-@@ -5,6 +5,7 @@
- #define OE_DEPTH_BITS		12
- #define OE_IN_PACK_BITS		14
- #define OE_Z_DELTA_BITS		16
-+#define OE_DELTA_SIZE_BITS	31
- 
- /*
-  * State flags for depth-first search used for analyzing delta cycles.
-@@ -81,7 +82,8 @@ struct object_entry {
- 				     * uses the same base as me
- 				     */
- 	void *delta_data;	/* cached delta (uncompressed) */
--	unsigned long delta_size;	/* delta data size (uncompressed) */
-+	uint32_t delta_size_:OE_DELTA_SIZE_BITS; /* delta data size (uncompressed) */
-+	uint32_t delta_size_valid:1;
- 	unsigned z_delta_size:OE_Z_DELTA_BITS;
- 	unsigned type_:TYPE_BITS;
- 	unsigned in_pack_type:TYPE_BITS; /* could be delta */
-@@ -314,4 +316,23 @@ static inline void oe_set_size(struct object_entry *e,
- 	}
- }
- 
-+static inline unsigned long oe_delta_size(struct packing_data *pack,
-+					  const struct object_entry *e)
-+{
-+	if (e->delta_size_valid)
-+		return e->delta_size_;
-+	return oe_size(e);
-+}
-+
-+static inline void oe_set_delta_size(struct packing_data *pack,
-+				     struct object_entry *e,
-+				     unsigned long size)
-+{
-+	e->delta_size_ = size;
-+	e->delta_size_valid = e->delta_size_ == size;
-+	if (!e->delta_size_valid && size != oe_size(e))
-+		die("BUG: this can only happen in check_object() "
-+		    "where delta size is the same as entry size");
-+}
-+
- #endif
--- 
-2.17.0.rc0.347.gf9cf61673a
-
+So this went from a typo of "uncompressd" in v5 to "uncompressedd",
+needs one less "d": "uncompressed".
