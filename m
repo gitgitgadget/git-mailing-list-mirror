@@ -2,149 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 05A161F404
-	for <e@80x24.org>; Sun, 18 Mar 2018 01:27:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9ABE01F404
+	for <e@80x24.org>; Sun, 18 Mar 2018 01:53:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752419AbeCRB0u (ORCPT <rfc822;e@80x24.org>);
-        Sat, 17 Mar 2018 21:26:50 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:51397 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752276AbeCRB0t (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Mar 2018 21:26:49 -0400
-Received: by mail-wm0-f68.google.com with SMTP id h21so9412874wmd.1
-        for <git@vger.kernel.org>; Sat, 17 Mar 2018 18:26:48 -0700 (PDT)
+        id S1752564AbeCRBnG (ORCPT <rfc822;e@80x24.org>);
+        Sat, 17 Mar 2018 21:43:06 -0400
+Received: from mail-qk0-f194.google.com ([209.85.220.194]:39672 "EHLO
+        mail-qk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752295AbeCRBnF (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Mar 2018 21:43:05 -0400
+Received: by mail-qk0-f194.google.com with SMTP id j73so7554409qke.6
+        for <git@vger.kernel.org>; Sat, 17 Mar 2018 18:43:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=9IoeSRxOkdTwKu4GAKWTeDRtovC2OTV/pq76yJpfLQk=;
-        b=gJ9/ZzdgjY0NWpRNuvIOeJBXsQe2iw2e7UUSaAOH0tn50aHFy1YzGsepZXbXj2A4wc
-         gSn9A11qXkI4l+uA0sdIxM085ZBZf4M9tNlui3nu8YgviFlqJjqtC7jVaiQKiQz76mMy
-         9IhuCwnOfXQ6iOV7xvZj3A4LONc95oiQqE9SqjvQjwVJDIcuh3WAXAuEuSPCNm79AOnd
-         a4AJ9zetl15SrU3GY+VZQ9x7zXTupPuVNy9E4F0aIOUJT1+cxkySHOhpiW4s2YOTLOmp
-         lMFkKJv8VSnqrR9/cIL4M1/+6K31ocgdq4JzGqlaxez9eJKphQp8ITrAfnjDOTY6dlYu
-         i0hQ==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-transfer-encoding;
+        bh=a5MJDx/rAYaGm+r7I/kKZdyLdNnPkXV6/UeqFcAT3Uw=;
+        b=j4xpZu/R/hqzm1SHYRYAg5bq2DIl7hTo9opmznFMjbqtwfmeDgEYEx+wcDiuqvn4Pn
+         Mve+umDmmmyeLzduyLfA4+m8+8crDzVCVDL7rJxSEgeF1T9aJ21/XE1Ld8ZrEFcJkiOv
+         flO2DnTvQZINCTCfAykqZNPKXs9suIx+YxL6V/ZUiO/60A/MA4bMPiwcz36XnnJ1onGa
+         jnlwheJiQ13jth7Gs6jUQb47HH3ZitigTQ2hbetp0Pr/KTn50KQuJzi8ockh1bQ546m/
+         YVNP/9L5a8SnKBqswqmVAqPHR2qPepIc0nH/3awBfiALxKp6vd5Nh9OpG2kYj7e15x0b
+         NFzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=9IoeSRxOkdTwKu4GAKWTeDRtovC2OTV/pq76yJpfLQk=;
-        b=eOrP7+toaPfitxTuDawILvD008wDNA5aOMeSdn0o3F0dp6qWZFyUyIBnZhvsCUfDXM
-         GsRU4oo8GDf+Jk7PblqCyvJOnz5bO5I6KMGDz42vS0fgXaB1EfTVZSB8nU5E310OZzK/
-         q2VnekKHEHayocWIWEk1PJNWkmYGqoM5ItETWKgajVQx6Lo5Wr4hCXah88PPMgu44jpD
-         qEulHOnSHiykhoLjnTmEwJ+/axxJ1lUD+a402ZgdVeX/Oe4UvAfu5W1wThaol60Av+hK
-         h4ME5fa+j1fIybbN2Vmy41CS9mSaMngi5+WCAEr+UqMxlqKdCqntlf7t1N+Dg5kI41SS
-         QgkA==
-X-Gm-Message-State: AElRT7HkDC4fE5G8/1ClotPMa5O0RKfVV52l+acDQdO/Lq3BCazITcCp
-        F+1mVxNFGq78ZXlJIfmRVzc=
-X-Google-Smtp-Source: AG47ELtmv8Si8caC2nR0NX5btDYpsr6svoYa2GiFqsTTqyIPuUPH3GPBur4SshjUupApQc0HEgAeaQ==
-X-Received: by 10.80.158.43 with SMTP id z40mr7996657ede.7.1521336407902;
-        Sat, 17 Mar 2018 18:26:47 -0700 (PDT)
-Received: from localhost.localdomain (x590c49b4.dyn.telefonica.de. [89.12.73.180])
-        by smtp.gmail.com with ESMTPSA id l91sm6184209ede.50.2018.03.17.18.26.46
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 17 Mar 2018 18:26:47 -0700 (PDT)
-From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-To:     Clemens Buchacher <drizzd@gmx.net>
-Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        git@vger.kernel.org, manlio.perillo@gmail.com,
-        johannes.schindelin@gmx.de
-Subject: Re: [PATCH 2/2] completion: simplify ls-files filter
-Date:   Sun, 18 Mar 2018 02:26:18 +0100
-Message-Id: <20180318012618.32691-1-szeder.dev@gmail.com>
-X-Mailer: git-send-email 2.17.0.rc0.103.gbdc5836ed3
-In-Reply-To: <1521274624-1370-2-git-send-email-drizzd@gmx.net>
-References: <1521274624-1370-1-git-send-email-drizzd@gmx.net> <1521274624-1370-2-git-send-email-drizzd@gmx.net>
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=a5MJDx/rAYaGm+r7I/kKZdyLdNnPkXV6/UeqFcAT3Uw=;
+        b=cziyjwaovHC0zSWico9lJ9Czk6TvIO97ckHEp3HXoL3ChuwwqEVn+vsI93yqycoeuA
+         F4UPzHWpMB/q/lheAfNUNcCSbZrmPXSqIvwYhAQIIuKEK3OUKu9S1jC0HPjks+KYnZsX
+         3yuuBI63QfDOBZOvMIecr8sFSnxQFfkI+0fN5bjCO6MKoyIz/aQ0KsmJij8pMImtt/Fe
+         8pLPBbmYviEHYAf5h7JLHfGrobuhJLl3/HN2aDAqFzwnA2Qx88EdtpI7LQxD+XW1emsZ
+         7/6g1bAlhH7mTDPKmcQ+yBv+A3rfTY9xtzx6iFrC4LkejioUTjeWchMlD4C0CLOZAOY8
+         Svvg==
+X-Gm-Message-State: AElRT7Gnc3X9XWzEC2iRcim9fR111J6aVaN/OMZRqEVYYEbDf30ObwdV
+        sqezeurs/mP5b4CkjUqZbjLwQDFCp3SUysRJLO0=
+X-Google-Smtp-Source: AG47ELtcXNPAoMgjkXxiyTiD4tXuRUDwSVvqvhDMpVsQJV4s5/r5gdh4YHjC3h9aKLqrV/313U3z1vbTNYnUE+cXMYM=
+X-Received: by 10.55.74.2 with SMTP id x2mr10540792qka.314.1521337384385; Sat,
+ 17 Mar 2018 18:43:04 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Received: by 10.12.190.196 with HTTP; Sat, 17 Mar 2018 18:43:03 -0700 (PDT)
+In-Reply-To: <20180317191138.GE2224@hank>
+References: <1520366804-28233-1-git-send-email-eddy.petrisor@gmail.com>
+ <20180306202149.GA160269@aiede.svl.corp.google.com> <CAK0XTWdY6rfKu_s8Am6dh9njcFHqSAz_54PhW6V09DuGwE-h0g@mail.gmail.com>
+ <20180316213323.GC2224@hank> <CAPig+cR5ncp9eMZ8krgy19A6g1Uqjx9dXTkus4r1QimD5Uwk0A@mail.gmail.com>
+ <CAK0XTWcNySGgwgFgCPDnZ+m=2hfEgswHbJKYeu+LQfuQ9_=shQ@mail.gmail.com> <20180317191138.GE2224@hank>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Sat, 17 Mar 2018 21:43:03 -0400
+X-Google-Sender-Auth: xj04YvbMaxdbR1JvmSRZhEVUBHs
+Message-ID: <CAPig+cRPkjDhedmvzuABCLD6+umsHP1w6ptw5BrezDx-gnWDfQ@mail.gmail.com>
+Subject: Re: [RFC PATCH] git-submodule.sh:cmd_update: if submodule branch
+ exists, fetch that instead of default
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+Cc:     =?UTF-8?Q?Eddy_Petri=C8=99or?= <eddy.petrisor@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Stefan Beller <sbeller@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> When filtering the ls-files output we take care not to touch absolute
-> paths. This is redundant, because ls-files will never output absolute
-> paths. Furthermore, sorting the output is also redundant, because the
-> output of ls-files is already sorted.
-> 
-> Remove the unnecessary operations.
+On Sat, Mar 17, 2018 at 3:11 PM, Thomas Gummerer <t.gummerer@gmail.com> wro=
+te:
+> On 03/17, Eddy Petri=C8=99or wrote:
+>> vin., 16 mar. 2018, 23:44 Eric Sunshine <sunshine@sunshineco.com> a scri=
+s:
+>> > It may be a disservice to remove mention of git-blame and git-shortlog
+>> > since git-contacts may not be suitable for everyone. Instead, perhaps
+>> > advertise git-contacts as a potentially simpler alternative to the
+>> > already-mentioned git-blamd & git-shortlog?
+>
+> Not sure how much of a disservice it would be.  I think of
+> SubmittingPatches as mostly a document for new git contributors, for
+> who I think we should make it as easy as possible to start
+> contributing.  Interpreting the output of 'git blame' and 'git
+> shortlog' feels like an extra hurdle for new contributors, especially
+> if someone is not familiar with the mailing list workflow.  I do
+> remember wondering exactly how I should interpret this when I sent my
+> first patches.
 
-You didn't run the test suite, did you? ;)
+Okay. Mentioning those commands (in addition to git-contacts) is an
+opportunity to educate newcomers to Git the tool (not just to git.git
+the project) about additional ways to engage in project spelunking. By
+"disservice", I meant that that educational opportunity is lost.
+Eddy's suggestion of reversing the order, thus mentioning git-contacts
+first is a good alternative.
 
-First, neither 'git ls-files' nor 'git diff-index' produce quite the
-same order as the 'sort' utility does, e.g.:
+However, perhaps this idea of educating newcomers to Git is misplaced
+in this context; such spelunking advice may be better suited to a
+general Git tutorial than to SubmittingPatches which is indeed
+specific to git.git. Given that reasoning, then my "disservice" view
+may be wrong.
 
-  $ touch foo.c foo-zzz.c
-  $ git add foo*
-  $ git diff-index --name-only HEAD
-  foo-zzz.c
-  foo.c
-  $ git diff-index --name-only HEAD |sort
-  foo.c
-  foo-zzz.c
+>> > Also, would it make sense to mention Felipe's git-related[1] which is
+>> > the original (and now more configurable) script from which
+>> > git-contacts functionality was derived?
+>
+> The reason I chose 'git contacts' over git-related is mainly that it
+> comes available with git.  Mentioning both again makes things harder
+> on new contributors who already have enough to think about when
+> submitting the patch.
+>
+> I guess in the end it comes down to who we think the target of the
+> document is.  To me it was always people new to the project, which is
+> why I think the single command there makes sense.
 
-Second, the output of 'git ls-files' is kind of "block-sorted": if you
-were to invoke it with the options '--cached --modified --others',
-then it will first list all untracked files in order, then all cached
-files in order, and finally all modified files in order.  Note the
-implications:
-
-  - A file could theoretically be listed twice, because a modified
-    file is inherently cached as well.  I believe this doesn't happen
-    currently, because no path completions use the combination of
-    '--modified --cached', but we use a lot of options when completing
-    paths for 'git status', and I haven't thought that through.
-
-  - A directory name is repeated in two (or more) blocks, if it
-    contains modified and untracked files as well.  We do use the
-    combination of '--modified --others' for 'git add', and '--cached
-    --others' for 'git mv', so this does happen.
-
-Note also that there can be any number of other files between the same
-directory listed in two different blocks.  That 'sort' that this patch
-is about to remove took care of this, but without that 'sort' the same
-directory name can be listed more than once even after 'uniq'.
-Consequently, the subsequent filtering of paths matching the current
-word to be completed might have twice as much work to do.
-
-All this leads to the failure of an enormous test in t9902, hence my
-rethorical question at the beginning of my reply.
-
-
-I have a short patch series collecting dust somewhere for a long
-while, which pulls a couple more tricks to make git-aware path
-completion faster, but haven't submitted it yet, because it doesn't
-work quite that well when filenames require quoting.  Though, arguably
-the current version doesn't work quite that well with quoted filenames
-either, so...
-Will try to dig up those patches.
-
-
-> Signed-off-by: Clemens Buchacher <drizzd@gmx.net>
-> ---
->  contrib/completion/git-completion.bash | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-> index e3ddf27..394c3df 100644
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -384,7 +384,7 @@ __git_index_files ()
->  	local root="${2-.}" file
->  
->  	__git_ls_files_helper "$root" "$1" |
-> -	sed -e '/^\//! s#/.*##' | sort | uniq
-> +	cut -f1 -d/ | uniq
->  }
->  
->  # Lists branches from the local repository.
-> -- 
-> 2.7.4
-> 
-> 
+Fair enough.
