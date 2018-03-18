@@ -2,84 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-0.8 required=3.0 tests=BAYES_00,DEAR_SOMETHING,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E08D41F404
-	for <e@80x24.org>; Sun, 18 Mar 2018 17:23:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3DD4C1F404
+	for <e@80x24.org>; Sun, 18 Mar 2018 18:21:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754432AbeCRRXs (ORCPT <rfc822;e@80x24.org>);
-        Sun, 18 Mar 2018 13:23:48 -0400
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:34090 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754088AbeCRRXq (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 18 Mar 2018 13:23:46 -0400
-Received: by mail-pg0-f68.google.com with SMTP id m15so6004119pgc.1
-        for <git@vger.kernel.org>; Sun, 18 Mar 2018 10:23:46 -0700 (PDT)
+        id S1754324AbeCRSVq (ORCPT <rfc822;e@80x24.org>);
+        Sun, 18 Mar 2018 14:21:46 -0400
+Received: from mail-it0-f52.google.com ([209.85.214.52]:40189 "EHLO
+        mail-it0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754301AbeCRSVp (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 18 Mar 2018 14:21:45 -0400
+Received: by mail-it0-f52.google.com with SMTP id y20-v6so7594480itc.5
+        for <git@vger.kernel.org>; Sun, 18 Mar 2018 11:21:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:date:subject:from:to:mime-version
-         :content-transfer-encoding;
-        bh=AD4VciUOqanfCYcnihmz+SsUgcGh14P04N0mOnnA8gU=;
-        b=vCNR5VToymV7PeUtj7pC5m1g0AyDVTgVWwC1hgB8Kc5QKkAci/bTtT/+lSE1XR5wIE
-         EV5+ThnqlbBs2bRpNpYv6BPMpGLlsze/PIG3rriIPFkPfFPpLqnv5xxwEm7fH+I+clD6
-         PeMtLWSUW33kynYi5TcLjC4BtKMzQnzHEFWWC3yEut+/NYHyJ0qbJJDjrxvtHWSh4iSh
-         DA9fhE7pj+NR8Nxw8Xgl2W0B8dSr2K81kL9C6uc0Q+n7lw0A6b3PDE8K9l8rEvlCQQqL
-         ndcvX63AtdtsDLIGdcPIotU7pOG11IfmSCiRu5VEjZw3EBuyDXz/pyxInZTieROdR3/U
-         k7Ow==
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=EH5sOJ76WNYRTaIsdYMlumusVkDWcyjSQEZuJXFpK2I=;
+        b=HZl9/SCqGAq6foL2aKFE1nhwG83Ju1aLPJCBPzadUoahj2GKmorwLjKAURYt7RdYTy
+         4WAqNd8e8AquB6E0Vmt/WfZ9BZum8zIrbJr0hyH683fMs/YnVsQXBj/NhsOgPqzamowJ
+         6p/VhLMEPUYtAGysNqioeLpz46VLHtuORNAzaS0oVs1mZOvnUDT0dKHYftRUmDbEL8J9
+         bHI0WpMFcnqzPZa6WP3b7OBk6qe8DaEAFjaJE81gTToT9GVyQVo7JpG82kFOr0nuiQ3r
+         hPsRwUZRBdwiGn6OYRxAzx5qV68x9Chqf+IOuAwkqox8SOr/C/ho6xHj44nrZY9+OepZ
+         684w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:date:subject:from:to:mime-version
-         :content-transfer-encoding;
-        bh=AD4VciUOqanfCYcnihmz+SsUgcGh14P04N0mOnnA8gU=;
-        b=nDe1NG5HHglTINBhIqlVBeLFrRSRnSxCNw06bDG3CmtctLgZ3V+rV/vIrZFJ40XWmy
-         Bk6Z4jjafnQbqbANeaXB/vDgHp8oLjUa/MqMJBCdYVXysGQsvb6Lst78ni8Waljc7jwf
-         Xm24HiNQLQFj0eWvwDpg2v2WjyE2c1pE87rmYpnBFdsG8paPgdFiEtc2rzZAyqN42FKC
-         HNlozMiomk6pjODbzZ6qzO3RogpN4g1ZHxtz8RyaL/xG7gFGlNU/juScNv/VUBeOh+sh
-         sPbDtW2uAI42dpRr9cjHd/8IRDnjXJfpnJBuQ+EzpEf7pcNz905KDbVSOj9QJFffAgSX
-         ZIgQ==
-X-Gm-Message-State: AElRT7H3PcDtHPcwj/1EpwQa7DnWuM1Tcxh+fe+RbmBRUVqHDBZIY3XL
-        LZ2DZ3xV+4ePdeNNp7ICIJiCKWtD
-X-Google-Smtp-Source: AG47ELu0KCINnia4OLsutVInuLDViDuoQC8CIAS22K1sEJVA/2mSU1s1UTbEf12nqgWQrEsrfmcApA==
-X-Received: by 10.99.127.89 with SMTP id p25mr5973940pgn.293.1521393826096;
-        Sun, 18 Mar 2018 10:23:46 -0700 (PDT)
-Received: from mylistae.com ([45.76.48.21])
-        by smtp.gmail.com with ESMTPSA id y6sm29017691pfg.71.2018.03.18.10.23.44
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 18 Mar 2018 10:23:45 -0700 (PDT)
-Message-ID: <6b726ed43b50d911fb6d855d1811f8a5@mylistae.com>
-Date:   Sun, 18 Mar 2018 17:23:44 +0000
-Subject: Websites & Web Based Applications
-From:   Huma <alitariqspn19@gmail.com>
-To:     git@vger.kernel.org
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=EH5sOJ76WNYRTaIsdYMlumusVkDWcyjSQEZuJXFpK2I=;
+        b=UKv6N/KSOLa5/+jETCm0Pobw6j9lRPBoCdoluJ4N+NuPV6Y5O2bchT54qx/9V9k51Z
+         GkFtjBbGRuLDNxQv4mkPJ5pOVFekLqCq4wxvX7K9PQYMGd79JYNWFUgJtO7PH2ZLTWF2
+         xKAGV1oh+K+dRzsvnS4ajRW753kDtuMz40MWzNCgylWJlyYovY4B7ZZC+gL95tWo14Py
+         Kdi047CCOoPRZbXssBI1/OvIEHIAB/sChkddLNo2gHfXJzEQWGPTwgh7h+aXYF2/znJU
+         MtgO3FbipXppeoUX8owHK3YZVPZMC4Q3uJb3rJf2RYQOfBhqvFy9JeZiGrnECP9dEbNh
+         P1LA==
+X-Gm-Message-State: AElRT7Fps3jUokQoRNs0wrrUl4ZIWgqThflqmLTY0W/z5grTmIaDVa25
+        Tr9GZiuTvZ4zfZFTc7lJfhsQ3fXjadMO0FWDpQnnYXJ6
+X-Google-Smtp-Source: AG47ELsDwu+iv4cPXOf5IfvCdE1g3mqXydQwsseEBvt/IxxQ/c+QQGHZSypHve5W9FGhRhfeWIJABUz6LVW6zavMoDA=
+X-Received: by 2002:a24:9794:: with SMTP id k142-v6mr6170181ite.40.1521397303726;
+ Sun, 18 Mar 2018 11:21:43 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Received: by 10.79.146.25 with HTTP; Sun, 18 Mar 2018 11:21:43 -0700 (PDT)
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Sun, 18 Mar 2018 19:21:43 +0100
+Message-ID: <CAP8UFD35QP0jwQ22jfUaNgo92o3vG8bV5n=iYnmn1ichxndphg@mail.gmail.com>
+Subject: Draft of Git Rev News edition 37
+To:     git <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jakub Narebski <jnareb@gmail.com>,
+        Markus Jansen <mja@jansen-preisler.de>,
+        Gabriel Alcaras <gabriel.alcaras@telecom-paristech.fr>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Hilco Wijbenga <hilco.wijbenga@gmail.com>,
+        Phillip Wood <phillip.wood@talktalk.net>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        William Chia <wchia@gitlab.com>,
+        Alex Vandiver <alexmv@dropbox.com>,
+        Michael Haggerty <mhagger@alum.mit.edu>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear Sir/Ma=E2=80=99am,
+Hi,
 
-We are an Online Marketing Group, comprising young and dynamic professional=
-s. We have executed a number of projects in the below mentioned categories:
+A draft of a new Git Rev News edition is available here:
 
-Website Design & Development
-PHP & MySQL website application development
-E-Commerce Applications/ Websites
-We Specialize in Laravel Based Developments
+  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-37.md
 
-We are extremely competitive and have worked for a lot of companies outside=
- India, assisting them in developing their company=E2=80=99s websites and c=
-ustomized business applications.
+Everyone is welcome to contribute in any section either by editing the
+above page on GitHub and sending a pull request, or by commenting on
+this GitHub issue:
 
-Please do not hesitate to get in touch with us, or any queries you may have=
-.
+  https://github.com/git/git.github.io/issues/279
 
-Huma
-Online Marketing Manager
-Whatsapp: +91 6393002436
+You can also reply to this email.
+
+In general all kinds of contribution, for example proofreading,
+suggestions for articles or links, help on the issues in GitHub, and
+so on, are very much appreciated.
+
+I tried to cc everyone who appears in this edition, but maybe I missed
+some people, sorry about that.
+
+Jakub, Markus, Gabriel and me plan to publish this edition on
+Wednesday March 21st.
+
+Thanks,
+Christian.
