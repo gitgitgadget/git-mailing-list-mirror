@@ -2,100 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9449D1F42D
-	for <e@80x24.org>; Sun, 18 Mar 2018 08:23:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3B9D61F42D
+	for <e@80x24.org>; Sun, 18 Mar 2018 08:26:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752548AbeCRIXi (ORCPT <rfc822;e@80x24.org>);
-        Sun, 18 Mar 2018 04:23:38 -0400
-Received: from mail-ot0-f174.google.com ([74.125.82.174]:37766 "EHLO
-        mail-ot0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752203AbeCRIXg (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 18 Mar 2018 04:23:36 -0400
-Received: by mail-ot0-f174.google.com with SMTP id t2-v6so5179686otj.4
-        for <git@vger.kernel.org>; Sun, 18 Mar 2018 01:23:36 -0700 (PDT)
+        id S1752346AbeCRI0H (ORCPT <rfc822;e@80x24.org>);
+        Sun, 18 Mar 2018 04:26:07 -0400
+Received: from mail-oi0-f44.google.com ([209.85.218.44]:41133 "EHLO
+        mail-oi0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751423AbeCRI0G (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 18 Mar 2018 04:26:06 -0400
+Received: by mail-oi0-f44.google.com with SMTP id g5so11953917oiy.8
+        for <git@vger.kernel.org>; Sun, 18 Mar 2018 01:26:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=gUfmZw2i41jFVAmOTivLV2Ah+TMogKGiGtcgG6T/Ync=;
-        b=QQDpg+R9FSNNBMrbWC/hxdJ1BfqWSw6ziQ0F26sxI6tPn1VOPQeaLgyh4blWG4gt81
-         p7wYBYqXuwVXelqbnA/9q8KEOiqJISBxjBEw36W1QZRa89qRDHAZAVm9HPQduk/mLpWM
-         UL5dgs5Xff48ifUFMvfvas7Y78DqYGpFlgZO5R96GKfZTHBDymw6bboqhmlVdvy+8hhI
-         l2wHVqXa7zxMAmgjMLFNjBAvm/vqvHVyBrG3vIrquJXKiBr4G1JNAYPMniKPVSkOCAFB
-         jBVWN3xLojCcIPN8bF9rVCz9qRaqkFC/frNb0TRlRFRaY6+wb48rql902AD4IjdKe06M
-         G/ew==
+         :cc:content-transfer-encoding;
+        bh=hRaGhmnzlXQ2s9Hrr2mRyLkKZdBJ9hMXOFkOXIaYE3k=;
+        b=gTXh7VkxLaq3sXNMKWQGcEhGu61L3v+hKSdD9fgXOoNijx2HWQfN2qigIk7x74RIlL
+         Lnf5wEBlr2QkwuPxgQ5FJUuIl/+7GIFSrlUbaRR1Yxsslvbi++06BvorcQMFhKiVhyBj
+         2brSZ6YnhAA+2nmNWlHcEwjIV/17X2ZavIH9gsO6bkpe3jplRqrxxB7sJM9bRVs0OrON
+         EI+K2XR/Rxj1485cpjImwmI2O+F/8wAKDH72b/fNmroUnGOHLiV62w5QqGI90HitEsKv
+         NtsKdlaisxszIFngI8cm/BwGeFI1I4H/DKcJ1IxTQ0YxoqaY6Outl+5gJBL7/A2Z+2/5
+         9x4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=gUfmZw2i41jFVAmOTivLV2Ah+TMogKGiGtcgG6T/Ync=;
-        b=aPj5a8SBgyP11z5rnLbSgUTqoo5HmMyTmzJH5t7wohRQDuIOhW3iCAt9f1PPX80fAS
-         k3Cck9hWWvqMZgatRwusCqI3puNwtE+lisK8ozk0t+AFxOVpHE/D4JBO0SvkR+BaakkL
-         iWfzFxunDIRMfMbievTd1vvoQwT4GPlX4+cbSVF+X05AX6MalgEpaKuVZ47VVlCnlUif
-         P8fRHcdXI2RJDoNwuSC5jWpsDIygr8w6Zs04QCoL1hpDdyE7NO+D/fU9XsCEXmXHRN98
-         Xt+cJIi3m3Cc2BsGVHM6dEaZzoYG+ZxuR2NsCTZ7UQEKbSD1O1sxQ2j0YB+IKH4h5i5G
-         QKwQ==
-X-Gm-Message-State: AElRT7F+8OsvIuWlenfgWqDRKuq71amVHlPHxVpDDJAfBqpIb6vUhceu
-        KYOXGltvZZQK5mwJASe4kMoqC+nA3mznDPCURH0=
-X-Google-Smtp-Source: AG47ELvu9nTAPL4Vxfy5IfOJQIxNhI3H3bZ+wOtNkAEyydZF6dPD2Am+AKbQJg3ltmnVItVPMFfcxdQwWbIk+RPSdFQ=
-X-Received: by 2002:a9d:3698:: with SMTP id h24-v6mr5430847otc.173.1521361416366;
- Sun, 18 Mar 2018 01:23:36 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=hRaGhmnzlXQ2s9Hrr2mRyLkKZdBJ9hMXOFkOXIaYE3k=;
+        b=OxQJcQMa8NOkpCKRYn/ixkiVyxM+E89iSYH5pjnAM3HrRNP7QkstIeVDYskn2okmvb
+         MaHmtxGNZcDSGLANimMLMezPckJk83P8HZXG9b0bznRIyCJwdmmuGj57A+h0MjtocNVJ
+         ohqD8eICAD3dqWuPp4IfxZy+EoiuGkXZW43/A2RgtdqCQlF7kyEaTiHKdbT6btiW0uGN
+         8R8YmfJbHXNIbPQLO9Lx/hPQCT+8hyFWcWDh1yOcCrgcKt+sWAWYYwvhE0ljRXS7RKbd
+         SMNPGi1dDr796hGYyee+axG6UspJ9Y1XT/VNiWlatig2/dPzhUIt9ZSCV2cz9lko+SVf
+         CvBw==
+X-Gm-Message-State: AElRT7HR4v2+4aXdMVObP6WyY1RgjZR8hosRDeqRI46/Dt0sqlqFjfuy
+        EZWIDQl8EK+W7dQA4r2FAA+jxHq7iGCRCdxWWeQ=
+X-Google-Smtp-Source: AG47ELvzKBmEHGLYymzFN2NKW4mh4Hivur6i6ddAo4xKEPLwzAuxtiG/pa5ymt4i4ZKxkcn6N5RXRWvkUt0rt+CnszE=
+X-Received: by 10.202.64.85 with SMTP id n82mr4861212oia.30.1521361565666;
+ Sun, 18 Mar 2018 01:26:05 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.74.154.146 with HTTP; Sun, 18 Mar 2018 01:23:05 -0700 (PDT)
-In-Reply-To: <xmqq8taqx949.fsf@gitster-ct.c.googlers.com>
-References: <20180316183200.31014-1-pclouds@gmail.com> <20180317141033.21545-1-pclouds@gmail.com>
- <20180317141033.21545-10-pclouds@gmail.com> <xmqq8taqx949.fsf@gitster-ct.c.googlers.com>
+Received: by 10.74.154.146 with HTTP; Sun, 18 Mar 2018 01:25:35 -0700 (PDT)
+In-Reply-To: <CAPig+cTSqxLTDoq3xGAmf1xCyCX0jvwyoSL5GApgaNg5PVPGGg@mail.gmail.com>
+References: <20180317075421.22032-1-pclouds@gmail.com> <20180317075421.22032-5-pclouds@gmail.com>
+ <CAPig+cTSqxLTDoq3xGAmf1xCyCX0jvwyoSL5GApgaNg5PVPGGg@mail.gmail.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sun, 18 Mar 2018 09:23:05 +0100
-Message-ID: <CACsJy8AXSCw1b0FpsUv85kZ_HYhHy9OHeDZGGFFg9pOno8GfNw@mail.gmail.com>
-Subject: Re: [PATCH v5 09/11] pack-objects: shrink size field in struct object_entry
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Eric Wong <e@80x24.org>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>
+Date:   Sun, 18 Mar 2018 09:25:35 +0100
+Message-ID: <CACsJy8CeXZJashmh+sLykRR4Mm_EwnASMVyB-4ztEcfQXU7MXw@mail.gmail.com>
+Subject: Re: [PATCH 04/36] t/helper: merge test-lazy-init-name-hash into test-tool
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Mar 18, 2018 at 6:09 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> +     uint32_t truncated_limit = (uint32_t)limit;
+On Sun, Mar 18, 2018 at 3:11 AM, Eric Sunshine <sunshine@sunshineco.com> wr=
+ote:
+> On Sat, Mar 17, 2018 at 3:53 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Du=
+y <pclouds@gmail.com> wrote:
+>> diff --git a/cache.h b/cache.h
+>> @@ -333,7 +333,7 @@ struct index_state {
+>> -extern int test_lazy_init_name_hash(struct index_state *istate, int try=
+_threaded);
+>> +extern int lazy_init_name_hash_for_testing(struct index_state *istate, =
+int try_threaded);
+>
+> I get why you renamed this since the "main" function in the test
+> program wants to be called 'test_lazy_init_name_hash'...
+>
+>> diff --git a/t/helper/test-lazy-init-name-hash.c b/t/helper/test-lazy-in=
+it-name-hash.c
+>> @@ -9,6 +10,9 @@ static int perf;
+>> +static int (*init_name_hash)(struct index_state *istate, int try_thread=
+ed) =3D
+>> +       lazy_init_name_hash_for_testing;
 >> +
->> +     return limit == truncated_limit;
->> +}
+>> @@ -33,9 +37,9 @@ static void dump_run(void)
+>>         if (single) {
+>> -               test_lazy_init_name_hash(&the_index, 0);
+>> +               init_name_hash(&the_index, 0);
 >
-> I am guessing that a compiler that is clever enough will make this
-> function a no-op on a 32-bit arch and that is why it is a static
-> inline function?
+> ... but I'm having trouble understanding why this indirection through
+> 'init_name_hash' is used rather than just calling
+> lazy_init_name_hash_for_testing() directly. Am I missing something
+> obvious or is 'init_name_hash' just an unneeded artifact of an earlier
+> iteration before the rename in cache.{c,h}?
 
-It's a separate function because I don't want to duplicate this ==
-logic twice. Even if the compiler does not optimize this, it's still
-much cheaper than oe_sze() which involves disk access.
-
->> +static inline int oe_size_less_than(const struct object_entry *e,
->> +                                 unsigned long limit)
->> +{
->> +     if (e->size_valid)
->> +             return e->size_ < limit;
->
-> e->size_ is the true size so we can compare it to see if it is smaller
-> than limit.
->
->> +     if (contains_in_32bits(limit))
->> +             return 1;
->
-> If limit is small enough, and because e->size_valid means e->size_
-> does not fit in 32-bit, we know size is larger than limit.
-> Shouldn't we be returning 0 that means "no, the size is not less
-> than limit" from here?
-
-Argh!!! This logic keeps messing with my brain.
--- 
+Nope. It just feels too long to me and because we're already in the
+test I don't feel the need to repeat _for_testing everywhere. If it's
+confusing, I'll remove init_name_hash.
+--=20
 Duy
