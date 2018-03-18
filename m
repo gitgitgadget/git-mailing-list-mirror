@@ -2,77 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 479EC1F404
-	for <e@80x24.org>; Sun, 18 Mar 2018 14:51:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1B4FF1F404
+	for <e@80x24.org>; Sun, 18 Mar 2018 15:56:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754466AbeCROvF (ORCPT <rfc822;e@80x24.org>);
-        Sun, 18 Mar 2018 10:51:05 -0400
-Received: from mail-wm0-f51.google.com ([74.125.82.51]:37354 "EHLO
-        mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754212AbeCROvE (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 18 Mar 2018 10:51:04 -0400
-Received: by mail-wm0-f51.google.com with SMTP id 139so11027467wmn.2
-        for <git@vger.kernel.org>; Sun, 18 Mar 2018 07:51:03 -0700 (PDT)
+        id S1754018AbeCRPz5 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 18 Mar 2018 11:55:57 -0400
+Received: from mail-oi0-f44.google.com ([209.85.218.44]:39636 "EHLO
+        mail-oi0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751372AbeCRPz5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 18 Mar 2018 11:55:57 -0400
+Received: by mail-oi0-f44.google.com with SMTP id q71so2130277oic.6
+        for <git@vger.kernel.org>; Sun, 18 Mar 2018 08:55:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=e4EJhKxBRa0eZej/Uax+4KPFNrUEJeilJkcXKHi17g8=;
-        b=KjeoJeYfLSfTCdpS59jdutm6GCxPXCDuqr3wb5o/A2ODOOrea3JUYpwsB6OBBezTMv
-         3gNWP1XClywSHi6n83SEHbJx7IIRr1nW78sYDzx7pltjw1/oumRfftLs3Eo2KDXAoxJc
-         uuE1v5xGsbbuShr3zfcwW5AsOurpmS+lOwr9LtF4n/kbwaKWSOYa98SkMl+7UUhpIydl
-         B2tVfPLdAoKurxkd2OkyK/2mciUIIqw71zq5jXe323I4wopbXuM8iRv8YWIg6rsKb2xP
-         4f2dszLrFe4UQ8LcjyiUCd5bw+oMSQ4eG8cBWpymPNBc3EklZMBesNpUEjV47+f7WKjN
-         OTZw==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=0AsEt32u4uLW662sxN+vK8uiY/Q7qGDa6RtppbH8UEs=;
+        b=Fw9MiHU3WXVKTXOVBOhZ3kou4tDsfOZE3j4HeKncfve3/+EFnTJixjyyg7fnRcV2dl
+         WKF6imlD97drZJZJeo9o8QqvQIiDUrTLqZdDVYgbP1W+Y8TFUPd5MAP1gUN8G7JppWuw
+         NBItqa/zMGT6ujAPNUw62aTeg49RpfioR+N8nB6enGhqA66WSeyPQ6swpexLdyL9yY5M
+         rMOGUEXqnSenUZsS7ouvEW1YN3H5rmr2cJUe2m1Wi7bWYduK+FckCZsY/V5poc5h8eXF
+         1UVgj4mmcTuoz1I6uivExkgpiiXICQ2uJHg7H3DLKBU8+SZDb0U9vTPF0zXy+zF7V1fQ
+         DK2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=e4EJhKxBRa0eZej/Uax+4KPFNrUEJeilJkcXKHi17g8=;
-        b=i44gp0WEyShczxIJCUqb6f9R9uGCppa8A7aA0nZw7r86tsrlJI84FF3ZAdjOqClxXV
-         S+vEsiJvlVRIKomtkoaKvsRAIRCKipEkhlklSirszZoJQkvkuCHPVnLBln0tWh0nGlMQ
-         oWLUKfKgb33qdxJWzC8bgWboekaV/w1bjzrr6l21OfwISc0co9ftpc0QzKloMJ6nN99t
-         1buqMwaLk8gM9hN0NmtpeBv4i7i7lAib6O2nqTU0ARTNH02fQZ8CBNBRwucKH35tuihh
-         jv4tUw06rHN52tO013YBgRVVV0FRp/CAUKKCZm8vjFPLxL2lYPr5I44xwtfi7r2FrQwr
-         mGgw==
-X-Gm-Message-State: AElRT7EpFUHUT2akv1NFvsY6LLlbkMRphVkl+1yPfNWlBpDNf6YPWze6
-        FFRuffZRwml5ZXWi22IRBkI=
-X-Google-Smtp-Source: AG47ELtGhwuyWWbW8cKA3PTP9RuDJpZ3+9R4XS0uCdgHCVv59dY2lRNP2mSIs0wB/VNSFwuurmf28g==
-X-Received: by 10.80.170.156 with SMTP id q28mr10250178edc.43.1521384663280;
-        Sun, 18 Mar 2018 07:51:03 -0700 (PDT)
-Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
-        by smtp.gmail.com with ESMTPSA id x6sm1390157edb.56.2018.03.18.07.51.01
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 18 Mar 2018 07:51:02 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     e@80x24.org, git@vger.kernel.org, gitster@pobox.com, peff@peff.net
-Subject: Re: [PATCH v6 00/11] nd/pack-objects-pack-struct updates
-References: <20180317141033.21545-1-pclouds@gmail.com> <20180318142526.9378-1-pclouds@gmail.com>
-User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 1.1.0
-In-reply-to: <20180318142526.9378-1-pclouds@gmail.com>
-Date:   Sun, 18 Mar 2018 15:51:01 +0100
-Message-ID: <877eq9cu96.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=0AsEt32u4uLW662sxN+vK8uiY/Q7qGDa6RtppbH8UEs=;
+        b=rVZN72hbYz/TV73uh7vylkZ5MbToFTvGOIpFMbGG3oZ86mM7MaPUkt3r3kblE6R3YZ
+         S+eTJ5SHBaruQxh1oSwnatKj7njmBRmSNpQUYdTJ2I1FQWueFL6DmI1lqbPkEsgZD/ug
+         l8zIneE+Wdp3nM8to4tYKXzyE5zls5CejzDZm9GVpqP8Vym9k4ccFkFSErcz8oDF5xCn
+         9jeVTGMO6EYYk8+dRV6A2Hkh0M2iEUuz5RgMvBHudq9k/kfbDfZFTgK6BAjR4h7a0N9E
+         xA+SZJeiTfbxTJbouK/UApFCBWQMS3xA9/wAefhXNIqziUEivLpJkmDiTonMRO/Jo2s+
+         7QIw==
+X-Gm-Message-State: AElRT7GVaJeEI76Hh/JLjLUJQylgFh20YrJrKdEt+6L1gKTaA4CQMTBs
+        806oKfYda8mA4wfVGH4S08V6o4QAJBBFfKdOpEg=
+X-Google-Smtp-Source: AG47ELtkqzCAetwHzRiqKN4DkzPOoTrwbZXQ4M+sQdPk0xDT2tWvEzD4obJKfuhK8GwiwppM2O7DnLwgRLELCYJKxeU=
+X-Received: by 10.202.64.85 with SMTP id n82mr5506995oia.30.1521388556482;
+ Sun, 18 Mar 2018 08:55:56 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Received: by 10.74.154.146 with HTTP; Sun, 18 Mar 2018 08:55:25 -0700 (PDT)
+In-Reply-To: <20180318081834.16081-1-pclouds@gmail.com>
+References: <20180317160832.GB15772@sigill.intra.peff.net> <20180318081834.16081-1-pclouds@gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Sun, 18 Mar 2018 16:55:25 +0100
+Message-ID: <CACsJy8BOCpHiMxJ0K=_-WPf9b4yh0W0i3m9sAo5-Sk5fY9x1+A@mail.gmail.com>
+Subject: Re: [PATCH] Makefile: detect compiler and enable more warnings in DEVELOPER=1
+To:     Jeff King <peff@peff.net>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Sun, Mar 18, 2018 at 9:18 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =
+<pclouds@gmail.com> wrote:
+> +ifneq ($(or $(filter gcc6,$(COMPILER_FEATURES)),$(filter clang4,$(COMPIL=
+ER_FEATURES))),)
+> +CFLAGS +=3D -Wextra
 
-On Sun, Mar 18 2018, Nguyễn Thái Ngọc Duy jotted:
-
-> v6 fixes the one optimization that I just couldn't get right, fixes
-> two off-by-one error messages and a couple commit message update
-> (biggest change is in 11/11 to record some numbers from AEvar)
-
-Thanks, aside from the minor typo I just noted in
-https://public-inbox.org/git/878tapcucc.fsf@evledraar.gmail.com/ (which
-I trust Junio can fix up) this all looks good to me.
+Another thing we can add here is -Og instead of standard -O2 (or -O0
+in my build), which is supported since gcc 4.8. clang seems to support
+it too (mapped to -O1 at least for clang5) but I don't know what
+version added that flag.
+--=20
+Duy
