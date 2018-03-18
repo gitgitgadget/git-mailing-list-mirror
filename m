@@ -7,65 +7,58 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3FDC41F404
-	for <e@80x24.org>; Sat, 17 Mar 2018 23:50:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 59FEF1FAE2
+	for <e@80x24.org>; Sun, 18 Mar 2018 00:14:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753551AbeCQXuN (ORCPT <rfc822;e@80x24.org>);
-        Sat, 17 Mar 2018 19:50:13 -0400
-Received: from mail-wr0-f175.google.com ([209.85.128.175]:45119 "EHLO
-        mail-wr0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753370AbeCQXuM (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Mar 2018 19:50:12 -0400
-Received: by mail-wr0-f175.google.com with SMTP id h2so15011273wre.12
-        for <git@vger.kernel.org>; Sat, 17 Mar 2018 16:50:11 -0700 (PDT)
+        id S1752379AbeCRAOE (ORCPT <rfc822;e@80x24.org>);
+        Sat, 17 Mar 2018 20:14:04 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:34250 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751867AbeCRAOD (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Mar 2018 20:14:03 -0400
+Received: by mail-wm0-f67.google.com with SMTP id a20so7630402wmd.1
+        for <git@vger.kernel.org>; Sat, 17 Mar 2018 17:14:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=0YmyXzsprikrLGbHAjRKVqg1vwFI/s9xC6Tn/pEvGTs=;
-        b=PnKXlNII0Fy/8LO6P4HCatPj4LTR+xc63Sz6As6cy3kV1Cf4dNiln/9fOcZ3UFzAcx
-         QdDjc8fiO2dW2G8xE8SVUo8q9pJR066aofThb1I9dQLYpkGbx3DcLpcMRz/SBMbSjACx
-         xhIuS/pMwwVh7ZpJDlX1xiEZhCmrivxwiJdwt5JpQK/FF7+ODYbx0zU5+uR7/mN7PsZk
-         eLuMJYkjxipbGId6odi0nkS7SBmmZ5AJuMLQaKairose2Ni7/osXEq2nsBSO1X2lJkqy
-         qDXB/OuvCaW1V2UStwncxxKLDvQlzg02cvfSe3mzuUK/HGBUINgOfnAShmYswDHFXFMf
-         yTMg==
+        bh=4iYGqDKewm5dFyBAcyNdF4TGqwI+cQNQwCvkUB0FGFM=;
+        b=S8GO5Hs0E5WCv/BoAFijBP3Q4v3OxOxgod2H1C6HnC+5h7s39r40o0pop+vinF0i+r
+         2BM5GqmqDSCI53+RV25VEFt9GUhFDzdYs3H9EbQ9lSZlwIpWnmpl03WrpuPOFlSixuc2
+         yzba6nbEp+FlLKow7AroK9WweslOMyQ4zkAEe5dqBFtVq+03oOSk1D3te0n6vzYy/YxK
+         5NxT/jUkYu19/0iaPZeMNwswgA8F9qwAXaR5rBYkZXNqvXXyhk0tMIsOyNp/BQulf3yH
+         xp+ooW3uk1LfWwTaw2l9N44paGT9mdHPoXJdVvycHU47uqbjRvBikpWjlJrrKStOzBcr
+         EU9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=0YmyXzsprikrLGbHAjRKVqg1vwFI/s9xC6Tn/pEvGTs=;
-        b=B2n85aXJjKrMDgLoe9jyVAsEgp/aNKani6uAwhq8uxcV1PrgWK0pclIOzCKExAOgh2
-         OKnFD/9e5aE2qiWH0CTy/nFck1LRNIElaFFWsbUMTMQciJpvD+/OrryChjPRBJwXkk4K
-         2aIFGbV0jhQjjp8yzRnusfkumHgWjTZYerJOPYlbvmcEJeJCDxIgtGKWeO2CkAgAhSwN
-         p+eZZXG203oEhcGoMw7E1MY/YnyJFP8i99lQL/euCCS3IG0Eu99F6pL+EPb+P2a7ZWdv
-         gz/Ue+sNJw4/jwRxLX6eky0aYQNvUfa853LIRiBR5ZYjDG7oswIdQ1rZ/eriDYSl59ZS
-         Lr/Q==
-X-Gm-Message-State: AElRT7El7KPGkphNCtJIkun7i/6MkAuy4MPWKl1rkocEqaW/gDwBh7ME
-        O9bNedvQoRIz8PXQz2lDxLU=
-X-Google-Smtp-Source: AG47ELvphvMZiwsscjfbsKYoO4RgPqvaTeCkWAG8IRc25B1z3bVrW29ToaZg22KawBQYnuCe1o5cVA==
-X-Received: by 10.223.224.200 with SMTP id e8mr5318756wri.149.1521330610428;
-        Sat, 17 Mar 2018 16:50:10 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id 188sm16107937wmx.14.2018.03.17.16.50.09
+        bh=4iYGqDKewm5dFyBAcyNdF4TGqwI+cQNQwCvkUB0FGFM=;
+        b=pjPv3TbPoQE0vL6H9v6dVPHDQBi9BZkUwF08m00Ly3UMvfKSBxc4UiqjoiKdM+6DmB
+         LeL34CtYC5avdBbQzIWkT/YHWs3yYXNNqsNaMcmG6VJ03R+PgTk9jYTgnZJIkSFBcx26
+         gxqheM3hosCULpMn1YjjPRTcbU4fnTEG1LRBIO5MdQ1rkDg2L0phl8odXzC/5fiPuC5N
+         wb0ZfQ1NMD9mFsarxzfVscCjWcs2aRrVA3j1ZpABIXaINmPVAHCNMhuKwP6WqEEkHcsE
+         /7AQI1xAYzTbUyCjLGq40lgkkTkB79mi1+fLn31CGfUTTY3Y/1qBDaDpOCARmcQIyVRg
+         ALWA==
+X-Gm-Message-State: AElRT7FBfWZQGpqbO1ha6gryjYxfLfiBrJnHycO/O5xOZfagVsbrwmH0
+        MnmJJnyD3InXCmnGZU6pkRE=
+X-Google-Smtp-Source: AG47ELvT2+5VapdBgI1VRQaeIOWjWmUsyqXsU/OBHvB8qdWINvUSbuZRuITmOTYHQgmpDXEDZfLxJQ==
+X-Received: by 10.28.161.4 with SMTP id k4mr4692788wme.103.1521332041620;
+        Sat, 17 Mar 2018 17:14:01 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id n64sm9025375wmd.11.2018.03.17.17.13.59
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 17 Mar 2018 16:50:09 -0700 (PDT)
+        Sat, 17 Mar 2018 17:13:59 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Duy Nguyen <pclouds@gmail.com>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH v2] travis-ci: enable more warnings on travis linux-gcc job
-References: <20180303014605.10603-1-pclouds@gmail.com>
-        <20180316193355.20161-1-pclouds@gmail.com>
-        <20180316212208.GC12333@sigill.intra.peff.net>
-        <CACsJy8A3_itjs0MRar+Aog=0yZDuAK2-x4MU=Rvqh2C6Le-7Aw@mail.gmail.com>
-        <D8137CD9-9E11-4FBC-B89B-907C007FC6E9@gmail.com>
-        <20180317145923.GA24689@duynguyen.home>
-        <20180317160832.GB15772@sigill.intra.peff.net>
-Date:   Sat, 17 Mar 2018 16:50:09 -0700
-In-Reply-To: <20180317160832.GB15772@sigill.intra.peff.net> (Jeff King's
-        message of "Sat, 17 Mar 2018 12:08:32 -0400")
-Message-ID: <xmqqsh8yxnwu.fsf@gitster-ct.c.googlers.com>
+To:     Clemens Buchacher <drizzd@gmx.net>
+Cc:     git@vger.kernel.org, manlio.perillo@gmail.com,
+        johannes.schindelin@gmx.de
+Subject: Re: [PATCH 1/2] completion: improve ls-files filter performance
+References: <1521274624-1370-1-git-send-email-drizzd@gmx.net>
+Date:   Sat, 17 Mar 2018 17:13:59 -0700
+In-Reply-To: <1521274624-1370-1-git-send-email-drizzd@gmx.net> (Clemens
+        Buchacher's message of "Sat, 17 Mar 2018 09:17:03 +0100")
+Message-ID: <xmqqo9jmxmt4.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -74,16 +67,63 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Clemens Buchacher <drizzd@gmx.net> writes:
 
-> Unfortunately I think that's hard to do in pure make. But we're already
-> relying on $(shell) here, so we could just move the logic there.
+> From the output of ls-files, we remove all but the leftmost path
+> component and then we eliminate duplicates. We do this in a while loop,
+> which is a performance bottleneck when the number of iterations is large
+> (e.g. for 60000 files in linux.git).
 >
-> Something like the patch below, perhaps. It should do the right thing on
-> clang and gcc, and I added in an extra clang-only warning I've found
-> useful. Otherwise the list of flags comes from your patch.
+> $ COMP_WORDS=(git status -- ar) COMP_CWORD=3; time _git
+>
+> real    0m11.876s
+> user    0m4.685s
+> sys     0m6.808s
+>
+> Using an equivalent sed script improves performance significantly:
+>
+> $ COMP_WORDS=(git status -- ar) COMP_CWORD=3; time _git
+>
+> real    0m1.372s
+> user    0m0.263s
+> sys     0m0.167s
+>
+> The measurements were done with mingw64 bash, which is used by Git for
+> Windows.
+>
+> Signed-off-by: Clemens Buchacher <drizzd@gmx.net>
+> ---
+>  contrib/completion/git-completion.bash | 7 +------
+>  1 file changed, 1 insertion(+), 6 deletions(-)
+>
+> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+> index 6da95b8..e3ddf27 100644
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -384,12 +384,7 @@ __git_index_files ()
+>  	local root="${2-.}" file
+>  
+>  	__git_ls_files_helper "$root" "$1" |
+> -	while read -r file; do
+> -		case "$file" in
+> -		?*/*) echo "${file%%/*}" ;;
+> -		*) echo "$file" ;;
+> -		esac
+> -	done | sort | uniq
+> +	sed -e '/^\//! s#/.*##' | sort | uniq
 
-I see this discussion is going in the right direction, and like the
-approach taken by this "how about this" patch.
+Micronit: perhaps lose SP after '!'?
 
-Thanks.
+cf. http://pubs.opengroup.org/onlinepubs/9699919799/utilities/sed.html
+
+"""A function can be preceded by a '!' character, in which case the
+function shall be applied if the addresses do not select the pattern
+space. Zero or more <blank> characters shall be accepted before the
+'!' character. It is unspecified whether <blank> characters can
+follow the '!' character, and conforming applications shall not
+follow the '!' character with <blank> characters."""
+
+
+>  }
+>  
+>  # Lists branches from the local repository.
