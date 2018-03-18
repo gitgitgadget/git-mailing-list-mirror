@@ -2,167 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0EF3D1F404
-	for <e@80x24.org>; Sun, 18 Mar 2018 20:16:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3AA341FAE2
+	for <e@80x24.org>; Sun, 18 Mar 2018 21:19:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754520AbeCRUQ3 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 18 Mar 2018 16:16:29 -0400
-Received: from shout02.mail.de ([213.128.151.217]:34321 "EHLO shout02.mail.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754579AbeCRUQM (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 18 Mar 2018 16:16:12 -0400
-X-Greylist: delayed 407 seconds by postgrey-1.27 at vger.kernel.org; Sun, 18 Mar 2018 16:16:11 EDT
-Received: from postfix02.mail.de (postfix02.bt.mail.de [10.0.121.126])
-        by shout02.mail.de (Postfix) with ESMTP id 2B15E6001B;
-        Sun, 18 Mar 2018 21:09:23 +0100 (CET)
-Received: from smtp02.mail.de (smtp02.bt.mail.de [10.0.121.212])
-        by postfix02.mail.de (Postfix) with ESMTP id 0F286C000E;
-        Sun, 18 Mar 2018 21:09:23 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mail.de;
-        s=mailde201610; t=1521403763;
-        bh=vb42Pgvb5A3JRvKf4ykt3QPreJWJbk4hbcaQ9drxrmw=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=T/Vno81SBoYGsNPxooR5IEOZ5aIDn7uLixJJKM4ysykYEjTlWlmhu/hqu+vAjrPd+
-         c1fmsNNKa0FlCGwUu6lJxSo8FredO3M/rTNzob1XGoL1BVUYPX22xgi+GyVQU6t3oS
-         UPJB6iv+hUafeVzTLf4OQnfCXNXqQaLUB+2iD8FI=
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by smtp02.mail.de (Postfix) with ESMTPSA id 5F873102E58;
-        Sun, 18 Mar 2018 21:09:22 +0100 (CET)
-Date:   Sun, 18 Mar 2018 21:09:08 +0100
-From:   Stefan Moch <stefanmoch@mail.de>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Simon Doodkin <helpmepro1@gmail.com>, git@vger.kernel.org,
-        Stefan Beller <sbeller@google.com>
-Subject: Re: feature-request: git "cp" like there is git mv.
-Message-ID: <20180318210908.3ed94777.stefanmoch@mail.de>
-In-Reply-To: <xmqqinb87f70.fsf@gitster-ct.c.googlers.com>
-References: <20171216013130.GB188893@aiede.mtv.corp.google.com>
-        <20171231191156.28359-1-stefanmoch@mail.de>
-        <xmqqinb87f70.fsf@gitster-ct.c.googlers.com>
+        id S1754588AbeCRVTt (ORCPT <rfc822;e@80x24.org>);
+        Sun, 18 Mar 2018 17:19:49 -0400
+Received: from mail-wr0-f172.google.com ([209.85.128.172]:39132 "EHLO
+        mail-wr0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754557AbeCRVTr (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 18 Mar 2018 17:19:47 -0400
+Received: by mail-wr0-f172.google.com with SMTP id c24so4819286wrc.6
+        for <git@vger.kernel.org>; Sun, 18 Mar 2018 14:19:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=thKVRecVUtUEhhp469T4OTiSARd1Fc33ZVksHe508C8=;
+        b=W3cCB20WvABqQcLqz8mXXATJKvtN7IMK6p1BQ+nfFrP1g31ZlQpIj4CInWLiMmkoVP
+         FCW7QVLl6x2oZ1hkJ2L0nHIgPJe23NjbYHufSdJiUKNh1rw3HZj6RrueK9beTz+CMlVg
+         z71BvfOAKZEOfS5Qmv19UMQ41u12jd0X99zd17YqkLlx4Eh24518Ihuij/vNNOaD0zWE
+         DhQ3Y4coqnTcmEelNlxLaDueuobQGj0iu9Gtq3XftjouV/cq8GCe4XmxIg8MDwnEECeN
+         gyibP1QCSDJtcYSZCnLvp95jwJV3Z/YlDcptf1j12mEdu7m/wVsbmMhHsO2GiIXMbtAd
+         0iQw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=thKVRecVUtUEhhp469T4OTiSARd1Fc33ZVksHe508C8=;
+        b=lQRz4RWK4g2msnHRDBAwhd0ieKMPvF442bCQXgQuCGcEhG3tOSA4d5xIKdwfz+0M0E
+         eNvLsOsL9Iehym7uscOLo0BlunYu4jGSfy9aOUCbVGQsR/i/p1froITRPoRvzbr9SLRg
+         1K5hJxFFkDO5mHH2Ysrexu++ArzO2YeLfTHgogd803oWleu+jDDCBTZmvLFzTMVm3p7o
+         v4k/yO61g9PDXrDgiRn7QjceLd/zF6QIsngc432Hggy9yTUO2kityWeVIyiuV61W7IIh
+         aKz5dKcW9PLyC54OEAvydXUsZdjo7tm6KVi/wwZiud8Af6gyOYuHfr6hHdQCh+dyMuNj
+         yR/A==
+X-Gm-Message-State: AElRT7HhtGLFVUxyz/q0SAIrveCWcxnozkKPX+7ctCL5R49PG25a3Vtm
+        iuUBCMSVkkcuropEl017UglYgA==
+X-Google-Smtp-Source: AG47ELvx7UtT8pdsLXYkdrvYpT8P6nSxpejFCcQA5PRRvb9PH6nCA1b4VGUS91XuOLbUMSWJA2AVcg==
+X-Received: by 10.223.133.209 with SMTP id 17mr7413729wru.143.1521407985988;
+        Sun, 18 Mar 2018 14:19:45 -0700 (PDT)
+Received: from ?IPv6:2001:a62:81d:ab01:4054:72ef:d863:f2b7? ([2001:a62:81d:ab01:4054:72ef:d863:f2b7])
+        by smtp.googlemail.com with ESMTPSA id w134sm11001016wmd.45.2018.03.18.14.19.44
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 18 Mar 2018 14:19:44 -0700 (PDT)
+Subject: Re: [PATCH v2 0/2] git-svn: --author-prog improvements
+To:     Git Mailing List <git@vger.kernel.org>, Eric Wong <e@80x24.org>
+References: <20180304112237.19254-1-asheiduk@gmail.co>
+ <20180311135835.9775-1-asheiduk@gmail.com>
+From:   Andreas Heiduk <asheiduk@gmail.com>
+Message-ID: <bf90b92a-d982-df89-7b01-b4a233181cb2@gmail.com>
+Date:   Sun, 18 Mar 2018 22:19:43 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.6.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-purgate: clean
-X-purgate: This mail is considered clean (visit http://www.eleven.de for further information)
-X-purgate-type: clean
-X-purgate-Ad: Categorized by eleven eXpurgate (R) http://www.eleven.de
-X-purgate: This mail is considered clean (visit http://www.eleven.de for further information)
-X-purgate: clean
-X-purgate-size: 3108
-X-purgate-ID: 154282::1521403762-000006B1-CE4E6B11/0/0
+In-Reply-To: <20180311135835.9775-1-asheiduk@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: de-BE
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-* Junio C Hamano <gitster@pobox.com> [2018-02-07T11:49:39-0800]:
-> Stefan Moch <stefanmoch@mail.de> writes:
->=20
-> > * Jonathan Nieder <jrnieder@gmail.com> [2017-12-15T17:31:30-0800]: =20
-> >> This sounds like a reasonable thing to add.  See builtin/mv.c for
-> >> how "git mv" works if you're looking for inspiration.
-> >>=20
-> >> cmd_mv in that file looks rather long, so I'd also be happy if
-> >> someone interested refactors to break it into multiple
-> >> self-contained pieces for easier reading (git mostly follows
-> >> https://www.kernel.org/doc/html/latest/process/coding-style.html#funct=
-ions). =20
-> >
-> > I looked at builtin/mv.c and have a rough idea how to split it
-> > up to support both mv and cp commands.
-> >
-> > But first I noticed and removed a redundant check in cmd_mv,
-> > also added a test case to check if mv --dry-run does not move
-> > the file. =20
->=20
-> I guess these two patches went unnoticed when posted at the end of
-> last year.  Reading them again, I think they are good changes.
-
-Thanks.
-
-Are such redundant checks in general a pattern worth searching
-for and cleaning up globally? Or is this rather in the category
-of cleaning up only when noticed?
-
-
-> As a no-op clean-up of a127331c ("mv: allow moving nested
-> submodules", 2016-04-19), the attached would also make sense, I
-> would think.
->=20
-> Thanks.
->=20
->  builtin/mv.c | 7 ++++---
->  1 file changed, 4 insertions(+), 3 deletions(-)
->=20
-> diff --git a/builtin/mv.c b/builtin/mv.c
-> index 9662804d23..9cb07990fd 100644
-> --- a/builtin/mv.c
-> +++ b/builtin/mv.c
-> @@ -266,10 +266,11 @@ int cmd_mv(int argc, const char **argv, const
-> char *prefix) const char *src =3D source[i], *dst =3D destination[i];
->  		enum update_mode mode =3D modes[i];
->  		int pos;
-> -		if (show_only || verbose)
-> -			printf(_("Renaming %s to %s\n"), src, dst);
-> -		if (show_only)
-> +		if (show_only) {
-> +			if (verbose)
-> +				printf(_("Renaming %s to %s\n"),
-> src, dst); continue;
-> +		}
->  		if (mode !=3D INDEX && rename(src, dst) < 0) {
->  			if (ignore_errors)
->  				continue;
->=20
-
-As Stefan Beller already noted, this changes the printing
-behavior:
-<https://public-inbox.org/git/CAGZ79kbX4uhDpdp0kH=3D8+5tj_zLWZbtbMUb5WWtOeX=
-WRQz8K3Q@mail.gmail.com/>
-
-See also the output of
-
-    git mv -n
-    git mv -n -v
-    git mv -v
-
-
-without your patch:
-
-    $ git mv -n 1 2
-    Checking rename of '1' to '2'
-    Renaming 1 to 2
-    $ git mv -n -v 1 2
-    Checking rename of '1' to '2'
-    Renaming 1 to 2
-    $ git mv -v 1 2
-    Renaming 1 to 2
-
-
-and with your patch:
-
-    $ git mv -n 1 2
-    Checking rename of '1' to '2'
-    $ git mv -n -v 1 2
-    Checking rename of '1' to '2'
-    Renaming 1 to 2
-    $ git mv -v 1 2
-
-
-Having different outputs of =E2=80=9Cgit mv -n=E2=80=9D and =E2=80=9Cgit mv=
- -n -v=E2=80=9D seems
-odd, but not necessarily wrong. However, =E2=80=9Cgit mv -v=E2=80=9D with no
-output at all, does not what the documentation says:
-
-       -v, --verbose
-           Report the names of files as they are moved.
-
-
+No comments on this one?
