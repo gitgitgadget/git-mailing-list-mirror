@@ -2,78 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F2D291F404
-	for <e@80x24.org>; Sun, 18 Mar 2018 02:32:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 406211F404
+	for <e@80x24.org>; Sun, 18 Mar 2018 04:01:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752564AbeCRCcW (ORCPT <rfc822;e@80x24.org>);
-        Sat, 17 Mar 2018 22:32:22 -0400
-Received: from mail-qk0-f174.google.com ([209.85.220.174]:36986 "EHLO
-        mail-qk0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751693AbeCRCcW (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Mar 2018 22:32:22 -0400
-Received: by mail-qk0-f174.google.com with SMTP id w6so2060744qkb.4
-        for <git@vger.kernel.org>; Sat, 17 Mar 2018 19:32:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-transfer-encoding;
-        bh=HeOtZq4TdmdlKodphOHf/1NLcL/AdXZZY3dfNQDZSTg=;
-        b=ibqh7HwZoUU6vgsD/Jp0ZTh05O6r5KvNz2smBx4jrVeS1KyYQ2eFRTxH/mBCw8V2Co
-         GAUiMWlS8gGtxYxmx/r4JOipADl+EUlvFoBFORbpJjQGasvFU0znIXkBIk7M105EBogb
-         2vM9I+7EDzLsTcNCnSXXwjRQMG0otBDfU6Cyix0aqT8EUmyqUAFQ1RdTpxnm9XW2RJeO
-         b4Yyrkxyypu2uHh/QAIKSpHxKtrYynqibSDmY7tKHDCsrjxnjaUXlBMFKKhHm/ZcNbgj
-         5QeVJFM3wiAg02mj/KinuLq5xUIspUG/SwnTpC9h9xiaVD6DJrmt1IFe0ucSaeX3C/3x
-         w4BQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=HeOtZq4TdmdlKodphOHf/1NLcL/AdXZZY3dfNQDZSTg=;
-        b=AhqH/e9dORK6/AxG4uDMECDD0voKRTx9dVGHit2uj7Blfs5vMKtk4gnrlY5ZNrN4DM
-         UQWVuXV9tQuF9db7Z6PJDgh/TwzI3AToGSYb74fIjn6yLNmvAquh0XGfGE0wteapId5l
-         flygWgLofwROXPiiZFFZqMkoZwvoX+yiQQ2yFADdL5IZsVSkUIGzxZPgzleHrvT9U0TT
-         xzlBHYMscdGLetB+QODj9ftqUY9gbFBHkfgxS7ncLMYrAMRmx6Q4+ZacV7TtfdQdkLV+
-         jzrGGp1cfXpXPpvq42tERi8sqsD5rCJphOuLn87M691+EPhwTHsk3zvqcSKU3OTkLOPL
-         b4Wg==
-X-Gm-Message-State: AElRT7EHQt83tj2k0oIS1jmLN6GHbNAMV2F1wylMmwVnzTLyt4zWybUz
-        C1qv9ekNi23GaUd8kW2K0YUKo5GWcknw0EdiFtifXA==
-X-Google-Smtp-Source: AG47ELsCSyf2Pa5QCtBfob0HNOosNR5PaOaX1XH8BGzLkRG/CB4j8aYIvEpURGNcG2WF77pVV+HbWuyYydF4iA0Mbjk=
-X-Received: by 10.55.22.28 with SMTP id g28mr10961051qkh.152.1521340341276;
- Sat, 17 Mar 2018 19:32:21 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.12.190.196 with HTTP; Sat, 17 Mar 2018 19:32:20 -0700 (PDT)
-In-Reply-To: <20180317075421.22032-35-pclouds@gmail.com>
-References: <20180317075421.22032-1-pclouds@gmail.com> <20180317075421.22032-35-pclouds@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sat, 17 Mar 2018 22:32:20 -0400
-X-Google-Sender-Auth: F2azaGmdmLDayRMHxCSAUFo6-gk
-Message-ID: <CAPig+cQXiVwrUroYqjeST3r4kwnLri=9xSrGAq+ksEeF44=HZA@mail.gmail.com>
-Subject: Re: [PATCH 34/36] t/helper: merge test-urlmatch-.. into test-tool
-To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        id S1750868AbeCREBi (ORCPT <rfc822;e@80x24.org>);
+        Sun, 18 Mar 2018 00:01:38 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:57394 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750789AbeCREBi (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 18 Mar 2018 00:01:38 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3D053D99AE;
+        Sun, 18 Mar 2018 00:01:37 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:date:message-id; s=sasl; bh=xt8UKqo5VhwG9xWE/w3PJoKjMoM
+        =; b=QxIjEJUGF41Go3rHjRkEXft47e31L3wI8h9E08rUwyHFUQljuuzjarD8xln
+        aWYdQsUbAgzTjkDVw9Ucp4Il0x6LNczlCwQpnbbxht0Q6/NSPXm0PPC+y0wRpMqI
+        zUVj095R6LBLUPzjjnGu22fjzTDZxDZ7wxLZlCD+tpYFNyoI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:date:message-id; q=dns; s=sasl; b=oDOWYJvmI96+IzxdMhPzh
+        Ub44WwlgfEiC4qupGuaaJReq+Ty5xtH3O9QdjYbBYOOrwfcdDWEHja+3WbGujRI5
+        m/xLNEih6KwUl070JPwyZTluGXW++N/16decajPDUCVc1UW9v2WKtGjMHaeFotuF
+        lgCFuTz5WbM/CTJbN8oDug=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 34BFDD99AD;
+        Sun, 18 Mar 2018 00:01:37 -0400 (EDT)
+Received: from morphine.paradise.teonanacatl.net (unknown [47.202.85.221])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8DC0CD99AC;
+        Sun, 18 Mar 2018 00:01:36 -0400 (EDT)
+From:   Todd Zullinger <tmz@pobox.com>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: [PATCH] completion: complete tags with git tag --delete/--verify
+Date:   Sun, 18 Mar 2018 00:01:35 -0400
+Message-Id: <20180318040135.30710-1-tmz@pobox.com>
+X-Mailer: git-send-email 2.17.0.rc0
+X-Pobox-Relay-ID: 0DD9899C-2A61-11E8-82C4-44CE1968708C-09356542!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Mar 17, 2018 at 3:54 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =
-<pclouds@gmail.com> wrote:
-> t/helper: merge test-urlmatch-.. into test-tool
+Completion of tag names has worked for the short -d/-v options since
+88e21dc746 ("Teach bash about completing arguments for git-tag",
+2007-08-31).  The long options were not added to "git tag" until many
+years later, in c97eff5a95 ("git-tag: introduce long forms for the
+options", 2011-08-28).
 
-Spelled out fully:
+Extend tag name completion to --delete/--verify.
 
-    t/helper: merge test-urlmatch-normalization into test-tool
+Signed-off-by: Todd Zullinger <tmz@pobox.com>
+---
+ contrib/completion/git-completion.bash | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-needs only 58 columns, so is well within the 70-72 column
-recommendation for summary line.
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 6da95b8095..c7957f0a90 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -2967,7 +2967,7 @@ _git_tag ()
+ 	while [ $c -lt $cword ]; do
+ 		i="${words[c]}"
+ 		case "$i" in
+-		-d|-v)
++		-d|--delete|-v|--verify)
+ 			__gitcomp_direct "$(__git_tags "" "$cur" " ")"
+ 			return
+ 			;;
+-- 
+2.17.0.rc0
 
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.c=
-om>
