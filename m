@@ -2,115 +2,213 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F33511F404
-	for <e@80x24.org>; Sun, 18 Mar 2018 05:28:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D80241F42D
+	for <e@80x24.org>; Sun, 18 Mar 2018 07:25:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750949AbeCRF2f (ORCPT <rfc822;e@80x24.org>);
-        Sun, 18 Mar 2018 01:28:35 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:50999 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750756AbeCRF2e (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 18 Mar 2018 01:28:34 -0400
-Received: by mail-wm0-f68.google.com with SMTP id w128so9814231wmw.0
-        for <git@vger.kernel.org>; Sat, 17 Mar 2018 22:28:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=44mGvgCGEOJpdd2jwREU+NIwovEKNS05cphx4PvzlC4=;
-        b=Z/Fl4j6htvoYbPlDuLGWqC3OzV2L6oGulLPGVxAKoHOCmc5Kce0vuNxIBcjYceRV5b
-         57dXqzpu5pnNMSBndb7RmmsG++dgtCrK9OfDYqWyM9J0FSWGk7R7cscxXcMC/WbBe981
-         7k6pcpqDVIjgzZyxNFW+oU5amPrrK6avQ6+mltw3MWC0xDl0P7o/BS5R5sxpXKfXSnuN
-         V2nTnek2N7jre1MH+TQEzAaHW0XTpzyTcITTfqFCmT5fti4lr0KFMidogNWVb/eqaTMu
-         lR8xRnEbQpqXmn+UnAd23QJiHGmpwC66vb17yc1pfLS/R+kR4kS+PWdWKjpylAj5B3JV
-         NhMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=44mGvgCGEOJpdd2jwREU+NIwovEKNS05cphx4PvzlC4=;
-        b=VXevdB9E6UGK/UmpznG/HWOpCepn4K+VCz+o0gz7LXKQmQa/xlb6LY7Po8C2sTs0iL
-         4soJVD7ZgEUAB2hMnhk91iOaQEqoLlr08Yk+wT7o8pRIk5v//sHI24WsVzrge1kCbgXv
-         H6yi4GLOZ4s8IFW8smptfiD6EQ56EJggh9NmRWQr1RDwC3sf2LIPUU8dgxIX0wcDHdvi
-         8ZRWW78LriVsvLneFMV5IO1JQSc+JxBnmFQKiRnqaTqDVJHRrnlY6OxQMt9HoQtU+4h4
-         cx/vtgnFG2Dez2zYc9lh3sGrDJUp9+wUWRVYOdm/AIuQq3lZoZxKWNeMj7TcqzECOSV5
-         fFPw==
-X-Gm-Message-State: AElRT7GqShFHFQzvXAAH1fK7trmx3X7uqMDNaSYCjLXCcrN+9zgZlpzF
-        tSkvXk9LeYXTPe/9Z/C8GCE=
-X-Google-Smtp-Source: AG47ELtsw0WSl7GgICAP+IZ6e0og2MZv/B31EHoeZJZ1d7SpA7Tz++pJpJak+PJfCd+834Dgddlz1Q==
-X-Received: by 10.28.136.74 with SMTP id k71mr5100917wmd.46.1521350913376;
-        Sat, 17 Mar 2018 22:28:33 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id c14sm12900405wmi.16.2018.03.17.22.28.32
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 17 Mar 2018 22:28:32 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Clemens Buchacher <drizzd@gmx.net>, git@vger.kernel.org,
-        manlio.perillo@gmail.com, johannes.schindelin@gmx.de
-Subject: Re: [PATCH 2/2] completion: simplify ls-files filter
-References: <1521274624-1370-1-git-send-email-drizzd@gmx.net>
-        <1521274624-1370-2-git-send-email-drizzd@gmx.net>
-        <20180318012618.32691-1-szeder.dev@gmail.com>
-Date:   Sat, 17 Mar 2018 22:28:32 -0700
-In-Reply-To: <20180318012618.32691-1-szeder.dev@gmail.com> ("SZEDER
- =?utf-8?Q?G=C3=A1bor=22's?=
-        message of "Sun, 18 Mar 2018 02:26:18 +0100")
-Message-ID: <xmqq4llex88v.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1751744AbeCRHY7 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 18 Mar 2018 03:24:59 -0400
+Received: from mout.web.de ([212.227.15.3]:42265 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751186AbeCRHY6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 18 Mar 2018 03:24:58 -0400
+Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb002
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0LkyTl-1eNZdD3uiL-00amau; Sun, 18
+ Mar 2018 08:24:39 +0100
+Date:   Sun, 18 Mar 2018 08:24:35 +0100
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     lars.schneider@autodesk.com
+Cc:     git@vger.kernel.org, gitster@pobox.com, j6t@kdbg.org,
+        sunshine@sunshineco.com, peff@peff.net,
+        ramsay@ramsayjones.plus.com, Johannes.Schindelin@gmx.de,
+        pclouds@gmail.com, Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: [PATCH v11 06/10] convert: add 'working-tree-encoding' attribute
+Message-ID: <20180318072435.GA24190@tor.lan>
+References: <20180309173536.62012-1-lars.schneider@autodesk.com>
+ <20180309173536.62012-7-lars.schneider@autodesk.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180309173536.62012-7-lars.schneider@autodesk.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Provags-ID: V03:K0:5zSRQeCzclnB5zhSfdHJRm5DTICM7M2j+1uXcgoej5htYYqjVGv
+ hOgF0glVRi+srEPN6Iuu2NFvQiJlnL+l87na4VJixStpyLG89dsZ5HhugbD4WtkHf/Q4KUk
+ llKckIS1Zd8FVaVJTX0aERvmG8b/Pq6R2fkcIKgchb7nKLT89da/ksJCk7MT1fBjQwdm6RR
+ moBVMnMd8XpU97rC1nx7w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:DFMjyzUUNkw=:8z4HxGZedodIsAQlvswaJt
+ T5OO5M5K2+fSTNNcfIKdlCFdbWGLYUfYMW3splUb2A4OwSCJyQ0XeBPXpFeA82Q8gl4rtSQRa
+ vO5j6N5PEHHflIIIskQ/1q7uwwDAWyjfkZAg/vahjzV75+/QGwz6YmgbOic3HRvMgGPoA9LHJ
+ jwoWcg/U5abClzepjBJgpLGQryV6hqCtcvlLs5Ub8LCZGZkUROzxb48j4HANbR7vIsfriztJF
+ R/etXZEKk+IB/+WdMM/5QqHffqRyDHpkhtGlD1LPECwSUH0RXRMcNegMykn1PgVsV4hdxYcvR
+ GEY3gTLxzrDA/LtfUdWJH0YuTah3BRZb2ua+xjMDL7EL2tE73x6SqQdgBfeLVFAvE8JP3qKWe
+ Lr41hFOjg5+qLpnqnX6F17fXcX4w5GAnwzG3LUhOw+XZjr2+BSm6ofEAmedwBTv3x6ehAQJID
+ P/loLC4Z8Qa2mlZzkcxBWqE0L57XighGjozhxxFWyhegHje74lgqhZBKJSezmm5U92+QQJ057
+ i0aG0IAEvGIhjEhrXNwMKtcQAQByyoQ/HtwUI0E7WIoJqNUovj6KTwQGFOAS0gwjxzPTH1J8v
+ KQELNTakUrPwuL4eI0NswyQCrffoaYncVgnEJlHzhgIMM+c6d/+Z/cgzDO1VOPOJW6DIT4zzM
+ V49G2Apw6Pm1/XcDwpYwlhh2Lp6jMnpbFdxufVuMAlP08WW7hGmWsQtTpa6ky1tKkK1NprKtK
+ L0/hegapwN8F8VOW/vTfONb0Lw5oGGvc/LWeKA+umcl+91VI+1Qd1Aa5ZGddPhQ0vCdKxHjPP
+ 1wz77jR/Qam+E9T8tLwTP2wNbyf+w==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SZEDER Gábor <szeder.dev@gmail.com> writes:
+Some comments inline
 
-> First, neither 'git ls-files' nor 'git diff-index' produce quite the
-> same order as the 'sort' utility does, e.g.:
->
->   $ touch foo.c foo-zzz.c
->   $ git add foo*
->   $ git diff-index --name-only HEAD
->   foo-zzz.c
->   foo.c
->   $ git diff-index --name-only HEAD |sort
->   foo.c
->   foo-zzz.c
+On Fri, Mar 09, 2018 at 06:35:32PM +0100, lars.schneider@autodesk.com wrote:
+> From: Lars Schneider <larsxschneider@gmail.com>
+> 
+> Git recognizes files encoded with ASCII or one of its supersets (e.g.
+> UTF-8 or ISO-8859-1) as text files. All other encodings are usually
+> interpreted as binary and consequently built-in Git text processing
+> tools (e.g. 'git diff') as well as most Git web front ends do not
+> visualize the content.
+> 
+> Add an attribute to tell Git what encoding the user has defined for a
+> given file. If the content is added to the index, then Git converts the
 
-Doesn't this depend on your locale?
+Minor comment:
+"Git converts the content"
+Everywhere else (?) "encodes or reencodes" is used.
+"Git reencodes the content" may be more consistent.
 
-    $ printf "foo%s\n" .c -zzz.c /c | LC_ALL=C sort
-    foo-zzz.c
-    foo.c
-    foo/c
 
-    $ printf "foo%s\n" .c -zzz.c /c | LC_ALL=en_US.UTF-8 sort
-    foo/c
-    foo.c
-    foo-zzz.c
+[No comments on the .gitattributes]
 
-> Second, the output of 'git ls-files' is kind of "block-sorted": if you
-> were to invoke it with the options '--cached --modified --others',
-> then it will first list all untracked files in order, then all cached
-> files in order, and finally all modified files in order.
+>  
+> diff --git a/convert.c b/convert.c
+> index b976eb968c..aa59ecfe49 100644
+> --- a/convert.c
+> +++ b/convert.c
+> @@ -7,6 +7,7 @@
+>  #include "sigchain.h"
+>  #include "pkt-line.h"
+>  #include "sub-process.h"
+> +#include "utf8.h"
+>  
+>  /*
+>   * convert.c - convert a file when checking it out and checking it in.
+> @@ -265,6 +266,78 @@ static int will_convert_lf_to_crlf(size_t len, struct text_stat *stats,
+>  
+>  }
+>  
+> +static const char *default_encoding = "UTF-8";
+> +
+> +static int encode_to_git(const char *path, const char *src, size_t src_len,
+> +			 struct strbuf *buf, const char *enc, int conv_flags)
+> +{
+> +	char *dst;
+> +	int dst_len;
+> +	int die_on_error = conv_flags & CONV_WRITE_OBJECT;
+> +
+> +	/*
+> +	 * No encoding is specified or there is nothing to encode.
+> +	 * Tell the caller that the content was not modified.
+> +	 */
+> +	if (!enc || (src && !src_len))
+> +		return 0;
 
-This is a lot more important consideration.
+(This may have been discussed before.
+ As we checked (enc != NULL) I think we can add here:)
+	if (is_encoding_utf8(enc))
+		return 0;
 
-> I have a short patch series collecting dust somewhere for a long
-> while, which pulls a couple more tricks to make git-aware path
-> completion faster, but haven't submitted it yet, because it doesn't
-> work quite that well when filenames require quoting.  Though, arguably
-> the current version doesn't work quite that well with quoted filenames
-> either, so...
-> Will try to dig up those patches.
+> +
+> +	/*
+> +	 * Looks like we got called from "would_convert_to_git()".
+> +	 * This means Git wants to know if it would encode (= modify!)
+> +	 * the content. Let's answer with "yes", since an encoding was
+> +	 * specified.
+> +	 */
+> +	if (!buf && !src)
+> +		return 1;
+> +
+> +	dst = reencode_string_len(src, src_len, default_encoding, enc,
+> +				  &dst_len);
+> +	if (!dst) {
+> +		/*
+> +		 * We could add the blob "as-is" to Git. However, on checkout
+> +		 * we would try to reencode to the original encoding. This
+> +		 * would fail and we would leave the user with a messed-up
+> +		 * working tree. Let's try to avoid this by screaming loud.
+> +		 */
+> +		const char* msg = _("failed to encode '%s' from %s to %s");
+> +		if (die_on_error)
+> +			die(msg, path, enc, default_encoding);
+> +		else {
+> +			error(msg, path, enc, default_encoding);
+> +			return 0;
+> +		}
+> +	}
+> +
+> +	strbuf_attach(buf, dst, dst_len, dst_len + 1);
+> +	return 1;
+> +}
+> +
+> +static int encode_to_worktree(const char *path, const char *src, size_t src_len,
+> +			      struct strbuf *buf, const char *enc)
+> +{
+> +	char *dst;
+> +	int dst_len;
+> +
+> +	/*
+> +	 * No encoding is specified or there is nothing to encode.
+> +	 * Tell the caller that the content was not modified.
+> +	 */
+> +	if (!enc || (src && !src_len))
+> +		return 0;
 
-Thanks.
+ Same as above:
+	if (is_encoding_utf8(enc))
+		return 0;
+
+> +
+> +	dst = reencode_string_len(src, src_len, enc, default_encoding,
+> +				  &dst_len);
+> +	if (!dst) {
+> +		error("failed to encode '%s' from %s to %s",
+> +			path, default_encoding, enc);
+> +		return 0;
+> +	}
+> +
+> +	strbuf_attach(buf, dst, dst_len, dst_len + 1);
+> +	return 1;
+> +}
+> +
+>  static int crlf_to_git(const struct index_state *istate,
+>  		       const char *path, const char *src, size_t len,
+>  		       struct strbuf *buf,
+> @@ -978,6 +1051,25 @@ static int ident_to_worktree(const char *path, const char *src, size_t len,
+>  	return 1;
+>  }
+>  
+> +static const char *git_path_check_encoding(struct attr_check_item *check)
+> +{
+> +	const char *value = check->value;
+> +
+> +	if (ATTR_UNSET(value) || !strlen(value))
+> +		return NULL;
+> +
+
+
+> +	if (ATTR_TRUE(value) || ATTR_FALSE(value)) {
+> +		error(_("working-tree-encoding attribute requires a value"));
+> +		return NULL;
+> +	}
+
+TRUE or false are values, but just wrong ones.
+If this test is removed, the user will see "failed to encode "TRUE" to "UTF-8",
+which should give enough information to fix it.
+
+> +
+> +	/* Don't encode to the default encoding */
+> +	if (!strcasecmp(value, default_encoding))
+> +		return NULL;
+ Same as above ?:
+	if (is_encoding_utf8(value))
+		return 0;
+
