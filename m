@@ -7,212 +7,95 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E4CBC1F42D
-	for <e@80x24.org>; Sun, 18 Mar 2018 08:18:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9449D1F42D
+	for <e@80x24.org>; Sun, 18 Mar 2018 08:23:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751656AbeCRISt (ORCPT <rfc822;e@80x24.org>);
-        Sun, 18 Mar 2018 04:18:49 -0400
-Received: from mail-lf0-f67.google.com ([209.85.215.67]:36177 "EHLO
-        mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751186AbeCRISr (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 18 Mar 2018 04:18:47 -0400
-Received: by mail-lf0-f67.google.com with SMTP id z143-v6so14808131lff.3
-        for <git@vger.kernel.org>; Sun, 18 Mar 2018 01:18:46 -0700 (PDT)
+        id S1752548AbeCRIXi (ORCPT <rfc822;e@80x24.org>);
+        Sun, 18 Mar 2018 04:23:38 -0400
+Received: from mail-ot0-f174.google.com ([74.125.82.174]:37766 "EHLO
+        mail-ot0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752203AbeCRIXg (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 18 Mar 2018 04:23:36 -0400
+Received: by mail-ot0-f174.google.com with SMTP id t2-v6so5179686otj.4
+        for <git@vger.kernel.org>; Sun, 18 Mar 2018 01:23:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=xpa5yPGqIISZECB6kW7CknCVFJadASTLsvrRDbboI6U=;
-        b=imyuAMSXjRwrnwG+gJ/u3L+mOKcbkjne39WbS2u5JnVtlmypvkayQiyvUZ8aBnqPv7
-         FYLrRBw5WsCSAHiIVC+Rzup7E46uBFhINBvkEEa4hRjTxvfosjl7mS91G1UbEpk6ARXC
-         UWxBQBd2X2MzW5AECLHfohoBF2G/gk46XJbKghk58gKdtFsuj560zjxam4gBOWMr4nFY
-         w3X/QlocaiDq4r7+NR1JivXeSZhPyQQPHj+7wrBxRvXUTuuckN4UfC2HgdkqjO/pMoV+
-         NsUv2AgpXywQbFoj93wTL8u6nUIawyUwM1rRtyxVhMHS92Die5Bx41FzO0CXefJ+eUwA
-         WVyQ==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=gUfmZw2i41jFVAmOTivLV2Ah+TMogKGiGtcgG6T/Ync=;
+        b=QQDpg+R9FSNNBMrbWC/hxdJ1BfqWSw6ziQ0F26sxI6tPn1VOPQeaLgyh4blWG4gt81
+         p7wYBYqXuwVXelqbnA/9q8KEOiqJISBxjBEw36W1QZRa89qRDHAZAVm9HPQduk/mLpWM
+         UL5dgs5Xff48ifUFMvfvas7Y78DqYGpFlgZO5R96GKfZTHBDymw6bboqhmlVdvy+8hhI
+         l2wHVqXa7zxMAmgjMLFNjBAvm/vqvHVyBrG3vIrquJXKiBr4G1JNAYPMniKPVSkOCAFB
+         jBVWN3xLojCcIPN8bF9rVCz9qRaqkFC/frNb0TRlRFRaY6+wb48rql902AD4IjdKe06M
+         G/ew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=xpa5yPGqIISZECB6kW7CknCVFJadASTLsvrRDbboI6U=;
-        b=khhnyYJrl9DK1oASklBNFr9yRO5ud3AL9fv3uWeMDdkH3tabqP3DVBJ3jOhFQ2LjIU
-         QtSRxt1sL7sArUflI0raovlkl3EF55hzmxh7XFvYirfjq2r+4zNTR9mKtVBEwW3ueBGJ
-         3+DQpe7x73oRgGarRzaiHO6DvivPEowsEPJOxWtwOqG2TokD9/OY77bYWd/Ghq3OXMWj
-         9raD6Ef1loLks3v5XUY85Rj/VAUp8eK+y8WrMnUdHq4DIY/L2aYDumzir3hEe6lJrd4/
-         LOZ+++KiFth1eW8G5Xhutu908OO5kitm34479gL4U1ygQyG93LiYyV+iXNf7WQ7VS3BO
-         0kGw==
-X-Gm-Message-State: AElRT7EsZRKZ4z3WWcrzRACtWelOTPf2IkzvdL+Yvl0RUI4smLhJnJ0A
-        NH8leLGK6o7Ax1OYz2Ap/VjTpg==
-X-Google-Smtp-Source: AG47ELvUNMkzYj7mI6C76pftcEkXDeO5FfjzFUzYYqZ7pHpM0QjGsmTy8Jqr5GF+x6B8A6odUBlCog==
-X-Received: by 10.46.134.25 with SMTP id a25mr5104278lji.87.1521361125754;
-        Sun, 18 Mar 2018 01:18:45 -0700 (PDT)
-Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id c76-v6sm237587lfh.17.2018.03.18.01.18.44
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 18 Mar 2018 01:18:44 -0700 (PDT)
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     peff@peff.net
-Cc:     git@vger.kernel.org, larsxschneider@gmail.com, pclouds@gmail.com,
-        Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] Makefile: detect compiler and enable more warnings in DEVELOPER=1
-Date:   Sun, 18 Mar 2018 09:18:34 +0100
-Message-Id: <20180318081834.16081-1-pclouds@gmail.com>
-X-Mailer: git-send-email 2.17.0.rc0.347.gf9cf61673a
-In-Reply-To: <20180317160832.GB15772@sigill.intra.peff.net>
-References: <20180317160832.GB15772@sigill.intra.peff.net>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=gUfmZw2i41jFVAmOTivLV2Ah+TMogKGiGtcgG6T/Ync=;
+        b=aPj5a8SBgyP11z5rnLbSgUTqoo5HmMyTmzJH5t7wohRQDuIOhW3iCAt9f1PPX80fAS
+         k3Cck9hWWvqMZgatRwusCqI3puNwtE+lisK8ozk0t+AFxOVpHE/D4JBO0SvkR+BaakkL
+         iWfzFxunDIRMfMbievTd1vvoQwT4GPlX4+cbSVF+X05AX6MalgEpaKuVZ47VVlCnlUif
+         P8fRHcdXI2RJDoNwuSC5jWpsDIygr8w6Zs04QCoL1hpDdyE7NO+D/fU9XsCEXmXHRN98
+         Xt+cJIi3m3Cc2BsGVHM6dEaZzoYG+ZxuR2NsCTZ7UQEKbSD1O1sxQ2j0YB+IKH4h5i5G
+         QKwQ==
+X-Gm-Message-State: AElRT7F+8OsvIuWlenfgWqDRKuq71amVHlPHxVpDDJAfBqpIb6vUhceu
+        KYOXGltvZZQK5mwJASe4kMoqC+nA3mznDPCURH0=
+X-Google-Smtp-Source: AG47ELvu9nTAPL4Vxfy5IfOJQIxNhI3H3bZ+wOtNkAEyydZF6dPD2Am+AKbQJg3ltmnVItVPMFfcxdQwWbIk+RPSdFQ=
+X-Received: by 2002:a9d:3698:: with SMTP id h24-v6mr5430847otc.173.1521361416366;
+ Sun, 18 Mar 2018 01:23:36 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Received: by 10.74.154.146 with HTTP; Sun, 18 Mar 2018 01:23:05 -0700 (PDT)
+In-Reply-To: <xmqq8taqx949.fsf@gitster-ct.c.googlers.com>
+References: <20180316183200.31014-1-pclouds@gmail.com> <20180317141033.21545-1-pclouds@gmail.com>
+ <20180317141033.21545-10-pclouds@gmail.com> <xmqq8taqx949.fsf@gitster-ct.c.googlers.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Sun, 18 Mar 2018 09:23:05 +0100
+Message-ID: <CACsJy8AXSCw1b0FpsUv85kZ_HYhHy9OHeDZGGFFg9pOno8GfNw@mail.gmail.com>
+Subject: Re: [PATCH v5 09/11] pack-objects: shrink size field in struct object_entry
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Eric Wong <e@80x24.org>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The set of extra warnings we enable when DEVELOPER has to be
-conservative because we can't assume any compiler version the
-developer may use. Detect the compiler version so we know when it's
-safe to enable -Wextra and maybe more.
+On Sun, Mar 18, 2018 at 6:09 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> +     uint32_t truncated_limit = (uint32_t)limit;
+>> +
+>> +     return limit == truncated_limit;
+>> +}
+>
+> I am guessing that a compiler that is clever enough will make this
+> function a no-op on a 32-bit arch and that is why it is a static
+> inline function?
 
-Helped-by: Jeff King <peff@peff.net>
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- -dumpversion does not work correctly for clang. So I use "-v" instead
- which seems to produce the same output for both gcc and clang (with a
- minor difference in freebsd where it says "FreeBSD clang" instead of
- just "clang"). Not sure if it helps your "cc on debian" case though
+It's a separate function because I don't want to duplicate this ==
+logic twice. Even if the compiler does not optimize this, it's still
+much cheaper than oe_sze() which involves disk access.
 
- Tested with clang-5.0.1 and gcc-6.4.0 (too lazy to test on freebsd
- clang 3.4.1 but I don't expect surprises there)
+>> +static inline int oe_size_less_than(const struct object_entry *e,
+>> +                                 unsigned long limit)
+>> +{
+>> +     if (e->size_valid)
+>> +             return e->size_ < limit;
+>
+> e->size_ is the true size so we can compare it to see if it is smaller
+> than limit.
+>
+>> +     if (contains_in_32bits(limit))
+>> +             return 1;
+>
+> If limit is small enough, and because e->size_valid means e->size_
+> does not fit in 32-bit, we know size is larger than limit.
+> Shouldn't we be returning 0 that means "no, the size is not less
+> than limit" from here?
 
- I will still need to pull more modern gcc/clang on travis, but that
- can wait until this patch settles.
-
- Makefile        | 11 +----------
- config.mak.dev  | 28 +++++++++++++++++++++++++++
- detect-compiler | 50 +++++++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 79 insertions(+), 10 deletions(-)
- create mode 100644 config.mak.dev
- create mode 100755 detect-compiler
-
-diff --git a/Makefile b/Makefile
-index a1d8775adb..9dfd152a1e 100644
---- a/Makefile
-+++ b/Makefile
-@@ -442,15 +442,6 @@ GIT-VERSION-FILE: FORCE
- # CFLAGS and LDFLAGS are for the users to override from the command line.
- 
- CFLAGS = -g -O2 -Wall
--DEVELOPER_CFLAGS = -Werror \
--	-Wdeclaration-after-statement \
--	-Wno-format-zero-length \
--	-Wold-style-definition \
--	-Woverflow \
--	-Wpointer-arith \
--	-Wstrict-prototypes \
--	-Wunused \
--	-Wvla
- LDFLAGS =
- ALL_CFLAGS = $(CPPFLAGS) $(CFLAGS)
- ALL_LDFLAGS = $(LDFLAGS)
-@@ -1051,7 +1042,7 @@ include config.mak.uname
- -include config.mak
- 
- ifdef DEVELOPER
--CFLAGS += $(DEVELOPER_CFLAGS)
-+include config.mak.dev
- endif
- 
- comma := ,
-diff --git a/config.mak.dev b/config.mak.dev
-new file mode 100644
-index 0000000000..59aef342c4
---- /dev/null
-+++ b/config.mak.dev
-@@ -0,0 +1,28 @@
-+CFLAGS += -Werror
-+CFLAGS += -Wdeclaration-after-statement
-+CFLAGS += -Wno-format-zero-length
-+CFLAGS += -Wold-style-definition
-+CFLAGS += -Woverflow
-+CFLAGS += -Wpointer-arith
-+CFLAGS += -Wstrict-prototypes
-+CFLAGS += -Wunused
-+CFLAGS += -Wvla
-+
-+COMPILER_FEATURES := $(shell ./detect-compiler $(CC))
-+
-+ifneq ($(filter clang4,$(COMPILER_FEATURES)),)
-+CFLAGS += -Wtautological-constant-out-of-range-compare
-+endif
-+
-+ifneq ($(or $(filter gcc6,$(COMPILER_FEATURES)),$(filter clang4,$(COMPILER_FEATURES))),)
-+CFLAGS += -Wextra
-+CFLAGS += -Wmissing-prototypes
-+CFLAGS += -Wno-empty-body
-+CFLAGS += -Wno-missing-field-initializers
-+CFLAGS += -Wno-sign-compare
-+CFLAGS += -Wno-unused-function
-+CFLAGS += -Wno-unused-parameter
-+ifneq ($(filter gcc6,$(COMPILER_FEATURES)),)
-+CFLAGS += -Wno-maybe-uninitialized
-+endif
-+endif
-diff --git a/detect-compiler b/detect-compiler
-new file mode 100755
-index 0000000000..bc2ea39ef5
---- /dev/null
-+++ b/detect-compiler
-@@ -0,0 +1,50 @@
-+#!/bin/sh
-+#
-+# Probe the compiler for vintage, version, etc. This is used for setting
-+# optional make knobs under the DEVELOPER knob.
-+
-+CC="$*"
-+
-+# we get something like (this is at least true for gcc and clang)
-+#
-+# FreeBSD clang version 3.4.1 (tags/RELEASE...)
-+get_version_line() {
-+	"$CC" -v 2>&1 | grep ' version '
-+}
-+
-+get_family() {
-+	get_version_line | sed 's/^\(.*\) version [0-9][^ ]* .*/\1/'
-+}
-+
-+get_version() {
-+	get_version_line | sed 's/^.* version \([0-9][^ ]*\) .*/\1/'
-+}
-+
-+print_flags() {
-+	family=$1
-+	version=$(get_version | cut -f 1 -d .)
-+
-+	# Print a feature flag not only for the current version, but also
-+	# for any prior versions we encompass. This avoids needing to do
-+	# numeric comparisons in make, which are awkward.
-+	while test "$version" -gt 0
-+	do
-+		echo $family$version
-+		version=$((version - 1))
-+	done
-+}
-+
-+case "$(get_family)" in
-+gcc)
-+	print_flags gcc
-+	;;
-+*clang)
-+	print_flags clang
-+	;;
-+"FreeBSD clang")
-+	print_flags clang
-+	;;
-+*)
-+	: unknown compiler family
-+	;;
-+esac
+Argh!!! This logic keeps messing with my brain.
 -- 
-2.17.0.rc0.347.gf9cf61673a
-
+Duy
