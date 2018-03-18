@@ -2,61 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 04CF81F42D
-	for <e@80x24.org>; Sun, 18 Mar 2018 08:47:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6E07B1FAE2
+	for <e@80x24.org>; Sun, 18 Mar 2018 08:49:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752092AbeCRIrW (ORCPT <rfc822;e@80x24.org>);
-        Sun, 18 Mar 2018 04:47:22 -0400
-Received: from mail-qt0-f181.google.com ([209.85.216.181]:34919 "EHLO
-        mail-qt0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751003AbeCRIrV (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 18 Mar 2018 04:47:21 -0400
-Received: by mail-qt0-f181.google.com with SMTP id z14so15113484qti.2
-        for <git@vger.kernel.org>; Sun, 18 Mar 2018 01:47:21 -0700 (PDT)
+        id S1753370AbeCRIty (ORCPT <rfc822;e@80x24.org>);
+        Sun, 18 Mar 2018 04:49:54 -0400
+Received: from mail-oi0-f54.google.com ([209.85.218.54]:36123 "EHLO
+        mail-oi0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751003AbeCRItx (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 18 Mar 2018 04:49:53 -0400
+Received: by mail-oi0-f54.google.com with SMTP id u73so11979263oie.3
+        for <git@vger.kernel.org>; Sun, 18 Mar 2018 01:49:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-transfer-encoding;
-        bh=+QcEdmXa2G4y2ay1/SPf6rxRPwRErlX1e6J5jul+bsU=;
-        b=FaLhTFc+x0CiVLP1rDqCceNIAFGJhi/fg/XsdYietq0cpPhhHBoKRInKy0SORVSy87
-         viQsIuQbe4uEWans0Bzh3j0FhC6EXlXyIwnOD6IWudwaUippu39vhreD5O2r1zVlRg1f
-         wAHk7zGdeFogctlOkRHRbf94E9t1zQUhi12pySlin0JhCG47VVUNTW4pbzdAqAbH0MEk
-         VotD2KYVAkjRlMjZ+KWPYbcBI+jmssQ7AGIqWIa3LmSgkR1vt2ZgNzg3oJHsqueuXM8u
-         8NO5WLvAlF0bM/KtXMlKVqr54jjZBEbqDaNVAXN+T9tmyXvB2eCAJrA4OTvNjp5v897g
-         8Xew==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=aUU2G7j/GkzaFnlVPQj2AkKPfghU/HgX5yewtZ705pY=;
+        b=AdMytF+QvO/EJLLN7CVUT/oydo9BaGE+slIAklB2VVf4G8lhB47/SA/uAxv6hv0WBU
+         Af3OG63crQfs7wCurpBo+NAjM96pAkNGYtEt85fqQVUgwVNSS8RIIBF5RBrgfxTx0tWI
+         ttBX3TA2jthFcaZwZqCnik655ijkgus0psMTHNudicPuIdEq08+tikIuohFDVo7fDLog
+         5e88fdcN2XjDdNSUZvsxHYCHx0sbjPYS41naBWx1GUz++GSvk/4FBMIbWQMJ87GYe4A7
+         FdpiobHW1kTQuhUt9hiOPuylu3kYW2O0OK0l71DL1pXCrmMprVm00MgxzMmREvD7REkJ
+         CWFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=+QcEdmXa2G4y2ay1/SPf6rxRPwRErlX1e6J5jul+bsU=;
-        b=DfPo2y03Z88u5ZbqaKETwGO/Ky8V5mS3a3d9CvRRMVGoPWTk3/pq0t22zJJHxdtPLU
-         rdm0C+k9mrGK8wkQuh7wEkJrHhxQpDH37M5No4DM6hTt5zGpzITjYDuNnkUprKbn+s3H
-         GnF5Hw/CCAmgHTPaL332BhMG11x7PNqt6Y1Kvr5O+CGJb7lpABlPF49PkOIT0pd+etoO
-         XWT+j2R5AisnAUprspxE7xD0gHmgzLcO7Gpafwq4Ss6xJ6rutrrN2VO3VccbDIAQEPbc
-         cgebS+sByVQU/VdnVPmykQ+VS9AkV7WSB29SY7Vo601ne4L6qlZwd7MTqFA4ZW7+DlFC
-         Mbjw==
-X-Gm-Message-State: AElRT7G9b2Y+wBJ5X+lpOxR82qZh6f5chwRQuBbpz9xmTO6JXHvag8dI
-        cKZpqjZnljbagV09OftN6TGqgKAEKZah4XWaOJ8=
-X-Google-Smtp-Source: AG47ELvLbjOPJ9+odX/NuPX5majDo82fz2lx0q7nCm0sOxVa1WxX27ObZxWfTC+AHZNKbLcs8X90HkfZwaNErlO1PGs=
-X-Received: by 10.200.1.2 with SMTP id e2mr6885957qtg.121.1521362841160; Sun,
- 18 Mar 2018 01:47:21 -0700 (PDT)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=aUU2G7j/GkzaFnlVPQj2AkKPfghU/HgX5yewtZ705pY=;
+        b=DilJgLdyVqXReBDQN4FMIu+JpmGj7qatWsf5lty+5s+GCwXTdzgVnGNqiQTNhEtIUi
+         6lnnPkiUVzcYvWkCXO5r4lqxT7CaOnz5LjBXdQYfNNxDhMuZ0oIykqPWkDzjdJea0n48
+         bGqDBKDaH08+mU1huzYIBAr3KlBGiFRGc/M6y2x3fLKd8LtkE53yQvFscoGw0SdHlUs8
+         KV+lx/tcnKeWxggmr7Eligo0QuF28ER3MQ5fVZNaarxKwpB9TLKUtnBcAXVP4lhB6DAH
+         GTHvoZLR3u0BF4qaxTy1BbEAWep5UmUczMMroOTr1cw4cboYyCVEIhXSizD7Gtpyre1k
+         FTyQ==
+X-Gm-Message-State: AElRT7HsEG3r6Fp29dK1LWW0xgIHBXO3bgCwLPE97f+Tbe0bu6MMUOYC
+        1pKmHGEj5Za3NJSQHomiy92Am6uGhWYnAwDhgCg=
+X-Google-Smtp-Source: AG47ELsdw0ZrQk48IBBnu+xProVyYHcbXbpPX4t6QJjjDVOtAe09ncX/54V0QjkkN3SVNo1d0ualK3d/PZhBmhyBOBw=
+X-Received: by 10.202.64.85 with SMTP id n82mr4886740oia.30.1521362992985;
+ Sun, 18 Mar 2018 01:49:52 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.12.190.196 with HTTP; Sun, 18 Mar 2018 01:47:20 -0700 (PDT)
-In-Reply-To: <CACsJy8CeXZJashmh+sLykRR4Mm_EwnASMVyB-4ztEcfQXU7MXw@mail.gmail.com>
-References: <20180317075421.22032-1-pclouds@gmail.com> <20180317075421.22032-5-pclouds@gmail.com>
- <CAPig+cTSqxLTDoq3xGAmf1xCyCX0jvwyoSL5GApgaNg5PVPGGg@mail.gmail.com> <CACsJy8CeXZJashmh+sLykRR4Mm_EwnASMVyB-4ztEcfQXU7MXw@mail.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 18 Mar 2018 04:47:20 -0400
-X-Google-Sender-Auth: AfK7_LD78kM11h4pEXmmGqo7uHo
-Message-ID: <CAPig+cRGpD1_U5PgO=-1wrsiyWqY4GmE3tWNdgCnuAh7PUjvHg@mail.gmail.com>
-Subject: Re: [PATCH 04/36] t/helper: merge test-lazy-init-name-hash into test-tool
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Git List <git@vger.kernel.org>
+Received: by 10.74.154.146 with HTTP; Sun, 18 Mar 2018 01:49:22 -0700 (PDT)
+In-Reply-To: <87muz6cwcu.fsf@evledraar.gmail.com>
+References: <20180316183200.31014-1-pclouds@gmail.com> <20180317141033.21545-1-pclouds@gmail.com>
+ <20180317141033.21545-12-pclouds@gmail.com> <87muz6cwcu.fsf@evledraar.gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Sun, 18 Mar 2018 09:49:22 +0100
+Message-ID: <CACsJy8D8ZrzyNE=JAGEnENhtGnhHvB4vL2B-tex=Z2=D2Mx4ZQ@mail.gmail.com>
+Subject: Re: [PATCH v5 11/11] pack-objects.h: reorder members to shrink struct object_entry
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Eric Wong <e@80x24.org>, Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
@@ -64,47 +64,44 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Mar 18, 2018 at 4:25 AM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Sun, Mar 18, 2018 at 3:11 AM, Eric Sunshine <sunshine@sunshineco.com> =
-wrote:
->> On Sat, Mar 17, 2018 at 3:53 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc D=
-uy <pclouds@gmail.com> wrote:
->>> -extern int test_lazy_init_name_hash(struct index_state *istate, int tr=
-y_threaded);
->>> +extern int lazy_init_name_hash_for_testing(struct index_state *istate,=
- int try_threaded);
->>
->> I get why you renamed this since the "main" function in the test
->> program wants to be called 'test_lazy_init_name_hash'...
->>
->>> diff --git a/t/helper/test-lazy-init-name-hash.c b/t/helper/test-lazy-i=
-nit-name-hash.c
->>> @@ -9,6 +10,9 @@ static int perf;
->>> +static int (*init_name_hash)(struct index_state *istate, int try_threa=
-ded) =3D
->>> +       lazy_init_name_hash_for_testing;
->>> +
->>> @@ -33,9 +37,9 @@ static void dump_run(void)
->>>         if (single) {
->>> -               test_lazy_init_name_hash(&the_index, 0);
->>> +               init_name_hash(&the_index, 0);
->>
->> ... but I'm having trouble understanding why this indirection through
->> 'init_name_hash' is used rather than just calling
->> lazy_init_name_hash_for_testing() directly. Am I missing something
->> obvious or is 'init_name_hash' just an unneeded artifact of an earlier
->> iteration before the rename in cache.{c,h}?
+On Sat, Mar 17, 2018 at 8:53 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
 >
-> Nope. It just feels too long to me and because we're already in the
-> test I don't feel the need to repeat _for_testing everywhere. If it's
-> confusing, I'll remove init_name_hash.
+> On Sat, Mar 17 2018, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy jotted:
+>
+>> Previous patches leave lots of holes and padding in this struct. This
+>> patch reorders the members and shrinks the struct down to 80 bytes
+>> (from 136 bytes, before any field shrinking is done) with 16 bits to
+>> spare (and a couple more in in_pack_header_size when we really run out
+>> of bits).
+>
+> Given what I mentioned in 87po42cwql.fsf@evledraar.gmail.com just now I
+> think we should add this to the commit message.
+>
+>     This is the last in a series of memory reduction patches (see
+>     "pack-objects: a bit of document about struct object_entry" for the
+>     first one).
+>
+>     Overall they've reduced repack memory size on linux.git from 3.747G
+>     to 3.424G, or by around 320M, a decrease of 8.5%. The runtime of
+>     repack has stayed the same throughout this series. =C3=86var's testin=
+g on
+>     a big monorepo he has access to (bigger than linux.git) has shown a
+>     7.9% reduction, so the overall expected improvement should be
+>     somewhere around 8%.
+>
+>     See 87po42cwql.fsf@evledraar.gmail.com on-list
+>     (https://public-inbox.org/git/87po42cwql.fsf@evledraar.gmail.com/)
+>     for more detailed numbers and a test script used to produce the
+>     numbers cited above.
 
-Without an explanatory in-code comment, I'd guess that someone coming
-across this in the future will also stumble over it just like I did in
-the review.
+Yeah.
 
-What if, instead, you rename test_lazy_init_name_hash() to
-lazy_init_name_hash_test(), shifting 'test' from the front to the back
-of the name? That way, the name remains the same length at the call
-sites in the test helper, and you don't have to introduce the
-confusing, otherwise unneeded 'init_name_hash'.
+I probably should add something that was on my mind but never written
+out. These shrinking and packing definitely slow down access to these
+struct members (more instructions to read or write). However, since
+pack-objects is mostly IO-bound, and when it's CPU-bound, I think the
+hot path is either inflating objects or generating deltas, these
+slowdowns do not matter (and smaller cache footprint helps too)
+--=20
+Duy
