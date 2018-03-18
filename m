@@ -7,59 +7,59 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1B4A91FAE2
-	for <e@80x24.org>; Sun, 18 Mar 2018 00:16:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DB4891F404
+	for <e@80x24.org>; Sun, 18 Mar 2018 00:24:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752721AbeCRAQj (ORCPT <rfc822;e@80x24.org>);
-        Sat, 17 Mar 2018 20:16:39 -0400
-Received: from mail-wr0-f195.google.com ([209.85.128.195]:37708 "EHLO
-        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751849AbeCRAQj (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Mar 2018 20:16:39 -0400
-Received: by mail-wr0-f195.google.com with SMTP id z12so15127772wrg.4
-        for <git@vger.kernel.org>; Sat, 17 Mar 2018 17:16:38 -0700 (PDT)
+        id S1752548AbeCRAYy (ORCPT <rfc822;e@80x24.org>);
+        Sat, 17 Mar 2018 20:24:54 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:42808 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751867AbeCRAYx (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Mar 2018 20:24:53 -0400
+Received: by mail-wr0-f193.google.com with SMTP id s18so15041298wrg.9
+        for <git@vger.kernel.org>; Sat, 17 Mar 2018 17:24:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=e8r5jDeJjN8LbmB194DTcYhyJMQDzg7ajiq0Yy1xfek=;
-        b=phyXYiPhlM2CRado8Zt2grjmnCnCuIfzE3OIfs4RYdEkj8m485sr3JMn6nZYR9YLp5
-         EnaAEileF4r/pTfh587XU5K03p2Wi3Ig8iwKWr1089rtzWJrlSRO0MghHSuCy5m3EJu3
-         4f4s+jC/jFK2A87s3YWStSbbfM8TqepgCWgILBURekfG9bdu0PWhXwJHJjbTPFoWfXbr
-         WoiIcqPNBjBRU9a5thaNF4mO/SaI2OO0vBSTrdigMDOZqyyvKDjdHB+uZvOPawQ/u3AP
-         +mrw2MkB8p70wApgBxlSmz9qFUkq4UIlR0csn1umMuDsHSEm9JQVeT2puP/PKVC6/D/b
-         lCJQ==
+        bh=DTDSbt0OYMvNZe8gy7LNTcLQ020kN69Bor+WH8SAygc=;
+        b=NXVpe7iqXEXOEWvlzv0aFAITkTG2a0EvCbVxU7B7nBx0Eh8EET0tPAUkM7YWgkT2Nh
+         dH88T1TW9Go5MzgdwNAV3m2kKpW/BLLjgDeAtyxZM8iG/0SJcx8arRm93FmDNrubi8hj
+         rfJ7JS9mDb6ya6YhRZEKap7xgbGMIEuYtbYF0Kkl9/6hgGzSecSkPoBycE5fb/CNzd1P
+         6gTVI+MMEeeIkEL71+MjrFBWB5j6O83X+/EniCxtnucf+h8NZs1vlwp0FjdkmkhbEoao
+         u+PFkGExDscsBAOwqNcsByfbQzWxQEZe/Md9oS+TO8+AWCUHbe6nT2FsmodGhdyOJKSe
+         MgpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=e8r5jDeJjN8LbmB194DTcYhyJMQDzg7ajiq0Yy1xfek=;
-        b=WGJGGNydU01N7XQuFn+/OTvEZWbmyA2nphB6poveqpYjorUhI7MPyB+RcbcVSLDlkC
-         Nb4bVia4WFjKSDRPiTeTw162LqUBZXWYy0qSD53haNj+/4DB64qh33Da7CwBU7lg/2p1
-         s++JcadJG9I2d+VYejMDfwioo+Fy8YS8Z1kM0jEebwjSq3nrlXlqJK2jAyFZWISuylTS
-         QrDhE++mRq1jQlEKl6PWBDOu2Jlj1uQp4rVN3rC2+xRepp8VtEsOFg53dUmIbYyOrS4H
-         4e+gcTtqN1WVMd9rZZ1P0+qFSktbvefJqyM1+MFYBCfa9JNhvzGi423dP3ddnFw1kF1d
-         wpAg==
-X-Gm-Message-State: AElRT7FOFeBzVyGKw7RYQColav5/n+ytiVktfYmLbob2/w96FtpSV+EG
-        Qsflsv4hE6IHIzdLsVwKOFI=
-X-Google-Smtp-Source: AG47ELt7tRbJ0IxyB4q05qbHnwOMIU7CYRJFT2pXTINhk0XP52QbELEhbcmyln9NGy5S/ZqdkyZR2A==
-X-Received: by 10.223.133.197 with SMTP id 5mr4513519wru.130.1521332197786;
-        Sat, 17 Mar 2018 17:16:37 -0700 (PDT)
+        bh=DTDSbt0OYMvNZe8gy7LNTcLQ020kN69Bor+WH8SAygc=;
+        b=DmVvl8SWNzzSt2i8vVePmM73RsJksIpqLOpfrHkfZxHAetiVpzSkOtGsds21kcr5Gc
+         JBb5/kyYiIMqBDMD/nOZpcdkWagSvCeteZ2mJiUjWsm8FO6/SBqXnd4DuYnet2PQo39H
+         iZE2kN+a+gZFIerxEAIgBhzRFvpQ/tGNUaxkhimq6mCPLCVSTkfstMi/O1nUV0QSTlI5
+         MSmSjsqJrAheEUahrzqCofGY7HOy6rQAGmY/aTEzbGdr/aiA7BHZk2J6Mh6wArMTT60T
+         OACksiH/XFE027PMMJja2si3T1bhJYf9M/Xgg6vbUbhyBfTTeMLuyGgdrVWPp3xNNkmt
+         y2eQ==
+X-Gm-Message-State: AElRT7EOK4DIXVVvUPTrsy6VuLFMVc+URBs0tg26dXA+kS6z9ATGlQ9q
+        DVYxkpTkh7z1FZDZ0jURTH8=
+X-Google-Smtp-Source: AG47ELt4w70tCeCsfpWkQVQ3yLc/A3k7FhFSNZMPZCN2TdWl7unsqVirfiPQHe3/X6wvQsBF21MDmw==
+X-Received: by 10.223.183.16 with SMTP id l16mr5818534wre.214.1521332692225;
+        Sat, 17 Mar 2018 17:24:52 -0700 (PDT)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id u62sm11239056wma.15.2018.03.17.17.16.37
+        by smtp.gmail.com with ESMTPSA id l41sm17714903wrl.2.2018.03.17.17.24.50
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 17 Mar 2018 17:16:37 -0700 (PDT)
+        Sat, 17 Mar 2018 17:24:51 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Clemens Buchacher <drizzd@gmx.net>
-Cc:     git@vger.kernel.org, manlio.perillo@gmail.com,
-        johannes.schindelin@gmx.de
-Subject: Re: [PATCH 2/2] completion: simplify ls-files filter
-References: <1521274624-1370-1-git-send-email-drizzd@gmx.net>
-        <1521274624-1370-2-git-send-email-drizzd@gmx.net>
-Date:   Sat, 17 Mar 2018 17:16:36 -0700
-In-Reply-To: <1521274624-1370-2-git-send-email-drizzd@gmx.net> (Clemens
-        Buchacher's message of "Sat, 17 Mar 2018 09:17:04 +0100")
-Message-ID: <xmqqk1uaxmor.fsf@gitster-ct.c.googlers.com>
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Subject: Re: [PATCH v3 0/4] worktree: teach "add" to check out existing branches
+References: <20180204221305.28300-1-t.gummerer@gmail.com>
+        <20180317220830.30963-1-t.gummerer@gmail.com>
+Date:   Sat, 17 Mar 2018 17:24:50 -0700
+In-Reply-To: <20180317220830.30963-1-t.gummerer@gmail.com> (Thomas Gummerer's
+        message of "Sat, 17 Mar 2018 22:08:26 +0000")
+Message-ID: <xmqqfu4yxmb1.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -68,40 +68,24 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Clemens Buchacher <drizzd@gmx.net> writes:
+Thomas Gummerer <t.gummerer@gmail.com> writes:
 
-> When filtering the ls-files output we take care not to touch absolute
-> paths. This is redundant, because ls-files will never output absolute
-> paths. Furthermore, sorting the output is also redundant, because the
-> output of ls-files is already sorted.
+> Previous rounds are at <20180121120208.12760-1-t.gummerer@gmail.com>
+> and <20180204221305.28300-1-t.gummerer@gmail.com>.  Thanks Duy, Eric
+> and Junio for the comments on the previous round.
 >
-> Remove the unnecessary operations.
->
-> Signed-off-by: Clemens Buchacher <drizzd@gmx.net>
-> ---
+> Junio: I know it is the rc period right now, but the topic is also
+> already queued in 'pu', so I wasn't sure if you prefer me submitting
+> this now, or after 2.17 is released.  I'm happy to resend this once
+> 2.17 is out if that makes it easier for you.
 
-Makes sense, and I think you can and should just directly jump to
-this concluding state without having an intermediate "sed" version.
-The fact that the code does not have to worry about absolute paths
-and unsorted input is shared with the original version, too, so the
-proposed log message for this one applies equally well to such a
-squashed patch.
+Mail archives would not forget messages easily, so it is OK if you
+sent early.  
 
+You just need to set expectations low enough, though ;-) Topics that
+are not in 'next' before -rc1 is tagged will not be in the upcoming
+release unless there is an extraordinary reason, and reviews,
+replacing in 'pu', and advancing topics to 'next' will all get lower
+priority than keeping an eye on breakages in what is already in
+'master' until the final.
 
-
->  contrib/completion/git-completion.bash | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-> index e3ddf27..394c3df 100644
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -384,7 +384,7 @@ __git_index_files ()
->  	local root="${2-.}" file
->  
->  	__git_ls_files_helper "$root" "$1" |
-> -	sed -e '/^\//! s#/.*##' | sort | uniq
-> +	cut -f1 -d/ | uniq
->  }
->  
->  # Lists branches from the local repository.
