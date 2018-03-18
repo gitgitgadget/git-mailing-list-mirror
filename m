@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A53B91FAE4
-	for <e@80x24.org>; Sun, 18 Mar 2018 14:25:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D3EB01FAE2
+	for <e@80x24.org>; Sun, 18 Mar 2018 14:25:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754325AbeCROZp (ORCPT <rfc822;e@80x24.org>);
-        Sun, 18 Mar 2018 10:25:45 -0400
-Received: from mail-lf0-f68.google.com ([209.85.215.68]:36983 "EHLO
-        mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754295AbeCROZn (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 18 Mar 2018 10:25:43 -0400
-Received: by mail-lf0-f68.google.com with SMTP id y19-v6so21739634lfd.4
-        for <git@vger.kernel.org>; Sun, 18 Mar 2018 07:25:42 -0700 (PDT)
+        id S1754338AbeCROZt (ORCPT <rfc822;e@80x24.org>);
+        Sun, 18 Mar 2018 10:25:49 -0400
+Received: from mail-lf0-f66.google.com ([209.85.215.66]:45873 "EHLO
+        mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754305AbeCROZo (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 18 Mar 2018 10:25:44 -0400
+Received: by mail-lf0-f66.google.com with SMTP id h127-v6so21680621lfg.12
+        for <git@vger.kernel.org>; Sun, 18 Mar 2018 07:25:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=BDMP+3w6q7Z3zjvSBuf5589LRJJYdDUT6HWouHxkcbo=;
-        b=AuBzkxMlhlSC4Nl5icqGUoPyF4p2qh01qjSuLryQGjKnjkMTSkycGxV0//W9nKt14F
-         l059X4sADC0sc2+PMMYXTKkRX1eeCkp2V4EEndK0dwh0HpHvlIRtWYqAiFBTXK3HuFQn
-         HmNAh694CMXqwAJmp/VDHlxKrHtkERvtdl98S7nHC0UZYLqkMx0zB2nXGCsw4WZbdBTh
-         cAPpeifbj/AqiX3w33mAQBcjtqwJUGyoDjZdDRibqmvVAFqeBqPlYCgA8Ua0lR+NRold
-         jBX/kwHvJxSa9CkgeG1I0bWbnrN890lvDtgEPjB1ob1LQdpt1zMWViF2E3LzFRqJGi/s
-         2dKg==
+        bh=OmfKEAbIi6WIU7d2CttL3tooXGn5B0Auo+RM3DLcJ3E=;
+        b=lCVQROeDz9eZRl7pt3IF+dO9XNGNmoWfuTVaBQvKjmmZOwWTE3iufr/48ydaWQO/oX
+         vVhJxIcxb2ubGqlySdxfzydd75ilD+quJSt9vhESo/B7O7CP0n0S7ZMlPlf70WQovjEO
+         miLnHqrk0Zl9t1RVP2Fh+o46BYiN7yQT+0AK3Bf0RZzeScE9p6e4IfVIDzxr+YSV1yX+
+         q0ZkdGcMjXgTSy+0bX4xKabX44u6VeOUKcOqZTL3yVR3//N3/hm2gIXUvMqHpA4/ClfJ
+         gjAUCKmkvUrrrQQLTbKjToaaC1slg0D3w9F3E/1PJeOHNHYLy0lTXdpVHqpIXWL2XdUC
+         Qzcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=BDMP+3w6q7Z3zjvSBuf5589LRJJYdDUT6HWouHxkcbo=;
-        b=kSTdsQ/VZxF36xBj5FgM9lbUk2M/ZSN5jnUHQX9PJ5s4Reo7O2uzQ/FsZltG1SmrzW
-         wpDh8Oj1CchMH7sShUVVa+0/e5P4oPajX3Yqus323SGdGelzZM+4MX2McpAj69Z2njvk
-         WxT05z0G2P1d813ax+j+CnPbloVtbbzsdh8D8CV0mJ+ClxI6J9WVaB9/mk+MWmVXR8uD
-         j19CL7hvRQxECmJC6nxq3PkjwMch7JWRcT9UIiI1n0GlTb0MUsG0wb8CdKCXZ6unb387
-         V28Ol23fOaGnEEPDW84apgmdMHg6/e89vVPSZAmDRfojyoEhuZPkZabDwdoShKQvA82h
-         Fi3Q==
-X-Gm-Message-State: AElRT7EQUpTkOPPNEXlFK8qa8U9ugqs2erMtGInJXktVsgn+dL1UuG48
-        TikqOzYtmtZi7UwPw1Kl44C+2A==
-X-Google-Smtp-Source: AG47ELu+YaldEkxKzVYsFNi9j3aZta1zaDneSpPr5tcZlPsNweboN1WzRam9uuW36jj64rFgGtK0/g==
-X-Received: by 2002:a19:d254:: with SMTP id j81-v6mr5606863lfg.112.1521383141215;
-        Sun, 18 Mar 2018 07:25:41 -0700 (PDT)
+        bh=OmfKEAbIi6WIU7d2CttL3tooXGn5B0Auo+RM3DLcJ3E=;
+        b=VdOlt6cThTqEAZL96KTrWjR92nA1O6zCerv1tgc2VE6IioHfrBJ6b7B2NI3Murkoi5
+         eqBmjT5+afiNhEwd/htP8CNVN7vqdPNEQax4Zys+zVvui0wI0v40mlKCA6jkbSswxtVU
+         67K4+hADvUz31xi0uq85FJh4EWDAttF480Q9K01rlSec3f1aKdSlMBN4MP59QEcCFU0j
+         c6uH/UL/jRrKD7l/GSCVgt0d9vaBiRKJkBCTf/y4yPdEj5SDvI1X3yyE97wH4g7E+UVw
+         AjNXrzFaor4y5KZJppoNn1nhmWSGEu4VnyuWggSYZu9Lfs9XIX5d2yxpssWDO9BaY5hT
+         owPw==
+X-Gm-Message-State: AElRT7FWtIfHQu+c/8qg7xph6Y6a93SNDuFga/JFgAkqyYBliIBv/2RI
+        Wdp0aQWuxZT0z6CNEi8KhLY=
+X-Google-Smtp-Source: AG47ELtmflU6mtTwdiw0XjXN0mTn50zNiqJLyCrlkSim2icfPX3BpW+kj/UdHvafcayK33KsGAs5gw==
+X-Received: by 2002:a19:280e:: with SMTP id o14-v6mr5951831lfo.121.1521383142636;
+        Sun, 18 Mar 2018 07:25:42 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id n24sm2551554ljg.22.2018.03.18.07.25.39
+        by smtp.gmail.com with ESMTPSA id n24sm2551554ljg.22.2018.03.18.07.25.41
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 18 Mar 2018 07:25:40 -0700 (PDT)
+        Sun, 18 Mar 2018 07:25:41 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     avarab@gmail.com, e@80x24.org, git@vger.kernel.org,
         gitster@pobox.com, peff@peff.net
-Subject: [PATCH v6 02/11] pack-objects: turn type and in_pack_type to bitfields
-Date:   Sun, 18 Mar 2018 15:25:17 +0100
-Message-Id: <20180318142526.9378-3-pclouds@gmail.com>
+Subject: [PATCH v6 03/11] pack-objects: use bitfield for object_entry::dfs_state
+Date:   Sun, 18 Mar 2018 15:25:18 +0100
+Message-Id: <20180318142526.9378-4-pclouds@gmail.com>
 X-Mailer: git-send-email 2.17.0.rc0.347.gf9cf61673a
 In-Reply-To: <20180318142526.9378-1-pclouds@gmail.com>
 References: <20180317141033.21545-1-pclouds@gmail.com>
@@ -69,339 +69,74 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-An extra field type_valid is added to carry the equivalent of OBJ_BAD
-in the original "type" field. in_pack_type always contains a valid
-type so we only need 3 bits for it.
-
-A note about accepting OBJ_NONE as "valid" type. The function
-read_object_list_from_stdin() can pass this value [1] and it
-eventually calls create_object_entry() where current code skip setting
-"type" field if the incoming type is zero. This does not have any bad
-side effects because "type" field should be memset()'d anyway.
-
-But since we also need to set type_valid now, skipping oe_set_type()
-leaves type_valid zero/false, which will make oe_type() return
-OBJ_BAD, not OBJ_NONE anymore. Apparently we do care about OBJ_NONE in
-prepare_pack(). This switch from OBJ_NONE to OBJ_BAD may trigger
-
-    fatal: unable to get type of object ...
-
-Accepting OBJ_NONE [2] does sound wrong, but this is how it is has
-been for a very long time and I haven't time to dig in further.
-
-[1] See 5c49c11686 (pack-objects: better check_object() performances -
-    2007-04-16)
-
-[2] 21666f1aae (convert object type handling from a string to a number
-    - 2007-02-26)
-
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- builtin/pack-objects.c | 60 ++++++++++++++++++++++++------------------
- cache.h                |  2 ++
- object.h               |  1 -
- pack-bitmap-write.c    |  6 ++---
- pack-objects.h         | 20 ++++++++++++--
- 5 files changed, 58 insertions(+), 31 deletions(-)
+ builtin/pack-objects.c |  3 +++
+ pack-objects.h         | 28 +++++++++++++++++-----------
+ 2 files changed, 20 insertions(+), 11 deletions(-)
 
 diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 5c674b2843..647c01ea34 100644
+index 647c01ea34..83f8154865 100644
 --- a/builtin/pack-objects.c
 +++ b/builtin/pack-objects.c
-@@ -265,7 +265,7 @@ static unsigned long write_no_reuse_object(struct hashfile *f, struct object_ent
- 	struct git_istream *st = NULL;
+@@ -3049,6 +3049,9 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
+ 		OPT_END(),
+ 	};
  
- 	if (!usable_delta) {
--		if (entry->type == OBJ_BLOB &&
-+		if (oe_type(entry) == OBJ_BLOB &&
- 		    entry->size > big_file_threshold &&
- 		    (st = open_istream(entry->idx.oid.hash, &type, &size, NULL)) != NULL)
- 			buf = NULL;
-@@ -371,7 +371,7 @@ static off_t write_reuse_object(struct hashfile *f, struct object_entry *entry,
- 	struct pack_window *w_curs = NULL;
- 	struct revindex_entry *revidx;
- 	off_t offset;
--	enum object_type type = entry->type;
-+	enum object_type type = oe_type(entry);
- 	off_t datalen;
- 	unsigned char header[MAX_PACK_OBJECT_HEADER],
- 		      dheader[MAX_PACK_OBJECT_HEADER];
-@@ -480,11 +480,12 @@ static off_t write_object(struct hashfile *f,
- 		to_reuse = 0;	/* explicit */
- 	else if (!entry->in_pack)
- 		to_reuse = 0;	/* can't reuse what we don't have */
--	else if (entry->type == OBJ_REF_DELTA || entry->type == OBJ_OFS_DELTA)
-+	else if (oe_type(entry) == OBJ_REF_DELTA ||
-+		 oe_type(entry) == OBJ_OFS_DELTA)
- 				/* check_object() decided it for us ... */
- 		to_reuse = usable_delta;
- 				/* ... but pack split may override that */
--	else if (entry->type != entry->in_pack_type)
-+	else if (oe_type(entry) != entry->in_pack_type)
- 		to_reuse = 0;	/* pack has delta which is unusable */
- 	else if (entry->delta)
- 		to_reuse = 0;	/* we want to pack afresh */
-@@ -705,8 +706,8 @@ static struct object_entry **compute_write_order(void)
- 	 * And then all remaining commits and tags.
- 	 */
- 	for (i = last_untagged; i < to_pack.nr_objects; i++) {
--		if (objects[i].type != OBJ_COMMIT &&
--		    objects[i].type != OBJ_TAG)
-+		if (oe_type(&objects[i]) != OBJ_COMMIT &&
-+		    oe_type(&objects[i]) != OBJ_TAG)
- 			continue;
- 		add_to_write_order(wo, &wo_end, &objects[i]);
- 	}
-@@ -715,7 +716,7 @@ static struct object_entry **compute_write_order(void)
- 	 * And then all the trees.
- 	 */
- 	for (i = last_untagged; i < to_pack.nr_objects; i++) {
--		if (objects[i].type != OBJ_TREE)
-+		if (oe_type(&objects[i]) != OBJ_TREE)
- 			continue;
- 		add_to_write_order(wo, &wo_end, &objects[i]);
- 	}
-@@ -1066,8 +1067,7 @@ static void create_object_entry(const struct object_id *oid,
- 
- 	entry = packlist_alloc(&to_pack, oid->hash, index_pos);
- 	entry->hash = hash;
--	if (type)
--		entry->type = type;
-+	oe_set_type(entry, type);
- 	if (exclude)
- 		entry->preferred_base = 1;
- 	else
-@@ -1407,6 +1407,7 @@ static void check_object(struct object_entry *entry)
- 		unsigned long avail;
- 		off_t ofs;
- 		unsigned char *buf, c;
-+		enum object_type type;
- 
- 		buf = use_pack(p, &w_curs, entry->in_pack_offset, &avail);
- 
-@@ -1415,11 +1416,15 @@ static void check_object(struct object_entry *entry)
- 		 * since non-delta representations could still be reused.
- 		 */
- 		used = unpack_object_header_buffer(buf, avail,
--						   &entry->in_pack_type,
-+						   &type,
- 						   &entry->size);
- 		if (used == 0)
- 			goto give_up;
- 
-+		if (type < 0)
-+			die("BUG: invalid type %d", type);
-+		entry->in_pack_type = type;
++	if (DFS_NUM_STATES > (1 << OE_DFS_STATE_BITS))
++		die("BUG: too many dfs states, increase OE_DFS_STATE_BITS");
 +
- 		/*
- 		 * Determine if this is a delta and if so whether we can
- 		 * reuse it or not.  Otherwise let's find out as cheaply as
-@@ -1428,9 +1433,9 @@ static void check_object(struct object_entry *entry)
- 		switch (entry->in_pack_type) {
- 		default:
- 			/* Not a delta hence we've already got all we need. */
--			entry->type = entry->in_pack_type;
-+			oe_set_type(entry, entry->in_pack_type);
- 			entry->in_pack_header_size = used;
--			if (entry->type < OBJ_COMMIT || entry->type > OBJ_BLOB)
-+			if (oe_type(entry) < OBJ_COMMIT || oe_type(entry) > OBJ_BLOB)
- 				goto give_up;
- 			unuse_pack(&w_curs);
- 			return;
-@@ -1484,7 +1489,7 @@ static void check_object(struct object_entry *entry)
- 			 * deltify other objects against, in order to avoid
- 			 * circular deltas.
- 			 */
--			entry->type = entry->in_pack_type;
-+			oe_set_type(entry, entry->in_pack_type);
- 			entry->delta = base_entry;
- 			entry->delta_size = entry->size;
- 			entry->delta_sibling = base_entry->delta_child;
-@@ -1493,7 +1498,7 @@ static void check_object(struct object_entry *entry)
- 			return;
- 		}
+ 	check_replace_refs = 0;
  
--		if (entry->type) {
-+		if (oe_type(entry)) {
- 			/*
- 			 * This must be a delta and we already know what the
- 			 * final object type is.  Let's extract the actual
-@@ -1516,7 +1521,7 @@ static void check_object(struct object_entry *entry)
- 		unuse_pack(&w_curs);
- 	}
- 
--	entry->type = sha1_object_info(entry->idx.oid.hash, &entry->size);
-+	oe_set_type(entry, sha1_object_info(entry->idx.oid.hash, &entry->size));
- 	/*
- 	 * The error condition is checked in prepare_pack().  This is
- 	 * to permit a missing preferred base object to be ignored
-@@ -1559,6 +1564,7 @@ static void drop_reused_delta(struct object_entry *entry)
- {
- 	struct object_entry **p = &entry->delta->delta_child;
- 	struct object_info oi = OBJECT_INFO_INIT;
-+	enum object_type type;
- 
- 	while (*p) {
- 		if (*p == entry)
-@@ -1570,16 +1576,18 @@ static void drop_reused_delta(struct object_entry *entry)
- 	entry->depth = 0;
- 
- 	oi.sizep = &entry->size;
--	oi.typep = &entry->type;
-+	oi.typep = &type;
- 	if (packed_object_info(entry->in_pack, entry->in_pack_offset, &oi) < 0) {
- 		/*
- 		 * We failed to get the info from this pack for some reason;
- 		 * fall back to sha1_object_info, which may find another copy.
--		 * And if that fails, the error will be recorded in entry->type
-+		 * And if that fails, the error will be recorded in oe_type(entry)
- 		 * and dealt with in prepare_pack().
- 		 */
--		entry->type = sha1_object_info(entry->idx.oid.hash,
--					       &entry->size);
-+		oe_set_type(entry, sha1_object_info(entry->idx.oid.hash,
-+						    &entry->size));
-+	} else {
-+		oe_set_type(entry, type);
- 	}
- }
- 
-@@ -1747,10 +1755,12 @@ static int type_size_sort(const void *_a, const void *_b)
- {
- 	const struct object_entry *a = *(struct object_entry **)_a;
- 	const struct object_entry *b = *(struct object_entry **)_b;
-+	enum object_type a_type = oe_type(a);
-+	enum object_type b_type = oe_type(b);
- 
--	if (a->type > b->type)
-+	if (a_type > b_type)
- 		return -1;
--	if (a->type < b->type)
-+	if (a_type < b_type)
- 		return 1;
- 	if (a->hash > b->hash)
- 		return -1;
-@@ -1826,7 +1836,7 @@ static int try_delta(struct unpacked *trg, struct unpacked *src,
- 	void *delta_buf;
- 
- 	/* Don't bother doing diffs between different types */
--	if (trg_entry->type != src_entry->type)
-+	if (oe_type(trg_entry) != oe_type(src_entry))
- 		return -1;
- 
- 	/*
-@@ -2432,11 +2442,11 @@ static void prepare_pack(int window, int depth)
- 
- 		if (!entry->preferred_base) {
- 			nr_deltas++;
--			if (entry->type < 0)
-+			if (oe_type(entry) < 0)
- 				die("unable to get type of object %s",
- 				    oid_to_hex(&entry->idx.oid));
- 		} else {
--			if (entry->type < 0) {
-+			if (oe_type(entry) < 0) {
- 				/*
- 				 * This object is not found, but we
- 				 * don't have to include it anyway.
-@@ -2545,7 +2555,7 @@ static void read_object_list_from_stdin(void)
- 			die("expected object ID, got garbage:\n %s", line);
- 
- 		add_preferred_base_object(p + 1);
--		add_object_entry(&oid, 0, p + 1, 0);
-+		add_object_entry(&oid, OBJ_NONE, p + 1, 0);
- 	}
- }
- 
-diff --git a/cache.h b/cache.h
-index 21fbcc2414..862bdff83a 100644
---- a/cache.h
-+++ b/cache.h
-@@ -373,6 +373,8 @@ extern void free_name_hash(struct index_state *istate);
- #define read_blob_data_from_cache(path, sz) read_blob_data_from_index(&the_index, (path), (sz))
- #endif
- 
-+#define TYPE_BITS 3
-+
- enum object_type {
- 	OBJ_BAD = -1,
- 	OBJ_NONE = 0,
-diff --git a/object.h b/object.h
-index 87563d9056..8ce294d6ec 100644
---- a/object.h
-+++ b/object.h
-@@ -25,7 +25,6 @@ struct object_array {
- 
- #define OBJECT_ARRAY_INIT { 0, 0, NULL }
- 
--#define TYPE_BITS   3
- /*
-  * object flag allocation:
-  * revision.h:      0---------10                                26
-diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
-index e01f992884..fd11f08940 100644
---- a/pack-bitmap-write.c
-+++ b/pack-bitmap-write.c
-@@ -64,12 +64,12 @@ void bitmap_writer_build_type_index(struct pack_idx_entry **index,
- 
- 		entry->in_pack_pos = i;
- 
--		switch (entry->type) {
-+		switch (oe_type(entry)) {
- 		case OBJ_COMMIT:
- 		case OBJ_TREE:
- 		case OBJ_BLOB:
- 		case OBJ_TAG:
--			real_type = entry->type;
-+			real_type = oe_type(entry);
- 			break;
- 
- 		default:
-@@ -98,7 +98,7 @@ void bitmap_writer_build_type_index(struct pack_idx_entry **index,
- 		default:
- 			die("Missing type information for %s (%d/%d)",
- 			    oid_to_hex(&entry->idx.oid), real_type,
--			    entry->type);
-+			    oe_type(entry));
- 		}
- 	}
- }
+ 	reset_pack_idx_option(&pack_idx_opts);
 diff --git a/pack-objects.h b/pack-objects.h
-index c0a1f61aac..b883d7aa10 100644
+index b883d7aa10..8507e1b869 100644
 --- a/pack-objects.h
 +++ b/pack-objects.h
-@@ -59,8 +59,9 @@ struct object_entry {
- 	void *delta_data;	/* cached delta (uncompressed) */
- 	unsigned long delta_size;	/* delta data size (uncompressed) */
- 	unsigned long z_delta_size;	/* delta data size (compressed) */
--	enum object_type type;
--	enum object_type in_pack_type;	/* could be delta */
-+	unsigned type_:TYPE_BITS;
-+	unsigned in_pack_type:TYPE_BITS; /* could be delta */
-+	unsigned type_valid:1;
- 	uint32_t hash;			/* name hint hash */
- 	unsigned int in_pack_pos;
- 	unsigned char in_pack_header_size;
-@@ -123,4 +124,19 @@ static inline uint32_t pack_name_hash(const char *name)
- 	return hash;
- }
+@@ -1,6 +1,21 @@
+ #ifndef PACK_OBJECTS_H
+ #define PACK_OBJECTS_H
  
-+static inline enum object_type oe_type(const struct object_entry *e)
-+{
-+	return e->type_valid ? e->type_ : OBJ_BAD;
-+}
++#define OE_DFS_STATE_BITS	2
 +
-+static inline void oe_set_type(struct object_entry *e,
-+			       enum object_type type)
-+{
-+	if (type >= OBJ_ANY)
-+		die("BUG: OBJ_ANY cannot be set in pack-objects code");
++/*
++ * State flags for depth-first search used for analyzing delta cycles.
++ *
++ * The depth is measured in delta-links to the base (so if A is a delta
++ * against B, then A has a depth of 1, and B a depth of 0).
++ */
++enum dfs_state {
++	DFS_NONE = 0,
++	DFS_ACTIVE,
++	DFS_DONE,
++	DFS_NUM_STATES
++};
 +
-+	e->type_valid = type >= OBJ_NONE;
-+	e->type_ = (unsigned)type;
-+}
+ /*
+  * basic object info
+  * -----------------
+@@ -73,19 +88,10 @@ struct object_entry {
+ 	unsigned no_try_delta:1;
+ 	unsigned tagged:1; /* near the very tip of refs */
+ 	unsigned filled:1; /* assigned write-order */
++	unsigned dfs_state:OE_DFS_STATE_BITS;
+ 
+-	/*
+-	 * State flags for depth-first search used for analyzing delta cycles.
+-	 *
+-	 * The depth is measured in delta-links to the base (so if A is a delta
+-	 * against B, then A has a depth of 1, and B a depth of 0).
+-	 */
+-	enum {
+-		DFS_NONE = 0,
+-		DFS_ACTIVE,
+-		DFS_DONE
+-	} dfs_state;
+ 	int depth;
 +
- #endif
+ };
+ 
+ struct packing_data {
 -- 
 2.17.0.rc0.347.gf9cf61673a
 
