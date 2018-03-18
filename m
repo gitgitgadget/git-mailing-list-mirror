@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 292C61F404
-	for <e@80x24.org>; Sun, 18 Mar 2018 02:22:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F2D291F404
+	for <e@80x24.org>; Sun, 18 Mar 2018 02:32:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752896AbeCRCWA (ORCPT <rfc822;e@80x24.org>);
-        Sat, 17 Mar 2018 22:22:00 -0400
-Received: from mail-qt0-f182.google.com ([209.85.216.182]:47098 "EHLO
-        mail-qt0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752548AbeCRCWA (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Mar 2018 22:22:00 -0400
-Received: by mail-qt0-f182.google.com with SMTP id h4so8963728qtn.13
-        for <git@vger.kernel.org>; Sat, 17 Mar 2018 19:21:59 -0700 (PDT)
+        id S1752564AbeCRCcW (ORCPT <rfc822;e@80x24.org>);
+        Sat, 17 Mar 2018 22:32:22 -0400
+Received: from mail-qk0-f174.google.com ([209.85.220.174]:36986 "EHLO
+        mail-qk0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751693AbeCRCcW (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Mar 2018 22:32:22 -0400
+Received: by mail-qk0-f174.google.com with SMTP id w6so2060744qkb.4
+        for <git@vger.kernel.org>; Sat, 17 Mar 2018 19:32:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:sender:in-reply-to:references:from:date:message-id
          :subject:to:cc:content-transfer-encoding;
-        bh=ASd84+mDbl/k1wjjMgQ7+ubxre385kKDNu4IBXmVfok=;
-        b=o9jxTS6W7RcgaJ9JPN0E604FMolpdui+jAY/tqI+drWn8xU6tJzJXGrdIr6f8KPOnF
-         VQG4ehVgBklbkFJVBeDc/zR7U3k7IhshsOehZMwRafutHi8pVeXSVRQGyG3YhJkx4G7U
-         WSoPlTQCDBj6IziZJ45q2MsuWTIZgVbebDDGNtVXUgw/80YyFdySODIk9tfjn7yvDYO5
-         IG+mJSo8VoeYWt30TF/z/zd6S09i8knw6oH8VzPnwSYBR98glRwuGp2o9n/pdqHIrGLq
-         asCS6vRM01nhBiEPQczzqm/ryoLtHPvDhFAujkK9uQWJUiFvZUCr9gE+Enok5LfZWe3F
-         cANw==
+        bh=HeOtZq4TdmdlKodphOHf/1NLcL/AdXZZY3dfNQDZSTg=;
+        b=ibqh7HwZoUU6vgsD/Jp0ZTh05O6r5KvNz2smBx4jrVeS1KyYQ2eFRTxH/mBCw8V2Co
+         GAUiMWlS8gGtxYxmx/r4JOipADl+EUlvFoBFORbpJjQGasvFU0znIXkBIk7M105EBogb
+         2vM9I+7EDzLsTcNCnSXXwjRQMG0otBDfU6Cyix0aqT8EUmyqUAFQ1RdTpxnm9XW2RJeO
+         b4Yyrkxyypu2uHh/QAIKSpHxKtrYynqibSDmY7tKHDCsrjxnjaUXlBMFKKhHm/ZcNbgj
+         5QeVJFM3wiAg02mj/KinuLq5xUIspUG/SwnTpC9h9xiaVD6DJrmt1IFe0ucSaeX3C/3x
+         w4BQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
          :date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=ASd84+mDbl/k1wjjMgQ7+ubxre385kKDNu4IBXmVfok=;
-        b=JLI1dR+Qd8chj/1Vunm1pTFXWXMg7/WY5qus/xcSCDwMN6tPENaluUYb8mbI9yywUX
-         qfAIgixgvxXLZ8o11JWDtsfmH4xhsC4xorlp4Qwf0lvXNdBkWLqXcmoT0RIACaqLvmP5
-         jTOZT2khdW4A7mCdZ43o3puJwUyKJ7zp8asVn9q/tuGkVpMpltJWo7tsNUr+XmUYR4vb
-         dQKZUKGYaFHgei3UzXzu7Rv1dcQ0UmEASomxQ51Dn01C2FKcO1K6Td5+NzghCx8dfptB
-         pn1dg+vZhMQ2rAc/YzX9CMQ3QyqPFznjj/J2Rl7bNO3CmL33MT2jxi4zB6IJ0RuNU9Zr
-         8I0w==
-X-Gm-Message-State: AElRT7HsuOR+UQc5DZwbES27qCOXo0fgt0ZQjS6GmJr+5qMNh8PNk/68
-        SDdWlfmnPNBr78Dt88SfR8v8kRa9KZVuaQQXSUI=
-X-Google-Smtp-Source: AG47ELuWlkZt4qHkuqeKQUCvMwLwr3mwO3lPL0Q45Ada56XaWbOxvfGVmufswIj/Wi41LXU+LumQF4vv5JnKn3TotbI=
-X-Received: by 10.200.69.131 with SMTP id l3mr11403025qtn.50.1521339719347;
- Sat, 17 Mar 2018 19:21:59 -0700 (PDT)
+        bh=HeOtZq4TdmdlKodphOHf/1NLcL/AdXZZY3dfNQDZSTg=;
+        b=AhqH/e9dORK6/AxG4uDMECDD0voKRTx9dVGHit2uj7Blfs5vMKtk4gnrlY5ZNrN4DM
+         UQWVuXV9tQuF9db7Z6PJDgh/TwzI3AToGSYb74fIjn6yLNmvAquh0XGfGE0wteapId5l
+         flygWgLofwROXPiiZFFZqMkoZwvoX+yiQQ2yFADdL5IZsVSkUIGzxZPgzleHrvT9U0TT
+         xzlBHYMscdGLetB+QODj9ftqUY9gbFBHkfgxS7ncLMYrAMRmx6Q4+ZacV7TtfdQdkLV+
+         jzrGGp1cfXpXPpvq42tERi8sqsD5rCJphOuLn87M691+EPhwTHsk3zvqcSKU3OTkLOPL
+         b4Wg==
+X-Gm-Message-State: AElRT7EHQt83tj2k0oIS1jmLN6GHbNAMV2F1wylMmwVnzTLyt4zWybUz
+        C1qv9ekNi23GaUd8kW2K0YUKo5GWcknw0EdiFtifXA==
+X-Google-Smtp-Source: AG47ELsCSyf2Pa5QCtBfob0HNOosNR5PaOaX1XH8BGzLkRG/CB4j8aYIvEpURGNcG2WF77pVV+HbWuyYydF4iA0Mbjk=
+X-Received: by 10.55.22.28 with SMTP id g28mr10961051qkh.152.1521340341276;
+ Sat, 17 Mar 2018 19:32:21 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.12.190.196 with HTTP; Sat, 17 Mar 2018 19:21:58 -0700 (PDT)
-In-Reply-To: <20180317075421.22032-23-pclouds@gmail.com>
-References: <20180317075421.22032-1-pclouds@gmail.com> <20180317075421.22032-23-pclouds@gmail.com>
+Received: by 10.12.190.196 with HTTP; Sat, 17 Mar 2018 19:32:20 -0700 (PDT)
+In-Reply-To: <20180317075421.22032-35-pclouds@gmail.com>
+References: <20180317075421.22032-1-pclouds@gmail.com> <20180317075421.22032-35-pclouds@gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sat, 17 Mar 2018 22:21:58 -0400
-X-Google-Sender-Auth: Id1btGJ6FNiTqEBBeyU2t9Wqb-k
-Message-ID: <CAPig+cSA16Da2Q=8Q7iUVF4smAyhJMe5qV-tvevePzj8BjEuKw@mail.gmail.com>
-Subject: Re: [PATCH 22/36] t/helepr: merge test-read-cache into test-tool
+Date:   Sat, 17 Mar 2018 22:32:20 -0400
+X-Google-Sender-Auth: F2azaGmdmLDayRMHxCSAUFo6-gk
+Message-ID: <CAPig+cQXiVwrUroYqjeST3r4kwnLri=9xSrGAq+ksEeF44=HZA@mail.gmail.com>
+Subject: Re: [PATCH 34/36] t/helper: merge test-urlmatch-.. into test-tool
 To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
         <pclouds@gmail.com>
 Cc:     Git List <git@vger.kernel.org>
@@ -66,9 +66,14 @@ X-Mailing-List: git@vger.kernel.org
 
 On Sat, Mar 17, 2018 at 3:54 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =
 <pclouds@gmail.com> wrote:
-> t/helepr: merge test-read-cache into test-tool
+> t/helper: merge test-urlmatch-.. into test-tool
 
-s/helepr/helper/
+Spelled out fully:
+
+    t/helper: merge test-urlmatch-normalization into test-tool
+
+needs only 58 columns, so is well within the 70-72 column
+recommendation for summary line.
 
 > Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.c=
 om>
