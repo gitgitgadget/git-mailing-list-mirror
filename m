@@ -2,265 +2,165 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B63CF1F404
-	for <e@80x24.org>; Mon, 19 Mar 2018 21:16:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 37A6C1F404
+	for <e@80x24.org>; Mon, 19 Mar 2018 21:21:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965308AbeCSVQU (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Mar 2018 17:16:20 -0400
-Received: from mail-qt0-f194.google.com ([209.85.216.194]:34295 "EHLO
-        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S935474AbeCSVQN (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Mar 2018 17:16:13 -0400
-Received: by mail-qt0-f194.google.com with SMTP id l25so19611014qtj.1
-        for <git@vger.kernel.org>; Mon, 19 Mar 2018 14:16:12 -0700 (PDT)
+        id S970242AbeCSVVi (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Mar 2018 17:21:38 -0400
+Received: from mail-io0-f195.google.com ([209.85.223.195]:45530 "EHLO
+        mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965283AbeCSVVb (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Mar 2018 17:21:31 -0400
+Received: by mail-io0-f195.google.com with SMTP id 141so2002993iou.12
+        for <git@vger.kernel.org>; Mon, 19 Mar 2018 14:21:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=spIRLrYzEAED4BtuRcZN1wqaKDfxvR1mw7SGtL5rFwM=;
-        b=MGbjAwLzIqPqESvqlUFCF0lr/L5q/Lq1JNhXiWtXEo/BbAHc8jKzg0dqLocG46ne41
-         FuBO3y0xzedS8TKvRUWMwtEO25utovpMg+OxowrNo/XVCyCV3ukMF16By9v0Sh8n//O0
-         ozr6uYcoA94xLi7TomxtjzByMRry1FFLpDMHSMSj/09Znr/kOxgOto/xQ84JRnH2TYuX
-         4tHMrZYcN0wbtGn9nDnh6JIG3tbhY8vkNQ45CtuYvLFiX4NJA2oVErCFOUA3TbNGXP1i
-         66iF8TQCu6Q92dDZ/wyke5CD0J6iwEK8Bfz2P28HO6oq8KI8EgtEFK+gB0XVMTcrO925
-         tkfA==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=a0r6SkFgh1m9kH4YfmcdALjdA0egLijwY2a/bUE+Ln0=;
+        b=K5MBuFFwBy23urioNncXy4BubvM39hU16B4NkWR8e8WEvEQSJqkYXf4KBj0edvdxKP
+         wVfg/ekhtqQyVxKUij6qKXg+RXq8J5AD3nwlI9KM4PoKJZD3x814mhdwA935Shsdry9z
+         4ToKKnv3IyU7rDaJn+LKw/IU+5kvK/0+3Y3NDzoCReIaoEkwRrpDzDbcZFAP/I4Z+22+
+         kKuWhxQ2JOT+7T0SWJOX1uUEp1CXZxV92tob20+17By8iGAB+pB6lFBjPLQjBCjF8XzA
+         iv1iHYtSTqIjvdlzbDvstnPKN+OQKfp9UumXz8MjI+eUgQUueFDyFLrVbKEKorU1+KVS
+         cGIg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linux-foundation.org; s=google;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=a0r6SkFgh1m9kH4YfmcdALjdA0egLijwY2a/bUE+Ln0=;
+        b=Lg9V4XLeX1dpsC9DQG6cWYGQL3Zt86n2qg+mkB5Rd/JT683kpmMWyGzcXVHyGxKKtr
+         SGMIUxstE2SmIrPEZuGrmjhkbfaxHtuNwQo+YMou+IFcDV2rgmMWI5vv8WWbrIZDbZuq
+         1zn6LTYANqImasWL7DyFMyuWDuFbBIWeQDAbw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=spIRLrYzEAED4BtuRcZN1wqaKDfxvR1mw7SGtL5rFwM=;
-        b=UOgEnkXRwIsX3TwdANkD/P6v54ZnmIgPJE66qJdm5yOkRLisx/plRHUCmbZE5lkNR5
-         JLvmt8ZnLSHDctyx6nh9IyokJcp99jVe4Ls8siUlRJn10cmCag+jmhkyVo7qlxc3fmoW
-         T95oeJDPB0x4Nv4ZPJvg8IWlnvfQgDwfJ/NjZKYEuwnJhHt5Om7LH8aagc2hA1e1GM3p
-         noXaJ2bsEQ4TT/jH0y9+/nXy80KCv3rUlHBiLiqBTCpeOofEFW5aHEVtnIkDA5Zf+SjU
-         gaDG6dWKiDnxTGDGZbZ2yiiaGNyD5pdaoTVigz9xF40BOdzEuTJNDXf+hVByIsxPVzbF
-         6QpA==
-X-Gm-Message-State: AElRT7EA4L97lFsb75vMQCLlk0Scjl881mW/BEUhFTGTE82uAQUu0HsB
-        go1IW+i0d0goY1TUZSnaizM=
-X-Google-Smtp-Source: AG47ELsddtosAxuf8RfLPmFhdsFl+ne6ddDeOBx4l6pr+x8cynwmRsYv3BQRVv/uQ7y2w9zisWWxyA==
-X-Received: by 10.200.68.15 with SMTP id j15mr20639720qtn.323.1521494171638;
-        Mon, 19 Mar 2018 14:16:11 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:c4e6:7a22:56f1:df04? ([2001:4898:8010:0:ae1c:7a22:56f1:df04])
-        by smtp.gmail.com with ESMTPSA id t82sm645504qke.52.2018.03.19.14.16.09
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 19 Mar 2018 14:16:10 -0700 (PDT)
-Subject: Re: What's cooking in git.git (Mar 2018, #03; Wed, 14)
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Duy Nguyen <pclouds@gmail.com>,
-        Takuto Ikuta <tikuta@chromium.org>, git@jeffhostetler.com,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Ben Peart <benpeart@microsoft.com>
-References: <xmqqefkm6s06.fsf@gitster-ct.c.googlers.com>
- <87r2olenw9.fsf@evledraar.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <94484ca0-6331-90a7-41cb-dd44200d8d20@gmail.com>
-Date:   Mon, 19 Mar 2018 17:16:09 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=a0r6SkFgh1m9kH4YfmcdALjdA0egLijwY2a/bUE+Ln0=;
+        b=EKghFk7EKgoAVj71y7ZwUOpSzxuqa/c04DbK9LfNmKy5kbEkcFQUpjaYOpSapnsqGV
+         itM4zoTd0l2JgtDQ1MVJ623cnWPrWDL6CmpdFxd8NEOGVGewc8WgIko2Cr71bMz4GDNQ
+         mIs9VE8M7dTH32Pjd4Dm1wQR/I8664bC2GLxqMvyLQMcm/laic4ERr4XurnARRS6nesG
+         pO/sNwbdpXckgJWb6nmSLdnVsI2+qVHQHHffHWLCca6MlasgDVnDKvdvUD22ybupK7yD
+         YZqbAdYJnzn/h5/d9O8EX4y1m88/EYRO1c34Pro7KkwOZpeSu39fxz8tFzecucxp9isd
+         MFyg==
+X-Gm-Message-State: AElRT7EikfzABXdyHW7FB4zTMF420ubJRYzrnx+hUvhqVTJ8FYOH1Mzb
+        pN9vFrF/D5/r781SR8KuBqSoYneCX3nsak1h9ug=
+X-Google-Smtp-Source: AG47ELvKcD/UYbfT61zDeNctl5kObxPf+dxhb6zqkwPhMTI63Mopiw68mrUxLVkMHQtIzC56YszlVzXSp9X8bB856OY=
+X-Received: by 10.107.22.1 with SMTP id 1mr14124851iow.238.1521494490327; Mon,
+ 19 Mar 2018 14:21:30 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <87r2olenw9.fsf@evledraar.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+Received: by 10.107.95.15 with HTTP; Mon, 19 Mar 2018 14:21:29 -0700 (PDT)
+In-Reply-To: <nycvar.QRO.7.76.6.1803191228240.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <20180313203935.5084-1-avarab@gmail.com> <20180313203935.5084-4-avarab@gmail.com>
+ <1cabf9c0-674e-c2b3-9977-9c74b929a86d@kdbg.org> <87y3ivdkvp.fsf@evledraar.gmail.com>
+ <CA+55aFwU5fwWx2+DdBp=XCpG2Orx+rA8KxPVtGHxpgHAZs=h2Q@mail.gmail.com>
+ <nycvar.QRO.7.76.6.1803151804390.64@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+ <CA+55aFz6J2j_o0b1JfPSPUX0t3703oFtrpcot29_cgbKi7EnOg@mail.gmail.com>
+ <nycvar.QRO.7.76.6.1803161248040.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+ <87efkkdwcv.fsf@evledraar.gmail.com> <nycvar.QRO.7.76.6.1803191228240.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+From:   Linus Torvalds <torvalds@linux-foundation.org>
+Date:   Mon, 19 Mar 2018 14:21:29 -0700
+X-Google-Sender-Auth: AiYhJxPhnI-mwwCBJ4i9dK2JWbE
+Message-ID: <CA+55aFxSx6xd3yKFQMAoRnjKVj=tgLD=Ui2RRkAe4HRWQ8ohsg@mail.gmail.com>
+Subject: Re: [PATCH 3/3] Makefile: optionally symlink libexec/git-core
+ binaries to bin/git
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Daniel Jacques <dnj@google.com>,
+        Steffen Prohaska <prohaska@zib.de>,
+        John Keeping <john@keeping.me.uk>, Stan Hu <stanhu@gmail.com>,
+        Richard Clamp <richardc@unixbeard.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 3/15/2018 4:36 AM, Ævar Arnfjörð Bjarmason wrote:
-> On Thu, Mar 15 2018, Junio C. Hamano jotted:
+On Mon, Mar 19, 2018, 04:34 Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
 >
->> * nd/repack-keep-pack (2018-03-07) 6 commits
->>   - SQUASH???
->>   - pack-objects: display progress in get_object_details()
->>   - pack-objects: show some progress when counting kept objects
->>   - gc --auto: exclude base pack if not enough mem to "repack -ad"
->>   - repack: add --keep-pack option
->>   - t7700: have closing quote of a test at the beginning of line
->>
->>   "git gc" in a large repository takes a lot of time as it considers
->>   to repack all objects into one pack by default.  The command has
->>   been taught to pretend as if the largest existing packfile is
->>   marked with ".keep" so that it is left untouched while objects in
->>   other packs and loose ones are repacked.
->>
->>   Expecting a reroll.
->>   cf. <CACsJy8BW_EtxQvgL=YrCXCQY7cEWCQxgfkeH=Gd=X=uVYhPJcw@mail.gmail.com>
->>   Except for final finishing touches, this looked more-or-less ready
->>   for 'next'.
->>
->>
-> As I noted in 87a7vdqegi.fsf@evledraar.gmail.com and
-> 877eqhq7ha.fsf@evledraar.gmail.com (both at:
-> https://public-inbox.org/git/?q=87a7vdqegi.fsf%40evledraar.gmail.com) I
-> think we should change the too-specific behavior here to be more generic
-> (and am happy to do the work pending feedback from Duy on what he thinks
-> about it).
->
-> I'm also interested to know from those at Microsoft (CC'd some) if the
-> mechanism I've proposed is something closer to what they could
-> eventually use to gc windows.git.
+> This is a real problem.
 
-Sorry that I couldn't get to this message sooner, I was traveling. While 
-I was gone, the others who you CC'd volunteered me as the best person to 
-respond ;)
+No it isn't.
 
-In the interest of full disclosure and hopefully starting an interesting 
-discussion, I want to share as much detail as possible as well as a few 
-future directions that can inform our actions now. Here are some rough 
-ideas that we are thinking about in this space:
+We already handle those special cases specially, and install them in
+the bin directory (as opposed to libexec). And it all works fine.
 
-   I. Use the multi-pack index (MIDX) [1] to track "packfile state" so 
-we can do GC/repack incrementally.
-  II. Replace our prefetch packs model with partial clone [2].
-III. Stop including all trees and focus the fetch down a cone of the 
-working directory.
-  IV. Provide a way to defer certain read-only commands to a remote when 
-the local repo doesn't have sufficient data.
+Look into the bin directory some day. You'll find things like
 
-> I know that now it doesn't GC now, and they have some side-channel
-> mechanism for pre-deploying large (daily?) packs to clients, if it's
-> adjusted as I suggest gc could be told not to touch packs of that size,
-> leaving only stray small packs from "git pull" and loose objects to GC.
->
-> I may also have entirely misunderstood how it works, this is from brief
-> in-person conversations at Git Merge.
->
-> But as far as mainlining some of that eventually I think it would be
-> good to get feedback on whether the mechanism I proposed would get in
-> their way more or less than what Duy has, or be entirely irrelevant
-> because they need something else.
->
-> Thanks!
+  git-cvsserver
+  gitk
+  git-receive-pack
+  git-shell
+  git-upload-archive
+  git-upload-pack
 
-The GVFS cache servers pre-compute daily packfiles filled with every 
-commit and tree introduced that day. When a client calls 'git fetch' the 
-GVFS hook runs a "prefetch" command to get these daily packs from the 
-cache servers and place them in an alternate we call the "shared object 
-cache". GVFS also disables the "receive-pack" portion of the fetch. The 
-MIDX is updated to cover the new packs.
+there, and the fact that a couple of them happen to be built-ins is an
+IMPLEMENTATION DETAIL, not a "Oh we should have used just 'git' for
+them".
 
-Something we are going to enable soon is the addition of "hourly packs" 
-where the cache servers keep a list of up to 24 hourly packs and on 
-prefetch the client receives an extra pack that concatenates that day's 
-pack up to that point. We are doing this because the refs they are 
-fetching are far enough ahead of the daily snapshots, which triggers a 
-decent amount of loose object downloads when those refs are checked out. 
-Since the next day will create a new daily pack, we can delete that 
-hourly pack (I don't think we do this currently). At the very least the 
-MIDX prefers the duplicates in the new packfile.
+The design of having separate programs is the *good* conceptual
+design. And we damn well should keep it for these things that are used
+for special purposes.
 
-We do not GC in GVFS-enabled repos. This doesn't destroy clients' disks 
-so far because the prefetch packs do not contain blobs -- blobs are a 
-large portion of the full repo size. As the repo grows, we are 
-re-examining how to make GC and repack work in this environment. An 
-important part of any solution will be to make it incremental: we cannot 
-afford to create a second copy of the repo and we can't take the repo 
-offline for a significant portion of time.
+The fact that two of them have become built-ins as part of the git
+binary is incidental. It shouldn't be visible in the names, because it
+really is just an internal implementation thing, not anything
+fundamental.
 
-I'm not sure that we can use Duy's solution out-of-the-box, in 
-particular because we haven't integrated our prefetch packs with the 
-"promisor" concept from partial clone. Hence, GC will fail with missing 
-objects. I think the core idea is good: perform GC incrementally and 
-don't touch previously-GC'd packs. Since it is rare for an object to be 
-reachable for a long time and then become unreachable, performing GC and 
-then keeping the resulting pack forever is a good idea. Especially when 
-paired with the MIDX so you care less about the number of packfiles.
+> And it is our own darned fault because we let an
+> implementation detail bleed into a protocol. We could have designed that a
+> lot better.
 
-I.
+And by "we" you clearly mean "not you", and by "we could have designed
+that a lot better" you must mean "and it was very well designed by
+competent people who didn't use bad operating systems".
 
-One of our thoughts is to use the MIDX to mark the packfiles with 
-metadata. For instance, we could mark new packfiles as "raw" and after 
-enough time we could run a GC on just one packfile (or a batch of 
-packfiles) to remove unreachable objects and mark it as "clean". In our 
-situation, we don't want to immediately GC the daily prefetch pack 
-because a large portion of those objects will be reachable in a few days 
-due to branch integrations.
+> Of course we should fix this, though. There is literally no good reason
 
-II.
+Go away.
 
-Our long-term plan is to remove these GVFS-specific fetch patterns and 
-replace them with partial clone logic. We still see the cache servers as 
-an important part of this process, but they are essentially read-only 
-copies of the main server object database (no refs). We haven't done the 
-work to see how expensive it will be to replace the precomputed prefetch 
-packs with a partial clone negotiation. Then we will need to see how to 
-make the shared object cache be transparent to the user.
+We shouldn't fix it, it's all fine as-is, and there were tons of
+f*cking good reasons for why git did what it did. The main one being
+"it's a collection of scripts", which was what git _was_, for
+chrissake. And using spaces and running some idiotic and
+hard-to-verify script de-multiplexer is the WRONG THING for things
+like "git-shell" and "git-receive-pack" and friends.
 
-An aside: it would be good to investigate how Git could provide 
-replication like a cache server with minimal setup, including client 
-configuration. The GVFS protocol has a "gvfs/config" endpoint that can 
-provide a list of cache server URLs, including a default. (For the 
-Windows repo, these URLs point to load balancers that pass-through to an 
-array of machines. I imagine most users will only need one server per 
-location.) Does Git already have a way to redirect the call to upload-pack?
+Right now you can actually verify exactly what "git-shell" does. Or
+you could replace - or remove - it entirely if you don't like it. And
+never have to worry about running "git" with some "shell" subcommand.
 
-III.
+And you know that it's not an alias, for example.  Because "git-xyz"
+simply does not look up aliases.
 
-Partial clone has options for filtering trees by paths [3]. We want to 
-take advantage of this functionality to reduce the number of objects 
-stored on disk. In a perfect world, we would use the virtualization 
-layer in GVFS to auto-detect the paths that are important to the user 
-and create a sparse filter for them that way. Partial clone doesn't have 
-a mechanism for that right now (we require a sparse-checkout 
-specification to be present on the remote) but perhaps it could be part 
-of a verb in protocol v2. We are working to collect sparse-checkout 
-files from our users to see if it is possible to cluster their usage 
-patterns into a reasonably small list of sparse-checkout specifications. 
-Alternatively, how large would it be to dynamically send a list of paths 
-based on the current virtual projection? In either case, we expect some 
-extra trees by including some amount of sibling paths as we expect users 
-to be interested in reading nearby files or inspecting history for those 
-paths.
+So really. Go away, Johannes. Your concerns are complete and utter BS.
 
-IV.
+The real problem is that Windows is badly designed, but since it's
+easy to work around (by using hard-linking on Windows), nobody sane
+cares.
 
-One big reason we started computing daily prefetch packs for GVFS is 
-that certain important Git commands became too slow if all objects were 
-obtained from the loose-object download. Simple commands like "git log" 
-would take forever. With all commits and trees, we can run "git log -- 
-path" at the same speed as a vanilla repo. "git diff" can still be slow 
-because it needs blob contents, but hopefully the diff was for a single 
-commit and there are not too many calls. "git grep" could be a disaster.
+The solution is simple, and was already suggested: use symlinks (like
+we used to!) on non-windows systems. End of story.
 
-When we start restricting to sparse-checkout specifications, not all 
-"git log -- deep/paths/in/particular" commands will have enough data 
-locally to run successfully.
+And for the libexec thing, we might want to deprecate those names, if
+somebody wants to, but it's not like it actually hurts, and it gives
+backwards compatibility.
 
-One approach is to have a way to pass-through to a remote. Certain 
-commands could be requested (via a protocol v2 verb) to the server. The 
-server can compute the answer and send a (paged) response faster than 
-the client can download objects and then compute locally. This also 
-prevents users from getting a bloated object database full of loose 
-blobs they don't need.
+Btw, real Windows people know all about backwards compatibility. Ask
+around competent people inside MS whether it's an important thing.
 
-At the very least, we will want to detect that we are missing many 
-objects and ask the user something like "Did you really want to do that? 
-It will cause 1000+ objects to be downloaded. [Y/n]"
+So stop this idiotic "bad design" crap. Somebody working on Windows
+simply can't afford your attitude.
 
+Somebody who didn't design it in the first place can't afford your attitude.
 
-I hope this combo of information and half-baked ideas is helpful. We are 
-definitely approaching a lot of interesting scale limits with many 
-different possible solutions.
-
-Thanks,
--Stolee
-
-[1] 
-https://public-inbox.org/git/20180107181459.222909-1-dstolee@microsoft.com/T/#u
-     [RFC PATCH 00/18] Multi-pack index (MIDX)
-
-[2] 
-https://public-inbox.org/git/20171214152404.35708-1-git@jeffhostetler.com/T/#u
-     [PATCH v2] Partial clone design document
-
-[3] 
-https://github.com/git/git/blob/0afbf6caa5b16dcfa3074982e5b48e27d452dbbb/Documentation/rev-list-options.txt#L727-L733
-     rev-list-options.txt Documentation for "--filter=sparse:*"
+                         Linus
