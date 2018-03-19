@@ -2,115 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 488951F404
-	for <e@80x24.org>; Mon, 19 Mar 2018 14:30:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0B5F21F404
+	for <e@80x24.org>; Mon, 19 Mar 2018 14:36:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933530AbeCSOaf (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Mar 2018 10:30:35 -0400
-Received: from mut-mta1-se01a-zose1-fr.yulpa.io ([185.49.21.248]:36574 "EHLO
-        mut-mta1-se01a-zose1-fr.yulpa.io" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S932708AbeCSOac (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 19 Mar 2018 10:30:32 -0400
-X-Greylist: delayed 2362 seconds by postgrey-1.27 at vger.kernel.org; Mon, 19 Mar 2018 10:30:32 EDT
-Received: from zose-mx-out01.web4all.fr ([185.49.20.46] helo=zose-mta-hub-out-mua-02.web4all.fr)
-        by mut-mta1-se01a-fr.yulpa.io with esmtps (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.89)
-        (envelope-from <git@matthieu-moy.fr>)
-        id 1exvBi-000DnZ-HN; Mon, 19 Mar 2018 14:51:05 +0100
-Received: from localhost (localhost [127.0.0.1])
-        by zose-mta-hub-out-mua-02.web4all.fr (Postfix) with ESMTP id D4AFB60E49;
-        Mon, 19 Mar 2018 14:50:57 +0100 (CET)
-Received: from zose-mta-hub-out-mua-02.web4all.fr ([127.0.0.1])
-        by localhost (zose-mta-hub-out-mua-02.web4all.fr [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id 7jBKG2WxjYmY; Mon, 19 Mar 2018 14:50:57 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-        by zose-mta-hub-out-mua-02.web4all.fr (Postfix) with ESMTP id 5947660F84;
-        Mon, 19 Mar 2018 14:50:57 +0100 (CET)
-X-Virus-Scanned: amavisd-new at zose1.web4all.fr
-Received: from zose-mta-hub-out-mua-02.web4all.fr ([127.0.0.1])
-        by localhost (zose-mta-hub-out-mua-02.web4all.fr [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id RN3HG-N3HRwx; Mon, 19 Mar 2018 14:50:57 +0100 (CET)
-Received: from moylip (nautfst12.univ-lyon1.fr [134.214.142.79])
-        (Authenticated sender: matthieu.moy@matthieu-moy.fr)
-        by zose-mta-hub-out-mua-02.web4all.fr (Postfix) with ESMTPSA id 36C7F60E49;
-        Mon, 19 Mar 2018 14:50:54 +0100 (CET)
-References: <nycvar.QRO.7.76.6.1803191217410.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-User-agent: mu4e 1.0; emacs 24.5.1
-From:   Matthieu Moy <git@matthieu-moy.fr>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
-        Ville =?utf-8?Q?Skytt=C3=A4?= <ville.skytta@iki.fi>,
-        Luke Diamand <luke@diamand.org>,
-        Lars Schneider <larsxschneider@gmail.com>, git@vger.kernel.org
-Subject: Re: multimail/p4: issues identified by lgtm.com
-In-reply-to: <nycvar.QRO.7.76.6.1803191217410.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-Date:   Mon, 19 Mar 2018 14:50:43 +0100
-Message-ID: <86d100uqbw.fsf@matthieu-moy.fr>
+        id S1755757AbeCSOgq (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Mar 2018 10:36:46 -0400
+Received: from mail-wm0-f53.google.com ([74.125.82.53]:54552 "EHLO
+        mail-wm0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755745AbeCSOgn (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Mar 2018 10:36:43 -0400
+Received: by mail-wm0-f53.google.com with SMTP id h76so15637712wme.4
+        for <git@vger.kernel.org>; Mon, 19 Mar 2018 07:36:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=3cghDmR3NAG3tpX5LOp7pOheXENNnKZvb7iVxGUMaQ8=;
+        b=uDjOu96JmcX+SW1ZejlDjDS6r5g2EDin2tRX1DovtFQ++7ZcNqTmHGWt88e1faEs3p
+         K1hIPOERXHJVRaJ2IxDXqqx2y87L5bXC0kBG5GZWbR5+UmOGS+jc5FQdsIFR24QH0sYA
+         zWzdFgPAbA6OilSgi/pUdQ1lN6dJDHWGcp8MfYdE0BzYhNMrvVeNVFm+kz5JeuwLL83Y
+         AJRCY89XT2DuqLlep12kLW2d6ecfKMvbellCrCeABLoE1KZIEKzHrGcaAhHS6rjmMdwW
+         s6AdWI0f1plVLH/70Gljgf8XCqR6t7BiA7NriNvhj8JBP6FvUa2svg58Cu0EpVHLMF1a
+         TNAg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=3cghDmR3NAG3tpX5LOp7pOheXENNnKZvb7iVxGUMaQ8=;
+        b=fjqQfFhs5Qu57j+8yTgIQuLek5rQXtk7gZtp4AsKWpMHRshdFNjR2H8Ph/QBCj93rS
+         mAcqa2Bjr6uB125eEbPPzCLdrdXFF+inTpJmFoNB6YA6swuHOApHenMAm4d1zSTa8shq
+         7mzSvKVWB4mX3qOu+fDbw+QEghAxfbIzsfK57bnL/4IU4rIUke4oe3+5Xn9U7mMcGrFe
+         pzDXhWelp46tXEwJg7CSusI/0ZlE0eIk4Jk+c9qpZZF0rKAY1m4KM7KNRWzJ8yVIYd5y
+         u4IpA/p8N0IlwVlZtX/vnzeSG3EMYkuDlPw6JkR+KjTuWEmFPRFJWdrd1hK2zuMy0GW7
+         b5HQ==
+X-Gm-Message-State: AElRT7HB2ICGoGXZeojxcLrEfevHs0c/xqU/ILqvc/esiOKVhqT2IlHD
+        pFBZES8bplWVMjIhz0z20oB9z2Z/
+X-Google-Smtp-Source: AG47ELtex8d6weFSazbgzXGs0uPmpYlpFt73GXWLaQfCY4m+IttW+e0brRlJONZPQH028V4+04pn/w==
+X-Received: by 10.80.194.10 with SMTP id n10mr13663746edf.84.1521470201473;
+        Mon, 19 Mar 2018 07:36:41 -0700 (PDT)
+Received: from evledraar (proxy-gw-a.booking.com. [5.57.21.8])
+        by smtp.gmail.com with ESMTPSA id c7sm296019edn.15.2018.03.19.07.36.40
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 19 Mar 2018 07:36:40 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
+        sbeller@google.com, szeder.dev@gmail.com,
+        ramsay@ramsayjones.plus.com, git@jeffhostetler.com,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v6 07/14] commit-graph: implement 'git-commit-graph write'
+References: <1519698787-190494-1-git-send-email-dstolee@microsoft.com> <20180314192736.70602-1-dstolee@microsoft.com> <20180314192736.70602-8-dstolee@microsoft.com> <87bmflcy8a.fsf@evledraar.gmail.com> <5e394b91-fa78-5b70-8c5e-b06cc332bb3a@gmail.com>
+User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 1.1.0
+In-reply-to: <5e394b91-fa78-5b70-8c5e-b06cc332bb3a@gmail.com>
+Date:   Mon, 19 Mar 2018 15:36:34 +0100
+Message-ID: <874llccetp.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: 185.49.20.46
-X-SpamExperts-Domain: zose1.web4all.fr
-X-SpamExperts-Username: 185.49.20.46
-Authentication-Results: yulpa.io; auth=pass smtp.auth=185.49.20.46@zose1.web4all.fr
-X-SpamExperts-Outgoing-Class: ham
-X-SpamExperts-Outgoing-Evidence: Combined (0.07)
-X-Recommended-Action: accept
-X-Filter-ID: EX5BVjFpneJeBchSMxfU5mtlMO/mxKxUbNU7fT5IXG5602E9L7XzfQH6nu9C/Fh9KJzpNe6xgvOx
- q3u0UDjvO971bSIN96NVv+IMZVam7SC2wHwewjZh5Xd5YBPvxpBfNfm8EmBb+vo+OUVqLvZQLbkQ
- UFA0QhbfV5+15tKhOE//wwVDpwXymAEABC1IUXJNzOH6UIkcPrObxtlwdPrnxPYP6qHrQthZds6l
- 4P414NnPak4NAcnq8KOMIFX6HA4RSh0IYMmLb5TEzF5YHRyy9Yl4OEMNsQuwpgbEFk99sLOmq3zv
- f6PSPqIikbzE5b8vJODXbtOodkPED+RkHjVGH+Y+AVTHAPNee46WGYwWe3A6LyrF4MQKOzzvnQnr
- 8hsMT4wPt/OpIKGz7i7CIVU4whTHswbbB/ha+ZWrSAi8Skyxe17QIfgTGOgXzm19/3QDeZ59RfF/
- VI1q+Rmm2+UHK7ASVYnBhdKUnGmBdHG7BUn2dK6UtSEdwn3yFtfkzf2gFHLQzlG8ZpaJcA9oorTz
- b5YN6CxqPuk3xOJ6j9j7VPsjF+zaopzR+EXhgx3SXAfA5fJjsMYie1KIHivoqPV+yIMy2iO2w3c6
- blrMf3On8U7Y2dgVhFBmmtiker54swgmHwNvxu9HAKewkv0+phKZdN1mHTcTFOoOq4AKk2yYOuUS
- FEevI6IrOhkUGOYYF3dBGplHcpVCCoX989hgB8R+yE53ufVArBUDE4BTYJtudsKDOFYPuE5z0j7b
- XKXFr6ZG9N+PyLGMxPVK2Cy0Y4Xe+vFKes0nIijDAkybd8uG2uOvfcWe2ihgEES7DHO3PMGQUzaT
- jUW1cP1WbhuwMi+ICgDzS42xN4VrjJgkUZLUenT2f4gZCAPRGlwWC65zIqnNaoKg9b9VVGI4r0/K
- aAd0W9clTxNspOQVWap5sO+kfG7ZwogH/RRzXouiYI7YfpxQZjEa/sNl+vcoDGoYk0DAXSmC4D60
- 6+Ipq2UhZR8vAu/DqcigOvSxdRnthmhn8Zn6aWrZrUlgdDND/i6cOItbj05c91oUlJFK7m5OBrtM
- fDJKJrcoxEfnFpm9QY4yOBflSQlYjKHWBXbyFNUxO4iwNdjZ2BWEUGaa2KR6vnizCCZMFTZq1uOx
- Qt3sHAFGc0h6q2VyZNYoPn0Qp1r9V9y1+JKIVfj9vA1k4g9l7rxwo+w=
-X-Report-Abuse-To: spam@mut-mta1-se01a-fr.yulpa.io
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin writes:
 
-> Hi team,
+On Mon, Mar 19 2018, Derrick Stolee jotted:
+
+> On 3/18/2018 9:25 AM, Ævar Arnfjörð Bjarmason wrote:
+>> On Wed, Mar 14 2018, Derrick Stolee jotted:
+>>
+>>> +'git commit-graph write' <options> [--object-dir <dir>]
+>>> +
+>>> +
+>>> +DESCRIPTION
+>>> +-----------
+>>> +
+>>> +Manage the serialized commit graph file.
+>>> +
+>>> +
+>>> +OPTIONS
+>>> +-------
+>>> +--object-dir::
+>>> +	Use given directory for the location of packfiles and commit graph
+>>> +	file. The commit graph file is expected to be at <dir>/info/commit-graph
+>>> +	and the packfiles are expected to be in <dir>/pack.
+>> Maybe this was covered in a previous round, this series is a little hard
+>> to follow since each version isn't In-Reply-To the version before it,
+>> but why is this option needed, i.e. why would you do:
+>>
+>>      git commit-graph write --object-dir=/some/path/.git/objects
+>>
+>> As opposed to just pigging-backing on what we already have with both of:
+>>
+>>      git --git-dir=/some/path/.git commit-graph write
+>>      git -C /some/path commit-graph write
+>>
+>> Is there some use-case where you have *just* the objects dir and not the
+>> rest of the .git folder?
 >
-> while Coverity was down (it still is not reachable for me, but I guess
-> that's just because everybody and their dog wants to catch up on a month
-> of work delayed by their outage), I tried to find alternatives, and one of
-> them is lgtm.com. Their C/C++ support is not generally available yet, but
-> there have been a couple of issues identified in our Python scripts:
+> Yes, such as an alternate. If I remember correctly, alternates only
+> need the objects directory.
 >
-> https://lgtm.com/projects/g/git/git/alerts/?mode=list&rule=py%2Fcall%2Fwrong-arguments%2Cpy%2Fcall%2Fwrong-named-argument%2Cpy%2Fexplicit-call-to-delete%2Cpy%2Finconsistent-equality%2Cpy%2Finheritance%2Fincorrect-overridden-signature%2Cpy%2Fmissing-call-to-init%2Cpy%2Fmultiple-definition%2Cpy%2Fredundant-else%2Cpy%2Funinitialized-local-variable%2Cpy%2Funreachable-statement
->
-> From a cursory look, it *does* seem as if there are legitimate issues
-> there that want to be fixed ;-) But then, I am far from a Python expert,
-> so my impressions could be completely off the mark.
+> In the GVFS case, we place prefetch packfiles in an alternate so there
+> is only one copy of the "remote objects" per drive. The commit graph
+> will be stored in that alternate.
 
-For git-multimail, there are actually a lot of false-positive due to the
-way we use multiple-inheritance (when calling super(...).__init__(),
-lgtm assumes we're calling the superclass's constructor while we
-actually call the "next in the method resolution order list"), but also
-probably valid concerns.
+Makes sense, but we should really document this as being such an unusual
+option, i.e. instead say something like.
 
-I've set up a separate project for git-multimail:
-
-  https://lgtm.com/projects/g/git-multimail/git-multimail/alerts/?mode=list
-
-I'll have a deeper look ASAP.
-
-Thanks!
-
--- 
-Matthieu Moy
-https://matthieu-moy.fr/
+    Use given directory for the location of packfiles and commit graph
+    file. Usually you'd use the `--git-dir` or `-C` arguments to `git`
+    itself. This option is here to support obscure use-cases where we
+    have a stand-alone object directory. The commit graph file is
+    expected to be at <dir>/info/commit-graph and the packfiles are
+    expected to be in <dir>/pack.
