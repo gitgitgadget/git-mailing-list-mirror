@@ -2,101 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 91F3A1FAE2
-	for <e@80x24.org>; Mon, 19 Mar 2018 15:53:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 37AF11F404
+	for <e@80x24.org>; Mon, 19 Mar 2018 16:19:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934144AbeCSPxN (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Mar 2018 11:53:13 -0400
-Received: from mail-wr0-f195.google.com ([209.85.128.195]:43419 "EHLO
-        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934075AbeCSPxF (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Mar 2018 11:53:05 -0400
-Received: by mail-wr0-f195.google.com with SMTP id o1so19103969wro.10
-        for <git@vger.kernel.org>; Mon, 19 Mar 2018 08:53:05 -0700 (PDT)
+        id S967012AbeCSQTu (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Mar 2018 12:19:50 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:36346 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S966659AbeCSQTq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Mar 2018 12:19:46 -0400
+Received: by mail-wm0-f68.google.com with SMTP id x82so3992903wmg.1
+        for <git@vger.kernel.org>; Mon, 19 Mar 2018 09:19:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=TmOBCvuXgijSwjoVG+IMgVsEWp7AsNO9EsZkCg2A9rc=;
-        b=oaWxkD29kkLskseWTePMbSF6reBR2PI3zdNt6epclPbhZKwgr53pUX5rvXCx5BLOef
-         fHbSQSa5Cm6gM2RPLob/ItRr5Q23bJ6seKeGBQ9oZCsV2oMYt3PZ1pli/xYoYinAenlT
-         e/gFAj6PZ6+5zfL4cktzGR1a9/pOK492CF/CvxhvlcqOr1wmQdj82c2Hf2uSYVqmW8PW
-         PBr+JZdZo8Zi9w+fpCuXQM586w7GshuvPRq76DxnLIPtUvwdh/KeqkKj4acAUiWe/4tn
-         kl6TH8GMyzCwEjAK/bmoYRnpfiQzfRGjDNeTQiQJ+kg0SBHuR7fu0sIZ6BIrWdSfUPJ6
-         L0Ng==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=eY5JubTPL0GbwF4fcaZIKvZYCF3mxH+C5jmp3WyDRMY=;
+        b=W9HPolCywnmLozncFlrJkjHp44G4xYbQ15i4usQXPcJiNF96nPyTncgWj3ritIJ9Pk
+         Gz2qauIFm8DadzzknhtRQV3zyGmsy8YMoi+e0sq2VVieXrH5mxG8S1c3MQENCl5D1u6s
+         ASuZEG94yme/tXOu43Yjp8E3UisI+21BjoGZcp1GknTkI/yj2NAfTg8xAzp2r/VGe/Tu
+         WvhLUN6/43Blqtf6htfdSJrI8OHrUKSm2Qplk+EGak2ZdzQELKNi4ejAoM8OZ/SOxlBw
+         4WJ+37dt6xeeSIeYig0lmW/+4RUX0Mk7e6QR4UJxQ2p3s9OCfu5252BTC0J9cEo/um5y
+         vgIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
-         :in-reply-to:references;
-        bh=TmOBCvuXgijSwjoVG+IMgVsEWp7AsNO9EsZkCg2A9rc=;
-        b=afM6XIimU7GJG+uSpfrfqrGdmkH2lYgj9AaAKEjXwHpu8G2pilx/AqqF5Xyfxu892T
-         vtcNsgC0JhaR1+4wNFcgtQTkaJrrP59ceeRQ4BbdxrfvfiGByGnYQK3sVXWdDK4OyAOl
-         kzyszMLUKXMj23PLGFgba1OBjsuPDnm85G0gEq/67goVjibAv2JOM7SqOCaFRdgpzQLN
-         Nn8xXPsE/J5gSohOfA+2KcMGtjcpEevU8Xp9/CaHZMTlp6yDUPrrwTQ+AS0xJBDLnmKV
-         KkZsXZaCy1KAT4lBxCOlYigE8jC6uOFvzMkDEZM8WM/zJQ5qHyNzbXyKivqwGZfuXh5f
-         l7VA==
-X-Gm-Message-State: AElRT7F66UeF0doR/K6fCICUEcEplmBfUqrFaVdIATmIR2d77Szp/dfu
-        9d2JcbsGvzS6JFjv+Hnxv31bWGTU
-X-Google-Smtp-Source: AG47ELu4vwFNMda8C30zaJu6s6vqId4ik6dZHNSL/XKNr5Z7yi3ZuMMuXaLO5800uvnmDPfYcG0RgQ==
-X-Received: by 10.223.144.69 with SMTP id h63mr970009wrh.218.1521474784111;
-        Mon, 19 Mar 2018 08:53:04 -0700 (PDT)
-Received: from FUJITSU-PCD-030.progesoft.local (151-0-155-178.ip281.fastwebnet.it. [151.0.155.178])
-        by smtp.gmail.com with ESMTPSA id k184sm826991wmk.45.2018.03.19.08.53.03
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 19 Mar 2018 08:53:03 -0700 (PDT)
-From:   Michele Locati <michele@locati.it>
-To:     git@vger.kernel.org
-Cc:     charles@hashpling.org, Michele Locati <michele@locati.it>
-Subject: [PATCH v2] filter-branch: use printf instead of echo -e
-Date:   Mon, 19 Mar 2018 16:52:59 +0100
-Message-Id: <20180319155259.13200-1-michele@locati.it>
-X-Mailer: git-send-email 2.16.2.windows.1
-In-Reply-To: <20180319144905.11564-1-michele@locati.it>
-References: <20180319144905.11564-1-michele@locati.it>
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=eY5JubTPL0GbwF4fcaZIKvZYCF3mxH+C5jmp3WyDRMY=;
+        b=Q1znrAwU9Uy2Dve8KMIEvkoeEGgSzHWKuAygrL2GhHJEvCRovdbtGi7LRq1BRfKknH
+         dd/G/49BdWcsEm9MYL6+zdCvVdnDavoVzqWnJR6Gq0S2KFlIoVf2ja20msTgfyFxtg69
+         27SRg/JXEAqaVmR0PBuT7VHtUk071fFDudGnvWRsVDi94kLgSXIeAeE1J5/ssKBJsPFT
+         KHk0I0wGl+tc6u4cGEfQjgWgi4M9k3/Xp4CxGGdSkEVK85HC6Uku/ucDMLSfG7TANNRP
+         EAY7LtKnsz1xtCPOb5RRO7E0BWJGrmW1c4BQeUavbgn9KHXThPlEUCJPAxm9hU+GQgCT
+         6aYQ==
+X-Gm-Message-State: AElRT7H+BtlqgLPEksa54Uabv9EQ6vmcKRcISGUAnjQV8GN6ZqrZu9KD
+        UmcsgRRgIHILXrjsGEBiUU4=
+X-Google-Smtp-Source: AG47ELta5AaUaALom72ePunK70Ms5kjfgI28CJMqfcxQ84tfiT7CE+UXhrDhrYXkMm1yHsVUGC9IOw==
+X-Received: by 10.28.22.210 with SMTP id 201mr8491130wmw.66.1521476384657;
+        Mon, 19 Mar 2018 09:19:44 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id w6sm492134wre.25.2018.03.19.09.19.43
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 19 Mar 2018 09:19:43 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     avarab@gmail.com, e@80x24.org, git@vger.kernel.org, peff@peff.net
+Subject: Re: [PATCH v6 09/11] pack-objects: shrink size field in struct object_entry
+References: <20180317141033.21545-1-pclouds@gmail.com>
+        <20180318142526.9378-1-pclouds@gmail.com>
+        <20180318142526.9378-10-pclouds@gmail.com>
+Date:   Mon, 19 Mar 2018 09:19:42 -0700
+In-Reply-To: <20180318142526.9378-10-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
+ =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
+        Duy"'s message of "Sun, 18 Mar 2018 15:25:24 +0100")
+Message-ID: <xmqqzi34vy01.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In order to echo a tab character, it's better to use printf instead of
-"echo -e", because it's more portable (for instance, "echo -e" doesn't work
-as expected on a Mac).
+Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
 
-This solves the "fatal: Not a valid object name" error in git-filter-branch
-when using the --state-branch option.
+> +static inline int oe_fits_in_32bits(unsigned long limit)
+> +{
+> +	uint32_t truncated_limit = (uint32_t)limit;
+> +
+> +	return limit == truncated_limit;
+> +}
 
-Furthermore, let's switch from "/bin/echo" to just "echo", so that the
-built-in echo command is used where available.
+I do not think it is worth a reroll (there only are a few
+callsites), but the above has nothing to do with "oe" fitting
+anything (it is about "limit").  Do you mind if I did this instead?
 
-Signed-off-by: Michele Locati <michele@locati.it>
----
- git-filter-branch.sh | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+	static inline int fits_in_32bits(unsigned long size)
 
-diff --git a/git-filter-branch.sh b/git-filter-branch.sh
-index 1b7e4b2cd..98c76ec58 100755
---- a/git-filter-branch.sh
-+++ b/git-filter-branch.sh
-@@ -627,12 +627,12 @@ then
- 				print H "$_:$f\n" or die;
- 			}
- 			close(H) or die;' || die "Unable to save state")
--	state_tree=$(/bin/echo -e "100644 blob $state_blob\tfilter.map" | git mktree)
-+	state_tree=$(printf '100644 blob %s\tfilter.map\n' "$state_blob" | git mktree)
- 	if test -n "$state_commit"
- 	then
--		state_commit=$(/bin/echo "Sync" | git commit-tree "$state_tree" -p "$state_commit")
-+		state_commit=$(echo "Sync" | git commit-tree "$state_tree" -p "$state_commit")
- 	else
--		state_commit=$(/bin/echo "Sync" | git commit-tree "$state_tree" )
-+		state_commit=$(echo "Sync" | git commit-tree "$state_tree" )
- 	fi
- 	git update-ref "$state_branch" "$state_commit"
- fi
--- 
-2.16.2.windows.1
+... or other suggestions, perhaps?
 
