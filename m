@@ -2,385 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9F98F1F404
-	for <e@80x24.org>; Mon, 19 Mar 2018 13:01:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5856E1F404
+	for <e@80x24.org>; Mon, 19 Mar 2018 13:10:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932889AbeCSNBO (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Mar 2018 09:01:14 -0400
-Received: from a7-11.smtp-out.eu-west-1.amazonses.com ([54.240.7.11]:34052
-        "EHLO a7-11.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1755531AbeCSNBC (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 19 Mar 2018 09:01:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=uku4taia5b5tsbglxyj6zym32efj7xqv; d=amazonses.com; t=1521464461;
-        h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-        bh=MOnaS5nYKNL0JB8Qv6tiHtOp+1xas7Ktvuw5hPNfxWU=;
-        b=t84C5XhHg7Jj4H8yzWugAPGl6W2PUoaYLR2s7JtCAoU1KVS68MrGFsf1+CGBXDAn
-        4UrM9fBlCat0jbqB0dgneOIc967jgtFjW7F9qDEKx7tsvZi8augtr4kVQ86RadKkqdh
-        Ib2BvSbt/AYpwJ+A7YygRf4RpSnKAgtDOTdDoPXw=
-From:   Olga Telezhnaya <olyatelezhnaya@gmail.com>
-To:     git@vger.kernel.org
-Message-ID: <010201623e5944bd-e932aceb-2d30-4940-89e1-130b99f6ed81-000000@eu-west-1.amazonses.com>
-In-Reply-To: <010201623e594401-906aa5ca-545b-405a-810a-607491fe09a7-000000@eu-west-1.amazonses.com>
-References: <010201623e594401-906aa5ca-545b-405a-810a-607491fe09a7-000000@eu-west-1.amazonses.com>
-Subject: [PATCH v3 4/5] ref-filter: add return value to parsers
+        id S933002AbeCSNKQ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Mar 2018 09:10:16 -0400
+Received: from mail-qt0-f196.google.com ([209.85.216.196]:35952 "EHLO
+        mail-qt0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932883AbeCSNKP (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Mar 2018 09:10:15 -0400
+Received: by mail-qt0-f196.google.com with SMTP id a20so829196qtj.3
+        for <git@vger.kernel.org>; Mon, 19 Mar 2018 06:10:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=P1ZASZzHQtcJHu6jHsQtSKODPflI1Lm7YVYeMOD2SCA=;
+        b=VyZILW57ZCCw1aYKgOemtH00mEvU8U/vblfEeQ3360lcFQFTAVi1pV6pfosTCCxudP
+         2R87fO67gIciRPPKCUnDnrdOEA0MAPakLKIqXD06Wop5Ncj0x6kVngHcp3OtFRbo18wm
+         4eZHvde3c/A94AIunjMgIB4kuotXliDkZ322NW9O1SP38uxaa05j+rrfuOG6+xMwoGMs
+         M+hM+TQUCeEMQsUOvG9236WHLMQi2rwIX1xDDFe2w9awsBl67q3HLq4yxx/u+3/EkUfJ
+         REG5zfQAXP9RsKB8e7ECEJuHPyW/q/HHnTUTIeN3mMEVTFBYAriZRVRJgYJVdFVSzb8+
+         Wqug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=P1ZASZzHQtcJHu6jHsQtSKODPflI1Lm7YVYeMOD2SCA=;
+        b=oaqBZ6PCVvpQaUOEZvp+FodBI1Gca4HgkI9C4MWv3TGSzOQGThJW6Qmw1+eBd2HbUq
+         Aaaw4A9FQd9srrBtayGo6pmm6pn9mu+izXjEiHJZjpDzV0MF/HYy89cvSkieYUl2hOVN
+         NCCWhO7qNHdcCE35R/fZHPztfJqAptSyA08+1Qb7zRVbiv8iQo8hk08IwyVBQGKOBj00
+         a9fOdpDZKI2yqIB7i+l2A37gYwoliy0HSxY7bS2xYE1L5AuATwPu8u6Qnhd7fesSoRRC
+         U/WMoPjZdKtfDG/TUV/Z/8ibWjygJRbKB2LSgzcWRugimqwxqDe7CZMlKXnWpfTGtC0O
+         I2bA==
+X-Gm-Message-State: AElRT7H8NCoiI70dMM4oT1e/1O71krNUfTxXNPvv/0LTmT+tZ50feR0O
+        s6YHX1ZAcPMz05HFdmvKHsg=
+X-Google-Smtp-Source: AG47ELutHByf+XqeIdUqRGjjSOMmbg6EPawS5BgbVgWmENqryX4SG1buGaNwRxoNKQlRIq8gm5NSrA==
+X-Received: by 10.200.58.229 with SMTP id x92mr18180088qte.46.1521465014148;
+        Mon, 19 Mar 2018 06:10:14 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:c4e6:7a22:56f1:df04? ([2001:4898:8010:0:ae1c:7a22:56f1:df04])
+        by smtp.gmail.com with ESMTPSA id 61sm4460630qtc.49.2018.03.19.06.10.13
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 19 Mar 2018 06:10:13 -0700 (PDT)
+Subject: Re: [PATCH v6 00/14] Serialized Git Commit Graph
+To:     Lars Schneider <larsxschneider@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Stefan Beller <sbeller@google.com>,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        git@jeffhostetler.com, Derrick Stolee <dstolee@microsoft.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <1519698787-190494-1-git-send-email-dstolee@microsoft.com>
+ <20180314192736.70602-1-dstolee@microsoft.com>
+ <xmqq605yz8ue.fsf@gitster-ct.c.googlers.com>
+ <54BC2335-72B3-404E-AA4A-368DEB121C8E@gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <e9062408-0983-2e47-4338-4ab1823bb9bd@gmail.com>
+Date:   Mon, 19 Mar 2018 09:10:12 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.6.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+In-Reply-To: <54BC2335-72B3-404E-AA4A-368DEB121C8E@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Date:   Mon, 19 Mar 2018 13:01:00 +0000
-X-SES-Outgoing: 2018.03.19-54.240.7.11
-Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Continue removing any printing from ref-filter formatting logic,
-so that it could be more general.
+On 3/16/2018 12:28 PM, Lars Schneider wrote:
+>
+>> On 14 Mar 2018, at 21:43, Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>> Derrick Stolee <stolee@gmail.com> writes:
+>>
+>>
+>>> Hopefully this version is ready to merge. I have several follow-up topics
+>>> in mind to submit soon after, including:
+>> A few patches add trailing blank lines and other whitespace
+>> breakages, which will stop my "git merge" later to 'next' and down,
+>> as I have a pre-commit hook to catch them.
+> @stolee:
+>
+> I run "git --no-pager diff --check $BASE_HASH...$HEAD_HASH" to detect
+> these kinds of things. I run this as part of my "prepare patch" [1] script
+> which is inspired by a similar script originally written by Dscho.
+>
+> Do you think it would make sense to mention (or even
+> recommend) such a script in your awesome GfW CONTRIBUTING.md?
+>
+>
+> - Lars
+>
+>
+> [1] https://github.com/larsxschneider/git-list-helper/blob/master/prepare-patch.sh#L71
+>
 
-Change the signature of parsers by adding return value and
-strbuf parameter for error message.
+Thanks for the suggestions. Somehow I got extra whitespace doing 
+copy/paste in vim and I never re-opened that file in my normal editor 
+(VS Code with an extension that shows trailing whitespace).
 
-Signed-off-by: Olga Telezhnaia <olyatelezhnaya@gmail.com>
----
- ref-filter.c | 177 +++++++++++++++++++++++++++++++++++++++--------------------
- 1 file changed, 118 insertions(+), 59 deletions(-)
+On 3/15/2018 1:23 PM, Johannes Schindelin wrote:
+> git log --check`
+> was introduced to show you whitespace problems). If all of those
+> whitespace issues are unintentional, you can fix them using `git rebase
+> --whitespace=fix` in the most efficient way.
 
-diff --git a/ref-filter.c b/ref-filter.c
-index 2313a33f0baa4..b90cec1056954 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -101,22 +101,28 @@ static struct used_atom {
- } *used_atom;
- static int used_atom_cnt, need_tagged, need_symref;
- 
--static void color_atom_parser(const struct ref_format *format, struct used_atom *atom, const char *color_value)
-+static int color_atom_parser(const struct ref_format *format, struct used_atom *atom,
-+			     const char *color_value, struct strbuf *err)
- {
--	if (!color_value)
--		die(_("expected format: %%(color:<color>)"));
--	if (color_parse(color_value, atom->u.color) < 0)
--		die(_("unrecognized color: %%(color:%s)"), color_value);
-+	if (!color_value) {
-+		strbuf_addstr(err, _("expected format: %(color:<color>)"));
-+		return -1;
-+	}
-+	if (color_parse(color_value, atom->u.color) < 0) {
-+		strbuf_addf(err, _("unrecognized color: %%(color:%s)"), color_value);
-+		return -1;
-+	}
- 	/*
- 	 * We check this after we've parsed the color, which lets us complain
- 	 * about syntactically bogus color names even if they won't be used.
- 	 */
- 	if (!want_color(format->use_color))
- 		color_parse("", atom->u.color);
-+	return 0;
- }
- 
--static void refname_atom_parser_internal(struct refname_atom *atom,
--					 const char *arg, const char *name)
-+static int refname_atom_parser_internal(struct refname_atom *atom, const char *arg,
-+					 const char *name, struct strbuf *err)
- {
- 	if (!arg)
- 		atom->option = R_NORMAL;
-@@ -125,17 +131,25 @@ static void refname_atom_parser_internal(struct refname_atom *atom,
- 	else if (skip_prefix(arg, "lstrip=", &arg) ||
- 		 skip_prefix(arg, "strip=", &arg)) {
- 		atom->option = R_LSTRIP;
--		if (strtol_i(arg, 10, &atom->lstrip))
--			die(_("Integer value expected refname:lstrip=%s"), arg);
-+		if (strtol_i(arg, 10, &atom->lstrip)) {
-+			strbuf_addf(err, _("Integer value expected refname:lstrip=%s"), arg);
-+			return -1;
-+		}
- 	} else if (skip_prefix(arg, "rstrip=", &arg)) {
- 		atom->option = R_RSTRIP;
--		if (strtol_i(arg, 10, &atom->rstrip))
--			die(_("Integer value expected refname:rstrip=%s"), arg);
--	} else
--		die(_("unrecognized %%(%s) argument: %s"), name, arg);
-+		if (strtol_i(arg, 10, &atom->rstrip)) {
-+			strbuf_addf(err, _("Integer value expected refname:rstrip=%s"), arg);
-+			return -1;
-+		}
-+	} else {
-+		strbuf_addf(err, _("unrecognized %%(%s) argument: %s"), name, arg);
-+		return -1;
-+	}
-+	return 0;
- }
- 
--static void remote_ref_atom_parser(const struct ref_format *format, struct used_atom *atom, const char *arg)
-+static int remote_ref_atom_parser(const struct ref_format *format, struct used_atom *atom,
-+				  const char *arg, struct strbuf *err)
- {
- 	struct string_list params = STRING_LIST_INIT_DUP;
- 	int i;
-@@ -145,9 +159,8 @@ static void remote_ref_atom_parser(const struct ref_format *format, struct used_
- 
- 	if (!arg) {
- 		atom->u.remote_ref.option = RR_REF;
--		refname_atom_parser_internal(&atom->u.remote_ref.refname,
--					     arg, atom->name);
--		return;
-+		return refname_atom_parser_internal(&atom->u.remote_ref.refname,
-+						    arg, atom->name, err);
- 	}
- 
- 	atom->u.remote_ref.nobracket = 0;
-@@ -170,29 +183,40 @@ static void remote_ref_atom_parser(const struct ref_format *format, struct used_
- 			atom->u.remote_ref.push_remote = 1;
- 		} else {
- 			atom->u.remote_ref.option = RR_REF;
--			refname_atom_parser_internal(&atom->u.remote_ref.refname,
--						     arg, atom->name);
-+			if (refname_atom_parser_internal(&atom->u.remote_ref.refname,
-+							 arg, atom->name, err))
-+				return -1;
- 		}
- 	}
- 
- 	string_list_clear(&params, 0);
-+	return 0;
- }
- 
--static void body_atom_parser(const struct ref_format *format, struct used_atom *atom, const char *arg)
-+static int body_atom_parser(const struct ref_format *format, struct used_atom *atom,
-+			    const char *arg, struct strbuf *err)
- {
--	if (arg)
--		die(_("%%(body) does not take arguments"));
-+	if (arg) {
-+		strbuf_addstr(err, _("%(body) does not take arguments"));
-+		return -1;
-+	}
- 	atom->u.contents.option = C_BODY_DEP;
-+	return 0;
- }
- 
--static void subject_atom_parser(const struct ref_format *format, struct used_atom *atom, const char *arg)
-+static int subject_atom_parser(const struct ref_format *format, struct used_atom *atom,
-+			       const char *arg, struct strbuf *err)
- {
--	if (arg)
--		die(_("%%(subject) does not take arguments"));
-+	if (arg) {
-+		strbuf_addstr(err, _("%(subject) does not take arguments"));
-+		return -1;
-+	}
- 	atom->u.contents.option = C_SUB;
-+	return 0;
- }
- 
--static void trailers_atom_parser(const struct ref_format *format, struct used_atom *atom, const char *arg)
-+static int trailers_atom_parser(const struct ref_format *format, struct used_atom *atom,
-+				const char *arg, struct strbuf *err)
- {
- 	struct string_list params = STRING_LIST_INIT_DUP;
- 	int i;
-@@ -205,15 +229,19 @@ static void trailers_atom_parser(const struct ref_format *format, struct used_at
- 				atom->u.contents.trailer_opts.unfold = 1;
- 			else if (!strcmp(s, "only"))
- 				atom->u.contents.trailer_opts.only_trailers = 1;
--			else
--				die(_("unknown %%(trailers) argument: %s"), s);
-+			else {
-+				strbuf_addf(err, _("unknown %%(trailers) argument: %s"), s);
-+				return -1;
-+			}
- 		}
- 	}
- 	atom->u.contents.option = C_TRAILERS;
- 	string_list_clear(&params, 0);
-+	return 0;
- }
- 
--static void contents_atom_parser(const struct ref_format *format, struct used_atom *atom, const char *arg)
-+static int contents_atom_parser(const struct ref_format *format, struct used_atom *atom,
-+				const char *arg, struct strbuf *err)
- {
- 	if (!arg)
- 		atom->u.contents.option = C_BARE;
-@@ -225,16 +253,23 @@ static void contents_atom_parser(const struct ref_format *format, struct used_at
- 		atom->u.contents.option = C_SUB;
- 	else if (skip_prefix(arg, "trailers", &arg)) {
- 		skip_prefix(arg, ":", &arg);
--		trailers_atom_parser(format, atom, *arg ? arg : NULL);
-+		if (trailers_atom_parser(format, atom, *arg ? arg : NULL, err))
-+			return -1;
- 	} else if (skip_prefix(arg, "lines=", &arg)) {
- 		atom->u.contents.option = C_LINES;
--		if (strtoul_ui(arg, 10, &atom->u.contents.nlines))
--			die(_("positive value expected contents:lines=%s"), arg);
--	} else
--		die(_("unrecognized %%(contents) argument: %s"), arg);
-+		if (strtoul_ui(arg, 10, &atom->u.contents.nlines)) {
-+			strbuf_addf(err, _("positive value expected contents:lines=%s"), arg);
-+			return -1;
-+		}
-+	} else {
-+		strbuf_addf(err, _("unrecognized %%(contents) argument: %s"), arg);
-+		return -1;
-+	}
-+	return 0;
- }
- 
--static void objectname_atom_parser(const struct ref_format *format, struct used_atom *atom, const char *arg)
-+static int objectname_atom_parser(const struct ref_format *format, struct used_atom *atom,
-+				  const char *arg, struct strbuf *err)
- {
- 	if (!arg)
- 		atom->u.objectname.option = O_FULL;
-@@ -243,17 +278,23 @@ static void objectname_atom_parser(const struct ref_format *format, struct used_
- 	else if (skip_prefix(arg, "short=", &arg)) {
- 		atom->u.objectname.option = O_LENGTH;
- 		if (strtoul_ui(arg, 10, &atom->u.objectname.length) ||
--		    atom->u.objectname.length == 0)
--			die(_("positive value expected objectname:short=%s"), arg);
-+		    atom->u.objectname.length == 0) {
-+			strbuf_addf(err, _("positive value expected objectname:short=%s"), arg);
-+			return -1;
-+		}
- 		if (atom->u.objectname.length < MINIMUM_ABBREV)
- 			atom->u.objectname.length = MINIMUM_ABBREV;
--	} else
--		die(_("unrecognized %%(objectname) argument: %s"), arg);
-+	} else {
-+		strbuf_addf(err, _("unrecognized %%(objectname) argument: %s"), arg);
-+		return -1;
-+	}
-+	return 0;
- }
- 
--static void refname_atom_parser(const struct ref_format *format, struct used_atom *atom, const char *arg)
-+static int refname_atom_parser(const struct ref_format *format, struct used_atom *atom,
-+			       const char *arg, struct strbuf *err)
- {
--	refname_atom_parser_internal(&atom->u.refname, arg, atom->name);
-+	return refname_atom_parser_internal(&atom->u.refname, arg, atom->name, err);
- }
- 
- static align_type parse_align_position(const char *s)
-@@ -267,15 +308,18 @@ static align_type parse_align_position(const char *s)
- 	return -1;
- }
- 
--static void align_atom_parser(const struct ref_format *format, struct used_atom *atom, const char *arg)
-+static int align_atom_parser(const struct ref_format *format, struct used_atom *atom,
-+			     const char *arg, struct strbuf *err)
- {
- 	struct align *align = &atom->u.align;
- 	struct string_list params = STRING_LIST_INIT_DUP;
- 	int i;
- 	unsigned int width = ~0U;
- 
--	if (!arg)
--		die(_("expected format: %%(align:<width>,<position>)"));
-+	if (!arg) {
-+		strbuf_addstr(err, _("expected format: %(align:<width>,<position>)"));
-+		return -1;
-+	}
- 
- 	align->position = ALIGN_LEFT;
- 
-@@ -286,49 +330,64 @@ static void align_atom_parser(const struct ref_format *format, struct used_atom
- 
- 		if (skip_prefix(s, "position=", &s)) {
- 			position = parse_align_position(s);
--			if (position < 0)
--				die(_("unrecognized position:%s"), s);
-+			if (position < 0) {
-+				strbuf_addf(err, _("unrecognized position:%s"), s);
-+				return -1;
-+			}
- 			align->position = position;
- 		} else if (skip_prefix(s, "width=", &s)) {
--			if (strtoul_ui(s, 10, &width))
--				die(_("unrecognized width:%s"), s);
-+			if (strtoul_ui(s, 10, &width)) {
-+				strbuf_addf(err, _("unrecognized width:%s"), s);
-+				return -1;
-+			}
- 		} else if (!strtoul_ui(s, 10, &width))
- 			;
- 		else if ((position = parse_align_position(s)) >= 0)
- 			align->position = position;
--		else
--			die(_("unrecognized %%(align) argument: %s"), s);
-+		else {
-+			strbuf_addf(err, _("unrecognized %%(align) argument: %s"), s);
-+			return -1;
-+		}
- 	}
- 
--	if (width == ~0U)
--		die(_("positive width expected with the %%(align) atom"));
-+	if (width == ~0U) {
-+		strbuf_addstr(err, _("positive width expected with the %(align) atom"));
-+		return -1;
-+	}
- 	align->width = width;
- 	string_list_clear(&params, 0);
-+	return 0;
- }
- 
--static void if_atom_parser(const struct ref_format *format, struct used_atom *atom, const char *arg)
-+static int if_atom_parser(const struct ref_format *format, struct used_atom *atom,
-+			  const char *arg, struct strbuf *err)
- {
- 	if (!arg) {
- 		atom->u.if_then_else.cmp_status = COMPARE_NONE;
--		return;
-+		return 0;
- 	} else if (skip_prefix(arg, "equals=", &atom->u.if_then_else.str)) {
- 		atom->u.if_then_else.cmp_status = COMPARE_EQUAL;
- 	} else if (skip_prefix(arg, "notequals=", &atom->u.if_then_else.str)) {
- 		atom->u.if_then_else.cmp_status = COMPARE_UNEQUAL;
- 	} else {
--		die(_("unrecognized %%(if) argument: %s"), arg);
-+		strbuf_addf(err, _("unrecognized %%(if) argument: %s"), arg);
-+		return -1;
- 	}
-+	return 0;
- }
- 
--static void head_atom_parser(const struct ref_format *format, struct used_atom *atom, const char *arg)
-+static int head_atom_parser(const struct ref_format *format, struct used_atom *atom,
-+			    const char *arg, struct strbuf *err)
- {
- 	atom->u.head = resolve_refdup("HEAD", RESOLVE_REF_READING, NULL, NULL);
-+	return 0;
- }
- 
- static struct {
- 	const char *name;
- 	cmp_type cmp_type;
--	void (*parser)(const struct ref_format *format, struct used_atom *atom, const char *arg);
-+	int (*parser)(const struct ref_format *format, struct used_atom *atom,
-+		      const char *arg, struct strbuf *err);
- } valid_atom[] = {
- 	{ "refname" , FIELD_STR, refname_atom_parser },
- 	{ "objecttype" },
-@@ -457,8 +516,8 @@ static int parse_ref_filter_atom(const struct ref_format *format,
- 		}
- 	}
- 	memset(&used_atom[at].u, 0, sizeof(used_atom[at].u));
--	if (valid_atom[i].parser)
--		valid_atom[i].parser(format, &used_atom[at], arg);
-+	if (valid_atom[i].parser && valid_atom[i].parser(format, &used_atom[at], arg, err))
-+		return -1;
- 	if (*atom == '*')
- 		need_tagged = 1;
- 	if (!strcmp(valid_atom[i].name, "symref"))
+Thanks for both of the suggestions. The `rebase` check was already in 
+the document, so I put the checks immediately above that line. PR is 
+available now [1].
 
---
-https://github.com/git/git/pull/466
+Thanks,
+-Stolee
+
+[1] https://github.com/git-for-windows/git/pull/1567
