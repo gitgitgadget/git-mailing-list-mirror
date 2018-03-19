@@ -2,108 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 081071F404
-	for <e@80x24.org>; Mon, 19 Mar 2018 18:08:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4E44F1F404
+	for <e@80x24.org>; Mon, 19 Mar 2018 18:45:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934993AbeCSSIF (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Mar 2018 14:08:05 -0400
-Received: from mail-pl0-f54.google.com ([209.85.160.54]:44106 "EHLO
-        mail-pl0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S968412AbeCSSHi (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Mar 2018 14:07:38 -0400
-Received: by mail-pl0-f54.google.com with SMTP id 9-v6so10722443ple.11
-        for <git@vger.kernel.org>; Mon, 19 Mar 2018 11:07:38 -0700 (PDT)
+        id S966796AbeCSSpj (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Mar 2018 14:45:39 -0400
+Received: from mail-ot0-f177.google.com ([74.125.82.177]:40516 "EHLO
+        mail-ot0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S935778AbeCSSpf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Mar 2018 14:45:35 -0400
+Received: by mail-ot0-f177.google.com with SMTP id l12-v6so18456772otj.7
+        for <git@vger.kernel.org>; Mon, 19 Mar 2018 11:45:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=GOFf5iqegC0waHvVF/FPRl0uBW3zVXdSucxhUurxFQ8=;
-        b=LZGdjFCsIMf/yZ3MmvN9KtH7XGr08ySHHNys0o5a8Hqydf6SP5Asy15DaacQGIxyzu
-         pzUw4XXVfA6U//7z0V2DYiPk4Ekau6789oRf+NeZMGBoEXN43stv596VU6y8UYv74RvN
-         IpJXJcR3if72OLm6xAgfgrfLLQAXvN7bY+qKcySF4LOuZ4Iehl8SkE6UBTSGDMEK5WC/
-         R/0G7RdhUyCI3vEaYc2kmv8fYLeL2saEi7nA1LjCKFEfs1PPDqTS4qkPJO3qPjdFdsEs
-         VgTasbweRpM7YFDPlDDQt3lpbdJX+tRQDdfqMkwJBfJ1TLrJs5t3wzwlnlk3kcCccNmq
-         K8dQ==
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=kSoceGvXYEyFpWkqGEFH53tfioGlagTsJ3mXyEAjMlc=;
+        b=lS0NeToKg3FyyTUqCeY+6qE6XPCWiOPj3heXHWZ99ndALfWWHruiIE8fdc3CcPQvn9
+         QLmfxM0n4jPTe1smVvXKEnCaNEbp3pWWjY8t6m2eHGQT2c0cIvpuhrQsyZvtR7ZP2SbR
+         3Tz+Qn5B3xqVw0Gd5JQCnjMvRphUpy22tK1ORE/r0RszKkfNnUGQoiWyqgQgyUTt5+ZA
+         ZWnttAcUGBQMikHqqxrUpcvQJ+ITJ2+Eyj+T3fhhKKsIgESL3HP0Noa79ksshynjT5r2
+         ahDA+TSCDsCEIYSRtJmBuRi+2MAEMlpA7Hv0NPP4B2LckcJ7h8kJshop8hrz05DxID+A
+         K2ug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=GOFf5iqegC0waHvVF/FPRl0uBW3zVXdSucxhUurxFQ8=;
-        b=FIuZMJXdfx4ZkjHbs8MGRi/LmIG6iVnHVtoMT84OXCNXeBuW4VseztkXaeQ0RDkujd
-         1Zch2NkF+hwStz1310mP9d7WEyaPj5NQFdPVihwjTrjRacKzRc+H+ie+BOwokaAxAnGF
-         g5GBCpNVUYfPX7kqXA/dwKZaI2pyHexAtCD0qczMYaVq3ECJyAgCzGEMOp+aldP+BIUN
-         LpUk0z3J5UnvYnziehHSgTPtULTuow+h6sOZlngicc/TACYrym8FtghP/98twGi5iksd
-         YYPc1uO04bBr4YYzUATGsFDGYjHGbobB3PUxIbeltjCdr2axBcw4SxzOcKveeMK6D+th
-         x+xQ==
-X-Gm-Message-State: AElRT7Ea7TTUVHF0PsVLC6KlpzHloHj+82dk3OEZfRGp8ReZ0RDyuWKg
-        dvuh47kBeVg/6ARLXkjT4SG66FdmJns=
-X-Google-Smtp-Source: AG47ELuVJF1UTxql/9P0urZ0+ZYIvgMIzZVcdU7wkSD0zPgJdnoCGj73gFhrrlCcoWqPLbOQmFn5Lg==
-X-Received: by 2002:a17:902:2805:: with SMTP id e5-v6mr5258275plb.89.1521482857872;
-        Mon, 19 Mar 2018 11:07:37 -0700 (PDT)
-Received: from twelve3.svl.corp.google.com ([2620:0:100e:422:ffac:c1d4:4bf7:bb93])
-        by smtp.gmail.com with ESMTPSA id y27sm949602pfi.156.2018.03.19.11.07.35
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 19 Mar 2018 11:07:36 -0700 (PDT)
-Date:   Mon, 19 Mar 2018 11:07:35 -0700
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 02/44] repository.c: move env-related setup code back to
- environment.c
-Message-Id: <20180319110735.56f860f2794c36b1e2e6180c@google.com>
-In-Reply-To: <20180303113637.26518-3-pclouds@gmail.com>
-References: <CACsJy8DWrNzZM1K2vkx2XiETdAR5WhwXEdPijsxd0ZD4Lj=tZw@mail.gmail.com>
-        <20180303113637.26518-1-pclouds@gmail.com>
-        <20180303113637.26518-3-pclouds@gmail.com>
-X-Mailer: Sylpheed 3.6.0 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=kSoceGvXYEyFpWkqGEFH53tfioGlagTsJ3mXyEAjMlc=;
+        b=DKVzOOmTrEbyo9Hh2R+4U9/lE/rmps1PrSqF9Bpkq+wOTgN8eFtUEdOoZyjVmeJKhh
+         o03R9ci05iNeh0DnqFvX564/pCs+ODVgD5I9LXHhnk0NHhGgB8GAVcKB2/EDrQwJ9T/d
+         zM2iAp9s61716O61ZjE03JU0ePlx+3dYR2x0EqKO+rZnLmWecoUrU6WfXXw38A/9DdZm
+         JeWIvOND+nERchj0b4/Sjg4RAM7rPD68ocUUWYjfcUAX2LCJXlu7VHVHI+iYxzeuv9A6
+         KU0ihpFYCSVaOTdc/PHcHXD6RMi79VTDzYwUHlu6dudH/FPHytBq8rqDnj22sJ0hWIbx
+         3WkA==
+X-Gm-Message-State: AElRT7HoQ6fJrQNd02fqp3TmPaIhxw3kJTGBBGxUhrqA0NCOyBfoJpXs
+        JdxysC/UQ1a1OZB/alZloeGWXYY6lAqIsiykt0k=
+X-Google-Smtp-Source: AG47ELtdsABH555G+be1thqRGneifB+327aiMt36YJXB75HYCM4+9Kvm5F3CUEGZqLgu7ce7zdvFKm4oHj1KjUceEys=
+X-Received: by 2002:a9d:3698:: with SMTP id h24-v6mr8919357otc.173.1521485134813;
+ Mon, 19 Mar 2018 11:45:34 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.74.154.146 with HTTP; Mon, 19 Mar 2018 11:45:04 -0700 (PDT)
+In-Reply-To: <xmqqlgenvs07.fsf@gitster-ct.c.googlers.com>
+References: <20180317141033.21545-1-pclouds@gmail.com> <20180318142526.9378-1-pclouds@gmail.com>
+ <20180318142526.9378-10-pclouds@gmail.com> <xmqqsh8wvwwn.fsf@gitster-ct.c.googlers.com>
+ <CACsJy8AkJJQ4XNszxBsESN_WGOSZ+ExWdcCtn6NA+gW9+-mAqQ@mail.gmail.com> <xmqqlgenvs07.fsf@gitster-ct.c.googlers.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Mon, 19 Mar 2018 19:45:04 +0100
+Message-ID: <CACsJy8AbkaSLBYqtFiCwFoqRXguy1hTs=XriefZ3WQJjo_sy8Q@mail.gmail.com>
+Subject: Re: [PATCH v6 09/11] pack-objects: shrink size field in struct object_entry
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Eric Wong <e@80x24.org>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat,  3 Mar 2018 18:35:55 +0700
-Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> wrote:
+On Mon, Mar 19, 2018 at 7:29 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>>>> +     if (!e->size_valid) {
+>>>> +             unsigned long real_size;
+>>>> +
+>>>> +             if (sha1_object_info(e->idx.oid.hash, &real_size) < 0 ||
+>>>> +                 size != real_size)
+>>>> +                     die("BUG: 'size' is supposed to be the object size!");
+>>>> +     }
+>>>
+>>> If an object that is smaller than 4GB is fed to this function with
+>>> an incorrect size, we happily record it in e->size_ and declare it
+>>> is valid.  Wouldn't that be equally grave error as we are catching
+>>> in this block?
+>>
+>> That adds an extra sha1_object_info() to all objects and it's
+>> expensive (I think it's one of the reasons we cache values in
+>> object_entry in the first place). I think there are also a few
+>> occasions we reuse even bad in-pack objects (there are even tests for
+>> that) so it's not always safe to die() here.
+>
+> So what?  My point is that I do not see the point in checking if the
+> size is correct on only one side (i.e. size is too big to fit in
+> e->size_) and not the other.  If it is worth checking (perhaps under
+> "#ifndef NDEBUG" or some other debug option?) then I'd think we
+> should spend cycles for all objects and check.
 
-> It does not make sense that generic repository code contains handling
-> of environment variables, which are specific for the main repository
-> only. Refactor repo_set_gitdir() function to take $GIT_DIR and
-> optionally _all_ other customizable paths. These optional paths can be
-> NULL and will be calculated according to the default directory layout.
-> 
-> Note that some dead functions are left behind to reduce diff
-> noise. They will be deleted in the next patch.
-> 
-> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+There is a difference. For sizes smaller than 2^32, whatever you pass
+to oe_set_size() will be returned by oe_size(), consistently. It does
+not matter if this size is "good" or not. With sizes > 2^32, we make
+the assumption that this size must be the same as one found in the
+object database. If it's different, oe_size() will return something
+else other than oe_set_size() is given. This check here is to make
+sure we do not accidentally let the caller fall into this trap.
 
-Thanks - I've reviewed up to this patch, and patches 1 and 2 look good.
-
-> -extern void repo_set_gitdir(struct repository *repo, const char *path);
-> +struct set_gitdir_args {
-> +	const char *commondir;
-> +	const char *object_dir;
-> +	const char *graft_file;
-> +	const char *index_file;
-> +};
-> +
-> +extern void repo_set_gitdir(struct repository *repo,
-> +			    const char *root,
-> +			    const struct set_gitdir_args *optional);
-
-Optional: Reading this header file alone makes me think that the 3rd
-argument can be NULL, but it actually can't. I would name it
-"extra_args" and add a comment inside "struct set_gitdir_args"
-explaining (e.g.):
-
-  /*
-   * Any of these fields may be NULL. If so, the name of that directory
-   * is instead derived from the root path of the repository.
-   */
+Yes, it may be a good thing to check anyway even for sizes < 2^32. I'm
+a bit uncomfortable doing that though. I was trying to exercise this
+code the other day by reducing size_ field down to 4 bits, and a
+couple tests broke but I still don't understand how. It's probably
+just me pushing the limits too hard, not a bug in these changes. But
+it does tell me that I don't understand pack-objects enough to assert
+that "all calls to oe_set_size() give good size".
+-- 
+Duy
