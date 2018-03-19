@@ -7,71 +7,334 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 023AD1F404
-	for <e@80x24.org>; Mon, 19 Mar 2018 18:51:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B1C091F404
+	for <e@80x24.org>; Mon, 19 Mar 2018 18:56:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S970333AbeCSSvB (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Mar 2018 14:51:01 -0400
-Received: from mail-wm0-f45.google.com ([74.125.82.45]:53309 "EHLO
-        mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S970539AbeCSSur (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Mar 2018 14:50:47 -0400
-Received: by mail-wm0-f45.google.com with SMTP id e194so17049048wmd.3
-        for <git@vger.kernel.org>; Mon, 19 Mar 2018 11:50:46 -0700 (PDT)
+        id S968296AbeCSSz5 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Mar 2018 14:55:57 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:36416 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S966626AbeCSSzx (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Mar 2018 14:55:53 -0400
+Received: by mail-wr0-f193.google.com with SMTP id d10so19728051wrf.3
+        for <git@vger.kernel.org>; Mon, 19 Mar 2018 11:55:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=7lZe6GKm3aiCNrs+V+m7sZ9MAPuy2Ac10cMRINl0q2E=;
-        b=FFH/naHCMW/nzLaPRjrk13efcUR9K5URHT3Seh5fy72yzOtWjdhKQ7hNjxmIQH0Sln
-         MIe4EiIhuIg0/Q/cQkyuCKtpzZODtXR6XGU7y/k0tHgP5zalA7LEgMCg6c3zoWh5DQFq
-         WFy2Gl4G//vHBr938LFcWEAV96Q5Ue3N4QEEZuO/PUkog+5pP+DOqp/E7hGRpvSODucw
-         KPIBh4e+5948IGGXNWCYMkak9vX1Ip8jJpXay2g7vPOwWZJIz4UgpKSDweGFm0dsIznF
-         QZRDCHxvzWXM5IEEYBUY6FzWv1ZlwZTUnHVBr4pGNQPMYZUFkqUXLwWMbH7sxZfRXPag
-         yocg==
+        h=from:to:cc:subject:date:message-id;
+        bh=ad91QVvejp8/WCXPKOVo9a8UU5DN3J/tIptAk2MGSjE=;
+        b=l+EQ1bEP/2FM+g4QK5I4JnH8O5xvIDbMsTguRKb4eE59qisvAhJH2pTe7yx3lpMfyl
+         LNhxYpDRhR/jLExGR2NQzPDXAYRv+OxrtZoVwv5U875OQCo/qO9hPmH27O18hCG0nAIN
+         gJJaJBEdC/O8epVykSjw7l/uAe6zZoexe1ZS901n8vX9WxlMx1JLHixArvxucHnu9XJB
+         yurIDYTDPWGFe6CmMjwY3pqu0XqBV7MzxL5yRDD1GnmggrvyC3Nr1PV2wH32Q8LWqN+a
+         hmpZ5spFkM7xASsYucvKPWWVcwT2d/ayt1GBwgkyZfz/7+UmJ84QfS8fM3DqRSxm2mp2
+         LTSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=7lZe6GKm3aiCNrs+V+m7sZ9MAPuy2Ac10cMRINl0q2E=;
-        b=cchNNLV7a8tMkpFjOPMceMde7Vr/zf6OMVfCIddCE/ecHQiijGsTMhIj/wB3zJJn4L
-         PcQ5st9fuSePJ4t2SIpkpAav/EVGRyqppEZaiOU7iayV5Mhip0ZWx73eXIeSMl1AXI8F
-         Je1+RsbcQCuNHL5sIgJQ6fvUMAlucFLbk+vDNdTC6Od3sMISFM5m4SsqKMIBV4Kh22lk
-         aDAsp7JakcJ7lN9uLbfPR4MLl0S/2NG3JsXKPDETIPFKSF/fYzR2zGaGoZCgwiBEdgXV
-         SepxRi7rjDANjiPJNi64ZnCZpj8soqEtmZg6VzgOai8CZgo+8ZSsiBrpQaN5zIP2Y8et
-         toiA==
-X-Gm-Message-State: AElRT7EOuo+eoXxr3N+FAmnjyph0/yNHPPJLvEuzsYiSAxMmSJDhAAmF
-        +XWnRjWp/sHmG42dznmTtWYeorMq
-X-Google-Smtp-Source: AG47ELugammFQox+ewfUvwrHokXUxOJtpJ7OiFzZpcQPl5S9FrcgI5+Np/6+D1wvI+lQ4vfAMRBiSQ==
-X-Received: by 10.28.138.6 with SMTP id m6mr10120419wmd.146.1521485445976;
-        Mon, 19 Mar 2018 11:50:45 -0700 (PDT)
-Received: from sebi-laptop ([91.250.255.11])
-        by smtp.gmail.com with ESMTPSA id i66sm126980wmd.0.2018.03.19.11.50.44
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 19 Mar 2018 11:50:45 -0700 (PDT)
-Message-ID: <1521485443.5987.1.camel@gmail.com>
-Subject: Re: [GSoC][PATCH v4] Make options that expect object ids less
- chatty if id is invalid
-From:   ungureanupaulsebastian@gmail.com
-To:     Martin =?ISO-8859-1?Q?=C5gren?= <martin.agren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Date:   Mon, 19 Mar 2018 20:50:43 +0200
-In-Reply-To: <CAN0heSrnERYggyJ8bL1nAV=X2JQYS8aOkc6nWZhnZu3oqhzAfA@mail.gmail.com>
-References: <20180306193116.23876-1-ungureanupaulsebastian@gmail.com>
-         <CAN0heSrnERYggyJ8bL1nAV=X2JQYS8aOkc6nWZhnZu3oqhzAfA@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.26.1-1 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=ad91QVvejp8/WCXPKOVo9a8UU5DN3J/tIptAk2MGSjE=;
+        b=dzBmeoEbRxW39PjjEZTZBuJqEgzo1T6yUC9rwHInQZyBdG1aWfIfxgnybZwJBLOID+
+         3LoNXtGdCCMQwpB3jmSr5L/IRNteO8D1QhHvKi4T4fyf5C4V4kRdmabYiAfLJjXK6+Nx
+         NjtsG9DHjXhBQk5iHzIacIy2jm6fJa58r4wZs51iRok52c1Corgwlt+jJUqWaKTi7YVS
+         se9YeEPlE/Rk0TIm+NR6MXcxbpXkTSySDsQgsGiCRIzA5r07o7CqlSF+GPXiaiK4DWSD
+         4dCRdqgqHpLPcnTlMQlyCFca21QeUb3A3Yi+RmrAgA5/W4WkmWtGxdmLv1eZqVkvw8Cy
+         0uHA==
+X-Gm-Message-State: AElRT7EuZ9nXxapbjwYx0uoeB9HjxYh3ztakYj8mmAb+XMrXDKneBcHI
+        bvNQixt6J3rtATAU+9XyGDmMtA==
+X-Google-Smtp-Source: AG47ELsVxjL3pXX+ZxEIMz0xvlQd4q5qts+OiXpi8OGw9E3a5Kk/FMFncpT/Eo4eQX4/i9eFPBSTTA==
+X-Received: by 10.223.136.248 with SMTP id g53mr10103531wrg.78.1521485752070;
+        Mon, 19 Mar 2018 11:55:52 -0700 (PDT)
+Received: from localhost.localdomain ([91.250.255.11])
+        by smtp.gmail.com with ESMTPSA id q21sm72294wmd.40.2018.03.19.11.55.50
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 19 Mar 2018 11:55:51 -0700 (PDT)
+From:   Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
+Subject: [GSoC][PATCH v5] Make options that expect object ids less chatty if id is invalid
+Date:   Mon, 19 Mar 2018 20:54:36 +0200
+Message-Id: <20180319185436.14309-1-ungureanupaulsebastian@gmail.com>
+X-Mailer: git-send-email 2.16.2.346.g16307f54f.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+Usually, the usage should be shown only if the user does not know what
+options are available. If the user specifies an invalid value, the user
+is already aware of the available options. In this case, there is no
+point in displaying the usage anymore.
 
-Thank you for your advice! Soon enough, I wil submit a new patch which
-fixes the issues you mentioned.
+This patch applies to "git tag --contains", "git branch --contains",
+"git branch --points-at", "git for-each-ref --contains" and many more.
 
-Best regards,
-Paul Ungureanu
+Signed-off-by: Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
+---
+ builtin/blame.c               |  1 +
+ builtin/shortlog.c            |  1 +
+ builtin/update-index.c        |  1 +
+ parse-options.c               | 20 ++++----
+ parse-options.h               |  1 +
+ t/t0040-parse-options.sh      |  2 +-
+ t/t0041-usage.sh              | 89 +++++++++++++++++++++++++++++++++++
+ t/t3404-rebase-interactive.sh |  6 +--
+ 8 files changed, 107 insertions(+), 14 deletions(-)
+ create mode 100755 t/t0041-usage.sh
+
+diff --git a/builtin/blame.c b/builtin/blame.c
+index 9dcb367b9..e8c6a4d6a 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -729,6 +729,7 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
+ 	for (;;) {
+ 		switch (parse_options_step(&ctx, options, blame_opt_usage)) {
+ 		case PARSE_OPT_HELP:
++		case PARSE_OPT_ERROR:
+ 			exit(129);
+ 		case PARSE_OPT_DONE:
+ 			if (ctx.argv[0])
+diff --git a/builtin/shortlog.c b/builtin/shortlog.c
+index e29875b84..be4df6a03 100644
+--- a/builtin/shortlog.c
++++ b/builtin/shortlog.c
+@@ -283,6 +283,7 @@ int cmd_shortlog(int argc, const char **argv, const char *prefix)
+ 	for (;;) {
+ 		switch (parse_options_step(&ctx, options, shortlog_usage)) {
+ 		case PARSE_OPT_HELP:
++		case PARSE_OPT_ERROR:
+ 			exit(129);
+ 		case PARSE_OPT_DONE:
+ 			goto parse_done;
+diff --git a/builtin/update-index.c b/builtin/update-index.c
+index 58d1c2d28..34adf55a7 100644
+--- a/builtin/update-index.c
++++ b/builtin/update-index.c
+@@ -1059,6 +1059,7 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
+ 			break;
+ 		switch (parseopt_state) {
+ 		case PARSE_OPT_HELP:
++		case PARSE_OPT_ERROR:
+ 			exit(129);
+ 		case PARSE_OPT_NON_OPTION:
+ 		case PARSE_OPT_DONE:
+diff --git a/parse-options.c b/parse-options.c
+index d02eb8b01..47c09a82b 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -317,14 +317,16 @@ static int parse_long_opt(struct parse_opt_ctx_t *p, const char *arg,
+ 		return get_value(p, options, all_opts, flags ^ opt_flags);
+ 	}
+ 
+-	if (ambiguous_option)
+-		return error("Ambiguous option: %s "
++	if (ambiguous_option) {
++		error("Ambiguous option: %s "
+ 			"(could be --%s%s or --%s%s)",
+ 			arg,
+ 			(ambiguous_flags & OPT_UNSET) ?  "no-" : "",
+ 			ambiguous_option->long_name,
+ 			(abbrev_flags & OPT_UNSET) ?  "no-" : "",
+ 			abbrev_option->long_name);
++		return -3;
++	}
+ 	if (abbrev_option)
+ 		return get_value(p, abbrev_option, all_opts, abbrev_flags);
+ 	return -2;
+@@ -434,7 +436,6 @@ int parse_options_step(struct parse_opt_ctx_t *ctx,
+ 		       const char * const usagestr[])
+ {
+ 	int internal_help = !(ctx->flags & PARSE_OPT_NO_INTERNAL_HELP);
+-	int err = 0;
+ 
+ 	/* we must reset ->opt, unknown short option leave it dangling */
+ 	ctx->opt = NULL;
+@@ -459,7 +460,7 @@ int parse_options_step(struct parse_opt_ctx_t *ctx,
+ 			ctx->opt = arg + 1;
+ 			switch (parse_short_opt(ctx, options)) {
+ 			case -1:
+-				goto show_usage_error;
++				return PARSE_OPT_ERROR;
+ 			case -2:
+ 				if (ctx->opt)
+ 					check_typos(arg + 1, options);
+@@ -472,7 +473,7 @@ int parse_options_step(struct parse_opt_ctx_t *ctx,
+ 			while (ctx->opt) {
+ 				switch (parse_short_opt(ctx, options)) {
+ 				case -1:
+-					goto show_usage_error;
++					return PARSE_OPT_ERROR;
+ 				case -2:
+ 					if (internal_help && *ctx->opt == 'h')
+ 						goto show_usage;
+@@ -504,9 +505,11 @@ int parse_options_step(struct parse_opt_ctx_t *ctx,
+ 			goto show_usage;
+ 		switch (parse_long_opt(ctx, arg + 2, options)) {
+ 		case -1:
+-			goto show_usage_error;
++			return PARSE_OPT_ERROR;
+ 		case -2:
+ 			goto unknown;
++		case -3:
++			goto show_usage;
+ 		}
+ 		continue;
+ unknown:
+@@ -517,10 +520,8 @@ int parse_options_step(struct parse_opt_ctx_t *ctx,
+ 	}
+ 	return PARSE_OPT_DONE;
+ 
+- show_usage_error:
+-	err = 1;
+  show_usage:
+-	return usage_with_options_internal(ctx, usagestr, options, 0, err);
++	return usage_with_options_internal(ctx, usagestr, options, 0, 0);
+ }
+ 
+ int parse_options_end(struct parse_opt_ctx_t *ctx)
+@@ -539,6 +540,7 @@ int parse_options(int argc, const char **argv, const char *prefix,
+ 	parse_options_start(&ctx, argc, argv, prefix, options, flags);
+ 	switch (parse_options_step(&ctx, options, usagestr)) {
+ 	case PARSE_OPT_HELP:
++	case PARSE_OPT_ERROR:
+ 		exit(129);
+ 	case PARSE_OPT_NON_OPTION:
+ 	case PARSE_OPT_DONE:
+diff --git a/parse-options.h b/parse-options.h
+index af711227a..c77bb3b4f 100644
+--- a/parse-options.h
++++ b/parse-options.h
+@@ -188,6 +188,7 @@ enum {
+ 	PARSE_OPT_HELP = -1,
+ 	PARSE_OPT_DONE,
+ 	PARSE_OPT_NON_OPTION,
++	PARSE_OPT_ERROR,
+ 	PARSE_OPT_UNKNOWN
+ };
+ 
+diff --git a/t/t0040-parse-options.sh b/t/t0040-parse-options.sh
+index 0c2fc81d7..04d474c84 100755
+--- a/t/t0040-parse-options.sh
++++ b/t/t0040-parse-options.sh
+@@ -291,7 +291,7 @@ test_expect_success 'OPT_CALLBACK() and OPT_BIT() work' '
+ test_expect_success 'OPT_CALLBACK() and callback errors work' '
+ 	test_must_fail test-parse-options --no-length >output 2>output.err &&
+ 	test_i18ncmp expect output &&
+-	test_i18ncmp expect.err output.err
++	test_must_be_empty output.err
+ '
+ 
+ cat >expect <<\EOF
+diff --git a/t/t0041-usage.sh b/t/t0041-usage.sh
+new file mode 100755
+index 000000000..2fc08ae70
+--- /dev/null
++++ b/t/t0041-usage.sh
+@@ -0,0 +1,89 @@
++#!/bin/sh
++
++test_description='Test commands behavior when given invalid argument value'
++
++. ./test-lib.sh
++
++test_expect_success 'setup ' '
++	git init . &&
++	test_commit "v1.0" &&
++	git tag "v1.1"
++'
++
++test_expect_success 'tag --contains <existent_tag>' '
++	git tag --contains "v1.0" >actual &&
++	grep "v1.0" actual &&
++	grep "v1.1" actual
++'
++
++test_expect_success 'tag --contains <inexistent_tag>' '
++	test_must_fail git tag --contains "notag" 2>actual &&
++	test_i18ngrep "error" actual
++'
++
++test_expect_success 'tag --no-contains <existent_tag>' '
++	git tag --no-contains "v1.1" >actual &&
++	test_line_count = 0 actual
++'
++
++test_expect_success 'tag --no-contains <inexistent_tag>' '
++	test_must_fail git tag --no-contains "notag" 2>actual &&
++	test_i18ngrep "error" actual
++'
++
++test_expect_success 'tag usage error' '
++	test_must_fail git tag --noopt 2>actual &&
++	test_i18ngrep "usage" actual
++'
++
++test_expect_success 'branch --contains <existent_commit>' '
++	git branch --contains "master" >actual &&
++	test_i18ngrep "master" actual
++'
++
++test_expect_success 'branch --contains <inexistent_commit>' '
++	test_must_fail git branch --no-contains "nocommit" 2>actual &&
++	test_i18ngrep "error" actual
++'
++
++test_expect_success 'branch --no-contains <existent_commit>' '
++	git branch --no-contains "master" >actual &&
++	test_line_count = 0 actual
++'
++
++test_expect_success 'branch --no-contains <inexistent_commit>' '
++	test_must_fail git branch --no-contains "nocommit" 2>actual &&
++	test_i18ngrep "error" actual
++'
++
++test_expect_success 'branch usage error' '
++	test_must_fail git branch --noopt 2>actual &&
++	test_i18ngrep "usage" actual
++'
++
++test_expect_success 'for-each-ref --contains <existent_object>' '
++	git for-each-ref --contains "master" >actual &&
++	test_line_count = 3 actual
++'
++
++test_expect_success 'for-each-ref --contains <inexistent_object>' '
++	test_must_fail git for-each-ref --no-contains "noobject" 2>actual &&
++	test_i18ngrep "error" actual
++'
++
++test_expect_success 'for-each-ref --no-contains <existent_object>' '
++	git for-each-ref --no-contains "master" >actual &&
++	test_line_count = 0 actual
++'
++
++test_expect_success 'for-each-ref --no-contains <inexistent_object>' '
++	test_must_fail git for-each-ref --no-contains "noobject" 2>actual &&
++	test_i18ngrep "error" actual
++'
++
++test_expect_success 'for-each-ref usage error' '
++	test_must_fail git for-each-ref --noopt 2>actual &&
++	test_i18ngrep "usage" actual
++'
++
++test_done
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index ef2887bd8..cac8b2bd8 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -919,10 +919,8 @@ test_expect_success 'rebase --exec works without -i ' '
+ test_expect_success 'rebase -i --exec without <CMD>' '
+ 	git reset --hard execute &&
+ 	set_fake_editor &&
+-	test_must_fail git rebase -i --exec 2>tmp &&
+-	sed -e "1d" tmp >actual &&
+-	test_must_fail git rebase -h >expected &&
+-	test_cmp expected actual &&
++	test_must_fail git rebase -i --exec 2>actual &&
++	test_i18ngrep "requires a value" actual &&
+ 	git checkout master
+ '
+ 
+-- 
+2.16.2.346.g16307f54f.dirty
+
