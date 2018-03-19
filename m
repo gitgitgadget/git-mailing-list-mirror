@@ -2,233 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 17A101F404
-	for <e@80x24.org>; Mon, 19 Mar 2018 19:13:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D8FA21F404
+	for <e@80x24.org>; Mon, 19 Mar 2018 19:13:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S970826AbeCSTN0 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Mar 2018 15:13:26 -0400
-Received: from mail-lf0-f46.google.com ([209.85.215.46]:34130 "EHLO
-        mail-lf0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S970781AbeCSTNX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Mar 2018 15:13:23 -0400
-Received: by mail-lf0-f46.google.com with SMTP id l191-v6so27154813lfe.1
-        for <git@vger.kernel.org>; Mon, 19 Mar 2018 12:13:22 -0700 (PDT)
+        id S935829AbeCSTNz (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Mar 2018 15:13:55 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:43482 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S935827AbeCSTNw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Mar 2018 15:13:52 -0400
+Received: by mail-wr0-f193.google.com with SMTP id o1so19739450wro.10
+        for <git@vger.kernel.org>; Mon, 19 Mar 2018 12:13:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=BbkL0TV9Q6OHhKjn/l7x4ElaWPyr0YbDifsdUzi4pHM=;
-        b=YlfCFbvqNtBBvIxE4LXIx8jul7n0+HaCPH3Ljgw9sWzI9EvwEYjFMdIJzrnl9iT4LX
-         nNuXhq5Ons6e/eBrQMdSX8NR1IRFSKt0aoVMhaC+e2wsswSmvar8X8B954U7/RuVHLoC
-         XaQ2rqMKOeEnBQvTViWzKkn5lWhIAcgv9Yska9DKcyBR4OpP+RuI68oQ2kfFN72O1+dT
-         gCodNzvR2KWmZixDHfd2PFP3EfIt5prlRzV++FmUsp9uOGKRCL83+j3Ar9xMsFfYQiXl
-         rnvWT3/Isx+rTX83bQmLLv5UpbTEaN78e0VRc3/OqgL2h8IqVQyGDC+lBcnYxYBh7GWA
-         7OYw==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=3DSzTFBo+loSUV+D3jMW6FqMa+TQYAzahvrRTUkpDH8=;
+        b=vKtQD8HwoJC45arWvClBQcs19Zb5u0YeeaK7dvLMyFjOQqiuxn8C0xOlTULqFW+BH2
+         WNIClrI7r6pWIP5jMOhOTXaD0wEksgdkGCV3kLPW2ZcYXmFwx9EWhIUgMGY6JsW1LPux
+         8BSR2nk7uKrSBqi3mxxT2qe/sUNn0aQjLWRKKoDBFy4JDb5USymBNQf6O50XWRQ9oj/D
+         I0c5xDSOz8RjQO460AJ1aZE3tB+StJT5luRfuXBkID0OaKLJIk3GH8SrlHNlIRlCVfZ0
+         piqc4/wthAEusZoUWBWJVDjg4AZwVYmRht9QaGxHTLqrCVNVtiv7o+CJhGzEtKBQmwqo
+         PdBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=BbkL0TV9Q6OHhKjn/l7x4ElaWPyr0YbDifsdUzi4pHM=;
-        b=A+X4zCJpENwP1PHq6GBoQGy8/ZvD9Y4kHbLlDTNtkVeWDSHyzYAfTr62PxUCG7CcM2
-         xbEeDLPuHDcvIr5lZtNFL+ZFBd4wkLT4ToQT514RajL6buo3nlkXuQ5iPn+f4jO3OPWG
-         goBtwPh7HpE35n5avAhezlFF1rwBy6NLOoWvV+Ga6UACeYwlzFmssUfGisIhb9hJrNB4
-         0OabgPHZ9MWkJgkdtvxVToJWe1424FvNhb5tA/X34pfC8gzESmT9d4k/m0OE9KQBkHiy
-         CDVTlqiQm2o+I13kSOMDXwolU/DhyaK7sJV9JhY3BCwVet35pIephLbNWBIuTeuJ3rmv
-         ErnQ==
-X-Gm-Message-State: AElRT7HvwR4OCmOzw0G1+RXW9GXm8J0FWpdn+MfDtnMP5iebZ/E/dHB1
-        0l2VB/QwJFCNqt7BFAy2jZGR/GPPeH667nS7ZG5uYQ==
-X-Google-Smtp-Source: AG47ELt+wg3XNbHlKR3icX/c3OePtbwMcHL3sAn/2XSgwXh4IZe6umNacDTccEECjsQ7m7v0pbb+ozvGo5cZr4HPjZg=
-X-Received: by 2002:a19:8e95:: with SMTP id a21-v6mr9380658lfl.140.1521486801270;
- Mon, 19 Mar 2018 12:13:21 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=3DSzTFBo+loSUV+D3jMW6FqMa+TQYAzahvrRTUkpDH8=;
+        b=WwyNJifkrROzsu+dlhqT2v6ek5e2Z1LjE65chJZWq0g3whHPG7RwR4odHDoV/c4q9L
+         MAWZtRwHVcGhjv45tRTnqHMwhvy1soux260FV+qLp7Rig9kZajn5cVHCBVqbnmfC/tZ2
+         wqeIKQ2Y/P4clu8v/N3zbUHXwMFde7nY5FiS32UQgcowtewNl3hHNEsCTmDtFgaBWxsg
+         XsuLsbANfsJjwU2NWkR29RmR+PH/cYuuRAtkSoAx7Qpd1sbxEsmqMz5Dp9P2zFnkXT+f
+         DCYgv53vPja1NKojYyiyIt4ekWVr4yhmx8PKWT8ELW6mU6N6sKysv4olqHiN/Qx0dB7N
+         yN/A==
+X-Gm-Message-State: AElRT7EyCTa7Y73wC1h0RLZbWTAnvjTTFySXKm74euOo3Y4s9PnxrGmu
+        8A4aR91gcRbFx2pINyScRhg=
+X-Google-Smtp-Source: AG47ELt+FyW491/oiY2zF8zL8WV9uiD9bAgg+nYNLElS/10cj+qdHc5B2YIZEEAauTJ/ydQdZTH2EQ==
+X-Received: by 10.223.157.3 with SMTP id k3mr11212184wre.179.1521486830821;
+        Mon, 19 Mar 2018 12:13:50 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id b8sm843502wrf.29.2018.03.19.12.13.50
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 19 Mar 2018 12:13:50 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Ben Peart <Ben.Peart@microsoft.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        Mike Hommey <mh@glandium.org>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Eric Wong <e@80x24.org>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH v2 00/36] Promisor remotes and external ODB support
+References: <20180319133147.15413-1-chriscool@tuxfamily.org>
+Date:   Mon, 19 Mar 2018 12:13:49 -0700
+In-Reply-To: <20180319133147.15413-1-chriscool@tuxfamily.org> (Christian
+        Couder's message of "Mon, 19 Mar 2018 14:31:11 +0100")
+Message-ID: <xmqqh8pbvpxu.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 2002:a19:4412:0:0:0:0:0 with HTTP; Mon, 19 Mar 2018 12:13:20
- -0700 (PDT)
-From:   Nick Hunt <nhunt11@gmail.com>
-Date:   Mon, 19 Mar 2018 15:13:20 -0400
-Message-ID: <CAJ-HmiZFpGbe_kLUFoOibMgc2dtf=n5VXb=ReZjN2wNsja1Lrw@mail.gmail.com>
-Subject: Potential git bug
-To:     git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="00000000000052243a0567c8c02d"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
---00000000000052243a0567c8c02d
-Content-Type: text/plain; charset="UTF-8"
+Christian Couder <christian.couder@gmail.com> writes:
 
-i committed my changes, then ran
-git reset --soft HEAD^
-at this point everything is fine
-then i switched branches, and all of my changes vaporized into thin
-air. uhhh, is this supposed to happen?
+> A lot of things are different because the jh/fsck-promisors and
+> jh/partial-clone have been merged into master since the v1. So the
+> integration is much more complete now (though not fully complete), and
+> this integration happens quite early in the patch series.
+>
+> This integration makes it possible to have many promisor and partial
+> clone remotes (instead of just one) with possibly different partial
+> clone filters, though that is not tested yet.
+>
+> I am not sure that the "external odb" name is still the best, as the
+> promisor remotes are not quite external. So I am open to suggestions
+> about a new name.
 
-anyway, thank god intellij saves my work for me as i go, so i didn't
-have to re-write all my code.
+So,... so far we have a way to make an incomplete clone of a project
+from a remote that promises that objects (deliberately) missing from
+the resulting repository are available later by an on-demand request.
 
-my bash/zsh commands are attached.
+We do not yet have code to actually make an on-demand request, and
+the other side of the request to fulfill the promise.  
 
-thanks for the help! :)
+And that is what these patches want to do?
 
---00000000000052243a0567c8c02d
-Content-Type: text/plain; charset="UTF-8"; name="terminal commands.txt"
-Content-Disposition: attachment; filename="terminal commands.txt"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_jeylvjpc0
+That sounds like a "lazy backfill" mechanism; I know others are
+better in naming things than me, though ;-)
 
-IG5odW50QG5pY2tzLW1icCDugrAgfi9UdXJuZXIvbmV3c3Ryb25fY2xpZW50L25ld3N0cm9uL3Zp
-ZGVvaW5nZXN0IO6CsCDugqAgbWFzdGVyIOKXjyDugrAgZ3N0Ck9uIGJyYW5jaCBtYXN0ZXIKWW91
-ciBicmFuY2ggaXMgYmVoaW5kICdvcmlnaW4vbWFzdGVyJyBieSA1MCBjb21taXRzLCBhbmQgY2Fu
-IGJlIGZhc3QtZm9yd2FyZGVkLgogICh1c2UgImdpdCBwdWxsIiB0byB1cGRhdGUgeW91ciBsb2Nh
-bCBicmFuY2gpCgpDaGFuZ2VzIG5vdCBzdGFnZWQgZm9yIGNvbW1pdDoKICAodXNlICJnaXQgYWRk
-IDxmaWxlPi4uLiIgdG8gdXBkYXRlIHdoYXQgd2lsbCBiZSBjb21taXR0ZWQpCiAgKHVzZSAiZ2l0
-IGNoZWNrb3V0IC0tIDxmaWxlPi4uLiIgdG8gZGlzY2FyZCBjaGFuZ2VzIGluIHdvcmtpbmcgZGly
-ZWN0b3J5KQoKCW1vZGlmaWVkOiAgIC4uL2Nubi9zZXJ2aWNlcy5qcwoJbW9kaWZpZWQ6ICAgLi4v
-cmVzb3VyY2VzL3ZlbmRvci9xdWFyay1maWx0ZXJzLy5ib3dlci5qc29uCgltb2RpZmllZDogICAu
-Li9yZXNvdXJjZXMvdmVuZG9yL3F1YXJrLWZpbHRlcnMvUkVBRE1FLm1kCgltb2RpZmllZDogICAu
-Li9yZXNvdXJjZXMvdmVuZG9yL3F1YXJrLWZpbHRlcnMvZGlzdC9xdWFyay1maWx0ZXJzLm1pbi5q
-cwoJbW9kaWZpZWQ6ICAgLi4vcmVzb3VyY2VzL3ZlbmRvci9xdWFyay1maWx0ZXJzL2Rpc3QvcXVh
-cmstZmlsdGVycy5taW4uanMubWFwCgltb2RpZmllZDogICAuLi9yZXNvdXJjZXMvdmVuZG9yL3F1
-YXJrLWZpbHRlcnMvc3JjL3F1YXJrLWZpbHRlcnMuanMKCW1vZGlmaWVkOiAgIGpzL3ZpZGVvbW9u
-aXRvci1wYWdlLmpzCgpubyBjaGFuZ2VzIGFkZGVkIHRvIGNvbW1pdCAodXNlICJnaXQgYWRkIiBh
-bmQvb3IgImdpdCBjb21taXQgLWEiKQogbmh1bnRAbmlja3MtbWJwIO6CsCB+L1R1cm5lci9uZXdz
-dHJvbl9jbGllbnQvbmV3c3Ryb24vdmlkZW9pbmdlc3Qg7oKwIO6CoCBtYXN0ZXIg4pePIO6CsCBn
-aXQgYWRkIC11CiBuaHVudEBuaWNrcy1tYnAg7oKwIH4vVHVybmVyL25ld3N0cm9uX2NsaWVudC9u
-ZXdzdHJvbi92aWRlb2luZ2VzdCDugrAg7oKgIG1hc3RlciDinJog7oKwIGdzdApPbiBicmFuY2gg
-bWFzdGVyCllvdXIgYnJhbmNoIGlzIGJlaGluZCAnb3JpZ2luL21hc3RlcicgYnkgNTAgY29tbWl0
-cywgYW5kIGNhbiBiZSBmYXN0LWZvcndhcmRlZC4KICAodXNlICJnaXQgcHVsbCIgdG8gdXBkYXRl
-IHlvdXIgbG9jYWwgYnJhbmNoKQoKQ2hhbmdlcyB0byBiZSBjb21taXR0ZWQ6CiAgKHVzZSAiZ2l0
-IHJlc2V0IEhFQUQgPGZpbGU+Li4uIiB0byB1bnN0YWdlKQoKCW1vZGlmaWVkOiAgIC4uL2Nubi9z
-ZXJ2aWNlcy5qcwoJbW9kaWZpZWQ6ICAgLi4vcmVzb3VyY2VzL3ZlbmRvci9xdWFyay1maWx0ZXJz
-Ly5ib3dlci5qc29uCgltb2RpZmllZDogICAuLi9yZXNvdXJjZXMvdmVuZG9yL3F1YXJrLWZpbHRl
-cnMvUkVBRE1FLm1kCgltb2RpZmllZDogICAuLi9yZXNvdXJjZXMvdmVuZG9yL3F1YXJrLWZpbHRl
-cnMvZGlzdC9xdWFyay1maWx0ZXJzLm1pbi5qcwoJbW9kaWZpZWQ6ICAgLi4vcmVzb3VyY2VzL3Zl
-bmRvci9xdWFyay1maWx0ZXJzL2Rpc3QvcXVhcmstZmlsdGVycy5taW4uanMubWFwCgltb2RpZmll
-ZDogICAuLi9yZXNvdXJjZXMvdmVuZG9yL3F1YXJrLWZpbHRlcnMvc3JjL3F1YXJrLWZpbHRlcnMu
-anMKCW1vZGlmaWVkOiAgIGpzL3ZpZGVvbW9uaXRvci1wYWdlLmpzCgogbmh1bnRAbmlja3MtbWJw
-IO6CsCB+L1R1cm5lci9uZXdzdHJvbl9jbGllbnQvbmV3c3Ryb24vdmlkZW9pbmdlc3Qg7oKwIO6C
-oCBtYXN0ZXIg4pyaIO6CsCBnaXQgcmVzZXQgLS0gLi4vY25uL3NlcnZpY2VzLmpzClVuc3RhZ2Vk
-IGNoYW5nZXMgYWZ0ZXIgcmVzZXQ6Ck0JY25uL3NlcnZpY2VzLmpzCiBuaHVudEBuaWNrcy1tYnAg
-7oKwIH4vVHVybmVyL25ld3N0cm9uX2NsaWVudC9uZXdzdHJvbi92aWRlb2luZ2VzdCDugrAg7oKg
-IG1hc3RlciDil4/inJog7oKwIGdzdApPbiBicmFuY2ggbWFzdGVyCllvdXIgYnJhbmNoIGlzIGJl
-aGluZCAnb3JpZ2luL21hc3RlcicgYnkgNTAgY29tbWl0cywgYW5kIGNhbiBiZSBmYXN0LWZvcndh
-cmRlZC4KICAodXNlICJnaXQgcHVsbCIgdG8gdXBkYXRlIHlvdXIgbG9jYWwgYnJhbmNoKQoKQ2hh
-bmdlcyB0byBiZSBjb21taXR0ZWQ6CiAgKHVzZSAiZ2l0IHJlc2V0IEhFQUQgPGZpbGU+Li4uIiB0
-byB1bnN0YWdlKQoKCW1vZGlmaWVkOiAgIC4uL3Jlc291cmNlcy92ZW5kb3IvcXVhcmstZmlsdGVy
-cy8uYm93ZXIuanNvbgoJbW9kaWZpZWQ6ICAgLi4vcmVzb3VyY2VzL3ZlbmRvci9xdWFyay1maWx0
-ZXJzL1JFQURNRS5tZAoJbW9kaWZpZWQ6ICAgLi4vcmVzb3VyY2VzL3ZlbmRvci9xdWFyay1maWx0
-ZXJzL2Rpc3QvcXVhcmstZmlsdGVycy5taW4uanMKCW1vZGlmaWVkOiAgIC4uL3Jlc291cmNlcy92
-ZW5kb3IvcXVhcmstZmlsdGVycy9kaXN0L3F1YXJrLWZpbHRlcnMubWluLmpzLm1hcAoJbW9kaWZp
-ZWQ6ICAgLi4vcmVzb3VyY2VzL3ZlbmRvci9xdWFyay1maWx0ZXJzL3NyYy9xdWFyay1maWx0ZXJz
-LmpzCgltb2RpZmllZDogICBqcy92aWRlb21vbml0b3ItcGFnZS5qcwoKQ2hhbmdlcyBub3Qgc3Rh
-Z2VkIGZvciBjb21taXQ6CiAgKHVzZSAiZ2l0IGFkZCA8ZmlsZT4uLi4iIHRvIHVwZGF0ZSB3aGF0
-IHdpbGwgYmUgY29tbWl0dGVkKQogICh1c2UgImdpdCBjaGVja291dCAtLSA8ZmlsZT4uLi4iIHRv
-IGRpc2NhcmQgY2hhbmdlcyBpbiB3b3JraW5nIGRpcmVjdG9yeSkKCgltb2RpZmllZDogICAuLi9j
-bm4vc2VydmljZXMuanMKCiBuaHVudEBuaWNrcy1tYnAg7oKwIH4vVHVybmVyL25ld3N0cm9uX2Ns
-aWVudC9uZXdzdHJvbi92aWRlb2luZ2VzdCDugrAg7oKgIG1hc3RlciDil4/inJog7oKwIGdpdCBj
-b21taXQgLW0gIk1DSS01MTU6IGluaXRpYWwgY29tbWl0OiBzcGVlZGluZyB1cCBsb2FkIHRpbWUg
-b2YgdGhlIG1vbml0b3IgcGFnZSBieSBkZWZhdWx0aW5nIHRoZSBkYXRlIGZpbHRlciB0byAxMiBo
-b3VycyBpbnN0ZWFkIG9mICdhbGwgdGltZScsIGIvYyBhbGwgdGltZSBkb2Vzbid0IGFjdHVhbGx5
-IHJlcHJlc2VudCBhbGwgdGltZSBhbmQgYi9jIG5vIHVzZXJzIGFjdHVhbGx5IGxvb2sgYXQgYWxs
-IHRpbWUgYW55d2F5IgpbbWFzdGVyIDIzOTQyZDI3Ml0gTUNJLTUxNTogaW5pdGlhbCBjb21taXQ6
-IHNwZWVkaW5nIHVwIGxvYWQgdGltZSBvZiB0aGUgbW9uaXRvciBwYWdlIGJ5IGRlZmF1bHRpbmcg
-dGhlIGRhdGUgZmlsdGVyIHRvIDEyIGhvdXJzIGluc3RlYWQgb2YgJ2FsbCB0aW1lJywgYi9jIGFs
-bCB0aW1lIGRvZXNuJ3QgYWN0dWFsbHkgcmVwcmVzZW50IGFsbCB0aW1lIGFuZCBiL2Mgbm8gdXNl
-cnMgYWN0dWFsbHkgbG9vayBhdCBhbGwgdGltZSBhbnl3YXkKIDYgZmlsZXMgY2hhbmdlZCwgMzQ5
-IGluc2VydGlvbnMoKyksIDI3NiBkZWxldGlvbnMoLSkKIHJld3JpdGUgcmVzb3VyY2VzL3ZlbmRv
-ci9xdWFyay1maWx0ZXJzL2Rpc3QvcXVhcmstZmlsdGVycy5taW4uanMubWFwICg5NSUpCiBuaHVu
-dEBuaWNrcy1tYnAg7oKwIH4vVHVybmVyL25ld3N0cm9uX2NsaWVudC9uZXdzdHJvbi92aWRlb2lu
-Z2VzdCDugrAg7oKgIG1hc3RlciDil48g7oKwIGdzdApPbiBicmFuY2ggbWFzdGVyCllvdXIgYnJh
-bmNoIGFuZCAnb3JpZ2luL21hc3RlcicgaGF2ZSBkaXZlcmdlZCwKYW5kIGhhdmUgMSBhbmQgNTAg
-ZGlmZmVyZW50IGNvbW1pdHMgZWFjaCwgcmVzcGVjdGl2ZWx5LgogICh1c2UgImdpdCBwdWxsIiB0
-byBtZXJnZSB0aGUgcmVtb3RlIGJyYW5jaCBpbnRvIHlvdXJzKQoKQ2hhbmdlcyBub3Qgc3RhZ2Vk
-IGZvciBjb21taXQ6CiAgKHVzZSAiZ2l0IGFkZCA8ZmlsZT4uLi4iIHRvIHVwZGF0ZSB3aGF0IHdp
-bGwgYmUgY29tbWl0dGVkKQogICh1c2UgImdpdCBjaGVja291dCAtLSA8ZmlsZT4uLi4iIHRvIGRp
-c2NhcmQgY2hhbmdlcyBpbiB3b3JraW5nIGRpcmVjdG9yeSkKCgltb2RpZmllZDogICAuLi9jbm4v
-c2VydmljZXMuanMKCm5vIGNoYW5nZXMgYWRkZWQgdG8gY29tbWl0ICh1c2UgImdpdCBhZGQiIGFu
-ZC9vciAiZ2l0IGNvbW1pdCAtYSIpCiBuaHVudEBuaWNrcy1tYnAg7oKwIH4vVHVybmVyL25ld3N0
-cm9uX2NsaWVudC9uZXdzdHJvbi92aWRlb2luZ2VzdCDugrAg7oKgIG1hc3RlciDil48g7oKwIGdp
-dCBwdXNoCk5vIHVzZXIgZXhpc3RzIGZvciB1aWQgNTAxCmZhdGFsOiBDb3VsZCBub3QgcmVhZCBm
-cm9tIHJlbW90ZSByZXBvc2l0b3J5LgoKUGxlYXNlIG1ha2Ugc3VyZSB5b3UgaGF2ZSB0aGUgY29y
-cmVjdCBhY2Nlc3MgcmlnaHRzCmFuZCB0aGUgcmVwb3NpdG9yeSBleGlzdHMuCiDinJggbmh1bnRA
-bmlja3MtbWJwIO6CsCB+L1R1cm5lci9uZXdzdHJvbl9jbGllbnQvbmV3c3Ryb24vdmlkZW9pbmdl
-c3Qg7oKwIO6CoCBtYXN0ZXIg4pePIO6CsCBnY28gLWIgTUNJLTUxNQpNCWNubi9zZXJ2aWNlcy5q
-cwpTd2l0Y2hlZCB0byBhIG5ldyBicmFuY2ggJ01DSS01MTUnCiBuaHVudEBuaWNrcy1tYnAg7oKw
-IH4vVHVybmVyL25ld3N0cm9uX2NsaWVudC9uZXdzdHJvbi92aWRlb2luZ2VzdCDugrAg7oKgIE1D
-SS01MTUg4pePIO6CsCBnc3QKT24gYnJhbmNoIE1DSS01MTUKQ2hhbmdlcyBub3Qgc3RhZ2VkIGZv
-ciBjb21taXQ6CiAgKHVzZSAiZ2l0IGFkZCA8ZmlsZT4uLi4iIHRvIHVwZGF0ZSB3aGF0IHdpbGwg
-YmUgY29tbWl0dGVkKQogICh1c2UgImdpdCBjaGVja291dCAtLSA8ZmlsZT4uLi4iIHRvIGRpc2Nh
-cmQgY2hhbmdlcyBpbiB3b3JraW5nIGRpcmVjdG9yeSkKCgltb2RpZmllZDogICAuLi9jbm4vc2Vy
-dmljZXMuanMKCm5vIGNoYW5nZXMgYWRkZWQgdG8gY29tbWl0ICh1c2UgImdpdCBhZGQiIGFuZC9v
-ciAiZ2l0IGNvbW1pdCAtYSIpCiBuaHVudEBuaWNrcy1tYnAg7oKwIH4vVHVybmVyL25ld3N0cm9u
-X2NsaWVudC9uZXdzdHJvbi92aWRlb2luZ2VzdCDugrAg7oKgIE1DSS01MTUg4pePIO6CsCBnY28g
-bWFzdGVyCk0JY25uL3NlcnZpY2VzLmpzClN3aXRjaGVkIHRvIGJyYW5jaCAnbWFzdGVyJwpZb3Vy
-IGJyYW5jaCBhbmQgJ29yaWdpbi9tYXN0ZXInIGhhdmUgZGl2ZXJnZWQsCmFuZCBoYXZlIDEgYW5k
-IDUwIGRpZmZlcmVudCBjb21taXRzIGVhY2gsIHJlc3BlY3RpdmVseS4KICAodXNlICJnaXQgcHVs
-bCIgdG8gbWVyZ2UgdGhlIHJlbW90ZSBicmFuY2ggaW50byB5b3VycykKIG5odW50QG5pY2tzLW1i
-cCDugrAgfi9UdXJuZXIvbmV3c3Ryb25fY2xpZW50L25ld3N0cm9uL3ZpZGVvaW5nZXN0IO6CsCDu
-gqAgbWFzdGVyIOKXjyDugrAgZ2l0IHJlc2V0IC0tc29mdCBIRUFEXgp6c2g6IG5vIG1hdGNoZXMg
-Zm91bmQ6IEhFQUReCiDinJggbmh1bnRAbmlja3MtbWJwIO6CsCB+L1R1cm5lci9uZXdzdHJvbl9j
-bGllbnQvbmV3c3Ryb24vdmlkZW9pbmdlc3Qg7oKwIO6CoCBtYXN0ZXIg4pePIO6CsCBnaXQgcmVz
-ZXQgLS1zb2Z0IEhFQUReCnpzaDogbm8gbWF0Y2hlcyBmb3VuZDogSEVBRF4KIOKcmCBuaHVudEBu
-aWNrcy1tYnAg7oKwIH4vVHVybmVyL25ld3N0cm9uX2NsaWVudC9uZXdzdHJvbi92aWRlb2luZ2Vz
-dCDugrAg7oKgIG1hc3RlciDil48g7oKwIGdpdCByZXNldCAtLXNvZnQgSEVBRFxeCiBuaHVudEBu
-aWNrcy1tYnAg7oKwIH4vVHVybmVyL25ld3N0cm9uX2NsaWVudC9uZXdzdHJvbi92aWRlb2luZ2Vz
-dCDugrAg7oKgIG1hc3RlciDil4/inJog7oKwIGdzdApPbiBicmFuY2ggbWFzdGVyCllvdXIgYnJh
-bmNoIGlzIGJlaGluZCAnb3JpZ2luL21hc3RlcicgYnkgNTAgY29tbWl0cywgYW5kIGNhbiBiZSBm
-YXN0LWZvcndhcmRlZC4KICAodXNlICJnaXQgcHVsbCIgdG8gdXBkYXRlIHlvdXIgbG9jYWwgYnJh
-bmNoKQoKQ2hhbmdlcyB0byBiZSBjb21taXR0ZWQ6CiAgKHVzZSAiZ2l0IHJlc2V0IEhFQUQgPGZp
-bGU+Li4uIiB0byB1bnN0YWdlKQoKCW1vZGlmaWVkOiAgIC4uL3Jlc291cmNlcy92ZW5kb3IvcXVh
-cmstZmlsdGVycy8uYm93ZXIuanNvbgoJbW9kaWZpZWQ6ICAgLi4vcmVzb3VyY2VzL3ZlbmRvci9x
-dWFyay1maWx0ZXJzL1JFQURNRS5tZAoJbW9kaWZpZWQ6ICAgLi4vcmVzb3VyY2VzL3ZlbmRvci9x
-dWFyay1maWx0ZXJzL2Rpc3QvcXVhcmstZmlsdGVycy5taW4uanMKCW1vZGlmaWVkOiAgIC4uL3Jl
-c291cmNlcy92ZW5kb3IvcXVhcmstZmlsdGVycy9kaXN0L3F1YXJrLWZpbHRlcnMubWluLmpzLm1h
-cAoJbW9kaWZpZWQ6ICAgLi4vcmVzb3VyY2VzL3ZlbmRvci9xdWFyay1maWx0ZXJzL3NyYy9xdWFy
-ay1maWx0ZXJzLmpzCgltb2RpZmllZDogICBqcy92aWRlb21vbml0b3ItcGFnZS5qcwoKQ2hhbmdl
-cyBub3Qgc3RhZ2VkIGZvciBjb21taXQ6CiAgKHVzZSAiZ2l0IGFkZCA8ZmlsZT4uLi4iIHRvIHVw
-ZGF0ZSB3aGF0IHdpbGwgYmUgY29tbWl0dGVkKQogICh1c2UgImdpdCBjaGVja291dCAtLSA8Zmls
-ZT4uLi4iIHRvIGRpc2NhcmQgY2hhbmdlcyBpbiB3b3JraW5nIGRpcmVjdG9yeSkKCgltb2RpZmll
-ZDogICAuLi9jbm4vc2VydmljZXMuanMKCiBuaHVudEBuaWNrcy1tYnAg7oKwIH4vVHVybmVyL25l
-d3N0cm9uX2NsaWVudC9uZXdzdHJvbi92aWRlb2luZ2VzdCDugrAg7oKgIG1hc3RlciDil4/inJog
-7oKwIGdjbyBNQ0ktNTE1Ck0JY25uL3NlcnZpY2VzLmpzClN3aXRjaGVkIHRvIGJyYW5jaCAnTUNJ
-LTUxNScKIG5odW50QG5pY2tzLW1icCDugrAgfi9UdXJuZXIvbmV3c3Ryb25fY2xpZW50L25ld3N0
-cm9uL3ZpZGVvaW5nZXN0IO6CsCDugqAgTUNJLTUxNSDil48g7oKwIGdzdApPbiBicmFuY2ggTUNJ
-LTUxNQpDaGFuZ2VzIG5vdCBzdGFnZWQgZm9yIGNvbW1pdDoKICAodXNlICJnaXQgYWRkIDxmaWxl
-Pi4uLiIgdG8gdXBkYXRlIHdoYXQgd2lsbCBiZSBjb21taXR0ZWQpCiAgKHVzZSAiZ2l0IGNoZWNr
-b3V0IC0tIDxmaWxlPi4uLiIgdG8gZGlzY2FyZCBjaGFuZ2VzIGluIHdvcmtpbmcgZGlyZWN0b3J5
-KQoKCW1vZGlmaWVkOiAgIC4uL2Nubi9zZXJ2aWNlcy5qcwoKbm8gY2hhbmdlcyBhZGRlZCB0byBj
-b21taXQgKHVzZSAiZ2l0IGFkZCIgYW5kL29yICJnaXQgY29tbWl0IC1hIikKIG5odW50QG5pY2tz
-LW1icCDugrAgfi9UdXJuZXIvbmV3c3Ryb25fY2xpZW50L25ld3N0cm9uL3ZpZGVvaW5nZXN0IO6C
-sCDugqAgTUNJLTUxNSDil48g7oKwIGdzdApPbiBicmFuY2ggTUNJLTUxNQpDaGFuZ2VzIG5vdCBz
-dGFnZWQgZm9yIGNvbW1pdDoKICAodXNlICJnaXQgYWRkIDxmaWxlPi4uLiIgdG8gdXBkYXRlIHdo
-YXQgd2lsbCBiZSBjb21taXR0ZWQpCiAgKHVzZSAiZ2l0IGNoZWNrb3V0IC0tIDxmaWxlPi4uLiIg
-dG8gZGlzY2FyZCBjaGFuZ2VzIGluIHdvcmtpbmcgZGlyZWN0b3J5KQoKCW1vZGlmaWVkOiAgIC4u
-L2Nubi9zZXJ2aWNlcy5qcwoKbm8gY2hhbmdlcyBhZGRlZCB0byBjb21taXQgKHVzZSAiZ2l0IGFk
-ZCIgYW5kL29yICJnaXQgY29tbWl0IC1hIikKIG5odW50QG5pY2tzLW1icCDugrAgfi9UdXJuZXIv
-bmV3c3Ryb25fY2xpZW50L25ld3N0cm9uL3ZpZGVvaW5nZXN0IO6CsCDugqAgTUNJLTUxNSDil48g
-7oKwIGdjbyBtYXN0ZXIKTQljbm4vc2VydmljZXMuanMKU3dpdGNoZWQgdG8gYnJhbmNoICdtYXN0
-ZXInCllvdXIgYnJhbmNoIGlzIGJlaGluZCAnb3JpZ2luL21hc3RlcicgYnkgNTAgY29tbWl0cywg
-YW5kIGNhbiBiZSBmYXN0LWZvcndhcmRlZC4KICAodXNlICJnaXQgcHVsbCIgdG8gdXBkYXRlIHlv
-dXIgbG9jYWwgYnJhbmNoKQogbmh1bnRAbmlja3MtbWJwIO6CsCB+L1R1cm5lci9uZXdzdHJvbl9j
-bGllbnQvbmV3c3Ryb24vdmlkZW9pbmdlc3Qg7oKwIO6CoCBtYXN0ZXIg4pePIO6CsCBnc3QKT24g
-YnJhbmNoIG1hc3RlcgpZb3VyIGJyYW5jaCBpcyBiZWhpbmQgJ29yaWdpbi9tYXN0ZXInIGJ5IDUw
-IGNvbW1pdHMsIGFuZCBjYW4gYmUgZmFzdC1mb3J3YXJkZWQuCiAgKHVzZSAiZ2l0IHB1bGwiIHRv
-IHVwZGF0ZSB5b3VyIGxvY2FsIGJyYW5jaCkKCkNoYW5nZXMgbm90IHN0YWdlZCBmb3IgY29tbWl0
-OgogICh1c2UgImdpdCBhZGQgPGZpbGU+Li4uIiB0byB1cGRhdGUgd2hhdCB3aWxsIGJlIGNvbW1p
-dHRlZCkKICAodXNlICJnaXQgY2hlY2tvdXQgLS0gPGZpbGU+Li4uIiB0byBkaXNjYXJkIGNoYW5n
-ZXMgaW4gd29ya2luZyBkaXJlY3RvcnkpCgoJbW9kaWZpZWQ6ICAgLi4vY25uL3NlcnZpY2VzLmpz
-CgpubyBjaGFuZ2VzIGFkZGVkIHRvIGNvbW1pdCAodXNlICJnaXQgYWRkIiBhbmQvb3IgImdpdCBj
-b21taXQgLWEiKQogbmh1bnRAbmlja3MtbWJwIO6CsCB+L1R1cm5lci9uZXdzdHJvbl9jbGllbnQv
-bmV3c3Ryb24vdmlkZW9pbmdlc3Qg7oKwIO6CoCBtYXN0ZXIg4pePIO6CsCBnc3QKT24gYnJhbmNo
-IG1hc3RlcgpZb3VyIGJyYW5jaCBpcyBiZWhpbmQgJ29yaWdpbi9tYXN0ZXInIGJ5IDUwIGNvbW1p
-dHMsIGFuZCBjYW4gYmUgZmFzdC1mb3J3YXJkZWQuCiAgKHVzZSAiZ2l0IHB1bGwiIHRvIHVwZGF0
-ZSB5b3VyIGxvY2FsIGJyYW5jaCkKCkNoYW5nZXMgbm90IHN0YWdlZCBmb3IgY29tbWl0OgogICh1
-c2UgImdpdCBhZGQgPGZpbGU+Li4uIiB0byB1cGRhdGUgd2hhdCB3aWxsIGJlIGNvbW1pdHRlZCkK
-ICAodXNlICJnaXQgY2hlY2tvdXQgLS0gPGZpbGU+Li4uIiB0byBkaXNjYXJkIGNoYW5nZXMgaW4g
-d29ya2luZyBkaXJlY3RvcnkpCgoJbW9kaWZpZWQ6ICAgLi4vY25uL3NlcnZpY2VzLmpzCgpubyBj
-aGFuZ2VzIGFkZGVkIHRvIGNvbW1pdCAodXNlICJnaXQgYWRkIiBhbmQvb3IgImdpdCBjb21taXQg
-LWEiKQ==
---00000000000052243a0567c8c02d--
+On the other hand, if the code updated with these patches do not
+cooperate with the promise mechansim (e.g. request is made to any
+missing objects, instead of "this object was promised by that
+remote, so let's go there and ask" and "this object is simply
+missing, without promise by anybody, so let's not bother the
+promisor remote"), then it is not even "back"-filling, but is a
+mechanism to access remote object database over a protocol, so
+a minimum s/ext/remote/ would clarify what it is.
+
+I guess "lazy backfill" would be more preferrable than a pile of
+independent, competing and uncooperative features ;-)
+
+>   - Patches 13/36 and 14/36:
+>
+> These patches move over the promisor objects and partial clone code to
+> use the external odb mechanism. The result of 13/36 is that instead of
+> the "extensions.partialclone" config variable, a
+> "odb.<name>.promisorRemote" config variable is now used. The result of
+> 14/36 is that instead of the "core.partialclonefilter" config
+> variable, a "odb.<name>.partialclonefilter" config variable is now
+> used.
+
+The use of "extensions" was to protect the repository from versions
+of Git that are unaware of the "promise" mechanism to even attempt
+touching it.  Will we keep the same degree of safety with these
+changes, I wonder?
+
