@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 70A981F404
-	for <e@80x24.org>; Mon, 19 Mar 2018 23:18:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A5A2B1F404
+	for <e@80x24.org>; Mon, 19 Mar 2018 23:19:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755949AbeCSXS4 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Mar 2018 19:18:56 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:37333 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755941AbeCSXSz (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Mar 2018 19:18:55 -0400
-Received: by mail-wm0-f66.google.com with SMTP id 139so78609wmn.2
-        for <git@vger.kernel.org>; Mon, 19 Mar 2018 16:18:54 -0700 (PDT)
+        id S1755941AbeCSXTB (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Mar 2018 19:19:01 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:51409 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755873AbeCSXTA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Mar 2018 19:19:00 -0400
+Received: by mail-wm0-f65.google.com with SMTP id h21so81441wmd.1
+        for <git@vger.kernel.org>; Mon, 19 Mar 2018 16:19:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=UkmqR+SjO9BU0XsheJQJfKpqvEQpYNfaPWZ6t1jJ3jU=;
-        b=ZPQvh452PulrMOeiOWHc941EUZa6kV8QHGhYAKtaWQxQjvMx8hPySUrBromL8zpyH9
-         1IQmzMC64L9uU2aOxcqpyaqH/YNNYCShc4vEPQ+GR0wQuHE+Cau8spNEKSLALWNDNJs8
-         sNdkUKDXfPzboehGhSHHreUP8lJL5aml1wY2eDkkcCZlcV+bBrwKDHtD2DmUeMwtnupg
-         n2Nu16rF86VBa8/gQh4mqCqzgfLLzz9EUB9V06jN5QcD/oeQPSJxYkLzPS4fwfu34Ac0
-         vSYn+AQOBFBucLOeikviDPY/eCH0a/yzNusfz7VdTSSK1u+GTNqwekXFEz9E7FmDAEp7
-         25lw==
+        bh=wooyPkEw6U5GDHLpGrutWzu/DRy7Y2Pyt2iszaEdTfg=;
+        b=QAcfnLrPkwhzfA4Y8v2f+XqSz/zwI9Lulvo8FLhkkjFnjCAiXs9s443zEw8CKRmZL4
+         lDsUx8VwGettJs7A5Tp+XunWzDUVD0HZaEH85Eo9UvD9+dXdzjUtsTRaxZNLcykaFGuc
+         hN2ZGQn6N9xZ6Om6nlmxVXXNrc9cfTOQe2/pH9tZ97MmBW8FgZnq5hhpMffab/OHUeXb
+         KhAxX2nNbCTMG/jsW/L/3tVYAW5vw/c8PU+x0a5GcZ0kqeZEost3JoJzDGXiz51AEF0M
+         4oh2hfbjueFGFiKsHoRVxuokvVWq/ragKxsnifz6QLLCu/GyvHaiO/v6RkZEnuZgdTsv
+         8iyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=UkmqR+SjO9BU0XsheJQJfKpqvEQpYNfaPWZ6t1jJ3jU=;
-        b=WisJFjX7a5HY9UO04sz4Sb8H/cDgHSSuX+AcQkrH4BDrKz/hyiFbQ+IDXR6LctrS3/
-         GcGLtT5VWGR6hVIRSrmF/5KTpOIWdjMmT7CcZaV0ViYSeQD+bW/pMF7OQiO4OAzA/RTy
-         lbqr3+W2NSAjnMYHm+OeOWkLeEXVtqN5gq/WRadQxbCPFHiKnvnx8rjgIuX6UPwV6+F8
-         LeU23r0zXW5z4JG3X3Wg+oDr342DtOsuR4IZe421FrHWykEK3pqKP5iS2OhfNsSD1REX
-         D2LP7xS1tn6luTYjzpugrzEMBC0k4Ggua7be3NrN7rE8kvjzgZ6MERCKJDCADHA47QPc
-         qCPQ==
-X-Gm-Message-State: AElRT7Fg+0soJ1WIMyCubMIWQPh5ofaQSpXVHflnsEYe7XgVNI7hlvv7
-        b3Ug8oiwg+8ra1FYQIeuAYEX7eFC
-X-Google-Smtp-Source: AG47ELvyA4xDVGNoGKOvtX/toQPACuznd8UoAJQ+TYUM18VbZaNLSNFFOMz/6T3jLyZeCzem8fzJnA==
-X-Received: by 10.28.35.76 with SMTP id j73mr317760wmj.103.1521501533840;
-        Mon, 19 Mar 2018 16:18:53 -0700 (PDT)
+        bh=wooyPkEw6U5GDHLpGrutWzu/DRy7Y2Pyt2iszaEdTfg=;
+        b=HIl9jEJCyVAkQzgcguioF8gSjhyAQ7y3+0sT0bLrVuM25coEdl/9AL919VLx1BxW4L
+         RMspxOJgcMPK2GZGET5BP97smEoIgKTfuC0K9uTCrKStBFiOjgff3/4lUYOdKRyrCcag
+         tUJG4TJlqywwHXDQyXvAR5fFjx9+JOBElRuKlxW5mLchy4q1khNKhbkY/Ce7cbxwsgXe
+         X1Pc7yh69TYt92yfAR4QCv83LiHIT49hF9LYhIA0ggAwS3RpTExnGlNKC6G/yYgA1vOF
+         hIrV2i5nmyR78cKc0FVWuYQAETA139/lDJV2Ty19TAvBKLscEFmsnsGN8nIhFt2+Dw16
+         QFRw==
+X-Gm-Message-State: AElRT7GPxTGO25AqReb6GFeiR3uSxRXMbrXdRYx7QCZ/AXvRF0KMxdAB
+        82CQTlOGsGbN0o+/LSJpIraSX6V1
+X-Google-Smtp-Source: AG47ELuuu4DXWnak3cpFF/zhr9+rZfuCns0OQuZIqu8qkKYHeKfEP79ZKK2d4fSuYuJPcmj7Bb9OtQ==
+X-Received: by 10.28.132.141 with SMTP id g135mr363818wmd.112.1521501539144;
+        Mon, 19 Mar 2018 16:18:59 -0700 (PDT)
 Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
-        by smtp.gmail.com with ESMTPSA id f14sm376159wmi.11.2018.03.19.16.18.52
+        by smtp.gmail.com with ESMTPSA id 142sm260080wmq.47.2018.03.19.16.18.57
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 19 Mar 2018 16:18:52 -0700 (PDT)
+        Mon, 19 Mar 2018 16:18:58 -0700 (PDT)
 From:   Thomas Gummerer <t.gummerer@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Marc Strapetz <marc.strapetz@syntevo.com>,
         Junio C Hamano <gitster@pobox.com>,
         Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH v5 2/3] stash push: avoid printing errors
-Date:   Mon, 19 Mar 2018 23:21:55 +0000
-Message-Id: <20180319232156.30916-3-t.gummerer@gmail.com>
+Subject: [PATCH v5 3/3] stash push -u: don't create empty stash
+Date:   Mon, 19 Mar 2018 23:21:56 +0000
+Message-Id: <20180319232156.30916-4-t.gummerer@gmail.com>
 X-Mailer: git-send-email 2.15.1.33.g3165b24a68
 In-Reply-To: <20180319232156.30916-1-t.gummerer@gmail.com>
 References: <20180316223715.108044-1-gitster@pobox.com>
@@ -65,107 +65,57 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-'git stash push -u -- <pathspec>' prints the following errors if
-<pathspec> only matches untracked files:
+When introducing the stash push feature, and thus allowing users to pass
+in a pathspec to limit the files that would get stashed in
+df6bba0937 ("stash: teach 'push' (and 'create_stash') to honor
+pathspec", 2017-02-28), this developer missed one place where the
+pathspec should be passed in.
 
-    fatal: pathspec 'untracked' did not match any files
-    error: unrecognized input
+Namely in the call to the 'untracked_files()' function in the
+'no_changes()' function.  This resulted in 'git stash push -u --
+<non-existant>' creating an empty stash when there are untracked files
+in the repository other that don't match the pathspec.
 
-This is because we first clean up the untracked files using 'git clean
-<pathspec>', and then use a command chain involving 'git add -u
-<pathspec>' and 'git apply' to clear the changes to files that are in
-the index and were stashed.
+As 'git stash' never creates empty stashes, this behaviour is wrong and
+confusing for users.  Instead it should just show a message "No local
+changes to save", and not create a stash.
 
-As the <pathspec> only includes untracked files that were already
-removed by 'git clean', the 'git add' call will barf, and so will 'git
-apply', as there are no changes that need to be applied.
-
-Fix this by avoiding the 'git clean' if a pathspec is given, and use the
-pipeline that's used for pathspec mode to get rid of the untracked files
-as well.
+Luckily the 'untracked_files()' function already correctly respects
+pathspecs that are passed to it, so the fix is simply to pass the
+pathspec along to the function.
 
 Reported-by: Marc Strapetz <marc.strapetz@syntevo.com>
 Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
 ---
- git-stash.sh                       |  6 +++--
- t/t3905-stash-include-untracked.sh | 46 ++++++++++++++++++++++++++++++++++++++
- 2 files changed, 50 insertions(+), 2 deletions(-)
+ git-stash.sh                       | 2 +-
+ t/t3905-stash-include-untracked.sh | 6 ++++++
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
 diff --git a/git-stash.sh b/git-stash.sh
-index 4c92ec931f..5e06f96da5 100755
+index 5e06f96da5..4e55f278bd 100755
 --- a/git-stash.sh
 +++ b/git-stash.sh
-@@ -308,14 +308,16 @@ push_stash () {
- 	if test -z "$patch_mode"
- 	then
- 		test "$untracked" = "all" && CLEAN_X_OPTION=-x || CLEAN_X_OPTION=
--		if test -n "$untracked"
-+		if test -n "$untracked" && test $# = 0
- 		then
- 			git clean --force --quiet -d $CLEAN_X_OPTION -- "$@"
- 		fi
+@@ -39,7 +39,7 @@ fi
+ no_changes () {
+ 	git diff-index --quiet --cached HEAD --ignore-submodules -- "$@" &&
+ 	git diff-files --quiet --ignore-submodules -- "$@" &&
+-	(test -z "$untracked" || test -z "$(untracked_files)")
++	(test -z "$untracked" || test -z "$(untracked_files "$@")")
+ }
  
- 		if test $# != 0
- 		then
--			git add -u -- "$@"
-+			test -z "$untracked" && UPDATE_OPTION="-u" || UPDATE_OPTION=
-+			test "$untracked" = "all" && FORCE_OPTION="--force" || FORCE_OPTION=
-+			git add $UPDATE_OPTION $FORCE_OPTION -- "$@"
- 			git diff-index -p --cached --binary HEAD -- "$@" |
- 			git apply --index -R
- 		else
+ untracked_files () {
 diff --git a/t/t3905-stash-include-untracked.sh b/t/t3905-stash-include-untracked.sh
-index bfde4057ad..2f9045553e 100755
+index 2f9045553e..3ea5b9bb3f 100755
 --- a/t/t3905-stash-include-untracked.sh
 +++ b/t/t3905-stash-include-untracked.sh
-@@ -228,4 +228,50 @@ test_expect_success 'stash previously ignored file' '
- 	test_path_is_file ignored.d/foo
+@@ -274,4 +274,10 @@ test_expect_success 'stash -u -- <ignored> leaves ignored file alone' '
+ 	test_path_is_file ignored.d/bar
  '
  
-+test_expect_success 'stash -u -- <untracked> doesnt print error' '
-+	>untracked &&
-+	git stash push -u -- untracked 2>actual &&
-+	test_path_is_missing untracked &&
-+	test_line_count = 0 actual
-+'
-+
-+test_expect_success 'stash -u -- <untracked> leaves rest of working tree in place' '
-+	>tracked &&
-+	git add tracked &&
-+	>untracked &&
-+	git stash push -u -- untracked &&
-+	test_path_is_missing untracked &&
-+	test_path_is_file tracked
-+'
-+
-+test_expect_success 'stash -u -- <tracked> <untracked> clears changes in both' '
-+	>tracked &&
-+	git add tracked &&
-+	>untracked &&
-+	git stash push -u -- tracked untracked &&
-+	test_path_is_missing tracked &&
-+	test_path_is_missing untracked
-+'
-+
-+test_expect_success 'stash --all -- <ignored> stashes ignored file' '
-+	>ignored.d/bar &&
-+	git stash push --all -- ignored.d/bar &&
-+	test_path_is_missing ignored.d/bar
-+'
-+
-+test_expect_success 'stash --all -- <tracked> <ignored> clears changes in both' '
-+	>tracked &&
-+	git add tracked &&
-+	>ignored.d/bar &&
-+	git stash push --all -- tracked ignored.d/bar &&
-+	test_path_is_missing tracked &&
-+	test_path_is_missing ignored.d/bar
-+'
-+
-+test_expect_success 'stash -u -- <ignored> leaves ignored file alone' '
-+	>ignored.d/bar &&
-+	git stash push -u -- ignored.d/bar &&
-+	test_path_is_file ignored.d/bar
++test_expect_success 'stash -u -- <non-existant> shows no changes when there are none' '
++	git stash push -u -- non-existant >actual &&
++	echo "No local changes to save" >expect &&
++	test_i18ncmp expect actual
 +'
 +
  test_done
