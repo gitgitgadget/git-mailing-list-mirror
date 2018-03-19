@@ -6,22 +6,22 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CFD701F404
-	for <e@80x24.org>; Mon, 19 Mar 2018 17:54:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 304371F404
+	for <e@80x24.org>; Mon, 19 Mar 2018 17:56:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S968257AbeCSRyo (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Mar 2018 13:54:44 -0400
-Received: from avasout04.plus.net ([212.159.14.19]:52928 "EHLO
+        id S968352AbeCSR4S (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Mar 2018 13:56:18 -0400
+Received: from avasout04.plus.net ([212.159.14.19]:53032 "EHLO
         avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965422AbeCSRyi (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Mar 2018 13:54:38 -0400
+        with ESMTP id S965686AbeCSR4N (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Mar 2018 13:56:13 -0400
 Received: from [10.0.2.15] ([80.189.70.162])
         by smtp with ESMTPA
-        id xyzTeXQarsD7bxyzUe8N5I; Mon, 19 Mar 2018 17:54:36 +0000
+        id xz11eXQqesD7bxz12e8N7q; Mon, 19 Mar 2018 17:56:12 +0000
 X-CM-Score: 0.00
 X-CNFS-Analysis: v=2.3 cv=CvORjEwD c=1 sm=1 tr=0
  a=zzlqjQC3YyNvDZl/Gy+4mg==:117 a=zzlqjQC3YyNvDZl/Gy+4mg==:17
- a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=Maj145vmRMi2jL8wVUYA:9 a=QEXdDO2ut3YA:10
+ a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=WGXUhORLsxBks2-AVLEA:9 a=QEXdDO2ut3YA:10
  a=yJM6EZoI5SlJf8ks9Ge_:22
 X-AUTH: ramsayjones@:2500
 To:     Junio C Hamano <gitster@pobox.com>
@@ -29,102 +29,97 @@ Cc:     Jeff King <peff@peff.net>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         GIT Mailing-list <git@vger.kernel.org>
 From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: PATCH 1/2] -Wuninitialized: remove some 'init-self' workarounds
-Message-ID: <946e0ff9-307c-6886-6ade-7bd37cc9f97f@ramsayjones.plus.com>
-Date:   Mon, 19 Mar 2018 17:54:35 +0000
+Subject: [PATCH 2/2] read-cache: fix an -Wmaybe-uninitialized warning
+Message-ID: <6d434e76-cfa0-2a6e-f163-b54316a24cee@ramsayjones.plus.com>
+Date:   Mon, 19 Mar 2018 17:56:11 +0000
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
  Thunderbird/52.6.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-GB
 Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfDpdyCQM+WUNSDGdn3wcOKzpXB34RMI9ONq0zL+2APj941w+QkTKP6yM4fGNnghTulq3yV5pr5wV/4V6b6eA0bn/qvwiuqsdzfGc4QzeoYVPhdu9DQJ7
- 2mxXFB541hgFl+YywNLOy2va3PlVKYRWGxlanK5jGLCo5blz2MWNmeDNedJOmlBYkk/wF/023nse4A==
+X-CMAE-Envelope: MS4wfOmj39MAuA/Ep/KwV4VHrCPNrBum7CmV8m+gqT96uquEfablYqN3lvvXN586Ws4FRk2D8vFFo2qafiaDgHXo4zVfaxQBp/k/Ex/gLUdv35/Lm4BXiQn4
+ cZ1C4iQj0DlSNzPHBLSKg7Oi4tvn3QBctsZBKFjRTBfJn9Na6mqD0oTS
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-The 'self-initialised' variables construct (ie <type> var = var;) has
-been used to silence gcc '-W[maybe-]uninitialized' warnings. This has,
-unfortunately, caused MSVC to issue 'uninitialized variable' warnings.
-Also, using clang static analysis causes complaints about an 'Assigned
-value is garbage or undefined'.
+The function ce_write_entry() uses a 'self-initialised' variable
+construct, for the symbol 'saved_namelen', to suppress a gcc
+'-Wmaybe-uninitialized' warning, given that the warning is a false
+positive.
 
-There are six such constructs in the current codebase. Only one of the
-six causes gcc to issue a '-Wmaybe-uninitialized' warning (which will
-be addressed elsewhere). The remaining five 'init-self' gcc workarounds
-are noted below, along with the commit which introduced them:
+For the purposes of this discussion, the ce_write_entry() function has
+three code blocks of interest, that look like so:
 
-  1. builtin/rev-list.c: 'reaches' and 'all', see commit 457f08a030
-     ("git-rev-list: add --bisect-vars option.", 2007-03-21).
+        /* block #1 */
+        if (ce->ce_flags & CE_STRIP_NAME) {
+                saved_namelen = ce_namelen(ce);
+                ce->ce_namelen = 0;
+        }
 
-  2. merge-recursive.c:2064 'mrtree', see commit f120ae2a8e ("merge-
-     recursive.c: mrtree in merge() is not used before set", 2007-10-29).
+        /* block #2 */
+        /*
+	 * several code blocks that contain, among others, calls
+         * to copy_cache_entry_to_ondisk(ondisk, ce);
+         */
 
-  3. fast-import.c:3023 'oe', see commit 85c62395b1 ("fast-import: let
-     importers retrieve blobs", 2010-11-28).
+        /* block #3 */
+        if (ce->ce_flags & CE_STRIP_NAME) {
+                ce->ce_namelen = saved_namelen;
+                ce->ce_flags &= ~CE_STRIP_NAME;
+        }
 
-  4. fast-import.c:3006 'oe', see commit 28c7b1f7b7 ("fast-import: add a
-     get-mark command", 2015-07-01).
+The warning implies that gcc thinks it is possible that the first
+block is not entered, the calls to copy_cache_entry_to_ondisk()
+could toggle the CE_STRIP_NAME flag on, thereby entering block #3
+with saved_namelen unset. However, the copy_cache_entry_to_ondisk()
+function does not write to ce->ce_flags (it only reads). gcc could
+easily determine this, since that function is local to this file,
+but it obviously doesn't.
 
-Remove the 'self-initialised' variable constructs noted above.
+In order to suppress this warning, we make it clear to the reader
+(human and compiler), that block #3 will only be entered when the
+first block has been entered, by introducing a new 'stripped_name'
+boolean variable. We also take the opportunity to change the type
+of 'saved_namelen' to 'unsigned int' to match ce->ce_namelen.
 
 Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
 ---
- builtin/rev-list.c | 2 +-
- fast-import.c      | 4 ++--
- merge-recursive.c  | 2 +-
- 3 files changed, 4 insertions(+), 4 deletions(-)
+ read-cache.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/rev-list.c b/builtin/rev-list.c
-index d5345b6a2..fbfc62de4 100644
---- a/builtin/rev-list.c
-+++ b/builtin/rev-list.c
-@@ -479,7 +479,7 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
- 		mark_edges_uninteresting(&revs, show_edge);
- 
- 	if (bisect_list) {
--		int reaches = reaches, all = all;
-+		int reaches, all;
- 
- 		find_bisection(&revs.commits, &reaches, &all, bisect_find_all);
- 
-diff --git a/fast-import.c b/fast-import.c
-index b70ac025e..1f01a2205 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -3003,7 +3003,7 @@ static void cat_blob(struct object_entry *oe, struct object_id *oid)
- 
- static void parse_get_mark(const char *p)
+diff --git a/read-cache.c b/read-cache.c
+index 2eb81a66b..49607ddcd 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -2104,13 +2104,15 @@ static int ce_write_entry(git_SHA_CTX *c, int fd, struct cache_entry *ce,
+ 			  struct strbuf *previous_name, struct ondisk_cache_entry *ondisk)
  {
--	struct object_entry *oe = oe;
-+	struct object_entry *oe;
- 	char output[GIT_MAX_HEXSZ + 2];
+ 	int size;
+-	int saved_namelen = saved_namelen; /* compiler workaround */
+ 	int result;
++	unsigned int saved_namelen;
++	int stripped_name = 0;
+ 	static unsigned char padding[8] = { 0x00 };
  
- 	/* get-mark SP <object> LF */
-@@ -3020,7 +3020,7 @@ static void parse_get_mark(const char *p)
+ 	if (ce->ce_flags & CE_STRIP_NAME) {
+ 		saved_namelen = ce_namelen(ce);
+ 		ce->ce_namelen = 0;
++		stripped_name = 1;
+ 	}
  
- static void parse_cat_blob(const char *p)
- {
--	struct object_entry *oe = oe;
-+	struct object_entry *oe;
- 	struct object_id oid;
- 
- 	/* cat-blob SP <object> LF */
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 0fc580d8c..fa9067eec 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -2061,7 +2061,7 @@ int merge_recursive(struct merge_options *o,
- {
- 	struct commit_list *iter;
- 	struct commit *merged_common_ancestors;
--	struct tree *mrtree = mrtree;
-+	struct tree *mrtree;
- 	int clean;
- 
- 	if (show(o, 4)) {
+ 	if (ce->ce_flags & CE_EXTENDED)
+@@ -2150,7 +2152,7 @@ static int ce_write_entry(git_SHA_CTX *c, int fd, struct cache_entry *ce,
+ 		strbuf_splice(previous_name, common, to_remove,
+ 			      ce->name + common, ce_namelen(ce) - common);
+ 	}
+-	if (ce->ce_flags & CE_STRIP_NAME) {
++	if (stripped_name) {
+ 		ce->ce_namelen = saved_namelen;
+ 		ce->ce_flags &= ~CE_STRIP_NAME;
+ 	}
 -- 
 2.16.0
