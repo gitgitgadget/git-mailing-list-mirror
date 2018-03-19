@@ -3,92 +3,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F40EB1F404
-	for <e@80x24.org>; Mon, 19 Mar 2018 16:31:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9BD771F404
+	for <e@80x24.org>; Mon, 19 Mar 2018 16:43:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934373AbeCSQbT (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Mar 2018 12:31:19 -0400
-Received: from mail-ot0-f182.google.com ([74.125.82.182]:37936 "EHLO
-        mail-ot0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965040AbeCSQam (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Mar 2018 12:30:42 -0400
-Received: by mail-ot0-f182.google.com with SMTP id 95-v6so18010556ote.5
-        for <git@vger.kernel.org>; Mon, 19 Mar 2018 09:30:42 -0700 (PDT)
+        id S965271AbeCSQn0 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Mar 2018 12:43:26 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:34706 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S964803AbeCSQnX (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Mar 2018 12:43:23 -0400
+Received: by mail-wm0-f65.google.com with SMTP id a20so13518295wmd.1
+        for <git@vger.kernel.org>; Mon, 19 Mar 2018 09:43:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=JF6x8iI5xpFPaD/QjH6hO8aREEGBZKjSKUBQsJdP+xA=;
-        b=iqH4304nrVOePkjAv86N5LfRBzOm95YNvWhhQhrO86KASr+iAh6PG+jinr4ICrZvT1
-         qlmS2Y+GDrBqM+cpccq57r/Gc1oKPnTuL1+HN3xFAurpNqKS/QKgT71ohHKtjitYIXF0
-         QmdINNinP1mnc9inqj/ZyrF0QxPOigrOxmRfM5a/gLP3RbkrxNgGWgngkESdesdxSOSh
-         Afe0cpv2po8ZMUqpFZFh3Jm0DiMc2IrCHytPToudOfL54hxTqwYoo1k5Eu/PQp6l2GZe
-         qrRRKT5myKiNe1KNNG1MWa5HoT4OrSBu0r5cCHERqzVM3+LDJHV+biA1x9AJlUYn17Au
-         MJmw==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=fcQUWbvwCAPmDcdGDGMrmEek2C4vi+VCPNBSxPhh8zY=;
+        b=IWthnXt9zagGGtIX6tAQEOYvR7QDEVvtRtto7T2+Xgtk+OgJhBbhTgHHxsO7CxOTQH
+         58X69U1aVcoq/rcrCSUfKYJabj7c6AlyB/eEEJugjEYFLd2xrEnDouMZ7TeqTW/w37o1
+         nNpZY/PrfbN/WP78aN+CXEl/8dtoc7F13lG9WXt8i4LQu2C9Dg1vgRzo+XCL5jIcty21
+         b57ypL6xjJLxahygTvwszZaPHosGNpXchf+ExP3e+koGO7uPqJJ/YtYMM4rS0XJcIN6K
+         uEr+L/KxxDEbp+pgTlMgiqu5JWjfDxHo/CKydJVbDW1xFkW2MXZbYx/6E7eSIZ8Bw6fQ
+         c6Jg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=JF6x8iI5xpFPaD/QjH6hO8aREEGBZKjSKUBQsJdP+xA=;
-        b=toVMxWx8VlXhPJtQc0SKXbF9ynvmBgh0WGR7tXuiAmJGLWrDy1zPJ7Dg5GrI93iFCY
-         7+1ILjC819Uzrnhvhh5G8ZtUKB5LI1ojwtSJ1SX5ayLySktjnBYOLx4wm/j1FcVaIZEV
-         5AGlvc6s/xZnPe3Y8kmH5rZfNSnOMDySFZf9mRDqV3GaGhshWvCqq0Xjb30GdzsjQ/b5
-         JCT11VOBgeG1mPOVllWYYPm+4GZUhBf9xapTGj24WPW4MxcOI9haUJeoKAHvsgHnNQ4G
-         AMdUOcGJXLH4/uYCdTS7tqY3w2+hCYhNvp1TX3b8VY+7kZIq59LwUlVYNNuiwkDP2Muc
-         TmDg==
-X-Gm-Message-State: AElRT7GZRGKousIgqSioqLtKS9aVfA+8C87h9fgnvo0Q26s0qqj7UrvG
-        w45lGPeFf2v9qCuX63rTi6o4tDy7lnDjANCrwuo=
-X-Google-Smtp-Source: AG47ELsauFGjXTk2EcdB8T4HaIE0bo5KjKAa2wnLjaIOqRWf/o3oowfwIMXRvGh+6T/+iLUd/CjoFe3xnjh9ksZB1DQ=
-X-Received: by 2002:a9d:ec5:: with SMTP id 63-v6mr5162836otj.14.1521477041914;
- Mon, 19 Mar 2018 09:30:41 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=fcQUWbvwCAPmDcdGDGMrmEek2C4vi+VCPNBSxPhh8zY=;
+        b=U3yqCJhdKQqWIdS+laNnlY1xhhIX9mSxMjK0t9BuqpucmtBnaIqG/jPdvg1tMfclcp
+         P2MhkD2CsNSEClW0SBc+AuT2R5eVXdVhQBsBcO7a7NJhSNwEbmJtUlK7gx0F8/HrY8KO
+         tC69/DAdN4VZideT4zK9bsdcWX8YWQNCPXpSWUofSXPLs9U2+989nZ2Aq+M1a9sMIPJg
+         YrvE1c6KjKyv/K+Vj31H7edAFYAoc7ApKZrYq2vmXQOLpxVmi7TSe6xw8SM69JXdMcYT
+         48gQZNcuC+VvAkgWdd3SYz0OC63VIRH56tnegDXbBgsDwkFR/0SaNg1qg8itAd2CiLqw
+         6B+A==
+X-Gm-Message-State: AElRT7H6I4JEbJxHCMtp7pjSQuSAKhOACKul/Jxc79FoDlbvyB1E2Snr
+        HRMuqhhMmyYMX0JVGeFXRT8=
+X-Google-Smtp-Source: AG47ELvBoHYAYJazFuZQjfOlOMQpSeyW3kM5pwL+XVRDEptHv9dxfwi6OihDljO+3nr5KErUvC2Cpw==
+X-Received: by 10.28.47.3 with SMTP id v3mr9746113wmv.96.1521477801717;
+        Mon, 19 Mar 2018 09:43:21 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id w29sm446665wra.84.2018.03.19.09.43.20
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 19 Mar 2018 09:43:20 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     avarab@gmail.com, e@80x24.org, git@vger.kernel.org, peff@peff.net
+Subject: Re: [PATCH v6 09/11] pack-objects: shrink size field in struct object_entry
+References: <20180317141033.21545-1-pclouds@gmail.com>
+        <20180318142526.9378-1-pclouds@gmail.com>
+        <20180318142526.9378-10-pclouds@gmail.com>
+Date:   Mon, 19 Mar 2018 09:43:20 -0700
+In-Reply-To: <20180318142526.9378-10-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
+ =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
+        Duy"'s message of "Sun, 18 Mar 2018 15:25:24 +0100")
+Message-ID: <xmqqsh8wvwwn.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.74.154.146 with HTTP; Mon, 19 Mar 2018 09:30:11 -0700 (PDT)
-In-Reply-To: <d30d131e-1cfe-fedb-4a45-7628615a7876@ramsayjones.plus.com>
-References: <20180317160832.GB15772@sigill.intra.peff.net> <20180318081834.16081-1-pclouds@gmail.com>
- <CACsJy8BOCpHiMxJ0K=_-WPf9b4yh0W0i3m9sAo5-Sk5fY9x1+A@mail.gmail.com> <d30d131e-1cfe-fedb-4a45-7628615a7876@ramsayjones.plus.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 19 Mar 2018 17:30:11 +0100
-Message-ID: <CACsJy8D4QdjncLdX83Xo4g5e-ZbCBqMfN9qaybXx5R3xC9d1gA@mail.gmail.com>
-Subject: Re: [PATCH] Makefile: detect compiler and enable more warnings in DEVELOPER=1
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc:     Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Mar 18, 2018 at 7:56 PM, Ramsay Jones
-<ramsay@ramsayjones.plus.com> wrote:
->
->
-> On 18/03/18 15:55, Duy Nguyen wrote:
->> On Sun, Mar 18, 2018 at 9:18 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc D=
-uy <pclouds@gmail.com> wrote:
->>> +ifneq ($(or $(filter gcc6,$(COMPILER_FEATURES)),$(filter clang4,$(COMP=
-ILER_FEATURES))),)
->>> +CFLAGS +=3D -Wextra
->>
->> Another thing we can add here is -Og instead of standard -O2 (or -O0
->> in my build), which is supported since gcc 4.8. clang seems to support
->> it too (mapped to -O1 at least for clang5) but I don't know what
->> version added that flag.
->
-> I've been doing a lot of compiling recently, using 10 'different'
-> versions of clang and gcc ('different' if you count 64-bit and 32-bit
-> compilers with the same version number as different!)
->
-> However, I can tell you that clang version 3.4 and 3.8.0 don't
-> support -Og, but clang version 5.0.1 does.
+Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
 
-Yeah. I checked clang git mirror and this -Og is in 4.x release branch
-(couldn't nail down exact release) so 5.x should be a safe bet.
---=20
-Duy
+> +static inline void oe_set_size(struct object_entry *e,
+> +			       unsigned long size)
+> +{
+> +	e->size_ = size;
+> +	e->size_valid = e->size_ == size;
+
+A quite similar comment as my earlier one applies here.  I wonder if
+this is easier to read?
+	
+	e->size_valid = fits_in_32bits(size);
+	if (e->size_valid)
+		e->size_ = size;
+
+Stepping back a bit in a different tangent, 
+
+ - fits_in_32bits() is a good public name if the helper is about
+   seeing if the given quantity fits in 32bit uint,
+
+ - but that carves it in stone that our e->size_ *will* be 32bit
+   forever, which is not good.
+
+So, it may be a good idea to call it size_cacheable_in_oe(size) or
+something to ask "I have this 'size'; is it small enough to fit in
+the field in the oe, i.e. allow us to cache it, as opposed to having
+to go back to the object every time?"  Of course, this would declare
+that the helper can only be used for that particular field, but that
+is sort of the point of such a change, to allow us to later define
+the e->size_ field to different sizes without affecting other stuff.
+
+> +	if (!e->size_valid) {
+> +		unsigned long real_size;
+> +
+> +		if (sha1_object_info(e->idx.oid.hash, &real_size) < 0 ||
+> +		    size != real_size)
+> +			die("BUG: 'size' is supposed to be the object size!");
+> +	}
+
+If an object that is smaller than 4GB is fed to this function with
+an incorrect size, we happily record it in e->size_ and declare it
+is valid.  Wouldn't that be equally grave error as we are catching
+in this block?
+
+> +}
+> +
+>  #endif
