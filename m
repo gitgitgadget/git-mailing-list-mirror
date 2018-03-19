@@ -1,153 +1,115 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
-X-Spam-Level: 
+X-Spam-Level: **
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=2.2 required=3.0 tests=BAYES_50,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 41FA51F42D
-	for <e@80x24.org>; Mon, 19 Mar 2018 10:19:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C552A1F42D
+	for <e@80x24.org>; Mon, 19 Mar 2018 10:21:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755330AbeCSKTa (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Mar 2018 06:19:30 -0400
-Received: from siwi.pair.com ([209.68.5.199]:41392 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752957AbeCSKT3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Mar 2018 06:19:29 -0400
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id C73053F4006;
-        Mon, 19 Mar 2018 06:19:28 -0400 (EDT)
-Received: from [192.168.1.71] (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 9A3923F4003;
-        Mon, 19 Mar 2018 06:19:28 -0400 (EDT)
-Subject: Re: [PATCH 0/2] routines to generate JSON data
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, gitster@pobox.com,
-        lars.schneider@autodesk.com,
-        Jeff Hostetler <jeffhost@microsoft.com>
-References: <20180316194057.77513-1-git@jeffhostetler.com>
- <20180316211837.GB12333@sigill.intra.peff.net>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <e2a9d2a9-f2e2-f285-52c3-be11668da543@jeffhostetler.com>
-Date:   Mon, 19 Mar 2018 06:19:26 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:59.0) Gecko/20100101
- Thunderbird/59.0
+        id S1755400AbeCSKV3 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Mar 2018 06:21:29 -0400
+Received: from bmmpi0804.jpx1.emslime.jp ([106.185.85.42]:54193 "EHLO
+        bmmpi0804.jpx1.emslime.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755302AbeCSKV2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Mar 2018 06:21:28 -0400
+X-Greylist: delayed 1201 seconds by postgrey-1.27 at vger.kernel.org; Mon, 19 Mar 2018 06:21:27 EDT
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1521454888;
+        s=giftex.201608; d=giftex.jp;
+        h=Date:From:Reply-To:To:Message-Id:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding;
+        bh=k6mQlIbDTBbB/hXzsiAZV2Rom6N+mhI/6JSO+FBXdSY=;
+        b=ChRIWH0TJjFaW07WAwI1LwjPT73yqOYxtp5vIRCVFgRzgYog+oivke1eYFj9VX7Q
+        /7NuEC8pwuiJt76YvCINfarJVTpOxTCO3D8fpJSlISJ+JreL4ckszbVrtNZeFuyuazv
+        Pkan0+sLuTIa2Kg/RxiKNAc/BE/235zWoaWsVdaw=
+Date:   Mon, 19 Mar 2018 19:01:15 +0900 (JST)
+From:   "LIFESTYLE EXPO TOKYO (Former: GIFTEX TOKYO) Show Management" 
+        <zk-en@giftex.jp>
+Reply-To: giftex-eng@reedexpo.co.jp
+To:     git@vger.kernel.org
+Message-Id: <1521453675287.2018100709.rxjpov2.0.16277.00000000@ad159se.mpse.jp>
+Subject: =?utf-8?B?5aSn6K6i5Y2V55qE6YeP5Lqn5ZywLS0t56ys?=
+ =?utf-8?B?MTDlsYrml6XmnKzlm73pmYXkv4PplIDlk4HlsZU=?=
+ =?utf-8?B?UHJvbW90aW9uYWwgR29vZHMgRXhwbw==?=
 MIME-Version: 1.0
-In-Reply-To: <20180316211837.GB12333@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Zhejiang Wuchuan Industrial Co., Ltd
+尊敬的 市场经理 先生/女士,
+
+您好！
+这里是日本国际促销品展展会主办方。
+
+贵司是否在寻找能接到大批量订单的市场和展会？
+那么您一定不能错过日本的促销品市场。
+如动漫明星周边，杂志赠品，日本各大品牌赠品/包装等均是促销品的范畴。
+
+想要遇见目标客户客户，相信日本最大的促销品展会----日本国际促销品展将是您最好的选择。
+
+为什么日本国际促销品展能接到大批量订单？
+------------------------------------
+理由一：
+日本大部分促销品属于赠品/附赠品，因此买家基本无需考虑在库风险。
+只要有有创意、性价比高的产品，客户会批量订购
+
+理由二：
+促销品单价相对较低，考虑到运费等因素，小量订单基本会寻找日本当地企业制作。
+因此来场问询海外展商的买家大多数是询问大批量订单
+
+理由三：
+促销品是伴随着企业的促销活动产生，根据商业经验，推广活动基本每年都会重复进行。
+因此会带给贵司持续获取订单的机会
+--------------------------------------
+
+本展自2017年首次正式对日本以外的展商开放以来，从2017年的25家海外展商，到现阶段已经有超过40家海外企业报名2018年展会。
+这进一步证明了展会的良好效果。
+2018年我们将迎来来自世界各地的600家展商和34000名专业观众。
+
+您的同行/日本客户可能已经在参展，详情查询2017年会场平面图
+》》http://www.sp-world.jp/en/doc/floormap/ 《《
+
+如果您有兴趣参展，请您尽快联系我们。
+我们将在第一时间和您分享展会信息和可选展位。
+
+期待您的回信。
+
+顺祝商祺。
 
 
-On 3/16/2018 5:18 PM, Jeff King wrote:
-> On Fri, Mar 16, 2018 at 07:40:55PM +0000, git@jeffhostetler.com wrote:
-> 
-[...]
-> I really like the idea of being able to send our machine-readable output
-> in some "standard" syntax for which people may already have parsers. But
-> one big hangup with JSON is that it assumes all strings are UTF-8. That
-> may be OK for telemetry data, but it would probably lead to problems for
-> something like status porcelain, since Git's view of paths is just a
-> string of bytes (not to mention possible uses elsewhere like author
-> names, subject lines, etc).
-[...]
+日本东京国际促销品展展会主办方
+Reed Exhibitions Japan Ltd.
+曲 俊（Jun Qu）
 
-I'll come back to the UTF-8/YAML questions in a separate response.
+TEL: +8180-2010-4207
+mailto:novelty@reedexpo.co.jp
 
+========================================================================
+同期展会
 
->> Documentation for the new API is given in json-writer.h at the bottom of
->> the first patch.
-> 
-> The API generally looks pleasant, but the nesting surprised me.  E.g.,
-> I'd have expected:
-> 
->    jw_array_begin(out);
->    jw_array_begin(out);
->    jw_array_append_int(out, 42);
->    jw_array_end(out);
->    jw_array_end(out);
-> 
-> to result in an array containing an array containing an integer. But
-> array_begin() actually resets the strbuf, so you can't build up nested
-> items like this internally. Ditto for objects within objects. You have
-> to use two separate strbufs and copy the data an extra time.
-> 
-> To make the above work, I think you'd have to store a little more state.
-> E.g., the "array_append" functions check "out->len" to see if they need
-> to add a separating comma. That wouldn't work if we might be part of a
-> nested array. So I think you'd need a context struct like:
-> 
->    struct json_writer {
->      int first_item;
->      struct strbuf out;
->    };
->    #define JSON_WRITER_INIT { 1, STRBUF_INIT }
-> 
-> to store the state and the output. As a bonus, you could also use it to
-> store some other sanity checks (e.g., keep a "depth" counter and BUG()
-> when somebody tries to access the finished strbuf with a hanging-open
-> object or array).
+第29届日本东京国际文具展展 ISOT （ http://www.isot.jp/en/ ） 
 
-Yeah, I thought about that, but I think it gets more complex than that.
-I'd need a stack of "first_item" values.  Or maybe the _begin() needs to
-increment a depth and set first_item and the _end() needs to always
-unset first_item.  I'll look at this gain.
-
-The thing I liked about the bottom-up construction is that it is easier
-to collect multiple sets in parallel and combine them during the final
-roll-up.  With the in-line nesting, you're tempted to try to construct
-the resulting JSON in a single series and that may not fit what the code
-is trying to do.  For example, if I wanted to collect an array of error
-messages as they are generated and an array of argv arrays and any alias
-expansions, then put together a final JSON string containing them and
-the final exit code, I'd need to build it in parts.  I can build these
-parts in pieces of JSON and combine them at the end -- or build up other
-similar data structures (string arrays, lists, or whatever) and then
-have a JSON conversion step.  But we can make it work both ways, I just
-wanted to keep it simpler.
+第13届日本东京国际消费品展 Lifestyle Expo Tokyo--July（原称GIFTEX）（ http://www.giftex.jp/en/ ）  
+               
+========================================================================
+ID: E36-G1402-0075
 
 
->> I wasn't sure how to unit test the API from a shell script, so I added a
->> helper command that does most of the work in the second patch.
-> 
-> In general I'd really prefer to keep the shell script as the driver for
-> the tests, and have t/helper programs just be conduits. E.g., something
-> like:
-> 
->    cat >expect <<-\EOF &&
->    {"key": "value", "foo": 42}
->    EOF
->    test-json-writer >actual \
->      object_begin \
->      object_append_string key value \
->      object_append_int foo 42 \
->      object_end &&
->    test_cmp expect actual
-> 
-> It's a bit tedious (though fairly mechanical) to expose the API in this
-> way, but it makes it much easier to debug, modify, or add tests later
-> on (for example, I had to modify the C program to find out that my
-> append example above wouldn't work).
 
-Yeah, I wasn't sure if such a simple api required exposing all that
-machinery to the shell or not.  And the api is fairly self-contained
-and not depending on a lot of disk/repo setup or anything, so my tests
-would be essentially static WRT everything else.
 
-With my t0019 script you should have been able use -x -v to see what
-was failing.
-
-> 
-> -Peff
-> 
-
-thanks for the quick review
-Jeff
+This message is delivered to you to provide details of exhibitions and conferences organised, co-organised, or managed by Reed Exhibitions Japan Ltd.
+If you would like to change your contact information, or prefer not to receive further information on this exhibition/conference, please follow the directions below.
+ 
+<Update contact information>
+Please click the URL below and follow the directions on the website to update your e-mail and other information.
+https://contact.reedexpo.co.jp/expo/REED/?lg=en&tp=ch&ec=CHANGE
+ 
+<Remove from list>
+Please reply to this mail changing the subject to "Remove from list".
+You will not receive any further information on this exhibition/conference.
