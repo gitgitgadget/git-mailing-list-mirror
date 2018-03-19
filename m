@@ -2,129 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D8FA21F404
-	for <e@80x24.org>; Mon, 19 Mar 2018 19:13:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 063851F404
+	for <e@80x24.org>; Mon, 19 Mar 2018 19:14:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935829AbeCSTNz (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Mar 2018 15:13:55 -0400
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:43482 "EHLO
-        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S935827AbeCSTNw (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Mar 2018 15:13:52 -0400
-Received: by mail-wr0-f193.google.com with SMTP id o1so19739450wro.10
-        for <git@vger.kernel.org>; Mon, 19 Mar 2018 12:13:51 -0700 (PDT)
+        id S970044AbeCSTOu (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Mar 2018 15:14:50 -0400
+Received: from mail-ot0-f180.google.com ([74.125.82.180]:44008 "EHLO
+        mail-ot0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S969771AbeCSTOr (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Mar 2018 15:14:47 -0400
+Received: by mail-ot0-f180.google.com with SMTP id m22-v6so18550478otf.10
+        for <git@vger.kernel.org>; Mon, 19 Mar 2018 12:14:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=3DSzTFBo+loSUV+D3jMW6FqMa+TQYAzahvrRTUkpDH8=;
-        b=vKtQD8HwoJC45arWvClBQcs19Zb5u0YeeaK7dvLMyFjOQqiuxn8C0xOlTULqFW+BH2
-         WNIClrI7r6pWIP5jMOhOTXaD0wEksgdkGCV3kLPW2ZcYXmFwx9EWhIUgMGY6JsW1LPux
-         8BSR2nk7uKrSBqi3mxxT2qe/sUNn0aQjLWRKKoDBFy4JDb5USymBNQf6O50XWRQ9oj/D
-         I0c5xDSOz8RjQO460AJ1aZE3tB+StJT5luRfuXBkID0OaKLJIk3GH8SrlHNlIRlCVfZ0
-         piqc4/wthAEusZoUWBWJVDjg4AZwVYmRht9QaGxHTLqrCVNVtiv7o+CJhGzEtKBQmwqo
-         PdBQ==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=TKPiti1hm2fkv+GVFHx9u+0C+zOj/oqwYxP5SWlpUG8=;
+        b=k9q1uiK+9/U016mMEB/iQ33eQ4soDtmYHhpiFdiN6/uY2LSDjr+/YDZuHjArHxoqsd
+         1W+WikzaJkDrL12hZ7DV18R0JgnrYBWJNXTKiZhUpQqznqVxsFTxpdA+9aJcusKMwQVI
+         5NJ/qxbxF/HYWv1PjU5ZRFE2nnSCCiIPCxKgrlmmdkRZMfiCVe7Cd8a1TIVtoUpJU/Vj
+         RTB+GneTwAu8ee7Q/8BJKrDE9VXe3viqlfKqmErhNfMpDcn8txzafnV8+UO0o7l8F/K3
+         OyZtYELEu02qFnQ+BbUyb3hQ2nKzYDS5QxIn7yK3ynQXhos5sKPQDhDpt3wwhvMwnMU6
+         T+YQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=3DSzTFBo+loSUV+D3jMW6FqMa+TQYAzahvrRTUkpDH8=;
-        b=WwyNJifkrROzsu+dlhqT2v6ek5e2Z1LjE65chJZWq0g3whHPG7RwR4odHDoV/c4q9L
-         MAWZtRwHVcGhjv45tRTnqHMwhvy1soux260FV+qLp7Rig9kZajn5cVHCBVqbnmfC/tZ2
-         wqeIKQ2Y/P4clu8v/N3zbUHXwMFde7nY5FiS32UQgcowtewNl3hHNEsCTmDtFgaBWxsg
-         XsuLsbANfsJjwU2NWkR29RmR+PH/cYuuRAtkSoAx7Qpd1sbxEsmqMz5Dp9P2zFnkXT+f
-         DCYgv53vPja1NKojYyiyIt4ekWVr4yhmx8PKWT8ELW6mU6N6sKysv4olqHiN/Qx0dB7N
-         yN/A==
-X-Gm-Message-State: AElRT7EyCTa7Y73wC1h0RLZbWTAnvjTTFySXKm74euOo3Y4s9PnxrGmu
-        8A4aR91gcRbFx2pINyScRhg=
-X-Google-Smtp-Source: AG47ELt+FyW491/oiY2zF8zL8WV9uiD9bAgg+nYNLElS/10cj+qdHc5B2YIZEEAauTJ/ydQdZTH2EQ==
-X-Received: by 10.223.157.3 with SMTP id k3mr11212184wre.179.1521486830821;
-        Mon, 19 Mar 2018 12:13:50 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id b8sm843502wrf.29.2018.03.19.12.13.50
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 19 Mar 2018 12:13:50 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Ben Peart <Ben.Peart@microsoft.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        Mike Hommey <mh@glandium.org>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Eric Wong <e@80x24.org>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v2 00/36] Promisor remotes and external ODB support
-References: <20180319133147.15413-1-chriscool@tuxfamily.org>
-Date:   Mon, 19 Mar 2018 12:13:49 -0700
-In-Reply-To: <20180319133147.15413-1-chriscool@tuxfamily.org> (Christian
-        Couder's message of "Mon, 19 Mar 2018 14:31:11 +0100")
-Message-ID: <xmqqh8pbvpxu.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=TKPiti1hm2fkv+GVFHx9u+0C+zOj/oqwYxP5SWlpUG8=;
+        b=YyQGZeEj9RYrsZWxzRI85DLDNaXGki1ApWhcJBm97QYcP3DkSmLzGvQ0wpdQ2rHTke
+         04bleErv7NSX/mHnNhTsa6x98/5UX9rIGD7/riXZNV2YSyTmy3NCTRnr5ADNAVGS6xIM
+         d177ws3vwqvh3kPMRELioEDJX7xPdmtivmGeY9EIuvpA0tk22WbrttgtZMVXaEHzRK2y
+         RB2rBC/2DXc7I6EJmV9ptck9W8o4xdQFnHu+3vEz7XjrdVrQy4jWn170GhnUdlKLOpI7
+         VNVBueee1G4+yJhi7YvLcMsga0JqFoRMHMjTnq6clfv3Fm4QQ7BeMEeAdI/uXfRc40Et
+         +npg==
+X-Gm-Message-State: AElRT7ElP6f1dm9MxjrFOSQK9aUu8+ALg3a25I/7TYmMA+MKMUz6pGZF
+        aVSSxxFi667yg1Rex/bjLvXgREiIYFBff3XKbnvweg5uJpM=
+X-Google-Smtp-Source: AG47ELv/aJhVzD6xRCqp7QjvtnoA6+4UI+rYwxSmtQ4su53ZXQuoaGX4ZVA+AnwbqeqwzW1qMX4sHeMuRNx9vBX4sq8=
+X-Received: by 2002:a9d:2cc9:: with SMTP id e9-v6mr8210077otd.6.1521486885808;
+ Mon, 19 Mar 2018 12:14:45 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20180319025046.58052-1-dnj@google.com> <20180319025046.58052-3-dnj@google.com>
+ <87zi33c22l.fsf@evledraar.gmail.com>
+In-Reply-To: <87zi33c22l.fsf@evledraar.gmail.com>
+From:   Daniel Jacques <dnj@google.com>
+Date:   Mon, 19 Mar 2018 19:14:35 +0000
+Message-ID: <CAD1RUU_MpCeXfCF9NqvD-CvsWtsJShfMyg9HFAXrN-ULCE67FA@mail.gmail.com>
+Subject: Re: [PATCH v6 2/3] Makefile: add Perl runtime prefix support
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Christian Couder <christian.couder@gmail.com> writes:
+On Mon, Mar 19, 2018 at 3:12 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <ava=
+rab@gmail.com>
+wrote:
 
-> A lot of things are different because the jh/fsck-promisors and
-> jh/partial-clone have been merged into master since the v1. So the
-> integration is much more complete now (though not fully complete), and
-> this integration happens quite early in the patch series.
->
-> This integration makes it possible to have many promisor and partial
-> clone remotes (instead of just one) with possibly different partial
-> clone filters, though that is not tested yet.
->
-> I am not sure that the "external odb" name is still the best, as the
-> promisor remotes are not quite external. So I am open to suggestions
-> about a new name.
+> The merge conflict becomes a tad easier to deal with, also makes sense
+> to have gitexecdir after infodir since that's the order we're listing
+> these in just a few lines earlier, and this is otherwise (mostly)
+> consistent.
 
-So,... so far we have a way to make an incomplete clone of a project
-from a remote that promises that objects (deliberately) missing from
-the resulting repository are available later by an on-demand request.
-
-We do not yet have code to actually make an on-demand request, and
-the other side of the request to fulfill the promise.  
-
-And that is what these patches want to do?
-
-That sounds like a "lazy backfill" mechanism; I know others are
-better in naming things than me, though ;-)
-
-On the other hand, if the code updated with these patches do not
-cooperate with the promise mechansim (e.g. request is made to any
-missing objects, instead of "this object was promised by that
-remote, so let's go there and ask" and "this object is simply
-missing, without promise by anybody, so let's not bother the
-promisor remote"), then it is not even "back"-filling, but is a
-mechanism to access remote object database over a protocol, so
-a minimum s/ext/remote/ would clarify what it is.
-
-I guess "lazy backfill" would be more preferrable than a pile of
-independent, competing and uncooperative features ;-)
-
->   - Patches 13/36 and 14/36:
->
-> These patches move over the promisor objects and partial clone code to
-> use the external odb mechanism. The result of 13/36 is that instead of
-> the "extensions.partialclone" config variable, a
-> "odb.<name>.promisorRemote" config variable is now used. The result of
-> 14/36 is that instead of the "core.partialclonefilter" config
-> variable, a "odb.<name>.partialclonefilter" config variable is now
-> used.
-
-The use of "extensions" was to protect the repository from versions
-of Git that are unaware of the "promise" mechanism to even attempt
-touching it.  Will we keep the same degree of safety with these
-changes, I wonder?
-
+Got it, I'll update my patch set to include this in v7, which I'll post
+after a little more time for comment on v6. Thanks!
