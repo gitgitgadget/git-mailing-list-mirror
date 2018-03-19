@@ -2,81 +2,183 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 69FA31F404
-	for <e@80x24.org>; Mon, 19 Mar 2018 03:07:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 335F31F404
+	for <e@80x24.org>; Mon, 19 Mar 2018 05:44:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755054AbeCSDHp (ORCPT <rfc822;e@80x24.org>);
-        Sun, 18 Mar 2018 23:07:45 -0400
-Received: from mail-qk0-f169.google.com ([209.85.220.169]:43015 "EHLO
-        mail-qk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755032AbeCSDHm (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 18 Mar 2018 23:07:42 -0400
-Received: by mail-qk0-f169.google.com with SMTP id g184so16867048qkd.10
-        for <git@vger.kernel.org>; Sun, 18 Mar 2018 20:07:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=ViAGQ7wYeKnNIiq882ZyPdjAjYFzy6mKguyQEmlrO9c=;
-        b=WqF9hg3dcHqIuc1biCNzLb3BmSHdnZFNCX7NuKiLYDtXItZiHMP0dVTeRU2816dpT9
-         g2/VwLJfjIujsBeUWhtcerLGQDiWbOMUrDBhUnZxpomBUV8VQQy8SbxnWf8cHHsSslDf
-         +kdevnjW4e0nvLu4UqxoBMZTlZLQ2PSE3sxagP7R68MIw3La2D8yCYaUkZwLeQO+yqnY
-         vTEbZlgGYzK6yLmFlb9cSD/YCfVjdgtcRC26/U3N32jK5GNLq5lDixLXRNy5+LOco9FV
-         T4olE7rdjU1tjKM6eJ2CoXpL+NULxo8o78AZ3Sp6dtG4nnHCJhv8AJZ32K906NuLm80E
-         qiBg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=ViAGQ7wYeKnNIiq882ZyPdjAjYFzy6mKguyQEmlrO9c=;
-        b=YF7JsdXPSv8mNgc5d7BuHr66vpcn9uphfRorQvh/Mb+4BN7e//8aIU6GaubfKYV7DF
-         zXDjU5PagKj0nn3vaULV49/BEUg4rK2E9H91PCmp8SoSCjivqZWJZyua+gLrIpgqbPjC
-         eSl48jPK8N2ztruUOGjtbS3Fhvm9xjV/c1iigcQVHd+OTL0/Z1kMqWrfSfaPeL4BeSdM
-         hc2MgAFvViYhVNxXlR+K+mE8VtfZhNHgokULN57s7qRGqZZdqhJ2gUqoolTHxoxzQ4DT
-         ZrL07Cqv/jWTtmFimDYBU8ly+L8pO+MOXehbmaVz43gv/cNjoJZy1kJY6WIDG3vZBDuS
-         0NlQ==
-X-Gm-Message-State: AElRT7Hanp9o1oKPvA6BxO4Gc5HTBWaqrxQg9aH6QZXL4zznM+XjREdu
-        Gl2p4FaSGrQ9RqMFv07qMnpS3878vXtfCxa062U=
-X-Google-Smtp-Source: AG47ELvG5WrxpOAtKcV2OjK1yMnmiDBZGjRzpRxj1rXYFn1uTkonfyaMycJDovdrK6QmYL+iHnjgLjrTioBHgL9+gTU=
-X-Received: by 10.55.74.2 with SMTP id x2mr15045826qka.314.1521428861689; Sun,
- 18 Mar 2018 20:07:41 -0700 (PDT)
+        id S1755237AbeCSFoF (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Mar 2018 01:44:05 -0400
+Received: from mail.javad.com ([54.86.164.124]:42705 "EHLO mail.javad.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1755204AbeCSFoE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Mar 2018 01:44:04 -0400
+Received: from osv (unknown [89.175.180.246])
+        by mail.javad.com (Postfix) with ESMTPSA id 9983A3E89E;
+        Mon, 19 Mar 2018 05:44:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1521438243;
+        bh=DdfKYFP/uYG7YJdX9HmEJzp8OoT7ptUe3uRF5w2kfTk=; l=2858;
+        h=Received:From:To:Subject;
+        b=rdcx21S0rus8ltXHtkesDu/Q3gtq/8ja/ESBKqzYceeJp2krPp6eSd8gaKYYAwx7C
+         W6V9gzANz+duYUE5pbsn7M3t4OjurNvQsd5sHAieoz3mHq43UThxyMsa/9uIJ7Tqgu
+         /XrXHieyXnPW4U/c9eCh63HQuMMwEhXQljlfWLG0=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1521438243;
+        bh=DdfKYFP/uYG7YJdX9HmEJzp8OoT7ptUe3uRF5w2kfTk=; l=2858;
+        h=Received:From:To:Subject;
+        b=rdcx21S0rus8ltXHtkesDu/Q3gtq/8ja/ESBKqzYceeJp2krPp6eSd8gaKYYAwx7C
+         W6V9gzANz+duYUE5pbsn7M3t4OjurNvQsd5sHAieoz3mHq43UThxyMsa/9uIJ7Tqgu
+         /XrXHieyXnPW4U/c9eCh63HQuMMwEhXQljlfWLG0=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1521438243;
+        bh=DdfKYFP/uYG7YJdX9HmEJzp8OoT7ptUe3uRF5w2kfTk=; l=2858;
+        h=Received:From:To:Subject;
+        b=rdcx21S0rus8ltXHtkesDu/Q3gtq/8ja/ESBKqzYceeJp2krPp6eSd8gaKYYAwx7C
+         W6V9gzANz+duYUE5pbsn7M3t4OjurNvQsd5sHAieoz3mHq43UThxyMsa/9uIJ7Tqgu
+         /XrXHieyXnPW4U/c9eCh63HQuMMwEhXQljlfWLG0=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1521438243;
+        bh=DdfKYFP/uYG7YJdX9HmEJzp8OoT7ptUe3uRF5w2kfTk=; l=2858;
+        h=Received:From:To:Subject;
+        b=rdcx21S0rus8ltXHtkesDu/Q3gtq/8ja/ESBKqzYceeJp2krPp6eSd8gaKYYAwx7C
+         W6V9gzANz+duYUE5pbsn7M3t4OjurNvQsd5sHAieoz3mHq43UThxyMsa/9uIJ7Tqgu
+         /XrXHieyXnPW4U/c9eCh63HQuMMwEhXQljlfWLG0=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1521438243;
+        bh=DdfKYFP/uYG7YJdX9HmEJzp8OoT7ptUe3uRF5w2kfTk=; l=2858;
+        h=Received:From:To:Subject;
+        b=rdcx21S0rus8ltXHtkesDu/Q3gtq/8ja/ESBKqzYceeJp2krPp6eSd8gaKYYAwx7C
+         W6V9gzANz+duYUE5pbsn7M3t4OjurNvQsd5sHAieoz3mHq43UThxyMsa/9uIJ7Tqgu
+         /XrXHieyXnPW4U/c9eCh63HQuMMwEhXQljlfWLG0=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1521438243;
+        bh=DdfKYFP/uYG7YJdX9HmEJzp8OoT7ptUe3uRF5w2kfTk=; l=2858;
+        h=Received:From:To:Subject;
+        b=rdcx21S0rus8ltXHtkesDu/Q3gtq/8ja/ESBKqzYceeJp2krPp6eSd8gaKYYAwx7C
+         W6V9gzANz+duYUE5pbsn7M3t4OjurNvQsd5sHAieoz3mHq43UThxyMsa/9uIJ7Tqgu
+         /XrXHieyXnPW4U/c9eCh63HQuMMwEhXQljlfWLG0=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1521438243;
+        bh=DdfKYFP/uYG7YJdX9HmEJzp8OoT7ptUe3uRF5w2kfTk=; l=2858;
+        h=Received:From:To:Subject;
+        b=rdcx21S0rus8ltXHtkesDu/Q3gtq/8ja/ESBKqzYceeJp2krPp6eSd8gaKYYAwx7C
+         W6V9gzANz+duYUE5pbsn7M3t4OjurNvQsd5sHAieoz3mHq43UThxyMsa/9uIJ7Tqgu
+         /XrXHieyXnPW4U/c9eCh63HQuMMwEhXQljlfWLG0=
+Authentication-Results: mail.javad.com;
+        spf=pass (sender IP is 89.175.180.246) smtp.mailfrom=osv@javad.com smtp.helo=osv
+Received-SPF: pass (mail.javad.com: connection is authenticated)
+Received: from osv by osv with local (Exim 4.84_2)
+        (envelope-from <osv@osv.gnss.ru>)
+        id 1exnaS-0003Kb-Gu; Mon, 19 Mar 2018 08:44:00 +0300
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Igor Djordjevic <igor.d.djordjevic@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC] Rebasing merges: a jorney to the ultimate solution(RoadClear)
+References: <87y3jtqdyg.fsf@javad.com>
+        <4d7f3406-b206-cc22-87df-85700d6a03d9@gmail.com>
+        <33da31e9-9101-475d-8901-4b6b3df2f29d@gmail.com>
+        <940d959d-151d-68dd-0f13-320ebad0d75b@gmail.com>
+        <87606hoflx.fsf@javad.com>
+        <0ac3a3fd-4053-e32e-75ed-8829f22c2e1f@gmail.com>
+        <87a7vss6ax.fsf@javad.com>
+        <f1a960dc-cc5c-e7b0-10b6-39e5516655b3@gmail.com>
+        <ed4d2b30-2dea-740b-6283-973c798f619d@philandanna.no-ip.org>
+        <1298a701-a860-a675-83d7-72f29e14cd2b@talktalk.net>
+        <CA+P7+xpgChuvh_vsPktBkOEhF=MjJh1n_3jD0-n4d67j9kYqzw@mail.gmail.com>
+        <ee809701-a6d8-157d-09cd-cebbf2e949ec@gmail.com>
+        <1580e48a-be44-38dd-79af-8a2a31c5712e@talktalk.net>
+        <nycvar.QRO.7.76.6.1803061812090.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        <754e2735-1288-9a8d-c8bd-ab39cf733812@gmail.com>
+        <nycvar.QRO.7.76.6.1803070810550.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        <2749ce78-8917-c821-6116-0c8d67b5e16e@gmail.com>
+        <87vadyd9az.fsf@javad.com>
+        <d5e68db4-8006-2c0e-bc21-0b136503edd9@gmail.com>
+        <d50a4099-9b3a-5aa9-c304-160c62330056@gmail.com>
+Date:   Mon, 19 Mar 2018 08:44:00 +0300
+In-Reply-To: <d50a4099-9b3a-5aa9-c304-160c62330056@gmail.com> (Igor
+        Djordjevic's message of "Sat, 17 Mar 2018 03:08:54 +0100")
+Message-ID: <87h8pc1uxr.fsf@javad.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.12.190.196 with HTTP; Sun, 18 Mar 2018 20:07:41 -0700 (PDT)
-In-Reply-To: <20180319025046.58052-2-dnj@google.com>
-References: <20180319025046.58052-1-dnj@google.com> <20180319025046.58052-2-dnj@google.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 18 Mar 2018 23:07:41 -0400
-X-Google-Sender-Auth: C9rglIQ42XEw1Kfqb7GjANtlaJk
-Message-ID: <CAPig+cRPX9fHdco-g0GOUCwMr5Sh=hdBTAtUHyYSpKPherRd-Q@mail.gmail.com>
-Subject: Re: [PATCH v6 1/3] Makefile: generate Perl header from template file
-To:     Dan Jacques <dnj@google.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Mar 18, 2018 at 10:50 PM, Dan Jacques <dnj@google.com> wrote:
-> Currently, the generated Perl script headers are emitted by commands in
-> the Makefile. This mechanism restricts options to introduce alternative
-> header content, needed by Perl runtime prefix support, and obscures the
-> origin of the Perl script header.
->
-> Change the Makefile to generate a header by processing a template file and
-> move the header content into the "perl/" subdirectory. The processed
-> generated will now be stored in the "GIT-PERL-HEADER" file. This allows
+Igor Djordjevic <igor.d.djordjevic@gmail.com> writes:
 
-"processed generated"?
-
-> the content of the Perl header to be controlled by changing the path of
-> the template in the Makefile.
+> On 15/03/2018 00:11, Igor Djordjevic wrote:
+>> 
+>> > > > Second side note: if we can fast-forward, currently we prefer
+>> > > > that, and I think we should keep that behavior with -R, too.
+>> > >
+>> > > I agree.
+>> > 
+>> > I'm admittedly somewhat lost in the discussion, but are you
+>> > talking fast-forward on _rebasing_ existing merge? Where would it
+>> > go in any of the suggested algorithms of rebasing and why?
+>> > 
+>> > I readily see how it can break merges. E.g., any "git merge
+>> > --ff-only --no-ff" merge will magically disappear. So, even if
+>> > somehow supported, fast-forward should not be performed by default
+>> > during _rebasing_ of a merge.
+>> 
+>> Hmm, now that you brought this up, I can only agree, of course.
+>> 
+>> What I had in my mind was more similar to "no-rebase-cousins", like 
+>> if we can get away without actually rebasing the merge but still 
+>> using the original one, do it. But I guess that`s not what Johannes 
+>> originally asked about.
+>> 
+>> This is another definitive difference between rebasing (`pick`?) and 
+>> recreating (`merge`) a merge commit - in the case where we`re rebasing, 
+>> of course it doesn`t make sense to drop commit this time (due to 
+>> fast-forward). This does make sense in recreating the merge (only).
 >
-> Signed-off-by: Dan Jacques <dnj@google.com>
+> Eh, I might take this back. I think my original interpretation (and 
+> agreement) to fast-forwarding is correct.
+>
+> But the confusion here comes from `--no-ff` as used for merging, as 
+> opposed to `--no-ff` as used for rebasing. I _think_ Johannes meant 
+> the latter one.
+>
+> In rebasing, `--no-ff` means that even if a commit inside todo list 
+> isn`t to be changed, do not reuse it but create a new one. Here`s 
+> excerpt from the docs[1]:
+>
+>   --no-ff
+>     With --interactive, cherry-pick all rebased commits instead of 
+>     fast-forwarding over the unchanged ones. This ensures that the 
+>     entire history of the rebased branch is composed of new commits.
+>
+>     Without --interactive, this is a synonym for --force-rebase.
+>
+>
+> So fast-forwarding in case of rebasing (merge commits as well) is 
+> something you would want by default, as it wouldn`t drop/lose 
+> anything, but merely reuse existing commit (if unchanged), instead of 
+> cherry-picking (rebasing) it into a new (merge) commit anyway.
+
+This sounds like breakage. E.g., it seems to be breaking every "-x ours"
+merge out there.
+
+Fast-forwarding existing merge, one way or another, still seems to be
+wrong idea to me, as merge commit is not only about content change, but
+also about joint point at particular place in the DAG.
+
+As for fast-forwarding re-merge, explicitly requested, I'm not sure. On
+one hand, it's inline with the default "git merge" behavior, on the
+other hand, it still feels wrong, somehow.
+
+-- Sergey
