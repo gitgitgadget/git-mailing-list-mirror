@@ -2,99 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0B4F71F404
-	for <e@80x24.org>; Mon, 19 Mar 2018 19:47:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5DD901F404
+	for <e@80x24.org>; Mon, 19 Mar 2018 20:03:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S969528AbeCSTrj (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Mar 2018 15:47:39 -0400
-Received: from mail-ot0-f180.google.com ([74.125.82.180]:34142 "EHLO
-        mail-ot0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S969954AbeCSTrd (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Mar 2018 15:47:33 -0400
-Received: by mail-ot0-f180.google.com with SMTP id m7-v6so318783otd.1
-        for <git@vger.kernel.org>; Mon, 19 Mar 2018 12:47:33 -0700 (PDT)
+        id S1031136AbeCSUDx (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Mar 2018 16:03:53 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:36778 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1030619AbeCSUDr (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Mar 2018 16:03:47 -0400
+Received: by mail-wr0-f193.google.com with SMTP id d10so19912707wrf.3
+        for <git@vger.kernel.org>; Mon, 19 Mar 2018 13:03:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=uuEx8U+FPk5/Fya+lMWGCEw+Z7cc44IqYpVTkKLhwDU=;
-        b=S85rlMY9pd37GG1424UYPmaXjaiDLCEv4JaMfTj3OJfPOC6v8qim2Ayus7VySgolm4
-         i7lJvjo4hfKmU4+1eMeiSN1e24/evmFQgX4KXI2t+iBIKzQJjyYlfC2I5YR5EEDunxHv
-         AXD9dy16h7ux9Dut5NTdxuKYlv3Bk1GgN66p3/QtIjpWCp2Ga7a7+o51yDicVFWR2VV4
-         DzGX2nOUQP6pMSG/FxlkknIlNqsTiqHLU/oVHK2iISNMWEoAmp0ISuj65B96UO7ghqR9
-         G4LkXCSu8iAwLbiwR1BBhyqQgnhkqNV66kqCL7KTWEBIYhv845v6yQC5KfHmffHt+4Eg
-         DF/w==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=aLGWJ+eEGvbJhBpjUsTMHr/OnthPBCvvQ+9qcEWBp8M=;
+        b=hjXGWxyBxpReDgwS154nfAk7Pq0a5LQhi3Du1AYs5NW+th4GU1C9QvMl8m/7+GzX3B
+         ASWRcayHOnt/4ywPGKdcwaet78oowem0nT/ScfDv6JRKGJbsfe+DURV8Pn8JId3i5aK/
+         NKlpppqGwT8NWP/Qr13vZjmT+CHUa7401Wqwzt7qNPIvMyXRf0La3s5nHIFxmb5xZqb4
+         cfl2PRhKJPE4FgEh8PMZfD8APorc3OCbcirYFRy4SVSHmkSlvgGVlSR1X/Zn2WPjUeEm
+         jYBNK27yB/q49fkY6WvYl+ur+SVLSnBea8gTGTshRwhPr38NlEwEK4WsF2ngBL1WNpWd
+         1Org==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=uuEx8U+FPk5/Fya+lMWGCEw+Z7cc44IqYpVTkKLhwDU=;
-        b=SPhdlls+jpCbzY01V1U867163vvSnKvFP9dNdDipL6veR59x5AZk0Ca8sQeu9qpgRI
-         YpyITnDQexg6/1n55Wmx75zItDku5KxcrBe5s0AitYI2paDXyjrgfHyMv/9p9fna73dT
-         JWP2KjHAvcj/WYFQe49jRzo97Di/mJotBQAsjht8OdKVVMFauEXbiznhXSW3FNEPPqA9
-         oevGjH1rFAyO59KVVOoREX+G1LJnlBFmuQ0Q1u86Mk6uEN6TaUTjpESP8ezx1BSw12to
-         Lm1OceSHApj3FNiJc/lyf8HC2ucKXZMIIG7aaxL27nXQ8LnBDWQyGWHXf+RA5u9dRnL1
-         5bHg==
-X-Gm-Message-State: AElRT7EkXfjvPMK0GE6T5n6PO4eMiYbJaH96Cminuw5veW8cce9kldOj
-        Yww170rw/kA+cvPyHACU6xhi1QSC1U1jF4RjPOWiy31A
-X-Google-Smtp-Source: AG47ELtU9iLruDGEA4q0zhCcDX+dfYD9CuzU/NMGmhX7qbjirgejKwIhpwnnxghTgD+DYgJpnTJY8/DeH9B1aFGWgmg=
-X-Received: by 2002:a9d:b68:: with SMTP id p37-v6mr6780121otd.27.1521488852347;
- Mon, 19 Mar 2018 12:47:32 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=aLGWJ+eEGvbJhBpjUsTMHr/OnthPBCvvQ+9qcEWBp8M=;
+        b=od0IaxMeGuq8WDTouu9EnGEvsQylZalkKcpzt2ybhfakp+xj2/LomCm7kUjkUINvfA
+         dX/2rTGLNDRzU95xebJJJ5/pUsc/pPY4vC1TVy8K1y8MZdh8QJCg6h13iKHkft3tmakV
+         HIy8CLKpMTjO+LhPaPW5lJvfS2nwnZx13w9HSS7nJzxbrNJJTmm6QpI/UU6T90OfFTcN
+         eufDL3Lst4ZcJevehYEpOaUkjabbeBDirjUMMij7//uOkYV/UvIRV5USZpKXSJe0n5XB
+         k39H15TeFW/5GCVfk0reBkZPovBuoIY+giCbWEZNmrFi0niy/+AFQwcGUNrwbX5Dpvuw
+         QZfw==
+X-Gm-Message-State: AElRT7HH8FmxgAq+HhkLoNeMl3Ochh5OMFM17h51aT0ClvdA8N/KXhnA
+        BlZhIKVhcfP77XFV3G/Y3FU=
+X-Google-Smtp-Source: AG47ELskXDlO+lTjymVWzmE1B+8w/XL2GSZzxmFhVeebilaOdbALdw6ctkJ4TKDWZrUs2Q/E/VnwGg==
+X-Received: by 10.223.184.234 with SMTP id c39mr10116089wrg.67.1521489826438;
+        Mon, 19 Mar 2018 13:03:46 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id b8sm5168wrf.29.2018.03.19.13.03.44
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 19 Mar 2018 13:03:44 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Moch <stefanmoch@mail.de>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Simon Doodkin <helpmepro1@gmail.com>, git@vger.kernel.org,
+        Stefan Beller <sbeller@google.com>
+Subject: Re: feature-request: git "cp" like there is git mv.
+References: <20171216013130.GB188893@aiede.mtv.corp.google.com>
+        <20171231191156.28359-1-stefanmoch@mail.de>
+        <xmqqinb87f70.fsf@gitster-ct.c.googlers.com>
+        <20180318210908.3ed94777.stefanmoch@mail.de>
+Date:   Mon, 19 Mar 2018 13:03:43 -0700
+In-Reply-To: <20180318210908.3ed94777.stefanmoch@mail.de> (Stefan Moch's
+        message of "Sun, 18 Mar 2018 21:09:08 +0100")
+Message-ID: <xmqq370vvnmo.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-References: <20180319025046.58052-1-dnj@google.com> <20180319025046.58052-3-dnj@google.com>
- <87y3inc1my.fsf@evledraar.gmail.com>
-In-Reply-To: <87y3inc1my.fsf@evledraar.gmail.com>
-From:   Daniel Jacques <dnj@google.com>
-Date:   Mon, 19 Mar 2018 19:47:21 +0000
-Message-ID: <CAD1RUU-3Q_SYvJorU+vEY2-0CPMZ1eL-41Z6eL7Sq4USiJ0U+w@mail.gmail.com>
-Subject: Re: [PATCH v6 2/3] Makefile: add Perl runtime prefix support
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 19, 2018 at 3:21 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <ava=
-rab@gmail.com>
-wrote:
+Stefan Moch <stefanmoch@mail.de> writes:
 
-> I think it would be more idiomatic and more paranoid (we'll catch bugs)
-> to do:
+> Are such redundant checks in general a pattern worth searching
+> for and cleaning up globally? Or is this rather in the category
+> of cleaning up only when noticed?
 
->       my $exec_path;
->       if (exists $ENV{GIT_EXEC_PATH}) {
->           $exec_path =3D $ENV{GIT_EXEC_PATH};
->       } else {
->           [...]
->       }
+A clean-up patch that is otherwise a no-op is still welcome as it
+will improve the health of the codebase, but they become hindrances
+if there are too many of them to consume the review bandwidth that
+would otherwise be better spent on other non no-op topics, and/or if
+they add too many merge conflicts with other non no-op topics in
+flight.
 
-> I.e. we're interested if we got passed GIT_EXEC_PATH, so let's see if it
-> exists in the env hash, and then use it as-is. If we have some bug where
-> it's an empty string we'd like to know, presumably...
+The amount of such negative impact a no-op clean-up patch can have
+on the project does not depend on how the issue was discovered, so
+we do not even have to know if the issue was discovered by actively
+hunting or by noticing while working on a near-by area.
 
-Good idea, done.
-
-> > +
-> > +     # Trim off the relative gitexecdir path to get the system path.
-> > +     (my $prefix =3D $exec_path) =3D~ s=3D${gitexecdir_relative}$=3D=
-=3D;
-
-> The path could contain regex metacharacters, so let's quote those via:
-
->       (my $prefix =3D $exec_path) =3D~ s/\Q$gitexecdir_relative\E$//;
-
-> This also nicely gets us rid of the more verbose ${} form, which makes
-> esnse when we're doing ${foo}$ instead of the arguably less readbale
-> $foo$, but when it's \Q$foo\E$ it's clear what's going on.
-
-Ah cool - makes sense. I'm not strong with Perl, so I wasn't aware that
-this was an option, but I agree it's cleaner. Done.
+It is possible that by actively looking for, you may end up
+producing more of the no-op clean-up patches and can more easily
+interfere with other topics, which we may need to discourge or at
+least ask you to slow down.  On the other hand, issues discovered
+while working on a near-by area would typically not increase
+conflicts with other topics in flight over the conflicts that would
+be caused by that real work you were doing in a near-by area
+already, so in that sense, "only when noticed" is a practical way to
+avoid the clean-up fatigue.
