@@ -1,115 +1,93 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
-X-Spam-Level: **
+X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=2.2 required=3.0 tests=BAYES_50,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C552A1F42D
-	for <e@80x24.org>; Mon, 19 Mar 2018 10:21:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D54E11F42D
+	for <e@80x24.org>; Mon, 19 Mar 2018 10:22:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755400AbeCSKV3 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Mar 2018 06:21:29 -0400
-Received: from bmmpi0804.jpx1.emslime.jp ([106.185.85.42]:54193 "EHLO
-        bmmpi0804.jpx1.emslime.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755302AbeCSKV2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Mar 2018 06:21:28 -0400
-X-Greylist: delayed 1201 seconds by postgrey-1.27 at vger.kernel.org; Mon, 19 Mar 2018 06:21:27 EDT
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1521454888;
-        s=giftex.201608; d=giftex.jp;
-        h=Date:From:Reply-To:To:Message-Id:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding;
-        bh=k6mQlIbDTBbB/hXzsiAZV2Rom6N+mhI/6JSO+FBXdSY=;
-        b=ChRIWH0TJjFaW07WAwI1LwjPT73yqOYxtp5vIRCVFgRzgYog+oivke1eYFj9VX7Q
-        /7NuEC8pwuiJt76YvCINfarJVTpOxTCO3D8fpJSlISJ+JreL4ckszbVrtNZeFuyuazv
-        Pkan0+sLuTIa2Kg/RxiKNAc/BE/235zWoaWsVdaw=
-Date:   Mon, 19 Mar 2018 19:01:15 +0900 (JST)
-From:   "LIFESTYLE EXPO TOKYO (Former: GIFTEX TOKYO) Show Management" 
-        <zk-en@giftex.jp>
-Reply-To: giftex-eng@reedexpo.co.jp
-To:     git@vger.kernel.org
-Message-Id: <1521453675287.2018100709.rxjpov2.0.16277.00000000@ad159se.mpse.jp>
-Subject: =?utf-8?B?5aSn6K6i5Y2V55qE6YeP5Lqn5ZywLS0t56ys?=
- =?utf-8?B?MTDlsYrml6XmnKzlm73pmYXkv4PplIDlk4HlsZU=?=
- =?utf-8?B?UHJvbW90aW9uYWwgR29vZHMgRXhwbw==?=
+        id S932239AbeCSKWA (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Mar 2018 06:22:00 -0400
+Received: from smtp-out-5.talktalk.net ([62.24.135.69]:14963 "EHLO
+        smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755302AbeCSKV7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Mar 2018 06:21:59 -0400
+Received: from [192.168.2.201] ([92.22.3.164])
+        by smtp.talktalk.net with SMTP
+        id xrvQe7fohlWlTxrvRe6Yr9; Mon, 19 Mar 2018 10:21:58 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1521454918;
+        bh=FzIIl815g8+41cybupXDYQpIPg5mlK7x7WszIwUu5Xk=;
+        h=Reply-To:From:Subject:To:Date;
+        b=n5kc5XEiATlK8ENzoKnKZ+z6LPPIQN5JhRuJ/H1Vxa60T5rUPwJIv8+oSppnzJipz
+         4+2Nw6QNncutmez56vjWcAS/iXNjulxe55SIrm0FBCLleHGI7JNGZJq3sVBwkmcMqV
+         /KQ+mmjNMb6B2BN8z48T+KEYpuNQV5psRjKpSKkU=
+X-Originating-IP: [92.22.3.164]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=N4gH6V1B c=1 sm=1 tr=0 a=8UrjQVoXl1ilnsKy4/PEMg==:117
+ a=8UrjQVoXl1ilnsKy4/PEMg==:17 a=IkcTkHD0fZMA:10 a=NEAV23lmAAAA:8
+ a=5_Fvg_zHC6LVKqpH9eEA:9 a=QEXdDO2ut3YA:10
+Reply-To: phillip.wood@dunelm.org.uk
+From:   Phillip Wood <phillip.wood@talktalk.net>
+Subject: [BUG] log --graph corrupts patch
+To:     Git Mailing List <git@vger.kernel.org>
+Message-ID: <897b7471-037a-78d9-fc11-0624ef657b4d@talktalk.net>
+Date:   Mon, 19 Mar 2018 10:21:56 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.6.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfFUqd424gBSWX17H+ixA3d9QWyFWZjlUZPxdvlV2PAJQXSe/ydibbvxHgJMRZ52ih7CNJ2FMn3OG+wqaBQfTj4S+brUlMcVEriDg095WHWaZpESETYF3
+ qyToEN2jQuTB82DTQYk4SMb973ERN1LK3ba1ajxP5jOdL3uIEbFHSBYzkWag4sjCy5T6bRjjKyk9xA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Zhejiang Wuchuan Industrial Co., Ltd
-尊敬的 市场经理 先生/女士,
+I've just been reviewing some patches with 'git log --graph --patch' and
+came across what looked like a bug:
 
-您好！
-这里是日本国际促销品展展会主办方。
+| @@ -272,6 +272,9 @@ do
+|       --keep-empty)
+|               keep_empty=yes
+|               ;;
+|       --allow-empty-message)
+| +     --no-keep-empty)
+| +             keep_empty=
+| +             ;;
+|               allow_empty_message=--allow-empty-message
+|               ;;
 
-贵司是否在寻找能接到大批量订单的市场和展会？
-那么您一定不能错过日本的促销品市场。
-如动漫明星周边，杂志赠品，日本各大品牌赠品/包装等均是促销品的范畴。
+However when I looked at the file it was fine, "--allow-empty-message)"
+was actually below the insertions. 'git log --patch' gives the correct
+patch:
 
-想要遇见目标客户客户，相信日本最大的促销品展会----日本国际促销品展将是您最好的选择。
+@@ -272,6 +272,9 @@ do
+        --keep-empty)
+                keep_empty=yes
+                ;;
++       --no-keep-empty)
++               keep_empty=
++               ;;
+        --allow-empty-message)
+                allow_empty_message=--allow-empty-message
+                ;;
 
-为什么日本国际促销品展能接到大批量订单？
-------------------------------------
-理由一：
-日本大部分促销品属于赠品/附赠品，因此买家基本无需考虑在库风险。
-只要有有创意、性价比高的产品，客户会批量订购
+for some reason adding --graph causes the patch to get corrupted. I've
+tried all combinations of --[no-]-indent-heuristic and
+--diff-algorithm={patience|minimal|histogram|myers} and they all give
+the same result. I've no idea what is going on, it happens with 2.16.2
+and recent next and master. I've pushed the commit to github so anyone
+who is interested can get it with
 
-理由二：
-促销品单价相对较低，考虑到运费等因素，小量订单基本会寻找日本当地企业制作。
-因此来场问询海外展商的买家大多数是询问大批量订单
+git fetch https://github.com/phillipwood/git.git log-graph-breaks-patch
 
-理由三：
-促销品是伴随着企业的促销活动产生，根据商业经验，推广活动基本每年都会重复进行。
-因此会带给贵司持续获取订单的机会
---------------------------------------
+Best Wishes
 
-本展自2017年首次正式对日本以外的展商开放以来，从2017年的25家海外展商，到现阶段已经有超过40家海外企业报名2018年展会。
-这进一步证明了展会的良好效果。
-2018年我们将迎来来自世界各地的600家展商和34000名专业观众。
-
-您的同行/日本客户可能已经在参展，详情查询2017年会场平面图
-》》http://www.sp-world.jp/en/doc/floormap/ 《《
-
-如果您有兴趣参展，请您尽快联系我们。
-我们将在第一时间和您分享展会信息和可选展位。
-
-期待您的回信。
-
-顺祝商祺。
-
-
-日本东京国际促销品展展会主办方
-Reed Exhibitions Japan Ltd.
-曲 俊（Jun Qu）
-
-TEL: +8180-2010-4207
-mailto:novelty@reedexpo.co.jp
-
-========================================================================
-同期展会
-
-第29届日本东京国际文具展展 ISOT （ http://www.isot.jp/en/ ） 
-
-第13届日本东京国际消费品展 Lifestyle Expo Tokyo--July（原称GIFTEX）（ http://www.giftex.jp/en/ ）  
-               
-========================================================================
-ID: E36-G1402-0075
-
-
-
-
-This message is delivered to you to provide details of exhibitions and conferences organised, co-organised, or managed by Reed Exhibitions Japan Ltd.
-If you would like to change your contact information, or prefer not to receive further information on this exhibition/conference, please follow the directions below.
- 
-<Update contact information>
-Please click the URL below and follow the directions on the website to update your e-mail and other information.
-https://contact.reedexpo.co.jp/expo/REED/?lg=en&tp=ch&ec=CHANGE
- 
-<Remove from list>
-Please reply to this mail changing the subject to "Remove from list".
-You will not receive any further information on this exhibition/conference.
+Phillip
