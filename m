@@ -3,63 +3,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9AAF11FAE2
-	for <e@80x24.org>; Mon, 19 Mar 2018 19:24:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4F9C81F404
+	for <e@80x24.org>; Mon, 19 Mar 2018 19:27:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965981AbeCSTYQ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Mar 2018 15:24:16 -0400
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:40892 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934989AbeCSTYM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Mar 2018 15:24:12 -0400
-Received: by mail-wr0-f194.google.com with SMTP id z8so10076785wrh.7
-        for <git@vger.kernel.org>; Mon, 19 Mar 2018 12:24:12 -0700 (PDT)
+        id S936038AbeCST1y (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Mar 2018 15:27:54 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:55944 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S936035AbeCST1s (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Mar 2018 15:27:48 -0400
+Received: by mail-wm0-f66.google.com with SMTP id t7so4449560wmh.5
+        for <git@vger.kernel.org>; Mon, 19 Mar 2018 12:27:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=6tTjIW2/SQntO5GRLjCHuXuo+gvDsCkhAlEwNeZMdR4=;
-        b=tAUVhuoahWlKOdf/u/nUUiat6hkjdJz8aN5C7mY8o3TIAB+M9k3SRR2EXiVhwkViUh
-         +ZL/DfRq+SnfXZiZtTOJS178t6rcy5K95dMvkjvUuKp94bVqcFVudRSyx7Ft/Vj3OJ1s
-         M3PnpEyP7GpQ2tlI1Ey2fSbY1ZIpVk9lBC0whksOtMogVQvWlEjCF+M+KI3ddQM7BIQF
-         vJmR/ZnYQP4hw+qe82R4k9AJVVaii/LFkq8OvsgOkWj2T6jjF4H9kTztC7K6S9idIRsn
-         olb92HBcv3CJf7WZchPIONvVolWyTAIbl0+Lo4r7OVfOTUOqloWzvbpzlGwfNrfyn9Lt
-         RCJQ==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=8hvcAroZ3DCDygciAskqq1ZiJnLt5/JNh/mjBTaYM6M=;
+        b=orKQPrL9WjlHdBGm4Tc8XPDL253v/35T21QTRgE/3zjSuUY0f3tutesHG0uqGEiuc7
+         9cY28ml0b/S86Psg+Zzy3+r9qj00Rce0Dy4HYlPAGSPp/BCjCQ8rWSj+i8hQGCXKxWZF
+         p/G/lV4WtKREAqOZrF7G93VAdAOZ0+E0W8GIGhzjNMSKWcFi5zkr5camxcV0pyW0vodn
+         Gwa+KZoxVOzrqAujIV89vw8aPbPKgCF8ymaC4q1guVf55G9EppFAH8KAtVaTiRHqlZ04
+         TtEPqCVsZsOjGuX5kC98eVjTj7x9/ZbtMDRuiQVz79rybaxl9zLv2ZlqDbpOSCmOQLMp
+         tscQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=6tTjIW2/SQntO5GRLjCHuXuo+gvDsCkhAlEwNeZMdR4=;
-        b=j+yG7Bb1z3ZV8UhrPwPGgEwEmivugwTrynMvDeI4bppuwnjijdnHyeKlitnwUJjh88
-         ksVvyXZZGM0j015ACYctMGuTJcelHDego46pl+13Eq4AnlaTkmZdZl8IV3Vx+6ZvMTTw
-         IczQ8pEHtFMYC8aRR953ibPCr+3bydydopS84gDuhI4nYxTtUTXTJLLZea/+4VZAtYoY
-         nS8i4gbXBxpvtZ0PTW9xi4i+KmaxfwDZY8bpMp+r+3awxA5JsvLWZUOvvzNKPCzFZUX1
-         W1v5zdoSBp08VxJkg56WjczPqcPnFt3XjiOCKCFWMF5M7YWrl1mI/DgrcelvmpLjFeh4
-         vJyg==
-X-Gm-Message-State: AElRT7E7C31Qk4ny5o+xuK1tJf/EZ53wbPmCGgSwCKWBOSKprWBuld8K
-        tYFavsB+d1G2la8VdvnX9F8=
-X-Google-Smtp-Source: AG47ELsZIzGSRCSxNISg70m+OcOzFUqk42D99i/6INi3ep8991sfroRr3jFMN5GVDDbYM/ViBXynXA==
-X-Received: by 10.223.136.217 with SMTP id g25mr11072722wrg.203.1521487451238;
-        Mon, 19 Mar 2018 12:24:11 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id l10sm882764wrf.37.2018.03.19.12.24.10
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=8hvcAroZ3DCDygciAskqq1ZiJnLt5/JNh/mjBTaYM6M=;
+        b=jAN5oiloDMJA07Os8jEaT35AAltBXKdcFd1QiggvBifQmjqjdmyVLzTPnLgZYiZIJL
+         JYTdzhB3Oun21MCg3qptWzXg11T8WX4atGek8bMaCSUMcMJs6HTUjHcYqz2GY71Z5au2
+         zGSAu0Fbz/bZrxXWF+dHmug5zgH19APppDdsGKx2R7BiBxAUab8eEwJafArmdPrmhXum
+         5XP1yHIy1iDnL/+qLfmlFTjNVUAcNJWMjxfDk7WUfLt5RhE9dRaSHfdE54NdvKmkXeW2
+         xMzOD1u2WxH7kxdAK1kQndETtrI4ihE7wk7veN0T5x0jJyZ+mKU+s1GOwiN+fV1JZram
+         Gyag==
+X-Gm-Message-State: AElRT7F5ujRQHPQ/2GKM8zWfGxiQJhSIZHG2mIdOgzw7akjg3ubl+kal
+        FRk7yMn8/ik7koqxRaI6cMc=
+X-Google-Smtp-Source: AG47ELtTgHVfZVlhpKjTmyD5shB18hGyIinrK54OJTD13agOXDf2VMKXQbpVjbi9RGacA36+Gd0L2Q==
+X-Received: by 10.28.149.71 with SMTP id x68mr10371724wmd.78.1521487667589;
+        Mon, 19 Mar 2018 12:27:47 -0700 (PDT)
+Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
+        by smtp.gmail.com with ESMTPSA id 21sm1033460wrt.82.2018.03.19.12.27.46
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 19 Mar 2018 12:24:10 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Olga Telezhnaya <olyatelezhnaya@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v3 2/5] ref-filter: add return value && strbuf to handlers
-References: <010201623e594401-906aa5ca-545b-405a-810a-607491fe09a7-000000@eu-west-1.amazonses.com>
-        <010201623e59448f-2db7a920-fe77-481a-b105-de6bbff253eb-000000@eu-west-1.amazonses.com>
-Date:   Mon, 19 Mar 2018 12:24:09 -0700
-In-Reply-To: <010201623e59448f-2db7a920-fe77-481a-b105-de6bbff253eb-000000@eu-west-1.amazonses.com>
-        (Olga Telezhnaya's message of "Mon, 19 Mar 2018 13:01:00 +0000")
-Message-ID: <xmqqbmfjvpgm.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        Mon, 19 Mar 2018 12:27:46 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Dan Jacques <dnj@google.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, Johannes.Schindelin@gmx.de
+Subject: Re: [PATCH v6 3/3] exec_cmd: RUNTIME_PREFIX on some POSIX systems
+References: <20180319025046.58052-1-dnj@google.com> <20180319025046.58052-4-dnj@google.com>
+User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 1.1.0
+In-reply-to: <20180319025046.58052-4-dnj@google.com>
+Date:   Mon, 19 Mar 2018 20:27:44 +0100
+Message-ID: <87woy7c1cf.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
@@ -67,28 +65,77 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Olga Telezhnaya <olyatelezhnaya@gmail.com> writes:
 
-> Continue removing any printing from ref-filter formatting logic,
-> so that it could be more general.
+On Mon, Mar 19 2018, Dan Jacques jotted:
 
-"more general" sounds overly broad.  Is this to avoid calling die()
-so that the caller can decide what error messages it wants to give,
-abort operation or not, etc.?  From a quick scan of the patch, I
-have a feeling that "any printing" is not the problem you are
-solving (calling die() is).
+>  #
+>  # Define HAVE_BSD_SYSCTL if your platform has a BSD-compatible sysctl function.
+>  #
+> +# Define HAVE_BSD_KERN_PROC_SYSCTL if your platform supports the KERN_PROC BSD
+> +# sysctl function.
+> +#
+> +# Define PROCFS_EXECUTABLE_PATH if your platform mounts a "procfs" filesystem
+> +# capable of resolving the path of the current executable. If defined, this
+> +# must be the canonical path for the "procfs" current executable path.
+> +#
+> +# Define HAVE_NS_GET_EXECUTABLE_PATH if your platform supports calling
+> +# _NSGetExecutablePath to retrieve the path of the running executable.
+> +#
+>  # Define HAVE_GETDELIM if your system has the getdelim() function.
+>  #
+>  # Define PAGER_ENV to a SP separated VAR=VAL pairs to define
 
-> Change the signature of handlers by adding return value
-> and strbuf parameter for errors.
+This is fine in isolation, but the sum total of the series ends up
+being:
 
-Could you explain what the "return value" means?  We can see from
-the patch that the function signature is being changed by the patch.
-What needs human explanation is why and what the values mean,
-e.g. "to allow the caller to notice an error, the function returns 0
-upon success and non-0 upon failure, and an error message is
-appended to the strbuf *err" (don't pay too much attention to "0" or
-"non-0" in this example, as I do not know what you chose to assign
-the return values to signal what to the callers; this is merely to
-illustrate the degree of details I would expect).
+    diff --git a/Makefile b/Makefile
+    index 96f6138f63..c23d4d10f0 100644
+    --- a/Makefile
+    +++ b/Makefile
+    @@ -425,6 +425,16 @@ all::
+     #
+     # Define HAVE_BSD_SYSCTL if your platform has a BSD-compatible sysctl function.
+     #
+    +# Define HAVE_BSD_KERN_PROC_SYSCTL if your platform supports the KERN_PROC BSD
+    +# sysctl function.
+    +#
+    +# Define PROCFS_EXECUTABLE_PATH if your platform mounts a "procfs" filesystem
+    +# capable of resolving the path of the current executable. If defined, this
+    +# must be the canonical path for the "procfs" current executable path.
+    +#
+    +# Define HAVE_NS_GET_EXECUTABLE_PATH if your platform supports calling
+    +# _NSGetExecutablePath to retrieve the path of the running executable.
+    +#
+     # Define HAVE_GETDELIM if your system has the getdelim() function.
+     #
+     # Define PAGER_ENV to a SP separated VAR=VAL pairs to define
+    @@ -441,6 +451,13 @@ all::
+     #
+     # When cross-compiling, define HOST_CPU as the canonical name of the CPU on
+     # which the built Git will run (for instance "x86_64").
+    +#
+    +# Define RUNTIME_PREFIX to configure Git to resolve its ancillary tooling and
+    +# support files relative to the location of the runtime binary, rather than
+    +# hard-coding them into the binary. Git installations built with RUNTIME_PREFIX
+    +# can be moved to arbitrary filesystem locations. RUNTIME_PREFIX also causes
+    +# Perl scripts to use a modified entry point header allowing them to resolve
+    +# support files at runtime.
 
-Thanks.
+I wonder if it wouldn't be a lot more understandable if these were noted
+together, i.e. let's first document RUNTIME_PREFIX, then for all the
+other ones say below that:
+
+   # When using RUNTIME_PREFIX, define HAVE_BSD[...]
+
+Or something like that. We can always drop the "When using
+RUNTIME_PREFIX, " bit later if it ends up benig used for other stuff,
+but for now it's helpful to note that you don't need to care about these
+if you're not using RUNTIME_PREFIX.
+
+> -				"but prefix computation failed.  "
+> -				"Using static fallback '%s'.\n", prefix);
+> +			     "but prefix computation failed.  "
+> +			     "Using static fallback '%s'.\n",
+> +			     prefix);
+
+Whitespace changed mixed in with the actual change.
