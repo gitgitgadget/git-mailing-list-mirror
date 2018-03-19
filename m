@@ -3,85 +3,140 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E07071F404
-	for <e@80x24.org>; Mon, 19 Mar 2018 17:02:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AC4BD1F404
+	for <e@80x24.org>; Mon, 19 Mar 2018 17:12:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S967732AbeCSRCu (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Mar 2018 13:02:50 -0400
-Received: from mail-wm0-f50.google.com ([74.125.82.50]:52402 "EHLO
-        mail-wm0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S967709AbeCSRCp (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Mar 2018 13:02:45 -0400
-Received: by mail-wm0-f50.google.com with SMTP id l9so7409309wmh.2
-        for <git@vger.kernel.org>; Mon, 19 Mar 2018 10:02:44 -0700 (PDT)
+        id S967666AbeCSRMO (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Mar 2018 13:12:14 -0400
+Received: from mail-ot0-f195.google.com ([74.125.82.195]:42484 "EHLO
+        mail-ot0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S966726AbeCSRMK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Mar 2018 13:12:10 -0400
+Received: by mail-ot0-f195.google.com with SMTP id v23-v6so2885962oth.9
+        for <git@vger.kernel.org>; Mon, 19 Mar 2018 10:12:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=rn1mZeJrJbDsRuhNU8B2LGQ3dUhc9/i1jE+d5JkajSA=;
-        b=W5ny22BChiBJ5gY5TBzT7JjR9JjFPhwbTF7e8MPeehEkCUDHTpmsagpBzyLdTjjZyv
-         oduPGGflVJ6jNUkoyyOfMqe+3WmpVNsutfywx8hTgs75J9HlexM7JX2FFbsno594Q6pD
-         Bx8yR6XydVXRq1jKtwX6XukaJBu+eV6MPAopSnBkaHBMjkSns8fGl/2U1oExcnSxBsR8
-         CqQ3bvrQzy0WKdl6yBKpwVL+y6i/n7kVin2WlUjNTOURijRaHuqWqUGATpzXUqiazgPJ
-         7Ir4sXjZkfunrl651r5ULzSVMJbjxb7oalZ+21zTfMn48S+WO2PMeNLIn3ph9Z4rWb50
-         2pvg==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=pOM5cnshK9PXu9YXcW6ZgfT/gBcKpjAprdrG4xOUDYg=;
+        b=DI/0qduVsEkYRi4RR5dL6E5TSK7sbG6lZU8rYdRcN3RbT4tC0h8iagzy4BsabynzGX
+         VXP6NWMNKVcfu21x80m/8fJN+4NH6cepAoso3BXBJm4MyQZeD111ESqlXyJPGC5/W5lS
+         T6KLR2AqT49U+Ooe0xVTIpjvrvpJassB76I5STOB37eDKsDW8x8B9DCWoM/cdq0/6lop
+         3vCLvmwlesmVt77d1bctSLfWVx88QOk6zJ7CqwWSjHddznR3vjo45MuFzSm+PkKx/Wlo
+         j5xHgVhPBVkkWPJRMEpiLL3Uzk5c2XKwtfpQxPqAjW/Gdv1GyROrVsjk/QuhHXE8RQ2m
+         GlNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=rn1mZeJrJbDsRuhNU8B2LGQ3dUhc9/i1jE+d5JkajSA=;
-        b=e7YCGpI1E7ZRRkASWn5UpwhmYsn6ygSbgael1PbWCap7G4wcOuZYhWAJtpof7RsAig
-         gSdsiY2/tTgrinmCk5euOXCC2A9fZVFOoGEfUZTn4rNw7rurtKSrxEAN9o81Oykt3CMk
-         OiOfpZORV8kKaNK45g2ZPcGhWqJ1xNSQSDxlY1vrJA1cuHSgORAp3wQKWg5c0q3Z6Bf3
-         sTq1mMvajM+kdfSlZm0q+qoZTKltjjf9BjB0z+tIod4OYlxm4aES8D9bq4p7Ix/aDb3M
-         UN+mBkxy5B+HNnaWj1++JQ8+ZtLJH220oukclcfXqYn0hpoxpKLKEQcvHbNbeFQNqB29
-         /4mw==
-X-Gm-Message-State: AElRT7EV0QMrTRAInks5EqRMCznEJnMRYmJh039ZZ48wtQM3rT1OY+4A
-        Mx6b+LPL7i/PolN6arM+ngs=
-X-Google-Smtp-Source: AG47ELvsbtqEclprLrLSCHf+Y7ruf1PRbOiZcCC3ughnnVRLyzR7pSSL75hJswVN2LCdNnx3y724cw==
-X-Received: by 10.28.19.206 with SMTP id 197mr9933657wmt.89.1521478963394;
-        Mon, 19 Mar 2018 10:02:43 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id e67sm1137124wmf.20.2018.03.19.10.02.42
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 19 Mar 2018 10:02:42 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Dan Jacques <dnj@google.com>
-Cc:     git@vger.kernel.org, avarab@gmail.com, Johannes.Schindelin@gmx.de
-Subject: Re: [PATCH v6 0/3] RUNTIME_PREFIX relocatable Git
-References: <20180319025046.58052-1-dnj@google.com>
-Date:   Mon, 19 Mar 2018 10:02:42 -0700
-In-Reply-To: <20180319025046.58052-1-dnj@google.com> (Dan Jacques's message of
-        "Sun, 18 Mar 2018 22:50:43 -0400")
-Message-ID: <xmqqfu4wvw0d.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=pOM5cnshK9PXu9YXcW6ZgfT/gBcKpjAprdrG4xOUDYg=;
+        b=rG0PCMSP1e0AELYQzMNHNUoTU4Gczjdz0Mhugfn/vz8oOswUR5J5zgUnOUYd5X1hYL
+         QIrfNYsA26QFAcrFMMvZiJT5sDwV9GMjp+0Ae1wb+qij5F0yr3sNus84SxELhCNOuvzm
+         +Q+HOzazFiUYYiIftTZz4+96cTa0vjAJKU3jKPGploPtLy0emIr/tj1rl4TWg+gdh11h
+         SYvbT1DJe992M7pwC7epHTy57+QX9pTY3KyRZ6u4I3pr87mHUaQJ/A2jvp2B3/pqLptb
+         AVsRbfWR7MZIYYG/UzjHtASGWkYIEvDkYEczP5tDr8s6m1Z35O+FUCV1uHbSZL6I/XGz
+         TH4Q==
+X-Gm-Message-State: AElRT7HVD1s6UXywj4idxPo6sEYCvLOvit9bOLYzcXBCVZu9mPoGWU9j
+        AM3qgxSHzQkDe9OZS3qVGwav6MqBIkwk3z7VZYY=
+X-Google-Smtp-Source: AG47ELszDd8tIuRH7gKlFI8W1ZM/C8+g+ZLydf85kLjx25uoxBpX5f7fDAWNrBLT3HNc2CE4AVfCsuMNwyEtpfcC4qM=
+X-Received: by 2002:a9d:182a:: with SMTP id b39-v6mr8815153ote.356.1521479530100;
+ Mon, 19 Mar 2018 10:12:10 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.74.154.146 with HTTP; Mon, 19 Mar 2018 10:11:39 -0700 (PDT)
+In-Reply-To: <20180317222219.4940-2-t.gummerer@gmail.com>
+References: <20180317220830.30963-1-t.gummerer@gmail.com> <20180317222219.4940-1-t.gummerer@gmail.com>
+ <20180317222219.4940-2-t.gummerer@gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Mon, 19 Mar 2018 18:11:39 +0100
+Message-ID: <CACsJy8DvUB7Sv6m384ccgDPnMnFfD80W5EZ=Pbkj8cyhFO_OqA@mail.gmail.com>
+Subject: Re: [PATCH v4 1/4] worktree: improve message when creating a new worktree
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dan Jacques <dnj@google.com> writes:
-
-> This patch set expands support for the RUNTIME_PREFIX configuration flag,
-> currently only used on Windows builds, to include Linux, Darwin, and
-> FreeBSD. When Git is built with RUNTIME_PREFIX enabled, it resolves its
-> ancillary paths relative to the runtime location of its executable
-> rather than hard-coding them at compile-time, allowing a Git
-> installation to be deployed to a path other than the one in which it
-> was built/installed.
+On Sat, Mar 17, 2018 at 11:22 PM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
+> Currently 'git worktree add' produces output like the following, when
+> '--no-checkout' is not given:
 >
-> Note that RUNTIME_PREFIX is not currently used outside of Windows.
-> This patch set should not have an impact on default Git builds.
+>     Preparing foo (identifier foo)
+>     HEAD is now at 26da330922 <title>
 >
-> I'm dusting this back off now that avarab@'s Perl Makefile simplification
-> patch set has landed. It's been a few months, so I'm a bit rusty, but I think
-> that I've incorporated all of the feedback. Please take a look and let me know
-> what you think!
+> where the first line is written to stderr, and the second line coming
+> from 'git reset --hard' is written to stdout, even though both lines are
+> supposed to tell the user what has happened.  In addition to someone not
+> familiar with 'git worktree', this might seem as if the current HEAD was
+> modified, not the HEAD in the new working tree.
+>
+> If the '--no-checkout' flag is given, the output of 'git worktree add'
+> is just:
+>
+>     Preparing foo (identifier foo)
+>
+> even though the HEAD is set to a commit, which is just not checked out.
+>
+> The identifier is also not particularly relevant for the user at the
+> moment, as it's only used internally to distinguish between different
+> worktrees that have the same $(basename <path>).
+>
+> Fix these inconsistencies, and no longer show the identifier by making
+> the 'git reset --hard' call quiet, and printing the message directly
+> from the builtin command instead.
+>
+> Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
+> ---
+>  builtin/worktree.c | 13 ++++++++++---
+>  1 file changed, 10 insertions(+), 3 deletions(-)
+>
+> diff --git a/builtin/worktree.c b/builtin/worktree.c
+> index 7cef5b120b..e5d04f0b4b 100644
+> --- a/builtin/worktree.c
+> +++ b/builtin/worktree.c
+> @@ -303,8 +303,6 @@ static int add_worktree(const char *path, const char *refname,
+>         strbuf_addf(&sb, "%s/commondir", sb_repo.buf);
+>         write_file(sb.buf, "../..");
+>
+> -       fprintf_ln(stderr, _("Preparing %s (identifier %s)"), path, name);
+> -
+>         argv_array_pushf(&child_env, "%s=%s", GIT_DIR_ENVIRONMENT, sb_git.buf);
+>         argv_array_pushf(&child_env, "%s=%s", GIT_WORK_TREE_ENVIRONMENT, path);
+>         cp.git_cmd = 1;
+> @@ -320,10 +318,19 @@ static int add_worktree(const char *path, const char *refname,
+>         if (ret)
+>                 goto done;
+>
+> +       fprintf(stderr, _("worktree HEAD is now at %s"),
 
-Yay.  Thanks for rebooting the effort.
+We use the term "working tree" for UI and documents. "worktree" is
+only used in code comments and stuff.
+
+> +               find_unique_abbrev(commit->object.oid.hash, DEFAULT_ABBREV));
+> +
+> +       strbuf_reset(&sb);
+> +       pp_commit_easy(CMIT_FMT_ONELINE, commit, &sb);
+> +       if (sb.len > 0)
+> +               fprintf(stderr, " %s", sb.buf);
+> +       fputc('\n', stderr);
+> +
+>         if (opts->checkout) {
+>                 cp.argv = NULL;
+>                 argv_array_clear(&cp.args);
+> -               argv_array_pushl(&cp.args, "reset", "--hard", NULL);
+> +               argv_array_pushl(&cp.args, "reset", "--hard", "--quiet", NULL);
+>                 cp.env = child_env.argv;
+>                 ret = run_command(&cp);
+>                 if (ret)
+> --
+> 2.17.0.rc0.231.g781580f06
+>
+-- 
+Duy
