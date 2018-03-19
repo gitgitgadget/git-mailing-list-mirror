@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 10BD41F404
-	for <e@80x24.org>; Mon, 19 Mar 2018 13:32:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D48F31FAE4
+	for <e@80x24.org>; Mon, 19 Mar 2018 13:32:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933318AbeCSNcc (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Mar 2018 09:32:32 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:36158 "EHLO
+        id S933327AbeCSNcg (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Mar 2018 09:32:36 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:39587 "EHLO
         mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933186AbeCSNc1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Mar 2018 09:32:27 -0400
-Received: by mail-wm0-f67.google.com with SMTP id x82so2876774wmg.1
-        for <git@vger.kernel.org>; Mon, 19 Mar 2018 06:32:26 -0700 (PDT)
+        with ESMTP id S933308AbeCSNcc (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Mar 2018 09:32:32 -0400
+Received: by mail-wm0-f67.google.com with SMTP id f125so7351214wme.4
+        for <git@vger.kernel.org>; Mon, 19 Mar 2018 06:32:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=00DV2rduOgaqG9QJYg8ZtgfvhC1sJeILZY3UWRBodRA=;
-        b=G7OTA935tDR27XjMR3oQ0IvB4Y7hJJWtEUSb7ejmI4JCmIGMI5TIiAivUvzJqnU5Nt
-         /Cpc2MwsfDHLRsXQ9LnIIMNQRtJ65+bQCDBttIAeIEMGjCvCtk7VGSUyDGFtaP7sXu1e
-         1vsqvLADcX+me/sTY7fPEonvtakHL1KtrdNOfuLGjjtB9ejczU7r8CZkkoahHussxROZ
-         FepZpw/RU//tp7VlrzT7iO9R9ljjnHcXAVLtdddAIwVLZNzuf0iSomZ55n9yDJF2Z8Dn
-         H5yiaWONen069C4u09K3DY1jFwxMcs1iIGo5xDc8rF817KJE9imd0ZR7ptqlo4Oie95x
-         d36w==
+        bh=6f7WPEJ3y2DebEEAMWDC21kaMcrKG+SpvlrLWg537NQ=;
+        b=vGE5UmsR303L9ts5F9JEzLDH1J+wdd/OcWkt2u00TDukIN2EnbqZOUkbzORypSz6yw
+         n/QSOSmVcNJfeA4YDFxdjx1NzwF85yhQAeWrpBxPeFJEu3bnQXQx9jBTT/WJVhzu870s
+         7uMt12yn8UTcQHr5TbTGgmdQqAV/8Eju2y4WBVTmD297udmtpC8aIu6URtO+LlS0OszO
+         qesWasXRKLj9iONXN8arwx/X0OXl/8c0bMXMwfq6lQA4AzhiIhV3ueHltiMx7v9O2BDV
+         bGwvArwA9U8Qg629vSJRZQFQMPTVXrIlVyuvVvpmSlMqg4sP61Uwa1ELsBuKFvmTkCxk
+         kP1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=00DV2rduOgaqG9QJYg8ZtgfvhC1sJeILZY3UWRBodRA=;
-        b=e9Tig3Y++ODsRWxbOwJEZjc8DVEWKO/5Vb9HTfENVc/q1JM91axwnk6qYOvQeR9w7/
-         vI41xfgvULIfrv5amKCKd3OVh4nREA/QSD23n7o9GtZlVbH2X+dSmTy2Yw8UZwQ6VWIW
-         9oqMo6TCt7Tk4t2Bcvigk2b/g1Dbif1vaFVdbQPdtNnr8r+uYHYSz3kQ41lKtt8UYcdP
-         zbWHis2Z8KbiVoMexwafCSBTnbNmXoK/OfR0Q2bNFu6tSD6jgL2cF958cgnBTtw7Zvse
-         IjwIEMDB6rSy82AECGIH80VWvrwtWDWH8CMp8MsEQJ/KjKYL3Pc6NfOSA4iTK3m9KyhN
-         nNKg==
-X-Gm-Message-State: AElRT7E1Ab97UIgdHksOgsYLlojZ65weDIppmHu6brr5HufxKcl/gSma
-        wOiFslTN0TlqqrKQSXzx8KyRTAeM
-X-Google-Smtp-Source: AG47ELtcG5/Xs3fXv7m/uP18YS7/qSrlWvZ9Gr4ZTE4fWTzof//SZy+Ez6a9Zm6qemc90kiBtkIMGw==
-X-Received: by 10.28.185.208 with SMTP id j199mr9246043wmf.9.1521466344589;
-        Mon, 19 Mar 2018 06:32:24 -0700 (PDT)
+        bh=6f7WPEJ3y2DebEEAMWDC21kaMcrKG+SpvlrLWg537NQ=;
+        b=gkkg8uSr6DdoQlbFL+bPcqPomJTYn1TDOXHCLeBi62js2vsIMiBJhVoV0ggUOuO4N6
+         T4+UIS5sTkb+pOCObPg3DEQcIgAPg+QIa7idqYLl1ktQQXWMxiuNPhSyq5SOKMi4t71X
+         gNPvOhIm8skxTPUVXh1Gc8AVXUK/zw3UOHogSOsVK0b9WOP6WNjzJL9X40cmRXPl2yld
+         RXIT6FWtq9SHXH4qFG0TOWFEzXUau4//iWe1VH2p+0rXAKOTEdIbaVi611dKHZcyGLCF
+         8JeWSegtKWXD4Yf1z41pYzmENiORvfUOy7/s7ePVDmTmJbWUKMduT1Z64EyVMn85dauk
+         AqNQ==
+X-Gm-Message-State: AElRT7HFo5xuhP0xVGs7+8SxdSlkWJtHTLa7zRA3nGErxww556otCKmi
+        iigfaz7tNQAVNKTm0YfIQ0+QnOqq
+X-Google-Smtp-Source: AG47ELvupOn53731C94/yw5D/5LxfmKiuk5Kyo0ceNpi9kkGM2QBOZhMrk1RszgCKGRKZzxOvBfApQ==
+X-Received: by 10.28.206.77 with SMTP id e74mr9339314wmg.41.1521466350516;
+        Mon, 19 Mar 2018 06:32:30 -0700 (PDT)
 Received: from localhost.localdomain (89-95-107-230.abo.bbox.fr. [89.95.107.230])
-        by smtp.gmail.com with ESMTPSA id p29sm539434wmf.3.2018.03.19.06.32.23
+        by smtp.gmail.com with ESMTPSA id p29sm539434wmf.3.2018.03.19.06.32.29
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 19 Mar 2018 06:32:23 -0700 (PDT)
+        Mon, 19 Mar 2018 06:32:29 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -60,9 +60,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Eric Wong <e@80x24.org>,
         Christian Couder <chriscool@tuxfamily.org>,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH v2 12/36] external-odb: add external_odb_get_many_direct()
-Date:   Mon, 19 Mar 2018 14:31:23 +0100
-Message-Id: <20180319133147.15413-13-chriscool@tuxfamily.org>
+Subject: [PATCH v2 16/36] t0500: add 'put_raw_obj' instruction to odb-helper script
+Date:   Mon, 19 Mar 2018 14:31:27 +0100
+Message-Id: <20180319133147.15413-17-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.17.0.rc0.37.g8f476fabe9
 In-Reply-To: <20180319133147.15413-1-chriscool@tuxfamily.org>
 References: <20180319133147.15413-1-chriscool@tuxfamily.org>
@@ -71,86 +71,72 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+To properly test passing objects from Git to an external odb
+we need an odb-helper script that supports a 'put'
+capability/instruction.
+
+For now we will support only sending raw blobs, so the
+supported capability/instruction will be 'put_raw_obj'.
+
+While at it let's add a test to check that our odb-helper
+script works well.
+
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- external-odb.c | 17 +++++++++++++++++
- external-odb.h |  1 +
- odb-helper.c   | 16 ++++++++++++++++
- odb-helper.h   |  2 ++
- 4 files changed, 36 insertions(+)
+ t/t0500-external-odb.sh | 24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
 
-diff --git a/external-odb.c b/external-odb.c
-index ae6bc017fe..8be92277d2 100644
---- a/external-odb.c
-+++ b/external-odb.c
-@@ -182,3 +182,20 @@ int external_odb_get_direct(const unsigned char *sha1)
- 
- 	return -1;
- }
-+
-+int external_odb_get_many_direct(const struct oid_array *to_get)
-+{
-+	struct odb_helper *o;
-+
-+	external_odb_init();
-+
-+	for (o = helpers; o; o = o->next) {
-+		if (!(o->supported_capabilities & ODB_HELPER_CAP_GET_DIRECT))
-+			continue;
-+		if (odb_helper_get_many_direct(o, to_get) < 0)
-+			continue;
-+		return 0;
-+	}
-+
-+	return -1;
+diff --git a/t/t0500-external-odb.sh b/t/t0500-external-odb.sh
+index 977fea852d..4ccca1e965 100755
+--- a/t/t0500-external-odb.sh
++++ b/t/t0500-external-odb.sh
+@@ -7,10 +7,15 @@ test_description='basic tests for external object databases'
+ ALT_SOURCE="$PWD/alt-repo/.git"
+ export ALT_SOURCE
+ write_script odb-helper <<\EOF
++die() {
++	printf >&2 "%s\n" "$@"
++	exit 1
 +}
-diff --git a/external-odb.h b/external-odb.h
-index c5ac071995..a4eda95b09 100644
---- a/external-odb.h
-+++ b/external-odb.h
-@@ -17,5 +17,6 @@ extern const char *external_odb_root(void);
- extern int external_odb_has_object(const unsigned char *sha1);
- extern int external_odb_get_object(const unsigned char *sha1);
- extern int external_odb_get_direct(const unsigned char *sha1);
-+extern int external_odb_get_many_direct(const struct oid_array *to_get);
+ GIT_DIR=$ALT_SOURCE; export GIT_DIR
+ case "$1" in
+ init)
+ 	echo "capability=get_git_obj"
++	echo "capability=put_raw_obj"
+ 	echo "capability=have"
+ 	;;
+ have)
+@@ -20,6 +25,16 @@ have)
+ get_git_obj)
+ 	cat "$GIT_DIR"/objects/$(echo $2 | sed 's#..#&/#')
+ 	;;
++put_raw_obj)
++	sha1="$2"
++	size="$3"
++	kind="$4"
++	written=$(git hash-object -w -t "$kind" --stdin)
++	test "$written" = "$sha1" || die "bad sha1 passed '$sha1' vs written '$written'"
++	;;
++*)
++	die "unknown command '$1'"
++	;;
+ esac
+ EOF
+ HELPER="\"$PWD\"/odb-helper"
+@@ -45,4 +60,13 @@ test_expect_success 'helper can retrieve alt objects' '
+ 	test_cmp expect actual
+ '
  
- #endif /* EXTERNAL_ODB_H */
-diff --git a/odb-helper.c b/odb-helper.c
-index a99f4a1299..7e5eab94cf 100644
---- a/odb-helper.c
-+++ b/odb-helper.c
-@@ -345,3 +345,19 @@ int odb_helper_get_direct(struct odb_helper *o,
- 
- 	return res;
- }
++test_expect_success 'helper can add objects to alt repo' '
++	hash=$(echo "Hello odb!" | git hash-object -w -t blob --stdin) &&
++	test -f .git/objects/$(echo $hash | sed "s#..#&/#") &&
++	size=$(git cat-file -s "$hash") &&
++	git cat-file blob "$hash" | ./odb-helper put_raw_obj "$hash" "$size" blob &&
++	alt_size=$(git -C alt-repo cat-file -s "$hash") &&
++	test "$size" -eq "$alt_size"
++'
 +
-+int odb_helper_get_many_direct(struct odb_helper *o,
-+			       const struct oid_array *to_get)
-+{
-+	int res = 0;
-+	uint64_t start;
-+
-+	start = getnanotime();
-+
-+	if (o->type == ODB_HELPER_GIT_REMOTE)
-+		fetch_objects(o->dealer, to_get);
-+
-+	trace_performance_since(start, "odb_helper_get_many_direct");
-+
-+	return res;
-+}
-diff --git a/odb-helper.h b/odb-helper.h
-index 7720684744..2c529af6af 100644
---- a/odb-helper.h
-+++ b/odb-helper.h
-@@ -39,5 +39,7 @@ extern int odb_helper_get_object(struct odb_helper *o,
- 				 int fd);
- extern int odb_helper_get_direct(struct odb_helper *o,
- 				 const unsigned char *sha1);
-+extern int odb_helper_get_many_direct(struct odb_helper *o,
-+				      const struct oid_array *to_get);
- 
- #endif /* ODB_HELPER_H */
+ test_done
 -- 
 2.17.0.rc0.37.g8f476fabe9
 
