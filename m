@@ -2,82 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6B15A1F404
-	for <e@80x24.org>; Mon, 19 Mar 2018 19:30:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 484991F404
+	for <e@80x24.org>; Mon, 19 Mar 2018 19:38:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965714AbeCSTaZ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Mar 2018 15:30:25 -0400
-Received: from mail-wr0-f173.google.com ([209.85.128.173]:41886 "EHLO
-        mail-wr0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S935481AbeCSTaV (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Mar 2018 15:30:21 -0400
-Received: by mail-wr0-f173.google.com with SMTP id f14so19776574wre.8
-        for <git@vger.kernel.org>; Mon, 19 Mar 2018 12:30:20 -0700 (PDT)
+        id S969627AbeCSTi3 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Mar 2018 15:38:29 -0400
+Received: from mail-ot0-f173.google.com ([74.125.82.173]:32990 "EHLO
+        mail-ot0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965605AbeCSTiZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Mar 2018 15:38:25 -0400
+Received: by mail-ot0-f173.google.com with SMTP id y11-v6so18647229otg.0
+        for <git@vger.kernel.org>; Mon, 19 Mar 2018 12:38:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=9gTVgC7T/QtYUmFSRC02P2wbI+Vz6R6ILBNO3WDSYlE=;
-        b=QI3fEaGYph9KXTiXXsBzbR37qCmF4aSbYctze8BUeHJaXmEcZrUafxcrimZaz/vCt+
-         IJSr0DbZogx7cNDzMgMOtyfOio7bG/q6lcYJkg19FB8FSQJTsEnsFWuPu73C9nZN9Nyl
-         Y3vCyfBuj3ZmSpuX5gxEyV6xlwZiAiEZXmJQTaVaL+bEvDJ6CKJHKeH550KqsRRzzA10
-         c8S0oxEleF7y77IUr/sf11kvHwdo270mfx1yU6ffsTS97Z83qK7WLQsk7oVCMnGOzWt7
-         Am3ROOxxugt9py9NiOIodyss0IjnXoW1X1W6QHhcpK3MYswS8TVRPT30oB+MUYlPCOVq
-         LEqw==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=f3z6LrzUcXWxBZt+TpjIPohNR2NV+NNqh38tTvTPL8U=;
+        b=kxogULxo93SVDZuXj5ecm9iVinQwoxx3rUr/hsLsM2xLxbRmOhJ9KcFL5b6FJ4v32e
+         ikpy4HDlPyawqcDelUEL1M9CTTx93x8v//u+lhImv6i01V56UDoZMgE2tgThq1HUhPvF
+         s4jZee8gRr0v+ku6j0wijW6UuM+ZIP7upmp/epbhFAqeSwK8hHFQLmQrreH0strB9dTJ
+         S90tZO/S+4VrEXWHcBLvE5T3NDjDp7KpRnfeGyHvTNI6b1PUK6WyHUDTTGAW9FrnJEpS
+         eslt2OsUGaQd2gcCmXCjl55skSuERxeXMXwJjuIneMyO6u0LPRs9FlYyzP4yDxdQd1Pk
+         xxoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=9gTVgC7T/QtYUmFSRC02P2wbI+Vz6R6ILBNO3WDSYlE=;
-        b=IzOZmYMEGfOsVuzgka+0Drsw8rqC0kpUV+KYwGad6Hi+9gle4zfpkLNxNbAuDTe2Vt
-         J+lWy9lXWXTBfma/3XIj0DK0iK4BuYtzEiAWzxjrXi1MlsCjmRhE6jwb5e0bQaHYM8x5
-         oPWdMJ/VeYC+hDIgh6IfG9HYhlK5Nh13+LeAQI96PcjLBBlV8SgR4X3NXTzjRz6o2Flp
-         h/rbnHRHPZ/73/SfVpcgGkzAmcmtnUzeKK4Jd3lH+tA43spPph0f9HSV9M+d77Vmx/Zf
-         BxCOBl/vc1kVcQ8GKSvFlvL/K7k1PftrvDbw8kWoBHxSMP+NktrAfT+bC2VrwOjszZ3E
-         ZEhg==
-X-Gm-Message-State: AElRT7EF92NJMVzXavYSis+wGawF51DDCKe61TJ5QrNAOK5tbD2jsMeT
-        OqutZsmNPlifrS9sJ3rrMMA=
-X-Google-Smtp-Source: AG47ELvcCrgmoxxbxDRilZNK1rxmvmPxohhvCD3vrpQRUjMhHmmpi1G4SN9WuoxGe+/AXBO2U4B1dQ==
-X-Received: by 10.223.184.234 with SMTP id c39mr10046387wrg.67.1521487820097;
-        Mon, 19 Mar 2018 12:30:20 -0700 (PDT)
-Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
-        by smtp.gmail.com with ESMTPSA id d8sm945667wrf.8.2018.03.19.12.30.18
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 19 Mar 2018 12:30:19 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Dan Jacques <dnj@google.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, Johannes.Schindelin@gmx.de
-Subject: Re: [PATCH v6 0/3] RUNTIME_PREFIX relocatable Git
-References: <20180319025046.58052-1-dnj@google.com>
-User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 1.1.0
-In-reply-to: <20180319025046.58052-1-dnj@google.com>
-Date:   Mon, 19 Mar 2018 20:30:18 +0100
-Message-ID: <87vadrc185.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=f3z6LrzUcXWxBZt+TpjIPohNR2NV+NNqh38tTvTPL8U=;
+        b=FHkCaIBOgnFvnsbZ82ASzS0C9eaLOg44GgF+e7QR6RANrSDohoBCM5aoRSJcr/UXKm
+         qmpzylfODpAuJIMihjilUzpvaxbYscXfoU7VZoRsRJMsniB5+K2XEoss9/kkTxzXnIPZ
+         SKuEW0WlqYbNTIoMAKq6NK0Om1cUGFu5II8AToFcuiqja13utKtSX0v0T8ZSOGTDd/pX
+         BEGtvezo212Fvlz1iTiFVK0sYnregDQDittefcBwz9BPTybbiSU1gwmCiodI3UE2VXcX
+         34fidipb+LFJKWPo2YfQn+4JFuLS6UONyULsyOKN5MhGlby4x72YXELXAhNMZjx7z7UF
+         XeLA==
+X-Gm-Message-State: AElRT7EihWLegfcKrXOPa2PKTn/ayeyPtF/b1ci5u3UC6UIxkc8I0gmC
+        M6q+NTf0ZJtuz3xxLl30EMeY4lQEiog8kMuoaR7VIY+P
+X-Google-Smtp-Source: AG47ELu2SLcRVIACUIKc9L3DTMT2M4Zp3Q8xPODMDuV1MC35C+vqxdiVakgerKpLuADA0SfpLA6/UfFbV7bwrg0/gfE=
+X-Received: by 2002:a9d:2ef0:: with SMTP id w103-v6mr2505198ota.400.1521488304636;
+ Mon, 19 Mar 2018 12:38:24 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20180319025046.58052-1-dnj@google.com> <20180319025046.58052-4-dnj@google.com>
+ <87woy7c1cf.fsf@evledraar.gmail.com>
+In-Reply-To: <87woy7c1cf.fsf@evledraar.gmail.com>
+From:   Daniel Jacques <dnj@google.com>
+Date:   Mon, 19 Mar 2018 19:38:14 +0000
+Message-ID: <CAD1RUU8JnQjspZjmWvM5h=3Rprk4TmfsNvBRAGVzze=WAnRQbg@mail.gmail.com>
+Subject: Re: [PATCH v6 3/3] exec_cmd: RUNTIME_PREFIX on some POSIX systems
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Mon, Mar 19, 2018 at 3:27 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <ava=
+rab@gmail.com>
+wrote:
 
-On Mon, Mar 19 2018, Dan Jacques jotted:
+> I wonder if it wouldn't be a lot more understandable if these were noted
+> together, i.e. let's first document RUNTIME_PREFIX, then for all the
+> other ones say below that:
 
-> I'm dusting this back off now that avarab@'s Perl Makefile simplification
-> patch set has landed. It's been a few months, so I'm a bit rusty, but I think
-> that I've incorporated all of the feedback. Please take a look and let me know
-> what you think!
+Sounds good to me, done.
 
-Thanks a lot, sans the tiny nits I noted in individual patch review (and
-stuff noted by others) these all look good to me.
+> Whitespace changed mixed in with the actual change.
 
-Also it would be great if you could test it for your use-case with the
-next branch and define my new INSTALL_SYMLINKS to check that it doesn't
-ruin anything for you, it shouldn't since I made it use relative
-symlinks, but better to make sure (maybe I missed some edge case, and
-we're largely modifying code in similar places).
+Oops, automatic "clang-format" slipped in there. I've reverted this part.
+
+Thanks for reviewing!
