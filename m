@@ -7,105 +7,144 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4E44F1F404
-	for <e@80x24.org>; Mon, 19 Mar 2018 18:45:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 164FB1F404
+	for <e@80x24.org>; Mon, 19 Mar 2018 18:49:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966796AbeCSSpj (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Mar 2018 14:45:39 -0400
-Received: from mail-ot0-f177.google.com ([74.125.82.177]:40516 "EHLO
-        mail-ot0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S935778AbeCSSpf (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Mar 2018 14:45:35 -0400
-Received: by mail-ot0-f177.google.com with SMTP id l12-v6so18456772otj.7
-        for <git@vger.kernel.org>; Mon, 19 Mar 2018 11:45:35 -0700 (PDT)
+        id S968247AbeCSStG (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Mar 2018 14:49:06 -0400
+Received: from mail-wm0-f51.google.com ([74.125.82.51]:33149 "EHLO
+        mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S970180AbeCSSs6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Mar 2018 14:48:58 -0400
+Received: by mail-wm0-f51.google.com with SMTP id s206so13989368wme.0
+        for <git@vger.kernel.org>; Mon, 19 Mar 2018 11:48:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=kSoceGvXYEyFpWkqGEFH53tfioGlagTsJ3mXyEAjMlc=;
-        b=lS0NeToKg3FyyTUqCeY+6qE6XPCWiOPj3heXHWZ99ndALfWWHruiIE8fdc3CcPQvn9
-         QLmfxM0n4jPTe1smVvXKEnCaNEbp3pWWjY8t6m2eHGQT2c0cIvpuhrQsyZvtR7ZP2SbR
-         3Tz+Qn5B3xqVw0Gd5JQCnjMvRphUpy22tK1ORE/r0RszKkfNnUGQoiWyqgQgyUTt5+ZA
-         ZWnttAcUGBQMikHqqxrUpcvQJ+ITJ2+Eyj+T3fhhKKsIgESL3HP0Noa79ksshynjT5r2
-         ahDA+TSCDsCEIYSRtJmBuRi+2MAEMlpA7Hv0NPP4B2LckcJ7h8kJshop8hrz05DxID+A
-         K2ug==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=8iqMad6WfgPleV5Gwhr9vqG/uzhrSm3aZQJPwuFMfKI=;
+        b=jyiz5Qz6RKL1Zo8g7Y+DQa0myo5bSBowZJkWCaB8d75MA7A7NS265FqQKOXyq5bLqU
+         UUpLyKxagmi/rtsvjjtVtkpzKlYJHzujAC3ZG0jjjccEGCPuaDwTfdVIC+pazyfuTwml
+         gSWMskKN0CdfVGBy2lp3DhZLfMY4MJIaS/vv4d/QrOCn243x8bFnoB9/xu9xlx+y150g
+         ARG8JrztNts8BcAZ5g6jvEiuG2qWc0ghwe1I+BjaguepqWgUMUSVCFGv/xOzG0SlMV6K
+         W3jder1qJlFci+OUBpFxrQ86t38RfG02OW62VDbZdEXwwW50tGBRa1ReXpPhxnzUcF4d
+         MOxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=kSoceGvXYEyFpWkqGEFH53tfioGlagTsJ3mXyEAjMlc=;
-        b=DKVzOOmTrEbyo9Hh2R+4U9/lE/rmps1PrSqF9Bpkq+wOTgN8eFtUEdOoZyjVmeJKhh
-         o03R9ci05iNeh0DnqFvX564/pCs+ODVgD5I9LXHhnk0NHhGgB8GAVcKB2/EDrQwJ9T/d
-         zM2iAp9s61716O61ZjE03JU0ePlx+3dYR2x0EqKO+rZnLmWecoUrU6WfXXw38A/9DdZm
-         JeWIvOND+nERchj0b4/Sjg4RAM7rPD68ocUUWYjfcUAX2LCJXlu7VHVHI+iYxzeuv9A6
-         KU0ihpFYCSVaOTdc/PHcHXD6RMi79VTDzYwUHlu6dudH/FPHytBq8rqDnj22sJ0hWIbx
-         3WkA==
-X-Gm-Message-State: AElRT7HoQ6fJrQNd02fqp3TmPaIhxw3kJTGBBGxUhrqA0NCOyBfoJpXs
-        JdxysC/UQ1a1OZB/alZloeGWXYY6lAqIsiykt0k=
-X-Google-Smtp-Source: AG47ELtdsABH555G+be1thqRGneifB+327aiMt36YJXB75HYCM4+9Kvm5F3CUEGZqLgu7ce7zdvFKm4oHj1KjUceEys=
-X-Received: by 2002:a9d:3698:: with SMTP id h24-v6mr8919357otc.173.1521485134813;
- Mon, 19 Mar 2018 11:45:34 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=8iqMad6WfgPleV5Gwhr9vqG/uzhrSm3aZQJPwuFMfKI=;
+        b=R2M0wCrRgwriB7/IEJrKFnfqkx/yaXQ5Ha0phBs8kgh7aaC4+LE8QB7q3DxBAvfKSr
+         MXOIE3Z+YYkzGdT3rEJjkwmNCv33oPmZGmvqn7Ge4jXVPdIyXJ3UDgFE+8hUhbabLrsH
+         XBndIeNo3tQCTWjhqo7zZb/g4icEuAiNWNedJrTTf4otT0OYtqsU6RkIx2qgtRMMcnXl
+         NagQoTpXV+2gPsEZ0eYLymR52n+xifstM3UhHKpJOVxfjed7Eb6CYnwExz9GVZ56hPEA
+         UWK80qw7r6AL9LBqh7w67EvqZusCHsAGGDI9PqUYGvTYGJjxnXTlQajh2DhmSjYUNS/g
+         r4Nw==
+X-Gm-Message-State: AElRT7H7xvqGdzqXjGw0bm7KjqK2KBiekc/2QHvhSamnjInS5006esaF
+        HtIIIEIvU5RQYMoXht7AOTxdkmfX
+X-Google-Smtp-Source: AG47ELvv5MrDpTyLtdxQFWT8NqXL3ktzbt76UF9O4U90M5XXqHyVyJVJ6osjS7zEJtB805b9uGx5lA==
+X-Received: by 10.80.230.14 with SMTP id y14mr14564093edm.307.1521485336804;
+        Mon, 19 Mar 2018 11:48:56 -0700 (PDT)
+Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
+        by smtp.gmail.com with ESMTPSA id h1sm587671ede.2.2018.03.19.11.48.55
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 19 Mar 2018 11:48:55 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
+        sbeller@google.com, szeder.dev@gmail.com,
+        ramsay@ramsayjones.plus.com, git@jeffhostetler.com,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v6 07/14] commit-graph: implement 'git-commit-graph write'
+References: <1519698787-190494-1-git-send-email-dstolee@microsoft.com>
+        <20180314192736.70602-1-dstolee@microsoft.com>
+        <20180314192736.70602-8-dstolee@microsoft.com>
+        <87bmflcy8a.fsf@evledraar.gmail.com>
+        <5e394b91-fa78-5b70-8c5e-b06cc332bb3a@gmail.com>
+        <874llccetp.fsf@evledraar.gmail.com>
+        <0c2f17fa-5c0e-9539-a081-7827a6678bf1@gmail.com>
+User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 1.1.0
+In-reply-to: <0c2f17fa-5c0e-9539-a081-7827a6678bf1@gmail.com>
+Date:   Mon, 19 Mar 2018 19:48:54 +0100
+Message-ID: <87370vdhpl.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Received: by 10.74.154.146 with HTTP; Mon, 19 Mar 2018 11:45:04 -0700 (PDT)
-In-Reply-To: <xmqqlgenvs07.fsf@gitster-ct.c.googlers.com>
-References: <20180317141033.21545-1-pclouds@gmail.com> <20180318142526.9378-1-pclouds@gmail.com>
- <20180318142526.9378-10-pclouds@gmail.com> <xmqqsh8wvwwn.fsf@gitster-ct.c.googlers.com>
- <CACsJy8AkJJQ4XNszxBsESN_WGOSZ+ExWdcCtn6NA+gW9+-mAqQ@mail.gmail.com> <xmqqlgenvs07.fsf@gitster-ct.c.googlers.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 19 Mar 2018 19:45:04 +0100
-Message-ID: <CACsJy8AbkaSLBYqtFiCwFoqRXguy1hTs=XriefZ3WQJjo_sy8Q@mail.gmail.com>
-Subject: Re: [PATCH v6 09/11] pack-objects: shrink size field in struct object_entry
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Eric Wong <e@80x24.org>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 19, 2018 at 7:29 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>>> +     if (!e->size_valid) {
->>>> +             unsigned long real_size;
->>>> +
->>>> +             if (sha1_object_info(e->idx.oid.hash, &real_size) < 0 ||
->>>> +                 size != real_size)
->>>> +                     die("BUG: 'size' is supposed to be the object size!");
->>>> +     }
->>>
->>> If an object that is smaller than 4GB is fed to this function with
->>> an incorrect size, we happily record it in e->size_ and declare it
->>> is valid.  Wouldn't that be equally grave error as we are catching
->>> in this block?
+
+On Mon, Mar 19 2018, Derrick Stolee jotted:
+
+> On 3/19/2018 10:36 AM, Ævar Arnfjörð Bjarmason wrote:
+>> On Mon, Mar 19 2018, Derrick Stolee jotted:
 >>
->> That adds an extra sha1_object_info() to all objects and it's
->> expensive (I think it's one of the reasons we cache values in
->> object_entry in the first place). I think there are also a few
->> occasions we reuse even bad in-pack objects (there are even tests for
->> that) so it's not always safe to die() here.
+>>> On 3/18/2018 9:25 AM, Ævar Arnfjörð Bjarmason wrote:
+>>>> On Wed, Mar 14 2018, Derrick Stolee jotted:
+>>>>
+>>>>> +'git commit-graph write' <options> [--object-dir <dir>]
+>>>>> +
+>>>>> +
+>>>>> +DESCRIPTION
+>>>>> +-----------
+>>>>> +
+>>>>> +Manage the serialized commit graph file.
+>>>>> +
+>>>>> +
+>>>>> +OPTIONS
+>>>>> +-------
+>>>>> +--object-dir::
+>>>>> +	Use given directory for the location of packfiles and commit graph
+>>>>> +	file. The commit graph file is expected to be at <dir>/info/commit-graph
+>>>>> +	and the packfiles are expected to be in <dir>/pack.
+>>>> Maybe this was covered in a previous round, this series is a little hard
+>>>> to follow since each version isn't In-Reply-To the version before it,
+>>>> but why is this option needed, i.e. why would you do:
+>>>>
+>>>>       git commit-graph write --object-dir=/some/path/.git/objects
+>>>>
+>>>> As opposed to just pigging-backing on what we already have with both of:
+>>>>
+>>>>       git --git-dir=/some/path/.git commit-graph write
+>>>>       git -C /some/path commit-graph write
+>>>>
+>>>> Is there some use-case where you have *just* the objects dir and not the
+>>>> rest of the .git folder?
+>>> Yes, such as an alternate. If I remember correctly, alternates only
+>>> need the objects directory.
+>>>
+>>> In the GVFS case, we place prefetch packfiles in an alternate so there
+>>> is only one copy of the "remote objects" per drive. The commit graph
+>>> will be stored in that alternate.
+>> Makes sense, but we should really document this as being such an unusual
+>> option, i.e. instead say something like.
+>>
+>>      Use given directory for the location of packfiles and commit graph
+>>      file. Usually you'd use the `--git-dir` or `-C` arguments to `git`
+>>      itself. This option is here to support obscure use-cases where we
+>>      have a stand-alone object directory. The commit graph file is
+>>      expected to be at <dir>/info/commit-graph and the packfiles are
+>>      expected to be in <dir>/pack.
 >
-> So what?  My point is that I do not see the point in checking if the
-> size is correct on only one side (i.e. size is too big to fit in
-> e->size_) and not the other.  If it is worth checking (perhaps under
-> "#ifndef NDEBUG" or some other debug option?) then I'd think we
-> should spend cycles for all objects and check.
+> A slight change to your recommendation:
+>
+>
+> OPTIONS
+> -------
+> --object-dir::
+>  Use given directory for the location of packfiles and commit graph
+>  file. This parameter exists to specify the location of an alternate
+>  that only has the objects directory, not a full .git directory. The
+>  commit graph file is expected to be at <dir>/info/commit-graph and
+>  the packfiles are expected to be in <dir>/pack.
 
-There is a difference. For sizes smaller than 2^32, whatever you pass
-to oe_set_size() will be returned by oe_size(), consistently. It does
-not matter if this size is "good" or not. With sizes > 2^32, we make
-the assumption that this size must be the same as one found in the
-object database. If it's different, oe_size() will return something
-else other than oe_set_size() is given. This check here is to make
-sure we do not accidentally let the caller fall into this trap.
+Sounds good. Although I think we should add
 
-Yes, it may be a good thing to check anyway even for sizes < 2^32. I'm
-a bit uncomfortable doing that though. I was trying to exercise this
-code the other day by reducing size_ field down to 4 bits, and a
-couple tests broke but I still don't understand how. It's probably
-just me pushing the limits too hard, not a bug in these changes. But
-it does tell me that I don't understand pack-objects enough to assert
-that "all calls to oe_set_size() give good size".
--- 
-Duy
+    For full .git directories use the `--git-dir` or `-C` arguments to
+    git itself.
+
+I.e. for documenting an unusual option it makes sense to have docs in
+the form "this is bit odd, usually you'd use XYZ", rather than just
+"this is a bit odd"..
