@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0BE3B1FAE4
-	for <e@80x24.org>; Mon, 19 Mar 2018 13:32:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7F10E1FAE7
+	for <e@80x24.org>; Mon, 19 Mar 2018 13:32:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933289AbeCSNcU (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Mar 2018 09:32:20 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:53931 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755194AbeCSNcS (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Mar 2018 09:32:18 -0400
-Received: by mail-wm0-f67.google.com with SMTP id e194so15142058wmd.3
-        for <git@vger.kernel.org>; Mon, 19 Mar 2018 06:32:17 -0700 (PDT)
+        id S1755536AbeCSNcX (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Mar 2018 09:32:23 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:55320 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933089AbeCSNcR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Mar 2018 09:32:17 -0400
+Received: by mail-wm0-f66.google.com with SMTP id t7so2353628wmh.5
+        for <git@vger.kernel.org>; Mon, 19 Mar 2018 06:32:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=WLfp4k/SkFRkZq9g/bo1AOcJDsXMCh4/OGJBp8+PN54=;
-        b=AGhBWPbyNSqfWYjEz+14MMxlY85lxP7u8vdHoh2HbCdcgdRnVcZ9BzI6H7Db8SZQ0h
-         li6Sek+S7mp078awTg6YsusKXhdVSPjKAu1RuWfqqqHkWEXyczLR6HuycKCI/jO+MYRH
-         Rg4e/AxhSGCow7uWFAsedZbjL17NLr4k9b9gzUmxk79kEvIZ7rOU/iXeLbCDuKWOXtDN
-         ThsYTKs1U43JK0fQ1RthKgjzFT2zy+CbsQQ1hde0xLKmZ09lEkezQ5OGGY0VGH6XXk0+
-         9ChkRfDPk+V+WH8iqUMeSBHR3Ax4JH73Fp6tMmCfBuMEzVUYkHtxC8Gd+ZZuKlvFdJgV
-         BfdA==
+        bh=jT79X7ResRZDCTLxQ1F7cPBkNKpVCZLDQt7GuzgYa2w=;
+        b=MVFBH9OAmS6baYH1oF2ZucmfkZWoIATU56Js6MbGkQaiZQNb9qPAjSdu9TMRg22Vz8
+         5iVPf9Zn883NoKkoO1nENJypFyN9asIOMAktagjhf9k14yo5IExns122A62i2sYpp2/F
+         Br/ieSuZ+xE6796xpZlq0NY3N+0S4kHfD871N10IPU+HbCQnVryhjlrpJoXwBUoRtNhl
+         K+6vTJCTHDuNo0vnFh8BvaFpAPXYZ8wyuImPHiEpVgoOMAPcW+WDchj4xxA8cjp8CNoP
+         nY4Td/4wev3qYAFUsDettYjMWG3BmTIhRWuiORmnbkZ15HQX9+jBAQo+f4POb5EhaW76
+         OH7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=WLfp4k/SkFRkZq9g/bo1AOcJDsXMCh4/OGJBp8+PN54=;
-        b=lKbGma9bPNacRYCbhRVNtROXHNJHKH5xrdp9BnoxDeWAmSGb6sfavHqZFoZDSSrI6s
-         v4XzzkR2Q68fmDHXrQdF6O4gSd/FKtrQVsRu6XNtEsVUcUZHvnE6xG/PTzKLY/lGz9oz
-         btZMZKvZdR4lvEBIVM+hS4xgZmEpZU7vK96rCJZqLuqqKkJokxcLPsUm5P5noWfQaMT8
-         f2cZXCY1FtOUF17kC/UD8mu7rLe1eYfILR65qYT93Tk/nvci3D3ipETbGbOM5wOla8uG
-         eAJXpR/MmdYr5bQ4MRWyDukPxjQV3/e2YvZZ3rYWtJ1mjSkF/ibNDxiF9uThKX5hO5EC
-         uPzg==
-X-Gm-Message-State: AElRT7E1E0XsAjVhF2bepnT1Gz4srHZFtr1g+YmRYr2n722Qmer9Mutg
-        WSqBMcqyQOfNCducE6782gN8ENF6
-X-Google-Smtp-Source: AG47ELuYPfLeu1i7BrvADw3lFUySQiuZHOfyj32HZdfFPW3GSIk50RIpsuacoiyf0u1qOqZhQzRXhw==
-X-Received: by 10.28.11.79 with SMTP id 76mr9328483wml.41.1521466336479;
-        Mon, 19 Mar 2018 06:32:16 -0700 (PDT)
+        bh=jT79X7ResRZDCTLxQ1F7cPBkNKpVCZLDQt7GuzgYa2w=;
+        b=HJTvdMDbQyXkReW5lkc9jvXFsuTeTgEpdWyaNqnKKeBNw93mbc2pyXGZ3B/xyBxHOH
+         K8Oxw+F+S9DE+rvRtlF8q4mYgCnhIF1l2ZJvlGDypGtgJp6snAtVai1ZegojsoIdtqb9
+         aii9i7eJtMX6e1Kc8mqBgV82y+6y38n1BR9swdWJmRm95xqtja7KxZ2UG4bfXOAXv4ET
+         toaFcFewyt/Gs0rgz6xlGcmNGzHi2t3S3M8fEjeu/v5THMbGu12MmUpVjrPXPiVD9hhd
+         vl2EKZIyStEp7XwBKo/xTrN3Lzr3xO2ej9ixO37xMzkkAwgZ3Flcu08WW1X4tVFx7OHT
+         c7wg==
+X-Gm-Message-State: AElRT7Gl9tIhQeXiS5Nf7feo8yWF1vc+C7DRpFCGA4Uix+xrQhsjw5gI
+        5SBOEpIdhrD5/CQ7I5AHOHi6wRA5
+X-Google-Smtp-Source: AG47ELsfrde5ayhFyW1pgjt2mq4gJghS9p3JiRUSn/XZr/D+yCTMt0i7yXc/2ETD3QtVV39mnGcuXg==
+X-Received: by 10.28.185.208 with SMTP id j199mr9245593wmf.9.1521466334875;
+        Mon, 19 Mar 2018 06:32:14 -0700 (PDT)
 Received: from localhost.localdomain (89-95-107-230.abo.bbox.fr. [89.95.107.230])
-        by smtp.gmail.com with ESMTPSA id p29sm539434wmf.3.2018.03.19.06.32.15
+        by smtp.gmail.com with ESMTPSA id p29sm539434wmf.3.2018.03.19.06.32.13
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 19 Mar 2018 06:32:15 -0700 (PDT)
+        Mon, 19 Mar 2018 06:32:14 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -60,9 +60,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Eric Wong <e@80x24.org>,
         Christian Couder <chriscool@tuxfamily.org>,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH v2 06/36] sha1_file: prepare for external odbs
-Date:   Mon, 19 Mar 2018 14:31:17 +0100
-Message-Id: <20180319133147.15413-7-chriscool@tuxfamily.org>
+Subject: [PATCH v2 05/36] external-odb: implement external_odb_get_direct
+Date:   Mon, 19 Mar 2018 14:31:16 +0100
+Message-Id: <20180319133147.15413-6-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.17.0.rc0.37.g8f476fabe9
 In-Reply-To: <20180319133147.15413-1-chriscool@tuxfamily.org>
 References: <20180319133147.15413-1-chriscool@tuxfamily.org>
@@ -71,158 +71,91 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In the following commits we will need some functions that were
-internal to sha1_file.c, so let's first make them non static
-and declare them in "cache.h". While at it, let's rename
-'create_tmpfile()' to 'create_object_tmpfile()' to make its
-name less generic.
+This is implemented only in the promisor remote mode
+for now by calling fetch_object().
 
-Let's also split out 'sha1_file_name_alt()' from
-'sha1_file_name()' and 'open_sha1_file_alt()' from
-'open_sha1_file()', as we will need both of these new
-functions too.
-
-Helped-by: Jeff King <peff@peff.net>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- cache.h     |  8 ++++++++
- sha1_file.c | 49 ++++++++++++++++++++++++++++++-------------------
- 2 files changed, 38 insertions(+), 19 deletions(-)
+ external-odb.c | 15 +++++++++++++++
+ external-odb.h |  1 +
+ odb-helper.c   | 13 +++++++++++++
+ odb-helper.h   |  3 ++-
+ 4 files changed, 31 insertions(+), 1 deletion(-)
 
-diff --git a/cache.h b/cache.h
-index 4aa0129cf8..e6fd9b97ec 100644
---- a/cache.h
-+++ b/cache.h
-@@ -951,6 +951,12 @@ extern void check_repository_format(void);
-  */
- extern void sha1_file_name(struct strbuf *buf, const unsigned char *sha1);
- 
-+/*
-+ * Like sha1_file_name, but put in `buf` the filename within a
-+ * specific alternate object directory.
-+ */
-+extern void sha1_file_name_alt(struct strbuf *buf, const char *objdir, const unsigned char *sha1);
+diff --git a/external-odb.c b/external-odb.c
+index d26e63d8b1..5d0afb9762 100644
+--- a/external-odb.c
++++ b/external-odb.c
+@@ -76,3 +76,18 @@ int external_odb_has_object(const unsigned char *sha1)
+ 			return 1;
+ 	return 0;
+ }
 +
- /*
-  * Return an abbreviated sha1 unique within this repository's object database.
-  * The result will be at least `len` characters long, and will be NUL
-@@ -1247,6 +1253,8 @@ extern int parse_sha1_header(const char *hdr, unsigned long *sizep);
- 
- extern int check_sha1_signature(const unsigned char *sha1, void *buf, unsigned long size, const char *type);
- 
-+extern int create_object_tmpfile(struct strbuf *tmp, const char *filename);
-+extern void close_sha1_file(int fd);
- extern int finalize_object_file(const char *tmpfile, const char *filename);
- 
- /*
-diff --git a/sha1_file.c b/sha1_file.c
-index f2e078e840..c460eb2658 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -320,13 +320,18 @@ static void fill_sha1_path(struct strbuf *buf, const unsigned char *sha1)
- 	}
- }
- 
--void sha1_file_name(struct strbuf *buf, const unsigned char *sha1)
-+void sha1_file_name_alt(struct strbuf *buf, const char *objdir, const unsigned char *sha1)
- {
--	strbuf_addstr(buf, get_object_directory());
-+	strbuf_addstr(buf, objdir);
- 	strbuf_addch(buf, '/');
- 	fill_sha1_path(buf, sha1);
- }
- 
-+void sha1_file_name(struct strbuf *buf, const unsigned char *sha1)
++int external_odb_get_direct(const unsigned char *sha1)
 +{
-+	return sha1_file_name_alt(buf, get_object_directory(), sha1);
-+}
++	struct odb_helper *o;
 +
- struct strbuf *alt_scratch_buf(struct alternate_object_database *alt)
- {
- 	strbuf_setlen(&alt->scratch, alt->base_len);
-@@ -905,6 +910,25 @@ static int stat_sha1_file(const unsigned char *sha1, struct stat *st,
- 	return -1;
- }
- 
-+static int open_sha1_file_alt(const unsigned char *sha1, const char **path)
-+{
-+	struct alternate_object_database *alt;
-+	int most_interesting_errno = errno;
++	external_odb_init();
 +
-+	prepare_alt_odb();
-+	for (alt = alt_odb_list; alt; alt = alt->next) {
-+		int fd;
-+		*path = alt_sha1_path(alt, sha1);
-+		fd = git_open(*path);
-+		if (fd >= 0)
-+			return fd;
-+		if (most_interesting_errno == ENOENT)
-+			most_interesting_errno = errno;
++	for (o = helpers; o; o = o->next) {
++		if (odb_helper_get_direct(o, sha1) < 0)
++			continue;
++		return 0;
 +	}
-+	errno = most_interesting_errno;
++
 +	return -1;
 +}
+diff --git a/external-odb.h b/external-odb.h
+index 9a3c2f01b3..fd6708163e 100644
+--- a/external-odb.h
++++ b/external-odb.h
+@@ -4,5 +4,6 @@
+ extern int has_external_odb(void);
+ extern const char *external_odb_root(void);
+ extern int external_odb_has_object(const unsigned char *sha1);
++extern int external_odb_get_direct(const unsigned char *sha1);
+ 
+ #endif /* EXTERNAL_ODB_H */
+diff --git a/odb-helper.c b/odb-helper.c
+index 67196e6317..c6127ce81f 100644
+--- a/odb-helper.c
++++ b/odb-helper.c
+@@ -4,6 +4,7 @@
+ #include "odb-helper.h"
+ #include "run-command.h"
+ #include "sha1-lookup.h"
++#include "fetch-object.h"
+ 
+ struct odb_helper *odb_helper_new(const char *name, int namelen)
+ {
+@@ -52,3 +53,15 @@ int odb_helper_has_object(struct odb_helper *o, const unsigned char *sha1)
+ 	return !!odb_helper_lookup(o, sha1);
+ }
+ 
++int odb_helper_get_direct(struct odb_helper *o,
++			  const unsigned char *sha1)
++{
++	int res = 0;
++	uint64_t start = getnanotime();
 +
- /*
-  * Like stat_sha1_file(), but actually open the object and return the
-  * descriptor. See the caveats on the "path" parameter above.
-@@ -912,8 +936,6 @@ static int stat_sha1_file(const unsigned char *sha1, struct stat *st,
- static int open_sha1_file(const unsigned char *sha1, const char **path)
- {
- 	int fd;
--	struct alternate_object_database *alt;
--	int most_interesting_errno;
- 	static struct strbuf buf = STRBUF_INIT;
- 
- 	strbuf_reset(&buf);
-@@ -923,19 +945,8 @@ static int open_sha1_file(const unsigned char *sha1, const char **path)
- 	fd = git_open(*path);
- 	if (fd >= 0)
- 		return fd;
--	most_interesting_errno = errno;
- 
--	prepare_alt_odb();
--	for (alt = alt_odb_list; alt; alt = alt->next) {
--		*path = alt_sha1_path(alt, sha1);
--		fd = git_open(*path);
--		if (fd >= 0)
--			return fd;
--		if (most_interesting_errno == ENOENT)
--			most_interesting_errno = errno;
--	}
--	errno = most_interesting_errno;
--	return -1;
-+	return open_sha1_file_alt(sha1, path);
- }
- 
- /*
-@@ -1537,7 +1548,7 @@ int hash_object_file(const void *buf, unsigned long len, const char *type,
- }
- 
- /* Finalize a file on disk, and close it. */
--static void close_sha1_file(int fd)
-+void close_sha1_file(int fd)
- {
- 	if (fsync_object_files)
- 		fsync_or_die(fd, "sha1 file");
-@@ -1561,7 +1572,7 @@ static inline int directory_size(const char *filename)
-  * We want to avoid cross-directory filename renames, because those
-  * can have problems on various filesystems (FAT, NFS, Coda).
-  */
--static int create_tmpfile(struct strbuf *tmp, const char *filename)
-+int create_object_tmpfile(struct strbuf *tmp, const char *filename)
- {
- 	int fd, dirlen = directory_size(filename);
- 
-@@ -1605,7 +1616,7 @@ static int write_loose_object(const struct object_id *oid, char *hdr,
- 	strbuf_reset(&filename);
- 	sha1_file_name(&filename, oid->hash);
- 
--	fd = create_tmpfile(&tmp_file, filename.buf);
-+	fd = create_object_tmpfile(&tmp_file, filename.buf);
- 	if (fd < 0) {
- 		if (errno == EACCES)
- 			return error("insufficient permission for adding an object to repository database %s", get_object_directory());
++	fetch_object(o->dealer, sha1);
++
++	trace_performance_since(start, "odb_helper_get_direct");
++
++	return res;
++}
+diff --git a/odb-helper.h b/odb-helper.h
+index e3c9c1cfe4..57b14fe814 100644
+--- a/odb-helper.h
++++ b/odb-helper.h
+@@ -20,5 +20,6 @@ struct odb_helper {
+ extern struct odb_helper *odb_helper_new(const char *name, int namelen);
+ extern int odb_helper_has_object(struct odb_helper *o,
+ 				 const unsigned char *sha1);
+-
++extern int odb_helper_get_direct(struct odb_helper *o,
++				 const unsigned char *sha1);
+ #endif /* ODB_HELPER_H */
 -- 
 2.17.0.rc0.37.g8f476fabe9
 
