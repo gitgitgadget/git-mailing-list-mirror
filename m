@@ -2,84 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C83E91F404
-	for <e@80x24.org>; Mon, 19 Mar 2018 22:07:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 20F861F404
+	for <e@80x24.org>; Mon, 19 Mar 2018 22:41:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934410AbeCSWHS (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Mar 2018 18:07:18 -0400
-Received: from mail-ot0-f170.google.com ([74.125.82.170]:44257 "EHLO
-        mail-ot0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934215AbeCSWHN (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Mar 2018 18:07:13 -0400
-Received: by mail-ot0-f170.google.com with SMTP id 79-v6so19011883oth.11
-        for <git@vger.kernel.org>; Mon, 19 Mar 2018 15:07:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=a8SCIfHS3kEQTaoD0aMgXld8sqaevhjVLBFmUkCPFV8=;
-        b=NWHsxwQ9/vWxyoPuP/o6dvi3fDt0NvTb8y+Vmqg4bRGg0FmMOGq2secCRmY4uFnG7a
-         kKHxd7SgAODVdcHwz1lFiae3zr0xj0+y7Wqak6t2snu/jsRT6WeHl87Ay7d0iwmlD2vx
-         veziLn3p+s4iTiKTt5OcR3WDSNCS+YTInWXMRlPkNMAnqdGZW7My9VBeY+rvc4xSFGYe
-         Cx5ORiiIqjNbQxMnNhKEkKLz+gbAviHKzMY7mbLVdo7rvseDsjx0dyKKn/Vmbc9l0N99
-         KKRl9xv3F8p7sLuvYQ7NUPOZjJzufmMtHtxf2BoGRnE1GiBiu5CfzC/8krLogcEGT9Ih
-         q5DQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=a8SCIfHS3kEQTaoD0aMgXld8sqaevhjVLBFmUkCPFV8=;
-        b=LhA1wsFUVw870zl+hyTFiINydTJOTuuzgUNi7qTx2exrDrvKJern6Vis6gK5w3qYA2
-         Snd8PrLZptSV9VQarXNBYeH/FVd5+YGVMMjphB+2O/ZxgjbDxH3u8bvN/Yo+wCRoowlY
-         5RXHIMKok7dyrN/pPwp+1snWopQIcZGq4qJDHtHui12lsQxMtjy3NKoR5cNhSBbt2Ib0
-         YdWtLqN8ma5i0ZDSgxe4kVTvPtCP3O1AjSAW0UZ3by+FwCFYMwfI14d/BQb47rdvlCJE
-         8BHHRGFt6J8ZEKaQuSPouXtWlZgFqKMPSRLfh47fasFz8oSQ1spNCAjXt8DO+QgA82//
-         1ozA==
-X-Gm-Message-State: AElRT7F+1ruxHQVVEkbuk0/Q0hKDYrvUpzJmja9VAcmqwOOXxI9aXCoR
-        w89JRIv95+uvxCTEniBAcnKyD0uuHjYDIvjhucrIuQ==
-X-Google-Smtp-Source: AG47ELtzpwK85p4QQCxMTrlll2Ez/UZTWS787yUtvF2c2tUypO+iDF1lf1K+zTkgT/xxGpvG0VQ1nVydyo5bsh/FYN4=
-X-Received: by 2002:a9d:37e6:: with SMTP id x93-v6mr9350541otb.256.1521497232810;
- Mon, 19 Mar 2018 15:07:12 -0700 (PDT)
+        id S933750AbeCSWjv (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Mar 2018 18:39:51 -0400
+Received: from avasout06.plus.net ([212.159.14.18]:40083 "EHLO
+        avasout06.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933063AbeCSPrV (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Mar 2018 11:47:21 -0400
+X-Greylist: delayed 452 seconds by postgrey-1.27 at vger.kernel.org; Mon, 19 Mar 2018 11:47:20 EDT
+Received: from hashpling.plus.com ([212.159.69.125])
+        by smtp with ESMTP
+        id xwt0e35zuy3jixwt1eUlBd; Mon, 19 Mar 2018 15:39:47 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.3 cv=fL8XI6Se c=1 sm=1 tr=0
+ a=wpJ/2au8Z6V/NgdivHIBow==:117 a=wpJ/2au8Z6V/NgdivHIBow==:17
+ a=kj9zAlcOel0A:10 a=v2DPQv5-lfwA:10 a=rIbfA5mB_Exxa7A2eHYA:9 a=CjuIK1q_8ugA:10
+Received: from charles by hashpling.plus.com with local (Exim 4.89)
+        (envelope-from <charles@hashpling.org>)
+        id 1exwt0-0002J5-33; Mon, 19 Mar 2018 15:39:46 +0000
+Date:   Mon, 19 Mar 2018 15:39:46 +0000
+From:   CB Bailey <charles@hashpling.org>
+To:     Michele Locati <michele@locati.it>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] filter-branch: use printf instead of echo -e
+Message-ID: <20180319153945.kchupu43cpcbg25n@hashpling.org>
+References: <20180319144905.11564-1-michele@locati.it>
 MIME-Version: 1.0
-References: <20180319025046.58052-1-dnj@google.com> <20180319025046.58052-3-dnj@google.com>
- <CAN0heSpu4Lv9P+zzKPgJe3nx+J20Yex9is8SCztKobLc5ZfWCA@mail.gmail.com>
-In-Reply-To: <CAN0heSpu4Lv9P+zzKPgJe3nx+J20Yex9is8SCztKobLc5ZfWCA@mail.gmail.com>
-From:   Daniel Jacques <dnj@google.com>
-Date:   Mon, 19 Mar 2018 22:07:02 +0000
-Message-ID: <CAD1RUU-emF0n2Qwvs_A4GqZ=CVZmfoRWoSAkr7J6yeov7zfp4Q@mail.gmail.com>
-Subject: Re: [PATCH v6 2/3] Makefile: add Perl runtime prefix support
-To:     martin.agren@gmail.com
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180319144905.11564-1-michele@locati.it>
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-CMAE-Envelope: MS4wfEEX+ob5MjvrpUx5baNY8uFzR5E06j9neLH9eIvINULyId/sRsr7t6J+UO6A637NN/9zNPjoqXvrw/HzQB767Lkgx2CU9sMsJ6rU1dyJmXzfrP6z90dZ
+ aihM85HUYnKDGo9ICT3nftEtWbo8n/9563vqOFqNKZwq02xCUdRFJ2hDhTbEaoPCaUF+9V98KV+vRQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 19, 2018 at 5:32 PM Martin =C3=85gren <martin.agren@gmail.com> =
-wrote:
+On Mon, Mar 19, 2018 at 03:49:05PM +0100, Michele Locati wrote:
+> In order to echo a tab character, it's better to use printf instead of
+> "echo -e", because it's more portable (for instance, "echo -e" doesn't work
+> as expected on a Mac).
+> 
+> This solves the "fatal: Not a valid object name" error in git-filter-branch
+> when using the --state-branch option.
+> 
+> Signed-off-by: Michele Locati <michele@locati.it>
+> ---
+>  git-filter-branch.sh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/git-filter-branch.sh b/git-filter-branch.sh
+> index 1b7e4b2cd..21d84eff3 100755
+> --- a/git-filter-branch.sh
+> +++ b/git-filter-branch.sh
+> @@ -627,7 +627,7 @@ then
+>  				print H "$_:$f\n" or die;
+>  			}
+>  			close(H) or die;' || die "Unable to save state")
+> -	state_tree=$(/bin/echo -e "100644 blob $state_blob\tfilter.map" | git mktree)
+> +	state_tree=$(printf '100644 blob %s\tfilter.map\n' "$state_blob" | git mktree)
+>  	if test -n "$state_commit"
+>  	then
+>  		state_commit=$(/bin/echo "Sync" | git commit-tree "$state_tree" -p "$state_commit")
 
-> This commit message mentions RUNTIME_PREFIX_PERL twice, but there is no
-> use of RUNTIME_PREFIX_PERL in the actual diffs (patches 1-3/3). Should
-> it be s/_PERL//? Your cover letter hints as much under "Changes in v6
-> from v5". And "Add a new Makefile flag ..." would need some more
-> rewriting since this patch rather expands the scope of the existing
-> flag?
+I think the change from 'echo -e' to printf is good because of the
+better portability reason that you cite.
 
-Thanks for pointing this out - the two were separate flags in my original
-patch set because I
-wanted to minimize the scope of impact; however, I have since received
-advice and buy-in
-on converging them and RUNTIME_PREFIX_PERL functionality was merged
-underneath
-of RUNTIME_PREFIX in this latest patch set.
+Looking at the change, I am now curious as to why '/bin/echo' is used.
+Testing on a Mac, bash's built in 'echo' recognizes '-e' whereas
+'/bin/echo' does not. This is just an observation, I still prefer the
+move to 'printf' that you suggest.
 
-I'll update the commit message!
+There are two further uses of '/bin/echo' in git-filter-branch.sh which
+are portable (no "-e", just printing a word that cannot be confused for
+an option). One is visible in your diff context and the other is just
+below it. For consistency with other echos in git-filter-branch.sh, I
+think that these should probably use simple 'echo' rather than
+'/bin/echo' to use a builtin where available.
+
+CB
