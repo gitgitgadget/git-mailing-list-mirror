@@ -2,92 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 032E21F404
-	for <e@80x24.org>; Mon, 19 Mar 2018 20:11:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 278A41F404
+	for <e@80x24.org>; Mon, 19 Mar 2018 20:11:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S971176AbeCSULF (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Mar 2018 16:11:05 -0400
-Received: from mail-pf0-f173.google.com ([209.85.192.173]:38431 "EHLO
-        mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S971169AbeCSULB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Mar 2018 16:11:01 -0400
-Received: by mail-pf0-f173.google.com with SMTP id d26so7480126pfn.5
-        for <git@vger.kernel.org>; Mon, 19 Mar 2018 13:11:00 -0700 (PDT)
+        id S971170AbeCSULA (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Mar 2018 16:11:00 -0400
+Received: from mail-wm0-f49.google.com ([74.125.82.49]:50568 "EHLO
+        mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S966634AbeCSUKw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Mar 2018 16:10:52 -0400
+Received: by mail-wm0-f49.google.com with SMTP id f19so4871459wmc.0
+        for <git@vger.kernel.org>; Mon, 19 Mar 2018 13:10:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=eDuEzgAVzO53R0rAWLTcIKr7FscTgUt4xhlUKD2Z1mo=;
-        b=cBw0y6QKde1/2rbQ04PY8eBktSvZmXVox6tTQQbYVXFWfZlRaE5LPinZ+3JCi8U3mC
-         b3nWjW8p35u5cCNM6o79MzvzWoubRa5Km0ACgy4bMt1DEDgcDL1niS/i0vWkrTWytXcl
-         MyxuEAgGrd3vPpPEfqjaAJcM8RktAy/OsWegza4TrWRj8axbL70i/01JcLdvTL/tUfiN
-         FAhMkbZD6rChVKuZPqxQt5vLuMZwzmZluIj8EL8h+O2F1PEjosjhrSwVBD779aCzhPz+
-         kA6yXLpVWVyxT66jhb3kAmemQ12Ny6R/62vLhGQPaHnczyDhrbEG2Dj0CUe0Icsabb0r
-         CDuw==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=ip2hGYcQbI7b4qYHlYeJ+63vFEs+0uRHxh5yOoRXwzM=;
+        b=dYmpihJikkbmuXfPrMwbDpJZdu0PYDVRY5TGtYb0Jnp5XaTbsuVUrjGQxuu45SZgru
+         Pk3GMkuPWAAWYBISxkjWVHrUP0G+eg41YJ/IkNjJ12oCq0vpnvAkHqkRDRgvoGOQJwPl
+         F17gFhwxKMnUwuYan/QmttdOh0zy/DtOBH3OYYfJGBoT8UYH1Iy/oqL50uo6HVT9Dmht
+         i17ujeZEGUJomS1MYbvxE724vUO+xd/YTF5XUM6ih7hEwwxYMEkAT6DXUH8NLEhzh9Zk
+         rc1aD6Y9NWe6Kbc2i6Cj6XDDjeZ4GqvpzDRkccR40xGEInHU2bOtXUOXS22VJMWJuUqV
+         UlAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=eDuEzgAVzO53R0rAWLTcIKr7FscTgUt4xhlUKD2Z1mo=;
-        b=FfBZkABLt47DTSHuhBDd+01ifmhgDer+XNUFMTAavY3Yd2nlYiXUU3BXxu6gvKqxrB
-         3L8B+P0PBCvY+9FSEsL00+qn19boVE4ASJJKUkg/+sndd7NvSUwyx4WM7cPht4oSio1a
-         soA0SOqQHDf+qY8oJTPqMHMD/Mw5RcEiCCwyI01qS0bprXCWq9HDwS7cikf/Qj68jfN2
-         GklyWcCjgZCQfkZSO5JTbkXkMLhfARhK0LjyK5ZcJTGmgBmKv1Un8FiQ/rQ7uHW3DzzM
-         d1XWoLDXMuiw/RG3Dt9TkgpVNuh9rIQjJbBwM6yFIOL5Mkrj7mSEBKAJm+hYWIr7qSah
-         dX6A==
-X-Gm-Message-State: AElRT7FzB6lfXkolnxXLxTRGQx//YDs1sWFLliRphOUw5eXwLxqWcHNF
-        7h3nVHGCgTZCUSVhOSZRhKtgpSpBiLc=
-X-Google-Smtp-Source: AG47ELsQC1wKdJ4MEMtsfz8FWle6UeG+gy5nsavp25C/aeEOUwykuqYPsJuu08sWSmk6mK9Mms5Kdg==
-X-Received: by 10.99.135.67 with SMTP id i64mr10055472pge.346.1521490259892;
-        Mon, 19 Mar 2018 13:10:59 -0700 (PDT)
-Received: from twelve3.svl.corp.google.com ([2620:0:100e:422:ffac:c1d4:4bf7:bb93])
-        by smtp.gmail.com with ESMTPSA id q15sm15954pff.65.2018.03.19.13.10.58
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=ip2hGYcQbI7b4qYHlYeJ+63vFEs+0uRHxh5yOoRXwzM=;
+        b=ZZFy9bvR1hDfo/9LFnN2cGAMDTdbaCINbkxcKk7K2tmSAdsY1RxSNhaZ1Ku7agr5r4
+         bSgV+Vd7umWLzHoVldla7QWBRLUsXihUQJzaZmgW4N09WonB+8YyGMDNx136iEOtw/x1
+         af3o7/JpYrnB8nUm0Y/ZP0bn3jOvI4S6lJ5lzHIVOQXQaSF1g93X2cjpkryGJ8sg/4mq
+         B7+uGO3jK422wiQYd2dvJhX/ffz2Cs6MV52O5EIUSyRylpEDnebP6bdmzLGSwbTpfVkz
+         e/MnmM43V1BPxRPn9rsiM1FSsfv8WgH3J1QdTGYYHR/zBfGyk0H8vWaubpoX888HNdyi
+         i7QQ==
+X-Gm-Message-State: AElRT7Ekb9PR0Kkvu1hL1VJ4fBr0Bq4IHoyxhVA2YcJNytegp6/KnI8N
+        3xtqhJ+5DOMAfqTVHZVmNA8=
+X-Google-Smtp-Source: AG47ELvIL4Fd+dwapCk+ltUtRtchuh9kOLMpJ6v/46TTEJd338wYxVSFVKA3ZPsSXiQpct++/W+Z/w==
+X-Received: by 10.28.10.210 with SMTP id 201mr30434wmk.115.1521490250444;
+        Mon, 19 Mar 2018 13:10:50 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id m191sm11112wma.21.2018.03.19.13.10.49
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 19 Mar 2018 13:10:58 -0700 (PDT)
-Date:   Mon, 19 Mar 2018 13:10:57 -0700
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 39/44] packfile: allow prepare_packed_git_one to handle
- arbitrary repositories
-Message-Id: <20180319131057.7cf5c90d55b34542f691cee8@google.com>
-In-Reply-To: <20180303113637.26518-40-pclouds@gmail.com>
-References: <CACsJy8DWrNzZM1K2vkx2XiETdAR5WhwXEdPijsxd0ZD4Lj=tZw@mail.gmail.com>
-        <20180303113637.26518-1-pclouds@gmail.com>
-        <20180303113637.26518-40-pclouds@gmail.com>
-X-Mailer: Sylpheed 3.6.0 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Mon, 19 Mar 2018 13:10:49 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Eric Wong <e@80x24.org>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH v6 09/11] pack-objects: shrink size field in struct object_entry
+References: <20180317141033.21545-1-pclouds@gmail.com>
+        <20180318142526.9378-1-pclouds@gmail.com>
+        <20180318142526.9378-10-pclouds@gmail.com>
+        <xmqqsh8wvwwn.fsf@gitster-ct.c.googlers.com>
+        <CACsJy8AkJJQ4XNszxBsESN_WGOSZ+ExWdcCtn6NA+gW9+-mAqQ@mail.gmail.com>
+        <xmqqlgenvs07.fsf@gitster-ct.c.googlers.com>
+        <CACsJy8AbkaSLBYqtFiCwFoqRXguy1hTs=XriefZ3WQJjo_sy8Q@mail.gmail.com>
+Date:   Mon, 19 Mar 2018 13:10:49 -0700
+In-Reply-To: <CACsJy8AbkaSLBYqtFiCwFoqRXguy1hTs=XriefZ3WQJjo_sy8Q@mail.gmail.com>
+        (Duy Nguyen's message of "Mon, 19 Mar 2018 19:45:04 +0100")
+Message-ID: <xmqqy3inu8qe.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat,  3 Mar 2018 18:36:32 +0700
-Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> wrote:
+Duy Nguyen <pclouds@gmail.com> writes:
 
-> From: Stefan Beller <sbeller@google.com>
-> 
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+> There is a difference. For sizes smaller than 2^32, whatever you
+> pass to oe_set_size() will be returned by oe_size(),
+> consistently. It does not matter if this size is "good" .... If
+> it's different, oe_size() will return something else other than
+> oe_set_size() is given.
 
-Thanks - I've checked that none of the functions invoked in
-prepare_packed_git_one() access the_repository. (add_packed_git() does
-not, despite its name.)
+OK, fair enough.
 
-The patches up to this one are fine.
+> ... I was trying to exercise this
+> code the other day by reducing size_ field down to 4 bits, and a
+> couple tests broke but I still don't understand how.
 
-[snip]
+Off by one?  Two or more copies of the same objects available whose
+oe_size() are different?
 
-> -			for (p = the_repository->objects.packed_git; p;
-> +			for (p = r->objects.packed_git; p;
-
-Optional: this could be get_packed_git(r).
