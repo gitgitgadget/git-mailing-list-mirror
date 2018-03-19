@@ -2,77 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 07E7D1F404
-	for <e@80x24.org>; Mon, 19 Mar 2018 14:49:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 170A71F404
+	for <e@80x24.org>; Mon, 19 Mar 2018 15:44:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932891AbeCSOtc (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Mar 2018 10:49:32 -0400
-Received: from mout.gmx.net ([212.227.17.20]:37013 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755632AbeCSOta (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Mar 2018 10:49:30 -0400
-Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MZU7V-1fBsS00Cjt-00LJ25; Mon, 19
- Mar 2018 15:49:25 +0100
-Date:   Mon, 19 Mar 2018 15:49:06 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     David Pursehouse <david.pursehouse@gmail.com>
-cc:     git@vger.kernel.org, David Pursehouse <dpursehouse@collab.net>
-Subject: Re: [PATCH 1/1] Fix typo in merge-strategies documentation
-In-Reply-To: <20180317033142.20119-2-david.pursehouse@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1803191548080.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <20180317033142.20119-1-david.pursehouse@gmail.com> <20180317033142.20119-2-david.pursehouse@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1755741AbeCSPoU (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Mar 2018 11:44:20 -0400
+Received: from smtprelay08.ispgateway.de ([134.119.228.109]:9568 "EHLO
+        smtprelay08.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751317AbeCSPoT (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Mar 2018 11:44:19 -0400
+Received: from [91.113.179.170] (helo=[192.168.92.26])
+        by smtprelay08.ispgateway.de with esmtpsa (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128)
+        (Exim 4.90_1)
+        (envelope-from <marc.strapetz@syntevo.com>)
+        id 1exwxX-0004LI-00; Mon, 19 Mar 2018 16:44:27 +0100
+Subject: Re: [PATCH v3 0/2] stash push -u -- <pathspec> fixes
+To:     Thomas Gummerer <t.gummerer@gmail.com>, git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
+References: <20180314214642.22185-1-t.gummerer@gmail.com>
+ <20180316204306.862-1-t.gummerer@gmail.com>
+From:   Marc Strapetz <marc.strapetz@syntevo.com>
+Message-ID: <bc69c1f4-7098-1bbf-e69b-97808c4d8779@syntevo.com>
+Date:   Mon, 19 Mar 2018 16:44:17 +0100
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.6.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:3rUmpbOCbkEH7LWlQ6nWZ6pHU6O3YECXxF6xL81a24FKLNaGUs/
- wvVo4LtaOWggfKHbtHXdb0s4pl31vz+dsW38HB9uB2SfVK5rtsL1+uPANT+EODh+XMrEj04
- Ik4T7LVcXeCoO8xad5tkqyXZmNsah97z/pMIktPGqHiRK/3NZMemQUn+PnV3yvUEbzYoMMy
- W2RA8fiuygF6TZ6tuiNKA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:dJf/Gy/xid4=:4eubqXhvR6FY/jji2Em2dx
- fk3I6tftIciiVp+WVjMCBei450q+8y8zekuKGUIagFFF994M5xK7qYaNl9ZqNhx2sl54SArPr
- IE6/LBE9/eP4nETTmjR/A7Ui09njC5E+YGErZj2pSSODCGiHIELOSG8W5Rqb3dSXzS3XOIQyO
- xRG/KWwWpmNXBoxoO8WvkP1vuBb1hKmLt7AvJvE7LZQ4iO84Z23y7a1cpNctE6gkzUbpXr1GK
- VAouIZql1JLsQm7v8WfxoZQFX7Myou70imJjhvHcL9VnvS7lp7EsDwTtltPXr0Wx+rdCjdFSA
- le3MiQME1pFNd6ZoBSQnBkNi7sGTlcqyUNAsCK+AajW7mEQvp0Xd0AprGly8NFLftDJX/Z7ju
- Qe9eR9eBYW2QZTd2RsrBnX1yhmceKy88TzWR7T11oQAsGJ8EsFMthD2GNdt/V5LqJgAagDkGx
- zgzppiptY2+cNj1XwsoteonJ7ob4d+nMCu4Ya5+RQI2WNR3ASoySFCXnAOClKKevAU9iykHZK
- DVQBvJDwalBeYk+ByKjxNkPdnnqUZsI23bjI7U+khXeOtuLyQAvbHOJ6l+l9TBHfPgEDmT+t8
- +ftWHLi+OyeJPkQ4i3xnnns1NupSiRyQjKGQ11pwoM5T68WE1ZAc/KCEiCeVdVr3Hs0NVoc/C
- JusmXZhKXItofqhFY36j5oNez+2l8fpsRhiIHPvP0V0uyvKCuztiXwscoJJdOZvzV0lFzjohj
- ozZxzM0zlHsPRfCkyAwt7m8BlsNlx+JZTYB8nNvpskulJFJYFhSthKcfd11m51ucGGbSxtMVq
- 36tbNE54kf0LnVyr/5ympEpuGGqnzfwZlrIuGxZplHR58kPGHw=
+In-Reply-To: <20180316204306.862-1-t.gummerer@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Df-Sender: bWFyYy5zdHJhcGV0ekBzeW50ZXZvLmNvbQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi David,
+On 16.03.2018 21:43, Thomas Gummerer wrote:
+> Thanks Marc for catching the regression I almost introduced and Junio
+> for the review of the second patch.  Here's a re-roll that should fix
+> the issues of v2.
 
-On Sat, 17 Mar 2018, David Pursehouse wrote:
+Thanks, existing issues are fixed, but cleanup of the stashed files 
+seems to not work properly when stashing a mixture of tracked and 
+untracked files:
 
-> diff --git a/Documentation/merge-strategies.txt b/Documentation/merge-strategies.txt
-> index fd5d748d1..4a58aad4b 100644
-> --- a/Documentation/merge-strategies.txt
-> +++ b/Documentation/merge-strategies.txt
-> @@ -40,7 +40,7 @@ the other tree did, declaring 'our' history contains all that happened in it.
->  
->  theirs;;
->  	This is the opposite of 'ours'; note that, unlike 'ours', there is
-> -	no 'theirs' merge stragegy to confuse this merge option with.
-> +	no 'theirs' merge strategy to confuse this merge option with.
+$ git init
+$ touch file1
+$ touch file2
+$ git add file1 file2
+$ git commit -m "initial import"
+$ echo "a" > file1
+$ echo "b" > file2
+$ touch file3
+$ git status --porcelain
+  M file1
+  M file2
+?? file3
+$ git stash push -u -- file1 file3
+Saved working directory and index state WIP on master: 48fb140 initial 
+import
+$ git status --porcelain
+  M file1
+  M file2
 
-Well spotted: it is `strategy`, not `stragegy` (nor `stragedy`, I might
-want to add :-))
+file1 and file3 are properly stashed, but file1 still remains modified 
+in the working tree. When instead stashing file1 and file2, results are 
+fine:
 
-I just verified that there is no other hit in `git grep stragegy`'s
-output.
+$ git stash push -u -- file1 file2
+Saved working directory and index state WIP on master: 48fb140 initial 
+import
+$ git status
+On branch master
+nothing to commit, working tree clean
 
-Thanks,
-Johannes
+-Marc
+
+
