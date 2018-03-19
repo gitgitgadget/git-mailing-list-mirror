@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B08191F404
-	for <e@80x24.org>; Mon, 19 Mar 2018 13:34:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A18231F404
+	for <e@80x24.org>; Mon, 19 Mar 2018 13:34:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933339AbeCSNcl (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Mar 2018 09:32:41 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:34820 "EHLO
+        id S933344AbeCSNcn (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Mar 2018 09:32:43 -0400
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:46213 "EHLO
         mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933308AbeCSNch (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Mar 2018 09:32:37 -0400
-Received: by mail-wr0-f196.google.com with SMTP id n12so18640319wra.2
-        for <git@vger.kernel.org>; Mon, 19 Mar 2018 06:32:37 -0700 (PDT)
+        with ESMTP id S933178AbeCSNcg (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Mar 2018 09:32:36 -0400
+Received: by mail-wr0-f196.google.com with SMTP id s10so5770455wra.13
+        for <git@vger.kernel.org>; Mon, 19 Mar 2018 06:32:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=tuI5d5cjt59fpRCAP2Qo0NYLS6L9tp28bIoZxlopHyU=;
-        b=umfvt+XqtpXtJ5npVwzEkCmzd2sUODXJJswPdNy+OcoW/NkP8Sg0nmcyrQszVjIakB
-         HBw+xeLuucZEo7w6uDQOL8kM+YDNMYymsdpzpG9cmEWtILvmqmcKUjFfRgb+PWe+sH0s
-         UxN+T96zGUSqObykj6ZR+7RgGUV4kmfegN6o4fIOyAWrPPMRPNkUnXNalQLXrOCdmGr4
-         OmmMHAXCvAw9N8brEzybb6PB3WIFoRBtKeLbfTWEWFTyGLO1je93VRjqKZtf4pXa224+
-         hrUj6i2DWcbewje7khlsUHACVMu/xa348H7/Lnf+vAfVN1j3nxuIWscKHIMLylG3ztk7
-         Xxmw==
+        bh=AhR//F8UP5b6U6NRkWF0EKs7kccmiO0iVcApF8mRD9U=;
+        b=AD6ltqfVxO7YeCXLsE6mxGy9H9H0nd4AA6IyD4wpjxSfWT65SGeTnh5ihLPS/n8/A8
+         oiK1whRlvgMdSQwmbf2OqrJFno2GThXcX9A4lsjLzCfBjULoURBPtTul1RrbY3tmCNii
+         STAgox8Jch+HpfJpJglJ19BhHLT1i84YRRgYCVaSpU1P1vqKDJ9Ye3pRVaWkMmgUacyI
+         krwyiNHdM+xsyOj8N7gqfEiDp/Pzc+488ZP0zBLaOjJeqFrNTbTZtKLZATWRmUR55WI9
+         3J04yY77RvvyAS3VgkgWWZebuOX9iGexUPlM1Bb+h0cQjFOLP/ivjRTT18ORii/BQ0jn
+         N+Mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=tuI5d5cjt59fpRCAP2Qo0NYLS6L9tp28bIoZxlopHyU=;
-        b=gq4/Q+ZXjSn+W/PNUdjjJfXKDmZ/X3kczMyWjODFD2Bbp1AxZEFQlcF65ScXpDLAt7
-         3Lew4NLZvqHvnpT68+8b3eKuRF5pyt7jk6yTIoYnFIx0usNItBBO0ARdKpzjbIsdTuBy
-         4npncc09TbblQA0maCMahJMJH50vSEwyLFsBw0XhTGTkS3XAjjBPIMVa5vjwFC8Lyx83
-         Bs3zv+aBzQduHZNzowMNd5EmUKtVuu5wQ9/4tMzlVsd8LxEPDlEDI5ahTt6sElvu14uV
-         KKzG8xsMOnNFc14y/0wfhQqQiFDDwEGTlle/zx5BcpdY8TyXiI83i/ONzzswVn2iaLeJ
-         f80A==
-X-Gm-Message-State: AElRT7G4zY4O16Q4h9jis0y5S8++ptdtn86YsW/mTaJ5It98vTyzCZ0k
-        QK8n0pwC+h2SMzP8Ks93lJhv5CeI
-X-Google-Smtp-Source: AG47ELu2ijYfhZZ5FVBstiU0oGBV1CZSK/fITjO2IX2chgfe+ipnvNZv06c59ESKcxAQFnByS0tMvQ==
-X-Received: by 10.223.196.132 with SMTP id m4mr10384664wrf.9.1521466355987;
-        Mon, 19 Mar 2018 06:32:35 -0700 (PDT)
+        bh=AhR//F8UP5b6U6NRkWF0EKs7kccmiO0iVcApF8mRD9U=;
+        b=Xgr3LZ5H2w3ijxdgo1fXoqpDajCs48IxhygP7vwpCTK1s4su/F509VT+Z74k1jcu6Y
+         0A2S9rX3MFe20b6bDhwgwogK0JlXqkF/fHiNaoSdYZGE4Bi1W/QM+znSDfMciMcuO4Ln
+         M0vnO1u109SWsJNnTmzNJ6+6PwzRrJFIj7XmpaUu8F4grc+U5f/QAaTgC4b/z1ihWjRQ
+         rzUGo/ajItsnuJP2c/7h5sbustViIbJrrAWQw+Yf4kCYDoCQLHzqTuPrFXfliIiXQEPL
+         C8FRXj2w6XdiVulf4fN6fpbiGzTVLVTCtFWxe8JAbRIi73t2ScCjAs5X8c3t2IJMeVhq
+         mShA==
+X-Gm-Message-State: AElRT7FxL4HYX0a7J0tKHLSFY49JimVxJW08IgGM3DI4JIeCAnP+D+N8
+        TGiWrxd1oJYPlyZWGE3YgkAFmToC
+X-Google-Smtp-Source: AG47ELulzARnZglaaI0Xbyuqwvt3RdEOw73DpFCb1C857kh20KdcP4RS+R4M1imUMwKGKpAQhKDIAw==
+X-Received: by 10.223.143.86 with SMTP id p80mr10336334wrb.31.1521466354652;
+        Mon, 19 Mar 2018 06:32:34 -0700 (PDT)
 Received: from localhost.localdomain (89-95-107-230.abo.bbox.fr. [89.95.107.230])
-        by smtp.gmail.com with ESMTPSA id p29sm539434wmf.3.2018.03.19.06.32.34
+        by smtp.gmail.com with ESMTPSA id p29sm539434wmf.3.2018.03.19.06.32.33
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 19 Mar 2018 06:32:35 -0700 (PDT)
+        Mon, 19 Mar 2018 06:32:34 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -60,9 +60,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Eric Wong <e@80x24.org>,
         Christian Couder <chriscool@tuxfamily.org>,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH v2 20/36] Add t0510 to test external ODB transfer
-Date:   Mon, 19 Mar 2018 14:31:31 +0100
-Message-Id: <20180319133147.15413-21-chriscool@tuxfamily.org>
+Subject: [PATCH v2 19/36] t0500: add test for external odb write support
+Date:   Mon, 19 Mar 2018 14:31:30 +0100
+Message-Id: <20180319133147.15413-20-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.17.0.rc0.37.g8f476fabe9
 In-Reply-To: <20180319133147.15413-1-chriscool@tuxfamily.org>
 References: <20180319133147.15413-1-chriscool@tuxfamily.org>
@@ -73,160 +73,26 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- t/t0510-transfer-e-odb.sh | 144 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 144 insertions(+)
- create mode 100755 t/t0510-transfer-e-odb.sh
+ t/t0500-external-odb.sh | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/t/t0510-transfer-e-odb.sh b/t/t0510-transfer-e-odb.sh
-new file mode 100755
-index 0000000000..065ec7d759
---- /dev/null
-+++ b/t/t0510-transfer-e-odb.sh
-@@ -0,0 +1,144 @@
-+#!/bin/sh
-+
-+test_description='basic tests for transfering external ODBs'
-+
-+. ./test-lib.sh
-+
-+ORIG_SOURCE="$PWD/.git"
-+export ORIG_SOURCE
-+
-+ALT_SOURCE1="$PWD/alt-repo1/.git"
-+export ALT_SOURCE1
-+write_script odb-helper1 <<\EOF
-+die() {
-+	printf >&2 "%s\n" "$@"
-+	exit 1
-+}
-+GIT_DIR=$ALT_SOURCE1; export GIT_DIR
-+case "$1" in
-+init)
-+	echo "capability=get_git_obj"
-+	echo "capability=have"
-+	;;
-+have)
-+	git cat-file --batch-check --batch-all-objects |
-+	awk '{print $1 " " $3 " " $2}'
-+	;;
-+get_git_obj)
-+	cat "$GIT_DIR"/objects/$(echo $2 | sed 's#..#&/#')
-+	;;
-+put_raw_obj)
-+	sha1="$2"
-+	size="$3"
-+	kind="$4"
-+	writen=$(git hash-object -w -t "$kind" --stdin)
-+	test "$writen" = "$sha1" || die "bad sha1 passed '$sha1' vs writen '$writen'"
-+	ref_hash=$(echo "$sha1 $size $kind" | GIT_DIR=$ORIG_SOURCE GIT_NO_EXTERNAL_ODB=1 git hash-object -w -t blob --stdin) || exit
-+	GIT_DIR=$ORIG_SOURCE git update-ref refs/odbs/magic/"$sha1" "$ref_hash"
-+	;;
-+*)
-+	die "unknown command '$1'"
-+	;;
-+esac
-+EOF
-+HELPER1="\"$PWD\"/odb-helper1"
-+
-+OTHER_SOURCE="$PWD/.git"
-+export OTHER_SOURCE
-+
-+ALT_SOURCE2="$PWD/alt-repo2/.git"
-+export ALT_SOURCE2
-+write_script odb-helper2 <<\EOF
-+die() {
-+	printf >&2 "%s\n" "$@"
-+	exit 1
-+}
-+GIT_DIR=$ALT_SOURCE2; export GIT_DIR
-+case "$1" in
-+init)
-+	echo "capability=get_git_obj"
-+	echo "capability=have"
-+	;;
-+have)
-+	GIT_DIR=$OTHER_SOURCE git for-each-ref --format='%(objectname)' refs/odbs/magic/ | GIT_DIR=$OTHER_SOURCE xargs git show
-+	;;
-+get_git_obj)
-+	OBJ_FILE="$GIT_DIR"/objects/$(echo $2 | sed 's#..#&/#')
-+	if ! test -f "$OBJ_FILE"
-+	then
-+		# "Download" the missing object by copying it from alt-repo1
-+		OBJ_DIR=$(echo $2 | sed 's/\(..\).*/\1/')
-+		OBJ_BASE=$(basename "$OBJ_FILE")
-+		ALT_OBJ_DIR1="$ALT_SOURCE1/objects/$OBJ_DIR"
-+		ALT_OBJ_DIR2="$ALT_SOURCE2/objects/$OBJ_DIR"
-+		mkdir -p "$ALT_OBJ_DIR2" || die "Could not mkdir '$ALT_OBJ_DIR2'"
-+		OBJ_SRC="$ALT_OBJ_DIR1/$OBJ_BASE"
-+		cp "$OBJ_SRC" "$ALT_OBJ_DIR2" ||
-+		die "Could not cp '$OBJ_SRC' into '$ALT_OBJ_DIR2'"
-+	fi
-+	cat "$OBJ_FILE" || die "Could not cat '$OBJ_FILE'"
-+	;;
-+put_raw_obj)
-+	sha1="$2"
-+	size="$3"
-+	kind="$4"
-+	writen=$(git hash-object -w -t "$kind" --stdin)
-+	test "$writen" = "$sha1" || die "bad sha1 passed '$sha1' vs writen '$writen'"
-+	ref_hash=$(echo "$sha1 $size $kind" | GIT_DIR=$OTHER_SOURCE GIT_NO_EXTERNAL_ODB=1 git hash-object -w -t blob --stdin) || exit
-+	GIT_DIR=$OTHER_SOURCE git update-ref refs/odbs/magic/"$sha1" "$ref_hash"
-+	;;
-+*)
-+	die "unknown command '$1'"
-+	;;
-+esac
-+EOF
-+HELPER2="\"$PWD\"/odb-helper2"
-+
-+test_expect_success 'setup first alternate repo' '
-+	git init alt-repo1 &&
-+	test_commit zero &&
-+	git config odb.magic.scriptCommand "$HELPER1"
+diff --git a/t/t0500-external-odb.sh b/t/t0500-external-odb.sh
+index 4ccca1e965..f924de870f 100755
+--- a/t/t0500-external-odb.sh
++++ b/t/t0500-external-odb.sh
+@@ -69,4 +69,12 @@ test_expect_success 'helper can add objects to alt repo' '
+ 	test "$size" -eq "$alt_size"
+ '
+ 
++test_expect_success 'commit adds objects to alt repo' '
++	test_config odb.magic.scriptCommand "$HELPER" &&
++	test_commit three &&
++	hash3=$(git ls-tree HEAD | grep three.t | cut -f1 | cut -d\  -f3) &&
++	content=$(git -C alt-repo show "$hash3") &&
++	test "$content" = "three"
 +'
 +
-+test_expect_success 'setup other repo and its alternate repo' '
-+	git init other-repo &&
-+	git init alt-repo2 &&
-+	(cd other-repo &&
-+	 git remote add origin .. &&
-+	 git pull origin master &&
-+	 git checkout master &&
-+	 git log)
-+'
-+
-+test_expect_success 'new blobs are put in first object store' '
-+	test_commit one &&
-+	hash1=$(git ls-tree HEAD | grep one.t | cut -f1 | cut -d\  -f3) &&
-+	content=$(cd alt-repo1 && git show "$hash1") &&
-+	test "$content" = "one" &&
-+	test_commit two &&
-+	hash2=$(git ls-tree HEAD | grep two.t | cut -f1 | cut -d\  -f3) &&
-+	content=$(cd alt-repo1 && git show "$hash2") &&
-+	test "$content" = "two"
-+'
-+
-+test_expect_success 'other repo gets the blobs from object store' '
-+	(cd other-repo &&
-+	 git fetch origin "refs/odbs/magic/*:refs/odbs/magic/*" &&
-+	 test_must_fail git cat-file blob "$hash1" &&
-+	 test_must_fail git cat-file blob "$hash2" &&
-+	 git config odb.magic.scriptCommand "$HELPER2" &&
-+	 git cat-file blob "$hash1" &&
-+	 git cat-file blob "$hash2"
-+	)
-+'
-+
-+test_expect_success 'other repo gets everything else' '
-+	(cd other-repo &&
-+	 git fetch origin &&
-+	 content=$(git show "$hash1") &&
-+	 test "$content" = "one" &&
-+	 content=$(git show "$hash2") &&
-+	 test "$content" = "two")
-+'
-+
-+test_done
+ test_done
 -- 
 2.17.0.rc0.37.g8f476fabe9
 
