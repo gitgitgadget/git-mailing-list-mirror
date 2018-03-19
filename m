@@ -2,129 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E0DDA1F404
-	for <e@80x24.org>; Mon, 19 Mar 2018 16:49:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0FD5E1F404
+	for <e@80x24.org>; Mon, 19 Mar 2018 16:51:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S967339AbeCSQts (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Mar 2018 12:49:48 -0400
-Received: from mout.gmx.net ([212.227.17.22]:53065 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S934025AbeCSQtn (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Mar 2018 12:49:43 -0400
-Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LhB9P-1eIIEO0HYt-00oWEB; Mon, 19
- Mar 2018 17:49:39 +0100
-Date:   Mon, 19 Mar 2018 17:49:22 +0100 (STD)
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     git@vger.kernel.org
-cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] mingw: abort on invalid strftime formats
-Message-ID: <66189602d022dd1911b5f5d98594506b80bb81ff.1521478106.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S935166AbeCSQvb (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Mar 2018 12:51:31 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:39857 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S966781AbeCSQvQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Mar 2018 12:51:16 -0400
+Received: by mail-wm0-f68.google.com with SMTP id f125so8662976wme.4
+        for <git@vger.kernel.org>; Mon, 19 Mar 2018 09:51:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=NJqxUx9fU5c5wJJbxzrmoV8onj7vdWin+5DirjqlcKk=;
+        b=Ak7VL/ilz5pXok5zfaZuWmYIVxCatxgEadFwLVUeEEO63/JTEa/weHxQy7SPaSvM/4
+         hYjKPTVUDyteO/1q+9EHx9oF+1DFAJd9vfx8+uYIVCaL96F0UzI1IFl3FkEQCT67Rxnw
+         hia1evuKFrIX0f5SZFOfGruZFFpK2aKBfK2dyAAoc489UjdcdAfnHLJ9m9iXUXZKCa6q
+         g5OyH0nmxXMc0B5cO8cf230UGwy+acbKqpTLKtbvg8hozRuOUTgx5eoGfZqVVr4K8ANG
+         nTcws1JFNFWgI5srcT1rcUm+TmrY8LEoCU5ZJavutKt7U5BDuKKXRU1GG7I/cZp3S/u/
+         ZG+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=NJqxUx9fU5c5wJJbxzrmoV8onj7vdWin+5DirjqlcKk=;
+        b=kBgSmhErbR3t693Le6jGcXk9HR+NtveKqMztOYVlOQsORZ2BnEKLCkqnZgXAFH+3Zl
+         D33ahyZcrkcDdjJoPKOhGk9AGFSlrmf64TIAXbpvCIAKZ2vkF5V/gxBlpt6f4Sol+r4v
+         ytIHa58vGJn7kaYcweK2DxqXkM/iF886TvNBSmUI1RDKge1EjRnoB1SDClM+qWfhYoOR
+         6vgYDkpY6EKf9Lf17HtlHramfTzgWcqNYp/Y10I1lq0dyETflBcvepms4iAz8fwkRv9V
+         hJ1+a+d3tAZDcEaf49hwEAHxI/KrcQjq7XWL7V1tFhh5p0X4oWcYkDeKPdHYSutlhqNV
+         ep0g==
+X-Gm-Message-State: AElRT7Eme5EFDwHQTGS7tCNTRa2omOmBEG5mqeINJvbcEecDF1xSyGeJ
+        HCaG3UabrNBcz4+zD8knI4c=
+X-Google-Smtp-Source: AG47ELt1tKHFTOgBhr+BBxpQURHSGWg3b1T3phDzgAZXB9zTVK7SrrLNW6ChTY5/KT4Tiiq0dwNPRg==
+X-Received: by 10.28.231.24 with SMTP id e24mr2268825wmh.123.1521478274934;
+        Mon, 19 Mar 2018 09:51:14 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id n29sm1081739wmi.32.2018.03.19.09.51.14
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 19 Mar 2018 09:51:14 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     David Pursehouse <david.pursehouse@gmail.com>
+Cc:     git@vger.kernel.org, David Pursehouse <dpursehouse@collab.net>
+Subject: Re: [PATCH 1/1] Fix typo in merge-strategies documentation
+References: <20180317033142.20119-1-david.pursehouse@gmail.com>
+        <20180317033142.20119-2-david.pursehouse@gmail.com>
+Date:   Mon, 19 Mar 2018 09:51:14 -0700
+In-Reply-To: <20180317033142.20119-2-david.pursehouse@gmail.com> (David
+        Pursehouse's message of "Sat, 17 Mar 2018 12:31:42 +0900")
+Message-ID: <xmqqo9jkvwjh.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:MvQ+YAP3BX4RCMcjHFkNyoScL6MJuQRT+AOZ9ldIvD/+gcyHejx
- 9RdTUUeo+nBpA8ou9NNA2NJyBYCjkosxlDv/gDyBgJfUbNeUmI8EVF6eCLRbqZhgOtyKvux
- awux2lKGXhHDCPNEVo54wsTRCsGe23DySrvbK1dKBb/qZfb7RpAbdomZW+YiW7V6XWYHOAt
- YNNbEhW+UD3u1IAS2lwwA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:QOqVDEfidJU=:OCQC23KDziqqAetm6GKlfy
- Nw39jhnDe6bXSUM+yN6WGfifxdOyg2IAtOO9TDeR8Z7W0pRQzgp5wZcwCLseaYyquYUpGPwBz
- uQ92SMYYx4OvYx8H/APISEfbqhd4Tz8eE98tMSHcZ9gqX4LxMPkhNujnbnLGuOw+S146f6m+E
- MRqzESpkjd0dkhq0Dk1SylChUxlBFM0oiHn159q540hgaThPWyLo0ghNiTOihNYKQS6LE1iLU
- DP+D/NAiAPNdKOLI+25v5eCjof9w7JNVA4UycXieeE4XheZ5GoSh8cqCu33G5HCtTl7STSG2E
- w1wE35+u6omN/eTuo2irfoJ+fTRcwSb+NCiIW4WKMI7l4eZaJ8x3q1rdA3fi1Sw0V45QUpWa7
- NdNMmoVgkCrr8+NLzgguujDxDnquChYTsU1xaR/tLrD7oWKa7GrAbe32cf3BjiHRO/1VoGVB6
- NLsw6D5+uludeE7FG6KSpf9yqXF0JqiPlNDs8xIUB2Bnw2VWEwmisV44HpxmSV1jMhVVelSDE
- H/nv/mKznEx1xDGHeBLVSOoG1rKh7jELwUEzT9zHRYJ8LpfQl+fCv4MkOJ0vTdqmkDibYkAF7
- rdC+YRUc/AO5i6lt2IKzrzimYcWYo+kOCVcj4gwKeP84iACi4flj9ztB6d5EhdVzUsj7wkSni
- K9I6TPqgGIGjLuYCQrDE+NuRLrDLjLaHmXbtr7LKIfh5NGMaNVtXgKVLbUmtpgcyPEjQORs2P
- kSET4STLD9JDIDqb0+fIeoIU5GL8zJX4Buaxq4wYRc+iWaoRQdIVmdrzOcrLmNldQ7iSFuDrM
- mEgElaX+6kCzGrHkPKpvbYCIlgoB/2t9EMHTFpQCGRJk6UNYoY=
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Windows, strftime() does not silently ignore invalid formats, but
-warns about them and then returns 0 and sets errno to EINVAL.
+David Pursehouse <david.pursehouse@gmail.com> writes:
 
-Unfortunately, Git does not expect such a behavior, as it disagrees
-with strftime()'s semantics on Linux. As a consequence, Git
-misinterprets the return value 0 as "I need more space" and grows the
-buffer. As the larger buffer does not fix the format, the buffer grows
-and grows and grows until we are out of memory and abort.
+> From: David Pursehouse <dpursehouse@collab.net>
+>
+> Signed-off-by: David Pursehouse <dpursehouse@collab.net>
+> ---
 
-Ideally, we would switch off the parameter validation just for
-strftime(), but we cannot even override the invalid parameter handler
-via _set_thread_local_invalid_parameter_handler() using MINGW because
-that function is not declared. Even _set_invalid_parameter_handler(),
-which *is* declared, does not help, as it simply does... nothing.
+I somehow had to stare at the patch for a few minutes, view it in
+two Emacs buffers and run M-x compare-windows before I finally spot
+the single-byte typofix.
 
-So let's just bite the bullet and override strftime() for MINGW and
-abort on an invalid format string. While this does not provide the
-best user experience, it is the best we can do.
+Will queue with a retitle.
 
-See https://msdn.microsoft.com/en-us/library/fe06s4ak.aspx for more
-details.
+    Documentation/merge-strategies: typofix
+    
+    It's strategy, not stragegy.
+    
+    Signed-off-by: David Pursehouse <dpursehouse@collab.net>
+    Signed-off-by: Junio C Hamano <gitster@pobox.com>
 
-This fixes https://github.com/git-for-windows/git/issues/863
+Thanks.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
 
-	This is a really old patch (from 2016) that I had not managed to
-	contribute to git.git yet...
-
- compat/mingw.c | 11 +++++++++++
- compat/mingw.h |  3 +++
- 2 files changed, 14 insertions(+)
-
-diff --git a/compat/mingw.c b/compat/mingw.c
-index 2d44d21aca8..a67872babf3 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -761,6 +761,17 @@ int mingw_utime (const char *file_name, const struct utimbuf *times)
- 	return rc;
- }
- 
-+#undef strftime
-+size_t mingw_strftime(char *s, size_t max,
-+		      const char *format, const struct tm *tm)
-+{
-+	size_t ret = strftime(s, max, format, tm);
-+
-+	if (!ret && errno == EINVAL)
-+		die("invalid strftime format: '%s'", format);
-+	return ret;
-+}
-+
- unsigned int sleep (unsigned int seconds)
- {
- 	Sleep(seconds*1000);
-diff --git a/compat/mingw.h b/compat/mingw.h
-index e03aecfe2e6..571019d0bdd 100644
---- a/compat/mingw.h
-+++ b/compat/mingw.h
-@@ -361,6 +361,9 @@ int mingw_fstat(int fd, struct stat *buf);
- 
- int mingw_utime(const char *file_name, const struct utimbuf *times);
- #define utime mingw_utime
-+size_t mingw_strftime(char *s, size_t max,
-+		   const char *format, const struct tm *tm);
-+#define strftime mingw_strftime
- 
- pid_t mingw_spawnvpe(const char *cmd, const char **argv, char **env,
- 		     const char *dir,
-
-base-commit: 0afbf6caa5b16dcfa3074982e5b48e27d452dbbb
--- 
-2.16.1.windows.4
-
-Published-As: https://github.com/dscho/git/releases/tag/mingw-strftime-v1
-Fetch-It-Via: git fetch https://github.com/dscho/git mingw-strftime-v1
+>  Documentation/merge-strategies.txt | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/Documentation/merge-strategies.txt b/Documentation/merge-strategies.txt
+> index fd5d748d1..4a58aad4b 100644
+> --- a/Documentation/merge-strategies.txt
+> +++ b/Documentation/merge-strategies.txt
+> @@ -40,7 +40,7 @@ the other tree did, declaring 'our' history contains all that happened in it.
+>  
+>  theirs;;
+>  	This is the opposite of 'ours'; note that, unlike 'ours', there is
+> -	no 'theirs' merge stragegy to confuse this merge option with.
+> +	no 'theirs' merge strategy to confuse this merge option with.
+>  
+>  patience;;
+>  	With this option, 'merge-recursive' spends a little extra time
