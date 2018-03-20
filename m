@@ -3,88 +3,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6715C1F404
-	for <e@80x24.org>; Tue, 20 Mar 2018 19:12:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 426651F404
+	for <e@80x24.org>; Tue, 20 Mar 2018 19:32:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751372AbeCTTMh (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Mar 2018 15:12:37 -0400
-Received: from mail-ot0-f179.google.com ([74.125.82.179]:42614 "EHLO
-        mail-ot0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751186AbeCTTMg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Mar 2018 15:12:36 -0400
-Received: by mail-ot0-f179.google.com with SMTP id v23-v6so2987637oth.9
-        for <git@vger.kernel.org>; Tue, 20 Mar 2018 12:12:36 -0700 (PDT)
+        id S1751411AbeCTTcc (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Mar 2018 15:32:32 -0400
+Received: from mail-wr0-f182.google.com ([209.85.128.182]:44385 "EHLO
+        mail-wr0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751320AbeCTTcb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Mar 2018 15:32:31 -0400
+Received: by mail-wr0-f182.google.com with SMTP id u46so2892791wrc.11
+        for <git@vger.kernel.org>; Tue, 20 Mar 2018 12:32:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=qVuYUZuDlzRMlb2zDnYrAAPukfY92ny6bVsSigtZ0XQ=;
-        b=iII5lZgrFEui+WgRW/C7NJst2FWuhd7qDVwP4jYOKqthoTLsUg791ogNiGums/SdxJ
-         k43XFUw3ipG5yLOrQe+A44acCS40ML5poUooNmPtbpluTQy23VeLBaytZgWF+X+Opa+7
-         EkXgavfgLjWogdq/j5SazPG+xTnUKa8nzTIGcMgqlArppep3hgedkTxK/hFuuqkvHVBU
-         vwJ1EYiPEDpvoLpRWA7V7z5LG0v/NX2t3DgHkG0Kiin8RDajYsWlccTS0TDf56bKvjdW
-         38x9MyO9fljJif3RuPqqjc4/fFVPUm4SjRdZvCQYPmgRAk0CSzmpS0G/quQMe+/giNn/
-         WUhQ==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=J3y/gVhfOHL01rJkYJaKrDUpKa9UAQW9Gd8d7Du1thU=;
+        b=szrcgWUVbWR+BWwEQrk9RcUWP3007fHXld86A0WcvBay2yOM7//PKOwONKjafN9SiH
+         WmrBA5iFw+8djTi4ex5L+cTPRKN6OZ1AN5NYr9pFIjuSSeQUtxbuUzM1bUVBGkK1cK2f
+         NzqwD0+ZhOLgSwex+E/VAwKN784RMdLeZYTaSMozED3Bv6DkFJqo7QkaR9ByYzVeE7CC
+         9T0Qetj7YupP6npM6SSwavV3I7srbk9xB6vC1IIld2M00Y2NwqeYYn3wMl+xqK0xYO1m
+         NhU+BRRaQDkE1EXUhdx40Tpuk5d16C0SIGU5Hl5ZaB05u76Sv0pfgeEdYX/5sTKrzHFe
+         zFsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=qVuYUZuDlzRMlb2zDnYrAAPukfY92ny6bVsSigtZ0XQ=;
-        b=E7Xz9mNdadPpm44Bkuis0yW1V618G5wdHIB4qCZicojGO7rjbRmGdLCzy2FZ7DPWxh
-         lL9FKRjx12jah2b6oHHAd0DWiORIr2R1UrLyict1qbdngeONJljw/PEgsLgbKDVHg0MA
-         zMgUhUQwIQ9At0x1V5pFRhKohZaydKJC7dpe6mV/hYj+xOGqM8zzo7AngaYlKTcXYGww
-         6pSTH/XM1O5k2HzuyWiUzfbj5/ByR8QK3hqCNJ6mVAp/Y8AisxOy3XcYyP1eX8bBFDl3
-         kqRkRbUtBzw5Tge2fAx2wDM3FlZCOnZ6ZtXibWAqYDwQDC1zVjVJZ3p3cs5gdZ8OylZA
-         7IEA==
-X-Gm-Message-State: AElRT7E3gQL+6F2fg/P3WkStvy8FcTw2cNsykecpaI0nZkm+3pMVBi0y
-        W+U/yeeZDsGj2jU5f+2ZGoVA6duC87nssvmi2iI=
-X-Google-Smtp-Source: AG47ELt85lKvH60qKshLb/Vh1kIUGzOCph9plzzzBj47PRWSc3giELYSguEMCDZRhKq2nqGZCl5AtJLDb3rNNp2pCnU=
-X-Received: by 2002:a9d:ae9:: with SMTP id 96-v6mr11827806otq.75.1521573155856;
- Tue, 20 Mar 2018 12:12:35 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=J3y/gVhfOHL01rJkYJaKrDUpKa9UAQW9Gd8d7Du1thU=;
+        b=C68A6tArkQ7YPGFJ8m/bOyYNGJNXP0PdrRyayscIc1KjZu7H3KYa/NXcyGAjdBxALt
+         g+8MlDa8IlGW6LC5LWQhHOAxoww43xvU+nRFkfJAKxb17/ZQsOPlj8jmkVk8E474HOWJ
+         LcTqmQ3wngxEkvjMthnGhCzlO9kNo4ALacAWgyrhzcOHUY/QRBExnSwHamndQWilyMSx
+         61tY1Wl67cXde9czghlAiA900VGERTVcDrXcVLiccePJYsfOdikB3/OAZmmvBWZ3RJ71
+         n2Nal4Sd50QcvO8Ss+ZsJ8Aophw19Gbb7MYT/qiH5KlN3TTwXIiYvWVy8IHSMWQZWdw7
+         Crbw==
+X-Gm-Message-State: AElRT7FnYAhQ4jxRPzI+t4ODSDNt6GAm11WVBoSC+QI32x8V97RCyKd8
+        LJJpJncLQE9oFJpP6nziUe8=
+X-Google-Smtp-Source: AG47ELu3PqtFvvbWKNZrTe/mcU6Zvx2yu2tAIoYrRWqIv6vYu0b0boWdDUk0+kLgLsyYQYOwnRj0Cg==
+X-Received: by 10.223.135.14 with SMTP id a14mr14711713wra.261.1521574349691;
+        Tue, 20 Mar 2018 12:32:29 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id u62sm3200160wma.15.2018.03.20.12.32.28
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 20 Mar 2018 12:32:29 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Phillip Wood <phillip.wood@talktalk.net>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH 0/2] rebase --recreate-merges --keep-empty: don't prune empty
+References: <20180320101114.17663-1-phillip.wood@talktalk.net>
+        <nycvar.QRO.7.76.6.1803201639540.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        <e306f33a-3cd9-b753-ed61-66b7ff614087@talktalk.net>
+Date:   Tue, 20 Mar 2018 12:32:28 -0700
+In-Reply-To: <e306f33a-3cd9-b753-ed61-66b7ff614087@talktalk.net> (Phillip
+        Wood's message of "Tue, 20 Mar 2018 18:40:45 +0000")
+Message-ID: <xmqqr2oer19v.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.74.154.146 with HTTP; Tue, 20 Mar 2018 12:12:05 -0700 (PDT)
-In-Reply-To: <751c0493-435c-4a98-4d1c-e3d6677c62d8@arlut.utexas.edu>
-References: <f301d093-af93-016b-79b9-3102475260cf@arlut.utexas.edu>
- <CACsJy8ABgZy=eJ7niUysb2XZ3qUr3J+jmh_5YWZ1ZDiFCrb0tA@mail.gmail.com> <751c0493-435c-4a98-4d1c-e3d6677c62d8@arlut.utexas.edu>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 20 Mar 2018 20:12:05 +0100
-Message-ID: <CACsJy8ChV5sXV7N0+N0y9ehO56UCJ8fuqjFbHbbnez35P5af4g@mail.gmail.com>
-Subject: Re: Understanding Binary Deltas within Packfile
-To:     Luke Robison <robison@arlut.utexas.edu>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 20, 2018 at 7:34 PM, Luke Robison <robison@arlut.utexas.edu> wrote:
-> On 3/20/2018 11:03 AM, Duy Nguyen wrote:
->>
->> On Tue, Mar 20, 2018 at 4:43 PM, Luke Robison <robison@arlut.utexas.edu>
->> wrote:
->>>
->>> Is there any documentation of the contents of the binary delta datain a
->>> packfile, and how to interpret them?  I found
->>>
->>> https://github.com/git/git/blob/master/Documentation/technical/pack-format.txt
->>> documenting the packfile itself, but the "compressed delta data" seems
->>> largely undocumented.  The source code of
->>> https://github.com/git/git/blob/master/diff-delta.c is pretty dense.
->>
->> The output is consumed by patch_delta()  in patch-delta.c if I'm not
->> mistaken. This function is less than 100 lines, probably much easier
->> to see the delta format.
->
-> Thank you, that was much easier to read, and I've got my prototype working
-> now.  I also found this site to be quite helpful:
-> http://stefan.saasen.me/articles/git-clone-in-haskell-from-the-bottom-up/#delta_encoding
+Phillip Wood <phillip.wood@talktalk.net> writes:
 
-By the way, I forgot to add, if you want to improve pack-format.txt
-(since you study it anyway), patches are always welcome.
--- 
-Duy
+> On 20/03/18 15:42, Johannes Schindelin wrote:
+> ...
+>> As indicated in another reply, I'd rather rebase the --recreate-merges
+>> patches on top of your --keep-empty patch series. This obviously means
+>> that I would fold essentially all of your 2/2 changes into my
+>> "rebase-helper --make-script: introduce a flag to recreate merges"
+>> 
+>> The 1/2 (with s/failure/success/g) would then be added to the
+>> --recreate-merges patch series at the end.
+>> 
+>> Would that be okay with you?
+>
+> Yes, that's fine, it would give a clearer history
+
+With or without the above plan, what we saw from you were a bit
+messy to queue.  The --keep-empty fix series is based on 'maint',
+while the --signoff series depends on changes that happened to
+sequencer between 'maint' and 'master', but yet depends on the
+former.
+
+In what I'll be pushing out at the end of today's integration run,
+I'll have two topics organized this way:
+
+ - pw/rebase-keep-empty-fixes: built by applying the three
+   '--keep-empty' patches on top of 'maint'.
+
+ - pw/rebase-signoff: built by first merging the above to 0f57f731
+   ("Merge branch 'pw/sequencer-in-process-commit'", 2018-02-13) and
+   then applying "rebase --signoff" series.
+
+Also, I'll revert merge of Dscho's recreate-merges topic to 'next';
+doing so would probably have to invalidate a few evil merges I've
+been carrying to resolve conflicts between it and bc/object-id
+topic, so today's integration cycle may take a bit longer than
+usual.
