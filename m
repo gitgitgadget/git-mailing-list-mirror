@@ -3,121 +3,356 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7D2B51F404
-	for <e@80x24.org>; Tue, 20 Mar 2018 17:34:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AE7371F404
+	for <e@80x24.org>; Tue, 20 Mar 2018 17:50:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751502AbeCTRel (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Mar 2018 13:34:41 -0400
-Received: from mail-wm0-f52.google.com ([74.125.82.52]:51952 "EHLO
-        mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751408AbeCTRej (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Mar 2018 13:34:39 -0400
-Received: by mail-wm0-f52.google.com with SMTP id h21so5014952wmd.1
-        for <git@vger.kernel.org>; Tue, 20 Mar 2018 10:34:39 -0700 (PDT)
+        id S1751450AbeCTRuy (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Mar 2018 13:50:54 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:55578 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751330AbeCTRux (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Mar 2018 13:50:53 -0400
+Received: by mail-wm0-f66.google.com with SMTP id t7so5134283wmh.5
+        for <git@vger.kernel.org>; Tue, 20 Mar 2018 10:50:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=FkkAQkqrnqcgbQUkABiiNNJy/AaLX9hR42j8j8Ughr0=;
-        b=pdFjURECPxiOpmufh0TQYI29AxRDLr9u4Y7knScZRvU99VLS6w4gtzoDX2SBwjQ9p9
-         8iyHg7kFOet2F0LroR/YQC+I9gB4+Fj0AHsveeGobwSdZypLQ5OxZRIcuZRtQnpfxD9C
-         XTiS190qhd/QktYZC4ehHTFvhbs04QVHXaejcfKG8tjOxLQQPtQpazx7jOZibjMcUrRw
-         kQfELpqM95GqLdbgeSdZdBiViz4cIDn3aMEzIkpAHcEKUozsY6Pa392oWMEdajLDbSfx
-         aF/jmXTNzK0O/c0r0dDWTCJbkZaHc1zKSRfibewfjQr9K9AEUbdDJkvlKNMYxHZpmm6+
-         16og==
+        h=from:to:cc:subject:date:message-id;
+        bh=99gViYOSH0QbD7HN44yzuq1BFrPWyj4jpYpjoLBPY50=;
+        b=nK0bNN8bET9osLcSp3mP/CrxD7wFII7IVOPCZe2503n07yMi2+KRSYFvbmEfgRPot+
+         Fb9HgUYlwL+J33bR5EwzHIiSditj8lB/70APfiEBBNy5Cp/OYvgI0vMWO1Up/BbTosHz
+         Yt03j0v6xI5wK9Iz2mSuj5qYuCq/mpkusvjYGaRsYYbqYY+6oFXBIBJF08bnKBFQpiuj
+         DVeCz0E0wu2zkVWzDfUFluVhOEZEw+mt2Y+jX+XN4N5UQYuDdPTMJV8Bi2YzcpSGeEdx
+         3FjCfGTitT/oraNVbcYuNaGJ6NH6emTju9A6PTOIHeF2CsmW1d5M47uEtswhF0/fA/y+
+         E+Fg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=FkkAQkqrnqcgbQUkABiiNNJy/AaLX9hR42j8j8Ughr0=;
-        b=V1+KJXp2PiOnehDhUDE3jFA/ct1RXjVR6hX2avkEf7TTUl+ao/8aOh7xgUUx6gDAnU
-         TsBaUQKxsPvXM79/BKtqlkz19Nbg6JbwxQvPeE2y4P1iMNxHEf7k4jvgLTGk+Pt2N/DO
-         IWZzsrIGCfdtYetDGRYo9uuFRjNy0LApJxQNjFDZ927bxBDQex4eyeprSeppa/w5wxae
-         xG1BHC8W/BN/N0FlkFkkx1YAexIX4gDcsm/LY9QAl86Z4VaiTsgO4omQYMVY1RBh25Ug
-         B2KUh1i48xRHZOy5eMPea2xzEkwhEnm44aP8vnMujm3Jk0r2CbV3//yCYhcx5ORV2kBx
-         OtxA==
-X-Gm-Message-State: AElRT7FQxt0+sq2AovkaO7oBVOhrWrCZkqMmr1xBrOH9Yh5eSojy4DGf
-        Ajs/5j73pActUafgfaqrTqE=
-X-Google-Smtp-Source: AG47ELuB27S9W3fpSugHctlhMWSCrrl6EPGEWHV5Cx8GfxD+zHzd9jMrFX7LDfJfQnjmAPdUjv2t4g==
-X-Received: by 10.28.64.131 with SMTP id n125mr418726wma.140.1521567278123;
-        Tue, 20 Mar 2018 10:34:38 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id r71sm3314696wmd.48.2018.03.20.10.34.36
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 20 Mar 2018 10:34:37 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 2/3] rebase -i --keep-empty: don't prune empty commits
-References: <20180320100315.15261-1-phillip.wood@talktalk.net>
-        <20180320100315.15261-3-phillip.wood@talktalk.net>
-        <nycvar.QRO.7.76.6.1803201630380.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-Date:   Tue, 20 Mar 2018 10:34:36 -0700
-In-Reply-To: <nycvar.QRO.7.76.6.1803201630380.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        (Johannes Schindelin's message of "Tue, 20 Mar 2018 16:33:46 +0100
-        (STD)")
-Message-ID: <xmqqfu4uslar.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=99gViYOSH0QbD7HN44yzuq1BFrPWyj4jpYpjoLBPY50=;
+        b=b1INwyl6bNw9i2YSRK6HRSBRxvH5S6Dtd+keEAQf4H1/iSSabZYmaC2aoJBjHXOdDM
+         waqYfWdodsHmgL8vvmfCKN+9WrzcGkHEJr0nDxm1WDsusqwyRcOVatTfL5S3ITq/TCnD
+         gKSgpJH8giFe7vBg8XCVNENhrS0+0wOOSsT02ishs5ks8b6pl2MISRsooKZIGOROMm6d
+         aAwJEHZ+1+HlhnRdkZqZ3xDLZ3Uwt8MJtp1WxqfkjWDqHn4Jq7HA3LWqzWXj3wcPwP0q
+         co9YOn9vkmR2Nr0i2MrKVaZ3qyyqAfdZFHtDu/PddWqCPzMTuDdpvPzP9WeNsYIxbUji
+         8RFA==
+X-Gm-Message-State: AElRT7HkfmuT8gwlOHI6fMrYmbEPiz9WuuhlAo9OHG2z2G1I9y+9yk8s
+        uBo21LbXEn8Mk+g19g63A+izBbRJ
+X-Google-Smtp-Source: AG47ELttf+Ye8ZMm4TVHwtl/FoLbxEOjJ5TzYmppWJAdEiIxONzETrTrbDqz8NsJl2olD/DdDE/ImQ==
+X-Received: by 10.28.172.196 with SMTP id v187mr429734wme.69.1521568251877;
+        Tue, 20 Mar 2018 10:50:51 -0700 (PDT)
+Received: from localhost.localdomain ([92.55.154.10])
+        by smtp.gmail.com with ESMTPSA id o12sm2265634wrf.93.2018.03.20.10.50.50
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 20 Mar 2018 10:50:51 -0700 (PDT)
+From:   Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
+Subject: [GSoC][PATCH v6] parse-options: do not show usage upon invalid option value
+Date:   Tue, 20 Mar 2018 19:50:05 +0200
+Message-Id: <20180320175005.18759-1-ungureanupaulsebastian@gmail.com>
+X-Mailer: git-send-email 2.16.2.346.g16307f54f.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Usually, the usage should be shown only if the user does not know what
+options are available. If the user specifies an invalid value, the user
+is already aware of the available options. In this case, there is no
+point in displaying the usage anymore.
 
->> +		if (!keep_empty && is_empty)
->>  			strbuf_addf(&buf, "%c ", comment_line_char);
+This patch applies to "git tag --contains", "git branch --contains",
+"git branch --points-at", "git for-each-ref --contains" and many more.
 
-We are not trying to preserve an empty one, and have found an empty
-one, so we comment it out, and then...
+Signed-off-by: Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
+---
+ builtin/blame.c               |   1 +
+ builtin/shortlog.c            |   1 +
+ builtin/update-index.c        |   1 +
+ parse-options.c               |  20 ++++---
+ parse-options.h               |   1 +
+ t/t0040-parse-options.sh      |   2 +-
+ t/t0041-usage.sh              | 107 ++++++++++++++++++++++++++++++++++
+ t/t3404-rebase-interactive.sh |   6 +-
+ 8 files changed, 125 insertions(+), 14 deletions(-)
+ create mode 100755 t/t0041-usage.sh
 
->> +		if (is_empty || !(commit->object.flags & PATCHSAME)) {
->
-> May I suggest inverting the logic here, to make the code more obvious and
-> also to avoid indenting the block even further?
->
-> 		if (!is_empty && (commit->object.flags & PATCHSAME))
-> 			continue;
+diff --git a/builtin/blame.c b/builtin/blame.c
+index 9dcb367b9..e8c6a4d6a 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -729,6 +729,7 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
+ 	for (;;) {
+ 		switch (parse_options_step(&ctx, options, blame_opt_usage)) {
+ 		case PARSE_OPT_HELP:
++		case PARSE_OPT_ERROR:
+ 			exit(129);
+ 		case PARSE_OPT_DONE:
+ 			if (ctx.argv[0])
+diff --git a/builtin/shortlog.c b/builtin/shortlog.c
+index e29875b84..be4df6a03 100644
+--- a/builtin/shortlog.c
++++ b/builtin/shortlog.c
+@@ -283,6 +283,7 @@ int cmd_shortlog(int argc, const char **argv, const char *prefix)
+ 	for (;;) {
+ 		switch (parse_options_step(&ctx, options, shortlog_usage)) {
+ 		case PARSE_OPT_HELP:
++		case PARSE_OPT_ERROR:
+ 			exit(129);
+ 		case PARSE_OPT_DONE:
+ 			goto parse_done;
+diff --git a/builtin/update-index.c b/builtin/update-index.c
+index 58d1c2d28..34adf55a7 100644
+--- a/builtin/update-index.c
++++ b/builtin/update-index.c
+@@ -1059,6 +1059,7 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
+ 			break;
+ 		switch (parseopt_state) {
+ 		case PARSE_OPT_HELP:
++		case PARSE_OPT_ERROR:
+ 			exit(129);
+ 		case PARSE_OPT_NON_OPTION:
+ 		case PARSE_OPT_DONE:
+diff --git a/parse-options.c b/parse-options.c
+index d02eb8b01..47c09a82b 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -317,14 +317,16 @@ static int parse_long_opt(struct parse_opt_ctx_t *p, const char *arg,
+ 		return get_value(p, options, all_opts, flags ^ opt_flags);
+ 	}
+ 
+-	if (ambiguous_option)
+-		return error("Ambiguous option: %s "
++	if (ambiguous_option) {
++		error("Ambiguous option: %s "
+ 			"(could be --%s%s or --%s%s)",
+ 			arg,
+ 			(ambiguous_flags & OPT_UNSET) ?  "no-" : "",
+ 			ambiguous_option->long_name,
+ 			(abbrev_flags & OPT_UNSET) ?  "no-" : "",
+ 			abbrev_option->long_name);
++		return -3;
++	}
+ 	if (abbrev_option)
+ 		return get_value(p, abbrev_option, all_opts, abbrev_flags);
+ 	return -2;
+@@ -434,7 +436,6 @@ int parse_options_step(struct parse_opt_ctx_t *ctx,
+ 		       const char * const usagestr[])
+ {
+ 	int internal_help = !(ctx->flags & PARSE_OPT_NO_INTERNAL_HELP);
+-	int err = 0;
+ 
+ 	/* we must reset ->opt, unknown short option leave it dangling */
+ 	ctx->opt = NULL;
+@@ -459,7 +460,7 @@ int parse_options_step(struct parse_opt_ctx_t *ctx,
+ 			ctx->opt = arg + 1;
+ 			switch (parse_short_opt(ctx, options)) {
+ 			case -1:
+-				goto show_usage_error;
++				return PARSE_OPT_ERROR;
+ 			case -2:
+ 				if (ctx->opt)
+ 					check_typos(arg + 1, options);
+@@ -472,7 +473,7 @@ int parse_options_step(struct parse_opt_ctx_t *ctx,
+ 			while (ctx->opt) {
+ 				switch (parse_short_opt(ctx, options)) {
+ 				case -1:
+-					goto show_usage_error;
++					return PARSE_OPT_ERROR;
+ 				case -2:
+ 					if (internal_help && *ctx->opt == 'h')
+ 						goto show_usage;
+@@ -504,9 +505,11 @@ int parse_options_step(struct parse_opt_ctx_t *ctx,
+ 			goto show_usage;
+ 		switch (parse_long_opt(ctx, arg + 2, options)) {
+ 		case -1:
+-			goto show_usage_error;
++			return PARSE_OPT_ERROR;
+ 		case -2:
+ 			goto unknown;
++		case -3:
++			goto show_usage;
+ 		}
+ 		continue;
+ unknown:
+@@ -517,10 +520,8 @@ int parse_options_step(struct parse_opt_ctx_t *ctx,
+ 	}
+ 	return PARSE_OPT_DONE;
+ 
+- show_usage_error:
+-	err = 1;
+  show_usage:
+-	return usage_with_options_internal(ctx, usagestr, options, 0, err);
++	return usage_with_options_internal(ctx, usagestr, options, 0, 0);
+ }
+ 
+ int parse_options_end(struct parse_opt_ctx_t *ctx)
+@@ -539,6 +540,7 @@ int parse_options(int argc, const char **argv, const char *prefix,
+ 	parse_options_start(&ctx, argc, argv, prefix, options, flags);
+ 	switch (parse_options_step(&ctx, options, usagestr)) {
+ 	case PARSE_OPT_HELP:
++	case PARSE_OPT_ERROR:
+ 		exit(129);
+ 	case PARSE_OPT_NON_OPTION:
+ 	case PARSE_OPT_DONE:
+diff --git a/parse-options.h b/parse-options.h
+index af711227a..c77bb3b4f 100644
+--- a/parse-options.h
++++ b/parse-options.h
+@@ -188,6 +188,7 @@ enum {
+ 	PARSE_OPT_HELP = -1,
+ 	PARSE_OPT_DONE,
+ 	PARSE_OPT_NON_OPTION,
++	PARSE_OPT_ERROR,
+ 	PARSE_OPT_UNKNOWN
+ };
+ 
+diff --git a/t/t0040-parse-options.sh b/t/t0040-parse-options.sh
+index 0c2fc81d7..04d474c84 100755
+--- a/t/t0040-parse-options.sh
++++ b/t/t0040-parse-options.sh
+@@ -291,7 +291,7 @@ test_expect_success 'OPT_CALLBACK() and OPT_BIT() work' '
+ test_expect_success 'OPT_CALLBACK() and callback errors work' '
+ 	test_must_fail test-parse-options --no-length >output 2>output.err &&
+ 	test_i18ncmp expect output &&
+-	test_i18ncmp expect.err output.err
++	test_must_be_empty output.err
+ '
+ 
+ cat >expect <<\EOF
+diff --git a/t/t0041-usage.sh b/t/t0041-usage.sh
+new file mode 100755
+index 000000000..ac96bc3b9
+--- /dev/null
++++ b/t/t0041-usage.sh
+@@ -0,0 +1,107 @@
++#!/bin/sh
++
++test_description='Test commands behavior when given invalid argument value'
++
++. ./test-lib.sh
++
++test_expect_success 'setup ' '
++	test_commit "v1.0"
++'
++
++test_expect_success 'tag --contains <existent_tag>' '
++	git tag --contains "v1.0" 1>actual 2>actual.err &&
++	grep "v1.0" actual &&
++	test_line_count = 0 actual.err
++'
++
++test_expect_success 'tag --contains <inexistent_tag>' '
++	test_must_fail git tag --contains "notag" 1>actual 2>actual.err &&
++	test_line_count = 0 actual &&
++	test_i18ngrep "error" actual.err &&
++	test_must_fail test_i18ngrep "usage" actual.err
++'
++
++test_expect_success 'tag --no-contains <existent_tag>' '
++	git tag --no-contains "v1.0" 1>actual 2>actual.err  &&
++	test_line_count = 0 actual &&
++	test_line_count = 0 actual.err
++'
++
++test_expect_success 'tag --no-contains <inexistent_tag>' '
++	test_must_fail git tag --no-contains "notag" 1>actual 2>actual.err &&
++	test_line_count = 0 actual &&
++	test_i18ngrep "error" actual.err &&
++	test_must_fail test_i18ngrep "usage" actual.err
++'
++
++test_expect_success 'tag usage error' '
++	test_must_fail git tag --noopt 1>actual 2>actual.err &&
++	test_line_count = 0 actual &&
++	test_i18ngrep "usage" actual.err
++'
++
++test_expect_success 'branch --contains <existent_commit>' '
++	git branch --contains "master" 1>actual 2>actual.err &&
++	test_i18ngrep "master" actual &&
++	test_line_count = 0 actual.err
++'
++
++test_expect_success 'branch --contains <inexistent_commit>' '
++	test_must_fail git branch --no-contains "nocommit" 1>actual 2>actual.err &&
++	test_line_count = 0 actual &&
++	test_i18ngrep "error" actual.err &&
++	test_must_fail test_i18ngrep "usage" actual.err
++'
++
++test_expect_success 'branch --no-contains <existent_commit>' '
++	git branch --no-contains "master" 1>actual 2>actual.err &&
++	test_line_count = 0 actual &&
++	test_line_count = 0 actual.err
++'
++
++test_expect_success 'branch --no-contains <inexistent_commit>' '
++	test_must_fail git branch --no-contains "nocommit" 1>actual 2>actual.err &&
++	test_line_count = 0 actual &&
++	test_i18ngrep "error" actual.err &&
++	test_must_fail test_i18ngrep "usage" actual.err
++'
++
++test_expect_success 'branch usage error' '
++	test_must_fail git branch --noopt 1>actual 2>actual.err &&
++	test_line_count = 0 actual &&
++	test_i18ngrep "usage" actual.err
++'
++
++test_expect_success 'for-each-ref --contains <existent_object>' '
++	git for-each-ref --contains "master" 1>actual 2>actual.err &&
++	test_line_count = 2 actual &&
++	test_line_count = 0 actual.err
++'
++
++test_expect_success 'for-each-ref --contains <inexistent_object>' '
++	test_must_fail git for-each-ref --no-contains "noobject" 1>actual 2>actual.err &&
++	test_line_count = 0 actual &&
++	test_i18ngrep "error" actual.err &&
++	test_must_fail test_i18ngrep "usage" actual.err
++'
++
++test_expect_success 'for-each-ref --no-contains <existent_object>' '
++	git for-each-ref --no-contains "master" 1>actual 2>actual.err &&
++	test_line_count = 0 actual &&
++	test_line_count = 0 actual.err
++'
++
++test_expect_success 'for-each-ref --no-contains <inexistent_object>' '
++	test_must_fail git for-each-ref --no-contains "noobject" 1>actual 2>actual.err &&
++	test_line_count = 0 actual &&
++	test_i18ngrep "error" actual.err &&
++	test_must_fail test_i18ngrep "usage" actual.err
++'
++
++test_expect_success 'for-each-ref usage error' '
++	test_must_fail git for-each-ref --noopt 1>actual 2>actual.err &&
++	test_line_count = 0 actual &&
++	test_i18ngrep "usage" actual.err
++'
++
++test_done
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index ef2887bd8..cac8b2bd8 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -919,10 +919,8 @@ test_expect_success 'rebase --exec works without -i ' '
+ test_expect_success 'rebase -i --exec without <CMD>' '
+ 	git reset --hard execute &&
+ 	set_fake_editor &&
+-	test_must_fail git rebase -i --exec 2>tmp &&
+-	sed -e "1d" tmp >actual &&
+-	test_must_fail git rebase -h >expected &&
+-	test_cmp expected actual &&
++	test_must_fail git rebase -i --exec 2>actual &&
++	test_i18ngrep "requires a value" actual &&
+ 	git checkout master
+ '
+ 
+-- 
+2.16.2.346.g16307f54f.dirty
 
-... if a non-empty one that already appears in the upstream, we do
-not do anything to it.  There is no room for keep-empty or lack of
-it to affect what happens to these commits.
-
-Otherwise the insn is emitted for the commit.
-
->> +			strbuf_addf(&buf, "%s %s ", insn,
->> +				    oid_to_hex(&commit->object.oid));
->> +			pretty_print_commit(&pp, commit, &buf);
->> +			strbuf_addch(&buf, '\n');
->> +			fputs(buf.buf, out);
->> +		}
-
-I tend to agree that the suggested structure is easier to follow
-than Phillip's version.
-
-But I wonder if this is even easier to follow.  It makes it even
-more clear that patchsame commits that are not empty are discarded
-unconditionally.
-
-	while ((commit = get_revision(&revs))) {
-		int is_empty  = is_original_commit_empty(commit);
-		if (!is_empty && (commit->object.flags & PATCHSAME))
-			continue;
-		strbuf_reset(&buf);
-		if (!keep_empty && is_empty)
-			strbuf_addf(&buf, "%c ", comment_line_char);
-		strbuf_addf(&buf, "%s %s ", insn,
-			    oid_to_hex(&commit->object.oid));
-		pretty_print_commit(&pp, commit, &buf);
-		strbuf_addch(&buf, '\n');
-		fputs(buf.buf, out);
-	}
-
-Or did I screw up the rewrite?
