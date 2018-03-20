@@ -7,88 +7,82 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BAF8E1F404
-	for <e@80x24.org>; Tue, 20 Mar 2018 14:46:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B2A121FAE2
+	for <e@80x24.org>; Tue, 20 Mar 2018 14:53:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751630AbeCTOqn (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Mar 2018 10:46:43 -0400
-Received: from mout.gmx.net ([212.227.15.18]:41739 "EHLO mout.gmx.net"
+        id S1751391AbeCTOxE (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Mar 2018 10:53:04 -0400
+Received: from mout.gmx.net ([212.227.17.20]:37571 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751617AbeCTOqm (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Mar 2018 10:46:42 -0400
-Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M9aX9-1et5sM14bn-00CxOD; Tue, 20
- Mar 2018 15:46:33 +0100
-Date:   Tue, 20 Mar 2018 15:46:05 +0100 (STD)
+        id S1751269AbeCTOxD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Mar 2018 10:53:03 -0400
+Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0Lfppu-1eEmgW1Skk-00pKSb; Tue, 20
+ Mar 2018 15:52:55 +0100
+Date:   Tue, 20 Mar 2018 15:52:40 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
-cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        GIT Mailing-list <git@vger.kernel.org>
-Subject: Re: [PATCH 0/2] -Wuninitialized
-In-Reply-To: <8f6d8e2e-aba4-128c-f17c-6c1b9c12436c@ramsayjones.plus.com>
-Message-ID: <nycvar.QRO.7.76.6.1803201514490.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <8f6d8e2e-aba4-128c-f17c-6c1b9c12436c@ramsayjones.plus.com>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Joseph Strauss <josephst@bhphoto.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Bug With git rebase -p
+In-Reply-To: <xmqqlgenu6qj.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1803201551480.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <9a1c2c55ff7f412f8830dbdc4bc033bc@EXMBX02B.bhphotovideo.local> <xmqqlgenu6qj.fsf@gitster-ct.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:fYodNblbqo+iqStna0solg7hEvG7O3sMmAr/8p7CuUnSEaE5HXe
- rUjaQlCLJkXpToei+9F9LqNm/+qeJgPHNZ+XN1hNahYkOR7V1M/7f3fCbDVNOXsI2MqmL2v
- Sc8X5iazw8VeKUDfekUtZF4i5eky1nJqMh3+MYj2ADQaOHCjq+iSqRU1M9yqKdL69A5RQLF
- aVnxCP8im2pDls/9YN9Lw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:lvYmGleyg8I=:SEW39aX+cS7jk6LXcXlztc
- 9KfsJA2atOesL2BWQIUdr+aWFI4Cn0sZ0ouoRtcy3kqWhxCwuiiXLlQpWAaDIUKEJJ5EFvRyG
- m8lqrVbxEJYDY1gn+IWCdeO/wxSX4FbSvZDQnt/RWlZOFz7B3LVfrNQdSDXZfiPbs4gzhVrI0
- cCBHUQpwWlNHkooff2aaF1QqmALka0m5Ur+OxuIzW2MaTj4oKxbiN8oI4N+B7IR7VARGXdIfs
- w3SwUDIQEkX2pM5xAyZRduDRZuSJ0obOwwfoxNrlhhiDgtnf8jm6I2Xchb/9jp1MPMBoVzA9P
- 3X8kd1lejUUb27ek9fXPAKTE/atXvVupPHWtcUCBmkNN6Jyo9W1VVoJbaZZvgdjtoI4LIq+XT
- ODuYGyKVmCYGzWXuc8j4r2vlobDmDL5qq0CAQWgOQJoIruJDNn9WsJMqr7FeBucEbJOMM0u3h
- 8BOWkwKCxxEVVYDKZGrhZuCBRqEMlLLN00+tvYl+grpRY2YwEfjgaFaZFwoJoBLoVu1FopG6i
- mFpTx3HTbyzkUfhgwYB1N/UPuQ/+2WUgsa7n8nCpUBkbHkpkVpZsMLUG6dllPg6+jdVNQK/66
- GX6FYQqiCu29BG+vm+oBPg2W3KLf8KvGVznFujVZnwx9bkhXuh/uMf7CMX9vfNN2LY5YdRWfV
- Ip1wQnAgMp0y61DFekLBcyxyins41sd9GHz2x8l7r5EKAbPRjSaWbzKhqvgDI7+rvIXAaGAUc
- c1+a01q1EaCJ9Dk8xMI7aHGYZCBH2efi6bsaCZ4Gj6+gWQTU12vIqRsLGWyRgrKDW/q16J5Rv
- 0kJKoT+uiw+ghH6spOWqwP2uoe1g9hwPi7e4vDRg6LY40fvFVs=
+X-Provags-ID: V03:K0:yAP+B+urxuQHihobr7MdVuzAo3RXzPr/gLa+HCrufWJfOef9Oxo
+ c33Ugk3x+EKN8qyltDuvOpVyXEFAXS5kWXQMSCbOAZgc2FMXCzW2/QujYazLG7vbjRgJe/x
+ mrfAKdgOv8cEO+l9Am9SSMIi2PJ43ulSVQZcFA+gYm9XqHjVxB97K5MoG/awU+FC8iwktqD
+ OuHKNQAhx7DAlju7ByZWQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:IEih0huE1Nk=:UA5D89qA1KGFz7T9sVGS2u
+ IR65kmt6RQU3Ksqn9seBinwwkWvOUjdxLF+JCtqTxgX6pCTX+K/nTTyX/tS8PLvtNVeyhxVJ0
+ CpGZbwS3V+24EvDxHw4/P2zUHUZBdNVoNTCIT7N0q21OsC10AlpNI/HW/j/ypf/2EksGShymf
+ CLEAqRo0eqP/exRF1W4v7VFQXGU442aBzop9N9m8ibp6qcp678K0o6pAR0iWqLSp6CMcaq8kv
+ N3P/aqXcHQR7Z/zmxpYRmZwVMqHIhEgrkojCMS5Qh0+5aSf9XI7mgPOf+95uDt/lT5YMx9Tli
+ dzuAI1W7U3QRZFhUr2d5fMjahA+g9OoEKNzqHlyXXn67eMo9GdiillG/22aCMS9ph6iSTyaOB
+ oEtGMML2F3HHdyalXVUR4cT326ShijcGmV3FICfcKluoVqurg1prasbuTCG41MgMmSonYE9To
+ mrlvKtrfNlaTsEfUWRyQkHj3g+0x+BXVJxvTls33urO3u2Exwd/hR6lVhE92BrcZoVnlrMyai
+ Njsou9dR7P4eaP8e0w8cUFzvLqMEAjPCZmpcO7q/yl5FyCumc5t2Ivu8lGm55nY8fyTuXe9wx
+ 1e1J80mzCZ3dQAgdG/atd25tCyxLp2FMJEM5jtVX266+98mXrt70YKvu44a9SlrFOjNc6xDrd
+ kv+0w3GR2YPmC3qax7bMBnTeqBXHRwdS0bXKf00DPv/XPTaGnG+R6ZAndk8/X8AxqD3i3PhgR
+ 450ts/pc1uKdshO5N+LC6EmxOoEpIpiWR76zhyEpE/FGL0S99kPJ3nwddFt7ZfhuFTrznxD4O
+ XcGmRnnL5aRgRk2VENrLfz6VxzeQ2cdvBvRwaXcRaHJV8cIjo0=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Ramsay,
+Hi,
 
-On Mon, 19 Mar 2018, Ramsay Jones wrote:
+On Mon, 19 Mar 2018, Junio C Hamano wrote:
 
-> This series removes all 'self-initialised' variables (ie. <type> var =
-> var;).  This construct has been used to silence gcc
-> '-W[maybe-]uninitialized' warnings in the past [1]. Unfortunately, this
-> construct causes warnings to be issued by MSVC [2], along with clang
-> static analysis complaining about an 'Assigned value is garbage or
-> undefined'. The number of these constructs has dropped over the years
-> (eg. see [3] and [4]), so there are currently only 6 remaining in the
-> current codebase. As demonstrated below, 5 of these no longer cause gcc
-> to issue warnings.
+> Joseph Strauss <josephst@bhphoto.com> writes:
+> 
+> > I found the following erroneous behavior with "git rebase -p".
+> >
+> > My current version is git version 2.16.2.windows.1
+> >
+> > I made an example at GitHub, https://github.com/jkstrauss/git-bug/
+> >
+> > There seem to be two problems when rebasing merge commits with git rebase -p :
+> >   1. All lines of merge commits' messages get collapse into a single line.
+> >   2. When an asterisk is present in the middle of the line it gets replaced with the file names of the current directory.
+> 
+> I suspect that this has already been independently discovered
+> (twice) and corrected with
+> 
+> https://public-inbox.org/git/20180208204241.19324-1-gregory.herrero@oracle.com/
+> 
+> and is included in v2.17-rc0 (and later ;-).
 
-Thank you so much for working on this!
+As it is included in v2.17.0-rc0, Joseph, could you verify that the
+version at
 
-In Git for Windows, to work around the MSVC issues you mention, I have
-this ugly work-around (essentially, it has a FAKE_INIT() macro that either
-performs that GCC workaround or initializes the variable to NULL/0):
+https://github.com/git-for-windows/git/releases/tag/v2.17.0-rc0.windows.1
 
-	https://github.com/git-for-windows/git/commit/474155f32a
+fixes this issue for you?
 
-FWIW I just tested your patches with Visual Studio 2017 and there are no
-C4700 warnings (the equivalent of GCC's "may be uninitialized" warning)
-[*1*].
-
-You can find the patches (your patches rebased onto Git for Windows'
-master, plus a patch adding the project files for Visual Studio) here:
-
-https://github.com/git-for-windows/git/compare/master...dscho:msvc-uninitialized-warning-test
-
-So here is my ACK, in case you want it ;-)
-
-Ciao,
-Dscho
-
-Footnote *1*: there actually was one, but in a Windows-only patch. That's
-what that last (fixup!) patch on my branch is all about.
+Thanks,
+Johannes
