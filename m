@@ -2,152 +2,151 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CAB351F404
-	for <e@80x24.org>; Tue, 20 Mar 2018 16:42:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C42861F404
+	for <e@80x24.org>; Tue, 20 Mar 2018 16:44:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751405AbeCTQmY (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Mar 2018 12:42:24 -0400
-Received: from mail-ot0-f195.google.com ([74.125.82.195]:36097 "EHLO
-        mail-ot0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751269AbeCTQmX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Mar 2018 12:42:23 -0400
-Received: by mail-ot0-f195.google.com with SMTP id 108-v6so2437773otv.3
-        for <git@vger.kernel.org>; Tue, 20 Mar 2018 09:42:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=b1fvy9mQyFPdosjpjdPQqxJNFbjEPnGTXtlYtC4ytgE=;
-        b=LzFCcQS0XZhlLhZydyAAlnX3pTBP1bwQ6QnX/7OIhDYTJXJg+5F83qdlOlVA5ptoyK
-         H6X8055FV+K5Ga1ukO4y1jdJc8R2bUrbRoMQGfR1Zy+pEvMLUv9Xy3WQC3EX03VVicXO
-         JH2Qau8/3KG+l2orCDp2aSY4ZdD6IJ65olMEK3yDhW5Jzd48G5Xu/laiSAGrYVZUCogT
-         cqIejtn6hJqszFK4RT2zr2Rg+sCVyLOwSEind59t3fQQnJgyOFQhS+M9WrDj7189K9+i
-         sxRV1OJR+3h9YmGGENdA1xoTVq62E4jQPod+FOV0DkJ/AuVQwn7oeuatyo9LsQySzgGD
-         cFfQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=b1fvy9mQyFPdosjpjdPQqxJNFbjEPnGTXtlYtC4ytgE=;
-        b=IL2qZSsoYp2vyeJtAGB49AtaS/RJK+tQGZ2QK/TfrFm9cEzbNnS+1iKx68B3j74Tqf
-         wVqmLRRiouqh4EZN9DSGZ2XgF6UrQ1qusf5slQ0k8AGI1gNcrTcx7DG7bRCxHfO+Mtlj
-         hHzlPppIMBXDgRkiZlpklSa1vuAtHWCoFXXrDnbGbF/kVhz0HRUwzLQQXINFpzKtzwq3
-         Nnkjic1YV13Kd6VC5UnMAm3mrcUJHIbqZq1PnuyxfLJhHYCN3dKfPFkqzVzhg0bjK/uk
-         CiJShNiwXhlZm88oHZNPVW2KBK6Ds6OphpMBzeFKBlCVmoRdpHjENKvakfNquYcvQb3a
-         OeEg==
-X-Gm-Message-State: AElRT7GR3fbgBMig6fIQgYQjekFffzucxAIM0G1LMvegS6Z+dTDbpSpS
-        xMMYydJwnTU36PgUNd60KG5XPN/yNu9a7krEDO4=
-X-Google-Smtp-Source: AG47ELuB5GyVnNGUOlyFQszw3toaVXOKnr+n3+LVsWTreg5X+JCTWOYytiyJwLNnsDaKbUEjb4dtXNE2jvvx2i4s53M=
-X-Received: by 2002:a9d:ae9:: with SMTP id 96-v6mr11454791otq.75.1521564142754;
- Tue, 20 Mar 2018 09:42:22 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.74.154.146 with HTTP; Tue, 20 Mar 2018 09:41:52 -0700 (PDT)
-In-Reply-To: <20180320041454.GA15213@sigill.intra.peff.net>
-References: <CAHnyXxRX4+sMJCNG6f9xtsDO6bdqRS-U6TAYO47OKQjH8bGzbg@mail.gmail.com>
- <20180320023423.GA10143@sigill.intra.peff.net> <CAHnyXxRcwq40W4tKm=Kscrsnb77yh7=eGDE=r5AZq073MPX9AQ@mail.gmail.com>
- <20180320040411.GB12938@sigill.intra.peff.net> <20180320041454.GA15213@sigill.intra.peff.net>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 20 Mar 2018 17:41:52 +0100
-Message-ID: <CACsJy8CpwtNfp9oQGvECBuWGcwLEKK609iPJVEiXH4cDD6mpEg@mail.gmail.com>
-Subject: Re: [PATCH] doc/gitattributes: mention non-recursive behavior
+        id S1751861AbeCTQoY (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Mar 2018 12:44:24 -0400
+Received: from siwi.pair.com ([209.68.5.199]:20307 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751310AbeCTQoV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Mar 2018 12:44:21 -0400
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id 8004B3F4013;
+        Tue, 20 Mar 2018 12:44:20 -0400 (EDT)
+Received: from [10.160.98.99] (unknown [167.220.148.99])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id ECC633F4004;
+        Tue, 20 Mar 2018 12:44:19 -0400 (EDT)
+Subject: Re: [PATCH 0/2] routines to generate JSON data
 To:     Jeff King <peff@peff.net>
-Cc:     Dakota Hawkins <dakota@dakotahawkins.com>,
-        Junio C Hamano <gitster@pobox.com>, Git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     git@vger.kernel.org, gitster@pobox.com,
+        lars.schneider@autodesk.com,
+        Jeff Hostetler <jeffhost@microsoft.com>
+References: <20180316194057.77513-1-git@jeffhostetler.com>
+ <20180316211837.GB12333@sigill.intra.peff.net>
+ <e2a9d2a9-f2e2-f285-52c3-be11668da543@jeffhostetler.com>
+ <20180320054223.GC15813@sigill.intra.peff.net>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <09dca55b-6c8b-2793-901d-d9f2cf5dd873@jeffhostetler.com>
+Date:   Tue, 20 Mar 2018 12:44:00 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.6.0
+MIME-Version: 1.0
+In-Reply-To: <20180320054223.GC15813@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 20, 2018 at 5:14 AM, Jeff King <peff@peff.net> wrote:
-> On Tue, Mar 20, 2018 at 12:04:11AM -0400, Jeff King wrote:
->
->> > I guess my takeaway is that it would be _good_ if the gitattributes
->> > documentation contained the caveat about not matching directories
->> > recursively, but _great_ if gitattributes and gitignore (and whatever
->> > else there is) were consistent.
+
+
+On 3/20/2018 1:42 AM, Jeff King wrote:
+> On Mon, Mar 19, 2018 at 06:19:26AM -0400, Jeff Hostetler wrote:
+> 
+>>> To make the above work, I think you'd have to store a little more state.
+>>> E.g., the "array_append" functions check "out->len" to see if they need
+>>> to add a separating comma. That wouldn't work if we might be part of a
+>>> nested array. So I think you'd need a context struct like:
+>>>
+>>>     struct json_writer {
+>>>       int first_item;
+>>>       struct strbuf out;
+>>>     };
+>>>     #define JSON_WRITER_INIT { 1, STRBUF_INIT }
+>>>
+>>> to store the state and the output. As a bonus, you could also use it to
+>>> store some other sanity checks (e.g., keep a "depth" counter and BUG()
+>>> when somebody tries to access the finished strbuf with a hanging-open
+>>> object or array).
 >>
->> I agree it would be nice if they were consistent (and pathspecs, too).
->> But unfortunately at this point there's a maze of backwards
->> compatibility to deal with.
->
-> So let's not forget to do the easy half there. Here's a patch.
->
-> -- >8 --
-> Subject: [PATCH] doc/gitattributes: mention non-recursive behavior
->
-> The gitattributes documentation claims that the pattern
-> rules are largely the same as for gitignore. However, the
-> rules for recursion are different.
->
-> In an ideal world, we would make them the same (if for
-> nothing else than consistency and simplicity), but that
-> would create backwards compatibility issues. For some
-> discussion, see this thread:
->
->   https://public-inbox.org/git/slrnkldd3g.1l4.jan@majutsushi.net/
->
-> But let's at least document the differences instead of
-> actively misleading the user by claiming that they're the
-> same.
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  Documentation/gitattributes.txt | 13 ++++++++++---
->  1 file changed, 10 insertions(+), 3 deletions(-)
->
-> diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
-> index d52b254a22..1094fe2b5b 100644
-> --- a/Documentation/gitattributes.txt
-> +++ b/Documentation/gitattributes.txt
-> @@ -56,9 +56,16 @@ Unspecified::
->
->  When more than one pattern matches the path, a later line
->  overrides an earlier line.  This overriding is done per
-> -attribute.  The rules how the pattern matches paths are the
-> -same as in `.gitignore` files; see linkgit:gitignore[5].
-> -Unlike `.gitignore`, negative patterns are forbidden.
-> +attribute.
-> +
-> +The rules by which the pattern matches paths are the same as in
-> +`.gitignore` files (see linkgit:gitignore[5]), with a few exceptions:
-> +
-> +  - negative patterns are forbidden
+>> Yeah, I thought about that, but I think it gets more complex than that.
+>> I'd need a stack of "first_item" values.  Or maybe the _begin() needs to
+>> increment a depth and set first_item and the _end() needs to always
+>> unset first_item.  I'll look at this gain.
+> 
+> I think you may be able to get by with just unsetting first_item for any
+> "end". Because as you "pop" to whatever data structure is holding
+> whatever has ended, you know it's no longer the first item (whatever
+> just ended was there before it).
+> 
+> I admit I haven't thought too hard on it, though, so maybe I'm missing
+> something.
 
-After 8b1bd02415 (Make !pattern in .gitattributes non-fatal -
-2013-03-01) maybe we could use the verb "ignored" too instead of
-"forbidden"
+I'll take a look.  Thanks.
 
-> +
-> +  - patterns that match a directory do not recursively match paths
-> +    inside that directory (so using the trailing-slash `path/` syntax is
+  
+>> The thing I liked about the bottom-up construction is that it is easier
+>> to collect multiple sets in parallel and combine them during the final
+>> roll-up.  With the in-line nesting, you're tempted to try to construct
+>> the resulting JSON in a single series and that may not fit what the code
+>> is trying to do.  For example, if I wanted to collect an array of error
+>> messages as they are generated and an array of argv arrays and any alias
+>> expansions, then put together a final JSON string containing them and
+>> the final exit code, I'd need to build it in parts.  I can build these
+>> parts in pieces of JSON and combine them at the end -- or build up other
+>> similar data structures (string arrays, lists, or whatever) and then
+>> have a JSON conversion step.  But we can make it work both ways, I just
+>> wanted to keep it simpler.
+> 
+> Yeah, I agree that kind of bottom-up construction would be nice for some
+> cases. I'm mostly worried about inefficiency copying the strings over
+> and over as we build up the final output.  Maybe that's premature
+> worrying, though.
+> 
+> If the first_item thing isn't too painful, then it might be nice to have
+> both approaches available.
 
-Technically gitignore does not match paths inside either. It simply
-ignores the whole dir and not traverse in (which is more of an
-optimization than anything). That is coincidentally perceived as
-recursively ignoring. Anyway yes it's good to spell out the
-differences here for gitattributes.
+True.
 
-> +    pointless in an attributes file; use `path/**` instead)
+  
+>>> In general I'd really prefer to keep the shell script as the driver for
+>>> the tests, and have t/helper programs just be conduits. E.g., something
+>>> like:
+>>>
+>>>     cat >expect <<-\EOF &&
+>>>     {"key": "value", "foo": 42}
+>>>     EOF
+>>>     test-json-writer >actual \
+>>>       object_begin \
+>>>       object_append_string key value \
+>>>       object_append_int foo 42 \
+>>>       object_end &&
+>>>     test_cmp expect actual
+>>>
+>>> It's a bit tedious (though fairly mechanical) to expose the API in this
+>>> way, but it makes it much easier to debug, modify, or add tests later
+>>> on (for example, I had to modify the C program to find out that my
+>>> append example above wouldn't work).
+>>
+>> Yeah, I wasn't sure if such a simple api required exposing all that
+>> machinery to the shell or not.  And the api is fairly self-contained
+>> and not depending on a lot of disk/repo setup or anything, so my tests
+>> would be essentially static WRT everything else.
+>>
+>> With my t0019 script you should have been able use -x -v to see what
+>> was failing.
+> 
+> I was able to run the test-helper directly. The tricky thing is that I
+> had to write new C code to test my theory about how the API worked.
+> Admittedly that's not something most people would do regularly, but I
+> often seem to end up doing that kind of probing and debugging. Many
+> times I've found the more generic t/helper programs useful.
+> 
+> I also wonder if various parts of the system embrace JSON, if we'd want
+> to have a tool for generating it as part of other tests (e.g., to create
+> "expect" files).
 
-We probably could do this internally too (converting "path/" to
-"path/**") but we need to deal with corner cases (e.g. "path" without
-the trailing slash, but is a directory). So yes, suggesting the user
-to do it instead may be easier.
+Ok, let me see what I can come up with.
 
->
->  When deciding what attributes are assigned to a path, Git
->  consults `$GIT_DIR/info/attributes` file (which has the highest
-> --
-> 2.17.0.rc0.402.ged0b3fd1ee
->
+Thanks
+Jeff
 
-
-
--- 
-Duy
