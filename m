@@ -2,246 +2,359 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F2B731F404
-	for <e@80x24.org>; Tue, 20 Mar 2018 20:03:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 414071F404
+	for <e@80x24.org>; Tue, 20 Mar 2018 20:09:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751423AbeCTUD5 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Mar 2018 16:03:57 -0400
-Received: from mail-sn1nam01on0128.outbound.protection.outlook.com ([104.47.32.128]:9536
-        "EHLO NAM01-SN1-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1751269AbeCTUD4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Mar 2018 16:03:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=selector1; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
- bh=26RHfMlouEE2kAdNv+Ah0PqGcepxK/y+gJI2YTbMqv8=;
- b=X9aMov0sClS0PPpiJXOteTgLMARPD3yN3xB53PZYMihIGHysf5WIZtSSMKwBvH9/8rRYTeCz6l+mc9+tHrTuUTHHuX9FYFI///8kvE/H+qhaeAVkMBacg3POvRYY7HCgZ8uVfyWLcSYWoHJXYUlDeyREBnk7pwt61W4hVlzUQPk=
-Received: from stolee-linux-2.corp.microsoft.com
- (2001:4898:8010:0:eb4a:5dff:fe0f:730f) by
- SN6PR2101MB1023.namprd21.prod.outlook.com (2603:10b6:805:a::31) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.631.1; Tue, 20 Mar
- 2018 20:03:54 +0000
-From:   Derrick Stolee <dstolee@microsoft.com>
-To:     git@vger.kernel.org
-Cc:     jonathantanmy@google.com, stolee@gmail.com,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: [PATCH] sha1_name: use bsearch_hash() for abbreviations
-Date:   Tue, 20 Mar 2018 16:03:25 -0400
-Message-Id: <20180320200325.168147-1-dstolee@microsoft.com>
-X-Mailer: git-send-email 2.17.0.rc0
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [2001:4898:8010:0:eb4a:5dff:fe0f:730f]
-X-ClientProxiedBy: SN1PR12CA0048.namprd12.prod.outlook.com
- (2603:10b6:802:20::19) To SN6PR2101MB1023.namprd21.prod.outlook.com
- (2603:10b6:805:a::31)
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-HT: Tenant
-X-MS-Office365-Filtering-Correlation-Id: 704a0fca-9d5d-404f-b22a-08d58e9db533
-X-Microsoft-Antispam: UriScan:;BCL:0;PCL:0;RULEID:(7020095)(4652020)(48565401081)(5600026)(4604075)(4534165)(4627221)(201703031133081)(201702281549075)(2017052603328)(7193020);SRVR:SN6PR2101MB1023;
-X-Microsoft-Exchange-Diagnostics: 1;SN6PR2101MB1023;3:hxKYo84bQ1SJlyksl4f2AN2CtwgHWAQCHi2CBtdZEiCJ9dXdMVabFM9gqH6J8MYMcXXYaEV/rKHYs3E8JxvJaurZZn/jGGBE7ywANQZih+qKnE8e8gy7EVaFP5e+mx1iIJbS3MjTQKlUlZPW/Vvwoel2p6iE4k+kvSwPdOV1+nGPOtwJX0EK0XKBlBXSPDtQUpBQwplIgxwHdkfRQp+p2N+RSQlLuhpT/H+xDzNDvMJWfoIzzhwdN3hZmT2ZkP4Q;25:2bGvIxTNA4rO4/GoGfQUSxBhcmjq7tOq3BVEpt1gPNRZ2vHD2XQxIUMoMYhOWb5bucJc81KYOqD6d7E+kLp9CRpM/3XY+5xYJCSFNQSIqTW8CkIQOHjquhvxVdrxfcma125r3AO4Ze9AmNKU0d2dPp5bhMBzUiaqh5OvFBEMg1iHJAfPR7weRAHl/+roJ5bXg7augNYpPNQ9/lt+Fo08KqW2aa83w+y7li3J+njlOdDWsikmBFeVUdyhYfqtrjYAyIqUX42g/ElOvXH3ky+VzcZagwpDBqg83VJwZ06K8fB/3ttkkUzAHg7kUghv/zHdWTNWYNTYb/zV7HjkUl3Pug==;31:/Q+yD0zDRxt97o2wmM7+C1I14spOuts9cvFN9JRlRF53PFdDQYefMC6abuheSLaXvtBUPZwh6sVg25ctC8IXdYPus1t1p8ggX+kLCJEWn2TNTl3uAeVYVnAGH531CvW2GYnWMdLH8vlU78syXCBBY47ZeBcrJcbXPsqETi+UdR53lyBlhPldalJYcco3mSbUDvJLvVTUE9SEGyCv6tqI6DTdye/qrs1TGZ4HkMH/Oyc=
-X-MS-TrafficTypeDiagnostic: SN6PR2101MB1023:
-Authentication-Results: spf=none (sender IP is )
- smtp.mailfrom=dstolee@microsoft.com; 
-X-Microsoft-Exchange-Diagnostics: 1;SN6PR2101MB1023;20:TJ3m7MlRRDYXnlorg+h0BZ8/Y0KfTKPcQhjcX24oxz8XLICaGz4LioxGnKuv2omSW4mg4z0AhgkoPMxFKr6xB1HunnAbqvXzPckbeH10EKqryRltQlGwc+eOxvLalcsXcb5BbmPGMp0+JulcbL9YY4GY7qCzfMnnrzYl30eH4h86RyXkPQD4YyExNv4D/SVC3+kTpURWiRnUtnMMBK5d/lmYsPaLgB4gDuAHBRG0I1tCumUtg/TzbP56yHkOl0r3dCZiS9KDvA6qf2XPcY4chJsTWF9o4XpHOL/54F2faC5X68YsvhmCgCp2LeYw4cIv8sCncPwbYdpp+ucBAZJW5McyuVx2sk/raO9SC3f0vy8ptuXG4yhN1fqsxlpixoSYV7O+OYDZnxaT9yp9N5Jkk0sTk1y0uUkeLpNUwbSaZrKw0V8thJu0LFUwZR7CftoBGKp3UpLBHAjiNOrFKKTf3bq3eIiJJow5w/gTJtyZDKad2Wk0CABQ9XZ2iJDfzaYY;4:ZcIgOYVW8uO7rfWXWptqzdNUShlaEf/KZ/aUNwzBcs92g0kH5RsvEdX45qROVx4fl2uDx8DACVwMddhIYsK3w7tOG5G9gS3DLdc2xInSjnVxY/BuymUq5HCEyar7rrrZl/c41+SXNKTz8l4yGRLKexoGoSNVyL3gRpkzuVU0A6KbZwKnC5Xbj0adWTeF/zHVGKARCOqQo+eaxDVFQtYhwbuOZS31GdMUbmzWhIdjWgkl4BMXJ0Hgq+EBP+UMgGNcYDDz5VxpYPJoCUOQy6I60ayrV55jczdvzZ1LLcl4lNVylAUWnhtQrTVybCJSbshQDWYZ7crMjzRNVuZ91NGYtHlR0hq2TpthvWaQgagRjsSwuyJnxJ4UoJzJkXQHQFaO
-X-Microsoft-Antispam-PRVS: <SN6PR2101MB10237791C3E9FA67DD733CF2A1AB0@SN6PR2101MB1023.namprd21.prod.outlook.com>
-X-Exchange-Antispam-Report-Test: UriScan:(28532068793085)(89211679590171)(211936372134217);
-X-Exchange-Antispam-Report-CFA-Test: BCL:0;PCL:0;RULEID:(8211001083)(61425038)(6040522)(2401047)(5005006)(8121501046)(3002001)(3231221)(944501314)(52105095)(10201501046)(93006095)(93001095)(6055026)(61426038)(61427038)(6041310)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(20161123558120)(20161123564045)(20161123560045)(20161123562045)(6072148)(201708071742011);SRVR:SN6PR2101MB1023;BCL:0;PCL:0;RULEID:;SRVR:SN6PR2101MB1023;
-X-Forefront-PRVS: 061725F016
-X-Forefront-Antispam-Report: SFV:NSPM;SFS:(10019020)(376002)(39380400002)(346002)(39860400002)(366004)(396003)(51414003)(199004)(189003)(16526019)(386003)(305945005)(7736002)(86362001)(575784001)(1857600001)(5660300001)(107886003)(86612001)(10290500003)(966005)(2906002)(68736007)(46003)(97736004)(51416003)(105586002)(7696005)(22452003)(52116002)(478600001)(186003)(52396003)(6916009)(6666003)(1076002)(6116002)(4326008)(8676002)(39060400002)(50226002)(6486002)(81156014)(10090500001)(53936002)(8936002)(6306002)(16586007)(2351001)(81166006)(50466002)(2361001)(48376002)(25786009)(47776003)(36756003)(316002)(106356001);DIR:OUT;SFP:1102;SCL:1;SRVR:SN6PR2101MB1023;H:stolee-linux-2.corp.microsoft.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
-Received-SPF: None (protection.outlook.com: microsoft.com does not designate
- permitted sender hosts)
-X-Microsoft-Exchange-Diagnostics: =?us-ascii?Q?1;SN6PR2101MB1023;23:v/teO9mG87yqz4gv67PD5j1rux3ui2aX30Ske3S?=
- =?us-ascii?Q?4jZ681eoxMOan4DOO6BN7k65nN2jj0hpJgXxrxbPEsEbbICsxMx728rzT7v4?=
- =?us-ascii?Q?TlrlTn1fiasHFdl5Xbq0+VsNNM35fWSVF0Dy4eKa8pAhpIdhRPBvoVUXsAum?=
- =?us-ascii?Q?MB+7Nt4owFwLIJdyvdWKIQp9nZc3sefIhQf0OQfmO73RHDBUnKYhAE9CiRs4?=
- =?us-ascii?Q?voDdOEvisYmbpNZOjDHd9ndfXLHzpBzOk6YQPxhiMOSGZq2ueFzvN0msUCos?=
- =?us-ascii?Q?5p/Zy8k9jQtzN/npSFLTElW8QGGNY/vlnUjGPBQveOFdDqZcL9hkBNQHABr1?=
- =?us-ascii?Q?OTsEXHZBtAsioYy8CP7xQHZOOj/X88+LVDpE4p2+TCrHEzScGqMvZ8ID+2G/?=
- =?us-ascii?Q?TmKmqDKocXez33KDM6xYFOKjGpsWGy42/Y3dr0u36ltsUDSRGkellCwdBlcx?=
- =?us-ascii?Q?LUZjeADjbEVNG63BRqBZSPJi5rf0cIEvUxVsznM0yIIK0YSnhBzjdHK9GaqZ?=
- =?us-ascii?Q?YCRVQMizcukLqquM2Ma4ntS6fpIo2tZqv9m0bM/zdstJZ0yJP1oQaYXDuQ64?=
- =?us-ascii?Q?CFWOCOtOMhDOIMP7mKAhks5uEfUa87MWrkJPKnKyQP9ZkaIEhYV0+GkKpn8D?=
- =?us-ascii?Q?ECIMgSnDLAao4TZoQDaDJeT7Fdy1ygTTw6xcsYDumuQVf6rZxQxFTHwY1Ef5?=
- =?us-ascii?Q?qHtMVHiPkBcoBCUotGhmhIRBoolZKXgHFJLNJMqvhCzbEs4ShkAz20Vf+cSA?=
- =?us-ascii?Q?EZlRNP7bHHB/EWCDfdIY0Ek+YJpWrwQSdFkphTqn22FrCEHHDLadfIhF9Dcx?=
- =?us-ascii?Q?bQCJX3R4bq73VE3TEZISfblFEGgRxfU5chp24Id00pPfnxBoK/zCP6itizuW?=
- =?us-ascii?Q?du0TWzhv3dizTeJgDSBd4tsUB00nvbaHc1Vf6uupL5C8Wm0nxfY2NPqLE8by?=
- =?us-ascii?Q?OKvjbX+1ywBUl/oDd+6yL2IDP5xY7KgI4JPKRGr6TfRDKfWEEGsAYOOgWn15?=
- =?us-ascii?Q?yyxHQCUTP7k5PzSb6BGdGpKqJEesb1vK89bT4BmMmUcwlzkGoAOheNMqa+Dc?=
- =?us-ascii?Q?50oOFclbLepaTwn0bYen1dGp+f9maV4x41MJyiFpp29RWn9PB9/U21MXyAsH?=
- =?us-ascii?Q?uZngPyy2wYPVbAxE8q8JDe/jfmfIh6PWUTmQlLNAsfO8w/yBJz8ksF8G24w1?=
- =?us-ascii?Q?ZAisUsrIypozfu9rUxQxkvcndAvPLO19dtBd0mpEsn6ek7im6GoF+5SnPiRi?=
- =?us-ascii?Q?l3FU001YOTy7DqlKpKdMFGkH+aw8cAuJYRctOrKi+nnyFg4Frqu6qpSQqxvp?=
- =?us-ascii?Q?n2xx0qoLYF93JXl0D3zB2TFAVPHJQ4ch9YQkjcM7I27GU?=
-X-Microsoft-Antispam-Message-Info: 566iFW81CTXdxgLWUlF4sY1c6leN8KhznwLOGi/OcVs6jW37QR+/RUAo4Qp3NoJUptsoHgB0Hw/dPr/WIAWBwKYnuQI8KtDYuqS4yDTSe/8VM+6pNnNrfikAQ8SnAsVFk4Hm4MHu/frfFQNQxuvyOJ6uS2D5A9ewjnULr6rHtCqEcGdHFAyKah2lXX/rdbxU
-X-Microsoft-Exchange-Diagnostics: 1;SN6PR2101MB1023;6:Qk8VydvH9u8+w5eO3PuGhlVSUj1qAZTMssDYVa8nKEf/KrZrJenxcN/FZ7/Rx4NiA9ygCVO7WluOBjihSi4MLF2nZ0jCTEf3YbVgki/znBztXPUbcw2qtfyTFnkWVZ59jyBYIfAdI4715m7j6JUDpPJkG7ivSk/lkYguqazDfVN5qKzVHV/ab+gLd4f3hKa+VHcKKtkw65foV4us7bKia9HQY1ecVYgozGlJWAiJf/2qK2O9cD4jdG2m5s3uNEmtalOFqU3ia9SrEEn6naET6Uc1fmElMwy7sbJXkvv5jCe0ZbbY8DW3kPuxsi2K3GklXb58DtXwgAnm2KkkY2N35EL/Cc6VjnPQDPEvvPmiA1EtSkby6uBe9PdObKArDJBzE8AJh9Cw+jQNFpmaw1LgLoWrHV9az3rIS0juzaDOIHR8Wqczw5AWm5wFiFaq7+HYaOK/nFEADfu/nBJ0nek9HA==;5:rmBM+4EZJl9xgcLrgRMuZJfViuEBx+It+Lq7b+VTVKjHzekNwNY5nC2EENiZmQcm+6Pe4sreZwHIOlZB7S6tAAPfRsOxE76a86347nt7FWmw+vpEoPR5bcMfdXlS0EUxQW3eyrzvF42FebO0u63+2F1LYSBkjg/XntnHRzA0njM=;24:tQEf28afm6+tgeLZGJk38Mz7PedzuBPq8nYr9URs3VLNtwInjxdgjalrV6lRcikQiQlKiX2FZfuCew7t8vLXQx5N/kZORfjUHDE0FMb1hlg=
-SpamDiagnosticOutput: 1:99
-SpamDiagnosticMetadata: NSPM
-X-Microsoft-Exchange-Diagnostics: 1;SN6PR2101MB1023;7:BUeQnemzCEFIlFXBuH6WxXJXp90KPw2g9K1qjywGW00XeKAakjisquhC27Z50zkDB55jJCS1mw1sbbDiFPxdFjoPYXD9TGNJ0/rSXxqGVK5P+jkRAuifjSLFQzXE8Rs5g+LFpQYUbGzgifzpxAKkUpLaigbo2FNpP03azCLC9Bt7fCHC4GTxFl+8lmvike5V6rw+nm8FMCYJdbHo1ZhblsaQgFV8+HunXJs4Zy7OjzL4ye0UVTMmlgWib0Y6NwnY;20:IPl2AqHuHw8IM5BOLcgNpDM3sdYjVa+iLhc5aQrOtCCS4nMSJugOK2KG9a6LmY4tZZeFIQUp/06YZ5ytfcUvNqzMCXrspdfpjzVF9CRIVXbvwfsFmV1azGjrv5eiFJkcpea+Z/d+wvjmLsjRIdjBUGITLcWOrypfQHegYYSIb7A=
-X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Mar 2018 20:03:54.0404
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 704a0fca-9d5d-404f-b22a-08d58e9db533
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 72f988bf-86f1-41af-91ab-2d7cd011db47
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN6PR2101MB1023
+        id S1751416AbeCTUJ1 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Mar 2018 16:09:27 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:33733 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751317AbeCTUJ0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Mar 2018 16:09:26 -0400
+Received: by mail-wr0-f193.google.com with SMTP id z73so3013965wrb.0
+        for <git@vger.kernel.org>; Tue, 20 Mar 2018 13:09:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:subject:from:to:cc:date:mime-version
+         :content-transfer-encoding;
+        bh=RQ7CRohEDU/dkhtwdYjfxKkUjbR/pxk8FI8m/mJeJss=;
+        b=XZafoEi3gnPhL0sYn1+sBEr1e9/dM9ExbR9y/7v+sGpfWeyKumjgvtD82Z7CrKPajr
+         ivQMIoXrwXXbjnGGw4KRj0VT2wRiQ4qQbpMIj+Y0OAmwdwRRUYXF8PW8tAVxbo0DfBVN
+         4EW1hxgmnwMyDbUq3gh4uyNesurZw7b/Jligj0wh2yjTd2HIPu0ZMIBe31AFB9IwHgWq
+         fvJLEXd0ckuuqcbk0BiTbHwYNdaHfeH5iyiC7MMIdeObuacbh3NzNnpQ6nyPoXlwJiks
+         dRynORehw2jT4/WPKv2bSKeLCbk+I91fWfI+8DNjKAZjc3FJbpbZHKQqFq1zk3j08Kb4
+         ajaw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:mime-version
+         :content-transfer-encoding;
+        bh=RQ7CRohEDU/dkhtwdYjfxKkUjbR/pxk8FI8m/mJeJss=;
+        b=Ktzqvx6X9u9cUaeZTtmYsI/rgcywUSVQIVu8hAgVUp0KSNifGfqF27G9CzzlXaRrjP
+         /sqzKtU79CIKI57eD9GP5/XeRSedJRwbrSIQi9sZIodN0yLH1R6lqrCsmV7DQIs6ye4V
+         4GMnsoxkAmMywdHjZ7iG+Co8nlpK9zzFgbscEL73oyNTP7XgN5aCqZT7glgYn8E/EsLT
+         bO5wBl6f9+o5qRHS9KSDCsZQxPPymag/kaZ4+rgtcRSt234NAK6dndl82jRpQ5OxEmYf
+         aWrRKghlEMMGPY/oFL9fHlAGPH3FG6IEwBacgFsk6BtBQvRFSTf9uY0tr0y9ppI/jlMd
+         FXUw==
+X-Gm-Message-State: AElRT7EBuQT1MGPj3KpB8e5gItU+XsuL0voxmVINDp+naqJX1lGcjRMc
+        5akLUQk9sqjBibYx5kEyl4Z3RlKyl+E=
+X-Google-Smtp-Source: AG47ELt/K4WMQ/4vrtf+R5VqiMxHJdODEGZhDeOExr3rD7VS+qzw0EVkPRIftLQl69QIA6j0KbGXZw==
+X-Received: by 10.223.209.132 with SMTP id h4mr3232795wri.12.1521576564044;
+        Tue, 20 Mar 2018 13:09:24 -0700 (PDT)
+Received: from sebi-laptop ([92.55.154.10])
+        by smtp.googlemail.com with ESMTPSA id e53sm2972060wrg.34.2018.03.20.13.09.22
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 20 Mar 2018 13:09:23 -0700 (PDT)
+Message-ID: <1521576562.2188.10.camel@gmail.com>
+Subject: [GSoC] Convert =?UTF-8?Q?=E2=80=9Cgit?= =?UTF-8?Q?_stash=E2=80=9D?=
+ to builtin proposal
+From:   Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Johannes.Schindelin@gmx.de
+Date:   Tue, 20 Mar 2018 22:09:22 +0200
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.26.1-1 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This patch updates the abbreviation code to use bsearch_hash() as defined
-in [1]. It gets a nice speedup since the old implementation did not use
-the fanout table at all.
+Hello,
 
-One caveat about the patch: there is a place where I cast a sha1 hash
-into a struct object_id pointer. This is because the abbreviation code
-still uses 'const unsigned char *' instead of structs. I wanted to avoid
-a hashcpy() in these calls, but perhaps that is not too heavy a cost.
+I have completed the first draft of my proposal for the Google Summer
+of Code, which can be found at [1] or below for those who prefer the
+text version.
 
-I look forward to feedback on this.
+Any feedback is greatly appreciated. Thanks!
 
-Thanks,
--Stolee
+[1]
+https://docs.google.com/document/d/1TtdD7zgUsEOszHG5HX1at4zHMDsPmSBYWqy
+dOPTTpV8/edit?usp=sharing
 
-[1] https://public-inbox.org/git/007f3a4c84cb1c07255404ad1ea9f797129c5cf0.1517609773.git.jonathantanmy@google.com/
-    [PATCH 2/2] packfile: refactor hash search with fanout table
+Best regards,
+Paul-Sebastian Ungureanu
 
--- >8 --
+# Convert “git stash” to builtin
 
-When computing abbreviation lengths for an object ID against a single
-packfile, the method find_abbrev_len_for_pack() currently implements
-binary search. This is one of several implementations. One issue with
-this implementation is that it ignores the fanout table in the pack-
-index.
+# Name and Contact Information
+Hello! My name is Paul-Sebastian Ungureanu. I am currently a first year
+Computer Science & Engineering student at Politehnica University of
+Bucharest, Romania.
 
-Translate this binary search to use the existing bsearch_hash() method
-that correctly uses a fanout table. To keep the details about pack-
-index version 1 or 2 out of sha1_name.c, create a bsearch_pack() method
-in packfile.c.
+My email address is ungureanupaulsebastian@gmail.com and my phone
+number is [CENSORED]. You can also find me on #git IRC channel as
+ungps.
 
-Due to the use of the fanout table, the abbreviation computation is
-slightly faster than before. For a fully-repacked copy of the Linux
-repo, the following 'git log' commands improved:
+FLOSS manual recommends students to include in their proposal their
+postal address and mention a relative as a emergency contact. My
+permanent address is [CENSORED]. In case of an emergency, you may
+contact my brother, [CENSORED] by email at [CENSORED] or by phone at
+[CENSORED].
 
-* git log --oneline --parents --raw
-  Before: 66.83s
-  After:  64.85s
-  Rel %:  -2.9%
+# Synopsis
+Currently, many components of Git are still in the form of Shell or
+Perl scripts. This choice makes sense especially when considering how
+faster new features can be implemented in Shell and Perl scripts,
+rather than writing them in C. However, in production, where Git runs
+daily on millions of computers with distinct configurations (i.e.
+different operating systems) some problems appear (i.e. POSIX-to-
+Windows path conversion issues).
 
-* git log --oneline --parents
-  Before: 7.85s
-  After:  7.29s
-  Rel %: -7.1%
+The idea of this project is to take “git-stash.sh” and reimplement it
+in C. Apart from fixing compatibility issues and increasing the
+performance by going one step closer to native code, I believe this is
+an excellent excuse to fix long-standing bugs or implement new minor
+features.
 
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
- packfile.c  | 23 +++++++++++++++++++++++
- packfile.h  |  8 ++++++++
- sha1_name.c | 24 ++++--------------------
- 3 files changed, 35 insertions(+), 20 deletions(-)
+# Benefits to community
+The essential benefit brought by rewriting Git commands is the
+increased compatibility with a large number computers with distinct
+configuration. I believe that this project can have a positive impact
+on a large mass of developers around the world. By rewriting the code
+behind some popular commands and making them “built-in”, developers
+will have a better overall experience when using Git and get to focus
+on what really matters to them.
 
-diff --git a/packfile.c b/packfile.c
-index 7c1a2519fc..ea0388f6dd 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -1654,6 +1654,29 @@ void *unpack_entry(struct packed_git *p, off_t obj_offset,
- 	return data;
- }
- 
-+int bsearch_pack(const struct object_id *oid, const struct packed_git *p, uint32_t *result)
-+{
-+	const unsigned char *index_fanout = p->index_data;
-+	const unsigned char *index_lookup;
-+	int index_lookup_width;
-+
-+	if (!index_fanout)
-+		BUG("bsearch_pack called without a valid pack-index");
-+
-+	index_lookup = index_fanout + 4 * 256;
-+	if (p->index_version == 1) {
-+		index_lookup_width = 24;
-+		index_lookup += 4;
-+	} else {
-+		index_lookup_width = 20;
-+		index_fanout += 8;
-+		index_lookup += 8;
-+	}
-+
-+	return bsearch_hash(oid->hash, (const uint32_t*)index_fanout,
-+			    index_lookup, index_lookup_width, result);
-+}
-+
- const unsigned char *nth_packed_object_sha1(struct packed_git *p,
- 					    uint32_t n)
- {
-diff --git a/packfile.h b/packfile.h
-index a7fca598d6..ec08cb2bb0 100644
---- a/packfile.h
-+++ b/packfile.h
-@@ -78,6 +78,14 @@ extern struct packed_git *add_packed_git(const char *path, size_t path_len, int
-  */
- extern void check_pack_index_ptr(const struct packed_git *p, const void *ptr);
- 
-+/*
-+ * Perform binary search on a pack-index for a given oid. Packfile is expected to
-+ * have a valid pack-index.
-+ *
-+ * See 'bsearch_hash' for more information.
-+ */
-+int bsearch_pack(const struct object_id *oid, const struct packed_git *p, uint32_t *result);
-+
- /*
-  * Return the SHA-1 of the nth object within the specified packfile.
-  * Open the index if it is not already open.  The return value points
-diff --git a/sha1_name.c b/sha1_name.c
-index 735c1c0b8e..be3627b915 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -512,32 +512,16 @@ static void find_abbrev_len_for_pack(struct packed_git *p,
- 				     struct min_abbrev_data *mad)
- {
- 	int match = 0;
--	uint32_t num, last, first = 0;
-+	uint32_t num, first = 0;
- 	struct object_id oid;
-+	const struct object_id *mad_oid;
- 
- 	if (open_pack_index(p) || !p->num_objects)
- 		return;
- 
- 	num = p->num_objects;
--	last = num;
--	while (first < last) {
--		uint32_t mid = first + (last - first) / 2;
--		const unsigned char *current;
--		int cmp;
--
--		current = nth_packed_object_sha1(p, mid);
--		cmp = hashcmp(mad->hash, current);
--		if (!cmp) {
--			match = 1;
--			first = mid;
--			break;
--		}
--		if (cmp > 0) {
--			first = mid + 1;
--			continue;
--		}
--		last = mid;
--	}
-+	mad_oid = (const struct object_id *)mad->hash;
-+	match = bsearch_pack(mad_oid, p, &first);
- 
- 	/*
- 	 * first is now the position in the packfile where we would insert
--- 
-2.17.0.rc0
+As a side effect, there will be a number of other improvements:
+increased performance, ability to rethink the design of some code that
+suffered from patching along the time, have the chance to create new
+features and fix old bugs.
 
+In theory, switching from Bash or Shell scripts, Git will be one step
+closer to native code which should have a positive impact on the
+performance. Being able to start from a clean slate is a great
+opportunity to rethink old designs that may have been patched a lot
+during their lifetime. This way, with the help of my mentors, I can
+think of new ways to try and remove some limitations of the current
+system (if there are any).
+
+Moreover, I believe that the community will benefit greatly from new
+features and bug fixes that I could help with. Even though this is not
+really one of the main goals of this project, I believe that it would
+be easier to fix bugs or implement new features while rewriting the
+code. However, I will have to discuss with my mentors and carefully
+review issues as I would not want to divagate from the purpose of the
+project.
+
+As a last point, I believe it is good to have a more homogenous
+codebase, where the majority of the code would be written in C. This
+could increase the number of contributions to the project as there are
+maybe more programmers who are familiar with C, and not so much with
+Perl or shell scripting.
+
+# Deliverables
+Deliverable of this project is “git stash” completely rewritten in
+portable C code. Along with the new code, there will be some additions
+and changes brought to tests to cover any new behaviour.
+
+# Related work
+Looking over the list of the other proposed projects, I believe that
+“Convert interactive rebase to C” and “git bisect improvements” are the
+most alike with this project and may be stretch goal of this project.
+
+Moreover, there is a chance that other scripts could benefit from this
+project if it were to be taken as an example for future conversions.
+
+# Biographical information
+I am a freshman at Politehnica University of Bucharest, which is
+considered to be one of the most prestigious universities in the
+Eastern Europe. I consider myself an ambitious software engineer that
+enjoys competition. This has been proven by my participation to
+programming competitions and extracurricular projects. As much as I
+like competitions, I also love working with and meeting people that
+share my interests for programming and technology.
+
+Even though, in the last two years I found myself to be more interested
+in Android software development rather than competitive programming, I
+still take part in most of the competitions, such as contests organized
+by Google HashCode, Google KickStart and ACM.
+
+I have a good grasp of programming languages such as C and C++ and I
+consider both of them to be my favorites. In the past, I intensively
+used shell scripting and Git for some of my personal projects.
+
+One of the facts that motivates me the most is that I get the chance to
+improve my abilities by getting the code reviewed by professionals that
+have been in the industry for a long period of time. This way, I get
+first-hand experience regarding software management and increase my
+programming skills in a professional environment.
+
+Ultimately, I believe that being part of a community such as Git would
+be a great confidence boost for me knowing that I gave something back
+to an excellent piece of software that I am using on a daily basis.
+
+# Project Details
+* Plan for converting each command
+
+* Understand the command well: read documentation, discover any
+features I were not aware of, find out how it works and why it works
+that way.
+
+* Find out all edge and corner cases: these should be quite obvious as
+soon as I have a good understanding of how the command works.
+
+* Find out the history of the command and what future improvements can
+be made: history of the command will help me know what issues affected
+the command, how those issues were fixed and will help me avoid them in
+the future. As I mentioned before, I believe that reimplementing those
+commands is a great excuse to fix bugs and if there are any, I need to
+know about them.
+
+* Convert function: this step is basically makes up the goal of this
+project.
+
+* Ensure that no regression occurred: considering that there are plenty
+of tests and that I have a good understanding of the function, this
+should be a trivial task.
+
+* Finally write more tests to ensure best code coverage.
+
+# Potential difficulties during conversion
+The rewritten code may introduce new bugs that may be delaying the
+project. I believe there is a small chance this will happen as long as
+I spend some time first to fully understand how it works and why it
+works that way. Considering the amount of documentation already
+available and the discussions from the mailing list, this should be a
+trivial task. Moreover, I am already familiar with “git stash”.
+
+There may be old bugs, from the Shell scripts that would cause issues
+while porting because they would probably require a discussion about
+what implications the bug has and what is the best way to fix it.
+
+Most of the times, Shell scripts tend to be a lot more smaller and hide
+a lot of complexity. Moreover, new data structures or utility functions
+may be needed, some which exist and need changes or do not exist and
+need to be implemented from scratch.
+
+# Wrapping-up the project
+In the end, the old Shell script will serve only as a called to the
+stash-helper I would be implementing. The final step is to remove the
+Shell script and promote the stash-helper to stash builtin.
+
+# Useful resources
+There has been a lot of progress made in this direction already and I
+believe it will serve of great help. However, from my understanding it
+is not yet mergeable and it requires changes.
+
+https://public-inbox.org/git/20170608005535.13080-1-joel@teichroeb.net/
+T/#m8849c7ce0ad8516cc206dd6910b79591bf9b3acd
+
+# Project Schedule
+I can spend about 25 hours during the exam period (last half of May and
+the first half of June) and about 40 hours a week as soon as I am done
+with exams. I hope that by the start of the program (14th of May), I
+will have completed a good part of the project and that will compensate
+for the exam period.
+
+After Google Summer of Code ends, I will do my best to keep
+contributing to Git. Hopefully, all the work I proposed over the summer
+will be done and I will be able to move towards other areas, maybe by
+continuing converting other scripts to builtins or something else,
+depending on what are the priorities of the Git team.
+
+Google Summer of Code starts on 14th of May and lasts 13 weeks. I
+propose to convert one command per week. I actually do not expect each
+command to take exactly one week, some may be easier to convert and
+other may be more challenging, but I believe that the average time of
+conversion is around 1 week.
+
+I am expecting to submit a patch for every command that is converted.
+This way, I have well set milestones and results will be seen as soon
+as possible. Moreover, seeing my contributions getting merged will be a
+huge confidence boost to myself.
+
+Each “convert” phase of the project below is not only about converting
+from Shell to C, but also ensuring that everything is documented, there
+are enough tests and there are no regressions.
+
+14th May - 20th May     	- Convert "git stash list"
+21st May - 27th May     	- Convert "git stash show"
+28th May - 3rd June     	- Convert "git stash save"
+4th June - 10th June    	- Convert "git stash push"
+11th June - 17th June*  	- Convert "git stash apply"
+18th June - 24th June   	- Convert "git stash clear"
+25th June - 1st July    	- Convert "git stash create"
+2nd July - 8th July     	- Convert "git stash store"
+9th July - 15th July*  		- Convert "git stash drop"
+16th July - 22nd July    	- Convert "git stash pop"
+23rd July - 29th July      	- Convert "git stash branch"
+30th July - 5th August 		- Remove old Shell script.
+6th August - 12th August* 	- Wrap-up the project by writing more
+tests and documentation.
+12th August - forever 		- Pick up another project.
+
+* 1st, 2nd and 3rd mentor and student evaluation
+
+# Git contributions
+My first contribution to Git was to help making “git tag --contains
+<id>” les chatty if <id> is invalid. Looking over the list of available
+microprojects, there were a couple of microprojects which got my
+attention, but I picked this up because it seemed to be a long-standing 
+bug (I noticed it was approached by students in 2016, 2017 and now in
+2018). Thanks to the code reviews from the mailing list, after a few
+iterations I succeeded in coming up with a patch that not only fixed
+the mentioned problem, but also a few others that were having the same
+cause.
+
+It got merged in the proposed updates branch.
+
+I worked on only one project because I tried to achieve the best
+quality I could. Even after I submitted one patch that was good enough
+[7], I decided to try another approach that worked better in the end
+[8].
+
+First of all, I weighed the ideas mentioned at [9] and considered the
+second one to be the best. After a few iterations [1], [2], [3], [4],
+[5] and after Junio’s review I decided to try another approach and
+submitted another patch [6].
+
+I changed the approach, because this issue was affecting not only “git
+tag” command, but also “git for-each-ref”, “git branch” and many more.
+The new submission was based on Junio’s ideea and fixed the cause at a
+lower level than the previous patch.
+
+In order to make sure that the new code was 100% correct and
+familiarize myself with the testing system, I also write a new set of
+tests.
+
+[1]
+https://public-inbox.org/git/20180219212130.4217-1-ungureanupaulsebasti
+an@gmail.com/
+
+[2]
+https://public-inbox.org/git/20180223162557.31477-1-ungureanupaulsebast
+ian@gmail.com/
+
+[3]
+https://public-inbox.org/git/20180303210938.32474-1-ungureanupaulsebast
+ian@gmail.com/
+
+[4]
+https://public-inbox.org/git/20180306193116.23876-1-ungureanupaulsebast
+ian@gmail.com/
+
+[5]
+https://public-inbox.org/git/20180319185436.14309-1-ungureanupaulsebast
+ian@gmail.com/
+
+[6]
+https://public-inbox.org/git/20180320175005.18759-1-ungureanupaulsebast
+ian@gmail.com/T/#u
+
+[7]
+https://public-inbox.org/git/xmqqpo4ne8ud.fsf@gitster-ct.c.googlers.com
+/
+
+[8]
+https://public-inbox.org/git/xmqqefkm6s06.fsf@gitster-ct.c.googlers.com
+/
+
+[9]
+https://public-inbox.org/git/20160118215433.GB24136@sigill.intra.peff.n
+et/
