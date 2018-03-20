@@ -2,128 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E1E0A1F404
-	for <e@80x24.org>; Tue, 20 Mar 2018 04:28:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5DEE31F404
+	for <e@80x24.org>; Tue, 20 Mar 2018 04:32:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751480AbeCTE2F (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Mar 2018 00:28:05 -0400
-Received: from mail-oi0-f68.google.com ([209.85.218.68]:35312 "EHLO
-        mail-oi0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751031AbeCTE2E (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Mar 2018 00:28:04 -0400
-Received: by mail-oi0-f68.google.com with SMTP id x20-v6so11150oie.2
-        for <git@vger.kernel.org>; Mon, 19 Mar 2018 21:28:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=dakotahawkins.com; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=QN3ABdMPD/AKpqzT/Y3dun4foxWIoGNncIcOJchir9Q=;
-        b=G42kq95BWqEekCZuIJ/awhLHZ81Kq8o1GKM93Wpj9QJ6n+apbQIw+Snr2XkddrZoTR
-         GtMHdGD/WRE1BJawInwyyrg+zogP3+ox0EBU/hKNZwDus8upp7FQz/1T7lOE/MR9c/I/
-         V9SuKkh3ZUSum0atfNobey7w2lfQbvFHKbmfU=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=QN3ABdMPD/AKpqzT/Y3dun4foxWIoGNncIcOJchir9Q=;
-        b=t/IiZjMLkMOI4/3d8RefV2nn7sC86wRjIyczHJ9T34X1PH4RBPmfjowFCTNSEc4Rpp
-         s1wwAboReoDVTeouGkfXZB85iABrJ9TxXFiZd0Z6T4GauuRr1v3gILiIaUzdIE36uoxZ
-         nROqH56w7cZX7W0jYU2lShZ1wOoWhgbScq9YbxCSjSLkbX3/lLFqFZk4L+NqsQDx26nh
-         X5UAgB29Ctd1reoQ9g5ecu80D4gHArlee93PxP1qCXxKaGwqg96TDThDZn2Tp5dWlXdn
-         NNIBFbRuV3UD8+AGmhBMMQ/BJ7SWry+uSC+ehFcArbTNcyjYSvmT3gz7OR8T3sZ9OkZp
-         9D9Q==
-X-Gm-Message-State: AElRT7EP0V9fjq1SyRPAMhwyHHGOJUURXHqKOyEC/ntA4jPjnZ+c7faw
-        5qauWkNzU0cC1d77ZJGRYYoyOdAtQfovGPBf7zZFIg==
-X-Google-Smtp-Source: AG47ELuDKLA5vY6i0uYuJn/8VuoTJ3PmFZW1Jzm4JC8ttXIQ1/nOvZX7U/6GorGkE6xSe23EIVo437T+33itV6tt0VA=
-X-Received: by 10.202.11.1 with SMTP id 1mr5800267oil.157.1521520084271; Mon,
- 19 Mar 2018 21:28:04 -0700 (PDT)
+        id S1751308AbeCTEc2 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Mar 2018 00:32:28 -0400
+Received: from cloud.peff.net ([104.130.231.41]:35444 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1750968AbeCTEc1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Mar 2018 00:32:27 -0400
+Received: (qmail 30241 invoked by uid 109); 20 Mar 2018 04:32:28 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 20 Mar 2018 04:32:28 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 29050 invoked by uid 111); 20 Mar 2018 04:33:23 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 20 Mar 2018 00:33:23 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 20 Mar 2018 00:32:25 -0400
+Date:   Tue, 20 Mar 2018 00:32:25 -0400
+From:   Jeff King <peff@peff.net>
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        GIT Mailing-list <git@vger.kernel.org>
+Subject: Re: [PATCH 0/2] -Wuninitialized
+Message-ID: <20180320043225.GB13302@sigill.intra.peff.net>
+References: <8f6d8e2e-aba4-128c-f17c-6c1b9c12436c@ramsayjones.plus.com>
 MIME-Version: 1.0
-Received: by 2002:a9d:4a69:0:0:0:0:0 with HTTP; Mon, 19 Mar 2018 21:28:03
- -0700 (PDT)
-In-Reply-To: <20180320041454.GA15213@sigill.intra.peff.net>
-References: <CAHnyXxRX4+sMJCNG6f9xtsDO6bdqRS-U6TAYO47OKQjH8bGzbg@mail.gmail.com>
- <20180320023423.GA10143@sigill.intra.peff.net> <CAHnyXxRcwq40W4tKm=Kscrsnb77yh7=eGDE=r5AZq073MPX9AQ@mail.gmail.com>
- <20180320040411.GB12938@sigill.intra.peff.net> <20180320041454.GA15213@sigill.intra.peff.net>
-From:   Dakota Hawkins <dakota@dakotahawkins.com>
-Date:   Tue, 20 Mar 2018 00:28:03 -0400
-Message-ID: <CAHnyXxSOvU9aokdyo_UBcHPLeCSogyFCRjxXi9NkrmQbT0Qtig@mail.gmail.com>
-Subject: Re: [PATCH] doc/gitattributes: mention non-recursive behavior
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <8f6d8e2e-aba4-128c-f17c-6c1b9c12436c@ramsayjones.plus.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-That's perfect, thank you so much!
+On Mon, Mar 19, 2018 at 05:53:09PM +0000, Ramsay Jones wrote:
 
-On Tue, Mar 20, 2018 at 12:14 AM, Jeff King <peff@peff.net> wrote:
-> On Tue, Mar 20, 2018 at 12:04:11AM -0400, Jeff King wrote:
->
->> > I guess my takeaway is that it would be _good_ if the gitattributes
->> > documentation contained the caveat about not matching directories
->> > recursively, but _great_ if gitattributes and gitignore (and whatever
->> > else there is) were consistent.
->>
->> I agree it would be nice if they were consistent (and pathspecs, too).
->> But unfortunately at this point there's a maze of backwards
->> compatibility to deal with.
->
-> So let's not forget to do the easy half there. Here's a patch.
->
-> -- >8 --
-> Subject: [PATCH] doc/gitattributes: mention non-recursive behavior
->
-> The gitattributes documentation claims that the pattern
-> rules are largely the same as for gitignore. However, the
-> rules for recursion are different.
->
-> In an ideal world, we would make them the same (if for
-> nothing else than consistency and simplicity), but that
-> would create backwards compatibility issues. For some
-> discussion, see this thread:
->
->   https://public-inbox.org/git/slrnkldd3g.1l4.jan@majutsushi.net/
->
-> But let's at least document the differences instead of
-> actively misleading the user by claiming that they're the
-> same.
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  Documentation/gitattributes.txt | 13 ++++++++++---
->  1 file changed, 10 insertions(+), 3 deletions(-)
->
-> diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
-> index d52b254a22..1094fe2b5b 100644
-> --- a/Documentation/gitattributes.txt
-> +++ b/Documentation/gitattributes.txt
-> @@ -56,9 +56,16 @@ Unspecified::
->
->  When more than one pattern matches the path, a later line
->  overrides an earlier line.  This overriding is done per
-> -attribute.  The rules how the pattern matches paths are the
-> -same as in `.gitignore` files; see linkgit:gitignore[5].
-> -Unlike `.gitignore`, negative patterns are forbidden.
-> +attribute.
-> +
-> +The rules by which the pattern matches paths are the same as in
-> +`.gitignore` files (see linkgit:gitignore[5]), with a few exceptions:
-> +
-> +  - negative patterns are forbidden
-> +
-> +  - patterns that match a directory do not recursively match paths
-> +    inside that directory (so using the trailing-slash `path/` syntax is
-> +    pointless in an attributes file; use `path/**` instead)
->
->  When deciding what attributes are assigned to a path, Git
->  consults `$GIT_DIR/info/attributes` file (which has the highest
-> --
-> 2.17.0.rc0.402.ged0b3fd1ee
->
+> This series removes all 'self-initialised' variables (ie. <type> var = var;).
+> This construct has been used to silence gcc '-W[maybe-]uninitialized' warnings
+> in the past [1]. Unfortunately, this construct causes warnings to be issued by
+> MSVC [2], along with clang static analysis complaining about an 'Assigned value
+> is garbage or undefined'. The number of these constructs has dropped over the
+> years (eg. see [3] and [4]), so there are currently only 6 remaining in the
+> current codebase. As demonstrated below, 5 of these no longer cause gcc to
+> issue warnings.
+
+Great. I'm happy to see these going away, and thanks for all the careful
+digging.
+
+> If we now add a patch to remove all self-initialization, which would be the
+> first patch plus the obvious change to 'saved_namelen' in read-cache.c, then
+> note the warnings issued by various compilers at various optimization levels
+> on several different platforms [5]:
+> 
+>                     O0      O1      O2      O3      Os       Og
+>  1) gcc 4.8.3   |   -      1,20     1    1,18-19  1-4,21-23  1,5-17
+>  2) gcc 4.8.4   |   -      1,20     1       1     1-4,21-23  1,5-8,10-13,15-16 
+>  3) clang 3.4   |   -       -       -       -        -       n/a 
+>  4) gcc 5.4.0   |   -       1       1       1     1,3-4,21   1,5-8,10-13,16-16
+>  5) clang 3.8.0 |   -       -       -       -        -       n/a 
+>  6) gcc 5.4.0   |   -       1       1       1       1-4     1,5-17 
+>  7) clang 3.8.0 |   -       -       -       -        -       n/a 
+>  8) gcc 6.4.0   |   -       1       1    1,18-19    1,4     1,5-17
+>  9) clang 5.0.1 |   -       -       -       -        -        -
+> 10) gcc 7.2.1   |   -       1       1       1       1,4     1,5-17
+
+So I guess this could create headaches for people using DEVELOPER=1 on
+as ancient a compiler as 4.8.4, but most other people should be OK. I
+think I can live with that as a cutoff, and the Travis builds should
+work there.
+
+(And if we do the detect-compiler stuff from the other nearby thread,
+somebody who cares can even loosen the warnings for those old gcc
+versions).
+
+I'm neglecting anybody doing -O3 or -Os here, but IMHO those are
+sufficiently rare that the builder can tweak their own settings.
+
+I wonder if people use -Og, though? I don't (I usually do -O0 for my
+edit-compile-debug cycle).
+
+-Peff
