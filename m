@@ -2,101 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 58A1C1F404
-	for <e@80x24.org>; Tue, 20 Mar 2018 22:25:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E743A1F404
+	for <e@80x24.org>; Tue, 20 Mar 2018 22:31:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751396AbeCTWZJ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Mar 2018 18:25:09 -0400
-Received: from mail-pg0-f54.google.com ([74.125.83.54]:38594 "EHLO
-        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751334AbeCTWZI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Mar 2018 18:25:08 -0400
-Received: by mail-pg0-f54.google.com with SMTP id a15so1206886pgn.5
-        for <git@vger.kernel.org>; Tue, 20 Mar 2018 15:25:08 -0700 (PDT)
+        id S1751423AbeCTWbB (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Mar 2018 18:31:01 -0400
+Received: from mail-wm0-f47.google.com ([74.125.82.47]:32791 "EHLO
+        mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751334AbeCTWbA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Mar 2018 18:31:00 -0400
+Received: by mail-wm0-f47.google.com with SMTP id i189so3799302wmf.0
+        for <git@vger.kernel.org>; Tue, 20 Mar 2018 15:30:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=NhcHGU9yH1QWy1Ujo3Prsco7NqjPavlMl1fvVist9EM=;
-        b=wGmm/HfNuKbNlzQMPGqBwOr0gtBTlmuSl3pMq/xHwbnG+fRWgLyDnwz0C+9NkzvQoD
-         5B3pHL065zNricr2hHchqTfQBzLqAA+BKhhY2h4VShJMcH7/AVWujQd0hGiA42mUOiG/
-         Z2CkorQ22EAZZXfkvnCsTgpuMiLVdwjHchFA/qBaaQffIgCLLYZZh0m74/X/fzj77Pww
-         cd9wndzIlSVKoVO9Pb15VHIQO3BqnbhSBdU50jx+0Q5ZoPwjPPnGnEb6ZJBh1xcHHzeJ
-         mggvZOGg3tbsAGP6j5M+i/vrdaLlURucANTWfITL5od0iriAXbtfxfdSqV0n9EkMFFAJ
-         whog==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=nicaQNt8O4pUXSk05GpJ0UeqjYI4nHh+ktlakjSK+x8=;
+        b=DnTjPrGNtjhYCwZds050wRusDhF++IPpqZEgs39FlcnyGIakK8P8l9OQO4lYD/9Fo8
+         ihPTtartv3JzTyonCQ4I8aaSrSoYoX1AdDHGHRBWFcGKEMVTTZiWcCkWq5p8/bHce8n2
+         jKEBzSAcww8ZjY1jCiPNZXcJjxx2eX8L/E9UaCTSkga8QvVimnc1g+O7N6rDZCiP3RNT
+         BoS68oD+iXy75gAC7DWts7LxeeBL+ufHBJT5teAFzLkOuy6zJuxyPaaFBhEJsxadjrM9
+         qvt5C3dJZssq2TLj0J3yY02vDIukAh8YrWo6DqNDEUcP2diSgS+Zo0zpZ/Y+cJwK7fK/
+         RwAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=NhcHGU9yH1QWy1Ujo3Prsco7NqjPavlMl1fvVist9EM=;
-        b=CpMMVp/KHAz2lqH4T8b+GN2sLVFtdwYcn9bOHta475ZP023I9aq2eaSALHHNbNtxD5
-         LCBR3tbRpWiyoVD+A8OHJGpVelfmSsicNjWwsfLvjm4YIQNlcpFA3FI0RT4NTV8270f3
-         HjC7kGp5JRITrrQt09104StALkbfNinoijUOx+ortrJwxYclTm0QsCnjDWA6Ci25Q2+3
-         VBrZ/c1GnYclrOZIjepktZ0ClXsSwzynrIfIgeKdYDAaSDQyJMuWo7vx0LDLGAoRafEP
-         rJGMuVjU4MNJRiFLxcLe5eCn8hb3nMonirGrx4Q0JV3bGwQT0+YgOtOU6JFYFbG2qMNF
-         7AKQ==
-X-Gm-Message-State: AElRT7FIFvDorE4ee6MhIdZAe/1QAGWq0rp5Me2h6F9r1ZH4Pg7cUk+v
-        wShyeRx3wT6pJrJrA0WcXcNJEw==
-X-Google-Smtp-Source: AG47ELuO39Fd5VHK+lSmsyPzy8NtzzT6SVOCUbQaVfnZe1Nj41iumnb080WCKJ9cqVukyfb7dnC5TQ==
-X-Received: by 10.99.36.193 with SMTP id k184mr13182394pgk.80.1521584707476;
-        Tue, 20 Mar 2018 15:25:07 -0700 (PDT)
-Received: from twelve3.svl.corp.google.com ([2620:0:100e:422:ffac:c1d4:4bf7:bb93])
-        by smtp.gmail.com with ESMTPSA id q13sm4567377pgr.52.2018.03.20.15.25.05
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=nicaQNt8O4pUXSk05GpJ0UeqjYI4nHh+ktlakjSK+x8=;
+        b=VficHzqe4WVNSiFeBaM6jIsDnvWX3dbpgYvkAcbQaubDi8gPZVKku6e5iQfIxThXiE
+         aVPT2pBnP99axyRpEqy4z0gxanL5aEofnpysUCKdSe6mqJZ9QPw83GcYjGAh2D8B2yab
+         7qAmpTuzPlZlvP5OBxc+0o5f1qlrtlbanXbF6Ap5+uGRMoEqByCguKchub558PcqJwTB
+         VsIHYgMYQBgbGbliDM7jm46U4nXRgk0k62o4oq5LKKc53/nsi7+V1swl8teqn9i874bf
+         0MjqBosIzclVM0HC60YpgMNjegSsgG/abYzC/GCUH5HGqBWykgHTUd2UfshSXcwyEnyx
+         aC0A==
+X-Gm-Message-State: AElRT7GQCJUqTrv6jHHi4e1Wv5dUNmC6/OfEv1b20aIkl0ESSbuIL7qC
+        uyhVS78FXLukJJzL+5doW/s=
+X-Google-Smtp-Source: AG47ELsNV3C7fZef3YnsAxw0Y1nVYYmFT3SiPh0diPF6dKxPb0oWh2mshFvIM0/hUvtMRXPA2K2Mkw==
+X-Received: by 10.28.144.5 with SMTP id s5mr917255wmd.98.1521585058473;
+        Tue, 20 Mar 2018 15:30:58 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id k44sm3041260wrk.6.2018.03.20.15.30.57
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 20 Mar 2018 15:25:06 -0700 (PDT)
-Date:   Tue, 20 Mar 2018 15:25:05 -0700
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Derrick Stolee <dstolee@microsoft.com>
-Cc:     git@vger.kernel.org, stolee@gmail.com
-Subject: Re: [PATCH] sha1_name: use bsearch_hash() for abbreviations
-Message-Id: <20180320152505.bd66f0deaecf6d92fa6d62de@google.com>
-In-Reply-To: <20180320200325.168147-1-dstolee@microsoft.com>
-References: <20180320200325.168147-1-dstolee@microsoft.com>
-X-Mailer: Sylpheed 3.6.0 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+        Tue, 20 Mar 2018 15:30:57 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Olga Telezhnaya <olyatelezhnaya@gmail.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: [PATCH v4 5/5] ref-filter: get_ref_atom_value() error handling
+References: <01020162442818b4-c153f9ce-3813-41a6-aebd-f5cb2b98b1fa-000000@eu-west-1.amazonses.com>
+        <010201624428199f-b4b3d8ce-222f-4966-9171-7fcf932ca220-000000@eu-west-1.amazonses.com>
+        <CAPig+cSxGgG=1k95j+n4DZHBdtN++7F6_U5fu0gOcjwwPQ5GZw@mail.gmail.com>
+Date:   Tue, 20 Mar 2018 15:30:56 -0700
+In-Reply-To: <CAPig+cSxGgG=1k95j+n4DZHBdtN++7F6_U5fu0gOcjwwPQ5GZw@mail.gmail.com>
+        (Eric Sunshine's message of "Tue, 20 Mar 2018 14:19:11 -0400")
+Message-ID: <xmqqh8paqt0f.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 20 Mar 2018 16:03:25 -0400
-Derrick Stolee <dstolee@microsoft.com> wrote:
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-> This patch updates the abbreviation code to use bsearch_hash() as defined
-> in [1]. It gets a nice speedup since the old implementation did not use
-> the fanout table at all.
+> Overall, with the need for resource cleanup, this function becomes
+> unusually noisy after this change. It could be tamed by doing
+> something like this:
+>
+>     int ret = 0;
+>     void *buf = get_obj(oid, obj, &size, &eaten);
+>     if (!buf)
+>         ret = strbuf_error(_("missing object %s for %s"),
+>             oid_to_hex(oid), ref->refname);
+>     else if (!*obj)
+>         ret = strbuf_error(_("parse_object_buffer failed on %s for %s"),
+>             oid_to_hex(oid), ref->refname);
+>     else
+>         grab_values(ref->value, deref, *obj, buf, size);
+>    if (!eaten)
+>         free(buf);
+>     return ret;
 
-You can refer to the patch as:
+I have no idea what strbuf_error() that does not take any strbuf is
+doing, but I think you can initialize ret to -1 (i.e. assume the
+worst at the beginning), and then make the "ok, we didn't get any
+errors" case do
 
-  b4e00f7306a1 ("packfile: refactor hash search with fanout table",
-  2018-02-15)
+	else {
+		grab_values(...);
+		ret = 0;
+	}
 
-Also, might be worth noting that this patch builds on
-jt/binsearch-with-fanout.
-
-> One caveat about the patch: there is a place where I cast a sha1 hash
-> into a struct object_id pointer. This is because the abbreviation code
-> still uses 'const unsigned char *' instead of structs. I wanted to avoid
-> a hashcpy() in these calls, but perhaps that is not too heavy a cost.
-
-I recall a discussion that there were alignment issues with doing this,
-but I might have be remembering wrongly - in my limited knowledge of C
-alignment, both "unsigned char *" and "struct object_id *" have the same
-constraints, but I'm not sure.
-
-> +	const unsigned char *index_fanout = p->index_data;
-[snip]
-> +	return bsearch_hash(oid->hash, (const uint32_t*)index_fanout,
-> +			    index_lookup, index_lookup_width, result);
-
-This cast to "const uint32_t *" is safe, because p->index_data points to
-a mmap-ed region (which has very good alignment, as far as I know). I
-wonder if we should document alignment guarantees on p->index_data, and
-if yes, what guarantees to declare.
