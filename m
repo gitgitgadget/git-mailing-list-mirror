@@ -8,33 +8,33 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 982811F404
-	for <e@80x24.org>; Tue, 20 Mar 2018 16:05:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6FEA41F404
+	for <e@80x24.org>; Tue, 20 Mar 2018 16:05:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751745AbeCTQFH (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Mar 2018 12:05:07 -0400
-Received: from a7-19.smtp-out.eu-west-1.amazonses.com ([54.240.7.19]:56906
-        "EHLO a7-19.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751597AbeCTQFC (ORCPT
+        id S1751768AbeCTQFJ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Mar 2018 12:05:09 -0400
+Received: from a7-18.smtp-out.eu-west-1.amazonses.com ([54.240.7.18]:51682
+        "EHLO a7-18.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751424AbeCTQFC (ORCPT
         <rfc822;git@vger.kernel.org>); Tue, 20 Mar 2018 12:05:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
         s=uku4taia5b5tsbglxyj6zym32efj7xqv; d=amazonses.com; t=1521561901;
         h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-        bh=Gj2aoStMINMt61wGD1s2CBE0lDKEMBdrapB/eInZYCc=;
-        b=r/k35mrzdJ8Td0IWJdyEn3L3NQe8kBe3RTGykI4YvW3GbJgB0PebgPc3hJ1fbO6g
-        zMCfGN8xnBs5YN+KBUo1Mnt+a8eP64ex1kP+vh+ksEKR60uaVos1Xii8zjoNZzq3Z9y
-        RrMq6o79wDXPw3kV1PFNx9YdU5Kikz0XDgF1INC8=
+        bh=ssGNT45bE96apAO2eDmQzv8h8AF/peBCXe+tfKuHX/E=;
+        b=b2vtXPYai0fS8XODZ+/FZcO5qISXlMCF1vMKZdQN0fWtMbzSlPZKu+M1fWGDlgRp
+        hI+PtgtSkw+pkse7WpzF7UmtwYe+A8Jyml0Lm30zhBMJIICJWcZhtXxel6ZTF9uONFP
+        1jQGVEUkwtoXIqGXDHUKjg/a/OK863LRes+flrYU=
 From:   Olga Telezhnaya <olyatelezhnaya@gmail.com>
 To:     git@vger.kernel.org
-Message-ID: <010201624428192e-dc81bfca-3acb-4c31-9d4c-1cf2adaee49d-000000@eu-west-1.amazonses.com>
+Message-ID: <010201624428190c-441272b2-bc7d-42af-82f8-6a805bb27f6c-000000@eu-west-1.amazonses.com>
 In-Reply-To: <01020162442818b4-c153f9ce-3813-41a6-aebd-f5cb2b98b1fa-000000@eu-west-1.amazonses.com>
 References: <01020162442818b4-c153f9ce-3813-41a6-aebd-f5cb2b98b1fa-000000@eu-west-1.amazonses.com>
-Subject: [PATCH v4 3/5] ref-filter: change parsing function error handling
+Subject: [PATCH v4 2/5] ref-filter: add return value && strbuf to handlers
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
 Date:   Tue, 20 Mar 2018 16:05:01 +0000
-X-SES-Outgoing: 2018.03.20-54.240.7.19
+X-SES-Outgoing: 2018.03.20-54.240.7.18
 Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -44,114 +44,200 @@ X-Mailing-List: git@vger.kernel.org
 Continue removing die() calls from ref-filter formatting logic,
 so that it could be used by other commands.
 
-Change the signature of parse_ref_filter_atom() by adding
-strbuf parameter for error message.
-The function returns the position in the used_atom[] array
-(as before) for the given atom, or -1 to signal an error (there
-could be more negative error codes further if necessary).
-Upon failure, error message is appended to the strbuf.
+Change the signature of handlers by adding return value
+and strbuf parameter for errors.
+Return value equals 0 upon success and -1 upon failure (there could be
+more error codes further if necessary). Upon failure, error message is
+appended to the strbuf.
 
 Signed-off-by: Olga Telezhnaia <olyatelezhnaya@gmail.com>
 ---
- ref-filter.c | 36 ++++++++++++++++++++++++++----------
- 1 file changed, 26 insertions(+), 10 deletions(-)
+ ref-filter.c | 71 ++++++++++++++++++++++++++++++++++++++++--------------------
+ 1 file changed, 48 insertions(+), 23 deletions(-)
 
 diff --git a/ref-filter.c b/ref-filter.c
-index d120360104806..2313a33f0baa4 100644
+index 54fae00bdd410..d120360104806 100644
 --- a/ref-filter.c
 +++ b/ref-filter.c
-@@ -397,7 +397,8 @@ struct atom_value {
-  * Used to parse format string and sort specifiers
-  */
- static int parse_ref_filter_atom(const struct ref_format *format,
--				 const char *atom, const char *ep)
-+				 const char *atom, const char *ep,
-+				 struct strbuf *err)
- {
- 	const char *sp;
- 	const char *arg;
-@@ -406,8 +407,10 @@ static int parse_ref_filter_atom(const struct ref_format *format,
- 	sp = atom;
- 	if (*sp == '*' && sp < ep)
- 		sp++; /* deref */
--	if (ep <= sp)
--		die(_("malformed field name: %.*s"), (int)(ep-atom), atom);
-+	if (ep <= sp) {
-+		strbuf_addf(err, _("malformed field name: %.*s"), (int)(ep-atom), atom);
-+		return -1;
-+	}
+@@ -387,7 +387,8 @@ struct ref_formatting_state {
  
- 	/* Do we have the atom already used elsewhere? */
- 	for (i = 0; i < used_atom_cnt; i++) {
-@@ -432,8 +435,10 @@ static int parse_ref_filter_atom(const struct ref_format *format,
- 			break;
+ struct atom_value {
+ 	const char *s;
+-	void (*handler)(struct atom_value *atomv, struct ref_formatting_state *state);
++	int (*handler)(struct atom_value *atomv, struct ref_formatting_state *state,
++		       struct strbuf *err);
+ 	uintmax_t value; /* used for sorting when not FIELD_STR */
+ 	struct used_atom *atom;
+ };
+@@ -481,7 +482,8 @@ static void quote_formatting(struct strbuf *s, const char *str, int quote_style)
  	}
- 
--	if (ARRAY_SIZE(valid_atom) <= i)
--		die(_("unknown field name: %.*s"), (int)(ep-atom), atom);
-+	if (ARRAY_SIZE(valid_atom) <= i) {
-+		strbuf_addf(err, _("unknown field name: %.*s"), (int)(ep-atom), atom);
-+		return -1;
-+	}
- 
- 	/* Add it in, including the deref prefix */
- 	at = used_atom_cnt;
-@@ -725,17 +730,21 @@ int verify_ref_format(struct ref_format *format)
- 
- 	format->need_color_reset_at_eol = 0;
- 	for (cp = format->format; *cp && (sp = find_next(cp)); ) {
-+		struct strbuf err = STRBUF_INIT;
- 		const char *color, *ep = strchr(sp, ')');
- 		int at;
- 
- 		if (!ep)
- 			return error(_("malformed format string %s"), sp);
- 		/* sp points at "%(" and ep points at the closing ")" */
--		at = parse_ref_filter_atom(format, sp + 2, ep);
-+		at = parse_ref_filter_atom(format, sp + 2, ep, &err);
-+		if (at < 0)
-+			die("%s", err.buf);
- 		cp = ep + 1;
- 
- 		if (skip_prefix(used_atom[at].name, "color:", &color))
- 			format->need_color_reset_at_eol = !!strcmp(color, "reset");
-+		strbuf_release(&err);
- 	}
- 	if (format->need_color_reset_at_eol && !want_color(format->use_color))
- 		format->need_color_reset_at_eol = 0;
-@@ -2154,13 +2163,15 @@ int format_ref_array_item(struct ref_array_item *info,
- 
- 	for (cp = format->format; *cp && (sp = find_next(cp)); cp = ep + 1) {
- 		struct atom_value *atomv;
-+		int pos;
- 
- 		ep = strchr(sp, ')');
- 		if (cp < sp)
- 			append_literal(cp, sp, &state);
--		get_ref_atom_value(info,
--				   parse_ref_filter_atom(format, sp + 2, ep),
--				   &atomv);
-+		pos = parse_ref_filter_atom(format, sp + 2, ep, error_buf);
-+		if (pos < 0)
-+			return -1;
-+		get_ref_atom_value(info, pos, &atomv);
- 		if (atomv->handler(atomv, &state, error_buf))
- 			return -1;
- 	}
-@@ -2215,7 +2226,12 @@ static int parse_sorting_atom(const char *atom)
- 	 */
- 	struct ref_format dummy = REF_FORMAT_INIT;
- 	const char *end = atom + strlen(atom);
--	return parse_ref_filter_atom(&dummy, atom, end);
-+	struct strbuf err = STRBUF_INIT;
-+	int res = parse_ref_filter_atom(&dummy, atom, end, &err);
-+	if (res < 0)
-+		die("%s", err.buf);
-+	strbuf_release(&err);
-+	return res;
  }
  
- /*  If no sorting option is given, use refname to sort as default */
+-static void append_atom(struct atom_value *v, struct ref_formatting_state *state)
++static int append_atom(struct atom_value *v, struct ref_formatting_state *state,
++		       struct strbuf *unused_err)
+ {
+ 	/*
+ 	 * Quote formatting is only done when the stack has a single
+@@ -493,6 +495,7 @@ static void append_atom(struct atom_value *v, struct ref_formatting_state *state
+ 		quote_formatting(&state->stack->output, v->s, state->quote_style);
+ 	else
+ 		strbuf_addstr(&state->stack->output, v->s);
++	return 0;
+ }
+ 
+ static void push_stack_element(struct ref_formatting_stack **stack)
+@@ -527,7 +530,8 @@ static void end_align_handler(struct ref_formatting_stack **stack)
+ 	strbuf_release(&s);
+ }
+ 
+-static void align_atom_handler(struct atom_value *atomv, struct ref_formatting_state *state)
++static int align_atom_handler(struct atom_value *atomv, struct ref_formatting_state *state,
++			      struct strbuf *unused_err)
+ {
+ 	struct ref_formatting_stack *new_stack;
+ 
+@@ -535,6 +539,7 @@ static void align_atom_handler(struct atom_value *atomv, struct ref_formatting_s
+ 	new_stack = state->stack;
+ 	new_stack->at_end = end_align_handler;
+ 	new_stack->at_end_data = &atomv->atom->u.align;
++	return 0;
+ }
+ 
+ static void if_then_else_handler(struct ref_formatting_stack **stack)
+@@ -572,7 +577,8 @@ static void if_then_else_handler(struct ref_formatting_stack **stack)
+ 	free(if_then_else);
+ }
+ 
+-static void if_atom_handler(struct atom_value *atomv, struct ref_formatting_state *state)
++static int if_atom_handler(struct atom_value *atomv, struct ref_formatting_state *state,
++			   struct strbuf *unused_err)
+ {
+ 	struct ref_formatting_stack *new_stack;
+ 	struct if_then_else *if_then_else = xcalloc(sizeof(struct if_then_else), 1);
+@@ -584,6 +590,7 @@ static void if_atom_handler(struct atom_value *atomv, struct ref_formatting_stat
+ 	new_stack = state->stack;
+ 	new_stack->at_end = if_then_else_handler;
+ 	new_stack->at_end_data = if_then_else;
++	return 0;
+ }
+ 
+ static int is_empty(const char *s)
+@@ -596,19 +603,24 @@ static int is_empty(const char *s)
+ 	return 1;
+ }
+ 
+-static void then_atom_handler(struct atom_value *atomv, struct ref_formatting_state *state)
++static int then_atom_handler(struct atom_value *atomv, struct ref_formatting_state *state,
++			     struct strbuf *err)
+ {
+ 	struct ref_formatting_stack *cur = state->stack;
+ 	struct if_then_else *if_then_else = NULL;
+ 
+ 	if (cur->at_end == if_then_else_handler)
+ 		if_then_else = (struct if_then_else *)cur->at_end_data;
+-	if (!if_then_else)
+-		die(_("format: %%(then) atom used without an %%(if) atom"));
+-	if (if_then_else->then_atom_seen)
+-		die(_("format: %%(then) atom used more than once"));
+-	if (if_then_else->else_atom_seen)
+-		die(_("format: %%(then) atom used after %%(else)"));
++	if (!if_then_else) {
++		strbuf_addstr(err, _("format: %(then) atom used without an %(if) atom"));
++		return -1;
++	} else if (if_then_else->then_atom_seen) {
++		strbuf_addstr(err, _("format: %(then) atom used more than once"));
++		return -1;
++	} else if (if_then_else->else_atom_seen) {
++		strbuf_addstr(err, _("format: %(then) atom used after %(else)"));
++		return -1;
++	}
+ 	if_then_else->then_atom_seen = 1;
+ 	/*
+ 	 * If the 'equals' or 'notequals' attribute is used then
+@@ -624,34 +636,44 @@ static void then_atom_handler(struct atom_value *atomv, struct ref_formatting_st
+ 	} else if (cur->output.len && !is_empty(cur->output.buf))
+ 		if_then_else->condition_satisfied = 1;
+ 	strbuf_reset(&cur->output);
++	return 0;
+ }
+ 
+-static void else_atom_handler(struct atom_value *atomv, struct ref_formatting_state *state)
++static int else_atom_handler(struct atom_value *atomv, struct ref_formatting_state *state,
++			     struct strbuf *err)
+ {
+ 	struct ref_formatting_stack *prev = state->stack;
+ 	struct if_then_else *if_then_else = NULL;
+ 
+ 	if (prev->at_end == if_then_else_handler)
+ 		if_then_else = (struct if_then_else *)prev->at_end_data;
+-	if (!if_then_else)
+-		die(_("format: %%(else) atom used without an %%(if) atom"));
+-	if (!if_then_else->then_atom_seen)
+-		die(_("format: %%(else) atom used without a %%(then) atom"));
+-	if (if_then_else->else_atom_seen)
+-		die(_("format: %%(else) atom used more than once"));
++	if (!if_then_else) {
++		strbuf_addstr(err, _("format: %(else) atom used without an %(if) atom"));
++		return -1;
++	} else if (!if_then_else->then_atom_seen) {
++		strbuf_addstr(err, _("format: %(else) atom used without a %(then) atom"));
++		return -1;
++	} else if (if_then_else->else_atom_seen) {
++		strbuf_addstr(err, _("format: %(else) atom used more than once"));
++		return -1;
++	}
+ 	if_then_else->else_atom_seen = 1;
+ 	push_stack_element(&state->stack);
+ 	state->stack->at_end_data = prev->at_end_data;
+ 	state->stack->at_end = prev->at_end;
++	return 0;
+ }
+ 
+-static void end_atom_handler(struct atom_value *atomv, struct ref_formatting_state *state)
++static int end_atom_handler(struct atom_value *atomv, struct ref_formatting_state *state,
++			    struct strbuf *err)
+ {
+ 	struct ref_formatting_stack *current = state->stack;
+ 	struct strbuf s = STRBUF_INIT;
+ 
+-	if (!current->at_end)
+-		die(_("format: %%(end) atom used without corresponding atom"));
++	if (!current->at_end) {
++		strbuf_addstr(err, _("format: %(end) atom used without corresponding atom"));
++		return -1;
++	}
+ 	current->at_end(&state->stack);
+ 
+ 	/*  Stack may have been popped within at_end(), hence reset the current pointer */
+@@ -668,6 +690,7 @@ static void end_atom_handler(struct atom_value *atomv, struct ref_formatting_sta
+ 	}
+ 	strbuf_release(&s);
+ 	pop_stack_element(&state->stack);
++	return 0;
+ }
+ 
+ /*
+@@ -2138,7 +2161,8 @@ int format_ref_array_item(struct ref_array_item *info,
+ 		get_ref_atom_value(info,
+ 				   parse_ref_filter_atom(format, sp + 2, ep),
+ 				   &atomv);
+-		atomv->handler(atomv, &state);
++		if (atomv->handler(atomv, &state, error_buf))
++			return -1;
+ 	}
+ 	if (*cp) {
+ 		sp = cp + strlen(cp);
+@@ -2147,7 +2171,8 @@ int format_ref_array_item(struct ref_array_item *info,
+ 	if (format->need_color_reset_at_eol) {
+ 		struct atom_value resetv;
+ 		resetv.s = GIT_COLOR_RESET;
+-		append_atom(&resetv, &state);
++		if (append_atom(&resetv, &state, error_buf))
++			return -1;
+ 	}
+ 	if (state.stack->prev) {
+ 		strbuf_addstr(error_buf, _("format: %(end) atom missing"));
 
 --
 https://github.com/git/git/pull/466
