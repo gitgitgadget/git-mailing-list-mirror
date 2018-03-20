@@ -2,115 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2669A1F404
-	for <e@80x24.org>; Tue, 20 Mar 2018 15:58:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9B7261F404
+	for <e@80x24.org>; Tue, 20 Mar 2018 16:04:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751609AbeCTP6R (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Mar 2018 11:58:17 -0400
-Received: from cloud.peff.net ([104.130.231.41]:36060 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751553AbeCTP6Q (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Mar 2018 11:58:16 -0400
-Received: (qmail 25562 invoked by uid 109); 20 Mar 2018 15:58:16 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 20 Mar 2018 15:58:16 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 382 invoked by uid 111); 20 Mar 2018 15:59:12 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 20 Mar 2018 11:59:12 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 20 Mar 2018 11:58:14 -0400
-Date:   Tue, 20 Mar 2018 11:58:14 -0400
-From:   Jeff King <peff@peff.net>
-To:     phillip.wood@dunelm.org.uk
-Cc:     Brian Henderson <henderson.bj@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [BUG] log --graph corrupts patch
-Message-ID: <20180320155814.GA32366@sigill.intra.peff.net>
-References: <897b7471-037a-78d9-fc11-0624ef657b4d@talktalk.net>
- <20180320060931.GE15813@sigill.intra.peff.net>
- <1e686ea0-90ac-f3f4-7bcf-6951c9253598@talktalk.net>
+        id S1751512AbeCTQEW (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Mar 2018 12:04:22 -0400
+Received: from mail-ot0-f174.google.com ([74.125.82.174]:38014 "EHLO
+        mail-ot0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751394AbeCTQEV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Mar 2018 12:04:21 -0400
+Received: by mail-ot0-f174.google.com with SMTP id 95-v6so2293774ote.5
+        for <git@vger.kernel.org>; Tue, 20 Mar 2018 09:04:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=e6g1ul105XG/USGI866QKGdSQVOTwaeXcqJJi8dHZAw=;
+        b=C/9ZzbWJmmZchtzHhjrhvRakoBAvamS1FzZ7+iQGLE+zqVuVzzS+8O6dlXsU0CBVAc
+         JmgpAwY5aSR/25hLJueSvcAsew37JA08KaUPZRsXSiCHsW5d3q8S/lYDiKQlQiZcI0OP
+         Mz8/oPykwP9s2lNis/+pn8bTROGyt0ZmuX4kI4o1zY9OgEbSAol1mx+V1/FQI9MdAfm+
+         GhiP5f/306Vwo6qkzjoJUO84dSHelDhC1mPYuE//MhASSQOi24tLNb19D7OeQ6e5PsoZ
+         nKvIfB9EzjoNwE/frNFgH+AZa/Zd7uMSLTXwt955YF3SzgYq6qS4XqDWUFTD+EnqQdc2
+         GDmg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=e6g1ul105XG/USGI866QKGdSQVOTwaeXcqJJi8dHZAw=;
+        b=CGPOruMXyy9p/X6hbkNS30VoCiIYKo2cn7SwLv9NXR1SCL59/HagTAm77ll2zpvNCd
+         QYHBMER7PgRbVEW0PaLrtDgwlG8kk+GUzl937qN0hx2MC77QWuoX8GZO4nk3TuhTUfkF
+         kXEq0NMZkdLGfqFrTnVt13LC44oK+i8xR733WiNC409dBuQ+tiMgy2gQ5feneVPDM5qh
+         UMDJ5OmpijtdJI/ex/ygjrxcV87zpqCbyF95q7nGtqkV1iXBzKBMQeM6Cy3YavLyFcfC
+         SnHFtwFZDon93TFx6DD+tgjtW5dTRUnpa6vzBGwbv1c4MXp9kDv5ZalqD0phlTXbAytT
+         RgTQ==
+X-Gm-Message-State: AElRT7E2vHKm5+Nl3fXF4tEzKtQ19vJjgSF9+C22pqJ2hsK0ZSq+1kzi
+        DYnGGWzBwLMf2RpkncAXbYOJRVx5bB5E37dcx94=
+X-Google-Smtp-Source: AG47ELsF4pIQ/XDzl/Tp5k4efqfz1sqnu34yBpM8rW7L4v/KLtsYqvAEjWi6Uzk0zgQ865+e2WL/PvsmqYrj1pIeTWw=
+X-Received: by 2002:a9d:ae9:: with SMTP id 96-v6mr11363102otq.75.1521561860786;
+ Tue, 20 Mar 2018 09:04:20 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1e686ea0-90ac-f3f4-7bcf-6951c9253598@talktalk.net>
+Received: by 10.74.154.146 with HTTP; Tue, 20 Mar 2018 09:03:50 -0700 (PDT)
+In-Reply-To: <f301d093-af93-016b-79b9-3102475260cf@arlut.utexas.edu>
+References: <f301d093-af93-016b-79b9-3102475260cf@arlut.utexas.edu>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Tue, 20 Mar 2018 17:03:50 +0100
+Message-ID: <CACsJy8ABgZy=eJ7niUysb2XZ3qUr3J+jmh_5YWZ1ZDiFCrb0tA@mail.gmail.com>
+Subject: Re: Understanding Binary Deltas within Packfile
+To:     Luke Robison <robison@arlut.utexas.edu>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 20, 2018 at 09:58:14AM +0000, Phillip Wood wrote:
+On Tue, Mar 20, 2018 at 4:43 PM, Luke Robison <robison@arlut.utexas.edu> wrote:
+> Is there any documentation of the contents of the binary delta datain a
+> packfile, and how to interpret them?  I found
+> https://github.com/git/git/blob/master/Documentation/technical/pack-format.txt
+> documenting the packfile itself, but the "compressed delta data" seems
+> largely undocumented.  The source code of
+> https://github.com/git/git/blob/master/diff-delta.c is pretty dense.
 
-> > Are you using any exotic filters for your pager? If you use "git
-> > --no-pager" does the problem persist?
-> 
-> Hi Peff, thanks for taking the time to check this, I had forgotten about
-> the pager. I'm using diff-highlight and it seems that is causing the
-> problems.
+The output is consumed by patch_delta()  in patch-delta.c if I'm not
+mistaken. This function is less than 100 lines, probably much easier
+to see the delta format.
 
-Heh. Lucky guess. Unsurprisingly, I use diff-highlight, too. But I did
-not see it because I never bothered to upgrade my personal copy of the
-script, which has been working for me for ages, to the one in contrib/.
+>  This
+> is what I've got so for:
+>
+> +-------------+
+> | Varint src_size
+> | Varint trg_size
+> | 1-byte inscnt
+> | N-bytes up to 16 bytes of trg_buf
+> |
+> | A series of Operations
+> |
+> +-------------
+>
+>
+> Any details on how to interpret the opcodes would be greatly appreciated.
+>
+> Thanks,
+> Luke
+>
 
-But indeed, I can easily reproduce the problem with that version of the
-script. Here's a pretty minimal reproduction:
 
--- >8 --
 
-cat >bad <<\EOF
-* commit whatever
-| other stuff irrelevant
-|
-| diff --git a/foo b/foo
-| --- a/foo
-| --- b/foo
-| @@ -100,6 +100,9
-|  some
-|  context
-|  lines
-| +some
-| +new
-| +lines
-|  -context line with a leading minus
-|  and other
-|  context
-EOF
-
-contrib/diff-highlight/diff-highlight <bad
-
--- 8< --
-
-which produce:
-
-...
-|  -context line with a leading minus
-| +some
-| +new
-| +lines
-...
-
-The issue bisects to 7e4ffb4c17 (diff-highlight: add support for --graph
-output, 2016-08-29). I think the problem is the "\s+" at the end of the
-$GRAPH regex, which soaks up the space for the context, and accidentally
-treats the "-" line as a preimage removal.
-
-But just switching that to "\s" doesn't quite work. We may have an
-arbitrary number of spaces between the graph ascii-art and the diff.
-E.g., if you have a commit at the base of a branch (the test in
-contrib/diff-highlight shows this case).
-
-So I think you'd have to record the indent of the previous hunk header,
-and then make sure that the indent matched that. But even there, I think
-we're subject to false positives if a commit message contains a hunk
-header (it's indented an extra 4 characters, but we'd accidentally soak
-that up thinking it was graph indentation).
-
-To make it bullet-proof, I think we'd have to actually parse the graph
-structure, finding a "*" line and then accepting only an indent that
-matched it.
-
--Peff
+-- 
+Duy
