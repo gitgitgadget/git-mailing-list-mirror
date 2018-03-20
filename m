@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 31A8E1F42D
-	for <e@80x24.org>; Tue, 20 Mar 2018 06:37:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AC15D1F42D
+	for <e@80x24.org>; Tue, 20 Mar 2018 06:40:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752308AbeCTGhK (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Mar 2018 02:37:10 -0400
-Received: from mail-qk0-f193.google.com ([209.85.220.193]:36552 "EHLO
-        mail-qk0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751601AbeCTGhG (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Mar 2018 02:37:06 -0400
-Received: by mail-qk0-f193.google.com with SMTP id d206so521139qkb.3
-        for <git@vger.kernel.org>; Mon, 19 Mar 2018 23:37:06 -0700 (PDT)
+        id S1751583AbeCTGkD (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Mar 2018 02:40:03 -0400
+Received: from mail-qt0-f193.google.com ([209.85.216.193]:41342 "EHLO
+        mail-qt0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750949AbeCTGkC (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Mar 2018 02:40:02 -0400
+Received: by mail-qt0-f193.google.com with SMTP id j4so496272qth.8
+        for <git@vger.kernel.org>; Mon, 19 Mar 2018 23:40:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:sender:in-reply-to:references:from:date:message-id
          :subject:to:cc;
-        bh=fQw6A3/Hy3J9xfPygjLOxTBGV1y3Hr10KkEMt1GXeGU=;
-        b=J1QIUw8pQO2fVCNT4k0iCkZUjwuxid6bOzOrfF6qWyd8qVkVuaklk0KYax7Yezb6/f
-         +gtgQiq85igUEn4i5Zyjcc6w5lh4tYrPzrD0A0KFncSMIH0n5cxxKBLnG5pPKUmwHrtq
-         xL8tzdK4rBUI7m8C5Ed8Xk7AtSqsafbYIBkA67zPXmyqUeK2Hbf3gZw3F2HRspVCF89w
-         hcemHMEd5QwUaWK71alWAGwribjjD0SdSk2SAryJ7ZJnqPG/RVGDrZoGCBZBesx/7X6v
-         9t8opSryt14xx/yBnfSnkqjYklzSX84+UUu7Bz3DiMXq3YzkvGLR150RQkaCYJHH9ulu
-         sjWg==
+        bh=PGBuVCKCw2lBtdRZ58wxLMQj/jYoHq5y8osEgP71fGI=;
+        b=JOdtzJacFk8EDJPLZ3yJxoqWPbagUI3HNI/G6wlIhqx/Fp9hUjyt/kk4loXLefaivW
+         ZXzqTAQHte/txWeNj10qZVclHCrZwHiIdb3CtKC4D4692iSC87ikScW8AyyoU49gA2hL
+         cqN+ysGxRORi6NuOjw02FgzC6zZ+Oypuh48z+UF5fdMI7+we3PAcV6dLOxdAm4VXNp7U
+         mgyITvPHNs9S3SuZbKUK/IoSu9uvBuvd3iktLyj7g3iWtopE7LyfhEzIWCqDy+l7/IDi
+         d10JwqF+neMmqoJalMBRv4GdDEXwaLKFPOw0Nd7jxuh0BZKnS5QGoUu+2+TYItTqaCrv
+         dBJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
          :date:message-id:subject:to:cc;
-        bh=fQw6A3/Hy3J9xfPygjLOxTBGV1y3Hr10KkEMt1GXeGU=;
-        b=ZhS3vTw0GhKAfAGQbXJmWQWjtJ3Z69WyyEbajnq67ifl3CllPsY1yjKjAkC+KjcXcx
-         URs5xM9T8evLb9fFqZXh4GeWqVRAYy3+5v4DbWGBgwYFrZsvjuMpNBcQj533MpV6neJo
-         2OIO0nK7R8qzToVqwZxhqh1don8cQl8sMzIsycz72pVj7PtOvB/x/BOun00myomCCQf1
-         7zN1svTxtmQYavrdoZf+BLrEg23LZATOyk91nDyFMi9+BTebFwvVvkfpszXO+xSVL5xS
-         cIWbIhq3EsR8dNpyzGrJnkr/BasdQdLKNOsye3kbhXQ8yWvC383VqrtSE+45KDP64HLT
-         f7kQ==
-X-Gm-Message-State: AElRT7HqmNJqjrfcxEslkpq9XCeTo6EmuWPbCBpeDrj2jHSo4dPkUueo
-        22M4xOqvovwEwTzj0AXf30f90ZBtB0x3vl3CS4Q=
-X-Google-Smtp-Source: AG47ELucx0ZJFJbB3a5TF8PCqLP6+oWwX2VP+tFNAkIiXDHkE7mp/oSdlAAri9hfH1ulqmdq9/hxj1+H7DB1L9pMi00=
-X-Received: by 10.55.3.140 with SMTP id 134mr22278608qkd.26.1521527826062;
- Mon, 19 Mar 2018 23:37:06 -0700 (PDT)
+        bh=PGBuVCKCw2lBtdRZ58wxLMQj/jYoHq5y8osEgP71fGI=;
+        b=sodE0WD4P9zZhMLpWkXsKfxkZBcpNgh+m5enESGreASOmPLfrGJO1r+Utvp5C2sfMH
+         SzXrdj/LUawvCW5nLdXrGSJMp845eGJm2ZEYAw+6n1dnr4G50kXGgKHqjPxAzLg1BTjA
+         SK0Xgvfs43JaIJ4RpbThfOYL/lLQx6EPocr2fj6NKXocctf4W4vpc3HHFaa0atnHiaPB
+         wMkhdnucpniUo60jJWBYVxOGQ4CbBhDqEIu/WR/NFrcPNC9/vD7ekbNTScF17rzNr8hb
+         zjBfgABAnQzebxczpIrAuec6aT4eWnOjGFd5rh2esdbguXy3g+1xznyze36kdOl8SEw4
+         skaQ==
+X-Gm-Message-State: AElRT7GVnO8Rv2eCdCs1Iow/f14aXajb+rwomwRZbJHS+a3QG+KD4dOq
+        lefvhN4AuWcn1ePjScDPQaeqPsoK8dnVjYxbrhU=
+X-Google-Smtp-Source: AG47ELvjFKRS7tY4FzYEUz5WOcc8R+wSdmEwBe9JN65npXW5WyFX+40CV1xUiKXbTbPQPDDD7YZh4yUkZKCLxg++qG8=
+X-Received: by 10.200.50.174 with SMTP id z43mr21603953qta.250.1521528001775;
+ Mon, 19 Mar 2018 23:40:01 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.12.190.196 with HTTP; Mon, 19 Mar 2018 23:37:05 -0700 (PDT)
-In-Reply-To: <20180317222219.4940-2-t.gummerer@gmail.com>
+Received: by 10.12.190.196 with HTTP; Mon, 19 Mar 2018 23:40:01 -0700 (PDT)
+In-Reply-To: <20180317222219.4940-3-t.gummerer@gmail.com>
 References: <20180317220830.30963-1-t.gummerer@gmail.com> <20180317222219.4940-1-t.gummerer@gmail.com>
- <20180317222219.4940-2-t.gummerer@gmail.com>
+ <20180317222219.4940-3-t.gummerer@gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 20 Mar 2018 02:37:05 -0400
-X-Google-Sender-Auth: -qYkgI3EFBy1neSxbgGS1xthePE
-Message-ID: <CAPig+cT8i9L9kbhx=b0sG4_QYNdoEDPW-1xypM9xzBqPmqR__Q@mail.gmail.com>
-Subject: Re: [PATCH v4 1/4] worktree: improve message when creating a new worktree
+Date:   Tue, 20 Mar 2018 02:40:01 -0400
+X-Google-Sender-Auth: CbSaTk9qSa2pUXplY_9CdyL_Inw
+Message-ID: <CAPig+cSaA+N0jWfbWccH45kVzz-0g4hTkg-KwgwTTTPL8pixuw@mail.gmail.com>
+Subject: Re: [PATCH v4 2/4] worktree: be clearer when "add" dwim-ery kicks in
 To:     Thomas Gummerer <t.gummerer@gmail.com>
 Cc:     Git List <git@vger.kernel.org>,
         =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
@@ -66,38 +66,20 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On Sat, Mar 17, 2018 at 6:22 PM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
-> [...]
-> Fix these inconsistencies, and no longer show the identifier by making
-> the 'git reset --hard' call quiet, and printing the message directly
-> from the builtin command instead.
+> Currently there is no indication in the "git worktree add" output that
+> a new branch was created.  This would be especially useful information
+> in the case where the dwim of "git worktree add <path>" kicks in, as the
+> user didn't explicitly ask for a new branch, but we create one from
+> them.
+>
+> Print some additional output showing that a branch was created and the
+> branch name to help the user.
+
+Good idea.
+
+> This will also be useful in the next commit, which introduces a new kind
+> of dwim-ery of checking out the branch if it exists instead of refusing
+> to create a new worktree in that case, and where it's nice to tell the
+> user which kind of dwim-ery kicked in.
 >
 > Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
-> ---
-> diff --git a/builtin/worktree.c b/builtin/worktree.c
-> @@ -303,8 +303,6 @@ static int add_worktree(const char *path, const char *refname,
->         strbuf_addf(&sb, "%s/commondir", sb_repo.buf);
->         write_file(sb.buf, "../..");
->
-> -       fprintf_ln(stderr, _("Preparing %s (identifier %s)"), path, name);
-
-A minor regression with this change is that error messages from
-git-update-ref or git-symbolic-ref -- which could be emitted after
-this point but before the new "worktree HEAD is now at..." message --
-are now somewhat orphaned. I'm not sure that it matters, though.
-
->         argv_array_pushf(&child_env, "%s=%s", GIT_DIR_ENVIRONMENT, sb_git.buf);
->         argv_array_pushf(&child_env, "%s=%s", GIT_WORK_TREE_ENVIRONMENT, path);
->         cp.git_cmd = 1;
-> @@ -320,10 +318,19 @@ static int add_worktree(const char *path, const char *refname,
-> +       fprintf(stderr, _("worktree HEAD is now at %s"),
-> +               find_unique_abbrev(commit->object.oid.hash, DEFAULT_ABBREV));
-
-I wonder if this should say "new worktree HEAD is now at..." to
-clearly indicate that it is talking about HEAD in the _new_ worktree,
-not HEAD in the current worktree.
-
-> +       strbuf_reset(&sb);
-> +       pp_commit_easy(CMIT_FMT_ONELINE, commit, &sb);
-> +       if (sb.len > 0)
-> +               fprintf(stderr, " %s", sb.buf);
-> +       fputc('\n', stderr);
