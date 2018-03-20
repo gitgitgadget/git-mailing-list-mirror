@@ -2,78 +2,62 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ABA391F42D
-	for <e@80x24.org>; Tue, 20 Mar 2018 10:11:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D01C81F42D
+	for <e@80x24.org>; Tue, 20 Mar 2018 10:28:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752609AbeCTKLb (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Mar 2018 06:11:31 -0400
-Received: from smtp-out-2.talktalk.net ([62.24.135.66]:42472 "EHLO
-        smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752555AbeCTKLX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Mar 2018 06:11:23 -0400
-Received: from lindisfarne.localdomain ([92.22.3.164])
-        by smtp.talktalk.net with SMTP
-        id yEEeeoX3nwheayEEkepmVc; Tue, 20 Mar 2018 10:11:22 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1521540682;
-        bh=JN6tm1/eFDzlJ9cij3EmqsklqygsleA+GnFhoMMOjBw=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:Reply-To;
-        b=nvvk2xDJ1GBchG/vb30mXiv8RlwvkKa4VMfKpIuoEti/mP4ENCfOCls9rymHkLYAz
-         A+VKjCo88UKJeIjJbfT2qLHfJLYThw/+TM9BeoFECUfYrRSCVQ1j8XPlP2rU4Swn/p
-         mXMMK0kj9zwCaQKpLmMYb2Tm0PGKNeGeGQy7uFCg=
-X-Originating-IP: [92.22.3.164]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=ZJr5Z0zb c=1 sm=1 tr=0 a=8UrjQVoXl1ilnsKy4/PEMg==:117
- a=8UrjQVoXl1ilnsKy4/PEMg==:17 a=evINK-nbAAAA:8 a=CetYfRad01Jzwee36Q8A:9
- a=bKVrrO9k-L5Jmzy2:21 a=qhQ4cclmUCcAGj-F:21 a=RfR_gqz1fSpA9VikTjo0:22
-From:   Phillip Wood <phillip.wood@talktalk.net>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH 1/2] add failing test for rebase --recreate-merges --keep-empty
-Date:   Tue, 20 Mar 2018 10:11:13 +0000
-Message-Id: <20180320101114.17663-2-phillip.wood@talktalk.net>
-X-Mailer: git-send-email 2.16.2
-In-Reply-To: <20180320101114.17663-1-phillip.wood@talktalk.net>
-References: <20180320101114.17663-1-phillip.wood@talktalk.net>
-Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
-X-CMAE-Envelope: MS4wfKvGpbgyEarOy+Bcue6/LLyNpdFoFJw7bQmnqjXkOLN7p+3/4vZB5yjRIQ+NMuEdT2b44m6L0dkKe6YXRsuGoWE7SMpxu+03lVDmZ/a0xz/1cRK5Dd7+
- duFQ7szCreUQdWZMaLYzmnBFL9DklhFZJYnmKrQJUlSP0BkoJ/01B+tlpXzcRUwcB7OM7un7gc9B7FoUZuynIVSskTBhTMjbmft1VFfLlQlx8y9Nuf7syhaD
- cXL/JuAQ6R9pDLDopWMSGvL4cuxJcg0wE5QOBHFxikQ3mQY+fqbpcwraFvbBFit8
+        id S1752362AbeCTK2a (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Mar 2018 06:28:30 -0400
+Received: from smtprelay01.ispgateway.de ([80.67.31.39]:29180 "EHLO
+        smtprelay01.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752265AbeCTK2a (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Mar 2018 06:28:30 -0400
+Received: from [91.113.179.170] (helo=[192.168.92.26])
+        by smtprelay01.ispgateway.de with esmtpsa (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128)
+        (Exim 4.90_1)
+        (envelope-from <marc.strapetz@syntevo.com>)
+        id 1eyEA2-0008Io-31; Tue, 20 Mar 2018 11:06:30 +0100
+Subject: Re: [PATCH v5 0/3] stash push -u -- <pathspec> fixes
+To:     Thomas Gummerer <t.gummerer@gmail.com>, git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
+References: <20180316223715.108044-1-gitster@pobox.com>
+ <20180319232156.30916-1-t.gummerer@gmail.com>
+From:   Marc Strapetz <marc.strapetz@syntevo.com>
+Message-ID: <adf6ff41-cc58-89fd-8703-d620babe0cd7@syntevo.com>
+Date:   Tue, 20 Mar 2018 11:06:31 +0100
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.6.0
+MIME-Version: 1.0
+In-Reply-To: <20180319232156.30916-1-t.gummerer@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Df-Sender: bWFyYy5zdHJhcGV0ekBzeW50ZXZvLmNvbQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+On 20.03.2018 00:21, Thomas Gummerer wrote:
+> Thanks again Marc for all the testing and Junio for fixing up my brown
+> paper bag copy-pasto.
+> 
+> This iteration addresses the breakage Marc noticed with the latest
+> version of the patches, adds some more tests, and moves all the new
+> tests to t3905 instead of t3903, which I just noticed exists and is a
+> much better match for the new tests.
+> 
+> Patch 1 and 3 are the same as in the previous round, Patch 2 is mostly
+> rewritten.  Instead of trying to avoid part of the pipeline we're
+> using to get rid of changes, we now are getting rid of the 'git clean'
+> call in the pathspec case, and use the existing pipeline to get rid of
+> changes in untracked files as well.  I'm not adding an interdiff,
+> because Patch 2 is mostly rewritten and the other two are unchanged,
+> so it is probably easiest to just review patch 2.
 
-If there are empty commits on the left hand side of $upstream...HEAD
-then the empty commits on the right hand side that we want to keep are
-being pruned. This will be fixed in the next commit.
+Thanks, Thomas. All of my manual tests have been working fine now.
 
-Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
----
- t/t3421-rebase-topology-linear.sh | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/t/t3421-rebase-topology-linear.sh b/t/t3421-rebase-topology-linear.sh
-index 68fe2003ef..cb7f176f1d 100755
---- a/t/t3421-rebase-topology-linear.sh
-+++ b/t/t3421-rebase-topology-linear.sh
-@@ -217,6 +217,7 @@ test_run_rebase success ''
- test_run_rebase failure -m
- test_run_rebase failure -i
- test_run_rebase failure -p
-+test_run_rebase failure --recreate-merges
- 
- #       m
- #      /
--- 
-2.16.2
-
+-Marc
