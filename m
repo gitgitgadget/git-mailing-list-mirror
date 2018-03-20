@@ -2,58 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4866B1F404
-	for <e@80x24.org>; Tue, 20 Mar 2018 21:24:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A56A41F404
+	for <e@80x24.org>; Tue, 20 Mar 2018 21:47:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751484AbeCTVYE (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Mar 2018 17:24:04 -0400
-Received: from mail-lf0-f68.google.com ([209.85.215.68]:46595 "EHLO
-        mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751455AbeCTVYE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Mar 2018 17:24:04 -0400
-Received: by mail-lf0-f68.google.com with SMTP id j68-v6so4775567lfg.13
-        for <git@vger.kernel.org>; Tue, 20 Mar 2018 14:24:03 -0700 (PDT)
+        id S1751499AbeCTVrQ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Mar 2018 17:47:16 -0400
+Received: from mail-qk0-f194.google.com ([209.85.220.194]:42549 "EHLO
+        mail-qk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751456AbeCTVrP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Mar 2018 17:47:15 -0400
+Received: by mail-qk0-f194.google.com with SMTP id b198so3404419qkg.9
+        for <git@vger.kernel.org>; Tue, 20 Mar 2018 14:47:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=saville-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=bf+/JcN+bJfgQZXk54Ligocr9u+O0G1ho9V3hZBqdSM=;
-        b=DhzS/bHiAfntP/5moirNuxZGUgixxr7GyZkoXmPDOntSvEjGC5mLzUmcfBLAd2G2Ug
-         7OjxnGlizHUHiMwMupqM0hIAY+Rh9M0bsGCaMEk+GQziHkOh4ugW9NCcyjMN+InB41mJ
-         iRDMTY9/wZ4QOxVB8YI05Orh+EasoJxf6yjINQZot6eXXBNFP6LSK0BcLPA2UUOzPbwF
-         +H8uh5jhubLDD2KhellbIrUqto4aaS1TRLysCbQLq9Aw8lh5bn6oCudOfoVMRNh0TbGK
-         siJVWSnyb7E8A8GSqzLSDA5kDNvoQEXxRj3zAiEj8GeYNdHdcOuTlfYx+cwx+j1kxKzK
-         B3+Q==
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=ienZPOu/AwQLDX/OYN3IFuqmElu+YxwK0XENvOgosn0=;
+        b=A05KdW8FmehfPKrHlrd3BOqC+Ro7MuS5Xp1jpzaHhetUcaBga2BPGE3/vrfCZs7SEa
+         kLM95IiDMoIrVCx4382IlQfYdysFn+CLh+ZMEqycbMKBh2tAG127dpVPDdtu2ctIm+PV
+         tvaAGIiswOMKU9d/PPNQSvfQV9I938/BiiGdQE9AsemKnB49TXDE6G9LxTYokEVwSkvy
+         rW2GaKNXsARfbM1u+Vt7WdUP/w8YMxGtdy84TmYF6DB/KxMH6TqqX2SoghcMYXER/wWe
+         7+1auhfMbpaH+TB2f3XHjzgtsNvw1m0qjXy2RpLriGylIvB6fysnBVf4otqio+j/K/Zk
+         ssnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=bf+/JcN+bJfgQZXk54Ligocr9u+O0G1ho9V3hZBqdSM=;
-        b=U9+Kz05hQr3BtW0EM1GO/wEtMEaKDb3eKboU6UkOlPySFLSaOIdWqKzep6Tc8lnj+v
-         gTRwlA3Rh53ifK1mzoLSMLfOMQdOx8cmCFIKwUZVI5sV6Sr1lJsmuZAJXkWtOrZwGdNe
-         Os6LWIRFjbU7YikOe1h9e/EZT+1Gno7k/V3CrgPHwuNpSGyD/ZVQW6qDLy85W6tKykFb
-         0hCeexVo2lYHmL2+iysxvNndh1liZsUB4YihxhO6mOfcMZBrFlACs/52aLp+ZgL32EyF
-         gRzAw2Il78VL9rThvXzf4x2ambFQo+NMVRhInyh80EBhZ+AVdeMldxsDxJtQgV8/QTGA
-         5LGw==
-X-Gm-Message-State: AElRT7F2zekXaPZuCFkZWq7AaQJ8oDYSyXFbn/BXSSRy5FlsuTzZYVz+
-        ieEdwnVMAD5tAmqprvsUq8WEbCbN0Iy/JJ0zkGpgAA==
-X-Google-Smtp-Source: AG47ELs2NDjyh3/EMvrRlVm+rMlA9obQcL7Wu7hxls/lGisUJjBn/mMZqpX34M1awxEOpn3fqglNvuTyKlh0hbspeu0=
-X-Received: by 2002:a19:9502:: with SMTP id x2-v6mr12602200lfd.119.1521581042375;
- Tue, 20 Mar 2018 14:24:02 -0700 (PDT)
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=ienZPOu/AwQLDX/OYN3IFuqmElu+YxwK0XENvOgosn0=;
+        b=I1ik85nSEHqNTPpdsPwv4cJvsCLzNYKtJfgpyoPl1HKxEvCbNXkbIcZwnIMy4fkYSh
+         UmWxLieIuVAtUOWw47rtKHV3Dfr3JH/7/6h0pWHHZZTbKMlWb0VaZ401xjwpV9KY95DQ
+         rF54kFs8Lgd/6nTt/VD/8S3qqPvtn6VSYxpzgAUDgszUOwg+pVyakquBu/l6SNbYAltg
+         E/sAG/Z1enzxWYkItX0qeuWlGvxC7jzcIBKMP1ZGson9sB8IHL8h0BA9hjXSK3nLM+e5
+         kKOT+FU5c7IaFSpPVwFhb8HrSaIq0qJ7E1JstfYbo9E4u3WHO/tuWXCzHDUEZuzo2LYS
+         YG0A==
+X-Gm-Message-State: AElRT7G/PPgzVn3kdS7P2XwfYNPAdWEznca2qy/OHQXKLMexpXlTT/3n
+        DAqrw6CfK94T9hCQwRvlGq12WFzZFEFj7T3i/8g=
+X-Google-Smtp-Source: AG47ELtteBZLV2o2t5HgFDWACqgvBgIgRuI5tJ9DL/fHKhj8rltS2cSfWf3j3GsQC0BaY8665elfAKYeB4t5UuC3gC4=
+X-Received: by 10.55.120.66 with SMTP id t63mr25671965qkc.42.1521582434904;
+ Tue, 20 Mar 2018 14:47:14 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:a19:d591:0:0:0:0:0 with HTTP; Tue, 20 Mar 2018 14:23:41
- -0700 (PDT)
-In-Reply-To: <CAPig+cRw4MSfcKJcgT-srCE7sDYi3qA0TrNApXBDBsgodVb3Pg@mail.gmail.com>
+Received: by 10.12.190.196 with HTTP; Tue, 20 Mar 2018 14:47:14 -0700 (PDT)
+In-Reply-To: <CAKk8ispSvaAr3iRhC4X+gufeKm20AQzw9_mvuysT7SiDsZQYJw@mail.gmail.com>
 References: <20180320204507.12623-1-wink@saville.com> <CAPig+cRw4MSfcKJcgT-srCE7sDYi3qA0TrNApXBDBsgodVb3Pg@mail.gmail.com>
-From:   Wink Saville <wink@saville.com>
-Date:   Tue, 20 Mar 2018 14:23:41 -0700
-Message-ID: <CAKk8ispSvaAr3iRhC4X+gufeKm20AQzw9_mvuysT7SiDsZQYJw@mail.gmail.com>
+ <CAKk8ispSvaAr3iRhC4X+gufeKm20AQzw9_mvuysT7SiDsZQYJw@mail.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Tue, 20 Mar 2018 17:47:14 -0400
+X-Google-Sender-Auth: iaDD2YUJe5Aawd4TTwRjdH1z-Kk
+Message-ID: <CAPig+cSvvg=hXjXLKM2yYqqy=q+z_T_TVkuUJe0W=R_494CMkA@mail.gmail.com>
 Subject: Re: [RFC PATCH 0/3] rebase-interactive
-To:     Eric Sunshine <sunshine@sunshineco.com>
+To:     Wink Saville <wink@saville.com>
 Cc:     Git List <git@vger.kernel.org>,
         Johannes Schindelin <johannes.schindelin@gmx.de>
 Content-Type: text/plain; charset="UTF-8"
@@ -62,56 +64,33 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 20, 2018 at 2:11 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Tue, Mar 20, 2018 at 4:45 PM, Wink Saville <wink@saville.com> wrote:
->> Patch 0001 creates a library of functions which can be
->> used by git-rebase--interactive and
->> git-rebase--interactive--preserve-merges. The functions are
->> those that exist in git-rebase--interactive.sh plus new
->> functions created from the body of git_rebase_interactive
->> that will be used git_rebase_interactive in the third patch
->> and git_rebase_interactive_preserve_merges in the second
->> patch. None of the functions are invoked so there is no
->> logic changes and the system builds and passes all tests
->> on travis-ci.org.
+On Tue, Mar 20, 2018 at 5:23 PM, Wink Saville <wink@saville.com> wrote:
+> On Tue, Mar 20, 2018 at 2:11 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>> A problem with this approach is that it loses "blame" information. A
+>> git-blame of git-rebase--interactive--lib.sh shows all code in that
+>> file as having arisen spontaneously from thin air; it is unable to
+>> trace its real history. It would be much better to actually _move_
+>> code to the new file (and update callers if necessary), which would
+>> preserve provenance.
 >>
->> Patch 0002 creates git-rebase--interactive--preserve-merges.sh
->> with the function git_rebase_interactive_preserve_merges. The contents
->> of the function are refactored from git_rebase_interactive and
->> uses existing and new functions in the library. A small modification
->> of git-rebase is also done to invoke the new function when the -p
->> switch is used with git-rebase. When this is applied on top of
->> 0001 the system builds and passes all tests on travis-ci.org.
+>> Ideally, patches which move code around should do so verbatim (or at
+>> least as close to verbatim as possible) to ease review burden.
+>> Sometimes changes to code are needed to make it relocatable before
+>> movement, in which case those changes should be made as separate
+>> preparatory patches, again to ease review.
 >>
->> The final patch, 0003, removes all unused code from
->> git_rebase_interactive and uses the functions from the library
->> where appropriate. And, of course, when applied on top of 0002
->> the system builds and passes all tests on travis-ci.org.
+>> As it is, without detailed spelunking, it is not immediately clear to
+>> a reviewer which functions in git-rebase--interactive--lib.sh are
+>> newly written, and which are merely moved (or moved and edited) from
+>> git-rebase--interactive.sh. This shortcoming suggests that the patch
+>> series could be re-worked to do the refactoring in a more piecemeal
+>> fashion which more clearly holds the hands of those trying to
+>> understand the changes. (For instance, one or more preparatory patches
+>> may be needed to make the code relocatable, followed by verbatim code
+>> relocation, possibly iterating these steps if some changes depend upon
+>> earlier changes, etc.)
 >
-> A problem with this approach is that it loses "blame" information. A
-> git-blame of git-rebase--interactive--lib.sh shows all code in that
-> file as having arisen spontaneously from thin air; it is unable to
-> trace its real history. It would be much better to actually _move_
-> code to the new file (and update callers if necessary), which would
-> preserve provenance.
->
-> Ideally, patches which move code around should do so verbatim (or at
-> least as close to verbatim as possible) to ease review burden.
-> Sometimes changes to code are needed to make it relocatable before
-> movement, in which case those changes should be made as separate
-> preparatory patches, again to ease review.
->
-> As it is, without detailed spelunking, it is not immediately clear to
-> a reviewer which functions in git-rebase--interactive--lib.sh are
-> newly written, and which are merely moved (or moved and edited) from
-> git-rebase--interactive.sh. This shortcoming suggests that the patch
-> series could be re-worked to do the refactoring in a more piecemeal
-> fashion which more clearly holds the hands of those trying to
-> understand the changes. (For instance, one or more preparatory patches
-> may be needed to make the code relocatable, followed by verbatim code
-> relocation, possibly iterating these steps if some changes depend upon
-> earlier changes, etc.)
->
-> Thanks.
+> Must all intermediate commits continue build and pass tests?
 
-Must all intermediate commits continue build and pass tests?
+Yes, not just because it is good hygiene, but also because it
+preserves git-bisect'ability.
