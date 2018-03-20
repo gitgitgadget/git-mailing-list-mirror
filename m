@@ -7,133 +7,127 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 30DE71F404
-	for <e@80x24.org>; Tue, 20 Mar 2018 18:19:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AE9A91F404
+	for <e@80x24.org>; Tue, 20 Mar 2018 18:22:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751798AbeCTSTO (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Mar 2018 14:19:14 -0400
-Received: from mail-qk0-f172.google.com ([209.85.220.172]:39182 "EHLO
-        mail-qk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751320AbeCTSTN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Mar 2018 14:19:13 -0400
-Received: by mail-qk0-f172.google.com with SMTP id j73so2709337qke.6
-        for <git@vger.kernel.org>; Tue, 20 Mar 2018 11:19:12 -0700 (PDT)
+        id S1751656AbeCTSWF (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Mar 2018 14:22:05 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:35024 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751578AbeCTSWE (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Mar 2018 14:22:04 -0400
+Received: by mail-wm0-f68.google.com with SMTP id r82so5398688wme.0
+        for <git@vger.kernel.org>; Tue, 20 Mar 2018 11:22:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=eFg0RmbOs8qZDGXztJd89K33k4wBc6cIFsmdDe/YWOM=;
-        b=PC2qWWSkzD330s2UA+UGEGSO5ogBprrfyEwKTMzvxHe7GsY0ArO+rY1ZldEFragV7F
-         L00eqB5eD6aekg98MOYg96QC6Db6a9GxgVs2GKwYKFMbKjE3g16gtDH5xKkUErGiLZey
-         1tJddZByrjSZodNIlgTZ72CHQwoeA4yY2cN5Z0BkDeeKcgYJNnSPH1qi7tIUPteDPbLV
-         ZmKHPlPcG3FwSbCrFYXEV4EtnwI9V4nMQCoEBuF6J+R4f1GW7ROuHBcgvkMbpXbH6vqH
-         pdh8QLkdVQyoWuAXyCfU4ZslK1JSz+sz5PopA3iW8axiy6pAt1eDW+CFELfNRSchl67Y
-         y5Ww==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=fFWuSIfdSyoN2nqSpiV/YlPuTULrGouhL/xJ4v+mAyQ=;
+        b=DSwRu5qhX1aMeG1x1luS8/iRmT7CKQ0bNzZkU9USjqARrgBxNezI+BohNk93ihd0jL
+         2nQPgV+X6y5wg/kQcHkgmhVnbpm269CBG2+BNGcvs+ecsb6cy/HF8ATfbbvF/3Q0pmcW
+         +3nKuvET6DMF6PYSWaNAWuMTz44tsIS4OmdS98bMETipD9uipq3JkoGljCssxuNj+ev0
+         IMUwAD0eKmb16FBk0xJ687KaKj3LpW5YIUarv974aNDRdPeRtgRdLEAtJYtH2D+K5ziN
+         AtfQuE1iRIZwq9jH3DOP5Ilri9i+YrorOV655UQbaJp8Rj9IwXi0KuDwO2FZDqv69std
+         fEFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=eFg0RmbOs8qZDGXztJd89K33k4wBc6cIFsmdDe/YWOM=;
-        b=R4p5QxsrLSCmN66DyI+7ZcK0BOhi1OlOgDfnHqhMNDGxtGmXhzeIfDBZw4n0Y1QS3H
-         2euvyIaJatlB2m4LhRQwxKv3XmdftmpGdRuvIYx8QrKSkHTwa0iSMP5eh2I0HmvpN8MG
-         gYf5dmp0eHe67o3hz6ZBoO7yz1e9xFaPle5FmhzyuZLMnK0njo7bFVUd9/MjeScZvOYR
-         uJ1+Rfe+0hnz41ZBHJ3lY7tb47EJUnw8M8WelkOm1gf5XTp3uXTeFf7+h5YM0MzmZhrf
-         a19LX28MUEWqk8ZydXxCyDZaWD0X4A59/KUpMUos3b9T3oCR/vIJO8oRXAQ6wBFsdVj4
-         rTtw==
-X-Gm-Message-State: AElRT7GiU1slDKlQt2imSniKE2sQDx+BCzFswvXXCC9UXDvnJYmssPPR
-        2iwW/oAJClDilOC89sWS+LlTfsyu9Qa6AUfWjgQ=
-X-Google-Smtp-Source: AG47ELuZbC07GxOFtgRPC+uXRb4pVO2eGtjrMsEJknIfH6XCJ4fL2WCN9nPyCVNrCyLG7OB29KG7rbuBybEauqaUCjo=
-X-Received: by 10.55.74.2 with SMTP id x2mr5347004qka.314.1521569952248; Tue,
- 20 Mar 2018 11:19:12 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=fFWuSIfdSyoN2nqSpiV/YlPuTULrGouhL/xJ4v+mAyQ=;
+        b=LNZr2xr6y+a7185LpvewtLT16pDnMIEhjvTGAX+YXgy68mJc4mvbeyGPnXO4robj+9
+         mmMd/C4ddtqTmZIOLt8LrbybucUk0wMcVIEPnkbG1EZhuLA4SkY7aPENbW1rSXez8isn
+         wns3qwPwEI6Ojr8VN3szY2JT51L083dLC1pFMtvLQE+sZlXKXEJNQuRaB/vezwAorWmI
+         BxG5uEK6539vQgGXM1DAaixplZO+0B11hLBMlEIRw7F7PWLaLNBGNI5Wep8XamLX0liO
+         exaAjnKuwUa5vHXTTw1l8sRz0kHabfMA8XCTbjGlej3Y7fPVwkOT9tGVDkeuEb6zUEDy
+         M2Rg==
+X-Gm-Message-State: AElRT7G4AJHXhpbFiCuwRrODWqjLM8lX9tekzfpKbc7cyCnwXTVuXUHI
+        VwN/SUPYc/gH08tLH7aCD8A=
+X-Google-Smtp-Source: AG47ELsRB44uMKoE11uzI/hwMNztuLHyK/6i5KtS26OfMdBhiwJU/n0FjMlXN9EGjMOFAve/m9T0YA==
+X-Received: by 10.28.171.193 with SMTP id u184mr489131wme.32.1521570122778;
+        Tue, 20 Mar 2018 11:22:02 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id d48sm4344166wrd.12.2018.03.20.11.22.02
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 20 Mar 2018 11:22:02 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Eric Wong <e@80x24.org>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH v6 09/11] pack-objects: shrink size field in struct object_entry
+References: <20180317141033.21545-1-pclouds@gmail.com>
+        <20180318142526.9378-1-pclouds@gmail.com>
+        <20180318142526.9378-10-pclouds@gmail.com>
+        <xmqqsh8wvwwn.fsf@gitster-ct.c.googlers.com>
+        <CACsJy8AkJJQ4XNszxBsESN_WGOSZ+ExWdcCtn6NA+gW9+-mAqQ@mail.gmail.com>
+        <xmqqlgenvs07.fsf@gitster-ct.c.googlers.com>
+        <CACsJy8AbkaSLBYqtFiCwFoqRXguy1hTs=XriefZ3WQJjo_sy8Q@mail.gmail.com>
+        <xmqqy3inu8qe.fsf@gitster-ct.c.googlers.com>
+        <20180320180806.GA16521@duynguyen.home>
+Date:   Tue, 20 Mar 2018 11:22:01 -0700
+In-Reply-To: <20180320180806.GA16521@duynguyen.home> (Duy Nguyen's message of
+        "Tue, 20 Mar 2018 19:08:07 +0100")
+Message-ID: <xmqq370usj3q.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.12.190.196 with HTTP; Tue, 20 Mar 2018 11:19:11 -0700 (PDT)
-In-Reply-To: <010201624428199f-b4b3d8ce-222f-4966-9171-7fcf932ca220-000000@eu-west-1.amazonses.com>
-References: <01020162442818b4-c153f9ce-3813-41a6-aebd-f5cb2b98b1fa-000000@eu-west-1.amazonses.com>
- <010201624428199f-b4b3d8ce-222f-4966-9171-7fcf932ca220-000000@eu-west-1.amazonses.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 20 Mar 2018 14:19:11 -0400
-X-Google-Sender-Auth: v8RbGpjJQR-ijClkIyLm18uvcio
-Message-ID: <CAPig+cSxGgG=1k95j+n4DZHBdtN++7F6_U5fu0gOcjwwPQ5GZw@mail.gmail.com>
-Subject: Re: [PATCH v4 5/5] ref-filter: get_ref_atom_value() error handling
-To:     Olga Telezhnaya <olyatelezhnaya@gmail.com>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 20, 2018 at 12:05 PM, Olga Telezhnaya
-<olyatelezhnaya@gmail.com> wrote:
-> ref-filter: get_ref_atom_value() error handling
+Duy Nguyen <pclouds@gmail.com> writes:
 
-This doesn't tell us much about what this patch is doing. Perhaps a
-better subject would be:
+> This "size" field contains the delta size if the in-pack object is a
+> delta. So blindly falling back to object_sha1_info() which returns the
+> canonical object size is definitely wrong.
 
-    ref-filter: libify get_ref_atom_value()
+Yup.  Also we need to be careful when going back to the packfile to
+read the size in question.  A different packfile that has the same
+object may have delta that was constructed differently and of wrong
+size.
 
-> Finish removing die() calls from ref-filter formatting logic,
-> so that it could be used by other commands.
+> Please eject the series
+> from 'pu' until I fix this. The bug won't likely affect anyone (since
+> they must have 4GB+ objects to trigger it) but better safe than sorry.
+
+> BTW can you apply this patch? This broken && chain made me think the
+> problem was in the next test. It would have saved me lots of time if I
+> saw this "BUG" line coming from the previous test.
+
+Thanks, will do.
+
 >
-> Change the signature of get_ref_atom_value() and underlying functions
-> by adding return value and strbuf parameter for error message.
-> Return value equals 0 upon success and -1 upon failure (there
-> could be more error codes further if necessary).
-> Upon failure, error message is appended to the strbuf.
+> -- 8< --
+> Subject: [PATCH] t9300: fix broken && chain
 >
-> Signed-off-by: Olga Telezhnaia <olyatelezhnaya@gmail.com>
+> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 > ---
-> diff --git a/ref-filter.c b/ref-filter.c
-> @@ -1445,28 +1445,36 @@ static const char *get_refname(struct used_atom *atom, struct ref_array_item *re
-> +static int get_object(struct ref_array_item *ref, const struct object_id *oid,
-> +                      int deref, struct object **obj, struct strbuf *err)
->  {
->         void *buf = get_obj(oid, obj, &size, &eaten);
-> -       if (!buf)
-> -               die(_("missing object %s for %s"),
-> -                   oid_to_hex(oid), ref->refname);
-> -       if (!*obj)
-> -               die(_("parse_object_buffer failed on %s for %s"),
-> -                   oid_to_hex(oid), ref->refname);
-> -
-> +       if (!buf) {
-> +               strbuf_addf(err, _("missing object %s for %s"), oid_to_hex(oid),
-> +                           ref->refname);
-> +               if (!eaten)
-> +                       free(buf);
-
-Since we are inside the 'if (!buf)' conditional, we _know_ that 'buf'
-is NULL, therefore this free(buff) is unnecessary.
-
-> +               return -1;
-> +       }
-> +       if (!*obj) {
-> +               strbuf_addf(err, _("parse_object_buffer failed on %s for %s"),
-> +                           oid_to_hex(oid), ref->refname);
-> +               if (!eaten)
-> +                       free(buf);
-> +               return -1;
-> +       }
->         grab_values(ref->value, deref, *obj, buf, size);
->         if (!eaten)
->                 free(buf);
-> +       return 0;
->  }
-
-Overall, with the need for resource cleanup, this function becomes
-unusually noisy after this change. It could be tamed by doing
-something like this:
-
-    int ret = 0;
-    void *buf = get_obj(oid, obj, &size, &eaten);
-    if (!buf)
-        ret = strbuf_error(_("missing object %s for %s"),
-            oid_to_hex(oid), ref->refname);
-    else if (!*obj)
-        ret = strbuf_error(_("parse_object_buffer failed on %s for %s"),
-            oid_to_hex(oid), ref->refname);
-    else
-        grab_values(ref->value, deref, *obj, buf, size);
-   if (!eaten)
-        free(buf);
-    return ret;
+>  t/t9300-fast-import.sh | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
+> index e4d06accc4..e2a0ae4075 100755
+> --- a/t/t9300-fast-import.sh
+> +++ b/t/t9300-fast-import.sh
+> @@ -348,7 +348,7 @@ test_expect_success 'B: accept branch name "TEMP_TAG"' '
+>  	INPUT_END
+>  
+>  	test_when_finished "rm -f .git/TEMP_TAG
+> -		git gc
+> +		git gc &&
+>  		git prune" &&
+>  	git fast-import <input &&
+>  	test -f .git/TEMP_TAG &&
+> @@ -365,7 +365,7 @@ test_expect_success 'B: accept empty committer' '
+>  	INPUT_END
+>  
+>  	test_when_finished "git update-ref -d refs/heads/empty-committer-1
+> -		git gc
+> +		git gc &&
+>  		git prune" &&
+>  	git fast-import <input &&
+>  	out=$(git fsck) &&
