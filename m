@@ -7,103 +7,70 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4B99D1F404
-	for <e@80x24.org>; Tue, 20 Mar 2018 15:34:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 76CF91F404
+	for <e@80x24.org>; Tue, 20 Mar 2018 15:36:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751610AbeCTPeQ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Mar 2018 11:34:16 -0400
-Received: from mout.gmx.net ([212.227.15.19]:53659 "EHLO mout.gmx.net"
+        id S1751524AbeCTPgs (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Mar 2018 11:36:48 -0400
+Received: from mout.gmx.net ([212.227.17.20]:34427 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751448AbeCTPeP (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Mar 2018 11:34:15 -0400
-Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LjIit-1eSowD42JD-00dYHg; Tue, 20
- Mar 2018 16:34:07 +0100
-Date:   Tue, 20 Mar 2018 16:33:46 +0100 (STD)
+        id S1751416AbeCTPgr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Mar 2018 11:36:47 -0400
+Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MaW7Z-1fHtb62lhp-00K9Hi; Tue, 20
+ Mar 2018 16:36:41 +0100
+Date:   Tue, 20 Mar 2018 16:36:22 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
 To:     Phillip Wood <phillip.wood@dunelm.org.uk>
 cc:     Git Mailing List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/3] rebase -i --keep-empty: don't prune empty commits
-In-Reply-To: <20180320100315.15261-3-phillip.wood@talktalk.net>
-Message-ID: <nycvar.QRO.7.76.6.1803201630380.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <20180320100315.15261-1-phillip.wood@talktalk.net> <20180320100315.15261-3-phillip.wood@talktalk.net>
+Subject: Re: [PATCH 0/3] rebase --keep-empty/--root fixes
+In-Reply-To: <nycvar.QRO.7.76.6.1803201634260.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+Message-ID: <nycvar.QRO.7.76.6.1803201635580.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <20180320100315.15261-1-phillip.wood@talktalk.net> <nycvar.QRO.7.76.6.1803201634260.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:r/c40nOMR1CC/eeLl2B5w4k7iTIBgC9vBKafrm7vH/93mS/2+JW
- ITpNo2guWvFnS2ab79Qc7AD79nVZgV4cKjuLggxib26e2yLjrz+X7CXAFpNdgJFa/S6A8zR
- gMwKeZbO+aJCNBY7vbqT8RJAETOrbNWwP1aJRNAJcO6QPtUNxjQ6bCWEor4G9rQc2m1G/V8
- joWKkinhxU6UsvCYLXkaA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:c51JesYVc2o=:GQE26J63LXnIuD5o5M66aq
- gtuvQ8BDOWcXGeMlRo907e0T2p7GMEBAfgB7M78mVY9AIhc0IJwOTPYvc6sPtb7Vz4UoRYvGQ
- 9QxCcILJ8jzqm0KoCvFFO0WrwR7EUri5BDqSWRkpph/q+k13mnB45sA/sbX27LxAC0aO6jPk2
- wDRwCf0rgt6VuXVei0TaYPO+2h2W/Lb4/GO3DJmpGBs4OZEJGcaNEsCpGLTJWCw+gtqKBcx0n
- K7YpiqsvjjHYFy5QT/jQbH9WuE+DygD1ygQr+1JZw0c4Xb2/WoXRcKnYo8bvlIcMO2j+RaIR6
- ttgwEoKvFNOxyWK3KHf0ald+6aArlPy0LO5vWohTaqgAV2eVatG00s0ppyy6h1cQVVdcwaCot
- U/uz2v8NnlOWOh7WyoIDnVI6PvXDpPpiJKoaVkDqP6vzqhepVTungdCBlwa0lTMHdizcLmTOa
- 17RjNyan9ElHYgAZsWjnpcrxthjI3Zhjfy9kjkPIYhj2RxFcC7VW4vg2m0bSHRIlC+8JwuFY8
- y3aFBwfaeLXvaoQ5ITAg1CWJ/Obx3ad5ggvi0BnqEnAgBEa9wQ3rlGA/XLKaYuUJR3nbZLFMb
- u2xHP/mQw/z7GKGjLxUJ2wRnNzKRC1atn1LLv8cW5b7mdZH4gkFIxSvLzMYqrAPdTZKjZG1UX
- ltzGXQmGIIb8HeQZ6jGvb29tHhPbJnd6QY2eUCjpPCY1gL13o6oVRigdgvGjc/di7FjR/0CyA
- yvVbRNFrWW4rRBkEtrwB7sj649gsE7ghMz4oLzdewzxBUFcbfUHintHRiVevzJu9HX0AU+lU0
- +SiWaQiSsQw6hAIHZqnCkRKmTf2Ppk3E2jJYjZBfcLIEc1h71k=
+X-Provags-ID: V03:K0:ho8mcFUuK/AMAYGF4vqjkc0CwCzqT2eysK9sCMdYlT0eE9sPHhQ
+ RW42iDVNR4CVJETWaXwlTOf3RN7Ra21JWgzpMhuscDdLGPJPYKlkSN6HqNwWpNkusf5vY9L
+ MABC0zAyQJzaSphhRLbOXRa44apkK1ZQeOf3SItnSEzUCA1+tk/pwDmYhLiRanOT/ZlUtsk
+ MgvXnFi2+izbREuppyIjg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:3ojhMJjDwcc=:BvVXeo4OKy4aQhn6qmc8qe
+ OAVWAdWgPsr86w8tc9J3l9g6WHGTR00FEMjaSOza3RzPfAX5bluh2hR8NIO3InjtFR62zWlkp
+ tYd05oqr1eznhXyAQq91wyvuJPmkRdrsSMVFlGECQQa2KcNB0u4CdgqiLDWymml0voEtDhNMB
+ 4tmh6rFz0tEBDi2qyi3qenlf7Ksak2I8IVkG51ISS/11yu5AC8gVzzKY8jUmk1W3w5Fw8gJi5
+ xMG573SE3Z6bbzJCM4y4QOtnVBOjHyCmFaZ9IoyN00pRt0J17CgBi8hELtnmsy+ThVdBPEpEf
+ XH/rFL5vGjJGCoySnMoiI6SmRUrURslQYpPvbVBRhwaMrvos7NiZO0PQH+1m3RQKZfKE738HF
+ 5O9tIltoiR3iqWLhYxNrCmo+rAmrPs84/sqzoUY5NxubxjwQfsy0oGfCRe6Du9IWU+tAVGdO/
+ QNFK4Shv3NK0C96lyBzPm9X1ays2pAwE+J4phdoUWZjbqCO4nw9GHXKx7VGHgpiMGTx0gWz7C
+ Yya+Q/L7dzC7YJ7xL8TkfsMtM9cxLGdzjJdoRNrpp69dbljtRN5Uwxuw8c9twe9J2oS2zzsqo
+ wT8rdytVR3yWG1Q0MgtH2DD3EtFZIvXynNk2ixI2oT12r4kUetE8e0uouy4ERgSC5JBKhTMSd
+ KGgfCnfTBESryLGiQNJqToAcKx3qLNw1+uvS0m1jk59IExkiQM3sEZlMCqOQ6B77/ONv9sYCS
+ zj7AtTpKtfNYsHB0ExtFQM1GRM7dAcXLRY4mV7VaL74KGi1Em9NvgqZ0cZbzVi7IaOqq20Jb4
+ Fod/UhdTnhzvP1b8pQs+I0mspTzWM5P06vTejgBKogh5da9cYk=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip,
+... and now also Cc:ing the list and Junio...
 
-On Tue, 20 Mar 2018, Phillip Wood wrote:
 
-> diff --git a/sequencer.c b/sequencer.c
-> index 4d3f60594c..96ff812c8d 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -2470,7 +2470,7 @@ int sequencer_make_script(FILE *out, int argc, const char **argv,
->  	init_revisions(&revs, NULL);
->  	revs.verbose_header = 1;
->  	revs.max_parents = 1;
-> -	revs.cherry_pick = 1;
-> +	revs.cherry_mark = 1;
+On Tue, 20 Mar 2018, Johannes Schindelin wrote:
 
-This will conflict with my --recreate-merges patch series, but in a good
-way.
-
-> @@ -2495,14 +2495,18 @@ int sequencer_make_script(FILE *out, int argc, const char **argv,
->  		return error(_("make_script: error preparing revisions"));
->  
->  	while ((commit = get_revision(&revs))) {
-> +		int is_empty  = is_original_commit_empty(commit);
-> +
->  		strbuf_reset(&buf);
-> -		if (!keep_empty && is_original_commit_empty(commit))
-> +		if (!keep_empty && is_empty)
->  			strbuf_addf(&buf, "%c ", comment_line_char);
-> -		strbuf_addf(&buf, "%s %s ", insn,
-> -			    oid_to_hex(&commit->object.oid));
-> -		pretty_print_commit(&pp, commit, &buf);
-> -		strbuf_addch(&buf, '\n');
-> -		fputs(buf.buf, out);
-> +		if (is_empty || !(commit->object.flags & PATCHSAME)) {
-
-May I suggest inverting the logic here, to make the code more obvious and
-also to avoid indenting the block even further?
-
-		if (!is_empty && (commit->object.flags & PATCHSAME))
-			continue;
-
-> +			strbuf_addf(&buf, "%s %s ", insn,
-> +				    oid_to_hex(&commit->object.oid));
-> +			pretty_print_commit(&pp, commit, &buf);
-> +			strbuf_addch(&buf, '\n');
-> +			fputs(buf.buf, out);
-> +		}
->  	}
->  	strbuf_release(&buf);
->  	return 0;
-
-Thanks,
-Dscho
+> Hi Phillip,
+> 
+> On Tue, 20 Mar 2018, Phillip Wood wrote:
+> 
+> > Phillip Wood (3):
+> >   rebase --root: stop assuming squash_onto is unset
+> >   rebase -i --keep-empty: don't prune empty commits
+> >   rebase: respect --no-keep-empty
+> 
+> Those patches look good. I offered a suggestion to 2/3 to avoid indenting
+> a code block, but I would also be okay to leave it as-is.
+> 
+> Thanks,
+> Dscho
+> 
