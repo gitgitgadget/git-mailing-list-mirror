@@ -6,43 +6,43 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 39FCB1F404
-	for <e@80x24.org>; Tue, 20 Mar 2018 22:52:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B47BB1FAE2
+	for <e@80x24.org>; Tue, 20 Mar 2018 23:02:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751514AbeCTWwT (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Mar 2018 18:52:19 -0400
-Received: from avasout04.plus.net ([212.159.14.19]:55241 "EHLO
+        id S1751718AbeCTXCg (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Mar 2018 19:02:36 -0400
+Received: from avasout04.plus.net ([212.159.14.19]:55781 "EHLO
         avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751018AbeCTWwS (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Mar 2018 18:52:18 -0400
+        with ESMTP id S1751688AbeCTXCc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Mar 2018 19:02:32 -0400
 Received: from [10.0.2.15] ([80.189.70.162])
         by smtp with ESMTPA
-        id yQ76easDssD7byQ77e97xu; Tue, 20 Mar 2018 22:52:17 +0000
+        id yQH0eat6hsD7byQH1e987V; Tue, 20 Mar 2018 23:02:31 +0000
 X-CM-Score: 0.00
 X-CNFS-Analysis: v=2.3 cv=CvORjEwD c=1 sm=1 tr=0
  a=zzlqjQC3YyNvDZl/Gy+4mg==:117 a=zzlqjQC3YyNvDZl/Gy+4mg==:17
- a=IkcTkHD0fZMA:10 a=fKQa1YAfMDZumaoXN8wA:9 a=crqOGCLSsL5djPXG:21
- a=k4MH0R6yTuwWr87J:21 a=QEXdDO2ut3YA:10
+ a=IkcTkHD0fZMA:10 a=NEAV23lmAAAA:8 a=5rxgeBVgAAAA:8 a=U7UbAiMzAAAA:8
+ a=-g_arkhoZMa9Vdi9YzwA:9 a=9zyFYljk-rIbivDk:21 a=Wday6L0f_gUK2sTJ:21
+ a=QEXdDO2ut3YA:10 a=PwKx63F5tFurRwaNxrlG:22 a=cNtvukwP7kaFzDVqf0Q5:22
 X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH 2/2] read-cache: fix an -Wmaybe-uninitialized warning
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+Subject: Re: [PATCH 0/2] -Wuninitialized
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         GIT Mailing-list <git@vger.kernel.org>
-References: <6d434e76-cfa0-2a6e-f163-b54316a24cee@ramsayjones.plus.com>
- <20180320043652.GC13302@sigill.intra.peff.net>
+References: <8f6d8e2e-aba4-128c-f17c-6c1b9c12436c@ramsayjones.plus.com>
+ <nycvar.QRO.7.76.6.1803201514490.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
 From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <e3894650-3639-c871-1291-f3efa7fbea0a@ramsayjones.plus.com>
-Date:   Tue, 20 Mar 2018 22:52:16 +0000
+Message-ID: <b939f3e7-9ccf-9a26-9ccf-2b2c13853e42@ramsayjones.plus.com>
+Date:   Tue, 20 Mar 2018 23:02:29 +0000
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
  Thunderbird/52.6.0
 MIME-Version: 1.0
-In-Reply-To: <20180320043652.GC13302@sigill.intra.peff.net>
+In-Reply-To: <nycvar.QRO.7.76.6.1803201514490.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-GB
 Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfKZlKTn+Af+TUhedInF7cDMguk0acKnuf/s7bq7GyI1t10pLkDgjNtdvk+qbMYIBBFVbhAe1LGbDpyWHLW5gPaixHx8BCTV/CWQmcz8odTp0ANoi/21P
- qygzlfR0J77o7nGJaxuuGb5eMyC5LLIUlFf4fq8VpncA+iL4BdpDq+wwIX6YKdeY/4xRx9pQV7w3lQ==
+X-CMAE-Envelope: MS4wfLIePUWxRw4AKXIG8LnoSkSxkrP/sRN3O9gGV4oAnHL3NHGijEXWPnGei0KQcAx3sZSB1SgaslKiuGDupFf3rwc8dpJ2lEigI6X5RSAem4TSENSP8347
+ rLG4wP2zBRapZK93g1vu9roC1Vw9Pggd142O8y5ao48Mn4HuTJENEq7A53b9F6g5ks43oa7tfuJ8SQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -50,46 +50,51 @@ X-Mailing-List: git@vger.kernel.org
 
 
 
-On 20/03/18 04:36, Jeff King wrote:
-> On Mon, Mar 19, 2018 at 05:56:11PM +0000, Ramsay Jones wrote:
+On 20/03/18 14:46, Johannes Schindelin wrote:
+> Hi Ramsay,
 > 
-[snip]
->> diff --git a/read-cache.c b/read-cache.c
->> index 2eb81a66b..49607ddcd 100644
->> --- a/read-cache.c
->> +++ b/read-cache.c
->> @@ -2104,13 +2104,15 @@ static int ce_write_entry(git_SHA_CTX *c, int fd, struct cache_entry *ce,
->>  			  struct strbuf *previous_name, struct ondisk_cache_entry *ondisk)
->>  {
->>  	int size;
->> -	int saved_namelen = saved_namelen; /* compiler workaround */
->>  	int result;
->> +	unsigned int saved_namelen;
->> +	int stripped_name = 0;
+> On Mon, 19 Mar 2018, Ramsay Jones wrote:
 > 
-> Maybe too clever, but I think you could just do:
+>> This series removes all 'self-initialised' variables (ie. <type> var =
+>> var;).  This construct has been used to silence gcc
+>> '-W[maybe-]uninitialized' warnings in the past [1]. Unfortunately, this
+>> construct causes warnings to be issued by MSVC [2], along with clang
+>> static analysis complaining about an 'Assigned value is garbage or
+>> undefined'. The number of these constructs has dropped over the years
+>> (eg. see [3] and [4]), so there are currently only 6 remaining in the
+>> current codebase. As demonstrated below, 5 of these no longer cause gcc
+>> to issue warnings.
 > 
->   unsigned int saved_namelen = 0;
->   ...
-> 	saved_namelen = ce_namelen(ce);
->   ...
->   if (saved_namelen)
-> 	ce->ce_namelen = saved_namelen;
->   ce->ce_flags &= ~CE_STRIP_NAME;
-> 
-> the zero-length name case (if that's even legal) would work out the
-> same.
+> Thank you so much for working on this!
 
-Yeah, that was one option that I looked at. The first option
-was to initialise saved_namelen to -1 (it was still an int) then
-the test became if (saved_namelen >= 0). However, that started
-me thinking about the zero-length case - should I assert if
-((ce->ce_flags & CE_STRIP_NAME) && (ce_namelen(ce) == 0))? etc.
+These patches are based on a very old branch (that goes back
+at least as far as 2010, see [1]). (I have too many in my repo,
+so it will be good to remove this one)!
 
-In the end, I decided that I wanted it to be 'drop dead' obvious
-what was going on! Hopefully, the result was just that. :-D
+> In Git for Windows, to work around the MSVC issues you mention, I have
+> this ugly work-around (essentially, it has a FAKE_INIT() macro that either
+> performs that GCC workaround or initializes the variable to NULL/0):
+> 
+> 	https://github.com/git-for-windows/git/commit/474155f32a
+
+Oh, wow! (Hmm, actually that doesn't look too bad :-D )
+
+> FWIW I just tested your patches with Visual Studio 2017 and there are no
+> C4700 warnings (the equivalent of GCC's "may be uninitialized" warning)
+> [*1*].
+> 
+> You can find the patches (your patches rebased onto Git for Windows'
+> master, plus a patch adding the project files for Visual Studio) here:
+> 
+> https://github.com/git-for-windows/git/compare/master...dscho:msvc-uninitialized-warning-test
+
+Thanks for testing the patches.
+
+> So here is my ACK, in case you want it ;-)
+
+Thanks!
 
 ATB,
 Ramsay Jones
 
-
+[1] https://public-inbox.org/git/4CFA8D4D.2020500@ramsay1.demon.co.uk/
