@@ -2,81 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BC94E1F404
-	for <e@80x24.org>; Tue, 20 Mar 2018 04:22:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 15C3C1F404
+	for <e@80x24.org>; Tue, 20 Mar 2018 04:25:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750969AbeCTEWs (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Mar 2018 00:22:48 -0400
-Received: from cloud.peff.net ([104.130.231.41]:35416 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1750768AbeCTEWr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Mar 2018 00:22:47 -0400
-Received: (qmail 29634 invoked by uid 109); 20 Mar 2018 04:22:48 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 20 Mar 2018 04:22:48 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 28912 invoked by uid 111); 20 Mar 2018 04:23:43 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 20 Mar 2018 00:23:43 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 20 Mar 2018 00:22:45 -0400
-Date:   Tue, 20 Mar 2018 00:22:45 -0400
-From:   Jeff King <peff@peff.net>
-To:     CB Bailey <charles@hashpling.org>
-Cc:     Michele Locati <michele@locati.it>, git@vger.kernel.org,
-        Ian Campbell <ijc@hellion.org.uk>
-Subject: Re: [PATCH] filter-branch: use printf instead of echo -e
-Message-ID: <20180320042245.GA13302@sigill.intra.peff.net>
-References: <20180319144905.11564-1-michele@locati.it>
- <20180319153945.kchupu43cpcbg25n@hashpling.org>
+        id S1751105AbeCTEZa (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Mar 2018 00:25:30 -0400
+Received: from mail-oi0-f53.google.com ([209.85.218.53]:45300 "EHLO
+        mail-oi0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750991AbeCTEZ3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Mar 2018 00:25:29 -0400
+Received: by mail-oi0-f53.google.com with SMTP id 71-v6so245123oie.12
+        for <git@vger.kernel.org>; Mon, 19 Mar 2018 21:25:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=dakotahawkins.com; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=A9kUyf6R7S0DNNolPZkFUWrKFvEmPIjhSfsqw/OB5ds=;
+        b=fce6tzEVA5Kf8bRvEZPilmnKqsdk4Shxrziq68VrP7q0f+ePM34wM0DxoGqqkZ9lam
+         xkXlq0vXh4Tf4z1GRlRx3c6MrVC24mNQTB0EGwAQMA16OB4BYOM1cWWt8MWROtFz/rba
+         BAGEkVaw1XGeOTJu2nkDMdCJOo+g0wLRsv4OM=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=A9kUyf6R7S0DNNolPZkFUWrKFvEmPIjhSfsqw/OB5ds=;
+        b=hKPP6/srHB8Ln3EwwtUo03yw2HEiAf+ITLkv7Nrt7HjqBzyPiALT+i0m5qrpS/y/9k
+         U0NJNp3BlbWN3GZXFZeFgHAo4e/8+woCmlTdBPsMuQtwp+Wb+oisQh5fQWsuuBvEJRLC
+         4IX48IwE87iZkjPbpPpOVjvkfKJEPqgjjHJGEYBPcE6M8/r6lphkYahN1iJU9AHUFfG8
+         LQxDGDHyo+Za5oFVD2mVOscK5YRiaSdMAZr8sWqio87u3s/mDOZgM5lqeRRWxdlwdrQl
+         7xH1/RNdNO+u0CFwM2F0Xt4zSq1+aNZRJcBioGa1nnJX//GnOY4cm24iPDaNAwSkHcwC
+         ROgQ==
+X-Gm-Message-State: AElRT7HqEA5+1wbuVpDzCu8nx/qlElhHiqJNxVmfGL3jr5xdhP25zmM5
+        SCglauhLAg2+scYORZ4J/adQRqk/QC8GhTv4Ru8eAOkz
+X-Google-Smtp-Source: AG47ELs444DS/D5MmmNRL2nnwUBvgk80gdEbMl/b+8fmoz5If5n//r4QaB9c5O+toAx1FTZ9upsSWRJzWf1cGo6PXhs=
+X-Received: by 10.202.78.16 with SMTP id c16mr5537662oib.314.1521519928362;
+ Mon, 19 Mar 2018 21:25:28 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20180319153945.kchupu43cpcbg25n@hashpling.org>
+Received: by 2002:a9d:4a69:0:0:0:0:0 with HTTP; Mon, 19 Mar 2018 21:25:27
+ -0700 (PDT)
+In-Reply-To: <20180320040411.GB12938@sigill.intra.peff.net>
+References: <CAHnyXxRX4+sMJCNG6f9xtsDO6bdqRS-U6TAYO47OKQjH8bGzbg@mail.gmail.com>
+ <20180320023423.GA10143@sigill.intra.peff.net> <CAHnyXxRcwq40W4tKm=Kscrsnb77yh7=eGDE=r5AZq073MPX9AQ@mail.gmail.com>
+ <20180320040411.GB12938@sigill.intra.peff.net>
+From:   Dakota Hawkins <dakota@dakotahawkins.com>
+Date:   Tue, 20 Mar 2018 00:25:27 -0400
+Message-ID: <CAHnyXxQMbnNam=oB_B57xDZBaMPRn_8hfKtostHPV6nBHbTBog@mail.gmail.com>
+Subject: Re: .gitattributes override behavior (possible bug, or documentation bug)
+To:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Cc:     Git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 19, 2018 at 03:39:46PM +0000, CB Bailey wrote:
+> Right. The technical reason is mostly "that is not how it was designed,
+> and it would possibly break some corner cases if we switched it now".
 
-> > diff --git a/git-filter-branch.sh b/git-filter-branch.sh
-> > index 1b7e4b2cd..21d84eff3 100755
-> > --- a/git-filter-branch.sh
-> > +++ b/git-filter-branch.sh
-> > @@ -627,7 +627,7 @@ then
-> >  				print H "$_:$f\n" or die;
-> >  			}
-> >  			close(H) or die;' || die "Unable to save state")
-> > -	state_tree=$(/bin/echo -e "100644 blob $state_blob\tfilter.map" | git mktree)
-> > +	state_tree=$(printf '100644 blob %s\tfilter.map\n' "$state_blob" | git mktree)
-> >  	if test -n "$state_commit"
-> >  	then
-> >  		state_commit=$(/bin/echo "Sync" | git commit-tree "$state_tree" -p "$state_commit")
-> 
-> I think the change from 'echo -e' to printf is good because of the
-> better portability reason that you cite.
-> 
-> Looking at the change, I am now curious as to why '/bin/echo' is used.
-> Testing on a Mac, bash's built in 'echo' recognizes '-e' whereas
-> '/bin/echo' does not. This is just an observation, I still prefer the
-> move to 'printf' that you suggest.
+I'm just spitballing here, but do you guys think there's any subset of
+the combined .gitignore and .gitattributes matching functionality that
+could at least serve as a good "best-practices, going forward"
+(because of consistency) for both? I will say every time I do this for
+a new repo and have to do something even slightly complicated or
+different from what I've done before with .gitattributes/.gitignore
+that it takes me a long-ish time to figure it out. It's like I'm
+vaguely aware of pitfalls I've encountered in the past in certain
+areas but don't remember exactly what they are, so I consult the docs,
+which are (in sum) confusing and lead to more time spent
+trying/failing/trying/works/fails-later/etc.
 
-Right. Moving them to just "echo -e" would work on systems where /bin/sh
-is bash, but not elsewhere (e.g., Debian systems with "dash" whose
-built-in echo doesn't understand "-e").
+One "this subset of rules will work for both this way" would be
+awesome even if the matching capabilities are technically divergent,
+but on the other hand that might paint both into a corner in terms of
+functionality.
 
-So my guess as to why /bin/echo was used is that on Linux systems it's
-_more_ predictable and portable, because you know you're always going to
-get the GNU coreutils version, which knows "-e". Even if you're using a
-non-bash shell.
+>> > I think just "/.readme-docs/**" should be sufficient for your case. You
+>> > could also probably write "*" inside ".readme-docs/.gitattributes",
+>> > which may be simpler (you don't need "**" there because patterns without
+>> > a slash are just matched directly against the basename).
+>>
+>> Wouldn't that make the "*" inside ".readme-docs/.gitattributes",
+>> technically recursive when "*" matches a directory?
+>
+> Sort of. The pattern is applied recursively to each basename, but the
+> pattern itself does not match recursively. That's probably splitting
+> hairs, though. :)
 
-But on non-Linux systems, who knows what system "echo" you'll get. :)
+I understand, but if I think about it too much I feel the overwhelming
+urge to stop thinking about it :)
 
-Author cc'd in case there's something more interesting going on.
+>> It's always seemed to me that both were necessary to explicitly match
+>> things in a directory and its subdirectories (example, IIRC: "git
+>> ls-files -- .gitattributes" vs "git ls-files -- .gitattributes
+>> **/.gitattributes"). Maybe that example is peculiar in that its a
+>> dotfile and can't have a wildcard before the dot?
+>
+> Those are pathspecs, which are not quite the same as gitattributes. They
+> don't do the magic basename matching.
+>
+> For pathspecs a "*" matches across slashes, which is what allows "git
+> log -- '*.h'" to work (but not a suffix wildcard like 'foo*').
 
--Peff
+Same comment -- makes sense but hard to want to think too much about.
+
+>> I guess my takeaway is that it would be _good_ if the gitattributes
+>> documentation contained the caveat about not matching directories
+>> recursively, but _great_ if gitattributes and gitignore (and whatever
+>> else there is) were consistent.
+>
+> I agree it would be nice if they were consistent (and pathspecs, too).
+> But unfortunately at this point there's a maze of backwards
+> compatibility to deal with.
+>
+> -Peff
+
+Again, as above, what if there were a subset of functionality git
+could recommend to avoid inconsistencies?
