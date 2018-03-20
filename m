@@ -7,70 +7,85 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 76CF91F404
-	for <e@80x24.org>; Tue, 20 Mar 2018 15:36:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 95C971F404
+	for <e@80x24.org>; Tue, 20 Mar 2018 15:39:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751524AbeCTPgs (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Mar 2018 11:36:48 -0400
-Received: from mout.gmx.net ([212.227.17.20]:34427 "EHLO mout.gmx.net"
+        id S1751778AbeCTPjU (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Mar 2018 11:39:20 -0400
+Received: from mout.gmx.net ([212.227.17.21]:59209 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751416AbeCTPgr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Mar 2018 11:36:47 -0400
-Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MaW7Z-1fHtb62lhp-00K9Hi; Tue, 20
- Mar 2018 16:36:41 +0100
-Date:   Tue, 20 Mar 2018 16:36:22 +0100 (STD)
+        id S1751727AbeCTPjQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Mar 2018 11:39:16 -0400
+Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0M9vnQ-1erfWP1p5k-00B3k3; Tue, 20
+ Mar 2018 16:39:09 +0100
+Date:   Tue, 20 Mar 2018 16:38:53 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
 To:     Phillip Wood <phillip.wood@dunelm.org.uk>
 cc:     Git Mailing List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/3] rebase --keep-empty/--root fixes
-In-Reply-To: <nycvar.QRO.7.76.6.1803201634260.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-Message-ID: <nycvar.QRO.7.76.6.1803201635580.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <20180320100315.15261-1-phillip.wood@talktalk.net> <nycvar.QRO.7.76.6.1803201634260.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+Subject: Re: [PATCH 2/2] rebase --recreate-merges --keep-empty: don't prune
+ empty commits
+In-Reply-To: <20180320101114.17663-3-phillip.wood@talktalk.net>
+Message-ID: <nycvar.QRO.7.76.6.1803201638010.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <20180320101114.17663-1-phillip.wood@talktalk.net> <20180320101114.17663-3-phillip.wood@talktalk.net>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:ho8mcFUuK/AMAYGF4vqjkc0CwCzqT2eysK9sCMdYlT0eE9sPHhQ
- RW42iDVNR4CVJETWaXwlTOf3RN7Ra21JWgzpMhuscDdLGPJPYKlkSN6HqNwWpNkusf5vY9L
- MABC0zAyQJzaSphhRLbOXRa44apkK1ZQeOf3SItnSEzUCA1+tk/pwDmYhLiRanOT/ZlUtsk
- MgvXnFi2+izbREuppyIjg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:3ojhMJjDwcc=:BvVXeo4OKy4aQhn6qmc8qe
- OAVWAdWgPsr86w8tc9J3l9g6WHGTR00FEMjaSOza3RzPfAX5bluh2hR8NIO3InjtFR62zWlkp
- tYd05oqr1eznhXyAQq91wyvuJPmkRdrsSMVFlGECQQa2KcNB0u4CdgqiLDWymml0voEtDhNMB
- 4tmh6rFz0tEBDi2qyi3qenlf7Ksak2I8IVkG51ISS/11yu5AC8gVzzKY8jUmk1W3w5Fw8gJi5
- xMG573SE3Z6bbzJCM4y4QOtnVBOjHyCmFaZ9IoyN00pRt0J17CgBi8hELtnmsy+ThVdBPEpEf
- XH/rFL5vGjJGCoySnMoiI6SmRUrURslQYpPvbVBRhwaMrvos7NiZO0PQH+1m3RQKZfKE738HF
- 5O9tIltoiR3iqWLhYxNrCmo+rAmrPs84/sqzoUY5NxubxjwQfsy0oGfCRe6Du9IWU+tAVGdO/
- QNFK4Shv3NK0C96lyBzPm9X1ays2pAwE+J4phdoUWZjbqCO4nw9GHXKx7VGHgpiMGTx0gWz7C
- Yya+Q/L7dzC7YJ7xL8TkfsMtM9cxLGdzjJdoRNrpp69dbljtRN5Uwxuw8c9twe9J2oS2zzsqo
- wT8rdytVR3yWG1Q0MgtH2DD3EtFZIvXynNk2ixI2oT12r4kUetE8e0uouy4ERgSC5JBKhTMSd
- KGgfCnfTBESryLGiQNJqToAcKx3qLNw1+uvS0m1jk59IExkiQM3sEZlMCqOQ6B77/ONv9sYCS
- zj7AtTpKtfNYsHB0ExtFQM1GRM7dAcXLRY4mV7VaL74KGi1Em9NvgqZ0cZbzVi7IaOqq20Jb4
- Fod/UhdTnhzvP1b8pQs+I0mspTzWM5P06vTejgBKogh5da9cYk=
+X-Provags-ID: V03:K0:Gejxtq9oZnW3bPwyrWR44zMiGXNc4G9Kuz0EgGNZp0yI+07zCN3
+ Um0+RsVMQk1Sf+0sLYP0n56olVjyzrui6mIGGxMw7oCPh8n4esCSHpKUWobx57iXcTLe0Jn
+ 4MDUIiJB5t7RCMP/WZF49wAUxzpa16o3RK0KevnbyeyEiA0oL3opiI9+tCZ7BKa3bAwAoTa
+ 16V6rhb+3DiSfVxXoXSRw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:/iqKfbPNN98=:YgRVCBS7hBQHlzSvCoZlHV
+ dQ6eZoh95Vh00aAcwTpBauR7O4RKC+kKIejd1Ts6ty/cIf1RWAyiUUKvametzVD4kl0ZUp9CN
+ RtRQ8sEramxmu/WQgJPPn/eBYvPUTCvDqdmI4WIl8gO1UZBqRfxNLKwyupnE16dO6P7elbs9x
+ Yy2UJuaIkRwU3gpD9Dm/7c6W+5iqg9v7qyOtFCs0gYGxcjT1KDWTow6x2Uc/z+9kk2k8ikpc5
+ mdjwKC5h/nNSUkDwKS4jNcG2Q5212oEohZvZpiJhqnF9IJCrm6T0C9f8mz8eQpXEBDKsIzpxz
+ 0PaC/+QEEZ1aXIPEGctJ60trx9OzbHiPejIznVx0k3ep5YYCDJwJmEMJQ3wrbB8/9YchEst4D
+ 0joez5Bb/FY8c0THyagUy+q/oZbbGd1u6DjZVeDze1lPa65Zy+aRmjxlTLcWYZE28wIZGDUrC
+ +3OqS2kE4xHsHcwPgr9IQVmrg63Sx/35Og3H3wy1ljfSdFr/LSP8Dcda+pr12hlEKYAROqiMI
+ 3Mmsw9Wxre/Ulm5SOx13Ul6VHtb3TqLo0xPOXgbosxR4GJ6f5IR76J5eOVkMakeFF+tV7JTm7
+ dZUCi1VlIW4kmYD/vra7ev7l+W9yv5D4qcPAM2Xnwsz8oDryFWVR8ffiKe1Z9c7E+H/PjrPrx
+ rEvQqm1y4eQuhkGPKfhN9HCQ6GqFO1FtAZe3lYrKHu+auXsg/U2gmPDG7zmAC/Xe6M2B9panw
+ OQEHra0Hd1Ngcjvu5JO2n6pIDWzRF4AipWtxiVB0LB4gk4Kh/lpLjHZHjUTEnMSctoQpzsPHX
+ +M0splGTmRUtD4vh7Sr5gglAIMsOv7occzKCwRB3P4+reVuM1I=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-... and now also Cc:ing the list and Junio...
+Hi Phillip,
 
+On Tue, 20 Mar 2018, Phillip Wood wrote:
 
-On Tue, 20 Mar 2018, Johannes Schindelin wrote:
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+> 
+> If there are empty commits on the left hand side of $upstream...HEAD
+> then the empty commits on the right hand side that we want to keep are
+> pruned because they are marked as cherry-picks. Fix this by keeping
+> the commits that are empty or are not marked as cherry-picks.
 
-> Hi Phillip,
-> 
-> On Tue, 20 Mar 2018, Phillip Wood wrote:
-> 
-> > Phillip Wood (3):
-> >   rebase --root: stop assuming squash_onto is unset
-> >   rebase -i --keep-empty: don't prune empty commits
-> >   rebase: respect --no-keep-empty
-> 
-> Those patches look good. I offered a suggestion to 2/3 to avoid indenting
-> a code block, but I would also be okay to leave it as-is.
-> 
-> Thanks,
-> Dscho
-> 
+Thank you!
+
+> @@ -3172,12 +3173,9 @@ int sequencer_make_script(FILE *out, int argc, const char **argv,
+>  
+>  	init_revisions(&revs, NULL);
+>  	revs.verbose_header = 1;
+> -	if (recreate_merges)
+> -		revs.cherry_mark = 1;
+> -	else {
+> +	if (!recreate_merges)
+>  		revs.max_parents = 1;
+> -		revs.cherry_pick = 1;
+> -	}
+> +	revs.cherry_mark = 1;
+>  	revs.limited = 1;
+>  	revs.reverse = 1;
+>  	revs.right_only = 1;
+
+Yeah, this looks ugly. I'd rather have your patch series applied first and
+then rebase my --recreate-merges patch series on top.
+
+Ciao,
+Dscho
