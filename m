@@ -2,112 +2,240 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 45E2F1F404
-	for <e@80x24.org>; Tue, 20 Mar 2018 13:58:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 549E21F404
+	for <e@80x24.org>; Tue, 20 Mar 2018 14:43:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753424AbeCTN6R (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Mar 2018 09:58:17 -0400
-Received: from mout.gmx.net ([212.227.17.21]:52431 "EHLO mout.gmx.net"
+        id S1751455AbeCTOnJ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Mar 2018 10:43:09 -0400
+Received: from mail.javad.com ([54.86.164.124]:34659 "EHLO mail.javad.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753098AbeCTN6Q (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Mar 2018 09:58:16 -0400
-Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MB2G8-1eqcnW20LU-009wgN; Tue, 20
- Mar 2018 14:58:11 +0100
-Date:   Tue, 20 Mar 2018 14:57:58 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org
-Subject: Re: [PATCH] mingw: abort on invalid strftime formats
-In-Reply-To: <xmqqy3iouf4b.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1803201444440.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <66189602d022dd1911b5f5d98594506b80bb81ff.1521478106.git.johannes.schindelin@gmx.de> <xmqqy3iouf4b.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1751105AbeCTOnH (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Mar 2018 10:43:07 -0400
+Received: from osv (unknown [89.175.180.246])
+        by mail.javad.com (Postfix) with ESMTPSA id 8D0D03E966;
+        Tue, 20 Mar 2018 14:43:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1521556986;
+        bh=iTnu/cHlNCN0U+0h4sAqOtNzipg8sQY7ypb7eEDYHO8=; l=5645;
+        h=Received:From:To:Subject;
+        b=PGqX0D8+ayZH1fah8auwMakf8jhBgiX/RVdAFuacZnATwfuqeNkdFrwT8BF6001Yv
+         YHt4KK/vhrmXq3EdaNqsU4sUWMdbVXtVQP6YOvoTOa8M/Pfu3dvkocOk50Q06NRujo
+         79PiDw+bfQQmPuA5BV0qvzgL79bSMeaJnntqdHsQ=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1521556986;
+        bh=iTnu/cHlNCN0U+0h4sAqOtNzipg8sQY7ypb7eEDYHO8=; l=5645;
+        h=Received:From:To:Subject;
+        b=PGqX0D8+ayZH1fah8auwMakf8jhBgiX/RVdAFuacZnATwfuqeNkdFrwT8BF6001Yv
+         YHt4KK/vhrmXq3EdaNqsU4sUWMdbVXtVQP6YOvoTOa8M/Pfu3dvkocOk50Q06NRujo
+         79PiDw+bfQQmPuA5BV0qvzgL79bSMeaJnntqdHsQ=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1521556986;
+        bh=iTnu/cHlNCN0U+0h4sAqOtNzipg8sQY7ypb7eEDYHO8=; l=5645;
+        h=Received:From:To:Subject;
+        b=PGqX0D8+ayZH1fah8auwMakf8jhBgiX/RVdAFuacZnATwfuqeNkdFrwT8BF6001Yv
+         YHt4KK/vhrmXq3EdaNqsU4sUWMdbVXtVQP6YOvoTOa8M/Pfu3dvkocOk50Q06NRujo
+         79PiDw+bfQQmPuA5BV0qvzgL79bSMeaJnntqdHsQ=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1521556986;
+        bh=iTnu/cHlNCN0U+0h4sAqOtNzipg8sQY7ypb7eEDYHO8=; l=5645;
+        h=Received:From:To:Subject;
+        b=PGqX0D8+ayZH1fah8auwMakf8jhBgiX/RVdAFuacZnATwfuqeNkdFrwT8BF6001Yv
+         YHt4KK/vhrmXq3EdaNqsU4sUWMdbVXtVQP6YOvoTOa8M/Pfu3dvkocOk50Q06NRujo
+         79PiDw+bfQQmPuA5BV0qvzgL79bSMeaJnntqdHsQ=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1521556986;
+        bh=iTnu/cHlNCN0U+0h4sAqOtNzipg8sQY7ypb7eEDYHO8=; l=5645;
+        h=Received:From:To:Subject;
+        b=PGqX0D8+ayZH1fah8auwMakf8jhBgiX/RVdAFuacZnATwfuqeNkdFrwT8BF6001Yv
+         YHt4KK/vhrmXq3EdaNqsU4sUWMdbVXtVQP6YOvoTOa8M/Pfu3dvkocOk50Q06NRujo
+         79PiDw+bfQQmPuA5BV0qvzgL79bSMeaJnntqdHsQ=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1521556986;
+        bh=iTnu/cHlNCN0U+0h4sAqOtNzipg8sQY7ypb7eEDYHO8=; l=5645;
+        h=Received:From:To:Subject;
+        b=PGqX0D8+ayZH1fah8auwMakf8jhBgiX/RVdAFuacZnATwfuqeNkdFrwT8BF6001Yv
+         YHt4KK/vhrmXq3EdaNqsU4sUWMdbVXtVQP6YOvoTOa8M/Pfu3dvkocOk50Q06NRujo
+         79PiDw+bfQQmPuA5BV0qvzgL79bSMeaJnntqdHsQ=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1521556986;
+        bh=iTnu/cHlNCN0U+0h4sAqOtNzipg8sQY7ypb7eEDYHO8=; l=5645;
+        h=Received:From:To:Subject;
+        b=PGqX0D8+ayZH1fah8auwMakf8jhBgiX/RVdAFuacZnATwfuqeNkdFrwT8BF6001Yv
+         YHt4KK/vhrmXq3EdaNqsU4sUWMdbVXtVQP6YOvoTOa8M/Pfu3dvkocOk50Q06NRujo
+         79PiDw+bfQQmPuA5BV0qvzgL79bSMeaJnntqdHsQ=
+Authentication-Results: mail.javad.com;
+        spf=pass (sender IP is 89.175.180.246) smtp.mailfrom=osv@javad.com smtp.helo=osv
+Received-SPF: pass (mail.javad.com: connection is authenticated)
+Received: from osv by osv with local (Exim 4.84_2)
+        (envelope-from <osv@osv.gnss.ru>)
+        id 1eyITg-0005KG-DP; Tue, 20 Mar 2018 17:43:04 +0300
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Igor Djordjevic <igor.d.djordjevic@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC] Rebasing merges: a jorney to the ultimate solution(RoadClear)
+References: <87y3jtqdyg.fsf@javad.com>
+        <33da31e9-9101-475d-8901-4b6b3df2f29d@gmail.com>
+        <940d959d-151d-68dd-0f13-320ebad0d75b@gmail.com>
+        <87606hoflx.fsf@javad.com>
+        <0ac3a3fd-4053-e32e-75ed-8829f22c2e1f@gmail.com>
+        <87a7vss6ax.fsf@javad.com>
+        <f1a960dc-cc5c-e7b0-10b6-39e5516655b3@gmail.com>
+        <ed4d2b30-2dea-740b-6283-973c798f619d@philandanna.no-ip.org>
+        <1298a701-a860-a675-83d7-72f29e14cd2b@talktalk.net>
+        <CA+P7+xpgChuvh_vsPktBkOEhF=MjJh1n_3jD0-n4d67j9kYqzw@mail.gmail.com>
+        <ee809701-a6d8-157d-09cd-cebbf2e949ec@gmail.com>
+        <1580e48a-be44-38dd-79af-8a2a31c5712e@talktalk.net>
+        <nycvar.QRO.7.76.6.1803061812090.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        <754e2735-1288-9a8d-c8bd-ab39cf733812@gmail.com>
+        <nycvar.QRO.7.76.6.1803070810550.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        <2749ce78-8917-c821-6116-0c8d67b5e16e@gmail.com>
+        <87vadyd9az.fsf@javad.com>
+        <d5e68db4-8006-2c0e-bc21-0b136503edd9@gmail.com>
+        <d50a4099-9b3a-5aa9-c304-160c62330056@gmail.com>
+        <87h8pc1uxr.fsf@javad.com>
+        <34e8d563-a035-b09e-e959-748f2b4f4b99@gmail.com>
+Date:   Tue, 20 Mar 2018 17:43:04 +0300
+In-Reply-To: <34e8d563-a035-b09e-e959-748f2b4f4b99@gmail.com> (Igor
+        Djordjevic's message of "Mon, 19 Mar 2018 22:35:09 +0100")
+Message-ID: <87r2oevmdj.fsf@javad.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:YRgc6blDh3kdi7A6KngLFmE2HKv386qf2vla6r3TOsbxEEZsImz
- tvomSpKaWA/Bd8qHhy5gIT3gNqZRxy9wTDV2YrdJXxainaXISeXAA3fkQRpJByurgDXyEPh
- 5v/FcAg351Yx/1GaSfTlt349HP1qGKXUeZWybh5qSYPM5/y3+GrWk+Mdj/UriTyYOYxblB2
- CnMWG+7WD0e0qqNtpCkYQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:qt2FgnsJ2Ao=:IYkwi1bhiE1MSysBHq0Cz0
- fxaHjNBZyD7B0QBnltWgUFGgYnSsTIYQhwnkZtKyYVXdyr/xp4djmBCRFaFh7FX8CWuXrXD0L
- UZwSKLGkSXm/1Rofg86X22i6x14RnuQd7FO9Hj5ePMtFAJIkE67TB1My2zPN6EKepNC1RPOCQ
- 4nsKS48mM3EzyeFzHSGdD/WjzjZcaPjhQkuBnjZfwe/AWdAtRLTtd5WI811LHJDnJMewpAXtu
- 2lfbaujRJhxcyL0vyWO4frp6S6pkoGIwyzokJoiqxrEfBpqoFRkC/j0tazMRfQ1xDQWVRQBnZ
- 1wAaDaJncZWK+EWf8Y1CRLCMtY/zV7zBcSlVkEI7jNDPCq/Pfuv7VXkCRRpVc2w5L6G6huEJ4
- uibX7HwL/YfJjCfvksjTfs3ANYIitqeOjteX54ePjhxW/09gMobtift/iC/bkkrhD5GyxtYdV
- ViFR/EhoZ//vT844d56zx4mM8dOfzdZC1Ovy49YeYKIHM/Xv2+EffeINzXRLiS0Q01aEgVHw6
- Hu7Js8IvKNrrfrhRcECwe5vw77QdvnLMMW9IpOjp6OiNQJB1uKjuIoCqyncguvOkdKDr0TQwN
- zn7okzQUEi01mTDsb+hKiDyVienItsaZQzkYeeTZTH+43iXYVLmli0PTLavEyxN7+bBjLrT4k
- 68cJLSDDodMqPLAYgK7GxNzxAnV9vEGV/TNGwH4R1cw3NC8rnPDn4RPboNpPlbyKSQMYUIKPv
- iJAqxnuz1A7nt1Rrl6mPgta103e8USn7Umu/WZvvPXKyW/uSkdBNxWJ7tNvihm5z2afzNkaIX
- ZKhCje7ZfSNclkMtNi4ljbqKLQGjiuL8hWE0N+T7eCxDvX4kJI=
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Igor Djordjevic <igor.d.djordjevic@gmail.com> writes:
 
-On Mon, 19 Mar 2018, Junio C Hamano wrote:
+> Hi Sergey,
+>
+> On 19/03/2018 06:44, Sergey Organov wrote:
+>> 
+>> > > > > > Second side note: if we can fast-forward, currently we prefer
+>> > > > > > that, and I think we should keep that behavior with -R, too.
+>> > > > >
+>> > > > > I agree.
+>> > > >
+>> > > > I'm admittedly somewhat lost in the discussion, but are you
+>> > > > talking fast-forward on _rebasing_ existing merge? Where would it
+>> > > > go in any of the suggested algorithms of rebasing and why?
+>> > > >
+>> > > > I readily see how it can break merges. E.g., any "git merge
+>> > > > --ff-only --no-ff" merge will magically disappear. So, even if
+>> > > > somehow supported, fast-forward should not be performed by default
+>> > > > during _rebasing_ of a merge.
+>> > >
+>> > > Hmm, now that you brought this up, I can only agree, of course.
+>> > >
+>> > > What I had in my mind was more similar to "no-rebase-cousins", like 
+>> > > if we can get away without actually rebasing the merge but still 
+>> > > using the original one, do it. But I guess that`s not what Johannes 
+>> > > originally asked about.
+>> > >
+>> > > This is another definitive difference between rebasing (`pick`?) and 
+>> > > recreating (`merge`) a merge commit - in the case where we`re rebasing, 
+>> > > of course it doesn`t make sense to drop commit this time (due to 
+>> > > fast-forward). This does make sense in recreating the merge (only).
+>> >
+>> > Eh, I might take this back. I think my original interpretation (and 
+>> > agreement) to fast-forwarding is correct.
+>> >
+>> > But the confusion here comes from `--no-ff` as used for merging, as 
+>> > opposed to `--no-ff` as used for rebasing. I _think_ Johannes meant 
+>> > the latter one.
+>> >
+>> > In rebasing, `--no-ff` means that even if a commit inside todo list 
+>> > isn`t to be changed, do not reuse it but create a new one. Here`s 
+>> > excerpt from the docs[1]:
+>> >
+>> >   --no-ff
+>> >     With --interactive, cherry-pick all rebased commits instead of 
+>> >     fast-forwarding over the unchanged ones. This ensures that the 
+>> >     entire history of the rebased branch is composed of new commits.
+>> >
+>> >     Without --interactive, this is a synonym for --force-rebase.
+>> >
+>> >
+>> > So fast-forwarding in case of rebasing (merge commits as well) is 
+>> > something you would want by default, as it wouldn`t drop/lose 
+>> > anything, but merely reuse existing commit (if unchanged), instead of 
+>> > cherry-picking (rebasing) it into a new (merge) commit anyway.
+>> 
+>> This sounds like breakage. E.g., it seems to be breaking every "-x ours"
+>> merge out there.
+>
+> Either you are not understanding how rebase fast-forward works, or 
+> I`m missing what you are pointing to... Mind explaining how can 
+> something that`s left unchanged suddenly become a breakage?
 
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-> 
-> > On Windows, strftime() does not silently ignore invalid formats, but
-> > warns about them and then returns 0 and sets errno to EINVAL.
-> >
-> > Unfortunately, Git does not expect such a behavior, as it disagrees
-> > with strftime()'s semantics on Linux. As a consequence, Git
-> > misinterprets the return value 0 as "I need more space" and grows the
-> > buffer. As the larger buffer does not fix the format, the buffer grows
-> > and grows and grows until we are out of memory and abort.
-> 
-> Yuck, it is bad that the callers assume 0 is always "need more space",
-> as "If a conversion specification does not correspond to any of the
-> above, the behavior is undefined." is what we get from POSIX.
+It was misunderstanding on my side indeed, sorry.
 
-Yeah, well, our own rules state that we are sometimes stricter than POSIX
-when it is pragmatic. This is one of those cases, methinks.
+>
+>> Fast-forwarding existing merge, one way or another, still seems to be
+>> wrong idea to me, as merge commit is not only about content change, but
+>> also about joint point at particular place in the DAG.
+>
+> Not sure what this has to do with rebase fast-forwarding, either - 
+> nothing changes for fast-forwarded (merge or non-merge) commit in 
+> question, both content, joint point and everything else stays exactly 
+> the same. If anything changed, then it can`t/won`t be fast-forwarded, 
+> being unchanged is a prerequisite.
+>
+> Let me elaborate a bit. Here`s a starting diagram:
 
-> > So let's just bite the bullet and override strftime() for MINGW and
-> > abort on an invalid format string. While this does not provide the
-> > best user experience, it is the best we can do.
-> 
-> As long as we allow arbitrary end-user input passed to strftime(), this
-> is probably a step in the right direction.  
-> 
-> As to the future direction, I however wonder if we can return an error
-> from here and make the caller cooperate a bit more.  Of course,
-> implementation of strftime() that silently ignore invalid formats would
-> not be able to return correct errors like an updated mingw_strftime()
-> that does not die but communicates error to its caller would, though.
+[... detailed explanation skipped for brevity ...]
 
-And I would not know what the caller should do in that case, quite
-honestly... Would strftime() somehow tell us *which* placeholder it took
-offense with? And would we "quote" that?
+> Does this settle your concerns, or I`m missing something?
 
-> My "git grep" is hitting only one caller of strftime(), which is
-> strbuf_addftime(), which already does some magic to the format
-> string, so such a future enhancement may not be _so_ bad.
+Yes, it does, thank you! Leaving as many leading commits as possible
+unchanged during rebase is what fast-forward mean in this case then, and
+it's pretty OK with me.
 
-Right, except that I do not think I could get the exact error condition
-necessary to know *how* to munge the format further, not unless I invest a
-serious amount of work in it ;-)
+>> As for fast-forwarding re-merge, explicitly requested, I'm not sure. On
+>> one hand, it's inline with the default "git merge" behavior, on the
+>> other hand, it still feels wrong, somehow.
+>
+> Regarding fast-forwarding in context of merging, in case where we are 
+> recreating merges (not rebasing them), following existing `git merge` 
+> logic might make sense, where I would expect rebasing todo list `merge` 
+> command to pick-up tricks from `git merge` as needed, like learning 
+> to accept `--no-ff` option, for example, thus not fast-forwarding 
+> merges (on request) even when possible.
+>
+> Though, I do agree that in case you want to recreate an existing merge 
+> (instead of just rebasing it), `merge` command fast-forwarding might 
+> probably not be what you want for the most of the time, but I`m afraid 
+> having rebase todo list `merge` command default behavior different than 
+> `git merge` default one (in regards to fast-forwarding) would be 
+> confusing... or not?
+>
+> From what I could grasp so far, usually Git commands` default 
+> behavior is (explained to be) chosen per "most common use case", so 
+> might be non fast-forwarding would be fine as default for rebase todo 
+> list `merge` command, even though different than `git merge`
+> itself...?
 
-> Will apply, thanks.  I do not think there is no reason to cook this
-> in 'next', and would assume this can instead go directly to 'master'
-> to be part of v2.17-rc1 and onward, right?
+As far as I can tell, fast-forward as default for "git merge" has been
+chosen to avoid excessive unintended merges in typical workflows, and
+therefore this decision is not actually applicable to rebasing, I think.
+I'm inclined to disable merges to fast-forward during history rebasing,
+at least by default.
 
-Thanks. Given that this patch has been in Git for Windows for quite a
-while without problems, I think it is safe to get it directly into
-`master`. FWIW this late in the -rc phase, I would be very reluctant to
-send anything I deem unworthy of `master` anyway.
+As far as I can tell, current "--preserve-merges" does fast-forward and
+breaks "git merge --ff-only --no-ff" merges, among other things it
+breaks, and that was my primary concern here. Didn't check
+what "--recreate-merges" does though.
 
-Ciao,
-Dscho
+-- Sergey
