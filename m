@@ -7,101 +7,111 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 09BC21F404
-	for <e@80x24.org>; Wed, 21 Mar 2018 16:07:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 65D3B1F404
+	for <e@80x24.org>; Wed, 21 Mar 2018 16:12:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751691AbeCUQHh (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Mar 2018 12:07:37 -0400
-Received: from mail-ot0-f179.google.com ([74.125.82.179]:35788 "EHLO
-        mail-ot0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751641AbeCUQHe (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Mar 2018 12:07:34 -0400
-Received: by mail-ot0-f179.google.com with SMTP id r30-v6so6153455otr.2
-        for <git@vger.kernel.org>; Wed, 21 Mar 2018 09:07:34 -0700 (PDT)
+        id S1752441AbeCUQMl (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Mar 2018 12:12:41 -0400
+Received: from mail-ot0-f193.google.com ([74.125.82.193]:33982 "EHLO
+        mail-ot0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752019AbeCUQMk (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Mar 2018 12:12:40 -0400
+Received: by mail-ot0-f193.google.com with SMTP id m7-v6so6183412otd.1
+        for <git@vger.kernel.org>; Wed, 21 Mar 2018 09:12:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=ogOHNUqvoYkQbVRIBdfVrG2z7tvCsdkvVwLV9GSJO6E=;
-        b=KRRKLrmFgsDC4384WApiX2cA2QizhredMZak//+Al2E2HgalIRUW34en3twgdXgtxN
-         R3+UYLtctlxGhBHXi7t+rM9AZ3dfo+GA4X6/GGSWKOoQ5AGp5u28BUyNKd/gKRIGOO5o
-         VSYT/opWFI0kAjFQhCdYhz3nJZpEbkeo8IYyYnEpii8yHoLtgu5GdBOG0vecPwJi7y2k
-         bjPwJ7q2lQ8BBFPN8AuBPbFkbk053Uy78Qo8pOScZZy9SjcOTxvpyK6IYwrCHncWB51I
-         4d+FFE7Bp07YVtz+GMmpVMEdxmpWP7sdIWZ+hO4a/BaekDYJEP6eWTNnFsN+vZrAcR1Y
-         5lrw==
+         :cc:content-transfer-encoding;
+        bh=glILiK0U/EbvplswdPc0F1LRquJRPoxKqhMpYt1/oAQ=;
+        b=uqua6u3ZTYVnI31dsrUi6cMXMWbu8TBAj/ikOAhh3l2pbKmla+X6qpG+4I7g3DdBtq
+         clbLsr0m9DB1ezegffN5IOzuj00R8ggyCSL3ZvKLFU3PVdt48C/F78xRBmVc4Cbohaap
+         rr3yayPN5lIrpHfDRrGdi7qXUdSYcWwJsZNfIdheh4my5sjP3H+DGZTYKLugxLgid6Ly
+         IKrKxh1zafMxScfNEIGEzeNESc3/jPF8bOLJ+R4AxzwX5Vz30Orwh8p7iB7Wrx293Lsm
+         FNGa3jIR4dv6vmBW89iHVC/kC5eUb+W02rVUHXCel8VFDQRDn9+ADXVSk2G01U0bXnis
+         qLKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=ogOHNUqvoYkQbVRIBdfVrG2z7tvCsdkvVwLV9GSJO6E=;
-        b=paGW6UCch5jdoZOmtzVIVmIkpvcxxn61YIsIHCgVW/iOwsCUewzZHPik953ErFc211
-         +IOpeTCJlZrWNTOUPFaJ5HvjNli3u3GRVCD/JaZPOTroFx7ufC+E1dBWrGjl5CHuc10f
-         Sbke4SDM7SvSITmDTXblMb7W13hTb33Q3Ny1QTIdUld+WlSlHZsb/x9oIbORaAgUtCbz
-         PUiHdkORUcFbUUX543khjX+YV7CWvAcGFORiWdwubmMxQeqHqjLNq9RXKYpM82Jm1gpL
-         uQo8HAN0bDrKvC5iuk4PFow757P3RAJGMzEtLcKuf7dnz3XmKCINw3wJQ6uEzejkIE6N
-         53Pg==
-X-Gm-Message-State: AElRT7Fp0bdWWTAUuZWkYejkXU4IzvVWG/qEWp+wXIiDZqKEjyAp+Wsq
-        e4q8sF/3H9f7z48QV0fW4eMDeIHTqY14aSPXSao=
-X-Google-Smtp-Source: AIpwx49rwMFfaEkDK5mSrjkpjirj85sJz22Ua4g8IhkyHLLJ7QEyoYU61kxvX9vZivGo4L9bfa9Ul9sSMFntRd5miFg=
-X-Received: by 2002:a9d:550b:: with SMTP id l11-v6mr4809318oth.356.1521648453696;
- Wed, 21 Mar 2018 09:07:33 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=glILiK0U/EbvplswdPc0F1LRquJRPoxKqhMpYt1/oAQ=;
+        b=c61fuIJFzXcOe4/lkVRszfXOaq/x9S8PQuZoY3CTAIeVf8tjd23PRppOOX5We8hLsL
+         VxxwXQusLaiMeNZF6w6QGfzL+Tn8Z0yZPAzQO/Kp/v8DBvHO0nSjnjc3ME0Ny95hmSfo
+         zwWnoogx1MgToMuwNWl8NFZLXRLomOi3JzoYrIXaXBIGkxzoHiL7jaVxxss8qtNMumFJ
+         2t+GLYQXNksg6NEjJkmluT1K5oqf1aIwFaiGOr9pXlUbTuvWwwdtKKO05Vy/WT5D82KS
+         ZgehJg6EeBtFV+dU+zbHRI1b8bm3DPXEFVi34DtoCeVxlKZTVhAXlVP6lMJxnDz3ToNC
+         2U3g==
+X-Gm-Message-State: AElRT7EGWrPwbdTRf3z7TrrhqnzC5iBl9GOx1mxAMZLNx+Wx09yQL6hE
+        uR9R9jqX6jlZNEM4CecujxjC2VqKa3urRkXzpRE=
+X-Google-Smtp-Source: AIpwx4/NjfvQ1j6pgIdxCDMlr9MVx1TLOYu8IwAxO99asrPT/vh5tnjjbO2Bxu97NbDkHPp4x45f4EcySSF9Z+g25ks=
+X-Received: by 2002:a9d:550b:: with SMTP id l11-v6mr4823474oth.356.1521648759680;
+ Wed, 21 Mar 2018 09:12:39 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.74.154.146 with HTTP; Wed, 21 Mar 2018 09:07:02 -0700 (PDT)
-In-Reply-To: <CAHnyXxRsqR3A0FpHJwnfOWo29WNx05qWSXfxvmwPv1TUdqm0aQ@mail.gmail.com>
-References: <CAHnyXxRX4+sMJCNG6f9xtsDO6bdqRS-U6TAYO47OKQjH8bGzbg@mail.gmail.com>
- <20180320023423.GA10143@sigill.intra.peff.net> <CAHnyXxRcwq40W4tKm=Kscrsnb77yh7=eGDE=r5AZq073MPX9AQ@mail.gmail.com>
- <20180320040411.GB12938@sigill.intra.peff.net> <CAHnyXxQMbnNam=oB_B57xDZBaMPRn_8hfKtostHPV6nBHbTBog@mail.gmail.com>
- <20180320044036.GD13302@sigill.intra.peff.net> <CACsJy8BP+ov0jeHp6QZoi=etPDQX5qEFqEfktyA-U-ffUE92vA@mail.gmail.com>
- <CAHnyXxRsqR3A0FpHJwnfOWo29WNx05qWSXfxvmwPv1TUdqm0aQ@mail.gmail.com>
+Received: by 10.74.154.146 with HTTP; Wed, 21 Mar 2018 09:12:09 -0700 (PDT)
+In-Reply-To: <20180321080343.GA25537@sigill.intra.peff.net>
+References: <20180317141033.21545-1-pclouds@gmail.com> <20180318142526.9378-1-pclouds@gmail.com>
+ <20180318142526.9378-10-pclouds@gmail.com> <xmqqsh8wvwwn.fsf@gitster-ct.c.googlers.com>
+ <CACsJy8AkJJQ4XNszxBsESN_WGOSZ+ExWdcCtn6NA+gW9+-mAqQ@mail.gmail.com>
+ <xmqqlgenvs07.fsf@gitster-ct.c.googlers.com> <CACsJy8AbkaSLBYqtFiCwFoqRXguy1hTs=XriefZ3WQJjo_sy8Q@mail.gmail.com>
+ <xmqqy3inu8qe.fsf@gitster-ct.c.googlers.com> <20180320180806.GA16521@duynguyen.home>
+ <20180321080343.GA25537@sigill.intra.peff.net>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 21 Mar 2018 17:07:02 +0100
-Message-ID: <CACsJy8A7k0d8wB_XWhvaaTXespg2y6G+Ab4b27Dc3iKY2Zjujw@mail.gmail.com>
-Subject: Re: .gitattributes override behavior (possible bug, or documentation bug)
-To:     Dakota Hawkins <dakota@dakotahawkins.com>
-Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        Git <git@vger.kernel.org>
+Date:   Wed, 21 Mar 2018 17:12:09 +0100
+Message-ID: <CACsJy8BErdP31AGxSDBMQ-a60WVMSVsUjaJj5xscFGUbgyCWwA@mail.gmail.com>
+Subject: Re: [PATCH v6 09/11] pack-objects: shrink size field in struct object_entry
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Eric Wong <e@80x24.org>, Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 21, 2018 at 4:22 AM, Dakota Hawkins
-<dakota@dakotahawkins.com> wrote:
-> Thinking about this a little more, I'm now attracted to the idea that
-> its .gitignore that's weird.
+On Wed, Mar 21, 2018 at 9:03 AM, Jeff King <peff@peff.net> wrote:
+> On Tue, Mar 20, 2018 at 07:08:07PM +0100, Duy Nguyen wrote:
 >
-> As I understand it, .gitignore stops recursion when there's a
-> directory match (`somedir/`) but also explicitly allows nested
-> .gitnore file _as well as_ exclusion (`!*.txt`).
+>> BTW can you apply this patch? This broken && chain made me think the
+>> problem was in the next test. It would have saved me lots of time if I
+>> saw this "BUG" line coming from the previous test.
+>>
+>> -- 8< --
+>> Subject: [PATCH] t9300: fix broken && chain
+>>
+>> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.=
+com>
+>> ---
+>>  t/t9300-fast-import.sh | 4 ++--
+>>  1 file changed, 2 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
+>> index e4d06accc4..e2a0ae4075 100755
+>> --- a/t/t9300-fast-import.sh
+>> +++ b/t/t9300-fast-import.sh
+>> @@ -348,7 +348,7 @@ test_expect_success 'B: accept branch name "TEMP_TAG=
+"' '
+>>       INPUT_END
+>>
+>>       test_when_finished "rm -f .git/TEMP_TAG
+>> -             git gc
+>> +             git gc &&
+>>               git prune" &&
 >
-> So, in the following (contrived) example, the user doesn't get what they want:
+> The &&-chain is broken from the first command, too. It's "rm -f", which
+> is not that big a deal, but...
 >
->     repo/
->     |- .git/
->     |- .gitignore               # /ignore-most/
->     |- ignore-most/
->     |  |- .gitignore            # !*.txt
->     |  |- please_ignore.png
->     |  |- dont_ignore_me.txt
+>> @@ -365,7 +365,7 @@ test_expect_success 'B: accept empty committer' '
+>>       INPUT_END
+>>
+>>       test_when_finished "git update-ref -d refs/heads/empty-committer-1
+>> -             git gc
+>> +             git gc &&
+>>               git prune" &&
 >
-> `repo/ignore-most/dont_ignore_me.txt` is still ignored, despite what
-> seems like the obvious intention of the user.
+> Same here, but we probably care more about noticing update-ref failure.
 
-Don't get me started on this. I voiced this problem a couple times.
-Attempted to fix it once which made it to rc cycles and caused lots of
-regressions. I haven't taken another stab since.
-
-> Maybe a unified "best-practices" would first-and-foremost recommend
-> against matching directories at all (makes sense, git doesn't manage
-> directories). In the above example, changing `/ignore-most/` to
-> `/ignore-most/*` has the "desired" effect.
-
-I think it's actually more intuitive to think "ignore recursively"
-(with the trailing slash) These things make sense to you once you know
-exactly _how_ the matching machinery works. But normal users don't
-know that. It's probably better that we add recursive matching support
-in gitattributes. Then both gitignore/gitattr are more or less
-consistent again and also easy to use (most of the times)
--- 
+Yes. I wasn't sure if that update-ref could fail but did not check
+since this was a side issue for me.
+--=20
 Duy
