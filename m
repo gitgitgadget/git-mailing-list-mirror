@@ -2,192 +2,167 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A0A401F404
-	for <e@80x24.org>; Wed, 21 Mar 2018 21:33:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3D3A01F404
+	for <e@80x24.org>; Wed, 21 Mar 2018 21:46:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753650AbeCUVdK (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Mar 2018 17:33:10 -0400
-Received: from mail-wr0-f178.google.com ([209.85.128.178]:34318 "EHLO
-        mail-wr0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753570AbeCUVdJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Mar 2018 17:33:09 -0400
-Received: by mail-wr0-f178.google.com with SMTP id o8so6662825wra.1
-        for <git@vger.kernel.org>; Wed, 21 Mar 2018 14:33:08 -0700 (PDT)
+        id S1753827AbeCUVqN (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Mar 2018 17:46:13 -0400
+Received: from mail-pl0-f66.google.com ([209.85.160.66]:34195 "EHLO
+        mail-pl0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753824AbeCUVqJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Mar 2018 17:46:09 -0400
+Received: by mail-pl0-f66.google.com with SMTP id u11-v6so3974213plq.1
+        for <git@vger.kernel.org>; Wed, 21 Mar 2018 14:46:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=google.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=3dt9Zl56AEPRBDfIISfTr5Vo5VzQ6te+j4dnoA2ngxE=;
-        b=ZurCIVxA/G4r2C5isLo7q5yl7QgmFbhRpOehSpr3GpwINqUmm9xft0Pmu/nYyrlbl+
-         NssPB9ncQeamj47dtYFfqyECBgp+DtFCv2wyoj7+W/SHYUKqWgNTNGZJ3rYBhVvm/wt0
-         iDtgcNdPf7XfPa37m5eKbvX6X0qkIEn9NHjxdxGY6GeCFIh4zRhA3mcXpL53b7+2nRMe
-         tNQXa63A5N3Wj1EK3tGav4Ob60Te66qMhbEtEtWph5n2u8bTawbWdjwIzZTJNrQG/VJm
-         3RgqBUt0Sr46EXRlBMvOYrbryntjpfhjEyG80hm50yR83BMoA21yDLyT/F5UBfp79XTg
-         +7Sg==
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=e9IA8/rHbbbND4ZZEwOwQoz0/AnlUVBEp6w6ER+Hd9w=;
+        b=GoZ/kXtbN6iLvoCrfSYi0HJbLwKF6Avw1EqgCzzAv1oAckl2bev+9GnZztbSWFKlGI
+         Mew67Zm5A1BsTmgTbeNQOHHyXr6Cxm+dR5LxsbW8WS9naEwdxeH0hihX7FL3/x3ed+hO
+         c2jfA4d88KcYtIa03iplmpGEeRB8bSyFcMOaikA8mZr/ozyrAFuFlh1/UENTOAOOnJBr
+         gweuKMpOaNdOyH6aXTSSUdSmFr2J+pIZewTwGmcfInv9M/zJVpihcQaRWFiHXuIbMGek
+         GGc2efjd+FCW7r4fP7fpbRZC+aNivt9Qzo+ADc+8loUGy9kNOutgPLf3Dkro35L6kz0l
+         I6pg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=3dt9Zl56AEPRBDfIISfTr5Vo5VzQ6te+j4dnoA2ngxE=;
-        b=axxBZ4uO99mBnKL5NzqiiLYU5dtT0/3IBQdoiIt7FysUYjrEUcXkL3FKHr7zmZsAWV
-         irKEOm5XSvgILC5K+Ni+Uf3h3VJoHMsgQ5/5YsFsulp79ZDPUK8g9j6YO9wX1d2v0Yfr
-         MEJzTGpMH+/fVBHre5iWsg92QMLPXlwQnY9xfbvdDwSlrpg2CMcuDXIO0+MRWqvFGx0X
-         liQVR+dVVeTd63ZZs+cBn3JEawTG76+O7LjR3b8L1xkbIvfYbYu6yEHhvjEyDhUZmhrl
-         oWUaEDquovd+DjQLYG9zeeBDqrya7glx+1XXqUi7npeVlJ2KeG5GfMrpKZ3tMrw/zGvl
-         kVvw==
-X-Gm-Message-State: AElRT7GeXcIO3WTg5i+JCuIMtRqz75j3+3zdh2lXCTwFPWeZV4MzNSxz
-        qSmLfhKVRpCh0Lf5HXCLkK4=
-X-Google-Smtp-Source: AG47ELsD6xtOmTxPGlddaGTu/AVyLszB3p6PiO3Qv/IaVkFmxaSMhXfVVQ0BjK1zrhKFACb4BZ4qzw==
-X-Received: by 10.223.139.199 with SMTP id w7mr16459011wra.219.1521667987762;
-        Wed, 21 Mar 2018 14:33:07 -0700 (PDT)
-Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
-        by smtp.gmail.com with ESMTPSA id m62sm7468933wmc.25.2018.03.21.14.33.06
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=e9IA8/rHbbbND4ZZEwOwQoz0/AnlUVBEp6w6ER+Hd9w=;
+        b=S9SUwDzna6DQpQY61/NgXVEJr+Bu9dZYZ90JTtnm1zj55y3f1HbWOu/mSonPQ/XC6h
+         EFo7NvTKvSKHgHl3vNMZadeo3V8f5aBcH/h3ZjBRiFu0vZt73IIz0qznN2zTq41EfHFq
+         l2GeJmv2keef0Sh72ZFgrJRNm0YVmbmyIjvx6lKw10tcmNKZS63JSLlc4lvTBVKj87wT
+         JGwA6kH4BwcDuixdd/aY0V/NBzVyLxQrUt2RS0/28YeOmOynt9QdXh0gQwqIPlk6ebQw
+         DjVyy9AXcKsqrN0Nq1B+wV/EtIX13SPsnaL+rFKeEnKifVg4cJs/4s3exNFdMPcWqRNm
+         GgNg==
+X-Gm-Message-State: AElRT7HdXYcGmOXP/nVF1SRqpVw423lyOikmB3L/ZGn4T3hjiWWCWNIY
+        30SvuDOS2dX2yQQ2pACRl3EKBg==
+X-Google-Smtp-Source: AG47ELstz1HvoXPSevAtkbnAzan5uoORG1DgeGJX8QkiRQTEbCvYMGauOKiEgVl6BWCcsxdsxlge+w==
+X-Received: by 2002:a17:902:bd4b:: with SMTP id b11-v6mr22162885plx.225.1521668768295;
+        Wed, 21 Mar 2018 14:46:08 -0700 (PDT)
+Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
+        by smtp.gmail.com with ESMTPSA id a3sm10375480pfh.120.2018.03.21.14.46.07
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 21 Mar 2018 14:33:06 -0700 (PDT)
-Date:   Wed, 21 Mar 2018 21:36:26 +0000
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Marc Strapetz <marc.strapetz@syntevo.com>
-Subject: Re: [PATCH v5 2/3] stash push: avoid printing errors
-Message-ID: <20180321213626.GG2224@hank>
-References: <20180316223715.108044-1-gitster@pobox.com>
- <20180319232156.30916-1-t.gummerer@gmail.com>
- <20180319232156.30916-3-t.gummerer@gmail.com>
- <xmqqzi32sn5u.fsf@gitster-ct.c.googlers.com>
+        Wed, 21 Mar 2018 14:46:07 -0700 (PDT)
+Date:   Wed, 21 Mar 2018 14:46:06 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH 01/44] repository: initialize the_repository in main()
+Message-ID: <20180321214606.GA18406@google.com>
+References: <CACsJy8DWrNzZM1K2vkx2XiETdAR5WhwXEdPijsxd0ZD4Lj=tZw@mail.gmail.com>
+ <20180303113637.26518-1-pclouds@gmail.com>
+ <20180303113637.26518-2-pclouds@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqzi32sn5u.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20180303113637.26518-2-pclouds@gmail.com>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 03/20, Junio C Hamano wrote:
-> Thomas Gummerer <t.gummerer@gmail.com> writes:
+On 03/03, Nguyễn Thái Ngọc Duy wrote:
+> This simplifies initialization of struct repository and anything
+> inside. Easier to read. Easier to add/remove fields.
 > 
-> > ...
-> > Fix this by avoiding the 'git clean' if a pathspec is given, and use the
-> > pipeline that's used for pathspec mode to get rid of the untracked files
-> > as well.
+> Everything will go through main() common-main.c so this should cover all
+> programs, including t/helper.
 > 
-> That made me wonder if we can get rid of 'git clean' altogether by
-> pretending that we saw a pathspec '.' that match everything when no
-> pathspec is given---that way we only have to worry about a single
-> codepath.
+> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+> ---
+>  common-main.c |  2 ++
+>  repository.c  | 18 +++++++++++++-----
+>  repository.h  |  2 +-
+>  3 files changed, 16 insertions(+), 6 deletions(-)
 > 
-> But I guess doing it this way can minimize potential damage.  Those
-> who do not use pathspec when running "git stash" won't be affected
-> even if this change had some bugs ;-)
+> diff --git a/common-main.c b/common-main.c
+> index 6a689007e7..7d716d5a54 100644
+> --- a/common-main.c
+> +++ b/common-main.c
+> @@ -34,6 +34,8 @@ int main(int argc, const char **argv)
+>  
+>  	git_setup_gettext();
+>  
+> +	initialize_the_repository();
+> +
+>  	attr_start();
+>  
+>  	git_extract_argv0_path(argv[0]);
+> diff --git a/repository.c b/repository.c
+> index 4ffbe9bc94..0eddf28fcd 100644
+> --- a/repository.c
+> +++ b/repository.c
+> @@ -4,10 +4,16 @@
+>  #include "submodule-config.h"
+>  
+>  /* The main repository */
+> -static struct repository the_repo = {
+> -	NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, &the_index, &hash_algos[GIT_HASH_SHA1], 0, 0
+> -};
+> -struct repository *the_repository = &the_repo;
+> +static struct repository the_repo;
+> +struct repository *the_repository;
+> +
+> +void initialize_the_repository(void)
+> +{
+> +	the_repository = &the_repo;
+> +
+> +	the_repo.index = &the_index;
+> +	repo_set_hash_algo(&the_repo, GIT_HASH_SHA1);
+> +}
 
-Heh yeah, we found enough bugs in this code so far, so it's probably
-best to leave the part that's working alone at least for now.
+Nice, one place to do all the crazy initialization for the_repo.  I
+wanted to do something like this when I introduced the repository but I
+shied away from it because it didn't seem like the right thing to do at
+the time.  Now that its grown a bit, its definitely the right move until
+using the repository object is ubiquitous enough that the setup code can
+produce a repository struct instead of relying on a global one.
 
-> > diff --git a/git-stash.sh b/git-stash.sh
-> > index 4c92ec931f..5e06f96da5 100755
-> > --- a/git-stash.sh
-> > +++ b/git-stash.sh
-> > @@ -308,14 +308,16 @@ push_stash () {
-> >  	if test -z "$patch_mode"
-> >  	then
-> >  		test "$untracked" = "all" && CLEAN_X_OPTION=-x || CLEAN_X_OPTION=
-> > -		if test -n "$untracked"
-> > +		if test -n "$untracked" && test $# = 0
-> >  		then
-> >  			git clean --force --quiet -d $CLEAN_X_OPTION -- "$@"
+>  
+>  static char *git_path_from_env(const char *envvar, const char *git_dir,
+>  			       const char *path, int fromenv)
+> @@ -128,7 +134,9 @@ static int read_and_verify_repository_format(struct repository_format *format,
+>   * Initialize 'repo' based on the provided 'gitdir'.
+>   * Return 0 upon success and a non-zero value upon failure.
+>   */
+> -int repo_init(struct repository *repo, const char *gitdir, const char *worktree)
+> +static int repo_init(struct repository *repo,
+> +		     const char *gitdir,
+> +		     const char *worktree)
+>  {
+>  	struct repository_format format;
+>  	memset(repo, 0, sizeof(*repo));
+> diff --git a/repository.h b/repository.h
+> index 0329e40c7f..40c1c81bdc 100644
+> --- a/repository.h
+> +++ b/repository.h
+> @@ -91,7 +91,7 @@ extern struct repository *the_repository;
+>  extern void repo_set_gitdir(struct repository *repo, const char *path);
+>  extern void repo_set_worktree(struct repository *repo, const char *path);
+>  extern void repo_set_hash_algo(struct repository *repo, int algo);
+> -extern int repo_init(struct repository *repo, const char *gitdir, const char *worktree);
 
-Argh I just noticed we could drop the "$@" here, as this is no longer
-the pathspec case.  It doesn't hurt anything, except it may be a bit
-confusing when reading the code.
+I had to double check that this was ok, it indeed is as repo_init is
+only used in repository.c.
 
-Although if we end up implementing 'git checkout --index <pathspec>',
-we'd have to add it back, but we do have a test covering this case, so
-there's no worries about forgetting to add it back.
+> +extern void initialize_the_repository(void);
+>  extern int repo_submodule_init(struct repository *submodule,
+>  			       struct repository *superproject,
+>  			       const char *path);
+> -- 
+> 2.16.1.435.g8f24da2e1a
+> 
 
-> >  		fi
-> >  
-> >  		if test $# != 0
-> >  		then
-> > -			git add -u -- "$@"
-> > +			test -z "$untracked" && UPDATE_OPTION="-u" || UPDATE_OPTION=
-> > +			test "$untracked" = "all" && FORCE_OPTION="--force" || FORCE_OPTION=
-> > +			git add $UPDATE_OPTION $FORCE_OPTION -- "$@"
-> >  			git diff-index -p --cached --binary HEAD -- "$@" |
-> >  			git apply --index -R
-> >  		else
-> 
-> Thanks, I'll take the change as-is.
-> 
-> I however wonder if we restructure the code to
-> 
-> 	if test $# = 0
-> 	then
-> 		# no pathspec
-> 		if test -n "$untracked"
-> 		then
-> 			git clean --force --quiet -d $CLEAN_OPTION -- "$@"
-> 		fi
-> 		git reset --hard -q
-> 	else
-> 		test -z "$untracked" && UPDATE=-u || UPDATE=
-> 		test "$untracked" = all && FORCE=--force || FORCE=
-> 		git add $UPDATE $FORCE-- "$@"
-> 		git diff-index -p --cached --binary HEAD -- "$@" |
-> 		git apply --index -R
-> 	fi
-> 
-> it becomes easier to understand what is going on.
-
-I like that code structure more than what I have now.  I see you
-already merged what I had to next, and I like keeping the change small
-now that we're in the rc period (assuming you want to get this into
-2.17?)  Maybe we can restructure the code as a separate cleanup once
-2.17 is out, so this has more time to cook in master and hopefully
-we'd notice regressions before the next release?
-
-> That way, once we have a plumbing command to help the else clause of
-> the above, i.e. "git checkout --index <tree-ish> -- <pathspec>"
-> [*1*], then we can lose the if/then/else and rewrite the whole "we
-> have created stash, so it's time to get rid of local modifications
-> to the paths that match the pathspec" code to:
-> 
-> 	if test "$untracked"
-> 	then
-> 		git clean --force --quiet -d $CLEAN_OPTION -- "$@"
-> 	fi
-> 	git checkout --index HEAD -- "$@"
-
-Yeah, this would be nice to have.  I wanted to have a look at what it
-would take to implement 'git checkout --{cached,index}', but I'm not
-familiar with the checkout code at all, so it will probably be a while
-until I can get around to do it. 
-
-> [Footnote]
-> cf. https://public-inbox.org/git/xmqq4loqplou.fsf@gitster.mtv.corp.google.com/
-> 
-> What we want in the case in the code in question when there is
-> pathspec is "match the index entries and the working tree files to
-> those that appear in a given tree for paths that match the given
-> pathspec".  This is close to "git checkout <tree-ish> -- <pathspec>"
-> but not quite.  Current "git checkout <tree-ish> -- <pathspec>" is
-> an overlay operation in that paths that match <pathspec> but do not
-> exist in <tree-ish> are *NOT* removed from the working tree.  We
-> obviously cannot change the behaviour of the command.
-> 
-> But we can add an option to ask for the new behaviour.  In general,
-> for an operation that affects the index and the working tree, we can
-> have "--cached" mode that affects only the index without touching
-> the working tree, and "--index" mode that affects both.
-> 
-> "git reset <tree-ish> -- <pathspec>", which is a UI mistake, is
-> better spelled "git checkout --cached <tree-ish> -- <pathspec>".  We
-> take paths that match <pathspec> from <tree-ish> and stuff into the
-> index, and remove entries from the index for paths that do not exist
-> in <tree-ish>.  And if we extend that to "--index" mode, that is
-> exactly what we want to happen.
+-- 
+Brandon Williams
