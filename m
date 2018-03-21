@@ -2,129 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EF12F1F404
-	for <e@80x24.org>; Wed, 21 Mar 2018 15:31:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E7DB71F404
+	for <e@80x24.org>; Wed, 21 Mar 2018 15:59:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752770AbeCUPb4 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Mar 2018 11:31:56 -0400
-Received: from mail-pl0-f66.google.com ([209.85.160.66]:42583 "EHLO
-        mail-pl0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752760AbeCUPbx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Mar 2018 11:31:53 -0400
-Received: by mail-pl0-f66.google.com with SMTP id w15-v6so3325326plq.9
-        for <git@vger.kernel.org>; Wed, 21 Mar 2018 08:31:53 -0700 (PDT)
+        id S1751736AbeCUP7v (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Mar 2018 11:59:51 -0400
+Received: from mail-ot0-f169.google.com ([74.125.82.169]:35570 "EHLO
+        mail-ot0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751416AbeCUP7u (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Mar 2018 11:59:50 -0400
+Received: by mail-ot0-f169.google.com with SMTP id r30-v6so6123862otr.2
+        for <git@vger.kernel.org>; Wed, 21 Mar 2018 08:59:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :in-reply-to:references;
-        bh=+H9d51IkxmCk9ZZ47TqjuldDH9XIxw6dFKoDgrndLy0=;
-        b=DJI/4SXU1iGG7G4JIvOyGrnISZsv8ltoI8N4Gy2yIinM4km4JX1c4VfMux27pAyZjN
-         I42p/c1euFH7z9f29up8DIrG4H/VSXGEcnkN1NMPRJL4QoTvlM8/kAWIweRkdmL0N8WS
-         X2qFahXQiMizz3/azu2dDF9J+Ozz+eueV08aGdBh/PZNVlt5PLG/SafQL5CEL+GOMqfF
-         oY91c0EF5xL6CzSz+F0NoSvWSo45XvxUjkNrFh6k40nl7uTV+j6nqOn8mfLTq0cRtRJQ
-         SswYcHoU4oXO2B3jFcscLvjZr6DeEpC8iLyQN6zyxvhOmwvdT6Nj700/dfmi7wfxBDjL
-         TvwA==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=IPHTSJnHE+Sily3gsXurLeSn2kWVVlXc9ahU6CbTDqE=;
+        b=Nw0oKOpHcmQoiOKGki7FnVIDrdYo+vs6rAoDvETYCj87YIz6hdaUvp0qcgiwbmGojv
+         4cpyA9XEPg81VEd6ITLI4YtVNOnED9ERSxIdbgsduHeuVKLg6uZ12ic8nY/bsHZTQyuP
+         h0bbXQGVGk0GDqUEdROMlDLanWYcEbViCi3cNcI9EjT/auHTwkX9JNRE3hYrGg/3+jbY
+         Ko8YVIR/yYjX2yt+/NQ6blviQf5qJzV+F+N7iFiC8ERHV1ySss3P6LpabozCeYpF2jzN
+         ldlyDBQoeub5JZ8i5t9BY1/ZG/MY2rqqBL+FYL+0aNdqU76f9xP8hG6tfFyFwA4Gz4Jd
+         DYuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:in-reply-to:references;
-        bh=+H9d51IkxmCk9ZZ47TqjuldDH9XIxw6dFKoDgrndLy0=;
-        b=iYYFcnBdwu+j+gXJr+9ND9WL3SI6kpME20vJc5my/pE9VnshETfLjJsXCJdTTqkljK
-         bmmC/n5yFNxXkPYMUAW0l/H39iVBWcBkHXJ/vI0c8HoHn8H9R/zF2KrlrgQF7mf0ZJth
-         lLZVpJNB17TXo6wwsq9c6Ggt70Plxuozi6JXEpzoDTJftUOFX7lpzkVlExTMptVKQ5Qj
-         93oz5gkm50U7f9vC1BgUObSZvPo9k7honCXGjjbKarV2+ztdzGSxcLjVrNaV8YccIKsi
-         dy+6ST8N7xVjDvcEQ1JYBcjUBtZVOetvOxYC+HXPU995pJN8V9M6MW8pGqrkULz/9CcT
-         nu3Q==
-X-Gm-Message-State: AElRT7ElcyBDajmgXeST/dIGVnvq2eBWIf0mtc2GZ6L2BF2re3WHU+2u
-        k0W8lPMRuzabSB1lI3H9HKE3VN0q
-X-Google-Smtp-Source: AG47ELvCeZpEOXKQ7hvERo3CFVBUgcKAghpWZiIZNBJxTBbREnHDG6UpO/i522AfqgQ1NEbOY76wLA==
-X-Received: by 2002:a17:902:988c:: with SMTP id s12-v6mr5875599plp.318.1521646312511;
-        Wed, 21 Mar 2018 08:31:52 -0700 (PDT)
-Received: from localhost.localdomain (softbank126094241038.bbtec.net. [126.94.241.38])
-        by smtp.gmail.com with ESMTPSA id j14sm8625333pfn.113.2018.03.21.08.31.50
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 21 Mar 2018 08:31:51 -0700 (PDT)
-From:   Yuki Kokubun <orga.chem.job@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Yuki Kokubun <orga.chem.job@gmail.com>
-Subject: [PATCH] filter-branch: consider refs can refer to an object other than commit or tag
-Date:   Wed, 21 Mar 2018 15:31:39 +0000
-Message-Id: <1521646299-16193-1-git-send-email-orga.chem.job@gmail.com>
-X-Mailer: git-send-email 1.9.1
-In-Reply-To: <20180321103504.9483-1-orga.chem.job@gmail.com>
-References: <20180321103504.9483-1-orga.chem.job@gmail.com>
-In-Reply-To: <20180321103504.9483-1-orga.chem.job@gmail.com>
-References: <20180321103504.9483-1-orga.chem.job@gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=IPHTSJnHE+Sily3gsXurLeSn2kWVVlXc9ahU6CbTDqE=;
+        b=YCtUhAgt1Q3berGsYodzvNK/a51zOsESE+dn5+Tj7mge/+XdJPt3WAX49ZQ2CVcu96
+         kLd3nBJzJAxEK1EYh7SQSde9vTgLESeGjaEQkAJXNz/ZdwM3e1H9Y4m1Pus8cRyEaiH5
+         tFrY/LuXfNcxadUZqsAbZiyAxGO1arpcrYFcAPXvZ+PKdIdoCm8PPP4xOyAru/9cgNyh
+         hPKFBkwONxZa+UL0wk10hx3oz4UNwrE6RJeIMUGZsDV8aQKiFhrO6cngS7DlNvzRVFQF
+         EG9tWAYmYl1UdRD0QzsTBfwPQtHttfDwSEHEIhNVuJlDLIhB9lM4+OziJmz7c6TlFaGA
+         pssw==
+X-Gm-Message-State: AElRT7EQKlcV1xZrgzA8ZAvjg97S8U/Yh9R4HIeokyyV42h3oda4G6Vc
+        ZfFLlZFKvDdsyJTYVKc7IxY+tGPJEQfDvOxkoas=
+X-Google-Smtp-Source: AG47ELspmWhBdDM/ttGt7SdTtFDnVs24MCgUw+TZveEO7IYFjfA2dULPMCfpdRcaUFUz50EIDy9n6dO5I8WvGmda/00=
+X-Received: by 2002:a9d:ec5:: with SMTP id 63-v6mr10805032otj.14.1521647990152;
+ Wed, 21 Mar 2018 08:59:50 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.74.154.146 with HTTP; Wed, 21 Mar 2018 08:59:19 -0700 (PDT)
+In-Reply-To: <20180321082441.GB25537@sigill.intra.peff.net>
+References: <20180317141033.21545-1-pclouds@gmail.com> <20180318142526.9378-1-pclouds@gmail.com>
+ <20180321082441.GB25537@sigill.intra.peff.net>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Wed, 21 Mar 2018 16:59:19 +0100
+Message-ID: <CACsJy8DkF3TpTGKp5MdS1ApC8Yj6FOL5uAg5U__PjBAQY1vdNw@mail.gmail.com>
+Subject: Re: [PATCH v6 00/11] nd/pack-objects-pack-struct updates
+To:     Jeff King <peff@peff.net>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Eric Wong <e@80x24.org>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"git filter-branch -- --all" can be confused when refs that refer to objects
-other than commits or tags exists.
-Because "git rev-parse --all" that is internally used can return refs that
-refer to an object other than commit or tag. But it is not considered in the
-phase of updating refs. Such refs can be created by "git replace" with
-objects other than commits or trees.
+On Wed, Mar 21, 2018 at 9:24 AM, Jeff King <peff@peff.net> wrote:
+> On Sun, Mar 18, 2018 at 03:25:15PM +0100, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=
+=BB=8Dc Duy wrote:
+>
+>> v6 fixes the one optimization that I just couldn't get right, fixes
+>> two off-by-one error messages and a couple commit message update
+>> (biggest change is in 11/11 to record some numbers from AEvar)
+>
+> I was traveling during some of the earlier rounds, so I finally got a
+> chance to take a look at this.
+>
+> I hate to be a wet blanket, but am I the only one who is wondering
+> whether the tradeoffs is worth it? 8% memory reduction doesn't seem
+> mind-bogglingly good,
 
-Signed-off-by: Yuki Kokubun <orga.chem.job@gmail.com>
----
-This patch fix the bug of the first patch.
-The first patch did not consider tags.
+AEvar measured RSS. If we count objects[] array alone, the saving is
+40% (136 bytes per entry down to 80). Some is probably eaten up by
+mmap in rss.
 
- git-filter-branch.sh     | 11 ++++++++++-
- t/t7003-filter-branch.sh | 13 +++++++++++++
- 2 files changed, 23 insertions(+), 1 deletion(-)
+> and I'm concerned about two things:
+>
+>   1. The resulting code is harder to read and reason about (things like
+>      the DELTA() macros), and seems a lot more brittle (things like the
+>      new size_valid checks).
+>
+>   2. There are lots of new limits. Some of these are probably fine
+>      (e.g., the cacheable delta size), but things like the
+>      number-of-packs limit don't have very good user-facing behavior.
+>      Yes, having that many packs is insane, but that's going to be small
+>      consolation to somebody whose automated maintenance program now
+>      craps out at 16k packs, when it previously would have just worked
+>      to fix the situation.
+>
+> Saving 8% is nice, but the number of objects in linux.git grew over 12%
+> in the last year. So you've bought yourself 8 months before the problem
+> is back. Is it worth making these changes that we'll have to deal with
+> for many years to buy 8 months of memory savings?
 
-diff --git a/git-filter-branch.sh b/git-filter-branch.sh
-index 1b7e4b2cd..f7cd97b86 100755
---- a/git-filter-branch.sh
-+++ b/git-filter-branch.sh
-@@ -251,7 +251,16 @@ done < "$tempdir"/backup-refs
- 
- # The refs should be updated if their heads were rewritten
- git rev-parse --no-flags --revs-only --symbolic-full-name \
--	--default HEAD "$@" > "$tempdir"/raw-heads || exit
-+	--default HEAD "$@" > "$tempdir"/raw-objects || exit
-+# refs/replace can refer to an object other than commit or tag
-+while read ref
-+do
-+	type=$(git cat-file -t "$ref")
-+	if test $type = commit || test $type = tag
-+	then
-+		echo "$ref"
-+	fi
-+done >"$tempdir"/raw-heads <"$tempdir"/raw-objects
- sed -e '/^^/d' "$tempdir"/raw-heads >"$tempdir"/heads
- 
- test -s "$tempdir"/heads ||
-diff --git a/t/t7003-filter-branch.sh b/t/t7003-filter-branch.sh
-index 7cb60799b..efeaf5887 100755
---- a/t/t7003-filter-branch.sh
-+++ b/t/t7003-filter-branch.sh
-@@ -470,4 +470,17 @@ test_expect_success 'tree-filter deals with object name vs pathname ambiguity' '
- 	git show HEAD:$ambiguous
- '
- 
-+test_expect_success 'rewrite repository including refs/replace that point to non commit object' '
-+	test_when_finished "git reset --hard original" &&
-+	tree=$(git rev-parse HEAD^{tree}) &&
-+	test_when_finished "git replace -d $tree" &&
-+	echo A >new &&
-+	git add new &&
-+	new_tree=$(git write-tree) &&
-+	git replace $tree $new_tree &&
-+	git reset --hard HEAD &&
-+	git filter-branch -f -- --all >filter-output 2>&1 &&
-+	! fgrep fatal filter-output
-+'
-+
- test_done
--- 
-2.16.2.18.g09cb46d
+Well, with 40% it buys us a couple more months. The object growth
+affects rev-list --all too so the actual "good months" is probably not
+super far from 8 months.
 
+Is it worth saving? I don't know. I raised the readability point from
+the very first patch and if people believe it makes it much harder to
+read, then no it's not worth it.
+
+While pack-objects is simple from the functionality point of view, it
+has received lots of optimizations and to me is quite fragile.
+Readability does count in this code. Fortunately it still looks quite
+ok to me with this series applied (but then it's subjective)
+
+About the 16k limit (and some other limits as well), I'm making these
+patches with the assumption that large scale deployment probably will
+go with custom builds anyway. Adjusting the limits back should be
+quite easy while we can still provide reasonable defaults for most
+people.
+
+> I think ultimately to work on low-memory machines we'll need a
+> fundamentally different approach that scales with the objects since the
+> last pack, and not with the complete history.
+
+Absolutely. Which is covered in a separate "gc --auto" series. Some
+memory reduction here may be still nice to have though. Even on beefy
+machine, memory can still be reused somewhere other than wasted in
+unused bits.
+--=20
+Duy
