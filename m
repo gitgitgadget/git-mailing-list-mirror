@@ -2,145 +2,189 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2E1781F404
-	for <e@80x24.org>; Wed, 21 Mar 2018 22:39:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B45941F404
+	for <e@80x24.org>; Wed, 21 Mar 2018 22:42:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754010AbeCUWj0 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Mar 2018 18:39:26 -0400
-Received: from mail-pl0-f66.google.com ([209.85.160.66]:40329 "EHLO
-        mail-pl0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753865AbeCUWjZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Mar 2018 18:39:25 -0400
-Received: by mail-pl0-f66.google.com with SMTP id x4-v6so4038888pln.7
-        for <git@vger.kernel.org>; Wed, 21 Mar 2018 15:39:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=IC+N3PpGy7RhXdFFvwav7gHJOl+ZJtMxcxCvtstnTF8=;
-        b=mxrho8hzZzpfWICzdh8dHCs9zglD2PjUcoCX7ZMDUY8bZqU2OqVjjhBD08/jF4nhKa
-         3qz0AM62UBIcc4Y83dU4BszYYVvWAbSt14q67Lbklv/N4qBUSRF7ZWCfmNXYzFOoHilr
-         wW26WICtY7YbStgTd8Rk4ZwhpCO2mgPlwvO7DTmuTR9L5c98iwmJVm1sjWqgdOkrGcMq
-         wGvLgs0iwoyxQnzQ5TLhyX+2s6NUm0gGcmtC3qM+5yzqzD1rzFvteK4YLPGSr6uo5bk5
-         ToFe/DiQxf03d3QT54gN9qiH54j6PPJyCjAzajs+cIHhrcbvwtptKkNoLcbge7XM2CN4
-         XZKQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=IC+N3PpGy7RhXdFFvwav7gHJOl+ZJtMxcxCvtstnTF8=;
-        b=qcDW76YHHXj5fWwgitGzQT+tKV0qRksLYfnWOjG+QmqbKz09U/4tpxKIgnTU1D5DBo
-         vrs/1zSYIm3OwzRe3NnnJvP2AeO0AE4BeMC5YFwQhmbiOPEiShrtfXlxPSV3wdXyRxW5
-         VpUHTol8MHcdCcyF29bIWv1BprbzC5jKlWlDuEKAmvSPNNOcFQ4ZYMWQtiZhgmoyGDBI
-         0EYqU812Gz5sr7JZeMZgFln70x4VJRWRMRymaTY1jfviURpR98XS2PHiaRas99kQXpAO
-         TNA9Nsy2Zz23ZObKjNE2iLCDbo5bWrzzu5WhnfSkFSFyYpOi3jlndY//lgofrRy2U/+l
-         oNqw==
-X-Gm-Message-State: AElRT7Hf02sSuiQkfVuO1H0EY2OS/8pBsy25WVJBI5QGy6iR06gpL+ND
-        JfmQhUAsJjUX1iuoyab7uCDYkA==
-X-Google-Smtp-Source: AG47ELsWjBgOlJBG+Ih2mA0Mpfegufqul6y8iSHw5RzQuk04fmBU7NtnCYp6CNhT7VxMb1hcp+Y/dw==
-X-Received: by 2002:a17:902:a610:: with SMTP id u16-v6mr22139094plq.293.1521671964900;
-        Wed, 21 Mar 2018 15:39:24 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
-        by smtp.gmail.com with ESMTPSA id s78sm10161448pfa.161.2018.03.21.15.39.23
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 21 Mar 2018 15:39:24 -0700 (PDT)
-Date:   Wed, 21 Mar 2018 15:39:23 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 40/44] packfile: allow prepare_packed_git to handle
- arbitrary repositories
-Message-ID: <20180321223923.GB202156@google.com>
-References: <CACsJy8DWrNzZM1K2vkx2XiETdAR5WhwXEdPijsxd0ZD4Lj=tZw@mail.gmail.com>
- <20180303113637.26518-1-pclouds@gmail.com>
- <20180303113637.26518-41-pclouds@gmail.com>
+        id S1753707AbeCUWme (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Mar 2018 18:42:34 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:40082 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1753309AbeCUWmd (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 21 Mar 2018 18:42:33 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id C2963600FB;
+        Wed, 21 Mar 2018 22:42:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1521672152;
+        bh=8khar4KkYLVMdsnbI+D+8hwd43ocKcvMYNit5UKWFPE=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=SFuTLzygzC853udGPzsRM6FJ+Rv5t5fi2Arm7cWn1a6BBU4f9AwU30FODzqldx9zz
+         SVBIJciQwxWrHT5QepAvnXlPfHxVUwx5IrnX0N+nX3sR7WJ7K8eh3eUlKyjV3U1v4J
+         6B4rLcQOtNwxMLQVJ/5cbpagpJ5YpIkHO1IIPN3LVvmsaHjS1jNuSzxI/MdiyLNoIz
+         nsrJeQP5K5TI4F/u7M5T1O8YCmfKlPkGRyQXAhHdbh4dgZqGReWRsYZxMRWBT6wEzu
+         xVnHTYrD8iNlJadEV+2lMIdWHsUh3KIS4ePHg3HBm3JzrbUgICoNL/wSjughz+faSC
+         6dKcvoBrTCFxk8oGtm+IFgzR/OMUR0wTzQGl9qT8o8oXB8UoI1CdEppeeP3nGaSYNC
+         pGd9jVbZt9aQCd8X4SFWc8NXs3UwQ4fL/dlX7Z+lnhChX2Amy1lCRwMB5DhM6cYM4l
+         eB0RqFZltsCmqfXlaYZVyI+fOUkmnV6kSprShgY+GSPcUnIsEXW
+Date:   Wed, 21 Mar 2018 22:42:26 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>,
+        Derrick Stolee <dstolee@microsoft.com>, git@vger.kernel.org
+Subject: Re: [PATCH] sha1_name: use bsearch_hash() for abbreviations
+Message-ID: <20180321224226.GA74743@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Derrick Stolee <stolee@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Derrick Stolee <dstolee@microsoft.com>, git@vger.kernel.org
+References: <20180320200325.168147-1-dstolee@microsoft.com>
+ <20180320152505.bd66f0deaecf6d92fa6d62de@google.com>
+ <3527bd3a-a899-a909-5fda-1d7abeb0e158@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="9amGYk9869ThD9tj"
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20180303113637.26518-41-pclouds@gmail.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+In-Reply-To: <3527bd3a-a899-a909-5fda-1d7abeb0e158@gmail.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.16.0-rc5-amd64)
+User-Agent: Mutt/1.9.4 (2018-02-28)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 03/03, Nguyễn Thái Ngọc Duy wrote:
-> From: Stefan Beller <sbeller@google.com>
-> 
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-> ---
 
-This is an invalid conversion.
+--9amGYk9869ThD9tj
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
->  packfile.c | 18 +++++++++---------
->  packfile.h |  3 +--
->  2 files changed, 10 insertions(+), 11 deletions(-)
-> 
-> diff --git a/packfile.c b/packfile.c
-> index 52febba932..2276e2ad26 100644
-> --- a/packfile.c
-> +++ b/packfile.c
-> @@ -882,19 +882,19 @@ static void prepare_packed_git_mru(struct repository *r)
->  		list_add_tail(&p->mru, &r->objects.packed_git_mru);
->  }
->  
-> -void prepare_packed_git_the_repository(void)
-> +void prepare_packed_git(struct repository *r)
->  {
->  	struct alternate_object_database *alt;
->  
-> -	if (the_repository->objects.packed_git_initialized)
-> +	if (r->objects.packed_git_initialized)
->  		return;
-> -	prepare_packed_git_one(the_repository, get_object_directory(), 1);
-> -	prepare_alt_odb(the_repository);
-> -	for (alt = the_repository->objects.alt_odb_list; alt; alt = alt->next)
-> -		prepare_packed_git_one(the_repository, alt->path, 0);
-> -	rearrange_packed_git(the_repository);
-> -	prepare_packed_git_mru(the_repository);
-> -	the_repository->objects.packed_git_initialized = 1;
-> +	prepare_packed_git_one(r, get_object_directory(), 1);
+On Wed, Mar 21, 2018 at 09:24:06AM -0400, Derrick Stolee wrote:
+> On 3/20/2018 6:25 PM, Jonathan Tan wrote:
+> > On Tue, 20 Mar 2018 16:03:25 -0400
+> > Derrick Stolee <dstolee@microsoft.com> wrote:
+> > > One caveat about the patch: there is a place where I cast a sha1 hash
+> > > into a struct object_id pointer. This is because the abbreviation code
+> > > still uses 'const unsigned char *' instead of structs. I wanted to av=
+oid
+> > > a hashcpy() in these calls, but perhaps that is not too heavy a cost.
+> > I recall a discussion that there were alignment issues with doing this,
+> > but I might have be remembering wrongly - in my limited knowledge of C
+> > alignment, both "unsigned char *" and "struct object_id *" have the same
+> > constraints, but I'm not sure.
+>=20
+> Adding Brian M. Carlson in the CC line for advice on how to do this
+> translation between old sha1's and new object_ids. If it isn't safe, then=
+ we
+> could do a hashcpy() until the translation makes it unnecessary.
+>=20
+> I should have compared the two methods before sending the patch, but runn=
+ing
+> the "git log --oneline --parents" test with a hashcpy() versus a cast has=
+ no
+> measurable difference in performance for Linux. Probably best to do the
+> safest thing here if there is no cost to perf.
 
-Calling get_object_directory() returns the_repository's object dir,
-this needs to be replaced with r->objects.objectdir.
+There is no alignment difference.  The alignment of struct object_id is
+going to be the same as the underlying hash.  My concern in the past has
+been strict aliasing violations, which compilers can sometimes exploit
+to generate incorrect code.
 
-> +	prepare_alt_odb(r);
-> +	for (alt = r->objects.alt_odb_list; alt; alt = alt->next)
-> +		prepare_packed_git_one(r, alt->path, 0);
-> +	rearrange_packed_git(r);
-> +	prepare_packed_git_mru(r);
-> +	r->objects.packed_git_initialized = 1;
->  }
->  
->  void reprepare_packed_git_the_repository(void)
-> diff --git a/packfile.h b/packfile.h
-> index ab5046938c..3fd9092472 100644
-> --- a/packfile.h
-> +++ b/packfile.h
-> @@ -34,8 +34,7 @@ extern struct packed_git *parse_pack_index(unsigned char *sha1, const char *idx_
->  #define PACKDIR_FILE_GARBAGE 4
->  extern void (*report_garbage)(unsigned seen_bits, const char *path);
->  
-> -#define prepare_packed_git(r) prepare_packed_git_##r()
-> -extern void prepare_packed_git_the_repository(void);
-> +extern void prepare_packed_git(struct repository *r);
->  #define reprepare_packed_git(r) reprepare_packed_git_##r()
->  extern void reprepare_packed_git_the_repository(void);
->  extern void install_packed_git(struct repository *r, struct packed_git *pack);
-> -- 
-> 2.16.1.435.g8f24da2e1a
-> 
+However, the bigger concern tends to be that when we switch to a new
+hash function, we may extend struct object_id with a hash type byte.
+The current hash function transition plan certainly makes this a likely
+scenario.  In such a case, a cast would end reading past the end of the
+underlying array should we read the type byte.
 
--- 
-Brandon Williams
+If this isn't a performance critical path, I'd recommend simply making a
+copy.  I can clean up the definition of struct min_abbrev_data in a
+future series, or I can do something like the following on top of the
+last series I sent, which is in next (only compile tested).  If you're
+willing to wait until it hits master, you can just drop the patch in.
+
+-- >8 --
+=46rom 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+=46rom: "brian m. carlson" <sandals@crustytoothpaste.net>
+Date: Wed, 21 Mar 2018 22:38:09 +0000
+Subject: [PATCH] sha1_name: convert struct min_abbrev_data to object_id
+
+This structure is only written to in one place, where we already have a
+struct object_id.  Convert the struct to use a struct object_id instead.
+
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+---
+ sha1_name.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/sha1_name.c b/sha1_name.c
+index 39e911c8ba..16e0003396 100644
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -480,7 +480,7 @@ struct min_abbrev_data {
+ 	unsigned int init_len;
+ 	unsigned int cur_len;
+ 	char *hex;
+-	const unsigned char *hash;
++	const struct object_id *oid;
+ };
+=20
+ static inline char get_hex_char_from_oid(const struct object_id *oid,
+@@ -526,7 +526,7 @@ static void find_abbrev_len_for_pack(struct packed_git =
+*p,
+ 		int cmp;
+=20
+ 		current =3D nth_packed_object_sha1(p, mid);
+-		cmp =3D hashcmp(mad->hash, current);
++		cmp =3D hashcmp(mad->oid->hash, current);
+ 		if (!cmp) {
+ 			match =3D 1;
+ 			first =3D mid;
+@@ -603,7 +603,7 @@ int find_unique_abbrev_r(char *hex, const struct object=
+_id *oid, int len)
+ 	mad.init_len =3D len;
+ 	mad.cur_len =3D len;
+ 	mad.hex =3D hex;
+-	mad.hash =3D oid->hash;
++	mad.oid =3D oid;
+=20
+ 	find_abbrev_len_packed(&mad);
+=20
+-- >8 --
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
+https://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: https://keybase.io/bk2204
+
+--9amGYk9869ThD9tj
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.5 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlqy39IACgkQv1NdgR9S
+9ossJA/+K2JfOp4cwR7B/wy0TNwjbuQtv2bdK/SdpjDwVJpmiF8lPfWXM3EeKDQn
+oMyeavipKdwmJWK6YN/hQKQGB/UKl1RzXJwvP2IQKy4BvgoPfq7WnGiLCpFK3vUB
+XnDv/HfDu591zV0JA6+9VLcoRJGRH6/ZuBRtaq5LXdS0YWa9kw3SgzPZrufRp+EH
+RJmlzdinpeNA4xSe2+Mt8ZkELA7CGQcV/60eA+x+DUuggfZC5iZHRmOfnUbSvLCS
+X9auZELEwhMCpnRgm8McuVkOxRyFYZzjZu+Q5hgfHqerFTlW6XUwx7wrPznCvFN3
+UDtB/RsC7b/DddcLgb/SSjjH/paNUWbjJFLa7NlwaZ3uXPaOCdl5/GeuuDYdfbIJ
+5uFfwEd1DoyvtzlQNVhWBiOzxNKu7+HUUERZWvBmOTTIuuC3R84BubB5e3B+2rKy
+NEmkBsOAZkJfzchtTXJxXX9YsuAyiluj08FYjGsNmb1yWdrU/eAgZaJDID+lJ0BW
+InqxvwHBVwUzfPT7SmjVFQFH6N8iX0EFVYl8ROtBCM42YRDEGN+mL+mIFRsIg7MF
+8GE3/EMlHVT5Ir9GSaM6AP6vbQYrV1gWROwleT1VfLTXZ28q1etq9gWGwkStxJek
+7+fL9yEp17Hiqi2rsj73fgIxqqDlFXd+W0gU3kzNuzOgtuKSHiI=
+=fdgu
+-----END PGP SIGNATURE-----
+
+--9amGYk9869ThD9tj--
