@@ -7,89 +7,89 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9DE7C1F404
-	for <e@80x24.org>; Wed, 21 Mar 2018 19:58:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C11691F404
+	for <e@80x24.org>; Wed, 21 Mar 2018 20:00:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753269AbeCUT6i (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Mar 2018 15:58:38 -0400
-Received: from mail-qt0-f174.google.com ([209.85.216.174]:46627 "EHLO
-        mail-qt0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753087AbeCUT6h (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Mar 2018 15:58:37 -0400
-Received: by mail-qt0-f174.google.com with SMTP id h4so6589305qtn.13
-        for <git@vger.kernel.org>; Wed, 21 Mar 2018 12:58:37 -0700 (PDT)
+        id S1753125AbeCUUAy (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Mar 2018 16:00:54 -0400
+Received: from mail-wm0-f48.google.com ([74.125.82.48]:36998 "EHLO
+        mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752954AbeCUUAy (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Mar 2018 16:00:54 -0400
+Received: by mail-wm0-f48.google.com with SMTP id 139so12116629wmn.2
+        for <git@vger.kernel.org>; Wed, 21 Mar 2018 13:00:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=ngHGIPwZSM5iUuQn14ybg1m+DzJ0a2Mro0WGzLJixHE=;
-        b=g9TtN2JmF3miLSgp/QPEJw8M3dRN3tCvcvzCuWmEv/wycZR6UVUwRYetLF1xrJ2gfB
-         EvunrTyT1lqGH6Qjr10l5y9hQia9etPRKQp2E0ES22erLyhyMvwLIlRgzWOl3Dqwmtnb
-         It37O63CJQDbHnHBfJ3ViuYyEJIWyDra1i9bB9XJRWW1JlnyfzxgcEUjtbrvR87qkR7M
-         Rd2j3j786y+gHDSDJDF+oUgjgfpyG7tQMzJcFHazx6I7WCWmTSfXcGdkJqXqy08vjREI
-         G0oER2/H9hxFmkTtKtP2T7VsTBt2HXYUK7qbpAjONHD3myjB4JsQNLykmHMDCEXn/inN
-         k5jw==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=fsOa+OmsBy8BXl67//yTKCxZsxEeEtxpyOh47oPP2e8=;
+        b=LnrQFkngz+Zw2EzEW2WJxvSEJbjc9y6SBHXvZ62isYLWT59OeQjiCoISV/eGNAzNAM
+         8X1m84qwTqihZ52+0dPdLIj/dtJMII/nzjAjDSPk1K+4UnAM470IpaQl6kmr1n2jre5i
+         PRe3UIzZfcQjQQ7DkzaLBJjo3aDE5ApFarxW7kMXF5/f1o2RHFCxtGcyohJ95FZQCgzT
+         aXF8roipX2PeFmg7FeUmqKnseeiAckyUWf9K4TVklW/EwVfhiOyA+YK6MDNiEzEUBjdb
+         jd+Bd/23fhGWLenhmsmJjJyY8tINny9hnIXKBGH97TKo8W8dkqS274hAq4vWbTBvtJ+9
+         Sagw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=ngHGIPwZSM5iUuQn14ybg1m+DzJ0a2Mro0WGzLJixHE=;
-        b=N1bXXmBxWRTvyrQRlOCjhITyeAK1PsuhGa04nnOYHgtMcK6tgdB6LsUXTLz7MKi2an
-         0LQxuesyJ5LIrFoA4bd3ImHpObbhua1y6hcV9DTPJY8sLx3+3JR5B7C4xDfp4hxnIMGm
-         bFgSFB8ub9Z4h7fvxp0siO4o8OdX1YzvGltgLYpmTlvxCDN/OxvmLxdPQdw+4ChSTJSS
-         gdXVsIfyICBfBgGIAMnBX14vrP4hvQ2/EEpJO9SLM/C+wWUaP+gHBlCjiNs2LO4UO2LK
-         nuXJwL4ZRRzbA7SG7caVvxlHe3XFpZukfo5m1ZsIM02lx92U09JcEFEGjqu+7Xy+i3MV
-         +KyQ==
-X-Gm-Message-State: AElRT7FUAnoohoPjqyLQf6xQQ+3b4HkYGunmfFCDiOsZHK2ZbdmRkEEl
-        yIT5037Vro9kNLuQ+nomfVjGgoTQfZWR4ybb1pAioA==
-X-Google-Smtp-Source: AG47ELuz9m3KvChI4ZFOnkQ5BZY73TBrxK+P7v6R9TZqSid7m9cBzFlnv0ksKAQOg8E2t9ehe54jptrYAKEkJ4is7Bk=
-X-Received: by 10.200.42.37 with SMTP id k34mr16045869qtk.101.1521662316648;
- Wed, 21 Mar 2018 12:58:36 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=fsOa+OmsBy8BXl67//yTKCxZsxEeEtxpyOh47oPP2e8=;
+        b=p71b2LNdgPS7vl+8ONvbnW7V36XQVR5at6GLoPQBrdEMQAQxnB4f007XcQeZtdk7uh
+         Myh4oE42VEgLvrzPIekBczL+Pq9H9cT0qE3in0wNFhHlgFlB/Z9YCrZHShqTwEfpgHs0
+         MdA3iW+naYzCtyhX0qK8lEM9mzg/WJ8g1AHrKibuFn5HUM/btF3y8l3jsLLBgjUteklf
+         bFK4BOuDdDfZF989FPLE/LBfWrzUsqDZNurRluQBlyXK1OPPvfkIpMmTlnBX189JySLy
+         s5X9F9igEm3CIAU+7q6zqD2GDMufav77Gy30gt/tT9hpRE9/qZ0rBhphivlz33vgzSqn
+         g6kA==
+X-Gm-Message-State: AElRT7EYfyyD/fkI4344ZJBnZEqVpFY2a1MmQiWBpmIYVZpMYh6AQr+H
+        3IjHDtk80TZltt0i9ashiSU=
+X-Google-Smtp-Source: AG47ELsX9NA/4wFRHbgAkXCs9Als7raYBPOIUaEK6aF7Uzn0cUN++yPdesLZU4wLv0E4FhS8ekSXFg==
+X-Received: by 10.28.192.8 with SMTP id q8mr1726004wmf.103.1521662452527;
+        Wed, 21 Mar 2018 13:00:52 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id n62sm4511214wmf.13.2018.03.21.13.00.51
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 21 Mar 2018 13:00:51 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Yuki Kokubun <orga.chem.job@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] filter-branch: consider refs can refer to an object other than commit or tag
+References: <xmqqwoy5pcno.fsf@gitster-ct.c.googlers.com>
+        <20180321103504.9483-1-orga.chem.job@gmail.com>
+        <1521646299-16193-1-git-send-email-orga.chem.job@gmail.com>
+        <5ab2b606.86f5620a.c0c10.41b3@mx.google.com>
+Date:   Wed, 21 Mar 2018 13:00:51 -0700
+In-Reply-To: <5ab2b606.86f5620a.c0c10.41b3@mx.google.com> (Yuki Kokubun's
+        message of "Wed, 21 Mar 2018 20:00:00 +0000")
+Message-ID: <xmqqpo3xnqq4.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.12.190.196 with HTTP; Wed, 21 Mar 2018 12:58:36 -0700 (PDT)
-In-Reply-To: <xmqq4ll9p6oq.fsf@gitster-ct.c.googlers.com>
-References: <01020162442818b4-c153f9ce-3813-41a6-aebd-f5cb2b98b1fa-000000@eu-west-1.amazonses.com>
- <010201624428199f-b4b3d8ce-222f-4966-9171-7fcf932ca220-000000@eu-west-1.amazonses.com>
- <CAPig+cSxGgG=1k95j+n4DZHBdtN++7F6_U5fu0gOcjwwPQ5GZw@mail.gmail.com>
- <xmqqh8paqt0f.fsf@gitster-ct.c.googlers.com> <CAPig+cQ0cq9-cYuw8AJpk6maeT-T25SJDhWpb4TyN8rQJmP=xg@mail.gmail.com>
- <xmqq4ll9p6oq.fsf@gitster-ct.c.googlers.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 21 Mar 2018 15:58:36 -0400
-X-Google-Sender-Auth: Ht_z52UM3JVwM0UMrC-SX95-WUk
-Message-ID: <CAPig+cQZOjFuAHXqj6c8oP8JJaboLf3kL9heMA=jkXssr+gQ_Q@mail.gmail.com>
-Subject: Re: [PATCH v4 5/5] ref-filter: get_ref_atom_value() error handling
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Olga Telezhnaya <olyatelezhnaya@gmail.com>,
-        Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 21, 2018 at 3:30 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
->> strbuf_error() was a possibility proposed in [1], and it does take a
->> strbuf. Failure to pass in a strbuf here is just a typo.
+Yuki Kokubun <orga.chem.job@gmail.com> writes:
+
+>> Yuki Kokubun <orga.chem.job@gmail.com> writes:
+>> 
+>> > "git filter-branch -- --all" can be confused when refs that refer to objects
+>> > other than commits or tags exists.
+>> > Because "git rev-parse --all" that is internally used can return refs that
+>> > refer to an object other than commit or tag. But it is not considered in the
+>> > phase of updating refs.
+>> 
+>> Could you describe what the consequence of that is?  We have a ref
+>> that points directly at a blob object, or a ref that points at a tag
+>> object that points at a blob object.  The current code leaves both of
+>> these refs in "$tempdir/heads".  Then...?
 >
-> I've seen it; I just thought it was a joke and not a serious
-> suggestion.
-> A macro or helper function that is local to the file might be OK,
+> Sorry, this is my wrong.
+> I wrongly thought only refs/replace can point at a blob or tree object.
 
-My thought all along was that this convenience helper (in whatever
-form) should start life local to ref-filter.c, and only be published
-more widely if found to be generally useful. Unfortunately, I forgot
-to state so explicitly when writing the review. Suggesting the name
-strbuf_error() didn't help to convey that thought either. My bad.
+No need to be sorry.  You still need to describe what (bad things)
+happen if we do not filter out refs that do not point at committish
+in the proposed log message.  
 
-> but I do not think "strbuf_error()" is a useful abstraction that is
-> generic enough in the first place (the questions to ask yourself to
-> think about it are: Why should it be limited to return -1?  Why
-> should it be limited to always do the addf() to a strbuf?).
-
-There is some precedent in the existing error() function. As with
-error(), as a _convenience_ function, it does not necessarily have to
-be universally general. That it simplifies a reasonably large body of
-code may be justification enough, despite it shortcomings. I don't
-feel strongly about it, though, and, as noted above, agree that it can
-be local to ref-filter.c.
+IOW, can you elaborate and clarify your "can be confused" at the
+beginning?
