@@ -2,167 +2,259 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3D3A01F404
-	for <e@80x24.org>; Wed, 21 Mar 2018 21:46:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A6C4B1F404
+	for <e@80x24.org>; Wed, 21 Mar 2018 21:49:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753827AbeCUVqN (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Mar 2018 17:46:13 -0400
-Received: from mail-pl0-f66.google.com ([209.85.160.66]:34195 "EHLO
-        mail-pl0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753824AbeCUVqJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Mar 2018 17:46:09 -0400
-Received: by mail-pl0-f66.google.com with SMTP id u11-v6so3974213plq.1
-        for <git@vger.kernel.org>; Wed, 21 Mar 2018 14:46:08 -0700 (PDT)
+        id S1753799AbeCUVta (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Mar 2018 17:49:30 -0400
+Received: from mail-lf0-f45.google.com ([209.85.215.45]:38157 "EHLO
+        mail-lf0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753744AbeCUVt3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Mar 2018 17:49:29 -0400
+Received: by mail-lf0-f45.google.com with SMTP id y2-v6so10121580lfc.5
+        for <git@vger.kernel.org>; Wed, 21 Mar 2018 14:49:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=e9IA8/rHbbbND4ZZEwOwQoz0/AnlUVBEp6w6ER+Hd9w=;
-        b=GoZ/kXtbN6iLvoCrfSYi0HJbLwKF6Avw1EqgCzzAv1oAckl2bev+9GnZztbSWFKlGI
-         Mew67Zm5A1BsTmgTbeNQOHHyXr6Cxm+dR5LxsbW8WS9naEwdxeH0hihX7FL3/x3ed+hO
-         c2jfA4d88KcYtIa03iplmpGEeRB8bSyFcMOaikA8mZr/ozyrAFuFlh1/UENTOAOOnJBr
-         gweuKMpOaNdOyH6aXTSSUdSmFr2J+pIZewTwGmcfInv9M/zJVpihcQaRWFiHXuIbMGek
-         GGc2efjd+FCW7r4fP7fpbRZC+aNivt9Qzo+ADc+8loUGy9kNOutgPLf3Dkro35L6kz0l
-         I6pg==
+        d=saville-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=ZRfVxWQfckBwiWAsl4nsSA30YCVrNbIXBxWqcLVpv1k=;
+        b=Tb6q/32pMpEdbGirJzm2r68r/+tOW90CneyfQnbMSWBT7quZtTT81CZ6HjFAsyWlB5
+         FtQfLFZz6hgOoh7UFZsk6Y53LfhIRwU1UOu70m/gE8rg/qxGDncCGi2eSKv5KC0O+RJg
+         LihX5P25E7IYoJpWBntR0HS4S/BnupyhawQWFOICp2D1V6Yd1qZQ9mciURMZTjikdzcR
+         IuRKwKcDU+q75L/OWDaRKHwJLv6HboJU5u9iyZVbMyuOLjDD6lrvjQ4tcgbTB/Lvb39h
+         pdon0W5xWGg5VFgzWG2J+PGmHXIgQcDd9FhHwcN2YNkNNr4wwjifionIODyYbIyy2zXs
+         N//g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=e9IA8/rHbbbND4ZZEwOwQoz0/AnlUVBEp6w6ER+Hd9w=;
-        b=S9SUwDzna6DQpQY61/NgXVEJr+Bu9dZYZ90JTtnm1zj55y3f1HbWOu/mSonPQ/XC6h
-         EFo7NvTKvSKHgHl3vNMZadeo3V8f5aBcH/h3ZjBRiFu0vZt73IIz0qznN2zTq41EfHFq
-         l2GeJmv2keef0Sh72ZFgrJRNm0YVmbmyIjvx6lKw10tcmNKZS63JSLlc4lvTBVKj87wT
-         JGwA6kH4BwcDuixdd/aY0V/NBzVyLxQrUt2RS0/28YeOmOynt9QdXh0gQwqIPlk6ebQw
-         DjVyy9AXcKsqrN0Nq1B+wV/EtIX13SPsnaL+rFKeEnKifVg4cJs/4s3exNFdMPcWqRNm
-         GgNg==
-X-Gm-Message-State: AElRT7HdXYcGmOXP/nVF1SRqpVw423lyOikmB3L/ZGn4T3hjiWWCWNIY
-        30SvuDOS2dX2yQQ2pACRl3EKBg==
-X-Google-Smtp-Source: AG47ELstz1HvoXPSevAtkbnAzan5uoORG1DgeGJX8QkiRQTEbCvYMGauOKiEgVl6BWCcsxdsxlge+w==
-X-Received: by 2002:a17:902:bd4b:: with SMTP id b11-v6mr22162885plx.225.1521668768295;
-        Wed, 21 Mar 2018 14:46:08 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
-        by smtp.gmail.com with ESMTPSA id a3sm10375480pfh.120.2018.03.21.14.46.07
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 21 Mar 2018 14:46:07 -0700 (PDT)
-Date:   Wed, 21 Mar 2018 14:46:06 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 01/44] repository: initialize the_repository in main()
-Message-ID: <20180321214606.GA18406@google.com>
-References: <CACsJy8DWrNzZM1K2vkx2XiETdAR5WhwXEdPijsxd0ZD4Lj=tZw@mail.gmail.com>
- <20180303113637.26518-1-pclouds@gmail.com>
- <20180303113637.26518-2-pclouds@gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=ZRfVxWQfckBwiWAsl4nsSA30YCVrNbIXBxWqcLVpv1k=;
+        b=KUdOGqaYObKQfcYbV/DZ5nwkEFtoZ1l1DuAHttpzBRKC0A1q87lNTsPbkBuBeRKqEx
+         fDOycfPDKuMAIJsmYEmJzTdLub9/8bXdixVHii1+j4PFMiepEkCym+/Z7HymXbaK6E0F
+         yOPzrn/Qoy39Sa+hNGkXIMcfJUxEzxK6UT19t8fFfLFFHVv3wMvyEqnns03pYANuOIoT
+         ySbGfE0sLsi/A602KJ+1bVxzwSQxJZUKCgJkExvUGrFDcMB6RdXb4pkvFUeBsoRFrrWi
+         aRy8tKCW7cVa6t+4UwO/ICeagnZc1IerRAf4eTn6Mmy4L34Qhrh9fgbFdnzMfL37oG+3
+         iDAA==
+X-Gm-Message-State: AElRT7HW4LbStbmyXcdDCsPSjrqh36Oy7e+TKdE/FzLz3DXuKl6US1rK
+        WU8Pfpnj6qdP4BvP3QJ5AxW47a+6trCHGMbO/rJPkw==
+X-Google-Smtp-Source: AG47ELtIdoFI+D59ODH9zUTb5UpPbWYDY0c5L1kb8SQah9pzuXgiOn5I+XRYvEVWq6qSM5yfbse1o6q+K42eBr5QqW4=
+X-Received: by 2002:a19:1449:: with SMTP id k70-v6mr15719875lfi.23.1521668967264;
+ Wed, 21 Mar 2018 14:49:27 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20180303113637.26518-2-pclouds@gmail.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+Received: by 2002:a19:9a93:0:0:0:0:0 with HTTP; Wed, 21 Mar 2018 14:49:06
+ -0700 (PDT)
+In-Reply-To: <xmqqy3ilnrkn.fsf@gitster-ct.c.googlers.com>
+References: <CAPig+cSm3kHF_hTRKutCCNsY82sE3xZfXJkQsKi+zedq9rdnPw@mail.gmail.com>
+ <cover.1521653702.git.wink@saville.com> <c169a69be3c61fd1e90eaf79febccef2afdfbd3b.1521653702.git.wink@saville.com>
+ <xmqqy3ilnrkn.fsf@gitster-ct.c.googlers.com>
+From:   Wink Saville <wink@saville.com>
+Date:   Wed, 21 Mar 2018 14:49:06 -0700
+Message-ID: <CAKk8isqopygpS0BfPi7Xa3jVTacptup-WKusZ3rzRzgU_WDaZg@mail.gmail.com>
+Subject: Re: [RFC PATCH v2 1/1] rebase-interactive: Add git_rebase__interactive__preserve_merges
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 03/03, Nguyễn Thái Ngọc Duy wrote:
-> This simplifies initialization of struct repository and anything
-> inside. Easier to read. Easier to add/remove fields.
-> 
-> Everything will go through main() common-main.c so this should cover all
-> programs, including t/helper.
-> 
-> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-> ---
->  common-main.c |  2 ++
->  repository.c  | 18 +++++++++++++-----
->  repository.h  |  2 +-
->  3 files changed, 16 insertions(+), 6 deletions(-)
-> 
-> diff --git a/common-main.c b/common-main.c
-> index 6a689007e7..7d716d5a54 100644
-> --- a/common-main.c
-> +++ b/common-main.c
-> @@ -34,6 +34,8 @@ int main(int argc, const char **argv)
->  
->  	git_setup_gettext();
->  
-> +	initialize_the_repository();
-> +
->  	attr_start();
->  
->  	git_extract_argv0_path(argv[0]);
-> diff --git a/repository.c b/repository.c
-> index 4ffbe9bc94..0eddf28fcd 100644
-> --- a/repository.c
-> +++ b/repository.c
-> @@ -4,10 +4,16 @@
->  #include "submodule-config.h"
->  
->  /* The main repository */
-> -static struct repository the_repo = {
-> -	NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, &the_index, &hash_algos[GIT_HASH_SHA1], 0, 0
-> -};
-> -struct repository *the_repository = &the_repo;
-> +static struct repository the_repo;
-> +struct repository *the_repository;
-> +
-> +void initialize_the_repository(void)
-> +{
-> +	the_repository = &the_repo;
-> +
-> +	the_repo.index = &the_index;
-> +	repo_set_hash_algo(&the_repo, GIT_HASH_SHA1);
-> +}
+On Wed, Mar 21, 2018 at 12:42 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Wink Saville <wink@saville.com> writes:
+>
+>> Refactor git_rebase__interactive__preserve_merges out of
+>> git_rebase__interactive resulting in fewer conditionals making
+>> both routines are simpler.
+>>
+>> Changed run_specific_rebase in git-rebase to dispatch to the appropriate
+>> function after sourcing git-rebase--interactive.
+>> ---
+>
+> I think this will become (more) reviewable if it is split into two
+> patches (at least).  A preliminary patch that does the style changes
+> and line wrapping (left below) as step #1, and all the rest on top
+> as step #2.
 
-Nice, one place to do all the crazy initialization for the_repo.  I
-wanted to do something like this when I introduced the repository but I
-shied away from it because it didn't seem like the right thing to do at
-the time.  Now that its grown a bit, its definitely the right move until
-using the repository object is ubiquitous enough that the setup code can
-produce a repository struct instead of relying on a global one.
+Yes, I will break this into several commits
 
->  
->  static char *git_path_from_env(const char *envvar, const char *git_dir,
->  			       const char *path, int fromenv)
-> @@ -128,7 +134,9 @@ static int read_and_verify_repository_format(struct repository_format *format,
->   * Initialize 'repo' based on the provided 'gitdir'.
->   * Return 0 upon success and a non-zero value upon failure.
->   */
-> -int repo_init(struct repository *repo, const char *gitdir, const char *worktree)
-> +static int repo_init(struct repository *repo,
-> +		     const char *gitdir,
-> +		     const char *worktree)
->  {
->  	struct repository_format format;
->  	memset(repo, 0, sizeof(*repo));
-> diff --git a/repository.h b/repository.h
-> index 0329e40c7f..40c1c81bdc 100644
-> --- a/repository.h
-> +++ b/repository.h
-> @@ -91,7 +91,7 @@ extern struct repository *the_repository;
->  extern void repo_set_gitdir(struct repository *repo, const char *path);
->  extern void repo_set_worktree(struct repository *repo, const char *path);
->  extern void repo_set_hash_algo(struct repository *repo, int algo);
-> -extern int repo_init(struct repository *repo, const char *gitdir, const char *worktree);
+>
+>> diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+>> index 331c8dfea..65ff75654 100644
+>> --- a/git-rebase--interactive.sh
+>> +++ b/git-rebase--interactive.sh
+>> @@ -1,5 +1,7 @@
+>> -# This shell script fragment is sourced by git-rebase to implement
+>> -# its interactive mode.  "git rebase --interactive" makes it easy
+>> +#!/bin/sh
+>
+> Addition of #! implies that this might be invoked as the top-level
+> script; is that the case now?  I did not get such an impression from
+> the proposed log message and it is still always dot-sourced (in
+> which case #! gives a wrong signal to the readers).
 
-I had to double check that this was ok, it indeed is as repo_init is
-only used in repository.c.
+Will remove adding the shebang
 
-> +extern void initialize_the_repository(void);
->  extern int repo_submodule_init(struct repository *submodule,
->  			       struct repository *superproject,
->  			       const char *path);
-> -- 
-> 2.16.1.435.g8f24da2e1a
-> 
+>> +# This shell script fragment is sourced by git-rebase--interactive
+>> +# and git-rebase--interactive--preserve-merges in support of the
+>> +# interactive mode.  "git rebase --interactive" makes it easy
+>>  # to fix up commits in the middle of a series and rearrange commits.
+>>  #
+>>  # Copyright (c) 2006 Johannes E. Schindelin
+>> @@ -7,6 +9,7 @@
+>>  # The original idea comes from Eric W. Biederman, in
+>>  # https://public-inbox.org/git/m1odwkyuf5.fsf_-_@ebiederm.dsl.xmission.com/
+>>  #
+>> +
+>>  # The file containing rebase commands, comments, and empty lines.
+>
+> Why?
 
--- 
-Brandon Williams
+Will remove the blank line.
+
+>> @@ -274,7 +290,8 @@ pick_one () {
+>>
+>>       case "$1" in -n) sha1=$2; ff= ;; *) sha1=$1 ;; esac
+>>       case "$force_rebase" in '') ;; ?*) ff= ;; esac
+>> -     output git rev-parse --verify $sha1 || die "$(eval_gettext "Invalid commit name: \$sha1")"
+>> +     output git rev-parse --verify $sha1 ||
+>> +             die "$(eval_gettext "Invalid commit name: \$sha1")"
+>
+> Just linewrapping.
+
+Will be leaving for now
+
+>
+>> @@ -287,8 +304,8 @@ pick_one () {
+>>                       ${gpg_sign_opt:+$(git rev-parse --sq-quote "$gpg_sign_opt")} \
+>>                       "$strategy_args" $empty_args $ff "$@"
+>>
+>> -     # If cherry-pick dies it leaves the to-be-picked commit unrecorded. Reschedule
+>> -     # previous task so this commit is not lost.
+>> +     # If cherry-pick dies it leaves the to-be-picked commit unrecorded.
+>> +     # Reschedule previous task so this commit is not lost.
+>
+> Ditto.
+
+Will be leaving for now
+
+>
+>> @@ -307,17 +324,15 @@ pick_one_preserving_merges () {
+>>       esac
+>>       sha1=$(git rev-parse $sha1)
+>>
+>> -     if test -f "$state_dir"/current-commit
+>> +     if test -f "$state_dir"/current-commit && test "$fast_forward" = t
+>>       then
+>> -             if test "$fast_forward" = t
+>> -             then
+>> -                     while read current_commit
+>> -                     do
+>> -                             git rev-parse HEAD > "$rewritten"/$current_commit
+>> -                     done <"$state_dir"/current-commit
+>> -                     rm "$state_dir"/current-commit ||
+>> -                             die "$(gettext "Cannot write current commit's replacement sha1")"
+>> -             fi
+>> +             while read current_commit
+>> +             do
+>> +                     git rev-parse HEAD > "$rewritten"/$current_commit
+>> +             done <"$state_dir"/current-commit
+>> +             rm "$state_dir"/current-commit ||
+>> +                 die "$(gettext \
+>> +                     "Cannot write current commit's replacement sha1")"
+>>       fi
+>
+> Good code simplification that turns
+>
+>         if A
+>                 if B
+>                         do this thing
+>                 fi
+>         fi
+>
+> into
+>
+>         if A & B
+>                 do this thing
+>         fi
+
+Will be keeping this in a future commit
+
+>
+>> @@ -337,10 +352,10 @@ pick_one_preserving_merges () {
+>>               if test -f "$rewritten"/$p
+>>               then
+>>                       new_p=$(cat "$rewritten"/$p)
+>> -
+>> -                     # If the todo reordered commits, and our parent is marked for
+>> -                     # rewriting, but hasn't been gotten to yet, assume the user meant to
+>> -                     # drop it on top of the current HEAD
+>> +                     # If the todo reordered commits, and our parent is
+>> +                     # marked for rewriting, but hasn't been gotten to yet,
+>> +                     # assume the user meant to drop it on top of the
+>> +                     # current HEAD
+>
+> Just line wrapping.
+
+Will be leaving for now
+
+>
+>> @@ -379,7 +394,7 @@ pick_one_preserving_merges () {
+>>               then
+>>                       # detach HEAD to current parent
+>>                       output git checkout $first_parent 2> /dev/null ||
+>> -                             die "$(eval_gettext "Cannot move HEAD to \$first_parent")"
+>> +                        die "$(eval_gettext "Cannot move HEAD to \$first_parent")"
+>>               fi
+>
+> Ditto.
+
+Will be leaving for now
+
+>
+>> @@ -553,7 +568,7 @@ do_next () {
+>>       pick|p)
+>>               comment_for_reflog pick
+>>
+>> -             mark_action_done
+>> +             mark_action_done $sha1 "$rest"
+>
+> This demands more attention from the readers than all the changes we
+> have seen so far which were just line wrapping and whitespace
+> changes.  That is why it is better to leave these changes to a
+> separate patch after preliminary clean-up.  It allows reviewers'
+> eyes coast over the clean-up step, and then lets them focus on the
+> more "meaningful" changes  like this one.
+>
+>> @@ -637,7 +652,7 @@ you are able to reword the commit.")"
+>>               read -r command rest < "$todo"
+>>               mark_action_done
+>>               eval_gettextln "Executing: \$rest"
+>> -             "${SHELL:-@SHELL_PATH@}" -c "$rest" # Actual execution
+>> +             "${SHELL:-/bin/sh}" -c "$rest" # Actual execution
+> Why?  This change is not justified in the proposed log message.
+
+Left over from testing, will be removed.
+
+>
+
+Junio, thanks for the review.
+
+As you suggest in v3 I'm going to break the change into several commits
+but leave everything in one file as it is here in v2. If desired we can break
+it into several files as a last step.
+
+I'm currently contemplating not touching long lines. In this file long lines
+were acceptable in the past and rather than introduce many changes to
+fix them I think it might be best to leave them. Also, there is a proposal
+that a GSOC might convert one or more of the git-rebase--* files into C,
+in which case these files could be removed.
+
+But if that doesn't come to past, I believe my goal of simplication and fixing:
+  "not ok 24 - exchange two commits with -p # TODO known breakage"
+In t3404-rebase-interactive.sh is worth while.
