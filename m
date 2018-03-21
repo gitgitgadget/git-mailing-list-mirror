@@ -2,99 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8D53C1F404
-	for <e@80x24.org>; Wed, 21 Mar 2018 16:02:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 09BC21F404
+	for <e@80x24.org>; Wed, 21 Mar 2018 16:07:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752201AbeCUQC4 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Mar 2018 12:02:56 -0400
-Received: from mout.gmx.net ([212.227.15.19]:39655 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751658AbeCUQCz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Mar 2018 12:02:55 -0400
-Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LzKmP-1eU8oi3XQv-014Rse; Wed, 21
- Mar 2018 17:02:49 +0100
-Date:   Wed, 21 Mar 2018 17:02:31 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Michael Haggerty <mhagger@alum.mit.edu>
-cc:     Git Mailing List <git@vger.kernel.org>,
-        Lars Schneider <larsxschneider@gmail.com>
-Subject: Re: [ANNOUNCE] git-sizer: compute various size-related metrics for
- your Git repository
-In-Reply-To: <CAMy9T_FaOdLP482YZcMX16mpy_EgM0ok1GKg45rE=X+HTGxSiQ@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1803211659390.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <CAMy9T_FaOdLP482YZcMX16mpy_EgM0ok1GKg45rE=X+HTGxSiQ@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1751691AbeCUQHh (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Mar 2018 12:07:37 -0400
+Received: from mail-ot0-f179.google.com ([74.125.82.179]:35788 "EHLO
+        mail-ot0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751641AbeCUQHe (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Mar 2018 12:07:34 -0400
+Received: by mail-ot0-f179.google.com with SMTP id r30-v6so6153455otr.2
+        for <git@vger.kernel.org>; Wed, 21 Mar 2018 09:07:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=ogOHNUqvoYkQbVRIBdfVrG2z7tvCsdkvVwLV9GSJO6E=;
+        b=KRRKLrmFgsDC4384WApiX2cA2QizhredMZak//+Al2E2HgalIRUW34en3twgdXgtxN
+         R3+UYLtctlxGhBHXi7t+rM9AZ3dfo+GA4X6/GGSWKOoQ5AGp5u28BUyNKd/gKRIGOO5o
+         VSYT/opWFI0kAjFQhCdYhz3nJZpEbkeo8IYyYnEpii8yHoLtgu5GdBOG0vecPwJi7y2k
+         bjPwJ7q2lQ8BBFPN8AuBPbFkbk053Uy78Qo8pOScZZy9SjcOTxvpyK6IYwrCHncWB51I
+         4d+FFE7Bp07YVtz+GMmpVMEdxmpWP7sdIWZ+hO4a/BaekDYJEP6eWTNnFsN+vZrAcR1Y
+         5lrw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=ogOHNUqvoYkQbVRIBdfVrG2z7tvCsdkvVwLV9GSJO6E=;
+        b=paGW6UCch5jdoZOmtzVIVmIkpvcxxn61YIsIHCgVW/iOwsCUewzZHPik953ErFc211
+         +IOpeTCJlZrWNTOUPFaJ5HvjNli3u3GRVCD/JaZPOTroFx7ufC+E1dBWrGjl5CHuc10f
+         Sbke4SDM7SvSITmDTXblMb7W13hTb33Q3Ny1QTIdUld+WlSlHZsb/x9oIbORaAgUtCbz
+         PUiHdkORUcFbUUX543khjX+YV7CWvAcGFORiWdwubmMxQeqHqjLNq9RXKYpM82Jm1gpL
+         uQo8HAN0bDrKvC5iuk4PFow757P3RAJGMzEtLcKuf7dnz3XmKCINw3wJQ6uEzejkIE6N
+         53Pg==
+X-Gm-Message-State: AElRT7Fp0bdWWTAUuZWkYejkXU4IzvVWG/qEWp+wXIiDZqKEjyAp+Wsq
+        e4q8sF/3H9f7z48QV0fW4eMDeIHTqY14aSPXSao=
+X-Google-Smtp-Source: AIpwx49rwMFfaEkDK5mSrjkpjirj85sJz22Ua4g8IhkyHLLJ7QEyoYU61kxvX9vZivGo4L9bfa9Ul9sSMFntRd5miFg=
+X-Received: by 2002:a9d:550b:: with SMTP id l11-v6mr4809318oth.356.1521648453696;
+ Wed, 21 Mar 2018 09:07:33 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:pNaBLp2pJxk++dsqF5bGcFW0MKdmz9KoaK+L5cJPORHVK8P/NYK
- QLSdzMGxDCiKQ/AaMpArDj1R3QT8oZ/qPI2n5Qqxo51FL27XncuWLdGYkdvb3NmhbzhzytU
- j/VcK4kcH7JNA9lrpxledJjIw2vmbrOgDgPsIx2GrlUHYRELceEatSFjVJvlaalb7OhkKS1
- /rf6aPm0P+fuuWp3+0gnQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:7QmYiLdLZxM=:emCboCLZQIKOIojdbCudjm
- xee1jksV9LPcHlExwfToXQ0cN8GnmIGrpF4Cb7Db0RvoZWMFvYo/AO7+41GBkz/CB84Qh5Gyj
- dAlYg/E/Cz5TmkJzwTvCsrbpw/LQJdno45yOxrVId08vRmd0myBfEjcfPH3vfGu88eSTP+AAN
- kD9icw0QK6fVzdMNveAb4zrBIoM5F38lAUmR+3C/5hyWdiCUlUpzR89DWkhcYxL6gaGaCpT6g
- qKnfyP3Dc4/dbXu5tOARGvGMBblnoXb5k0NyP0cI/hyRhhfhywhBltfuxyRVq6p337p3vYtjq
- J1Ua70iz5q+hYPBbdl+inNucOylwDyN2aVoBmQFN1IMw+XubBB4raTZd/FBCdZE4oa7XaCAkq
- W39oBrMkyS8XxnwzdJwn/MYqMzdcrUlpfIiiLT+fP97SsHqHCGjr4NR/2C3fc2/yGd3p77LEV
- 3ecFC51AH943cqQ9LjrRZkfq6BjDnrUGEnzunCQRHlQQZgeTgOTHusua7mV39kMcJd3vbEBqi
- ax29eFzaqXXvXGNK4bEBKwNPa+sQhs5CArofUFVq0o8LtzriKeZ8hOE95ZEsd2E413UioOO64
- isf9x+iPeYbg3PWZC00rDH0K0yVIzrVx91IRodIzv0ZWwWbMxBsSmq/lNhkEMDRZxctb3OJV7
- 6+LHYoKxhyN0MpGogMmSfgGwTcAUdtL07JaFAe8HZsSWRy20ju6Kcwl7lGt0yN4IQ1xh+xNnB
- lr6LzoEQz2TQqqyQDWHjhzz/7swrN5nP7QzYZgyhgE16wgoveMu8OTSddNhnfNXmq3CrSlg3A
- sT/3jW4DrLu/rUAHwZs36sUCAtJboqpdjR7JevqPVCECLk0ypY=
+Received: by 10.74.154.146 with HTTP; Wed, 21 Mar 2018 09:07:02 -0700 (PDT)
+In-Reply-To: <CAHnyXxRsqR3A0FpHJwnfOWo29WNx05qWSXfxvmwPv1TUdqm0aQ@mail.gmail.com>
+References: <CAHnyXxRX4+sMJCNG6f9xtsDO6bdqRS-U6TAYO47OKQjH8bGzbg@mail.gmail.com>
+ <20180320023423.GA10143@sigill.intra.peff.net> <CAHnyXxRcwq40W4tKm=Kscrsnb77yh7=eGDE=r5AZq073MPX9AQ@mail.gmail.com>
+ <20180320040411.GB12938@sigill.intra.peff.net> <CAHnyXxQMbnNam=oB_B57xDZBaMPRn_8hfKtostHPV6nBHbTBog@mail.gmail.com>
+ <20180320044036.GD13302@sigill.intra.peff.net> <CACsJy8BP+ov0jeHp6QZoi=etPDQX5qEFqEfktyA-U-ffUE92vA@mail.gmail.com>
+ <CAHnyXxRsqR3A0FpHJwnfOWo29WNx05qWSXfxvmwPv1TUdqm0aQ@mail.gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Wed, 21 Mar 2018 17:07:02 +0100
+Message-ID: <CACsJy8A7k0d8wB_XWhvaaTXespg2y6G+Ab4b27Dc3iKY2Zjujw@mail.gmail.com>
+Subject: Re: .gitattributes override behavior (possible bug, or documentation bug)
+To:     Dakota Hawkins <dakota@dakotahawkins.com>
+Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        Git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Michael,
+On Wed, Mar 21, 2018 at 4:22 AM, Dakota Hawkins
+<dakota@dakotahawkins.com> wrote:
+> Thinking about this a little more, I'm now attracted to the idea that
+> its .gitignore that's weird.
+>
+> As I understand it, .gitignore stops recursion when there's a
+> directory match (`somedir/`) but also explicitly allows nested
+> .gitnore file _as well as_ exclusion (`!*.txt`).
+>
+> So, in the following (contrived) example, the user doesn't get what they want:
+>
+>     repo/
+>     |- .git/
+>     |- .gitignore               # /ignore-most/
+>     |- ignore-most/
+>     |  |- .gitignore            # !*.txt
+>     |  |- please_ignore.png
+>     |  |- dont_ignore_me.txt
+>
+> `repo/ignore-most/dont_ignore_me.txt` is still ignored, despite what
+> seems like the obvious intention of the user.
 
-On Fri, 16 Mar 2018, Michael Haggerty wrote:
+Don't get me started on this. I voiced this problem a couple times.
+Attempted to fix it once which made it to rc cycles and caused lots of
+regressions. I haven't taken another stab since.
 
-> What makes a Git repository unwieldy to work with and host? It turns
-> out that the respository's on-disk size in gigabytes is only part of
-> the story. From our experience at GitHub, repositories cause problems
-> because of poor internal layout at least as often as because of their
-> overall size. For example,
-> 
-> * blobs or trees that are too large
-> * large blobs that are modified frequently (e.g., database dumps)
-> * large trees that are modified frequently
-> * trees that expand to unreasonable size when checked out (e.g., "Git
-> bombs" [2])
-> * too many tiny Git objects
-> * too many references
-> * other oddities, such as giant octopus merges, super long reference
-> names or file paths, huge commit messages, etc.
-> 
-> `git-sizer` [1] is a new open-source tool that computes various
-> size-related statistics for a Git repository and points out those that
-> are likely to cause problems or inconvenience to its users.
+> Maybe a unified "best-practices" would first-and-foremost recommend
+> against matching directories at all (makes sense, git doesn't manage
+> directories). In the above example, changing `/ignore-most/` to
+> `/ignore-most/*` has the "desired" effect.
 
-Thank you very much for sharing this tool.
-
-I packaged this as a MSYS2 package for use in Git for Windows' SDKs. You
-can install it via
-
-	pacman -Sy mingw-w64-x86_64-git-sizer
-
-(obviously, if you are in a 32-bit SDK you want to replace x86_64 by i686)
-
-Note: I am simply re-bundling the binaries you post to the GitHub
-releases; The main purpose is to make it easier for users to include this
-in their custom installers.
-
-Second note: I briefly considered including this tool in Git for Windows,
-but it does increase the size of the installer by a full megabyte, and
-therefore I decided to keep it as SDK-only, optional package.
-
-Thanks!
-Dscho
+I think it's actually more intuitive to think "ignore recursively"
+(with the trailing slash) These things make sense to you once you know
+exactly _how_ the matching machinery works. But normal users don't
+know that. It's probably better that we add recursive matching support
+in gitattributes. Then both gitignore/gitattr are more or less
+consistent again and also easy to use (most of the times)
+-- 
+Duy
