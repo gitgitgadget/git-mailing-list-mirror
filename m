@@ -2,119 +2,145 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-1.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
 	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0AB211F404
-	for <e@80x24.org>; Wed, 21 Mar 2018 22:38:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2E1781F404
+	for <e@80x24.org>; Wed, 21 Mar 2018 22:39:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753970AbeCUWiq (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Mar 2018 18:38:46 -0400
-Received: from mout.gmx.net ([212.227.15.19]:51305 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753865AbeCUWiq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Mar 2018 18:38:46 -0400
-Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M1Fe4-1ejAGd1zK4-00tAKn; Wed, 21
- Mar 2018 23:38:39 +0100
-Date:   Wed, 21 Mar 2018 23:38:21 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 2/3] rebase -i --keep-empty: don't prune empty commits
-In-Reply-To: <xmqqfu4uslar.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1803212336420.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <20180320100315.15261-1-phillip.wood@talktalk.net> <20180320100315.15261-3-phillip.wood@talktalk.net> <nycvar.QRO.7.76.6.1803201630380.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <xmqqfu4uslar.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1754010AbeCUWj0 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Mar 2018 18:39:26 -0400
+Received: from mail-pl0-f66.google.com ([209.85.160.66]:40329 "EHLO
+        mail-pl0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753865AbeCUWjZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Mar 2018 18:39:25 -0400
+Received: by mail-pl0-f66.google.com with SMTP id x4-v6so4038888pln.7
+        for <git@vger.kernel.org>; Wed, 21 Mar 2018 15:39:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=IC+N3PpGy7RhXdFFvwav7gHJOl+ZJtMxcxCvtstnTF8=;
+        b=mxrho8hzZzpfWICzdh8dHCs9zglD2PjUcoCX7ZMDUY8bZqU2OqVjjhBD08/jF4nhKa
+         3qz0AM62UBIcc4Y83dU4BszYYVvWAbSt14q67Lbklv/N4qBUSRF7ZWCfmNXYzFOoHilr
+         wW26WICtY7YbStgTd8Rk4ZwhpCO2mgPlwvO7DTmuTR9L5c98iwmJVm1sjWqgdOkrGcMq
+         wGvLgs0iwoyxQnzQ5TLhyX+2s6NUm0gGcmtC3qM+5yzqzD1rzFvteK4YLPGSr6uo5bk5
+         ToFe/DiQxf03d3QT54gN9qiH54j6PPJyCjAzajs+cIHhrcbvwtptKkNoLcbge7XM2CN4
+         XZKQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=IC+N3PpGy7RhXdFFvwav7gHJOl+ZJtMxcxCvtstnTF8=;
+        b=qcDW76YHHXj5fWwgitGzQT+tKV0qRksLYfnWOjG+QmqbKz09U/4tpxKIgnTU1D5DBo
+         vrs/1zSYIm3OwzRe3NnnJvP2AeO0AE4BeMC5YFwQhmbiOPEiShrtfXlxPSV3wdXyRxW5
+         VpUHTol8MHcdCcyF29bIWv1BprbzC5jKlWlDuEKAmvSPNNOcFQ4ZYMWQtiZhgmoyGDBI
+         0EYqU812Gz5sr7JZeMZgFln70x4VJRWRMRymaTY1jfviURpR98XS2PHiaRas99kQXpAO
+         TNA9Nsy2Zz23ZObKjNE2iLCDbo5bWrzzu5WhnfSkFSFyYpOi3jlndY//lgofrRy2U/+l
+         oNqw==
+X-Gm-Message-State: AElRT7Hf02sSuiQkfVuO1H0EY2OS/8pBsy25WVJBI5QGy6iR06gpL+ND
+        JfmQhUAsJjUX1iuoyab7uCDYkA==
+X-Google-Smtp-Source: AG47ELsWjBgOlJBG+Ih2mA0Mpfegufqul6y8iSHw5RzQuk04fmBU7NtnCYp6CNhT7VxMb1hcp+Y/dw==
+X-Received: by 2002:a17:902:a610:: with SMTP id u16-v6mr22139094plq.293.1521671964900;
+        Wed, 21 Mar 2018 15:39:24 -0700 (PDT)
+Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
+        by smtp.gmail.com with ESMTPSA id s78sm10161448pfa.161.2018.03.21.15.39.23
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 21 Mar 2018 15:39:24 -0700 (PDT)
+Date:   Wed, 21 Mar 2018 15:39:23 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH 40/44] packfile: allow prepare_packed_git to handle
+ arbitrary repositories
+Message-ID: <20180321223923.GB202156@google.com>
+References: <CACsJy8DWrNzZM1K2vkx2XiETdAR5WhwXEdPijsxd0ZD4Lj=tZw@mail.gmail.com>
+ <20180303113637.26518-1-pclouds@gmail.com>
+ <20180303113637.26518-41-pclouds@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:axQH3nez07R4Dl0FM2LJpFevRbHEKT2ue5aB/e1wKcXysTStK+P
- L5ZljKBAr712c1ABiWoNIiYgIQfd2UjTuRrX8CBSbJAnFOvNru6TCmNBfEcI+vXt5jH1mst
- GFV/CtMa+IDBQN7o5PiwKn73TgXnm1yPJkxMKz6/wy/q+/vLF8qmUTtMLnTN0LueEc5OvUw
- NjRoJpE6sMI6ndQ2irnjA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:whd6B4F9PH0=:wFy5WHMzLvcbkoUvIN/Y7z
- Iis2ogKRA1HSGzaIKFmJdThqgGsHOJ9RwUDbCQrps8ahSoSwd3Apt+KzVpW5jum9f7YPVCemi
- EZTGnf+djzRolcQj8C0un/5hkJDwBy5Dj+Db27ibHG2UmM9CUUtwhVCK2vwnuYkc8UHB3pFlF
- g0vR4eW1MyKQr43Y6qI6nVXXKr/dkZzX97KcFwccvXCUxenkn1vaFuJ8CICf9dP+U9kChRK9b
- rCOqFN9jJ62yXat5yVTykxKNs5YcmWXAT2CNcQsicNaSCLf35dbVaVPAdCFl9hvDzgfnJ+TjH
- 2m2RkmpHQ2CJnEMmErYcJgmr13N3ndSofirNkCFvTGMsegVd9BIXJGbXbeUrZwC+pJkC472Ze
- G0UXx8jc2lcJ3qv3+GFygr7v+zitzb4Zd04aGyiKqohC1BaoSBXvCMqhuB02NUNa4eANXNhwM
- JTZ+NDp5rbcjUZzLqFB6I5oKoD6HLYMNiV1IC7iTAOJQShdJEA+c8Z9fOhrR6QQDec6nzjbnz
- B/Onedx71rMyRm2GsJ6MIsDNrJ4Zl27pTrC/UNfJ7TZAEPlhi1IFZJe5Bm+g+c6ICafMaXuLt
- XHJpMO1ZQuwbL0PGd3AtUY5XF15FWzNyhL9/6T8dxJTRLcSTcKXP8XiS8vEXf/DwFL9216UKa
- sN5Gu9vDiuMDjzDburHmQIR2hqd5N0jmiSJz+UpBdud+fhYl2Jn88haizJS6ALHr6XrezUMKT
- mk9xgjmNiwMyUSdxE0YaaAZL2Q9H6AW0iBAVJF8clsZ6yrJFw7ShjgrXV6BPv0n/GNw6jckLu
- gEKytuGV0bZVGJQ75i9v3C6n4rwTZLb2Q4jrTAqA5ue+YdZsZs=
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20180303113637.26518-41-pclouds@gmail.com>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+On 03/03, Nguyễn Thái Ngọc Duy wrote:
+> From: Stefan Beller <sbeller@google.com>
+> 
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+> ---
 
-On Tue, 20 Mar 2018, Junio C Hamano wrote:
+This is an invalid conversion.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>  packfile.c | 18 +++++++++---------
+>  packfile.h |  3 +--
+>  2 files changed, 10 insertions(+), 11 deletions(-)
 > 
-> >> +		if (!keep_empty && is_empty)
-> >>  			strbuf_addf(&buf, "%c ", comment_line_char);
-> 
-> We are not trying to preserve an empty one, and have found an empty
-> one, so we comment it out, and then...
-> 
-> >> +		if (is_empty || !(commit->object.flags & PATCHSAME)) {
-> >
-> > May I suggest inverting the logic here, to make the code more obvious and
-> > also to avoid indenting the block even further?
-> >
-> > 		if (!is_empty && (commit->object.flags & PATCHSAME))
-> > 			continue;
-> 
-> ... if a non-empty one that already appears in the upstream, we do
-> not do anything to it.  There is no room for keep-empty or lack of
-> it to affect what happens to these commits.
-> 
-> Otherwise the insn is emitted for the commit.
-> 
-> >> +			strbuf_addf(&buf, "%s %s ", insn,
-> >> +				    oid_to_hex(&commit->object.oid));
-> >> +			pretty_print_commit(&pp, commit, &buf);
-> >> +			strbuf_addch(&buf, '\n');
-> >> +			fputs(buf.buf, out);
-> >> +		}
-> 
-> I tend to agree that the suggested structure is easier to follow
-> than Phillip's version.
-> 
-> But I wonder if this is even easier to follow.  It makes it even
-> more clear that patchsame commits that are not empty are discarded
-> unconditionally.
-> 
-> 	while ((commit = get_revision(&revs))) {
-> 		int is_empty  = is_original_commit_empty(commit);
-> 		if (!is_empty && (commit->object.flags & PATCHSAME))
-> 			continue;
-> 		strbuf_reset(&buf);
-> 		if (!keep_empty && is_empty)
-> 			strbuf_addf(&buf, "%c ", comment_line_char);
-> 		strbuf_addf(&buf, "%s %s ", insn,
-> 			    oid_to_hex(&commit->object.oid));
-> 		pretty_print_commit(&pp, commit, &buf);
-> 		strbuf_addch(&buf, '\n');
-> 		fputs(buf.buf, out);
-> 	}
-> 
-> Or did I screw up the rewrite?
+> diff --git a/packfile.c b/packfile.c
+> index 52febba932..2276e2ad26 100644
+> --- a/packfile.c
+> +++ b/packfile.c
+> @@ -882,19 +882,19 @@ static void prepare_packed_git_mru(struct repository *r)
+>  		list_add_tail(&p->mru, &r->objects.packed_git_mru);
+>  }
+>  
+> -void prepare_packed_git_the_repository(void)
+> +void prepare_packed_git(struct repository *r)
+>  {
+>  	struct alternate_object_database *alt;
+>  
+> -	if (the_repository->objects.packed_git_initialized)
+> +	if (r->objects.packed_git_initialized)
+>  		return;
+> -	prepare_packed_git_one(the_repository, get_object_directory(), 1);
+> -	prepare_alt_odb(the_repository);
+> -	for (alt = the_repository->objects.alt_odb_list; alt; alt = alt->next)
+> -		prepare_packed_git_one(the_repository, alt->path, 0);
+> -	rearrange_packed_git(the_repository);
+> -	prepare_packed_git_mru(the_repository);
+> -	the_repository->objects.packed_git_initialized = 1;
+> +	prepare_packed_git_one(r, get_object_directory(), 1);
 
-This looks correct. And the postimage is easier to follow than the one of
-my suggested change.
+Calling get_object_directory() returns the_repository's object dir,
+this needs to be replaced with r->objects.objectdir.
 
-My version is easier to review on the mailing list, of course, as it
-minimizes the diff... ;-)
+> +	prepare_alt_odb(r);
+> +	for (alt = r->objects.alt_odb_list; alt; alt = alt->next)
+> +		prepare_packed_git_one(r, alt->path, 0);
+> +	rearrange_packed_git(r);
+> +	prepare_packed_git_mru(r);
+> +	r->objects.packed_git_initialized = 1;
+>  }
+>  
+>  void reprepare_packed_git_the_repository(void)
+> diff --git a/packfile.h b/packfile.h
+> index ab5046938c..3fd9092472 100644
+> --- a/packfile.h
+> +++ b/packfile.h
+> @@ -34,8 +34,7 @@ extern struct packed_git *parse_pack_index(unsigned char *sha1, const char *idx_
+>  #define PACKDIR_FILE_GARBAGE 4
+>  extern void (*report_garbage)(unsigned seen_bits, const char *path);
+>  
+> -#define prepare_packed_git(r) prepare_packed_git_##r()
+> -extern void prepare_packed_git_the_repository(void);
+> +extern void prepare_packed_git(struct repository *r);
+>  #define reprepare_packed_git(r) reprepare_packed_git_##r()
+>  extern void reprepare_packed_git_the_repository(void);
+>  extern void install_packed_git(struct repository *r, struct packed_git *pack);
+> -- 
+> 2.16.1.435.g8f24da2e1a
+> 
 
-Ciao,
-Dscho
+-- 
+Brandon Williams
