@@ -2,105 +2,170 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 37FD71F404
-	for <e@80x24.org>; Wed, 21 Mar 2018 17:01:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0DF171F404
+	for <e@80x24.org>; Wed, 21 Mar 2018 17:21:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752488AbeCURBW (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Mar 2018 13:01:22 -0400
-Received: from mail-ot0-f174.google.com ([74.125.82.174]:46326 "EHLO
-        mail-ot0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752176AbeCURBT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Mar 2018 13:01:19 -0400
-Received: by mail-ot0-f174.google.com with SMTP id g97-v6so6333367otg.13
-        for <git@vger.kernel.org>; Wed, 21 Mar 2018 10:01:18 -0700 (PDT)
+        id S1751597AbeCURVw (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Mar 2018 13:21:52 -0400
+Received: from mail-wr0-f169.google.com ([209.85.128.169]:33617 "EHLO
+        mail-wr0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751416AbeCURVv (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Mar 2018 13:21:51 -0400
+Received: by mail-wr0-f169.google.com with SMTP id z73so5995763wrb.0
+        for <git@vger.kernel.org>; Wed, 21 Mar 2018 10:21:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=icj2L5ssehbiWw2OH0aE0vmQFDdPu+28rpmdzjT7IKo=;
-        b=BSSh/9gukpaHoHOU97J4Vp8VoUOfGHhRTpDLdQsL2g5Qzsg++rAg54VmteilT+iBd8
-         DnhWotfX528zTVk6yPunPBm80xD7hn+k49fqIpg+30rCyzsVz6YFkDocNBPvCM1i8ocP
-         wYcZH3XWqns6YcIW8R1uEXKCXVV0GZI6vco7dXvxYNIrmHpWlJtstByRU7LaRmB+TXp/
-         424foYQAFQeAmQxAA5vITysB1w2p+H+pML5e/LjhLt8Tt9Y/rBTLfjd1jAtuyNLhMsbx
-         3SgYzCkH6cXaD+CiUzChnhV+uaB7/LYoRgaDeB03cZbvmrHHf6zqjiZdYOtxLoYNayu4
-         zeTA==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=X2baUVmwh649SeK8nW9e8gDGhMflyw26gMdrX+xdhEA=;
+        b=al2D9K/Q4MGVUslKoMhXbOBXm8l1aiHuwEdTl3l6m42XdcPwgQYZZ8jZB/LX+Xz9zm
+         TNOOdbq3T+ul1uBzxaoA2GbJCXE3+1pkbI91DVzDmIBLXCiYCFCdJGce5p9QjFwmBA8F
+         MCRFf/24HiVkZSvUCEsTt9srPyzGSRCPYNjNfXUlIySuWjMB8Z9E1QGp/kIlRORRiQ0D
+         /0CmcvZvuCHbvJKdWXH8xjlUCHfaYLvYbaO52MPEgaAOLZeuKF1ugyDDisy2fiaMYsqb
+         FQraHsGYofinkXuaGtH0DcLybipn3QCtUsPt3dhDVDAqx/YOUIwoGFQuFRHSESww5aA2
+         BdqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=icj2L5ssehbiWw2OH0aE0vmQFDdPu+28rpmdzjT7IKo=;
-        b=J3gcyCLH/NInZFBRjKcR45XerAJnFHqjT4eHk60Ehncu0WFWl+Q/HDwMVdsyFOnJPX
-         LJKGxLoFtOTYDKWgzFEWgIVowmFuGQY3yPfedu89Lj2wSoj8AnI2GM8DBpIb3fArth5e
-         KxUPgw2QJv831fYrMFXM6TdkdiQpfEsGtkDnh4SHUdQUthWTaWqB+raAxsbWYALqnFHH
-         nIjQ8vdXUtWiJjujRMg/xP6Z1TtMeh3kTN2UY/Hj1Gi6B6GAreEssCTy/XHVIFq3XtRS
-         vW37hj0nNqP0QvovCf1dFzdkvxuumah194lcudPpa3vGvs60B8I53yyfA989DGgBCJN6
-         ronw==
-X-Gm-Message-State: AElRT7ELuu3jhZSExdnYNyeOw7hgW/lFtFQoIQIL8+93QF9/lJF5Fjt+
-        CqskivGuMEIXjrKI8/h1t03KcnsadfZa+/Kh6qI=
-X-Google-Smtp-Source: AG47ELtbyajkZiEEg6A9pBgoescuWwxVMK1JFTQhQduEKFs3O/u+mmJvUUuDNufZNK1o4ujptYK0kVOmDJGmqAo8N0I=
-X-Received: by 2002:a9d:154c:: with SMTP id z12-v6mr13284389otz.65.1521651677350;
- Wed, 21 Mar 2018 10:01:17 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=X2baUVmwh649SeK8nW9e8gDGhMflyw26gMdrX+xdhEA=;
+        b=R3uHYJF+7MZI7qt+yBI91TewUqnPu6Am9MetViT4TmvkJcQXtJvmV8NdILIEJ3SNlZ
+         Zp3mJ4pIrQZyS6o4qbn1SBG2wMO6n7qzCIjYEXqBVSv1rscuzxkldvdIGraA+GLeViou
+         KbPiv/EQQV4RvA2R89BpoBknwKeb6d4qvrC07nTqAkfntYD1spnEKC8DK0DxmI2Tkk40
+         +T0XgjqI8BwUdcbn2RMgeGR0Fb3Te11nIXTJyPie3X4/Wg0tCztJpK/XND8HmHh0TgR+
+         7BVW1XJSMLZsqPPC/xXrRD/7qIyox9xqwqQN6x2kjShoGYJeG4iFBbE0COLwvwbul8eR
+         SxrQ==
+X-Gm-Message-State: AElRT7HpVtGbgkLbmChBigwhAIH8zMF3VRoFqcj6eZfhUz37HgjgL1pK
+        a9kGgrTSWDOkT1AapXjd1X4=
+X-Google-Smtp-Source: AG47ELuY42TPQBKcGJFRJbg7yLncXR3YQNvW/2wA4TqEj1crLwly0RRMhYn7TLulAvkRM3yIULb3eg==
+X-Received: by 10.223.196.82 with SMTP id a18mr17749501wrg.164.1521652909757;
+        Wed, 21 Mar 2018 10:21:49 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id j126sm4287457wmb.33.2018.03.21.10.21.47
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 21 Mar 2018 10:21:47 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Yuki Kokubun <orga.chem.job@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] filter-branch: consider refs can refer to an object other than commit or tag
+References: <20180321103504.9483-1-orga.chem.job@gmail.com>
+        <20180321103504.9483-1-orga.chem.job@gmail.com>
+        <1521646299-16193-1-git-send-email-orga.chem.job@gmail.com>
+Date:   Wed, 21 Mar 2018 10:21:47 -0700
+In-Reply-To: <1521646299-16193-1-git-send-email-orga.chem.job@gmail.com> (Yuki
+        Kokubun's message of "Wed, 21 Mar 2018 15:31:39 +0000")
+Message-ID: <xmqqwoy5pcno.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.74.154.146 with HTTP; Wed, 21 Mar 2018 10:00:46 -0700 (PDT)
-In-Reply-To: <xmqq370tqsjk.fsf@gitster-ct.c.googlers.com>
-References: <20180317141033.21545-1-pclouds@gmail.com> <20180318142526.9378-1-pclouds@gmail.com>
- <20180321082441.GB25537@sigill.intra.peff.net> <87tvt9xuel.fsf@evledraar.gmail.com>
- <xmqq370tqsjk.fsf@gitster-ct.c.googlers.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 21 Mar 2018 18:00:46 +0100
-Message-ID: <CACsJy8CWkm_Xn2c0f46jUdD5dH7NUzTqyu6TrRkGKTS8WRCe3Q@mail.gmail.com>
-Subject: Re: [PATCH v6 00/11] nd/pack-objects-pack-struct updates
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Jeff King <peff@peff.net>, Eric Wong <e@80x24.org>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 21, 2018 at 5:53 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
->
->> That's going to be super rare (and probably nonexisting) edge case, but
->> (untested) I wonder if something like this on top would alleviate your
->> concerns, i.e. instead of dying we just take the first N packs up to our
->> limit:
->>
->>     diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
->>     index 4406af640f..49d467ab2a 100644
->>     --- a/builtin/pack-objects.c
->>     +++ b/builtin/pack-objects.c
->>     @@ -1065,8 +1065,9 @@ static int want_object_in_pack(const struct ob=
-ject_id *oid,
->>
->>             want =3D 1;
->>      done:
->>     -       if (want && *found_pack && !(*found_pack)->index)
->>     -               oe_add_pack(&to_pack, *found_pack);
->>     +       if (want && *found_pack && !(*found_pack)->index) {
->>     +               if (oe_add_pack(&to_pack, *found_pack) =3D=3D -1)
->>     +                       return 0;
->>
->>             return want;
->>      }
->
-> It is probably a small first step in the right direction, but we'd
-> need to communicate which packs we ignored with this logic to the
-> calling program.  I offhand do not know how we would handle the "-d"
-> part of "repack -a -d" without it.
+Yuki Kokubun <orga.chem.job@gmail.com> writes:
 
-repack will delete all the packs except ones with .keep files and ones
-created by pack-objects. So this change alone is not enough. I think I
-did mention that we could make this work by making repack run
-pack-objects multiple times. But I did not do it because I did not
-think it could really happen.
---=20
-Duy
+> "git filter-branch -- --all" can be confused when refs that refer to objects
+> other than commits or tags exists.
+> Because "git rev-parse --all" that is internally used can return refs that
+> refer to an object other than commit or tag. But it is not considered in the
+> phase of updating refs.
+
+Could you describe what the consequence of that is?  We have a ref
+that points directly at a blob object, or a ref that points at a tag
+object that points at a blob object.  The current code leaves both of
+these refs in "$tempdir/heads".  Then...?
+
+	... goes and looks ...
+
+There is a loop that looks like this:
+
+	while read ref
+	do
+		sha1=$(git rev-parse "$ref^0")
+		...
+	done <"$tempdir/heads"
+
+which would break on anything but a commit-ish.
+
+>  # The refs should be updated if their heads were rewritten
+>  git rev-parse --no-flags --revs-only --symbolic-full-name \
+> -	--default HEAD "$@" > "$tempdir"/raw-heads || exit
+> +	--default HEAD "$@" > "$tempdir"/raw-objects || exit
+> +# refs/replace can refer to an object other than commit or tag
+
+Mention of replace refs in the proposed log message gives an easy to
+understand example and is a good idea, but this in code comment does
+not have to single out the replace refs.  A tag can also point at an
+object with any type, e.g. "git tag v2.6.11-tree v2.6.11^{tree}"
+would make "refs/tags/v2.6.11-tree" point at the tree at the top
+level of the tree-ish "v2.6.11".  It probably is OK to drop this
+comment altogether.
+
+> +while read ref
+> +do
+> +	type=$(git cat-file -t "$ref")
+> +	if test $type = commit || test $type = tag
+> +	then
+> +		echo "$ref"
+> +	fi
+> +done >"$tempdir"/raw-heads <"$tempdir"/raw-objects
+>  sed -e '/^^/d' "$tempdir"/raw-heads >"$tempdir"/heads
+
+So... is the idea to limit the set of refs to be rewritten to those
+that point at commits and tags?  As I already alluded to, I do not
+think you want to accept a ref that points at any tag object---only
+the ones that point at a tag that points at a commit-ish, so that
+the code will not barf when doing "$ref^0".
+
+So perhaps
+
+	git rev-parse --no-flags ... >"$tempdir/raw-heads" || exit
+
+	while read ref
+	do
+		case "$ref" in ^?*) continue ;; esac
+		if git rev-parse --verify "$ref^0" 2>/dev/null
+                then
+			echo "$ref"
+		fi
+	done >"$tempdir/heads" <"$tempdir/raw-heads"
+
+or something?  Note that you do not need the "sed" as the loop
+already excludes the negative revs.
+
+>  test -s "$tempdir"/heads ||
+> diff --git a/t/t7003-filter-branch.sh b/t/t7003-filter-branch.sh
+> index 7cb60799b..efeaf5887 100755
+> --- a/t/t7003-filter-branch.sh
+> +++ b/t/t7003-filter-branch.sh
+> @@ -470,4 +470,17 @@ test_expect_success 'tree-filter deals with object name vs pathname ambiguity' '
+>  	git show HEAD:$ambiguous
+>  '
+>  
+> +test_expect_success 'rewrite repository including refs/replace that point to non commit object' '
+> +	test_when_finished "git reset --hard original" &&
+> +	tree=$(git rev-parse HEAD^{tree}) &&
+> +	test_when_finished "git replace -d $tree" &&
+> +	echo A >new &&
+> +	git add new &&
+> +	new_tree=$(git write-tree) &&
+> +	git replace $tree $new_tree &&
+
+Perhaps something like this here:
+
+	git tag -a "tag to a tree" treetag $new_tree &&
+
+can tell su how well it works with a tag that points at a tree?
+
+> +	git reset --hard HEAD &&
+> +	git filter-branch -f -- --all >filter-output 2>&1 &&
+> +	! fgrep fatal filter-output
+> +'
+> +
+>  test_done
