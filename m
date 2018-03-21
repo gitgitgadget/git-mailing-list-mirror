@@ -2,285 +2,174 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 87C0E1F404
-	for <e@80x24.org>; Wed, 21 Mar 2018 16:43:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 65B8A1F404
+	for <e@80x24.org>; Wed, 21 Mar 2018 16:46:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753174AbeCUQnD (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Mar 2018 12:43:03 -0400
-Received: from mail-qk0-f193.google.com ([209.85.220.193]:45529 "EHLO
-        mail-qk0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752833AbeCUQm1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Mar 2018 12:42:27 -0400
-Received: by mail-qk0-f193.google.com with SMTP id s9so6095250qke.12
-        for <git@vger.kernel.org>; Wed, 21 Mar 2018 09:42:27 -0700 (PDT)
+        id S1752610AbeCUQqk (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Mar 2018 12:46:40 -0400
+Received: from mail-lf0-f65.google.com ([209.85.215.65]:35097 "EHLO
+        mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751669AbeCUQqj (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Mar 2018 12:46:39 -0400
+Received: by mail-lf0-f65.google.com with SMTP id t132-v6so8874859lfe.2
+        for <git@vger.kernel.org>; Wed, 21 Mar 2018 09:46:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=wP29c83X1n+HNob5SFa0NpM8WBQ0on3QL6Ry0gis/TA=;
-        b=bBM4XTI5U/Sgj76cRDhOavZSdVysAL2h5O0ynzns77WGMZWHoWu32BtuViRESHHLKy
-         gQT1w/q7jPtgdn0/Pg+XeFA+z842OalQEs+APAJkHcXa02zwFrZzYk9URIV+i5+Tp6ts
-         UKmVPGiqvc2zcODYfccUFre2cE1q7RhrzhJGbLwi7rbwAAAf7E3WF7nebn0Ej+9nJfhr
-         eI7CnNSXQ5oMCAl1qp6EwqkKjQpBkJLQcHS3kpkq+XqO13WJwGeUk36EwYbxTZIpogT6
-         IO2UaZUPiNDB94dRFRaqh3TtZL4qVUP4xw++NUY8eQAnzkL3vxcO1tPbPs6oTpORqZlR
-         E1fA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=aAjktMIdCHgLG3pduSggn5sOBEC8qwXvEO1PWIna9eY=;
+        b=kyExqMXDHjp9LIeT0zMfR6Ruurcc/yqvUAukzTew/IyeftMTyBGjrZVq3GhFPR2ALD
+         lXGnswHHaqSeE6VSLbs0ylNlR1ijBI/9N9KdHUqSnPHQviatC+GTuONkicysKUKUNOuE
+         bw9UonDUi5ITfkY0HGp+U0qrP4liLgISYxSjC10rJO5GQ8my564ARzvERWD2pCvQic45
+         wi+Tgo/GatwjbAUekxXB6qaEi2gcRlvxi9OEoobSkNIq5WxXGGAe1NkPX58929NjfhaO
+         lWjv5LgXDtI7K+0jlLjxVFi1b3CJ2lLU5Z0/ocVuuu7mdTpA0cU4ZcqkeqA2J/6mJDaS
+         s/gA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=wP29c83X1n+HNob5SFa0NpM8WBQ0on3QL6Ry0gis/TA=;
-        b=XMd5fJ7POan9h11m7E3qvPyR7S5/86O71ILKMznqL3J7ia4bbh8e0WTOkFZlLKmw9G
-         IaXOATk0sVyukO7ShTq8mfdm6XJUMHsgHIBuSbH80IPcgKOn5cR8zGi1jGetdbhEUdlq
-         hoIXuTGW6w28+kuVE+jRwrOxgdvKRF6XqUdG4KGJQDa8vwlsDRP8N6Su98D2Fq1eHVBR
-         oDO26JNnpoblf3NN1DQUdvWDgon/eO3SJw0SwFpByBTELbGRMpgv4QqBZGIo+FlHoP8i
-         SKN86qCIedeNLHwQbDhgidK5c/LQUMA7NlKJbZYxHltOruG9921ZErKI6+tOyKruWlUs
-         qMyQ==
-X-Gm-Message-State: AElRT7HKJ3+zjeHlcDJTylaqPuaon4+gI3KjOA6k703hkRiHGrD+0rqw
-        ZRpit1StM96yE587uDQ+EZ9W8spI
-X-Google-Smtp-Source: AG47ELt8UgopLBAtpKryARXt49iWwQ7U/VSHyilUpj9ZbhU/RD5es1jYHmrzrhVoYESk8UukivKFuw==
-X-Received: by 10.55.17.105 with SMTP id b102mr14006391qkh.136.1521650546839;
-        Wed, 21 Mar 2018 09:42:26 -0700 (PDT)
-Received: from localhost.corp.microsoft.com ([2001:4898:8010:1:1060:bd2c:4297:50e])
-        by smtp.gmail.com with ESMTPSA id m24sm3235584qtc.81.2018.03.21.09.42.26
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 21 Mar 2018 09:42:26 -0700 (PDT)
-From:   jameson.miller81@gmail.com
-X-Google-Original-From: jamill@microsoft.com
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, peff@peff.net,
-        Jameson Miller <jamill@microsoft.com>
-Subject: [PATCH 2/3] Introduce a reusable memory pool type
-Date:   Wed, 21 Mar 2018 12:41:51 -0400
-Message-Id: <20180321164152.204869-3-jamill@microsoft.com>
-X-Mailer: git-send-email 2.14.3
-In-Reply-To: <20180321164152.204869-1-jamill@microsoft.com>
-References: <20180321164152.204869-1-jamill@microsoft.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=aAjktMIdCHgLG3pduSggn5sOBEC8qwXvEO1PWIna9eY=;
+        b=Nxrsng/CFqkDh8hFDiLfcmxyaC0yAP3oKMySziiXzhk6jbUMDcfseiJVv0eaKEokvZ
+         fW3VrWrZfKFH7cVeC6abj2hSNq3gl/onTnmlc/clJxZKhxZe5lIUgZ1pUDd3HlXiJGhy
+         B7t+NNApkZKRZStPu8be8sSQ7v4cEOGQxsDZxl7QHkOIGm01zf7ZJJhHupZQ621dzMey
+         4p5lBScp71zsBtHF6RjzWeHHP4vBbm7k2waKkdwMOMtPWmIH267rMPrIOuVQPCF+e0AT
+         5OcoZqY9HG8TBL/0MiiB7up74RFx7BGpq4HCz9pqZZVE8L2OyCdCai04biB/kOmEdTRu
+         r37Q==
+X-Gm-Message-State: AElRT7GY1giy5MJ6lsniB04ddNTjKJghS2Zdd1z+1QpIPqDIHgHgxV9D
+        cVmUxygHYlFIW+0/PnQIox4=
+X-Google-Smtp-Source: AG47ELtbPddYglLd52qHcNagw3LpoK/TQfll4YmblE5RLYtFpeiCB4VV70Ppwki+AYQjiwMzV/Jy5g==
+X-Received: by 2002:a19:eacc:: with SMTP id y73-v6mr13981364lfi.71.1521650797652;
+        Wed, 21 Mar 2018 09:46:37 -0700 (PDT)
+Received: from duynguyen (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
+        by smtp.gmail.com with ESMTPSA id s82sm944627lja.7.2018.03.21.09.46.36
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 21 Mar 2018 09:46:36 -0700 (PDT)
+Date:   Wed, 21 Mar 2018 17:46:29 +0100
+From:   Duy Nguyen <pclouds@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        Eric Wong <e@80x24.org>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v6 00/11] nd/pack-objects-pack-struct updates
+Message-ID: <20180321164629.GA27584@duynguyen>
+References: <20180317141033.21545-1-pclouds@gmail.com>
+ <20180318142526.9378-1-pclouds@gmail.com>
+ <20180321082441.GB25537@sigill.intra.peff.net>
+ <CACsJy8DkF3TpTGKp5MdS1ApC8Yj6FOL5uAg5U__PjBAQY1vdNw@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CACsJy8DkF3TpTGKp5MdS1ApC8Yj6FOL5uAg5U__PjBAQY1vdNw@mail.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jameson Miller <jamill@microsoft.com>
+On Wed, Mar 21, 2018 at 04:59:19PM +0100, Duy Nguyen wrote:
+> About the 16k limit (and some other limits as well), I'm making these
+> patches with the assumption that large scale deployment probably will
+> go with custom builds anyway. Adjusting the limits back should be
+> quite easy while we can still provide reasonable defaults for most
+> people.
 
-Extract the existing memory pool logic used by fast-import into a
-generalized component. This memory pool component can then be used by
-other components that need this functionality.
+And we could even do something like this to make custom builds
+easier. Some more gluing is needed so you can set this from config.mak
+but you get the idea. This removes all limits set by this
+series. Readability in pack-objects.c and object_entry struct
+declaration is still a concern though.
 
-Signed-off-by: Jameson Miller <jamill@microsoft.com>
----
- Makefile   |   1 +
- mem-pool.c | 130 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- mem-pool.h |  48 +++++++++++++++++++++++
- 3 files changed, 179 insertions(+)
- create mode 100644 mem-pool.c
- create mode 100644 mem-pool.h
-
-diff --git a/Makefile b/Makefile
-index a1d8775adb..1e142b1dd9 100644
---- a/Makefile
-+++ b/Makefile
-@@ -832,6 +832,7 @@ LIB_OBJS += lockfile.o
- LIB_OBJS += log-tree.o
- LIB_OBJS += mailinfo.o
- LIB_OBJS += mailmap.o
-+LIB_OBJS += mem-pool.o
- LIB_OBJS += match-trees.o
- LIB_OBJS += merge.o
- LIB_OBJS += merge-blobs.o
-diff --git a/mem-pool.c b/mem-pool.c
-new file mode 100644
-index 0000000000..3028bc3c67
---- /dev/null
-+++ b/mem-pool.c
-@@ -0,0 +1,130 @@
-+/*
-+ * Memory Pool implementation logic.
-+ */
-+
-+#include "cache.h"
-+#include "mem-pool.h"
-+
-+#define MIN_ALLOC_GROWTH_SIZE 1024 * 1024
-+
-+struct mp_block {
-+	struct mp_block *next_block;
-+	char *next_free;
-+	char *end;
-+	uintmax_t space[FLEX_ARRAY];
-+};
-+
-+static struct mp_block *mem_pool_alloc_block(struct mem_pool *mem_pool, size_t block_alloc)
-+{
-+	struct mp_block *p;
-+
-+	/* Round up to a 'uintmax_t' alignment */
-+	if (block_alloc & (sizeof(uintmax_t) - 1))
-+		block_alloc += sizeof(uintmax_t) - (block_alloc & (sizeof(uintmax_t) - 1));
-+
-+	mem_pool->pool_alloc += block_alloc;
-+
-+	p = xmalloc(st_add(sizeof(struct mp_block), block_alloc));
-+
-+	p->next_block = mem_pool->mp_block;
-+	p->next_free = (char *)p->space;
-+	p->end = p->next_free + block_alloc;
-+	mem_pool->mp_block = p;
-+
-+	return p;
-+}
-+
-+void mem_pool_init(struct mem_pool **mem_pool, size_t block_alloc, size_t initial_size)
-+{
-+	if (!(*mem_pool))
-+	{
-+		if (block_alloc < MIN_ALLOC_GROWTH_SIZE)
-+			block_alloc = MIN_ALLOC_GROWTH_SIZE;
-+
-+		*mem_pool = xmalloc(sizeof(struct mem_pool));
-+		(*mem_pool)->pool_alloc = 0;
-+		(*mem_pool)->mp_block = 0;
-+		(*mem_pool)->block_alloc = block_alloc;
-+
-+		if (initial_size > 0)
-+			mem_pool_alloc_block((*mem_pool), initial_size);
-+	}
-+}
-+
-+void mem_pool_discard(struct mem_pool *mem_pool)
-+{
-+	struct mp_block *block, *block_to_free;
-+	for (block = mem_pool->mp_block; block;)
-+	{
-+		block_to_free = block;
-+		block = block->next_block;
-+		free(block_to_free);
-+	}
-+
-+	free(mem_pool);
-+}
-+
-+void *mem_pool_alloc(struct mem_pool *mem_pool, size_t len)
-+{
-+	struct mp_block *p;
-+	void *r;
-+
-+	/* Round up to a 'uintmax_t' alignment */
-+	if (len & (sizeof(uintmax_t) - 1))
-+		len += sizeof(uintmax_t) - (len & (sizeof(uintmax_t) - 1));
-+
-+	p = mem_pool->mp_block;
-+
-+	if (p &&
-+	   (p->end - p->next_free < len)) {
-+		for (p = p->next_block; p; p = p->next_block)
-+			if (p->end - p->next_free >= len)
-+				break;
-+	}
-+
-+	if (!p) {
-+		if (len >= ((mem_pool->block_alloc - sizeof(struct mp_block)) / 2)) {
-+			p = mem_pool_alloc_block(mem_pool, len);
-+		}
-+		else
-+			p = mem_pool_alloc_block(mem_pool, mem_pool->block_alloc);
-+	}
-+
-+	r = p->next_free;
-+	p->next_free += len;
-+	return r;
-+}
-+
-+void *mem_pool_calloc(struct mem_pool *mem_pool, size_t count, size_t size)
-+{
-+	size_t len = st_mult(count, size);
-+	void *r = mem_pool_alloc(mem_pool, len);
-+	memset(r, 0, len);
-+	return r;
-+}
-+
-+int mem_pool_contains(struct mem_pool *mem_pool, void *mem)
-+{
-+	struct mp_block *p;
-+	for (p = mem_pool->mp_block; p; p = p->next_block)
-+		if ((mem >= ((void *)p->space)) &&
-+		    (mem < ((void *)p->end)))
-+			return 1;
-+
-+	return 0;
-+}
-+
-+void mem_pool_combine(struct mem_pool *dst, struct mem_pool *src)
-+{
-+	struct mp_block **tail = &dst->mp_block;
-+	/* find pointer of dst's last block (if any) */
-+	while (*tail)
-+		tail = &(*tail)->next_block;
-+
-+	/* append the blocks from src to dst */
-+	*tail = src->mp_block;
-+
-+	dst->pool_alloc += src->pool_alloc;
-+	src->pool_alloc = 0;
-+	src->mp_block = NULL;
-+}
-diff --git a/mem-pool.h b/mem-pool.h
-new file mode 100644
-index 0000000000..902ef8caf2
---- /dev/null
-+++ b/mem-pool.h
-@@ -0,0 +1,48 @@
-+#ifndef MEM_POOL_H
-+#define MEM_POOL_H
-+
-+struct mem_pool {
-+	struct mp_block *mp_block;
-+
-+	/* The size of new blocks to grow the pool by. */
-+	size_t block_alloc;
-+
-+	/* The total amount of memory allocated by the pool. */
-+	size_t pool_alloc;
-+};
-+
-+/*
-+ * Initialize mem_pool with specified parameters for initial size and
-+ * how much to grow when a larger memory block is required.
-+ */
-+void mem_pool_init(struct mem_pool **mem_pool, size_t alloc_growth_size, size_t initial_size);
-+
-+/*
-+ * Move the memory associated with the 'src' pool to the 'dst' pool. The 'src'
-+ * pool will be empty and not contain any memory. It still needs to be free'd
-+ * with a call to `mem_pool_discard`.
-+ */
-+void mem_pool_combine(struct mem_pool *dst, struct mem_pool *src);
-+
-+/*
-+ * Discard a memory pool and free all the memory it is responsible for.
-+ */
-+void mem_pool_discard(struct mem_pool *mem_pool);
-+
-+/*
-+ * Alloc memory from the mem_pool.
-+ */
-+void *mem_pool_alloc(struct mem_pool *pool, size_t len);
-+
-+/*
-+ * Allocate and zero memory from the memory pool.
-+ */
-+void *mem_pool_calloc(struct mem_pool *pool, size_t count, size_t size);
-+
-+/*
-+ * Check if a memory pointed at by 'mem' is part of the range of
-+ * memory managed by the specified mem_pool.
-+ */
-+int mem_pool_contains(struct mem_pool *mem_pool, void *mem);
-+
+-- 8< --
+diff --git a/pack-objects.h b/pack-objects.h
+index af40211105..b6e84c9b48 100644
+--- a/pack-objects.h
++++ b/pack-objects.h
+@@ -2,10 +2,17 @@
+ #define PACK_OBJECTS_H
+ 
+ #define OE_DFS_STATE_BITS	2
++#ifdef PACK_OBJECTS_BIG_MEMORY
++#define OE_DEPTH_BITS		31
++/* OE_IN_PACK_BITS is not defined */
++#define OE_Z_DELTA_BITS		32
++#define OE_DELTA_SIZE_BITS	32
++#else
+ #define OE_DEPTH_BITS		12
+ #define OE_IN_PACK_BITS		14
+ #define OE_Z_DELTA_BITS		16
+ #define OE_DELTA_SIZE_BITS	31
 +#endif
--- 
-2.14.3
-
+ 
+ /*
+  * State flags for depth-first search used for analyzing delta cycles.
+@@ -82,7 +89,11 @@ struct object_entry {
+ 				     */
+ 	uint32_t delta_size_:OE_DELTA_SIZE_BITS; /* delta data size (uncompressed) */
+ 	uint32_t delta_size_valid:1;
++#ifdef PACK_OBJECTS_BIG_MEMORY
++	struct packed_git *in_pack; /* already in pack */
++#else
+ 	unsigned in_pack_idx:OE_IN_PACK_BITS;	/* already in pack */
++#endif
+ 	unsigned size_valid:1;
+ 	unsigned z_delta_size:OE_Z_DELTA_BITS;
+ 	unsigned type_valid:1;
+@@ -112,7 +123,9 @@ struct packing_data {
+ 
+ 	unsigned int *in_pack_pos;
+ 	int in_pack_count;
++#ifndef PACK_OBJECTS_BIG_MEMORY
+ 	struct packed_git *in_pack[1 << OE_IN_PACK_BITS];
++#endif
+ };
+ 
+ struct object_entry *packlist_alloc(struct packing_data *pdata,
+@@ -174,6 +187,9 @@ static inline void oe_set_in_pack_pos(const struct packing_data *pack,
+ static inline unsigned int oe_add_pack(struct packing_data *pack,
+ 				       struct packed_git *p)
+ {
++#ifdef PACK_OBJECTS_BIG_MEMORY
++	return 0;
++#else
+ 	if (pack->in_pack_count >= (1 << OE_IN_PACK_BITS))
+ 		die(_("too many packs to handle in one go. "
+ 		      "Please add .keep files to exclude\n"
+@@ -187,22 +203,31 @@ static inline unsigned int oe_add_pack(struct packing_data *pack,
+ 	}
+ 	pack->in_pack[pack->in_pack_count] = p;
+ 	return pack->in_pack_count++;
++#endif
+ }
+ 
+ static inline struct packed_git *oe_in_pack(const struct packing_data *pack,
+ 					    const struct object_entry *e)
+ {
++#ifdef PACK_OBJECTS_BIG_MEMORY
++	return e->in_pack;
++#else
+ 	return pack->in_pack[e->in_pack_idx];
++#endif
+ 
+ }
+ 
+ static inline void oe_set_in_pack(struct object_entry *e,
+ 				  struct packed_git *p)
+ {
++#ifdef PACK_OBJECTS_BIG_MEMORY
++	e->in_pack = p;
++#else
+ 	if (p->index <= 0)
+ 		die("BUG: found_pack should be NULL "
+ 		    "instead of having non-positive index");
+ 	e->in_pack_idx = p->index;
++#endif
+ 
+ }
+ 
+-- 8< --
