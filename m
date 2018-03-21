@@ -2,75 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 11B951F404
-	for <e@80x24.org>; Wed, 21 Mar 2018 23:50:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 23C8F1F404
+	for <e@80x24.org>; Wed, 21 Mar 2018 23:51:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753682AbeCUXuE (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Mar 2018 19:50:04 -0400
-Received: from mail-it0-f41.google.com ([209.85.214.41]:36887 "EHLO
-        mail-it0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753646AbeCUXuE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Mar 2018 19:50:04 -0400
-Received: by mail-it0-f41.google.com with SMTP id p67-v6so3957435itc.2
-        for <git@vger.kernel.org>; Wed, 21 Mar 2018 16:50:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=9BeV9g42Km+YQCLYgXInhuXc3II40b4r+oG8coQTmKw=;
-        b=B73rRuRvQPHjb4SWFE4ZDJhf9t3BU+gmzSrAwJuiAGYVgV15OnF+06LqIBY5dq/Sxo
-         3r5hBlPkBhQtuxFPWUWnhxv5R645OqsONMDrp7H6jHEBXAtTK48mMwsMzmc0jHHO9mNd
-         wczZyTyrUwX3/ZGBC5qAWZwDxRAKwUM1xteRnAtpfBheGetPFCHXBNFsW5LepgkdZMI6
-         YhaOvT7LMx3vB1o04amgL1Eyv4+WlVtLH1Gg1DevlU8JuB2GedoBHJyp067t8jKXBsIw
-         G6QEMikF61wMEt1kqmK2bKWr3JVDL7Q6BWyECWz59mwlqiQaiz4iWEnttX+I6/9kIGyZ
-         50oQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=9BeV9g42Km+YQCLYgXInhuXc3II40b4r+oG8coQTmKw=;
-        b=Tcoz8EpiaAzzqKdiW9UdJdnAUTYf4kIXLu7AScSp1JKHl85xaxK9UYgyf+X4Z8Ty34
-         q6SEPWL+eIKsRHDVhpO7E499QB0lTVvHRIRnAH9J/F8uSxHe7kuYmrdr6JRBLuMSPcVn
-         /SK3Ik6ybNQRV1UfOWDAUAbjgTFsFTS5VfqjrRo2oSJ6ei41fzTgkoeOlWaMBuH4U7j4
-         FRTYQBSyoZsv1k2j1oHtb+cD/X+KeV6mbzyksF0g5QBgHgo5NdKwHBMBMGMmwklzswg/
-         Rt1wCL53s7iWRkKdwu6pvPzunJmWG9l4GCCAoEDzw1SqCdOTNmnHBx9NMt++IyM9I05j
-         GB7g==
-X-Gm-Message-State: AElRT7HfkRHhpA+m3ToUFexOf+a674J+c/Elj+CZvv1TBQnNHgt4xSmO
-        +I992b0NYI5BNJlnWqUBs8mExJaQmsyduVIlq8Q=
-X-Google-Smtp-Source: AIpwx490eMfyDsiQHnhnAnHLQExVR6VI86lOsCIcUbKIl3Rzm44G8+kiTeTQUCa386iQRdXe48vzs3GwnWf4HXpRXe0=
-X-Received: by 2002:a24:1753:: with SMTP id 80-v6mr6478551ith.35.1521676203532;
- Wed, 21 Mar 2018 16:50:03 -0700 (PDT)
+        id S1753863AbeCUXvV (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Mar 2018 19:51:21 -0400
+Received: from mout.gmx.net ([212.227.17.22]:52139 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753732AbeCUXvT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Mar 2018 19:51:19 -0400
+Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MP0LT-1evETC3gdL-006Kaj; Thu, 22
+ Mar 2018 00:51:17 +0100
+Date:   Thu, 22 Mar 2018 00:51:17 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+To:     Alban Gruin <alban.gruin@gmail.com>
+cc:     git <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>
+Subject: Re: [RFC][GSoC] Project proposal: convert interactive rebase to C
+In-Reply-To: <46112353.MVnaADNoVi@andromeda>
+Message-ID: <nycvar.QRO.7.76.6.1803220043180.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <2564070.6kGkNsz7Qa@andromeda> <nycvar.QRO.7.76.6.1803201720090.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <46112353.MVnaADNoVi@andromeda>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Received: by 10.79.229.11 with HTTP; Wed, 21 Mar 2018 16:50:02 -0700 (PDT)
-In-Reply-To: <xmqqo9jkvwjh.fsf@gitster-ct.c.googlers.com>
-References: <20180317033142.20119-1-david.pursehouse@gmail.com>
- <20180317033142.20119-2-david.pursehouse@gmail.com> <xmqqo9jkvwjh.fsf@gitster-ct.c.googlers.com>
-From:   David Pursehouse <david.pursehouse@gmail.com>
-Date:   Thu, 22 Mar 2018 08:50:02 +0900
-Message-ID: <CAM5Va3kECqGmw-oMQ_PJuVqfC8-OWWnfkPJQW1Q+bL7TgOEVfQ@mail.gmail.com>
-Subject: Re: [PATCH 1/1] Fix typo in merge-strategies documentation
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, David Pursehouse <dpursehouse@collab.net>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/mixed; boundary="8323329-930568946-1521676277=:77"
+X-Provags-ID: V03:K0:jIRZucGNPvBdNVq2zh1n0irLCrqb5e65dKLs32Q6QLsl55Dr1+f
+ cjoL/b1fGPIQURyyakF8hOKVFgbGvHkQbq6qjhZ9u5T4oncSA2scrjkSNPypsUsa03wKOi3
+ ezEBHKzBfkdMLHzVxxob+sQ5Kj2BZVugcPKe6VGoBEcANR1x5lRxoqLHAyqu19qXE0TgbNP
+ NI8mnzRTgJBv8rZqup/bg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:ESsgFW7XIag=:tD9wBRCVECdxdwtdYOR/31
+ WdAwkcx8EYXFLi2BmRtK0DKFBe8Fab7hzehnBppBts+3n5W6TCHoaFduy0gAwsnwEqxcvm2Ue
+ LFIZGVhQi3QDiXeEC/P0SsJ8vb/mXmIskKjTOzS8RX1OW8e29SMidRt6s1RsV7gsJsTKNSSxK
+ QZIM88udxGPY9JwrfBs7a8nCQtMrwNy4KOywqn2tgxWHt7cnuAmEnMfon+MPeIKPqmA3T1L9B
+ M445/dePHMFi4JDK0B9GfH1a/a2E9GnXvjY1LynZzQtQSdh+eMOYbic476K2e3balKaUeFP5v
+ 4JFXusBg+r9K3wjYIaQgc7ZMt1GNgYR5Y6SqogcKKcH+1g7+wwqE+5DNNQXurYOcf8EA/Za+/
+ 7rD36PExCxhhAPj7jjHraEt4Zv/LW9nD3JKvOv7JgBlnEzZ+tYB9oVFLc5GZJd7FE1xWDjvLq
+ Iwr/1d6/gR6T1VOHYydSQc5SIyVKPqnUY/nJKIcNGVMxSGx4Oee27e9UGpNPaHRM5O9228OJp
+ Dor8hpGaa2PSXpGqirh7RQ8EvxQwnKJMSdvBPvGrfk7vt2VUCpPhKmhsQsL564y+PZ0JEuMan
+ VDSRIgr2HOMRw0ZvllEWz3Rd6RQ5IkcT3YGxtGjLJGFaVsaIW1aKVMt5uTvQUMz0r5sjaUq5p
+ 4ytqd5HzOocdqQZQD4148OOo7KRvgr6TQ331SdBuJvXUN0GrNACnwksw5KO5ELP+Yqw+zNr12
+ O0Dg95yjNpbsODZpm9p1lyJ3PGtxJozA7r4couoJJV9M8XCCXQf6T9H3YNfN6LQBACnkwWiBQ
+ yQzGyV/+vGUyOgZYQFZDOKXrJwDA/HjBhMNoe/FoykRfqwLwsM=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 20, 2018 at 1:51 AM, Junio C Hamano <gitster@pobox.com> wrote:
->
-> I somehow had to stare at the patch for a few minutes, view it in
-> two Emacs buffers and run M-x compare-windows before I finally spot
-> the single-byte typofix.
->
-> Will queue with a retitle.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-[resending as plain text]
+--8323329-930568946-1521676277=:77
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-Thanks, and sorry for the confusion.  I'll provide a more detailed
-commit message next time.
+Hi Alban,
+
+On Wed, 21 Mar 2018, Alban Gruin wrote:
+
+> Le mardi 20 mars 2018 17:29:28 CET, vous avez =C3=A9crit :
+>=20
+> > Also, I have a hunch that there is actually almost nothing left to
+> > rewrite after my sequencer improvements that made it into Git v2.13.0,
+> > together with the upcoming changes (which are on top of the
+> > --recreate-merges patch series, hence I did not send them to the
+> > mailing list yet) in
+> > https://github.com/dscho/git/commit/c261f17a4a3e
+>=20
+> One year ago, you said[2] that converting this script "will fill up 3
+> month, very easily". Is this not accurate anymore?
+
+Let me read that mail ;-)
+
+*goes and reads*
+
+Well, I was talking about two different aspects to Ivan and to you. I
+should have been clearer. So let me try again:
+
+To convert `git-rebase--interactive.sh`, I think the most important part
+is to factor out the preserve-merges code into its own script. After that,
+there is little I can think of (apart from support for --root, which a
+not-yet-contributed patch in my sequencer-shears branch on
+https://github.com/dscho/git addresses) that still needs to be converted.
+For somebody familiar with Git's source code, I would estimate one week
+(and therefore 3 weeks would be a realistic estimate :-)).
+
+Come to think of it, a better approach might be to leave the
+preserve-merges stuff in, and teach `git-rebase.sh` to call the sequencer
+directly for --interactive without --preserve-merges, then rename the
+script to git-rebase--preserve.sh
+
+The other aspect, the one I thought would take up to 3 months, easily, was
+to convert the entirety of rebase -i into C. That would entail also the
+option parsing, for which you would have to convert also git-rebase.sh
+(and if you do not convert git-rebase--am.sh and git-rebase--merge.sh
+first, you would then have to teach builtin/rebase.c to populate the
+environment variables expected by those shell scripts while spawning
+them).
+
+I still think that the latter is too big a task for a single GSoC.
+
+> I=E2=80=99ll send a new draft as soon as possible (hopefully this afterno=
+on).
+
+I look forward to reading it!
+
+Ciao,
+Johannes
+--8323329-930568946-1521676277=:77--
