@@ -2,98 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 099811F404
-	for <e@80x24.org>; Wed, 21 Mar 2018 19:18:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E6A001F404
+	for <e@80x24.org>; Wed, 21 Mar 2018 19:27:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752788AbeCUTSM (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Mar 2018 15:18:12 -0400
-Received: from mail-lf0-f65.google.com ([209.85.215.65]:46941 "EHLO
-        mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752637AbeCUTSM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Mar 2018 15:18:12 -0400
-Received: by mail-lf0-f65.google.com with SMTP id j68-v6so9513685lfg.13
-        for <git@vger.kernel.org>; Wed, 21 Mar 2018 12:18:11 -0700 (PDT)
+        id S1753635AbeCUT1p (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Mar 2018 15:27:45 -0400
+Received: from mail-wr0-f195.google.com ([209.85.128.195]:41329 "EHLO
+        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753597AbeCUT13 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Mar 2018 15:27:29 -0400
+Received: by mail-wr0-f195.google.com with SMTP id f14so6351218wre.8
+        for <git@vger.kernel.org>; Wed, 21 Mar 2018 12:27:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=saville-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=wLGlXTdEds58eb/k18kULOr7r8suv+5QiMYNNCyxy2k=;
-        b=QxiG22xldA8m/n0CBkjL9gs6jM/FgPBMureZVJBHRXSAWLFQj2KdCkVHyfgg0941Lx
-         bdpvOql/AbF5BYUDqjzqEA1tZY6M/1iGOtZQg3uhLcuGKEoWB4sg9eQB/nSYFAojsFc8
-         js/N9TcrINDbWC/NbDWNb8rd3wDJx0e1ZN0xPz1UEcliPjk14lQWYXs+VAc+yd+bBi24
-         zJOTGVF1URveEdFlOkM+dbwzJxiuRMYZWPrIPiOwHRP2tURS+DWlaynP4Ngxbr3IOoNL
-         pfHDS/YBcwIe3/EIjnlfbBo0NwvTwqhqch2h5pNEXQFYoWVNiWm5+P88b7/WlEwhz3Ck
-         Fazg==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=l1/Q5xd+aiNETHiToF5K9aV5Vvff738fgaXkAVniUrw=;
+        b=SeFsA1Wyyc3lB7i5UyCGyHMFcgpys8X9d2qgRR8DpzjEBALJ9xKbPe/dQ/lcVELFxw
+         IxwflUe35CHTpSZ/8mF9D2InBbBPhf+uaBcWOn34aYmDSi8mhUqjdUjY6KP39zmrgdZe
+         XDHd2s2l6QyCA3wZv2O5vuq8O555m7NWGXa/DZRCoOAIU9cWAJFKzBi1sRtt79KAsjXe
+         MnRCi8I6anl9ciRySQzVf/aELufVMLtJjDGtAbTLBUO+6IfHbjtqTwZGdOr7RhhIzYK8
+         RuGUi3oQ/ZB+pHIlfVAZJY81wscQD/btHTTJrZM5N1N7FNcStSCk5N/1ddyRTripqXnc
+         KRIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=wLGlXTdEds58eb/k18kULOr7r8suv+5QiMYNNCyxy2k=;
-        b=Chr8Hd62cCVRgM2QFzgx2xAELwYZxCBOy0QrfWDXAnG7Xlp5B7nQWLly9VYfBZPXFu
-         PY+9TKVxp1Ttv7B/jF8Vah6Jf6mz9G/fKXikK6MBjDPyJKgO+IEbgI5aAYlXU6G4Ahbg
-         u4RzSrFuDIQZMJ83QvPPx63TKKwTTkkAv0Ls9q7PDIfAxUEoHHWBHXtAN+HyHk1RGvyl
-         DswfLh3KlAsFkZweHq5Z5lIiZcBjs4+7gaQhBxLDT8/lzXwFURzIA28llxYGV/tv/urq
-         OKXyNVQvwt4B5DfFk81wKPkYu0sBwY7TJLdmLQkFC56g5qb5/legmVm1v9G2KLf9Eb4D
-         va4w==
-X-Gm-Message-State: AElRT7GiFIARMLU921eOu6Lg9rUSybUaxKp+WGHQVugUMhtLfTfQgvcR
-        JTuHZlUugtAMO4+EOSk1KFt1qRPNWbOxi0DhD8nRlg==
-X-Google-Smtp-Source: AG47ELvd4CRXgOhEdiL+olopAqnWNmOLOGKItOyyqg7I7KSAlRuvahQ3gbdZ+DCfsL6jpQ7zxiUyyRYnW+4dcVZqYnU=
-X-Received: by 10.46.49.10 with SMTP id x10mr7456767ljx.5.1521659890285; Wed,
- 21 Mar 2018 12:18:10 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=l1/Q5xd+aiNETHiToF5K9aV5Vvff738fgaXkAVniUrw=;
+        b=Fdy+g2GbOHUAgcM6JWYMzvcMVe2A6Ya4wKdJQOEw1+74B6coWBda7IUnlj87M2hknG
+         T0dzoGrj7DQgU2ma6gck6iXFvRAHfI8MEfa9ceO4CAaxhBd2yrVxAb9MwPcMood89jDZ
+         3FvYvjKepW/Xi3/rOW4m59cQOLa3imSR16skXaNpekOewMRpNEvucms+dGG/BbPm0QYr
+         v+/mqCjyKDIgPqnJWnDw+io9mJntjnq4hERbbqN469mjg/RFtTSpSTuCLLx3rzil00Rf
+         SdPrKBkQSpIaYJyBWPvLO0X1Oi+JkXnN6y3Mx6BF4MgtDHup8Bc7J4cwmN9PkBZC1+BF
+         JXlg==
+X-Gm-Message-State: AElRT7E/yuGchSGfNTr7F3AF/H5zPZbFxLfy7uhu3/cocsoHgTHhasZ4
+        t0axzwOcMwlJHBBi37G6560=
+X-Google-Smtp-Source: AG47ELvDExhtzM/COXkLV5Y6AdmYNUypFKPm7NhlFZXKooIE7pLiErpQafgb2oQ2ZzZ5CPCjjucJnw==
+X-Received: by 10.223.145.161 with SMTP id 30mr17181321wri.106.1521660448066;
+        Wed, 21 Mar 2018 12:27:28 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id 124sm3413275wmv.19.2018.03.21.12.27.26
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 21 Mar 2018 12:27:27 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     jameson.miller81@gmail.com
+Cc:     git@vger.kernel.org, peff@peff.net,
+        Jameson Miller <jamill@microsoft.com>
+Subject: Re: [PATCH 0/3] Extract memory pool logic into reusable component
+References: <20180321164152.204869-1-jamill@microsoft.com>
+Date:   Wed, 21 Mar 2018 12:27:26 -0700
+In-Reply-To: <20180321164152.204869-1-jamill@microsoft.com> (jameson's message
+        of "Wed, 21 Mar 2018 12:41:49 -0400")
+Message-ID: <xmqq8talp6u9.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 2002:a19:d591:0:0:0:0:0 with HTTP; Wed, 21 Mar 2018 12:17:49
- -0700 (PDT)
-In-Reply-To: <nycvar.QRO.7.76.6.1803211242190.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <CADzBBBb0KDVJiX2WSNW=vC6b6paWoK=5XrnZNAY+pwpcu-t9JA@mail.gmail.com>
- <nycvar.QRO.7.76.6.1803211242190.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-From:   Wink Saville <wink@saville.com>
-Date:   Wed, 21 Mar 2018 12:17:49 -0700
-Message-ID: <CAKk8isrOMMm0zyJ1JtH3aDm=tF5hwokZ0Wzn=D1BQ1R-qEPicw@mail.gmail.com>
-Subject: Re: [GSoC] Regarding "Convert scripts to builtins"
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Paul Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
-        Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 21, 2018 at 5:32 AM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi Paul,
->
+jameson.miller81@gmail.com writes:
 
-> Note! There is one exception, and it is not even a full script. As
-> everybody knows who follows my patch series on this here mailing list, I
-> consider --preserve-merges one of my stupidest design mistakes ever. To
-> undo this (or at least to alleviate the damage I caused), I already
-> submitted a patch series to introduce a superseding option:
-> --recreate-merges. This patch series is on hold due to the -rc phase of
-> v2.17 and will be kicked back into action after v2.17.0 final is out. As
-> it is my hope that --preserve-merges can be deprecated in favor of
-> --recreate-merges (and eventually even phased out of Git), I would be
-> totally cool with git-rebase--preserve-merges.sh being factored out of
-> git-rebase--interactive.sh before converting the latter to pure C, and
-> leaving the --preserve-merges script alone until the time when it is put
-> to rest.
->
-> (While I was sleeping, leaving this mail unfinished, to be completed and
-> sent today, a patch series was sent to the mailing list that seems to
-> perform this refactoring of --preserve-merges into its own script.)
+> This patch series extracts the memory pool implementation, currently
+> used by fast-import, into a generalized component. This memory pool
+> can then be generally used by any component that needs a pool of
+> memory.
 
-I plead guilty to being the preson refactoring --preserve-merges. But after
-reading this and seeing that --recreate-merges is coming and possibly
-git-rebase--* moving to C I'm worried I'd be messing things up.
+The way this series is organized is quite reviewer hostile.  
 
-Also, Eric Sunshine felt my v1 changes causes the blame information to
-be obscured. So I created a v2 change which keeps everything in the
-git-rebase--interactive.sh.
+Step #2 that adds bunch of new code without introducing any caller
+nor adjusting existing code means the readers will have no idea how
+the new code relates to the existing code in fast-import.c (e.g. "Is
+it just a rename of some type, structure fields, function names
+etc., and moving the lines without no other change?"  "Is the new
+code more capable than fast-import's one and does step #3 just makes
+the existing fast-import callers use just a subset of the feature?").
 
-Please see "[RFC PATCH 0/3] rebase-interactive" and
-"[RFC PATCH v2 0/1] rebase-interactive: ...". I'm looking for
-advice on how to proceed.
+Either case, if I were doing this (by the way, I am not in
+particular an expert in this area), I probably would make existing
+memtool implementation more generic (e.g. renaming, feature
+generalization, etc.) and adjust existing callers while the code is
+still in its original place in one step, and then in a separate step
+move the resulting reusable bits to a new file wilt a new header.
+
+
+
