@@ -7,93 +7,122 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ADEAD1F404
-	for <e@80x24.org>; Wed, 21 Mar 2018 20:36:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8E96C1F404
+	for <e@80x24.org>; Wed, 21 Mar 2018 20:59:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753190AbeCUUgv (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Mar 2018 16:36:51 -0400
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:39086 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752954AbeCUUgs (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Mar 2018 16:36:48 -0400
-Received: by mail-wr0-f194.google.com with SMTP id c24so6536880wrc.6
-        for <git@vger.kernel.org>; Wed, 21 Mar 2018 13:36:47 -0700 (PDT)
+        id S1753320AbeCUU73 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Mar 2018 16:59:29 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:44603 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753254AbeCUU71 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Mar 2018 16:59:27 -0400
+Received: by mail-wr0-f193.google.com with SMTP id u46so6575176wrc.11
+        for <git@vger.kernel.org>; Wed, 21 Mar 2018 13:59:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=mUTkKFWKkYoqOfeyH/KkM3zXQFrtdfayeG6pSGoBkwc=;
-        b=ZZ5q4FXOrGLwPP92aLiAyp87U6amhv8daXyIgW82ulaR4fj4+J1k9G8DePJV6NNVcf
-         tfkLtQu2Sn4liDxOmwkXGSYXXMtxXcFhrZA1r1y18XlhM62GljAm3brrCuchUagUnUbA
-         /MHolxLuGBWPoaCTfa+NCxxfKdYkeLRuOOqbA9cWVLXPp3YPqFPMyEIm6ifAFU1TrrAq
-         bgVMD97BNcmi8JvYLNZunNbl6ulfiOsUqOxJkp4eozrOP0t+LjmGymSyQtgKw016IWrs
-         vxXl2UrSqUIuwpoT6v+FO7tSQ5Ufj/jIPbrDiyJ/qQsSfp1ybaE6tO65mu7VGbWNoafC
-         sAdg==
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=hHd86b0S5qn8r0XXRAby9Au8mfHKD4PBnAlrWay8GKw=;
+        b=qnLilYOcuy2MvZIPa7TnTsBaKNFSvYrrt7oMCTTS0986srW2fclw+mtJZCcN9Jx7uU
+         R+MqYtwbjhP0YAdmyekkfmlk1OfvansR5otTIgfUh5EoLdGUZFOXPT98A9dx8fD/qzy1
+         6mAQj/ZWzVo7bybvH++Ei4ng0hrfIemkp0YBR5CH6S8i9JzgDb7wJuaIBoCETEuuF12J
+         kyptAa+MIr4W1cdgbQ/eWIcMmppsK5BYbvgzgWuLH+CPE1n2iN7CUDt9+czaeClfwjdi
+         U1anc6UJGQZUlF9owUQHRQI1bF9feVrsL1PRChDJeEcsTWruPZUUN17Ote6KJ7CrW6j4
+         A3cQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=mUTkKFWKkYoqOfeyH/KkM3zXQFrtdfayeG6pSGoBkwc=;
-        b=DLiIsehuBMsDcqdK8QuCJuwj+Jhe6bm0zAI4/U2YiaU6L7c4FvfVCipTyQAxMLaClo
-         Rk7APAjg0WUnHtNJ4JZdiL4FHe6zT0Pbav9zmQTunuUmnvGEtDOYl5ctW2RCVp9cCRrp
-         ConWgceE2uxTHfl1Jz4ZbQfywCQVfNoGhxZXCcidvGBmvyeekveqQ9ervoXrNPntZuRv
-         zCszAuJyV9KSiuqibJbzMfjpkGrbAk5YNBffnx0EjdmhHr+kA6pcKeahXmDUEobQSaam
-         ibmtkehAZP1TNipSRt2uP4B2nTlWWA63oWnm7kvBwWEmt4C8QxKghCg6j1A+GFu5smix
-         bMSQ==
-X-Gm-Message-State: AElRT7Hst5cjlrYCyelHCxO2KBPJ0IOXyhO+DZ1lhHiwz9kmCfDAw9/R
-        jZ/7SQAzHyggyoQZKEvGlmBkZ4Qc
-X-Google-Smtp-Source: AG47ELtGezYi5Rr3B9B43DTMd6w/0Vnn1V6jIUu7jpLRiBWJPxfoTvHakgIPJbM4hdd/nBYecf0MGg==
-X-Received: by 10.223.170.152 with SMTP id h24mr16821243wrc.193.1521664606544;
-        Wed, 21 Mar 2018 13:36:46 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=hHd86b0S5qn8r0XXRAby9Au8mfHKD4PBnAlrWay8GKw=;
+        b=n2JpCkUui2NwY6+uTrTaDIwhTEx8QVBBT4OeBZif6AlfqF8uHDR8WxFV6etcUj62gK
+         g+T50zKSPUFJVO0rtExhw+UlNEIwzv1vJPAW5ZN3KK5GtQozPq9bSZhWQiInZ782Ye7w
+         g5JyT5R4HqvJf1Ktu9qCk/YaHsop3AqQr/vB38hFIOuB4u6vSDK2jTPdgo4uKSSdSO1C
+         jX+z5ZjYqw2JCpyEjUsvfRksXeeatG7ACr4pRHNLxYatV/CnvDDI/ZeFAf2+DPBQkug9
+         rDD5amb1FSXeAAP1MP0Bg8tiAm6kCm3ed/NhkFSm+AMJGD8ymoZt1gLTdvb6pZt+ILPi
+         p7fw==
+X-Gm-Message-State: AElRT7FmQzm+1Wu18KzypN2UGCp7xABAMHIsMAV6WJyh3nWEC74NDUCz
+        NxI9H2ifL3Zn8flQaLTxcDQ=
+X-Google-Smtp-Source: AG47ELvueRM22iOuZnzdNf7ZI0Nhy7lA00qEEepgzpIiWfQ/SeyFZavMi5F9unHzMsO0wLWUycYDkQ==
+X-Received: by 10.223.166.179 with SMTP id t48mr17463631wrc.161.1521665966159;
+        Wed, 21 Mar 2018 13:59:26 -0700 (PDT)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id f22sm10196929wmi.39.2018.03.21.13.36.45
+        by smtp.gmail.com with ESMTPSA id b38sm7759392wrg.81.2018.03.21.13.59.24
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 21 Mar 2018 13:36:45 -0700 (PDT)
+        Wed, 21 Mar 2018 13:59:24 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Olga Telezhnaya <olyatelezhnaya@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v5 4/6] ref-filter: change parsing function error handling
-References: <0102016249d21c40-0edf6647-4d26-46fc-8cfd-5a446b93a5e2-000000@eu-west-1.amazonses.com>
-        <0102016249d21c96-29f058b0-a43d-45b7-9c1d-5ea2382858a2-000000@eu-west-1.amazonses.com>
-Date:   Wed, 21 Mar 2018 13:36:45 -0700
-In-Reply-To: <0102016249d21c96-29f058b0-a43d-45b7-9c1d-5ea2382858a2-000000@eu-west-1.amazonses.com>
-        (Olga Telezhnaya's message of "Wed, 21 Mar 2018 18:28:49 +0000")
-Message-ID: <xmqqh8p9np2a.fsf@gitster-ct.c.googlers.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH] completion: add option completion for most builtin commands
+References: <20180321193039.19779-1-pclouds@gmail.com>
+Date:   Wed, 21 Mar 2018 13:59:24 -0700
+In-Reply-To: <20180321193039.19779-1-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
+ =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
+        Duy"'s message of "Wed, 21 Mar 2018 20:30:39 +0100")
+Message-ID: <xmqqd0zxno0j.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Olga Telezhnaya <olyatelezhnaya@gmail.com> writes:
+Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
 
-> @@ -2144,13 +2151,15 @@ int format_ref_array_item(struct ref_array_item *info,
+> These commands can take options and use parse-options so it's quite
+> easy to allow option completion. This does not pollute the command
+> name completion though. "git <tab>" will show you the same set as
+> before. This only kicks in when you type the correct command name.
+>
+> Some other builtin commands are not still added because either they
+> don't use parse-options, or they are deprecated, or they are those
+> -helper commands that are used to move some logic back in C for
+> sh-based commands.
+>
+> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+> ---
+>  contrib/completion/git-completion.bash | 276 +++++++++++++++++++++++++
+>  1 file changed, 276 insertions(+)
+
+Wow, just wow.  It however looks a lot of boilerplates, e.g. looking
+at these, we notice ...
+
+> +_git_blame() {
+> +	case "$cur" in
+> +	--*)
+> +		__gitcomp_builtin blame
+> +		return
+> +		;;
+> +	esac
+> +}
+> +
 >  
->  	for (cp = format->format; *cp && (sp = find_next(cp)); cp = ep + 1) {
->  		struct atom_value *atomv;
-> +		int pos;
->  
->  		ep = strchr(sp, ')');
->  		if (cp < sp)
->  			append_literal(cp, sp, &state);
-> -		get_ref_atom_value(info,
-> -				   parse_ref_filter_atom(format, sp + 2, ep),
-> -				   &atomv);
-> +		pos = parse_ref_filter_atom(format, sp + 2, ep, error_buf);
-> +		if (pos < 0)
-> +			return -1;
-> +		get_ref_atom_value(info, pos, &atomv);
->  		if (atomv->handler(atomv, &state, error_buf))
->  			return -1;
->  	}
+> +_git_cat_file() {
+> +	case "$cur" in
+> +	--*)
+> +		__gitcomp_builtin cat-file
+> +		return
+> +		;;
+> +	esac
+> +}
+> +
+> +_git_check_attr() {
+> +	case "$cur" in
+> +	--*)
+> +		__gitcomp_builtin check-attr
+> +		return
+> +		;;
+> +	esac
+> +}
 
-These error returns leave the formatting state "state" on the stack
-holding onto its resources, no?
+... the only thing we need for the above three is a table that says
+"use blame for blame, cat-file for cat_file, and check-attr for
+check_attr".
 
-The only thing the caller of format_ref_array_item() that notices an
-error return does is to die even after this series, so in that sense
-it does not matter (yet), but it still feels somewhat wrong.
-
+And that pattern repeats throughout the patch.  I wonder if we can
+express the same a lot more concisely by updating the caller that
+calls these command specific helpers?
 
