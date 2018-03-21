@@ -7,58 +7,58 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 226971F404
-	for <e@80x24.org>; Wed, 21 Mar 2018 20:20:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ADEAD1F404
+	for <e@80x24.org>; Wed, 21 Mar 2018 20:36:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753117AbeCUUUx (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Mar 2018 16:20:53 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:34820 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752954AbeCUUUt (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Mar 2018 16:20:49 -0400
-Received: by mail-wm0-f67.google.com with SMTP id r82so12229030wme.0
-        for <git@vger.kernel.org>; Wed, 21 Mar 2018 13:20:48 -0700 (PDT)
+        id S1753190AbeCUUgv (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Mar 2018 16:36:51 -0400
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:39086 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752954AbeCUUgs (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Mar 2018 16:36:48 -0400
+Received: by mail-wr0-f194.google.com with SMTP id c24so6536880wrc.6
+        for <git@vger.kernel.org>; Wed, 21 Mar 2018 13:36:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=i2Yb4o4Q7dujQCbSX5LyrXeZeVqYUI6UnhoDQd3i348=;
-        b=prr90spalhZkKpF7cYUJXeszn4nSVsmMwT/Ag7jFwDN+UYJuH4lvsa0C5yds7D1Qq8
-         nvGtXEccAKU5Pze2rTwia9krcQ7UQ+i3zMwz6q0wXNAydp8GbWxeVc0ocOArQ+fBxmrz
-         IDg1qbDeuJfwEg/APNljgudQSOoC2sbhuNueoH6aJrD3xXjXj8jdxInksYnlDycuSSjj
-         B0lofJuWKAQqaPSTCIA5Uo1uagp++tj8M0pbIRdslFkpuWQN6Pz8FHyIZVLhNnjScG/9
-         Yr4AmycWYq2YnAJt+b6Ej007R/pMM64QtPmYutoxNmzLbkYafFhmDoCn5WjsIJu6GPY3
-         ll0g==
+        bh=mUTkKFWKkYoqOfeyH/KkM3zXQFrtdfayeG6pSGoBkwc=;
+        b=ZZ5q4FXOrGLwPP92aLiAyp87U6amhv8daXyIgW82ulaR4fj4+J1k9G8DePJV6NNVcf
+         tfkLtQu2Sn4liDxOmwkXGSYXXMtxXcFhrZA1r1y18XlhM62GljAm3brrCuchUagUnUbA
+         /MHolxLuGBWPoaCTfa+NCxxfKdYkeLRuOOqbA9cWVLXPp3YPqFPMyEIm6ifAFU1TrrAq
+         bgVMD97BNcmi8JvYLNZunNbl6ulfiOsUqOxJkp4eozrOP0t+LjmGymSyQtgKw016IWrs
+         vxXl2UrSqUIuwpoT6v+FO7tSQ5Ufj/jIPbrDiyJ/qQsSfp1ybaE6tO65mu7VGbWNoafC
+         sAdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=i2Yb4o4Q7dujQCbSX5LyrXeZeVqYUI6UnhoDQd3i348=;
-        b=Y6h1cK/aqbyo0ljfeDn3UWrqVBeDcZfA7oXsuNVVF3Q5P9d+Y3Y0yzrIyGWSa4AYFN
-         ZnjaCemH8bhipoDKRXCFMDxVQKYvBYz10soKX5c4W2YAUwu4HDAn5eo/ETF/PCyfLcN1
-         c17ZXgxJRN/EJFD4APTRDQ+swHAF5pZsf7BBat8zgI1X2jMGwcoL/ExlI6gr1MQQ9wrF
-         szirjF8UNiNvMp4Th1poqY+7K6+yp+OxhErNCIj0PDOdlrOopNwKz1T+46sxt/TkSg7F
-         RcxN9y/Ji15w7XX+XhHe25wh5crDTDtJBOeTJxGgLg7NbTjcXY7m/2TraOk01gSFIahU
-         Z7sw==
-X-Gm-Message-State: AElRT7G4bTIlSCpLCBcmlhZ+chX+J6ET8kAV4hjRjTfyUrzvaMdXqynv
-        mXFIggZgxuXQ5+I9Zx9y/VA=
-X-Google-Smtp-Source: AG47ELtM16mhZv9xwq078a323UX613u499EpklSMTRmTkNcvs/t4PVdFzkqvO1B1eEoBn/7/QEC4aQ==
-X-Received: by 10.28.171.131 with SMTP id u125mr3500296wme.19.1521663647678;
-        Wed, 21 Mar 2018 13:20:47 -0700 (PDT)
+        bh=mUTkKFWKkYoqOfeyH/KkM3zXQFrtdfayeG6pSGoBkwc=;
+        b=DLiIsehuBMsDcqdK8QuCJuwj+Jhe6bm0zAI4/U2YiaU6L7c4FvfVCipTyQAxMLaClo
+         Rk7APAjg0WUnHtNJ4JZdiL4FHe6zT0Pbav9zmQTunuUmnvGEtDOYl5ctW2RCVp9cCRrp
+         ConWgceE2uxTHfl1Jz4ZbQfywCQVfNoGhxZXCcidvGBmvyeekveqQ9ervoXrNPntZuRv
+         zCszAuJyV9KSiuqibJbzMfjpkGrbAk5YNBffnx0EjdmhHr+kA6pcKeahXmDUEobQSaam
+         ibmtkehAZP1TNipSRt2uP4B2nTlWWA63oWnm7kvBwWEmt4C8QxKghCg6j1A+GFu5smix
+         bMSQ==
+X-Gm-Message-State: AElRT7Hst5cjlrYCyelHCxO2KBPJ0IOXyhO+DZ1lhHiwz9kmCfDAw9/R
+        jZ/7SQAzHyggyoQZKEvGlmBkZ4Qc
+X-Google-Smtp-Source: AG47ELtGezYi5Rr3B9B43DTMd6w/0Vnn1V6jIUu7jpLRiBWJPxfoTvHakgIPJbM4hdd/nBYecf0MGg==
+X-Received: by 10.223.170.152 with SMTP id h24mr16821243wrc.193.1521664606544;
+        Wed, 21 Mar 2018 13:36:46 -0700 (PDT)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id k17sm4290651wrh.18.2018.03.21.13.20.46
+        by smtp.gmail.com with ESMTPSA id f22sm10196929wmi.39.2018.03.21.13.36.45
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 21 Mar 2018 13:20:47 -0700 (PDT)
+        Wed, 21 Mar 2018 13:36:45 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Olga Telezhnaya <olyatelezhnaya@gmail.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v5 1/6] strbuf: add shortcut to work with error messages
-References: <01020162442818b4-c153f9ce-3813-41a6-aebd-f5cb2b98b1fa-000000@eu-west-1.amazonses.com>
-        <0102016249d21c40-0edf6647-4d26-46fc-8cfd-5a446b93a5e2-000000@eu-west-1.amazonses.com>
-Date:   Wed, 21 Mar 2018 13:20:46 -0700
-In-Reply-To: <0102016249d21c40-0edf6647-4d26-46fc-8cfd-5a446b93a5e2-000000@eu-west-1.amazonses.com>
+Subject: Re: [PATCH v5 4/6] ref-filter: change parsing function error handling
+References: <0102016249d21c40-0edf6647-4d26-46fc-8cfd-5a446b93a5e2-000000@eu-west-1.amazonses.com>
+        <0102016249d21c96-29f058b0-a43d-45b7-9c1d-5ea2382858a2-000000@eu-west-1.amazonses.com>
+Date:   Wed, 21 Mar 2018 13:36:45 -0700
+In-Reply-To: <0102016249d21c96-29f058b0-a43d-45b7-9c1d-5ea2382858a2-000000@eu-west-1.amazonses.com>
         (Olga Telezhnaya's message of "Wed, 21 Mar 2018 18:28:49 +0000")
-Message-ID: <xmqqlgelnpsx.fsf@gitster-ct.c.googlers.com>
+Message-ID: <xmqqh8p9np2a.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -69,51 +69,31 @@ X-Mailing-List: git@vger.kernel.org
 
 Olga Telezhnaya <olyatelezhnaya@gmail.com> writes:
 
-> Add function strbuf_error() that helps to save few lines of code.
-> Function expands fmt with placeholders, append resulting error message
-> to strbuf *err, and return error code ret.
->
-> Signed-off-by: Olga Telezhnaia <olyatelezhnaya@gmail.com>
-> ---
->  strbuf.h | 13 +++++++++++++
->  1 file changed, 13 insertions(+)
->
-> diff --git a/strbuf.h b/strbuf.h
-> index e6cae5f4398c8..fa66d4835f1a7 100644
-> --- a/strbuf.h
-> +++ b/strbuf.h
-> @@ -620,4 +620,17 @@ char *xstrvfmt(const char *fmt, va_list ap);
->  __attribute__((format (printf, 1, 2)))
->  char *xstrfmt(const char *fmt, ...);
+> @@ -2144,13 +2151,15 @@ int format_ref_array_item(struct ref_array_item *info,
 >  
-> +/*
-> + * Expand error message, append it to strbuf *err, then return error code ret.
-> + * Allow to save few lines of code.
-> + */
-> +static inline int strbuf_error(struct strbuf *err, int ret, const char *fmt, ...)
-> +{
+>  	for (cp = format->format; *cp && (sp = find_next(cp)); cp = ep + 1) {
+>  		struct atom_value *atomv;
+> +		int pos;
+>  
+>  		ep = strchr(sp, ')');
+>  		if (cp < sp)
+>  			append_literal(cp, sp, &state);
+> -		get_ref_atom_value(info,
+> -				   parse_ref_filter_atom(format, sp + 2, ep),
+> -				   &atomv);
+> +		pos = parse_ref_filter_atom(format, sp + 2, ep, error_buf);
+> +		if (pos < 0)
+> +			return -1;
+> +		get_ref_atom_value(info, pos, &atomv);
+>  		if (atomv->handler(atomv, &state, error_buf))
+>  			return -1;
+>  	}
 
-With this function, err does not have to be an error message, and
-ret does not have to be negative.  Hence strbuf_error() is a wrong
-name for the wrapper.
+These error returns leave the formatting state "state" on the stack
+holding onto its resources, no?
 
-It somewhat is bothersome to see that this is inlined; if it is
-meant for error codepath, it probably shouldn't have to be.
+The only thing the caller of format_ref_array_item() that notices an
+error return does is to die even after this series, so in that sense
+it does not matter (yet), but it still feels somewhat wrong.
 
-> +	va_list ap;
-> +	va_start(ap, fmt);
-> +	strbuf_vaddf(err, fmt, ap);
-> +	va_end(ap);
-> +	return ret;
-> +}
-> +
->  #endif /* STRBUF_H */
 
-Quite honestly, I am not sure if it is worth to be in strbuf.h; it
-feels a bit too specific to the immediate need for these five
-patches and nowhere else.  Are there many existing calls to
-strbuf_addf() immediately followed by an "return" of an integer,
-that can be simplified by using this helper?  I see quite a many
-instances of addf() soon followed by "return -1" in
-refs/files-backend.c, but they are not immediately adjacent to each
-other, and won't be helped.
