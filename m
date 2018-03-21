@@ -7,122 +7,159 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8E96C1F404
-	for <e@80x24.org>; Wed, 21 Mar 2018 20:59:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B8E251F404
+	for <e@80x24.org>; Wed, 21 Mar 2018 21:25:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753320AbeCUU73 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Mar 2018 16:59:29 -0400
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:44603 "EHLO
+        id S1753539AbeCUVZI (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Mar 2018 17:25:08 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:45977 "EHLO
         mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753254AbeCUU71 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Mar 2018 16:59:27 -0400
-Received: by mail-wr0-f193.google.com with SMTP id u46so6575176wrc.11
-        for <git@vger.kernel.org>; Wed, 21 Mar 2018 13:59:27 -0700 (PDT)
+        with ESMTP id S1753210AbeCUVZH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Mar 2018 17:25:07 -0400
+Received: by mail-wr0-f193.google.com with SMTP id h2so6643012wre.12
+        for <git@vger.kernel.org>; Wed, 21 Mar 2018 14:25:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=hHd86b0S5qn8r0XXRAby9Au8mfHKD4PBnAlrWay8GKw=;
-        b=qnLilYOcuy2MvZIPa7TnTsBaKNFSvYrrt7oMCTTS0986srW2fclw+mtJZCcN9Jx7uU
-         R+MqYtwbjhP0YAdmyekkfmlk1OfvansR5otTIgfUh5EoLdGUZFOXPT98A9dx8fD/qzy1
-         6mAQj/ZWzVo7bybvH++Ei4ng0hrfIemkp0YBR5CH6S8i9JzgDb7wJuaIBoCETEuuF12J
-         kyptAa+MIr4W1cdgbQ/eWIcMmppsK5BYbvgzgWuLH+CPE1n2iN7CUDt9+czaeClfwjdi
-         U1anc6UJGQZUlF9owUQHRQI1bF9feVrsL1PRChDJeEcsTWruPZUUN17Ote6KJ7CrW6j4
-         A3cQ==
+         :user-agent:mime-version;
+        bh=lC+rRVK5R2ISabIEoVuOHTE2OWqVGr3+71Rfd+1BFPc=;
+        b=OOFKbGxDhxRtK92JtHi6fB3rwyItPeQjijWWESkMRh3VYu9S5b1MhUqTdBYwJhl0Nv
+         DPs3ivHQuiNfYD/723wYmJJtlh+92dZHvqYfoIEkfj9CLxNyN74Eo3EJnEy83Akt3+ka
+         9qgWejitV9eIFt4atteW7kJSs9e4P44Bj6Eq5eBXM6TCaSUJMesAApSQw/MTfvQMGQ26
+         fjxI+95HExYwniPYWT+Zd8L+G6NKMF6tjemXLKIe93P5eU64+gP4zINdJcM4YfAAVv3z
+         uJKS6q4Gp0M6bj15MclKebj6BTpWp+XR7M3LASOMppuqOAxsEsZdTJkQyW/soRmiwQ4i
+         mdAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=hHd86b0S5qn8r0XXRAby9Au8mfHKD4PBnAlrWay8GKw=;
-        b=n2JpCkUui2NwY6+uTrTaDIwhTEx8QVBBT4OeBZif6AlfqF8uHDR8WxFV6etcUj62gK
-         g+T50zKSPUFJVO0rtExhw+UlNEIwzv1vJPAW5ZN3KK5GtQozPq9bSZhWQiInZ782Ye7w
-         g5JyT5R4HqvJf1Ktu9qCk/YaHsop3AqQr/vB38hFIOuB4u6vSDK2jTPdgo4uKSSdSO1C
-         jX+z5ZjYqw2JCpyEjUsvfRksXeeatG7ACr4pRHNLxYatV/CnvDDI/ZeFAf2+DPBQkug9
-         rDD5amb1FSXeAAP1MP0Bg8tiAm6kCm3ed/NhkFSm+AMJGD8ymoZt1gLTdvb6pZt+ILPi
-         p7fw==
-X-Gm-Message-State: AElRT7FmQzm+1Wu18KzypN2UGCp7xABAMHIsMAV6WJyh3nWEC74NDUCz
-        NxI9H2ifL3Zn8flQaLTxcDQ=
-X-Google-Smtp-Source: AG47ELvueRM22iOuZnzdNf7ZI0Nhy7lA00qEEepgzpIiWfQ/SeyFZavMi5F9unHzMsO0wLWUycYDkQ==
-X-Received: by 10.223.166.179 with SMTP id t48mr17463631wrc.161.1521665966159;
-        Wed, 21 Mar 2018 13:59:26 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=lC+rRVK5R2ISabIEoVuOHTE2OWqVGr3+71Rfd+1BFPc=;
+        b=Q7G6m1bPg/5WuwYdFTbNSo+oxl0WGNvrsMWizzYED1cTTqIvE/E1NSoKvaqIm+UC0c
+         8eiMgzMkPcB9exSoNpSqHkTB8WlsTtAxp7AQie+AOHOEWYr9yGJkuSHfUdUmUyZtCqiD
+         jIdt9hgtomv7Bbmcz5Hy3MuN/AqGFAPuyb7CcOoNuwasgLgNZhh+beiT2PDxfQ1HLMOZ
+         VqYuWnHEhYi1mH6dyNTrF64A/J7qU96dmUp0UiNiRdSGam8oBAxpDfYxM+LvGH+cNVVk
+         IX9+zfJwSUeU0VVq8r0GmBjZWgryps30FNdPZ8Io6TNO5Ai3CKsM/J4NEg18apy4zUXS
+         575g==
+X-Gm-Message-State: AElRT7HmBHRRnP5mLuIGRwaJMKVnGuBzERLLi1+Npj3GpgR7GNl8mcGP
+        R2J0q2DbUdrvpOw9wyw+lzI=
+X-Google-Smtp-Source: AG47ELsvnJRKMT/C1Sj1HQP19IzgnivlG/1jLT8f8kSpfV4CL4AptyrT2XeN7D7pUCdK9oL3MsTVWA==
+X-Received: by 10.223.150.175 with SMTP id u44mr17049225wrb.104.1521667505782;
+        Wed, 21 Mar 2018 14:25:05 -0700 (PDT)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id b38sm7759392wrg.81.2018.03.21.13.59.24
+        by smtp.gmail.com with ESMTPSA id g38sm8186192wra.77.2018.03.21.14.25.03
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 21 Mar 2018 13:59:24 -0700 (PDT)
+        Wed, 21 Mar 2018 14:25:04 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH] completion: add option completion for most builtin commands
-References: <20180321193039.19779-1-pclouds@gmail.com>
-Date:   Wed, 21 Mar 2018 13:59:24 -0700
-In-Reply-To: <20180321193039.19779-1-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
- =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
-        Duy"'s message of "Wed, 21 Mar 2018 20:30:39 +0100")
-Message-ID: <xmqqd0zxno0j.fsf@gitster-ct.c.googlers.com>
+To:     git@jeffhostetler.com
+Cc:     git@vger.kernel.org, peff@peff.net, avarab@gmail.com,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH v2] json_writer: new routines to create data in JSON format
+References: <20180321192827.44330-1-git@jeffhostetler.com>
+        <20180321192827.44330-2-git@jeffhostetler.com>
+Date:   Wed, 21 Mar 2018 14:25:03 -0700
+In-Reply-To: <20180321192827.44330-2-git@jeffhostetler.com>
+        (git@jeffhostetler.com's message of "Wed, 21 Mar 2018 19:28:27 +0000")
+Message-ID: <xmqq8talnmts.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
+git@jeffhostetler.com writes:
 
-> These commands can take options and use parse-options so it's quite
-> easy to allow option completion. This does not pollute the command
-> name completion though. "git <tab>" will show you the same set as
-> before. This only kicks in when you type the correct command name.
+> From: Jeff Hostetler <jeffhost@microsoft.com>
 >
-> Some other builtin commands are not still added because either they
-> don't use parse-options, or they are deprecated, or they are those
-> -helper commands that are used to move some logic back in C for
-> sh-based commands.
->
-> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-> ---
->  contrib/completion/git-completion.bash | 276 +++++++++++++++++++++++++
->  1 file changed, 276 insertions(+)
+> Add basic routines to generate data in JSON format.
 
-Wow, just wow.  It however looks a lot of boilerplates, e.g. looking
-at these, we notice ...
+And the point of having capability to write JSON data in our
+codebase is...?
 
-> +_git_blame() {
-> +	case "$cur" in
-> +	--*)
-> +		__gitcomp_builtin blame
-> +		return
-> +		;;
-> +	esac
-> +}
+> diff --git a/json-writer.c b/json-writer.c
+> new file mode 100644
+> index 0000000..89a6abb
+> --- /dev/null
+> +++ b/json-writer.c
+> @@ -0,0 +1,321 @@
+> +#include "cache.h"
+> +#include "json-writer.h"
 > +
->  
-> +_git_cat_file() {
-> +	case "$cur" in
-> +	--*)
-> +		__gitcomp_builtin cat-file
-> +		return
-> +		;;
-> +	esac
-> +}
+> +static char g_ch_open[2]  = { '{', '[' };
+> +static char g_ch_close[2] = { '}', ']' };
+
+What's "g_" prefix?
+
 > +
-> +_git_check_attr() {
-> +	case "$cur" in
-> +	--*)
-> +		__gitcomp_builtin check-attr
-> +		return
-> +		;;
-> +	esac
-> +}
+> +/*
+> + * Append JSON-quoted version of the given string to 'out'.
+> + */
+> +static void append_quoted_string(struct strbuf *out, const char *in)
+> +{
+> +	strbuf_addch(out, '"');
+> +	for (/**/; *in; in++) {
+> +		unsigned char c = (unsigned char)*in;
 
-... the only thing we need for the above three is a table that says
-"use blame for blame, cat-file for cat_file, and check-attr for
-check_attr".
+It is clear enough to lose /**/, i.e.
 
-And that pattern repeats throughout the patch.  I wonder if we can
-express the same a lot more concisely by updating the caller that
-calls these command specific helpers?
+	for (; *in; in++) {
+
+but for this one. I wonder if
+
+	unsigned char c;
+	strbuf_addch(out, '"');
+	while ((c = *in++) != '\0') {
+ 		...
+
+is easier to follow, though.
+
+> +static inline void begin(struct json_writer *jw, int is_array)
+> +{
+> +	ALLOC_GROW(jw->levels, jw->nr + 1, jw->alloc);
+> +
+> +	jw->levels[jw->nr].level_is_array = !!is_array;
+> +	jw->levels[jw->nr].level_is_empty = 1;
+
+An element of this array is a struct that represents a level, and
+everybody who accesses an element of that type knows it is talking
+about a level by the field that has the array being named as
+.levels[] (also [*1*]).  In such a context, it is a bit too loud to
+name the fields with level_$blah.  IOW,
+
+	struct json_writer_level
+	{
+		unsigned is_array : 1;
+		unsigned is_empty : 1;
+	};
+
+> +struct json_writer_level
+> +{
+> +	unsigned level_is_array : 1;
+> +	unsigned level_is_empty : 1;
+> +};
+> +
+> +struct json_writer
+> +{
+> +	struct json_writer_level *levels;
+> +	int nr, alloc;
+> +	struct strbuf json;
+> +};
+
+[Footnote]
+
+*1* I personally prefer to call an array of things "thing[]", not
+    "things[]", because then you can refer to an individual element
+    e.g. "thing[4]" and read it as "the fourth thing".
+
+    Unless the code often treats an array as a whole, that is, in
+    which case, things[] is OK as you'll be calling the whole thing
+    with the plural name (e.g. call that function and give all the
+    things by passing things[]).
+
+    In this case, one level instance is an element of a stack, and
+    the code would be accessing one level at a time most of the
+    time, so "writer.level[4].is_empty" would read more naturally
+    than "writer.levels[4].level_is_empty".
+
 
