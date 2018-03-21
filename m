@@ -2,134 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E7DB71F404
-	for <e@80x24.org>; Wed, 21 Mar 2018 15:59:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8D53C1F404
+	for <e@80x24.org>; Wed, 21 Mar 2018 16:02:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751736AbeCUP7v (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Mar 2018 11:59:51 -0400
-Received: from mail-ot0-f169.google.com ([74.125.82.169]:35570 "EHLO
-        mail-ot0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751416AbeCUP7u (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Mar 2018 11:59:50 -0400
-Received: by mail-ot0-f169.google.com with SMTP id r30-v6so6123862otr.2
-        for <git@vger.kernel.org>; Wed, 21 Mar 2018 08:59:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=IPHTSJnHE+Sily3gsXurLeSn2kWVVlXc9ahU6CbTDqE=;
-        b=Nw0oKOpHcmQoiOKGki7FnVIDrdYo+vs6rAoDvETYCj87YIz6hdaUvp0qcgiwbmGojv
-         4cpyA9XEPg81VEd6ITLI4YtVNOnED9ERSxIdbgsduHeuVKLg6uZ12ic8nY/bsHZTQyuP
-         h0bbXQGVGk0GDqUEdROMlDLanWYcEbViCi3cNcI9EjT/auHTwkX9JNRE3hYrGg/3+jbY
-         Ko8YVIR/yYjX2yt+/NQ6blviQf5qJzV+F+N7iFiC8ERHV1ySss3P6LpabozCeYpF2jzN
-         ldlyDBQoeub5JZ8i5t9BY1/ZG/MY2rqqBL+FYL+0aNdqU76f9xP8hG6tfFyFwA4Gz4Jd
-         DYuQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=IPHTSJnHE+Sily3gsXurLeSn2kWVVlXc9ahU6CbTDqE=;
-        b=YCtUhAgt1Q3berGsYodzvNK/a51zOsESE+dn5+Tj7mge/+XdJPt3WAX49ZQ2CVcu96
-         kLd3nBJzJAxEK1EYh7SQSde9vTgLESeGjaEQkAJXNz/ZdwM3e1H9Y4m1Pus8cRyEaiH5
-         tFrY/LuXfNcxadUZqsAbZiyAxGO1arpcrYFcAPXvZ+PKdIdoCm8PPP4xOyAru/9cgNyh
-         hPKFBkwONxZa+UL0wk10hx3oz4UNwrE6RJeIMUGZsDV8aQKiFhrO6cngS7DlNvzRVFQF
-         EG9tWAYmYl1UdRD0QzsTBfwPQtHttfDwSEHEIhNVuJlDLIhB9lM4+OziJmz7c6TlFaGA
-         pssw==
-X-Gm-Message-State: AElRT7EQKlcV1xZrgzA8ZAvjg97S8U/Yh9R4HIeokyyV42h3oda4G6Vc
-        ZfFLlZFKvDdsyJTYVKc7IxY+tGPJEQfDvOxkoas=
-X-Google-Smtp-Source: AG47ELspmWhBdDM/ttGt7SdTtFDnVs24MCgUw+TZveEO7IYFjfA2dULPMCfpdRcaUFUz50EIDy9n6dO5I8WvGmda/00=
-X-Received: by 2002:a9d:ec5:: with SMTP id 63-v6mr10805032otj.14.1521647990152;
- Wed, 21 Mar 2018 08:59:50 -0700 (PDT)
+        id S1752201AbeCUQC4 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Mar 2018 12:02:56 -0400
+Received: from mout.gmx.net ([212.227.15.19]:39655 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751658AbeCUQCz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Mar 2018 12:02:55 -0400
+Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LzKmP-1eU8oi3XQv-014Rse; Wed, 21
+ Mar 2018 17:02:49 +0100
+Date:   Wed, 21 Mar 2018 17:02:31 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+To:     Michael Haggerty <mhagger@alum.mit.edu>
+cc:     Git Mailing List <git@vger.kernel.org>,
+        Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: [ANNOUNCE] git-sizer: compute various size-related metrics for
+ your Git repository
+In-Reply-To: <CAMy9T_FaOdLP482YZcMX16mpy_EgM0ok1GKg45rE=X+HTGxSiQ@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1803211659390.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <CAMy9T_FaOdLP482YZcMX16mpy_EgM0ok1GKg45rE=X+HTGxSiQ@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Received: by 10.74.154.146 with HTTP; Wed, 21 Mar 2018 08:59:19 -0700 (PDT)
-In-Reply-To: <20180321082441.GB25537@sigill.intra.peff.net>
-References: <20180317141033.21545-1-pclouds@gmail.com> <20180318142526.9378-1-pclouds@gmail.com>
- <20180321082441.GB25537@sigill.intra.peff.net>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 21 Mar 2018 16:59:19 +0100
-Message-ID: <CACsJy8DkF3TpTGKp5MdS1ApC8Yj6FOL5uAg5U__PjBAQY1vdNw@mail.gmail.com>
-Subject: Re: [PATCH v6 00/11] nd/pack-objects-pack-struct updates
-To:     Jeff King <peff@peff.net>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Eric Wong <e@80x24.org>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:pNaBLp2pJxk++dsqF5bGcFW0MKdmz9KoaK+L5cJPORHVK8P/NYK
+ QLSdzMGxDCiKQ/AaMpArDj1R3QT8oZ/qPI2n5Qqxo51FL27XncuWLdGYkdvb3NmhbzhzytU
+ j/VcK4kcH7JNA9lrpxledJjIw2vmbrOgDgPsIx2GrlUHYRELceEatSFjVJvlaalb7OhkKS1
+ /rf6aPm0P+fuuWp3+0gnQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:7QmYiLdLZxM=:emCboCLZQIKOIojdbCudjm
+ xee1jksV9LPcHlExwfToXQ0cN8GnmIGrpF4Cb7Db0RvoZWMFvYo/AO7+41GBkz/CB84Qh5Gyj
+ dAlYg/E/Cz5TmkJzwTvCsrbpw/LQJdno45yOxrVId08vRmd0myBfEjcfPH3vfGu88eSTP+AAN
+ kD9icw0QK6fVzdMNveAb4zrBIoM5F38lAUmR+3C/5hyWdiCUlUpzR89DWkhcYxL6gaGaCpT6g
+ qKnfyP3Dc4/dbXu5tOARGvGMBblnoXb5k0NyP0cI/hyRhhfhywhBltfuxyRVq6p337p3vYtjq
+ J1Ua70iz5q+hYPBbdl+inNucOylwDyN2aVoBmQFN1IMw+XubBB4raTZd/FBCdZE4oa7XaCAkq
+ W39oBrMkyS8XxnwzdJwn/MYqMzdcrUlpfIiiLT+fP97SsHqHCGjr4NR/2C3fc2/yGd3p77LEV
+ 3ecFC51AH943cqQ9LjrRZkfq6BjDnrUGEnzunCQRHlQQZgeTgOTHusua7mV39kMcJd3vbEBqi
+ ax29eFzaqXXvXGNK4bEBKwNPa+sQhs5CArofUFVq0o8LtzriKeZ8hOE95ZEsd2E413UioOO64
+ isf9x+iPeYbg3PWZC00rDH0K0yVIzrVx91IRodIzv0ZWwWbMxBsSmq/lNhkEMDRZxctb3OJV7
+ 6+LHYoKxhyN0MpGogMmSfgGwTcAUdtL07JaFAe8HZsSWRy20ju6Kcwl7lGt0yN4IQ1xh+xNnB
+ lr6LzoEQz2TQqqyQDWHjhzz/7swrN5nP7QzYZgyhgE16wgoveMu8OTSddNhnfNXmq3CrSlg3A
+ sT/3jW4DrLu/rUAHwZs36sUCAtJboqpdjR7JevqPVCECLk0ypY=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 21, 2018 at 9:24 AM, Jeff King <peff@peff.net> wrote:
-> On Sun, Mar 18, 2018 at 03:25:15PM +0100, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=
-=BB=8Dc Duy wrote:
->
->> v6 fixes the one optimization that I just couldn't get right, fixes
->> two off-by-one error messages and a couple commit message update
->> (biggest change is in 11/11 to record some numbers from AEvar)
->
-> I was traveling during some of the earlier rounds, so I finally got a
-> chance to take a look at this.
->
-> I hate to be a wet blanket, but am I the only one who is wondering
-> whether the tradeoffs is worth it? 8% memory reduction doesn't seem
-> mind-bogglingly good,
+Hi Michael,
 
-AEvar measured RSS. If we count objects[] array alone, the saving is
-40% (136 bytes per entry down to 80). Some is probably eaten up by
-mmap in rss.
+On Fri, 16 Mar 2018, Michael Haggerty wrote:
 
-> and I'm concerned about two things:
->
->   1. The resulting code is harder to read and reason about (things like
->      the DELTA() macros), and seems a lot more brittle (things like the
->      new size_valid checks).
->
->   2. There are lots of new limits. Some of these are probably fine
->      (e.g., the cacheable delta size), but things like the
->      number-of-packs limit don't have very good user-facing behavior.
->      Yes, having that many packs is insane, but that's going to be small
->      consolation to somebody whose automated maintenance program now
->      craps out at 16k packs, when it previously would have just worked
->      to fix the situation.
->
-> Saving 8% is nice, but the number of objects in linux.git grew over 12%
-> in the last year. So you've bought yourself 8 months before the problem
-> is back. Is it worth making these changes that we'll have to deal with
-> for many years to buy 8 months of memory savings?
+> What makes a Git repository unwieldy to work with and host? It turns
+> out that the respository's on-disk size in gigabytes is only part of
+> the story. From our experience at GitHub, repositories cause problems
+> because of poor internal layout at least as often as because of their
+> overall size. For example,
+> 
+> * blobs or trees that are too large
+> * large blobs that are modified frequently (e.g., database dumps)
+> * large trees that are modified frequently
+> * trees that expand to unreasonable size when checked out (e.g., "Git
+> bombs" [2])
+> * too many tiny Git objects
+> * too many references
+> * other oddities, such as giant octopus merges, super long reference
+> names or file paths, huge commit messages, etc.
+> 
+> `git-sizer` [1] is a new open-source tool that computes various
+> size-related statistics for a Git repository and points out those that
+> are likely to cause problems or inconvenience to its users.
 
-Well, with 40% it buys us a couple more months. The object growth
-affects rev-list --all too so the actual "good months" is probably not
-super far from 8 months.
+Thank you very much for sharing this tool.
 
-Is it worth saving? I don't know. I raised the readability point from
-the very first patch and if people believe it makes it much harder to
-read, then no it's not worth it.
+I packaged this as a MSYS2 package for use in Git for Windows' SDKs. You
+can install it via
 
-While pack-objects is simple from the functionality point of view, it
-has received lots of optimizations and to me is quite fragile.
-Readability does count in this code. Fortunately it still looks quite
-ok to me with this series applied (but then it's subjective)
+	pacman -Sy mingw-w64-x86_64-git-sizer
 
-About the 16k limit (and some other limits as well), I'm making these
-patches with the assumption that large scale deployment probably will
-go with custom builds anyway. Adjusting the limits back should be
-quite easy while we can still provide reasonable defaults for most
-people.
+(obviously, if you are in a 32-bit SDK you want to replace x86_64 by i686)
 
-> I think ultimately to work on low-memory machines we'll need a
-> fundamentally different approach that scales with the objects since the
-> last pack, and not with the complete history.
+Note: I am simply re-bundling the binaries you post to the GitHub
+releases; The main purpose is to make it easier for users to include this
+in their custom installers.
 
-Absolutely. Which is covered in a separate "gc --auto" series. Some
-memory reduction here may be still nice to have though. Even on beefy
-machine, memory can still be reused somewhere other than wasted in
-unused bits.
---=20
-Duy
+Second note: I briefly considered including this tool in Git for Windows,
+but it does increase the size of the installer by a full megabyte, and
+therefore I decided to keep it as SDK-only, optional package.
+
+Thanks!
+Dscho
