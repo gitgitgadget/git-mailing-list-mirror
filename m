@@ -2,153 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B15F41F42D
-	for <e@80x24.org>; Wed, 21 Mar 2018 11:04:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 395B51F42D
+	for <e@80x24.org>; Wed, 21 Mar 2018 11:13:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751691AbeCULEi (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Mar 2018 07:04:38 -0400
-Received: from mail-wm0-f47.google.com ([74.125.82.47]:39608 "EHLO
-        mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751587AbeCULEh (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Mar 2018 07:04:37 -0400
-Received: by mail-wm0-f47.google.com with SMTP id f125so8958125wme.4
-        for <git@vger.kernel.org>; Wed, 21 Mar 2018 04:04:36 -0700 (PDT)
+        id S1751542AbeCULNj (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Mar 2018 07:13:39 -0400
+Received: from mail-oi0-f45.google.com ([209.85.218.45]:43691 "EHLO
+        mail-oi0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751477AbeCULNi (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Mar 2018 07:13:38 -0400
+Received: by mail-oi0-f45.google.com with SMTP id y27-v6so3944725oix.10
+        for <git@vger.kernel.org>; Wed, 21 Mar 2018 04:13:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=E1z/L32NP5zLlLqkVueZO9gsvJJYh7mPww+dN9wYqdQ=;
-        b=OSGVYHXo9AlPwZC1AHtCY2diONsX+uc/V1wavhrrzKhb/99PNxnyU/rvbHXrNfcCaZ
-         R6x282gCf1IVxEdekFYAUg/vug1eV4AYCiCjqxiirQDjVird4tH+hKlrVVVtOPguEF24
-         C20a5HXBng0s5xxGydJTYkf6WctfXL0aY9D/qbPYGkZuzWaf8+70Omv4eT9UbXYF8Sc3
-         HmOp6auoJzY/eMXeZPIBKiP4WM0nmnTqSMckTbCPrlsEeCI856Y/7r1rGtXdMWU9bwFB
-         L424h+VfLysBXfbr9vS4VMVbT7dwHvCgr1ZyUhO4N2eKIXSKc3V8gLJIqASMuD5OqhlQ
-         6NpQ==
+        d=dakotahawkins.com; s=google;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=/AeiVLFynDa0ZqHbb3sKXMk+jdgNQJ1Rpvb0foKfN5Y=;
+        b=Uyo7QFDE8ZQrIQukkwDLVsZ4hCiD8lgfGS3NEz4WKb5n+vSei47PAibzUlJ+5CAn6n
+         bYWA76iW28Dizu9FcEyUkGyxUlR8eQVQ89WW2VcI2u2xIP2ohyCCfPbWnN8vzHjSq/uT
+         ZFgDNGj0Q6WhEFZ+PqBPMg6TjHcmb12PSuWJo=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=E1z/L32NP5zLlLqkVueZO9gsvJJYh7mPww+dN9wYqdQ=;
-        b=mwAuUnDgCWUyY8X6N2aH7Xz51EiWedYuldT3vpS3hL7SBHGi59gnx6lJ6BFnozla76
-         ejK5gPltCcRtcb09M+V+arBmmey9pOUdYj0EpML2+owpXZqCagJ38vfTC7DJH2VAWpOK
-         pvIIzTw85ftEocEn/aw6l4VOuAhj7c5DHW6kEdxdjd8ut3uvALMJy1O3otVu93K5EJM2
-         Jwy/fXnQxGHN1R0UpgBtNzfN82p2ZIwg9vNjNZ3LhO8PvdWAGB59YEQ3q0+1R4kWe+Lu
-         2tEx1X+o6rLU36dqiN7nA3UhtVPLT8kHrvUkHBpW5zoVOfXUopXEdJJXwGl7i4vskPcG
-         bmEQ==
-X-Gm-Message-State: AElRT7G6bY9Br8Io6jToWCSmGQTFXILfuDDgADMoe1ZQZXbIb+RzPFW3
-        z3Gy5CgLV2RAU5WBP3ZnFY659aIh
-X-Google-Smtp-Source: AG47ELtz6Bd0AnIToFIyIKjSppmTbw5edqVmVaVT8rTF1RQFlwXwEGtPR2oJeZcMqEdCBNFCBlhouA==
-X-Received: by 10.28.63.66 with SMTP id m63mr2479730wma.102.1521630275786;
-        Wed, 21 Mar 2018 04:04:35 -0700 (PDT)
-Received: from andromeda.localnet (wifi-eduroam-trans.univ-tlse3.fr. [195.220.58.237])
-        by smtp.gmail.com with ESMTPSA id l41sm8896783wrl.2.2018.03.21.04.04.34
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 21 Mar 2018 04:04:34 -0700 (PDT)
-From:   Alban Gruin <alban.gruin@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>
-Subject: Re: [RFC][GSoC] Project proposal: convert interactive rebase to C
-Date:   Wed, 21 Mar 2018 12:04:28 +0100
-Message-ID: <46112353.MVnaADNoVi@andromeda>
-In-Reply-To: <nycvar.QRO.7.76.6.1803201720090.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <2564070.6kGkNsz7Qa@andromeda> <nycvar.QRO.7.76.6.1803201720090.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=/AeiVLFynDa0ZqHbb3sKXMk+jdgNQJ1Rpvb0foKfN5Y=;
+        b=tOK+sMBfZp6GZAz1ApvrMoksQrSO345vlX5lNnaigawznqBZd3+tiMSxkITQ7tnaus
+         rtRzei51bqy3AxEBnwjAeuuBa9KNqiM4EhJX00oGSHXb7+BZZZvAI4mWEgu8s8I+7GrB
+         rdf5oV8JtwXZ3wE2OTEXO7zcDYQi/iyaAPs1f7J/KlwPwebzaWsOrrK4C+v2gMehE9qw
+         bqejmR95DdqpMGG0f9EGcEbtf+jQ/BKzxRdBUSNQEK/yv+Ebsw1rqR6mpm2cB7dentfp
+         mvtzS8Tsg0Vd9GMx8yi90GaFso2Fxpzq1VMY8wltXfR5XnYu7i8m7CAWZrhPI4EZXJZ5
+         y4sg==
+X-Gm-Message-State: AElRT7EfHZPX1V366tPUG9ybmGPJT8+Reckw6INSqjaaYYQZrn/Gf/5w
+        stk2CWi3l8wUg4pT8Z4oXdfPlbNWX1KIEDtalG1tHQ==
+X-Google-Smtp-Source: AG47ELtOCwtm/TTupPEPA5wKjXjfCK8X4FrdZGXchJgdY7/WxMPmI5GJoB28mR4doHOUbNmT1nOw2MnmQSNBqk8lsO8=
+X-Received: by 10.202.90.138 with SMTP id o132mr10674019oib.11.1521630817611;
+ Wed, 21 Mar 2018 04:13:37 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+Received: by 2002:a9d:4a69:0:0:0:0:0 with HTTP; Wed, 21 Mar 2018 04:13:37
+ -0700 (PDT)
+From:   Dakota Hawkins <dakota@dakotahawkins.com>
+Date:   Wed, 21 Mar 2018 07:13:37 -0400
+Message-ID: <CAHnyXxSqtB=bSbA83V6HC6-aPCxw60h1iKQaa6ChwsmcUUCd0w@mail.gmail.com>
+Subject: [PATCH] doc: clarify non-recursion for ignore paths like `foo/`
+To:     Jeff King <peff@peff.net>
+Cc:     Duy Nguyen <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+        Git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Johannes,
+>> At any rate, would it at least be a good idea to make the "trailing
+>> slash halts recursion, won't consider nested .gitignore files"
+>> explicit in the `.gitignore` doc? Unless I'm missing it, I don't think
+>> that behavior is called out (or at least not called out concisely/in
+>> one place). It looks like this is all there is:
+>
+> Yeah, it's definitely come up multiple times over the years. I don't
+> know what all is in gitignore(5), but if it's not mentioned it probably
+> should be.
+>
+>>     "If the pattern ends with a slash, it is removed for the purpose
+>> of the following description, but it would only find a match with a
+>> directory. In other words, foo/ will match a directory foo and paths
+>> underneath it, but will not match a regular file or a symbolic link
+>> foo (this is consistent with the way how pathspec works in general in
+>> Git)."
+>>
+>> Also, I'm not sure what the "following description" is in "it is
+>> removed for the purpose of the following description". Is that trying
+>> to imply "excluded from the rest of the doc"?
+>
+> I think it means "for the rest of the description of how the patterns
+> work". I.e., "foo/" matches as "foo" when the rest of the matching rules
+> are applied. I agree it's a bit awkward. Patches welcome. :)
 
-Le mardi 20 mars 2018 17:29:28 CET, vous avez =C3=A9crit :
-> > Weeks 1 & 2 =E2=80=94 May 14, 2018 =E2=80=93 May 28, 2018
-> > First, I would refactor --preserve-merges in its own shell script, as
-> > described in Dscho=E2=80=99s email.
->=20
-> Could you go into detail a bit here? Like, describe what parts of the
-> git-rebase--interactive.sh script would need to be duplicated, which ones
-> would be truly moved, etc
->=20
+I hope this is correct. I tried to follow the instructions. Please let
+me know if I need to fix something with how I'm sending this!
 
-It would lead to duplicate a good chunk of git_rebase__interactive(),=20
-apparently. The moved parts would be everything in `if test t =3D=20
-"$preserve_merges"; then =E2=80=A6; fi` statements. That is, about 50 lines=
- of shell=20
-code.
+-- >8 --
+Subject: [PATCH] doc: clarify non-recursion for ignore paths like `foo/`
 
-Judging by that, beginning by that is probably not the right thing to do.=20
-Also, somebody is already working on that[1].=20
+The behavior of .gitignore patterns ending with trailing slashes is
+unclear. The user may expect subsequent matching patterns to matter, while
+they do not. For example:
 
-> > Weeks 3 & 4 =E2=80=94 May 18, 2018 =E2=80=93 June 11, 2018
-> > Then, I would start to rewrite git-rebase--interactive, and get rid of
-> > git-
-> > rebase--helper.
->=20
-> I think this is a bit premature, as the rebase--helper would not only
-> serve the --interactive part, but in later conversions also --am and
-> --merge, and only in the very end, when git-rebase.sh gets converted,
-> would we be able to simply rename the rebase--helper to rebase.
->=20
+  foo/       # Ignores `foo` directories and everything inside of them
+  !foo/*.txt # Does nothing
 
-Yes, Christian Couder told me that it would not be a good methodology too.
+Explain this behavior (and its implications) more explicitly.
 
-> Also, I have a hunch that there is actually almost nothing left to rewrite
-> after my sequencer improvements that made it into Git v2.13.0, together
-> with the upcoming changes (which are on top of the --recreate-merges patch
-> series, hence I did not send them to the mailing list yet) in
-> https://github.com/dscho/git/commit/c261f17a4a3e
+Signed-off-by: Dakota Hawkins <daktoahawkins@gmail.com>
+---
+ Documentation/gitignore.txt | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
-One year ago, you said[2] that converting this script "will fill up 3 month=
-,=20
-very easily". Is this not accurate anymore?
+diff --git a/Documentation/gitignore.txt b/Documentation/gitignore.txt
+index ff5d7f9ed..e9c34c1d5 100644
+--- a/Documentation/gitignore.txt
++++ b/Documentation/gitignore.txt
+@@ -89,12 +89,17 @@ PATTERN FORMAT
+    Put a backslash ("`\`") in front of the first "`!`" for patterns
+    that begin with a literal "`!`", for example, "`\!important!.txt`".
 
->=20
-> So I would like to see more details here... ;-)
+- - If the pattern ends with a slash, it is removed for the
+-   purpose of the following description, but it would only find
+-   a match with a directory.  In other words, `foo/` will match a
+-   directory `foo` and paths underneath it, but will not match a
+-   regular file or a symbolic link `foo` (this is consistent
+-   with the way how pathspec works in general in Git).
++ - If the pattern ends with a slash it will match directories but prevent
++   further recursion into subdirectories. In other words, `foo/` will match a
++   directory `foo`, excluding files and paths underneath it, but will not match
++   a regular file or a symbolic link `foo` (this is consistent with the way
++   that pathspec works in general in Git). Consequently, `foo/` will prevent
++   consideration of subsequent matches, including exclusions (for example,
++   `!foo/*.noignore`). In order to match `foo/` directories while allowing for
++   possible later exclusions, consider using a trailing wildcard (`foo/*`).
++   Note that matching directories with a trailing wildcard incurs some
++   additional performance cost, since it requires recursion into
++   subdirectories.
 
-Yep, I=E2=80=99m working on that.=20
-
-> > Weeks 5 to 9 =E2=80=94 June 11, 2018 =E2=80=93 July 15, 2018
-> > During this period, I would continue to rewrite git-rebase--interactive.
->=20
-> It would be good if the proposal said what parts of the conversion are
-> tricky, to merit spending a month on them.
->=20
-> > Weeks 10 & 11 =E2=80=94 July 16, 2018 =E2=80=93 July 29, 2018
-> > In the second half of July, I would look for bugs in the new code, test
-> > it,
-> > and improve its coverage.
->=20
-> As I mentioned in a related mail, the test suite coverage would be most
-> sensibly extended *before* starting to rewrite code in C, as it helps
-> catching bugs early and avoids having to merge buggy code that needs to be
-> fixed immediately.
-
-Makes sense.
-
->=20
-> > Weeks 12 =E2=80=94 July 30, 2018 =E2=80=93 August 5, 2018
-> > In the last week, I would polish the code where needed, in order to
-> > improve for performance or to make the code more readable.
->=20
-> Thank you for sharing this draft with us!
-> Johannes
-
-I=E2=80=99ll send a new draft as soon as possible (hopefully this afternoon=
-).
-
-Thank you for your enthousiasm :)
-Alban
-
-[1] https://public-inbox.org/git/20180320204507.12623-1-wink@saville.com/
-[2] https://public-inbox.org/git/alpine.DEB.
-2.20.1703231827060.3767@virtualbox/
-
-
+  - If the pattern does not contain a slash '/', Git treats it as
+    a shell glob pattern and checks for a match against the
+-- 
+2.16.2.windows.1
