@@ -7,74 +7,85 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A73671F404
-	for <e@80x24.org>; Wed, 21 Mar 2018 18:58:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 23C521F404
+	for <e@80x24.org>; Wed, 21 Mar 2018 19:11:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753278AbeCUS65 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Mar 2018 14:58:57 -0400
-Received: from mail-qk0-f182.google.com ([209.85.220.182]:41712 "EHLO
-        mail-qk0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752909AbeCUS6z (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Mar 2018 14:58:55 -0400
-Received: by mail-qk0-f182.google.com with SMTP id s78so6587210qkl.8
-        for <git@vger.kernel.org>; Wed, 21 Mar 2018 11:58:55 -0700 (PDT)
+        id S1752835AbeCUTLk (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Mar 2018 15:11:40 -0400
+Received: from mail-wm0-f46.google.com ([74.125.82.46]:56190 "EHLO
+        mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752732AbeCUTLj (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Mar 2018 15:11:39 -0400
+Received: by mail-wm0-f46.google.com with SMTP id t7so11717956wmh.5
+        for <git@vger.kernel.org>; Wed, 21 Mar 2018 12:11:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=kVT5hFvp5MaHYswePCBfJFvNipfT5IJL77DQPspOJkg=;
-        b=dNsKzoqt3DxvSJuAAbk6euuqFOAdEy4mJbNoTg0oq9CrTsKU5gEWAQjUqnXVAIkEdB
-         vnzt3Qy5OXsEjQ1jrG8UfTIcb7HvkbQb89pAlEgi+WJhv/GCiYZQHEY64CS3NRr2rZ5J
-         WrCNi9gWTNjGKy65/on4p7q6HUoCfZaSngPvlX06p/uIy4EZJKn3YCOcJmVQhkG3CMtQ
-         AmSm8+wjmz6ePb/X3dW3W9b4W/IvP/A5ezYzeznnT+qtRAB5B4u2pT5eGqksUtdPQf4X
-         zVYn0gulnPUtP89LJWV23xijlLOzzJfA9HPRewn/snDCaQh9U2hEuNsn/+AEX3uAWUBh
-         6v9Q==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=fB171DyYQLW/J1atbphkZoWTmn1MulhanhpW9ZVuW6E=;
+        b=LGlb4sqK1IL5otPgif+g5V50MCSLZQavwGv/RZ9tA2A9z03VWvfnsTbr8bfP/iZcFO
+         /fCzbmCuKhD1a7H3fu3eHnQYn+7oz6Z26fg/1Y1F47hknoco6Zo3KjLc23u7yZbke7jR
+         Q90tX94yPAl2nKBYwqpvxxQjSBUEC7MyfQrCajoXfDgUpQar0uKzQgZTkjooQXRyHFzA
+         gbP3Q414nEEIUYoIasszSXtW2BX6FX9Z7bXwRlVvADtSZEaN4e+47/ILnSuCW7oksoMQ
+         F/3K8ersAclVZX3VOVuMFGWt+q4NCPNhByQXgrH3Qnf/f0Mgwvel8PBVfjS8UrEcZ9oS
+         cG3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=kVT5hFvp5MaHYswePCBfJFvNipfT5IJL77DQPspOJkg=;
-        b=m2xCgEbE04bFoT2zG6aF5tMckpY7CvERA4FNAT01nh0XuhKriR1XVBSXYA4rDiyKLm
-         UgZCH5ChUOmmJOCkU8cVb17ofM6r04FR26a0kTAxBy1o8mIbaF06PHudFQfwpaLgzSfA
-         N8tuKvfmAs9/LbPAN72n+ksKj3Dqwm2B1edJijp9b5IciDpHC0NxNz48uGVw0ezc9CeR
-         qyqC1numTdNaazYBE8yp4q/3FKNtc8TdPyrBtJU1GK3plxnkSILrV6wi9Yj0YgFmSVHv
-         afRioNvKuK6Bi8GlIbcD8UZHv2Groue3HzK/+ouP1lCA0x5JR39twoAQnXOYDRxycC6i
-         eNdg==
-X-Gm-Message-State: AElRT7FmkLdVNbJ0DzMlSqSRxOm5BCIoX7viotTVzt2c26rij6PcMKgi
-        RxB5oaQLaro2xLDoysBY05r4z7OoDK1Pv06bNFVO9g==
-X-Google-Smtp-Source: AG47ELvsWlcl6KFAYAfUO2R1sGbfN6oIoseeZ4ARXZ7UYQtuFai+0W0vrPeFtR147CT3qyh8bGHnOFmQ//hWYERm2B0=
-X-Received: by 10.55.74.2 with SMTP id x2mr10937802qka.314.1521658734441; Wed,
- 21 Mar 2018 11:58:54 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=fB171DyYQLW/J1atbphkZoWTmn1MulhanhpW9ZVuW6E=;
+        b=XRINkr6NSsRsv84whxHplYH1f+oHSzx4LeZXB53pNYvyIu3WTO4xQRArENkYVZqJM2
+         XASqudZnWibWq7kUpbChwg9OwG/yZh3Y9kWcLaMyyHRGgV2c7Xog3odzhXs9GZz/dCrp
+         QrJKq3MRtuTxWpvVDhn9hnRKpYzBhyKrnuRjw8SzrA44fOM2ZVa5JdFebZupvXiw/y23
+         Twb6Z5TSCiuJy+kiKFBu2Kq40ypRYP8d8c9r/8A0pxrGSK47gJCCPbDUTCnEUw8tKYmB
+         ZIsxRlGRB/vPenEBx8bVkNqLLrM35bQjC9NQDkZw21E+3rRD/xaMupLBroRvpKAypjRF
+         Q76A==
+X-Gm-Message-State: AElRT7EgI6jeR227uHW6oaKHhZl4GjsngvSlVbxbtmVILw5CgEY04+lO
+        NTF0R4A/hW6T7qQyBZgKft0=
+X-Google-Smtp-Source: AG47ELtybaok6D7NF9YSOZ7TDPpWR9oAtAH9zh7GXpD8aFDwxPyHfW7DIckVR5eyDzZzIHGjTwkfyw==
+X-Received: by 10.28.145.76 with SMTP id t73mr3818111wmd.77.1521659498408;
+        Wed, 21 Mar 2018 12:11:38 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id n7sm5044550wrg.20.2018.03.21.12.11.36
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 21 Mar 2018 12:11:37 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Jeff King <peff@peff.net>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Eric Wong <e@80x24.org>, Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH v6 00/11] nd/pack-objects-pack-struct updates
+References: <20180317141033.21545-1-pclouds@gmail.com>
+        <20180318142526.9378-1-pclouds@gmail.com>
+        <20180321082441.GB25537@sigill.intra.peff.net>
+        <CACsJy8DkF3TpTGKp5MdS1ApC8Yj6FOL5uAg5U__PjBAQY1vdNw@mail.gmail.com>
+        <20180321164629.GA27584@duynguyen>
+Date:   Wed, 21 Mar 2018 12:11:36 -0700
+In-Reply-To: <20180321164629.GA27584@duynguyen> (Duy Nguyen's message of "Wed,
+        21 Mar 2018 17:46:29 +0100")
+Message-ID: <xmqqd0zxp7kn.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.12.190.196 with HTTP; Wed, 21 Mar 2018 11:58:54 -0700 (PDT)
-In-Reply-To: <xmqqo9jhpadh.fsf@gitster-ct.c.googlers.com>
-References: <CAPig+cTKkp6kpFcJfVV8W1ejCrCWQH33mHtgFUn+MpMgw5i1pA@mail.gmail.com>
- <20180321152356.10754-1-predatoramigo@gmail.com> <xmqqo9jhpadh.fsf@gitster-ct.c.googlers.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 21 Mar 2018 14:58:54 -0400
-X-Google-Sender-Auth: fd2nkc71wsCYqtvIkK5U21NKiqs
-Message-ID: <CAPig+cRnO6e5B=mYAfkt7bdgit2uOJk1a+CAahQ2+uRRbPAObQ@mail.gmail.com>
-Subject: Re: [GSoC][PATCH v3] test: avoid pipes in git related commands for test
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Pratik Karki <predatoramigo@gmail.com>,
-        Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 21, 2018 at 2:11 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Pratik Karki <predatoramigo@gmail.com> writes:
->>  Avoid using pipes downstream of Git commands since the exit
->>  codes of commands upstream of pipes get swallowed, thus potentially hiding
->>  failure of those commands. Instead, capture Git command output to a file and
->>  apply the downstream command(s) to that file.
->
-> Please do not indent the body of the log message by one space.
+Duy Nguyen <pclouds@gmail.com> writes:
 
-One other issue I forgot to mention is that the commit message in v3
-started getting too wide again[1]; it was fine in v2. Pratik, try to
-keep the commit message wrapped to about 70-72 characters or so.
+> And we could even do something like this to make custom builds
+> easier. Some more gluing is needed so you can set this from config.mak
+> but you get the idea. This removes all limits set by this
+> series.
 
-[1]: https://public-inbox.org/git/CAPig+cRPzyw525ODC4=-E7w=zbpbhVN2eqxSYDSLij5wfW8S_A@mail.gmail.com/
+Yes, we _could_, but it would mean we would have many variants of
+the codepath that is pretty crucial to the integrity of the data we
+keep in the repository, all of which must pretty much be bug-free.
+
+> Readability in pack-objects.c and object_entry struct declaration
+> is still a concern though.
+
+Yup, a change like this does not change the readability; personally,
+I do not think the original is _too_ bad, though.
+
