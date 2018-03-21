@@ -2,224 +2,64 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AC3B11F404
-	for <e@80x24.org>; Wed, 21 Mar 2018 18:29:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3235C1F404
+	for <e@80x24.org>; Wed, 21 Mar 2018 18:33:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752689AbeCUS24 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Mar 2018 14:28:56 -0400
-Received: from a7-17.smtp-out.eu-west-1.amazonses.com ([54.240.7.17]:45540
-        "EHLO a7-17.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752431AbeCUS2u (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 21 Mar 2018 14:28:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=uku4taia5b5tsbglxyj6zym32efj7xqv; d=amazonses.com; t=1521656929;
-        h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-        bh=57dp3lyGESa3XENzWUkyamLVkW+hjSge/LqjjH5I6Hs=;
-        b=iLcmZw8WuZK/H0DprxCGFLwty1YOdO2VjUBbG+dFaAT0wTVjhLNVfNSfbYnGMEji
-        bA0/yoMtXY2VV8WePfdhzLMSOCHm7tw69J+/VmTr4TEsjNLQVLpvzGaRVfLGCtQNih3
-        TDkp2Q/CP9G+MjR9sEBY6k7UM7QSS6WPFbU2uFno=
-From:   Olga Telezhnaya <olyatelezhnaya@gmail.com>
-To:     git@vger.kernel.org
-Message-ID: <0102016249d21c7f-c26a3b49-dbf3-4435-b1ef-e61917f0d08e-000000@eu-west-1.amazonses.com>
-In-Reply-To: <0102016249d21c40-0edf6647-4d26-46fc-8cfd-5a446b93a5e2-000000@eu-west-1.amazonses.com>
-References: <0102016249d21c40-0edf6647-4d26-46fc-8cfd-5a446b93a5e2-000000@eu-west-1.amazonses.com>
-Subject: [PATCH v5 3/6] ref-filter: add return value && strbuf to handlers
+        id S1752431AbeCUSdv (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Mar 2018 14:33:51 -0400
+Received: from mail-wm0-f41.google.com ([74.125.82.41]:51570 "EHLO
+        mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752415AbeCUSdu (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Mar 2018 14:33:50 -0400
+Received: by mail-wm0-f41.google.com with SMTP id v21so317329wmc.1
+        for <git@vger.kernel.org>; Wed, 21 Mar 2018 11:33:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=HaKh9bjidrTllE4Wq2BaNvHOd9zAWtT/DIzX0w/3SCs=;
+        b=IuOyssqtX89nvfgPWMvqoQ81bfD9Q5X9vB9ofe3S6hcKqEHptU3MfNLZATw5fOSEA6
+         TM9HUMpU4plEdrlowd+y1UlkMh6JJW7OOO70r3+3KwGW1YgJeewtZ97jVM32hkyJBQkJ
+         zVUcFYCHmWEqF0O4hqQ9jdqiWDMq8ghRtlpZiGoooLPp3z4sbfpzdE2ZWZ5U8lmsNlm/
+         x7QIXsIrXQPND+TBbIyJvjYkgjUSXdCCAqzitfr2tvoKV5NQ3Blw20YhoEYCovJZPncT
+         6/g8OR9xODJFdAAJNvbZDKsgIg7nD5QH1ZY1u2L7Jt8ZmKf4ZxF9W1NRjzJPB2dbi4wR
+         VY0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=HaKh9bjidrTllE4Wq2BaNvHOd9zAWtT/DIzX0w/3SCs=;
+        b=sQkj2EB4DM9o01Y8fO+BRRKli8taxljbWEbf6GcWFcdLq02YBSWsQcb6amx9IXEl5a
+         30rY2dCnsYHaUQnCuthk7oIO66fMh2xX4fhneq4CcuXOdQody64l7yElFoU3xQU24643
+         YJnaMY1/CwnKgeynbHhQ7yqHDe+EjL4nGtWklqsjJ/lFpEiz020nzNeiNtnXPwqGUrB0
+         aaUWssQSDLPKpLmedYK45vP+13YhBok7zzioCM6i7xoHBLscwGGpnp2tKWgE28qsB9hl
+         FIpuEz7kKeOUWcTq4bGgEj91X5CGmXjpG+f62/HhV0EzLURWWMSIiwl4wOWpazkRjeCA
+         jyrQ==
+X-Gm-Message-State: AElRT7GviPqItlquWvaR1Kz9paRcbdIcFqLo/MJ462oXMdOrWUekvvkj
+        qP1TfAeqj86Qr2cOHy4LPbBaIO0Sqhl73v7bPHc=
+X-Google-Smtp-Source: AG47ELsCLu/5MyqdKjKPo/jX4tj052dOXY0qhKhPFGe71Dd5l9l6F/IUBnFm5EcvqoC0BFhQVWXqKgViz4ixsGUCdY4=
+X-Received: by 10.28.85.193 with SMTP id j184mr3386420wmb.109.1521657228978;
+ Wed, 21 Mar 2018 11:33:48 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Date:   Wed, 21 Mar 2018 18:28:49 +0000
-X-SES-Outgoing: 2018.03.21-54.240.7.17
-Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
+Received: by 10.223.157.205 with HTTP; Wed, 21 Mar 2018 11:33:48 -0700 (PDT)
+From:   =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
+        <olyatelezhnaya@gmail.com>
+Date:   Wed, 21 Mar 2018 21:33:48 +0300
+Message-ID: <CAL21Bm=H-t=nkbEXMQdcEXj8h=6o9s=LJ7gC88sA1PPB4v0A=Q@mail.gmail.com>
+Subject: [PATCH v5 0/6] ref-filter: remove die() calls from formatting logic
+To:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Continue removing die() calls from ref-filter formatting logic,
-so that it could be used by other commands.
+Add strbuf_error() as a first commit and use it in all other commits.
+Good line reduction, -67 lines compare to previous version.
+Eric, thanks a lot, new code looks much better!
 
-Change the signature of handlers by adding return value
-and strbuf parameter for errors.
-Return value equals 0 upon success and -1 upon failure.
-Upon failure, error message is appended to the strbuf.
-
-Signed-off-by: Olga Telezhnaia <olyatelezhnaya@gmail.com>
----
- ref-filter.c | 47 +++++++++++++++++++++++++++++++----------------
- 1 file changed, 31 insertions(+), 16 deletions(-)
-
-diff --git a/ref-filter.c b/ref-filter.c
-index 2c3fb2f003708..f79c8c477f1dc 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -387,7 +387,8 @@ struct ref_formatting_state {
- 
- struct atom_value {
- 	const char *s;
--	void (*handler)(struct atom_value *atomv, struct ref_formatting_state *state);
-+	int (*handler)(struct atom_value *atomv, struct ref_formatting_state *state,
-+		       struct strbuf *err);
- 	uintmax_t value; /* used for sorting when not FIELD_STR */
- 	struct used_atom *atom;
- };
-@@ -481,7 +482,8 @@ static void quote_formatting(struct strbuf *s, const char *str, int quote_style)
- 	}
- }
- 
--static void append_atom(struct atom_value *v, struct ref_formatting_state *state)
-+static int append_atom(struct atom_value *v, struct ref_formatting_state *state,
-+		       struct strbuf *unused_err)
- {
- 	/*
- 	 * Quote formatting is only done when the stack has a single
-@@ -493,6 +495,7 @@ static void append_atom(struct atom_value *v, struct ref_formatting_state *state
- 		quote_formatting(&state->stack->output, v->s, state->quote_style);
- 	else
- 		strbuf_addstr(&state->stack->output, v->s);
-+	return 0;
- }
- 
- static void push_stack_element(struct ref_formatting_stack **stack)
-@@ -527,7 +530,8 @@ static void end_align_handler(struct ref_formatting_stack **stack)
- 	strbuf_release(&s);
- }
- 
--static void align_atom_handler(struct atom_value *atomv, struct ref_formatting_state *state)
-+static int align_atom_handler(struct atom_value *atomv, struct ref_formatting_state *state,
-+			      struct strbuf *unused_err)
- {
- 	struct ref_formatting_stack *new_stack;
- 
-@@ -535,6 +539,7 @@ static void align_atom_handler(struct atom_value *atomv, struct ref_formatting_s
- 	new_stack = state->stack;
- 	new_stack->at_end = end_align_handler;
- 	new_stack->at_end_data = &atomv->atom->u.align;
-+	return 0;
- }
- 
- static void if_then_else_handler(struct ref_formatting_stack **stack)
-@@ -572,7 +577,8 @@ static void if_then_else_handler(struct ref_formatting_stack **stack)
- 	free(if_then_else);
- }
- 
--static void if_atom_handler(struct atom_value *atomv, struct ref_formatting_state *state)
-+static int if_atom_handler(struct atom_value *atomv, struct ref_formatting_state *state,
-+			   struct strbuf *unused_err)
- {
- 	struct ref_formatting_stack *new_stack;
- 	struct if_then_else *if_then_else = xcalloc(sizeof(struct if_then_else), 1);
-@@ -584,6 +590,7 @@ static void if_atom_handler(struct atom_value *atomv, struct ref_formatting_stat
- 	new_stack = state->stack;
- 	new_stack->at_end = if_then_else_handler;
- 	new_stack->at_end_data = if_then_else;
-+	return 0;
- }
- 
- static int is_empty(const char *s)
-@@ -596,7 +603,8 @@ static int is_empty(const char *s)
- 	return 1;
- }
- 
--static void then_atom_handler(struct atom_value *atomv, struct ref_formatting_state *state)
-+static int then_atom_handler(struct atom_value *atomv, struct ref_formatting_state *state,
-+			     struct strbuf *err)
- {
- 	struct ref_formatting_stack *cur = state->stack;
- 	struct if_then_else *if_then_else = NULL;
-@@ -604,11 +612,11 @@ static void then_atom_handler(struct atom_value *atomv, struct ref_formatting_st
- 	if (cur->at_end == if_then_else_handler)
- 		if_then_else = (struct if_then_else *)cur->at_end_data;
- 	if (!if_then_else)
--		die(_("format: %%(then) atom used without an %%(if) atom"));
-+		return strbuf_error(err, -1, _("format: %%(then) atom used without an %%(if) atom"));
- 	if (if_then_else->then_atom_seen)
--		die(_("format: %%(then) atom used more than once"));
-+		return strbuf_error(err, -1, _("format: %%(then) atom used more than once"));
- 	if (if_then_else->else_atom_seen)
--		die(_("format: %%(then) atom used after %%(else)"));
-+		return strbuf_error(err, -1, _("format: %%(then) atom used after %%(else)"));
- 	if_then_else->then_atom_seen = 1;
- 	/*
- 	 * If the 'equals' or 'notequals' attribute is used then
-@@ -624,9 +632,11 @@ static void then_atom_handler(struct atom_value *atomv, struct ref_formatting_st
- 	} else if (cur->output.len && !is_empty(cur->output.buf))
- 		if_then_else->condition_satisfied = 1;
- 	strbuf_reset(&cur->output);
-+	return 0;
- }
- 
--static void else_atom_handler(struct atom_value *atomv, struct ref_formatting_state *state)
-+static int else_atom_handler(struct atom_value *atomv, struct ref_formatting_state *state,
-+			     struct strbuf *err)
- {
- 	struct ref_formatting_stack *prev = state->stack;
- 	struct if_then_else *if_then_else = NULL;
-@@ -634,24 +644,26 @@ static void else_atom_handler(struct atom_value *atomv, struct ref_formatting_st
- 	if (prev->at_end == if_then_else_handler)
- 		if_then_else = (struct if_then_else *)prev->at_end_data;
- 	if (!if_then_else)
--		die(_("format: %%(else) atom used without an %%(if) atom"));
-+		return strbuf_error(err, -1, _("format: %%(else) atom used without an %%(if) atom"));
- 	if (!if_then_else->then_atom_seen)
--		die(_("format: %%(else) atom used without a %%(then) atom"));
-+		return strbuf_error(err, -1, _("format: %%(else) atom used without a %%(then) atom"));
- 	if (if_then_else->else_atom_seen)
--		die(_("format: %%(else) atom used more than once"));
-+		return strbuf_error(err, -1, _("format: %%(else) atom used more than once"));
- 	if_then_else->else_atom_seen = 1;
- 	push_stack_element(&state->stack);
- 	state->stack->at_end_data = prev->at_end_data;
- 	state->stack->at_end = prev->at_end;
-+	return 0;
- }
- 
--static void end_atom_handler(struct atom_value *atomv, struct ref_formatting_state *state)
-+static int end_atom_handler(struct atom_value *atomv, struct ref_formatting_state *state,
-+			    struct strbuf *err)
- {
- 	struct ref_formatting_stack *current = state->stack;
- 	struct strbuf s = STRBUF_INIT;
- 
- 	if (!current->at_end)
--		die(_("format: %%(end) atom used without corresponding atom"));
-+		return strbuf_error(err, -1, _("format: %%(end) atom used without corresponding atom"));
- 	current->at_end(&state->stack);
- 
- 	/*  Stack may have been popped within at_end(), hence reset the current pointer */
-@@ -668,6 +680,7 @@ static void end_atom_handler(struct atom_value *atomv, struct ref_formatting_sta
- 	}
- 	strbuf_release(&s);
- 	pop_stack_element(&state->stack);
-+	return 0;
- }
- 
- /*
-@@ -2138,7 +2151,8 @@ int format_ref_array_item(struct ref_array_item *info,
- 		get_ref_atom_value(info,
- 				   parse_ref_filter_atom(format, sp + 2, ep),
- 				   &atomv);
--		atomv->handler(atomv, &state);
-+		if (atomv->handler(atomv, &state, error_buf))
-+			return -1;
- 	}
- 	if (*cp) {
- 		sp = cp + strlen(cp);
-@@ -2147,7 +2161,8 @@ int format_ref_array_item(struct ref_array_item *info,
- 	if (format->need_color_reset_at_eol) {
- 		struct atom_value resetv;
- 		resetv.s = GIT_COLOR_RESET;
--		append_atom(&resetv, &state);
-+		if (append_atom(&resetv, &state, error_buf))
-+			return -1;
- 	}
- 	if (state.stack->prev)
- 		return strbuf_error(error_buf, -1, _("format: %%(end) atom missing"));
-
---
-https://github.com/git/git/pull/466
+Thank all of you,
+Olga
