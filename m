@@ -2,92 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0C9BD1F404
-	for <e@80x24.org>; Wed, 21 Mar 2018 12:46:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CBE561F404
+	for <e@80x24.org>; Wed, 21 Mar 2018 13:01:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751673AbeCUMqO (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Mar 2018 08:46:14 -0400
-Received: from mail-ot0-f176.google.com ([74.125.82.176]:39080 "EHLO
-        mail-ot0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751600AbeCUMqN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Mar 2018 08:46:13 -0400
-Received: by mail-ot0-f176.google.com with SMTP id h8-v6so5415915oti.6
-        for <git@vger.kernel.org>; Wed, 21 Mar 2018 05:46:13 -0700 (PDT)
+        id S1751628AbeCUNBK (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Mar 2018 09:01:10 -0400
+Received: from mail-io0-f196.google.com ([209.85.223.196]:44437 "EHLO
+        mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751464AbeCUNBJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Mar 2018 09:01:09 -0400
+Received: by mail-io0-f196.google.com with SMTP id h23so6528893iob.11
+        for <git@vger.kernel.org>; Wed, 21 Mar 2018 06:01:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=dakotahawkins.com; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=FCmQZLMsRrWAUmli4QlfsjodRzOYtWeIylfgUZeryxY=;
-        b=I22qQ4itZK9s86X5oAVRzkvDGfAN0Ja79k4f8AqL6Z7bogtn7xQRCFXGTiPDU9nm9r
-         4nvdZu/M96gavCRqdrhclOA9uO3IKZm4VIx5e1ZPBw85BiCMQWOkT8ZalS+YJuFJ/puJ
-         zbawTfttFYRp3gc5ZrFG9Q+gGqHDVDGNg9oTI=
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=f8B5joQoAOZxhw9hRl30yos1x9Pbz7EHDw7Z3Zj3iiU=;
+        b=kDm1bE04Emor8zrAuh4EPW3/hh5BBHO79j+MtkPPr2OMDzxF2G1P8lyBSPAFxNxfBh
+         80azUfIlkUfKWXe6l745UxPoffM2WpM357pTALX9WT5hHh/OzsE6seFspRq3ngaUwllb
+         ax54ptcwZsWQw0wCErPKEqYEecfyzicMuYgX7EcO9P9EyDPSY8SB2DamKwIjIafpwwMC
+         3q7Q0MLD4Row/xknn31FS0tz8xsi5r09CLECjhp8OKRUuYiB15jTPut17bSTnxYZ9HQ+
+         nQ6aRRr/StHNuDFo5+dl8eSObOqEMYfAs91M0mzJFSKWo8XGezn0zPt8BgStiHed4XqZ
+         tzzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=FCmQZLMsRrWAUmli4QlfsjodRzOYtWeIylfgUZeryxY=;
-        b=PU3IE0Tyyjks+0/reaONd12K/T3syedrZO5cgI/0QKV7KvNexFRvyf5dCKkJK8APpn
-         W2VoVeBwhTrBUOGqGsIJDoOb+hT2zmbSND8V5OjnhONlx/FgXq9CPNvROvxzGCBAU0Vt
-         b99vB97wRQS/BkzHWzOlwWRfx4yKQxutR6qhAwtaS4L2N33z7/1fyt8P15DwwHTUtDDw
-         wr2qOBDT7b6JbGpS4+gVSUkQWLEIOAHuPiFTgP5qNLj+sj0q5yl9hKeL15MbQRTOE7Bc
-         jbGVkQqyYrEHjalhnjh1tvyPePQd7Ge/rx/17si6eK6wVMe+a51oXb9oFtjuGZffzado
-         b1sQ==
-X-Gm-Message-State: AElRT7G+q1MQkhr+3pSfz1ZSl1oSPdFZxv82AG4Wa3N2fAmfNC0Q9/zc
-        KawtPQ8LeFaj+lgFviwYhOPUXbWsJ1wSk2joSz7rlg==
-X-Google-Smtp-Source: AIpwx49P4sHg1c5Gt7xJQ0ZTv2vWfnzW0EoJjBNwZM8mVbdedOg0vEEnerzoke5+ehn6tDotpd5QBZqQ5DBF6nXv26U=
-X-Received: by 2002:a9d:4792:: with SMTP id b18-v6mr4053894otf.118.1521636373273;
- Wed, 21 Mar 2018 05:46:13 -0700 (PDT)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=f8B5joQoAOZxhw9hRl30yos1x9Pbz7EHDw7Z3Zj3iiU=;
+        b=dxzqzneKxkIYPFwMOPiGTalhF3yG53SOgYQtHmrsmtzcAGrv+THjvag75sYzJfXd7g
+         Xv4QTLWVGIovWjDR93zBvek7Yt1aDcdExgAyYk0UKboc003YTaaBbwEKlTm0Wu8kwaoE
+         4dwgCfaTmldW5GyOjopr8MS2J0ugFEfFs+V5al9yDO0HeXl0FisW4yCwJLxJ1b9U+e7M
+         DOC2taQP7E383h7qQ41KnR4Yv2bXjj15SjpFpyZwdWuXPgY0JIYsMwaKmX8n75yhDc1/
+         Xybah6Hu70fXvbSiVZkTdvJdtukFQ97cvOfWoCEycYHM9vx71/vwEudNS1wlAW/o33Hm
+         XLnQ==
+X-Gm-Message-State: AElRT7Goz0Xs4/oYKNQh9OagBD7XvcIAVaFDwTvcHfJ4PP9UDTFOKWSu
+        urKog7q6/NJQV+mNYkeLB8On24bgV2ho4LkQsSV4WsV9
+X-Google-Smtp-Source: AG47ELtrn+6bieBeu5Yj7FziX+TVAPdodNuJMo+pmvZCnuAhULjQgVv1Sm491xZxbFpCaFIiu9H+r2vignOcMKmYLQc=
+X-Received: by 10.107.144.197 with SMTP id s188mr21820669iod.147.1521637266871;
+ Wed, 21 Mar 2018 06:01:06 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:a9d:4a69:0:0:0:0:0 with HTTP; Wed, 21 Mar 2018 05:46:12
- -0700 (PDT)
-In-Reply-To: <87woy5y5y8.fsf@evledraar.gmail.com>
-References: <CAHnyXxSqtB=bSbA83V6HC6-aPCxw60h1iKQaa6ChwsmcUUCd0w@mail.gmail.com>
- <87muz1brgt.fsf@evledraar.gmail.com> <CAHnyXxQRfzAT75P7dxvdEEN_FRYCc7j97VEfL8tTUgVdeK-O+g@mail.gmail.com>
- <87woy5y5y8.fsf@evledraar.gmail.com>
-From:   Dakota Hawkins <dakota@dakotahawkins.com>
-Date:   Wed, 21 Mar 2018 08:46:12 -0400
-Message-ID: <CAHnyXxRYjCey8N82TfbMbv1+tXNDN4df_UWZ7znaYUj4wcS5HA@mail.gmail.com>
-Subject: Re: [PATCH] doc: clarify non-recursion for ignore paths like `foo/`
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>, Git <git@vger.kernel.org>
+Received: by 10.79.146.25 with HTTP; Wed, 21 Mar 2018 06:01:06 -0700 (PDT)
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Wed, 21 Mar 2018 14:01:06 +0100
+Message-ID: <CAP8UFD23Xku__TDkT10SRFF7oW8fozWo=WwtZ4aMdjS7WDBwRQ@mail.gmail.com>
+Subject: [ANNOUNCE] Git Rev News edition 37
+To:     git <git@vger.kernel.org>
+Cc:     lwn@lwn.net, Junio C Hamano <gitster@pobox.com>,
+        Jakub Narebski <jnareb@gmail.com>,
+        Markus Jansen <mja@jansen-preisler.de>,
+        Gabriel Alcaras <gabriel.alcaras@telecom-paristech.fr>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Hilco Wijbenga <hilco.wijbenga@gmail.com>,
+        Phillip Wood <phillip.wood@talktalk.net>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        William Chia <wchia@gitlab.com>,
+        Alex Vandiver <alexmv@dropbox.com>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        Brett Smith <brett@sfconservancy.org>,
+        Patrick Steinhardt <ps@pks.im>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> I think it makes more sense to document it where it's documented now,
-> i.e. under how "!" works in general, since this is an edge case with
-> negative matching.
+Hi everyone,
 
-My reasoning is/was that while yes, that's true, I think it's likely
-that the positive matches would be added before (in terms of git
-history) the exclusions. In other words it may not occur to the user
-writing an early version of `.gitignore` to think about exclusions if
-they don't need to exclude anything yet -- the eventual symptoms of
-this problem may be "far away" from the cause, making it harder to
-diagnose (I'm living proof of that!)
+The 37th edition of Git Rev News is now published:
 
-> I think it can certainly be made clearer, but maybe with a practical
-> example (per above) where we also show the dir structure that
-> would/wouldn't be matched.
->
-> I just chimed in on this one because your patch says the docs are
-> "unclear" then "Explain this behavior (and its implications) more
-> explicitly" without a reference to the existing adjacent docs. I think
-> whatever we do we should be unifying these docs if they're amended, not
-> stating this twice.
+  https://git.github.io/rev_news/2018/03/21/edition-37/
 
-I think my inability to see it despite knowing exactly what I was
-looking for (this time) makes it "unclear", at least to dummies me, so
-I feel like that statement is at least somewhat defensible :)
+Thanks a lot to all the contributors!
 
-If the explanation were unified, would the idiomatic way to do that be
-to add some section way down the document with a couple of `(see SOME
-DETAILS ABOUT THIS below)` and some examples in the examples section?
+Enjoy,
+Christian, Jakub, Markus and Gabriel.
