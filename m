@@ -7,127 +7,731 @@ X-Spam-Status: No, score=-1.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2EBCF1F404
-	for <e@80x24.org>; Wed, 21 Mar 2018 22:10:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 497991F404
+	for <e@80x24.org>; Wed, 21 Mar 2018 22:18:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753992AbeCUWKy (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Mar 2018 18:10:54 -0400
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:38856 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753744AbeCUWKx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Mar 2018 18:10:53 -0400
-Received: by mail-pg0-f65.google.com with SMTP id a15so2486428pgn.5
-        for <git@vger.kernel.org>; Wed, 21 Mar 2018 15:10:53 -0700 (PDT)
+        id S1753948AbeCUWSr (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Mar 2018 18:18:47 -0400
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:33376 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753744AbeCUWSp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Mar 2018 18:18:45 -0400
+Received: by mail-pg0-f66.google.com with SMTP id g12so2493805pgs.0
+        for <git@vger.kernel.org>; Wed, 21 Mar 2018 15:18:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:content-transfer-encoding:in-reply-to
          :user-agent;
-        bh=2RE3cWMn21ShOR8ilSQF047uCMDQW98jzOI1uZWyLT8=;
-        b=CV4j7H2QyDkX0ayYV6J0uEj7MDsjwMHE5nWYhn5PdozEnpi60n9beAVf4+MICT1Uzr
-         OL4mLaK/j+bO0PW4oI9uDN09kRiHcr80pFMywhpLwkbfSLXZbRb7FT9rW23aVQ3bllfK
-         Qy0XMK4iQo9RfKMyUKlaVYzJPiLGBGmGMgcFB2cBNlsbU2f1zjKHxNBYU96Bb2L2GcWy
-         CMcA9QQIouqnem6kibFqd0EEOEqRvwwPjmeoyo0uUnhHz9iqFbVtOK4imEc0HHuaAcyD
-         I/Uwuv90ffMLwjEyQdMfIsG2tXm2qPEBE1GRbEam07MQ5H7ASHLPoxD6zTnI5fs7Fpxu
-         tRng==
+        bh=d90fe3JRK9z0ljqNC07xvPIFOpkuem/P0SzIFVHjm0M=;
+        b=LVSH09wBR5lJzjczPHNccCdlSDjVV6UvIK5vv3MFpcgrgDnibaxPLI2X41+6bQ92Ct
+         rxWjsiZrmgOQq/CIMw/SFzOq0ndCHYLcPHIJkPd8dBYgSITGZk/Obtxl9O5onkZGh7Gr
+         Oyy7WLounf40DQXGkQsUsdyviSOvbVVNqEbo50x0WdymMdqzm5XsB596U9i566TFE5Dc
+         JaDZe3XsABAPqZBF0g3uEQ7zNBV1gffwjc5M/uB0z1wRYmAIqriIetyYHvNfdJzUxiQ1
+         zVQwSx6Q0zOKKY0a8yaNBtywUUDH2SBetBForkoK2Ap9ArtHtr5Mmbmdo/lB57qwEpC8
+         y99g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:content-transfer-encoding
          :in-reply-to:user-agent;
-        bh=2RE3cWMn21ShOR8ilSQF047uCMDQW98jzOI1uZWyLT8=;
-        b=KTwPUyH1HPW8Q1bIdGfhuEmI7fdJLEIUs9bja1HPKNLvkIurtU64+qvsUTFFtvuQrQ
-         vY2qLvD7OJdEWcok+lK1jwHXzmYHlF1YdkyJjVvkUpmBXzTkV2Ea9ZpyP1kynpuj75Bi
-         YlcPBlDU69VrQGCSH2Mn2a3gemLDG2eCATs7oGjQdWvwfNVtFbnV0/WG6u44R+rn4k28
-         W+hv2M+ykHcKL+Zdf13MN0ymrzbEteu8fBxzWB1nTaDOfqrzMqMAZOxctboEDBPfX86d
-         N2y117qp9KfQRKXPx9YNdZh/Jh/IgDEH9gtDz94kZIDqI2rDT5+ueECoyOb8AxE7UVoF
-         +ieQ==
-X-Gm-Message-State: AElRT7G9tR4x5j68iBadssbQ+Zo3CLCEIhHTEiKTthDW0r7frOn1TVdj
-        jjbEs/cix57xD5Yfjj5G9DgyQA==
-X-Google-Smtp-Source: AG47ELtBOLq/HoanQqfYCSImbYkNgYUVhUPm74I9DEv6YG10E8NAWLGjQB78ufPS2ntt+UFOlR9AiA==
-X-Received: by 10.99.149.86 with SMTP id t22mr2460584pgn.144.1521670252248;
-        Wed, 21 Mar 2018 15:10:52 -0700 (PDT)
+        bh=d90fe3JRK9z0ljqNC07xvPIFOpkuem/P0SzIFVHjm0M=;
+        b=Lbudm+fCq+OyA8QQon6x4KFwHOIflO6HnHsmO1pDKhNWPe/KS0diUVXitW4i12TSnL
+         ae301FNkOwu+bDWeDezE/0kI4OfYLY7sbNOLgBqfFqT0MGuhazQmTPCsjBEqOZV1kC+e
+         Me/g1rF2Dd9agL24w546w4dbmxpJsbUS1b/G1QS4KzXj+Zf43rtbnq2KKkJ/Bkz4n5/5
+         sHrGaIrgU7qKmJ+F6lcCR06tPeZtZBZmUsCv/jEgl1f5dexFJVVFyqtbj+SF+Y237C6+
+         sUVTLuI61XwXsZzeNYvFtB2n4btwLwqBiGWFZaSffcAPLsS84Hfw1IiXqVQEy8DV6k+w
+         mdsw==
+X-Gm-Message-State: AElRT7FoALWCyYjS0UmBdre+biWgWavlJfiPjH5HFOQsFGzICO224Ih/
+        spcXxkP4DDah6ciHIn8H5u4N2Q==
+X-Google-Smtp-Source: AG47ELsuEeOPBA8t5ffull/vrZ7SwZOJVS2yLulkvL4JNr9liAEEuXQFFXaUEWp4QwyxBALj3IUtYA==
+X-Received: by 10.99.111.3 with SMTP id k3mr16278619pgc.135.1521670724279;
+        Wed, 21 Mar 2018 15:18:44 -0700 (PDT)
 Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
-        by smtp.gmail.com with ESMTPSA id z28sm8268975pgc.15.2018.03.21.15.10.50
+        by smtp.gmail.com with ESMTPSA id e10sm9256349pff.151.2018.03.21.15.18.42
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 21 Mar 2018 15:10:51 -0700 (PDT)
-Date:   Wed, 21 Mar 2018 15:10:50 -0700
+        Wed, 21 Mar 2018 15:18:43 -0700 (PDT)
+Date:   Wed, 21 Mar 2018 15:18:42 -0700
 From:   Brandon Williams <bmwill@google.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 09/44] object-store: free alt_odb_list
-Message-ID: <20180321221050.GG18406@google.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <sbeller@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 10/44] object-store: move packed_git and packed_git_mru
+ to object store
+Message-ID: <20180321221842.GH18406@google.com>
 References: <CACsJy8DWrNzZM1K2vkx2XiETdAR5WhwXEdPijsxd0ZD4Lj=tZw@mail.gmail.com>
  <20180303113637.26518-1-pclouds@gmail.com>
- <20180303113637.26518-10-pclouds@gmail.com>
- <CAPig+cSkU8j-NiNeMP-F3VygF1sAoXP3qzn4fx7C1qxTZoO5+g@mail.gmail.com>
+ <20180303113637.26518-11-pclouds@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAPig+cSkU8j-NiNeMP-F3VygF1sAoXP3qzn4fx7C1qxTZoO5+g@mail.gmail.com>
+In-Reply-To: <20180303113637.26518-11-pclouds@gmail.com>
 User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 03/03, Eric Sunshine wrote:
-> On Sat, Mar 3, 2018 at 6:36 AM, Nguyễn Thái Ngọc Duy <pclouds@gmail.com> wrote:
-> > Free the memory and reset alt_odb_{list, tail} to NULL.
-> >
-> > Signed-off-by: Stefan Beller <sbeller@google.com>
-> > Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-> > ---
-> > diff --git a/object.c b/object.c
-> > @@ -450,8 +450,26 @@ void raw_object_store_init(struct raw_object_store *o)
-> > +static void free_alt_odb(struct alternate_object_database *alt)
-> > +{
-> > +       strbuf_release(&alt->scratch);
-> > +       oid_array_clear(&alt->loose_objects_cache);
-> > +}
+On 03/03, Nguyễn Thái Ngọc Duy wrote:
+> From: Stefan Beller <sbeller@google.com>
 > 
-> This doesn't free the 'struct alternate_object_database' entry itself, right?
+> In a process with multiple repositories open, packfile accessors
+> should be associated to a single repository and not shared globally.
+> Move packed_git and packed_git_mru into the_repository and adjust
+> callers to reflect this.
 > 
-> Is that intentional? Isn't the idea that this should free the entries too?
+> [nd: while at there, wrap access to these two fields in get_packed_git()
+> and get_packed_git_mru(). This allows us to lazily initialize these
+> fields without caller doing that explicitly]
+> 
+> Patch generated by
+> 
+>  1. Moving the struct packed_git declaration to object-store.h
+>     and packed_git, packed_git_mru globals to struct object_store.
+> 
+>  2. Apply the following semantic patch to adjust callers:
+>     @@ @@
+>     - packed_git
+>     + the_repository->objects.packed_git
+> 
+>     @@ @@
+>     - packed_git_mru
+>     + the_repository->objects.packed_git_mru
 
-Yep it definitely should free the entry itself.  Should be fixed easy
-enough by freeing the list entry after grabbing the next entry
+As Jonathan mentioned, this should probably be taken out of the commit
+message because it doesn't reflect what the code actually does.  What it
+actually does took me a second to figure out.  You're marking packed_git
+as "private"...well C has no notion of private vs public fields in a
+struct so it might be difficult to keep that convention, it also took me
+a second to realize that it was only in the scope of packfile.c where it
+was ok to reference it directly.  Maybe it'll be ok?  If we really
+wanted something to be private we'd need it to be an opaque type
+instead, which may be out of the scope of this code refactor.
 
 > 
-> > +static void free_alt_odbs(struct raw_object_store *o)
-> > +{
-> > +       while (o->alt_odb_list) {
-
-                    struct alternate_object_database old = o->alt_odb_list;
-
-> > +               free_alt_odb(o->alt_odb_list);
-> > +               o->alt_odb_list = o->alt_odb_list->next;
-
-                    free(old);
-
-> > +       }
-> > +}
+>  3. Applying line wrapping fixes from "make style" to break the
+>     resulting long lines.
 > 
-> Accessing an entry's 'next' member after invoking free_alt_odb() works
-> because the entry itself hasn't been freed (as noted above).
+>  4. Adding missing #includes of repository.h where needed.
 > 
-> Is leaking the entries themselves intentional?
+>  5. As the packfiles are now owned by an objectstore, which is ephemeral
+>     unlike globals, we introduce memory leaks. So address them in
+>     raw_object_store_clear(). Defer freeing packed_git to the next
+>     patch due to the size of this patch.
 > 
-> >  void raw_object_store_clear(struct raw_object_store *o)
-> >  {
-> >         FREE_AND_NULL(o->objectdir);
-> >         FREE_AND_NULL(o->alternate_db);
-> > +
-> > +       free_alt_odbs(o);
-> > +       o->alt_odb_tail = NULL;
-> >  }
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+> ---
+>  builtin/count-objects.c  |  5 ++--
+>  builtin/fsck.c           |  6 +++--
+>  builtin/gc.c             |  3 ++-
+>  builtin/pack-objects.c   | 20 ++++++++--------
+>  builtin/pack-redundant.c |  5 ++--
+>  cache.h                  | 29 ------------------------
+>  fast-import.c            |  7 ++++--
+>  http-backend.c           |  5 ++--
+>  object-store.h           | 28 +++++++++++++++++++++++
+>  object.c                 |  7 ++++++
+>  pack-bitmap.c            |  3 ++-
+>  packfile.c               | 49 ++++++++++++++++++++++++----------------
+>  packfile.h               |  3 +++
+>  server-info.c            |  5 ++--
+>  sha1_name.c              |  5 ++--
+>  15 files changed, 107 insertions(+), 73 deletions(-)
 > 
-> The commit message talks about freeing memory and resetting
-> alt_odb_list and alt_odb_tail, but this code only resets alt_odb_tail.
+> diff --git a/builtin/count-objects.c b/builtin/count-objects.c
+> index 33343818c8..5c7c3c6ae3 100644
+> --- a/builtin/count-objects.c
+> +++ b/builtin/count-objects.c
+> @@ -7,6 +7,7 @@
+>  #include "cache.h"
+>  #include "config.h"
+>  #include "dir.h"
+> +#include "repository.h"
+>  #include "builtin.h"
+>  #include "parse-options.h"
+>  #include "quote.h"
+> @@ -120,9 +121,9 @@ int cmd_count_objects(int argc, const char **argv, const char *prefix)
+>  		struct strbuf loose_buf = STRBUF_INIT;
+>  		struct strbuf pack_buf = STRBUF_INIT;
+>  		struct strbuf garbage_buf = STRBUF_INIT;
+> -		if (!packed_git)
+> +		if (!get_packed_git(the_repository))
+>  			prepare_packed_git();
+> -		for (p = packed_git; p; p = p->next) {
+> +		for (p = get_packed_git(the_repository); p; p = p->next) {
+>  			if (!p->pack_local)
+>  				continue;
+>  			if (open_pack_index(p))
+> diff --git a/builtin/fsck.c b/builtin/fsck.c
+> index b284a3a74e..7aca9699f6 100644
+> --- a/builtin/fsck.c
+> +++ b/builtin/fsck.c
+> @@ -729,7 +729,8 @@ int cmd_fsck(int argc, const char **argv, const char *prefix)
+>  			prepare_packed_git();
+>  
+>  			if (show_progress) {
+> -				for (p = packed_git; p; p = p->next) {
+> +				for (p = get_packed_git(the_repository); p;
+> +				     p = p->next) {
+>  					if (open_pack_index(p))
+>  						continue;
+>  					total += p->num_objects;
+> @@ -737,7 +738,8 @@ int cmd_fsck(int argc, const char **argv, const char *prefix)
+>  
+>  				progress = start_progress(_("Checking objects"), total);
+>  			}
+> -			for (p = packed_git; p; p = p->next) {
+> +			for (p = get_packed_git(the_repository); p;
+> +			     p = p->next) {
+>  				/* verify gives error messages itself */
+>  				if (verify_pack(p, fsck_obj_buffer,
+>  						progress, count))
+> diff --git a/builtin/gc.c b/builtin/gc.c
+> index 77fa720bd0..dd30067ac1 100644
+> --- a/builtin/gc.c
+> +++ b/builtin/gc.c
+> @@ -11,6 +11,7 @@
+>   */
+>  
+>  #include "builtin.h"
+> +#include "repository.h"
+>  #include "config.h"
+>  #include "tempfile.h"
+>  #include "lockfile.h"
+> @@ -173,7 +174,7 @@ static int too_many_packs(void)
+>  		return 0;
+>  
+>  	prepare_packed_git();
+> -	for (cnt = 0, p = packed_git; p; p = p->next) {
+> +	for (cnt = 0, p = get_packed_git(the_repository); p; p = p->next) {
+>  		if (!p->pack_local)
+>  			continue;
+>  		if (p->pack_keep)
+> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+> index 83dcbc9773..0e5fde1d6b 100644
+> --- a/builtin/pack-objects.c
+> +++ b/builtin/pack-objects.c
+> @@ -1,5 +1,6 @@
+>  #include "builtin.h"
+>  #include "cache.h"
+> +#include "repository.h"
+>  #include "config.h"
+>  #include "attr.h"
+>  #include "object.h"
+> @@ -1025,8 +1026,7 @@ static int want_object_in_pack(const struct object_id *oid,
+>  		if (want != -1)
+>  			return want;
+>  	}
+> -
+> -	list_for_each(pos, &packed_git_mru) {
+> +	list_for_each(pos, get_packed_git_mru(the_repository)) {
+>  		struct packed_git *p = list_entry(pos, struct packed_git, mru);
+>  		off_t offset;
+>  
+> @@ -1044,7 +1044,8 @@ static int want_object_in_pack(const struct object_id *oid,
+>  			}
+>  			want = want_found_object(exclude, p);
+>  			if (!exclude && want > 0)
+> -				list_move(&p->mru, &packed_git_mru);
+> +				list_move(&p->mru,
+> +					  get_packed_git_mru(the_repository));
+>  			if (want != -1)
+>  				return want;
+>  		}
+> @@ -2673,7 +2674,7 @@ static void add_objects_in_unpacked_packs(struct rev_info *revs)
+>  
+>  	memset(&in_pack, 0, sizeof(in_pack));
+>  
+> -	for (p = packed_git; p; p = p->next) {
+> +	for (p = get_packed_git(the_repository); p; p = p->next) {
+>  		struct object_id oid;
+>  		struct object *o;
+>  
+> @@ -2736,7 +2737,8 @@ static int has_sha1_pack_kept_or_nonlocal(const struct object_id *oid)
+>  	static struct packed_git *last_found = (void *)1;
+>  	struct packed_git *p;
+>  
+> -	p = (last_found != (void *)1) ? last_found : packed_git;
+> +	p = (last_found != (void *)1) ? last_found :
+> +					get_packed_git(the_repository);
+>  
+>  	while (p) {
+>  		if ((!p->pack_local || p->pack_keep) &&
+> @@ -2745,7 +2747,7 @@ static int has_sha1_pack_kept_or_nonlocal(const struct object_id *oid)
+>  			return 1;
+>  		}
+>  		if (p == last_found)
+> -			p = packed_git;
+> +			p = get_packed_git(the_repository);
+>  		else
+>  			p = p->next;
+>  		if (p == last_found)
+> @@ -2781,7 +2783,7 @@ static void loosen_unused_packed_objects(struct rev_info *revs)
+>  	uint32_t i;
+>  	struct object_id oid;
+>  
+> -	for (p = packed_git; p; p = p->next) {
+> +	for (p = get_packed_git(the_repository); p; p = p->next) {
+>  		if (!p->pack_local || p->pack_keep)
+>  			continue;
+>  
+> @@ -3152,7 +3154,7 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
+>  	prepare_packed_git();
+>  	if (ignore_packed_keep) {
+>  		struct packed_git *p;
+> -		for (p = packed_git; p; p = p->next)
+> +		for (p = get_packed_git(the_repository); p; p = p->next)
+>  			if (p->pack_local && p->pack_keep)
+>  				break;
+>  		if (!p) /* no keep-able packs found */
+> @@ -3165,7 +3167,7 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
+>  		 * also covers non-local objects
+>  		 */
+>  		struct packed_git *p;
+> -		for (p = packed_git; p; p = p->next) {
+> +		for (p = get_packed_git(the_repository); p; p = p->next) {
+>  			if (!p->pack_local) {
+>  				have_non_local_packs = 1;
+>  				break;
+> diff --git a/builtin/pack-redundant.c b/builtin/pack-redundant.c
+> index aaa8136322..d6d8a44959 100644
+> --- a/builtin/pack-redundant.c
+> +++ b/builtin/pack-redundant.c
+> @@ -7,6 +7,7 @@
+>  */
+>  
+>  #include "builtin.h"
+> +#include "repository.h"
+>  #include "packfile.h"
+>  
+>  #define BLKSIZE 512
+> @@ -571,7 +572,7 @@ static struct pack_list * add_pack(struct packed_git *p)
+>  
+>  static struct pack_list * add_pack_file(const char *filename)
+>  {
+> -	struct packed_git *p = packed_git;
+> +	struct packed_git *p = get_packed_git(the_repository);
+>  
+>  	if (strlen(filename) < 40)
+>  		die("Bad pack filename: %s", filename);
+> @@ -586,7 +587,7 @@ static struct pack_list * add_pack_file(const char *filename)
+>  
+>  static void load_all(void)
+>  {
+> -	struct packed_git *p = packed_git;
+> +	struct packed_git *p = get_packed_git(the_repository);
+>  
+>  	while (p) {
+>  		add_pack(p);
+> diff --git a/cache.h b/cache.h
+> index 41530d5d16..d3429a0d48 100644
+> --- a/cache.h
+> +++ b/cache.h
+> @@ -1585,35 +1585,6 @@ struct pack_window {
+>  	unsigned int inuse_cnt;
+>  };
+>  
+> -extern struct packed_git {
+> -	struct packed_git *next;
+> -	struct list_head mru;
+> -	struct pack_window *windows;
+> -	off_t pack_size;
+> -	const void *index_data;
+> -	size_t index_size;
+> -	uint32_t num_objects;
+> -	uint32_t num_bad_objects;
+> -	unsigned char *bad_object_sha1;
+> -	int index_version;
+> -	time_t mtime;
+> -	int pack_fd;
+> -	unsigned pack_local:1,
+> -		 pack_keep:1,
+> -		 freshened:1,
+> -		 do_not_close:1,
+> -		 pack_promisor:1;
+> -	unsigned char sha1[20];
+> -	struct revindex_entry *revindex;
+> -	/* something like ".git/objects/pack/xxxxx.pack" */
+> -	char pack_name[FLEX_ARRAY]; /* more */
+> -} *packed_git;
+> -
+> -/*
+> - * A most-recently-used ordered version of the packed_git list.
+> - */
+> -extern struct list_head packed_git_mru;
+> -
+>  struct pack_entry {
+>  	off_t offset;
+>  	unsigned char sha1[20];
+> diff --git a/fast-import.c b/fast-import.c
+> index b70ac025e0..0dba555478 100644
+> --- a/fast-import.c
+> +++ b/fast-import.c
+> @@ -154,6 +154,7 @@ Format of STDIN stream:
+>  
+>  #include "builtin.h"
+>  #include "cache.h"
+> +#include "repository.h"
+>  #include "config.h"
+>  #include "lockfile.h"
+>  #include "object.h"
+> @@ -1110,7 +1111,8 @@ static int store_object(
+>  	if (e->idx.offset) {
+>  		duplicate_count_by_type[type]++;
+>  		return 1;
+> -	} else if (find_sha1_pack(oid.hash, packed_git)) {
+> +	} else if (find_sha1_pack(oid.hash,
+> +				  get_packed_git(the_repository))) {
+>  		e->type = type;
+>  		e->pack_id = MAX_PACK_ID;
+>  		e->idx.offset = 1; /* just not zero! */
+> @@ -1305,7 +1307,8 @@ static void stream_blob(uintmax_t len, struct object_id *oidout, uintmax_t mark)
+>  		duplicate_count_by_type[OBJ_BLOB]++;
+>  		truncate_pack(&checkpoint);
+>  
+> -	} else if (find_sha1_pack(oid.hash, packed_git)) {
+> +	} else if (find_sha1_pack(oid.hash,
+> +				  get_packed_git(the_repository))) {
+>  		e->type = OBJ_BLOB;
+>  		e->pack_id = MAX_PACK_ID;
+>  		e->idx.offset = 1; /* just not zero! */
+> diff --git a/http-backend.c b/http-backend.c
+> index f3dc218b2a..22921d169a 100644
+> --- a/http-backend.c
+> +++ b/http-backend.c
+> @@ -1,5 +1,6 @@
+>  #include "cache.h"
+>  #include "config.h"
+> +#include "repository.h"
+>  #include "refs.h"
+>  #include "pkt-line.h"
+>  #include "object.h"
+> @@ -518,13 +519,13 @@ static void get_info_packs(struct strbuf *hdr, char *arg)
+>  
+>  	select_getanyfile(hdr);
+>  	prepare_packed_git();
+> -	for (p = packed_git; p; p = p->next) {
+> +	for (p = get_packed_git(the_repository); p; p = p->next) {
+>  		if (p->pack_local)
+>  			cnt++;
+>  	}
+>  
+>  	strbuf_grow(&buf, cnt * 53 + 2);
+> -	for (p = packed_git; p; p = p->next) {
+> +	for (p = get_packed_git(the_repository); p; p = p->next) {
+>  		if (p->pack_local)
+>  			strbuf_addf(&buf, "P %s\n", p->pack_name + objdirlen + 6);
+>  	}
+> diff --git a/object-store.h b/object-store.h
+> index 0ca9233a85..1f3e66a3b8 100644
+> --- a/object-store.h
+> +++ b/object-store.h
+> @@ -52,6 +52,30 @@ void add_to_alternates_memory(const char *dir);
+>   */
+>  struct strbuf *alt_scratch_buf(struct alternate_object_database *alt);
+>  
+> +struct packed_git {
+> +	struct packed_git *next;
+> +	struct list_head mru;
+> +	struct pack_window *windows;
+> +	off_t pack_size;
+> +	const void *index_data;
+> +	size_t index_size;
+> +	uint32_t num_objects;
+> +	uint32_t num_bad_objects;
+> +	unsigned char *bad_object_sha1;
+> +	int index_version;
+> +	time_t mtime;
+> +	int pack_fd;
+> +	unsigned pack_local:1,
+> +		 pack_keep:1,
+> +		 freshened:1,
+> +		 do_not_close:1,
+> +		 pack_promisor:1;
+> +	unsigned char sha1[20];
+> +	struct revindex_entry *revindex;
+> +	/* something like ".git/objects/pack/xxxxx.pack" */
+> +	char pack_name[FLEX_ARRAY]; /* more */
+> +};
+> +
+>  struct raw_object_store {
+>  	/*
+>  	 * Path to the repository's object store.
+> @@ -62,6 +86,10 @@ struct raw_object_store {
+>  	/* Path to extra alternate object database if not NULL */
+>  	char *alternate_db;
+>  
+> +	struct packed_git *packed_git; /* private */
+> +	/* A most-recently-used ordered version of the packed_git list. */
+> +	struct list_head packed_git_mru; /* private */
+> +
+>  	struct alternate_object_database *alt_odb_list;
+>  	struct alternate_object_database **alt_odb_tail;
+>  };
+> diff --git a/object.c b/object.c
+> index a71ab34e69..83be6b1ecb 100644
+> --- a/object.c
+> +++ b/object.c
+> @@ -449,6 +449,7 @@ void clear_commit_marks_all(unsigned int flags)
+>  void raw_object_store_init(struct raw_object_store *o)
+>  {
+>  	memset(o, 0, sizeof(*o));
+> +	INIT_LIST_HEAD(&o->packed_git_mru);
+>  }
+>  
+>  static void free_alt_odb(struct alternate_object_database *alt)
+> @@ -472,4 +473,10 @@ void raw_object_store_clear(struct raw_object_store *o)
+>  
+>  	free_alt_odbs(o);
+>  	o->alt_odb_tail = NULL;
+> +
+> +	INIT_LIST_HEAD(&o->packed_git_mru);
+> +	/*
+> +	 * TODO: call close_all_packs once migrated to
+> +	 * take an object store argument
+> +	 */
+>  }
+> diff --git a/pack-bitmap.c b/pack-bitmap.c
+> index 9270983e5f..abed43cdb5 100644
+> --- a/pack-bitmap.c
+> +++ b/pack-bitmap.c
+> @@ -10,6 +10,7 @@
+>  #include "pack-revindex.h"
+>  #include "pack-objects.h"
+>  #include "packfile.h"
+> +#include "repository.h"
+>  
+>  /*
+>   * An entry on the bitmap index, representing the bitmap for a given
+> @@ -335,7 +336,7 @@ static int open_pack_bitmap(void)
+>  	assert(!bitmap_git.map && !bitmap_git.loaded);
+>  
+>  	prepare_packed_git();
+> -	for (p = packed_git; p; p = p->next) {
+> +	for (p = get_packed_git(the_repository); p; p = p->next) {
+>  		if (open_pack_bitmap_1(p) == 0)
+>  			ret = 0;
+>  	}
+> diff --git a/packfile.c b/packfile.c
+> index 216ea836ee..d3c4a12ae0 100644
+> --- a/packfile.c
+> +++ b/packfile.c
+> @@ -45,8 +45,6 @@ static unsigned int pack_open_fds;
+>  static unsigned int pack_max_fds;
+>  static size_t peak_pack_mapped;
+>  static size_t pack_mapped;
+> -struct packed_git *packed_git;
+> -LIST_HEAD(packed_git_mru);
+>  
+>  #define SZ_FMT PRIuMAX
+>  static inline uintmax_t sz_fmt(size_t s) { return s; }
+> @@ -246,7 +244,7 @@ static int unuse_one_window(struct packed_git *current)
+>  
+>  	if (current)
+>  		scan_windows(current, &lru_p, &lru_w, &lru_l);
+> -	for (p = packed_git; p; p = p->next)
+> +	for (p = the_repository->objects.packed_git; p; p = p->next)
+>  		scan_windows(p, &lru_p, &lru_w, &lru_l);
+>  	if (lru_p) {
+>  		munmap(lru_w->base, lru_w->len);
+> @@ -316,7 +314,7 @@ void close_all_packs(void)
+>  {
+>  	struct packed_git *p;
+>  
+> -	for (p = packed_git; p; p = p->next)
+> +	for (p = the_repository->objects.packed_git; p; p = p->next)
+>  		if (p->do_not_close)
+>  			die("BUG: want to close pack marked 'do-not-close'");
+>  		else
+> @@ -384,7 +382,7 @@ static int close_one_pack(void)
+>  	struct pack_window *mru_w = NULL;
+>  	int accept_windows_inuse = 1;
+>  
+> -	for (p = packed_git; p; p = p->next) {
+> +	for (p = the_repository->objects.packed_git; p; p = p->next) {
+>  		if (p->pack_fd == -1)
+>  			continue;
+>  		find_lru_pack(p, &lru_p, &mru_w, &accept_windows_inuse);
+> @@ -686,8 +684,8 @@ void install_packed_git(struct packed_git *pack)
+>  	if (pack->pack_fd != -1)
+>  		pack_open_fds++;
+>  
+> -	pack->next = packed_git;
+> -	packed_git = pack;
+> +	pack->next = the_repository->objects.packed_git;
+> +	the_repository->objects.packed_git = pack;
+>  }
+>  
+>  void (*report_garbage)(unsigned seen_bits, const char *path);
+> @@ -769,7 +767,8 @@ static void prepare_packed_git_one(char *objdir, int local)
+>  		base_len = path.len;
+>  		if (strip_suffix_mem(path.buf, &base_len, ".idx")) {
+>  			/* Don't reopen a pack we already have. */
+> -			for (p = packed_git; p; p = p->next) {
+> +			for (p = the_repository->objects.packed_git; p;
+> +			     p = p->next) {
+>  				size_t len;
+>  				if (strip_suffix(p->pack_name, ".pack", &len) &&
+>  				    len == base_len &&
+> @@ -820,7 +819,7 @@ unsigned long approximate_object_count(void)
+>  
+>  		prepare_packed_git();
+>  		count = 0;
+> -		for (p = packed_git; p; p = p->next) {
+> +		for (p = the_repository->objects.packed_git; p; p = p->next) {
+>  			if (open_pack_index(p))
+>  				continue;
+>  			count += p->num_objects;
+> @@ -869,18 +868,19 @@ static int sort_pack(const void *a_, const void *b_)
+>  
+>  static void rearrange_packed_git(void)
+>  {
+> -	packed_git = llist_mergesort(packed_git, get_next_packed_git,
+> -				     set_next_packed_git, sort_pack);
+> +	the_repository->objects.packed_git = llist_mergesort(
+> +		the_repository->objects.packed_git, get_next_packed_git,
+> +		set_next_packed_git, sort_pack);
+>  }
+>  
+>  static void prepare_packed_git_mru(void)
+>  {
+>  	struct packed_git *p;
+>  
+> -	INIT_LIST_HEAD(&packed_git_mru);
+> +	INIT_LIST_HEAD(&the_repository->objects.packed_git_mru);
+>  
+> -	for (p = packed_git; p; p = p->next)
+> -		list_add_tail(&p->mru, &packed_git_mru);
+> +	for (p = the_repository->objects.packed_git; p; p = p->next)
+> +		list_add_tail(&p->mru, &the_repository->objects.packed_git_mru);
+>  }
+>  
+>  static int prepare_packed_git_run_once = 0;
+> @@ -906,6 +906,16 @@ void reprepare_packed_git(void)
+>  	prepare_packed_git();
+>  }
+>  
+> +struct packed_git *get_packed_git(struct repository *r)
+> +{
+> +	return r->objects.packed_git;
+> +}
+> +
+> +struct list_head *get_packed_git_mru(struct repository *r)
+> +{
+> +	return &r->objects.packed_git_mru;
+> +}
+> +
+>  unsigned long unpack_object_header_buffer(const unsigned char *buf,
+>  		unsigned long len, enum object_type *type, unsigned long *sizep)
+>  {
+> @@ -1014,7 +1024,7 @@ const struct packed_git *has_packed_and_bad(const unsigned char *sha1)
+>  	struct packed_git *p;
+>  	unsigned i;
+>  
+> -	for (p = packed_git; p; p = p->next)
+> +	for (p = the_repository->objects.packed_git; p; p = p->next)
+>  		for (i = 0; i < p->num_bad_objects; i++)
+>  			if (!hashcmp(sha1, p->bad_object_sha1 + 20 * i))
+>  				return p;
+> @@ -1845,13 +1855,14 @@ int find_pack_entry(const unsigned char *sha1, struct pack_entry *e)
+>  	struct list_head *pos;
+>  
+>  	prepare_packed_git();
+> -	if (!packed_git)
+> +	if (!the_repository->objects.packed_git)
+>  		return 0;
+>  
+> -	list_for_each(pos, &packed_git_mru) {
+> +	list_for_each(pos, &the_repository->objects.packed_git_mru) {
+>  		struct packed_git *p = list_entry(pos, struct packed_git, mru);
+>  		if (fill_pack_entry(sha1, e, p)) {
+> -			list_move(&p->mru, &packed_git_mru);
+> +			list_move(&p->mru,
+> +				  &the_repository->objects.packed_git_mru);
+>  			return 1;
+>  		}
+>  	}
+> @@ -1898,7 +1909,7 @@ int for_each_packed_object(each_packed_object_fn cb, void *data, unsigned flags)
+>  	int pack_errors = 0;
+>  
+>  	prepare_packed_git();
+> -	for (p = packed_git; p; p = p->next) {
+> +	for (p = the_repository->objects.packed_git; p; p = p->next) {
+>  		if ((flags & FOR_EACH_OBJECT_LOCAL_ONLY) && !p->pack_local)
+>  			continue;
+>  		if ((flags & FOR_EACH_OBJECT_PROMISOR_ONLY) &&
+> diff --git a/packfile.h b/packfile.h
+> index a7fca598d6..76496226bb 100644
+> --- a/packfile.h
+> +++ b/packfile.h
+> @@ -38,6 +38,9 @@ extern void prepare_packed_git(void);
+>  extern void reprepare_packed_git(void);
+>  extern void install_packed_git(struct packed_git *pack);
+>  
+> +struct packed_git *get_packed_git(struct repository *r);
+> +struct list_head *get_packed_git_mru(struct repository *r);
+> +
+>  /*
+>   * Give a rough count of objects in the repository. This sacrifices accuracy
+>   * for speed.
+> diff --git a/server-info.c b/server-info.c
+> index 26a6c20b7d..6fe64ede17 100644
+> --- a/server-info.c
+> +++ b/server-info.c
+> @@ -1,4 +1,5 @@
+>  #include "cache.h"
+> +#include "repository.h"
+>  #include "refs.h"
+>  #include "object.h"
+>  #include "commit.h"
+> @@ -200,7 +201,7 @@ static void init_pack_info(const char *infofile, int force)
+>  	objdirlen = strlen(objdir);
+>  
+>  	prepare_packed_git();
+> -	for (p = packed_git; p; p = p->next) {
+> +	for (p = get_packed_git(the_repository); p; p = p->next) {
+>  		/* we ignore things on alternate path since they are
+>  		 * not available to the pullers in general.
+>  		 */
+> @@ -210,7 +211,7 @@ static void init_pack_info(const char *infofile, int force)
+>  	}
+>  	num_pack = i;
+>  	info = xcalloc(num_pack, sizeof(struct pack_info *));
+> -	for (i = 0, p = packed_git; p; p = p->next) {
+> +	for (i = 0, p = get_packed_git(the_repository); p; p = p->next) {
+>  		if (!p->pack_local)
+>  			continue;
+>  		info[i] = xcalloc(1, sizeof(struct pack_info));
+> diff --git a/sha1_name.c b/sha1_name.c
+> index 957ce25680..bd4d7352ce 100644
+> --- a/sha1_name.c
+> +++ b/sha1_name.c
+> @@ -196,7 +196,8 @@ static void find_short_packed_object(struct disambiguate_state *ds)
+>  	struct packed_git *p;
+>  
+>  	prepare_packed_git();
+> -	for (p = packed_git; p && !ds->ambiguous; p = p->next)
+> +	for (p = get_packed_git(the_repository); p && !ds->ambiguous;
+> +	     p = p->next)
+>  		unique_in_pack(p, ds);
+>  }
+>  
+> @@ -566,7 +567,7 @@ static void find_abbrev_len_packed(struct min_abbrev_data *mad)
+>  	struct packed_git *p;
+>  
+>  	prepare_packed_git();
+> -	for (p = packed_git; p; p = p->next)
+> +	for (p = get_packed_git(the_repository); p; p = p->next)
+>  		find_abbrev_len_for_pack(p, mad);
+>  }
+>  
+> -- 
+> 2.16.1.435.g8f24da2e1a
+> 
 
 -- 
 Brandon Williams
