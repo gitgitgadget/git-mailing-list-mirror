@@ -2,120 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DFC691FAE2
-	for <e@80x24.org>; Thu, 22 Mar 2018 14:28:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0DAE51F404
+	for <e@80x24.org>; Thu, 22 Mar 2018 16:35:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755671AbeCVO2L (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Mar 2018 10:28:11 -0400
-Received: from mail-pl0-f51.google.com ([209.85.160.51]:34304 "EHLO
-        mail-pl0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754546AbeCVO2K (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Mar 2018 10:28:10 -0400
-Received: by mail-pl0-f51.google.com with SMTP id u11-v6so5403890plq.1
-        for <git@vger.kernel.org>; Thu, 22 Mar 2018 07:28:10 -0700 (PDT)
+        id S1751719AbeCVQfD (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Mar 2018 12:35:03 -0400
+Received: from mail-wm0-f51.google.com ([74.125.82.51]:56210 "EHLO
+        mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751632AbeCVQfC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Mar 2018 12:35:02 -0400
+Received: by mail-wm0-f51.google.com with SMTP id t7so17166032wmh.5
+        for <git@vger.kernel.org>; Thu, 22 Mar 2018 09:35:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:to:cc:in-reply-to:from:date:subject:references;
-        bh=oNOfgcHepuZdvJKc2bwqVbHJv3mXn6cRHSg/xknF1tc=;
-        b=q1JQOVlE/eThpUI7bCG10PGfJWJ4hJArxwvh98298m/ydfQL3IRtidKuVanP+60G1Y
-         DbHaPmOXvY5gu94cMKW0Zx8fCXZ31RjTq7lzfrg/Q4jY+5wq2WOm91Qb9QCDWODBw1zW
-         EyBuViza6qNrUcodFnUYuTYz2wM5hzwdWEpin7EvPeexrCdHGdRNCSoqm8prWFXcrZw6
-         s+1cTA0L7BClJcsdbpB+682vg7ElBrK0Vry9bkahWLDvVhCs7dlSKeIMdhq+Yi97RbG1
-         Hi/Qq/jhT/soLBTIg4i2a2jIjn4c4wi/yrhBp4n+QidGb84xhTb5/p7d3ak1QYpZamc+
-         Zb7g==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=cdUAfMPBiFumDSReMGZT5l0CUpoZJiG6qxuQqvLgVPo=;
+        b=JmjaiB1mUS+JJY4Tv834GiEyJdkdo4fDgTvqTIPCSHY4+K4IsCwF4eY3Jpjnfk0QuT
+         4wbq8lM4/zuSbsUCTjYcrKQyfGj2M7vKw9jdSiOVZWzkfwgzORNiQnqHdVHCsolbxOvx
+         gWdXTQIoGyJZtkfAkIJ5xlc8tGf9YjaddnqUDG2cayEm9Fzk6VDmYTW6Z884WTHDj5m/
+         w5c7u3z8pEQvt44zfBuXLtgmHKOhe5GGKwisyfv7tOtOr6NB4IegJGWYtYAUw/9EAMVN
+         yDlhktZv4I1eAaA6aBC71SHM+veMvUb7f5afCEqS12Qhk8/gjFhKNHKCRyWomx1v4RlO
+         AkNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:to:cc:in-reply-to:from:date:subject
-         :references;
-        bh=oNOfgcHepuZdvJKc2bwqVbHJv3mXn6cRHSg/xknF1tc=;
-        b=cn8U0MeJQ5kR1XyX9IJGJO4kFX5Pw8Cf1rhGW0y6AeM+IXBSFX27oiycea1nVqosFd
-         AzNijeyvoPt9O7YmGEQm9ddzsIEoeAlEL8/t8ruJDgquxeZ1v3pdwRA0+5pTldxoUMTT
-         0Sp9+Q/jk8XoCH66cvSxbojpwBainqZuovCR1anro17YggqTiQK1uxK7VD+soO506Y23
-         eHaHW6O4Nd0yKWX2jRvyV4U6C5avlj+d+5+32Fw6cVAOB6jC8jORLXx0injh2HxgTwxs
-         h8/P5KvW+MjWGoVdHdUR7BMFb1VOO4C4FN/uMFYm6O4Sco2SA7hyqr+5jAEtoE2UnhH/
-         rOyA==
-X-Gm-Message-State: AElRT7GdbXMPZQQBqiCDxThkzs7pksKzzgaWn3SazMpPK1Qi9TX9uPSq
-        5iUwLNHYV4MJSO5/8PxPUxM=
-X-Google-Smtp-Source: AG47ELsqlRKrzu31MCa0YleJyiM/M3iSINnjXNQGMcV3p5VmU7W8jkZoyOGJWWrQUlsQkFa4NUkoBw==
-X-Received: by 2002:a17:902:209:: with SMTP id 9-v6mr24867128plc.403.1521728889864;
-        Thu, 22 Mar 2018 07:28:09 -0700 (PDT)
-Received: from localhost (softbank126094241038.bbtec.net. [126.94.241.38])
-        by smtp.gmail.com with ESMTPSA id q17sm11879753pgt.7.2018.03.22.07.28.08
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 22 Mar 2018 07:28:09 -0700 (PDT)
-Message-ID: <5ab3bd79.d14d650a.be5c0.8544@mx.google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-CC:     git@vger.kernel.org
-In-Reply-To: <xmqqpo3xnqq4.fsf@gitster-ct.c.googlers.com>
-From:   Yuki Kokubun <orga.chem.job@gmail.com>
-Date:   Thu, 22 Mar 2018 14:26:10 +0000
-Subject: Re: [PATCH] filter-branch: consider refs can refer to an object other than commit or tag
-References: <xmqqpo3xnqq4.fsf@gitster-ct.c.googlers.com>
-        <xmqqwoy5pcno.fsf@gitster-ct.c.googlers.com>
-        <20180321103504.9483-1-orga.chem.job@gmail.com>
-        <1521646299-16193-1-git-send-email-orga.chem.job@gmail.com>
-        <5ab2b606.86f5620a.c0c10.41b3@mx.google.com>
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=cdUAfMPBiFumDSReMGZT5l0CUpoZJiG6qxuQqvLgVPo=;
+        b=eFP30tHHVs9a0WRlGtAhEMGi2/KxCBAaApooPxOCa5Qaasz17LQiVcbtmGST2VllkE
+         4NW3vWPlg4hYjrzq4HdLeJU7mEErpimuG+5n5I1wXwQkjlhQPlo9iLZEBYtRtaqOANvg
+         z0gUmMsF7EPZNC1l7UGM+fyQ43kWt8+hUH+/irL2MlIpAWg8qgw6RXCFyzY23L7jWvXJ
+         3QUF1iCufReJOpt5dHkGpxZEV2AuUVZY3vZjoWRZcryn0+dsHPKyiXbHLd6UrGJjqMGy
+         mpSLGfhHy6vnGTqZ4dQvVKNfZxjnoUckyrvBY/n56eTM1OnJiPWjyZe1YViAB/UC7Ieb
+         KwXQ==
+X-Gm-Message-State: AElRT7Hs0k05f8LcImhQZIVwz2Xhryd3Ic1ngIPPWfLom4yc/hTH//UW
+        mjq+vTjyCuYTCX1/A4HwLBE=
+X-Google-Smtp-Source: AG47ELv7MCYh/6TKsOljiA9anEeRuxx8udxJdszbiOJdlzj7RfGA8giPIz8uAF7t2t9zRxwivZ8Agw==
+X-Received: by 10.28.113.216 with SMTP id d85mr5724292wmi.97.1521736501063;
+        Thu, 22 Mar 2018 09:35:01 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id l22sm6863381wmi.39.2018.03.22.09.34.59
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 22 Mar 2018 09:35:00 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     David Pursehouse <david.pursehouse@gmail.com>, git@vger.kernel.org,
+        David Pursehouse <dpursehouse@collab.net>
+Subject: Re: [PATCH 1/1] Fix typo in merge-strategies documentation
+References: <20180317033142.20119-1-david.pursehouse@gmail.com>
+        <20180317033142.20119-2-david.pursehouse@gmail.com>
+        <xmqqo9jkvwjh.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1803212330510.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+Date:   Thu, 22 Mar 2018 09:34:59 -0700
+In-Reply-To: <nycvar.QRO.7.76.6.1803212330510.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        (Johannes Schindelin's message of "Wed, 21 Mar 2018 23:31:14 +0100
+        (STD)")
+Message-ID: <xmqqk1u4m5l8.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+MIME-Version: 1.0
 Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Yuki Kokubun <orga.chem.job@gmail.com> writes:
-> 
-> >> Yuki Kokubun <orga.chem.job@gmail.com> writes:
-> >> 
-> >> > "git filter-branch -- --all" can be confused when refs that refer to objects
-> >> > other than commits or tags exists.
-> >> > Because "git rev-parse --all" that is internally used can return refs that
-> >> > refer to an object other than commit or tag. But it is not considered in the
-> >> > phase of updating refs.
-> >> 
-> >> Could you describe what the consequence of that is?  We have a ref
-> >> that points directly at a blob object, or a ref that points at a tag
-> >> object that points at a blob object.  The current code leaves both of
-> >> these refs in "$tempdir/heads".  Then...?
-> >
-> > Sorry, this is my wrong.
-> > I wrongly thought only refs/replace can point at a blob or tree object.
-> 
-> No need to be sorry.  You still need to describe what (bad things)
-> happen if we do not filter out refs that do not point at committish
-> in the proposed log message.  
-> 
-> IOW, can you elaborate and clarify your "can be confused" at the
-> beginning?
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-I meant the confusion is abnormal messages from the output of "git filter-branch -- --all".
-For example, this is an output of "git filter-branch -- --all":
+> On Mon, 19 Mar 2018, Junio C Hamano wrote:
+>
+>> David Pursehouse <david.pursehouse@gmail.com> writes:
+>> 
+>> > From: David Pursehouse <dpursehouse@collab.net>
+>> >
+>> > Signed-off-by: David Pursehouse <dpursehouse@collab.net>
+>> > ---
+>> 
+>> I somehow had to stare at the patch for a few minutes, view it in
+>> two Emacs buffers and run M-x compare-windows before I finally spot
+>> the single-byte typofix.
+>
+> Pro-tip: git am && git show --color-words
 
-Rewrite bcdbd016c77df3d5641a3cf820b2ed46ba7bf3b4 (5/5) (0 seconds passed, remaining 0 predicted)
-WARNING: Ref 'refs/heads/master' is unchanged
-WARNING: Ref 'refs/heads/no-newline' is unchanged
-WARNING: Ref 'refs/heads/original' is unchanged
-error: object 1bf53b49c26465454e4ac377f2ed3f91bb1d6ac1 is a tree, not a commit
-error: object 1bf53b49c26465454e4ac377f2ed3f91bb1d6ac1 is a tree, not a commit
-fatal: ambiguous argument 'refs/replace/8a2016f3730cad8309c110f819c855403ed0a5b9^0': unknown revision or path not in the working tree.
-Use '--' to separate paths from revisions, like this:
-'git <command> [<revision>...] -- [<file>...]'
-WARNING: Ref 'refs/replace/8a2016f3730cad8309c110f819c855403ed0a5b9' is unchanged
-WARNING: Ref 'refs/tags/add-file' is unchanged
-WARNING: Ref 'refs/tags/file' is unchanged
-error: object 1bf53b49c26465454e4ac377f2ed3f91bb1d6ac1 is a tree, not a commit
-error: object 1bf53b49c26465454e4ac377f2ed3f91bb1d6ac1 is a tree, not a commit
-fatal: ambiguous argument 'refs/tags/treetag^0': unknown revision or path not in the working tree.
-Use '--' to separate paths from revisions, like this:
-'git <command> [<revision>...] -- [<file>...]'
-WARNING: Ref 'refs/tags/treetag' is unchanged
-
-You can see a lot of terrible messages such as "error" and "fatal".
-But on the whole, the result of "git filter-branch -- --all" is not so abnormal.
-So, this is a just problem about abonormal messages.
-
-I think this messages should be suppressed.
-How do you feel about it?
+Yeah, I know, but that would not work while I am wondering if the
+patch is worth applying in the first place ;-)
