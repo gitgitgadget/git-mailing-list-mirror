@@ -6,82 +6,99 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 794131F404
-	for <e@80x24.org>; Thu, 22 Mar 2018 16:57:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B490F1F404
+	for <e@80x24.org>; Thu, 22 Mar 2018 16:57:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751692AbeCVQ5i (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Mar 2018 12:57:38 -0400
-Received: from mail-pl0-f48.google.com ([209.85.160.48]:43241 "EHLO
-        mail-pl0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751586AbeCVQ5h (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Mar 2018 12:57:37 -0400
-Received: by mail-pl0-f48.google.com with SMTP id f23-v6so5681354plr.10
-        for <git@vger.kernel.org>; Thu, 22 Mar 2018 09:57:37 -0700 (PDT)
+        id S1751717AbeCVQ5l (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Mar 2018 12:57:41 -0400
+Received: from mail-pl0-f66.google.com ([209.85.160.66]:44046 "EHLO
+        mail-pl0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751140AbeCVQ5j (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Mar 2018 12:57:39 -0400
+Received: by mail-pl0-f66.google.com with SMTP id 9-v6so5678802ple.11
+        for <git@vger.kernel.org>; Thu, 22 Mar 2018 09:57:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=saville-com.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id;
-        bh=LaRY8iYradRNxEup/mvablU/U4Hwc1RlmiQKxDF0b5o=;
-        b=YrS0SlaYxMQUFQSbUtl2A5XozvFIUCwk0X8034bhDh3lchPN5Jg+PzrFbwVC1KHu9r
-         JG/LvFBPJ7HWyl1Z6WbzQq2y8/w86Xx6L4jiWWTpbtDQm7SHTy+QQScpEvWxEGEvu8bP
-         RX+wtZKVSflrqWDisNVD/jzPPGIJkspRL9gVnz48NZSGkL1N+Grruh8BbNGG1ThNFJ9X
-         qL8u6Bx4KK+bdtfjQkp7WqvtV/b8k3CFS04HgrHCbUVQYVjulCg5vOQ8MOlU4Z7n9CQw
-         7xDo46AxmW19JxV1JxXK4sGxMwLJRaFwdPymbl3j/RF72q9vC9XchnM9EH6RjwPFJ7E4
-         8LHQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :in-reply-to:references;
+        bh=uqb06WGfSlBVvO4ilj4Ioy3zkZxyQ/eRfl0sMdC80m8=;
+        b=YrSwnzrsXmqXxnXhAJUX0UA/MwX4sLW7PKUoOxaQXAQ0iwMgNMKvFCgMCvAm006eiU
+         gLYvswvfCCn1+vekIHHfLAIz4x8ivO52OZJF8LzS4hmdigsT9YPyxnBSV+xFJH0tk/lJ
+         I4pR6yib2gdMRbWOfMRLJdB6CD9XqvEiiwDBi8EKr394nkASpbAQxvPubtOlRWc30b65
+         vM/tbBJSXThVfoBS/5yLSWsqcGZsGHlKBoY10ym/+ONV1xUphpHEPvoZbNV7xm1qYiiS
+         ypELfKNHvZixhg2Ba99RGmyo0P9UsjLjM1zlKnJbUtc9i704RnvBpSq4tw83QMerLPba
+         P7mA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=LaRY8iYradRNxEup/mvablU/U4Hwc1RlmiQKxDF0b5o=;
-        b=YT+jIcjB6bIxKxJddjpFP6zO7M6W+5ImChmw1XLJI1FEnoPIP7e+ZmTSbrKX7gXAKg
-         1P1k0fOrkaJ02YPN6rRiLRTBM0WavgjxmMZ/NJi+FKCfuJSakVHHnQabyUxTFgEiHK6c
-         iKRMFG6ulonTxEsDNxG/p0OxkzQCda2wDrOdyLhxapaFlyqcNJc7KcJIFV+qqzfgfn5P
-         YHsy79fTLvCvlQQuwY43ib732G5aFL6VJJ33kU4flw4AGVbR26kay1LHH577aR5FpKNQ
-         R9r3eS9J5zeHvZX9PzoexwHtpSerPPpaGr+oSrlCNQy0GxSIKG+oYj8CXXvzGsSOocgz
-         EhiA==
-X-Gm-Message-State: AElRT7HXFWojGHuyMgHM1+owRQ7QGrAeSlkWetdMVPe/Q6zbG/L8baiG
-        5Vj5hSaJj1Aq83BLy6srmVDiMqxiAms=
-X-Google-Smtp-Source: AG47ELuN3NdmXiu18a8fbLRCObCQgl196qgSTaT1yobD9CM0c/XpZ6pUZiErpb9JR7g+JgxVJJvhVg==
-X-Received: by 2002:a17:902:7b81:: with SMTP id w1-v6mr1926762pll.66.1521737855982;
-        Thu, 22 Mar 2018 09:57:35 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:in-reply-to:references;
+        bh=uqb06WGfSlBVvO4ilj4Ioy3zkZxyQ/eRfl0sMdC80m8=;
+        b=J+Zb4U8UwAqVIW5xdNymaiybN7UvmfmtshPx/uVJBIMtd/ZkRJVdsGpTIWByZyZf4b
+         XFMi8E9WTEGhKgZyCQJy+sUHIHHCS0cLnpN332u6e6hWUrjK52JCbkWAzAKk7HnM1RYP
+         vhZY47ZsVKLSdDiGqZEy1BAkmWXEY1wi3wBi2xL9y0b/kKcas6ZeedJ8pTQHLBHCO10y
+         Zfe9UNBmp7Djeoqfk/lYmUzZ1YAVnzd8FsK/ChX17SU4mhjwns/S062pAvffYT2JrI+S
+         sOAitxTQrnvnogOCKtucvk3Yjmk8JWABiaa9yvi0vbwc2v1/L49CIpcLHOxAzyJNaJXP
+         FN7Q==
+X-Gm-Message-State: AElRT7HOIkb1kUei3cu2rIW2TjNsYOmqA1A7/ubMJXuOdzHT+W9H+BeA
+        Su3pZ2+YDyLcsLdme8Jnf64CgCykvfQ=
+X-Google-Smtp-Source: AG47ELuUhO4VidYL8qj80tq6IiRw2kYjNT+Zw8YByvMZ7xGPII1P+zOwqvcX7X1s5XRCRdX1bTJGYw==
+X-Received: by 2002:a17:902:3181:: with SMTP id x1-v6mr8474418plb.338.1521737857985;
+        Thu, 22 Mar 2018 09:57:37 -0700 (PDT)
 Received: from wink-desktop.hsd1.ca.comcast.net ([2601:647:cb02:7980:314d:6e5e:475c:ebd3])
-        by smtp.gmail.com with ESMTPSA id 2sm15043830pfo.70.2018.03.22.09.57.33
+        by smtp.gmail.com with ESMTPSA id 2sm15043830pfo.70.2018.03.22.09.57.36
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 22 Mar 2018 09:57:34 -0700 (PDT)
+        Thu, 22 Mar 2018 09:57:36 -0700 (PDT)
 From:   Wink Saville <wink@saville.com>
 To:     git@vger.kernel.org
 Cc:     Wink Saville <wink@saville.com>, sunshine@sunshineco.com,
         Johannes.Schindelin@gmx.de, gitster@pobox.com
-Subject: [RFC PATCH v3 0/9] rebase-interactive:
-Date:   Thu, 22 Mar 2018 09:57:20 -0700
-Message-Id: <cover.1521690197.git.wink@saville.com>
+Subject: [RFC PATCH v3 1/9] Simplify pick_on_preserving_merges
+Date:   Thu, 22 Mar 2018 09:57:21 -0700
+Message-Id: <41b0b34f7d56fd1600dc1dcadd9836f02f139fe3.1521690197.git.wink@saville.com>
 X-Mailer: git-send-email 2.16.2
+In-Reply-To: <cover.1521690197.git.wink@saville.com>
+References: <cover.1521690197.git.wink@saville.com>
+In-Reply-To: <cover.1521690197.git.wink@saville.com>
+References: <cover.1521690197.git.wink@saville.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I've incorporated review feed back to date. I'm split the change
-into 9 commits with each commit do a single class of operation.
+Signed-off-by: Wink Saville <wink@saville.com>
+---
+ git-rebase--interactive.sh | 17 +++++++----------
+ 1 file changed, 7 insertions(+), 10 deletions(-)
 
-I've prepared these commits using github and have Travis-CI setup to
-test my changes. Of the 9 commits 2 failed, the 1st and 5th commits, I
-tested those two locally and they were fine. I then restarted the builds
-on Travis-CI they finished fine so it seems the errors were spurious.
-
-Wink Saville (9):
-  Simplify pick_on_preserving_merges
-  Call git_rebase__interactive from run_specific_rebase
-  Indent function git_rebase__interactive
-  Extract functions out of git_rebase__interactive
-  Use new functions in git_rebase__interactive
-  Add and use git_rebase__interactive__preserve_merges
-  Remove unused code paths from git_rebase__interactive
-  Remove unused code paths from git_rebase__interactive__preserve_merges
-  Remove merges_option and a blank line
-
- git-rebase--interactive.sh | 407 ++++++++++++++++++++++++---------------------
- git-rebase.sh              |  16 +-
- 2 files changed, 229 insertions(+), 194 deletions(-)
-
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index 331c8dfea..561e2660e 100644
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -307,17 +307,14 @@ pick_one_preserving_merges () {
+ 	esac
+ 	sha1=$(git rev-parse $sha1)
+ 
+-	if test -f "$state_dir"/current-commit
++	if test -f "$state_dir"/current-commit && test "$fast_forward" = t
+ 	then
+-		if test "$fast_forward" = t
+-		then
+-			while read current_commit
+-			do
+-				git rev-parse HEAD > "$rewritten"/$current_commit
+-			done <"$state_dir"/current-commit
+-			rm "$state_dir"/current-commit ||
+-				die "$(gettext "Cannot write current commit's replacement sha1")"
+-		fi
++		while read current_commit
++		do
++			git rev-parse HEAD > "$rewritten"/$current_commit
++		done <"$state_dir"/current-commit
++		rm "$state_dir"/current-commit ||
++			die "$(gettext "Cannot write current commit's replacement sha1")"
+ 	fi
+ 
+ 	echo $sha1 >> "$state_dir"/current-commit
 -- 
 2.16.2
 
