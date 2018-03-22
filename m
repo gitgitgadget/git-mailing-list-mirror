@@ -6,75 +6,101 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0E2CF1F404
-	for <e@80x24.org>; Thu, 22 Mar 2018 06:05:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4E5401F42D
+	for <e@80x24.org>; Thu, 22 Mar 2018 08:07:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752145AbeCVGFo (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Mar 2018 02:05:44 -0400
-Received: from cloud.peff.net ([104.130.231.41]:38478 "HELO cloud.peff.net"
+        id S1752580AbeCVIHp (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Mar 2018 04:07:45 -0400
+Received: from cloud.peff.net ([104.130.231.41]:38500 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1752004AbeCVGFo (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Mar 2018 02:05:44 -0400
-Received: (qmail 28706 invoked by uid 109); 22 Mar 2018 06:05:44 -0000
+        id S1752494AbeCVIHm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Mar 2018 04:07:42 -0400
+Received: (qmail 1900 invoked by uid 109); 22 Mar 2018 08:07:42 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 22 Mar 2018 06:05:44 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 22 Mar 2018 08:07:41 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 17726 invoked by uid 111); 22 Mar 2018 06:06:40 -0000
+Received: (qmail 17859 invoked by uid 111); 22 Mar 2018 08:08:38 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 22 Mar 2018 02:06:40 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 22 Mar 2018 04:08:38 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 22 Mar 2018 02:05:41 -0400
-Date:   Thu, 22 Mar 2018 02:05:41 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 22 Mar 2018 04:07:40 -0400
+Date:   Thu, 22 Mar 2018 04:07:40 -0400
 From:   Jeff King <peff@peff.net>
-To:     git@jeffhostetler.com
-Cc:     git@vger.kernel.org, gitster@pobox.com, avarab@gmail.com,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v2] routines to generate JSON data
-Message-ID: <20180322060541.GA28476@sigill.intra.peff.net>
-References: <20180321192827.44330-1-git@jeffhostetler.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        e@80x24.org, git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [PATCH v6 00/11] nd/pack-objects-pack-struct updates
+Message-ID: <20180322080740.GA28907@sigill.intra.peff.net>
+References: <20180317141033.21545-1-pclouds@gmail.com>
+ <20180318142526.9378-1-pclouds@gmail.com>
+ <20180321082441.GB25537@sigill.intra.peff.net>
+ <87tvt9xuel.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20180321192827.44330-1-git@jeffhostetler.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87tvt9xuel.fsf@evledraar.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 21, 2018 at 07:28:26PM +0000, git@jeffhostetler.com wrote:
+On Wed, Mar 21, 2018 at 05:31:14PM +0100, Ævar Arnfjörð Bjarmason wrote:
 
-> It includes a new "struct json_writer" which is used to guide the
-> accumulation of JSON data -- knowing whether an object or array is
-> currently being composed.  This allows error checking during construction.
+> > [...]Yes, having that many packs is insane, but that's going to be
+> > small consolation to somebody whose automated maintenance program now
+> > craps out at 16k packs, when it previously would have just worked to
+> > fix the situation[...]
 > 
-> It also allows construction of nested structures using an inline model (in
-> addition to the original bottom-up composition).
+> That's going to be super rare (and probably nonexisting) edge case, but
+> (untested) I wonder if something like this on top would alleviate your
+> concerns, i.e. instead of dying we just take the first N packs up to our
+> limit:
+
+I wish you were right about the rarity, but it's unfortunately something
+I have seen multiple times in the wild (and why I spent time optimizing
+the many-packs case for pack-objects). Unfortunately I don't know how
+often it actually comes up, because in theory running "git repack"
+cleans it up without further ado. But after these patches, not so much.
+
+I'll admit that my experiences aren't necessarily typical of most git
+users. But I wouldn't be surprised if other people hosting their own
+repositories run into this, too (e.g., somebody pushing in a loop,
+auto-gc disabled or clogged by something silly like the "too many loose
+objects" warning).
+
+>     diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+>     index 4406af640f..49d467ab2a 100644
+>     --- a/builtin/pack-objects.c
+>     +++ b/builtin/pack-objects.c
+>     @@ -1065,8 +1065,9 @@ static int want_object_in_pack(const struct object_id *oid,
 > 
-> The test helper has been updated to include both the original unit tests and
-> a new scripting API to allow individual tests to be written directly in our
-> t/t*.sh shell scripts.
+>             want = 1;
+>      done:
+>     -       if (want && *found_pack && !(*found_pack)->index)
+>     -               oe_add_pack(&to_pack, *found_pack);
+>     +       if (want && *found_pack && !(*found_pack)->index) {
+>     +               if (oe_add_pack(&to_pack, *found_pack) == -1)
+>     +                       return 0;
 
-Thanks for all of this. The changes look quite sensible to me (I do
-still suspect we could do the "first_item" thing without having to
-allocate, but I really like the assertions you were able to put in).
+Something like this does seem like a much better fallback, as we'd make
+forward progress instead of aborting (and exacerbating whatever caused
+the packs to stack up in the first place).
 
-> So I think for our uses here, defining this as "JSON-like" is probably the
-> best answer.  We write the strings as we received them (from the file system,
-> the index, or whatever).  These strings are properly escaped WRT double
-> quotes, backslashes, and control characters, so we shouldn't have an issue
-> with decoders getting out of sync -- only with them rejecting non-UTF-8
-> sequences.
+I think the patch as-is does not work, though. You say "oops, too many
+packs" and so the "yes we want this object" return becomes "no, we do
+not want it". And it is not included in the resulting packfile.
 
-Yeah, I think I've come to the same conclusion. My main goal in raising
-it now was to see if there was some other format we might use before we
-go too far down the JSON road. But as far as I can tell there really
-isn't another good option.
+But what happens after that? After pack-objects finishes, we return to
+"git repack", which assumes that pack-objects packed everything it was
+told to. And with "-d", it then _deletes_ the old packs, knowing that
+anything of value was copied to the new pack. So with this patch, we'd
+corrupt the repository if this code is ever hit.
 
-> WRT binary data, I had not intended using this for binary data.  And without
-> knowing what kinds or quantity of binary data we might use it for, I'd like
-> to ignore this for now.
-
-Yeah, I don't have any plans here either. I was thinking more about
-things like author names and file paths.
+You'd need some way to report back to "git repack" that the pack was
+omitted. Or probably more sensibly, you'd need "git repack" to count up
+the packs and make sure that it marks anybody beyond the limit manually
+as .keep (presumably using Duy's new command-line option rather than
+actually writing a file).
 
 -Peff
