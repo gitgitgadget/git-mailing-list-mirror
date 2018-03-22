@@ -2,89 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 04FDC1F42D
-	for <e@80x24.org>; Thu, 22 Mar 2018 08:38:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D714F1F42D
+	for <e@80x24.org>; Thu, 22 Mar 2018 09:32:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752705AbeCVIin (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Mar 2018 04:38:43 -0400
-Received: from mail-wm0-f48.google.com ([74.125.82.48]:54181 "EHLO
-        mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751768AbeCVIij (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Mar 2018 04:38:39 -0400
-Received: by mail-wm0-f48.google.com with SMTP id e194so14246760wmd.3
-        for <git@vger.kernel.org>; Thu, 22 Mar 2018 01:38:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=kyvgxiAtaKQdDzgXo5Qwg5ik7G8q5sLyhnPYI5DM80Q=;
-        b=dA/p5zA6cbf8omGabyHq6bhMtnl0p55LClm/xQGv4srZCZPN1m3Qkxwct3SOGP67Mt
-         tXYqJ1a1sMfGWXEguOaJryFnqZw3SmJqauRhzsH0aUqbM+LPjcgu+SctzuvY15FR0wOk
-         iPgp1j5ahmAItfYHky72HmQmlP167OroOrMTTq7XBYkLfxUinFmAy1eJjPvMlrXNMw/p
-         aUvp6rZsgx0XurvGCsx/GyNgPc8HNvK+c8seOa2Bj3tVCWN++rmoDd1E0dzmV/bXtumy
-         XNaiWE6Jv5lrLcuR2G4DzrLsb+l2qu6ZxB8K9ApLBT/uCMART4jtg27RPw4LQepiG6hx
-         wvqQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=kyvgxiAtaKQdDzgXo5Qwg5ik7G8q5sLyhnPYI5DM80Q=;
-        b=KGnDfZSfgwsZevgb04Ec2kfZf9lgSBmVzAkCb3foijClBLB8EX/h4X2bfvKNHdc68m
-         QHwAwu2hAj/KhihZl79lTCgMujfZs7SNTxonkN7ginnVBxud8+2zV0xgNHY4WHCQ9yiG
-         nVVBZ4Xj8tTxS1CWs2VFnM0rMy4oRuNTk6lYxG39I2qRs0mNvFj9UEsOVOEMIyJG/7PJ
-         A7gdepNP9u0G4uY/sKljOAs7uIlQJ/wdM+zjBjbTV7xszhhCo+KEpFOoz3Onl84RDN/o
-         TOvU8C3u0w2q/wGT0Y4ZN/hO7EOhYuHGzi1mZbHo4rKG3VSelBQRed6A8B1OS/c0sOdf
-         1jKA==
-X-Gm-Message-State: AElRT7Fvf8T7f9AKfYNjH70x3LrBrMJXF5SjLdNtzeI68TIDqtYfsyTH
-        y4EudoOsNhAnDDGnB8ogQWw=
-X-Google-Smtp-Source: AG47ELtPwcV4ucwj6cWmD+/yUD3h1of12wX3NKYE5yo317AegK0xV5y/dH7TIAZjzpRL+Cl36yDgyg==
-X-Received: by 10.28.136.18 with SMTP id k18mr5209766wmd.111.1521707918224;
-        Thu, 22 Mar 2018 01:38:38 -0700 (PDT)
-Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
-        by smtp.gmail.com with ESMTPSA id p21sm7208929wmc.0.2018.03.22.01.38.36
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 22 Mar 2018 01:38:36 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     git@jeffhostetler.com
-Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v2] routines to generate JSON data
-References: <20180321192827.44330-1-git@jeffhostetler.com>
-User-agent: Debian GNU/Linux 9.4 (stretch); Emacs 25.1.1; mu4e 1.1.0
-In-reply-to: <20180321192827.44330-1-git@jeffhostetler.com>
-Date:   Thu, 22 Mar 2018 09:38:34 +0100
-Message-ID: <87sh8sy06t.fsf@evledraar.gmail.com>
+        id S1753268AbeCVJcR (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Mar 2018 05:32:17 -0400
+Received: from cloud.peff.net ([104.130.231.41]:38548 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1753171AbeCVJcP (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Mar 2018 05:32:15 -0400
+Received: (qmail 5612 invoked by uid 109); 22 Mar 2018 09:32:14 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 22 Mar 2018 09:32:14 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 18078 invoked by uid 111); 22 Mar 2018 09:33:11 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 22 Mar 2018 05:33:11 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 22 Mar 2018 05:32:12 -0400
+Date:   Thu, 22 Mar 2018 05:32:12 -0400
+From:   Jeff King <peff@peff.net>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Eric Wong <e@80x24.org>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v6 00/11] nd/pack-objects-pack-struct updates
+Message-ID: <20180322093212.GB28907@sigill.intra.peff.net>
+References: <20180317141033.21545-1-pclouds@gmail.com>
+ <20180318142526.9378-1-pclouds@gmail.com>
+ <20180321082441.GB25537@sigill.intra.peff.net>
+ <CACsJy8DkF3TpTGKp5MdS1ApC8Yj6FOL5uAg5U__PjBAQY1vdNw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CACsJy8DkF3TpTGKp5MdS1ApC8Yj6FOL5uAg5U__PjBAQY1vdNw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Wed, Mar 21, 2018 at 04:59:19PM +0100, Duy Nguyen wrote:
 
-On Wed, Mar 21 2018, git@jeffhostetler.com wrote:
+> > I hate to be a wet blanket, but am I the only one who is wondering
+> > whether the tradeoffs is worth it? 8% memory reduction doesn't seem
+> > mind-bogglingly good,
+> 
+> AEvar measured RSS. If we count objects[] array alone, the saving is
+> 40% (136 bytes per entry down to 80). Some is probably eaten up by
+> mmap in rss.
 
-> So, I'm not sure we have a route to get UTF-8-clean data out of Git, and if
-> we do it is beyond the scope of this patch series.
->
-> So I think for our uses here, defining this as "JSON-like" is probably the
-> best answer.  We write the strings as we received them (from the file system,
-> the index, or whatever).  These strings are properly escaped WRT double
-> quotes, backslashes, and control characters, so we shouldn't have an issue
-> with decoders getting out of sync -- only with them rejecting non-UTF-8
-> sequences.
->
-> We could blindly \uXXXX encode each of the hi-bit characters, if that would
-> help the parsers, but I don't want to do that right now.
->
-> WRT binary data, I had not intended using this for binary data.  And without
-> knowing what kinds or quantity of binary data we might use it for, I'd like
-> to ignore this for now.
+Measuring actual heap usage with massif, I get before/after peak heaps
+of 1728 and 1346MB respectively when repacking linux.git. So that's ~22%
+savings overall.
 
-I agree we should just ignore this problem for now given the immediate
-use-case.
+Of the used heap after your patches:
+
+ - ~40% of that is from packlist_alloc()
+ - ~17% goes to "struct object"
+ - ~10% for the object.c hash table to store all the "struct object"
+ - ~7% goes to the delta cache
+ - ~7% goes to the pack revindex (actually, there's a duplicate 7%
+       there, too; I think our peak is when we're sorting the revindex
+       and have to keep two copies in memory at once)
+ - ~5% goes to the packlist_find() hash table
+ - ~3.5% for the get_object_details() sorting list (this is only held
+	 for a minute, but again, our peak comes during this sort, which
+	 in turn loads the revindex)
+
+So 27% of the total heap goes away if you switch to a separate rev-list.
+Though it's mostly just going to a different process, it does help peak
+because that process would have exited by the time we get to the
+revindex bits.
+
+I suspect you could get the same effect by just teaching pack-objects to
+clear obj_hash and all of the allocated object structs. I think that
+should be safe to do as long as we clear _all_ of the objects, so there
+are no dangling pointers.
+
+> About the 16k limit (and some other limits as well), I'm making these
+> patches with the assumption that large scale deployment probably will
+> go with custom builds anyway. Adjusting the limits back should be
+> quite easy while we can still provide reasonable defaults for most
+> people.
+
+I think this 16k limit is the thing I _most_ dislike about the series.
+If we could tweak that case such that we always made forward progress, I
+think I'd be a lot less nervous. I responded elsewhere in the thread
+(before seeing that both Junio and you seemed aware of the issues ;) ),
+but I think it would be acceptable to have git-repack enforce the limit.
+
+That would still mean you could get into a broken state for serving
+fetches, but you could at least get out of it by running "git repack".
+
+-Peff
