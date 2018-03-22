@@ -2,108 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2AD2B1F404
-	for <e@80x24.org>; Thu, 22 Mar 2018 16:48:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9AA5C1F404
+	for <e@80x24.org>; Thu, 22 Mar 2018 16:48:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751771AbeCVQsU (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Mar 2018 12:48:20 -0400
-Received: from mail-qt0-f176.google.com ([209.85.216.176]:45170 "EHLO
-        mail-qt0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751628AbeCVQsT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Mar 2018 12:48:19 -0400
-Received: by mail-qt0-f176.google.com with SMTP id f8so9613989qtg.12
-        for <git@vger.kernel.org>; Thu, 22 Mar 2018 09:48:19 -0700 (PDT)
+        id S1751765AbeCVQs5 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Mar 2018 12:48:57 -0400
+Received: from mail-wr0-f179.google.com ([209.85.128.179]:33585 "EHLO
+        mail-wr0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751692AbeCVQs4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Mar 2018 12:48:56 -0400
+Received: by mail-wr0-f179.google.com with SMTP id z73so9412190wrb.0
+        for <git@vger.kernel.org>; Thu, 22 Mar 2018 09:48:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=to:from:subject:organization:message-id:date:user-agent
-         :mime-version;
-        bh=iMregjsRp33dCMg6XJ7UoMu3pRmIuV8D6SBmciqtarc=;
-        b=TvfkxWYmlmeOrUMi2Z17E9HF5uU50m5aXy5A4kEz4YlLd5ZgYAE3Hf1lMjsLAg/YQt
-         rS7U38+oXHj7y6fNN9qJqePA3VYmhU9o5NSweECKcLnYWOupCWMKBIYMBC2T/71CKLZ8
-         H/OfyzYK2odbNa8huNLAM1e7mRnJUuy/1SFLk=
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=/SmzKvOQjqfIkWR2BTDuuv9dGvcGbfIIGgM5RQK3E5Y=;
+        b=oH9u16b2Vp53hJX6/yX5FwUx77EaKr+TFeNaTPW51DQ/5me4ocpmumom+An66GOlxs
+         oaCrStdyMrUbDdM67chVUkZNMEBes+jWzKZPef/61rqJr2ovPu7HHtPm/0gJQyGBCIYx
+         NtVv/SWSrtcIvRxOuvyUMuLxV2ajY1/F3u41VSty7WBVG+gr6VnAXROpAoPZaKsjs5du
+         kv4pqDShaSfHPRnEDuDSiT1OAjqZVzR4mLEOG4BKRdc1uPiJ4z7tcxt4piUaYGIfXiMC
+         j+FYLWvrXQn5fLFUExmfzLCA3q/CvOvJW4/mRa3tfCODk127jAd2IXiKs+2yQ3gcwhmo
+         GGkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:to:from:subject:organization:message-id:date
-         :user-agent:mime-version;
-        bh=iMregjsRp33dCMg6XJ7UoMu3pRmIuV8D6SBmciqtarc=;
-        b=HPQnXG32nTsbrH6afjSl/0g7JlgvdIoOeguphLRmH7bL3DM20WOiiNCqFswWOfMSrh
-         4qESyX/GgtQ5Ecab4ulynfMK+tSt0USJw7Y3hHeKMdGAUEbdhZbvJ0inYJdR9lA0R/G2
-         Rs4Gox/ryy6KTaKsLMuXbtgjgpm9BPTjJdGQ7WyQBESLL6Uwkmv3f/Tr1SC0hgX3s5ht
-         7+rND+6sCG/zitR7tqrPcZNPtChBGiF3SGEgodKJD1K0p/cH6FpP4ISwHu3h6JGQwKCw
-         zQpEE5PRb65n2z2cOi0F7XvqCLzCj2/OtmeHZSpBnsXZJkLNSfxTq5+kx9Q1ekof5D82
-         0GJQ==
-X-Gm-Message-State: AElRT7GSvq1XKuy4QeJOFQmyApaw/ugnc7PESVKzxQc77zKLNN4orOdm
-        464A5LzUBoIA1EdOYJa762mWNYenYbs=
-X-Google-Smtp-Source: AIpwx4/BD5GaiyKrZeZXIX4voqitxjJ2fVIWZMriCUN4wP4XKVx3wdScvt/6TJp8drGSBqdeUG3sHA==
-X-Received: by 10.237.46.69 with SMTP id j63mr8668127qtd.52.1521737298733;
-        Thu, 22 Mar 2018 09:48:18 -0700 (PDT)
-Received: from [10.137.0.22] ([199.66.90.113])
-        by smtp.gmail.com with ESMTPSA id a199sm5130515qkb.14.2018.03.22.09.48.17
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 22 Mar 2018 09:48:17 -0700 (PDT)
-To:     git@vger.kernel.org
-From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Subject: The most efficient way to test if repositories share the same objects
-Organization: The Linux Foundation
-Message-ID: <14d0937f-0e39-7af7-a395-3046ec5d5c16@linuxfoundation.org>
-Date:   Thu, 22 Mar 2018 12:48:15 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.5.2
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=/SmzKvOQjqfIkWR2BTDuuv9dGvcGbfIIGgM5RQK3E5Y=;
+        b=BXbiUJ9CPCdvKt3YJbICNjB/pIYHv4VNLbMsokNCKW+ezVERNNAf9/pmMXN232yZQZ
+         rVohwzrZZ8WTlCxEVuqaoWr36XM+Z/IkRRpi7lgirTsWqbfIq+l6TbUEmJRmXBH/gJjx
+         oLOEIR2srQS2o5U/F4bQm36XNM4y69v0d+9fTULGVA7ybBlXCt9kmSx89XqKF8rgs3Bl
+         CMO2pXGVROAPuYiU8NZIj2MJyt0HeD7LRIe333jwgcInRA77ja668OYEduWWZdPCDZ4L
+         NpNn4x12KvIqSswIAx8WUYUbLWF1d9aKX0SNIVI7VOhFRKssVxnLE4eONnBj+5UD2gQe
+         TA7g==
+X-Gm-Message-State: AElRT7GHoAVH7j1/ZCxlseobMXvtQ/YcwGxNG/f9+r4d6fPPb4JnoU5F
+        hmVw8Hxnfxc7NsYA74LSBig=
+X-Google-Smtp-Source: AG47ELtnT93c8OSFwRWTthnqDuztyQu8FTFMXJc6t0WfIZbslPOTVmywL1wHtcTHwZ0/tsE/Z8SEtQ==
+X-Received: by 10.223.131.37 with SMTP id 34mr20962128wrd.169.1521737334939;
+        Thu, 22 Mar 2018 09:48:54 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id e67sm12928735wmf.20.2018.03.22.09.48.51
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 22 Mar 2018 09:48:52 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Phillip Wood <phillip.wood@talktalk.net>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH 0/2] rebase --recreate-merges --keep-empty: don't prune empty
+References: <20180320101114.17663-1-phillip.wood@talktalk.net>
+        <nycvar.QRO.7.76.6.1803201639540.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        <e306f33a-3cd9-b753-ed61-66b7ff614087@talktalk.net>
+        <xmqqr2oer19v.fsf@gitster-ct.c.googlers.com>
+        <1f7194bb-f48b-e229-94ae-44c58636172f@talktalk.net>
+Date:   Thu, 22 Mar 2018 09:48:51 -0700
+In-Reply-To: <1f7194bb-f48b-e229-94ae-44c58636172f@talktalk.net> (Phillip
+        Wood's message of "Thu, 22 Mar 2018 11:03:59 +0000")
+Message-ID: <xmqq8takm4y4.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="RX3GlWw1LRxZqgsBjfuD5mVbQ5tEt0ZZu"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---RX3GlWw1LRxZqgsBjfuD5mVbQ5tEt0ZZu
-Content-Type: multipart/mixed; boundary="PuupRKCuQ3zNiCvrDnFjatzfwdNQWCl8B";
- protected-headers="v1"
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: git@vger.kernel.org
-Message-ID: <14d0937f-0e39-7af7-a395-3046ec5d5c16@linuxfoundation.org>
-Subject: The most efficient way to test if repositories share the same objects
+Phillip Wood <phillip.wood@talktalk.net> writes:
 
---PuupRKCuQ3zNiCvrDnFjatzfwdNQWCl8B
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-CA
-Content-Transfer-Encoding: quoted-printable
+> On 20/03/18 19:32, Junio C Hamano wrote:
+>
+>> With or without the above plan, what we saw from you were a bit
+>> messy to queue.  The --keep-empty fix series is based on 'maint',
+>> while the --signoff series depends on changes that happened to
+>> sequencer between 'maint' and 'master', but yet depends on the
+>> former.
+>
+> Yes, that is awkward and unfortunate but the idea behind splitting them
+> into two separate series was to have a single set of bug fixes in the
+> history. The feature needed to be based on master, so if I'd had the bug
+> fixes in the same series you'd of had to cherry-pick them to maint which
+> would break branch/tag --contains. I'm not sure if that is a better option.
 
-Hi, all:
+I said "a bit messy" but that was a statement of a fact, not a
+complaint.  Sometimes, we cannot avoid that necessary solutions to
+real-life problems must be messy.
 
-What is the most efficient way to test if repoA and repoB share common
-commits? My goal is to automatically figure out if repoB can benefit
-from setting alternates to repoA and repacking. I currently do it by
-comparing the output of "show-ref --tags -s", but that does not work for
-repos without tags.
+I still think what you sent was the best organization, given the
+constraints ;-).
 
-Best,
---=20
-Konstantin Ryabitsev
-
-
---PuupRKCuQ3zNiCvrDnFjatzfwdNQWCl8B--
-
---RX3GlWw1LRxZqgsBjfuD5mVbQ5tEt0ZZu
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEARYIAB0WIQR2vl2yUnHhSB5njDW2xBzjVmSZbAUCWrPeTwAKCRC2xBzjVmSZ
-bEt9AP9xFTiTHlcxdIlRcSsaitVektlUDwdX89jCHVmFqGrRYgD8DcXi0s4rIQbw
-cchxoCr47Jy4nFq8BWxfDdeDb2Avog4=
-=iKkV
------END PGP SIGNATURE-----
-
---RX3GlWw1LRxZqgsBjfuD5mVbQ5tEt0ZZu--
+Thanks.
