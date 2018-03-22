@@ -2,166 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 41FF41F404
-	for <e@80x24.org>; Thu, 22 Mar 2018 14:16:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DFC691FAE2
+	for <e@80x24.org>; Thu, 22 Mar 2018 14:28:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754458AbeCVOQM (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Mar 2018 10:16:12 -0400
-Received: from mail-wm0-f46.google.com ([74.125.82.46]:52544 "EHLO
-        mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754280AbeCVOQK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Mar 2018 10:16:10 -0400
-Received: by mail-wm0-f46.google.com with SMTP id l9so16308895wmh.2
-        for <git@vger.kernel.org>; Thu, 22 Mar 2018 07:16:09 -0700 (PDT)
+        id S1755671AbeCVO2L (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Mar 2018 10:28:11 -0400
+Received: from mail-pl0-f51.google.com ([209.85.160.51]:34304 "EHLO
+        mail-pl0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754546AbeCVO2K (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Mar 2018 10:28:10 -0400
+Received: by mail-pl0-f51.google.com with SMTP id u11-v6so5403890plq.1
+        for <git@vger.kernel.org>; Thu, 22 Mar 2018 07:28:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=ikHp6EN8ETy2p5RluPXSiKSVrK/6Y5DvC92f/iokyH0=;
-        b=id+tCWILiS7AgNMiqeFJamt+vhfGAa6aQYhjFgvA3nfyAyo7KhIpn/Z7FGGFmCv7Vu
-         HKj6W1v5hN/KPL3+1FlgtDSPHKDJsEu0D75a0a4geDP8Tb+YjtQOUnjh2d5YBzUT9++s
-         uXD8C8aapxThLFbwmkD8KZqTRhCgLZH6x4q/PeamC7ham5kmVQbYUH+FthDpcdF8UeZr
-         x3HziIrKlWN/gaty/48qsyJ81HN6Imcu+ibSM8tMiDdQAuUmefPT/S8RpCsf743BIKn1
-         9Awqg13H5/mfoxzIeN/StIcS39s5y/1mFFIA8fbN1plqDIML3FxXikph3wy1zY8HDbjF
-         f/0Q==
+        h=message-id:to:cc:in-reply-to:from:date:subject:references;
+        bh=oNOfgcHepuZdvJKc2bwqVbHJv3mXn6cRHSg/xknF1tc=;
+        b=q1JQOVlE/eThpUI7bCG10PGfJWJ4hJArxwvh98298m/ydfQL3IRtidKuVanP+60G1Y
+         DbHaPmOXvY5gu94cMKW0Zx8fCXZ31RjTq7lzfrg/Q4jY+5wq2WOm91Qb9QCDWODBw1zW
+         EyBuViza6qNrUcodFnUYuTYz2wM5hzwdWEpin7EvPeexrCdHGdRNCSoqm8prWFXcrZw6
+         s+1cTA0L7BClJcsdbpB+682vg7ElBrK0Vry9bkahWLDvVhCs7dlSKeIMdhq+Yi97RbG1
+         Hi/Qq/jhT/soLBTIg4i2a2jIjn4c4wi/yrhBp4n+QidGb84xhTb5/p7d3ak1QYpZamc+
+         Zb7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=ikHp6EN8ETy2p5RluPXSiKSVrK/6Y5DvC92f/iokyH0=;
-        b=LJ1/LYXsb3Z7AUgJCnoH0D3w4ufQDumyEvFshzbYAx/MdietQaVNi0dXiNxDhClJKi
-         2tK9JpDU8IdjeytGKPShJnD+4frs0bi8Vzfpa4h1EMkewB97UahWRi72LBwpsXWHICK6
-         46dgY9csIXROZtpJYuTuvU7c4hxnsPFtmbWHSUifQT+ORRRulGdPVKlgHMb1ZqplPR98
-         n/JUsnPJV//Jrd/VDAm3aPUpbXJC+K9cPZeNoB4N3IG4I4WKZ0ip0oAE8sVtk+wLeTov
-         YdPI7dktoPmEqEOmY+eRmJxrfMN6AWmxrLTWTgoCs59GI53njgGfGojuTPbgJKtzkoff
-         pFOg==
-X-Gm-Message-State: AElRT7GUNdoecbmmNEnFAMBN8ixdLaocbyWtBH7EJPmeZjScOFwsPJEn
-        VK8CF9X/2lYddTXRpw3cdFI=
-X-Google-Smtp-Source: AG47ELufzw4bfioYSdP+Ie4gSqKRfl32bItIKs/xpnLPQNT4dL+3KELpnwp12wGIepxRpocxKzdXpQ==
-X-Received: by 10.80.153.68 with SMTP id l4mr1587158edb.179.1521728168990;
-        Thu, 22 Mar 2018 07:16:08 -0700 (PDT)
-Received: from localhost.localdomain (x590d0944.dyn.telefonica.de. [89.13.9.68])
-        by smtp.gmail.com with ESMTPSA id p7sm5178472edc.20.2018.03.22.07.16.07
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 22 Mar 2018 07:16:08 -0700 (PDT)
-From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+        h=x-gm-message-state:message-id:to:cc:in-reply-to:from:date:subject
+         :references;
+        bh=oNOfgcHepuZdvJKc2bwqVbHJv3mXn6cRHSg/xknF1tc=;
+        b=cn8U0MeJQ5kR1XyX9IJGJO4kFX5Pw8Cf1rhGW0y6AeM+IXBSFX27oiycea1nVqosFd
+         AzNijeyvoPt9O7YmGEQm9ddzsIEoeAlEL8/t8ruJDgquxeZ1v3pdwRA0+5pTldxoUMTT
+         0Sp9+Q/jk8XoCH66cvSxbojpwBainqZuovCR1anro17YggqTiQK1uxK7VD+soO506Y23
+         eHaHW6O4Nd0yKWX2jRvyV4U6C5avlj+d+5+32Fw6cVAOB6jC8jORLXx0injh2HxgTwxs
+         h8/P5KvW+MjWGoVdHdUR7BMFb1VOO4C4FN/uMFYm6O4Sco2SA7hyqr+5jAEtoE2UnhH/
+         rOyA==
+X-Gm-Message-State: AElRT7GdbXMPZQQBqiCDxThkzs7pksKzzgaWn3SazMpPK1Qi9TX9uPSq
+        5iUwLNHYV4MJSO5/8PxPUxM=
+X-Google-Smtp-Source: AG47ELsqlRKrzu31MCa0YleJyiM/M3iSINnjXNQGMcV3p5VmU7W8jkZoyOGJWWrQUlsQkFa4NUkoBw==
+X-Received: by 2002:a17:902:209:: with SMTP id 9-v6mr24867128plc.403.1521728889864;
+        Thu, 22 Mar 2018 07:28:09 -0700 (PDT)
+Received: from localhost (softbank126094241038.bbtec.net. [126.94.241.38])
+        by smtp.gmail.com with ESMTPSA id q17sm11879753pgt.7.2018.03.22.07.28.08
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 22 Mar 2018 07:28:09 -0700 (PDT)
+Message-ID: <5ab3bd79.d14d650a.be5c0.8544@mx.google.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>, git@vger.kernel.org,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH] completion: clear cached --options when sourcing the completion script
-Date:   Thu, 22 Mar 2018 15:16:04 +0100
-Message-Id: <20180322141604.15957-1-szeder.dev@gmail.com>
-X-Mailer: git-send-email 2.17.0.rc0.103.gbdc5836ed3
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+CC:     git@vger.kernel.org
+In-Reply-To: <xmqqpo3xnqq4.fsf@gitster-ct.c.googlers.com>
+From:   Yuki Kokubun <orga.chem.job@gmail.com>
+Date:   Thu, 22 Mar 2018 14:26:10 +0000
+Subject: Re: [PATCH] filter-branch: consider refs can refer to an object other than commit or tag
+References: <xmqqpo3xnqq4.fsf@gitster-ct.c.googlers.com>
+        <xmqqwoy5pcno.fsf@gitster-ct.c.googlers.com>
+        <20180321103504.9483-1-orga.chem.job@gmail.com>
+        <1521646299-16193-1-git-send-email-orga.chem.job@gmail.com>
+        <5ab2b606.86f5620a.c0c10.41b3@mx.google.com>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The established way to update the completion script in an already
-running shell is to simply source it again: this brings in any new
---options and features, and clears caching variables.  E.g. it clears
-the variables caching the list of (all|porcelain) git commands, so
-when they are later lazy-initialized again, then they will list and
-cache any newly installed commmands as well.
+> Yuki Kokubun <orga.chem.job@gmail.com> writes:
+> 
+> >> Yuki Kokubun <orga.chem.job@gmail.com> writes:
+> >> 
+> >> > "git filter-branch -- --all" can be confused when refs that refer to objects
+> >> > other than commits or tags exists.
+> >> > Because "git rev-parse --all" that is internally used can return refs that
+> >> > refer to an object other than commit or tag. But it is not considered in the
+> >> > phase of updating refs.
+> >> 
+> >> Could you describe what the consequence of that is?  We have a ref
+> >> that points directly at a blob object, or a ref that points at a tag
+> >> object that points at a blob object.  The current code leaves both of
+> >> these refs in "$tempdir/heads".  Then...?
+> >
+> > Sorry, this is my wrong.
+> > I wrongly thought only refs/replace can point at a blob or tree object.
+> 
+> No need to be sorry.  You still need to describe what (bad things)
+> happen if we do not filter out refs that do not point at committish
+> in the proposed log message.  
+> 
+> IOW, can you elaborate and clarify your "can be confused" at the
+> beginning?
 
-Unfortunately, since d401f3debc (git-completion.bash: introduce
-__gitcomp_builtin, 2018-02-09) and subsequent patches this doesn't
-work for a lot of git commands' options.  To eliminate a lot of
-hard-to-maintain hard-coded lists of options, those commits changed
-the completion script to use a bunch of programmatically created and
-lazy-initialized variables to cache the options of those builtin
-porcelain commands that use parse-options.  These variables are not
-cleared upon sourcing the completion script, therefore they continue
-caching the old lists of options, even when some commands recently
-learned new options or when deprecated options were removed.
+I meant the confusion is abnormal messages from the output of "git filter-branch -- --all".
+For example, this is an output of "git filter-branch -- --all":
 
-Always 'unset' these variables caching the options of builtin commands
-when sourcing the completion script.
+Rewrite bcdbd016c77df3d5641a3cf820b2ed46ba7bf3b4 (5/5) (0 seconds passed, remaining 0 predicted)
+WARNING: Ref 'refs/heads/master' is unchanged
+WARNING: Ref 'refs/heads/no-newline' is unchanged
+WARNING: Ref 'refs/heads/original' is unchanged
+error: object 1bf53b49c26465454e4ac377f2ed3f91bb1d6ac1 is a tree, not a commit
+error: object 1bf53b49c26465454e4ac377f2ed3f91bb1d6ac1 is a tree, not a commit
+fatal: ambiguous argument 'refs/replace/8a2016f3730cad8309c110f819c855403ed0a5b9^0': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+WARNING: Ref 'refs/replace/8a2016f3730cad8309c110f819c855403ed0a5b9' is unchanged
+WARNING: Ref 'refs/tags/add-file' is unchanged
+WARNING: Ref 'refs/tags/file' is unchanged
+error: object 1bf53b49c26465454e4ac377f2ed3f91bb1d6ac1 is a tree, not a commit
+error: object 1bf53b49c26465454e4ac377f2ed3f91bb1d6ac1 is a tree, not a commit
+fatal: ambiguous argument 'refs/tags/treetag^0': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+WARNING: Ref 'refs/tags/treetag' is unchanged
 
-Redirect 'unset's stderr to /dev/null, because ZSH's 'unset' complains
-if it's invoked without any arguments, i.e. no variables caching
-builtin's options are set.  This can happen, if someone were to source
-the completion script twice without completing any --options in
-between.  Bash stays silent in this case.
+You can see a lot of terrible messages such as "error" and "fatal".
+But on the whole, the result of "git filter-branch -- --all" is not so abnormal.
+So, this is a just problem about abonormal messages.
 
-Add tests to ensure that these variables are indeed cleared when the
-completion script is sourced; not just the variables caching options,
-but all other caching variables, i.e. the variables caching commands,
-porcelain commands and merge strategies as well.
-
-Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
----
-
-Fixes a recent regression introduced in 'nd/parseopt-completion'.
-
- contrib/completion/git-completion.bash |  4 ++++
- t/t9902-completion.sh                  | 31 ++++++++++++++++++++++++++
- 2 files changed, 35 insertions(+)
-
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 7c84eb1912..602352f952 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -280,6 +280,10 @@ __gitcomp ()
- 	esac
- }
- 
-+# Clear the variables caching builtins' options when (re-)sourcing
-+# the completion script.
-+unset $(set |sed -ne 's/^\(__gitcomp_builtin_[a-zA-Z0-9_][a-zA-Z0-9_]*\)=.*/\1/p') 2>/dev/null
-+
- # This function is equivalent to
- #
- #    __gitcomp "$(git xxx --git-completion-helper) ..."
-diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index e6485feb0a..4c86adadf2 100755
---- a/t/t9902-completion.sh
-+++ b/t/t9902-completion.sh
-@@ -1497,4 +1497,35 @@ do
- 	'
- done
- 
-+test_expect_success 'sourcing the completion script clears cached commands' '
-+	__git_compute_all_commands &&
-+	verbose test -n "$__git_all_commands" &&
-+	. "$GIT_BUILD_DIR/contrib/completion/git-completion.bash" &&
-+	verbose test -z "$__git_all_commands"
-+'
-+
-+test_expect_success 'sourcing the completion script clears cached porcelain commands' '
-+	__git_compute_porcelain_commands &&
-+	verbose test -n "$__git_porcelain_commands" &&
-+	. "$GIT_BUILD_DIR/contrib/completion/git-completion.bash" &&
-+	verbose test -z "$__git_porcelain_commands"
-+'
-+
-+test_expect_success 'sourcing the completion script clears cached merge strategies' '
-+	__git_compute_merge_strategies &&
-+	verbose test -n "$__git_merge_strategies" &&
-+	. "$GIT_BUILD_DIR/contrib/completion/git-completion.bash" &&
-+	verbose test -z "$__git_merge_strategies"
-+'
-+
-+test_expect_success 'sourcing the completion script clears cached --options' '
-+	__gitcomp_builtin checkout &&
-+	verbose test -n "$__gitcomp_builtin_checkout" &&
-+	__gitcomp_builtin notes_edit &&
-+	verbose test -n "$__gitcomp_builtin_notes_edit" &&
-+	. "$GIT_BUILD_DIR/contrib/completion/git-completion.bash" &&
-+	verbose test -z "$__gitcomp_builtin_checkout" &&
-+	verbose test -z "$__gitcomp_builtin_notes_edit"
-+'
-+
- test_done
--- 
-2.17.0.rc0.103.gbdc5836ed3
-
+I think this messages should be suppressed.
+How do you feel about it?
