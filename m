@@ -7,36 +7,37 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 69AFA1F404
-	for <e@80x24.org>; Thu, 22 Mar 2018 17:40:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DF3EA1F404
+	for <e@80x24.org>; Thu, 22 Mar 2018 17:40:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751733AbeCVRk1 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Mar 2018 13:40:27 -0400
+        id S1751876AbeCVRkc (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Mar 2018 13:40:32 -0400
 Received: from mail-sn1nam01on0108.outbound.protection.outlook.com ([104.47.32.108]:2404
         "EHLO NAM01-SN1-obe.outbound.protection.outlook.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1751594AbeCVRk0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Mar 2018 13:40:26 -0400
+        id S1751594AbeCVRk2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Mar 2018 13:40:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=selector1; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
- bh=n8eUwloB0wjwvG57oeWXRXkZZD6UyNKMh/4D4rgO3xs=;
- b=dvWLPOZpPyG8cJ4u7ldngM63W0qkx0fQombdl/wrMUO+YFpFmwziGF5AAa/4XZ/wvZN9hBbh/R6sZfGZQTwRXm71/EnaAok7RbvHaBse1++IKc1fPAG8wvC0aT2AvJD6gM0uu37d/usAFSstfqvyKoodxR82iP1ix+0at6hdqOI=
+ bh=F2rLU3NWUS0k/ycQp7ZTj9w/9mnvGsllGvPyMVX+510=;
+ b=XE/jR1Q69bzgaxQpyBLeK/c9VcFkX0YozaJ4BD0TuMr4a0Kr65WdcU3HtNRn//qCA1D28f3woR204NAyt4r/JiZsUuF8F9SWCfym6AklwONKkCx78bAKDYPMm2IJ/d1f8Y+BEOI58BtPyKTEV8EPXCspZZW4xV/ggwcpiaFeOGM=
 Received: from stolee-linux-2.corp.microsoft.com
  (2001:4898:8010:0:eb4a:5dff:fe0f:730f) by
  DM5PR2101MB1015.namprd21.prod.outlook.com (2603:10b6:4:a8::37) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.631.1; Thu, 22 Mar 2018 17:40:24 +0000
+ 15.20.631.1; Thu, 22 Mar 2018 17:40:26 +0000
 From:   Derrick Stolee <dstolee@microsoft.com>
 To:     git@vger.kernel.org
 Cc:     stolee@gmail.com, jonathantanmy@google.com,
         sandals@crustytoothpaste.net,
         Derrick Stolee <dstolee@microsoft.com>
-Subject: [PATCH v2 0/3] Use bsearch_hash() for abbreviations
-Date:   Thu, 22 Mar 2018 13:40:07 -0400
-Message-Id: <20180322174010.120117-1-dstolee@microsoft.com>
+Subject: [PATCH v2 2/3] packfile: define and use bsearch_pack()
+Date:   Thu, 22 Mar 2018 13:40:09 -0400
+Message-Id: <20180322174010.120117-3-dstolee@microsoft.com>
 X-Mailer: git-send-email 2.17.0.rc0
-In-Reply-To: <20180321224226.GA74743@genre.crustytoothpaste.net>
+In-Reply-To: <20180322174010.120117-1-dstolee@microsoft.com>
 References: <20180321224226.GA74743@genre.crustytoothpaste.net>
+ <20180322174010.120117-1-dstolee@microsoft.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Originating-IP: [2001:4898:8010:0:eb4a:5dff:fe0f:730f]
@@ -44,13 +45,13 @@ X-ClientProxiedBy: BN4PR10CA0017.namprd10.prod.outlook.com (2603:10b6:403::27)
  To DM5PR2101MB1015.namprd21.prod.outlook.com (2603:10b6:4:a8::37)
 X-MS-PublicTrafficType: Email
 X-MS-Office365-Filtering-HT: Tenant
-X-MS-Office365-Filtering-Correlation-Id: f843db12-ece3-4290-214c-08d5901bfe72
+X-MS-Office365-Filtering-Correlation-Id: f086f987-1393-4ae5-c976-08d5901bff6b
 X-Microsoft-Antispam: UriScan:;BCL:0;PCL:0;RULEID:(7020095)(4652020)(48565401081)(5600026)(4604075)(4534165)(4627221)(201703031133081)(201702281549075)(2017052603328)(7193020);SRVR:DM5PR2101MB1015;
-X-Microsoft-Exchange-Diagnostics: 1;DM5PR2101MB1015;3:i/f6mfsSvoBchZquWSaCZ9BeRQWz41csEDtL14PivxvPI6+FoJpV1ASI4tZr3pNvDTBoDkL9dYmZpMrnxhZNybci0bP23eGYlOEJy+JP/9N7Kl/5bjXtYcO34Xlk8PenNA5+qPVXhouk9KPcGSKvrxZBWPkIF7S45rEapazuu2Kgm+fSvj40X47J5ONV7N8L7j6d25senmG5wBI6LQW4JaH/jx6R8PzlnGBoA3rJMTQ20+rDolbwWVnM7PmbHTpD;25:oit3YErz7ew/UBRphsjaXHuUi400SFFndpXH/appgXfCYlBbTcP2FtmaFCFz0FdLhBaKFWCNWlda8VXlrwqwSMN74lZ9xMcBcMzdccLxUQOSG907uCvHP8l/z544/6o+Bb5yb7TtBtVcXyJGLea2eYbWo0CoQV3h79iUV2e20tOfrXochoPf/zP67ozFlLWjg0SPSYDiqA4aUNfKMAL+gpwY3mfwF/fcUiVQUN8jc4SY6oNvRrG4YST6jof0MmAWOgy7lTPgMWALIq57WGDr+0tv3CJYC6q1AwYpTfwPJOPOqXfLrF5TjJorQYx47vjJ9ROcziBNTe1i7ce+jUfzXQ==;31:L2UF0SllEmF4zGSdkxnZmM8N7IV79JcIJCxGM+43uZzxEZfzqHzGVFzy8Nz+gMGDNx82HXzNBWtOd5MCIp1dAS6sH0wBlAklzIfXM2VXKk+iyD9JpVlth2tIQD3UX2+gRK1RwVPvIXINhU+E0pfu1/lV7Sckile8yEH4g6CkMGrNMKIs9HFA1AH6bu7PQF5Lp/TAEwVj91MrOCnj02NtrH41vL0tlPZLnlNAtqD4OE0=
+X-Microsoft-Exchange-Diagnostics: 1;DM5PR2101MB1015;3:CMcvCc0JX7O0RI91/9bpb+MbFh3Fwytrrlo1TKtZusdsZzD1+2kI7lxOFJSlRaH1Ky4py7bcrJMPOgCA+5iSHRcc3xsOWcJgB/+ou9oN43xdCCOO6d3ubYO4EAaJeZqdomCLsSCDwQ2i9simXRyE1uMuH5hCdutfiy8CxD3aKxMjt8Lvti/Xb2N8Es8zMmJzuc198q1gz3rjP3CGmqKvkTYFxwJ+SD9E+IZWIUJ94YVb6ua8Hjjevz69EJPrNaSR;25:UNjaO4ZrYI6TBM7aZtIFajav4gHexZYolGpH6sAv5O8nWfDp9n7vxNAFvNua9h6ZkqGX0Anv8QkDdfTkuZbLNPE2g73YyxthbT7JSfxfzIxUp7JlClLt7cpPGdWJhup4C8hHq3xMuuSLKtoqBJmr/BIZhhqNortjqIx2R/ylQmhcHzR7bzKI/b0M56j8emEWSzNdNkF7/2KigVBOsXorzLTM70wacxkRJTS7kP+zE+MPN9lPvQwpJ/eh6myyZdExbGL/PMzjw1skrkgPDeIz1yHwJRDTcZ9PIybxi1ojZvk18KzfoZsGvOIUfg5EPkhKIwqZfQDlFHJI9doTMnQftA==;31:sdQZrDFGr/CJ5ivQWC5j2wke7KUJ0BRkOEL1WkHoCupMNXsTgh2e/Tn47HV+NYZrccNObyZz33me7XK14avvmg/Qoixs2qfhGVQ43vwUVk7qNOMnZld6Qz0PMPiSm68XnsCUqpTiaBUrk4pxSma4AxlJOFUGSNUVbWy4VN+/LqxFD4sL6YXD9xpAh7UBISB2xb2ZlZGodmbOW6/2xULLmZShuLiS+J+HQbfY908Ib6Y=
 X-MS-TrafficTypeDiagnostic: DM5PR2101MB1015:
-X-Microsoft-Exchange-Diagnostics: 1;DM5PR2101MB1015;20:1HJy0KNmHTmrxWRQiNqUIAIlwW+ydFwl6lkA0Bs4x8P8N1WQ6UZzNyC+e/DSsgNRYT1xXKSXGp9tmHoQmjPxztW/dNe4ovJFdHWrNqWFLBv/erYamaME2Nx3hWz1Sc7IHYCrrsjuqPrfSs1M/cSFmTuTMr4zSXDA/KTGOc0kk3z8QXFJiZl7pVZWnfNpVvoakIvsSPnCd7m2fWAr7rDBr9qKNhcLqJSM/kF9LJgVxz4xhAW5KbdN69sMC4fT82nyeSeWOTvJTW5JaXO+xMmQByCJPUdcwwwIe1gAZgeFEjZGxwgGWsDNBaO0HdkWfBoH3Qg33WRmYkZQYCSLBamMG3J/eBzWDtCRoOG+fdk9bUtHzoMlksUwjtAGU37HzSEe9Ce4jiSvTFHDYkeGJ1CG9AjL2tzQ2xzYJUvuYOlKykDnRE/vPnv2mQTMJCqmAv0YBuZuDvIGipatq4CjTztCimRDYJzuuWhRNhNI5hSOioS05mmNqZ6ugLbVYdo+EqVb;4:D3evcf17k2sJumVcL6KNVAglRWNOeDBNOalaC5Kv38koUl1q9O+WE6NqAASIRMgtv0tRL23/kfBu1O9jM7hx7f1X3hLusfcf16P7Q8ExXGK++3YpCibnclwXctZH3KAJE6XxX9+f9Jj1WzRIo7Krn41ItYiolhl6WKB1DYSTd0Kev5P1s6+cBx9DV/dklxgeJln2hDSxvwghUJKombAuHUEfL7hU4qS+ZPKDK5Pj0W9lMsnMYVyckID5kf7cKrhFV6sChfG9L9Z+z/Y4SXiSrA==
-X-Microsoft-Antispam-PRVS: <DM5PR2101MB1015C743D14D1D34106E0597A1A90@DM5PR2101MB1015.namprd21.prod.outlook.com>
-X-Exchange-Antispam-Report-Test: UriScan:;
+X-Microsoft-Exchange-Diagnostics: 1;DM5PR2101MB1015;20:5EkMKxltdA1HV4w1dZz873NGMeE7P/M7ZYFWrrzuCLNpw4WbytcQrr+I14mynjv0VFGqBcHpa01TiblxDT1+wnvfYcCpODKS+dPmTJstWR0HwD9JtxgBR3JMvMaldkB40s6loWD1nPEArnjO1a4NzcGlDDi4nR5s5aVavsyCPnYJX01jug3YkJMqmNOuO5ZMH1egTsbM7aqEf9z9UaOfIE/m4bw2VkvfstKaRUJeC2Q+jr/Qrpyg75NQFq2ZJY4x5p9Pk8CNOkSCKvf9vpHvA1glfBkQK5HjusuyAMENySadztFVoN8AvGlp4Xol/91/ZAN0bmiPM1prlZQ3oJaBJKf0EC1fAJtmLs1oBU61TQ8YeFJfs2wN7vyilUnXMJnaAO5EkUe5TypaTheh+NmgqI4F5A96Qm9o5CDOp36+jsFffroujPbp4wh/14O9B3d/ev3mak9+PsFM0Z4bPJoGgN3/X6CgeOYsg8yrOi/Y1Gtze4iouAqJB8OfSLcO7+7a;4:fFkGa3gk5ldBt8u0qeuUSAWNXlZzfGkJJ8GOR5bEzFoEard/Z1NgyqLeBAzKApqOGH3iXXW7GQvCSlEayab2c5bg8R6aDfEOXjMG+qLGscoPUKoMasfjwbzxuKOJWwpXw745sfhP8VH/gAmC0etcReIJLmidV/nQfVkmrcF5qbNMZ6Fb1yMnTn54AJpjU+hl0bXEzkKYa5+GHVFqba6L+qnG/MfOMo0ioFew9OhGl6Y2NML2QEIxqdA4GcGLYToGzvec0tbo8NLP4udMTEpirxvpfXL8xuQlVzdMkcMNzqqUCkOEGHKAj5yPwjN23W6t+Mv7qAfA1T4hFu0iCAfZx9T6AYQkZQycXXoPjCTbr1o=
+X-Microsoft-Antispam-PRVS: <DM5PR2101MB10153C2B616CB139EFE2190DA1A90@DM5PR2101MB1015.namprd21.prod.outlook.com>
+X-Exchange-Antispam-Report-Test: UriScan:(28532068793085)(89211679590171);
 X-Exchange-Antispam-Report-CFA-Test: BCL:0;PCL:0;RULEID:(8211001083)(61425038)(6040522)(2401047)(5005006)(8121501046)(3231221)(944501327)(52105095)(3002001)(10201501046)(93006095)(93001095)(6055026)(61426038)(61427038)(6041310)(20161123560045)(20161123558120)(20161123564045)(20161123562045)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(6072148)(201708071742011);SRVR:DM5PR2101MB1015;BCL:0;PCL:0;RULEID:;SRVR:DM5PR2101MB1015;
 X-Forefront-PRVS: 0619D53754
 X-Forefront-Antispam-Report: SFV:NSPM;SFS:(10019020)(366004)(39860400002)(396003)(376002)(346002)(39380400002)(199004)(189003)(68736007)(1076002)(10290500003)(6346003)(386003)(4326008)(76176011)(22452003)(305945005)(52396003)(51416003)(7696005)(52116002)(46003)(86362001)(25786009)(5660300001)(478600001)(53936002)(50466002)(6116002)(48376002)(36756003)(446003)(8936002)(2906002)(16526019)(16586007)(6916009)(81166006)(6486002)(97736004)(6666003)(81156014)(7736002)(316002)(10090500001)(107886003)(105586002)(106356001)(39060400002)(186003)(2351001)(50226002)(2361001)(86612001)(47776003)(11346002)(8676002);DIR:OUT;SFP:1102;SCL:1;SRVR:DM5PR2101MB1015;H:stolee-linux-2.corp.microsoft.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
@@ -58,38 +59,38 @@ Received-SPF: None (protection.outlook.com: microsoft.com does not designate
  permitted sender hosts)
 Authentication-Results: spf=none (sender IP is )
  smtp.mailfrom=dstolee@microsoft.com; 
-X-Microsoft-Exchange-Diagnostics: =?us-ascii?Q?1;DM5PR2101MB1015;23:xq2ghO1XFPn4wYHGDPjtX2q+1BZJPY24u8dZwrz?=
- =?us-ascii?Q?J10hsSaVk3kbvu0dV2V6iuGn88ghSsM88FWNzlaI8SRnFW9efW9BgIJImJSh?=
- =?us-ascii?Q?Ese8xRtXCO21qhQnF0SxCo1wblBs0Pxc4hEUsn5UE1QFQc1Ih5bk7FHKhu2e?=
- =?us-ascii?Q?LIHHKV7rEumqQ44mQlkI40Qo8uE+np6jDFW8XPmlND/ZVGIupJ6oK7iZwA2R?=
- =?us-ascii?Q?FM2/x0MH3nZi20UxDeQD1QobMIEmHNxDHET4J8Pv+P9u6BUZYuxgAFWi6wjR?=
- =?us-ascii?Q?E61AM+7ErCYrdm6mPN/kETdQYkdXM7WdOIk1l0aHNJjweeZZAJHzYb8+DeFK?=
- =?us-ascii?Q?LUl+YQVzJj4geXus2e5d1RZEEMZo1tp+XjTDM7SIQjdU8YPbvIbcf/JyPIKs?=
- =?us-ascii?Q?thsDuWhlmvWFT7wVCUGMKgU6SQscM5Cg/HT2M1fYCke6CULbTuQK8iCLjBfi?=
- =?us-ascii?Q?d1OgtMzdqbAq+C53leh3u5TwQSH6ck/nubBLUak7goAxZVPAVv+DEr1Pdbns?=
- =?us-ascii?Q?v9KaS/lGpFXvQkHcB3Atik064rtk27KEMFruuLP9HVEtr4amgUXaMJ0naSZJ?=
- =?us-ascii?Q?FUuj9RWoe3cuNKDIjV3n5iB50SsRBfzSepMFo3ACp2FJEBy5/NG2Wt1bwoU5?=
- =?us-ascii?Q?7ZejhJQZ1Ue4cEd2Q4Mw28cSNEbsR0OUKDe9kDeyIVEGcVpDpCPt084yFDYZ?=
- =?us-ascii?Q?KRQ2NwsMwQXcZbCBNh46xilNWsYcLgX9kxC4vaE1LJdG0TnPLdZRkgnMuUNt?=
- =?us-ascii?Q?sIL4XY+0BuDYY8oAP3as6JemUcFDZ/at9wcO6jqQCP4RhkAPPkKMySPFrGGa?=
- =?us-ascii?Q?Ax4odI6OcYXt3xuc8X7Ox5+3BIIgKva7C9h/HMlqQoqhmGPfTTZtEe7heToS?=
- =?us-ascii?Q?sUtHQI8ihBKZ+ksMAqhGZIIAOqt7IY0g/P1A+Yl9c9bDxzaFkMgiXoapTe8n?=
- =?us-ascii?Q?g7fNeuUv2ipINtkv9oGTKPL36st5MhYPJo/6ApBJfIRiisnaoVDOjTYvWdAu?=
- =?us-ascii?Q?zcRdcL9Q6J0Zq8gqftU7rkwwqD2VZ83lpm13t8/aj/x7yVtYnF1z7Y+NJY3M?=
- =?us-ascii?Q?owk9Tex5VRWFh4tm0uejCeELMdI5e9lc/LOPMDpGVRBpYL3JWB0vSmtkn59E?=
- =?us-ascii?Q?DTK+Zz7yyxD0b8r7RSP1tWh5NSOk/7EJcgJsQCng20w3XFOxNqijhV785x2+?=
- =?us-ascii?Q?ZEj+2VBbl5Grjp9u+Pdc/lgk/+YtfYn31bumPN/VDnwEEnRRcfLmDK0Z4h4f?=
- =?us-ascii?Q?KpT085sTzI45Y3sLpWHa5kH5AL4O5x60B/XVaQiXM7y+sQWByHhnmcooFhqz?=
- =?us-ascii?Q?vRA=3D=3D?=
-X-Microsoft-Antispam-Message-Info: oycKWP1QEJHzNDOBW6rXlIZVzyILKg8SEQMdxogXnDnCr8JSY7gpJvB58PUB5BcvaeYpiYlGsBXIl64tQ7E6sFXNhQipS9NPRORAX77Ao3TRkt1xwlFTqDq8JCz17YpvTFa9HeZyenmvUOX4V9xB+MGQBwk8VAsIZSoG3fOTtDwGPHtGr/pJjrvmh5Ldjy4t
-X-Microsoft-Exchange-Diagnostics: 1;DM5PR2101MB1015;6:Cfayrf8vJ2e9NzMb2/cUsYk8gIpttJ9Z2pr6CJqpMG4LHXzBlGseR076Dsv7qG0chkJjh2mOrs9OO1fwhNDRm4GW1pZQ2Pu88cVkIVVAlfRYoOUrav2T+yBez6mfgByiZNl6sazBXJRVxJ/cXaanRNccS0HW5nGQpWwwRlBnZ3kHhaI2WYJDpwNFsCyL+ENyc6ebMLUuVfHmfQWx+89o/NOuP6J98x0/RvAa7alNFlSuOZQa6ula+/FktZ/QPfgx23KC5eBBPM9JBs6f0umqBUJhbG7RL+UeE7ozhtzzSLlwBgXtnu60lFLO3PhR2o/jdf2qy2bL4eiDJ2dWTwkWqXMGKBNAwvEAAs1t1nj/7+5+mZFxIdOdM6YDAv6DwVdGeEbF6aSd89J2aT1WTCYRcty34prgpEl22HpUF9DrpKuOP3DsUCM69JKbkOSNdqB1eLghxo/0o5B41eFaUviXvg==;5:Wt5ikKINgNOXNkLSX228cZd+gNEZYL2Zf0UGxrrpp6tBK0Pao73a/1X+gbUhXha7sOi2rMyzLsIhTHf6R2hScwMPs1IJkJZ4IWxHf8QtG5y3EQswky1GDzVcX3f1qoMqX0p1VQML6pc/rKlQ/P542TEdz4Audp4AFiYdZ/cImwY=;24:FgODcjzzWZyRjYPTqG8mo883YW9rYKcns7nZlULTkqe/tGCPqK1CG5BUm1nitoBmMYaSo0SNEvtXkQdfQZQcouL9TXVwehxTpDcaQ6RUsEw=
+X-Microsoft-Exchange-Diagnostics: =?us-ascii?Q?1;DM5PR2101MB1015;23:2btdGoMBrQECcAl21KLv3tdtzVwr+Sh5ANJWJnq?=
+ =?us-ascii?Q?82IbPTsEkVG+ptBCY8W+AiT/5eGhM39CVRHkFeyvgsa35CA1ikK0B9IrhhCR?=
+ =?us-ascii?Q?38Y5tijLJ/VHI0j3xgrdV1JRmEAZpvgQqASXYIbeuDrE7bJjgyPcau0ARlor?=
+ =?us-ascii?Q?O3Yte9C2dEavYdDVlcd8JR2If/321MSvp/jvkF8tPXIrfzDAwt3GAj6GlL3P?=
+ =?us-ascii?Q?0VKGWKf4fsTmdagK9XSnC0OndiZFqpJ7kAw2TNv4l/BuC45GdC9Bt5Zh2y0Q?=
+ =?us-ascii?Q?3gnLgNQjElmP7gbcbUarPhmXBfHQW81SixuMrj7QLxaQq/naEDs6do3s9Gah?=
+ =?us-ascii?Q?zEOCvPheCfuY6/AiG2aa05EctdClDYAyHs+ffsg8MVExQKZVbRIDR8to1xDU?=
+ =?us-ascii?Q?9kbA4YaWT7uvIJgcfJxKn77XgHncak7waWDiLCIN/FY0GkTnki7tKcBzkYhL?=
+ =?us-ascii?Q?/CDNvQsVcwTChetOdcQvUp64MwKEktzACjeAmkaHFBKXEdR9WEelFiOFfcxY?=
+ =?us-ascii?Q?aZqkDwRyGid/TxLcrzt80AdLDHbH/VGZoZ6d/cnd75JbYS0c7HeVxYmzfsp5?=
+ =?us-ascii?Q?cWqUo2iVGeYESkMwO83+2sk+MN4rh45+pgjHO3uM6CdkMxzFBWp199vkuLsy?=
+ =?us-ascii?Q?C3791jDqAcNA3XbrrSUyFWtD33ixib1pGZngoNR31/oBuwTzUBFuXyexRp9J?=
+ =?us-ascii?Q?PLnugw8i+N37bRk7vjlwrGIQOzx1yctKAdN1v81xLJJKS7NhHjO9JNwB2Vsu?=
+ =?us-ascii?Q?d33KogmLb5tWoX2UWijjvMfFFFQxE0krdToWCw1XJw1zvoPVgXZG4L3SgeGu?=
+ =?us-ascii?Q?gS6kj0ISycjREukLLsCBR2GfpDMcXQJn73nQ53AgqMQo5xUAqEj5rVFmZQoD?=
+ =?us-ascii?Q?8yEC4ssB+kjudVQNepBmNe8iA6u/NcIPmE/spebQtutUyDqFFnGvZJJhuJZn?=
+ =?us-ascii?Q?hJPU0xxFztKoEF/RmyqrOotV50z7yJjQ/S1t35O9l5nI/tFtEol9BawzgoQd?=
+ =?us-ascii?Q?nu+gCnyfUIAusvqw1XxUoExz7lZXNsNevaVADEToOolcILKc/b3dhogvIqk3?=
+ =?us-ascii?Q?m4mgeuq+ePa7HoQlLftfUiU5dmdcc9WH3SeuK9SvDaoynYYpCjfKOPCDUHB1?=
+ =?us-ascii?Q?gheM7PN+d514spFPjBTeKX1GB+Zc0iY4Ia5UiPONyzh0WFsvHRyYJAuRKtme?=
+ =?us-ascii?Q?9vSYOP+/Eztc2pI/8VfVm/YbLqqurs9uuAjWmOsKYmUk3BgyEyPYOtIib2kI?=
+ =?us-ascii?Q?7Q5Wws/KnmxOhibVSntK9t3UciExIUprULbB8wop6CGfx0TNO2a9UBxbBQRC?=
+ =?us-ascii?Q?FEA=3D=3D?=
+X-Microsoft-Antispam-Message-Info: k4v50gc6//oc5+jjBHXf7hWHXNr8gr3mqVRGW+1nMs1wmTbhXan0kVb2oTjyKfCdsl+BaIqcl+W7i4oRanFjPdfCG2/xtgzMErlIF9Wjvwziyko+gu1A+IuHrbDXqaeZnE9MdL1azDHQTVbIpXE8jZF997lWkfZ+6Fl5oeytwqc1ATi/FnUcwfFqLKO9YExD
+X-Microsoft-Exchange-Diagnostics: 1;DM5PR2101MB1015;6:DRN39BcoUoqvnif4YWtFiqT0SzAg4raWtDdOK2tWPANnennT7z7K4YjXrULjgcpvzeixcfm38xcrOCNr4sYDqQPFUUeZDbwCHr1B/T9AJnF4JibqQaFGxOlg9cicLx2HbgNMC8e+nQ2zb5zqMRNQHp1Qd3nlVgGSi98HKrocHt/cAhbpZdytzPjJ3qx8/vETbB/T+kBAExZT2Eb4zNgNfA7We3cBw56A3mfuSWj6/RRkwTmQ1k3y3Ls8tHzVfSJ9Wj4AJXbUxfNRs0OcjI1vJ+uNd4yPqDC88XvjxTCew1bnI7D1ystc6NKw9nJ1SR7qDGnTSmclSkvEFzLG5+avE6tchYeMnVQx391PzQARKhBkFmEEclXkwEuWiB250rUN/1a51H7U/JVRSpD91Tv2Wy7efASc4H8AkX76MrofBXsn3NFFD+OQ37J0P93z4IUJZuL8oZ6t3AI4EYnDmXLogg==;5:f8sSPcbZKj/ErYRFRzmew+imG3waStUJ5/dm72KhDC4jLGWtipSd7y4pjH19+S0nSMcnNtbDOxz8SgW4tg1e+AC2AGyvBNa2hde2pB8VC89WyLiOPkVk2dHlf1kjUfFW+AC55S0DK2GvpJcwswhdEAguN9ThRrX0mzjzzaZciLM=;24:gIBkCNaBl+5qKHsi3+Rl6gEUfy3yWyyMz8NEt6HVblS6GEAmfbx9BGifHrvD8CLMTEx8CCMPAThDUspg7SoN5hwPJDakrUhOx6/ikv2Lmkk=
 SpamDiagnosticOutput: 1:99
 SpamDiagnosticMetadata: NSPM
-X-Microsoft-Exchange-Diagnostics: 1;DM5PR2101MB1015;7:9U9Qr2b9xlyAGROjzZQZKc5LVFl7LdTT7gH3ZpL2E1+SaCFukeIhocY5cAMDnmpVQANneT4NDihBZ1FG0RjypJIuWtyYCMhV/Rp43Ft0mondbCvsxegMtOzXHy2KBtitPLYAh2uM6+P+MkwEf1orhUiGaxN9Yj+KshBp4/kWs2vk4RHzznYdNbchLfbI/JSdbLH3xn4IrOx2fPssPX1uZ02qes7hkuuCNOqPpE3uhZ/BHG0pwF0rXiXkF6VN9wTi;20:fQkswa9+3BoD1rewEovRZy6klGCdqeIZjmRzSBEN0WLViSgkC6c4hU+QJG18iJ3c9Gofg1319nzAQAu0Zs+9tiG8z8J+P6xf4HAhwwwuMkqbVZwWGe5gAP7LfuUm+uA4Ot/4NUbIydJWCNKDFmLjQOcr6q5MnY5KLqqrBKyDuaw=
+X-Microsoft-Exchange-Diagnostics: 1;DM5PR2101MB1015;7:Clhd4ycVbXX7mfe4xCkLWN3OpI4Ncpnrbv+QoQqWHwrIp+0U0xfC60e9JxHFI4Li74CGPnXRC5aSuC3uVhNYIHazp40HQuxwi95purg0vW+2rrJrVmOw0TtYozrdlPYIqeTfB3PQi2yCpMq76GmOAwDPGIc/M94lrdyoQw2mZkci3VgVEqEGDjCzHIypfKLxe2ZjbFFasx3GWwhJyvOZdC4NcQWRSoDEnLF0qnbni55qR9b4NM1AmeY1ueRmK6uF;20:4alBOWHcq5Ke4L3hRf503y83mPSzP22USMuaOweGBFiojMh/FWX4NpBWsJSndspMCR/CthH4OcB+rwqbMiGK/UCC85Tva7HBV4kt5SdrvGx8xt0AK/nnpy6+Ki5kM2nVtG54nZtmeDnAanRSQ5zdnMjmmNTD8ypYP2etoXfsO0c=
 X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Mar 2018 17:40:24.5339
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Mar 2018 17:40:26.1780
  (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: f843db12-ece3-4290-214c-08d5901bfe72
+X-MS-Exchange-CrossTenant-Network-Message-Id: f086f987-1393-4ae5-c976-08d5901bff6b
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 72f988bf-86f1-41af-91ab-2d7cd011db47
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM5PR2101MB1015
@@ -98,25 +99,107 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks to Jonathan and Brian for the help with the proper way to handle
-OIDs and existing callers to bsearch_hash(). This patch includes one
-commit that Brian sent in the previous discussion (included again here
-for completeness).
+The method bsearch_hash() generalizes binary searches using a
+fanout table. The only consumer is currently find_pack_entry_one().
+It requires a bit of pointer arithmetic to align the fanout table
+and the lookup table depending on the pack-index version.
 
-Derrick Stolee (2):
-  packfile: define and use bsearch_pack()
-  sha1_name: use bsearch_pack() for abbreviations
+Extract the pack-index pointer arithmetic to a new method,
+bsearch_pack(), so this can be re-used in other code paths.
 
-brian m. carlson (1):
-  sha1_name: use bsearch_hash() for abbreviations
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
+ packfile.c | 42 ++++++++++++++++++++++++++----------------
+ packfile.h |  8 ++++++++
+ 2 files changed, 34 insertions(+), 16 deletions(-)
 
- packfile.c  | 42 ++++++++++++++++++++++++++----------------
- packfile.h  |  8 ++++++++
- sha1_name.c | 28 ++++++----------------------
- 3 files changed, 40 insertions(+), 38 deletions(-)
-
-
-base-commit: 1a750441a7360b29fff7a414649ece1d35acaca6
+diff --git a/packfile.c b/packfile.c
+index f26395ecab..69d3afda6c 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -1654,6 +1654,29 @@ void *unpack_entry(struct packed_git *p, off_t obj_offset,
+ 	return data;
+ }
+ 
++int bsearch_pack(const struct object_id *oid, const struct packed_git *p, uint32_t *result)
++{
++	const unsigned char *index_fanout = p->index_data;
++	const unsigned char *index_lookup;
++	int index_lookup_width;
++
++	if (!index_fanout)
++		BUG("bsearch_pack called without a valid pack-index");
++
++	index_lookup = index_fanout + 4 * 256;
++	if (p->index_version == 1) {
++		index_lookup_width = 24;
++		index_lookup += 4;
++	} else {
++		index_lookup_width = 20;
++		index_fanout += 8;
++		index_lookup += 8;
++	}
++
++	return bsearch_hash(oid->hash, (const uint32_t*)index_fanout,
++			    index_lookup, index_lookup_width, result);
++}
++
+ const unsigned char *nth_packed_object_sha1(struct packed_git *p,
+ 					    uint32_t n)
+ {
+@@ -1720,30 +1743,17 @@ off_t nth_packed_object_offset(const struct packed_git *p, uint32_t n)
+ off_t find_pack_entry_one(const unsigned char *sha1,
+ 				  struct packed_git *p)
+ {
+-	const uint32_t *level1_ofs = p->index_data;
+ 	const unsigned char *index = p->index_data;
+-	unsigned stride;
++	struct object_id oid;
+ 	uint32_t result;
+ 
+ 	if (!index) {
+ 		if (open_pack_index(p))
+ 			return 0;
+-		level1_ofs = p->index_data;
+-		index = p->index_data;
+-	}
+-	if (p->index_version > 1) {
+-		level1_ofs += 2;
+-		index += 8;
+-	}
+-	index += 4 * 256;
+-	if (p->index_version > 1) {
+-		stride = 20;
+-	} else {
+-		stride = 24;
+-		index += 4;
+ 	}
+ 
+-	if (bsearch_hash(sha1, level1_ofs, index, stride, &result))
++	hashcpy(oid.hash, sha1);
++	if (bsearch_pack(&oid, p, &result))
+ 		return nth_packed_object_offset(p, result);
+ 	return 0;
+ }
+diff --git a/packfile.h b/packfile.h
+index a7fca598d6..ec08cb2bb0 100644
+--- a/packfile.h
++++ b/packfile.h
+@@ -78,6 +78,14 @@ extern struct packed_git *add_packed_git(const char *path, size_t path_len, int
+  */
+ extern void check_pack_index_ptr(const struct packed_git *p, const void *ptr);
+ 
++/*
++ * Perform binary search on a pack-index for a given oid. Packfile is expected to
++ * have a valid pack-index.
++ *
++ * See 'bsearch_hash' for more information.
++ */
++int bsearch_pack(const struct object_id *oid, const struct packed_git *p, uint32_t *result);
++
+ /*
+  * Return the SHA-1 of the nth object within the specified packfile.
+  * Open the index if it is not already open.  The return value points
 -- 
 2.17.0.rc0
 
