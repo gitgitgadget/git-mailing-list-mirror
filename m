@@ -2,95 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CCD6A1F404
-	for <e@80x24.org>; Thu, 22 Mar 2018 16:52:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 794131F404
+	for <e@80x24.org>; Thu, 22 Mar 2018 16:57:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751827AbeCVQwk convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Thu, 22 Mar 2018 12:52:40 -0400
-Received: from mx0a-001d5301.pphosted.com ([67.231.148.98]:38938 "EHLO
-        mx0b-001d5301.pphosted.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1751628AbeCVQwj (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 22 Mar 2018 12:52:39 -0400
-X-Greylist: delayed 300 seconds by postgrey-1.27 at vger.kernel.org; Thu, 22 Mar 2018 12:52:39 EDT
-Received: from pps.filterd (m0084119.ppops.net [127.0.0.1])
-        by mx0a-001d5301.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w2MGhNW5015396;
-        Thu, 22 Mar 2018 12:47:35 -0400
-Received: from dc2-mx8.bnh.com (edge-2.bhphoto.net [74.113.190.228] (may be forged))
-        by mx0a-001d5301.pphosted.com with ESMTP id 2gumjsms30-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 22 Mar 2018 12:47:35 -0400
-Received: from DC2-DLPMTA1 (lb-fmg-svc.bhphoto.net [10.50.8.10])
-        by dc2-mx8.bnh.com (8.15.1+Sun/8.14.9) with ESMTP id w2MGlYfh018754;
-        Thu, 22 Mar 2018 12:47:34 -0400 (EDT)
-Received: from [10.150.2.236] (helo=GTB)
-        by DC2-DLPMTA1 with esmtps (TLSv1.2:ECDHE-RSA-AES256-SHA384:256)
-        (Exim 4.88)
-        (envelope-from <josephst@bhphoto.com>)
-        id 1ez3NF-000DFQ-VD; Thu, 22 Mar 2018 12:47:34 -0400
-Received: from EXMBX02B.bhphotovideo.local (10.150.2.237) by
- EXMBX01B.bhphotovideo.local (10.150.2.236) with Microsoft SMTP Server (TLS)
- id 15.0.1347.2; Thu, 22 Mar 2018 12:47:33 -0400
-Received: from EXMBX02B.bhphotovideo.local ([fe80::e062:366f:3c94:9917]) by
- EXMBX02B.bhphotovideo.local ([fe80::e062:366f:3c94:9917%17]) with mapi id
- 15.00.1347.000; Thu, 22 Mar 2018 12:47:33 -0400
-From:   Joseph Strauss <josephst@bhphoto.com>
-To:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-CC:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: RE: Bug With git rebase -p
-Thread-Topic: Bug With git rebase -p
-Thread-Index: AQHTwfw1ROpH+fLZQPeiJyRnBL5/FqPcdJyw
-Date:   Thu, 22 Mar 2018 16:47:32 +0000
-Message-ID: <e1f49e12af544f4c9ece2794f7be4d9a@EXMBX02B.bhphotovideo.local>
-References: <9a1c2c55ff7f412f8830dbdc4bc033bc@EXMBX02B.bhphotovideo.local>
-        <xmqqlgenu6qj.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1803201551480.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <44d0049acaf24e409849f929d7ae4888@EXMBX02B.bhphotovideo.local>
-        <nycvar.QRO.7.76.6.1803212332320.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
- <xmqqd0zwm5fd.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqd0zwm5fd.fsf@gitster-ct.c.googlers.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [10.50.0.10]
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-MIME-Version: 1.0
-X-MTA-device-Scanned: Yes (on DC2-DLPMTA1) 1042 bytes in 1 secs
-X-UOID: 9D432090-76D4-4370-9B96-3666A9C0E953
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,, definitions=2018-03-22_08:,,
- signatures=0
+        id S1751692AbeCVQ5i (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Mar 2018 12:57:38 -0400
+Received: from mail-pl0-f48.google.com ([209.85.160.48]:43241 "EHLO
+        mail-pl0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751586AbeCVQ5h (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Mar 2018 12:57:37 -0400
+Received: by mail-pl0-f48.google.com with SMTP id f23-v6so5681354plr.10
+        for <git@vger.kernel.org>; Thu, 22 Mar 2018 09:57:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=saville-com.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id;
+        bh=LaRY8iYradRNxEup/mvablU/U4Hwc1RlmiQKxDF0b5o=;
+        b=YrS0SlaYxMQUFQSbUtl2A5XozvFIUCwk0X8034bhDh3lchPN5Jg+PzrFbwVC1KHu9r
+         JG/LvFBPJ7HWyl1Z6WbzQq2y8/w86Xx6L4jiWWTpbtDQm7SHTy+QQScpEvWxEGEvu8bP
+         RX+wtZKVSflrqWDisNVD/jzPPGIJkspRL9gVnz48NZSGkL1N+Grruh8BbNGG1ThNFJ9X
+         qL8u6Bx4KK+bdtfjQkp7WqvtV/b8k3CFS04HgrHCbUVQYVjulCg5vOQ8MOlU4Z7n9CQw
+         7xDo46AxmW19JxV1JxXK4sGxMwLJRaFwdPymbl3j/RF72q9vC9XchnM9EH6RjwPFJ7E4
+         8LHQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=LaRY8iYradRNxEup/mvablU/U4Hwc1RlmiQKxDF0b5o=;
+        b=YT+jIcjB6bIxKxJddjpFP6zO7M6W+5ImChmw1XLJI1FEnoPIP7e+ZmTSbrKX7gXAKg
+         1P1k0fOrkaJ02YPN6rRiLRTBM0WavgjxmMZ/NJi+FKCfuJSakVHHnQabyUxTFgEiHK6c
+         iKRMFG6ulonTxEsDNxG/p0OxkzQCda2wDrOdyLhxapaFlyqcNJc7KcJIFV+qqzfgfn5P
+         YHsy79fTLvCvlQQuwY43ib732G5aFL6VJJ33kU4flw4AGVbR26kay1LHH577aR5FpKNQ
+         R9r3eS9J5zeHvZX9PzoexwHtpSerPPpaGr+oSrlCNQy0GxSIKG+oYj8CXXvzGsSOocgz
+         EhiA==
+X-Gm-Message-State: AElRT7HXFWojGHuyMgHM1+owRQ7QGrAeSlkWetdMVPe/Q6zbG/L8baiG
+        5Vj5hSaJj1Aq83BLy6srmVDiMqxiAms=
+X-Google-Smtp-Source: AG47ELuN3NdmXiu18a8fbLRCObCQgl196qgSTaT1yobD9CM0c/XpZ6pUZiErpb9JR7g+JgxVJJvhVg==
+X-Received: by 2002:a17:902:7b81:: with SMTP id w1-v6mr1926762pll.66.1521737855982;
+        Thu, 22 Mar 2018 09:57:35 -0700 (PDT)
+Received: from wink-desktop.hsd1.ca.comcast.net ([2601:647:cb02:7980:314d:6e5e:475c:ebd3])
+        by smtp.gmail.com with ESMTPSA id 2sm15043830pfo.70.2018.03.22.09.57.33
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 22 Mar 2018 09:57:34 -0700 (PDT)
+From:   Wink Saville <wink@saville.com>
+To:     git@vger.kernel.org
+Cc:     Wink Saville <wink@saville.com>, sunshine@sunshineco.com,
+        Johannes.Schindelin@gmx.de, gitster@pobox.com
+Subject: [RFC PATCH v3 0/9] rebase-interactive:
+Date:   Thu, 22 Mar 2018 09:57:20 -0700
+Message-Id: <cover.1521690197.git.wink@saville.com>
+X-Mailer: git-send-email 2.16.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I meant to say that I installed 2.17.0-rc0, and it worked perfectly. Sorry for the ambiguity.
+I've incorporated review feed back to date. I'm split the change
+into 9 commits with each commit do a single class of operation.
 
------Original Message-----
-From: Junio C Hamano [mailto:jch2355@gmail.com] On Behalf Of Junio C Hamano
-Sent: Thursday, March 22, 2018 12:39 PM
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc: Joseph Strauss <josephst@bhphoto.com>; git@vger.kernel.org
-Subject: Re: Bug With git rebase -p
+I've prepared these commits using github and have Travis-CI setup to
+test my changes. Of the 9 commits 2 failed, the 1st and 5th commits, I
+tested those two locally and they were fine. I then restarted the builds
+on Travis-CI they finished fine so it seems the errors were spurious.
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Wink Saville (9):
+  Simplify pick_on_preserving_merges
+  Call git_rebase__interactive from run_specific_rebase
+  Indent function git_rebase__interactive
+  Extract functions out of git_rebase__interactive
+  Use new functions in git_rebase__interactive
+  Add and use git_rebase__interactive__preserve_merges
+  Remove unused code paths from git_rebase__interactive
+  Remove unused code paths from git_rebase__interactive__preserve_merges
+  Remove merges_option and a blank line
 
-> On Tue, 20 Mar 2018, Joseph Strauss wrote:
->
->> Perfect. Thank you.
->
-> You are welcome.
->
-> I am puzzled, though... does your message mean that you tested the Git 
-> for Windows v2.17.0-rc0 installer and it did fix your problem? Or do 
-> you simply assume that it does fix your problem because Junio & I 
-> expect it to fix your problem?
+ git-rebase--interactive.sh | 407 ++++++++++++++++++++++++---------------------
+ git-rebase.sh              |  16 +-
+ 2 files changed, 229 insertions(+), 194 deletions(-)
 
-Thanks for asking, as I was curious about the same thing after interpreting what Joseph said as "oh, perfect that there is a packaged thing I can readily test" (implying "I'll get back to you after seeing if it helps").
+-- 
+2.16.2
+
