@@ -2,80 +2,153 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 522E41F404
-	for <e@80x24.org>; Thu, 22 Mar 2018 17:32:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4555B1F404
+	for <e@80x24.org>; Thu, 22 Mar 2018 17:36:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751753AbeCVRcP (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Mar 2018 13:32:15 -0400
-Received: from mout.gmx.net ([212.227.17.20]:34505 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751632AbeCVRcO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Mar 2018 13:32:14 -0400
-Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MZxch-1fJ4KJ1IKt-00Lp9o; Thu, 22
- Mar 2018 18:32:12 +0100
-Date:   Thu, 22 Mar 2018 18:32:11 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Wink Saville <wink@saville.com>
-cc:     Paul Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
-        Git List <git@vger.kernel.org>
-Subject: Re: [GSoC] Regarding "Convert scripts to builtins"
-In-Reply-To: <CAKk8isrOMMm0zyJ1JtH3aDm=tF5hwokZ0Wzn=D1BQ1R-qEPicw@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1803221831120.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <CADzBBBb0KDVJiX2WSNW=vC6b6paWoK=5XrnZNAY+pwpcu-t9JA@mail.gmail.com> <nycvar.QRO.7.76.6.1803211242190.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <CAKk8isrOMMm0zyJ1JtH3aDm=tF5hwokZ0Wzn=D1BQ1R-qEPicw@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1751658AbeCVRgA (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Mar 2018 13:36:00 -0400
+Received: from mail-lf0-f49.google.com ([209.85.215.49]:33485 "EHLO
+        mail-lf0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751286AbeCVRf6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Mar 2018 13:35:58 -0400
+Received: by mail-lf0-f49.google.com with SMTP id x205-v6so14406063lfa.0
+        for <git@vger.kernel.org>; Thu, 22 Mar 2018 10:35:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=eWde3pkv7GwEWCLjKR4Z4Mxz8i9bwdrTFixgBKn+oMc=;
+        b=qJPE5pCWyE6w+uoYsdRWAuGnjQON6OAE4W0qjE2lPzHXmxh34ZEVtkxF0qtxUu2MzB
+         MyvWuq5yC1Ax2AKVq7THT4LdZyB1b1FGo93bbKq2D0CsqnDx1WL7ooH8c1YW9H7b8U9f
+         WRbdI/aZl/l3V2itICs+e1sOXNN6GRrQ6oM3F5C5rF+GI2HSWtZSedwpLdXEko00hhJR
+         xv8nkEaKefaDaLhVR/uUErfdKJB90h7ehVpft+cYTHJMQBgG7Zkvs14srFMiAPTM70z+
+         0oREQRrdLF50593xmf9MKICsImBb9H09NQgmBqbihYIh4fwWkbztEZL7WV8hmagHcSJO
+         lcWg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=eWde3pkv7GwEWCLjKR4Z4Mxz8i9bwdrTFixgBKn+oMc=;
+        b=NazIo/FVJK338zkABNF+6oLtfpQheDnYyBZU5MxN3yyKsBXKm7V4vdnc8F68W7yNA7
+         7dMDunNDP3DHAqbrNu7UdC+YvZDDaSph/54XyXkmG9yzQPGdoA79CM98dmxSE9oPzR4H
+         Mnkh2U0Ys4PBlUSiqkJyHoXq9KovS2rtguiQaVDCBEk/obVPa6sVBgSo/aJM4vGVuQ78
+         J3+pTYJPReWRZKm7YNUADv9KrDbPmUz6friIjx+Erl5ogNWsWLn0Xfgl03RkxNmQB79T
+         3Y1ot3oCJuXiqFNaaafcaxl3dnFcG1G+gcByZqEbqucFlY+F+L8WvlgQGXEcDu7U3LTA
+         xKXg==
+X-Gm-Message-State: AElRT7GRLQYUT0MzWo49HgBrrguYwv0ljRQPGpkOpW6BEYhUS6+rhFLp
+        ul7l7qYWfXbDZdqeOgaVg4h0Hw==
+X-Google-Smtp-Source: AG47ELsiUU1dH6hNl00OlMaZ8FU6Da1u47um3FNXXC4CpPE0GYULvMQtYAyKH734UKvaVSkvqkU6+Q==
+X-Received: by 10.46.70.18 with SMTP id t18mr17921373lja.62.1521740157504;
+        Thu, 22 Mar 2018 10:35:57 -0700 (PDT)
+Received: from duynguyen.home (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
+        by smtp.gmail.com with ESMTPSA id b8sm867804ljj.44.2018.03.22.10.35.56
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 22 Mar 2018 10:35:56 -0700 (PDT)
+Date:   Thu, 22 Mar 2018 18:35:54 +0100
+From:   Duy Nguyen <pclouds@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH] completion: add option completion for most builtin
+ commands
+Message-ID: <20180322173553.GA20984@duynguyen.home>
+References: <20180321193039.19779-1-pclouds@gmail.com>
+ <xmqqd0zxno0j.fsf@gitster-ct.c.googlers.com>
+ <CACsJy8CWWSixQpXDh+q108j4xF8vpm5gsj2u3gJEgW=2bnXQHA@mail.gmail.com>
+ <xmqqy3ikkpba.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:vtb2NebGIX4wDbTtea9fUwn7aV9a3DfsqEUbpIqATFPzfmN0Rly
- xKph6XtaiPGIGLGytTxMUUyTu95wLrDj5i4ZBbdLzyadA1kFnhZz0zB5++FHagVQ9Jq8ViK
- PEx7zVSl/ypDJDlpD4uA0P9V2L2gPwvgdkS1ZxwVdt6Hg91E0JJq2D9iwLJvjfS4oKeaVLg
- +xxAJ2IHLdN7N2MpzywYA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:m4f/YVEDoF8=:YZHyybXLfTdYobfPAgDE4S
- dsj5Qpj77u0HwIs/3N1K5T/6c+D2ASk//7kPvPwv1VXOHXPO0hZWpxLF5GI4qkX01Brbw0EPL
- rMzisWTZotP/dCEcfFeSc/JLK0B5IAGgQj+w/28VQ6q5j9A5yemasETL5FnqpHTeGIP//Sltm
- 6a21uv4UPGySvH8unrv/DGU9VsJ0x0FM2Sz6KuNO5vaKvmO6Kc8N+ClpM8waSkbFFHO31S6hc
- eX+SQrKnKLzDBKuwg8mLurrknLSrts4G8EYh1EJheaRjjxyFIHac/qACoH4Z1sVF5EPK4NBCB
- 0BuLHQER+UpzQSgA9OJN9UZWWOiwDo+5/TAtS9gLMmIVlqrpg3LWJp65UEbJH5wejoIoa63l0
- e7HvG3E2d5qmurelkSTTJUtfeI1gFV7KdnZ8Uhz9E/on5Bexdpq/Gu6SPsgspDBsT7Ie/Bac+
- LYDZaL+3sWgqEpDU/knmiNP5fxf4x1HOjvvKQV1boOGL64wQiMBUnKY/yoABnsLloKZGBwLWh
- +FrBWQ0oeOa56k1oevX49DBjTgKSS4dZmRLnRDT0zNAa52mpO6vuMyWpSldCLmDc0/kAA3j3B
- gmwq1/ZFc4jeUAQUYaQ6Gy+THOw5OKr3NORzqWuHWGPManVyV7iZP3IdQ8/jInH8kQxBTRXgY
- 7potc3q7KbODi1ICm4HFMjFS3mN1alCoarg7xcEWNy9/o6hbF/iQuFfBHysBPZhdZyNvTDQOo
- kJPZhpjNBejiM1JC6CmFe7GnefMNRPmCD2RxRJG5gW36hCObBsnrx8AM1jlZjbuvh2jJDmLK2
- mu2cvD7k3J8csMANyy3hhs0xtArKb4y32TqEbyxd4U3DHGgcGg=
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqy3ikkpba.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Wink,
+On Thu, Mar 22, 2018 at 10:11:53AM -0700, Junio C Hamano wrote:
+> Duy Nguyen <pclouds@gmail.com> writes:
+> 
+> >> And that pattern repeats throughout the patch.  I wonder if we can
+> >> express the same a lot more concisely by updating the caller that
+> >> calls these command specific helpers?
+> >
+> > Yeah. I almost went to just generate and eval these functions. But we
+> > still need to keep a list of "bultin with --git-completion-helper"
+> > support somewhere, and people may want to complete arguments without
+> > double dashes (e.g. read-tree should take a ref...) which can't be
+> > helped by --git-completion-helper.
+> 
+> Hmph, I actually did not have 'eval' in mind.
+> 
+> Rather, I was wondering if it is cleaner to update __git_main where
+> it computes $completion_func by mangling $command and then calls
+> it---instead call __gitcomp_builtin directly when the $command
+> appears in such a "list of builtins that knows --completion-helper
+> and no custom completion".
 
-On Wed, 21 Mar 2018, Wink Saville wrote:
+Ah. Something like this? Seems to work fine and definitely not as ugly
+as eval.
 
-> I plead guilty to being the preson refactoring --preserve-merges. But
-> after reading this and seeing that --recreate-merges is coming and
-> possibly git-rebase--* moving to C I'm worried I'd be messing things up.
+-- 8< --
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 6da95b8095..960e26e09d 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -3032,6 +3032,32 @@ _git_worktree ()
+ 	fi
+ }
+ 
++__git_main_with_parseopt_helper='
++	blame cat-file check-attr check-ignore
++	check-mailmap checkout-index column count-objects fast-export
++	hash-object index-pack interpret-trailers merge-file mktree
++	pack-objects pack-refs prune prune-packed read-tree repack
++	send-pack show-ref stripspace symbolic-ref update-index
++	update-ref verify-commit verify-tag write-tree
++'
++__git_complete_command() {
++	local command="$1"
++	local completion_func="_git_${command//-/_}"
++	if declare -f $completion_func >/dev/null 2>/dev/null; then
++		$completion_func
++	elif echo $__git_main_with_parseopt_helper | git grep -w "$command" >/dev/null; then
++		case "$cur" in
++		--*)
++			__gitcomp_builtin "$command"
++			return 0
++			;;
++		esac
++		return 0
++	else
++		return 1
++	fi
++}
++
+ __git_main ()
+ {
+ 	local i c=1 command __git_dir __git_repo_path
+@@ -3091,14 +3117,12 @@ __git_main ()
+ 		return
+ 	fi
+ 
+-	local completion_func="_git_${command//-/_}"
+-	declare -f $completion_func >/dev/null 2>/dev/null && $completion_func && return
++	__git_complete_command "$command" && return
+ 
+ 	local expansion=$(__git_aliased_command "$command")
+ 	if [ -n "$expansion" ]; then
+ 		words[1]=$expansion
+-		completion_func="_git_${expansion//-/_}"
+-		declare -f $completion_func >/dev/null 2>/dev/null && $completion_func
++		__git_complete_command "$expansion"
+ 	fi
+ }
+ 
+-- 8< --
 
-Don't worry. We will just work together to avoid messing anything up.
-
-> Also, Eric Sunshine felt my v1 changes causes the blame information to
-> be obscured. So I created a v2 change which keeps everything in the
-> git-rebase--interactive.sh.
-
-Great!
-
-> Please see "[RFC PATCH 0/3] rebase-interactive" and
-> "[RFC PATCH v2 0/1] rebase-interactive: ...". I'm looking for
-> advice on how to proceed.
-
-Sadly, I had almost no time to spend on the Git mailing list today, but I
-will have a look tomorrow, okay?
-
-Ciao,
-Johannes
