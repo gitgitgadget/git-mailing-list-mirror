@@ -2,186 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8F2261F404
-	for <e@80x24.org>; Thu, 22 Mar 2018 16:58:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 61DAA1F404
+	for <e@80x24.org>; Thu, 22 Mar 2018 17:01:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751903AbeCVQ6E (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Mar 2018 12:58:04 -0400
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:43272 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751853AbeCVQ5x (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Mar 2018 12:57:53 -0400
-Received: by mail-pg0-f68.google.com with SMTP id i9so3490629pgq.10
-        for <git@vger.kernel.org>; Thu, 22 Mar 2018 09:57:53 -0700 (PDT)
+        id S1751898AbeCVRBp (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Mar 2018 13:01:45 -0400
+Received: from mail-wr0-f174.google.com ([209.85.128.174]:38910 "EHLO
+        mail-wr0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751868AbeCVRBl (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Mar 2018 13:01:41 -0400
+Received: by mail-wr0-f174.google.com with SMTP id l8so9441556wrg.5
+        for <git@vger.kernel.org>; Thu, 22 Mar 2018 10:01:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=saville-com.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :in-reply-to:references;
-        bh=E65gm5Jt8trkLkXNy76UqeoVMnfICiuvI0ADfRj8ZzM=;
-        b=C43v7T7U6D+7v63xXhWEf+CCXeMVD4csn6FGVdeV59tMH22xxqHplhY2LqdAkC2GjE
-         Vf4BDLzdcK3RCsHcApMk55h20lYOvj9yNuJ7tXR/LX+7ICkLqRGz4c0CHZc+vgzOsZ0s
-         gLY6fHvhTVbw7LI9LEJIG9J3Ypub0ZB0nXPBCP3rist9CNj9FNTAoggoXGWJW63aGG+3
-         eIL9F19l7pW4yhAr9qfjWXJtbn/qPmLDTvQGxIcGIzXzQDVp9+EadKxo7gx5VCCOERVJ
-         sgjR7GRta9zbIRNZvw6U8VKcp3SgYR9X+hQDn8CzS91nHda3ktrf8opQHaHGdIA2S+ou
-         o5zw==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=vsZJlcHWMpeAZoPfB9+wx3l9d8gBcEo2MPAKQcc45dM=;
+        b=LJaimKlfahdOwMVl93TNbOjsjkJ5FnCSOg9DLG3ABUGOhI+lltm+F7V05QFvcRIQ1H
+         HXjV9TUmkLWHDny2N8pNMxDs4rxWGALwFZJPoikLW5qankaQMUuiBZTqrclp5hdScfoA
+         z52doIt7mm/vIxzA3huDZUfSTyhoNGs18Ni99LxB4W3zwRmqxi5mS8uFdAU0dI8thpGA
+         R8thhfgNOVFdR2/8Up7jk4DAkJf7TospvZ50DbUj5NcBx+FcKri2NqmjY5xP02Dk6T6R
+         wZsbzJ4BveIQ8YqSVQmPqxiLUUBuJaBW5EFB8hOsmda0Lk+Z9E80iccJU/I+D4ottkQg
+         OBig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:in-reply-to:references;
-        bh=E65gm5Jt8trkLkXNy76UqeoVMnfICiuvI0ADfRj8ZzM=;
-        b=BonacTrvr6rCcDD6L2znJOcFTMHtafg0++DJwUEeLvr/dXJLHWodiqOb2RaftgFs2z
-         ic2Yq+bZOe/e2zgkJIUjZATv5RGqfXpM4IC3D4wEdIrbApkt95IWCnoHp3b5F8uZBWo/
-         L/ljR86z7jYBjt//yH9hnMX9LYzbVIcErGweTaSeRq4jEPQ+hIWeK/vDwzLSzFt7t0cs
-         eOQ9Lgjgr4YkLNffGDjt4xw9IaNytZ/OAsbKjaV+L7nKsznkSmBWpy/PXA3sgyjrcPpJ
-         GVZLcOCq3Jd5K1ggQ2KnLAh/UYVRlj5a+uov9emTQg0OwCmpT+w1jaUh+E8KMhU49Nj6
-         kBzQ==
-X-Gm-Message-State: AElRT7FOl6OwWfYl4uYx/wkLtMY5LKaOIHasDgG7ia4LIA+BC/7RGVYW
-        IzlflyzPtvhVcLjAn6h2V46gKSKd0bM=
-X-Google-Smtp-Source: AG47ELucvDa+2gS83zEKLvrZITna7WrYVaZB30RYm6PeJnDv3x33KkMZYqdmJqif1PgUTLaeydyCaw==
-X-Received: by 10.98.14.215 with SMTP id 84mr16765611pfo.168.1521737871860;
-        Thu, 22 Mar 2018 09:57:51 -0700 (PDT)
-Received: from wink-desktop.hsd1.ca.comcast.net ([2601:647:cb02:7980:314d:6e5e:475c:ebd3])
-        by smtp.gmail.com with ESMTPSA id 2sm15043830pfo.70.2018.03.22.09.57.49
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 22 Mar 2018 09:57:50 -0700 (PDT)
-From:   Wink Saville <wink@saville.com>
-To:     git@vger.kernel.org
-Cc:     Wink Saville <wink@saville.com>, sunshine@sunshineco.com,
-        Johannes.Schindelin@gmx.de, gitster@pobox.com
-Subject: [RFC PATCH v3 7/9] Remove unused code paths from git_rebase__interactive
-Date:   Thu, 22 Mar 2018 09:57:27 -0700
-Message-Id: <f8acfb100bc65009843605b4ee24c39decea7ea0.1521690197.git.wink@saville.com>
-X-Mailer: git-send-email 2.16.2
-In-Reply-To: <cover.1521690197.git.wink@saville.com>
-References: <cover.1521690197.git.wink@saville.com>
-In-Reply-To: <cover.1521690197.git.wink@saville.com>
-References: <cover.1521690197.git.wink@saville.com>
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=vsZJlcHWMpeAZoPfB9+wx3l9d8gBcEo2MPAKQcc45dM=;
+        b=jJytuEK3JUuM8Ai+UGQtp2hCAbhHGqgeWIsVAB1ltnQLid1tXc3F3/PBE+yktAEScQ
+         WMGBu+bzg/HMGWJGYaF8wN8lBIaIh5hIbiSYpit+88Lzg73eMDgyreuPtKCZMk1zxtUR
+         IAeZVDwVFvXsrONIAi1FtZF+NULwG7OKSmtf2rui423sfy9Q7LGX5J6AOSMlfKMx8NQz
+         jgNQwAlQ1pB1Ym/DM7DAggNgXc8Wtt6G2EnIksSkLXaxGwBu0v1PpBVJzcCTJm4wEqKq
+         A79Hv5nrZWBu0keS05EQ40JlMOyFaHyoEftJhvjkrjINu1ET2sbm5V7AA0zsQNXfQBxV
+         cJww==
+X-Gm-Message-State: AElRT7EmRdKGu54rFSkEGtEwl18xx2gB8xmunVAVnRUxaB/uKgfG4DXS
+        fLcZLAn2rH6yoW6ziQqrlCgqD0n/
+X-Google-Smtp-Source: AG47ELsMzRvCh+LL0nvQ+gpeN6NhUx+u14o5ZNf9nuLMf2BskG5oFJ2jhyTBIKq+9LlU/4z/GElZtw==
+X-Received: by 10.223.162.203 with SMTP id t11mr21504447wra.88.1521738098459;
+        Thu, 22 Mar 2018 10:01:38 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id e136sm1464036wmd.10.2018.03.22.10.01.36
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 22 Mar 2018 10:01:36 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Yuki Kokubun <orga.chem.job@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] filter-branch: consider refs can refer to an object other than commit or tag
+References: <xmqqpo3xnqq4.fsf@gitster-ct.c.googlers.com>
+        <xmqqwoy5pcno.fsf@gitster-ct.c.googlers.com>
+        <20180321103504.9483-1-orga.chem.job@gmail.com>
+        <1521646299-16193-1-git-send-email-orga.chem.job@gmail.com>
+        <5ab2b606.86f5620a.c0c10.41b3@mx.google.com>
+        <5ab3bd79.d14d650a.be5c0.8544@mx.google.com>
+Date:   Thu, 22 Mar 2018 10:01:36 -0700
+In-Reply-To: <5ab3bd79.d14d650a.be5c0.8544@mx.google.com> (Yuki Kokubun's
+        message of "Thu, 22 Mar 2018 14:26:10 +0000")
+Message-ID: <xmqq370sm4cv.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since git_rebase__interactive is now never called with
-$preserve_merges = t we can remove those code paths.
+Yuki Kokubun <orga.chem.job@gmail.com> writes:
 
-Signed-off-by: Wink Saville <wink@saville.com>
----
- git-rebase--interactive.sh | 95 ++--------------------------------------------
- 1 file changed, 4 insertions(+), 91 deletions(-)
+>> Yuki Kokubun <orga.chem.job@gmail.com> writes:
+>> 
+>> >> Yuki Kokubun <orga.chem.job@gmail.com> writes:
+>> >> 
+>> >> > "git filter-branch -- --all" can be confused when refs that refer to objects
+>> >> > other than commits or tags exists.
+>> ...
+>
+> I meant the confusion is abnormal messages from the output of "git filter-branch -- --all".
 
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index ab5513d80..346da0f67 100644
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -961,100 +961,13 @@ git_rebase__interactive () {
- 	setup_reflog_action
- 	init_basic_state
- 
--	if test t = "$preserve_merges"
--	then
--		if test -z "$rebase_root"
--		then
--			mkdir "$rewritten" &&
--			for c in $(git merge-base --all $orig_head $upstream)
--			do
--				echo $onto > "$rewritten"/$c ||
--					die "$(gettext "Could not init rewritten commits")"
--			done
--		else
--			mkdir "$rewritten" &&
--			echo $onto > "$rewritten"/root ||
--				die "$(gettext "Could not init rewritten commits")"
--		fi
--		# No cherry-pick because our first pass is to determine
--		# parents to rewrite and skipping dropped commits would
--		# prematurely end our probe
--		merges_option=
--	else
--		merges_option="--no-merges --cherry-pick"
--	fi
-+	merges_option="--no-merges --cherry-pick"
- 
- 	init_revisions_and_shortrevisions
- 
--	if test t != "$preserve_merges"
--	then
--		git rebase--helper --make-script ${keep_empty:+--keep-empty} \
--			$revisions ${restrict_revision+^$restrict_revision} >"$todo" ||
--		die "$(gettext "Could not generate todo list")"
--	else
--		format=$(git config --get rebase.instructionFormat)
--		# the 'rev-list .. | sed' requires %m to parse; the instruction requires %H to parse
--		git rev-list $merges_option --format="%m%H ${format:-%s}" \
--			--reverse --left-right --topo-order \
--			$revisions ${restrict_revision+^$restrict_revision} | \
--			sed -n "s/^>//p" |
--		while read -r sha1 rest
--		do
--
--			if test -z "$keep_empty" && is_empty_commit $sha1 && ! is_merge_commit $sha1
--			then
--				comment_out="$comment_char "
--			else
--				comment_out=
--			fi
--
--			if test -z "$rebase_root"
--			then
--				preserve=t
--				for p in $(git rev-list --parents -1 $sha1 | cut -d' ' -s -f2-)
--				do
--					if test -f "$rewritten"/$p
--					then
--						preserve=f
--					fi
--				done
--			else
--				preserve=f
--			fi
--			if test f = "$preserve"
--			then
--				touch "$rewritten"/$sha1
--				printf '%s\n' "${comment_out}pick $sha1 $rest" >>"$todo"
--			fi
--		done
--	fi
--
--	# Watch for commits that been dropped by --cherry-pick
--	if test t = "$preserve_merges"
--	then
--		mkdir "$dropped"
--		# Save all non-cherry-picked changes
--		git rev-list $revisions --left-right --cherry-pick | \
--			sed -n "s/^>//p" > "$state_dir"/not-cherry-picks
--		# Now all commits and note which ones are missing in
--		# not-cherry-picks and hence being dropped
--		git rev-list $revisions |
--		while read rev
--		do
--			if test -f "$rewritten"/$rev &&
--			   ! sane_grep "$rev" "$state_dir"/not-cherry-picks >/dev/null
--			then
--				# Use -f2 because if rev-list is telling us this commit is
--				# not worthwhile, we don't want to track its multiple heads,
--				# just the history of its first-parent for others that will
--				# be rebasing on top of it
--				git rev-list --parents -1 $rev | cut -d' ' -s -f2 > "$dropped"/$rev
--				sha1=$(git rev-list -1 $rev)
--				sane_grep -v "^[a-z][a-z]* $sha1" <"$todo" > "${todo}2" ; mv "${todo}2" "$todo"
--				rm "$rewritten"/$rev
--			fi
--		done
--	fi
-+	git rebase--helper --make-script ${keep_empty:+--keep-empty} \
-+		$revisions ${restrict_revision+^$restrict_revision} >"$todo" ||
-+	die "$(gettext "Could not generate todo list")"
- 
- 	complete_action
- }
--- 
-2.16.2
+OK, so it is not that the program logic gets confused and ends up
+performing a wrong rewrite, but mostly that it gives confusing
+messages.
 
+> For example, this is an output of "git filter-branch -- --all":
+>
+> Rewrite bcdbd016c77df3d5641a3cf820b2ed46ba7bf3b4 (5/5) (0 seconds passed, remaining 0 predicted)
+> WARNING: Ref 'refs/heads/master' is unchanged
+> WARNING: Ref 'refs/heads/no-newline' is unchanged
+> WARNING: Ref 'refs/heads/original' is unchanged
+
+These are worth keeping, as I think existing users expect to see
+them.
+
+> error: object 1bf53b49c26465454e4ac377f2ed3f91bb1d6ac1 is a tree, not a commit
+> error: object 1bf53b49c26465454e4ac377f2ed3f91bb1d6ac1 is a tree, not a commit
+> fatal: ambiguous argument 'refs/replace/8a2016f3730cad8309c110f819c855403ed0a5b9^0': unknown revision or path not in the working tree.
+> Use '--' to separate paths from revisions, like this:
+> 'git <command> [<revision>...] -- [<file>...]'
+> WARNING: Ref 'refs/replace/8a2016f3730cad8309c110f819c855403ed0a5b9' is unchanged
+> WARNING: Ref 'refs/tags/add-file' is unchanged
+> WARNING: Ref 'refs/tags/file' is unchanged
+> error: object 1bf53b49c26465454e4ac377f2ed3f91bb1d6ac1 is a tree, not a commit
+> error: object 1bf53b49c26465454e4ac377f2ed3f91bb1d6ac1 is a tree, not a commit
+> fatal: ambiguous argument 'refs/tags/treetag^0': unknown revision or path not in the working tree.
+> Use '--' to separate paths from revisions, like this:
+> 'git <command> [<revision>...] -- [<file>...]'
+> WARNING: Ref 'refs/tags/treetag' is unchanged
+
+I think these warning messages should be kept, especially if we are
+to keep the warning messages for the unchanged branches.  However,
+the internal error messages are unwanted--these are implementation
+details that reach the conclusion, i.e. the ref we were asked to
+rewrite ended up being unchanged hence we did not touch it.
+
+However, if we pre-filter to limit the refs in "$tempdir/heads" to
+those that are committish (i.e. those that pass "$ref^0") like the
+patch and subsequent discussion suggests, wouldn't we lose the
+warning for these replace refs and non-committish tags.  We perhaps
+could do something like:
+
+	git rev-parse --no-flags ... >"$tempdir/raw-heads" || exit
+
+	while read ref
+	do
+		case "$ref" in ^?*) continue ;; esac
+		if git rev-parse --verify "$ref^0" 2>/dev/null
+                then
+			echo "$ref"
+		else
+			warn "WARNING: not rewriting '$ref' (not a committish)"
+		fi
+	done >"$tempdir/heads" <"$tempdir/raw-heads"
+
+(note: the else clause is new, relative to my earlier suggestion).
