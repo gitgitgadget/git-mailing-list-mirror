@@ -2,86 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6501F1F404
-	for <e@80x24.org>; Thu, 22 Mar 2018 17:51:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3EDA51F404
+	for <e@80x24.org>; Thu, 22 Mar 2018 17:56:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751669AbeCVRvH (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Mar 2018 13:51:07 -0400
-Received: from mail-lf0-f49.google.com ([209.85.215.49]:42283 "EHLO
-        mail-lf0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751625AbeCVRvG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Mar 2018 13:51:06 -0400
-Received: by mail-lf0-f49.google.com with SMTP id a22-v6so14450513lfg.9
-        for <git@vger.kernel.org>; Thu, 22 Mar 2018 10:51:05 -0700 (PDT)
+        id S1751594AbeCVR43 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Mar 2018 13:56:29 -0400
+Received: from mail-wm0-f50.google.com ([74.125.82.50]:50576 "EHLO
+        mail-wm0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751319AbeCVR42 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Mar 2018 13:56:28 -0400
+Received: by mail-wm0-f50.google.com with SMTP id f19so17649549wmc.0
+        for <git@vger.kernel.org>; Thu, 22 Mar 2018 10:56:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=saville-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=JJiDyZPaY2fubUqbix5blwqCfNEXVyT+Rr6g7Bu9sj0=;
-        b=098uQ5bTMpsTkD0qvBZMDKtErw/Fzrd2PCAWEKSdF0IuzPENDB0eNVGXhLeiRbh/n/
-         XLUpibY2B55bOoeYHghulsEU7jTW2FH1O+vizTc873uIOEEnfcN7TIiVYKruJimaVe9H
-         j7abI6BVQJJyStfOCBqGu8loxw8/5C7+bVV4ziYDCoz9/Xx7fM4p4hE9HNecwo1MwVWB
-         BvOFiyUvugWgqqNeVcuuYnU/eigeRS2brH++AfMfVPszQ00vr9bI3no3g0RKlcdF5QpS
-         PZILJ5TGjEjM/Q0FGikU3S8YEBXpwn3hBiVWPpmV4VwyXGq7Awq8MKdTo5/6/3t3msB/
-         e5Xg==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=coB3xDzr9JnpASiVAI7JEvy3axksRgbETl4TWado+xc=;
+        b=WLXXGDR+VOnTdu26Jb2J4EjoYIWjRnIgLRd4GsY8VRnq7g5NEnFD2gONq1hmcSd9dJ
+         0kB1uCiKeOtXVva7cIxl0U+rk5IBMgOYsCse/G68FVqpbLaxZSu2GC4MBuU8UNkg5kwe
+         85DMlZeUSvTqDrZyTiXyOgfZD0R318ytzJ9RgDnA4Zsse64fDHQ2LrRLNO862dxEkWoL
+         cv5qif7o97jlN3zMZWMsDpomlvZztKBgU6QIEo5NiqZojI/HAqAoHr0xnRwuxw5sFPS5
+         qoqcyaScodsbaoJC2kNfdQsHqdK0Cg7Cv+ie41b4gVMS0NggNi39fJuOufNnP9orHmdl
+         9LEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=JJiDyZPaY2fubUqbix5blwqCfNEXVyT+Rr6g7Bu9sj0=;
-        b=d7QSgRJzrckRdr7eyTrGTRmfX6WwxKeMrryv6v5w6Q8+/KszaOoZACleohKeW4VmjL
-         9NX21gFXOj1hB8QJD3YcDVe8XHMqIczjzartXUFlotx6sOXJ6llOiZr7Sk3m+TEF36ZI
-         YtamGHO8iQgZMa/Ed7bLKS5wbaA9JDNygmkGxXy9Wr3uSTf9Aemjf5NpwwTwZ2ebC9GO
-         vN8OglCDPG9V+f5O0/au7hrsvHdtHDxAwr/2nXw6+MjWxxw7ifDHOV5qoiFO3z1FBNab
-         ifPa+WPu71muezMjsgR0BWrJ3Sxkuk4ORwmpFddHq1Ird6kjrhH+zR+EilXZUqu3ov0P
-         EtuQ==
-X-Gm-Message-State: AElRT7G3dUjiZAwTm9JRtJnBXrrtb7gLwKdTFPgIGFL+ZapmLahwXy5p
-        WYgwuRlKz4DThC+Q3+7w7LaJktFnD9PMm36Zb99Qkg==
-X-Google-Smtp-Source: AG47ELvWOw0lCT0N2vcQDjvniNMza1c4AXaLJz86sNxw4iHgn0MbM6ANdChHKFsTHcamLtbK46FnRmU8Qawi2ugzSbo=
-X-Received: by 2002:a19:ef08:: with SMTP id n8-v6mr16227368lfh.1.1521741064630;
- Thu, 22 Mar 2018 10:51:04 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=coB3xDzr9JnpASiVAI7JEvy3axksRgbETl4TWado+xc=;
+        b=ui7n5Qq0hE8gKWGxi+XOBFyy8ZSKxrhwEQqRCCUFQrW+sRoDUSR1gNr5sgK7RyGrYk
+         5I2MsZuxV5W0AToP/us9oiDbAOUncL68jjI2z/8yL/pnJDwWdp/8AL1UmiDU83+igmyQ
+         hUTLWNGcOPccK9tGExn4jdL5047v9O2YpkNzZH9GVqfVD8RPtrWp6LxudTLIHmdqn8BT
+         QHkP4Ero6IDKN8XtA9HKkB1FLCpOgumRWMkvr9QbNEwrbSMGA2yvbaFCmkjXPXJbmUWQ
+         PdAiPWPNQzoNSxb/+xM0LZ0nz3TCKMDuxfZd2/kMZ0Z7WkN8mJd3c/HrvR6lbXKDIKm4
+         uhxQ==
+X-Gm-Message-State: AElRT7EQYIue9w5b/O/hqcEA4IO35dR2qkGBnFv9ffbbD4isdBAaWFc8
+        7qBzQ4n0ZxpkODAcxzaKtwA=
+X-Google-Smtp-Source: AG47ELuBDFF7aPR0zHwBzrR0cIk4TNfGab0IBU3SoNmB1xuVZAsmlLb53mRBs2LIyBNtVoNx3m/WEA==
+X-Received: by 10.28.35.205 with SMTP id j196mr6072195wmj.108.1521741386695;
+        Thu, 22 Mar 2018 10:56:26 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id m9sm7578922wrf.13.2018.03.22.10.56.25
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 22 Mar 2018 10:56:25 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH] completion: add option completion for most builtin commands
+References: <20180321193039.19779-1-pclouds@gmail.com>
+        <xmqqd0zxno0j.fsf@gitster-ct.c.googlers.com>
+        <CACsJy8CWWSixQpXDh+q108j4xF8vpm5gsj2u3gJEgW=2bnXQHA@mail.gmail.com>
+        <xmqqy3ikkpba.fsf@gitster-ct.c.googlers.com>
+        <20180322173553.GA20984@duynguyen.home>
+Date:   Thu, 22 Mar 2018 10:56:25 -0700
+In-Reply-To: <20180322173553.GA20984@duynguyen.home> (Duy Nguyen's message of
+        "Thu, 22 Mar 2018 18:35:54 +0100")
+Message-ID: <xmqqtvt8kn92.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 2002:a19:9a93:0:0:0:0:0 with HTTP; Thu, 22 Mar 2018 10:50:43
- -0700 (PDT)
-In-Reply-To: <nycvar.QRO.7.76.6.1803221831120.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <CADzBBBb0KDVJiX2WSNW=vC6b6paWoK=5XrnZNAY+pwpcu-t9JA@mail.gmail.com>
- <nycvar.QRO.7.76.6.1803211242190.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
- <CAKk8isrOMMm0zyJ1JtH3aDm=tF5hwokZ0Wzn=D1BQ1R-qEPicw@mail.gmail.com> <nycvar.QRO.7.76.6.1803221831120.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-From:   Wink Saville <wink@saville.com>
-Date:   Thu, 22 Mar 2018 10:50:43 -0700
-Message-ID: <CAKk8isqH4uRdf4dXKpxMkNoJqpabztWNPgELqtLbSupR+_C=SA@mail.gmail.com>
-Subject: Re: [GSoC] Regarding "Convert scripts to builtins"
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Git List <git@vger.kernel.org>,
-        Paul Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 22, 2018, 10:32 AM Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
->
-> Hi Wink,
+Duy Nguyen <pclouds@gmail.com> writes:
 
+> +__git_main_with_parseopt_helper='
+> +	blame cat-file check-attr check-ignore
+> +	check-mailmap checkout-index column count-objects fast-export
+> +	hash-object index-pack interpret-trailers merge-file mktree
+> +	pack-objects pack-refs prune prune-packed read-tree repack
+> +	send-pack show-ref stripspace symbolic-ref update-index
+> +	update-ref verify-commit verify-tag write-tree
+> +'
+> +__git_complete_command() {
+> +	local command="$1"
+> +	local completion_func="_git_${command//-/_}"
+> +	if declare -f $completion_func >/dev/null 2>/dev/null; then
+> +		$completion_func
+> +	elif echo $__git_main_with_parseopt_helper | git grep -w "$command" >/dev/null; then
 
->
-> > Please see "[RFC PATCH 0/3] rebase-interactive" and
-> > "[RFC PATCH v2 0/1] rebase-interactive: ...". I'm looking for
-> > advice on how to proceed.
->
-> Sadly, I had almost no time to spend on the Git mailing list today, but I
-> will have a look tomorrow, okay?
+"git grep"???
 
+I imagined that you'd keep an associative shell array (we are not
+constrained by POSIX here) that can be used like so
 
-NP, I totally understand and, of course, I now have a
-version 3: "[RFC PATCH v3 0/9] rebase-interactive:"
+	elif test -n "${__git_main_with_parseopt_helper[$command]}"; then
 
-Cheers,
-Winthrop Lyon Saville III (I had to repsond with my full name although I
-always use my nick name, Wink, just because Johannes seems so formal :)
+Of course, a more traditional way to write it without spawning grep
+or pipe is
+
+	case " $__git_main_with_parseopt_helper " in
+	*" $command "*)
+		... Yes, $command is on the list ...
+		;;
+	*)
+		... No, $command is not on the list ...
+		;;
+	esac
