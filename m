@@ -2,92 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DDF981F404
-	for <e@80x24.org>; Thu, 22 Mar 2018 16:40:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2AD2B1F404
+	for <e@80x24.org>; Thu, 22 Mar 2018 16:48:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751987AbeCVQkp (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Mar 2018 12:40:45 -0400
-Received: from mail-co1nam03on0047.outbound.protection.outlook.com ([104.47.40.47]:22390
-        "EHLO NAM03-CO1-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1751553AbeCVQko (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Mar 2018 12:40:44 -0400
+        id S1751771AbeCVQsU (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Mar 2018 12:48:20 -0400
+Received: from mail-qt0-f176.google.com ([209.85.216.176]:45170 "EHLO
+        mail-qt0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751628AbeCVQsT (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Mar 2018 12:48:19 -0400
+Received: by mail-qt0-f176.google.com with SMTP id f8so9613989qtg.12
+        for <git@vger.kernel.org>; Thu, 22 Mar 2018 09:48:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mindbody.onmicrosoft.com; s=selector1-mindbodyonline-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
- bh=hDvXZseByX9J7Cm+Q2oopiO1NV4Vk/LZscxScdydf18=;
- b=eTWHOQYlFRAGQ87vVD+TwI/mal/pPdFwyeEj4MWjufA52aXeSedyMhf2bpfYslLhCV66toFaKVHrEO+IoKQtGHYbw2rYH5kYPUCRaiS9iU+gi7t/aionWU0o+EcFxqd8E240Zv3hfx6ClIXvRjJIp0WS7UzmZ5ZlUGfvHNfE/L8=
-Received: from DM5PR05MB3548.namprd05.prod.outlook.com (10.174.242.153) by
- DM5PR05MB3148.namprd05.prod.outlook.com (10.173.219.18) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.631.5; Thu, 22 Mar 2018 16:40:43 +0000
-Received: from DM5PR05MB3548.namprd05.prod.outlook.com
- ([fe80::88d6:f789:d91c:4e00]) by DM5PR05MB3548.namprd05.prod.outlook.com
- ([fe80::88d6:f789:d91c:4e00%3]) with mapi id 15.20.0609.006; Thu, 22 Mar 2018
- 16:40:43 +0000
-From:   John Chesshir <John.Chesshir@mindbodyonline.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: UriFormatException output when interacting with a Git server
-Thread-Topic: UriFormatException output when interacting with a Git server
-Thread-Index: AdPB+6BgMgfjOBkiQC692R1oac1TRg==
-Date:   Thu, 22 Mar 2018 16:40:42 +0000
-Message-ID: <DM5PR05MB35484CC117C6E758F520600994A90@DM5PR05MB3548.namprd05.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=John.Chesshir@mindbodyonline.com; 
-x-originating-ip: [136.179.14.254]
-x-ms-publictraffictype: Email
-x-microsoft-exchange-diagnostics: 1;DM5PR05MB3148;7:2TM+cGNkWU5D17+mKqb8ac1HSIqM2Y6l4KWmWUqPcr2LlauXL/Bu5xOr/mipDyCfoNdG2vqIrWKQjWEwII4s/QWtSa+wDTlSEZdXHypHMiz2lFev97TKRWSlwiODTxWei80+qlB78fMkOuW7wKPFUAKgCAikOuVfFnC0SIjDTQdwgvnUldvdGdVSnJhq8EIpDYWG/EZBGrbfGOsU1HBgrwhCCfo1+dwWEeFiORvDzj5G8VTYyb5M0j7s7JPgjhx+
-x-ms-exchange-antispam-srfa-diagnostics: SSOS;
-x-ms-office365-filtering-correlation-id: fcb63252-6444-4a1e-d58e-08d59013a765
-x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(7020095)(4652020)(5600026)(4604075)(3008032)(4534165)(4627221)(201703031133081)(201702281549075)(2017052603328)(7153060)(7193020);SRVR:DM5PR05MB3148;
-x-ms-traffictypediagnostic: DM5PR05MB3148:
-x-microsoft-antispam-prvs: <DM5PR05MB314822E77AC42D7037A1094194A90@DM5PR05MB3148.namprd05.prod.outlook.com>
-x-exchange-antispam-report-test: UriScan:(158342451672863)(185212123834332);
-x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(6040522)(2401047)(5005006)(8121501046)(93006095)(93001095)(3231221)(944501327)(52105095)(10201501046)(3002001)(6041310)(20161123560045)(20161123564045)(20161123558120)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(20161123562045)(6072148)(201708071742011);SRVR:DM5PR05MB3148;BCL:0;PCL:0;RULEID:;SRVR:DM5PR05MB3148;
-x-forefront-prvs: 0619D53754
-x-forefront-antispam-report: SFV:NSPM;SFS:(10009020)(346002)(39860400002)(396003)(376002)(366004)(39380400002)(189003)(199004)(966005)(14454004)(99286004)(6306002)(66066001)(9686003)(106356001)(25786009)(305945005)(7736002)(2351001)(53936002)(186003)(5640700003)(68736007)(7696005)(2900100001)(72206003)(478600001)(6436002)(26005)(86362001)(55016002)(316002)(33656002)(5660300001)(8676002)(97736004)(2501003)(81156014)(102836004)(105586002)(6506007)(2906002)(5250100002)(1730700003)(3846002)(81166006)(3660700001)(8936002)(74316002)(3280700002)(6116002)(6916009);DIR:OUT;SFP:1101;SCL:1;SRVR:DM5PR05MB3148;H:DM5PR05MB3548.namprd05.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
-received-spf: None (protection.outlook.com: mindbodyonline.com does not
- designate permitted sender hosts)
-x-microsoft-antispam-message-info: +Ftmbfm8lbhpYongn+qZxV4dT+niKOqGKWOSi3q8s9KJO850LFFkum1U3Izh7fYpGOgJzBA+VTHO4rLeLu43bv3e8ZfkH1K56HQzoNgcb6FVlA760ZjP9X0vneEtfwIpDjEB1J4sDE7SHKzuvAs8mYUORLcaFd6xkf/Bv1kZLrl+xIDJVCRqUi2eQKgVlc3LVYlrREIpgVHyclVnq1/btAmYj5RHEbYwkzKcpNJ2fMzjILvtzO57aT6fii3n9HccQG6cpadxTrGWZliNE5cgVpdDRIyEMSGiUxuMJ9TjZhTGlW2Cs0hfp2fwlTmwqbLQdi2ts6JOB+cfMSmJCiKlqQ==
-spamdiagnosticoutput: 1:99
-spamdiagnosticmetadata: NSPM
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+        d=linuxfoundation.org; s=google;
+        h=to:from:subject:organization:message-id:date:user-agent
+         :mime-version;
+        bh=iMregjsRp33dCMg6XJ7UoMu3pRmIuV8D6SBmciqtarc=;
+        b=TvfkxWYmlmeOrUMi2Z17E9HF5uU50m5aXy5A4kEz4YlLd5ZgYAE3Hf1lMjsLAg/YQt
+         rS7U38+oXHj7y6fNN9qJqePA3VYmhU9o5NSweECKcLnYWOupCWMKBIYMBC2T/71CKLZ8
+         H/OfyzYK2odbNa8huNLAM1e7mRnJUuy/1SFLk=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:to:from:subject:organization:message-id:date
+         :user-agent:mime-version;
+        bh=iMregjsRp33dCMg6XJ7UoMu3pRmIuV8D6SBmciqtarc=;
+        b=HPQnXG32nTsbrH6afjSl/0g7JlgvdIoOeguphLRmH7bL3DM20WOiiNCqFswWOfMSrh
+         4qESyX/GgtQ5Ecab4ulynfMK+tSt0USJw7Y3hHeKMdGAUEbdhZbvJ0inYJdR9lA0R/G2
+         Rs4Gox/ryy6KTaKsLMuXbtgjgpm9BPTjJdGQ7WyQBESLL6Uwkmv3f/Tr1SC0hgX3s5ht
+         7+rND+6sCG/zitR7tqrPcZNPtChBGiF3SGEgodKJD1K0p/cH6FpP4ISwHu3h6JGQwKCw
+         zQpEE5PRb65n2z2cOi0F7XvqCLzCj2/OtmeHZSpBnsXZJkLNSfxTq5+kx9Q1ekof5D82
+         0GJQ==
+X-Gm-Message-State: AElRT7GSvq1XKuy4QeJOFQmyApaw/ugnc7PESVKzxQc77zKLNN4orOdm
+        464A5LzUBoIA1EdOYJa762mWNYenYbs=
+X-Google-Smtp-Source: AIpwx4/BD5GaiyKrZeZXIX4voqitxjJ2fVIWZMriCUN4wP4XKVx3wdScvt/6TJp8drGSBqdeUG3sHA==
+X-Received: by 10.237.46.69 with SMTP id j63mr8668127qtd.52.1521737298733;
+        Thu, 22 Mar 2018 09:48:18 -0700 (PDT)
+Received: from [10.137.0.22] ([199.66.90.113])
+        by smtp.gmail.com with ESMTPSA id a199sm5130515qkb.14.2018.03.22.09.48.17
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 22 Mar 2018 09:48:17 -0700 (PDT)
+To:     git@vger.kernel.org
+From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Subject: The most efficient way to test if repositories share the same objects
+Organization: The Linux Foundation
+Message-ID: <14d0937f-0e39-7af7-a395-3046ec5d5c16@linuxfoundation.org>
+Date:   Thu, 22 Mar 2018 12:48:15 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.2
 MIME-Version: 1.0
-X-OriginatorOrg: mindbodyonline.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: fcb63252-6444-4a1e-d58e-08d59013a765
-X-MS-Exchange-CrossTenant-originalarrivaltime: 22 Mar 2018 16:40:42.9415
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 4f2dfe35-1884-424a-b8d0-7c69ffcf7d92
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM5PR05MB3148
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="RX3GlWw1LRxZqgsBjfuD5mVbQ5tEt0ZZu"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I'm getting this error on a fresh install of git version 2.16.2.windows.1:
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--RX3GlWw1LRxZqgsBjfuD5mVbQ5tEt0ZZu
+Content-Type: multipart/mixed; boundary="PuupRKCuQ3zNiCvrDnFjatzfwdNQWCl8B";
+ protected-headers="v1"
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: git@vger.kernel.org
+Message-ID: <14d0937f-0e39-7af7-a395-3046ec5d5c16@linuxfoundation.org>
+Subject: The most efficient way to test if repositories share the same objects
 
-fatal: UriFormatException encountered.
-=A0=A0 queryUrl
+--PuupRKCuQ3zNiCvrDnFjatzfwdNQWCl8B
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-CA
+Content-Transfer-Encoding: quoted-printable
 
-See this post I found, https://stackoverflow.com/questions/48775400/git-fat=
-al-uriformatexception-encountered-actualurl for more details.=A0 Note that =
-the latest comments are mine, and describe the conditions on which I first =
-saw the problem.=A0 I'll warn you, it's weird.
+Hi, all:
 
-Thank you,
-John Chesshir
+What is the most efficient way to test if repoA and repoB share common
+commits? My goal is to automatically figure out if repoB can benefit
+from setting alternates to repoA and repacking. I currently do it by
+comparing the output of "show-ref --tags -s", but that does not work for
+repos without tags.
 
-P.S.=A0 I also found this older post, which appears related, but has clearl=
-y been fixed: https://superuser.com/questions/1114193/when-cloning-on-with-=
-git-bash-on-windows-getting-fatal-uriformatexception-enco.=A0 Include just =
-in case that helps get closer to the latest problem.
+Best,
+--=20
+Konstantin Ryabitsev
+
+
+--PuupRKCuQ3zNiCvrDnFjatzfwdNQWCl8B--
+
+--RX3GlWw1LRxZqgsBjfuD5mVbQ5tEt0ZZu
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEARYIAB0WIQR2vl2yUnHhSB5njDW2xBzjVmSZbAUCWrPeTwAKCRC2xBzjVmSZ
+bEt9AP9xFTiTHlcxdIlRcSsaitVektlUDwdX89jCHVmFqGrRYgD8DcXi0s4rIQbw
+cchxoCr47Jy4nFq8BWxfDdeDb2Avog4=
+=iKkV
+-----END PGP SIGNATURE-----
+
+--RX3GlWw1LRxZqgsBjfuD5mVbQ5tEt0ZZu--
