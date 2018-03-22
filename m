@@ -2,125 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B26741F404
-	for <e@80x24.org>; Thu, 22 Mar 2018 01:47:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8DA291F404
+	for <e@80x24.org>; Thu, 22 Mar 2018 05:13:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754170AbeCVBrR (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Mar 2018 21:47:17 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:35933 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752752AbeCVBrQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Mar 2018 21:47:16 -0400
-Received: by mail-wm0-f66.google.com with SMTP id x82so13149670wmg.1
-        for <git@vger.kernel.org>; Wed, 21 Mar 2018 18:47:15 -0700 (PDT)
+        id S1752238AbeCVFNa (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Mar 2018 01:13:30 -0400
+Received: from mail-oi0-f44.google.com ([209.85.218.44]:43241 "EHLO
+        mail-oi0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752199AbeCVFN3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Mar 2018 01:13:29 -0400
+Received: by mail-oi0-f44.google.com with SMTP id y27-v6so6326130oix.10
+        for <git@vger.kernel.org>; Wed, 21 Mar 2018 22:13:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=pGUqpqgz5YkRs56OWXJQIKCi0YYDaVhANzXkG/wDQEw=;
-        b=OCDUac9YaNVYvz1tPAH9xqKUf5ox9pifvBVIFVM08twrqOsZQr87o+Lh4EAlKd+OUe
-         M1Myt3S4u5mTFlrRCBFhltauL4jP/kzAjdLZfRiiUyqL2iSWbAP8SrshZHg2+QZAiCZw
-         8Rvbq7dPhPebhesm+U8JwV9KzELuGIeN5Btonubm3xLWwtLzdTTZLxHcmno7vHcohPPG
-         ZO6DrDJ1jc991bx/7ODnK30gQAEBUka14a1mlZXfmnRhdZoaNJb2kDY3I9WsnLGW2Dnd
-         IbBaMmB3cEwpoW5rH+/b/VZSh8sR9ZSgvXQD4IAsFrT8sQxzw2lRErxqBNq0AFSCD96V
-         xIxA==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=TfulljaKRnIJmE/ox/+0/YK+UDjjoJyMIMUE3jOsaTg=;
+        b=aKMn1nvItu5e3sgSqNkEopOfPbJ2b/+bbKiwkpIM6XNirh2CcQHHMTlM+KY4G7X1tP
+         2f4C7F+uPJ5rud3b8S7PicqGhOsmt2NTgJT+tt1V2Umt5Am5/CyXgZH4znWPtkrUWWI2
+         z+n5gMFqaMPL7MTKhRBMndOVeif1arOXrKCd9rr0h28zD5RcYUvuAnaSUjO1gYHGn5dt
+         fAPjlAROwpUHiWdOUXc3ZqwiF+6MZ4OOi7aQvpgsRTrO9g/efEyBhZKlcPl2iwuPkH24
+         hjowk4+aShFgL2YLy2Wm5lPos0ba8wFaFXkIZz+OGCRR70AosCRhurtZ6Ngs0kICUlVb
+         OCLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=pGUqpqgz5YkRs56OWXJQIKCi0YYDaVhANzXkG/wDQEw=;
-        b=swGMmmuy6quAPw9rGN94GXc2OkmGoqMvk8BSToQ3CDROCoO+B9v1Tars0lPpGiDbRm
-         jS6da3cPpJrfXCPl3eeqa5r+3O0dVipJL962GZEPaKvgdMZDv9FPx6xhbMwlZrxqHEjq
-         rllu1zD5W9VtnOMJEvB9lIE6pYzTnxURzAJJihBZkYGYfgU3upCln5dI/eMTwow7Crs+
-         oWgmbrlJeGnpOAfixcvvGEThedHwlu5b9JAuKTEWZnqcUpQAexhNKqD/boKwt1NQ14qn
-         nRN/mOY8jDRMQXi/29pFGDVYHVCcO+c2Y68I2mbNB0w+rLdqIjnSivujFEr237IdmosC
-         YjNQ==
-X-Gm-Message-State: AElRT7Gpf3hCCgUPuq/sP7LxIdTH9+9siwkGTYCgKRNOAQSk1sYNG6BA
-        IkPtZQv0bo8+STdDOBybAZw=
-X-Google-Smtp-Source: AG47ELuS81zWB6wob34+Y6781FtG9DF6ANFYckJ+5e2aEfF2OgBloIfcUh/N/h6BAaKpm5vlx142FQ==
-X-Received: by 10.28.176.132 with SMTP id z126mr3840034wme.122.1521683234622;
-        Wed, 21 Mar 2018 18:47:14 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id r102sm1830391wrb.78.2018.03.21.18.47.10
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 21 Mar 2018 18:47:11 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 40/44] packfile: allow prepare_packed_git to handle arbitrary repositories
-References: <CACsJy8DWrNzZM1K2vkx2XiETdAR5WhwXEdPijsxd0ZD4Lj=tZw@mail.gmail.com>
-        <20180303113637.26518-1-pclouds@gmail.com>
-        <20180303113637.26518-41-pclouds@gmail.com>
-        <20180321223923.GB202156@google.com>
-Date:   Wed, 21 Mar 2018 18:47:10 -0700
-In-Reply-To: <20180321223923.GB202156@google.com> (Brandon Williams's message
-        of "Wed, 21 Mar 2018 15:39:23 -0700")
-Message-ID: <xmqqr2ocnaox.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=TfulljaKRnIJmE/ox/+0/YK+UDjjoJyMIMUE3jOsaTg=;
+        b=dm7nO3q5Qd0L3sTjrHVfIdmE4KNN+KeVf+sVxxq0Dr5Nu5h2hfpk/Bybd751zvtX9f
+         TM73LkygXoUwZG2NpY4UIq/vcdiS2Z4u6Rig6t/Aiw5BRvupWJXA6nlb0N8UzlOP9LqJ
+         TJvzq+tnQdAab0ifD+tS+P/IeMr8tmmVg2dJiujSD7M0nGhtqMGK/QG0tigTp0mMYuVy
+         ms+Bo70TqHdjE70eYTMeh2eGYfDWaFillUJSvT+j/tLBqK7Mj4EQzgbTTK7R42tt4lhF
+         MAx07ZFNJ51aLcPIbFwt6aT5L4ihbZGAzksJ4ua8VQoChQA/v0tkwFH7f0rW9EUhg+ew
+         up5A==
+X-Gm-Message-State: AElRT7GC7CjgK0dO2tBlFPZ8+F3o/yVnVsYpXrsETxm+mUbMU6kKyzjh
+        T8+lhE+HSseGJhetb1ZbKhgwFA35OsHPx7o8Aoc=
+X-Google-Smtp-Source: AG47ELsCnqZNU42Mcl+hRWXBHBIIni2tk6Afa3mJg99Ktq2ThPdQ3XMEJFWuk+GUx/9SrirISIhSmj9MG8/ZRFWCPwc=
+X-Received: by 10.202.206.13 with SMTP id e13mr14024503oig.34.1521695608588;
+ Wed, 21 Mar 2018 22:13:28 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Received: by 10.74.154.146 with HTTP; Wed, 21 Mar 2018 22:12:58 -0700 (PDT)
+In-Reply-To: <xmqqd0zxno0j.fsf@gitster-ct.c.googlers.com>
+References: <20180321193039.19779-1-pclouds@gmail.com> <xmqqd0zxno0j.fsf@gitster-ct.c.googlers.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Thu, 22 Mar 2018 06:12:58 +0100
+Message-ID: <CACsJy8CWWSixQpXDh+q108j4xF8vpm5gsj2u3gJEgW=2bnXQHA@mail.gmail.com>
+Subject: Re: [PATCH] completion: add option completion for most builtin commands
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Brandon Williams <bmwill@google.com> writes:
-
-> On 03/03, Nguyễn Thái Ngọc Duy wrote:
->> From: Stefan Beller <sbeller@google.com>
->> 
->> Signed-off-by: Stefan Beller <sbeller@google.com>
->> Signed-off-by: Junio C Hamano <gitster@pobox.com>
->> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+On Wed, Mar 21, 2018 at 9:59 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+>
+>> These commands can take options and use parse-options so it's quite
+>> easy to allow option completion. This does not pollute the command
+>> name completion though. "git <tab>" will show you the same set as
+>> before. This only kicks in when you type the correct command name.
+>>
+>> Some other builtin commands are not still added because either they
+>> don't use parse-options, or they are deprecated, or they are those
+>> -helper commands that are used to move some logic back in C for
+>> sh-based commands.
+>>
+>> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.=
+com>
 >> ---
+>>  contrib/completion/git-completion.bash | 276 +++++++++++++++++++++++++
+>>  1 file changed, 276 insertions(+)
 >
-> This is an invalid conversion.
+> Wow, just wow.  It however looks a lot of boilerplates, e.g. looking
+> at these, we notice ...
 >
->>  packfile.c | 18 +++++++++---------
->>  packfile.h |  3 +--
->>  2 files changed, 10 insertions(+), 11 deletions(-)
->> 
->> diff --git a/packfile.c b/packfile.c
->> index 52febba932..2276e2ad26 100644
->> --- a/packfile.c
->> +++ b/packfile.c
->> @@ -882,19 +882,19 @@ static void prepare_packed_git_mru(struct repository *r)
->>  		list_add_tail(&p->mru, &r->objects.packed_git_mru);
->>  }
->>  
->> -void prepare_packed_git_the_repository(void)
->> +void prepare_packed_git(struct repository *r)
->>  {
->>  	struct alternate_object_database *alt;
->>  
->> -	if (the_repository->objects.packed_git_initialized)
->> +	if (r->objects.packed_git_initialized)
->>  		return;
->> -	prepare_packed_git_one(the_repository, get_object_directory(), 1);
->> -	prepare_alt_odb(the_repository);
->> -	for (alt = the_repository->objects.alt_odb_list; alt; alt = alt->next)
->> -		prepare_packed_git_one(the_repository, alt->path, 0);
->> -	rearrange_packed_git(the_repository);
->> -	prepare_packed_git_mru(the_repository);
->> -	the_repository->objects.packed_git_initialized = 1;
->> +	prepare_packed_git_one(r, get_object_directory(), 1);
+>> +_git_blame() {
+>> +     case "$cur" in
+>> +     --*)
+>> +             __gitcomp_builtin blame
+>> +             return
+>> +             ;;
+>> +     esac
+>> +}
+>> +
+>>
+>> +_git_cat_file() {
+>> +     case "$cur" in
+>> +     --*)
+>> +             __gitcomp_builtin cat-file
+>> +             return
+>> +             ;;
+>> +     esac
+>> +}
+>> +
+>> +_git_check_attr() {
+>> +     case "$cur" in
+>> +     --*)
+>> +             __gitcomp_builtin check-attr
+>> +             return
+>> +             ;;
+>> +     esac
+>> +}
 >
-> Calling get_object_directory() returns the_repository's object dir,
-> this needs to be replaced with r->objects.objectdir.
+> ... the only thing we need for the above three is a table that says
+> "use blame for blame, cat-file for cat_file, and check-attr for
+> check_attr".
+>
+> And that pattern repeats throughout the patch.  I wonder if we can
+> express the same a lot more concisely by updating the caller that
+> calls these command specific helpers?
+>
 
-Nicely spotted.  I think this was inherited from the orginal,
-e.g. the one from the end of last month
-
-https://public-inbox.org/git/20180228010608.215505-9-sbeller@google.com/
-
-also calls get_object_directory().
-
-Thanks.
+Yeah. I almost went to just generate and eval these functions. But we
+still need to keep a list of "bultin with --git-completion-helper"
+support somewhere, and people may want to complete arguments without
+double dashes (e.g. read-tree should take a ref...) which can't be
+helped by --git-completion-helper.
+--=20
+Duy
