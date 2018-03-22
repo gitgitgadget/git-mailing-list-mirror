@@ -2,97 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 262431F42D
-	for <e@80x24.org>; Thu, 22 Mar 2018 08:24:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 04FDC1F42D
+	for <e@80x24.org>; Thu, 22 Mar 2018 08:38:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752677AbeCVIY0 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Mar 2018 04:24:26 -0400
-Received: from mail-oi0-f50.google.com ([209.85.218.50]:39499 "EHLO
-        mail-oi0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752619AbeCVIYN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Mar 2018 04:24:13 -0400
-Received: by mail-oi0-f50.google.com with SMTP id q71-v6so6626372oic.6
-        for <git@vger.kernel.org>; Thu, 22 Mar 2018 01:24:13 -0700 (PDT)
+        id S1752705AbeCVIin (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Mar 2018 04:38:43 -0400
+Received: from mail-wm0-f48.google.com ([74.125.82.48]:54181 "EHLO
+        mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751768AbeCVIij (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Mar 2018 04:38:39 -0400
+Received: by mail-wm0-f48.google.com with SMTP id e194so14246760wmd.3
+        for <git@vger.kernel.org>; Thu, 22 Mar 2018 01:38:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=Xc4aRjUJgwlMlcvXYVkC11SOb5DeizvL5KSbpjkIcxs=;
-        b=VJWeimvA0u6GlB6eEOJ3V7W134v0sL/fe5IbASvalyWnKIvqZSk5NIjEVTobD0tHCT
-         I7jHtakUTkSDCbE0DxySa3V67b22tbvNDcFSxfppQRmF7vG+q3rvw74pgFssTXhxu72h
-         EZYo3kIJLZXMzVEkx180V8YM305kGN7+gkyTgn0wfiIcp7EDDpLT+8iNzQvxH4eJI7Xy
-         RruDibPEQ7tsHNpKu5QZbHFwq+q197gcJek121eHkLSahQGKRZJSUwidOdFN0pTF2N2B
-         ewhnzkCIfFvs4noPp0wzYXfd7cMwaMNe1QiS1r36PaF5DLp6ZpvXCpC7rCIvsB3NoiBv
-         CmWw==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=kyvgxiAtaKQdDzgXo5Qwg5ik7G8q5sLyhnPYI5DM80Q=;
+        b=dA/p5zA6cbf8omGabyHq6bhMtnl0p55LClm/xQGv4srZCZPN1m3Qkxwct3SOGP67Mt
+         tXYqJ1a1sMfGWXEguOaJryFnqZw3SmJqauRhzsH0aUqbM+LPjcgu+SctzuvY15FR0wOk
+         iPgp1j5ahmAItfYHky72HmQmlP167OroOrMTTq7XBYkLfxUinFmAy1eJjPvMlrXNMw/p
+         aUvp6rZsgx0XurvGCsx/GyNgPc8HNvK+c8seOa2Bj3tVCWN++rmoDd1E0dzmV/bXtumy
+         XNaiWE6Jv5lrLcuR2G4DzrLsb+l2qu6ZxB8K9ApLBT/uCMART4jtg27RPw4LQepiG6hx
+         wvqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=Xc4aRjUJgwlMlcvXYVkC11SOb5DeizvL5KSbpjkIcxs=;
-        b=ZF+2JAhz9nTh6GiDCm8j5hJrpjXxND+6rOb+I17GXCMwLNJ7cWjviL5pkC4ZMSnipW
-         gWZfoO52Z5Zwj6zmEOuESWLVTIu4kKekzwesnwDFjytAAJNLfEuJ2SC4F4nk3B2HHMNv
-         NK+N6dB5OY0E4wmq86bYp48RefsvB6WXZouXj2dbwulcpwCG24g0+eOW03+WhbVikI5/
-         h+o7+9xLSQHgzMHE8kv+tCNIqJwKsC1rYVqL4ChSKhIwt3Fmy1rS6YvgACuf+BRwsN0+
-         NpzULK4D8ARGr/uzg+N8WCwavUEL5iWH5X0UHHZKDJRLpBbgcbSSJK1yXAk3YjTj7Vck
-         ratA==
-X-Gm-Message-State: AElRT7Fq4gtd1skaBg8G6WCLkk35YN2g15vz4ALZh57OR1OpvySMCNsX
-        ke0qznztSutL5U8DjmFK+wUCxfrrVdBiaKG2h5E=
-X-Google-Smtp-Source: AG47ELtDT4A3ADRRxT4gxN7isuf0qf3Cic/E/jLVZdcvFvoSjO5ux+KLfZB5Aj2gw1RdSkZkpSu8RcHMNGTFQduLBvo=
-X-Received: by 10.202.81.200 with SMTP id f191mr13745192oib.32.1521707053134;
- Thu, 22 Mar 2018 01:24:13 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=kyvgxiAtaKQdDzgXo5Qwg5ik7G8q5sLyhnPYI5DM80Q=;
+        b=KGnDfZSfgwsZevgb04Ec2kfZf9lgSBmVzAkCb3foijClBLB8EX/h4X2bfvKNHdc68m
+         QHwAwu2hAj/KhihZl79lTCgMujfZs7SNTxonkN7ginnVBxud8+2zV0xgNHY4WHCQ9yiG
+         nVVBZ4Xj8tTxS1CWs2VFnM0rMy4oRuNTk6lYxG39I2qRs0mNvFj9UEsOVOEMIyJG/7PJ
+         A7gdepNP9u0G4uY/sKljOAs7uIlQJ/wdM+zjBjbTV7xszhhCo+KEpFOoz3Onl84RDN/o
+         TOvU8C3u0w2q/wGT0Y4ZN/hO7EOhYuHGzi1mZbHo4rKG3VSelBQRed6A8B1OS/c0sOdf
+         1jKA==
+X-Gm-Message-State: AElRT7Fvf8T7f9AKfYNjH70x3LrBrMJXF5SjLdNtzeI68TIDqtYfsyTH
+        y4EudoOsNhAnDDGnB8ogQWw=
+X-Google-Smtp-Source: AG47ELtPwcV4ucwj6cWmD+/yUD3h1of12wX3NKYE5yo317AegK0xV5y/dH7TIAZjzpRL+Cl36yDgyg==
+X-Received: by 10.28.136.18 with SMTP id k18mr5209766wmd.111.1521707918224;
+        Thu, 22 Mar 2018 01:38:38 -0700 (PDT)
+Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
+        by smtp.gmail.com with ESMTPSA id p21sm7208929wmc.0.2018.03.22.01.38.36
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 22 Mar 2018 01:38:36 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     git@jeffhostetler.com
+Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH v2] routines to generate JSON data
+References: <20180321192827.44330-1-git@jeffhostetler.com>
+User-agent: Debian GNU/Linux 9.4 (stretch); Emacs 25.1.1; mu4e 1.1.0
+In-reply-to: <20180321192827.44330-1-git@jeffhostetler.com>
+Date:   Thu, 22 Mar 2018 09:38:34 +0100
+Message-ID: <87sh8sy06t.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Received: by 10.74.154.146 with HTTP; Thu, 22 Mar 2018 01:23:42 -0700 (PDT)
-In-Reply-To: <20180322080740.GA28907@sigill.intra.peff.net>
-References: <20180317141033.21545-1-pclouds@gmail.com> <20180318142526.9378-1-pclouds@gmail.com>
- <20180321082441.GB25537@sigill.intra.peff.net> <87tvt9xuel.fsf@evledraar.gmail.com>
- <20180322080740.GA28907@sigill.intra.peff.net>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Thu, 22 Mar 2018 09:23:42 +0100
-Message-ID: <CACsJy8AF0FYysw48Y1CKdAHs_zWN8raYaGXrKQ9OmeKS-XujLQ@mail.gmail.com>
-Subject: Re: [PATCH v6 00/11] nd/pack-objects-pack-struct updates
-To:     Jeff King <peff@peff.net>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Eric Wong <e@80x24.org>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 22, 2018 at 9:07 AM, Jeff King <peff@peff.net> wrote:
-> On Wed, Mar 21, 2018 at 05:31:14PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
->
->> > [...]Yes, having that many packs is insane, but that's going to be
->> > small consolation to somebody whose automated maintenance program now
->> > craps out at 16k packs, when it previously would have just worked to
->> > fix the situation[...]
->>
->> That's going to be super rare (and probably nonexisting) edge case, but
->> (untested) I wonder if something like this on top would alleviate your
->> concerns, i.e. instead of dying we just take the first N packs up to our
->> limit:
->
-> I wish you were right about the rarity, but it's unfortunately something
-> I have seen multiple times in the wild (and why I spent time optimizing
-> the many-packs case for pack-objects). Unfortunately I don't know how
-> often it actually comes up, because in theory running "git repack"
-> cleans it up without further ado. But after these patches, not so much.
 
-It's good to know this case is real and I can start to fix it
-(assuming that the other concern about readability will not stop this
-series).
+On Wed, Mar 21 2018, git@jeffhostetler.com wrote:
 
-I think I'll try to fix this without involving repack. pack-objects
-can produce multiple packs, so if we have more than 16k pack files, we
-produce  one new pack per 16k old ones.
---=20
-Duy
+> So, I'm not sure we have a route to get UTF-8-clean data out of Git, and if
+> we do it is beyond the scope of this patch series.
+>
+> So I think for our uses here, defining this as "JSON-like" is probably the
+> best answer.  We write the strings as we received them (from the file system,
+> the index, or whatever).  These strings are properly escaped WRT double
+> quotes, backslashes, and control characters, so we shouldn't have an issue
+> with decoders getting out of sync -- only with them rejecting non-UTF-8
+> sequences.
+>
+> We could blindly \uXXXX encode each of the hi-bit characters, if that would
+> help the parsers, but I don't want to do that right now.
+>
+> WRT binary data, I had not intended using this for binary data.  And without
+> knowing what kinds or quantity of binary data we might use it for, I'd like
+> to ignore this for now.
+
+I agree we should just ignore this problem for now given the immediate
+use-case.
