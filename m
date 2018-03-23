@@ -2,85 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6519A1FAE2
-	for <e@80x24.org>; Fri, 23 Mar 2018 18:59:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5E2431F404
+	for <e@80x24.org>; Fri, 23 Mar 2018 19:06:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752017AbeCWS7X (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Mar 2018 14:59:23 -0400
-Received: from mail-ot0-f179.google.com ([74.125.82.179]:45238 "EHLO
-        mail-ot0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751843AbeCWS7W (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Mar 2018 14:59:22 -0400
-Received: by mail-ot0-f179.google.com with SMTP id h26-v6so6891292otj.12
-        for <git@vger.kernel.org>; Fri, 23 Mar 2018 11:59:22 -0700 (PDT)
+        id S1751960AbeCWTGj (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Mar 2018 15:06:39 -0400
+Received: from mail-lf0-f50.google.com ([209.85.215.50]:45926 "EHLO
+        mail-lf0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751595AbeCWTGi (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Mar 2018 15:06:38 -0400
+Received: by mail-lf0-f50.google.com with SMTP id l4-v6so15454147lfg.12
+        for <git@vger.kernel.org>; Fri, 23 Mar 2018 12:06:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=saville-com.20150623.gappssmtp.com; s=20150623;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=dBALgJNU8KYHOLr45HynpYS4TZALWZ9pfj7m3yeXBzk=;
-        b=FNgQBq88t4g1eT/5U83/Dma0UP9HaGlp41a1sO8WAOeMuNwuadG3higYOusKJGzYZo
-         PUaQc7FUTV22WVBjN0AL3Ngx+ZBgRdLQLw02wdfUU/0jRYwNHkyEr/Cg9zfgohwxslsz
-         u3TGxA1AR1bLRegSBtpKYpMpkBoAa7LtwXPNlMV0jWKUy+lin3dBoBeHvz/2NDW0aW26
-         CnS1ObPRTMsRE1ina9hDjDk3okLu7bOo++y8iNVufqNZ6HAwzIKcBTdqO5ZyxpUnrzQ/
-         ldETh0lVW4GOJUYFeoSaSD6SUz8U+CZhPyctgjqked5obJBCgOaTfA6+6+4d2sib5wdI
-         xqSQ==
+         :cc;
+        bh=bBG3eFRdokoawnKcyuaiglwWFjZrdF+vQqgizCcAu14=;
+        b=EuroPHVNx+XZuf63r8duMVJyiJslttNigdOObgh5DcjM7MGLCAjqY16yrXvLxk8HAi
+         N7RRbsn5+qvJ774m58ewn2OqI42iQvruqUdydkY/xGKqQbuJ675Js9Y/XyGtekVh9ei/
+         HhfClcXZTzgMt/bkv63NlOw5rpCuFcfdASXrXYk7IDtdUX6abVuekpYTYJLtHiXVZFYV
+         SnqMEwRAkPb3xGGxHzrjswU4Kss2EkQ/gAwM+SG2FdqW3b+kra+f0r3fcRbGSbh0yZx4
+         MNhXTcfwCPRaiC9oV7wo6A5CJuLYPWFVRaeJWK81BkSlKcsHR9T4G2mSifE1hwDbM8UH
+         zJ8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=dBALgJNU8KYHOLr45HynpYS4TZALWZ9pfj7m3yeXBzk=;
-        b=fCJWoRaNf9tGiQSr5rucOadz3OIzHqfo+qucWZAxpgkXFQWstKTx1uoUtgxjMv8JI+
-         rFY6BCyfwuQwW8UttrfknyYLYFv7jt9tokMSWMHsoV65vB0E7GYdcqYi3xcmWl7HjFDu
-         K8k50ygvNTZKVZftIrt8rTxAezjf6MUY6uYEXHRNqqo6/pxHk32hD07J/EyNOQRjouSA
-         c0GyjNdJns8fXfQyVSRZGQKU6JxhXKXpNdggh0/vET028LZVGDfKlZxoWn5pIMOoezh3
-         HrL+nJUydBBhnWDspjzyf9CN7jKCXPgQw0FPSNLs+Fmts/c76+XVfVc6e+idXI6cQOSX
-         0QXQ==
-X-Gm-Message-State: AElRT7HrJsATvOqehzQS09KPCuFroqXFzSqTHoW61VqhZ+j9oKhrZ/Rx
-        AAZ5IwxJ1k4hY5t1uPKLWaQgV2GvY11dvpE2VI8=
-X-Google-Smtp-Source: AG47ELtjB99V+jDwz3oh6G47F6u4DNf7i5YtF4+4zg3faNV0FxX+Sk34s1wQMUDQ6EZ6/bLPQw9D/VYtWWnru1xGUJ8=
-X-Received: by 2002:a9d:ae9:: with SMTP id 96-v6mr20387724otq.75.1521831561648;
- Fri, 23 Mar 2018 11:59:21 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=bBG3eFRdokoawnKcyuaiglwWFjZrdF+vQqgizCcAu14=;
+        b=XXi8I0rro/2HAeUEzCo8yWIKQeTeNRv5C+1rQPYgvXzaWmcy25JE+AxCTHybQ23KBi
+         qzJE4WGiXFwuNntO0jvLhV0cq1I8HULNgTYZO/C9J2WsZHSBK3TyRRN9eJdOw6ZJBPYp
+         F117Yft4w6GzBPSEiR4QJmKA22UJ7nAMZ3Xtf0FVqqjm7po2WZhH1m9Na5I4qoaKMTDl
+         rLC2nCPK1obxIiq5IYNS3ehrL2hM3T0e7eh2MrU8OR63lip9P9J6bjleKnXrux1CbRXS
+         aKYSl3q2C3oLzY+vAS4YgiK2zSArBPJdobu0/yMwSsI9VZTw+2mks1RqepS58gfgE9l5
+         voFg==
+X-Gm-Message-State: AElRT7FMzCVI4Poxu1F469fltCHatrDjMLHhvh/8INi5UCtrcdyGDwa9
+        vqemQm/k5QZAOqF+WkiOU/wDZnf1ZVIJB7gzxFrqHg==
+X-Google-Smtp-Source: AG47ELuD1d1vpDMrAlVhFjlaEtwPi1tfj+AeGAlGsKIZSHBbDbFkX+/EZ1ddUe82OydeaqVb+pOZkjSHR0g0UP/jOUA=
+X-Received: by 2002:a19:9502:: with SMTP id x2-v6mr21347840lfd.119.1521831996784;
+ Fri, 23 Mar 2018 12:06:36 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.74.154.146 with HTTP; Fri, 23 Mar 2018 11:58:51 -0700 (PDT)
-In-Reply-To: <20180323183550.GB243756@google.com>
-References: <20180303113637.26518-1-pclouds@gmail.com> <20180323172121.17725-1-pclouds@gmail.com>
- <20180323183550.GB243756@google.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Fri, 23 Mar 2018 19:58:51 +0100
-Message-ID: <CACsJy8C2MXqsRaoXsk+Kbbc21VG0dXtCEK45Yj6-S2RdOk9pSA@mail.gmail.com>
-Subject: Re: [PATCH 00/27] sb/object-store updates
-To:     Brandon Williams <bmwill@google.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
+Received: by 2002:a19:9690:0:0:0:0:0 with HTTP; Fri, 23 Mar 2018 12:06:16
+ -0700 (PDT)
+In-Reply-To: <nycvar.QRO.7.76.6.1803231811530.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <cover.1521779249.git.wink@saville.com> <ed4cfdc9f31b920eae5055c3b080e2ca5b2f6e42.1521779249.git.wink@saville.com>
+ <nycvar.QRO.7.76.6.1803231811530.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+From:   Wink Saville <wink@saville.com>
+Date:   Fri, 23 Mar 2018 12:06:16 -0700
+Message-ID: <CAKk8isrxTmryumw5EFVcPxx9wUKA=pB3VxvH9VaHPLRraa=4=g@mail.gmail.com>
+Subject: Re: [RFC PATCH v4] rebase: Update invocation of rebase dot-sourced scripts
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Git List <git@vger.kernel.org>,
         Eric Sunshine <sunshine@sunshineco.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 23, 2018 at 7:35 PM, Brandon Williams <bmwill@google.com> wrote=
-:
-> On 03/23, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
->> I think I have addressed all comments I've received so far. What I
->> decided not to do, I have responded individually. One comment I did
->> not respond nor do is the approximate thing, which could be done
->> later.
->>
->> Interdiff is big due to the "objects." to "objects->" conversion
->> (blame Brandon for his suggestion, don't blame me :D)
+On Fri, Mar 23, 2018 at 10:12 AM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi Wink,
 >
-> Haha, I'm guessing you prefer having a pointer too then? :P
+> On Thu, 22 Mar 2018, Wink Saville wrote:
+>
+>> The backend scriptlets for "git rebase" were structured in a
+>> bit unusual way for historical reasons.  Originally, it was
+>> designed in such a way that dot-sourcing them from "git
+>> rebase" would be sufficient to invoke the specific backend.
+>>
+>> When it was discovered that some shell implementations
+>> (e.g. FreeBSD 9.x) misbehaved when exiting with a "return"
+>> is executed at the top level of a dot-sourced script (the
+>> original was expecting that the control returns to the next
+>> command in "git rebase" after dot-sourcing the scriptlet).
+>>
+>> To fix this issue the whole body of git-rebase--$backend.sh
+>> was made into a shell function git_rebase__$backend and then
+>> the last statement of the scriptlet would invoke the function.
+>>
+>> Here the call is moved to "git rebase" side, instead of at the
+>> end of each scriptlet.  This give us a more normal arrangement
+>> where the scriptlet function library and allows multiple functions
+>> to be implemented in a scriptlet.
+>>
+>> Signed-off-by: Wink Saville <wink@saville.com>
+>> Reviewed-by: Junio C Hamano <gitster@pobox.com>
+>> Reviewed-by: Eric Sunsine <sunsine@sunshineco.com>
+>> ---
+>>  git-rebase--am.sh          | 11 -----------
+>>  git-rebase--interactive.sh | 11 -----------
+>>  git-rebase--merge.sh       | 11 -----------
+>>  git-rebase.sh              |  2 ++
+>
+> The patch makes sense to me.
+>
+> Thanks,
+> Johannes
 
-That goes without saying or I would be arguing against that instead of
-spending time fixing a bunch of compile errors ;-)
---=20
-Duy
+Junio, Eric and Johannes, thanks for the help!!!
+
+I've created v5 with the two patches, what is the suggested
+format-patch/send-email command(s)?
+
+Here is one possibility:
+
+git format-patch --cover-letter --rfc --thread -v 5
+--to=git@vger.kernel.org --cc=sunshine@sunshineco.com
+--cc=Johannes.Schindelin@gmx.de -o patches/v5 master..v5-2
+
+If this was the first version then the above would seem to be a
+reasonable choice.
+But this is version 5 and maybe I don't need --cover-letter which, I
+think means I
+don't want to use --thread. If that's the case should I add --in-reply-to? But
+that leads to the question. from which message should I get the Message-Id?
+
+More likely I'm totally wrong and should do something completely different,
+advice appreciated.
+
+-- Wink
