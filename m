@@ -2,126 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5E2431F404
-	for <e@80x24.org>; Fri, 23 Mar 2018 19:06:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2F84E1F404
+	for <e@80x24.org>; Fri, 23 Mar 2018 19:33:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751960AbeCWTGj (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Mar 2018 15:06:39 -0400
-Received: from mail-lf0-f50.google.com ([209.85.215.50]:45926 "EHLO
-        mail-lf0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751595AbeCWTGi (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Mar 2018 15:06:38 -0400
-Received: by mail-lf0-f50.google.com with SMTP id l4-v6so15454147lfg.12
-        for <git@vger.kernel.org>; Fri, 23 Mar 2018 12:06:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=saville-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=bBG3eFRdokoawnKcyuaiglwWFjZrdF+vQqgizCcAu14=;
-        b=EuroPHVNx+XZuf63r8duMVJyiJslttNigdOObgh5DcjM7MGLCAjqY16yrXvLxk8HAi
-         N7RRbsn5+qvJ774m58ewn2OqI42iQvruqUdydkY/xGKqQbuJ675Js9Y/XyGtekVh9ei/
-         HhfClcXZTzgMt/bkv63NlOw5rpCuFcfdASXrXYk7IDtdUX6abVuekpYTYJLtHiXVZFYV
-         SnqMEwRAkPb3xGGxHzrjswU4Kss2EkQ/gAwM+SG2FdqW3b+kra+f0r3fcRbGSbh0yZx4
-         MNhXTcfwCPRaiC9oV7wo6A5CJuLYPWFVRaeJWK81BkSlKcsHR9T4G2mSifE1hwDbM8UH
-         zJ8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=bBG3eFRdokoawnKcyuaiglwWFjZrdF+vQqgizCcAu14=;
-        b=XXi8I0rro/2HAeUEzCo8yWIKQeTeNRv5C+1rQPYgvXzaWmcy25JE+AxCTHybQ23KBi
-         qzJE4WGiXFwuNntO0jvLhV0cq1I8HULNgTYZO/C9J2WsZHSBK3TyRRN9eJdOw6ZJBPYp
-         F117Yft4w6GzBPSEiR4QJmKA22UJ7nAMZ3Xtf0FVqqjm7po2WZhH1m9Na5I4qoaKMTDl
-         rLC2nCPK1obxIiq5IYNS3ehrL2hM3T0e7eh2MrU8OR63lip9P9J6bjleKnXrux1CbRXS
-         aKYSl3q2C3oLzY+vAS4YgiK2zSArBPJdobu0/yMwSsI9VZTw+2mks1RqepS58gfgE9l5
-         voFg==
-X-Gm-Message-State: AElRT7FMzCVI4Poxu1F469fltCHatrDjMLHhvh/8INi5UCtrcdyGDwa9
-        vqemQm/k5QZAOqF+WkiOU/wDZnf1ZVIJB7gzxFrqHg==
-X-Google-Smtp-Source: AG47ELuD1d1vpDMrAlVhFjlaEtwPi1tfj+AeGAlGsKIZSHBbDbFkX+/EZ1ddUe82OydeaqVb+pOZkjSHR0g0UP/jOUA=
-X-Received: by 2002:a19:9502:: with SMTP id x2-v6mr21347840lfd.119.1521831996784;
- Fri, 23 Mar 2018 12:06:36 -0700 (PDT)
+        id S1752308AbeCWTds (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Mar 2018 15:33:48 -0400
+Received: from siwi.pair.com ([209.68.5.199]:35727 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752097AbeCWTds (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Mar 2018 15:33:48 -0400
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id B3AB93F400E;
+        Fri, 23 Mar 2018 15:33:47 -0400 (EDT)
+Received: from [192.168.1.71] (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 818F13F400D;
+        Fri, 23 Mar 2018 15:33:47 -0400 (EDT)
+Subject: Re: [PATCH v3] json_writer: new routines to create data in JSON
+ format
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
+        avarab@gmail.com, Jeff Hostetler <jeffhost@microsoft.com>
+References: <20180323162952.81443-1-git@jeffhostetler.com>
+ <20180323162952.81443-2-git@jeffhostetler.com>
+ <20180323171828.GD179915@aiede.svl.corp.google.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <6b27b09b-727d-1c3f-c311-5cf6c9bafb4f@jeffhostetler.com>
+Date:   Fri, 23 Mar 2018 15:33:46 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:59.0) Gecko/20100101
+ Thunderbird/59.0
 MIME-Version: 1.0
-Received: by 2002:a19:9690:0:0:0:0:0 with HTTP; Fri, 23 Mar 2018 12:06:16
- -0700 (PDT)
-In-Reply-To: <nycvar.QRO.7.76.6.1803231811530.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <cover.1521779249.git.wink@saville.com> <ed4cfdc9f31b920eae5055c3b080e2ca5b2f6e42.1521779249.git.wink@saville.com>
- <nycvar.QRO.7.76.6.1803231811530.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-From:   Wink Saville <wink@saville.com>
-Date:   Fri, 23 Mar 2018 12:06:16 -0700
-Message-ID: <CAKk8isrxTmryumw5EFVcPxx9wUKA=pB3VxvH9VaHPLRraa=4=g@mail.gmail.com>
-Subject: Re: [RFC PATCH v4] rebase: Update invocation of rebase dot-sourced scripts
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Git List <git@vger.kernel.org>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20180323171828.GD179915@aiede.svl.corp.google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 23, 2018 at 10:12 AM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi Wink,
->
-> On Thu, 22 Mar 2018, Wink Saville wrote:
->
->> The backend scriptlets for "git rebase" were structured in a
->> bit unusual way for historical reasons.  Originally, it was
->> designed in such a way that dot-sourcing them from "git
->> rebase" would be sufficient to invoke the specific backend.
+
+
+On 3/23/2018 1:18 PM, Jonathan Nieder wrote:
+> git@jeffhostetler.com wrote:
+> 
+>> From: Jeff Hostetler <jeffhost@microsoft.com>
 >>
->> When it was discovered that some shell implementations
->> (e.g. FreeBSD 9.x) misbehaved when exiting with a "return"
->> is executed at the top level of a dot-sourced script (the
->> original was expecting that the control returns to the next
->> command in "git rebase" after dot-sourcing the scriptlet).
+>> Add basic routines to generate data in JSON format.
 >>
->> To fix this issue the whole body of git-rebase--$backend.sh
->> was made into a shell function git_rebase__$backend and then
->> the last statement of the scriptlet would invoke the function.
->>
->> Here the call is moved to "git rebase" side, instead of at the
->> end of each scriptlet.  This give us a more normal arrangement
->> where the scriptlet function library and allows multiple functions
->> to be implemented in a scriptlet.
->>
->> Signed-off-by: Wink Saville <wink@saville.com>
->> Reviewed-by: Junio C Hamano <gitster@pobox.com>
->> Reviewed-by: Eric Sunsine <sunsine@sunshineco.com>
->> ---
->>  git-rebase--am.sh          | 11 -----------
->>  git-rebase--interactive.sh | 11 -----------
->>  git-rebase--merge.sh       | 11 -----------
->>  git-rebase.sh              |  2 ++
->
-> The patch makes sense to me.
->
-> Thanks,
-> Johannes
+>> Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+> 
+> If I understand the cover letter correctly, this is a JSON-like
+> format, not actual JSON.  Am I understanding correctly?
+> 
+> What are the requirements for consuming this output?  Will a typical
+> JSON library be able to handle it without trouble?  If not, is there
+> some subset of cases where a typical JSON library is able to handle it
+> without trouble?
 
-Junio, Eric and Johannes, thanks for the help!!!
+I'll add text to the commit message and the .h file explaining
+the Unicode limitation in the next reroll.
 
-I've created v5 with the two patches, what is the suggested
-format-patch/send-email command(s)?
+> 
+> Can you say a little about the motivation here?  (I know you already
+> put some of that in the cover letter, but since that doesn't become
+> part of permanent history, it doesn't help the audience that matters.)
 
-Here is one possibility:
+I'll add a note about that to the commit message.
+Thanks.
 
-git format-patch --cover-letter --rfc --thread -v 5
---to=git@vger.kernel.org --cc=sunshine@sunshineco.com
---cc=Johannes.Schindelin@gmx.de -o patches/v5 master..v5-2
+> 
+> This would also be easier to review if there were an application of it
+> in the same series.  It's fine to send an RFC like this without such
+> an application, but I think we should hold off on merging it until we
+> have one.  Having an application makes review much easier since we can
+> see how the API works in practice, how well the approach fits what
+> users need, etc.
 
-If this was the first version then the above would seem to be a
-reasonable choice.
-But this is version 5 and maybe I don't need --cover-letter which, I
-think means I
-don't want to use --thread. If that's the case should I add --in-reply-to? But
-that leads to the question. from which message should I get the Message-Id?
+That's fine.  I'm planning to push up another patch series next week
+that builds upon this, so hopefully that will help.
 
-More likely I'm totally wrong and should do something completely different,
-advice appreciated.
+> 
+> Thanks and hope that helps,
+> Jonathan
 
--- Wink
+Thanks,
+Jeff
+
