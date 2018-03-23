@@ -7,93 +7,70 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 04A191F42D
-	for <e@80x24.org>; Fri, 23 Mar 2018 09:43:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9AD831FAE2
+	for <e@80x24.org>; Fri, 23 Mar 2018 09:48:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751771AbeCWJm6 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Mar 2018 05:42:58 -0400
-Received: from mout.gmx.net ([212.227.17.22]:52507 "EHLO mout.gmx.net"
+        id S1752341AbeCWJs4 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Mar 2018 05:48:56 -0400
+Received: from mout.gmx.net ([212.227.17.21]:57203 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750789AbeCWJm5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Mar 2018 05:42:57 -0400
-Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LqV4f-1eLrrh3uNt-00e0qQ; Fri, 23
- Mar 2018 10:42:53 +0100
-Date:   Fri, 23 Mar 2018 10:42:53 +0100 (STD)
+        id S1751839AbeCWJsz (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Mar 2018 05:48:55 -0400
+Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MZfZi-1fITpT0RWY-00LY4e; Fri, 23
+ Mar 2018 10:48:53 +0100
+Date:   Fri, 23 Mar 2018 10:48:53 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     John Chesshir <John.Chesshir@mindbodyonline.com>
-cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: UriFormatException output when interacting with a Git server
-In-Reply-To: <DM5PR05MB35484CC117C6E758F520600994A90@DM5PR05MB3548.namprd05.prod.outlook.com>
-Message-ID: <nycvar.QRO.7.76.6.1803231039490.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <DM5PR05MB35484CC117C6E758F520600994A90@DM5PR05MB3548.namprd05.prod.outlook.com>
+To:     Wink Saville <wink@saville.com>
+cc:     Git List <git@vger.kernel.org>,
+        Paul Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
+Subject: Re: [GSoC] Regarding "Convert scripts to builtins"
+In-Reply-To: <CAKk8isqH4uRdf4dXKpxMkNoJqpabztWNPgELqtLbSupR+_C=SA@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1803231048110.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <CADzBBBb0KDVJiX2WSNW=vC6b6paWoK=5XrnZNAY+pwpcu-t9JA@mail.gmail.com> <nycvar.QRO.7.76.6.1803211242190.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <CAKk8isrOMMm0zyJ1JtH3aDm=tF5hwokZ0Wzn=D1BQ1R-qEPicw@mail.gmail.com>
+ <nycvar.QRO.7.76.6.1803221831120.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <CAKk8isqH4uRdf4dXKpxMkNoJqpabztWNPgELqtLbSupR+_C=SA@mail.gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323329-1273028567-1521798174=:77"
-X-Provags-ID: V03:K0:diahThCD/rtGivTYizoYOk59eVI/OrhTIu4sriW1HVgB1xv5AK/
- XrirJRMI0tW5zY9W/VT3dsLEM7GkpWqxvbY8sSRvARIdr7Vqw79KdtfWrLINTGvyd5Tf+z3
- 4s9CCYB3nBK3TLvtlqU2RYqekKaz4eAGgdpaQpgy+Ek4LlNPdLvHf/7O2svdcdqceILEwkv
- 9njsYm+zz04FoPUpaKgyA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:3xs/F0nlSnY=:FgYXrDAR3g3NPS1wy3r11g
- Wk/71wMjWRIG2gBdFT8nkGjCA0+25E5RD8gabf2xQGWk9VH1ItMBdRyrSnMjJ3ry7KNd2eWql
- jYNvZNsATvz3qdmzbsc7oyipF1roRO/wNSSzFKlF2rRJysfpNLsP1W07tuvz5v9dyFU+853nV
- p9K08RqJ3oMHJHyjQhZq8JpaVVKIXUYkUjxDvpsOv01sfZ6kWpK+t+jOM03mUoXSXdkYcQ+aK
- A0At/e9VeL5s5mKoIyZ92uF8L/7eJ9I/5kCkMwCN5Gf8V9yF4lpNGllzOCZRASDfHT37MH2P9
- JbimA0miXDYxWg3i4u3UtK+eZZINDA3iD4J+U1x5oYNKNLgOCt7k6gAD2CM68N5oe5ieVIFGG
- Fzzk5oxsoCsgOyeww2yxF72rPM4lt83uhmmHGlPGgTtBcpieyzz/rnPEeg8v+0T+/1/U54VqR
- CzaWfD2B+2cYMB0GtxtnhrVvZXcxIXU2MT0K9Qrm73OS9nBX7j9BA1+rfU9Rm5NF12IVxLgQA
- WRk23x3LP5TOqpbLa9rHU4Ov75WVtbQbwuOhmHmwUwMdLMuE0QBJ13WAxNuiKzQhHEax+aSU4
- /rG+FhTSVL2+hseGJ87cq4i4PpcyAZWsbQIMGB+2oJl6JTQ5NjKW4qnJ7l/C+FKyyKvLKVYiE
- 5/Sb/qWTGtIrJS/avhPi5ghzLsNDYxkryB5HVWLnINBJ6CF+JZgFeb25KZBQ8yKtJTD4X4ncw
- tWrzeIyiHF0/bJeC8U5B4IRovSZH5C4iMbVE5ZfXhCS7yZxmSzRowBO3aVa79sBtabyFlZkkv
- QHhc7660rTMiYrXqu5vz8L2aPdqhnn0OolKYC9+NVu4aJtb7Yc=
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:f2cv8/RDAUo5Nf9R/rr/K/cWh2ARj83HduZ/NbGQ68nkrZYKAdc
+ GffkiQe/Tcg9kA0++YuWndZ6o9IqOGXT0U1rPIWiGY1ZOW2Bq0kOrvMKWTLNh38dD6PEDet
+ HtKx9zuS+zccfE8bnuRQGhIkBhv7mBRX42pRvUCDjJD7a/veeLfIV65Pwh+Kj6ramCo5s2V
+ mgGODMSQaaqTGk+YsTSBQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Di7GNwIRxlg=:bbdS16UqL2u0hqv4X2WVel
+ bHnaPJQAmcWfTQMxDt+zXR1UAXTYdh0RPrG+XLY5Y6L8F3xLO+JjWc6w1BXifmFY6VtPeLQvm
+ SiU3Tif8zsSDYUsRPEN+Ys5tT6r+XXH6Pg6MuFvk+CZBQynaOa/kHUSecjvzfs3lT6jZhlej2
+ hzxxeH7wBeC7OAK6YyT+9DIvugWDl8J1mRqjaq7FfL55yiV+Al1uQEwRKKnWwF7qtyrnGpHGo
+ iZgYMycCjVgJd6ql731SMz5X+WWEZfdnndgt5L3PcIfhgKflPPI5proTjPP54K3ScgCq/H7Dj
+ lSiWmxi42UHK3ncdxX0IFcaPredssIcJI2EiKQBseJbvICpQZ2b3tj4hwWqBouafn1poaEx2s
+ hTv01xviUztahqo9lr8WaMLhy4s+yk1OFRZhRsi1BvbsvXfK4sfyyROcPaEN7r4p/GMRL/JfL
+ 9hdFkr9S3PRsRIDvh1aV+ibEJGfg8qM13CdiNOk21fs4oqMb9QxVY4+p21I5VlDGB0Tfz0MWw
+ 4dqSTXCYNiNHUQF3mjHG0sQEnj/RQzNof6Y1NQ3paBKuw91PtCNYhRDzgiuqTDY7WpZGzVpvc
+ obo5meoKrZ25R+KlO5t+Co3bwTl36M5ckoa6drHWS0YjoX0cf1aSc1NhK9BdTP5DB08hhfhhX
+ bRiMkWhFpSMtuoiTfXTZyvJZONvQubx8Y292mxWkueSqCU9zlsfU/vRTS+GMkfkU++klTw41d
+ xEb54nhhfWk76g3M7aZvtOJ1V/+dmjWmojy5LsqEIMvin5OyNNGK+38tCK+bKnqgvJdp18nBQ
+ A9waMIOy7iK37a6Jd4pt0UJbHRijOHMEaQ3ZH0smytkCYhM1no=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Wink,
 
---8323329-1273028567-1521798174=:77
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+On Thu, 22 Mar 2018, Wink Saville wrote:
 
-Hi John,
+> On Thu, Mar 22, 2018, 10:32 AM Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> 
+> I now have a version 3: "[RFC PATCH v3 0/9] rebase-interactive:"
 
-On Thu, 22 Mar 2018, John Chesshir wrote:
+Great!
 
-> I'm getting this error on a fresh install of git version 2.16.2.windows.1=
-:
->=20
-> fatal: UriFormatException encountered.
-> =C2=A0=C2=A0 queryUrl
+> Cheers,
+> Winthrop Lyon Saville III (I had to repsond with my full name although I
+> always use my nick name, Wink, just because Johannes seems so formal :)
 
-Thank you for posting this report.
-
-I would like to ask for more information, though. Ideally, open a bug
-report at https://github.com/git-for-windows/git/issues/new which has a
-template to fill out the most important information.
-
-In particular, I would like to know
-
-- what command you ran, and
-- whether you have a reliable reproducer
-
-> See this post I found,
-> https://stackoverflow.com/questions/48775400/git-fatal-uriformatexception=
--encountered-actualurl
-> for more details.=C2=A0 Note that the latest comments are mine, and descr=
-ibe
-> the conditions on which I first saw the problem.=C2=A0 I'll warn you, it'=
-s
-> weird.
-
-If this is a bug in Git (or more likely in Git Credential Manager, judging
-by the error message), you are more likely to receive assistance in fixing
-that bug on the special-purpose bug tracker on GitHub.
+Yes, I am formal. All Germans are. It's a matter of form.
 
 Ciao,
 Johannes
---8323329-1273028567-1521798174=:77--
