@@ -2,191 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3199C1F404
-	for <e@80x24.org>; Fri, 23 Mar 2018 04:40:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E7A801F404
+	for <e@80x24.org>; Fri, 23 Mar 2018 05:27:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751853AbeCWEkG (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Mar 2018 00:40:06 -0400
-Received: from mail-pl0-f66.google.com ([209.85.160.66]:38347 "EHLO
-        mail-pl0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751823AbeCWEkE (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Mar 2018 00:40:04 -0400
-Received: by mail-pl0-f66.google.com with SMTP id m22-v6so6781905pls.5
-        for <git@vger.kernel.org>; Thu, 22 Mar 2018 21:40:04 -0700 (PDT)
+        id S1751409AbeCWF1J (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Mar 2018 01:27:09 -0400
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:33744 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751303AbeCWF1J (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Mar 2018 01:27:09 -0400
+Received: by mail-pg0-f67.google.com with SMTP id g12so4204842pgs.0
+        for <git@vger.kernel.org>; Thu, 22 Mar 2018 22:27:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=saville-com.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :in-reply-to:references;
-        bh=1hQUVQtYpj25cTi/rPFxncCmBdP1CuIxieLffjiMj+M=;
-        b=NjhEIqzh0zS7PBkMa+Vp/r821szDkAZzlFH0ij3syqmpYjwK5az1CNIOnP1alDbM0F
-         Mn+JjW9DhPp8H1JwpBtYQ22ol0nA6bAG8v/ugj9gXgd0Aca7p1agLm0QjHp9IIq41Ztv
-         OfXB9Atckm2sfd4xFbqgA9ClWkwHW/v8NKDLWmpjlYPQzUrpIef5j/VKyY1fdIpZA5Tp
-         rdFWn0cBvob0fW2UqzkGOe8yHkSKo36HkJnJN41L06WoOpiRuKhSgYVrVFnlKedV/bwy
-         0inaaZWZVjGr9OPcrzYSVuwPl5R0ymgxzNn8VtcYUbp1WmhCBn5H+pXiSOXohSwUD75r
-         EVTg==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=kacrIWFqlgy+8y5MjH0g3j4XcofNQ+PJ0hU/rEXTY5w=;
+        b=ENYzyqO09LNr+WX3PHghj2qUmh0iPMxFuN7XP0lI3IaNHxc4BgNaaLLjsevFaBaSpr
+         HRKPB5I3uKQddi3dmPLVKytEI9ULCnkypuFwEprvt+vu0ypePZlbSU+cSJQtZfZ12WNS
+         q9ZlRyY6Nucj01PdQf9pMwHJqJMZaU2pnEvAGnBdw6blNT8iNqh+FvnGN469KrpfunbF
+         zoTNvqQJbDnIdOTl78ahZtEH/jTssiKUruIw2f6wPYDpe+lxq6NU+Qt+MTatP0AL9PH0
+         75jHAYL1P4+tsRVgHQ+1nTiKsHqXjitStRWeAjvNeqs0ip+qrxi3H5JTPWdOV8fL2Rnn
+         RDlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:in-reply-to:references;
-        bh=1hQUVQtYpj25cTi/rPFxncCmBdP1CuIxieLffjiMj+M=;
-        b=hLmLgBEuZNWLvlrYB2zqICzgZDRNf9aoWcVu5nAyxNbOMd7d2uEAi33BBTlt3Axy2e
-         LOQnmndHOetObFl/ua/5FA+gWM0fCj2UF1PWbJeCW8QGL4KwRfiS3Q98VsGv+P6t66+f
-         scfsffPGlcEjsYsS6KC9Lg9xC/oNyGt9RoIPXjcObHaD1qgNeCCoxTAdn8qYVChJkIQI
-         nCdjoWV9IFtYVR0RkUWlI6NyCAl1FlCZfybjYZAk4km8IkC25sTGpe91c+7OLcubCUlk
-         o3lL1tIINZLCtc0HU0dKMTSkGF2hGAixGj/+D0GerzfmtYD8v9nNtESWRii7lZkG+dLM
-         GWig==
-X-Gm-Message-State: AElRT7HzvW7O9QX9Z1DHoCbuo3gc+CDCUvcfl/gxyuc2NmrqDovQzVkH
-        UQD0KTaBNZ2RLIwEVOTdkl5btasCMt0=
-X-Google-Smtp-Source: AG47ELu+P3K19DfGKQLden0vFKhRpo5zZufUITcwGIpqzGB7+BPSFJjBoEujO1RFATnmmu9EfS9qTw==
-X-Received: by 2002:a17:902:2cc1:: with SMTP id n59-v6mr19333032plb.198.1521780002907;
-        Thu, 22 Mar 2018 21:40:02 -0700 (PDT)
-Received: from wink-desktop.hsd1.ca.comcast.net ([2601:647:cb02:7980:314d:6e5e:475c:ebd3])
-        by smtp.gmail.com with ESMTPSA id l22sm16069901pfj.98.2018.03.22.21.40.00
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 22 Mar 2018 21:40:01 -0700 (PDT)
-From:   Wink Saville <wink@saville.com>
-To:     git@vger.kernel.org
-Cc:     Wink Saville <wink@saville.com>, sunshine@sunshineco.com,
-        Johannes.Schindelin@gmx.de
-Subject: [RFC PATCH v4] rebase: Update invocation of rebase dot-sourced scripts
-Date:   Thu, 22 Mar 2018 21:39:53 -0700
-Message-Id: <ed4cfdc9f31b920eae5055c3b080e2ca5b2f6e42.1521779249.git.wink@saville.com>
-X-Mailer: git-send-email 2.16.2
-In-Reply-To: <cover.1521779249.git.wink@saville.com>
-References: <cover.1521779249.git.wink@saville.com>
-In-Reply-To: <cover.1521779249.git.wink@saville.com>
-References: <cover.1521779249.git.wink@saville.com>
+         :references;
+        bh=kacrIWFqlgy+8y5MjH0g3j4XcofNQ+PJ0hU/rEXTY5w=;
+        b=KO9aods7Wj5Gv+EClDe5Gr+Q2ISiMZqMcJkL/L5cNpd5uQ2t65pdhtDz6VyI7tpo+y
+         qpOe7pGLuPrLwTUPOlv+z2P0gUASBmm8BobBcOf/Nc3bvFvwWPtN4s50/hpD2U6HBAeW
+         ub8mNqiM9gbIIK69FP43s2n3ROITXgk7QaRO3STc0zO2/2LJnpEv7TDswVLztPwg1xTI
+         Z0+Mq2VknwEwszhOKhVncN4gmyzGpZINYMquljOnZpA5J+oQtf4+ZXyCMyA+AXDe3HOL
+         DbeyKUZjcri3IXqp4BTwZ/0POyL8atN2WL6dZjfNMiBdgAourdqnVXR8AhopejUzK0uK
+         hRBQ==
+X-Gm-Message-State: AElRT7FX8HQYrJeSlHZ+iE6Oy08ddLLwEtLqp91TrAkBLBNffjreg0M/
+        RhUhuZBwsPVj4IM6R0cOTBM=
+X-Google-Smtp-Source: AG47ELu53c8sA6PCSn9ya0duzgBz70LCpnbfdUga9xiV1zrYzCkrW7yxTkWzai2qdmEyR4JrSS4j6Q==
+X-Received: by 10.98.254.5 with SMTP id z5mr22472089pfh.53.1521782828622;
+        Thu, 22 Mar 2018 22:27:08 -0700 (PDT)
+Received: from localhost.localdomain (softbank126094251158.bbtec.net. [126.94.251.158])
+        by smtp.gmail.com with ESMTPSA id r14sm18106840pfa.163.2018.03.22.22.27.06
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 22 Mar 2018 22:27:08 -0700 (PDT)
+From:   Yuki Kokubun <orga.chem.job@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Yuki Kokubun <orga.chem.job@gmail.com>
+Subject: [PATCH v2] filter-branch: fix errors caused by refs that cannot be used with ^0
+Date:   Fri, 23 Mar 2018 05:09:13 +0000
+Message-Id: <20180323050913.5188-1-orga.chem.job@gmail.com>
+X-Mailer: git-send-email 2.16.2.18.g09cb46d
+In-Reply-To: <5ab46520.0352650a.cc02b.a177@mx.google.com>
+References: <5ab46520.0352650a.cc02b.a177@mx.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The backend scriptlets for "git rebase" were structured in a
-bit unusual way for historical reasons.  Originally, it was
-designed in such a way that dot-sourcing them from "git
-rebase" would be sufficient to invoke the specific backend.
-
-When it was discovered that some shell implementations
-(e.g. FreeBSD 9.x) misbehaved when exiting with a "return"
-is executed at the top level of a dot-sourced script (the
-original was expecting that the control returns to the next
-command in "git rebase" after dot-sourcing the scriptlet).
-
-To fix this issue the whole body of git-rebase--$backend.sh
-was made into a shell function git_rebase__$backend and then
-the last statement of the scriptlet would invoke the function.
-
-Here the call is moved to "git rebase" side, instead of at the
-end of each scriptlet.  This give us a more normal arrangement
-where the scriptlet function library and allows multiple functions
-to be implemented in a scriptlet.
-
-Signed-off-by: Wink Saville <wink@saville.com>
-Reviewed-by: Junio C Hamano <gitster@pobox.com>
-Reviewed-by: Eric Sunsine <sunsine@sunshineco.com>
+"git filter-branch -- --all" print unwanted error messages when refs that
+cannot be used with ^0 exist. Such refs can be created by "git replace" with
+trees or blobs. Also, "git tag" with trees or blobs can create such refs.
 ---
- git-rebase--am.sh          | 11 -----------
- git-rebase--interactive.sh | 11 -----------
- git-rebase--merge.sh       | 11 -----------
- git-rebase.sh              |  2 ++
- 4 files changed, 2 insertions(+), 33 deletions(-)
+ git-filter-branch.sh     | 14 ++++++++++++--
+ t/t7003-filter-branch.sh | 14 ++++++++++++++
+ 2 files changed, 26 insertions(+), 2 deletions(-)
 
-diff --git a/git-rebase--am.sh b/git-rebase--am.sh
-index be3f06892..e5fd6101d 100644
---- a/git-rebase--am.sh
-+++ b/git-rebase--am.sh
-@@ -4,15 +4,6 @@
- # Copyright (c) 2010 Junio C Hamano.
- #
+diff --git a/git-filter-branch.sh b/git-filter-branch.sh
+index 1b7e4b2cd..41efecb28 100755
+--- a/git-filter-branch.sh
++++ b/git-filter-branch.sh
+@@ -251,8 +251,18 @@ done < "$tempdir"/backup-refs
  
--# The whole contents of this file is run by dot-sourcing it from
--# inside a shell function.  It used to be that "return"s we see
--# below were not inside any function, and expected to return
--# to the function that dot-sourced us.
--#
--# However, older (9.x) versions of FreeBSD /bin/sh misbehave on such a
--# construct and continue to run the statements that follow such a "return".
--# As a work-around, we introduce an extra layer of a function
--# here, and immediately call it after defining it.
- git_rebase__am () {
+ # The refs should be updated if their heads were rewritten
+ git rev-parse --no-flags --revs-only --symbolic-full-name \
+-	--default HEAD "$@" > "$tempdir"/raw-heads || exit
+-sed -e '/^^/d' "$tempdir"/raw-heads >"$tempdir"/heads
++	--default HEAD "$@" > "$tempdir"/raw-refs || exit
++while read ref
++do
++	case "$ref" in ^?*) continue ;; esac
++
++	if git rev-parse --verify "$ref"^0 >/dev/null 2>&1
++	then
++		echo "$ref"
++	else
++		warn "WARNING: not rewriting '$ref' (not a committish)"
++	fi
++done >"$tempdir"/heads <"$tempdir"/raw-refs
  
- case "$action" in
-@@ -105,5 +96,3 @@ fi
- move_to_original_branch
+ test -s "$tempdir"/heads ||
+ 	die "You must specify a ref to rewrite."
+diff --git a/t/t7003-filter-branch.sh b/t/t7003-filter-branch.sh
+index 7cb60799b..04f79f32b 100755
+--- a/t/t7003-filter-branch.sh
++++ b/t/t7003-filter-branch.sh
+@@ -470,4 +470,18 @@ test_expect_success 'tree-filter deals with object name vs pathname ambiguity' '
+ 	git show HEAD:$ambiguous
+ '
  
- }
--# ... and then we call the whole thing.
--git_rebase__am
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 561e2660e..213d75f43 100644
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -740,15 +740,6 @@ get_missing_commit_check_level () {
- 	printf '%s' "$check_level" | tr 'A-Z' 'a-z'
- }
- 
--# The whole contents of this file is run by dot-sourcing it from
--# inside a shell function.  It used to be that "return"s we see
--# below were not inside any function, and expected to return
--# to the function that dot-sourced us.
--#
--# However, older (9.x) versions of FreeBSD /bin/sh misbehave on such a
--# construct and continue to run the statements that follow such a "return".
--# As a work-around, we introduce an extra layer of a function
--# here, and immediately call it after defining it.
- git_rebase__interactive () {
- 
- case "$action" in
-@@ -1029,5 +1020,3 @@ fi
- do_rest
- 
- }
--# ... and then we call the whole thing.
--git_rebase__interactive
-diff --git a/git-rebase--merge.sh b/git-rebase--merge.sh
-index ceb715453..685f48ca4 100644
---- a/git-rebase--merge.sh
-+++ b/git-rebase--merge.sh
-@@ -104,15 +104,6 @@ finish_rb_merge () {
- 	say All done.
- }
- 
--# The whole contents of this file is run by dot-sourcing it from
--# inside a shell function.  It used to be that "return"s we see
--# below were not inside any function, and expected to return
--# to the function that dot-sourced us.
--#
--# However, older (9.x) versions of FreeBSD /bin/sh misbehave on such a
--# construct and continue to run the statements that follow such a "return".
--# As a work-around, we introduce an extra layer of a function
--# here, and immediately call it after defining it.
- git_rebase__merge () {
- 
- case "$action" in
-@@ -171,5 +162,3 @@ done
- finish_rb_merge
- 
- }
--# ... and then we call the whole thing.
--git_rebase__merge
-diff --git a/git-rebase.sh b/git-rebase.sh
-index a1f6e5de6..4595a316a 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -196,7 +196,9 @@ run_specific_rebase () {
- 		export GIT_EDITOR
- 		autosquash=
- 	fi
-+	# Source the code and invoke it
- 	. git-rebase--$type
-+	git_rebase__$type
- 	ret=$?
- 	if test $ret -eq 0
- 	then
++test_expect_success 'rewrite repository including refs that point at non-commit object' '
++	test_when_finished "git reset --hard original" &&
++	tree=$(git rev-parse HEAD^{tree}) &&
++	test_when_finished "git replace -d $tree" &&
++	echo A >new &&
++	git add new &&
++	new_tree=$(git write-tree) &&
++	git replace $tree $new_tree &&
++	git tag -a -m "tag to a tree" treetag $new_tree &&
++	git reset --hard HEAD &&
++	git filter-branch -f -- --all >filter-output 2>&1 &&
++	! fgrep fatal filter-output
++'
++
+ test_done
 -- 
-2.16.2
+2.16.2.18.g09cb46d
 
