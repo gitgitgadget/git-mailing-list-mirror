@@ -7,121 +7,74 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 260931F404
-	for <e@80x24.org>; Fri, 23 Mar 2018 22:41:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 32B9E1F404
+	for <e@80x24.org>; Fri, 23 Mar 2018 22:41:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752590AbeCWWlW (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Mar 2018 18:41:22 -0400
-Received: from out5-smtp.messagingengine.com ([66.111.4.29]:47565 "EHLO
+        id S1752573AbeCWWlc (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Mar 2018 18:41:32 -0400
+Received: from out5-smtp.messagingengine.com ([66.111.4.29]:34269 "EHLO
         out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752462AbeCWWlS (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 23 Mar 2018 18:41:18 -0400
+        by vger.kernel.org with ESMTP id S1752564AbeCWWlP (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 23 Mar 2018 18:41:15 -0400
 Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
-        by mailout.nyi.internal (Postfix) with ESMTP id 74C0120C1B;
-        Fri, 23 Mar 2018 18:41:17 -0400 (EDT)
+        by mailout.nyi.internal (Postfix) with ESMTP id BC9B420C8D;
+        Fri, 23 Mar 2018 18:41:14 -0400 (EDT)
 Received: from frontend2 ([10.202.2.161])
-  by compute6.internal (MEProxy); Fri, 23 Mar 2018 18:41:17 -0400
+  by compute6.internal (MEProxy); Fri, 23 Mar 2018 18:41:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         aaronjgreenberg.com; h=cc:date:from:in-reply-to:message-id
         :references:subject:to:x-me-sender:x-me-sender:x-sasl-enc; s=
-        fm2; bh=vIhgleWfQuK9vwaeY9Wr4oszx+hnUbWZkGTViiyQXJI=; b=PHPPkIWU
-        2PSuPF3jJtuQERTmtLtBVZWkUTJxofgZKGMGvgH5g42PzeGxzStzvOTJxwm7Cp9O
-        wW4hWJOUT/ZRBM2i5+GDbgHsLVjLu2WX6liPf0Kr1ITLYNLpUW/IGGwTPwIpvv8U
-        SPWO4Nu5jBOfq+Gcxx8iYjyRXGIMWEbpgAh1zWYR7h+FCZlHT0VYwwQOWTqeUqFt
-        DM1zKN/AU/QuxdrNveiGHEnB8Dw7g73HjToKcOkkB9TpuQt4oY8tCbSrNgasBxmO
-        i+3R0+niSa7CG3pO+5JWYDgzJYkTDv7pIh995aTSJEv1pV10JbB/elt1GfqwvryU
-        D74kHXIDgFtU1g==
+        fm2; bh=6GdZWcB5Jhg5XJUGaxgvIbYGuGfdR1AkDV2V8Q8QYzw=; b=M9KBP0BC
+        veENuDEXFrvofdqP0U10dkTtyaZvUSEIj5rQaM092XaSsR/SW82rqeK15hnX4hRl
+        ZM0s6IopuRCVF0Lljdc3m7J6oir9k8TB8TAveH+FfpTt+BIHTLwJxW5jvhZy/kMY
+        O5ndxz42wiPH3mTwc8xdHEyqsNoZ85rWJQNqqWfmpEHK/+YmgDBSpOfbPXE8xjPL
+        RCYue21tQOIDrcM0q5iWUK1td5u5mt7QjvBOcz64GzFMuWq4L63iHi/h1hFj8yrU
+        a0MtNZLLkaDjKStdCtSdoxmOm1tQOQP/I7/BKvFN/wX8kQQ8SSou/Dm9MtGp+ah5
+        1pBvTBTGPzHjRg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:date:from:in-reply-to:message-id
         :references:subject:to:x-me-sender:x-me-sender:x-sasl-enc; s=
-        fm2; bh=vIhgleWfQuK9vwaeY9Wr4oszx+hnUbWZkGTViiyQXJI=; b=BCxSIoRX
-        X4d8uBqyU+horlrvhWGwARLDdOG/ZyFTKcxj+i2XALGYJJHFkXKN4hpYBnLb6g6q
-        9fudQNNoOgOQoSLmUsn7XsuW3JyuHunjFWHdYeKu0nP1EAnasIk6Npq81CjRrE2W
-        jmnvNru+LC5qntUufhfmjx57P4zPq8cBOMe+FtD93kpINy1T4GAHMfA6oa8a/aur
-        53sFubowDtW8WkBMkVeUKivQSq/QbfB9qqnzFKY7sRUMXgqYGIkE2n7H29VN9jRS
-        JTplIymxduFwdGH/hsgwlpwC2FxJ7kOsjeJGfoK0sBKiVxmlj6ClfDTiFgCF4mMQ
-        cOjzxRN/JGo45Q==
-X-ME-Sender: <xms:jYK1WuMILP7T3hLrLGontWB6_Q6a_D8lr6nDbBAbGkXiwKeNbzBMYg>
+        fm2; bh=6GdZWcB5Jhg5XJUGaxgvIbYGuGfdR1AkDV2V8Q8QYzw=; b=dZHO7s0O
+        5S/hEXowx4op0jTF1ZyphRSdAq1mkCGGl83kDhx9H2rj+3fdsR9EIApcafVbt3iT
+        jroqTZ9044n/Rb3zdG5Hm0ebhDXAlv3mPC3+L1IcOpFJduzc+X7kDEJwQMl8OUxX
+        9xTezYIPWRgaffX6iDPhHfY+XQd5Ky6Wi2sob7zmcoC9ZOd8HjOZVASYo2aNMwW8
+        OoUlA8H5lokS6VPjjzR/7uDl0wo9swtJCSrVuqkZFrnXgvKWE6lqCVZe+kWo2wYo
+        0D0ShTnSxq6UwanBFXqACAzJ172Y0ztspQpK4Xtne6GqhHqBNxkOrclAFsqnklyv
+        WvV4tOrRp5lWBA==
+X-ME-Sender: <xms:ioK1WoFVt3roTaCZYvxz3eCq8SpmSmWqgkRcj6kU6-32D4pev5mLTQ>
 Received: from localhost.localdomain (unknown [159.203.64.218])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 27AFC240F8;
-        Fri, 23 Mar 2018 18:41:17 -0400 (EDT)
+        by mail.messagingengine.com (Postfix) with ESMTPA id 72DC924131;
+        Fri, 23 Mar 2018 18:41:14 -0400 (EDT)
 From:   Aaron Greenberg <p@aaronjgreenberg.com>
 To:     peff@peff.net
 Cc:     git@matthieu-moy.fr, git@vger.kernel.org, p@aaronjgreenberg.com,
         gitster@pobox.com
-Subject: [PATCH] branch: implement shortcut to delete last branch
-Date:   Fri, 23 Mar 2018 22:40:35 +0000
-Message-Id: <1521844835-23956-2-git-send-email-p@aaronjgreenberg.com>
+Subject: [PATCH v2] branch: implement shortcut to delete last branch
+Date:   Fri, 23 Mar 2018 22:40:34 +0000
+Message-Id: <1521844835-23956-1-git-send-email-p@aaronjgreenberg.com>
 X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1521844835-23956-1-git-send-email-p@aaronjgreenberg.com>
+In-Reply-To: <20180323085636.GA24416@sigill.intra.peff.net>
 References: <20180323085636.GA24416@sigill.intra.peff.net>
- <1521844835-23956-1-git-send-email-p@aaronjgreenberg.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This patch gives git-branch the ability to delete the previous
-checked-out branch using the "-" shortcut. This shortcut already exists
-for git-checkout, git-merge, and git-revert. A common workflow is
 
-1. Do some work on a local topic-branch and push it to a remote.
-2. 'remote/topic-branch' gets merged in to 'remote/master'.
-3. Switch back to local master and fetch 'remote/master'.
-4. Delete previously checked-out local topic-branch.
+I updated the commit message to include my first email's cover letter
+and cleaned up the test.
 
-$ git checkout -b topic-a
-$ # Do some work...
-$ git commit -am "Implement feature A"
-$ git push origin topic-a
+Copying Junio, since he also had good comments in the conversation you
+linked.
 
-$ git checkout master
-$ git branch -d topic-a
-$ # With this patch, a user could simply type
-$ git branch -d -
+I can appreciate Matthieu's points on the use of "-" in destructive
+commands. As of this writing, git-merge supports the "-" shorthand,
+which while not destructive, is at least _mutative_. Also,
+"git branch -d" is not destructive in the same way that "rm -rf" is
+destructive since you can recover the branch using the reflog.
 
-"-" is a useful shortcut for cleaning up a just-merged branch
-(or a just switched-from branch.)
-
-Signed-off-by: Aaron Greenberg <p@aaronjgreenberg.com>
----
- builtin/branch.c  | 3 +++
- t/t3200-branch.sh | 8 ++++++++
- 2 files changed, 11 insertions(+)
-
-diff --git a/builtin/branch.c b/builtin/branch.c
-index 6d0cea9..9e37078 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -221,6 +221,9 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
- 		char *target = NULL;
- 		int flags = 0;
- 
-+		if (!strcmp(argv[i], "-"))
-+			argv[i] = "@{-1}";
-+
- 		strbuf_branchname(&bname, argv[i], allowed_interpret);
- 		free(name);
- 		name = mkpathdup(fmt, bname.buf);
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index 6c0b7ea..78c25aa 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -776,6 +776,14 @@ test_expect_success 'deleting currently checked out branch fails' '
- 	test_must_fail git branch -d my7
- '
- 
-+test_expect_success 'test deleting last branch' '
-+	git checkout -b my7.1 &&
-+	git checkout  - &&
-+	test_path_is_file .git/refs/heads/my7.1 &&
-+	git branch -d - &&
-+	test_path_is_missing .git/refs/heads/my7.1
-+'
-+
- test_expect_success 'test --track without .fetch entries' '
- 	git branch --track my8 &&
- 	test "$(git config branch.my8.remote)" &&
--- 
-2.7.4
-
+One thing to consider is that approval of this patch extends the
+implementation of the "-" shorthand in a piecemeal, rather than
+consistent, way (implementing it in a consistent way was the goal of
+the patch set you mentioned in your previous email.) Is that okay? Or
+is it better to pick up the consistent approach where it was left?
