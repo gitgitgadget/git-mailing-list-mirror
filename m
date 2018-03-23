@@ -2,190 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BE1DC1F42D
-	for <e@80x24.org>; Fri, 23 Mar 2018 06:26:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 971081F42D
+	for <e@80x24.org>; Fri, 23 Mar 2018 06:48:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751491AbeCWG05 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Mar 2018 02:26:57 -0400
-Received: from mail-qk0-f174.google.com ([209.85.220.174]:34414 "EHLO
-        mail-qk0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751288AbeCWG04 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Mar 2018 02:26:56 -0400
-Received: by mail-qk0-f174.google.com with SMTP id z184so11871589qkc.1
-        for <git@vger.kernel.org>; Thu, 22 Mar 2018 23:26:56 -0700 (PDT)
+        id S1751668AbeCWGsn (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Mar 2018 02:48:43 -0400
+Received: from mail-wr0-f181.google.com ([209.85.128.181]:44601 "EHLO
+        mail-wr0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751553AbeCWGsm (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Mar 2018 02:48:42 -0400
+Received: by mail-wr0-f181.google.com with SMTP id u46so10979746wrc.11
+        for <git@vger.kernel.org>; Thu, 22 Mar 2018 23:48:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=eV8i7hNmLZKCARoPh/uUIhCmHGZgAK7Idaff2Q0d5qo=;
-        b=FPrFhyBuaBYvo/UpPG1xMYvUl2uQ4K/ZWrJD762yPDav79xH/kImSV2jX8OuT9psmY
-         1BxKC8MktsrgQy/ziLTPtEp4iiLwCqpC188+IoFDh88o7xmypxFTrpgmtjZmMK4g2uVC
-         Hv7mtx8QyggGZDl+4/pkI6DrsKndqgyR9kjX35KpJGoRUdYyTCqSMmJCqEPngNOjQDNO
-         ZWNC2qOjlYc/bl52DPWBQ72ahK0g3rLTJbkIllIHq7Wd39urOr29bNGos7sZE712ekdj
-         1yjnDuaHhYqL2tVK4daczKqTNJtXgPU08bL0deJhMdYBiq/cGCia1R4tUPxOEOeNusHj
-         Eqgg==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=vheEfU4IzkgG4+QeEqfFQcOGVN85lEqQwhk7txV1tjU=;
+        b=u3Cwphjz1C3/7JezgtwqGGI1L6ScvBgeR/pCx30r4RCoFBlSf2g5K7lhe1HT72p/Rn
+         3P+DZULjKQpqmbnw7MZ18+ZXzX2guXy9yRVJOqP3uOUdR5WYx11boo1e/b8pBOh6WRgz
+         LVIJQkX9pxp0Vb3FTxykWtavANEGdXms9i84p5BJeBvmVXL+wBYrk1tRjnWv63zQD2fi
+         aSnRjRq3yUCSuThkjy6l7l94oYTxcsasOEHfd8yPI5eqISoUufrBs6RAznT3VT/mxoIt
+         QGv4tpdrGc5qheJdtui+KYHhTRSjMm4tfG1kZrsaasIP7+ty1I3f0qYLe1jWh7L/1vd9
+         gcWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=eV8i7hNmLZKCARoPh/uUIhCmHGZgAK7Idaff2Q0d5qo=;
-        b=XXJF/3Vi3tc6B/4SVebzoKdsiroc07j7sk3Jt4NVAO/zQAKIQdp/cBs/GufQi8rVrn
-         cASypK9U/oVYDTjbu4iHTUSET+LYQH/4CCZl1K0sn4DaQk6I3rFAXN4k9Vwwc3JfZzXA
-         QzDrJeKYoSt+qgHCiq63lA7d0Z1xR8MW1XLP91MDVEghsgIdmb1TZDRM01URXZ77dtmm
-         amBrd3Do4zAAmiRTJPNURI9HUE9uhZVRavmWMYMcwwUMW0rvMVUAr1BMXvL9C4sBm4TG
-         EDeeTDlc3pBjb8lbQnP3TeVzp6rVRcoinZIn3VwsAnbp0+f1fhyZ9ZO8AnY11K4/Q4r7
-         l0/Q==
-X-Gm-Message-State: AElRT7F/+OJ/OApWNlnsIefQXf+2AXYEHN0UfSuLoNaOV3eQmHRuKUfj
-        6AQMsoTpfOaK+RnxH+0D9IRwy5boq5Q1Kw0uqHkU5A==
-X-Google-Smtp-Source: AG47ELsfz+RqQX2JYDwkNNygvAOb9YoMCeohqIFh04CPInj+g6mHFWKaYSPWaJmnULNBQX6KfbNdFaxK7TBiASgkV90=
-X-Received: by 10.55.159.140 with SMTP id i134mr35089387qke.220.1521786415709;
- Thu, 22 Mar 2018 23:26:55 -0700 (PDT)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=vheEfU4IzkgG4+QeEqfFQcOGVN85lEqQwhk7txV1tjU=;
+        b=kaL8tFNnYEu/r2GlSqENG6B5GK6TQmf3fRx+UNGQu69xIFqEluhgYLwYAWy/tZyLFR
+         EzjSu3QtkxR4UYp87Oe0yNFsYXF/q+CdAgSoueT+zoj9B+6Ju67hi35YZGvRQVSp4m+M
+         HLYPu2GsIn/B5PQ8E3oJIUmLzd7e9Iop+Smp6XS98MGtv6qNk12zN6Hf0uVpVsFlp2sn
+         fx0t22qBOO/Sm+AhaEkXdEndJ36OR+biDg4iaSSneQMmoANhXsvfmy81aeioAdyVy+06
+         jymQ3KIDsftB9tSgxRORpmBQAVwsYsU9Q5Nd3RdfN8at4TuVV1mFa7pqeNy3nM7qIBsP
+         uL8w==
+X-Gm-Message-State: AElRT7GokV5PWwXA6VRpTDO0cEEue7HC0xovxYiOXuBunOfDR2/Alje2
+        /Vl9vJxIsWtdGkngMv+FXLkBUrlFsncdx/s/UVQ=
+X-Google-Smtp-Source: AG47ELui3kEZW+QJ/1VVPlPo7UYVVBAGn4ZAnBh2F389v6MRm8lSZpZKxMbV3wwaO5gko/plAZiPXvPJwkPG0dWBy6Q=
+X-Received: by 10.223.144.35 with SMTP id h32mr23072091wrh.2.1521787721665;
+ Thu, 22 Mar 2018 23:48:41 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.12.190.196 with HTTP; Thu, 22 Mar 2018 23:26:55 -0700 (PDT)
-In-Reply-To: <ed4cfdc9f31b920eae5055c3b080e2ca5b2f6e42.1521779249.git.wink@saville.com>
-References: <cover.1521779249.git.wink@saville.com> <ed4cfdc9f31b920eae5055c3b080e2ca5b2f6e42.1521779249.git.wink@saville.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 23 Mar 2018 02:26:55 -0400
-X-Google-Sender-Auth: X0dId7Vbr8za5WEao1Dni-YRKoQ
-Message-ID: <CAPig+cQG16AhLPMeOFAw1GF81oXivFSDHvQ5B8kX20YGAT_BxQ@mail.gmail.com>
-Subject: Re: [RFC PATCH v4] rebase: Update invocation of rebase dot-sourced scripts
-To:     Wink Saville <wink@saville.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Received: by 10.223.156.195 with HTTP; Thu, 22 Mar 2018 23:48:41 -0700 (PDT)
+In-Reply-To: <xmqqlgelnpsx.fsf@gitster-ct.c.googlers.com>
+References: <01020162442818b4-c153f9ce-3813-41a6-aebd-f5cb2b98b1fa-000000@eu-west-1.amazonses.com>
+ <0102016249d21c40-0edf6647-4d26-46fc-8cfd-5a446b93a5e2-000000@eu-west-1.amazonses.com>
+ <xmqqlgelnpsx.fsf@gitster-ct.c.googlers.com>
+From:   =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
+        <olyatelezhnaya@gmail.com>
+Date:   Fri, 23 Mar 2018 09:48:41 +0300
+Message-ID: <CAL21Bm=M-X8pjnxKzXKZbwArF6gyoPLLLa8JBZFNrvwrsRsacg@mail.gmail.com>
+Subject: Re: [PATCH v5 1/6] strbuf: add shortcut to work with error messages
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks for splitting these changes into smaller, more manageable
-chunks. A couple non-code comments below apply to both patches in this
-2-patch series even though I'm responding only to this patch. (The
-actual code changes in the other patch looked fine and the patch was
-easily digested.)
-
-On Fri, Mar 23, 2018 at 12:39 AM, Wink Saville <wink@saville.com> wrote:
-> rebase: Update invocation of rebase dot-sourced scripts
-
-Nit: On this project, the summary line is not capitalized, so: s/Update/update/
-
-> The backend scriptlets for "git rebase" were structured in a
-
-On this project, commit messages are written in imperative mood. The
-commit message Junio suggested[1] said "are structured", which makes
-for a better imperative mood fit.
-
-> bit unusual way for historical reasons.  Originally, it was
-> designed in such a way that dot-sourcing them from "git
-> rebase" would be sufficient to invoke the specific backend.
+2018-03-21 23:20 GMT+03:00 Junio C Hamano <gitster@pobox.com>:
+> Olga Telezhnaya <olyatelezhnaya@gmail.com> writes:
 >
-> When it was discovered that some shell implementations
-> (e.g. FreeBSD 9.x) misbehaved when exiting with a "return"
-> is executed at the top level of a dot-sourced script (the
-> original was expecting that the control returns to the next
-> command in "git rebase" after dot-sourcing the scriptlet).
+>> Add function strbuf_error() that helps to save few lines of code.
+>> Function expands fmt with placeholders, append resulting error message
+>> to strbuf *err, and return error code ret.
+>>
+>> Signed-off-by: Olga Telezhnaia <olyatelezhnaya@gmail.com>
+>> ---
+>>  strbuf.h | 13 +++++++++++++
+>>  1 file changed, 13 insertions(+)
+>>
+>> diff --git a/strbuf.h b/strbuf.h
+>> index e6cae5f4398c8..fa66d4835f1a7 100644
+>> --- a/strbuf.h
+>> +++ b/strbuf.h
+>> @@ -620,4 +620,17 @@ char *xstrvfmt(const char *fmt, va_list ap);
+>>  __attribute__((format (printf, 1, 2)))
+>>  char *xstrfmt(const char *fmt, ...);
+>>
+>> +/*
+>> + * Expand error message, append it to strbuf *err, then return error code ret.
+>> + * Allow to save few lines of code.
+>> + */
+>> +static inline int strbuf_error(struct strbuf *err, int ret, const char *fmt, ...)
+>> +{
+>
+> With this function, err does not have to be an error message, and
+> ret does not have to be negative.  Hence strbuf_error() is a wrong
+> name for the wrapper.
+>
+> It somewhat is bothersome to see that this is inlined; if it is
+> meant for error codepath, it probably shouldn't have to be.
+>
+>> +     va_list ap;
+>> +     va_start(ap, fmt);
+>> +     strbuf_vaddf(err, fmt, ap);
+>> +     va_end(ap);
+>> +     return ret;
+>> +}
+>> +
+>>  #endif /* STRBUF_H */
+>
+> Quite honestly, I am not sure if it is worth to be in strbuf.h; it
+> feels a bit too specific to the immediate need for these five
+> patches and nowhere else.  Are there many existing calls to
+> strbuf_addf() immediately followed by an "return" of an integer,
+> that can be simplified by using this helper?  I see quite a many
+> instances of addf() soon followed by "return -1" in
+> refs/files-backend.c, but they are not immediately adjacent to each
+> other, and won't be helped.
 
-ECANTPARSE: This paragraph is grammatically corrupt.
+Summarizing all that we discussed: I have 2 options how to continue
+this patch. I can revert to v4, or I can replace new function in
+strbuf.h with similar macro in ref-filter.c (I mean, there would be no
+changes in strbuf.h and one new macro in ref-filter.c). What do you
+like more?
 
-?  "When {something}..." but then what?
-
-?  "...when exiting with a "return" is executed"
-
-> To fix this issue the whole body of git-rebase--$backend.sh
-> was made into a shell function git_rebase__$backend and then
-> the last statement of the scriptlet would invoke the function.
-
-Junio's proposed commit message[1] called this a "workaround", not a
-"fix", and, indeed, "workaround" better characterizes that change. If
-anything, _this_ patch is a (more correct) "fix" for that workaround.
-
-> Here the call is moved to "git rebase" side, instead of at the
-
-Junio's version, using imperative mood, said "Move the call...".
-
-> end of each scriptlet.  This give us a more normal arrangement
-> where the scriptlet function library and allows multiple functions
-> to be implemented in a scriptlet.
-
-ECANTPARSE: Grammatically corrupt.
-
-?  "where the ... library and allows..."
-
-Overall, Junio's proposed message followed project practice
-(imperative mood) more closely and felt somewhat more coherent
-(despite the run-on sentence in the first paragraph and the apparent
-incorrect explanation of top-level "return" misbehavior -- the in-code
-comment says top-level "return" was essentially a no-op in broken
-shells, whereas he said it exited the shell).
-
-Perhaps the following re-write addresses the above concerns:
-
-    Due to historical reasons, the backend scriptlets for "git rebase"
-    are structured a bit unusually. As originally designed,
-    dot-sourcing them from "git rebase" was sufficient to invoke the
-    specific backend.
-
-    However, it was later discovered that some shell implementations
-    (e.g. FreeBSD 9.x) misbehaved by continuing to execute statements
-    following a top-level "return" rather than returning control to
-    the next statement in "git rebase" after dot-sourcing the
-    scriptlet. To work around this shortcoming, the whole body of
-    git-rebase--$backend.sh was made into a shell function
-    git_rebase__$backend, and then the very last line of the scriptlet
-    called that function.
-
-    A more normal architecture is for a dot-sourced scriptlet merely
-    to define functions (thus acting as a function library), and for
-    those functions to be called by the script doing the dot-sourcing.
-    Migrate to this arrangement by moving the git_rebase__$backend
-    call from the end of a scriptlet into "git rebase" itself.
-
-    While at it, remove the large comment block from each scriptlet
-    explaining this historic anomaly since it serves no purpose under
-    the new normalized architecture in which a scriptlet is merely a
-    function library.
-
-> Signed-off-by: Wink Saville <wink@saville.com>
-> Reviewed-by: Junio C Hamano <gitster@pobox.com>
-> Reviewed-by: Eric Sunsine <sunsine@sunshineco.com>
-
-Despite its name, on this project, a Reviewed-by: does not mean merely
-that a person looked at and commented on a patch. Rather, it is a way
-for a person to say "I have studied and understood the patch and feel
-that it is ready for inclusion in the project." Reviewed-by:'s are
-therefore always given explicitly by the reviewer and Junio adds them
-to a patch when queuing. (Reviewed-by:'s are not always given, though,
-even when a reviewer has not found problems with a patch. For
-instance, even if I review and comment on this or subsequent patches,
-I will not give a Reviewed-by: since I'm not an area expert, thus
-wouldn't feel comfortable stating that the patch is correct.)
-
-Consequently, these Reviewed-by: lines should be dropped. (You can, on
-the other hand, add Helped-by:'s when appropriate.)
-
-The patch itself makes sense and seems straightforward. See one minor
-comment below...
-
-[1]: https://public-inbox.org/git/xmqqefkbltxv.fsf@gitster-ct.c.googlers.com/
-
-> ---
-> diff --git a/git-rebase.sh b/git-rebase.sh
-> index a1f6e5de6..4595a316a 100755
-> --- a/git-rebase.sh
-> +++ b/git-rebase.sh
-> @@ -196,7 +196,9 @@ run_specific_rebase () {
->                 export GIT_EDITOR
->                 autosquash=
->         fi
-> +       # Source the code and invoke it
->         . git-rebase--$type
-> +       git_rebase__$type
-
-The new comment merely repeats what the two lines of code themselves
-already state clearly, thus the comment is an unnecessary distraction;
-it does not aid in understanding the code.
+Thanks!
+Olga
