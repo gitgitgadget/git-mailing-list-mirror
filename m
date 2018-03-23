@@ -2,95 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9A0F91F404
-	for <e@80x24.org>; Fri, 23 Mar 2018 20:27:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D306C1F404
+	for <e@80x24.org>; Fri, 23 Mar 2018 20:32:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751847AbeCWU1P (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Mar 2018 16:27:15 -0400
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:35160 "EHLO
-        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751541AbeCWU1O (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Mar 2018 16:27:14 -0400
-Received: by mail-wr0-f193.google.com with SMTP id 80so12250807wrb.2
-        for <git@vger.kernel.org>; Fri, 23 Mar 2018 13:27:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=Fi/V160vhnkvyJ+RwWh782Bu3Q2v2h9eeWUqHZowXjM=;
-        b=VkXPNITfB/iFrNK3FhDDwPV0Tn2hqlnEwWOChmP2qN/Ib21L48Wo8HKBxYjGNBpNT1
-         FcLhE0kz7GhFQ8kxo8d+iI5cGmx7uInyIWJXNnDr642mjXkJ/cTnc0870l7zpYE+PlcQ
-         eXXPNbREIHm3IU3jplQQQMShSuZIXxMXEmCO+A+bqf6VhsqWKNK9+CsLRiI5qyVp6D7A
-         ILaaSCGREbwWd5ERuBipwKUjfllBwV4DkqBNQ5l1TzV3BV00wUgPkiHgZQP+2zLXPfKZ
-         e0ZrCSBELfg/FIFpJ3ijLoigAVf8+uyvYMGP9p2FfPymxarcjtTAcXSi9v2sWnWfob5q
-         ywtQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=Fi/V160vhnkvyJ+RwWh782Bu3Q2v2h9eeWUqHZowXjM=;
-        b=klNpQrks+LO5IZ+g5x63UOS4ts44lmhA6yN98dm+N4ETM0OvHfxfSgAQZ69VtMXYPq
-         nBlr9YpmafnaEzFjp+vXA2G2AvpLaXESwOoDkwsUlTZhB2U+JCgtFm+qvkcIC1t/s5X5
-         sHFs6h0m5N2xtfqNlnjkZLBE1tfUHd8kzosGEEvbDJDq9Myyg6AK8iGZP6xyAmkuVrP1
-         sOiQZfMGuGlotRTab0p/u8AIg0plKi1XwLO0kNyGZDmp+BOH+EfORzU9oKbzYSTPqKH1
-         klXX9C41KckNmKMhydSyur45dTZllTmIbVmGdIGWo/tS2RvGPkgSKHckhFRjCbvYaXF9
-         0AjQ==
-X-Gm-Message-State: AElRT7HnPgD08lbFy3c40b8K3NLCydr5nbEBz1LJMSR+iEarKd64FprV
-        H/SY3mUsrwQNVTiFzzFPMJU=
-X-Google-Smtp-Source: AG47ELt/tru0qAR9XkqaIwJjBbU/Ucn9M000oOk1sVmKqj8blKwXEOhIy53gj/nzMUwe96RoVBeg9Q==
-X-Received: by 10.223.179.195 with SMTP id x3mr19597778wrd.94.1521836833063;
-        Fri, 23 Mar 2018 13:27:13 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id i44sm8808671wri.23.2018.03.23.13.27.12
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 23 Mar 2018 13:27:12 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jameson Miller <jamill@microsoft.com>
-Cc:     git@vger.kernel.org, peff@peff.net
-Subject: Re: [PATCH v2 4/5] Move the reusable parts of memory pool into its own file
-References: <20180321164152.204869-1-jamill@microsoft.com>
-        <20180323144408.213145-5-jamill@microsoft.com>
-Date:   Fri, 23 Mar 2018 13:27:12 -0700
-In-Reply-To: <20180323144408.213145-5-jamill@microsoft.com> (Jameson Miller's
-        message of "Fri, 23 Mar 2018 10:44:07 -0400")
-Message-ID: <xmqqr2oaillr.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1751668AbeCWUco (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Mar 2018 16:32:44 -0400
+Received: from siwi.pair.com ([209.68.5.199]:49197 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751471AbeCWUcn (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Mar 2018 16:32:43 -0400
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id 7959B3F4024;
+        Fri, 23 Mar 2018 16:32:43 -0400 (EDT)
+Received: from [192.168.1.71] (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 4BFE93F401D;
+        Fri, 23 Mar 2018 16:32:43 -0400 (EDT)
+Subject: Re: [PATCH v2] json_writer: new routines to create data in JSON
+ format
+To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>, git@vger.kernel.org
+Cc:     gitster@pobox.com, peff@peff.net, avarab@gmail.com,
+        Jeff Hostetler <jeffhost@microsoft.com>
+References: <20180321192827.44330-1-git@jeffhostetler.com>
+ <20180321192827.44330-2-git@jeffhostetler.com>
+ <524c47a6-7c9f-5519-250a-4722081a0f32@web.de>
+ <14bbf223-a4d1-3c11-cd2e-dff044e01fef@jeffhostetler.com>
+ <306104ac-37ac-8198-1988-03efa818cde3@web.de>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <e4a64bc0-40eb-9285-c3b5-f034d78ffb85@jeffhostetler.com>
+Date:   Fri, 23 Mar 2018 16:32:42 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:59.0) Gecko/20100101
+ Thunderbird/59.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <306104ac-37ac-8198-1988-03efa818cde3@web.de>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jameson Miller <jamill@microsoft.com> writes:
-
-> This moves the reusable parts of the memory pool logic used by
-> fast-import.c into its own file for use by other components.
->
-> Signed-off-by: Jameson Miller <jamill@microsoft.com>
-> ---
->  Makefile      |   1 +
->  fast-import.c | 118 +---------------------------------------------------------
->  mem-pool.c    | 103 ++++++++++++++++++++++++++++++++++++++++++++++++++
->  mem-pool.h    |  34 +++++++++++++++++
->  4 files changed, 139 insertions(+), 117 deletions(-)
->  create mode 100644 mem-pool.c
->  create mode 100644 mem-pool.h
-
-This step looks totally uncontroversial, provided that the result
-after [1-3/5] is in a reasonable shape ;-)
-
-Hint for other reviewers.  This
-
-    $ git blame -s -b -C HEAD^..HEAD mem-pool.c
-
-can be used to see that most of the lines in this new file are
-imported verbatim from fast-import.c at the receiving end.
 
 
+On 3/23/2018 4:11 PM, René Scharfe wrote:
+> Am 23.03.2018 um 20:55 schrieb Jeff Hostetler:
+>>>> +struct json_writer_level
+>>>> +{
+>>>> +    unsigned level_is_array : 1;
+>>>> +    unsigned level_is_empty : 1;
+>>>> +};
+>>>> +
+>>>> +struct json_writer
+>>>> +{
+>>>> +    struct json_writer_level *levels;
+>>>> +    int nr, alloc;
+>>>> +    struct strbuf json;
+>>>> +};
+>>>
+>>> A simpler and probably more compact representation of is_array would
+>>> be a strbuf with one char per level, e.g. '[' for an array and '{'
+>>> for an object (or ']' and '}').
+>>>
+>>> I don't understand the need to track emptiness per level.  Only the
+>>> top level array/object can ever be empty, can it?
+>>
+>> My expectation was that any sub-object or sub-array could be empty.
+>> That is, this should be valid (and the JSON parser in Python allows):
+>>
+>>       {"a":{}, "b":[], "c":[[]], "d":[{}]}
+> 
+> Sure, but the emptiness of finished arrays and objects doesn't matter
+> for the purposes of error checking, comma setting or closing.  At most
+> one of them is empty *and* unclosed while writing the overall JSON
+> object -- the last one opened:
+> 
+> 	{
+> 	{"a":{
+> 	{"a":{}, "b":[
+> 	{"a":{}, "b":[], "c":[
+> 	{"a":{}, "b":[], "c":[[
+> 	{"a":{}, "b":[], "c":[[]], "d":[
+> 	{"a":{}, "b":[], "c":[[]], "d":[{
+> 
+> Any of the earlier written arrays/objects are either closed or contain
+> at least a half-done sub-array/object, which makes them non-empty.
+> 
+> René
+> 
 
+good point.  i'll revisit.  thanks.
+Jeff
