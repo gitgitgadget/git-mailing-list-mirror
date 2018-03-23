@@ -7,33 +7,33 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0A31A1F404
-	for <e@80x24.org>; Fri, 23 Mar 2018 14:45:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6CEE71F404
+	for <e@80x24.org>; Fri, 23 Mar 2018 14:45:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751836AbeCWOpF (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Mar 2018 10:45:05 -0400
-Received: from mail-bn3nam01on0111.outbound.protection.outlook.com ([104.47.33.111]:49120
+        id S1751891AbeCWOpH (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Mar 2018 10:45:07 -0400
+Received: from mail-bn3nam01on0117.outbound.protection.outlook.com ([104.47.33.117]:25505
         "EHLO NAM01-BN3-obe.outbound.protection.outlook.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1751812AbeCWOpC (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Mar 2018 10:45:02 -0400
+        id S1751670AbeCWOpE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Mar 2018 10:45:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=selector1; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
- bh=xbFqMs4ThRCOXyliPFHGrlROEXe60SF08PluZkho194=;
- b=frRtEmiVISF1l++MOyT3pNczB8jd43f3KYjtWvI6CxByP1xrWC2YrHd3dwZSs7bhS9tQ3Rfzmekn+SH5yQZo+0v6gRADXA1FNUUSXZ766e4Y25KTHej6VHfKkdTPHkAMzx1Uf9c8MGLszLAPP0rQ7tiboLshjqSsWybQdV7xeKs=
+ bh=3zGR32t90apoIBCs8D8ubkJWKO56baY4J63sdEVGLS0=;
+ b=B4j/YT37xZTUaSgCyKBwDkUfQ0fadHXm1jPtqQ/t4zxqhFvJ9jPE5NHYsVNKzKkmKh5QBsOoWmaF3isZkYNQkTDbIPhPEwYaNKdG5r3LRV7mnZm7lrXTbnwytHcsRQROWV2BbiMBFc6jHjedQLcvq3ANIbQ+6JMZHnNV3kmlae8=
 Received: from localhost.corp.microsoft.com
  (2001:4898:8010:1:1060:bd2c:4297:50e) by
  BL0PR2101MB1105.namprd21.prod.outlook.com (2603:10b6:207:37::27) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.631.2; Fri, 23 Mar
- 2018 14:45:00 +0000
+ 2018 14:45:01 +0000
 From:   Jameson Miller <jamill@microsoft.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net,
         Jameson Miller <jamill@microsoft.com>
-Subject: [PATCH v2 2/5] fast-import: introduce mem_pool type
-Date:   Fri, 23 Mar 2018 10:44:05 -0400
-Message-Id: <20180323144408.213145-3-jamill@microsoft.com>
+Subject: [PATCH v2 3/5] fast-import: update pool_* functions to work on local pool
+Date:   Fri, 23 Mar 2018 10:44:06 -0400
+Message-Id: <20180323144408.213145-4-jamill@microsoft.com>
 X-Mailer: git-send-email 2.14.3
 In-Reply-To: <20180321164152.204869-1-jamill@microsoft.com>
 References: <20180321164152.204869-1-jamill@microsoft.com>
@@ -44,52 +44,53 @@ X-ClientProxiedBy: DM5PR0102CA0021.prod.exchangelabs.com (2603:10b6:4:9c::34)
  To BL0PR2101MB1105.namprd21.prod.outlook.com (2603:10b6:207:37::27)
 X-MS-PublicTrafficType: Email
 X-MS-Office365-Filtering-HT: Tenant
-X-MS-Office365-Filtering-Correlation-Id: a1d4aa82-95be-43da-8da5-08d590cca824
+X-MS-Office365-Filtering-Correlation-Id: ba00c542-f221-4f22-b8c9-08d590cca8bb
 X-Microsoft-Antispam: UriScan:;BCL:0;PCL:0;RULEID:(7020095)(4652020)(48565401081)(5600026)(4604075)(4534165)(4627221)(201703031133081)(201702281549075)(2017052603328)(7193020);SRVR:BL0PR2101MB1105;
-X-Microsoft-Exchange-Diagnostics: 1;BL0PR2101MB1105;3:nPdaB+VL2dSKol8wnKZIpeCFAFzpJ10fKz3MUufewwrlO3g+EckdBzZsPmzH0+cDHog/XK1PpfqXg7b8Rb33YACz0K1PlcFduhd5+afbUE7g5aDhBM3VLSxNFcPvERwc5qa71kypMW+4UHzkLf5hcRsxGhnm/jhnmYuJbEyl3YGn8y6jq213+mzAm80HCHQvS6i8UNx8uQyUx6HdURLBpjZhQqAk6l04hDHnFBwkTnAXPzvkDqvmvwfwTcn25owo;25:AtY9g6jzIMcn6xVgPHmA//8pEsLFgaPv6Ptlns8ivtc3QLdpj7I7R0vFlTmfVdFVG8QPBfwckj3rUWkO9nCh47SrgPQvNhL8xpLMVloyM1Y5MIrVRdX5+YaenuuHRl0D6bDLcjwzSChcpDuaj0QFLrvRbZje9Y1C47eEQwAb/v81xWbawvXUWU2bwEblh/ICJBUOkV+fLfFnfl5Pj33oLIfRLFkISHDS58OwWiY9LABbu2hbUX34+VQov/ifkUoCejTkEgRTa2kPu/1ASWyeI6YyK6nwxcRiJRukYequxm8x8OiXVaQzjM4sK2xxWfGhptQ+opG4SXMho1mPOkt1Ww==;31:xxDhhPk9sjC64Y7Bf78+Kd25IYAPinrcHTSP8YJUCJpAYR8al0Vojp8rbZx16O4Uvkx2qytm0qw2vL0j5Bj0aRMa5fSCYy4LkFay4PpnEuaqyR22kMIAjMVAioN0gXSLnESqopkAz41fLMVbu4aJEr7SXUtFeKAO6Uk8HxT3h1as/pEhBylF9mvpAD6t2iPN+NN4XvzAYiOH92tz5brFXPsCmBng5SiwnZ4meLpW8zk=
+X-Microsoft-Exchange-Diagnostics: 1;BL0PR2101MB1105;3:fFuBdrsW3gd0uaidNQyIGyVxWnxleEaFtrNuGkelbH4vsDbjPJSwNFn3PCC5KlOBnSKjQjj8XoaHWf7fl8mdy/9QyPk/UiTx1Dix/P28ik3fhZqsA9msi/wYvsxGH1mwjYCENuKXnAw/dqaGq4b/P/6ryiqbw26WSZ7li/qgOhPeY+ZMLUyLqFQAlIbHsh5ngS92jqD3FExXdyLMFGWgtRbsAYNscbtYmwvqd3felwwqg9hb6O2MDq5IhZswVy05;25:/EV3jZKPnIodzlwib4TgcbSdVUjciOlhuDp5gclaE8yAiduIMlDXf+D2EzWlKPJwtYKL4xurH5iUKwzF60Fnw0BYP+th//9l5LmPGcLJRaKFXkTpUphI4EAE4h62iVs1N3+dYo3R93M8T2lShPkpPX+e4Xq5e/bkTIjW8WhXCxq5aRzH02gLGXrv27plrIw0dx6cqcOOgx7mHPAPkPQZ2xXjBvC7bVVvvMotE29eNTiXzjUJs+0pqYrW7BuzH+Nbe9scO33toiqTNW2+8Pj8Q3TeuiAJ+jWsOcU3dAefuubGaUEQ74T+noHO1gXDA9LX820g7G8PP2B3Co/QvsHj9Q==;31:9qAlPltaCMQY1D8HxmF597m+s2NicwJ+/1ZYyHNbOtpBtdqMwyPO0AqkPGElEOYA38l2tCPHG14nE5c5E6LLPZxvY10if9LLU7VOs9dBDGwMFLN5/35OnhGD+e7/gyERgYsZPzQyUIc0GsCqyR0YMpAYCCYgaWMCipp37UUtS4fnMwEjsrZDv+vqx/DSxyJEMmm9u1gOMpiXN/vp0f/+3VVFVuYzD0g5RfA8EHsHhHE=
 X-MS-TrafficTypeDiagnostic: BL0PR2101MB1105:
-X-Microsoft-Exchange-Diagnostics: 1;BL0PR2101MB1105;20:b5cgpAzUdPbPL0zq2X070i2LPc6iri8vH8y7uNaRGiuXJ9TRpZtUZ9Ihv0QwCvybeJWdrLftJDIcU98ayhroco5igTfbtSxL/PndU5+ciZ9uzV15LtsOcekgNZQ+gI05Mq3ejWOiBLCGfNIC9bDJl/1H3hsCxlsErsgeyt0S+JQrr6jTTNPildkbmTDHxE9r/O0JNMar1y9RRH2u7B/XsBeg+/Z4ROYIqQpBg1RUYCMF6ouC/GWAaT85RQtCwrF+lovLnV8pYudAuhAZOFTaY1YXthKyJpJWenPd6chXauVbrkw5coO0m0vvhVp0CsuS9Cyqy+JSzFIBnJomXKRA2gOaMShfSESxtbdVDQ4+ByeIcJUw5RV8cZEdxKkmIQNfmAb00tQnvOgENEvsrVNIgGWC6817oMCeWh7TEYWg2GUW2AO9RnKW/JGh1sWuOxCNzx0ToY7vDTKCNyuOnb+tF9xtPKZXl0nZ0twsKe263rT28AN5EWPdov72aO+CihmG;4:Ml+J2rz5KBJikJlLQbb+ckoxM6fohVGJh+6ghNddj3bTM9Wz67+nMU6OYZGRqbhOq44wYCwL8IXyCKEUpgRklXR+m3ifqyoW8qQEYskTfKYJ8+Jh5O7mfgQtXINiCu7lOZFOBXGWDvIp4O33x6/i0YajQXH9foa51xXZuSYFkPf2HSasGZjf91qh43xc0WKYxHMc3+4/eBJPUMf6gGXF5gpYj3Uwf6JN3l6mjLAgPhzkwKBH5drRrrVl9PmWJGkMNOW8Y+XILpbCit7b/ojsIfzyG2DuDgSJQW9TaP/kfZL2ZzaAadYsiXRat0+j52TrhqTmjfqHn8ha6vF4ZGdzPQesR9fTwaBZXMEcMYSIzZ4=
-X-Microsoft-Antispam-PRVS: <BL0PR2101MB110564F433D9327B0308659ACEA80@BL0PR2101MB1105.namprd21.prod.outlook.com>
+X-Microsoft-Exchange-Diagnostics: 1;BL0PR2101MB1105;20:inKbw51MJpUt/eXMi0TkW8jOvDWWlWWC+y35p5N4YQz5rpuOU1JvUu4FHzmwR0bhkWIwQjmqIUvYQa9JweMtCQLWM5AsFYophNsxju5Y9VMUHagkoH7hbqkLK4CP99nTp9yGr9tMDzlHXCw35E9DMSc+OXvRDltKYWcxoCJjuZ8O56oqHpCvMizRX+vGVRr6waMy2HWR5Xr+ZCJ2R3FlpIZLOL6UDttgUyCnUKl+RqXMoaWz9FGoLQrRajPayObw9mYilUjpR1nlsUeHgvbYFQk50vx+NDJLziWE70sZ3llq4ZvSt3LG5pjsHdVjz3a+XXN0FIgAFa5u0iXbW1XiHVqnuvZ6yj12N83vkNYa7hoS9graucJYeuDDiu/8ZZOrY8H1NXD4UJjPPg0EDY6/a5FpkIb6nYRuOcmAser6VYHZ4x69dfBMJiKCrNe8nJHokxjV9pf4tkKYq1Dhf++9Z9tt5JzvKvfzq7DfG19NRJ71VIIQfpNcmpCLHGdVG3oy;4:H6ZsFqysgAaa5wzLurWgOHVK41Bv9feQPEcSNke5MLnatZ+9lxVq8DlQquCtSpHpEm1+mFRUxpQhJnFd8zpsMow/TsfnY+AGfnj7n0AqPhViAxLhZL9yciBpjDFdSMaxWM7zlu+UxlMr2U+DqHH7pRlxcybcrTdSPgOtGwarYD1OlScyb58G6mRISLGBzpOhm5LyTWriEwxcUkZCf9od8jHPc4eXEGy9WjszmLJ7b+hudr4rj1ByBh7Wm+eRZA/ZWbwXD2reStylT1aKmiRpbtNtqAfs4GdHDohl+8xbZBowKueygBZxG8Jp6NS1P+Zzr13AxC0gp1Ojp5PK21bTN/bSCPLLrhPPqH6gnbExzMc=
+X-Microsoft-Antispam-PRVS: <BL0PR2101MB1105471FF470D667CFE2F499CEA80@BL0PR2101MB1105.namprd21.prod.outlook.com>
 X-Exchange-Antispam-Report-Test: UriScan:(28532068793085)(89211679590171);
 X-Exchange-Antispam-Report-CFA-Test: BCL:0;PCL:0;RULEID:(8211001083)(61425038)(6040522)(2401047)(5005006)(8121501046)(10201501046)(93006095)(93001095)(3002001)(3231221)(944501327)(52105095)(6055026)(61426038)(61427038)(6041310)(20161123564045)(20161123558120)(20161123562045)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(20161123560045)(6072148)(201708071742011);SRVR:BL0PR2101MB1105;BCL:0;PCL:0;RULEID:;SRVR:BL0PR2101MB1105;
 X-Forefront-PRVS: 0620CADDF3
-X-Forefront-Antispam-Report: SFV:NSPM;SFS:(10019020)(6069001)(39380400002)(39860400002)(346002)(396003)(366004)(376002)(199004)(189003)(305945005)(446003)(46003)(11346002)(36756003)(6916009)(4326008)(5660300001)(2906002)(186003)(68736007)(10290500003)(25786009)(7736002)(107886003)(16526019)(86362001)(2351001)(8936002)(8656006)(22452003)(76506005)(478600001)(50226002)(47776003)(52116002)(6346003)(316002)(52396003)(97736004)(48376002)(86612001)(8676002)(81156014)(81166006)(51416003)(7696005)(1076002)(105586002)(106356001)(76176011)(16586007)(386003)(50466002)(2361001)(53936002)(10090500001)(6486002)(6116002);DIR:OUT;SFP:1102;SCL:1;SRVR:BL0PR2101MB1105;H:localhost.corp.microsoft.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
+X-Forefront-Antispam-Report: SFV:NSPM;SFS:(10019020)(6069001)(39380400002)(39860400002)(346002)(396003)(366004)(376002)(199004)(189003)(305945005)(446003)(46003)(11346002)(36756003)(6916009)(4326008)(5660300001)(2906002)(186003)(68736007)(10290500003)(25786009)(7736002)(107886003)(16526019)(86362001)(2351001)(8936002)(8656006)(22452003)(76506005)(478600001)(50226002)(47776003)(52116002)(6346003)(316002)(52396003)(97736004)(48376002)(86612001)(8676002)(81156014)(81166006)(51416003)(7696005)(1076002)(15650500001)(105586002)(106356001)(76176011)(16586007)(386003)(50466002)(2361001)(53936002)(10090500001)(6486002)(6116002)(59450400001);DIR:OUT;SFP:1102;SCL:1;SRVR:BL0PR2101MB1105;H:localhost.corp.microsoft.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
 Received-SPF: None (protection.outlook.com: microsoft.com does not designate
  permitted sender hosts)
 Authentication-Results: spf=none (sender IP is )
  smtp.mailfrom=jamill@microsoft.com; 
-X-Microsoft-Exchange-Diagnostics: =?us-ascii?Q?1;BL0PR2101MB1105;23:6LnDS9YrJfcy9Ro2AiZup2gpWwdJIhdlrNyZRD/?=
- =?us-ascii?Q?C7beGeVokQxG0pF5KIqiCH8ZJy6ValRDmjkOFmvKd/eYW7anhndBKY8HyMu0?=
- =?us-ascii?Q?TDbpsktY2+FMtABk9GcRoNg9B24c7KN26mU+IYoxe1mrXDaublzPim578MHz?=
- =?us-ascii?Q?CRvlFD2Tj0bcioIuxlN8SoJYDWPsPagCdfv2rkcj9wiP8qgto8R1N7CH3ylx?=
- =?us-ascii?Q?kJD3gCZdIQOUSzERb2MtZn5HT6Yh2hYQM1UfBGpGMTrwEI6rDWmF0bC3Ky7d?=
- =?us-ascii?Q?+05JXJe7+PvagqTCfZL0ixbp7qbDqPnTu07v/t51ajamZ9b3UgqC22S6Oc1s?=
- =?us-ascii?Q?AnJrxBaMMlp19iTYHqf3IEwKHg7CTKWAmoP9zC7MlmpBhDPJFhXmV3XbykuP?=
- =?us-ascii?Q?8j+se5JDaaCLjytOPVRC/LkYOWZYmsfbK3nhimWWn5/3IWacIxr2vEk3n9ou?=
- =?us-ascii?Q?TVg+b/2FaVgaTgkxS96gldTDcIAttn7JDGaAD/y+xlHYo6q/8RVno0F7eXuY?=
- =?us-ascii?Q?modr3ARbloswQHTu+5YxLwuU6IcXrXZxPiFa9IJmNOa0E9dif2J4p9WKhGUL?=
- =?us-ascii?Q?REyrwqLT3E6wGJPzInPIhfTwv35Zoi848YjnJ6NKLfJgLWmFhFqJ2wNMkIcn?=
- =?us-ascii?Q?0uoC6TkvSgCFj0TkI0cf4/6m1dsQfuM5f+eiqBqaqrJhpkgIF3iWo8qbwriw?=
- =?us-ascii?Q?M0j3igZA1UAmSYjbdR0qs61lzIURpSmcWPk+TFu3cOELe7bjMFZZ3BZQrHwQ?=
- =?us-ascii?Q?8ajPC4oxlSXtuVCQUf3Pc5lX+Tb9CRvLD/uMnEK5ELeo7uNsSkpWkwJBLFlL?=
- =?us-ascii?Q?sVCp++ga5vPk2ktYwj5NBVhhpMcNo6tASnsjNseElMkHxY3E4dQMkhQNp8Ry?=
- =?us-ascii?Q?PgCY5ASeOd4A/cjKDFC3Yi47e3ciD5DcVpykigdkUcBgtlr5gmwUzDI6JASC?=
- =?us-ascii?Q?PVUW0VpuqzzjUw2YiPMV+R/Wj6KKr5PkCmXukJARFgd41shUAzMmTVOIlwz1?=
- =?us-ascii?Q?zS3N5ktul9S8IK8fktWay0Yr61M7vdaP14YKs3CJ7ouMZcoOpsYAmkzVykOE?=
- =?us-ascii?Q?5W3l6urV6MIRnm9gwHZp2VvG3vpm9n++iSrqTBfsaQVs+7hNid8rtUQqZTrt?=
- =?us-ascii?Q?//iWHBX/FGBbmH6FWIQzFUSZyRcVzKxiD/K22TAqzToyzuG1nJUZqlCoWSsS?=
- =?us-ascii?Q?WpI/+zjsGHL/GKDsNasizfCjxQqGDvORjc5z4j2lh62bKbCbt4JjZz1dMuti?=
- =?us-ascii?Q?AM5IjxboJ8Bg6++7aTHkq99FC6VzTbyusuB7yJcsCFXdCSaru5w9iGi3uB+0?=
- =?us-ascii?Q?TQbBntoNyufmZkb5hd2h8U5E=3D?=
-X-Microsoft-Antispam-Message-Info: pLcT0Te98GrUDg31L+vVW0Jv7htgR/M7XK/8w/+MTLbDau4uAhJKy3daLJj8OmPbvBV4oh+eI5QmWoHrDwW7HalQlhrg6ic0oncuOdwVRp5Ry2w1B2jZc/OhBbCGuxz2blJiHiFz4J2R63D0STad4wQWeoYlum1U/s5SPQ8oEApwaSU5vcxtd//MecN39051
-X-Microsoft-Exchange-Diagnostics: 1;BL0PR2101MB1105;6:9r3M2dubM37e5pIf36uALurYOE8aMQF9P5Qz8lPGmfLKHdeoYs8TbA60uQ3EExY6g6ATIUt52QMfN3nauln6nEiWsHgHLQPQLh8qyDKBFenrXS/sXrRzumlRMT5bQyRn7NGUffo5sXVyF8HGuLDGhwq5Ujl3wv3Mw0z8ciaMxJuAvs9GoUie2CwRoMnJ29Jii9jJfpoH6QUakh7fJn6y1U/5dfbzZyLWPJA1prZOW5eS7kKhlFFvXXduInYOGP21RpxVum4A/RR/15/X1Xjig+nuazPAtSOAHQgzsHjoKfLvBjs+0PgolrALQ8II2mylgS31XMk83n6SYfZxruh65NmvsLrsx/ImxzaSv/Nbq5vidnmfz9VFh3BW/JsYAbpAciMcML32UUBuWhPsVU2wKQFnJsHzoUU9uZJt7gU38cvxx6GI9eE92b4ZtXr6Gl1znQG2CLdokSY11Ud3nfLtzA==;5:hXnfrlgvToW2CRb4KbCpDIsuvDyfdCf7CtfkIeVoEo4r7a8N1IJMq8EB8B8wlPV6tW5S/jFn4POPqrUHeL/j4vZCbvAsxtxcRPrENTN0VUJUp54V+DX58EM3amBBT80JgImNJ24fDFF8er9et7fzWJHIQ1xuW3EypWNVRkV7XTY=;24:MSb0KIjBPD37KDaTF5FQhogBcl1HSDosfPYClfW40huVp8EUM7fEDxcACmj/4awvjQvzm4jbKDQADMJ9tV3tROCDQEkWiNgD+uwUZZeskhs=
+X-Microsoft-Exchange-Diagnostics: =?us-ascii?Q?1;BL0PR2101MB1105;23:KQrwuFEkxO4PT6jRAdI7JHo0PLNVUyKDQwb/imd?=
+ =?us-ascii?Q?5UqOfACIjzDKL9nyjOY2SkzEXA/KSzvQRGGKu9hYAADQKmgg0cWLWjVB2CiE?=
+ =?us-ascii?Q?WLK+xaOjzK7M6cG1LCLFzpg4Q0DVdArdaicsTaWc0kFffsNWS4COsF9f7AKx?=
+ =?us-ascii?Q?PNK4vCwzNFkl2wZBR8CZQ60WiJyGYCDhoxY9PKMgCi+hRo75GFibsldhyRSz?=
+ =?us-ascii?Q?KQAVC75BdhzDkSyElj2858nJvPuJsujAZUpkwi6z5UJ6P6AE6T6sZAj1JcMQ?=
+ =?us-ascii?Q?VWQaKO4IEGKMTf5IQ9EdgPD1+dv9XZpU45QhJX1W4yIrMJuvtPOCKSZ3GqnT?=
+ =?us-ascii?Q?XXAhtR0l0LVfZEr7/LKU5kZTTEj7rBiRnAXXFO9L8sC4c3axGaa1Kg7ciE9b?=
+ =?us-ascii?Q?Sok1/EV8XCUoRaRBqplqOxyu4uWnQAqEjxWZInxx5RHjzWbA5AVW7jlSkOS+?=
+ =?us-ascii?Q?Lje6cs8pHZFXA1lnb4bpSusngf5dx8+Hp2aosJn7UjAIA30EkcynGp6BOWVO?=
+ =?us-ascii?Q?kmxHH29bb25Yk5ARpwVyt6OWj142jPJcxaJdHapZw3UasR+10cCXdaqMRA5Y?=
+ =?us-ascii?Q?1QEmBelOJ58IkyCk4U27K+yAIbOWutcUuJfNQDkC1P6cdJ4bQ6nbbMHw2pP0?=
+ =?us-ascii?Q?5uoRusj+rgmG2VUyEe21STN6O3aVb2Ve/KZTzzJrg6H0dUY8higNCUW8aLZB?=
+ =?us-ascii?Q?oTbsgm3Jf/lkXjasV27AFQHHRkE+xaMMJ1fEyYL7distRX2avuCk2ciI83tz?=
+ =?us-ascii?Q?E/6L8Jy1QH4w3WtIWKo1FOlNOKi+K9+t8wqpNxLT93mnmxCsxWlK27ErZTR/?=
+ =?us-ascii?Q?Qzj77EB7R/iqN18aao5OKMYViS5ShlzWWnYdRcIG5iusbspajJKUS87BlF5h?=
+ =?us-ascii?Q?rgNykHreynrmsn8uuHdBdyM8PSAWGgBECik5PNT0l27DIVYQyAMozF7ajR54?=
+ =?us-ascii?Q?fmVunETm/t/Pe2eqWmYaBDn1xRUHiyehZbarYOXKFFmwnWZTci4qT+fQIcQi?=
+ =?us-ascii?Q?G/tpAYtmsT+HGVjMXMDH6GpIHVwpOVx0BZwkGqbULt+qNVe4C8xYwuMf8kDE?=
+ =?us-ascii?Q?oGBT4een2YGyXSKolZqaV3te4Im0iHrsGPBoqzNFn7giNZPlg1ehBKgTJJrm?=
+ =?us-ascii?Q?pNK8iVxkT5MuUGo2HcWmxzzl1NKAAhK65pJZAIMwuqF4ZveeI/tUJMooV+a3?=
+ =?us-ascii?Q?Tw8fy+1RTtcmuJEa5rzQFsDG8i/5el7QiyHY0gYaVOtfzp9FhO0cfzq6wZBi?=
+ =?us-ascii?Q?6Wpk5yn6W2eIxO/klyhlPpV6uTcc2M0gAXMktuok6/AcHSM0wYPl/V/Wy7Xz?=
+ =?us-ascii?Q?WJj1R9LMsujlAOfjDfiCwDEb0iYezJyBh5trKxixl9oD1AWZhhaSeBAXihWm?=
+ =?us-ascii?Q?sV5VwKA=3D=3D?=
+X-Microsoft-Antispam-Message-Info: NU2Cdd0cJR8vVESMr5VEDWVa05GeD/oBCyhjusfar7jYZbExabr+ZNPJ6eDd3CCZokfo6rsHmWmFwgQUAryiqaq8SQNJlvDLj1hQTLzjzw0RNtkWxZQm72XAOupLTL9RhhWJTJRrh+d/GsLmWFJhmkwJFsRaStcI61mN49KR2xdGvdG8nkzDfT+maNta5cdR
+X-Microsoft-Exchange-Diagnostics: 1;BL0PR2101MB1105;6:QzxDT7akg7AGIVN26F9gqUa6IUap2tqGDlw4i19nRBXZdJxKTbQZ6YmFovKihNNtzHI/dVunDfG9JA3wAn0z/xq71QP4ah6H/70Tae6ASeRbSwDj6CfkC/vwvRb/IkRYf14RtKHt6p5yEYFkP4FGiG6tQHM2ZFSt3Na7+Vct2Ntap7Mito0JUIlCB6NKHCvkUi5m2bzgHIeOSZ1s1ahvzbDNdJgeJjP9K/D/g4hcTtSnFJN+hILjly1AL2BlXBBuFn2u+7njWN0AQpdVYaH0rtHcskNqh/6epJgXzzcGMrTGaHcLDxCWr8WHcx6Lgt/uWrYHs3ofCoadB3mkXKXL8hMz2wceZFufW2qGIP/Sp0mUiy0Yy82MUTzDP9dewwRHnVlylbKKaZ162+ribTcrRCjvYTG1oGYUH+7Wo3DBHf6hS/N/zasMfB36NyNIYs0qvevElQRe9PFZWdEuPX9LCA==;5:kx9vPsvTiTkgvXYXZ8GnBmMTpSbQeCyxrAMc6b+kJ/sxqJ/h/CcKX2Si/tJGnCVtSe0oH73eExKaLfJhvYbFEEslxaCqu+bcVR450a68n+pcc2LoMoFwlyXi9djvdVXZYw9R02PxC4MkjvKt2Gw/UYqd7jR+dxtHuYRrkJffFdE=;24:JbxvopaMXmdBhD5qVBXBYSUhyu1xzhyqJ2l7xjGXOc6Xkwm1UN+63LEpK2ALYl/RiwD2iRNgDPm9FiZnA3Rnk9CHRXETSbbyb386+SnjW5c=
 SpamDiagnosticOutput: 1:99
 SpamDiagnosticMetadata: NSPM
-X-Microsoft-Exchange-Diagnostics: 1;BL0PR2101MB1105;7:1Knj2Jdo62xbAFQvzf0+5XeR/Varwi+8PZfDQfUQz4mKwHMpBblOA26TcPfTJEKfDzSc6+wzx4NP7fkynuHRy01tRnL/Xxq39Mls+EfIIUEjlq/UGTN8ad/CZr2Y3gvM5PPx9vbqAYH/82L8k7WOcc7Vju7oxZkGUJoWPb+0j+09rQkfbliBxMe/PGFZz4klWeZma9NcHF2bOkfOF/XbFnJmBKyRKUFwxD9sedLEMM0Ms/QIMa3zuS/fpkSv9Pwu;20:3poFVSNDpJMkZXHUTdmmqw3KAe9cVQHQaVXj1tpRWLA8kxYCGKL6MIYyazoGrV4miXydfeTw9+PgD4TM3VeGm9lOXUB8sVhJ1Dl1XwGq/3mVlBVrtbUCOg4BLE0pof+xWB/V4F94+hw0g3K4AwxlAw3hOsbNh+zz/WgRj/9JdQQ=
+X-Microsoft-Exchange-Diagnostics: 1;BL0PR2101MB1105;7:UWk6WEK3vxkfRC422DdU5zA5y851sNvnWYfDkSp6BtbJMf6+PV4Lqk5csEDx42XuaYJUi3e0bfX4gS7wKWfD1npvA3QsvtpusdtuqEHld1SFXBjNgxtM+4fXxthHpr0WELkbxXsp3ikVUZbPz+psUZPfQrjqqeL+mwdLuxnGg/UIw+79gpgxxgr49kl2RLZ187RGfsIucj9L4v/FfGMOXt2YvOqpTI1Qq/izAk8VzA/R7jc7M+YXSL0IvgFkunso;20:C0GB+7Mk/nuOUUZ7h1h0nr2CvXxKMLYERNhFi1ZQ83BneaDr8RLqRqGto+a8uRhTwXVI5FKPEWOofD6hPAQnS+G2q5QGpbcahfv+VSdpQottwD8ke0cSRluoxossIoBDeJPCXtGE/WrVYUq2O7yScXQHYcs0j1XiswsBt1NBp18=
 X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Mar 2018 14:45:00.5665
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Mar 2018 14:45:01.5582
  (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: a1d4aa82-95be-43da-8da5-08d590cca824
+X-MS-Exchange-CrossTenant-Network-Message-Id: ba00c542-f221-4f22-b8c9-08d590cca8bb
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 72f988bf-86f1-41af-91ab-2d7cd011db47
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL0PR2101MB1105
@@ -98,179 +99,191 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Introduce the mem_pool type and wrap the existing mp_block in this new
-type. The new mem_pool type will allow for the memory pool logic to be
-reused outside of fast-import. This type will be moved into its own file
-in a future commit.
+Update memory pool functions to work on a passed in mem_pool instead of
+the global mem_pool type. This is in preparation for making the memory
+pool logic reusable.
 
 Signed-off-by: Jameson Miller <jamill@microsoft.com>
 ---
- fast-import.c | 108 +++++++++++++++++++++++++++++++++++++++++++++++-----------
- 1 file changed, 89 insertions(+), 19 deletions(-)
+ fast-import.c | 52 ++++++++++++++++++++++++++--------------------------
+ 1 file changed, 26 insertions(+), 26 deletions(-)
 
 diff --git a/fast-import.c b/fast-import.c
-index 6c3215d7c3..1262d9e6be 100644
+index 1262d9e6be..519e1cbd7f 100644
 --- a/fast-import.c
 +++ b/fast-import.c
-@@ -216,6 +216,19 @@ struct mp_block {
- 	uintmax_t space[FLEX_ARRAY]; /* more */
- };
- 
-+struct mem_pool {
-+	struct mp_block *mp_block;
-+
-+	/*
-+	 * The amount of available memory to grow the pool by.
-+	 * This size does not include the overhead for the mp_block.
-+	 */
-+	size_t block_alloc;
-+
-+	/* The total amount of memory allocated by the pool. */
-+	size_t pool_alloc;
-+};
-+
- struct atom_str {
- 	struct atom_str *next_atom;
- 	unsigned short str_len;
-@@ -304,9 +317,7 @@ static int global_argc;
- static const char **global_argv;
- 
- /* Memory pools */
--static size_t mem_pool_alloc = 2*1024*1024 - sizeof(struct mp_block);
--static size_t total_allocd;
--static struct mp_block *mp_block_head;
-+static struct mem_pool fi_mem_pool =  {0, 2*1024*1024 - sizeof(struct mp_block), 0 };
- 
- /* Atom management */
- static unsigned int atom_table_sz = 4451;
-@@ -324,6 +335,7 @@ static off_t pack_size;
- /* Table of objects we've written. */
- static unsigned int object_entry_alloc = 5000;
- static struct object_entry_pool *blocks;
-+static size_t total_allocd = 0;
- static struct object_entry *object_table[1 << 16];
- static struct mark_set *marks;
- static const char *export_marks_file;
-@@ -634,6 +646,60 @@ static unsigned int hc_str(const char *s, size_t len)
+@@ -646,16 +646,16 @@ static unsigned int hc_str(const char *s, size_t len)
  	return r;
  }
  
-+static struct mp_block *pool_alloc_block()
-+{
-+	struct mp_block *p;
-+
-+	fi_mem_pool.pool_alloc += sizeof(struct mp_block) + fi_mem_pool.block_alloc;
-+	p = xmalloc(st_add(sizeof(struct mp_block), fi_mem_pool.block_alloc));
-+	p->next_block = fi_mem_pool.mp_block;
-+	p->next_free = (char *)p->space;
-+	p->end = p->next_free + fi_mem_pool.block_alloc;
-+	fi_mem_pool.mp_block = p;
-+
-+	return p;
-+}
-+
-+/*
-+ * Allocates a block of memory with a specific size and
-+ * appends it to the memory pool's list of blocks.
-+ *
-+ * This function is used to allocate blocks with sizes
-+ * different than the default "block_alloc" size for the mem_pool.
-+ *
-+ * There are two use cases:
-+ *  1) The initial block allocation for a memory pool.
-+ *
-+ *  2) large" blocks of a specific size, where the entire memory block
-+ *     is going to be used. This means the block will not have any
-+ *     available memory for future allocations. The block is placed at
-+ *     the end of the list so that it will be the last block searched
-+ *     for available space.
-+ */
-+static struct mp_block *pool_alloc_block_with_size(size_t block_alloc)
-+{
-+	struct mp_block *p, *block;
-+
-+	fi_mem_pool.pool_alloc += sizeof(struct mp_block) + block_alloc;
-+	p = xmalloc(st_add(sizeof(struct mp_block), block_alloc));
-+
-+	block = fi_mem_pool.mp_block;
-+	if (block) {
-+		while (block->next_block)
-+			block = block->next_block;
-+
-+		block->next_block = p;
-+	} else {
-+		fi_mem_pool.mp_block = p;
-+	}
-+
-+	p->next_block = NULL;
-+	p->next_free = (char *)p->space;
-+	p->end = p->next_free + block_alloc;
-+
-+	return p;
-+}
-+
- static void *pool_alloc(size_t len)
+-static struct mp_block *pool_alloc_block()
++static struct mp_block *mem_pool_alloc_block(struct mem_pool *mem_pool)
  {
  	struct mp_block *p;
-@@ -643,21 +709,25 @@ static void *pool_alloc(size_t len)
+ 
+-	fi_mem_pool.pool_alloc += sizeof(struct mp_block) + fi_mem_pool.block_alloc;
+-	p = xmalloc(st_add(sizeof(struct mp_block), fi_mem_pool.block_alloc));
+-	p->next_block = fi_mem_pool.mp_block;
++	mem_pool->pool_alloc += sizeof(struct mp_block) + mem_pool->block_alloc;
++	p = xmalloc(st_add(sizeof(struct mp_block), mem_pool->block_alloc));
++	p->next_block = mem_pool->mp_block;
+ 	p->next_free = (char *)p->space;
+-	p->end = p->next_free + fi_mem_pool.block_alloc;
+-	fi_mem_pool.mp_block = p;
++	p->end = p->next_free + mem_pool->block_alloc;
++	mem_pool->mp_block = p;
+ 
+ 	return p;
+ }
+@@ -676,21 +676,21 @@ static struct mp_block *pool_alloc_block()
+  *     the end of the list so that it will be the last block searched
+  *     for available space.
+  */
+-static struct mp_block *pool_alloc_block_with_size(size_t block_alloc)
++static struct mp_block *mem_pool_alloc_block_with_size(struct mem_pool *mem_pool, size_t block_alloc)
+ {
+ 	struct mp_block *p, *block;
+ 
+-	fi_mem_pool.pool_alloc += sizeof(struct mp_block) + block_alloc;
++	mem_pool->pool_alloc += sizeof(struct mp_block) + block_alloc;
+ 	p = xmalloc(st_add(sizeof(struct mp_block), block_alloc));
+ 
+-	block = fi_mem_pool.mp_block;
++	block = mem_pool->mp_block;
+ 	if (block) {
+ 		while (block->next_block)
+ 			block = block->next_block;
+ 
+ 		block->next_block = p;
+ 	} else {
+-		fi_mem_pool.mp_block = p;
++		mem_pool->mp_block = p;
+ 	}
+ 
+ 	p->next_block = NULL;
+@@ -700,7 +700,7 @@ static struct mp_block *pool_alloc_block_with_size(size_t block_alloc)
+ 	return p;
+ }
+ 
+-static void *pool_alloc(size_t len)
++static void *mem_pool_alloc(struct mem_pool *mem_pool, size_t len)
+ {
+ 	struct mp_block *p;
+ 	void *r;
+@@ -709,7 +709,7 @@ static void *pool_alloc(size_t len)
  	if (len & (sizeof(uintmax_t) - 1))
  		len += sizeof(uintmax_t) - (len & (sizeof(uintmax_t) - 1));
  
--	for (p = mp_block_head; p; p = p->next_block)
--		if ((p->end - p->next_free >= len))
--			break;
-+	p = fi_mem_pool.mp_block;
-+
-+	/*
-+	 * In performance profiling, there was a minor perf benefit to
-+	 * check for available memory in the head block via the if
-+	 * statement, and only going through the loop when needed.
-+	 */
-+	if (p &&
-+	   (p->end - p->next_free < len)) {
-+		for (p = p->next_block; p; p = p->next_block)
-+			if (p->end - p->next_free >= len)
-+				break;
-+	}
+-	p = fi_mem_pool.mp_block;
++	p = mem_pool->mp_block;
+ 
+ 	/*
+ 	 * In performance profiling, there was a minor perf benefit to
+@@ -724,10 +724,10 @@ static void *pool_alloc(size_t len)
+ 	}
  
  	if (!p) {
--		if (len >= (mem_pool_alloc/2)) {
--			total_allocd += len;
--			return xmalloc(len);
--		}
--		total_allocd += sizeof(struct mp_block) + mem_pool_alloc;
--		p = xmalloc(st_add(sizeof(struct mp_block), mem_pool_alloc));
--		p->next_block = mp_block_head;
--		p->next_free = (char *) p->space;
--		p->end = p->next_free + mem_pool_alloc;
--		mp_block_head = p;
-+		if (len >= (fi_mem_pool.block_alloc / 2))
-+			p = pool_alloc_block_with_size(len);
-+		else
-+			p = pool_alloc_block();
+-		if (len >= (fi_mem_pool.block_alloc / 2))
+-			p = pool_alloc_block_with_size(len);
++		if (len >= (mem_pool->block_alloc / 2))
++			p = mem_pool_alloc_block_with_size(mem_pool, len);
+ 		else
+-			p = pool_alloc_block();
++			p = mem_pool_alloc_block(mem_pool);
  	}
  
  	r = p->next_free;
-@@ -667,7 +737,7 @@ static void *pool_alloc(size_t len)
+@@ -735,10 +735,10 @@ static void *pool_alloc(size_t len)
+ 	return r;
+ }
  
- static void *pool_calloc(size_t count, size_t size)
+-static void *pool_calloc(size_t count, size_t size)
++static void *mem_pool_calloc(struct mem_pool *mem_pool, size_t count, size_t size)
  {
--	size_t len = count * size;
-+	size_t len = st_mult(count, size);
- 	void *r = pool_alloc(len);
+ 	size_t len = st_mult(count, size);
+-	void *r = pool_alloc(len);
++	void *r = mem_pool_alloc(mem_pool, len);
  	memset(r, 0, len);
  	return r;
-@@ -3541,8 +3611,8 @@ int cmd_main(int argc, const char **argv)
- 		fprintf(stderr, "Total branches:  %10lu (%10lu loads     )\n", branch_count, branch_load_count);
- 		fprintf(stderr, "      marks:     %10" PRIuMAX " (%10" PRIuMAX " unique    )\n", (((uintmax_t)1) << marks->shift) * 1024, marks_set_count);
- 		fprintf(stderr, "      atoms:     %10u\n", atom_cnt);
--		fprintf(stderr, "Memory total:    %10" PRIuMAX " KiB\n", (total_allocd + alloc_count*sizeof(struct object_entry))/1024);
--		fprintf(stderr, "       pools:    %10lu KiB\n", (unsigned long)(total_allocd/1024));
-+		fprintf(stderr, "Memory total:    %10" PRIuMAX " KiB\n", (total_allocd + fi_mem_pool.pool_alloc + alloc_count*sizeof(struct object_entry))/1024);
-+		fprintf(stderr, "       pools:    %10lu KiB\n", (unsigned long)((total_allocd + fi_mem_pool.pool_alloc) /1024));
- 		fprintf(stderr, "     objects:    %10" PRIuMAX " KiB\n", (alloc_count*sizeof(struct object_entry))/1024);
- 		fprintf(stderr, "---------------------------------------------------------------------\n");
- 		pack_report();
+ }
+@@ -746,7 +746,7 @@ static void *pool_calloc(size_t count, size_t size)
+ static char *pool_strdup(const char *s)
+ {
+ 	size_t len = strlen(s) + 1;
+-	char *r = pool_alloc(len);
++	char *r = mem_pool_alloc(&fi_mem_pool, len);
+ 	memcpy(r, s, len);
+ 	return r;
+ }
+@@ -755,7 +755,7 @@ static void insert_mark(uintmax_t idnum, struct object_entry *oe)
+ {
+ 	struct mark_set *s = marks;
+ 	while ((idnum >> s->shift) >= 1024) {
+-		s = pool_calloc(1, sizeof(struct mark_set));
++		s = mem_pool_calloc(&fi_mem_pool, 1, sizeof(struct mark_set));
+ 		s->shift = marks->shift + 10;
+ 		s->data.sets[0] = marks;
+ 		marks = s;
+@@ -764,7 +764,7 @@ static void insert_mark(uintmax_t idnum, struct object_entry *oe)
+ 		uintmax_t i = idnum >> s->shift;
+ 		idnum -= i << s->shift;
+ 		if (!s->data.sets[i]) {
+-			s->data.sets[i] = pool_calloc(1, sizeof(struct mark_set));
++			s->data.sets[i] = mem_pool_calloc(&fi_mem_pool, 1, sizeof(struct mark_set));
+ 			s->data.sets[i]->shift = s->shift - 10;
+ 		}
+ 		s = s->data.sets[i];
+@@ -802,7 +802,7 @@ static struct atom_str *to_atom(const char *s, unsigned short len)
+ 		if (c->str_len == len && !strncmp(s, c->str_dat, len))
+ 			return c;
+ 
+-	c = pool_alloc(sizeof(struct atom_str) + len + 1);
++	c = mem_pool_alloc(&fi_mem_pool, sizeof(struct atom_str) + len + 1);
+ 	c->str_len = len;
+ 	memcpy(c->str_dat, s, len);
+ 	c->str_dat[len] = 0;
+@@ -833,7 +833,7 @@ static struct branch *new_branch(const char *name)
+ 	if (check_refname_format(name, REFNAME_ALLOW_ONELEVEL))
+ 		die("Branch name doesn't conform to GIT standards: %s", name);
+ 
+-	b = pool_calloc(1, sizeof(struct branch));
++	b = mem_pool_calloc(&fi_mem_pool, 1, sizeof(struct branch));
+ 	b->name = pool_strdup(name);
+ 	b->table_next_branch = branch_table[hc];
+ 	b->branch_tree.versions[0].mode = S_IFDIR;
+@@ -869,7 +869,7 @@ static struct tree_content *new_tree_content(unsigned int cnt)
+ 			avail_tree_table[hc] = f->next_avail;
+ 	} else {
+ 		cnt = cnt & 7 ? ((cnt / 8) + 1) * 8 : cnt;
+-		f = pool_alloc(sizeof(*t) + sizeof(t->entries[0]) * cnt);
++		f = mem_pool_alloc(&fi_mem_pool, sizeof(*t) + sizeof(t->entries[0]) * cnt);
+ 		f->entry_capacity = cnt;
+ 	}
+ 
+@@ -2932,7 +2932,7 @@ static void parse_new_tag(const char *arg)
+ 	enum object_type type;
+ 	const char *v;
+ 
+-	t = pool_alloc(sizeof(struct tag));
++	t = mem_pool_alloc(&fi_mem_pool, sizeof(struct tag));
+ 	memset(t, 0, sizeof(struct tag));
+ 	t->name = pool_strdup(arg);
+ 	if (last_tag)
+@@ -3531,12 +3531,12 @@ int cmd_main(int argc, const char **argv)
+ 	atom_table = xcalloc(atom_table_sz, sizeof(struct atom_str*));
+ 	branch_table = xcalloc(branch_table_sz, sizeof(struct branch*));
+ 	avail_tree_table = xcalloc(avail_tree_table_sz, sizeof(struct avail_tree_content*));
+-	marks = pool_calloc(1, sizeof(struct mark_set));
++	marks = mem_pool_calloc(&fi_mem_pool, 1, sizeof(struct mark_set));
+ 
+ 	global_argc = argc;
+ 	global_argv = argv;
+ 
+-	rc_free = pool_alloc(cmd_save * sizeof(*rc_free));
++	rc_free = mem_pool_alloc(&fi_mem_pool, cmd_save * sizeof(*rc_free));
+ 	for (i = 0; i < (cmd_save - 1); i++)
+ 		rc_free[i].next = &rc_free[i + 1];
+ 	rc_free[cmd_save - 1].next = NULL;
 -- 
 2.14.3
 
