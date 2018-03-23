@@ -2,85 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4F60E1F404
-	for <e@80x24.org>; Fri, 23 Mar 2018 23:06:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D20801F404
+	for <e@80x24.org>; Fri, 23 Mar 2018 23:37:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752159AbeCWXGP (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Mar 2018 19:06:15 -0400
-Received: from mail-wr0-f181.google.com ([209.85.128.181]:45817 "EHLO
-        mail-wr0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751899AbeCWXGN (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Mar 2018 19:06:13 -0400
-Received: by mail-wr0-f181.google.com with SMTP id u11so1302860wri.12
-        for <git@vger.kernel.org>; Fri, 23 Mar 2018 16:06:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=JoI5ZYfb3e0gShH5nSel/ePPlaR4Vq9kJKPQM2m48og=;
-        b=qX7GeX3Ig05FTZmdmIUJT8TOqOE343IDXtIXAkMASi3LO3ZtkHnK/cWK2l++OJiT3H
-         YvDUKSgUPpOaPzGRh29qqgchfZm3DzjdaaZfGmJMWhcrKtxalBc3vh4Ax8/jgDuHDVCN
-         Ik3FtbPs3E3l2pBhWo2rk7T1QM3XiniD14sGqrtJODPS4GfHF9aGX356EuCRXvuVawF4
-         hWnASAhmPoOdq5Uq8vdZmmU4WkBFCwhvZfZV1jTZTQhLeGkQTT3fmZkWXe+oxodLQdZJ
-         X3KMisaOKQdxt6ZOdfpzSy4O9ZoTM7JVWFFw/o47EILITrbri5SFHEUWlPx5gAKuJgBP
-         /VSg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=JoI5ZYfb3e0gShH5nSel/ePPlaR4Vq9kJKPQM2m48og=;
-        b=nWcv8/Y8z9gtgMF3LmDXoEoTQT2m1Yhc+kpYEsY9bsG/fvh5naJbtUtORmmLhsfY0B
-         ZUFWRbBHWUiQ+g9EexpLSTIsVg2FnMnqFSctbdYJcpOo4MwRSxqdMzgsz5xD0j9hw/gI
-         L+zJ8tUbAXpRoFP4pJoo5TW8FjP/9GwedrSGSU8F5b8z+KIOuz7n5AucKz3QoonPAsbc
-         EO8jCAnNYsmGAQhaUG14VZ22HCk8FOG9Zgth/zHccHkzUZD4ecQ118WV2vOeyJQGTJ6Q
-         j8nLsjHHneDp7+cZfkbbrriAxxCSa4j7mkpfzCAlQj2jOoKDiJ4JIIVncKz7K0BiHtqS
-         cHUA==
-X-Gm-Message-State: AElRT7E7871cRi4qRsQufD2oPxdWef7VWIdJ6cj+jVC6pGT4nnd4ICFB
-        TJmMq8p6Is9CDMjfTOHkKkek+Aef
-X-Google-Smtp-Source: AG47ELsO9aXb2RQbYUHG153oVnQhm+ypPduZIbjDhC1k1QyyK6fXyizp/zdijVG2q4J7Hxki3QXGlw==
-X-Received: by 10.223.161.25 with SMTP id o25mr13042469wro.137.1521846372041;
-        Fri, 23 Mar 2018 16:06:12 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id a72sm8557091wme.28.2018.03.23.16.06.10
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 23 Mar 2018 16:06:11 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Wink Saville <wink@saville.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFC PATCH v5 3/8] Indent function git_rebase__interactive
-References: <cover.1521779249.git.wink@saville.com>
-        <cover.1521839546.git.wink@saville.com>
-        <e893a9d550f4d09baf0d21adedca841b96feae0d.1521839546.git.wink@saville.com>
-        <xmqqpo3uh26k.fsf@gitster-ct.c.googlers.com>
-        <CAKk8israKrrF4PBH4csLQDyrQXwap0oZ3FkihswR1DUf8nqrxQ@mail.gmail.com>
-Date:   Fri, 23 Mar 2018 16:06:10 -0700
-In-Reply-To: <CAKk8israKrrF4PBH4csLQDyrQXwap0oZ3FkihswR1DUf8nqrxQ@mail.gmail.com>
-        (Wink Saville's message of "Fri, 23 Mar 2018 15:52:04 -0700")
-Message-ID: <xmqq370qgzod.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1751905AbeCWXhM (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Mar 2018 19:37:12 -0400
+Received: from mout.gmx.net ([212.227.17.22]:41503 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751668AbeCWXhL (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Mar 2018 19:37:11 -0400
+Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0Lw2dd-1eVVxh3JS1-017nDN; Sat, 24
+ Mar 2018 00:37:08 +0100
+Date:   Sat, 24 Mar 2018 00:37:07 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+To:     Loganaden Velvindron <logan@hackers.mu>
+cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH] Allow use of TLS 1.3
+In-Reply-To: <20180323183950.GA15994@voidlinux>
+Message-ID: <nycvar.QRO.7.76.6.1803240035300.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <20180323182506.GA15493@voidlinux> <87in9my6y3.fsf@evledraar.gmail.com> <20180323183950.GA15994@voidlinux>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/mixed; boundary="8323329-553774356-1521848228=:77"
+X-Provags-ID: V03:K0:p5pZLW/nb8hn4hnyz1ad1IabCKQeMqB9M2gidZaLmgYco3CSpdz
+ pyPA/DcXx/elbcuUE0geRsrxo2N3x0qZ9/ffHZyaXHYARJuB30WFBKIJGHSFQltzkGNNZLg
+ htH68n0puhZIKODEGNoPdVnY+KLJDg4iFWVfp1yv08CCzK7XUNryCPIe8N9aHrW/u3mGxZT
+ o2RzEuXTM3ZvhLpz8A5PQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:s1pYKCBrZSQ=:bq8ght36PPYrjmGUJ/9j5/
+ O2mGhJxLs5RSIGf0SgEP198DKOlsoV///Djb4vmDxr7lVz26GVN5gWWcZkB51H8QI6DnnYQk7
+ 6BiD8qjWj+923prpc0NuLUyMeqJz0bpbiFJQgmAouMGtWdNHprXGFPPhkYUVpBANp+xGsRLEV
+ b57bo38YP4+bsxGl34KYF+qnI9AmQMR3hdKlqjD3bc5aBlTdeSguQcVJXmBz0YePKKWdJz6Lc
+ njvPcG6hsPOAzJBGZJC0Gd27ldUTPbJHovWob04cdN6kFEiiPpatAZjEKv3+ZJSzxMJI5fHUp
+ y3h4zF7j5whve9HeS7THxm+E9vCs2IQV2CzaqbZpmrGXflLNwRFi8gxHzTYxgE4btw5Kj9r5J
+ cxg/5aZLhRHn6KNUjna1TVtxFf3eGBv64eqFXpyL2jUVnkH3TjP50ZZrsFjHntW6PihcZRSrY
+ kLs1Y5f9PewL/sB1Rz/qbd0iwNAF0DgBRJrntMu2BMs54GUQASeyZOywnDm950mQW0lez1rOK
+ ploqQ97bSOjhgn7Ll0em0J7TSRhDIrC4oHQx435cgQdUMsT7sjyDp3lxrfj+SsYk78zAXb4hH
+ XrlGryPiBde660IHXP+Rxz16rRrQI5GzZ14slfryX3ECV9dwbobqjmrwQNnMN6bglbZYPBX0n
+ af2A/9IWcAeqUEElhMqcXr36kCyulBOYM40vxpYmHNkCGwv6Y5xypXb33Zen4q4hQWpfqaKyH
+ /nptZZ32cwm2YlyPYURhrBwptQ4MVdRsyDIaJSua789zh73cum87NisyWyLhyRYhLFrZJOid4
+ AylHyP62aMm4HECZ0tUNZkFfZ94NDDJsuRsSObmZk451/LFE/0=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Wink Saville <wink@saville.com> writes:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> Also, I assume you want me to only change lines in
-> git_rebase__interactive.
+--8323329-553774356-1521848228=:77
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-I actually do not care if line-wrapping is done; it is perfectly
-fine to leave it for future clean-up and leave it outside the scope
-of this series.  If you are going to do as a part of the series,
-yes, I do prefer you limit yourself to those lines that are involved
-in the series in some other way.
+Hi,
 
-Thanks.
+On Fri, 23 Mar 2018, Loganaden Velvindron wrote:
+
+> On Fri, Mar 23, 2018 at 07:37:08PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason wrote:
+> >=20
+> > On Fri, Mar 23 2018, Loganaden Velvindron wrote:
+> >=20
+> > > Done during IETF 101 hackathon
+> >=20
+> > Hi. Thanks. Let's add a meaningful commit message to this though,
+> > something like:
+> >=20
+> >     Add a tlsv1.3 option to http.sslVersion in addition to the existing
+> >     tlsv1.[012] options. libcurl has supported this since 7.52.0.
+
+Can we please also add that OpenSSL 1.1.* is required (or that cURL is
+built with NSS or BoringSSL as the TLS backend)?
+
+Thanks,
+Johannes
+--8323329-553774356-1521848228=:77--
