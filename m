@@ -3,76 +3,140 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8356B1F404
-	for <e@80x24.org>; Fri, 23 Mar 2018 16:42:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9AED91FAE2
+	for <e@80x24.org>; Fri, 23 Mar 2018 16:57:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751951AbeCWQmz (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Mar 2018 12:42:55 -0400
-Received: from mail-wr0-f177.google.com ([209.85.128.177]:41621 "EHLO
-        mail-wr0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751504AbeCWQmy (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Mar 2018 12:42:54 -0400
-Received: by mail-wr0-f177.google.com with SMTP id f14so12755577wre.8
-        for <git@vger.kernel.org>; Fri, 23 Mar 2018 09:42:54 -0700 (PDT)
+        id S1752203AbeCWQ5d (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Mar 2018 12:57:33 -0400
+Received: from mail-ot0-f194.google.com ([74.125.82.194]:39976 "EHLO
+        mail-ot0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751691AbeCWQ5c (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Mar 2018 12:57:32 -0400
+Received: by mail-ot0-f194.google.com with SMTP id l12-v6so13958815otj.7
+        for <git@vger.kernel.org>; Fri, 23 Mar 2018 09:57:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=fkX36n8rTh7tikaqfznRk1gK359tCKb020J/w1JfFr8=;
-        b=Ryb1Bq9zdoqJlY/+ALnQgtuiigrqP4J4JnXmaMOw7C1Ri7jItaYY3NZAH8dlZ7x6Oc
-         tqZJ6rfDG8bOc3kbqBHwpywWG6l0i2Xlr5/Lb+QFt1eNd+VWorYzcdfz/AZ+hoXQrrkC
-         lZolc7+XDjQBJtlCFnXZCWZq9pm0k7eL2853dAHOxc7vRP/V9SHRcWxstTWn0nzPMZQB
-         KEMtwHwQY6J5SI3WsObzTZkCXvryZA17SdgohMqkcLkhkpyKdP3QA3hjVG3HyzVMzRwz
-         wYSj8KEK5MPvLmysm0MrTJzkCb9KQqqwswxucMke8W225lKtPFj/YMtC/qKqLb1CUWsS
-         qAeg==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=I+Y7fNosqt0MdHPefp1hkIka6KeRJ3+nb/hNre9NbcM=;
+        b=Lq1877WktJMkBDa8IGdDXS4NDLb66itAtKc3aMu/pn+Wc13PxYM+r0klZyHKPSxXcx
+         wnNxq6nwXJd+IeW1K2x5sShTPJ2Moze/Y8iILcXvYOgEtA4oXpc/DrsD/4qWgSWcBG0h
+         mDcDvZP/ST1P9urPLsn73ZHbCYBWxIpB9bi0fbNF331ccDVOJI6PaoIMSpqyC6i6Wg39
+         J8deSf54bf+6PaNFey1a0wv4mdgKaMK56ZPUKQQC7teCAvvEHKSBAFzV3/K210njHtdC
+         HyBudKxn4SUH94Tb8tg/xGD1x9Z7ochnrzR2ZjwfJCZlke3804Wf1xj3oJlhJ3toOBbk
+         UYMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=fkX36n8rTh7tikaqfznRk1gK359tCKb020J/w1JfFr8=;
-        b=ij7NQN+G5FYJ1RxnQkVDccPMWI0nKZFYA9gsb5udCCvTr/bKSBKgwPj7+aWW12iGuj
-         9Zx4k8SUgVyxrh8EKeHjY84aSAg5Jvt/cOwB0Ao24l8IoM2/cjVXJ6cKssXSfXRAaMBz
-         tfUfXJdhxo7iDwikehgiePvCmxZw+YTU5iaOPdhd9yAZUEL29PSqP+5iA4oLzfEsw7YM
-         jlYvHBwU6zOUXuH3DubzY6+byImDb70TpwgYwKV3a5TEcMv/5tycPJIZGVp6LQ1mPvr9
-         EjfHvfRBTJ24/qkZ4svzR0Pzub21KdOBWNO9axnfmphqIWOXGPPsH3EoFew3DnWRGLyQ
-         irsQ==
-X-Gm-Message-State: AElRT7E6JS2+mUTHV0RQov44m7TrdQOMfh5WdVom2/GWHyfZ1P6BG0Mi
-        lN/B8T1Wp7KP2DKbJwJHI3Y=
-X-Google-Smtp-Source: AG47ELvnxkeah/acjSpF+cyjuGA1+CyF4NAucektMihGlHvQlTru62mE+FJRcWym9ndjI1Q+zSJKrw==
-X-Received: by 10.223.167.153 with SMTP id j25mr25043284wrc.118.1521823372835;
-        Fri, 23 Mar 2018 09:42:52 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id 33sm7835277wrs.74.2018.03.23.09.42.52
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 23 Mar 2018 09:42:52 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jameson Miller <jamill@microsoft.com>
-Cc:     git@vger.kernel.org, peff@peff.net
-Subject: Re: [PATCH v2 1/5] fast-import: rename mem_pool type to mp_block
-References: <20180321164152.204869-1-jamill@microsoft.com>
-        <20180323144408.213145-2-jamill@microsoft.com>
-Date:   Fri, 23 Mar 2018 09:42:51 -0700
-In-Reply-To: <20180323144408.213145-2-jamill@microsoft.com> (Jameson Miller's
-        message of "Fri, 23 Mar 2018 10:44:04 -0400")
-Message-ID: <xmqqvadmkak4.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=I+Y7fNosqt0MdHPefp1hkIka6KeRJ3+nb/hNre9NbcM=;
+        b=DL3VnTDY8j/c7ENNOS54RY/AosMc3FCsHamK4rwmoHwCTkgS7pIG2ePMTmXjAWSYY+
+         49jnxfDLEvBynYLX7Fw6bhdKs1Xr716Y7Jtz0laijJvmIoHdtHP/3ggFKYTnA41c/GyK
+         Ih2GQBOYsIk6JIvRqKxWBMerUstYkRpmJcmHpp1nFzS++tIEiuHfFAL7e/YulBCL8UNs
+         2lUL9LYjB6cBRYVUJzjCzBdxEMZaRC6i/dzu8QjFCT1tYYdI1NIN0QLWlR9jux/xDbcK
+         H3jV9pe8dcSWQOrpHwFXM4EFWzyMYwCkVSOnItBglHDNRRnG8PPt532z9FOHUcFc7EAh
+         NH5w==
+X-Gm-Message-State: AElRT7Ecywp0JtUdz50PGG5QP1KRa7WnfmJTDu7GOPypo1TddtUidUi1
+        4YsOChpOt6h7QVXkighoYcy0PC6BAvFMBYNJOlM=
+X-Google-Smtp-Source: AG47ELs76rZtgh+7qQ1cz5Ro9mI6E1d4yMpT9rWKEZb+bmTmX/AG8Ba/ttgdkC4SApgRfLWGIbkx/GCdFHQKWECFZi4=
+X-Received: by 2002:a9d:154c:: with SMTP id z12-v6mr18980571otz.65.1521824252061;
+ Fri, 23 Mar 2018 09:57:32 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.74.154.146 with HTTP; Fri, 23 Mar 2018 09:57:01 -0700 (PDT)
+In-Reply-To: <20180319123914.6767c0660fb3e77247f02989@google.com>
+References: <CACsJy8DWrNzZM1K2vkx2XiETdAR5WhwXEdPijsxd0ZD4Lj=tZw@mail.gmail.com>
+ <20180303113637.26518-1-pclouds@gmail.com> <20180303113637.26518-11-pclouds@gmail.com>
+ <20180319123914.6767c0660fb3e77247f02989@google.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Fri, 23 Mar 2018 17:57:01 +0100
+Message-ID: <CACsJy8AKd4osxTCo=SRJz3RbFwsW5rB9SBu+WS4HBPCP0MdO9g@mail.gmail.com>
+Subject: Re: [PATCH 10/44] object-store: move packed_git and packed_git_mru to
+ object store
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <sbeller@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jameson Miller <jamill@microsoft.com> writes:
+On Mon, Mar 19, 2018 at 8:39 PM, Jonathan Tan <jonathantanmy@google.com> wr=
+ote:
+> On Sat,  3 Mar 2018 18:36:03 +0700
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> wrote:
+>
+>> From: Stefan Beller <sbeller@google.com>
+>>
+>> In a process with multiple repositories open, packfile accessors
+>> should be associated to a single repository and not shared globally.
+>> Move packed_git and packed_git_mru into the_repository and adjust
+>> callers to reflect this.
+>>
+>> [nd: while at there, wrap access to these two fields in get_packed_git()
+>> and get_packed_git_mru(). This allows us to lazily initialize these
+>> fields without caller doing that explicitly]
+>
+> The patches up to this one look good. (I didn't reply for each
+> individual one to avoid unnecessarily sending messages to the list.)
+>
+> About this patch: will lazily initializing these fields be done in a
+> later patch?
 
-> This is part of a patch series to extract the memory pool logic in
-> fast-import into a more generalized version. The existing mem_pool type
-> maps more closely to a "block of memory" (mp_block) in the more
-> generalized memory pool.
+Yes.
 
-Sounds good.
 
+>> Patch generated by
+>>
+>>  1. Moving the struct packed_git declaration to object-store.h
+>>     and packed_git, packed_git_mru globals to struct object_store.
+>>
+>>  2. Apply the following semantic patch to adjust callers:
+>>     @@ @@
+>>     - packed_git
+>>     + the_repository->objects.packed_git
+>>
+>>     @@ @@
+>>     - packed_git_mru
+>>     + the_repository->objects.packed_git_mru
+>
+> This doesn't seem up-to-date - they are being replaced with a function
+> call, not a field access. I would be OK with just removing this "Patch
+> generated by" section.
+
+I'll just drop this part. I'm manually updating the series anyway.
+
+
+> [snip remainder of "Patch generated by" section]
+>
+>> @@ -246,7 +244,7 @@ static int unuse_one_window(struct packed_git *curre=
+nt)
+>>
+>>       if (current)
+>>               scan_windows(current, &lru_p, &lru_w, &lru_l);
+>> -     for (p =3D packed_git; p; p =3D p->next)
+>> +     for (p =3D the_repository->objects.packed_git; p; p =3D p->next)
+>>               scan_windows(p, &lru_p, &lru_w, &lru_l);
+>>       if (lru_p) {
+>>               munmap(lru_w->base, lru_w->len);
+>
+> Here (and elsewhere), "the_repository->objects.packed_git" instead of
+> "get_packed_git" is still used.
+
+
+Yeah. I saw your other comment about the not converting in packfile.c
+too. My view is, packfile has intimate knowledge about pack
+manipulation and we don't need to try to "protect" from misuse of
+packed_git pointer without prepare_packed_git. People how modify this
+code probably know that by heart at this point. And we can't avoid it
+completely anyway because it will have access to the static function
+prepare_packed_git.
+--=20
+Duy
