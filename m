@@ -2,104 +2,142 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-1.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
 	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A63C11F404
-	for <e@80x24.org>; Fri, 23 Mar 2018 20:11:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3EAD61F404
+	for <e@80x24.org>; Fri, 23 Mar 2018 20:15:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752319AbeCWULs (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Mar 2018 16:11:48 -0400
-Received: from mout.web.de ([212.227.15.3]:56533 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751827AbeCWULq (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Mar 2018 16:11:46 -0400
-Received: from [192.168.178.36] ([79.237.251.165]) by smtp.web.de (mrweb001
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0Md4V8-1fHXqf2gqI-00IEAT; Fri, 23
- Mar 2018 21:11:27 +0100
-Subject: Re: [PATCH v2] json_writer: new routines to create data in JSON
- format
-To:     Jeff Hostetler <git@jeffhostetler.com>, git@vger.kernel.org
-Cc:     gitster@pobox.com, peff@peff.net, avarab@gmail.com,
-        Jeff Hostetler <jeffhost@microsoft.com>
-References: <20180321192827.44330-1-git@jeffhostetler.com>
- <20180321192827.44330-2-git@jeffhostetler.com>
- <524c47a6-7c9f-5519-250a-4722081a0f32@web.de>
- <14bbf223-a4d1-3c11-cd2e-dff044e01fef@jeffhostetler.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <306104ac-37ac-8198-1988-03efa818cde3@web.de>
-Date:   Fri, 23 Mar 2018 21:11:26 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
+        id S1752180AbeCWUPQ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Mar 2018 16:15:16 -0400
+Received: from mail-pf0-f178.google.com ([209.85.192.178]:45229 "EHLO
+        mail-pf0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751883AbeCWUPP (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Mar 2018 16:15:15 -0400
+Received: by mail-pf0-f178.google.com with SMTP id l27so5144467pfk.12
+        for <git@vger.kernel.org>; Fri, 23 Mar 2018 13:15:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=Pya9Y8GOn0okQLaKCLPECdKBfn+Mr+DkEy00xAfES08=;
+        b=JRmGsW2VP//i4VRr/sp1UvrMkmVN1KHYZlrCDnHKpFtliTRmHzj/nFcGtt4lJPTHfv
+         R8Y/UbUY9EbXAah4Em8so3K/j9EyyevOSY8C4Ae5Y6VY3vGCZlqAiyHIng8lenjHTcwM
+         x1LJmsmqhF3+xwCrYZyAx7jx+41G/5FT12RS30C7/RsF9aF6pMcNTq/kFD2nAQl7r3mo
+         UFIriyC+8GvpDdbKUa9od3VDNoYcM2NG0e5+hIrV6OC/xQu/MPnBcdcNkvgL2Fg97h5c
+         Lup/IVc2H7tkP9a8EJcIthLCvrZL4UC4dIKZN5yU90xnEu57WShXhW+DGkC5Wc0aYTec
+         Mgvw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=Pya9Y8GOn0okQLaKCLPECdKBfn+Mr+DkEy00xAfES08=;
+        b=ew8im3k0hmrvc46m2MJ1gdU2oHgGrnellDTTLY/Iv+WLyDXCvQgf5RG+GOmDcZnK18
+         g0ajQL0jHzRO865eVhA3BCgGQ2xJQP1DFNlK9Ap/7iLjyICyFGRLlHyDIsXCJAfizd5M
+         Xj7KkXgFAa6VoKtfRwedkEOxIb/0nXHwO1EJaqaB/+c9LFHEUW3tx7IxynzmdvnHSj8k
+         v3IwRTYLsfY5fNqRtrpKoJxUI0jNjgigO7CezNNE8m1tmD+fNL/+Pr1B3LvXJ8Sa+kQ5
+         4NmYnYspQZH9gQu79RGBHQacb2t0icD4Y8Y3p3FNBCSAk9BK7emr/fZmn9C+aXUvWAww
+         ZNMA==
+X-Gm-Message-State: AElRT7EJR9hjZCUnU7kYjbfejH5k5P/oog9FPYmgO04RY1D/k7gMFgkd
+        nVuxO+LoOXPAjOkLwxioTwsITA==
+X-Google-Smtp-Source: AG47ELsuUD7zS49VvvVSedbDPtVWSaAF47zipJzJwYUma5RCN4Q0imSXGdbjreh/nLplFWzn4F9mvg==
+X-Received: by 10.101.69.4 with SMTP id n4mr19800578pgq.101.1521836114817;
+        Fri, 23 Mar 2018 13:15:14 -0700 (PDT)
+Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
+        by smtp.gmail.com with ESMTPSA id m13sm16399753pgs.25.2018.03.23.13.15.13
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 23 Mar 2018 13:15:13 -0700 (PDT)
+Date:   Fri, 23 Mar 2018 13:15:12 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, sbeller@google.com,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 00/12] sb/packfiles-in-repository updates
+Message-ID: <20180323201512.GE243756@google.com>
+References: <20180303113637.26518-1-pclouds@gmail.com>
+ <20180323174527.30337-1-pclouds@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <14bbf223-a4d1-3c11-cd2e-dff044e01fef@jeffhostetler.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:SxFEAesdm6RzQ4UtV+pa8fDugfTOGludD6TgAoswE8KalOvhN5U
- DXBeco7VBf5KoZlDbieE6p7yOUQx7AHg5mGp6tUQcrLo0RaYkQFT7HiB9P+7M2UK6QZoPvO
- uRt3BReM/Dli3bYbOiFf4ECBKmniMt60b3p1G2HBc8ybuJ2Xo+TPDyuOjwe21+Qe4b/ObAS
- iyqaYibl7Pkl+TQlgJQmQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:QSDWMtTNN2g=:KTMD8GUd09VVGziHz7Gijq
- h2dc+zM2UkX9RaE9a47y1H7p8EvZS2ZDIyKDpuS0Ij7PJrOwkjpYEWPqHKs12tUKYu4N6YhVk
- oQEhGHrN6K079rfCEFap4fu+8edC+g1gqe75DK/mX6yT43xouLP9cqGQmILX01Qe4/M/vf/bB
- FV+uqHNpBp/SqwsoxiOg77uvOEnAn3aA7Xq6zqK+ivs3ssqKL5NG5WeUatj7B3jhDXCk2vnzF
- BzQ0+kJ7py2FrtGYI/JU3Nbsd6jUQgvzG8hCzDsDArx36ga33qgXiOZB8ijKBgouAkqxABbG1
- 3g9HsoPHVh1OzmT/TzSp8Cqs2JMccLZsZLxlu0SIiM6v4jMopOdGAjqLZ0Mv6ZcWkYxYx3Q/j
- mnr9uXJmjvctHgqc7VRxKH+VhXTsNruiTGh5S1ivxIKmx1E+ujM5S+HlA95NoPdozwdcbOWz+
- vjKZs9nVUkfo8CqTC9Ta1rzZFudvkOjNPF0yZrublC13ckFTDXexzpPQr5y22wB1IYpjjSFhY
- anu30mnvN0n6RXucRWPKFDhrq2lEgnqhFpUmcwc5WVS7Z5VPA+5Gi2k5r5tOq93HoH4JxeM0+
- oedHz7DGHm3fMUZgPorNe5KBmMKU3dzMjGMDJk0SEi14XF8O5POa5Du2k1A/K+XfAEwu6Jsin
- JVoESlSs6VvJPMok9UBOjqvYFl8Q1cr3hPyEk6AxMccAN2KKh25HpMcJBS7qFg9IM6No86eND
- yOlLO25FZ9PIUjFnB9nL3vTrj+pvR7mNAXqwW7HTbpIVKEpocXA4iSXuJeFfQSCv7fdjr/jmL
- euL/6DUnvJIAkVzlIHIMt8ucYJn778bpn7y6oHAtST4OT0yvZ8=
+In-Reply-To: <20180323174527.30337-1-pclouds@gmail.com>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 23.03.2018 um 20:55 schrieb Jeff Hostetler:
->>> +struct json_writer_level
->>> +{
->>> +    unsigned level_is_array : 1;
->>> +    unsigned level_is_empty : 1;
->>> +};
->>> +
->>> +struct json_writer
->>> +{
->>> +    struct json_writer_level *levels;
->>> +    int nr, alloc;
->>> +    struct strbuf json;
->>> +};
->>
->> A simpler and probably more compact representation of is_array would
->> be a strbuf with one char per level, e.g. '[' for an array and '{'
->> for an object (or ']' and '}').
->>
->> I don't understand the need to track emptiness per level.  Only the
->> top level array/object can ever be empty, can it?
+On 03/23, Nguyễn Thái Ngọc Duy wrote:
+> This is the rebased version on the updated sb/object-store I just sent
+> out plus the fix for get_object_directory(). The interdiff (after
+> rebased) looks small and nice
+
+Nice! Thanks for fixing that.  This series looks good to me :)
+
 > 
-> My expectation was that any sub-object or sub-array could be empty.
-> That is, this should be valid (and the JSON parser in Python allows):
+> diff --git a/packfile.c b/packfile.c
+> index e02136bebb..63c89ee31a 100644
+> --- a/packfile.c
+> +++ b/packfile.c
+> @@ -890,7 +890,7 @@ static void prepare_packed_git(struct repository *r)
+>  
+>  	if (r->objects->packed_git_initialized)
+>  		return;
+> -	prepare_packed_git_one(r, get_object_directory(), 1);
+> +	prepare_packed_git_one(r, r->objects->objectdir, 1);
+>  	prepare_alt_odb(r);
+>  	for (alt = r->objects->alt_odb_list; alt; alt = alt->next)
+>  		prepare_packed_git_one(r, alt->path, 0);
 > 
->      {"a":{}, "b":[], "c":[[]], "d":[{}]}
+> I notice there's still one get_object_directory() left in packfile.c
+> but that should not cause problems with converted functions. That
+> could be done in "phase 2".
+> 
+> Nguyễn Thái Ngọc Duy (1):
+>   packfile: keep prepare_packed_git() private
+> 
+> Stefan Beller (11):
+>   packfile: allow prepare_packed_git_mru to handle arbitrary
+>     repositories
+>   packfile: allow rearrange_packed_git to handle arbitrary repositories
+>   packfile: allow install_packed_git to handle arbitrary repositories
+>   packfile: add repository argument to prepare_packed_git_one
+>   packfile: add repository argument to prepare_packed_git
+>   packfile: add repository argument to reprepare_packed_git
+>   packfile: allow prepare_packed_git_one to handle arbitrary
+>     repositories
+>   packfile: allow prepare_packed_git to handle arbitrary repositories
+>   packfile: allow reprepare_packed_git to handle arbitrary repositories
+>   packfile: add repository argument to find_pack_entry
+>   packfile: allow find_pack_entry to handle arbitrary repositories
+> 
+>  builtin/count-objects.c  |  3 +-
+>  builtin/fsck.c           |  2 --
+>  builtin/gc.c             |  3 +-
+>  builtin/pack-objects.c   |  1 -
+>  builtin/pack-redundant.c |  2 --
+>  builtin/receive-pack.c   |  3 +-
+>  bulk-checkin.c           |  3 +-
+>  fast-import.c            |  3 +-
+>  fetch-pack.c             |  3 +-
+>  http-backend.c           |  1 -
+>  http.c                   |  2 +-
+>  pack-bitmap.c            |  1 -
+>  packfile.c               | 76 +++++++++++++++++++---------------------
+>  packfile.h               | 11 +++---
+>  server-info.c            |  1 -
+>  sha1_file.c              |  8 ++---
+>  sha1_name.c              |  2 --
+>  17 files changed, 58 insertions(+), 67 deletions(-)
+> 
+> -- 
+> 2.17.0.rc0.348.gd5a49e0b6f
+> 
 
-Sure, but the emptiness of finished arrays and objects doesn't matter
-for the purposes of error checking, comma setting or closing.  At most
-one of them is empty *and* unclosed while writing the overall JSON
-object -- the last one opened:
-
-	{
-	{"a":{
-	{"a":{}, "b":[
-	{"a":{}, "b":[], "c":[
-	{"a":{}, "b":[], "c":[[
-	{"a":{}, "b":[], "c":[[]], "d":[
-	{"a":{}, "b":[], "c":[[]], "d":[{
-
-Any of the earlier written arrays/objects are either closed or contain
-at least a half-done sub-array/object, which makes them non-empty.
-
-René
+-- 
+Brandon Williams
