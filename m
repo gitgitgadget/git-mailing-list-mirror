@@ -6,55 +6,55 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9E40C1F404
-	for <e@80x24.org>; Fri, 23 Mar 2018 21:26:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9762E1F404
+	for <e@80x24.org>; Fri, 23 Mar 2018 21:26:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752269AbeCWV0F (ORCPT <rfc822;e@80x24.org>);
+        id S1752279AbeCWV0H (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Mar 2018 17:26:07 -0400
+Received: from mail-pl0-f68.google.com ([209.85.160.68]:36483 "EHLO
+        mail-pl0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752223AbeCWV0F (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 23 Mar 2018 17:26:05 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:46755 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752223AbeCWV0C (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Mar 2018 17:26:02 -0400
-Received: by mail-pf0-f196.google.com with SMTP id z10so5203057pfh.13
-        for <git@vger.kernel.org>; Fri, 23 Mar 2018 14:26:02 -0700 (PDT)
+Received: by mail-pl0-f68.google.com with SMTP id 91-v6so392242pld.3
+        for <git@vger.kernel.org>; Fri, 23 Mar 2018 14:26:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=saville-com.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references;
-        bh=6f2TWRnBQHVjfmIFgBWVRzRunntWMTDZlHLmitTilYk=;
-        b=ch0E4jHO5FRn4nWeiUhmscRKVPm2NLnmFjaimW0riqKN9Q4skzqXDXhrqEpcuwkmEA
-         ed15TcfgZL7slXG4Yws+70S6kPE/3OoYWmRFwPb2V5MqelTqQX2ixyx0tqexAwmP0aT5
-         QbBYgZi5oaqbSAYOiN6nUCFkehjvv6AyhWtaeP8DMjjPfxERzg4FiAaUr6bgRPqrfne8
-         SezClYnFbP0iMVYhvJUfPheo71N2opcfNihjsDp4jWvjShK7RV6FC8DTsxk1Id02cyMy
-         MbcU0qiDZkTMyh+W94KBFe1t70Cg0xVi+MsHzLac9j990goq6IGzGfA9hbQuazkwpthR
-         37fw==
+        bh=YnokpKutcrQhwCMZX68OR5xP1iAZTC/ql08Fte5F7wQ=;
+        b=kwyR36cqRDDJZPQ0DmIxdwTKFPKj2/PcFNHbtkhnQTSv9XVhexEgx5F13FfoPlrFPd
+         DMe+ckH8xeTWWBEDMDaJ88398e/dlrAuqMq+6pHUz1xBmCxC+cVlKRJUr9Zoh/LpxHpQ
+         Rb5zdLyXQ5c5iwmsqdFZMfwsuDaMlNdIWDbZeU+214LknJ08X7TNq/5IrMywbUR+hjq6
+         9k7GozCtSY09cAVDiAWuEIroXIzpZJ4ycXWSQYToh3Z7/nkqqheDkNJ+TLpZMI8v3ypr
+         Qq0qUy1CX/5PW6j00kY/k388yj25a7T/elUj7xEIov1081Y0CvJqwNELFDbF7nIqKXXN
+         /hbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:in-reply-to:references;
-        bh=6f2TWRnBQHVjfmIFgBWVRzRunntWMTDZlHLmitTilYk=;
-        b=EQPkZyTxfRGtfBgWC2VWZkl9Oiv3lXUTLMk+0gFZZBZPC3HNZGjae1lI/G02TTFYg9
-         r+gjaFOieTN5rf8SS6KKhtjZzWClJV+ACK8qaUYZA1evbStn72oMtLAPsUpL+okH1K7P
-         Zrb7pN3kSPFURjlixfRiA/JNvvVAnBh2MIM3Hv7c3KwT5UhioM2p7rEuyU6c3kSFn+YQ
-         Q1pNTNwc1Jsm7wEVImqVAV3RG7Ldy6qAFLu7/slR1oTn5BFP/462h0038PoBtG7iTVn0
-         uuVxYPjPq9mUzW9CO4YBK0Gi6wPSgoD81reO9ImfSgvwxIys5LSICFDkQg8sblSslY6w
-         6UXg==
-X-Gm-Message-State: AElRT7GhKexMvfTl5lo1ATduUy4p9yyBJJ5m26pKdFljbqlb3e7pfkpr
-        l0r19wV20sqmR7q8iV5Pgq6ia5PvG1g=
-X-Google-Smtp-Source: AG47ELsHsfIghbVkogttpwbvA1rvroNgyhKO/JOmjJSLC1Tiu31qCfOqwIGOh5ps3ifjHugn2h7SIA==
-X-Received: by 10.99.172.84 with SMTP id z20mr21667699pgn.273.1521840361518;
-        Fri, 23 Mar 2018 14:26:01 -0700 (PDT)
+        bh=YnokpKutcrQhwCMZX68OR5xP1iAZTC/ql08Fte5F7wQ=;
+        b=RnnBvJl79witMTz9dfmOIeVjzMf5zODv1obe/JQx8lnBYsgpSFP3YLik5F57yrcUck
+         nQWZ4hDXz6BWjNFboVOiWn1UH5h1gWtkCcCHXyoM5N0gykJR9zSxE4Rm/GRyjkn+PvCx
+         dhpKEIp+25plbhyIDk3oLDW2QEYfiNepZf2P5P/VTkBfFl5WmMClhd7Gi/PpK/EdiWPO
+         7km8mfuG13X/01y9cWlAoyPp+hKz6Ckek9oBEhovHVOMcM6ev3Jy9QwFAjTmgPVGONvj
+         qDzON9SIkfD54WRQ8LVJw7yzrRDJ+sSxlxeyBDy5fWHnb2LsNYa4gjaLq5PsGPXBjg+s
+         ROhQ==
+X-Gm-Message-State: AElRT7HhPTNwzlqBL7OB6+PV+HWJhwvHQ9XTs7AUJIQWHv+i0HC/RUyD
+        f96pvM6wwAb8hKCw2wYRBe05R696iXs=
+X-Google-Smtp-Source: AG47ELtFxKX00121wJPcW73lcvkoAlovfP5hgy4s57TMcUoLyU64/1ikbEVXWs/IBVnOfnjGm2vi1w==
+X-Received: by 2002:a17:902:5716:: with SMTP id k22-v6mr30748287pli.229.1521840364692;
+        Fri, 23 Mar 2018 14:26:04 -0700 (PDT)
 Received: from wink-desktop.hsd1.ca.comcast.net ([2601:647:cb02:7980:314d:6e5e:475c:ebd3])
-        by smtp.gmail.com with ESMTPSA id z28sm15380096pgc.15.2018.03.23.14.25.59
+        by smtp.gmail.com with ESMTPSA id z28sm15380096pgc.15.2018.03.23.14.26.01
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 23 Mar 2018 14:26:00 -0700 (PDT)
+        Fri, 23 Mar 2018 14:26:03 -0700 (PDT)
 From:   Wink Saville <wink@saville.com>
 To:     git@vger.kernel.org
 Cc:     Wink Saville <wink@saville.com>, gister@pobox.com,
         sunshine@sunshineco.com, Johannes.Schindelin@gmx.de
-Subject: [RFC PATCH v5 7/8] Remove unused code paths from git_rebase__interactive__preserve_merges
-Date:   Fri, 23 Mar 2018 14:25:28 -0700
-Message-Id: <d1e69af862ff0e7a3f04d2c1a73243f5057e804b.1521839546.git.wink@saville.com>
+Subject: [RFC PATCH v5 8/8] Remove merges_option and a blank line
+Date:   Fri, 23 Mar 2018 14:25:29 -0700
+Message-Id: <56ec4f8edf648917dc5cb11ecdf67b16e78d26ce.1521839546.git.wink@saville.com>
 X-Mailer: git-send-email 2.16.2
 In-Reply-To: <cover.1521839546.git.wink@saville.com>
 References: <cover.1521839546.git.wink@saville.com>
@@ -65,188 +65,51 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since git_rebase__interactive__preserve_merges is now always called with
-$preserve_merges = t we can remove the unused code paths.
+merges_option is unused in git_rebase__interactive and always empty in
+git_rebase__interactive__preserve_merges so it can be removed.
 
 Signed-off-by: Wink Saville <wink@saville.com>
 ---
- git-rebase--interactive.sh | 152 ++++++++++++++++++++-------------------------
- 1 file changed, 69 insertions(+), 83 deletions(-)
+ git-rebase--interactive.sh | 10 +---------
+ 1 file changed, 1 insertion(+), 9 deletions(-)
 
 diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 346da0f67..ddbd126f2 100644
+index ddbd126f2..50323fc27 100644
 --- a/git-rebase--interactive.sh
 +++ b/git-rebase--interactive.sh
-@@ -982,100 +982,86 @@ git_rebase__interactive__preserve_merges () {
+@@ -961,8 +961,6 @@ git_rebase__interactive () {
  	setup_reflog_action
  	init_basic_state
  
--	if test t = "$preserve_merges"
-+	if test -z "$rebase_root"
- 	then
--		if test -z "$rebase_root"
--		then
--			mkdir "$rewritten" &&
--			for c in $(git merge-base --all $orig_head $upstream)
--			do
--				echo $onto > "$rewritten"/$c ||
--					die "$(gettext "Could not init rewritten commits")"
--			done
--		else
--			mkdir "$rewritten" &&
--			echo $onto > "$rewritten"/root ||
-+		mkdir "$rewritten" &&
-+		for c in $(git merge-base --all $orig_head $upstream)
-+		do
-+			echo $onto > "$rewritten"/$c ||
- 				die "$(gettext "Could not init rewritten commits")"
--		fi
--		# No cherry-pick because our first pass is to determine
--		# parents to rewrite and skipping dropped commits would
--		# prematurely end our probe
--		merges_option=
-+		done
- 	else
--		merges_option="--no-merges --cherry-pick"
-+		mkdir "$rewritten" &&
-+		echo $onto > "$rewritten"/root ||
-+			die "$(gettext "Could not init rewritten commits")"
- 	fi
- 
-+	# No cherry-pick because our first pass is to determine
-+	# parents to rewrite and skipping dropped commits would
-+	# prematurely end our probe
-+	merges_option=
-+
+-	merges_option="--no-merges --cherry-pick"
+-
  	init_revisions_and_shortrevisions
  
--	if test t != "$preserve_merges"
--	then
--		git rebase--helper --make-script ${keep_empty:+--keep-empty} \
--			$revisions ${restrict_revision+^$restrict_revision} >"$todo" ||
--		die "$(gettext "Could not generate todo list")"
--	else
--		format=$(git config --get rebase.instructionFormat)
--		# the 'rev-list .. | sed' requires %m to parse; the instruction requires %H to parse
--		git rev-list $merges_option --format="%m%H ${format:-%s}" \
--			--reverse --left-right --topo-order \
--			$revisions ${restrict_revision+^$restrict_revision} | \
--			sed -n "s/^>//p" |
--		while read -r sha1 rest
--		do
-+	format=$(git config --get rebase.instructionFormat)
-+	# the 'rev-list .. | sed' requires %m to parse; the instruction requires %H to parse
-+	git rev-list $merges_option --format="%m%H ${format:-%s}" \
-+		--reverse --left-right --topo-order \
-+		$revisions ${restrict_revision+^$restrict_revision} | \
-+		sed -n "s/^>//p" |
-+	while read -r sha1 rest
-+	do
+ 	git rebase--helper --make-script ${keep_empty:+--keep-empty} \
+@@ -996,22 +994,16 @@ git_rebase__interactive__preserve_merges () {
+ 			die "$(gettext "Could not init rewritten commits")"
+ 	fi
  
--			if test -z "$keep_empty" && is_empty_commit $sha1 && ! is_merge_commit $sha1
--			then
--				comment_out="$comment_char "
--			else
--				comment_out=
--			fi
-+		if test -z "$keep_empty" && is_empty_commit $sha1 && ! is_merge_commit $sha1
-+		then
-+			comment_out="$comment_char "
-+		else
-+			comment_out=
-+		fi
+-	# No cherry-pick because our first pass is to determine
+-	# parents to rewrite and skipping dropped commits would
+-	# prematurely end our probe
+-	merges_option=
+-
+ 	init_revisions_and_shortrevisions
  
--			if test -z "$rebase_root"
--			then
--				preserve=t
--				for p in $(git rev-list --parents -1 $sha1 | cut -d' ' -s -f2-)
--				do
--					if test -f "$rewritten"/$p
--					then
--						preserve=f
--					fi
--				done
--			else
--				preserve=f
--			fi
--			if test f = "$preserve"
--			then
--				touch "$rewritten"/$sha1
--				printf '%s\n' "${comment_out}pick $sha1 $rest" >>"$todo"
--			fi
--		done
--	fi
-+		if test -z "$rebase_root"
-+		then
-+			preserve=t
-+			for p in $(git rev-list --parents -1 $sha1 | cut -d' ' -s -f2-)
-+			do
-+				if test -f "$rewritten"/$p
-+				then
-+					preserve=f
-+				fi
-+			done
-+		else
-+			preserve=f
-+		fi
-+		if test f = "$preserve"
-+		then
-+			touch "$rewritten"/$sha1
-+			printf '%s\n' "${comment_out}pick $sha1 $rest" >>"$todo"
-+		fi
-+	done
- 
- 	# Watch for commits that been dropped by --cherry-pick
--	if test t = "$preserve_merges"
--	then
--		mkdir "$dropped"
--		# Save all non-cherry-picked changes
--		git rev-list $revisions --left-right --cherry-pick | \
--			sed -n "s/^>//p" > "$state_dir"/not-cherry-picks
--		# Now all commits and note which ones are missing in
--		# not-cherry-picks and hence being dropped
--		git rev-list $revisions |
--		while read rev
--		do
--			if test -f "$rewritten"/$rev &&
--			   ! sane_grep "$rev" "$state_dir"/not-cherry-picks >/dev/null
--			then
--				# Use -f2 because if rev-list is telling us this commit is
--				# not worthwhile, we don't want to track its multiple heads,
--				# just the history of its first-parent for others that will
--				# be rebasing on top of it
--				git rev-list --parents -1 $rev | cut -d' ' -s -f2 > "$dropped"/$rev
--				sha1=$(git rev-list -1 $rev)
--				sane_grep -v "^[a-z][a-z]* $sha1" <"$todo" > "${todo}2" ; mv "${todo}2" "$todo"
--				rm "$rewritten"/$rev
--			fi
--		done
--	fi
-+	mkdir "$dropped"
-+	# Save all non-cherry-picked changes
-+	git rev-list $revisions --left-right --cherry-pick | \
-+		sed -n "s/^>//p" > "$state_dir"/not-cherry-picks
-+	# Now all commits and note which ones are missing in
-+	# not-cherry-picks and hence being dropped
-+	git rev-list $revisions |
-+	while read rev
-+	do
-+		if test -f "$rewritten"/$rev &&
-+		   ! sane_grep "$rev" "$state_dir"/not-cherry-picks >/dev/null
-+		then
-+			# Use -f2 because if rev-list is telling us this commit is
-+			# not worthwhile, we don't want to track its multiple heads,
-+			# just the history of its first-parent for others that will
-+			# be rebasing on top of it
-+			git rev-list --parents -1 $rev | cut -d' ' -s -f2 > "$dropped"/$rev
-+			sha1=$(git rev-list -1 $rev)
-+			sane_grep -v "^[a-z][a-z]* $sha1" <"$todo" > "${todo}2" ; mv "${todo}2" "$todo"
-+			rm "$rewritten"/$rev
-+		fi
-+	done
- 
- 	complete_action
- }
+ 	format=$(git config --get rebase.instructionFormat)
+ 	# the 'rev-list .. | sed' requires %m to parse; the instruction requires %H to parse
+-	git rev-list $merges_option --format="%m%H ${format:-%s}" \
++	git rev-list --format="%m%H ${format:-%s}" \
+ 		--reverse --left-right --topo-order \
+ 		$revisions ${restrict_revision+^$restrict_revision} | \
+ 		sed -n "s/^>//p" |
+ 	while read -r sha1 rest
+ 	do
+-
+ 		if test -z "$keep_empty" && is_empty_commit $sha1 && ! is_merge_commit $sha1
+ 		then
+ 			comment_out="$comment_char "
 -- 
 2.16.2
 
