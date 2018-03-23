@@ -2,160 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 80FC71F404
-	for <e@80x24.org>; Fri, 23 Mar 2018 14:13:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B423A1F404
+	for <e@80x24.org>; Fri, 23 Mar 2018 14:36:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751657AbeCWONL (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Mar 2018 10:13:11 -0400
-Received: from siwi.pair.com ([209.68.5.199]:38739 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751388AbeCWONK (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Mar 2018 10:13:10 -0400
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id AB44E3F401D;
-        Fri, 23 Mar 2018 10:13:09 -0400 (EDT)
-Received: from [192.168.1.71] (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 8620E3F401B;
-        Fri, 23 Mar 2018 10:13:09 -0400 (EDT)
-Subject: Re: [PATCH v2] json_writer: new routines to create data in JSON
- format
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, peff@peff.net, avarab@gmail.com,
-        Jeff Hostetler <jeffhost@microsoft.com>
-References: <20180321192827.44330-1-git@jeffhostetler.com>
- <20180321192827.44330-2-git@jeffhostetler.com>
- <xmqq8talnmts.fsf@gitster-ct.c.googlers.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <d6ef7034-351f-c1ef-a5d7-8ed684078ba7@jeffhostetler.com>
-Date:   Fri, 23 Mar 2018 10:13:08 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:59.0) Gecko/20100101
- Thunderbird/59.0
+        id S1751715AbeCWOgL (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Mar 2018 10:36:11 -0400
+Received: from mail-wm0-f41.google.com ([74.125.82.41]:40271 "EHLO
+        mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751658AbeCWOgK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Mar 2018 10:36:10 -0400
+Received: by mail-wm0-f41.google.com with SMTP id t6so3946402wmt.5
+        for <git@vger.kernel.org>; Fri, 23 Mar 2018 07:36:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=6Uxw0prTifPaa9dwCLscXWkN0lW4CiyafFk1D1bktl4=;
+        b=Ar3rEUukgv9hMxadw9RUXm9zCozWbUoVYxilPmS5RBLP3IGW2nBG47o7C4ueAs0Owt
+         8XzWmqNYXc2v2OmvvoAvmCTexBgzyMhmyes6SSsEmYlH/8ijL+N52UW18hvU1GvEZu+Y
+         a8isDCwgYkRYN/SlCZp4Hd4al77WHYaGnIsF+MiQf6uoyojbzh340gYKblEx12CY4XJd
+         JL+O6fA5gsS6+Kxnpi1rPjkvefNveiSyf6sIS+HxXm8AVmFjUHn04U5a6DmicO42tD2T
+         hjEWu8/95e4ku+Wz7BybzWtcUE6xwX87Snb1a6YA2Us8nHmv0J4CfgOM3HuJtGk8a6ck
+         sNxA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=6Uxw0prTifPaa9dwCLscXWkN0lW4CiyafFk1D1bktl4=;
+        b=rIRNQGUjCdhO6AAungtEO+Z0sLHHhz3KUZ8GUcd+1iCrbPrCQr9Fk/9NS/2nVgWXyQ
+         SXCTxKsh4iSk6PBCFypK6sq2wTcOrMuoHlmGfY9gD16uXx0QHQIy2Qzt6Je1ZJb7QGUS
+         CxzMoiOoWoaEXAuSaUObEbRkakZt9L28aJIF1sTLyZJ5fzLjQsg+Lo8qdr8wNshWANDa
+         b+4YK2ELC/d16dt3ZR7Lj7fVe/JO3jpCzZ5jGs2vcCbLGmmjcWEKxHyqV6oUmCtZCX7k
+         djXbO7Dtao9Tf+z3C9+FdrwN9GdsiTinSn3pV08d0YeOIh/lBhzEEQ86ZSxInmkWb20S
+         AelA==
+X-Gm-Message-State: AElRT7EP+JyN5sHgfWeeqMQFvn074yGPl5FcuDAITrtPmI99lw79Dyl4
+        WHvK0Zp3GTPmHmw15TIu/6k=
+X-Google-Smtp-Source: AG47ELuqZhPYXjKnGNe0KT5wvGqvr3l2ukXBTVYXEMT2fFbryrGQvhaDXoocFVXxoByLCw607KZS2Q==
+X-Received: by 10.80.180.216 with SMTP id x24mr22122661edd.126.1521815769435;
+        Fri, 23 Mar 2018 07:36:09 -0700 (PDT)
+Received: from evledraar (proxy-gw-a.booking.com. [5.57.21.8])
+        by smtp.gmail.com with ESMTPSA id y46sm4146159edd.77.2018.03.23.07.36.07
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 23 Mar 2018 07:36:07 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: The most efficient way to test if repositories share the same objects
+References: <14d0937f-0e39-7af7-a395-3046ec5d5c16@linuxfoundation.org>
+        <87o9jfyl0y.fsf@evledraar.gmail.com>
+        <xmqqlgejlx8e.fsf@gitster-ct.c.googlers.com>
+        <906555df-e906-775a-0255-fbc71f7138f6@linuxfoundation.org>
+        <xmqqa7uzlr8x.fsf@gitster-ct.c.googlers.com>
+        <179c3cf0-72bd-559a-1e00-b18ce97e8136@linuxfoundation.org>
+User-agent: Debian GNU/Linux 9.4 (stretch); Emacs 25.1.1; mu4e 1.1.0
+In-reply-to: <179c3cf0-72bd-559a-1e00-b18ce97e8136@linuxfoundation.org>
+Date:   Fri, 23 Mar 2018 15:36:06 +0100
+Message-ID: <87lgeiyi3t.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <xmqq8talnmts.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
+On Fri, Mar 23 2018, Konstantin Ryabitsev wrote:
 
-On 3/21/2018 5:25 PM, Junio C Hamano wrote:
-> git@jeffhostetler.com writes:
-> 
->> From: Jeff Hostetler <jeffhost@microsoft.com>
+> On 03/22/18 17:44, Junio C Hamano wrote:
+>> Wouldn't it be more efficient to avoid doing so one-by-one?
+>> That is, wouldn't
 >>
->> Add basic routines to generate data in JSON format.
-> 
-> And the point of having capability to write JSON data in our
-> codebase is...?
-> 
->> diff --git a/json-writer.c b/json-writer.c
->> new file mode 100644
->> index 0000000..89a6abb
->> --- /dev/null
->> +++ b/json-writer.c
->> @@ -0,0 +1,321 @@
->> +#include "cache.h"
->> +#include "json-writer.h"
->> +
->> +static char g_ch_open[2]  = { '{', '[' };
->> +static char g_ch_close[2] = { '}', ']' };
-> 
-> What's "g_" prefix?
+>> 	rev-list --max-parents=0 --all
+>>
+>> be a bit faster than
+>>
+>> 	for-each-ref |
+>> 	while read object type refname
+>> 	do
+>> 		rev-list --max-parents=0 $refname
+>> 	done
+>>
+>> I wonder?
+>
+> Yeah, you're right -- I forgot that we can pass --all. The check takes
+> 30 seconds, which is a lot better than 12 hours. :) It's a bit heavy
+> still, but msm kernel repos are one of the heaviest outliers, so let me
+> try to run with this.
+>
+> Thanks for the suggestion!
 
-Global.
+Unless you have just one CPU core your script would probably benefit
+from being wrapped in GNU parallel. I.e.:
 
-Sorry, very old habits.
+    parallel 'stuff-to-do {}' ::: $(list-of-repos)
 
->> +
->> +/*
->> + * Append JSON-quoted version of the given string to 'out'.
->> + */
->> +static void append_quoted_string(struct strbuf *out, const char *in)
->> +{
->> +	strbuf_addch(out, '"');
->> +	for (/**/; *in; in++) {
->> +		unsigned char c = (unsigned char)*in;
-> 
-> It is clear enough to lose /**/, i.e.
-> 
-> 	for (; *in; in++) {
-> 
-> but for this one. I wonder if
-> 
-> 	unsigned char c;
-> 	strbuf_addch(out, '"');
-> 	while ((c = *in++) != '\0') {
->   		...
-> 
-> is easier to follow, though.
-
-either way is fine.  will fix.
-
-
-
->> +static inline void begin(struct json_writer *jw, int is_array)
->> +{
->> +	ALLOC_GROW(jw->levels, jw->nr + 1, jw->alloc);
->> +
->> +	jw->levels[jw->nr].level_is_array = !!is_array;
->> +	jw->levels[jw->nr].level_is_empty = 1;
-> 
-> An element of this array is a struct that represents a level, and
-> everybody who accesses an element of that type knows it is talking
-> about a level by the field that has the array being named as
-> .levels[] (also [*1*]).  In such a context, it is a bit too loud to
-> name the fields with level_$blah.  IOW,
-> 
-> 	struct json_writer_level
-> 	{
-> 		unsigned is_array : 1;
-> 		unsigned is_empty : 1;
-> 	};
-
-make sense.  will fix.
-
->> +struct json_writer_level
->> +{
->> +	unsigned level_is_array : 1;
->> +	unsigned level_is_empty : 1;
->> +};
->> +
->> +struct json_writer
->> +{
->> +	struct json_writer_level *levels;
->> +	int nr, alloc;
->> +	struct strbuf json;
->> +};
-> 
-> [Footnote]
-> 
-> *1* I personally prefer to call an array of things "thing[]", not
->      "things[]", because then you can refer to an individual element
->      e.g. "thing[4]" and read it as "the fourth thing".
-> 
->      Unless the code often treats an array as a whole, that is, in
->      which case, things[] is OK as you'll be calling the whole thing
->      with the plural name (e.g. call that function and give all the
->      things by passing things[]).
-> 
->      In this case, one level instance is an element of a stack, and
->      the code would be accessing one level at a time most of the
->      time, so "writer.level[4].is_empty" would read more naturally
->      than "writer.levels[4].level_is_empty".
-
-yeah, that makes sense.
-
-Thanks
-Jeff
-
-
+Or something similar.
