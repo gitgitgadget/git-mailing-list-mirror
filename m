@@ -2,63 +2,63 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A98231F404
-	for <e@80x24.org>; Fri, 23 Mar 2018 20:20:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9A0F91F404
+	for <e@80x24.org>; Fri, 23 Mar 2018 20:27:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751930AbeCWUU0 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Mar 2018 16:20:26 -0400
-Received: from mail-wm0-f51.google.com ([74.125.82.51]:38092 "EHLO
-        mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751541AbeCWUUZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Mar 2018 16:20:25 -0400
-Received: by mail-wm0-f51.google.com with SMTP id l16so5666139wmh.3
-        for <git@vger.kernel.org>; Fri, 23 Mar 2018 13:20:25 -0700 (PDT)
+        id S1751847AbeCWU1P (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Mar 2018 16:27:15 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:35160 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751541AbeCWU1O (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Mar 2018 16:27:14 -0400
+Received: by mail-wr0-f193.google.com with SMTP id 80so12250807wrb.2
+        for <git@vger.kernel.org>; Fri, 23 Mar 2018 13:27:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=/sIi2J5rzm/zdvc/KqYMQq8XIbp6+NswBFhvqLrJOLo=;
-        b=mntgW/6eHZhexwjDrgTE3Jb3uavgFoQS9H538Kvr1MHvv/BToAzlIfVR0P+TPqC8DM
-         QseAVgvPjW7+XPJuopBWotlNhNoOL5TDYE1iOwHT77gex7IIpRKTAlnXDEAZ8lHv4PCo
-         NLZPgG3bwggTrChHHMZkvGB0qRn2HkMlzALKkgvcuEPdyoFW5/+TLpLspEMfhUJOJYOd
-         EM0wT5T7jxqaFCY+C/6ZEs4ZwW9B+uzvaDleKhVUItzcLWJwl4GEJrVoFe51IcHjRJ2b
-         aDEakY+2niCUiMagZX4JuIkfE2gMa9qu6e1SIrIb3YtIOypYijgg49rrBHOLUsxgiaLN
-         FQzQ==
+        bh=Fi/V160vhnkvyJ+RwWh782Bu3Q2v2h9eeWUqHZowXjM=;
+        b=VkXPNITfB/iFrNK3FhDDwPV0Tn2hqlnEwWOChmP2qN/Ib21L48Wo8HKBxYjGNBpNT1
+         FcLhE0kz7GhFQ8kxo8d+iI5cGmx7uInyIWJXNnDr642mjXkJ/cTnc0870l7zpYE+PlcQ
+         eXXPNbREIHm3IU3jplQQQMShSuZIXxMXEmCO+A+bqf6VhsqWKNK9+CsLRiI5qyVp6D7A
+         ILaaSCGREbwWd5ERuBipwKUjfllBwV4DkqBNQ5l1TzV3BV00wUgPkiHgZQP+2zLXPfKZ
+         e0ZrCSBELfg/FIFpJ3ijLoigAVf8+uyvYMGP9p2FfPymxarcjtTAcXSi9v2sWnWfob5q
+         ywtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=/sIi2J5rzm/zdvc/KqYMQq8XIbp6+NswBFhvqLrJOLo=;
-        b=UaDMxk3pP+a3ZLNEAOqBtGEvkqbH2A4qGu6J5m9BIPeawNnGwl3XTm6zkYprpxc9Cy
-         znlkJRltNwHKJRL4ElcloMR85c5Ytde+PBql0/Op/hlDA1YwisVmza9ky3WG2Z2yzjRD
-         viSFDLth4r35MZkZTK0ytxmWn7LdGhUxEi4i6P2lZaLDFculn+wOUhzCoRV2TjBpPmDE
-         sLUWRcxeayckj9d+T7/b7njT6HspLvksCfuYYsGJcxHFJlX708c3rPGn2/iwr0ZFe+ey
-         va3YTlWqVf0CieH9j8i3uF0IP/fG+lOYJESWT379Cm2aqH/hS+LMrSavjwSJ5Lla2ZBo
-         iL1w==
-X-Gm-Message-State: AElRT7H3t3tq/DTG9xY2G0wvYSmPbjUsVBSP5DBXtsevGN12jVfbhR6f
-        cPl0bzzagET4xCYRIY1lAxg=
-X-Google-Smtp-Source: AG47ELtaOuGi3EI8dlB4LU6weJdix8b2H7m0rJGe8++fd0FRxXv1gw9D8I8Aw53fdAp6XHckA1HPEg==
-X-Received: by 10.28.193.13 with SMTP id r13mr8765053wmf.38.1521836423912;
-        Fri, 23 Mar 2018 13:20:23 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id n62sm8846071wmf.13.2018.03.23.13.20.22
+        bh=Fi/V160vhnkvyJ+RwWh782Bu3Q2v2h9eeWUqHZowXjM=;
+        b=klNpQrks+LO5IZ+g5x63UOS4ts44lmhA6yN98dm+N4ETM0OvHfxfSgAQZ69VtMXYPq
+         nBlr9YpmafnaEzFjp+vXA2G2AvpLaXESwOoDkwsUlTZhB2U+JCgtFm+qvkcIC1t/s5X5
+         sHFs6h0m5N2xtfqNlnjkZLBE1tfUHd8kzosGEEvbDJDq9Myyg6AK8iGZP6xyAmkuVrP1
+         sOiQZfMGuGlotRTab0p/u8AIg0plKi1XwLO0kNyGZDmp+BOH+EfORzU9oKbzYSTPqKH1
+         klXX9C41KckNmKMhydSyur45dTZllTmIbVmGdIGWo/tS2RvGPkgSKHckhFRjCbvYaXF9
+         0AjQ==
+X-Gm-Message-State: AElRT7HnPgD08lbFy3c40b8K3NLCydr5nbEBz1LJMSR+iEarKd64FprV
+        H/SY3mUsrwQNVTiFzzFPMJU=
+X-Google-Smtp-Source: AG47ELt/tru0qAR9XkqaIwJjBbU/Ucn9M000oOk1sVmKqj8blKwXEOhIy53gj/nzMUwe96RoVBeg9Q==
+X-Received: by 10.223.179.195 with SMTP id x3mr19597778wrd.94.1521836833063;
+        Fri, 23 Mar 2018 13:27:13 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id i44sm8808671wri.23.2018.03.23.13.27.12
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 23 Mar 2018 13:20:22 -0700 (PDT)
+        Fri, 23 Mar 2018 13:27:12 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Yuki Kokubun <orga.chem.job@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2] filter-branch: fix errors caused by refs that cannot be used with ^0
-References: <5ab46520.0352650a.cc02b.a177@mx.google.com>
-        <20180323050913.5188-1-orga.chem.job@gmail.com>
-Date:   Fri, 23 Mar 2018 13:20:22 -0700
-In-Reply-To: <20180323050913.5188-1-orga.chem.job@gmail.com> (Yuki Kokubun's
-        message of "Fri, 23 Mar 2018 05:09:13 +0000")
-Message-ID: <xmqqvadmilx5.fsf@gitster-ct.c.googlers.com>
+To:     Jameson Miller <jamill@microsoft.com>
+Cc:     git@vger.kernel.org, peff@peff.net
+Subject: Re: [PATCH v2 4/5] Move the reusable parts of memory pool into its own file
+References: <20180321164152.204869-1-jamill@microsoft.com>
+        <20180323144408.213145-5-jamill@microsoft.com>
+Date:   Fri, 23 Mar 2018 13:27:12 -0700
+In-Reply-To: <20180323144408.213145-5-jamill@microsoft.com> (Jameson Miller's
+        message of "Fri, 23 Mar 2018 10:44:07 -0400")
+Message-ID: <xmqqr2oaillr.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -67,45 +67,30 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Yuki Kokubun <orga.chem.job@gmail.com> writes:
+Jameson Miller <jamill@microsoft.com> writes:
 
-> "git filter-branch -- --all" print unwanted error messages when refs that
-> cannot be used with ^0 exist.
-
-It is not incorrect per-se, but if I were writing this, I'd say
-"... when refs that point at objects that are not committish" or
-something like that, as that is much closer to people (both end
-users and Git developers) than the "^0" implementation detail.
-
-> Such refs can be created by "git replace" with
-> trees or blobs. Also, "git tag" with trees or blobs can create such refs.
-
-Taking two paragraphs above together, you wrote an excellent
-description of the problem to be solved (i.e. what would be seen by
-users and under what condition the symptom would trigger).  If there
-is a single obvious solution that would trivially follow from the
-problem description, it is perfectly fine to stop here.  Otherwise,
-it would help to describe how it is solved next.  Something as brief
-like
-
-	Filter these problematic refs out early, and warn that these
-	refs are left unwritten while doing so.
-
-would suffice in this case, I think.  We _could_ insert
-
-	before they are seen by the logic to see which refs have
-	been modified and which have been left intact (which is
-	where the unwanted error messages come from),
-
-between "early," and "and warn", if we wanted to.
-
+> This moves the reusable parts of the memory pool logic used by
+> fast-import.c into its own file for use by other components.
+>
+> Signed-off-by: Jameson Miller <jamill@microsoft.com>
 > ---
->  git-filter-branch.sh     | 14 ++++++++++++--
->  t/t7003-filter-branch.sh | 14 ++++++++++++++
->  2 files changed, 26 insertions(+), 2 deletions(-)
+>  Makefile      |   1 +
+>  fast-import.c | 118 +---------------------------------------------------------
+>  mem-pool.c    | 103 ++++++++++++++++++++++++++++++++++++++++++++++++++
+>  mem-pool.h    |  34 +++++++++++++++++
+>  4 files changed, 139 insertions(+), 117 deletions(-)
+>  create mode 100644 mem-pool.c
+>  create mode 100644 mem-pool.h
 
-The diff looks good.  
+This step looks totally uncontroversial, provided that the result
+after [1-3/5] is in a reasonable shape ;-)
 
-Please sign-off your patch (cf. Documentation/SubmittingPatches).
+Hint for other reviewers.  This
 
-Thanks.
+    $ git blame -s -b -C HEAD^..HEAD mem-pool.c
+
+can be used to see that most of the lines in this new file are
+imported verbatim from fast-import.c at the receiving end.
+
+
+
