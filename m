@@ -2,86 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C76511F404
-	for <e@80x24.org>; Fri, 23 Mar 2018 02:46:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C309A1FAE2
+	for <e@80x24.org>; Fri, 23 Mar 2018 04:40:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751784AbeCWCqM (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Mar 2018 22:46:12 -0400
-Received: from cloud.peff.net ([104.130.231.41]:39564 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751732AbeCWCqM (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Mar 2018 22:46:12 -0400
-Received: (qmail 21508 invoked by uid 109); 23 Mar 2018 02:46:12 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 23 Mar 2018 02:46:12 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 24375 invoked by uid 111); 23 Mar 2018 02:47:08 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 22 Mar 2018 22:47:08 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 22 Mar 2018 22:46:10 -0400
-Date:   Thu, 22 Mar 2018 22:46:10 -0400
-From:   Jeff King <peff@peff.net>
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc:     Duy Nguyen <pclouds@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Eric Wong <e@80x24.org>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v6 00/11] nd/pack-objects-pack-struct updates
-Message-ID: <20180323024609.GA12229@sigill.intra.peff.net>
-References: <20180317141033.21545-1-pclouds@gmail.com>
- <20180318142526.9378-1-pclouds@gmail.com>
- <20180321082441.GB25537@sigill.intra.peff.net>
- <CACsJy8DkF3TpTGKp5MdS1ApC8Yj6FOL5uAg5U__PjBAQY1vdNw@mail.gmail.com>
- <20180322093212.GB28907@sigill.intra.peff.net>
- <7a49135b-faad-9856-b757-e3ed4886720d@ramsayjones.plus.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <7a49135b-faad-9856-b757-e3ed4886720d@ramsayjones.plus.com>
+        id S1751835AbeCWEkA (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Mar 2018 00:40:00 -0400
+Received: from mail-pl0-f42.google.com ([209.85.160.42]:45676 "EHLO
+        mail-pl0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751823AbeCWEkA (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Mar 2018 00:40:00 -0400
+Received: by mail-pl0-f42.google.com with SMTP id n15-v6so6774467plp.12
+        for <git@vger.kernel.org>; Thu, 22 Mar 2018 21:39:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=saville-com.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id;
+        bh=6Zox8IAaxjlfP+Bhs0i4MIwkKJpAcQEO2hODRtM5SW8=;
+        b=hszBLwxGiB1bvIXwSWFluFUVyvscP1lj1zPAfaLpt1Fcctt/EYRwVs8BbaJn5m68mL
+         SkdlefrxHbqZoczEKXytEMkNrUH3iQ+FnXA3NDxEeZNjz3AyM5cGLPuSfDvR3eXA38P1
+         4unZGsOKzXF9HzFocN2bJ6EwwmHPhXqDZxDqDaPaXcbDo6jPE1d1iIh4qMFSq9nJoLUC
+         f+XwT5ejfiEIJnywIwPX+2pWHjz8WSEmiQdlLKvrTWzCr6OOiPnjsP3yYbiC4J9zW145
+         JETxcMbP7WMgjKqPTFGwqkiRVvx6oANw33hz0FpuL0TBugR07vDsjI0Q6zP0bXQnkRb/
+         P70A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=6Zox8IAaxjlfP+Bhs0i4MIwkKJpAcQEO2hODRtM5SW8=;
+        b=AewBg32qKYhR7puc0GBSTy2fScH1w75D4SYWV1KvMoomFLkHutrTISbeOw4wr5vSqP
+         khZHMyKJ5kFSmv5STFtjTYPKMz2uyQyG61y3BTLPHL2JZabhw1bxjQdEkbq8AoKENDZJ
+         ICnY7lFavIdirog2vvymtbxGK+cXj8RzxvXUbZl8Rl/hsvH7z5tvGOgNvHfCWb0T9lsR
+         yEWXA7jdcgzyKxUV77nFj8pjyyimVIFPVIo4V5ATR2qJEO516zpjz8PJXXaE6+bun6de
+         UpK7zMgKn4FbU0YYf5765qjzZDvDlpdQLnkq4PVuwUyuuU2YDEJrWWOpQcu1uKu709m0
+         +gAw==
+X-Gm-Message-State: AElRT7G7RhPncIsi8rJczvHC5JdI2ETKkXbdUZkVJQWot0smEf+U4l9d
+        0EQKwZBcntrpnzaUVtEKlsD5JFzc628=
+X-Google-Smtp-Source: AG47ELsIL7507VLCyE81eA0NW+L1irC0PZXpIIWhoBadRfTwDg5DWD7Juu4iZlUfNh33vLsm3xlmhg==
+X-Received: by 2002:a17:902:8684:: with SMTP id g4-v6mr24461356plo.117.1521779998729;
+        Thu, 22 Mar 2018 21:39:58 -0700 (PDT)
+Received: from wink-desktop.hsd1.ca.comcast.net ([2601:647:cb02:7980:314d:6e5e:475c:ebd3])
+        by smtp.gmail.com with ESMTPSA id l22sm16069901pfj.98.2018.03.22.21.39.56
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 22 Mar 2018 21:39:56 -0700 (PDT)
+From:   Wink Saville <wink@saville.com>
+To:     git@vger.kernel.org
+Cc:     Wink Saville <wink@saville.com>, sunshine@sunshineco.com,
+        Johannes.Schindelin@gmx.de
+Subject: [RFC PATCH v4] rebase-interactive
+Date:   Thu, 22 Mar 2018 21:39:51 -0700
+Message-Id: <cover.1521779249.git.wink@saville.com>
+X-Mailer: git-send-email 2.16.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 23, 2018 at 01:28:12AM +0000, Ramsay Jones wrote:
+This is v4 of the first 2 patches of "[RFC PATCH vV n/9] rebase-interactive",
+looking forward to any additional comments.
 
-> > Of the used heap after your patches:
-> > 
-> >  - ~40% of that is from packlist_alloc()
-> >  - ~17% goes to "struct object"
-> >  - ~10% for the object.c hash table to store all the "struct object"
-> >  - ~7% goes to the delta cache
-> >  - ~7% goes to the pack revindex (actually, there's a duplicate 7%
-> >        there, too; I think our peak is when we're sorting the revindex
-> >        and have to keep two copies in memory at once)
-> 
-> which begs the question, how much slower would it be if we
-> replaced the radix-sort with an in-place sort (e.g. heapsort).
-> 
-> I hacked up the patch below, just for fun. I don't have any
-> large repos (or enough disk space) to do any meaningful perf
-> tests, but I did at least compile it and it passes the test-suite.
-> (That is no guarantee that I haven't introduced bugs, of course!)
 
-It might have been easier to just revert 8b8dfd5132 (pack-revindex:
-radix-sort the revindex, 2013-07-11). It even includes some performance
-numbers. :)
+Wink Saville (2):
+  rebase-interactive: Simplify pick_on_preserving_merges
+  rebase: Update invocation of rebase dot-sourced scripts
 
-In short, no, I don't think we want to go back to a comparison-sort. The
-radix sort back then was around 4 times faster for linux.git. And that
-was when there were half as many objects in the repository, so the radix
-sort should continue to improve as the repo size grows.
+ git-rebase--am.sh          | 11 -----------
+ git-rebase--interactive.sh | 28 +++++++---------------------
+ git-rebase--merge.sh       | 11 -----------
+ git-rebase.sh              |  2 ++
+ 4 files changed, 9 insertions(+), 43 deletions(-)
 
-The absolute time savings aren't huge for something as bulky as a
-repack, so it's less exciting in this context. But it's also not that
-much memory (7% of the peak here, but as I showed elsewhere, if we can
-stop holding all of the "struct object" memory once we're done with it,
-then this revindex stuff doesn't even factor into the peak).
+-- 
+2.16.2
 
--Peff
