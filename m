@@ -2,96 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3E3251F404
-	for <e@80x24.org>; Fri, 23 Mar 2018 22:29:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 888A81F404
+	for <e@80x24.org>; Fri, 23 Mar 2018 22:39:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752119AbeCWW26 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Mar 2018 18:28:58 -0400
-Received: from mail-wm0-f45.google.com ([74.125.82.45]:53853 "EHLO
-        mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751632AbeCWW25 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Mar 2018 18:28:57 -0400
-Received: by mail-wm0-f45.google.com with SMTP id e194so6091861wmd.3
-        for <git@vger.kernel.org>; Fri, 23 Mar 2018 15:28:57 -0700 (PDT)
+        id S1752159AbeCWWjx (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Mar 2018 18:39:53 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:54238 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751677AbeCWWjw (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Mar 2018 18:39:52 -0400
+Received: by mail-wm0-f68.google.com with SMTP id e194so6119390wmd.3
+        for <git@vger.kernel.org>; Fri, 23 Mar 2018 15:39:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=p1NeuQdeWmlC3ncB42SWeIdUkgxdiUqkcN/3DG4zD80=;
-        b=DE0osUGe8RKKnAl87B/+cPsOm6N2t1tYpGUfQUgRxHa2c9ORgQNMcYBZHp9PiYCf4h
-         L9GA4ll/1U38YOFQgd1JOFECaU22qEd0vSghGTBW+BkNwiTtBeK5ea7XDopJ8Qk/zFek
-         nBDVOvePi2VZB9uk1j5DpOGFjx+WuT639N2lRYBLLbAs5c31Doaaarl5BMBYE9aS3g4c
-         Hks8VEBpiCDkNF0e6lR1IVQ6jJpm0WWxY//kVnKRLjNg9J+UW5HciBbVuFSeMGGHARhI
-         t57HC19XvQulTU6IMIovkxv5tWd1aelPYmemRY855fymz9xPviGy/EX57tfy+O80ysg5
-         jk4w==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=cxPmgJWOuTX41rH9blyy0TqheZ8GcD3bdG+R3kO1B8Q=;
+        b=LsXPX+srt5Lv8ol48hBkUED/Ctk35nzYnH+oaXppdPEhlwV9iTk7z4uElYgrjymazD
+         go/JLE87mtyufGw70MwnatlAJUY7d2qQSuFIEhiw8WNfJotImVGKcvoYDzd9x7SdNOAE
+         HBEHDosr78O4GlGdGN/JlHNOlI71daDkr8b4bIkyJVHKyPbDEk92azsDwdefm5PFATKp
+         OI5K4zlphqcF/4TRxBZFIeBSONgU7qM+b0rNi5wzzwICTpIm7Tkh/Bpou4QukSPWe9Dh
+         KeaPNRV8zv0fzSvGnYfs3fdOwqTIGxV7LwoauiJ+xtwNEzD04ANNcjM2Lmrft202kkEv
+         UWsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=p1NeuQdeWmlC3ncB42SWeIdUkgxdiUqkcN/3DG4zD80=;
-        b=IVon2B5UE6Sb7NsaUn1Kr6rnf54b+0my9Eqw48mdICHHyqz9USy4Uahio52MSui3tG
-         mcuBxVHIhpdMR5KO1+1xv+g3Oboa3KwCwbD5bGLj3OTrHQDCPgfCrRlfHvrw+/eszgJT
-         3UxK9+Q+AkpJxpFQkduZDfCf6xjFl8QF/ewigWbqtIM95gptxwHDeZNhNHkgOLvF2HnC
-         TVAvdxE92sUp4bl1nQ52XDuHV2/mnoxkZI0AjDBPVOfI8cKn2immMxUkkzRpK7fLHEnf
-         xMCBtCxplsUS/TKe8Y8SArB6MN5B9V3Nk/DD1Tsget1MlyD/WQAI6RkYyr/tDUvmiNnM
-         j4TQ==
-X-Gm-Message-State: AElRT7H8nKP/76GoqqyqUA0ZEJZaucJuFrlq5hKHDspevncKvzrxK/p3
-        /R2229Ngb6ihBEY93ne86IZ4VJeP
-X-Google-Smtp-Source: AG47ELvcSqh2ltKZD1vCaXy/IpkCEVohSSnjQCKvKmXEGR3ynmMJDCI7NJ8oitaeX7E5Ale722KE+Q==
-X-Received: by 10.80.208.221 with SMTP id g29mr32200808edf.295.1521844136430;
-        Fri, 23 Mar 2018 15:28:56 -0700 (PDT)
-Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
-        by smtp.gmail.com with ESMTPSA id q6sm6257411edh.48.2018.03.23.15.28.54
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=cxPmgJWOuTX41rH9blyy0TqheZ8GcD3bdG+R3kO1B8Q=;
+        b=T+CYv/VyxAMlkL/LjYqCUb2A5B8R2ptxd8Y7G/IzZS/Wd/1UmZpWKym4IZ7oFh/t0Z
+         2JpHOrDcj/PoH3eIXaE+IOlp6D/s8edCDQDE9TjLLeYd9dMo8uFj5MdLFOnMgGTLQoQR
+         Jh7bPjhqC+LU/suR7BtImMNDJ54ixvpOPXq0QVXdpWEhioq3otQb1dBDeL/7RG9LSTSy
+         8/zlAaeqbkBtp9rdJ5UgVhrAPTLNYnYoQzx7NBH6eTZXgnhqMlFNYmUtxGMyxg988gen
+         6lfXh8E2Su2oejLftGcAjznFslVv8QgSWVacwTzyJ0xecU0LW63X9cuJygYwlPGbvfHl
+         SLbQ==
+X-Gm-Message-State: AElRT7GO0KvLFOSvGXMNKgWiM/jAql6PKZ7d44U6IaSYMPYwKCpNKIr4
+        JfFimrUxeeprYde0q74u44g=
+X-Google-Smtp-Source: AG47ELvTEukmj0oXyHyYiZ4Y4txmkIEX+8I7DcuOUN1jMF+pI0WdMn9j/XSQ3NS92BWhtsVqu6VuaA==
+X-Received: by 10.28.184.8 with SMTP id i8mr10715778wmf.52.1521844791001;
+        Fri, 23 Mar 2018 15:39:51 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id i66sm13387227wmd.0.2018.03.23.15.39.49
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 23 Mar 2018 15:28:55 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Loganaden Velvindron <logan@hackers.mu>, git@vger.kernel.org,
-        Daniel Stenberg <daniel@haxx.se>
-Subject: Re: [PATCH v2] Allow use of TLS 1.3
-References: <20180323193435.GA21971@voidlinux> <xmqqy3iih2xi.fsf@gitster-ct.c.googlers.com>
-User-agent: Debian GNU/Linux 9.4 (stretch); Emacs 25.1.1; mu4e 1.1.0
-In-reply-to: <xmqqy3iih2xi.fsf@gitster-ct.c.googlers.com>
-Date:   Fri, 23 Mar 2018 23:28:54 +0100
-Message-ID: <87h8p6xw7t.fsf@evledraar.gmail.com>
+        Fri, 23 Mar 2018 15:39:50 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Wink Saville <wink@saville.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [RFC PATCH v5 0/8] rebase-interactive
+References: <cover.1521779249.git.wink@saville.com>
+        <cover.1521839546.git.wink@saville.com>
+        <CAKk8isqj3OusAE8OJtcys0a-Yj9fgQNn=DtLe-ZGYNzcKp=-3Q@mail.gmail.com>
+Date:   Fri, 23 Mar 2018 15:39:49 -0700
+In-Reply-To: <CAKk8isqj3OusAE8OJtcys0a-Yj9fgQNn=DtLe-ZGYNzcKp=-3Q@mail.gmail.com>
+        (Wink Saville's message of "Fri, 23 Mar 2018 14:34:20 -0700")
+Message-ID: <xmqq7eq2h0wa.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Wink Saville <wink@saville.com> writes:
 
-On Fri, Mar 23 2018, Junio C. Hamano wrote:
+> On Fri, Mar 23, 2018 at 2:25 PM, Wink Saville <wink@saville.com> wrote:
+>> Reworked patch 1 so that all of the backend scriptlets
+>> used by git-rebase use a normal function style invocation.
+>>
+>> Merged the previous patch 2 and 3 have been squashed which
+>> provides reviewers a little easier time to detect any changes
+>> during extraction of the functions.
+>>
+>> Wink Saville (8):
+>>   rebase-interactive: simplify pick_on_preserving_merges
+>>   rebase: update invocation of rebase dot-sourced scripts
+>>   Indent function git_rebase__interactive
+>>   Extract functions out of git_rebase__interactive
+>>   Add and use git_rebase__interactive__preserve_merges
+>>   Remove unused code paths from git_rebase__interactive
+>>   Remove unused code paths from git_rebase__interactive__preserve_merges
+>>   Remove merges_option and a blank line
+>>
+>>  git-rebase--am.sh          |  11 --
+>>  git-rebase--interactive.sh | 407 ++++++++++++++++++++++++---------------------
+>>  git-rebase--merge.sh       |  11 --
+>>  git-rebase.sh              |   1 +
+>>  4 files changed, 216 insertions(+), 214 deletions(-)
+>>
+>> --
+>> 2.16.2
+>>
+>
+> Argh, I misspelled Junio's email address, so when you reply-all try
+> to remember to remove "gister@pobox.com" from the cc: list.
 
->> @@ -62,6 +62,9 @@ static struct {
->>  	{ "tlsv1.1", CURL_SSLVERSION_TLSv1_1 },
->>  	{ "tlsv1.2", CURL_SSLVERSION_TLSv1_2 },
->>  #endif
->> +#ifdef CURL_SSLVERSION_TLSv1_3
->> +	{ "tlsv1.3", CURL_SSLVERSION_TLSv1_3 }
->> +#endif
->>  };
->
-> It seems to me that
->
->     https://github.com/curl/curl/blob/master/include/curl/curl.h#L1956
->
-> tells me that this #ifdef would not work.  Did you test it with the
-> "test not version but feature" change you made at the last minute?
->
-> I know it is not your fault but is Ævar's, but you're responsible
-> for double-checking what you are told on the internet ;-)
+Heh, too late ;-)
 
-Yeah I should add some "I haven't actually tried this, but what do you
-think about this?" disclaimer.
+I queued everything (with all patch 3-8/8 retitled to share a
+common prefix, so that "git shortlog" output would stay sane)
+and I think I resolved the conflicts with Dscho's recreate-merges
+topic correctly.  Please double check what will appear on 'pu' later
+today.
 
-But it's not a good sign that we have a v2 with an ifdef that'll never
-be true, indicating that it wasn't tested against TLSv1.3. Is there some
-way we could check for this in our test suite?
+Thanks.
+
