@@ -2,79 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 32B9E1F404
-	for <e@80x24.org>; Fri, 23 Mar 2018 22:41:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B7ECB1F404
+	for <e@80x24.org>; Fri, 23 Mar 2018 22:52:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752573AbeCWWlc (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Mar 2018 18:41:32 -0400
-Received: from out5-smtp.messagingengine.com ([66.111.4.29]:34269 "EHLO
-        out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752564AbeCWWlP (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 23 Mar 2018 18:41:15 -0400
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
-        by mailout.nyi.internal (Postfix) with ESMTP id BC9B420C8D;
-        Fri, 23 Mar 2018 18:41:14 -0400 (EDT)
-Received: from frontend2 ([10.202.2.161])
-  by compute6.internal (MEProxy); Fri, 23 Mar 2018 18:41:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        aaronjgreenberg.com; h=cc:date:from:in-reply-to:message-id
-        :references:subject:to:x-me-sender:x-me-sender:x-sasl-enc; s=
-        fm2; bh=6GdZWcB5Jhg5XJUGaxgvIbYGuGfdR1AkDV2V8Q8QYzw=; b=M9KBP0BC
-        veENuDEXFrvofdqP0U10dkTtyaZvUSEIj5rQaM092XaSsR/SW82rqeK15hnX4hRl
-        ZM0s6IopuRCVF0Lljdc3m7J6oir9k8TB8TAveH+FfpTt+BIHTLwJxW5jvhZy/kMY
-        O5ndxz42wiPH3mTwc8xdHEyqsNoZ85rWJQNqqWfmpEHK/+YmgDBSpOfbPXE8xjPL
-        RCYue21tQOIDrcM0q5iWUK1td5u5mt7QjvBOcz64GzFMuWq4L63iHi/h1hFj8yrU
-        a0MtNZLLkaDjKStdCtSdoxmOm1tQOQP/I7/BKvFN/wX8kQQ8SSou/Dm9MtGp+ah5
-        1pBvTBTGPzHjRg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:date:from:in-reply-to:message-id
-        :references:subject:to:x-me-sender:x-me-sender:x-sasl-enc; s=
-        fm2; bh=6GdZWcB5Jhg5XJUGaxgvIbYGuGfdR1AkDV2V8Q8QYzw=; b=dZHO7s0O
-        5S/hEXowx4op0jTF1ZyphRSdAq1mkCGGl83kDhx9H2rj+3fdsR9EIApcafVbt3iT
-        jroqTZ9044n/Rb3zdG5Hm0ebhDXAlv3mPC3+L1IcOpFJduzc+X7kDEJwQMl8OUxX
-        9xTezYIPWRgaffX6iDPhHfY+XQd5Ky6Wi2sob7zmcoC9ZOd8HjOZVASYo2aNMwW8
-        OoUlA8H5lokS6VPjjzR/7uDl0wo9swtJCSrVuqkZFrnXgvKWE6lqCVZe+kWo2wYo
-        0D0ShTnSxq6UwanBFXqACAzJ172Y0ztspQpK4Xtne6GqhHqBNxkOrclAFsqnklyv
-        WvV4tOrRp5lWBA==
-X-ME-Sender: <xms:ioK1WoFVt3roTaCZYvxz3eCq8SpmSmWqgkRcj6kU6-32D4pev5mLTQ>
-Received: from localhost.localdomain (unknown [159.203.64.218])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 72DC924131;
-        Fri, 23 Mar 2018 18:41:14 -0400 (EDT)
-From:   Aaron Greenberg <p@aaronjgreenberg.com>
-To:     peff@peff.net
-Cc:     git@matthieu-moy.fr, git@vger.kernel.org, p@aaronjgreenberg.com,
-        gitster@pobox.com
-Subject: [PATCH v2] branch: implement shortcut to delete last branch
-Date:   Fri, 23 Mar 2018 22:40:34 +0000
-Message-Id: <1521844835-23956-1-git-send-email-p@aaronjgreenberg.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <20180323085636.GA24416@sigill.intra.peff.net>
-References: <20180323085636.GA24416@sigill.intra.peff.net>
+        id S1752118AbeCWWw1 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Mar 2018 18:52:27 -0400
+Received: from mail-lf0-f68.google.com ([209.85.215.68]:33564 "EHLO
+        mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751677AbeCWWw0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Mar 2018 18:52:26 -0400
+Received: by mail-lf0-f68.google.com with SMTP id x205-v6so20492578lfa.0
+        for <git@vger.kernel.org>; Fri, 23 Mar 2018 15:52:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=saville-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=yMQMK5klUZ0Q6AQaiLDh5Cs0Xsra3RVx/8XATPz0byY=;
+        b=QqtL+XW4X84T71Rxq2UlhHsMHpOtQcdP5yLZtZaxrarXpsslDma7K6aoDJG6OLmtBx
+         EauTx689iqXH7kPc2PYOZkEXg32IHt5G8cpNHAXJENstlyZmARmqOEqDDxABksVWUlzD
+         Hce2n1hpONa3m9digkC0kBrXg/+NvVfI6tF2oVNZmZJSkCrrovNNaNdEdLFBiISjtPGS
+         XF5U3mGJt4VGt6DEb/SMhxauIQWITriW3fwTOdK6eY0ljsuiGYJy6OGa2cmtVFnv9ogy
+         8NwNIbSdeIsG4nZASSjzUN9N+mMHAj9XlgyPq8q4G4ZDUwzhSYJy12/9qXrTUvyVtoRi
+         /mcA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=yMQMK5klUZ0Q6AQaiLDh5Cs0Xsra3RVx/8XATPz0byY=;
+        b=iawqLOxmBXJdeVoR2LVusOToRzh+dR7EStN9PmAj1tQcNGGC7gqwumg7PnM/VvqppG
+         Y9YcM6AvVk/gERSmFbf6e0vELb2Yh9pOlO/LVCmXHcwDi6pqw/Rdmi16mbwdVOKPsYK7
+         Sq7D/oJKLTtH7XtKkvqN6JhmuEcy3hkUq7qblz8ST8RNr7pkUHO/q2B/Qct9GTUVXZa/
+         xStw0ZcxPpiq1TfbZcWqBPCW94sHvTnIBPCUTK4Zjv4zu5Tg4adODfNuXYwzT1+uTDkS
+         2tay8fueVxcLWhexgAOSSo1h0H9HNj7IfmRxPw7p/UWIyh1eDrIKK3BPapWWEE1aiAHw
+         Wu7w==
+X-Gm-Message-State: AElRT7E9aNlBs8By9mgaWxnk8kWGV5hIUwKsbjSxhT1Ho6p4JKlSvCoD
+        +9Mxo1WQDGBKqOPPrespkIkpKJy3PY5MFbOcJoSI5A==
+X-Google-Smtp-Source: AG47ELvQAaS50U2Scba3Tpl7F/adUYdw1QWy5rrUcno/ziyEk/1o8S5FVBF3+fR16azguStg6ya5hj30x0eKi/0lQvQ=
+X-Received: by 2002:a19:9e95:: with SMTP id h143-v6mr21862801lfe.129.1521845544769;
+ Fri, 23 Mar 2018 15:52:24 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 2002:a19:9690:0:0:0:0:0 with HTTP; Fri, 23 Mar 2018 15:52:04
+ -0700 (PDT)
+In-Reply-To: <xmqqpo3uh26k.fsf@gitster-ct.c.googlers.com>
+References: <cover.1521779249.git.wink@saville.com> <cover.1521839546.git.wink@saville.com>
+ <e893a9d550f4d09baf0d21adedca841b96feae0d.1521839546.git.wink@saville.com> <xmqqpo3uh26k.fsf@gitster-ct.c.googlers.com>
+From:   Wink Saville <wink@saville.com>
+Date:   Fri, 23 Mar 2018 15:52:04 -0700
+Message-ID: <CAKk8israKrrF4PBH4csLQDyrQXwap0oZ3FkihswR1DUf8nqrxQ@mail.gmail.com>
+Subject: Re: [RFC PATCH v5 3/8] Indent function git_rebase__interactive
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Fri, Mar 23, 2018 at 3:12 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Wink Saville <wink@saville.com> writes:
+>
+>> Signed-off-by: Wink Saville <wink@saville.com>
+>> ---
+>>  git-rebase--interactive.sh | 432 ++++++++++++++++++++++-----------------------
+>>  1 file changed, 215 insertions(+), 217 deletions(-)
+>
+> Thanks for separating this step out.  "git show -w --stat -p" tells
+> us that this is a pure re-indent patch pretty easily ;-).
+>
+> Overlong lines might want to get rewrapped at some point, and it is
+> OK to do that either in this step or in a separate step.
+>
 
-I updated the commit message to include my first email's cover letter
-and cleaned up the test.
+The longest line in the file before this change was line 532 which is 108
+characters, now there are three lines longer because of the indentation.
+Line 762 is 112, line 957 is 110 and 985 110.
 
-Copying Junio, since he also had good comments in the conversation you
-linked.
+My initial reaction is to leave these long lines as is, but if you want them
+shorter what is the maximum line length?  At 80 characters per line
+I count about 25 lines will need to be shortened.
 
-I can appreciate Matthieu's points on the use of "-" in destructive
-commands. As of this writing, git-merge supports the "-" shorthand,
-which while not destructive, is at least _mutative_. Also,
-"git branch -d" is not destructive in the same way that "rm -rf" is
-destructive since you can recover the branch using the reflog.
+Also, I assume you want me to only change lines in
+git_rebase__interactive.
 
-One thing to consider is that approval of this patch extends the
-implementation of the "-" shorthand in a piecemeal, rather than
-consistent, way (implementing it in a consistent way was the goal of
-the patch set you mentioned in your previous email.) Is that okay? Or
-is it better to pick up the consistent approach where it was left?
+-- Wink
