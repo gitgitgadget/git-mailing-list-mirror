@@ -2,107 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E47AF1F404
-	for <e@80x24.org>; Fri, 23 Mar 2018 15:56:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 30BA11F404
+	for <e@80x24.org>; Fri, 23 Mar 2018 16:01:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752096AbeCWP4B (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Mar 2018 11:56:01 -0400
-Received: from mail-lf0-f66.google.com ([209.85.215.66]:36033 "EHLO
-        mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751691AbeCWP4A (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Mar 2018 11:56:00 -0400
-Received: by mail-lf0-f66.google.com with SMTP id z143-v6so19019347lff.3
-        for <git@vger.kernel.org>; Fri, 23 Mar 2018 08:56:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=uaFz1XnIdARnY1OWGqcSf3Dk5wi1ow+lc3PiZLOF2zE=;
-        b=GlPFhFCjENksqelm/5Z0JD0D5qs5UveW7rUTHpPa/vUHrcJwjFV+cDmHa4Bbp4w50v
-         QkPFo3ZCKwhpPUWGqUU3OeM1dnK1SkqOljCSZqJePWYLtIJdZWlDoLBbPqKf+gYfDVhf
-         QFcJ4xFFlQIi0Tw8DHzO3XbkHZpa6aAfHpLAlpB879WWfaX5EVSSOI1D5d1jBBevyrp/
-         WJe9satVb8wTQvDmHkwtMATC9Tp2QeJgFK7BWIWxPR9Hl8qXObXHtHIWt9V4Jtt3jN9P
-         tGYV2gqTOuOloq9Ov8d6i4ZJ/HWtbFdvnQodSxpEzEdcVjEAsjxvxvN6RAI5o1O8jdPh
-         B+Rg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=uaFz1XnIdARnY1OWGqcSf3Dk5wi1ow+lc3PiZLOF2zE=;
-        b=Rbst+Y7igZOzOGzo8uJFrUuvqphGSgususTyc5smglVYCGGP60yZOzeIMfUIB4F5xF
-         4kNrwXPr7W1DwihBpBQQgEGkSy+15nR9uSTNq/Lr/3rWtr79ekFm5HS0btj8gx1PVCtq
-         qCW+QwEsgv4TVJWv7Nae46oMCm0Ovu5gXimFNuuZxdViwlcnySArhbLKP7029FKSXOje
-         pFqw3DbxPuD3n3JEfwmbAHgPhjn6zo2NTonovcfW+HgSqRpyP8HEZ6EZ+QI63sC3ruSb
-         gyeUc6c4P7U/lAiOFf1ion4d66c/WQG0gNHCXmFczAPisUZKOMebzzbV467NzZMipgN7
-         sBpA==
-X-Gm-Message-State: AElRT7H0b5Z2c0zo4sqG+KdSYEDGFJKEmunjxGwk2WAr8HmCUSMpvHQN
-        6hY/a6V6J1PUUcd4P/1hi94=
-X-Google-Smtp-Source: AIpwx4/a2n36fxodT15wLblsHa+EsyuGxZxu/yRpy72K/TXe2/BGDlT/z6D3VuDFnHQufrcTvKcP+g==
-X-Received: by 2002:a19:5750:: with SMTP id l77-v6mr5690614lfb.10.1521820559384;
-        Fri, 23 Mar 2018 08:55:59 -0700 (PDT)
-Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id g192-v6sm2248963lfg.86.2018.03.23.08.55.58
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 23 Mar 2018 08:55:58 -0700 (PDT)
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     pclouds@gmail.com
-Cc:     git@vger.kernel.org, gitster@pobox.com, sbeller@google.com,
-        Brandon Williams <bmwill@google.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: [PATCH 1/1] repository.h: add comment and clarify repo_set_gitdir
-Date:   Fri, 23 Mar 2018 16:55:23 +0100
-Message-Id: <20180323155523.22269-2-pclouds@gmail.com>
-X-Mailer: git-send-email 2.17.0.rc0.348.gd5a49e0b6f
-In-Reply-To: <20180323155523.22269-1-pclouds@gmail.com>
-References: <20180303113637.26518-1-pclouds@gmail.com>
- <20180323155523.22269-1-pclouds@gmail.com>
+        id S1752004AbeCWQBy (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Mar 2018 12:01:54 -0400
+Received: from avasout04.plus.net ([212.159.14.19]:55117 "EHLO
+        avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751771AbeCWQBx (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Mar 2018 12:01:53 -0400
+Received: from [10.0.2.15] ([80.189.70.162])
+        by smtp with ESMTPA
+        id zP8Yei5gcsD7bzP8ZeB4fi; Fri, 23 Mar 2018 16:01:52 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.3 cv=CvORjEwD c=1 sm=1 tr=0
+ a=zzlqjQC3YyNvDZl/Gy+4mg==:117 a=zzlqjQC3YyNvDZl/Gy+4mg==:17
+ a=IkcTkHD0fZMA:10 a=atuuPTaa6FTDEbNp9bAA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+Subject: Re: [PATCH v6 00/11] nd/pack-objects-pack-struct updates
+To:     Jeff King <peff@peff.net>
+Cc:     Duy Nguyen <pclouds@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFy?= =?UTF-8?Q?mason?= 
+        <avarab@gmail.com>, Eric Wong <e@80x24.org>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+References: <20180317141033.21545-1-pclouds@gmail.com>
+ <20180318142526.9378-1-pclouds@gmail.com>
+ <20180321082441.GB25537@sigill.intra.peff.net>
+ <CACsJy8DkF3TpTGKp5MdS1ApC8Yj6FOL5uAg5U__PjBAQY1vdNw@mail.gmail.com>
+ <20180322093212.GB28907@sigill.intra.peff.net>
+ <7a49135b-faad-9856-b757-e3ed4886720d@ramsayjones.plus.com>
+ <20180323024609.GA12229@sigill.intra.peff.net>
+ <20180323055027.GA30227@sigill.intra.peff.net>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <4395a668-845e-a66f-2a14-f6a4474c3d4b@ramsayjones.plus.com>
+Date:   Fri, 23 Mar 2018 16:01:50 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.6.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20180323055027.GA30227@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfOOESyDNCAaFBpbohbKsMEUaek7sVnLyiUs6CxUpL3T0caO3arrrmpXg3lysUlPRVk3Mo64zXbFagflxkxfu0RzGeIiBnF0CoVu/yQg3GY7q5rj3dUYa
+ qxR3Jxk/hjRrlzd++eIkBYB50Lb6uAm6RDoVSTK9nw6v+OQ3+CfzUndg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The argument name "optional" may mislead the reader to think this
-option could be NULL. But it can't be. While at there, document a bit
-more about struct set_gitdir_args.
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- repository.h | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/repository.h b/repository.h
-index e7127baffb..f21fd93f72 100644
---- a/repository.h
-+++ b/repository.h
-@@ -82,6 +82,10 @@ struct repository {
- 
- extern struct repository *the_repository;
- 
-+/*
-+ * Define a custom repository layout. Any field can be NULL, which
-+ * will default back to the path according to the default layout.
-+ */
- struct set_gitdir_args {
- 	const char *commondir;
- 	const char *object_dir;
-@@ -92,7 +96,7 @@ struct set_gitdir_args {
- 
- extern void repo_set_gitdir(struct repository *repo,
- 			    const char *root,
--			    const struct set_gitdir_args *optional);
-+			    const struct set_gitdir_args *extra_args);
- extern void repo_set_worktree(struct repository *repo, const char *path);
- extern void repo_set_hash_algo(struct repository *repo, int algo);
- extern void initialize_the_repository(void);
--- 
-2.17.0.rc0.348.gd5a49e0b6f
+On 23/03/18 05:50, Jeff King wrote:
+> On Thu, Mar 22, 2018 at 10:46:09PM -0400, Jeff King wrote:
+[snip]
+> I was curious whether my hand-waving there was true. It turns out that
+> it is: the radix sort has stayed about the same speed but the comparison
+> sort has gotten even slower. Here are best-of-five timings for "git
+> cat-file --batch-check='%(objectsize:disk)'", which does very little
+> besides generate the rev-index:
+
+Not that it matters, but I assume this was something like:
+
+  $ time (echo HEAD | git cat-file --batch-check="%(objectsize:disk)")
+
+... and I suspect it was on the linux.git repo, yes?
+
+I used to have a copy of the linux repo on disk, but I had to
+delete it a while ago to recover some disk space (no matter how
+big disks get, they never seem big enough)!
+
+If I do this on my biggest repo (ffmpeg), I get:
+
+  $ cd ../ffmpeg/
+
+  $ time (echo HEAD | git cat-file --batch-check="%(objectsize:disk)")
+  227
+
+  real	0m0.037s
+  user	0m0.020s
+  sys	0m0.004s
+
+  $ time (echo HEAD | ../git/git-cat-file --batch-check="%(objectsize:disk)")
+  227
+
+  real	0m0.146s
+  user	0m0.112s
+  sys	0m0.012s
+
+  $ 
+
+Where I'm using a version with my patch applied, rather than
+reverting commit 8b8dfd5132. A 395% slowdown is bad enough, but
+not as bad as a factor of 11! I bet you have a much more modern
+system (with a fast SSD) than my old laptop. :-D
+
+>   [current master, using radix sort]
+>   real	0m0.104s
+>   user	0m0.088s
+>   sys	0m0.016s
+> 
+>   [reverting 8b8dfd5132, going back to qsort]
+>   real	0m1.193s
+>   user	0m1.176s
+>   sys	0m0.016s
+> 
+> So it's now a factor of 11. Yikes.
+
+Thanks for looking into this, even if it was a wild
+goose chase. :)
+
+ATB,
+Ramsay Jones
 
