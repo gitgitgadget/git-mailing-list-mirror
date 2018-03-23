@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B243C1F404
-	for <e@80x24.org>; Fri, 23 Mar 2018 17:45:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 588AF1F404
+	for <e@80x24.org>; Fri, 23 Mar 2018 17:45:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752007AbeCWRpn (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Mar 2018 13:45:43 -0400
-Received: from mail-lf0-f68.google.com ([209.85.215.68]:37196 "EHLO
+        id S1752016AbeCWRpp (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Mar 2018 13:45:45 -0400
+Received: from mail-lf0-f68.google.com ([209.85.215.68]:40959 "EHLO
         mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751691AbeCWRpm (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Mar 2018 13:45:42 -0400
-Received: by mail-lf0-f68.google.com with SMTP id m16-v6so15742709lfc.4
-        for <git@vger.kernel.org>; Fri, 23 Mar 2018 10:45:41 -0700 (PDT)
+        with ESMTP id S1751993AbeCWRpn (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Mar 2018 13:45:43 -0400
+Received: by mail-lf0-f68.google.com with SMTP id e5-v6so19498879lfb.7
+        for <git@vger.kernel.org>; Fri, 23 Mar 2018 10:45:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=kBOXfS2hWuuUvO43Ve8oqMVcJk6mKELQdB81IRMeGRI=;
-        b=E2DZQKxXtp0sol6sBRH1mEsKvoeHrewRy3c2dmPbLkjzLZcmMLx+RjRPvY/1bXxtyd
-         mNKX2SOhhL8Fx8GuwK9cmHkSUERjjTjmgNINm/L/K/2WqDnwTjyeCwBGPDkAx3klk0k8
-         qw47oGs31w0PO3qykKFoijF5S+sh6R+CojQ9gv9mlgI3LrztnHsOLG01lHVdnzNVxZqQ
-         h/M2N08dkMnpYbrvB3glxty505Utpgs5iIQd7GtcPYj7vyz1c2X4OGYkRZPqriExSp20
-         FaAxCXKoSJ/Hf+6+8VblR0El6iTP+ntPtNwqfwbxYrLmEr/FlLnT7f+PZeVEQE9MTiRi
-         te1g==
+        bh=FGCKlj2PMKIqja6wmx9oujDFRCPViJYUAJxy0QDdGaI=;
+        b=a63CuNc7PvA5sUgCo3z0hmztv6MOtBafagLMod5h6LaCwZ61pTWZix35e7QZh5GT4s
+         QPjyegw66jRtKeoH8DdJtqnNa5HVJUsRisnVj5K/7g0nnbUzSeDMYYEfX9cX1RcJkKrG
+         pLEXTcz7R6f1OLPvSOqncjQbQ7/izP/Sqh724JOlYvCeKuTTug55B8ujXEFZaBF0rbzB
+         UHGJGyyJiiRotJ0KXS8sMF93bmQ+JI3t9dEKVP78SS3ncJesq1oblhSFLgFHru2EDr7/
+         MrwECMVaMWrIVFyAARGOcffqpHqFR60a+wbBr19YV36XAup7vFepQc1By9XH6r3z+yyA
+         U+ag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=kBOXfS2hWuuUvO43Ve8oqMVcJk6mKELQdB81IRMeGRI=;
-        b=juACnduHP96+bK8kLQniYGvy9vaQqMT0cyYPyfpgODxgY99AJAaOszwjeGu+qNj3NE
-         02reWX8fbwQUDsARPHMZvwf1p7Q2Xfp4loQSHkM1W/f94/QUDGrSYu9Pd7T1Je41bsKM
-         IVixGJUIcIT20qD1aVsyjASdKM/UokIMwH6hMNVD5s4ltpJ4CRNCoXz/zJwrdmBDRGrn
-         tZiwX/iCBGmwsbOmn8MonTqyEN6IFWFS+IETBIHHlKr0W4L/iKynUWDL8imTOhonNbkc
-         g25UC+LvOsVxNYdfnAt5RuObIdv55tc82NReCY96fTZDuFptkzwgUc1KCHylEEQ0awHL
-         /8Ag==
-X-Gm-Message-State: AElRT7EwZ3dd099c6aIxi2fmaiDLqcw64lDZOB1Oeo0GApXkIiTEUFMz
-        c/+PYHfP6rd6WbU87BIaX0Y=
-X-Google-Smtp-Source: AG47ELvviOYdO5W6DxJl7FJDUWxxGEp/glY3DIIr+b6h4laCLLXqyG9xf+6u+5L5dEiEHGe8MCfJJg==
-X-Received: by 10.46.2.90 with SMTP id 87mr6955661ljc.46.1521827140874;
-        Fri, 23 Mar 2018 10:45:40 -0700 (PDT)
+        bh=FGCKlj2PMKIqja6wmx9oujDFRCPViJYUAJxy0QDdGaI=;
+        b=DCGEx5Wp9EzzKvQRYlJa1T8TvH/YKuMn7Wzer4ipBIRYsw55Ek3BRnlxiZuJkzBKO6
+         UEKWyxarPVPE24SXaLtj64/xxUj9hz4OTXkmA11zvjJoxOgMBWbRo/3ADzyJdLsCl4FI
+         NGgEuu9IxIG8KRRUaAs9SgGrLFeVJzTR6Yypqfq8MK45xehTkFwR2N9MC+kbZqdTj+33
+         LtWCnePp/rlGfrgFah1vd3YAAypiLSXfZEwJoG/egSUK6izzgHpzYzYoz0mWuaa/dADB
+         589XeIyv7PvM3MIhrTKXGPEUEYJZi1nmI08VdM97ShmMY2TgCBAwtJbymZMpZF/8wqYg
+         20bg==
+X-Gm-Message-State: AElRT7F0oRAc5SKgJCfQXmGkW2q29vGNGhZ8ev3A+r/TPxeCndvwYL5O
+        RR86YwkXScDckQgFFnNmLzI=
+X-Google-Smtp-Source: AG47ELvuFaxKAWUMLQtrUWJRjGtOCUqxfndyVZ5T9M1tAvh3crH4byQ1WRKIOq3BYTuWd4x5k9Gp8A==
+X-Received: by 10.46.128.16 with SMTP id j16mr4906489ljg.26.1521827142155;
+        Fri, 23 Mar 2018 10:45:42 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id e8sm847487ljj.6.2018.03.23.10.45.39
+        by smtp.gmail.com with ESMTPSA id e8sm847487ljj.6.2018.03.23.10.45.40
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 23 Mar 2018 10:45:40 -0700 (PDT)
+        Fri, 23 Mar 2018 10:45:41 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
@@ -56,12 +56,13 @@ Cc:     git@vger.kernel.org, gitster@pobox.com, sbeller@google.com,
         Brandon Williams <bmwill@google.com>,
         Jonathan Tan <jonathantanmy@google.com>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH 00/12] sb/packfiles-in-repository updates
-Date:   Fri, 23 Mar 2018 18:45:15 +0100
-Message-Id: <20180323174527.30337-1-pclouds@gmail.com>
+Subject: [PATCH 01/12] packfile: allow prepare_packed_git_mru to handle arbitrary repositories
+Date:   Fri, 23 Mar 2018 18:45:16 +0100
+Message-Id: <20180323174527.30337-2-pclouds@gmail.com>
 X-Mailer: git-send-email 2.17.0.rc0.348.gd5a49e0b6f
-In-Reply-To: <20180303113637.26518-1-pclouds@gmail.com>
+In-Reply-To: <20180323174527.30337-1-pclouds@gmail.com>
 References: <20180303113637.26518-1-pclouds@gmail.com>
+ <20180323174527.30337-1-pclouds@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,65 +71,52 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is the rebased version on the updated sb/object-store I just sent
-out plus the fix for get_object_directory(). The interdiff (after
-rebased) looks small and nice
+From: Stefan Beller <sbeller@google.com>
+
+This conversion was done without the #define trick used in the earlier
+series refactoring to have better repository access, because this function
+is easy to review, as all lines are converted and it has only one caller
+
+Signed-off-by: Stefan Beller <sbeller@google.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ packfile.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/packfile.c b/packfile.c
-index e02136bebb..63c89ee31a 100644
+index 17170fc662..8c335bdcd1 100644
 --- a/packfile.c
 +++ b/packfile.c
-@@ -890,7 +890,7 @@ static void prepare_packed_git(struct repository *r)
+@@ -873,14 +873,14 @@ static void rearrange_packed_git(void)
+ 		set_next_packed_git, sort_pack);
+ }
  
- 	if (r->objects->packed_git_initialized)
- 		return;
--	prepare_packed_git_one(r, get_object_directory(), 1);
-+	prepare_packed_git_one(r, r->objects->objectdir, 1);
- 	prepare_alt_odb(r);
- 	for (alt = r->objects->alt_odb_list; alt; alt = alt->next)
- 		prepare_packed_git_one(r, alt->path, 0);
-
-I notice there's still one get_object_directory() left in packfile.c
-but that should not cause problems with converted functions. That
-could be done in "phase 2".
-
-Nguyễn Thái Ngọc Duy (1):
-  packfile: keep prepare_packed_git() private
-
-Stefan Beller (11):
-  packfile: allow prepare_packed_git_mru to handle arbitrary
-    repositories
-  packfile: allow rearrange_packed_git to handle arbitrary repositories
-  packfile: allow install_packed_git to handle arbitrary repositories
-  packfile: add repository argument to prepare_packed_git_one
-  packfile: add repository argument to prepare_packed_git
-  packfile: add repository argument to reprepare_packed_git
-  packfile: allow prepare_packed_git_one to handle arbitrary
-    repositories
-  packfile: allow prepare_packed_git to handle arbitrary repositories
-  packfile: allow reprepare_packed_git to handle arbitrary repositories
-  packfile: add repository argument to find_pack_entry
-  packfile: allow find_pack_entry to handle arbitrary repositories
-
- builtin/count-objects.c  |  3 +-
- builtin/fsck.c           |  2 --
- builtin/gc.c             |  3 +-
- builtin/pack-objects.c   |  1 -
- builtin/pack-redundant.c |  2 --
- builtin/receive-pack.c   |  3 +-
- bulk-checkin.c           |  3 +-
- fast-import.c            |  3 +-
- fetch-pack.c             |  3 +-
- http-backend.c           |  1 -
- http.c                   |  2 +-
- pack-bitmap.c            |  1 -
- packfile.c               | 76 +++++++++++++++++++---------------------
- packfile.h               | 11 +++---
- server-info.c            |  1 -
- sha1_file.c              |  8 ++---
- sha1_name.c              |  2 --
- 17 files changed, 58 insertions(+), 67 deletions(-)
-
+-static void prepare_packed_git_mru(void)
++static void prepare_packed_git_mru(struct repository *r)
+ {
+ 	struct packed_git *p;
+ 
+-	INIT_LIST_HEAD(&the_repository->objects->packed_git_mru);
++	INIT_LIST_HEAD(&r->objects->packed_git_mru);
+ 
+-	for (p = the_repository->objects->packed_git; p; p = p->next)
+-		list_add_tail(&p->mru, &the_repository->objects->packed_git_mru);
++	for (p = r->objects->packed_git; p; p = p->next)
++		list_add_tail(&p->mru, &r->objects->packed_git_mru);
+ }
+ 
+ void prepare_packed_git(void)
+@@ -894,7 +894,7 @@ void prepare_packed_git(void)
+ 	for (alt = the_repository->objects->alt_odb_list; alt; alt = alt->next)
+ 		prepare_packed_git_one(alt->path, 0);
+ 	rearrange_packed_git();
+-	prepare_packed_git_mru();
++	prepare_packed_git_mru(the_repository);
+ 	the_repository->objects->packed_git_initialized = 1;
+ }
+ 
 -- 
 2.17.0.rc0.348.gd5a49e0b6f
 
