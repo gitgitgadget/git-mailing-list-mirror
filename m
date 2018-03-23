@@ -7,75 +7,61 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A1FB11F42D
-	for <e@80x24.org>; Fri, 23 Mar 2018 09:35:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2B6361F42D
+	for <e@80x24.org>; Fri, 23 Mar 2018 09:39:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751692AbeCWJf1 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Mar 2018 05:35:27 -0400
-Received: from mout.gmx.net ([212.227.15.15]:55391 "EHLO mout.gmx.net"
+        id S1752425AbeCWJjX (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Mar 2018 05:39:23 -0400
+Received: from mout.gmx.net ([212.227.15.15]:47889 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751597AbeCWJf0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Mar 2018 05:35:26 -0400
-Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lq9oW-1eLadE2q7U-00doLm; Fri, 23
- Mar 2018 10:35:20 +0100
-Date:   Fri, 23 Mar 2018 10:35:21 +0100 (STD)
+        id S1752384AbeCWJjW (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Mar 2018 05:39:22 -0400
+Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LmbZb-1eQnMO0y6V-00aDGZ; Fri, 23
+ Mar 2018 10:39:15 +0100
+Date:   Fri, 23 Mar 2018 10:39:15 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Michele Locati <michele@locati.it>
-cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2] filter-branch: use printf instead of echo -e
-In-Reply-To: <081ccfce-7a89-503e-465e-3befe6f33f17@locati.it>
-Message-ID: <nycvar.QRO.7.76.6.1803231034400.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <20180319144905.11564-1-michele@locati.it> <20180319155259.13200-1-michele@locati.it> <nycvar.QRO.7.76.6.1803212249170.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <081ccfce-7a89-503e-465e-3befe6f33f17@locati.it>
+To:     Joseph Strauss <josephst@bhphoto.com>
+cc:     Junio C Hamano <gitster@pobox.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: RE: Bug With git rebase -p
+In-Reply-To: <e1f49e12af544f4c9ece2794f7be4d9a@EXMBX02B.bhphotovideo.local>
+Message-ID: <nycvar.QRO.7.76.6.1803231038560.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <9a1c2c55ff7f412f8830dbdc4bc033bc@EXMBX02B.bhphotovideo.local> <xmqqlgenu6qj.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1803201551480.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <44d0049acaf24e409849f929d7ae4888@EXMBX02B.bhphotovideo.local>
+ <nycvar.QRO.7.76.6.1803212332320.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <xmqqd0zwm5fd.fsf@gitster-ct.c.googlers.com> <e1f49e12af544f4c9ece2794f7be4d9a@EXMBX02B.bhphotovideo.local>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:7mOG8IiIotcJ8mnALk8ULjPKS6HPKLwM/9LYAXMRPZGcNFuNNzN
- VWYCkRxRQpjcd/rxYczOdzWLq5Zx3IdDtjMghLArcKvAZHNMnuSkmLBctRAad++YcQ+qKPi
- IcLVUnsslPFajUHTuXz12SROXBTO4tbO7lBWraFiI3NEt1j3AbIGrdV9CEErxCVpDonP9sr
- pSOj5l8z0cS1Vd7uK8EYg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:enTf/eoX3pg=:lCmU1PK/AOIhXq3wyy3VJu
- 4OzaepMuWPtz7zxrIAe0I39g4p8OhPGIzlx7rOxqYYs6NIBgqzTBN+QqBjFueDlUuurvFy+Jg
- EjE370oFRuwSdMwK5Zivr5/Zbp1fPrr5eQRMDiA+eovI+skoEgYCbwppdocnJdvvxka47ktou
- QEmeMA4BFM1DT8ffwZjmSSeHMXIe3uXykC4pa3kfl5smdoP1mzU+9HPLQal5S47ldEYUPtew9
- cQIJIT/GyED822q3Ax+8lzjHNhv2ZKegtjEF4IDO3RG1BTe88Asi4u/KjLy5TzyQdmIiXM3qb
- eO2XeKvRZXZu8i7T3/rQwFPdPUbihOYcjzDw5Wbne28G0uYjABASBOdc/PlvZ5LvdXJLSkhui
- OAXwlAVLx43Dic9+LvcJDeITyYxgahVtAYGdUGZPMWtvczbiiUbb/cA10VI+Z4lDPBFwG5Ax3
- dvE/KOHOsvD3JF/LSW/fU0ULSY3UgmFEyIJW5p6t2Df77aN4Es4HHknGjY82B+y13DB91QDkm
- 39MJ/ZWcqz6AqTCwHmYnJNzSxb/umXPJmgf3xPvbAyxeXIeW9c+WRH9005yKQdjRTrSXlIBRu
- TERc/tLWOhknLsLyzieu3852OCSUZfXGCm9ChR4D4aSwUM6QKJk5PIwdsd5QKjEgwsNNtS5AG
- g5hOyTInQ6A3wxI3V2IFVPtNmfM5KSot/AKYR8d4rIw5uDST3j6wm247Wd6V9EBoUZ509Wj5g
- LBNJlQ17EK160KNOXcb78/vpitipbj/i7kw32WQOeXUXjpxVY1ei970bBvFnho+1ycCHtq+y8
- 4a8I0QYIQNW0egb4mACpJSiWFRdSRhq8fAoecupLUEEzTN4aHc=
+X-Provags-ID: V03:K0:WwZbgRnqZiY/XsJNb2x9cX1b554n7jW8gHFeF8q/x4a7iBAQrAp
+ KmPPmbquWJNCX0FDyvr0lhDHkneOW3gu2LC0gbVtsx/NIvfmVCTZsZH3yTaiXRielhcfxRt
+ nMy5KX2I78GBP0Tw6Hb62OiQXyb8PmA80MfEfnpPUxvUAqd8DYFO1DrJc7bcVrj25Kp90Xi
+ nLJWCjCGjtBI+S78eAOug==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:hY4FzBaej5E=:zqOwyRoLVsfT/dh8E2l4sq
+ R1UEtBlwf4FmhIdOW+/ZD3JoZ3nrxng7MK/4rg9XoZmTQ/29PBOJ9TXJMKiplbT8/YxAn8xHQ
+ ElLwW9VeXFBjuVKw1PU394rKDtr8XUIEg88tZY05xUnSCyhK0a7MXgHs2QbNtDJ09f2ogmQXB
+ D7yJoF7PlxNkRq2S1Nec/en+u5Q5mu3qC2V3JoKRaIcfYxQvgVWT8D7bEEnSbUcaoBgraXw4N
+ AKOcaV2dseLreLXNCSRw5lc/8GLxLIl8zlw5Qp7l//+nbeayPS7lpVkBBZv6AjTUkcC9jr0u9
+ 5b0xRG17mbNkpWdVKBUDeOPtUEUK5+QbwMJwgsXiLrPe/IirTeYdgTC+d6hkECjWGBeYnJZ5e
+ lsGgUeqqTz7wSdUQeXZTnAEYeZs0HWtgamBRz/AM251lcw2BF2Ruur1SYoY68lhTyvb4E9Z+y
+ tp6CE+pD2C3AHJBsN/JW5839nuWYAkdB82yswEJpU3CVcvUayTNuMXaxSUBDAtwttLcf0ElJ4
+ sY1uEdFDJmU2FgvoBEN4uAgqQNK5YE2oX/2O+jMuEsDp6kSxG+6Rqwctf8913IYIeBj7Z95Ti
+ QyxyEJHS2NEVC+XQVixfOX8Wmzy/9TCDuNzUTI3RcHme7Wm7FBOQHSTIyeA11ECMh6QvqN8lc
+ 8uO4A2ZTsJhcR3vOdU5be+2VIsQxpj9ok3H6/SpbCTWZfmZUpdyjwYH6jUYcn8kXKamLHanIX
+ AYnMzj/tnarRbmGZz8DT+yT242WjDu7HfzCBxzWMEmP/BP+trrmRkLvLZWil9vWAn3srB+rk8
+ E2rn6BH3b6a6E8EMWz0/IocLoSZ/AbpT+4/+NnPHMDsyMW8IFY=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Michele,
+Hi Joseph,
 
-On Thu, 22 Mar 2018, Michele Locati wrote:
+On Thu, 22 Mar 2018, Joseph Strauss wrote:
 
-> Il 21/03/2018 22:50, Johannes Schindelin ha scritto:
-> > 
-> > On Mon, 19 Mar 2018, Michele Locati wrote:
-> > 
-> > > [...]
-> > > -- 
-> > > 2.16.2.windows.1
-> > 
-> > Yaaaaay!
-> > 
-> > Out of curiosity: did the CONTRIBUTING.md file help that was recently
-> > turned into a guide how to contribute to Git (for Windows) by Derrick
-> > Stolee?
-> 
-> Well, no. Here's what led me here...
-> 
-> [...]
+> I meant to say that I installed 2.17.0-rc0, and it worked perfectly.
 
-Thank you for taking the time to tell the story!
+Thank you for testing.
 
 Ciao,
 Johannes
