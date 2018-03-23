@@ -2,106 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 195BE1F404
-	for <e@80x24.org>; Fri, 23 Mar 2018 18:24:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D46E71F404
+	for <e@80x24.org>; Fri, 23 Mar 2018 18:27:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752065AbeCWSYY (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Mar 2018 14:24:24 -0400
-Received: from mail-wr0-f172.google.com ([209.85.128.172]:35209 "EHLO
-        mail-wr0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751388AbeCWSYX (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Mar 2018 14:24:23 -0400
-Received: by mail-wr0-f172.google.com with SMTP id 80so11963493wrb.2
-        for <git@vger.kernel.org>; Fri, 23 Mar 2018 11:24:23 -0700 (PDT)
+        id S1752259AbeCWS12 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Mar 2018 14:27:28 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:39444 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751632AbeCWS11 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Mar 2018 14:27:27 -0400
+Received: by mail-wm0-f67.google.com with SMTP id f125so5158110wme.4
+        for <git@vger.kernel.org>; Fri, 23 Mar 2018 11:27:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=CXooiXZgNc20OoFag6xc7R1NP5WeyPkToB79/Ei+hoo=;
-        b=WwqyXxbRVzmSnSwMy38EezCVqpenXgS4QNgw7WqZ13XsOap+H26cAKJR9+uJQ0ql/D
-         OFRLoLtLx7vQaNGAurqAIEo2g6HQrOiDCdo9o/7gd0HdObGy3UwttqtFlLof1w6XxDy0
-         WZ7SM4sqiwv35eTY42hrvxyWtgHF9CJhZZoj/+KPVhFsv5Z/A9LndR704g9scjOW6VTx
-         SIfGHysfsEPqB+qW2UG0DcsyLrw9c75DsaPqqLSfIX8mcxRLBsOu6qL0lZsa3beQvlr5
-         7ftqQdqsAwUIEEIhopenBUUkPvZtOn29U9sM4qHtPx+kzOIuJ32cnD4UZuf82xu/sXFS
-         8KQw==
+        d=hackers-mu.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:subject:message-id:mime-version:content-disposition
+         :user-agent;
+        bh=XcRXFfxvcTK6zQJgncAe5MUNs7As07AkHYHWios0Qmk=;
+        b=1l8Q6VGTrWBAhPV1sq1lSaecENpBItb7nxXo2BGTzMp+y4phdgtxP9wSUHtkZ3Tchx
+         RqfWDhdMD/g36VocRoRCTQNG2j+O8zmiWmsOBs4LVwBvg9gBfx3xSJZtECB6pH2LYfIZ
+         PJlalupc2Dg62VVXEwJAcLS3qnZtBJ6mWjj1OEqmH9TzYUzFRj4Xs5dKJ5trLDWlPxGI
+         m3W2IXG8e8ahLZq5+WudkuACELbjaoj1f+9ezITA/4XctWedFFCd6J8iQvpBPSIL9PJF
+         KiqbEh4g2QpuvAmEnrWFtXbnNjiPhiUtmixE6LyDLSTB7ZuohHeInwiWuM2kfE/SeCQd
+         0eeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=CXooiXZgNc20OoFag6xc7R1NP5WeyPkToB79/Ei+hoo=;
-        b=V42fktpTQi6pCjnMIy3vz+m7liLJiCD53vJgTa2ciWizHgaa4YQgiRtnL/P2ozZ7H/
-         mKfrMnPq56Sh6Jbnn9oHuU1kKaxH4INBRn9C2FYRV2qUfzcFjYYfowd3Ttp5k77qoVdj
-         5NVxTS5Kjcz4PlyGx1DeNKmYYfuj21WZ7FEMyO9xpvcH+iNJ7f7Isn0sU1DxgEJtb86T
-         jHE2o9+GNJzDFPT7A/qrvbo190c3zCbSJ82WqGbR5/fHJOrUPBOOl2OfvFGEt42bqmHA
-         5CcxJa4egforwaFOISEWWrKiEQP9Yc73ISbF/bfTSXa5Rk6bNPKR6rXr0OfweLvwORuz
-         AohA==
-X-Gm-Message-State: AElRT7G+iQHbAdw3E/8uTnItY/uCbb+YJYhAC/o/W7tmZYAIJYYh/PuO
-        OPyL63pn8C7wTBOwJMVe57cMu9UW
-X-Google-Smtp-Source: AG47ELuDPSiUA8CrV0D96LgA8J4RoWWVIGsLlfzk6EzW38aEs0DrDB6AKNaO1haa3M9HxWhWQraRmg==
-X-Received: by 10.223.195.58 with SMTP id n55mr22283264wrf.132.1521829462247;
-        Fri, 23 Mar 2018 11:24:22 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id f22sm19666682wmi.39.2018.03.23.11.24.21
+        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=XcRXFfxvcTK6zQJgncAe5MUNs7As07AkHYHWios0Qmk=;
+        b=i5jIa6rRR6tgbhRcyTcPNXrw/KwEDMpZ87OmCUS7QnqA8u6CAHetLYxQAv6GfuLcUn
+         8Cp5NxXVMkJ2X77BnPAvMzgtsv49g7ppE+k74TNgR98ckqb9VZDZn51Zubot4+A2Bp/X
+         0UA9vTQEye0QUFjmKq+IlmL15z4mfALEllDT1U/nI6knfqwp6sb7MNkJZxQLrj5AzcxH
+         PaUuo1b54nTiPVobOfvigmggyg+CGd19tnU6LAfvblCeSdoSbwdLaPibeEpU0Jb/JpWV
+         /B9iHpF9ckHZRJXeJyXarKbhC79iSjp/S/9aKWQC5CnNKPI654UQt29U9Z71jkz26yXo
+         YxKQ==
+X-Gm-Message-State: AElRT7GnOlJ1fgt7Ziy7U1izfxMKxkx+iyXUIsCjjpo237SeBIW55BJX
+        KBnVFGOsysE0A9+V68djeFHh5w4o
+X-Google-Smtp-Source: AIpwx4/xcQfX9Ng370VSFlymI3MXzDd5FGn2+Gtmk5pLAbXBnqYpzjxT07fwKl0LAIoeyW0IfU2Psg==
+X-Received: by 10.28.191.75 with SMTP id p72mr2521302wmf.15.1521829646222;
+        Fri, 23 Mar 2018 11:27:26 -0700 (PDT)
+Received: from voidlinux ([41.136.242.177])
+        by smtp.gmail.com with ESMTPSA id f10sm4936390wrg.67.2018.03.23.11.27.24
+        for <git@vger.kernel.org>
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 23 Mar 2018 11:24:21 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Wink Saville <wink@saville.com>, git@vger.kernel.org,
-        sunshine@sunshineco.com
-Subject: Re: [RFC PATCH v3 5/9] Use new functions in git_rebase__interactive
-References: <cover.1521690197.git.wink@saville.com>
-        <387b3dc01562fd30f5894c91109d1a9d00d07720.1521690197.git.wink@saville.com>
-        <nycvar.QRO.7.76.6.1803231838020.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-Date:   Fri, 23 Mar 2018 11:24:20 -0700
-In-Reply-To: <nycvar.QRO.7.76.6.1803231838020.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        (Johannes Schindelin's message of "Fri, 23 Mar 2018 18:42:13 +0100
-        (STD)")
-Message-ID: <xmqqzi2yiraj.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        Fri, 23 Mar 2018 11:27:25 -0700 (PDT)
+Date:   Fri, 23 Mar 2018 22:25:06 +0400
+From:   Loganaden Velvindron <logan@hackers.mu>
+To:     git@vger.kernel.org
+Subject: [PATCH] Allow use of TLS 1.3
+Message-ID: <20180323182506.GA15493@voidlinux>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Done during IETF 101 hackathon
 
-> If you fold this into the previous patch, I am sure that after your 3/9
-> indenting the function properly, the splitting into functions will look
-> more or less like this:
->
-> -git_rebase__interactive () {
-> +initiate_action () {
-> +	action="$1"
->  
->  	[... unchanged code ...]
-> +}
-> +
-> +<next function> () {
-> +	[... setting up variables ...]
->  
->  	[.. unchanged code ...]
-> +}
-> [... more of the same ...]
-> +
-> +git_rebase__interactive () {
-> +	initiate_action "$action" &&
-> + 	<next function> <arguments> &&
-> +	...
-> +}
->
-> In other words, it would be easier to review and to verify that the
-> previous code is left unchanged (although that would have to be verified
-> manually by applying 3/9 and then looking at the diff with the -w option,
-> anyway).
+Signed-off-by: Loganaden Velvindron <logan@hackers.mu>
+---
+ Documentation/config.txt | 1 +
+ http.c                   | 3 +++
+ 2 files changed, 4 insertions(+)
 
-We are on the same page on this.  A series structured to have a step
-that looks exactly like the above would be very pleasant to review.
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index ce9102cea..f31d62772 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1957,6 +1957,7 @@ http.sslVersion::
+ 	- tlsv1.0
+ 	- tlsv1.1
+ 	- tlsv1.2
++	- tlsv1.3
+ 
+ +
+ Can be overridden by the `GIT_SSL_VERSION` environment variable.
+diff --git a/http.c b/http.c
+index 8c11156ae..666fe31f3 100644
+--- a/http.c
++++ b/http.c
+@@ -61,6 +61,9 @@ static struct {
+ 	{ "tlsv1.0", CURL_SSLVERSION_TLSv1_0 },
+ 	{ "tlsv1.1", CURL_SSLVERSION_TLSv1_1 },
+ 	{ "tlsv1.2", CURL_SSLVERSION_TLSv1_2 },
++#if LIBCURL_VERSION_NUM >= 0x075200
++	{ "tlsv1.3", CURL_SSLVERSION_TLSv1_3 }
++#endif
+ #endif
+ };
+ #if LIBCURL_VERSION_NUM >= 0x070903
+-- 
+2.16.2
 
-Thanks for a great suggestion.
