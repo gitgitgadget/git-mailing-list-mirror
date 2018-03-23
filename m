@@ -2,79 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BDC291F404
-	for <e@80x24.org>; Fri, 23 Mar 2018 21:18:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DA7DE1F404
+	for <e@80x24.org>; Fri, 23 Mar 2018 21:25:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752174AbeCWVSX (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Mar 2018 17:18:23 -0400
-Received: from mail-qt0-f178.google.com ([209.85.216.178]:33023 "EHLO
-        mail-qt0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751471AbeCWVSU (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Mar 2018 17:18:20 -0400
-Received: by mail-qt0-f178.google.com with SMTP id i8so14041648qtj.0
-        for <git@vger.kernel.org>; Fri, 23 Mar 2018 14:18:20 -0700 (PDT)
+        id S1752121AbeCWVZp (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Mar 2018 17:25:45 -0400
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:46733 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752101AbeCWVZo (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Mar 2018 17:25:44 -0400
+Received: by mail-pf0-f194.google.com with SMTP id z10so5202789pfh.13
+        for <git@vger.kernel.org>; Fri, 23 Mar 2018 14:25:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=f4PmmYq77LPcSUlDNgMigoqLbXf7uSA9CeiKbip8qdU=;
-        b=n8twPx7cvGYxIIlwSuy6sS4vW3J6EmgBhQ7NeiHleJarWdN/YEYh8B7BPLbc1PAzjT
-         CueHbf1sVAKW8qvEuXkZ/N4afHkJV9Ud9pLQ5DnJZzUyLC3WeVavQUOffiK8IToWnAx+
-         O1yhhry38O1H+0vSAHgnnx82z1dvmQvWWzzpqmdi1YJD+sP6nfxOYJ1A8AJtGahtbZy2
-         H/D+ARzrBIaENwmnbIVNuDtp2zw9Me9dyzL3vKQa/k4INYhAo6ooS/ue+uqZR+4TBVkv
-         jSHmP2Md0s38YX2qg52qZkj9SifCCJfZ18Yd2lpqxokKN6G09tWpqYGY9Nq004R4u+3r
-         ufJg==
+        d=saville-com.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=maYhZIZhUzeJ4534cpL0cpLVMSFuuRjyOkp16Alhnng=;
+        b=pXiLE4Pk9bguEtD393Poz/lbvAYIpD/zdF1erE/LSP8TkWNGYcVrWT8n7hc+RcxkTl
+         AyIOOIM5qj6yReGsKid1lEpzXec0fhVamNuhQ9zr63rDOF+ohnuKW5zWCKYBej0rR+pK
+         EOA+NcUGkF7D2eV/Z/M9nOWTVEwAZ7lcE9NPhVVTDh4BPrlPvPgWJ9ZXVIM4jLg6uXyp
+         TYZYclpWE9/WnGATiBZcdQaReEfLrj1vPni+u/16i0hJP0LL66qh2DD1YFGFbXCtV8ft
+         PADgauMFhtCdSU4w5aP1wXmvFmsSfb2/VidwkHrWIeHgXMfuowwhduhaoem6+D3H0wkP
+         N1zA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=f4PmmYq77LPcSUlDNgMigoqLbXf7uSA9CeiKbip8qdU=;
-        b=ZI/BYQhzsGkxHzR6Cjdb+8pgjepIviiSBXekSj/ek1vYqq4wwxjq5wu9smnrpZruWu
-         xpjTFBbR107Z/sbMbxDfRp9dhYYSHQF2DYo5cB1uRPmNDpNen6/DOyeUZYwBU44xfanW
-         2nZwATX6X/Kogd2QAvEHeOuB4EPmSyPNHAE7pz8QVHiZmEyvIlYMW3LifTTwrM5RmE+q
-         9rpuju0mi4loujWenEW2PIdpSbheMLgSFnRdtm8jDuPQwvIK1WLI0xrNCdXlsnnBBBiL
-         D73DvJ1wLX5Q4Ze/wFg6RvBqqB+jyDSsKR8GNrMyAn856NrhCg3NSZLSgIQnTP1puCj0
-         6bOg==
-X-Gm-Message-State: AElRT7GU821iUc+igE3TDnixJh3KfxzS2/geClUsDBlfpYWhEpHQLIru
-        TVwHL3cQs+CkebEoXnduYGGBtuEXuWkb07oMeNM=
-X-Google-Smtp-Source: AG47ELtKJ4OfNdh1J1/uAZZ4Lgi63poL6CfZWCn++D+3XPdMCw/AR5m93Ej1iqzQlCYlvMpHRzk5efQiCc1fpZGp49Y=
-X-Received: by 10.200.69.131 with SMTP id l3mr44639700qtn.50.1521839899782;
- Fri, 23 Mar 2018 14:18:19 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.12.174.202 with HTTP; Fri, 23 Mar 2018 14:18:19 -0700 (PDT)
-In-Reply-To: <xmqqbmfeik0i.fsf@gitster-ct.c.googlers.com>
-References: <cover.1521779249.git.wink@saville.com> <ed4cfdc9f31b920eae5055c3b080e2ca5b2f6e42.1521779249.git.wink@saville.com>
- <CAPig+cQG16AhLPMeOFAw1GF81oXivFSDHvQ5B8kX20YGAT_BxQ@mail.gmail.com> <xmqqbmfeik0i.fsf@gitster-ct.c.googlers.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 23 Mar 2018 17:18:19 -0400
-X-Google-Sender-Auth: LwJopMeyY2MWMQYF3hB0jAo0NVI
-Message-ID: <CAPig+cT=0-+zgyGP7NEL3FFrc9bTDe9JLugoBqiFo5BtJq=2PQ@mail.gmail.com>
-Subject: Re: [RFC PATCH v4] rebase: Update invocation of rebase dot-sourced scripts
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Wink Saville <wink@saville.com>, Git List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=maYhZIZhUzeJ4534cpL0cpLVMSFuuRjyOkp16Alhnng=;
+        b=FQoSAmTtaTOAFueMziPlQ2uSE1N/uAnr39zo3aOm6VcmMzTvnKFH2YgEE129/fb6Yn
+         GFLeIfpPLHy2yEeieUsdXQlHL9BemrqpLk3fhHt0LLzpVwBnIHn4ceYLotS8XGC+GX/m
+         lyXw6rlhUfR4f1+jVfEatpOKYuMCB2VYYn2/4jTfRiLuaViF5bzFOunMu8Pr+1Pj+wwM
+         IRVUlYtpzjC8omkxoFQyQYnCuPU7TkAaO3jZjAGlRg9c6zjAMgewyKxZAclZT3sVed7e
+         OA5KxFx6KJ+iwauN5pdEUjO37v67IjoYiXrL6KyXdbKM1KC7jcrxZ1lBYU+LBLLKjl0c
+         srLg==
+X-Gm-Message-State: AElRT7HPjgumcRqtJOQ0DIqiMWK8QIzDzgqPYUgs0QSOLvpyZfHC201F
+        1h0WN852Mor55VXFg+U+BuROnCSmcxs=
+X-Google-Smtp-Source: AG47ELsm8T2t6D0R1Rrm8uOLmk3kSaXrH63g2XjsVlnisldLCs0UoofbbOQtf8XAU+O6Ad/BjoTtww==
+X-Received: by 10.99.109.142 with SMTP id i136mr22035781pgc.306.1521840343551;
+        Fri, 23 Mar 2018 14:25:43 -0700 (PDT)
+Received: from wink-desktop.hsd1.ca.comcast.net ([2601:647:cb02:7980:314d:6e5e:475c:ebd3])
+        by smtp.gmail.com with ESMTPSA id z28sm15380096pgc.15.2018.03.23.14.25.40
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 23 Mar 2018 14:25:41 -0700 (PDT)
+From:   Wink Saville <wink@saville.com>
+To:     git@vger.kernel.org
+Cc:     Wink Saville <wink@saville.com>, gister@pobox.com,
+        sunshine@sunshineco.com, Johannes.Schindelin@gmx.de
+Subject: [RFC PATCH v5 0/8] rebase-interactive
+Date:   Fri, 23 Mar 2018 14:25:21 -0700
+Message-Id: <cover.1521839546.git.wink@saville.com>
+X-Mailer: git-send-email 2.16.2
+In-Reply-To: <cover.1521779249.git.wink@saville.com>
+References: <cover.1521779249.git.wink@saville.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 23, 2018 at 5:01 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
->> (despite the run-on sentence in the first paragraph and the apparent
->> incorrect explanation of top-level "return" misbehavior -- the in-code
->> comment says top-level "return" was essentially a no-op in broken
->> shells, whereas he said it exited the shell).
->
-> My bad, almost entirely.  Sorry.
+Reworked patch 1 so that all of the backend scriptlets
+used by git-rebase use a normal function style invocation.
 
-No apology necessary. That minor error aside, your proposed commit
-message gave just the right amount of detail for a person (me) not at
-all familiar with the topic to be able to understand it fully and
-intuit the patch content before even reading the patch proper. That's
-a good commit message.
+Merged the previous patch 2 and 3 have been squashed which
+provides reviewers a little easier time to detect any changes
+during extraction of the functions.
+
+Wink Saville (8):
+  rebase-interactive: simplify pick_on_preserving_merges
+  rebase: update invocation of rebase dot-sourced scripts
+  Indent function git_rebase__interactive
+  Extract functions out of git_rebase__interactive
+  Add and use git_rebase__interactive__preserve_merges
+  Remove unused code paths from git_rebase__interactive
+  Remove unused code paths from git_rebase__interactive__preserve_merges
+  Remove merges_option and a blank line
+
+ git-rebase--am.sh          |  11 --
+ git-rebase--interactive.sh | 407 ++++++++++++++++++++++++---------------------
+ git-rebase--merge.sh       |  11 --
+ git-rebase.sh              |   1 +
+ 4 files changed, 216 insertions(+), 214 deletions(-)
+
+-- 
+2.16.2
+
