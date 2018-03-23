@@ -2,81 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_STARTS_WITH_NUMS,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 74C931FAE2
-	for <e@80x24.org>; Fri, 23 Mar 2018 01:44:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5BE9B1F404
+	for <e@80x24.org>; Fri, 23 Mar 2018 02:06:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751661AbeCWBon (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Mar 2018 21:44:43 -0400
-Received: from mail-pl0-f42.google.com ([209.85.160.42]:33111 "EHLO
-        mail-pl0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751551AbeCWBom (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Mar 2018 21:44:42 -0400
-Received: by mail-pl0-f42.google.com with SMTP id c11-v6so6523924plo.0
-        for <git@vger.kernel.org>; Thu, 22 Mar 2018 18:44:42 -0700 (PDT)
+        id S1751599AbeCWCGH (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Mar 2018 22:06:07 -0400
+Received: from mail-wm0-f41.google.com ([74.125.82.41]:40058 "EHLO
+        mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751551AbeCWCGG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Mar 2018 22:06:06 -0400
+Received: by mail-wm0-f41.google.com with SMTP id t6so901674wmt.5
+        for <git@vger.kernel.org>; Thu, 22 Mar 2018 19:06:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=to:from:subject:message-id:date:user-agent:mime-version
-         :content-language:content-transfer-encoding;
-        bh=bsLZ7jgyo8bdhjV9BtVa2eqTMP1SSfnU7HqrIRCDmsw=;
-        b=eRzdEqISxJJJ8BMPEN2vPo+YKT88Igv+7npeVC9oQ+/1Qi74b7iUj3IVwEUZb+Xyp9
-         d2Bn8e0j+sUSt7YF/CojGByLGUukZkdM8h8MQd13tcCgGD/M7C75/PMzHI976SkhzW0n
-         kkydatzZR7NnFByY03EydReQQK0lzIQcUKcXWTZnXSIss67+q7ICewk/ld1yycYheH25
-         +t/lbip+jEdp3JXgrpvteWLv1ZCRr+cD61nUMhQPtOLGLaTHNnkK2iOymZN7jGSMS2FZ
-         rrsRKOgz0+gGGe9zF3SiwC+PgBdojLhc6PDfcae2cRDpZgu7yftCHfS23vJeuzKBOpNV
-         kTSQ==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=x0Y/RE8cQ40NwenAY249rAuQhKae+1bZsEFv4eVy7FU=;
+        b=poLviqs2xNNSqdi7mUezeFwedXnXymhFrFiPXkIfQpUbGYFOAs51mSSP7DRVQfKM9U
+         KbJR3byZS09Uy3jygPuWKABue+3NhTag6I/ZlvjJz4vGbv5uO94rYgWkklTTM+kXS1eS
+         q5W1l/i1AyI/3ecDk2lxslfiS/rMQd38j8I0XOP77g5qebASzGhYZlJ+hlxTeY0HJ7ZC
+         Op4F8kbk0zQDxsqiqVAHuxO0Q8DoTK3QbJn8xhTujcWZ53ujE6ReWiQJImoGTXiP7iBn
+         WlPhaceeEBuM6GaKBK5qZqhiHXY3mVAYeyJpG7AvgcWWWfrnUwj9B9Qtex20+NVysvuu
+         t4oQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
-         :mime-version:content-language:content-transfer-encoding;
-        bh=bsLZ7jgyo8bdhjV9BtVa2eqTMP1SSfnU7HqrIRCDmsw=;
-        b=WC3rRA3m52bMu3WCOk1eHOCkZITjhFmKNDEviSGCsu95A6B+WpIG8VzRI8Y+yoQL7H
-         pKEO7mkHFxKKOfKT1sVLfJrx6wWsv/d+dkmxJufdMeUeJ8XWJw0naz8KMevFzFyIZn7u
-         bwJch43cGELh40F1ZhF1ZBZY9inKfn9+HtSYNf/pfaeJE8BCXCxSBfcNv/boiwyKQo9V
-         8a7ZdjIjZ6BgO47UMjd1W9N+2gqY+cYf0ySXUaU/oRRov8QUSEbEMxxqJiQUhOs/NJ6m
-         LzsRaL/VCOgDqbtidx7XO6Pgj7mTpP17aNEv95CYNI0mlVcCzg6wP8OzVrkSuhi5atU8
-         cqJw==
-X-Gm-Message-State: AElRT7E/wTim1SXedSM5RfZlVd33PSNBqlHzF6heEovriuCscVn3VkdW
-        fVXz+AeXSg5cR1oc7j564N0S/I27y30=
-X-Google-Smtp-Source: AG47ELvBhXqhU84mlQKn7gtp+OwLbh7koJ59EfDQBsVvRJS0SkDUWTdNvxm3S/j+Tmetzst7uKadWA==
-X-Received: by 2002:a17:902:a5c5:: with SMTP id t5-v6mr27696205plq.244.1521769481296;
-        Thu, 22 Mar 2018 18:44:41 -0700 (PDT)
-Received: from [10.66.13.0] ([209.132.188.80])
-        by smtp.gmail.com with ESMTPSA id l66sm2002593pfc.184.2018.03.22.18.44.39
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 22 Mar 2018 18:44:40 -0700 (PDT)
-To:     git@vger.kernel.org
-From:   Zhibin Li <08826794brmt@gmail.com>
-Subject: [GSOC]About the microproject related to CI
-Message-ID: <d64eca23-8a59-1aa2-597a-128e341f4af3@gmail.com>
-Date:   Fri, 23 Mar 2018 09:44:30 +0800
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=x0Y/RE8cQ40NwenAY249rAuQhKae+1bZsEFv4eVy7FU=;
+        b=SOQgb2lozKojURHuyDoFnZ8fE0O4xoKgjeQmRQsV4YidxI+kprGLM2XK/OfnxF6JOQ
+         kEKW/DRFbA1/dYmj3S1uwRmZRUIp+ET0rXNusy/hgRdX01E/2rD5qwnBoTNrHNzwYL2P
+         V+t0wEpbWQzm/rrGmEe5vGEYe+WJ3YQSZCIHQ2KZb7xcGT09DlLq6OtDC2XHsPztpaZb
+         CEevGzG7HuQTpKqvxt603XdTGMdfhkKHVXGCjCW8dYts7KOxllBn2YEpRQyMb68Tmim4
+         MLGSjnLO54Nv6VIqmTMIrTqocpD3vj/X33NVQDSZljM50XpCi+MvHWxd01zHQsuAksYG
+         GAqg==
+X-Gm-Message-State: AElRT7HOETLoc6Z4qdYyjkuQlBasxasCqa9Ki5us+03uyb/ZPbKK2z5i
+        xLz9LZ8lVpiG4p3zVprdnys=
+X-Google-Smtp-Source: AG47ELtU+QLhMlC1XOFzpCm77+UhJrhlpekCbdxKiIzVKzeHKbnh1/AObDrL1AaKTEIslre37AcIkg==
+X-Received: by 10.28.125.84 with SMTP id y81mr7120735wmc.66.1521770765323;
+        Thu, 22 Mar 2018 19:06:05 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id y68sm9696762wrb.73.2018.03.22.19.06.02
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 22 Mar 2018 19:06:03 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Wink Saville <wink@saville.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [RFC PATCH v3.1 2/9 2/2] rebase-interactive: Do not automatically run code
+References: <CAKk8isoL--f1gt_p5XZ99ybN+xts=0_AKBo52Ej=n3SMPoMq3A@mail.gmail.com>
+        <7ce3cfef9ff3ab97ac8292fae94a0024a1d85505.1521748846.git.wink@saville.com>
+        <xmqqefkbltxv.fsf@gitster-ct.c.googlers.com>
+        <CAKk8isrLrE+sC0Rfv6WUzjziSqGzRgk2xTOh-OKCeEpdxsPfkA@mail.gmail.com>
+Date:   Thu, 22 Mar 2018 19:06:01 -0700
+In-Reply-To: <CAKk8isrLrE+sC0Rfv6WUzjziSqGzRgk2xTOh-OKCeEpdxsPfkA@mail.gmail.com>
+        (Wink Saville's message of "Thu, 22 Mar 2018 15:45:48 -0700")
+Message-ID: <xmqqzi2zk0l2.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi all,
+Wink Saville <wink@saville.com> writes:
 
-I'm Zhibin Li, an undergraduate from China and I'm interested in 
-automated testing. Since the application deadline is coming, hope it's 
-not too late for me to start with the microproject. If it's ok, I would 
-like to take Git CI Improvements 4 as my starting point. But the 
-description on the website shows less details so I wonder what am I 
-supposed to do more specifically? Reporting the results or trying to 
-figure out the how and why those results come out independently? It 
-would be nice if you guys can tell me about any details.
+> Currently I'm not rebasing the other commits (3..9)
+> to reduce the amount of work I have to do in each
+> review cycle, is that OK?
 
-Thanks,
-Zhibin
+Yeah, I want to see others more heavily involved in this part of the
+system to comment on your patches.  As to the organization of the
+changes, I have some more opinions of my own, primarily regarding to
+reviewability, but they are of secondary importance than reviews by
+area experts.  I think it would be helpful to give them a target
+that is not moving too rapidly ;-)
+
+> Also, will you merge commits 1 and 2 before the other
+> commits or is the procedure to merge the complete set
+> at once?
+
+I am inclined to take the early preliminary clean-up steps before
+the remainder.
