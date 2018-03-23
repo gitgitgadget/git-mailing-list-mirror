@@ -2,75 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CE4601F404
-	for <e@80x24.org>; Fri, 23 Mar 2018 17:47:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BF1ED1F404
+	for <e@80x24.org>; Fri, 23 Mar 2018 17:59:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752445AbeCWRrN (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Mar 2018 13:47:13 -0400
-Received: from mout.gmx.net ([212.227.17.21]:37029 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752486AbeCWRrM (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Mar 2018 13:47:12 -0400
-Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0Lzsf1-1eV3zk3ywF-0151hb; Fri, 23
- Mar 2018 18:47:08 +0100
-Date:   Fri, 23 Mar 2018 18:47:06 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+        id S1752119AbeCWR7O (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Mar 2018 13:59:14 -0400
+Received: from mail-wr0-f182.google.com ([209.85.128.182]:33888 "EHLO
+        mail-wr0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751953AbeCWR7N (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Mar 2018 13:59:13 -0400
+Received: by mail-wr0-f182.google.com with SMTP id o8so12977664wra.1
+        for <git@vger.kernel.org>; Fri, 23 Mar 2018 10:59:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=3PONo55tXVYJmVqqLjtKKHgqWWlThUfa93QR+q8op6Q=;
+        b=gPjWjoFGxu2jtB1y5JAdvFqxAXCxQHbqRvSkmbumspr0SGyfUGXe5zUbzqD4uBC71m
+         WQ3aEcPgRF/dHa7M3eU138zhwvgDmt97Ial0o6W/ZiWpb/7OUFNDrtfi5PWAk+6lROew
+         lQGcts0tSbMwtxLZMXJJpgT4D5MQ+yMvDXArRAmvm3LwQLpuSykdh19QnkOXHwJI52/P
+         ql2axOj4iNI74I2HSyG9Kn56YtSGFPaycS/9fZ5EtlgTa8LPJPT6MFd8jQYoCukhJ70/
+         QNRXURqloesZ1+8eayot8IRRlLTy6GRLM30rdHY9pT6R0scYGuRWvrS3mI9LitcQYahF
+         XrqA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=3PONo55tXVYJmVqqLjtKKHgqWWlThUfa93QR+q8op6Q=;
+        b=MDv/TGiwYZQqWJiCgdhwj8iFUFBLnQsqw0SZMr+HGRLgljqeBeHFTFEmcHbevgQROZ
+         VMdfo6yWv0LWtcfAxj2VsPn4rL6bcf8NY3GktRrVbJJ/mBI7fENtruAILc8WNYRPulgX
+         DhmEgH3JLNQ5to+n7p5ayMaGbEV4YONO6yaQ9dPDpAYkyCUb3t1BvPESDYGM4TT4JpaG
+         zzGy/sCX/xWe2YTENdXai/U/v4J9y/U83xwO2M3aCf0K6d9h/1zsTvXJ7uhXjUFaXmXj
+         ehnt5VIXR+c0yeTZomnUCBMEAZvmlGhC0j7ES7BGJJcvQzaQLXStY4EupZrfhFJh/VCE
+         tMDA==
+X-Gm-Message-State: AElRT7EiGdZI5GrFOzVYNJtZpBohH0+47+Rtp5L+/wc0KhfFWtjO1nRU
+        m8qZg9Bp34geSIeo77F81Dk=
+X-Google-Smtp-Source: AG47ELtniKrZcaMrz7J+RSt9SJRiG858bVSWxawXSsezRSggn5UfYWQxK78a+F8FBeK+9shpQqlu1w==
+X-Received: by 10.223.162.201 with SMTP id t9mr23393687wra.148.1521827951705;
+        Fri, 23 Mar 2018 10:59:11 -0700 (PDT)
+Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
+        by smtp.gmail.com with ESMTPSA id x10sm9512141wrc.64.2018.03.23.10.59.08
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 23 Mar 2018 10:59:08 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org, git-for-windows@googlegroups.com,
-        git-packagers@googlegroups.com
+Cc:     git@vger.kernel.org, Takuto Ikuta <tikuta@chromium.org>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>
 Subject: Re: [ANNOUNCE] Git v2.17.0-rc1
-In-Reply-To: <xmqqtvt9nr7p.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1803231845520.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
 References: <xmqqtvt9nr7p.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+User-agent: Debian GNU/Linux 9.4 (stretch); Emacs 25.1.1; mu4e 1.1.0
+In-reply-to: <xmqqtvt9nr7p.fsf@gitster-ct.c.googlers.com>
+Date:   Fri, 23 Mar 2018 18:59:07 +0100
+Message-ID: <87k1u2y8pg.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:S/eY24g/Nr0JKF7msE6fPJJP90swGeYsV00jS3cd3Fj62gf0g2D
- CPhgdctzpfVtB6TYk8oKF1T+tkvzeK6JTv3Q4W4Ifng+PTabK2V1XfZdYtPAKfEv3LyYgqD
- +kLkFowK91lyAvA8CD49SI18jS0/HTeCUkYE7RhEbvViP2o8x+BcZ9cGOb6UoHIwLs739gY
- Ze9P737Q5kEa6gJ11s+sg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:4Zy/MoVGYrw=:luCC78ZaP85jNPtklXh/z7
- htczSnIjIa6Pi6ae3Mcyhq2v5b2KNqxxE6uz4nKpOWigL5RGR4Xxe7LKDUJZs+BFsMPMH3+7S
- us8xwDXpuBp9Ci6sCfDal69TmNS1hGSk5YMoQORNVmNc2YWoAWeTTmPb1WvJPY8pVWKvAC5gw
- Nqcia9ud3sAPuuZ5aIAD3N8dzLGlXTzbhTKvW/MG9fEBc+pfwx0v8lN4p6mA26ShExn4QzWDA
- w/aG6yIxDX5Aeja1OkZG6FjSIvhqHB8YI2BUiA0Wxr4jX+wVuhJggV2/cgmw2TSJY/344XU9P
- 7FX1dbuztX4UdH83tmGgvVWEs4vAHPPD8FSAWwdZlHv47emmSMhH22MGurhjj6+baC+xdNHJI
- VRchl/+NBSPumjuePO1W1EZMBynqgU9kUe2qAXAwLbt2oNjTTCr4C9EPAdiR+I+XhQt84qUEE
- SWfdOpLq4qRMt+jeTkbG1UG5yIRv/+4UEgNsdYHkVvSHVFWCwY+RMfDzjOvxjpQTEmCNfz9Dw
- ajnLxC+MniPa1CzeNmSY/9hK1T6CbmUZv1UA/J5tQ1H48PwX+3umO7zhEzXMXzHrOEs5m2hw0
- OsRVzjwssPIALN2SyCpvFOEFwFuEncrfR4M5UJri1YvlIFpTQ60OH08pye+QMaZuRBgCwCQl1
- IVWmLgjniqJcXNjzQmoCPenOzGmNlowAi/eHdHHAjeISvqpXTLaKWFhAKxPMYENWzU4qhclWJ
- 5kmLkqSFRDu2ZrPqhpE+vICT0vGNQ0U77ZpCIDRVfztYBDUUGk5y545z+sGcYYpQDzghDzqiF
- msJ7tNN+5Ak9ikoaUS3sz/xbxX4sDNxXFT6qn1jIruMHel9X9E=
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi team,
 
-On Wed, 21 Mar 2018, Junio C Hamano wrote:
+On Wed, Mar 21 2018, Junio C. Hamano wrote:
 
 > A release candidate Git v2.17.0-rc1 is now available for testing
 > at the usual places.  It is comprised of 493 non-merge commits
 > since v2.16.0, contributed by 62 people, 19 of which are new faces.
-> 
-> The tarballs are found at:
-> 
->     https://www.kernel.org/pub/software/scm/git/testing/
 
-And Git for Windows v2.17.0-rc1 can be found here:
+I have this deployed on some tens of K machines who all use git in one
+way or another (from automated pulls, to users interactively), and rc0
+before that, with a few patches on top from me + Takato + Duy + Derrick
+since rc0 was released (and since today based on top of rc1). No issues
+so far.
 
-https://github.com/git-for-windows/git/releases/tag/v2.17.0-rc1.windows.1
+The specific in-house version I have is at:
+https://github.com/git/git/compare/v2.17.0-rc1...bookingcom:booking-git-v2018-03-23-1
 
-Please test so that we can hammer out a robust v2.17.0!
+>  * Some bugs around "untracked cache" feature have been fixed.  This
+>    will notice corrupt data in the untracked cache left by old and
+>    buggy code and issue a warning---the index can be fixed by clearing
+>    the untracked cache from it.
+>    (merge 0cacebf099 nd/fix-untracked-cache-invalidation later to maint).
+>    (merge 7bf0be7501 ab/untracked-cache-invalidation-docs later to maint).
 
-Ciao,
-Johannes
+FYI over some >10k machines I tested on around 1% had (very) verbose
+warnings on "status", which was fixed as a one-off with 'git -c
+core.untrackedCache=false status' as the
+ab/untracked-cache-invalidation-docs suggest, and it hasn't happened
+again since.
