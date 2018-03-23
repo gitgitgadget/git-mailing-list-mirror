@@ -7,93 +7,76 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8E3861F404
-	for <e@80x24.org>; Fri, 23 Mar 2018 15:14:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EFE5D1F404
+	for <e@80x24.org>; Fri, 23 Mar 2018 15:56:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751938AbeCWPOs (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Mar 2018 11:14:48 -0400
-Received: from mail-vk0-f51.google.com ([209.85.213.51]:32972 "EHLO
-        mail-vk0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751756AbeCWPOq (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Mar 2018 11:14:46 -0400
-Received: by mail-vk0-f51.google.com with SMTP id j85so7497108vke.0
-        for <git@vger.kernel.org>; Fri, 23 Mar 2018 08:14:46 -0700 (PDT)
+        id S1752066AbeCWP4A (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Mar 2018 11:56:00 -0400
+Received: from mail-lf0-f53.google.com ([209.85.215.53]:34086 "EHLO
+        mail-lf0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751471AbeCWPz7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Mar 2018 11:55:59 -0400
+Received: by mail-lf0-f53.google.com with SMTP id c78-v6so14327987lfh.1
+        for <git@vger.kernel.org>; Fri, 23 Mar 2018 08:55:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=wFnTSfW9JyUKruaUoeX2JNsvSQQMz7uOka41H+y6pWA=;
-        b=YI4y7ASWmGzTeUtO99+U5jvt50hRXkb2A/aDnx6pmKUduJ5krUpQywovKDpJ0gJaym
-         LOirDwJYPAGBrAaP9+TRJ8B0hqWGxoJJoE0ODAGClGxvTLlOJ30wfn964VL0ARPqgOL3
-         ftZ4+KtsgWggzm07ic72+k8HFiERnbQZiDis5/TbtFYGG8+6F2Y6msSv73POlBtx5/T6
-         wAF7onhURi76O1pMA5nuHNyl3Ca9kaYD426GjcMx0dCGXdluL9bz4fXfh+V5vGX/QyUp
-         NWYZCz3ANYO9Fhx3dSEY1aHpKiiQ1uxAcCLMtcH3jFfAEnPGY+TsRZZU6KwavWoUUylM
-         47TQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=7uiVuAFfUBUIe6KyEsyKqHINQhfVPNjhGB3c1E2xzOM=;
+        b=IxvGatwTBS3DKqmXAze45+lRuVmiwZS0bNbQ6KmY5tDaEyiilG5GtfCAKWFnth2u2e
+         /P2GhCcLhVGCmX3XODNVujSbALRNpH9mHAKZx6TeaJYNhgERNTjbSFAqzX78CIzebDxm
+         hjPvuXv+KtphW5xCRRYG/pP4TaMzNvUEeX4bwQiXOlh0Rb9DshDGiYhV9IVr4ExF7ofr
+         sdio+Whz015YfC466THsqV83dy3bYPUsawAGXknrXWOglx3I1YTDS7hYGZzOC63s5WzD
+         C3fpmj/38zV0k3CWelUIcPRoBC7o/aegmJohNoCB2l1fELup99eQg0xaHL42C8Uzrnur
+         4JuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=wFnTSfW9JyUKruaUoeX2JNsvSQQMz7uOka41H+y6pWA=;
-        b=FwJffhBGauwgi2BbPoVseVjWRPUw0kNUecWal7bJlU1e+YKEkNsoe6jfHAy4fduu1F
-         boVbp6nvdD/wkWgyPlBfRbbm5sjbIY7S+0NyiW/l0T1ZHk60sANgTvsKbwHLgbgQZ/qZ
-         bpt7/38B9/vmefeLhSztnM68fpZ2ByjoXvshfD+YjvGFfNDiKJ576KXMKOctUL5y4jqZ
-         CXDGDPed7x9t5IM+7TfYV+8ehqC0dY4eV8Dd6+RcjVrPDdOMgeN/oioj2mdDVkyP1Pkd
-         6aPh9X6Spot9rN3eYtPUT8RG/EOO9GIumEMnV95+L2UOF8ksDIl59gbAgOFsRefi87QJ
-         c4DA==
-X-Gm-Message-State: AElRT7HG1iheXJz70SADVxXHLfQCeOzpoAUp7kzexJiK3iIoiaFGMXab
-        1zf753UDZEJmUNsHLGlqzacj4QUB7+s3Q/s9FsE=
-X-Google-Smtp-Source: AG47ELvZr0pl+tFdwV/gLse9ajz+LGXXo7atP6WmV8BNIhBe1HhTpg0jYiARaCoJGvuuAbmhDAU8P8vSVoz8NA6o4aQ=
-X-Received: by 10.31.107.15 with SMTP id g15mr18633947vkc.2.1521818085579;
- Fri, 23 Mar 2018 08:14:45 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=7uiVuAFfUBUIe6KyEsyKqHINQhfVPNjhGB3c1E2xzOM=;
+        b=tqyTSzLUjzWkqqfNB5JGgPmZkrFsy5ehoobqfSY0+b9ZhSEPlGf3FIKtQ8fi87m5bD
+         yG4+P+y25iIg5abzM87UrprIt9a0se5uEtj2kc3n+CsZttie2ADlE1VL/yQfYD0KfUGz
+         /stwE50EAopmr+NwIyr/71Xo2CydJ16iMirXQMahvnAOhl7+CrqQ7fA16gMjwprKUZqm
+         ItdI4nutdbQFy1ZxoTWf/083RAfvl5cBvZQP6DfS6p1HPPApVlbKpORZA6N40VBNBWS3
+         KhTqEsZLz83MIPHG6Zqyve+yIavl5U6oJElbm2G4i91Yn6AYaa6TkcYTUBV/FSuGT5UI
+         gu5w==
+X-Gm-Message-State: AElRT7EmYhFbTJLkpbUR60elk2ALIcVVNLBxxBKLw0Ew8PtjsXoES/RQ
+        eVoeHGtg/FAEumAWz32jjiA=
+X-Google-Smtp-Source: AG47ELuDAJ9Kabh50Am+Bp14PbYlT/BkxjiUAOlxYAHGJtGS6ffOQrVaUrRMCYVXvi7ujNGwqQOoig==
+X-Received: by 2002:a19:9904:: with SMTP id b4-v6mr19084494lfe.51.1521820558002;
+        Fri, 23 Mar 2018 08:55:58 -0700 (PDT)
+Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
+        by smtp.gmail.com with ESMTPSA id g192-v6sm2248963lfg.86.2018.03.23.08.55.56
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 23 Mar 2018 08:55:56 -0700 (PDT)
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     pclouds@gmail.com
+Cc:     git@vger.kernel.org, gitster@pobox.com, sbeller@google.com,
+        Brandon Williams <bmwill@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: [PATCH 0/1] nd/remove-ignore-env-field updates
+Date:   Fri, 23 Mar 2018 16:55:22 +0100
+Message-Id: <20180323155523.22269-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.17.0.rc0.348.gd5a49e0b6f
+In-Reply-To: <20180303113637.26518-1-pclouds@gmail.com>
+References: <20180303113637.26518-1-pclouds@gmail.com>
 MIME-Version: 1.0
-Received: by 10.159.59.233 with HTTP; Fri, 23 Mar 2018 08:14:45 -0700 (PDT)
-In-Reply-To: <20180322141604.15957-1-szeder.dev@gmail.com>
-References: <20180322141604.15957-1-szeder.dev@gmail.com>
-From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Date:   Fri, 23 Mar 2018 16:14:45 +0100
-Message-ID: <CAM0VKjm3WKkxjEN09Dv1wUnuBf8CSsUvmLjmSVb1fbHTyAdXEQ@mail.gmail.com>
-Subject: Re: [PATCH] completion: clear cached --options when sourcing the
- completion script
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Git mailing list <git@vger.kernel.org>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 22, 2018 at 3:16 PM, SZEDER G=C3=A1bor <szeder.dev@gmail.com> w=
-rote:
+This is a very small, non-functional update. On top of 'next'
 
-> Add tests to ensure that these variables are indeed cleared when the
-> completion script is sourced; not just the variables caching options,
-> but all other caching variables, i.e. the variables caching commands,
-> porcelain commands and merge strategies as well.
+Nguyễn Thái Ngọc Duy (1):
+  repository.h: add comment and clarify repo_set_gitdir
 
-> +test_expect_success 'sourcing the completion script clears cached merge =
-strategies' '
-> +       __git_compute_merge_strategies &&
-> +       verbose test -n "$__git_merge_strategies" &&
-> +       . "$GIT_BUILD_DIR/contrib/completion/git-completion.bash" &&
-> +       verbose test -z "$__git_merge_strategies"
-> +'
+ repository.h | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-Hang on, this test fails in the GETTEXT_POISON build.
+-- 
+2.17.0.rc0.348.gd5a49e0b6f
 
-The thing is, we get the merge strategies with this piece of code in
-__git_list_merge_strategies() in master:
-
-    LANG=3DC LC_ALL=3DC git merge -s help 2>&1 |
-    sed -n -e '/[Aa]vailable strategies are: /,/^$/{
-        # a couple of s/// commands
-    }'
-
-
-and that '/[Aa]vailable strategies are: /' won't match in a
-GETTEXT_POISON-ed output, because that string is translated.
-
-I think for now (-rc phase) we should just drop this test, and in the
-future we should consider adding a 'git merge --list-strategies' option.
