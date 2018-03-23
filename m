@@ -2,92 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 81F961F404
-	for <e@80x24.org>; Fri, 23 Mar 2018 02:23:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C76511F404
+	for <e@80x24.org>; Fri, 23 Mar 2018 02:46:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751853AbeCWCXa (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Mar 2018 22:23:30 -0400
-Received: from mail-pl0-f51.google.com ([209.85.160.51]:46673 "EHLO
-        mail-pl0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751843AbeCWCX3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Mar 2018 22:23:29 -0400
-Received: by mail-pl0-f51.google.com with SMTP id f5-v6so6562071plj.13
-        for <git@vger.kernel.org>; Thu, 22 Mar 2018 19:23:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:to:cc:in-reply-to:from:date:subject:references;
-        bh=uNDliLIgL/bb+xI2l/0AGOV5EmfQafXEonHPDd9DPSw=;
-        b=HnFH7Cwhazzbw4IBxEMnQgA7b2HO/EZp8+zA4o9Or2LboFYW13KS1yDsmVgHJqGIRp
-         DL4DV7KTND5cDAFYp2SuANagvNSgEFEci9x6BTm6fwuFUIlG4ZKz7N79m+d8kzcyjIWL
-         lBPJGXF9jS0A2Zrlg0T259Kry9geVSudHgGpZVf+32RaCPfGDDnGngyWGZX0HP4p8cHl
-         X5gHX0Ru0olk/C8b+f5Z6QCOEWaXaKVQDDaPCnPcDOHAKIoVVQwRns0RV7TjD9NM+Lpk
-         SDX89VSTiBBvDn/+3XyZK8keT1v1+PZK4rYSOlTVeDIKgzfUaT2bvLI/JFAev7bSG1/b
-         3Smg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:to:cc:in-reply-to:from:date:subject
-         :references;
-        bh=uNDliLIgL/bb+xI2l/0AGOV5EmfQafXEonHPDd9DPSw=;
-        b=EsktKFGcxNi3XpmsU88psk2QbhziW2F0DF24TvBzB9ENvIhE0GTFcvehAH6ZwBxJMZ
-         v5vDrb5zAuq6KWmMJD4N9TNg9546vx0gQNtaIoYHGqwZC3P+VGOVLHko/tJ4dzMlQqj6
-         4rSCQekMjCINAC1Ywp6MSeVu5FytJJZX8WiRl4yClD6x44uwxKeD8KMUw2CvzzZGx244
-         BRMv5e7seeKQcdig/FtJqYs8IBut4lu+azv4DPA+nMtAmZXYDCNX6AeO8oljfkX+I5YJ
-         0BQY71cUQj2V0HqBfEipXLXsYrvnghP9b9/DCkA03QAQc6YjOhRn7xoWHVLVGbqwo2Uf
-         64CQ==
-X-Gm-Message-State: AElRT7FDWxEgintXTJmZ1DAVfYZJjicC7dYvOHJAxK0FRuDDCxZ1ikwD
-        Yyk5P7UdAxbMDJON79rQyfc=
-X-Google-Smtp-Source: AG47ELu018O8fy7+RjmwsA24bNrbGh3uzUOL1+6yTgzWLP+eDdGjYaK5L+7Qy6phIkSrFZYFoyix3Q==
-X-Received: by 2002:a17:902:b7cc:: with SMTP id v12-v6mr12019478plz.237.1521771809356;
-        Thu, 22 Mar 2018 19:23:29 -0700 (PDT)
-Received: from localhost (softbank126094241038.bbtec.net. [126.94.241.38])
-        by smtp.gmail.com with ESMTPSA id o3sm11511412pgp.18.2018.03.22.19.23.27
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 22 Mar 2018 19:23:28 -0700 (PDT)
-Message-ID: <5ab46520.0352650a.cc02b.a177@mx.google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-CC:     git@vger.kernel.org
-In-Reply-To: <xmqq370sm4cv.fsf@gitster-ct.c.googlers.com>
-From:   Yuki Kokubun <orga.chem.job@gmail.com>
-Date:   Fri, 23 Mar 2018 02:15:39 +0000
-Subject: Re: [PATCH] filter-branch: consider refs can refer to an object other than commit or tag
-References: <xmqq370sm4cv.fsf@gitster-ct.c.googlers.com>
-        <xmqqpo3xnqq4.fsf@gitster-ct.c.googlers.com>
-        <xmqqwoy5pcno.fsf@gitster-ct.c.googlers.com>
-        <20180321103504.9483-1-orga.chem.job@gmail.com>
-        <1521646299-16193-1-git-send-email-orga.chem.job@gmail.com>
-        <5ab2b606.86f5620a.c0c10.41b3@mx.google.com>
-        <5ab3bd79.d14d650a.be5c0.8544@mx.google.com>
-Content-Type: text/plain
+        id S1751784AbeCWCqM (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Mar 2018 22:46:12 -0400
+Received: from cloud.peff.net ([104.130.231.41]:39564 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1751732AbeCWCqM (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Mar 2018 22:46:12 -0400
+Received: (qmail 21508 invoked by uid 109); 23 Mar 2018 02:46:12 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 23 Mar 2018 02:46:12 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 24375 invoked by uid 111); 23 Mar 2018 02:47:08 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 22 Mar 2018 22:47:08 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 22 Mar 2018 22:46:10 -0400
+Date:   Thu, 22 Mar 2018 22:46:10 -0400
+From:   Jeff King <peff@peff.net>
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     Duy Nguyen <pclouds@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Eric Wong <e@80x24.org>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v6 00/11] nd/pack-objects-pack-struct updates
+Message-ID: <20180323024609.GA12229@sigill.intra.peff.net>
+References: <20180317141033.21545-1-pclouds@gmail.com>
+ <20180318142526.9378-1-pclouds@gmail.com>
+ <20180321082441.GB25537@sigill.intra.peff.net>
+ <CACsJy8DkF3TpTGKp5MdS1ApC8Yj6FOL5uAg5U__PjBAQY1vdNw@mail.gmail.com>
+ <20180322093212.GB28907@sigill.intra.peff.net>
+ <7a49135b-faad-9856-b757-e3ed4886720d@ramsayjones.plus.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <7a49135b-faad-9856-b757-e3ed4886720d@ramsayjones.plus.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> However, if we pre-filter to limit the refs in "$tempdir/heads" to
-> those that are committish (i.e. those that pass "$ref^0") like the
-> patch and subsequent discussion suggests, wouldn't we lose the
-> warning for these replace refs and non-committish tags.  We perhaps
-> could do something like:
-> 
-> 	git rev-parse --no-flags ... >"$tempdir/raw-heads" || exit
-> 
-> 	while read ref
-> 	do
-> 		case "$ref" in ^?*) continue ;; esac
-> 		if git rev-parse --verify "$ref^0" 2>/dev/null
->                 then
-> 			echo "$ref"
-> 		else
-> 			warn "WARNING: not rewriting '$ref' (not a committish)"
-> 		fi
-> 	done >"$tempdir/heads" <"$tempdir/raw-heads"
-> 
-> (note: the else clause is new, relative to my earlier suggestion).
+On Fri, Mar 23, 2018 at 01:28:12AM +0000, Ramsay Jones wrote:
 
-I agree these suggestions.
-I'm gonna send a new patch that follow it.
+> > Of the used heap after your patches:
+> > 
+> >  - ~40% of that is from packlist_alloc()
+> >  - ~17% goes to "struct object"
+> >  - ~10% for the object.c hash table to store all the "struct object"
+> >  - ~7% goes to the delta cache
+> >  - ~7% goes to the pack revindex (actually, there's a duplicate 7%
+> >        there, too; I think our peak is when we're sorting the revindex
+> >        and have to keep two copies in memory at once)
+> 
+> which begs the question, how much slower would it be if we
+> replaced the radix-sort with an in-place sort (e.g. heapsort).
+> 
+> I hacked up the patch below, just for fun. I don't have any
+> large repos (or enough disk space) to do any meaningful perf
+> tests, but I did at least compile it and it passes the test-suite.
+> (That is no guarantee that I haven't introduced bugs, of course!)
+
+It might have been easier to just revert 8b8dfd5132 (pack-revindex:
+radix-sort the revindex, 2013-07-11). It even includes some performance
+numbers. :)
+
+In short, no, I don't think we want to go back to a comparison-sort. The
+radix sort back then was around 4 times faster for linux.git. And that
+was when there were half as many objects in the repository, so the radix
+sort should continue to improve as the repo size grows.
+
+The absolute time savings aren't huge for something as bulky as a
+repack, so it's less exciting in this context. But it's also not that
+much memory (7% of the peak here, but as I showed elsewhere, if we can
+stop holding all of the "struct object" memory once we're done with it,
+then this revindex stuff doesn't even factor into the peak).
+
+-Peff
