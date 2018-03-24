@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2B38B1F42D
-	for <e@80x24.org>; Sat, 24 Mar 2018 07:45:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1DEF71F42D
+	for <e@80x24.org>; Sat, 24 Mar 2018 07:45:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752028AbeCXHps (ORCPT <rfc822;e@80x24.org>);
-        Sat, 24 Mar 2018 03:45:48 -0400
-Received: from mail-lf0-f65.google.com ([209.85.215.65]:40522 "EHLO
-        mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751541AbeCXHpl (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 24 Mar 2018 03:45:41 -0400
-Received: by mail-lf0-f65.google.com with SMTP id e5-v6so21419796lfb.7
-        for <git@vger.kernel.org>; Sat, 24 Mar 2018 00:45:40 -0700 (PDT)
+        id S1752026AbeCXHpr (ORCPT <rfc822;e@80x24.org>);
+        Sat, 24 Mar 2018 03:45:47 -0400
+Received: from mail-lf0-f67.google.com ([209.85.215.67]:36283 "EHLO
+        mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751719AbeCXHpn (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 24 Mar 2018 03:45:43 -0400
+Received: by mail-lf0-f67.google.com with SMTP id z143-v6so21407575lff.3
+        for <git@vger.kernel.org>; Sat, 24 Mar 2018 00:45:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=M4xaz9crpZ8prxY23Otf+8TSBV7S5wep7o5hiF5ERPc=;
-        b=iZQpqJU/mEQxQUq/bMozubxHTLvsHp2nK+ndQzZEeRNfUzJdpOZOTlSjSjEZf3DNDV
-         3ufUBy758GBiS7Aq8V9SJPjjoFeSmkRHSFMne5OMJYbJrs7LlFhCBbuFlGRxAejLz5nN
-         KKaE6SlBF/qT50oWTQEESVcU1MZSVzkfZRnF/68GTNjWHfQDqz0K0j7+Pd04Hn+ZEJj3
-         SDfmWv1Ha6kyMLHvJkoueTkKtVSpdaDFQ5CLe5RgG2KgxjKQsyY5j2xWtsOsDzG5f67M
-         NmeKIElKhHvsfcchV4UyN8TjgqaFPChDZPAM3Nh90OF0scgwdLkLcMaFD4fcVHMkQq04
-         zytw==
+        bh=ZMNafEw/W+1gY+ifOutsjwkaZZ8gSJ6x0JGbzBTXpcI=;
+        b=ZTjb5GvtEZiCigh6cJAkwgSjx1Ki88m2C/q/u1taPAmDl2fvc0YuE6W4HjKstQyTFl
+         rEoiYSMUVvD6v+qKTcg5WY8Jex9nmxO4RErAWzsoV91CnP7YPYZYGQphrlEzRT6ScWBv
+         R/y7uP7ui4mZKNORZEDcK0UyM7lRInrsYOV/ZzEASI+IHHgBXwlruy2zingDBoR98fI+
+         pIaYxRjcmWDMr3wXigyLQXJzbiSi3QoZtfnsieefFADUVOqPpZFs2KEFuWvJzPvnZF1f
+         7z9C6Gy7nyVBLMyv4/CrtvEAn40nyMvAMx6OGIKFxWAPLIt8BAyqjMLArG7SeXBSe3D+
+         2z4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=M4xaz9crpZ8prxY23Otf+8TSBV7S5wep7o5hiF5ERPc=;
-        b=La23hm7wzYMNE0UZ9ttANR4n6LUlpoy9HnTOZRcWgSMQ0QoODUjXfU4qHXCX96yhOi
-         cpH59EeRc7FmOJDjeQzMx0h1oNGNLInNG/ve/zLXbENmj8vu16Ru6wDoouTPgKpILVWB
-         g6RIPykR9StYxp9uK3zHMuA0+4/WZfKAT9N8JhVi4ZH0aTb4MsL4fTJmOFB23YG+0rgG
-         1hWHZ0nIMwwjs/QlFR1MA6+PlG6MdKqyTmdHmx+AYI2ApTtVFsAHvcOsHC/g6Ah6Y7Do
-         kXKS22N+/ZyrDUqajvpJjDGpowKeAjcZtllOrqo81XlVSBY5u/nx3SlAAEa80my7K/Tw
-         WLDw==
-X-Gm-Message-State: AElRT7F5GC3I5aRzi+q8aghuWQHybAAujeqOJJp6++u1ejM1pAE32NPe
-        M9y/vftLH37ty/OaPs6rwCM=
-X-Google-Smtp-Source: AG47ELubgpEAaoBtwX+fRFL/mbyMoq9Tf2lgLGB/tK0V3l6M/Xl4ip4xEuIDDH+1PF5JCI2u0+Fd1A==
-X-Received: by 2002:a19:1754:: with SMTP id n81-v6mr18961155lfi.113.1521877539534;
-        Sat, 24 Mar 2018 00:45:39 -0700 (PDT)
+        bh=ZMNafEw/W+1gY+ifOutsjwkaZZ8gSJ6x0JGbzBTXpcI=;
+        b=SARQ3AJtbu3jlcXfsqSoq1fEGTO0oEWrFelNaz9hbY8JEHeYA9+hSZw1hJko+nycyL
+         VMKn6shC/XQ3Oxs70QJPmQ2N5XnepR1+KOUektbyq2/O8wLPrspwQrDhSkD220gL+QYK
+         Ndu1pGZtB+b2llB3aBW1r/qLkJJscp4G9gudZPdFd84pRkeXNLon19Uy9rWwW9Kj/kku
+         eeBuWuDgFeJBSNKmZTk7uLeePmprvibr3LK3V/e/JfwxL/KD4NrNXvWblRZ2x2wbgjd9
+         OmjaaBEQxpeyaCi72baRR7mues4m+EZvwI87PGnVATwnmSE0Db0q/wNE3bWAwg7OkvqG
+         6xrg==
+X-Gm-Message-State: AElRT7HBylARQVcsfF5gTZ/roLCC32mljpkQHxCrRTi/Baiagg+ftP4P
+        l3+fr5xIqGG77+D2D1/KqlY=
+X-Google-Smtp-Source: AG47ELtijqCNQ1a5Tqc4cqCQPUS6bunSG8zxTm4gsiZN8bvFIDyZPzj8XpfXSWihLzopTzzLCmu7Dg==
+X-Received: by 2002:a19:d015:: with SMTP id h21-v6mr15027579lfg.124.1521877541653;
+        Sat, 24 Mar 2018 00:45:41 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id g7sm2313741ljj.50.2018.03.24.00.45.38
+        by smtp.gmail.com with ESMTPSA id g7sm2313741ljj.50.2018.03.24.00.45.40
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 24 Mar 2018 00:45:38 -0700 (PDT)
+        Sat, 24 Mar 2018 00:45:41 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
         Jeff Hostetler <git@jeffhostetler.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 07/36] t/helper: merge test-date into test-tool
-Date:   Sat, 24 Mar 2018 08:44:36 +0100
-Message-Id: <20180324074505.19100-8-pclouds@gmail.com>
+Subject: [PATCH v2 09/36] t/helper: merge test-drop-caches into test-tool
+Date:   Sat, 24 Mar 2018 08:44:38 +0100
+Message-Id: <20180324074505.19100-10-pclouds@gmail.com>
 X-Mailer: git-send-email 2.17.0.rc0.348.gd5a49e0b6f
 In-Reply-To: <20180324074505.19100-1-pclouds@gmail.com>
 References: <20180317075421.22032-1-pclouds@gmail.com>
@@ -72,155 +72,129 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- Makefile               |  2 +-
- t/helper/test-date.c   | 17 +++++++++--------
- t/helper/test-tool.c   |  1 +
- t/helper/test-tool.h   |  1 +
- t/t0006-date.sh        |  8 ++++----
- t/t1300-repo-config.sh |  2 +-
- t/test-lib.sh          |  4 ++--
- 7 files changed, 19 insertions(+), 16 deletions(-)
+ Makefile                    |  2 +-
+ t/helper/test-drop-caches.c |  3 ++-
+ t/helper/test-tool.c        |  1 +
+ t/helper/test-tool.h        |  1 +
+ t/perf/p7519-fsmonitor.sh   | 12 ++++++------
+ 5 files changed, 11 insertions(+), 8 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index d09710dc3d..efb1872c52 100644
+index 327d63217a..edd9c43982 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -655,10 +655,10 @@ PROGRAMS += $(patsubst %.o,git-%$X,$(PROGRAM_OBJS))
- TEST_BUILTINS_OBJS += test-chmtime.o
- TEST_BUILTINS_OBJS += test-config.o
+@@ -657,10 +657,10 @@ TEST_BUILTINS_OBJS += test-config.o
  TEST_BUILTINS_OBJS += test-ctype.o
-+TEST_BUILTINS_OBJS += test-date.o
+ TEST_BUILTINS_OBJS += test-date.o
+ TEST_BUILTINS_OBJS += test-delta.o
++TEST_BUILTINS_OBJS += test-drop-caches.o
  TEST_BUILTINS_OBJS += test-lazy-init-name-hash.o
  TEST_BUILTINS_OBJS += test-sha1.o
  
--TEST_PROGRAMS_NEED_X += test-date
- TEST_PROGRAMS_NEED_X += test-delta
- TEST_PROGRAMS_NEED_X += test-drop-caches
+-TEST_PROGRAMS_NEED_X += test-drop-caches
  TEST_PROGRAMS_NEED_X += test-dump-cache-tree
-diff --git a/t/helper/test-date.c b/t/helper/test-date.c
-index ac83687970..a0837371ab 100644
---- a/t/helper/test-date.c
-+++ b/t/helper/test-date.c
-@@ -1,13 +1,14 @@
+ TEST_PROGRAMS_NEED_X += test-dump-fsmonitor
+ TEST_PROGRAMS_NEED_X += test-dump-split-index
+diff --git a/t/helper/test-drop-caches.c b/t/helper/test-drop-caches.c
+index bd1a857d52..838760898b 100644
+--- a/t/helper/test-drop-caches.c
++++ b/t/helper/test-drop-caches.c
+@@ -1,3 +1,4 @@
 +#include "test-tool.h"
- #include "cache.h"
+ #include "git-compat-util.h"
  
- static const char *usage_msg = "\n"
--"  test-date relative [time_t]...\n"
--"  test-date show:<format> [time_t]...\n"
--"  test-date parse [date]...\n"
--"  test-date approxidate [date]...\n"
--"  test-date timestamp [date]...\n"
--"  test-date is64bit\n"
--"  test-date time_t-is64bit\n";
-+"  test-tool date relative [time_t]...\n"
-+"  test-tool date show:<format> [time_t]...\n"
-+"  test-tool date parse [date]...\n"
-+"  test-tool date approxidate [date]...\n"
-+"  test-tool date timestamp [date]...\n"
-+"  test-tool date is64bit\n"
-+"  test-tool date time_t-is64bit\n";
+ #if defined(GIT_WINDOWS_NATIVE)
+@@ -157,7 +158,7 @@ static int cmd_dropcaches(void)
  
- static void show_relative_dates(const char **argv, struct timeval *now)
- {
-@@ -81,7 +82,7 @@ static void parse_approx_timestamp(const char **argv, struct timeval *now)
- 	}
- }
+ #endif
  
 -int cmd_main(int argc, const char **argv)
-+int cmd__date(int argc, const char **argv)
++int cmd__drop_caches(int argc, const char **argv)
  {
- 	struct timeval now;
- 	const char *x;
+ 	cmd_sync();
+ 	return cmd_dropcaches();
 diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
-index d600a31935..e92f93ac3b 100644
+index 6bef386842..b6f648d387 100644
 --- a/t/helper/test-tool.c
 +++ b/t/helper/test-tool.c
-@@ -10,6 +10,7 @@ static struct test_cmd cmds[] = {
- 	{ "chmtime", cmd__chmtime },
- 	{ "config", cmd__config },
+@@ -12,6 +12,7 @@ static struct test_cmd cmds[] = {
  	{ "ctype", cmd__ctype },
-+	{ "date", cmd__date },
+ 	{ "date", cmd__date },
+ 	{ "delta", cmd__delta },
++	{ "drop-caches", cmd__drop_caches },
  	{ "lazy-init-name-hash", cmd__lazy_init_name_hash },
  	{ "sha1", cmd__sha1 },
  };
 diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
-index 41805ecd1c..31c20bb656 100644
+index 761705e110..f585b7776e 100644
 --- a/t/helper/test-tool.h
 +++ b/t/helper/test-tool.h
-@@ -4,6 +4,7 @@
- int cmd__chmtime(int argc, const char **argv);
- int cmd__config(int argc, const char **argv);
+@@ -6,6 +6,7 @@ int cmd__config(int argc, const char **argv);
  int cmd__ctype(int argc, const char **argv);
-+int cmd__date(int argc, const char **argv);
+ int cmd__date(int argc, const char **argv);
+ int cmd__delta(int argc, const char **argv);
++int cmd__drop_caches(int argc, const char **argv);
  int cmd__lazy_init_name_hash(int argc, const char **argv);
  int cmd__sha1(int argc, const char **argv);
  
-diff --git a/t/t0006-date.sh b/t/t0006-date.sh
-index 7ac9466d50..64ff86df8e 100755
---- a/t/t0006-date.sh
-+++ b/t/t0006-date.sh
-@@ -10,7 +10,7 @@ check_relative() {
- 	t=$(($TEST_DATE_NOW - $1))
- 	echo "$t -> $2" >expect
- 	test_expect_${3:-success} "relative date ($2)" "
--	test-date relative $t >actual &&
-+	test-tool date relative $t >actual &&
- 	test_i18ncmp expect actual
- 	"
- }
-@@ -35,7 +35,7 @@ check_show () {
- 	zone=$5
- 	test_expect_success $prereqs "show date ($format:$time)" '
- 		echo "$time -> $expect" >expect &&
--		TZ=${zone:-$TZ} test-date show:"$format" "$time" >actual &&
-+		TZ=${zone:-$TZ} test-tool date show:"$format" "$time" >actual &&
- 		test_cmp expect actual
- 	'
- }
-@@ -71,7 +71,7 @@ check_show iso-local "$FUTURE" "2152-06-19 22:24:56 +0000" TIME_IS_64BIT,TIME_T_
- check_parse() {
- 	echo "$1 -> $2" >expect
- 	test_expect_${4:-success} "parse date ($1${3:+ TZ=$3})" "
--	TZ=${3:-$TZ} test-date parse '$1' >actual &&
-+	TZ=${3:-$TZ} test-tool date parse '$1' >actual &&
- 	test_cmp expect actual
- 	"
- }
-@@ -92,7 +92,7 @@ check_parse '2008-02-14 20:30:45' '2008-02-14 20:30:45 -0500' EST5
- check_approxidate() {
- 	echo "$1 -> $2 +0000" >expect
- 	test_expect_${3:-success} "parse approxidate ($1)" "
--	test-date approxidate '$1' >actual &&
-+	test-tool date approxidate '$1' >actual &&
- 	test_cmp expect actual
- 	"
- }
-diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
-index 4f8e6f5fde..8780934478 100755
---- a/t/t1300-repo-config.sh
-+++ b/t/t1300-repo-config.sh
-@@ -914,7 +914,7 @@ test_expect_success 'get --expiry-date' '
- 	invalid1 = "abc"
- 	EOF
- 	cat >expect <<-EOF &&
--	$(test-date timestamp $rel)
-+	$(test-tool date timestamp $rel)
- 	1275666415
- 	1510441871
- 	1510348087
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 7ab8af47a5..483c8d6d7c 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -1206,5 +1206,5 @@ test_lazy_prereq LONG_IS_64BIT '
- 	test 8 -le "$(build_option sizeof-long)"
+diff --git a/t/perf/p7519-fsmonitor.sh b/t/perf/p7519-fsmonitor.sh
+index 65e145c02d..def7ecdbc7 100755
+--- a/t/perf/p7519-fsmonitor.sh
++++ b/t/perf/p7519-fsmonitor.sh
+@@ -118,7 +118,7 @@ test_expect_success "setup for fsmonitor" '
  '
  
--test_lazy_prereq TIME_IS_64BIT 'test-date is64bit'
--test_lazy_prereq TIME_T_IS_64BIT 'test-date time_t-is64bit'
-+test_lazy_prereq TIME_IS_64BIT 'test-tool date is64bit'
-+test_lazy_prereq TIME_T_IS_64BIT 'test-tool date time_t-is64bit'
+ if test -n "$GIT_PERF_7519_DROP_CACHE"; then
+-	test-drop-caches
++	test-tool drop-caches
+ fi
+ 
+ test_perf "status (fsmonitor=$INTEGRATION_SCRIPT)" '
+@@ -126,7 +126,7 @@ test_perf "status (fsmonitor=$INTEGRATION_SCRIPT)" '
+ '
+ 
+ if test -n "$GIT_PERF_7519_DROP_CACHE"; then
+-	test-drop-caches
++	test-tool drop-caches
+ fi
+ 
+ test_perf "status -uno (fsmonitor=$INTEGRATION_SCRIPT)" '
+@@ -134,7 +134,7 @@ test_perf "status -uno (fsmonitor=$INTEGRATION_SCRIPT)" '
+ '
+ 
+ if test -n "$GIT_PERF_7519_DROP_CACHE"; then
+-	test-drop-caches
++	test-tool drop-caches
+ fi
+ 
+ test_perf "status -uall (fsmonitor=$INTEGRATION_SCRIPT)" '
+@@ -148,7 +148,7 @@ test_expect_success "setup without fsmonitor" '
+ '
+ 
+ if test -n "$GIT_PERF_7519_DROP_CACHE"; then
+-	test-drop-caches
++	test-tool drop-caches
+ fi
+ 
+ test_perf "status (fsmonitor=$INTEGRATION_SCRIPT)" '
+@@ -156,7 +156,7 @@ test_perf "status (fsmonitor=$INTEGRATION_SCRIPT)" '
+ '
+ 
+ if test -n "$GIT_PERF_7519_DROP_CACHE"; then
+-	test-drop-caches
++	test-tool drop-caches
+ fi
+ 
+ test_perf "status -uno (fsmonitor=$INTEGRATION_SCRIPT)" '
+@@ -164,7 +164,7 @@ test_perf "status -uno (fsmonitor=$INTEGRATION_SCRIPT)" '
+ '
+ 
+ if test -n "$GIT_PERF_7519_DROP_CACHE"; then
+-	test-drop-caches
++	test-tool drop-caches
+ fi
+ 
+ test_perf "status -uall (fsmonitor=$INTEGRATION_SCRIPT)" '
 -- 
 2.17.0.rc0.348.gd5a49e0b6f
 
