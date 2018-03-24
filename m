@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 900151F42D
-	for <e@80x24.org>; Sat, 24 Mar 2018 07:25:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 360001F42D
+	for <e@80x24.org>; Sat, 24 Mar 2018 07:25:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751745AbeCXHZ3 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 24 Mar 2018 03:25:29 -0400
-Received: from mail-lf0-f65.google.com ([209.85.215.65]:40786 "EHLO
-        mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751668AbeCXHZZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 24 Mar 2018 03:25:25 -0400
-Received: by mail-lf0-f65.google.com with SMTP id e5-v6so21382029lfb.7
-        for <git@vger.kernel.org>; Sat, 24 Mar 2018 00:25:25 -0700 (PDT)
+        id S1751811AbeCXHZd (ORCPT <rfc822;e@80x24.org>);
+        Sat, 24 Mar 2018 03:25:33 -0400
+Received: from mail-lf0-f67.google.com ([209.85.215.67]:34731 "EHLO
+        mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751009AbeCXHZ1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 24 Mar 2018 03:25:27 -0400
+Received: by mail-lf0-f67.google.com with SMTP id c78-v6so16678312lfh.1
+        for <git@vger.kernel.org>; Sat, 24 Mar 2018 00:25:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=WIP8CsvE/iGnVD94d+NukYAD8nQfqSOswYmh+xt+HV8=;
-        b=c8ijEKlof4g+yaF7LauHtuRXINnSKyQT5tM7Abx8y7gI5G0PYyDCO0TqT91X1gQuUO
-         BRxmuKQOfiwWpnjVoPPFxczdnFCXEawgbG5WBAMVppFJbY9zul/oxZw4mkCAbRBDd0fn
-         NJXub7xbcXcyTbiakOSxME7hZ1j0CWy0YHxubOGLKKkB2JePzZZCvwBKHAeu2WbyFgW/
-         aOcjw0dE/aOXWjQwW2rZ0EdMxNgdemIUixnkedeG6r4ZzZt5RY+PBzf6QUzBt9n/vsqu
-         mpVm5ZTd1shfHIqyRdyFIkuTxSDDedidCBBqE17O0yD9RVzxeHVdGxT+uXvT8IzrPuKH
-         O+/g==
+        bh=iprsEwFyfVjBL3yMRv+v9HREafV/iImHLegB/iosrRg=;
+        b=JeAX5e0ITFinRG2R4Bxs9cKh4sQ0bFkFzcbaMu32rLzlE34UN3pVIDLVJmXv6fe4Hr
+         tf+IeIkQgJGtbcKTGzImVKJAlJhVFvunIa59wcMwhmCrNYqeHvu4rIEAACVPCkEkMah8
+         lw/JLtUnDMp8pz9sOZ2zmMbSrmtNASusXDOc2aW1pz0qY+17b3IRaRPYnNw78iQUEYlD
+         G7uFLboMtoxgsUJaqsQ9jJT4ol/4r7jEtGHA1NUkZ0Zk6V/m4LKNQ/xKJJTulLubooe1
+         81ULna3RV6F2PXHcwvrapnSf4/45Wb+628RE8gXPsGBV4Kdd7Awz0prZCoaWUvf9U/UC
+         jCag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=WIP8CsvE/iGnVD94d+NukYAD8nQfqSOswYmh+xt+HV8=;
-        b=cZZ6FNu+jsu6mbCLKC95GL5zX2VHafAoARma6Xe8DsYMVPVWPROB25KqgMjKDNYMO+
-         yN3PGfyb82+Uxb/O9fpPqOo4cFQgMwOebkqz3/ZS8WMEDbPXdNPa+YVc8KPytC6mcKFF
-         zJp9CrVNzC/evEaJsWZD5YaMn9YOJ0FYYZD6Tde7Qt311Cnl7d+OLQKrHhetGlEKCaHy
-         yHSbfNM2Lbyr/UwfwfTFKG5r8+tSC9BJ+X3LvACVq9XsDH6HDJQqUiKWHFGUCBgMbOHm
-         Sy1RINltnIxC4qmNfO8nqafoV3qhE74KWNkUACntjLnj4zqkqGJTDAiEk3xYBREI9xsK
-         ADRA==
-X-Gm-Message-State: AElRT7HKpoW6gELcq+kJViGGxB84+L3JbeUZtaVxHuXOYgVJHasszmrI
-        lW/qgTAS8AD72/qRJFjRxIA=
-X-Google-Smtp-Source: AG47ELvB045xc/kA0h554kHxSDkg7GND8nlKeQVhrf2WGAXIx5QizYT1FGWQe7BtwdUY6LE3OfZ0rQ==
-X-Received: by 10.46.85.196 with SMTP id g65mr5768384lje.10.1521876324324;
-        Sat, 24 Mar 2018 00:25:24 -0700 (PDT)
+        bh=iprsEwFyfVjBL3yMRv+v9HREafV/iImHLegB/iosrRg=;
+        b=DZ2XAavmXONPV84pb0LZlSk7C0m6Cvn/1LvcDGB4+eyyidyoc2R+rr3q4k9sYT/wn1
+         mFzlflRn1oGEYzgRh0BrQ/XFZ2orMrns2s9u2kdf6RuUHcXtiX825jnHULvZTVnSHVn+
+         Lq7aVzRYighUoF4BWHFU8qMRH0XpeQJJBSU0JtE+Xo0ZY2WxeTHc7AH6FjrwIKUb9KJr
+         jHWMlZV/Gs1ux6YyPVqOmSxb1goB3wHmH+HE8OHl+QLrPsgAkz06VeLrdMSHDP+vOaKr
+         Rgbf8MdivLus80BK/qJjofZU8yQf5HkzIe2y4ARhyEMzRUt/Yi+zD+pRfwhuYN4Vms3Q
+         Q3BQ==
+X-Gm-Message-State: AElRT7FDNq9+Jkra5q/54yRbW+b8wdIXthUxPAs2xg2R7rc3DUz9tipo
+        z5CH7W1MAF9ZxjpbuNbLDWs=
+X-Google-Smtp-Source: AG47ELt18jncvgkwgN2Fx2wugug2GyCIRnoOvePytfN86Fvkplo5IX+alv7KzPDYWo2o28tbx8DcRw==
+X-Received: by 10.46.46.10 with SMTP id u10mr3674607lju.77.1521876325740;
+        Sat, 24 Mar 2018 00:25:25 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id b67-v6sm2684028lfh.26.2018.03.24.00.25.23
+        by smtp.gmail.com with ESMTPSA id b67-v6sm2684028lfh.26.2018.03.24.00.25.24
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 24 Mar 2018 00:25:23 -0700 (PDT)
+        Sat, 24 Mar 2018 00:25:25 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     avarab@gmail.com, e@80x24.org, git@vger.kernel.org,
         gitster@pobox.com, peff@peff.net
-Subject: [PATCH v4 6/7] gc --auto: exclude base pack if not enough mem to "repack -ad"
-Date:   Sat, 24 Mar 2018 08:25:06 +0100
-Message-Id: <20180324072507.21059-7-pclouds@gmail.com>
+Subject: [PATCH v4 7/7] pack-objects: show some progress when counting kept objects
+Date:   Sat, 24 Mar 2018 08:25:07 +0100
+Message-Id: <20180324072507.21059-8-pclouds@gmail.com>
 X-Mailer: git-send-email 2.17.0.rc0.348.gd5a49e0b6f
 In-Reply-To: <20180324072507.21059-1-pclouds@gmail.com>
 References: <20180316192745.19557-1-pclouds@gmail.com>
@@ -69,277 +69,104 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-pack-objects could be a big memory hog especially on large repos,
-everybody knows that. The suggestion to stick a .keep file on the
-giant base pack to avoid this problem is also known for a long time.
+We only show progress when there are new objects to be packed. But
+when --keep-pack is specified on the base pack, we will exclude most
+of objects. This makes 'pack-objects' stay silent for a long time
+while the counting phase is going.
 
-Recent patches add an option to do just this, but it has to be either
-configured or activated manually. This patch lets `git gc --auto`
-activate this mode automatically when it thinks `repack -ad` will use
-a lot of memory and start affecting the system due to swapping or
-flushing OS cache.
+Let's show some progress whenever we visit an object instead. The old
+"Counting objects" is renamed to "Enumerating objects" and a new
+progress "Counting objects" line is added.
 
-gc --auto decides to do this based on an estimation of pack-objects
-memory usage, which is quite accurate at least for the heap part, and
-whether that fits in half of system memory (the assumption here is for
-desktop environment where there are many other applications running).
-
-This mechanism only kicks in if gc.bigBasePackThreshold is not configured.
-If it is, it is assumed that the user already knows what they want.
+This new "Counting objects" line should progress pretty quick when the
+system is beefy. But when the system is under pressure, the reading
+object header done in this phase could be slow and showing progress is
+an improvement over staying silent in the current code.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- Documentation/git-gc.txt |  9 +++-
- builtin/gc.c             | 98 +++++++++++++++++++++++++++++++++++++++-
- builtin/pack-objects.c   |  2 +-
- config.mak.uname         |  1 +
- git-compat-util.h        |  4 ++
- pack-objects.h           |  2 +
- t/t6500-gc.sh            |  7 +++
- 7 files changed, 119 insertions(+), 4 deletions(-)
+ builtin/pack-objects.c | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
-diff --git a/Documentation/git-gc.txt b/Documentation/git-gc.txt
-index 0adf381b52..7549094900 100644
---- a/Documentation/git-gc.txt
-+++ b/Documentation/git-gc.txt
-@@ -58,8 +58,13 @@ If the number of packs exceeds the value of `gc.autoPackLimit`,
- then existing packs (except those marked with a `.keep` file
- or over `gc.bigPackThreshold` limit)
- are consolidated into a single pack by using the `-A` option of
--'git repack'. Setting `gc.autoPackLimit` to 0 disables
--automatic consolidation of packs.
-+'git repack'.
-+If the amount of memory is estimated not enough for `git repack` to
-+run smoothly and `gc.bigPackThreshold` is not set, the largest
-+pack will also be excluded (this is the equivalent of running `git gc`
-+with `--keep-base-pack`).
-+Setting `gc.autoPackLimit` to 0 disables automatic consolidation of
-+packs.
- 
- --prune=<date>::
- 	Prune loose objects older than date (default is 2 weeks ago,
-diff --git a/builtin/gc.c b/builtin/gc.c
-index 74d3aaa270..d0b04e369e 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -20,6 +20,10 @@
- #include "argv-array.h"
- #include "commit.h"
- #include "packfile.h"
-+#include "pack.h"
-+#include "pack-objects.h"
-+#include "blob.h"
-+#include "tree.h"
- 
- #define FAILED_RUN "failed to run %s"
- 
-@@ -40,6 +44,7 @@ static const char *gc_log_expire = "1.day.ago";
- static const char *prune_expire = "2.weeks.ago";
- static const char *prune_worktrees_expire = "3.months.ago";
- static unsigned long big_pack_threshold;
-+static unsigned long max_delta_cache_size = DEFAULT_DELTA_CACHE_SIZE;
- 
- static struct argv_array pack_refs_cmd = ARGV_ARRAY_INIT;
- static struct argv_array reflog = ARGV_ARRAY_INIT;
-@@ -128,6 +133,7 @@ static void gc_config(void)
- 	git_config_get_expiry("gc.logexpiry", &gc_log_expire);
- 
- 	git_config_get_ulong("gc.bigpackthreshold", &big_pack_threshold);
-+	git_config_get_ulong("pack.deltacachesize", &max_delta_cache_size);
- 
- 	git_config(git_default_config, NULL);
- }
-@@ -167,7 +173,8 @@ static int too_many_loose_objects(void)
- 	return needed;
- }
- 
--static void find_base_packs(struct string_list *packs, unsigned long limit)
-+static struct packed_git *find_base_packs(struct string_list *packs,
-+					  unsigned long limit)
- {
- 	struct packed_git *p, *base = NULL;
- 
-@@ -186,6 +193,8 @@ static void find_base_packs(struct string_list *packs, unsigned long limit)
- 
- 	if (base)
- 		string_list_append(packs, base->pack_name);
-+
-+	return base;
- }
- 
- static int too_many_packs(void)
-@@ -211,6 +220,79 @@ static int too_many_packs(void)
- 	return gc_auto_pack_limit < cnt;
- }
- 
-+static uint64_t total_ram(void)
-+{
-+#if defined(HAVE_SYSINFO)
-+	struct sysinfo si;
-+
-+	if (!sysinfo(&si))
-+		return si.totalram;
-+#elif defined(HAVE_BSD_SYSCTL) && (defined(HW_MEMSIZE) || defined(HW_PHYSMEM))
-+	int64_t physical_memory;
-+	int mib[2];
-+	size_t length;
-+
-+	mib[0] = CTL_HW;
-+# if defined(HW_MEMSIZE)
-+	mib[1] = HW_MEMSIZE;
-+# else
-+	mib[1] = HW_PHYSMEM;
-+# endif
-+	length = sizeof(int64_t);
-+	if (!sysctl(mib, 2, &physical_memory, &length, NULL, 0))
-+		return physical_memory;
-+#elif defined(GIT_WINDOWS_NATIVE)
-+	MEMORYSTATUSEX memInfo;
-+
-+	memInfo.dwLength = sizeof(MEMORYSTATUSEX);
-+	if (GlobalMemoryStatusEx(&memInfo))
-+		return memInfo.ullTotalPhys;
-+#endif
-+	return 0;
-+}
-+
-+static uint64_t estimate_repack_memory(struct packed_git *pack)
-+{
-+	unsigned long nr_objects = approximate_object_count();
-+	size_t os_cache, heap;
-+
-+	if (!pack || !nr_objects)
-+		return 0;
-+
-+	/*
-+	 * First we have to scan through at least one pack.
-+	 * Assume enough room in OS file cache to keep the entire pack
-+	 * or we may accidentally evict data of other processes from
-+	 * the cache.
-+	 */
-+	os_cache = pack->pack_size + pack->index_size;
-+	/* then pack-objects needs lots more for book keeping */
-+	heap = sizeof(struct object_entry) * nr_objects;
-+	/*
-+	 * internal rev-list --all --objects takes up some memory too,
-+	 * let's say half of it is for blobs
-+	 */
-+	heap += sizeof(struct blob) * nr_objects / 2;
-+	/*
-+	 * and the other half is for trees (commits and tags are
-+	 * usually insignificant)
-+	 */
-+	heap += sizeof(struct tree) * nr_objects / 2;
-+	/* and then obj_hash[], underestimated in fact */
-+	heap += sizeof(struct object *) * nr_objects;
-+	/* revindex is used also */
-+	heap += sizeof(struct revindex_entry) * nr_objects;
-+	/*
-+	 * read_sha1_file() (either at delta calculation phase, or
-+	 * writing phase) also fills up the delta base cache
-+	 */
-+	heap += delta_base_cache_limit;
-+	/* and of course pack-objects has its own delta cache */
-+	heap += max_delta_cache_size;
-+
-+	return os_cache + heap;
-+}
-+
- static int keep_one_pack(struct string_list_item *item, void *data)
- {
- 	argv_array_pushf(&repack, "--keep-pack=%s", basename(item->string));
-@@ -261,6 +343,20 @@ static int need_to_gc(void)
- 				string_list_clear(&keep_pack, 0);
- 				find_base_packs(&keep_pack, 0);
- 			}
-+		} else {
-+			struct packed_git *p = find_base_packs(&keep_pack, 0);
-+			uint64_t mem_have, mem_want;
-+
-+			mem_have = total_ram();
-+			mem_want = estimate_repack_memory(p);
-+
-+			/*
-+			 * Only allow 1/2 of memory for pack-objects, leave
-+			 * the rest for the OS and other processes in the
-+			 * system.
-+			 */
-+			if (!mem_have || mem_want < mem_have / 2)
-+				string_list_clear(&keep_pack, 0);
- 		}
- 
- 		add_repack_all_option(&keep_pack);
 diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 7ec70131a9..8b2f8b72bf 100644
+index 8b2f8b72bf..1379b4cb92 100644
 --- a/builtin/pack-objects.c
 +++ b/builtin/pack-objects.c
-@@ -80,7 +80,7 @@ static uint16_t write_bitmap_options;
- static int exclude_promisor_objects;
+@@ -44,7 +44,7 @@ static const char *pack_usage[] = {
+ static struct packing_data to_pack;
  
- static unsigned long delta_cache_size = 0;
--static unsigned long max_delta_cache_size = 256 * 1024 * 1024;
-+static unsigned long max_delta_cache_size = DEFAULT_DELTA_CACHE_SIZE;
- static unsigned long cache_max_small_delta_size = 1000;
+ static struct pack_idx_entry **written_list;
+-static uint32_t nr_result, nr_written;
++static uint32_t nr_result, nr_written, nr_seen;
  
- static unsigned long window_memory_limit = 0;
-diff --git a/config.mak.uname b/config.mak.uname
-index 6a1d0de0cc..ae9cbccec1 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -37,6 +37,7 @@ ifeq ($(uname_S),Linux)
- 	HAVE_GETDELIM = YesPlease
- 	SANE_TEXT_GREP=-a
- 	FREAD_READS_DIRECTORIES = UnfortunatelyYes
-+	BASIC_CFLAGS += -DHAVE_SYSINFO
- endif
- ifeq ($(uname_S),GNU/kFreeBSD)
- 	HAVE_ALLOCA_H = YesPlease
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 07e383257b..e373af48b8 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -284,6 +284,10 @@ extern char *gitdirname(char *);
- #include <openssl/err.h>
- #endif
+ static int non_empty;
+ static int reuse_delta = 1, reuse_object = 1;
+@@ -1096,6 +1096,8 @@ static int add_object_entry(const struct object_id *oid, enum object_type type,
+ 	off_t found_offset = 0;
+ 	uint32_t index_pos;
  
-+#ifdef HAVE_SYSINFO
-+# include <sys/sysinfo.h>
-+#endif
++	display_progress(progress_state, ++nr_seen);
 +
- /* On most systems <netdb.h> would have given us this, but
-  * not on some systems (e.g. z/OS).
-  */
-diff --git a/pack-objects.h b/pack-objects.h
-index 03f1191659..af4f46c026 100644
---- a/pack-objects.h
-+++ b/pack-objects.h
-@@ -1,6 +1,8 @@
- #ifndef PACK_OBJECTS_H
- #define PACK_OBJECTS_H
+ 	if (have_duplicate_entry(oid, exclude, &index_pos))
+ 		return 0;
  
-+#define DEFAULT_DELTA_CACHE_SIZE (256 * 1024 * 1024)
+@@ -1111,8 +1113,6 @@ static int add_object_entry(const struct object_id *oid, enum object_type type,
+ 	create_object_entry(oid, type, pack_name_hash(name),
+ 			    exclude, name && no_try_delta(name),
+ 			    index_pos, found_pack, found_offset);
+-
+-	display_progress(progress_state, nr_result);
+ 	return 1;
+ }
+ 
+@@ -1123,6 +1123,8 @@ static int add_object_entry_from_bitmap(const struct object_id *oid,
+ {
+ 	uint32_t index_pos;
+ 
++	display_progress(progress_state, ++nr_seen);
 +
- struct object_entry {
- 	struct pack_idx_entry idx;
- 	unsigned long size;	/* uncompressed size */
-diff --git a/t/t6500-gc.sh b/t/t6500-gc.sh
-index a95969af2a..100f287b97 100755
---- a/t/t6500-gc.sh
-+++ b/t/t6500-gc.sh
-@@ -5,6 +5,13 @@ test_description='basic git gc tests
+ 	if (have_duplicate_entry(oid, 0, &index_pos))
+ 		return 0;
  
- . ./test-lib.sh
+@@ -1130,8 +1132,6 @@ static int add_object_entry_from_bitmap(const struct object_id *oid,
+ 		return 0;
  
-+test_expect_success 'setup' '
-+	# do not let the amount of physical memory affects gc
-+	# behavior, make sure we always pack everything to one pack by
-+	# default
-+	git config gc.bigPackThreshold 2g
-+'
+ 	create_object_entry(oid, type, name_hash, 0, 0, index_pos, pack, offset);
+-
+-	display_progress(progress_state, nr_result);
+ 	return 1;
+ }
+ 
+@@ -1717,6 +1717,10 @@ static void get_object_details(void)
+ 	uint32_t i;
+ 	struct object_entry **sorted_by_offset;
+ 
++	if (progress)
++		progress_state = start_progress(_("Counting objects"),
++						to_pack.nr_objects);
 +
- test_expect_success 'gc empty repository' '
- 	git gc
- '
+ 	sorted_by_offset = xcalloc(to_pack.nr_objects, sizeof(struct object_entry *));
+ 	for (i = 0; i < to_pack.nr_objects; i++)
+ 		sorted_by_offset[i] = to_pack.objects + i;
+@@ -1727,7 +1731,9 @@ static void get_object_details(void)
+ 		check_object(entry);
+ 		if (big_file_threshold < entry->size)
+ 			entry->no_try_delta = 1;
++		display_progress(progress_state, i + 1);
+ 	}
++	stop_progress(&progress_state);
+ 
+ 	/*
+ 	 * This must happen in a second pass, since we rely on the delta
+@@ -3212,7 +3218,7 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
+ 	}
+ 
+ 	if (progress)
+-		progress_state = start_progress(_("Counting objects"), 0);
++		progress_state = start_progress(_("Enumerating objects"), 0);
+ 	if (!use_internal_rev_list)
+ 		read_object_list_from_stdin();
+ 	else {
 -- 
 2.17.0.rc0.348.gd5a49e0b6f
 
