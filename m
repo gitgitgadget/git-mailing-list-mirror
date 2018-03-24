@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8D9C61F42D
-	for <e@80x24.org>; Sat, 24 Mar 2018 07:47:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DC2CE1F42D
+	for <e@80x24.org>; Sat, 24 Mar 2018 07:47:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752283AbeCXHrd (ORCPT <rfc822;e@80x24.org>);
-        Sat, 24 Mar 2018 03:47:33 -0400
-Received: from mail-lf0-f65.google.com ([209.85.215.65]:38415 "EHLO
-        mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752015AbeCXHpp (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 24 Mar 2018 03:45:45 -0400
-Received: by mail-lf0-f65.google.com with SMTP id u3-v6so483120lff.5
-        for <git@vger.kernel.org>; Sat, 24 Mar 2018 00:45:44 -0700 (PDT)
+        id S1751921AbeCXHrc (ORCPT <rfc822;e@80x24.org>);
+        Sat, 24 Mar 2018 03:47:32 -0400
+Received: from mail-lf0-f68.google.com ([209.85.215.68]:38433 "EHLO
+        mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751661AbeCXHp4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 24 Mar 2018 03:45:56 -0400
+Received: by mail-lf0-f68.google.com with SMTP id u3-v6so483515lff.5
+        for <git@vger.kernel.org>; Sat, 24 Mar 2018 00:45:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=EUbUDnFSrnVPkS++EOliMULVma51WjwuoLPAX4H2jaU=;
-        b=mUcEvpeComGtwD9xL38gdZTpEMgMLtLds/u5r8T6upC0JrGbOxJVNw7G9ZfwYIUGNd
-         MWS1ddMOaiFbhjSLfCi+/xWNqBPjacdiKiSAWyzdh4uEfbtDb8PotsRI+XncvnKQMWr9
-         ssziWq+qm0QAPKgHs2zv1V5DnXCNOwduAdE35e8ZJJHaHzvx7jDXPFnu5q/fdtuNU0Q1
-         tUjzsEMSF/bywRz5aHS95t5l7VotAsmWT5cb79FhONDLx9bzoIK+ZVTNuHuucKNukYLE
-         epEg+PmFG+/cO1Y2E2gWqw/noXa/SqTgsT2QXEvadm5du0ZfUU8Lr66AmNoUwecb13OR
-         NBdg==
+        bh=c8JPTFRy1/tGQ6GTndnZqQkTvZSsUKWWteumnM9WoY0=;
+        b=M8eKQsASBjNWgEBrStiDnSm59wmotCPDjiGyx98qmydDdG1of7kqg17lee4ka1zq8f
+         ygzeIVKXY3OgW74046H+uDhdma2xMvIA+9SC1ws93qMpgDcta/Hpjtv4sIgvVwUB06Dv
+         KdfR2aF0o1JgYwzJvZH0ki116NtM4pDQW/hBkck29t7jcM/1z6qAKOX4RgZ84A2z6A7E
+         bGiaUB93j2uqH+gagBbifCmIlhRD7+qwUXrKnuK6wKesSo9K9DwKl7/7KMGVShZkWp9U
+         hYrUE36oXrI2C9Z9ikjumCI+94fH8PIQs640YZYoRoFH7QqAeHNmqGkpGXbT4JG6f7ym
+         +WWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=EUbUDnFSrnVPkS++EOliMULVma51WjwuoLPAX4H2jaU=;
-        b=PcpSsmva8rbazsSEWuk+f3K1EbDVVnjjBn63ouQNx3ImdlYlwVDHWhFFVZ4U7ONzrU
-         YAtUTEMJ9/qIVwZnaHOT84raalAmFOlIxKnWJdzjs+54hFXnWyqaosSoJY2o3o++HfQL
-         YzvOoHUKWzbjIz6aSOyy+Rnx4FFFTeQhGYYDerYrzC/g+tf4YPRTACiwXb2ykB1Gn8Sn
-         WsVGAhpGdJ5SlWazYdATdrTaJZ3LdCxJd91id3udPKbPdGcpF9WMQr+TJQ+XYF8R8Kq0
-         1TCxFzV805mfg/kzlD7m+ZPa+H3Nvs59YB33bnznZnycPTq4bL5B8HXs0x4jcTK8StLV
-         eI9A==
-X-Gm-Message-State: AElRT7El68nh5qcfNeosgTfQEc3aFClG4jswqGk7Pi7EHAzYJa387gqo
-        atKO2UjfTcYiKEgyHaQUMkE=
-X-Google-Smtp-Source: AG47ELteHrCd7MlK8tTK9RVw1usL8LC5TJctTwwJ9vSA62YkrNB1UBcY+Djm+/0lr6h4wtYvibjw0A==
-X-Received: by 2002:a19:b588:: with SMTP id g8-v6mr22226440lfk.90.1521877543660;
-        Sat, 24 Mar 2018 00:45:43 -0700 (PDT)
+        bh=c8JPTFRy1/tGQ6GTndnZqQkTvZSsUKWWteumnM9WoY0=;
+        b=gPjr+k1mcnPUDEFVs8Pp+Y/JqFg22O1C3sHVFrX7HhMO8ckU/lFmldawi0Eh6fkkZ/
+         iVdjZ6yitUiQ98Gr7SmqdDj7WgFsiHtilQ+toF4aNfWnaKVOF35dAunnW/dWllzhyFPZ
+         qLEI4t92y0UJiFh4oskz9cU78o4SC/Hc6ZKqEvk0MKpOvUXbZq5HdMIQWUiJYA4x2GGc
+         7Pi0XDNtwTjdKv0csRc6OTIDfM5ye8wV/UXzwdWTcD5H4/dCQx1excCwVR8BD55cAxyu
+         KQB++zvgynJGKJYbU88uxFATYr9+krCtLh2lYlIiOW9gR6vVyjwKTdUlJm2q8ozwQeYP
+         SlWQ==
+X-Gm-Message-State: AElRT7EnDP4N3N9BFRYiDcHAQ2UvdGbo/k/qeq4uRKnRawlaRp566hLi
+        7FAO/IJuPEXmPOaR1FNbEXA=
+X-Google-Smtp-Source: AG47ELuR84aY2OBvVvkr6iH8ZbNZBe6vH0Fbpd1LJAC5kdyXqGWarqwNIBiMdBNP07oDfvGuCiPTzw==
+X-Received: by 2002:a19:9fd3:: with SMTP id i202-v6mr20498483lfe.123.1521877555054;
+        Sat, 24 Mar 2018 00:45:55 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id g7sm2313741ljj.50.2018.03.24.00.45.42
+        by smtp.gmail.com with ESMTPSA id g7sm2313741ljj.50.2018.03.24.00.45.53
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 24 Mar 2018 00:45:43 -0700 (PDT)
+        Sat, 24 Mar 2018 00:45:54 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
         Jeff Hostetler <git@jeffhostetler.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 11/36] t/helper: merge test-dump-split-index into test-tool
-Date:   Sat, 24 Mar 2018 08:44:40 +0100
-Message-Id: <20180324074505.19100-12-pclouds@gmail.com>
+Subject: [PATCH v2 20/36] t/helper: merge test-path-utils into test-tool
+Date:   Sat, 24 Mar 2018 08:44:49 +0100
+Message-Id: <20180324074505.19100-21-pclouds@gmail.com>
 X-Mailer: git-send-email 2.17.0.rc0.348.gd5a49e0b6f
 In-Reply-To: <20180324074505.19100-1-pclouds@gmail.com>
 References: <20180317075421.22032-1-pclouds@gmail.com>
@@ -72,267 +72,298 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- Makefile                         |  2 +-
- t/helper/test-dump-split-index.c |  3 +-
- t/helper/test-tool.c             |  1 +
- t/helper/test-tool.h             |  1 +
- t/t0090-cache-tree.sh            |  4 +--
- t/t1700-split-index.sh           | 48 ++++++++++++++++----------------
- 6 files changed, 31 insertions(+), 28 deletions(-)
+ Makefile                   |  2 +-
+ t/helper/test-path-utils.c |  3 +-
+ t/helper/test-tool.c       |  1 +
+ t/helper/test-tool.h       |  1 +
+ t/lib-git-p4.sh            |  2 +-
+ t/t0060-path-utils.sh      | 60 +++++++++++++++++++-------------------
+ t/t1501-work-tree.sh       |  8 ++---
+ 7 files changed, 40 insertions(+), 37 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 991bafa6fb..8993cec274 100644
+index 91af906d08..751ea6cad7 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -659,11 +659,11 @@ TEST_BUILTINS_OBJS += test-date.o
- TEST_BUILTINS_OBJS += test-delta.o
- TEST_BUILTINS_OBJS += test-drop-caches.o
- TEST_BUILTINS_OBJS += test-dump-cache-tree.o
-+TEST_BUILTINS_OBJS += test-dump-split-index.o
- TEST_BUILTINS_OBJS += test-lazy-init-name-hash.o
+@@ -669,6 +669,7 @@ TEST_BUILTINS_OBJS += test-match-trees.o
+ TEST_BUILTINS_OBJS += test-mergesort.o
+ TEST_BUILTINS_OBJS += test-mktemp.o
+ TEST_BUILTINS_OBJS += test-online-cpus.o
++TEST_BUILTINS_OBJS += test-path-utils.o
  TEST_BUILTINS_OBJS += test-sha1.o
  
  TEST_PROGRAMS_NEED_X += test-dump-fsmonitor
--TEST_PROGRAMS_NEED_X += test-dump-split-index
- TEST_PROGRAMS_NEED_X += test-dump-untracked-cache
- TEST_PROGRAMS_NEED_X += test-example-decorate
+@@ -676,7 +677,6 @@ TEST_PROGRAMS_NEED_X += test-dump-untracked-cache
  TEST_PROGRAMS_NEED_X += test-fake-ssh
-diff --git a/t/helper/test-dump-split-index.c b/t/helper/test-dump-split-index.c
-index e44430b699..4e2fdb5e30 100644
---- a/t/helper/test-dump-split-index.c
-+++ b/t/helper/test-dump-split-index.c
+ TEST_PROGRAMS_NEED_X += test-line-buffer
+ TEST_PROGRAMS_NEED_X += test-parse-options
+-TEST_PROGRAMS_NEED_X += test-path-utils
+ TEST_PROGRAMS_NEED_X += test-prio-queue
+ TEST_PROGRAMS_NEED_X += test-read-cache
+ TEST_PROGRAMS_NEED_X += test-write-cache
+diff --git a/t/helper/test-path-utils.c b/t/helper/test-path-utils.c
+index 2b3c5092a1..e115d44ac2 100644
+--- a/t/helper/test-path-utils.c
++++ b/t/helper/test-path-utils.c
 @@ -1,3 +1,4 @@
 +#include "test-tool.h"
  #include "cache.h"
- #include "split-index.h"
- #include "ewah/ewok.h"
-@@ -7,7 +8,7 @@ static void show_bit(size_t pos, void *data)
- 	printf(" %d", (int)pos);
- }
+ #include "string-list.h"
  
--int cmd_main(int ac, const char **av)
-+int cmd__dump_split_index(int ac, const char **av)
+@@ -170,7 +171,7 @@ static struct test_data dirname_data[] = {
+ 	{ NULL,              NULL     }
+ };
+ 
+-int cmd_main(int argc, const char **argv)
++int cmd__path_utils(int argc, const char **argv)
  {
- 	struct split_index *si;
- 	int i;
+ 	if (argc == 3 && !strcmp(argv[1], "normalize_path_copy")) {
+ 		char *buf = xmallocz(strlen(argv[2]));
 diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
-index 3d8d9ed1ce..26ae209cd5 100644
+index 8f78d61b68..4c985074b7 100644
 --- a/t/helper/test-tool.c
 +++ b/t/helper/test-tool.c
-@@ -14,6 +14,7 @@ static struct test_cmd cmds[] = {
- 	{ "delta", cmd__delta },
- 	{ "drop-caches", cmd__drop_caches },
- 	{ "dump-cache-tree", cmd__dump_cache_tree },
-+	{ "dump-split-index", cmd__dump_split_index },
- 	{ "lazy-init-name-hash", cmd__lazy_init_name_hash },
+@@ -24,6 +24,7 @@ static struct test_cmd cmds[] = {
+ 	{ "mergesort", cmd__mergesort },
+ 	{ "mktemp", cmd__mktemp },
+ 	{ "online-cpus", cmd__online_cpus },
++	{ "path-utils", cmd__path_utils },
  	{ "sha1", cmd__sha1 },
  };
+ 
 diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
-index 2a0d034adf..e8363e851f 100644
+index aeabc9740f..3b7ced01f5 100644
 --- a/t/helper/test-tool.h
 +++ b/t/helper/test-tool.h
-@@ -8,6 +8,7 @@ int cmd__date(int argc, const char **argv);
- int cmd__delta(int argc, const char **argv);
- int cmd__drop_caches(int argc, const char **argv);
- int cmd__dump_cache_tree(int argc, const char **argv);
-+int cmd__dump_split_index(int argc, const char **argv);
- int cmd__lazy_init_name_hash(int argc, const char **argv);
+@@ -18,6 +18,7 @@ int cmd__match_trees(int argc, const char **argv);
+ int cmd__mergesort(int argc, const char **argv);
+ int cmd__mktemp(int argc, const char **argv);
+ int cmd__online_cpus(int argc, const char **argv);
++int cmd__path_utils(int argc, const char **argv);
  int cmd__sha1(int argc, const char **argv);
  
-diff --git a/t/t0090-cache-tree.sh b/t/t0090-cache-tree.sh
-index f81e3deead..3266209e41 100755
---- a/t/t0090-cache-tree.sh
-+++ b/t/t0090-cache-tree.sh
-@@ -246,9 +246,9 @@ test_expect_success 'switching trees does not invalidate shared index' '
- 	git update-index --split-index &&
- 	>split &&
- 	git add split &&
--	test-dump-split-index .git/index | grep -v ^own >before &&
-+	test-tool dump-split-index .git/index | grep -v ^own >before &&
- 	git commit -m "as-is" &&
--	test-dump-split-index .git/index | grep -v ^own >after &&
-+	test-tool dump-split-index .git/index | grep -v ^own >after &&
- 	test_cmp before after
+ #endif
+diff --git a/t/lib-git-p4.sh b/t/lib-git-p4.sh
+index 54fd5a6ca0..c27599474c 100644
+--- a/t/lib-git-p4.sh
++++ b/t/lib-git-p4.sh
+@@ -39,7 +39,7 @@ native_path () {
+ 	then
+ 		path=$(cygpath --windows "$path")
+ 	else
+-		path=$(test-path-utils real_path "$path")
++		path=$(test-tool path-utils real_path "$path")
+ 	fi &&
+ 	echo "$path"
+ }
+diff --git a/t/t0060-path-utils.sh b/t/t0060-path-utils.sh
+index 7ea2bb515b..f46e3c4995 100755
+--- a/t/t0060-path-utils.sh
++++ b/t/t0060-path-utils.sh
+@@ -8,15 +8,15 @@ test_description='Test various path utilities'
+ . ./test-lib.sh
+ 
+ norm_path() {
+-	expected=$(test-path-utils print_path "$2")
++	expected=$(test-tool path-utils print_path "$2")
+ 	test_expect_success $3 "normalize path: $1 => $2" \
+-	"test \"\$(test-path-utils normalize_path_copy '$1')\" = '$expected'"
++	"test \"\$(test-tool path-utils normalize_path_copy '$1')\" = '$expected'"
+ }
+ 
+ relative_path() {
+-	expected=$(test-path-utils print_path "$3")
++	expected=$(test-tool path-utils print_path "$3")
+ 	test_expect_success $4 "relative path: $1 $2 => $3" \
+-	"test \"\$(test-path-utils relative_path '$1' '$2')\" = '$expected'"
++	"test \"\$(test-tool path-utils relative_path '$1' '$2')\" = '$expected'"
+ }
+ 
+ test_submodule_relative_url() {
+@@ -37,7 +37,7 @@ test_git_path() {
+ # On Windows, we are using MSYS's bash, which mangles the paths.
+ # Absolute paths are anchored at the MSYS installation directory,
+ # which means that the path / accounts for this many characters:
+-rootoff=$(test-path-utils normalize_path_copy / | wc -c)
++rootoff=$(test-tool path-utils normalize_path_copy / | wc -c)
+ # Account for the trailing LF:
+ if test $rootoff = 2; then
+ 	rootoff=	# we are on Unix
+@@ -46,7 +46,7 @@ else
+ 	# In MSYS2, the root directory "/" is translated into a Windows
+ 	# directory *with* trailing slash. Let's test for that and adjust
+ 	# our expected longest ancestor length accordingly.
+-	case "$(test-path-utils print_path /)" in
++	case "$(test-tool path-utils print_path /)" in
+ 	*/) rootslash=1;;
+ 	*) rootslash=0;;
+ 	esac
+@@ -61,7 +61,7 @@ ancestor() {
+ 		expected=$(($expected+$rootoff))
+ 	fi
+ 	test_expect_success "longest ancestor: $1 $2 => $expected" \
+-	"actual=\$(test-path-utils longest_ancestor_length '$1' '$2') &&
++	"actual=\$(test-tool path-utils longest_ancestor_length '$1' '$2') &&
+ 	 test \"\$actual\" = '$expected'"
+ }
+ 
+@@ -77,8 +77,8 @@ case $(uname -s) in
+ 	;;
+ esac
+ 
+-test_expect_success basename 'test-path-utils basename'
+-test_expect_success dirname 'test-path-utils dirname'
++test_expect_success basename 'test-tool path-utils basename'
++test_expect_success dirname 'test-tool path-utils dirname'
+ 
+ norm_path "" ""
+ norm_path . ""
+@@ -157,48 +157,48 @@ ancestor /foo/bar /foo:/bar 4
+ ancestor /foo/bar /bar -1
+ 
+ test_expect_success 'strip_path_suffix' '
+-	test c:/msysgit = $(test-path-utils strip_path_suffix \
++	test c:/msysgit = $(test-tool path-utils strip_path_suffix \
+ 		c:/msysgit/libexec//git-core libexec/git-core)
  '
  
-diff --git a/t/t1700-split-index.sh b/t/t1700-split-index.sh
-index b778975de8..ec179fbaf7 100755
---- a/t/t1700-split-index.sh
-+++ b/t/t1700-split-index.sh
-@@ -11,7 +11,7 @@ sane_unset GIT_FSMONITOR_TEST
- test_expect_success 'enable split index' '
- 	git config splitIndex.maxPercentChange 100 &&
- 	git update-index --split-index &&
--	test-dump-split-index .git/index >actual &&
-+	test-tool dump-split-index .git/index >actual &&
- 	indexversion=$(test-index-version <.git/index) &&
- 	if test "$indexversion" = "4"
- 	then
-@@ -39,7 +39,7 @@ test_expect_success 'add one file' '
- 	EOF
- 	test_cmp ls-files.expect ls-files.actual &&
+ test_expect_success 'absolute path rejects the empty string' '
+-	test_must_fail test-path-utils absolute_path ""
++	test_must_fail test-tool path-utils absolute_path ""
+ '
  
--	test-dump-split-index .git/index | sed "/^own/d" >actual &&
-+	test-tool dump-split-index .git/index | sed "/^own/d" >actual &&
- 	cat >expect <<-EOF &&
- 	base $base
- 	100644 $EMPTY_BLOB 0	one
-@@ -57,8 +57,8 @@ test_expect_success 'disable split index' '
- 	EOF
- 	test_cmp ls-files.expect ls-files.actual &&
+ test_expect_success 'real path rejects the empty string' '
+-	test_must_fail test-path-utils real_path ""
++	test_must_fail test-tool path-utils real_path ""
+ '
  
--	BASE=$(test-dump-split-index .git/index | grep "^own" | sed "s/own/base/") &&
--	test-dump-split-index .git/index | sed "/^own/d" >actual &&
-+	BASE=$(test-tool dump-split-index .git/index | grep "^own" | sed "s/own/base/") &&
-+	test-tool dump-split-index .git/index | sed "/^own/d" >actual &&
- 	cat >expect <<-EOF &&
- 	not a split index
- 	EOF
-@@ -73,7 +73,7 @@ test_expect_success 'enable split index again, "one" now belongs to base index"'
- 	EOF
- 	test_cmp ls-files.expect ls-files.actual &&
+ test_expect_success POSIX 'real path works on absolute paths 1' '
+ 	nopath="hopefully-absent-path" &&
+-	test "/" = "$(test-path-utils real_path "/")" &&
+-	test "/$nopath" = "$(test-path-utils real_path "/$nopath")"
++	test "/" = "$(test-tool path-utils real_path "/")" &&
++	test "/$nopath" = "$(test-tool path-utils real_path "/$nopath")"
+ '
  
--	test-dump-split-index .git/index | sed "/^own/d" >actual &&
-+	test-tool dump-split-index .git/index | sed "/^own/d" >actual &&
- 	cat >expect <<-EOF &&
- 	$BASE
- 	replacements:
-@@ -91,7 +91,7 @@ test_expect_success 'modify original file, base index untouched' '
- 	EOF
- 	test_cmp ls-files.expect ls-files.actual &&
+ test_expect_success 'real path works on absolute paths 2' '
+ 	nopath="hopefully-absent-path" &&
+ 	# Find an existing top-level directory for the remaining tests:
+ 	d=$(pwd -P | sed -e "s|^\([^/]*/[^/]*\)/.*|\1|") &&
+-	test "$d" = "$(test-path-utils real_path "$d")" &&
+-	test "$d/$nopath" = "$(test-path-utils real_path "$d/$nopath")"
++	test "$d" = "$(test-tool path-utils real_path "$d")" &&
++	test "$d/$nopath" = "$(test-tool path-utils real_path "$d/$nopath")"
+ '
  
--	test-dump-split-index .git/index | sed "/^own/d" >actual &&
-+	test-tool dump-split-index .git/index | sed "/^own/d" >actual &&
- 	q_to_tab >expect <<-EOF &&
- 	$BASE
- 	100644 2e0996000b7e9019eabcad29391bf0f5c7702f0b 0Q
-@@ -111,7 +111,7 @@ test_expect_success 'add another file, which stays index' '
- 	EOF
- 	test_cmp ls-files.expect ls-files.actual &&
+ test_expect_success POSIX 'real path removes extra leading slashes' '
+ 	nopath="hopefully-absent-path" &&
+-	test "/" = "$(test-path-utils real_path "///")" &&
+-	test "/$nopath" = "$(test-path-utils real_path "///$nopath")" &&
++	test "/" = "$(test-tool path-utils real_path "///")" &&
++	test "/$nopath" = "$(test-tool path-utils real_path "///$nopath")" &&
+ 	# Find an existing top-level directory for the remaining tests:
+ 	d=$(pwd -P | sed -e "s|^\([^/]*/[^/]*\)/.*|\1|") &&
+-	test "$d" = "$(test-path-utils real_path "//$d")" &&
+-	test "$d/$nopath" = "$(test-path-utils real_path "//$d/$nopath")"
++	test "$d" = "$(test-tool path-utils real_path "//$d")" &&
++	test "$d/$nopath" = "$(test-tool path-utils real_path "//$d/$nopath")"
+ '
  
--	test-dump-split-index .git/index | sed "/^own/d" >actual &&
-+	test-tool dump-split-index .git/index | sed "/^own/d" >actual &&
- 	q_to_tab >expect <<-EOF &&
- 	$BASE
- 	100644 2e0996000b7e9019eabcad29391bf0f5c7702f0b 0Q
-@@ -130,7 +130,7 @@ test_expect_success 'remove file not in base index' '
- 	EOF
- 	test_cmp ls-files.expect ls-files.actual &&
+ test_expect_success 'real path removes other extra slashes' '
+ 	nopath="hopefully-absent-path" &&
+ 	# Find an existing top-level directory for the remaining tests:
+ 	d=$(pwd -P | sed -e "s|^\([^/]*/[^/]*\)/.*|\1|") &&
+-	test "$d" = "$(test-path-utils real_path "$d///")" &&
+-	test "$d/$nopath" = "$(test-path-utils real_path "$d///$nopath")"
++	test "$d" = "$(test-tool path-utils real_path "$d///")" &&
++	test "$d/$nopath" = "$(test-tool path-utils real_path "$d///$nopath")"
+ '
  
--	test-dump-split-index .git/index | sed "/^own/d" >actual &&
-+	test-tool dump-split-index .git/index | sed "/^own/d" >actual &&
- 	q_to_tab >expect <<-EOF &&
- 	$BASE
- 	100644 2e0996000b7e9019eabcad29391bf0f5c7702f0b 0Q
-@@ -147,7 +147,7 @@ test_expect_success 'remove file in base index' '
- 	EOF
- 	test_cmp ls-files.expect ls-files.actual &&
+ test_expect_success SYMLINKS 'real path works on symlinks' '
+@@ -209,35 +209,35 @@ test_expect_success SYMLINKS 'real path works on symlinks' '
+ 	mkdir third &&
+ 	dir="$(cd .git; pwd -P)" &&
+ 	dir2=third/../second/other/.git &&
+-	test "$dir" = "$(test-path-utils real_path $dir2)" &&
++	test "$dir" = "$(test-tool path-utils real_path $dir2)" &&
+ 	file="$dir"/index &&
+-	test "$file" = "$(test-path-utils real_path $dir2/index)" &&
++	test "$file" = "$(test-tool path-utils real_path $dir2/index)" &&
+ 	basename=blub &&
+-	test "$dir/$basename" = "$(cd .git && test-path-utils real_path "$basename")" &&
++	test "$dir/$basename" = "$(cd .git && test-tool path-utils real_path "$basename")" &&
+ 	ln -s ../first/file .git/syml &&
+ 	sym="$(cd first; pwd -P)"/file &&
+-	test "$sym" = "$(test-path-utils real_path "$dir2/syml")"
++	test "$sym" = "$(test-tool path-utils real_path "$dir2/syml")"
+ '
  
--	test-dump-split-index .git/index | sed "/^own/d" >actual &&
-+	test-tool dump-split-index .git/index | sed "/^own/d" >actual &&
- 	cat >expect <<-EOF &&
- 	$BASE
- 	replacements:
-@@ -165,7 +165,7 @@ test_expect_success 'add original file back' '
- 	EOF
- 	test_cmp ls-files.expect ls-files.actual &&
+ test_expect_success SYMLINKS 'prefix_path works with absolute paths to work tree symlinks' '
+ 	ln -s target symlink &&
+-	test "$(test-path-utils prefix_path prefix "$(pwd)/symlink")" = "symlink"
++	test "$(test-tool path-utils prefix_path prefix "$(pwd)/symlink")" = "symlink"
+ '
  
--	test-dump-split-index .git/index | sed "/^own/d" >actual &&
-+	test-tool dump-split-index .git/index | sed "/^own/d" >actual &&
- 	cat >expect <<-EOF &&
- 	$BASE
- 	100644 $EMPTY_BLOB 0	one
-@@ -195,7 +195,7 @@ test_expect_success 'unify index, two files remain' '
- 	EOF
- 	test_cmp ls-files.expect ls-files.actual &&
+ test_expect_success 'prefix_path works with only absolute path to work tree' '
+ 	echo "" >expected &&
+-	test-path-utils prefix_path prefix "$(pwd)" >actual &&
++	test-tool path-utils prefix_path prefix "$(pwd)" >actual &&
+ 	test_cmp expected actual
+ '
  
--	test-dump-split-index .git/index | sed "/^own/d" >actual &&
-+	test-tool dump-split-index .git/index | sed "/^own/d" >actual &&
- 	cat >expect <<-EOF &&
- 	not a split index
- 	EOF
-@@ -229,8 +229,8 @@ test_expect_success 'set core.splitIndex config variable to true' '
- 	100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0	two
- 	EOF
- 	test_cmp ls-files.expect ls-files.actual &&
--	BASE=$(test-dump-split-index .git/index | grep "^base") &&
--	test-dump-split-index .git/index | sed "/^own/d" >actual &&
-+	BASE=$(test-tool dump-split-index .git/index | grep "^base") &&
-+	test-tool dump-split-index .git/index | sed "/^own/d" >actual &&
- 	cat >expect <<-EOF &&
- 	$BASE
- 	replacements:
-@@ -248,7 +248,7 @@ test_expect_success 'set core.splitIndex config variable to false' '
- 	100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0	two
- 	EOF
- 	test_cmp ls-files.expect ls-files.actual &&
--	test-dump-split-index .git/index | sed "/^own/d" >actual &&
-+	test-tool dump-split-index .git/index | sed "/^own/d" >actual &&
- 	cat >expect <<-EOF &&
- 	not a split index
- 	EOF
-@@ -259,8 +259,8 @@ test_expect_success 'set core.splitIndex config variable to true' '
- 	git config core.splitIndex true &&
- 	: >three &&
- 	git update-index --add three &&
--	BASE=$(test-dump-split-index .git/index | grep "^base") &&
--	test-dump-split-index .git/index | sed "/^own/d" >actual &&
-+	BASE=$(test-tool dump-split-index .git/index | grep "^base") &&
-+	test-tool dump-split-index .git/index | sed "/^own/d" >actual &&
- 	cat >expect <<-EOF &&
- 	$BASE
- 	replacements:
-@@ -269,7 +269,7 @@ test_expect_success 'set core.splitIndex config variable to true' '
- 	test_cmp expect actual &&
- 	: >four &&
- 	git update-index --add four &&
--	test-dump-split-index .git/index | sed "/^own/d" >actual &&
-+	test-tool dump-split-index .git/index | sed "/^own/d" >actual &&
- 	cat >expect <<-EOF &&
- 	$BASE
- 	100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0	four
-@@ -283,8 +283,8 @@ test_expect_success 'check behavior with splitIndex.maxPercentChange unset' '
- 	git config --unset splitIndex.maxPercentChange &&
- 	: >five &&
- 	git update-index --add five &&
--	BASE=$(test-dump-split-index .git/index | grep "^base") &&
--	test-dump-split-index .git/index | sed "/^own/d" >actual &&
-+	BASE=$(test-tool dump-split-index .git/index | grep "^base") &&
-+	test-tool dump-split-index .git/index | sed "/^own/d" >actual &&
- 	cat >expect <<-EOF &&
- 	$BASE
- 	replacements:
-@@ -293,7 +293,7 @@ test_expect_success 'check behavior with splitIndex.maxPercentChange unset' '
- 	test_cmp expect actual &&
- 	: >six &&
- 	git update-index --add six &&
--	test-dump-split-index .git/index | sed "/^own/d" >actual &&
-+	test-tool dump-split-index .git/index | sed "/^own/d" >actual &&
- 	cat >expect <<-EOF &&
- 	$BASE
- 	100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0	six
-@@ -307,8 +307,8 @@ test_expect_success 'check splitIndex.maxPercentChange set to 0' '
- 	git config splitIndex.maxPercentChange 0 &&
- 	: >seven &&
- 	git update-index --add seven &&
--	BASE=$(test-dump-split-index .git/index | grep "^base") &&
--	test-dump-split-index .git/index | sed "/^own/d" >actual &&
-+	BASE=$(test-tool dump-split-index .git/index | grep "^base") &&
-+	test-tool dump-split-index .git/index | sed "/^own/d" >actual &&
- 	cat >expect <<-EOF &&
- 	$BASE
- 	replacements:
-@@ -317,8 +317,8 @@ test_expect_success 'check splitIndex.maxPercentChange set to 0' '
- 	test_cmp expect actual &&
- 	: >eight &&
- 	git update-index --add eight &&
--	BASE=$(test-dump-split-index .git/index | grep "^base") &&
--	test-dump-split-index .git/index | sed "/^own/d" >actual &&
-+	BASE=$(test-tool dump-split-index .git/index | grep "^base") &&
-+	test-tool dump-split-index .git/index | sed "/^own/d" >actual &&
- 	cat >expect <<-EOF &&
- 	$BASE
- 	replacements:
+ test_expect_success 'prefix_path rejects absolute path to dir with same beginning as work tree' '
+-	test_must_fail test-path-utils prefix_path prefix "$(pwd)a"
++	test_must_fail test-tool path-utils prefix_path prefix "$(pwd)a"
+ '
+ 
+ test_expect_success SYMLINKS 'prefix_path works with absolute path to a symlink to work tree having  same beginning as work tree' '
+ 	git init repo &&
+ 	ln -s repo repolink &&
+-	test "a" = "$(cd repo && test-path-utils prefix_path prefix "$(pwd)/../repolink/a")"
++	test "a" = "$(cd repo && test-tool path-utils prefix_path prefix "$(pwd)/../repolink/a")"
+ '
+ 
+ relative_path /foo/a/b/c/	/foo/a/b/	c/
+diff --git a/t/t1501-work-tree.sh b/t/t1501-work-tree.sh
+index b06210ec5e..b07cb9140e 100755
+--- a/t/t1501-work-tree.sh
++++ b/t/t1501-work-tree.sh
+@@ -360,7 +360,7 @@ test_expect_success 'GIT_DIR set (1)' '
+ 	(
+ 		cd work &&
+ 		GIT_DIR=../gitfile git rev-parse --git-common-dir >actual &&
+-		test-path-utils real_path "$TRASH_DIRECTORY/repo.git" >expect &&
++		test-tool path-utils real_path "$TRASH_DIRECTORY/repo.git" >expect &&
+ 		test_cmp expect actual
+ 	)
+ '
+@@ -371,7 +371,7 @@ test_expect_success 'GIT_DIR set (2)' '
+ 	(
+ 		cd work &&
+ 		GIT_DIR=../gitfile git rev-parse --git-common-dir >actual &&
+-		test-path-utils real_path "$TRASH_DIRECTORY/repo.git" >expect &&
++		test-tool path-utils real_path "$TRASH_DIRECTORY/repo.git" >expect &&
+ 		test_cmp expect actual
+ 	)
+ '
+@@ -382,7 +382,7 @@ test_expect_success 'Auto discovery' '
+ 	(
+ 		cd work &&
+ 		git rev-parse --git-common-dir >actual &&
+-		test-path-utils real_path "$TRASH_DIRECTORY/repo.git" >expect &&
++		test-tool path-utils real_path "$TRASH_DIRECTORY/repo.git" >expect &&
+ 		test_cmp expect actual &&
+ 		echo haha >data1 &&
+ 		git add data1 &&
+@@ -400,7 +400,7 @@ test_expect_success '$GIT_DIR/common overrides core.worktree' '
+ 	(
+ 		cd work &&
+ 		git rev-parse --git-common-dir >actual &&
+-		test-path-utils real_path "$TRASH_DIRECTORY/repo.git" >expect &&
++		test-tool path-utils real_path "$TRASH_DIRECTORY/repo.git" >expect &&
+ 		test_cmp expect actual &&
+ 		echo haha >data2 &&
+ 		git add data2 &&
 -- 
 2.17.0.rc0.348.gd5a49e0b6f
 
