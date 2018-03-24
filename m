@@ -7,100 +7,302 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D4B421F404
-	for <e@80x24.org>; Sat, 24 Mar 2018 12:51:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5AABB1F404
+	for <e@80x24.org>; Sat, 24 Mar 2018 12:54:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751935AbeCXMvD (ORCPT <rfc822;e@80x24.org>);
-        Sat, 24 Mar 2018 08:51:03 -0400
-Received: from mail-wm0-f43.google.com ([74.125.82.43]:34955 "EHLO
-        mail-wm0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751891AbeCXMvC (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 24 Mar 2018 08:51:02 -0400
-Received: by mail-wm0-f43.google.com with SMTP id r82so7969494wme.0
-        for <git@vger.kernel.org>; Sat, 24 Mar 2018 05:51:02 -0700 (PDT)
+        id S1751903AbeCXMyE (ORCPT <rfc822;e@80x24.org>);
+        Sat, 24 Mar 2018 08:54:04 -0400
+Received: from mail-lf0-f47.google.com ([209.85.215.47]:41070 "EHLO
+        mail-lf0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751891AbeCXMyD (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 24 Mar 2018 08:54:03 -0400
+Received: by mail-lf0-f47.google.com with SMTP id o102-v6so21994803lfg.8
+        for <git@vger.kernel.org>; Sat, 24 Mar 2018 05:54:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=2VAwPcEeEEZKXIgemtwsIgdV1Y7TRx8w1BGq/q16XsQ=;
-        b=RNioOXkQzmZ4YOX7JmlmAZlG2O5kmB3dDZD2NWl/JCsYnGx4LHANP/586778wTMv0D
-         WoglVgJPK0NGWt0+uoV7fuaWdfaxCVUZ+UaIl4KfGIxV0EMLMOySCFwLWDqbmoqMstiC
-         GXw5QqF/RodPW0hErH6MmI55I9HBvqw0UHcZzmQtI6ilo58rjwLmuLBrLqSTgV5qXe2y
-         N2fVOAM5rZrpQKw39Y4UQuFpeYFLqTUUmrKyJBbmGaObmpGkdWSDZvMPJTAaWWRMRr8z
-         YLD+0h9bOa1EnKD1ETrhEIJnaIIEqAk3q+rcwVv8RvgZ9Y9xH9dqxMZiuCG6ITPCb8Nq
-         mMdA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=4TsV/BnYgM5hz/dJBt89JWzewBODSExsF+ZA4dav9xI=;
+        b=XYOCJfI4EyhLt1mb+OzOX/iy6cf7kl9EFpsvAO+GvVce/b1uIVDpOUAecqNF6YYAh8
+         hbltRqlXT6kmg5snMHKBRV1MGOF+vsq2Zdilj564dgzllsec6bf+1JNR28uS1YjTRKqF
+         hSTee7wQ4kieMF0xeoqQXkTWZdcvW7ivrTLPF98flcIxAueTVRZ4fHw4Dpaj6OXWvv7y
+         VZ9TciEZ8pkkH8rW/5QWMba2DEMi1XYCdiVmbhKZ/xzPJjlMF/toi7hFx6pYDfGyHj7v
+         FrK+1hlGdU8AdjvjBLM4in0fQ952q4qKvgGp5KHXzgZSTn8Dv4aorq1eUC+RC+k/UQpC
+         OI2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=2VAwPcEeEEZKXIgemtwsIgdV1Y7TRx8w1BGq/q16XsQ=;
-        b=rtu/0O3o6zZ0P+wllEwT+LkvG2DfYMp1C7tBUjXNnx5NZpEbCTvWm7qvdvzvGLGOPy
-         7VT072/mjaAMI6KocTheEB3NDqOjxUE/T0Lo6x1DNOCsW7WKYZbUfZeau4vcPlVqV0Ry
-         8RH9Ljxe+5nLpt+IwDdZHG5J8BbBA6Umjn4XM33mKRk+poBb7AoYsBd2TtwT/QDfyjqi
-         ekE2uUvAHCZQzhe8TGskVcSZSgbM6XjBT7mQ5a7ZXPv/ENcZ+kt68NbnLZ+Dpcy+TAhU
-         kVg0YN24WEaSSPHse+L0TYqHFbBUziRoF8wwt9oTed8jCCFqb2LxdvL9Mi8bidapGlQr
-         EmGQ==
-X-Gm-Message-State: AElRT7F6jg3O+OC2pqcGfL3UO3BNDZYLCtcoOoYeA4NMczGbyKCLTywL
-        ERcX6ZkA1NIHUwnTKEQVt1M=
-X-Google-Smtp-Source: AG47ELuqxmYbnYFQyePSvS0YQ8I+n4RDTVmAMzDK9x4oCNGvit4vLaY1oWrLt3hk7UomykeWFv7Rfg==
-X-Received: by 10.28.132.133 with SMTP id g127mr11758795wmd.50.1521895861379;
-        Sat, 24 Mar 2018 05:51:01 -0700 (PDT)
-Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
-        by smtp.gmail.com with ESMTPSA id o70sm11153365wmg.3.2018.03.24.05.50.59
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 24 Mar 2018 05:51:00 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 00/36] Combine t/helper binaries into a single one
-References: <20180317075421.22032-1-pclouds@gmail.com> <20180324074505.19100-1-pclouds@gmail.com>
-User-agent: Debian GNU/Linux 9.4 (stretch); Emacs 25.1.1; mu4e 1.1.0
-In-reply-to: <20180324074505.19100-1-pclouds@gmail.com>
-Date:   Sat, 24 Mar 2018 13:50:59 +0100
-Message-ID: <87bmfdy6vg.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=4TsV/BnYgM5hz/dJBt89JWzewBODSExsF+ZA4dav9xI=;
+        b=ZuAWtp3UBajYLahky7qNZtH79vbGJC+l30kTa+I77wEFdxo2JNEda8OP1cE0+SlLo6
+         ixm1IkjmDxCLPaXREkwg0mypUZMKdBJJqBQwsxfr6SAgSamHCnUqVHkCqjcYiQ4yxL+l
+         Cr8KNf677f8Pqw8v3ouFw9OflubSmi15wWmCjTSUe5JYUeoeR8ievF/Uh4hyi4o6Orea
+         9tmDtCmBbFoZPZBHr00ECatpYAiLnBiTOArrhtJ3Vi4LqIwLjltewR7puWHmwkc63Fhl
+         v1uAUHlblakXV7sMwbiEqRPZUhMVdZ1lM/QmrNXxH3omQWoHAW81umbrjsO2TdfS+Whf
+         bGiQ==
+X-Gm-Message-State: AElRT7GsXsExkdqy7BexvkgiTCYIKOm79WoJV9qsW+NI1wog5lcHrSxt
+        DngvIvL33E4Be2zdSZN1tF2Dfw==
+X-Google-Smtp-Source: AG47ELt8wcKwZ9zIxCh+FHeVBQsQUyGpkLpl/iz7SUW89vaRPV0TqmR4OTk12sI8Xd6M55gTVdjP2g==
+X-Received: by 2002:a19:6919:: with SMTP id e25-v6mr21616064lfc.52.1521896041294;
+        Sat, 24 Mar 2018 05:54:01 -0700 (PDT)
+Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
+        by smtp.gmail.com with ESMTPSA id m23sm2472676ljg.21.2018.03.24.05.54.00
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 24 Mar 2018 05:54:00 -0700 (PDT)
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        larsxschneider@gmail.com,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+Subject: [PATCH v2] Makefile: detect compiler and enable more warnings in DEVELOPER=1
+Date:   Sat, 24 Mar 2018 13:53:48 +0100
+Message-Id: <20180324125348.6614-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.17.0.rc0.348.gd5a49e0b6f
+In-Reply-To: <20180318081834.16081-1-pclouds@gmail.com>
+References: <20180318081834.16081-1-pclouds@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+The set of extra warnings we enable when DEVELOPER has to be
+conservative because we can't assume any compiler version the
+developer may use. Detect the compiler version so we know when it's
+safe to enable -Wextra and maybe more.
 
-On Sat, Mar 24 2018, Nguyễn Thái Ngọc Duy wrote:
+These warning settings are mostly from my custom config.mak a long
+time ago when I tried to enable as many warnings as possible that can
+still build without showing warnings. Some of them those warnings are
+probably worth fixing instead of just suppressing in future.
 
-> v2 fixes a couple of typos in commit messages and use the cmd__ prefix
-> for test commands instead of test_, which avoids a naming conflict
-> with the existing function test_lazy_init_name_hash
->
-> [the previous v2 send out was aborted because I messed it up with some
-> other patches]
+Helped-by: Jeff King <peff@peff.net>
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ v2 improves a bit over v1:
 
-This whole thing looks good to me, and I've applied it to my own build
-and run several modes (normal, split index etc.) of the test suite with
-it. Didn't get any problems.
+ - apple clang support (though I suspect we may want to make it a
+   separate compiler family since apple clang has different
+   versioning, but I can't and won't work on that front)
 
-Micronit: If you M-x sort-lines (and I assume similar in other editors
-that have a function to sort stuff in ASCII order) the test-tool.c list
-you get this diff on top:
+ - support CC='ccache gcc' (yes it breaks now if you have spaces in
+   your cc path)
 
-    diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
-    index cd5e28b045..c38939b93e 100644
-    --- a/t/helper/test-tool.c
-    +++ b/t/helper/test-tool.c
-    @@ -32,8 +32,8 @@ static struct test_cmd cmds[] = {
-            { "revision-walking", cmd__revision_walking },
-            { "run-command", cmd__run_command },
-            { "scrap-cache-tree", cmd__scrap_cache_tree },
-    -       { "sha1-array", cmd__sha1_array },
-            { "sha1", cmd__sha1 },
-    +       { "sha1-array", cmd__sha1_array },
-            { "sigchain", cmd__sigchain },
-            { "strcmp-offset", cmd__strcmp_offset },
-            { "string-list", cmd__string_list },
+ - allow to skip detect-compiler by setting COMPILER_FEATURES in
+   config.mak
 
-I think it makes sense to keep such lists in ASCII order (" before -)
-for subsequent edits where one or more things are added to the list and
-then sorted before submission.
+ I notice Ramsay is working on clean -Wmaybe-uninitialized, if his
+ series is merged first I'll stop disabling it here.
+
+ Interdiff
+
+    diff --git a/Makefile b/Makefile
+    index 9dfd152a1e..04b2a39bab 100644
+    --- a/Makefile
+    +++ b/Makefile
+    @@ -434,6 +434,10 @@ all::
+     #
+     # When cross-compiling, define HOST_CPU as the canonical name of the CPU on
+     # which the built Git will run (for instance "x86_64").
+    +#
+    +# Define DEVELOPER to enable more compiler warnings. Compiler version
+    +# and faimily are auto detected, but could be overridden by defining
+    +# COMPILER_FEATURES (see config.mak.dev)
+     
+     GIT-VERSION-FILE: FORCE
+     	@$(SHELL_PATH) ./GIT-VERSION-GEN
+    diff --git a/config.mak.dev b/config.mak.dev
+    index 59aef342c4..d8beaf9347 100644
+    --- a/config.mak.dev
+    +++ b/config.mak.dev
+    @@ -8,7 +8,9 @@ CFLAGS += -Wstrict-prototypes
+     CFLAGS += -Wunused
+     CFLAGS += -Wvla
+     
+    +ifndef COMPILER_FEATURES
+     COMPILER_FEATURES := $(shell ./detect-compiler $(CC))
+    +endif
+     
+     ifneq ($(filter clang4,$(COMPILER_FEATURES)),)
+     CFLAGS += -Wtautological-constant-out-of-range-compare
+    diff --git a/detect-compiler b/detect-compiler
+    index bc2ea39ef5..70b754481c 100755
+    --- a/detect-compiler
+    +++ b/detect-compiler
+    @@ -9,7 +9,7 @@ CC="$*"
+     #
+     # FreeBSD clang version 3.4.1 (tags/RELEASE...)
+     get_version_line() {
+    -	"$CC" -v 2>&1 | grep ' version '
+    +	$CC -v 2>&1 | grep ' version '
+     }
+     
+     get_family() {
+    @@ -38,12 +38,15 @@ case "$(get_family)" in
+     gcc)
+     	print_flags gcc
+     	;;
+    -*clang)
+    +clang)
+     	print_flags clang
+     	;;
+     "FreeBSD clang")
+     	print_flags clang
+     	;;
+    +"Apple LLVM")
+    +	print_flags clang
+    +	;;
+     *)
+     	: unknown compiler family
+     	;;
+
+ Makefile        | 15 +++++---------
+ config.mak.dev  | 30 ++++++++++++++++++++++++++++
+ detect-compiler | 53 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 88 insertions(+), 10 deletions(-)
+ create mode 100644 config.mak.dev
+ create mode 100755 detect-compiler
+
+diff --git a/Makefile b/Makefile
+index a1d8775adb..04b2a39bab 100644
+--- a/Makefile
++++ b/Makefile
+@@ -434,6 +434,10 @@ all::
+ #
+ # When cross-compiling, define HOST_CPU as the canonical name of the CPU on
+ # which the built Git will run (for instance "x86_64").
++#
++# Define DEVELOPER to enable more compiler warnings. Compiler version
++# and faimily are auto detected, but could be overridden by defining
++# COMPILER_FEATURES (see config.mak.dev)
+ 
+ GIT-VERSION-FILE: FORCE
+ 	@$(SHELL_PATH) ./GIT-VERSION-GEN
+@@ -442,15 +446,6 @@ GIT-VERSION-FILE: FORCE
+ # CFLAGS and LDFLAGS are for the users to override from the command line.
+ 
+ CFLAGS = -g -O2 -Wall
+-DEVELOPER_CFLAGS = -Werror \
+-	-Wdeclaration-after-statement \
+-	-Wno-format-zero-length \
+-	-Wold-style-definition \
+-	-Woverflow \
+-	-Wpointer-arith \
+-	-Wstrict-prototypes \
+-	-Wunused \
+-	-Wvla
+ LDFLAGS =
+ ALL_CFLAGS = $(CPPFLAGS) $(CFLAGS)
+ ALL_LDFLAGS = $(LDFLAGS)
+@@ -1051,7 +1046,7 @@ include config.mak.uname
+ -include config.mak
+ 
+ ifdef DEVELOPER
+-CFLAGS += $(DEVELOPER_CFLAGS)
++include config.mak.dev
+ endif
+ 
+ comma := ,
+diff --git a/config.mak.dev b/config.mak.dev
+new file mode 100644
+index 0000000000..d8beaf9347
+--- /dev/null
++++ b/config.mak.dev
+@@ -0,0 +1,30 @@
++CFLAGS += -Werror
++CFLAGS += -Wdeclaration-after-statement
++CFLAGS += -Wno-format-zero-length
++CFLAGS += -Wold-style-definition
++CFLAGS += -Woverflow
++CFLAGS += -Wpointer-arith
++CFLAGS += -Wstrict-prototypes
++CFLAGS += -Wunused
++CFLAGS += -Wvla
++
++ifndef COMPILER_FEATURES
++COMPILER_FEATURES := $(shell ./detect-compiler $(CC))
++endif
++
++ifneq ($(filter clang4,$(COMPILER_FEATURES)),)
++CFLAGS += -Wtautological-constant-out-of-range-compare
++endif
++
++ifneq ($(or $(filter gcc6,$(COMPILER_FEATURES)),$(filter clang4,$(COMPILER_FEATURES))),)
++CFLAGS += -Wextra
++CFLAGS += -Wmissing-prototypes
++CFLAGS += -Wno-empty-body
++CFLAGS += -Wno-missing-field-initializers
++CFLAGS += -Wno-sign-compare
++CFLAGS += -Wno-unused-function
++CFLAGS += -Wno-unused-parameter
++ifneq ($(filter gcc6,$(COMPILER_FEATURES)),)
++CFLAGS += -Wno-maybe-uninitialized
++endif
++endif
+diff --git a/detect-compiler b/detect-compiler
+new file mode 100755
+index 0000000000..70b754481c
+--- /dev/null
++++ b/detect-compiler
+@@ -0,0 +1,53 @@
++#!/bin/sh
++#
++# Probe the compiler for vintage, version, etc. This is used for setting
++# optional make knobs under the DEVELOPER knob.
++
++CC="$*"
++
++# we get something like (this is at least true for gcc and clang)
++#
++# FreeBSD clang version 3.4.1 (tags/RELEASE...)
++get_version_line() {
++	$CC -v 2>&1 | grep ' version '
++}
++
++get_family() {
++	get_version_line | sed 's/^\(.*\) version [0-9][^ ]* .*/\1/'
++}
++
++get_version() {
++	get_version_line | sed 's/^.* version \([0-9][^ ]*\) .*/\1/'
++}
++
++print_flags() {
++	family=$1
++	version=$(get_version | cut -f 1 -d .)
++
++	# Print a feature flag not only for the current version, but also
++	# for any prior versions we encompass. This avoids needing to do
++	# numeric comparisons in make, which are awkward.
++	while test "$version" -gt 0
++	do
++		echo $family$version
++		version=$((version - 1))
++	done
++}
++
++case "$(get_family)" in
++gcc)
++	print_flags gcc
++	;;
++clang)
++	print_flags clang
++	;;
++"FreeBSD clang")
++	print_flags clang
++	;;
++"Apple LLVM")
++	print_flags clang
++	;;
++*)
++	: unknown compiler family
++	;;
++esac
+-- 
+2.17.0.rc0.348.gd5a49e0b6f
+
