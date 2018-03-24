@@ -2,111 +2,152 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 15AD11F404
-	for <e@80x24.org>; Sat, 24 Mar 2018 16:41:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 251471F404
+	for <e@80x24.org>; Sat, 24 Mar 2018 17:10:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752281AbeCXQlW (ORCPT <rfc822;e@80x24.org>);
-        Sat, 24 Mar 2018 12:41:22 -0400
-Received: from mout.web.de ([212.227.15.4]:50565 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752167AbeCXQlV (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 24 Mar 2018 12:41:21 -0400
-Received: from [192.168.178.36] ([79.237.251.165]) by smtp.web.de (mrweb001
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0LqlAw-1eLkNo21q6-00eJQi; Sat, 24
- Mar 2018 17:41:10 +0100
-Subject: [PATCH 4/3] sha1_name: use bsearch_pack() in unique_in_pack()
-To:     Derrick Stolee <dstolee@microsoft.com>, git@vger.kernel.org
-Cc:     stolee@gmail.com, jonathantanmy@google.com,
-        sandals@crustytoothpaste.net
-References: <20180321224226.GA74743@genre.crustytoothpaste.net>
- <20180322174010.120117-1-dstolee@microsoft.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <71b5cef0-abad-001f-6a23-3f2d874b9709@web.de>
-Date:   Sat, 24 Mar 2018 17:41:08 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.7.0
+        id S1752486AbeCXRKE (ORCPT <rfc822;e@80x24.org>);
+        Sat, 24 Mar 2018 13:10:04 -0400
+Received: from mail-pf0-f169.google.com ([209.85.192.169]:42677 "EHLO
+        mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752253AbeCXRKD (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 24 Mar 2018 13:10:03 -0400
+Received: by mail-pf0-f169.google.com with SMTP id a16so5914936pfn.9
+        for <git@vger.kernel.org>; Sat, 24 Mar 2018 10:10:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to;
+        bh=ITMpTgWR8wxFxHAnUFNSzp7JL9ZZmS/d95jb7NlVCG0=;
+        b=vCnNnLt5rObj7A1jQll9EgvatOONn/nNadd5KxcNGvK00zsD/N9wXCgjSVv3ILR2Yl
+         hsy+TWafcifvdrjnYRHGS7KEZobjR7gU8WUs2U9CG3JONjRcCxmMthXA7UPHqzVmdGE5
+         pL9gJmdDhKEfeX3vo2iLP+5dKFatOus78Qp0hj2Z36KXLLNrGZ/64zIjTpYcUMCrNQRY
+         8DMNy1cgXd+rQq1pirZOltW+9XLHkqnKXm0NhuMn2cDjnR7MrhwbpbFEbA7EC90RexX3
+         eG6cZsyNvHiSlatZ2IStZ2yaLPufUYki3ooMfn/C+4muLev+TDMoyqcAbgD7RkYYMs3/
+         5gAA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to;
+        bh=ITMpTgWR8wxFxHAnUFNSzp7JL9ZZmS/d95jb7NlVCG0=;
+        b=c2IuF14be5VyGG6eQZYewx8j/8ZX8F+dVjgwTf1tT5GRk+emzfmC/MInyu16Y3LA7h
+         Jr2UjS+9Db96f6QEIQI4KkI7EHcsV7AHiqSLJkITR6Qe1Epih4HU9FmpFtpQ8FtSl4Lc
+         KY9GcyIWy6/8mN4cMDdLWaHD1V2Y7dS4EdFJLn4xp/GbI4fKwpG+/Xke12+N6549z4lm
+         Mx3VM2XMOf7APKNzXS36xsj0nljyb13RFyMKid9W7eMbVoyaxnh9cMF5F7tctENsv7hP
+         7pZYPL+Sts40QT4uNasPQpDZmIRF9B7VUu3Fv6WjhLo9fegXwIIVq21js1t1u20tC0t6
+         OD1g==
+X-Gm-Message-State: AElRT7HSqA0UIPtVCeTE8xPJbNE46kgsJhmQj1YG/6qTuqNjJ6qy7X7F
+        G3S5xI9jVO4yQgEYOwDQwXE=
+X-Google-Smtp-Source: AG47ELs2oFwmx0ytrVkr7STe6aPQj2w9KAOv5TGXDroZY9jidtkbYq9J3SD7cMkTwcdqYqdsKnP8Kg==
+X-Received: by 10.98.18.70 with SMTP id a67mr27848722pfj.213.1521911403222;
+        Sat, 24 Mar 2018 10:10:03 -0700 (PDT)
+Received: from [192.168.206.100] ([117.251.231.152])
+        by smtp.gmail.com with ESMTPSA id t20sm22472374pfh.182.2018.03.24.10.09.59
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 24 Mar 2018 10:10:02 -0700 (PDT)
+Subject: Re: [PATCH v4 2/3] builtin/branch: give more useful error messages
+ when renaming
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git mailing list <git@vger.kernel.org>,
+        Eric Sunshine <sunshine@sunshineco.com>
+References: <20171102065407.25404-1-kaartic.sivaraam@gmail.com>
+ <20180310155416.21802-1-kaartic.sivaraam@gmail.com>
+ <20180310155416.21802-3-kaartic.sivaraam@gmail.com>
+ <xmqqlget3wqa.fsf@gitster-ct.c.googlers.com>
+From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Message-ID: <3d5aa4f7-de4a-15d4-9987-13524dc40c59@gmail.com>
+Date:   Sat, 24 Mar 2018 22:39:48 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.6.0
 MIME-Version: 1.0
-In-Reply-To: <20180322174010.120117-1-dstolee@microsoft.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:h+s4ywDmz/SuPbh01nREwvVHx3T1T764xzbWSv51xJ7UQQK0ZIq
- PoOPH9qLGF0sy7BLIl2l2gKBJwECXyxDr22MQcu3BjVlJo7bp4UyAa6ko/GsFAIjmy0rbQB
- oytZOUJbeLTaOOAUX1h9uLmFdUH7y189AZfE0sz17Jml+EhGjqOI0t9FDnHV4SgaWQhhDIP
- WF1HWP2sXyWX/iF5K5Y1g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:iLCtdS8tcaQ=:egNzfQKtp04hiod8epetHg
- 26TFYUb+44jMMlZifAJmCueEkWaDTngAm5RYHMXNtB/ZJecfaIrOfMhh0odwuCeRyXQkHHOy0
- WzXxlHusr72nfbs+kRb+zl+0fox+xGXgp/h94dq+mNoeBJRvyIvFMyIJqYKQg7oRp00aFrW2P
- QctKIQ5/Lk1cVssKrgoB8d4TRcS10CX9qErxlwSXhNxm+UtB2T8kThs8ok6Rpg74GF6qhSx0i
- mFAHoIzKALTKEdsuw/zZJP+fbWCqSLQ/cL+YWfCRTz137jGUnpo/4b/a8YIElPGQQb2EoephP
- uMfLXw3njoNUamb3d72HbvR3hDxbE0e/uyTpCO/rveRs9Yj8nX/sAc95dBEFYM7vPVHJTjDlR
- Jy2YJKWotoNa+3mjsMkT88VOEaavQSH2056cHAF2DML3W31E6EjgpaKlJ/9iY4Y8M+D3hYNfc
- imvLTKvvJ2V0g9hknKFBgc9tsU4qOKp9pltmfrJyumlxfeaDAxNs3u5MShGouQJzKAns2uDZL
- eTMhE2cyeP3VCF+rTrAWkrfXpx4UY/ucN3+zQXXUd4Ct6zDUPraZAZC9mD8X8uvXZDE5E5I06
- gVq3PYShwUNZIjikYp42tPTUxXfC6Dffuax9VYydmAmWBImWndhTRpBGEpimsW53nylZgOIWm
- VNlxs6N07F7cJw5eAgVfqArVNhTPysgvlSG3TqzmXrM58NV+zlPy7NAvIre0gyRjMASDiZH75
- +tXqJXvIEAbJGH6rInWn+z1Nx/iVMPt+pOqiaa1FVGUzymn3zqMHDYpkAr1aoodUF27OFM5BV
- lkxxUR7MiCBMSzKyCPrZgcCo+ffEn/yvvxj3XxPz/euf8v7Q1o=
+In-Reply-To: <xmqqlget3wqa.fsf@gitster-ct.c.googlers.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="vHt0hQy0yv7fpcnJ1n4XLYigufPqxdb2T"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Replace the custom binary search in unique_in_pack() with a call to
-bsearch_pack().  This reduces code duplication and makes use of the
-fan-out table of packs.
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--vHt0hQy0yv7fpcnJ1n4XLYigufPqxdb2T
+Content-Type: multipart/mixed; boundary="WsE7y7SEqly86g9J87KkRu3K17VOQpfMb";
+ protected-headers="v1"
+From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Git mailing list <git@vger.kernel.org>,
+ Eric Sunshine <sunshine@sunshineco.com>
+Message-ID: <3d5aa4f7-de4a-15d4-9987-13524dc40c59@gmail.com>
+Subject: Re: [PATCH v4 2/3] builtin/branch: give more useful error messages
+ when renaming
+References: <20171102065407.25404-1-kaartic.sivaraam@gmail.com>
+ <20180310155416.21802-1-kaartic.sivaraam@gmail.com>
+ <20180310155416.21802-3-kaartic.sivaraam@gmail.com>
+ <xmqqlget3wqa.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqlget3wqa.fsf@gitster-ct.c.googlers.com>
 
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
----
-This is basically the same replacement as done by patch 3.  Speed is
-less of a concern here -- at least I don't know a commonly used
-command that needs to resolve lots of short hashes.
+--WsE7y7SEqly86g9J87KkRu3K17VOQpfMb
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
 
- sha1_name.c | 21 ++-------------------
- 1 file changed, 2 insertions(+), 19 deletions(-)
+On Friday 16 March 2018 02:03 AM, Junio C Hamano wrote:
+> Quite honestly, I am not sure if this amount of new code that
+> results in sentence lego is really worth it.
 
-diff --git a/sha1_name.c b/sha1_name.c
-index 24894b3dbe..0185c6081a 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -150,31 +150,14 @@ static int match_sha(unsigned len, const unsigned char *a, const unsigned char *
- static void unique_in_pack(struct packed_git *p,
- 			   struct disambiguate_state *ds)
- {
--	uint32_t num, last, i, first = 0;
-+	uint32_t num, i, first = 0;
- 	const struct object_id *current = NULL;
- 
- 	if (open_pack_index(p) || !p->num_objects)
- 		return;
- 
- 	num = p->num_objects;
--	last = num;
--	while (first < last) {
--		uint32_t mid = first + (last - first) / 2;
--		const unsigned char *current;
--		int cmp;
--
--		current = nth_packed_object_sha1(p, mid);
--		cmp = hashcmp(ds->bin_pfx.hash, current);
--		if (!cmp) {
--			first = mid;
--			break;
--		}
--		if (cmp > 0) {
--			first = mid+1;
--			continue;
--		}
--		last = mid;
--	}
-+	bsearch_pack(&ds->bin_pfx, p, &first);
- 
- 	/*
- 	 * At this point, "first" is the location of the lowest object
--- 
-2.16.3
+Speaking specifically about the new code for the sentence lego: I
+currently lack knowledge of a better way to achieve the same outcome the
+new code does. Let me know if there is a better way.
+
+
+> Is it so wrong for
+> "branch -m tset master" to complain that master already exists so no
+> branch can be renamed to it?
+>
+
+Speaking in general about the patch itself: though I still find the fact
+that "the error about an inexistent source branch seconds the error
+about an existing destination branch" to be a little unintuitive, I
+actually went on to reboot this after a long time as this also seems to
+bring consistency in the error messages related to moving a branch. It
+seems that the commit message requires an update as it currently seems
+to be misleading as it currently doesn't specify the motivation completel=
+y.
+
+That said, I won't be against dropping the patch if it seems to be
+adding less value at the cost of more code.
+
+--=20
+Kaartic
+
+
+--WsE7y7SEqly86g9J87KkRu3K17VOQpfMb--
+
+--vHt0hQy0yv7fpcnJ1n4XLYigufPqxdb2T
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQJPBAEBCAA5FiEEmrp5T6QugsbUnN0Nveda2sPWGWkFAlq2hlwbHGthYXJ0aWMu
+c2l2YXJhYW1AZ21haWwuY29tAAoJEL3nWtrD1hlpsRIP/1l108FYLG/1mhKHeBgG
+3Yt+HcyBah6oQKB2lV2ypH/rC3gqsM4DPdIFvvpAi8bjxhQmxZrfz+J2wP8nR2Ko
+Mlbm7LTJjgxk4yE1o2kY8q7T3FNsOmHUHStJrklmhGR/ZksaAPeKGhIO350dcpLJ
+6aoBnnHMpPZDZMczhtS5nY4kfHH84UaRhaTE8/j1hZq78j7wpDl4XqYi0ZFLbVU/
+P4uYIMtHW7srfpJtg6KBN5kiCtMZp4TG7qY32MgEXzJmVakl21L3vWVjw/Cgkwyr
+f3hNiFeaq0vZvUMMphrCLmzGKFFmbHbIhBl6LPQ6m5ioJEWu78ab1HUeLPh1lIzr
+U3InYWwBvnPvDUCi4Yr0SmzI+OEeWQjI0+qB62EZcStfsB/ezp3aY5Wl+kkkItx8
+o1vrIu6WmmBkKJ8Wq08oQrZ3JGPWBdbJj3b0y4k5h59sjBqMzeVEE3GD5Bqvt80+
+aOA/AkJwSTbB4HNezmvYhe9QyOmInCcweBdKgcJlUqTohr4gZwSIduyzDfY80LXO
+EImAT1E6gGpklKtyF4X6we9LQ6p54ryFzC2XOIiOZuHmHf/85+e06pdpRhJTd2ZK
+VTYA8KuCaCmkmY3lImUMbjdBLJrjVZxAIySeyFanAdhl+f3JP5G2U2esUfM2v1yC
+u1inJoBVe8dkU6W1yvNeIU3X
+=ZOvY
+-----END PGP SIGNATURE-----
+
+--vHt0hQy0yv7fpcnJ1n4XLYigufPqxdb2T--
