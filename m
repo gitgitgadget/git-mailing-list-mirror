@@ -7,105 +7,90 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B6CC31F404
-	for <e@80x24.org>; Sat, 24 Mar 2018 12:58:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 219D81F404
+	for <e@80x24.org>; Sat, 24 Mar 2018 13:38:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752105AbeCXM6F (ORCPT <rfc822;e@80x24.org>);
-        Sat, 24 Mar 2018 08:58:05 -0400
-Received: from mail-oi0-f42.google.com ([209.85.218.42]:45946 "EHLO
-        mail-oi0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751894AbeCXM6E (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 24 Mar 2018 08:58:04 -0400
-Received: by mail-oi0-f42.google.com with SMTP id 71-v6so12525755oie.12
-        for <git@vger.kernel.org>; Sat, 24 Mar 2018 05:58:04 -0700 (PDT)
+        id S1751935AbeCXNiv (ORCPT <rfc822;e@80x24.org>);
+        Sat, 24 Mar 2018 09:38:51 -0400
+Received: from mail-oi0-f52.google.com ([209.85.218.52]:40877 "EHLO
+        mail-oi0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751894AbeCXNiu (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 24 Mar 2018 09:38:50 -0400
+Received: by mail-oi0-f52.google.com with SMTP id 1-v6so6859730oix.7
+        for <git@vger.kernel.org>; Sat, 24 Mar 2018 06:38:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=gw0kF3LEYW2aXLVUPqFmTpJunPRk4oDVvKv+TbTfKWg=;
-        b=U/rMZsCZcAicod9QBzfXXzPhAuEhebjel+MmI96wW43bbdiK3jxkxpPElDbnSJ28sM
-         2ctrXPCxb3z4Mh/j9iEuxIlqyzszIwwxmx3u/jykGa8atL/ce7CHmprlhYJRR67bJ4K+
-         NG9qdtWTzNNBHmFKh0YaBmAiw60rIDRJlEDkZ7gioVb1jtesUzRZF8qgiWP/8pByJhoq
-         6LdJjZ4uWkqowqMrAIXUNWkP6NGy4mC+JfEZ9uFvgS10scvd2qLrcuDzxnfurCzv8woH
-         ne3Vy0v4FvqPCVVY3teU09eI5a69pPI+LD9hhNImKmxO9ZqxYjJlobrMFNl/UVafm/yL
-         hKFw==
+         :cc;
+        bh=zAFakm/UBgTYC5AOLxF4Kk6gUvomY+KFeYOPgJAEhw8=;
+        b=lFZEkx+3IZ9hXB76Mp7ixy9ahjgZHFQCjA4sZ9zFCt2ReEDg4ctrghZBTWqPFD8LkT
+         cdjCbm56sHTey43s66iYxYOlGnxOyjYG+xA0KJ8PkVgt0ILQ95S2LwlNxAmzy6WO7RTr
+         XYNh1TdZBHB0gkUIKFNTfk7Jdfd8qfWos4rte5X0VQUSqeDRzDbsfb1wX3+2Y6Ozr7xO
+         5OvPuTrtymwgb6qumq9PorqO7YHBSOt8OwSL42vKbPjt6E2mHxw799E3PFz7ekUgNhVY
+         +sQ/SV7r6OZKqS90i0NWjVXQo9sAHR+S04PSjywkIkq0/NPS10Sqp5GDVzixSzQibeiC
+         N+Hg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=gw0kF3LEYW2aXLVUPqFmTpJunPRk4oDVvKv+TbTfKWg=;
-        b=laFOX/G9zVRUrT2ydIhrRJYVpJLaUha2TgBiPhKUtdBZhkWr8KIujtFfoylcR0UTLR
-         Ryng/VrIJ1Qgl9/i4YRBoTOo9XSxdR7eUy7WUaEn83W80fzqCtkjjVdha/aWVcvT3Eo2
-         I9dG5vASef5vzTl9kJ1N1Rr2KBfxlci7BgBFqSwJgi6tu6DZhAd37MySYnqPZ20KR5S6
-         TXYwROZ0XMwsXoWa1s5J4Ktdaef4XeZEqEPJKcMKLD9XBTbfX4ITCFdjohmsQpssUFaz
-         +n2i5ke4uuflOikkogr4E4Zci5tOxRmnna+NXAVNklVHUQv/Fbgx2gwQ8eE8bVKyNJrX
-         SBdQ==
-X-Gm-Message-State: AElRT7GHVxuPzaCZ0hhlEuzhQifhAfRGBPAh0yeRBeN0xzDIKeHjsQKA
-        RVFdwcfeOC8EoDpReUTTLzkZ886lim0lt1CYDn4=
-X-Google-Smtp-Source: AG47ELt3PTZHE4RmiymdcBUI1dG5uHOrWlGpnoofNie5dehVTSfpdBYe6tYdNnmzdXFvD80Mtx/CSfx3qFY/1TQ/mzU=
-X-Received: by 10.202.206.13 with SMTP id e13mr19491359oig.34.1521896284201;
- Sat, 24 Mar 2018 05:58:04 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=zAFakm/UBgTYC5AOLxF4Kk6gUvomY+KFeYOPgJAEhw8=;
+        b=BrmP8c89d61RRNcgkFgi9Sl+cSViO1Dyz6NAuDhx6dA5KfesPuWdiePU2kauolsHsP
+         W223G/lWl8eesNL2aFxPxV8GeFPyFcKsWxmfSSx0eB7ZvIPmYpdZJhuTFLABxv746IuW
+         8GVe+lbUKSj1AMCr4QbDTATzMc/hSuxzWK9QfGHEhFRQ4Q9dY3v727fek0DrJ+Z8xw1Y
+         zB97PqajJl0BsIUg9CgmdPQh0piraEhMJM3VgOReIzDmtFtq5/weJhufY4N9Na+IT0B7
+         dTzQVM8vD2nKcI09JhKicZTV/1CSVrYj0KJkT21rAXqkHU3RmRjQ7pODqLLoywX8WE3B
+         GTkg==
+X-Gm-Message-State: AElRT7FGOlMStCurz16ianiRDntaEhdPKTorfb2v6wlmFDv2JShV7I3H
+        kxNQc/PkDYYxN/HCJPceu9xQm6OAtDdNuxSTWc4=
+X-Google-Smtp-Source: AG47ELuyX0Cfj9uG438aVpuSASmKuzms2W/t/mwPUNX9ez3tcAzGJrz2eBbyf3UuIiQPSyGNRZWIN8nG0lWCB4iTUEo=
+X-Received: by 10.202.81.200 with SMTP id f191mr19035497oib.32.1521898729760;
+ Sat, 24 Mar 2018 06:38:49 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.74.154.146 with HTTP; Sat, 24 Mar 2018 05:57:33 -0700 (PDT)
-In-Reply-To: <87bmfdy6vg.fsf@evledraar.gmail.com>
-References: <20180317075421.22032-1-pclouds@gmail.com> <20180324074505.19100-1-pclouds@gmail.com>
- <87bmfdy6vg.fsf@evledraar.gmail.com>
+Received: by 10.74.154.146 with HTTP; Sat, 24 Mar 2018 06:38:19 -0700 (PDT)
+In-Reply-To: <xmqqtvt8kn92.fsf@gitster-ct.c.googlers.com>
+References: <20180321193039.19779-1-pclouds@gmail.com> <xmqqd0zxno0j.fsf@gitster-ct.c.googlers.com>
+ <CACsJy8CWWSixQpXDh+q108j4xF8vpm5gsj2u3gJEgW=2bnXQHA@mail.gmail.com>
+ <xmqqy3ikkpba.fsf@gitster-ct.c.googlers.com> <20180322173553.GA20984@duynguyen.home>
+ <xmqqtvt8kn92.fsf@gitster-ct.c.googlers.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sat, 24 Mar 2018 13:57:33 +0100
-Message-ID: <CACsJy8A=qRN6VCP_NwTdtuZWEgsnX6U+zQN8LK8F9FT2XvBaRA@mail.gmail.com>
-Subject: Re: [PATCH v2 00/36] Combine t/helper binaries into a single one
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Sat, 24 Mar 2018 14:38:19 +0100
+Message-ID: <CACsJy8CxdGXUcqP5r2u6kcjrsftO+-CrNVaFy5wv85Mm3F8pPg@mail.gmail.com>
+Subject: Re: [PATCH] completion: add option completion for most builtin commands
+To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Junio C Hamano <gitster@pobox.com>
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Mar 24, 2018 at 1:50 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
+On Thu, Mar 22, 2018 at 6:56 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Duy Nguyen <pclouds@gmail.com> writes:
 >
-> On Sat, Mar 24 2018, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+>> +__git_main_with_parseopt_helper='
+>> +     blame cat-file check-attr check-ignore
+>> +     check-mailmap checkout-index column count-objects fast-export
+>> +     hash-object index-pack interpret-trailers merge-file mktree
+>> +     pack-objects pack-refs prune prune-packed read-tree repack
+>> +     send-pack show-ref stripspace symbolic-ref update-index
+>> +     update-ref verify-commit verify-tag write-tree
+>> +'
+>> +__git_complete_command() {
+>> +     local command="$1"
+>> +     local completion_func="_git_${command//-/_}"
+>> +     if declare -f $completion_func >/dev/null 2>/dev/null; then
+>> +             $completion_func
+>> +     elif echo $__git_main_with_parseopt_helper | git grep -w "$command" >/dev/null; then
 >
->> v2 fixes a couple of typos in commit messages and use the cmd__ prefix
->> for test commands instead of test_, which avoids a naming conflict
->> with the existing function test_lazy_init_name_hash
->>
->> [the previous v2 send out was aborted because I messed it up with some
->> other patches]
+> "git grep"???
 >
-> This whole thing looks good to me, and I've applied it to my own build
-> and run several modes (normal, split index etc.) of the test suite with
-> it. Didn't get any problems.
+> I imagined that you'd keep an associative shell array (we are not
+> constrained by POSIX here) that can be used like so
 >
-> Micronit: If you M-x sort-lines (and I assume similar in other editors
-> that have a function to sort stuff in ASCII order) the test-tool.c list
-> you get this diff on top:
->
->     diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
->     index cd5e28b045..c38939b93e 100644
->     --- a/t/helper/test-tool.c
->     +++ b/t/helper/test-tool.c
->     @@ -32,8 +32,8 @@ static struct test_cmd cmds[] =3D {
->             { "revision-walking", cmd__revision_walking },
->             { "run-command", cmd__run_command },
->             { "scrap-cache-tree", cmd__scrap_cache_tree },
->     -       { "sha1-array", cmd__sha1_array },
->             { "sha1", cmd__sha1 },
->     +       { "sha1-array", cmd__sha1_array },
->             { "sigchain", cmd__sigchain },
->             { "strcmp-offset", cmd__strcmp_offset },
->             { "string-list", cmd__string_list },
->
-> I think it makes sense to keep such lists in ASCII order (" before -)
-> for subsequent edits where one or more things are added to the list and
-> then sorted before submission.
+>         elif test -n "${__git_main_with_parseopt_helper[$command]}"; then
 
-Yeah, my brain just failed to see that sha1-array should be behind
-sha1. Bad brain!
---=20
+Nope. We are not constrained by POSIX, but MacOS still runs the
+ancient bash 3.x while associative arrays are in 4.x
+-- 
 Duy
