@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2070A1F42D
-	for <e@80x24.org>; Sat, 24 Mar 2018 07:46:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ABAFF1F42D
+	for <e@80x24.org>; Sat, 24 Mar 2018 07:46:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750825AbeCXHqE (ORCPT <rfc822;e@80x24.org>);
+        id S1752122AbeCXHqG (ORCPT <rfc822;e@80x24.org>);
+        Sat, 24 Mar 2018 03:46:06 -0400
+Received: from mail-lf0-f67.google.com ([209.85.215.67]:44566 "EHLO
+        mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752120AbeCXHqE (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 24 Mar 2018 03:46:04 -0400
-Received: from mail-lf0-f65.google.com ([209.85.215.65]:43467 "EHLO
-        mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752003AbeCXHpq (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 24 Mar 2018 03:45:46 -0400
-Received: by mail-lf0-f65.google.com with SMTP id v207-v6so21403421lfa.10
-        for <git@vger.kernel.org>; Sat, 24 Mar 2018 00:45:45 -0700 (PDT)
+Received: by mail-lf0-f67.google.com with SMTP id g203-v6so21366348lfg.11
+        for <git@vger.kernel.org>; Sat, 24 Mar 2018 00:46:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=c63A3tFA8uG0NWRqaktasheN93f/p0iNjpupvcxOqxQ=;
-        b=pxKNjIrDnVCH6rd1ZDpvvQUxKjXOyYNlwMJw/ChocODmdQapb1j8ZaRS+wupVz2KzH
-         ksii76Clpx2uu+bwA5tGyYOfiuK+Vlccwd0g7IfLBKuUNJyZ6BYIr/x8zjGovKvsi4N5
-         vnyNxhKIb93H2t0mXplNaAgAc+Te6c8GUd9KdAILzVIi/5zmVuD0Bhrlp490i2xSRQB3
-         3v00zN6KZLS+npF6KMZIhHAtCEgtqGY3ST+4rID2awv744j1vmLSzNx9OtfsCxnKPhyS
-         iFAZEYZ/2wUIPqFiSRmKVz9RyOVb2QreMqpH94r/K9ZG8OG3xeyNLXINo3ICgYLyWeRZ
-         qVcg==
+        bh=Gudgvjqj3J3IG6JDmmgDvuVXKjg9jFpePNp+HAI5mmg=;
+        b=kuNccNDwI8NjXAmI9FujNN6++03NvZViJIwJJKYCb6p9OXQ5a1NpXpeXVsT8q9ecRs
+         6vTTN7Wmo2Cu9+Hi/9yXvUnYRSUxkgt4Qn9qpWNSdnqLCVcXTwImSDqEdUmhM9EfbvoM
+         tVmnsJdvbDofNZnUPcGduP7IMEcJOov9X/AN6q8Dzy9AlOR/OWcnnPv6dr3YKWatKzRk
+         i353WMm1ut3tUEV87Z88J1kWT1q18+yrZJRobgp8gvKADFeAxMdQ+ufPyF91o0Rp4Yzd
+         iCEL5WyMtk91n0KzbYVUFCD7K5N85TVMe9b6cNgG8KuEd50KuP7WB87pdUp+umZnJyPS
+         WOPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=c63A3tFA8uG0NWRqaktasheN93f/p0iNjpupvcxOqxQ=;
-        b=Da8/70xP7AwwMEAc/RA1XWMwq63od/Ikvgl06/jbVFe4uxb8y5uj3Cx06ITWpqp+9I
-         UYW0WxN23hRdMrah1BrhFekV+LjjZCMJc7hECESlw20PYgpgm2YOesTOXUmi8HvikYbC
-         JtFcm9ebvGf7bGWNAFvTJsgauEVrf7TvR6XCJPJHxDMyML1FufG9ZF94HYNfIAaPYMnz
-         aCejHjb7tb8eE5O8m7xoCH9dwkyAHM21GI0I9QldPR/78rbqoa4PpRVYOCX4Sx+2jF+w
-         gNf/EGFYN5+DghuU0UgKT2olpaNRhBdxB2WPUYco5hDHcPxg58KpXTBiGlfVz7aj5NCJ
-         CcgA==
-X-Gm-Message-State: AElRT7H4ibG516hOh9ZkaLp9sPqZ5QgoTRcXq0EfVdLx99mn+JcocN7/
-        FHx8ndZ7UXOU5ONf/r1bzAM=
-X-Google-Smtp-Source: AG47ELubQNKP3HRImGWf9JbC8BpofEMeWma+6tpwm2ZmZhzHcttzT5EF05e4kIfmOf71xTq49DI8mg==
-X-Received: by 10.46.31.10 with SMTP id f10mr20692184ljf.130.1521877545259;
-        Sat, 24 Mar 2018 00:45:45 -0700 (PDT)
+        bh=Gudgvjqj3J3IG6JDmmgDvuVXKjg9jFpePNp+HAI5mmg=;
+        b=jAfcKViRpRUDI6UlpmKWfDCYgMfquMJqVaOuKywFCeJhUjtzi1rFqJPqnCHVhAXcci
+         wf8OTxTxGitWFWxmSdUxeleRK5pE2JVEetnFhOrJT9eYVE/kVsrqISOmMN8LpmK/zIgx
+         LR46YV4q2t20um2enF+E9PQ4tdAtntRtKBBJADzNxK0TA4wy9qgbDuipXAmrb2gnM0oY
+         kJSEBCajeCFM16vT7abLmINSpLXXL1AB5hycbwtvNjnd3w91mnRDeB9WHseJ43vcXTXp
+         ArXGcLuqgGHDyac9rzatU61V+XyDM29dT0CPHDbTQunMlVIVKdggBwN6amDXq7GA9FSD
+         NEZQ==
+X-Gm-Message-State: AElRT7FPiB/LL00a1H+Obw3YzXKTdolO70sP8Rwlenx3z7uR9wkSFYBo
+        q+oMVKSz0HTmTecBwAiiKRA=
+X-Google-Smtp-Source: AG47ELssmF+Z8aIff4Tw9vIFJ6IAt+MniCeVNqLpWKI3OJlbB+c0YC/mlU66Bdu6TpvCa3fgHJTB7Q==
+X-Received: by 2002:a19:a210:: with SMTP id l16-v6mr22550285lfe.38.1521877563043;
+        Sat, 24 Mar 2018 00:46:03 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id g7sm2313741ljj.50.2018.03.24.00.45.43
+        by smtp.gmail.com with ESMTPSA id g7sm2313741ljj.50.2018.03.24.00.46.01
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 24 Mar 2018 00:45:44 -0700 (PDT)
+        Sat, 24 Mar 2018 00:46:02 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
         Jeff Hostetler <git@jeffhostetler.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 12/36] t/helper: merge test-example-decorate into test-tool
-Date:   Sat, 24 Mar 2018 08:44:41 +0100
-Message-Id: <20180324074505.19100-13-pclouds@gmail.com>
+Subject: [PATCH v2 26/36] t/helper: merge test-run-command into test-tool
+Date:   Sat, 24 Mar 2018 08:44:55 +0100
+Message-Id: <20180324074505.19100-27-pclouds@gmail.com>
 X-Mailer: git-send-email 2.17.0.rc0.348.gd5a49e0b6f
 In-Reply-To: <20180324074505.19100-1-pclouds@gmail.com>
 References: <20180317075421.22032-1-pclouds@gmail.com>
@@ -72,83 +72,181 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- Makefile                         | 2 +-
- t/helper/test-example-decorate.c | 3 ++-
- t/helper/test-tool.c             | 1 +
- t/helper/test-tool.h             | 1 +
- t/t9004-example.sh               | 2 +-
- 5 files changed, 6 insertions(+), 3 deletions(-)
+ Makefile                    |  2 +-
+ t/helper/test-run-command.c |  3 ++-
+ t/helper/test-tool.c        |  1 +
+ t/helper/test-tool.h        |  1 +
+ t/t0061-run-command.sh      | 24 ++++++++++++------------
+ 5 files changed, 17 insertions(+), 14 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 8993cec274..895b170fe3 100644
+index 3ed461cd55..adece67b8e 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -660,12 +660,12 @@ TEST_BUILTINS_OBJS += test-delta.o
- TEST_BUILTINS_OBJS += test-drop-caches.o
- TEST_BUILTINS_OBJS += test-dump-cache-tree.o
- TEST_BUILTINS_OBJS += test-dump-split-index.o
-+TEST_BUILTINS_OBJS += test-example-decorate.o
- TEST_BUILTINS_OBJS += test-lazy-init-name-hash.o
+@@ -675,6 +675,7 @@ TEST_BUILTINS_OBJS += test-read-cache.o
+ TEST_BUILTINS_OBJS += test-ref-store.o
+ TEST_BUILTINS_OBJS += test-regex.o
+ TEST_BUILTINS_OBJS += test-revision-walking.o
++TEST_BUILTINS_OBJS += test-run-command.o
  TEST_BUILTINS_OBJS += test-sha1.o
  
  TEST_PROGRAMS_NEED_X += test-dump-fsmonitor
- TEST_PROGRAMS_NEED_X += test-dump-untracked-cache
--TEST_PROGRAMS_NEED_X += test-example-decorate
- TEST_PROGRAMS_NEED_X += test-fake-ssh
- TEST_PROGRAMS_NEED_X += test-genrandom
- TEST_PROGRAMS_NEED_X += test-hashmap
-diff --git a/t/helper/test-example-decorate.c b/t/helper/test-example-decorate.c
-index 90dc97a9d0..081115bf8e 100644
---- a/t/helper/test-example-decorate.c
-+++ b/t/helper/test-example-decorate.c
-@@ -1,8 +1,9 @@
+@@ -683,7 +684,6 @@ TEST_PROGRAMS_NEED_X += test-fake-ssh
+ TEST_PROGRAMS_NEED_X += test-line-buffer
+ TEST_PROGRAMS_NEED_X += test-parse-options
+ TEST_PROGRAMS_NEED_X += test-write-cache
+-TEST_PROGRAMS_NEED_X += test-run-command
+ TEST_PROGRAMS_NEED_X += test-scrap-cache-tree
+ TEST_PROGRAMS_NEED_X += test-sha1-array
+ TEST_PROGRAMS_NEED_X += test-sigchain
+diff --git a/t/helper/test-run-command.c b/t/helper/test-run-command.c
+index 153342e44d..2cc93bb69c 100644
+--- a/t/helper/test-run-command.c
++++ b/t/helper/test-run-command.c
+@@ -8,6 +8,7 @@
+  * published by the Free Software Foundation.
+  */
+ 
 +#include "test-tool.h"
- #include "cache.h"
- #include "object.h"
- #include "decorate.h"
+ #include "git-compat-util.h"
+ #include "run-command.h"
+ #include "argv-array.h"
+@@ -49,7 +50,7 @@ static int task_finished(int result,
+ 	return 1;
+ }
  
 -int cmd_main(int argc, const char **argv)
-+int cmd__example_decorate(int argc, const char **argv)
++int cmd__run_command(int argc, const char **argv)
  {
- 	struct decoration n;
- 	struct object_id one_oid = { {1} };
+ 	struct child_process proc = CHILD_PROCESS_INIT;
+ 	int jobs;
 diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
-index 26ae209cd5..a0e95c13ed 100644
+index e43405bea9..94ceda66e7 100644
 --- a/t/helper/test-tool.c
 +++ b/t/helper/test-tool.c
-@@ -15,6 +15,7 @@ static struct test_cmd cmds[] = {
- 	{ "drop-caches", cmd__drop_caches },
- 	{ "dump-cache-tree", cmd__dump_cache_tree },
- 	{ "dump-split-index", cmd__dump_split_index },
-+	{ "example-decorate", cmd__example_decorate },
- 	{ "lazy-init-name-hash", cmd__lazy_init_name_hash },
+@@ -30,6 +30,7 @@ static struct test_cmd cmds[] = {
+ 	{ "ref-store", cmd__ref_store },
+ 	{ "regex", cmd__regex },
+ 	{ "revision-walking", cmd__revision_walking },
++	{ "run-command", cmd__run_command },
  	{ "sha1", cmd__sha1 },
  };
+ 
 diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
-index e8363e851f..721a1e1b09 100644
+index 4dff220646..0fe2dd640b 100644
 --- a/t/helper/test-tool.h
 +++ b/t/helper/test-tool.h
-@@ -9,6 +9,7 @@ int cmd__delta(int argc, const char **argv);
- int cmd__drop_caches(int argc, const char **argv);
- int cmd__dump_cache_tree(int argc, const char **argv);
- int cmd__dump_split_index(int argc, const char **argv);
-+int cmd__example_decorate(int argc, const char **argv);
- int cmd__lazy_init_name_hash(int argc, const char **argv);
+@@ -24,6 +24,7 @@ int cmd__read_cache(int argc, const char **argv);
+ int cmd__ref_store(int argc, const char **argv);
+ int cmd__regex(int argc, const char **argv);
+ int cmd__revision_walking(int argc, const char **argv);
++int cmd__run_command(int argc, const char **argv);
  int cmd__sha1(int argc, const char **argv);
  
-diff --git a/t/t9004-example.sh b/t/t9004-example.sh
-index b28a028f55..7e8894a4a7 100755
---- a/t/t9004-example.sh
-+++ b/t/t9004-example.sh
-@@ -4,7 +4,7 @@ test_description='check that example code compiles and runs'
- . ./test-lib.sh
+ #endif
+diff --git a/t/t0061-run-command.sh b/t/t0061-run-command.sh
+index 24c92b6cd7..d03149be9f 100755
+--- a/t/t0061-run-command.sh
++++ b/t/t0061-run-command.sh
+@@ -14,13 +14,13 @@ EOF
+ >empty
  
- test_expect_success 'decorate' '
--	test-example-decorate
-+	test-tool example-decorate
+ test_expect_success 'start_command reports ENOENT' '
+-	test-run-command start-command-ENOENT ./does-not-exist
++	test-tool run-command start-command-ENOENT ./does-not-exist
  '
  
- test_done
+ test_expect_success 'run_command can run a command' '
+ 	cat hello-script >hello.sh &&
+ 	chmod +x hello.sh &&
+-	test-run-command run-command ./hello.sh >actual 2>err &&
++	test-tool run-command run-command ./hello.sh >actual 2>err &&
+ 
+ 	test_cmp hello-script actual &&
+ 	test_cmp empty err
+@@ -31,7 +31,7 @@ test_expect_success !MINGW 'run_command can run a script without a #! line' '
+ 	cat hello-script
+ 	EOF
+ 	chmod +x hello &&
+-	test-run-command run-command ./hello >actual 2>err &&
++	test-tool run-command run-command ./hello >actual 2>err &&
+ 
+ 	test_cmp hello-script actual &&
+ 	test_cmp empty err
+@@ -45,7 +45,7 @@ test_expect_success 'run_command does not try to execute a directory' '
+ 	EOF
+ 
+ 	PATH=$PWD/bin1:$PWD/bin2:$PATH \
+-		test-run-command run-command greet >actual 2>err &&
++		test-tool run-command run-command greet >actual 2>err &&
+ 	test_cmp bin2/greet actual &&
+ 	test_cmp empty err
+ '
+@@ -62,7 +62,7 @@ test_expect_success POSIXPERM 'run_command passes over non-executable file' '
+ 	EOF
+ 
+ 	PATH=$PWD/bin1:$PWD/bin2:$PATH \
+-		test-run-command run-command greet >actual 2>err &&
++		test-tool run-command run-command greet >actual 2>err &&
+ 	test_cmp bin2/greet actual &&
+ 	test_cmp empty err
+ '
+@@ -70,7 +70,7 @@ test_expect_success POSIXPERM 'run_command passes over non-executable file' '
+ test_expect_success POSIXPERM 'run_command reports EACCES' '
+ 	cat hello-script >hello.sh &&
+ 	chmod -x hello.sh &&
+-	test_must_fail test-run-command run-command ./hello.sh 2>err &&
++	test_must_fail test-tool run-command run-command ./hello.sh 2>err &&
+ 
+ 	grep "fatal: cannot exec.*hello.sh" err
+ '
+@@ -104,17 +104,17 @@ World
+ EOF
+ 
+ test_expect_success 'run_command runs in parallel with more jobs available than tasks' '
+-	test-run-command run-command-parallel 5 sh -c "printf \"%s\n%s\n\" Hello World" 2>actual &&
++	test-tool run-command run-command-parallel 5 sh -c "printf \"%s\n%s\n\" Hello World" 2>actual &&
+ 	test_cmp expect actual
+ '
+ 
+ test_expect_success 'run_command runs in parallel with as many jobs as tasks' '
+-	test-run-command run-command-parallel 4 sh -c "printf \"%s\n%s\n\" Hello World" 2>actual &&
++	test-tool run-command run-command-parallel 4 sh -c "printf \"%s\n%s\n\" Hello World" 2>actual &&
+ 	test_cmp expect actual
+ '
+ 
+ test_expect_success 'run_command runs in parallel with more tasks than jobs available' '
+-	test-run-command run-command-parallel 3 sh -c "printf \"%s\n%s\n\" Hello World" 2>actual &&
++	test-tool run-command run-command-parallel 3 sh -c "printf \"%s\n%s\n\" Hello World" 2>actual &&
+ 	test_cmp expect actual
+ '
+ 
+@@ -128,7 +128,7 @@ asking for a quick stop
+ EOF
+ 
+ test_expect_success 'run_command is asked to abort gracefully' '
+-	test-run-command run-command-abort 3 false 2>actual &&
++	test-tool run-command run-command-abort 3 false 2>actual &&
+ 	test_cmp expect actual
+ '
+ 
+@@ -137,14 +137,14 @@ no further jobs available
+ EOF
+ 
+ test_expect_success 'run_command outputs ' '
+-	test-run-command run-command-no-jobs 3 sh -c "printf \"%s\n%s\n\" Hello World" 2>actual &&
++	test-tool run-command run-command-no-jobs 3 sh -c "printf \"%s\n%s\n\" Hello World" 2>actual &&
+ 	test_cmp expect actual
+ '
+ 
+ test_trace () {
+ 	expect="$1"
+ 	shift
+-	GIT_TRACE=1 test-run-command "$@" run-command true 2>&1 >/dev/null | \
++	GIT_TRACE=1 test-tool run-command "$@" run-command true 2>&1 >/dev/null | \
+ 		sed 's/.* run_command: //' >actual &&
+ 	echo "$expect true" >expect &&
+ 	test_cmp expect actual
 -- 
 2.17.0.rc0.348.gd5a49e0b6f
 
