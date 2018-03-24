@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 360001F42D
-	for <e@80x24.org>; Sat, 24 Mar 2018 07:25:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F22CB1F42D
+	for <e@80x24.org>; Sat, 24 Mar 2018 07:25:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751811AbeCXHZd (ORCPT <rfc822;e@80x24.org>);
-        Sat, 24 Mar 2018 03:25:33 -0400
-Received: from mail-lf0-f67.google.com ([209.85.215.67]:34731 "EHLO
-        mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751009AbeCXHZ1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 24 Mar 2018 03:25:27 -0400
-Received: by mail-lf0-f67.google.com with SMTP id c78-v6so16678312lfh.1
-        for <git@vger.kernel.org>; Sat, 24 Mar 2018 00:25:26 -0700 (PDT)
+        id S1751784AbeCXHZb (ORCPT <rfc822;e@80x24.org>);
+        Sat, 24 Mar 2018 03:25:31 -0400
+Received: from mail-lf0-f66.google.com ([209.85.215.66]:37570 "EHLO
+        mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750763AbeCXHZY (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 24 Mar 2018 03:25:24 -0400
+Received: by mail-lf0-f66.google.com with SMTP id m16-v6so17624251lfc.4
+        for <git@vger.kernel.org>; Sat, 24 Mar 2018 00:25:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=iprsEwFyfVjBL3yMRv+v9HREafV/iImHLegB/iosrRg=;
-        b=JeAX5e0ITFinRG2R4Bxs9cKh4sQ0bFkFzcbaMu32rLzlE34UN3pVIDLVJmXv6fe4Hr
-         tf+IeIkQgJGtbcKTGzImVKJAlJhVFvunIa59wcMwhmCrNYqeHvu4rIEAACVPCkEkMah8
-         lw/JLtUnDMp8pz9sOZ2zmMbSrmtNASusXDOc2aW1pz0qY+17b3IRaRPYnNw78iQUEYlD
-         G7uFLboMtoxgsUJaqsQ9jJT4ol/4r7jEtGHA1NUkZ0Zk6V/m4LKNQ/xKJJTulLubooe1
-         81ULna3RV6F2PXHcwvrapnSf4/45Wb+628RE8gXPsGBV4Kdd7Awz0prZCoaWUvf9U/UC
-         jCag==
+        bh=l5ge+wSz70nxEp/mrs/C/Zn992ZE3B56lv15eVDwQlY=;
+        b=DbE54G0CaaqpO0uEqh23hqjZYxyqLxcnULqTo5OpLPRqUnSkwDqjTdBBVBugs7Pd9v
+         3ayJrjpYuL+bXgjC8gsIEeRYy24oi9LO141GoMQnw75GBsG/CEZeNAsktWugjIV+EAeu
+         YrmXI2sRkevipwa8VADNU6UHOXQpjZlHMt5phdr83bAYEKCJ8futy7uftMvSQSSaquB7
+         iJgktbaWrlYtHY3Rhf93qctBZpXV5lMd6IkL+z5LMkvJbC7+ZoaCV8HsT70kYNayrOTA
+         lpn1DkEE1AMEc1pcUeZTijkxpF4JjWaDPOeBUsywrOMHCOCLCcsF2EWLDF3dsoGbO2Kh
+         CLzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=iprsEwFyfVjBL3yMRv+v9HREafV/iImHLegB/iosrRg=;
-        b=DZ2XAavmXONPV84pb0LZlSk7C0m6Cvn/1LvcDGB4+eyyidyoc2R+rr3q4k9sYT/wn1
-         mFzlflRn1oGEYzgRh0BrQ/XFZ2orMrns2s9u2kdf6RuUHcXtiX825jnHULvZTVnSHVn+
-         Lq7aVzRYighUoF4BWHFU8qMRH0XpeQJJBSU0JtE+Xo0ZY2WxeTHc7AH6FjrwIKUb9KJr
-         jHWMlZV/Gs1ux6YyPVqOmSxb1goB3wHmH+HE8OHl+QLrPsgAkz06VeLrdMSHDP+vOaKr
-         Rgbf8MdivLus80BK/qJjofZU8yQf5HkzIe2y4ARhyEMzRUt/Yi+zD+pRfwhuYN4Vms3Q
-         Q3BQ==
-X-Gm-Message-State: AElRT7FDNq9+Jkra5q/54yRbW+b8wdIXthUxPAs2xg2R7rc3DUz9tipo
-        z5CH7W1MAF9ZxjpbuNbLDWs=
-X-Google-Smtp-Source: AG47ELt18jncvgkwgN2Fx2wugug2GyCIRnoOvePytfN86Fvkplo5IX+alv7KzPDYWo2o28tbx8DcRw==
-X-Received: by 10.46.46.10 with SMTP id u10mr3674607lju.77.1521876325740;
-        Sat, 24 Mar 2018 00:25:25 -0700 (PDT)
+        bh=l5ge+wSz70nxEp/mrs/C/Zn992ZE3B56lv15eVDwQlY=;
+        b=scGg7oS/GOtAOS21vAV8XU8OWrCKzRbJ19feG33+PXs/HRHWvuxp02u4Ui+i8tRtet
+         ylWwWpIG+F5vU4Ab1atmxeQbDO8HbrGumYq15wOlbwhuLobzIxxoK6vmAh6efoVbPGtf
+         aeQNSdsLGhF0Cp/yG4ycuqE6f4DpPWFnrnx2mxGP2OyH/YcyoAVhqc7s/7MYsduSAMmc
+         JAu64wxjejrxh/bNxMrpXw3GRQ0coDHd/2y5Q9st7dh4wqWzf6SjY4vfpWqFEqUuZQvF
+         7Hv7LGvA20mqgUXP6obRZMTDyAKWzBk2jxZkOO5NLvTGANQ/cyRQ/aBqpYrdcm9kOH1x
+         Np7g==
+X-Gm-Message-State: AElRT7G7kWepM8FLMBDjEaYig2MAI0IlVYi7U6+18xo2ftpgltD96qRC
+        r1uTty9XWtWSGYxcYWzsp4g=
+X-Google-Smtp-Source: AG47ELuFpdSGu/uTo4ZNmwFnxflouquAO5e3XjARV7lrkdCjSqp80g/DIbMPeLpCwaQUn1SXQ9IeYQ==
+X-Received: by 2002:a19:4acc:: with SMTP id x195-v6mr22627518lfa.46.1521876322981;
+        Sat, 24 Mar 2018 00:25:22 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id b67-v6sm2684028lfh.26.2018.03.24.00.25.24
+        by smtp.gmail.com with ESMTPSA id b67-v6sm2684028lfh.26.2018.03.24.00.25.21
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 24 Mar 2018 00:25:25 -0700 (PDT)
+        Sat, 24 Mar 2018 00:25:22 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     avarab@gmail.com, e@80x24.org, git@vger.kernel.org,
         gitster@pobox.com, peff@peff.net
-Subject: [PATCH v4 7/7] pack-objects: show some progress when counting kept objects
-Date:   Sat, 24 Mar 2018 08:25:07 +0100
-Message-Id: <20180324072507.21059-8-pclouds@gmail.com>
+Subject: [PATCH v4 5/7] gc: handle a corner case in gc.bigPackThreshold
+Date:   Sat, 24 Mar 2018 08:25:05 +0100
+Message-Id: <20180324072507.21059-6-pclouds@gmail.com>
 X-Mailer: git-send-email 2.17.0.rc0.348.gd5a49e0b6f
 In-Reply-To: <20180324072507.21059-1-pclouds@gmail.com>
 References: <20180316192745.19557-1-pclouds@gmail.com>
@@ -69,104 +69,62 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We only show progress when there are new objects to be packed. But
-when --keep-pack is specified on the base pack, we will exclude most
-of objects. This makes 'pack-objects' stay silent for a long time
-while the counting phase is going.
+This config allows us to keep <N> packs back if their size is larger
+than a limit. But if this N >= gc.autoPackLimit, we may have a
+problem. We are supposed to reduce the number of packs after a
+threshold because it affects performance.
 
-Let's show some progress whenever we visit an object instead. The old
-"Counting objects" is renamed to "Enumerating objects" and a new
-progress "Counting objects" line is added.
-
-This new "Counting objects" line should progress pretty quick when the
-system is beefy. But when the system is under pressure, the reading
-object header done in this phase could be slow and showing progress is
-an improvement over staying silent in the current code.
+We could tell the user that they have incompatible gc.bigPackThreshold
+and gc.autoPackLimit, but it's kinda hard when 'git gc --auto' runs in
+background. Instead let's fall back to the next best stategy: try to
+reduce the number of packs anyway, but keep the base pack out. This
+reduces the number of packs to two and hopefully won't take up too
+much resources to repack (the assumption still is the base pack takes
+most resources to handle).
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- builtin/pack-objects.c | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ Documentation/config.txt | 6 +++++-
+ builtin/gc.c             | 8 +++++++-
+ 2 files changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 8b2f8b72bf..1379b4cb92 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -44,7 +44,7 @@ static const char *pack_usage[] = {
- static struct packing_data to_pack;
- 
- static struct pack_idx_entry **written_list;
--static uint32_t nr_result, nr_written;
-+static uint32_t nr_result, nr_written, nr_seen;
- 
- static int non_empty;
- static int reuse_delta = 1, reuse_object = 1;
-@@ -1096,6 +1096,8 @@ static int add_object_entry(const struct object_id *oid, enum object_type type,
- 	off_t found_offset = 0;
- 	uint32_t index_pos;
- 
-+	display_progress(progress_state, ++nr_seen);
-+
- 	if (have_duplicate_entry(oid, exclude, &index_pos))
- 		return 0;
- 
-@@ -1111,8 +1113,6 @@ static int add_object_entry(const struct object_id *oid, enum object_type type,
- 	create_object_entry(oid, type, pack_name_hash(name),
- 			    exclude, name && no_try_delta(name),
- 			    index_pos, found_pack, found_offset);
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index d63db3f12c..cf862d3edf 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1564,7 +1564,11 @@ gc.bigPackThreshold::
+ 	except that all packs that meet the threshold are kept, not
+ 	just the base pack. Defaults to zero. Common unit suffixes of
+ 	'k', 'm', or 'g' are supported.
 -
--	display_progress(progress_state, nr_result);
- 	return 1;
- }
+++
++Note that if the number of kept packs is more than gc.autoPackLimit,
++this configuration variable is ignored, all packs except the base pack
++will be repacked. After this the number of packs should go below
++gc.autoPackLimit and gc.bigPackThreshold should be respected again.
  
-@@ -1123,6 +1123,8 @@ static int add_object_entry_from_bitmap(const struct object_id *oid,
- {
- 	uint32_t index_pos;
+ gc.logExpiry::
+ 	If the file gc.log exists, then `git gc --auto` won't run
+diff --git a/builtin/gc.c b/builtin/gc.c
+index 53a0500898..74d3aaa270 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -254,8 +254,14 @@ static int need_to_gc(void)
+ 	if (too_many_packs()) {
+ 		struct string_list keep_pack = STRING_LIST_INIT_NODUP;
  
-+	display_progress(progress_state, ++nr_seen);
-+
- 	if (have_duplicate_entry(oid, 0, &index_pos))
- 		return 0;
+-		if (big_pack_threshold)
++		if (big_pack_threshold) {
+ 			find_base_packs(&keep_pack, big_pack_threshold);
++			if (keep_pack.nr >= gc_auto_pack_limit) {
++				big_pack_threshold = 0;
++				string_list_clear(&keep_pack, 0);
++				find_base_packs(&keep_pack, 0);
++			}
++		}
  
-@@ -1130,8 +1132,6 @@ static int add_object_entry_from_bitmap(const struct object_id *oid,
- 		return 0;
- 
- 	create_object_entry(oid, type, name_hash, 0, 0, index_pos, pack, offset);
--
--	display_progress(progress_state, nr_result);
- 	return 1;
- }
- 
-@@ -1717,6 +1717,10 @@ static void get_object_details(void)
- 	uint32_t i;
- 	struct object_entry **sorted_by_offset;
- 
-+	if (progress)
-+		progress_state = start_progress(_("Counting objects"),
-+						to_pack.nr_objects);
-+
- 	sorted_by_offset = xcalloc(to_pack.nr_objects, sizeof(struct object_entry *));
- 	for (i = 0; i < to_pack.nr_objects; i++)
- 		sorted_by_offset[i] = to_pack.objects + i;
-@@ -1727,7 +1731,9 @@ static void get_object_details(void)
- 		check_object(entry);
- 		if (big_file_threshold < entry->size)
- 			entry->no_try_delta = 1;
-+		display_progress(progress_state, i + 1);
- 	}
-+	stop_progress(&progress_state);
- 
- 	/*
- 	 * This must happen in a second pass, since we rely on the delta
-@@ -3212,7 +3218,7 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 	}
- 
- 	if (progress)
--		progress_state = start_progress(_("Counting objects"), 0);
-+		progress_state = start_progress(_("Enumerating objects"), 0);
- 	if (!use_internal_rev_list)
- 		read_object_list_from_stdin();
- 	else {
+ 		add_repack_all_option(&keep_pack);
+ 		string_list_clear(&keep_pack, 0);
 -- 
 2.17.0.rc0.348.gd5a49e0b6f
 
