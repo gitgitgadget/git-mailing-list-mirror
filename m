@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BF4B41FAE2
-	for <e@80x24.org>; Sat, 24 Mar 2018 06:34:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3DB0B1F42D
+	for <e@80x24.org>; Sat, 24 Mar 2018 06:34:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751777AbeCXGeW (ORCPT <rfc822;e@80x24.org>);
-        Sat, 24 Mar 2018 02:34:22 -0400
-Received: from mail-lf0-f67.google.com ([209.85.215.67]:45057 "EHLO
+        id S1751827AbeCXGe0 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 24 Mar 2018 02:34:26 -0400
+Received: from mail-lf0-f67.google.com ([209.85.215.67]:45075 "EHLO
         mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750785AbeCXGeM (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 24 Mar 2018 02:34:12 -0400
-Received: by mail-lf0-f67.google.com with SMTP id l4-v6so16932307lfg.12
-        for <git@vger.kernel.org>; Fri, 23 Mar 2018 23:34:11 -0700 (PDT)
+        with ESMTP id S1750785AbeCXGeY (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 24 Mar 2018 02:34:24 -0400
+Received: by mail-lf0-f67.google.com with SMTP id l4-v6so16932619lfg.12
+        for <git@vger.kernel.org>; Fri, 23 Mar 2018 23:34:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=x0HlUkIbhXxhdyUpXfN2LDMc7FHQH3g5yvkX25DRE3E=;
-        b=LhD2+5XoGWp3cNAfYsc/9IXpc7boH95ZN8SFFvmxFVe3EgwYV2wr4lOhQprC4PYTmP
-         Z/vgn51C4qxSMwiMTjFWiB40JlY0gz63n60bVuIacEpfyjrnyJ46ZClL0SGyzHNyUL2Y
-         GRZ7ShE4ADdyFrVjaSgdaSfUrINwVf+Y9chSjTXmXg7jFo0SEaN+p33L+riIiw7T4sJb
-         O8hLuHoTLAt35ZtATsqkYuFZY3DPk3e3ZHpAr3CoGUc8QCHoJcF0NC91oibDl+CNFnmK
-         91k6ZwB91i5nUB9FI55Fv6F7NbwrE0ajlSqwBuH1pXtPO6okkeWeESYZZxYccrxG2yai
-         5ohA==
+        bh=h+nbhaElqASrJpwU1GqlBr71Y0dBSWJTEugKOZMIaDE=;
+        b=urcjE2G9UtkLhyCVrQ3qiQ3QaZHBIioNsYo4jtEmIlH1POLxLS+uqx/ZZKoPs+cEQX
+         gHJ027oqAGSNPNjd3u1aylSpygeGDevvQvacsZvn9KXPOrbOVov/pwry8sA5b9j6Yzwb
+         XyrH484Ngm0FsZIEkcvKUEWUKXiNFIujoANzrdV3qia7+prptZgOORC4lTs8uQI1zhAN
+         9PU4EABZIMFjxjrjw0lSsVnBVYnsFd0VNwmUzveC+h8/E0f3w31pThjzf1mFFu/qgOVI
+         qotDmNr1CG2cpr60pC0mDkGMdsntlzIsqPOgx9TwKAzh7XebqQvux9aGP0rSeODajqxn
+         WIJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=x0HlUkIbhXxhdyUpXfN2LDMc7FHQH3g5yvkX25DRE3E=;
-        b=j066B4WFYyDAp1MqEyKPx8defQDYQ0PJlQ+ejKX5Y76PFyyo95Ecr1/bjXTd0CV7iD
-         yx5ipU9EwmofddDJ6sFmK3v2NS60Yk/0hnE3caJo7Oo1SuG9w5L8/U6rJkJkNrBxmzld
-         fEjeETO3F9gxyoMSDEQrrD5DmHrUZXPJKSkhlleliUXUOkDkNY1SjODD7WCDYB8XDxme
-         TTW740JOyypTToZ3C0MRfk+0iiT5UCI7wGR805E676EOxGWyWoeqm1/vGj2hS8JgJJig
-         xd9YpzZA4mdc3NYqBLm15KlGsNWCNVmcobFFkQcLOabzILDbO7qHYJjmKsXjCBZ9VvI4
-         LkEQ==
-X-Gm-Message-State: AElRT7FyL9WhUcRI9cNsaUA1gpb8pttmzWIh+qtKPDttXrdPy77Dcfy8
-        Ydf0PdCCCCVzjRkJKDiMmvw=
-X-Google-Smtp-Source: AG47ELtaNyMgyZ1X/F4KZ3YVz2m9txs8kSnpuBw5Qmyl1+WThP1E1AnAe9yr4A4hTon/dwb2wxYxRw==
-X-Received: by 2002:a19:8d93:: with SMTP id p141-v6mr21049540lfd.24.1521873251112;
-        Fri, 23 Mar 2018 23:34:11 -0700 (PDT)
+        bh=h+nbhaElqASrJpwU1GqlBr71Y0dBSWJTEugKOZMIaDE=;
+        b=YJSYUsGo7/SVqnD188boCvkW5+12BfSGPnnxLL+Brg2feAQv0DC6eOQr4WdLMupTVI
+         Xtx5XIBozeOEjC+0QA5VuPY7GbH8WE3LbSAP3G9dI6cTrYgrq2NT6spZb+q+IKBmi1yG
+         GMpcQzLFFrBvMwMiC1uj5x9gh7RI+D0AVkKkjkdEzgwWIO4DJ0lg8fluC2WP3uCJ+++T
+         +QLb+DVqhNMWdIkNsyX6SXLy8nq6Hzw9NXjMNJyYZQ6JKavADXLy9WhJS5yddz2y1ibM
+         n9x9ZgRvBC2ESRe8xCcYTWz9+26AFIc79QE7mqGgQG4PXuSqM1Upca6aHHKTTz9u7vqv
+         Xoqg==
+X-Gm-Message-State: AElRT7HXb2xKCeil4KjLJxDj+leNUMZpd3RqkFTZFLPM4CVL+0rOLA8e
+        BvKdVIe9AhKz1SzUegG7RwI=
+X-Google-Smtp-Source: AIpwx4/zoDXrx/x5J7kRbu0LOrxYNNAz/k9WFefc8DCLCU5HqNer0agNwljBhHO3+NQa3zLNEWEpsA==
+X-Received: by 2002:a19:5750:: with SMTP id l77-v6mr7204055lfb.10.1521873262532;
+        Fri, 23 Mar 2018 23:34:22 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id h8sm2251703lja.41.2018.03.23.23.34.10
+        by smtp.gmail.com with ESMTPSA id h8sm2251703lja.41.2018.03.23.23.34.21
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 23 Mar 2018 23:34:10 -0700 (PDT)
+        Fri, 23 Mar 2018 23:34:21 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     avarab@gmail.com, e@80x24.org, git@vger.kernel.org,
         gitster@pobox.com, peff@peff.net
-Subject: [PATCH v7 04/13] pack-objects: use bitfield for object_entry::depth
-Date:   Sat, 24 Mar 2018 07:33:44 +0100
-Message-Id: <20180324063353.24722-5-pclouds@gmail.com>
+Subject: [PATCH v7 13/13] pack-objects: reorder members to shrink struct object_entry
+Date:   Sat, 24 Mar 2018 07:33:53 +0100
+Message-Id: <20180324063353.24722-14-pclouds@gmail.com>
 X-Mailer: git-send-email 2.17.0.rc0.348.gd5a49e0b6f
 In-Reply-To: <20180324063353.24722-1-pclouds@gmail.com>
 References: <20180318142526.9378-1-pclouds@gmail.com>
@@ -69,97 +69,79 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Because of struct packing from now on we can only handle max depth
-4095 (or even lower when new booleans are added in this struct). This
-should be ok since long delta chain will cause significant slow down
-anyway.
+Previous patches leave lots of holes and padding in this struct. This
+patch reorders the members and shrinks the struct down to 80 bytes
+(from 136 bytes, before any field shrinking is done) with 16 bits to
+spare (and a couple more in in_pack_header_size when we really run out
+of bits).
+
+This is the last in a series of memory reduction patches (see
+"pack-objects: a bit of document about struct object_entry" for the
+first one).
+
+Overall they've reduced repack memory size on linux-2.6.git from
+3.747G to 3.424G, or by around 320M, a decrease of 8.5%. The runtime
+of repack has stayed the same throughout this series. Ævar's testing
+on a big monorepo he has access to (bigger than linux-2.6.git) has
+shown a 7.9% reduction, so the overall expected improvement should be
+somewhere around 8%.
+
+See 87po42cwql.fsf@evledraar.gmail.com on-list
+(https://public-inbox.org/git/87po42cwql.fsf@evledraar.gmail.com/) for
+more detailed numbers and a test script used to produce the numbers
+cited above.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- Documentation/config.txt           | 1 +
- Documentation/git-pack-objects.txt | 4 +++-
- Documentation/git-repack.txt       | 4 +++-
- builtin/pack-objects.c             | 4 ++++
- pack-objects.h                     | 5 ++---
- 5 files changed, 13 insertions(+), 5 deletions(-)
+ pack-objects.h | 18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index f57e9cf10c..9bd3f5a789 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -2412,6 +2412,7 @@ pack.window::
- pack.depth::
- 	The maximum delta depth used by linkgit:git-pack-objects[1] when no
- 	maximum depth is given on the command line. Defaults to 50.
-+	Maximum value is 4095.
- 
- pack.windowMemory::
- 	The maximum size of memory that is consumed by each thread
-diff --git a/Documentation/git-pack-objects.txt b/Documentation/git-pack-objects.txt
-index 81bc490ac5..3503c9e3e6 100644
---- a/Documentation/git-pack-objects.txt
-+++ b/Documentation/git-pack-objects.txt
-@@ -96,7 +96,9 @@ base-name::
- 	it too deep affects the performance on the unpacker
- 	side, because delta data needs to be applied that many
- 	times to get to the necessary object.
--	The default value for --window is 10 and --depth is 50.
-++
-+The default value for --window is 10 and --depth is 50. The maximum
-+depth is 4095.
- 
- --window-memory=<n>::
- 	This option provides an additional limit on top of `--window`;
-diff --git a/Documentation/git-repack.txt b/Documentation/git-repack.txt
-index ae750e9e11..25c83c4927 100644
---- a/Documentation/git-repack.txt
-+++ b/Documentation/git-repack.txt
-@@ -90,7 +90,9 @@ other objects in that pack they already have locally.
- 	space. `--depth` limits the maximum delta depth; making it too deep
- 	affects the performance on the unpacker side, because delta data needs
- 	to be applied that many times to get to the necessary object.
--	The default value for --window is 10 and --depth is 50.
-++
-+The default value for --window is 10 and --depth is 50. The maximum
-+depth is 4095.
- 
- --threads=<n>::
- 	This option is passed through to `git pack-objects`.
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 83f8154865..205e1f646c 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -3068,6 +3068,10 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 	if (pack_to_stdout != !base_name || argc)
- 		usage_with_options(pack_usage, pack_objects_options);
- 
-+	if (depth >= (1 << OE_DEPTH_BITS))
-+		die(_("delta chain depth %d is greater than maximum limit %d"),
-+		    depth, (1 << OE_DEPTH_BITS) - 1);
-+
- 	argv_array_push(&rp, "pack-objects");
- 	if (thin) {
- 		use_internal_rev_list = 1;
 diff --git a/pack-objects.h b/pack-objects.h
-index 8507e1b869..59407aae3c 100644
+index 6d0345a82c..9f19672602 100644
 --- a/pack-objects.h
 +++ b/pack-objects.h
-@@ -2,6 +2,7 @@
- #define PACK_OBJECTS_H
- 
- #define OE_DFS_STATE_BITS	2
-+#define OE_DEPTH_BITS		12
- 
- /*
-  * State flags for depth-first search used for analyzing delta cycles.
-@@ -89,9 +90,7 @@ struct object_entry {
+@@ -74,34 +74,36 @@ enum dfs_state {
+  */
+ struct object_entry {
+ 	struct pack_idx_entry idx;
+-	uint32_t size_:OE_SIZE_BITS;
+-	uint32_t size_valid:1;
+-	unsigned in_pack_idx:OE_IN_PACK_BITS;	/* already in pack */
++	void *delta_data;	/* cached delta (uncompressed) */
+ 	off_t in_pack_offset;
++	uint32_t hash;			/* name hint hash */
++	uint32_t size_:OE_SIZE_BITS;
++	unsigned size_valid:1;
+ 	uint32_t delta_idx;	/* delta base object */
+ 	uint32_t delta_child_idx; /* deltified objects who bases me */
+ 	uint32_t delta_sibling_idx; /* other deltified objects who
+ 				     * uses the same base as me
+ 				     */
+-	void *delta_data;	/* cached delta (uncompressed) */
+ 	uint32_t delta_size_:OE_DELTA_SIZE_BITS; /* delta data size (uncompressed) */
+ 	uint32_t delta_size_valid:1;
++	unsigned in_pack_idx:OE_IN_PACK_BITS;	/* already in pack */
+ 	unsigned z_delta_size:OE_Z_DELTA_BITS;
++	unsigned type_valid:1;
+ 	unsigned type_:TYPE_BITS;
++	unsigned no_try_delta:1;
+ 	unsigned in_pack_type:TYPE_BITS; /* could be delta */
+-	unsigned type_valid:1;
+-	uint32_t hash;			/* name hint hash */
+-	unsigned char in_pack_header_size;
+ 	unsigned preferred_base:1; /*
+ 				    * we do not pack this, but is available
+ 				    * to be used as the base object to delta
+ 				    * objects against.
+ 				    */
+-	unsigned no_try_delta:1;
  	unsigned tagged:1; /* near the very tip of refs */
  	unsigned filled:1; /* assigned write-order */
  	unsigned dfs_state:OE_DFS_STATE_BITS;
--
--	int depth;
--
-+	unsigned depth:OE_DEPTH_BITS;
++	unsigned char in_pack_header_size;
+ 	unsigned depth:OE_DEPTH_BITS;
++
++	/* size: 80, bit_padding: 20 bits, holes: 1 bit */
  };
  
  struct packing_data {
