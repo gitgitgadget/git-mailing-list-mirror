@@ -2,150 +2,142 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3AAD81F404
-	for <e@80x24.org>; Sat, 24 Mar 2018 20:38:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4D95D1F404
+	for <e@80x24.org>; Sat, 24 Mar 2018 20:43:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753082AbeCXUi2 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 24 Mar 2018 16:38:28 -0400
-Received: from mail-lf0-f68.google.com ([209.85.215.68]:33291 "EHLO
-        mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752924AbeCXUiL (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 24 Mar 2018 16:38:11 -0400
-Received: by mail-lf0-f68.google.com with SMTP id x205-v6so22936735lfa.0
-        for <git@vger.kernel.org>; Sat, 24 Mar 2018 13:38:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=BAgT36+fu8FyFwVCxOazrvKQuPUOr2j2X2eZztnOxQg=;
-        b=JkuoRyF1Wc9R4kWeV9aXQhvWZJVhoYMLSLYNm8NOYjlC9ugdzDtLE+FPd5t+mwTQbM
-         IG79Z/O6GIIUTlzbDWlPyfQyBuMOIm13ywIVGOoD9HcWMQ7+YYjKx/js8IxNvCuhNIav
-         JF7/x1aJg3x1N9buSKoq7H2ts/ISPm7BsV0gRzXyA9vWHNCTVX4sxyDQDvmnx/CFWiiB
-         h7xrq1StfV//weB/h2fqdAelUxkphgAVnVemE4bt9XuAthL98KKr1MtwbKlSUhr3gdkV
-         dRN5n1nLhEZbGXdk3L8cXeZ/8E6Hlr42DZ4jcGRmpCFjuHK019nfj7uTF2q9/VtL24BW
-         gRzQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=BAgT36+fu8FyFwVCxOazrvKQuPUOr2j2X2eZztnOxQg=;
-        b=F9qBdC4XfbnAvvumn6tGEw+zPkmbxTeQpi6G3+Qi+9ngH1IzLWioXEvuwDY7UyDIQw
-         0sn7ED4PRRPV8hYr057sVlYd+UMIWsXc0XQuFBaN+lZQwQBM0zziizTXw5E5Oqay92Oa
-         kiCC5BMB2ssgjzrySLEA0d78qkASg2LjwbPZdv72tx0nd/T35F/VrxEO1LFfLD6ROlVb
-         ym7yJsTHVAb+TrKlRoKD9PJTCo/3P2WYEtGKZFA64FGG4p3j8K9FmShEHs3AAydB4xyO
-         5OOU/B0kR9MFtUNoBC821Cx6K8/MlXM3l7xOv9ZQkRh9+tUkRBPzupmQDVc8fL35/dvg
-         WMEw==
-X-Gm-Message-State: AElRT7H5QnWLKYQe4yYqBcxItlGEaSlVHxeuRyF+nklsUeKQHkksQQNn
-        wqrdhwHbv4a1o3MLLSlUwd4=
-X-Google-Smtp-Source: AG47ELvpdx4M2aBeI2HD1IaYvNc45Nw1BaKzeuSRO9NM9n9NVh1zkXwrUfv2gP3TZMKxTwSz9dDbNA==
-X-Received: by 10.46.145.4 with SMTP id m4mr7445947ljg.73.1521923889982;
-        Sat, 24 Mar 2018 13:38:09 -0700 (PDT)
-Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id n2sm972680lji.75.2018.03.24.13.38.08
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 24 Mar 2018 13:38:09 -0700 (PDT)
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     pclouds@gmail.com
-Cc:     git@vger.kernel.org, szeder.dev@gmail.com,
+        id S1752872AbeCXUnK (ORCPT <rfc822;e@80x24.org>);
+        Sat, 24 Mar 2018 16:43:10 -0400
+Received: from mout.web.de ([212.227.17.11]:54805 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752822AbeCXUnJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 24 Mar 2018 16:43:09 -0400
+Received: from [192.168.178.36] ([79.237.251.165]) by smtp.web.de (mrweb101
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MVtxM-1f6RhL0oqO-00X04f; Sat, 24
+ Mar 2018 21:42:59 +0100
+Subject: Re: Null pointer dereference in git-submodule
+To:     Jeremy Feusi <jeremy@feusi.co>
+References: <20180324174234.GA3779@feusi.co>
+Cc:     git@vger.kernel.org, Prathamesh Chavan <pc44800@gmail.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 5/8] completion: add --option completion for most builtin commands
-Date:   Sat, 24 Mar 2018 21:35:22 +0100
-Message-Id: <20180324203525.24159-6-pclouds@gmail.com>
-X-Mailer: git-send-email 2.17.0.rc0.348.gd5a49e0b6f
-In-Reply-To: <20180324203525.24159-1-pclouds@gmail.com>
-References: <20180321193039.19779-1-pclouds@gmail.com>
- <20180324203525.24159-1-pclouds@gmail.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <a7ad9dbf-1b0f-efc6-3a17-51cf25381ce5@web.de>
+Date:   Sat, 24 Mar 2018 21:42:57 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20180324174234.GA3779@feusi.co>
+Content-Type: text/plain; charset=windows-1252
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:IspwVdA0BfD2neqOdJdPjLxmM4JZo//ShUGAjSlottuzQCoRrBu
+ /v7T3rrG7vHe+QbuPc9jiLFQ9UxX1QRCKtGZ23F8o3aKFVqRrR4oo65hCUpu02jAe4rl28i
+ IlbpCUcaXLS5FYggkB1Z4AQGUVWQrtR2V3eRgMGYKwvipfyjza/R6Ao4UBnqiPnydf4uwvu
+ ie3qT10fpxN18quU99BRQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:JojBLn0ao/w=:0DXgafrr4BiQVBny2tMgxH
+ nY/X1V5TM850GvsabR8graibOErVcveBkGvK4pPi2+e8D+cpY7+polV/YKkIo03UfS8YfrMli
+ EUDYdmp2tYInWlUX7xKucLokCiqt+RhMthLYEcGBqjnChfZrEzcUG8iHxo16EVeBeNn+0EsE7
+ bIYhvOcE6L6ojcp0NSNtPoXvkc5bjIu0n8RGbI/GY/OXTVDlbxq0fhyfNd7QyQ5gBkUitWzcs
+ YSG3b+DXjpLeV3RvcPbsgRSjDgq65UnIyZTQwDdtMuXWfGXRmpcvwh/2RRgngzJOVdkkEEVVm
+ Qa3bH64jRuHmXUvde3k7oidOuqRWMpvcp0XRMANpnkr1KhWcKAJQ9X61ngeO/nc0IWvK0Czmi
+ KGtHzkTt9JYshd8IvqM8UR2AzRO/liBSLqnagLbpZBs/uYHFvWmjLYAsiHFtm82B4thIZ8jvZ
+ HR2IB3mR0yO8zY2BdhAlgAhXf/oIlMX5FivBUutliJezBOXQpIU8vjhSrSH44S9ZEUtLi5bYt
+ D3q3nxrrDnCHvharn9VUYPPFj+L06omW5oILN60U1VaChnLfusE8a16r2v3TGKB/lRhJ215Ca
+ j5Lr0DTR17kdB6lFyi0CYTRXBxA2JB/Ctxvij2KNgMnp9ZxtLDHlcC455qtXhzMN3uuuN+lkf
+ n3GKSrnBwH7RnGBFB31M2yWXF63JGPIQfktj4uhZSR4yTLQvf5N6TK4yAvQQpdGy9h0pqNyYr
+ L2ole5FbiqZI7dE6j+hmTh3zqh1k+m3JlKxKXTZ65VNOwNNkmTt1j0wWPYtQwixDIOb7mY7xJ
+ v7utuGe6aRy7soZmAqS0EuTFq8nd1YmYeZkVuEuyepJZxRYd2Q=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Many builtin commands use parseopt which supports expose the option
-list via --git-completion-helper but do not have explicit support in
-git-completion.bash. This patch detects those commands and uses
-__gitcomp_builtin for option completion.
+Am 24.03.2018 um 18:42 schrieb Jeremy Feusi:
+> Hi,
+> While bootstrapping a gnu repository I noticed that git segfaulted when
+> called as "git submodule status". After compiling git with address
+> sanitizer and minimizing the directory I finally narrowed it down to the
+> files which I have attached as a tar archive. Here is a detailed backtrace:
+> 
+> AddressSanitizer:DEADLYSIGNAL
+> =================================================================
+> ==63400==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x000000c27a93 bp 0x7ffdcb4eec10 sp 0x7ffdcb4eeb80 T0)
+> ==63400==The signal is caused by a READ memory access.
+> ==63400==Hint: address points to the zero page.
+>      #0 0xc27a92 in refs_read_raw_ref /home/jfe/git/refs.c:1451:20
+>      #1 0xc174a6 in refs_resolve_ref_unsafe /home/jfe/git/refs.c:1493:7
+>      #2 0xc1826a in refs_read_ref_full /home/jfe/git/refs.c:224:6
+>      #3 0xc26d53 in refs_head_ref /home/jfe/git/refs.c:1314:7
+>      #4 0x8071e6 in status_submodule /home/jfe/git/builtin/submodule--helper.c:658:7
+>      #5 0x806a89 in status_submodule_cb /home/jfe/git/builtin/submodule--helper.c:699:2
+>      #6 0x80523e in for_each_listed_submodule /home/jfe/git/builtin/submodule--helper.c:438:3
+>      #7 0x7f7e9a in module_status /home/jfe/git/builtin/submodule--helper.c:732:2
+>      #8 0x7efd69 in cmd_submodule__helper /home/jfe/git/builtin/submodule--helper.c:1859:11
+>      #9 0x51e024 in run_builtin /home/jfe/git/git.c:346:11
+>      #10 0x5192c2 in handle_builtin /home/jfe/git/git.c:554:8
+>      #11 0x51d0f0 in run_argv /home/jfe/git/git.c:606:4
+>      #12 0x518600 in cmd_main /home/jfe/git/git.c:683:19
+>      #13 0x8501d6 in main /home/jfe/git/common-main.c:43:9
+>      #14 0x7f49fdaf2f29 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x20f29)
+>      #15 0x41f4b9 in _start (/home/jfe/git/inst/libexec/git-core/git+0x41f4b9)
+> 
+> AddressSanitizer can not provide additional info.
+> SUMMARY: AddressSanitizer: SEGV /home/jfe/git/refs.c:1451:20 in refs_read_raw_ref
+> ==63400==ABORTING
+> 
+> As mentioned above, this bug is triggered by issuing the command
+> "git submodule status" while in the attached directory.
+> 
+> This bug was confirmed on Debian with version 2.16.1 and
+> 2.17.0.rc1.35.g90bbd502d as well as on Arch Linux with version 2.16.2
+> where further output is given by git:
+> 
+> /usr/lib/git-core/git-submodule: line 979:  8119 Segmentation fault      (core dumped) git ${wt_prefix:+-C "$wt_prefix"} ${prefix:+--super-prefix "$prefix"} submodule--helper status ${GIT_QUIET:+--quiet} ${cached:+--cached} ${recursive:+--recursive} "$@"
+> 
 
-This does not pollute the command name completion though. "git <tab>"
-will show you the same set as before. This only kicks in when you type
-the correct command name.
+You may have minimized too much.  With the patch below I get:
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+	fatal: no ref store in submodule 'gnulib'
+
+I guess you'll get a different one in your original repo.
+
+The patch seems like a good idea in any case, though.
+
+-- >8 --
+Subject: [PATCH] submodule: check for NULL return of get_submodule_ref_store()
+
+refs_head_ref() requires a valid ref_store pointer to be given as its
+first argument.  get_submodule_ref_store() can return NULL.  Exit and
+report the failure to find a ref store in that case instead of
+segfaulting.
+
+Reported-by: Jeremy Feusi <jeremy@feusi.co>
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
 ---
- contrib/completion/git-completion.bash | 28 ++++++++++++++++++++++++++
- t/t9902-completion.sh                  |  6 ++++++
- 2 files changed, 34 insertions(+)
+ builtin/submodule--helper.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index b3a9ecfad0..a90b0e8db4 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -3034,12 +3034,40 @@ _git_worktree ()
- 	fi
- }
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index ee020d4749..0f74e81005 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -654,9 +654,11 @@ static void status_submodule(const char *path, const struct object_id *ce_oid,
+ 			     displaypath);
+ 	} else if (!(flags & OPT_CACHED)) {
+ 		struct object_id oid;
++		struct ref_store *refs = get_submodule_ref_store(path);
  
-+__git_complete_common () {
-+	local command="$1"
-+
-+	case "$cur" in
-+	--*)
-+		__gitcomp_builtin "$command"
-+		;;
-+	esac
-+}
-+
-+__git_cmds_with_parseopt_helper=
-+__git_support_parseopt_helper () {
-+	test -n "$__git_cmds_with_parseopt_helper" ||
-+		__git_cmds_with_parseopt_helper="$(__git --list-parseopt-builtins)"
-+
-+	case " $__git_cmds_with_parseopt_helper " in
-+	*" $1 "*)
-+		return 0
-+		;;
-+	*)
-+		return 1
-+		;;
-+	esac
-+}
-+
- __git_complete_command () {
- 	local command="$1"
- 	local completion_func="_git_${command//-/_}"
- 	if declare -f $completion_func >/dev/null 2>/dev/null; then
- 		$completion_func
- 		return 0
-+	elif __git_support_parseopt_helper "$command"; then
-+		__git_complete_common "$command"
-+		return 0
- 	else
- 		return 1
- 	fi
-diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index e6485feb0a..d0a1e4c988 100755
---- a/t/t9902-completion.sh
-+++ b/t/t9902-completion.sh
-@@ -1454,6 +1454,12 @@ test_expect_success 'completion used <cmd> completion for alias: !f() { : git <c
- 	EOF
- '
+-		if (refs_head_ref(get_submodule_ref_store(path),
+-				  handle_submodule_head_ref, &oid))
++		if (!refs)
++			die(_("no ref store in submodule '%s'"), path);
++		if (refs_head_ref(refs, handle_submodule_head_ref, &oid))
+ 			die(_("could not resolve HEAD ref inside the "
+ 			      "submodule '%s'"), path);
  
-+test_expect_success 'completion without explicit _git_xxx function' '
-+	test_completion "git version --" <<-\EOF
-+	--build-options Z
-+	EOF
-+'
-+
- test_expect_failure 'complete with tilde expansion' '
- 	git init tmp && cd tmp &&
- 	test_when_finished "cd .. && rm -rf tmp" &&
 -- 
-2.17.0.rc0.348.gd5a49e0b6f
-
+2.16.3
