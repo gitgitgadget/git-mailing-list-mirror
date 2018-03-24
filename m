@@ -2,226 +2,234 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1DD4B1F42D
-	for <e@80x24.org>; Sat, 24 Mar 2018 10:22:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C9EC71F42D
+	for <e@80x24.org>; Sat, 24 Mar 2018 10:39:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751891AbeCXKWM (ORCPT <rfc822;e@80x24.org>);
-        Sat, 24 Mar 2018 06:22:12 -0400
-Received: from mail-wm0-f43.google.com ([74.125.82.43]:55342 "EHLO
-        mail-wm0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751755AbeCXKWK (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 24 Mar 2018 06:22:10 -0400
-Received: by mail-wm0-f43.google.com with SMTP id t7so7577430wmh.5
-        for <git@vger.kernel.org>; Sat, 24 Mar 2018 03:22:09 -0700 (PDT)
+        id S1751883AbeCXKjH (ORCPT <rfc822;e@80x24.org>);
+        Sat, 24 Mar 2018 06:39:07 -0400
+Received: from mail-io0-f170.google.com ([209.85.223.170]:45612 "EHLO
+        mail-io0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751853AbeCXKjF (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 24 Mar 2018 06:39:05 -0400
+Received: by mail-io0-f170.google.com with SMTP id 141so17975400iou.12
+        for <git@vger.kernel.org>; Sat, 24 Mar 2018 03:39:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=ClorHRQWK5Vo46j5utQNzy/6+3HHo2akbr2lFnOyjc4=;
-        b=vG+41HoYrUd2JSHBoJ4WgRNshzzlUYYKnbQ3FN0dbGc47/o0nPeOlNtdYq7zSN6W6d
-         +k4wiFHuPL1REzhUncJuT8osktJeOb8WSiiCv9KTJ/dOI9iY8DuhRddu5Wp3EpocNC4d
-         gtsppeJZqGeAFg8sNKNZ7SE3cg7DIqYVy2OE7NOFlb8vOabsNy/qw5mEenIrdbCSqY6E
-         qlDlj8gEDWOI4wnlLeT+mXHp9uoKbPRDrg3XBuZMEtFJY9j4lqYm/eZKLp62hkM39YnE
-         964pUmHfQLJSwDDw+oo4BpFVv2sieu7je1sgL7jMGFVb+t5vvHVPEZjua/IpferhRBKL
-         SReA==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=UY9Sgp0gbUdzi/z2tOidjdQUMvUwdct11DtzHIN4As4=;
+        b=KXNQTegPg+gTXwGs/mqg4AT0fBDj0RiPnmBDyHyM0XvfV2T/teyPtDjavNsazbzZEP
+         CfT6VNbLNHACD/nNQ0XRcNqzWE/U2PlcRO+71xUjqWc0ZTpjy4w6LK05u5oH26loqUq7
+         ju1apn7sG2u3srrhrlU/jtCr8byhUnGA0I5yllQPXxElxUEetGhn0HduqLPjxNw9TOOl
+         pBLVsdNNiAaIhY9WZ8afX3pAVQcereO8tU0UzBdRAMHTBVO7P6Na0qG3NmDXqMpZVV1Q
+         FOmdlKeGodvRvPws6WeLejUgfqtD9mOfRMqq8GbelnYiGkQc6XLU60Hdo1C0/a4TW1sp
+         TdLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=ClorHRQWK5Vo46j5utQNzy/6+3HHo2akbr2lFnOyjc4=;
-        b=gcApW3V4cZ7+2aoR+Dqt4dHq0NGz8dn5UD9IKrTVC7W8Su7zrFFAt05s1D2Btd7ERZ
-         verAaqXGZr7+XzFWGV61lh1wOcwZCaEvdruEdgEBVacw3w5RNGgP+/oxsqzm0TIVGXyd
-         xW7IuEc29YUo0I8+fK8kgLsiETO8IdqNgbiaP/zgZMZgJ6s4E0Ov3uB0ps2nI0Ao8L//
-         4Vrd3Tx1JhqIyz1ndzUZJ8deLnOJ7VTcOj6QuzvohtRjt2n+Lh4e661tMXHDPznpgTa6
-         MQE6Ou7K51+gM023y2lZPM8KWLOzGeBJoouHbDUriOZh1vCAXgoxLX+DkVun4ZH+RVcv
-         N5Zg==
-X-Gm-Message-State: AElRT7GuCDM+N2K2rSahSzdpMvVkcBDvo7NcEikc1u9PNV9hrQwf8ZiT
-        0v8lw4e2hBQGdO2cp2G9+E//eQ==
-X-Google-Smtp-Source: AG47ELuYRgxgUGUVRnvGMoOhzfrrRZxW4VkGan0LPZSZduHvQGNMZB9UUFZ6ZYIRzWC1TzRoImt/uQ==
-X-Received: by 10.28.109.88 with SMTP id i85mr10330749wmc.150.1521886928468;
-        Sat, 24 Mar 2018 03:22:08 -0700 (PDT)
-Received: from arrakeen.fritz.box ([2001:a62:81d:ab01:3c52:d1a9:f75d:ebe4])
-        by smtp.gmail.com with ESMTPSA id e74sm10413183wmg.27.2018.03.24.03.22.06
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 24 Mar 2018 03:22:07 -0700 (PDT)
-From:   Andreas Heiduk <asheiduk@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>, Eric Wong <e@80x24.org>
-Cc:     sunshine@sunshineco.com, Andreas Heiduk <asheiduk@gmail.com>
-Subject: [PATCH v3] git-svn: allow empty email-address using authors-prog and authors-file
-Date:   Sat, 24 Mar 2018 11:20:46 +0100
-Message-Id: <20180324102046.8840-1-asheiduk@gmail.com>
-X-Mailer: git-send-email 2.16.2
-In-Reply-To: <20180320220743.GA17234@whir>
-References: <20180320220743.GA17234@whir>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=UY9Sgp0gbUdzi/z2tOidjdQUMvUwdct11DtzHIN4As4=;
+        b=FKCX0Ny4t1O54TDMfDQ81MSs7EOJ/wkk0awy3JKomVPo61vQJOsRjAvlXMtB4npjDd
+         /U7PUkf0g/eokElU/Nikz6/9epWAiiKIsPx68oxo1+60rJsUhlEITfP4LKcBrK9R5n3s
+         vXkUhK9gTd02qCOgSaZiFOQl/LJ+fQVdOZixv6P0dxZfvm989YD7F4cHmAkFowTmW6X5
+         vp+5xbeT+krr8FOxZF2zQK6AjBOmMU3fJe3xpq/CDcLQObueJmr+mHmSEvOS1nIpdrd5
+         ISQzfHAATUg5RJZWg2ILm4VDKQA/TmgzIAmmH/OZf3QrDtW17OH+9+qO63UksD9Lsikq
+         mu+w==
+X-Gm-Message-State: AElRT7GF3DH40D4vMZ3EoYhkualia1bqta3+/aWP3rPlj9SAxT+ECvRX
+        +5eH7fr2l3kUAX7Wzxd6PkhUabWGHyLDlGT3kNU=
+X-Google-Smtp-Source: AG47ELtT2lrI+hjPAvhEpIp3orvsUV1OOMoipe5eD2z8jAWggx0YraHGfUjZGXehHQJZuhkjs50QkaQLgcbofmYfRkU=
+X-Received: by 10.107.93.20 with SMTP id r20mr32551346iob.53.1521887944507;
+ Sat, 24 Mar 2018 03:39:04 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.79.34.9 with HTTP; Sat, 24 Mar 2018 03:39:03 -0700 (PDT)
+In-Reply-To: <20180321061605.27814-1-predatoramigo@gmail.com>
+References: <nycvar.QRO.7.76.6.1803201616290.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+ <20180321061605.27814-1-predatoramigo@gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Sat, 24 Mar 2018 11:39:03 +0100
+Message-ID: <CAP8UFD2k6ROC51zHob+HnqqKL0fgM=xLgUk3LmOJTTEuoHBijQ@mail.gmail.com>
+Subject: Re: [RFC] [GSoC] Project proposal: convert scripts to builtins
+To:     Pratik Karki <predatoramigo@gmail.com>
+Cc:     git <git@vger.kernel.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The email address in --authors-file and --authors-prog can be empty but
-git-svn translated it into a fictional email address in the form
+Hi,
 
-	jondoe <jondoe@6aafaa21e0fb4338a68ab372a049893d>
+On Wed, Mar 21, 2018 at 7:16 AM, Pratik Karki <predatoramigo@gmail.com> wrote:
+>
+> Thanks for the feedback. Thanks to you, I realized my proposal was
+> a bit ambitious. Both git-stash and git-rebase are big
+> commitment. After much analyzing, I found out I cannot complete
+> both in the given time frame. So, I decided to stick to one and
+> complete it.
 
-containing the SVN repository UUID. Now git-svn behaves like git-commit:
-If the email is *explicitly* set to the empty string using '<>', the
-commit does not contain an email address, only the name:
+Great.
 
-	jondoe <>
+[...]
 
-Allowing to remove the email address *intentionally* prevents automatic
-systems from sending emails to those fictional addresses and avoids
-cluttering the log output with unnecessary stuff.
+> There has been some development in `git-stash` as seen on
+> [<https://public-inbox.org/git/20171110231314.30711-1-joel@teichroeb.net/>]
+> (https://public-inbox.org/git/20171110231314.30711-1-joel@teichroeb.net/).
+> To maximize the productivity, the findings from the patch submitted can
+> be used. Since, there are already much discussions regarding the
+> rewrite.
 
-Signed-off-by: Andreas Heiduk <asheiduk@gmail.com>
----
- Documentation/git-svn.txt       |  8 +++++---
- perl/Git/SVN.pm                 | 13 ++++++-------
- t/t9130-git-svn-authors-file.sh | 14 ++++++++++++++
- t/t9138-git-svn-authors-prog.sh | 25 ++++++++++++++++++++++++-
- 4 files changed, 49 insertions(+), 11 deletions(-)
+In general it would be nice if you summarized what has already been
+done, how you can reuse it and what is needed to complete it.
 
-diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
-index b858374649..d59379ee23 100644
---- a/Documentation/git-svn.txt
-+++ b/Documentation/git-svn.txt
-@@ -635,7 +635,8 @@ config key: svn.findcopiesharder
- 
- -A<filename>::
- --authors-file=<filename>::
--	Syntax is compatible with the file used by 'git cvsimport':
-+	Syntax is compatible with the file used by 'git cvsimport' but
-+	an empty email address can be supplied with '<>':
- +
- ------------------------------------------------------------------------
- 	loginname = Joe User <user@example.com>
-@@ -654,8 +655,9 @@ config key: svn.authorsfile
- 	If this option is specified, for each SVN committer name that
- 	does not exist in the authors file, the given file is executed
- 	with the committer name as the first argument.  The program is
--	expected to return a single line of the form "Name <email>",
--	which will be treated as if included in the authors file.
-+	expected to return a single line of the form "Name <email>" or
-+	"Name <>", which will be treated as if included in the authors
-+	file.
- +
- Due to historical reasons a relative 'filename' is first searched
- relative to the current directory for 'init' and 'clone' and relative
-diff --git a/perl/Git/SVN.pm b/perl/Git/SVN.pm
-index bc4eed3d75..945ca4db2b 100644
---- a/perl/Git/SVN.pm
-+++ b/perl/Git/SVN.pm
-@@ -1482,7 +1482,6 @@ sub call_authors_prog {
- 	}
- 	if ($author =~ /^\s*(.+?)\s*<(.*)>\s*$/) {
- 		my ($name, $email) = ($1, $2);
--		$email = undef if length $2 == 0;
- 		return [$name, $email];
- 	} else {
- 		die "Author: $orig_author: $::_authors_prog returned "
-@@ -2020,8 +2019,8 @@ sub make_log_entry {
- 		remove_username($full_url);
- 		$log_entry{metadata} = "$full_url\@$r $uuid";
- 		$log_entry{svm_revision} = $r;
--		$email ||= "$author\@$uuid";
--		$commit_email ||= "$author\@$uuid";
-+		$email = "$author\@$uuid" unless defined $email;
-+		$commit_email = "$author\@$uuid" unless defined $commit_email;
- 	} elsif ($self->use_svnsync_props) {
- 		my $full_url = canonicalize_url(
- 			add_path_to_url( $self->svnsync->{url}, $self->path )
-@@ -2029,15 +2028,15 @@ sub make_log_entry {
- 		remove_username($full_url);
- 		my $uuid = $self->svnsync->{uuid};
- 		$log_entry{metadata} = "$full_url\@$rev $uuid";
--		$email ||= "$author\@$uuid";
--		$commit_email ||= "$author\@$uuid";
-+		$email = "$author\@$uuid" unless defined $email;
-+		$commit_email = "$author\@$uuid" unless defined $commit_email;
- 	} else {
- 		my $url = $self->metadata_url;
- 		remove_username($url);
- 		my $uuid = $self->rewrite_uuid || $self->ra->get_uuid;
- 		$log_entry{metadata} = "$url\@$rev " . $uuid;
--		$email ||= "$author\@" . $uuid;
--		$commit_email ||= "$author\@" . $uuid;
-+		$email = "$author\@$uuid" unless defined $email;
-+		$commit_email = "$author\@$uuid" unless defined $commit_email;
- 	}
- 	$log_entry{name} = $name;
- 	$log_entry{email} = $email;
-diff --git a/t/t9130-git-svn-authors-file.sh b/t/t9130-git-svn-authors-file.sh
-index 41264818cc..6af6daf461 100755
---- a/t/t9130-git-svn-authors-file.sh
-+++ b/t/t9130-git-svn-authors-file.sh
-@@ -108,6 +108,20 @@ test_expect_success !MINGW 'fresh clone with svn.authors-file in config' '
- 	)
- '
- 
-+cat >> svn-authors <<EOF
-+ff = FFFFFFF FFFFFFF <>
-+EOF
-+
-+test_expect_success 'authors-file imported user without email' '
-+	svn_cmd mkdir -m aa/branches/ff --username ff "$svnrepo/aa/branches/ff" &&
-+	(
-+		cd aa-work &&
-+		git svn fetch --authors-file=../svn-authors &&
-+		git rev-list -1 --pretty=raw refs/remotes/origin/ff | \
-+		  grep "^author FFFFFFF FFFFFFF <> "
-+	)
-+	'
-+
- test_debug 'GIT_DIR=gitconfig.clone/.git git log'
- 
- test_done
-diff --git a/t/t9138-git-svn-authors-prog.sh b/t/t9138-git-svn-authors-prog.sh
-index 7d7e9d46bc..0cec56128f 100755
---- a/t/t9138-git-svn-authors-prog.sh
-+++ b/t/t9138-git-svn-authors-prog.sh
-@@ -9,7 +9,9 @@ test_description='git svn authors prog tests'
- 
- write_script svn-authors-prog "$PERL_PATH" <<-\EOF
- 	$_ = shift;
--	if (s/-sub$//)  {
-+	if (s/-hermit//) {
-+		print "$_ <>\n";
-+	} elsif (s/-sub$//)  {
- 		print "$_ <$_\@sub.example.com>\n";
- 	} else {
- 		print "$_ <$_\@example.com>\n";
-@@ -68,6 +70,27 @@ test_expect_success 'authors-file overrode authors-prog' '
- git --git-dir=x/.git config --unset svn.authorsfile
- git --git-dir=x/.git config --unset svn.authorsprog
- 
-+test_expect_success 'authors-prog imported user without email' '
-+	svn mkdir -m gg --username gg-hermit "$svnrepo"/gg &&
-+	(
-+		cd x &&
-+		git svn fetch --authors-prog=../svn-authors-prog &&
-+		git rev-list -1 --pretty=raw refs/remotes/git-svn | \
-+		  grep "^author gg <> "
-+	)
-+'
-+
-+test_expect_success 'imported without authors-prog and authors-file' '
-+	svn mkdir -m hh --username hh "$svnrepo"/hh &&
-+	(
-+		uuid=$(svn info --show-item=repos-uuid "$svnrepo") &&
-+		cd x &&
-+		git svn fetch &&
-+		git rev-list -1 --pretty=raw refs/remotes/git-svn | \
-+		  grep "^author hh <hh@$uuid> "
-+	)
-+'
-+
- test_expect_success 'authors-prog handled special characters in username' '
- 	svn mkdir -m bad --username "xyz; touch evil" "$svnrepo"/bad &&
- 	(
--- 
-2.16.2
+I see that you talk about some of that below, but a more general
+overview might be nice too.
 
+It could be interesting also to put the author(s) of the work that you
+will reuse in Cc.
+
+[...]
+
+> Timeline and Development Cycle
+> ------------------------------
+>
+> -   Apr 23: Accepted student proposals announced.
+>
+> -   Apr 23 onwards: Researching of all the test suites. Discussion of
+>     possible test improvements in for `git-stash`.
+>
+>     Firstly, the test suite coverage of every command will be reviewed
+>     using gcov and kcov.
+
+I don't think it is necessary to spend a lot of time on the test suite coverage.
+
+> The test suite might not be perfect or
+>     comprehensive but must cover all the major code paths and
+>     command-line switches of the script. For the tests which seem
+>     inadequate, minimum required tests are written and developed
+>     incrementally. The minimum tests must provide safety net for
+>     migration of scripts to built-ins. The tests would be sent as a
+>     separate patch for parallel development and review process so that
+>     development of built-ins can happen at the same time productively.
+
+Nice.
+
+>     The tests will be written for every code changes and will be worked
+>     throughout the summer.
+>
+> -   May 1: Rewriting skeleton begins.
+>
+>     The shell scripts are translated on a line-by-line basis into C
+>     code. The C code will be written in a way to maximize the use of git
+>     internal API. In git-stash `parse-options` API can be used for
+>     implementing parsing argument of command-line. This would be way
+>     better than parsing via the scripts. Firstly, I will start
+>     implementing `stash --helper`from respective scripts to C code. Then
+>     increment it further more. Then I'll start converting git-stash.sh
+>     on a line-by-line basis.
+
+Not sure what you mean by line-by-line basis.
+
+>      Again for git-stash some work seem to be done
+>     [<https://public-inbox.org/git/20171110231314.30711-1-joel@teichroeb.net/>]
+>     (https://public-inbox.org/git/20171110231314.30711-1-joel@teichroeb.net/).
+>     Now, to maximize the output I'll be taking findings from the
+>     previous patch and use it for my patch. As seen from the comments in
+>     the patch some tests for checking branch when `git stash branch`
+>     fails needs to be written.
+
+Nice. Maybe writing those tests can come earlier in you schedule.
+
+> New tests will be written and code
+>     coverage tools will be used for the written code.
+
+Not sure that code coverage tools need to be used.
+
+> -   May 13: Making minimal `builtin/stash.c` with `stash--helper` ready
+>     for review process. (This goes on for some time.)
+>
+>     The initial review of minimal builtin would be ready for git-stash.
+>     The result C code at this stage may not be necessarily be efficient
+>     but would be free from obvious bugs and can serve as a baseline for
+>     the final patch. This is sent for review process which can take some
+>     time. The code will ofcourse be tested using the test suite with
+>     some additional tests.
+
+How does that relates with the existing work? Will this be one or
+several patch series? What will each patch do?
+
+[...]
+
+> -   June 10 - Jul 20: Start optimizing `builtin/stash.c`. Benchmarking
+>     and profiling is done. They are exclusively compared to their
+>     original shell scripts, to check whether they are more performant or
+>     not and the results are published in the mailing list for further
+>     discussion.
+
+Will the performance tests be added to the t/perf tests?
+
+> The C code will be optimized for speed and efficiency in this stage. The
+> built-ins will now be profiled using the new efficient test suites to
+> find hot spots. Bench-marking is also done in comparison to original
+> scripts.The performance for stash can be measured by making it stash
+> large number of changes in another working directory and measuring the
+> time for completion of the task. After finding out, a graphical
+> representation of performance findings will be published to git mailing
+> list and discussions will commence on more optimization.
+>
+> -   Jul 20 - Aug 5: More optimizing and polishing of `builtin/stash.c`
+>     and further polishing of tests series written and send them for code
+>     review.
+>
+> After discussions with the git community, optimization is done further
+> and the code and tests at this stage are polished for final submissions.
+
+Often there is not much time for optimization and a lot more time is
+spent on improving the structure of the patch series and the patch
+themselves through many review rounds. We also expect that many of the
+early patch series have been already polished and submitted many times
+before the last weeks of the GSoC.
+
+[...]
+
+> -   Apr 24 - Aug 14: Documentation is written.
+
+What kind of documentation is that? In the Git project we expect that
+the documentation for the work done comes with the work itself. It can
+be in the form of the cover letter of a patch series, or the commit
+messages of the patches that are sent to the mailing list, or in
+patches that change files in Documentation/.
+
+> "What I'm working on" is
+>     written and posted in my blog regarding GSoC with Git.
+>
+>     The documentation of the code written is done in the whole summer.
+>     Additionally, a blog series will be written in a weekly basis of my
+>     current findings and will write about "What I'm working on" to
+>     further provide information about my development of summer project.
+
+Nice.
+
+> About me
+> --------
+>
+> I'm Pratik Karki and am studing bachelors in Computer Engineering in
+> Advanced College of Engineering and Management (Affiliated to Institue
+> of Engineering, Tribhuvan University). I've been writing C, C++, Ruby,
+> Perl, Clojure, Lisp, Java, JS, Erlang, Rust for 3 years, and contributed
+> to some projects which can be seen in
+> [Github](https://github.com/prertik). I've been doing independent
+> contract works for small upcoming start-ups in Nepal.
+> I have been planning to contribute in Git for a long time. Thanks, to
+> GSoC I've submitted small patch as a microproject: [test: avoid pipes in
+> git related commands for test
+> suite](https://public-inbox.org/git/20180319173204.31952-1-predatoramigo@gmail.com/).
+> I am looking forward to submitting more patches to Git on a long time
+> basis.
+
+Thanks.
