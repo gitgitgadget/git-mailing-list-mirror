@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 11E401F42D
-	for <e@80x24.org>; Sat, 24 Mar 2018 07:43:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AD3DC1F42D
+	for <e@80x24.org>; Sat, 24 Mar 2018 07:43:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751870AbeCXHna (ORCPT <rfc822;e@80x24.org>);
-        Sat, 24 Mar 2018 03:43:30 -0400
-Received: from mail-lf0-f67.google.com ([209.85.215.67]:46156 "EHLO
+        id S1751880AbeCXHne (ORCPT <rfc822;e@80x24.org>);
+        Sat, 24 Mar 2018 03:43:34 -0400
+Received: from mail-lf0-f67.google.com ([209.85.215.67]:38210 "EHLO
         mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751409AbeCXHn2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 24 Mar 2018 03:43:28 -0400
-Received: by mail-lf0-f67.google.com with SMTP id j68-v6so21383682lfg.13
-        for <git@vger.kernel.org>; Sat, 24 Mar 2018 00:43:28 -0700 (PDT)
+        with ESMTP id S1751583AbeCXHna (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 24 Mar 2018 03:43:30 -0400
+Received: by mail-lf0-f67.google.com with SMTP id u3-v6so478919lff.5
+        for <git@vger.kernel.org>; Sat, 24 Mar 2018 00:43:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=+M/0/oYiRJxNpCluntdYs0tbDIUdkXwm1P7iOXaIc28=;
-        b=GkdfN6pR6dWx8wXPEHwR6mwTLCxZMTHw23f2b5DsHdvNV/wQfbDQTDbQVa4c47x/HY
-         mRDVjiMRKekI1OSeZbdC4mx8XSuU2YAbARYrJht2YSHFB+KytxGTb8RcyNDlXO/R5y6m
-         exDQnnxEoRDFEs6CEn0XeOtKlp5EVufCXMMh+EtiGICjReDJvoXJTK39TE/2QeO1MOHb
-         +DmHIJhcrCwf9K7qNlgYkosOWVOIhb2241JU/tlGmWwhbxkfYJJXCLBFq3RCAgD1LjcF
-         80da2heoXygI5B1oxa2h9VxQLs9XoSGHpk96QDaytoQVSomkZdSN4rprddXGiDqA0YNi
-         UT8A==
+        bh=p/3tYEgP/0gP+rfDqvZvT+9uTPB8YTu8qWrq0k2qbWg=;
+        b=mkJpWzgTSj6OoCxS7hLXQzmontVTZHOqOSkP2/NCSfrWBH8wQtGQ3FCqGiVZ9a+sWD
+         vLzE9V8h8GVTQ5GoikOijf99qsxOoz+q78bC6jHToqzyqChEuW6JA58yvNq+hlMoPbuh
+         E75xwlGy6huDynq/L2dtGRRsdERzBn97dGDzU4sQsFMpSBTrJ9Tu5B6q4cs0NhBZNIV7
+         nZC7UP2lsS8gBz4nPWsKCkp8p4W/xZs/iUJ2rTF7C9uGwE0vf/gQ/0c7qNr+DwvYE/Ln
+         Kq8ruaz79d0vXY1wfr1Ugf7dj9tj4w8JskBEDJ1VPU0NZw2m2HGKwrm8p0bl87YWiYxS
+         kWVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=+M/0/oYiRJxNpCluntdYs0tbDIUdkXwm1P7iOXaIc28=;
-        b=PZhAVfoSiXPzn9+u3gXikZP2f8dHJ+339H4SEEdnINaPrzrk7qIarJKI+7VFlMwpmO
-         NnlHbXqIRoVy0oU4ZB+M9fsH/gGV7mErQKtPDORi05vfw0uyBE1z/HyxvvXNKL1TEy0s
-         NG4IMQZEH9AM5VIFqYfX5/8fDZKrVtxrgdb5azZA2uTWnld08JVggJgjqKlBd5XKb+vZ
-         hANiDv1bFah/XfFD+kGon+KpdsWbvd1oZsd0BneQvt53cwIBXq/A8yAHXz4BMLanouh9
-         GR2rom9PENqyaaXhzTgJrL+kouGDQLpIcQhMWPrOT8P4VucRiSK1hXpcYn9G1XnShLfr
-         rbnw==
-X-Gm-Message-State: AElRT7HUa+waVIiZk7a17ktpv1bw0ff3o7Knsv3Betrus5KQukN+fS8y
-        khW2SnrrZ4rscPbp7KfoD5w=
-X-Google-Smtp-Source: AG47ELskzRImjaYiurEEuURsXx/T8FLA5KNIQxM/2uJX8KFgP7+krvahntMBrCWUKlj/o5ycmrVavw==
-X-Received: by 2002:a19:4e82:: with SMTP id u2-v6mr22240227lfk.131.1521877407358;
-        Sat, 24 Mar 2018 00:43:27 -0700 (PDT)
+        bh=p/3tYEgP/0gP+rfDqvZvT+9uTPB8YTu8qWrq0k2qbWg=;
+        b=r7Up5llfE3W8n3bre0rf+0tUosNhi2qbA014h0vrKxE73miEoh++C5qKpwyLwDyANH
+         2x9MevQvddlvlGJfeLn80qpuAQPRBcqcaLWGr3kWoclTjcNWdu5aKO82thaVYm0kMpRJ
+         0RZuumGBIWGW8aXM1NQ+4x+BafpQEvWzIreRWJawUIaDy1Zj3dR95LB+bR7BkGgORy5/
+         X11fZNEYzZlOAun9EuwmgUzq6+kgzT9V0OpGZGAc9RczKvLdEaCTt1JwLno4HqWxTFtp
+         hgZjGAYTIvDn70OKfqltJyx+A0ELjYVivhMSsoXOHUR/mcWiS9c+htA56R71XquB8wNB
+         XwkQ==
+X-Gm-Message-State: AElRT7Ec7ZDXVVw3E1VbsQLA3c5KBoy9SnSTC40CROLGXzPUTCQxkOTR
+        Z1RtFbRwX2tKroY6FSQT8U0=
+X-Google-Smtp-Source: AIpwx49mo/085UvCvg21IayZlf/sb55e6GIZXqLP7Psnlvmq/VFPDU1uAAAp1fk6x6WMk1Gcnk+B2Q==
+X-Received: by 2002:a19:d80b:: with SMTP id p11-v6mr1241871lfg.11.1521877408905;
+        Sat, 24 Mar 2018 00:43:28 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id o132-v6sm2642867lfe.91.2018.03.24.00.43.25
+        by smtp.gmail.com with ESMTPSA id o132-v6sm2642867lfe.91.2018.03.24.00.43.27
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 24 Mar 2018 00:43:26 -0700 (PDT)
+        Sat, 24 Mar 2018 00:43:28 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
         Jeff Hostetler <git@jeffhostetler.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v4 1/7] t7700: have closing quote of a test at the beginning of line
-Date:   Sat, 24 Mar 2018 08:42:26 +0100
-Message-Id: <20180324074308.18934-2-pclouds@gmail.com>
+Subject: [PATCH v2 01/36] t/helper: add an empty test-tool program
+Date:   Sat, 24 Mar 2018 08:42:27 +0100
+Message-Id: <20180324074308.18934-3-pclouds@gmail.com>
 X-Mailer: git-send-email 2.17.0.rc0.348.gd5a49e0b6f
 In-Reply-To: <20180324074308.18934-1-pclouds@gmail.com>
 References: <20180317075421.22032-1-pclouds@gmail.com>
@@ -70,28 +70,110 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The closing quote of a test body by convention is always at the start
-of line.
+This will become an umbrella program that absorbs most [1] t/helper
+programs in. By having a single executable binary we reduce disk usage
+(libgit.a is replicated by every t/helper program) and shorten link
+time a bit.
+
+Running "make --jobs=1; du -sh t/helper" with ccache fully populated,
+it takes 27 seconds and 277MB at the beginning of this series, 17
+seconds and 42MB at the end.
+
+[1] There are a couple programs that will not become part of
+    test-tool: test-line-buffer and test-svn-fe have extra
+    dependencies and test-fake-ssh's program name has to be a single
+    word for some ssh tests.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- t/t7700-repack.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Makefile             |  6 +++++-
+ t/helper/test-tool.c | 27 +++++++++++++++++++++++++++
+ t/helper/test-tool.h |  4 ++++
+ 3 files changed, 36 insertions(+), 1 deletion(-)
+ create mode 100644 t/helper/test-tool.c
+ create mode 100644 t/helper/test-tool.h
 
-diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
-index 6061a04147..38247afbec 100755
---- a/t/t7700-repack.sh
-+++ b/t/t7700-repack.sh
-@@ -194,7 +194,7 @@ test_expect_success 'objects made unreachable by grafts only are kept' '
- 	git reflog expire --expire=$test_tick --expire-unreachable=$test_tick --all &&
- 	git repack -a -d &&
- 	git cat-file -t $H1
--	'
-+'
+diff --git a/Makefile b/Makefile
+index a1d8775adb..2376646e98 100644
+--- a/Makefile
++++ b/Makefile
+@@ -546,6 +546,7 @@ SCRIPT_PERL =
+ SCRIPT_PYTHON =
+ SCRIPT_SH =
+ SCRIPT_LIB =
++TEST_BUILTINS_OBJS =
+ TEST_PROGRAMS_NEED_X =
  
- test_done
+ # Having this variable in your environment would break pipelines because
+@@ -690,6 +691,7 @@ TEST_PROGRAMS_NEED_X += test-string-list
+ TEST_PROGRAMS_NEED_X += test-submodule-config
+ TEST_PROGRAMS_NEED_X += test-subprocess
+ TEST_PROGRAMS_NEED_X += test-svn-fe
++TEST_PROGRAMS_NEED_X += test-tool
+ TEST_PROGRAMS_NEED_X += test-urlmatch-normalization
+ TEST_PROGRAMS_NEED_X += test-wildmatch
  
+@@ -2083,7 +2085,7 @@ VCSSVN_OBJS += vcs-svn/fast_export.o
+ VCSSVN_OBJS += vcs-svn/svndiff.o
+ VCSSVN_OBJS += vcs-svn/svndump.o
+ 
+-TEST_OBJS := $(patsubst %$X,%.o,$(TEST_PROGRAMS))
++TEST_OBJS := $(patsubst %$X,%.o,$(TEST_PROGRAMS)) $(patsubst %,t/helper/%,$(TEST_BUILTINS_OBJS))
+ OBJECTS := $(LIB_OBJS) $(BUILTIN_OBJS) $(PROGRAM_OBJS) $(TEST_OBJS) \
+ 	$(XDIFF_OBJS) \
+ 	$(VCSSVN_OBJS) \
+@@ -2494,6 +2496,8 @@ t/helper/test-svn-fe$X: $(VCSSVN_LIB)
+ 
+ .PRECIOUS: $(TEST_OBJS)
+ 
++t/helper/test-tool$X: $(patsubst %,t/helper/%,$(TEST_BUILTINS_OBJS))
++
+ t/helper/test-%$X: t/helper/test-%.o GIT-LDFLAGS $(GITLIBS)
+ 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) $(filter %.a,$^) $(LIBS)
+ 
+diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
+new file mode 100644
+index 0000000000..c730f718ca
+--- /dev/null
++++ b/t/helper/test-tool.c
+@@ -0,0 +1,27 @@
++#include "git-compat-util.h"
++#include "test-tool.h"
++
++struct test_cmd {
++	const char *name;
++	int (*main)(int argc, const char **argv);
++};
++
++static struct test_cmd cmds[] = {
++};
++
++int cmd_main(int argc, const char **argv)
++{
++	int i;
++
++	if (argc < 2)
++		die("I need a test name!");
++
++	for (i = 0; i < ARRAY_SIZE(cmds); i++) {
++		if (!strcmp(cmds[i].name, argv[1])) {
++			argv++;
++			argc--;
++			return cmds[i].main(argc, argv);
++		}
++	}
++	die("There is no test named '%s'", argv[1]);
++}
+diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
+new file mode 100644
+index 0000000000..6ce57ae0cc
+--- /dev/null
++++ b/t/helper/test-tool.h
+@@ -0,0 +1,4 @@
++#ifndef __TEST_TOOL_H__
++#define __TEST_TOOL_H__
++
++#endif
 -- 
 2.17.0.rc0.348.gd5a49e0b6f
 
