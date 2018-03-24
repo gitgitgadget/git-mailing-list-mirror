@@ -2,116 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2080A1F42D
-	for <e@80x24.org>; Sat, 24 Mar 2018 07:53:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BBE841F42D
+	for <e@80x24.org>; Sat, 24 Mar 2018 08:41:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751879AbeCXHw7 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 24 Mar 2018 03:52:59 -0400
-Received: from mail-ot0-f194.google.com ([74.125.82.194]:43189 "EHLO
-        mail-ot0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751625AbeCXHw6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 24 Mar 2018 03:52:58 -0400
-Received: by mail-ot0-f194.google.com with SMTP id m22-v6so15694893otf.10
-        for <git@vger.kernel.org>; Sat, 24 Mar 2018 00:52:57 -0700 (PDT)
+        id S1751734AbeCXIlW (ORCPT <rfc822;e@80x24.org>);
+        Sat, 24 Mar 2018 04:41:22 -0400
+Received: from mail-it0-f67.google.com ([209.85.214.67]:51307 "EHLO
+        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751699AbeCXIlT (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 24 Mar 2018 04:41:19 -0400
+Received: by mail-it0-f67.google.com with SMTP id j137-v6so5270127ita.1
+        for <git@vger.kernel.org>; Sat, 24 Mar 2018 01:41:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=hackers-mu.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=UT3bk7KDka+lh39BCurS15MJBxccSxEGNaGgWiN6jjs=;
-        b=QArqzDIw71DK+nH+VCs/c+QML8doil6y3eYJUS1uc14jP/kQyGmG5/BPtGXWVGGUxP
-         vRCCYdv7nU5YgqQVtkB0HCQ9jrnbHwB5hc9KtsMd5F6K3xTKaAUzVTnWfrZkgo50ciZt
-         /Dlwke+noN0Htd1bpZbVvIl5srJSkGk/fr0aFzMhB1OL+ML8OcF0K8zjXclXNERSGDrU
-         KPr5w2N9q8xapnNParqxoJhh1kp9fRiizgVVKAPtmHoBSHexO8pq8jNiJZt6vVEO/lV9
-         wuKFKDBAAN8sz3h742VLpqLvFWTpGJfRItML4Og97wwsdccJs7UaWuFEwKHcsF4Nd34A
-         DQQQ==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=sDn7dM6i4knCEP4GUo17Mh1q7d4t1QJzvhBHpqqCg/A=;
+        b=PBYiHcWqFB9QtPTIk2vjsqSLpRGK/MzVeYynga1UWkb9/5jeSwt6xA8f7lkjSwWhKa
+         QxTLsNUSpa0wwtCKkHFNX5eK2qtDadWeMIPvFaD4YlIKJcRpDIeIMCMsqwWNqIWbKRHD
+         KXLHEiLicxBE/HlI/Op/sP17t8SLDLBj5e9Nd3rmqejWsp2xpWkm5T+6ibAICcPDZEhL
+         j5OE5pM0IN8XtjWzgTUrpzVEqGPfhwW1EGRAifiWVaLtEkS8i16zEERnTGXCz/+xGNv5
+         wOoPH+rtk4GnZyAVwZTH5LSUdtvTExcIl99GcWUxJrWaQ0l0PUUTHwFc0RXQRGWHZFMR
+         g0cw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=UT3bk7KDka+lh39BCurS15MJBxccSxEGNaGgWiN6jjs=;
-        b=SWmfdQFLBqv6q+MqIgdsRIDWRX91xmr+Ct4pNFgwoFJYadfltxjEXrUS4BrgqCJCKx
-         IQKIfTkZXr9SyRJZ0S1zUZVUyRU2z2c+nGlH60aw33nKhEBkadYjjzqa+Dcxh7/UaQqk
-         wTu3OibTGbHTdLdNXspfcfO8uHVdb7zLe83/baSRZ8n7sPAdOpQqT+ekHRqhQ+CYyObC
-         hf2ThAI/uBApQBo5QGRrxuqrRCqv4HFpJlit1EkoXIL23uh3pmT/u0sB3yvKbYdRnXzs
-         +KIDFq8+F5Oj7GoyF3ven/1P50NNhTgMDN6KBRN3+K+WwvB8+45gEoLNxfn8FbpaKIw7
-         pI+Q==
-X-Gm-Message-State: AElRT7HZdyangI6r9LiSjDEN6hVOP7aa0RCB7VVllswUSteUAP4WSggP
-        BcKGOdVp9e0cfrJiok6pEp2A3FQN8a1oBZ/L2aTPuw==
-X-Google-Smtp-Source: AG47ELvMgmywT6IOS6iZfBOmMYF2wNQABn06DrtzZ5vSQ4JzZ/aPcake51J47MAKO5ZWweg4PBDa7Qix8tF0quVdNFg=
-X-Received: by 2002:a9d:419a:: with SMTP id p26-v6mr14337856ote.350.1521877977445;
- Sat, 24 Mar 2018 00:52:57 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.74.197.137 with HTTP; Sat, 24 Mar 2018 00:52:57 -0700 (PDT)
-In-Reply-To: <xmqqtvt6h2ic.fsf@gitster-ct.c.googlers.com>
-References: <20180323193435.GA21971@voidlinux> <alpine.DEB.2.20.1803232246020.16250@tvnag.unkk.fr>
- <xmqqtvt6h2ic.fsf@gitster-ct.c.googlers.com>
-From:   Loganaden Velvindron <logan@hackers.mu>
-Date:   Sat, 24 Mar 2018 11:52:57 +0400
-Message-ID: <CAFDEUTf_KCn7Sqs+O8JJfBXo_+QfvAmiT2uzmM_ROWfXUdF0Sg@mail.gmail.com>
-Subject: Re: [PATCH v2] Allow use of TLS 1.3
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Daniel Stenberg <daniel@haxx.se>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=sDn7dM6i4knCEP4GUo17Mh1q7d4t1QJzvhBHpqqCg/A=;
+        b=SJZee3d2SEtgsHbrWmz29TuUby/638VcUsIt4OxzfCyOy+Xb5Nyx87OdRegLAGG8CW
+         z8h4mzCIuRU/rzNihWecALguIB6wOnxA0rg++9N5v5Hw0VCnIuIB99UjmGZnY0UY1AgP
+         tI5C3J+Uw3saMUCV0Uuibw/0dTApK1C70dprBhwoOSU56lf74k7PnzFfZIVvea9FXJY3
+         zjBJhsUHFF26gZbEUz43wA3nfC2jIWiV+DFuqqIFEJDM5w2bjBkOsHjrzyiGNyrsYWMD
+         d7WG18CTN6NC4DkdgKFwIgjz6PbvSupSTB+Ss1BA9FlNFQFaI2B/fDk7vELiLDbOzBde
+         Aerg==
+X-Gm-Message-State: AElRT7GozGNWihITS0pMcAWWkJ4maX3F+NcybRVJszU3OCLuJD282rzI
+        2HlF38U9z/KNTa7utowiMzyYKc4E
+X-Google-Smtp-Source: AG47ELs/EGidtWbdbIv2chXwxJL/u4qeUK928BE/AUM3bXpjbN4tq8SOX929P7i6eJvmRcmr06iKjw==
+X-Received: by 2002:a24:7f0a:: with SMTP id r10-v6mr16191925itc.101.1521880878674;
+        Sat, 24 Mar 2018 01:41:18 -0700 (PDT)
+Received: from localhost.localdomain ([27.34.20.189])
+        by smtp.gmail.com with ESMTPSA id b17-v6sm7751186itc.38.2018.03.24.01.41.15
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 24 Mar 2018 01:41:17 -0700 (PDT)
+From:   Pratik Karki <predatoramigo@gmail.com>
+To:     git <git@vger.kernel.org>
+Cc:     Pratik Karki <predatoramigo@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [GSoC] Re: Info: git log --oneline improvements
+Date:   Sat, 24 Mar 2018 14:26:03 +0545
+Message-Id: <20180324084103.3367-1-predatoramigo@gmail.com>
+X-Mailer: git-send-email 2.16.2
+In-Reply-To: <CAP8UFD2D-XU=YeJD7A+9wauu0WKHwkXgVxbEBkOGPyZE7GiOZA@mail.gmail.com>
+References: <CAP8UFD2D-XU=YeJD7A+9wauu0WKHwkXgVxbEBkOGPyZE7GiOZA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Mar 24, 2018 at 2:04 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Daniel Stenberg <daniel@haxx.se> writes:
->
->> On Fri, 23 Mar 2018, Loganaden Velvindron wrote:
->>
->>> +#ifdef CURL_SSLVERSION_TLSv1_3
->>> +    { "tlsv1.3", CURL_SSLVERSION_TLSv1_3 }
->>> +#endif
->>
->> Unfortunately, CURL_SSLVERSION_TLSv1_3 is an enum so this construct
->> won't work.
->>
->> Also, let me just point out that 7.52.0 is 0x073400 in hex and not the
->> one used for the first version of this patch.
->
 
-It's working with tls 1.3:
+Hi Christian and Johannes,
 
-ldd for curl (showing linking to openssl 1.1.1 pre2 preview):
- ldd /usr/local/bin/curl
-linux-vdso.so.1 (0x00007ffd30599000)
-libcurl.so.4 => /usr/local/lib/libcurl.so.4 (0x00007f5a81845000)
-libssl.so.1.1 => /usr/local/lib/libssl.so.1.1 (0x00007f5a815b5000)
-libcrypto.so.1.1 => /usr/local/lib/libcrypto.so.1.1 (0x00007f5a810dd000)
-libz.so.1 => /usr/lib/libz.so.1 (0x00007f5a80ec6000)
-libpthread.so.0 => /usr/lib/libpthread.so.0 (0x00007f5a80ca7000)
-libc.so.6 => /usr/lib/libc.so.6 (0x00007f5a808f2000)
-libnghttp2.so.14 => /usr/lib/libnghttp2.so.14 (0x00007f5a806cd000)
-libdl.so.2 => /usr/lib/libdl.so.2 (0x00007f5a804c9000)
-/lib/ld-linux-x86-64.so.2 (0x00007f5a81ce5000)
-
-handshake failure against a tls 1.2 server:
-
-GIT_SSL_VERSION=tlsv1.3 ./git clone https://github.com/shuque/pydig
-Cloning into 'pydig'...
-warning: templates not found /usr/local/share/git-core/templates
-fatal: unable to access 'https://github.com/shuque/pydig/':
-error:14094410:SSL routines:ssl3_read_bytes:sslv3 alert handshake
-failure
-
-With a local server running nginx using only tls 1.3 (had to disable
-ssl verification due to self-signed cert):
-GIT_SSL_NO_VERIFY=true GIT_SSL_VERSION=tlsv1.2 ./git clone
-https://192.168.1.214/git_test
-error:1409442E:SSL routines:ssl3_read_bytes:tlsv1 alert protocol version
+Though I sent a mail earlier, saying I would like to submit another
+proposal, I am now skeptical on re-writing another proposal as you
+guys are only available mentor for GSoC and I believe Git doesn't
+select more than 2 proposals. Hence, I will try to update my previous
+proposal[1] and make it more worthy. Can you review it and explain
+what I might be lacking there? Thank you for your time.
 
 
-Now with TLS 1.3, it works:
-GIT_SSL_NO_VERIFY=true GIT_SSL_VERSION=tlsv1.3 ./git clone
-https://192.168.1.214/git_test
+[1]: https://public-inbox.org/git/20180321061605.27814-1-predatoramigo@gmail.com/
 
-
-
-> Thanks!
+Cheers,
+Pratik Karki
