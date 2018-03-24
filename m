@@ -2,106 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BDFD31F42D
-	for <e@80x24.org>; Sat, 24 Mar 2018 08:46:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1EF8D1F42D
+	for <e@80x24.org>; Sat, 24 Mar 2018 09:36:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751784AbeCXIqT (ORCPT <rfc822;e@80x24.org>);
-        Sat, 24 Mar 2018 04:46:19 -0400
-Received: from mail-it0-f46.google.com ([209.85.214.46]:38747 "EHLO
-        mail-it0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751699AbeCXIqQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 24 Mar 2018 04:46:16 -0400
-Received: by mail-it0-f46.google.com with SMTP id 19-v6so5316931itw.3
-        for <git@vger.kernel.org>; Sat, 24 Mar 2018 01:46:16 -0700 (PDT)
+        id S1751853AbeCXJgb (ORCPT <rfc822;e@80x24.org>);
+        Sat, 24 Mar 2018 05:36:31 -0400
+Received: from mail-wr0-f182.google.com ([209.85.128.182]:42850 "EHLO
+        mail-wr0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751755AbeCXJg3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 24 Mar 2018 05:36:29 -0400
+Received: by mail-wr0-f182.google.com with SMTP id s18so14308000wrg.9
+        for <git@vger.kernel.org>; Sat, 24 Mar 2018 02:36:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=g2c+zS20sS3CdQQYn+t5ucAh6vXzUFjM8JaYtrEZK0M=;
-        b=ZrFxyOFCs5ZQES2Z1e5dK65toPnprK9REVHCGHtghzrnI8OKnouyFuzBYpaPPIs6Zj
-         1RHlNZplv/CZWLhzHSggmwIhRYcn3ztsemnEiT8XELyzPuK6J+hQowQeHUIvsSL5JDSt
-         DJ2QeWCo/Ep7FV7f73JW+LSe9FH6wzSUtfCsKEezwiVtwH2hz31Iqg4P12uFaB7AYbZ6
-         AQgFVtMM9DpkqL2My3J1vXUWHE2w4nn3vMZ34myJIttTRq26pZBDBc+7li4z9DZ/o4Yj
-         phUA4tH5Wlke+YOWb+ejctlZkaW8YLHtXUQSY5jHzSPCeDmc7cGL6OP8NNnqyvsKy9Yf
-         CFKQ==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=QvcZilnDwim4NlKloI63a8JyDGsXD7cLGaf2nfUXlPU=;
+        b=nLhVrAhZt3yz0kU0ubyj1vNXtxH82kCqgj2t6ttO/VGHPIOj/25dFDZLWF+IOqeid3
+         J3IybpfC4gRF/nT+yHEKOFoTSMdkAp1pC930/MiwZF447fQL1/GqqNO59IgeQPC6byqp
+         5TNKyuRlQbPKFDkDdzGpsEV/ZHUVKTa3iSjJ6aZxqD5VKbYC8gLYx9DS+XjRFYkzQxFQ
+         nempOfrfJ3WFkGJswKcuRSiP/opt4MKM22Ou8QMIheaGqlvqqXIoSPVz5nUQATlhXSy4
+         EANCKAA0WLUe2Nh4eTKbjZIe+QAHC5Mm32AVcjyYbZvrVB41s/zJbjY0pTAzaAjVV30r
+         FQPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=g2c+zS20sS3CdQQYn+t5ucAh6vXzUFjM8JaYtrEZK0M=;
-        b=eghuuRTT50zn2e177MDp432Y54AnVrp+fdJBsMclZ6+CLLIwdlQf6EeJHzVNKjErRt
-         6Ql0jN6EsTY2dDpbtyCYOcnnmjgbJG0b+FWWluTcmItSnEsOUGgaH1KIzV9Irl/B7w1/
-         OIr8k1hG3ioNJYHdqzy9BjyzILDonMvRv3UVyGL37AjNHnoY8fxBhJOyLwEdOJcVwZqN
-         5yvMYU0yzEUgSlXyA2l3/2Zcnh2N/e7dDn/fls7SFMoDku1PslH12uavMP1iOmSgdE7F
-         YfiELmhkySLtVss9Mi9j9fiOjv47zOXv01Yb8lH2Aj+15ikkPdhwLnBZFIG4Io9C62gG
-         weVw==
-X-Gm-Message-State: AElRT7HTKrBJRDyOWM7KOssZ42TK30mheGfxstra3Gg04WCxR7buOxeZ
-        nvEyMYqFEDl/Z1misDU1me/o4tx3JzvEv2yp0xDzONxx
-X-Google-Smtp-Source: AG47ELvdTcrZh0KxPxA190Iho9gIGME7kcUpz0VjhaQ7PsxwfZREaYLx9jX3D+7YOpo54oezLFhRo8xdjZrf2qj7hQk=
-X-Received: by 2002:a24:eec5:: with SMTP id b188-v6mr15558601iti.96.1521881176051;
- Sat, 24 Mar 2018 01:46:16 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=QvcZilnDwim4NlKloI63a8JyDGsXD7cLGaf2nfUXlPU=;
+        b=pbOFoDx097zz6mR6Y4GJgqcMbbfl9LqhdduaWyTmsvz/pxEHzRsh4chhvTN+fZ062M
+         nNYrBJzkjFUHCrRq115Od+QWpVi5Uo4VT6GLbsRKKt82P1aRqXXrcC5eq/by60wLTM39
+         thagwnU5jg/JOJU0qPS3RV1+YBb1E/2q1+QDcUxPwlJ93lBrw8PP5kqKao/XlKTjsZ04
+         4c10F0a3+aYMdF/jev5JiksGIQFP4Bu5PFuXja79HhzwceYSydTOatR5Qs2jiIJUAq/J
+         vcFZHxku/UDxyyhohHIH93QWEijyymSx5zIM2kSKox6K0Kiji0ytrxbSgGn6T6OY7ujn
+         v5hw==
+X-Gm-Message-State: AElRT7GEi51sl8Fxe7dEzuzQfa7EHCMonTXqTYokf+DjATRJlty1jmkF
+        ks/8uGD+FUwRHbw5vmzL5EE=
+X-Google-Smtp-Source: AG47ELummv1bfyp0Wml81iXz8PoQElYqSqKb4ZtWnD4x1kph2mFe4c4Fot6NK+GvyFgtqzEPaBIVBw==
+X-Received: by 10.223.144.69 with SMTP id h63mr16097691wrh.218.1521884188507;
+        Sat, 24 Mar 2018 02:36:28 -0700 (PDT)
+Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
+        by smtp.gmail.com with ESMTPSA id y9sm1923309wrg.34.2018.03.24.02.36.25
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sat, 24 Mar 2018 02:36:26 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 3/7] gc: add --keep-largest-pack option
+References: <20180317075421.22032-1-pclouds@gmail.com> <20180324074308.18934-1-pclouds@gmail.com> <20180324074308.18934-6-pclouds@gmail.com>
+User-agent: Debian GNU/Linux 9.4 (stretch); Emacs 25.1.1; mu4e 1.1.0
+In-reply-to: <20180324074308.18934-6-pclouds@gmail.com>
+Date:   Sat, 24 Mar 2018 10:36:24 +0100
+Message-ID: <87fu4pyfvr.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Received: by 10.79.34.9 with HTTP; Sat, 24 Mar 2018 01:46:15 -0700 (PDT)
-In-Reply-To: <d64eca23-8a59-1aa2-597a-128e341f4af3@gmail.com>
-References: <d64eca23-8a59-1aa2-597a-128e341f4af3@gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Sat, 24 Mar 2018 09:46:15 +0100
-Message-ID: <CAP8UFD3Y4_h1Rt4fC-BwKYwJtU-7DR3W2pTFHsg_u1_sXNxUnQ@mail.gmail.com>
-Subject: Re: [GSOC]About the microproject related to CI
-To:     Zhibin Li <08826794brmt@gmail.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
 
-On Fri, Mar 23, 2018 at 2:44 AM, Zhibin Li <08826794brmt@gmail.com> wrote:
-> Hi all,
->
-> I'm Zhibin Li, an undergraduate from China and I'm interested in automated
-> testing. Since the application deadline is coming, hope it's not too late
-> for me to start with the microproject.
+On Sat, Mar 24 2018, Nguyễn Thái Ngọc Duy wrote:
 
-As the Student Application Period ends on March 27, I think there are
-very few chances that your microproject and your proposal will get
-advanced enough at the end of the period for you to be selected. You
-can still try if you really want though.
+>  	struct option builtin_gc_options[] = {
+>  		OPT__QUIET(&quiet, N_("suppress progress reporting")),
+> @@ -362,6 +390,8 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
+>  		OPT_BOOL(0, "aggressive", &aggressive, N_("be more thorough (increased runtime)")),
+>  		OPT_BOOL(0, "auto", &auto_gc, N_("enable auto-gc mode")),
+>  		OPT_BOOL(0, "force", &force, N_("force running gc even if there may be another gc running")),
+> +		OPT_BOOL(0, "keep-largest-pack", &keep_base_pack,
+> +			 N_("repack all other packs except the largest pack")),
+>  		OPT_END()
+>  	};
 
-> If it's ok, I would like to take Git
-> CI Improvements 4 as my starting point. But the description on the website
-> shows less details so I wonder what am I supposed to do more specifically?
+This conflicts with master because of your own 7e1eeaa431 ("completion:
+use __gitcomp_builtin in _git_gc", 2018-02-09). I pushed out a
+avar-pclouds/gc-auto-keep-base-pack branch to github.com/avar/git which
+resolves it as:
 
-It looks like the CI improvements 4 is:
+    @@ -365,6 +393,8 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
+                    OPT_BOOL_F(0, "force", &force,
+                               N_("force running gc even if there may be another gc running"),
+                               PARSE_OPT_NOCOMPLETE),
+    +               OPT_BOOL(0, "keep-largest-pack", &keep_base_pack,
+    +                        N_("repack all other packs except the largest pack")),
+                    OPT_END()
+            };
 
-install CVS on the build machines to run t94?? and t96?? tests
-install SVN on the build machines to run t91?? tests
-install Apache Web Server to run 5539, 5550, and 5561
-
-So it seems to me that you should create a patch that changes:
-
-https://github.com/git/git/blob/master/.travis.yml
-
-so that the testing machines will have some software installed that is
-required to run some tests.
-
-See:
-
-e7e9f5e7a1 (travis-ci: enable Git SVN tests t91xx on Linux, 2016-05-19), and
-
-https://public-inbox.org/git/20180305200400.3769-1-sidm1999@gmail.com/
-
-for example.
-
-> Reporting the results or trying to figure out the how and why those results
-> come out independently? It would be nice if you guys can tell me about any
-> details.
-
-No this is not about the results of the tests.
+I assume that's the intention here.
