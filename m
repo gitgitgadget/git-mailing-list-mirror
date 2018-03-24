@@ -2,88 +2,138 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3145D1F404
-	for <e@80x24.org>; Sat, 24 Mar 2018 05:43:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8D2AD1FAE5
+	for <e@80x24.org>; Sat, 24 Mar 2018 06:34:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751715AbeCXFn2 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 24 Mar 2018 01:43:28 -0400
-Received: from mail-ot0-f193.google.com ([74.125.82.193]:35810 "EHLO
-        mail-ot0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750801AbeCXFn1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 24 Mar 2018 01:43:27 -0400
-Received: by mail-ot0-f193.google.com with SMTP id r30-v6so15522164otr.2
-        for <git@vger.kernel.org>; Fri, 23 Mar 2018 22:43:27 -0700 (PDT)
+        id S1750899AbeCXGeL (ORCPT <rfc822;e@80x24.org>);
+        Sat, 24 Mar 2018 02:34:11 -0400
+Received: from mail-lf0-f68.google.com ([209.85.215.68]:38512 "EHLO
+        mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750785AbeCXGeI (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 24 Mar 2018 02:34:08 -0400
+Received: by mail-lf0-f68.google.com with SMTP id u3-v6so352932lff.5
+        for <git@vger.kernel.org>; Fri, 23 Mar 2018 23:34:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=hackers-mu.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=t+Z4wibB52kiiKl8rUv2aDQ6mUTHRYHxvJD5tqroAyo=;
-        b=aQKIj7bRBR9/I/NKNjvRUFXHmN1+dB5labCLINlly+ENNSoxU1IL+snOsHxdvdu/Td
-         cwuoTWIxg2Lh2EL8SBPiAV9pTip86X2IXq1ltoM6r5AbF1gD//jDAbHwVsdDJFkRlhfv
-         gxJoRLy5KyVGDsJgLFBmmju9GbcMDxNRevOuzuNuFPZ6gH57u33ZGbMd83EgIHmTz4A7
-         OLV+kGqQd/93E1dmIg021CaCOzEaAmlolt+3jzMvgvRQ3mLFO2YE6dVXzqB5Hk1ALk9U
-         Dwlj2wvA9qu42RpUrXzX3SHWsyEzVw52ACBYRnFDReaGjrNoMp8B5rllyyogDzQdj4TP
-         sncw==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=DOEiB5eitX1F+jJH+a4MQ9uOkKjTC4OmZEAwcQbBI9Q=;
+        b=ITQLwOnd8nwWgT8Q4D5WmhxEajYX0sLF/NuKJFdQkOUxmjj6DHLp/X0stWNPc6eQNd
+         D3mnBAvyaprxYoxg1IbWpwwU1Jqr9X3sUrx3vTsP7uxZf2asVg0rWIUeOLkg14nzhIyl
+         aMGszyitQhx59ZELV8QC1lVe3k2uiD15zlRPtXhK5C1KINuLKu61tgzUmIJlElkN8Tmp
+         kWaz/8rBI8xx/igcPkd75wsWKk2lKiOMkFYqYRi8eeg/wH1k8tSKC1Kg51zPfuVFjtK0
+         rGXg5iKaXRSBNOZ+O9AfXsme4GThthSpJwyWDSzPaV0isc3h6FIkM9coLaZiXVel9qoA
+         NFuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=t+Z4wibB52kiiKl8rUv2aDQ6mUTHRYHxvJD5tqroAyo=;
-        b=R2YhuJPvnW8Ofkm6UzLJa+M9a2loZlbgT6ZfOTrGtwbepRmfRZDN4MY68uhyD2GQfB
-         Zgzd6t/X8K7cLcGxl+YewWWhGF+uUQ59R1KuZAVKDPacF3WEL5cQoGA7QGuuQ87EA2gr
-         LovuAUNKc1ZPb5WgtyfhcWXhXfjpb71fYQm6KR35ri1GyjHbyuQ7ykMAGQStmb5RZZUb
-         SOCOkEwmboldxwRoKxtvCZfCkVTbIcMAXPQdlasL3cM46gpu7kjV24VQ9XJ3nj5q4QzZ
-         Rg7V2PEg8BoSSProa1BQuPPLayhwo4N3n+FyiyI2tcjB2wFMKqnP8syVuwYtX3oMzI5b
-         v7xQ==
-X-Gm-Message-State: AElRT7FR9rAcn60Tyz2A/q3NDanomdP6//ZXlGVvAnJMNPWIJhvjPOFX
-        LGBaxNpQN+C1Mzv6oY8dA+22lr8vrAnVvVSheYoyoozT
-X-Google-Smtp-Source: AIpwx4/lHbSfozdlZL6wYpRTdyiHjvsl3i/X5ahz3E5ZgurBVo2QKC8G2MGbMMv7mXwSb3+brqHlvnjpEJCnC1ARuYM=
-X-Received: by 2002:a9d:213c:: with SMTP id i57-v6mr1828554otb.85.1521870206810;
- Fri, 23 Mar 2018 22:43:26 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=DOEiB5eitX1F+jJH+a4MQ9uOkKjTC4OmZEAwcQbBI9Q=;
+        b=CdvifebpBjpMXM2yX+fAiQyx2MMHsG+8PwuPITEARRC0otppbTGxBpnx80pOQD0d0J
+         D5ZkB2UziZsb5tVdkFQxq65TqlUoiOxkOcklUVZRgFlwdgdvVb4M9MRMJcoryGelal2G
+         p9UWI+ZvhMgugXrcHdYCyxMNS9YqfAc16S8MIH/6kCmgDQaW+Hk2f1S+gyym0RtZTWMn
+         Kfua23UkgGgjeLLcWcI941/+SNLwKAU9IURJMIjN32IglqpY3jxR6hZlG9zf5dHb1F8W
+         Q4bgeaDc6ZtzDaNKfAE/t4/9UuNT4wsRxKltaYGvBs+vo0QeK253zA3vyV1qz3MeNJXw
+         1iDQ==
+X-Gm-Message-State: AElRT7HhbNoIwO4jdjl6BwMG9GIHuJk9i55+8467xzNEnTEDYOTOpRCF
+        hfoUnX/JeQpbAT6wgcmzQqw=
+X-Google-Smtp-Source: AG47ELsn074JgOAn2R20kKLVuwihL/sPyxauuFN8wGReiujqhRCShfPh1C8/j+dHnZHms81V/NiBWw==
+X-Received: by 10.46.23.202 with SMTP id 71mr21186771ljx.49.1521873247215;
+        Fri, 23 Mar 2018 23:34:07 -0700 (PDT)
+Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
+        by smtp.gmail.com with ESMTPSA id h8sm2251703lja.41.2018.03.23.23.34.06
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 23 Mar 2018 23:34:06 -0700 (PDT)
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     pclouds@gmail.com
+Cc:     avarab@gmail.com, e@80x24.org, git@vger.kernel.org,
+        gitster@pobox.com, peff@peff.net
+Subject: [PATCH v7 01/13] pack-objects: a bit of document about struct object_entry
+Date:   Sat, 24 Mar 2018 07:33:41 +0100
+Message-Id: <20180324063353.24722-2-pclouds@gmail.com>
+X-Mailer: git-send-email 2.17.0.rc0.348.gd5a49e0b6f
+In-Reply-To: <20180324063353.24722-1-pclouds@gmail.com>
+References: <20180318142526.9378-1-pclouds@gmail.com>
+ <20180324063353.24722-1-pclouds@gmail.com>
 MIME-Version: 1.0
-Received: by 10.74.197.137 with HTTP; Fri, 23 Mar 2018 22:43:26 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.20.1803232246020.16250@tvnag.unkk.fr>
-References: <20180323193435.GA21971@voidlinux> <alpine.DEB.2.20.1803232246020.16250@tvnag.unkk.fr>
-From:   Loganaden Velvindron <logan@hackers.mu>
-Date:   Sat, 24 Mar 2018 09:43:26 +0400
-Message-ID: <CAFDEUTfxnJdVunuEJ9VWPy_T4yByv3cCGZZbW7iDfoq3kYy17Q@mail.gmail.com>
-Subject: Re: [PATCH v2] Allow use of TLS 1.3
-To:     Daniel Stenberg <daniel@haxx.se>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Mar 24, 2018 at 1:47 AM, Daniel Stenberg <daniel@haxx.se> wrote:
-> On Fri, 23 Mar 2018, Loganaden Velvindron wrote:
->
->> +#ifdef CURL_SSLVERSION_TLSv1_3
->> +       { "tlsv1.3", CURL_SSLVERSION_TLSv1_3 }
->> +#endif
->
->
-> Unfortunately, CURL_SSLVERSION_TLSv1_3 is an enum so this construct won't
-> work.
->
-> Also, let me just point out that 7.52.0 is 0x073400 in hex and not the one
-> used for the first version of this patch.
->
+The role of this comment block becomes more important after we shuffle
+fields around to shrink this struct. It will be much harder to see what
+field is related to what.
 
-Here's the error i get when I use a recent libcurl, but the OpenSSL
-wasn't built with tls 1.3:
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ pack-objects.h | 45 +++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 45 insertions(+)
 
- using : GIT_SSL_VERSION=tlsv1.3
+diff --git a/pack-objects.h b/pack-objects.h
+index 03f1191659..c0a1f61aac 100644
+--- a/pack-objects.h
++++ b/pack-objects.h
+@@ -1,6 +1,51 @@
+ #ifndef PACK_OBJECTS_H
+ #define PACK_OBJECTS_H
+ 
++/*
++ * basic object info
++ * -----------------
++ * idx.oid is filled up before delta searching starts. idx.crc32 is
++ * only valid after the object is written out and will be used for
++ * generating the index. idx.offset will be both gradually set and
++ * used in writing phase (base objects get offset first, then deltas
++ * refer to them)
++ *
++ * "size" is the uncompressed object size. Compressed size of the raw
++ * data for an object in a pack is not stored anywhere but is computed
++ * and made available when reverse .idx is made.
++ *
++ * "hash" contains a path name hash which is used for sorting the
++ * delta list and also during delta searching. Once prepare_pack()
++ * returns it's no longer needed.
++ *
++ * source pack info
++ * ----------------
++ * The (in_pack, in_pack_offset) tuple contains the location of the
++ * object in the source pack. in_pack_header_size allows quickly
++ * skipping the header and going straight to the zlib stream.
++ *
++ * "type" and "in_pack_type" both describe object type. in_pack_type
++ * may contain a delta type, while type is always the canonical type.
++ *
++ * deltas
++ * ------
++ * Delta links (delta, delta_child and delta_sibling) are created to
++ * reflect that delta graph from the source pack then updated or added
++ * during delta searching phase when we find better deltas.
++ *
++ * delta_child and delta_sibling are last needed in
++ * compute_write_order(). "delta" and "delta_size" must remain valid
++ * at object writing phase in case the delta is not cached.
++ *
++ * If a delta is cached in memory and is compressed, delta_data points
++ * to the data and z_delta_size contains the compressed size. If it's
++ * uncompressed [1], z_delta_size must be zero. delta_size is always
++ * the uncompressed size and must be valid even if the delta is not
++ * cached.
++ *
++ * [1] during try_delta phase we don't bother with compressing because
++ * the delta could be quickly replaced with a better one.
++ */
+ struct object_entry {
+ 	struct pack_idx_entry idx;
+ 	unsigned long size;	/* uncompressed size */
+-- 
+2.17.0.rc0.348.gd5a49e0b6f
 
-Error:
-OpenSSL was built without TLS 1.3 support
-
-
-> --
->
->  / daniel.haxx.se
