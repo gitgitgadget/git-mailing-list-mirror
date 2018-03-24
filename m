@@ -2,102 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A9DA81F404
-	for <e@80x24.org>; Sat, 24 Mar 2018 05:37:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3145D1F404
+	for <e@80x24.org>; Sat, 24 Mar 2018 05:43:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750899AbeCXFhV (ORCPT <rfc822;e@80x24.org>);
-        Sat, 24 Mar 2018 01:37:21 -0400
-Received: from mail-pl0-f65.google.com ([209.85.160.65]:45616 "EHLO
-        mail-pl0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750801AbeCXFhU (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 24 Mar 2018 01:37:20 -0400
-Received: by mail-pl0-f65.google.com with SMTP id n15-v6so8707674plp.12
-        for <git@vger.kernel.org>; Fri, 23 Mar 2018 22:37:20 -0700 (PDT)
+        id S1751715AbeCXFn2 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 24 Mar 2018 01:43:28 -0400
+Received: from mail-ot0-f193.google.com ([74.125.82.193]:35810 "EHLO
+        mail-ot0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750801AbeCXFn1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 24 Mar 2018 01:43:27 -0400
+Received: by mail-ot0-f193.google.com with SMTP id r30-v6so15522164otr.2
+        for <git@vger.kernel.org>; Fri, 23 Mar 2018 22:43:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=saville-com.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :in-reply-to:references;
-        bh=Ic0QvOv9JDXDEsZEZfp/8NF7qTnArQAqxrGlIp0zl+8=;
-        b=Flq1sE7IzFEto9NOT0tJQmCOLxopYkyPOnaC7DmHUa+l14F0m20naknyX+Q6BrlbpX
-         TtyFt0tkN/NdCzewCXwsprknIRsgvro5qgUqZimKHtNSJCWokpzVXNEkY+g4rKCShMd4
-         v3VZ/PmatApixJPep+40ToiwKQkCVU0TuCSjs3Zsms1Kpf3HqmUI8b3QUgOOYpolMBRm
-         ng1bD2GARN6MVMrv6uSsKk/g1Y/wrtg1s6LyOZhvqVj+HhXfQ6Df2ilnOObDJ8Nm1IYK
-         PRqK87s2mWZeexp0YQvyAvwFgAIBL7UYjtaj+PPEx6XTdJKTxRpglqd66qNycWBY0a0s
-         OiGQ==
+        d=hackers-mu.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=t+Z4wibB52kiiKl8rUv2aDQ6mUTHRYHxvJD5tqroAyo=;
+        b=aQKIj7bRBR9/I/NKNjvRUFXHmN1+dB5labCLINlly+ENNSoxU1IL+snOsHxdvdu/Td
+         cwuoTWIxg2Lh2EL8SBPiAV9pTip86X2IXq1ltoM6r5AbF1gD//jDAbHwVsdDJFkRlhfv
+         gxJoRLy5KyVGDsJgLFBmmju9GbcMDxNRevOuzuNuFPZ6gH57u33ZGbMd83EgIHmTz4A7
+         OLV+kGqQd/93E1dmIg021CaCOzEaAmlolt+3jzMvgvRQ3mLFO2YE6dVXzqB5Hk1ALk9U
+         Dwlj2wvA9qu42RpUrXzX3SHWsyEzVw52ACBYRnFDReaGjrNoMp8B5rllyyogDzQdj4TP
+         sncw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:in-reply-to:references;
-        bh=Ic0QvOv9JDXDEsZEZfp/8NF7qTnArQAqxrGlIp0zl+8=;
-        b=QXqLQpmpSlmXPBdZA/j7pWI2Y5Ou7D8vu0rOo/mZ4CoYI08B/gigEeSyJplJxHh6ZZ
-         vHQvRxV+OEnXJ4hx5bk5PX8FM8gqDUaxeSvYlDmU+CcpW+VNfNKD71x6DOTMYhLFjMe+
-         vOnc5elIYb6twlHGPzQgFFH8xcaqmaXYrxBYfmkRIuTF5xIQtihl8Y0qIOs+XamUuVqz
-         wqZOCj/bPJnBF8GBh7ju5WASewNz6zBXawe4gHi1uBqh8fg3MBClpQn514x0qP5WjFXI
-         gnqojohoR05LbmXBPXwS6xqspFS5cbnFsoocb9tR7s+Fm1F8b1hJIBfacR+WQBgg4Cfi
-         q23w==
-X-Gm-Message-State: AElRT7FIZYDoBk53brTjKLHNxC1qyM9y9UC/uQ9IaAIyjj7PSfKAN+oq
-        yKb0MOHqHDiYSoD/uqD2ErZc8PeXglk=
-X-Google-Smtp-Source: AG47ELsnFAl0fHd4qBj/kUy9xJ2+AYDmEb+LOj8ZexYlavJARoIuio0KzrkqN4dB9Y1mOnIi8qxK8w==
-X-Received: by 2002:a17:902:8c91:: with SMTP id t17-v6mr32409811plo.233.1521869838859;
-        Fri, 23 Mar 2018 22:37:18 -0700 (PDT)
-Received: from wink-desktop.hsd1.ca.comcast.net ([2601:647:cb02:7980:314d:6e5e:475c:ebd3])
-        by smtp.gmail.com with ESMTPSA id h2sm22691447pfd.119.2018.03.23.22.37.16
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 23 Mar 2018 22:37:17 -0700 (PDT)
-From:   Wink Saville <wink@saville.com>
-To:     git@vger.kernel.org
-Cc:     Wink Saville <wink@saville.com>, gitster@pobox.com,
-        jeffhost@microsoft.com
-Subject: [RFC PATCH 1/1] json-writer: incorrect format specifier
-Date:   Fri, 23 Mar 2018 22:37:11 -0700
-Message-Id: <140b7646e7efa4175f9d82e6eb2909f2f94771fe.1521868951.git.wink@saville.com>
-X-Mailer: git-send-email 2.16.2
-In-Reply-To: <cover.1521868951.git.wink@saville.com>
-References: <cover.1521868951.git.wink@saville.com>
-In-Reply-To: <cover.1521868951.git.wink@saville.com>
-References: <cover.1521868951.git.wink@saville.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=t+Z4wibB52kiiKl8rUv2aDQ6mUTHRYHxvJD5tqroAyo=;
+        b=R2YhuJPvnW8Ofkm6UzLJa+M9a2loZlbgT6ZfOTrGtwbepRmfRZDN4MY68uhyD2GQfB
+         Zgzd6t/X8K7cLcGxl+YewWWhGF+uUQ59R1KuZAVKDPacF3WEL5cQoGA7QGuuQ87EA2gr
+         LovuAUNKc1ZPb5WgtyfhcWXhXfjpb71fYQm6KR35ri1GyjHbyuQ7ykMAGQStmb5RZZUb
+         SOCOkEwmboldxwRoKxtvCZfCkVTbIcMAXPQdlasL3cM46gpu7kjV24VQ9XJ3nj5q4QzZ
+         Rg7V2PEg8BoSSProa1BQuPPLayhwo4N3n+FyiyI2tcjB2wFMKqnP8syVuwYtX3oMzI5b
+         v7xQ==
+X-Gm-Message-State: AElRT7FR9rAcn60Tyz2A/q3NDanomdP6//ZXlGVvAnJMNPWIJhvjPOFX
+        LGBaxNpQN+C1Mzv6oY8dA+22lr8vrAnVvVSheYoyoozT
+X-Google-Smtp-Source: AIpwx4/lHbSfozdlZL6wYpRTdyiHjvsl3i/X5ahz3E5ZgurBVo2QKC8G2MGbMMv7mXwSb3+brqHlvnjpEJCnC1ARuYM=
+X-Received: by 2002:a9d:213c:: with SMTP id i57-v6mr1828554otb.85.1521870206810;
+ Fri, 23 Mar 2018 22:43:26 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.74.197.137 with HTTP; Fri, 23 Mar 2018 22:43:26 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.20.1803232246020.16250@tvnag.unkk.fr>
+References: <20180323193435.GA21971@voidlinux> <alpine.DEB.2.20.1803232246020.16250@tvnag.unkk.fr>
+From:   Loganaden Velvindron <logan@hackers.mu>
+Date:   Sat, 24 Mar 2018 09:43:26 +0400
+Message-ID: <CAFDEUTfxnJdVunuEJ9VWPy_T4yByv3cCGZZbW7iDfoq3kYy17Q@mail.gmail.com>
+Subject: Re: [PATCH v2] Allow use of TLS 1.3
+To:     Daniel Stenberg <daniel@haxx.se>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In routines jw_object_uint64 and jw_object_double strbuf_addf is
-invoked with strbuf_addf(&jw->json, ":%"PRIuMAX, value) where value
-is a uint64_t. This causes a compile error on OSX.
+On Sat, Mar 24, 2018 at 1:47 AM, Daniel Stenberg <daniel@haxx.se> wrote:
+> On Fri, 23 Mar 2018, Loganaden Velvindron wrote:
+>
+>> +#ifdef CURL_SSLVERSION_TLSv1_3
+>> +       { "tlsv1.3", CURL_SSLVERSION_TLSv1_3 }
+>> +#endif
+>
+>
+> Unfortunately, CURL_SSLVERSION_TLSv1_3 is an enum so this construct won't
+> work.
+>
+> Also, let me just point out that 7.52.0 is 0x073400 in hex and not the one
+> used for the first version of this patch.
+>
 
-The correct format specifier is PRIu64 instead of PRIuMax.
+Here's the error i get when I use a recent libcurl, but the OpenSSL
+wasn't built with tls 1.3:
 
-Signed-off-by: Wink Saville <wink@saville.com>
----
- json-writer.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ using : GIT_SSL_VERSION=tlsv1.3
 
-diff --git a/json-writer.c b/json-writer.c
-index 89a6abb57..04045448a 100644
---- a/json-writer.c
-+++ b/json-writer.c
-@@ -120,7 +120,7 @@ void jw_object_uint64(struct json_writer *jw, const char *key, uint64_t value)
- 	maybe_add_comma(jw);
- 
- 	append_quoted_string(&jw->json, key);
--	strbuf_addf(&jw->json, ":%"PRIuMAX, value);
-+	strbuf_addf(&jw->json, ":%"PRIu64, value);
- }
- 
- void jw_object_double(struct json_writer *jw, const char *fmt,
-@@ -225,7 +225,7 @@ void jw_array_uint64(struct json_writer *jw, uint64_t value)
- 	assert_in_array(jw);
- 	maybe_add_comma(jw);
- 
--	strbuf_addf(&jw->json, "%"PRIuMAX, value);
-+	strbuf_addf(&jw->json, "%"PRIu64, value);
- }
- 
- void jw_array_double(struct json_writer *jw, const char *fmt, double value)
--- 
-2.16.2
+Error:
+OpenSSL was built without TLS 1.3 support
 
+
+> --
+>
+>  / daniel.haxx.se
