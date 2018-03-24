@@ -6,96 +6,74 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CE6571F404
-	for <e@80x24.org>; Sat, 24 Mar 2018 05:37:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1A0361F404
+	for <e@80x24.org>; Sat, 24 Mar 2018 05:37:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750797AbeCXFhM (ORCPT <rfc822;e@80x24.org>);
-        Sat, 24 Mar 2018 01:37:12 -0400
-Received: from mail-lf0-f43.google.com ([209.85.215.43]:37128 "EHLO
-        mail-lf0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750730AbeCXFhL (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 24 Mar 2018 01:37:11 -0400
-Received: by mail-lf0-f43.google.com with SMTP id m16-v6so17435645lfc.4
-        for <git@vger.kernel.org>; Fri, 23 Mar 2018 22:37:11 -0700 (PDT)
+        id S1750825AbeCXFhS (ORCPT <rfc822;e@80x24.org>);
+        Sat, 24 Mar 2018 01:37:18 -0400
+Received: from mail-pl0-f54.google.com ([209.85.160.54]:40028 "EHLO
+        mail-pl0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750801AbeCXFhR (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 24 Mar 2018 01:37:17 -0400
+Received: by mail-pl0-f54.google.com with SMTP id x4-v6so8707120pln.7
+        for <git@vger.kernel.org>; Fri, 23 Mar 2018 22:37:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=saville-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=sVfV6HsJgVtpgtb9rCkmo7hGiwLkPfR16Y0K3Bc2XQc=;
-        b=hP/SuQKCYzAFQ/luk4Z6D7QpjjkQEFMmvxOkzlxYcjDd+fzjbOnfVEdJA1Aioh3aFQ
-         pjjZ96BgyNir8Vo9zSP2X5AWQLuzy4dVuBmc4zvNxFs6MYR9rTP5LVKx7DSMmF6k4fB4
-         MdyCv8a+brDSjzBEluulHecBA/GpHDhc2spLMyT2N2Bz98YFgWzJ8wyANAnTPH/Xzx1t
-         u8jfRihTI587uNY3wxe+b8PRNi5w9PIEzCHz/sRSPs5/74cfuY8vOiQr81QAnMGfzQsi
-         46w3cguCxjPYio8y0UZiS+c4NyAPm4ozcSY2cqHKa4Wb5t84FFKVhGOv6nvjRdWdSzfj
-         r6mA==
+        h=from:to:cc:subject:date:message-id;
+        bh=ZWHUHyZX2tWyP6fQA/H72k3ePxp1bRGCER0iIfxeMPE=;
+        b=iu6GN/qNWvGkq1ZVpwYEPyd6OI6CUU9IYURTacy/sP1KDAm14hTWJWUFht41zP/kYz
+         RIJHhxV+QUb6THQIctfoCnS3tw16+fe/omhD44sTG2azMEqXtgept1Y3gW0IgHtUQXPg
+         1JUwfN1S4GFuwM6fLxAOwFSTvFfB6qefkgsv4XLnTPHWqs4mORape2GMzsDWWnaXMSso
+         sYTJGiqJuB5XxK5rnQIeG/yVOAbywTbA2Mt0EVCHbfmElfuya/7jWCXIDK2yP3P7qi9w
+         3zDp85arKstDHYVUVFG5rNZFwIOMItRP8You6oTQIvDDDzBnE4wu0XRsZjAQA+7Dl0cy
+         /l4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=sVfV6HsJgVtpgtb9rCkmo7hGiwLkPfR16Y0K3Bc2XQc=;
-        b=lf4E/zzuXdUICJgFVhCbxbskjY03t1QxjFWymXNNDSq802dyVinIAyqsfpY3jV4a6n
-         Fr7qDmb3S3ArUjrkAOM+ZxnRocuf3DwyE0+WODlzBRsjQvlN9IDbEEGSd8p7M6PtgzEm
-         Wf6eNjgRDCD/C2Gr8iypWiFqS4+YDbGqUu3/0lmgeLwfB22n548c0F3A1S+VH6INLOGn
-         Ruyfsk+RKxVfFbHLt3piuCKrGZnaWMNWGVuNPM/mOTd47kz5pbVXAanP+cqeWAaB3jY8
-         Aq6wlLgIOBx50qjsPIfNSRJOk/2ASXnaBaqBE75qtcXVZzUbl2fd8lIITBV2HP/rTXI4
-         fGIg==
-X-Gm-Message-State: AElRT7G0eQcIYhPHyLu82w6m2kTknj8kXsO9VOjV37B07OburVFKZHQM
-        u6B/d2S2yJkuvX5dU77S47RwwZ1SQ3EDuRvikh8gbg==
-X-Google-Smtp-Source: AIpwx49vGHy8FE5pgkzeMnjdP3uMp4gWoVVZRyOiXTQSupTsISxW2rCQ6GIpYIz/nocWS6EYUX3+E/uAQDtvtczStBE=
-X-Received: by 2002:a19:c1c8:: with SMTP id r191-v6mr3475745lff.45.1521869830334;
- Fri, 23 Mar 2018 22:37:10 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 2002:a19:9690:0:0:0:0:0 with HTTP; Fri, 23 Mar 2018 22:36:49
- -0700 (PDT)
-In-Reply-To: <CAKk8isoJQrikitO7ezRajgphUXYR6207k4UkXP6r57WJEFBaDA@mail.gmail.com>
-References: <cover.1521779249.git.wink@saville.com> <cover.1521839546.git.wink@saville.com>
- <CAKk8isqj3OusAE8OJtcys0a-Yj9fgQNn=DtLe-ZGYNzcKp=-3Q@mail.gmail.com>
- <xmqq7eq2h0wa.fsf@gitster-ct.c.googlers.com> <CAKk8isoJQrikitO7ezRajgphUXYR6207k4UkXP6r57WJEFBaDA@mail.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=ZWHUHyZX2tWyP6fQA/H72k3ePxp1bRGCER0iIfxeMPE=;
+        b=cqauYjTsnDg6nZT19Y9RYo82CxwtcagqQ1ewFUtOXuoWIOL3rCk2gmtvh++Ec8nh0d
+         yX+/ZUgvMobBaf52HNM9Fvy5alzZjW9ao91FVYyOGQh2sZ5CP2TkaeMX43ETTWFpbk8g
+         2fCxvZnL7mxTDX9TDkb4UZ/i0wJ1iPivwnIgLA0X6MoB4GU9ZUHddCl5C/n8QMB2rpHU
+         6j7xw/RI8l5cWFrtpk2Xk9S6ID4lK2mhTUXjHeNoI76pOORJFpDGiJlxw6Db7WcC+JoY
+         e3nHnunk0BUYQ5II7qa787Nng5ygK/4GhucYh72hn1gQCErcy/x2+5ckt3ZMoVlYD4TH
+         RJ8A==
+X-Gm-Message-State: AElRT7EhUKzUH7gqNDQpPNKDdSxZUqNSJQd8gQAiTU6lQMqlVryOaej6
+        GRorlQ90+8VupcMw827j2L1MXSs7npU=
+X-Google-Smtp-Source: AG47ELu/tcQu4q1CDpBTszf5+TcRwVedtrnk3xRLCIX3YMKj4HtFNMAc13XI16Gw46DQ44aFhHYZKw==
+X-Received: by 2002:a17:902:30a3:: with SMTP id v32-v6mr27096290plb.123.1521869836504;
+        Fri, 23 Mar 2018 22:37:16 -0700 (PDT)
+Received: from wink-desktop.hsd1.ca.comcast.net ([2601:647:cb02:7980:314d:6e5e:475c:ebd3])
+        by smtp.gmail.com with ESMTPSA id h2sm22691447pfd.119.2018.03.23.22.37.14
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 23 Mar 2018 22:37:14 -0700 (PDT)
 From:   Wink Saville <wink@saville.com>
-Date:   Fri, 23 Mar 2018 22:36:49 -0700
-Message-ID: <CAKk8ispSgNgZxS7KfuOyxfU53tzesvNyLRaNXFZa3K7SCbaRkQ@mail.gmail.com>
-Subject: Re: [RFC PATCH v5 0/8] rebase-interactive
-To:     Junio C Hamano <gitster@pobox.com>, jeffhost@microsoft.com
-Cc:     Git List <git@vger.kernel.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     Wink Saville <wink@saville.com>, gitster@pobox.com,
+        jeffhost@microsoft.com
+Subject: [RFC PATCH 0/1] json-writer: incorrect format specifier
+Date:   Fri, 23 Mar 2018 22:37:10 -0700
+Message-Id: <cover.1521868951.git.wink@saville.com>
+X-Mailer: git-send-email 2.16.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
->> I queued everything (with all patch 3-8/8 retitled to share a
->> common prefix, so that "git shortlog" output would stay sane)
->> and I think I resolved the conflicts with Dscho's recreate-merges
->> topic correctly.  Please double check what will appear on 'pu' later
->> today.
->>
->> Thanks.
->>
->
-> OK, thank you!
-
-I looked at 'pu' and it LGTM, so I pushed 'pu' as a branch to my
-github account to test with Travis-CI. All the linux builds are
-green, but the 2 OSX builds are red[1] and the logs show compile
-errors:
+Building the pu branch at commit 8b49f5c076c using Travis-CI all
+of the linux builds are green but the two OSX builds are red[1] and
+the logs show compile errors:
 
     CC ident.o
     CC json-writer.o
 
-json-writer.c:123:38:  error:  format specifies type 'uintmax_t' (aka
-'unsigned long') but the argument has type 'uint64_t' (aka 'unsigned
-long long') [-Werror,-Wformat]
+json-writer.c:123:38:  error:  format specifies type 'uintmax_t' (aka 'unsigned long') but the argument has type 'uint64_t' (aka 'unsigned long long') [-Werror,-Wformat]
 
         strbuf_addf(&jw->json, ":%"PRIuMAX, value);
                                  ~~         ^~~~~
-json-writer.c:228:37:  error:  format specifies type 'uintmax_t' (aka
-'unsigned long') but the argument has type 'uint64_t' (aka 'unsigned
-long long') [-Werror,-Wformat] [0m
+json-writer.c:228:37:  error:  format specifies type 'uintmax_t' (aka 'unsigned long') but the argument has type 'uint64_t' (aka 'unsigned long long') [-Werror,-Wformat] [0m
 
         strbuf_addf(&jw->json, "%"PRIuMAX, value);
-                                 ~~         ^~~~~
+                                ~~         ^~~~~
 2 errors generated.
 make: *** [json-writer.o] Error 1
 make: *** Waiting for unfinished jobs....
@@ -106,4 +84,12 @@ and now Travis-CI is green [2].
 [1]: https://travis-ci.org/winksaville/git/builds/357660624
 [2]: https://travis-ci.org/winksaville/git/builds/357681929
 
--- Wink
+Wink Saville (1):
+  json-writer: incorrect format specifier
+
+ json-writer.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+-- 
+2.16.2
+
