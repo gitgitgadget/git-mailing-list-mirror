@@ -2,127 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 431621F404
-	for <e@80x24.org>; Sat, 24 Mar 2018 19:41:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 81D4B1F404
+	for <e@80x24.org>; Sat, 24 Mar 2018 20:31:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752743AbeCXTlU (ORCPT <rfc822;e@80x24.org>);
-        Sat, 24 Mar 2018 15:41:20 -0400
-Received: from mail-pg0-f50.google.com ([74.125.83.50]:33586 "EHLO
-        mail-pg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752633AbeCXTlT (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 24 Mar 2018 15:41:19 -0400
-Received: by mail-pg0-f50.google.com with SMTP id i194so1598301pgd.0
-        for <git@vger.kernel.org>; Sat, 24 Mar 2018 12:41:19 -0700 (PDT)
+        id S1752858AbeCXUb0 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 24 Mar 2018 16:31:26 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:39560 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752736AbeCXUbZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 24 Mar 2018 16:31:25 -0400
+Received: by mail-wm0-f66.google.com with SMTP id f125so8983006wme.4
+        for <git@vger.kernel.org>; Sat, 24 Mar 2018 13:31:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=fexm7hw15m/xlT12f5NzFPjRnogRj36Bjs70EKRQ2KY=;
-        b=ZTYNHqXXOnqpkK8Ba2f1t6IqCew8N/cGwzzedCtaELRr/42i8zeyzfPaqKEpUQFFVy
-         EZZdlInh+ybT9VzpWgj8RiZ7/jSub4A/7b3OBBMXd4IcmEnxERk6YxZiHTtSj9k7OAWC
-         /NuoRht0RM6sxAU+T0ZyIYPd+ME707gDTBomsPdlpYPu6cthJwf6Ayad08o2OrVwsyd7
-         qjZpMXEiWC0I2RLEV4dVkmEsrpZflwboJwOga2U9qPDSdso5rcyh8hZk8oQ7pcxDbjq3
-         OFnO1DFySRC+53pIZ3DK0hIQ2Y+RnJ+gFnPxRD1aOpXqU1E9VRDuUVAn8kI8uW2S3Rof
-         FS5A==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=u4clfmIcLSKtPhD6c66UAmoliIcI1R123K6rM5YnMpU=;
+        b=Neer34SRPgHcKkmpiTkGMl5EoQa7l734Rqm3Oh5jyF+0cH+BJly5n+VHogfynwFf15
+         pV0NCkTjo4yDxaMZgikD4N0ddGJQ/X1Ekcr5zeuB5/UOYfX+WD+VIVLvhhUEbbe8NDor
+         ZtKVxf0XNZODaNPfVQC/qc5WRzs7G9ImwmlRu4x+iJnIBdDRvZ4e8JsL/gqb5YGVKjN3
+         d6ZJliHrN8dOEHfFQ3rGUnvdr4Ym9fCPVdydXn/bQw+yxWXv8Ks+RAeKNcclGASWeFbf
+         2lwTdYeGHgSa+85rBRDsr5walXO8rKYAHEdwMmqPd1ZivNNUdwk+yOWd2/2d5A1PgMA4
+         q0uA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=fexm7hw15m/xlT12f5NzFPjRnogRj36Bjs70EKRQ2KY=;
-        b=nwi9tOWP5tekzeMZnPQXH5xwI8OB5cRrKSfWXk1L4VpEKkIPwnkRL9Bbio4YXjOkCv
-         ju2q3bwr9mjZvUG33CfC5nc3lugBU6fCkP934CjJoRKYnL3wDfEKjaKfKOnJ6CezhfBA
-         9R+k4CqDMa2XXoW1fGzwjtOnHnjUqK719iauP385VAHonL7SuHlE4Nfkf67MV4E7bsXF
-         5qhH+WILTPVHfGo4DFoY+O0G6uFtaRra9gb8DR1k/EdcLAalMO3n1Tm8xzB1EHL55Joy
-         8/BNd0WdUZs8oH7+0uPu+pSJbSf3676I84dnqMymgN1BB6/qPRQ9QvFyXuVsXp45y4dv
-         5awQ==
-X-Gm-Message-State: AElRT7FR5l2HdCXy2FvAiBkm7Xy3mle67ZC+qNSSZ+nxnz5o1WobYOHW
-        TKqBahMqLON21C5G3WL3qbw=
-X-Google-Smtp-Source: AG47ELvg2aM10bN4xy35RWOg26aOTt7+4L2coKLXG6B08pjHqf1Di+a0BayZvB4Nxg0lKhyPW+yq/Q==
-X-Received: by 10.101.97.208 with SMTP id j16mr2561044pgv.431.1521920478840;
-        Sat, 24 Mar 2018 12:41:18 -0700 (PDT)
-Received: from localhost.localdomain (softbank126094196092.bbtec.net. [126.94.196.92])
-        by smtp.gmail.com with ESMTPSA id p86sm25537658pfi.55.2018.03.24.12.41.17
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 24 Mar 2018 12:41:18 -0700 (PDT)
-From:   Yuki Kokubun <orga.chem.job@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Yuki Kokubun <orga.chem.job@gmail.com>
-Subject: [PATCH v3] filter-branch: fix errors caused by refs that point at non-committish
-Date:   Sat, 24 Mar 2018 19:41:07 +0000
-Message-Id: <1521920467-6091-1-git-send-email-orga.chem.job@gmail.com>
-X-Mailer: git-send-email 1.9.1
-In-Reply-To: <xmqqvadmilx5.fsf@gitster-ct.c.googlers.com>
-References: <xmqqvadmilx5.fsf@gitster-ct.c.googlers.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=u4clfmIcLSKtPhD6c66UAmoliIcI1R123K6rM5YnMpU=;
+        b=h8vw0Q/0B8DWHVaXBAAS8KoI3o/B/UPM+kzO5lxn4ZWgwDlA0hzA2MajA4j7FFiYYx
+         LOiA9YUazthMXbpAxvEfwpFakfiVRXArxwJjNyl9kgWLzcVwJkLqZzgA1v7NpXqISX4L
+         RiXow8KtJ2C0kWH1VWxh+4GyVLIEqKy7rfoCBnRwQ68NGZ8+PHgAEH+Di/UNq4J0GPcs
+         pAyIP8WEzCllcNr6JmMmoAWZjGSmdwOiASuPz0TcDSmIsEqBTeGOOjGOHfKNkxEhVAMg
+         ifm6ClpLhQqZzJjfnWtBdBYnQe0pNQH5mrzRhEm8UY2ss+qqUW1oUTjt7HIhc+HbpC02
+         oumw==
+X-Gm-Message-State: AElRT7Hf1L/va1fkpCOfIs5whU5oMiR0aNhqr/9P6H7cuytx+2DG5gV2
+        S9dSNdqqwf6r8Sv4AmwGoYK9E7PP
+X-Google-Smtp-Source: AG47ELv5Rg7Vl3vAMNpWXzL56BiEs0dzlJ5AVl5BwATMJcT5wNPkAOEOqW2ifHgxz3zglhVS9uKN0w==
+X-Received: by 10.28.184.8 with SMTP id i8mr12775291wmf.52.1521923483986;
+        Sat, 24 Mar 2018 13:31:23 -0700 (PDT)
+Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
+        by smtp.gmail.com with ESMTPSA id o88sm12322447wrb.44.2018.03.24.13.31.21
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sat, 24 Mar 2018 13:31:22 -0700 (PDT)
+Date:   Sat, 24 Mar 2018 20:34:45 +0000
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 1/4] worktree: improve message when creating a new
+ worktree
+Message-ID: <20180324203445.GI2224@hank>
+References: <20180317220830.30963-1-t.gummerer@gmail.com>
+ <20180317222219.4940-1-t.gummerer@gmail.com>
+ <20180317222219.4940-2-t.gummerer@gmail.com>
+ <CAPig+cT8i9L9kbhx=b0sG4_QYNdoEDPW-1xypM9xzBqPmqR__Q@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAPig+cT8i9L9kbhx=b0sG4_QYNdoEDPW-1xypM9xzBqPmqR__Q@mail.gmail.com>
+User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"git filter-branch -- --all" print error messages when refs that point at
-objects that are not committish. Such refs can be created by "git replace" with
-trees or blobs. And also "git tag" with trees or blobs can create such refs.
+On 03/20, Eric Sunshine wrote:
+> On Sat, Mar 17, 2018 at 6:22 PM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
+> > [...]
+> > Fix these inconsistencies, and no longer show the identifier by making
+> > the 'git reset --hard' call quiet, and printing the message directly
+> > from the builtin command instead.
+> >
+> > Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
+> > ---
+> > diff --git a/builtin/worktree.c b/builtin/worktree.c
+> > @@ -303,8 +303,6 @@ static int add_worktree(const char *path, const char *refname,
+> >         strbuf_addf(&sb, "%s/commondir", sb_repo.buf);
+> >         write_file(sb.buf, "../..");
+> >
+> > -       fprintf_ln(stderr, _("Preparing %s (identifier %s)"), path, name);
+> 
+> A minor regression with this change is that error messages from
+> git-update-ref or git-symbolic-ref -- which could be emitted after
+> this point but before the new "worktree HEAD is now at..." message --
+> are now somewhat orphaned. I'm not sure that it matters, though.
 
-Filter these problematic refs out early, before they are seen by the logic to
-see which refs have been modified and which have been left intact (which is
-where the unwanted error messages come from), and warn that these refs are left
-unwritten while doing so.
----
- git-filter-branch.sh     | 14 ++++++++++++--
- t/t7003-filter-branch.sh | 14 ++++++++++++++
- 2 files changed, 26 insertions(+), 2 deletions(-)
+If those commands fail, we would now not print the "worktree HEAD is
+now at..." message, but go directly to "done", and clean up the
+working tree.
 
-diff --git a/git-filter-branch.sh b/git-filter-branch.sh
-index 1b7e4b2..41efecb 100755
---- a/git-filter-branch.sh
-+++ b/git-filter-branch.sh
-@@ -251,8 +251,18 @@ done < "$tempdir"/backup-refs
- 
- # The refs should be updated if their heads were rewritten
- git rev-parse --no-flags --revs-only --symbolic-full-name \
--	--default HEAD "$@" > "$tempdir"/raw-heads || exit
--sed -e '/^^/d' "$tempdir"/raw-heads >"$tempdir"/heads
-+	--default HEAD "$@" > "$tempdir"/raw-refs || exit
-+while read ref
-+do
-+	case "$ref" in ^?*) continue ;; esac
-+
-+	if git rev-parse --verify "$ref"^0 >/dev/null 2>&1
-+	then
-+		echo "$ref"
-+	else
-+		warn "WARNING: not rewriting '$ref' (not a committish)"
-+	fi
-+done >"$tempdir"/heads <"$tempdir"/raw-refs
- 
- test -s "$tempdir"/heads ||
- 	die "You must specify a ref to rewrite."
-diff --git a/t/t7003-filter-branch.sh b/t/t7003-filter-branch.sh
-index 7cb6079..04f79f3 100755
---- a/t/t7003-filter-branch.sh
-+++ b/t/t7003-filter-branch.sh
-@@ -470,4 +470,18 @@ test_expect_success 'tree-filter deals with object name vs pathname ambiguity' '
- 	git show HEAD:$ambiguous
- '
- 
-+test_expect_success 'rewrite repository including refs that point at non-commit object' '
-+	test_when_finished "git reset --hard original" &&
-+	tree=$(git rev-parse HEAD^{tree}) &&
-+	test_when_finished "git replace -d $tree" &&
-+	echo A >new &&
-+	git add new &&
-+	new_tree=$(git write-tree) &&
-+	git replace $tree $new_tree &&
-+	git tag -a -m "tag to a tree" treetag $new_tree &&
-+	git reset --hard HEAD &&
-+	git filter-branch -f -- --all >filter-output 2>&1 &&
-+	! fgrep fatal filter-output
-+'
-+
- test_done
--- 
-1.9.1
+So while we no longer emit the "Preparing worktree" header, the user
+should still be aware that they are creating a new worktree, and that
+the error happened while creating a new worktree.  From a (admittedly
+very quick) look the error messages would all make sense in this
+context, without an additional message.
 
+Printing the "worktree HEAD is now at ..." message before that
+wouldn't make much sense, as we may not even have a new working tree
+at the end.  We could add the message back, but that would also put us
+back at three lines of output.  I think I prefer the more concise
+version here in the normal case, and I think we can live with the
+slight regression.  But if others have a strong preference for the
+current way I'm happy to add that message back.
+
+> >         argv_array_pushf(&child_env, "%s=%s", GIT_DIR_ENVIRONMENT, sb_git.buf);
+> >         argv_array_pushf(&child_env, "%s=%s", GIT_WORK_TREE_ENVIRONMENT, path);
+> >         cp.git_cmd = 1;
+> > @@ -320,10 +318,19 @@ static int add_worktree(const char *path, const char *refname,
+> > +       fprintf(stderr, _("worktree HEAD is now at %s"),
+> > +               find_unique_abbrev(commit->object.oid.hash, DEFAULT_ABBREV));
+> 
+> I wonder if this should say "new worktree HEAD is now at..." to
+> clearly indicate that it is talking about HEAD in the _new_ worktree,
+> not HEAD in the current worktree.
+
+Yeah I aggree that's nicer.  Will change.
+
+> > +       strbuf_reset(&sb);
+> > +       pp_commit_easy(CMIT_FMT_ONELINE, commit, &sb);
+> > +       if (sb.len > 0)
+> > +               fprintf(stderr, " %s", sb.buf);
+> > +       fputc('\n', stderr);
