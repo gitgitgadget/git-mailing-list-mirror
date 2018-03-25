@@ -2,192 +2,155 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	FAKE_REPLY_C,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9EA661F42D
-	for <e@80x24.org>; Sun, 25 Mar 2018 09:46:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 23BA91F42D
+	for <e@80x24.org>; Sun, 25 Mar 2018 09:50:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751776AbeCYJqK (ORCPT <rfc822;e@80x24.org>);
-        Sun, 25 Mar 2018 05:46:10 -0400
-Received: from mail-it0-f46.google.com ([209.85.214.46]:52761 "EHLO
-        mail-it0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751007AbeCYJqI (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 25 Mar 2018 05:46:08 -0400
-Received: by mail-it0-f46.google.com with SMTP id k135-v6so7287862ite.2
-        for <git@vger.kernel.org>; Sun, 25 Mar 2018 02:46:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=n4YGqeVnHhPnZeKngi7xl1IlctIi6y4vecZWW/Qy+9U=;
-        b=Ln7wSomctsGCyOlEgtuLPjuZp9WF+TfestfNMPZzjgNE47Qon/xmHtaznLHTmTnLJn
-         M308rEWp113cjkbsyli0TOAu6ep4IRp/9dv/EbxioiJdM1LbtgJKXqShCTJrgaZGxPLr
-         OO1xnWJRQr3beeowJb+mx76EQa4BT959j+gjcn5Oo4+UwELCfGh2a5wVQcmTlddKwVIY
-         wP4AmS/5WiAE4jtLJO2iNozJY078hMmeDA36kUqtqVeGKdhtNVcXLEvkV7EXRIEAmzjj
-         1+SVdmW7M18OhELW4TJDMkhJR1LlrlDaybKp2gsRuXncTpxKdOgOZ3i6a0PSrBwmgZf5
-         gTmg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=n4YGqeVnHhPnZeKngi7xl1IlctIi6y4vecZWW/Qy+9U=;
-        b=nIF2nyRBew94TQz+jf0kDCuL2QbJI4ukCFXqTMCzZr95+P2F9pKxjEni81Ci8ojyJI
-         5dKxT/2iq/by/vxYxQDWfXnwkWPBhs/LM5lilW1S3WoLInEFCrqE0TWMP55dhqYZutYm
-         T/AG9LyMN5jG+O/lGp7orO2ZddpnGRiUdensXSFHJsExdmDw11ASggF/nC2+RzhFerTp
-         TqE9CVK5/igXWDdtGTFI5tz9cwGh6CDhNTloQ6quwJgCoJkQOyMdG+AxwATN+6UzzEyv
-         qQgm72wKSGMj3bTbv9IkPHQG+DeDsfmLL3+oLbESidDjCess7m5VsKnLiU9vG+2CviTj
-         qVqw==
-X-Gm-Message-State: AElRT7EpRbx//3YxZkrNVEYmnTSk40eiqAImHfjqLSl1NylCPsAVsfky
-        WlWYTGZTq+Coj+KTbDnF58HTAb/o75GnM+H7nVk=
-X-Google-Smtp-Source: AG47ELsob6BgMQPQjx4/ETLXVQyxR+lpb3Yl6GzvrR0zFAWXLc/xt/9OrnG7vMDgcfMMkb522QkSPMi39ni0zm253k8=
-X-Received: by 2002:a24:fa89:: with SMTP id v131-v6mr19587115ith.40.1521971167897;
- Sun, 25 Mar 2018 02:46:07 -0700 (PDT)
+        id S1751827AbeCYJuM (ORCPT <rfc822;e@80x24.org>);
+        Sun, 25 Mar 2018 05:50:12 -0400
+Received: from sender-of-o51.zoho.eu ([31.186.226.243]:21093 "EHLO
+        sender-of-o51.zoho.eu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751594AbeCYJuK (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 25 Mar 2018 05:50:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1521971406;
+        s=zoho; d=feusi.co; i=jeremy@feusi.co;
+        h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding;
+        l=4773; bh=U8Q9q3+/1B2U44z8UiPkr6SF8O0NsMroLkpCJtIgMOU=;
+        b=O6AwmS7KZsTOUZXbcR7pDeB50W08yk/pfTHjjI2rDbZm+YhU2I79xi6snhtF9Sa7
+        5JBOPhK3Joff/Ir+2UiMwI8cSY1UJ1X9wrIcJxWTFty7tghUtK1pu1W7X2Idt7USoZm
+        t/H9dXf9Vgmnum652OGOp03hNJGNmp4DxAKbPMeg=
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; 
+  s=zoho; d=feusi.co; 
+  h=date:from:to:cc:subject:message-id:mime-version:content-type:user-agent; 
+  b=dKtqfdPo5gjAo5GPddEfXo+hBYZFwg4BPpNswBhmIQ9cdbtDvNHOO7fydBug+U+v8gnkiaFznh60
+    CXT6d7YbFtJFoXQmRlwdlrGyIQsOdO7mvlY7g8HEqvdmmnQ16WUM8Rd8mkEWq13FsHTTmSKLtLpr
+    Cz8QgPc51DN8RrHEwkI=  
+Received: from feusi.co (194.191.224.221 [194.191.224.221]) by mx.zoho.eu
+        with SMTPS id 1521971406146741.4922262524224; Sun, 25 Mar 2018 11:50:06 +0200 (CEST)
+Date:   Sun, 25 Mar 2018 11:50:46 +0200
+From:   Jeremy Feusi <jeremy@feusi.co>
+To:     =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>
+Cc:     git@vger.kernel.org, Prathamesh Chavan <pc44800@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: Null pointer dereference in git-submodule
+Message-ID: <20180325095046.GA687@feusi.co>
 MIME-Version: 1.0
-Received: by 10.79.34.9 with HTTP; Sun, 25 Mar 2018 02:46:07 -0700 (PDT)
-In-Reply-To: <6603149f-776a-fde8-5d11-a7d9d6d37e96@gmail.com>
-References: <1521576562.2188.10.camel@gmail.com> <CAP8UFD3NKCSN8mVDiCUzvor5uZh4nFCAw4T0zgxpvHLf9AWmyA@mail.gmail.com>
- <1521760546.11809.20.camel@gmail.com> <CAP8UFD3bRaPke8MvubZ3+v6RrY7K7Peip1dpQ2LG9kxKoXcmbw@mail.gmail.com>
- <6603149f-776a-fde8-5d11-a7d9d6d37e96@gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Sun, 25 Mar 2018 11:46:07 +0200
-Message-ID: <CAP8UFD2y605FQeiymO2JNxy7MXs=-vRcN-Z2ri1=ttDF8kccvQ@mail.gmail.com>
-Subject: =?UTF-8?B?UmU6IFtHU29DXSBDb252ZXJ0IOKAnGdpdCBzdGFzaOKAnSB0byBidWlsdGluIHByb3Bvcw==?=
-        =?UTF-8?B?YWw=?=
-To:     Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Mar 24, 2018 at 8:31 PM, Paul-Sebastian Ungureanu
-<ungureanupaulsebastian@gmail.com> wrote:
-> On 23.03.2018 19:11, Christian Couder wrote:
->
->>> * Ensure that no regression occurred: considering that there are plenty
->>> of tests and that I have a good understanding of the function, this
->>> should be a trivial task.
->>
->> There are a lot of things that the test suite doesn't test.
->
-> Hopefully, by first adding new tests, any eventual bug will be spotted.
 
-I was thinking about things like memory leaks that tests cannot easily spot=
-.
+Reply-To: 
 
->>> * In the end, an analysis based on performance can be made.
->>> Benchmarking the script will be done by recording the running time
->>> given a large set of diversified tests that cover all the
->>> functionalities, before and after conversion. The new commands should
->>> run faster just because they were written in C, but I expect to see
->>> even more improvements.
->>
->> If you want to do benchmarks, you might want to add performance tests
->> into t/perf.
->
-> That is great. I will surely make use of the existent testing framework t=
-o
-> do benchmarks.
+Hmm... That's weird. I can reproduce it on 3 independant systems with
+versions 2.16.2 up, although it does not work with version 2.11.0.
+Anyway, I figured out how to reproduce this bug. It is caused when a
+submodule is added and then the directory it resides in is moved or
+deleted without commiting. For example:
 
-Good.
+git init
+git submodule add https://github.com/git/git git
+mv git git.BAK
+git submodule status #this command segfaults
 
->>> ## Example of conversion (for =E2=80=9Cgit stash list=E2=80=9D)
->>> ------------------------------------------
->>> To test my capabilities and to be sure that I am able to work on a
->>> project of this kind, I tried to convert =E2=80=9Cgit stash list=E2=80=
-=9D into a built-
->>> in. The result can be found below in text-only version or at the Github
->>> link.
->>
->> I think it would be better if it was sent as a patch (maybe an RFC
->> patch) to the mailing list and add the link to the patch email in the
->> maling list archive to your proposal.
->
-> I sent it as a [RFC] patch to the mailing list and included it in the
-> proposal.
->
-> <https://public-inbox.org/git/20180324182313.13705-1-ungureanupaulsebasti=
-an@gmail.com>
+cheers
+Jeremy
 
-Nice.
+In-Reply-To: <a7ad9dbf-1b0f-efc6-3a17-51cf25381ce5@web.de>
 
->> It could be useful if you described a bit more how you could (re)use
->> the work that has already been made.
->>
->> In the rest of your proposal it looks like you are starting from
->> scratch, which is a bit strange if a lot of progress has already been
->> made.
->
-> The patches about converting =E2=80=98git stash=E2=80=99 are a great star=
-ting point and I
-> will definitely use them. Each time I start converting a new command I wi=
-ll
-> first take a look at what other patches there are, evaluate them and if I
-> consider the patch to be good enough I will continue my work on top of th=
-at
-> patch. Otherwise, I will start from scratch and that patch will only serv=
-e
-> for comparison.
->
-> One other resource that is of great importance is git itself. I can learn
-> how a builtin is structured and how it is built by considering examples t=
-he
-> other Git commands. Having a similar coding standard used, the codebase w=
-ill
-> be homogeneous and hopefully easier to maintain.
->
-> Another important resource are commands that are Google Summer of Code
-> projects from previous years (2016 and 2017) which had as purpose to conv=
-ert
-> =E2=80=9Cgit bisect=E2=80=9D and =E2=80=9Cgit submodule=E2=80=9D. I can a=
-lways take a look at the patches
-> they submitted and read their code reviews to avoid making same mistakes
-> they did.
+On Sat, Mar 24, 2018 at 09:42:57PM +0100, René Scharfe wrote:
+> Am 24.03.2018 um 18:42 schrieb Jeremy Feusi:
+> > Hi,
+> > While bootstrapping a gnu repository I noticed that git segfaulted when
+> > called as "git submodule status". After compiling git with address
+> > sanitizer and minimizing the directory I finally narrowed it down to the
+> > files which I have attached as a tar archive. Here is a detailed backtrace:
+> > 
+> > AddressSanitizer:DEADLYSIGNAL
+> > =================================================================
+> > ==63400==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x000000c27a93 bp 0x7ffdcb4eec10 sp 0x7ffdcb4eeb80 T0)
+> > ==63400==The signal is caused by a READ memory access.
+> > ==63400==Hint: address points to the zero page.
+> >      #0 0xc27a92 in refs_read_raw_ref /home/jfe/git/refs.c:1451:20
+> >      #1 0xc174a6 in refs_resolve_ref_unsafe /home/jfe/git/refs.c:1493:7
+> >      #2 0xc1826a in refs_read_ref_full /home/jfe/git/refs.c:224:6
+> >      #3 0xc26d53 in refs_head_ref /home/jfe/git/refs.c:1314:7
+> >      #4 0x8071e6 in status_submodule /home/jfe/git/builtin/submodule--helper.c:658:7
+> >      #5 0x806a89 in status_submodule_cb /home/jfe/git/builtin/submodule--helper.c:699:2
+> >      #6 0x80523e in for_each_listed_submodule /home/jfe/git/builtin/submodule--helper.c:438:3
+> >      #7 0x7f7e9a in module_status /home/jfe/git/builtin/submodule--helper.c:732:2
+> >      #8 0x7efd69 in cmd_submodule__helper /home/jfe/git/builtin/submodule--helper.c:1859:11
+> >      #9 0x51e024 in run_builtin /home/jfe/git/git.c:346:11
+> >      #10 0x5192c2 in handle_builtin /home/jfe/git/git.c:554:8
+> >      #11 0x51d0f0 in run_argv /home/jfe/git/git.c:606:4
+> >      #12 0x518600 in cmd_main /home/jfe/git/git.c:683:19
+> >      #13 0x8501d6 in main /home/jfe/git/common-main.c:43:9
+> >      #14 0x7f49fdaf2f29 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x20f29)
+> >      #15 0x41f4b9 in _start (/home/jfe/git/inst/libexec/git-core/git+0x41f4b9)
+> > 
+> > AddressSanitizer can not provide additional info.
+> > SUMMARY: AddressSanitizer: SEGV /home/jfe/git/refs.c:1451:20 in refs_read_raw_ref
+> > ==63400==ABORTING
+> > 
+> > As mentioned above, this bug is triggered by issuing the command
+> > "git submodule status" while in the attached directory.
+> > 
+> > This bug was confirmed on Debian with version 2.16.1 and
+> > 2.17.0.rc1.35.g90bbd502d as well as on Arch Linux with version 2.16.2
+> > where further output is given by git:
+> > 
+> > /usr/lib/git-core/git-submodule: line 979:  8119 Segmentation fault      (core dumped) git ${wt_prefix:+-C "$wt_prefix"} ${prefix:+--super-prefix "$prefix"} submodule--helper status ${GIT_QUIET:+--quiet} ${cached:+--cached} ${recursive:+--recursive} "$@"
+> > 
+> 
+> You may have minimized too much.  With the patch below I get:
+> 
+> 	fatal: no ref store in submodule 'gnulib'
+> 
+> I guess you'll get a different one in your original repo.
+> 
+> The patch seems like a good idea in any case, though.
+> 
+> -- >8 --
+> Subject: [PATCH] submodule: check for NULL return of get_submodule_ref_store()
+> 
+> refs_head_ref() requires a valid ref_store pointer to be given as its
+> first argument.  get_submodule_ref_store() can return NULL.  Exit and
+> report the failure to find a ref store in that case instead of
+> segfaulting.
+> 
+> Reported-by: Jeremy Feusi <jeremy@feusi.co>
+> Signed-off-by: Rene Scharfe <l.s.r@web.de>
+> ---
+>  builtin/submodule--helper.c | 6 ++++--
+>  1 file changed, 4 insertions(+), 2 deletions(-)
+> 
+> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+> index ee020d4749..0f74e81005 100644
+> --- a/builtin/submodule--helper.c
+> +++ b/builtin/submodule--helper.c
+> @@ -654,9 +654,11 @@ static void status_submodule(const char *path, const struct object_id *ce_oid,
+>  			     displaypath);
+>  	} else if (!(flags & OPT_CACHED)) {
+>  		struct object_id oid;
+> +		struct ref_store *refs = get_submodule_ref_store(path);
+>  
+> -		if (refs_head_ref(get_submodule_ref_store(path),
+> -				  handle_submodule_head_ref, &oid))
+> +		if (!refs)
+> +			die(_("no ref store in submodule '%s'"), path);
+> +		if (refs_head_ref(refs, handle_submodule_head_ref, &oid))
+>  			die(_("could not resolve HEAD ref inside the "
+>  			      "submodule '%s'"), path);
+>  
+> -- 
+> 2.16.3
 
-Nice.
-
->> It is probably better especially for reviewers and more common to work
->> in small batches, for example to send a patch series converting a few
->> related commands, then to start working on the next small batch of
->> commands in another patch series while improving the first patch
->> series according to reviews.
->>
->> Also we ask GSoC students to communicate publicly every week about
->> their project for example by writing a blg post or sending a report to
->> the mailing list.
->
-> Noted.
->
->>> ## Git contributions
->>> ------------------------------------------
->>> My first contribution to Git was to help making =E2=80=9Cgit tag --cont=
-ains
->>> <id>=E2=80=9D les chatty if <id> is invalid. Looking over the list of a=
-vailable
->>> microprojects, there were a couple of microprojects which got my
->>> attention, but I picked this up because it seemed to be a long-standing
->>> bug (I noticed it was approached by students in 2016, 2017 and now in
->>> 2018). Thanks to the code reviews from the mailing list, after a few
->>> iterations I succeeded in coming up with a patch that not only fixed
->>> the mentioned problem, but also a few others that were having the same
->>> cause.
->>>
->>> It got merged in the proposed updates branch.
->>
->> What is its status in Junio's "What's cooking in Git" emails?
->
-> It is now in the =E2=80=98next=E2=80=99 branch of the Git repository.
->
-> I updated the proposal, in which I included these ideas and some addition=
-al
-> examples. Thank you a lot!
-
-Ok. Feel free to resend another version of your proposal.
-
-Thanks.
