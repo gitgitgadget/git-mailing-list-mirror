@@ -2,112 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A9B611F404
-	for <e@80x24.org>; Sun, 25 Mar 2018 04:11:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 682361F404
+	for <e@80x24.org>; Sun, 25 Mar 2018 04:14:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750957AbeCYELA (ORCPT <rfc822;e@80x24.org>);
-        Sun, 25 Mar 2018 00:11:00 -0400
-Received: from cloud.peff.net ([104.130.231.41]:41946 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1750771AbeCYEK7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 25 Mar 2018 00:10:59 -0400
-Received: (qmail 26642 invoked by uid 109); 25 Mar 2018 04:10:59 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sun, 25 Mar 2018 04:10:59 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 10971 invoked by uid 111); 25 Mar 2018 04:11:56 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Sun, 25 Mar 2018 00:11:56 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 25 Mar 2018 00:10:57 -0400
-Date:   Sun, 25 Mar 2018 00:10:57 -0400
-From:   Jeff King <peff@peff.net>
-To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Git mailing list <git@vger.kernel.org>
-Subject: Re: [PATCH] branch -l: print useful info whilst rebasing a non-local
- branch
-Message-ID: <20180325041056.GA22321@sigill.intra.peff.net>
+        id S1750960AbeCYEN6 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 25 Mar 2018 00:13:58 -0400
+Received: from mail-qt0-f179.google.com ([209.85.216.179]:37640 "EHLO
+        mail-qt0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750771AbeCYEN6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 25 Mar 2018 00:13:58 -0400
+Received: by mail-qt0-f179.google.com with SMTP id w12so8898687qti.4
+        for <git@vger.kernel.org>; Sat, 24 Mar 2018 21:13:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=o3RR6ZCK6HS0GDVcSBU0cy07jxr5b/TqGKRpgQn7HLI=;
+        b=gDDSEIrdJas6u2nCnczXxX+gPkSvNzb1euJtjff5K7lGS28FFTSOZMmw4h/Khy6lOM
+         p9sED47mvGUzx7A+XXPYQsef8BIMWjLdttaNfwqdgiZbrMk0vfFK9V4+wNW6R6EQ8u20
+         q4iXj6BrKCSb9sAzy3IWKI+n8mIXJMV9eZm8qfJ9TGPYg1IDkGaf1zFHJO5pGXYvfi+l
+         iL9Tv8qO1DIIfA6uWXebTJHMCMvyN0U8anPf+SUpkwq6kKCK/Ic5i6RPJ/6YuH6T1nRS
+         O6UAinO+k+K7x6SbluyyZvEAvq/EWwKoxb3Z2jo+E6qNDqId25YDNkXAH8fqLRhHjekU
+         5b6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=o3RR6ZCK6HS0GDVcSBU0cy07jxr5b/TqGKRpgQn7HLI=;
+        b=LLkdh5RL7T6qpZpHnNw+xlNY2n3zp71PzBzbaLmhtwiJ+m85+KTuQ8FdRVAuDdMj6A
+         jLj9ySegVaf0ovi3HPk62HhZAg+6XqgihS8m+cGkYhXkMbl8phO7fbeJSJvqueYkHGV1
+         fsE5Qh8dCjH+6NlWXcbtngNMPTTWP6S+3uOCnv8wbVbF19n1A01uXHJX1kHV1gnJ4fPF
+         B5AzZ20iwLePnOQDNQIqlRkANgqVnomIUc8gvg2iBB8RUjdUmcscV7c5zb4380eY9izv
+         s/yjBvnlFudQXES+kjuDgdKS99KmeE0g+Rx8PjkwYEEiRuuGif9sXxlixHJkXr5JaCdA
+         O8fA==
+X-Gm-Message-State: AElRT7FAkslBfqseumyctUFTHjrBuUiltXT+eZJn7QS374UvzntViXnj
+        jc547dDWteKrEN30r4ccIRL6JZs4P59/VYiX+HQ=
+X-Google-Smtp-Source: AG47ELua7xidwZrIHX5sQZH/m02TzmyRGN4zUlce0MS8SowuvzSg30nNxCzq9l1SDJPoR2BEqyW/q3HYIN5SOoSAskk=
+X-Received: by 10.237.49.195 with SMTP id 61mr49082265qth.77.1521951237395;
+ Sat, 24 Mar 2018 21:13:57 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.12.174.202 with HTTP; Sat, 24 Mar 2018 21:13:56 -0700 (PDT)
+In-Reply-To: <20180325041056.GA22321@sigill.intra.peff.net>
 References: <20180324183844.4565-1-kaartic.sivaraam@gmail.com>
  <CAPig+cQ8xw23SGhpx5qtDEyzJGR1v4L2Lm9tEWe56Rh3c8Q3cg@mail.gmail.com>
- <87ea8cac-c745-b7e6-7804-5116cd94ed48@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <87ea8cac-c745-b7e6-7804-5116cd94ed48@gmail.com>
+ <87ea8cac-c745-b7e6-7804-5116cd94ed48@gmail.com> <20180325041056.GA22321@sigill.intra.peff.net>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Sun, 25 Mar 2018 00:13:56 -0400
+X-Google-Sender-Auth: Hwr6v6_qkQQ-xa2dPMJIYaybiXA
+Message-ID: <CAPig+cSSy2AFc22EOFWLOE1MszHdeA3ijDPbFVNGK70AmHUg_w@mail.gmail.com>
+Subject: Re: [PATCH] branch -l: print useful info whilst rebasing a non-local branch
+To:     Jeff King <peff@peff.net>
+Cc:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Mar 25, 2018 at 09:11:34AM +0530, Kaartic Sivaraam wrote:
+On Sun, Mar 25, 2018 at 12:10 AM, Jeff King <peff@peff.net> wrote:
+> So:
+>
+>   git branch -l
+>
+> _looks_ like it works, but only because list mode is the default. If you
+> did:
+>
+>   git branch -l foo
+>
+> you would find that it does list "foo" at all, but instead creates a new
+> branch "foo" with reflog.
 
-> >> When rebasing interacitvely (rebase -i), "git branch -l" prints a line
-> > 
-> > The "git branch -l" threw me since "-l" is short for --create-reflog.
-> > I'm guessing you meant "git branch --list".
-> 
-> That's surprising, I just tried "git branch -l" on a repository and I
-> did get a list of branch names. Is this a consequence of some option
-> parsing weirdness ?!
-
-Sort of. The "-l" option causes us to set the "reflog" variable to 1.
-And then we have no other command-line options, so we default to
-"--list" mode. The listing code does not look at the "reflog" variable
-at all, so it's just silently ignored.
-
-So:
-
-  git branch -l
-
-_looks_ like it works, but only because list mode is the default. If you
-did:
-
-  git branch -l foo
-
-you would find that it does list "foo" at all, but instead creates a new
-branch "foo" with reflog.
-
-> To be honest, I actually assumed "-l" to be a shorthand for "--list" and
-> didn't check with it in the documentation; which I should have. Sorry,
-> for that. I still wonder why "git branch -l" prints a list of branch
-> names when it is not a shorthand for "--list" ? (BTW, I'm also surprised
-> by the fact that "-l" is not act shorthand for "--list"!)
-
-It's historical and quite unfortunate. Doubly so since probably nobody
-has ever actually wanted to use the short "-l" to create a reflog, since
-it's typically the default and has been for a decade.
-
-We've been hesitant to change it due to backwards compatibility. While
-"branch" is generally considered porcelain, it probably is the main
-scripting interface for creating branches (the only other option would
-be using "update-ref" manually). So I dunno. Maybe it would be OK to
-transition.
-
-Alternatively, we could at least detect the situation that confused you:
-
-diff --git a/builtin/branch.c b/builtin/branch.c
-index 6d0cea9d4b..89e7fdc89c 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -676,6 +676,9 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 		colopts = 0;
- 	}
- 
-+	if (list && reflog)
-+		die(_("--reflog in list mode does not make sense"));
-+
- 	if (force) {
- 		delete *= 2;
- 		rename *= 2;
-
-That doesn't help somebody mistakenly doing "git branch -l foo", but
-more likely they'd do "git branch -l jk/*" if they were trying to list
-branches (and then "branch" would barf with "that's not a valid branch
-name", though that may still leave them quite confused).
-
--Peff
+s/does/doesn't/
