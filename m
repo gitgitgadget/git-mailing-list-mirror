@@ -7,80 +7,125 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 054CA1F404
-	for <e@80x24.org>; Sun, 25 Mar 2018 00:59:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2851F1F404
+	for <e@80x24.org>; Sun, 25 Mar 2018 01:35:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752821AbeCYA7c (ORCPT <rfc822;e@80x24.org>);
-        Sat, 24 Mar 2018 20:59:32 -0400
-Received: from mail-qt0-f194.google.com ([209.85.216.194]:44120 "EHLO
-        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752216AbeCYA7b (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 24 Mar 2018 20:59:31 -0400
-Received: by mail-qt0-f194.google.com with SMTP id j26so16283038qtl.11
-        for <git@vger.kernel.org>; Sat, 24 Mar 2018 17:59:31 -0700 (PDT)
+        id S1753129AbeCYBfB (ORCPT <rfc822;e@80x24.org>);
+        Sat, 24 Mar 2018 21:35:01 -0400
+Received: from mail-qk0-f175.google.com ([209.85.220.175]:36010 "EHLO
+        mail-qk0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752621AbeCYBfA (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 24 Mar 2018 21:35:00 -0400
+Received: by mail-qk0-f175.google.com with SMTP id o205so5154579qke.3
+        for <git@vger.kernel.org>; Sat, 24 Mar 2018 18:35:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-transfer-encoding;
-        bh=2Z5immI1sVGdmRxj7Dlhm7QEL+q30GGR6TfxsmfculU=;
-        b=odQnNpQrUqfZ9SDOtawNL4pOdkJNtSi5ibigRFvxpOZ+GoygeFeWMMER9nzI+01tGZ
-         hnvVEIToJU9M8KZOLAYS+/3GsgepRtXEJpNgIzDc06diBc6Th8qxhpV/Q1DdxDm96RPZ
-         WsY+70maPnnhIJvHqf324pxjWQEkvPAj0rrzBGl8AC77M9w6VD8C/TH40PP0qJV+YVMD
-         z0EvdfTWa0Bw14Xz7VE18Z3pVLMpSD+/vQXL9CrMdcyDH+fU/WMbm0RKX4zmg1pXD6d6
-         SgBDUD32s9mqo+vQl59VOpnd1NENa6DDS6fvCjtggggyGSVY1WKPpw4CAPfEvP++yEVG
-         x2/Q==
+         :subject:to:cc;
+        bh=lzFjOK3mrxBvcVzuc0C1gYye6gRvMibsQw4poKWzV9U=;
+        b=biqUkQ0CbOwPWNhIPlU8WaOiLF9phgBnrR0Y7PXxJfqN7zrsBPQElcMt08EuHGqNcJ
+         /+Z71yMmzn5rcT2Nbmn8b3b+l5g30tnl7wuttU5q7ScwNU8Fsy32bg+nHd5ZAeEn5XfH
+         wb+x865CBrgVnfrnv3hlKeWGNNf3V0MOshzeapE0hDechnmI/Tkryb6q5eDJoearN3Z6
+         eiB0PrwW1GQjHtBYCzeG8CZk2wtcmbmcGkp58NM2Wp9qj7pGqdOOVw6K2J9oTiX7ngtM
+         EJxZxTOlXzNkZ2i/+Jml8ZIW2nQbwhOjEuxc8bfre0MVwv6LFmQqHH5ohar4Swtcpan/
+         SU2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=2Z5immI1sVGdmRxj7Dlhm7QEL+q30GGR6TfxsmfculU=;
-        b=VD2LWPN/A97cRCrJnQLLs0LGCLkxLvxRn2P1cZfzsHERWOM6TLP0QUl3ZNGMi1UO6i
-         8WKCmAA9/HbmXriA54KKzpCXUgMzof0+CLThh3kcoKLZbgu8lirflV+PGg5+yqa4HVgM
-         l5dP3SQTC46gU+QVHF1S7xB3PXxxoALRVMabCGuyMCePSDVSQ+AblA3Rwx6oIcpdRs8+
-         57XblO15oSbCvd28jRA5qQ/uCSrXdZMsFW6Qvee3lRce0rgQg1uwLdOK9O4CwDIy/ZJI
-         hLt5N9n/XZQBzqrK4FsYQpZGqkbvBN71DgZK78R2nB5wnGB2JwQ3c5FlMZ01GmGb92hW
-         rkoQ==
-X-Gm-Message-State: AElRT7EqNbPdor4u62kEwHz/6yF/crKRfb0dVpKpQr+V/6N+t3QJFQ/V
-        efhTikVFPa6EASTRmw2PulGMuEJmvOt40OLSBHc=
-X-Google-Smtp-Source: AG47ELsyYfcU7sy7qrK/7QiOK4ECwwnehhJWYxzSTCvru5wNdcL3eFC4dprF2nFf2Cxilwjohen3ToroQOVpCCk23dc=
-X-Received: by 10.200.50.174 with SMTP id z43mr47413350qta.250.1521939570945;
- Sat, 24 Mar 2018 17:59:30 -0700 (PDT)
+         :date:message-id:subject:to:cc;
+        bh=lzFjOK3mrxBvcVzuc0C1gYye6gRvMibsQw4poKWzV9U=;
+        b=INKIdljj9X85hto1BT0hlGrdb7/cwYy63nus5kJAb1uJIINZc27Pq6lXLE6pfcEvSw
+         r6S5JM5DqXRUq1K+Omi4GvYb63ksGrvQGSgMSdl0UXa781Rp2SuIlH4h4xL7Or/ck9ZF
+         l7BHxwas7QMEsRtCPHMFqp7VdsweFEOKUlGiU0b1GcHWt//5lgQwtW+cgimXwCXFp/DR
+         hq8/oNN9X9nBPWNA8mNUDy7JYXTFfiJrynSnBdTb4Jcw7Z/Gh26ZhHl19F4liNFZsjxc
+         METKdByxUhC1Z4T5LWOcZhGrvEvDj0ZYqWxG+Sgo1cq/4osRSoO8hGFSNlgbU+oItbKv
+         zeKA==
+X-Gm-Message-State: AElRT7FRCLpGnwbHMKs95O2JUpmIQ6198Ub15aR7KF1dUJ7eilLgZWtT
+        2wPUdOk98Coa+TBpJ9E58hIwJwfEXEyQHRIeaUA=
+X-Google-Smtp-Source: AG47ELtw7cfzNw9yU91pD/pdpFelISty/xdGvHxqi///s+uAeJjNkraCrCtm2msTtyL+V+lXNEb6ih2wx2oNyY3KZc8=
+X-Received: by 10.55.156.79 with SMTP id f76mr47496008qke.36.1521941699722;
+ Sat, 24 Mar 2018 18:34:59 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.12.174.202 with HTTP; Sat, 24 Mar 2018 17:59:30 -0700 (PDT)
-In-Reply-To: <20180324203525.24159-6-pclouds@gmail.com>
-References: <20180321193039.19779-1-pclouds@gmail.com> <20180324203525.24159-1-pclouds@gmail.com>
- <20180324203525.24159-6-pclouds@gmail.com>
+Received: by 10.12.174.202 with HTTP; Sat, 24 Mar 2018 18:34:59 -0700 (PDT)
+In-Reply-To: <20180324183844.4565-1-kaartic.sivaraam@gmail.com>
+References: <20180324183844.4565-1-kaartic.sivaraam@gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sat, 24 Mar 2018 20:59:30 -0400
-X-Google-Sender-Auth: JFz-USESSbpCr3_YE7cpWR2ZoGQ
-Message-ID: <CAPig+cThH3mNTn2nR9XEsmAVaQ0-NfA7r5JwyjBd9wZiRzedhw@mail.gmail.com>
-Subject: Re: [PATCH v2 5/8] completion: add --option completion for most
- builtin commands
-To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
+Date:   Sat, 24 Mar 2018 21:34:59 -0400
+X-Google-Sender-Auth: NqIrhybB-dTYXaOTjhwOCRZ1iAQ
+Message-ID: <CAPig+cQ8xw23SGhpx5qtDEyzJGR1v4L2Lm9tEWe56Rh3c8Q3cg@mail.gmail.com>
+Subject: Re: [PATCH] branch -l: print useful info whilst rebasing a non-local branch
+To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Cc:     Git mailing list <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Mar 24, 2018 at 4:35 PM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =
-<pclouds@gmail.com> wrote:
-> Many builtin commands use parseopt which supports expose the option
+On Sat, Mar 24, 2018 at 2:38 PM, Kaartic Sivaraam
+<kaartic.sivaraam@gmail.com> wrote:
+> When rebasing interacitvely (rebase -i), "git branch -l" prints a line
 
-s/expose/exposing/ maybe?
+The "git branch -l" threw me since "-l" is short for --create-reflog.
+I'm guessing you meant "git branch --list".
 
-> list via --git-completion-helper but do not have explicit support in
-> git-completion.bash. This patch detects those commands and uses
-> __gitcomp_builtin for option completion.
+> indicating the current branch being rebased. This works well when the
+> interactive rebase was intiated when a local branch is checked out.
 >
-> This does not pollute the command name completion though. "git <tab>"
-> will show you the same set as before. This only kicks in when you type
-> the correct command name.
+> This doesn't play well when the rebase was initiated on a remote
+> branch or an arbitrary commit that is not pointed to by a local
+> branch.
+
+A shorter way of saying "arbitrary commit ... not pointed at by local
+branch" would be "detached HEAD".
+
+> In this case "git branch -l" tries to print the name of a
+> branch using an unintialized variable and thus tries to print a "null
+> pointer string". As a consequence, it does not provide useful
+> information while also inducing undefined behaviour.
 >
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.c=
-om>
+> So, print the commit from which the rebase started when interactive
+> rebasing a non-local branch.
+
+Makes sense. The commit message gives enough information for the
+reader to understand the problem easily.
+
+> Signed-off-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+> ---
+> diff --git a/ref-filter.c b/ref-filter.c
+> @@ -1310,8 +1310,16 @@ char *get_head_description(void)
+>         wt_status_get_state(&state, 1);
+>         if (state.rebase_in_progress ||
+>             state.rebase_interactive_in_progress)
+> +       {
+
+Style: attach '{' to the line above it (don't make it standalone)
+
+> +               const char *rebasing = NULL;
+> +               if (state.branch != NULL)
+> +                       rebasing = state.branch;
+> +               else
+> +                       rebasing = state.detached_from;
+> +
+>                 strbuf_addf(&desc, _("(no branch, rebasing %s)"),
+> -                           state.branch);
+> +                           rebasing);
+
+You could collapse the whole thing back down to:
+
+    strbuf_addf(&desc, _("(no branch, rebasing %s)"),
+        state.branch ? state.branch : state.detached_from);
+
+which means you don't need the 'rebasing' variable or the braces.
+
+> +       }
+>         else if (state.bisect_in_progress)
+
+Style: cuddle 'else' with '}': } else
+
+>                 strbuf_addf(&desc, _("(no branch, bisect started on %s)"),
+>                             state.branch);
+
+Can we have a couple new tests: one checking "git branch --list" for
+the typical case (when rebasing off a named branch) and one checking
+when rebasing from a detached HEAD?
