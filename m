@@ -7,96 +7,77 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AECB41F404
-	for <e@80x24.org>; Sun, 25 Mar 2018 16:31:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B5DEB1F404
+	for <e@80x24.org>; Sun, 25 Mar 2018 16:32:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753455AbeCYQb4 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 25 Mar 2018 12:31:56 -0400
-Received: from mout.web.de ([212.227.17.12]:34085 "EHLO mout.web.de"
+        id S1753519AbeCYQcT (ORCPT <rfc822;e@80x24.org>);
+        Sun, 25 Mar 2018 12:32:19 -0400
+Received: from mout.web.de ([212.227.17.11]:57589 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753281AbeCYQbz (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 25 Mar 2018 12:31:55 -0400
-Received: from [192.168.178.36] ([79.237.251.165]) by smtp.web.de (mrweb101
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0LaCji-1eIZSq1zNm-00m4bg; Sun, 25
- Mar 2018 18:31:50 +0200
-To:     Git List <git@vger.kernel.org>
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        Junio C Hamano <gitster@pobox.com>
+        id S1753281AbeCYQcS (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 25 Mar 2018 12:32:18 -0400
+Received: from [192.168.178.36] ([79.237.251.165]) by smtp.web.de (mrweb103
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0LrK0u-1eaefR1OyC-0134vN; Sun, 25
+ Mar 2018 18:32:05 +0200
+Subject: Re: [PATCH 4/3] sha1_name: use bsearch_pack() in unique_in_pack()
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Derrick Stolee <dstolee@microsoft.com>, git@vger.kernel.org,
+        stolee@gmail.com, jonathantanmy@google.com,
+        sandals@crustytoothpaste.net
+References: <20180321224226.GA74743@genre.crustytoothpaste.net>
+ <20180322174010.120117-1-dstolee@microsoft.com>
+ <71b5cef0-abad-001f-6a23-3f2d874b9709@web.de>
+ <xmqqvadkf7rd.fsf@gitster-ct.c.googlers.com>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] unpack-trees: release oid_array after use in check_updates()
-Message-ID: <b2380d1e-1d45-22cf-ba22-cf4cb02e1134@web.de>
-Date:   Sun, 25 Mar 2018 18:31:48 +0200
+Message-ID: <c56cd048-f0d1-3ed2-6e4e-5063d97071be@web.de>
+Date:   Sun, 25 Mar 2018 18:32:03 +0200
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
  Thunderbird/52.7.0
 MIME-Version: 1.0
+In-Reply-To: <xmqqvadkf7rd.fsf@gitster-ct.c.googlers.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:Ay5kA7F2UTceLZaIYyDk8J2fnZq3nJjXkrPkl+ZQH4IbEowKuJ0
- DL++pAfJusKvd223krdZ6NMZdUzGoWEUzLcezfXr86m35U4+rQNcIRt6asXcjczvJ9jp4Cz
- gsWTFX0n9aYv/FSMVSxOH9rYrRUwsReWK0z08SZQtJXjQSjuyWeRyPKmKov8WtK9EC1Bb/u
- A7qZNeeQEG8snpajmUfzw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:LOikF6pQ2jc=:5QZmFieHEelyJthe7486A9
- NNAmnu1jrrlQGq/T8ZuGTUepSFtr9hFug1foDvsLmBcLyKHCcbiArBwKoRo1XosvZvCB6j4kP
- eyzp/gxAJ/8cWBwfamjdgNPdoHNvFifFFbNBTQ7VgiriaCWWVXAaKrUK/6sQEjDyGR2aZCk9X
- 0IPVYjDoxVDR8mMVVVUlDI9JyUpliMBdt5Wq4cQ4irzUEZG774Al0rwXKNE+ITASO+Kly6JeT
- F3MD1yjkl1MGmjl63Vma6B8pCs7CmV6K1hUx0W8eASLt8IPJfW1vjMrQ04yxmYSe+7iJt/yTi
- ujJ4t6ktQe5ZAy2kNPIqKb+63cpdY0rLMPJxpWDmmoOLBj7wQXvO6OBjD5pOiPDyW5VbO5MuI
- 5lKMM2qTUGx6HVy5ctMhpo6kUxKTguTHJWXa3hunQLg7k39QC03umjZA6oPuPEcwF3tzOxN1a
- IfwbNjEAtr6Dv/VqsZGpr8or0MG38FJSobXFxINY70cDRza+A4bVVkqRJr0H2IJT31KxwYekV
- Lm1DajmINNRtUNFiyrHt1Cbh8R1u1woLQeB8gnnOIRaR1zujPiD3+f+YWQiYZqTnmld46Thas
- 4Vw/msuIL3gjArdKu21CPxWt090YrpkzL0EZymSZfuwFcZfo3MWxN0Odl+yBoEEm5jk8D6+/D
- Ty73LJTu3+VRwjxlOHdSQZC4+18B+QOBwULVbjuKPmX5qeyi7uoFHpZ+zR3TQUSxIhy4g80sq
- t/Zrjr/0tQY6hLNEClVFlamtiY1+HyrL0nzOq7fHAeoNsbwmhR+LUyxdOViBouO2X3qKfQ+fG
- Q4cf6SeaFoGR5hnesN8QLT7y2xhqcRxasbppOZszBIQBy2SsDA=
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:Cp6TAeR3UMsLtwAk0bz2XiKjPqBcHxqDC8ImzSKYXST9igexSKt
+ AZjspiU2kf5Z8D5DqEaxb0eQky7sEuFfkYgOQYW5QwQtFTqveHarV09TIezDQ1PBa61TR30
+ RTZ4o7bGQ3mXY0X7vMwtG69KIZSWw98MhcIx5Rh+cmkNVoSAF+/RcZ3WDj//pezmOgaKCYF
+ KVuL0P6quAYSUNxyXg7zg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:1xmIlkuWWeE=:8ZCtY5qz20wYP77AOl0Ja4
+ uKmhoxpK5o+Kjo1QQ5p0OLk7STZ1Sb4vHx8VgkQboYtciGT+t6bReKnzS3J9r/eDmApBNXOR+
+ cwj1RmYWS65X59aUYQjwkkvZQQ50H50SVPXwlyanwOraYDiPBi+5CdQhrJSt457mnAiE7ukoP
+ EdwrxJ8/RXc2CWv1WRzbPvmZZNiUuvSssoJA5TvAj9mTF5HWQ6wnchx8Ibgc59ndRz7iS4FGE
+ 6+qYqPFk81XQ8jx7RDlkC9ikjZnqV1Imera9oNBxZ0Lnc04ASg+LhL5X8MTVWxObsPmCCCud0
+ wxTMp9+2N5WD4rYtyGbjKAqvHW4X2g0uRdcb/yDvUummEmbElSJBu3R3ty7eN8OqwPbwHx43Q
+ EifSZTMNaIhIA1GUFJO7GCl5mYOlykWNfgKGulfFLyN297SiBluAaBuVUfwjhRSfOmWA+zYkT
+ g7cKxrLM5WRr2u3JkvNbvlLF8qYELlwstLgUSXuHc+luzZQ4DhzKO+pBNCD8sEFa25vhudO7g
+ KV/mPqe+E0uybZ5bTYfyAXFLhtX7/100lm7S3t5NsLwEgHnJ6F/i0Rl7+Yz9ctlsgSBo2xV70
+ CklJODojqkdqnuJVovuLKuXtATR6JxfOYCN+g5Mnr7uJP+egVa774DEX9xlcuZ/w0ryyDWM8L
+ ev4k6JCyG2qJ/gZV31zIYZcSw51NvbwQsR94e6D1zmBbfHycqt3hHJmw9kbszpQrRmU8Jccwc
+ rHuF5jjfwOQbXE9cra8u0V9kigcUD8kF1a+E+WBBcY+mG3BdEpAox3KOb7DlRqYc21yPSYqt6
+ XbRefz6q94lBGoyEIdAALWn+Zt3CfLu56Nl6ZW5HsyS4sW3PYc=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
----
-That leak was introduced by c0c578b33c (unpack-trees: batch fetching of
-missing blobs).
+Am 25.03.2018 um 18:19 schrieb Junio C Hamano:
+> René Scharfe <l.s.r@web.de> writes:
+> 
+>> Replace the custom binary search in unique_in_pack() with a call to
+>> bsearch_pack().  This reduces code duplication and makes use of the
+>> fan-out table of packs.
+>>
+>> Signed-off-by: Rene Scharfe <l.s.r@web.de>
+>> ---
+>> This is basically the same replacement as done by patch 3.  Speed is
+>> less of a concern here -- at least I don't know a commonly used
+>> command that needs to resolve lots of short hashes.
+> 
+> Looks correct.  Did you find this by eyeballing, or do you have some
+> interesting tool you use?
 
- unpack-trees.c | 1 +
- 1 file changed, 1 insertion(+)
+I was looking for SHA1 binary searches using something like this:
 
-diff --git a/unpack-trees.c b/unpack-trees.c
-index d5685891a5..e73745051e 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -379,30 +379,31 @@ static int check_updates(struct unpack_trees_options *o)
- 		struct oid_array to_fetch = OID_ARRAY_INIT;
- 		int fetch_if_missing_store = fetch_if_missing;
- 		fetch_if_missing = 0;
- 		for (i = 0; i < index->cache_nr; i++) {
- 			struct cache_entry *ce = index->cache[i];
- 			if ((ce->ce_flags & CE_UPDATE) &&
- 			    !S_ISGITLINK(ce->ce_mode)) {
- 				if (!has_object_file(&ce->oid))
- 					oid_array_append(&to_fetch, &ce->oid);
- 			}
- 		}
- 		if (to_fetch.nr)
- 			fetch_objects(repository_format_partial_clone,
- 				      &to_fetch);
- 		fetch_if_missing = fetch_if_missing_store;
-+		oid_array_clear(&to_fetch);
- 	}
- 	for (i = 0; i < index->cache_nr; i++) {
- 		struct cache_entry *ce = index->cache[i];
- 
- 		if (ce->ce_flags & CE_UPDATE) {
- 			if (ce->ce_flags & CE_WT_REMOVE)
- 				die("BUG: both update and delete flags are set on %s",
- 				    ce->name);
- 			display_progress(progress, ++cnt);
- 			ce->ce_flags &= ~CE_UPDATE;
- 			if (o->update && !o->dry_run) {
- 				errs |= checkout_entry(ce, &state, NULL);
- 			}
- 		}
- 	}
--- 
-2.16.3
+	git grep -e '/ 2' -e hashcmp -W --all-match
+
+René
