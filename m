@@ -2,646 +2,197 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-2.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D9DE71F404
-	for <e@80x24.org>; Sun, 25 Mar 2018 20:51:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 63E1F1F404
+	for <e@80x24.org>; Sun, 25 Mar 2018 20:57:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752161AbeCYUvf (ORCPT <rfc822;e@80x24.org>);
-        Sun, 25 Mar 2018 16:51:35 -0400
-Received: from mail-qk0-f193.google.com ([209.85.220.193]:43467 "EHLO
-        mail-qk0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752053AbeCYUv3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 25 Mar 2018 16:51:29 -0400
-Received: by mail-qk0-f193.google.com with SMTP id g184so18132921qkd.10
-        for <git@vger.kernel.org>; Sun, 25 Mar 2018 13:51:29 -0700 (PDT)
+        id S1752176AbeCYU52 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 25 Mar 2018 16:57:28 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:38942 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751112AbeCYU51 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 25 Mar 2018 16:57:27 -0400
+Received: by mail-wm0-f67.google.com with SMTP id f125so11879760wme.4
+        for <git@vger.kernel.org>; Sun, 25 Mar 2018 13:57:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=gjDsSz3LCM1Fbc5dI6QaEIHyNUWbQkNqHGLrrLU7LEw=;
-        b=QzcJVDnZcfreMYv6JVmTaW+wb0racNzLWBstIqsV/t+IN9L76PgBYv+s9LUWQrXMXm
-         ejQxA0hHeIYXNM9k7ZPTb1Ujwqt1J1Erh42NZ/0adcco7KgXobaIFDyWhOZlF8WACNQN
-         zKHYCM0Mks9u4BWjrZtoRDH+yleFr+uTGbgwbRkbO6kAMktmqPVVY0Y+uzag8fPj/Lpp
-         CtlRi1bq2P9fdimcReJHf9bTHuBkG33TVR0uAwZIpEdo+IWk06MWDPaQAhQlnHyaFwj9
-         3Bv1nVZ2GDf8fkSqvuRI/Ah34Pui9e388w/9tR+zgyepFpYsKBrcGjAoGxS4YfiAnYEP
-         2inQ==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=/itiSbnXiIROYewZ4L803qedkBKttulsokdT6/iqwYU=;
+        b=cpecWLSzS5ec7KNtcrz9PLZgK1JjKfcCcsxCXUKJG/rK922tQ8oyWbz2r1s51nRtGO
+         VVcXD2aJYS2tgBmViALwX9ykQT9qAjZrWPI92IegWO2rmhT2y4I+AvH4LkBRVe9crN8X
+         bvbk/xtaWo0UvO3bU0aGI8uU2smA6eIE8q4UOR/mHD0B+qhUBlbPlAVc/L47GXq56btN
+         3YrR0t175sbkIgsLEjUcKNQi9auzS7D8p64E/SdLjqzKvqWK+tUaWbYlIiTjbD5youN7
+         Ss/WzQRpqmHeoPJNIF6mzvXb+qCwBG7vJjlMgGFt+pA9+prc6pv8QMBYcM0XjU7o1v5J
+         01aQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=gjDsSz3LCM1Fbc5dI6QaEIHyNUWbQkNqHGLrrLU7LEw=;
-        b=S8RXswcqHMpClGl807yZ3Q38cEz6EFvkHiL+OQ9P+OHm68T/5PxsXzXQRKisSGHMp4
-         0T3xEDe8WGC5DPXfs/aH2WD7o+b6Bj9mG0iL/g8fpgcIhyYEChQsIJOSVZb9dYmWliWd
-         ISyneIT+lTZf1kKVWVRt/0st6HrfYHwsZVw9aB9i2xxfacKXpQYHwUMLmXfNGQ6CIbSc
-         XmCDO9y1N7mPX45dAv55115Kej3GmrQ6fPxtzcrsnAIfJMgR8zr5uJZj44rzFCtLK+Nt
-         F+h22ifWjG4T2wMnu/p148C9LEE+ku0mw0o8aLYXNSeNsM7xUufkprPMUw0Huh4QiFhV
-         kt4g==
-X-Gm-Message-State: AElRT7G+Bth1DUxDwDMveldP7REGOnWoNASRKPTKAhwa0DTZ72DT3m9p
-        dFWJQ1jGVTMlw/inuCpvGM6QO92gyQM=
-X-Google-Smtp-Source: AG47ELv9PATTUuYxZrqEVyQvDQPfXVJAwmH0xsNx4S1h5EdvMYSYPRrA5deAjL9Vd4SesIM9x28UvQ==
-X-Received: by 10.55.112.199 with SMTP id l190mr53326347qkc.335.1522011087716;
-        Sun, 25 Mar 2018 13:51:27 -0700 (PDT)
-Received: from localhost.localdomain (pool-74-109-218-108.pitbpa.fios.verizon.net. [74.109.218.108])
-        by smtp.gmail.com with ESMTPSA id 72sm10217537qtf.53.2018.03.25.13.51.26
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 25 Mar 2018 13:51:26 -0700 (PDT)
-From:   Dan Jacques <dnj@google.com>
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=/itiSbnXiIROYewZ4L803qedkBKttulsokdT6/iqwYU=;
+        b=ow72QVzoERGYfECakziq35xT+2Mie5d1eKimdOl80KFwAZFGrDVAtpX3AConHrq5hB
+         duW2QV/oPmkakmTNxfi18n7oqzxmeJvTRyuN3ChaRnVO9g0WrN94ayfhXVCBAaLyeHAp
+         A+7HKok8ZjblpBpjx3lLSIPybxdWavYn7UVr2GqQpyEa/Hu/I844j4+yhUfUoA24vtFP
+         P7AKY2mO4wMIYDcaRBIdRrWzPF4L4SDjGlYOZYWPvB9/M1gEee0SixXkSCFkoKcNxJ4p
+         7dqv4TGsOD1uIZRk3tGm34/LGk3mbO1+OIG/AQo82D7QysPJoNVq+osihz+fgeYgCu8l
+         LGPg==
+X-Gm-Message-State: AElRT7GP06J4ZAWg8kPBHo6ZgseHvzyeBaX6DXAOjiowXICaTyLItYDg
+        wXLA+z8EG0EqMYol2UMWZFrd0kRf
+X-Google-Smtp-Source: AG47ELtbQ7lh5nTcZMKarJMN2QbVfl6RtIRbYPAVCLW2DMBqQ7nZ2rUPN6tNcy42YvhVl420iSyIrA==
+X-Received: by 10.80.246.3 with SMTP id c3mr32516808edn.185.1522011445701;
+        Sun, 25 Mar 2018 13:57:25 -0700 (PDT)
+Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
+        by smtp.gmail.com with ESMTPSA id h64sm8384874edc.86.2018.03.25.13.57.24
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 25 Mar 2018 13:57:24 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, avarab@gmail.com, Johannes.Schindelin@gmx.de,
-        Dan Jacques <dnj@google.com>
-Subject: [PATCH v7 3/3] exec_cmd: RUNTIME_PREFIX on some POSIX systems
-Date:   Sun, 25 Mar 2018 16:51:20 -0400
-Message-Id: <20180325205120.17730-4-dnj@google.com>
-X-Mailer: git-send-email 2.15.0.chromium12
-In-Reply-To: <20180325205120.17730-1-dnj@google.com>
-References: <20180325205120.17730-1-dnj@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Joel Teichroeb <joel@teichroeb.net>,
+        Christian Couder <christian.couder@gmail.com>
+Subject: [PATCH] Remove contrib/examples/*
+References: <CA+CzEk9QpmHK_TSBwQfEedNqrcVSBp3xY7bdv1YA_KxePiFeXw@mail.gmail.com> <20180325204653.1470-1-avarab@gmail.com>
+User-agent: Debian GNU/Linux 9.4 (stretch); Emacs 25.1.1; mu4e 1.1.0
+In-reply-to: <20180325204653.1470-1-avarab@gmail.com>
+Date:   Sun, 25 Mar 2018 22:57:23 +0200
+Message-ID: <878tafyito.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Enable Git to resolve its own binary location using a variety of
-OS-specific and generic methods, including:
 
-- procfs via "/proc/self/exe" (Linux)
-- _NSGetExecutablePath (Darwin)
-- KERN_PROC_PATHNAME sysctl on BSDs.
-- argv0, if absolute (all, including Windows).
+On Sun, Mar 25 2018, Ævar Arnfjörð Bjarmason wrote:
 
-This is used to enable RUNTIME_PREFIX support for non-Windows systems,
-notably Linux and Darwin. When configured with RUNTIME_PREFIX, Git will
-do a best-effort resolution of its executable path and automatically use
-this as its "exec_path" for relative helper and data lookups, unless
-explicitly overridden.
+> There were some side discussions at Git Merge this year about how we
+> should just update the README to tell users they can dig these up from
+> the history if the need them, do that.
+>
+> Looking at the "git log" for this directory we get quite a bit more
+> patch churn than we should here, mainly from things fixing various
+> tree-wide issues.
+>
+> There's also confusion on the list occasionally about how these should
+> be treated, "Re: [PATCH 1/4] stash: convert apply to
+> builtin" (<CA+CzEk9QpmHK_TSBwQfEedNqrcVSBp3xY7bdv1YA_KxePiFeXw@mail.gmail.com>)
+> being the latest example of that.
 
-Small incidental formatting cleanup of "exec_cmd.c".
+The people on CC got this, but it seems the git ML rejected the message
+as it's too big. The abbreviated patches is here quoted inline, and at:
+https://github.com/avar/git/commit/cc578c81c2cb2999b1a0b73954610bd74951c37b
 
-Signed-off-by: Dan Jacques <dnj@google.com>
-Thanks-to: Robbie Iannucci <iannucci@google.com>
-Thanks-to: Junio C Hamano <gitster@pobox.com>
----
- Makefile               |  30 ++++++-
- cache.h                |   1 +
- common-main.c          |   4 +-
- config.mak.uname       |   7 ++
- exec_cmd.c             | 236 +++++++++++++++++++++++++++++++++++++++++++------
- exec_cmd.h             |   4 +-
- gettext.c              |   8 +-
- git.c                  |   2 +-
- t/t0061-run-command.sh |   2 +-
- 9 files changed, 254 insertions(+), 40 deletions(-)
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> ---
+>
+> On Sun, Mar 25, 2018 at 6:51 PM, Joel Teichroeb <joel@teichroeb.net> wrote:
+>> On Sun, Mar 25, 2018 at 1:09 AM, Christian Couder
+>> <christian.couder@gmail.com> wrote:
+>>> It seems to me that the apply_stash() shell function is also used in
+>>> pop_stash() and in apply_to_branch(). Can the new helper be used there
+>>> too instead of apply_stash()? And then could apply_stash() be remove?
+>>
+>> I wasn't really sure if I should remove code from the .sh file as it
+>> seems in the past the old .sh files have been kept around as examples.
+>> Has that been done for previous conversions?
+>
+> I was skimming this patch and it seemed to me like it would be more
+> readable if the *.sh code was removed in the same change (if
+> possible). It's easier to review like that.
+>
+> Also, we should just stop maintainign contrib/examples/*.
+>
+>  contrib/examples/README                |  23 +-
+>  contrib/examples/builtin-fetch--tool.c | 575 ---------------
+>  contrib/examples/git-am.sh             | 975 ------------------------
+>  contrib/examples/git-checkout.sh       | 302 --------
+>  contrib/examples/git-clean.sh          | 118 ---
+>  contrib/examples/git-clone.sh          | 525 -------------
+>  contrib/examples/git-commit.sh         | 639 ----------------
+>  contrib/examples/git-difftool.perl     | 481 ------------
+>  contrib/examples/git-fetch.sh          | 379 ----------
+>  contrib/examples/git-gc.sh             |  37 -
+>  contrib/examples/git-log.sh            |  15 -
+>  contrib/examples/git-ls-remote.sh      | 142 ----
+>  contrib/examples/git-merge-ours.sh     |  14 -
+>  contrib/examples/git-merge.sh          | 620 ----------------
+>  contrib/examples/git-notes.sh          | 121 ---
+>  contrib/examples/git-pull.sh           | 381 ----------
+>  contrib/examples/git-remote.perl       | 474 ------------
+>  contrib/examples/git-repack.sh         | 194 -----
+>  contrib/examples/git-rerere.perl       | 284 -------
+>  contrib/examples/git-reset.sh          | 106 ---
+>  contrib/examples/git-resolve.sh        | 112 ---
+>  contrib/examples/git-revert.sh         | 207 ------
+>  contrib/examples/git-svnimport.perl    | 976 -------------------------
+>  contrib/examples/git-svnimport.txt     | 179 -----
+>  contrib/examples/git-tag.sh            | 205 ------
+>  contrib/examples/git-verify-tag.sh     |  45 --
+>  contrib/examples/git-whatchanged.sh    |  28 -
+>  27 files changed, 20 insertions(+), 8137 deletions(-)
+>  delete mode 100644 contrib/examples/builtin-fetch--tool.c
+>  delete mode 100755 contrib/examples/git-am.sh
+>  delete mode 100755 contrib/examples/git-checkout.sh
+>  delete mode 100755 contrib/examples/git-clean.sh
+>  delete mode 100755 contrib/examples/git-clone.sh
+>  delete mode 100755 contrib/examples/git-commit.sh
+>  delete mode 100755 contrib/examples/git-difftool.perl
+>  delete mode 100755 contrib/examples/git-fetch.sh
+>  delete mode 100755 contrib/examples/git-gc.sh
+>  delete mode 100755 contrib/examples/git-log.sh
+>  delete mode 100755 contrib/examples/git-ls-remote.sh
+>  delete mode 100755 contrib/examples/git-merge-ours.sh
+>  delete mode 100755 contrib/examples/git-merge.sh
+>  delete mode 100755 contrib/examples/git-notes.sh
+>  delete mode 100755 contrib/examples/git-pull.sh
+>  delete mode 100755 contrib/examples/git-remote.perl
+>  delete mode 100755 contrib/examples/git-repack.sh
+>  delete mode 100755 contrib/examples/git-rerere.perl
+>  delete mode 100755 contrib/examples/git-reset.sh
+>  delete mode 100755 contrib/examples/git-resolve.sh
+>  delete mode 100755 contrib/examples/git-revert.sh
+>  delete mode 100755 contrib/examples/git-svnimport.perl
+>  delete mode 100644 contrib/examples/git-svnimport.txt
+>  delete mode 100755 contrib/examples/git-tag.sh
+>  delete mode 100755 contrib/examples/git-verify-tag.sh
+>  delete mode 100755 contrib/examples/git-whatchanged.sh
+>
+> diff --git a/contrib/examples/README b/contrib/examples/README
+> index 6946f3dd2a..18bc60b021 100644
+> --- a/contrib/examples/README
+> +++ b/contrib/examples/README
+> @@ -1,3 +1,20 @@
+> -These are original scripted implementations, kept primarily for their
+> -reference value to any aspiring plumbing users who want to learn how
+> -pieces can be fit together.
+> +This directory used to contain scripted implementations of builtins
+> +that have since been rewritten in C.
+> +
+> +They have now been removed, but can be retrieved from an older commit
+> +that removed them from this directory.
+> +
+> +They're interesting for their reference value to any aspiring plumbing
+> +users who want to learn how pieces can be fit together, but in many
+> +cases have drifted enough from the actual implementations Git uses to
+> +be instructive.
+> +
+> +Other things that can be useful:
+> +
+> + * Some commands such as git-gc wrap other commands, and what they're
+> +   doing behind the scenes can be seen by running them under
+> +   GIT_TRACE=1
+> +
+> + * Doing `git log` on paths matching '*--helper.c' will show
+> +   incremental effort in the direction of moving existing shell
+> +   scripts to C.
+> [...]
 
-diff --git a/Makefile b/Makefile
-index 033a55505..f84e816cf 100644
---- a/Makefile
-+++ b/Makefile
-@@ -441,6 +441,18 @@ all::
- # can be moved to arbitrary filesystem locations. RUNTIME_PREFIX also causes
- # Perl scripts to use a modified entry point header allowing them to resolve
- # support files at runtime.
-+#
-+# When using RUNTIME_PREFIX, define HAVE_BSD_KERN_PROC_SYSCTL if your platform
-+# supports the KERN_PROC BSD sysctl function.
-+#
-+# When using RUNTIME_PREFIX, define PROCFS_EXECUTABLE_PATH if your platform
-+# mounts a "procfs" filesystem capable of resolving the path of the current
-+# executable. If defined, this must be the canonical path for the "procfs"
-+# current executable path.
-+#
-+# When using RUNTIME_PREFIX, define HAVE_NS_GET_EXECUTABLE_PATH if your platform
-+# supports calling _NSGetExecutablePath to retrieve the path of the running
-+# executable.
- 
- GIT-VERSION-FILE: FORCE
- 	@$(SHELL_PATH) ./GIT-VERSION-GEN
-@@ -1664,10 +1676,23 @@ ifdef HAVE_BSD_SYSCTL
- 	BASIC_CFLAGS += -DHAVE_BSD_SYSCTL
- endif
- 
-+ifdef HAVE_BSD_KERN_PROC_SYSCTL
-+	BASIC_CFLAGS += -DHAVE_BSD_KERN_PROC_SYSCTL
-+endif
-+
- ifdef HAVE_GETDELIM
- 	BASIC_CFLAGS += -DHAVE_GETDELIM
- endif
- 
-+ifneq ($(PROCFS_EXECUTABLE_PATH),)
-+	procfs_executable_path_SQ = $(subst ','\'',$(PROCFS_EXECUTABLE_PATH))
-+	BASIC_CFLAGS += '-DPROCFS_EXECUTABLE_PATH="$(procfs_executable_path_SQ)"'
-+endif
-+
-+ifdef HAVE_NS_GET_EXECUTABLE_PATH
-+	BASIC_CFLAGS += -DHAVE_NS_GET_EXECUTABLE_PATH
-+endif
-+
- ifeq ($(TCLTK_PATH),)
- NO_TCLTK = NoThanks
- endif
-@@ -1772,7 +1797,7 @@ PERLLIB_EXTRA_SQ = $(subst ','\'',$(PERLLIB_EXTRA))
- # RUNTIME_PREFIX's resolution logic requires resource paths to be expressed
- # relative to each other and share an installation path.
- #
--# This is a dependnecy in:
-+# This is a dependency in:
- # - Git's binary RUNTIME_PREFIX logic in (see "exec_cmd.c").
- # - The runtime prefix Perl header (see
- #   "perl/header_templates/runtime_prefix.template.pl").
-@@ -2216,6 +2241,7 @@ endif
- exec_cmd.sp exec_cmd.s exec_cmd.o: GIT-PREFIX
- exec_cmd.sp exec_cmd.s exec_cmd.o: EXTRA_CPPFLAGS = \
- 	'-DGIT_EXEC_PATH="$(gitexecdir_SQ)"' \
-+	'-DGIT_LOCALE_PATH="$(localedir_relative_SQ)"' \
- 	'-DBINDIR="$(bindir_relative_SQ)"' \
- 	'-DPREFIX="$(prefix_SQ)"'
- 
-@@ -2233,7 +2259,7 @@ attr.sp attr.s attr.o: EXTRA_CPPFLAGS = \
- 
- gettext.sp gettext.s gettext.o: GIT-PREFIX
- gettext.sp gettext.s gettext.o: EXTRA_CPPFLAGS = \
--	-DGIT_LOCALE_PATH='"$(localedir_SQ)"'
-+	-DGIT_LOCALE_PATH='"$(localedir_relative_SQ)"'
- 
- http-push.sp http.sp http-walker.sp remote-curl.sp imap-send.sp: SPARSE_FLAGS += \
- 	-DCURL_DISABLE_TYPECHECK
-diff --git a/cache.h b/cache.h
-index a61b2d3f0..d8c55d72b 100644
---- a/cache.h
-+++ b/cache.h
-@@ -428,6 +428,7 @@ static inline enum object_type object_type(unsigned int mode)
- #define GIT_ICASE_PATHSPECS_ENVIRONMENT "GIT_ICASE_PATHSPECS"
- #define GIT_QUARANTINE_ENVIRONMENT "GIT_QUARANTINE_PATH"
- #define GIT_OPTIONAL_LOCKS_ENVIRONMENT "GIT_OPTIONAL_LOCKS"
-+#define GIT_TEXT_DOMAIN_DIR_ENVIRONMENT "GIT_TEXTDOMAINDIR"
- 
- /*
-  * Environment variable used in handshaking the wire protocol.
-diff --git a/common-main.c b/common-main.c
-index 6a689007e..6516a1f89 100644
---- a/common-main.c
-+++ b/common-main.c
-@@ -32,12 +32,12 @@ int main(int argc, const char **argv)
- 	 */
- 	sanitize_stdfds();
- 
-+	git_resolve_executable_dir(argv[0]);
-+
- 	git_setup_gettext();
- 
- 	attr_start();
- 
--	git_extract_argv0_path(argv[0]);
--
- 	restore_sigpipe_to_default();
- 
- 	return cmd_main(argc, argv);
-diff --git a/config.mak.uname b/config.mak.uname
-index 6a1d0de0c..e1cfe5e5e 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -37,6 +37,7 @@ ifeq ($(uname_S),Linux)
- 	HAVE_GETDELIM = YesPlease
- 	SANE_TEXT_GREP=-a
- 	FREAD_READS_DIRECTORIES = UnfortunatelyYes
-+	PROCFS_EXECUTABLE_PATH = /proc/self/exe
- endif
- ifeq ($(uname_S),GNU/kFreeBSD)
- 	HAVE_ALLOCA_H = YesPlease
-@@ -111,6 +112,7 @@ ifeq ($(uname_S),Darwin)
- 	BASIC_CFLAGS += -DPROTECT_HFS_DEFAULT=1
- 	HAVE_BSD_SYSCTL = YesPlease
- 	FREAD_READS_DIRECTORIES = UnfortunatelyYes
-+	HAVE_NS_GET_EXECUTABLE_PATH = YesPlease
- endif
- ifeq ($(uname_S),SunOS)
- 	NEEDS_SOCKET = YesPlease
-@@ -205,6 +207,7 @@ ifeq ($(uname_S),FreeBSD)
- 	HAVE_PATHS_H = YesPlease
- 	GMTIME_UNRELIABLE_ERRORS = UnfortunatelyYes
- 	HAVE_BSD_SYSCTL = YesPlease
-+	HAVE_BSD_KERN_PROC_SYSCTL = YesPlease
- 	PAGER_ENV = LESS=FRX LV=-c MORE=FRX
- 	FREAD_READS_DIRECTORIES = UnfortunatelyYes
- endif
-@@ -217,6 +220,8 @@ ifeq ($(uname_S),OpenBSD)
- 	BASIC_LDFLAGS += -L/usr/local/lib
- 	HAVE_PATHS_H = YesPlease
- 	HAVE_BSD_SYSCTL = YesPlease
-+	HAVE_BSD_KERN_PROC_SYSCTL = YesPlease
-+	PROCFS_EXECUTABLE_PATH = /proc/curproc/file
- endif
- ifeq ($(uname_S),MirBSD)
- 	NO_STRCASESTR = YesPlease
-@@ -235,6 +240,8 @@ ifeq ($(uname_S),NetBSD)
- 	USE_ST_TIMESPEC = YesPlease
- 	HAVE_PATHS_H = YesPlease
- 	HAVE_BSD_SYSCTL = YesPlease
-+	HAVE_BSD_KERN_PROC_SYSCTL = YesPlease
-+	PROCFS_EXECUTABLE_PATH = /proc/curproc/exe
- endif
- ifeq ($(uname_S),AIX)
- 	DEFAULT_PAGER = more
-diff --git a/exec_cmd.c b/exec_cmd.c
-index ce192a2d6..38d52d90a 100644
---- a/exec_cmd.c
-+++ b/exec_cmd.c
-@@ -2,24 +2,52 @@
- #include "exec_cmd.h"
- #include "quote.h"
- #include "argv-array.h"
--#define MAX_ARGS	32
- 
--static const char *argv_exec_path;
-+#if defined(RUNTIME_PREFIX)
-+
-+#if defined(HAVE_NS_GET_EXECUTABLE_PATH)
-+#include <mach-o/dyld.h>
-+#endif
-+
-+#if defined(HAVE_BSD_KERN_PROC_SYSCTL)
-+#include <sys/param.h>
-+#include <sys/types.h>
-+#include <sys/sysctl.h>
-+#endif
-+
-+#endif /* RUNTIME_PREFIX */
-+
-+#define MAX_ARGS 32
-+
-+static const char *system_prefix(void);
- 
- #ifdef RUNTIME_PREFIX
--static const char *argv0_path;
-+
-+/**
-+ * When using a runtime prefix, Git dynamically resolves paths relative to its
-+ * executable.
-+ *
-+ * The method for determining the path of the executable is highly
-+ * platform-specific.
-+ */
-+
-+/**
-+ * Path to the current Git executable. Resolved on startup by
-+ * 'git_resolve_executable_dir'.
-+ */
-+static const char *executable_dirname;
- 
- static const char *system_prefix(void)
- {
- 	static const char *prefix;
- 
--	assert(argv0_path);
--	assert(is_absolute_path(argv0_path));
-+	assert(executable_dirname);
-+	assert(is_absolute_path(executable_dirname));
- 
- 	if (!prefix &&
--	    !(prefix = strip_path_suffix(argv0_path, GIT_EXEC_PATH)) &&
--	    !(prefix = strip_path_suffix(argv0_path, BINDIR)) &&
--	    !(prefix = strip_path_suffix(argv0_path, "git"))) {
-+	    !(prefix = strip_path_suffix(executable_dirname, GIT_EXEC_PATH)) &&
-+	    !(prefix = strip_path_suffix(executable_dirname, BINDIR)) &&
-+	    !(prefix = strip_path_suffix(executable_dirname, "git"))) {
- 		prefix = PREFIX;
- 		trace_printf("RUNTIME_PREFIX requested, "
- 				"but prefix computation failed.  "
-@@ -28,27 +56,179 @@ static const char *system_prefix(void)
- 	return prefix;
- }
- 
--void git_extract_argv0_path(const char *argv0)
-+/*
-+ * Resolves the executable path from argv[0], only if it is absolute.
-+ *
-+ * Returns 0 on success, -1 on failure.
-+ */
-+static int git_get_exec_path_from_argv0(struct strbuf *buf, const char *argv0)
- {
- 	const char *slash;
- 
- 	if (!argv0 || !*argv0)
--		return;
-+		return -1;
- 
- 	slash = find_last_dir_sep(argv0);
-+	if (slash) {
-+		trace_printf("trace: resolved executable path from argv0: %s\n",
-+			     argv0);
-+		strbuf_add_absolute_path(buf, argv0);
-+		return 0;
-+	}
-+	return -1;
-+}
- 
-+#ifdef PROCFS_EXECUTABLE_PATH
-+/*
-+ * Resolves the executable path by examining a procfs symlink.
-+ *
-+ * Returns 0 on success, -1 on failure.
-+ */
-+static int git_get_exec_path_procfs(struct strbuf *buf)
-+{
-+	if (strbuf_realpath(buf, PROCFS_EXECUTABLE_PATH, 0)) {
-+		trace_printf(
-+			"trace: resolved executable path from procfs: %s\n",
-+			buf->buf);
-+		return 0;
-+	}
-+	return -1;
-+}
-+#endif /* PROCFS_EXECUTABLE_PATH */
-+
-+#ifdef HAVE_BSD_KERN_PROC_SYSCTL
-+/*
-+ * Resolves the executable path using KERN_PROC_PATHNAME BSD sysctl.
-+ *
-+ * Returns 0 on success, -1 on failure.
-+ */
-+static int git_get_exec_path_bsd_sysctl(struct strbuf *buf)
-+{
-+	int mib[4];
-+	char path[MAXPATHLEN];
-+	size_t cb = sizeof(path);
-+
-+	mib[0] = CTL_KERN;
-+	mib[1] = KERN_PROC;
-+	mib[2] = KERN_PROC_PATHNAME;
-+	mib[3] = -1;
-+	if (!sysctl(mib, 4, path, &cb, NULL, 0)) {
-+		trace_printf(
-+			"trace: resolved executable path from sysctl: %s\n",
-+			path);
-+		strbuf_addstr(buf, path);
-+		return 0;
-+	}
-+	return -1;
-+}
-+#endif /* HAVE_BSD_KERN_PROC_SYSCTL */
-+
-+#ifdef HAVE_NS_GET_EXECUTABLE_PATH
-+/*
-+ * Resolves the executable path by querying Darwin application stack.
-+ *
-+ * Returns 0 on success, -1 on failure.
-+ */
-+static int git_get_exec_path_darwin(struct strbuf *buf)
-+{
-+	char path[PATH_MAX];
-+	uint32_t size = sizeof(path);
-+	if (!_NSGetExecutablePath(path, &size)) {
-+		trace_printf(
-+			"trace: resolved executable path from Darwin stack: %s\n",
-+			path);
-+		strbuf_addstr(buf, path);
-+		return 0;
-+	}
-+	return -1;
-+}
-+#endif /* HAVE_NS_GET_EXECUTABLE_PATH */
-+
-+/*
-+ * Resolves the absolute path of the current executable.
-+ *
-+ * Returns 0 on success, -1 on failure.
-+ */
-+static int git_get_exec_path(struct strbuf *buf, const char *argv0)
-+{
-+	/*
-+	 * Identifying the executable path is operating system specific.
-+	 * Selectively employ all available methods in order of preference,
-+	 * preferring highly-available authoritative methods over
-+	 * selectively-available or non-authoritative methods.
-+	 *
-+	 * All cases fall back on resolving against argv[0] if there isn't a
-+	 * better functional method. However, note that argv[0] can be
-+	 * used-supplied on many operating systems, and is not authoritative
-+	 * in those cases.
-+	 *
-+	 * Each of these functions returns 0 on success, so evaluation will stop
-+	 * after the first successful method.
-+	 */
-+	if (
-+#ifdef HAVE_BSD_KERN_PROC_SYSCTL
-+		git_get_exec_path_bsd_sysctl(buf) &&
-+#endif /* HAVE_BSD_KERN_PROC_SYSCTL */
-+
-+#ifdef HAVE_NS_GET_EXECUTABLE_PATH
-+		git_get_exec_path_darwin(buf) &&
-+#endif /* HAVE_NS_GET_EXECUTABLE_PATH */
-+
-+#ifdef PROCFS_EXECUTABLE_PATH
-+		git_get_exec_path_procfs(buf) &&
-+#endif /* PROCFS_EXECUTABLE_PATH */
-+
-+		git_get_exec_path_from_argv0(buf, argv0)) {
-+		return -1;
-+	}
-+
-+	if (strbuf_normalize_path(buf)) {
-+		trace_printf("trace: could not normalize path: %s\n", buf->buf);
-+		return -1;
-+	}
-+
-+	return 0;
-+}
-+
-+void git_resolve_executable_dir(const char *argv0)
-+{
-+	struct strbuf buf = STRBUF_INIT;
-+	char *resolved;
-+	const char *slash;
-+
-+	if (git_get_exec_path(&buf, argv0)) {
-+		trace_printf(
-+			"trace: could not determine executable path from: %s\n",
-+			argv0);
-+		strbuf_release(&buf);
-+		return;
-+	}
-+
-+	resolved = strbuf_detach(&buf, NULL);
-+	slash = find_last_dir_sep(resolved);
- 	if (slash)
--		argv0_path = xstrndup(argv0, slash - argv0);
-+		resolved[slash - resolved] = '\0';
-+
-+	executable_dirname = resolved;
-+	trace_printf("trace: resolved executable dir: %s\n",
-+		     executable_dirname);
- }
- 
- #else
- 
-+/*
-+ * When not using a runtime prefix, Git uses a hard-coded path.
-+ */
- static const char *system_prefix(void)
- {
- 	return PREFIX;
- }
- 
--void git_extract_argv0_path(const char *argv0)
-+/*
-+ * This is called during initialization, but No work needs to be done here when
-+ * runtime prefix is not being used.
-+ */
-+void git_resolve_executable_dir(const char *argv0)
- {
- }
- 
-@@ -65,32 +245,28 @@ char *system_path(const char *path)
- 	return strbuf_detach(&d, NULL);
- }
- 
--void git_set_argv_exec_path(const char *exec_path)
-+static const char *exec_path_value;
-+
-+void git_set_exec_path(const char *exec_path)
- {
--	argv_exec_path = exec_path;
-+	exec_path_value = exec_path;
- 	/*
- 	 * Propagate this setting to external programs.
- 	 */
- 	setenv(EXEC_PATH_ENVIRONMENT, exec_path, 1);
- }
- 
--
--/* Returns the highest-priority, location to look for git programs. */
-+/* Returns the highest-priority location to look for git programs. */
- const char *git_exec_path(void)
- {
--	static char *cached_exec_path;
--
--	if (argv_exec_path)
--		return argv_exec_path;
--
--	if (!cached_exec_path) {
-+	if (!exec_path_value) {
- 		const char *env = getenv(EXEC_PATH_ENVIRONMENT);
- 		if (env && *env)
--			cached_exec_path = xstrdup(env);
-+			exec_path_value = xstrdup(env);
- 		else
--			cached_exec_path = system_path(GIT_EXEC_PATH);
-+			exec_path_value = system_path(GIT_EXEC_PATH);
- 	}
--	return cached_exec_path;
-+	return exec_path_value;
- }
- 
- static void add_path(struct strbuf *out, const char *path)
-@@ -103,10 +279,12 @@ static void add_path(struct strbuf *out, const char *path)
- 
- void setup_path(void)
- {
-+	const char *exec_path = git_exec_path();
- 	const char *old_path = getenv("PATH");
- 	struct strbuf new_path = STRBUF_INIT;
- 
--	add_path(&new_path, git_exec_path());
-+	git_set_exec_path(exec_path);
-+	add_path(&new_path, exec_path);
- 
- 	if (old_path)
- 		strbuf_addstr(&new_path, old_path);
-@@ -125,7 +303,8 @@ const char **prepare_git_cmd(struct argv_array *out, const char **argv)
- 	return out->argv;
- }
- 
--int execv_git_cmd(const char **argv) {
-+int execv_git_cmd(const char **argv)
-+{
- 	struct argv_array nargv = ARGV_ARRAY_INIT;
- 
- 	prepare_git_cmd(&nargv, argv);
-@@ -140,8 +319,7 @@ int execv_git_cmd(const char **argv) {
- 	return -1;
- }
- 
--
--int execl_git_cmd(const char *cmd,...)
-+int execl_git_cmd(const char *cmd, ...)
- {
- 	int argc;
- 	const char *argv[MAX_ARGS + 1];
-diff --git a/exec_cmd.h b/exec_cmd.h
-index ff0b48048..2522453cd 100644
---- a/exec_cmd.h
-+++ b/exec_cmd.h
-@@ -3,8 +3,8 @@
- 
- struct argv_array;
- 
--extern void git_set_argv_exec_path(const char *exec_path);
--extern void git_extract_argv0_path(const char *path);
-+extern void git_set_exec_path(const char *exec_path);
-+extern void git_resolve_executable_dir(const char *path);
- extern const char *git_exec_path(void);
- extern void setup_path(void);
- extern const char **prepare_git_cmd(struct argv_array *out, const char **argv);
-diff --git a/gettext.c b/gettext.c
-index db727ea02..6b64d5c2e 100644
---- a/gettext.c
-+++ b/gettext.c
-@@ -2,7 +2,8 @@
-  * Copyright (c) 2010 Ævar Arnfjörð Bjarmason
-  */
- 
--#include "git-compat-util.h"
-+#include "cache.h"
-+#include "exec_cmd.h"
- #include "gettext.h"
- #include "strbuf.h"
- #include "utf8.h"
-@@ -157,10 +158,11 @@ static void init_gettext_charset(const char *domain)
- 
- void git_setup_gettext(void)
- {
--	const char *podir = getenv("GIT_TEXTDOMAINDIR");
-+	const char *podir = getenv(GIT_TEXT_DOMAIN_DIR_ENVIRONMENT);
- 
- 	if (!podir)
--		podir = GIT_LOCALE_PATH;
-+		podir = system_path(GIT_LOCALE_PATH);
-+
- 	bindtextdomain("git", podir);
- 	setlocale(LC_MESSAGES, "");
- 	setlocale(LC_TIME, "");
-diff --git a/git.c b/git.c
-index ceaa58ef4..ab2042d5c 100644
---- a/git.c
-+++ b/git.c
-@@ -65,7 +65,7 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
- 		 */
- 		if (skip_prefix(cmd, "--exec-path", &cmd)) {
- 			if (*cmd == '=')
--				git_set_argv_exec_path(cmd + 1);
-+				git_set_exec_path(cmd + 1);
- 			else {
- 				puts(git_exec_path());
- 				exit(0);
-diff --git a/t/t0061-run-command.sh b/t/t0061-run-command.sh
-index 24c92b6cd..1009595d6 100755
---- a/t/t0061-run-command.sh
-+++ b/t/t0061-run-command.sh
-@@ -145,7 +145,7 @@ test_trace () {
- 	expect="$1"
- 	shift
- 	GIT_TRACE=1 test-run-command "$@" run-command true 2>&1 >/dev/null | \
--		sed 's/.* run_command: //' >actual &&
-+		sed -e 's/.* run_command: //' -e '/trace: .*/d' >actual &&
- 	echo "$expect true" >expect &&
- 	test_cmp expect actual
- }
--- 
-2.15.0.chromium12
-
+The rest of this patch is deleting everything in contrib/examples/ that
+isn't the README.
