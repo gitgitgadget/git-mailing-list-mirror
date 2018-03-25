@@ -2,108 +2,131 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 622F01F404
-	for <e@80x24.org>; Sun, 25 Mar 2018 15:20:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8BAD11F404
+	for <e@80x24.org>; Sun, 25 Mar 2018 16:19:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753390AbeCYPUc (ORCPT <rfc822;e@80x24.org>);
-        Sun, 25 Mar 2018 11:20:32 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:42358 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753321AbeCYPUb (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 25 Mar 2018 11:20:31 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 8F7CC60428;
-        Sun, 25 Mar 2018 15:20:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1521991229;
-        bh=RYDn8wYrY9IDUf0Mv8ROVwMmK8RgjmtDMInH0oomJmA=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=mK1bGxFA13lwY/gFeIMoICp9zM+EiJai9XddknP/xZohPTot+4wYqZqchiz/UzCBR
-         FH7E9W8ta/B+aEnJaPHEKrCLPpCR/kF3V46+SVmgm+wI590q9Fc0tQ2zKubjjaTms2
-         /whqF2jNo36d5/EKyGdx4eKu1nMfSN4fe/N8ZEab+7q6bmXVze/WBGGSRkc9Y4O51x
-         JcD38KNBwnoub48Po03MEtvc1IPCfZBY/r5+D6K1jQrK2pm1heEXOhMycWnXifnvl4
-         GRQv8yIDHesbqro4vTLuf3B45V8SmK8SfeEh0ZlDoMdGl0uz0fYEAnDv6lkxQDW1pj
-         wrGuqliE/ID9yE0aQAKG3wcSFi9vI8oLXxId2BAAcFIH1BgxtPpigp4bxceBGywHFs
-         oK3sGgYs3WtEdI7OymvCAhvrnW9onnzRzoqT5YBzmmI1IOezCtP6H/6vqfigDAlmuo
-         QRMtlHvKFmIpXOnTdjh4uvNoSFhwR7mdHXwMtRbfGIj98F9o8yO
-Date:   Sun, 25 Mar 2018 15:20:22 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc:     Git List <git@vger.kernel.org>,
-        Yasushi SHOJI <yasushi.shoji@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] bisect: use oid_to_hex() for converting object_id hashes
- to hex strings
-Message-ID: <20180325152022.GD74743@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-        Git List <git@vger.kernel.org>,
-        Yasushi SHOJI <yasushi.shoji@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-References: <9839073c-84ca-f00e-d0e1-801e521ef29e@web.de>
+        id S1753497AbeCYQTH (ORCPT <rfc822;e@80x24.org>);
+        Sun, 25 Mar 2018 12:19:07 -0400
+Received: from mail-wr0-f195.google.com ([209.85.128.195]:33294 "EHLO
+        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753435AbeCYQTG (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 25 Mar 2018 12:19:06 -0400
+Received: by mail-wr0-f195.google.com with SMTP id z73so16544391wrb.0
+        for <git@vger.kernel.org>; Sun, 25 Mar 2018 09:19:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=Cis0bDrPVN7yXTcxGu4syK3kzW346ze9rLrOF50R284=;
+        b=XqgGQGy85oH1G768xcG+/xMVm/x/RxCxoN65s3EiwXZqLC9lG1TtXm8YWZN/WYM2sL
+         AZhRXS+JL/QpnZ/sCjAx86xW/92iBUJcLSQN6/DqYuaWmPI8r6BUAVpn6k5uHLuC8VKi
+         bljI2bAfgp04IEK1i8rZt1RHdkEV1CiTmQ04qlSm8W76/K1T01IZ0JxGDnzvwcaUnk5x
+         8Mfb+l57c22B7FI03M1wqEZzzpNOCaEqamry2MDBk0yMDr/NgsJYeCy+7tksD5MhRfaA
+         zeYUKWtlF07HE9RjCcpwWRi7thyqSX4S/PcbOa0xmVM+vcyD6eNlUY6uFpuBPKR54xwY
+         yxBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=Cis0bDrPVN7yXTcxGu4syK3kzW346ze9rLrOF50R284=;
+        b=cHU657RV3snHs1aohvmGxqyJkD1bl49rg7O1aYfp+wl9Bd7E8yHhwURA5QTqN1zex0
+         BVXGIPDiT472JJ0vqJuZEBsksovs4N1zBcgIfdwFAcMmH4ngmldTweM/oxzuYVAKxwjr
+         E9q/dusg5lnxBT+/y6SHg13EJ3NpcRKwh7xBOnHcHMa/5uLKY/FSlzInh3ZguEdhRagd
+         DuOnNLxhOGKqO7ZLGsIz+qgF0ypdB7XwWqbiMNQzrc/u8JrolgdzzEHpX1k1K4Z4f9pP
+         3mANlQcDnOOYF+XG4tDrEVqfB0itk/LHowhJIjgaj7+hxdTYOnwCb9hIM2jfQXmMaZAK
+         Eafw==
+X-Gm-Message-State: AElRT7EON2m64ugke+ECPW2FNKrgeK46wnS3gFEP9TecvtVm+m1Aw3Lh
+        4mnWAsnYLxWru3WG+MimTHI=
+X-Google-Smtp-Source: AG47ELtOlSouUD6ux2hrdusM0mGMPNj4k5hkCz/M8saJrs67tYWI6zcZOaTd3L5lG1LIUaSR1w76sQ==
+X-Received: by 10.223.188.1 with SMTP id s1mr30189783wrg.243.1521994744915;
+        Sun, 25 Mar 2018 09:19:04 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id n62sm12414222wmf.13.2018.03.25.09.19.02
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 25 Mar 2018 09:19:03 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     Derrick Stolee <dstolee@microsoft.com>, git@vger.kernel.org,
+        stolee@gmail.com, jonathantanmy@google.com,
+        sandals@crustytoothpaste.net
+Subject: Re: [PATCH 4/3] sha1_name: use bsearch_pack() in unique_in_pack()
+References: <20180321224226.GA74743@genre.crustytoothpaste.net>
+        <20180322174010.120117-1-dstolee@microsoft.com>
+        <71b5cef0-abad-001f-6a23-3f2d874b9709@web.de>
+Date:   Sun, 25 Mar 2018 09:19:02 -0700
+In-Reply-To: <71b5cef0-abad-001f-6a23-3f2d874b9709@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+        message of "Sat, 24 Mar 2018 17:41:08 +0100")
+Message-ID: <xmqqvadkf7rd.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="KdquIMZPjGJQvRdI"
-Content-Disposition: inline
-In-Reply-To: <9839073c-84ca-f00e-d0e1-801e521ef29e@web.de>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.16.0-rc5-amd64)
-User-Agent: Mutt/1.9.4 (2018-02-28)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+René Scharfe <l.s.r@web.de> writes:
 
---KdquIMZPjGJQvRdI
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Sun, Mar 25, 2018 at 12:57:36PM +0200, Ren=C3=A9 Scharfe wrote:
-> Patch generated with Coccinelle and contrib/coccinelle/object_id.cocci.
->=20
+> Replace the custom binary search in unique_in_pack() with a call to
+> bsearch_pack().  This reduces code duplication and makes use of the
+> fan-out table of packs.
+>
 > Signed-off-by: Rene Scharfe <l.s.r@web.de>
 > ---
-> This is a belated follow-up to f0a6068a9f (bisect: debug: convert struct
-> object to object_id).
+> This is basically the same replacement as done by patch 3.  Speed is
+> less of a concern here -- at least I don't know a commonly used
+> command that needs to resolve lots of short hashes.
 
-This looks good to me.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-https://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: https://keybase.io/bk2204
+Looks correct.  Did you find this by eyeballing, or do you have some
+interesting tool you use?
 
---KdquIMZPjGJQvRdI
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.5 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlq3vjYACgkQv1NdgR9S
-9ovwDA//XG+NcCVxli5NBwlZSvzsjmOb4bsR/ncsBcekYavC75GZUtmqy5j+IeAX
-Oa3mAEP1qAKNXM43ahRz0SBJON8jYBp4N4+UmVajRrpovf5woMtEc7WTwf43pLfo
-z1cS4oB8fD8Gg/1XParaoKf9D3oMkm7JnJNoK1/5xgeUwllOwolIgzp1yekCWW2L
-SQLbSWpK5lHoapaWqE0Bh5yhsPocsNCjbc2YKYhL5elSOjQK+jLhmAkm9t1W6eFm
-vMM+ZO0nJ/Rxzo4DpJRwsWrFGyVDEnAIBhi0SpcmQpat0cGrZr8Gti3nCzNIHd61
-ACg7jLIxxXkGHPva4Dy0GjxynBQjuk+dpk6rQurckJnGA0c7nsOhoYOL9UEI1FVB
-zx/yUbPMXLHM7sGE0egalc6J3Y+Le/Xv6DS0gPV2OIDHHyH63Hj4wR4RacVZqEea
-l9vR8cZGxE80o4Tehxl+WUjE1NqUgMqcikm2CfvXuKnALWW4mZdu/TLEW0chWHsR
-u6ik+n5UewhDAaSU+ErTQOLTj/T12jmXNKvxaz/dirKVM4WBv0WyqTZwGpW1kIAl
-4iJUtqeePNc4EzMCYenrJQtJcRDas/LFNjhUyLhkIY2QyDnabdZyamZrXK2IGsTv
-ohjl1JckAEdJCbYwS5MR1hGXhBDsjD2xsLWv9GPEzxHwRqqnZ/U=
-=90Ec
------END PGP SIGNATURE-----
-
---KdquIMZPjGJQvRdI--
+>
+>  sha1_name.c | 21 ++-------------------
+>  1 file changed, 2 insertions(+), 19 deletions(-)
+>
+> diff --git a/sha1_name.c b/sha1_name.c
+> index 24894b3dbe..0185c6081a 100644
+> --- a/sha1_name.c
+> +++ b/sha1_name.c
+> @@ -150,31 +150,14 @@ static int match_sha(unsigned len, const unsigned char *a, const unsigned char *
+>  static void unique_in_pack(struct packed_git *p,
+>  			   struct disambiguate_state *ds)
+>  {
+> -	uint32_t num, last, i, first = 0;
+> +	uint32_t num, i, first = 0;
+>  	const struct object_id *current = NULL;
+>  
+>  	if (open_pack_index(p) || !p->num_objects)
+>  		return;
+>  
+>  	num = p->num_objects;
+> -	last = num;
+> -	while (first < last) {
+> -		uint32_t mid = first + (last - first) / 2;
+> -		const unsigned char *current;
+> -		int cmp;
+> -
+> -		current = nth_packed_object_sha1(p, mid);
+> -		cmp = hashcmp(ds->bin_pfx.hash, current);
+> -		if (!cmp) {
+> -			first = mid;
+> -			break;
+> -		}
+> -		if (cmp > 0) {
+> -			first = mid+1;
+> -			continue;
+> -		}
+> -		last = mid;
+> -	}
+> +	bsearch_pack(&ds->bin_pfx, p, &first);
+>  
+>  	/*
+>  	 * At this point, "first" is the location of the lowest object
