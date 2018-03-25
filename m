@@ -7,164 +7,191 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A62B81F404
-	for <e@80x24.org>; Sun, 25 Mar 2018 05:48:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E90181F42D
+	for <e@80x24.org>; Sun, 25 Mar 2018 06:40:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751100AbeCYFsd (ORCPT <rfc822;e@80x24.org>);
-        Sun, 25 Mar 2018 01:48:33 -0400
-Received: from mail-it0-f67.google.com ([209.85.214.67]:51028 "EHLO
-        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751090AbeCYFsc (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 25 Mar 2018 01:48:32 -0400
-Received: by mail-it0-f67.google.com with SMTP id d13-v6so7036284itf.0
-        for <git@vger.kernel.org>; Sat, 24 Mar 2018 22:48:32 -0700 (PDT)
+        id S1751204AbeCYGkq (ORCPT <rfc822;e@80x24.org>);
+        Sun, 25 Mar 2018 02:40:46 -0400
+Received: from mail-qt0-f179.google.com ([209.85.216.179]:40218 "EHLO
+        mail-qt0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751029AbeCYGkp (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 25 Mar 2018 02:40:45 -0400
+Received: by mail-qt0-f179.google.com with SMTP id g5so5494811qth.7
+        for <git@vger.kernel.org>; Sat, 24 Mar 2018 23:40:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=5EyvoQYdQka9LAkwHMUM4gUKZOqB+W9WNjn6egKpTxI=;
-        b=c0QBuqRhaZ1Ltx0js/N8aMOn32U0sI6RkmSeKdb9MT+8BJPpmFCuz2OyNajVkbyN8d
-         knkuQpIuyvBEMBton8QHP217RW4rZD/YVbkSPYX684C5oOI+1dXEZns68WCRsXE8reH3
-         JJXuJ6Bqq10anN2XENiGGBNTHAIox0IYx42iz/nmP2MnDNiAZPSm1w/wxvcTuhSKwBzr
-         1+aBAzhEV50zb/6olBJ+INhCud+IR+R1owyv7k+enHhlHAnZvkdFLDAG/ZV897xYsiv9
-         uI47rYr0vu5fn6fV+b83wMd41G6VxwMcUAKFsSbeGEdDLHx6UaqI7wHUk988CrremEFA
-         I2NQ==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=K5uAe3k+FSI6NdJ+o8/QpGMRrpsBIEKfladfi9JaFX4=;
+        b=dOtR6WxCVdvlUMn38Xpe5kNMhjkHgpQYTJ+ynBIs5A+NVMxMfhQQkB3pOwkutczjVx
+         hvx1LVTlVBAuhAjWlGZiRHgfvGYXg0CxERE9aWzKC3w6XaqSQUwR7BuC6vUThrrUfkGq
+         BVSyOXTEgx16qO0Hu9WLlxhS4CyrBpdgDMQsaKEIJv8lUwXYRkX50cV9ZkUKFAr7VDoK
+         SY8t3PDD2YGL9w5QjcmMwK+pXk1P0hC0XZrusfW4lYQ6kgc5MWP0wN6YZtFGZ7Nm+hx9
+         71vU/EAZNamyQZvLmDEPFc9eQlt779g0rCat+HQc0GAwSSinf1ORFhZ46DR10fnvctLM
+         bM7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to:user-agent;
-        bh=5EyvoQYdQka9LAkwHMUM4gUKZOqB+W9WNjn6egKpTxI=;
-        b=JpHEhmfdst0pPldiixgUHUda13ctlNO9R6P85jFyPPabfrxg10RhE5E1nylE5ALo8q
-         ZzrqpuSHNZpMv6z5YFsvWz30F7/MPTw74OGEozfddh5bwdnnUy0wpAFgrL2+5B1Kb8zS
-         1g8JATtT4U65xx4a4I1pt8SyvOvrxvuAOK1ge8imXHRacxAYU9jASa29jne+LaaJepMc
-         eJTKLSHO8TN+N6XXY27nzfcZmspIm5xV4FsPPXQseHwHrL0/FFBuPgj5LUWYFn+Ngyn3
-         Xl8t71KzHXQ8WIRFQB6llejb9KHTUUH13/csWp/OFxI9bqJjcWWF86Cib+sp13Gcf+Qt
-         rRdA==
-X-Gm-Message-State: AElRT7FmokXkhhYOY1xBKVdmwYcibq8GfcFreghNnoyIhGFuB2KzepLK
-        6tLYfeNxYOJuxYQLIhG4twc=
-X-Google-Smtp-Source: AG47ELuoThArn363KYbRzYJ6QcnRFuDqTQYHjOvxaPpZeOb2nheyn5nvWIiTuJhSzwmOCCqzyKEBNw==
-X-Received: by 2002:a24:d445:: with SMTP id x66-v6mr19456412itg.5.1521956911609;
-        Sat, 24 Mar 2018 22:48:31 -0700 (PDT)
-Received: from flurp.local (user-12l2cs3.cable.mindspring.com. [69.81.51.131])
-        by smtp.gmail.com with ESMTPSA id i94sm8204933ioo.46.2018.03.24.22.48.30
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 24 Mar 2018 22:48:30 -0700 (PDT)
-Date:   Sun, 25 Mar 2018 01:48:24 -0400
-From:   Eric Sunshine <sunshine@sunshineco.com>
-To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Cc:     Git mailing list <git@vger.kernel.org>
-Subject: Re: [PATCH] branch -l: print useful info whilst rebasing a non-local
- branch
-Message-ID: <20180325054824.GA56795@flurp.local>
-References: <20180324183844.4565-1-kaartic.sivaraam@gmail.com>
- <CAPig+cQ8xw23SGhpx5qtDEyzJGR1v4L2Lm9tEWe56Rh3c8Q3cg@mail.gmail.com>
- <87ea8cac-c745-b7e6-7804-5116cd94ed48@gmail.com>
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=K5uAe3k+FSI6NdJ+o8/QpGMRrpsBIEKfladfi9JaFX4=;
+        b=meQetVRsrdmkvnukEtYilxD2phc2tRlk2kXNEuCG6pkMr3k53ya3XIW1ouQgIBxipY
+         SoHb2E1fqV6PMqRBqdJz+AegMcALdQ/pKkteSxNRXjbJr/zaHxlwvLmhhSEb+uwQijJT
+         AQIg5G/V+cekKAGQAjwPxXr5UWKkU8uwjGWLQVdch1L4wDWorRqrUzZ4TdGuiXniUaOr
+         k1sHl2DkDOdopBFCO4g8PKE1s/XtkFIgvzFamZgi0TqRtj7GXFWV55wl339g6Q9o1/Qy
+         5iNSMuvop58HzQevMfY4JsisqiDdaQr0qOUFySU3zgiFD/iyE1poHZOxsPPSQBmbnNZr
+         ClBA==
+X-Gm-Message-State: AElRT7GXoEnCZ5DIKLvxcntTfD/Yh8o2NDfJo1G8qAhlDO2YYDi7SbXy
+        ixbMk2kzPVTgnwtOu+gHf7G/iCC2vBifPQcNoTi6wQ==
+X-Google-Smtp-Source: AG47ELth2GXvQ8N3pgmJYGPhHZNoLR8BJ3eJsF0u1odcqym5CY5hUPN76/UyDHFXO3VzX9KZlGamCY+E1X79FUfhwJk=
+X-Received: by 10.200.42.37 with SMTP id k34mr35024416qtk.101.1521960044342;
+ Sat, 24 Mar 2018 23:40:44 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <87ea8cac-c745-b7e6-7804-5116cd94ed48@gmail.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Received: by 10.12.174.202 with HTTP; Sat, 24 Mar 2018 23:40:43 -0700 (PDT)
+In-Reply-To: <20180324173707.17699-2-joel@teichroeb.net>
+References: <20180324173707.17699-1-joel@teichroeb.net> <20180324173707.17699-2-joel@teichroeb.net>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Sun, 25 Mar 2018 02:40:43 -0400
+X-Google-Sender-Auth: HS8Yo4Q4cAQErUmUx9lV407ZfU4
+Message-ID: <CAPig+cSkQLSvOroB0bLLLBAXy9UBDN+s=i97COtNDpO0FbLJkg@mail.gmail.com>
+Subject: Re: [PATCH 1/4] stash: convert apply to builtin
+To:     Joel Teichroeb <joel@teichroeb.net>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Mar 25, 2018 at 09:11:34AM +0530, Kaartic Sivaraam wrote:
-> On Sunday 25 March 2018 07:04 AM, Eric Sunshine wrote:
-> > Can we have a couple new tests: one checking "git branch --list" for
-> > the typical case (when rebasing off a named branch) and one checking
-> > when rebasing from a detached HEAD?
-> 
-> Sure, but I guess it would take some time for me to add the tests. I'll
-> send a v2 with the suggested changes.
+On Sat, Mar 24, 2018 at 1:37 PM, Joel Teichroeb <joel@teichroeb.net> wrote:
+> diff --git a/builtin/stash--helper.c b/builtin/stash--helper.c
+> @@ -0,0 +1,339 @@
+> +static int get_stash_info(struct stash_info *info, const char *commit)
+> +{
+> +       struct strbuf w_commit_rev = STRBUF_INIT;
+> +       struct strbuf b_commit_rev = STRBUF_INIT;
+> +       struct strbuf w_tree_rev = STRBUF_INIT;
+> +       struct strbuf b_tree_rev = STRBUF_INIT;
+> +       struct strbuf i_tree_rev = STRBUF_INIT;
+> +       struct strbuf u_tree_rev = STRBUF_INIT;
+> +       struct strbuf commit_buf = STRBUF_INIT;
+> +       struct strbuf symbolic = STRBUF_INIT;
+> +       struct strbuf out = STRBUF_INIT;
 
-A couple more comments:
+'commit_buf' is being leaked. All the others seem to be covered (even
+in the case of early 'return').
 
-* Please run the commit message through a spell checker; it contains
-  several typographical errors.
+> +       if (commit == NULL) {
+> +               strbuf_addf(&commit_buf, "%s@{0}", ref_stash);
+> +               revision = commit_buf.buf;
+> +       } else if (strspn(commit, "0123456789") == strlen(commit)) {
+> +               strbuf_addf(&commit_buf, "%s@{%s}", ref_stash, commit);
+> +               revision = commit_buf.buf;
+> +       }
+> +static int do_apply_stash(const char *prefix, struct stash_info *info, int index)
+> +{
+> +       if (index) {
+> +               if (!oidcmp(&info->b_tree, &info->i_tree) || !oidcmp(&c_tree, &info->i_tree)) {
+> +                       has_index = 0;
+> +               } else {
+> +                       struct child_process cp = CHILD_PROCESS_INIT;
+> +                       struct strbuf out = STRBUF_INIT;
+> +                       struct argv_array args = ARGV_ARRAY_INIT;
+> +                       cp.git_cmd = 1;
+> +                       argv_array_pushl(&cp.args, "diff-tree", "--binary", NULL);
+> +                       argv_array_pushf(&cp.args, "%s^2^..%s^2", sha1_to_hex(info->w_commit.hash), sha1_to_hex(info->w_commit.hash));
+> +                       if (pipe_command(&cp, NULL, 0, &out, 0, NULL, 0))
+> +                               return -1;
 
-* I wonder if it makes sense to give slightly different output in the
-  detached HEAD case. Normal output is:
+Leaking 'out'?
 
-      (no branch, rebasing <branch>)
+> +
+> +                       child_process_init(&cp);
+> +                       cp.git_cmd = 1;
+> +                       argv_array_pushl(&cp.args, "apply", "--cached", NULL);
+> +                       if (pipe_command(&cp, out.buf, out.len, NULL, 0, NULL, 0))
+> +                               return -1;
 
-  and, with your change, detached HEAD output is:
+Leaking 'out'.
 
-      (no branch, rebasing d3adb33f)
+> +
+> +                       strbuf_release(&out);
+> +                       discard_cache();
+> +                       read_cache();
+> +                       if (write_cache_as_tree(index_tree.hash, 0, NULL))
+> +                               return -1;
+> +
+> +                       argv_array_push(&args, "reset");
+> +                       cmd_reset(args.argc, args.argv, prefix);
+> +               }
+> +       }
+> +       if (has_index) {
+> +               if (reset_tree(index_tree, 0, 0))
+> +                       return -1;
+> +       } else {
+> +               struct child_process cp = CHILD_PROCESS_INIT;
+> +               struct strbuf out = STRBUF_INIT;
+> +               cp.git_cmd = 1;
+> +               argv_array_pushl(&cp.args, "diff-index", "--cached", "--name-only", "--diff-filter=A", NULL);
+> +               argv_array_push(&cp.args, sha1_to_hex(c_tree.hash));
+> +               ret = pipe_command(&cp, NULL, 0, &out, 0, NULL, 0);
+> +               if (ret)
+> +                       return -1;
+> +
+> +               if (reset_tree(c_tree, 0, 1))
+> +                       return -1;
 
-  which is okay, but perhaps it could be better; for instance:
+Leaking 'out' at these two 'return's?
 
-      (no branch, rebasing detached HEAD d3adb33f)
+> +               child_process_init(&cp);
+> +               cp.git_cmd = 1;
+> +               argv_array_pushl(&cp.args, "update-index", "--add", "--stdin", NULL);
+> +               ret = pipe_command(&cp, out.buf, out.len, NULL, 0, NULL, 0);
+> +               if (ret)
+> +                       return -1;
 
-Anyhow, I wrote the tests for you. When you re-roll, you can make the
-following patch 2/2 and your fix 1/2. (If you go with the above idea
-of using a slightly different wording for the detached HEAD case, then
-you'll need to adjust the 'grep' slightly in the second test.)
+And here.
 
---- >8 ---
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Sun, 25 Mar 2018 01:29:58 -0400
-Subject: [PATCH] t3200: verify "branch --list" sanity when rebasing from
- detached HEAD
+> +
+> +               strbuf_release(&out);
+> +               discard_cache();
+> +       }
+> +
+> +       if (!quiet) {
+> +               struct argv_array args = ARGV_ARRAY_INIT;
+> +               argv_array_push(&args, "status");
+> +               cmd_status(args.argc, args.argv, prefix);
+> +       }
+> +
+> +       return 0;
+> +}
+> +
+> +static int apply_stash(int argc, const char **argv, const char *prefix)
+> +{
+> +       const char *commit = NULL;
+> +       int index = 0;
+> +       struct stash_info info;
+> +       struct option options[] = {
+> +               OPT__QUIET(&quiet, N_("be quiet, only report errors")),
+> +               OPT_BOOL(0, "index", &index,
+> +                       N_("attempt to ininstate the index")),
 
-"git branch --list" shows an in-progress rebase as:
+"ininstate"??
 
-  * (no branch, rebasing <branch>)
-    master
-    ...
-
-However, if the rebase is started from a detached HEAD, then there is no
-<branch>, and it would attempt to print a NULL pointer. The previous
-commit fixed this problem, so add a test to verify that the output is
-sane in this situation.
-
-Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
----
- t/t3200-branch.sh | 24 ++++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
-
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index 6c0b7ea4ad..d1f80c80ab 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -6,6 +6,7 @@
- test_description='git branch assorted tests'
- 
- . ./test-lib.sh
-+. "$TEST_DIRECTORY"/lib-rebase.sh
- 
- test_expect_success 'prepare a trivial repository' '
- 	echo Hello >A &&
-@@ -1246,6 +1247,29 @@ test_expect_success '--merged is incompatible with --no-merged' '
- 	test_must_fail git branch --merged HEAD --no-merged HEAD
- '
- 
-+test_expect_success '--list during rebase' '
-+	test_when_finished "reset_rebase" &&
-+	git checkout master &&
-+	FAKE_LINES="1 edit 2" &&
-+	export FAKE_LINES &&
-+	set_fake_editor &&
-+	git rebase -i HEAD~2 &&
-+	git branch --list >actual &&
-+	grep "rebasing master" actual
-+'
-+
-+test_expect_success '--list during rebase from detached HEAD' '
-+	test_when_finished "reset_rebase && git checkout master" &&
-+	git checkout HEAD^0 &&
-+	oid=$(git rev-parse --short HEAD) &&
-+	FAKE_LINES="1 edit 2" &&
-+	export FAKE_LINES &&
-+	set_fake_editor &&
-+	git rebase -i HEAD~2 &&
-+	git branch --list >actual &&
-+	grep "rebasing $oid" actual
-+'
-+
- test_expect_success 'tracking with unexpected .fetch refspec' '
- 	rm -rf a b c d &&
- 	git init a &&
--- 
-2.17.0.rc1.321.gba9d0f2565
---- >8 ---
+> +               OPT_END()
+> +       };
+> +
+> +       argc = parse_options(argc, argv, prefix, options,
+> +                       git_stash_helper_apply_usage, 0);
+> +
+> +       if (argc == 1) {
+> +               commit = argv[0];
+> +       }
+> +
+> +       if (get_stash_info(&info, commit))
+> +               return -1;
+> +
+> +
+> +       return do_apply_stash(prefix, &info, index);
+> +}
