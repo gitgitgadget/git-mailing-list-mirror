@@ -2,119 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 759C41F404
-	for <e@80x24.org>; Sun, 25 Mar 2018 18:47:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9ED1D1F404
+	for <e@80x24.org>; Sun, 25 Mar 2018 19:21:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753815AbeCYSrf (ORCPT <rfc822;e@80x24.org>);
-        Sun, 25 Mar 2018 14:47:35 -0400
-Received: from mail-qk0-f196.google.com ([209.85.220.196]:45945 "EHLO
-        mail-qk0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751449AbeCYSre (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 25 Mar 2018 14:47:34 -0400
-Received: by mail-qk0-f196.google.com with SMTP id s9so17951549qke.12
-        for <git@vger.kernel.org>; Sun, 25 Mar 2018 11:47:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=inDmZO/N1FoSVeaS5zGbm6IYKJu6qrHzboLDWW+ngk0=;
-        b=DeKda4bSHtzuDvjB6El23OHPWIq+/AnLoy8MY294x/m+zzXkQ+yqB5DYjz7KZ5TBbx
-         KluRpgACzBINfZBKsUlLCrlT/lhDTtO91nnEtxgSnK+RLBX/JHM65EpRZgt1oVx4QEbV
-         K46k0OCXxEgZuWWyn4jwrYCTiHAYaqbM+cbpHw/xn78ie1/FS8n37STzgYmwYFbopt+k
-         D9NohbqMcHLVs+4nT39soYwshEp0No3dLMR6g+BUe/ZmZYqRoa8fZs6VVlDvFlfP5NHU
-         R4HuPOAxq9TYnfVaL5cyRL9bPDLX/dlkpVBqyrzN7faXISKr7xQgCZmYHuiYae7uPC1I
-         QuXQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=inDmZO/N1FoSVeaS5zGbm6IYKJu6qrHzboLDWW+ngk0=;
-        b=kwoRRFzsPx5x0rmZkJnZQ97R+rBpkk7k/pzlTvwbN+WRZajPn0pkZQdcGijdOrqxPy
-         TI57lJXFzrjDy5AshAnM0gjDqKsfGlUU/QdTEfZd5dHKucXXLRmv04nGZ1n+Eu6an9x2
-         U2s/dLtGngRAV5GIDJDvwkq1RWP8wh7e2wtGQYNMC2pth4Myrn00PXx64W83jxYl3bUp
-         gcZZ7diu0Vc4Sn2em4R1iZZgdGKkZ8S6sSYNmms6aspu9pRvnZ28trNR0sFl4dz+B3vD
-         51erBAcwLg1Pu4zdsJHePoyeA2Kaw4g42Wn5y1raRuIRVNyi8VIa3Qc05p0wXSZwAnlx
-         D7Mw==
-X-Gm-Message-State: AElRT7Glody3DozhD5tHEni2aI+7by+TMm/DXTNSVNAvI6FNwmZyEKdH
-        h//66qP00rRSE5QXulk78rs=
-X-Google-Smtp-Source: AG47ELtfxi2pBOmCU4t6nbaZJgJaXX0+cUjPqdxrt5pi4JRfVn07DwuiRVEar9klC/4F6hPJE2pqBA==
-X-Received: by 10.55.115.67 with SMTP id o64mr50916849qkc.144.1522003654158;
-        Sun, 25 Mar 2018 11:47:34 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:c4e6:7a22:56f1:df04? ([2001:4898:8010:0:ae1c:7a22:56f1:df04])
-        by smtp.gmail.com with ESMTPSA id p54sm10606181qtj.29.2018.03.25.11.47.33
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 25 Mar 2018 11:47:33 -0700 (PDT)
-Subject: Re: [ANNOUNCE] Git v2.17.0-rc1
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Takuto Ikuta <tikuta@chromium.org>,
-        Duy Nguyen <pclouds@gmail.com>
-References: <xmqqtvt9nr7p.fsf@gitster-ct.c.googlers.com>
- <87k1u2y8pg.fsf@evledraar.gmail.com>
- <e2d0a2e2-44a1-9aa6-9c52-e341b44c18f4@gmail.com>
- <87a7uwxai4.fsf@evledraar.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <c3d41848-f15d-99af-22fb-d6de2859bd93@gmail.com>
-Date:   Sun, 25 Mar 2018 14:47:32 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
-MIME-Version: 1.0
-In-Reply-To: <87a7uwxai4.fsf@evledraar.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+        id S1751449AbeCYTVL (ORCPT <rfc822;e@80x24.org>);
+        Sun, 25 Mar 2018 15:21:11 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:42470 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1750782AbeCYTVK (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 25 Mar 2018 15:21:10 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id C79C160988;
+        Sun, 25 Mar 2018 19:21:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1522005668;
+        bh=iR1aBkC/ZWTWksgWH66Ac8mSKM4Ahaa+kj1iKi2Y4gU=;
+        h=From:To:Cc:Subject:Date:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=uCSYPCR5Gtwpe06nSPdehVq3bc8cybko+fQwf17rlN2bJq6cJVMUIkaKiQpWIjD6X
+         W01mH1NxLiaZr1gint7FTViBbDvPGcB8HkYQ5k/eMhB3SVfpspXotaW1L6fRq74bgR
+         3gqGzEuq0w/7/4ez0s8uDKVbwqQi/wuRjSV7uAufAo5Iju/nBPQ9Liv5tpGuG1gYCw
+         aTNyLXTs7tAi3p8jJ0YH/g74l8LTmjmi5wzHmrt3bwlhTaCfoAwWvfq6a4cpq9IwXs
+         kqcKP3oGZDZPi7PgvAiMLBTK5pawlLh91zFQQnrc6r7OFnRbZ9vcx12WOPIHul+pV1
+         QLeuh1R+rl7wVyumhCXbX0nQWXOAi528RZvFrUAQmqaVnnnmNyDP/Ek76jvAgO1WAu
+         rFvU0H/MNreXZlQdf+jCGa6pdTrAhPf5Cvj/kQsaAzCkKZW7pCTyI2hiMLTg2IkheU
+         ZfJ6ttGVf4gDiYUuZhRYFXeKoEwbJKriCOHTkP9gaVmiw8YmFFr
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Lars Schneider <larsxschneider@gmail.com>
+Subject: [PATCH 00/10] Hash-independent tests (part 1)
+Date:   Sun, 25 Mar 2018 19:20:45 +0000
+Message-Id: <20180325192055.841459-1-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.17.0.rc1.317.g4a561d2cc9
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 3/25/2018 2:42 PM, Ævar Arnfjörð Bjarmason wrote:
-> On Sun, Mar 25 2018, Derrick Stolee wrote:
->
->> On 3/23/2018 1:59 PM, Ævar Arnfjörð Bjarmason wrote:
->>> On Wed, Mar 21 2018, Junio C. Hamano wrote:
->>>
->>>> A release candidate Git v2.17.0-rc1 is now available for testing
->>>> at the usual places.  It is comprised of 493 non-merge commits
->>>> since v2.16.0, contributed by 62 people, 19 of which are new faces.
->>> I have this deployed on some tens of K machines who all use git in one
->>> way or another (from automated pulls, to users interactively), and rc0
->>> before that, with a few patches on top from me + Takato + Duy + Derrick
->>> since rc0 was released (and since today based on top of rc1). No issues
->>> so far.
->>>
->>> The specific in-house version I have is at:
->>> https://github.com/git/git/compare/v2.17.0-rc1...bookingcom:booking-git-v2018-03-23-1
->> Thanks for testing the commit-graph feature, Ævar! I'm guessing you
->> have some mechanisms to ensure the 'git commit-graph write' command is
->> run on these machines and 'core.commitGraph' is set to true in the
->> config? I would love to hear how this benefits your org.
-> I haven't deployed any actual use of it at a wider scale, but I've done
-> some ad-hoc benchmarking with our internal version which has your
-> patches, and the results are very promising so far on the isolated test
-> cases where it helps (that you know about, e.g. rev-list --all).
->
-> So sorry, I don't have any meaningful testing of this, I just wanted an
-> easy way to ad-hoc test it & make sure it doesn't break other stuff for
-> now.
->
-> I also threw out most of the manual git maintenance stuff we had and
-> just rely on gc --auto now, so as soon as you have something to
-> integrate with that, along with those perf changes Peff suggested I'm
-> much more likely to play with it in some real way.
+This is a series to make our tests hash-independent.  Many tests have
+hard-coded SHA-1 values in them, and it would be valuable to express
+these items in a hash-independent way for our hash transitions.
 
-Thanks. Integration with 'gc --auto' is a high priority for me after the 
-patch lands.
+The approach in this series relies on only three components for hash
+independence: git rev-parse, git hash-object, and EMPTY_BLOB and
+EMPTY_TREE.  Because many of our shell scripts and test components
+already rely on the first two, this seems like a safe assumption.
 
-The version on GitHub [1] is slightly ahead of v6 as I wait to reroll on 
-v2.17.0. It includes Peff's improvements to inspecting pack-indexes [2].
+For the same reason, this series avoids modifying tests that test these
+components or their expected SHA-1 values.  I expect that when we add
+another hash function, we'll copy these tests to expose both SHA-1 and
+NewHash versions.
 
-[1] https://github.com/derrickstolee/git/pull/2
-[2] 
-https://github.com/derrickstolee/git/pull/2/commits/cb86817ee5c5127b32c93a22ef130f0db6207970
+Many of our tests use heredocs for defining expected values.  My
+approach has been to interpolate values into the heredocs, as that
+produces the best readability in my view.
+
+These tests have been tested using my "short BLAKE2b" series (branch
+blake2b-test-hash) and have also been tested based off master.
+
+Comments on any aspect of this series are welcome, but opinions on the
+approach or style are especially so.
+
+brian m. carlson (10):
+  t1011: abstract away SHA-1-specific constants
+  t1304: abstract away SHA-1-specific constants
+  t1300: abstract away SHA-1-specific constants
+  t1405: sort reflog entries in a hash-independent way
+  t1411: abstract away SHA-1-specific constants
+  t1507: abstract away SHA-1-specific constants
+  t2020: abstract away SHA-1 specific constants
+  t2101: modernize test style
+  t2101: abstract away SHA-1-specific constants
+  t2107: abstract away SHA-1-specific constants
+
+ t/t1011-read-tree-sparse-checkout.sh |  7 ++-
+ t/t1300-repo-config.sh               |  6 +-
+ t/t1304-default-acl.sh               |  2 +-
+ t/t1405-main-ref-store.sh            |  4 +-
+ t/t1411-reflog-show.sh               | 21 ++++---
+ t/t1507-rev-parse-upstream.sh        |  5 +-
+ t/t2020-checkout-detach.sh           | 40 +++++++-----
+ t/t2101-update-index-reupdate.sh     | 91 +++++++++++++++-------------
+ t/t2107-update-index-basic.sh        |  6 +-
+ 9 files changed, 100 insertions(+), 82 deletions(-)
+
