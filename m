@@ -2,185 +2,131 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9A3A81F404
-	for <e@80x24.org>; Sun, 25 Mar 2018 16:59:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1CEA11F404
+	for <e@80x24.org>; Sun, 25 Mar 2018 17:02:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753766AbeCYQ7P (ORCPT <rfc822;e@80x24.org>);
-        Sun, 25 Mar 2018 12:59:15 -0400
-Received: from mail-wr0-f180.google.com ([209.85.128.180]:45597 "EHLO
-        mail-wr0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753711AbeCYQ7P (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 25 Mar 2018 12:59:15 -0400
-Received: by mail-wr0-f180.google.com with SMTP id u11so4279012wri.12
-        for <git@vger.kernel.org>; Sun, 25 Mar 2018 09:59:14 -0700 (PDT)
+        id S1753591AbeCYRB7 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 25 Mar 2018 13:01:59 -0400
+Received: from mail-pl0-f66.google.com ([209.85.160.66]:44413 "EHLO
+        mail-pl0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753408AbeCYRB6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 25 Mar 2018 13:01:58 -0400
+Received: by mail-pl0-f66.google.com with SMTP id 9-v6so10463544ple.11
+        for <git@vger.kernel.org>; Sun, 25 Mar 2018 10:01:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=RxKRbVpJ4wi73Qu59b0qh1SQ3/BhuKD7eo9YCFwhCJQ=;
-        b=FPZwMs25jHC71RM0bqrjzS/COHfCVpNH6v5/9GyoEOTiVjCkWiQrNjA8aKBJs08AtQ
-         xYrYrhTWjbk7O71xSfbLW36nfyigVrYDzeoMwPbvo/n4+6GbLo33xLCMLTGH28yQGLr3
-         7PhnOj+qCai8hO9QpM6dH/250JYaILyD1GgyrynWpPPo25zuWA00Ty7xYiHZKVLVnc+A
-         wsW5GvGJVfIYDtyElOP2/EY2TsWpKka9Z3UMBxFe6CZkb7O5SM9BW9Zo9wh/f8B9wAFc
-         4Ww4KPQNrJap1bZRu38PV+z6A1oz3fd0i/JGmmnm309L4tiH8G+EKSDhQQwzVTP+9RK7
-         nudw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=YvEHUI/AbyZ35zi/rjjNY+21XT+Bn0BKpluCrDHs6VM=;
+        b=lV/gs+O9dnixFzSViOVw+ahjhp4IeNoO7dZ0yznylumq6P0a9pVRxjbSTYdE48MJdQ
+         Bp/fooFBOAF8dVgC4/IFm3W52BkDlaDwYOT6z6Iaj5UT3ay0MP0cAPIwdYrg8aCqSE4u
+         eg0/nJ6CrunYrOkJe6pW+j+w+I3wKh5LLW/afAmjQy4/pXFFw26j9G7xs8Awr1csLoWY
+         aciM8DlNXWqZB/B9wYdSZVbX/bF9kEGDQVlWZk6iPYEBov/imn0HmJi5pd2DhZarMBNf
+         xszirio/+Eqqigzo+mQfKgqASW4XHqsJm04oUcz+JoVlHXn/SUan7dyzR24eyRRD42wj
+         O0oA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=RxKRbVpJ4wi73Qu59b0qh1SQ3/BhuKD7eo9YCFwhCJQ=;
-        b=kKXSWUhCphUkXleZPFvqwtjH/nIduh93KYwChFNDsSdCPcXTholOl0aJaCPxhNJoZp
-         i94Hw70SG6XhLcwk9xqfdAynlv0FR6tE5d+2zisJ4VolExQGTu5bVduFjq+mgF+Rko53
-         MwR335sL+AypcQ0eXOXVIm1jLthmr1NXxmEIcy/MCp5QHIpFD31IMFzCR/ndv/dDd8gl
-         7MnkR20CNnwCh9Kli/kJoluloA+C0baispOsqJ/5u2DBkxly7lvEH8Su037Fs72yFX4w
-         IMCjsVRlnJWJLq0QGFNZ9ePNDIsKTkns9t5zKckRYU4rMeH7OlaXszkUsSECJmAq6ASh
-         nfxA==
-X-Gm-Message-State: AElRT7E7bKUJ4lXz5pIlgCF6qDY406knFgx0KQ3m8qW/ZQebP34FRj2M
-        wEby69WNGZd10mNQUA7Fu3Rindem
-X-Google-Smtp-Source: AG47ELvA3oemROazHGRQbYqI8oSc/cALOcVHZuGHM/l+u8+hGwnSJmMNGYAqTHkkNPf/awWnmm+vKA==
-X-Received: by 10.223.157.135 with SMTP id p7mr28218653wre.253.1521997153539;
-        Sun, 25 Mar 2018 09:59:13 -0700 (PDT)
-Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
-        by smtp.gmail.com with ESMTPSA id y68sm18036945wrb.73.2018.03.25.09.59.12
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 25 Mar 2018 09:59:12 -0700 (PDT)
-Date:   Sun, 25 Mar 2018 18:02:36 +0100
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     Joel Teichroeb <joel@teichroeb.net>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 2/4] stash: convert branch to builtin
-Message-ID: <20180325170236.GB10909@hank>
-References: <20180324173707.17699-1-joel@teichroeb.net>
- <20180324173707.17699-3-joel@teichroeb.net>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180324173707.17699-3-joel@teichroeb.net>
-User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=YvEHUI/AbyZ35zi/rjjNY+21XT+Bn0BKpluCrDHs6VM=;
+        b=iO1/wI7PlbU3w6tlZKAp425XDBHbypDFsV5xbJf/tDl3A7EGj6FY78anEgw9bT+uKm
+         Ad44PQJObgjvl627vgqaJnOodm9HmaZx5H+a6RioLV9ZAJ4GzXQR0tPkbsz2VqZDcE95
+         FMZAY6NyIH8DE7fkOQx13nihKTd/LRbNl1WwmEe3JrEzSbZKfkLgNQOwE95noNx7qAla
+         JirMrIFl5nkzIxHaoxRKzWFJw8pGRfamw4VkdDajsYKhjI1Lwvc7k7HDqT81UBb1QmSG
+         OcdQ1FvQPQqyKQ703K3fELqpqI+YxfBRQxIB9CWj0dHZ/US/mHFEcTxVMUe9mOC72RMx
+         aoiQ==
+X-Gm-Message-State: AElRT7E7wSjmVTgD5Z6uQBN5BFSOQ/txHXnJZIeqrDrtey8ftFfMR0Nq
+        O406zGqWxw6nvODcoJcR4W0=
+X-Google-Smtp-Source: AG47ELt8WEqwaXdgS2KDIuPSAV0zAeEYmd/qIn2ojPayn18yCvnDwXpOMooTnK4/o+ZzTlcPqjBRGA==
+X-Received: by 2002:a17:902:6941:: with SMTP id k1-v6mr18765902plt.185.1521997317929;
+        Sun, 25 Mar 2018 10:01:57 -0700 (PDT)
+Received: from localhost.localdomain (softbank126094196092.bbtec.net. [126.94.196.92])
+        by smtp.gmail.com with ESMTPSA id f126sm27113693pfg.25.2018.03.25.10.01.56
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 25 Mar 2018 10:01:57 -0700 (PDT)
+From:   Yuki Kokubun <orga.chem.job@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Yuki Kokubun <orga.chem.job@gmail.com>
+Subject: [PATCH v5] filter-branch: fix errors caused by refs that point at non-committish
+Date:   Sun, 25 Mar 2018 17:01:50 +0000
+Message-Id: <1521997310-7200-1-git-send-email-orga.chem.job@gmail.com>
+X-Mailer: git-send-email 1.9.1
+In-Reply-To: <1521996898-7052-1-git-send-email-orga.chem.job@gmail.com>
+References: <1521996898-7052-1-git-send-email-orga.chem.job@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 03/24, Joel Teichroeb wrote:
-> ---
->  builtin/stash--helper.c | 44 ++++++++++++++++++++++++++++++++++++++++++++
->  git-stash.sh            |  3 ++-
->  2 files changed, 46 insertions(+), 1 deletion(-)
-> 
-> diff --git a/builtin/stash--helper.c b/builtin/stash--helper.c
-> index e9a9574f40..18c4aba665 100644
-> --- a/builtin/stash--helper.c
-> +++ b/builtin/stash--helper.c
-> @@ -12,6 +12,7 @@
->  
->  static const char * const git_stash_helper_usage[] = {
->  	N_("git stash--helper apply [--index] [-q|--quiet] [<stash>]"),
-> +	N_("git stash--helper branch <branchname> [<stash>]"),
->  	NULL
->  };
->  
-> @@ -20,6 +21,11 @@ static const char * const git_stash_helper_apply_usage[] = {
->  	NULL
->  };
->  
-> +static const char * const git_stash_helper_branch_usage[] = {
-> +	N_("git stash--helper branch <branchname> [<stash>]"),
-> +	NULL
-> +};
-> +
->  static const char *ref_stash = "refs/stash";
->  static int quiet;
->  static char stash_index_path[PATH_MAX];
-> @@ -307,6 +313,42 @@ static int apply_stash(int argc, const char **argv, const char *prefix)
->  	return do_apply_stash(prefix, &info, index);
->  }
->  
-> +static int branch_stash(int argc, const char **argv, const char *prefix)
-> +{
-> +	const char *commit = NULL, *branch = NULL;
-> +	int ret;
-> +	struct argv_array args = ARGV_ARRAY_INIT;
-> +	struct stash_info info;
-> +	struct option options[] = {
-> +		OPT_END()
-> +	};
-> +
-> +	argc = parse_options(argc, argv, prefix, options,
-> +			git_stash_helper_branch_usage, 0);
-> +
-> +	if (argc != 0) {
-> +		branch = argv[0];
-> +		if (argc == 2)
-> +			commit = argv[1];
-> +	}
-> +
-> +	if (get_stash_info(&info, commit))
-> +		return -1;
+"git filter-branch -- --all" prints error messages when processing refs that
+point at objects that are not committish. Such refs can be created by
+"git replace" with trees or blobs. And also "git tag" with trees or blobs can
+create such refs.
 
-I see this is supposed to do something similar to what
-'assert_stash_like' was doing.  However we never end up die'ing with
-"... is not a a stash-like commit" here from what I can see.  I think
-I can see where this is coming from, and I missed it when reading over
-1/4 here.  I'll go back and comment there, where I think we're going
-slightly wrong.
+Filter these problematic refs out early, before they are seen by the logic to
+see which refs have been modified and which have been left intact (which is
+where the unwanted error messages come from), and warn that these refs are left
+unwritten while doing so.
 
-Either way while I tripped over the 'get_stash_info' call here, I
-think it's the right thing to do.
+Signed-off-by: Yuki Kokubun <orga.chem.job@gmail.com>
+Reviewed-by: Junio C Hamano <gitster@pobox.com>
+---
+ git-filter-branch.sh     | 14 ++++++++++++--
+ t/t7003-filter-branch.sh | 14 ++++++++++++++
+ 2 files changed, 26 insertions(+), 2 deletions(-)
 
-> +	argv_array_pushl(&args, "checkout", "-b", NULL);
-> +	argv_array_push(&args, branch);
-> +	argv_array_push(&args, sha1_to_hex(info.b_commit.hash));
-> +	ret = cmd_checkout(args.argc, args.argv, prefix);
-> +	if (ret)
-> +		return -1;
-> +
-> +	ret = do_apply_stash(prefix, &info, 1);
-> +	if (!ret && info.is_stash_ref)
-> +		ret = do_drop_stash(prefix, &info);
+diff --git a/git-filter-branch.sh b/git-filter-branch.sh
+index 1b7e4b2cd..41efecb28 100755
+--- a/git-filter-branch.sh
++++ b/git-filter-branch.sh
+@@ -251,8 +251,18 @@ done < "$tempdir"/backup-refs
+ 
+ # The refs should be updated if their heads were rewritten
+ git rev-parse --no-flags --revs-only --symbolic-full-name \
+-	--default HEAD "$@" > "$tempdir"/raw-heads || exit
+-sed -e '/^^/d' "$tempdir"/raw-heads >"$tempdir"/heads
++	--default HEAD "$@" > "$tempdir"/raw-refs || exit
++while read ref
++do
++	case "$ref" in ^?*) continue ;; esac
++
++	if git rev-parse --verify "$ref"^0 >/dev/null 2>&1
++	then
++		echo "$ref"
++	else
++		warn "WARNING: not rewriting '$ref' (not a committish)"
++	fi
++done >"$tempdir"/heads <"$tempdir"/raw-refs
+ 
+ test -s "$tempdir"/heads ||
+ 	die "You must specify a ref to rewrite."
+diff --git a/t/t7003-filter-branch.sh b/t/t7003-filter-branch.sh
+index 7cb60799b..04f79f32b 100755
+--- a/t/t7003-filter-branch.sh
++++ b/t/t7003-filter-branch.sh
+@@ -470,4 +470,18 @@ test_expect_success 'tree-filter deals with object name vs pathname ambiguity' '
+ 	git show HEAD:$ambiguous
+ '
+ 
++test_expect_success 'rewrite repository including refs that point at non-commit object' '
++	test_when_finished "git reset --hard original" &&
++	tree=$(git rev-parse HEAD^{tree}) &&
++	test_when_finished "git replace -d $tree" &&
++	echo A >new &&
++	git add new &&
++	new_tree=$(git write-tree) &&
++	git replace $tree $new_tree &&
++	git tag -a -m "tag to a tree" treetag $new_tree &&
++	git reset --hard HEAD &&
++	git filter-branch -f -- --all >filter-output 2>&1 &&
++	! fgrep fatal filter-output
++'
++
+ test_done
+-- 
+2.16.2.18.g09cb46d
 
-'do_drop_stash' is only defined in the next patch.  Maybe maybe 2/4
-and 3/4 need to swap places?
-
-All patches should compile individually, and all tests should pass for
-each patch, so we maintain bisectability of the codebase.
-
-> +
-> +	return ret;
-> +}
-> +
->  int cmd_stash__helper(int argc, const char **argv, const char *prefix)
->  {
->  	int result = 0;
-> @@ -329,6 +371,8 @@ int cmd_stash__helper(int argc, const char **argv, const char *prefix)
->  		usage_with_options(git_stash_helper_usage, options);
->  	else if (!strcmp(argv[0], "apply"))
->  		result = apply_stash(argc, argv, prefix);
-> +	else if (!strcmp(argv[0], "branch"))
-> +		result = branch_stash(argc, argv, prefix);
->  	else {
->  		error(_("unknown subcommand: %s"), argv[0]);
->  		usage_with_options(git_stash_helper_usage, options);
-> diff --git a/git-stash.sh b/git-stash.sh
-> index 92c084eb17..360643ad4e 100755
-> --- a/git-stash.sh
-> +++ b/git-stash.sh
-> @@ -736,7 +736,8 @@ pop)
->  	;;
->  branch)
->  	shift
-> -	apply_to_branch "$@"
-> +	cd "$START_DIR"
-> +	git stash--helper branch "$@"
->  	;;
->  *)
->  	case $# in
-> -- 
-> 2.16.2
-> 
