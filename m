@@ -7,117 +7,207 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C15D81F404
-	for <e@80x24.org>; Sun, 25 Mar 2018 18:33:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 184BE1F404
+	for <e@80x24.org>; Sun, 25 Mar 2018 18:39:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753703AbeCYSdU (ORCPT <rfc822;e@80x24.org>);
-        Sun, 25 Mar 2018 14:33:20 -0400
-Received: from mail-qk0-f194.google.com ([209.85.220.194]:43080 "EHLO
-        mail-qk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753472AbeCYSdT (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 25 Mar 2018 14:33:19 -0400
-Received: by mail-qk0-f194.google.com with SMTP id g184so17943425qkd.10
-        for <git@vger.kernel.org>; Sun, 25 Mar 2018 11:33:19 -0700 (PDT)
+        id S1753929AbeCYSjm (ORCPT <rfc822;e@80x24.org>);
+        Sun, 25 Mar 2018 14:39:42 -0400
+Received: from mail-wm0-f50.google.com ([74.125.82.50]:36142 "EHLO
+        mail-wm0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753763AbeCYSjl (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 25 Mar 2018 14:39:41 -0400
+Received: by mail-wm0-f50.google.com with SMTP id x82so11572357wmg.1
+        for <git@vger.kernel.org>; Sun, 25 Mar 2018 11:39:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=9WNnW31CeCKfYIdGd2x3Mh+zBTycgBaGxNA9WmbpanE=;
-        b=DRdIjW83C7x+EfJ4fCgN6AvvXu1u/oWrQMKXWG9viTfIeaEPHQmc9SOSiL25bNc11K
-         2Ygvvj6FuMpAmMO2D141UvCbWMzAnZE0jBSP/+kjnLZQRfAxvYjjMKyXruoRarGGpt/Q
-         GGItYOhXTqlm0a/TN3Ge0J/9f6Cz+DG0on6PKujcBnS3yVW1jRKnc12v/BiKDBWy7l3q
-         L9D6+M6FW9zXSuQjxxNE5wbTKCy0jm6HIVsnO3h/Fe+HhsB+AQcXWilsSv/iAK5z65tD
-         zoknxr2FkVNBZTFqgEdOlQ7WGWIZ1iJ9D2B+zhGIX8LLjhmUkfSMICoiWGmojCsS/mMs
-         G13A==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=ASL/OM0DSHho9dYLP0NKDIsvaMNMwSyhGKK4IqObahI=;
+        b=dXcvTfm7BUuVNfaDzUstupj2TN4VE20XjXQgUAljqSwKRo+1Cww0ZTObFXpRJ3LWBy
+         g9i4Ql9t7aH10Vm2LONc2JgeagFj3RMho6E76kTgl5JA7SPjRuP4TWMcDSjvEY5ngtts
+         40uWRVwqSIadSmoHdFQe3QBWM7nJPU7tXL/E/cSVvBbSsONFqnDt1pkP7gmqDJClUV91
+         epKOtdy9kByv82vqU3Hlabe+1rdhPp7NgS4cGgPhcMySGZcgzHfyNppGQHwaQOSRXtmN
+         I7tPiFzA2AZNpZIq4ZJGF0TexI/ktnjt9nhkANKT2M2krXKiAjNyHMpbCbyR406nI8FM
+         mKRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=9WNnW31CeCKfYIdGd2x3Mh+zBTycgBaGxNA9WmbpanE=;
-        b=F5p6JKn43zbCFM/NMnCFsQ/04IwvzRoelhn8GgkEwBZHfno1uPe1B7nDvQmi/+Oy0e
-         fX5fR/1fwbmgx42ZhKKUN8G8anA2rcQieSUf8jbGd7QMqWSMLzbKLNP4dSHzw2BqJZeH
-         K7qobOWtnMOikp3wdn+K6p2du+FG+JEYBviszJkEsoFuii2qDFE36BsfwZJG2AwmU19q
-         lnuB3AfVcECxIr66LigSAyZPV9pKCwSjf0LAI6uVd3xFTgFeZL8JpmpI6Pboohbese5a
-         29fOubzjmM96wmrfGB/tmyxTNJYe+17zD/ZjEhWgsoAJcSCOZ64Ltocn96suKgUh0ao6
-         lSuw==
-X-Gm-Message-State: AElRT7GVthueYSTJkCfvbXXc1EKQnLIwLi87SsgaZdl516mw8j3pmrlS
-        TtpMODWkqdsatHb8//W+ZJdyQgzd
-X-Google-Smtp-Source: AG47ELtJJtEW1DfR2/Biq1rTidWdvIK2I30AGM2qXTc/qe3fj8OqLmfic+wucebf1bpt5Xl36upfmA==
-X-Received: by 10.55.20.135 with SMTP id 7mr50808251qku.286.1522002799126;
-        Sun, 25 Mar 2018 11:33:19 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:c4e6:7a22:56f1:df04? ([2001:4898:8010:0:ae1c:7a22:56f1:df04])
-        by smtp.gmail.com with ESMTPSA id k29sm10257409qtc.45.2018.03.25.11.33.18
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 25 Mar 2018 11:33:18 -0700 (PDT)
-Subject: Re: [PATCH] unpack-trees: release oid_array after use in
- check_updates()
-To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
-        Git List <git@vger.kernel.org>
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        Junio C Hamano <gitster@pobox.com>
-References: <b2380d1e-1d45-22cf-ba22-cf4cb02e1134@web.de>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <c46f189d-7825-4d60-be71-a4d339c4fa43@gmail.com>
-Date:   Sun, 25 Mar 2018 14:33:17 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=ASL/OM0DSHho9dYLP0NKDIsvaMNMwSyhGKK4IqObahI=;
+        b=M9ngj0FQUOm+wjvvUNBmmKy7n9QNo2Sm0tSM5ijZq9GDHkB/PxKzUPEyAFlqrE4kcq
+         YpqfwFCoN80YvYUjVrFcSHnN7ooyl3i+pBKAOFZQYWcipIpn/61vbDj+2GpnPXcFnZsO
+         G+u4O5u0gsmsxLX+uB/7T8oClMeN/qp+XOSebnSgR+cuIeXD072RYDrM9eIRs7blPuxa
+         +Co/T7/+3C38LzzCGndWkbyx8TcnLpH8ZGXrwoD3ROqs7a79lZrkeAvOA+VzS1keHpU3
+         6erH+4OjeIW2gZsnltN5cbm/TRmXnW0iWrBsEJ7clh6oIvsYKTUktzJX2TZhauY9P5TC
+         7CHg==
+X-Gm-Message-State: AElRT7FCA0LesIx7Zd6bkP8sHpjKbHeYHQTk4jgrP6VZ/N1CQjhmYYmv
+        TSPQV6e2TpHj0uMrkf4txxI=
+X-Google-Smtp-Source: AIpwx48InCzgwjP6mXpnNdmT8iIkRuBAX9XF0/S7uwNhv2fUts2aAHvrsDSK1IbVj8u3Ll45CrEhHg==
+X-Received: by 10.28.153.215 with SMTP id b206mr5895383wme.91.1522003180299;
+        Sun, 25 Mar 2018 11:39:40 -0700 (PDT)
+Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
+        by smtp.gmail.com with ESMTPSA id q9sm12564993wrf.11.2018.03.25.11.39.39
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 25 Mar 2018 11:39:39 -0700 (PDT)
+Date:   Sun, 25 Mar 2018 19:43:03 +0100
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [RFC][PATCH] git-stash: convert git stash list to C builtin
+Message-ID: <20180325184303.GF10909@hank>
+References: <20180324182313.13705-1-ungureanupaulsebastian@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <b2380d1e-1d45-22cf-ba22-cf4cb02e1134@web.de>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180324182313.13705-1-ungureanupaulsebastian@gmail.com>
+User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 3/25/2018 12:31 PM, René Scharfe wrote:
-> Signed-off-by: Rene Scharfe <l.s.r@web.de>
+On 03/24, Paul-Sebastian Ungureanu wrote:
+> Currently, because git stash is not fully converted to C, I
+> introduced a new helper that will hold the converted commands.
+
+Missing sign-off?  I think it's a good idea to sign off your work even
+for RFC patches that you don't expect to be applied.  If for nothing
+else, it helps people not wonder whether you just forgot the sign-off
+or if you intentionally didn't add it.
+
 > ---
-> That leak was introduced by c0c578b33c (unpack-trees: batch fetching of
-> missing blobs).
->
->   unpack-trees.c | 1 +
->   1 file changed, 1 insertion(+)
->
-> diff --git a/unpack-trees.c b/unpack-trees.c
-> index d5685891a5..e73745051e 100644
-> --- a/unpack-trees.c
-> +++ b/unpack-trees.c
-> @@ -379,30 +379,31 @@ static int check_updates(struct unpack_trees_options *o)
->   		struct oid_array to_fetch = OID_ARRAY_INIT;
->   		int fetch_if_missing_store = fetch_if_missing;
->   		fetch_if_missing = 0;
->   		for (i = 0; i < index->cache_nr; i++) {
->   			struct cache_entry *ce = index->cache[i];
->   			if ((ce->ce_flags & CE_UPDATE) &&
->   			    !S_ISGITLINK(ce->ce_mode)) {
->   				if (!has_object_file(&ce->oid))
->   					oid_array_append(&to_fetch, &ce->oid);
->   			}
->   		}
->   		if (to_fetch.nr)
->   			fetch_objects(repository_format_partial_clone,
->   				      &to_fetch);
->   		fetch_if_missing = fetch_if_missing_store;
-> +		oid_array_clear(&to_fetch);
->   	}
->   	for (i = 0; i < index->cache_nr; i++) {
->   		struct cache_entry *ce = index->cache[i];
->   
->   		if (ce->ce_flags & CE_UPDATE) {
->   			if (ce->ce_flags & CE_WT_REMOVE)
->   				die("BUG: both update and delete flags are set on %s",
->   				    ce->name);
->   			display_progress(progress, ++cnt);
->   			ce->ce_flags &= ~CE_UPDATE;
->   			if (o->update && !o->dry_run) {
->   				errs |= checkout_entry(ce, &state, NULL);
->   			}
->   		}
->   	}
+>  Makefile                |  1 +
+>  builtin.h               |  1 +
+>  builtin/stash--helper.c | 52 +++++++++++++++++++++++++++++++++++++++++
+>  git-stash.sh            |  7 +-----
+>  git.c                   |  1 +
+>  5 files changed, 56 insertions(+), 6 deletions(-)
+>  create mode 100644 builtin/stash--helper.c
+> 
+> diff --git a/Makefile b/Makefile
+> index a1d8775ad..8ca361c57 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -1020,6 +1020,7 @@ BUILTIN_OBJS += builtin/send-pack.o
+>  BUILTIN_OBJS += builtin/shortlog.o
+>  BUILTIN_OBJS += builtin/show-branch.o
+>  BUILTIN_OBJS += builtin/show-ref.o
+> +BUILTIN_OBJS += builtin/stash--helper.o
+>  BUILTIN_OBJS += builtin/stripspace.o
+>  BUILTIN_OBJS += builtin/submodule--helper.o
+>  BUILTIN_OBJS += builtin/symbolic-ref.o
+> diff --git a/builtin.h b/builtin.h
+> index 42378f3aa..2ddb4bd5c 100644
+> --- a/builtin.h
+> +++ b/builtin.h
+> @@ -220,6 +220,7 @@ extern int cmd_show(int argc, const char **argv, const char *prefix);
+>  extern int cmd_show_branch(int argc, const char **argv, const char *prefix);
+>  extern int cmd_status(int argc, const char **argv, const char *prefix);
+>  extern int cmd_stripspace(int argc, const char **argv, const char *prefix);
+> +extern int cmd_stash__helper(int argc, const char **argv, const char *prefix);
+>  extern int cmd_submodule__helper(int argc, const char **argv, const char *prefix);
+>  extern int cmd_symbolic_ref(int argc, const char **argv, const char *prefix);
+>  extern int cmd_tag(int argc, const char **argv, const char *prefix);
+> diff --git a/builtin/stash--helper.c b/builtin/stash--helper.c
+> new file mode 100644
+> index 000000000..61fd5390d
+> --- /dev/null
+> +++ b/builtin/stash--helper.c
+> @@ -0,0 +1,52 @@
+> +#include "builtin.h"
+> +#include "cache.h"
+> +#include "parse-options.h"
+> +#include "argv-array.h"
+> +
+> +enum {
+> +	LIST_STASH = 1
+> +};
+> +
+> +static const char * ref_stash = "refs/stash";
+> +
+> +static const char * const git_stash__helper_usage[] = {
+> +	N_("git stash--helper --list [<options>]"),
+> +	NULL
+> +};
+> +
+> +static int list_stash(int argc, const char **argv, const char *prefix)
+> +{
+> +	struct object_id obj;
+> +	struct argv_array args = ARGV_ARRAY_INIT;
+> +
+> +	if (get_oid(ref_stash, &obj))
+> +		return 0;
+> +
+> +	argv_array_pushl(&args, "log", "--format=%gd: %gs", "-g", "--first-parent", "-m", NULL);
+> +	argv_array_pushv(&args, argv);
+> +	argv_array_push(&args, ref_stash);
 
-Ack. Looks correct.
+This is missing the final '--' argument to 'git log'.  It's needed to
+disambiguate the ref from paths.  If we don't have that, this git log
+call will fail when a "refs/stash" directory exists.
 
--Stolee
+> +	return !!cmd_log(args.argc, args.argv, prefix);
+> +}
+> +
+> +int cmd_stash__helper(int argc, const char **argv, const char *prefix)
+> +{
+> +	int cmdmode = 0;
+> +
+> +	struct option options[] = {
+> +		OPT_CMDMODE(0, "list", &cmdmode,
+> +			 N_("list stash entries"), LIST_STASH),
+> +		OPT_END()
+> +	};
+> +
+> +	argc = parse_options(argc, argv, prefix, options,
+> +			     git_stash__helper_usage, PARSE_OPT_KEEP_UNKNOWN);
+> +
+> +	if (!cmdmode)
+> +		usage_with_options(git_stash__helper_usage, options);
+> +
+> +	switch (cmdmode) {
+> +		case LIST_STASH:
+> +			return list_stash(argc, argv, prefix);
+> +	}
+> +	return 0;
+> +}
+> diff --git a/git-stash.sh b/git-stash.sh
+> index fc8f8ae64..a5b9f5fb6 100755
+> --- a/git-stash.sh
+> +++ b/git-stash.sh
+> @@ -380,11 +380,6 @@ have_stash () {
+>  	git rev-parse --verify --quiet $ref_stash >/dev/null
+>  }
+>  
+> -list_stash () {
+> -	have_stash || return 0
+> -	git log --format="%gd: %gs" -g --first-parent -m "$@" $ref_stash --
+> -}
+> -
+>  show_stash () {
+>  	ALLOW_UNKNOWN_FLAGS=t
+>  	assert_stash_like "$@"
+> @@ -695,7 +690,7 @@ test -n "$seen_non_option" || set "push" "$@"
+>  case "$1" in
+>  list)
+>  	shift
+> -	list_stash "$@"
+> +	git stash--helper --list "$@"
+>  	;;
+>  show)
+>  	shift
+> diff --git a/git.c b/git.c
+> index 96cd734f1..6fd2ccd9a 100644
+> --- a/git.c
+> +++ b/git.c
+> @@ -466,6 +466,7 @@ static struct cmd_struct commands[] = {
+>  	{ "show-branch", cmd_show_branch, RUN_SETUP },
+>  	{ "show-ref", cmd_show_ref, RUN_SETUP },
+>  	{ "stage", cmd_add, RUN_SETUP | NEED_WORK_TREE },
+> +	{ "stash--helper", cmd_stash__helper, RUN_SETUP },
+>  	{ "status", cmd_status, RUN_SETUP | NEED_WORK_TREE },
+>  	{ "stripspace", cmd_stripspace },
+>  	{ "submodule--helper", cmd_submodule__helper, RUN_SETUP | SUPPORT_SUPER_PREFIX},
+> -- 
+> 2.16.2.647.gb9d10dde1
+> 
