@@ -2,145 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-2.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 682561F404
-	for <e@80x24.org>; Sun, 25 Mar 2018 21:01:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9EBAC1F404
+	for <e@80x24.org>; Sun, 25 Mar 2018 21:15:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751897AbeCYVBk (ORCPT <rfc822;e@80x24.org>);
-        Sun, 25 Mar 2018 17:01:40 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:42610 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751208AbeCYVBj (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 25 Mar 2018 17:01:39 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id CEEE160988;
-        Sun, 25 Mar 2018 21:01:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1522011698;
-        bh=867JyLfh7Drqp2hA1vL/WGfrbLxzU9vXurF/C46GNNA=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=oVHyYljjoc97UGXl+oL1o+LFsjGLWk3BZ4kdlue5etbGJsunyx/qOYHKud7nkLtIR
-         XhRB+MOOETcxZ5gjmFK8cd2Aq+MdWef/l1upp1I2hnkGeX0x/yFVJfrAPTNApaaWKq
-         i/paxb9/IprNTinYejy750My1/ooJiZERy1GjXS5eTCdVrEF9cgFrYFn0ECXpbuw82
-         K0SxaPOnbS6bKclDSzyAH6p+fudDCi0OeS8SYkOuOO/EKmbE8IHJlASF8ZWFlE3OqV
-         7SkbsbdO8Gw7VOF8+WL7Qh99RlYR5VZ4OA6OC1gLX7NnkDk8zw2yvDlmUV/QxN8Vx/
-         kpUvlQZ42Q0oIrxUf5mFja866kJNTE8GBQkkk/eLJNEfecKX4v+207PreVB/vpqErL
-         pyGGyJYqUyzFXD7NIG27F9jrqYuj/YW0OXcRyVG6JMp7hESRGIIVDJ1TlFHJIGOiiq
-         vEdagDPbssEusThdvmNGiKVvslzrh4fSR5wGbKuWD0mJ7g1lAqR
-Date:   Sun, 25 Mar 2018 21:01:32 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 2/2] send-email: supply a --send-delay=1 by default
-Message-ID: <20180325210132.GE74743@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-References: <20180325182803.30036-1-avarab@gmail.com>
- <20180325182803.30036-3-avarab@gmail.com>
+        id S1751864AbeCYVPE (ORCPT <rfc822;e@80x24.org>);
+        Sun, 25 Mar 2018 17:15:04 -0400
+Received: from mail-wm0-f41.google.com ([74.125.82.41]:52392 "EHLO
+        mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751142AbeCYVPD (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 25 Mar 2018 17:15:03 -0400
+Received: by mail-wm0-f41.google.com with SMTP id l9so11946884wmh.2
+        for <git@vger.kernel.org>; Sun, 25 Mar 2018 14:15:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=swcl/hzHFUzkYIRCAGkQJqjL9wWVMRG+M+Hdxz3E/8E=;
+        b=A+2Np4YVNqBsfUIuAoPJTyZ4PwoydISAnV7kt1lq12+k+/DV+p82kGds3zcpQ7Lufa
+         tL89cHSBAHP5QHx2Shw0coTRbFYbNzZUksN32bKKO1mEWbn8X3AeIy8Fpyc9Bj7ktSG9
+         VxGaFzuSlp3kZCR/xeON9oaEIeSLI/lQkw6UHRjLEgIRtIuW3ll26mzojO7OGjFcaBz6
+         5AyCdCdXsVDqVOizOChrvxEq2eCVZMQBF0cMe875LBoWJBjdUe0eySgx1ZEpMgaGAaeq
+         C7cw4NpnNURMHUJ7G7yJ3caqvZ0B03Kxnlb8jsgAR9uTF+W0eAat/4zA7w3GzLyMYEkH
+         8w3Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=swcl/hzHFUzkYIRCAGkQJqjL9wWVMRG+M+Hdxz3E/8E=;
+        b=hxUiYbcWNXTaFNepnXwv1Ofj5rs1kNw3XA///49T796VrjwUg82LJMtEbQ/vNfpLPB
+         pItJ52Ukc7vtS0M6YZ80lJ3a+Cz4cWiPHvjqiCz93+h0F/Yb+XmSi6aD75EGP02qEmbK
+         zz6mJYOlE0KWJ/5uGNSy1RfW5FmT8Eq2EwbO1JUvGI0dG8+JLCvcxxDMuOmqgdAz2+gG
+         8nF0k8/W0UfCxv2adHt/0O0d379EjI3NnVt9C78HqlBkpQMlCB7hpayfnlb4LHoCoKKP
+         HvSwO9Tgz8kgiYvGynt8290ymT4wZQO1TNw59QrXz8bsdTl1nQXrKs+Pg+AJJdXDcf+x
+         DD/g==
+X-Gm-Message-State: AElRT7HADRWuxa4ETILeIFFPVUidWM26Lw4JGeMP5V3E/cE31bUiHMij
+        F4DXOI26/U40QSnQjr1966A=
+X-Google-Smtp-Source: AG47ELsQr+jyqp/Qtf3rN06jqz1+AriciYd73bB4dmSm4MQ8gQw9oSbj2q70+AbPkj8r42nG93/79w==
+X-Received: by 10.80.134.50 with SMTP id o47mr37899410edo.243.1522012502447;
+        Sun, 25 Mar 2018 14:15:02 -0700 (PDT)
+Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
+        by smtp.gmail.com with ESMTPSA id a10sm9509207eda.71.2018.03.25.14.15.00
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 25 Mar 2018 14:15:00 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Dan Jacques <dnj@google.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, Johannes.Schindelin@gmx.de
+Subject: Re: [PATCH v7 0/3] RUNTIME_PREFIX relocatable Git
+References: <20180325205120.17730-1-dnj@google.com>
+User-agent: Debian GNU/Linux 9.4 (stretch); Emacs 25.1.1; mu4e 1.1.0
+In-reply-to: <20180325205120.17730-1-dnj@google.com>
+Date:   Sun, 25 Mar 2018 23:15:00 +0200
+Message-ID: <877epzyi0b.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="ZInfyf7laFu/Kiw7"
-Content-Disposition: inline
-In-Reply-To: <20180325182803.30036-3-avarab@gmail.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.16.0-rc5-amd64)
-User-Agent: Mutt/1.9.4 (2018-02-28)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---ZInfyf7laFu/Kiw7
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Sun, Mar 25 2018, Dan Jacques wrote:
 
-On Sun, Mar 25, 2018 at 06:28:03PM +0000, =C3=86var Arnfj=C3=B6r=C3=B0 Bjar=
-mason wrote:
-> The earlier change to add this option described the problem this
-> option is trying to solve.
->=20
-> This turns it on by default with a value of 1 second, which'll
-> hopefully solve it, and if not user reports as well as the
-> X-Mailer-Send-Delay header should help debug it.
->=20
-> I think the trade-off of slowing down E-Mail sending to turn this on
-> makes sense because:
->=20
->  * GMail is a really common client, git.git's own unique authors by
->    %aE are ~30% @gmail.com, ~20% for linux.git. That's just patch
->    submitters, my guess is this it's much more common among those who
->    mostly read the list, and those users who aren't using mu4e / mutt
->    etc. anyway.
->=20
->  * There's really no point in having this feature at all if it's not
->    made the default, since the entire point is to be able to read a
->    list like the git ML or the LKML and have patches from others show
->    up in order.
->=20
->  * I don't think anyone's really sensitive to the sending part of
->    send-email taking longer. You just choose "all" and then switch to
->    another terminal while it does its thing if you have a huge series,
->    and for 1-3 patches I doubt anyone would notice this anyway.
+> This patch set expands support for the RUNTIME_PREFIX configuration flag,
+> currently only used on Windows builds, to include Linux, Darwin, and
+> FreeBSD. When Git is built with RUNTIME_PREFIX enabled, it resolves its
+> ancillary paths relative to the runtime location of its executable
+> rather than hard-coding them at compile-time, allowing a Git
+> installation to be deployed to a path other than the one in which it
+> was built/installed.
+>
+> Note that RUNTIME_PREFIX is not currently used outside of Windows.
+> This patch set should not have an impact on default Git builds.
+>
+> This is a minor update based on comments from the v6 series. If all's
+> well, I'm hoping this set is good to go.
 
-I'm not sure that this is going to have the effect you want it to have.
-Let me give an example to demonstrate why.
+This looks good to me this time around, couple of small nits (maybe
+Junio can amend while queuing):
 
-If I send a series to the list, in order for this to work, you need my
-SMTP server (Postfix) to essentially send mails slowly enough to
-vger.kernel.org (ZMailer) that it doesn't batch them when it sends them
-to GMail.  The problem is that with my mail server, due to filtering and
-such, already takes at least a second to accept, process, and relay
-submitted messages.  vger still batched them and delivered them back to
-me out of order.  This will be even worse with large series.
+ * You add a dependnecy typo in 2/3 but fix it again in 3/3. Should be
+   squashed.
 
-You are also assuming that my mail server will not have batched them and
-delivered them out of order, which it might well do, since Postfix uses
-a connection cache to machines that don't do STARTTLS (which, much to my
-annoyance, vger doesn't offer).
-
-In short, I don't think this is going to be especially helpful because
-it won't change the status quo for a lot of senders.  You'd have to
-insert some significant delay in order to get the effect you desire, and
-even then things could still be delivered out of order.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-https://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: https://keybase.io/bk2204
-
---ZInfyf7laFu/Kiw7
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.5 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlq4DiwACgkQv1NdgR9S
-9otDQw/9H8FPstoFfE9ZLLry8V6c9Wxx61F1h/GrR1fWcMsa111DVlEvYjb4Fq2q
-XjG7MCTPbQAJ9fPEdNHyqMdczGKdrWU4MYEl39pDUBCCiAL3X9WsHZps/glGxuQx
-yVJ7D5fHKHY8Xh3Ovps9cdpes3it9I5AzA0wMj7oY1s18A8VTKH5vVb/hwEEP/lw
-NiqrGAucbr8I1t05Y3IIqpFAY7HAuwk4Ik2nIS9cfGl9WpjkmBF9lJaMNp49KB0A
-YvqOAe6fsJRrqr1BZ/06RaTQPxmPOi/hdVep8qIBmna3GBmfCv/wxaUTweYeUkib
-XTAI8Q/muLzW4MlSFifu4L7XKDW+zlPyKGCCzcFZ9ENup4xr87gWuO87FEvKgq8/
-+p9855UDEOQeCL2ZrvcdXCtiuBuXGbzuhYEGXty5TejIhE7i+osY+19gxomAhEzc
-NZaCtgb/dxhIywniqKUCCL+woFVY7lQjsMZldFKa1MIkhmv3iG5VbNWYDTZj1M46
-NXiGRYogRQlq8TTMf/B8OLSnHRWicNJs8aIqGFHfrCMg6amEipCOEBK+q7FOgu2c
-BzolRL5y53O2MR2qHSSg0mGPzd/ENqNQePFy9wT//GuHapEUFMODDfRcyh36VyUx
-9n5z9u7bQ+ewlq5pNk4bUA7ffDbYcyK1ZvANmeiOu0cZeOdrm6k=
-=NQDg
------END PGP SIGNATURE-----
-
---ZInfyf7laFu/Kiw7--
+ * s/\Q${gitexecdir_relative}\E$// in 2/3 can be done less verbosely as
+   s/\Q$gitexecdir_relative\E$//. Discussed before in
+   https://public-inbox.org/git/CAD1RUU-3Q_SYvJorU+vEY2-0CPMZ1eL-41Z6eL7Sq4USiJ0U+w@mail.gmail.com/
+   seems like something you just forgot about.
