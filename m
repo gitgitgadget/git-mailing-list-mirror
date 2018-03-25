@@ -7,94 +7,84 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9ED1D1F404
-	for <e@80x24.org>; Sun, 25 Mar 2018 19:21:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 836E81F404
+	for <e@80x24.org>; Sun, 25 Mar 2018 19:21:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751449AbeCYTVL (ORCPT <rfc822;e@80x24.org>);
-        Sun, 25 Mar 2018 15:21:11 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:42470 "EHLO
+        id S1751793AbeCYTVO (ORCPT <rfc822;e@80x24.org>);
+        Sun, 25 Mar 2018 15:21:14 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:42478 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1750782AbeCYTVK (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 25 Mar 2018 15:21:10 -0400
+        by vger.kernel.org with ESMTP id S1750782AbeCYTVM (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 25 Mar 2018 15:21:12 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id C79C160988;
-        Sun, 25 Mar 2018 19:21:07 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 0E2026099A;
+        Sun, 25 Mar 2018 19:21:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1522005668;
-        bh=iR1aBkC/ZWTWksgWH66Ac8mSKM4Ahaa+kj1iKi2Y4gU=;
-        h=From:To:Cc:Subject:Date:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=uCSYPCR5Gtwpe06nSPdehVq3bc8cybko+fQwf17rlN2bJq6cJVMUIkaKiQpWIjD6X
-         W01mH1NxLiaZr1gint7FTViBbDvPGcB8HkYQ5k/eMhB3SVfpspXotaW1L6fRq74bgR
-         3gqGzEuq0w/7/4ez0s8uDKVbwqQi/wuRjSV7uAufAo5Iju/nBPQ9Liv5tpGuG1gYCw
-         aTNyLXTs7tAi3p8jJ0YH/g74l8LTmjmi5wzHmrt3bwlhTaCfoAwWvfq6a4cpq9IwXs
-         kqcKP3oGZDZPi7PgvAiMLBTK5pawlLh91zFQQnrc6r7OFnRbZ9vcx12WOPIHul+pV1
-         QLeuh1R+rl7wVyumhCXbX0nQWXOAi528RZvFrUAQmqaVnnnmNyDP/Ek76jvAgO1WAu
-         rFvU0H/MNreXZlQdf+jCGa6pdTrAhPf5Cvj/kQsaAzCkKZW7pCTyI2hiMLTg2IkheU
-         ZfJ6ttGVf4gDiYUuZhRYFXeKoEwbJKriCOHTkP9gaVmiw8YmFFr
+        s=default; t=1522005671;
+        bh=PBDuPpeFHdlkWY554obEy+d5dRRaxSAPoeQdgJxJqk8=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
+         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
+         In-Reply-To:References:Content-Type:Content-Disposition;
+        b=UKbJXir0hic8UebHtg7MfD3i/j5lejSPH8ns6lLntQU0EwhPUSxLjXLsd/1qpKcoE
+         NC4Puws8PW928ivef8/loNqYDRw94s+SkDPt8KR54GlW6biu7tdIvJlZ7TNOBsckpm
+         d7n3fmF8BBw8LLkFR4/PN1Pkex//vt/nQODhat7pfrA9E7FuRR+XhZUiKx8rvPo6x+
+         FRPMCRTmMCb/+LeWHGHUqkCLg+LWs8NQKQfYofAsLPacNr20z4PaTVy78BmTRKDp+D
+         jiCPRTH9aJBRj9xkj+O3gofX6rg5Wn/LelQEwt3gKsZLzN5hQRSv2aV4gA1tm2639Q
+         8lhTNDazytzcdwrcXb63Ts+zg0XCYTQAO5KQdDwTivYaAzgEgDAGYPOfNUh51KS5L0
+         lQPKjb3tlRMtZjgjoL2vZdB4QnxeJ2GS2pOth0vzQyc1iyqG5x/QdIUue1rJC34ZlG
+         UYl85GBOdXjfAVAuZCh7aZdKrNokPGib8UhXha6Iw3AvnMdzroj
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Lars Schneider <larsxschneider@gmail.com>
-Subject: [PATCH 00/10] Hash-independent tests (part 1)
-Date:   Sun, 25 Mar 2018 19:20:45 +0000
-Message-Id: <20180325192055.841459-1-sandals@crustytoothpaste.net>
+Subject: [PATCH 01/10] t1011: abstract away SHA-1-specific constants
+Date:   Sun, 25 Mar 2018 19:20:46 +0000
+Message-Id: <20180325192055.841459-2-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.17.0.rc1.317.g4a561d2cc9
+In-Reply-To: <20180325192055.841459-1-sandals@crustytoothpaste.net>
+References: <20180325192055.841459-1-sandals@crustytoothpaste.net>
 X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a series to make our tests hash-independent.  Many tests have
-hard-coded SHA-1 values in them, and it would be valuable to express
-these items in a hash-independent way for our hash transitions.
+Adjust the test so that it computes the expected hash value dynamically
+instead of relying on a hard-coded hash.  Hoist some code earlier in the
+test to make this possible.
 
-The approach in this series relies on only three components for hash
-independence: git rev-parse, git hash-object, and EMPTY_BLOB and
-EMPTY_TREE.  Because many of our shell scripts and test components
-already rely on the first two, this seems like a safe assumption.
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+---
+ t/t1011-read-tree-sparse-checkout.sh | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-For the same reason, this series avoids modifying tests that test these
-components or their expected SHA-1 values.  I expect that when we add
-another hash function, we'll copy these tests to expose both SHA-1 and
-NewHash versions.
-
-Many of our tests use heredocs for defining expected values.  My
-approach has been to interpolate values into the heredocs, as that
-produces the best readability in my view.
-
-These tests have been tested using my "short BLAKE2b" series (branch
-blake2b-test-hash) and have also been tested based off master.
-
-Comments on any aspect of this series are welcome, but opinions on the
-approach or style are especially so.
-
-brian m. carlson (10):
-  t1011: abstract away SHA-1-specific constants
-  t1304: abstract away SHA-1-specific constants
-  t1300: abstract away SHA-1-specific constants
-  t1405: sort reflog entries in a hash-independent way
-  t1411: abstract away SHA-1-specific constants
-  t1507: abstract away SHA-1-specific constants
-  t2020: abstract away SHA-1 specific constants
-  t2101: modernize test style
-  t2101: abstract away SHA-1-specific constants
-  t2107: abstract away SHA-1-specific constants
-
- t/t1011-read-tree-sparse-checkout.sh |  7 ++-
- t/t1300-repo-config.sh               |  6 +-
- t/t1304-default-acl.sh               |  2 +-
- t/t1405-main-ref-store.sh            |  4 +-
- t/t1411-reflog-show.sh               | 21 ++++---
- t/t1507-rev-parse-upstream.sh        |  5 +-
- t/t2020-checkout-detach.sh           | 40 +++++++-----
- t/t2101-update-index-reupdate.sh     | 91 +++++++++++++++-------------
- t/t2107-update-index-basic.sh        |  6 +-
- 9 files changed, 100 insertions(+), 82 deletions(-)
-
+diff --git a/t/t1011-read-tree-sparse-checkout.sh b/t/t1011-read-tree-sparse-checkout.sh
+index c167f606ca..0c6f48f302 100755
+--- a/t/t1011-read-tree-sparse-checkout.sh
++++ b/t/t1011-read-tree-sparse-checkout.sh
+@@ -15,8 +15,11 @@ test_description='sparse checkout tests
+ . "$TEST_DIRECTORY"/lib-read-tree.sh
+ 
+ test_expect_success 'setup' '
++	test_commit init &&
++	echo modified >>init.t &&
++
+ 	cat >expected <<-EOF &&
+-	100644 77f0ba1734ed79d12881f81b36ee134de6a3327b 0	init.t
++	100644 $(git hash-object init.t) 0	init.t
+ 	100644 $EMPTY_BLOB 0	sub/added
+ 	100644 $EMPTY_BLOB 0	sub/addedtoo
+ 	100644 $EMPTY_BLOB 0	subsub/added
+@@ -28,8 +31,6 @@ test_expect_success 'setup' '
+ 	H subsub/added
+ 	EOF
+ 
+-	test_commit init &&
+-	echo modified >>init.t &&
+ 	mkdir sub subsub &&
+ 	touch sub/added sub/addedtoo subsub/added &&
+ 	git add init.t sub/added sub/addedtoo subsub/added &&
