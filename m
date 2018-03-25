@@ -2,78 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1EB651F404
-	for <e@80x24.org>; Sun, 25 Mar 2018 19:21:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4EF581F404
+	for <e@80x24.org>; Sun, 25 Mar 2018 19:59:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752043AbeCYTVd (ORCPT <rfc822;e@80x24.org>);
-        Sun, 25 Mar 2018 15:21:33 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:42544 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751874AbeCYTVZ (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 25 Mar 2018 15:21:25 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id BADE96099D;
-        Sun, 25 Mar 2018 19:21:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1522005684;
-        bh=/E/zG4fJH6855ke8RLPz9n/JTJnqVKkmjtjmAkfab6k=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
-         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
-         In-Reply-To:References:Content-Type:Content-Disposition;
-        b=0Kxy2wvvthPzrGiGGJUi5hOT+HmLt5ah78JRidQkzQii0zgOhYH80H8eR6pnh3PS2
-         ++zSJ3sPWweFYLCDjngKFGR+fgHdVbDPT5c9e6vch7IDtMtZ1wILYLryzRS7wRcugn
-         WHvc+jDi3DpL65G/qVYD6JwkxeCRq2xVLL3Bjrn8ZxPPoBwck73CBeUZqyZZGIyy2w
-         hKj6F3GNcWX4FLMc3nXVWEQK7EW0lKYmLCgQ00+tlveLIPiL0HpaLy2ZdzzZU+HaXr
-         jRN1+nlp4X7KOiE4D0W4LQi6rtFtKlny5TggTxEx8xMjBTBJ0mNfzNxCa4mw+GCfYL
-         /WjC8m0Wk7D78XkV0OUsdopMgPNXknHgGvGfdocX009glFPkxdfKVtaqg21fUru0EO
-         4mJU7uMEmCWskuFyjc5sKXszMw4ePyZbsGCpjWOkD3A7HNQ1hopOTn/uZdNRS8soVR
-         cfXacI1FkXPDQCadUDx5DcZyMjP0j62FUXldgYil+XYuUoa+P3U
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Lars Schneider <larsxschneider@gmail.com>
-Subject: [PATCH 10/10] t2107: abstract away SHA-1-specific constants
-Date:   Sun, 25 Mar 2018 19:20:55 +0000
-Message-Id: <20180325192055.841459-11-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.17.0.rc1.317.g4a561d2cc9
-In-Reply-To: <20180325192055.841459-1-sandals@crustytoothpaste.net>
-References: <20180325192055.841459-1-sandals@crustytoothpaste.net>
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+        id S1751857AbeCYT7B (ORCPT <rfc822;e@80x24.org>);
+        Sun, 25 Mar 2018 15:59:01 -0400
+Received: from mail-io0-f172.google.com ([209.85.223.172]:43649 "EHLO
+        mail-io0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751049AbeCYT7B (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 25 Mar 2018 15:59:01 -0400
+Received: by mail-io0-f172.google.com with SMTP id q84so15288562iod.10
+        for <git@vger.kernel.org>; Sun, 25 Mar 2018 12:59:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=1mmKXXwTDSif0AOJDawhCNmWN9q18P8k1nFEzpYNWP4=;
+        b=aZEkQWKm7+ykxk5cq5GNCnb5E/uJA+RsQEA30DVcjsYymRj8wvZgi2bB+Y7/3sMAsA
+         yc9u12F9c2Wt8QYw3kwrhSm5lR6nGmkYGiNR746NkZJY83bWX6NTqKkrVBTein6VOMlk
+         NlK7O/XX2CRX62GiPpP1Ohq8dZlC2rlnwTBpJ6tiPmsI9Z3X88JaQwtSjeXIHlCYdcWQ
+         9q59doUdkTHoqf8wVXVcJ0pGCFIPYWvJmGmR1jenKrEVX5jb54rFJbRFr/crfNrQ1WRf
+         fR0BfRaE7AdG0ARPzPzAkEJTeADwdbgQ1cHshZI1fEyUttd9xV35FMd2j96kTwz6U1K9
+         U2zg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=1mmKXXwTDSif0AOJDawhCNmWN9q18P8k1nFEzpYNWP4=;
+        b=McJllTz6InhA4p/HV8BHJyWPi+nsRq9G1gcUWEVJ+7fM5GH4Jhsk6A4CkhE2q3MSEo
+         Va4ogVZecLhUWpOo4h1wJSCdPKWVOt+JzdDUhNq+xoTdrLYTHagdyOaIlCVFlSRLg9kn
+         0ttzjnj6sl06aYTEyd4UuJjxwxbzdWGBzwXlJImasopmkmxjQnpjm4fNtPxA/PS1fgtb
+         snfJlLGWSjPl652ETT2eiqq59lJFRCvBk065uLy+Zyt47ofwaZrp5TuwI+TrIUa9hrTu
+         M7Wod/jCNLa43UfxIG1eLmYAjKySggx4U8Da4E55pgk8a3xDLLrSxCFEXnTA8VwMrwkC
+         2vQw==
+X-Gm-Message-State: AElRT7H2s+KspE3Zi55lya/llUYVQO8U9aWe3JPO8ZzOnnW4q+aEHin9
+        dyXnl9ap/XZte6g2Tku4DUBkET1vzsDROKNuCPKNBjy5
+X-Google-Smtp-Source: AG47ELvSRbS/x4fjLuL0UmfLd9ALdgL2NgiORCPMTiaYBfVUNgmNOV/SF7Xo1W8ZI8bk/gImpxMV+DeXofokbdVpgEQ=
+X-Received: by 10.107.144.197 with SMTP id s188mr39687376iod.147.1522007940127;
+ Sun, 25 Mar 2018 12:59:00 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.79.34.9 with HTTP; Sun, 25 Mar 2018 12:58:59 -0700 (PDT)
+In-Reply-To: <CA+CzEk9QpmHK_TSBwQfEedNqrcVSBp3xY7bdv1YA_KxePiFeXw@mail.gmail.com>
+References: <20180324173707.17699-1-joel@teichroeb.net> <20180324173707.17699-2-joel@teichroeb.net>
+ <CAP8UFD3Qxt2YMqTtHwU8n7EDvD66QjGSywRQoxJDnncv7=2BUg@mail.gmail.com> <CA+CzEk9QpmHK_TSBwQfEedNqrcVSBp3xY7bdv1YA_KxePiFeXw@mail.gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Sun, 25 Mar 2018 21:58:59 +0200
+Message-ID: <CAP8UFD04LF68LONP3hxpjc4oQokSab4HYvTkazeBq8STzN6E-A@mail.gmail.com>
+Subject: Re: [PATCH 1/4] stash: convert apply to builtin
+To:     Joel Teichroeb <joel@teichroeb.net>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Use the $EMPTY_BLOB variable instead of hard-coding a hash.
+On Sun, Mar 25, 2018 at 6:51 PM, Joel Teichroeb <joel@teichroeb.net> wrote:
+> On Sun, Mar 25, 2018 at 1:09 AM, Christian Couder
+> <christian.couder@gmail.com> wrote:
+>> It seems to me that the apply_stash() shell function is also used in
+>> pop_stash() and in apply_to_branch(). Can the new helper be used there
+>> too instead of apply_stash()? And then could apply_stash() be remove?
+>
+> I wasn't really sure if I should remove code from the .sh file as it
+> seems in the past the old .sh files have been kept around as examples.
 
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
- t/t2107-update-index-basic.sh | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+Yeah, some original shell scripts that have been converted are kept in
+contrib/examples/, but the shell code has still been removed from the
+.sh files when they were being converted.
 
-diff --git a/t/t2107-update-index-basic.sh b/t/t2107-update-index-basic.sh
-index 32ac6e09bd..1db7e6a1ab 100755
---- a/t/t2107-update-index-basic.sh
-+++ b/t/t2107-update-index-basic.sh
-@@ -85,9 +85,9 @@ test_expect_success '--chmod=+x and chmod=-x in the same argument list' '
- 	>B &&
- 	git add A B &&
- 	git update-index --chmod=+x A --chmod=-x B &&
--	cat >expect <<-\EOF &&
--	100755 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0	A
--	100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0	B
-+	cat >expect <<-EOF &&
-+	100755 $EMPTY_BLOB 0	A
-+	100644 $EMPTY_BLOB 0	B
- 	EOF
- 	git ls-files --stage A B >actual &&
- 	test_cmp expect actual
+> Has that been done for previous conversions?
+
+I don't think there were some cases when the shell code was not
+removed. I haven't looked at all the conversions in details though.
