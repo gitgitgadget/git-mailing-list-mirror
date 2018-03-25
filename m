@@ -7,113 +7,81 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 478B11F42D
-	for <e@80x24.org>; Sun, 25 Mar 2018 10:57:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 173691F42D
+	for <e@80x24.org>; Sun, 25 Mar 2018 10:57:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752367AbeCYK5m (ORCPT <rfc822;e@80x24.org>);
-        Sun, 25 Mar 2018 06:57:42 -0400
-Received: from mout.web.de ([212.227.17.11]:33297 "EHLO mout.web.de"
+        id S1752431AbeCYK5v (ORCPT <rfc822;e@80x24.org>);
+        Sun, 25 Mar 2018 06:57:51 -0400
+Received: from mout.web.de ([212.227.17.12]:45411 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752213AbeCYK5l (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 25 Mar 2018 06:57:41 -0400
-Received: from [192.168.178.36] ([79.237.251.165]) by smtp.web.de (mrweb101
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0Ltnmz-1eYFax2Ii5-0118WU; Sun, 25
- Mar 2018 12:57:30 +0200
-Subject: Re: Null pointer dereference in git-submodule
-To:     Jeremy Feusi <jeremy@feusi.co>
-Cc:     git@vger.kernel.org, Prathamesh Chavan <pc44800@gmail.com>,
+        id S1752374AbeCYK5u (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 25 Mar 2018 06:57:50 -0400
+Received: from [192.168.178.36] ([79.237.251.165]) by smtp.web.de (mrweb103
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MgOCo-1fBh92189G-00NfHJ; Sun, 25
+ Mar 2018 12:57:38 +0200
+To:     Git List <git@vger.kernel.org>
+Cc:     Yasushi SHOJI <yasushi.shoji@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
         Junio C Hamano <gitster@pobox.com>
-References: <20180325095046.GA687@feusi.co>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <9c3c0161-f894-3368-ece2-500d0bb6f475@web.de>
-Date:   Sun, 25 Mar 2018 12:57:28 +0200
+Subject: [PATCH] bisect: use oid_to_hex() for converting object_id hashes to
+ hex strings
+Message-ID: <9839073c-84ca-f00e-d0e1-801e521ef29e@web.de>
+Date:   Sun, 25 Mar 2018 12:57:36 +0200
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
  Thunderbird/52.7.0
 MIME-Version: 1.0
-In-Reply-To: <20180325095046.GA687@feusi.co>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:MCxD1cTCbF6ZD/9Y7kKLR8MiBBVp8wDjvlFXkUyvJ2DNimmk0yT
- iUWqVQPSz8rGZW4VZgrECyqRLp+JCKTRh8g2g8g5vONYFFiQkWF2mF8wofhs1P+4iwYL1jS
- gW8zD/K8NoxhtTqK5fIADI9HKXc7IMfk6d+KH8safhrfh1TD/we8N9tnSw10YyO88povic2
- 046ui8gO1Fe6m3Wt3n+5Q==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:39VJOFPDN/c=:WW8LROE1wPvKNxci4FBpvG
- QY4q1dHmU5S3q3EyIF6dOwMykTbmxtefjlsCiWUc5xnVthi+7gQp2cxTCm9cMhdHoThmIfpDb
- XTBzDozkHxRoyZExWBdpJBMqFGnZNywkHHVjP9M0nUOCtJA9t9jzG+PSHjKWM9zxmja56S+p7
- B3YXe4XMOoMcpNSLXet1lsa5noP2YJ1tSDgAHvuSIVZ+/P8gs09rNccvB6nKM2TDn1BbxBNY0
- 77N3z/z3jRXXynRxgml2HIy9yjnSp8z0PEYyjv3mzvKGH0SbJm/xnA8fa++z43lg6r/K/CTpQ
- CmFb0EQND8aZLPRhHYCZOimqYwbivyLq9lWQ8e3V52roghx6CvwVPYMHk4f3j0blBBto95WP+
- 2KQ4+epz5Y1P92V0VwH6xvZ44tWnWPP5dJSipXnL7WB4gSY7AsoQ3GpVcWQ7sn/8Mgr9Z009K
- naY0aMZD1F/qItH8CW46S/8GDOnon9MzaB7qKYAxqgMkfDHhfH2y5KZxsE5nf29o8u1Jy7ghf
- Ne593bXhpTrfJbpgU5SOPXo+YhSAV9D4h8ZfGZYutJ9m4ejT7AG8PulV0/NbW//lh3D7xIWkk
- 3W13EN76Nn44pjHeLod42ZjrOEeZA+t6OAbpONF/a882Layz6QlHPI2WPk6Auvft2md/8BT6B
- fJIC76TzRTXpkqzgZhJmkR6DDvEcjqwt+cb7rvoe7bImkUqb+47IkeWDlv+L8KTip3kD2yauJ
- bppRcx2RxDCKxOmt12FAl3JM3RlKsLxVZxRIEyOUWJ8/fIlNYuDoKtACrXwgYqrEM2aRs9lcE
- +1wCY0uYQhYoM+3ndVuox4MaD9cZ6Pzk/L8I8HUOL9EwXrmjtE=
+X-Provags-ID: V03:K0:vSsbn+HtbqJ30B6IwiGrFgyD6N0Kb9K3SSPVt73uxStTrmcqmnC
+ eruQnAvZ+jhXYyZQj8WaM5V+ZnMGrooiXyqKfLzjUDqM52lU5RPufIBPgBXEAsExqsW/IPA
+ fIW+echOYwh9VZs+xU34algfd1y/0JSyZ7H2kUq/4N8puaWlciI2zum5nKjLtjZsLMWz4Kl
+ mxoWW4KOlsXmoxB1GFMcQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:lRFRD+2f6ec=:NTmySNuhkrHW+n2tqyFDvH
+ RBAS236NkC/xqFJDPF6uRNoC2H0F1FTmG5/QvGjiH2+YOCZstd/yBhKHQR2oZUqm35LtVlt5V
+ iIufRTzTuguA1E2cyeqem1hYRUg9S+AEctvB2DgW5Eh/BCfpsYk3tEfF6esuvO2qh0UBlMVPj
+ zao0c+h92Spym3AkbYbHb5D+hUSGLvBOR4SpewaKXYeBCBa02ptg01019gkywyQeF3e1KVl2a
+ MvjPCrwYw21kc9CCfXM2zcrTCMqibWx92j3xjsh1JRPTdB30gIJKqiRtlLpjzJ/HnO6XELzJX
+ /y1C/xsWkIljdBPQFIvxMKvFFUh/PicUBIndTbD8V2SmyW25h4niJ3djEmZewz8AW1OzPRYn/
+ rB4+SSrwZAizhI7fFRy8C+LwPo03Zr5IfgvzGFj2Oj1FwKLm1t8aT0r3vVWh8q02wSEIRYHdX
+ q/M3H2LHzcFjCdFu+/m40aeuGK58I4pdE8zqIicztC94VdeGCbRvDs0fOarluRRL76oeZFEXY
+ nGc/i9hcJn/VydvQp50qK03uTqPw7Oj6AeCPxcWnqgyubRbTQiSZrDf2N2pIQnAPGrbAxkEPN
+ Z2ZSvLWohGgsEYsSo7fZbVIBXmLc6TCVPBWuSa33Zh2Dsf/wB0htODmQgR3sBSwGN8Asbidvo
+ MLdeW/HYPT52NP7XCe7ske6ts7ezkwWULIPqZQ6Q9UQ/z6Ba1nNKVMm+BatUeer0NRhEYqh+4
+ OztAm5rZ70oj3qOuBKaUksxvGsKfcIcSmKskUCX0xZxBD0Mb2OWZLCKE6NPNCUyKRIpyikfCu
+ uHKbbZRpijQGIp4L4RHlD+t9MCYClbIwfUQpj2fq0ebUnqXnJQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 25.03.2018 um 11:50 schrieb Jeremy Feusi:
-> 
-> Hmm... That's weird. I can reproduce it on 3 independant systems with
-> versions 2.16.2 up, although it does not work with version 2.11.0.
-> Anyway, I figured out how to reproduce this bug. It is caused when a
-> submodule is added and then the directory it resides in is moved or
-> deleted without commiting. For example:
-> 
-> git init
-> git submodule add https://github.com/git/git git
-> mv git git.BAK
-> git submodule status #this command segfaults
+Patch generated with Coccinelle and contrib/coccinelle/object_id.cocci.
 
-With the patch I sent in my first reply the last command reports:
-
-	fatal: no ref store in submodule 'git'
-
-That may not be the most helpful message -- not just the ref store is
-missing, the whole submodule is gone!
-
-Come to think about it, this removal may be intended.  How about
-showing the submodule as not being initialized at that point?
-
--- >8 --
-Subject: [PATCH v2] submodule: check for NULL return of get_submodule_ref_store()
-
-If we can't find a ref store for a submodule then assume it the latter
-is not initialized (or was removed).  Print a status line accordingly
-instead of causing a segmentation fault by passing NULL as the first
-parameter of refs_head_ref().
-
-Reported-by: Jeremy Feusi <jeremy@feusi.co>
 Signed-off-by: Rene Scharfe <l.s.r@web.de>
 ---
-Test missing..
+This is a belated follow-up to f0a6068a9f (bisect: debug: convert struct
+object to object_id).
 
- builtin/submodule--helper.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ bisect.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index ee020d4749..ae3014ac5a 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -654,9 +654,13 @@ static void status_submodule(const char *path, const struct object_id *ce_oid,
- 			     displaypath);
- 	} else if (!(flags & OPT_CACHED)) {
- 		struct object_id oid;
-+		struct ref_store *refs = get_submodule_ref_store(path);
+diff --git a/bisect.c b/bisect.c
+index f6d05bd66f..319d60edad 100644
+--- a/bisect.c
++++ b/bisect.c
+@@ -144,10 +144,10 @@ static void show_list(const char *debug, int counted, int nr,
+ 			fprintf(stderr, "%3d", weight(p));
+ 		else
+ 			fprintf(stderr, "---");
+-		fprintf(stderr, " %.*s", 8, sha1_to_hex(commit->object.oid.hash));
++		fprintf(stderr, " %.*s", 8, oid_to_hex(&commit->object.oid));
+ 		for (pp = commit->parents; pp; pp = pp->next)
+ 			fprintf(stderr, " %.*s", 8,
+-				sha1_to_hex(pp->item->object.oid.hash));
++				oid_to_hex(&pp->item->object.oid));
  
--		if (refs_head_ref(get_submodule_ref_store(path),
--				  handle_submodule_head_ref, &oid))
-+		if (!refs) {
-+			print_status(flags, '-', path, ce_oid, displaypath);
-+			goto cleanup;
-+		}
-+		if (refs_head_ref(refs, handle_submodule_head_ref, &oid))
- 			die(_("could not resolve HEAD ref inside the "
- 			      "submodule '%s'"), path);
- 
+ 		subject_len = find_commit_subject(buf, &subject_start);
+ 		if (subject_len)
 -- 
-2.17.0.rc1.38.g7c51fd80b8
+2.16.3
