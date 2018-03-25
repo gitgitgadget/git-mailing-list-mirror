@@ -2,149 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E0FAD1F404
-	for <e@80x24.org>; Sun, 25 Mar 2018 16:25:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AECB41F404
+	for <e@80x24.org>; Sun, 25 Mar 2018 16:31:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753426AbeCYQZG (ORCPT <rfc822;e@80x24.org>);
-        Sun, 25 Mar 2018 12:25:06 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:55982 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753281AbeCYQZF (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 25 Mar 2018 12:25:05 -0400
-Received: by mail-wm0-f66.google.com with SMTP id t7so11238116wmh.5
-        for <git@vger.kernel.org>; Sun, 25 Mar 2018 09:25:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=nwAK8eqoXTTh6uoO2YGijFWmt1Kyrw+e7XbvyqgXPEE=;
-        b=ma8E9U61tbVXgyaSmm07F4i9fXO0PRgVfcS3DmAKqljRJDD6Wc0dYexOgs+DSshV2C
-         vHeGMqMDAutczTOK1JlbPMBBWviJzmLzEqCkVZCDh3GToCchtWm8HDl4uub0wZFbNkrk
-         KEYN++RvJJCAC9AE6P6PcAjOigDH9JiIegb3XlUfEB6DxmvEA6pu7ZGxYer9434ErdBo
-         0QY8YBQArdff9g2amTjS9TdBCUUekT8TfWmVAZu7JpQI4eT/bqfumkJ8ef4dXDyPiwuG
-         Am3GXVTzWMbgQZwXEk27AY8AuUpj2aXL4TC/F3bMbMqcbCpTjG7cO6wNxfrJO3DmUnkG
-         4xcQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=nwAK8eqoXTTh6uoO2YGijFWmt1Kyrw+e7XbvyqgXPEE=;
-        b=Lj3qSM25seVh+d9QH7Lk1oKZbLuNAbxF2ehMm8B8jkl9o/y0/RndOeDlZKsat6P44c
-         lTNgLYMGbU21mFqEKv9pHlk8f/AFBEmcUHvEt+xxfWqKu0/FSPT5J0vkulbxhPV+GqFg
-         VIBu2NCN/uTohgHEK3imq/BkbfbZyNlj2a2jzpIounj5XZ9bi/6TL23JfxtRTUmmiX0E
-         aS7F29e4vbuYFPEwrP6txakwsb+jyIEHChbGgEaJUfMjp4LQzPMH+5QJ0243F+b9aVRV
-         YfAeB1X/BAnI041Vkqj5hQHDIYz/X1xSsrWWIZBy5Ix6d93moOsfQXPlyN+73z22tOaU
-         UONA==
-X-Gm-Message-State: AElRT7E44n0lLyL3r1TPyRYrX3TQWTvZX1H4oQUMdAJIfuGp9C0rXME5
-        +lwJYuWDvR0aFohjVM+GrcQ=
-X-Google-Smtp-Source: AIpwx48f/U2uSIsnkPX7GfynwUH7fHOW4Lffs9sc7KvesfkUcuF1E0X9pztsQlsgKvVtRwQykQldaQ==
-X-Received: by 10.28.174.67 with SMTP id x64mr3956342wme.104.1521995103542;
-        Sun, 25 Mar 2018 09:25:03 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id f10sm8796191wrg.67.2018.03.25.09.25.02
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 25 Mar 2018 09:25:03 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Yuki Kokubun <orga.chem.job@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v3] filter-branch: fix errors caused by refs that point at non-committish
-References: <xmqqvadmilx5.fsf@gitster-ct.c.googlers.com>
-        <1521920467-6091-1-git-send-email-orga.chem.job@gmail.com>
-Date:   Sun, 25 Mar 2018 09:25:02 -0700
-In-Reply-To: <1521920467-6091-1-git-send-email-orga.chem.job@gmail.com> (Yuki
-        Kokubun's message of "Sat, 24 Mar 2018 19:41:07 +0000")
-Message-ID: <xmqqr2o8f7hd.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1753455AbeCYQb4 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 25 Mar 2018 12:31:56 -0400
+Received: from mout.web.de ([212.227.17.12]:34085 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753281AbeCYQbz (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 25 Mar 2018 12:31:55 -0400
+Received: from [192.168.178.36] ([79.237.251.165]) by smtp.web.de (mrweb101
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0LaCji-1eIZSq1zNm-00m4bg; Sun, 25
+ Mar 2018 18:31:50 +0200
+To:     Git List <git@vger.kernel.org>
+Cc:     Jonathan Tan <jonathantanmy@google.com>,
+        Junio C Hamano <gitster@pobox.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH] unpack-trees: release oid_array after use in check_updates()
+Message-ID: <b2380d1e-1d45-22cf-ba22-cf4cb02e1134@web.de>
+Date:   Sun, 25 Mar 2018 18:31:48 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.7.0
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:Ay5kA7F2UTceLZaIYyDk8J2fnZq3nJjXkrPkl+ZQH4IbEowKuJ0
+ DL++pAfJusKvd223krdZ6NMZdUzGoWEUzLcezfXr86m35U4+rQNcIRt6asXcjczvJ9jp4Cz
+ gsWTFX0n9aYv/FSMVSxOH9rYrRUwsReWK0z08SZQtJXjQSjuyWeRyPKmKov8WtK9EC1Bb/u
+ A7qZNeeQEG8snpajmUfzw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:LOikF6pQ2jc=:5QZmFieHEelyJthe7486A9
+ NNAmnu1jrrlQGq/T8ZuGTUepSFtr9hFug1foDvsLmBcLyKHCcbiArBwKoRo1XosvZvCB6j4kP
+ eyzp/gxAJ/8cWBwfamjdgNPdoHNvFifFFbNBTQ7VgiriaCWWVXAaKrUK/6sQEjDyGR2aZCk9X
+ 0IPVYjDoxVDR8mMVVVUlDI9JyUpliMBdt5Wq4cQ4irzUEZG774Al0rwXKNE+ITASO+Kly6JeT
+ F3MD1yjkl1MGmjl63Vma6B8pCs7CmV6K1hUx0W8eASLt8IPJfW1vjMrQ04yxmYSe+7iJt/yTi
+ ujJ4t6ktQe5ZAy2kNPIqKb+63cpdY0rLMPJxpWDmmoOLBj7wQXvO6OBjD5pOiPDyW5VbO5MuI
+ 5lKMM2qTUGx6HVy5ctMhpo6kUxKTguTHJWXa3hunQLg7k39QC03umjZA6oPuPEcwF3tzOxN1a
+ IfwbNjEAtr6Dv/VqsZGpr8or0MG38FJSobXFxINY70cDRza+A4bVVkqRJr0H2IJT31KxwYekV
+ Lm1DajmINNRtUNFiyrHt1Cbh8R1u1woLQeB8gnnOIRaR1zujPiD3+f+YWQiYZqTnmld46Thas
+ 4Vw/msuIL3gjArdKu21CPxWt090YrpkzL0EZymSZfuwFcZfo3MWxN0Odl+yBoEEm5jk8D6+/D
+ Ty73LJTu3+VRwjxlOHdSQZC4+18B+QOBwULVbjuKPmX5qeyi7uoFHpZ+zR3TQUSxIhy4g80sq
+ t/Zrjr/0tQY6hLNEClVFlamtiY1+HyrL0nzOq7fHAeoNsbwmhR+LUyxdOViBouO2X3qKfQ+fG
+ Q4cf6SeaFoGR5hnesN8QLT7y2xhqcRxasbppOZszBIQBy2SsDA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Yuki Kokubun <orga.chem.job@gmail.com> writes:
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+That leak was introduced by c0c578b33c (unpack-trees: batch fetching of
+missing blobs).
 
-> "git filter-branch -- --all" print error messages when refs that point at
-> objects that are not committish.
+ unpack-trees.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-Grammo (third-person singular 'prints' misspelt without 's'; the
-"when" clause has a complex subject but no verb).
-
-Perhaps this will salvage what you meant:
-
-	"git filter-branch -- --all" prints error messages when
-	processing refs that point at objects that are not
-	committish.
-
-> Such refs can be created by "git replace" with
-> trees or blobs. And also "git tag" with trees or blobs can create such refs.
->
-> Filter these problematic refs out early, before they are seen by the logic to
-> see which refs have been modified and which have been left intact (which is
-> where the unwanted error messages come from), and warn that these refs are left
-> unwritten while doing so.
-> ---
-
-Please sign-off your patch (cf. Documentation/SubmittingPatches).
-
-Otherwise this round looks good.
-
-Thanks.
-
->  git-filter-branch.sh     | 14 ++++++++++++--
->  t/t7003-filter-branch.sh | 14 ++++++++++++++
->  2 files changed, 26 insertions(+), 2 deletions(-)
->
-> diff --git a/git-filter-branch.sh b/git-filter-branch.sh
-> index 1b7e4b2..41efecb 100755
-> --- a/git-filter-branch.sh
-> +++ b/git-filter-branch.sh
-> @@ -251,8 +251,18 @@ done < "$tempdir"/backup-refs
->  
->  # The refs should be updated if their heads were rewritten
->  git rev-parse --no-flags --revs-only --symbolic-full-name \
-> -	--default HEAD "$@" > "$tempdir"/raw-heads || exit
-> -sed -e '/^^/d' "$tempdir"/raw-heads >"$tempdir"/heads
-> +	--default HEAD "$@" > "$tempdir"/raw-refs || exit
-> +while read ref
-> +do
-> +	case "$ref" in ^?*) continue ;; esac
-> +
-> +	if git rev-parse --verify "$ref"^0 >/dev/null 2>&1
-> +	then
-> +		echo "$ref"
-> +	else
-> +		warn "WARNING: not rewriting '$ref' (not a committish)"
-> +	fi
-> +done >"$tempdir"/heads <"$tempdir"/raw-refs
->  
->  test -s "$tempdir"/heads ||
->  	die "You must specify a ref to rewrite."
-> diff --git a/t/t7003-filter-branch.sh b/t/t7003-filter-branch.sh
-> index 7cb6079..04f79f3 100755
-> --- a/t/t7003-filter-branch.sh
-> +++ b/t/t7003-filter-branch.sh
-> @@ -470,4 +470,18 @@ test_expect_success 'tree-filter deals with object name vs pathname ambiguity' '
->  	git show HEAD:$ambiguous
->  '
->  
-> +test_expect_success 'rewrite repository including refs that point at non-commit object' '
-> +	test_when_finished "git reset --hard original" &&
-> +	tree=$(git rev-parse HEAD^{tree}) &&
-> +	test_when_finished "git replace -d $tree" &&
-> +	echo A >new &&
-> +	git add new &&
-> +	new_tree=$(git write-tree) &&
-> +	git replace $tree $new_tree &&
-> +	git tag -a -m "tag to a tree" treetag $new_tree &&
-> +	git reset --hard HEAD &&
-> +	git filter-branch -f -- --all >filter-output 2>&1 &&
-> +	! fgrep fatal filter-output
-> +'
-> +
->  test_done
+diff --git a/unpack-trees.c b/unpack-trees.c
+index d5685891a5..e73745051e 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -379,30 +379,31 @@ static int check_updates(struct unpack_trees_options *o)
+ 		struct oid_array to_fetch = OID_ARRAY_INIT;
+ 		int fetch_if_missing_store = fetch_if_missing;
+ 		fetch_if_missing = 0;
+ 		for (i = 0; i < index->cache_nr; i++) {
+ 			struct cache_entry *ce = index->cache[i];
+ 			if ((ce->ce_flags & CE_UPDATE) &&
+ 			    !S_ISGITLINK(ce->ce_mode)) {
+ 				if (!has_object_file(&ce->oid))
+ 					oid_array_append(&to_fetch, &ce->oid);
+ 			}
+ 		}
+ 		if (to_fetch.nr)
+ 			fetch_objects(repository_format_partial_clone,
+ 				      &to_fetch);
+ 		fetch_if_missing = fetch_if_missing_store;
++		oid_array_clear(&to_fetch);
+ 	}
+ 	for (i = 0; i < index->cache_nr; i++) {
+ 		struct cache_entry *ce = index->cache[i];
+ 
+ 		if (ce->ce_flags & CE_UPDATE) {
+ 			if (ce->ce_flags & CE_WT_REMOVE)
+ 				die("BUG: both update and delete flags are set on %s",
+ 				    ce->name);
+ 			display_progress(progress, ++cnt);
+ 			ce->ce_flags &= ~CE_UPDATE;
+ 			if (o->update && !o->dry_run) {
+ 				errs |= checkout_entry(ce, &state, NULL);
+ 			}
+ 		}
+ 	}
+-- 
+2.16.3
