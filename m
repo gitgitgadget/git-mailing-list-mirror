@@ -7,100 +7,83 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BF1791F404
-	for <e@80x24.org>; Sun, 25 Mar 2018 13:46:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0CB211F404
+	for <e@80x24.org>; Sun, 25 Mar 2018 14:32:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753352AbeCYNqq (ORCPT <rfc822;e@80x24.org>);
-        Sun, 25 Mar 2018 09:46:46 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:34992 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753337AbeCYNqk (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 25 Mar 2018 09:46:40 -0400
-Received: by mail-wm0-f65.google.com with SMTP id r82so10944119wme.0
-        for <git@vger.kernel.org>; Sun, 25 Mar 2018 06:46:39 -0700 (PDT)
+        id S1753285AbeCYOcl (ORCPT <rfc822;e@80x24.org>);
+        Sun, 25 Mar 2018 10:32:41 -0400
+Received: from mail-wm0-f52.google.com ([74.125.82.52]:38542 "EHLO
+        mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751094AbeCYOck (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 25 Mar 2018 10:32:40 -0400
+Received: by mail-wm0-f52.google.com with SMTP id l16so11018275wmh.3
+        for <git@vger.kernel.org>; Sun, 25 Mar 2018 07:32:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=fNAwNWtX413n5H0cBqComBfOtwAAO4mqnHCQhU4q17U=;
-        b=GveU8LWcA6VRO43j75rp07azAFV8Mw34a1UzX5MhRd+4hplqz7w6G5dhgPQH6eUO2A
-         XI5nEN86bUzarUjS/bH2B7K8Kuja8t7nFXwOQhGOEA0xQJpQbiafN/57I84Zv9zBDGW5
-         u2gbcEZTMbfq49NiwdvYOR8g+dyA69U7unj9tDrh31A4JQWLnY7Kv5HJoHT81KUPQj5I
-         jd+6dB94z7a0pZ0cmzpLtLge1VfITV3sFqjy9WogS/1D8Vbmfm8Co/KfIVDln5Fv6CcS
-         cEkLGX0wgTL4Zjs+xXyK7XQHOyzBHMVFD3VQNUx9NXfKM/s9iBpI3DmSTdYFYBohhV6X
-         oAgQ==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=U+m0IW3/PeestNhFY+zFeFx6QkeIKLNvYEimu/H+vNQ=;
+        b=EqRGyUtcSSfIHh0nUglI8K9FgNKTTwUA2/lmHckguPt+kUlZdtX35oLRYbRUhsNoDD
+         2UMjxWAb5r/KgjCYHeTqfVBy/Bfp+Blk/iK1LyR924+70cUrlG1L+0iV1rzVCoaGmr0S
+         eMTBd+Psyko8gqOw1376lPuz2M0wx5sy217+lm6SblEVxeV1JypCfG9+7fXW32mSezNp
+         wEMt0sqozpga3Ztgd9a9p6MPeNrztBzxK5GhdJEaQZhZWWnPO97xfAXrFBe5KcAjGWCW
+         Zphb+Rrj0GKfENtzPvMFec4zNlWt4042tG3MS6XjIk322b1YpNCrLbd1WREbJ4qXWot3
+         v/Og==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=fNAwNWtX413n5H0cBqComBfOtwAAO4mqnHCQhU4q17U=;
-        b=agWbXjzn3MpzOT8uniTMgE2riXmcHpSjFuwC9odt/fFOpdXoXNfqzrIEfLzD3fH5If
-         FFGZZU0wQvhJRKATUQxVFpXfaEjYAH7y6WTRtfiAgwhTEYT1fpVZ0FjIDOXSnEU3eiri
-         7zRJkFuZbGrAfVaiuO2sP4URwA4T8sUymOqSpqcMG4liXfA7X6t/269vJaT/CQ6HbW9j
-         u7D1/QyOV4XvqGvDoSITRo8pfXhv30mKo2txY284RIcVq+6qFZUDqckFt1XVBGM3XiS7
-         B0w27goOZhZZgA59+cgvQMF9Vqxw9Zxtad5/WK84NpUuL4st22q37KbIE7QkPdMMw9G4
-         WIOw==
-X-Gm-Message-State: AElRT7G5fSqNe1CRvHsVCyCpdaOQB1MTyE/czWJTOZ6M76cdvVTpepCX
-        BqUjL6GkIVAM45yLpqE1uTKUHaht
-X-Google-Smtp-Source: AG47ELsfBdoYlFdi/uy0xKpcYzctqwSgtfEuPWPoSmi2kis+FDTs7l2bBZ7qos8/ghA1k6AC8yCkHQ==
-X-Received: by 10.28.193.13 with SMTP id r13mr11943653wmf.38.1521985598906;
-        Sun, 25 Mar 2018 06:46:38 -0700 (PDT)
-Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
-        by smtp.gmail.com with ESMTPSA id 96sm12511788wrk.54.2018.03.25.06.46.37
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 25 Mar 2018 06:46:37 -0700 (PDT)
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH v5 6/6] t2025: rename now outdated branch name
-Date:   Sun, 25 Mar 2018 14:49:47 +0100
-Message-Id: <20180325134947.25828-7-t.gummerer@gmail.com>
-X-Mailer: git-send-email 2.16.1.77.g8685934aa2
-In-Reply-To: <20180325134947.25828-1-t.gummerer@gmail.com>
-References: <20180317222219.4940-1-t.gummerer@gmail.com>
- <20180325134947.25828-1-t.gummerer@gmail.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=U+m0IW3/PeestNhFY+zFeFx6QkeIKLNvYEimu/H+vNQ=;
+        b=O/Yl3p9NVodBx3X6SxZ1RMQ/faSpFn7/UzTysiLgiFhufmjQ0tCRe1mmdwFz8RzUS2
+         H7p5ssb16uCSohQ/8E0kjrWC1MtY8QkBwRqY9+tx3NyIb2/HP9LoBE/3fYEX/AGxp9bZ
+         1JBFDGjnDSBw4q+srJNMWRDtmXYTCBpU89S8tLIbmj4cSn16GJUYKzNjdzhs91O9CbSy
+         n3bGsKUA5zRWAi5B0nTvzYfujj0qC/R2i3NSKkWzH0QssGK+rN/Fnq/9tWobH0V47hTR
+         5E6Kjpu/LuSWX17DXxVa/OrZnlqc2e/+/lKbuRHLBES+lD50B/KN+GU89GqpycNDGMp+
+         Cm9w==
+X-Gm-Message-State: AElRT7Fpowod9ITHWqIeITx2sEqfCkygprQ4zVzSUuon5vPbGScfjKVa
+        W0XP+xjUh7muBBuGeTuSg5439toGx00=
+X-Google-Smtp-Source: AG47ELtVMFHgeZ0j1ta1LPdPNmlgrKWA0c9hx9/Vzu4XnQ4m+iDz78LFPtOopDENqglZhJAsYThpuQ==
+X-Received: by 10.28.71.77 with SMTP id u74mr13152419wma.149.1521988359427;
+        Sun, 25 Mar 2018 07:32:39 -0700 (PDT)
+Received: from [192.168.0.103] ([92.55.154.10])
+        by smtp.gmail.com with ESMTPSA id q21sm16573870wmd.40.2018.03.25.07.32.38
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 25 Mar 2018 07:32:38 -0700 (PDT)
+Subject: =?UTF-8?Q?Re:_[GSoC]_Convert_=e2=80=9cgit_stash=e2=80=9d_to_builtin?=
+ =?UTF-8?Q?_proposal?=
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+References: <1521576562.2188.10.camel@gmail.com>
+ <CAP8UFD3NKCSN8mVDiCUzvor5uZh4nFCAw4T0zgxpvHLf9AWmyA@mail.gmail.com>
+ <1521760546.11809.20.camel@gmail.com>
+ <nycvar.QRO.7.76.6.1803231754390.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+From:   Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
+Message-ID: <30151c63-9437-e1e7-dd89-585e35232455@gmail.com>
+Date:   Sun, 25 Mar 2018 17:32:37 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.6.0
+MIME-Version: 1.0
+In-Reply-To: <nycvar.QRO.7.76.6.1803231754390.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Before the previous commit, the branch named precious was used to check
-that 'git worktree' wouldn't clobber the branch.  While 'git worktree'
-still shouldn't (and doesn't) modify the branch, that's no longer the
-main thing the test is checking.
+On 23.03.2018 19:06, Johannes Schindelin wrote:
+>> [... proposal ...]
+> 
+> This is a pretty good proposal. The initial draft at converting `stash
+> list` is a good start (it will need to be converted to avoid spawning an
+> extra process, but that is something we can do incrementally, together).
 
-Rename the branch to avoid making future readers wonder why this
-particular branch is more "precious" than others.
+Thank you for your kind words. It feels good to see other people 
+appreciate my work. It is a strong incentive to keep going on. I made a 
+few adjustments and I hope that the final version will be better.
 
-Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
----
- t/t2025-worktree-add.sh | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
-
-diff --git a/t/t2025-worktree-add.sh b/t/t2025-worktree-add.sh
-index ae602cf20e..fb99f4c46f 100755
---- a/t/t2025-worktree-add.sh
-+++ b/t/t2025-worktree-add.sh
-@@ -201,12 +201,12 @@ test_expect_success '"add" with <branch> omitted' '
- test_expect_success '"add" checks out existing branch of dwimd name' '
- 	test_commit c1 &&
- 	test_commit c2 &&
--	git branch precious HEAD~1 &&
--	git worktree add precious &&
--	test_cmp_rev HEAD~1 precious &&
-+	git branch dwim HEAD~1 &&
-+	git worktree add dwim &&
-+	test_cmp_rev HEAD~1 dwim &&
- 	(
--		cd precious &&
--		test_cmp_rev precious HEAD
-+		cd dwim &&
-+		test_cmp_rev dwim HEAD
- 	)
- '
- 
--- 
-2.16.1.77.g8685934aa2
-
+Best regards,
+Paul Ungureanu
