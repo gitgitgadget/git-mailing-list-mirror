@@ -7,61 +7,61 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8408D1F404
-	for <e@80x24.org>; Sun, 25 Mar 2018 16:48:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AC3F61F404
+	for <e@80x24.org>; Sun, 25 Mar 2018 16:49:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753569AbeCYQsb (ORCPT <rfc822;e@80x24.org>);
-        Sun, 25 Mar 2018 12:48:31 -0400
-Received: from mail-wm0-f47.google.com ([74.125.82.47]:38505 "EHLO
-        mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753525AbeCYQsa (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 25 Mar 2018 12:48:30 -0400
-Received: by mail-wm0-f47.google.com with SMTP id l16so11340431wmh.3
-        for <git@vger.kernel.org>; Sun, 25 Mar 2018 09:48:30 -0700 (PDT)
+        id S1753604AbeCYQtY (ORCPT <rfc822;e@80x24.org>);
+        Sun, 25 Mar 2018 12:49:24 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:51036 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753521AbeCYQtY (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 25 Mar 2018 12:49:24 -0400
+Received: by mail-wm0-f65.google.com with SMTP id i75so11282850wmf.0
+        for <git@vger.kernel.org>; Sun, 25 Mar 2018 09:49:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-transfer-encoding;
-        bh=754OEzCfks1q7M1D9RXQjDMJwK0YjaZ8/hwd1fl5cvE=;
-        b=IuBmZFgQTwpcKi69eNwjNyAdYQZnetC9H0SmflCN+lkp5OM3Pg7g6WtWHCWY4CE3C+
-         SCgtOifiY9V3wesorj2JU02H/6I6Ysm5h0EVVdVERwJ5n9RlFpJ2f7c1VQnYYff9E+iw
-         /OW236FLjzEAu8978qdm6v/d6w4oQWrvoXhAUnymz6wrM9RA7SOTDcsFTFgAAONZUVYe
-         blzQiJnpG5CoCuhEqZuVgplMowPmUublCIUYEQn4McTVl192HUZtNxywx0vUFGe1eB0O
-         OrD4Uaa4G9kMuaVBLcyZOsZv0nZ5Lmf4EBnMOHJZS/1PmWA6u3QuR05nTcm6uwyhWZk5
-         2H7w==
+        bh=dmaYxpaAp+I7Z7kwbf3eS6IFFAhkjbLmSwf1Fjz4sy8=;
+        b=BMJPQkp4+2OFhQJzCMQUTc0RUSi3GADerwohJPokl3UX10PwX+bW4pvcDLhb7O8kjp
+         S+E4w6mKHwt8yJTFPnRPXflqosxm9mJbteq/HPLZ4a8aVQwrLgdV4UPYsDbSsX378Y0A
+         cqgcdB7MlQbwwC6ViZdKtVVipkRQxtiZE7Mclf7BL5iNGXQw3DTBRQ9n/U4kgjQG364P
+         Ux8tEqD0tz9JhxargZVdOXN/KibYeDCjpVzhZeMDr2OFZN3cgCRd7hoJHAktdJBWtD3q
+         jR427G+6XMaUlrZUMDRh2yQU9LmyIt7G3D7yCHa0q8k4JZayIJ2JGkYDWPVqVp+bRZfg
+         6ScQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version
          :content-transfer-encoding;
-        bh=754OEzCfks1q7M1D9RXQjDMJwK0YjaZ8/hwd1fl5cvE=;
-        b=byUANZJVkzmb4OoiOU5wJoORfXm/sHZyOxzEnJTZ4TKcTGcCfkpfUqhLKSMkMvTuS1
-         vONVIzmxYUBpt/7fWNV83pBcz5AYf4O/C7WV0i7UH+0lXNZ1+WLmj+FASCPQyX+ww/JQ
-         d4a+VarvBeAvXdrBQ8PyxsIqrgjvgAtdMj44lJIeSBMHkM6/XPlgYNa5XRRfWXGJQBk6
-         hUlIhWaQyEy8gkIK9xACJaGUXGMxCNk6mQQb0kTt0BLGIkdu87CFMfEpsY7MiHw36pIy
-         VxtSdgkOSfhiU/J3rTbbxRq54typgb3YY9rxxpnd/iHgYVbkR0KeNNBWlm++fMGeSGJK
-         kDxg==
-X-Gm-Message-State: AElRT7GkOPUK92MZKIcarVrAedyOTpb6KKBH4rJrqTIQIt32xBc8SeHS
-        5+Etxgkk3NrM+Xp+J8+OKOI=
-X-Google-Smtp-Source: AIpwx4+n3Wt8bBGLhjwFpgQifvYGE9XJ7qrTcDDg9B6LeYoosP3+m2bhJcv5R8m/BBrxd2WnYx/6Dw==
-X-Received: by 10.28.156.196 with SMTP id f187mr5986657wme.63.1521996509266;
-        Sun, 25 Mar 2018 09:48:29 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id v4sm3837075wra.36.2018.03.25.09.48.28
+        bh=dmaYxpaAp+I7Z7kwbf3eS6IFFAhkjbLmSwf1Fjz4sy8=;
+        b=MJGcL1ECPDrcdRgo4N/3R6gyXeAHlEasEIJzrgg7MVIJdiU8LH7UrzKuontzLcTdkd
+         wnR5ugDHSYAx/KmiQQprvxNkntf1TRgDVIFW5ypyZb2ZBzXu3MlV8KiTBQiCX2XGNHdp
+         PBHr8TZcmLcZNMfXg90uQLAnmuZjkXL1MUp1PhSG871gOCKL9ZLzeHSOogWs1I/QRxgF
+         G9pKWQLeurTv1lcjOSfkeZ74NWuP6n8yLKxIyE2pDyC5IDKXPkLYHuD7IYIuW7Drhck6
+         D16VniFbttoN3VGGyC/GZUxl6B1qz/0pFGslxVI4klswDlL1vfH2mB9PN+HsQ2hNKIcN
+         jPEg==
+X-Gm-Message-State: AElRT7ElQavUUQgAVG+xV8sNDYEV9lqlaJFLrLaX7eFzfbf1x7rblf6E
+        1FkztNP3htt30crgs3HVqFM=
+X-Google-Smtp-Source: AG47ELsDp0QDj562M5otqSLh7vn7kTaCU9vJYbjtiftsnn0ynlb+nfJIK1Su/MeE3BBEg64ignGTZw==
+X-Received: by 10.28.109.27 with SMTP id i27mr14159959wmc.109.1521996562545;
+        Sun, 25 Mar 2018 09:49:22 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id p197sm1176508wme.43.2018.03.25.09.49.21
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 25 Mar 2018 09:48:28 -0700 (PDT)
+        Sun, 25 Mar 2018 09:49:21 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Git List <git@vger.kernel.org>,
-        Yasushi SHOJI <yasushi.shoji@gmail.com>
-Subject: Re: [PATCH] bisect: use oid_to_hex() for converting object_id hashes to hex strings
-References: <9839073c-84ca-f00e-d0e1-801e521ef29e@web.de>
-        <20180325152022.GD74743@genre.crustytoothpaste.net>
-Date:   Sun, 25 Mar 2018 09:48:28 -0700
-In-Reply-To: <20180325152022.GD74743@genre.crustytoothpaste.net> (brian
-        m. carlson's message of "Sun, 25 Mar 2018 15:20:22 +0000")
-Message-ID: <xmqqfu4of6eb.fsf@gitster-ct.c.googlers.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     Git List <git@vger.kernel.org>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmc=?= =?utf-8?B?4buNYw==?= Duy 
+        <pclouds@gmail.com>
+Subject: Re: [PATCH] run-command: use strbuf_addstr() for adding a string to a strbuf
+References: <19c993cf-7220-42e1-6a76-d257d97d6f55@web.de>
+Date:   Sun, 25 Mar 2018 09:49:21 -0700
+In-Reply-To: <19c993cf-7220-42e1-6a76-d257d97d6f55@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+        message of "Sun, 25 Mar 2018 12:57:50 +0200")
+Message-ID: <xmqqbmfcf6cu.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -71,16 +71,31 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+René Scharfe <l.s.r@web.de> writes:
 
-> On Sun, Mar 25, 2018 at 12:57:36PM +0200, René Scharfe wrote:
->> Patch generated with Coccinelle and contrib/coccinelle/object_id.cocci.
->> 
->> Signed-off-by: Rene Scharfe <l.s.r@web.de>
->> ---
->> This is a belated follow-up to f0a6068a9f (bisect: debug: convert struct
->> object to object_id).
+> Patch generated with Coccinelle and contrib/coccinelle/strbuf.cocci.
 >
-> This looks good to me.
+> Signed-off-by: Rene Scharfe <l.s.r@web.de>
+> ---
+> That line was added by e73dd78699 (run-command.c: introduce
+> trace_run_command()).
 
 Thanks.
+
+>
+>  run-command.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/run-command.c b/run-command.c
+> index a483d5904a..84899e423f 100644
+> --- a/run-command.c
+> +++ b/run-command.c
+> @@ -621,7 +621,7 @@ static void trace_run_command(const struct child_process *cp)
+>  	if (!trace_want(&trace_default_key))
+>  		return;
+>  
+> -	strbuf_addf(&buf, "trace: run_command:");
+> +	strbuf_addstr(&buf, "trace: run_command:");
+>  	if (cp->dir) {
+>  		strbuf_addstr(&buf, " cd ");
+>  		sq_quote_buf_pretty(&buf, cp->dir);
