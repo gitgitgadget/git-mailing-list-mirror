@@ -2,97 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,STOX_REPLY_TYPE,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 82FA51F404
-	for <e@80x24.org>; Sat, 24 Mar 2018 22:16:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8873D1F404
+	for <e@80x24.org>; Sun, 25 Mar 2018 00:40:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752360AbeCXWQm (ORCPT <rfc822;e@80x24.org>);
-        Sat, 24 Mar 2018 18:16:42 -0400
-Received: from smtp-out-2.talktalk.net ([62.24.135.66]:20451 "EHLO
-        smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752229AbeCXWQl (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 24 Mar 2018 18:16:41 -0400
-X-Greylist: delayed 487 seconds by postgrey-1.27 at vger.kernel.org; Sat, 24 Mar 2018 18:16:41 EDT
-Received: from PhilipOakley ([92.29.14.162])
-        by smtp.talktalk.net with SMTP
-        id zrKwezIxgwheazrKwesIql; Sat, 24 Mar 2018 22:08:32 +0000
-X-Originating-IP: [92.29.14.162]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=ZJr5Z0zb c=1 sm=1 tr=0 a=NXc+vVEgz70gitWznrz3ig==:117
- a=NXc+vVEgz70gitWznrz3ig==:17 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8
- a=hZl4FlbxAAAA:8 a=_j03d67v3mU7a8DzvfkA:9 a=QEXdDO2ut3YA:10
- a=zNGlSMxTWkni11D5GzKz:22
-Message-ID: <88A1405D65254C7BA987ED4745FEFA43@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-From:   "Philip Oakley" <philipoakley@iee.org>
-To:     "Christian Couder" <christian.couder@gmail.com>,
-        "git" <git@vger.kernel.org>
-Cc:     <lwn@lwn.net>, "Junio C Hamano" <gitster@pobox.com>,
-        "Jakub Narebski" <jnareb@gmail.com>,
-        "Markus Jansen" <mja@jansen-preisler.de>,
-        "Gabriel Alcaras" <gabriel.alcaras@telecom-paristech.fr>,
-        "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-        "Jeff King" <peff@peff.net>,
-        "Jacob Keller" <jacob.keller@gmail.com>,
-        "Hilco Wijbenga" <hilco.wijbenga@gmail.com>,
-        "Phillip Wood" <phillip.wood@talktalk.net>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        "William Chia" <wchia@gitlab.com>,
-        "Alex Vandiver" <alexmv@dropbox.com>,
-        "Michael Haggerty" <mhagger@alum.mit.edu>,
-        "Brett Smith" <brett@sfconservancy.org>,
-        "Patrick Steinhardt" <ps@pks.im>
-References: <CAP8UFD23Xku__TDkT10SRFF7oW8fozWo=WwtZ4aMdjS7WDBwRQ@mail.gmail.com>
-Subject: Re: [ANNOUNCE] Git Rev News edition 37
-Date:   Sat, 24 Mar 2018 22:08:31 -0000
-Organization: OPDS
+        id S1752664AbeCYAkO (ORCPT <rfc822;e@80x24.org>);
+        Sat, 24 Mar 2018 20:40:14 -0400
+Received: from mail-qk0-f196.google.com ([209.85.220.196]:43541 "EHLO
+        mail-qk0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752216AbeCYAkN (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 24 Mar 2018 20:40:13 -0400
+Received: by mail-qk0-f196.google.com with SMTP id g184so16707842qkd.10
+        for <git@vger.kernel.org>; Sat, 24 Mar 2018 17:40:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-transfer-encoding;
+        bh=l57r8Maole50mW0rOKI4FJOsjiBis57aCt2ozv8o9N8=;
+        b=CeAR7KV9orgczf+Q+XpEPYTqzIILu1+G6yaG5aIXr95i0kUkKDlFuAufn3tWBG0H5V
+         5Fgdjrfq/F1Unv9D5Oi2VktgT2WjEYgkV14k2wQ2Nr5tggo1tvlXxfMddBGfJINXG2uh
+         f9HJZ1bQs8DC2MXUGNLXjWTDvIMr/qH/FQ4O9qV0awH69/unx20P9I7VsFC+SHVKdssE
+         UMZykxhJb9INaSzdy87kqNlgdQvvdRwXRmzjrOxrh3SoOeIUgbMdQmEbDtT8FB4L11yu
+         EsuqdGkjSjLFSlNJh6EqNoEuBBV0lflbpl+nkm2OkRmdU2mq8fv2vwAghyjRRVPqVho3
+         dYvQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=l57r8Maole50mW0rOKI4FJOsjiBis57aCt2ozv8o9N8=;
+        b=CikhjR+a4gWF6TCraym5HAIufW5Je6EiWPC5wJroDjhUAtz1OxKJ+cZkPxTJBwXSCW
+         Dl5vNadKVk2/n9Fypf+Hrizuc0PkSL+d7eukor7XeBxH19iQtqU+YOD5C6PUnOgC0Dgm
+         YZSRq/KsKGg61V+k1VVAlmOXj84N9FVoIPB0btrVPOG9oZkUM45bGOQlsVFhMXMfGzHA
+         5R/jDnvF2ldZ+gWdz4fGe15IpFAAh1/a7n0nQ+LCi8vXscloFpcKnmOtGPy7QF2pN0IA
+         cHfSx53I0GVNB+YjHEatunos+Ou90UYMI8Tr7wWoMtXKUOf8Yp4YspI2TDBLsT47uvC2
+         09yQ==
+X-Gm-Message-State: AElRT7EQQPrk4yX0Fhyatv85cN02QgHHfmOpgN7BRHbcZ8ieefkOS7sf
+        TiRtkiTOEFiQpDu+Jub5W7fnSOnQgu4OxxD0ItQ=
+X-Google-Smtp-Source: AG47ELtmeNJejXVx5p8yOmd5xBPCnTgTZ+eZj18ztit9JWibVOV6FIR8FRidjGJLz6aeaowTX0ZcbHu3LiHO4/DDG4E=
+X-Received: by 10.55.22.28 with SMTP id g28mr48085348qkh.152.1521938413010;
+ Sat, 24 Mar 2018 17:40:13 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        format=flowed;
-        charset="UTF-8";
-        reply-type=original
-Content-Transfer-Encoding: 7bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-Antivirus: AVG (VPS 180323-4, 23/03/2018), Outbound message
-X-Antivirus-Status: Clean
-X-CMAE-Envelope: MS4wfC5m/CD3fV1w8StVBT1hLjVy6tNhXmlOAZaDj0jMuJbQ3W+9s8TblhkStUmoISVLlfp0EhcZeVoppHkhxEX26/BgInjqa3s1Gl/cZw3xrPqahzAcWMrx
- zb6YX/v/HcgBx4Q/87oN58p7fymms2QV8bNu2jta4XkZLEsraZzJo9wKJOt/4PUmjyfxT1Ax5VDvenjoVYWRPysrs2j+Dz0WnSm/wAuRDwozkVuR79KRGoCn
- k2lpMIYboimODOpdqEXmVsMw++K4zzlS+/zt6DVNWytTfpHNeCaXq0Sgu1qIvuxXdUMpLZcpLpjtz6MTlb+2Jmanye9JEYqTFAYyjPt5jEyi8QqJnlN3Hxlb
- kypIYWMNwbmpwcpXnKlQs+m7oXPSBwBqBmGM8pkT8HaBSaGhCar1nK3UjH/wDfNNgDt9Xf7NeVpm99yKvBQYMU5pVVtLiyqVxig8Hr1ngQq1IibPQEH7EcFZ
- FoUM/7cBj+Rn/IVss1YBv8lcbukkxJ+uD/nop/e9PFqiSU5iHdTLk6cbBjMKqG9djutNwcW/HSAzFNRxi05o7ZFNG2tnN/uWk3/a2gLJBj3D+/hwMwueALaC
- XTI4yF+JCFEA2lWDq+VjgWMJaZIay6xiB8fBgzOotKYB7o6JHHSfhTmEpxbQBtx88/cHhtzOwwQp8BW6RRRN8jXlC1lG2ENIgTNTNqzUkeh+ioC6g2GCfsXI
- zZ7xYrQl7/I=
+Received: by 10.12.174.202 with HTTP; Sat, 24 Mar 2018 17:40:12 -0700 (PDT)
+In-Reply-To: <20180324125348.6614-1-pclouds@gmail.com>
+References: <20180318081834.16081-1-pclouds@gmail.com> <20180324125348.6614-1-pclouds@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Sat, 24 Mar 2018 20:40:12 -0400
+X-Google-Sender-Auth: KEO3IxV94tDFAHQhj5aihRpReTI
+Message-ID: <CAPig+cQAufB=DDgkSwz+EDkkTKEx32KJBGPdeDxuzZTdoM2Nrg@mail.gmail.com>
+Subject: Re: [PATCH v2] Makefile: detect compiler and enable more warnings in DEVELOPER=1
+To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Lars Schneider <larsxschneider@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: "Christian Couder" <christian.couder@gmail.com>
-> Hi everyone,
+On Sat, Mar 24, 2018 at 8:53 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =
+<pclouds@gmail.com> wrote:
+> The set of extra warnings we enable when DEVELOPER has to be
+> conservative because we can't assume any compiler version the
+> developer may use. Detect the compiler version so we know when it's
+> safe to enable -Wextra and maybe more.
 >
-> The 37th edition of Git Rev News is now published:
+> These warning settings are mostly from my custom config.mak a long
+> time ago when I tried to enable as many warnings as possible that can
+> still build without showing warnings. Some of them those warnings are
+
+s/them those/those/
+
+> probably worth fixing instead of just suppressing in future.
 >
->  https://git.github.io/rev_news/2018/03/21/edition-37/
->
-> Thanks a lot to all the contributors!
->
-> Enjoy,
-> Christian, Jakub, Markus and Gabriel.
->
-
-Thank you for the Git Rev News. I've been off-line for 5 weeks, so seeing 
-the newsletter is great.
-
-Next is to peruse Junio's "What's Cooking" lists.
-
-Thanks to all.
-
-Philip 
-
+> Helped-by: Jeff King <peff@peff.net>
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.c=
+om>
