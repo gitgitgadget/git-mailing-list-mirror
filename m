@@ -2,197 +2,145 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 63E1F1F404
-	for <e@80x24.org>; Sun, 25 Mar 2018 20:57:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 682561F404
+	for <e@80x24.org>; Sun, 25 Mar 2018 21:01:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752176AbeCYU52 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 25 Mar 2018 16:57:28 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:38942 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751112AbeCYU51 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 25 Mar 2018 16:57:27 -0400
-Received: by mail-wm0-f67.google.com with SMTP id f125so11879760wme.4
-        for <git@vger.kernel.org>; Sun, 25 Mar 2018 13:57:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=/itiSbnXiIROYewZ4L803qedkBKttulsokdT6/iqwYU=;
-        b=cpecWLSzS5ec7KNtcrz9PLZgK1JjKfcCcsxCXUKJG/rK922tQ8oyWbz2r1s51nRtGO
-         VVcXD2aJYS2tgBmViALwX9ykQT9qAjZrWPI92IegWO2rmhT2y4I+AvH4LkBRVe9crN8X
-         bvbk/xtaWo0UvO3bU0aGI8uU2smA6eIE8q4UOR/mHD0B+qhUBlbPlAVc/L47GXq56btN
-         3YrR0t175sbkIgsLEjUcKNQi9auzS7D8p64E/SdLjqzKvqWK+tUaWbYlIiTjbD5youN7
-         Ss/WzQRpqmHeoPJNIF6mzvXb+qCwBG7vJjlMgGFt+pA9+prc6pv8QMBYcM0XjU7o1v5J
-         01aQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=/itiSbnXiIROYewZ4L803qedkBKttulsokdT6/iqwYU=;
-        b=ow72QVzoERGYfECakziq35xT+2Mie5d1eKimdOl80KFwAZFGrDVAtpX3AConHrq5hB
-         duW2QV/oPmkakmTNxfi18n7oqzxmeJvTRyuN3ChaRnVO9g0WrN94ayfhXVCBAaLyeHAp
-         A+7HKok8ZjblpBpjx3lLSIPybxdWavYn7UVr2GqQpyEa/Hu/I844j4+yhUfUoA24vtFP
-         P7AKY2mO4wMIYDcaRBIdRrWzPF4L4SDjGlYOZYWPvB9/M1gEee0SixXkSCFkoKcNxJ4p
-         7dqv4TGsOD1uIZRk3tGm34/LGk3mbO1+OIG/AQo82D7QysPJoNVq+osihz+fgeYgCu8l
-         LGPg==
-X-Gm-Message-State: AElRT7GP06J4ZAWg8kPBHo6ZgseHvzyeBaX6DXAOjiowXICaTyLItYDg
-        wXLA+z8EG0EqMYol2UMWZFrd0kRf
-X-Google-Smtp-Source: AG47ELtbQ7lh5nTcZMKarJMN2QbVfl6RtIRbYPAVCLW2DMBqQ7nZ2rUPN6tNcy42YvhVl420iSyIrA==
-X-Received: by 10.80.246.3 with SMTP id c3mr32516808edn.185.1522011445701;
-        Sun, 25 Mar 2018 13:57:25 -0700 (PDT)
-Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
-        by smtp.gmail.com with ESMTPSA id h64sm8384874edc.86.2018.03.25.13.57.24
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 25 Mar 2018 13:57:24 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Joel Teichroeb <joel@teichroeb.net>,
-        Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH] Remove contrib/examples/*
-References: <CA+CzEk9QpmHK_TSBwQfEedNqrcVSBp3xY7bdv1YA_KxePiFeXw@mail.gmail.com> <20180325204653.1470-1-avarab@gmail.com>
-User-agent: Debian GNU/Linux 9.4 (stretch); Emacs 25.1.1; mu4e 1.1.0
-In-reply-to: <20180325204653.1470-1-avarab@gmail.com>
-Date:   Sun, 25 Mar 2018 22:57:23 +0200
-Message-ID: <878tafyito.fsf@evledraar.gmail.com>
+        id S1751897AbeCYVBk (ORCPT <rfc822;e@80x24.org>);
+        Sun, 25 Mar 2018 17:01:40 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:42610 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751208AbeCYVBj (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 25 Mar 2018 17:01:39 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id CEEE160988;
+        Sun, 25 Mar 2018 21:01:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1522011698;
+        bh=867JyLfh7Drqp2hA1vL/WGfrbLxzU9vXurF/C46GNNA=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=oVHyYljjoc97UGXl+oL1o+LFsjGLWk3BZ4kdlue5etbGJsunyx/qOYHKud7nkLtIR
+         XhRB+MOOETcxZ5gjmFK8cd2Aq+MdWef/l1upp1I2hnkGeX0x/yFVJfrAPTNApaaWKq
+         i/paxb9/IprNTinYejy750My1/ooJiZERy1GjXS5eTCdVrEF9cgFrYFn0ECXpbuw82
+         K0SxaPOnbS6bKclDSzyAH6p+fudDCi0OeS8SYkOuOO/EKmbE8IHJlASF8ZWFlE3OqV
+         7SkbsbdO8Gw7VOF8+WL7Qh99RlYR5VZ4OA6OC1gLX7NnkDk8zw2yvDlmUV/QxN8Vx/
+         kpUvlQZ42Q0oIrxUf5mFja866kJNTE8GBQkkk/eLJNEfecKX4v+207PreVB/vpqErL
+         pyGGyJYqUyzFXD7NIG27F9jrqYuj/YW0OXcRyVG6JMp7hESRGIIVDJ1TlFHJIGOiiq
+         vEdagDPbssEusThdvmNGiKVvslzrh4fSR5wGbKuWD0mJ7g1lAqR
+Date:   Sun, 25 Mar 2018 21:01:32 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 2/2] send-email: supply a --send-delay=1 by default
+Message-ID: <20180325210132.GE74743@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+References: <20180325182803.30036-1-avarab@gmail.com>
+ <20180325182803.30036-3-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="ZInfyf7laFu/Kiw7"
+Content-Disposition: inline
+In-Reply-To: <20180325182803.30036-3-avarab@gmail.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.16.0-rc5-amd64)
+User-Agent: Mutt/1.9.4 (2018-02-28)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Sun, Mar 25 2018, Ævar Arnfjörð Bjarmason wrote:
+--ZInfyf7laFu/Kiw7
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> There were some side discussions at Git Merge this year about how we
-> should just update the README to tell users they can dig these up from
-> the history if the need them, do that.
->
-> Looking at the "git log" for this directory we get quite a bit more
-> patch churn than we should here, mainly from things fixing various
-> tree-wide issues.
->
-> There's also confusion on the list occasionally about how these should
-> be treated, "Re: [PATCH 1/4] stash: convert apply to
-> builtin" (<CA+CzEk9QpmHK_TSBwQfEedNqrcVSBp3xY7bdv1YA_KxePiFeXw@mail.gmail.com>)
-> being the latest example of that.
+On Sun, Mar 25, 2018 at 06:28:03PM +0000, =C3=86var Arnfj=C3=B6r=C3=B0 Bjar=
+mason wrote:
+> The earlier change to add this option described the problem this
+> option is trying to solve.
+>=20
+> This turns it on by default with a value of 1 second, which'll
+> hopefully solve it, and if not user reports as well as the
+> X-Mailer-Send-Delay header should help debug it.
+>=20
+> I think the trade-off of slowing down E-Mail sending to turn this on
+> makes sense because:
+>=20
+>  * GMail is a really common client, git.git's own unique authors by
+>    %aE are ~30% @gmail.com, ~20% for linux.git. That's just patch
+>    submitters, my guess is this it's much more common among those who
+>    mostly read the list, and those users who aren't using mu4e / mutt
+>    etc. anyway.
+>=20
+>  * There's really no point in having this feature at all if it's not
+>    made the default, since the entire point is to be able to read a
+>    list like the git ML or the LKML and have patches from others show
+>    up in order.
+>=20
+>  * I don't think anyone's really sensitive to the sending part of
+>    send-email taking longer. You just choose "all" and then switch to
+>    another terminal while it does its thing if you have a huge series,
+>    and for 1-3 patches I doubt anyone would notice this anyway.
 
-The people on CC got this, but it seems the git ML rejected the message
-as it's too big. The abbreviated patches is here quoted inline, and at:
-https://github.com/avar/git/commit/cc578c81c2cb2999b1a0b73954610bd74951c37b
+I'm not sure that this is going to have the effect you want it to have.
+Let me give an example to demonstrate why.
 
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> ---
->
-> On Sun, Mar 25, 2018 at 6:51 PM, Joel Teichroeb <joel@teichroeb.net> wrote:
->> On Sun, Mar 25, 2018 at 1:09 AM, Christian Couder
->> <christian.couder@gmail.com> wrote:
->>> It seems to me that the apply_stash() shell function is also used in
->>> pop_stash() and in apply_to_branch(). Can the new helper be used there
->>> too instead of apply_stash()? And then could apply_stash() be remove?
->>
->> I wasn't really sure if I should remove code from the .sh file as it
->> seems in the past the old .sh files have been kept around as examples.
->> Has that been done for previous conversions?
->
-> I was skimming this patch and it seemed to me like it would be more
-> readable if the *.sh code was removed in the same change (if
-> possible). It's easier to review like that.
->
-> Also, we should just stop maintainign contrib/examples/*.
->
->  contrib/examples/README                |  23 +-
->  contrib/examples/builtin-fetch--tool.c | 575 ---------------
->  contrib/examples/git-am.sh             | 975 ------------------------
->  contrib/examples/git-checkout.sh       | 302 --------
->  contrib/examples/git-clean.sh          | 118 ---
->  contrib/examples/git-clone.sh          | 525 -------------
->  contrib/examples/git-commit.sh         | 639 ----------------
->  contrib/examples/git-difftool.perl     | 481 ------------
->  contrib/examples/git-fetch.sh          | 379 ----------
->  contrib/examples/git-gc.sh             |  37 -
->  contrib/examples/git-log.sh            |  15 -
->  contrib/examples/git-ls-remote.sh      | 142 ----
->  contrib/examples/git-merge-ours.sh     |  14 -
->  contrib/examples/git-merge.sh          | 620 ----------------
->  contrib/examples/git-notes.sh          | 121 ---
->  contrib/examples/git-pull.sh           | 381 ----------
->  contrib/examples/git-remote.perl       | 474 ------------
->  contrib/examples/git-repack.sh         | 194 -----
->  contrib/examples/git-rerere.perl       | 284 -------
->  contrib/examples/git-reset.sh          | 106 ---
->  contrib/examples/git-resolve.sh        | 112 ---
->  contrib/examples/git-revert.sh         | 207 ------
->  contrib/examples/git-svnimport.perl    | 976 -------------------------
->  contrib/examples/git-svnimport.txt     | 179 -----
->  contrib/examples/git-tag.sh            | 205 ------
->  contrib/examples/git-verify-tag.sh     |  45 --
->  contrib/examples/git-whatchanged.sh    |  28 -
->  27 files changed, 20 insertions(+), 8137 deletions(-)
->  delete mode 100644 contrib/examples/builtin-fetch--tool.c
->  delete mode 100755 contrib/examples/git-am.sh
->  delete mode 100755 contrib/examples/git-checkout.sh
->  delete mode 100755 contrib/examples/git-clean.sh
->  delete mode 100755 contrib/examples/git-clone.sh
->  delete mode 100755 contrib/examples/git-commit.sh
->  delete mode 100755 contrib/examples/git-difftool.perl
->  delete mode 100755 contrib/examples/git-fetch.sh
->  delete mode 100755 contrib/examples/git-gc.sh
->  delete mode 100755 contrib/examples/git-log.sh
->  delete mode 100755 contrib/examples/git-ls-remote.sh
->  delete mode 100755 contrib/examples/git-merge-ours.sh
->  delete mode 100755 contrib/examples/git-merge.sh
->  delete mode 100755 contrib/examples/git-notes.sh
->  delete mode 100755 contrib/examples/git-pull.sh
->  delete mode 100755 contrib/examples/git-remote.perl
->  delete mode 100755 contrib/examples/git-repack.sh
->  delete mode 100755 contrib/examples/git-rerere.perl
->  delete mode 100755 contrib/examples/git-reset.sh
->  delete mode 100755 contrib/examples/git-resolve.sh
->  delete mode 100755 contrib/examples/git-revert.sh
->  delete mode 100755 contrib/examples/git-svnimport.perl
->  delete mode 100644 contrib/examples/git-svnimport.txt
->  delete mode 100755 contrib/examples/git-tag.sh
->  delete mode 100755 contrib/examples/git-verify-tag.sh
->  delete mode 100755 contrib/examples/git-whatchanged.sh
->
-> diff --git a/contrib/examples/README b/contrib/examples/README
-> index 6946f3dd2a..18bc60b021 100644
-> --- a/contrib/examples/README
-> +++ b/contrib/examples/README
-> @@ -1,3 +1,20 @@
-> -These are original scripted implementations, kept primarily for their
-> -reference value to any aspiring plumbing users who want to learn how
-> -pieces can be fit together.
-> +This directory used to contain scripted implementations of builtins
-> +that have since been rewritten in C.
-> +
-> +They have now been removed, but can be retrieved from an older commit
-> +that removed them from this directory.
-> +
-> +They're interesting for their reference value to any aspiring plumbing
-> +users who want to learn how pieces can be fit together, but in many
-> +cases have drifted enough from the actual implementations Git uses to
-> +be instructive.
-> +
-> +Other things that can be useful:
-> +
-> + * Some commands such as git-gc wrap other commands, and what they're
-> +   doing behind the scenes can be seen by running them under
-> +   GIT_TRACE=1
-> +
-> + * Doing `git log` on paths matching '*--helper.c' will show
-> +   incremental effort in the direction of moving existing shell
-> +   scripts to C.
-> [...]
+If I send a series to the list, in order for this to work, you need my
+SMTP server (Postfix) to essentially send mails slowly enough to
+vger.kernel.org (ZMailer) that it doesn't batch them when it sends them
+to GMail.  The problem is that with my mail server, due to filtering and
+such, already takes at least a second to accept, process, and relay
+submitted messages.  vger still batched them and delivered them back to
+me out of order.  This will be even worse with large series.
 
-The rest of this patch is deleting everything in contrib/examples/ that
-isn't the README.
+You are also assuming that my mail server will not have batched them and
+delivered them out of order, which it might well do, since Postfix uses
+a connection cache to machines that don't do STARTTLS (which, much to my
+annoyance, vger doesn't offer).
+
+In short, I don't think this is going to be especially helpful because
+it won't change the status quo for a lot of senders.  You'd have to
+insert some significant delay in order to get the effect you desire, and
+even then things could still be delivered out of order.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
+https://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: https://keybase.io/bk2204
+
+--ZInfyf7laFu/Kiw7
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.5 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlq4DiwACgkQv1NdgR9S
+9otDQw/9H8FPstoFfE9ZLLry8V6c9Wxx61F1h/GrR1fWcMsa111DVlEvYjb4Fq2q
+XjG7MCTPbQAJ9fPEdNHyqMdczGKdrWU4MYEl39pDUBCCiAL3X9WsHZps/glGxuQx
+yVJ7D5fHKHY8Xh3Ovps9cdpes3it9I5AzA0wMj7oY1s18A8VTKH5vVb/hwEEP/lw
+NiqrGAucbr8I1t05Y3IIqpFAY7HAuwk4Ik2nIS9cfGl9WpjkmBF9lJaMNp49KB0A
+YvqOAe6fsJRrqr1BZ/06RaTQPxmPOi/hdVep8qIBmna3GBmfCv/wxaUTweYeUkib
+XTAI8Q/muLzW4MlSFifu4L7XKDW+zlPyKGCCzcFZ9ENup4xr87gWuO87FEvKgq8/
++p9855UDEOQeCL2ZrvcdXCtiuBuXGbzuhYEGXty5TejIhE7i+osY+19gxomAhEzc
+NZaCtgb/dxhIywniqKUCCL+woFVY7lQjsMZldFKa1MIkhmv3iG5VbNWYDTZj1M46
+NXiGRYogRQlq8TTMf/B8OLSnHRWicNJs8aIqGFHfrCMg6amEipCOEBK+q7FOgu2c
+BzolRL5y53O2MR2qHSSg0mGPzd/ENqNQePFy9wT//GuHapEUFMODDfRcyh36VyUx
+9n5z9u7bQ+ewlq5pNk4bUA7ffDbYcyK1ZvANmeiOu0cZeOdrm6k=
+=NQDg
+-----END PGP SIGNATURE-----
+
+--ZInfyf7laFu/Kiw7--
