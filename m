@@ -7,102 +7,78 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5693D1F404
-	for <e@80x24.org>; Sun, 25 Mar 2018 17:35:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 167001F404
+	for <e@80x24.org>; Sun, 25 Mar 2018 18:07:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753838AbeCYRfz (ORCPT <rfc822;e@80x24.org>);
-        Sun, 25 Mar 2018 13:35:55 -0400
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:38136 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753739AbeCYRfy (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 25 Mar 2018 13:35:54 -0400
-Received: by mail-wr0-f194.google.com with SMTP id m13so3315364wrj.5
-        for <git@vger.kernel.org>; Sun, 25 Mar 2018 10:35:54 -0700 (PDT)
+        id S1753830AbeCYSHy (ORCPT <rfc822;e@80x24.org>);
+        Sun, 25 Mar 2018 14:07:54 -0400
+Received: from mail-wm0-f42.google.com ([74.125.82.42]:56134 "EHLO
+        mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751597AbeCYSHy (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 25 Mar 2018 14:07:54 -0400
+Received: by mail-wm0-f42.google.com with SMTP id t7so11485724wmh.5
+        for <git@vger.kernel.org>; Sun, 25 Mar 2018 11:07:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=1iCDTnAjYnJOTk2dZ7L7rZCggFotiMg+V6fEvIbuz10=;
-        b=X5uJ5EOV1ON+spLqC9t76+VECvPnHWUBZK5nai0At0C7TTaPl0DuID2nOgVRgc0LGy
-         O0p3tXsA7YDaqZJ8doaJCc6w9xgeFmeWhJK0t6eDYtXIw+Gu3or9MhUaq6TxbZulRK/T
-         XaU2YAtiqNtx4tj+ZRMpam5WJMYdNymcIw8N3mQuDtWjX66kyBHhVvFdFVRJlruiFdZP
-         hlB2P3MWFNgeR4ZqVB+xkF7zGxMTtNfjsXTd7iQXB3W32olrQS8DIkPOGTTd8vU7Dfvb
-         vWKE/+s6KYKzYLpTCSrctQmpCS9XB2wh4b6d+7Vk4D9p9B+j8D2L/l4Vgq4nWRBLw9x2
-         /tLQ==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=3vadwgEjQXt7irjNhSDg7mbqLGhmV8ifInGkA3o6zH0=;
+        b=IMJYGS1dhrNiCGzxrviLnkJ6OUx9jSEtDhKyvl30rPPfgxRD/KOK/Nog3YeICCpNEq
+         9icYAeJymcYv14aZdb06NOwjwCL9UkNU15oyC/bB0mPG+gDsYFXbMU+lChobTAmCXT7N
+         +6VZRR1e3VnGogn9/jMLWHQBgex6a0DhYzZokxzkXsj6XD7EoFx4SsdrNl/s55GRi5Gi
+         AZS0Jr22X+MuIm2F9448QLoxV2uqwdy3PVeSPiqTR6U6Skx80xzEDgv3jQ3e9HakQzuT
+         s6CRUIMQTRLNZ+bQlGkC9gPTmSnFH885hvYXLmhxO7IhT17LJh9YznLbOWiD+EI6CL4B
+         Yjig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=1iCDTnAjYnJOTk2dZ7L7rZCggFotiMg+V6fEvIbuz10=;
-        b=ajbB1Sfxs7tYmHm8KoOODhSiuXWBbMShoaT/yuzM/mXMpfPXLVb+6oP1uVkrwGthp4
-         NNgce6CoWyvoNyx21XwVSdW0IQaRGtqcJkquG9MkPmXegfzihqp5F3KjerAflMl8iImK
-         O5lwr4n8JCAvTwvRoJmWYvBmVPrhb0GSkIaVXtbHy6A/r2fWwmLc06mlDbLZljEoBs/I
-         BBgvoOtWIw4t37EUVHUmlgtYijxYa5llSWM/yMbTyrWNgxcl2rNL1u2DUD/7t9OVJzVD
-         eW6jWGO1DcIkefdI6OecEDdpv+5eLQtQSgx4esGSJJoC+hBoWdTCqjUd5hbBgPw9ke39
-         atgg==
-X-Gm-Message-State: AElRT7FIw4g7HtTvoOs+/NXSD11tdCJmMbmkSBX5JKGBWl58lQUitN9s
-        efFWo+axReLxIKC2VWgggJs=
-X-Google-Smtp-Source: AG47ELvpjgGWqeuJMCHh3V1/0MosJIJaRtD2TC56YexxNxEP6s2gkkNulE/dA9+/DdjeMMSeIy9+eQ==
-X-Received: by 10.223.184.56 with SMTP id h53mr28151284wrf.87.1521999353335;
-        Sun, 25 Mar 2018 10:35:53 -0700 (PDT)
-Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
-        by smtp.gmail.com with ESMTPSA id n64sm13610474wmd.11.2018.03.25.10.35.52
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 25 Mar 2018 10:35:52 -0700 (PDT)
-Date:   Sun, 25 Mar 2018 18:39:16 +0100
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     Joel Teichroeb <joel@teichroeb.net>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 0/4] Convert some stash functionality to a builtin
-Message-ID: <20180325173916.GE10909@hank>
-References: <20180324173707.17699-1-joel@teichroeb.net>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=3vadwgEjQXt7irjNhSDg7mbqLGhmV8ifInGkA3o6zH0=;
+        b=ICYEZ0lBrYZiJbmrdeb3FCDblTbTijLozn3jlzpJg4TCEVSESSFKuiEst7j0Ogc4Pv
+         4XiOKv1537M+xB4Up9FQWfcclFaDNX7dcs43KSOy5Td1tZ9oCbKKnig33/05b1SxpxUn
+         0LsQJAXKsgjKi6SnaanqUZLwZCE9g7TCye00K4aicx/ZFmgJe/bF/yDRn8LUWNhD2ej+
+         LE174aa2IdtYNWInLT0JJMg0JhbEMiTmMA5eC517u89ZytE5OrLPeMBe9OoluOwAt5LQ
+         EHGBfYumhJYWosvY6Vd+B4ucATjJV/2bfoh6KXQQl5DTixT2WQwi+wcyuLYSd2cHu8C9
+         zDWg==
+X-Gm-Message-State: AElRT7GTAamIoKiIvUVIY8fAwGiIEh+nfE62+0LMGH1Bd7Yeh/FuqHA6
+        vsebdClgpdJpJvadJ7G2dss1fFaxmW58c755MZU=
+X-Google-Smtp-Source: AG47ELtecbyMZ03TGypmDP2odOzYIv7HhzKj1zY8Sv0tdqWHp9WfHUNv/AMlQvmjFRCYqfVkYjT18NJBH9/tL+ilW/s=
+X-Received: by 10.80.149.68 with SMTP id v4mr37620881eda.236.1522001272660;
+ Sun, 25 Mar 2018 11:07:52 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180324173707.17699-1-joel@teichroeb.net>
-User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
+Received: by 10.80.203.135 with HTTP; Sun, 25 Mar 2018 11:07:32 -0700 (PDT)
+In-Reply-To: <CAKk8isqvfhiMPCdNBW5WNN4BfN1sLszekQscpy5M2Okh2YmbZg@mail.gmail.com>
+References: <CAKk8isqvfhiMPCdNBW5WNN4BfN1sLszekQscpy5M2Okh2YmbZg@mail.gmail.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Sun, 25 Mar 2018 11:07:32 -0700
+Message-ID: <CA+P7+xqqLU-J5hv=yioMxMvp40hz_S9GfimjE7bp1Pj_TP-k3w@mail.gmail.com>
+Subject: Re: Should I try to fix rebase interactive preserve-merges bug
+To:     Wink Saville <wink@saville.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 03/24, Joel Teichroeb wrote:
-> I've been working on converting all of git stash to be a
-> builtin, however it's hard to get it all working at once with
-> limited time, so I've moved around half of it to a new
-> stash--helper builtin and called these functions from the shell
-> script. Once this is stabalized, it should be easier to convert
-> the rest of the commands one at a time without breaking
-> anything.
-> 
-> I've sent most of this code before, but that was targetting a
-> full replacement of stash. The code is overall the same, but
-> with some code review changes and updates for internal api
-> changes.
+On Sun, Mar 25, 2018 at 10:32 AM, Wink Saville <wink@saville.com> wrote:
+> There is a "TODO known breakage" in t3404-rebase-interactve.sh:
+>
+>    not ok 24 - exchange two commits with -p # TODO known breakage
+>
+> I'm contemplating trying to fix it. But with --recreate-merges coming
+> maybe it's not worth the effort. Should I proceed with attempting a
+> fix or is --preserve-merges going to be a synonym for
+> --recreate-merges?
+>
+> -- Wink
 
-Thanks for splitting this up into multiple patches, I found that much
-more pleasant to review, and thanks for your continued work on this :)
+AFAIK this breakage of preserve-merges is a design flaw which isn't
+really fixable, which is why --recreate-merges is being added.
 
-> Since there seems to be interest from GSOC students who want to
-> work on converting builtins, I figured I should finish what I
-> have that works now so they could build on top of it.
-> 
-> Joel Teichroeb (4):
->   stash: convert apply to builtin
->   stash: convert branch to builtin
->   stash: convert drop and clear to builtin
->   stash: convert pop to builtin
-> 
->  .gitignore              |   1 +
->  Makefile                |   1 +
->  builtin.h               |   1 +
->  builtin/stash--helper.c | 514 ++++++++++++++++++++++++++++++++++++++++++++++++
->  git-stash.sh            |  13 +-
->  git.c                   |   1 +
->  6 files changed, 526 insertions(+), 5 deletions(-)
->  create mode 100644 builtin/stash--helper.c
-> 
-> -- 
-> 2.16.2
-> 
+I believe the plan is to deprecate preserve-merges once
+recreate-merges has landed.
+
+Thanks,
+Jake
