@@ -2,89 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AB7DF1F404
-	for <e@80x24.org>; Mon, 26 Mar 2018 14:33:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9670C1F404
+	for <e@80x24.org>; Mon, 26 Mar 2018 14:55:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752120AbeCZOd5 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Mar 2018 10:33:57 -0400
-Received: from mail-yw0-f173.google.com ([209.85.161.173]:36131 "EHLO
-        mail-yw0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751859AbeCZOd4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Mar 2018 10:33:56 -0400
-Received: by mail-yw0-f173.google.com with SMTP id y64so6193563ywa.3
-        for <git@vger.kernel.org>; Mon, 26 Mar 2018 07:33:55 -0700 (PDT)
+        id S1752334AbeCZOzS (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Mar 2018 10:55:18 -0400
+Received: from mail-ot0-f178.google.com ([74.125.82.178]:43251 "EHLO
+        mail-ot0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752290AbeCZOzQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Mar 2018 10:55:16 -0400
+Received: by mail-ot0-f178.google.com with SMTP id m22-v6so20915423otf.10
+        for <git@vger.kernel.org>; Mon, 26 Mar 2018 07:55:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=edwardthomson-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=WSdflkwVT87KkXsX1Kj49GXwYR/d1x9QR2hnH7cqD2c=;
-        b=n6wzmqNwwGet5SFxvFv/hBDpY9cERbK93BeiHdA5i58uRWWFUyB8ikVpZGOSDe+bMf
-         gOKmGuPwvi19zk8tuc2CJF/1GHLwAontANt6WDLuarbNVOSex8UIed5qhgVg/umXavQX
-         el36V/PHO5/OVYXjnfnxT65mCGUu1kzI4Z3RC4iv3N9UzJtvOsmpZ5ud70Y5cznobGJF
-         ukh95v29bAglhkE8NnryPTbrLIYjJF9CysSi+9D5luby72AaBEOb57y/HkmZC4zk8z/4
-         Jop+SCEDmL+C9J1MiwF8UNbbazYM3JKP3LBmnERq0bhpXWYJaJW+kH2u3dSGeB8BjuWM
-         le5Q==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=Si/zF8GoV8XG8TyKt6gQnBUXZy6GCvN8ivuqxrcVgn8=;
+        b=VAYL8FWZZb4d70cT53j/IyPwWKZ9cJhoUfjmAz7WGuAK4SFUxOmgaZkDnbRnVbxChe
+         aXCBUtErL/XtfOcta2FCMYxkDPWYtcmgKtlr3B0OExvsm9bWTO0w97TZqv2K4vSSVgVf
+         W8VT8tTMeEDRI6vdyBkmZNAc89kSddfd8t5l83jtvgrQkt/ABrDi5yVI3OAKPeDxOyP3
+         4jCZNt4SUPqdSU8hVsSkX/FPJ9pXdcgeP5Y8dJVM8iaPuD7rDHzMR+PC34B3NTzlhLct
+         qpJt5u/JIceif2ZziDl3I+5p1STHMazN2Smfiw6LbWX9EhjL6lxoYpEjOMXnkl+EZ8d+
+         CaEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=WSdflkwVT87KkXsX1Kj49GXwYR/d1x9QR2hnH7cqD2c=;
-        b=iuUuvgI71DGPQw6l3182/OEmhSHDg0W+588xWqwkZAxfX92dELLixiXfOVTehesNjF
-         QNzFI6QfanB6wApMxXAxftIpw0HnTsn+RC+EBdB9s2D8DyeIQSCiYGvmy8V38NkkOtfL
-         GHk/I6vWsy1aSJ8QwlcvNmXYZarr0Le3na1HBgiLXgURF5dN8kezTCNe5aJjjlgIU8P2
-         HKZU2nlLhGiSugQs6iAmD7TLM3E2lKkd6ymzRnT2LoNM44ECGAp97eW2RJjUzYbJFBLO
-         PhgQB6ensjcQgty6nW9/n5wIl51mpUJ8bUBqLAhLOi2IfL4Qw6gHMBSTPlJya6fXYlDl
-         WSDA==
-X-Gm-Message-State: AElRT7EnNL4txQHnNt3Dr78A5naZauNo0307MRSPILE7UO4yBgzqnofs
-        gfdwmai+Q91hXHpZpBiMFpVNoIT8OpbU6KKml+J0KX3hP4o=
-X-Google-Smtp-Source: AIpwx49hUTJ75ZnGd3q6f730aVqIpq9FpOJ9jTfsPEOMA04gZ4HLQfZHJklDhdV+hw9qoCvvexZ53N1Xwg+or59DyzA=
-X-Received: by 10.13.238.133 with SMTP id x127mr2334387ywe.131.1522074835337;
- Mon, 26 Mar 2018 07:33:55 -0700 (PDT)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=Si/zF8GoV8XG8TyKt6gQnBUXZy6GCvN8ivuqxrcVgn8=;
+        b=F0CRsVveytkOOA+kHKFVJwlidpI/Aar+rCTOz0zXR8tND0KPYX4fwJfV21NObVP+Vf
+         Dg6uVSnZkIhgclTl5Er/XzRHeX/LSrl+yh1Q2GgiWrNjP41JOk+A/l/lVAvLAWY6k5yI
+         +m0qgninx2KvkEzdrvv8uVdAeO3imeBIF8AXgQC3+MjuyyfMRJ2W9DVLwRcwzkNFxdn6
+         hAkaPS35KGLyOSwTwf+rng8gvWzwoCPIopJ/N0ESuXCI/Z5yHLtNb+jRngB0LJka5klh
+         cvDoXEoVRshXvO0WW8O56xfcpDBIYiJQk08FvjT0cTUkdq6z6sugT8EN5/MhCf2ctu8n
+         hyaw==
+X-Gm-Message-State: AElRT7FwYscJesLXq3XdUBx7tETFjqMlRzJwkFVk/dVHRSiM2tesGEBy
+        LdI3Zq78EzUTLZWhe3m0ZDzIsh6CGPcRkyvBqzGhg1EA
+X-Google-Smtp-Source: AG47ELtwTbbuFhqADmJt9msGByT8bqXcpgpGPXu2JdizmfPWOJ8Raz3dZn0Jub4fbcpLnrrDqIPQLntXAnks9evcDJQ=
+X-Received: by 2002:a9d:624d:: with SMTP id i13-v6mr16738957otk.26.1522076115677;
+ Mon, 26 Mar 2018 07:55:15 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:a25:4707:0:0:0:0:0 with HTTP; Mon, 26 Mar 2018 07:33:54
- -0700 (PDT)
-In-Reply-To: <f8d0f3b6-69b3-ba42-c39c-551814caf335@gmail.com>
-References: <cover.1522062649.git.mhagger@alum.mit.edu> <f8d0f3b6-69b3-ba42-c39c-551814caf335@gmail.com>
-From:   Edward Thomson <ethomson@edwardthomson.com>
-Date:   Mon, 26 Mar 2018 15:33:54 +0100
-Message-ID: <CA+WKDT1LMuwuXar9i-1RJ15+o5Rxp013FL9fqfAfMydZJ9cQ6g@mail.gmail.com>
-Subject: Re: [RFC 0/1] Tolerate broken headers in `packed-refs` files
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?Q?Carlos_Mart=C3=ADn_Nieto?= <cmn@dwim.me>
+References: <20180325205120.17730-1-dnj@google.com> <877epzyi0b.fsf@evledraar.gmail.com>
+ <CAD1RUU-EoitBdoXL_JQoP+Q9BuA_6Fq65Ra-f+Atz8YNOV3Cig@mail.gmail.com> <87zi2vvsir.fsf@evledraar.gmail.com>
+In-Reply-To: <87zi2vvsir.fsf@evledraar.gmail.com>
+From:   Daniel Jacques <dnj@google.com>
+Date:   Mon, 26 Mar 2018 14:55:04 +0000
+Message-ID: <CAD1RUU9xFBhmo2-2P6TN_oiYR-fFZ+O6UeJsaXQBZG+dE0h3bQ@mail.gmail.com>
+Subject: Re: [PATCH v7 0/3] RUNTIME_PREFIX relocatable Git
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 26, 2018 at 2:08 PM, Derrick Stolee <stolee@gmail.com> wrote:
-> Since most heavily-used tools that didn't spawn Git processes use
-> LibGit2 to interact with Git repos, I added Ed Thomson to CC to see
-> if libgit2 could ever write these bad header comments.
+On Mon, Mar 26, 2018 at 10:08 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <av=
+arab@gmail.com>
+wrote:
 
-We added the `sorted` capability to our `packed-refs` header relatively
-recently (approximately two months ago, v0.27.0 will be the first release
-to include it as of today).  So, at the moment, libgit2 writes:
+> > Oh sorry, I must have missed that. I have a personal preference for
+adding
+> > brackets for clarity; it leaked into this patch set. I did implement
+most
+> > of the suggestion, which was to use the escaped Q/E instead of equals.
+> >
+> > Stylistically I still prefer the braces, but I'll defer to you and
+remove
+> > them in my pending patch set in case I'm asked to submit another
+version.
 
-  "# pack-refs with: peeled fully-peeled sorted "
+> If you prefer it that way just keep your version. It's your code and
+> it's just a trivial style difference.
 
-Prior to this change, libgit2's header was stable for the last five years
-as:
+> I just mentioned it because in the previous discussion you said "I agree
+> it's cleaner" so I inferred that you'd just forgotten about it but meant
+> to change it. It's also fine if later you just thought "you know what,
+> I'm doing it my way" :)
 
-  "# pack-refs with: peeled fully-peeled "
-
-And prior to that, we advertised only `peeled`:
-
-  "# pack-refs with: peeled "
-
-Thanks for thinking of us!
-
--ed
+Honestly there's enough of a delay here that I don't remember, but if I had
+to guess I probably just forgot to make the change :)
