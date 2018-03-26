@@ -2,153 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 084DD1F404
-	for <e@80x24.org>; Sun, 25 Mar 2018 22:59:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0AD201F404
+	for <e@80x24.org>; Mon, 26 Mar 2018 00:11:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751732AbeCYW67 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 25 Mar 2018 18:58:59 -0400
-Received: from mail-wm0-f41.google.com ([74.125.82.41]:37439 "EHLO
-        mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751055AbeCYW66 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 25 Mar 2018 18:58:58 -0400
-Received: by mail-wm0-f41.google.com with SMTP id r131so5332321wmb.2
-        for <git@vger.kernel.org>; Sun, 25 Mar 2018 15:58:57 -0700 (PDT)
+        id S1751133AbeCZAL2 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 25 Mar 2018 20:11:28 -0400
+Received: from mail-qt0-f176.google.com ([209.85.216.176]:36981 "EHLO
+        mail-qt0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750960AbeCZAL0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 25 Mar 2018 20:11:26 -0400
+Received: by mail-qt0-f176.google.com with SMTP id w12so10348438qti.4;
+        Sun, 25 Mar 2018 17:11:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=FZIBJBPcFWlKJgrwRy2Gg7svGEBax00KPXsI/otmOmo=;
-        b=lGYB4r+1A6WkanhmbJ9evnj0zRwJVptfI1kYDLvR2difwNGaHiouVP112nxFIcrJYj
-         aQVJbjacKmZH/7k4Ldw0wVoyqCCkBPSclgji1nqWYjLXXBBIpXQqnfc5/F+QJQ2IuY1a
-         pdryhodsQIOiZ5RdgwwCrz3KaaKgcbrsQLsJMzQcC5Dv+s229OCGv1jR4AeeqkonC4h7
-         oE9WbuUrZRqbj5S2Di2VhyU7l+YYXwVSRAv5bmgYS4k5+T7I2yUuaqmYkpuFD7p1eu4M
-         tGTBTa239l5QL90Kye9zO/F2J9lu83DLhLFQ65lt4n0nW2fHHfd0NgijKWf9OeuOp39m
-         4Tyw==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-transfer-encoding;
+        bh=IfELDUhFG8SC4eYISU210bReIOYkqkbvRJtk0VfZoho=;
+        b=lQ0DbLvkyWaFMOBa3do3+LYswNxdJ1hDORAk+ugYVrFuQU063z9iL+auhYZvcfY555
+         X/JgRvaoRF6/cuUSDzOe6h9aN7s7p23A3KjIN+JVlZRTPgSLGsI/X72M6vdotj1W6Mhn
+         NYISH3yNYs06BQkGGpdzuODnIRR63v4jk2M+jYj6jHqFmsnMp9CwQ0h3ntvgO7p6aKIi
+         jZQ/CZpO0aGedLRG6hxV3Aot1cxD5OvS5pbopmp1kTvRxptxsBYLmKg25cjXS3IxiJMY
+         PfvZ8NnOjTHlmuSE/N8DNc9r7DS1zCl37f3xEWt8n4jF+kfpxkom7+BtYRXjCrK1CBri
+         4Fyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=FZIBJBPcFWlKJgrwRy2Gg7svGEBax00KPXsI/otmOmo=;
-        b=bLWjNbJpQUCs9m/ZeV7WSylRSIhr0u4MofnQsVP/CKrDX1pOEjDPOTyABgy+r/cfdN
-         xLQN3rDjg3Gukau+Fn8TSTbs7NcbdovVmaDqI9U3kHV8VDO9BbW3SC5cIOMF+BqsijUW
-         7smZErMWO2SOwnWemxJ/hVQ1xxVCOe1u9jibWxi/Gfs+pzrgIPN9tpdV/dIgETs5YSy0
-         UbcnFLm8okjLO5QWhv3LhwmOYa7fxExtSUrBj22LdgGQaaZdOaLblWYPrn9xRRBz06fx
-         508skroQTRZ0eNcBxq49rkaJnUyERzMBoHhMYDKF2/v5TtjYUYOCWa7CbfnSYlhiyMIc
-         +Kgg==
-X-Gm-Message-State: AElRT7HlCVPfe7yD100yp2hINS1NyOWf7l+ljgWNUZJX7UZA3yb5dXok
-        Sa8hQmugu/+oo1QACASP/tw=
-X-Google-Smtp-Source: AG47ELt7H9Nh+kw+T5YTqt4xdlg87eGZI604pmugZpLkEBJc+Vq5PhkwEQwcvJ1SDezJyupEEErwnA==
-X-Received: by 10.80.210.215 with SMTP id q23mr15552531edg.294.1522018737316;
-        Sun, 25 Mar 2018 15:58:57 -0700 (PDT)
-Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
-        by smtp.gmail.com with ESMTPSA id t11sm8229839edh.46.2018.03.25.15.58.55
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 25 Mar 2018 15:58:55 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Alex Vandiver <alexmv@dropbox.com>
-Cc:     git@vger.kernel.org, git@jeffhostetler.com,
-        jonathantanmy@google.com, bmwill@google.com, stolee@gmail.com,
-        sbeller@google.com, peff@peff.net, johannes.schindelin@gmx.de,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: Git Merge contributor summit notes
-References: <alpine.DEB.2.20.1803091557510.23109@alexmv-linux>
-User-agent: Debian GNU/Linux 9.4 (stretch); Emacs 25.1.1; mu4e 1.1.0
-In-reply-to: <alpine.DEB.2.20.1803091557510.23109@alexmv-linux>
-Date:   Mon, 26 Mar 2018 00:58:54 +0200
-Message-ID: <874ll3yd75.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=IfELDUhFG8SC4eYISU210bReIOYkqkbvRJtk0VfZoho=;
+        b=mIlaU3u/zMffej6KJz/CbMN3kayTN9UgQGdv0aZVgugsEacWBsWoCE9XLC/4YSyRDW
+         usjDwrTanXRJQUPVEAGKsY1f3A4pU7UUTikwHNXHhgHl+rt0oYD0NmTO0Ot5+xnmstLK
+         zqJoNAz7U31C+cBhljpcKsE5VuNhdjKOu4XssV0sZpASmTNKqnoU0OTaRophcEhZ9+TS
+         VA9sD1a3eOnEyUTdLwK7rwNg3sOAcGvsSRMNk4VPuqJmrO2DnKdr/aN55kc0K4xuYsXF
+         uEzBsLr5XFEDowg28FY7S2GQhXPXoJOEdz9F6PjzjEvA0zC62kdEqT6Sb7diaCNhZURw
+         ICYA==
+X-Gm-Message-State: AElRT7HKAGq1EbJ9xuMhT8yZFAtWbMWy4cs2dj/Ipo9UCbMYkb7+C1NE
+        A9JrZuZMc5Yanx10EP8iyh6JjtAuWtcN9zqG800=
+X-Google-Smtp-Source: AG47ELvyAcjoJm4aR+531CrNxnW67JuomWnR+XoMMVeCMj1vUDrGB7LRnlEe/BFMG6AvlhUzsYUTqWbYl1XpDBQf7LQ=
+X-Received: by 10.200.42.37 with SMTP id k34mr38733897qtk.101.1522023085520;
+ Sun, 25 Mar 2018 17:11:25 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.12.174.202 with HTTP; Sun, 25 Mar 2018 17:11:24 -0700 (PDT)
+In-Reply-To: <20180325182803.30036-3-avarab@gmail.com>
+References: <20180325182803.30036-1-avarab@gmail.com> <20180325182803.30036-3-avarab@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Sun, 25 Mar 2018 20:11:24 -0400
+X-Google-Sender-Auth: l9iQk9vDwO21Uy8Os4ZJ6lUjogQ
+Message-ID: <CAPig+cQ6EK=Q00panZECVvWt3pJyS9acC1n4mgogMmk5J4hO8g@mail.gmail.com>
+Subject: Re: [PATCH 2/2] send-email: supply a --send-delay=1 by default
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Sun, Mar 25, 2018 at 2:28 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+> The earlier change to add this option described the problem this
+> option is trying to solve.
+>
+> This turns it on by default with a value of 1 second, which'll
+> hopefully solve it, and if not user reports as well as the
+> X-Mailer-Send-Delay header should help debug it.
+> [...]
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+> ---
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> @@ -3070,7 +3070,18 @@ sendemail.smtpReloginDelay::
+>  sendemail.smtpSendDelay::
+>         Seconds wait in between message sending before sending another
+> -       message. Set it to 0 to impose no extra delay, defaults to 0.
+> +       message. Set it to 0 to impose no extra delay, defaults to 1
+> +       to wait 1 second.
+> ++
+> +The reason for imposing a default delay is because certain popular
+> +E-Mail clients such as Google's GMail completely ignore the "Date"
+> +header, which format-patch is careful to set such that the patches
+> +will be displayed in order, and instead sort by the time the E-mail
+> +was received.
 
-On Sat, Mar 10 2018, Alex Vandiver wrote:
-
-> New hash (Stefan, etc)
-> ----------------------
->  - discussed on the mailing list
->  - actual plan checked in to Documentation/technical/hash-function-transition.txt
->  - lots of work renaming
->  - any actual work with the transition plan?
->  - local conversion first; fetch/push have translation table
->  - like git-svn
->  - also modified pack and index format to have lookup/translation efficiently
->  - brian's series to eliminate SHA1 strings from the codebase
->  - testsuite is not working well because hardcoded SHA1 values
->  - flip a bit in the sha1 computation and see what breaks in the testsuite
->  - will also need a way to do the conversion itself; traverse and write out new version
->  - without that, can start new repos, but not work on old ones
->  - on-disk formats will need to change -- something to keep in mind with new index work
->  - documentation describes packfile and index formats
->  - what time frame are we talking?
->  - public perception question
->  - signing commits doesn't help (just signs commit object) unless you "recursive sign"
->  - switched to SHA1dc; we detect and reject known collision technique
->  - do it now because it takes too long if we start when the collision drops
->  - always call it "new hash" to reduce bikeshedding
->  - is translation table a backdoor? has it been reviewed by crypto folks?
->    - no, but everything gets translated
->  - meant to avoid a flag day for entire repositories
->  - linus can decide to upgrade to newhash; if pushes to server that is not newhash aware, that's fine
->  - will need a wire protocol change
->  - v2 might add a capability for newhash
->  - "now that you mention md5, it's a good idea"
->  - can use md5 to test the conversion
->  - is there a technical reason for why not /n/ hashes?
->  - the slow step goes away as people converge to the new hash
->  - beneficial to make up some fake hash function for testing
->  - is there a plan on how we decide which hash function?
->  - trust junio to merge commits when appropriate
->  - conservancy committee explicitly does not make code decisions
->  - waiting will just give better data
->  - some hash functions are in silicon (e.g. microsoft cares)
->  - any movement in libgit2 / jgit?
->    - basic stuff for libgit2; same testsuite problems
->    - no work in jgit
->  - most optimistic forecast?
->    - could be done in 1-2y
->  - submodules with one hash function?
->    - unable to convert project unless all submodules are converted
->    - OO-ing is not a prereq
-
-Late reply, but one thing I brought up at the time is that we'll want to
-keep this code around even after the NewHash migration at least for
-testing purposes, should we ever need to move to NewNewHash.
-
-It occurred to me recently that once we have such a layer it could be
-(ab)used with some relatively minor changes to do any arbitrary
-local-to-remote object content translation, unless I've missed something
-(but I just re-read hash-function-transition.txt now...).
-
-E.g. having a SHA-1 (or NewHash) local repo, but interfacing with a
-remote server so that you upload a GPG encrypted version of all your
-blobs, and have your trees reference those blobs.
-
-Because we'd be doing arbitrary translations for all of
-commits/trees/blobs this could go further than other bolted-on
-encryption solutions for Git. E.g. paths in trees could be encrypted
-too, as well as all the content of the commit object that isn't parent
-info & the like (but that would have different hashes).
-
-Basically clean/smudge filters on steroids, but for every object in the
-repo. Anyone who got a hold of it would still see the shape of the repo
-& approximate content size, but other than that it wouldn't be more info
-than they'd get via `fast-export --anonymize` now.
-
-I mainly find it interesting because presents an intersection between a
-feature we might want to offer anyway, and something that would stress
-the hash transition codepath going forward, to make sure it hasn't all
-bitrotted by the time we'll need NewHash->NewNewHash.
-
-Git hosting providers would hate it, but they should probably be
-charging users by how much Michael Haggerty's git-sizer tool hates their
-repo anyway :)
+A minor point: Are you sure that it's git-format-patch that's being
+careful about arranging Date: to display in the desired order, and not
+git-send-email? Looking at old patches I still have hanging around
+which were created with git-format-patch, I see the Date: headers are
+wildly out of order, presumably because the date is taken from
+Author-Date: and the patches were heavily rebased.
