@@ -2,94 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ACB571F404
-	for <e@80x24.org>; Mon, 26 Mar 2018 21:27:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8B7C91F404
+	for <e@80x24.org>; Mon, 26 Mar 2018 21:31:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752105AbeCZV1w (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Mar 2018 17:27:52 -0400
-Received: from mail-qk0-f171.google.com ([209.85.220.171]:37025 "EHLO
-        mail-qk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751614AbeCZV1v (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Mar 2018 17:27:51 -0400
-Received: by mail-qk0-f171.google.com with SMTP id w6so21755614qkb.4
-        for <git@vger.kernel.org>; Mon, 26 Mar 2018 14:27:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=M30gAOXmhwuE0DJC4EZ7hXYgvHOvxZuUXNdTP9jAjCQ=;
-        b=O0lIuam5a2yyGpCDyQTj2r+sbXCF1ME0I3yh4Apn8PMlLcJ8CV7Z0sf06DztCm/2HL
-         JFJ+TJXuPFuj70vN1Vw30E+0M7nKTqv65sBZdUbESgH+puFPrZNLRhoqstTSbS1kO3LP
-         S0AcW3FhE+zPSNMo6m2jk2t/oPK+c+9eZzqPIwekIfhT5cCBT0gS68EysO1XFrgqSxpL
-         aQWODATdesHCVKZp0Kxzg8cN4F3ER7OO+WHtXuEOLdEoHIngxNjJP9PPNIgvjosfb4O9
-         qerejB/5JvokMpdjNBLT1gJpN/KigbfgW8g0wzVbeGh4Hikc7Lb8uTzakEDAw9d302fz
-         DNHg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=M30gAOXmhwuE0DJC4EZ7hXYgvHOvxZuUXNdTP9jAjCQ=;
-        b=DrxbvYMSTMVC4hQiawiM7QVh8cXnFj71FZm9unjDRDMj6FXxQmYZ8VjZ6pKhw2meDi
-         RsqTLsTqbviWxJKYYZ7Cdr9TE+tzka7Vl3+O9tSZp8Dwqe/ECsLcelRJwMFpHBs9KS2V
-         D9eGiesSivhYPPtSaCXnirKLt2IlhJ4ekoiwUlc4a6CrO6gEEgPmjYE8JICYrjZduhJ2
-         Scskt9X0jw60HwTTSPZxko7u+uIv2soIwkdhVZ/h9l/dqG8EDwdZ42TcQSY9SxeVTCWP
-         3cN8DbdvyZKrXG2O0kSRBuFflqiQxfIGHIF5UWYOXzRUIqx7BoykljbnyHXjdvdcoiij
-         JwEA==
-X-Gm-Message-State: AElRT7Flwpk59jmFzHxDX3Eki/Cfp/QBwUB5eHkUBVR8OC1n8orP8g2u
-        3aPrq7XeeBF8BNz/irQkYeT1yiKgaRpFkpnsB3KeYPdG
-X-Google-Smtp-Source: AIpwx4/Q94m178fb4TndJz+iA5dmhLGvmCMvx9DkXD9GzIVSDuTxZ1EVaMl7gTxW0Ii2vAFvqd7eP6eU5y27pPT7fjU=
-X-Received: by 10.55.78.86 with SMTP id c83mr4309363qkb.264.1522099669820;
- Mon, 26 Mar 2018 14:27:49 -0700 (PDT)
+        id S1752026AbeCZVbk (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Mar 2018 17:31:40 -0400
+Received: from mout.gmx.net ([212.227.17.20]:37245 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751903AbeCZVbj (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Mar 2018 17:31:39 -0400
+Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LejNC-1eDkYS127C-00qR7V; Mon, 26
+ Mar 2018 23:31:34 +0200
+Date:   Mon, 26 Mar 2018 23:31:33 +0200 (DST)
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+To:     Dan Jacques <dnj@google.com>
+cc:     git@vger.kernel.org, gitster@pobox.com
+Subject: [PATCH 0/2] Add Windows support to the new RUNTIME_PREFIX design
+In-Reply-To: <20180325205120.17730-1-dnj@google.com>
+Message-ID: <nycvar.QRO.7.76.6.1803262331040.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <20180325205120.17730-1-dnj@google.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Received: by 10.12.203.129 with HTTP; Mon, 26 Mar 2018 14:27:09 -0700 (PDT)
-From:   Rafael Ascensao <rafa.almas@gmail.com>
-Date:   Mon, 26 Mar 2018 22:27:09 +0100
-Message-ID: <CACUQV5_3Pw+vnyyNUL4oE4tMLG_wKVdqdVk01rg4V92ufUYHHA@mail.gmail.com>
-Subject: git complains packed-refs is not a directory when used with GIT_DIR
- and GIT_WORK_TREE envvars.
-To:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:hABmRmdOnmehBf2+DnUf6BxU9Qdly9MYDA6NquzbmjBqFDUUuti
+ 8Fwn3GIwEwDZ7leCjatx/mFHfLi3h56beoceWH9InmzjscW6K3d5oFUHcHKjDEzYD1+gMIK
+ u2WTl1rjwNIsbB/ximPJ2EZ1xACXvB+yRT9z61OykJWE1NLfo7c5mnFVeHcke3PuYcT5R9C
+ OC0VwDORKmDwuLQIDKPtg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:yQmKoC//RdY=:kRtcYAbYjq+Mut16YLDMQv
+ M/nuBzSRW++wyW7Xsu0/pesUxTXc5BWaOkAtfhrMhFiiwjBmNn1D1IGGUvlQZ/UqfDWe8jcR5
+ YPHUNxAukMuJKZdz4VO26g9t3Uj9K2y0bfTLj4hsiRspDEywjOpvXsPvlZc+hHucdG0fj/e8X
+ ZBIPNX8htrG544ZZzqjfoHeld1chw5622NSKxfNjUbmGjgEB3+jFScbTbzvuDjiYuXPQvYzOy
+ ZHroM7rCvUP3dKfbRjQHqZZC4RYJwFdgsPtdc/B5OgLetvfOt+ViTEgAsZVwvnelUxRzDLRxa
+ tDjd43xymqlAnTGxhkX87jmk+Ne/628YVxW5sKdaDgOYih7PP+lHw0rLrTg+PvOQh+jm1T9PT
+ KQq5YvuT85/e7sDejCNaWN+iG/HKsleav+13k7AXdGFeLwZg5v6on8QpcHLulljJyrYj45z+n
+ aEb2hY6A7leuOYKC9f8WeQu/GbbDoIntZwkExWrEuj23QOiSpweyd9y7WWbn/csLvcEdraPTL
+ eGTKx+x2X+z96luR43h//LWzE14AQKxuIvxF2sgGPYHqJwcH2WudjMMgkyPGUZjbu9KyLk9FF
+ wvI1j3GerAGwLBqdzAbSeixhBV/TZ/i6OPGU1nNTj7eRq1QrOcwbBpfKT3llnyVuRDglga6b/
+ I9mdtu9bQVzGHqQEEEA/Mb2DxGySoWYbcV0k6LERySTtItFxHRtdrlXiyWe6OcRMmnxGnz7P2
+ tT0JK4LrclDs/nxHMqTMOwNOtfhdcjnN3JhYdLM7kzhIQjN6eTkI4HNoX+M+d9VFouEGPYxkH
+ dG/9NOE34uBoweN1HcoNTHPESW7oxzLtsk7ZMFF1iMUsHHRU0fVSrlJFaXvcL4BopJ70Dx4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-One of the tools that manages PKGBUILDS for Arch Linux stores PKGBUILD
-git repos inside a cache directory for reuse.
+Even if the RUNTIME_PREFIX feature originates from Git for Windows, the
+current patch series is different enough in its design that it leaves the
+Windows-specific RUNTIME_PREFIX handling in place: On Windows, we still
+have to override argv[0] with the absolute path of the current `git`
+executable.
 
-One of the repos is triggering some unexpected behaviour that can be
-reproduced in the CLI with:
+Let's just port the Windows-specific code over to the new design and get
+rid of that argv[0] overwriting.
 
-  $ GIT_DIR=3Dspotify/.git GIT_WORK_TREE=3Dspotify git reset HEAD
-  fatal: couldn't read spotify/.git/packed-refs: Not a directory
+This also partially addresses a very obscure problem reported on the Git
+for Windows bug tracker, where misspelling a builtin command using a
+creative mIxEd-CaSe version could lead to an infinite ping-pong between
+git.exe and Git for Windows' "Git wrapper" (that we use in place of
+copies when on a file system without hard-links, most notably FAT).
 
-Moving up one directory works as expected.
-  $ cd ..
-  $ GIT_DIR=3Dsync/spotify/.git GIT_WORK_TREE=3Dsync/spotify git reset HEAD
+Dan, I would be delighted if you could adopt these patches into your patch
+series.
 
-Using -C seems to work fine too.
-  $ git -C spotify reset HEAD
+Johannes Schindelin (2):
+  exec_cmd: provide a new-style RUNTIME_PREFIX helper for Windows
+  mingw/msvc: use the new-style RUNTIME_PREFIX helper
 
-$ GIT_TRACE_SETUP=3D2 GIT_TRACE=3D2 GIT_DIR=3D"spotify/.git"
-GIT_WORK_TREE=3D"spotify" git reset HEAD
-22:10:53.020525 trace.c:315             setup: git_dir: spotify/.git
-22:10:53.020605 trace.c:316             setup: git_common_dir: spotify/.git
-22:10:53.020616 trace.c:317             setup: worktree:
-/home/rafasc/.cache/aurutils/sync/spotify
-22:10:53.020625 trace.c:318             setup: cwd:
-/home/rafasc/.cache/aurutils/sync
-22:10:53.020635 trace.c:319             setup: prefix: (null)
-22:10:53.020644 git.c:344               trace: built-in: git 'reset' 'HEAD'
-fatal: couldn't read spotify/.git/packed-refs: Not a directory
+ Makefile         |  8 ++++++++
+ compat/mingw.c   |  5 ++---
+ config.mak.uname |  2 ++
+ exec_cmd.c       | 22 ++++++++++++++++++++++
+ 4 files changed, 34 insertions(+), 3 deletions(-)
 
-The issue seems to bisect to f57f37e2e1bf11ab4cdfd221ad47e961ba9353a0
-I can't pinpoint why this particular repo is behaving differently.
+-- 
+2.7.4
 
-Cumprimentos,
-Rafael Ascens=C3=A3o
