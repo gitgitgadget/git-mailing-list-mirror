@@ -2,191 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4E40A1F42D
-	for <e@80x24.org>; Mon, 26 Mar 2018 07:05:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E7D151F42D
+	for <e@80x24.org>; Mon, 26 Mar 2018 07:24:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750928AbeCZHFq (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Mar 2018 03:05:46 -0400
-Received: from mail-it0-f67.google.com ([209.85.214.67]:38363 "EHLO
-        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750783AbeCZHFp (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Mar 2018 03:05:45 -0400
-Received: by mail-it0-f67.google.com with SMTP id 19-v6so9394340itw.3
-        for <git@vger.kernel.org>; Mon, 26 Mar 2018 00:05:45 -0700 (PDT)
+        id S1751083AbeCZHY5 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Mar 2018 03:24:57 -0400
+Received: from mail-wr0-f174.google.com ([209.85.128.174]:36280 "EHLO
+        mail-wr0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751013AbeCZHY4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Mar 2018 03:24:56 -0400
+Received: by mail-wr0-f174.google.com with SMTP id d10so17763145wrf.3
+        for <git@vger.kernel.org>; Mon, 26 Mar 2018 00:24:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=/i9F6jmQix5Dl8jKcKI91vDD8v7WDLvOPQQoKVystv8=;
-        b=flIyQo0MxlXfeD1CEW59vyCVsXQs3ohRc41UvKBla5F1dIIvme43MEf2jtOHAnI/Vx
-         59k9BYKfEyjofU/zhpYvJAJGrRgOyi/Dw0Lx8Cn6RNEh4Ey+fpMNX/vCQPah2w1WBp4P
-         zI/V4XKt3iz5ry3ElFc3DygZf+btAXBCO+Z+4dej963gyq1IH6DyerhQdds7vNBrO/h8
-         ESuJhNtKwEuthTxa6yiBU0bP0m6s3yHnlIMmJSeb9bq3WjZ40TY5dqyBwonmrGHdaM3s
-         KxCF08J+ywpgU8CLa+Puga7beftAAp2yffiKSajB99ym1Md7Y6pVHtiH+T3h7t3oCg2M
-         cCRw==
+        h=from:to:cc:subject:date:message-id;
+        bh=BEzWC+Nx/sRzQOoOJhV1JXdROwvlW7nzznjarU5Y35U=;
+        b=AP5rXqmc1qLhUN0IquJbt1zQwROekuzWR/xVlGrbg0q4ZIgKNk1byKl2JEKZJFrANJ
+         qTB1LeQfzfsVkkFpnVL4Qv6jah3cmRBL1lgem303ihnWV3+ky/8WG+dHJTAnsjC1fPmT
+         7gCkZkg5gq2F6kZhEVd/IkhKAwGf5zvDcF+pFLOKMvO1/FpbAHDotfdCi850Qygofab6
+         0+MyFHzRjlA4Gx9uvGz1HER1X0+Fxv5bO/G3lkwRikZRLihLYhUg2ePs3eZHcHgBgWyi
+         xtD+ZJ6SyA+dGXlGL9UxoVr4Be4ZyQtkUg7BBwVEYgpXrtLCs2Sjw+947n8BoTNbIyMM
+         qbjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=/i9F6jmQix5Dl8jKcKI91vDD8v7WDLvOPQQoKVystv8=;
-        b=SxBcfV9Kfh35uMZ9vGCTtY95sSHxMMCzAu9aNO/dfk6iBjwsBTNGWEl4vs4DChKO8r
-         lRV7ANS+8PYu4Gkf4C5MLLRwTmlvD9lYwIrSDTw2XenXyy8+pnGS5lxOmtacdC7hzoj4
-         j5akWRQLKLFY5uPr88lwxREO+1RAfMhfKrhqfwEt3LiAXEXUVWDeK+1/dpAvCj66+2H/
-         hvdcHZY4m9xBWibes9iewmqPz+Dnuos1gRGIcwpuLwYaCkbSOQxWlTIusZFv34qb2NbZ
-         EimH+882pSoqcNJ6UvMsOReto795S/Ha1rTuN0NGM2UfVScVK5Nq9hYTmD9P0SPmNIJz
-         WI2A==
-X-Gm-Message-State: AElRT7G0Ro8Ef9nepayZ28GnifiW0tOMTiQ+9zo1bnIokw9uMH7nxrNI
-        RypO4ed1nL9slS3sx4bkf8JPLcYsflF6gmPYt14=
-X-Google-Smtp-Source: AG47ELtZN0fwTf/rlzpDqSRerXKQZKG4KLtEkSmL31tFBr9d4uX4kPEr9tMU3sUmcrxkCJpQXVaCmkL9/alQRC2wuds=
-X-Received: by 2002:a24:c457:: with SMTP id v84-v6mr20903396itf.81.1522047944632;
- Mon, 26 Mar 2018 00:05:44 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.79.34.9 with HTTP; Mon, 26 Mar 2018 00:05:44 -0700 (PDT)
-In-Reply-To: <20180326011426.19159-4-joel@teichroeb.net>
-References: <20180326011426.19159-1-joel@teichroeb.net> <20180326011426.19159-4-joel@teichroeb.net>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=BEzWC+Nx/sRzQOoOJhV1JXdROwvlW7nzznjarU5Y35U=;
+        b=hXk5q04zhGbrymAVkBS3kQu52S9SHq45C+NgLlFZYBdP8VY39E6jl9nbQaJ6TL54uS
+         tAUXDj8B0hfyrdzvaSB2aLxD31wFbEoU3rIIEj8iIBtirVZil4Gdjbl2LvH96MMJbDZ7
+         NZx9LdeK9Aks9IrEBRx64WNkODHOFdB0uqAuAIK7KilDG+JkiulrJ6Ro++lM+M9j4YpS
+         qgGD7e0Sysn0oe5BuuW9k/nwInrLJ6JbVghB6ptwgMjPvaoi7d1NVFVASK/UMoYgpD1e
+         Gm/E5iGfgJdQEPeZXzozn3GARawalHKooFp11wYdMPsIe9S6DKQe4GdFLbqXqRhHw1dr
+         BtJw==
+X-Gm-Message-State: AElRT7FSKjv6i3C5QT5SZpGMGGf0mxVFpE471wCujmqCOssBjc2luoXT
+        9jL1eb+qmPDcq26tEOq+tKNRy20/
+X-Google-Smtp-Source: AG47ELv5iLjW/5xFB2jGGFzrr+PfcAkxIjucwAW/UDSCkQPqoFU0dc7rfGsMri6unEauiO3s+7aPrw==
+X-Received: by 10.223.166.102 with SMTP id k93mr31656920wrc.231.1522049094509;
+        Mon, 26 Mar 2018 00:24:54 -0700 (PDT)
+Received: from localhost.localdomain (89-95-107-230.abo.bbox.fr. [89.95.107.230])
+        by smtp.gmail.com with ESMTPSA id u8sm2820922wmf.2.2018.03.26.00.24.53
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 26 Mar 2018 00:24:53 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
-Date:   Mon, 26 Mar 2018 09:05:44 +0200
-Message-ID: <CAP8UFD0wc2i3W4FNZPcDs3ELJGJj=4NaP8mhd-zMAkdK=vXT1A@mail.gmail.com>
-Subject: Re: [PATCH v2 3/6] stash: convert apply to builtin
-To:     Joel Teichroeb <joel@teichroeb.net>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Content-Type: text/plain; charset="UTF-8"
+X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Thomas Rast <tr@thomasrast.ch>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Christian Couder <chriscool@tuxfamily.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Philip Oakley <philipoakley@iee.org>
+Subject: [PATCH v2 0/2] perf/aggregate: sort results by regression
+Date:   Mon, 26 Mar 2018 09:24:29 +0200
+Message-Id: <20180326072431.30771-1-chriscool@tuxfamily.org>
+X-Mailer: git-send-email 2.17.0.rc1.36.g098d832c9.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 26, 2018 at 3:14 AM, Joel Teichroeb <joel@teichroeb.net> wrote:
-> Signed-off-by: Joel Teichroeb <joel@teichroeb.net>
+This small patch series makes it easy to spot big performance
+regressions, so that they can later be investigated.
 
-The commit message in this patch and the following ones could be a bit
-more verbose. It could at least tell that the end goal is to convert
-git-stash.sh to a C builtin.
+For example:
 
-> +static void destroy_stash_info(struct stash_info *info)
-> +{
-> +       strbuf_release(&info->revision);
-> +}
+$ ./aggregate.perl --sort-by=regression --subsection "without libpcre" v2.14.3 v2.15.1 v2.16.2 p4220-log-grep-engines.sh 
++5.0% p4220-log-grep-engines.2 0.60(0.58+0.02) 0.63(0.59+0.04) v2.14.3 v2.15.1
++4.5% p4220-log-grep-engines.10 0.67(0.64+0.03) 0.70(0.67+0.02) v2.14.3 v2.15.1
++1.7% p4220-log-grep-engines.5 0.58(0.57+0.01) 0.59(0.59+0.00) v2.14.3 v2.15.1
++1.7% p4220-log-grep-engines.6 0.58(0.58+0.00) 0.59(0.56+0.02) v2.14.3 v2.15.1
++1.7% p4220-log-grep-engines.17 0.58(0.57+0.01) 0.59(0.56+0.02) v2.14.3 v2.15.1
++1.7% p4220-log-grep-engines.1 0.60(0.58+0.01) 0.61(0.60+0.01) v2.14.3 v2.15.1
++1.6% p4220-log-grep-engines.13 0.64(0.63+0.02) 0.65(0.63+0.01) v2.14.3 v2.15.1
++1.5% p4220-log-grep-engines.9 0.67(0.66+0.01) 0.68(0.67+0.01) v2.14.3 v2.15.1
++0.0% p4220-log-grep-engines.14 0.65(0.62+0.02) 0.65(0.63+0.02) v2.14.3 v2.15.1
++0.0% p4220-log-grep-engines.18 0.58(0.57+0.00) 0.58(0.56+0.02) v2.14.3 v2.15.1
+-1.5% p4220-log-grep-engines.13 0.65(0.63+0.01) 0.64(0.62+0.01) v2.15.1 v2.16.2
+-1.5% p4220-log-grep-engines.14 0.65(0.63+0.02) 0.64(0.60+0.03) v2.15.1 v2.16.2
+-1.6% p4220-log-grep-engines.1 0.61(0.60+0.01) 0.60(0.58+0.02) v2.15.1 v2.16.2
+-1.7% p4220-log-grep-engines.5 0.59(0.59+0.00) 0.58(0.55+0.02) v2.15.1 v2.16.2
+-1.7% p4220-log-grep-engines.6 0.59(0.56+0.02) 0.58(0.55+0.02) v2.15.1 v2.16.2
+-1.7% p4220-log-grep-engines.18 0.58(0.56+0.02) 0.57(0.55+0.02) v2.15.1 v2.16.2
+-2.9% p4220-log-grep-engines.9 0.68(0.67+0.01) 0.66(0.64+0.02) v2.15.1 v2.16.2
+-3.4% p4220-log-grep-engines.17 0.59(0.56+0.02) 0.57(0.55+0.01) v2.15.1 v2.16.2
+-4.3% p4220-log-grep-engines.10 0.70(0.67+0.02) 0.67(0.66+0.01) v2.15.1 v2.16.2
+-4.8% p4220-log-grep-engines.2 0.63(0.59+0.04) 0.60(0.57+0.03) v2.15.1 v2.16.2
 
-Not sure if "destroy" is the right word in the function name. I would
-have used "free" instead.
+Since V1, the indent issues have been fixed and the name of the option
+has been changed to --sort-by=regression (from --sortbyregression) as
+suggested by Junio.
 
-> +static int get_stash_info(struct stash_info *info, int argc, const char **argv)
-> +{
-> +       struct strbuf w_commit_rev = STRBUF_INIT;
-> +       struct strbuf b_commit_rev = STRBUF_INIT;
-> +       struct strbuf w_tree_rev = STRBUF_INIT;
-> +       struct strbuf b_tree_rev = STRBUF_INIT;
-> +       struct strbuf i_tree_rev = STRBUF_INIT;
-> +       struct strbuf u_tree_rev = STRBUF_INIT;
-> +       struct strbuf symbolic = STRBUF_INIT;
-> +       struct strbuf out = STRBUF_INIT;
-> +       int ret;
-> +       const char *revision;
-> +       const char *commit = NULL;
-> +       char *end_of_rev;
-> +       info->is_stash_ref = 0;
-> +
-> +       if (argc > 1) {
-> +               int i;
-> +               fprintf(stderr, _("Too many revisions specified:"));
-> +               for (i = 0; i < argc; ++i) {
-> +                       fprintf(stderr, " '%s'", argv[i]);
-> +               }
+Christian Couder (2):
+  perf/aggregate: add display_dir()
+  perf/aggregate: add --sort-by=regression option
 
-The brackets are not needed.
+ t/perf/aggregate.perl | 70 +++++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 65 insertions(+), 5 deletions(-)
 
-> +               fprintf(stderr, "\n");
-> +
-> +               return -1;
-> +       }
-> +
-> +       if (argc == 1)
-> +               commit = argv[0];
-> +
-> +       strbuf_init(&info->revision, 0);
-> +       if (commit == NULL) {
-> +               if (have_stash()) {
-> +                       destroy_stash_info(info);
-> +                       return error(_("No stash entries found."));
-> +               }
-> +
-> +               strbuf_addf(&info->revision, "%s@{0}", ref_stash);
-> +       } else if (strspn(commit, "0123456789") == strlen(commit)) {
-> +               strbuf_addf(&info->revision, "%s@{%s}", ref_stash, commit);
-> +       } else {
-> +               strbuf_addstr(&info->revision, commit);
-> +       }
-> +
-> +       revision = info->revision.buf;
-> +
-> +       strbuf_addf(&w_commit_rev, "%s", revision);
+-- 
+2.17.0.rc1.36.g098d832c9.dirty
 
-Maybe use strbuf_addstr()?
-
-> +
-> +
-
-Spurious new line.
-
-[...]
-
-> +static int diff_cached_index(struct strbuf *out, struct object_id *c_tree)
-> +{
-> +       struct child_process cp = CHILD_PROCESS_INIT;
-> +    const char *c_tree_hex = oid_to_hex(c_tree);
-
-Indent looks weird.
-
-> +
-> +       cp.git_cmd = 1;
-> +       argv_array_pushl(&cp.args, "diff-index", "--cached", "--name-only", "--diff-filter=A", NULL);
-> +       argv_array_push(&cp.args, c_tree_hex);
-> +       return pipe_command(&cp, NULL, 0, out, 0, NULL, 0);
-> +}
-> +
-> +static int update_index(struct strbuf *out) {
-
-The opening bracket should be on its own line.
-
-> +       struct child_process cp = CHILD_PROCESS_INIT;
-
-Maybe add a new line here to be more consistent with other such functions.
-
-> +       cp.git_cmd = 1;
-> +       argv_array_pushl(&cp.args, "update-index", "--add", "--stdin", NULL);
-> +       return pipe_command(&cp, out->buf, out->len, NULL, 0, NULL, 0);
-> +}
-
-[...]
-
-> +       if (info->has_u) {
-> +               struct child_process cp = CHILD_PROCESS_INIT;
-> +               struct child_process cp2 = CHILD_PROCESS_INIT;
-> +               int res;
-> +
-> +               cp.git_cmd = 1;
-> +               argv_array_push(&cp.args, "read-tree");
-> +               argv_array_push(&cp.args, oid_to_hex(&info->u_tree));
-> +               argv_array_pushf(&cp.env_array, "GIT_INDEX_FILE=%s", stash_index_path);
-> +
-> +               cp2.git_cmd = 1;
-> +               argv_array_pushl(&cp2.args, "checkout-index", "--all", NULL);
-> +               argv_array_pushf(&cp2.env_array, "GIT_INDEX_FILE=%s", stash_index_path);
-
-Maybe use small functions for the above read-tree and checkout-index.
-
-> +               res = run_command(&cp) || run_command(&cp2);
-> +               remove_path(stash_index_path);
-> +               if (res)
-> +                       return error(_("Could not restore untracked files from stash"));
-> +       }
-
-Thanks.
