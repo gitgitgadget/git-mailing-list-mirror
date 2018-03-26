@@ -2,190 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 157351F404
-	for <e@80x24.org>; Mon, 26 Mar 2018 15:13:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 106241F404
+	for <e@80x24.org>; Mon, 26 Mar 2018 15:28:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752129AbeCZPNU (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Mar 2018 11:13:20 -0400
-Received: from cloud.peff.net ([104.130.231.41]:43334 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751249AbeCZPNT (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Mar 2018 11:13:19 -0400
-Received: (qmail 1278 invoked by uid 109); 26 Mar 2018 15:13:19 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 26 Mar 2018 15:13:19 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 20100 invoked by uid 111); 26 Mar 2018 15:14:17 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 26 Mar 2018 11:14:17 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 26 Mar 2018 11:13:17 -0400
-Date:   Mon, 26 Mar 2018 11:13:17 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     avarab@gmail.com, e@80x24.org, git@vger.kernel.org,
-        gitster@pobox.com
-Subject: Re: [PATCH v7 00/13] nd/pack-objects-pack-struct updates
-Message-ID: <20180326151317.GA24425@sigill.intra.peff.net>
-References: <20180318142526.9378-1-pclouds@gmail.com>
- <20180324063353.24722-1-pclouds@gmail.com>
+        id S1752109AbeCZP2G (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Mar 2018 11:28:06 -0400
+Received: from mout.gmx.net ([212.227.17.20]:54581 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751840AbeCZP2F (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Mar 2018 11:28:05 -0400
+Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MFgxF-1eo85Z49kD-00EcFG; Mon, 26
+ Mar 2018 17:27:57 +0200
+Date:   Mon, 26 Mar 2018 17:27:55 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+To:     =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
+        <pclouds@gmail.com>
+cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 01/36] t/helper: add an empty test-tool program
+In-Reply-To: <20180324074505.19100-2-pclouds@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1803261722350.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <20180317075421.22032-1-pclouds@gmail.com> <20180324074505.19100-1-pclouds@gmail.com> <20180324074505.19100-2-pclouds@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20180324063353.24722-1-pclouds@gmail.com>
+Content-Type: multipart/mixed; boundary="8323329-1412799066-1522078077=:77"
+X-Provags-ID: V03:K0:VXW8wWfho9TuB1V7oS70xia8dkqeM3v1X99yqMpNofUT0V9nQn/
+ 5yImlOscEXrrnEAMdKJos9qbJI10Y2Bl44H6Q5jc7yo4+ZT7ZmAT3iRMnikZNkwLnILmYAT
+ 1Lu7Mmgf+hndj+PdxUiinIsR2A7tLB8mbEtwpUkifH0N62Wkco2WVp50ZBqSjAzNiNWd+DX
+ 34KotRLPtIJMVpjZCAiaw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:AqoYuMb8x2Q=:i+MQCgn3YbwOIE3cPIX5he
+ tPdGuSLlZvwdL3543PxA4yd1tYgSYDHl+fUSTlwqEor7KkOdyQGowVd0Qk7aBhgiw7NXGWjIu
+ y4N6WTvDM/ho5aAUOeh6QLJ1hyMctJONdJwdzwS3ozj/7tDrbxTWsMEOh+LHqK46uLz50kdgv
+ vgx3rk1R5Rdm4RFIvfzrWTaeUadduWYo2NNiYTtaRx15tG5aF2kjb5Aa9sfvUECpP8qiWt4mC
+ cp6cUe/XmKPnnCQS/DeU71YmyXZ4TITTqVOn82VbtOOCnA9VfN92Fo+9EX93NLBBEGKQtsTb8
+ 5MDxuJpLrG64Ww4K3qNlANHMdpxCJkbqMFwN1y8JyleWUSBI7WcRzRY8+f/0L8TQFcYWzoZRS
+ q3g096mKTNEQ7u1k+aT70nu1XUpkHBfxWEdRpurkmtFVpTnExSphnsBIiV0EtlCOQd6vRKwyn
+ aog3u0BM1Rp7wSsYA0HeQKSK8M7dJYGVD4suBl5Ji2omo1Vtl2wLu7BwBScfYTNV8HFTWEc32
+ v5/KNrWI9gnc/1RZWIFctb0j9TQyXCMbS1aDzsOnEgINxYPQyr8giQoPjyjRy26UvZdgDREzY
+ GxlhknJM7K5/j7Z6YV6mpO+dQsQui20MMPqPkvBOx4SISJNJrt4ouQKGZNClOdfngmM81z4Gk
+ cO7PCHy2Fs8lQAKrpFGoLGBQUYsehRGBUyYqlFlq56HinnFDc4u+L/FMNWqi/rdJuNALGRj5k
+ WjC8IoR7PsG9EBjrpEQi7eyNBbltuUmBrqcW8wRGEc8Af5rUthNAdH65f2rEu+xDgnYRBROKI
+ UCxHCiiN/iPfa1sG7dKNFr487n3e+K0CBI6hNb9oalkHFN+VVgg951m/+lYwDyJ9CMOn6S1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Mar 24, 2018 at 07:33:40AM +0100, Nguyễn Thái Ngọc Duy wrote:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> +unsigned long oe_get_size_slow(struct packing_data *pack,
-> +			       const struct object_entry *e)
-> +{
-> +	struct packed_git *p;
-> +	struct pack_window *w_curs;
-> +	unsigned char *buf;
-> +	enum object_type type;
-> +	unsigned long used, avail, size;
+--8323329-1412799066-1522078077=:77
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+
+Hi Duy,
+
+On Sat, 24 Mar 2018, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+
+> diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
+> new file mode 100644
+> index 0000000000..c730f718ca
+> --- /dev/null
+> +++ b/t/helper/test-tool.c
+> @@ -0,0 +1,27 @@
+> +#include "git-compat-util.h"
+> +#include "test-tool.h"
 > +
-> +	if (e->type_ != OBJ_OFS_DELTA && e->type_ != OBJ_REF_DELTA) {
-> +		read_lock();
-> +		if (sha1_object_info(e->idx.oid.hash, &size) < 0)
-> +			die(_("unable to get size of %s"),
-> +			    oid_to_hex(&e->idx.oid));
-> +		read_unlock();
-> +		return size;
-> +	}
-> +
-> +	p = oe_in_pack(pack, e);
-> +	if (!p)
-> +		die("BUG: when e->type is a delta, it must belong to a pack");
-> +
-> +	read_lock();
-> +	w_curs = NULL;
-> +	buf = use_pack(p, &w_curs, e->in_pack_offset, &avail);
-> +	used = unpack_object_header_buffer(buf, avail, &type, &size);
-> +	if (used == 0)
-> +		die(_("unable to parse object header of %s"),
-> +		    oid_to_hex(&e->idx.oid));
-> +
-> +	unuse_pack(&w_curs);
-> +	read_unlock();
-> +	return size;
-> +}
+> +struct test_cmd {
+> +=09const char *name;
+> +=09int (*main)(int argc, const char **argv);
 
-It took me a while to figure out why this treated deltas and non-deltas
-differently. At first I thought it was an optimization (since we can
-find non-delta sizes quickly by looking at the headers).  But I think
-it's just that you want to know the size of the actual _delta_, not the
-reconstructed object. And there's no way to ask sha1_object_info() for
-that.
+This makes the build fail on Windows, as we override `main` in
+compat/mingw.h:
 
-Perhaps the _extended version of that function should learn an
-OBJECT_INFO_NO_DEREF flag or something to tell it return the true delta
-type and size. Then this whole function could just become a single call.
+=09/*
+=09 * A replacement of main() that adds win32 specific initialization.
+=09 */
 
-But short of that, it's probably worth a comment explaining what's going
-on.
+=09void mingw_startup(void);
+=09#define main(c,v) dummy_decl_mingw_main(void); \
+=09static int mingw_main(c,v); \
+=09int main(int argc, const char **argv) \
+=09{ \
+=09=09mingw_startup(); \
+=09=09return mingw_main(__argc, (void *)__argv); \
+=09} \
+=09static int mingw_main(c,v)
 
-> +static void prepare_in_pack_by_idx(struct packing_data *pdata)
-> +{
-> +	struct packed_git **mapping, *p;
-> +	int cnt = 0, nr = 1 << OE_IN_PACK_BITS;
-> +
-> +	if (getenv("GIT_TEST_FULL_IN_PACK_ARRAY")) {
-> +		/*
-> +		 * leave in_pack_by_idx NULL to force in_pack[] to be
-> +		 * used instead
-> +		 */
-> +		return;
-> +	}
 
-Minor nit, but can we use git_env_bool() here? It's just as easy, and
-it's less surprising in some corner cases.
+I know, I know, now that common-main.c is a thing, we could simply pluck a
+`platform_specific_pre_main()` or some such, which is overridden in
+compat/mingw.h to `mingw_startup` and to a no-op in git-compat-util.h as a
+fall-back.
 
->  struct object_entry *packlist_alloc(struct packing_data *pdata,
->  				    const unsigned char *sha1,
->  				    uint32_t index_pos)
->  {
->  	struct object_entry *new_entry;
->  
-> +	if (!pdata->nr_objects) {
-> +		prepare_in_pack_by_idx(pdata);
-> +		if (getenv("GIT_TEST_OE_SIZE_BITS")) {
-> +			int bits = atoi(getenv("GIT_TEST_OE_SIZE_BITS"));;
-> +			pdata->oe_size_limit = 1 << bits;
-> +		}
-> +		if (!pdata->oe_size_limit)
-> +			pdata->oe_size_limit = 1 << OE_SIZE_BITS;
-> +	}
+The truth is: I simply did not get around to doing this yet.
 
-Ditto here; I think this could just be:
+In the meantime, could we have this SQUASH???, please?
 
-  pdata->oe_size_limit = git_env_ulong("GIT_TEST_OE_SIZE_BITS",
-                                       (1 << OE_SIZE_BITS));
+-- snipsnap --
+diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
+index cd5e28b045a..87066ced62a 100644
+--- a/t/helper/test-tool.c
++++ b/t/helper/test-tool.c
+@@ -3,7 +3,7 @@
+=20
+ struct test_cmd {
+ =09const char *name;
+-=09int (*main)(int argc, const char **argv);
++=09int (*fn)(int argc, const char **argv);
+ };
+=20
+ static struct test_cmd cmds[] =3D {
+@@ -55,7 +55,7 @@ int cmd_main(int argc, const char **argv)
+ =09=09if (!strcmp(cmds[i].name, argv[1])) {
+ =09=09=09argv++;
+ =09=09=09argc--;
+-=09=09=09return cmds[i].main(argc, argv);
++=09=09=09return cmds[i].fn(argc, argv);
+ =09=09}
+ =09}
+ =09die("There is no test named '%s'", argv[1]);
 
->  	if (pdata->nr_objects >= pdata->nr_alloc) {
->  		pdata->nr_alloc = (pdata->nr_alloc  + 1024) * 3 / 2;
->  		REALLOC_ARRAY(pdata->objects, pdata->nr_alloc);
-> +
-> +		if (!pdata->in_pack_by_idx)
-> +			REALLOC_ARRAY(pdata->in_pack, pdata->nr_alloc);
->  	}
-
-I was going to complain that we don't use ALLOC_GROW() here, but
-actually that part is in the context. ;)
-
-> @@ -35,7 +36,9 @@ enum dfs_state {
->   *
->   * "size" is the uncompressed object size. Compressed size of the raw
->   * data for an object in a pack is not stored anywhere but is computed
-> - * and made available when reverse .idx is made.
-> + * and made available when reverse .idx is made. Note that when an
-> + * delta is reused, "size" is the uncompressed _delta_ size, not the
-> + * canonical one after the delta has been applied.
-
-s/an delta/a delta/
-
-> +Running tests with special setups
-> +---------------------------------
-> +
-> +The whole test suite could be run to test some special features
-> +that cannot be easily covered by a few specific test cases. These
-> +could be enabled by running the test suite with correct GIT_TEST_
-> +environment set.
-> +
-> +GIT_TEST_SPLIT_INDEX forces split-index mode on the whole test suite.
-> +
-> +GIT_TEST_FULL_IN_PACK_ARRAY exercises the uncommon pack-objects code
-> +path where there are more than 1024 packs even if the actual number of
-> +packs in repository is below this limit.
-> +
-> +GIT_TEST_OE_SIZE_BITS=<bits> exercises the uncommon pack-objects
-> +code path where we do not cache objecct size in memory and read it
-> +from existing packs on demand. This normally only happens when the
-> +object size is over 2GB. This variable forces the code path on any
-> +object larger than 2^<bits> bytes.
-
-It's nice to have these available to test the uncommon cases. But I have
-a feeling nobody will ever run them, since it requires extra effort (and
-takes a full test run).
-
-I see there's a one-off test for GIT_TEST_FULL_IN_PACK_ARRAY, which I
-think is a good idea, since it makes sure the code is exercised in a
-normal test suite run. Should we do the same for GIT_TEST_OE_SIZE_BITS?
-
-Also, s/objecct/object/. :)
-
-> [...]
-
-I haven't done an in-depth read of each patch yet; this was just what
-jumped out at me from reading the interdiff.
-
--Peff
+--8323329-1412799066-1522078077=:77--
