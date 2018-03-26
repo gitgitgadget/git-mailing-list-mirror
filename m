@@ -2,106 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EF5751F404
-	for <e@80x24.org>; Mon, 26 Mar 2018 14:08:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CB4A41F404
+	for <e@80x24.org>; Mon, 26 Mar 2018 14:11:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751824AbeCZOIc (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Mar 2018 10:08:32 -0400
-Received: from mail-wm0-f48.google.com ([74.125.82.48]:35971 "EHLO
-        mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751127AbeCZOIb (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Mar 2018 10:08:31 -0400
-Received: by mail-wm0-f48.google.com with SMTP id x82so15713001wmg.1
-        for <git@vger.kernel.org>; Mon, 26 Mar 2018 07:08:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=lINFTNvSGqmGayuc83bjvrACbWyL7lD1ybYRmWwK/m4=;
-        b=dkCq0puGZ7xGYapKQdpjCy1tB83shSuJ/h/lP1xxhflFvuiznFpFkICyDpip2mJli0
-         zXot7ma0c4nSlWFF2IjZrZVrs490c+3t/2MFFUjQmHG4PA3wZok9prKzTsO09OBAMyg3
-         w+bUDl+3+75RSo6w9MX967ko5IqgTqkGuVcAnoXDbBqcQqYc01aTnzuNkuFd2t8kbkGZ
-         FZ5ipyACryEnWbDdbBrzErZDNxGjXV2XzdQu/AuybZub3szs0+GjO62h6gxR+cvtdt37
-         TB0qxujhZUtTY9s5PgZw9ArpmuLNy9n6pgbNWfPS6aT0mnrruaOXDTkj4uVxF4o9yNOq
-         ThrA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=lINFTNvSGqmGayuc83bjvrACbWyL7lD1ybYRmWwK/m4=;
-        b=luJ7CStd08CpGE7MKBvWI95rx3EtVRPqAKQdR0tkmUZbUC8JgQ4j6MypsmJcw/Bu5H
-         xMVdXoGIBp4Dy/NmUMfTVZslAYJSj7/CaPAPoKC7+TtAn72tqIgY8Rv7n3PwSWtF1rVd
-         MgiqULDFTQ2EY/2eeKKN7eGFELvlMRSKflI+zn6F6si9HBavCITml8SX5EkazyMb6uHc
-         FK51wNhocVo+g1soI/W6sCXv8qOodYFIwLF4LTM7b9C8um9vOi3/lawiwfo+xrPOK+oK
-         +dFUWCIZpN7rf9kH/Ktjt3NiNDF0iIcgh1xIkLh4qUIgC7aGQiGKhPLgUd56SIOIALrz
-         ZJ/g==
-X-Gm-Message-State: AElRT7HZOxLXRIFtAojHJmJ4pf8gNRaP0QF1oVktn8W4VSu40LLrOdIq
-        1Ff0VG7bynCNmPBSZAhEYeI=
-X-Google-Smtp-Source: AG47ELvaw6Tf0TFsXb7iN4vVbC0TSBDe/5bFSOfnShi165pHL6egMcwdESD5wVmJo1UghDqId8kBlQ==
-X-Received: by 10.80.222.205 with SMTP id d13mr18470829edl.76.1522073310694;
-        Mon, 26 Mar 2018 07:08:30 -0700 (PDT)
-Received: from evledraar (proxy-gw-a.booking.com. [5.57.21.8])
-        by smtp.gmail.com with ESMTPSA id d89sm10088649edc.75.2018.03.26.07.08.28
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 26 Mar 2018 07:08:28 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Daniel Jacques <dnj@google.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v7 0/3] RUNTIME_PREFIX relocatable Git
-References: <20180325205120.17730-1-dnj@google.com> <877epzyi0b.fsf@evledraar.gmail.com> <CAD1RUU-EoitBdoXL_JQoP+Q9BuA_6Fq65Ra-f+Atz8YNOV3Cig@mail.gmail.com>
-User-agent: Debian GNU/Linux 9.4 (stretch); Emacs 25.1.1; mu4e 1.1.0
-In-reply-to: <CAD1RUU-EoitBdoXL_JQoP+Q9BuA_6Fq65Ra-f+Atz8YNOV3Cig@mail.gmail.com>
-Date:   Mon, 26 Mar 2018 16:08:28 +0200
-Message-ID: <87zi2vvsir.fsf@evledraar.gmail.com>
+        id S1751752AbeCZOLm (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Mar 2018 10:11:42 -0400
+Received: from mout.gmx.net ([212.227.15.15]:50757 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751099AbeCZOLm (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Mar 2018 10:11:42 -0400
+Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MC4y8-1erd9q0gd6-008ony; Mon, 26
+ Mar 2018 16:11:34 +0200
+Date:   Mon, 26 Mar 2018 16:11:33 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+To:     Igor Djordjevic <igor.d.djordjevic@gmail.com>
+cc:     Sergey Organov <sorganov@gmail.com>,
+        Phillip Wood <phillip.wood@talktalk.net>,
+        phillip.wood@dunelm.org.uk, Git mailing list <git@vger.kernel.org>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC] Rebasing merges: a jorney to the ultimate solution (Road
+ Clear)
+In-Reply-To: <3dbf86bc-cae9-8d6c-a206-cac685938f3d@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1803261602360.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <87y3jtqdyg.fsf@javad.com> <bbe64321-4d3a-d3fe-8bb9-58b600fabf35@gmail.com> <nycvar.QRO.7.76.6.1802270051470.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <CA+P7+xq8UUcLWomUi=PS_hTKfJd3dMAxMmhioDS1bixwcmKAqw@mail.gmail.com>
+ <nycvar.QRO.7.76.6.1802271718090.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <4d7f3406-b206-cc22-87df-85700d6a03d9@gmail.com> <33da31e9-9101-475d-8901-4b6b3df2f29d@gmail.com> <940d959d-151d-68dd-0f13-320ebad0d75b@gmail.com> <87606hoflx.fsf@javad.com>
+ <0ac3a3fd-4053-e32e-75ed-8829f22c2e1f@gmail.com> <87a7vss6ax.fsf@javad.com> <6c8749ca-ec5d-b4b7-f1a0-50d9ad2949a5@talktalk.net> <877eqgardi.fsf@javad.com> <3f2209e0-c560-5384-c589-3aa83615d688@gmail.com> <87efkn6s1h.fsf@javad.com> <de063fba-2882-6194-a889-ad3e9b6b02b9@gmail.com>
+ <87lget7p2g.fsf@javad.com> <3dbf86bc-cae9-8d6c-a206-cac685938f3d@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:cjm5emA3H5Xc3sLqlW67ckeaLAzlD95BVwxTxTE+zaS0e9XqurR
+ Iw5fsc9cFNLDP5GixDX52ZLC7RaBSAjd8so5IE1C3WYFO+UfPUng4B+oAfFSubVGzUYj1p2
+ yKWGCDFnTPNzX3C0RPQIU/viTk8FCxPEZgR0VYextIf4CvmxrMHiLB2q8tf35E16wLKvp4e
+ X4XbnkDvIOaKIzgZGi3aw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:pNOqBZacgCU=:ZFAsgnW/QRrK0oABARmd89
+ /MKfrsDzpGppo6UOXKIL+LXsgjTfmOsU31jprAsmPG9FHKhmqglWr767RXB2s5bOIY6whgjYc
+ UaPjkfChKfU811bMQQNTWWbeRIwPNCR9t4yETEEpLgyWPvMbWu5IzakpHcyYv2ND8eXlxEomw
+ 73zkvQOUcUrKaC2Y7hp8GP0sEw/RKDeC8fQ6RVPLJyUyZ5LggLtxEfirMqvBxIMMUnEsAIyHk
+ shacmWBFUtfkJPtDhIJ1YYkQtwJxmIOiFnwByTfRJrLTDyymOt6CQxJ1bKSQVjHnpRu5xN0h+
+ 49lqczSzwr4s8FFat+CDixKnCwDAY0bfNU8KK/x7RmQNlc1xTn0cwzvRJuoUp0ISdLIxkvGFf
+ 8OzkSf30Nxyutt8EzRIeAktgCuR5kvt2iwdvX2phaQ427k4W9ilK6SIjRTRB36PPXpGiINMh6
+ d3h+zjrgzrXD+qcUnIU86z9a1QAXQ8Wuf8eKHlqs+1bnu2GTQL6vbtHp8WBcfoAUpwmVLB+Oa
+ H7rTsdxDkVDOv9zLS50KINPG/Qujnf1AMJvvg5r+/6xOrWqhFlQvkIOEzcs87L2Hec4um1Cex
+ ZtpxUExg0jIoc7IEiE2zq0vKfhysVlF8D5+VvXbKpDrvHCUfV+2nl094VPOBih7zPoNCJxH2N
+ FHs5KoKvQmkKSjh5EBx2WviRkGRPpDiIwGInqbTu5YoMJJ2FGWufV8Il+N5MwDf9lzKhiIZF5
+ /mXWXg+F6w+bo850jHxADwGqOMRBOnT6llnBKsn10v5PRw01mWx/dcnuQEvuTBWFcrkBR4yrD
+ 44twJGLZLaHFQ8M9FSj3hhAl91p5yBOP9fZmsshNL9n2NlaDEEk+YRzJQv2UGfEAZyFvo38
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Buga,
 
-On Mon, Mar 26 2018, Daniel Jacques wrote:
+On Fri, 16 Mar 2018, Igor Djordjevic wrote:
 
-> On Sun, Mar 25, 2018 at 5:15 PM Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> wrote:
+> [...]
 >
->> This looks good to me this time around, couple of small nits (maybe
->> Junio can amend while queuing):
->
->>   * You add a dependnecy typo in 2/3 but fix it again in 3/3. Should be
->>     squashed.
->
-> d'oh, I'll fix that in my local copy so that if I do end up needing to
-> upload a new version, it's available.
+> Yes, having more steps would mean more power/options to the user, but
+> more complexity to explain to and guide him through as well, not really
+> sure where the line should be drawn - for the first time, at least.
 
-\o/
+If you want to avoid having a huge discussion with me about bias, male
+privilege and how unaware most men are of it, and how it excludes half the
+potential usership/talented developers, and how representation matters --
+and believe me, you do want to avoid this discussion -- you will want to
+avoid referring to the user as a "he".
 
->>   * s/\Q${gitexecdir_relative}\E$// in 2/3 can be done less verbosely as
->>     s/\Q$gitexecdir_relative\E$//. Discussed before in
->
-> https://public-inbox.org/git/CAD1RUU-3Q_SYvJorU+vEY2-0CPMZ1eL-41Z6eL7Sq4USiJ0U+w@mail.gmail.com/
->>     seems like something you just forgot about.
->
-> Oh sorry, I must have missed that. I have a personal preference for adding
-> brackets for clarity; it leaked into this patch set. I did implement most
-> of the suggestion, which was to use the escaped Q/E instead of equals.
->
-> Stylistically I still prefer the braces, but I'll defer to you and remove
-> them in my pending patch set in case I'm asked to submit another version.
+It might be true in your case. But it is also true in your case that you
+are Russian. Yet you write English here, probably to avoid excluding
+people from the discussion. And you should demonstrate the same courtesy
+to people who do not happen to identify with the same gender as you do.
 
-If you prefer it that way just keep your version. It's your code and
-it's just a trivial style difference.
+In short: every time you think of a user or a developer as "he", take a
+step back and reflect how excluded *you* would feel if someone forced you
+to change that to "she". That is exactly how much you exclude non-males if
+you think of them as "he". Just don't.
 
-I just mentioned it because in the previous discussion you said "I agree
-it's cleaner" so I inferred that you'd just forgotten about it but meant
-to change it. It's also fine if later you just thought "you know what,
-I'm doing it my way" :)
+The remedy is easy: use the gender-neutral "they". Which is, by the way,
+not a modern invention as of late (in contrast to the "he" you use):
+https://en.wikipedia.org/wiki/Singular_they#Older_usage
+
+Ciao,
+Dscho
