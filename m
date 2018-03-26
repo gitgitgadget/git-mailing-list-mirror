@@ -2,113 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D15C91F404
-	for <e@80x24.org>; Mon, 26 Mar 2018 22:14:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 022781F404
+	for <e@80x24.org>; Mon, 26 Mar 2018 22:15:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751890AbeCZWOy (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Mar 2018 18:14:54 -0400
-Received: from mout.gmx.net ([212.227.17.21]:52321 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751134AbeCZWOx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Mar 2018 18:14:53 -0400
-Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MWTSA-1f3E4c4866-00Xcng; Tue, 27
- Mar 2018 00:14:45 +0200
-Date:   Tue, 27 Mar 2018 00:14:43 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Duy Nguyen <pclouds@gmail.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-cc:     Git Mailing List <git@vger.kernel.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 01/36] t/helper: add an empty test-tool program
-In-Reply-To: <CACsJy8Dz87YHiA48m_X7OmJXioKorUDNSyPy250jaqU7xt1JXQ@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1803270007550.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <20180317075421.22032-1-pclouds@gmail.com> <20180324074505.19100-1-pclouds@gmail.com> <20180324074505.19100-2-pclouds@gmail.com> <nycvar.QRO.7.76.6.1803261722350.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
- <CACsJy8Dz87YHiA48m_X7OmJXioKorUDNSyPy250jaqU7xt1JXQ@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1751938AbeCZWPF (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Mar 2018 18:15:05 -0400
+Received: from mail-yw0-f175.google.com ([209.85.161.175]:46307 "EHLO
+        mail-yw0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751134AbeCZWPE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Mar 2018 18:15:04 -0400
+Received: by mail-yw0-f175.google.com with SMTP id v68so6622867ywg.13
+        for <git@vger.kernel.org>; Mon, 26 Mar 2018 15:15:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=u2z+W4cFde79x+/EC/iT8X0NN+4gIgcWc4lF7kfeUkU=;
+        b=LGPfs4hIEhgj1tfVYq50lRTDjld2ZaozE4ToI/o/EeZGnDth5A4Lv4jjOLdh4V7PoX
+         l5B+2dRiJ52Uwt7Jeoii/ibk3ra6q1J4ie7JbJGS3AVSrPqr/8U3FGxO/Cx+y67772La
+         sWfUboGJhcKZimvpGX+GkBjOqz+KMuwE8uFLBtwxtpE0XRasjlpLcybc/bTVil7EVBvJ
+         bMvFmzWgTSL7/CMMQb7SeOWv7+aILCQ7ybcwGxVbGYPvBr+blhGYok4pl/yw7+PVJkjo
+         ROhoGCy2Q27tqNmH8u7RweUcrZYx/cO+JtKqE6M9Yo2xyc43+lyuRh054VS8vFgJNWwt
+         0utQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=u2z+W4cFde79x+/EC/iT8X0NN+4gIgcWc4lF7kfeUkU=;
+        b=e6mH0bhCjdFAL1QN0jGE3OSk8DkPVygT4vfpEWdmc4NgJkIGjdTKwlhIlKfRZdlocW
+         yLoK9tcqP23ghqSnwyGp/IWOl8Ww3x94/XsDHJs8JW/WEkSqh9meWiNOlkBiHqBRN1wh
+         3nU5qu0ut/99zOaW5kiiQz5RbVAOTcZlbUNlsxJPMsWT6AeYTKOU7ILSk+JkjAMWCet1
+         ro4Zx6CagKAUIcDnAf/amkktRhbdnHxfUa5N69NyZinL6iFWvx4ZKdqtMtNdUkktzD94
+         b36ZqTKlo2+/t4QqhdVcYpLqX4Cg1XtJVK+zVDoPfBT0KuzCVIAguGpTRCzf9IyQzr3o
+         ooqA==
+X-Gm-Message-State: AElRT7FAWVFRD7+BhFgQlTx3niM/DC5Z/GobCu9DWfmaF6Vl+oo+fUWh
+        y2eYys9y/lN8ED0RURhCG4ySBB1ibaiODqOGOlx3pg==
+X-Google-Smtp-Source: AG47ELsn2fKXGz0md5fz8AjkVB0APZErBJXuHbC/7RvZIAopavWAlix3j8fcSyzGLpJRDE1Q/BNWmmdRPshxhtCg8XY=
+X-Received: by 10.129.159.195 with SMTP id w186mr24436037ywg.414.1522102503273;
+ Mon, 26 Mar 2018 15:15:03 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323329-700398765-1522102485=:77"
-X-Provags-ID: V03:K0:OSJ1var6nJ+4yLJOoSkIh0oeyYNbOgobg8EiOus+V7lipT5b97+
- boMNzG8OvHJdNPxlL6XQhVexFF1QUu2diOOsxv8qA4c+QuxJQuhC72Gdkx347RaFYPO91ee
- lY+T3YMjF44Gu2nckqRtxGNA4BH1mVjxenGcAUVSANLyQinmGVnag+Ap8O4MZ63AzvFP7U1
- KCprU37tfkaeTxtlviMSA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Vvp7kisAKAM=:tmLhkEuk1O/NRX69xrqKw7
- haw56GuDGgkTNAWD+XeaYKeptptfxKrD6ev3t8mJlhUQXIcJAhyWq7ihzetWilywVMquk0oAw
- 1w4Z22wL372kvLn1dbKAhcdmzRDSrPcVGk5NXWMBIBfanqUlHf4KcJ9gZ45teFvqmZiDsRDYM
- Y8tIBY/r9OdmJaZkrJxErDdLEiAZCiM2Bl6m09XGfXnFtohkosMH26wWUb7gRVuPjddljZ8hx
- ejFAvfXK8N6klE6XPxy2aDj1MoZSYGQSURxeTeT6MZS4AoPVqExNYjJT9mn0wDQ0LfIiMWd7Y
- 127k739S87XcqBJB6hqLjZNcNIYBa96+FqqLY/mCz36PryFZD201h3Y2ZYlM8BavQTmo315eG
- cFnm9aqWHeotkXwX/3N+0MaU0spBeu0NO6ZhJZZ2wOGEMO/CVxm7sP3Kq2xLoZKX4b6tvtXrh
- k5zwUNvulE8KXQTtVkIwFBPillcl8f+ymd6zgYk+x/5RvoBfPcALKaMy0nKc5AK65IPRTTMZW
- xyz8f1T7wWD435CVyapxtXjdjd/kSkqqpHIU6pbuuR7bU3QaeYP/9smQpB1FU0b09YWlGaP7P
- 1J/Hp7avuS/uVpjRGV6SECiK1qtiRaEgY/G2yrAnDmQSRn7DWigHSxQSh4rcpw0GVY71sEq61
- 17yKF0LQTvcEUTQoAa5t7l86e7GGMUhP4DPb+8IOB2T5Y+HFae1b05nJhJXHGixNEPkT2slWh
- AlPyDYnsWChnT/XkQpChAWzj3nyHhAiZwdrrxO/jbQhXEOPr3vCQOi5zcqXXJrG+58jcFmzbJ
- fxC+g1KUmE5ugxzF1oqGUG/NYvmca3yZU+vqXaeRFR22QG20LINgAbXj5Yc290XWH885cpv
+References: <CANT8FXR3pMgbwVWmwssDYhgv6eMFw4+Uz5xARGwFVVU1cMVmWw@mail.gmail.com>
+ <20180317130128.mr2sfsrncykkubwo@tigra> <20180317161819.GB25113@sigill.intra.peff.net>
+ <xmqqwoyay48n.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqwoyay48n.fsf@gitster-ct.c.googlers.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 26 Mar 2018 22:14:52 +0000
+Message-ID: <CAGZ79kZU39B42BeOxrUDxT6Nca0=Yd+O0TEgu6_HvK3O=b2KhQ@mail.gmail.com>
+Subject: Re: get commit ID from a tree object ID
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, kostix@bswap.ru, clime@redhat.com,
+        git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Sat, Mar 17, 2018 at 10:57 AM Junio C Hamano <gitster@pobox.com> wrote:
 
---8323329-700398765-1522102485=:77
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+> Jeff King <peff@peff.net> writes:
 
-Hi Duy,
-
-On Mon, 26 Mar 2018, Duy Nguyen wrote:
-
-> On Mon, Mar 26, 2018 at 5:27 PM, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
+> > If you want to dig further, you can use the diff machinery to show which
+> > commit introduced a particular tree, like:
 > >
-> > On Sat, 24 Mar 2018, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+> >   git rev-list --all |
+> >   git diff-tree --stdin --pretty=raw --raw -t -r |
+> >   less +/$desired_tree
 > >
-> >> diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
-> >> new file mode 100644
-> >> index 0000000000..c730f718ca
-> >> --- /dev/null
-> >> +++ b/t/helper/test-tool.c
-> >> @@ -0,0 +1,27 @@
-> >> +#include "git-compat-util.h"
-> >> +#include "test-tool.h"
-> >> +
-> >> +struct test_cmd {
-> >> +     const char *name;
-> >> +     int (*main)(int argc, const char **argv);
-> >
-> > This makes the build fail on Windows, as we override `main` in
-> > compat/mingw.h:
->=20
-> Sigh.. not complaining, but I wish somebody tries to compile git with
-> wine (and automate it in travis). This way we could at least cover the
-> compilation part for all major platforms. Probably too small for a
-> GSoC (and making the test suite pass with wine may be too large for
-> GSoC)
+> > That "less" will find the mentioned tree, and then you'll have to
+> > manually read the commit. It would be possible to do it mechanically
+> > with a short perl script, but I'll leave that as an exercise for the
+> > reader.
 
-We do have Continuous Testing of maint, master, next & pu.
+> Before Stefan jumps in ;-) I wonder if a recently materialized
+> "find-object" option to the diff family can be used here as a
+> sugar-coated way.
 
-However, it seems that something is off, as
-ba5bec9589e9eefe2446044657963e25b7c8d88e is reported as fine on Windows:
-https://travis-ci.org/git/git/jobs/358260023 (while there is clearly a red
-X next to that commit in
-https://github.com/git/git/commits/ba5bec9589e9eefe2446044657963e25b7c8d88e=
-,
-that X is due to a hiccup on macOS).
+I am late to jump in, but testing the 'git log --find-object'
+seems to have issues with trees named by sha1 here,
+but the named tree via <commit>:<path> still seems to work.
 
-It seems that the good-trees feature for Travis does not quite work as
-intended. G=C3=A1bor?
+It seems reasonable to be able to find trees using the find-object
+flag, though.
 
-Ciao,
-Dscho
---8323329-700398765-1522102485=:77--
+Stefan
