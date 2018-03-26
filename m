@@ -2,104 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E6E6D1F42D
-	for <e@80x24.org>; Mon, 26 Mar 2018 11:55:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 783A01F42D
+	for <e@80x24.org>; Mon, 26 Mar 2018 11:58:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751125AbeCZLzW (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Mar 2018 07:55:22 -0400
-Received: from mail-ua0-f176.google.com ([209.85.217.176]:43668 "EHLO
-        mail-ua0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751035AbeCZLzV (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Mar 2018 07:55:21 -0400
-Received: by mail-ua0-f176.google.com with SMTP id u4so2512191uaf.10
-        for <git@vger.kernel.org>; Mon, 26 Mar 2018 04:55:21 -0700 (PDT)
+        id S1751109AbeCZL62 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Mar 2018 07:58:28 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:35776 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751050AbeCZL61 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Mar 2018 07:58:27 -0400
+Received: by mail-wm0-f66.google.com with SMTP id r82so15022955wme.0
+        for <git@vger.kernel.org>; Mon, 26 Mar 2018 04:58:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=M8xne344BcLL107S7B+meQifsnCIupUqJIOiqxxrSos=;
-        b=enZ4i2iC3z01f01tctOIehraKVEC8uU0rWmc3UOcuq94zUPjvHv1C9oUU53J9kMX8S
-         bVK5fGZX2myEcinNEdV005spjzBBeVLond3WyP//OzBep779ol1oigO2IEF4EM6H+lAo
-         pqHT2PTIzuq6Cv4choapHsYoTZZs7J1ItnlMKBK01jUz6IokgkuvnuM8l5WPyTAM2ea0
-         LalQi9NysPGJe7T7GTU2/f4l4KhirNlDdUlJrNm9kJ4E8jvXNtulKDZDcQWsuC0V6DUu
-         lo77DniOcavUF2Za9MBkgKOEkJTL5apQAlwbXO6V/ooUf++3rwpIyMKCXwzSdYMP9FFC
-         gomw==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=htnEtmtpyv6kDj6BdhxvccwsQNh+PbbyZe6obtbECzQ=;
+        b=UmjXSJeQhUx4MC7/W50JhCXGXUIFTmK9otXmd7a6AwcdJf/uXKJT+u14ItyysHczxI
+         xOgba+Nk4gdvkl+0nXw/zHF4RY+Da1q4Fg48m+lmhFtXxAHFHpDwP97gZpWnF4uLOKMg
+         8WU77pZDlBKfJrzpz1B7SI2mzmGF2XuILGsnJUR1U6VSn3o/J5nTOwKpFth2yk3bncBc
+         6BdwriHkByHRc7Sf5vBZY/sqps/d4uhyfWTs601Kb6wAuJ74azbZKaYZOl7GVglnT9Iv
+         0sm1eEC8HpuBD7g7cFR6/IrW7m4GD8OZYeCy78w/eP5u9OzfNiggejXHswwEHIVxl4km
+         gCvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=M8xne344BcLL107S7B+meQifsnCIupUqJIOiqxxrSos=;
-        b=N1FoOkyjTvQrrMqx7B1KvMFIZtP3eoRn1NxM/dIPIr3oyaLgtkjPuzeTJnax18AJSB
-         jOhmQp3JuK2srJi9J1N7RopGA9L57rKH64PbRq+Fjm/eXgUSVJ0sHknQI8AdG0NFYN52
-         x05EhCGoPmsqXoQgHi+n6zafKBGiO8W7U8jc262QP+6LEDCSM5hpKx1IfEhKxC/qsHUC
-         sIl8qNBP1mJ24zS1VI6j23p3elIXnQQxE10Q3H9PbeXZ70CbxAd24+AX8JcEpc5f++TW
-         QQVa9g96+qLCLrgrvITRfSc+tl0o1v3PMDF5O0Th5kxsSvkGiJVlyx+A8p6i3g5umhOb
-         JOTw==
-X-Gm-Message-State: AElRT7GXq8ZE2nkmob83cXUE0HPok+rvosnaMxoxwr90Th4H+WSTN9mw
-        rq6dpfbS7mRYSqAk81Ey55cYfQ1/NwZ5U+C1Of0=
-X-Google-Smtp-Source: AG47ELv+GvV5DZmz17sStmQ9AnWeztANQIAnO2R3IfFkJ6wQfxJ5gWkAnMkeSirmmzaMxAKoSJRJIcawZ/8/mGw4T54=
-X-Received: by 10.176.67.229 with SMTP id l92mr15999256ual.27.1522065320936;
- Mon, 26 Mar 2018 04:55:20 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.159.59.233 with HTTP; Mon, 26 Mar 2018 04:55:20 -0700 (PDT)
-In-Reply-To: <xmqq7eq2k840.fsf@gitster-ct.c.googlers.com>
-References: <20180322141604.15957-1-szeder.dev@gmail.com> <CAM0VKjm3WKkxjEN09Dv1wUnuBf8CSsUvmLjmSVb1fbHTyAdXEQ@mail.gmail.com>
- <xmqqbmfek8ml.fsf@gitster-ct.c.googlers.com> <xmqq7eq2k840.fsf@gitster-ct.c.googlers.com>
-From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Date:   Mon, 26 Mar 2018 13:55:20 +0200
-Message-ID: <CAM0VKjnVM6sjkZjQNLtr+rm34=pPfihWzrk6L+r=ky5UZ_JsrA@mail.gmail.com>
-Subject: Re: [PATCH] completion: clear cached --options when sourcing the
- completion script
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=htnEtmtpyv6kDj6BdhxvccwsQNh+PbbyZe6obtbECzQ=;
+        b=V3s22p7f6BtVbeT/QyxbmigXulzHig0Ftpn3AjXtnLgn3TwjTAxmpfYL2sMOtry3FH
+         9RszV6lsgHj8a7/XdttTolRG5pTi0+yJhVzr02EPP1EvWIG9oRQAufp7QI+e0Wfu7gte
+         0/ibGBUQOcf1vK+K2Bm65fuf4sjaDDeGwQ6deS9AO5wx0Oy9eINk6RUGxtbDr8gT/a/0
+         xHHmwrb3GGUnS7b5HGvZGui68nVTxKVmLeqMYmuhGhtr0e/Z1MRpEAeE1mtFngtTTNK0
+         MWMCCKm36sXm+5zCgPk40yAf9P/6fffw3zDJbEmDVH65LdmSTVr63iPeJd6JrCDIEsds
+         xerQ==
+X-Gm-Message-State: AElRT7Gke+kqfU9nNqRi0LSdnyAm8l+3/wq303sl/8Xeb7jfJfC88VHr
+        w7zviTYe2MMpg5dQlfRoQrk=
+X-Google-Smtp-Source: AG47ELtfXyNun9eaJ7kQ8jlNyFFQB0DsPveYJaCLxrOm4ISXXEb2p7nI+/EFN0pX0B+AKr8CYagptA==
+X-Received: by 10.80.148.49 with SMTP id p46mr39695265eda.311.1522065506569;
+        Mon, 26 Mar 2018 04:58:26 -0700 (PDT)
+Received: from localhost.localdomain (x4db0d68c.dyn.telefonica.de. [77.176.214.140])
+        by smtp.gmail.com with ESMTPSA id 4sm9644508edx.8.2018.03.26.04.58.25
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 26 Mar 2018 04:58:25 -0700 (PDT)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Git mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     git@vger.kernel.org,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: [PATCH] test_must_be_empty: simplify file existence check
+Date:   Mon, 26 Mar 2018 13:58:15 +0200
+Message-Id: <20180326115815.10180-1-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.17.0.rc1.148.gc92dc354c5
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 23, 2018 at 6:35 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
+Commit ea3c87d0b7 (test_must_be_empty: make sure the file exists, not
+just empty, 2018-02-27) basically duplicated the 'test_path_is_file'
+helper function in 'test_must_be_empty'.
 
->> I'd say we should just add !GETTEXT_POISON prereq to the problematic
->> tests.
+Just call 'test_path_is_file' to avoid this code duplication.
 
-> IOW, this is the minumum required.
+Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+---
+ t/test-lib-functions.sh | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-Thanks for already committing the fix, I couldn't get around to it.
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index d2eaf5ab67..36ad8accdd 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -718,11 +718,8 @@ verbose () {
+ # otherwise.
+ 
+ test_must_be_empty () {
+-	if ! test -f "$1"
+-	then
+-		echo "'$1' is missing"
+-		return 1
+-	elif test -s "$1"
++	test_path_is_file "$1" &&
++	if test -s "$1"
+ 	then
+ 		echo "'$1' is not empty, it contains:"
+ 		cat "$1"
+-- 
+2.17.0.rc1.145.gfac1bf9500
 
-> By the way, shouldn't we be running the body of these new tests
-> inside a subshell?  Otherwise a dot-sourcing by an earlier test of
-> these new ones _will_ affect all the subsequent tests.
-
-I don't think it matters.  All new tests first initialize the variable
-they are interested in before sourcing the completion script, to avoid
-false successes caused by the variable being empty to begin with.
-
-And it shouldn't matter, either, because in the end the users will
-source the completion script into their main shell process, and it
-should just work no matter how many times it gets sourced.
-
-
->  t/t9902-completion.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-> index 4c86adadf2..b7f5b1e632 100755
-> --- a/t/t9902-completion.sh
-> +++ b/t/t9902-completion.sh
-> @@ -1511,7 +1511,7 @@ test_expect_success 'sourcing the completion script clears cached porcelain comm
->         verbose test -z "$__git_porcelain_commands"
->  '
->
-> -test_expect_success 'sourcing the completion script clears cached merge strategies' '
-> +test_expect_success !GETTEXT_POISON 'sourcing the completion script clears cached merge strategies' '
->         __git_compute_merge_strategies &&
->         verbose test -n "$__git_merge_strategies" &&
->         . "$GIT_BUILD_DIR/contrib/completion/git-completion.bash" &&
