@@ -2,76 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B29061F404
-	for <e@80x24.org>; Mon, 26 Mar 2018 21:38:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 218E11F404
+	for <e@80x24.org>; Mon, 26 Mar 2018 21:42:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752042AbeCZViV (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Mar 2018 17:38:21 -0400
-Received: from mout.gmx.net ([212.227.17.20]:54297 "EHLO mout.gmx.net"
+        id S1752121AbeCZVmS (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Mar 2018 17:42:18 -0400
+Received: from siwi.pair.com ([209.68.5.199]:65065 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751677AbeCZViU (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Mar 2018 17:38:20 -0400
-Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MC3zg-1erk8A2K3c-008okv; Mon, 26
- Mar 2018 23:38:18 +0200
-Date:   Mon, 26 Mar 2018 23:38:17 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Loganaden Velvindron <logan@hackers.mu>
-cc:     git@vger.kernel.org
-Subject: Re: [PATCH v3] Allow use of TLS 1.3
-In-Reply-To: <20180326092423.GA7521@voidlinux>
-Message-ID: <nycvar.QRO.7.76.6.1803262336070.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <20180326092423.GA7521@voidlinux>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1751913AbeCZVmR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Mar 2018 17:42:17 -0400
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id 6608B3F4026;
+        Mon, 26 Mar 2018 17:42:16 -0400 (EDT)
+Received: from [10.160.98.99] (unknown [167.220.148.99])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id DFE8D3F401E;
+        Mon, 26 Mar 2018 17:42:15 -0400 (EDT)
+Subject: Re: Including object type and size in object id (Re: Git Merge
+ contributor summit notes)
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Alex Vandiver <alexmv@dropbox.com>, git@vger.kernel.org,
+        jonathantanmy@google.com, bmwill@google.com, stolee@gmail.com,
+        sbeller@google.com, peff@peff.net, johannes.schindelin@gmx.de,
+        Michael Haggerty <mhagger@alum.mit.edu>
+References: <alpine.DEB.2.20.1803091557510.23109@alexmv-linux>
+ <874ll3yd75.fsf@evledraar.gmail.com>
+ <0c3bb65f-d418-b39e-34c7-c2f3efec7e50@jeffhostetler.com>
+ <20180326210039.GB21735@aiede.svl.corp.google.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <b7b6d617-1951-5934-5b1d-bb1a300006ef@jeffhostetler.com>
+Date:   Mon, 26 Mar 2018 17:42:15 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.6.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:PZ7eendeYUxvSEHirbQSb60k93408YH94s+M2FwoHZLR11+ZLUg
- xiSKtdp1TWeORncBEB+a3fFpLbSokzyemiBQBex9XpnBt6+rIFSf3J0Hethj3aNqASsd0Gs
- WLCAL2AaXk1gu4S2Jx+yRx2vAHfBQ7oaaPKZaZKrDIpq3c2Kf1NLOXmW4w+4iX578+es1fp
- fHRRb9aHPsR3oNhZhqwaQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:YwnIYYUPFyc=:lAruLJegyq/VSLROqZqqVl
- MBlFmLzTsPJqLGu1P6aoij/7eBwhSA0VNnYpNe81SPNSkYioipaQuAHDlrkuzu5kkinaYVbB9
- rUa+IW8ej79CJHE3rPTzyhtnA3JsBqqaPG3ZsLnBn3fjQHy/aZOg1rutppd1IfP4g+kTAJ94E
- RrUNUN5X2Bt16CWFm9qWIIb4s3wSV9SGzIWDDPByAY5b5hn/fZfscmV7DxrZIawTYajQQCeQQ
- 7rp2siH3qKxopbsv4t0cc8QQUvh2iKZKbbklMU+X4K/pCfR3TvuWAGqCFcCYMOuKvkQfDHt+h
- 3smCrIgNPRjFtxNuFV7QRgx5mn/69yIrqpEHZWRDhRW0BpHJACf4qzgPS/8t9iG3a/V+Pk0wW
- n+R9Qt4ia5Yq61eTwoJHrBA4/LZk5ahMJdAZVl1dO0Ty71UrlHp52CH4NlN2mO0/OPDf/Y/8s
- 6/U+aaaDZTPWMGeufkjyS1gQceVSKqiWRG278qoJxnetMp5gGKGp2/wSOr58T3WrOvopCY/fa
- b8hrW4893ijlU6uNTzXQsZoJysGrs4kghDO/gOSlGc8X3/T3ngDxHO58EhP5G+RqHabDkXZPr
- Vtl+K08tVkkcGFmnXhYnzqSoCvND6udRuYdVxOTJGGbTL8fOVzAQKsE+gpv9AIpI/Q/ql5Aeh
- c3wHXGfcLOxRHGHFgt988oDJxlEyx4z/RgMDYuOHtcBp9+MXuro2yC+iq5FhvFp2JiOAqQD9J
- 4gLVv68J0/tvsawCfZ+ZXPuGbgKkcJKoB9KxJ1rgPPuIYGcbAqMq5K7ndCGVUtgqvg+bBsg8D
- kYcaU8gZpKyeq5345P1WTfXAPzdBG0XrPJVtJZUW2d35ojYefFS2H+93jwCux0gkAvZ+VAS
+In-Reply-To: <20180326210039.GB21735@aiede.svl.corp.google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Logan,
 
-On Mon, 26 Mar 2018, Loganaden Velvindron wrote:
 
-> Add a tlsv1.3 option to http.sslVersion in addition to the existing
-> tlsv1.[012] options. libcurl has supported this since 7.52.0.
+On 3/26/2018 5:00 PM, Jonathan Nieder wrote:
+> Jeff Hostetler wrote:
+> [long quote snipped]
 > 
-> Signed-off-by: Loganaden Velvindron <logan@hackers.mu>
+>> While we are converting to a new hash function, it would be nice
+>> if we could add a couple of fields to the end of the OID:  the object
+>> type and the raw uncompressed object size.
+>>
+>> If would be nice if we could extend the OID to include 6 bytes of data
+>> (4 or 8 bits for the type and the rest for the raw object size), and
+>> just say that an OID is a {hash,type,size} tuple.
+>>
+>> There are lots of places where we open an object to see what type it is
+>> or how big it is.  This requires uncompressing/undeltafying the object
+>> (or at least decoding enough to get the header).  In the case of missing
+>> objects (partial clone or a gvfs-like projection) it requires either
+>> dynamically fetching the object or asking an object-size-server for the
+>> data.
+>>
+>> All of these cases could be eliminated if the type/size were available
+>> in the OID.
+> 
+> This implies a limit on the object size (e.g. 5 bytes in your
+> example).  What happens when someone wants to encode an object larger
+> than that limit?
 
-Can we *please* also add that OpenSSL 1.1.* is required (or that cURL is
-built with NSS or BoringSSL as the TLS backend)?
+I could say add a full uint64 to the tail end of the hash, but
+we currently don't handle blobs/objects larger then 4GB right now
+anyway, right?
 
-See
-https://public-inbox.org/git/nycvar.QRO.7.76.6.1803240035300.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz/
-for my original please.
+5 bytes for the size is just a compromise -- 1TB blobs would be
+terrible to think about...
+  
+> 
+> This also decreases the number of bits available for the hash, but
+> that shouldn't be a big issue.
 
-I deem this information *really* important because a lot of Git packages
-are still built against OpenSSL 1.0.2 (e.g. Git for Windows) and *won't*
-benefit immediately from your patch.
+I was suggesting extending the OIDs by 6 bytes while we are changing
+the hash function.
 
-Ciao,
-Johannes
+> Aside from those two, I don't see any downsides.  It would mean that
+> tree objects contain information about the sizes of blobs contained
+> there, which helps with virtual file systems.  It's also possible to
+> do that without putting the size in the object id, but maybe having it
+> in the object id is simpler.
+> 
+> Will think more about this.
+> 
+> Thanks for the idea,
+> Jonathan
+> 
+
+Thanks
+Jeff
+
