@@ -2,90 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7213A1F404
-	for <e@80x24.org>; Mon, 26 Mar 2018 16:37:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 426C51F404
+	for <e@80x24.org>; Mon, 26 Mar 2018 16:49:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752221AbeCZQhf (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Mar 2018 12:37:35 -0400
-Received: from mout.gmx.net ([212.227.17.21]:44611 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752131AbeCZQhe (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Mar 2018 12:37:34 -0400
-Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LcmN9-1eJzF51rr5-00k7JU; Mon, 26
- Mar 2018 18:37:24 +0200
-Date:   Mon, 26 Mar 2018 18:37:22 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Bryan Turner <bturner@atlassian.com>
-cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Users <git@vger.kernel.org>,
-        git-for-windows@googlegroups.com, git-packagers@googlegroups.com
-Subject: Re: [ANNOUNCE] Git v2.17.0-rc1
-In-Reply-To: <CAGyf7-H8Zv=97LDnGAkfr-Xd4mYpRp3Fz0y+E2P34XcGPneUWA@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1803261836290.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <xmqqtvt9nr7p.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1803231845520.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <CAGyf7-H8Zv=97LDnGAkfr-Xd4mYpRp3Fz0y+E2P34XcGPneUWA@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1752197AbeCZQtt (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Mar 2018 12:49:49 -0400
+Received: from mail-wr0-f179.google.com ([209.85.128.179]:36126 "EHLO
+        mail-wr0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752138AbeCZQts (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Mar 2018 12:49:48 -0400
+Received: by mail-wr0-f179.google.com with SMTP id d10so19616951wrf.3
+        for <git@vger.kernel.org>; Mon, 26 Mar 2018 09:49:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=MvOazrE4SxfGFg1MZ94bXcNK42X+kkGPXLU0OGwAe5Q=;
+        b=b/3FJe/uZdBmX+a2z/a56pm17Z5j4r5U2M0g6rfDHLhTgUvFB+uvKDMvO9gfUUqEHG
+         tL1kkArUZvTjMt3jS0xlO2VIa66AqkMdrsa04bC5ifmaq3BsGUyCUaPluVK8ThQ7XnNP
+         1aCGUuAuadXdoRPMePXYEjUs/gw66BOZB0bft69XhWSSKDUvP+6tEpHC5EXTFynXxcij
+         +mhEjgmk7elLmIs7ZMMijDMxQIg5S2cqOvzwXxwNAQSoDMaaq9cUj8m6PkmhQYSGWii3
+         /eMmv8gplLpn3Ny8rEd4cpmLBQTyOwG/+KtG9p8k+/MRXnYGB4AQ8YAzyzILtnb1W+4e
+         bXnQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=MvOazrE4SxfGFg1MZ94bXcNK42X+kkGPXLU0OGwAe5Q=;
+        b=ShLFwLIf+6nJb91PjBn1KBGaCco6euo5w/ZWvv2yf2W/+CIxXnyOQZH37LxvbHucSs
+         OCJJBzgsUdVBBGN+Q1R5nosdRx44dj8WVTn4gq4xFPLQbyssGIU/kjagH0TgEH3pptwr
+         XG/kSzbMohsRUB8HQx0u2VZxubbCifSXUpiuDec6CXs9Vleb9Zwr9x3M8HPUn48UKEFT
+         NFHm8Xg7NWg3purN/qgn9oXyZZpntMSG38wiSqGW3GenALov581oN4kQnQY4nmmX6wJb
+         Z4CiFZ9BsJXnO+Lo3fR7Lz7+nL8wc/QGFQn8lGWkd8rDvKRq9U6aiqCwu4PvbruL2ZHa
+         bk4w==
+X-Gm-Message-State: AElRT7HiWl0O2NgU1HZy/8SYA0gnqMca1IVhjQh3FhsCjeZaoFu/1tWj
+        1VLWP+KCsGKLsNphUQQkW+U=
+X-Google-Smtp-Source: AG47ELtEK1S18S48bS62TfCqums3N4yInzQSTj4IjWOrWbAUMfd9X0YSekkPaUYkfzb5beypPPvI4g==
+X-Received: by 10.223.151.1 with SMTP id r1mr31210429wrb.126.1522082986748;
+        Mon, 26 Mar 2018 09:49:46 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id f10sm11169374wrg.67.2018.03.26.09.49.45
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 26 Mar 2018 09:49:45 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     git@matthieu-moy.fr
+Cc:     Jeff King <peff@peff.net>, Aaron Greenberg <p@aaronjgreenberg.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH v2] branch: implement shortcut to delete last branch
+References: <20180323085636.GA24416@sigill.intra.peff.net>
+        <1521844835-23956-1-git-send-email-p@aaronjgreenberg.com>
+        <20180326081036.GA18714@sigill.intra.peff.net>
+        <86r2o7nh4i.fsf@matthieu-moy.fr>
+Date:   Mon, 26 Mar 2018 09:49:44 -0700
+In-Reply-To: <86r2o7nh4i.fsf@matthieu-moy.fr> (git@matthieu-moy.fr's message
+        of "Mon, 26 Mar 2018 14:41:49 +0200")
+Message-ID: <xmqqvadidbo7.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:p+LVOtEde/v3jIHnw0fBmlVdlA8rFinQF87piZ+JhfuAO4KnBsU
- +Gt15kMI5ID5+AfmF3f8UiScyDkeDLPNkmu+gh4E14f/DOEPsrbQ+9LAQAhDKFpB1zfMl7j
- AWih995TPTznv40/F0XbWl9FEpLP/OhIm5/XoPmpqWjewGULJJU7ZZAn9yHpiVU7zqAlkCg
- JuX1ySu3iLSbYLuEeltvg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:yq9qlegvIE8=:t/vqwMyLzciiawE67mDopg
- im/JRXBcEv3frwwqhoFtOrzy6oKh+fgqvjnrATNwqEolGkhJWMo1jmtAT27xI4BrfxMbZ59pp
- 9J49wk9IH276bKBa+2KL8U+/98lty/6JtAMOt5wCnnQffHU7KTpZErvBRojrU6DiKJBu/h8BH
- ngm0MxZMtRy4vmmVxNU07laUS0OuyuBuRdTtz9vED/dH1SOgswoEFVB+ubTQO0swC3fMn/v88
- py9jufSqR3wx0yhjT7C4XnfgZceKpubXSO+6FDQZ+O3BRvBX7dCnI0S8mXL5qGx+jwMADxFV5
- 2NgxK7sPD9WW0DdhPVH1ZciDAYhJyhX6q6ADYcEhSZY45cK5qtQxPLqpAjqHPV1dUpopt1iSR
- 8UJ0xR8zFtgGu6h63B2w0AM6NCC4B+aZ5dD2E3D5rOvctar7mqn1q9EwIrbA+ZFPvPi7kBRae
- z7ELFVMN+Sa9EKktYMVzMWlaG40h+B/O1h+cG0SSxplsmEvbVUJAhgpHHmB+oYjEnTZ32iKjH
- BYJ6qxehluNn5wAB1ByEuGWwjnDhrVB5z8YUCztGnTaEfPb+NHYWXtVAPAHt50ErufqH9+vnq
- USI0sU+kDN78FiSvEqiM4bm4LPNleiiDjwgsaMCryTSnPrBv48e9SzaVkkpQ+auUZ9gtiAOE7
- YDuJJFjQEhnxuxFBnZrrH+/8cBwmZ9UKUZZPiv2W09tc7NHAUZ2eWGF4DuA0cHw0whI6CFQXx
- 2A+BrtzWjJf28UQlHYsY7kKjO7DzCu2fCEhcTI3Z5N5ILgSv7qqqfe2q7aBJFp45zcGdRJ5La
- mN7wjDFYZprkApB8jWmltz1QNYhO/EIPQ+UENOxb6EVJuG3y1qMQpmRdXVT1laf6WqyJzT0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Bryan,
+git@matthieu-moy.fr writes:
 
-On Fri, 23 Mar 2018, Bryan Turner wrote:
+>> That said, I'd still be OK with it.
+>
+> I don't have objection either.
 
-> On Fri, Mar 23, 2018 at 10:47 AM, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> >
-> > On Wed, 21 Mar 2018, Junio C Hamano wrote:
-> >
-> >> A release candidate Git v2.17.0-rc1 is now available for testing
-> >> at the usual places.  It is comprised of 493 non-merge commits
-> >> since v2.16.0, contributed by 62 people, 19 of which are new faces.
-> >>
-> >> The tarballs are found at:
-> >>
-> >>     https://urldefense.proofpoint.com/v2/url?u=https-3A__www.kernel.org_pub_software_scm_git_testing_&d=DwIBAg&c=wBUwXtM9sKhff6UeHOQgvw&r=uBedA6EFFVX1HiLgmpdrBrv8bIDAScKjk1yk9LOASBM&m=yXNBIWf9n-gxAIgQyCzXfuKaFkHQaMmwUdtiNBNE8XI&s=E_Z2M418iwz-HyJg5D0VyTCvyMMd4kGIvYccgJkyTwA&e=
-> >
-> > And Git for Windows v2.17.0-rc1 can be found here:
-> >
-> > https://urldefense.proofpoint.com/v2/url?u=https-3A__github.com_git-2Dfor-2Dwindows_git_releases_tag_v2.17.0-2Drc1.windows.1&d=DwIBAg&c=wBUwXtM9sKhff6UeHOQgvw&r=uBedA6EFFVX1HiLgmpdrBrv8bIDAScKjk1yk9LOASBM&m=yXNBIWf9n-gxAIgQyCzXfuKaFkHQaMmwUdtiNBNE8XI&s=7ePu15Fwlwuxo8JGcqj-pBNh1wSZYAfYmboqBvJOyA0&e=
-> >
-> > Please test so that we can hammer out a robust v2.17.0!
-> 
-> I've added 2.16.3 and 2.17.0-rc1, for both Linux and Windows, to the
-> test matrix for Bitbucket Server. All ~1500 tests have passed for all
-> 4 versions.
+FWIW, I do not even buy the "destructive commands should force
+spelling things out even more" argument in the first place.
 
-Thank you so much for testing!
+    $ git checkout somelongtopicname
+    $ work work work
+    $ git checkout master && git merge -
+    $ git branch -d -
 
-Everybody else: remember that I can only fix bugs pre-emptively in time
-for v2.17.0 if you test and report...
+would be a lot less error-prone than the user being forced to write
+last step in longhand
 
-Ciao,
-Johannes
+    $ git branch -d someotherlongtopicname
+
+and destroying an unrelated but similarly named branch.
+
+So obviously I am OK with it, too.
+
+As long as we do not regress end-user experience, that is.  For
+example, "git merge @{-1}" in the above sequence would record the
+fact that the resulting commit is a merge of 'somelongtopicname',
+not literally "@{-1}", in its log message.  It would be a sad
+regression if it suddenly starts to say "Merge branch '-'" [*1*],
+for example.
+
+
+[Reference]
+
+*1* https://public-inbox.org/git/xmqqinnsegxb.fsf@gitster.mtv.corp.google.com/
+
+
