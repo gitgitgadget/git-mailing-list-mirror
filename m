@@ -2,116 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 010211F404
-	for <e@80x24.org>; Mon, 26 Mar 2018 22:21:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B39281F404
+	for <e@80x24.org>; Mon, 26 Mar 2018 22:27:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751748AbeCZWVK (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Mar 2018 18:21:10 -0400
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:43972 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751160AbeCZWVJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Mar 2018 18:21:09 -0400
-Received: by mail-pg0-f67.google.com with SMTP id i124so458455pgc.10
-        for <git@vger.kernel.org>; Mon, 26 Mar 2018 15:21:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=JjZ/CecI2Ba6N2Mj+O9MuZLxdjaaEsomOLbCHFjz2fc=;
-        b=RVDimERjLGAcxBASATs6voGatXlkWFFukIlC2Akw2FSkev34sCKsbdalmTk6k3/tEC
-         kt3l4Ls5oviWuZg0r1j/QW2vuyqXeslj0TGj3NtrW/+yxr8uw54kYY9j2kDaOHPwo4Y0
-         o3TJx3GMwtK0Disp9wW/mbS7Yq09AFAZhGBeCuY4bz91gU+BkKPwUAyFvqVcKzGd7Ruw
-         M03OQo4lXmk/agq4iRPnjDl2FAHqylbJBBTbDV4GzwK+WwXN9ehKqmb8wp0JuCMa2B7+
-         rr8VGwtIjcIvLy9bSsujEqwrN7cnbGY5hgdUfm9Trk8l+rykdkCMvLRZ57O8ksVcUQtN
-         aWgA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=JjZ/CecI2Ba6N2Mj+O9MuZLxdjaaEsomOLbCHFjz2fc=;
-        b=rEWT4wGgyGJ7meO8aXjYqiLxH5DzGrk7TQ6fINFlwA2pUErBgkTjuEiJ9PL/Pelmmd
-         bIXOi99DLbE8ZaUue6D8aXDb8S+BExOCVm2v+MPju2EdBUE1DMtF+THlbb4a+eafDqk9
-         5On6RKRWgqckxTbii0H81/Re+KxBOVHwstyjeqWuYAFWtp1GZlvIoSnBNBvfxb9V9f4P
-         fLgzIxPgeYyeeCbOseJ8yNLLDoi63iHLTzbhrsRZb+Hr6k4TZEHDhFOBKdqkdMsAA+By
-         hRaJK7+oq6E+R9d0btYO4Dl7gtYCXL5K2cMD500Q+e2kpPwGK+X6pjx5l3nCje7ayH97
-         1J4A==
-X-Gm-Message-State: AElRT7Ft0Wnyoembn4s5xO9rC5kh0BxHGUKq1rYK9H0H0gpA0tfWEEH2
-        E7EDTejab/anrJxT6do2IFs=
-X-Google-Smtp-Source: AG47ELtmZkDSKZK63s/1DEFtqgtbhhnfCe+o7WgQFOfGsN0MPhhPea8iJwYSxy2AeXK/bSYAqvpCsg==
-X-Received: by 10.98.19.85 with SMTP id b82mr18373217pfj.236.1522102869039;
-        Mon, 26 Mar 2018 15:21:09 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id b6sm32979227pfm.160.2018.03.26.15.21.08
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 26 Mar 2018 15:21:08 -0700 (PDT)
-Date:   Mon, 26 Mar 2018 15:21:06 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        kostix@bswap.ru, clime@redhat.com, git <git@vger.kernel.org>
-Subject: Re: get commit ID from a tree object ID
-Message-ID: <20180326222106.GC21735@aiede.svl.corp.google.com>
-References: <CANT8FXR3pMgbwVWmwssDYhgv6eMFw4+Uz5xARGwFVVU1cMVmWw@mail.gmail.com>
- <20180317130128.mr2sfsrncykkubwo@tigra>
- <20180317161819.GB25113@sigill.intra.peff.net>
- <xmqqwoyay48n.fsf@gitster-ct.c.googlers.com>
- <CAGZ79kZU39B42BeOxrUDxT6Nca0=Yd+O0TEgu6_HvK3O=b2KhQ@mail.gmail.com>
+        id S1752390AbeCZW1d (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Mar 2018 18:27:33 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:43266 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751374AbeCZW1Q (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 26 Mar 2018 18:27:16 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 677D160428;
+        Mon, 26 Mar 2018 22:27:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1522103234;
+        bh=AA7Ilw3kMfwQVRDpfZt4JxyfiFNxZaXRhXQf9T5Za3A=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=V5AzDaMgoyEB/0pGRounHkwyA73iYcLlmpN5CeZiLBV189ZJxMMgYjozp/9YlTXs6
+         vbuLHj2LH3H6/ZIOM78c/fTUqJNFNz1se0VRF2E6mO1Ef9n/wBl394rNVNW19Yl78S
+         R40FB/qwbj3fmzHBbBwqtdF4dJtLS6NIc0LWExyvaYeqV4zMcLGRiX7nvFQ+uwxqVD
+         BI8CxvaEzwYMk9lQwuVrTUd+iDK2fmqFSZM4QqexNI3+Y88wPLqsf5mZ27b2hg3Eu1
+         NB0V57ZA452ft0ZfPEUzeLFKBuG8t5Pw+zgxDHxn+aiGsV1vO09Swe9Qk9IXKvKZgS
+         7XFjC7SdF485QDO1n3QnzxfjXSh5RJizFMHbmIKYf97hhLc1DdmEXN5/aezkmGSoOe
+         qHF4Y0cNRYUGwz5Q4pyPGDzzt0sFxqSYFnh9QTRVYL0VMkQYmh4wtjZcIC5/eQ2yrP
+         8OaOi/YA1LC58+6tZaqBeru5zDx9sGPVyohEY0jcVZLWZYghIkG
+Date:   Mon, 26 Mar 2018 22:27:08 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: [PATCH 00/10] Hash-independent tests (part 1)
+Message-ID: <20180326032411.GF74743@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Lars Schneider <larsxschneider@gmail.com>
+References: <20180325192055.841459-1-sandals@crustytoothpaste.net>
+ <CAPig+cR==SNfGdhwqPdvW75fUxXg-VSQ5Tz_OR7Sy_c0L94axQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="doKZ0ri6bHmN2Q5y"
 Content-Disposition: inline
-In-Reply-To: <CAGZ79kZU39B42BeOxrUDxT6Nca0=Yd+O0TEgu6_HvK3O=b2KhQ@mail.gmail.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+In-Reply-To: <CAPig+cR==SNfGdhwqPdvW75fUxXg-VSQ5Tz_OR7Sy_c0L94axQ@mail.gmail.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.16.0-rc5-amd64)
+User-Agent: Mutt/1.9.4 (2018-02-28)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
 
-Stefan Beller wrote:
-> On Sat, Mar 17, 2018 at 10:57 AM Junio C Hamano <gitster@pobox.com> wrote:
->> Jeff King <peff@peff.net> writes:
+--doKZ0ri6bHmN2Q5y
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
->>> If you want to dig further, you can use the diff machinery to show which
->>> commit introduced a particular tree, like:
->>>
->>>   git rev-list --all |
->>>   git diff-tree --stdin --pretty=raw --raw -t -r |
->>>   less +/$desired_tree
->>>
->>> That "less" will find the mentioned tree, and then you'll have to
->>> manually read the commit. It would be possible to do it mechanically
->>> with a short perl script, but I'll leave that as an exercise for the
->>> reader.
->
->> Before Stefan jumps in ;-) I wonder if a recently materialized
->> "find-object" option to the diff family can be used here as a
->> sugar-coated way.
->
-> I am late to jump in, but testing the 'git log --find-object'
-> seems to have issues with trees named by sha1 here,
-> but the named tree via <commit>:<path> still seems to work.
+On Sun, Mar 25, 2018 at 10:10:21PM -0400, Eric Sunshine wrote:
+> What's the plan for oddball cases such as 66ae9a57b8 (t3404: rebase
+> -i: demonstrate short SHA-1 collision, 2013-08-23) which depend
+> implicitly upon SHA-1 without actually hardcoding any hashes? The test
+> added by 66ae9a57b8, for instance, won't start failing in the face of
+> NewHash, but it also won't be testing anything meaningful.
+>=20
+> Should such tests be dropped altogether? Should they be marked with a
+> 'SHA1' predicate or be annotated with a comment as being
+> SHA-1-specific? Something else?
 
-Experimenting a little more, I wondered if "-t" wasn't being passed
-by default:
+My plan for these was to treat them the same way as for git rev-parse
+and git hash-object.  Basically, for the moment, I had planned to ignore
+them, although I like the idea for a prerequisite to get the full
+testsuite passing in the interim.
 
-  $ git --oneline log -t --find-object=$(git rev-parse HEAD~30:Documentation/technical)
-  $
+Ultimately, we could use some sort of lookup table or a test helper to
+translate them so that we get functionally equivalent results.  t1512 is
+another great example of this same kind of test.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
+https://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: https://keybase.io/bk2204
 
-No, that's not it.  Could it have to do with merges?
+--doKZ0ri6bHmN2Q5y
+Content-Type: application/pgp-signature; name="signature.asc"
 
-  $ git log --oneline -m --first-parent --find-object=$(git rev-parse HEAD~30:Documentation/technical)
-  df6cfe8c30 Merge branch 'debian-experimental' into google3
-  f86d5fd2e4 Merge branch 'debian-experimental' into google3
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.5 (GNU/Linux)
 
-Yes.
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlq5c7cACgkQv1NdgR9S
+9osPDQ//ZVOOp2ez856X5DhIRK6avIE1vRsTUkYQY+C1azBi3HUZV40fYCJBTd0x
+N+QKbxESlgl0u/tsLEPwYD7rZwdZ59Lw6tgg0QHXkHUvg9usv9/vxSxUE+ngOcsy
+xCkkIvj178rS6Z8hnaSpkOwCSPRR3Vvo/PXwA4/Dw2vHlUtWwr+y7g4oemf5FozT
+Iu5xZx1OJnaNhHS9b5YCYPlkdNcCqvLBo/PN8IDI0tXmtv7Z9uA1J8nprJNA0zve
+txXTDlU9FsLeBbYqK2K56TsKHcYpmN+nV05bmTwDyegJIYPPsAG5+aZP0aWGQiEo
+wDm3/9S3eAyEUoH9vf/w+ZAM7KP/wpHHwafUIDvFkjqQp8/NmJ3IhCi6+TdQm4Lz
+d3bHgrZVK/h4ARMG02ID0pd1X7DoeWZiqUbzcme0NhteFN7PsTT0F7xf/+D9le1d
+ho4c6F00qRGRaQFHX+gcKN9WtLyOzsabnCZ9TiIudmn+isXs29gkgdBL0vGvuJw9
+jvdIKOXFJ0jjrcFYPyCEkQlRcRwKXkDVul1vKKwnA9EaQlbLG+PewwTO72aCiU/S
+kABSEDkTkE6oa9/F4kvzh00KX7UsWv3KvVjb5X5C4fO7JmJpn/LzinAXbbI0N0x/
+ZWb9Na4CrZFSKQFs7DxWmxvfFsMWwP62SY4Az+p6xhK3mlvB2PE=
+=T5Xi
+-----END PGP SIGNATURE-----
 
-That doesn't explain why <commit>:<path> worked for you, though. :)
-
-Thanks,
-Jonathan
+--doKZ0ri6bHmN2Q5y--
