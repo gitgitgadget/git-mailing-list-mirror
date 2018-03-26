@@ -7,97 +7,119 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8BB4E1F404
-	for <e@80x24.org>; Mon, 26 Mar 2018 20:54:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5B9101F404
+	for <e@80x24.org>; Mon, 26 Mar 2018 20:55:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751150AbeCZUy2 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Mar 2018 16:54:28 -0400
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:45370 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751076AbeCZUy1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Mar 2018 16:54:27 -0400
-Received: by mail-pf0-f195.google.com with SMTP id l27so8000907pfk.12
-        for <git@vger.kernel.org>; Mon, 26 Mar 2018 13:54:27 -0700 (PDT)
+        id S1751204AbeCZUzK (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Mar 2018 16:55:10 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:35676 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751076AbeCZUzJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Mar 2018 16:55:09 -0400
+Received: by mail-wm0-f68.google.com with SMTP id r82so18001666wme.0
+        for <git@vger.kernel.org>; Mon, 26 Mar 2018 13:55:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=sn+gWD1oJWPA2+xqyq+/2XJ7XBnh1AFIIWpBtuccbF0=;
-        b=MktWQ61JbwW3NWNcPll8Y1QdH/6dU94KC34uMzmKnUdB7Hf1Ti6+9Ot8wx981iTpTj
-         9bn3x8kBU9HmeVZgI11y8bwWobka/tvd/i+Hy09u9Qj0bVNzO5sNOGH80fTaaNeILg29
-         q5hU/afLCUhvwde9owvlV6CxR5xnNHs2P0bYFdMxtuV5B//+pylZi1iKjFGnDq0E1Pha
-         3stQWS7VyRJDjgJ0sBxCf1HmMvmDnWreudldGqzInG482gEOy1eRqf9DbRdJUXmgTZ3C
-         Nj8N25+Lp65nViM6xXUQo/IcBzx+9r7MLICeLy+hWM9kWmpgLHTsXlRpdDvpgJsv6c+a
-         Qnqw==
+         :content-disposition:in-reply-to:user-agent;
+        bh=gEEWCdi8QxbM6L/iqcDChMAjZLnffTHk4zztC5KaRxs=;
+        b=XSGmjHC5no5zQJ5wxw7Sy+6iNvlPaIrDt/LDWPjrzGFXgc0zrZ5BdZZf/9yuNARAmm
+         QYTHVRX2Xyw8kRKYtny9WDMuI6Ks2F2vrMOggW63ysbaUlfDiSwlG9apnHge1HS+lsRU
+         zDxLOAizRLV99kZdVTdrtasP1NTNtwNSefwDm60UiLYbns3tGKQAUi/Eb7j8fWFMobZC
+         reOmcxS5/JLPGBm1lIQatAgkZXZNNlcNgQNF7rvZd931snB0mG/HRyenDGuvuRoxDtKk
+         UM/P30/1vBoNT5nkuCobZ1LMAX3y1I1WtU9ep/0Lysx1nwAMFtPWIJ04+Ts2S0pZ7Og6
+         +R/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=sn+gWD1oJWPA2+xqyq+/2XJ7XBnh1AFIIWpBtuccbF0=;
-        b=oTC5qIHliPThTCHSV70vgjxApPZ2TynvL8BA5dWkj5qnFPPunGScLRmUYXwezpXNE0
-         O8sGSE6ZM0M7zI8HBhomTv8RzEG8VvsRfuvRRT5RtKHBNs3Gep3YONJZzkigdYWa35nC
-         hmoEBOvZ2XxUV/Ga1+vKB93IMAZLKx952lorkJ4BTksaxBJbxmKtDIzRGdhepAGatoxD
-         sZaP31JToRaD6miCoKq7KiZ/O/3eZEJD6oK8GWESeh4NipyVznwcFp6kUj334Rn3xoF2
-         OYf1cTblZ12YzY8JCHOrKrskTXwvfSJcJKvr1l7Ac5Da8eafubgEh08Ua1F8FupZkqGE
-         8+Bw==
-X-Gm-Message-State: AElRT7FXLN+Cl0OnjFgRjVLmfdI43gqjT+SeBqiLpAftt/eLB8VISJXS
-        smde3D+bs411+QZoT/9FIFLRKjE6
-X-Google-Smtp-Source: AG47ELuRE/w7vo0+YXON9u4UGcIZwOjhjRU0dzz8hG34dS82n0qukGL2wBbDTbJNJot6nmSXOq81+g==
-X-Received: by 10.98.220.86 with SMTP id t83mr23098066pfg.60.1522097666675;
-        Mon, 26 Mar 2018 13:54:26 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id k2sm4842350pfb.123.2018.03.26.13.54.25
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=gEEWCdi8QxbM6L/iqcDChMAjZLnffTHk4zztC5KaRxs=;
+        b=gZaZ9//FLPtbAWD8vdt3UIhKk4WkF69FUJuSBrUZtCOPlDmBjQWHUrEY3bg8IEDg0r
+         7ox5UvHS95DEVdb55+0sdO/OYPjSn+9T18NuZp+aOBYIyDaRGnyUUFAXBtfHs3ZLEZMW
+         AoIDztDM3mHUkTKQuduVnANYV5NziKGbNZseqYM4oLglOi2dkTkGqHOGitzlfukFbTuM
+         o4EL/5jqGEuEl23DbjjD0cOPvSD9GnconFN/GM4zwWBRwsoxfrjk++XjBrvGCIme097E
+         QIv+BdDZNXtmNUB3DmxI5Ckb6RTuUARrHz+xnaoDq13Gp6kIjz1g3Ctnl26MoQGMdBMK
+         evNQ==
+X-Gm-Message-State: AElRT7GejctikbVyg3nbqUd780Iz7FUIqV+OxcEdHufFJI3CRYrXrp8l
+        Xd9qz9iE+mb+Qw69VWbqAcThFkXr
+X-Google-Smtp-Source: AIpwx48GkWYjzkoq5f6J3OtPo+FImcNRvb+lO4xU7sIONhItyuRD31YosDAdz9Dv+WfwchzPd+673Q==
+X-Received: by 10.28.241.6 with SMTP id p6mr619216wmh.107.1522097708256;
+        Mon, 26 Mar 2018 13:55:08 -0700 (PDT)
+Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
+        by smtp.gmail.com with ESMTPSA id y9sm8434429wrg.34.2018.03.26.13.55.07
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 26 Mar 2018 13:54:25 -0700 (PDT)
-Date:   Mon, 26 Mar 2018 13:54:01 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     Alex Vandiver <alexmv@dropbox.com>, git@vger.kernel.org,
-        git@jeffhostetler.com, jonathantanmy@google.com, bmwill@google.com,
-        stolee@gmail.com, sbeller@google.com, peff@peff.net,
-        johannes.schindelin@gmx.de, Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Per-object encryption (Re: Git Merge contributor summit notes)
-Message-ID: <20180326205349.GA21735@aiede.svl.corp.google.com>
-References: <alpine.DEB.2.20.1803091557510.23109@alexmv-linux>
- <874ll3yd75.fsf@evledraar.gmail.com>
+        Mon, 26 Mar 2018 13:55:07 -0700 (PDT)
+Date:   Mon, 26 Mar 2018 21:58:31 +0100
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: [RFC][PATCH] git-stash: convert git stash list to C builtin
+Message-ID: <20180326205831.GG10909@hank>
+References: <20180324182313.13705-1-ungureanupaulsebastian@gmail.com>
+ <CAPig+cS9QwCOG7BA7O5Nu_zsh-xTbDFy2vTWpAXxBuKTY-uzUw@mail.gmail.com>
+ <nycvar.QRO.7.76.6.1803262058490.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <874ll3yd75.fsf@evledraar.gmail.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+In-Reply-To: <nycvar.QRO.7.76.6.1803262058490.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Ævar,
+On 03/26, Johannes Schindelin wrote:
+> Hi Eric,
+> 
+> On Sun, 25 Mar 2018, Eric Sunshine wrote:
+> 
+> > On Sat, Mar 24, 2018 at 2:23 PM, Paul-Sebastian Ungureanu
+> > <ungureanupaulsebastian@gmail.com> wrote:
+> > > Currently, because git stash is not fully converted to C, I
+> > > introduced a new helper that will hold the converted commands.
+> > > ---
+> > > diff --git a/builtin/stash--helper.c b/builtin/stash--helper.c
+> > > @@ -0,0 +1,52 @@
+> > > +int cmd_stash__helper(int argc, const char **argv, const char *prefix)
+> > > +{
+> > > +       int cmdmode = 0;
+> > > +
+> > > +       struct option options[] = {
+> > > +               OPT_CMDMODE(0, "list", &cmdmode,
+> > > +                        N_("list stash entries"), LIST_STASH),
+> > > +               OPT_END()
+> > > +       };
+> > 
+> > Is the intention that once git-stash--helper implements all 'stash'
+> > functionality, you will simply rename git-stash--helper to git-stash?
+> > If so, then I'd think that you'd want it to accept subcommand
+> > arguments as bare words ("apply", "drop") in order to be consistent
+> > with the existing git-stash command set, not in dashed form
+> 
+> Why not start with cmdmode, and then add a single patch that *also*
+> accepts argv[1] as a bare-word cmdmode?
 
-Ævar Arnfjörð Bjarmason wrote:
+I don't think we should accept the dashed form of the commands for
+'git stash'.  The main reason being that we also have 'git stash'
+without any arguments, which acts as 'git stash push'.  So if we would
+ever come up with an argument to 'git stash push', that matches one of
+the current verbs, or if we come up with a new verb that matches one
+of the options to 'git stash push', that would not work.
 
-> It occurred to me recently that once we have such a layer it could be
-> (ab)used with some relatively minor changes to do any arbitrary
-> local-to-remote object content translation, unless I've missed something
-> (but I just re-read hash-function-transition.txt now...).
->
-> E.g. having a SHA-1 (or NewHash) local repo, but interfacing with a
-> remote server so that you upload a GPG encrypted version of all your
-> blobs, and have your trees reference those blobs.
+In that case we could obviously go for a different word, but I think
+the rules when 'git stash' is going to be 'git stash push' and when it
+is not are already complicated enough, and allowing the verbs as
+dashed options would only make the interface more complicated.
 
-Interesting!
+> This could even potentially be a patch to parse-options.[ch] that
+> introduces, say, PARSE_OPT_ALLOW_BARE_CMDMODE.
 
-To be clear, this would only work with deterministic encryption.
-Normal GPG encryption would not have the round-tripping properties
-required by the design.
+Now if we'd take that one step further and make it
+PARSE_OPT_BARE_CMDMODE, which would only allow the non-dashed options,
+I think we could use that in other places in git as well (for example
+in 'git worktree').
 
-If I understand correctly, it also requires both sides of the
-connection to have access to the encryption key.  Otherwise they
-cannot perform ordinary operations like revision walks.  So I'm not
-seeing a huge advantage over ordinary transport-layer encryption.
-
-That said, it's an interesting idea --- thanks for that.  I'm changing
-the subject line since otherwise there's no way I'll find this again. :)
-
-Jonathan
+> Ciao,
+> Dscho
