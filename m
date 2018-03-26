@@ -7,85 +7,106 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 368291F404
-	for <e@80x24.org>; Mon, 26 Mar 2018 19:03:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 343C41F404
+	for <e@80x24.org>; Mon, 26 Mar 2018 19:21:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752169AbeCZTDq (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Mar 2018 15:03:46 -0400
-Received: from mout.gmx.net ([212.227.17.20]:54123 "EHLO mout.gmx.net"
+        id S1752230AbeCZTVj (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Mar 2018 15:21:39 -0400
+Received: from mout.gmx.net ([212.227.17.22]:44863 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750983AbeCZTDo (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Mar 2018 15:03:44 -0400
-Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LbdiB-1eGnfK3Op9-00lBeW; Mon, 26
- Mar 2018 21:03:41 +0200
-Date:   Mon, 26 Mar 2018 21:03:41 +0200 (DST)
+        id S1751157AbeCZTVh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Mar 2018 15:21:37 -0400
+Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MHbpA-1ezRDd3W6m-003KZb; Mon, 26
+ Mar 2018 21:21:33 +0200
+Date:   Mon, 26 Mar 2018 21:21:33 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Eric Sunshine <sunshine@sunshineco.com>
-cc:     Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
-        Git List <git@vger.kernel.org>
-Subject: Re: [RFC][PATCH] git-stash: convert git stash list to C builtin
-In-Reply-To: <CAPig+cS9QwCOG7BA7O5Nu_zsh-xTbDFy2vTWpAXxBuKTY-uzUw@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1803262058490.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <20180324182313.13705-1-ungureanupaulsebastian@gmail.com> <CAPig+cS9QwCOG7BA7O5Nu_zsh-xTbDFy2vTWpAXxBuKTY-uzUw@mail.gmail.com>
+To:     Joel Teichroeb <joel@teichroeb.net>
+cc:     Git Mailing List <git@vger.kernel.org>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 1/6] stash: Add tests for passing in too many refs
+In-Reply-To: <20180326011426.19159-2-joel@teichroeb.net>
+Message-ID: <nycvar.QRO.7.76.6.1803262110000.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <20180326011426.19159-1-joel@teichroeb.net> <20180326011426.19159-2-joel@teichroeb.net>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:Hxr0eZqb4I5Jae2IM1yyO8FpyGBgYsbpd89Kb8oXQYIfM1R3lOv
- +P78CBOEqJJbW6xZQEfM1fB3Oar6HaSMyEwjEEcw4uRIlFcIgQ+Z0V2hHYW76jvhigJ5czH
- PIAmg+JbTnKPAssQFoE4jYYKUbO5GK5tx/hkKAk/9WuMe+5hYbXbgH1/EykKMLIesOVfx+Z
- lLuC+RAWn30Z8v0I9YUyA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:b562lcGJJDg=:v7CFNWEKxr2P++aR0+00BB
- ml/CwIH/ewdTlaSONli35WWMlJpC6lZD8nRsOl9bWJ7gImAk+Jr2sZqNar90fVNBILo+pEzXS
- iCiZ/sbCKhIpkIBw1ArNaYTJ2R7erF7ELLZ9it59YWtdKBBZrC9JkEWA+ACRs9BA3jXVJZ/nm
- 6GUa2BExT0X7HpHKN9Xg5TkL1KVsLIQocC1lPBbYERc7VQ6KSlaqmU4OKRotStwXY9/3wNqwl
- wX1qXxtFD4tEU2foHKj9owno4CNrKF5UuHU8fwG9bRdMWRvVNF4fV86ILxVo58U+1NHl+VDvR
- EFcrF3fayaqXbGi2buElJOHqHg2ympFCd45ArZ5hhrh19plpz3Sl3yzopKwa2cBxUmFJepmWi
- NtrNusCmp0uiMWSQmNXHDNKjbJtLHTpvyftAWKemsu+QIHis1rS0BA2ha5pLow0JJbXY55LN5
- /njbxGcBoARrk+UEap3I3oooLC6dRid3oZ6RcSerG6dokiPn6PhCvuI63nOkPv31diuiqxc+R
- sIcYiD3OZD0jyKaCGD11l7NtbzXIDB7oW7bznXN8EyOwcFo7mtgfG3wtNmxPnCy4+RWDdrqPk
- 7gnvyRDiupfBcX5Tzhs/yHWryWHZdpaoaVeyomiVKnb0cKdWlyt+f3oLbnycYWnHE21XSFcH4
- C3WKjNjt6kcTIe08eiGt56poN2cQSsXXnoy+27ynJHDbbyGALjgZLwbmB0sYy5E7oFHZN6nV6
- pJ7wHkQ51s1aI9USyQMXkL79attYUpLFrHRPZpAFx/CsH4E5G2loirIBHjDRq0TTrsdP3ohb5
- kXPlKIUGHUgOD/9zl0AYKmTsnRyrc1RmUfnjSE3hSYZBa2oX88MCj+oZsQEqGZZOldW0oAq
+X-Provags-ID: V03:K0:1VrxAqxdAqR5RHFXS4lis/edowkaUJdGo4PfsH7lnAkGFIb5kcV
+ 7UKyaeSi9NIQleFjaetmmegaotxGLVEiRJLFk6N3JC2Rm7FEE0r4jgRLW1NuZ1W8fN5iVZC
+ dPBDGSDj1Rvaxa2vbRrhXNy0X5GMWK1V89W2dI3zN7qrTnzYTUsEpMuFcOJu9r7vgZ9pS4J
+ hV19JzYB/xYa6LENNpcSA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:D7ytwdQ6fpU=:E5iTwVDL/Uk0MIN7jGsLn8
+ iqkEq61ZrLIK4f0Gdzfxy29birrJjE075wLZ95YVZgXAms8bm60EnfSzggtsRD9dqrP1t5LEs
+ jw/GRd4K6VYIBZ1zWGdgb53YR4NvsFxH9zId4VCeM6bVqPBBv/Y0tDSDdZ+zkj06YsulRPd2T
+ yI3hEsyJ1S7OijU8iCDVYUFXufufYeSvqKD9SStcUdPi+PkOpwJyW4U+dMFISrImI49Kjc38G
+ kYjy+uVj9Im0fvJNpy+t/Xw7wdwBYaEwyAOymcrx8OEUcuaGTph1XtZberdwYyUS+HBvDRxNW
+ UCfyfnnEz5+KP5bwl606sUFKWsJczDBSkmINsUgAIJQ8YKaVcK7rqa7iDfKnDm/eSTZOoH/TS
+ wlTh+SvrDMSZCjZhyKnSaGkloS79vj9A6ET9RFp/E+N9AOTzp4Ef64m5wFrX/X5psMYVdnBWF
+ Knxzmo3bw/FSRh1FYtjZEuDDXfvpMMGT2BGVOmV6d8IVBLgv/BA8Jv9p8STACpu3HEud10ZjF
+ DDsDVgXtjGBpTNi2qz2fLmKHeVx7+Hp36f3o4NNqXwjkxEUMZEMexpCPrbX1rrgat77KAmvaZ
+ sZo55clVPKFkZ9BX0nqRR69zVtEBWR4KMxYaI6VOfyw7836hB0VO+fKrmIlIZt2vXp/zzGwSb
+ sgmIAYShfH/pPLla3jO5QsLoe8juq2VD/9Ir0oelnyzBAvVHR7CCXZyIACOVJF4b2oVKkVXkM
+ lsrPcHEUQz7CvbMJgvMHCYRtE5u/1oJsXOfR9dQdmxue4zhVQ7QyXk4EGCghbET1SPOwZo6ZN
+ ApeKbtW1pJIRJ5GGwIWeisged2APAMSGzyuAXAD7FhN6zI2fE5EjCP/HW7F4Y9qrYAvlxgN
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Eric,
+Hi Joel,
 
-On Sun, 25 Mar 2018, Eric Sunshine wrote:
+On Sun, 25 Mar 2018, Joel Teichroeb wrote:
 
-> On Sat, Mar 24, 2018 at 2:23 PM, Paul-Sebastian Ungureanu
-> <ungureanupaulsebastian@gmail.com> wrote:
-> > Currently, because git stash is not fully converted to C, I
-> > introduced a new helper that will hold the converted commands.
-> > ---
-> > diff --git a/builtin/stash--helper.c b/builtin/stash--helper.c
-> > @@ -0,0 +1,52 @@
-> > +int cmd_stash__helper(int argc, const char **argv, const char *prefix)
-> > +{
-> > +       int cmdmode = 0;
-> > +
-> > +       struct option options[] = {
-> > +               OPT_CMDMODE(0, "list", &cmdmode,
-> > +                        N_("list stash entries"), LIST_STASH),
-> > +               OPT_END()
-> > +       };
-> 
-> Is the intention that once git-stash--helper implements all 'stash'
-> functionality, you will simply rename git-stash--helper to git-stash?
-> If so, then I'd think that you'd want it to accept subcommand
-> arguments as bare words ("apply", "drop") in order to be consistent
-> with the existing git-stash command set, not in dashed form
+> Signed-off-by: Joel Teichroeb <joel@teichroeb.net>
 
-Why not start with cmdmode, and then add a single patch that *also*
-accepts argv[1] as a bare-word cmdmode?
+I could imagine that the commit message would benefit from this body:
 
-This could even potentially be a patch to parse-options.[ch] that
-introduces, say, PARSE_OPT_ALLOW_BARE_CMDMODE.
+	In preparation for converting the stash command incrementally to
+	a builtin command, this patch improves test coverage of the option
+	parsing.
+
+> diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
+> index aefde7b172..7146e27bb5 100755
+> --- a/t/t3903-stash.sh
+> +++ b/t/t3903-stash.sh
+> @@ -45,6 +45,12 @@ test_expect_success 'applying bogus stash does nothing' '
+>  	test_cmp expect file
+>  '
+>  
+> +test_expect_success 'applying with too many agruments does nothing' '
+> +	test_must_fail git stash apply stash@{0} bar &&
+> +	echo 1 >expect &&
+> +	test_cmp expect file
+> +'
+
+I suppose you encountered a problem where `stash apply a b` would modify
+the file?
+
+And if you really want to verify that the command does nothing, I guess
+you will have to use
+
+	test-chmtime =123456789 file &&
+	test_must_fail git stash apply stash@{0} bar &&
+	test 123456789 = $(test-chmtime -v +0 file | sed 's/[^0-9].*$//')
+
+> @@ -97,6 +103,10 @@ test_expect_success 'stash drop complains of extra options' '
+>  	test_must_fail git stash drop --foo
+>  '
+>  
+> +test_expect_success 'stash drop complains with too many refs' '
+> +	test_must_fail git stash drop stash@{1} stash@{2}
+
+I wonder whether you might want to verify that the error message is
+printed, e.g. via
+
+	test_must_fail git stash drop stash@{1} stash@{2} 2>err &&
+	test_i18ngrep "Too many" err
+
+Also, since the added tests look very similar, it might make sense to use
+a loop (with fixed revision arguments).
 
 Ciao,
 Dscho
