@@ -2,102 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3E2281FAE2
-	for <e@80x24.org>; Mon, 26 Mar 2018 17:39:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7F00E1F404
+	for <e@80x24.org>; Mon, 26 Mar 2018 17:46:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752722AbeCZRjV (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Mar 2018 13:39:21 -0400
-Received: from siwi.pair.com ([209.68.5.199]:58752 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751908AbeCZRjT (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Mar 2018 13:39:19 -0400
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id F3DB53F400D;
-        Mon, 26 Mar 2018 13:39:18 -0400 (EDT)
-Received: from [10.160.98.99] (unknown [167.220.148.99])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id ADBF53F4006;
-        Mon, 26 Mar 2018 13:39:18 -0400 (EDT)
-Subject: Re: [RFC PATCH 1/1] json-writer: incorrect format specifier
-To:     Junio C Hamano <gitster@pobox.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc:     Wink Saville <wink@saville.com>, git@vger.kernel.org,
-        jeffhost@microsoft.com
-References: <cover.1521868951.git.wink@saville.com>
- <140b7646e7efa4175f9d82e6eb2909f2f94771fe.1521868951.git.wink@saville.com>
- <4f4221d9-2ad9-2282-d26f-412ba0bfd719@ramsayjones.plus.com>
- <c8628770-71d7-42f4-4bc5-444ea0160d26@ramsayjones.plus.com>
- <xmqqr2o6dayt.fsf@gitster-ct.c.googlers.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <db400047-ac2e-100c-8d5a-12f1d05b93be@jeffhostetler.com>
-Date:   Mon, 26 Mar 2018 13:39:18 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
+        id S1752734AbeCZRp7 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Mar 2018 13:45:59 -0400
+Received: from mail-yw0-f177.google.com ([209.85.161.177]:38298 "EHLO
+        mail-yw0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752596AbeCZRp7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Mar 2018 13:45:59 -0400
+Received: by mail-yw0-f177.google.com with SMTP id x20so5394732ywg.5
+        for <git@vger.kernel.org>; Mon, 26 Mar 2018 10:45:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=PGU6uM6ju4ZF4igMohT96JY/KD9d1vgOzHVnGkOVVNg=;
+        b=C8EZimkORr09gkEEGbGfE38Wdh3YlOO0HRJHh4AXC/r8beeyw7hf8JTLYECvTTUBqy
+         d4VnYdZFCgL/nzt4C7M1HamCBPwcSlUPKWwflAXVFduYYEtt2P8NQEodyWIsFTKjDJoX
+         BNUw+UHsTrDAVwhhOY5ewX/VzdIQoP66ihnPjq0bAZr/ccNrzXzRvf1YmiJXsFaRnMvg
+         hGK0GHBoHxxZrCWkonVapiMUDW7pTlurzcvfWT8ftaJs864QnQNSvpiF04mdyLTvkWjk
+         KPRvaCYRaL1T2CJ+IRwpmpt8/6eXh3ukJ14RRvGwZrGOcFJG2A22FxAUkucEHepc/JIM
+         VppQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=PGU6uM6ju4ZF4igMohT96JY/KD9d1vgOzHVnGkOVVNg=;
+        b=guOj+tuB+1jJP8RPlJOb/O884FlUVe5JpufimO2y3V7UgR8tq020m1Y8DZ2V3yRYuZ
+         +UQ/SNXn6q9z1hi+bDVdIsKFm4/BlGtWRT/Lp7J2++aYTyFU/A6F2W+iEzjLgcNxC1E2
+         WOoskiIG1JmlQrmMxNHHF6GY7q1n1df80XPfri32AJ2s/HZgXLAHOsqmNUbk0fsvSJt6
+         z96Is1anYX+dXiY+Mq+d0ngMUytNHk2GsTl5t4KIBvPgvd0kJsZMrFNrGT6u82hNPKS3
+         nke51oA7LO/LqUzDtCxFnnG7w7BigDLO5Nc8fKulcINesVw4crCTbpPLjdRwp9yleVAj
+         wbCw==
+X-Gm-Message-State: AElRT7EwPo2yG4Tdc53lXzftLQ1hfmQSey1UxPiPPEWo3z1Uv8Wb5Ajl
+        5zKoadjzPFLALB8h40LQN0cQNrBBLBkt5e9IwQURDw==
+X-Google-Smtp-Source: AG47ELvyPEWQ+oNLhNY6RbNjvzHwiDGdOs7x4eb5Z2MiqsUNS6iI+CuGk/bDMq1BhW5sZxnXlGHcomQGqvb1fmlWamE=
+X-Received: by 10.129.86.5 with SMTP id k5mr15166312ywb.345.1522086357868;
+ Mon, 26 Mar 2018 10:45:57 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <xmqqr2o6dayt.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <20180303113637.26518-1-pclouds@gmail.com> <20180323172121.17725-1-pclouds@gmail.com>
+ <CAPig+cQ=u2xVaptpVzVd3g_RO+9kTWVitD4V7zpZFuL+a3wmtg@mail.gmail.com> <20180324053144.GA11420@duynguyen.home>
+In-Reply-To: <20180324053144.GA11420@duynguyen.home>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 26 Mar 2018 17:45:47 +0000
+Message-ID: <CAGZ79kbkc2d-EHDTWP1GvCU62=ogZbP0ffxOHZamdQK+3h1yJw@mail.gmail.com>
+Subject: Re: [PATCH 00/27] sb/object-store updates
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>, git <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Brandon Williams <bmwill@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Fri, Mar 23, 2018 at 10:31 PM Duy Nguyen <pclouds@gmail.com> wrote:
 
+> I got too excited when searching and replacing. Here's the fixup
+> patch.
 
-On 3/26/2018 1:04 PM, Junio C Hamano wrote:
-> Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
-> 
->>>> @@ -120,7 +120,7 @@ void jw_object_uint64(struct json_writer *jw, const char *key, uint64_t value)
->>>>   	maybe_add_comma(jw);
->>>>   
->>>>   	append_quoted_string(&jw->json, key);
->>>> -	strbuf_addf(&jw->json, ":%"PRIuMAX, value);
->>>> +	strbuf_addf(&jw->json, ":%"PRIu64, value);
->>>
->>> In this code-base, that would normally be written as:
->>>
->>> 	strbuf_addf(&jw->json, ":%"PRIuMAX, (uintmax_t) value);
->>
->> heh, I should learn not to reply in a hurry, just before
->> going out ...
->>
->> I had not noticed that 'value' was declared with an 'sized type'
->> of uint64_t, so using PRIu64 should be fine.
-> 
-> But why is this codepath using a sized type in the first place?  It
-> is not like it wants to read/write a fixed binary file format---it
-> just wants to use an integer type that is wide enough to handle any
-> inttype the platform uses, for which uintmax_t would be a more
-> appropriate type, no?
-> 
+Thanks for picking up the series that I left unattended over the last weeks.
+I have reviewed nd/remove-ignore-env-field as well as sb/object-store
+as currently queued and found them well done.
 
-[Somehow the conversation forked and this compiler warning
-appeared in both the json-writer and the rebase-interactive
-threads.  I'm copying here the response that I already made
-on the latter.]
+Thanks for driving this when I was away!
 
+With the fixup patch, both series are
+Reviewed-by: Stefan Beller <sbeller@google.com>
+(No need to apply that as it already looks funny to have
+3-5 sign offs including mine)
 
-I defined that routine to take a uint64_t because I wanted to
-pass a nanosecond value received from getnanotime() and that's
-what it returns.
+With these 2 series reviewed, I'll continue reviewing
+sb/pack-files-in-repository and the rest of my mail box.
 
-My preference would be to change the PRIuMAX to PRIu64, but there
-aren't any other references in the code to that symbol and I didn't
-want to start a new trend here.
+Thanks,
+Stefan
 
-I am concerned that the above compiler error message says that uintmax_t
-is defined as an "unsigned long" (which is defined as *at least* 32 bits,
-but not necessarily 64.  But a uint64_t is defined as a "unsigned long long"
-and guaranteed as a 64 bit value.
+> -- 8< --
+> Subject: [PATCH] fixup! object-store: move packed_git and packed_git_mru
+to
+>   object store
 
-So while I'm not really worried about 128 bit integers right now, I'm
-more concerned about 32 bit compilers truncating that value without any
-warnings.
+> ---
+>   packfile.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
-Jeff
+> diff --git a/packfile.c b/packfile.c
+> index 63c89ee31a..0906b8f741 100644
+> --- a/packfile.c
+> +++ b/packfile.c
+> @@ -1937,7 +1937,7 @@ static int add_promisor_object(const struct
+object_id *oid,
+
+>          /*
+>           * If this is a tree, commit, or tag, the objects it refers
+> -        * to are also promisor objects-> (Blobs refer to no objects->)
+> +        * to are also promisor objects. (Blobs refer to no objects.)
+>           */
+>          if (obj->type == OBJ_TREE) {
+>                  struct tree *tree = (struct tree *)obj;
+> --
+> 2.17.0.rc0.348.gd5a49e0b6f
+
+> -- 8< --
