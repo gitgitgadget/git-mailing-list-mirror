@@ -2,107 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9EFA61F404
-	for <e@80x24.org>; Mon, 26 Mar 2018 15:56:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7213A1F404
+	for <e@80x24.org>; Mon, 26 Mar 2018 16:37:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752390AbeCZP4h (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Mar 2018 11:56:37 -0400
-Received: from mail-wr0-f170.google.com ([209.85.128.170]:47084 "EHLO
-        mail-wr0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751865AbeCZP4g (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Mar 2018 11:56:36 -0400
-Received: by mail-wr0-f170.google.com with SMTP id d1so7429726wrj.13
-        for <git@vger.kernel.org>; Mon, 26 Mar 2018 08:56:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=wTY94PqKziSuWg4beAvyhjK8M6p/ISx0zuGc4yv4sMw=;
-        b=aCBi+qJCg8EZ5UnT/Kb0gKAPlurOoo52fCyntNNVkUslfuozFOEoT2z9uPeIGBN0WM
-         lyhk1qcNHx1Fy4JiLjIhowq37w3jvym2eURL8VT0+HG4gPSNwcH1oL9wFt3o5F8GqhBJ
-         Whp1xupqOkDGm60Jnnr8IrDZBYB890Zc9iHXweKRhNJLgi3BUbk5BcWyWLLO8wMU68EA
-         lJFayef8Lqoehm7zcK7OKEogt0ztxvCULRZb42HJDbHEEYXLEphO9TGGIKg/LxaRQAli
-         CrjG8vAV0aoRJIvG2A67AxktO01akLjbisn7msB7hclhVuNM6uE43PBfhDCP7dfnhEeK
-         T94w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=wTY94PqKziSuWg4beAvyhjK8M6p/ISx0zuGc4yv4sMw=;
-        b=lFcjxRrFU4yAAJU3GYGsU0bkIdzyyA1NiBNy5oyGoqhSc8hgt3SDXaeMjG9T+H1VXJ
-         DwxpDZqfzaxas+9ZNSkltMk6J8E/4pbP8yuaQoS9+gXNmkO6Q3o15a0Ft/+o79mFX4M2
-         Xw++yXLzKJjvaYex7q+0imhmIci29NUG6AUSX/gSVimabllYaMCR9JTYaX3PjmgyKV5R
-         QDRe5vp9gGzScRQJ5EACS+5Oeyj9Zj69C40mj8dVryLgxuq7Iez3MQmPo5fVca5KM41l
-         XhaHVSKXK1Kf4sYA36ykXnO9mr+auh1BGyL3Oflix7z5Zq6LGQZdFPH27uQUtbAx/+Dp
-         MW6Q==
-X-Gm-Message-State: AElRT7FYnRwhYnjtGbTR3TJMgJ4KUq41IRynLI8Z4EkxmrvwZeacxaC0
-        U9a2iTgj6/u6fO3B22KOfeo=
-X-Google-Smtp-Source: AG47ELtaOJ6yptGSW+ZjaOcIUYgt/0W1l8grS8h2JRkPSC+PEK+6WnusQIuAo1bgvs9GLaiedB9GcQ==
-X-Received: by 10.223.160.241 with SMTP id n46mr30567023wrn.280.1522079794641;
-        Mon, 26 Mar 2018 08:56:34 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id t196sm16089210wme.35.2018.03.26.08.56.32
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 26 Mar 2018 08:56:32 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Wink Saville <wink@saville.com>
-Cc:     jeffhost@microsoft.com, Git List <git@vger.kernel.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFC PATCH v5 0/8] rebase-interactive
-References: <cover.1521779249.git.wink@saville.com>
-        <cover.1521839546.git.wink@saville.com>
-        <CAKk8isqj3OusAE8OJtcys0a-Yj9fgQNn=DtLe-ZGYNzcKp=-3Q@mail.gmail.com>
-        <xmqq7eq2h0wa.fsf@gitster-ct.c.googlers.com>
-        <CAKk8isoJQrikitO7ezRajgphUXYR6207k4UkXP6r57WJEFBaDA@mail.gmail.com>
-        <CAKk8ispSgNgZxS7KfuOyxfU53tzesvNyLRaNXFZa3K7SCbaRkQ@mail.gmail.com>
-Date:   Mon, 26 Mar 2018 08:56:31 -0700
-In-Reply-To: <CAKk8ispSgNgZxS7KfuOyxfU53tzesvNyLRaNXFZa3K7SCbaRkQ@mail.gmail.com>
-        (Wink Saville's message of "Fri, 23 Mar 2018 22:36:49 -0700")
-Message-ID: <xmqqzi2ude4w.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1752221AbeCZQhf (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Mar 2018 12:37:35 -0400
+Received: from mout.gmx.net ([212.227.17.21]:44611 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752131AbeCZQhe (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Mar 2018 12:37:34 -0400
+Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LcmN9-1eJzF51rr5-00k7JU; Mon, 26
+ Mar 2018 18:37:24 +0200
+Date:   Mon, 26 Mar 2018 18:37:22 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+To:     Bryan Turner <bturner@atlassian.com>
+cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Users <git@vger.kernel.org>,
+        git-for-windows@googlegroups.com, git-packagers@googlegroups.com
+Subject: Re: [ANNOUNCE] Git v2.17.0-rc1
+In-Reply-To: <CAGyf7-H8Zv=97LDnGAkfr-Xd4mYpRp3Fz0y+E2P34XcGPneUWA@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1803261836290.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <xmqqtvt9nr7p.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1803231845520.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <CAGyf7-H8Zv=97LDnGAkfr-Xd4mYpRp3Fz0y+E2P34XcGPneUWA@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:p+LVOtEde/v3jIHnw0fBmlVdlA8rFinQF87piZ+JhfuAO4KnBsU
+ +Gt15kMI5ID5+AfmF3f8UiScyDkeDLPNkmu+gh4E14f/DOEPsrbQ+9LAQAhDKFpB1zfMl7j
+ AWih995TPTznv40/F0XbWl9FEpLP/OhIm5/XoPmpqWjewGULJJU7ZZAn9yHpiVU7zqAlkCg
+ JuX1ySu3iLSbYLuEeltvg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:yq9qlegvIE8=:t/vqwMyLzciiawE67mDopg
+ im/JRXBcEv3frwwqhoFtOrzy6oKh+fgqvjnrATNwqEolGkhJWMo1jmtAT27xI4BrfxMbZ59pp
+ 9J49wk9IH276bKBa+2KL8U+/98lty/6JtAMOt5wCnnQffHU7KTpZErvBRojrU6DiKJBu/h8BH
+ ngm0MxZMtRy4vmmVxNU07laUS0OuyuBuRdTtz9vED/dH1SOgswoEFVB+ubTQO0swC3fMn/v88
+ py9jufSqR3wx0yhjT7C4XnfgZceKpubXSO+6FDQZ+O3BRvBX7dCnI0S8mXL5qGx+jwMADxFV5
+ 2NgxK7sPD9WW0DdhPVH1ZciDAYhJyhX6q6ADYcEhSZY45cK5qtQxPLqpAjqHPV1dUpopt1iSR
+ 8UJ0xR8zFtgGu6h63B2w0AM6NCC4B+aZ5dD2E3D5rOvctar7mqn1q9EwIrbA+ZFPvPi7kBRae
+ z7ELFVMN+Sa9EKktYMVzMWlaG40h+B/O1h+cG0SSxplsmEvbVUJAhgpHHmB+oYjEnTZ32iKjH
+ BYJ6qxehluNn5wAB1ByEuGWwjnDhrVB5z8YUCztGnTaEfPb+NHYWXtVAPAHt50ErufqH9+vnq
+ USI0sU+kDN78FiSvEqiM4bm4LPNleiiDjwgsaMCryTSnPrBv48e9SzaVkkpQ+auUZ9gtiAOE7
+ YDuJJFjQEhnxuxFBnZrrH+/8cBwmZ9UKUZZPiv2W09tc7NHAUZ2eWGF4DuA0cHw0whI6CFQXx
+ 2A+BrtzWjJf28UQlHYsY7kKjO7DzCu2fCEhcTI3Z5N5ILgSv7qqqfe2q7aBJFp45zcGdRJ5La
+ mN7wjDFYZprkApB8jWmltz1QNYhO/EIPQ+UENOxb6EVJuG3y1qMQpmRdXVT1laf6WqyJzT0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Wink Saville <wink@saville.com> writes:
+Hi Bryan,
 
-> json-writer.c:123:38:  error:  format specifies type 'uintmax_t' (aka
-> 'unsigned long') but the argument has type 'uint64_t' (aka 'unsigned
-> long long') [-Werror,-Wformat]
->
->         strbuf_addf(&jw->json, ":%"PRIuMAX, value);
->                                  ~~         ^~~~~
-> json-writer.c:228:37:  error:  format specifies type 'uintmax_t' (aka
-> 'unsigned long') but the argument has type 'uint64_t' (aka 'unsigned
-> long long') [-Werror,-Wformat] [0m
->
->         strbuf_addf(&jw->json, "%"PRIuMAX, value);
->                                  ~~         ^~~~~
-> 2 errors generated.
-> make: *** [json-writer.o] Error 1
-> make: *** Waiting for unfinished jobs....
+On Fri, 23 Mar 2018, Bryan Turner wrote:
 
-For whatever reason, our codebase seems to shy away from PRIu64,
-even though there are liberal uses of PRIu32.  Showing the value
-casted to uintmax_t with PRIuMAX seems to be our preferred way to
-say "We cannot say how wide this type is on different platforms, and
-are playing safe by using widest-possible int type" (e.g. showing a
-pid_t value from daemon.c).
+> On Fri, Mar 23, 2018 at 10:47 AM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> >
+> > On Wed, 21 Mar 2018, Junio C Hamano wrote:
+> >
+> >> A release candidate Git v2.17.0-rc1 is now available for testing
+> >> at the usual places.  It is comprised of 493 non-merge commits
+> >> since v2.16.0, contributed by 62 people, 19 of which are new faces.
+> >>
+> >> The tarballs are found at:
+> >>
+> >>     https://urldefense.proofpoint.com/v2/url?u=https-3A__www.kernel.org_pub_software_scm_git_testing_&d=DwIBAg&c=wBUwXtM9sKhff6UeHOQgvw&r=uBedA6EFFVX1HiLgmpdrBrv8bIDAScKjk1yk9LOASBM&m=yXNBIWf9n-gxAIgQyCzXfuKaFkHQaMmwUdtiNBNE8XI&s=E_Z2M418iwz-HyJg5D0VyTCvyMMd4kGIvYccgJkyTwA&e=
+> >
+> > And Git for Windows v2.17.0-rc1 can be found here:
+> >
+> > https://urldefense.proofpoint.com/v2/url?u=https-3A__github.com_git-2Dfor-2Dwindows_git_releases_tag_v2.17.0-2Drc1.windows.1&d=DwIBAg&c=wBUwXtM9sKhff6UeHOQgvw&r=uBedA6EFFVX1HiLgmpdrBrv8bIDAScKjk1yk9LOASBM&m=yXNBIWf9n-gxAIgQyCzXfuKaFkHQaMmwUdtiNBNE8XI&s=7ePu15Fwlwuxo8JGcqj-pBNh1wSZYAfYmboqBvJOyA0&e=
+> >
+> > Please test so that we can hammer out a robust v2.17.0!
+> 
+> I've added 2.16.3 and 2.17.0-rc1, for both Linux and Windows, to the
+> test matrix for Bitbucket Server. All ~1500 tests have passed for all
+> 4 versions.
 
-In this codepath, the actual values are specified to be uint64_t, so
-the use of PRIu64 may be OK, but I have to wonder why the codepath
-is not dealing with uintmax_t in the first place.  When even larger
-than present archs are prevalent in N years and 64-bit starts to
-feel a tad small (like we feel for 16-bit ints these days), it will
-feel a bit silly to have a subsystem that is limited to such a
-"fixed and a tad small these days" types and pretend it to be be a
-generic seriealizer, I suspect.
+Thank you so much for testing!
+
+Everybody else: remember that I can only fix bugs pre-emptively in time
+for v2.17.0 if you test and report...
+
+Ciao,
+Johannes
