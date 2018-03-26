@@ -2,61 +2,65 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BB80E1F404
-	for <e@80x24.org>; Mon, 26 Mar 2018 23:07:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8ADC51F404
+	for <e@80x24.org>; Mon, 26 Mar 2018 23:07:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752204AbeCZXHH (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Mar 2018 19:07:07 -0400
-Received: from mail-yb0-f175.google.com ([209.85.213.175]:44819 "EHLO
-        mail-yb0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752021AbeCZXHG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Mar 2018 19:07:06 -0400
-Received: by mail-yb0-f175.google.com with SMTP id v8-v6so6971701ybm.11
-        for <git@vger.kernel.org>; Mon, 26 Mar 2018 16:07:06 -0700 (PDT)
+        id S1752456AbeCZXH0 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Mar 2018 19:07:26 -0400
+Received: from mail-ua0-f174.google.com ([209.85.217.174]:33559 "EHLO
+        mail-ua0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752370AbeCZXHZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Mar 2018 19:07:25 -0400
+Received: by mail-ua0-f174.google.com with SMTP id f6so13170794ual.0
+        for <git@vger.kernel.org>; Mon, 26 Mar 2018 16:07:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=M39QHrkfEP4R+8LsI+C6b8Wp4IiG7dNv7/NOiARItz0=;
-        b=Rxmrz0QPYPPxGZ+gOUe4gB/ckxw9yQGOIUtLfyFqaQb6AlmhjPj86aQU8Ip9mm3Wwf
-         8+92kbWVu03/yQr6jcvyIMf5HnURLlyArtsMzCf88po8oHbjncUgko0qquTtelDchMnR
-         xibLVFlrNNg5Xuda3SAi43Vvdo6Gmr08BGSp1FxnDinCvqMKnyjOCs35Lg0qUE2DUZ+5
-         rvkXb2XqkTuMz/LqcaY59SvorVFcHVcRCfz1ytHp/Qh90cGPDbyAHug7CKVZKPC5tDZp
-         vFInTJsUAxTxBf7qmcDzUmTNF0sEmVJu9NqNtBT2BtohJWSnNbim0zZ1ifdQ9Dobf20B
-         HpmA==
+        bh=mvDgpp5RAiivmqKPPAWTh7VkUnttHfxizlMTwukbDlk=;
+        b=HlsvWxRjUCukSA+hc11IuTrg2VRTIxYUEonX5faM5ePkOKXm6nBjDZydT5TJ/eErfG
+         bRwGz9ekY+kCKN7k+pBmXnuSnE6WycHfLpfOykxmgiLsAvjzZBTps3Pf4V16JVeIgSSK
+         zjYIUK6p2RxFvKrrhNSofxTtu7CPlJEEQGY6LMsYnqyK9MJgxWlcBXhUWYDoAiaxqSb+
+         lCjDqKV4W2nTe/UbrVe1AeENFe2as+IcGZUrf/qawZS0TvvogpgAhn19WvMiZvxLh5rq
+         3DC9JESFxPbmlsIbxYO95MwRCcmee9uRQkLsZx8CJkp9nNYffE/U+WYpVMC4NpWR70tW
+         U01g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=M39QHrkfEP4R+8LsI+C6b8Wp4IiG7dNv7/NOiARItz0=;
-        b=ZjLzlxjuBGW5NA1NCJnrn0sK1zGM8nXMlxAl/lvVZiUOU2vSZ/v9bwbfBp0/QJbtT+
-         xn/aKWhlQxjNI05OJ7/GiJX6oeOCrZ2085skTXpVvy4zGm9SR9V5UrdjuZ+DrZCIT207
-         3Hll4h0U0EItjCl8jx0dRmSXiao3vGGK8tLUN2Ms6wJYUftfXTodLFYPCyscR4hEqDbM
-         zUzY982ufVivy2V/1lJjTUUzKIlaSAIPtADp/5ES3XgiumO494FZ4jL+Tm60JEBL9SwR
-         FrV7TJ1sTRcsKG8T+bRoq6H1BE4f9q6gv5Tz0cFxNmrrmiOFk5ShOsENuJDKAgMvd3zm
-         ig9w==
-X-Gm-Message-State: AElRT7EuAKTI9/OmdEEmYvE8VzkC5GTL8AM1V/7ZYyTvoWUaR8Jx01ah
-        6eW69J6soVfPNMMyIPontEaZevWNAPgmfEJz0wLndKCsXBw=
-X-Google-Smtp-Source: AG47ELt8UppIewjhUKgESMUrdRfSGmJXd/PzPyQKnAri+Irwjo+Jz4nhxsgDkqJVlacVBzo57fGFCBzZtW5jcHHrn6g=
-X-Received: by 2002:a25:5605:: with SMTP id k5-v6mr24906566ybb.292.1522105625228;
- Mon, 26 Mar 2018 16:07:05 -0700 (PDT)
+        bh=mvDgpp5RAiivmqKPPAWTh7VkUnttHfxizlMTwukbDlk=;
+        b=awKTHulHNR/O4nmv3H706Kh7IkUaQvycyAwfRsy6PEmeMVWsEXD5IWDF2HWDBQXR9e
+         SZi6GvJmeeZ2lNBqE6aoZh0KnSiqRLkrYPICG3BASLBsl8QmCFoQu6A2BH+tgI4T+Krl
+         j1JYL800ntYBRaN9M7O54HxRPb7pGBmw4+P9QpEysRoiVOngH6AufzdJhMTjSou2+65d
+         EG4Nlec1J67YVoJkutY6T5Lm7aHzbNGhItoc/peeuC0W64FUYk9tlVH6MOD6bBUUXK/V
+         YOkFEgo7rpNR1fqTdmRBJgJ8S9FmeA7QdZWCFXZPQljUxkqLkph2sgb3qQsDEspuMy7A
+         611g==
+X-Gm-Message-State: AElRT7GnWVnAK+2vpUu0PErCMXi1jlq5WIkRtWB4+xOZvGFJPZh6yF2b
+        iJ9uoxAj8fq4I2HVsUelPjxecWTMCpq/2LPNlKc=
+X-Google-Smtp-Source: AG47ELtDJaBsLonKGB6BwmJ3kZixLOj/mI/K8C7VPNj2E4VPrFe8u5YX9Ed3lg8JCyu3AvmwUA+MRmvxJZ97WLtQslE=
+X-Received: by 10.159.33.227 with SMTP id 90mr21013121uac.48.1522105644668;
+ Mon, 26 Mar 2018 16:07:24 -0700 (PDT)
 MIME-Version: 1.0
-References: <1520366804-28233-1-git-send-email-eddy.petrisor@gmail.com>
-In-Reply-To: <1520366804-28233-1-git-send-email-eddy.petrisor@gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 26 Mar 2018 23:06:54 +0000
-Message-ID: <CAGZ79kb4Ea7t5j9XA0key1f99w5xRDwyRhMder1FMgdiZot3Tg@mail.gmail.com>
-Subject: Re: [RFC PATCH] git-submodule.sh:cmd_update: if submodule branch
- exists, fetch that instead of default
-To:     eddy.petrisor@gmail.com
-Cc:     git <git@vger.kernel.org>, Heiko Voigt <hvoigt@hvoigt.net>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
+Received: by 10.159.59.233 with HTTP; Mon, 26 Mar 2018 16:07:24 -0700 (PDT)
+In-Reply-To: <nycvar.QRO.7.76.6.1803270007550.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <20180317075421.22032-1-pclouds@gmail.com> <20180324074505.19100-1-pclouds@gmail.com>
+ <20180324074505.19100-2-pclouds@gmail.com> <nycvar.QRO.7.76.6.1803261722350.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+ <CACsJy8Dz87YHiA48m_X7OmJXioKorUDNSyPy250jaqU7xt1JXQ@mail.gmail.com> <nycvar.QRO.7.76.6.1803270007550.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Date:   Tue, 27 Mar 2018 01:07:24 +0200
+Message-ID: <CAM0VKjmCKmQisLZcBw7ZROQmg3bVTXTOK6auo6DjjkOfKdPv1w@mail.gmail.com>
+Subject: Re: [PATCH v2 01/36] t/helper: add an empty test-tool program
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Duy Nguyen <pclouds@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
@@ -64,126 +68,36 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-[snipped the cc list as well]
-
-On Tue, Mar 6, 2018 at 12:06 PM Eddy Petri=C8=99or <eddy.petrisor@gmail.com=
+On Tue, Mar 27, 2018 at 12:14 AM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> However, it seems that something is off, as
+> ba5bec9589e9eefe2446044657963e25b7c8d88e is reported as fine on Windows:
+> https://travis-ci.org/git/git/jobs/358260023 (while there is clearly a re=
+d
+> X next to that commit in
+> https://github.com/git/git/commits/ba5bec9589e9eefe2446044657963e25b7c8d8=
+8e,
+> that X is due to a hiccup on macOS).
 >
-wrote:
+> It seems that the good-trees feature for Travis does not quite work as
+> intended. G=C3=A1bor?
 
-> Signed-off-by: Eddy Petri=C8=99or <eddy.petrisor@gmail.com>
-> ---
+AFAICT it works as expected.
 
-Did this go anywhere?
-(I just came back from a longer vacation, sorry for the delay on my site)
+When a build job encounters a commit with a tree that has previously
+been built and tested successfully, then first it says so, like this:
 
-> There are projects such as llvm/clang which use several repositories, and
-they
-> might be forked for providing support for various features such as adding
-Redox
-> awareness to the toolchain. This typically means the superproject will us=
-e
-> another branch than master, occasionally even use an old commit from that
-> non-master branch.
+  https://travis-ci.org/szeder/git/jobs/347295038#L635
 
-> Combined with the fact that when incorporating such a hierachy of
-repositories
-> usually the user is interested in just the exact commit specified in the
-> submodule info, it follows that a desireable usecase is to be also able t=
-o
-> provide '--depth 1' to avoid waiting for ages for the clone operation to
-> finish.
+and then skips the rest of the build job (see the 'exit 0' a few lines
+later).
 
-Very sensible.
+In case of this Windows build job we haven't seen this tree yet:
 
-> Git submodule seems to be very stubborn and cloning master, although the
-> wrapper script and the gitmodules-helper could work together to clone
-directly
-> the branch specified in the .gitmodules file, if specified.
+  https://travis-ci.org/git/git/jobs/358260023#L467
 
-Also very sensible.
+so the build job continues as usual (see the 'test -z Windows' two lines
+later).
 
-So far so good, could you move these paragraphs before the triple dashed
-line
-and sign off so we record it as the commit message?
-
-> Another wrinkle is that when the commit is not the tip of the branch, the
-depth
-> parameter should somehow be stored in the .gitmodules info, but any
-change in
-> the submodule will break the supermodule submodule depth info sooner or
-later,
-> which is definitly frigile.
-
-... which is why I would not include that.
-
-git-fetch knows about --shallow-since or even better
-shallow-exclude which could be set to the (depth+1)-th commit
-(the boundary commit) recorded in the shallow information.
-
-> I tried digging into this section of the code and debugging with bashdb
-to see
-> where --depth might fit, but I got stuck on the shell-to-helper
-interaction and
-> the details of the submodule implementation, so I want to lay out this
-first
-> patch as starting point for the discussion in the hope somebody else
-picks it
-> up or can provide some inputs. I have the feeling there are multiple code
-paths
-> that are being ran, depending on the moment (initial clone, submodule
-> recursive, post-clone update etc.) and I have a gut feeling there
-shouldn't be
-> any code duplication just because the operation is different.
-
-> This first patch is only trying to use a non-master branch, I have some
-changes
-> for the --depth part, but I stopped working on it due to the "default
-depth"
-> issue above.
-
-> Does any of this sound reasonable?
-> Is this patch idea usable or did I managed to touch the part of the code
-that
-> should not be touched?
-
-This sounds reasonable. Thanks for writing the patch!
-
-> diff --git a/git-submodule.sh b/git-submodule.sh
-> index 2491496..370f19e 100755
-> --- a/git-submodule.sh
-> +++ b/git-submodule.sh
-> @@ -589,8 +589,11 @@ cmd_update()
->                          branch=3D$(git submodule--helper remote-branch
-"$sm_path")
->                          if test -z "$nofetch"
->                          then
-> +                               # non-default branch
-> +                               rbranch=3D$(git config -f .gitmodules
-submodule.$sm_path.branch)
-> +
-br_refspec=3D${rbanch:+"refs/heads/$rbranch:refs/heads/$rbranch"}
-
-Wouldn't we want to fetch into a remote tracking branch instead?
-Instead of computing all this by yourself, these two lines could be
-
-     br_refspec=3D$(git submodule--helper remote-branch $sm_path)
-
-I would think.
-
->                                  # Fetch remote before determining
-tracking $sha1
-> -                               fetch_in_submodule "$sm_path" $depth ||
-> +                               fetch_in_submodule "$sm_path" $depth
-$br_refspec ||
->                                  die "$(eval_gettext "Unable to fetch in
-submodule path '\$sm_path'")"
->                          fi
->                          remote_name=3D$(sanitize_submodule_env; cd
-"$sm_path" && get_default_remote)
-
-It would be awesome if you could write a little test for this feature, too.
-Look for the tests in regarding --remote in t7406 (in the t/ directory) as
-a starting point, please.
-
-Thanks!
-Stefan
+Unfortunately, I have no idea about how the rest of the Windows build
+job is supposed to work...
