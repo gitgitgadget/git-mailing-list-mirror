@@ -2,93 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ABEF31F404
-	for <e@80x24.org>; Mon, 26 Mar 2018 22:02:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 841341F404
+	for <e@80x24.org>; Mon, 26 Mar 2018 22:05:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752113AbeCZWCa (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Mar 2018 18:02:30 -0400
-Received: from mail-wr0-f174.google.com ([209.85.128.174]:44697 "EHLO
-        mail-wr0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751912AbeCZWC3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Mar 2018 18:02:29 -0400
-Received: by mail-wr0-f174.google.com with SMTP id u46so20387967wrc.11
-        for <git@vger.kernel.org>; Mon, 26 Mar 2018 15:02:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=0orWDGgOaTykQCea9Xa5VlH1aA7tju+01mzKixfqr48=;
-        b=OF00tWxOLGIXvEuSCP8OjTi5a6UVGrItNIq0YV1a7pHXGap5t31SCrdDDT6DJe2G9b
-         ywvea8jfVdTRTOmjyPXp2DxLPGcabPhx6sPudon/fKMrvmeeJxawcPdNrraB32gNTJQP
-         vv/Q+UjxIRWvL7muAz3PcxjxYbuwpfY+j+TFLeZ45dqXVJnD/C/Z93IxzvWfWopcqTI9
-         YgDA9TLxjCzEWpnvNf8LdCP2CtfckxbSZNr92M3zhIt5anwNHsncVGlroja1341i8sr7
-         7RIMo19u16hNmPyspdJMQYfpCzVXDi/QtedAfkl4Q81wxtjxYeWC90YNe/BA3VP57Zzd
-         92TQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=0orWDGgOaTykQCea9Xa5VlH1aA7tju+01mzKixfqr48=;
-        b=ihbvA/b0TChf8xplNE70f6VTBzmvoD4UnDMu/+jDw0D85zz833iyt0WFC5Esuw4EFB
-         2eE1GcUTx4ysiUM1XeI4FoK36hUB+7XwYlN/62t+WW5N+FYVV25xMyIj2astVXqU/oXj
-         C+Ji7yXM31pYPv9IlT67vZlRuovlhTyeiv5y48GCcxnirMt1TgbffhHf0BhQivRTUWSj
-         Z/zPF/2GiePCKXSaOdii+Ml7Fq4f4+55Hgu86+ZAP0yte4o7P7XijZL7h/5D5HRhs8hW
-         TbskIhqZT69fxI1n+fS7UmxOP8LiAxBJZCReCxNj3jYSgT2fzlzeovr4ilRbEmo7TdoP
-         0KYg==
-X-Gm-Message-State: AElRT7FyBo9jUxRNznBL3/YW76gGCDxGleTuagHkAbN9dNu6OjYu0KKD
-        plL0OLmGO7G0LfDNTV9+9PQ=
-X-Google-Smtp-Source: AG47ELvZ+IFJ1EEKEYcQ02m1P8sGhk9t9ltDLu2J/Wg/miR1OJOMLbJ9qcD7weMhWacB8NGXIAajeA==
-X-Received: by 10.223.179.195 with SMTP id x3mr28055185wrd.94.1522101747976;
-        Mon, 26 Mar 2018 15:02:27 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id l41sm33761701wrl.2.2018.03.26.15.02.27
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 26 Mar 2018 15:02:27 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        larsxschneider@gmail.com
-Subject: Re: [PATCH v2] Makefile: detect compiler and enable more warnings in DEVELOPER=1
-References: <20180318081834.16081-1-pclouds@gmail.com>
-        <20180324125348.6614-1-pclouds@gmail.com>
-Date:   Mon, 26 Mar 2018 15:02:26 -0700
-In-Reply-To: <20180324125348.6614-1-pclouds@gmail.com> (=?utf-8?B?Ik5ndXk=?=
- =?utf-8?B?4buFbiBUaMOhaSBOZ+G7jWM=?=
-        Duy"'s message of "Sat, 24 Mar 2018 13:53:48 +0100")
-Message-ID: <xmqqlgeebiml.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1752084AbeCZWFC (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Mar 2018 18:05:02 -0400
+Received: from mout.gmx.net ([212.227.17.22]:36081 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751684AbeCZWFB (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Mar 2018 18:05:01 -0400
+Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LhkiL-1eE25C4AF7-00mqQM; Tue, 27
+ Mar 2018 00:05:00 +0200
+Date:   Tue, 27 Mar 2018 00:04:59 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+To:     Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
+cc:     Christian Couder <christian.couder@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: =?UTF-8?Q?Re=3A_=5BGSoC=5D_Convert_=E2=80=9Cgit_stash=E2=80=9D_?=
+ =?UTF-8?Q?to_builtin_proposal?=
+In-Reply-To: <ad524ce4-8be2-4d14-44cc-2fbc9ff60b79@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1803270004300.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <1521576562.2188.10.camel@gmail.com> <CAP8UFD3NKCSN8mVDiCUzvor5uZh4nFCAw4T0zgxpvHLf9AWmyA@mail.gmail.com> <1521760546.11809.20.camel@gmail.com> <CAP8UFD3bRaPke8MvubZ3+v6RrY7K7Peip1dpQ2LG9kxKoXcmbw@mail.gmail.com> <6603149f-776a-fde8-5d11-a7d9d6d37e96@gmail.com>
+ <CAP8UFD2y605FQeiymO2JNxy7MXs=-vRcN-Z2ri1=ttDF8kccvQ@mail.gmail.com> <ad524ce4-8be2-4d14-44cc-2fbc9ff60b79@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:o8hn51TSvkLBDClECDpORCD0yoS8SQuQkLk9zbG5sKJIhxE2QIb
+ qBCUWmZ9zMLeHpoX0DO91aroAMQ0hTN5nzOeArQDrvPEXqfjRPkHOpleUe+W93zIExsPIzw
+ 0uaxg4CP1rmNUz8UsVtQo2kBViXk115ZqQahw8pnVUtxaKojbUu8eAOseXgt4v78Iw8lHyj
+ hlMmcsIPioPfnKQgY6c4w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:jLRmKfIJ8Us=:z6KLZA77g+zKBasxWVtgfO
+ iNjvER12/Wi2I5U4Q2/Jv9JNDH4Bba6yrvown7J21+1nEp6N+wSavlAE+hPIAN3VIRK5IGi0j
+ gu41uON6HJaLs+kS/3zMuO4gm58ACFkuW8jafVSecCTDebPOM0ix7L+dytQFpb04znNztUalj
+ jJCY1EWA68yu9BB+xVvMpRzWjymkkP4EyJh9mR+/OTfbYIcupd8V1aCMi021g7JIQKWBzfhPi
+ 4bMgSR5ka8pBK0ZrF9HzC8KIdkfCB4TSgGsxG75IFJQcD8lZV7/nlEhoEH4Aaq4mBX5781MFI
+ nuDCtIPm02CXq0FRjTatwvtzOlPOn7nQeBi8cxOnVj8StFzrgUMaH2LdufLq+YO8cBCK5TgyD
+ 26OnToL77zxxNCJfEL+DX/J0pV6ocWJMySPnaCn7GAyDDMDdqqUMI2H2i5E47b6heneetISZX
+ G4VITskJzkUuUGnEf0in0a+dsMOxRwmdsf2Hx0R5Ry9MbHSv1kzJ8VfIJjxeb2ophGLBUOdRr
+ Wcb2/25Ge1wGD5awUArjQgG0x9GTcp8rtEaIaJNhS+cqpK/gkzIb8gXN3Z/TA9EnUEjhSQzEs
+ Xxp+L7jqO7Sr2MUukJGxwi4Y03BcoUO8cfgvg8arNPgK12VwfY/pFLaqwFn2ey4wj2J0OIc7Z
+ IqldJgVyBlOaa0z1vq4h0zWEDvRHxGPmRs1XAowYJddJv4iCGAZ/M/BJ5WSyJkebUNuPKxWmV
+ sGwOdDIO7TYEVvmtkFZ0Wqurmh5zEI7jbmtsp08J2cXaBkHjI+GwQbFzEgJphVMMXHBHHFJhj
+ LgclPwxDZ9Q37pUm6vRMNLAXArbtxcfz3JdPZ1RaK3nYfMs4D5WlJt5EjEvABCzXWsbx+jI
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
+Hi Paul,
 
-> The set of extra warnings we enable when DEVELOPER has to be
-> conservative because we can't assume any compiler version the
-> developer may use. Detect the compiler version so we know when it's
-> safe to enable -Wextra and maybe more.
+On Sun, 25 Mar 2018, Paul-Sebastian Ungureanu wrote:
 
-This is a good idea in general, but we are not quite ready without
-some fixups.  
+> One thing I did not mention in the previous reply was that I also added
+> a new paragraph to "Benefits to community" about 'git stash' being slow
+> on Windows for a lot of users. I consider this alone to be a very good
+> justification for this project and doing this project will be very
+> beneficial for the Windows users.
 
-Here is a quick summary (not exhaustive) from my trial merge to 'pu'
-(which will be reverted before today's integration is pushed out).
+Yesssss!
 
- - json-writer.c triggers -Werror=old-style-decl
-
- - t/helper/test-json-writer.c triggers Werror=missing-prototypes
-   quite a few times.
-
- - connect.c -Werror=implicit-fallthough around die_initial_contact().
-
+Thank you,
+Johannes
