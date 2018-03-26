@@ -2,118 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 568EB1F404
-	for <e@80x24.org>; Mon, 26 Mar 2018 21:00:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5638D1F404
+	for <e@80x24.org>; Mon, 26 Mar 2018 21:04:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751355AbeCZVAn (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Mar 2018 17:00:43 -0400
-Received: from mail-pl0-f68.google.com ([209.85.160.68]:38624 "EHLO
-        mail-pl0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751124AbeCZVAm (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Mar 2018 17:00:42 -0400
-Received: by mail-pl0-f68.google.com with SMTP id m22-v6so12725163pls.5
-        for <git@vger.kernel.org>; Mon, 26 Mar 2018 14:00:42 -0700 (PDT)
+        id S1751138AbeCZVEp (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Mar 2018 17:04:45 -0400
+Received: from mail-yw0-f169.google.com ([209.85.161.169]:45061 "EHLO
+        mail-yw0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751076AbeCZVEo (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Mar 2018 17:04:44 -0400
+Received: by mail-yw0-f169.google.com with SMTP id r29so6576306ywa.12
+        for <git@vger.kernel.org>; Mon, 26 Mar 2018 14:04:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=7doUIsYBYGgFtr/mUhU0Y9u2cpaK+Lv3ysQCMAay3P4=;
-        b=bysINN/DnbcfbLXrCcw6ADamgwUS+vvgKE/YYHmDMc/bTbxyKf7L5R8CSy/h+ZKRjo
-         E1eRXeKPmWs1vuEmGeSkfb23SN0NDEvNWRjfed6B95m2AXHAa/D1hfzJHfwZ6nhCYADZ
-         rous0pvX9BSNP4jkmeGLR3v1z8ugQIDC3HTphObZhN9aUpcBheuRqExqPlj+EItPzWNY
-         WYv4EBdbWjRua2OUDjdFzeAMFQ5Xeen/pSJfATvlqFdX6FRelNXKEkJ6z6z8nd25n7/E
-         Yr7FLUHuPuXI4TEH3LjrmW18RpvFxFZNue9fs5lQvUPkoklyj1GNztjLcVzgdgwxOwaI
-         PhGQ==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=/9qeeEkXP20gDjUvwMAHxtp0gczqukOXChE4DWRXNVI=;
+        b=UeNfOGaaswQauhxycEPpCY9zxA9VPhPGcECM0igMZoUWycmGUq99CBdcDaKZGK/iED
+         jvKpy+PUt2Wz5jT0pQ1uhvAo4s20syP74d8FdoGPDwKXKJYtrnnOa5KP2h+xcDYAD8YO
+         UuQ5KHXYdSjGkDguz1bO4T/xWWJvrYhMhBj/PzuO4/01SUBfopmYyMVyTnxw8OQ11Vme
+         kucUIr/pnkNt2UvNoyz3FljWgna+GbVUbFL18S9mfcUpe6Rj9AyNtq0JGrrs6btv8q3Q
+         VZ80YVvUWfcXzum8M4Xu+jFg5HI2J6X+OsatCsdUqnZJgjANGbCsZIwDqQb3w+UpGd1m
+         li5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=7doUIsYBYGgFtr/mUhU0Y9u2cpaK+Lv3ysQCMAay3P4=;
-        b=uSyFsZOJYK/7zJt/Rp5mCD79ht2j6xU+KGUtVX/GzXbYEkBpt2IAmmSTA5FgLxUz7I
-         Iox46XMpfL7s2kkPn6L35h3o9gO3s4Wa0uPdsYEY8NdDAb9y+4DflRHPYoLjcK0MnEd4
-         e7igYIPoEO/DNMoj4IhE5WWJn3YDorSp+6OH/mNGdvy2nMM1N4SaSdyDm8cQSlJletBf
-         CGuku7pTC31vkZBaI98a2t/PWYcU8EArfYkpkYNAqi4v1RndSRd2XVkOaobJD1W5NBeM
-         7Wg6yLgYGplXTHBCvZFjjHkp8XNw3OOVdT60+p2upATqhjpnxeB6JuLcNYww1gwtVENt
-         /pzA==
-X-Gm-Message-State: AElRT7HePHkxHfOFhVDKROepwDH2dIdG5WqQFL+z6ImYikGVBUqQSE5B
-        Sp2BHvR8hVT7fVdu+loKHZs=
-X-Google-Smtp-Source: AG47ELudYD7AVTFSK2aLvRZEZMtdX7vk7Vzj3gH8RqCzRuiYKLiOcrR6nvdGUHnBERMAm+yfOIBrTg==
-X-Received: by 2002:a17:902:5957:: with SMTP id e23-v6mr41235937plj.323.1522098042042;
-        Mon, 26 Mar 2018 14:00:42 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id v12sm26432351pgs.21.2018.03.26.14.00.40
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 26 Mar 2018 14:00:41 -0700 (PDT)
-Date:   Mon, 26 Mar 2018 14:00:39 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Alex Vandiver <alexmv@dropbox.com>, git@vger.kernel.org,
-        jonathantanmy@google.com, bmwill@google.com, stolee@gmail.com,
-        sbeller@google.com, peff@peff.net, johannes.schindelin@gmx.de,
-        Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Including object type and size in object id (Re: Git Merge
- contributor summit notes)
-Message-ID: <20180326210039.GB21735@aiede.svl.corp.google.com>
-References: <alpine.DEB.2.20.1803091557510.23109@alexmv-linux>
- <874ll3yd75.fsf@evledraar.gmail.com>
- <0c3bb65f-d418-b39e-34c7-c2f3efec7e50@jeffhostetler.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=/9qeeEkXP20gDjUvwMAHxtp0gczqukOXChE4DWRXNVI=;
+        b=q0OylpwTB6aBkQ13IKLsa2gjElryiFjbAmQkXklDqnuLN3EKx4PU+/Nbd7maLvCV5f
+         9Au1GkGRTkTPbxUHO6JhVszBvlumk63fD6PeZj/AlO0m/R8mg+jSUOdlVwze6bjKEis+
+         gw1soYebQJYkvlwfQ2QzYy2tedNOH6ywvkmgUJpg8VNrNW1zF9I49HoFSTnhBG7pfUfU
+         qPTWBIsnWcGJbfRkoJIcDSVKdOz5Rt/KMOW5GqWSeXYkX9T6GpaC+CZOR9l7mYOuXcV2
+         BXdrv+hT0qvlefYw1laNIHKzz5ilJZkH7zWt3mdsflqmVM6P++8BgoN9omBgrYdqplE0
+         ls3g==
+X-Gm-Message-State: AElRT7HPeuAAwBBJnj0BGHDh5pmbErYfyZ7Wp3uO9q1fNUsckA9LN9Hn
+        q8ezdEX6m8VVIzogCWtJ/B8/FBx48PzQEQXnw5iodg==
+X-Google-Smtp-Source: AG47ELsWu0ic1x9g/S+HZLdyV57gfUu5WX143u3pUD5oPAfYGw3K+mG36AiXEAzGygV1/7t6zAKpDlKBuW5/2Xfwf6Q=
+X-Received: by 10.129.159.195 with SMTP id w186mr24323762ywg.414.1522098283495;
+ Mon, 26 Mar 2018 14:04:43 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <0c3bb65f-d418-b39e-34c7-c2f3efec7e50@jeffhostetler.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+References: <20180303113637.26518-1-pclouds@gmail.com> <20180323155523.22269-1-pclouds@gmail.com>
+ <20180323155523.22269-2-pclouds@gmail.com>
+In-Reply-To: <20180323155523.22269-2-pclouds@gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 26 Mar 2018 21:04:33 +0000
+Message-ID: <CAGZ79ka0ptbwHU0Ym7aGm86o+YG27goHR6iS3uf5yUkj0Uj15w@mail.gmail.com>
+Subject: Re: [PATCH 1/1] repository.h: add comment and clarify repo_set_gitdir
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Brandon Williams <bmwill@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-(administrivia: please omit parts of the text you are replying to that
- are not relevant to the reply.  This makes it easier to see what you're
- replying to, especially in mail readers that don't hide quoted text by
- the default)
-Hi Jeff,
+On Fri, Mar 23, 2018 at 8:55 AM Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <=
+pclouds@gmail.com>
+wrote:
 
-Jeff Hostetler wrote:
-[long quote snipped]
+> The argument name "optional" may mislead the reader to think this
+> option could be NULL. But it can't be. While at there, document a bit
+> more about struct set_gitdir_args.
 
-> While we are converting to a new hash function, it would be nice
-> if we could add a couple of fields to the end of the OID:  the object
-> type and the raw uncompressed object size.
->
-> If would be nice if we could extend the OID to include 6 bytes of data
-> (4 or 8 bits for the type and the rest for the raw object size), and
-> just say that an OID is a {hash,type,size} tuple.
->
-> There are lots of places where we open an object to see what type it is
-> or how big it is.  This requires uncompressing/undeltafying the object
-> (or at least decoding enough to get the header).  In the case of missing
-> objects (partial clone or a gvfs-like projection) it requires either
-> dynamically fetching the object or asking an object-size-server for the
-> data.
->
-> All of these cases could be eliminated if the type/size were available
-> in the OID.
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.c=
+om>
 
-This implies a limit on the object size (e.g. 5 bytes in your
-example).  What happens when someone wants to encode an object larger
-than that limit?
-
-This also decreases the number of bits available for the hash, but
-that shouldn't be a big issue.
-
-Aside from those two, I don't see any downsides.  It would mean that
-tree objects contain information about the sizes of blobs contained
-there, which helps with virtual file systems.  It's also possible to
-do that without putting the size in the object id, but maybe having it
-in the object id is simpler.
-
-Will think more about this.
-
-Thanks for the idea,
-Jonathan
+Reviewed-by: Stefan Beller <sbeller@google.com>
