@@ -7,131 +7,89 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4EB181F404
-	for <e@80x24.org>; Mon, 26 Mar 2018 18:33:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C7B4C1F404
+	for <e@80x24.org>; Mon, 26 Mar 2018 18:35:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752147AbeCZSdN (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Mar 2018 14:33:13 -0400
-Received: from mail-yw0-f181.google.com ([209.85.161.181]:36459 "EHLO
+        id S1752146AbeCZSfk (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Mar 2018 14:35:40 -0400
+Received: from mail-yw0-f181.google.com ([209.85.161.181]:35015 "EHLO
         mail-yw0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751739AbeCZSdM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Mar 2018 14:33:12 -0400
-Received: by mail-yw0-f181.google.com with SMTP id y64so6436548ywa.3
-        for <git@vger.kernel.org>; Mon, 26 Mar 2018 11:33:12 -0700 (PDT)
+        with ESMTP id S1751739AbeCZSfj (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Mar 2018 14:35:39 -0400
+Received: by mail-yw0-f181.google.com with SMTP id c20so6446035ywa.2
+        for <git@vger.kernel.org>; Mon, 26 Mar 2018 11:35:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=jRrRgxDsanfUWsgrCJmPG8im2tTbaRIUqyDe68jXM+E=;
-        b=h4rwucSCsB6RuiaCtQjHqA4TFqeeWwadP+bYWB8ORKasxf0TdwV0W4JDpmNsX56k+0
-         +OFVlgnYz8gaTMqMU8Cd9BqPMgmCyNEsK+/TRPWzZWBnClI3XL48Pr94WSwfseP8M+L1
-         im+Ve6vB0PP1P9JenZZA2zfbwBvcHpLGjs0MG4ces57W0Q7J/7dkYE0mub2tane5j/qy
-         AzV/k7y22PEyKgvmfH61XrURgScluLYrjk6IepJqbF45dpn7Zj4UvCIwTOmgXR/i9zJ5
-         nyl7Ix0dHRUkNYcH+T8LUNJlVXY7BtyPrpv77reBDMyS8ssFI7DUGrYkvp2dcgVAWMA5
-         DG2w==
+         :cc:content-transfer-encoding;
+        bh=/oQRsVRPeQov7vEq5DS4huEFWnEYrZJ0AFiMtPsBtDM=;
+        b=qmshQr2aYUrWAeqkYfioyST98xJqxi8tISYYEBhdbmHBAy0Q3r8lwbiTwMY9J9gzQD
+         FRKQrc8zOa7Y2Q4oe7raUhTK1zzJGcODKZvZF/v4cFdeCCJ3dlvl6Aw5YQe1g7X0UJAt
+         RJvyqeVcvW9qSpV+xptq/QiwspYqcufsYsr5dAr0r9anFkOaa6SSQRHZVz+pVC6ooe4Y
+         VQp/AEupypnwW7NnI7i5mhseZ9sY3ZlzGdaIYrcpv9aXKx46p3867b9v5hOoQeMB38EU
+         6mQKgju6wa+fxzQgn6TLiaDbB54yc2a6f0Taf1mlqh2NAmB9hkbWzp1wK7pIpEI0OWfn
+         GAhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=jRrRgxDsanfUWsgrCJmPG8im2tTbaRIUqyDe68jXM+E=;
-        b=gB37mPSYOSRgox61a90rgso01qkLXwxvgd7PSe4wsol6X/D2h8mRBLj48vfzSZMW+z
-         ifpNdScP23LT30GFPoh0vY36Vgs0U7cr5fGaePTex+rMZ7QiYhK2LXA55oiUKtvksALj
-         PfqWBUJI1/kAyJDatHrp45hE0cLzIU7Jvc3i2rM3XqeAy2gaEAdZMjlDPf6N6c7cczBC
-         6dndKvLA/2QEk+Ajn6fN3fwfJp4zP9+/9uMMdtWGqDhhKcPXlSww3zq9fJeRBlw1OKXx
-         CFdrQdi2aIhhzMqJJUXYJnG3fYg9Fz6zG2oozZEVrX9wSNWHLXsuZseGCo02UYxHTAde
-         TBJQ==
-X-Gm-Message-State: AElRT7FHM5r1DkU6TtTTHGVokGHGLcOgGj0LGMGPNdX1O0ag3p6U6Qv0
-        ZhjSQG91YSFFwboF2IA0nxi9EL9njAjYESG8KwpH4JAmMQ4=
-X-Google-Smtp-Source: AG47ELt/hEBFbzEYnhOFFgDFjHcTBnU16f/Pql5wOZ1ev0ZiMNcPvNlGikvok0V306Uw/My97q+LcDLk6NpWtUVFWTY=
-X-Received: by 10.129.108.67 with SMTP id h64mr23968640ywc.500.1522089191028;
- Mon, 26 Mar 2018 11:33:11 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=/oQRsVRPeQov7vEq5DS4huEFWnEYrZJ0AFiMtPsBtDM=;
+        b=BCQTs6yqQtaE0HQqXBfHW499YRi1BjV0fFJYjErNHpWf+NVwYpCGT85wekpxb8iTdd
+         dgtzr2HNcklHKCAt/I5+Ot37LbWeHEEgebsUP+EX+Qlxcy4tDSsSF27vEKkEAF3CBqG3
+         lprB4duWzp2Zz+lcWK1ngXNSzD7cS8782/1z3bVPPJ9+M8pkrjHpiehWSVykO6eWQSEt
+         mK4Ch2FvX92zuN5L+A91Lx1vynlk3JOmfqIatM5qEUtdg7fjVhc51yACj9M79LUWkxOA
+         h5CV2pRJKhPii63ic+LnCTde21rZWRr28WjerF0usanVFCVwsO772LJEJV2Cop1njBQr
+         68fA==
+X-Gm-Message-State: AElRT7E61iJ1/9D0HRb4WferfreNWWnlku3GOKf8uIvtKj7phIARjGmS
+        QRGwO73+G3YK/oLywX/3GzM12P7iSu/iEZcjyeRA6Q==
+X-Google-Smtp-Source: AG47ELtIsLbLXGlAuZsJKDq1IhwkovTl0v26OfrbzYfuUObxYrTbKjuF0xJzo8uO1RkjmkGlQrARy8G5Pdl4XDzKiBg=
+X-Received: by 10.129.232.5 with SMTP id a5mr10409325ywm.421.1522089338066;
+ Mon, 26 Mar 2018 11:35:38 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAP8UFD2D-XU=YeJD7A+9wauu0WKHwkXgVxbEBkOGPyZE7GiOZA@mail.gmail.com>
- <20180324084103.3367-1-predatoramigo@gmail.com> <CAP8UFD3Q26oiusO-+0SyFd=J+DTnrL5Xemrk+LLOk3hAUEVe9Q@mail.gmail.com>
-In-Reply-To: <CAP8UFD3Q26oiusO-+0SyFd=J+DTnrL5Xemrk+LLOk3hAUEVe9Q@mail.gmail.com>
+References: <20180326182708.26551-1-avarab@gmail.com>
+In-Reply-To: <20180326182708.26551-1-avarab@gmail.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 26 Mar 2018 18:33:00 +0000
-Message-ID: <CAGZ79kapp-k5NY+Zop78r+2VtxC+Qs-SBK75r3S6T78EAg4q+g@mail.gmail.com>
-Subject: Re: [GSoC] Re: Info: git log --oneline improvements
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     predatoramigo@gmail.com, git <git@vger.kernel.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Date:   Mon, 26 Mar 2018 18:35:27 +0000
+Message-ID: <CAGZ79kYcX6z6276c1R8k0qya56G5UzuM96mOxhAOtG7OFw=TqA@mail.gmail.com>
+Subject: Re: [PATCH 0/2] doc hash-function-transition: minor & major clarifications
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Brandon Williams <bmwill@google.com>,
+        Jeff King <peff@peff.net>, Marc Stevens <marc@marc-stevens.nl>,
+        shumow@gmail.com, "brian m. carlson" <sandals@crustytoothpaste.net>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Mar 24, 2018 at 4:15 AM Christian Couder
-<christian.couder@gmail.com>
+On Mon, Mar 26, 2018 at 11:27 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <av=
+arab@gmail.com>
 wrote:
 
-> Hi,
+> Having read through the hash-function-transition.txt again, a couple
+> of things jumped out at me:
 
-> On Sat, Mar 24, 2018 at 9:41 AM, Pratik Karki <predatoramigo@gmail.com>
-wrote:
-> >
-> > Hi Christian and Johannes,
-> >
-> > Though I sent a mail earlier, saying I would like to submit another
-> > proposal, I am now skeptical on re-writing another proposal as you
-> > guys are only available mentor for GSoC
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (2):
+>    doc hash-function-transition: clarify how older gits die on NewHash
 
-Is there a place/email where I can read up on the git log --oneline
-improvements? I use the --oneline flag a lot and would be interested
-in hearing what you plan there.
+> We weren't accurately describing how "git status" would die on NewHash
+> repos on new versions.
 
-> Well Stefan Beller wrote in
+>    doc hash-function-transition: clarify what SHAttered means
 
+> I don't think we had a good summary of how SHA-1 vulnerabilities
+> overlap with concerns Git has, now that we've moved to the hardened
+> SHA-1.
 
-https://public-inbox.org/git/CAGZ79kax5Hip1wP3U60im__Dm0GvH8nNd+ByxG5OxMXrRkRvdQ@mail.gmail.com/
+> I may very well have gotten this new summary subtly wrong though. So
+> please review.
 
-> that he would be ok to co-mentor, but I am not sure which projects he
-> would be ok to co-mentor. I just Cc'ed him so he can tell us more.
+>   .../technical/hash-function-transition.txt    | 40 +++++++++++++++----
+>   1 file changed, 32 insertions(+), 8 deletions(-)
 
-I would be happy to co mentor any project by prioritizing some
-review time on it.
+Both patches look good to me.
 
-Regarding rewriting shell scripts in C,
-there have been GSoC students in the previous years, which may help you
-understand the scope of the project better.
-
-     git clone --mirror https://public-inbox.org/git
-     git clone https://git.kernel.org/pub/scm/git/git.git/
-
-and search via "git log --author=" for
-Paul Tan, who converted git-am and git-pull into C
-or Prathamesh Chavan, who rewrote git-submodule
-to be in C, but the result is not upstream (yet).
-
-I think there are more shell to C conversions, but I was involved
-with these 2, hence giving these examples.
-
-> > and I believe Git doesn't
-> > select more than 2 proposals.
-
-> Yeah, because mentoring is a lot of work, and doesn't always work out
-> as well as we would expect, (mostly because it is difficult to explain
-> to new contributors that review cycles for significant patch series
-> take a lot more time than they could imagine), so not many people
-> volunteer to mentor or co-mentor.
-
-I agree on this. Mentoring takes some time as well.
-The coding part is the easy part, the communication part with
-the community is the harder part.
-
-For example the Git community is spread across all time zones.
-So if you want to give everyone the opportunity to give input to
-your patches you want to wait 2 hours.
-
-The community consists of people with diverse backgrounds, e.g.
-some work on Git in their spare time on the weekends [only]. Others
-work on it as their job [so it is rather a Mon-Fri activity]; others glance
-at the mailing list in the lunch break or in the evenings.
-
-These timing issues are not the hardest part,
-but the easiest to explain shortly. ;)
-
-> I still hope though that over time some former GSoC student will
-> become (co-)mentors as this happens quite often in other projects that
-> participates in the GSoC.
+Stefan
