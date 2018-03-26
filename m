@@ -7,65 +7,70 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9E0A71F404
-	for <e@80x24.org>; Mon, 26 Mar 2018 19:27:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 32B9A1F404
+	for <e@80x24.org>; Mon, 26 Mar 2018 19:37:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751714AbeCZT1a (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Mar 2018 15:27:30 -0400
-Received: from mail-wm0-f49.google.com ([74.125.82.49]:52824 "EHLO
-        mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751024AbeCZT13 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Mar 2018 15:27:29 -0400
-Received: by mail-wm0-f49.google.com with SMTP id l9so17562247wmh.2
-        for <git@vger.kernel.org>; Mon, 26 Mar 2018 12:27:29 -0700 (PDT)
+        id S1751195AbeCZTh3 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Mar 2018 15:37:29 -0400
+Received: from mail-wm0-f42.google.com ([74.125.82.42]:37149 "EHLO
+        mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750955AbeCZTh2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Mar 2018 15:37:28 -0400
+Received: by mail-wm0-f42.google.com with SMTP id r131so10738903wmb.2
+        for <git@vger.kernel.org>; Mon, 26 Mar 2018 12:37:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=Gsdpq/28Ml1GVs0jaNcKk2B39Z+rEGmxaeZqXP9Vkmc=;
-        b=UCkdXm4rh4GZN9sKNpDmcB07ADh6Um2bkZODBm8pJORabqqPaHigH62BDW96RYdw7p
-         SvEtiO0gKHjR/GYG8FSTZBwqYYrCSJVGZF5WEgGWeoGhD54tucB8dSwaOCvAjH97TF43
-         2fScdVP0OJ5F1oJQaTONI2wbSf2L0UHWfRrsKgd45sfHRl10bCYwMZFW3cTOYdZQDWAf
-         qhCXPkcxU4bAmsix80Ym7OeX0E3B/J7XyNpJigncjarz8ZX1fXqAIgq4zZVTvb6QN6Fg
-         50cjmIH11IXy7Qx9JK9oYjiWe2NDYd9o6vHhq5p1fvyBtXJRgpv9CdBuZanpDMPRkT6s
-         oLeA==
+        bh=4lLA/aVo6rTU2g/9Asze/EHRovTiPd87PRfj6/AKtz8=;
+        b=UKUc3JOegBXhgyA2aZsd5E7ejAaHsUQwpkFMNgbZLgsIQw8LhsXbnPKFBUmZaqufZf
+         M8jwYYRAbkTuUj5h+gGmw4tDRTbUreDmkLlib750L9Q3bzEaSgXcqlvxKUVuSDQohxJw
+         70TlhRMnf0OznaWJjenIHoZvfLVhVlTPcps9NlxF6lPWgkxAWR/W79pLSt7lAXPMwUeZ
+         cBMnh95vrFlM9Y5JfhuQC8VOzzztv43bJXWoe77sQKSXXyNWrTsFgmfShzTA7jNtWVjg
+         DO+IDnZt5jGxx7btOEaybxjqXK8AuH2MHDNwv5Nm3sS3aH8N6fG7aqJYxQveB0RUy8dQ
+         a7RQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=Gsdpq/28Ml1GVs0jaNcKk2B39Z+rEGmxaeZqXP9Vkmc=;
-        b=bf+GGdDjG/1EevXavjw7vkpUmPJgHADFHOirBgZELaMjVXTefHWlEJwm0uTtZ9nzyR
-         v3cMzDXMbiuP9q1/X4KD939zqBRoqEHsF/7APChTZgtEYW4cJ0kZYM3Fby066TEM7ZaC
-         322+33cOICG637qYyzAL9QduovkSEL13fJN+4v1KG6X+stF9j3nvrR/gZwSb4Zbv6X5e
-         CoFA2mXgAjnBerkE8yOY0H2Eg86dw0zBKN932wTxg+MV2VsZwUd4g6PbXhJgPBjC2pX3
-         DBArgGoUBNoU0g6dZPDmeyI4jBlubY7QDfARXkRMxrXpFGL+XrrynZmQQyvjviVZ5gW+
-         O39Q==
-X-Gm-Message-State: AElRT7HyhK5+9n6D6N3l/FACd1vhvHl6sUpliM/pIS7OzvaqPNx6F5TK
-        YUXvf0DkKo6r+5dXQh7pJk4=
-X-Google-Smtp-Source: AG47ELuVHv2/NUNIRZfmKqn/biZ9F4iobcel0X+Q+q7Z0m0kYfkG7ZnNOKCmXs2oMro5W7/8DMCQdA==
-X-Received: by 10.28.1.197 with SMTP id 188mr16065621wmb.49.1522092448091;
-        Mon, 26 Mar 2018 12:27:28 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id z9sm24740510wrz.4.2018.03.26.12.27.27
+        bh=4lLA/aVo6rTU2g/9Asze/EHRovTiPd87PRfj6/AKtz8=;
+        b=LxaP9UNAHf4bVj97lgW4B7jR9SVbG5dsW/9q5GcCipU9P4P3hM2J2NyufJeTy8J5rT
+         aoO+sx4B4n8xv7RVVhhC0jVOwql2dJEjyxJ+n2PXupdxA6sOrSEUBlhUYMjyu778eBY6
+         rXcJ6erXozXpNwlZG/tSDookmzFE3d0+HN0KRKsgaa8QKGe53yfeVmr5qoZFhmADB8Rn
+         uvNmf82+QrU1SpFnHZUkxM4R5FKJfAu8bnmhR302k6EPKin0XyeJC0yL7N20GfhsrZah
+         0T69NLDE06j8Q1is/K/S7TN7xcYDa+ABqHvjy/JArDKG9PM5ZKysINBWfJwDK7qMvaj5
+         /97w==
+X-Gm-Message-State: AElRT7F/5Ea4+53QiUh9lzxJ89habO+5P/DW+35O53x4L1UjHr9eAdlU
+        01x1HUu4K/iLxJrjImN/6H0=
+X-Google-Smtp-Source: AIpwx4+knnHDAIJWWKg5iUKezuaAfNsXHrkCYgbvzeLNfDwwRmWTbtFw0DbwTOlH1AmjX55T69WvvA==
+X-Received: by 10.28.0.72 with SMTP id 69mr9988076wma.105.1522093046554;
+        Mon, 26 Mar 2018 12:37:26 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id 95sm17533894wrb.47.2018.03.26.12.37.25
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 26 Mar 2018 12:27:27 -0700 (PDT)
+        Mon, 26 Mar 2018 12:37:25 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Stefan Beller <sbeller@google.com>,
+To:     Wink Saville <wink@saville.com>
+Cc:     Jeff Hostetler <git@jeffhostetler.com>, jeffhost@microsoft.com,
+        Git List <git@vger.kernel.org>,
         Eric Sunshine <sunshine@sunshineco.com>,
-        git <git@vger.kernel.org>, Brandon Williams <bmwill@google.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH 00/27] sb/object-store updates
-References: <20180303113637.26518-1-pclouds@gmail.com>
-        <20180323172121.17725-1-pclouds@gmail.com>
-        <CAPig+cQ=u2xVaptpVzVd3g_RO+9kTWVitD4V7zpZFuL+a3wmtg@mail.gmail.com>
-        <20180324053144.GA11420@duynguyen.home>
-        <CAGZ79kbkc2d-EHDTWP1GvCU62=ogZbP0ffxOHZamdQK+3h1yJw@mail.gmail.com>
-        <xmqq8taed7ze.fsf@gitster-ct.c.googlers.com>
-Date:   Mon, 26 Mar 2018 12:27:27 -0700
-In-Reply-To: <xmqq8taed7ze.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Mon, 26 Mar 2018 11:09:25 -0700")
-Message-ID: <xmqqy3iebpsw.fsf@gitster-ct.c.googlers.com>
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [RFC PATCH v5 0/8] rebase-interactive
+References: <cover.1521779249.git.wink@saville.com>
+        <cover.1521839546.git.wink@saville.com>
+        <CAKk8isqj3OusAE8OJtcys0a-Yj9fgQNn=DtLe-ZGYNzcKp=-3Q@mail.gmail.com>
+        <xmqq7eq2h0wa.fsf@gitster-ct.c.googlers.com>
+        <CAKk8isoJQrikitO7ezRajgphUXYR6207k4UkXP6r57WJEFBaDA@mail.gmail.com>
+        <CAKk8ispSgNgZxS7KfuOyxfU53tzesvNyLRaNXFZa3K7SCbaRkQ@mail.gmail.com>
+        <xmqqzi2ude4w.fsf@gitster-ct.c.googlers.com>
+        <9ca76d31-828d-0b6f-5069-375792c1f55d@jeffhostetler.com>
+        <xmqqd0zqd8dw.fsf@gitster-ct.c.googlers.com>
+        <3d845e99-e392-a62f-b83e-33b58482fc54@jeffhostetler.com>
+        <CAKk8isp_qx1ajgRryhBw6TYBoaa8fJU6hP3JyUWAx20knQSLXA@mail.gmail.com>
+Date:   Mon, 26 Mar 2018 12:37:24 -0700
+In-Reply-To: <CAKk8isp_qx1ajgRryhBw6TYBoaa8fJU6hP3JyUWAx20knQSLXA@mail.gmail.com>
+        (Wink Saville's message of "Mon, 26 Mar 2018 11:43:46 -0700")
+Message-ID: <xmqqtvt2bpcb.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -74,30 +79,26 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Wink Saville <wink@saville.com> writes:
 
-> Stefan Beller <sbeller@google.com> writes:
->
->> Thanks for driving this when I was away!
->>
->> With the fixup patch, both series are
->> Reviewed-by: Stefan Beller <sbeller@google.com>
->
-> I think everybody involved agrees that these two you cited above are
-> already in good shape.  Let's have them in 'next' for the remainder
-> of this cycle and go incremental, and merge them to 'master' soon
-> after 2.17 final is tagged.
->
-> Thanks all for working well together.  
+> Should we add a "_Static_assert" that sizeof(uintmax_t) >= sizeof(uint64_t) ?
 
-Just FYI, when merging the topic nd/pack-objects-pack-struct to a
-codebase with these two topics, because the former adds a handful of
-inline functions that wants to see packed_git but all existing
-sources have relied on the rule that cache.h is included early and
-the fact that packed_git was declared in there, the change in
-sb/object-store to move the structure declaration to object-store.h
-causes quite a trouble.  I plan to resolve this with an evil merge
-to include object-store.h from pack-objects.h to resolve this with
-minimum damage to topics in flight.
+If that expression compiles, then both types are understood by the
+platform.  Because
 
+http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/stdint.h.html
+
+tells us:
+
+    Greatest-width integer types
+
+    The following type designates a signed integer type capable of
+    representing any value of any signed integer type: intmax_t
+
+    The following type designates an unsigned integer type capable of
+    representing any value of any unsigned integer type: uintmax_t
+
+    These types are required.
+
+we know what that expression evaluates to, no?
 
