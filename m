@@ -2,132 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9273F1F404
-	for <e@80x24.org>; Mon, 26 Mar 2018 18:55:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D66791F404
+	for <e@80x24.org>; Mon, 26 Mar 2018 19:03:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752626AbeCZSzo (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Mar 2018 14:55:44 -0400
-Received: from mail-yb0-f175.google.com ([209.85.213.175]:43060 "EHLO
-        mail-yb0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752401AbeCZSzn (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Mar 2018 14:55:43 -0400
-Received: by mail-yb0-f175.google.com with SMTP id z5-v6so6742919ybo.10
-        for <git@vger.kernel.org>; Mon, 26 Mar 2018 11:55:43 -0700 (PDT)
+        id S1752106AbeCZTD1 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Mar 2018 15:03:27 -0400
+Received: from mail-qk0-f196.google.com ([209.85.220.196]:33722 "EHLO
+        mail-qk0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750983AbeCZTD0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Mar 2018 15:03:26 -0400
+Received: by mail-qk0-f196.google.com with SMTP id d206so8944298qkb.0
+        for <git@vger.kernel.org>; Mon, 26 Mar 2018 12:03:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=pf3UavO8PtVnuDSt18WCr63z1VtFU0nhwev9tJaXEwk=;
-        b=lyc5WRNSW33C38JGqRgx6Fq3JUkmgrM8hfyzYKURkqN4yP408kpoDKENOBpt6RABTz
-         YyY0AVwwnox/hSiv9siMOonnujTQMrgacAI+j3RXoCwCSVaFG+sEXCNPEjV+O124pTcw
-         Bg2/jjUNpT1etSGP+NZumBs9kA8owdyd7qlvbIyaJS1aDpGdC8X4qiT4e0FkYnwYdq+G
-         KZs65GuBjS8vjtNT7fySUBgW7MZ9T+qDviChRb9cVp0texSjn2G9uvMV06MKpE+UUI30
-         F+MH3nmv3pPEU91AwxbKamAd2XppxwxCP+wLKzAUju2hnOS1zrFXzkkluPIbXKxTR/B8
-         IZlA==
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-transfer-encoding;
+        bh=50nU16SCdj3epu+hkBlA4qdIJFshYaOT7rbxsyzxD1Y=;
+        b=jU45BTEaJR3fZopAoYaNycv6piaXjLzWrtxqbgch/c+LiLN0sy3lkkXcm340JkfWrP
+         LlHBGzJ5+zJ9xYcoYLy2Seqccu58VQnxrACLP47J+wO0CcCy8AZOpbT2I28gkGwJfIHm
+         9ysXByVl6NBsD6nCSKmesfcapH5q4qwn+dgK2MfUlIYzLTRVvIJ1vTaC+Kjf7F9Ntkko
+         eG5Y7fhWsewbZ+uPLsGQwLj4jauE9ErTEQDCUzMq/qA2jhoAGO+bsYOqs9ifdKgXuWJd
+         dUUtjoEywBUwiAy+4nhv8e73LFoKI6wJhGlq82GrP+9PSdKWlx/n2VlGVkaSA4q/NNcf
+         hgbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=pf3UavO8PtVnuDSt18WCr63z1VtFU0nhwev9tJaXEwk=;
-        b=dGbrtBhCWajspvF+zRPq6eUDHyBKguATzxxZdI7GOLIWrhE+qrZYplUwXOEgjD0+L5
-         iOuhatSNMlA34oReLQ9cx+Ldcw/XKpYBP9cfzVTD2n3dGGZnDYLA0000bCXDCV/4242N
-         NnX/Qm809VqFClC6Sjsw3Kxy3hqMK+otTEwoNU9GBLnnj6N6+FPfe5zc92NWNXJWJ+rB
-         AaeTq30RCwflhmxPC1vYxbnZBMWOxEzeP5/n88ErHXwouY+eXxLvstzro03K97lxWtA0
-         yeDNb6nbonos9YiQp+De7ZMIw01UT1AfUuB0ujOwpl4rULSuMILGjFrNxWLei+xEfO1Y
-         MsSA==
-X-Gm-Message-State: AElRT7GKWpIENPpBoHFYDMqB4YdCJLdv17pd9I2KD0aPyV+2wdBKVtLn
-        prpM5ZnBkkGhn9E13oZvRAZ1XTSEfjOt/4mDZ7ccn3JZ3MI=
-X-Google-Smtp-Source: AG47ELtsV2OU/PrWNDIOnTve2A3Ed1OBIwq3/ycubJEsrUGVuJALbgys2GX2J7hm1fyK6IovMmkhX5i01A2iYZrcNgE=
-X-Received: by 2002:a25:2782:: with SMTP id n124-v6mr24790169ybn.307.1522090542396;
- Mon, 26 Mar 2018 11:55:42 -0700 (PDT)
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=50nU16SCdj3epu+hkBlA4qdIJFshYaOT7rbxsyzxD1Y=;
+        b=PE3wWRjpv00KWiR3V1NPjIaDT8PXajuOZDm+QLOEp6YQj3aOsLaHHjrF3q7PPVcvNC
+         HAONpW7bGUndggLXNGLHEKTCLQzPFDH7wioedj8JNFUIx0ZvdGhk5fX1g6Qnz6j+zn1E
+         eEcs1s9TtXIg/G/of8RZHvZvIHWf7SVCUGe0oKfSWJvAgn4N6F+dPfMX/h40bZpiMeS6
+         NzLav8yXx0agNn3lWyLFjAMKZbmL3VkszsmR0liEz20fak9RzUIm4H5e4uU8ApKOl3A8
+         vnxTjsDeYWQUko0uk8Bnz7MLxQ7Zy4gHynIJ8UVAdmMeHcJ9XDkL0HSrhzHHLPc2Ixbl
+         nycw==
+X-Gm-Message-State: AElRT7FyxgAAusUFa1fpZXzjeWL6HaOF6RiCCva1YZPzZCtdDkG5Gv3v
+        A2wxxQ5oaRY8ZM2+WYFeGwrrjw5GlOoPDV2V4uE=
+X-Google-Smtp-Source: AIpwx48aOkYLLmTuqFDKKgEJ17qEEYefJIFeoo8D4mY9JWWS9aWOVmfFWRnBVlYShRDSRmEGyYApBIpj516V7xj3Pyg=
+X-Received: by 10.55.182.70 with SMTP id g67mr17362788qkf.314.1522091005957;
+ Mon, 26 Mar 2018 12:03:25 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAA7Y+T3OdaSBcqPmfJcVbPTjY=VFnvx9PH-rW9utQ4mXce+S8w@mail.gmail.com>
- <xmqqk1u0f6ha.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqk1u0f6ha.fsf@gitster-ct.c.googlers.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 26 Mar 2018 18:55:31 +0000
-Message-ID: <CAGZ79ka4Xfx3x09VtDOM9tD68et-DFPNCcSvJhB4G_Hb-+oPew@mail.gmail.com>
-Subject: Re: query on git submodule (ignore)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     pashnidgunde@gmail.com, git <git@vger.kernel.org>
+Received: by 10.12.174.202 with HTTP; Mon, 26 Mar 2018 12:03:25 -0700 (PDT)
+In-Reply-To: <20180326182708.26551-3-avarab@gmail.com>
+References: <20180326182708.26551-1-avarab@gmail.com> <20180326182708.26551-3-avarab@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Mon, 26 Mar 2018 15:03:25 -0400
+X-Google-Sender-Auth: eFXObCpn3sm1RyCRHfQiFa-BVXQ
+Message-ID: <CAPig+cS8kY-cmJcFVdmu9vU+2NP+YZmXuraaK9CBTyWBEy0jAQ@mail.gmail.com>
+Subject: Re: [PATCH 2/2] doc hash-function-transition: clarify what SHAttered means
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Brandon Williams <bmwill@google.com>,
+        Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>,
+        Marc Stevens <marc@marc-stevens.nl>,
+        Dan Shumow <shumow@gmail.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Mar 25, 2018 at 9:46 AM Junio C Hamano <gitster@pobox.com> wrote:
+On Mon, Mar 26, 2018 at 2:27 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+> Attempt to clarify what the SHAttered attack means in practice for
+> Git. The previous version of the text made no mention whatsoever of
+> Git already having a mitigation for this specific attack, which the
+> SHAttered researchers claim will detect cryptanalytic collision
+> attacks.
+> [...]
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+> ---
+> diff --git a/Documentation/technical/hash-function-transition.txt b/Docum=
+entation/technical/hash-function-transition.txt
+> @@ -28,11 +28,30 @@ advantages:
+>  Over time some flaws in SHA-1 have been discovered by security
+> +researchers. On 23 February 2017 the SHAttered attack
+> +(https://shattered.io) demonstrated a practical SHA-1 hash collision.
+> +
+> +Git v2.13.0 and later subsequently moved to a hardened SHA-1
+> +implementation by default, which isn't vulnerable to the SHAttered
+> +attack.
+> +
+> +Thus Git has in effect already migrated to a new hash that isn't SHA-1
+> +and doesn't share its vulnerabilities, its new hash function just
+> +happens to produce exactly the same output for all known inputs,
+> +except two PDFs published by the SHAttered researchers, and the new
+> +implementation (written by those researchers) claims to detect future
+> +cryptanalytic collision attacks.
+> +
+> +Regardless, it's considered prudent to move past any variant of SHA-1
+> +to a new hash. There's no guarantee that future attacks on SHA-1 won't
+> +be published in the future, and those attacks may not have viable
+> +mitigations.
+> +
+> +If SHA-1 and its variants were to be truly broken Git's hash function
 
-> prashant Nidgunde <pashnidgunde@gmail.com> writes:
+s/broken/&,/
 
-> [cc: stefan, for his interest in improving 'git submodules']
-
-> > Hello,
-> >
-> > I am new to this community ,so please ignore if I am asking anything
-silly.
-> >
-> > Case :
-> > Today when I built my submodule , and did a git status , it shows as
-modified.
-> >
-> > After reading certain suggestions on web i found out that i can ignore
-> > that adding a line in .gitmodules
-> >
-> > But, I had to add that line manually ( which could be errorprone
-> > because of typos )
-> >
-> >
-> > Question:
-> >     1. Is it feasible to build a feature like :
-> >                    git submodule "zlib" ignore dirty ( which will
-> > ignore submodule zlib when its built and dirty  as it has new files in
-> > its directory)
-
-> How does it prevent you from saying
-
->          git submodule "glib" ignore dirty
-
-> when you really meant "zlib"?  How is the command supposed to know
-> that you did *not* mean "glib", which may currently not exist in the
-> index nor in the working tree yet but you are about to create, and
-> doing the "ignore dirty" configuration as an earlier step of
-> multiple steps to add a submodule?
-
-> I personally doubt that the main issue you should be concerned about
-> is feasibility.  A larger issue is how it is supposed to help, iow,
-> is such a "feature" useful in the first place?
-
-> Whenever you hear yourself say "I have to do X manually, and I can
-> make mistakes. Can a command do it instead?", you have to ask
-> yourself: what pieces of information do you give to that command,
-> and how do you ensure you do not make typos on that command line?
-
-> Besides, the above syntax would not work.  What would a user do when
-> a submodule called "add" exists, for example?
-
-I would think this can be solved by reordering the command to be
-
-   git submodule ignore [--option-for-granularity=dirty] [-- <path-spec>]
-
-However for now this would be a shallow wrapper to
-
-   name=$(git submodule--helper name <one submodule path>)
-   git config submodule.$name.ignore dirty
-
-if I understand the requested feature correctly?
-Instead of coming up with each name for each submodule path
-(btw name and path are most often the same any way,
-just put it here for correctness), one could also use
-
-   git submodule foreach -- \
-       git -C .. config submodule.$name.ignore dirty
-
-as the foreach already populates the $name variable.
-
-Stefan
+> +could not be considered cryptographically secure any more. This would
+> +impact the communication of hash values because we could not trust
+> +that a given hash value represented the known good version of content
+> +that the speaker intended.
