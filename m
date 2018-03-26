@@ -2,92 +2,142 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B089D1F404
-	for <e@80x24.org>; Mon, 26 Mar 2018 13:03:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0833E1FAE2
+	for <e@80x24.org>; Mon, 26 Mar 2018 13:07:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751109AbeCZNDz (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Mar 2018 09:03:55 -0400
-Received: from mail-ot0-f172.google.com ([74.125.82.172]:43658 "EHLO
-        mail-ot0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750984AbeCZNDz (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Mar 2018 09:03:55 -0400
-Received: by mail-ot0-f172.google.com with SMTP id m22-v6so20487706otf.10
-        for <git@vger.kernel.org>; Mon, 26 Mar 2018 06:03:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=PVGLXpHet2GrD5uONzN9fagaY66c27GI1O2L8kH+H54=;
-        b=gsivH90+YgfAV84JdUd2qxQB00PWT1ufgnmaDREXA1wEj5sXuE/Of6lygQPowgFcnN
-         sG9yaGTei+xvo4I/RgOsJ0wzGJyFQlSe4xz+aspYPPMW4euCHEwvKShvcoXUr+hjodr3
-         UKtqBVz1jYeQq0kuZ/xAFhriDyOLU0zN21snvTminzGqWvBvFj8vqP0eG7hAWTcctYyn
-         dYWJkKZh06KyUbtm36Bq4WT/26Pc09TYarhe0beCWCIVCmNp6B8nRNtDfAPrD60KxUYx
-         tWb1FajE+Xt/psty/TMccExIRBl3fQ1xy5voeV/LZL+4yeAIE1+HE6+CLZcxxEBYvbbf
-         d0lw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=PVGLXpHet2GrD5uONzN9fagaY66c27GI1O2L8kH+H54=;
-        b=J2hitmr4ko4wvbUDkWvwwqrTTNqKSSLQpIOTYVBEybuX+JIfqA7Kp3+z4MQ8+3EzHB
-         Jv6GWcXpD2knmdZTace3zPwPFQo/deTq8vjETGKmOQ+4KHG+TJgLwqGPGdRErDKTfkzt
-         TsSC4Y77Q++HJvWskcrIMnYxlOnHi61fdCLV7YP/OJKUzUqN5dfQa3M8ZI6VRJvzFECR
-         jJVLtpomrzolc6bWu+pbJ711zokxz9i/760zXK5kUDdDBY4yDPqzBJGQNlSjhlQR0r6Y
-         XJAlIEMpWr5BexDkTOXALlduFtvqLPCzkeIP+qgQ08k3Zmhc9xyCIFeN+GAPqDFqhibr
-         L0Ww==
-X-Gm-Message-State: AElRT7HZ6vWNbK0nJp10rAhdOOf0SxiZ319pvh+r2eTgwtVIlKzT9OdC
-        IedGCqxHmkBz3DX4pPDnNCJAwzcj8aXk7CJpdappuA==
-X-Google-Smtp-Source: AG47ELuh3BpCYW604tdvdF+poHwehf0p+1RXllnh9VH3x2hselAjgipFTjCAptyO3DhhVnSwwrxKHy2ikj/GciBWfF8=
-X-Received: by 2002:a9d:ae9:: with SMTP id 96-v6mr26574235otq.75.1522069433822;
- Mon, 26 Mar 2018 06:03:53 -0700 (PDT)
+        id S1751204AbeCZNHn (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Mar 2018 09:07:43 -0400
+Received: from mout.gmx.net ([212.227.15.18]:57321 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750984AbeCZNHm (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Mar 2018 09:07:42 -0400
+Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MRo6b-1f7EIm3yEj-00Sxwe; Mon, 26
+ Mar 2018 15:07:34 +0200
+Date:   Mon, 26 Mar 2018 15:07:32 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+To:     Igor Djordjevic <igor.d.djordjevic@gmail.com>
+cc:     phillip.wood@dunelm.org.uk, Jacob Keller <jacob.keller@gmail.com>,
+        Sergey Organov <sorganov@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC] Rebasing merges: a jorney to the ultimate
+ solution(RoadClear)
+In-Reply-To: <243ca23d-77a9-4ae1-a120-de6c6b195cdc@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1803261455130.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <87y3jtqdyg.fsf@javad.com> <87a7vss6ax.fsf@javad.com> <f1a960dc-cc5c-e7b0-10b6-39e5516655b3@gmail.com> <ed4d2b30-2dea-740b-6283-973c798f619d@philandanna.no-ip.org> <1298a701-a860-a675-83d7-72f29e14cd2b@talktalk.net>
+ <CA+P7+xpgChuvh_vsPktBkOEhF=MjJh1n_3jD0-n4d67j9kYqzw@mail.gmail.com> <ee809701-a6d8-157d-09cd-cebbf2e949ec@gmail.com> <1580e48a-be44-38dd-79af-8a2a31c5712e@talktalk.net> <nycvar.QRO.7.76.6.1803061812090.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+ <754e2735-1288-9a8d-c8bd-ab39cf733812@gmail.com> <nycvar.QRO.7.76.6.1803070810550.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <c5a5c2cc-6a11-440f-5b9b-964ae1ca07dd@talktalk.net> <f3872fb9-01bc-b2f1-aee9-cfc0e4db77d6@gmail.com>
+ <nycvar.QRO.7.76.6.1803111301340.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <b329bb98-f9d6-3d51-2513-465aad2fa37a@gmail.com> <nycvar.QRO.7.76.6.1803121142550.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+ <243ca23d-77a9-4ae1-a120-de6c6b195cdc@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <20180325205120.17730-1-dnj@google.com> <877epzyi0b.fsf@evledraar.gmail.com>
-In-Reply-To: <877epzyi0b.fsf@evledraar.gmail.com>
-From:   Daniel Jacques <dnj@google.com>
-Date:   Mon, 26 Mar 2018 13:03:43 +0000
-Message-ID: <CAD1RUU-EoitBdoXL_JQoP+Q9BuA_6Fq65Ra-f+Atz8YNOV3Cig@mail.gmail.com>
-Subject: Re: [PATCH v7 0/3] RUNTIME_PREFIX relocatable Git
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:bJeFw7Bjp2rG3Af2OU6u8kQ71JVNmFBnYTa9JY2z59ZZ8I5HEfz
+ +MH0AQsnKsitX3t1HHDeCP5gzlXQqQu4/Atjon8G8fa3VLc8z73TI1g5jWcgNM/A/1XDLv9
+ 4VkBi+y7UlZKs1k91sl9xstDLzhO/jXxQGoSXkzCgJPakI8spdqURKYyl3PHri8txOAlVsX
+ egjkV9aeqt4RKhaVeCB7w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:mEnjZVzYf4o=:OT0Ozqhx94iToeOGfVLAtf
+ t2WnL5qIh9C1bAwxmo2a0hNz1FuL3JOC2+E7JrU9o/DyKnZYHIwtrGqzw4zEuU2vIS/poMnRr
+ OwPJ98XFcuqb7DSlwvisKu27OrmFR2xUOhl5EHII/D70/GvDguVvAkRehAfU23QKl+nSHgWYx
+ 4r0GP1KFOOd0GF7s0NQ75asChlYGVHRlmV6TPYEv9m6/D37jqWJJDy425ghuTG9o9oDF/6iO9
+ X7UC5/C1MhTgls+mc8rtmbJqHd78SrnF1sPDPEWx2Bo0dYOL/H5pWfgmVlhY3laHwJoeefe4b
+ jTVnaGG+XDKwt/1Yuh8UV9PPUrkFUIyCsRrwtNfTn6TNbamzM040j34wnjTtaon2qU7r99DR0
+ x3wZikgtMIloF49Z9o+zWqcwbbSPKlUbqEknH1H5m5pMTLQV82jy6SUEeos8+Yx+F8VSimZO4
+ SBtney/qeowboY/a0jz+g0wHrpn0yC3nKkCaa+OinaPju0yLgdtjoZQiDAwL/lTRhEiIIPqu3
+ H6yn5L+eUzRD3msDS/GwlZjIOtIsjFgvkLYfZ+xTOqBzyykkvMbOGCH6T90CEHw7sZr02d0cv
+ b2iPXK5JaoITReUSWeGrPBHD1MBiThtsoyLD+9Z0+vXBnitlNnrOa0MT34uyoSjnTnpd4fr3l
+ f+k+QXyJboyQ1hQUenvAvNVt2g7ARU72FD5T1pv7yG9v3h2xvgrXJNLpup5Fpl+kk44sP7nc7
+ 5dh0s08yaClhZQdwumE3kwmSd0Z54pgcs+Lxib1k2ZxDGYYOwM609U2/Uygrq/XAH13E3xFa1
+ +NaLDiIjWE0KcM8TBw52FXjQnHnw5+l+pGgoxKUa22ZmPf31DPUdFcHRd/ZGGjIGGOrTNRC
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Mar 25, 2018 at 5:15 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <ava=
-rab@gmail.com>
-wrote:
+Hi Buga,
 
-> This looks good to me this time around, couple of small nits (maybe
-> Junio can amend while queuing):
+On Tue, 13 Mar 2018, Igor Djordjevic wrote:
 
->   * You add a dependnecy typo in 2/3 but fix it again in 3/3. Should be
->     squashed.
+> On 12/03/2018 11:46, Johannes Schindelin wrote:
+> > 
+> > > Sometimes one just needs to read the manual, and I don`t really
+> > > think this is a ton complicated, but just something we didn`t really
+> > > have before (real merge rebasing), so it requires a moment to grasp
+> > > the concept.
+> > 
+> > If that were the case, we would not keep getting bug reports about
+> > --preserve-merges failing to reorder patches.
+> 
+> Not sure where that is heading to, but what I`m arguing about is that 
+> introducing new commands and concepts (`merge`, and with `-R`) just 
+> makes the situation even worse (more stuff to grasp).
 
-d'oh, I'll fix that in my local copy so that if I do end up needing to
-upload a new version, it's available.
+The problem with re-using `pick` is that its concept does not apply to
+merges. The cherry-pick of a non-merge commit is well-defined: the current
+HEAD is implicitly chosen as the cherry-picked commit's (single) parent
+commit. There is no ambiguity here.
 
->   * s/\Q${gitexecdir_relative}\E$// in 2/3 can be done less verbosely as
->     s/\Q$gitexecdir_relative\E$//. Discussed before in
+But for merge commits, we need to specify the parent commits (apart from
+the first one) *explicitly*. There was no need for that in the `pick`
+command, nor in the concept of a cherry-pick.
 
-https://public-inbox.org/git/CAD1RUU-3Q_SYvJorU+vEY2-0CPMZ1eL-41Z6eL7Sq4USi=
-J0U+w@mail.gmail.com/
->     seems like something you just forgot about.
+> Reusing existing concepts where possible doesn`t have this problem.
 
-Oh sorry, I must have missed that. I have a personal preference for adding
-brackets for clarity; it leaked into this patch set. I did implement most
-of the suggestion, which was to use the escaped Q/E instead of equals.
+Existing concepts are great. As long as they fit the requirements of the
+new scenarios. In this case, `pick` does *not* fit the requirement of
+"rebase a merge commit".
 
-Stylistically I still prefer the braces, but I'll defer to you and remove
-them in my pending patch set in case I'm asked to submit another version.
+If you really want to force the `pick` concept onto the use case where you
+need to "reapply" merges, then the closest you get really is Sergey's
+idea, which I came to reject when considering its practical implications.
 
-Cheers!
--Dan
+Even so, you would have to make the `pick` command more complicated to
+support merge commits. And whatever you would do to extend the `pick`
+command would *not make any sense* to the current use case of the `pick`
+command.
+
+The real problem, of course, is that a non-merge commit, when viewed from
+the perspective of the changes it introduced, is a very different beast
+than a merge commit: it does not need to reconcile changes, ever, because
+there is really only one "patch" to one revision. That is very different
+from a merge commit, whose changes can even disagree with one another (and
+in fact be resolved with changes disagreeing *yet again*)!
+
+> > > Saying in favor of `--rebase-merges`, you mean as a separate option,
+> > > alongside `--recreate-merges` (once that series lands)?
+> > 
+> > No. I am against yet another option. The only reason I pollute the
+> > option name space further with --recreate-merges is that it would be
+> > confusing to users if the new mode was called --preserve-merges=v2
+> > (but work *totally differently*).
+> 
+> I see. So I take you`re thinking about renaming `--recreate-merges` to
+> `--rebase-merges` instead?
+
+Thinking about it. Nothing will happen before v2.17.0 on that front,
+though, because -- unlike you gentle people -- I have to focus on
+stabilizing Git's code base now.
+
+> That would seem sensible, too, I think, being the default usage mode in
+> the first place. Being able to actually (re)create merges, too, once
+> user goes interactive, would be "just" an additional (nice and powerful)
+> feature on top of it.
+
+The implementation detail is, of course, that I will introduce this with
+the technically-simpler strategy: always recreating merge commits with the
+recursive strategy. A follow-up patch series will add support for rebasing
+merge commits, and then use it by default.
+
+This latter part will need a lot of experimentation, though. That's why I
+want the --recreate-merges patch series cooking in `next` first.
+
+Ciao,
+Dscho
