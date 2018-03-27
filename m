@@ -1,66 +1,87 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
-X-Spam-Level: *
+X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=1.2 required=3.0 tests=BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MISSING_SUBJECT,PI_EMPTY_SUBJ,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0801F1F404
-	for <e@80x24.org>; Tue, 27 Mar 2018 23:05:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 541571F404
+	for <e@80x24.org>; Tue, 27 Mar 2018 23:07:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752216AbeC0XFs (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Mar 2018 19:05:48 -0400
-Received: from mail-pf0-f169.google.com ([209.85.192.169]:35005 "EHLO
-        mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752027AbeC0XFr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Mar 2018 19:05:47 -0400
-Received: by mail-pf0-f169.google.com with SMTP id u86so228812pfd.2
-        for <git@vger.kernel.org>; Tue, 27 Mar 2018 16:05:47 -0700 (PDT)
+        id S1752204AbeC0XHT (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Mar 2018 19:07:19 -0400
+Received: from mail-pg0-f44.google.com ([74.125.83.44]:40342 "EHLO
+        mail-pg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752001AbeC0XHT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Mar 2018 19:07:19 -0400
+Received: by mail-pg0-f44.google.com with SMTP id g8so217555pgv.7
+        for <git@vger.kernel.org>; Tue, 27 Mar 2018 16:07:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:date:from:to:mime-version:content-transfer-encoding;
-        bh=MnW17wGGjnLS37oIhvXxNpUqbTgc4NA9NEPJU9cB7Ro=;
-        b=J5Cvfrj0U1eKKTpVS/ZCx6eNfzGPNTs4fGGQ4fcvSnkTuDToXYP8T0siV8iOj2P3Gt
-         NeOGpcoNCecDww14RzcQtN0nSvbnz3y4g5x0oOsPvKDKBYxfBvfPNtIQQlBlHLJmm9mT
-         eEm4wKlb7NOIdS2tD7SlZaYirHrkzlZE8kHwJLcY4L5vM1Au8QT2rVdPfQIh+ScWpNeS
-         siqyHMeEDYiRXZRGp9a9uMfPHJ+FsDT8xwlBwlC2KdKapSpUmReIhUDWsDLexfXt5mKQ
-         2C81w7TP+u39Mz8G5aBRvQQ41UK1Kxu3JMAq1WcUwbQE4nY1hWz4mNnzKyDqkj51iu1E
-         kk/A==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=foz9qmX2dR8+Wr4m2+SSQ4CJKQv3WCSNB1K9yrUj6iw=;
+        b=c/KlaHapFPNPyva/YBB3G+GC8L8+5HfwPgUK9V/O663EQjEphKgAVgvcWI09F+P3Vm
+         +ww9VYGFC32U9E2EEpUhhzXkyYqLorljDhpXlQ/f4/xkneGtorPwE27ah8y1VFC7rZiv
+         U4oC+nQhI1R/M9z1rad9qyidjvRFj5XGRiRDvDMjFGOVBPVJ/EWB/w4LcyqI6EoFdsfr
+         aipyrgEV2i/lhKRIj0Eo3UecFunmLH0IXlqDuuG/8I52YIEYui7k9sMpgX+jJKRY95Cs
+         MQW3eSdPSoa15eTOPdoeQUfPXNkIbbc5O0XP5h7vxfeVfOMfNTIbtXabTu7Q1skIAloM
+         zDvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:date:from:to:mime-version
-         :content-transfer-encoding;
-        bh=MnW17wGGjnLS37oIhvXxNpUqbTgc4NA9NEPJU9cB7Ro=;
-        b=LDJIJRdnGtyjUY5clzLjhVA9HCGLUUdKIP4yemdLy9vptbc4TrKP+TQaq67yBl++Uv
-         Buvw+0dNjnAjK89uCTE4Vkhdyr4g02tJQeB0YelXGbHg+hL1iUJoSlB6pGnQe7dnWnKX
-         BcGDEAjYkiW7EwRCBW8WpyLUwwCV00GpHVRzT28apNHcrUpJDrPeIuRcpnyBvsXjSTwz
-         8PnvKEfcXJ7uAPE5GwH74OzpE940Ui+htVLRQPgtxFWaxpZ7xGPt+U55pqjpFubrZSR7
-         nR8hA611LjLLySrnod++0qiORh2OgDC433zvRFugG+M43hi9rT4JdOy8Cyroo4bdw8zK
-         OZ9w==
-X-Gm-Message-State: AElRT7Eo76t/Gqbz4rh74A69IpFspjcvhFUIAEuq6QWYGlMHc1NFWk05
-        DjejAAAdC17oIuVxoVScsfDT9kCa
-X-Google-Smtp-Source: AIpwx48jGRozXV4DA3Z3+zZnXuDI4UMziomNvpDfA1DYfwgaAg03SYSS5mP9mtthGym26CoyY/HHtw==
-X-Received: by 10.98.103.199 with SMTP id t68mr954323pfj.24.1522191946791;
-        Tue, 27 Mar 2018 16:05:46 -0700 (PDT)
-Received: from ?IPv6:2402:1980:8180:ca60::1? ([2402:1980:8180:ca60::1])
-        by smtp.gmail.com with ESMTPSA id y23sm4083585pgv.4.2018.03.27.16.05.45
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 27 Mar 2018 16:05:46 -0700 (PDT)
-Message-ID: <5abace4a.d765650a.d85ca.86cb@mx.google.com>
-Date:   Wed, 28 Mar 2018 07:05:40 +0800
-From:   Cheah Teng Chye <ctc3315@gmail.com>
-To:     git@vger.kernel.org
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: base64
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=foz9qmX2dR8+Wr4m2+SSQ4CJKQv3WCSNB1K9yrUj6iw=;
+        b=QvFUz4JPCrrot/vyLoY/Y9x/gBmf9LPNBAVQO8x7Nj3zrNyAcvoV3becu/DOJmOzAy
+         iwfjYEiRxk1CIUXfQMF99kcPUTLgBUohZzTEy2DWGMq3wH0c8oTZCy/UY2esZo2zhnBu
+         1B06bzu6lsqfr8pSYXQgqOMlLkIDrROBxfF3+x2aHyEb4DB4ihvD2GouJLknm0WfXIzP
+         mxFOr4Jz7OozwtV+o45gHs6K2zAw6XzN57MdAkVSAkxr6Rllf9PcOXYh+UbZS6S6XdzS
+         3F1ghhR4Tcp52GwVFuqxbDNmpX04NYQu8IESgBKwmLTQb5zILjxn7gNI4UfgyNqmRMGt
+         2wgA==
+X-Gm-Message-State: AElRT7G0HdETMXSjl6ums/j2iGGsOFG5RBNc1KHo9BaifnFa4iUQz3CS
+        vhU7CtGyNGkpSdFNx2E/9ZU/nShJ4/g=
+X-Google-Smtp-Source: AIpwx48MHkmnFpbGXPnYy9BtZLIktCImZC/80Xa/JyO7ZHL5w3FOfA3f8M/qAZrCWVWz05zXyjjg7A==
+X-Received: by 10.98.236.86 with SMTP id k83mr957530pfh.84.1522192038522;
+        Tue, 27 Mar 2018 16:07:18 -0700 (PDT)
+Received: from twelve3.svl.corp.google.com ([2620:0:100e:422:ffac:c1d4:4bf7:bb93])
+        by smtp.gmail.com with ESMTPSA id p6sm5294000pfk.104.2018.03.27.16.07.17
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 27 Mar 2018 16:07:17 -0700 (PDT)
+Date:   Tue, 27 Mar 2018 16:07:16 -0700
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git@vger.kernel.org, seanwbehan@riseup.net, bmwill@google.com,
+        hvoigt@hvoigt.net
+Subject: Re: [PATCH 4/5] submodule-config: remove submodule_from_cache
+Message-Id: <20180327160716.eec5ae96c7c1c5135b27b08e@google.com>
+In-Reply-To: <20180327213918.77851-5-sbeller@google.com>
+References: <20180327213918.77851-1-sbeller@google.com>
+        <20180327213918.77851-5-sbeller@google.com>
+X-Mailer: Sylpheed 3.6.0 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Cgrlj5Hoh6rmiJHnmoTmiYvmnLo=
+On Tue, 27 Mar 2018 14:39:17 -0700
+Stefan Beller <sbeller@google.com> wrote:
 
+> This continues the story of bf12fcdf5e (submodule-config: store
+> the_submodule_cache in the_repository, 2017-06-22).
+> 
+> The previous patch taught submodule_from_path to take a repository into
+> account, such that submodule_from_{path, cache} are the same now.
+> Remove submodule_from_cache, migrating all its callers to
+> submodule_from_path.
+> 
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+
+Obviously correct, since submodule_from_{path,cache} are word-for-word
+identical (other than parameter names).
+
+Reviewed-by: Jonathan Tan <jonathantanmy@google.com>
