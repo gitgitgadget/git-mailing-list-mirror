@@ -2,112 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C51F51F404
-	for <e@80x24.org>; Tue, 27 Mar 2018 06:14:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E2D6B1F42D
+	for <e@80x24.org>; Tue, 27 Mar 2018 06:31:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750913AbeC0GOh (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Mar 2018 02:14:37 -0400
-Received: from mail-io0-f181.google.com ([209.85.223.181]:39436 "EHLO
-        mail-io0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750753AbeC0GOg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Mar 2018 02:14:36 -0400
-Received: by mail-io0-f181.google.com with SMTP id v13so26111034iob.6
-        for <git@vger.kernel.org>; Mon, 26 Mar 2018 23:14:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=spO8yFtGEibqvxzWAfUuCFCOcAVEVlitUOibn1suAGk=;
-        b=gms/4qBFwzp8QG3/eeWHjMHc5BFqxAeQAJ7uQvr5AZt1zjJzXtXxd81ycDlWnb9Wwl
-         3sxZojDYpE538TjL4kTmw37/W1kHGsrXxFnNTcC+z8RMwHoYeQMU+SwT2z72Jg58xNz6
-         hT+nceXgvnjutpe/1eTPBaOhtajUNwAIf98/30IitdIgozxhwnkNNRtQNJ1vUcnJHdlC
-         IIW0ZW2kkfcbOLWrWR8sdBKMeAcCOBO26PbNzQps6AVg/8XxxjLBrIF4gmXqpErSKnbH
-         CS7aIXuldMSVH5hCX6nd8sH+B6r88ids/ptDKoUFMkTGL5CP24zVq60GcW9hgz2nM8gn
-         WA+A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=spO8yFtGEibqvxzWAfUuCFCOcAVEVlitUOibn1suAGk=;
-        b=LXoAHHKq/T5jL8NTgkiUzGxdfIN06ABX1zARi7zE9S/sjFKPqvYbXxRsVtAQ5vfJ96
-         Wda/yump07H8m6lX09mtsq5sBFcK1hfEb37ko6yLhuK8xTPAQvVzSjcfnL/+iWP8A1MT
-         6oxgmI/PEcSxq8EbNGok9f+ZsHfnik5s7WksosMiZhplbf/34A4ZsNOelvyTwEmKNiVh
-         uBywANo/WaXJK4an3U1f3eFGVnOAaAKS90nLGOUfG9sU1ci+otAz7UmSskC8cOFeWeQq
-         e19qhemD5J+JMOJjuQYrOBkU82R9Twp5WJDgvoyrxBdcbXlpw+QjcN0aKvPmF+rPqkUv
-         g/qA==
-X-Gm-Message-State: AElRT7HLsKL09qiizvOISBXPAU4MmrUPd+T5AOCoeBgktYuRBlIdK7eh
-        XbBURfz+aIzdBA4gSM0qsysvMJIvgOrXkCLAoSTf0g==
-X-Google-Smtp-Source: AG47ELshzgBoC1waJOdteplRTkcxCuztP4mlQiVekbU2UCto0mbkMVJVtO9QbjHvQg77QwqwoEyswhfjb2aIr8CFPw0=
-X-Received: by 10.107.93.20 with SMTP id r20mr41937384iob.53.1522131275729;
- Mon, 26 Mar 2018 23:14:35 -0700 (PDT)
+        id S1752484AbeC0Gbl (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Mar 2018 02:31:41 -0400
+Received: from cloud.peff.net ([104.130.231.41]:44270 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1752480AbeC0Gbk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Mar 2018 02:31:40 -0400
+Received: (qmail 1115 invoked by uid 109); 27 Mar 2018 06:31:40 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 27 Mar 2018 06:31:40 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 26996 invoked by uid 111); 27 Mar 2018 06:32:38 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 27 Mar 2018 02:32:38 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 27 Mar 2018 02:31:38 -0400
+Date:   Tue, 27 Mar 2018 02:31:38 -0400
+From:   Jeff King <peff@peff.net>
+To:     Rafael Ascensao <rafa.almas@gmail.com>
+Cc:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: git complains packed-refs is not a directory when used with
+ GIT_DIR and GIT_WORK_TREE envvars.
+Message-ID: <20180327063137.GA24044@sigill.intra.peff.net>
+References: <CACUQV5_3Pw+vnyyNUL4oE4tMLG_wKVdqdVk01rg4V92ufUYHHA@mail.gmail.com>
 MIME-Version: 1.0
-Received: by 10.79.34.9 with HTTP; Mon, 26 Mar 2018 23:14:35 -0700 (PDT)
-In-Reply-To: <ad524ce4-8be2-4d14-44cc-2fbc9ff60b79@gmail.com>
-References: <1521576562.2188.10.camel@gmail.com> <CAP8UFD3NKCSN8mVDiCUzvor5uZh4nFCAw4T0zgxpvHLf9AWmyA@mail.gmail.com>
- <1521760546.11809.20.camel@gmail.com> <CAP8UFD3bRaPke8MvubZ3+v6RrY7K7Peip1dpQ2LG9kxKoXcmbw@mail.gmail.com>
- <6603149f-776a-fde8-5d11-a7d9d6d37e96@gmail.com> <CAP8UFD2y605FQeiymO2JNxy7MXs=-vRcN-Z2ri1=ttDF8kccvQ@mail.gmail.com>
- <ad524ce4-8be2-4d14-44cc-2fbc9ff60b79@gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Tue, 27 Mar 2018 08:14:35 +0200
-Message-ID: <CAP8UFD2Rx2Ykc1VNfqRy=UduNb5n6rQzrwTnZW7LZb1hvcBocA@mail.gmail.com>
-Subject: =?UTF-8?B?UmU6IFtHU29DXSBDb252ZXJ0IOKAnGdpdCBzdGFzaOKAnSB0byBidWlsdGluIHByb3Bvcw==?=
-        =?UTF-8?B?YWw=?=
-To:     Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CACUQV5_3Pw+vnyyNUL4oE4tMLG_wKVdqdVk01rg4V92ufUYHHA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Mar 25, 2018 at 4:38 PM, Paul-Sebastian Ungureanu
-<ungureanupaulsebastian@gmail.com> wrote:
-> On 25.03.2018 12:46, Christian Couder wrote:
->>
->> On Sat, Mar 24, 2018 at 8:31 PM, Paul-Sebastian Ungureanu
->> <ungureanupaulsebastian@gmail.com> wrote:
->>>
->>> On 23.03.2018 19:11, Christian Couder wrote:
->>>
->>>>> * Ensure that no regression occurred: considering that there are plenty
->>>>> of tests and that I have a good understanding of the function, this
->>>>> should be a trivial task.
->>>>
->>>> There are a lot of things that the test suite doesn't test.
->>>
->>> Hopefully, by first adding new tests, any eventual bug will be spotted.
->>
->> I was thinking about things like memory leaks that tests cannot easily
->> spot.>
->
-> I will do my best and follow best practices in order to avoid any memory
-> leaks. However, to make sure that my code is really leak free, I will use
-> Valgrind, which is already integrated with the testing framework.
+On Mon, Mar 26, 2018 at 10:27:09PM +0100, Rafael Ascensao wrote:
 
-Yeah, but it's still not so easy even with valgrind for a number of
-reasons. For example it's difficult to test all the error paths, and
-there are also some memory leaks that we accept when we know that they
-happen just once and that we are going to exit soon anyway when we
-should free the memory.
+> One of the tools that manages PKGBUILDS for Arch Linux stores PKGBUILD
+> git repos inside a cache directory for reuse.
+> 
+> One of the repos is triggering some unexpected behaviour that can be
+> reproduced in the CLI with:
+> 
+>   $ GIT_DIR=spotify/.git GIT_WORK_TREE=spotify git reset HEAD
+>   fatal: couldn't read spotify/.git/packed-refs: Not a directory
+> [...]
+> The issue seems to bisect to f57f37e2e1bf11ab4cdfd221ad47e961ba9353a0
+> I can't pinpoint why this particular repo is behaving differently.
 
->> Ok. Feel free to resend another version of your proposal.
->
-> Sorry for not sending the whole proposal again. I decided to send only the
-> changed parts because the proposal is quite big and I wanted to avoid
-> sending the same thing over and over again.
+I think we're getting confused by the relative paths. Here's a related
+reproduction:
 
-It's up to you, but but fewer people might review it.
+  $ git init repo
+  $ git -C repo commit --allow-empty -m foo
+  $ GIT_DIR=repo/.git GIT_WORK_TREE=repo git reset HEAD
+  $ find repo/repo
+  repo/repo
+  repo/repo/.git
+  repo/repo/.git/logs
+  repo/repo/.git/logs/HEAD
+  repo/repo/.git/HEAD
 
-> One thing I did not mention in the previous reply was that I also added a
-> new paragraph to "Benefits to community" about 'git stash' being slow on
-> Windows for a lot of users. I consider this alone to be a very good
-> justification for this project and doing this project will be very
-> beneficial for the Windows users.
+Er, what? It looks like we kept looking at "repo/.git" as our git
+directory, even though we should have normalized it into an absolute
+path after moving into the root of the work-tree.
 
-Sure.
+I can also reproduce your exact error by inserting:
+
+  git -C repo pack-refs
+  echo whatever >repo/repo
+
+before the call to "git reset" (and then we get ENOTDIR trying to read
+the packed-refs file, because the file "repo" is in the way).
+
+Looking at f57f37e2, I think the problem is that files_ref_store_create()
+saves the value of get_git_dir() at that point. But later after we
+chdir for the working tree, presumably it's updated, but we continue to
+use the out-dated relative path.
+
+So one "fix" is something like this:
+
+diff --git a/refs.c b/refs.c
+index 20ba82b434..449bdf2437 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1643,11 +1643,14 @@ static struct ref_store *ref_store_init(const char *gitdir,
+ 	const char *be_name = "files";
+ 	struct ref_storage_be *be = find_ref_storage_backend(be_name);
+ 	struct ref_store *refs;
++	char *abs_gitdir;
+ 
+ 	if (!be)
+ 		die("BUG: reference backend %s is unknown", be_name);
+ 
+-	refs = be->init(gitdir, flags);
++	abs_gitdir = absolute_pathdup(gitdir);
++	refs = be->init(abs_gitdir, flags);
++	free(abs_gitdir);
+ 	return refs;
+ }
+ 
+
+But that really feels like we're papering over the problem. It's not
+clear to me exactly what f57f37e2 is trying to accomplish, and whether
+it would work for it to look call get_git_dir() whenever it needed the
+path.
+
+-Peff
