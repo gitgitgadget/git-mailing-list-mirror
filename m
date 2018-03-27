@@ -2,112 +2,138 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 19ABA1F404
-	for <e@80x24.org>; Tue, 27 Mar 2018 18:05:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 049DD1F404
+	for <e@80x24.org>; Tue, 27 Mar 2018 18:10:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751146AbeC0SFj (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Mar 2018 14:05:39 -0400
-Received: from avasout04.plus.net ([212.159.14.19]:46775 "EHLO
-        avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750922AbeC0SFh (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Mar 2018 14:05:37 -0400
-Received: from [10.0.2.15] ([80.189.70.162])
-        by smtp with ESMTPA
-        id 0syTfsGlMsD7b0syVfEJpu; Tue, 27 Mar 2018 19:05:35 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.3 cv=CvORjEwD c=1 sm=1 tr=0
- a=zzlqjQC3YyNvDZl/Gy+4mg==:117 a=zzlqjQC3YyNvDZl/Gy+4mg==:17
- a=IkcTkHD0fZMA:10 a=bt3WUTiwAAAA:8 a=yMhMjlubAAAA:8 a=FFy51TlrWJey8IgzQAUA:9
- a=QEXdDO2ut3YA:10 a=OXx4ngWzwLx9h_IvVXMu:22
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH v4] json_writer: new routines to create data in JSON
- format
-To:     Jeff Hostetler <git@jeffhostetler.com>, git@vger.kernel.org
-Cc:     gitster@pobox.com, peff@peff.net, l.s.r@web.de, wink@saville.com,
-        Jeff Hostetler <jeffhost@microsoft.com>
-References: <20180326143136.47116-1-git@jeffhostetler.com>
- <20180326143136.47116-2-git@jeffhostetler.com>
- <ce076d5e-f30f-006e-a25e-ff1a900562bf@ramsayjones.plus.com>
- <ad15ccab-088d-b827-a9fa-c83d397c3479@ramsayjones.plus.com>
- <2bc6f6a6-bf53-b87c-af02-156ad006a878@jeffhostetler.com>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <c9c2ebba-9cde-9eed-bd08-34ce8b543787@ramsayjones.plus.com>
-Date:   Tue, 27 Mar 2018 19:05:33 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
+        id S1752597AbeC0SKa (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Mar 2018 14:10:30 -0400
+Received: from mout.gmx.net ([212.227.15.15]:41653 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751241AbeC0Q2v (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Mar 2018 12:28:51 -0400
+Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MZCUG-1fHIwr28Pk-00L1MX; Tue, 27
+ Mar 2018 18:28:45 +0200
+Date:   Tue, 27 Mar 2018 18:28:44 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+To:     Daniel Jacques <dnj@google.com>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/2] Add Windows support to the new RUNTIME_PREFIX
+ design
+In-Reply-To: <CAD1RUU9XK837mdRwicMwM5qVApzz8o2e4Eg=B0LH3SRtLqG9WQ@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1803271817060.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <20180325205120.17730-1-dnj@google.com> <nycvar.QRO.7.76.6.1803262331040.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <CAD1RUU8jNudjCXN=-mucogmSFj2xqyYqyk-dfADhjceLsmBE2g@mail.gmail.com> <nycvar.QRO.7.76.6.1803271752190.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+ <CAD1RUU9XK837mdRwicMwM5qVApzz8o2e4Eg=B0LH3SRtLqG9WQ@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <2bc6f6a6-bf53-b87c-af02-156ad006a878@jeffhostetler.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfGmo97QTavW+sHuL2MpTDN7hYFqBtvIozTtgxzONP9ZEURY3/gAuyTYPJxJWz4jtf93fmV5Z5SSSVzLocUYIuszlg5t9rZpXa0sczGxm0AUpseZrc5bZ
- TGAgckabP8t40KpAPEPS1GvTXOP9p/GgoyEC6CZMoJuPHjZgV0GbFUb/
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:nHV1boWxisqgipotmb4QXJ8O5zYWFj4Pkt4axv+VuNoHjQCWmyS
+ F4ckxRK/Rqb94eH5z/+TCbHt0P8Qqaz0tPFPG4p1fwq37UzhUYCg8L1KaSj1+QY/eACHh9P
+ rUo2rdifdlFfCrxVBz5d1lT4LSU3uMOMcdiUAm2bZH5Pkdvn3hE2urB47Xri/398LIPS8+C
+ OB6DtxyhEFDMFza215uPA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:LWZzk+qvRmQ=:rR+0MWIcBI3ywXi16r6PmY
+ RpDlU68KSW3C6At562NXOuZ9tm0yOmV31Asm0Qbdtiq1DZkr2pzLzY7zLp0DT8G05iWyt6/dB
+ KzkZQCKiqt2ofziwU/2VVIPLu4BCSAuQjfxxtwip+HaEjHahp063G0O0pmP4hrHoFsQ2fP35T
+ rBfXhw4uWR4vc/tJ2IubPM2Y65qTY9gmc8xOWgK3pjEGMP+kNQ3RvaPOuYD1qZH7R46cq8m3r
+ HAa2y02GVSg5Pf0aaG9U2gfSn0ySoWbLeJZ4WwnyLkitjsns7lmCYeyUywWR2pF9Ddg75PkiD
+ gbW7Zs9cgvxTLa5Z9j4afQ3K57crHoLJFaJ5c9IZuX2T6vOgvSK9yC/VPfCcZKiIz6DZYNzxH
+ r18geNIzegyfeRjl80lKN6HeR9k8rgWddpY0jG5ft9ep5663ioB3JpoZCxxuVQXCW6RHxZ1LL
+ z1uLShqNiqnb3fuUOb9J23p9mv6it3I7fqrPMUOfq+Yf95SfvIOHpFyad9aSzbnoEDEuy+u2H
+ YxKDYYbx2Ogi/X2MzoSli7dRWs813wH4lZgOtVVV90+oAGxTghjxXVi49YyxkHVBLg7qoaLBZ
+ 3SYuLTSrl9jsREKmiy876Htimn6NnRgQY0DcVb5M9cv+o444w6GzEBEBqOpTIOywaJw3FzWz3
+ lSb2IAhgsCGWjStwuST4kJAmOh0m2DhrcJoVpUf5clVl+9ztvgn1tym/g0Uc5BxUNTYCLSQHr
+ fxIoJLIq32zLit5BRCq3I36vCp1Ko30oWyMzDZNxMomtm6esWuurW7n2LEjhn6V9kfQNSBwiD
+ omCEeS3+Cx/vcU5+3Wq0zZ5z39Q/o75+KZKUOfX2Us6qvywHMcuFXkFPA8pMxXOxWXTnxms
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Dan,
 
+On Tue, 27 Mar 2018, Daniel Jacques wrote:
 
-On 27/03/18 18:14, Jeff Hostetler wrote:
+> On Tue, Mar 27, 2018 at 11:54 AM Johannes Schindelin <
+> Johannes.Schindelin@gmx.de> wrote:
 > 
+> > I guess we should add a test where we copy the `git` executable into a
+> > subdirectory with the name "git" and call `git/git --exec-path` and
+> > verify that its output matches our expectation?
 > 
-> On 3/27/2018 11:45 AM, Ramsay Jones wrote:
->>
->>
->> On 27/03/18 04:18, Ramsay Jones wrote:
->>> On 26/03/18 15:31, git@jeffhostetler.com wrote:
->>>> From: Jeff Hostetler <jeffhost@microsoft.com>
->>>>
->>> [snip]
->>>
->>> Thanks, this version fixes all issues I had (with the compilation
->>> and sparse warnings).
->>>
->>> [Was using UINT64_C(0xffffffffffffffff) a problem on windows?]
->>
->> BTW, I forgot to mention that you had some whitespace problems
->> with this patch, viz:
+> I'm actually a little fuzzy on the testing model here.
+
+Alright, I'll bite.
+
+You are correct that the test must be contingent on the RUNTIME_PREFIX
+prerequisite. This could be tested thusly:
+
+	test_lazy_prereq RUNTIME_PREFIX '
+		# test whether we built with RUNTIME_PREFIX support
+		grep " -DRUNTIME_PREFIX" "$GIT_BUILD_DIR/GIT-CFLAGS"
+	'
+
+The subsequent test would run like this:
+
+	test_expect_success RUNTIME_PREFIX '
+		mkdir git &&
+		cp "$GIT_BUILD_DIR/git$X" git/ &&
+		path="$(git/git$X --exec-path)" &&
+		case "$(echo "$path" | tr '\\' /)" in
+		"$(pwd)/libexec/git-core") ;; # okay
+		*)
+			echo "Unexpected exec path: $path" >&2
+			return 1
+			;;
+		esac
+	'
+
+I say "like this" because it is a little bit tricky to get right, in
+particular when supporting Windows ;-)
+
+For example, when building with Visual C, the dependencies' .dll files
+need to be copied into the same directory as the .exe files because there
+is no good central place to put them (don't get me started on the problems
+incurred by some software copying some random OpenSSL version's
+ssleay32.dll into C:\Windows\system32, unless you buy me beer all night
+and want to be entertained). And that obviously would fail with this
+approach.
+
+> As things are, this test will only work if Git is relocatable; however,
+> the test suite doesn't seem to be equipped to build multiple versions of
+> Git for different tests.  From this I conclude that the right approach
+> would be to make a test that runs conditional on RUNTIME_PREFIX being
+> set, but I'm not familiar enough with the testing framework to be
+> confident that this is correct, or really how to go about writing such a
+> test.
 > 
-> I ran "make sparse" on this and it did not complain about any of this.
+> A simple grep suggests that the current test suite doesn't seem to have any
+> RUNTIME_PREFIX-specific tests. When I've been running the test suites, I've
+> been doing it with a "config.mak" file that explicitly enables
+> RUNTIME_PREFIX to get the runtime prefix code tested against the standard
+> Git testing suites.
 
-No, sparse doesn't check for whitespace issues.
+Indeed, this would be the first test.
 
-> What command do you run to get these messages?
+>  From a Git maintainer's perspective, would such a test be a
+>  prerequisite for landing this patch series, or is this a good candidate
+>  for follow-up work to improve our testing coverage?
 
-'git am' told me when I applied the patch from the ML, and ...
+I cannot speak for Junio, but from my understanding he would probably be
+fine without such a test. Or a separate patch at a later stage that
+introduces that.
 
-> I know they appear as red in diffs (and I usually double check that),
-> but I had not seen a command to complain about them like this.
+Or something completely different such as a helper in t/helper/ that
+always succeeds if RUNTIME_PREFIX is not defined, otherwise passes argv[1]
+as parameter to git_resolve_executable_dir() and outputs that. Would be a
+lot more robust than what I described above. But I would want for Duy's
+test-tool patch series to land first because I would hate to introduce
+*yet* another stand-alone .exe in t/helper/.
 
-... since I applied the patch yesterday, it was easier to
-demonstrate the issue today using this command:
-
->>    $ git log --oneline -1 --check master-json
->>    ab643d838 (master-json) json_writer: new routines to create data in JSON format
->>    t/helper/test-json-writer.c:280: trailing whitespace.
->>    + */
->>    t/t0019-json-writer.sh:179: indent with spaces.
->>    +        "g": 0,
->>    t/t0019-json-writer.sh:180: indent with spaces.
->>    +        "h": 1
->>    $
-> 
-> the leading spaces are required in this case.
-> the pretty json output contains 8 spaces for that sub-structure not a tab.
-> is there a preferred way to denote this in the test script?
-
-OK, I should have looked at the output more closely! :(
-
-Only the trailing whitespace in test-json-writer.c needs
-to be addressed then.
-
-ATB,
-Ramsay Jones
-
-
-
+Ciao,
+Dscho
