@@ -2,152 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E4BCC1F404
-	for <e@80x24.org>; Tue, 27 Mar 2018 21:39:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C4E061F404
+	for <e@80x24.org>; Tue, 27 Mar 2018 21:45:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752154AbeC0Vjs (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Mar 2018 17:39:48 -0400
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:35021 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751913AbeC0Vji (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Mar 2018 17:39:38 -0400
-Received: by mail-pg0-f65.google.com with SMTP id j3so146224pgf.2
-        for <git@vger.kernel.org>; Tue, 27 Mar 2018 14:39:38 -0700 (PDT)
+        id S1751241AbeC0Vp2 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Mar 2018 17:45:28 -0400
+Received: from mail-yb0-f180.google.com ([209.85.213.180]:34180 "EHLO
+        mail-yb0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751088AbeC0Vp1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Mar 2018 17:45:27 -0400
+Received: by mail-yb0-f180.google.com with SMTP id e3-v6so126094ybk.1
+        for <git@vger.kernel.org>; Tue, 27 Mar 2018 14:45:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=JPAr3I1OPqIh9wJJZx8kl8E+NW0V/EshEm+0u6IUoTY=;
-        b=NDnFrqbkBgNxuVtKy51dxzz4Dyr4P20aOex0FIJajb/Sg45UPozP7KjTif+9//OH2L
-         u+sNRM8hzDWW8o4Qq2l0dFMSD9DlnDCAMNz9Xw9tcLeeVjeBVudpUpRTKxz8k2mbpceT
-         /bT5kIzT4kNWTR9xBilNR06FRRLzfxy2VR/SyoVjS0W7ObolG+TqHoiwaPL8Wmc434ea
-         iMqGBQ75xTJ1f500Ha1FbTyOrEnv8Lit1jQNATSK2q+ZZ5wWj2BdBYK8/O/6P1NILyj3
-         +DJewGqbIG7vfv4yfJloE8TWmkPiRc7Ta2BXM/cyol2LelpLK0/Eh4j7K5PVlfK1l6Vs
-         1f/g==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=BjtJgBJJ/QxmBnzl94LrLPMDd0SYeSfuKdAXEdFm5nA=;
+        b=Qxf7Zt+KDVtPt9yjZI/E8s6LWfDnfuxf7kqXlgXh+eDCCXVxXCnQQoIwj0bAl3ftjm
+         H73vgI7T7OnjkZHC50+khMNPF3icztPPrOUTQL962WC0BLIWKyKPQzp7bW6GYxml1a7+
+         i/FsN1V8AG0XeH4iPKGK82Iad1mQKyUcltJrWARr+5XnHHET1cucv93AIqtHShUgiMzx
+         kkl8U5qY8OMr9YgUOH1pEJN8WolCUvA/DVkj5VuUbGFCvAQZcPG3Puh1oQFQWAC5oe+5
+         KRLjnkHQaW2mGDB3ToHJhKEIOHQbdVvSSh8yig1kvO3mYvWGFp9BCRwadiWdKd9pO5aH
+         6OIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=JPAr3I1OPqIh9wJJZx8kl8E+NW0V/EshEm+0u6IUoTY=;
-        b=LsdjL06UOqpNGKyzbs14Z7OqvCL+xm1mQz7K3vl1H8sl48cfD+N1MiOiIdzrauGWbJ
-         y/yo6fJSIN3WFV4Gc4F+PBmo40iT7tRtXQbVEyfK1h/WR/dEXmjfXIH92yOUk5p95+VG
-         mUG7lBo3PNTHksGKYj4dxvTpJnx+GdBwkKk2UV5fv1S7rqv5mwiZlxElw1B2pHxQC0nw
-         dNbvXKTYbKB04uuPDsGDvhdh4DLT8Ubk04mifImHyBXHqacxhLdGrqW52rIu7cv1OMTM
-         uCC+h0l9TuhWInE4IaZj5JtNQ2WgAtv7fG1+LRAw6QnzSYKfnEkLjbvIh7X4B7v7caeK
-         op5g==
-X-Gm-Message-State: AElRT7E/48WwHTuwV52sZpEIe4RH1uho4VIq4ACbhm54epMWroHfcqP2
-        3qAqaVxFDAmfiAlGj4LrgXQXrWxvD3E=
-X-Google-Smtp-Source: AIpwx49sqVYnmAEaZRe52IlDh0HxiauBmq/KyD/mEzPZ8oVHCoJly3eIwbD3xX7+RHnOF/1ctGFhAA==
-X-Received: by 10.98.141.78 with SMTP id z75mr756777pfd.174.1522186777410;
-        Tue, 27 Mar 2018 14:39:37 -0700 (PDT)
-Received: from localhost ([2620:0:100e:422:ea58:fa52:fa77:9b41])
-        by smtp.gmail.com with ESMTPSA id 203sm4779516pfb.50.2018.03.27.14.39.36
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 27 Mar 2018 14:39:36 -0700 (PDT)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=BjtJgBJJ/QxmBnzl94LrLPMDd0SYeSfuKdAXEdFm5nA=;
+        b=W+exWYz31MXb5ZjybXt/kvt8zmTSRt1Eb3d6TWbPA6mqBQlAnnl4fbTwJmHYP8NuGr
+         7A9SnwwU/O598x3Ls6jBI41TiywPNGL0kWXJTfngeSOskjr5cd3HONdUqlVrBZgRTv41
+         M+ohKvIf5KRtlWWFrsJNQZa2DboOVICSpvfPeys76EvCJQxTqtJi09IyFesf84H+cg+C
+         WmUl8VypUNEBoDEQ6nC8LGBpeUtpi2Y6wcAN3M1psqk8lkSlLYIxTZYRUN9gSxo6UI2c
+         cdcArEqLA4AXOxibk3rI0ppgmikJapfiIwak5X8pIa7Dx4Z/mzPblLcziznWaTKVRxLE
+         SBVQ==
+X-Gm-Message-State: AElRT7GzxY4x3AKNVM/ZjLWICWKVGBPpbBeCzrGg5jldwXhav4K1EGE6
+        XANjMrS3lN6GQcTkh5Em4ruQpn91zDeVY6xxJTAb4w==
+X-Google-Smtp-Source: AIpwx48XgNcOur5fP3EXIlZF0xgq2uGx8dy/fhMxyjLy3raRz6fAyhBDYVJ0P1rR7T/PoxmJYq1gIDsA11xNBbIvE74=
+X-Received: by 2002:a25:c713:: with SMTP id w19-v6mr689558ybe.515.1522187126115;
+ Tue, 27 Mar 2018 14:45:26 -0700 (PDT)
+MIME-Version: 1.0
+References: <CAP6Vx84GRRxgMZF5P6tb6F4rJ8ozxx-d0o_LsNe=kEYVRkBTKQ@mail.gmail.com>
+In-Reply-To: <CAP6Vx84GRRxgMZF5P6tb6F4rJ8ozxx-d0o_LsNe=kEYVRkBTKQ@mail.gmail.com>
 From:   Stefan Beller <sbeller@google.com>
-To:     git@vger.kernel.org
-Cc:     seanwbehan@riseup.net, bmwill@google.com, hvoigt@hvoigt.net,
-        Stefan Beller <sbeller@google.com>
-Subject: [PATCH 4/5] submodule-config: remove submodule_from_cache
-Date:   Tue, 27 Mar 2018 14:39:17 -0700
-Message-Id: <20180327213918.77851-5-sbeller@google.com>
-X-Mailer: git-send-email 2.17.0.rc1.321.gba9d0f2565-goog
-In-Reply-To: <20180327213918.77851-1-sbeller@google.com>
-References: <20180327213918.77851-1-sbeller@google.com>
+Date:   Tue, 27 Mar 2018 21:45:15 +0000
+Message-ID: <CAGZ79ka_dd=4-EVmoKrBVC_y4+eVPSz959BVNmzZkOwiZh_24A@mail.gmail.com>
+Subject: Re: Bug: duplicate sections in .git/config after remote removal
+To:     jfrey@redhat.com
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This continues the story of bf12fcdf5e (submodule-config: store
-the_submodule_cache in the_repository, 2017-06-22).
+On Tue, Mar 27, 2018 at 1:41 PM Jason Frey <jfrey@redhat.com> wrote:
 
-The previous patch taught submodule_from_path to take a repository into
-account, such that submodule_from_{path, cache} are the same now.
-Remove submodule_from_cache, migrating all its callers to
-submodule_from_path.
+> at which point you can see the duplicate sections (even though one is
+> empty).  Also note that if you do the steps again, you will be left
+> with 3 sections, 2 of which are empty.  This process can be repeated
+> over and over.
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- repository.c       | 2 +-
- submodule-config.c | 9 ---------
- submodule-config.h | 3 ---
- submodule.c        | 4 ++--
- 4 files changed, 3 insertions(+), 15 deletions(-)
+I agree that this is an issue for the user, and there were some attempts
+to fix it in the past. (feel free to dig them up in the archive at
+https://public-inbox.org/git)
 
-diff --git a/repository.c b/repository.c
-index 4ffbe9bc94..fa0a132e22 100644
---- a/repository.c
-+++ b/repository.c
-@@ -167,7 +167,7 @@ int repo_submodule_init(struct repository *submodule,
- 	struct strbuf worktree = STRBUF_INIT;
- 	int ret = 0;
- 
--	sub = submodule_from_cache(superproject, &null_oid, path);
-+	sub = submodule_from_path(superproject, &null_oid, path);
- 	if (!sub) {
- 		ret = -1;
- 		goto out;
-diff --git a/submodule-config.c b/submodule-config.c
-index 4b7803e6ed..cb65354d4c 100644
---- a/submodule-config.c
-+++ b/submodule-config.c
-@@ -635,15 +635,6 @@ const struct submodule *submodule_from_path(struct repository *r,
- 	return config_from(r->submodule_cache, treeish_name, path, lookup_path);
- }
- 
--const struct submodule *submodule_from_cache(struct repository *repo,
--					     const struct object_id *treeish_name,
--					     const char *key)
--{
--	gitmodules_read_check(repo);
--	return config_from(repo->submodule_cache, treeish_name,
--			   key, lookup_path);
--}
--
- void submodule_free(struct repository *r)
- {
- 	if (r->submodule_cache)
-diff --git a/submodule-config.h b/submodule-config.h
-index ff3c9e0b5c..3ae8a1e51b 100644
---- a/submodule-config.h
-+++ b/submodule-config.h
-@@ -43,9 +43,6 @@ extern const struct submodule *submodule_from_name(struct repository *r,
- 		const struct object_id *commit_or_tree, const char *name);
- extern const struct submodule *submodule_from_path(struct repository *r,
- 		const struct object_id *commit_or_tree, const char *path);
--extern const struct submodule *submodule_from_cache(struct repository *repo,
--						    const struct object_id *treeish_name,
--						    const char *key);
- extern void submodule_free(struct repository *r);
- 
- #endif /* SUBMODULE_CONFIG_H */
-diff --git a/submodule.c b/submodule.c
-index e94b7f9acd..89d0aee086 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -230,7 +230,7 @@ int is_submodule_active(struct repository *repo, const char *path)
- 	const struct string_list *sl;
- 	const struct submodule *module;
- 
--	module = submodule_from_cache(repo, &null_oid, path);
-+	module = submodule_from_path(repo, &null_oid, path);
- 
- 	/* early return if there isn't a path->module mapping */
- 	if (!module)
-@@ -1235,7 +1235,7 @@ static int get_next_submodule(struct child_process *cp,
- 		if (!S_ISGITLINK(ce->ce_mode))
- 			continue;
- 
--		submodule = submodule_from_cache(spf->r, &null_oid, ce->name);
-+		submodule = submodule_from_path(spf->r, &null_oid, ce->name);
- 		if (!submodule) {
- 			const char *name = default_name_or_path(ce->name);
- 			if (name) {
--- 
-2.17.0.rc1.321.gba9d0f2565-goog
+IIRC the problem is (a) with the loose file format (What if the user put
+a valuable comment just after or before the '[branch "master"]' line?)
+as well as (b) the way the parser/writer works (single pass, line by line)
 
+(b) specifically made it a "huge effort, but little return" bug,
+so nobody got around for a proper fix.
+
+Thanks,
+Stefan
