@@ -8,106 +8,99 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 903BA1F404
-	for <e@80x24.org>; Tue, 27 Mar 2018 05:11:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 072061F404
+	for <e@80x24.org>; Tue, 27 Mar 2018 05:32:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751067AbeC0FLv (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Mar 2018 01:11:51 -0400
-Received: from mail.javad.com ([54.86.164.124]:44656 "EHLO mail.javad.com"
+        id S1752179AbeC0FcP (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Mar 2018 01:32:15 -0400
+Received: from mail.javad.com ([54.86.164.124]:58584 "EHLO mail.javad.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750978AbeC0FLu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Mar 2018 01:11:50 -0400
+        id S1752171AbeC0FcM (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Mar 2018 01:32:12 -0400
 Received: from osv (unknown [89.175.180.246])
-        by mail.javad.com (Postfix) with ESMTPSA id 7BE9B3EA25;
-        Tue, 27 Mar 2018 05:11:49 +0000 (UTC)
+        by mail.javad.com (Postfix) with ESMTPSA id 1790A3EA25;
+        Tue, 27 Mar 2018 05:32:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1522127509;
-        bh=mN+glT06uNC/9MGL/ia0YVd5bpPHr/i3dyqW1k3pI00=; l=1661;
+        s=default; t=1522128731;
+        bh=ltb67j70w9WLcUeMYPEmtd10cOZakZeZxgU5vB0o9Y8=; l=2361;
         h=Received:From:To:Subject;
-        b=Fk9XEhB6x+oy99sC4HGQlUSfGqVVrfs5QySHxuluztG/wam2XBb7XQwyBfsssE+Np
-         sc/4OrK1BKDVn97kfoyMmN8+IgXTEIq3V4MpNCD0SiN3v61IJ8xIpEe2Gf73Yrul2M
-         NHsaCsERgahwvVRndRa+YmpkWXawFQQtdZrYQPa8=
+        b=VYIFXnn0Uqs+xU3DFnAKomrXw6yym+cokLfI/hoTAUj29HN6tGEiWXfqSBwCeYty+
+         egoFLTddi7mICwIF2QaDyCHD8JTqXU4ANpql2d3kb5gaPzvkdzjirAddsoPfD2/C88
+         I2hlpMMWTpuV6Gv38Fgl/keCJJp8ZQdQHHLPSVJo=
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1522127509;
-        bh=mN+glT06uNC/9MGL/ia0YVd5bpPHr/i3dyqW1k3pI00=; l=1661;
+        s=default; t=1522128731;
+        bh=ltb67j70w9WLcUeMYPEmtd10cOZakZeZxgU5vB0o9Y8=; l=2361;
         h=Received:From:To:Subject;
-        b=Fk9XEhB6x+oy99sC4HGQlUSfGqVVrfs5QySHxuluztG/wam2XBb7XQwyBfsssE+Np
-         sc/4OrK1BKDVn97kfoyMmN8+IgXTEIq3V4MpNCD0SiN3v61IJ8xIpEe2Gf73Yrul2M
-         NHsaCsERgahwvVRndRa+YmpkWXawFQQtdZrYQPa8=
+        b=VYIFXnn0Uqs+xU3DFnAKomrXw6yym+cokLfI/hoTAUj29HN6tGEiWXfqSBwCeYty+
+         egoFLTddi7mICwIF2QaDyCHD8JTqXU4ANpql2d3kb5gaPzvkdzjirAddsoPfD2/C88
+         I2hlpMMWTpuV6Gv38Fgl/keCJJp8ZQdQHHLPSVJo=
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1522127509;
-        bh=mN+glT06uNC/9MGL/ia0YVd5bpPHr/i3dyqW1k3pI00=; l=1661;
+        s=default; t=1522128731;
+        bh=ltb67j70w9WLcUeMYPEmtd10cOZakZeZxgU5vB0o9Y8=; l=2361;
         h=Received:From:To:Subject;
-        b=Fk9XEhB6x+oy99sC4HGQlUSfGqVVrfs5QySHxuluztG/wam2XBb7XQwyBfsssE+Np
-         sc/4OrK1BKDVn97kfoyMmN8+IgXTEIq3V4MpNCD0SiN3v61IJ8xIpEe2Gf73Yrul2M
-         NHsaCsERgahwvVRndRa+YmpkWXawFQQtdZrYQPa8=
+        b=VYIFXnn0Uqs+xU3DFnAKomrXw6yym+cokLfI/hoTAUj29HN6tGEiWXfqSBwCeYty+
+         egoFLTddi7mICwIF2QaDyCHD8JTqXU4ANpql2d3kb5gaPzvkdzjirAddsoPfD2/C88
+         I2hlpMMWTpuV6Gv38Fgl/keCJJp8ZQdQHHLPSVJo=
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1522127509;
-        bh=mN+glT06uNC/9MGL/ia0YVd5bpPHr/i3dyqW1k3pI00=; l=1661;
+        s=default; t=1522128731;
+        bh=ltb67j70w9WLcUeMYPEmtd10cOZakZeZxgU5vB0o9Y8=; l=2361;
         h=Received:From:To:Subject;
-        b=Fk9XEhB6x+oy99sC4HGQlUSfGqVVrfs5QySHxuluztG/wam2XBb7XQwyBfsssE+Np
-         sc/4OrK1BKDVn97kfoyMmN8+IgXTEIq3V4MpNCD0SiN3v61IJ8xIpEe2Gf73Yrul2M
-         NHsaCsERgahwvVRndRa+YmpkWXawFQQtdZrYQPa8=
+        b=VYIFXnn0Uqs+xU3DFnAKomrXw6yym+cokLfI/hoTAUj29HN6tGEiWXfqSBwCeYty+
+         egoFLTddi7mICwIF2QaDyCHD8JTqXU4ANpql2d3kb5gaPzvkdzjirAddsoPfD2/C88
+         I2hlpMMWTpuV6Gv38Fgl/keCJJp8ZQdQHHLPSVJo=
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1522127509;
-        bh=mN+glT06uNC/9MGL/ia0YVd5bpPHr/i3dyqW1k3pI00=; l=1661;
+        s=default; t=1522128731;
+        bh=ltb67j70w9WLcUeMYPEmtd10cOZakZeZxgU5vB0o9Y8=; l=2361;
         h=Received:From:To:Subject;
-        b=Fk9XEhB6x+oy99sC4HGQlUSfGqVVrfs5QySHxuluztG/wam2XBb7XQwyBfsssE+Np
-         sc/4OrK1BKDVn97kfoyMmN8+IgXTEIq3V4MpNCD0SiN3v61IJ8xIpEe2Gf73Yrul2M
-         NHsaCsERgahwvVRndRa+YmpkWXawFQQtdZrYQPa8=
+        b=VYIFXnn0Uqs+xU3DFnAKomrXw6yym+cokLfI/hoTAUj29HN6tGEiWXfqSBwCeYty+
+         egoFLTddi7mICwIF2QaDyCHD8JTqXU4ANpql2d3kb5gaPzvkdzjirAddsoPfD2/C88
+         I2hlpMMWTpuV6Gv38Fgl/keCJJp8ZQdQHHLPSVJo=
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1522127509;
-        bh=mN+glT06uNC/9MGL/ia0YVd5bpPHr/i3dyqW1k3pI00=; l=1661;
+        s=default; t=1522128731;
+        bh=ltb67j70w9WLcUeMYPEmtd10cOZakZeZxgU5vB0o9Y8=; l=2361;
         h=Received:From:To:Subject;
-        b=Fk9XEhB6x+oy99sC4HGQlUSfGqVVrfs5QySHxuluztG/wam2XBb7XQwyBfsssE+Np
-         sc/4OrK1BKDVn97kfoyMmN8+IgXTEIq3V4MpNCD0SiN3v61IJ8xIpEe2Gf73Yrul2M
-         NHsaCsERgahwvVRndRa+YmpkWXawFQQtdZrYQPa8=
+        b=VYIFXnn0Uqs+xU3DFnAKomrXw6yym+cokLfI/hoTAUj29HN6tGEiWXfqSBwCeYty+
+         egoFLTddi7mICwIF2QaDyCHD8JTqXU4ANpql2d3kb5gaPzvkdzjirAddsoPfD2/C88
+         I2hlpMMWTpuV6Gv38Fgl/keCJJp8ZQdQHHLPSVJo=
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1522127509;
-        bh=mN+glT06uNC/9MGL/ia0YVd5bpPHr/i3dyqW1k3pI00=; l=1661;
+        s=default; t=1522128731;
+        bh=ltb67j70w9WLcUeMYPEmtd10cOZakZeZxgU5vB0o9Y8=; l=2361;
         h=Received:From:To:Subject;
-        b=Fk9XEhB6x+oy99sC4HGQlUSfGqVVrfs5QySHxuluztG/wam2XBb7XQwyBfsssE+Np
-         sc/4OrK1BKDVn97kfoyMmN8+IgXTEIq3V4MpNCD0SiN3v61IJ8xIpEe2Gf73Yrul2M
-         NHsaCsERgahwvVRndRa+YmpkWXawFQQtdZrYQPa8=
+        b=VYIFXnn0Uqs+xU3DFnAKomrXw6yym+cokLfI/hoTAUj29HN6tGEiWXfqSBwCeYty+
+         egoFLTddi7mICwIF2QaDyCHD8JTqXU4ANpql2d3kb5gaPzvkdzjirAddsoPfD2/C88
+         I2hlpMMWTpuV6Gv38Fgl/keCJJp8ZQdQHHLPSVJo=
 Authentication-Results: mail.javad.com;
         spf=pass (sender IP is 89.175.180.246) smtp.mailfrom=osv@javad.com smtp.helo=osv
 Received-SPF: pass (mail.javad.com: connection is authenticated)
 Received: from osv by osv with local (Exim 4.84_2)
         (envelope-from <osv@osv.gnss.ru>)
-        id 1f0gtf-000092-RS; Tue, 27 Mar 2018 08:11:47 +0300
+        id 1f0hDN-0000CI-Da; Tue, 27 Mar 2018 08:32:09 +0300
 From:   Sergey Organov <sorganov@gmail.com>
 To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     phillip.wood@dunelm.org.uk,
-        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
-        Git mailing list <git@vger.kernel.org>,
-        Jacob Keller <jacob.keller@gmail.com>,
+Cc:     Igor Djordjevic <igor.d.djordjevic@gmail.com>, git@vger.kernel.org,
         Johannes Sixt <j6t@kdbg.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC] Rebasing merges: a jorney to the ultimate solution (Road Clear)
-References: <87y3jtqdyg.fsf@javad.com>
-        <CA+P7+xq8UUcLWomUi=PS_hTKfJd3dMAxMmhioDS1bixwcmKAqw@mail.gmail.com>
-        <nycvar.QRO.7.76.6.1802271718090.56@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <4d7f3406-b206-cc22-87df-85700d6a03d9@gmail.com>
-        <33da31e9-9101-475d-8901-4b6b3df2f29d@gmail.com>
-        <940d959d-151d-68dd-0f13-320ebad0d75b@gmail.com>
-        <87606hoflx.fsf@javad.com>
-        <0ac3a3fd-4053-e32e-75ed-8829f22c2e1f@gmail.com>
-        <87a7vss6ax.fsf@javad.com>
-        <6c8749ca-ec5d-b4b7-f1a0-50d9ad2949a5@talktalk.net>
-        <872944c4-ca97-9f55-a424-86d1e3299a22@gmail.com>
-        <1c912980-8ce8-6281-fa99-040a5e3e1103@talktalk.net>
-        <nycvar.QRO.7.76.6.1803061829460.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <87h8pscw0r.fsf@javad.com>
-        <nycvar.QRO.7.76.6.1803070756550.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <87ina8ymxs.fsf@javad.com>
-        <nycvar.QRO.7.76.6.1803080741160.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <87vae1h3uo.fsf@javad.com>
-        <nycvar.QRO.7.76.6.1803261333500.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-Date:   Tue, 27 Mar 2018 08:11:47 +0300
-In-Reply-To: <nycvar.QRO.7.76.6.1803261333500.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        (Johannes Schindelin's message of "Mon, 26 Mar 2018 13:37:57 +0200
+        Junio C Hamano <gitster@pobox.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [RFC v2] Rebasing merges: a jorney to the ultimate solution (Road Clear)
+References: <87y3jtqdyg.fsf@javad.com> <87r2oxe3o1.fsf@javad.com>
+        <nycvar.QRO.7.76.6.1803070742580.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        <87vae8yq15.fsf@javad.com>
+        <nycvar.QRO.7.76.6.1803071450511.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        <a0cc88d2-bfed-ce7b-1b3f-3c447d2b32da@gmail.com>
+        <4918cc79-79ba-5dd2-ea84-dc47db47d835@gmail.com>
+        <b11785bd-5c96-43c1-95d8-b28eccfd13c8@gmail.com>
+        <d29d3c0e-6473-0461-c8ea-02975ce4de14@gmail.com>
+        <nycvar.QRO.7.76.6.1803111644380.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        <6362804d-e204-a9e0-9ff0-51d8497ce921@gmail.com>
+        <nycvar.QRO.7.76.6.1803121056400.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        <874lllh09b.fsf@javad.com>
+        <nycvar.QRO.7.76.6.1803261405170.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+Date:   Tue, 27 Mar 2018 08:32:09 +0300
+In-Reply-To: <nycvar.QRO.7.76.6.1803261405170.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        (Johannes Schindelin's message of "Mon, 26 Mar 2018 14:44:40 +0200
         (DST)")
-Message-ID: <87in9igl0s.fsf@javad.com>
+Message-ID: <87bmfagk2u.fsf@javad.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -116,6 +109,8 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Dear Johannes,
+
 Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
 > Hi Sergey,
@@ -123,43 +118,60 @@ Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > On Mon, 12 Mar 2018, Sergey Organov wrote:
 >
 >> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->> >
->> > On Wed, 7 Mar 2018, Sergey Organov wrote:
->> >
->> >> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->> >> 
->> >> > How can your approach -- which relies *very much* on having the
->> >> > original parent commits -- not *require* that consistency check?
->> >> 
->> >> I don't understand what you mean, sorry. Could you please point me to
->> >> the *require* you talk about in the original proposal?
->> >
->> > Imagine a todo list that contains this line
->> >
->> > 	merge -C abcdef 123456
->> >
->> > and now the user edits it (this is an interactive rebase, after all),
->> > adding another merge head:
->> >
->> > 	merge -C abcdef 987654 123456
->> >
->> > Now your strategy would have a serious problem: to find the original
->> > version of 987654. If there was one.
 >> 
->> We are talking about different checks then. My method has a built-in
->> check that Pillip's one doesn't.
+>> > [...]
+>> >
+>> > Where "easy" meant that I had to spend 1h still to figure out why
+>> > using the unrebased merge parents as merge bases.
+>> 
+>> That's because you try to figure out something that is not there in the
+>> [RFC v2]. I suggest to forget everything you've already imagined and
+>> just read the [RFC v2] proposal afresh. It should take about 10 minutes
+>> or less to get it. Really.
+>> 
+>> > The same amount of time did not allow me to wrap my head around
+>> > Sergey's verbose explanations.
+>> 
+>> Honestly, I don't believe it, sorry, but I'm willing to explain anything
+>> you wish to be explained in _[RFC v2]_.
 >
-> Since you did not bother to elaborate, I have to assume that your
-> "built-in check" is that thing where intermediate merges can give you
-> conflicts?
+> No, really. If you cannot bring yourself to believe my words, then I hate
+> to break it to you: I am not lying.
 >
-> If so, there is a possibility in Phillip's method for such conflicts, too:
-> we have to perform as many 3-way merges as there are parent commits.
->
-> It does make me uncomfortable to have to speculate what you meant,
-> though.
+> As to "I'm willing to explain anything you wish to be explained in RFC
+> v2": I was asking, and asking, and asking again, for a simple summary of
+> the idea behind your proposal. Nothing. That was the answer.
 
-It doesn't matter anymore as this check could easily be added to
-Phillip's algorithm as well, see [1].
+No. The answer rather was this simple explanation that I gave you
+multiple times already "rebase each side of the merge, then merge the
+results back using original merge commit as the merge base". Yet you say
+there was none. I'm confused.
+
+Well, as it seems you grok Phillip's notation just fine, here is RFC
+algorithm in this notation [1]:
+
+git checkout --detach A'
+git merge-recursive A -- A' M
+tree_U1'=$(git write-tree)
+git checkout --detach B'
+git merge-recursive B -- B' M
+tree_U2'=$(git write-tree)
+git merge-recursive M -- $tree_U1' $tree_U2'
+tree=$(git write-tree)
+M'=$(git log --pretty=%B -1 M | git commit-tree -pA' -pB')
+
+> I had to figure it out myself: the idea is to *create* fake commits,
+> non-merge ones, for every single merge commit parent. Those fake commits
+> combine the changes of *all* merge commit parents *but one*. And then
+> those commits are rebased, individually, with tons of opportunities for
+> merge conflicts. Repeated ones. And then that result is merged.
+
+Wrong. See above.
+
+Anyway, it doesn't matter anymore, see [1].
+
+References:
 
 [1] https://public-inbox.org/git/87efkn6s1h.fsf@javad.com
+
+-- Sergey
