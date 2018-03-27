@@ -6,44 +6,45 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0556E1F404
-	for <e@80x24.org>; Tue, 27 Mar 2018 03:18:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E311A1F404
+	for <e@80x24.org>; Tue, 27 Mar 2018 03:26:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751840AbeC0DS0 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Mar 2018 23:18:26 -0400
-Received: from avasout04.plus.net ([212.159.14.19]:56677 "EHLO
+        id S1751865AbeC0D0R (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Mar 2018 23:26:17 -0400
+Received: from avasout04.plus.net ([212.159.14.19]:57010 "EHLO
         avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751249AbeC0DSZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Mar 2018 23:18:25 -0400
+        with ESMTP id S1751249AbeC0D0R (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Mar 2018 23:26:17 -0400
 Received: from [10.0.2.15] ([80.189.70.162])
         by smtp with ESMTPA
-        id 0f7ufqTXAsD7b0f7vfDfY3; Tue, 27 Mar 2018 04:18:24 +0100
+        id 0fFWfqUAFsD7b0fFXfDfiP; Tue, 27 Mar 2018 04:26:16 +0100
 X-CM-Score: 0.00
 X-CNFS-Analysis: v=2.3 cv=CvORjEwD c=1 sm=1 tr=0
  a=zzlqjQC3YyNvDZl/Gy+4mg==:117 a=zzlqjQC3YyNvDZl/Gy+4mg==:17
- a=IkcTkHD0fZMA:10 a=bt3WUTiwAAAA:8 a=yMhMjlubAAAA:8 a=sUX920SBAAAA:8
- a=EBOSESyhAAAA:8 a=B9cyP-JphD63wTbySoMA:9 a=QEXdDO2ut3YA:10
- a=OXx4ngWzwLx9h_IvVXMu:22 a=egVJUTT-lD9PU5ZP4Sin:22 a=yJM6EZoI5SlJf8ks9Ge_:22
+ a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=gsn_jT7NtKzQPLLWNU0A:9 a=QEXdDO2ut3YA:10
+ a=yJM6EZoI5SlJf8ks9Ge_:22
 X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH v4] json_writer: new routines to create data in JSON
- format
-To:     git@jeffhostetler.com, git@vger.kernel.org
-Cc:     gitster@pobox.com, peff@peff.net, l.s.r@web.de, wink@saville.com,
-        Jeff Hostetler <jeffhost@microsoft.com>
-References: <20180326143136.47116-1-git@jeffhostetler.com>
- <20180326143136.47116-2-git@jeffhostetler.com>
+Subject: Re: [RFC PATCH 1/1] json-writer: incorrect format specifier
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Wink Saville <wink@saville.com>, git@vger.kernel.org,
+        jeffhost@microsoft.com
+References: <cover.1521868951.git.wink@saville.com>
+ <140b7646e7efa4175f9d82e6eb2909f2f94771fe.1521868951.git.wink@saville.com>
+ <4f4221d9-2ad9-2282-d26f-412ba0bfd719@ramsayjones.plus.com>
+ <c8628770-71d7-42f4-4bc5-444ea0160d26@ramsayjones.plus.com>
+ <xmqqr2o6dayt.fsf@gitster-ct.c.googlers.com>
 From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <ce076d5e-f30f-006e-a25e-ff1a900562bf@ramsayjones.plus.com>
-Date:   Tue, 27 Mar 2018 04:18:21 +0100
+Message-ID: <9512a1eb-2b9d-fda5-f2a5-c9f59dff972c@ramsayjones.plus.com>
+Date:   Tue, 27 Mar 2018 04:26:14 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
  Thunderbird/52.6.0
 MIME-Version: 1.0
-In-Reply-To: <20180326143136.47116-2-git@jeffhostetler.com>
+In-Reply-To: <xmqqr2o6dayt.fsf@gitster-ct.c.googlers.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-GB
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfD0E4Hfskf+5eIVFemn7Re0W91u9/Z494uW8NUeQ5slQ+SZp5P8ow8KqmJOrF64YUnI37A0JGTvY0WaxYP2TcnGlrCRNK/55dQhwe1DQH0e/s4foGt9b
- wTu92TTmyksQh2cdJGkStLyVo++7kNOv7Pv/dOcvUHipLE+2QaLg8vG/
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfB5kHlA+9s35igwF00cgdR4KMC3q5qJxmO5cN9y4sMab80L7pvVbCan1VjhewPUuR4Yej6gMuZ1TVhUqpK48CbOsVkdz63ymrqDfskVR4E4XYNU1bKBU
+ ZictlEfH9cOmJ4x0JtTw1rpqfRosDpbZ+Cfjvi2cCpBRn7qirS5Y6pthuZKBOVySEl3IwBrJJLwetA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -51,48 +52,37 @@ X-Mailing-List: git@vger.kernel.org
 
 
 
-On 26/03/18 15:31, git@jeffhostetler.com wrote:
-> From: Jeff Hostetler <jeffhost@microsoft.com>
+On 26/03/18 18:04, Junio C Hamano wrote:
+> Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
 > 
-> Add a series of jw_ routines and "struct json_writer" structure to compose
-> JSON data.  The resulting string data can then be output by commands wanting
-> to support a JSON output format.
+>>>> @@ -120,7 +120,7 @@ void jw_object_uint64(struct json_writer *jw, const char *key, uint64_t value)
+>>>>  	maybe_add_comma(jw);
+>>>>  
+>>>>  	append_quoted_string(&jw->json, key);
+>>>> -	strbuf_addf(&jw->json, ":%"PRIuMAX, value);
+>>>> +	strbuf_addf(&jw->json, ":%"PRIu64, value);
+>>>
+>>> In this code-base, that would normally be written as:
+>>>
+>>> 	strbuf_addf(&jw->json, ":%"PRIuMAX, (uintmax_t) value);
+>>
+>> heh, I should learn not to reply in a hurry, just before
+>> going out ...
+>>
+>> I had not noticed that 'value' was declared with an 'sized type'
+>> of uint64_t, so using PRIu64 should be fine.
 > 
-> The json-writer routines can be used to generate structured data in a
-> JSON-like format.  We say "JSON-like" because we do not enforce the Unicode
-> (usually UTF-8) requirement on string fields.  Internally, Git does not
-> necessarily have Unicode/UTF-8 data for most fields, so it is currently
-> unclear the best way to enforce that requirement.  For example, on Linx
-> pathnames can contain arbitrary 8-bit character data, so a command like
-> "status" would not know how to encode the reported pathnames.  We may want
-> to revisit this (or double encode such strings) in the future.
-> 
-> The initial use for the json-writer routines is for generating telemetry
-> data for executed Git commands.  Later, we may want to use them in other
-> commands, such as status.
-> 
-> Helped-by: René Scharfe <l.s.r@web.de>
-> Helped-by: Wink Saville <wink@saville.com>
-> Helped-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
-> Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
-> ---
->  Makefile                    |   2 +
->  json-writer.c               | 395 +++++++++++++++++++++++++++++
->  json-writer.h               |  92 +++++++
->  t/helper/test-json-writer.c | 590 ++++++++++++++++++++++++++++++++++++++++++++
->  t/t0019-json-writer.sh      | 253 +++++++++++++++++++
->  5 files changed, 1332 insertions(+)
->  create mode 100644 json-writer.c
->  create mode 100644 json-writer.h
->  create mode 100644 t/helper/test-json-writer.c
->  create mode 100755 t/t0019-json-writer.sh
-> 
-[snip]
+> But why is this codepath using a sized type in the first place?  It
+> is not like it wants to read/write a fixed binary file format---it
+> just wants to use an integer type that is wide enough to handle any
+> inttype the platform uses, for which uintmax_t would be a more
+> appropriate type, no?
 
-Thanks, this version fixes all issues I had (with the compilation
-and sparse warnings).
-
-[Was using UINT64_C(0xffffffffffffffff) a problem on windows?]
+I must confess to not having given any thought to the wider
+implications of the code. I don't really know what this code
+is going to be used for. [Although I did shudder when I read
+some mention of a 'universal interchange format' - I still
+have nightmares about XML :-D ]
 
 ATB,
 Ramsay Jones
