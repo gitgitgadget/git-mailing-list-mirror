@@ -6,38 +6,33 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3A9F71F42D
-	for <e@80x24.org>; Tue, 27 Mar 2018 10:28:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 207CE1F42D
+	for <e@80x24.org>; Tue, 27 Mar 2018 10:38:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752560AbeC0K2Z (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Mar 2018 06:28:25 -0400
-Received: from siwi.pair.com ([209.68.5.199]:38205 "EHLO siwi.pair.com"
+        id S1752016AbeC0Kih (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Mar 2018 06:38:37 -0400
+Received: from siwi.pair.com ([209.68.5.199]:39115 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752555AbeC0K2Y (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Mar 2018 06:28:24 -0400
+        id S1751030AbeC0Kig (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Mar 2018 06:38:36 -0400
 Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 8A1103F4090;
-        Tue, 27 Mar 2018 06:28:23 -0400 (EDT)
+        by siwi.pair.com (Postfix) with ESMTP id 3503B3F4012;
+        Tue, 27 Mar 2018 06:38:36 -0400 (EDT)
 Received: from [192.168.1.71] (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 4AACF3F4015;
-        Tue, 27 Mar 2018 06:28:23 -0400 (EDT)
-Subject: Re: [PATCH v4] json_writer: new routines to create data in JSON
- format
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>, git@vger.kernel.org
-Cc:     gitster@pobox.com, peff@peff.net, l.s.r@web.de, wink@saville.com,
-        Jeff Hostetler <jeffhost@microsoft.com>
-References: <20180326143136.47116-1-git@jeffhostetler.com>
- <20180326143136.47116-2-git@jeffhostetler.com>
- <ce076d5e-f30f-006e-a25e-ff1a900562bf@ramsayjones.plus.com>
+        by siwi.pair.com (Postfix) with ESMTPSA id 1FADE3F4005;
+        Tue, 27 Mar 2018 06:38:36 -0400 (EDT)
+Subject: Re: Fwd: New Defects reported by Coverity Scan for git
+To:     Stefan Beller <sbeller@google.com>, git <git@vger.kernel.org>
+References: <CAGZ79kbAOcwaRzjuMtZ_HVsYvUr_7UAPbOcnrmPgsdE19q=PrQ@mail.gmail.com>
 From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <5192e88a-41ea-02ed-c765-bfcb96aaba9d@jeffhostetler.com>
-Date:   Tue, 27 Mar 2018 06:28:22 -0400
+Message-ID: <95add9fa-85f2-4c2b-4610-dc32edd78acf@jeffhostetler.com>
+Date:   Tue, 27 Mar 2018 06:38:35 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:59.0) Gecko/20100101
  Thunderbird/59.0
 MIME-Version: 1.0
-In-Reply-To: <ce076d5e-f30f-006e-a25e-ff1a900562bf@ramsayjones.plus.com>
+In-Reply-To: <CAGZ79kbAOcwaRzjuMtZ_HVsYvUr_7UAPbOcnrmPgsdE19q=PrQ@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -48,22 +43,42 @@ X-Mailing-List: git@vger.kernel.org
 
 
 
-On 3/26/2018 11:18 PM, Ramsay Jones wrote:
-> On 26/03/18 15:31, git@jeffhostetler.com wrote:
->> From: Jeff Hostetler <jeffhost@microsoft.com>
-> [snip]
+On 3/26/2018 7:39 PM, Stefan Beller wrote:
+> coverity scan failed for the last couple month (since Nov 20th)
+> without me noticing, I plan on running it again nightly for the
+> Git project.
 > 
-> Thanks, this version fixes all issues I had (with the compilation
-> and sparse warnings).
+> Anyway, here are issues that piled up (in origin/pu) since then.
 > 
-> [Was using UINT64_C(0xffffffffffffffff) a problem on windows?]
+> Stefan
+> 
+> 
+> ---------- Forwarded message ----------
+[...]
+________________________________________________________________________________________________________
+> *** CID 1433539:  Null pointer dereferences  (FORWARD_NULL)
+> /t/helper/test-json-writer.c: 278 in scripted()
+> 272             struct json_writer jw = JSON_WRITER_INIT;
+> 273             int k;
+> 274
+> 275             if (!strcmp(argv[0], "@object"))
+> 276                     jw_object_begin(&jw);
+> 277             else if (!strcmp(argv[0], "@array"))
+>>>>      CID 1433539:  Null pointer dereferences  (FORWARD_NULL)
+>>>>      Passing "&jw" to "jw_array_begin", which dereferences null "jw.levels".
+> 278                     jw_array_begin(&jw);
+> 279             else
+> 280                     die("first script term must be '@object' or
+> '@array': '%s'", argv[0]);
+> 281
+> 282             for (k = 1; k < argc; k++) {
+> 283                     const char *a_k = argv[k];
+> 
+> ** CID 1433538:  Null pointer dereferences  (FORWARD_NULL)
+> 
 
-Thanks for the confirmation.
-
-I was building on Linux.  I haven't tried using UINT64_C()
-for anything, but I'll keep that in mind next time.
+The "jw.levels" field has been removed in the json-writer V4 reroll,
+so this isn't an issue going forward.
 
 Thanks,
 Jeff
-
-
