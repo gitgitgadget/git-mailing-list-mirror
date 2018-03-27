@@ -2,83 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 207CE1F42D
-	for <e@80x24.org>; Tue, 27 Mar 2018 10:38:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C03211F404
+	for <e@80x24.org>; Tue, 27 Mar 2018 12:49:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752016AbeC0Kih (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Mar 2018 06:38:37 -0400
-Received: from siwi.pair.com ([209.68.5.199]:39115 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751030AbeC0Kig (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Mar 2018 06:38:36 -0400
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 3503B3F4012;
-        Tue, 27 Mar 2018 06:38:36 -0400 (EDT)
-Received: from [192.168.1.71] (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 1FADE3F4005;
-        Tue, 27 Mar 2018 06:38:36 -0400 (EDT)
-Subject: Re: Fwd: New Defects reported by Coverity Scan for git
-To:     Stefan Beller <sbeller@google.com>, git <git@vger.kernel.org>
-References: <CAGZ79kbAOcwaRzjuMtZ_HVsYvUr_7UAPbOcnrmPgsdE19q=PrQ@mail.gmail.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <95add9fa-85f2-4c2b-4610-dc32edd78acf@jeffhostetler.com>
-Date:   Tue, 27 Mar 2018 06:38:35 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:59.0) Gecko/20100101
- Thunderbird/59.0
+        id S1751897AbeC0Mtp (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Mar 2018 08:49:45 -0400
+Received: from cloud.peff.net ([104.130.231.41]:44522 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1750914AbeC0Mtp (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Mar 2018 08:49:45 -0400
+Received: (qmail 29383 invoked by uid 109); 27 Mar 2018 12:49:44 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 27 Mar 2018 12:49:44 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 29009 invoked by uid 111); 27 Mar 2018 12:50:43 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 27 Mar 2018 08:50:43 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 27 Mar 2018 08:49:43 -0400
+Date:   Tue, 27 Mar 2018 08:49:43 -0400
+From:   Jeff King <peff@peff.net>
+To:     Orgad Shaneh <orgads@gmail.com>
+Cc:     git <git@vger.kernel.org>
+Subject: Re: A bug in git merge
+Message-ID: <20180327124942.GA18448@sigill.intra.peff.net>
+References: <CAGHpTBJ-4a5+5=303_N-n3TtUg_sXt6J1cad0WCQ4Kc-=HDdSA@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <CAGZ79kbAOcwaRzjuMtZ_HVsYvUr_7UAPbOcnrmPgsdE19q=PrQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAGHpTBJ-4a5+5=303_N-n3TtUg_sXt6J1cad0WCQ4Kc-=HDdSA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Tue, Mar 27, 2018 at 12:53:52PM +0300, Orgad Shaneh wrote:
 
+> If I cherry-pick a commit that added a line, then merge another commit
+> which removes this line, the line remains in the file instead of being
+> removed.
+> 
+> The following script demonstrates the bug.
+> 
+> file should be equivalent on both branches
+> 
+> git init
+> seq 1 20 > file
+> git add file
+> git commit -m 'Initial'
+> sed -i "s/^5/5\n55/" file
+> git commit -a -m 'Added 55'
+> git checkout -b other HEAD^
+> git cherry-pick master
+> git commit --amend --author 'Author <a@b.c>' --no-edit # generate a new hash
+> sed -i '/55/d' file
+> git commit -a -m 'Removed 55'
+> git checkout master
+> git merge --no-edit other
+> git diff other # Should be equal
 
-On 3/26/2018 7:39 PM, Stefan Beller wrote:
-> coverity scan failed for the last couple month (since Nov 20th)
-> without me noticing, I plan on running it again nightly for the
-> Git project.
-> 
-> Anyway, here are issues that piled up (in origin/pu) since then.
-> 
-> Stefan
-> 
-> 
-> ---------- Forwarded message ----------
-[...]
-________________________________________________________________________________________________________
-> *** CID 1433539:  Null pointer dereferences  (FORWARD_NULL)
-> /t/helper/test-json-writer.c: 278 in scripted()
-> 272             struct json_writer jw = JSON_WRITER_INIT;
-> 273             int k;
-> 274
-> 275             if (!strcmp(argv[0], "@object"))
-> 276                     jw_object_begin(&jw);
-> 277             else if (!strcmp(argv[0], "@array"))
->>>>      CID 1433539:  Null pointer dereferences  (FORWARD_NULL)
->>>>      Passing "&jw" to "jw_array_begin", which dereferences null "jw.levels".
-> 278                     jw_array_begin(&jw);
-> 279             else
-> 280                     die("first script term must be '@object' or
-> '@array': '%s'", argv[0]);
-> 281
-> 282             for (k = 1; k < argc; k++) {
-> 283                     const char *a_k = argv[k];
-> 
-> ** CID 1433538:  Null pointer dereferences  (FORWARD_NULL)
-> 
+This isn't a bug; it's the expected behavior for a 3-way merge.
 
-The "jw.levels" field has been removed in the json-writer V4 reroll,
-so this isn't an issue going forward.
+The merge looks only at the two final states to be merged, and the merge
+base. The three states we have are:
 
-Thanks,
-Jeff
+    base: without line 55
+    ours: with line 55
+  theirs: without line 55
+
+And since only one side made a change, the resolution is to take the
+change in the final result. The fact that the other branch actually
+manipulated the file (and how it manipulated it) isn't considered at
+all.
+
+The fact that it was a cherry-pick doesn't change that. A cherry-pick is
+an application of the same changes, but it has no history-relationship
+with the original commit in Git.
+
+One could argue for or against the user experience of history as a DAG,
+3-way endpoint merges, and how cherry-picks are stored, but this is all
+working according to Git's design and not a bug.
+
+-Peff
