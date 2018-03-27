@@ -2,89 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 829761F404
-	for <e@80x24.org>; Tue, 27 Mar 2018 14:37:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A7B771F404
+	for <e@80x24.org>; Tue, 27 Mar 2018 14:41:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751994AbeC0Ohj (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Mar 2018 10:37:39 -0400
-Received: from mail-ot0-f170.google.com ([74.125.82.170]:43258 "EHLO
-        mail-ot0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750944AbeC0Ohi (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Mar 2018 10:37:38 -0400
-Received: by mail-ot0-f170.google.com with SMTP id m22-v6so24733312otf.10
-        for <git@vger.kernel.org>; Tue, 27 Mar 2018 07:37:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=IPAl+A18nGv8/T0ZUQM5I+9Qz7/uP1UElZK3xirgkrc=;
-        b=IsH7n17QZIc3qr4X/vuEcTLIqhmcE/JZKxhSmZ4W5YkCZu9aMebGK8BXmXNdZoZ57X
-         hlOLe13LNjyslsw+7JgBOQWZGYiIlC6a3N9sGNO2wqZRqk1nl+MXHvOVUxX5bFE+KUZ3
-         S8aAGuCvXz9nANyFyPsVOv5bcEUOx1kIZtGfhSaqyPs9D0wUlWOBpWWmGRTj/jCJ3j1x
-         jx97FMQ5FcEDdOye6obhjm4GMErGh++7XNBsDmCHu8+YV+0TXpiYVMmpv5GDzHqCyoES
-         Xf4SsSoCjyfVZQvI11XF0znwEz9dnI3WI0xvTXM9Ayr6e5siqgu97TdK0WxXddEFYzf6
-         rY4g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=IPAl+A18nGv8/T0ZUQM5I+9Qz7/uP1UElZK3xirgkrc=;
-        b=pK8gdfIAsDRFlbZw3VRfekQlXW7Q36yZLplF7x6fows6MNyniWHyvlSUYi6geqol+y
-         2BZbNvXJ5YxwJXffRI1//kfxByY6iQ32kDafaG99DKtrOyG4GdMPSvyx5QFaGMtd8VHu
-         bqbOaTVVPGaaTXkWa6LyHU078SQr4KzBVHLCQrL4Z2HbmAnSS/HjCnrZoSpCfXeWYIP7
-         jjBOMU2UqdtQIf8uU+xyHXxJAi/HIc+SINGMh1gHSzTrR0wKalNc1M8ynaTvP5kBaQvW
-         M+pMcucYQMfNj7Vn1FleWFwEVCiA+NT2HYmVHgHNj885ItIHTZ4t5KwViYjm1REfwfwh
-         MHNA==
-X-Gm-Message-State: AElRT7EYkydmyS+ay5sWzawapHPUske6BebVk2eaYBOF5U6uFoBFJ2Gn
-        oqMW/g61BUmrDsGiiaTDMwZYNKB/WxGRpb9eB2NxwJqo
-X-Google-Smtp-Source: AIpwx49FfGpiuGVq3NqPbwVWqdLoSthy7aOsD35L9Du3PNUVBNU/IIr9lFhNYIgKzbZje2a+zo84rg9PFVcGu2RtGTw=
-X-Received: by 2002:a9d:6244:: with SMTP id i4-v6mr3397177otk.140.1522161457372;
- Tue, 27 Mar 2018 07:37:37 -0700 (PDT)
+        id S1752348AbeC0OlC (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Mar 2018 10:41:02 -0400
+Received: from mout.gmx.net ([212.227.15.19]:47649 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751316AbeC0OlB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Mar 2018 10:41:01 -0400
+Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lh7sF-1eFPOf1P5b-00oT2i; Tue, 27
+ Mar 2018 16:40:50 +0200
+Date:   Tue, 27 Mar 2018 16:40:47 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Git List <git@vger.kernel.org>,
+        =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
+        <pclouds@gmail.com>, Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: [PATCH 00/10] Hash-independent tests (part 1)
+In-Reply-To: <xmqq8tafe92r.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1803271630210.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <20180325192055.841459-1-sandals@crustytoothpaste.net> <CAPig+cR==SNfGdhwqPdvW75fUxXg-VSQ5Tz_OR7Sy_c0L94axQ@mail.gmail.com> <xmqq8tafe92r.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <20180325205120.17730-1-dnj@google.com> <nycvar.QRO.7.76.6.1803262331040.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-In-Reply-To: <nycvar.QRO.7.76.6.1803262331040.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-From:   Daniel Jacques <dnj@google.com>
-Date:   Tue, 27 Mar 2018 14:37:26 +0000
-Message-ID: <CAD1RUU8jNudjCXN=-mucogmSFj2xqyYqyk-dfADhjceLsmBE2g@mail.gmail.com>
-Subject: Re: [PATCH 0/2] Add Windows support to the new RUNTIME_PREFIX design
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:IQz3keL5iuj2R41DAIAMtLltc2XKaRN/qLGpkMV8y/v6etD0N/i
+ u8Xx1+vL2nTHBVxAxWasEW5emG39o/WJmY+LHQqdL8krEdrDldLika1u8hoEW3LDaAF7wr1
+ YBTeFCOj6FdIDcNefG0xz5zAWrYGnRfck25WschIytpsFxj74NcgFyZ7++ZF0vp7PWUDLis
+ Gwcm7Fov4Y4sFqkCT5I4w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:V6qooZ6Zi7M=:E5cyVSZWfcEKapV76MeQrU
+ eV5L0ic9oiHM2LoTrAqwQn6wUls3W6d1wY0ucqDYufIjgv2VIpnVoWZNg/bEh00+NDF6/KYQn
+ ZJVUHqvwD3BQfLFI26eO2n8GzRazfkDOL7kU1nxDrkj1CP/JQBWYUC2lBDOhTjJVowpe48678
+ nvepgQ7I18iEjA4s/2TsyY0T0L5ePUgWAkmhceoBRCM3I2gztqTrq25T9VLj6CGl7eXFY347K
+ 7C9LaAEKDJt2vjkaXnH7MtPdT9k0W88bgcd4XIJYIbdpRJO7TGUCjXZGHKkwm8mTjw11EuaJ0
+ 2ZGIBRh9lV10s2PXEAr5fxpEm/fDO6X6byWAVJVN8oSKWR7tqxcVkV2rw1jyVLzJpBq/XVGT3
+ klHESnUEpKFYeOsBRxuxP2M5BKuYzkFVqZKN8o0IbvPXADLoD8DGSAiD58I8DoBdyHuOFi6V6
+ TaWD5KSFZXa4UiKU0/oEXKZy1sRZM1hEDDCTqduKazp2oD49jFfVGN/CZPDkLMG+gxT7giGuo
+ TnUKp94kVatMa8ZHtokrq8ba7TC2jkwnf/YfJhZpI+lSq1dAAICLHgaPM8J78AjZGYXZZknnz
+ HARQNboogewjoTutIBf0zridUP5ilsEQnnHBWzCoBAyMdXbxbewHqpfoNcBfHFCVoUHM0IgTO
+ dSNsNHeKoZYEW74/Ia2ib2R8VSeGYNBnR1IDlwntotUO1sL+mt4z3fcq/7OmguBknDpaLG3za
+ KMVI23tDdPwDQoOzkprIhm+xVmxm4ta9tSplD5UEf8QtDYj5vvXqYZa7UVaII9WWdTU79OWpA
+ gDRY7Q9uUCuuBEmNHNI7KFoJRLmgs6u4W67sgWpGesk5vgKNlGRgn71YkPyBV6pVDP1UEiH
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 26, 2018 at 5:31 PM Johannes Schindelin <
-johannes.schindelin@gmx.de> wrote:
+Hi Junio,
 
-> Even if the RUNTIME_PREFIX feature originates from Git for Windows, the
-> current patch series is different enough in its design that it leaves the
-> Windows-specific RUNTIME_PREFIX handling in place: On Windows, we still
-> have to override argv[0] with the absolute path of the current `git`
-> executable.
+On Sun, 25 Mar 2018, Junio C Hamano wrote:
 
-> Let's just port the Windows-specific code over to the new design and get
-> rid of that argv[0] overwriting.
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+> 
+> > What's the plan for oddball cases such as 66ae9a57b8 (t3404: rebase
+> > -i: demonstrate short SHA-1 collision, 2013-08-23) which depend
+> > implicitly upon SHA-1 without actually hardcoding any hashes? The test
+> > added by 66ae9a57b8, for instance, won't start failing in the face of
+> > NewHash, but it also won't be testing anything meaningful.
+> >
+> > Should such tests be dropped altogether? Should they be marked with a
+> > 'SHA1' predicate or be annotated with a comment as being
+> > SHA-1-specific? Something else?
+> 
+> Ideally, the existing one be annotated with prereq SHA1, and also
+> duplicated with a tweak to cause the same kind of (half-)collision
+> under the NewHash and be annotated with prereq NewHash.
 
-> This also partially addresses a very obscure problem reported on the Git
-> for Windows bug tracker, where misspelling a builtin command using a
-> creative mIxEd-CaSe version could lead to an infinite ping-pong between
-> git.exe and Git for Windows' "Git wrapper" (that we use in place of
-> copies when on a file system without hard-links, most notably FAT).
+That's a good idea. I wonder whether we want to be a bit more specific,
+though, so that we have something grep'able for the future? Something like
+SHA1_SHORT_COLLISION or some such?
 
-> Dan, I would be delighted if you could adopt these patches into your patch
-> series.
+> It's a different matter how feasible it is to attain such an ideal,
+> though.  t1512 was fun to write, but it was quite a lot of work to
+> come up with bunch of blobs, trees and commits whose object names
+> share the common prefix 0{10}.
 
-Great, I'm glad this patch set could be useful to you! I'm happy to apply
-this to the patch series. They applied cleanly, so I'll push a new version
-after Travis validates the candidate.
+Did you write a helper to brute-force those? If so, we might want to have
+such a helper in t/helper/ to generate/re-generate those (i.e. it could be
+asked to generate a blob whose ID starts with five NUL bytes, and it would
+have hard-coded values for already-generated ones). Even if you did not
+write such a helper, we might want to have such a helper. That would take
+the responsibility away from the shell script.
 
-I don't have a Windows testing facility available, so I'm hoping that you
-verified that this works locally. I suppose that's what the unstable branch
-series is for.
+Ciao,
+Dscho
