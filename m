@@ -2,130 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6E3BE1F404
-	for <e@80x24.org>; Tue, 27 Mar 2018 05:34:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 461E61F404
+	for <e@80x24.org>; Tue, 27 Mar 2018 05:45:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751184AbeC0Fec (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Mar 2018 01:34:32 -0400
-Received: from mail.javad.com ([54.86.164.124]:43988 "EHLO mail.javad.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752106AbeC0FeE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Mar 2018 01:34:04 -0400
-Received: from osv (unknown [89.175.180.246])
-        by mail.javad.com (Postfix) with ESMTPSA id D01CA3EA25;
-        Tue, 27 Mar 2018 05:34:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1522128844;
-        bh=2HcXSJHFxYh5jg4n7qU6b39GiVRT2Fwrif1lqZdUTHY=; l=658;
-        h=Received:From:To:Subject;
-        b=V5bBr/gEC6zv11r6mlEmK7rGEeeEJ+pQ67ydHjuXOvK8iK+pDWtvhD7XVzn5Q5DIY
-         L1j7mlG5Qb29StK77PFWvcwvjOOoXOGgWw77okFQhkHZ80haXEARspgrzzHHePv8kH
-         TD0g/Bv7ury2gZS6vwBk6MWGQScMkCIvqfgmxFP0=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1522128844;
-        bh=2HcXSJHFxYh5jg4n7qU6b39GiVRT2Fwrif1lqZdUTHY=; l=658;
-        h=Received:From:To:Subject;
-        b=V5bBr/gEC6zv11r6mlEmK7rGEeeEJ+pQ67ydHjuXOvK8iK+pDWtvhD7XVzn5Q5DIY
-         L1j7mlG5Qb29StK77PFWvcwvjOOoXOGgWw77okFQhkHZ80haXEARspgrzzHHePv8kH
-         TD0g/Bv7ury2gZS6vwBk6MWGQScMkCIvqfgmxFP0=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1522128844;
-        bh=2HcXSJHFxYh5jg4n7qU6b39GiVRT2Fwrif1lqZdUTHY=; l=658;
-        h=Received:From:To:Subject;
-        b=V5bBr/gEC6zv11r6mlEmK7rGEeeEJ+pQ67ydHjuXOvK8iK+pDWtvhD7XVzn5Q5DIY
-         L1j7mlG5Qb29StK77PFWvcwvjOOoXOGgWw77okFQhkHZ80haXEARspgrzzHHePv8kH
-         TD0g/Bv7ury2gZS6vwBk6MWGQScMkCIvqfgmxFP0=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1522128844;
-        bh=2HcXSJHFxYh5jg4n7qU6b39GiVRT2Fwrif1lqZdUTHY=; l=658;
-        h=Received:From:To:Subject;
-        b=V5bBr/gEC6zv11r6mlEmK7rGEeeEJ+pQ67ydHjuXOvK8iK+pDWtvhD7XVzn5Q5DIY
-         L1j7mlG5Qb29StK77PFWvcwvjOOoXOGgWw77okFQhkHZ80haXEARspgrzzHHePv8kH
-         TD0g/Bv7ury2gZS6vwBk6MWGQScMkCIvqfgmxFP0=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1522128844;
-        bh=2HcXSJHFxYh5jg4n7qU6b39GiVRT2Fwrif1lqZdUTHY=; l=658;
-        h=Received:From:To:Subject;
-        b=V5bBr/gEC6zv11r6mlEmK7rGEeeEJ+pQ67ydHjuXOvK8iK+pDWtvhD7XVzn5Q5DIY
-         L1j7mlG5Qb29StK77PFWvcwvjOOoXOGgWw77okFQhkHZ80haXEARspgrzzHHePv8kH
-         TD0g/Bv7ury2gZS6vwBk6MWGQScMkCIvqfgmxFP0=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1522128844;
-        bh=2HcXSJHFxYh5jg4n7qU6b39GiVRT2Fwrif1lqZdUTHY=; l=658;
-        h=Received:From:To:Subject;
-        b=V5bBr/gEC6zv11r6mlEmK7rGEeeEJ+pQ67ydHjuXOvK8iK+pDWtvhD7XVzn5Q5DIY
-         L1j7mlG5Qb29StK77PFWvcwvjOOoXOGgWw77okFQhkHZ80haXEARspgrzzHHePv8kH
-         TD0g/Bv7ury2gZS6vwBk6MWGQScMkCIvqfgmxFP0=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1522128844;
-        bh=2HcXSJHFxYh5jg4n7qU6b39GiVRT2Fwrif1lqZdUTHY=; l=658;
-        h=Received:From:To:Subject;
-        b=V5bBr/gEC6zv11r6mlEmK7rGEeeEJ+pQ67ydHjuXOvK8iK+pDWtvhD7XVzn5Q5DIY
-         L1j7mlG5Qb29StK77PFWvcwvjOOoXOGgWw77okFQhkHZ80haXEARspgrzzHHePv8kH
-         TD0g/Bv7ury2gZS6vwBk6MWGQScMkCIvqfgmxFP0=
-Authentication-Results: mail.javad.com;
-        spf=pass (sender IP is 89.175.180.246) smtp.mailfrom=osv@javad.com smtp.helo=osv
-Received-SPF: pass (mail.javad.com: connection is authenticated)
-Received: from osv by osv with local (Exim 4.84_2)
-        (envelope-from <osv@osv.gnss.ru>)
-        id 1f0hFC-0000Cu-5L; Tue, 27 Mar 2018 08:34:02 +0300
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Igor Djordjevic <igor.d.djordjevic@gmail.com>, git@vger.kernel.org,
-        Johannes Sixt <j6t@kdbg.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [RFC v2] Rebasing merges: a jorney to the ultimate solution (Road Clear)
-References: <87y3jtqdyg.fsf@javad.com> <87r2oxe3o1.fsf@javad.com>
-        <nycvar.QRO.7.76.6.1803070742580.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <87vae8yq15.fsf@javad.com>
-        <nycvar.QRO.7.76.6.1803071450511.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <a0cc88d2-bfed-ce7b-1b3f-3c447d2b32da@gmail.com>
-        <nycvar.QRO.7.76.6.1803111324390.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <d18a6e73-ce6f-b4aa-8ead-7aaabddf454d@gmail.com>
-        <87zi3dh53k.fsf@javad.com>
-        <nycvar.QRO.7.76.6.1803261331340.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-Date:   Tue, 27 Mar 2018 08:34:02 +0300
-In-Reply-To: <nycvar.QRO.7.76.6.1803261331340.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        (Johannes Schindelin's message of "Mon, 26 Mar 2018 13:33:20 +0200
-        (DST)")
-Message-ID: <874ll2gjzp.fsf@javad.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        id S1750932AbeC0Fp1 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Mar 2018 01:45:27 -0400
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:39488 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750880AbeC0Fp0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Mar 2018 01:45:26 -0400
+Received: by mail-pf0-f194.google.com with SMTP id u5so8478239pfh.6
+        for <git@vger.kernel.org>; Mon, 26 Mar 2018 22:45:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=teichroeb-net.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id;
+        bh=xlIpK3ZJvQ1DeXnpMV+T5ee9FQAWU0rn6W+xqQJoSK8=;
+        b=AClwLl8+JsXSa0Fku5k1wP52eGQZUMML88LTKuVosYSnuJIziNtb+KEDafz47bMp2N
+         GOjq9GYUvqH0YJDPphp1aYcCO0EbJX/KZm3ONigp6TToou0dyvFVVroBtKnGbsGVquy1
+         o0adcj3tBCv3ZpuMucIbtXfl8tgwJXHM6bThHwSDHRK/WK8OjHkKEdSURKdcC9AAac82
+         8J0xGFuC7pnNl8o7nexNx3VHs1yxy2iyO+im5T6q6iqbH/v4xbDQ7Y463+75n1Tn6QPO
+         hQIa3TWD++zzDdHIbq+YCp0DrGWVoc8yijNQnWWdBndzNmx1XKdY++LpCMG1eryDxMhe
+         gWBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=xlIpK3ZJvQ1DeXnpMV+T5ee9FQAWU0rn6W+xqQJoSK8=;
+        b=GGI54dAzYvMX+5XhsXfis+5ZzBUHjmeeEYDQg1kaUxHNkry9IgGNfvCNL1YXeD4Q/x
+         BTHf56KFUnY7ne6vPM9FVwSVHNA/Jw6hSwiwVKvZnpQ1z1tcg1qd2b0u/BIhcn9Tmmjs
+         OlP7zexNDZgx4FkCw7FBsGebV6Ed7nEQwbNXM6+kxdL00H7L2Z0P/ItGC5iTW66paERY
+         Ex7NUilhUuzps4BuvR8/4FLIKHEUNOzAb4KRHsMwCV/hUoAcbjjQqLdBFP1kY2q6w5vb
+         thxUaZg5o1i7Xdent8rrsjw1EyLjOtqpl6rJAuWF+KM30j4h/wWVHJisb4iLo3h49gFZ
+         IVwA==
+X-Gm-Message-State: AElRT7G6xaBWbrfHzeK/Pe/oXwA0XvWEuHJ2MX2J0W4sThJItClCQTff
+        Aa9IN6487cn+tkPhsD2kzQt2Gwk=
+X-Google-Smtp-Source: AG47ELsF4D4M9PPH0G7lG0SgrEy8DPI/6mZ/9XHBxoliXi8Gw01WqWMpspjyXTV2z9CVS8/BsMOFxA==
+X-Received: by 10.99.96.84 with SMTP id u81mr30504536pgb.231.1522129525616;
+        Mon, 26 Mar 2018 22:45:25 -0700 (PDT)
+Received: from localhost.localdomain (S01066c3b6b1953d0.vc.shawcable.net. [24.80.205.243])
+        by smtp.gmail.com with ESMTPSA id n8sm898733pff.131.2018.03.26.22.45.24
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 26 Mar 2018 22:45:25 -0700 (PDT)
+From:   Joel Teichroeb <joel@teichroeb.net>
+To:     Git Mailing List <git@vger.kernel.org>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Joel Teichroeb <joel@teichroeb.net>
+Subject: [PATCH v3 0/5] Convert some stash functionality to a builtin
+Date:   Mon, 26 Mar 2018 22:44:27 -0700
+Message-Id: <20180327054432.26419-1-joel@teichroeb.net>
+X-Mailer: git-send-email 2.16.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Johannes,
+I've been working on converting all of git stash to be a
+builtin, however it's hard to get it all working at once with
+limited time, so I've moved around half of it to a new
+stash--helper builtin and called these functions from the shell
+script. Once this is stabalized, it should be easier to convert
+the rest of the commands one at a time without breaking
+anything.
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+I've sent most of this code before, but that was targetting a
+full replacement of stash. The code is overall the same, but
+with some code review changes and updates for internal api
+changes.
 
-> Hi Sergey,
->
-> On Mon, 12 Mar 2018, Sergey Organov wrote:
->
->> [...]
->> 
->> Yet another consequence is that my approach will likely result in better
->> code reuse.
->
-> This is a purely academic speculation. At least until somebody implements
-> Phillip's method. Oh wait, I already started to implement it, and it was
-> not exactly hard to implement:
->
-> https://github.com/dscho/git/commit/26d2858800a4e0d3cc6313ddb54dd4d2ce516f31
+Since there seems to be interest from GSOC students who want to
+work on converting builtins, I figured I should finish what I
+have that works now so they could build on top of it.
 
-Nice! Please see [1] for some recent relevant discussion.
+Previous threads:
+v1: https://public-inbox.org/git/20180325173916.GE10909@hank/T/
+v2: https://public-inbox.org/git/20180326011426.19159-1-joel@teichroeb.net/
 
-[1] https://public-inbox.org/git/87efkn6s1h.fsf@javad.com/
+Changes from v2:
+ - Fixed formatting (I keep forgetting to set vim to tabs)
+ - Renamed destroy to free
+ - Redid my tests to validate more (Thanks Johannes)
+ - Deleted more shell code that isn't needed anymore
 
--- Sergey
+Joel Teichroeb (5):
+  stash: improve option parsing test coverage
+  stash: convert apply to builtin
+  stash: convert drop and clear to builtin
+  stash: convert branch to builtin
+  stash: convert pop to builtin
+
+ .gitignore              |   1 +
+ Makefile                |   1 +
+ builtin.h               |   1 +
+ builtin/stash--helper.c | 631 ++++++++++++++++++++++++++++++++++++++++++++++++
+ git-stash.sh            | 136 +----------
+ git.c                   |   1 +
+ t/t3903-stash.sh        |  16 ++
+ 7 files changed, 659 insertions(+), 128 deletions(-)
+ create mode 100644 builtin/stash--helper.c
+
+-- 
+2.16.2
+
