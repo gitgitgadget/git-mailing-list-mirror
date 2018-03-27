@@ -2,116 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E2D6B1F42D
-	for <e@80x24.org>; Tue, 27 Mar 2018 06:31:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D417A1F42D
+	for <e@80x24.org>; Tue, 27 Mar 2018 08:58:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752484AbeC0Gbl (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Mar 2018 02:31:41 -0400
-Received: from cloud.peff.net ([104.130.231.41]:44270 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1752480AbeC0Gbk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Mar 2018 02:31:40 -0400
-Received: (qmail 1115 invoked by uid 109); 27 Mar 2018 06:31:40 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 27 Mar 2018 06:31:40 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 26996 invoked by uid 111); 27 Mar 2018 06:32:38 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 27 Mar 2018 02:32:38 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 27 Mar 2018 02:31:38 -0400
-Date:   Tue, 27 Mar 2018 02:31:38 -0400
-From:   Jeff King <peff@peff.net>
-To:     Rafael Ascensao <rafa.almas@gmail.com>
-Cc:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: git complains packed-refs is not a directory when used with
- GIT_DIR and GIT_WORK_TREE envvars.
-Message-ID: <20180327063137.GA24044@sigill.intra.peff.net>
-References: <CACUQV5_3Pw+vnyyNUL4oE4tMLG_wKVdqdVk01rg4V92ufUYHHA@mail.gmail.com>
+        id S1751938AbeC0I6W (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Mar 2018 04:58:22 -0400
+Received: from mail-qt0-f178.google.com ([209.85.216.178]:39720 "EHLO
+        mail-qt0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751752AbeC0I6U (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Mar 2018 04:58:20 -0400
+Received: by mail-qt0-f178.google.com with SMTP id v11so22883857qtj.6
+        for <git@vger.kernel.org>; Tue, 27 Mar 2018 01:58:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=cb2Jga62bQebp84MCpMv+uXyFWMpwxjhLkZjkqKwNOc=;
+        b=NDyX41ufkaH1OKusMCprNIPYpNfe1kFlgLGL+70B32UoDehY/HDSDriDRCVpmXwqy9
+         2TvJXmavJeP/IRx+YcYZPfPFOQ4OvxdietoWHU1F9b/HKw4MsorYFoNKKLWWZLWRoVVM
+         0kWxZr2j+NiXPp4Oe4YFdJX1rWLgPpRDPtG6rGVmOPCl/lDAVbniI8rJJwv/bVRgEXYO
+         UCcd29BXIQCYx74hxzuF5InM/34n8zjjg6NwpbOjsrNuLN2ZYaT5L8IF4J1+GykF4tez
+         WapLFoqtMb3KFU988syuqsQ+3qVdx/abs6pewW1Wwfc5Sa9r5Oe6lHet9q7dZLdVGr2i
+         X1Pw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=cb2Jga62bQebp84MCpMv+uXyFWMpwxjhLkZjkqKwNOc=;
+        b=sCEHlqVbfJ9YXmnQvdeT4xx3BIRYwJZAe+JbLW3nO1xYi0q753anwFO6nfDG9ImjJx
+         2VC7ZilPgRU5urK1zNNUHm/WDS7KcYQjkSaEJ36rt8+OG6uXB2Bemei5p3YIlk8JdLhp
+         CmdS4sb/BeIiRIxO/G+eKuXhvGAbSg5uSlTVgQPYlCsvzIrQ+WmnwwaydscM2HvEA2zB
+         GqWAt1b82kq3rNqB4egEzhacJU1jlcCZP5ebOFFc9MZNx5RmujtwfVKZVc1E+NtYy2N6
+         Cj6SxgSU3Eqm879GxaGVAFT6PRdInOwyijL2M1Lyw4anPHBQipJZHBMteCrdTh8QDu2x
+         wsnA==
+X-Gm-Message-State: AElRT7Gzh8jr1qUQYcW3AYwdlqK2bat3kXrJpa2CtIpeImpcVWxCd3RN
+        1isdw9n31U1Qdg7LRPAr4YsflRokcsnSiR5Jod0=
+X-Google-Smtp-Source: AG47ELtYbpchLmqj3B6Sjyx6cUoMGfUGn75kY9i213uWNGLuULr7MoX95p1KebGs4jJnJv1iUN6g/eNm9lJVxcIACKI=
+X-Received: by 10.200.1.2 with SMTP id e2mr57626936qtg.121.1522141099991; Tue,
+ 27 Mar 2018 01:58:19 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CACUQV5_3Pw+vnyyNUL4oE4tMLG_wKVdqdVk01rg4V92ufUYHHA@mail.gmail.com>
+Received: by 10.12.174.202 with HTTP; Tue, 27 Mar 2018 01:58:19 -0700 (PDT)
+In-Reply-To: <20180325134947.25828-1-t.gummerer@gmail.com>
+References: <20180317222219.4940-1-t.gummerer@gmail.com> <20180325134947.25828-1-t.gummerer@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Tue, 27 Mar 2018 04:58:19 -0400
+X-Google-Sender-Auth: vQ4e3RCIf_slIjv6ciEjUaInfrg
+Message-ID: <CAPig+cSS2T-CweGtfO1vm=cskS91hLCHBoOhDuoqHAzg=27WbA@mail.gmail.com>
+Subject: Re: [PATCH v5 0/6] worktree: teach "add" to check out existing branches
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+Cc:     Git List <git@vger.kernel.org>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 26, 2018 at 10:27:09PM +0100, Rafael Ascensao wrote:
+On Sun, Mar 25, 2018 at 9:49 AM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
+> Thanks Eric for the review of the previous round and Duy and Junio for
+> additional comments.
+> This round should address all of Eric's comments from the previous round.
 
-> One of the tools that manages PKGBUILDS for Arch Linux stores PKGBUILD
-> git repos inside a cache directory for reuse.
-> 
-> One of the repos is triggering some unexpected behaviour that can be
-> reproduced in the CLI with:
-> 
->   $ GIT_DIR=spotify/.git GIT_WORK_TREE=spotify git reset HEAD
->   fatal: couldn't read spotify/.git/packed-refs: Not a directory
-> [...]
-> The issue seems to bisect to f57f37e2e1bf11ab4cdfd221ad47e961ba9353a0
-> I can't pinpoint why this particular repo is behaving differently.
+Thanks, it appears to cover my review comments from the previous
+round. I do have some additional comments on this round (which I could
+have raised with the previous round if I had thought of them at the
+time).
 
-I think we're getting confused by the relative paths. Here's a related
-reproduction:
+> As explained in more detail in a reply to the review comment directly,
+> I did not add an enum to 'struct add_opts', for 'force_new_branch' and
+> 'checkout_existing_branch', but instead removed 'force_new_branch'
+> from the struct as it's not required.
 
-  $ git init repo
-  $ git -C repo commit --allow-empty -m foo
-  $ GIT_DIR=repo/.git GIT_WORK_TREE=repo git reset HEAD
-  $ find repo/repo
-  repo/repo
-  repo/repo/.git
-  repo/repo/.git/logs
-  repo/repo/.git/logs/HEAD
-  repo/repo/.git/HEAD
+Makes sense. In fact, I had thoughts along these lines during your
+previous dwim-ery series. See my comments on patch 3/6.
 
-Er, what? It looks like we kept looking at "repo/.git" as our git
-directory, even though we should have normalized it into an absolute
-path after moving into the root of the work-tree.
+> The rest of the updates are mainly in the user facing messages,
+> documentation and one added test.
+> Interdiff below:
 
-I can also reproduce your exact error by inserting:
-
-  git -C repo pack-refs
-  echo whatever >repo/repo
-
-before the call to "git reset" (and then we get ENOTDIR trying to read
-the packed-refs file, because the file "repo" is in the way).
-
-Looking at f57f37e2, I think the problem is that files_ref_store_create()
-saves the value of get_git_dir() at that point. But later after we
-chdir for the working tree, presumably it's updated, but we continue to
-use the out-dated relative path.
-
-So one "fix" is something like this:
-
-diff --git a/refs.c b/refs.c
-index 20ba82b434..449bdf2437 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1643,11 +1643,14 @@ static struct ref_store *ref_store_init(const char *gitdir,
- 	const char *be_name = "files";
- 	struct ref_storage_be *be = find_ref_storage_backend(be_name);
- 	struct ref_store *refs;
-+	char *abs_gitdir;
- 
- 	if (!be)
- 		die("BUG: reference backend %s is unknown", be_name);
- 
--	refs = be->init(gitdir, flags);
-+	abs_gitdir = absolute_pathdup(gitdir);
-+	refs = be->init(abs_gitdir, flags);
-+	free(abs_gitdir);
- 	return refs;
- }
- 
-
-But that really feels like we're papering over the problem. It's not
-clear to me exactly what f57f37e2 is trying to accomplish, and whether
-it would work for it to look call get_git_dir() whenever it needed the
-path.
-
--Peff
+The interdiff looks sane. Unfortunately, due to UI regressions, I'm
+having second thoughts about whether this series is going in the right
+direction. See my comments on patch 2/6.
