@@ -7,123 +7,143 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E83DF1F404
-	for <e@80x24.org>; Tue, 27 Mar 2018 22:18:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BD7F01F404
+	for <e@80x24.org>; Tue, 27 Mar 2018 22:56:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752334AbeC0WSL (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Mar 2018 18:18:11 -0400
-Received: from mail-yb0-f175.google.com ([209.85.213.175]:39228 "EHLO
-        mail-yb0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752232AbeC0WSJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Mar 2018 18:18:09 -0400
-Received: by mail-yb0-f175.google.com with SMTP id k8-v6so144997ybd.6
-        for <git@vger.kernel.org>; Tue, 27 Mar 2018 15:18:08 -0700 (PDT)
+        id S1752082AbeC0W4z (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Mar 2018 18:56:55 -0400
+Received: from mail-yw0-f171.google.com ([209.85.161.171]:34289 "EHLO
+        mail-yw0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751913AbeC0W4y (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Mar 2018 18:56:54 -0400
+Received: by mail-yw0-f171.google.com with SMTP id e17so193470ywa.1
+        for <git@vger.kernel.org>; Tue, 27 Mar 2018 15:56:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=BNzbX96DLyqTCGYgRvoHtY+/dDhMU0vqf3gkdssg5CE=;
-        b=CZKMVFZLPpNglKIGimgLCA2cC2Fq2Y/DIrmowjgJXHlxI+YWCLAy0N/Wu3LRbgCGYb
-         /jg7z7E0cT1hC+tKI6MPx94dmzIwJaAElQW+Ye6cvRTnCo3bKgbW/uMndtj9J7q3iL6I
-         s6WV9jacu7bnJHcISkB/2JvRPuEgish91TMHtvC4KO3k80FiTUPWkz4cze2SRPeRyJfd
-         fFPnWA2VOwNKZL7jbHWxSUGZKQ/ztFGVZ3/1E3so/VJ3s0ddt7EUwdYWgddun10eRqt2
-         o2l6Qct42Tgu98eRWjqtkeHkoAuUHqm8M9j8hQDvlrA9ha7kyjqXyP/scb59r3vHrNmw
-         AczQ==
+        bh=uL7o+qp6vsa6UOplg2A3YZA5U+vdBe6Zy/5/XFTLPW8=;
+        b=GtW5HEUs5v5BMT6I1dAafYVKTJn12oc1CEpIgMcJ089rzp8bVrgrDR0XvYREVuNfRU
+         m2kidpycfjNp0yjp0+KIspuXK6qexXn7w39/M+cqoQUKcQ5ZSD7R6LnMviV0sgGKI117
+         rfxur8tkAS30w9uWeA55nDVVf+hGS9n1ymDQvuO7hFj1wb/S34fnDtDO8vCaoH3LcesN
+         74JEvOb1z9p9du1jTW1KKIrzg0da6pr+rqKXFDPJqhdnBCKBUPgZX7H7LL1UXcJhlKCY
+         qULpgTY8UrMSrx7FysRGZXQT9NWGQLDQFFGIxiKhL7HiGAAB9k7bXTpeJnhZmC+DqgoL
+         3yyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=BNzbX96DLyqTCGYgRvoHtY+/dDhMU0vqf3gkdssg5CE=;
-        b=tYsEFPx49qoyvpXgoHOzl/E3qtZarWv/W1IaNzDVlhkLAi+5qu5Xy5or7nmW9M6xBh
-         GjMzKK/VmwblGASiCT9lxGquH7lPESWJTv+7cGeKiqrUFQOSVJdqqpQYF+lzXvrFB6WV
-         flGE3ZZvw57jl0mCPaFz3yYZwnm7AnhyF2ZiXczRCGIF54I4osmcA4XUiw7VmnUglVUY
-         BS5pXa5SifeNuDedQbyqtf4tD+oTd0zbVyr4ua2k5JJTNcpipUsX/1ELD+M/uqKy8lWM
-         CQjmz/Nvx6MrRfyMrDrYPS3UVtgM5JsoLMeDNesU/xRcobVXa7jY0gCow7i8jJrvXF2W
-         3Fhg==
-X-Gm-Message-State: AElRT7Hr91RGb+jG+B01PHFjN9p07jcWnik/SwJW/ogTsFpF3C787kNb
-        /n6rCu/3U99BW7ilsnCIRPlwLngNeK9W6WwIzoW1Sg==
-X-Google-Smtp-Source: AIpwx4/R3zu8emWqkvvAavxIuNZOqPBMGuKsE5/twri3SXsOE5isHomfQECLU0dd6X6m1KNzLIcNQ63EOX7PkNz360A=
-X-Received: by 2002:a25:493:: with SMTP id 141-v6mr801747ybe.247.1522189088071;
- Tue, 27 Mar 2018 15:18:08 -0700 (PDT)
+        bh=uL7o+qp6vsa6UOplg2A3YZA5U+vdBe6Zy/5/XFTLPW8=;
+        b=mBHFUYynBlaukMCJZBMQwNHGanfYuAmpV+VPAcseTrfp3YQQHNEMK+UVMlj9q//TGe
+         JC60EX2NX0h0ZmJ4n+ll/PXUA5akCwpgUeg96XAWUTEu8XVDjOcO9Bb27kqP6j+PbBTt
+         e46ZFCXxb5R0RFnegomFtYl1cHjMflQxHy1B46B5E1POwu1QBSWQra0asKKWUtFvdOKW
+         oTilw8QuzQM30ZKm4QBlz2S4FPV12uYa0M6D2viqO0dmN61I5yKi8GrODH0Nc38qC9fX
+         9LpgJsZisfg5zwhblQTqcRu274BiE3xH7p7NLAoAjdFxkvN1efVit5UeYHe/n+gR9wIj
+         LifA==
+X-Gm-Message-State: AElRT7Hih2H+nnRbTexIbvygzWJGteMGPpskgehU83ITa8WlaN3DNQnB
+        9xaqtymP4JgT0qjbpLCcDL7eHI0qOFx9JG8eX+USEA==
+X-Google-Smtp-Source: AIpwx4//xcLjPczVQzxsRr7PxSIBug56SJMmbmmXaNZFS0y83FmCpauRIBzGldkvwSi2yP4VtzOu+WopEz8kRCB+0kM=
+X-Received: by 10.129.232.5 with SMTP id a5mr860340ywm.421.1522191413426; Tue,
+ 27 Mar 2018 15:56:53 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180307211140.19272-1-rcdailey@gmail.com> <CAGZ79kZk7N4zQUS1eMFMPTuPPuo5ViOeLj5hQHV=E+A=OO+D0w@mail.gmail.com>
- <xmqqina56t8h.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqina56t8h.fsf@gitster-ct.c.googlers.com>
+References: <9e22b49e-6732-17c7-76fe-0ce241787db9@arcor.de>
+In-Reply-To: <9e22b49e-6732-17c7-76fe-0ce241787db9@arcor.de>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 27 Mar 2018 22:17:57 +0000
-Message-ID: <CAGZ79kZ_j3_mhk5asNEBgBe_2qD7=18foJgW=p0+p=uJa3U2nw@mail.gmail.com>
-Subject: Re: [PATCH] Support long format for log-based submodule diff
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Robert Dailey <rcdailey.lists@gmail.com>,
-        git <git@vger.kernel.org>,
-        Stefan Beller <stefanbeller@gmail.com>,
-        Brandon Williams <bmwill@google.com>
+Date:   Tue, 27 Mar 2018 22:56:42 +0000
+Message-ID: <CAGZ79kYGY5bjh0WPQh7xkXQxLkB9EQ-OcJhVuGE8YUnwmvk2Fg@mail.gmail.com>
+Subject: Re: git submodule deinit resulting in BUG: builtin/submodule--helper.c:1045:
+ module_list_compute should not choke on empty pathspec
+To:     kumbayo84@arcor.de
+Cc:     git <git@vger.kernel.org>, Prathamesh Chavan <pc44800@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> >> $ git diff --submodule=log --submodule-log-detail=(long|short)
-> >>
-> >> I'm not sure what makes sense here. I welcome thoughts/discussion and
-> >> will provide follow-up patches.
-> >
-> > The case of merges is usually configured with --[no-]merges, or
-> > --min-parents=<n>.
+On Tue, Mar 27, 2018 at 12:55 PM Peter Oberndorfer <kumbayo84@arcor.de>
+wrote:
 
-> But that is a knob that controls an irrelevant aspect of the detail
-> in the context of this discussion, isn't it?  This code is about "to
-> what degree the things that happened between two submodule commits
-> in an adjacent pair of commits in the superproject are summarized?"
+> Hi,
 
-And I took it a step further and wanted to give a general solution, which
-allows giving any option that the diff machinery accepts to only apply
-to the submodule diffing part of the current diff.
+> i tried to run "git submodule deinit xxx"
+> on a submodule that was recently removed from the Rust project.
+> But git responded with a BUG/Core dump (and also did not remove the
+submodule directory from the checkout).
 
-> The hack Robert illustrates below is to change it to stop favouring
-> such projects with "clean" histories, and show "log --oneline
-> --no-merges --left-right".  When presented that way, clean histories
-> of topic-branch based projects will suffer by losing conciseness,
-> but clean histories of totally linear projects will still be shown
-> the same way, and messy history that sometimes merges, sometimes
-> merges mergy histories, and sometimes directly builds on the trunk
-> will be shown as an enumeration of individual commits in a flat way
-> by ignoring merges and not restricting the traversal to the first
-> parent chains, which would appear more uniform than what the current
-> code shows.
+> ~/src/rust/rust$ git submodule deinit src/rt/hoedown/
+> error: pathspec 'src/rt/hoedown/' did not match any file(s) known to git.
+> BUG: builtin/submodule--helper.c:1045: module_list_compute should not
+choke on empty pathspec
+> Aborted (core dumped)
 
-Oh, I realize this is in the *summary* code path, I was thinking about the
-show_submodule_inline_diff, which would benefit from more diff options.
+> I had a short look at submodule--helper.c and module_list_compute() is
+called from multiple places.
+> Most of them handle failure by return 1;
+> Only module_deinit() seems to calls BUG() on failure.
 
-> I do not see a point in introducing --min/max-parents as a knob to
-> control how the history is summarized.
+Thanks for the analysis!
 
-For a summary a flat list of commits may be fine, ignoring
-(ideally non-evil) merges.
+> This leaves me with 2 questions:
+> 1) Should this code path just ignore the error and also return 1 like
+other code paths?
 
-> This is a strongly related tangent, but I wonder if we can and/or
-> want to share more code with the codepath that prepares the log
-> message for a merge.  It summarizes what happened on the side branch
-> since it forked from the history it is joining back to (I think it
-> is merge.c::shortlog() that computes this)
+This would be a sensible thing to do. I would think.
+I just checked out v2.0.0 (an ancient version, way before the efforts to
+rewrite
+git-submodule in C were taking off) and there we can do
 
-I do not find code there. To me it looks like builtin/fmt-merge-msg.c
-is responsible for coming up with a default merge message?
-In that file there is a shortlog() function, which walks revisions
-and puts together the subject lines of commits.
+     $ git submodule deinit gerrit-gpg-asdf/
+     ignoring UNTR extension
+     error: pathspec 'gerrit-gpg-asdf/' did not match any file(s) known to
+git.
+     Did you forget to 'git add'?
+     $ echo $?
+     1
 
-> and it is quite similar
-> to what Robert wants to use for submodules here.  On the other hand,
-> in a project _without_ submodule, if you are pulling history made by
-> your lieutenant whose history is full of linear merges of topic
-> branches to the mainline, it may not be a bad idea to allow
-> fmt-merge-msg to alternatively show something similar to the "diff
-> --submodule=log" gives us, i.e. summarize the history of the side
-> branch being merged by just listing the commits on the first-parent
-> chain.  So I sense some opportunity for cross pollination here.
+(The warning about the UNTR extension can be ignored that was introduced
+later).
+But the important part is that we get the same error for the missing
+pathspec.
+The next line ("Did you forget to git-add?") comes from git-ls-files which
+at the time
+was invoked by module_list() implemented in shell. I would think we can
+live without
+that line. So to fix the segfault, we can just s/BUG(..)/return 1/ as you
+suggest.
 
-The cross pollination that I sense is the desire in both cases to freely
-specify the format as it may depend on the workflow.
+> 2) Should "git submodule deinit" work on submodules that were removed by
+upstream already?
 
+To answer the question "Is this a submodule that upstream removed
+(recently)?"
+we'd have to put in some effort, essentially checking if that was ever a
+submodule
+(and not a directory or file).
+
+When using "git pull --recurse-submodules" the submodule ought to be removed
+automatically.
+
+When doing a fetch && merge manually, we may want to teach merge to remove
+a submodule that we have locally upon merge, too.
+
+I view the git-submodule command as a bare bones plumbing helper, that we'd
+want
+to deprecate eventually as all other higher level commands will know how to
+deal
+with submodules.
+
+So I think we do not want to teach "git submodule deinit" to remove dormant
+repositories, that were submodules removed by upstream already.
+
+> ~/src/rust/rust$ git submodule status
+...
+>   b87873eaceb75cf9342d5273f01ba2c020f61ca8 src/tools/lld ((null))
+
+> -> strangely I get (null) for the current branch/commit in some
+submodules?
+
+This sounds like (3). Looking into that.
+
+Thanks,
 Stefan
