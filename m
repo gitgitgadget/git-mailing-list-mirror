@@ -2,138 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 049DD1F404
-	for <e@80x24.org>; Tue, 27 Mar 2018 18:10:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5C1581FAE2
+	for <e@80x24.org>; Tue, 27 Mar 2018 18:46:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752597AbeC0SKa (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Mar 2018 14:10:30 -0400
-Received: from mout.gmx.net ([212.227.15.15]:41653 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751241AbeC0Q2v (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Mar 2018 12:28:51 -0400
-Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MZCUG-1fHIwr28Pk-00L1MX; Tue, 27
- Mar 2018 18:28:45 +0200
-Date:   Tue, 27 Mar 2018 18:28:44 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Daniel Jacques <dnj@google.com>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/2] Add Windows support to the new RUNTIME_PREFIX
- design
-In-Reply-To: <CAD1RUU9XK837mdRwicMwM5qVApzz8o2e4Eg=B0LH3SRtLqG9WQ@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1803271817060.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <20180325205120.17730-1-dnj@google.com> <nycvar.QRO.7.76.6.1803262331040.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <CAD1RUU8jNudjCXN=-mucogmSFj2xqyYqyk-dfADhjceLsmBE2g@mail.gmail.com> <nycvar.QRO.7.76.6.1803271752190.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
- <CAD1RUU9XK837mdRwicMwM5qVApzz8o2e4Eg=B0LH3SRtLqG9WQ@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:nHV1boWxisqgipotmb4QXJ8O5zYWFj4Pkt4axv+VuNoHjQCWmyS
- F4ckxRK/Rqb94eH5z/+TCbHt0P8Qqaz0tPFPG4p1fwq37UzhUYCg8L1KaSj1+QY/eACHh9P
- rUo2rdifdlFfCrxVBz5d1lT4LSU3uMOMcdiUAm2bZH5Pkdvn3hE2urB47Xri/398LIPS8+C
- OB6DtxyhEFDMFza215uPA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:LWZzk+qvRmQ=:rR+0MWIcBI3ywXi16r6PmY
- RpDlU68KSW3C6At562NXOuZ9tm0yOmV31Asm0Qbdtiq1DZkr2pzLzY7zLp0DT8G05iWyt6/dB
- KzkZQCKiqt2ofziwU/2VVIPLu4BCSAuQjfxxtwip+HaEjHahp063G0O0pmP4hrHoFsQ2fP35T
- rBfXhw4uWR4vc/tJ2IubPM2Y65qTY9gmc8xOWgK3pjEGMP+kNQ3RvaPOuYD1qZH7R46cq8m3r
- HAa2y02GVSg5Pf0aaG9U2gfSn0ySoWbLeJZ4WwnyLkitjsns7lmCYeyUywWR2pF9Ddg75PkiD
- gbW7Zs9cgvxTLa5Z9j4afQ3K57crHoLJFaJ5c9IZuX2T6vOgvSK9yC/VPfCcZKiIz6DZYNzxH
- r18geNIzegyfeRjl80lKN6HeR9k8rgWddpY0jG5ft9ep5663ioB3JpoZCxxuVQXCW6RHxZ1LL
- z1uLShqNiqnb3fuUOb9J23p9mv6it3I7fqrPMUOfq+Yf95SfvIOHpFyad9aSzbnoEDEuy+u2H
- YxKDYYbx2Ogi/X2MzoSli7dRWs813wH4lZgOtVVV90+oAGxTghjxXVi49YyxkHVBLg7qoaLBZ
- 3SYuLTSrl9jsREKmiy876Htimn6NnRgQY0DcVb5M9cv+o444w6GzEBEBqOpTIOywaJw3FzWz3
- lSb2IAhgsCGWjStwuST4kJAmOh0m2DhrcJoVpUf5clVl+9ztvgn1tym/g0Uc5BxUNTYCLSQHr
- fxIoJLIq32zLit5BRCq3I36vCp1Ko30oWyMzDZNxMomtm6esWuurW7n2LEjhn6V9kfQNSBwiD
- omCEeS3+Cx/vcU5+3Wq0zZ5z39Q/o75+KZKUOfX2Us6qvywHMcuFXkFPA8pMxXOxWXTnxms
+        id S1751195AbeC0Sqt (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Mar 2018 14:46:49 -0400
+Received: from out5-smtp.messagingengine.com ([66.111.4.29]:54049 "EHLO
+        out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1750937AbeC0Sqs (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 27 Mar 2018 14:46:48 -0400
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
+        by mailout.nyi.internal (Postfix) with ESMTP id C99EC2140B;
+        Tue, 27 Mar 2018 14:46:47 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute6.internal (MEProxy); Tue, 27 Mar 2018 14:46:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        aaronjgreenberg.com; h=cc:date:from:message-id:subject:to
+        :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=c8Kg872wgzokkwjh0
+        RORViz0OWSF+zWcgaG/DvbP+Eo=; b=c8PEfhu1bf8vxJIC6wqjMlE3QG8gjjFlq
+        pqgF2lLBrK1PSVHO4mqULpBfKoAsMLTA89JYPg2j5e23PIUZUk4shjklxCA0pxCP
+        acuAJllaHAQD5UehNLLhl4PL6Ea5IT2a3F5MK7jaOcdWn+jB7lvNNzjPaA6VhDTX
+        hbLC3Bg7sXn9ZW8Q1k+DJXXRt9VB3qNzXCtL7xiOb06HiPNEaP3DvOo+iK3XSBd2
+        7AGyuE62DiHFEtcmkbBv72abbzbFdGqJHB2O3tspwGAEZrPJ5U4F7XpvlsZH1HTf
+        FBMnZPD7e1LDHWbrW13DMRL6OMm334pidIQbNN4wnrKgW/BTH4xew==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:date:from:message-id:subject:to
+        :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=c8Kg872wgzokkwjh0
+        RORViz0OWSF+zWcgaG/DvbP+Eo=; b=QErr5DorvQnjIslcnBkUkK/Mpbm2I3KRQ
+        l+0vsEqxb/V3uQz69B1tdw9Sq6aReS85a7zXCdBfKrIdk5yYa7uW2xBkQ842YMVb
+        clLCGqIiOBH4UPLNDWQYomQIwCjMWka5nUGE4vAtbBsAUF/cgXaVyvZn0woizkzv
+        6Oy+0rusRBnmKPXEwokdlyY0a2DS+6NK0kNUlcZ7p3zd7M/WiHMq8vcbU06LNhyx
+        FVskdrWxKoPl2ntPiVnZuuxxy4t8sR0YfH6zf5E5QhAqxAtg8hZHDjqhh/0g0tAb
+        wLxPG0CyqoPaxpbJZsQO5hjmp/ismRappoM6Yitmy1bzLRUmxZfZg==
+X-ME-Sender: <xms:l5G6WqZXdbz6R4Wj1niTgt-Paih_8PDkddmUaW44l6LuHvnPXErCbg>
+Received: from localhost.localdomain (unknown [159.203.64.218])
+        by mail.messagingengine.com (Postfix) with ESMTPA id 80BBBE50B1;
+        Tue, 27 Mar 2018 14:46:47 -0400 (EDT)
+From:   Aaron Greenberg <p@aaronjgreenberg.com>
+To:     gitster@pobox.com
+Cc:     git@vger.kernel.org
+Subject: [PATCH] branch: implement shortcut to delete last branch
+Date:   Tue, 27 Mar 2018 18:46:29 +0000
+Message-Id: <1522176390-646-1-git-send-email-p@aaronjgreenberg.com>
+X-Mailer: git-send-email 2.7.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Dan,
+With the approvals listed in [*1*] and in accordance with the
+guidelines set out in Documentation/SubmittingPatches, I am submitting
+this patch to be applied upstream.
 
-On Tue, 27 Mar 2018, Daniel Jacques wrote:
+After work on this patch is done, I'll look into picking up where the
+prior work done in [*2*] left off.
 
-> On Tue, Mar 27, 2018 at 11:54 AM Johannes Schindelin <
-> Johannes.Schindelin@gmx.de> wrote:
-> 
-> > I guess we should add a test where we copy the `git` executable into a
-> > subdirectory with the name "git" and call `git/git --exec-path` and
-> > verify that its output matches our expectation?
-> 
-> I'm actually a little fuzzy on the testing model here.
+Is there anything else that needs to be done before this can be
+accepted?
 
-Alright, I'll bite.
+[Reference]
 
-You are correct that the test must be contingent on the RUNTIME_PREFIX
-prerequisite. This could be tested thusly:
+*1* https://public-inbox.org/git/1521844835-23956-2-git-send-email-p@aaronjgreenberg.com/
+*2* https://public-inbox.org/git/1488007487-12965-1-git-send-email-kannan.siddharth12@gmail.com/
 
-	test_lazy_prereq RUNTIME_PREFIX '
-		# test whether we built with RUNTIME_PREFIX support
-		grep " -DRUNTIME_PREFIX" "$GIT_BUILD_DIR/GIT-CFLAGS"
-	'
-
-The subsequent test would run like this:
-
-	test_expect_success RUNTIME_PREFIX '
-		mkdir git &&
-		cp "$GIT_BUILD_DIR/git$X" git/ &&
-		path="$(git/git$X --exec-path)" &&
-		case "$(echo "$path" | tr '\\' /)" in
-		"$(pwd)/libexec/git-core") ;; # okay
-		*)
-			echo "Unexpected exec path: $path" >&2
-			return 1
-			;;
-		esac
-	'
-
-I say "like this" because it is a little bit tricky to get right, in
-particular when supporting Windows ;-)
-
-For example, when building with Visual C, the dependencies' .dll files
-need to be copied into the same directory as the .exe files because there
-is no good central place to put them (don't get me started on the problems
-incurred by some software copying some random OpenSSL version's
-ssleay32.dll into C:\Windows\system32, unless you buy me beer all night
-and want to be entertained). And that obviously would fail with this
-approach.
-
-> As things are, this test will only work if Git is relocatable; however,
-> the test suite doesn't seem to be equipped to build multiple versions of
-> Git for different tests.  From this I conclude that the right approach
-> would be to make a test that runs conditional on RUNTIME_PREFIX being
-> set, but I'm not familiar enough with the testing framework to be
-> confident that this is correct, or really how to go about writing such a
-> test.
-> 
-> A simple grep suggests that the current test suite doesn't seem to have any
-> RUNTIME_PREFIX-specific tests. When I've been running the test suites, I've
-> been doing it with a "config.mak" file that explicitly enables
-> RUNTIME_PREFIX to get the runtime prefix code tested against the standard
-> Git testing suites.
-
-Indeed, this would be the first test.
-
->  From a Git maintainer's perspective, would such a test be a
->  prerequisite for landing this patch series, or is this a good candidate
->  for follow-up work to improve our testing coverage?
-
-I cannot speak for Junio, but from my understanding he would probably be
-fine without such a test. Or a separate patch at a later stage that
-introduces that.
-
-Or something completely different such as a helper in t/helper/ that
-always succeeds if RUNTIME_PREFIX is not defined, otherwise passes argv[1]
-as parameter to git_resolve_executable_dir() and outputs that. Would be a
-lot more robust than what I described above. But I would want for Duy's
-test-tool patch series to land first because I would hate to introduce
-*yet* another stand-alone .exe in t/helper/.
-
-Ciao,
-Dscho
