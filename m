@@ -7,91 +7,77 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A7B771F404
-	for <e@80x24.org>; Tue, 27 Mar 2018 14:41:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B04421F404
+	for <e@80x24.org>; Tue, 27 Mar 2018 14:47:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752348AbeC0OlC (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Mar 2018 10:41:02 -0400
-Received: from mout.gmx.net ([212.227.15.19]:47649 "EHLO mout.gmx.net"
+        id S1751907AbeC0Oru (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Mar 2018 10:47:50 -0400
+Received: from mout.gmx.net ([212.227.17.21]:33545 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751316AbeC0OlB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Mar 2018 10:41:01 -0400
-Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lh7sF-1eFPOf1P5b-00oT2i; Tue, 27
- Mar 2018 16:40:50 +0200
-Date:   Tue, 27 Mar 2018 16:40:47 +0200 (DST)
+        id S1752458AbeC0Ors (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Mar 2018 10:47:48 -0400
+Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MH4Os-1en6e22xow-00DmkD; Tue, 27
+ Mar 2018 16:47:44 +0200
+Date:   Tue, 27 Mar 2018 16:47:43 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Git List <git@vger.kernel.org>,
-        =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
-        <pclouds@gmail.com>, Lars Schneider <larsxschneider@gmail.com>
-Subject: Re: [PATCH 00/10] Hash-independent tests (part 1)
-In-Reply-To: <xmqq8tafe92r.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1803271630210.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <20180325192055.841459-1-sandals@crustytoothpaste.net> <CAPig+cR==SNfGdhwqPdvW75fUxXg-VSQ5Tz_OR7Sy_c0L94axQ@mail.gmail.com> <xmqq8tafe92r.fsf@gitster-ct.c.googlers.com>
+To:     Joel Teichroeb <joel@teichroeb.net>
+cc:     Git Mailing List <git@vger.kernel.org>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v3 0/5] Convert some stash functionality to a builtin
+In-Reply-To: <20180327054432.26419-1-joel@teichroeb.net>
+Message-ID: <nycvar.QRO.7.76.6.1803271646520.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <20180327054432.26419-1-joel@teichroeb.net>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:IQz3keL5iuj2R41DAIAMtLltc2XKaRN/qLGpkMV8y/v6etD0N/i
- u8Xx1+vL2nTHBVxAxWasEW5emG39o/WJmY+LHQqdL8krEdrDldLika1u8hoEW3LDaAF7wr1
- YBTeFCOj6FdIDcNefG0xz5zAWrYGnRfck25WschIytpsFxj74NcgFyZ7++ZF0vp7PWUDLis
- Gwcm7Fov4Y4sFqkCT5I4w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:V6qooZ6Zi7M=:E5cyVSZWfcEKapV76MeQrU
- eV5L0ic9oiHM2LoTrAqwQn6wUls3W6d1wY0ucqDYufIjgv2VIpnVoWZNg/bEh00+NDF6/KYQn
- ZJVUHqvwD3BQfLFI26eO2n8GzRazfkDOL7kU1nxDrkj1CP/JQBWYUC2lBDOhTjJVowpe48678
- nvepgQ7I18iEjA4s/2TsyY0T0L5ePUgWAkmhceoBRCM3I2gztqTrq25T9VLj6CGl7eXFY347K
- 7C9LaAEKDJt2vjkaXnH7MtPdT9k0W88bgcd4XIJYIbdpRJO7TGUCjXZGHKkwm8mTjw11EuaJ0
- 2ZGIBRh9lV10s2PXEAr5fxpEm/fDO6X6byWAVJVN8oSKWR7tqxcVkV2rw1jyVLzJpBq/XVGT3
- klHESnUEpKFYeOsBRxuxP2M5BKuYzkFVqZKN8o0IbvPXADLoD8DGSAiD58I8DoBdyHuOFi6V6
- TaWD5KSFZXa4UiKU0/oEXKZy1sRZM1hEDDCTqduKazp2oD49jFfVGN/CZPDkLMG+gxT7giGuo
- TnUKp94kVatMa8ZHtokrq8ba7TC2jkwnf/YfJhZpI+lSq1dAAICLHgaPM8J78AjZGYXZZknnz
- HARQNboogewjoTutIBf0zridUP5ilsEQnnHBWzCoBAyMdXbxbewHqpfoNcBfHFCVoUHM0IgTO
- dSNsNHeKoZYEW74/Ia2ib2R8VSeGYNBnR1IDlwntotUO1sL+mt4z3fcq/7OmguBknDpaLG3za
- KMVI23tDdPwDQoOzkprIhm+xVmxm4ta9tSplD5UEf8QtDYj5vvXqYZa7UVaII9WWdTU79OWpA
- gDRY7Q9uUCuuBEmNHNI7KFoJRLmgs6u4W67sgWpGesk5vgKNlGRgn71YkPyBV6pVDP1UEiH
+X-Provags-ID: V03:K0:ASBLCL1X1HosBbNphGTrBF/5ZEhCQf/VgRSYiyYMj5gK19yCzLh
+ h2FJ1b0khj7u6jJvebhiqtRZI/vJlGcgYF4aPhsNFzvyiVaLkLouzzFA0lhbfccaBJiF5Dv
+ Ifo/gKkcT2GG3rj099qwAi5NR7Q0LPc9+qszMKdROvvEM2H27O9nSnFgXNv9vr7iCpKTqz0
+ ob+CGY5QBsdDkasY/hZkQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:9B/7E+sKIoY=:CDc8Ko9zTceqgeQgsJaJ0L
+ UfP5kqTAut/aQD5XzEdgfRTo1E1oNjGnzBAKAtUvfy51HrqhYGwoW8BprZkYai3As1l4mOUo9
+ Jxnbgfx6tT2VaPMVcIJ3ahs0Mm4RGKjnTbuu8aqQ0KKJUy8FznU2V8mnRGRDMMESSJbY1L5Uj
+ oq7r+x536A9/YNRVmEwqUcqoN3hSfmJhvafCx8Tpge3QGIO2XW3jrXXJLYMj3OY8dqtY1s4Do
+ phY5fLNvusEDhqhV+44ip4T673mFRpjQoj5n8IfY0PyoorhLZEGrissjpwusxD41fWnxb/9cR
+ qI+icWEakkpZJvUF4czMfS0+HuFumAbJbv3FMcJ/WCxM73g/lOh3QySNS+wO3RTYTm+J16qn3
+ eT6Scm1dAepAkKmpcsKjixu1XBRPhN6w70DFoWTAyawvkczTIMlApsF90NdRqKMlHxNm6669G
+ gPmYjMnUMlbnt7cLczK5Qf31XodMThaU7YnaEgLB/MkhBSwx2wcwI24/yi3O3+uCjhaO/Z7Z6
+ m3QUdmQn1RWzX18oqWq6ijHZlRQvcVqXgfMeuQr92aXBRmuFqYWLOdZtDw817Qj6eay7g36OQ
+ UTRD2WpBAP6dGMk7QdX54c9uU6QxMFI/iG5sSSh2QzikRbiCV25RzUdUFf1LE5sgMHUg2XRZ/
+ 8z6MK8qCwwuGyXXJuk4ESPOjAUNVzvUnuGMNfPz5QE3W7eQbdEwWj6zMKMn+Zku5kkqwQx7tK
+ 7ix79GM25XyHQQSkxsBcKEwHsZNGiZuml8IWDI1Kwk1lENRmR7zADN2jV4jr23o/FRRfn8xTS
+ hurH3ueNOcxfqGIL9ri5asPeAC17VhfnJoQHU19Bpuvthe81/0N2qlpK/6/QrlAFLheslbJ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Hi Joel,
 
-On Sun, 25 Mar 2018, Junio C Hamano wrote:
+On Mon, 26 Mar 2018, Joel Teichroeb wrote:
 
-> Eric Sunshine <sunshine@sunshineco.com> writes:
+> I've been working on converting all of git stash to be a
+> builtin, however it's hard to get it all working at once with
+> limited time, so I've moved around half of it to a new
+> stash--helper builtin and called these functions from the shell
+> script. Once this is stabalized, it should be easier to convert
+> the rest of the commands one at a time without breaking
+> anything.
 > 
-> > What's the plan for oddball cases such as 66ae9a57b8 (t3404: rebase
-> > -i: demonstrate short SHA-1 collision, 2013-08-23) which depend
-> > implicitly upon SHA-1 without actually hardcoding any hashes? The test
-> > added by 66ae9a57b8, for instance, won't start failing in the face of
-> > NewHash, but it also won't be testing anything meaningful.
-> >
-> > Should such tests be dropped altogether? Should they be marked with a
-> > 'SHA1' predicate or be annotated with a comment as being
-> > SHA-1-specific? Something else?
+> I've sent most of this code before, but that was targetting a
+> full replacement of stash. The code is overall the same, but
+> with some code review changes and updates for internal api
+> changes.
 > 
-> Ideally, the existing one be annotated with prereq SHA1, and also
-> duplicated with a tweak to cause the same kind of (half-)collision
-> under the NewHash and be annotated with prereq NewHash.
+> Since there seems to be interest from GSOC students who want to
+> work on converting builtins, I figured I should finish what I
+> have that works now so they could build on top of it.
 
-That's a good idea. I wonder whether we want to be a bit more specific,
-though, so that we have something grep'able for the future? Something like
-SHA1_SHORT_COLLISION or some such?
-
-> It's a different matter how feasible it is to attain such an ideal,
-> though.  t1512 was fun to write, but it was quite a lot of work to
-> come up with bunch of blobs, trees and commits whose object names
-> share the common prefix 0{10}.
-
-Did you write a helper to brute-force those? If so, we might want to have
-such a helper in t/helper/ to generate/re-generate those (i.e. it could be
-asked to generate a blob whose ID starts with five NUL bytes, and it would
-have hard-coded values for already-generated ones). Even if you did not
-write such a helper, we might want to have such a helper. That would take
-the responsibility away from the shell script.
+Great! This will help tremendously, I am sure.
 
 Ciao,
 Dscho
