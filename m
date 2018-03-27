@@ -2,76 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1BE741F404
-	for <e@80x24.org>; Tue, 27 Mar 2018 19:26:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 374701F404
+	for <e@80x24.org>; Tue, 27 Mar 2018 19:55:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751072AbeC0T0Q (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Mar 2018 15:26:16 -0400
-Received: from mail-wm0-f43.google.com ([74.125.82.43]:33965 "EHLO
-        mail-wm0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751859AbeC0T0O (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Mar 2018 15:26:14 -0400
-Received: by mail-wm0-f43.google.com with SMTP id a20so22674172wmd.1
-        for <git@vger.kernel.org>; Tue, 27 Mar 2018 12:26:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=BlWafB3Qj7l4gJzs/A/BQg9ySI4o+vlVY/f4de6NoMw=;
-        b=spGXSzCoOuA1UGl3KUPWk/dR+gPf02XK6mAIQtlGsNZLKNntr1OMkPjN/p0t8P5roJ
-         WMM6Q+Fns2qxOo+g7e98MvGa2etD1mg57G0mkM64dvPWf1wUxOYIFXGplSSw1CxRxMkQ
-         2kIe+xOayB6nxtlYRD6lVUU2LBN7TxXkUNFALWMQ/5Gx0FJDKhCeIN91xlbVVX2w4j9R
-         8yAS9vMBBUFCdDnvetEyubdB7Nf6zUV3R63z+kXx67WJpsOE5mjypPhUVAgrBpByvOvg
-         8v+aqiRSrDnIUeCXbBRbz+hDfqUAdw3Ka7xLvMhyI8FWepNpeYSuUsPWn7n+Gsj6c0nw
-         ZPig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=BlWafB3Qj7l4gJzs/A/BQg9ySI4o+vlVY/f4de6NoMw=;
-        b=UlBw+jNQQ67IDlm2e7wYSMGGIheTUdsVd4DHVoBhOmt/SwrtChG6r7cexRFfQCWo1a
-         l4iImEHVEpXEf23ZOPwXxWpn7JRmRaXRnl4L8GIwBq/sgTzeId/AHtE8d4imNkCCZFFZ
-         8QLYVYCvMPmYnrE2VQpx5XrWTmt9JkWElGjUEZocddP9ufxP7kxPzjSc++LVTpBOELp8
-         wwGonlGiIQNtSrH0AwL45s6w0NbKbi+ypWASy3WHqf4Owc3vSxP9vZz8vdyzHL3paBJZ
-         FnC7rDw/zcA04tn7ndlkBltaKLvKz2aYg7/BdqtyuYfUR40E7k6Z31HHgP+Cnf+Mkpnb
-         NlHg==
-X-Gm-Message-State: AElRT7GHHL3fj5z+N4eAAbEU7pXaXX51gYc9+IM3mMh4o2TsrhvyqdBP
-        osjmASW9f09C+2KKbTro0rM=
-X-Google-Smtp-Source: AIpwx4+nfNaHnFwLddE5QrrZOCL7ZKY+ciU0aE/MA2mNwBhNh3KU7AOl9uuX8sxloxY1mvR7Ca6BJw==
-X-Received: by 10.28.153.12 with SMTP id b12mr433640wme.104.1522178773413;
-        Tue, 27 Mar 2018 12:26:13 -0700 (PDT)
-Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
-        by smtp.gmail.com with ESMTPSA id 134sm2832592wmm.42.2018.03.27.12.26.12
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 27 Mar 2018 12:26:12 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Aaron Greenberg <p@aaronjgreenberg.com>
-Cc:     gitster@pobox.com, git@vger.kernel.org,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] branch: implement shortcut to delete last branch
-References: <1522176390-646-1-git-send-email-p@aaronjgreenberg.com> <1522176390-646-2-git-send-email-p@aaronjgreenberg.com> <87tvt1wce3.fsf@evledraar.gmail.com>
-User-agent: Debian GNU/Linux 9.4 (stretch); Emacs 25.1.1; mu4e 1.1.0
-In-reply-to: <87tvt1wce3.fsf@evledraar.gmail.com>
-Date:   Tue, 27 Mar 2018 21:26:11 +0200
-Message-ID: <87sh8lwca4.fsf@evledraar.gmail.com>
+        id S1751398AbeC0Tzn (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Mar 2018 15:55:43 -0400
+Received: from vsmx012.vodafonemail.xion.oxcs.net ([153.92.174.90]:17205 "EHLO
+        vsmx012.vodafonemail.xion.oxcs.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751101AbeC0Tzl (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 27 Mar 2018 15:55:41 -0400
+X-Greylist: delayed 407 seconds by postgrey-1.27 at vger.kernel.org; Tue, 27 Mar 2018 15:55:41 EDT
+Received: from vsmx004.vodafonemail.xion.oxcs.net (unknown [192.168.75.198])
+        by mta-8-out.mta.xion.oxcs.net (Postfix) with ESMTP id DA70D8CE098;
+        Tue, 27 Mar 2018 19:48:48 +0000 (UTC)
+Received: from [10.0.0.19] (unknown [188.22.127.143])
+        by mta-8-out.mta.xion.oxcs.net (Postfix) with ESMTPA id 8F547CD6B6;
+        Tue, 27 Mar 2018 19:48:44 +0000 (UTC)
+From:   Peter Oberndorfer <kumbayo84@arcor.de>
+Subject: git submodule deinit resulting in BUG:
+ builtin/submodule--helper.c:1045: module_list_compute should not choke on
+ empty pathspec
+To:     git@vger.kernel.org
+Cc:     Prathamesh Chavan <pc44800@gmail.com>
+Message-ID: <9e22b49e-6732-17c7-76fe-0ce241787db9@arcor.de>
+Date:   Tue, 27 Mar 2018 21:48:43 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.6.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-VADE-STATUS: LEGIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi,
 
-On Tue, Mar 27 2018, Ævar Arnfjörð Bjarmason wrote:
+i tried to run "git submodule deinit xxx"
+on a submodule that was recently removed from the Rust project.
+But git responded with a BUG/Core dump (and also did not remove the submodule directory from the checkout).
 
-> [...]With that, some comments on the change below:
+~/src/rust/rust$ git submodule deinit src/rt/hoedown/
+error: pathspec 'src/rt/hoedown/' did not match any file(s) known to git.
+BUG: builtin/submodule--helper.c:1045: module_list_compute should not choke on empty pathspec
+Aborted (core dumped)
 
-Also, didn't mean to gang up on you. I only saw Jonathan's E-Mail after
-I sent mine, and it covered some of the same stuff.
+I had a short look at submodule--helper.c and module_list_compute() is called from multiple places.
+Most of them handle failure by return 1;
+Only module_deinit() seems to calls BUG() on failure.
+
+This leaves me with 2 questions:
+1) Should this code path just ignore the error and also return 1 like other code paths?
+2) Should "git submodule deinit" work on submodules that were removed by upstream already?
+
+For more debugging information please see below.
+
+Thanks,
+Greetings Peter
+
+
+
+~/src/rust/rust$ git --version
+git version 2.17.0.rc1.47.g9f57127417.dirty
+(this should basically be 90bbd502d54fe920356fa9278055dc9c9bfe9a56 + some Makefile adjustments)
+
+Git Gui reports
+src/rt/hoedown
+Untracked, not staged
+* Git Repository (subproject)
+
+
+~/src/rust/rust$ git status
+On branch fix_literal_attribute_doc
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+        src/rt/
+
+
+~/src/rust/rust$ cat .git/config
+...
+[submodule "src/rt/hoedown"]
+        url = https://github.com/rust-lang/hoedown.git
+...
+-> there is no "active = true" in this hoedown section
+which is present on some (not all) other submodules
+
+
+~/src/rust/rust$ cat .gitmodules
+-> does not contain any references to hoedown anymore as they were remove by upstream
+
+
+~/src/rust/rust$ cat src/rt/hoedown/.git
+gitdir: ../../../.git/modules/src/rt/hoedown
+
+
+~/src/rust/rust/src/rt/hoedown$ git status
+HEAD detached at da282f1
+nothing to commit, working tree clean
+
+-> so there is a working git repository at src/rt/hoedown
+
+
+~/src/rust/rust$ git submodule status
+ 9b2dcac06c3e23235f8997b3c5f2325a6d3382df src/dlmalloc (heads/master)
+ b889e1e30c5e9953834aa9fa6c982bb28df46ac9 src/doc/book (remotes/origin/ch10-edits-137-gb889e1e3)
+ 6a8f0a27e9a58c55c89d07bc43a176fdae5e051c src/doc/nomicon (remotes/origin/HEAD)
+ 76296346e97c3702974d3398fdb94af9e10111a2 src/doc/reference (remotes/origin/HEAD)
+ d5ec87eabe5733cc2348c7dada89fc67c086f391 src/doc/rust-by-example (remotes/origin/HEAD)
+ 1f5a28755e301ac581e2048011e4e0ff3da482ef src/jemalloc (3.6.0-775-g1f5a2875)
+ 263a703b10351d8930e48045b4fd09768991b867 src/libcompiler_builtins (remotes/origin/auto-10-g263a703)
+ ed04152aacf5b4798f78ff13396f3c04c0a77144 src/liblibc (0.2.37-29-ged04152aac)
+ 6ceaaa4b0176a200e4bbd347d6a991ab6c776ede src/llvm (remotes/origin/rust-llvm-release-6-0-0)
+-2717444753318e461e0c3b30dacd03ffbac96903 src/llvm-emscripten
+ bcb720e55861c38db47f2ebdf26b7198338cb39d src/stdsimd ((null))
+ 311a5eda6f90d660bb23e97c8ee77090519b9eda src/tools/cargo (0.14.0-2144-g311a5eda)
+ eafd09010815da43302ac947afee45b0f5219e6b src/tools/clippy (v0.0.189-21-geafd0901)
+ b87873eaceb75cf9342d5273f01ba2c020f61ca8 src/tools/lld ((null))
+ d4712ca37500f26bbcbf97edcb27820717f769f7 src/tools/miri (remotes/origin/hack_branch_for_miri_do_not_delete_until_merged)
+ f5a0c91a39368395b1c1ad322e04be7b6074bc65 src/tools/rls (0.125-131-gf5a0c91)
+ 118e078c5badd520d18b92813fd88789c8d341ab src/tools/rust-installer (remotes/origin/HEAD)
+ 374dba833e22cc8df8e16e19cccbde61c69d9aed src/tools/rustfmt (0.4.1-35-g374dba83)
+
+-> strangely I get (null) for the current branch/commit in some submodules?
