@@ -2,92 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 15D7D1F404
-	for <e@80x24.org>; Tue, 27 Mar 2018 20:41:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 684E11FAE2
+	for <e@80x24.org>; Tue, 27 Mar 2018 21:02:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751935AbeC0Ulq (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Mar 2018 16:41:46 -0400
-Received: from mail-pg0-f54.google.com ([74.125.83.54]:42930 "EHLO
-        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751025AbeC0Ulp (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Mar 2018 16:41:45 -0400
-Received: by mail-pg0-f54.google.com with SMTP id f10so82182pgs.9
-        for <git@vger.kernel.org>; Tue, 27 Mar 2018 13:41:45 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=NDilgldexp2FK7PA2BMskLCG5A2oQqm+Y+YMlJibLiQ=;
-        b=VgyYfK/J5zMs0zv2ZposvY4lo25GGJLZZwKqiMnWhvlhCnt8Wh0gXDheMxTcdJlpUg
-         2wIkPHoQPCVdXMCQho0yPwco1hlQmycQmrUqoc00SdUSWZgA7fte/FZ70SomiO/q8F/U
-         kcB/qWcrAfZ4t6+pt2FEuL0Rw6j5vaCSFMfkI5oRXMLyIIEIK+TWsqasNBUwpl+x/50p
-         egxbuo1LQEVHyM/ixqthROGWr/b5L70UeNuaw4Oa/tT8y+eXC2koSds6nPnIU0VjJGhK
-         VxI6tgVxjPKbkm5IwYjBFmLTzyvuyfABvjZ3obIb2fHymgdjwikWsZmat7CnKg+7E8iO
-         77KA==
-X-Gm-Message-State: AElRT7F6aiOslfUqhpt6BxVSNzweM5iAlrx0XBVSouAj4rKy+aKdTXqC
-        ZtUWgoPLhcxBXC3ydqDpNxVqDBjddhZuvN5GhmRwe254
-X-Google-Smtp-Source: AIpwx4/pnMSf9b1tqV5F8d511pDTQu4nkpJXj/F4jDh9fs4eRnK9LzgonWW7hBI1l3pjxbEqnYlN4Y2ezM4Z7hcPg50=
-X-Received: by 10.98.244.6 with SMTP id r6mr622777pff.242.1522183305033; Tue,
- 27 Mar 2018 13:41:45 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.100.177.141 with HTTP; Tue, 27 Mar 2018 13:41:24 -0700 (PDT)
-From:   Jason Frey <jfrey@redhat.com>
-Date:   Tue, 27 Mar 2018 16:41:24 -0400
-Message-ID: <CAP6Vx84GRRxgMZF5P6tb6F4rJ8ozxx-d0o_LsNe=kEYVRkBTKQ@mail.gmail.com>
-Subject: Bug: duplicate sections in .git/config after remote removal
+        id S1751152AbeC0VCn (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Mar 2018 17:02:43 -0400
+Received: from siwi.pair.com ([209.68.5.199]:49691 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751020AbeC0VCm (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Mar 2018 17:02:42 -0400
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id 431633F40B3;
+        Tue, 27 Mar 2018 17:02:42 -0400 (EDT)
+Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 98D333F4088;
+        Tue, 27 Mar 2018 17:02:41 -0400 (EDT)
+From:   git@jeffhostetler.com
 To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Cc:     gitster@pobox.com, peff@peff.net, l.s.r@web.de, wink@saville.com,
+        ramsay@ramsayjones.plus.com,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: [PATCH v5] routines to generate JSON data
+Date:   Tue, 27 Mar 2018 21:02:32 +0000
+Message-Id: <20180327210233.29076-1-git@jeffhostetler.com>
+X-Mailer: git-send-email 2.9.3
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-While the impact of this bug is minimal, and git itself is not
-affected, it can affect external tools that want to read the
-.git/config file, expecting unique section names.
+From: Jeff Hostetler <jeffhost@microsoft.com>
 
-To reproduce:
+This is version 5 of my JSON data format routines.
 
-Given the following example .git/config file (I am leaving out the
-[core] section for brevity):
+This version address the uint64_t vs intmax_t formatting issues
+that were discussed on the mailing list.  I removed the jw_*_int()
+and jw_*_uint64() routines and replaced them with a single
+jw_*_intmax() routine.
 
-    [remote "origin"]
-        url = git@github.com:Fryguy/example.git
-        fetch = +refs/heads/*:refs/remotes/origin/*
-    [branch "master"]
-        remote = origin
-        merge = refs/heads/master
+Also added a jw_release() routine similar to strbuf_release()
+and fixed the indentation of sub-array when pretty printing is
+enabled.
 
-Running `git remote rm origin` will result in the following contents:
+The following PR includes my WIP telemetry changes that build
+upon the json-writer routines and demonstrates how they might
+be used.  The first commit in this PR is this patch.
 
-    [branch "master"]
+     https://github.com/jeffhostetler/git/pull/11
 
-Running `git remote add origin git@github.com:Fryguy/example.git` will
-result in the following contents:
 
-    [branch "master"]
-    [remote "origin"]
-        url = git@github.com:Fryguy/example.git
-        fetch = +refs/heads/*:refs/remotes/origin/*
+Jeff Hostetler (1):
+  json_writer: new routines to create data in JSON format
 
-And finally, running `git fetch origin; git branch -u origin/master`
-will result in the following contents:
+ Makefile                    |   2 +
+ json-writer.c               | 394 ++++++++++++++++++++++++++++++
+ json-writer.h               |  91 +++++++
+ t/helper/test-json-writer.c | 572 ++++++++++++++++++++++++++++++++++++++++++++
+ t/t0019-json-writer.sh      | 253 ++++++++++++++++++++
+ 5 files changed, 1312 insertions(+)
+ create mode 100644 json-writer.c
+ create mode 100644 json-writer.h
+ create mode 100644 t/helper/test-json-writer.c
+ create mode 100755 t/t0019-json-writer.sh
 
-    [branch "master"]
-    [remote "origin"]
-        url = git@github.com:Fryguy/example.git
-        fetch = +refs/heads/*:refs/remotes/origin/*
-    [branch "master"]
-        remote = origin
-        merge = refs/heads/master
+-- 
+2.9.3
 
-at which point you can see the duplicate sections (even though one is
-empty).  Also note that if you do the steps again, you will be left
-with 3 sections, 2 of which are empty.  This process can be repeated
-over and over.
-
-Thanks,
-Jason
