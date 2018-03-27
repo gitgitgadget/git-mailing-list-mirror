@@ -2,75 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 76C791F404
-	for <e@80x24.org>; Tue, 27 Mar 2018 05:07:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F34E21F404
+	for <e@80x24.org>; Tue, 27 Mar 2018 05:08:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751065AbeC0FH3 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Mar 2018 01:07:29 -0400
-Received: from mail-wm0-f50.google.com ([74.125.82.50]:40632 "EHLO
-        mail-wm0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751030AbeC0FH2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Mar 2018 01:07:28 -0400
-Received: by mail-wm0-f50.google.com with SMTP id x4so6855922wmh.5
-        for <git@vger.kernel.org>; Mon, 26 Mar 2018 22:07:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=4Wxvc65D9TjqGwJ45eVAhrwqeXWfKTR41TC6NvU5/Is=;
-        b=ZkGAOFtL+uD4LHLwHdh2RYHy9NYHfmF/CseSw7z3hyteqjQ42522I+oUyCkovqaGCQ
-         0i+tXpxjaWcEkx6+6V1aYWOpkk9RSws6E+C0Fhwjy+muBXZCkvFzIRB4hxXTbrHGOCM/
-         iPW6JUM294YnD6StY8l/fd/wdyrdKv2W/2REQmBWrxHrnMfpuYhm6B4N1ZIU29W6J9GV
-         CRsu6TBUGRGs+qK5RBWiIl2CtEX6wd6nTmYrTSsHmlc1kvJNXQNGTLhyTi72yiv0m0+h
-         tlGl7rylKpJo7099TJj8kM4/xW7ZJCcyJng8UkDKIeEcwM4wz3GR3a30htLwnWaGaVbU
-         v+sw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=4Wxvc65D9TjqGwJ45eVAhrwqeXWfKTR41TC6NvU5/Is=;
-        b=isM+RwdzYkVO+Xljq75y5g9ZlifEjqCu2BBpDXIHTn+Fo7MhkeNT2/SYgJLHuujgB/
-         38Ru0F0HkZAJdu4W3XagcW3ZlDeBkAFzJviy0BerijirHiUlazTtX5HSuoN9ysKDw8QG
-         uE2RWOpEtJ5PxExsH6NOkVDnI4cUdwkgkUd6vtlpjJgTsVOuG1SsCPc73g96fLwLzJzj
-         6mxaq3CByrUmj0Xt7eFdo7wh18hNKBCvjOdH+PQ2bRQb5U4AMvAeKALM3NnRwqNEs+7o
-         6nsLtCrWJhv8MyBSNMT0++XRWILYp/slCKrfUMz5/JoyRGX1YTAv1YY9NHvp0Bqs5ALC
-         g2Xg==
-X-Gm-Message-State: AElRT7GXHhtfqrSNnYiJMwHNP0QXLaH+WxhtanZDZlpI275kknO/egBd
-        u8GbIbZ5nIoDp0eYJyCeyGU=
-X-Google-Smtp-Source: AG47ELttkoJwnVBkY3iYZqynYk8EFnKyrWnikY7P+nymZF3LGNp3jBZlNim4e5wOzPo8+Ify3Ukvpw==
-X-Received: by 10.28.19.193 with SMTP id 184mr15926132wmt.158.1522127246399;
-        Mon, 26 Mar 2018 22:07:26 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id u110sm1064725wrc.72.2018.03.26.22.07.25
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 26 Mar 2018 22:07:25 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     Wink Saville <wink@saville.com>, jeffhost@microsoft.com,
-        Git List <git@vger.kernel.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFC PATCH v5 0/8] rebase-interactive
-References: <cover.1521779249.git.wink@saville.com>
-        <cover.1521839546.git.wink@saville.com>
-        <CAKk8isqj3OusAE8OJtcys0a-Yj9fgQNn=DtLe-ZGYNzcKp=-3Q@mail.gmail.com>
-        <xmqq7eq2h0wa.fsf@gitster-ct.c.googlers.com>
-        <CAKk8isoJQrikitO7ezRajgphUXYR6207k4UkXP6r57WJEFBaDA@mail.gmail.com>
-        <CAKk8ispSgNgZxS7KfuOyxfU53tzesvNyLRaNXFZa3K7SCbaRkQ@mail.gmail.com>
-        <xmqqzi2ude4w.fsf@gitster-ct.c.googlers.com>
-        <9ca76d31-828d-0b6f-5069-375792c1f55d@jeffhostetler.com>
-        <xmqqh8p2d8jh.fsf@gitster-ct.c.googlers.com>
-        <d56a60a8-e735-b147-a2e6-4e48461ad701@jeffhostetler.com>
-Date:   Mon, 26 Mar 2018 22:07:24 -0700
-In-Reply-To: <d56a60a8-e735-b147-a2e6-4e48461ad701@jeffhostetler.com> (Jeff
-        Hostetler's message of "Mon, 26 Mar 2018 14:22:39 -0400")
-Message-ID: <xmqqy3ie9kdv.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1750939AbeC0FIo (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Mar 2018 01:08:44 -0400
+Received: from mail.javad.com ([54.86.164.124]:34041 "EHLO mail.javad.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750878AbeC0FIn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Mar 2018 01:08:43 -0400
+Received: from osv (unknown [89.175.180.246])
+        by mail.javad.com (Postfix) with ESMTPSA id EAFC73EA25;
+        Tue, 27 Mar 2018 05:08:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1522127322;
+        bh=pVcSuZFfur7IjfqW6Nnq2zZPF7T7O6Gk3fsOmUvwt7M=; l=5551;
+        h=Received:From:To:Subject;
+        b=BNtg6QuFEqOrY+UmBhZku1UvwQaONSke9hWShDtEjN/nCahZt4vtVYxuSxR8eAZ8J
+         j76Muh9ziHiRpWtYfFpX/eT1M3vzagI2l5mQFIRMw3o5OGcMFuS1ae5g20Om/0BT0V
+         zB/hYVv0tFRZybXrCQH54hv02hUhZPBDZZZRGFq0=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1522127322;
+        bh=pVcSuZFfur7IjfqW6Nnq2zZPF7T7O6Gk3fsOmUvwt7M=; l=5551;
+        h=Received:From:To:Subject;
+        b=BNtg6QuFEqOrY+UmBhZku1UvwQaONSke9hWShDtEjN/nCahZt4vtVYxuSxR8eAZ8J
+         j76Muh9ziHiRpWtYfFpX/eT1M3vzagI2l5mQFIRMw3o5OGcMFuS1ae5g20Om/0BT0V
+         zB/hYVv0tFRZybXrCQH54hv02hUhZPBDZZZRGFq0=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1522127322;
+        bh=pVcSuZFfur7IjfqW6Nnq2zZPF7T7O6Gk3fsOmUvwt7M=; l=5551;
+        h=Received:From:To:Subject;
+        b=BNtg6QuFEqOrY+UmBhZku1UvwQaONSke9hWShDtEjN/nCahZt4vtVYxuSxR8eAZ8J
+         j76Muh9ziHiRpWtYfFpX/eT1M3vzagI2l5mQFIRMw3o5OGcMFuS1ae5g20Om/0BT0V
+         zB/hYVv0tFRZybXrCQH54hv02hUhZPBDZZZRGFq0=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1522127322;
+        bh=pVcSuZFfur7IjfqW6Nnq2zZPF7T7O6Gk3fsOmUvwt7M=; l=5551;
+        h=Received:From:To:Subject;
+        b=BNtg6QuFEqOrY+UmBhZku1UvwQaONSke9hWShDtEjN/nCahZt4vtVYxuSxR8eAZ8J
+         j76Muh9ziHiRpWtYfFpX/eT1M3vzagI2l5mQFIRMw3o5OGcMFuS1ae5g20Om/0BT0V
+         zB/hYVv0tFRZybXrCQH54hv02hUhZPBDZZZRGFq0=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1522127322;
+        bh=pVcSuZFfur7IjfqW6Nnq2zZPF7T7O6Gk3fsOmUvwt7M=; l=5551;
+        h=Received:From:To:Subject;
+        b=BNtg6QuFEqOrY+UmBhZku1UvwQaONSke9hWShDtEjN/nCahZt4vtVYxuSxR8eAZ8J
+         j76Muh9ziHiRpWtYfFpX/eT1M3vzagI2l5mQFIRMw3o5OGcMFuS1ae5g20Om/0BT0V
+         zB/hYVv0tFRZybXrCQH54hv02hUhZPBDZZZRGFq0=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1522127322;
+        bh=pVcSuZFfur7IjfqW6Nnq2zZPF7T7O6Gk3fsOmUvwt7M=; l=5551;
+        h=Received:From:To:Subject;
+        b=BNtg6QuFEqOrY+UmBhZku1UvwQaONSke9hWShDtEjN/nCahZt4vtVYxuSxR8eAZ8J
+         j76Muh9ziHiRpWtYfFpX/eT1M3vzagI2l5mQFIRMw3o5OGcMFuS1ae5g20Om/0BT0V
+         zB/hYVv0tFRZybXrCQH54hv02hUhZPBDZZZRGFq0=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1522127322;
+        bh=pVcSuZFfur7IjfqW6Nnq2zZPF7T7O6Gk3fsOmUvwt7M=; l=5551;
+        h=Received:From:To:Subject;
+        b=BNtg6QuFEqOrY+UmBhZku1UvwQaONSke9hWShDtEjN/nCahZt4vtVYxuSxR8eAZ8J
+         j76Muh9ziHiRpWtYfFpX/eT1M3vzagI2l5mQFIRMw3o5OGcMFuS1ae5g20Om/0BT0V
+         zB/hYVv0tFRZybXrCQH54hv02hUhZPBDZZZRGFq0=
+Authentication-Results: mail.javad.com;
+        spf=pass (sender IP is 89.175.180.246) smtp.mailfrom=osv@javad.com smtp.helo=osv
+Received-SPF: pass (mail.javad.com: connection is authenticated)
+Received: from osv by osv with local (Exim 4.84_2)
+        (envelope-from <osv@osv.gnss.ru>)
+        id 1f0gqd-00008B-Tz; Tue, 27 Mar 2018 08:08:39 +0300
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Igor Djordjevic <igor.d.djordjevic@gmail.com>,
+        phillip.wood@dunelm.org.uk, Jacob Keller <jacob.keller@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC] Rebasing merges: a jorney to the ultimate solution(RoadClear)
+References: <87y3jtqdyg.fsf@javad.com>
+        <ed4d2b30-2dea-740b-6283-973c798f619d@philandanna.no-ip.org>
+        <1298a701-a860-a675-83d7-72f29e14cd2b@talktalk.net>
+        <CA+P7+xpgChuvh_vsPktBkOEhF=MjJh1n_3jD0-n4d67j9kYqzw@mail.gmail.com>
+        <ee809701-a6d8-157d-09cd-cebbf2e949ec@gmail.com>
+        <1580e48a-be44-38dd-79af-8a2a31c5712e@talktalk.net>
+        <nycvar.QRO.7.76.6.1803061812090.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        <754e2735-1288-9a8d-c8bd-ab39cf733812@gmail.com>
+        <nycvar.QRO.7.76.6.1803070810550.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        <c5a5c2cc-6a11-440f-5b9b-964ae1ca07dd@talktalk.net>
+        <483674f8-4097-a374-c8f3-cf56cbb92042@talktalk.net>
+        <29bc6661-1d78-8f89-194e-1dcc9d88c34e@gmail.com>
+        <nycvar.QRO.7.76.6.1803111256410.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        <f4e6237a-84dc-1aa8-150d-041806e2416e@gmail.com>
+        <nycvar.QRO.7.76.6.1803121122390.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        <87h8plh2qd.fsf@javad.com>
+        <39327070-f13a-f7e5-6c8c-cd204530f051@gmail.com>
+        <nycvar.QRO.7.76.6.1803261351070.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+Date:   Tue, 27 Mar 2018 08:08:39 +0300
+In-Reply-To: <nycvar.QRO.7.76.6.1803261351070.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        (Johannes Schindelin's message of "Mon, 26 Mar 2018 14:03:42 +0200
+        (DST)")
+Message-ID: <87muyugl60.fsf@javad.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
@@ -78,36 +114,147 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff Hostetler <git@jeffhostetler.com> writes:
+Hi Johannes,
 
-> I did the uint64_t for the unsigned ns times.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> Hi Buga,
 >
-> I did the other one for the usual signed ints.
+> On Tue, 13 Mar 2018, Igor Djordjevic wrote:
 >
-> I could convert them both to a single signed 64 bit typed function
-> if we only want to have one function.
+>> On 12/03/2018 13:56, Sergey Organov wrote:
+>> > 
+>> > > > I agree with both of you that `pick <merge-commit>` is inflexible
+>> > > > (not to say just plain wrong), but I never thought about it like
+>> > > > that.
+>> > > >
+>> > > > If we are to extract further mentioned explicit old:new merge
+>> > > > parameter mapping to a separate discussion point, what we`re
+>> > > > eventually left with is just replacing this:
+>> > > >
+>> > > > 	merge -R -C <original--merge-commit> <merge-head>
+>> > > >
+>> > > > ... with this:
+>> > > >
+>> > > > 	pick <original--merge-commit> <merge-head>
+>> > >
+>> > > I see where you are coming from.
+>> > >
+>> > > I also see where users will be coming from. Reading a todo list in
+>> > > the editor is as much documentation as it is a "program to execute".
+>> > > And I am afraid that reading a command without even mentioning the
+>> > > term "merge" once is pretty misleading in this setting.
+>> > >
+>> > > And even from the theoretical point of view: cherry-picking
+>> > > non-merge commits is *so much different* from "rebasing merge
+>> > > commits" as discussed here, so much so that using the same command
+>> > > would be even more misleading.
+>> > 
+>> > This last statement is plain wrong when applied to the method in the
+>> > [RFC] you are replying to.
+>
+> That is only because the RFC seems to go out of its way to break down a
+> single merge commit into as many commits as there are merge commit
+> parents.
 
-I still think having sized version is a horrible idea, and recommend
-instrad to use "the widest possible on the platform" type, for the
-same reason why you would only have variant for double but not for
-float.
+Complex entity is being split for ease of reasoning. People tend to use
+this often.
 
-intmax and uintmax are by definition wide enough to hold any value
-that would fit in any integral type the platform supports, so if a
-caller that wants to handle 64-bit unsigned timestamp for example
-uses uint64_t variable to pass such a timestamp around, and the
-platform is capable of groking that code, you should be able to
-safely pass that to json serializer you are writing that takes
-uintmax_t just fine, and (1) your caller that passes around uint64_t
-timestamps won't compile on a platform that is incapable of doing
-64-bit and you have bigger problem than uintmax_t being narrower
-than 64-bit on such a platform, and (2) your caller can just pass
-uint64_t value to your JSON formatter that expects uintmax_t without
-explicit casting, as normal integral type promotion rule would
-apply.
+> This is a pretty convoluted way to think about it: if you have three
+> parent commits, for example, that way of thinking would introduce three
+> intermediate commits, one with the changes of parent 2 & 3 combined, one
+> with the changes of parent 1 & 3 combined, and one with the changes of
+> parent 1 & 2 combined.
 
-So I would think it is most sensible to have double, uintmax_t and
-intmax_t variants.  If you do not care about the extra value range
-that unsigned integral types afford, a single intmax_t variant would
-also be fine.
+No.
 
+> To rebase those commits, you essentially have to rebase *every parent's
+> changes twice*.
+
+No.
+
+> It gets worse with merge commits that have 4 parents. In that case, you
+> have to rebase every parent's changes *three times*.
+
+Sorry, the [RFC] has nothing of the above. Once again, it's still just
+as simple is: rebase every side of the merge then merge the results
+using the original merge commit as a merge base.
+
+And if you can't or don't want to grok the explanation in the RFC, just
+forget the explanation, no problem.
+
+> And so on.
+>
+>> > Using the method in [RFC], "cherry-pick non-merge" is nothing more or
+>> > less than reduced version of generic "cherry-pick merge", exactly as
+>> > it should be.
+>
+> I really get the impression that you reject Phillip's proposal on the
+> ground of not being yours. In other words, the purpose of this here
+> argument is to praise one proposal because of its heritage, rather than
+> trying to come up with the best solution.
+
+No. As the discussion evolved, I inclined to conclusion that modified
+Phillip's algorithm is actually better suited for the implementation
+[1].
+
+> On that basis, I will go with the proposal that is clearly the simplest
+> and does the job and gets away with avoiding unnecessary work.
+
+These algorithms are actually the same one, as has already been shown
+elsewhere in the discussion. Asymmetric incremental nature of the
+Phillip's one is apparently better suited for naturally asymmetrical way
+Git already handles merging. FYI, here is the latest proposal that came
+out of discussion [1]:
+
+git-rebase-first-parent --onto A' M
+tree_U1'=$(git write-tree)
+git merge-recursive B -- $tree_U1' B'
+tree=$(git write-tree)
+M'=$(git log --pretty=%B -1 M | git commit-tree -pA' -pB')
+[ $conflicted_last_merge = "yes" ] ||
+  trees-match $tree_U1' $tree || 
+  stop-for-user-amendment
+
+where 'git-rebase-first-parent' denotes whatever machinery is currently
+being used to rebase simple non-merge commit.
+
+>
+>> > Or, in other words, "cherry-pick merge" is generalization of
+>> > "cherry-pick non-merge" to multiple parents.
+>> 
+>> I think Sergey does have a point here, his approach showing it.
+>
+> His approach is showing that he wants to shoehorn the "rebase a merge
+> commit" idea into a form where you can cherry-pick *something*.
+>
+> It does not have to make sense. And to me, it really does not.
+
+Except that Phillip's one does exactly this as well, only in incremental
+manner, as shown in [1].
+
+>
+>> Phillip`s simplification might be further from it, though, but we`re 
+>> talking implementation again - important mental model should just be 
+>> "rebasing a commit" (merge or non-merge), how we`re doing it is 
+>> irrelevant for the user, the point (goal) is the same.
+>
+> Except that Phillip's simplification is not a simplification. It comes
+> from a different point of view: trying to reconcile the diverging
+> changes.
+
+They are essentially the same as one easily converts to another and back
+[1]. They will only bring different user experience in case of
+conflicts.
+
+> Phillip's is a true generalization of the "rebase vs merge" story: it is
+> no longer about merging, or about rebasing, but about reconciling
+> divergent commit histories, with whatever tool is appropriate.
+
+Whatever. They are essentially the same thing. The only difference is
+incremental vs parallel [1].
+
+References:
+
+[1] https://public-inbox.org/git/87efkn6s1h.fsf@javad.com/
+
+-- Sergey
