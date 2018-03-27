@@ -2,98 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 02A7D1F404
-	for <e@80x24.org>; Tue, 27 Mar 2018 16:11:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4ACF11F404
+	for <e@80x24.org>; Tue, 27 Mar 2018 16:13:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752967AbeC0QLP (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Mar 2018 12:11:15 -0400
-Received: from cloud.peff.net ([104.130.231.41]:44826 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1752945AbeC0QLN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Mar 2018 12:11:13 -0400
-Received: (qmail 10617 invoked by uid 109); 27 Mar 2018 16:11:12 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 27 Mar 2018 16:11:12 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 31029 invoked by uid 111); 27 Mar 2018 16:12:11 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 27 Mar 2018 12:12:11 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 27 Mar 2018 12:11:11 -0400
-Date:   Tue, 27 Mar 2018 12:11:11 -0400
-From:   Jeff King <peff@peff.net>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Brandon Williams <bmwill@google.com>, git@vger.kernel.org,
-        git@jeffhostetler.com, gitster@pobox.com, jrnieder@gmail.com,
-        sbeller@google.com, stolee@gmail.com, jonathantanmy@google.com
-Subject: Re: [PATCH v6 07/35] connect: convert get_remote_heads to use struct
- packet_reader
-Message-ID: <20180327161110.GA24747@sigill.intra.peff.net>
-References: <20180314183213.223440-1-bmwill@google.com>
- <20180315173142.176023-1-bmwill@google.com>
- <20180315173142.176023-8-bmwill@google.com>
- <20180327152714.GA27050@duynguyen.home>
+        id S1752120AbeC0QND (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Mar 2018 12:13:03 -0400
+Received: from mout.gmx.net ([212.227.15.18]:52111 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750914AbeC0QNC (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Mar 2018 12:13:02 -0400
+Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M2tXS-1ejsIL1m4M-00si69; Tue, 27
+ Mar 2018 18:12:55 +0200
+Date:   Tue, 27 Mar 2018 18:12:54 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
+        <pclouds@gmail.com>, git@vger.kernel.org,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Jeff Hostetler <git@jeffhostetler.com>
+Subject: Re: [PATCH v2 00/36] Combine t/helper binaries into a single one
+In-Reply-To: <xmqqtvt1a5kg.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1803271812430.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <20180317075421.22032-1-pclouds@gmail.com> <20180324074505.19100-1-pclouds@gmail.com> <nycvar.QRO.7.76.6.1803271558380.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <xmqqtvt1a5kg.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20180327152714.GA27050@duynguyen.home>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:l8eVu1TWseBNEDJEE7RmrX6lXaCjjI1EXw3AGQEvmmHxYeznt6V
+ HJSm4u6FmopxdJ8TULBgl1cTG2an7KKpce5S1mdRS7idPL1/moG3avpw2m4DnOG5PcoEgtT
+ zFrlpukLZFRmOlapMucB0sK0+SdM5HyRRJ4fwVtinNBj7iwpraGUn3czI+bgVEmfh7c/YJK
+ QkFzj7DX8BSHmLopJtnig==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Ec9fg+FHZSI=:EAAqTkcQJ9q+osc1+ZNiF1
+ 29iyCO15cEAXkWFpqLSHXjyOvjqgkcWCihoO3gjuVUyJ37baU9VqYWd53UuPhwXFTS5yS7xwp
+ AfzTAxBd8uymNRxCkR0V91F2zmVpASHctsa6q2kV8pbsSke7+kKPFRDzTlKUPnud8GVq8yujO
+ A0w8P3ePR41aP5sIzlfQWlWlFGnQLG5FhrGbNRpEo6VTNGXxX7GEEcxF2juGHx2J6Frta1vak
+ /XmuB7AhY0Kf98IeR8aqsYW/i4MZUCG3dLCgFci3iODueqlFchaaARSJr714rIsH7Z81EB+go
+ UhLOz91dEgdFBzmcU14wkRaxSQOK6uvGhW9f17kLpsSLHbWr+2OyD5W3DQa0EMx5ACePj8KDS
+ CJzsqOcegJoiJhTPA7isHA0OOroDpLbTSc7cAz6+pXA08D2xUI1hQF0Lsn0p5OhZSBsV1TxRs
+ 2+JL64nFmtpCs7utDTQpQOLup/eVPL2n4JXXn/D1bgkA9MUVvZt1DY/0FU8QEmeD8/1A22f1x
+ +GalTGxQCN2Dh9VsdO+fBkkPF3k1M6jNMJwN3G76knu85roW0Kyf/zEQl04GBDPYvjj+17Fnx
+ 6S3uh5vOCxJyMjtVv+i82x/sCZd7JjSDQDbcjOHdMEyEDsdOB323noXNbD4r5x6yvVODU5n6t
+ uqK4ebKFdjQ2hyQsdyHnXzPcE7F7sNSdqc8d8lnT8P++8f5JGwZmg5qUmyk4H4DGTvyIfDUay
+ nJPYyCzyZ64XM0sTaEMiJuuXjLo3bd3blHe3cL1A6bBxBVZ0zcv75DzlHdIOI8J8a1vGCPCRS
+ IRNz4rT29gGGYhFHEnwnrs8uZrr50yp0HuyOUgHhfi/+x4t20LY/zmCAcn+7b1dRd9d20dD
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 27, 2018 at 05:27:14PM +0200, Duy Nguyen wrote:
+Hi Junio,
 
-> On Thu, Mar 15, 2018 at 10:31:14AM -0700, Brandon Williams wrote:
-> > In order to allow for better control flow when protocol_v2 is introduced
-> > +static enum protocol_version discover_version(struct packet_reader *reader)
-> > +{
-> > +	enum protocol_version version = protocol_unknown_version;
-> > +
-> > +	/*
-> > +	 * Peek the first line of the server's response to
-> > +	 * determine the protocol version the server is speaking.
-> > +	 */
-> > +	switch (packet_reader_peek(reader)) {
-> > +	case PACKET_READ_EOF:
-> > +		die_initial_contact(0);
-> > +	case PACKET_READ_FLUSH:
+On Tue, 27 Mar 2018, Junio C Hamano wrote:
+
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> gcc is dumb. When -Werror and -Wimplicit-fallthrough are enabled (on
-> at least gcc 7.x), it fails to realize that this die_initial_contact()
-> will not fall through (even though we do tell it about die() not
-> returning, but I guess that involves more flow analysis to realize
-> die_initial_contact is in the same boat).
-> [...]
-> @@ -124,6 +124,7 @@ enum protocol_version discover_version(struct packet_reader *reader)
->  	switch (packet_reader_peek(reader)) {
->  	case PACKET_READ_EOF:
->  		die_initial_contact(0);
-> +		break;
+> > This iteration, with the SQUASH??? I proposed (and that Junio will
+> > hopefully pick up soon), works well on Windows.
+> 
+> Thanks; is that the "call it fn, as main is macro-ed away by us?"
+> change?
 
-Would it make sense just to annotate that function to help the flow
-analysis? Like:
+Precisely.
 
-diff --git a/connect.c b/connect.c
-index c3a014c5ba..49eca46462 100644
---- a/connect.c
-+++ b/connect.c
-@@ -46,7 +46,7 @@ int check_ref_type(const struct ref *ref, int flags)
- 	return check_ref(ref->name, flags);
- }
- 
--static void die_initial_contact(int unexpected)
-+static NORETURN void die_initial_contact(int unexpected)
- {
- 	if (unexpected)
- 		die(_("The remote end hung up upon initial contact"));
-
-That should let the callers know what's going on, and inside the
-function itself, the compiler should confirm that all code paths hit
-another NORETURN function.
-
--Peff
+Thanks,
+Dscho
