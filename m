@@ -7,91 +7,138 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E11AF1F404
-	for <e@80x24.org>; Tue, 27 Mar 2018 15:54:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E59881F404
+	for <e@80x24.org>; Tue, 27 Mar 2018 16:01:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752614AbeC0Pyv (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Mar 2018 11:54:51 -0400
-Received: from mout.gmx.net ([212.227.15.18]:44617 "EHLO mout.gmx.net"
+        id S1752731AbeC0QBT (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Mar 2018 12:01:19 -0400
+Received: from mout.gmx.net ([212.227.17.21]:39313 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752580AbeC0Py0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Mar 2018 11:54:26 -0400
-Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MFuWk-1eoC0R3mAY-00ErNV; Tue, 27
- Mar 2018 17:54:22 +0200
-Date:   Tue, 27 Mar 2018 17:54:21 +0200 (DST)
+        id S1751486AbeC0QBS (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Mar 2018 12:01:18 -0400
+Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MQdAP-1f8iqm1YvV-00U4xu; Tue, 27
+ Mar 2018 18:01:09 +0200
+Date:   Tue, 27 Mar 2018 18:01:07 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Daniel Jacques <dnj@google.com>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/2] Add Windows support to the new RUNTIME_PREFIX
- design
-In-Reply-To: <CAD1RUU8jNudjCXN=-mucogmSFj2xqyYqyk-dfADhjceLsmBE2g@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1803271752190.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <20180325205120.17730-1-dnj@google.com> <nycvar.QRO.7.76.6.1803262331040.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <CAD1RUU8jNudjCXN=-mucogmSFj2xqyYqyk-dfADhjceLsmBE2g@mail.gmail.com>
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+cc:     Duy Nguyen <pclouds@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: Windows build on Travis CI (was: Re: [PATCH v2 01/36] t/helper:
+ add an empty test-tool program)
+In-Reply-To: <CAM0VKjmRiOjb6Jsx1XCfGWe_9+AqJGeBvAWt2sM1_rJArdEVQA@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1803271758490.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <CAM0VKjmRiOjb6Jsx1XCfGWe_9+AqJGeBvAWt2sM1_rJArdEVQA@mail.gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:XzBS3IYnElOqKaxT3+Pt9MIMUDcGH8YzFlrhqfVf5SMuIQS9+pz
- BqeLaJ/EO2eURFuIbg4K1KjHlOnguW6V2V6h95hrtywNg7kfIRR9xttDltRylv6v2UeweHU
- btVFkF2o4jutGBoQCP+FF9F1ci5JZL0BztAoeByv+gTUopKmY603fHyxDVjf/kXZ4z6M4JF
- /M6BSwoieV/37UBFpMloQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:CIOqmA67bqc=:6tPtErUOf02HiHzUBl2eVU
- U/ENSZKDohfxxIZoCZqNG7xshEridmjtsL/1loZ42BbVd+5zk/j7NCFZSWqTZBGSvCOd5q8WI
- lUWzFu5n2oahh2Zi65nDkAlcnQaVgzrzmDd039bApVVTTKK6gxr8d84s6fCxBbaJvwGF5j19o
- xjz+UrCbg2G+XyHQl3oflyElc0eMlw4itvGm7quQOwBgKxfuh2EOvOtJNkmDUefuhm5qqloqm
- dBiRXF4pF84LwsiwYVsyJVj0KG0WBDr+hhlD2n4XzE5ZWbTzPP2YEMMEXfsoQN6lgev1NcVG4
- b6/Z2vkEfJG50U1cnYDnbrTBBOsRKUEpWEZZA+iBgY0le/y/h3g3VbDDtMuYlOWk3uWBWjgnn
- 9jBhrPP1QPzceMsLKQc2HoDId+y3eG8UJgOtwEofT/klj9RG19v95nYjlaH1+diha0X9AEAmi
- lgPWXz0s8IzYCa2SDkr7wUZQeHYoo5WH1Cj0X5nDynRAcT40HT+CgnmKISJenFM4iB/bZn35Q
- wtrbNkaO3ee6qhcGJLt+yw04poaOwbYQj4oJ710091nn7LyMzSVJ760OurTspEuEo5/iMS8wL
- Hu9xDVmGeGns1vHw2VCZxgAzRwijvhwygOTiWBDz6hswmfxHNmKx7hT+EdjQAF+Dfv5DQElxO
- 9k9h7LukFVj0+es8x66OL50JvM/T+VnuGZpze1inaRKzQXOm8seq+8kwx0k9Fo9wcenbsJ/qx
- vqgptK0/DvW+KJOR2kChqCVE3JwP8fvKOc0IzBu0lzueTi2BCzHPCWz2uDkaHmKnHBUconje+
- mwcQqfBQcIRJNraWltMYcb0fjk83sEdGEWCAkhWmqs3LtZkrkykNR5cG/z9ogJk6hlMma0f
+Content-Type: multipart/mixed; boundary="8323329-571997179-1522166469=:77"
+X-Provags-ID: V03:K0:hfS92AByGY+BWptJ8M0QA4xE3cU6ZcV9CXglSG4JEyGimceujUg
+ tjjkfA2/FnfLVXsoUTI+kzKyQlyAbQwOgfQGdvcojBE4e3A3iEYk65Sd5dkSvKxxWmrtcYf
+ m/uST8Eo4FMFWNqXtwJjXtHzfel6nsfmljZHIUP4mzOqYhV6XURwvtA+QpRfpfRlEWjMILi
+ +z+5Frn7aH8sJ1LSUOung==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:HV01auJzCv8=:WLrF/8VbWloxkQPT0ULnBV
+ Er1PJlMqXJDs9xoE5106JcuA6a374/vBq0K4FkhAAUxc5LIMZOaoXdT1CvoEeyG4S/TCLUrvl
+ GyIqnFNugK2VySLeOc17imulty40iKMCqLPsP6n2Fiq+B/VbECWkKzKRJAejhjQAvTl/bPykX
+ lpYJmSowbFKxk0QfLYXSVrWT6nYbq4HS6UyYk121DvTxj+Oouvs80oqGXoZOiQKwl0L+peGh4
+ MTzLWNKDueh7y9z/2uxwlesUdumlyz6uR8JSLcBwi9Ocb8kf+dAKMjmvJEhMGl3/Oskj2Lt4A
+ rxtVI5JA1hhhU/z7Psv8gz4SL+uQQ5x4I8N97x+Ri8OiJAYOMBtFY3ccoUa4EqSepBirPhfHp
+ BZ8Wwce+HIJCLQmQgwsxyB68mJJbhG81GN828CEsyian75if7mloXd5SK8hWYgc+kQE8g4oZi
+ bzBgH0kx6Pi0rx2UiXDgIyouxye5IiAulI4zuJc/FkqE9hUVAnaBpWvkUu6ZP/gQgHpzGXEPP
+ eAqswafobuKPEveetLx6zG0cdnZp8qSbX/o6+25E2ALEWAV0oyzN4Re10KwYj/n0Bi+iR5RXr
+ i/x6ekf/Hxzv0DRlVEvfZUHI4jE72etjLGWxYH+MVcspgkFie51bM5XmWrXTOPGdIqjI22oL/
+ lE/bXxq+ShYeCLQsX3wKGe+4RQTZtoFGEnGXk9ryJXfuVzfQdJfGLtdeixFX99qgAALeVy+ZP
+ R9uNHh0eoVrQigYD4OUr0rlfDvTHopSBuoLJw//hjH9qjo6BDYL7BSZJNBtmHOvVN/fs9XCbI
+ uA3SHId1mkmgwQCgWY+97IGRtQexRrFexbkZOslTG6Ddc4VwSQbDBQVwfP34Z3GkjsZqfmK
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Dan,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Tue, 27 Mar 2018, Daniel Jacques wrote:
+--8323329-571997179-1522166469=:77
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-> On Mon, Mar 26, 2018 at 5:31 PM Johannes Schindelin <
-> johannes.schindelin@gmx.de> wrote:
-> 
-> > Even if the RUNTIME_PREFIX feature originates from Git for Windows, the
-> > current patch series is different enough in its design that it leaves the
-> > Windows-specific RUNTIME_PREFIX handling in place: On Windows, we still
-> > have to override argv[0] with the absolute path of the current `git`
-> > executable.
-> 
-> > Let's just port the Windows-specific code over to the new design and get
-> > rid of that argv[0] overwriting.
-> 
-> > This also partially addresses a very obscure problem reported on the Git
-> > for Windows bug tracker, where misspelling a builtin command using a
-> > creative mIxEd-CaSe version could lead to an infinite ping-pong between
-> > git.exe and Git for Windows' "Git wrapper" (that we use in place of
-> > copies when on a file system without hard-links, most notably FAT).
-> 
-> > Dan, I would be delighted if you could adopt these patches into your patch
-> > series.
-> 
-> Great, I'm glad this patch set could be useful to you! I'm happy to apply
-> this to the patch series. They applied cleanly, so I'll push a new version
-> after Travis validates the candidate.
-> 
-> I don't have a Windows testing facility available, so I'm hoping that you
-> verified that this works locally. I suppose that's what the unstable branch
-> series is for.
+Hi G=C3=A1bor,
 
-Yes, I performed manual testing.
+On Tue, 27 Mar 2018, SZEDER G=C3=A1bor wrote:
 
-I guess we should add a test where we copy the `git` executable into a
-subdirectory with the name "git" and call `git/git --exec-path` and verify
-that its output matches our expectation?
+> On Tue, Mar 27, 2018 at 3:57 PM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> >
+> > On Tue, 27 Mar 2018, SZEDER G=C3=A1bor wrote:
+> >
+> >> On Tue, Mar 27, 2018 at 12:14 AM, Johannes Schindelin
+> >> <Johannes.Schindelin@gmx.de> wrote:
+> >> > However, it seems that something is off, as
+> >> > ba5bec9589e9eefe2446044657963e25b7c8d88e is reported as fine on Wind=
+ows:
+> >> > https://travis-ci.org/git/git/jobs/358260023 (while there is clearly=
+ a red
+> >> > X next to that commit in
+> >> > https://github.com/git/git/commits/ba5bec9589e9eefe2446044657963e25b=
+7c8d88e,
+> >> > that X is due to a hiccup on macOS).
+> >> >
+> >> > It seems that the good-trees feature for Travis does not quite work =
+as
+> >> > intended. G=C3=A1bor?
+> >>
+> >> AFAICT it works as expected.
+> >>
+> >> When a build job encounters a commit with a tree that has previously
+> >> been built and tested successfully, then first it says so, like this:
+> >>
+> >>   https://travis-ci.org/szeder/git/jobs/347295038#L635
+> >
+> > But what if it has not been built successfully (as was the case here)?
+> > This very commit that is "succeeding" on Travis fails to compile on
+> > Windows.
+>=20
+> Then why has the GfW web app reported success?
+>=20
+>   https://travis-ci.org/git/git/jobs/358260023#L512
+
+Oy. There was a shift in build steps, so that shows the wrong output. The
+correct build step ends thusly:
+
+-- snip --
+[...]
+2018-03-26T06:50:55.0000371Z Checking out files:  97% (3136/3232)  =20
+2018-03-26T06:50:55.0106984Z Checking out files:  98% (3168/3232)  =20
+2018-03-26T06:50:55.0223806Z Checking out files:  99% (3200/3232)  =20
+2018-03-26T06:50:55.0227819Z Checking out files: 100% (3232/3232)  =20
+2018-03-26T06:50:55.0228191Z Checking out files: 100% (3232/3232), done.
+2018-03-26T06:50:55.0343621Z HEAD is now at 90bbd502d Sync with Git 2.16.3
+2018-03-26T06:50:55.0759061Z Updating upstream
+2018-03-26T06:50:56.3001946Z From https://github.com/git/git
+2018-03-26T06:50:56.3002737Z  * [new branch]          maint      -> upstrea=
+m/maint
+2018-03-26T06:50:56.3003056Z  * [new branch]          master     -> upstrea=
+m/master
+2018-03-26T06:50:56.3003832Z  * [new branch]          next       -> upstrea=
+m/next
+2018-03-26T06:50:56.3354328Z  * [new branch]          pu         -> upstrea=
+m/pu
+2018-03-26T06:50:56.3354880Z  * [new branch]          todo       -> upstrea=
+m/todo
+2018-03-26T06:50:56.8219992Z fatal: Not a valid commit name 7a6a7fb7d0ab105=
+2db113318478f9e40e66e59dc
+2018-03-26T06:50:56.8236547Z Commit 7a6a7fb7d0ab1052db113318478f9e40e66e59d=
+c is not on branch upstream/master; skipping
+```
+
+So as you see, by the time we fetched `pu`, it was no longer reachable
+(otherwise we would have been able to fetch it).
+
+That's a bummer.
 
 Ciao,
 Dscho
+--8323329-571997179-1522166469=:77--
