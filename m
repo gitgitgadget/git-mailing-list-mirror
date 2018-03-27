@@ -2,135 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A60AC1F404
-	for <e@80x24.org>; Tue, 27 Mar 2018 16:58:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 402381F404
+	for <e@80x24.org>; Tue, 27 Mar 2018 17:06:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754407AbeC0Q63 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Mar 2018 12:58:29 -0400
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:42326 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754218AbeC0Q61 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Mar 2018 12:58:27 -0400
-Received: by mail-pf0-f194.google.com with SMTP id a16so9089880pfn.9
-        for <git@vger.kernel.org>; Tue, 27 Mar 2018 09:58:27 -0700 (PDT)
+        id S1755418AbeC0Qk2 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Mar 2018 12:40:28 -0400
+Received: from mail-oi0-f67.google.com ([209.85.218.67]:36919 "EHLO
+        mail-oi0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755389AbeC0QkW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Mar 2018 12:40:22 -0400
+Received: by mail-oi0-f67.google.com with SMTP id e8-v6so6033802oii.4
+        for <git@vger.kernel.org>; Tue, 27 Mar 2018 09:40:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=ukbPWuT5q4lwiUMiYZ4S8UEfrB8ssAF4HukS37Jbvig=;
-        b=QxWTDp/HNk/QeMwlb6gB6MfXg20zQRIjj9mJqJn5mG1NVW0s54+mwFBj9vGoFljhHN
-         6ZcxZnK8/aDahnCtR1KMEZCl7H5cJacwqhzJ6tjrFoTGKXyomhpYwYwDo86NzeDI9vIH
-         VzNBwr4MYomtuvXqvuNLTlUSq2GiiAGcrgqdgE9F6qKB8UjYvYYU2clszxmyRyJspCGn
-         Fd1k+p9gr3NZ8SOeS8pBVZa9qXPFCrAoaxdU+kawgSjSL5A951hnFpGnEIE9CdK0Q7yy
-         N3Pig8qDf28Sg5u1YWfeGyT5R9xbh5ijRNcnGuwq6Dryu7INnMs0lSSJ/j76kJeyo2b5
-         f50w==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=+EgV+BBjAomwusFigsbWXMpsELWdtOSnrYB8Y8CFi8k=;
+        b=ONUYQAt6vIJ+Zg9GxTPmH5KL97LNCC8cBJ7O+bduzc5wlNPix5EOrslyWP0rt0vX+e
+         7qZ8aXZjMNB0vaVYaY7b3HE4H18UxQB/xPIWSZtegyKfQHzyrdGwOVrhNd3DLon/31js
+         ZJDtU+91t75qXoIQEDsUCCCKUfTrrSqQ6sG3LAWbKlXCDU3BmYCAw4wHNNa3PrXid0fV
+         p5e7C9enChjioqdI2UDmhaEItOb/cgE3EyCFjFnGSRqevCYpdOg642x8yVseU8flXuTb
+         8GtKkk/Uil2HrrNlq60GZDFfK76eQhq0hP21kbyUukNvPQukQRF0hEjnU7OAlD0kEEBn
+         t1/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=ukbPWuT5q4lwiUMiYZ4S8UEfrB8ssAF4HukS37Jbvig=;
-        b=Yrv9h8rpisHJRY64X+jiu0ff1GOsFTkhBSwSZJfgsLFGGr4OiV8cFcbKpGKEwkQjaa
-         DEA511VnoHqbWA9NrQb6GdcYaxyKnS/F2Wt0IjGDZW16cwxI+CWnDu/Gk3ff+H2LGQy+
-         +xsufz6ZFTtOudxQG3OweDkI3VAz5pmEwoyp4dGIpurHqvc/j5sRtQ41Ia4wxJBsOqMi
-         VIuCPvsv+maAQ4/MC1zpmCTbdz0jNH/0IuCdB/7MzZVFjz/NO+TK5iPMXjArx1BwJ6Bv
-         Fg6gEepo0eN7hVIpaiywaGc+o4cHy+bYHn6mG6hJnUBGiJgmlsX35di43XKZ6AFaQ8lw
-         cnHA==
-X-Gm-Message-State: AElRT7GkzEmsWmCvoikrhPcpnuCWrAyYG6nSQOHiDtWymEReOKbN+5ip
-        ovnP5mQtlBNKxbJhdW7zbLI=
-X-Google-Smtp-Source: AIpwx491VY8JCyFgJ4KL1jYE4HloccDsf+pBaQGlCz4E+bXgG8UcuNsQyk91US3xdBNu0YwiZTtfdA==
-X-Received: by 10.98.32.134 with SMTP id m6mr90262pfj.27.1522169906831;
-        Tue, 27 Mar 2018 09:58:26 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id s78sm4001267pfa.161.2018.03.27.09.58.25
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 27 Mar 2018 09:58:26 -0700 (PDT)
-Date:   Tue, 27 Mar 2018 09:57:51 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Alexandre Julliard <julliard@winehq.org>,
-        Dorab Patel <dorabpatel@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        David =?iso-8859-1?Q?K=E5gedal?= <davidk@lysator.liu.se>,
-        Kyle Meyer <kyle@kyleam.com>,
-        Martin =?iso-8859-1?Q?=C5gren?= <martin.agren@gmail.com>,
-        Ami Fischman <fischman@google.com>
-Subject: Re: [PATCH v3] git{,-blame}.el: remove old bitrotting Emacs code
-Message-ID: <20180327165751.GA4343@aiede.svl.corp.google.com>
-References: <EKzyQbDEJGG4Lm5YboF8xg@mail.gmail.com>
- <20180310184545.16950-1-avarab@gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=+EgV+BBjAomwusFigsbWXMpsELWdtOSnrYB8Y8CFi8k=;
+        b=uWB1rZ6HIvZnwwOwULC4gXHSx5lNqjFh8IBBjG/dyyX4WOGetx3UbE1uu8p0BZdYsL
+         li4/kw6THVuvYu4uq8OHYBsGPkrBKqCd7styqfr8vq/QZVRcH6ufQUn/c+nyimKnKxYj
+         93e2n8vHFFPUarS52ouAhEQ5yRBFFqO92Fsx7IPg4sztgu4Ogo6Ha1yjvEurSkJ0E96Y
+         p782yuOV8DHgTab6+nkYaHnVwJY2naoK7aWXjm79gZvbeOnSKiRilo74l430x/l9GUsI
+         BljF6Cm/AtJhDjmCVwAe6dGR5002lZRy621VnT+Vu2lc3jdCP9/R51LJPEcMMTnRs25Q
+         v/LA==
+X-Gm-Message-State: AElRT7EIN3TxpZpRg1jsigPLROqybHmbEg2l/EK4TOdKjq1SzyDhsOBr
+        jujQn6bOd03zntHtv4Ig5dyzkaj2OXKOilIe+c0=
+X-Google-Smtp-Source: AIpwx4+MbHb6cymZM0ywLVkJIJTKIt9O7um/MDHLM7rOnBj93zk0Qk/Sb9ij/+8Vewu12H9BUve1YzFtAPjlwJy93jY=
+X-Received: by 10.202.243.84 with SMTP id r81mr24180oih.281.1522168821639;
+ Tue, 27 Mar 2018 09:40:21 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20180310184545.16950-1-avarab@gmail.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+Received: by 10.74.211.131 with HTTP; Tue, 27 Mar 2018 09:39:51 -0700 (PDT)
+In-Reply-To: <CACsJy8B7Da7ubTti_NL46uejo_OMgx5pkFvk4My5g7RZDmAK7g@mail.gmail.com>
+References: <20180314183213.223440-1-bmwill@google.com> <20180315173142.176023-1-bmwill@google.com>
+ <20180315173142.176023-8-bmwill@google.com> <20180327152714.GA27050@duynguyen.home>
+ <20180327161110.GA24747@sigill.intra.peff.net> <CACsJy8B7Da7ubTti_NL46uejo_OMgx5pkFvk4My5g7RZDmAK7g@mail.gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Tue, 27 Mar 2018 18:39:51 +0200
+Message-ID: <CACsJy8CvDRGUX9LmY-jjH=BT5V3qWo8YnU1jqan-6ZbhS+tbQQ@mail.gmail.com>
+Subject: Re: [PATCH v6 07/35] connect: convert get_remote_heads to use struct packet_reader
+To:     Brandon Williams <bmwill@google.com>
+Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Stefan Beller <sbeller@google.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-
-Ævar Arnfjörð Bjarmason wrote[1]:
-
-> The git-blame.el mode has been superseded by Emacs's own
-> vc-annotate (invoked by C-x v g). Users of the git.el mode are now
-> much better off using either Magit or the Git backend for Emacs's own
-> VC mode.
+On Tue, Mar 27, 2018 at 6:25 PM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Tue, Mar 27, 2018 at 6:11 PM, Jeff King <peff@peff.net> wrote:
+>> On Tue, Mar 27, 2018 at 05:27:14PM +0200, Duy Nguyen wrote:
+>>
+>>> On Thu, Mar 15, 2018 at 10:31:14AM -0700, Brandon Williams wrote:
+>>> > In order to allow for better control flow when protocol_v2 is introduced
+>>> > +static enum protocol_version discover_version(struct packet_reader *reader)
+>>> > +{
+>>> > +   enum protocol_version version = protocol_unknown_version;
+>>> > +
+>>> > +   /*
+>>> > +    * Peek the first line of the server's response to
+>>> > +    * determine the protocol version the server is speaking.
+>>> > +    */
+>>> > +   switch (packet_reader_peek(reader)) {
+>>> > +   case PACKET_READ_EOF:
+>>> > +           die_initial_contact(0);
+>>> > +   case PACKET_READ_FLUSH:
+>>>
+>>> gcc is dumb. When -Werror and -Wimplicit-fallthrough are enabled (on
+>>> at least gcc 7.x), it fails to realize that this die_initial_contact()
+>>> will not fall through (even though we do tell it about die() not
+>>> returning, but I guess that involves more flow analysis to realize
+>>> die_initial_contact is in the same boat).
+>>> [...]
+>>> @@ -124,6 +124,7 @@ enum protocol_version discover_version(struct packet_reader *reader)
+>>>       switch (packet_reader_peek(reader)) {
+>>>       case PACKET_READ_EOF:
+>>>               die_initial_contact(0);
+>>> +             break;
+>>
+>> Would it make sense just to annotate that function to help the flow
+>> analysis?
 >
-> These modes were added over 10 years ago when Emacs's own Git support
-> was much less mature, and there weren't other mature modes in the wild
-> or shipped with Emacs itself.
->
-> These days these modes have few if any users, and users of git aren't
-> well served by us shipping these (some OS's install them alongside git
-> by default, which is confusing and leads users astray).
->
-> So let's remove these per Alexandre Julliard's message to the
-> ML[1]. If someone still wants these for some reason they're better
-> served by hosting these elsewhere (e.g. on ELPA), instead of us
-> distributing them with git.
+> Yes that works wonderfully with my gcc-7.3.0
 
-The trouble with removing these so abruptly is that it makes for a bad
-user experience.
-
-  Warning (initialization): An error occurred while loading ‘/home/jrn/.emacs’:
-
-  File error: Cannot open load file, No such file or directory, git
-
-In some sense that is the distributor's fault: just because Git
-upstream stops removing the git.el file doesn't mean that the
-distributor needs to.  But the same thing would happen if the user
-symlinked git.el into a place that emacs could find when using
-upstream Git directly.  And we are putting the distributor in a bad
-place.
-
-Ami Fischman (cc-ed) writes:
-
-| IMO a placeholder git.el that did something like:
-|
-|   (error "git.el is no more; replace (require 'git) with (require 'magit) or
-|   simply delete the former in your initialization file(s)")
-|
-| ideally with a pointer to a short URL explaining the rationale would have
-| been fine.
-| (note that though I've seen
-| https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=893734 I'm _still_ unclear
-| as to why the change was made; you might want to clarify in that bug and
-| point to it from this, or something else)
-
-What do you think?  Would adding such a placeholder during a
-transitional period work well for you?
-
-Thanks,
-Jonathan
-
-[1] https://public-inbox.org/git/20180310184545.16950-1-avarab@gmail.com/
+And this changes things. Since this series is 35 patches and there's
+no sign of reroll needed, I'm going to make this change separately.
+Don't reroll just because of this
+-- 
+Duy
