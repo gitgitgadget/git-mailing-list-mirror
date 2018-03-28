@@ -2,114 +2,177 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AC7581F424
-	for <e@80x24.org>; Wed, 28 Mar 2018 10:10:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4E1571F424
+	for <e@80x24.org>; Wed, 28 Mar 2018 11:29:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752858AbeC1KKy (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Mar 2018 06:10:54 -0400
-Received: from mail-ot0-f174.google.com ([74.125.82.174]:41765 "EHLO
-        mail-ot0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752694AbeC1KKx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Mar 2018 06:10:53 -0400
-Received: by mail-ot0-f174.google.com with SMTP id i28-v6so2025927otf.8
-        for <git@vger.kernel.org>; Wed, 28 Mar 2018 03:10:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=xq5H75vkfPSn2ZJnxC3weLhTIl/iCyjTyeRt+15IcwA=;
-        b=uV2LmyW85qPpgSaem8Pn9lb7efePoapxleRJKPoO85aZYcquFSDc2MhA5fOeEOhh2r
-         9nZF41WETp8E0AUVyBXIrZNgzc0fWv9VLENAYDBfiyUxUs24b5+sKFNt+XF3ji+X4Qwb
-         g0Z5PkiKWLpmADRji0Tzg3CFDdKZlB79doq6mOrsf9KuVkgm1W2uUK7U5gZh4zkBRPQp
-         59i+alSZMnRMNxp1Acxx8rHsPjdjb9gvR/w6krlqJZChadyWUVJGkwuP4uO0d6I4K//9
-         +rv4jF5dKiuZzgtss+KQToQ4YwRtvPd0vi5kHWBrURndi/SeiZ9gu8JUQH4EHSkVtjn0
-         pDIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=xq5H75vkfPSn2ZJnxC3weLhTIl/iCyjTyeRt+15IcwA=;
-        b=Wbs3QiJAIVz1c8vaqHjtQcJ4uRUqihp8FZmT4BL8PGdX8GgguHuprApfG0ZmyDU8QZ
-         qPz0Fba1OZpRW1wHfFM+VXxAhtiwv8BCyz4dFFfGlEXs/Dow78yiYyajFvOfNjO2mKGq
-         eFAHJO37we/BHoIhZ9E4cgCCYK0VuoQ9PQp0NygQvjg/kgY2/bdAREMxTVhOjCNGtb07
-         rmALC/XfF9tON0kvZ7FEpoWg1qzClZQjgbLAsFG7AJJoJ7yYOfSBKR5AUoanhu7RzqlM
-         YagF9CtNHh2DoP2w336jSnZhg54a/t06QYpvcHeBJyeOReIajGG/U8F3HHNahBgo5mdf
-         rsiw==
-X-Gm-Message-State: ALQs6tDSOdYDyrHD5CU0rmLHU31a/IZ0xeHFACM+exTDyEQdNJMlR1bf
-        ZnDsWVec3QuZkkuSfEsh2lHf24CCicX0O6Fra7s=
-X-Google-Smtp-Source: AIpwx48i2Lb88+v2krEe0/hzALKnPHg6jtqwRQM7GmRds5vcy3b1g0w+OLHz1pEQRxpJ2xaBl7sloDbi7FTr0l+gGo4=
-X-Received: by 2002:a9d:ae9:: with SMTP id 96-v6mr1893182otq.75.1522231852564;
- Wed, 28 Mar 2018 03:10:52 -0700 (PDT)
+        id S1752338AbeC1L3P (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Mar 2018 07:29:15 -0400
+Received: from mail.javad.com ([54.86.164.124]:42058 "EHLO mail.javad.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752161AbeC1L3N (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Mar 2018 07:29:13 -0400
+Received: from osv (unknown [89.175.180.246])
+        by mail.javad.com (Postfix) with ESMTPSA id 12D193E899;
+        Wed, 28 Mar 2018 11:29:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1522236552;
+        bh=k01evPYiY9EaxxUBq8u/84vK8WJXSgTTGSYQIn1q7DM=; l=2176;
+        h=Received:From:To:Subject;
+        b=IaNPHx7NRYII+hYgGl9cyz/FLTXiDT4gIfENnQZ8WU7oMrLeRrPa8lkFmllSO6FMi
+         l6N0jRh0gsU0LcWk8xxos8MGCL7CzxUEw6tNfNkUAIPBx7OpyghVxEd3vh4wlZPqPL
+         GT1gYWG1dH4EH6d56369Mgcviw5s8E6NQau8Sjic=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1522236552;
+        bh=k01evPYiY9EaxxUBq8u/84vK8WJXSgTTGSYQIn1q7DM=; l=2176;
+        h=Received:From:To:Subject;
+        b=IaNPHx7NRYII+hYgGl9cyz/FLTXiDT4gIfENnQZ8WU7oMrLeRrPa8lkFmllSO6FMi
+         l6N0jRh0gsU0LcWk8xxos8MGCL7CzxUEw6tNfNkUAIPBx7OpyghVxEd3vh4wlZPqPL
+         GT1gYWG1dH4EH6d56369Mgcviw5s8E6NQau8Sjic=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1522236552;
+        bh=k01evPYiY9EaxxUBq8u/84vK8WJXSgTTGSYQIn1q7DM=; l=2176;
+        h=Received:From:To:Subject;
+        b=IaNPHx7NRYII+hYgGl9cyz/FLTXiDT4gIfENnQZ8WU7oMrLeRrPa8lkFmllSO6FMi
+         l6N0jRh0gsU0LcWk8xxos8MGCL7CzxUEw6tNfNkUAIPBx7OpyghVxEd3vh4wlZPqPL
+         GT1gYWG1dH4EH6d56369Mgcviw5s8E6NQau8Sjic=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1522236552;
+        bh=k01evPYiY9EaxxUBq8u/84vK8WJXSgTTGSYQIn1q7DM=; l=2176;
+        h=Received:From:To:Subject;
+        b=IaNPHx7NRYII+hYgGl9cyz/FLTXiDT4gIfENnQZ8WU7oMrLeRrPa8lkFmllSO6FMi
+         l6N0jRh0gsU0LcWk8xxos8MGCL7CzxUEw6tNfNkUAIPBx7OpyghVxEd3vh4wlZPqPL
+         GT1gYWG1dH4EH6d56369Mgcviw5s8E6NQau8Sjic=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1522236552;
+        bh=k01evPYiY9EaxxUBq8u/84vK8WJXSgTTGSYQIn1q7DM=; l=2176;
+        h=Received:From:To:Subject;
+        b=IaNPHx7NRYII+hYgGl9cyz/FLTXiDT4gIfENnQZ8WU7oMrLeRrPa8lkFmllSO6FMi
+         l6N0jRh0gsU0LcWk8xxos8MGCL7CzxUEw6tNfNkUAIPBx7OpyghVxEd3vh4wlZPqPL
+         GT1gYWG1dH4EH6d56369Mgcviw5s8E6NQau8Sjic=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1522236552;
+        bh=k01evPYiY9EaxxUBq8u/84vK8WJXSgTTGSYQIn1q7DM=; l=2176;
+        h=Received:From:To:Subject;
+        b=IaNPHx7NRYII+hYgGl9cyz/FLTXiDT4gIfENnQZ8WU7oMrLeRrPa8lkFmllSO6FMi
+         l6N0jRh0gsU0LcWk8xxos8MGCL7CzxUEw6tNfNkUAIPBx7OpyghVxEd3vh4wlZPqPL
+         GT1gYWG1dH4EH6d56369Mgcviw5s8E6NQau8Sjic=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1522236552;
+        bh=k01evPYiY9EaxxUBq8u/84vK8WJXSgTTGSYQIn1q7DM=; l=2176;
+        h=Received:From:To:Subject;
+        b=IaNPHx7NRYII+hYgGl9cyz/FLTXiDT4gIfENnQZ8WU7oMrLeRrPa8lkFmllSO6FMi
+         l6N0jRh0gsU0LcWk8xxos8MGCL7CzxUEw6tNfNkUAIPBx7OpyghVxEd3vh4wlZPqPL
+         GT1gYWG1dH4EH6d56369Mgcviw5s8E6NQau8Sjic=
+Authentication-Results: mail.javad.com;
+        spf=pass (sender IP is 89.175.180.246) smtp.mailfrom=osv@javad.com smtp.helo=osv
+Received-SPF: pass (mail.javad.com: connection is authenticated)
+Received: from osv by osv with local (Exim 4.84_2)
+        (envelope-from <osv@osv.gnss.ru>)
+        id 1f19GP-0003Ij-Lu; Wed, 28 Mar 2018 14:29:09 +0300
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Jacob Keller <jacob.keller@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Git Mailing List <git@vger.kernel.org>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC] Rebasing merges: a jorney to the ultimate solution(RoadClear)
+References: <87y3jtqdyg.fsf@javad.com>
+        <1298a701-a860-a675-83d7-72f29e14cd2b@talktalk.net>
+        <CA+P7+xpgChuvh_vsPktBkOEhF=MjJh1n_3jD0-n4d67j9kYqzw@mail.gmail.com>
+        <ee809701-a6d8-157d-09cd-cebbf2e949ec@gmail.com>
+        <1580e48a-be44-38dd-79af-8a2a31c5712e@talktalk.net>
+        <nycvar.QRO.7.76.6.1803061812090.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        <754e2735-1288-9a8d-c8bd-ab39cf733812@gmail.com>
+        <nycvar.QRO.7.76.6.1803070810550.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        <c5a5c2cc-6a11-440f-5b9b-964ae1ca07dd@talktalk.net>
+        <f3872fb9-01bc-b2f1-aee9-cfc0e4db77d6@gmail.com>
+        <nycvar.QRO.7.76.6.1803111301340.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        <b329bb98-f9d6-3d51-2513-465aad2fa37a@gmail.com>
+        <nycvar.QRO.7.76.6.1803121142550.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        <243ca23d-77a9-4ae1-a120-de6c6b195cdc@gmail.com>
+        <nycvar.QRO.7.76.6.1803261455130.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        <87woxyf4lk.fsf@javad.com>
+        <nycvar.QRO.7.76.6.1803271536020.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        <874ll0d9nt.fsf@javad.com>
+        <CA+P7+xoDQ2mzhxeZPFhaY+TaSoKkQm=5AtoduHH06-VggOJ2jg@mail.gmail.com>
+Date:   Wed, 28 Mar 2018 14:29:09 +0300
+In-Reply-To: <CA+P7+xoDQ2mzhxeZPFhaY+TaSoKkQm=5AtoduHH06-VggOJ2jg@mail.gmail.com>
+        (Jacob Keller's message of "Wed, 28 Mar 2018 00:20:31 -0700")
+Message-ID: <87r2o48mm2.fsf@javad.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.74.211.131 with HTTP; Wed, 28 Mar 2018 03:10:21 -0700 (PDT)
-In-Reply-To: <20180328095203.GB1523@sigill.intra.peff.net>
-References: <CACUQV5_3Pw+vnyyNUL4oE4tMLG_wKVdqdVk01rg4V92ufUYHHA@mail.gmail.com>
- <20180327063137.GA24044@sigill.intra.peff.net> <CACsJy8DP53Og1crS1bLoJf6w8cJhjGKy=ggfbsqzJ6AU4eNhPA@mail.gmail.com>
- <20180327164757.GB24747@sigill.intra.peff.net> <CACsJy8Bog6U7X-jvzDhq14heQWx0HA_21HsSYR0nykU9aDsCYQ@mail.gmail.com>
- <20180327173024.GA5017@duynguyen.home> <20180328095203.GB1523@sigill.intra.peff.net>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 28 Mar 2018 12:10:21 +0200
-Message-ID: <CACsJy8AVcPi=0i7s9o8cy-XGFuOLr72fe9WLRnEqo1SwLJEBOw@mail.gmail.com>
-Subject: Re: git complains packed-refs is not a directory when used with
- GIT_DIR and GIT_WORK_TREE envvars.
-To:     Jeff King <peff@peff.net>
-Cc:     Rafael Ascensao <rafa.almas@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 28, 2018 at 11:52 AM, Jeff King <peff@peff.net> wrote:
-> On Tue, Mar 27, 2018 at 07:30:24PM +0200, Duy Nguyen wrote:
->
->> On Tue, Mar 27, 2018 at 07:09:36PM +0200, Duy Nguyen wrote:
->> > I would rather have something like ref_store_reinit() in the same
->> > spirit as the second call of set_git_dir() in setup_work_tree. It is
->> > hacky, but it works and keeps changes to minimal (so that it could be
->> > easily replaced later).
+Jacob Keller <jacob.keller@gmail.com> writes:
+
+> On Tue, Mar 27, 2018 at 10:57 PM, Sergey Organov <sorganov@gmail.com> wrote:
 >>
->> So in the name of hacky and dirty things, it would look something like
->> this. This passed your test case. The test suite is still running
->> (slow laptop) but I don't expect breakages there.
+>> Hi Johannes,
+>>
+>> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>> > Hi Sergey,
+>> >
+>>
+>> [...]
+>>
+>> >> >> Reusing existing concepts where possible doesn`t have this problem.
+>> >> >
+>> >> > Existing concepts are great. As long as they fit the requirements of
+>> >> > the new scenarios. In this case, `pick` does *not* fit the
+> requirement
+>> >> > of "rebase a merge commit".
+>> >>
+>> >> It does, provided you use suitable syntax.
+>> >
+>> > You know what `pick` would also do, provided you use suitable syntax?
+> Pick
+>> > your nose.
+>> >
+>> > Don't blame me for this ridiculous turn the discussion took.
+>> >
+>> > Of course, using the suitable syntax you can do anything. Unless there
+> is
+>> > *already* a syntax and you cannot break it for backwards-compatibility
+>> > reasons, as is the case here.
+>>
+>> Backward compatibility to what? To a broken '--preserve-merges'? I had a
+>> feel you've invented '--recreate-merges' exactly to break that
+>> compatibility. No?
+>>
+>> Or is it "Backwards compatibility of a feature that existed only as a
+>> topic branch in `next` before being worked on more?", as you say
+>> yourself below?
+>>
 >
-> I think this is the right direction. I mentioned in my last reply that
-> it would be nice for this to be a bit more generic, in case we need to
-> use it again (and also just to keep the module boundaries sane).
+> I'm pretty sure he meant that changing the meaning and behavior of "pick"
+> is incompatible, as people use scripts which check the edit lists, and
+> these scripts would expect pick to behave in a certain way.
 
-Yes, that's why I called it hacky and dirty :) I keep thinking about
-this, so I will probably fix it in a nicer way.
+Are we still speaking about that new --recreate-merges feature? You
+already care for compatibility for it? You expect there are already
+scripts that use it?
 
-> This part confused me at first:
->
->> +void make_main_ref_store_use_absolute_paths(void)
->> +{
->> +     files_force_absolute_paths(get_main_ref_store());
->> +}
->> +
->> +void make_main_ref_store_use_relative_paths(const char *cwd)
->> +{
->> +     files_make_relative_paths(get_main_ref_store(), cwd);
->> +}
->
-> since I thought you were actually turning things into absolute paths.
-> But your procedure is basically "turn absolute, then after chdir, turn
-> them back relative".
->
-> I think it might be clearer if a single call is given both the old and
-> new paths. That requires the caller of chdir() storing getcwd() before
-> it moves, but I don't think that should be a big deal.
+Once again, it seems like you care and don't care about backward
+compatibility at the same time, here is your phrase below:
 
-The problem is switching relative paths relies on the old $CWD if I'm
-not mistaken and we need  getcwd() for this. I'd love to have one
-callback that says "$CWD has been switched from this path to that
-path, do whatever you need to" that can be called any time, before or
-after chdir(). I'll look more into it.
--- 
-Duy
+"He absolutely cares about compatibility, but in this case, the feature
+has not yet been merged into an official release."
+
+Are we still speaking about that new --recreate-merges feature?
+
+Do you guys care for compatibility for this particular --recreate-merges
+feature or not? I'm lost. "Yes" or "No" answer, if you please!
+
+-- Sergey
