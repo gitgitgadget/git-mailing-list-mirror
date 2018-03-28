@@ -2,83 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 527A31F404
-	for <e@80x24.org>; Wed, 28 Mar 2018 18:57:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D4CB81F404
+	for <e@80x24.org>; Wed, 28 Mar 2018 19:08:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753198AbeC1S5p (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Mar 2018 14:57:45 -0400
-Received: from mail-qt0-f175.google.com ([209.85.216.175]:36139 "EHLO
-        mail-qt0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753135AbeC1S5o (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Mar 2018 14:57:44 -0400
-Received: by mail-qt0-f175.google.com with SMTP id f16so3709918qth.3
-        for <git@vger.kernel.org>; Wed, 28 Mar 2018 11:57:44 -0700 (PDT)
+        id S1753647AbeC1TIe (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Mar 2018 15:08:34 -0400
+Received: from mail-yb0-f180.google.com ([209.85.213.180]:35992 "EHLO
+        mail-yb0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753555AbeC1TIX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Mar 2018 15:08:23 -0400
+Received: by mail-yb0-f180.google.com with SMTP id o3-v6so1178780ybm.3
+        for <git@vger.kernel.org>; Wed, 28 Mar 2018 12:08:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=jQtrop/i0AewQM8nxlgsdPl2H3+AKr6DHxxQFhw7WXA=;
-        b=Mk2eMoEWePYaXZnp3QKfQd0/9ZWqP3jlo7K3tSklKqTA2POpW5TCmCZKHxF8eHloBn
-         FQirkXosCGBg9O2mpAc/b/WLzdyJGcfZkGwjrCt69ji/I8Stq+eH7ljmaERh6RPpun5c
-         f5OP/DvagEWnOtO1SAJzSnbOb5JxDNJyjdeV01XMZXASWlCrzwFCyfGaFKbT4WEBeq79
-         34IuLPb7gpcWqqEryH6nNDtKArAU6lSQrDiw2oAhGgP6sX+Hkf+SYJhr/7LDnNRDJVYd
-         cxJpxgx3cIvdu42XG2sR6EbgapYkSgo7gZWn7QPgdsCdPBVolCpkcoUt5JoCis5bjnhv
-         UALg==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=cXo8Htj7YrDn3PamBPHxIKooJzNFNBOSBcJS2vJj/1c=;
+        b=PzpZzBF8ztNFOnLWktOeSteoEPFvLqAmnASH0QsnrmO75jq2PYbt8+K1RiHJn4kWZE
+         wWsKcgT3nZ5iZt4FxbujafOWDakCofe+0mUTjKdd159/9Nf1sWR8xG/zko/lE959FGn3
+         41W+SVKqcl8V0mRMRSPCxzOo21gK02yXAmbJ2RfPYMUUgkckmr7yP2a2CaW6QYh3Qppq
+         Ey9LK4Hz0uv3H8tcY0Umevndys2zUnzy5rzlix/DGp7gM6K7QuSnQYQsPTzjItV/70Hc
+         LlC9jKo/mUn2apW+AbLlw6VoCJRcwCUm7pJ3odv2yLe1v3ffdQln/mdWe/lLlONvl4Im
+         1exg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=jQtrop/i0AewQM8nxlgsdPl2H3+AKr6DHxxQFhw7WXA=;
-        b=YrK41Jxw1q0L+P7RF+fQO7I/9s7E9B+4eHs+b+vNXVHeQqFhIuLl3+T4bMsuUNSD/a
-         uwP5UcADek3bVw3f2kWWUnH9ozge3Xlh+Rwz/LQRj5WzGW26vhWfXI/lN/dh1EfzsUpF
-         pMZLWbxUCbTRvZm3xTi5cVGdjVNbq3cV+sdmA/PwEaa8G3HQ94tAw3wCX0+1su++u8BI
-         7sIREIW9TLVB6chS7Ynn6VIQa3tShQSgULnPpzIpy6Qjcm103d4uCs3O88NlLXoMgrKg
-         seQBk3kzSyLZloD38nGk7bYelRDXydVNVKAr5UcOCwMZDpkEqfxiGhjbXryaGPLrlWt0
-         O1eg==
-X-Gm-Message-State: ALQs6tDMIrBD5ZDP8YjBfDEKB1U/DJQpbbrup7nvL/Rr3PDaALS3JZ7h
-        bYh65nJzQeNUr2gnX1zrEOFsUlC+lJbEAv3PVLA=
-X-Google-Smtp-Source: AIpwx4+sZkkmw0W5l51JnfDKtwQYH07i/rGM7Yc8n8JYvqdFfrUCYtRo/cyEwmZwBhHIyX+BGoJG6bCRqM8OrH4X7zc=
-X-Received: by 10.237.57.166 with SMTP id m35mr6602229qte.220.1522263463787;
- Wed, 28 Mar 2018 11:57:43 -0700 (PDT)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=cXo8Htj7YrDn3PamBPHxIKooJzNFNBOSBcJS2vJj/1c=;
+        b=hP0UCRYzSqEjzXsq81eECqluWlj/aCQ3a/K9fXUL8jOupHB6dFDSdI6KuLLlO2zzmY
+         hRanh1Y4/tsGH85xiKD37+U12wTYkzObLqXLuYqvmKsPmqs4/rU4oVAaTewDU/Pzpgwr
+         crFWnXU+89BbwVv+nmTTSlOytnWIlOlm07uKl0tDeoGg0fRAuhMOKhVjZQT7rTEOsYP0
+         OlXtms+K/KZ0BIQwmzLjViv9sy4jtvT30IgbhJWSAavKbxWuuAkTUDnaXHw5fTfutFMH
+         LaeCbAykIx7K2+pXMIAyNsKx39FAv/eyhVcu/czpjknJ5PzrH/lnb7bnMyq358wIKIVf
+         TqsQ==
+X-Gm-Message-State: AElRT7Fco01VDB1j1lPLN+gk16KJ6NqB6k1cT3G5fcbgLJjGJVSDKQuL
+        +qOhHp9te9etm6aR1ZskjS2E6/TXXW62HMZQ5nMq+w==
+X-Google-Smtp-Source: AIpwx48jOUJ61H7o9/U/6E4ntTk0ZkgF8zV+xsmIkDnFfPzjNt2q/ComMI/Uv8QYc6VSP2YLJIhdg0sIRZgLHvOJ3cE=
+X-Received: by 2002:a25:2782:: with SMTP id n124-v6mr3098173ybn.307.1522264102092;
+ Wed, 28 Mar 2018 12:08:22 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.12.174.202 with HTTP; Wed, 28 Mar 2018 11:57:42 -0700 (PDT)
-In-Reply-To: <20180328183832.243036-1-sbeller@google.com>
-References: <9c3c0161-f894-3368-ece2-500d0bb6f475@web.de> <20180328183832.243036-1-sbeller@google.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 28 Mar 2018 14:57:42 -0400
-X-Google-Sender-Auth: MR6xSHjDw23WU_aGLqTuzYpS0zM
-Message-ID: <CAPig+cT1Yp8J8E0VDKdxvPdVD-UBsyDfQS+a83zOAW11ayfhnA@mail.gmail.com>
-Subject: Re: [PATCH] submodule: check for NULL return of get_submodule_ref_store()
-To:     Stefan Beller <sbeller@google.com>
-Cc:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-        Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>, jeremy@feusi.co,
-        Prathamesh Chavan <pc44800@gmail.com>
+Received: by 2002:a25:cf81:0:0:0:0:0 with HTTP; Wed, 28 Mar 2018 12:08:21
+ -0700 (PDT)
+In-Reply-To: <20180328173543.GA159395@google.com>
+References: <CAGZ79kaQYjepND8EdgB73meBsShOc5aBporiK2Bo40fqcar0gg@mail.gmail.com>
+ <20180328172449.27012-1-sbeller@google.com> <20180328172449.27012-6-sbeller@google.com>
+ <20180328173543.GA159395@google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 28 Mar 2018 12:08:21 -0700
+Message-ID: <CAGZ79kb1z8Ro9XV72s0-8O_D68VbLWbA=KT2EPOvgfi+e2YWCg@mail.gmail.com>
+Subject: Re: [PATCH 5/6] submodule: fixup nested submodules after moving the submodule
+To:     Brandon Williams <bmwill@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
+        Heiko Voigt <hvoigt@hvoigt.net>,
+        Jonathan Tan <jonathantanmy@google.com>, seanwbehan@riseup.net
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 28, 2018 at 2:38 PM, Stefan Beller <sbeller@google.com> wrote:
-> diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-> @@ -821,6 +821,18 @@ test_expect_success 'moving the superproject does not break submodules' '
-> +test_expect_success 'moving the submodule does not break the superproject' '
-> +       (
-> +               cd addtest2 &&
-> +
-> +               mv repo repo.bak &&
-> +               git submodule status >actual &&
-> +               grep -e "^-" -e repo actual &&
-> +
-> +               mv repo.bak repo
+>> +     if (repo_init(&subrepo, sub_gitdir, sub_worktree))
+>> +             return;
+>
+> Note that in Duy's object-store series he made this function private
+> (IIRC) so this will result in some clash of the two series.
+>
 
-Should this "move back" be encapsulated in a test_when_finished?
+Yes, that is the case.
+I wonder if I'd rather revert to v1 where we only use the
+submodule repo init, or if we revert b2f0eceecf (repository:
+initialize the_repository in main(), 2018-03-03) partially to
+have repo_init available.
 
-> +       )
-> +'
+I would think the approach with submodule init is a bit cleaner
+though has some more lines of code, using just repo_init
+seems easier, but we really have no use case for a separate
+repo_init unless they are submodules. And here we ought to
+check for the repo being a submodule.
+
+Not yet sure which path to take.
