@@ -2,157 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 90A481F404
-	for <e@80x24.org>; Wed, 28 Mar 2018 20:33:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8EBE01F404
+	for <e@80x24.org>; Wed, 28 Mar 2018 20:40:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753079AbeC1Udc (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Mar 2018 16:33:32 -0400
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:41827 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753072AbeC1Udb (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Mar 2018 16:33:31 -0400
-Received: by mail-pg0-f66.google.com with SMTP id t10so1538511pgv.8
-        for <git@vger.kernel.org>; Wed, 28 Mar 2018 13:33:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=ivXqWojENe2XGFrojq/MNgCbKWheCYWfHec+tkgn81Q=;
-        b=PnwGAEq22Cj0aU9EVV8sIOUtG1KHJWjy1NyWmP3Fmmt4i9I+gsQjyHUAqAR0MMR2Ol
-         jcgElNTbA9b0QEgQiznmSy2Y14mlvcIoZbpNWz//SCkE7L02y141VYpAzs5i767GZa+J
-         HYNsqHGoLUBq5ko2wKvCXanAn4sNJej81gzAW8I2eh+GUmOXgquXpg7sscpLwgMG7D/G
-         YMUoHm2S0P6obPFbwWKtY1Bzf/QoSa8rAE+6/9Mfv41Qo+X+u6FyWbVXXU5j/n2g+0FA
-         xUek7w/uPwIAwj+v2nm6wU8rHKNmo/P7YttKat8VFcioi27xGyN3/CWO8S2crzpuHkq3
-         aF+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=ivXqWojENe2XGFrojq/MNgCbKWheCYWfHec+tkgn81Q=;
-        b=sJ2EZdztpfW7dtKVKNqMMTiclzTeBWb0Q/MaeW0qQhiN7Gkxlvp739oua+kmU7TrTy
-         StlWMSAFzc2y+StG9Rz+oLXbah2nX7diKwVTEZtCeRE7GX0V3PV4DA9lmk8/C7keY0Iz
-         ZDMW6qFD22bOxPo6/M19skzRUZXaTY7uNXi7VeMxrr7r21vpzP17H9D8uUSUt8lRXPlI
-         j22ZmLvL5vBm4merTJviuwyENtda24gvdrTzRxsPEqXPO7FY/y7ZbdaEYtfKKPrqwdCg
-         WIW2egZhiEANKyE3iy+c6RL4FWByXanMp1aR7aA2RA5NwJovxX8T+1vYIOFSJ1bPMR8i
-         HUPQ==
-X-Gm-Message-State: AElRT7EOnboamVxp5bCDpgggMl9ifki4yUIgO+lVOZ9mDDUmT9BXH1HD
-        xwy9fm4Jvp1IIfVE1zbBh4NgKdmN
-X-Google-Smtp-Source: AIpwx48tC1sORXMBbYshMGeaTb8GN4bh1hcPF9wvEkuaLXbmzpqSm1WdTnxm3/uKj7YqHkyYpdvM8Q==
-X-Received: by 10.99.62.193 with SMTP id l184mr3456356pga.87.1522269210148;
-        Wed, 28 Mar 2018 13:33:30 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id p71sm10650403pfl.89.2018.03.28.13.33.29
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 28 Mar 2018 13:33:29 -0700 (PDT)
-Date:   Wed, 28 Mar 2018 13:33:03 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [RFC/PATCH] upload-pack: disable object filtering when disabled by
- config
-Message-ID: <20180328203303.GA260688@aiede.svl.corp.google.com>
+        id S1753102AbeC1Ukg (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Mar 2018 16:40:36 -0400
+Received: from rcdn-iport-5.cisco.com ([173.37.86.76]:1206 "EHLO
+        rcdn-iport-5.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752924AbeC1Uke (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Mar 2018 16:40:34 -0400
+X-Greylist: delayed 571 seconds by postgrey-1.27 at vger.kernel.org; Wed, 28 Mar 2018 16:40:34 EDT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=cisco.com; i=@cisco.com; l=3482; q=dns/txt; s=iport;
+  t=1522269634; x=1523479234;
+  h=from:to:cc:subject:date:message-id:references:
+   in-reply-to:content-id:content-transfer-encoding:
+   mime-version;
+  bh=Xh5L6o/zjQ/OsWsLdokFcuzZO1VKEOizAwbrKI5SmKM=;
+  b=StUUqQPWv5k2VuIgVZKdZ96IfUEIsmoHvW7JJJucIWUTrzdDt6sT9lk9
+   BfaF3h5XUcQqSoYdao4OkPgCdx/TmNCBmoWlCj+ElwIIGfPPTo72br7g2
+   TtlGav5jCrOOHsQ9Di9DDFcYsLMgSgho7ig5VgWocBIFMlmLD6tkvgzLt
+   g=;
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: =?us-ascii?q?A0AYAQCI+rta/4ENJK1dGQEBAQEBAQEBA?=
+ =?us-ascii?q?QEBAQcBAQEBAYMWK2E+MSgKg1KIAI0BgVMhgQ+SSoF6CxuEaQIag3MhNBgBAgE?=
+ =?us-ascii?q?BAQEBAQJrKIUmAQQBIxE3DhACAQgODAIUEgICAh0TFRACBA4FhQYIq12CHIRVg?=
+ =?us-ascii?q?2+CKYEIhDyCGoITgS4MgigugxECgiqCMjCCJAKHBJAvCAIYhTeIV4Evhi+EU49?=
+ =?us-ascii?q?QAhETAYEkARw4gVJwFWQBghgJghcXegEIjRNvjU+BCoEXAQE?=
+X-IronPort-AV: E=Sophos;i="5.48,373,1517875200"; 
+   d="scan'208";a="155816586"
+Received: from alln-core-9.cisco.com ([173.36.13.129])
+  by rcdn-iport-5.cisco.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 28 Mar 2018 20:31:02 +0000
+Received: from XCH-RTP-016.cisco.com (xch-rtp-016.cisco.com [64.101.220.156])
+        by alln-core-9.cisco.com (8.14.5/8.14.5) with ESMTP id w2SKV21E014492
+        (version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=FAIL);
+        Wed, 28 Mar 2018 20:31:02 GMT
+Received: from xch-rtp-020.cisco.com (64.101.220.160) by XCH-RTP-016.cisco.com
+ (64.101.220.156) with Microsoft SMTP Server (TLS) id 15.0.1320.4; Wed, 28 Mar
+ 2018 16:31:01 -0400
+Received: from xch-rtp-020.cisco.com ([64.101.220.160]) by
+ XCH-RTP-020.cisco.com ([64.101.220.160]) with mapi id 15.00.1320.000; Wed, 28
+ Mar 2018 16:31:01 -0400
+From:   "Erik Brady -X (brady - ROBERT HALF INTERNATIONAL INC at Cisco)" 
+        <brady@cisco.com>
+To:     Jeff King <peff@peff.net>
+CC:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Apparent bug in credential tool running...
+Thread-Topic: Apparent bug in credential tool running...
+Thread-Index: AQHTxsI9w7UvG8AaqkW66sXaczqa96PmP74A//+n0AA=
+Date:   Wed, 28 Mar 2018 20:31:01 +0000
+Message-ID: <6C6181C9-AA36-4940-94BC-5DB0160C412D@cisco.com>
+References: <7898B9A4-D52E-41AD-9162-5B6B401A1AEA@cisco.com>
+ <20180328184637.GB16931@sigill.intra.peff.net>
+In-Reply-To: <20180328184637.GB16931@sigill.intra.peff.net>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-messagesentrepresentingtype: 1
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [10.24.45.247]
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <0CAB53ECD8438C41B22E78C0F50E9A7E@emea.cisco.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When upload-pack gained partial clone support (v2.17.0-rc0~132^2~12,
-2017-12-08), it was guarded by the uploadpack.allowFilter config item
-to allow server operators to control when they start supporting it.
-
-That config item didn't go far enough, though: it controls whether the
-'filter' capability is advertised, but if a (custom) client ignores
-the capability advertisement and passes a filter specification anyway,
-the server would handle that despite allowFilter being false.
-
-This is particularly significant if a security bug is discovered in
-this new experimental partial clone code.  Installations without
-uploadpack.allowFilter ought not to be affected since they don't
-intend to support partial clone, but they would be swept up into being
-vulnerable.
-
-Simplify and limit the attack surface by making uploadpack.allowFilter
-disable the feature, not just the advertisement of it.
-
-NEEDSWORK: tests
-
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
-Noticed while reviewing the corresponding JGit code.
-
-If this change seems like a good idea, I can add tests and re-send it
-for real.
-
-Thanks,
-Jonathan
-
- Documentation/config.txt | 2 +-
- upload-pack.c            | 8 ++++----
- 2 files changed, 5 insertions(+), 5 deletions(-)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index ce9102cea8..4e0cff87f6 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -3364,7 +3364,7 @@ uploadpack.packObjectsHook::
- 	stdout.
- 
- uploadpack.allowFilter::
--	If this option is set, `upload-pack` will advertise partial
-+	If this option is set, `upload-pack` will support partial
- 	clone and partial fetch object filtering.
- +
- Note that this configuration variable is ignored if it is seen in the
-diff --git a/upload-pack.c b/upload-pack.c
-index f51b6cfca9..4a82602be5 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -69,7 +69,7 @@ static int stateless_rpc;
- static const char *pack_objects_hook;
- 
- static int filter_capability_requested;
--static int filter_advertise;
-+static int allow_filter;
- static struct list_objects_filter_options filter_options;
- 
- static void reset_timeout(void)
-@@ -846,7 +846,7 @@ static void receive_needs(void)
- 			no_progress = 1;
- 		if (parse_feature_request(features, "include-tag"))
- 			use_include_tag = 1;
--		if (parse_feature_request(features, "filter"))
-+		if (allow_filter && parse_feature_request(features, "filter"))
- 			filter_capability_requested = 1;
- 
- 		o = parse_object(&oid_buf);
-@@ -976,7 +976,7 @@ static int send_ref(const char *refname, const struct object_id *oid,
- 				     " allow-reachable-sha1-in-want" : "",
- 			     stateless_rpc ? " no-done" : "",
- 			     symref_info.buf,
--			     filter_advertise ? " filter" : "",
-+			     allow_filter ? " filter" : "",
- 			     git_user_agent_sanitized());
- 		strbuf_release(&symref_info);
- 	} else {
-@@ -1056,7 +1056,7 @@ static int upload_pack_config(const char *var, const char *value, void *unused)
- 		if (!strcmp("uploadpack.packobjectshook", var))
- 			return git_config_string(&pack_objects_hook, var, value);
- 	} else if (!strcmp("uploadpack.allowfilter", var)) {
--		filter_advertise = git_config_bool(var, value);
-+		allow_filter = git_config_bool(var, value);
- 	}
- 	return parse_hide_refs_config(var, value, "uploadpack");
- }
--- 
-2.17.0.rc1.321.gba9d0f2565
-
+U3VyZSwgSSBjYW4gc3VibWl0IGEgcGF0Y2ggaWYgdGhlIGNoYW5nZSBsb29rcyBnb29kIHRvIHlv
+dSAod2l0aCBteSBsYWNrIG9mIGV4cGVyaWVuY2UgaW4gdGhlIGdpdCBzb3VyY2UgYW5kIHZlcnkg
+cnVzdHkgQyBJIHdvdWxkLCBvZiBjb3Vyc2UsIGRlZmVyIHRvIGFuIGV4cGVydCBpbiB0aGUgYXJl
+YSBvbiBleGFjdGx5IHdoZXJlIHRvIHBsYWNlIHRoZSBTSUdQSVBFIGlnbm9yZSBwdXNoIGFuZCBw
+b3AgYW5kIHN1Y2guLi4gYnV0IHdoYXQncyBiZWxvdyBzZWVtcyB0byBhdm9pZCB0aGUgcmFjZSBm
+b3IgdXMuLi4uIHNvIEkgY2FuIHN1Ym1pdCB0aGF0IGFzLWlzKS4NCg0KVGhhbmtzIGZvciB0aGUg
+cXVpY2sgcmVzcG9uc2UhDQpFcmlrDQoNCu+7v09uIDMvMjgvMTgsIDExOjQ2IEFNLCAiSmVmZiBL
+aW5nIiA8cGVmZkBwZWZmLm5ldD4gd3JvdGU6DQoNCiAgICBPbiBXZWQsIE1hciAyOCwgMjAxOCBh
+dCAwNjoyNjowOFBNICswMDAwLCBFcmlrIEJyYWR5IC1YIChicmFkeSAtIFJPQkVSVCBIQUxGIElO
+VEVSTkFUSU9OQUwgSU5DIGF0IENpc2NvKSB3cm90ZToNCiAgICANCiAgICA+IFRoZSBsb2NhdGlv
+biBvZiB0aGUgcHJvYmxlbSBpcyBpbiBjcmVkZW50aWFsLmMsIHJ1bl9jcmVkZW50aWFsX2hlbHBl
+cigpLi4uIHRoaXMgY29kZToNCiAgICA+IA0KICAgID4gICAgLi4uDQogICAgPiAgICAgZnAgPSB4
+ZmRvcGVuKGhlbHBlci5pbiwgInciKTsNCiAgICA+ICAgICBjcmVkZW50aWFsX3dyaXRlKGMsIGZw
+KTsNCiAgICA+ICAgICBmY2xvc2UoZnApOw0KICAgID4gICAgLi4NCiAgICA+IA0KICAgID4gV2hp
+Y2ggSSB0aGluayBuZWVkcyB0byBiZWNvbWUgc29tZXRoaW5nIGxpa2UgdGhpczoNCiAgICA+IA0K
+ICAgID4gICAgIGZwID0geGZkb3BlbihoZWxwZXIuaW4sICJ3Iik7DQogICAgPiAgICAgc2lnY2hh
+aW5fcHVzaChTSUdQSVBFLCBTSUdfSUdOKTsNCiAgICA+ICAgICBjcmVkZW50aWFsX3dyaXRlKGMs
+IGZwKTsNCiAgICA+ICAgICBmY2xvc2UoZnApOw0KICAgID4gICAgIHNpZ2NoYWluX3BvcChTSUdQ
+SVBFKTsNCiAgICA+IA0KICAgID4gVGhlIGJhc2ljcyBhcmUgdGhhdCB3ZSB3cm90ZSBhIGNyZWRl
+bnRpYWwgaGVscGVyIGluIEdvIGFuZCwgZm9yIHRoZQ0KICAgID4gc3RvcmUgYWN0aW9uLCBpdCBz
+aW1wbHkgZXhpdHMgMC4gIEl0IGlzIGZhc3QuICBUaGlzIGlzIHNpbWlsYXIgdG8gdGhlDQogICAg
+PiBleGFtcGxlIGhlcmU6DQogICAgDQogICAgWWVhaCwgdGhhdCBtYWtlcyBzZW5zZS4gR2VuZXJh
+bGx5IGEgcGlwZSBidWZmZXIgd291bGQgYmUgcGxlbnR5IHRvIGhvbGQNCiAgICBhIGNyZWRlbnRp
+YWwsIGJ1dCB3ZSdyZSByYWNpbmcgYWdhaW5zdCB3aGV0aGVyIHRoZSBvdGhlciBwcm9jZXNzIGV4
+aXRzDQogICAgYmVmb3JlIHdlIGV2ZW4gd3JpdGUgYW55dGhpbmcsIHNvIGl0J3MgYm91bmQgdG8g
+ZmFpbCBldmVudHVhbGx5IGluIGENCiAgICByYWN5IHdheS4NCiAgICANCiAgICBJIGRvbid0IHRo
+aW5rIHdlJ3ZlIGV2ZXIgbWFkZSBhIHByb21pc2VbMV0gYWJvdXQgd2hldGhlciBjcmVkZW50aWFs
+DQogICAgaGVscGVycyBoYXZlIHRvIHJlYWQgdGhlaXIgaW5wdXQsIGJ1dCBpdCBtYWtlcyBzZW5z
+ZSB0byBtZSBmb3IgR2l0IHRvIGJlDQogICAgZnJpZW5kbHkgYW5kIGhhbmRsZSB0aGlzIGNhc2Uu
+IFdlJ3ZlIGRvbmUgc2ltaWxhciB0aGluZ3MgZm9yIGhvb2tzLg0KICAgIA0KICAgIEN1cmlvdXNs
+eSwgSSBoYXZlIGEgdmVyeSBzaW1pbGFyIGhlbHBlciBteXNlbGYsIHdoaWNoIEkgZGlkIGFzIGFu
+IGlubGluZQ0KICAgIHNoZWxsIHNuaXBwZXQgaW4gbXkgfi8uZ2l0Y29uZmlnOg0KICAgIA0KICAg
+ICAgW2NyZWRlbnRpYWwgImh0dHBzOi8vZ2l0aHViLmNvbSJdDQogICAgICB1c2VybmFtZSA9IHBl
+ZmYNCiAgICAgIGhlbHBlciA9ICIhZigpIHsgdGVzdCAkMSA9IGdldCAmJiBlY2hvIHBhc3N3b3Jk
+PWBwYXNzIHBlZmYvZ2l0aHViL29hdXRoYDsgfTsgZiINCiAgICANCiAgICBJIGd1ZXNzIEkndmUg
+bmV2ZXIgbG9zdCB0aGUgcmFjZSBiZWNhdXNlIG9mIHRoZSBzaGVlciBudW1iZXIgb2YNCiAgICBz
+dWItcHJvY2Vzc2VzIHRoYXQgZ2V0IHNwYXduZWQgKHNoZWxsIHRvICJwYXNzIiB3aGljaCBpcyBp
+dHNlbGYgYSBzaGVsbA0KICAgIHNjcmlwdCwgd2hpY2ggc3Bhd25zIGdwZyAtLSB5aWtlcyEpLg0K
+ICAgIA0KICAgIERvIHlvdSB3YW50IHRvIHNlbmQgeW91ciBjaGFuZ2UgYXMgYSBwYXRjaD8gVGhl
+cmUncyBzb21lIGd1aWRhbmNlIGluDQogICAgRG9jdW1lbnRhdGlvbi9TdWJtaXR0aW5nUGF0Y2hl
+cy4NCiAgICANCiAgICAtUGVmZg0KICAgIA0KICAgIFsxXSBJIGtub3cgeW91IHB1bGxlZCBhIHNp
+bWlsYXIgZXhhbXBsZSBmcm9tIHRoZSBQcm8gR2l0IGJvb2sgY29udGVudCwNCiAgICAgICAgd2hp
+Y2ggd2UgbWlycm9yIG9uIGdpdC1zY20uY29tLiAgVGhlIHF1YWxpdHkgdGhlcmUgaXMgdXN1YWxs
+eSBxdWl0ZQ0KICAgICAgICBnb29kLCBidXQgSSBkb24ndCBjb25zaWRlciBpdCBhcyBhdXRob3Jp
+dGF0aXZlIGFzIHRoZSBtYW5wYWdlcy4gOikNCiAgICANCg0K
