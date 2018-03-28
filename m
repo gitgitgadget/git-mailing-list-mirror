@@ -2,88 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CFF551F404
-	for <e@80x24.org>; Wed, 28 Mar 2018 22:24:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B128D1F404
+	for <e@80x24.org>; Wed, 28 Mar 2018 22:25:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753568AbeC1WYL (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Mar 2018 18:24:11 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:52188 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752447AbeC1WYI (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Mar 2018 18:24:08 -0400
-Received: by mail-wm0-f65.google.com with SMTP id v21so7565244wmc.1
-        for <git@vger.kernel.org>; Wed, 28 Mar 2018 15:24:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=8zcZcR+q+sJObbT9Nyd5wgzwOMSgFuqBvs1JjXTBgeQ=;
-        b=beaK9nF2BjmUgqur9syxzc23XaThJUZVuh7gdCWdkQ3Q5dFu/uz7ifxQiTSPHUydd6
-         cxE8EGjB6nCzdSr9ASfN3sdImdKTm6xtF/EUwrhrFVm3nQPqOGph6Zw/KHV76FqlsZzI
-         KJAim6e++qZX/IS9sLp71JTJsji7f9Dnfi5yCJXlYSxkMJtbMkPgyVwo6+9z5ICV17zW
-         0bQciaTPdoPoqyoU7bW9wREO9k24ofKGbV6bIrziWO0W1KxZf6NqlzhNnXD1bTEwSWD1
-         Nj+So+8S3AUYoAb06+fzenj4OLym9bv+DsVCqyz9l/R7GuDUVA85KvYtm8+mQEN93EIe
-         8k4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=8zcZcR+q+sJObbT9Nyd5wgzwOMSgFuqBvs1JjXTBgeQ=;
-        b=UcYEHK6/pHl4QqBrR6eg/LpuSt5wWDXXA11R4R5zsG44UI1MEGvkJx8YNf2HGa5m4L
-         IGfKkMYJU6nl20/zuQ89jdx3TX1m9YBu5k8Dm/F61N2LlZMWz1MMkg9w1LApIL2ona3B
-         9Bi4n3NZDXqkOTujVfvHEy1CHRkZquq3jTyYl1zDsjPEhx1XC7mg0cKYxDhxKwypV3E7
-         JKVg5fKqD653HGEgv9XQELvty5tR0WU0WV4pnOHxa+vHl2w1JxtPTxSzu/NT2fQtCyET
-         RMTvH+ej7teVPZ3N6xyOIUKcI2LaPxyyPMaGlEzWbDJDWm9gVfFQz6DOZeq8Hnhy2r26
-         uS3w==
-X-Gm-Message-State: AElRT7G8jW0q5kirk6FpstqH8RIIACDoHRaYeyETW+X3NirRl3JBHKKz
-        BqzkMzAYiCM2VmM5dYA2j8raPfDE
-X-Google-Smtp-Source: AIpwx48uFqOrzyPvTs4j7JO0rt4wcTwzo/ReK9Zc4wxOns/34rvGYa3ofjTSNiKiio9tBii7CGh9jw==
-X-Received: by 10.28.35.76 with SMTP id j73mr3699140wmj.103.1522275847218;
-        Wed, 28 Mar 2018 15:24:07 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id l11sm4088893wrg.71.2018.03.28.15.24.05
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 28 Mar 2018 15:24:06 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Rafael Ascensao <rafa.almas@gmail.com>
-Subject: Re: [PATCH 0/8] Re: git complains packed-refs is not a directory when used with GIT_DIR and GIT_WORK_TREE envvars.
-References: <20180328094733.GA1523@sigill.intra.peff.net>
-        <20180328175537.17450-1-pclouds@gmail.com>
-Date:   Wed, 28 Mar 2018 15:24:05 -0700
-In-Reply-To: <20180328175537.17450-1-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
- =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
-        Duy"'s message of "Wed, 28 Mar 2018 19:55:29 +0200")
-Message-ID: <xmqqh8oz7sai.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1753720AbeC1WZB (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Mar 2018 18:25:01 -0400
+Received: from mout.web.de ([212.227.15.4]:58801 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753426AbeC1WZA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Mar 2018 18:25:00 -0400
+Received: from [192.168.178.36] ([79.237.251.165]) by smtp.web.de (mrweb002
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0Lzaxm-1eXHsM1MRO-014lUg; Thu, 29
+ Mar 2018 00:24:52 +0200
+Subject: Re: [PATCH] submodule: check for NULL return of
+ get_submodule_ref_store()
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>, jeremy@feusi.co,
+        Prathamesh Chavan <pc44800@gmail.com>
+References: <9c3c0161-f894-3368-ece2-500d0bb6f475@web.de>
+ <20180328183832.243036-1-sbeller@google.com>
+ <CAPig+cT1Yp8J8E0VDKdxvPdVD-UBsyDfQS+a83zOAW11ayfhnA@mail.gmail.com>
+ <CAGZ79kYD+RC_Z7AH_uH9tZSDHhkikML4HkxUNGxkW8voHJ1i3A@mail.gmail.com>
+ <CAPig+cQ_j4OyBjsZHE8ZPBojqD7HhSEb14-CFY9qYfXX+dafpQ@mail.gmail.com>
+ <38570708-e166-0004-878a-2d8442c12b65@web.de>
+ <CAGZ79kYL55+=9UbW7H-c7OUg6CHbnzdkxs0ZMsFnEAaoVXRwLw@mail.gmail.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <096248bf-0a33-7360-e82b-b7a36e362604@web.de>
+Date:   Thu, 29 Mar 2018 00:24:49 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.7.0
 MIME-Version: 1.0
+In-Reply-To: <CAGZ79kYL55+=9UbW7H-c7OUg6CHbnzdkxs0ZMsFnEAaoVXRwLw@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:/9k70/HJ+3U15qr0yzcavaaEmLb+WoZIEEx6lONRu32+XsF4aYJ
+ RePJn/RI6ykYZ6kXWgQGXjRTe4BYGNENAxZc4Ckosb7U6ZC8kHLikV8d1Lr0QhK4szvbSkp
+ 4lzRaGeR/uSbX0IrOC48A3J4PRqbDp7DBzEf0fOEy92+Nq6nH+UmgsWIpWTjDxYjZJGJPvv
+ cMygP1fOYH6H/wdm7p2tw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:mrRiZwratlg=:bbeYN79KeIY9bq8Mre2F5p
+ Cf7orq1x/Xh5RIZIwH1qNm73oVvRp7j5ZJwGqlmFtMPgSGsc70S8tCAIzU9aE6ruPx123BY5C
+ 42A2X3H8pot6cM42p8riY3fC73gChijpBJClpdklVn8ZbuoOvRHGWIdjZDcGx7vxxC+Zf2QpA
+ QTw8vnSfo6BARoulcRyIO47qzXWTGZNzq4UB5qsetWzHIGhr3Vc1GEX0FiYyR8NVQ2eRqLO6p
+ f34HTi6mRkgsIb0JziJmip7sxTwBR9fUJj9ZNF4FeTcSuGXMrS+Hq1jWCz7GDipkFRuNiI3op
+ KnnqWDKwXxtengcVSddUNA9SZitkqsziNzyrU6FrTB4l7o4vERZhOWDkEwIYKtto0ysd9iu1B
+ sM+ZZTeE6dkO/XUWrlrqn/XB1a3h+VRaVmHlK9uGhYSku4suJKDLOvzMhgLABg3jOJ8UYu586
+ EsmVdRnY58s0qkgUWeYfKw+Zj2MD/EL0Z3u1lSBLNLhpx5ZVuCJBgPUbholZs/FtwkiFOAseF
+ FANrFBiTP1DLArMfOzJNVRw0ZoID8fUS42MNl6rDP3pBoiJOCEeqp//yxLve+Si+hYPcL+cr7
+ lpr1EE79pRDGlIfCM4YdQp1LkBvMqRGb4ylM6sJ5p6eHCazgGK2i7vVzIJkjLsD0LKd14T4Jz
+ r07CSLrviLV+3k1ORXdQB1HYaNaUlmwQjpQZ5ZbrXAFrzxqfh22vn8jW9N7lEDJqtJJrEQkC7
+ tXhgl8h2bfBk1ZJ5cITzp8h5wx9okwkEDcyq8SLAmHb0BSJW3OEQZAQ+0m0aYFe/JIorKVlpj
+ TpIgCCJmxDM+FbTCr5aJycbePEC2aWOleHF1jSmMVpb8cHVcbY=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
+Am 28.03.2018 um 23:37 schrieb Stefan Beller:
+>> This looks nicer here in the script, but doesn't test exactly what users
+>> type most of the time, I suppose.
+>>
+>> So how about this?
+> 
+> Looks good to me, though I had a nagging feeling at first that the
+> regex could be made more concise.
+> Why do we need the optional "[^ ]" inside \1 ?
+> 
+>> +       sed -e "s/^ \([^ ]* repo\) .*/-\1/" <actual >expect &&
 
-> This is what I got, which is slightly different from your series
-> because I want to call set_git_dir() just one time (by
-> setup_git_directory) and never again. I think the API looks close
-> enough.
->
-> I will probably rework on top of your chdir-notify instead (and let
-> yours to be merged earlier)
+[:xdigit:] would match the hash more precisely, but I don't know how
+widely this character class is supported among sed implementations.
+And being so strict may require changes once SHA1 is replaced -- new
+hashes might be marked with a special character.  And it's longer
+anyway.
 
-I was occupied with the current cycle and did not have a chance to
-read this one over before seeing this exchange.  After reading
-Peff's chdir-notify thing, I agree with its general direction and
-the idea to refine on top of it, which you two seem to have agreed.
+\S could be used instead, but I also don't know how widely this is
+supported.
 
-Thanks for working well together.
+. could be used as well, of course, but that feels a bit sloppy to
+me.
+
+Using separate s commands for beginning and end of the line would
+be shorter.  This here is slightly longer, anyway:
+
+	/ repo / {s/^ /-/; s/ (.*//}
+
+What do you have in mind?  How to transform this:
+
+ b2613938d15a18d9d4a504cacd9654fd1c879197 repo (heads/master)
+
+... into this:
+
+-b2613938d15a18d9d4a504cacd9654fd1c879197 repo
+
+... while keeping other lines unchanged?
+
+René
