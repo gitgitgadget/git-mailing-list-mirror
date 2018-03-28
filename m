@@ -2,91 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 97C161F404
-	for <e@80x24.org>; Wed, 28 Mar 2018 16:34:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2FC4A1F42D
+	for <e@80x24.org>; Wed, 28 Mar 2018 16:52:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753167AbeC1Qet (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Mar 2018 12:34:49 -0400
-Received: from mout.gmx.net ([212.227.17.22]:40147 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752670AbeC1Qes (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Mar 2018 12:34:48 -0400
-Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MNw0t-1etpW73uHr-007R0u; Wed, 28
- Mar 2018 18:34:41 +0200
-Date:   Wed, 28 Mar 2018 18:34:34 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+        id S1752318AbeC1QwL (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Mar 2018 12:52:11 -0400
+Received: from mail-wm0-f44.google.com ([74.125.82.44]:54438 "EHLO
+        mail-wm0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751072AbeC1QwK (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Mar 2018 12:52:10 -0400
+Received: by mail-wm0-f44.google.com with SMTP id h76so6181264wme.4
+        for <git@vger.kernel.org>; Wed, 28 Mar 2018 09:52:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=7pPoIzm/sQbRYRBUAVxVN7UdCTL9QpDAp3OIEEZYIt0=;
+        b=RkNYe0cBjPvuCsbS2vxpvR3dn5lIhP2WAPnltqXzPhA4pyQKXJXZ2v6d8hFoB6Yns4
+         pTp9u+4HoIhMuiaSc8eoYHzThg8gp6PMNiO6gEPr/CQKykrmFXGahdSeFJRy1kBOVkho
+         qzHgVtNesCkIQBM6jekvnioTvU6XU4BTmn+IMybeAsxy2yzPAXuU0H7BLyJaTvU/MLKp
+         yLY5JMSybSDhKkR7HZGtctegMtxaA6rP7msj9+HOSO75Qx22cJqwNEFW/LloTyYhRQdK
+         h2jiYEqwOmwAy9d7qWoG+ZEPZvmkzrDr+z9O3C+bhVNMZ8/8xqJpaNdPzMagzLh/fCAr
+         2uZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=7pPoIzm/sQbRYRBUAVxVN7UdCTL9QpDAp3OIEEZYIt0=;
+        b=GRE8m44K2LDYr2Gd3HXH0v7SCgn/AQRD5Xa+1sw5td2a8D8/0C8vTMr3epmZJPQUJw
+         IdPSfxOkYrGGroAp7NntR6b22z/c8iuwUDSK/WgXAbbExFlB7lIe62Owh+by+cwr3TAn
+         QsYixeImRUdkw7D/LHKecBfbzlo/SrN52iepgXTpGG9tsACe+311VRu9pvh3tJ0abJpP
+         dfLZtqpN30JLdB6lTAJyPZdhO7eVfoqJwacYBbRn6nsYqd349PwBOsjTVWNr1IXacpzv
+         LLBQn3mWmJSlZW0F07zDkmbu4z3OTaCNueoA907P+bgxOaDiNoSe57mQ2XU2T9X3YjYg
+         jdMA==
+X-Gm-Message-State: AElRT7GKPyB2tXpmmlbUgyc7ZiiZlZbQrCSGvXyh37U8ndr0CeKTgLVO
+        mSC+EiQf8vKGAWFMPsPRh9M=
+X-Google-Smtp-Source: AIpwx49TML5vwcdQov7xuxqVwWX5Ed5vD1mnIUUdml8l0oZ14RvR9RwPJeVXp/JYAN2j0kzWxXlzzQ==
+X-Received: by 10.28.6.14 with SMTP id 14mr3159485wmg.42.1522255928432;
+        Wed, 28 Mar 2018 09:52:08 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id d8sm5143898wrf.8.2018.03.28.09.52.07
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 28 Mar 2018 09:52:07 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Stefan Beller <sbeller@google.com>
-cc:     jfrey@redhat.com, git <git@vger.kernel.org>
-Subject: Re: Bug: duplicate sections in .git/config after remote removal
-In-Reply-To: <CAGZ79ka_dd=4-EVmoKrBVC_y4+eVPSz959BVNmzZkOwiZh_24A@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1803281110260.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <CAP6Vx84GRRxgMZF5P6tb6F4rJ8ozxx-d0o_LsNe=kEYVRkBTKQ@mail.gmail.com> <CAGZ79ka_dd=4-EVmoKrBVC_y4+eVPSz959BVNmzZkOwiZh_24A@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+Cc:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>, jeremy@feusi.co,
+        git <git@vger.kernel.org>, Prathamesh Chavan <pc44800@gmail.com>
+Subject: Re: Null pointer dereference in git-submodule
+References: <20180325095046.GA687@feusi.co>
+        <9c3c0161-f894-3368-ece2-500d0bb6f475@web.de>
+        <CAGZ79kYagdvpOcZykF4JPQc9vpVb8_xyFiQkE9yznBQTD1PWJw@mail.gmail.com>
+Date:   Wed, 28 Mar 2018 09:52:07 -0700
+In-Reply-To: <CAGZ79kYagdvpOcZykF4JPQc9vpVb8_xyFiQkE9yznBQTD1PWJw@mail.gmail.com>
+        (Stefan Beller's message of "Tue, 27 Mar 2018 23:50:44 +0000")
+Message-ID: <xmqqlgec87ns.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:/e761BjC9lwXUUrVIqzlHyBRqfUCjszDmXUP4i6VZ5os5Qtp83/
- Oyf9fW1m5+SDGemAutB/n2CQe93Xet60K09Tu4XEurDQAu/Pv4kSLjew6b/XjG8dX+Lns1l
- vLyHB444nGIAeGcXJ9jcawu4mkc+IP+3mbs829CCECy6JEXSuspnFVOAPR+FpRyD4obaCO/
- DTwIW6OQfnX0g7AP0pqpw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:2r+7QpoR8vg=:Z2HxJTzNYGFnOFI8cPZocl
- KR2B2Wq/ardgHdwWe3oPegi+Ih6Si2hC9nHXKcWzZJlPEJCj1YHNt738YnoIvjBlAQ59KY4yn
- p6k4xEmJtptAGH8nGPZ62C2HXR5wFvwdYM26DfyAXLlrlBLH3wxdbCnKSgep86zn2e1rlqY3w
- BcFaoAoxW+ADgPN2FKVAszH1eQW7ck4fP9vj5zB0ggjADn3axgrZkqldY51wFUQ/8yJgWlFH8
- axhi15t0qSas9RYnTvQ8c5S2IwyRJ7CJaE5oyc07VrZuLQGXdwa6tB22QubKKPj//PYXenoC1
- ekrvuzOSDUmlOcc+GaAxf749NhdCTYuWuARvfXz03dCa0NUGyYYdD4KikLvrvFh//P24XKM5Z
- 5ruYNwH9kbgfV86PNBzfqvTF2AMpJ5wKURjAgc7ogUewbjS7jl1MVojyqUxyvvrt7atgEeysZ
- uZoJMQyD9VcrKQSugpxwU5zCvpLYizVUIV+XAZSrqRDUPipFxhLnZDuW+NxkfIXYOCgWZ45mS
- aobQlGw4nZo+Jshco4Rd1GjPiEE9pTJ5NkUOs7uBG2gPM7+N+i+U7yBk2FVRRmIvK3g6Rmy9D
- LkkPTlhlXDkxDWVtP2hyvNbN8gyvy2zRSg3HOosZMOjb5tl6lA6ScyqmnG3D7+x0fh4jaGMQU
- DKBUXwjElN6k7mqr/XcZA/5NHmHwlzIUa3NMgZ6fPg7MvKRT0f3WffdQJBgpW5/JQOdrEjxul
- b4FHdWrXSKWzxXAaD+3A8kmRHsmyt714EC4TsRaS5G5iU7G3dzGdyqB4xW8eIAOJ7mlZXixk1
- ZMB34f8KxMM8gkX9EPkl98/KzdJAgpPQfe1wUaPRAbv9Pw7TehKVKf2q/MbdG3jVKbIQv2B
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Stefan & Jason,
+Stefan Beller <sbeller@google.com> writes:
 
-On Tue, 27 Mar 2018, Stefan Beller wrote:
+>> Subject: [PATCH v2] submodule: check for NULL return of
+> get_submodule_ref_store()
+>
+> Maybe more imperative, telling what we actually want
+> to achieve instead of what we do?
+>
+>    submodule: report deleted submodules as not initialized
+>
+>> If we can't find a ref store for a submodule then assume it the latter
+>> is not initialized (or was removed).  Print a status line accordingly
+>> instead of causing a segmentation fault by passing NULL as the first
+>> parameter of refs_head_ref().
+>
+> Thanks for the message here. Looks good!
+> ...
+> Which would be added in t/t7400-submodule-basic.sh
+>
+> Thanks for coming up with a sensible patch!
 
-> On Tue, Mar 27, 2018 at 1:41 PM Jason Frey <jfrey@redhat.com> wrote:
-> 
-> > at which point you can see the duplicate sections (even though one is
-> > empty).  Also note that if you do the steps again, you will be left
-> > with 3 sections, 2 of which are empty.  This process can be repeated
-> > over and over.
-> 
-> I agree that this is an issue for the user, and there were some attempts
-> to fix it in the past. (feel free to dig them up in the archive at
-> https://public-inbox.org/git)
+I take the above to mean that you as a contributor active in this
+area like the general idea in the patch but not volunteering to take
+this topic over and instead trust René to tie the loose ends with a
+reroll, taking hints from your suggestions?
 
-Note: as far as I remember, the attempted fixes were exclusively trying to
-remove the empty section. But this report suggests that we could instead
-*keep* empty sections, but then reuse them when a new value is added.
+I just wanted to make sure that we won't be confused whose turn it
+is next (e.g. me waiting for update to t7400 from you or René doing
+the same).
 
-> IIRC the problem is (a) with the loose file format (What if the user put
-> a valuable comment just after or before the '[branch "master"]' line?)
-> as well as (b) the way the parser/writer works (single pass, line by line)
-> 
-> (b) specifically made it a "huge effort, but little return" bug,
-> so nobody got around for a proper fix.
+Thanks.
 
-Yes, (a) makes removing an empty section something less of a desirable
-thing. Unless there are no comments before and after the section, of
-course, and yes, (b) is a real thing.
 
-On a positive note: I just finished work on a set of patches addressing
-this:
-https://github.com/git/git/compare/master...dscho:empty-config-section (I
-plan on submitting this tomorrow)
 
-Ciao,
-Dscho
