@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BE2BC1F404
-	for <e@80x24.org>; Wed, 28 Mar 2018 17:56:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3AFB71F404
+	for <e@80x24.org>; Wed, 28 Mar 2018 17:56:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753430AbeC1R4g (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Mar 2018 13:56:36 -0400
-Received: from mail-lf0-f68.google.com ([209.85.215.68]:33552 "EHLO
-        mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753320AbeC1R4b (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Mar 2018 13:56:31 -0400
-Received: by mail-lf0-f68.google.com with SMTP id x205-v6so4753273lfa.0
-        for <git@vger.kernel.org>; Wed, 28 Mar 2018 10:56:30 -0700 (PDT)
+        id S1753448AbeC1R4k (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Mar 2018 13:56:40 -0400
+Received: from mail-lf0-f66.google.com ([209.85.215.66]:39515 "EHLO
+        mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753405AbeC1R4f (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Mar 2018 13:56:35 -0400
+Received: by mail-lf0-f66.google.com with SMTP id p142-v6so4727437lfd.6
+        for <git@vger.kernel.org>; Wed, 28 Mar 2018 10:56:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=PH4wom3YFNdUn8AyiZ8h1tvDzCh9RRwoxIHbxeYuJWw=;
-        b=kO98Ib2SutLw4fOiGmQE9Iq76X0rk/a+w067cryRbILwC7g9Hgt0DZuO3pLHuurono
-         RRxPSEZdMA/wFrj3VuKcrvevGKAJEKVVuIS7DPW/l6MfkGjLc6xzDWsjvj1kmgGsmlWF
-         Hp/5EmEroLixqcJBvkXZbGYPSiFzTuNQKwMSnrEzs4IaUYfql9cZFCGiMSKhTXJCZbTO
-         N+HuBs9FvYEHIMt/GlXk7YrfXgLr1OusRNgxwX4LM7nLmPIfzbT/KyJDuY/Tw243altO
-         Ta7arbu016yAawPj1a1Vjogyoco9WR+WFW9ft2A3chafgAu8TFhUKGKAhZekPqvtx4fR
-         GS9w==
+        bh=RNKA41YeHbBPLjV5ZZxjpSNtvhkyEie7XC/C/6xtfek=;
+        b=K6NvX2yaKPDxsvHVQvY2Z4nArw9DMrsLo0hd/AbB9QeSC7B+RM+70BOrWYZCC/euD1
+         GyO2DhfG1D4bT8WldzGYaUP5fh80sfvAJgDP5Kd4L5QOyjdDCzpC3VCjPHW1ET+hFHG4
+         53tX1J5S7Vi/682n3SdXssSiFHgu7i+RD0J3TMe2lfTN6cNt2/faUjsLAzIRM83Mr8MK
+         8TOZaX6XXAOIaVEgexKrfjzyfAjmKwWjk1VhF1kmvsaFNP5dBYZPowReU6cHSV15TqhJ
+         cGTcPBPQ8A2jHhXqsPzTLoApe4JDeDlgbN3mgbuaKOKUDu8HVuLG31EBzSXk07chXhbm
+         dxcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=PH4wom3YFNdUn8AyiZ8h1tvDzCh9RRwoxIHbxeYuJWw=;
-        b=N2MgS5TQe4MN0gHyh94ODd8HB/+OMnixsB62wLxuh0IX4EPOo23eyS+0sdeOBnZDPZ
-         X2cFPFQxCcaWQqdEqYlhxxwj9F5GNGylYghj8O0PwVdaoFECwEPWHbCAq7npuqe5p9cB
-         7LMlU0RA8YTXfdeuyKoQ7pCvXXq0xd5GGMX5R2hP/AfJeOBkTcjaCoy7PtkLUosZi7u6
-         oQJVzCUg9T5EIuH8mf2YKabtZIXs8WSnaYqxSDsvCIV3I5iH8RD1Hcmj3a5pYoohqihb
-         c86jxUP1MrZIyfnJC0o/CTChfjAoLxrJd2LKQyJceBgDfLOi00ULRB32JWMwoi9AduMg
-         ++6A==
-X-Gm-Message-State: AElRT7HBzlnDbwDCne2Q/PlzaQZmtbtJBC33a8ZyJHLlmDjRbpk+jS/a
-        6vn3TmK/qh+224E3Mewu513ylA==
-X-Google-Smtp-Source: AIpwx48dFPlDvoXNU/17J7aKrdW1BhvZKHJoD0UNUIBX++Bmcl6AFZyH1K16MpCxwHd0EVYZ70NcMw==
-X-Received: by 2002:a19:4acc:: with SMTP id x195-v6mr3223274lfa.46.1522259789620;
-        Wed, 28 Mar 2018 10:56:29 -0700 (PDT)
+        bh=RNKA41YeHbBPLjV5ZZxjpSNtvhkyEie7XC/C/6xtfek=;
+        b=j+RhLx32WJHdNppsA023g2zEpHcyCpc1BFalfjVJBrYLKVCaOyRkwlybjE/+0N9sKC
+         /aOiQtilSvL0/FibUeqEQFcCZlpZGIyTEkErKPwT7FJOrmvUflD9Wt+5a3OagAbjXo8Y
+         NYxGnvQARX0wW/dp2Vkalgh2yaQ7VuMCGfSGwp714WKPbQ2Filh2AoxitORpfui1DfdV
+         dnq+BSYkxA/d8pcHiJmbcHHbdDIb22ItR70XcKIlgvRRaHCyVXH8ywsFPHMUWBdIYn12
+         wYu+2DAykE6yjkh9aMzcj+gfDeJXIGSOYaa/11YTBOPnjXERtBSQabibdItLawy/R0v7
+         x4YA==
+X-Gm-Message-State: AElRT7GJtbiL8UhrCB+lEQgKxDybC4C+B6J10e5sSkbbGyTx9AmWSqBv
+        gcEeWB/0kODd6Jud+Y8I50HBVg==
+X-Google-Smtp-Source: AIpwx490w3PS/LOlhSS+z1Ju0e+1VX9M1ch5wbMYMyaS87cEJ4pGEphcsgo0/rrNCWrU9Shx7jZIew==
+X-Received: by 2002:a19:e202:: with SMTP id z2-v6mr3199298lfg.58.1522259792759;
+        Wed, 28 Mar 2018 10:56:32 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id s12sm706658ljj.49.2018.03.28.10.56.27
+        by smtp.gmail.com with ESMTPSA id s12sm706658ljj.49.2018.03.28.10.56.31
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 28 Mar 2018 10:56:28 -0700 (PDT)
+        Wed, 28 Mar 2018 10:56:31 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Rafael Ascensao <rafa.almas@gmail.com>,
         Duy Nguyen <pclouds@gmail.com>
-Subject: [PATCH 5/8] setup.c: allow other code to be notified when $CWD moves
-Date:   Wed, 28 Mar 2018 19:55:34 +0200
-Message-Id: <20180328175537.17450-6-pclouds@gmail.com>
+Subject: [PATCH 6/8] environment.c: adjust env containing relpath when $CWD is moved
+Date:   Wed, 28 Mar 2018 19:55:35 +0200
+Message-Id: <20180328175537.17450-7-pclouds@gmail.com>
 X-Mailer: git-send-email 2.17.0.rc1.439.gca064e2955
 In-Reply-To: <20180328175537.17450-1-pclouds@gmail.com>
 References: <20180328094733.GA1523@sigill.intra.peff.net>
@@ -71,102 +71,117 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Duy Nguyen <pclouds@gmail.com>
 
-When the current directory is moved, all relative paths may become
-invalid because they are still relative to the old current
-directory. At this point in setup_work_tree() many objects have been
-initialized and some keep relative paths in their data structure.
+As noted in the previous patch, when $CWD is moved, we recognize the
+problem with relative paths and update $GIT_WORK_TREE and $GIT_DIR
+with new ones.
 
-$GIT_DIR and $GIT_WORK_TREE for example are the two examples which are
-dealt with explicitly in this code: $GIT_WORK_TREE is reset to "." and
-set_git_dir() is called the second time with a new relative path.
+We have plenty more environment variables that can contain paths
+though. If they are read and cached before setup_work_tree() is
+called, nobody will update them and they become bad paths.
 
-Introduce a more generic mechanism to let all code get notified and do
-the path adjustment themselves instead of pulling all path adjustment
-logic in here. The $GIT_DIR and $GIT_WORK_TREE adjustments will
-removed from this code in later patches.
+Hook into setup_work_tree() and update all those env variables. The
+code to update $GIT_WORK_TREE is no longer needed and removed.
+
+Technically we should remove the setenv() in set_git_dir() as well,
+but that is also called _not_ by setup_work_tree() and we should keep
+the behavior the same in that case for safety. set_git_dir() will be
+removed from setup_work_tree() soon, which achieves the same goal.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- cache.h |  5 +++++
- setup.c | 27 ++++++++++++++++++++++++++-
- 2 files changed, 31 insertions(+), 1 deletion(-)
+ environment.c | 46 ++++++++++++++++++++++++++++++++++++++++++++++
+ setup.c       |  7 -------
+ 2 files changed, 46 insertions(+), 7 deletions(-)
 
-diff --git a/cache.h b/cache.h
-index 05f32c9659..895abe7e7e 100644
---- a/cache.h
-+++ b/cache.h
-@@ -522,6 +522,11 @@ extern void set_git_work_tree(const char *tree);
+diff --git a/environment.c b/environment.c
+index 39b3d906c8..f9dcc1b99e 100644
+--- a/environment.c
++++ b/environment.c
+@@ -128,6 +128,20 @@ const char * const local_repo_env[] = {
+ 	NULL
+ };
  
- #define ALTERNATE_DB_ENVIRONMENT "GIT_ALTERNATE_OBJECT_DIRECTORIES"
- 
-+typedef void (*cwd_updated_fn)(const char *old_cwd,
-+			       const char *new_cwd,
-+			       void *cb_data);
-+void add_cwd_update_callback(cwd_updated_fn fn, void *cb_data);
-+void removet_cwd_update_callback(cwd_updated_fn fn, void *cb_data);
- extern void setup_adjust_path(const char *name, char **path,
- 			      const char *old_cwd,
- 			      const char *new_cwd);
-diff --git a/setup.c b/setup.c
-index e26f44185e..e340ee2130 100644
---- a/setup.c
-+++ b/setup.c
-@@ -376,6 +376,24 @@ int is_inside_work_tree(void)
- 	return inside_work_tree;
- }
- 
-+struct cwd_update_callback {
-+	cwd_updated_fn fn;
-+	void *cb_data;
++/* A subset of local_repo_env[] that contains path */
++const char * const local_repo_path_env[] = {
++	ALTERNATE_DB_ENVIRONMENT,
++	CONFIG_ENVIRONMENT,
++	DB_ENVIRONMENT,
++	GIT_COMMON_DIR_ENVIRONMENT,
++	GIT_DIR_ENVIRONMENT,
++	GIT_SHALLOW_FILE_ENVIRONMENT,
++	GIT_WORK_TREE_ENVIRONMENT,
++	GRAFT_ENVIRONMENT,
++	INDEX_ENVIRONMENT,
++	NULL
 +};
 +
-+static struct cwd_update_callback *cwd_callbacks;
-+static int nr_cwd_callbacks;
-+
-+void add_cwd_update_callback(cwd_updated_fn fn, void *cb_data)
-+{
-+	struct cwd_update_callback *cb;
-+
-+	REALLOC_ARRAY(cwd_callbacks, nr_cwd_callbacks + 1);
-+	cb = cwd_callbacks + nr_cwd_callbacks++;
-+	cb->fn = fn;
-+	cb->cb_data = cb_data;
-+}
-+
- void setup_adjust_path(const char *name, char **path,
- 		       const char *old_cwd,
- 		       const char *new_cwd)
-@@ -398,8 +416,10 @@ void setup_adjust_path(const char *name, char **path,
- 
- void setup_work_tree(void)
+ static char *expand_namespace(const char *raw_namespace)
  {
--	const char *work_tree, *git_dir;
- 	static int initialized = 0;
-+	const char *work_tree, *git_dir;
-+	struct strbuf old_cwd = STRBUF_INIT;
-+	int i;
+ 	struct strbuf buf = STRBUF_INIT;
+@@ -149,6 +163,32 @@ static char *expand_namespace(const char *raw_namespace)
+ 	return strbuf_detach(&buf, NULL);
+ }
  
- 	if (initialized)
- 		return;
-@@ -411,6 +431,7 @@ void setup_work_tree(void)
- 	git_dir = get_git_dir();
- 	if (!is_absolute_path(git_dir))
- 		git_dir = real_path(get_git_dir());
-+	strbuf_get_pwd_cwd(&old_cwd);
++static void update_path_envs(const char *old_cwd, const char *new_cwd,
++			     void *cb)
++{
++	int i;
++
++	/*
++	 * FIXME: special treatment needed for
++	 * GIT_ALTERNATE_OBJECT_DIRECTORIES because it can contain
++	 * multiple paths.
++	 */
++	for (i = 0; local_repo_path_env[i]; i++) {
++		const char *name = local_repo_path_env[i];
++		const char *value = getenv(name);
++		char *new_value;
++
++		if (!value)
++			continue;
++		if (is_absolute_path(value))
++			continue;
++		new_value = xstrdup(value);
++		setup_adjust_path(name, &new_value, old_cwd, new_cwd);
++		if (setenv(name, new_value, 10))
++			error(_("could not set %s to '%s'"), name, value);
++		free(new_value);
++	}
++}
+ /*
+  * Wrapper of getenv() that returns a strdup value. This value is kept
+  * in argv to be freed later.
+@@ -170,6 +210,12 @@ void setup_git_env(const char *git_dir)
+ 	const char *replace_ref_base;
+ 	struct set_gitdir_args args = { NULL };
+ 	struct argv_array to_free = ARGV_ARRAY_INIT;
++	static int added_cwd_callback;
++
++	if (!added_cwd_callback) {
++		add_cwd_update_callback(update_path_envs, NULL);
++		added_cwd_callback = 1;
++	}
+ 
+ 	args.commondir = getenv_safe(&to_free, GIT_COMMON_DIR_ENVIRONMENT);
+ 	args.object_dir = getenv_safe(&to_free, DB_ENVIRONMENT);
+diff --git a/setup.c b/setup.c
+index e340ee2130..23b8f89ce2 100644
+--- a/setup.c
++++ b/setup.c
+@@ -435,13 +435,6 @@ void setup_work_tree(void)
  	if (!work_tree || chdir(work_tree))
  		die(_("this operation must be run in a work tree"));
  
-@@ -421,6 +442,10 @@ void setup_work_tree(void)
- 	if (getenv(GIT_WORK_TREE_ENVIRONMENT))
- 		setenv(GIT_WORK_TREE_ENVIRONMENT, ".", 1);
- 
-+	for (i = 0; i < nr_cwd_callbacks; i++)
-+		cwd_callbacks[i].fn(old_cwd.buf, work_tree,
-+				    cwd_callbacks[i].cb_data);
-+	strbuf_release(&old_cwd);
- 	set_git_dir(remove_leading_path(git_dir, work_tree));
- 	initialized = 1;
- }
+-	/*
+-	 * Make sure subsequent git processes find correct worktree
+-	 * if $GIT_WORK_TREE is set relative
+-	 */
+-	if (getenv(GIT_WORK_TREE_ENVIRONMENT))
+-		setenv(GIT_WORK_TREE_ENVIRONMENT, ".", 1);
+-
+ 	for (i = 0; i < nr_cwd_callbacks; i++)
+ 		cwd_callbacks[i].fn(old_cwd.buf, work_tree,
+ 				    cwd_callbacks[i].cb_data);
 -- 
 2.17.0.rc1.439.gca064e2955
 
