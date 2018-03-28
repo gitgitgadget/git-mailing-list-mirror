@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EC5FA1F404
-	for <e@80x24.org>; Wed, 28 Mar 2018 22:35:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 798E71F404
+	for <e@80x24.org>; Wed, 28 Mar 2018 22:35:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753613AbeC1Wfl (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Mar 2018 18:35:41 -0400
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:43070 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753429AbeC1Wfi (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Mar 2018 18:35:38 -0400
-Received: by mail-pg0-f68.google.com with SMTP id i124so1736669pgc.10
-        for <git@vger.kernel.org>; Wed, 28 Mar 2018 15:35:38 -0700 (PDT)
+        id S1753695AbeC1Wfo (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Mar 2018 18:35:44 -0400
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:46123 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753426AbeC1Wfk (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Mar 2018 18:35:40 -0400
+Received: by mail-pf0-f195.google.com with SMTP id h69so1811177pfe.13
+        for <git@vger.kernel.org>; Wed, 28 Mar 2018 15:35:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=WmuI+OT7C/daBq7ohiOJ9wmggA3j70lhLouMqH4cp+M=;
-        b=RW/9TkUOovZpe1avj8GCt5VqG/0g5zXyU6j/lTXX9JPAswZ9HnemjNUlKOkqOXpsrX
-         hLxaRPkrkS+6Ijyd+xQ68rImJ0Uo3qlwQfCd5/ZbtOsHb+yYcpDsArT3vAh6DFoxhw0k
-         pdqjz9I+PcPlaTcplhrqiGVD3YMrZzGg0HhWskcmhWPuaEPd0LD05/jP2z4V6vd/htrx
-         s/ZR2H0XJr14Hg4ITmiuUaj2Hmmu1fW08nChQt7jBA471nUy2LRIBeBtdMERAfyERcVo
-         N216eQTOUGInIWDLTcnuWU9dQKY2kMvVN1/vfgMIvBQCZ+tFOXIrDg4Rma871FFNt1Kj
-         RU/g==
+        bh=nNQzZ+x3m0lhkw+0k394WnhVlW9e9KUO3S6m60nM8ac=;
+        b=B6NIaWq1yvAjS0d7w65fQTNuXoYekAG1wh8jdjbNWivntwVUS6Lt0SldEM7jPQOGrr
+         +IDm0bpVl0sFbTmc/pVLg4NJDRnpZmojiR4uWew/Bz38OEMMuH8UF9xD5XlMCkRC/eD2
+         U0yuTosqd6S4GisDLtVXRHk7u+EMXyya0lkfQLXsB7rm0/rvpSlLaUOlALBxrO1XUYXW
+         JeHihGUETSMxnTXB4jaPCtou9gYZ67sKG2eym6awSb3kk1pv+9RUxWtQdxEFPdNFArsR
+         ueDDp9x2K7HypWMpF9+iF+671I9Z13WHDxlH+lAGeO99j3mTmERIl48Cg4JaluHJAn7d
+         veXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=WmuI+OT7C/daBq7ohiOJ9wmggA3j70lhLouMqH4cp+M=;
-        b=ImGtNQe19eFMD+Vjn0VHgb07cJ6V+vARRo7mWYO08J+UpL1okzg7n1BfaDbwc042el
-         XA7JHBI7Y9PIwQV5BZ13mpiwo6pECdLuXcUHXW3VFoYsmBvKjRUXXTylYpahCESZ1rAc
-         XVpxCnrTuEgILcOCsM8vOO5HBnwWZrZxFC5bdQgKbk7asotXhr1DA+qRXNDIo+tDMh1F
-         DW/F+lWjwBiVrzkql286PjmZaek5NNroDgnUQ8oYGMdnw75dm+9co8Y/fVtVzjGP9gUf
-         Ng+CG2kDjk6l0mZiHGvK6CkGmIS/qgJFUv019TkyS8xaLmN+XbAtp457Z18lrXG+bf3g
-         GuvA==
-X-Gm-Message-State: AElRT7F854sdMmF4ted2uLN5cf0HX/8ON3HOuD918s+XUFkONa9pp2T5
-        Ss0PqErX3auXZFNuzcj4rQrNqQT/1Yk=
-X-Google-Smtp-Source: AIpwx4+ZjGrHFAI7hZNqcoDpO7mxLSn8U82T9oCbSHcpuiVefF/uOYe+M7i3OCSkzuqE6YF0UXCLhg==
-X-Received: by 10.98.174.6 with SMTP id q6mr4348946pff.140.1522276537643;
-        Wed, 28 Mar 2018 15:35:37 -0700 (PDT)
+        bh=nNQzZ+x3m0lhkw+0k394WnhVlW9e9KUO3S6m60nM8ac=;
+        b=ky6xt5jKNpvU6tDkSxbqpriUTvNaiisr2GYkQsNbl4SZHmPBgdE9Tf6aY/0tJClJPY
+         es8FuKbDaK3uNK5iY5YwFuQXsTBCRK1kiCsw0GWZ9n7p1+w7X+/oVxVvof2Zfsdvc48z
+         WvDN4awjT9mG5XSqgcILBTLNrbKa71W1sgw898L/TANRtgn+F24gvvKxigrdFIJ7+O4Z
+         6tEyK7DCylaA/Rlv2nxWb45ehyic5WND7wmAFBibOkzRYGzLoYLo0OV790Y+NzRGYA4P
+         cl6PlSkjbmLejllYmPV3Fe4U0dACo7VbRPWMj1Hqq/CXSGy7q1bnu9SdVBirzdZyrnSS
+         zt9A==
+X-Gm-Message-State: AElRT7Hp+JNUOrn6DwCtVqo84I9tCMvYyGgy/lZnWMvnW1OFOWklH8+z
+        1qfL5pDxekll5buUVX9RMMhAeREsVBU=
+X-Google-Smtp-Source: AIpwx49UlCLyNrIqWAuW43jFzXs8rQtwrUqZ14d0WsGCKeVbaWQ+Pgw1s/ue7RLSs3mybKSzwA5SDQ==
+X-Received: by 2002:a17:902:9a44:: with SMTP id x4-v6mr5692810plv.332.1522276538974;
+        Wed, 28 Mar 2018 15:35:38 -0700 (PDT)
 Received: from localhost ([2620:0:100e:422:ea58:fa52:fa77:9b41])
-        by smtp.gmail.com with ESMTPSA id q2sm7760997pgp.70.2018.03.28.15.35.36
+        by smtp.gmail.com with ESMTPSA id t16sm8271835pgu.63.2018.03.28.15.35.38
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 28 Mar 2018 15:35:36 -0700 (PDT)
+        Wed, 28 Mar 2018 15:35:38 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     jonathantanmy@google.com
 Cc:     bmwill@google.com, git@vger.kernel.org, gitster@pobox.com,
         hvoigt@hvoigt.net, sbeller@google.com, seanwbehan@riseup.net
-Subject: [PATCHv3 2/6] grep: remove "repo" arg from non-supporting funcs
-Date:   Wed, 28 Mar 2018 15:35:27 -0700
-Message-Id: <20180328223531.241920-3-sbeller@google.com>
+Subject: [PATCHv3 3/6] submodule-config: allow submodule_free to handle arbitrary repositories
+Date:   Wed, 28 Mar 2018 15:35:28 -0700
+Message-Id: <20180328223531.241920-4-sbeller@google.com>
 X-Mailer: git-send-email 2.17.0.rc1.321.gba9d0f2565-goog
 In-Reply-To: <20180328223531.241920-1-sbeller@google.com>
 References: <20180328105416.3add54858bac92573d7d1130@google.com>
@@ -64,82 +64,103 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jonathan Tan <jonathantanmy@google.com>
+At some point we may want to rename the function so that it describes what
+it actually does as 'submodule_free' doesn't quite describe that this
+clears a repository's submodule cache.  But that's beyond the scope of
+this series.
 
-As part of commit f9ee2fcdfa ("grep: recurse in-process using 'struct
-repository'", 2017-08-02), many functions in builtin/grep.c were
-converted to also take "struct repository *" arguments. Among them were
-grep_object() and grep_objects().
+While at it remove the extern key word from its declaration.
 
-However, at least grep_objects() was converted incompletely - it calls
-gitmodules_config_oid(), which references the_repository.
-
-But it turns out that the conversion was extraneous anyway - there has
-been no user-visible effect - because grep_objects() is never invoked
-except with the_repository. This is because grepping through objects
-cannot be done recursively into submodules.
-
-Revert the changes to grep_objects() and grep_object() (which conversion
-is also extraneous) to show that both these functions do not support
-repositories other than the_repository.
-
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- builtin/grep.c | 12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+ Documentation/technical/api-submodule-config.txt | 2 +-
+ builtin/grep.c                                   | 2 +-
+ submodule-config.c                               | 6 +++---
+ submodule-config.h                               | 2 +-
+ t/helper/test-submodule-config.c                 | 2 +-
+ unpack-trees.c                                   | 2 +-
+ 6 files changed, 8 insertions(+), 8 deletions(-)
 
+diff --git a/Documentation/technical/api-submodule-config.txt b/Documentation/technical/api-submodule-config.txt
+index 3dce003fda..44a85bbb8b 100644
+--- a/Documentation/technical/api-submodule-config.txt
++++ b/Documentation/technical/api-submodule-config.txt
+@@ -38,7 +38,7 @@ Data Structures
+ Functions
+ ---------
+ 
+-`void submodule_free()`::
++`void submodule_free(struct repository *r)`::
+ 
+ 	Use these to free the internally cached values.
+ 
 diff --git a/builtin/grep.c b/builtin/grep.c
-index 1e9cdbdf78..754eb6da3b 100644
+index 754eb6da3b..c1f22fb9fb 100644
 --- a/builtin/grep.c
 +++ b/builtin/grep.c
-@@ -595,8 +595,7 @@ static int grep_tree(struct grep_opt *opt, const struct pathspec *pathspec,
- }
+@@ -643,7 +643,7 @@ static int grep_objects(struct grep_opt *opt, const struct pathspec *pathspec,
  
- static int grep_object(struct grep_opt *opt, const struct pathspec *pathspec,
--		       struct object *obj, const char *name, const char *path,
--		       struct repository *repo)
-+		       struct object *obj, const char *name, const char *path)
- {
- 	if (obj->type == OBJ_BLOB)
- 		return grep_oid(opt, &obj->oid, name, 0, path);
-@@ -623,7 +622,7 @@ static int grep_object(struct grep_opt *opt, const struct pathspec *pathspec,
- 		}
- 		init_tree_desc(&tree, data, size);
- 		hit = grep_tree(opt, pathspec, &tree, &base, base.len,
--				obj->type == OBJ_COMMIT, repo);
-+				obj->type == OBJ_COMMIT, the_repository);
- 		strbuf_release(&base);
- 		free(data);
- 		return hit;
-@@ -632,7 +631,6 @@ static int grep_object(struct grep_opt *opt, const struct pathspec *pathspec,
- }
- 
- static int grep_objects(struct grep_opt *opt, const struct pathspec *pathspec,
--			struct repository *repo,
- 			const struct object_array *list)
- {
- 	unsigned int i;
-@@ -648,8 +646,8 @@ static int grep_objects(struct grep_opt *opt, const struct pathspec *pathspec,
- 			submodule_free();
+ 		/* load the gitmodules file for this rev */
+ 		if (recurse_submodules) {
+-			submodule_free();
++			submodule_free(the_repository);
  			gitmodules_config_oid(&real_obj->oid);
  		}
--		if (grep_object(opt, pathspec, real_obj, list->objects[i].name, list->objects[i].path,
--				repo)) {
-+		if (grep_object(opt, pathspec, real_obj, list->objects[i].name,
-+				list->objects[i].path)) {
- 			hit = 1;
- 			if (opt->status_only)
- 				break;
-@@ -1098,7 +1096,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 		if (cached)
- 			die(_("both --cached and trees are given."));
+ 		if (grep_object(opt, pathspec, real_obj, list->objects[i].name,
+diff --git a/submodule-config.c b/submodule-config.c
+index 2aa8a1747f..5b4f0baae8 100644
+--- a/submodule-config.c
++++ b/submodule-config.c
+@@ -642,8 +642,8 @@ const struct submodule *submodule_from_cache(struct repository *repo,
+ 			   key, lookup_path);
+ }
  
--		hit = grep_objects(&opt, &pathspec, the_repository, &list);
-+		hit = grep_objects(&opt, &pathspec, &list);
+-void submodule_free(void)
++void submodule_free(struct repository *r)
+ {
+-	if (the_repository->submodule_cache)
+-		submodule_cache_clear(the_repository->submodule_cache);
++	if (r->submodule_cache)
++		submodule_cache_clear(r->submodule_cache);
+ }
+diff --git a/submodule-config.h b/submodule-config.h
+index a5503a5d17..6b71a8cd30 100644
+--- a/submodule-config.h
++++ b/submodule-config.h
+@@ -46,6 +46,6 @@ extern const struct submodule *submodule_from_path(
+ extern const struct submodule *submodule_from_cache(struct repository *repo,
+ 						    const struct object_id *treeish_name,
+ 						    const char *key);
+-extern void submodule_free(void);
++void submodule_free(struct repository *r);
+ 
+ #endif /* SUBMODULE_CONFIG_H */
+diff --git a/t/helper/test-submodule-config.c b/t/helper/test-submodule-config.c
+index f23db3b19a..9971c5e9dd 100644
+--- a/t/helper/test-submodule-config.c
++++ b/t/helper/test-submodule-config.c
+@@ -64,7 +64,7 @@ int cmd_main(int argc, const char **argv)
+ 		arg += 2;
  	}
  
- 	if (num_threads)
+-	submodule_free();
++	submodule_free(the_repository);
+ 
+ 	return 0;
+ }
+diff --git a/unpack-trees.c b/unpack-trees.c
+index e6a15bbe44..3a6a28e794 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -290,7 +290,7 @@ static void load_gitmodules_file(struct index_state *index,
+ 		if (!state && ce->ce_flags & CE_WT_REMOVE) {
+ 			repo_read_gitmodules(the_repository);
+ 		} else if (state && (ce->ce_flags & CE_UPDATE)) {
+-			submodule_free();
++			submodule_free(the_repository);
+ 			checkout_entry(ce, state, NULL);
+ 			repo_read_gitmodules(the_repository);
+ 		}
 -- 
 2.17.0.rc1.321.gba9d0f2565-goog
 
