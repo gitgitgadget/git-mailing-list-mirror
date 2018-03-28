@@ -7,57 +7,56 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4013C1F404
-	for <e@80x24.org>; Wed, 28 Mar 2018 17:56:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 98E031F404
+	for <e@80x24.org>; Wed, 28 Mar 2018 17:56:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753400AbeC1R4c (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Mar 2018 13:56:32 -0400
-Received: from mail-lf0-f67.google.com ([209.85.215.67]:35822 "EHLO
+        id S1753331AbeC1R4b (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Mar 2018 13:56:31 -0400
+Received: from mail-lf0-f67.google.com ([209.85.215.67]:36900 "EHLO
         mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753292AbeC1R42 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Mar 2018 13:56:28 -0400
-Received: by mail-lf0-f67.google.com with SMTP id t132-v6so4750329lfe.2
-        for <git@vger.kernel.org>; Wed, 28 Mar 2018 10:56:27 -0700 (PDT)
+        with ESMTP id S1753181AbeC1R43 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Mar 2018 13:56:29 -0400
+Received: by mail-lf0-f67.google.com with SMTP id m16-v6so4738422lfc.4
+        for <git@vger.kernel.org>; Wed, 28 Mar 2018 10:56:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=kotmm39aZT1qvuWS9nNDWsiEl2Mo5i74m+gh4grAYdw=;
-        b=DLYrGFQapCXEjP+6JFSvFZ0QTqRf/H709HYqMQFHYPLf6Z8NhdhnXLUAEUny8FxrNJ
-         EVbZOVE+yfXCasYHa5c+ZL7MUHnVw5bQN6C+6ChiVLCtZQubdWwqffeu7cmMFSfa+DMs
-         dThFYYl/AX+VoaLanfPWC1oy5UKWMPdyEFcZ1Fkb1KkStzbpPBcjrLcw6iYFmq7NV4z1
-         s3qIW6D0eDOORFXimeRLFlOLtfFHFIjiPDH++lJESgJQWohRBHFC0ukzvnBC8mud0NVD
-         N0Wgplf4pBzWcsqx7Yy2/tr2XJW1KX/B6nYkcZ+SpouLYngAXji0P1poHKm86OZiZwbk
-         bBwg==
+        bh=ZhJQiRTRtZmGXei1L1UJiC9NDJUZNw6bhXO08QAO9Xs=;
+        b=CjuxaBkk6EQDrmCbwIFW6yVsldHOz7cafm/mcrJrRn/giJGDLLMx2PWG4ysR6z1faI
+         g0wKAx8la7/bx2jJrqL63qQ56F0rVsd1tPyfhElXOrbmGVeHy8n5nFsDToCXCs3VwOZi
+         E8J9Ww1DY4uPJ4lnAg3eTDCHmQvxrhprOOS4pNLuj3pgwq7RWJ5M5yUc1tR6Y3IWbyn7
+         QmHhVvfIrsMhG7W89IX+ko2JNeOQQm0/O5abWKBf8c6VkCHxPaL8xxxrDxPaJlS4nbpH
+         5hiTJpsup91R836VMSjhUCkIOXetsKCx97oygvHb4hd3F7nt2AJFBs0GiknCOqdZmoky
+         kcDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=kotmm39aZT1qvuWS9nNDWsiEl2Mo5i74m+gh4grAYdw=;
-        b=UAOAXK+OhkNochp7pIUFRDAMEpcWSdv0eS0a0yVUqRQmZMyyr5VIxbKG/3zNY6SvID
-         ioYsfDUnGlfpM0i+1M7xFPyyCovQUqRjNYKP8ng9+7WhR59wC/ngbpbhfO0bLiIPL5eO
-         Y5oL1EYAnVQC85StBpyk/nk7y7d5QGToE3a2gqyjTktmxR7FTZkC1zIlBmogXyNgiWFd
-         pEZXKKU/WEUGD2wKxl3B+2uECOi5IdbC8L6+RTRotQRzrSdtLllnknDbguBjPNnym7ds
-         AcgRDIiM8czU0c3MOUExWdSaR/A3fQt0sMJ3/ZWpcx5omtRNqJSkkegAgrnGi+BTkVKQ
-         FaVQ==
-X-Gm-Message-State: AElRT7EhXbJIveJC+CdU+38iuzyAhV4W8SEEOZXbK8jWSsQuZV93/hTd
-        kZC/Tz6WdYONJOLmIlq3e2xDVQ==
-X-Google-Smtp-Source: AIpwx4/4jdLPTC8u916NBNZIyI1LJiVTrYTXZVFLK7KegwkUFTnQhbBY8tdQuq9eqtL5o2M/EPt0vg==
-X-Received: by 10.46.144.72 with SMTP id n8mr3085114ljg.40.1522259786637;
-        Wed, 28 Mar 2018 10:56:26 -0700 (PDT)
+        bh=ZhJQiRTRtZmGXei1L1UJiC9NDJUZNw6bhXO08QAO9Xs=;
+        b=Wy2POQZbliv3v0snSTCQkldgOhbF2or5K8lfN75uCJvPeA+CqIzi2VOj7r27Qhv+Lr
+         M7AtTCZFQ6KVbeD4/C6w6q73dTAt9vIDyNlD0Wm7Slh8XFjVqgLyd/rvnXyfDFnmYTUL
+         72f5lMQs2/athTwWVcgbeYtaSRq/ytY5UNILOj4FPgnOWyOxkxYThQkpflL0Wm6rUtO0
+         3GxSJlwKsRnUVM5FR+BDuRMFRbGaNQcPH+ukWZ3X5lq+MChBTX/0Y+b2DHALXvy5aAVG
+         0LTMvvjAM6yNp6NbF/pCZON2tfWRMa7LwJlyNcYPGMu+riS7QLWNrkUF0LJBKUvl7HEq
+         76/g==
+X-Gm-Message-State: AElRT7GNd+0TgOc/45DtL8LfVUIIQHIPALlEYN0aqPinT6VkywnUhMjv
+        KAe+U3jXmM7XgMiiHOzhSZ4QCg==
+X-Google-Smtp-Source: AIpwx48k6AozSIJCWdNHS2q4DCeOmG8BHYYksWn3EeyJyzv+9NhBiUGaLpX6eS1NUq4dZz3CH/Ox2A==
+X-Received: by 10.46.137.138 with SMTP id c10mr3263922lji.0.1522259787795;
+        Wed, 28 Mar 2018 10:56:27 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id s12sm706658ljj.49.2018.03.28.10.56.25
+        by smtp.gmail.com with ESMTPSA id s12sm706658ljj.49.2018.03.28.10.56.26
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 28 Mar 2018 10:56:25 -0700 (PDT)
+        Wed, 28 Mar 2018 10:56:27 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Rafael Ascensao <rafa.almas@gmail.com>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-Subject: [PATCH 3/8] trace.c: export trace_setup_key
-Date:   Wed, 28 Mar 2018 19:55:32 +0200
-Message-Id: <20180328175537.17450-4-pclouds@gmail.com>
+        Duy Nguyen <pclouds@gmail.com>
+Subject: [PATCH 4/8] setup.c: introduce setup_adjust_path()
+Date:   Wed, 28 Mar 2018 19:55:33 +0200
+Message-Id: <20180328175537.17450-5-pclouds@gmail.com>
 X-Mailer: git-send-email 2.17.0.rc1.439.gca064e2955
 In-Reply-To: <20180328175537.17450-1-pclouds@gmail.com>
 References: <20180328094733.GA1523@sigill.intra.peff.net>
@@ -70,68 +69,64 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is so that we can print traces based on this key outside trace.c.
+From: Duy Nguyen <pclouds@gmail.com>
+
+When $CWD is moved, relative path must be updated to be relative to
+the new $CWD. This function helps do that. The _in_place version is
+just for convenient (and we will use it quite often in subsequent
+patches).
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- trace.c | 14 +++++++-------
- trace.h |  1 +
- 2 files changed, 8 insertions(+), 7 deletions(-)
+ cache.h |  3 +++
+ setup.c | 20 ++++++++++++++++++++
+ 2 files changed, 23 insertions(+)
 
-diff --git a/trace.c b/trace.c
-index 7f3b08e148..fc623e91fd 100644
---- a/trace.c
-+++ b/trace.c
-@@ -26,6 +26,7 @@
+diff --git a/cache.h b/cache.h
+index bbaf5c349a..05f32c9659 100644
+--- a/cache.h
++++ b/cache.h
+@@ -522,6 +522,9 @@ extern void set_git_work_tree(const char *tree);
  
- struct trace_key trace_default_key = { "GIT_TRACE", 0, 0, 0 };
- struct trace_key trace_perf_key = TRACE_KEY_INIT(PERFORMANCE);
-+struct trace_key trace_setup_key = TRACE_KEY_INIT(SETUP);
+ #define ALTERNATE_DB_ENVIRONMENT "GIT_ALTERNATE_OBJECT_DIRECTORIES"
  
- /* Get a trace file descriptor from "key" env variable. */
- static int get_trace_fd(struct trace_key *key)
-@@ -300,11 +301,10 @@ static const char *quote_crnl(const char *path)
- /* FIXME: move prefix to startup_info struct and get rid of this arg */
- void trace_repo_setup(const char *prefix)
- {
--	static struct trace_key key = TRACE_KEY_INIT(SETUP);
- 	const char *git_work_tree;
- 	char *cwd;
- 
--	if (!trace_want(&key))
-+	if (!trace_want(&trace_setup_key))
- 		return;
- 
- 	cwd = xgetcwd();
-@@ -315,11 +315,11 @@ void trace_repo_setup(const char *prefix)
- 	if (!prefix)
- 		prefix = "(null)";
- 
--	trace_printf_key(&key, "setup: git_dir: %s\n", quote_crnl(get_git_dir()));
--	trace_printf_key(&key, "setup: git_common_dir: %s\n", quote_crnl(get_git_common_dir()));
--	trace_printf_key(&key, "setup: worktree: %s\n", quote_crnl(git_work_tree));
--	trace_printf_key(&key, "setup: cwd: %s\n", quote_crnl(cwd));
--	trace_printf_key(&key, "setup: prefix: %s\n", quote_crnl(prefix));
-+	trace_printf_key(&trace_setup_key, "setup: git_dir: %s\n", quote_crnl(get_git_dir()));
-+	trace_printf_key(&trace_setup_key, "setup: git_common_dir: %s\n", quote_crnl(get_git_common_dir()));
-+	trace_printf_key(&trace_setup_key, "setup: worktree: %s\n", quote_crnl(git_work_tree));
-+	trace_printf_key(&trace_setup_key, "setup: cwd: %s\n", quote_crnl(cwd));
-+	trace_printf_key(&trace_setup_key, "setup: prefix: %s\n", quote_crnl(prefix));
- 
- 	free(cwd);
++extern void setup_adjust_path(const char *name, char **path,
++			      const char *old_cwd,
++			      const char *new_cwd);
+ extern void setup_work_tree(void);
+ /*
+  * Find the commondir and gitdir of the repository that contains the current
+diff --git a/setup.c b/setup.c
+index 664453fcef..e26f44185e 100644
+--- a/setup.c
++++ b/setup.c
+@@ -376,6 +376,26 @@ int is_inside_work_tree(void)
+ 	return inside_work_tree;
  }
-diff --git a/trace.h b/trace.h
-index 88055abef7..2b6a1bc17c 100644
---- a/trace.h
-+++ b/trace.h
-@@ -15,6 +15,7 @@ extern struct trace_key trace_default_key;
  
- #define TRACE_KEY_INIT(name) { "GIT_TRACE_" #name, 0, 0, 0 }
- extern struct trace_key trace_perf_key;
-+extern struct trace_key trace_setup_key;
- 
- extern void trace_repo_setup(const char *prefix);
- extern int trace_want(struct trace_key *key);
++void setup_adjust_path(const char *name, char **path,
++		       const char *old_cwd,
++		       const char *new_cwd)
++{
++	char *old_path = *path;
++	struct strbuf sb = STRBUF_INIT;
++
++	if (!old_path || is_absolute_path(old_path))
++		return;
++
++	strbuf_addstr(&sb, old_cwd);
++	strbuf_ensure_trailing_dir_sep(&sb);
++	strbuf_addstr(&sb, old_path);
++	*path = xstrdup(remove_leading_path(sb.buf, new_cwd));
++	trace_printf_key(&trace_setup_key, "setup: adjust '%s' to %s",
++			 name, *path);
++	strbuf_release(&sb);
++	free(old_path);
++}
++
+ void setup_work_tree(void)
+ {
+ 	const char *work_tree, *git_dir;
 -- 
 2.17.0.rc1.439.gca064e2955
 
