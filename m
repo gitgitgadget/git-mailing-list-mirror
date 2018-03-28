@@ -2,85 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 907761F404
-	for <e@80x24.org>; Wed, 28 Mar 2018 17:56:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 86F3F1F404
+	for <e@80x24.org>; Wed, 28 Mar 2018 17:56:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753090AbeC1R4J (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Mar 2018 13:56:09 -0400
-Received: from mail-pg0-f49.google.com ([74.125.83.49]:36880 "EHLO
-        mail-pg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753232AbeC1RyS (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Mar 2018 13:54:18 -0400
-Received: by mail-pg0-f49.google.com with SMTP id n11so1250049pgp.4
-        for <git@vger.kernel.org>; Wed, 28 Mar 2018 10:54:18 -0700 (PDT)
+        id S1753234AbeC1R4Z (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Mar 2018 13:56:25 -0400
+Received: from mail-lf0-f65.google.com ([209.85.215.65]:43337 "EHLO
+        mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753200AbeC1R4W (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Mar 2018 13:56:22 -0400
+Received: by mail-lf0-f65.google.com with SMTP id v207-v6so4713798lfa.10
+        for <git@vger.kernel.org>; Wed, 28 Mar 2018 10:56:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=2NlqGEeEVyMR8C3FnfaViPWGED6whenfq3mEbpzUvhQ=;
-        b=okXMKB+dXilrHd2Cf7dqqARWIClEhKEjP/Mz4c404WpJV4LnHBq1XB++N+BfUFERKM
-         VqbO7prZ7Hus/xIzdmoUGmy9z5wdywrQqcYY+Ho+NQLOz94Zq/9wNP49T3G6UXyblttA
-         NaIQaZj1EA8r/g1vo4NeeDhoPHZ4ODDbRChrnaP81Ph+2RVaGESOWNzDR90s1B4Jbe+4
-         ZGayiP8EjjEkLPjHRIZ8nxfnzU6PNRUK0BJ2sCHn5P21/MFXjtF/cEtwjNjK1iHmKWdP
-         S921Dlzyztwxod6XDCdz7NRaiMxb5fj83PYAKrf/8i0guVgMuKu/Y8bRT0kjTTusDSsu
-         jqiA==
+        bh=yIwxbeJnrfF4tgQZrtCPhMKNZIj6iZuaVMPQEQK8ma8=;
+        b=EHlIUz7fg3CsgcQ2w2E7jumNzr2Gu3400MFubkHaA3XvB6hQkb3qnc7i24JCZXl0DU
+         UDmEikMysfbo/q0FhoJYfDBippmRNKInMaVysyx19HWy2NUAgJDnpvzF+o5gEZ71H2JP
+         NrHx42EIbT4aCoo/aXD798Q5dvxI784LTdI98FQz8CoPikSyP2m5ZGaCo1o2Y0+GcUSn
+         27OnzpfBK22TXeUnNEPpKmwk07hzXcCFjXeArC8umaY2jREz7OqsxlNo472X1mFwBJoR
+         U0cwRNmekrIUdpkCVtPRtrhM+rPbwiFSqbkred5yCEdBepwINUdtvlBn6XzghVA20R/T
+         xgnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=2NlqGEeEVyMR8C3FnfaViPWGED6whenfq3mEbpzUvhQ=;
-        b=alLu8cHS9OiTxihSJ3yJvB4s3zNLELafb3A0zu2fxEDc3nDpibZ2kOQhG221UBNxOT
-         6wVr9h3FjHovhwBbxCfX9MM4xBVx1CHcf2ph9rsa3dGIWrG6fayw8NJH9HpWctDYI25Z
-         04b951o3XMl69u82jC3CISlUSGhoEZ9ENruhDVSovqmf9nWsn5WyLxLs8e7h+CYt6LqA
-         XRN+vAh1Juvcmx1CsWwTYnHoI8Ta8aV0oB3i5LdysiNwgJypY+ARi8GNGXSo5LPLEkUk
-         HB7l3OBO1lyZsklNxnfwGKo9Qd92kmMcgxmgvroCH8UQtKA/gfLzIwq2U8PWVsZeMiFK
-         YWGA==
-X-Gm-Message-State: AElRT7EKdeJP9R8utZG4ThCdc+TXxu/dRFwCWt6EtAg47zQ1jmJHpZQW
-        C9ZJN7W2RsCKmKD7ylqAiheEZw==
-X-Google-Smtp-Source: AIpwx4/6MMi4l1byIl2xmQ9yhzSVjTekqsg5Ty4cPLJULIIkswyaS0v+nUcidCFTOv4RzZ2m/CSm6g==
-X-Received: by 10.98.17.85 with SMTP id z82mr3756759pfi.206.1522259658055;
-        Wed, 28 Mar 2018 10:54:18 -0700 (PDT)
-Received: from twelve3.svl.corp.google.com ([2620:0:100e:422:ffac:c1d4:4bf7:bb93])
-        by smtp.gmail.com with ESMTPSA id a3sm7674240pgv.14.2018.03.28.10.54.16
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 28 Mar 2018 10:54:17 -0700 (PDT)
-Date:   Wed, 28 Mar 2018 10:54:16 -0700
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     gitster@pobox.com, bmwill@google.com, git@vger.kernel.org,
-        hvoigt@hvoigt.net, seanwbehan@riseup.net
-Subject: Re: [PATCHv2 0/6] Moving submodules with nested submodules
-Message-Id: <20180328105416.3add54858bac92573d7d1130@google.com>
-In-Reply-To: <20180328172449.27012-1-sbeller@google.com>
-References: <CAGZ79kaQYjepND8EdgB73meBsShOc5aBporiK2Bo40fqcar0gg@mail.gmail.com>
-        <20180328172449.27012-1-sbeller@google.com>
-X-Mailer: Sylpheed 3.6.0 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+        bh=yIwxbeJnrfF4tgQZrtCPhMKNZIj6iZuaVMPQEQK8ma8=;
+        b=jOLy6cDMyzztVFXfMiEvhk/aapwZt21qEtErDcvLbhrVjt9kjnx1cjckr9p6zgRlLf
+         9sPmaDuTsXiLNKEmsSJidxh+4+SX8+hYyPJb3mA+wH13EnS+4Z3qJCZrXxHFA2oBMRdw
+         BUFRuTN4UfUfDX1jRjiRnWTYqvcwMbE/fMbjlZfbfqCvCdvHeYqwIRxN7ytWXNnLlbU8
+         lfH+A9ODV2b2wc9hQPrmGtpSLnaPBvKeG+Dk34bhpve5ESpYv/IPfk+UrdQNp4Rl9dMZ
+         weAEhsJlV2LN0sFuYj0ElibkKMnzKMN2tTu04lDT6J6m2uQJzukMds+zHFEw/xOQn4lL
+         WrIA==
+X-Gm-Message-State: AElRT7GvvLmZFDHakM/xs1kK3f2p9caGpz21DPjwLJsPJdJGbIMzJ8I4
+        VsiqxcAGwC4BGkGcxyK90KIJuQ==
+X-Google-Smtp-Source: AIpwx48fbuJiFICGCSBzWPowaXzmh86GcS7AT376PPsto9Wmj+8iQoM4uI9eL1aAI/jXhOPSaS3XXw==
+X-Received: by 2002:a19:2044:: with SMTP id g65-v6mr3186803lfg.0.1522259780961;
+        Wed, 28 Mar 2018 10:56:20 -0700 (PDT)
+Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
+        by smtp.gmail.com with ESMTPSA id s12sm706658ljj.49.2018.03.28.10.56.19
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 28 Mar 2018 10:56:19 -0700 (PDT)
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>, Rafael Ascensao <rafa.almas@gmail.com>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+Subject: [PATCH 0/8] Re: git complains packed-refs is not a directory when used with GIT_DIR and GIT_WORK_TREE envvars.
+Date:   Wed, 28 Mar 2018 19:55:29 +0200
+Message-Id: <20180328175537.17450-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.17.0.rc1.439.gca064e2955
+In-Reply-To: <20180328094733.GA1523@sigill.intra.peff.net>
+References: <20180328094733.GA1523@sigill.intra.peff.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 28 Mar 2018 10:24:43 -0700
-Stefan Beller <sbeller@google.com> wrote:
+On Wed, Mar 28, 2018 at 7:36 PM, Jeff King <peff@peff.net> wrote:
+> On Wed, Mar 28, 2018 at 12:10:21PM +0200, Duy Nguyen wrote:
+>
+>> > I think it might be clearer if a single call is given both the old and
+>> > new paths. That requires the caller of chdir() storing getcwd() before
+>> > it moves, but I don't think that should be a big deal.
+>>
+>> The problem is switching relative paths relies on the old $CWD if I'm
+>> not mistaken and we need  getcwd() for this. I'd love to have one
+>> callback that says "$CWD has been switched from this path to that
+>> path, do whatever you need to" that can be called any time, before or
+>> after chdir(). I'll look more into it.
+>
+> I think it should be OK to save getcwd() and just construct the original
+> path after the fact. Here's some patches which do that in a nice way.
 
-> * picked up Jonathans patch and added it as a nice finish of the series.
->   I did not see the need or aesthetic desire to put that patch earlier
->   in the series.
+Heh.. I should have checked mails more often while coding ;-)
 
-Thanks for picking up my patch. The aesthetic desire is to avoid what's
-currently happening in PATCH 2/6 version 2, where we still have the
-potentially confusing submodule_free() -> submodule_free(repo)
-conversion, which is also later redone in PATCH 6/6 version 2
-(submodule_free(repo) -> submodule_free(the_repository)). But I'll leave
-the final decision to you.
+This is what I got, which is slightly different from your series
+because I want to call set_git_dir() just one time (by
+setup_git_directory) and never again. I think the API looks close
+enough.
 
-Other than that, besides PATCH 5/6 (which I have already commented on),
-everything looks good.
+I will probably rework on top of your chdir-notify instead (and let
+yours to be merged earlier)
+
+Note, this one is built on a strange base, which is a merge of 'next'
+and 'sb/object-store' (I needed 'next' and Junio would have another
+evil merge if 'sb/object-store' was not in the base).
+
+Nguyễn Thái Ngọc Duy (8):
+  strbuf.c: add strbuf_ensure_trailing_dr_sep()
+  strbuf.c: reintroduce get_pwd_cwd() (with strbuf_ prefix)
+  trace.c: export trace_setup_key
+  setup.c: introduce setup_adjust_path()
+  setup.c: allow other code to be notified when $CWD moves
+  environment.c: adjust env containing relpath when $CWD is moved
+  repository: adjust repo paths when $CWD moves
+  refs: adjust main repo paths when $CWD moves
+
+ abspath.c             |  4 +--
+ builtin/difftool.c    |  6 ++---
+ cache.h               |  8 ++++++
+ dir-iterator.c        |  3 +--
+ environment.c         | 46 +++++++++++++++++++++++++++++++++
+ object-store.h        |  3 +++
+ object.c              | 15 +++++++++++
+ path.c                |  9 +++----
+ refs.c                | 10 ++++++++
+ refs/files-backend.c  | 15 +++++++++++
+ refs/packed-backend.c | 12 +++++++++
+ refs/refs-internal.h  |  4 +++
+ repository.c          | 28 ++++++++++++++++++++
+ setup.c               | 59 ++++++++++++++++++++++++++++++++++---------
+ strbuf.c              | 43 ++++++++++++++++++++-----------
+ strbuf.h              |  8 ++++++
+ trace.c               | 14 +++++-----
+ trace.h               |  1 +
+ 18 files changed, 239 insertions(+), 49 deletions(-)
+
+-- 
+2.17.0.rc1.439.gca064e2955
+
