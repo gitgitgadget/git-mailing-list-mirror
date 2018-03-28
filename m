@@ -7,25 +7,25 @@ X-Spam-Status: No, score=-2.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6F7F31F424
-	for <e@80x24.org>; Wed, 28 Mar 2018 08:09:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4642E1F424
+	for <e@80x24.org>; Wed, 28 Mar 2018 08:18:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752120AbeC1IJX (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Mar 2018 04:09:23 -0400
-Received: from e1i290.smtp2go.com ([103.36.109.34]:37440 "EHLO
+        id S1752349AbeC1ISP (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Mar 2018 04:18:15 -0400
+Received: from e1i290.smtp2go.com ([103.36.109.34]:35185 "EHLO
         e1i290.smtp2go.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750753AbeC1IJW (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Mar 2018 04:09:22 -0400
+        with ESMTP id S1751903AbeC1ISM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Mar 2018 04:18:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=smtpservice.net; s=m1fbw0.a1-4.dyn; x=1522225461; h=Feedback-ID:
+        d=smtpservice.net; s=m1fbw0.a1-4.dyn; x=1522225992; h=Feedback-ID:
         X-Smtpcorp-Track:Date:Subject:To:From:Reply-To:Message-ID:Sender:
-        List-Unsubscribe; bh=HJWnyGJ1L2GWgg4Wtho395K3NOj8nparkb3tcHXT9gk=; b=mq+LtA/F
-        A7AzMLznSGubL+mrx/Him0DINAfZnnnQeNHsK2OhJCGPMvJPsM+pi4rX5z1MQSeK/gF53mY0U3dkt
-        YKCpaFw41dTV5dnYTQyXRJSzQBGTM0ufoNQJDszpLDBnI9gMcVH9XxdFA9RsDnY8gOVtOtmxsJNyu
-        jQ/gIo6D/K4PUlKPAXCJ2xNJmplKt9QmQ9Dio/afAz/DXf6aJb1GH95tLPWggz11Fy+FW5cAh2IGr
-        mLdBf1VEPNNxxC3U9frJ/ijBEEIX7eTSXOQzUwIooNlCzTmYY/qFhce5pSiBzJyVjtuTrkyMSk+Nv
-        Sf+TJm7PuWmGHNIwSsq7+zQ0mg==;
-Message-ID: <3E6DC98AE44C424E9D97A08E0522EF5B@PhilipOakley>
+        List-Unsubscribe; bh=HJWnyGJ1L2GWgg4Wtho395K3NOj8nparkb3tcHXT9gk=; b=kTZYk/MK
+        /019Ms4+1FdFusQCUuSBGfjDiQ0YISSu326l6WOatwoEKSCD2menFEWl4V7j+8gRtuZmCsw1DW6dy
+        sj0IWkbdjvCYX5YTnFqSLTxzgBhpyy6kLplyjfXCvjNc3QbL3oPl6IKRYQIW+E/lVsTxOpO9xsuKo
+        9tqa6ZcKySe8HIQXA37Px7kA18rN4KUibBF9bwjqcEK3iiL3MHd2OIa8Q0WQfxRPfdkAp+6qjdYZq
+        FX1Rd62NCjvUQFPpjHPRbHAmyiFEwujOClasuqO/Z7fPI6OaELDlIH8JLxGQ5s4VJ/VOkmg/uDx68
+        yjXiYe0GQQN/7BsE0MS9cVhcOg==;
+Message-ID: <113DAB1F68404779AB7B5899171AC13E@PhilipOakley>
 Reply-To: "Philip Oakley" <philipoakley@iee.org>
 From:   "Philip Oakley" <philipoakley@iee.org>
 To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
@@ -33,7 +33,7 @@ To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
 Cc:     <git@vger.kernel.org>, "Stefan Beller" <sbeller@google.com>
 References: <CAP6Vx84GRRxgMZF5P6tb6F4rJ8ozxx-d0o_LsNe=kEYVRkBTKQ@mail.gmail.com> <87r2o5w5mn.fsf@evledraar.gmail.com>
 Subject: Re: Bug: duplicate sections in .git/config after remote removal
-Date:   Wed, 28 Mar 2018 08:54:54 +0100
+Date:   Wed, 28 Mar 2018 08:55:22 +0100
 Organization: OPDS
 MIME-Version: 1.0
 Content-Type: text/plain;
@@ -45,7 +45,7 @@ X-Priority: 3
 X-MSMail-Priority: Normal
 X-Mailer: Microsoft Outlook Express 6.00.2900.5931
 X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-Smtpcorp-Track: 1f15ver_ZHbrQ3.I2pghxX-l
+X-Smtpcorp-Track: 1f15var_ZHg9ua.I2ptp7HYz
 Feedback-ID: 66524m:66524aMf6O2Y:66524s05ewz12Um:SMTPCORP
 X-Report-Abuse: Please forward a copy of this message, including all
  headers, to <abuse-report@smtp2go.com>
