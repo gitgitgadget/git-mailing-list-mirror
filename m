@@ -8,73 +8,73 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4E1571F424
-	for <e@80x24.org>; Wed, 28 Mar 2018 11:29:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C67A21F404
+	for <e@80x24.org>; Wed, 28 Mar 2018 12:10:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752338AbeC1L3P (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Mar 2018 07:29:15 -0400
-Received: from mail.javad.com ([54.86.164.124]:42058 "EHLO mail.javad.com"
+        id S1752216AbeC1MKz (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Mar 2018 08:10:55 -0400
+Received: from mail.javad.com ([54.86.164.124]:50820 "EHLO mail.javad.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752161AbeC1L3N (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Mar 2018 07:29:13 -0400
+        id S1750820AbeC1MKy (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Mar 2018 08:10:54 -0400
 Received: from osv (unknown [89.175.180.246])
-        by mail.javad.com (Postfix) with ESMTPSA id 12D193E899;
-        Wed, 28 Mar 2018 11:29:12 +0000 (UTC)
+        by mail.javad.com (Postfix) with ESMTPSA id 8AE803E898;
+        Wed, 28 Mar 2018 12:10:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1522236552;
-        bh=k01evPYiY9EaxxUBq8u/84vK8WJXSgTTGSYQIn1q7DM=; l=2176;
+        s=default; t=1522239053;
+        bh=UXw95nw8GHcxSXrjN7TiaotiAfnVSOJ7t/hM8CWtHEY=; l=2975;
         h=Received:From:To:Subject;
-        b=IaNPHx7NRYII+hYgGl9cyz/FLTXiDT4gIfENnQZ8WU7oMrLeRrPa8lkFmllSO6FMi
-         l6N0jRh0gsU0LcWk8xxos8MGCL7CzxUEw6tNfNkUAIPBx7OpyghVxEd3vh4wlZPqPL
-         GT1gYWG1dH4EH6d56369Mgcviw5s8E6NQau8Sjic=
+        b=eaOTOtDOJLDO9+ePZA/DbSJZyQQBiZSkbo+cC2Znr2b7vlnS2q/x8IP2mawwwiqun
+         5VpcFY2LDRmWgm13u4Y3+jkvssh8MrvKiB8zO67B2I0B1HHDqsVUvXf26chmaPnHdr
+         mrce/APhO1WWoXX3Dz4zsmKwOpk6EZbHFHaugrsE=
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1522236552;
-        bh=k01evPYiY9EaxxUBq8u/84vK8WJXSgTTGSYQIn1q7DM=; l=2176;
+        s=default; t=1522239053;
+        bh=UXw95nw8GHcxSXrjN7TiaotiAfnVSOJ7t/hM8CWtHEY=; l=2975;
         h=Received:From:To:Subject;
-        b=IaNPHx7NRYII+hYgGl9cyz/FLTXiDT4gIfENnQZ8WU7oMrLeRrPa8lkFmllSO6FMi
-         l6N0jRh0gsU0LcWk8xxos8MGCL7CzxUEw6tNfNkUAIPBx7OpyghVxEd3vh4wlZPqPL
-         GT1gYWG1dH4EH6d56369Mgcviw5s8E6NQau8Sjic=
+        b=eaOTOtDOJLDO9+ePZA/DbSJZyQQBiZSkbo+cC2Znr2b7vlnS2q/x8IP2mawwwiqun
+         5VpcFY2LDRmWgm13u4Y3+jkvssh8MrvKiB8zO67B2I0B1HHDqsVUvXf26chmaPnHdr
+         mrce/APhO1WWoXX3Dz4zsmKwOpk6EZbHFHaugrsE=
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1522236552;
-        bh=k01evPYiY9EaxxUBq8u/84vK8WJXSgTTGSYQIn1q7DM=; l=2176;
+        s=default; t=1522239053;
+        bh=UXw95nw8GHcxSXrjN7TiaotiAfnVSOJ7t/hM8CWtHEY=; l=2975;
         h=Received:From:To:Subject;
-        b=IaNPHx7NRYII+hYgGl9cyz/FLTXiDT4gIfENnQZ8WU7oMrLeRrPa8lkFmllSO6FMi
-         l6N0jRh0gsU0LcWk8xxos8MGCL7CzxUEw6tNfNkUAIPBx7OpyghVxEd3vh4wlZPqPL
-         GT1gYWG1dH4EH6d56369Mgcviw5s8E6NQau8Sjic=
+        b=eaOTOtDOJLDO9+ePZA/DbSJZyQQBiZSkbo+cC2Znr2b7vlnS2q/x8IP2mawwwiqun
+         5VpcFY2LDRmWgm13u4Y3+jkvssh8MrvKiB8zO67B2I0B1HHDqsVUvXf26chmaPnHdr
+         mrce/APhO1WWoXX3Dz4zsmKwOpk6EZbHFHaugrsE=
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1522236552;
-        bh=k01evPYiY9EaxxUBq8u/84vK8WJXSgTTGSYQIn1q7DM=; l=2176;
+        s=default; t=1522239053;
+        bh=UXw95nw8GHcxSXrjN7TiaotiAfnVSOJ7t/hM8CWtHEY=; l=2975;
         h=Received:From:To:Subject;
-        b=IaNPHx7NRYII+hYgGl9cyz/FLTXiDT4gIfENnQZ8WU7oMrLeRrPa8lkFmllSO6FMi
-         l6N0jRh0gsU0LcWk8xxos8MGCL7CzxUEw6tNfNkUAIPBx7OpyghVxEd3vh4wlZPqPL
-         GT1gYWG1dH4EH6d56369Mgcviw5s8E6NQau8Sjic=
+        b=eaOTOtDOJLDO9+ePZA/DbSJZyQQBiZSkbo+cC2Znr2b7vlnS2q/x8IP2mawwwiqun
+         5VpcFY2LDRmWgm13u4Y3+jkvssh8MrvKiB8zO67B2I0B1HHDqsVUvXf26chmaPnHdr
+         mrce/APhO1WWoXX3Dz4zsmKwOpk6EZbHFHaugrsE=
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1522236552;
-        bh=k01evPYiY9EaxxUBq8u/84vK8WJXSgTTGSYQIn1q7DM=; l=2176;
+        s=default; t=1522239053;
+        bh=UXw95nw8GHcxSXrjN7TiaotiAfnVSOJ7t/hM8CWtHEY=; l=2975;
         h=Received:From:To:Subject;
-        b=IaNPHx7NRYII+hYgGl9cyz/FLTXiDT4gIfENnQZ8WU7oMrLeRrPa8lkFmllSO6FMi
-         l6N0jRh0gsU0LcWk8xxos8MGCL7CzxUEw6tNfNkUAIPBx7OpyghVxEd3vh4wlZPqPL
-         GT1gYWG1dH4EH6d56369Mgcviw5s8E6NQau8Sjic=
+        b=eaOTOtDOJLDO9+ePZA/DbSJZyQQBiZSkbo+cC2Znr2b7vlnS2q/x8IP2mawwwiqun
+         5VpcFY2LDRmWgm13u4Y3+jkvssh8MrvKiB8zO67B2I0B1HHDqsVUvXf26chmaPnHdr
+         mrce/APhO1WWoXX3Dz4zsmKwOpk6EZbHFHaugrsE=
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1522236552;
-        bh=k01evPYiY9EaxxUBq8u/84vK8WJXSgTTGSYQIn1q7DM=; l=2176;
+        s=default; t=1522239053;
+        bh=UXw95nw8GHcxSXrjN7TiaotiAfnVSOJ7t/hM8CWtHEY=; l=2975;
         h=Received:From:To:Subject;
-        b=IaNPHx7NRYII+hYgGl9cyz/FLTXiDT4gIfENnQZ8WU7oMrLeRrPa8lkFmllSO6FMi
-         l6N0jRh0gsU0LcWk8xxos8MGCL7CzxUEw6tNfNkUAIPBx7OpyghVxEd3vh4wlZPqPL
-         GT1gYWG1dH4EH6d56369Mgcviw5s8E6NQau8Sjic=
+        b=eaOTOtDOJLDO9+ePZA/DbSJZyQQBiZSkbo+cC2Znr2b7vlnS2q/x8IP2mawwwiqun
+         5VpcFY2LDRmWgm13u4Y3+jkvssh8MrvKiB8zO67B2I0B1HHDqsVUvXf26chmaPnHdr
+         mrce/APhO1WWoXX3Dz4zsmKwOpk6EZbHFHaugrsE=
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1522236552;
-        bh=k01evPYiY9EaxxUBq8u/84vK8WJXSgTTGSYQIn1q7DM=; l=2176;
+        s=default; t=1522239053;
+        bh=UXw95nw8GHcxSXrjN7TiaotiAfnVSOJ7t/hM8CWtHEY=; l=2975;
         h=Received:From:To:Subject;
-        b=IaNPHx7NRYII+hYgGl9cyz/FLTXiDT4gIfENnQZ8WU7oMrLeRrPa8lkFmllSO6FMi
-         l6N0jRh0gsU0LcWk8xxos8MGCL7CzxUEw6tNfNkUAIPBx7OpyghVxEd3vh4wlZPqPL
-         GT1gYWG1dH4EH6d56369Mgcviw5s8E6NQau8Sjic=
+        b=eaOTOtDOJLDO9+ePZA/DbSJZyQQBiZSkbo+cC2Znr2b7vlnS2q/x8IP2mawwwiqun
+         5VpcFY2LDRmWgm13u4Y3+jkvssh8MrvKiB8zO67B2I0B1HHDqsVUvXf26chmaPnHdr
+         mrce/APhO1WWoXX3Dz4zsmKwOpk6EZbHFHaugrsE=
 Authentication-Results: mail.javad.com;
         spf=pass (sender IP is 89.175.180.246) smtp.mailfrom=osv@javad.com smtp.helo=osv
 Received-SPF: pass (mail.javad.com: connection is authenticated)
 Received: from osv by osv with local (Exim 4.84_2)
         (envelope-from <osv@osv.gnss.ru>)
-        id 1f19GP-0003Ij-Lu; Wed, 28 Mar 2018 14:29:09 +0300
+        id 1f19ul-0003L9-IM; Wed, 28 Mar 2018 15:10:51 +0300
 From:   Sergey Organov <sorganov@gmail.com>
 To:     Jacob Keller <jacob.keller@gmail.com>
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
@@ -103,10 +103,10 @@ References: <87y3jtqdyg.fsf@javad.com>
         <nycvar.QRO.7.76.6.1803271536020.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
         <874ll0d9nt.fsf@javad.com>
         <CA+P7+xoDQ2mzhxeZPFhaY+TaSoKkQm=5AtoduHH06-VggOJ2jg@mail.gmail.com>
-Date:   Wed, 28 Mar 2018 14:29:09 +0300
+Date:   Wed, 28 Mar 2018 15:10:51 +0300
 In-Reply-To: <CA+P7+xoDQ2mzhxeZPFhaY+TaSoKkQm=5AtoduHH06-VggOJ2jg@mail.gmail.com>
         (Jacob Keller's message of "Wed, 28 Mar 2018 00:20:31 -0700")
-Message-ID: <87r2o48mm2.fsf@javad.com>
+Message-ID: <87k1tw8kok.fsf@javad.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -122,57 +122,60 @@ Jacob Keller <jacob.keller@gmail.com> writes:
 >> Hi Johannes,
 >>
 >> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->> > Hi Sergey,
->> >
->>
->> [...]
->>
->> >> >> Reusing existing concepts where possible doesn`t have this problem.
->> >> >
->> >> > Existing concepts are great. As long as they fit the requirements of
->> >> > the new scenarios. In this case, `pick` does *not* fit the
-> requirement
->> >> > of "rebase a merge commit".
->> >>
->> >> It does, provided you use suitable syntax.
->> >
->> > You know what `pick` would also do, provided you use suitable syntax?
-> Pick
->> > your nose.
->> >
->> > Don't blame me for this ridiculous turn the discussion took.
->> >
->> > Of course, using the suitable syntax you can do anything. Unless there
-> is
->> > *already* a syntax and you cannot break it for backwards-compatibility
->> > reasons, as is the case here.
->>
->> Backward compatibility to what? To a broken '--preserve-merges'? I had a
->> feel you've invented '--recreate-merges' exactly to break that
->> compatibility. No?
->>
->> Or is it "Backwards compatibility of a feature that existed only as a
->> topic branch in `next` before being worked on more?", as you say
->> yourself below?
->>
->
-> I'm pretty sure he meant that changing the meaning and behavior of "pick"
-> is incompatible, as people use scripts which check the edit lists, and
-> these scripts would expect pick to behave in a certain way.
 
-Are we still speaking about that new --recreate-merges feature? You
-already care for compatibility for it? You expect there are already
-scripts that use it?
+[...]
 
-Once again, it seems like you care and don't care about backward
-compatibility at the same time, here is your phrase below:
+> I'm pretty sure the fact has already been accepted, as he did indeed
+> implement and develop a strategy for rebasing the merges (Phillip's
+> strategy). He hasn't chosen to re-write all the code such that it was
+> "always" this method, but rather kept it as an incremental patch on top as
+> it makes it easier to review the changes since we've already spent time
+> looking at and reviewing the --recreate-merges patches.
 
-"He absolutely cares about compatibility, but in this case, the feature
-has not yet been merged into an official release."
+That's perfectly OK with me, except that he apparently still can't
+accept the fact that rebasing a non-merge is not fundamentally different
+from rebasing a merge.
 
-Are we still speaking about that new --recreate-merges feature?
+"Rebase non-merge" is just a special case of generic "rebase commit",
+provided we do have generic method that is capable to rebase any commit,
+and we do have it, Phillip's or not.
 
-Do you guys care for compatibility for this particular --recreate-merges
-feature or not? I'm lost. "Yes" or "No" answer, if you please!
+> Having watched from the sidelines, I've been unable to completely
+> understand and parse the strategies completely, but I've also found
+> Phillip's method to be easier to understand.
+
+It doesn't matter at all for this particular discussion. Let's call the
+method "rebase a commit", a black-box, that is capable to rebase any
+commit. I don't care what implementation is inside. Rebasing a commit is
+still rebasing a commit, and it should not be called "merge" in the todo
+list.
+
+> As someone who's read the discussion on the sidelines, it certainly
+> does feel like there is some misunderstanding on both sides. Neither
+> of you have been able to get the other to see what you clearly both
+> believe strongly.
+
+Calling "rebase" operation "merge" is wrong no matter what method is
+used to rebase a commit. Isn't it obvious? It's currently called "pick"
+in the todo and it seems natural to continue to use that name for
+picking a commit, whatever number of parents it happens to have.
+
+> Unfortunately I do not have any suggestion as to how to resolve the
+> misunderstanding.
+
+This sub-thread is not about method at all, so no resolution on that
+matter is required here. This sub-thread is about todo format only.
+
+> Sergey's method appears to me to be more complex, and I agree that the
+> extra steps could cause more merge conflicts, at least in how it was
+> originally conceptualized and implemented. It is possible that we are
+> mis-understanding the terminology for U1 and U2? It sure seems like it
+> introduces more changes for merge conflicts than the strategy proposed by
+> Phillip. However, the latest editions also sound a lot closer to Phillip's
+> strategy in general, so maybe I have mis-understood how it works and what
+> is fundamentally different about the two strategies.
+
+There is nothing fundamentally different between them and thus I don't
+care in this discussion what exact method is being used.
 
 -- Sergey
