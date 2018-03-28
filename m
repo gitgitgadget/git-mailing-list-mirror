@@ -2,84 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AA5BC1F404
-	for <e@80x24.org>; Wed, 28 Mar 2018 18:05:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 49C551F404
+	for <e@80x24.org>; Wed, 28 Mar 2018 18:19:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752832AbeC1SF5 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Mar 2018 14:05:57 -0400
-Received: from mail-oi0-f46.google.com ([209.85.218.46]:35552 "EHLO
-        mail-oi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752349AbeC1SF4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Mar 2018 14:05:56 -0400
-Received: by mail-oi0-f46.google.com with SMTP id z8-v6so2930190oix.2
-        for <git@vger.kernel.org>; Wed, 28 Mar 2018 11:05:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=ZK1FrhXPFc39PVIVehvssyEMeDnJ6/X4HFtow9ugHVY=;
-        b=g6bk0giCxEQt4oBz/b5XIw2wrJ8UV0obi7h04Iq0WWgfL1S6wnSHvXthZlY4BUWbP8
-         zuYGs87IkjaUDn+SQ6jQ0q1p4GOexDmvEmCPkSQODueXeTYmsQdnNqlKbtqP10Dmuy/L
-         rMS+BFD2XN2QJXIXGkdJGjO3T3ij/bKcgmhI5a1qm3ohRzsOlkMaU/L8vtmlsEVrNOEJ
-         5V6XrdPcvPulzLvu2sB+saYyPc6ovDXHPxo94XvBgluUvPcZz8ISUWZThYXgyBhrH7jz
-         63rEtwhH/HWAbDiqf2ecAmwiD1Rv8CP7fqfG7Z1ZccK4dhQidgerw13n1CYDeYt+HzlP
-         Bbbg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=ZK1FrhXPFc39PVIVehvssyEMeDnJ6/X4HFtow9ugHVY=;
-        b=p7lc4oiV4JqxhIfABhRLX6moC6v8CzQ2/P5kKutktjvR+B8hnVDyl14LIJwEZdn/rL
-         qRFoOf6G3f++HINHuCtZnbv+A8eZiyA5yX5H8QT1vh8BRX9l5Cfwah17TzqfDhpp1ztm
-         u0kEHUlyDW3GUjT77TMna8iUnT+Bxp46qeJUb1mCdJFztoM1zewD+eA2s7n7xB2iEIO0
-         tZed2681dvI+GjI0org5K9p5/BXHhLUqdo+F4Jy2W7iUxUzh2w0e0XWcc+gip09R56zi
-         iU/rpaEmeuRbB91X/rI6q/e2AnK4vhgCtEhGkogNR8K2+XD24DklJP8YvlGA+zNR+t40
-         1LHA==
-X-Gm-Message-State: ALQs6tCXwEVXeDVWLRzuOhDm6RZC79Fe2QBF8P7w2c4Pd4OgdE7lOW6B
-        0C29lS6pJzaas6Pe0fuQ/Z0NehiVhVsP1FglfrQ=
-X-Google-Smtp-Source: AIpwx482AixBMdRMDK5Lrgv3Bsj+4Z7Un9WTr3ux9IAW+DtKKqcqjKXeliXz8mhE3cwR9Qk3Trws4lxgd39CVEgVwXY=
-X-Received: by 10.202.64.85 with SMTP id n82mr2687301oia.30.1522260356293;
- Wed, 28 Mar 2018 11:05:56 -0700 (PDT)
+        id S1752995AbeC1STf (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Mar 2018 14:19:35 -0400
+Received: from cloud.peff.net ([104.130.231.41]:46442 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1752743AbeC1STe (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Mar 2018 14:19:34 -0400
+Received: (qmail 15526 invoked by uid 109); 28 Mar 2018 18:19:34 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 28 Mar 2018 18:19:34 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 11814 invoked by uid 111); 28 Mar 2018 18:20:32 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 28 Mar 2018 14:20:32 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 28 Mar 2018 14:19:32 -0400
+Date:   Wed, 28 Mar 2018 14:19:32 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org, Rafael Ascensao <rafa.almas@gmail.com>
+Subject: Re: [PATCH 0/8] Re: git complains packed-refs is not a directory
+ when used with GIT_DIR and GIT_WORK_TREE envvars.
+Message-ID: <20180328181932.GB16565@sigill.intra.peff.net>
+References: <20180328094733.GA1523@sigill.intra.peff.net>
+ <20180328175537.17450-1-pclouds@gmail.com>
 MIME-Version: 1.0
-Received: by 10.74.211.131 with HTTP; Wed, 28 Mar 2018 11:05:25 -0700 (PDT)
-In-Reply-To: <CAGZ79kbofCd+8iscOFUNHTfQ2Y1cUDUjp5kOQQr_b1uPgPC2Eg@mail.gmail.com>
-References: <20180328094733.GA1523@sigill.intra.peff.net> <20180328175537.17450-1-pclouds@gmail.com>
- <20180328175537.17450-3-pclouds@gmail.com> <CAGZ79kbofCd+8iscOFUNHTfQ2Y1cUDUjp5kOQQr_b1uPgPC2Eg@mail.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 28 Mar 2018 20:05:25 +0200
-Message-ID: <CACsJy8D6h_t0LTD6ML8o4imEaU7vqxZJyzaBU6McCfVqWOQkWA@mail.gmail.com>
-Subject: Re: [PATCH 2/8] strbuf.c: reintroduce get_pwd_cwd() (with strbuf_ prefix)
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Rafael Ascensao <rafa.almas@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20180328175537.17450-1-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 28, 2018 at 8:02 PM, Stefan Beller <sbeller@google.com> wrote:
-> On Wed, Mar 28, 2018 at 10:55 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc D=
-uy
-> <pclouds@gmail.com> wrote:
->> +/**
->> + * Return the current directory, fall back to $PWD if the
->> + * current directory does not exist.
->> + */
->> +extern void strbuf_get_pwd_cwd(struct strbuf *sb);
->
-> Please see 89a9f2c862 (CodingGuidelines: mention "static" and "extern",
-> 2018-02-08) and drop the extern if you need to reroll.
+On Wed, Mar 28, 2018 at 07:55:29PM +0200, Nguyễn Thái Ngọc Duy wrote:
 
-I'm aware (and in favor) of that actually. But this whole strbuf.h
-uses extern. Either I had to delete all extern first, or go with old
-style and maybe do the whole deletion later. I chose the former. Maybe
-be I'll delete all "extern" as a prep patch.
---=20
-Duy
+> >> The problem is switching relative paths relies on the old $CWD if I'm
+> >> not mistaken and we need  getcwd() for this. I'd love to have one
+> >> callback that says "$CWD has been switched from this path to that
+> >> path, do whatever you need to" that can be called any time, before or
+> >> after chdir(). I'll look more into it.
+> >
+> > I think it should be OK to save getcwd() and just construct the original
+> > path after the fact. Here's some patches which do that in a nice way.
+> 
+> Heh.. I should have checked mails more often while coding ;-)
+
+I was worried about that. I started this earlier as a "well, I could
+probably just knock this out quickly" task. Many hours later, I found
+there were quite a few subtleties. :)
+
+> This is what I got, which is slightly different from your series
+> because I want to call set_git_dir() just one time (by
+> setup_git_directory) and never again. I think the API looks close
+> enough.
+
+Yeah, I actually think after this series we could enforce that
+set_git_dir() is never called twice.
+
+I think we could even make sure that repo_set_gitdir() is never called
+twice, too, but it would involve a little more surgery (we'd have to
+teach it to set up a child_notify handler, and the way it interacts with
+the set_git_dir() one is subtle. I did try it and it worked, but I went
+with what you saw in patch 3 because it was simpler).
+
+> I will probably rework on top of your chdir-notify instead (and let
+> yours to be merged earlier)
+
+Thanks. I like some of the related changes you made, like including this
+in the tracing output. That should be easy to do on top of mine, I
+think.
+
+I didn't look for other spots that might need similar treatment (like
+the object-store bits).
+
+-Peff
