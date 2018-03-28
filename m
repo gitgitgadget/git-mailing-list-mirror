@@ -7,118 +7,84 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 742DF1F404
-	for <e@80x24.org>; Wed, 28 Mar 2018 22:35:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 819D21F404
+	for <e@80x24.org>; Wed, 28 Mar 2018 22:35:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753423AbeC1Wfg (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Mar 2018 18:35:36 -0400
-Received: from mail-pf0-f172.google.com ([209.85.192.172]:33321 "EHLO
-        mail-pf0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752447AbeC1Wff (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Mar 2018 18:35:35 -0400
-Received: by mail-pf0-f172.google.com with SMTP id f15so1822414pfn.0
-        for <git@vger.kernel.org>; Wed, 28 Mar 2018 15:35:35 -0700 (PDT)
+        id S1753570AbeC1Wfj (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Mar 2018 18:35:39 -0400
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:44174 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753426AbeC1Wfh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Mar 2018 18:35:37 -0400
+Received: by mail-pf0-f194.google.com with SMTP id m68so1812243pfm.11
+        for <git@vger.kernel.org>; Wed, 28 Mar 2018 15:35:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=BFh3YpYUdraaFfPakfX0cKzncKsIJaKKLYoyzL1UJu8=;
-        b=Vp/i1cr9rFO0RtcXG1WF/3Y+DuNKT6URor9tF/Js61rh2jbOx024HWyVOOV8MGWOxq
-         zw9IGSzavIBj0M/hxXkUoCdCfisW1xBHtGHJ4xlljc523bO12xCdBH1BXiF605B8PKOw
-         PLN5GYD0BhERjiurEAxBDMj8+yH3m5nCTv7ZH4LFZ3ySjw4D43DVk0+27q5lqvtGvO+7
-         ZFbjvHAu3v/+kQTY8RoEItopJRlhudHbavKeVBcz+Q/z3qaiY+2w7ZwbzN9R76ydkHjC
-         A4HRnyKrUM5eurzQeEJr8O3XbnPZ9EKUFwmJelGlZAo8JcY81HtuxTdsJcIS8Ykhd2wy
-         87Cg==
+        bh=KLwCagjSpPEUboe0YTjYrxIlGmE3Mhdcvbq+CC304mY=;
+        b=wPgw0/CJ5Ju+qfMTOuGG1BCw1wBVQhQSi+LQmdq49yFXH1nfV6zlRZQTHZtqlmsI3A
+         JDd3cwIdJ87vVkeHNnYj9k7UFWUqfRtNrnPBYhjEfHOpErDOB3jFpUXv/Hk8tfARc6RQ
+         n1T4fmAsZZJ3BJFHbbp9Ka8PEO01AMC7ynROWiB1Ov23jh8Y3OBwa7cIGkyECLc/YX+j
+         EfPZod/bg2dH8M73pnjTn7YMzZZmDybqoVJltN54V3GgW2bdaNhL2NzHKTBxDkhgXpGx
+         NShO0K5yEQHoPkuAR8UulERyj9SEkf2veyBnJyDvkutfoapW/4N3qJXQCLYQGs42eKlF
+         NmhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=BFh3YpYUdraaFfPakfX0cKzncKsIJaKKLYoyzL1UJu8=;
-        b=ni8WQdG2C1Ii9TailU1DO/0tm5cDX4mwgn5RO5kxpflWoJx3V7cr/dEovr2XOQd0IW
-         8YH0W0UclQqQoYm+MBSAI9of0bwb0jXij3YUi/0ejj2+voyjXQbfTtka7ZnLus5ZXhhZ
-         ijcZBKxzEw5xi/MDOPU9rHMd9WDj4W66EIltRXi4TW/Pfrc/W4ZPlT+4Jy2/pMWxXR4A
-         +v9E9FkYRGSiYq4DCDnoeN2ECFBIdAl1msiQbx+ixFcRUkXg1wCZIzIVQsyxyZkjmWvG
-         UkuQRPjpyabGxkMkU8pVJ/zlpQmX5sOG+8V94DK2yEUS70FauUZXDeg6POoXJB/JthL0
-         bYEA==
-X-Gm-Message-State: AElRT7EYbPlCzAWbzUNdI0m+eHettaVxQig6NlHT3KmbPjv5PaEZ3PrG
-        yStHBm0yTjSJ3YjMuxBygsIaDg==
-X-Google-Smtp-Source: AIpwx4+XVQjhwwacWr4Rgk/Z8fnLKC+8mBodyd9yJ3J05N3kCtvGzIFaCO7nCLsSHqww+3bga3fO5w==
-X-Received: by 2002:a17:902:7c95:: with SMTP id y21-v6mr5604178pll.170.1522276534988;
-        Wed, 28 Mar 2018 15:35:34 -0700 (PDT)
+        bh=KLwCagjSpPEUboe0YTjYrxIlGmE3Mhdcvbq+CC304mY=;
+        b=Ix83fjdZhVqpkixvGajU2gvtny0C/N0OgY7hunWDAXa+MS+L2/TM0IdFkfGChhlDGg
+         rWRchPj0WdycRCtgz50VswWSq2ftg0cCbCKqrh1ugLr0Qb0Kz0afHmVJkZJGHynutXE4
+         CH4awIOyRNeMWVYj7B7nGZuNl2+4VubuA51gshtOk3t4afvcGu/dC+fYe5FVr/J+NN1r
+         0rS130W5nIsCfZYl6+vFyQ6Nq4qZMtHp16PHongqTjJxQcw6AgrnjsooTo0hHPi24GSa
+         wEN2zSkorv/ewGfaJuI+o5+8YpJVyfGmSco+hLQa4FGVQuWWjXEZwV7BjLLfGIsxziEz
+         nkWw==
+X-Gm-Message-State: AElRT7EBnJEUxleAG6v453MDLB7nNZSAFNRjZ5LeYZ7OobcmGmxdky2e
+        3+irOEpnjOh5djM8qhk4qiQqMA==
+X-Google-Smtp-Source: AIpwx49KG7S+xntTgROVmBojdazDLQmkJ4SwJJIXZXPps7FRIZsWdky5/oipqVHuM7goJxc41089qQ==
+X-Received: by 10.98.108.69 with SMTP id h66mr4308841pfc.43.1522276536258;
+        Wed, 28 Mar 2018 15:35:36 -0700 (PDT)
 Received: from localhost ([2620:0:100e:422:ea58:fa52:fa77:9b41])
-        by smtp.gmail.com with ESMTPSA id x5sm9834247pfx.110.2018.03.28.15.35.34
+        by smtp.gmail.com with ESMTPSA id k70sm8377806pga.72.2018.03.28.15.35.35
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 28 Mar 2018 15:35:34 -0700 (PDT)
+        Wed, 28 Mar 2018 15:35:35 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     jonathantanmy@google.com
 Cc:     bmwill@google.com, git@vger.kernel.org, gitster@pobox.com,
         hvoigt@hvoigt.net, sbeller@google.com, seanwbehan@riseup.net
-Subject: [PATCHv3 0/6] Moving submodules with nested submodules
-Date:   Wed, 28 Mar 2018 15:35:25 -0700
-Message-Id: <20180328223531.241920-1-sbeller@google.com>
+Subject: [PATCHv3 1/6] submodule.h: drop declaration of connect_work_tree_and_git_dir
+Date:   Wed, 28 Mar 2018 15:35:26 -0700
+Message-Id: <20180328223531.241920-2-sbeller@google.com>
 X-Mailer: git-send-email 2.17.0.rc1.321.gba9d0f2565-goog
-In-Reply-To: <20180328105416.3add54858bac92573d7d1130@google.com>
+In-Reply-To: <20180328223531.241920-1-sbeller@google.com>
 References: <20180328105416.3add54858bac92573d7d1130@google.com>
+ <20180328223531.241920-1-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-v3:
-* reordered patches to have Jonathans patch before submodule_free
-* addressed Jonathans comments on patch 5.
-* rebased on origin/sb/object-store to resolve a visibility conflict
-  about repo_init being exposed outside of repository.c
+The function connect_work_tree_and_git_dir is declared in both submodule.h
+and dir.h, such that one of them is redundant. As the function is
+implemented in dir.c, drop the declaration from submodule.h
 
-v2:
-* addressed memleaks and messy code in patch 5
-* removed the extern keyword where applicable
-* extended the commit message, stating we want to rename submodule_free
-  in the future.
-* picked up Jonathans patch and added it as a nice finish of the series.
-  I did not see the need or aesthetic desire to put that patch earlier
-  in the series.
-  
-Thanks,
-Stefan
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ submodule.h | 1 -
+ 1 file changed, 1 deletion(-)
 
-v1:
-
-This fixes the bug reported in [1] ("Bug: moving submodules that have submodules
-inside them causes a fatal error in git status")
-
-[1] https://public-inbox.org/git/20180306192017.GA5797@riseup.net/
-
-Thanks,
-Stefan
-Jonathan Tan (1):
-  grep: remove "repo" arg from non-supporting funcs
-
-Stefan Beller (5):
-  submodule.h: drop declaration of connect_work_tree_and_git_dir
-  submodule-config: allow submodule_free to handle arbitrary
-    repositories
-  submodule-config: add repository argument to submodule_from_{name,
-    path}
-  submodule-config: remove submodule_from_cache
-  submodule: fixup nested submodules after moving the submodule
-
- .../technical/api-submodule-config.txt        |  2 +-
- builtin/grep.c                                | 14 ++---
- builtin/mv.c                                  |  6 +-
- builtin/submodule--helper.c                   | 17 +++---
- dir.c                                         | 60 ++++++++++++++++++-
- dir.h                                         | 12 +++-
- repository.c                                  |  8 +--
- repository.h                                  |  3 +
- submodule-config.c                            | 29 ++++-----
- submodule-config.h                            | 15 +++--
- submodule.c                                   | 40 +++++++------
- submodule.h                                   |  1 -
- t/helper/test-submodule-config.c              |  8 ++-
- t/t7001-mv.sh                                 |  2 +-
- unpack-trees.c                                |  2 +-
- 15 files changed, 140 insertions(+), 79 deletions(-)
-
+diff --git a/submodule.h b/submodule.h
+index b9b7ef0030..b6130e6287 100644
+--- a/submodule.h
++++ b/submodule.h
+@@ -105,7 +105,6 @@ extern int push_unpushed_submodules(struct oid_array *commits,
+ 				    const char **refspec, int refspec_nr,
+ 				    const struct string_list *push_options,
+ 				    int dry_run);
+-extern void connect_work_tree_and_git_dir(const char *work_tree, const char *git_dir);
+ /*
+  * Given a submodule path (as in the index), return the repository
+  * path of that submodule in 'buf'. Return -1 on error or when the
 -- 
 2.17.0.rc1.321.gba9d0f2565-goog
 
