@@ -2,61 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3748F1F404
-	for <e@80x24.org>; Wed, 28 Mar 2018 18:02:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AA5BC1F404
+	for <e@80x24.org>; Wed, 28 Mar 2018 18:05:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752349AbeC1SCh (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Mar 2018 14:02:37 -0400
-Received: from mail-yb0-f169.google.com ([209.85.213.169]:43060 "EHLO
-        mail-yb0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751166AbeC1SCg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Mar 2018 14:02:36 -0400
-Received: by mail-yb0-f169.google.com with SMTP id z5-v6so1099628ybo.10
-        for <git@vger.kernel.org>; Wed, 28 Mar 2018 11:02:36 -0700 (PDT)
+        id S1752832AbeC1SF5 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Mar 2018 14:05:57 -0400
+Received: from mail-oi0-f46.google.com ([209.85.218.46]:35552 "EHLO
+        mail-oi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752349AbeC1SF4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Mar 2018 14:05:56 -0400
+Received: by mail-oi0-f46.google.com with SMTP id z8-v6so2930190oix.2
+        for <git@vger.kernel.org>; Wed, 28 Mar 2018 11:05:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
+        d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=3lJK6aOFOO2zSIKSnPP/BBuvilNtMavige08Crh/ZIw=;
-        b=ZWrbszabUKrGW4auke0dik+UjEd9W1y3zKX/rZWnfFaDV/Fb4pJLzhwf39NBh2n+/t
-         WZs0UtR9+QqtqpXD7SZbqIVpus3NpzZD5iTffnGdF4JVhg85r6rJiZpNr5wE/uXYl+Hv
-         u/YJ/fAuBE3rKKpCSZZlF1YfL2dZnlemN96syUPonZbUzANQ22VG2xmCCING+W7Hw5is
-         sdHak3oGLgE1j3FGRKiQj3qYgF3NK6su+VzeSV0FuQ60VQExCw9Wi4P8DbzRCOLwGSTA
-         MXYLBqzVGgZaZJEIIrMXAxvSJ8Q5UBBpmi/dOIjw7HVDW0Up7t/IPs1TjRAEGeYFwCwM
-         Zz8w==
+        bh=ZK1FrhXPFc39PVIVehvssyEMeDnJ6/X4HFtow9ugHVY=;
+        b=g6bk0giCxEQt4oBz/b5XIw2wrJ8UV0obi7h04Iq0WWgfL1S6wnSHvXthZlY4BUWbP8
+         zuYGs87IkjaUDn+SQ6jQ0q1p4GOexDmvEmCPkSQODueXeTYmsQdnNqlKbtqP10Dmuy/L
+         rMS+BFD2XN2QJXIXGkdJGjO3T3ij/bKcgmhI5a1qm3ohRzsOlkMaU/L8vtmlsEVrNOEJ
+         5V6XrdPcvPulzLvu2sB+saYyPc6ovDXHPxo94XvBgluUvPcZz8ISUWZThYXgyBhrH7jz
+         63rEtwhH/HWAbDiqf2ecAmwiD1Rv8CP7fqfG7Z1ZccK4dhQidgerw13n1CYDeYt+HzlP
+         Bbbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=3lJK6aOFOO2zSIKSnPP/BBuvilNtMavige08Crh/ZIw=;
-        b=KS77r7oZnmoisJ/LX/DVRNIMIktxVJR4VoTc8stGJ6srPad3219QKNy7+OpLBdAMvb
-         dGkZO2pYEKzDISi7ssay7jDrQyTF+AoYZbVZhRMRN+kQUcCXFDjGgKrOuN+wuW+5jHT1
-         qZmrQHfKNgUOSkGCRDt1C+IV+0gO44wcAcfspEV+FoscM/8pewy0WWsbGUimhp7LORp+
-         jyMHV4fIUXMktZrA+CuInsxj/54LGmvecDmhmZb0nhfrsMrIq339FtPjC6t8DXnZOOgu
-         ZVuEnRsQ+Cy5VpTmq2PHRB3L0iWnb1Ct9JiIqsPPs4K564Y7qJrIFcT1gWlBHD53ISaw
-         ePrg==
-X-Gm-Message-State: AElRT7HcTNxL+3moeeWIHr423qV/UpIDM4VJGoNrAZawSNktxv+iaGz1
-        uFLVtyiM31/Jlo0fk71xfOWc38AZDdGKbm+OY6lLQQ==
-X-Google-Smtp-Source: AIpwx4/P8tAolQcwt4epSXS3Nw9C/4/ptstwExEguW+AUNVO5Hd4Py4mjb3ddtbDOoKlE+FRYjWxOiMf/8sDSXO2xRs=
-X-Received: by 2002:a25:5605:: with SMTP id k5-v6mr2934169ybb.292.1522260155114;
- Wed, 28 Mar 2018 11:02:35 -0700 (PDT)
+        bh=ZK1FrhXPFc39PVIVehvssyEMeDnJ6/X4HFtow9ugHVY=;
+        b=p7lc4oiV4JqxhIfABhRLX6moC6v8CzQ2/P5kKutktjvR+B8hnVDyl14LIJwEZdn/rL
+         qRFoOf6G3f++HINHuCtZnbv+A8eZiyA5yX5H8QT1vh8BRX9l5Cfwah17TzqfDhpp1ztm
+         u0kEHUlyDW3GUjT77TMna8iUnT+Bxp46qeJUb1mCdJFztoM1zewD+eA2s7n7xB2iEIO0
+         tZed2681dvI+GjI0org5K9p5/BXHhLUqdo+F4Jy2W7iUxUzh2w0e0XWcc+gip09R56zi
+         iU/rpaEmeuRbB91X/rI6q/e2AnK4vhgCtEhGkogNR8K2+XD24DklJP8YvlGA+zNR+t40
+         1LHA==
+X-Gm-Message-State: ALQs6tCXwEVXeDVWLRzuOhDm6RZC79Fe2QBF8P7w2c4Pd4OgdE7lOW6B
+        0C29lS6pJzaas6Pe0fuQ/Z0NehiVhVsP1FglfrQ=
+X-Google-Smtp-Source: AIpwx482AixBMdRMDK5Lrgv3Bsj+4Z7Un9WTr3ux9IAW+DtKKqcqjKXeliXz8mhE3cwR9Qk3Trws4lxgd39CVEgVwXY=
+X-Received: by 10.202.64.85 with SMTP id n82mr2687301oia.30.1522260356293;
+ Wed, 28 Mar 2018 11:05:56 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:a25:cf81:0:0:0:0:0 with HTTP; Wed, 28 Mar 2018 11:02:34
- -0700 (PDT)
-In-Reply-To: <20180328175537.17450-3-pclouds@gmail.com>
+Received: by 10.74.211.131 with HTTP; Wed, 28 Mar 2018 11:05:25 -0700 (PDT)
+In-Reply-To: <CAGZ79kbofCd+8iscOFUNHTfQ2Y1cUDUjp5kOQQr_b1uPgPC2Eg@mail.gmail.com>
 References: <20180328094733.GA1523@sigill.intra.peff.net> <20180328175537.17450-1-pclouds@gmail.com>
- <20180328175537.17450-3-pclouds@gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 28 Mar 2018 11:02:34 -0700
-Message-ID: <CAGZ79kbofCd+8iscOFUNHTfQ2Y1cUDUjp5kOQQr_b1uPgPC2Eg@mail.gmail.com>
+ <20180328175537.17450-3-pclouds@gmail.com> <CAGZ79kbofCd+8iscOFUNHTfQ2Y1cUDUjp5kOQQr_b1uPgPC2Eg@mail.gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Wed, 28 Mar 2018 20:05:25 +0200
+Message-ID: <CACsJy8D6h_t0LTD6ML8o4imEaU7vqxZJyzaBU6McCfVqWOQkWA@mail.gmail.com>
 Subject: Re: [PATCH 2/8] strbuf.c: reintroduce get_pwd_cwd() (with strbuf_ prefix)
-To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
+To:     Stefan Beller <sbeller@google.com>
 Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
         Rafael Ascensao <rafa.almas@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
@@ -66,16 +64,22 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 28, 2018 at 10:55 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy
-<pclouds@gmail.com> wrote:
-> +/**
-> + * Return the current directory, fall back to $PWD if the
-> + * current directory does not exist.
-> + */
-> +extern void strbuf_get_pwd_cwd(struct strbuf *sb);
+On Wed, Mar 28, 2018 at 8:02 PM, Stefan Beller <sbeller@google.com> wrote:
+> On Wed, Mar 28, 2018 at 10:55 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc D=
+uy
+> <pclouds@gmail.com> wrote:
+>> +/**
+>> + * Return the current directory, fall back to $PWD if the
+>> + * current directory does not exist.
+>> + */
+>> +extern void strbuf_get_pwd_cwd(struct strbuf *sb);
+>
+> Please see 89a9f2c862 (CodingGuidelines: mention "static" and "extern",
+> 2018-02-08) and drop the extern if you need to reroll.
 
-Please see 89a9f2c862 (CodingGuidelines: mention "static" and "extern",
-2018-02-08) and drop the extern if you need to reroll.
-
-Thanks,
-Stefan
+I'm aware (and in favor) of that actually. But this whole strbuf.h
+uses extern. Either I had to delete all extern first, or go with old
+style and maybe do the whole deletion later. I chose the former. Maybe
+be I'll delete all "extern" as a prep patch.
+--=20
+Duy
