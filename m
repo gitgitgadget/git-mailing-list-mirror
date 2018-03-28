@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 961161F404
-	for <e@80x24.org>; Wed, 28 Mar 2018 17:56:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 198C21F404
+	for <e@80x24.org>; Wed, 28 Mar 2018 17:56:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753291AbeC1R41 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Mar 2018 13:56:27 -0400
-Received: from mail-lf0-f66.google.com ([209.85.215.66]:39493 "EHLO
+        id S1753262AbeC1R40 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Mar 2018 13:56:26 -0400
+Received: from mail-lf0-f66.google.com ([209.85.215.66]:43346 "EHLO
         mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753181AbeC1R4Y (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Mar 2018 13:56:24 -0400
-Received: by mail-lf0-f66.google.com with SMTP id p142-v6so4726726lfd.6
-        for <git@vger.kernel.org>; Wed, 28 Mar 2018 10:56:23 -0700 (PDT)
+        with ESMTP id S1753240AbeC1R4Z (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Mar 2018 13:56:25 -0400
+Received: by mail-lf0-f66.google.com with SMTP id v207-v6so4714035lfa.10
+        for <git@vger.kernel.org>; Wed, 28 Mar 2018 10:56:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=x2dmtagEF2bdTa59Q7drMJVTo9tSW4UGIVJRnLpcZ3A=;
-        b=dpS8lEix0974J3le0IlagEIsF1aksv3GR4SqENDVsd0S5rvBIX6D/az6p80Ybx0MQT
-         iu1j4EHVUYOrozW9wYhF44EBVgnVqJTmcNz6Dr8NtIbbfH96+an+Eqijs1D8UK+zaaNS
-         g6Mu/HgJhDOdPhXfF51iDR0AWrgH4D69mIlxyYCWcUxBB1NibCKUcZMRXYxM5tdeiFkw
-         pY+h6Tsih6Ur/Rv0tlAzdzoT+4cnntjjpDxpkKu63RMPpRnT0LnhztLogc6yky9uFL2a
-         gCjwLrleD9fPn7MKZsHtYevclwou+wXdeL2PYKeBN9n2WkH/bZwabkgGF/qbqAX+dk+P
-         7UwA==
+        bh=8x09ygNjsp78dnb4MlzwrX3T84db1amDSGszkX5vqPE=;
+        b=pNVetPL/wgtDKMaeFn7CZp8V1s9JTQZjOEkDGJ+Z+u8alwgSr69RGfxl3pW5EQZu0G
+         f/XyInzKyUj+Kd/IW87FRRou+0N7H5XJxTjCHopfkVYrcLAmtt8FUkmR3awn1bYKGrmi
+         3btUfLv6rLqOHwGBMKnghsD8AHWG1vp6hf9Bll/qrPjWV7z5KAa2O/qv7rQxW674x1x8
+         kh4n8xKxO2ej0YDauGB69TVBEZlCacLnRUbChoFaYB2rC590srJczhBLXBnm3xfvY8oa
+         G+7B9/fvw1EqNISdbeC+2fKewRUXLOgaSo11b5Ak2xJin88/J6HkQjQfaMn6iwXaEJuW
+         bwww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=x2dmtagEF2bdTa59Q7drMJVTo9tSW4UGIVJRnLpcZ3A=;
-        b=t04QP7EIwZJGHTEW4TEGIP/e0NlDuyHH6sbzOa/vMmiDHQ1+FVQ/ks/e7iOe4UnfJD
-         UqcODJGqYaTTmF0iLjSxWIz87W4vMNZ3YsXapz/09Oh1bWoAj2JQxUdjoYBlfA256QI6
-         tDt1Ue30Pbk0SqrdGjVFG5p8ZY4hvmns5cuta8+DnDKQ9fK5ZuiF2TlTIBltLGkyQmeA
-         jjzncQvlBQW56qQH6oKHA5zUtPjyfBkYe0i5SY65SnNp46uOEENRaxn30OgZITzDtrWr
-         q+hTLUPOS5aZRlNsbdnlPgCl+zFMpkXcv/4lcxcypMIP6IPn3HLnuoNjKAIHy5p8pty4
-         nP5g==
-X-Gm-Message-State: AElRT7GATfDWZikLJSkhULZOi/HUvKOslOeHoRiSiAZRpMDBxQTxV8+g
-        Sdo8Fz8kio7R8gtyraUcBI3MsA==
-X-Google-Smtp-Source: AIpwx494UgKjJdqjxz7x8ENy99cCstVVKGibVmjCMmosbAMqb4+12TaSa3YxUxkicUfB+c33QoXvkw==
-X-Received: by 2002:a19:a003:: with SMTP id j3-v6mr2955855lfe.8.1522259782626;
-        Wed, 28 Mar 2018 10:56:22 -0700 (PDT)
+        bh=8x09ygNjsp78dnb4MlzwrX3T84db1amDSGszkX5vqPE=;
+        b=XukyDv9AE4i6GDtfX06J9iA7MrtigvSHdOm7/0ysQyYHROZqycMDpFLW3m6nW2me38
+         q4mjjnUt/2+GwDFbo8AcIIsSrzGipn1BdQJYQDqOJp6HpRm6q+BMN7QjBJuITXs5Mc1c
+         +sNxdi+R3wKV9yaS/1casJlJFLdIVhtcf08cqpleqGOMgfCMKuw8sQ2P1bN2LbCkx85M
+         enAvCGGZIqcKCWM9P7Wz0YkWqSoArjGraChDWmwCtUDRXjO9PRAEYK2b0Fvw+wZbdgaM
+         w+xo1+2hHcs96UaK7GVxD5OYlnvhap5KECyTZYN5hX+mEzZ/cvlhqY0NX1jjJ39Gkt37
+         ZYLw==
+X-Gm-Message-State: AElRT7HB2hV8knRYUEdNFNq/gzy2bdIksRas2kG5pGMPPTGvN8++8voh
+        8Nl9ceO7LUx/LFT8E9MrQHsSYQ==
+X-Google-Smtp-Source: AIpwx4//SKSxDK57aOZ/KqYBrdzfjBtfIUwhGZ6kq4nCMQVf3jGz0HWFY3aJaY8EC4YBR89CXfAxxw==
+X-Received: by 10.46.80.71 with SMTP id v7mr3038824ljd.45.1522259783833;
+        Wed, 28 Mar 2018 10:56:23 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id s12sm706658ljj.49.2018.03.28.10.56.20
+        by smtp.gmail.com with ESMTPSA id s12sm706658ljj.49.2018.03.28.10.56.22
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 28 Mar 2018 10:56:21 -0700 (PDT)
+        Wed, 28 Mar 2018 10:56:23 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Rafael Ascensao <rafa.almas@gmail.com>,
         Duy Nguyen <pclouds@gmail.com>
-Subject: [PATCH 1/8] strbuf.c: add strbuf_ensure_trailing_dr_sep()
-Date:   Wed, 28 Mar 2018 19:55:30 +0200
-Message-Id: <20180328175537.17450-2-pclouds@gmail.com>
+Subject: [PATCH 2/8] strbuf.c: reintroduce get_pwd_cwd() (with strbuf_ prefix)
+Date:   Wed, 28 Mar 2018 19:55:31 +0200
+Message-Id: <20180328175537.17450-3-pclouds@gmail.com>
 X-Mailer: git-send-email 2.17.0.rc1.439.gca064e2955
 In-Reply-To: <20180328175537.17450-1-pclouds@gmail.com>
 References: <20180328094733.GA1523@sigill.intra.peff.net>
@@ -71,136 +71,91 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Duy Nguyen <pclouds@gmail.com>
 
-This is just good cleanup and the logic will also be needed in new
-patches.
+This function was added in 10c4c881c4 (Allow add_path() to add
+non-existent directories to the path - 2008-07-21) because getcwd()
+may fail on non-existing cwd and we want to construct non-existing
+absolute paths sometimes.
+
+The function was merged back in strbuf_add_absolute_path() some time
+later. Move it out again because it will have another caller shortly.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- abspath.c          | 4 +---
- builtin/difftool.c | 6 ++----
- dir-iterator.c     | 3 +--
- path.c             | 9 +++------
- strbuf.c           | 6 ++++++
- strbuf.h           | 2 ++
- 6 files changed, 15 insertions(+), 15 deletions(-)
+ strbuf.c | 37 ++++++++++++++++++++++---------------
+ strbuf.h |  6 ++++++
+ 2 files changed, 28 insertions(+), 15 deletions(-)
 
-diff --git a/abspath.c b/abspath.c
-index 9857985329..994075b5c8 100644
---- a/abspath.c
-+++ b/abspath.c
-@@ -122,9 +122,7 @@ char *strbuf_realpath(struct strbuf *resolved, const char *path,
- 			continue;
- 		}
- 
--		/* append the next component and resolve resultant path */
--		if (!is_dir_sep(resolved->buf[resolved->len - 1]))
--			strbuf_addch(resolved, '/');
-+		strbuf_ensure_trailing_dir_sep(resolved);
- 		strbuf_addbuf(resolved, &next);
- 
- 		if (lstat(resolved->buf, &st)) {
-diff --git a/builtin/difftool.c b/builtin/difftool.c
-index ee8dce019e..8d125c7968 100644
---- a/builtin/difftool.c
-+++ b/builtin/difftool.c
-@@ -88,8 +88,7 @@ static int parse_index_info(char *p, int *mode1, int *mode2,
- static void add_path(struct strbuf *buf, size_t base_len, const char *path)
- {
- 	strbuf_setlen(buf, base_len);
--	if (buf->len && buf->buf[buf->len - 1] != '/')
--		strbuf_addch(buf, '/');
-+	strbuf_ensure_trailing_dir_sep(buf);
- 	strbuf_addstr(buf, path);
- }
- 
-@@ -362,8 +361,7 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
- 	strbuf_addf(&ldir, "%s/left/", tmpdir);
- 	strbuf_addf(&rdir, "%s/right/", tmpdir);
- 	strbuf_addstr(&wtdir, workdir);
--	if (!wtdir.len || !is_dir_sep(wtdir.buf[wtdir.len - 1]))
--		strbuf_addch(&wtdir, '/');
-+	strbuf_ensure_trailing_dir_sep(&wtdir);
- 	mkdir(ldir.buf, 0700);
- 	mkdir(rdir.buf, 0700);
- 
-diff --git a/dir-iterator.c b/dir-iterator.c
-index 34182a9a1c..249b5325cf 100644
---- a/dir-iterator.c
-+++ b/dir-iterator.c
-@@ -65,8 +65,7 @@ int dir_iterator_advance(struct dir_iterator *dir_iterator)
- 			 * Note: dir_iterator_begin() ensures that
- 			 * path is not the empty string.
- 			 */
--			if (!is_dir_sep(iter->base.path.buf[iter->base.path.len - 1]))
--				strbuf_addch(&iter->base.path, '/');
-+			strbuf_ensure_trailing_dir_sep(&iter->base.path);
- 			level->prefix_len = iter->base.path.len;
- 
- 			level->dir = opendir(iter->base.path.buf);
-diff --git a/path.c b/path.c
-index 3308b7b958..cd0ad89868 100644
---- a/path.c
-+++ b/path.c
-@@ -408,8 +408,7 @@ static void do_git_path(const struct repository *repo,
- {
- 	int gitdir_len;
- 	strbuf_worktree_gitdir(buf, repo, wt);
--	if (buf->len && !is_dir_sep(buf->buf[buf->len - 1]))
--		strbuf_addch(buf, '/');
-+	strbuf_ensure_trailing_dir_sep(buf);
- 	gitdir_len = buf->len;
- 	strbuf_vaddf(buf, fmt, args);
- 	if (!wt)
-@@ -512,8 +511,7 @@ static void do_worktree_path(const struct repository *repo,
- 			     const char *fmt, va_list args)
- {
- 	strbuf_addstr(buf, repo->worktree);
--	if(buf->len && !is_dir_sep(buf->buf[buf->len - 1]))
--		strbuf_addch(buf, '/');
-+	strbuf_ensure_trailing_dir_sep(buf);
- 
- 	strbuf_vaddf(buf, fmt, args);
- 	strbuf_cleanup_path(buf);
-@@ -608,8 +606,7 @@ static void do_git_common_path(const struct repository *repo,
- 			       va_list args)
- {
- 	strbuf_addstr(buf, repo->commondir);
--	if (buf->len && !is_dir_sep(buf->buf[buf->len - 1]))
--		strbuf_addch(buf, '/');
-+	strbuf_ensure_trailing_dir_sep(buf);
- 	strbuf_vaddf(buf, fmt, args);
- 	strbuf_cleanup_path(buf);
- }
 diff --git a/strbuf.c b/strbuf.c
-index 83d05024e6..d5b7cda61e 100644
+index d5b7cda61e..aed4bec856 100644
 --- a/strbuf.c
 +++ b/strbuf.c
-@@ -122,6 +122,12 @@ void strbuf_ltrim(struct strbuf *sb)
- 	sb->buf[sb->len] = '\0';
+@@ -746,27 +746,34 @@ void strbuf_humanise_bytes(struct strbuf *buf, off_t bytes)
+ 	}
  }
  
-+void strbuf_ensure_trailing_dir_sep(struct strbuf *sb)
++void strbuf_get_pwd_cwd(struct strbuf *sb)
 +{
-+	if (sb->len && !is_dir_sep(sb->buf[sb->len - 1]))
-+		strbuf_addch(sb, '/');
++	struct stat cwd_stat, pwd_stat;
++	char *cwd = xgetcwd();
++	char *pwd = getenv("PWD");
++
++	if (pwd && strcmp(pwd, cwd) &&
++	    !stat(cwd, &cwd_stat) &&
++	    (cwd_stat.st_dev || cwd_stat.st_ino) &&
++	    !stat(pwd, &pwd_stat) &&
++	    pwd_stat.st_dev == cwd_stat.st_dev &&
++	    pwd_stat.st_ino == cwd_stat.st_ino)
++		strbuf_addstr(sb, pwd);
++	else
++		strbuf_addstr(sb, cwd);
++	free(cwd);
 +}
 +
- int strbuf_reencode(struct strbuf *sb, const char *from, const char *to)
+ void strbuf_add_absolute_path(struct strbuf *sb, const char *path)
  {
- 	char *out;
+ 	if (!*path)
+ 		die("The empty string is not a valid path");
+ 	if (!is_absolute_path(path)) {
+-		struct stat cwd_stat, pwd_stat;
+ 		size_t orig_len = sb->len;
+-		char *cwd = xgetcwd();
+-		char *pwd = getenv("PWD");
+-		if (pwd && strcmp(pwd, cwd) &&
+-		    !stat(cwd, &cwd_stat) &&
+-		    (cwd_stat.st_dev || cwd_stat.st_ino) &&
+-		    !stat(pwd, &pwd_stat) &&
+-		    pwd_stat.st_dev == cwd_stat.st_dev &&
+-		    pwd_stat.st_ino == cwd_stat.st_ino)
+-			strbuf_addstr(sb, pwd);
+-		else
+-			strbuf_addstr(sb, cwd);
+-		if (sb->len > orig_len && !is_dir_sep(sb->buf[sb->len - 1]))
+-			strbuf_addch(sb, '/');
+-		free(cwd);
++
++		strbuf_get_pwd_cwd(sb);
++		if (sb->len > orig_len)
++			strbuf_ensure_trailing_dir_sep(sb);
+ 	}
+ 	strbuf_addstr(sb, path);
+ }
 diff --git a/strbuf.h b/strbuf.h
-index c4de5e4588..62dc7f16fa 100644
+index 62dc7f16fa..f712c4ff92 100644
 --- a/strbuf.h
 +++ b/strbuf.h
-@@ -189,6 +189,8 @@ extern void strbuf_ltrim(struct strbuf *);
+@@ -458,6 +458,12 @@ extern int strbuf_getwholeline_fd(struct strbuf *, int, int);
+  */
+ extern int strbuf_getcwd(struct strbuf *sb);
  
- /* Strip trailing directory separators */
- extern void strbuf_trim_trailing_dir_sep(struct strbuf *);
-+/* Append trailing directory separator if necessary */
-+extern void strbuf_ensure_trailing_dir_sep(struct strbuf *sb);
- 
++/**
++ * Return the current directory, fall back to $PWD if the
++ * current directory does not exist.
++ */
++extern void strbuf_get_pwd_cwd(struct strbuf *sb);
++
  /**
-  * Replace the contents of the strbuf with a reencoded form.  Returns -1
+  * Add a path to a buffer, converting a relative path to an
+  * absolute one in the process.  Symbolic links are not
 -- 
 2.17.0.rc1.439.gca064e2955
 
