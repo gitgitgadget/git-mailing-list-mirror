@@ -2,135 +2,165 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 61C3A1F404
-	for <e@80x24.org>; Wed, 28 Mar 2018 18:38:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6F3E01F404
+	for <e@80x24.org>; Wed, 28 Mar 2018 18:45:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752457AbeC1Sig (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Mar 2018 14:38:36 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:39587 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751434AbeC1Sig (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Mar 2018 14:38:36 -0400
-Received: by mail-pf0-f196.google.com with SMTP id c78so1390896pfj.6
-        for <git@vger.kernel.org>; Wed, 28 Mar 2018 11:38:35 -0700 (PDT)
+        id S1753074AbeC1Sp4 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Mar 2018 14:45:56 -0400
+Received: from mail-ot0-f179.google.com ([74.125.82.179]:33296 "EHLO
+        mail-ot0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752732AbeC1Spz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Mar 2018 14:45:55 -0400
+Received: by mail-ot0-f179.google.com with SMTP id 23-v6so3787208otj.0
+        for <git@vger.kernel.org>; Wed, 28 Mar 2018 11:45:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=kGoQeVvOPqyOYm9Oa3G9t0p1Ol1/Itm9ouS7cdIrUw4=;
-        b=CuHjTn4qGI2A6/5RO2XBjK1vQZqsdBrAbTWESwh+cwjloNhPlaSko9e6aZPCHTh30z
-         Z6eLY0jstzhL8l2DEcKx0lCVn6SVwYFrtXdHEEWz2RdsjYWPSXTcXR8QR9gl5GYm7L/X
-         I6nBarumK5IOc9/a/gdIWJbme6ucphObHLTvdVJ4Co+y9o0TYr4BSMrHDs4gEOyNDMD3
-         dELAe5L96upwosnt3rYzwXDw6tyc+wdY4TjKPh6buYHJps45fdimsBohW0DdbG3QuKyK
-         sk17Pisz/vMSPEuU3Wxz/0QJsn1TCst0ckpM8Vr0XYKeu1ryZm4oICIpQo+d/FaEEmeb
-         8cbw==
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=73mV0vwTsDtl3o3LCco+Oq3/7xPyVKueEY1dNI3dX7c=;
+        b=Dtzn2ObcuTM3PPAbbWGU4utJUAkpXJDZx8lHsFezgt29rSFfF1OMUplxmhxcPOcuy0
+         HEuoXYuH4wQRpzi3Usuj/P/lSAWdHh8PJWrbBU2srhfmUad0jgTlrUWE5axtaVuJZ0tv
+         VssM790nAjuELDq7EvHcKnMLu4apQbl/E8TaA1bsKxWe2/dQW43cASZJVKrhHvQuIkBS
+         mxXJGu/B/qQrF/OhDyCXRiXvWFgACIm+juQCYuCeW5vSLrz28PUehmkTeySnlm0IgqX3
+         LpR587ZM4O/ptF3xxqlW1ACIp/3heh532Rtu0AcQykgyJ7LFtUdZeEKx7yBK6Rt3eZpX
+         ubsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=kGoQeVvOPqyOYm9Oa3G9t0p1Ol1/Itm9ouS7cdIrUw4=;
-        b=GasbiNwfwu8/nTABQJ8NsaFiaCS0WNVB3fLb28+FOA4Vp7LL1mlPGV7PXgLd7kRgvI
-         q4ANaYKAtVOu+NfMDDPOmd4tv+arwBUqmrTNS5ivfOuEMFfZU7qfuF0OvqPLJgUOh8tv
-         XdAVrwK+NbM7fuV19EYXf9+CsyRtQy3UF1vqpdfY7JhJXJ1AwxY7m9hzdzp/bBj6RGfT
-         ppz1n2m7oBErX7Z4nPUZAeUUs8QmE/FkOcKR1IEafrec90PRjezJIhmbYQc8xEV0Vt2b
-         RRtLyf2u6v5Vim+UaAb90IfJjtFRGL7t/dsedJK6q9IJ3pSZaUoB+uYMZ2UbYQY8Fish
-         tsOQ==
-X-Gm-Message-State: AElRT7Ht/5ailVDNqk62wMcpM0MGbygvx/BRdzt0MJZBH97qvBzp3cF2
-        jFZRBFgOAyk31imkqs80+PITLg==
-X-Google-Smtp-Source: AIpwx4/B2XwL2dBU1mNLTW3rIyv6FsIqyj/emLU0MIX6QS7d70TWN0HQOqkpJP3qWgxSew8qW9YyDg==
-X-Received: by 2002:a17:902:1006:: with SMTP id b6-v6mr4917733pla.252.1522262315248;
-        Wed, 28 Mar 2018 11:38:35 -0700 (PDT)
-Received: from localhost ([2620:0:100e:422:ea58:fa52:fa77:9b41])
-        by smtp.gmail.com with ESMTPSA id w24sm9552646pfl.84.2018.03.28.11.38.34
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 28 Mar 2018 11:38:34 -0700 (PDT)
-From:   Stefan Beller <sbeller@google.com>
-To:     l.s.r@web.de
-Cc:     git@vger.kernel.org, gitster@pobox.com, jeremy@feusi.co,
-        pc44800@gmail.com, Stefan Beller <sbeller@google.com>
-Subject: [PATCH] submodule: check for NULL return of get_submodule_ref_store()
-Date:   Wed, 28 Mar 2018 11:38:32 -0700
-Message-Id: <20180328183832.243036-1-sbeller@google.com>
-X-Mailer: git-send-email 2.17.0.rc1.321.gba9d0f2565-goog
-In-Reply-To: <9c3c0161-f894-3368-ece2-500d0bb6f475@web.de>
-References: <9c3c0161-f894-3368-ece2-500d0bb6f475@web.de>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=73mV0vwTsDtl3o3LCco+Oq3/7xPyVKueEY1dNI3dX7c=;
+        b=feLrwr0rHyMBBPQsfAdlzFDlMQKTK1pN+6AhaYBUEhyjfWuOxouLAHrazHFyRABC8M
+         F4e4hV7w3ymPPW7ajUL6prXXqVp0rO07uDEBTaOQkL5pMdU46DGd668QhrMPSp81Y74f
+         Y0fXI3LyY6zfYnzIUpUJrao4VgW18AMhAfqfzhg0DkK9ajRgAcvW9cP+mqiq/5xZWVMw
+         9qsxJeaJvn+GbLedqYnnuyGtQ3adBsvaDMoG/Q1z8wah7EcMTaiO2aFHjFWbKUfAqmZ1
+         tiY7JXkR3Pp7YDp//YO+ig22Wq9RBXFCJQtMyWlTUczD4khkFxT7I54c44FCYCXAJ4Gd
+         Zl/Q==
+X-Gm-Message-State: ALQs6tB92D+NXlIYt3fk03ZZtz89t/Yw09K2JnIPtmZ+p21ODb50UL+K
+        edxrTriPqAQ+iCDYEroi+nHyHU/+as02469juFs=
+X-Google-Smtp-Source: AIpwx48KQcpIRsWAjuFu6SzOMrThbaquu/JdOwWSf8udnAz2O548WMZPe0qeFEJyI9nWCg+7pwGTLq9iBeJGc0xGL9A=
+X-Received: by 2002:a9d:24c7:: with SMTP id z65-v6mr3135370ota.152.1522262754410;
+ Wed, 28 Mar 2018 11:45:54 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Received: by 10.74.211.131 with HTTP; Wed, 28 Mar 2018 11:45:23 -0700 (PDT)
+In-Reply-To: <20180328183011.GA16931@sigill.intra.peff.net>
+References: <20180328094733.GA1523@sigill.intra.peff.net> <20180328175537.17450-1-pclouds@gmail.com>
+ <20180328175537.17450-7-pclouds@gmail.com> <20180328183011.GA16931@sigill.intra.peff.net>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Wed, 28 Mar 2018 20:45:23 +0200
+Message-ID: <CACsJy8COj-usWbJzb_CRF95an94QhpTcc+uv-VDxmPbDfH+o6g@mail.gmail.com>
+Subject: Re: [PATCH 6/8] environment.c: adjust env containing relpath when
+ $CWD is moved
+To:     Jeff King <peff@peff.net>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Rafael Ascensao <rafa.almas@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: René Scharfe <l.s.r@web.de>
+On Wed, Mar 28, 2018 at 8:30 PM, Jeff King <peff@peff.net> wrote:
+> On Wed, Mar 28, 2018 at 07:55:35PM +0200, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=
+=BB=8Dc Duy wrote:
+>
+>> From: Duy Nguyen <pclouds@gmail.com>
+>>
+>> As noted in the previous patch, when $CWD is moved, we recognize the
+>> problem with relative paths and update $GIT_WORK_TREE and $GIT_DIR
+>> with new ones.
+>>
+>> We have plenty more environment variables that can contain paths
+>> though. If they are read and cached before setup_work_tree() is
+>> called, nobody will update them and they become bad paths.
+>
+> Hmm, yeah, I missed these. It would be interesting to know if there are
+> easy-to-run test cases that show off these bugs, or if they're
+> hypothetical. (Even if they are hypothetical, I'm not opposed to fixing
+> them in the name of maintainability).
 
-If we can't find a ref store for a submodule then assume it the latter
-is not initialized (or was removed).  Print a status line accordingly
-instead of causing a segmentation fault by passing NULL as the first
-parameter of refs_head_ref().
+It's kinda hard to show off these. But the GIT_ALTERNATE_OBJ..
+variable could be one example in favor of this fix. Before, we lazily
+read the env var which is most likely after setup_work_tree() has run.
+After a bunch of code reorganization and stuff, GIT_ALTERNATE_OBJ is
+now read very early, which should be safe (why not?) but it actually
+breaks. Alternate db is only queried as the last resort if I'm not
+mistaken, so 90% of time you just hit an object in odb and never find
+out that your GIT_ALTERNATE_OBJ... points to nowhere.
 
-Reported-by: Jeremy Feusi <jeremy@feusi.co>
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
+>> diff --git a/environment.c b/environment.c
+>> index 39b3d906c8..f9dcc1b99e 100644
+>> --- a/environment.c
+>> +++ b/environment.c
+>> @@ -128,6 +128,20 @@ const char * const local_repo_env[] =3D {
+>>       NULL
+>>  };
+>>
+>> +/* A subset of local_repo_env[] that contains path */
+>> +const char * const local_repo_path_env[] =3D {
+>> +     ALTERNATE_DB_ENVIRONMENT,
+>> +     CONFIG_ENVIRONMENT,
+>> +     DB_ENVIRONMENT,
+>> +     GIT_COMMON_DIR_ENVIRONMENT,
+>> +     GIT_DIR_ENVIRONMENT,
+>> +     GIT_SHALLOW_FILE_ENVIRONMENT,
+>> +     GIT_WORK_TREE_ENVIRONMENT,
+>> +     GRAFT_ENVIRONMENT,
+>> +     INDEX_ENVIRONMENT,
+>> +     NULL
+>> +};
+>
+> It might be nice to fold this list into local_repo_env automatically. I
+> think you'd have to do it with a macro.
 
-I added a test for you.
+Aha! I did not like the split either and wanted to turn
+local_repo_env[] to an array of struct so we can add attributes to
+each variable, but the way local_repo_env[] is being used, that's
+impossible without more surgery.
 
-Thanks,
-Stefan
+> OTOH, it's possible that there could be a path-related environment
+> variable that _isn't_ actually part of local_repo_env. E.g., I think
+> GIT_CONFIG might classify there (though I don't know if it's worth
+> worrying about).
 
- builtin/submodule--helper.c |  8 ++++++--
- t/t7400-submodule-basic.sh  | 12 ++++++++++++
- 2 files changed, 18 insertions(+), 2 deletions(-)
+I'd rather fix it now and forget about it than trying to troubleshoot
+a problem related to bad relative $GIT_CONFIG (even if the chance of
+that happening is probably 1%)
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index ee020d4749..ae3014ac5a 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -654,9 +654,13 @@ static void status_submodule(const char *path, const struct object_id *ce_oid,
- 			     displaypath);
- 	} else if (!(flags & OPT_CACHED)) {
- 		struct object_id oid;
-+		struct ref_store *refs = get_submodule_ref_store(path);
- 
--		if (refs_head_ref(get_submodule_ref_store(path),
--				  handle_submodule_head_ref, &oid))
-+		if (!refs) {
-+			print_status(flags, '-', path, ce_oid, displaypath);
-+			goto cleanup;
-+		}
-+		if (refs_head_ref(refs, handle_submodule_head_ref, &oid))
- 			die(_("could not resolve HEAD ref inside the "
- 			      "submodule '%s'"), path);
- 
-diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-index a39e69a3eb..d8aee51603 100755
---- a/t/t7400-submodule-basic.sh
-+++ b/t/t7400-submodule-basic.sh
-@@ -821,6 +821,18 @@ test_expect_success 'moving the superproject does not break submodules' '
- 	)
- '
- 
-+test_expect_success 'moving the submodule does not break the superproject' '
-+	(
-+		cd addtest2 &&
-+
-+		mv repo repo.bak &&
-+		git submodule status >actual &&
-+		grep -e "^-" -e repo actual &&
-+
-+		mv repo.bak repo
-+	)
-+'
-+
- test_expect_success 'submodule add --name allows to replace a submodule with another at the same path' '
- 	(
- 		cd addtest2 &&
--- 
-2.17.0.rc1.321.gba9d0f2565-goog
+>> +static void update_path_envs(const char *old_cwd, const char *new_cwd,
+>> +                          void *cb)
+>> +{
+>> +     int i;
+>> +
+>> +     /*
+>> +      * FIXME: special treatment needed for
+>> +      * GIT_ALTERNATE_OBJECT_DIRECTORIES because it can contain
+>> +      * multiple paths.
+>> +      */
+>
+> Yuck. It just keeps getting more complicated. :(
+>
+> I do wonder if relative paths in variables like this are worth worrying
+> about. AFAIK, it's always been a "well, it kind of works" situation, but
 
+Yeah. 99% of time $GIT_DIR is $GIT_WORK_TREE/.git and no path
+adjustment is needed.
+
+> not something we've tried to actively support. I think with the current
+> code you'd potentially get inconsistent results between a command which
+> sets up the work tree and one which doesn't. So this would be fixing
+> that, but at the same time, I'm not sure how much we want to promise
+> here.
+
+I would be just as happy to die() when we find out we have relative
+paths that takes too much work to reparent. It keeps the amount of
+work down and will not bite us later (and will let us know if any user
+needs it because they would have to report back after hitting the said
+die()).
+--=20
+Duy
