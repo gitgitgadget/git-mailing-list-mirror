@@ -8,73 +8,73 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8DA821F404
-	for <e@80x24.org>; Wed, 28 Mar 2018 05:57:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0135A1F404
+	for <e@80x24.org>; Wed, 28 Mar 2018 05:57:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751932AbeC1F5F (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Mar 2018 01:57:05 -0400
-Received: from mail.javad.com ([54.86.164.124]:54226 "EHLO mail.javad.com"
+        id S1751973AbeC1F5r (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Mar 2018 01:57:47 -0400
+Received: from mail.javad.com ([54.86.164.124]:47282 "EHLO mail.javad.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751210AbeC1F5E (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Mar 2018 01:57:04 -0400
+        id S1751166AbeC1F5q (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Mar 2018 01:57:46 -0400
 Received: from osv (unknown [89.175.180.246])
-        by mail.javad.com (Postfix) with ESMTPSA id 6523D3E863;
-        Wed, 28 Mar 2018 05:57:03 +0000 (UTC)
+        by mail.javad.com (Postfix) with ESMTPSA id 8095C3E863;
+        Wed, 28 Mar 2018 05:57:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1522216623;
-        bh=SoY5hQIZlObGfvLUJ+1D9NB8ufYlLokPiUOnb9N7d4k=; l=1235;
+        s=default; t=1522216665;
+        bh=/WMk3tDUHGNwowsPThcHhX5ZcUJBR7unwWtFqCxAbuE=; l=2092;
         h=Received:From:To:Subject;
-        b=Ys6jAuk7I5cVN8mFJe8vvzXM86h7FmhbpPz25XulTe7KsZjlpzRwQePFyB5UqMph1
-         nzQcRjAe8ttdIFkSdV+VB4EKJESh+68SIB2xJzC0ypNs2qj1DXG6qbAuJsBerq6arD
-         JVdYqxPJdbSSkgcNpEC/zJ959UxBAigqWO8NW2pg=
+        b=XhoM/txzr2Ey4qh6D7t6qQ4H0alAq+nYK8XOoO79nqEfhy0elJxO6X07UD/7ECYhZ
+         VzzDe35M2vZbRDgzX/1nG8XooVv07LscJKqK3NszCv6laArueMQLeEdwxoO89E0fW8
+         B904IhnwzH5aETz4Wp5pjsfuC0Hrh1nzexp/StRw=
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1522216623;
-        bh=SoY5hQIZlObGfvLUJ+1D9NB8ufYlLokPiUOnb9N7d4k=; l=1235;
+        s=default; t=1522216665;
+        bh=/WMk3tDUHGNwowsPThcHhX5ZcUJBR7unwWtFqCxAbuE=; l=2092;
         h=Received:From:To:Subject;
-        b=Ys6jAuk7I5cVN8mFJe8vvzXM86h7FmhbpPz25XulTe7KsZjlpzRwQePFyB5UqMph1
-         nzQcRjAe8ttdIFkSdV+VB4EKJESh+68SIB2xJzC0ypNs2qj1DXG6qbAuJsBerq6arD
-         JVdYqxPJdbSSkgcNpEC/zJ959UxBAigqWO8NW2pg=
+        b=XhoM/txzr2Ey4qh6D7t6qQ4H0alAq+nYK8XOoO79nqEfhy0elJxO6X07UD/7ECYhZ
+         VzzDe35M2vZbRDgzX/1nG8XooVv07LscJKqK3NszCv6laArueMQLeEdwxoO89E0fW8
+         B904IhnwzH5aETz4Wp5pjsfuC0Hrh1nzexp/StRw=
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1522216623;
-        bh=SoY5hQIZlObGfvLUJ+1D9NB8ufYlLokPiUOnb9N7d4k=; l=1235;
+        s=default; t=1522216665;
+        bh=/WMk3tDUHGNwowsPThcHhX5ZcUJBR7unwWtFqCxAbuE=; l=2092;
         h=Received:From:To:Subject;
-        b=Ys6jAuk7I5cVN8mFJe8vvzXM86h7FmhbpPz25XulTe7KsZjlpzRwQePFyB5UqMph1
-         nzQcRjAe8ttdIFkSdV+VB4EKJESh+68SIB2xJzC0ypNs2qj1DXG6qbAuJsBerq6arD
-         JVdYqxPJdbSSkgcNpEC/zJ959UxBAigqWO8NW2pg=
+        b=XhoM/txzr2Ey4qh6D7t6qQ4H0alAq+nYK8XOoO79nqEfhy0elJxO6X07UD/7ECYhZ
+         VzzDe35M2vZbRDgzX/1nG8XooVv07LscJKqK3NszCv6laArueMQLeEdwxoO89E0fW8
+         B904IhnwzH5aETz4Wp5pjsfuC0Hrh1nzexp/StRw=
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1522216623;
-        bh=SoY5hQIZlObGfvLUJ+1D9NB8ufYlLokPiUOnb9N7d4k=; l=1235;
+        s=default; t=1522216665;
+        bh=/WMk3tDUHGNwowsPThcHhX5ZcUJBR7unwWtFqCxAbuE=; l=2092;
         h=Received:From:To:Subject;
-        b=Ys6jAuk7I5cVN8mFJe8vvzXM86h7FmhbpPz25XulTe7KsZjlpzRwQePFyB5UqMph1
-         nzQcRjAe8ttdIFkSdV+VB4EKJESh+68SIB2xJzC0ypNs2qj1DXG6qbAuJsBerq6arD
-         JVdYqxPJdbSSkgcNpEC/zJ959UxBAigqWO8NW2pg=
+        b=XhoM/txzr2Ey4qh6D7t6qQ4H0alAq+nYK8XOoO79nqEfhy0elJxO6X07UD/7ECYhZ
+         VzzDe35M2vZbRDgzX/1nG8XooVv07LscJKqK3NszCv6laArueMQLeEdwxoO89E0fW8
+         B904IhnwzH5aETz4Wp5pjsfuC0Hrh1nzexp/StRw=
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1522216623;
-        bh=SoY5hQIZlObGfvLUJ+1D9NB8ufYlLokPiUOnb9N7d4k=; l=1235;
+        s=default; t=1522216665;
+        bh=/WMk3tDUHGNwowsPThcHhX5ZcUJBR7unwWtFqCxAbuE=; l=2092;
         h=Received:From:To:Subject;
-        b=Ys6jAuk7I5cVN8mFJe8vvzXM86h7FmhbpPz25XulTe7KsZjlpzRwQePFyB5UqMph1
-         nzQcRjAe8ttdIFkSdV+VB4EKJESh+68SIB2xJzC0ypNs2qj1DXG6qbAuJsBerq6arD
-         JVdYqxPJdbSSkgcNpEC/zJ959UxBAigqWO8NW2pg=
+        b=XhoM/txzr2Ey4qh6D7t6qQ4H0alAq+nYK8XOoO79nqEfhy0elJxO6X07UD/7ECYhZ
+         VzzDe35M2vZbRDgzX/1nG8XooVv07LscJKqK3NszCv6laArueMQLeEdwxoO89E0fW8
+         B904IhnwzH5aETz4Wp5pjsfuC0Hrh1nzexp/StRw=
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1522216623;
-        bh=SoY5hQIZlObGfvLUJ+1D9NB8ufYlLokPiUOnb9N7d4k=; l=1235;
+        s=default; t=1522216665;
+        bh=/WMk3tDUHGNwowsPThcHhX5ZcUJBR7unwWtFqCxAbuE=; l=2092;
         h=Received:From:To:Subject;
-        b=Ys6jAuk7I5cVN8mFJe8vvzXM86h7FmhbpPz25XulTe7KsZjlpzRwQePFyB5UqMph1
-         nzQcRjAe8ttdIFkSdV+VB4EKJESh+68SIB2xJzC0ypNs2qj1DXG6qbAuJsBerq6arD
-         JVdYqxPJdbSSkgcNpEC/zJ959UxBAigqWO8NW2pg=
+        b=XhoM/txzr2Ey4qh6D7t6qQ4H0alAq+nYK8XOoO79nqEfhy0elJxO6X07UD/7ECYhZ
+         VzzDe35M2vZbRDgzX/1nG8XooVv07LscJKqK3NszCv6laArueMQLeEdwxoO89E0fW8
+         B904IhnwzH5aETz4Wp5pjsfuC0Hrh1nzexp/StRw=
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1522216623;
-        bh=SoY5hQIZlObGfvLUJ+1D9NB8ufYlLokPiUOnb9N7d4k=; l=1235;
+        s=default; t=1522216665;
+        bh=/WMk3tDUHGNwowsPThcHhX5ZcUJBR7unwWtFqCxAbuE=; l=2092;
         h=Received:From:To:Subject;
-        b=Ys6jAuk7I5cVN8mFJe8vvzXM86h7FmhbpPz25XulTe7KsZjlpzRwQePFyB5UqMph1
-         nzQcRjAe8ttdIFkSdV+VB4EKJESh+68SIB2xJzC0ypNs2qj1DXG6qbAuJsBerq6arD
-         JVdYqxPJdbSSkgcNpEC/zJ959UxBAigqWO8NW2pg=
+        b=XhoM/txzr2Ey4qh6D7t6qQ4H0alAq+nYK8XOoO79nqEfhy0elJxO6X07UD/7ECYhZ
+         VzzDe35M2vZbRDgzX/1nG8XooVv07LscJKqK3NszCv6laArueMQLeEdwxoO89E0fW8
+         B904IhnwzH5aETz4Wp5pjsfuC0Hrh1nzexp/StRw=
 Authentication-Results: mail.javad.com;
         spf=pass (sender IP is 89.175.180.246) smtp.mailfrom=osv@javad.com smtp.helo=osv
 Received-SPF: pass (mail.javad.com: connection is authenticated)
 Received: from osv by osv with local (Exim 4.84_2)
         (envelope-from <osv@osv.gnss.ru>)
-        id 1f144z-0002bM-2X; Wed, 28 Mar 2018 08:57:01 +0300
+        id 1f145e-0002bY-BV; Wed, 28 Mar 2018 08:57:42 +0300
 From:   Sergey Organov <sorganov@gmail.com>
 To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Cc:     Igor Djordjevic <igor.d.djordjevic@gmail.com>,
@@ -100,11 +100,11 @@ References: <87y3jtqdyg.fsf@javad.com>
         <nycvar.QRO.7.76.6.1803261455130.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
         <87woxyf4lk.fsf@javad.com>
         <nycvar.QRO.7.76.6.1803271536020.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-Date:   Wed, 28 Mar 2018 08:57:01 +0300
+Date:   Wed, 28 Mar 2018 08:57:42 +0300
 In-Reply-To: <nycvar.QRO.7.76.6.1803271536020.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
         (Johannes Schindelin's message of "Tue, 27 Mar 2018 15:49:17 +0200
         (DST)")
-Message-ID: <87605gd9oy.fsf@javad.com>
+Message-ID: <874ll0d9nt.fsf@javad.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -116,34 +116,58 @@ X-Mailing-List: git@vger.kernel.org
 Hi Johannes,
 
 Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-
 > Hi Sergey,
+>
 
 [...]
 
-> But I'll stop here. Even my account how there are conceptual differences
-> between the changes in merge vs non-merge commits (the non-merge commit
-> *introduces* changes, the merge commit *reconciles existing* changes)
-> seems to fly by without convincing you.
+>> >> Reusing existing concepts where possible doesn`t have this problem.
+>> >
+>> > Existing concepts are great. As long as they fit the requirements of
+>> > the new scenarios. In this case, `pick` does *not* fit the requirement
+>> > of "rebase a merge commit".
+>> 
+>> It does, provided you use suitable syntax.
+>
+> You know what `pick` would also do, provided you use suitable syntax? Pick
+> your nose.
+>
+> Don't blame me for this ridiculous turn the discussion took.
+>
+> Of course, using the suitable syntax you can do anything. Unless there is
+> *already* a syntax and you cannot break it for backwards-compatibility
+> reasons, as is the case here.
 
-Good for you, but Git should keep caring about content, it should care
-not about meaning. Please leave it to the user to assign meaning to
-their content.
+Backward compatibility to what? To a broken '--preserve-merges'? I had a
+feel you've invented '--recreate-merges' exactly to break that
+compatibility. No?
 
-If you rather want a SCM that focuses on meaning, I'd suggest to look at
-Bzr and see how it goes.
+Or is it "Backwards compatibility of a feature that existed only as a
+topic branch in `next` before being worked on more?", as you say
+yourself below?
 
-> I use rebase every day. I use the Git garden shears every week. If you do
-> not trust my experience with these things, nothing will convince you. 
+[...]
 
-Unfortunately you have exactly zero experience with rebasing merges as
-you've never actually rebased them till now, and it's rebasing merges
-that matters in this particular discussion.
+>> > The implementation detail is, of course, that I will introduce this with
+>> > the technically-simpler strategy: always recreating merge commits with the
+>> > recursive strategy. A follow-up patch series will add support for rebasing
+>> > merge commits, and then use it by default.
+>> 
+>> Switching to use it by default would be backward incompatible again? Yet
+>> another option to obsolete? Sigh. 
+>
+> Oh wow.
+>
+> Backwards compatibility of a feature that existed only as a topic branch
+> in `next` before being worked on more? Any other splendid ideas?
 
-> You are just stuck with your pre-existing opinion.
+Either you care about compatibility or not. You can't have it both ways,
+sorry.
 
-I'm afraid that it's rather your huge experience with re-creating merges
-that makes you stuck to your pre-existing opinion and carefully shields
-you from experiencing actual paradigm shift.
+And "technically-simpler strategy: always recreating merge commits with
+the recursive strategy" vs. "rebasing merge commits" is not just a minor
+strategy change, it's entire paradigm shift in handling merge commits
+while rebasing. I'm afraid you will still come up with a wrong design
+unless you finally accept this fact.
 
 -- Sergey
