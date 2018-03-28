@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 257551F404
+	by dcvr.yhbt.net (Postfix) with ESMTP id EDB8A1F42D
 	for <e@80x24.org>; Wed, 28 Mar 2018 17:25:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752318AbeC1RY5 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Mar 2018 13:24:57 -0400
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:46338 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751434AbeC1RY4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Mar 2018 13:24:56 -0400
-Received: by mail-pf0-f195.google.com with SMTP id h69so1240650pfe.13
-        for <git@vger.kernel.org>; Wed, 28 Mar 2018 10:24:56 -0700 (PDT)
+        id S1752447AbeC1RZA (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Mar 2018 13:25:00 -0400
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:46594 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752237AbeC1RY6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Mar 2018 13:24:58 -0400
+Received: by mail-pg0-f67.google.com with SMTP id t12so1185223pgp.13
+        for <git@vger.kernel.org>; Wed, 28 Mar 2018 10:24:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=4T85SFIzUUxs8//m+Bn7gt56Xtcm+66m/G2z2GrQWcg=;
-        b=FMnWK+ln7rD/siHhsIsme4h6e6ANgfZAknCbeB2D82n0cmEORk2BlDPSRvXV/14npU
-         PzdPV7xm/ZlDUKf/L33F4NPPkg2sq4x4kBB6npcpSHp4Hz2s88ocIqmQVIsRw3L/TvSH
-         0aHn5lxm2zhFztOhizz2xC6eA3EbHeIbb+c90S5PprMgRI6k8xBQVbYljlZ8xnWiOiTn
-         QyEdBYRiM6TZpwX6IsGzIara2SgkXiJFOsWGdWaodEFAoT3jyp44W/xmDpEIFaZkqmo0
-         duxQvKeZcMtE0Eqxky3D8KzvGHw7cY7gGZW2OtIFVEbXb/Taj7yPIMWO6KsqEydhua0U
-         0SiA==
+        bh=cRiJN+Ne6DL4AiVx3VDOA8DP/j9GAVYfH6Vj0batJlQ=;
+        b=eLCRIMAX0ItA5a6tUZjfKbzigYWwHyBUFeXHOzbbwamp5y6IR8x7liFEk2xv2bvEbt
+         MupDoNFt4xaJI5+lzMA+zshrn0xoN39WNq+iOjy7NDeVM6km9uw35wQWbxcEKZcqcr0E
+         LRkWcYxZeOjjSCNdhiOUEA8V2xHPMULDDDNygU0ZGTZ4WnK+Och66t5J4uE2fGCGsiUQ
+         xj0igN0O0RyyujHBUvqV+mkY3gTiuvpOa7kCnKNSAwBtyHCOMjOO/DYDfYONLR3LqAJb
+         JPvWuuiDR5u3AVND8sse3kbYjpITeDIzGJie8e1C5iXKfXtpzYL8CNnHTZv4OtVkbvGG
+         /9fg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=4T85SFIzUUxs8//m+Bn7gt56Xtcm+66m/G2z2GrQWcg=;
-        b=a36I5m4stYZcRUc5TkkFAurd5ijK1c2KozPxc2XvGv7rdjUYF5MmVcgugUMAU7kTm4
-         vRdi3SQdcgNqgI/3K8rhV/Sw4tgArLTYINorYBk1Ds0KTgGpUX5l2+rdwrDQIVbKNC7G
-         DjrX4tRrdnJem8T5lWQhrfUEo6Qcz0n1u/Oyno0fDmcSboYhUJivvlDl2YY+R9OZHWV9
-         JC9wYSmzl3v3ZaGR9/+S3lMkqxKit2ETRojmBt0pg9jl3sM/miktMlIRt//pSs8U4vqJ
-         tinI4HyvEsJabyX8BlIbG7KJLiISvO778qe4imN6lwBu+v0bU5qi1wNuKT8F5J/wMeAH
-         m4xw==
-X-Gm-Message-State: AElRT7GjZUAJcwa9A0tF3RSC/hjnQzz3UhdwbIObZoLqxcVrrYSfiPJk
-        7N5JrhTUoJ158ILnVuPA45uWMQ==
-X-Google-Smtp-Source: AIpwx4+9Nu74bfMVUQMN84/J2y1Pfs8P9hS0fGW1vSH4uwj6AqYx4aXodS2Z3DL8/l6ybQuukv+ZoA==
-X-Received: by 2002:a17:902:14cb:: with SMTP id y11-v6mr4751662plg.23.1522257895799;
-        Wed, 28 Mar 2018 10:24:55 -0700 (PDT)
+        bh=cRiJN+Ne6DL4AiVx3VDOA8DP/j9GAVYfH6Vj0batJlQ=;
+        b=UhQC1ebxaVb+t7mV5dku3TirLaSvM4TYjqVHFXIgjtmrorYv2mZe4XNMQ4tNtv93CJ
+         nGBoGCwjPrvEWnPHUCm23E09A2ljMGUUgyLVNdi6QA8j69xZHRTVQGmK9N7JLxD/nIcL
+         v0ExstRLb3poWJMaqkVlTDzE0HNAn1/S8vss1brqWi9e9SNnAuKnYNQexUl0N6sroaTL
+         OIFvZGmP269olPa6iszFDpK4XHZpXSLBBLY3+6u7Be4kmOo9FDzXRS5A97Z2L7ghF4Nb
+         7LA4aSS2/RjVEBjDUr6H+UofekxvjHAYkLHoGMj/kbOUSdPyEM0EaouZ5oDeq5t/FC4p
+         SEXQ==
+X-Gm-Message-State: AElRT7Gh7dCazH0QrSBfbtFF7kS8RDJCmtlsBIG+u47oSrxWX3gLRUmK
+        5kXuvrfqb3qTih29twvXaIuWxg==
+X-Google-Smtp-Source: AIpwx49L7Kzd7gmw8ZaHuAuRvbBVQE47Mvdco+mkWbQZ25BamqCBOwmcvrI8BTcBriKAxRxhj0oAug==
+X-Received: by 2002:a17:902:a582:: with SMTP id az2-v6mr4763930plb.37.1522257897138;
+        Wed, 28 Mar 2018 10:24:57 -0700 (PDT)
 Received: from localhost ([2620:0:100e:422:ea58:fa52:fa77:9b41])
-        by smtp.gmail.com with ESMTPSA id v6sm8478996pfm.2.2018.03.28.10.24.54
+        by smtp.gmail.com with ESMTPSA id z14sm7157238pgv.26.2018.03.28.10.24.56
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 28 Mar 2018 10:24:54 -0700 (PDT)
+        Wed, 28 Mar 2018 10:24:56 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     sbeller@google.com, gitster@pobox.com
 Cc:     bmwill@google.com, git@vger.kernel.org, hvoigt@hvoigt.net,
         jonathantanmy@google.com, seanwbehan@riseup.net
-Subject: [PATCH 1/6] submodule.h: drop declaration of connect_work_tree_and_git_dir
-Date:   Wed, 28 Mar 2018 10:24:44 -0700
-Message-Id: <20180328172449.27012-2-sbeller@google.com>
+Subject: [PATCH 2/6] submodule-config: allow submodule_free to handle arbitrary repositories
+Date:   Wed, 28 Mar 2018 10:24:45 -0700
+Message-Id: <20180328172449.27012-3-sbeller@google.com>
 X-Mailer: git-send-email 2.17.0.rc1.321.gba9d0f2565-goog
 In-Reply-To: <20180328172449.27012-1-sbeller@google.com>
 References: <CAGZ79kaQYjepND8EdgB73meBsShOc5aBporiK2Bo40fqcar0gg@mail.gmail.com>
@@ -64,27 +64,103 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The function connect_work_tree_and_git_dir is declared in both submodule.h
-and dir.h, such that one of them is redundant. As the function is
-implemented in dir.c, drop the declaration from submodule.h
+At some point we may want to rename the function so that it describes what
+it actually does as 'submodule_free' doesn't quite describe that this
+clears a repository's submodule cache.  But that's beyond the scope of
+this series.
+
+While at it remove the extern key word from its declaration.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- submodule.h | 1 -
- 1 file changed, 1 deletion(-)
+ Documentation/technical/api-submodule-config.txt | 2 +-
+ builtin/grep.c                                   | 2 +-
+ submodule-config.c                               | 6 +++---
+ submodule-config.h                               | 2 +-
+ t/helper/test-submodule-config.c                 | 2 +-
+ unpack-trees.c                                   | 2 +-
+ 6 files changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/submodule.h b/submodule.h
-index 9589f13127..e5526f6aaa 100644
---- a/submodule.h
-+++ b/submodule.h
-@@ -105,7 +105,6 @@ extern int push_unpushed_submodules(struct oid_array *commits,
- 				    const char **refspec, int refspec_nr,
- 				    const struct string_list *push_options,
- 				    int dry_run);
--extern void connect_work_tree_and_git_dir(const char *work_tree, const char *git_dir);
- /*
-  * Given a submodule path (as in the index), return the repository
-  * path of that submodule in 'buf'. Return -1 on error or when the
+diff --git a/Documentation/technical/api-submodule-config.txt b/Documentation/technical/api-submodule-config.txt
+index ee907c4a82..fb06089393 100644
+--- a/Documentation/technical/api-submodule-config.txt
++++ b/Documentation/technical/api-submodule-config.txt
+@@ -38,7 +38,7 @@ Data Structures
+ Functions
+ ---------
+ 
+-`void submodule_free()`::
++`void submodule_free(struct repository *r)`::
+ 
+ 	Use these to free the internally cached values.
+ 
+diff --git a/builtin/grep.c b/builtin/grep.c
+index 789a89133a..8f04cde18e 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -651,7 +651,7 @@ static int grep_objects(struct grep_opt *opt, const struct pathspec *pathspec,
+ 
+ 		/* load the gitmodules file for this rev */
+ 		if (recurse_submodules) {
+-			submodule_free();
++			submodule_free(repo);
+ 			gitmodules_config_oid(&real_obj->oid);
+ 		}
+ 		if (grep_object(opt, pathspec, real_obj, list->objects[i].name, list->objects[i].path,
+diff --git a/submodule-config.c b/submodule-config.c
+index 602ba8ca8b..a3efff1a34 100644
+--- a/submodule-config.c
++++ b/submodule-config.c
+@@ -642,8 +642,8 @@ const struct submodule *submodule_from_cache(struct repository *repo,
+ 			   key, lookup_path);
+ }
+ 
+-void submodule_free(void)
++void submodule_free(struct repository *r)
+ {
+-	if (the_repository->submodule_cache)
+-		submodule_cache_clear(the_repository->submodule_cache);
++	if (r->submodule_cache)
++		submodule_cache_clear(r->submodule_cache);
+ }
+diff --git a/submodule-config.h b/submodule-config.h
+index a5503a5d17..6b71a8cd30 100644
+--- a/submodule-config.h
++++ b/submodule-config.h
+@@ -46,6 +46,6 @@ extern const struct submodule *submodule_from_path(
+ extern const struct submodule *submodule_from_cache(struct repository *repo,
+ 						    const struct object_id *treeish_name,
+ 						    const char *key);
+-extern void submodule_free(void);
++void submodule_free(struct repository *r);
+ 
+ #endif /* SUBMODULE_CONFIG_H */
+diff --git a/t/helper/test-submodule-config.c b/t/helper/test-submodule-config.c
+index f23db3b19a..9971c5e9dd 100644
+--- a/t/helper/test-submodule-config.c
++++ b/t/helper/test-submodule-config.c
+@@ -64,7 +64,7 @@ int cmd_main(int argc, const char **argv)
+ 		arg += 2;
+ 	}
+ 
+-	submodule_free();
++	submodule_free(the_repository);
+ 
+ 	return 0;
+ }
+diff --git a/unpack-trees.c b/unpack-trees.c
+index d5685891a5..05e5fa77eb 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -290,7 +290,7 @@ static void load_gitmodules_file(struct index_state *index,
+ 		if (!state && ce->ce_flags & CE_WT_REMOVE) {
+ 			repo_read_gitmodules(the_repository);
+ 		} else if (state && (ce->ce_flags & CE_UPDATE)) {
+-			submodule_free();
++			submodule_free(the_repository);
+ 			checkout_entry(ce, state, NULL);
+ 			repo_read_gitmodules(the_repository);
+ 		}
 -- 
 2.17.0.rc1.321.gba9d0f2565-goog
 
