@@ -2,116 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 680071F404
-	for <e@80x24.org>; Wed, 28 Mar 2018 17:12:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 455801F404
+	for <e@80x24.org>; Wed, 28 Mar 2018 17:24:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752654AbeC1RMo (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Mar 2018 13:12:44 -0400
-Received: from mail-wm0-f52.google.com ([74.125.82.52]:35806 "EHLO
-        mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752171AbeC1RMn (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Mar 2018 13:12:43 -0400
-Received: by mail-wm0-f52.google.com with SMTP id r82so6775508wme.0
-        for <git@vger.kernel.org>; Wed, 28 Mar 2018 10:12:43 -0700 (PDT)
+        id S1752169AbeC1RY4 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Mar 2018 13:24:56 -0400
+Received: from mail-pg0-f44.google.com ([74.125.83.44]:40250 "EHLO
+        mail-pg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751434AbeC1RYz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Mar 2018 13:24:55 -0400
+Received: by mail-pg0-f44.google.com with SMTP id g8so1191490pgv.7
+        for <git@vger.kernel.org>; Wed, 28 Mar 2018 10:24:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=Sr38UMbPX5p5Mc2G8mITFuYwu5CyDDrPS7H1wKl2lwU=;
-        b=eM3O40ScB3aG0/E/Wrqp9GGv8KwKNCLMQN7hknsiO7jeZtFmcaC7v6WDVssHsyofVg
-         Av/bkOcaxWelHq4iCkiP2RKZvQ/yUMl6WLspr8T/tdr7SgcvZlgsunDZgbO6HCtVjsNe
-         H1D+2JK45OzRrsH4YpmqhXLeyO6KFmStbx3Y0j3piDuMBTD5yhRZHfBcDY0Ak7Gao7TA
-         unIvPYPWKRI5X183EYRYwzmh7Y0CgmUn+I6xmHRaiPLjYF/yYDaDiSLQ9Y4LRkjakvNh
-         lITmERFC184QARmfZY77kTOTTAy9EMTxWqL+3oMZBTwBszPZFeMUR6rMVc1wXWp7GCek
-         FH7Q==
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=Mg5UDX9pWFUhcGozs+qpfvKzPk9QR7oKX2F+7sI1amw=;
+        b=Vrx/ubc2z/pXqHJKKOBspkaAT8MS3pTEPpgkIPi8VWtnDXzbaqHgFxqFYN5zUp8R6t
+         CDgFqeuxvvtYjEdc9LLj9TneQc0IllWiGxTKgJ4bKeYlml3A9BOMPJvCEKHyzTf/VSLw
+         NjQw8DXcXw9CgJWHAZk/bI8S9gRpiG68XfA+7zP0sxOY0/48vKqKSexmasqsi6v+QZmV
+         uyMqTMyvlNSq4dDQqIbK7/ZVLczsVfPk7I0OTyxjFBURA4Tywh0HrVS0fX7wYbtXmbSs
+         SE9B9UD8gnhK3It3ytgmoljOGQjQILFfOKXk3XKgaA9Hhh5UgQoHpJQhhP3U3VKd+oyM
+         nx5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=Sr38UMbPX5p5Mc2G8mITFuYwu5CyDDrPS7H1wKl2lwU=;
-        b=ZLIW8T+tUN9ZVul2B08ilQN/x9P/4eEvUTk8yHiVCeWQln/cnC91U01GSJe5VIjv96
-         Wa/keH/2DdA/N08FNA3Gh3UjkaCE7E14C5lWENeP0o2yt90WWSvMec+ON23J7yKGYbI+
-         r4HxDoQE4wlZ2dtJDsu845gbBUOmS1/oX8D+BZntjr2+sY9yyGWQnlCuybkad6c3WCrQ
-         9+BhLHqriRmq6796AFqZt5/N/IoSGJVrMr468+smTJs0W6bmqIWuMJN48r2yfDBWKo9/
-         p251P0XonbUuRrx2o/6i7MB7unD377sD3IzOtRqbCR2sSoceNdX3IfpyIW2j1jm1Ek0n
-         6OiA==
-X-Gm-Message-State: AElRT7FutLasSkjB8UwpCHjdF27fYpn5ZlinQmGlygu4SspBmAz9C4LM
-        +PIvAcW6iinJtDmDUVYXaSftLKob
-X-Google-Smtp-Source: AIpwx4+y9YANLUONBqiopD5f/WVpJI4FE5pK/bLyTHo318/KiHDpKuOpRaxgwOZbB7vAL87G1IrHqg==
-X-Received: by 10.28.9.81 with SMTP id 78mr3157425wmj.23.1522257162062;
-        Wed, 28 Mar 2018 10:12:42 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id q21sm6649169wmd.12.2018.03.28.10.12.41
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=Mg5UDX9pWFUhcGozs+qpfvKzPk9QR7oKX2F+7sI1amw=;
+        b=lhENVoYHrgHYFtBUAbJaKYxMHnSBryc2dxLTSXNWom2PG7IZFFJFwNXoPRdW39sL99
+         Fd1RUyM1OP4e8w8ra9nMOxP96GDCWvQQtTe2CzGShcxunWYORILKO3H1ba1wxHJyihV9
+         7lBWDZZhCnS1/8Foas2DwP5h64cA6uOQPuNTHgkK1+NZvUeeWj1gsE0ZYlnwhlpSKKo9
+         sYVT9EbJoxm963rDBbRdfluuIP/Me6PbyvA88PHTXH1eyR1WmkmDIozDpZ62MbXHKvF4
+         RUvRcS9fFMeBkUjUyhCacVN/RRYR0mxUjxPpqHhIzWYbLegFBxrcy+KF3qvI26eKo+X6
+         jc9A==
+X-Gm-Message-State: AElRT7GS3PveUwgHIQoXWuZnHPkRLsXpXl4HPGZMmzyaBCM6Eg0G5zrw
+        l6QuCGmnI7xwZPfAMCGoudGY32r4Bao=
+X-Google-Smtp-Source: AIpwx4/s1Zr9JCn01RsSreIdnShBdm58y5Jt8jZ8T4DZpKXThJR1VQPZTyFBsB21ZmajyAJq0D89HQ==
+X-Received: by 2002:a17:902:76c4:: with SMTP id j4-v6mr4632596plt.31.1522257894318;
+        Wed, 28 Mar 2018 10:24:54 -0700 (PDT)
+Received: from localhost ([2620:0:100e:422:ea58:fa52:fa77:9b41])
+        by smtp.gmail.com with ESMTPSA id c18sm8602696pfd.100.2018.03.28.10.24.53
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 28 Mar 2018 10:12:41 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Daniel Jacques <dnj@google.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 0/2] Add Windows support to the new RUNTIME_PREFIX design
-References: <20180325205120.17730-1-dnj@google.com>
-        <nycvar.QRO.7.76.6.1803262331040.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <CAD1RUU8jNudjCXN=-mucogmSFj2xqyYqyk-dfADhjceLsmBE2g@mail.gmail.com>
-        <nycvar.QRO.7.76.6.1803271752190.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <CAD1RUU9XK837mdRwicMwM5qVApzz8o2e4Eg=B0LH3SRtLqG9WQ@mail.gmail.com>
-Date:   Wed, 28 Mar 2018 10:12:41 -0700
-In-Reply-To: <CAD1RUU9XK837mdRwicMwM5qVApzz8o2e4Eg=B0LH3SRtLqG9WQ@mail.gmail.com>
-        (Daniel Jacques's message of "Tue, 27 Mar 2018 16:05:32 +0000")
-Message-ID: <xmqqa7us86pi.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        Wed, 28 Mar 2018 10:24:53 -0700 (PDT)
+From:   Stefan Beller <sbeller@google.com>
+To:     sbeller@google.com, gitster@pobox.com
+Cc:     bmwill@google.com, git@vger.kernel.org, hvoigt@hvoigt.net,
+        jonathantanmy@google.com, seanwbehan@riseup.net
+Subject: [PATCHv2 0/6] Moving submodules with nested submodules
+Date:   Wed, 28 Mar 2018 10:24:43 -0700
+Message-Id: <20180328172449.27012-1-sbeller@google.com>
+X-Mailer: git-send-email 2.17.0.rc1.321.gba9d0f2565-goog
+In-Reply-To: <CAGZ79kaQYjepND8EdgB73meBsShOc5aBporiK2Bo40fqcar0gg@mail.gmail.com>
+References: <CAGZ79kaQYjepND8EdgB73meBsShOc5aBporiK2Bo40fqcar0gg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Daniel Jacques <dnj@google.com> writes:
+v2:
+* addressed memleaks and messy code in patch 5
+* removed the extern keyword where applicable
+* extended the commit message, stating we want to rename submodule_free
+  in the future.
+* picked up Jonathans patch and added it as a nice finish of the series.
+  I did not see the need or aesthetic desire to put that patch earlier
+  in the series.
+  
+Thanks,
+Stefan
 
-> A simple grep suggests that the current test suite doesn't seem to have any
-> RUNTIME_PREFIX-specific tests. When I've been running the test suites, I've
-> been doing it with a "config.mak" file that explicitly enables
-> RUNTIME_PREFIX to get the runtime prefix code tested against the standard
-> Git testing suites.
->
-> From a Git maintainer's perspective, would such a test be a prerequisite
-> for landing this patch series, or is this a good candidate for follow-up
-> work to improve our testing coverage?
+v1:
 
-It would be a nice-to-have follow-up, I would say, but as you two
-seem to be working well together and it shouldn't be too involved to
-have the minimum test that makes sure the version of "git" being
-tested thinks things should be where we think they should be, with
-something like...
+This fixes the bug reported in [1] ("Bug: moving submodules that have submodules
+inside them causes a fatal error in git status")
 
-	test_expect_success RUNTIME_PREFIX 'runtime-prefix basics' '
-		(
-			# maybe others
-			safe_unset GIT_EXEC_PATH &&
-			git --exec-path >actual
-		) &&
-		# compute the expected value -- we know the first
-		# element of $PATH is where we find "git", so things
-		# should be computable relative to that, perhaps?
-		echo >expect "${PATH%%:*}/..." &&
-		# then compare
-		test_cmp expect actual		
-	'
+[1] https://public-inbox.org/git/20180306192017.GA5797@riseup.net/
 
-so I am hoping such a minimum test to be in the series when it
-graduate to 'master' and become a part of a release.  
+Thanks,
+Stefan
 
-On the other hand, "make a whole test install and try running it"
-may actually be easier but that probably can be done using existing
-GIT_TEST_INSTALLED framework?  In short, you would probably do
+Jonathan Tan (1):
+  grep: remove "repo" arg from non-supporting funcs
 
- - make RUNTIME_PREFIX=YesPlease
- - make RUNTIME_PREFIX=YesPlease DESTDIR=...some..where... install
- - GIT_TEST_INSTALLED=...some..where.../bin make test
+Stefan Beller (5):
+  submodule.h: drop declaration of connect_work_tree_and_git_dir
+  submodule-config: allow submodule_free to handle arbitrary
+    repositories
+  submodule-config: add repository argument to submodule_from_{name,
+    path}
+  submodule-config: remove submodule_from_cache
+  submodule: fixup nested submodules after moving the submodule
 
-or something like that.
+ .../technical/api-submodule-config.txt        |  2 +-
+ builtin/grep.c                                | 14 ++---
+ builtin/mv.c                                  |  6 +-
+ builtin/submodule--helper.c                   | 17 +++--
+ dir.c                                         | 63 ++++++++++++++++++-
+ dir.h                                         | 12 +++-
+ repository.c                                  |  2 +-
+ submodule-config.c                            | 29 ++++-----
+ submodule-config.h                            | 15 +++--
+ submodule.c                                   | 40 ++++++------
+ submodule.h                                   |  1 -
+ t/helper/test-submodule-config.c              |  8 ++-
+ t/t7001-mv.sh                                 |  2 +-
+ unpack-trees.c                                |  2 +-
+ 14 files changed, 137 insertions(+), 76 deletions(-)
+
+-- 
+2.17.0.rc1.321.gba9d0f2565-goog
+
