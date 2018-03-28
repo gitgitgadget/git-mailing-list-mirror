@@ -6,31 +6,31 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5EA281F404
-	for <e@80x24.org>; Wed, 28 Mar 2018 17:38:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E39251F404
+	for <e@80x24.org>; Wed, 28 Mar 2018 17:40:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752659AbeC1Rij (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Mar 2018 13:38:39 -0400
-Received: from cloud.peff.net ([104.130.231.41]:46232 "HELO cloud.peff.net"
+        id S1752859AbeC1Rkp (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Mar 2018 13:40:45 -0400
+Received: from cloud.peff.net ([104.130.231.41]:46242 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1752639AbeC1Rih (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Mar 2018 13:38:37 -0400
-Received: (qmail 13528 invoked by uid 109); 28 Mar 2018 17:38:37 -0000
+        id S1752349AbeC1Rkn (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Mar 2018 13:40:43 -0400
+Received: (qmail 13626 invoked by uid 109); 28 Mar 2018 17:40:43 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 28 Mar 2018 17:38:37 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 28 Mar 2018 17:40:43 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 10502 invoked by uid 111); 28 Mar 2018 17:39:35 -0000
+Received: (qmail 10553 invoked by uid 111); 28 Mar 2018 17:41:41 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 28 Mar 2018 13:39:35 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 28 Mar 2018 13:41:41 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 28 Mar 2018 13:38:35 -0400
-Date:   Wed, 28 Mar 2018 13:38:35 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 28 Mar 2018 13:40:41 -0400
+Date:   Wed, 28 Mar 2018 13:40:41 -0400
 From:   Jeff King <peff@peff.net>
 To:     Duy Nguyen <pclouds@gmail.com>
 Cc:     Rafael Ascensao <rafa.almas@gmail.com>,
         Git Mailing List <git@vger.kernel.org>
-Subject: [PATCH 1/4] set_git_dir: die when setenv() fails
-Message-ID: <20180328173835.GA16274@sigill.intra.peff.net>
+Subject: [PATCH 2/4] add chdir-notify API
+Message-ID: <20180328174041.GB16274@sigill.intra.peff.net>
 References: <20180328173656.GA29094@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -41,58 +41,201 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The set_git_dir() function returns an error if setenv()
-fails, but there are zero callers who pay attention to this
-return value. If this ever were to happen, it could cause
-confusing results, as sub-processes would see a potentially
-stale GIT_DIR (e.g., if it is relative and we chdir()-ed to
-the root of the working tree).
+If one part of the code does a permanent chdir(), then this
+invalidates any relative paths that may be held by other
+parts of the code. For example, setup_work_tree() moves us
+to the top of the working tree, which may invalidate a
+previously stored relative gitdir.
 
-We _could_ try to fix each caller, but there's really
-nothing useful to do after this failure except die. Let's
-just lump setenv() failure into the same category as malloc
-failure: things that should never happen and cause us to
-abort catastrophically.
+We've hacked around this case by teaching setup_work_tree()
+to re-run set_git_dir() with an adjusted path, but this
+stomps all over the idea of module boundaries.
+setup_work_tree() shouldn't have to know all of the places
+that need to be fed an adjusted path. And indeed, there's at
+least one other place (the refs code) which needs adjusting.
+
+Let's provide an API to let code that stores relative paths
+"subscribe" to updates to the current working directory.
+This means that callers of chdir() don't need to know about
+all subscribers ahead of time; they can simply consult a
+dynamically built list.
+
+Note that our helper function to reparent relative paths
+uses the simple remove_leading_path(). We could in theory
+use the much smarter relative_path(), but that led to some
+problems as described in 41894ae3a3 (Use simpler
+relative_path when set_git_dir, 2013-10-14). Since we're
+aiming to replace the setup_work_tree() code here, let's
+follow its lead.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- cache.h       | 2 +-
- environment.c | 5 ++---
- 2 files changed, 3 insertions(+), 4 deletions(-)
+ Makefile       |  1 +
+ chdir-notify.c | 71 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ chdir-notify.h | 64 +++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 136 insertions(+)
+ create mode 100644 chdir-notify.c
+ create mode 100644 chdir-notify.h
 
-diff --git a/cache.h b/cache.h
-index a61b2d3f0d..5c24394d84 100644
---- a/cache.h
-+++ b/cache.h
-@@ -477,7 +477,7 @@ extern const char *get_git_common_dir(void);
- extern char *get_object_directory(void);
- extern char *get_index_file(void);
- extern char *get_graft_file(void);
--extern int set_git_dir(const char *path);
-+extern void set_git_dir(const char *path);
- extern int get_common_dir_noenv(struct strbuf *sb, const char *gitdir);
- extern int get_common_dir(struct strbuf *sb, const char *gitdir);
- extern const char *get_git_namespace(void);
-diff --git a/environment.c b/environment.c
-index d6dd64662c..e01acf8b11 100644
---- a/environment.c
-+++ b/environment.c
-@@ -296,13 +296,12 @@ char *get_graft_file(void)
- 	return the_repository->graft_file;
- }
- 
--int set_git_dir(const char *path)
-+void set_git_dir(const char *path)
- {
- 	if (setenv(GIT_DIR_ENVIRONMENT, path, 1))
--		return error("Could not set GIT_DIR to '%s'", path);
-+		die("could not set GIT_DIR to '%s'", path);
- 	repo_set_gitdir(the_repository, path);
- 	setup_git_env();
--	return 0;
- }
- 
- const char *get_log_output_encoding(void)
+diff --git a/Makefile b/Makefile
+index a1d8775adb..0da98b9274 100644
+--- a/Makefile
++++ b/Makefile
+@@ -772,6 +772,7 @@ LIB_OBJS += branch.o
+ LIB_OBJS += bulk-checkin.o
+ LIB_OBJS += bundle.o
+ LIB_OBJS += cache-tree.o
++LIB_OBJS += chdir-notify.o
+ LIB_OBJS += checkout.o
+ LIB_OBJS += color.o
+ LIB_OBJS += column.o
+diff --git a/chdir-notify.c b/chdir-notify.c
+new file mode 100644
+index 0000000000..0b88bf0e5b
+--- /dev/null
++++ b/chdir-notify.c
+@@ -0,0 +1,71 @@
++#include "cache.h"
++#include "chdir-notify.h"
++#include "list.h"
++#include "strbuf.h"
++
++struct chdir_notify_entry {
++	chdir_notify_callback cb;
++	void *data;
++	struct list_head list;
++};
++static LIST_HEAD(chdir_notify_entries);
++
++void chdir_notify_register(chdir_notify_callback cb, void *data)
++{
++	struct chdir_notify_entry *e = xmalloc(sizeof(*e));
++	e->cb = cb;
++	e->data = data;
++	list_add_tail(&e->list, &chdir_notify_entries);
++}
++
++static void reparent_cb(const char *old_cwd,
++			const char *new_cwd,
++			void *data)
++{
++	char **path = data;
++	char *tmp = *path;
++	*path = reparent_relative_path(old_cwd, new_cwd, tmp);
++	free(tmp);
++}
++
++void chdir_notify_reparent(char **path)
++{
++	if (!is_absolute_path(*path))
++		chdir_notify_register(reparent_cb, path);
++}
++
++int chdir_notify(const char *new_cwd)
++{
++	struct strbuf old_cwd = STRBUF_INIT;
++	struct list_head *pos;
++
++	if (strbuf_getcwd(&old_cwd) < 0)
++		return -1;
++	if (chdir(new_cwd) < 0)
++		return -1;
++
++	list_for_each(pos, &chdir_notify_entries) {
++		struct chdir_notify_entry *e =
++			list_entry(pos, struct chdir_notify_entry, list);
++		e->cb(old_cwd.buf, new_cwd, e->data);
++	}
++
++	strbuf_release(&old_cwd);
++	return 0;
++}
++
++char *reparent_relative_path(const char *old_cwd,
++			     const char *new_cwd,
++			     const char *path)
++{
++	char *ret, *full;
++
++	if (is_absolute_path(path))
++		return xstrdup(path);
++
++	full = xstrfmt("%s/%s", old_cwd, path);
++	ret = xstrdup(remove_leading_path(full, new_cwd));
++	free(full);
++
++	return ret;
++}
+diff --git a/chdir-notify.h b/chdir-notify.h
+new file mode 100644
+index 0000000000..c3bd818a85
+--- /dev/null
++++ b/chdir-notify.h
+@@ -0,0 +1,64 @@
++#ifndef CHDIR_NOTIFY_H
++#define CHDIR_NOTIFY_H
++
++/*
++ * An API to let code "subscribe" to changes to the current working directory.
++ * The general idea is that some code asks to be notified when the working
++ * directory changes, and other code that calls chdir uses a special wrapper
++ * that notifies everyone.
++ */
++
++/*
++ * Callers who need to know about changes can do:
++ *
++ *   void foo(const char *old_path, const char *new_path, void *data)
++ *   {
++ *	warning("switched from %s to %s!", old_path, new_path);
++ *   }
++ *   ...
++ *   chdir_notify_register(foo, data);
++ *
++ * In practice most callers will want to move a relative path to the new root;
++ * they can use the reparent_relative_path() helper for that. If that's all
++ * you're doing, you can also use the convenience function:
++ *
++ *   chdir_notify_reparent(&my_path);
++ *
++ * Registered functions are called in the order in which they were added. Note
++ * that there's currently no way to remove a function, so make sure that the
++ * data parameter remains valid for the rest of the program.
++ */
++typedef void (*chdir_notify_callback)(const char *old_cwd,
++				      const char *new_cwd,
++				      void *data);
++void chdir_notify_register(chdir_notify_callback cb, void *data);
++void chdir_notify_reparent(char **path);
++
++/*
++ *
++ * Callers that want to chdir:
++ *
++ *   chdir_notify(new_path);
++ *
++ * to switch to the new path and notify any callbacks.
++ *
++ * Note that you don't need to chdir_notify() if you're just temporarily moving
++ * to a directory and back, as long as you don't call any subscribed code in
++ * between (but it should be safe to do so if you're unsure).
++ */
++int chdir_notify(const char *new_cwd);
++
++/*
++ * Reparent a relative path from old_root to new_root. For example:
++ *
++ *   reparent_relative_path("/a", "/a/b", "b/rel");
++ *
++ * would return the (newly allocated) string "rel". Note that we may return an
++ * absolute path in some cases (e.g., if the resulting path is not inside
++ * new_cwd).
++ */
++char *reparent_relative_path(const char *old_cwd,
++			     const char *new_cwd,
++			     const char *path);
++
++#endif /* CHDIR_NOTIFY_H */
 -- 
 2.17.0.rc1.515.g3cc84c0ca4
 
