@@ -2,177 +2,159 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9DDE21F404
-	for <e@80x24.org>; Wed, 28 Mar 2018 21:14:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C71931F404
+	for <e@80x24.org>; Wed, 28 Mar 2018 21:19:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753320AbeC1VOV (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Mar 2018 17:14:21 -0400
-Received: from mout.web.de ([212.227.15.14]:38067 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752832AbeC1VOT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Mar 2018 17:14:19 -0400
-Received: from [192.168.178.36] ([79.237.251.165]) by smtp.web.de (mrweb004
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0LmQS2-1eSmrA2n7S-00Zuvy; Wed, 28
- Mar 2018 23:14:10 +0200
-Subject: Re: [PATCH] submodule: check for NULL return of
- get_submodule_ref_store()
-To:     Eric Sunshine <sunshine@sunshineco.com>,
-        Stefan Beller <sbeller@google.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        jeremy@feusi.co, Prathamesh Chavan <pc44800@gmail.com>
-References: <9c3c0161-f894-3368-ece2-500d0bb6f475@web.de>
- <20180328183832.243036-1-sbeller@google.com>
- <CAPig+cT1Yp8J8E0VDKdxvPdVD-UBsyDfQS+a83zOAW11ayfhnA@mail.gmail.com>
- <CAGZ79kYD+RC_Z7AH_uH9tZSDHhkikML4HkxUNGxkW8voHJ1i3A@mail.gmail.com>
- <CAPig+cQ_j4OyBjsZHE8ZPBojqD7HhSEb14-CFY9qYfXX+dafpQ@mail.gmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <38570708-e166-0004-878a-2d8442c12b65@web.de>
-Date:   Wed, 28 Mar 2018 23:14:08 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.7.0
+        id S1752887AbeC1VT5 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Mar 2018 17:19:57 -0400
+Received: from mail-yb0-f174.google.com ([209.85.213.174]:35344 "EHLO
+        mail-yb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752090AbeC1VT4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Mar 2018 17:19:56 -0400
+Received: by mail-yb0-f174.google.com with SMTP id v66-v6so1309840ybv.2
+        for <git@vger.kernel.org>; Wed, 28 Mar 2018 14:19:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=csbQyXZIOAWhuxm8Gwgi3RAeDmnyl70Im/zfDmimo2I=;
+        b=igF4tVpyn/DipVLFmbahS2hYXE5n/yrSxjhfkF5zf7kA5ZKBM7m+4RT29JJFRwAaCG
+         Hnd16a3jYk8p12ZyAU7kTwfpv6OCom/e6ajLV1jH+nFAG7fMKrExiZ2wp1T5iKiSvBzY
+         53qpthorYyHUt3Hqy3qiRQk7SzOBjmODNrKdYqDRyBRUVBoIrr96aR2OirwMEMLDJanv
+         7LwZROdYOfvtODuXHicUEkCgwNJgglJLUUKsjN4G8GwLEe61Fgg9kzOL4xPj+HlCi5T2
+         kdEKIxSUQQ8APLTPljQWdk4vo3jvtmVPVgp3MsQp4DBmi0IABW36UzxI7hbCFplvW2+M
+         HHVA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=csbQyXZIOAWhuxm8Gwgi3RAeDmnyl70Im/zfDmimo2I=;
+        b=ipdBCCXQ2TTARNmjVnK1Ppu8DnbESw8ThBoQ+chKplqrYO8w3idJgkQ9zyoSHvWa4Q
+         OpiWM4HrHEmDfy5qsw1IRWMePVMms0tQPzZZAZq+blPrO8aHhmKoUZ2kTYl45zadLy/p
+         uj5nROWId0C+uHW2kSa0lhGGiVfLrTrbJCHqJNxl7MvHHl5Ov01U5EnvUrX5vFr5Q4Y0
+         AbCdWGzr6JhKPnlK585VPXQB97+snYte4pob+Bb++F6utL4GUjYoqRxZ9TYbrtuGm20o
+         kRU9a56Eaj15HMN+J2VJ2wufB6urFnWN81KhVUI16VjZshep/5MnnGGXtc+fzYUTU8Jm
+         vc5Q==
+X-Gm-Message-State: AElRT7Hy2uzDapfz5f2jgI/C7NKS2w8GCA16IBfY8nOOOKzAdXxYzRbl
+        AgPEMRgxxPzfT/Lq5E7siIjUkfJwVDjh7Im13uqtBKW5
+X-Google-Smtp-Source: AIpwx49iSA4U56nZaF0tjabQ5+uLwJFZMh6EMa3eBV4Tc+jO0dIdCB6UdqdJDx8gTxsEG9RihVXwl65lb3vjE3gyQxI=
+X-Received: by 2002:a25:e80d:: with SMTP id k13-v6mr3285410ybd.334.1522271995360;
+ Wed, 28 Mar 2018 14:19:55 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAPig+cQ_j4OyBjsZHE8ZPBojqD7HhSEb14-CFY9qYfXX+dafpQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:zb2lT/IHBmkM3K5QAO8R8Y2FKp7qrIvt6iXdMSBM91L0uCMnyqW
- yVvIJaccud3aDJk2u4PjaNogFi4S0xFtVtVfcevFNvM5RxUXOL8kNOXsJO4eJgfIIdhOLlH
- 9jU3jzMGOd6HMchVz+AAcuTIc6dVGNNb/5lQNEXpH7bJcVPPV6RqT+qybnwFLV5D+dAbnlF
- 9isdqWlAXyoWc686Rptgw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:MGBe4yHtZA0=:xDw3A/Dx24LCO0gb9QOCnW
- 3nWxZLhpJfXyJyOvetAaSxtlbyCMmA4MMRnlydKeKMguN6ZmwdA2eLKQsgvoJhC3h2DWJDcml
- JqNxBR9Mbc85y8hcvDPsaQhXczT4qi7pg08MOl3teK82pTFLTgyV9k9dxqWiL+YD2nbbn1PhJ
- Wqs8CIb5RH7hVz9fR8wbmHKdqbzR5psINoaHGLjI4i8NtUYOGGNpXxITWFYg/P3zZmOMCGwtl
- YHR5XnxQQ3zG+CifVSehIe0u4vhpLnA3uAPWsilosJDNVLPESanWwGkW5ddHaNO8Ty1+DmvvL
- niBdPoNDLJgdgqIgcDQKOHQFZeNsQz6JtXFccXqYFSMdcC/95/I/PBZ+rvTzzFVfOB3ZQ9SZA
- aobiOnsBxOK9aVLieX8wW1Vi4zzPL1fFjqo7Ayn4ECLzXXtqdRcju8GecS2HtZYxmtgOzG+sr
- gp1EOF56vSla7lY6CXEJcJynljNMBN84Ck3/GAJeVFB2I8OBlDmyrQr2R05srI05VmX44tzWm
- 6hu3cT7qhQbosadlew6eF29ZNGcyEiSPGyMuny59Cit3HTjVspXpLu31VHC60pWY/LENQ/Sco
- aqJQwcv4+Aq7veIe1L/AYG7lu2wR/awG6VzPMwYgayg1qvB0ViTOHkAC+/clP8V6r+3s/qc/t
- uvhu6U3UuyBV9gaumN4Nhpo28okxHiZ+8NZ/ZPz1X7uIPRqp8xv6SsBRDbc4/pTjzmvoJyuIw
- 3TnYpK2OiCpnAnrGCAXoeo9fT3KRnh0PZY2LA94MjrgFIX1jwY/WZ3dYf6h8mF20LZG4JcLRp
- vDlqhHvmlLX6tXhSM4MdWhJsObnZSegZ86pW6WIG1A9zkZKbXY=
+Received: by 2002:a25:cf81:0:0:0:0:0 with HTTP; Wed, 28 Mar 2018 14:19:54
+ -0700 (PDT)
+In-Reply-To: <9ead5ee1-9d4a-38f6-0fa3-ca4c982b33f5@arcor.de>
+References: <9e22b49e-6732-17c7-76fe-0ce241787db9@arcor.de>
+ <CAGZ79kYGY5bjh0WPQh7xkXQxLkB9EQ-OcJhVuGE8YUnwmvk2Fg@mail.gmail.com> <9ead5ee1-9d4a-38f6-0fa3-ca4c982b33f5@arcor.de>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 28 Mar 2018 14:19:54 -0700
+Message-ID: <CAGZ79kZ326BGMuNNDTepN=_9j35Tu+zUACHKK67m+dhz7MFpMQ@mail.gmail.com>
+Subject: Re: git submodule deinit resulting in BUG: builtin/submodule--helper.c:1045:
+ module_list_compute should not choke on empty pathspec
+To:     Peter Oberndorfer <kumbayo84@arcor.de>
+Cc:     git <git@vger.kernel.org>, Prathamesh Chavan <pc44800@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 28.03.2018 um 22:21 schrieb Eric Sunshine:
-> On Wed, Mar 28, 2018 at 4:08 PM, Stefan Beller <sbeller@google.com> wrote:
->> On Wed, Mar 28, 2018 at 11:57 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->>>> +test_expect_success 'moving the submodule does not break the superproject' '
->>>> +       (
->>>> +               cd addtest2 &&
->>>> +
->>>> +               mv repo repo.bak &&
->>>> +               git submodule status >actual &&
->>>> +               grep -e "^-" -e repo actual &&
->>>> +
->>>> +               mv repo.bak repo
->>>
->>> Should this "move back" be encapsulated in a test_when_finished?
+On Wed, Mar 28, 2018 at 12:37 PM, Peter Oberndorfer <kumbayo84@arcor.de> wrote:
+
+>>> 2) Should "git submodule deinit" work on submodules that were removed by
+>> upstream already?
 >>
->> I thought about that, but decided against it for some reason as I was debating
->> where to put the test_when_finished. I mostly saw those at the very beginning
->> of a test and wondered if it can be called from within a subshell.
->> (I'd not want to put it at the beginning but rather adjacent to the move.)
-> 
-> It looks like test_when_finished() shouldn't be used in a subshell.
-> However, wouldn't the following be reasonable?
-> 
->      mv addtest2/repo addtest2/repo.bak &&
->      test_when_finished "mv addtest2/repo.bak addtest2/repo" &&
->      (
->          cd addtest2 &&
->          git submodule status >actual &&
->          grep -e "^-" -e repo actual
->      )
+>> To answer the question "Is this a submodule that upstream removed
+>> (recently)?"
+>> we'd have to put in some effort, essentially checking if that was ever a
+>> submodule
+>> (and not a directory or file).
+>>
+>
+> Hmm, yeah looks a bit more complicated than I initially imagined
+> since submodules can have a name that's different from their path.
+> And after the rebase, the name <-> path mapping via .gitmodules is not available anymore.
+>
+> Naively I think it could work the following way:
+> * Either iterate over all submodules in .git/modules/ and check their config
+>   has a worktree = "../../path" that resolves to the submodule path we want to remove.
 
-I like this version, except for the grep call -- it accepts either lines
-starting with a dash or containing "repo".  So if status would report
-just "-" and nothing else then the test would pass. 
+This would work but scales linearly with the number of submodules.
 
-> Or, even simpler:
-> 
->      mv addtest2/repo addtest2/repo.bak &&
->      test_when_finished "mv addtest2/repo.bak addtest2/repo" &&
->      git -C addtest2 submodule status >actual &&
->      grep -e "^-" -e repo actual
-> 
 
-This looks nicer here in the script, but doesn't test exactly what users
-type most of the time, I suppose.
+> * Or check the "gitlink:" path in submodule/.git if it points to our .git/modules/
+> Then if .git/config contains a [submodule "name"] entry
+> we should have a pretty good idea if this folder contains a stale submodule.
 
-So how about this?
+If you move a submodule a directory up or down, the relative path is not exact
+any more, we'd need to check for the last part to loosely match.
 
--- >8 --
-Subject: [PATCH v3] submodule: check for NULL return of get_submodule_ref_store()
 
-If we can't find a ref store for a submodule then assume the latter
-is not initialized (or was removed).  Print a status line accordingly
-instead of causing a segmentation fault by passing NULL as the first
-parameter of refs_head_ref().
+>> When using "git pull --recurse-submodules" the submodule ought to be removed
+>> automatically.
+>>
+>> When doing a fetch && merge manually, we may want to teach merge to remove
+>> a submodule that we have locally upon merge, too.
+>>
+>
+> Yeah that would be nice :-)
+> In my case I updated the repository via a rebase, so that would also have to be covered.
 
-Reported-by: Jeremy Feusi <jeremy@feusi.co>
-Reviewed-by: Stefan Beller <sbeller@google.com>
-Initial-Test-By: Stefan Beller <sbeller@google.com>
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
----
- builtin/submodule--helper.c |  8 ++++++--
- t/t7400-submodule-basic.sh  | 15 +++++++++++++++
- 2 files changed, 21 insertions(+), 2 deletions(-)
+Oh rebase itself has not yet learned about recursion into submodules.
+("git pull --rebase --recurse-submodules" is a thing though)
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 6ba8587b6d..9a0fb5e784 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -654,9 +654,13 @@ static void status_submodule(const char *path, const struct object_id *ce_oid,
- 			     displaypath);
- 	} else if (!(flags & OPT_CACHED)) {
- 		struct object_id oid;
-+		struct ref_store *refs = get_submodule_ref_store(path);
- 
--		if (refs_head_ref(get_submodule_ref_store(path),
--				  handle_submodule_head_ref, &oid))
-+		if (!refs) {
-+			print_status(flags, '-', path, ce_oid, displaypath);
-+			goto cleanup;
-+		}
-+		if (refs_head_ref(refs, handle_submodule_head_ref, &oid))
- 			die(_("could not resolve HEAD ref inside the "
- 			      "submodule '%s'"), path);
- 
-diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-index a39e69a3eb..ef1ea8d6b0 100755
---- a/t/t7400-submodule-basic.sh
-+++ b/t/t7400-submodule-basic.sh
-@@ -821,6 +821,21 @@ test_expect_success 'moving the superproject does not break submodules' '
- 	)
- '
- 
-+test_expect_success 'moving the submodule does not break the superproject' '
-+	(
-+		cd addtest2 &&
-+		git submodule status
-+	) >actual &&
-+	sed -e "s/^ \([^ ]* repo\) .*/-\1/" <actual >expect &&
-+	mv addtest2/repo addtest2/repo.bak &&
-+	test_when_finished "mv addtest2/repo.bak addtest2/repo" &&
-+	(
-+		cd addtest2 &&
-+		git submodule status
-+	) >actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'submodule add --name allows to replace a submodule with another at the same path' '
- 	(
- 		cd addtest2 &&
--- 
-2.16.3
+>> I view the git-submodule command as a bare bones plumbing helper, that we'd
+>> want
+>> to deprecate eventually as all other higher level commands will know how to
+>> deal
+>> with submodules.
+>>
+>> So I think we do not want to teach "git submodule deinit" to remove dormant
+>> repositories, that were submodules removed by upstream already.
+>>
+>
+> My gut feeling makes me expect the following:
+> * It would be nice if such stale submodules showed up in "git submodule status" or "git status"
+>   Now "git submodule" shows nothing related to this stale submodule
+
+That has currently only two ways "+" or "-" for there/not there.
+Maybe we'd need to add some characters similar to "git status --porcelain"
+such as "?"
+
+>   Now "git status" shows  Untracked files: src/rt which is a bit confusing as the actual submodule is in src/rt/hoedown
+>   Now "Git gui" shows src/rt/hoedown as untracked git repository
+
+hm. The current state of affairs doesn't sound intriguing.
+Though, I think we'd want to step back one more step and rather want
+to ask how a dormant submodule comes into existence, instead of
+just improving the reporting. Reportingthem is of course also important,
+but in the long run I'd rather want to have situations like these happen
+less often. When upstream deletes a file, they are also not required to be
+deleted manually, but merge/checkout would take care of them.
+
+> * There should be an easy(and safe) way for the user to deinit such a submodule
+>   if if the automatic submodule updating during a merge/rebase was not enabled or somehow failed.
+> (Minus the problem of somebody having to actually do the work...)
+>
+>>> ~/src/rust/rust$ git submodule status
+>> ...
+>>>   b87873eaceb75cf9342d5273f01ba2c020f61ca8 src/tools/lld ((null))
+>>
+>>> -> strangely I get (null) for the current branch/commit in some
+>> submodules?
+>>
+>> This sounds like (3). Looking into that.
+>
+> Sorry, what do you mean by (3)?
+
+I meant the ((null)) issue is another third thought that we can
+discuss separately,
+slightly unrelated to the others (that you marked as (1) and (2))
+
+Thanks,
+Stefan
