@@ -2,40 +2,38 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,STOX_REPLY_TYPE,T_DKIM_INVALID,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6C7711F424
-	for <e@80x24.org>; Wed, 28 Mar 2018 08:07:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9E78F1F424
+	for <e@80x24.org>; Wed, 28 Mar 2018 08:08:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752392AbeC1IHd (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Mar 2018 04:07:33 -0400
-Received: from e1i290.smtp2go.com ([103.36.109.34]:56583 "EHLO
+        id S1752175AbeC1IIH (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Mar 2018 04:08:07 -0400
+Received: from e1i290.smtp2go.com ([103.36.109.34]:48002 "EHLO
         e1i290.smtp2go.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751750AbeC1IHZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Mar 2018 04:07:25 -0400
-X-Greylist: delayed 722 seconds by postgrey-1.27 at vger.kernel.org; Wed, 28 Mar 2018 04:07:25 EDT
+        with ESMTP id S1751114AbeC1IIF (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Mar 2018 04:08:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=smtpservice.net; s=m1fbw0.a1-4.dyn; x=1522225345; h=Feedback-ID:
+        d=smtpservice.net; s=m1fbw0.a1-4.dyn; x=1522225385; h=Feedback-ID:
         X-Smtpcorp-Track:Date:Subject:To:From:Reply-To:Message-ID:Sender:
-        List-Unsubscribe; bh=HJWnyGJ1L2GWgg4Wtho395K3NOj8nparkb3tcHXT9gk=; b=XlOhWsl/
-        tQFv0J03wpeFhCcBY5oDH0K81McIQVXbIyOA21oIPY9TYoliEANNER9af5roVr/cT91D6qdLGZIz1
-        L2hVNyvKmVjAY9P7LqQAEstyFxYyIllRmPcO0n6VQgIT7s6SAUirtsa+TS/UwwSpEnNgL0H7fzuwN
-        URjTsG3JDh2f3dDiqiRzXwsPnK+9BK2+fSH9d7Trl8Mxww9XFVLAh9GDR+OoC92Kncv/tOWNcbSeZ
-        AwJxclOUgpRGlRZ415Msh1v10uCfI1itYn6CLe43iDPV6kWMeYJqiuYMREZOJoNWcvdw8HHURkvDr
-        qldoOEeyIl+AvywcKyflihrEzg==;
-Message-ID: <EBC18DF9AA474D29B3178885F122D962@PhilipOakley>
+        List-Unsubscribe; bh=HJWnyGJ1L2GWgg4Wtho395K3NOj8nparkb3tcHXT9gk=; b=F+HpXNNm
+        IALUJcWVJoef34ZYXyWfjWK4ft1FJ0u2WD413DLGWSyo7u5JHhRPUakQ5zGxfcjhFVtXx7iVlItWz
+        lJTxv/XyneuKRWdI53HgLRejtcX/KnkyF3a41yRoCRmJ1qfvvIcZ4e61MCl1BwJST3z8AmnKvUBfZ
+        krDZ9cCsvwCYjXAXQD0DnUkvhJMwmADb7R5fp6oXkphnoQCx60orVThVKitBQaVK5Wvo6p9WpBnil
+        XdBWzqvWrEhJi895b+lJ09BpevlnTaKzYiY3g+E8vAbPjBJYSEp6cqMkVb9kcaVLPFP7MhDFzMzP5
+        G9W3WMBtXfeFatneTLbWXTnEgw==;
+Message-ID: <D4DCD9C1E17B4AD5AFB501B8FADA02BB@PhilipOakley>
 Reply-To: "Philip Oakley" <philipoakley@iee.org>
 From:   "Philip Oakley" <philipoakley@iee.org>
 To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
         "Jason Frey" <jfrey@redhat.com>
-Cc:     "Git List" <git@vger.kernel.org>,
-        "Stefan Beller" <sbeller@google.com>
+Cc:     <git@vger.kernel.org>, "Stefan Beller" <sbeller@google.com>
 References: <CAP6Vx84GRRxgMZF5P6tb6F4rJ8ozxx-d0o_LsNe=kEYVRkBTKQ@mail.gmail.com> <87r2o5w5mn.fsf@evledraar.gmail.com>
 Subject: Re: Bug: duplicate sections in .git/config after remote removal
-Date:   Wed, 28 Mar 2018 09:06:15 +0100
+Date:   Wed, 28 Mar 2018 08:54:09 +0100
 Organization: OPDS
 MIME-Version: 1.0
 Content-Type: text/plain;
@@ -47,7 +45,7 @@ X-Priority: 3
 X-MSMail-Priority: Normal
 X-Mailer: Microsoft Outlook Express 6.00.2900.5931
 X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-Smtpcorp-Track: 1f1673r_ZEG9Q_.I202aLl5_
+X-Smtpcorp-Track: 1f15vur_ZHbrSw.I2pMAydF1
 Feedback-ID: 66524m:66524aMf6O2Y:66524s05ewz12Um:SMTPCORP
 X-Report-Abuse: Please forward a copy of this message, including all
  headers, to <abuse-report@smtp2go.com>
@@ -106,8 +104,8 @@ From: "Ævar Arnfjörð Bjarmason" <avarab@gmail.com>
 > This can be annoying and result in some very verbose config files when
 > we automatically edit them, e.g.:
 >
->    (rm -v /tmp/test.ini; for i in {1..3}; do git config -f /tmp/test.ini
-> foo.bar 0 && git config -f /tmp/test.ini --unset foo.bar; done; cat
+>    (rm -v /tmp/test.ini; for i in {1..3}; do git config -f /tmp/test.ini 
+> foo.bar 0 && git config -f /tmp/test.ini --unset foo.bar; done; cat 
 > /tmp/test.ini)
 >    removed '/tmp/test.ini'
 >    [foo]
@@ -157,16 +155,16 @@ From: "Ævar Arnfjörð Bjarmason" <avarab@gmail.com>
 > repeat sections is part of our config format that you're simply going to
 > have to deal with.
 
-One option may be to create  a simple 'lint' style checker that simply
-hiughlights and suggests options so the user can decide for themselves what
-they need to do. This would help span the gap between hard format and the
-soft format capabiulities of machine readable ini files, the Git config
+One option may be to create  a simple 'lint' style checker that simply 
+hiughlights and suggests options so the user can decide for themselves what 
+they need to do. This would help span the gap between hard format and the 
+soft format capabiulities of machine readable ini files, the Git config 
 reader and being human readable.
 
-Thus duplicate sections would be noted, likewise the presence of comments
-immediately preceding a section header, or terminating a section (with or
-without spacing?), etc.Such a config_lint could reside in the contrib as a
-supprt tool, and may in the long term be a guide to a common format.
+Thus duplicate sections would be noted, likewise the presence of comments 
+immediately preceding a section header, or terminating a section (with or 
+without spacing?), etc.Such a config_lint could reside in the contrib as a 
+supprt tool, and may in the long term be a guide to a common format. 
 However, as noted, it would be more of a long term aspiration..
 
 
@@ -184,5 +182,5 @@ However, as noted, it would be more of a long term aspiration..
 >
 
 --
-Philip
+Philip 
 
