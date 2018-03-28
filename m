@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 819D21F404
-	for <e@80x24.org>; Wed, 28 Mar 2018 22:35:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EC5FA1F404
+	for <e@80x24.org>; Wed, 28 Mar 2018 22:35:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753570AbeC1Wfj (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Mar 2018 18:35:39 -0400
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:44174 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753426AbeC1Wfh (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Mar 2018 18:35:37 -0400
-Received: by mail-pf0-f194.google.com with SMTP id m68so1812243pfm.11
-        for <git@vger.kernel.org>; Wed, 28 Mar 2018 15:35:36 -0700 (PDT)
+        id S1753613AbeC1Wfl (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Mar 2018 18:35:41 -0400
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:43070 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753429AbeC1Wfi (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Mar 2018 18:35:38 -0400
+Received: by mail-pg0-f68.google.com with SMTP id i124so1736669pgc.10
+        for <git@vger.kernel.org>; Wed, 28 Mar 2018 15:35:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=KLwCagjSpPEUboe0YTjYrxIlGmE3Mhdcvbq+CC304mY=;
-        b=wPgw0/CJ5Ju+qfMTOuGG1BCw1wBVQhQSi+LQmdq49yFXH1nfV6zlRZQTHZtqlmsI3A
-         JDd3cwIdJ87vVkeHNnYj9k7UFWUqfRtNrnPBYhjEfHOpErDOB3jFpUXv/Hk8tfARc6RQ
-         n1T4fmAsZZJ3BJFHbbp9Ka8PEO01AMC7ynROWiB1Ov23jh8Y3OBwa7cIGkyECLc/YX+j
-         EfPZod/bg2dH8M73pnjTn7YMzZZmDybqoVJltN54V3GgW2bdaNhL2NzHKTBxDkhgXpGx
-         NShO0K5yEQHoPkuAR8UulERyj9SEkf2veyBnJyDvkutfoapW/4N3qJXQCLYQGs42eKlF
-         NmhA==
+        bh=WmuI+OT7C/daBq7ohiOJ9wmggA3j70lhLouMqH4cp+M=;
+        b=RW/9TkUOovZpe1avj8GCt5VqG/0g5zXyU6j/lTXX9JPAswZ9HnemjNUlKOkqOXpsrX
+         hLxaRPkrkS+6Ijyd+xQ68rImJ0Uo3qlwQfCd5/ZbtOsHb+yYcpDsArT3vAh6DFoxhw0k
+         pdqjz9I+PcPlaTcplhrqiGVD3YMrZzGg0HhWskcmhWPuaEPd0LD05/jP2z4V6vd/htrx
+         s/ZR2H0XJr14Hg4ITmiuUaj2Hmmu1fW08nChQt7jBA471nUy2LRIBeBtdMERAfyERcVo
+         N216eQTOUGInIWDLTcnuWU9dQKY2kMvVN1/vfgMIvBQCZ+tFOXIrDg4Rma871FFNt1Kj
+         RU/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=KLwCagjSpPEUboe0YTjYrxIlGmE3Mhdcvbq+CC304mY=;
-        b=Ix83fjdZhVqpkixvGajU2gvtny0C/N0OgY7hunWDAXa+MS+L2/TM0IdFkfGChhlDGg
-         rWRchPj0WdycRCtgz50VswWSq2ftg0cCbCKqrh1ugLr0Qb0Kz0afHmVJkZJGHynutXE4
-         CH4awIOyRNeMWVYj7B7nGZuNl2+4VubuA51gshtOk3t4afvcGu/dC+fYe5FVr/J+NN1r
-         0rS130W5nIsCfZYl6+vFyQ6Nq4qZMtHp16PHongqTjJxQcw6AgrnjsooTo0hHPi24GSa
-         wEN2zSkorv/ewGfaJuI+o5+8YpJVyfGmSco+hLQa4FGVQuWWjXEZwV7BjLLfGIsxziEz
-         nkWw==
-X-Gm-Message-State: AElRT7EBnJEUxleAG6v453MDLB7nNZSAFNRjZ5LeYZ7OobcmGmxdky2e
-        3+irOEpnjOh5djM8qhk4qiQqMA==
-X-Google-Smtp-Source: AIpwx49KG7S+xntTgROVmBojdazDLQmkJ4SwJJIXZXPps7FRIZsWdky5/oipqVHuM7goJxc41089qQ==
-X-Received: by 10.98.108.69 with SMTP id h66mr4308841pfc.43.1522276536258;
-        Wed, 28 Mar 2018 15:35:36 -0700 (PDT)
+        bh=WmuI+OT7C/daBq7ohiOJ9wmggA3j70lhLouMqH4cp+M=;
+        b=ImGtNQe19eFMD+Vjn0VHgb07cJ6V+vARRo7mWYO08J+UpL1okzg7n1BfaDbwc042el
+         XA7JHBI7Y9PIwQV5BZ13mpiwo6pECdLuXcUHXW3VFoYsmBvKjRUXXTylYpahCESZ1rAc
+         XVpxCnrTuEgILcOCsM8vOO5HBnwWZrZxFC5bdQgKbk7asotXhr1DA+qRXNDIo+tDMh1F
+         DW/F+lWjwBiVrzkql286PjmZaek5NNroDgnUQ8oYGMdnw75dm+9co8Y/fVtVzjGP9gUf
+         Ng+CG2kDjk6l0mZiHGvK6CkGmIS/qgJFUv019TkyS8xaLmN+XbAtp457Z18lrXG+bf3g
+         GuvA==
+X-Gm-Message-State: AElRT7F854sdMmF4ted2uLN5cf0HX/8ON3HOuD918s+XUFkONa9pp2T5
+        Ss0PqErX3auXZFNuzcj4rQrNqQT/1Yk=
+X-Google-Smtp-Source: AIpwx4+ZjGrHFAI7hZNqcoDpO7mxLSn8U82T9oCbSHcpuiVefF/uOYe+M7i3OCSkzuqE6YF0UXCLhg==
+X-Received: by 10.98.174.6 with SMTP id q6mr4348946pff.140.1522276537643;
+        Wed, 28 Mar 2018 15:35:37 -0700 (PDT)
 Received: from localhost ([2620:0:100e:422:ea58:fa52:fa77:9b41])
-        by smtp.gmail.com with ESMTPSA id k70sm8377806pga.72.2018.03.28.15.35.35
+        by smtp.gmail.com with ESMTPSA id q2sm7760997pgp.70.2018.03.28.15.35.36
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 28 Mar 2018 15:35:35 -0700 (PDT)
+        Wed, 28 Mar 2018 15:35:36 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     jonathantanmy@google.com
 Cc:     bmwill@google.com, git@vger.kernel.org, gitster@pobox.com,
         hvoigt@hvoigt.net, sbeller@google.com, seanwbehan@riseup.net
-Subject: [PATCHv3 1/6] submodule.h: drop declaration of connect_work_tree_and_git_dir
-Date:   Wed, 28 Mar 2018 15:35:26 -0700
-Message-Id: <20180328223531.241920-2-sbeller@google.com>
+Subject: [PATCHv3 2/6] grep: remove "repo" arg from non-supporting funcs
+Date:   Wed, 28 Mar 2018 15:35:27 -0700
+Message-Id: <20180328223531.241920-3-sbeller@google.com>
 X-Mailer: git-send-email 2.17.0.rc1.321.gba9d0f2565-goog
 In-Reply-To: <20180328223531.241920-1-sbeller@google.com>
 References: <20180328105416.3add54858bac92573d7d1130@google.com>
@@ -64,27 +64,82 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The function connect_work_tree_and_git_dir is declared in both submodule.h
-and dir.h, such that one of them is redundant. As the function is
-implemented in dir.c, drop the declaration from submodule.h
+From: Jonathan Tan <jonathantanmy@google.com>
 
+As part of commit f9ee2fcdfa ("grep: recurse in-process using 'struct
+repository'", 2017-08-02), many functions in builtin/grep.c were
+converted to also take "struct repository *" arguments. Among them were
+grep_object() and grep_objects().
+
+However, at least grep_objects() was converted incompletely - it calls
+gitmodules_config_oid(), which references the_repository.
+
+But it turns out that the conversion was extraneous anyway - there has
+been no user-visible effect - because grep_objects() is never invoked
+except with the_repository. This is because grepping through objects
+cannot be done recursively into submodules.
+
+Revert the changes to grep_objects() and grep_object() (which conversion
+is also extraneous) to show that both these functions do not support
+repositories other than the_repository.
+
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- submodule.h | 1 -
- 1 file changed, 1 deletion(-)
+ builtin/grep.c | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/submodule.h b/submodule.h
-index b9b7ef0030..b6130e6287 100644
---- a/submodule.h
-+++ b/submodule.h
-@@ -105,7 +105,6 @@ extern int push_unpushed_submodules(struct oid_array *commits,
- 				    const char **refspec, int refspec_nr,
- 				    const struct string_list *push_options,
- 				    int dry_run);
--extern void connect_work_tree_and_git_dir(const char *work_tree, const char *git_dir);
- /*
-  * Given a submodule path (as in the index), return the repository
-  * path of that submodule in 'buf'. Return -1 on error or when the
+diff --git a/builtin/grep.c b/builtin/grep.c
+index 1e9cdbdf78..754eb6da3b 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -595,8 +595,7 @@ static int grep_tree(struct grep_opt *opt, const struct pathspec *pathspec,
+ }
+ 
+ static int grep_object(struct grep_opt *opt, const struct pathspec *pathspec,
+-		       struct object *obj, const char *name, const char *path,
+-		       struct repository *repo)
++		       struct object *obj, const char *name, const char *path)
+ {
+ 	if (obj->type == OBJ_BLOB)
+ 		return grep_oid(opt, &obj->oid, name, 0, path);
+@@ -623,7 +622,7 @@ static int grep_object(struct grep_opt *opt, const struct pathspec *pathspec,
+ 		}
+ 		init_tree_desc(&tree, data, size);
+ 		hit = grep_tree(opt, pathspec, &tree, &base, base.len,
+-				obj->type == OBJ_COMMIT, repo);
++				obj->type == OBJ_COMMIT, the_repository);
+ 		strbuf_release(&base);
+ 		free(data);
+ 		return hit;
+@@ -632,7 +631,6 @@ static int grep_object(struct grep_opt *opt, const struct pathspec *pathspec,
+ }
+ 
+ static int grep_objects(struct grep_opt *opt, const struct pathspec *pathspec,
+-			struct repository *repo,
+ 			const struct object_array *list)
+ {
+ 	unsigned int i;
+@@ -648,8 +646,8 @@ static int grep_objects(struct grep_opt *opt, const struct pathspec *pathspec,
+ 			submodule_free();
+ 			gitmodules_config_oid(&real_obj->oid);
+ 		}
+-		if (grep_object(opt, pathspec, real_obj, list->objects[i].name, list->objects[i].path,
+-				repo)) {
++		if (grep_object(opt, pathspec, real_obj, list->objects[i].name,
++				list->objects[i].path)) {
+ 			hit = 1;
+ 			if (opt->status_only)
+ 				break;
+@@ -1098,7 +1096,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 		if (cached)
+ 			die(_("both --cached and trees are given."));
+ 
+-		hit = grep_objects(&opt, &pathspec, the_repository, &list);
++		hit = grep_objects(&opt, &pathspec, &list);
+ 	}
+ 
+ 	if (num_threads)
 -- 
 2.17.0.rc1.321.gba9d0f2565-goog
 
