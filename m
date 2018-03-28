@@ -2,94 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 77DDE1F404
-	for <e@80x24.org>; Wed, 28 Mar 2018 22:21:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 38C101F404
+	for <e@80x24.org>; Wed, 28 Mar 2018 22:21:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753293AbeC1WVM (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Mar 2018 18:21:12 -0400
-Received: from rcdn-iport-4.cisco.com ([173.37.86.75]:51969 "EHLO
-        rcdn-iport-4.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752881AbeC1WVL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Mar 2018 18:21:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=cisco.com; i=@cisco.com; l=1294; q=dns/txt; s=iport;
-  t=1522275671; x=1523485271;
-  h=from:to:cc:subject:date:message-id;
-  bh=GUL5bm9xtCYLeE3n3271NaGmzR0rKejaH7zNo7/9h6M=;
-  b=nASHUwjeU3rEzquhzJGPlB7X6O0NF6chFdxTX+/Cyg3p90OzasPSwY29
-   Dx1whrSx24baznvYGQSDtI228FvSxOgsQYOO5m/zP+JIBYpf1UgR0cSvz
-   lPcsJI5CaVBYsT2yFWPxX4s2GTidhfbBNl3ZgfYYaFyRbuxAkhMT2Tzle
-   g=;
-X-IronPort-AV: E=Sophos;i="5.48,373,1517875200"; 
-   d="scan'208";a="373603263"
-Received: from alln-core-6.cisco.com ([173.36.13.139])
-  by rcdn-iport-4.cisco.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 28 Mar 2018 22:21:10 +0000
-Received: from sjc-acme-v04.cisco.com (sjc-acme-v04.cisco.com [10.22.27.234])
-        by alln-core-6.cisco.com (8.14.5/8.14.5) with ESMTP id w2SMLAta009073
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-        Wed, 28 Mar 2018 22:21:10 GMT
-Received: from sjc-acme-v04.cisco.com (localhost.localdomain [127.0.0.1])
-        by sjc-acme-v04.cisco.com (8.13.8/8.13.8) with ESMTP id w2SML9eg027841;
-        Wed, 28 Mar 2018 15:21:09 -0700
-Received: (from brady@localhost)
-        by sjc-acme-v04.cisco.com (8.13.8/8.13.8/Submit) id w2SML9oF027837;
-        Wed, 28 Mar 2018 15:21:09 -0700
-From:   Erik E Brady <brady@cisco.com>
-To:     git@vger.kernel.org
-Cc:     Erik E Brady <brady@cisco.com>
-Subject: [PATCH] credential: cred helper fast exit can cause SIGPIPE, crash
-Date:   Wed, 28 Mar 2018 15:20:51 -0700
-Message-Id: <20180328222051.23684-1-brady@cisco.com>
-X-Mailer: git-send-email 2.9.3
+        id S1753431AbeC1WVm (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Mar 2018 18:21:42 -0400
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:41991 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753311AbeC1WVl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Mar 2018 18:21:41 -0400
+Received: by mail-pf0-f193.google.com with SMTP id a16so1791265pfn.9
+        for <git@vger.kernel.org>; Wed, 28 Mar 2018 15:21:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=teichroeb-net.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id;
+        bh=73fgJufxI2LNEj9pHuMduLI3ZGtt8K5r8iAQyBG28s0=;
+        b=xVByZkmw7XQGTDN4AJVVClzLqA8ReK3LncGEdJgI4Xe0zUaeYWrPFDcrncxIUHj+nP
+         FzCGdm0i9dPO0/jQcafWB9Ek+sw/TvKaZ+L8Kn4G3iHI3eSO6JRU3JsNBUyUePIt1V4B
+         lOL/oNSIvKl8xzQydHEwkHvc9AwMBDCBkhuoCIZhBE65ziO2uRdgupSH1tLFr6JfXY/6
+         3F0obI12eTlnuqacIYprUKYygqWm9jgV5tv22zl9TOypRzUlc/Aipf5fnyB9ob+f8Rce
+         ncnugMR7KnU9elouQ0APZnGsk1+sasyCVjAgLf5BWNEpk0dfDqSbTv1u6FcaPm4RozMz
+         0kyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=73fgJufxI2LNEj9pHuMduLI3ZGtt8K5r8iAQyBG28s0=;
+        b=rxNaE7YGDq2ODUcFAU0j07+dsspCx2S2canaYYNt9Lgivn73aGmBFqOdMcpIlSePEC
+         4qXoDApazLfqo5xdcYxzxfqfsf4UqnPte4o+KwbpwJYwuzX1eLO+OYEG9G9FeT661Skv
+         CcRmlfJQ8fiIlKYBI6sU+i+eyCm8pf3V9G5hYewWh2CvazSofLrgpHZ7T6MKrWrbMf5f
+         dZglVz7rD2FSmzNsbqsLWiK22nMtXrDfoz82mOSlGZrDHlAlmyKyav6ssN0vVQZ/41U2
+         m0rnz8nI54OMGvGHtN5peNunhHEtCq6q/FoZm1BLd/TC5UzVNJs1qZ2HXgtCl76/d7xI
+         qTDg==
+X-Gm-Message-State: AElRT7Ex7MHdAeezffwuuMhs2YGn2BScas2iklGZV+kBEeg/IgFKwksf
+        eT/B/gSWJoJhm84VUfauWC6NUbM=
+X-Google-Smtp-Source: AIpwx4+VgM8GDtiPBwAmQ2MEbHEH4+1+zBah1Ero47oGYlPSZjL7lZk8rlnFu214wsumfMErNodpkw==
+X-Received: by 10.99.117.78 with SMTP id f14mr3735028pgn.382.1522275700462;
+        Wed, 28 Mar 2018 15:21:40 -0700 (PDT)
+Received: from localhost.localdomain (S01066c3b6b1953d0.vc.shawcable.net. [24.80.205.243])
+        by smtp.gmail.com with ESMTPSA id e23sm8801907pfi.76.2018.03.28.15.21.39
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 28 Mar 2018 15:21:39 -0700 (PDT)
+From:   Joel Teichroeb <joel@teichroeb.net>
+To:     Git Mailing List <git@vger.kernel.org>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        gitster@pobox.com
+Cc:     Joel Teichroeb <joel@teichroeb.net>
+Subject: [PATCH v4 0/5] Convert some stash functionality to a builtin
+Date:   Wed, 28 Mar 2018 15:21:24 -0700
+Message-Id: <20180328222129.22192-1-joel@teichroeb.net>
+X-Mailer: git-send-email 2.16.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-credential.c, run_credential_helper(): now ignores SIGPIPE
-when writing to credential helper.  Avoids problem with race
-where cred helper exits very quickly and, after, git tries
-to write to it, generating SIGPIPE and crashing git.  To
-reproduce this the cred helper must not read from STDIN.
+I've been working on converting all of git stash to be a
+builtin, however it's hard to get it all working at once with
+limited time, so I've moved around half of it to a new
+stash--helper builtin and called these functions from the shell
+script. Once this is stabalized, it should be easier to convert
+the rest of the commands one at a time without breaking
+anything.
 
-This was seen with a custom credential helper, written in
-Go, which ignored the store command (STDIN not read) and
-then did a quick exit.  Even with this fast helper the race
-was pretty rare, ie: was only seen on some of our older VM's
-running 2.6.18-416.el5 #1 SMP linux for whatever reason.  On
-these VM's it occurred only once every few hundred git cmds.
----
- credential.c | 3 +++
- 1 file changed, 3 insertions(+)
+I've sent most of this code before, but that was targetting a
+full replacement of stash. The code is overall the same, but
+with some code review changes and updates for internal api
+changes.
 
-diff --git a/credential.c b/credential.c
-index 9747f47b1..62be651b0 100644
---- a/credential.c
-+++ b/credential.c
-@@ -5,6 +5,7 @@
- #include "run-command.h"
- #include "url.h"
- #include "prompt.h"
-+#include "sigchain.h"
- 
- void credential_init(struct credential *c)
- {
-@@ -227,8 +228,10 @@ static int run_credential_helper(struct credential *c,
- 		return -1;
- 
- 	fp = xfdopen(helper.in, "w");
-+	sigchain_push(SIGPIPE, SIG_IGN);
- 	credential_write(c, fp);
- 	fclose(fp);
-+	sigchain_pop(SIGPIPE);
- 
- 	if (want_output) {
- 		int r;
+Since there seems to be interest from GSOC students who want to
+work on converting builtins, I figured I should finish what I
+have that works now so they could build on top of it.
+
+The code is based on next as write_cache_as_tree was changed to
+take an object ID. It can easily be rebase on master by changing
+the two calls to write_cache_as_tree to use tha hash.
+
+The only comments on v3 were minor, so I feel this should be
+ready to go in soon.
+
+Previous threads:
+v1: https://public-inbox.org/git/20180325173916.GE10909@hank/T/
+v2: https://public-inbox.org/git/20180326011426.19159-1-joel@teichroeb.net/
+v3: https://public-inbox.org/git/20180327054432.26419-1-joel@teichroeb.net/
+
+Changes from v3:
+ - Fix the Windows build
+ - Fix a use after free in the error handling
+
+Joel Teichroeb (5):
+  stash: improve option parsing test coverage
+  stash: convert apply to builtin
+  stash: convert drop and clear to builtin
+  stash: convert branch to builtin
+  stash: convert pop to builtin
+
+ .gitignore              |   1 +
+ Makefile                |   1 +
+ builtin.h               |   1 +
+ builtin/stash--helper.c | 633 ++++++++++++++++++++++++++++++++++++++++++++++++
+ git-stash.sh            | 136 +----------
+ git.c                   |   1 +
+ t/t3903-stash.sh        |  16 ++
+ 7 files changed, 661 insertions(+), 128 deletions(-)
+ create mode 100644 builtin/stash--helper.c
+
 -- 
-2.16.3.dirty
+2.16.2
 
