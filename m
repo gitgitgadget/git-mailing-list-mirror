@@ -2,72 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2E5171F424
-	for <e@80x24.org>; Wed, 28 Mar 2018 01:26:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5106C1F404
+	for <e@80x24.org>; Wed, 28 Mar 2018 03:31:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752774AbeC1B0j (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Mar 2018 21:26:39 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:48804 "EHLO dcvr.yhbt.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752594AbeC1B0i (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Mar 2018 21:26:38 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-        by dcvr.yhbt.net (Postfix) with ESMTP id EE3331F404;
-        Wed, 28 Mar 2018 01:26:37 +0000 (UTC)
-Date:   Wed, 28 Mar 2018 01:26:37 +0000
-From:   Eric Wong <e@80x24.org>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 2/2] send-email: supply a --send-delay=1 by default
-Message-ID: <20180328012637.GA12551@whir>
-References: <20180325182803.30036-1-avarab@gmail.com>
- <20180325182803.30036-3-avarab@gmail.com>
- <20180325210132.GE74743@genre.crustytoothpaste.net>
- <87605jyfvi.fsf@evledraar.gmail.com>
+        id S1751642AbeC1Da7 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Mar 2018 23:30:59 -0400
+Received: from mail-yw0-f180.google.com ([209.85.161.180]:44490 "EHLO
+        mail-yw0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750947AbeC1Da6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Mar 2018 23:30:58 -0400
+Received: by mail-yw0-f180.google.com with SMTP id z21so346035ywg.11
+        for <git@vger.kernel.org>; Tue, 27 Mar 2018 20:30:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=tfzSjVOn1FukJEhqKvSKpagQE3NcUF9f60JUmsqby2U=;
+        b=qIvXZETetjrg/Xr6QCA/p48hFKt38cyvRRg/t/QZ4wXW7CgiSBpIZDw2zYcgH+/Adz
+         f03i1qflNkIJQINO30uaM6prKUCk4MRImxcJpoa4Wg/fl5pVY6pRrGOjQTnSG208lWhu
+         1QNG610dbIg/DZ3lDLWZtvzP+dmuKedre9MKqcF5ircayKsAlhG3g3GsNMhEPxP7lmvy
+         H3rFvFqCwv2YG96/X6VXz25az54VpAIZbSErtnRyL4NHtsudCpLq1tRSNBCS0T+qJnOO
+         Y5O67sYY8QAmum6i/8MYyAoiI2HJwwzjC7uF96if25fqi1EwVe/LtufK8GcfpmrhNTSS
+         DulQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=teichroeb-net.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=tfzSjVOn1FukJEhqKvSKpagQE3NcUF9f60JUmsqby2U=;
+        b=lNSeophl51k+YBlK6zheeuISQxkC7wHV5b22hZSdhuQUverf4R1WQK5sD05E/mpeeT
+         zEQU+A9dbKiGV081wET5Qdt5ZzAWteu1ECBxbN47kDabuewIyOdWkJKWoGRFt9wuZQbb
+         qZBGjaefj3wLxhuhrFjIqTbLluyr3rPNTu1e1+fhzcoausBg0YQhWOAX2QC/dj5Srqhz
+         hPGclLDL9EhJoEHIAilOvLN1Q3/NgVENYWU+9Ni/Rf7TT/6Bll4bjvyH1n3RujnbgYOx
+         wM2k6puJEv6s4QtEvewI5pSE9VhxPkwyVR5IHl8jzF5RmXYFy2M0rUUv2yv9r48Q2cNB
+         smTw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=tfzSjVOn1FukJEhqKvSKpagQE3NcUF9f60JUmsqby2U=;
+        b=Ka+9qawUxUalte6kNOjMHvlLNRxYSJ8k+H+WlOFGhxhlhQ0zv6qxdcDh3LXGK789sE
+         5CZY+Xm50YRaMiN0DbonQClXI/o+2TEVjLrKAHWiLL3kmpNOm+Woqj4jj5MHaNaUeDT2
+         GuOMwD4Rwm+NAjh5Zwb/ZME6nrXL/lPpcLUwPO4v8FdLLEiBoY1/4k6T0be9/C3cW9gN
+         WKHUoE9W0OLNNIttNtzBb4tYcna3t22OfUhjdtekbS+AZYrudXyF9KF6GUYsLszA9Qjk
+         4YGFUwXCrWG55ShdkAodgd0PH6RTOa9CE1p2U38NGc0NhUBFnsIuwjW6hMXlyVTfRJm5
+         EMEQ==
+X-Gm-Message-State: AElRT7H0Zm7ha0arhHFxgxSnvoERY8V0rSfXh5w3YzPbtCyK59aQ/I7P
+        2OkRaCOQbsB3TVEgi9PHtCizXvLyYK0Q4H+rpLs=
+X-Google-Smtp-Source: AIpwx48AeRycMz/UsmiDrmBkrInPxKyV8MccvsnhmXysNl8edijAmpa0rScW91LKJYwyDd4E25hURIW9yMN0j62x74g=
+X-Received: by 10.129.181.76 with SMTP id c12mr1190516ywk.250.1522207857331;
+ Tue, 27 Mar 2018 20:30:57 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87605jyfvi.fsf@evledraar.gmail.com>
+Received: by 2002:a25:3804:0:0:0:0:0 with HTTP; Tue, 27 Mar 2018 20:30:36
+ -0700 (PDT)
+In-Reply-To: <20180325164300.GA10909@hank>
+References: <20180324173707.17699-1-joel@teichroeb.net> <20180324173707.17699-2-joel@teichroeb.net>
+ <20180325164300.GA10909@hank>
+From:   Joel Teichroeb <joel@teichroeb.net>
+Date:   Tue, 27 Mar 2018 20:30:36 -0700
+X-Google-Sender-Auth: x1UDetZggGEaOUSM-vOzFI_2-s0
+Message-ID: <CA+CzEk_vRc2AQ+Cxn66TmqbYjDcMsgy0-QXLsJwKRLE70nip_A@mail.gmail.com>
+Subject: Re: [PATCH 1/4] stash: convert apply to builtin
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason <avarab@gmail.com> wrote:
-> Good point. I also see that (via git log --author=Ævar --grep='^\[PATCH
-> ') that this series itself arrived out of order (0 -> 2 -> 1), but I
-> don't know to what extent public-inbox itself might be batching things.
+On Sun, Mar 25, 2018 at 9:43 AM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
+> On 03/24, Joel Teichroeb wrote:
+>> ---
+>
+> Missing sign-off?  I saw it's missing in the other patches as well.
+>
 
-public-inbox doesn't batch, aside from when the
-public-inbox-watch process gets restarted and needs to catch up
-using readdir.  Once it's done catching up with readdir, it
-gets into an inotify loop which injects messages in the order
-the MTA (or offlineimap) puts them in a Maildir.
+Thanks! I always forget to add a sign-off.
 
-Right now, public-inbox only sorts by Date: header in the mail.
+>> [...]
+>> +
+>> +     if (info->has_u) {
+>> +             struct child_process cp = CHILD_PROCESS_INIT;
+>> +             struct child_process cp2 = CHILD_PROCESS_INIT;
+>> +             int res;
+>> +
+>> +             cp.git_cmd = 1;
+>> +             argv_array_push(&cp.args, "read-tree");
+>> +             argv_array_push(&cp.args, sha1_to_hex(info->u_tree.hash));
+>> +             argv_array_pushf(&cp.env_array, "GIT_INDEX_FILE=%s", stash_index_path);
+>> +
+>> +             cp2.git_cmd = 1;
+>> +             argv_array_pushl(&cp2.args, "checkout-index", "--all", NULL);
+>> +             argv_array_pushf(&cp2.env_array, "GIT_INDEX_FILE=%s", stash_index_path);
+>> +
+>> +             res = run_command(&cp) || run_command(&cp2);
+>> +             remove_path(stash_index_path);
+>> +             if (res)
+>> +                     return error(_("Could not restore untracked files from stash"));
+>
+> A minor change in behaviour here is that we are removing the temporary
+> index file unconditionally here, while we would previously only remove
+> it if both 'read-tree' and 'checkout-index' would succeed.
+>
+> I don't think that's a bad thing, we probably don't want users to try
+> and use that index file in any way, and I doubt that's part of anyones
+> workflow, so I think cleaning it up makes sense.
+>
 
-The next Xapian schema revision of public-inbox will use
-internally sorts search results(*) by the date in the newest
-Received: header.  That is analogous to git committer date.  The
-displayed message date will still be sorted by the Date: header
-(analogous to git author date); since git-send-email already
-alters the Date: in a series for sorting.
-
-This allow messages/threads which are actually new get bumped to
-the top of the homepage; regardless of how wrong the original
-sender's clock was.
-
-It should help prevent kernel developers from crafting message
-dates with optimization for classic^Wextra reviews in mind :)
-
-
-(*) all the look-at-a-bunch-of-messages operations, including
-    the landing page (e.g. https://public-inbox.org/git/)
-    is a Xapian search query, nowadays; but "git log"
+I'm not sure about that. The shell script has a trap near the start in
+order to clean up the temp index, unless I'm understanding the shell
+script incorrectly.
