@@ -2,124 +2,177 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8D2DD1F404
-	for <e@80x24.org>; Wed, 28 Mar 2018 00:11:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8AE671F404
+	for <e@80x24.org>; Wed, 28 Mar 2018 00:15:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752161AbeC1ALC (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Mar 2018 20:11:02 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:45771 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752008AbeC1ALB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Mar 2018 20:11:01 -0400
-Received: by mail-wr0-f196.google.com with SMTP id u11so540360wri.12
-        for <git@vger.kernel.org>; Tue, 27 Mar 2018 17:11:01 -0700 (PDT)
+        id S1752159AbeC1APo (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Mar 2018 20:15:44 -0400
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:34625 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752129AbeC1APn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Mar 2018 20:15:43 -0400
+Received: by mail-pf0-f194.google.com with SMTP id q9so293488pff.1
+        for <git@vger.kernel.org>; Tue, 27 Mar 2018 17:15:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=Vijlvqm44Jt2zzwkKHob7Z7wSyumE22909U0IGcL4hM=;
-        b=TGajs5P+AVjAiyKq93ICtS/HOn/EwXXulhmDx5xJ6gbivbnr6cSzHztZBuUg/c/76S
-         8YCHVhmwq91f+WCYlEySU/yUp6NereEvl9wJ76dFa0TJQWpNceYl4+b625SXOCPeOy9C
-         garA7v+JZWEfqubpmJDGUT4W/8jkCxH5fawQsasPunXaLWCbXAD2VM4jAcJhi45q9Icp
-         1PgvqzENmQmPXq9OxteSYTjCoT2HVU04ecXFXQg865DguLlRByi/hHuLrt/0Y0srvif6
-         mScuOfjmZlIzs+eaGQB9n+BhWA7whKynxgIaoUms2VvODHsbgEyVG1eq4i7EHMg9AXPZ
-         qVcQ==
+        d=saville-com.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id;
+        bh=QRndHMATYOCyFN/YzAKmTSMcpQcV7uG4ZIoSm9dsY6Q=;
+        b=FQn9zwqqIfxnHQIb4KJDQ7WBXmA6vz8PS0eJtFoN1oNn/A6JprP0Wh8xliAcRNLUPW
+         BxRLeJphXQxKCs3ETn55rk18lXpdJCWME2PF5cc6lklpvuQdE9aXl/xa8dRcmWk1N3sb
+         x/W8SaHJUHPKBRyfgK7iLZwnAeGVn23lLQ4xFlFAsD27qJCTpKGKi6QOItxhexI442C/
+         rJzCd1w7nYm8v1KWljVLBHSMiJthXpwBLSNwHcx89leYE1tfIadRZSihv00jIhqiClHr
+         2lmxgo6ZYf52j6Q86r3GMh7E5GcMxmlhQMwo88RSSdV+AEuG01Obg2u/UjdvFLqssDIi
+         wKiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=Vijlvqm44Jt2zzwkKHob7Z7wSyumE22909U0IGcL4hM=;
-        b=Q9de2fUs0Sa5T6tXcWAtuWqPrWbopzqVdDScU2uxitTtlXXbpsZhY4cETx8WEIp+Kg
-         ZFqxnIFscZqujM9rQQXR7S6Wc+7X1vDEUY+EVHmoSQJLnMEyBfvsYXyvX+CfvdjuL0IX
-         JKNocUb8sbRL5HhWB5v2uRjPh/BnW2w/IT0T1d7eIVHkcz1ZqBjuQKUInSGl0qRVU784
-         ju0jP6q3CcC+VCo+uKs6+WUuOhYtz5Acczffw6BtveqB6OszgX/Rr5NMjxePCbRusWxP
-         1Yer+Nkm6Ag/FKhDh0ORXhZfAJcwSsmysYyu3iRSapwFe/ZA4oTS8z4cevH7ZFn4VVJN
-         nYjw==
-X-Gm-Message-State: AElRT7ECZy21KNpYYCWShP8ke18eYYBGouCVs3BCLmT+00ORqSFyjiLe
-        dR83pPTxpN3q8jQICmhw5tdrdQ9G
-X-Google-Smtp-Source: AIpwx48/1WjbCJSXhrw3NBRtOVgoAGmpcAXnILVviczMXQ068+R1PJ4CC4A7s0QhkAHk6QC/UWZhtA==
-X-Received: by 10.223.158.208 with SMTP id b16mr978077wrf.274.1522195859969;
-        Tue, 27 Mar 2018 17:10:59 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id u143sm4011611wmd.46.2018.03.27.17.10.59
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 27 Mar 2018 17:10:59 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
-Subject: Re: [PATCH v2] test_must_be_empty: simplify file existence check
-References: <20180326124847.GA21993@sigill.intra.peff.net>
-        <20180326131124.13003-1-szeder.dev@gmail.com>
-Date:   Tue, 27 Mar 2018 17:10:58 -0700
-In-Reply-To: <20180326131124.13003-1-szeder.dev@gmail.com> ("SZEDER
- =?utf-8?Q?G=C3=A1bor=22's?=
-        message of "Mon, 26 Mar 2018 15:11:24 +0200")
-Message-ID: <xmqqd0zp9i0d.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=QRndHMATYOCyFN/YzAKmTSMcpQcV7uG4ZIoSm9dsY6Q=;
+        b=hKLZ4WGmQsS+8cQoRTA0KXguD9+gEYPml8e9F1lPt2iA5ktDMFKqOf6mgKEgHobS+K
+         ROq65SlkEN1+NonOSwBxI6/LlT28/W65ZeVT3bG7FUaO0LTQBQJTaqC19f1iMHxFahCc
+         Ee+dW/nfPzc1dWhWWUNAqdaYiVmn96HIZCN7dXDFxu0JzOGWms2ZejslUgusA0QB55kO
+         BNw67RNkzskXmYFX7ZlwKNKxm3UvnMosjdI2Wj8nsOh4IZgV/U7GqILc4OzJD7VECBYy
+         y7+lEeGo56N/Jwm4wnoIwT5QisYnncavIE8Ke1irCy+RUmJlrl/TiSHs6tk3sbbK6XNq
+         XH4A==
+X-Gm-Message-State: AElRT7FEgt50QGXflQwaOhFOlNKW5ItNQEn1yVYyhEgqRWBCU21JNi+c
+        PeFGF8E3aDKiNRatIV5bQnwzH8SB2wI=
+X-Google-Smtp-Source: AIpwx48NVkUBMSF7vhaCzD6t4bQsJ1qTIDwP73wDVoxm2hun1/JaD9kXEVCPvuqGSTMBomWr7xf79g==
+X-Received: by 10.98.76.68 with SMTP id z65mr1081308pfa.181.1522196142391;
+        Tue, 27 Mar 2018 17:15:42 -0700 (PDT)
+Received: from wink-desktop.hsd1.ca.comcast.net ([2601:647:cb02:7980:314d:6e5e:475c:ebd3])
+        by smtp.gmail.com with ESMTPSA id j65sm4315423pge.58.2018.03.27.17.15.40
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 27 Mar 2018 17:15:40 -0700 (PDT)
+From:   Wink Saville <wink@saville.com>
+To:     git@vger.kernel.org
+Cc:     Wink Saville <wink@saville.com>
+Subject: [RFC PATCH 0/1] bdl-lib.sh: add bash debug logger
+Date:   Tue, 27 Mar 2018 17:15:34 -0700
+Message-Id: <cover.1522190580.git.wink@saville.com>
+X-Mailer: git-send-email 2.16.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SZEDER Gábor <szeder.dev@gmail.com> writes:
+Add bdl-lib.sh which provides functions to assit in debugging git
+shell scripts and tests. The primary public interace are two routines,
+bdl and bdl_nsl which print strings. The difference between the two
+is that bdl outputs location of the statement optionally followed by
+a string to print. For example:
 
-> Commit 11395a3b4b (test_must_be_empty: make sure the file exists, not
-> just empty, 2018-02-27) basically duplicated the 'test_path_is_file'
-> helper function in 'test_must_be_empty'.
->
-> Just call 'test_path_is_file' to avoid this code duplication.
->
-> Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
-> ---
->
-> The only change is to refer to the right commit in the log message.
->
->  t/test-lib-functions.sh | 7 ++-----
->  1 file changed, 2 insertions(+), 5 deletions(-)
->
-> diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-> index d2eaf5ab67..36ad8accdd 100644
-> --- a/t/test-lib-functions.sh
-> +++ b/t/test-lib-functions.sh
-> @@ -718,11 +718,8 @@ verbose () {
->  # otherwise.
->  
->  test_must_be_empty () {
-> -	if ! test -f "$1"
-> -	then
-> -		echo "'$1' is missing"
-> -		return 1
-> -	elif test -s "$1"
-> +	test_path_is_file "$1" &&
-> +	if test -s "$1"
->  	then
->  		echo "'$1' is not empty, it contains:"
->  		cat "$1"
+  $ cat -n bdl-exmpl1.sh
+       1  #!/usr/bin/env bash
+       2  . bdl-lib.sh
+       3  bdl "hi"
+       4  
+       5  # If no parameters just the location is printed
+       6  bdl
+  $ ./bdl-exmpl1.sh 
+  bdl-exmpl1.sh:3: hi
+  bdl-exmpl1.sh:6:
 
-"Just call it" is fine as an idea but
+bdl_nsl means bdl with no source location being printed and at least
+one parameter is required. For example:
 
-	A &&
-	if B
-	then
-		...
-	fi
+  $ cat -n bdl-exmpl2.sh 
+       1  #!/usr/bin/env bash
+       2  . bdl-lib.sh
+       3  bdl_nsl "hi"
+       4	
+       5  # If no parameters nothing is printed
+       6  bdl_nsl
+  $ ./bdl-exmpl1.sh 
+  hi
 
-is somewhat questionable.  Shouldn't we make it
+These routines can also take two parameters where the first parameter is
+the destination for the string. There are two types of destinations,
+either a single digit file descriptor 1..9 or a file name. For example:
 
-	if A && B
-	then
-		...
-	fi
+  $ cat -n bdl-exmpl3.sh
+       1  #!/usr/bin/env bash
+       2  . bdl-lib.sh
+       3  
+       4  # Output to STDOUT
+       5  bdl_nsl 1 "hi there"
+       6  
+       7  # Map 5 to STDOUT
+       8  exec 5>&1
+       9  bdl 5 "yo dude"
+      10  
+      11  # Output to a file
+      12  bdl bdl_out.txt "good bye!"
+      13  cat bdl_out.txt
+      14  rm bdl_out.txt
+  $ ./bdl-exmpl3.sh 
+  hi there
+  bdl-exmpl3.sh:9: yo dude
+  bdl-exmpl3.sh:12: good bye!
 
-instead?  That way, if we ever need to add an else clause, the logic
-flow would be more obvious, no?
+If a destination is not provided as a parameter than there are two
+variables, bdl_dst and bdl_stdout, that can be used to provide a
+defaults. With bdl_dst taking presedence over bdl_stdout and a
+destination parameter taking presedence over the variables. For example:
+
+  $ cat -n bdl-exmpl4.sh 
+       1  #!/usr/bin/env bash
+       2  . bdl-lib.sh
+       3  
+       4  # Set defaults with bdl_dst taking presedence
+       5  bdl_dst=bdl_dst_out.txt
+       6  bdl_stdout=5
+       7  
+       8  bdl_nsl "printed by bdl_nsl to bdl_dst_out.txt"
+       9  bdl "printed by bdl to bdl_dst_out.txt"
+      10  
+      11  # But the parameter the ultimate presedence
+      12  bdl bdl_out.txt "good bye to bdl_out.txt"
+      13  
+      14  cat bdl_dst_out.txt
+      15  cat bdl_out.txt
+      16  
+      17  rm bdl_dst_out.txt
+      18  rm bdl_out.txt
+      19  
+      20  # Now clear bdl_dst and bdl_stdout takes presedence
+      21  # but parameters take presedence
+      22  bdl_dst=
+      23  exec 5>&1
+      24  
+      25  bdl_nsl "monkeys via 5"
+      26  bdl 1 "horses via 1"
+      27  bdl bdl_out.txt "orcas to bdl_out.txt"
+      28  
+      29  cat bdl_out.txt
+      30  rm bdl_out.txt
+  $ ./bdl-exmpl4.sh 
+  printed by bdl_nsl to bdl_dst_out.txt
+  bdl-exmpl4.sh:9: printed by bdl to bdl_dst_out.txt
+  bdl-exmpl4.sh:26: orcas to bdl_out.txt
+  bdl-exmpl4.sh:12: good bye to bdl_out.txt
+  monkeys via 5
+  bdl-exmpl4.sh:26: horses via 1
+  bdl-exmpl4.sh:27: orcas to bdl_out.txt
+
+
+TODO: More tests and documentation needed.
+
+
+Wink Saville (1):
+  bdl-lib.sh: add bash debug logger
+
+ bdl-exmpl.sh       |  46 ++++++++++++
+ bdl-lib.sh         | 215 +++++++++++++++++++++++++++++++++++++++++++++++++++++
+ t/t0014-bdl-lib.sh | 115 ++++++++++++++++++++++++++++
+ t/test-lib.sh      |   4 +
+ 4 files changed, 380 insertions(+)
+ create mode 100755 bdl-exmpl.sh
+ create mode 100644 bdl-lib.sh
+ create mode 100755 t/t0014-bdl-lib.sh
+
+-- 
+2.16.3
 
