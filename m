@@ -2,180 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C67A21F404
-	for <e@80x24.org>; Wed, 28 Mar 2018 12:10:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E36921F404
+	for <e@80x24.org>; Wed, 28 Mar 2018 12:24:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752216AbeC1MKz (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Mar 2018 08:10:55 -0400
-Received: from mail.javad.com ([54.86.164.124]:50820 "EHLO mail.javad.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750820AbeC1MKy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Mar 2018 08:10:54 -0400
-Received: from osv (unknown [89.175.180.246])
-        by mail.javad.com (Postfix) with ESMTPSA id 8AE803E898;
-        Wed, 28 Mar 2018 12:10:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1522239053;
-        bh=UXw95nw8GHcxSXrjN7TiaotiAfnVSOJ7t/hM8CWtHEY=; l=2975;
-        h=Received:From:To:Subject;
-        b=eaOTOtDOJLDO9+ePZA/DbSJZyQQBiZSkbo+cC2Znr2b7vlnS2q/x8IP2mawwwiqun
-         5VpcFY2LDRmWgm13u4Y3+jkvssh8MrvKiB8zO67B2I0B1HHDqsVUvXf26chmaPnHdr
-         mrce/APhO1WWoXX3Dz4zsmKwOpk6EZbHFHaugrsE=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1522239053;
-        bh=UXw95nw8GHcxSXrjN7TiaotiAfnVSOJ7t/hM8CWtHEY=; l=2975;
-        h=Received:From:To:Subject;
-        b=eaOTOtDOJLDO9+ePZA/DbSJZyQQBiZSkbo+cC2Znr2b7vlnS2q/x8IP2mawwwiqun
-         5VpcFY2LDRmWgm13u4Y3+jkvssh8MrvKiB8zO67B2I0B1HHDqsVUvXf26chmaPnHdr
-         mrce/APhO1WWoXX3Dz4zsmKwOpk6EZbHFHaugrsE=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1522239053;
-        bh=UXw95nw8GHcxSXrjN7TiaotiAfnVSOJ7t/hM8CWtHEY=; l=2975;
-        h=Received:From:To:Subject;
-        b=eaOTOtDOJLDO9+ePZA/DbSJZyQQBiZSkbo+cC2Znr2b7vlnS2q/x8IP2mawwwiqun
-         5VpcFY2LDRmWgm13u4Y3+jkvssh8MrvKiB8zO67B2I0B1HHDqsVUvXf26chmaPnHdr
-         mrce/APhO1WWoXX3Dz4zsmKwOpk6EZbHFHaugrsE=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1522239053;
-        bh=UXw95nw8GHcxSXrjN7TiaotiAfnVSOJ7t/hM8CWtHEY=; l=2975;
-        h=Received:From:To:Subject;
-        b=eaOTOtDOJLDO9+ePZA/DbSJZyQQBiZSkbo+cC2Znr2b7vlnS2q/x8IP2mawwwiqun
-         5VpcFY2LDRmWgm13u4Y3+jkvssh8MrvKiB8zO67B2I0B1HHDqsVUvXf26chmaPnHdr
-         mrce/APhO1WWoXX3Dz4zsmKwOpk6EZbHFHaugrsE=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1522239053;
-        bh=UXw95nw8GHcxSXrjN7TiaotiAfnVSOJ7t/hM8CWtHEY=; l=2975;
-        h=Received:From:To:Subject;
-        b=eaOTOtDOJLDO9+ePZA/DbSJZyQQBiZSkbo+cC2Znr2b7vlnS2q/x8IP2mawwwiqun
-         5VpcFY2LDRmWgm13u4Y3+jkvssh8MrvKiB8zO67B2I0B1HHDqsVUvXf26chmaPnHdr
-         mrce/APhO1WWoXX3Dz4zsmKwOpk6EZbHFHaugrsE=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1522239053;
-        bh=UXw95nw8GHcxSXrjN7TiaotiAfnVSOJ7t/hM8CWtHEY=; l=2975;
-        h=Received:From:To:Subject;
-        b=eaOTOtDOJLDO9+ePZA/DbSJZyQQBiZSkbo+cC2Znr2b7vlnS2q/x8IP2mawwwiqun
-         5VpcFY2LDRmWgm13u4Y3+jkvssh8MrvKiB8zO67B2I0B1HHDqsVUvXf26chmaPnHdr
-         mrce/APhO1WWoXX3Dz4zsmKwOpk6EZbHFHaugrsE=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1522239053;
-        bh=UXw95nw8GHcxSXrjN7TiaotiAfnVSOJ7t/hM8CWtHEY=; l=2975;
-        h=Received:From:To:Subject;
-        b=eaOTOtDOJLDO9+ePZA/DbSJZyQQBiZSkbo+cC2Znr2b7vlnS2q/x8IP2mawwwiqun
-         5VpcFY2LDRmWgm13u4Y3+jkvssh8MrvKiB8zO67B2I0B1HHDqsVUvXf26chmaPnHdr
-         mrce/APhO1WWoXX3Dz4zsmKwOpk6EZbHFHaugrsE=
-Authentication-Results: mail.javad.com;
-        spf=pass (sender IP is 89.175.180.246) smtp.mailfrom=osv@javad.com smtp.helo=osv
-Received-SPF: pass (mail.javad.com: connection is authenticated)
-Received: from osv by osv with local (Exim 4.84_2)
-        (envelope-from <osv@osv.gnss.ru>)
-        id 1f19ul-0003L9-IM; Wed, 28 Mar 2018 15:10:51 +0300
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Jacob Keller <jacob.keller@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Git Mailing List <git@vger.kernel.org>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC] Rebasing merges: a jorney to the ultimate solution(RoadClear)
-References: <87y3jtqdyg.fsf@javad.com>
-        <1298a701-a860-a675-83d7-72f29e14cd2b@talktalk.net>
-        <CA+P7+xpgChuvh_vsPktBkOEhF=MjJh1n_3jD0-n4d67j9kYqzw@mail.gmail.com>
-        <ee809701-a6d8-157d-09cd-cebbf2e949ec@gmail.com>
-        <1580e48a-be44-38dd-79af-8a2a31c5712e@talktalk.net>
-        <nycvar.QRO.7.76.6.1803061812090.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <754e2735-1288-9a8d-c8bd-ab39cf733812@gmail.com>
-        <nycvar.QRO.7.76.6.1803070810550.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <c5a5c2cc-6a11-440f-5b9b-964ae1ca07dd@talktalk.net>
-        <f3872fb9-01bc-b2f1-aee9-cfc0e4db77d6@gmail.com>
-        <nycvar.QRO.7.76.6.1803111301340.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <b329bb98-f9d6-3d51-2513-465aad2fa37a@gmail.com>
-        <nycvar.QRO.7.76.6.1803121142550.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <243ca23d-77a9-4ae1-a120-de6c6b195cdc@gmail.com>
-        <nycvar.QRO.7.76.6.1803261455130.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <87woxyf4lk.fsf@javad.com>
-        <nycvar.QRO.7.76.6.1803271536020.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <874ll0d9nt.fsf@javad.com>
-        <CA+P7+xoDQ2mzhxeZPFhaY+TaSoKkQm=5AtoduHH06-VggOJ2jg@mail.gmail.com>
-Date:   Wed, 28 Mar 2018 15:10:51 +0300
-In-Reply-To: <CA+P7+xoDQ2mzhxeZPFhaY+TaSoKkQm=5AtoduHH06-VggOJ2jg@mail.gmail.com>
-        (Jacob Keller's message of "Wed, 28 Mar 2018 00:20:31 -0700")
-Message-ID: <87k1tw8kok.fsf@javad.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+        id S1751903AbeC1MY2 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Mar 2018 08:24:28 -0400
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:36697 "EHLO
+        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751207AbeC1MY1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Mar 2018 08:24:27 -0400
+Received: by mail-pg0-f65.google.com with SMTP id 201so866666pgg.3
+        for <git@vger.kernel.org>; Wed, 28 Mar 2018 05:24:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=YXU+VGc7yvRKMhdJIvxFiqvI6dgWpBM6McYDBCsYRG0=;
+        b=ST+IMjFNBn7QOGohYhKDL6nvqd5i1ybGiTevfu02hCCwnBPUZs6qF2PGwtClBOXtj2
+         ZHcWiUitTbOiJ+cPW2yKaFEoKx16qPbkb/a17UNcUT7026YnXQyW6rGWsvg5oYX9tMsE
+         XED0dFg1TKcd7Eo2Ah8+Byvcf+9MO1xL8+1ZIsPBFWrp2/RgQc1Qq/QHeCgkjLX2CbzN
+         YXaAiXBPMZkEH0P8Gvmt/0ckwijjQ8hGzF/ps/HF2Ks7cUwgAVzuRmcMIhCE+5LS9sm8
+         nJsI5k1tdw1bZkCY2XQmxuFXCDFEavyHIRgywSQsVH1F9R6egpe9vOGp2oLKoUbwZeVT
+         Nngg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=YXU+VGc7yvRKMhdJIvxFiqvI6dgWpBM6McYDBCsYRG0=;
+        b=LaiR8x9XhpIApz3NuT4y5/kRajowWH791dzA2zkvpAvDt8XrUIK+gjuxA9QdwuCsLx
+         h6wTXw/lPG3J4EQnncW+vnZbIlxy0ruWHq1bPTVeMYIkpPLQD96+CwyBw+oiYtMrOsnw
+         a5Dwveg4Nqg5Aq9UoGvgmy1OrlQZBW+JnbB4CTYSFbRSjFqIWjegSKOhhxJe/0MSxfIe
+         IW/OP7ZSEuOg2l7EHIXXn163M2J5bRtdJzws+VJ/+pZTBUMLCS0DNXd6uPE3UR3Q+oVS
+         cTFVNm3DdkglNGXuUvNOinb1e1t3aU4xNAJzCxaXJ0WyDLzsjkauLRZB0J2GKHLrsily
+         OnEA==
+X-Gm-Message-State: AElRT7EqCy8bmF3Z0ot6gPglarKHDCTFDJZKHi+jcgHwL62DzCdnd10v
+        YE6vEAdJc9FE2dCBbE4krVoxXHMQPnpbxeJzYDsUbw==
+X-Google-Smtp-Source: AIpwx4/awuL6ab/GNBsbUbAUFCD1WpK5pVbtKEkCqU2kz4TztyT8nO6f9ivTaM7h0JQZXfUKc71TbRJxlW29c+LJAes=
+X-Received: by 10.101.88.130 with SMTP id d2mr2418871pgu.383.1522239867431;
+ Wed, 28 Mar 2018 05:24:27 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.236.191.141 with HTTP; Wed, 28 Mar 2018 05:24:26 -0700 (PDT)
+In-Reply-To: <20180328084839.GA31002@sigill.intra.peff.net>
+References: <cover.1520680894.git.martin.agren@gmail.com> <20180328084839.GA31002@sigill.intra.peff.net>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Wed, 28 Mar 2018 14:24:26 +0200
+Message-ID: <CAN0heSru4-VoCTxZ6OHU_jdTs0__xvRmd45Dd0H3L8apMKkW6w@mail.gmail.com>
+Subject: Re: [PATCH 0/3] shortlog: do not accept revisions when run outside repo
+To:     Jeff King <peff@peff.net>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jacob Keller <jacob.keller@gmail.com> writes:
+On 28 March 2018 at 10:48, Jeff King <peff@peff.net> wrote:
+> On Sat, Mar 10, 2018 at 12:52:09PM +0100, Martin =C3=85gren wrote:
+>
+>> Someone trying this out might notice that `man git-shortlog` renders
+>> "\--" as "\--", which is not wanted. (Also visible on git-scm.com...)
+>> There is quite some history around such double-slashes and compatibility
+>> with AsciiDoc-versions, so I'd rather not do a "while at it" there.
+>> Regardless of the destiny of patch 1/3, I will follow up later to
+>> address various forms of "\--" throughout the tree.
+>
+> I didn't see any follow-up here, but in case you were delaying because
+> the history search seemed boring: dropping the backslash is the right
+> thing to do.  See the discussion in 1c262bb7b2 (doc: convert \--option
+> to --option, 2015-05-13).
 
-> On Tue, Mar 27, 2018 at 10:57 PM, Sergey Organov <sorganov@gmail.com> wrote:
->>
->> Hi Johannes,
->>
->> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Thanks for pinging and thanks for the pointer. That commit is indeed
+helpful and I am referencing it in a local topic, which I will submit
+once ma/shortlog-revparse hits master.
 
-[...]
-
-> I'm pretty sure the fact has already been accepted, as he did indeed
-> implement and develop a strategy for rebasing the merges (Phillip's
-> strategy). He hasn't chosen to re-write all the code such that it was
-> "always" this method, but rather kept it as an incremental patch on top as
-> it makes it easier to review the changes since we've already spent time
-> looking at and reviewing the --recreate-merges patches.
-
-That's perfectly OK with me, except that he apparently still can't
-accept the fact that rebasing a non-merge is not fundamentally different
-from rebasing a merge.
-
-"Rebase non-merge" is just a special case of generic "rebase commit",
-provided we do have generic method that is capable to rebase any commit,
-and we do have it, Phillip's or not.
-
-> Having watched from the sidelines, I've been unable to completely
-> understand and parse the strategies completely, but I've also found
-> Phillip's method to be easier to understand.
-
-It doesn't matter at all for this particular discussion. Let's call the
-method "rebase a commit", a black-box, that is capable to rebase any
-commit. I don't care what implementation is inside. Rebasing a commit is
-still rebasing a commit, and it should not be called "merge" in the todo
-list.
-
-> As someone who's read the discussion on the sidelines, it certainly
-> does feel like there is some misunderstanding on both sides. Neither
-> of you have been able to get the other to see what you clearly both
-> believe strongly.
-
-Calling "rebase" operation "merge" is wrong no matter what method is
-used to rebase a commit. Isn't it obvious? It's currently called "pick"
-in the todo and it seems natural to continue to use that name for
-picking a commit, whatever number of parents it happens to have.
-
-> Unfortunately I do not have any suggestion as to how to resolve the
-> misunderstanding.
-
-This sub-thread is not about method at all, so no resolution on that
-matter is required here. This sub-thread is about todo format only.
-
-> Sergey's method appears to me to be more complex, and I agree that the
-> extra steps could cause more merge conflicts, at least in how it was
-> originally conceptualized and implemented. It is possible that we are
-> mis-understanding the terminology for U1 and U2? It sure seems like it
-> introduces more changes for merge conflicts than the strategy proposed by
-> Phillip. However, the latest editions also sound a lot closer to Phillip's
-> strategy in general, so maybe I have mis-understood how it works and what
-> is fundamentally different about the two strategies.
-
-There is nothing fundamentally different between them and thus I don't
-care in this discussion what exact method is being used.
-
--- Sergey
+Martin
