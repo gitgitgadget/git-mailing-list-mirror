@@ -7,19 +7,19 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6B26E1F404
-	for <e@80x24.org>; Thu, 29 Mar 2018 15:18:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4BFB21F404
+	for <e@80x24.org>; Thu, 29 Mar 2018 15:18:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751241AbeC2PSs (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Mar 2018 11:18:48 -0400
-Received: from mout.gmx.net ([212.227.15.15]:33867 "EHLO mout.gmx.net"
+        id S1751341AbeC2PSv (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Mar 2018 11:18:51 -0400
+Received: from mout.gmx.net ([212.227.15.15]:40435 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751218AbeC2PSq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Mar 2018 11:18:46 -0400
-Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MLNpK-1f27Hr2wTa-000eBj; Thu, 29
- Mar 2018 17:18:37 +0200
-Date:   Thu, 29 Mar 2018 17:18:35 +0200 (DST)
+        id S1751218AbeC2PSt (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Mar 2018 11:18:49 -0400
+Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MWBpJ-1f3ca02sRd-00XKis; Thu, 29
+ Mar 2018 17:18:41 +0200
+Date:   Thu, 29 Mar 2018 17:18:40 +0200 (DST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@dscho.gitforwindows.org
 To:     git@vger.kernel.org
@@ -29,74 +29,46 @@ cc:     Junio C Hamano <gitster@pobox.com>, Thomas Rast <tr@thomasrast.ch>,
         <avarab@gmail.com>, Stefan Beller <sbeller@google.com>,
         Jason Frey <jfrey@redhat.com>,
         Philip Oakley <philipoakley@iee.org>
-Subject: [PATCH 1/9] git_config_set: fix off-by-two
+Subject: [PATCH 2/9] t1300: rename it to reflect that `repo-config` was
+ deprecated
 In-Reply-To: <cover.1522336130.git.johannes.schindelin@gmx.de>
-Message-ID: <899ea23951627426ccd0aac79f824af386c5590c.1522336130.git.johannes.schindelin@gmx.de>
+Message-ID: <6023d70cff199424893d116339f860952c6a6b4b.1522336130.git.johannes.schindelin@gmx.de>
 References: <cover.1522336130.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:6ZdJjVXMplziVBjoUZ/p4PxJ8Jk9nm4xR2nUHZrtEHy5YPwLrCn
- ENx9/EMOoknRrj+54rc/QDeT9TeWBv7z5ZRUu7RTs9F5jYnlZQ/To1g5wLmGEvkaEK+R+cd
- Qnb6cIwCahKozK4kKZbbYfJs4Hxrw9ZQ+XKA+Dfjyq+5xp/3zJnUikZVFTDccz2OWOY/S4x
- RfRc8IN+ZHiJDVzMUU0UQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:LWDy+3X52Kc=:nqWVfTfu69F1kl3aN4bxdY
- 6T1JhTE1txjE5EXgrrGEDAOsv4Cznxg3Ik9XReO3gySi/7M3iosSMDGjBhWkn7FyeP04Zd22f
- ILd6s0TZDEnRT6Y+pfU5S3Iafs9/FCGyHe24+t7NTsCyS0S1fEaXN7lTyjJNIkv0wf6GAxCpD
- c2mQcvr+wfhmWqQ/F5pkvgSk3f4Yxxu62FChk7GiJN+qZzHeae1vhVVEU/UzJGDwziA3beG71
- GQdAhzyGsnjIfNf+FfkS5OhtovMQ1K+6iJva30AQLKpc2uEiQpVjhZm8iPjtbT/YeKbuwxANs
- fnHdhoNES+5kHSNxjpBuRcd4uGZjbvsoKM3/ZEkE+/7LAJPe9qJbXac1Eeu4A8tpXGNwKpNXG
- UmdKE4fwDjkIjXjMeAbWzSlWDaCRd/NkbJZxYHZ0A7hUBX0VNPwKdZ2cR7eAz4kGdY18do8Lz
- rNVMHoOO9mbYsYkJVUNtVQFquy39fSBmFXOzz5uN03yFauGI5/HqatCgC7+B0XIHBmaGm63dB
- LM7Rq8/VseHSogpp6qTBTRDVhlpoTwGiFodiJ42IfPxmHIch7OyPEmmaMCDJVTcZzbvjLEORw
- plnj8R2pQhBvCiIqeGyA7c4+BF39S/8vJcPgLYJanJzfD8U9qtMgzNgUCr73DjNhafd/y7nQ3
- yw48KfR3pjNirP47My/68H07hSI67ssY88PEs3912fRpsTNLWr394m6soXhvQniqx5wP13NeV
- hqXnxdeJ2fGBDvcz2lE/rJpW7XfzloM1Fnm66Q83yXHaEgvTFHfYu9wGLIM83O0e3/l/CEfSy
- HNX732/07V/9QfDpartOADH7fTbMHReuo9WXBExCKjP7CmzLb62zz98M/W4A9h+dDjt2z8b
+X-Provags-ID: V03:K0:B4wniEQ16tPlLq8+I6U73Psbd/3ikbrJpIQ31/eaCo8sBcT1kEw
+ I7IgNp7xBFfJ2X/EkTfunTLDORCZ8DQ+/Fjt3VQfvKzDIHCLVyyPBNWdDkWfaRYpMVzgbfT
+ 1ylQArtGN9b3PgPdt78KllewpivH/lpzHe07F7j1HsGJ6YN3LJyxE9uIGZl4VHBqlNf3Rx8
+ Fo/hDnmaBV2qJCGgyxcnA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:3Gj0KbdIv2E=:Aw2wDs53VIKGUqe0bOb5mv
+ eBZOJQAEYtoYDm39Ea1t1gHCBmgprEZpeMgBtwcGuAqZn2PMzYtJYD8BuJcpPW+Nfl4EZi1PV
+ OxuPzJNHAF5xWpjgXljEW44UQ+e04vmvWwFAbs/AhDc6qDhSwAQ6yNIeT3r8NGIKNSjbLQgbr
+ LqEMoeV0goHLIexQGKNJC++gXNZ8Wrd+sg+ji3ezvCPlvC54qWNq6onoMGSbAyoTsPWiYCxDy
+ xsDF4CLS/uRBMzWgKu+4/0Gwbg0tA3DaYSmLt0rlxHNngDc9gshVDCyZPwKfGzNXfB/ZaHwGX
+ 4uCLKJJplfvG4xEUltaz0WAD+E7P9XLoTNOIHf8zgrcGDdBcGElHCPQzBZpCDQb+JGX3AlmXU
+ bqcuwyJD9/rhzQaA8smN2yZgWnFtAgeAL+JWAcIg2D/vuLySyZOJ/1VauXVoiT4VRADyVnYPJ
+ o7phU3mRAzpb9DbyvBpZHm5pvmzP82PCtHB3YDrr9N/x7DhOiwvFQ0Ow+dD2rD06/aFjDambW
+ VgoTRnH5L/NpgjniHk3fSmbUsfB6+1Rbe9jfvUWL3gjKdSS3k/qEcmRKXtD5I4WApr3PhlQMk
+ 1Ghm+FUTsK5LG+teYzP4Hf3DvLhcU5ECAufjqnrV7LR+9ZC7aEGqO9K/Q+abPpnCF9bPWzVF0
+ xeshf0jQAa1ebPdRCunAHIwmYdcOo6qfr5gMvQuCNxYj0La14EplF0AU2QVKI/UWMpRjXGVKC
+ O6+jQStRWNyP76iPaltn1nKrh6eMOrI3t415gnwRIYePcQpKV1jN8FUFGNXBA/ypunjTnU9/L
+ 3XT86UEAeQf56v+tpo3Vlg8yeEL6AL1eNwY/vTerHcQqUfjUHJWanP5mCc2KXZWnQMkcWTr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently, we are slightly overzealous When removing an entry from a
-config file of this form:
-
-	[abc]a
-	[xyz]
-		key = value
-
-When calling `git config --unset abc.a` on this file, it leaves this
-(invalid) config behind:
-
-	[
-	[xyz]
-		key = value
-
-The reason is that we try to search for the beginning of the line (or
-for the end of the preceding section header on the same line) that
-defines abc.a, but as an optimization, we subtract 2 from the offset
-pointing just after the definition before we call
-find_beginning_of_line(). That function, however, *also* performs that
-optimization and promptly fails to find the section header correctly.
-
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- config.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/{t1300-repo-config.sh => t1300-config.sh} | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ rename t/{t1300-repo-config.sh => t1300-config.sh} (100%)
 
-diff --git a/config.c b/config.c
-index b0c20e6cb8a..5cc049aaef0 100644
---- a/config.c
-+++ b/config.c
-@@ -2632,7 +2632,7 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
- 			} else
- 				copy_end = find_beginning_of_line(
- 					contents, contents_sz,
--					store.offset[i]-2, &new_line);
-+					store.offset[i], &new_line);
- 
- 			if (copy_end > 0 && contents[copy_end-1] != '\n')
- 				new_line = 1;
+diff --git a/t/t1300-repo-config.sh b/t/t1300-config.sh
+similarity index 100%
+rename from t/t1300-repo-config.sh
+rename to t/t1300-config.sh
 -- 
 2.16.2.windows.1.26.g2cc3565eb4b
 
