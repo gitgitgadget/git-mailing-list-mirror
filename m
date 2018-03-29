@@ -8,156 +8,350 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E9AE71F404
-	for <e@80x24.org>; Thu, 29 Mar 2018 12:49:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C5CAE1F404
+	for <e@80x24.org>; Thu, 29 Mar 2018 12:49:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752699AbeC2Mtz (ORCPT <rfc822;e@80x24.org>);
+        id S1752687AbeC2Mtz (ORCPT <rfc822;e@80x24.org>);
         Thu, 29 Mar 2018 08:49:55 -0400
-Received: from a7-20.smtp-out.eu-west-1.amazonses.com ([54.240.7.20]:36354
-        "EHLO a7-20.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752596AbeC2Mtr (ORCPT
+Received: from a7-12.smtp-out.eu-west-1.amazonses.com ([54.240.7.12]:34268
+        "EHLO a7-12.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1752568AbeC2Mtr (ORCPT
         <rfc822;git@vger.kernel.org>); Thu, 29 Mar 2018 08:49:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
         s=uku4taia5b5tsbglxyj6zym32efj7xqv; d=amazonses.com; t=1522327786;
         h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-        bh=g2PdwCpDQkKV2Lwz8tkxIdEd0Ubk0gVDjwhtZh4haqo=;
-        b=WhEEL6qxnFMsINiT8OJBWJkS+Iir7Y2dBMWtYqILmgMUO2DGUPzfQoBss8bHcF68
-        g2HVHSLAIKT8Dty3NZlseSOEkgLJ9sKUeVMeG+liDb56Vefd5MCvPEsV8eWwZxRbs2m
-        MOC1yMYAKNqW6pgNAiFxfMRrCsgI9YPfnxOAKGCk=
+        bh=bz//um0qVKKyVLZCP8EvcKZeqCDjTHJnPDyCn5Gp7Tk=;
+        b=pII99UPpdHeewHP8HLwVyFKjBNMO3JYlxa7KCGS9BQT0zCn/fwdKbrIciRPEQ5rZ
+        BSim9sqdJVep978BqKnJZYJXXrMU8gIMVoVhZwv/EaU/EYFSIOdxERYCQrHb+d98Fho
+        mPPpxKNV6giO8ceOaN26rJrkDzOvkz42Tk/Y63XY=
 From:   Olga Telezhnaya <olyatelezhnaya@gmail.com>
 To:     git@vger.kernel.org
-Message-ID: <0102016271ce916b-f246ef25-49df-456c-9e76-7b1ae0de3c96-000000@eu-west-1.amazonses.com>
+Message-ID: <0102016271ce91a9-07b0e717-34fd-46a4-a475-58715a1a038b-000000@eu-west-1.amazonses.com>
 In-Reply-To: <0102016271ce90fc-1bd75012-add6-49ee-bb32-66eeeb1cc3df-000000@eu-west-1.amazonses.com>
 References: <0102016271ce90fc-1bd75012-add6-49ee-bb32-66eeeb1cc3df-000000@eu-west-1.amazonses.com>
-Subject: [PATCH v6 2/6] ref-filter: start adding strbufs with errors
+Subject: [PATCH v6 5/6] ref-filter: add return value to parsers
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
 Date:   Thu, 29 Mar 2018 12:49:45 +0000
-X-SES-Outgoing: 2018.03.29-54.240.7.20
+X-SES-Outgoing: 2018.03.29-54.240.7.12
 Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a first step in removing die() calls from ref-filter
-formatting logic, so that it could be used by other commands
-that do not want to die during formatting process.
-die() calls related to bugs in code will not be touched in this patch.
+Continue removing die() calls from ref-filter formatting logic,
+so that it could be used by other commands.
 
-Everything would be the same for show_ref_array_item() users.
-But, if you want to deal with errors by your own, you could invoke
-format_ref_array_item(). It means that you need to print everything
-(the result and errors) on your side.
-
-This commit changes signature of format_ref_array_item() by adding
-return value and strbuf parameter for errors, and adjusts
-its callers. While at it, reduce the scope of the out-variable.
+Change the signature of parsers by adding return value and
+strbuf parameter for error message.
+Return value equals 0 upon success and -1 upon failure.
+Upon failure, error message is appended to the strbuf.
 
 Signed-off-by: Olga Telezhnaia <olyatelezhnaya@gmail.com>
 ---
- builtin/branch.c |  7 +++++--
- ref-filter.c     | 17 ++++++++++++-----
- ref-filter.h     |  7 ++++---
- 3 files changed, 21 insertions(+), 10 deletions(-)
+ ref-filter.c | 138 ++++++++++++++++++++++++++++++++++++++---------------------
+ 1 file changed, 89 insertions(+), 49 deletions(-)
 
-diff --git a/builtin/branch.c b/builtin/branch.c
-index 6d0cea9d4bcc4..c21e5a04a0177 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -391,7 +391,6 @@ static void print_ref_list(struct ref_filter *filter, struct ref_sorting *sortin
- 	struct ref_array array;
- 	int maxwidth = 0;
- 	const char *remote_prefix = "";
--	struct strbuf out = STRBUF_INIT;
- 	char *to_free = NULL;
- 
- 	/*
-@@ -419,7 +418,10 @@ static void print_ref_list(struct ref_filter *filter, struct ref_sorting *sortin
- 	ref_array_sort(sorting, &array);
- 
- 	for (i = 0; i < array.nr; i++) {
--		format_ref_array_item(array.items[i], format, &out);
-+		struct strbuf out = STRBUF_INIT;
-+		struct strbuf err = STRBUF_INIT;
-+		if (format_ref_array_item(array.items[i], format, &out, &err))
-+			die("%s", err.buf);
- 		if (column_active(colopts)) {
- 			assert(!filter->verbose && "--column and --verbose are incompatible");
- 			 /* format to a string_list to let print_columns() do its job */
-@@ -428,6 +430,7 @@ static void print_ref_list(struct ref_filter *filter, struct ref_sorting *sortin
- 			fwrite(out.buf, 1, out.len, stdout);
- 			putchar('\n');
- 		}
-+		strbuf_release(&err);
- 		strbuf_release(&out);
- 	}
- 
 diff --git a/ref-filter.c b/ref-filter.c
-index 0c8d1589cf316..9833709dbefe3 100644
+index 93fa6b4e5e63d..3f85ef64267d9 100644
 --- a/ref-filter.c
 +++ b/ref-filter.c
-@@ -2131,9 +2131,10 @@ static void append_literal(const char *cp, const char *ep, struct ref_formatting
- 	}
+@@ -114,22 +114,25 @@ static int strbuf_addf_ret(struct strbuf *sb, int ret, const char *fmt, ...)
+ 	return ret;
  }
  
--void format_ref_array_item(struct ref_array_item *info,
-+int format_ref_array_item(struct ref_array_item *info,
- 			   const struct ref_format *format,
--			   struct strbuf *final_buf)
-+			   struct strbuf *final_buf,
-+			   struct strbuf *error_buf)
+-static void color_atom_parser(const struct ref_format *format, struct used_atom *atom, const char *color_value)
++static int color_atom_parser(const struct ref_format *format, struct used_atom *atom,
++			     const char *color_value, struct strbuf *err)
  {
- 	const char *cp, *sp, *ep;
- 	struct ref_formatting_state state = REF_FORMATTING_STATE_INIT;
-@@ -2161,19 +2162,25 @@ void format_ref_array_item(struct ref_array_item *info,
- 		resetv.s = GIT_COLOR_RESET;
- 		append_atom(&resetv, &state);
- 	}
--	if (state.stack->prev)
--		die(_("format: %%(end) atom missing"));
-+	if (state.stack->prev) {
-+		pop_stack_element(&state.stack);
-+		return strbuf_addf_ret(error_buf, -1, _("format: %%(end) atom missing"));
-+	}
- 	strbuf_addbuf(final_buf, &state.stack->output);
- 	pop_stack_element(&state.stack);
+ 	if (!color_value)
+-		die(_("expected format: %%(color:<color>)"));
++		return strbuf_addf_ret(err, -1, _("expected format: %%(color:<color>)"));
+ 	if (color_parse(color_value, atom->u.color) < 0)
+-		die(_("unrecognized color: %%(color:%s)"), color_value);
++		return strbuf_addf_ret(err, -1, _("unrecognized color: %%(color:%s)"),
++				       color_value);
+ 	/*
+ 	 * We check this after we've parsed the color, which lets us complain
+ 	 * about syntactically bogus color names even if they won't be used.
+ 	 */
+ 	if (!want_color(format->use_color))
+ 		color_parse("", atom->u.color);
 +	return 0;
  }
  
- void show_ref_array_item(struct ref_array_item *info,
- 			 const struct ref_format *format)
+-static void refname_atom_parser_internal(struct refname_atom *atom,
+-					 const char *arg, const char *name)
++static int refname_atom_parser_internal(struct refname_atom *atom, const char *arg,
++					 const char *name, struct strbuf *err)
  {
- 	struct strbuf final_buf = STRBUF_INIT;
-+	struct strbuf error_buf = STRBUF_INIT;
- 
--	format_ref_array_item(info, format, &final_buf);
-+	if (format_ref_array_item(info, format, &final_buf, &error_buf))
-+		die("%s", error_buf.buf);
- 	fwrite(final_buf.buf, 1, final_buf.len, stdout);
-+	strbuf_release(&error_buf);
- 	strbuf_release(&final_buf);
- 	putchar('\n');
+ 	if (!arg)
+ 		atom->option = R_NORMAL;
+@@ -139,16 +142,18 @@ static void refname_atom_parser_internal(struct refname_atom *atom,
+ 		 skip_prefix(arg, "strip=", &arg)) {
+ 		atom->option = R_LSTRIP;
+ 		if (strtol_i(arg, 10, &atom->lstrip))
+-			die(_("Integer value expected refname:lstrip=%s"), arg);
++			return strbuf_addf_ret(err, -1, _("Integer value expected refname:lstrip=%s"), arg);
+ 	} else if (skip_prefix(arg, "rstrip=", &arg)) {
+ 		atom->option = R_RSTRIP;
+ 		if (strtol_i(arg, 10, &atom->rstrip))
+-			die(_("Integer value expected refname:rstrip=%s"), arg);
++			return strbuf_addf_ret(err, -1, _("Integer value expected refname:rstrip=%s"), arg);
+ 	} else
+-		die(_("unrecognized %%(%s) argument: %s"), name, arg);
++		return strbuf_addf_ret(err, -1, _("unrecognized %%(%s) argument: %s"), name, arg);
++	return 0;
  }
-diff --git a/ref-filter.h b/ref-filter.h
-index 0d98342b34319..e13f8e6f8721a 100644
---- a/ref-filter.h
-+++ b/ref-filter.h
-@@ -110,9 +110,10 @@ int verify_ref_format(struct ref_format *format);
- /*  Sort the given ref_array as per the ref_sorting provided */
- void ref_array_sort(struct ref_sorting *sort, struct ref_array *array);
- /*  Based on the given format and quote_style, fill the strbuf */
--void format_ref_array_item(struct ref_array_item *info,
--			   const struct ref_format *format,
--			   struct strbuf *final_buf);
-+int format_ref_array_item(struct ref_array_item *info,
-+			  const struct ref_format *format,
-+			  struct strbuf *final_buf,
-+			  struct strbuf *error_buf);
- /*  Print the ref using the given format and quote_style */
- void show_ref_array_item(struct ref_array_item *info, const struct ref_format *format);
- /*  Parse a single sort specifier and add it to the list */
+ 
+-static void remote_ref_atom_parser(const struct ref_format *format, struct used_atom *atom, const char *arg)
++static int remote_ref_atom_parser(const struct ref_format *format, struct used_atom *atom,
++				  const char *arg, struct strbuf *err)
+ {
+ 	struct string_list params = STRING_LIST_INIT_DUP;
+ 	int i;
+@@ -158,9 +163,8 @@ static void remote_ref_atom_parser(const struct ref_format *format, struct used_
+ 
+ 	if (!arg) {
+ 		atom->u.remote_ref.option = RR_REF;
+-		refname_atom_parser_internal(&atom->u.remote_ref.refname,
+-					     arg, atom->name);
+-		return;
++		return refname_atom_parser_internal(&atom->u.remote_ref.refname,
++						    arg, atom->name, err);
+ 	}
+ 
+ 	atom->u.remote_ref.nobracket = 0;
+@@ -183,29 +187,38 @@ static void remote_ref_atom_parser(const struct ref_format *format, struct used_
+ 			atom->u.remote_ref.push_remote = 1;
+ 		} else {
+ 			atom->u.remote_ref.option = RR_REF;
+-			refname_atom_parser_internal(&atom->u.remote_ref.refname,
+-						     arg, atom->name);
++			if (refname_atom_parser_internal(&atom->u.remote_ref.refname,
++							 arg, atom->name, err)) {
++				string_list_clear(&params, 0);
++				return -1;
++			}
+ 		}
+ 	}
+ 
+ 	string_list_clear(&params, 0);
++	return 0;
+ }
+ 
+-static void body_atom_parser(const struct ref_format *format, struct used_atom *atom, const char *arg)
++static int body_atom_parser(const struct ref_format *format, struct used_atom *atom,
++			    const char *arg, struct strbuf *err)
+ {
+ 	if (arg)
+-		die(_("%%(body) does not take arguments"));
++		return strbuf_addf_ret(err, -1, _("%%(body) does not take arguments"));
+ 	atom->u.contents.option = C_BODY_DEP;
++	return 0;
+ }
+ 
+-static void subject_atom_parser(const struct ref_format *format, struct used_atom *atom, const char *arg)
++static int subject_atom_parser(const struct ref_format *format, struct used_atom *atom,
++			       const char *arg, struct strbuf *err)
+ {
+ 	if (arg)
+-		die(_("%%(subject) does not take arguments"));
++		return strbuf_addf_ret(err, -1, _("%%(subject) does not take arguments"));
+ 	atom->u.contents.option = C_SUB;
++	return 0;
+ }
+ 
+-static void trailers_atom_parser(const struct ref_format *format, struct used_atom *atom, const char *arg)
++static int trailers_atom_parser(const struct ref_format *format, struct used_atom *atom,
++				const char *arg, struct strbuf *err)
+ {
+ 	struct string_list params = STRING_LIST_INIT_DUP;
+ 	int i;
+@@ -218,15 +231,20 @@ static void trailers_atom_parser(const struct ref_format *format, struct used_at
+ 				atom->u.contents.trailer_opts.unfold = 1;
+ 			else if (!strcmp(s, "only"))
+ 				atom->u.contents.trailer_opts.only_trailers = 1;
+-			else
+-				die(_("unknown %%(trailers) argument: %s"), s);
++			else {
++				strbuf_addf(err, _("unknown %%(trailers) argument: %s"), s);
++				string_list_clear(&params, 0);
++				return -1;
++			}
+ 		}
+ 	}
+ 	atom->u.contents.option = C_TRAILERS;
+ 	string_list_clear(&params, 0);
++	return 0;
+ }
+ 
+-static void contents_atom_parser(const struct ref_format *format, struct used_atom *atom, const char *arg)
++static int contents_atom_parser(const struct ref_format *format, struct used_atom *atom,
++				const char *arg, struct strbuf *err)
+ {
+ 	if (!arg)
+ 		atom->u.contents.option = C_BARE;
+@@ -238,16 +256,19 @@ static void contents_atom_parser(const struct ref_format *format, struct used_at
+ 		atom->u.contents.option = C_SUB;
+ 	else if (skip_prefix(arg, "trailers", &arg)) {
+ 		skip_prefix(arg, ":", &arg);
+-		trailers_atom_parser(format, atom, *arg ? arg : NULL);
++		if (trailers_atom_parser(format, atom, *arg ? arg : NULL, err))
++			return -1;
+ 	} else if (skip_prefix(arg, "lines=", &arg)) {
+ 		atom->u.contents.option = C_LINES;
+ 		if (strtoul_ui(arg, 10, &atom->u.contents.nlines))
+-			die(_("positive value expected contents:lines=%s"), arg);
++			return strbuf_addf_ret(err, -1, _("positive value expected contents:lines=%s"), arg);
+ 	} else
+-		die(_("unrecognized %%(contents) argument: %s"), arg);
++		return strbuf_addf_ret(err, -1, _("unrecognized %%(contents) argument: %s"), arg);
++	return 0;
+ }
+ 
+-static void objectname_atom_parser(const struct ref_format *format, struct used_atom *atom, const char *arg)
++static int objectname_atom_parser(const struct ref_format *format, struct used_atom *atom,
++				  const char *arg, struct strbuf *err)
+ {
+ 	if (!arg)
+ 		atom->u.objectname.option = O_FULL;
+@@ -257,16 +278,18 @@ static void objectname_atom_parser(const struct ref_format *format, struct used_
+ 		atom->u.objectname.option = O_LENGTH;
+ 		if (strtoul_ui(arg, 10, &atom->u.objectname.length) ||
+ 		    atom->u.objectname.length == 0)
+-			die(_("positive value expected objectname:short=%s"), arg);
++			return strbuf_addf_ret(err, -1, _("positive value expected objectname:short=%s"), arg);
+ 		if (atom->u.objectname.length < MINIMUM_ABBREV)
+ 			atom->u.objectname.length = MINIMUM_ABBREV;
+ 	} else
+-		die(_("unrecognized %%(objectname) argument: %s"), arg);
++		return strbuf_addf_ret(err, -1, _("unrecognized %%(objectname) argument: %s"), arg);
++	return 0;
+ }
+ 
+-static void refname_atom_parser(const struct ref_format *format, struct used_atom *atom, const char *arg)
++static int refname_atom_parser(const struct ref_format *format, struct used_atom *atom,
++			       const char *arg, struct strbuf *err)
+ {
+-	refname_atom_parser_internal(&atom->u.refname, arg, atom->name);
++	return refname_atom_parser_internal(&atom->u.refname, arg, atom->name, err);
+ }
+ 
+ static align_type parse_align_position(const char *s)
+@@ -280,7 +303,8 @@ static align_type parse_align_position(const char *s)
+ 	return -1;
+ }
+ 
+-static void align_atom_parser(const struct ref_format *format, struct used_atom *atom, const char *arg)
++static int align_atom_parser(const struct ref_format *format, struct used_atom *atom,
++			     const char *arg, struct strbuf *err)
+ {
+ 	struct align *align = &atom->u.align;
+ 	struct string_list params = STRING_LIST_INIT_DUP;
+@@ -288,7 +312,7 @@ static void align_atom_parser(const struct ref_format *format, struct used_atom
+ 	unsigned int width = ~0U;
+ 
+ 	if (!arg)
+-		die(_("expected format: %%(align:<width>,<position>)"));
++		return strbuf_addf_ret(err, -1, _("expected format: %%(align:<width>,<position>)"));
+ 
+ 	align->position = ALIGN_LEFT;
+ 
+@@ -299,49 +323,65 @@ static void align_atom_parser(const struct ref_format *format, struct used_atom
+ 
+ 		if (skip_prefix(s, "position=", &s)) {
+ 			position = parse_align_position(s);
+-			if (position < 0)
+-				die(_("unrecognized position:%s"), s);
++			if (position < 0) {
++				strbuf_addf(err, _("unrecognized position:%s"), s);
++				string_list_clear(&params, 0);
++				return -1;
++			}
+ 			align->position = position;
+ 		} else if (skip_prefix(s, "width=", &s)) {
+-			if (strtoul_ui(s, 10, &width))
+-				die(_("unrecognized width:%s"), s);
++			if (strtoul_ui(s, 10, &width)) {
++				strbuf_addf(err, _("unrecognized width:%s"), s);
++				string_list_clear(&params, 0);
++				return -1;
++			}
+ 		} else if (!strtoul_ui(s, 10, &width))
+ 			;
+ 		else if ((position = parse_align_position(s)) >= 0)
+ 			align->position = position;
+-		else
+-			die(_("unrecognized %%(align) argument: %s"), s);
++		else {
++			strbuf_addf(err, _("unrecognized %%(align) argument: %s"), s);
++			string_list_clear(&params, 0);
++			return -1;
++		}
+ 	}
+ 
+-	if (width == ~0U)
+-		die(_("positive width expected with the %%(align) atom"));
++	if (width == ~0U) {
++		string_list_clear(&params, 0);
++		return strbuf_addf_ret(err, -1, _("positive width expected with the %%(align) atom"));
++	}
+ 	align->width = width;
+ 	string_list_clear(&params, 0);
++	return 0;
+ }
+ 
+-static void if_atom_parser(const struct ref_format *format, struct used_atom *atom, const char *arg)
++static int if_atom_parser(const struct ref_format *format, struct used_atom *atom,
++			  const char *arg, struct strbuf *err)
+ {
+ 	if (!arg) {
+ 		atom->u.if_then_else.cmp_status = COMPARE_NONE;
+-		return;
++		return 0;
+ 	} else if (skip_prefix(arg, "equals=", &atom->u.if_then_else.str)) {
+ 		atom->u.if_then_else.cmp_status = COMPARE_EQUAL;
+ 	} else if (skip_prefix(arg, "notequals=", &atom->u.if_then_else.str)) {
+ 		atom->u.if_then_else.cmp_status = COMPARE_UNEQUAL;
+-	} else {
+-		die(_("unrecognized %%(if) argument: %s"), arg);
+-	}
++	} else
++		return strbuf_addf_ret(err, -1, _("unrecognized %%(if) argument: %s"), arg);
++	return 0;
+ }
+ 
+-static void head_atom_parser(const struct ref_format *format, struct used_atom *atom, const char *arg)
++static int head_atom_parser(const struct ref_format *format, struct used_atom *atom,
++			    const char *arg, struct strbuf *unused_err)
+ {
+ 	atom->u.head = resolve_refdup("HEAD", RESOLVE_REF_READING, NULL, NULL);
++	return 0;
+ }
+ 
+ static struct {
+ 	const char *name;
+ 	cmp_type cmp_type;
+-	void (*parser)(const struct ref_format *format, struct used_atom *atom, const char *arg);
++	int (*parser)(const struct ref_format *format, struct used_atom *atom,
++		      const char *arg, struct strbuf *err);
+ } valid_atom[] = {
+ 	{ "refname" , FIELD_STR, refname_atom_parser },
+ 	{ "objecttype" },
+@@ -468,8 +508,8 @@ static int parse_ref_filter_atom(const struct ref_format *format,
+ 		}
+ 	}
+ 	memset(&used_atom[at].u, 0, sizeof(used_atom[at].u));
+-	if (valid_atom[i].parser)
+-		valid_atom[i].parser(format, &used_atom[at], arg);
++	if (valid_atom[i].parser && valid_atom[i].parser(format, &used_atom[at], arg, err))
++		return -1;
+ 	if (*atom == '*')
+ 		need_tagged = 1;
+ 	if (!strcmp(valid_atom[i].name, "symref"))
 
 --
 https://github.com/git/git/pull/466
