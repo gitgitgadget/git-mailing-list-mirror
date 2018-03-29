@@ -2,210 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 01E1E1FAE7
-	for <e@80x24.org>; Thu, 29 Mar 2018 15:19:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 73BE31F404
+	for <e@80x24.org>; Thu, 29 Mar 2018 17:02:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751980AbeC2PTU (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Mar 2018 11:19:20 -0400
-Received: from mout.gmx.net ([212.227.17.20]:42571 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751147AbeC2PTT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Mar 2018 11:19:19 -0400
-Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0M7UUd-1eey8u26aN-00xM0m; Thu, 29
- Mar 2018 17:19:11 +0200
-Date:   Thu, 29 Mar 2018 17:19:09 +0200 (DST)
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-X-X-Sender: virtualbox@dscho.gitforwindows.org
-To:     git@vger.kernel.org
-cc:     Junio C Hamano <gitster@pobox.com>, Thomas Rast <tr@thomasrast.ch>,
-        Phil Haack <haacked@gmail.com>, Jeff King <peff@peff.net>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Stefan Beller <sbeller@google.com>,
-        Jason Frey <jfrey@redhat.com>,
-        Philip Oakley <philipoakley@iee.org>
-Subject: [PATCH 9/9] git_config_set: reuse empty sections
-In-Reply-To: <cover.1522336130.git.johannes.schindelin@gmx.de>
-Message-ID: <29868fec2606f5f6aa1c5de2928580f2ca24e6e2.1522336130.git.johannes.schindelin@gmx.de>
-References: <cover.1522336130.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1750866AbeC2RCx (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Mar 2018 13:02:53 -0400
+Received: from mail-oi0-f41.google.com ([209.85.218.41]:35806 "EHLO
+        mail-oi0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750735AbeC2RCw (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Mar 2018 13:02:52 -0400
+Received: by mail-oi0-f41.google.com with SMTP id z8-v6so5767992oix.2
+        for <git@vger.kernel.org>; Thu, 29 Mar 2018 10:02:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=KpIB1yujpAFEWdBA8USEr3lDJIGHhqEQxiOCTcoGc78=;
+        b=R17KGScBpvCrWcGmTIeZvr5cHEhHoIdZjv+Cqjx4d+zZErcFc+7Sgl7RQIk33J9yJ1
+         ZA91kIC/z6O70F4e9Aj6mI1XKeyRqsQUtOj3qcptOtKTWS14BBNgKMb2Fb5B11rhqk+z
+         9xPZb2XzLbGCkkSY3lsEzqRKiPXOQXI9aTsnGark+eM+njlb0nDoUET8FIqDBn71d/Qs
+         HwUdP1YyrvGdVfl0UI5UP4xZGKe5unl3F+AHAUjiODfrAhVhGHzG4VhhgIEf9ogv047K
+         1De0IOJTj9oKLahRdQeq4AvWHZRI2usSoQYtMXsn94ALvLzZ+jcUG8cLQMYjadoAg54e
+         v+7g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=KpIB1yujpAFEWdBA8USEr3lDJIGHhqEQxiOCTcoGc78=;
+        b=tEEZlu21PHtZjJbW9CDgtrLGjTLIka0unfcTtnSihdWc554gWUe1vHZC8ngQpaSh5Y
+         U7VN5czd0KgAqDxOtD/VOB9Ow8Sk5Q8M75qYdYs4iK/5q9QrwLG4OQPwS2sERjFcyJwJ
+         zIcCnyVOIoLmw1w1ySlGaT9OHZZg90zUon6683Fim1jmI6zPyEBLK2Twwa/q5Icotpli
+         I1gLnjg34SXuMDd+qdAIJ9XKXScOYTR6QGH6kQpSKh1dnrjJy7oKJE8GxV0QyKGn9tUp
+         wcBRFzXJo8iJUDqC6QsQ6GLIg/BBeu4lqB1qNbYKY/00oFw9OQEYajQCkVNcL2aGghLT
+         ZZ2w==
+X-Gm-Message-State: AElRT7EMUVz67ywOAV7Ctxb4SQcaAhjcIy3nz7Du9v/BLVR+shWIQ+24
+        rjm/M+5aQKrqJE7NHFJJCIJEDaC5HBKFG5jSJus=
+X-Google-Smtp-Source: AIpwx488BdLlyWqLnDvZcCLVM7bPJuekfMdzFGlqpdx1mIcPi5XwMspCL1zHnbZ5Vac7OIGAgAT+oaG/i5pYIakvU7g=
+X-Received: by 10.202.243.84 with SMTP id r81mr5102831oih.281.1522342971877;
+ Thu, 29 Mar 2018 10:02:51 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:GrmA+oSZkI3vN4oLvkTOLhRSgOrbGxLdom1e08H9Q1di8k3iDlc
- 8VEcPxFrQbqDn8BDyazkt3gjCvtu5/bKnjtNMaPCUcey6ZI6mxUJ1UcTJKKsKVIwkrDnbsd
- EhMg/8OxS6hzacItuWzH9QdFQe07giN1PXXtS0IBHemNkjs3PeCkigTRZwKXUStte/E4k+g
- BSPNU+so4JkBGsyMnNvZA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:uXx1ssMIPOY=:4MaopYisSgy6yJRXa7wCz2
- 4xS93Rt32VyAPuRtqjU6gNSCR6V3dDMRyMs1ju187B/QzPUt4ALxM4EcmTQvYc/LUFd5LGY8p
- XgIr09/XmUypQP0rcNaFScBcHg1C4R8G1JNNVlZsEFb7U5L9zO8McBE5OcJj1qd/drqW3Ih3L
- 8dYxGwQsgDOhAD+89bxTa/FmsTpUMq9K2/wqHMokQkk1E4cJJf9adxoUVqG3vq8aAKvgSoOGN
- m+QyVOoBqI/T3R9ggnB8UW51mXlfoEGN1lc9TunvxJ4+IXYHE21s3gIIn4+D4HheAzdJxxd2k
- tSMtNUVtIPGIiQ7lZEz0QFzacAnOpUYJbmGi4f0maIGPgyOwQMI4FKTPCxsoyZV0y2iFPdLSF
- GdAxZ7aBj3amqFmY6S04QSzJkHky4phP7KBeu8lCF1JOVN7hTKb+KbF9Glu74i4lNq3STrJwP
- QPxhjQzhJ0L/4Co4bXswrBHNXsTIJKKFD8RJ1g6pQ5K5OOTBfpVejt87f7fGrs4XZ7A+c4jN5
- 3eShJYtluH6rBwxpG2p3dsP+GyutIU/umUhqQ5C7it0tREfBpQya2d9dxm0kvdbG6jBftebU9
- Gl9A4g1cDlYifERfKqXA/GEmh1t8W6+zUkWCLtxFvhLUBPp8hj7F4j0skAl2lt8A8WtKDTnEy
- wC6IzH5ua/xnE2CyN8AV0G9sm/wxOsgB1aGC3vCGhLr6jEVn9zH/xRCq8VBHM0nSLHVmh9N7E
- u8Z8F/NxJu8ki82pKOIXEBv1QmXGkgGO0mGeOipohy72f5mXSHJP7wVSZjQqfpXcyY6hEcydX
- LIUUxy8IdmiePJVtBuQlaaBBBXef2JUqp1sU/PSnEFpeKyYUhNMbGsG0eUmfzMnuttznDov
+Received: by 10.74.211.131 with HTTP; Thu, 29 Mar 2018 10:02:21 -0700 (PDT)
+In-Reply-To: <20180328174215.GC16274@sigill.intra.peff.net>
+References: <20180328173656.GA29094@sigill.intra.peff.net> <20180328174215.GC16274@sigill.intra.peff.net>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Thu, 29 Mar 2018 19:02:21 +0200
+Message-ID: <CACsJy8CAjb4zdAgD5H9OZOAoHdrRFzGm9gaL8Wbna+GXJJCW4Q@mail.gmail.com>
+Subject: Re: [PATCH 3/4] set_work_tree: use chdir_notify
+To:     Jeff King <peff@peff.net>
+Cc:     Rafael Ascensao <rafa.almas@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It can happen quite easily that the last setting in a config section is
-removed, and to avoid confusion when there are comments in the config
-about that section, we keep a lone section header, i.e. an empty
-section.
+On Wed, Mar 28, 2018 at 7:42 PM, Jeff King <peff@peff.net> wrote:
+> When we change to the top of the working tree, we manually
+> re-adjust $GIT_DIR and call set_git_dir() again, in order to
+> update any relative git-dir we'd compute earlier.
 
-The code to add new entries in the config tries to be cute by reusing
-the parsing code that is used to retrieve config settings, but that
-poses the problem that the latter use case does *not* care about empty
-sections, therefore even the former user case won't see them.
+Another way to approach this problem is not delaying chdir() at all.
+We have to delay calling setup_work_tree() and not do it in
+setup_git_directory() because it can die() when chdir() fails. But in
+many cases, the command does not actually need the worktree and does
+not deserve to die. But what if we make setup_work_tree be gentle?
 
-Fix this by introducing a mode where the parser reports also empty
-sections (with a trailing '.' as tell-tale), and then using that when
-adding new config entries.
+If it successfully chdir() at the end of setup_git_directory() (and
+perhaps before the first set_git_dir call), great! The problem we're
+dealing here vanishes. If it fails, don't die, just set a flag. Later
+on when a command requests a worktree, we can check this flag and now
+can die().
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- config.c          | 32 +++++++++++++++++++++++---------
- t/t1300-config.sh |  2 +-
- 2 files changed, 24 insertions(+), 10 deletions(-)
-
-diff --git a/config.c b/config.c
-index eb1e0d335fc..b04c40f76bc 100644
---- a/config.c
-+++ b/config.c
-@@ -653,13 +653,15 @@ static int get_base_var(struct strbuf *name)
- 	}
- }
- 
--static int git_parse_source(config_fn_t fn, void *data)
-+static int git_parse_source(config_fn_t fn, void *data,
-+			    int include_section_headers)
- {
- 	int comment = 0;
- 	int baselen = 0;
- 	struct strbuf *var = &cf->var;
- 	int error_return = 0;
- 	char *error_msg = NULL;
-+	int saw_section_header = 0;
- 
- 	/* U+FEFF Byte Order Mark in UTF8 */
- 	const char *bomptr = utf8_bom;
-@@ -685,6 +687,16 @@ static int git_parse_source(config_fn_t fn, void *data)
- 			if (cf->eof)
- 				return 0;
- 			comment = 0;
-+			if (saw_section_header) {
-+				if (include_section_headers) {
-+					cf->linenr--;
-+					error_return = fn(var->buf, NULL, data);
-+					if (error_return < 0)
-+						break;
-+					cf->linenr++;
-+				}
-+				saw_section_header = 0;
-+			}
- 			continue;
- 		}
- 		if (comment || isspace(c))
-@@ -700,6 +712,7 @@ static int git_parse_source(config_fn_t fn, void *data)
- 				break;
- 			strbuf_addch(var, '.');
- 			baselen = var->len;
-+			saw_section_header = 1;
- 			continue;
- 		}
- 		if (!isalpha(c))
-@@ -1398,7 +1411,8 @@ int git_default_config(const char *var, const char *value, void *dummy)
-  * fgetc, ungetc, ftell of top need to be initialized before calling
-  * this function.
-  */
--static int do_config_from(struct config_source *top, config_fn_t fn, void *data)
-+static int do_config_from(struct config_source *top, config_fn_t fn, void *data,
-+			  int include_section_headers)
- {
- 	int ret;
- 
-@@ -1410,7 +1424,7 @@ static int do_config_from(struct config_source *top, config_fn_t fn, void *data)
- 	strbuf_init(&top->var, 1024);
- 	cf = top;
- 
--	ret = git_parse_source(fn, data);
-+	ret = git_parse_source(fn, data, include_section_headers);
- 
- 	/* pop config-file parsing state stack */
- 	strbuf_release(&top->value);
-@@ -1423,7 +1437,7 @@ static int do_config_from(struct config_source *top, config_fn_t fn, void *data)
- static int do_config_from_file(config_fn_t fn,
- 		const enum config_origin_type origin_type,
- 		const char *name, const char *path, FILE *f,
--		void *data)
-+		void *data, int include_section_headers)
- {
- 	struct config_source top;
- 
-@@ -1436,12 +1450,12 @@ static int do_config_from_file(config_fn_t fn,
- 	top.do_ungetc = config_file_ungetc;
- 	top.do_ftell = config_file_ftell;
- 
--	return do_config_from(&top, fn, data);
-+	return do_config_from(&top, fn, data, include_section_headers);
- }
- 
- static int git_config_from_stdin(config_fn_t fn, void *data)
- {
--	return do_config_from_file(fn, CONFIG_ORIGIN_STDIN, "", NULL, stdin, data);
-+	return do_config_from_file(fn, CONFIG_ORIGIN_STDIN, "", NULL, stdin, data, 0);
- }
- 
- int git_config_from_file(config_fn_t fn, const char *filename, void *data)
-@@ -1452,7 +1466,7 @@ int git_config_from_file(config_fn_t fn, const char *filename, void *data)
- 	f = fopen_or_warn(filename, "r");
- 	if (f) {
- 		flockfile(f);
--		ret = do_config_from_file(fn, CONFIG_ORIGIN_FILE, filename, filename, f, data);
-+		ret = do_config_from_file(fn, CONFIG_ORIGIN_FILE, filename, filename, f, data, 0);
- 		funlockfile(f);
- 		fclose(f);
- 	}
-@@ -1475,7 +1489,7 @@ int git_config_from_mem(config_fn_t fn, const enum config_origin_type origin_typ
- 	top.do_ungetc = config_buf_ungetc;
- 	top.do_ftell = config_buf_ftell;
- 
--	return do_config_from(&top, fn, data);
-+	return do_config_from(&top, fn, data, 0);
- }
- 
- int git_config_from_blob_oid(config_fn_t fn,
-@@ -2743,7 +2757,7 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
- 		f = fopen_or_warn(config_filename, "r");
- 		if (!f || do_config_from_file(store_aux, CONFIG_ORIGIN_FILE,
- 					      config_filename, config_filename,
--					      f, NULL)) {
-+					      f, NULL, 1)) {
- 			error("invalid config file %s", config_filename);
- 			if (store.value_regex != NULL &&
- 			    store.value_regex != CONFIG_REGEX_NONE) {
-diff --git a/t/t1300-config.sh b/t/t1300-config.sh
-index ecbcc9cf3d0..867397ae930 100755
---- a/t/t1300-config.sh
-+++ b/t/t1300-config.sh
-@@ -1463,7 +1463,7 @@ test_expect_success '--unset-all removes section if empty & uncommented' '
- 	test_line_count = 0 .git/config
- '
- 
--test_expect_failure 'adding a key into an empty section reuses header' '
-+test_expect_success 'adding a key into an empty section reuses header' '
- 	cat >.git/config <<-\EOF &&
- 	[section]
- 	EOF
+It's less code this way, but it uses up more of your (or my) time
+because even though the first set_git_dir() call actually happens at 8
+places. Is it worth trying ?
 -- 
-2.16.2.windows.1.26.g2cc3565eb4b
+Duy
