@@ -2,217 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4CAA11F404
-	for <e@80x24.org>; Thu, 29 Mar 2018 05:54:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8E6EC1F424
+	for <e@80x24.org>; Thu, 29 Mar 2018 10:10:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751714AbeC2FyB (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Mar 2018 01:54:01 -0400
-Received: from mail.javad.com ([54.86.164.124]:40922 "EHLO mail.javad.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751199AbeC2Fx7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Mar 2018 01:53:59 -0400
-Received: from osv (unknown [89.175.180.246])
-        by mail.javad.com (Postfix) with ESMTPSA id 5F14F3E898;
-        Thu, 29 Mar 2018 05:53:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1522302838;
-        bh=JfvphpbOONoWH7KlUrJK/AjiQuV7439kADRLgzakQOA=; l=3954;
-        h=Received:From:To:Subject;
-        b=fhMM073iaSWSd2Nd7sUCuJJxcRbPidOySIkDH3DgbfNvVjMcrouwQK7kc374Ys3UY
-         dDgTyM7HglIjhjunoQirBPRMi6pc9fRDdN2fa1fqJdZ91xLGWehvzc5Sr8A3ukbETR
-         +p/v5W39613d5QkatVJKKUsAEdNhyHzX++Wb4PnI=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1522302838;
-        bh=JfvphpbOONoWH7KlUrJK/AjiQuV7439kADRLgzakQOA=; l=3954;
-        h=Received:From:To:Subject;
-        b=fhMM073iaSWSd2Nd7sUCuJJxcRbPidOySIkDH3DgbfNvVjMcrouwQK7kc374Ys3UY
-         dDgTyM7HglIjhjunoQirBPRMi6pc9fRDdN2fa1fqJdZ91xLGWehvzc5Sr8A3ukbETR
-         +p/v5W39613d5QkatVJKKUsAEdNhyHzX++Wb4PnI=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1522302837;
-        bh=JfvphpbOONoWH7KlUrJK/AjiQuV7439kADRLgzakQOA=; l=3954;
-        h=Received:From:To:Subject;
-        b=fnpvfD2AWgRB4GlIAK1gm4YZvAdCHMd3pxz+vVVhN/QT0KjLx+RLqHqsUmd6ZjFU0
-         lgzknSZy1QW8G5K66Er0oA8stacZ9L62lkm9MsNg+lI6/cTfnBOrMOqBaQdFBlVkgQ
-         TgbxmBJk9WLXfKNm/+M7BqLJFXHsE85hTwwaIvxo=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1522302837;
-        bh=JfvphpbOONoWH7KlUrJK/AjiQuV7439kADRLgzakQOA=; l=3954;
-        h=Received:From:To:Subject;
-        b=fnpvfD2AWgRB4GlIAK1gm4YZvAdCHMd3pxz+vVVhN/QT0KjLx+RLqHqsUmd6ZjFU0
-         lgzknSZy1QW8G5K66Er0oA8stacZ9L62lkm9MsNg+lI6/cTfnBOrMOqBaQdFBlVkgQ
-         TgbxmBJk9WLXfKNm/+M7BqLJFXHsE85hTwwaIvxo=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1522302837;
-        bh=JfvphpbOONoWH7KlUrJK/AjiQuV7439kADRLgzakQOA=; l=3954;
-        h=Received:From:To:Subject;
-        b=fnpvfD2AWgRB4GlIAK1gm4YZvAdCHMd3pxz+vVVhN/QT0KjLx+RLqHqsUmd6ZjFU0
-         lgzknSZy1QW8G5K66Er0oA8stacZ9L62lkm9MsNg+lI6/cTfnBOrMOqBaQdFBlVkgQ
-         TgbxmBJk9WLXfKNm/+M7BqLJFXHsE85hTwwaIvxo=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1522302837;
-        bh=JfvphpbOONoWH7KlUrJK/AjiQuV7439kADRLgzakQOA=; l=3954;
-        h=Received:From:To:Subject;
-        b=fnpvfD2AWgRB4GlIAK1gm4YZvAdCHMd3pxz+vVVhN/QT0KjLx+RLqHqsUmd6ZjFU0
-         lgzknSZy1QW8G5K66Er0oA8stacZ9L62lkm9MsNg+lI6/cTfnBOrMOqBaQdFBlVkgQ
-         TgbxmBJk9WLXfKNm/+M7BqLJFXHsE85hTwwaIvxo=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1522302837;
-        bh=JfvphpbOONoWH7KlUrJK/AjiQuV7439kADRLgzakQOA=; l=3954;
-        h=Received:From:To:Subject;
-        b=fnpvfD2AWgRB4GlIAK1gm4YZvAdCHMd3pxz+vVVhN/QT0KjLx+RLqHqsUmd6ZjFU0
-         lgzknSZy1QW8G5K66Er0oA8stacZ9L62lkm9MsNg+lI6/cTfnBOrMOqBaQdFBlVkgQ
-         TgbxmBJk9WLXfKNm/+M7BqLJFXHsE85hTwwaIvxo=
-Authentication-Results: mail.javad.com;
-        spf=pass (sender IP is 89.175.180.246) smtp.mailfrom=osv@javad.com smtp.helo=osv
-Received-SPF: pass (mail.javad.com: connection is authenticated)
-Received: from osv by osv with local (Exim 4.84_2)
-        (envelope-from <osv@osv.gnss.ru>)
-        id 1f1QVX-0004oW-Mc; Thu, 29 Mar 2018 08:53:55 +0300
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Jacob Keller <jacob.keller@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Git Mailing List <git@vger.kernel.org>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC] Rebasing merges: a jorney to the ultimate solution(RoadClear)
-References: <87y3jtqdyg.fsf@javad.com>
-        <1298a701-a860-a675-83d7-72f29e14cd2b@talktalk.net>
-        <CA+P7+xpgChuvh_vsPktBkOEhF=MjJh1n_3jD0-n4d67j9kYqzw@mail.gmail.com>
-        <ee809701-a6d8-157d-09cd-cebbf2e949ec@gmail.com>
-        <1580e48a-be44-38dd-79af-8a2a31c5712e@talktalk.net>
-        <nycvar.QRO.7.76.6.1803061812090.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <754e2735-1288-9a8d-c8bd-ab39cf733812@gmail.com>
-        <nycvar.QRO.7.76.6.1803070810550.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <c5a5c2cc-6a11-440f-5b9b-964ae1ca07dd@talktalk.net>
-        <f3872fb9-01bc-b2f1-aee9-cfc0e4db77d6@gmail.com>
-        <nycvar.QRO.7.76.6.1803111301340.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <b329bb98-f9d6-3d51-2513-465aad2fa37a@gmail.com>
-        <nycvar.QRO.7.76.6.1803121142550.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <243ca23d-77a9-4ae1-a120-de6c6b195cdc@gmail.com>
-        <nycvar.QRO.7.76.6.1803261455130.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <87woxyf4lk.fsf@javad.com>
-        <nycvar.QRO.7.76.6.1803271536020.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <874ll0d9nt.fsf@javad.com>
-        <CA+P7+xoDQ2mzhxeZPFhaY+TaSoKkQm=5AtoduHH06-VggOJ2jg@mail.gmail.com>
-        <87r2o48mm2.fsf@javad.com>
-        <CA+P7+xo19mHrWz9Fy-ifgCcVJM2xwzcLj7F2NvFe2LwGbaJiDQ@mail.gmail.com>
-Date:   Thu, 29 Mar 2018 08:53:55 +0300
-In-Reply-To: <CA+P7+xo19mHrWz9Fy-ifgCcVJM2xwzcLj7F2NvFe2LwGbaJiDQ@mail.gmail.com>
-        (Jacob Keller's message of "Wed, 28 Mar 2018 17:32:25 -0700")
-Message-ID: <87zi2r5swc.fsf@javad.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+        id S1751008AbeC2KKd (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Mar 2018 06:10:33 -0400
+Received: from mail-qk0-f193.google.com ([209.85.220.193]:34014 "EHLO
+        mail-qk0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750735AbeC2KKc (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Mar 2018 06:10:32 -0400
+Received: by mail-qk0-f193.google.com with SMTP id z184so5430239qkc.1
+        for <git@vger.kernel.org>; Thu, 29 Mar 2018 03:10:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=y7PCCAHmqolVLmrQcvtG5Q2h2kzwR7KO6xKvodTm4hc=;
+        b=lEgCwvoc0Y2xpci3YfF3+L3HT62D/JJsyjyDMPbQSKouvt2ZYX7r2/bOutOdQQupot
+         6PItkth5/rEPJMzg38NVp4VgBFh7cp3ey8JxUQN8s0OYRaq9tX8hRXALQnQAMKUkbuCb
+         Ce7bZ3OiroPYr08C0ZHJMQ+qeZXyaRYKd9rQ8bYW0zQOvONUtC7sEAdTuzr4jHsoHamS
+         5I1+rbka3pY6U0xzvpVhQV5mJ9AEXFqdqGz8z3hIWUIcml1TibmechsHBq79tn/Gcvdz
+         pa8ECSJ0/YvHA8Neb2a/YkF6VD0NiAgu68D1GxKAq3dVIm3t65c6RY5vHfREmY+IHSlQ
+         soTg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=y7PCCAHmqolVLmrQcvtG5Q2h2kzwR7KO6xKvodTm4hc=;
+        b=QZysLpsu6nxlgNKIPpD8oh6iI7On82o69oR6oUDkTU3UKqSN+JSgAYMTjP+a1+0Y75
+         Hk2RNSKJEkbcKx1pKOAyNDexEk8TNOKKmu+FTSOLWO/lrIJTzl4+U5TJ9h2ZvDMnafwI
+         sGvXf2r6gjQCSy+KrsU27CC/sXH7sIOybGEDozeKz2LjFtQSp98en71/YPYP97u+ARP7
+         BC7Vo/PMoSkAYCUGY8NqwZS28uUT+7pr739UDLyM4qO1TB3RjctW8uS4/8H2rGl3YZf+
+         DF1TTcC6Bg0NKpGHGkU9aEsVCNjhI7O7+VcykjV3O6jPnbdS0MPEKvP0YXA/C+NX+8gf
+         eRqQ==
+X-Gm-Message-State: AElRT7GV67466XMFBQeTKwZUmfXpNqG4HIwZKmbuSbIFaLOkZrINTvVw
+        010QBgKVeJ2IrtyKOe3mR9Oy2ehyf4voxDmIEbHLmw==
+X-Google-Smtp-Source: AIpwx4/IwjWMwzB48Mf3i0uxp/vjIbnjBvyGzjvPv/kCkfJrokKSNypuHNHXvTrgHvEsvdLWomCYNMXIybJv7kJMgKU=
+X-Received: by 10.55.156.79 with SMTP id f76mr10046248qke.36.1522318232037;
+ Thu, 29 Mar 2018 03:10:32 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.12.174.202 with HTTP; Thu, 29 Mar 2018 03:10:31 -0700 (PDT)
+In-Reply-To: <20180328222129.22192-2-joel@teichroeb.net>
+References: <20180328222129.22192-1-joel@teichroeb.net> <20180328222129.22192-2-joel@teichroeb.net>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Thu, 29 Mar 2018 06:10:31 -0400
+X-Google-Sender-Auth: bimp2ErwjmFXewcCFYDyzaIU41A
+Message-ID: <CAPig+cQHC_nO_CpVLm7m_iNq1AuCGb5nzqN4EokAYf9NVdfuWA@mail.gmail.com>
+Subject: Re: [PATCH v4 1/5] stash: improve option parsing test coverage
+To:     Joel Teichroeb <joel@teichroeb.net>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jacob Keller <jacob.keller@gmail.com> writes:
+On Wed, Mar 28, 2018 at 6:21 PM, Joel Teichroeb <joel@teichroeb.net> wrote:
+> In preparation for converting the stash command incrementally to
+> a builtin command, this patch improves test coverage of the option
+> parsing. Both for having too many paramerters, or too few.
 
-> On Wed, Mar 28, 2018 at 4:29 AM, Sergey Organov <sorganov@gmail.com> wrote:
->
->> Jacob Keller <jacob.keller@gmail.com> writes:
->>
->> > On Tue, Mar 27, 2018 at 10:57 PM, Sergey Organov <sorganov@gmail.com>
->> wrote:
->> >>
->> >> Hi Johannes,
->> >>
->> >> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->> >> > Hi Sergey,
->> >> >
->> >>
->> >> [...]
->> >>
->> >> >> >> Reusing existing concepts where possible doesn`t have this
->> problem.
->> >> >> >
->> >> >> > Existing concepts are great. As long as they fit the requirements
->> of
->> >> >> > the new scenarios. In this case, `pick` does *not* fit the
->> > requirement
->> >> >> > of "rebase a merge commit".
->> >> >>
->> >> >> It does, provided you use suitable syntax.
->> >> >
->> >> > You know what `pick` would also do, provided you use suitable syntax?
->> > Pick
->> >> > your nose.
->> >> >
->> >> > Don't blame me for this ridiculous turn the discussion took.
->> >> >
->> >> > Of course, using the suitable syntax you can do anything. Unless there
->> > is
->> >> > *already* a syntax and you cannot break it for backwards-compatibility
->> >> > reasons, as is the case here.
->> >>
->> >> Backward compatibility to what? To a broken '--preserve-merges'? I had a
->> >> feel you've invented '--recreate-merges' exactly to break that
->> >> compatibility. No?
->> >>
->> >> Or is it "Backwards compatibility of a feature that existed only as a
->> >> topic branch in `next` before being worked on more?", as you say
->> >> yourself below?
->> >>
->> >
->> > I'm pretty sure he meant that changing the meaning and behavior of "pick"
->> > is incompatible, as people use scripts which check the edit lists, and
->> > these scripts would expect pick to behave in a certain way.
->>
->> Are we still speaking about that new --recreate-merges feature? You
->> already care for compatibility for it? You expect there are already
->> scripts that use it?
->>
->> Once again, it seems like you care and don't care about backward
->> compatibility at the same time, here is your phrase below:
->>
->> "He absolutely cares about compatibility, but in this case, the feature
->> has not yet been merged into an official release."
->>
->> Are we still speaking about that new --recreate-merges feature?
->>
->> Do you guys care for compatibility for this particular --recreate-merges
->> feature or not? I'm lost. "Yes" or "No" answer, if you please!
->>
->> -- Sergey
->>
->
-> I care about the general compatibility of the rebase todo list regardless
-> of which options you enabled on the command line to generate it.
+s/paramerters/parameters/
 
-It's a good thing in general, yes. However, I recall I was told by the
-author that --recreate-merges was introduced exactly to break backward
-compatibility of the todo list. If so, could we please agree to stop
-using backward compatibility as an objection in the discussion of this
-particular feature?
-
-> Yes this has a bit of problem because *any* new todo command will
-> break the todo list, but it's better to only add new commands rather
-> than change semantics of existing ones.
-
-I'm not against new commands in general. I'm against inventing new
-entities without necessity, so, provided we did agree not to care about
-compatibility, there should be some other necessity to invent yet
-another command. I don't see such a necessity. Do you?
-
-The main principle I stand for in this discussion though is that all the
-commits should be treated equally as much as possible, new command or no
-new command. Doing otherwise will lead to all kinds of troubles and
-confusion, both in implementation and in user experience.
-
-Overall, what I think is needed is extending the syntax of existing todo
-commands to handle merge commits. This will give a provision to get it
-right this time. Otherwise it will likely end up being yet another
-subject of deprecation in the future.
-
--- Sergey
+> Signed-off-by: Joel Teichroeb <joel@teichroeb.net>
