@@ -7,61 +7,60 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 932CE1F404
-	for <e@80x24.org>; Thu, 29 Mar 2018 18:33:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DCDBE1F404
+	for <e@80x24.org>; Thu, 29 Mar 2018 18:37:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753177AbeC2Scy (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Mar 2018 14:32:54 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:33620 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752286AbeC2Scv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Mar 2018 14:32:51 -0400
-Received: by mail-wm0-f65.google.com with SMTP id o23so19626654wmf.0
-        for <git@vger.kernel.org>; Thu, 29 Mar 2018 11:32:51 -0700 (PDT)
+        id S1751164AbeC2Sh1 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Mar 2018 14:37:27 -0400
+Received: from mail-wm0-f52.google.com ([74.125.82.52]:33281 "EHLO
+        mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751096AbeC2Sh0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Mar 2018 14:37:26 -0400
+Received: by mail-wm0-f52.google.com with SMTP id o23so19639869wmf.0
+        for <git@vger.kernel.org>; Thu, 29 Mar 2018 11:37:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=keqkRElNWagR6yPXtw+uF+kInEaT6aF32jxtXZHZz8k=;
-        b=AAm/EzeJw3LEnfuqzG82LcNvvN59nCe067wDxQF7qDMvP24vh8l8yAv5QjYgve9G+d
-         gBASMpBtuysd1myiMPHf3nWKizH56N20keU6UwQHWF59lXetl+EbTD68NI+MYdLyrd9/
-         Q4AbzLr977Rx6Lquij/KJfpH6qWNCNF8/UY+wEHp5dmxRQcFil9VaB8fXlv0iZ7kA316
-         SL5nvbQ2n/I71tNDTld7PGc5O2IKaK5vCgjOdaxdBzfd6xDKgcAxvXTy+8KD6K6mDGHD
-         UOSCLALHpyB/53H9eNm6UrN4HuYiopbImGdnQKOn7SQ20ptizb1e5BNslS/L1df5OTgZ
-         eRWw==
+        bh=wqi61JIKEvwA9SOwbH2ESk4L/AWdx9axdujgR9j6OtI=;
+        b=C7VtfPTQsMpWfTidjSPhEchDcvvZVSk4YzTIP/uWGH0MXYPRLwyuqHeWG4NdZPMLAc
+         i+TjvHC5zCxD+F2elXjz9tKN9rNJ7OLatg8Gwoj/QHHyHxfM2PdKhQlLI0gPFN7Jtw5l
+         q2Dt8Zr5qceyj2vvmcxg2NPGxv5ZYk5j1eZV7n799zJLEGpTe4Ar4QEa0x/aXDDxIlEE
+         KcssKdDGUzVxVjajBWeR7KAaAVWGiEbOOtLyg2J3FFMzp9CxraSLTmEBNRtlReYCNdOG
+         7dhd618Rqt6u/lEarv+mBX4/ULhljRT26nehufIG77UrD9i8Ceb69kuG89VsLuqfC3yS
+         gIqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=keqkRElNWagR6yPXtw+uF+kInEaT6aF32jxtXZHZz8k=;
-        b=YNSZJd/cu8FJwfGElLaO0sum8x07G1nyyfxkBIO3yWPPsgv+WhvoPPsF1TNItlUJsw
-         eIFd3MRXnUlTf5+bvde/DEeFYnWYwH+nQPBXPzxZEnuyJhy1nWbBEvKNGmWpn03mWPeG
-         u5YQ5fJZ5WquHEg2/XdVhUqm0eddHXOpawM5xBkY1Oh43gocz+t5r4CztpyLgtpQGqyD
-         41/jKqIVSqH83laPtjd2OqafKLmgI8bYyP2zaflH3F4Aoo7JJ7flYtzRU54a08flf6NA
-         6Jl+gBALGZ7NDravAWARqHVtnisDzhbsyjwv+MY50OUFnJbZGH5rlLFxvkhV7lwVNN06
-         J+Ew==
-X-Gm-Message-State: AElRT7FVvlqGSYEOmp/nD+TB+OeZsodqlrsQtrO3QdoHW+SWlcEOK3W7
-        auMA7rRlMnt1BV+JDh1lh37Zl3Og
-X-Google-Smtp-Source: AIpwx48mDISOvH2BqfYi4j+CDv6X9vOn3gGPY1OK5JI/iBDMZ8Ev60b5JhbVLCkDPYIyViAf43puBA==
-X-Received: by 10.28.108.5 with SMTP id h5mr50649wmc.35.1522348369688;
-        Thu, 29 Mar 2018 11:32:49 -0700 (PDT)
+        bh=wqi61JIKEvwA9SOwbH2ESk4L/AWdx9axdujgR9j6OtI=;
+        b=g36xyuvI72/mVCgVNrfCku+9VoQ3FrqGd0Rb25m+WLw8/SaGVj4QC6MMeiQnw41h3S
+         TgA/YraS4vYSc//XrKsZCzJ9/Z5hQX1p4L3/WAgo9U6rbblTgfWivudJr3IuNFp8Ps7Q
+         o3cg9VbrV6ce7mhwJarR4LyVihOge7av6m9on9LoKQbVNDJjjr9+RpSFD4cJv55wwjB5
+         uDc7kWCyPQtjupks6gJyhdup6rl82GAYJXTaMTySvz3vDetgDNxq/o8ap+phETlPgEsf
+         +KrcZqGfawr6h6h0Q0O0PMQ1ZkNVPtTtRLnr0KYZABI755jTRuDhI5WLkfJ0GzPlf0Bn
+         T1pA==
+X-Gm-Message-State: AElRT7ExiinpAjhJISAW/frzvnmkwcY9CiWhw4DmZcgZ525RH7AHfPGi
+        +Uu1huiRSXzw5nEZUNCy+0U=
+X-Google-Smtp-Source: AIpwx49hSkikPuk8dugn0DsOjru/Clsu/uVRhrn1JUDbpluFWvyhjvn6rUsgNUiIDJr+c92j4eEQ2A==
+X-Received: by 10.28.213.12 with SMTP id m12mr79514wmg.98.1522348644526;
+        Thu, 29 Mar 2018 11:37:24 -0700 (PDT)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id z66sm2640400wmh.14.2018.03.29.11.32.48
+        by smtp.gmail.com with ESMTPSA id a11sm8487450wra.50.2018.03.29.11.37.23
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 29 Mar 2018 11:32:48 -0700 (PDT)
+        Thu, 29 Mar 2018 11:37:23 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Phillip Wood <phillip.wood@talktalk.net>,
-        Gustavo Leite <gustavoleite.ti@gmail.com>,
-        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v3 0/3] add -p: select individual hunk lines
-References: <20180219113619.26566-1-phillip.wood@talktalk.net>
-        <20180316101346.7137-1-phillip.wood@talktalk.net>
-Date:   Thu, 29 Mar 2018 11:32:48 -0700
-In-Reply-To: <20180316101346.7137-1-phillip.wood@talktalk.net> (Phillip Wood's
-        message of "Fri, 16 Mar 2018 10:13:43 +0000")
-Message-ID: <xmqq1sg27mwf.fsf@gitster-ct.c.googlers.com>
+To:     lars.schneider@autodesk.com
+Cc:     git@vger.kernel.org, tboegi@web.de, j6t@kdbg.org,
+        sunshine@sunshineco.com, peff@peff.net,
+        ramsay@ramsayjones.plus.com, Johannes.Schindelin@gmx.de,
+        pclouds@gmail.com, Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: [PATCH v12 00/10] convert: add support for different encodings
+References: <20180315225746.18119-1-lars.schneider@autodesk.com>
+Date:   Thu, 29 Mar 2018 11:37:23 -0700
+In-Reply-To: <20180315225746.18119-1-lars.schneider@autodesk.com> (lars
+        schneider's message of "Thu, 15 Mar 2018 23:57:36 +0100")
+Message-ID: <xmqqwoxu684c.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -70,34 +69,23 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Phillip Wood <phillip.wood@talktalk.net> writes:
+lars.schneider@autodesk.com writes:
 
-> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+> From: Lars Schneider <larsxschneider@gmail.com>
 >
-> Since v2 I've updated the patches to use '-' instead of '^' to invert
-> the selection to match the rest of add -i and clean -i.
+> Patches 1-6,9 are preparation and helper functions. Patch 4 is new.
+> Patch 7,8,10 are the actual change.
 >
-> These patches build on top of the recount fixes in [1]. The commit
-> message for the first patch describes the motivation:
->
-> "When I end up editing hunks it is almost always because I want to
-> stage a subset of the lines in the hunk. Doing this by editing the
-> hunk is inconvenient and error prone (especially so if the patch is
-> going to be reversed before being applied). Instead offer an option
-> for add -p to stage individual lines. When the user presses 'l' the
-> hunk is redrawn with labels by the insertions and deletions and they
-> are prompted to enter a list of the lines they wish to stage. Ranges
-> of lines may be specified using 'a-b' where either 'a' or 'b' may be
-> omitted to mean all lines from 'a' to the end of the hunk or all lines
-> from 1 upto and including 'b'."
+> This series depends on Torsten's 8462ff43e4 (convert_to_git():
+> safe_crlf/checksafe becomes int conv_flags, 2018-01-13) which is
+> already in master.
 
-I haven't seen any review comments on this round, and as I am not a
-heavy user of "add -i" interface (even though I admit that I
-originally wrote it), I haven't had a chance to exercise the code
-myself in the two weeks since the patches have been queued in my
-tree.
+I didn't see any further review comments on this round, and as far
+as I can tell from my reading, these patches looked more-or-less
+ready.  
 
-I am inclihned to merge them to 'next' soonish, but please stop me
-if anybody (including the original author) has further comments.
+Except for 04/10 that had a few messages around "who should be
+responsible for handling the 'NULL is for the default UTF-8'?", that
+is.
 
-Thanks.
+So, what's the doneness of this thing?
