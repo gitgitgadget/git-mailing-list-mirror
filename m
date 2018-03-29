@@ -2,94 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-2.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D3F1A1F404
-	for <e@80x24.org>; Thu, 29 Mar 2018 17:58:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 412331F404
+	for <e@80x24.org>; Thu, 29 Mar 2018 18:01:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751913AbeC2R6p (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Mar 2018 13:58:45 -0400
-Received: from mail-yb0-f172.google.com ([209.85.213.172]:38594 "EHLO
-        mail-yb0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750866AbeC2R6o (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Mar 2018 13:58:44 -0400
-Received: by mail-yb0-f172.google.com with SMTP id o197-v6so2272896ybg.5
-        for <git@vger.kernel.org>; Thu, 29 Mar 2018 10:58:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=jh1Kz7ozcI4mQ3Z6vmUtrj2bL4HwZMBYjnIkg56cjSY=;
-        b=pKQbQPzAujSKW1G3UUVd9MRvTO2nOa492aUjSZl3hWXgMqIXFb/1wdRPIzPP8pdqCx
-         RmdN/OGx2Rnq2tSTehcqOhlzJ31nLWFVGXiOFxzxStcjarmu29WefiVkYOqwEPnodjAj
-         4QpFTMWOeN4KGqtG8nokegBnBt/yuT+iusLDuOpMK0NFLVybwfZT0M4lFoF6kCLwMYlJ
-         P2eK7yIMmb6DZ4InB/hp7JU4Ubb04lGLJItMvH0VUXE+lLHtKaBKQsg5ZECLcU6SsA/O
-         y+m83736ep8IPipdhqHbdrQQlzCQM5slCGrUrW7fYQJ71IoabtSEWtQa7V3N71zQp+Mv
-         yjyw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=jh1Kz7ozcI4mQ3Z6vmUtrj2bL4HwZMBYjnIkg56cjSY=;
-        b=QW5ePDT37murT+TaXAlB++izQBUmLcNIcn5COA2S6+sQy2F4+QpJgCJxKak7qQDTe7
-         uijUOjonyzjtJYyhn8Xpav8oViNJEnT3jS6dXHE3lf0/a7Vi6RPftYRJV/nOuah6K9yR
-         fxxydhWGKPY4JZAlgjb1usOC5yZv9jT5GcTJtLE2QaKfW0JeVKHZKjjWQVlE7YiWWaSC
-         glWT+nW4dpMJ0ryUBcVU+wnew3Jb+4W03IPHFLtxy1C2YJ7zyqjspVuJrxLaPCb2bo2b
-         uCPm4PRXnJw0FMwDyACBw2uJLXYxyzd5YUsl5vsII1yL4PbIXwEZO7A9YCz8bPVQMhXo
-         MSbg==
-X-Gm-Message-State: AElRT7EME4g8a/qYp8XLY+M4wu7xDA5P2bUdOT+zgiV2FPzz9Pu8t8m0
-        BcVeOZXHLAn+CCxZWWBFkr5zBWbLlkcJ97hc5r655A==
-X-Google-Smtp-Source: AIpwx49GM2+oHRu6tzsa2RYF8kQvYVWzVZqEbxTtcDcqaq+VM6d4MWdSTEFGt4RMZvWPu16RFL983QMxMjSAUJlWXCo=
-X-Received: by 2002:a25:9841:: with SMTP id k1-v6mr5568630ybo.352.1522346323695;
- Thu, 29 Mar 2018 10:58:43 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 2002:a25:cf81:0:0:0:0:0 with HTTP; Thu, 29 Mar 2018 10:58:43
- -0700 (PDT)
-In-Reply-To: <cover.1522336130.git.johannes.schindelin@gmx.de>
-References: <cover.1522336130.git.johannes.schindelin@gmx.de>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 29 Mar 2018 10:58:43 -0700
-Message-ID: <CAGZ79ka41uD7A_64kz5oyrhCBci+oXmDGEVc6mHWyQd7d9avAQ@mail.gmail.com>
-Subject: Re: [PATCH 0/9] Assorted fixes for `git config` (including the "empty
- sections" bug)
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Thomas Rast <tr@thomasrast.ch>, Phil Haack <haacked@gmail.com>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Jason Frey <jfrey@redhat.com>,
-        Philip Oakley <philipoakley@iee.org>
-Content-Type: text/plain; charset="UTF-8"
+        id S1752231AbeC2SBj (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Mar 2018 14:01:39 -0400
+Received: from rcdn-iport-8.cisco.com ([173.37.86.79]:25434 "EHLO
+        rcdn-iport-8.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752206AbeC2SBh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Mar 2018 14:01:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=cisco.com; i=@cisco.com; l=1480; q=dns/txt; s=iport;
+  t=1522346497; x=1523556097;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references;
+  bh=rJzZzyzR50+/p8rT5XTSJs4IHhCLi3RpwAcHn7YLkYQ=;
+  b=FIM457Q/8Fzc0G1ocoqh5FAMjBsRD7VlYWjfFn/EBzjJyHPhPotfNaPm
+   feOLEidhyWpZp4iC/nFeYzpdGf6sVsRZrn3ASHOk5Y6dQInM5Ws5f5hs9
+   7xtRxSmGipszqj8CWLGd9ZGrjtUo+f4GbbxJ6YzRjipxVNixAVD8K/6Os
+   I=;
+X-IronPort-AV: E=Sophos;i="5.48,378,1517875200"; 
+   d="scan'208";a="372330864"
+Received: from rcdn-core-3.cisco.com ([173.37.93.154])
+  by rcdn-iport-8.cisco.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 29 Mar 2018 18:01:31 +0000
+Received: from sjc-ark-dv01.cisco.com (sjc-ark-dv01.cisco.com [10.30.219.73])
+        by rcdn-core-3.cisco.com (8.14.5/8.14.5) with ESMTP id w2TI1UNF001607;
+        Thu, 29 Mar 2018 18:01:30 GMT
+Received: by sjc-ark-dv01.cisco.com (Postfix, from userid 5489)
+        id 664313FC0C; Thu, 29 Mar 2018 11:01:30 -0700 (PDT)
+From:   Erik E Brady <brady@cisco.com>
+To:     git@vger.kernel.org
+Cc:     Erik E Brady <brady@cisco.com>
+Subject: [PATCH] credential: ignore SIGPIPE when writing to credential helpers
+Date:   Thu, 29 Mar 2018 11:00:56 -0700
+Message-Id: <20180329180056.9941-1-brady@cisco.com>
+X-Mailer: git-send-email 2.15.1
+In-Reply-To: <20180329175501.GE31833@sigill.intra.peff.net>
+References: <20180329175501.GE31833@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 29, 2018 at 8:18 AM, Johannes Schindelin
-<johannes.schindelin@gmx.de> wrote:
+The credential subsystem can trigger SIGPIPE when writing to an
+external helper if that helper closes its stdin before reading the
+whole input. Normally this is rare, since helpers would need to read
+that input to make a decision about how to respond, but:
 
-> So what is the argument against this extra care to detect comments? Well, if
-> you have something like this:
->
->         [section]
->                 ; Here we comment about the variable called snarf
->                 snarf = froop
->
-> and we run `git config --unset section.snarf`, we end up with this config:
->
->         [section]
->                 ; Here we comment about the variable called snarf
->
-> which obviously does not make sense. However, that is already established
-> behavior for quite a few years, and I do not even try to think of a way how
-> this could be solved.
+1. It's reasonable to configure a helper which only handles "get"
+   while ignoring "store".  Such a handler might not read stdin
+   for "store", thereby rapidly closing stdin upon helper exit.
 
-By commenting out the key/value pair instead of deleting it.
-It's called --unset, not --delete ;)
+2. A broken or misbehaving helper might exit immediately. That's an
+   error, but it's not reasonable for it to take down the parent Git
+   process with SIGPIPE.
 
-Now onto reviewing the patches.
+Even with such a helper, seeing this problem should be rare. Getting
+SIGPIPE requires the helper racily exiting before we've written the
+fairly small credential output.
 
-Stefan
+Signed-off-by: Erik E Brady <brady@cisco.com>
+---
+ credential.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/credential.c b/credential.c
+index 9747f47b1..62be651b0 100644
+--- a/credential.c
++++ b/credential.c
+@@ -5,6 +5,7 @@
+ #include "run-command.h"
+ #include "url.h"
+ #include "prompt.h"
++#include "sigchain.h"
+ 
+ void credential_init(struct credential *c)
+ {
+@@ -227,8 +228,10 @@ static int run_credential_helper(struct credential *c,
+ 		return -1;
+ 
+ 	fp = xfdopen(helper.in, "w");
++	sigchain_push(SIGPIPE, SIG_IGN);
+ 	credential_write(c, fp);
+ 	fclose(fp);
++	sigchain_pop(SIGPIPE);
+ 
+ 	if (want_output) {
+ 		int r;
+-- 
+2.16.3.dirty
+
