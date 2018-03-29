@@ -7,19 +7,19 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F3B9E1F404
-	for <e@80x24.org>; Thu, 29 Mar 2018 15:19:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 01E1E1FAE7
+	for <e@80x24.org>; Thu, 29 Mar 2018 15:19:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751973AbeC2PTS (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Mar 2018 11:19:18 -0400
-Received: from mout.gmx.net ([212.227.17.20]:45347 "EHLO mout.gmx.net"
+        id S1751980AbeC2PTU (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Mar 2018 11:19:20 -0400
+Received: from mout.gmx.net ([212.227.17.20]:42571 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751147AbeC2PTR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Mar 2018 11:19:17 -0400
-Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LymjL-1eWChZ0n95-01687z; Thu, 29
- Mar 2018 17:19:06 +0200
-Date:   Thu, 29 Mar 2018 17:19:04 +0200 (DST)
+        id S1751147AbeC2PTT (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Mar 2018 11:19:19 -0400
+Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0M7UUd-1eey8u26aN-00xM0m; Thu, 29
+ Mar 2018 17:19:11 +0200
+Date:   Thu, 29 Mar 2018 17:19:09 +0200 (DST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@dscho.gitforwindows.org
 To:     git@vger.kernel.org
@@ -29,91 +29,183 @@ cc:     Junio C Hamano <gitster@pobox.com>, Thomas Rast <tr@thomasrast.ch>,
         <avarab@gmail.com>, Stefan Beller <sbeller@google.com>,
         Jason Frey <jfrey@redhat.com>,
         Philip Oakley <philipoakley@iee.org>
-Subject: [PATCH 8/9] git_config_set: use do_config_from_file() directly
+Subject: [PATCH 9/9] git_config_set: reuse empty sections
 In-Reply-To: <cover.1522336130.git.johannes.schindelin@gmx.de>
-Message-ID: <e3032300946eb5962878341f7796f5872c4d138d.1522336130.git.johannes.schindelin@gmx.de>
+Message-ID: <29868fec2606f5f6aa1c5de2928580f2ca24e6e2.1522336130.git.johannes.schindelin@gmx.de>
 References: <cover.1522336130.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:aycCASuIyBjEswZpXBYT5WKX3XhrcmHbCit0oiGYUNBeWJfMCDp
- bVQAiIyPKG3ekQ2g1xjkRy1Bdc+yQBxCbgvskXrUYKLK+x6XHAS1alrBruZ7EQLDer6GuFP
- fyrJczxd9NAySrWpqXrTDxhcFTv1+POq18R/vM+NVJfs4LEud6WUgsnLMHsQZUW7z4hHlqa
- elTbI2fyGEciXkX/x6HcA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:n7lM7EXDWig=:SKFX6eQLpJOqKPd2kDnXCK
- Mu8H4vlDG5IqZlmzgR9MGvxW5mQl0/i5yR5V6rsXf5gGsViqRlk00aL8ugX4o7KX8RNfxnL2e
- QZC5oQ8qyCXLc69Pn0R861epdFSX30eqzYdUd328p3wDBVDJvH1rLSAWJ/nkBgCf+Yvpbq/Fm
- NYgEJ0wrLWPZozI+eIwZk7wsA7E5Odf6J2NEbEgL+tFp7NUIUAVF1t+YldfH+ccchMVqVkMAv
- 1t3zvkdZHbsd/1wiaXj2nE6uzhldl35koUP0Pr5cef/YyUV1YTHT9C1JGA9v6D3IJpQL6/IAx
- eqg2b72ugwL0XrqnlYz//bwtXkNyGOgUeeZID7Vvhy69T4dNbQ/EmSNLAOoC/eiGy9dhlr6JD
- o210wvHQmHWcbOOjE69OMFfKAi9BycNcBNkFGOTmAUEg5xeKUbokYaFooM+0gsri9XwV0N1F9
- crQtMfcC4m3rqkM59zEcxGey6GAJ7/ndGNHPTKpnQWsf4AvCdvgVNBDPhTz2ToQ+XHpGq/02x
- rA5aEB+vnAyGW3mCM0yryRZv9aKDsw4/kMdA8cqW3kNCfXXfHPpChYfl5n1xDnmX3un3+1lTQ
- NXd3uUbwELD4Dcib337cxhHKRmJgzgiPOKxxvD1VAQz2wvsaiWCRQw2HslCbwKY1pHg1QFO7V
- 3J977NITik0EBKZ+hu2IXEHNyRjKc5OX3dyaYFiXWRHHeEKUNeOOHX1LGqfJF4wFpooDkQH+t
- 28NLD3dbI60EQCSsuIpx/XDIOnWAPXQsbpljOJc2oNFwLRzXlu17sXARjBrjoKUp4rC/qQVIs
- Xfs4evIrFh0Fn3yGWHofgGMa7RmBCsCoFjUHsFZCwBFJaxUAVPfp2wxbEUh+3zRIkBKZ2lH
+X-Provags-ID: V03:K0:GrmA+oSZkI3vN4oLvkTOLhRSgOrbGxLdom1e08H9Q1di8k3iDlc
+ 8VEcPxFrQbqDn8BDyazkt3gjCvtu5/bKnjtNMaPCUcey6ZI6mxUJ1UcTJKKsKVIwkrDnbsd
+ EhMg/8OxS6hzacItuWzH9QdFQe07giN1PXXtS0IBHemNkjs3PeCkigTRZwKXUStte/E4k+g
+ BSPNU+so4JkBGsyMnNvZA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:uXx1ssMIPOY=:4MaopYisSgy6yJRXa7wCz2
+ 4xS93Rt32VyAPuRtqjU6gNSCR6V3dDMRyMs1ju187B/QzPUt4ALxM4EcmTQvYc/LUFd5LGY8p
+ XgIr09/XmUypQP0rcNaFScBcHg1C4R8G1JNNVlZsEFb7U5L9zO8McBE5OcJj1qd/drqW3Ih3L
+ 8dYxGwQsgDOhAD+89bxTa/FmsTpUMq9K2/wqHMokQkk1E4cJJf9adxoUVqG3vq8aAKvgSoOGN
+ m+QyVOoBqI/T3R9ggnB8UW51mXlfoEGN1lc9TunvxJ4+IXYHE21s3gIIn4+D4HheAzdJxxd2k
+ tSMtNUVtIPGIiQ7lZEz0QFzacAnOpUYJbmGi4f0maIGPgyOwQMI4FKTPCxsoyZV0y2iFPdLSF
+ GdAxZ7aBj3amqFmY6S04QSzJkHky4phP7KBeu8lCF1JOVN7hTKb+KbF9Glu74i4lNq3STrJwP
+ QPxhjQzhJ0L/4Co4bXswrBHNXsTIJKKFD8RJ1g6pQ5K5OOTBfpVejt87f7fGrs4XZ7A+c4jN5
+ 3eShJYtluH6rBwxpG2p3dsP+GyutIU/umUhqQ5C7it0tREfBpQya2d9dxm0kvdbG6jBftebU9
+ Gl9A4g1cDlYifERfKqXA/GEmh1t8W6+zUkWCLtxFvhLUBPp8hj7F4j0skAl2lt8A8WtKDTnEy
+ wC6IzH5ua/xnE2CyN8AV0G9sm/wxOsgB1aGC3vCGhLr6jEVn9zH/xRCq8VBHM0nSLHVmh9N7E
+ u8Z8F/NxJu8ki82pKOIXEBv1QmXGkgGO0mGeOipohy72f5mXSHJP7wVSZjQqfpXcyY6hEcydX
+ LIUUxy8IdmiePJVtBuQlaaBBBXef2JUqp1sU/PSnEFpeKyYUhNMbGsG0eUmfzMnuttznDov
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Technically, it is the git_config_set_multivar_in_file_gently()
-function that we modify here (but the oneline would get too long if we
-were that precise).
+It can happen quite easily that the last setting in a config section is
+removed, and to avoid confusion when there are comments in the config
+about that section, we keep a lone section header, i.e. an empty
+section.
 
-This change prepares the git_config_set machinery to allow reusing empty
-sections, by using the file-local function do_config_from_file()
-directly (whose signature can then be changed without any effect outside
-of config.c).
+The code to add new entries in the config tries to be cute by reusing
+the parsing code that is used to retrieve config settings, but that
+poses the problem that the latter use case does *not* care about empty
+sections, therefore even the former user case won't see them.
 
-An incidental benefit is that we avoid a level of indirection, and we
-also avoid calling flockfile()/funlockfile() when we already know that
-we are not operating on stdin/stdout here.
+Fix this by introducing a mode where the parser reports also empty
+sections (with a trailing '.' as tell-tale), and then using that when
+adding new config entries.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- config.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ config.c          | 32 +++++++++++++++++++++++---------
+ t/t1300-config.sh |  2 +-
+ 2 files changed, 24 insertions(+), 10 deletions(-)
 
 diff --git a/config.c b/config.c
-index 503aef4b318..eb1e0d335fc 100644
+index eb1e0d335fc..b04c40f76bc 100644
 --- a/config.c
 +++ b/config.c
-@@ -2706,6 +2706,7 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
- 		struct stat st;
- 		size_t copy_begin, copy_end;
- 		int i, new_line = 0;
-+		FILE *f;
+@@ -653,13 +653,15 @@ static int get_base_var(struct strbuf *name)
+ 	}
+ }
  
- 		if (value_regex == NULL)
- 			store.value_regex = NULL;
-@@ -2739,7 +2740,10 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
- 		 * As a side effect, we make sure to transform only a valid
- 		 * existing config file.
- 		 */
--		if (git_config_from_file(store_aux, config_filename, NULL)) {
-+		f = fopen_or_warn(config_filename, "r");
-+		if (!f || do_config_from_file(store_aux, CONFIG_ORIGIN_FILE,
-+					      config_filename, config_filename,
-+					      f, NULL)) {
+-static int git_parse_source(config_fn_t fn, void *data)
++static int git_parse_source(config_fn_t fn, void *data,
++			    int include_section_headers)
+ {
+ 	int comment = 0;
+ 	int baselen = 0;
+ 	struct strbuf *var = &cf->var;
+ 	int error_return = 0;
+ 	char *error_msg = NULL;
++	int saw_section_header = 0;
+ 
+ 	/* U+FEFF Byte Order Mark in UTF8 */
+ 	const char *bomptr = utf8_bom;
+@@ -685,6 +687,16 @@ static int git_parse_source(config_fn_t fn, void *data)
+ 			if (cf->eof)
+ 				return 0;
+ 			comment = 0;
++			if (saw_section_header) {
++				if (include_section_headers) {
++					cf->linenr--;
++					error_return = fn(var->buf, NULL, data);
++					if (error_return < 0)
++						break;
++					cf->linenr++;
++				}
++				saw_section_header = 0;
++			}
+ 			continue;
+ 		}
+ 		if (comment || isspace(c))
+@@ -700,6 +712,7 @@ static int git_parse_source(config_fn_t fn, void *data)
+ 				break;
+ 			strbuf_addch(var, '.');
+ 			baselen = var->len;
++			saw_section_header = 1;
+ 			continue;
+ 		}
+ 		if (!isalpha(c))
+@@ -1398,7 +1411,8 @@ int git_default_config(const char *var, const char *value, void *dummy)
+  * fgetc, ungetc, ftell of top need to be initialized before calling
+  * this function.
+  */
+-static int do_config_from(struct config_source *top, config_fn_t fn, void *data)
++static int do_config_from(struct config_source *top, config_fn_t fn, void *data,
++			  int include_section_headers)
+ {
+ 	int ret;
+ 
+@@ -1410,7 +1424,7 @@ static int do_config_from(struct config_source *top, config_fn_t fn, void *data)
+ 	strbuf_init(&top->var, 1024);
+ 	cf = top;
+ 
+-	ret = git_parse_source(fn, data);
++	ret = git_parse_source(fn, data, include_section_headers);
+ 
+ 	/* pop config-file parsing state stack */
+ 	strbuf_release(&top->value);
+@@ -1423,7 +1437,7 @@ static int do_config_from(struct config_source *top, config_fn_t fn, void *data)
+ static int do_config_from_file(config_fn_t fn,
+ 		const enum config_origin_type origin_type,
+ 		const char *name, const char *path, FILE *f,
+-		void *data)
++		void *data, int include_section_headers)
+ {
+ 	struct config_source top;
+ 
+@@ -1436,12 +1450,12 @@ static int do_config_from_file(config_fn_t fn,
+ 	top.do_ungetc = config_file_ungetc;
+ 	top.do_ftell = config_file_ftell;
+ 
+-	return do_config_from(&top, fn, data);
++	return do_config_from(&top, fn, data, include_section_headers);
+ }
+ 
+ static int git_config_from_stdin(config_fn_t fn, void *data)
+ {
+-	return do_config_from_file(fn, CONFIG_ORIGIN_STDIN, "", NULL, stdin, data);
++	return do_config_from_file(fn, CONFIG_ORIGIN_STDIN, "", NULL, stdin, data, 0);
+ }
+ 
+ int git_config_from_file(config_fn_t fn, const char *filename, void *data)
+@@ -1452,7 +1466,7 @@ int git_config_from_file(config_fn_t fn, const char *filename, void *data)
+ 	f = fopen_or_warn(filename, "r");
+ 	if (f) {
+ 		flockfile(f);
+-		ret = do_config_from_file(fn, CONFIG_ORIGIN_FILE, filename, filename, f, data);
++		ret = do_config_from_file(fn, CONFIG_ORIGIN_FILE, filename, filename, f, data, 0);
+ 		funlockfile(f);
+ 		fclose(f);
+ 	}
+@@ -1475,7 +1489,7 @@ int git_config_from_mem(config_fn_t fn, const enum config_origin_type origin_typ
+ 	top.do_ungetc = config_buf_ungetc;
+ 	top.do_ftell = config_buf_ftell;
+ 
+-	return do_config_from(&top, fn, data);
++	return do_config_from(&top, fn, data, 0);
+ }
+ 
+ int git_config_from_blob_oid(config_fn_t fn,
+@@ -2743,7 +2757,7 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
+ 		f = fopen_or_warn(config_filename, "r");
+ 		if (!f || do_config_from_file(store_aux, CONFIG_ORIGIN_FILE,
+ 					      config_filename, config_filename,
+-					      f, NULL)) {
++					      f, NULL, 1)) {
  			error("invalid config file %s", config_filename);
  			if (store.value_regex != NULL &&
  			    store.value_regex != CONFIG_REGEX_NONE) {
-@@ -2747,8 +2751,11 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
- 				free(store.value_regex);
- 			}
- 			ret = CONFIG_INVALID_FILE;
-+			if (f)
-+				fclose(f);
- 			goto out_free;
--		}
-+		} else
-+			fclose(f);
+diff --git a/t/t1300-config.sh b/t/t1300-config.sh
+index ecbcc9cf3d0..867397ae930 100755
+--- a/t/t1300-config.sh
++++ b/t/t1300-config.sh
+@@ -1463,7 +1463,7 @@ test_expect_success '--unset-all removes section if empty & uncommented' '
+ 	test_line_count = 0 .git/config
+ '
  
- 		if (store.value_regex != NULL &&
- 		    store.value_regex != CONFIG_REGEX_NONE) {
+-test_expect_failure 'adding a key into an empty section reuses header' '
++test_expect_success 'adding a key into an empty section reuses header' '
+ 	cat >.git/config <<-\EOF &&
+ 	[section]
+ 	EOF
 -- 
 2.16.2.windows.1.26.g2cc3565eb4b
-
-
