@@ -2,64 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 64AEF1F404
-	for <e@80x24.org>; Thu, 29 Mar 2018 12:52:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A87131F404
+	for <e@80x24.org>; Thu, 29 Mar 2018 13:47:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752587AbeC2Mwc (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Mar 2018 08:52:32 -0400
-Received: from mail-wr0-f172.google.com ([209.85.128.172]:45686 "EHLO
-        mail-wr0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751908AbeC2Mwb (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Mar 2018 08:52:31 -0400
-Received: by mail-wr0-f172.google.com with SMTP id u11so5284988wri.12
-        for <git@vger.kernel.org>; Thu, 29 Mar 2018 05:52:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=PNbJjqOoVUo4AmW/V5dn8kVmJk+yi1h3LwwKBhsiD3Q=;
-        b=ZYtVyBk9GfqKyv9S/+h2Kg2MJ1Cr5vpYEcpGYWg6Y1LaPP5az5vxcaflTdK/wFN45b
-         3JQVoK646rvs16Vis7lmxTmn18e4IvTp70Db7xyeRjwT7D4kWIsk83T8qjP1IoOQRQNt
-         yTskfQuvWYJa11Xji0mQq4UqSzmHjY4CoHrvEj0vof3urcQVJkUATto7daIxc4PaQc4f
-         w266+O3szlzrkqYBGWZlJkufTyzlXI8/oKxOh6ZCzgr7xv3srX7jlY07ijvdUcohgq69
-         FIui2rTCd6YneXCGMtdWo26SKBuROTnhAyuctOz4uJDN2KH6owbRbvEq/T5I+sCDDaXx
-         K2YA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=PNbJjqOoVUo4AmW/V5dn8kVmJk+yi1h3LwwKBhsiD3Q=;
-        b=Hz9I2yxpL0EbJDjSDBrVJLVgxXaaGRjYMckEmLJQkBCSp3T/0sOP9ncmAMnGBRzAgm
-         l6Yccl6YbeCMkghq6fFn+irtzEy1KACis5BrlHSYjLZZMPmueCralnmgMOR20s2u+kbG
-         teDTzF2kDhupI7pjuI292i2eHFPkMcpivRwMvneub+XT5qf1ARjS9E4v4SOqADO7Z9RA
-         ZwAk+jJW/M2LRK5DXnrrDsFb+hGifb3YHKM8GQSuVY5b2XL5aTyFexAhLIPNgKX8ooXf
-         bFPvesJQIASjMRq1phAitwWZHjcCXY7eE49z+ds8iH3b121kQwDgyI5kSSCbj8BZkP59
-         XH9Q==
-X-Gm-Message-State: AElRT7EAPo+MtZXwzEZc2KMpQdP3YYoW6qmVrRGG6c1mTSUd5y73FZZ0
-        XGBCSqOBpljd6EZQ7qtBd0RHI9jHTWV3fe1wRhE=
-X-Google-Smtp-Source: AIpwx4/bPB/Dxh6QyI41fqM4HC9veM1ifa826UoVS9EBFC2WbC1QTgKX1TulhX3Uwzrm2uTba9dIU2B7xeKXy/+9qOw=
-X-Received: by 10.223.133.182 with SMTP id 51mr5936621wrt.226.1522327949387;
- Thu, 29 Mar 2018 05:52:29 -0700 (PDT)
+        id S1752839AbeC2NrP (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Mar 2018 09:47:15 -0400
+Received: from siwi.pair.com ([209.68.5.199]:37702 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752319AbeC2NrN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Mar 2018 09:47:13 -0400
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id E5C083F4141;
+        Thu, 29 Mar 2018 09:47:12 -0400 (EDT)
+Received: from [10.160.98.99] (unknown [167.220.148.99])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id A285D3F4140;
+        Thu, 29 Mar 2018 09:47:12 -0400 (EDT)
+Subject: Re: [RFC/PATCH] upload-pack: disable object filtering when disabled
+ by config
+To:     Junio C Hamano <gitster@pobox.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+References: <20180328203303.GA260688@aiede.svl.corp.google.com>
+ <xmqqo9j77sub.fsf@gitster-ct.c.googlers.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <16479282-4241-7bf2-5f7c-b7889eb0e906@jeffhostetler.com>
+Date:   Thu, 29 Mar 2018 09:47:12 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.6.0
 MIME-Version: 1.0
-Received: by 10.223.156.140 with HTTP; Thu, 29 Mar 2018 05:52:28 -0700 (PDT)
-From:   =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
-        <olyatelezhnaya@gmail.com>
-Date:   Thu, 29 Mar 2018 15:52:28 +0300
-Message-ID: <CAL21Bm=U=p+tw5FSXXBU01Bm=YCS6oQQSseB-Xv758onmxszwA@mail.gmail.com>
-Subject: [PATCH v6 0/6] ref-filter: remove die() calls from formatting logic
-To:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <xmqqo9j77sub.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Move helper function from strbuf to ref-filter.
-Get rid of some memory leaks.
 
-Thanks to everyone!
-Olga
+
+On 3/28/2018 6:12 PM, Junio C Hamano wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
+> 
+>> When upload-pack gained partial clone support (v2.17.0-rc0~132^2~12,
+>> 2017-12-08), it was guarded by the uploadpack.allowFilter config item
+>> to allow server operators to control when they start supporting it.
+>>
+>> That config item didn't go far enough, though: it controls whether the
+>> 'filter' capability is advertised, but if a (custom) client ignores
+>> the capability advertisement and passes a filter specification anyway,
+>> the server would handle that despite allowFilter being false.
+>>
+>> This is particularly significant if a security bug is discovered in
+>> this new experimental partial clone code.  Installations without
+>> uploadpack.allowFilter ought not to be affected since they don't
+>> intend to support partial clone, but they would be swept up into being
+>> vulnerable.
+>>
+>> Simplify and limit the attack surface by making uploadpack.allowFilter
+>> disable the feature, not just the advertisement of it.
+>>
+>> NEEDSWORK: tests
+>>
+>> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+>> ---
+>> Noticed while reviewing the corresponding JGit code.
+>>
+>> If this change seems like a good idea, I can add tests and re-send it
+>> for real.
+> 
+> Yup.  The names of the static variables tell almost the whole story
+> to convince me why this is a good change ;-).  It is not about
+> advertising a feature alone, but if the feature is actually enabled,
+> so advertisement and handling of the feature should be either both
+> enabled or disabled.
+> 
+> Thanks.
+> 
+
+I agree.  Thanks.
