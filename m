@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 61D171F404
-	for <e@80x24.org>; Thu, 29 Mar 2018 15:03:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 878DC1F404
+	for <e@80x24.org>; Thu, 29 Mar 2018 15:03:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752188AbeC2PDf (ORCPT <rfc822;e@80x24.org>);
+        id S1752297AbeC2PDz (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Mar 2018 11:03:55 -0400
+Received: from mail-lf0-f65.google.com ([209.85.215.65]:35947 "EHLO
+        mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752131AbeC2PDf (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 29 Mar 2018 11:03:35 -0400
-Received: from mail-lf0-f66.google.com ([209.85.215.66]:43673 "EHLO
-        mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751398AbeC2PDe (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Mar 2018 11:03:34 -0400
-Received: by mail-lf0-f66.google.com with SMTP id v207-v6so8848757lfa.10
-        for <git@vger.kernel.org>; Thu, 29 Mar 2018 08:03:33 -0700 (PDT)
+Received: by mail-lf0-f65.google.com with SMTP id z143-v6so8865717lff.3
+        for <git@vger.kernel.org>; Thu, 29 Mar 2018 08:03:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=TqxpSpRwcrZHB5UAHywFdMK6lvR9usylOZ3c6rbWqbM=;
-        b=Nmrw5SbxbKsPXmh/GmZbWzSOyCOCfZ4e5VB8/BlAlfraF82wt73EwRoaehR+nJe5GM
-         OklPyK6goF/fbDwVmT1Si4y78z20jurnJUNAnlzabtvlhxvCa+g/SGAejCD6KzqVANnT
-         uOB5h+fDuVDP+X5UWNLu7WIkECzzLOqNdvm9FQuu5xKELUFkR7e7bDsl6RmtDiOLbzPe
-         +p2RNEvn0gUlfYMdpEdW15NqbUeTpXFKpD/o3cEj0aWCmEeGdMFfQL2oFWv6ign4/ffL
-         IbIvYau1SrV5Zx16VZE/xH0jM6pEkaI/xg0k4WrVwLcowywz6OqdJjF3R3EL+5BOzX4Q
-         /n1w==
+        bh=0lVMMlGrFXQaWxyJstlKiFjkPYy66fCW9b3k+ExmuyU=;
+        b=eZ+LRhIlhrwMUedU520rt7OHPI8OCJt9enXx6G+nJMNsic00aP+72Co+v6JRa8mF9U
+         hPt/kW4DZJFIfVun5PSjnaZRk4i5uNYvhOivRZ3xYwYz0KsZ1oSadi+lowbtYscldlEq
+         W26O2SJac9RnC8KeZFSZB4tqEe0SpKAPOKC5z7Z4UTNS8u5DRGEWHgkVxT6ZF8l4/V9x
+         6xeOO7Da6YF/H6l6wKM2fkse1x0qCB3Hvfey+xeBM5mOQcSnmaUNUOBMrE0hqTwlvtFh
+         TKHYJK9A1k+W1VcvhQ5U4LF9oB5QKyWUGJZ2BK6puunApDgMSSmOK6nBzLgOrZQBKpur
+         id5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=TqxpSpRwcrZHB5UAHywFdMK6lvR9usylOZ3c6rbWqbM=;
-        b=tVWl0dwWzpyKsEXQpiiA5gBwG60tiqn0xB+2/LgkKZpQEZvxbb2zDUij56HuxLh1ys
-         Qs95mQ1qTou3KlELqo/J2u77YpMVhJew1hGSZWSx0cYuROXnYVerTKzD/sFLRJTObReT
-         wPbgtUg9zvj3GXOhrLVQE4JUFtukWajfRCLwtqTge6yIA0Vt2quo1R3ZUDQmrDkwLoAG
-         71SU6TuGD0H7nmWK5y5c/5yyHyD/BWydFQF2u5umyqWlQnjKlrWO3NKubEMWQXLgC5Z0
-         jr1geZ1OrKppn/dqnuOrg7fuiv9CXkCDmSXB8XDq6XosWRTIuUfH7623gymSTOBerz/a
-         h8ww==
-X-Gm-Message-State: AElRT7F3U5XlJxKuxXGoxRONzR4ysW6MczmdjWQbhlht7LxC8jNT8uCb
-        KgdUti9G8iTk2bXbNQmjqP6gXA==
-X-Google-Smtp-Source: AIpwx48C5p8onHEBK0kybgw+XLyWfIP8NOX7P0ObyCtw7L5GFw9FW5FodVXoyriYgPI5PwoVy7eTUw==
-X-Received: by 2002:a19:23c5:: with SMTP id j188-v6mr5381136lfj.122.1522335812480;
-        Thu, 29 Mar 2018 08:03:32 -0700 (PDT)
+        bh=0lVMMlGrFXQaWxyJstlKiFjkPYy66fCW9b3k+ExmuyU=;
+        b=tg6zVNr9M5xWB0lPC07m9v+GuDmSNBtfRdnbfwFdNQ/PRZj4X8BYYWFbbtsk6aqE4t
+         9qyoIFgDlRYe2cIcs4fV/AX872zcJyQoC82xbLcF4oPGO6MZkPcvije2yjlEqErIg7gY
+         W3tZ4gWPNBzQI/JNvgAmrrZffTDGye93LBHsPR+KUC+XG9oSb3uVQPOfk117n06LlsLJ
+         CUdAMc/5Xd8dthm0Xlgxh43/L083nrBYmuQaFR8DUtr1xZa+CPQqCWU45qSZAn0RGONK
+         4YTyu1BHfHAmsrt9fR9d6vuooxZo/eTaKsbSE2iQUwJygAtI+BxoxC6rYH4SLHiKz8Wb
+         Fwow==
+X-Gm-Message-State: AElRT7F2oK+7VqZmMw+7/uCrDTBerOLES0mVldlqVxYBaJjuZQX1CR7t
+        +Uwi9+2CXtrg2BK8lji5QaOZyQ==
+X-Google-Smtp-Source: AIpwx48rMN6uZ1LSxUKVPpJ0fZBu8S1yKU4pxvN9HQHhIH7RyE0o9CDo4GiRreCMGljJ7rRDtQM7uA==
+X-Received: by 2002:a19:9dc5:: with SMTP id g188-v6mr5835520lfe.95.1522335813713;
+        Thu, 29 Mar 2018 08:03:33 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id x7-v6sm1186265lff.64.2018.03.29.08.03.31
+        by smtp.gmail.com with ESMTPSA id x7-v6sm1186265lff.64.2018.03.29.08.03.32
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 29 Mar 2018 08:03:31 -0700 (PDT)
+        Thu, 29 Mar 2018 08:03:32 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -57,12 +57,13 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v3 0/3] Enable more compiler warnings for devs
-Date:   Thu, 29 Mar 2018 17:03:19 +0200
-Message-Id: <20180329150322.10722-1-pclouds@gmail.com>
+Subject: [PATCH v3 1/3] connect.c: mark die_initial_contact() NORETURN
+Date:   Thu, 29 Mar 2018 17:03:20 +0200
+Message-Id: <20180329150322.10722-2-pclouds@gmail.com>
 X-Mailer: git-send-email 2.17.0.rc1.439.gca064e2955
-In-Reply-To: <20180324125348.6614-1-pclouds@gmail.com>
+In-Reply-To: <20180329150322.10722-1-pclouds@gmail.com>
 References: <20180324125348.6614-1-pclouds@gmail.com>
+ <20180329150322.10722-1-pclouds@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,79 +72,28 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-v3 fixes the fallthru warnings in connect.c, and with json-writer
-series rerolled, 'pu' should build cleanly now.
--Wno-maybe-uninitialized is removed, thanks to Ramsay.
+There is a series running in parallel with this one that adds code
+like this
 
-v3 also adds an experimental patch that adds EAGER_DEVELOPER=1. These
-developers will have all warnings enabled (nothing is suppressed) but
-they are not fatal. They could go through them and perhaps clean up
-the code base a bit more.
+    switch (...) {
+    case ...:
+        die_initial_contact();
+    case ...:
 
-Interdiff
+There is nothing wrong with this. There is no actual falling
+through. But since gcc is not that smart and gcc 7.x introduces
+-Wimplicit-fallthrough, it raises a false alarm in this case.
 
-diff --git a/Makefile b/Makefile
-index e6680a8977..e4f04ce1cb 100644
---- a/Makefile
-+++ b/Makefile
-@@ -434,7 +434,9 @@ all::
- #
- # Define DEVELOPER to enable more compiler warnings. Compiler version
- # and faimily are auto detected, but could be overridden by defining
--# COMPILER_FEATURES (see config.mak.dev)
-+# COMPILER_FEATURES (see config.mak.dev).
-+# Define EAGER_DEVELOPER keeps compiler warnings non-fatal, but no warning
-+# class is suppressed anymore.
- 
- GIT-VERSION-FILE: FORCE
- 	@$(SHELL_PATH) ./GIT-VERSION-GEN
-@@ -1041,6 +1043,9 @@ include config.mak.uname
- -include config.mak.autogen
- -include config.mak
- 
-+ifdef EAGER_DEVELOPER
-+DEVELOPER = Yes
-+endif
- ifdef DEVELOPER
- include config.mak.dev
- endif
-diff --git a/config.mak.dev b/config.mak.dev
-index d8beaf9347..13883410b3 100644
---- a/config.mak.dev
-+++ b/config.mak.dev
-@@ -1,4 +1,6 @@
-+ifndef EAGER_DEVELOPER
- CFLAGS += -Werror
-+endif
- CFLAGS += -Wdeclaration-after-statement
- CFLAGS += -Wno-format-zero-length
- CFLAGS += -Wold-style-definition
-@@ -18,13 +20,23 @@ endif
- 
- ifneq ($(or $(filter gcc6,$(COMPILER_FEATURES)),$(filter clang4,$(COMPILER_FEATURES))),)
- CFLAGS += -Wextra
-+# if a function is public, there should be a prototype and the right
-+# header file should be included. If not, it should be static.
- CFLAGS += -Wmissing-prototypes
-+ifndef EAGER_DEVELOPER
-+# These are disabled because we have these all over the place.
- CFLAGS += -Wno-empty-body
- CFLAGS += -Wno-missing-field-initializers
- CFLAGS += -Wno-sign-compare
- CFLAGS += -Wno-unused-function
- CFLAGS += -Wno-unused-parameter
--ifneq ($(filter gcc6,$(COMPILER_FEATURES)),)
--CFLAGS += -Wno-maybe-uninitialized
-+endif
-+endif
-+
-+# uninitialized warnings on gcc 4.9.2 in xdiff/xdiffi.c and config.c
-+# not worth fixing since newer compilers correctly stop complaining
-+ifneq ($(filter gcc4,$(COMPILER_FEATURES)),)
-+ifeq ($(filter gcc5,$(COMPILER_FEATURES)),)
-+CFLAGS += -Wno-uninitialized
- endif
- endif
+This class of warnings may be useful elsewhere, so instead of
+suppressing the whole class, let's try to fix just this code. gcc is
+smart enough to realize that no execution can continue after a
+NORETURN function call and no longer raises the warning.
+
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ connect.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
 diff --git a/connect.c b/connect.c
 index c3a014c5ba..49eca46462 100644
 --- a/connect.c
@@ -157,21 +107,6 @@ index c3a014c5ba..49eca46462 100644
  {
  	if (unexpected)
  		die(_("The remote end hung up upon initial contact"));
-
-
-Nguyễn Thái Ngọc Duy (3):
-  connect.c: mark die_initial_contact() NORETURN
-  Makefile: detect compiler and enable more warnings in DEVELOPER=1
-  Makefile: add EAGER_DEVELOPER mode
-
- Makefile        | 20 +++++++++----------
- config.mak.dev  | 42 +++++++++++++++++++++++++++++++++++++++
- connect.c       |  2 +-
- detect-compiler | 53 +++++++++++++++++++++++++++++++++++++++++++++++++
- 4 files changed, 106 insertions(+), 11 deletions(-)
- create mode 100644 config.mak.dev
- create mode 100755 detect-compiler
-
 -- 
 2.17.0.rc1.439.gca064e2955
 
