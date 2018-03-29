@@ -2,124 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E85C11F404
-	for <e@80x24.org>; Thu, 29 Mar 2018 18:15:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 069561F404
+	for <e@80x24.org>; Thu, 29 Mar 2018 18:22:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754050AbeC2SPg (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Mar 2018 14:15:36 -0400
-Received: from mail-yw0-f193.google.com ([209.85.161.193]:39280 "EHLO
-        mail-yw0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753544AbeC2SPf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Mar 2018 14:15:35 -0400
-Received: by mail-yw0-f193.google.com with SMTP id q66so2237582ywg.6
-        for <git@vger.kernel.org>; Thu, 29 Mar 2018 11:15:34 -0700 (PDT)
+        id S1753650AbeC2SWS (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Mar 2018 14:22:18 -0400
+Received: from mail-wm0-f46.google.com ([74.125.82.46]:39195 "EHLO
+        mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752969AbeC2SF4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Mar 2018 14:05:56 -0400
+Received: by mail-wm0-f46.google.com with SMTP id f125so13096343wme.4
+        for <git@vger.kernel.org>; Thu, 29 Mar 2018 11:05:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=fk/XJvU1fN4NaF1NBhzOvb6kSAJuEsONYlBLjwyPjL4=;
-        b=hr4TI9+6lYn5r6diJ2R9giHbaXypnProGWsFZCPVSCj5C5e4+Fd+cmaPGyYvaZuepR
-         qIEWUYDfJuxXV1JJUYEgfY5vaGnVvdARBpI8yLnbmCuasaS1YvLKcKdKato686F00v16
-         aXpwOdN9xe9pp4z0c/XmO6gYTnbmn1fdh2xeNoTLyRXoV5MV12bfWimIlTT5Q5m0HIV0
-         JSxZEkzcOcUO6F3CNwuG2JEMEqr6x7i3BXmvqGPiB5XOf4b8zEbMq0xvBco6GkMa9Ug0
-         yWppcy1Sb5zCrgF/NOxFTDx3Sh21F7Mdq0Y4ffvR5JdPCkj+AKT2N8+ddnFhh02moUNk
-         d7Fg==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=VnTccLsW1YN1lu1DdZekxXqkoHGpzRz6jUg1SqfpJyM=;
+        b=nh6ivehP7d8XBh+Pac3Rnrv96hW8IUu17X6ZPv3IMpYaE7GwMA//HDiTm3uRMKRNPz
+         uWlGMCxPZzY2vBHYKedg9Kr5yenuLzrtKWEUd6mzm3g6htF4Wmha5D3AAWA37nesJ/de
+         uF14d+xn/YbfVHIeBY79zgm6GPy+eq6Z/ZTGyHtTKbXSCJE73fvY3keDD8xBtPLurKhv
+         RPufQYEPPWTcfomrSKbaN4EVpHoRaxZU77vXJFWIFXxFBXLnt4+YT/Vhi/c3FDlClDyh
+         bRQECAOfjZ7roH5vH+dsm/H7EfRD1v+5mWRetnKT9ZmM73XMZM0AK1k7Is6uYn6UG6MP
+         FvNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=fk/XJvU1fN4NaF1NBhzOvb6kSAJuEsONYlBLjwyPjL4=;
-        b=Zo1R2r/2bQg5zpzJfS9kj3Ry5iruIWzYrNVRyFkmJ0rIRItNB2pRLv6xe6KETqWMAG
-         s9Pef/SHb6Rf3SrcHXt6wP6LiWnLl22kTqWOGuGg9vA4teVmBIxV7O7BeXMLAdx4on2T
-         mh4ImLD6Mu7VcxfvVSGYPxHcY4y6A+txjUAO6AqJ0dLrTBdW1ftvne/6IG7ScsAquIOk
-         OT8k0PlPjUjucre/FAbhjSWUCl7IWMWeAVHfyd1Hw10hxixXjD8Ih6C8LtZha/koG7PR
-         NI6M4afU92l+M0vZ8AevlliEY3jApTjCZearZSA42MuVjf/PsyRz4KfgPCZpM3BfkHQY
-         Dv9A==
-X-Gm-Message-State: AElRT7GKFkUH8SDLz2L/JaGd3ZUcwlzfnfhFwIvasYdNDLS4Ya0wfFJm
-        YmBPnlvcUDQGRbbjjlyzu6U1/Sq80TXCmss+GouZwbSV
-X-Google-Smtp-Source: AIpwx48ml2mmiaVmoE06eMwN9PjPhKWJjONiBTULrkOHbPXp7OYZR6ZCe2onxTaZTANwCqVTLX4uYyeA1XIjtC1D5iw=
-X-Received: by 10.129.84.66 with SMTP id i63mr5690261ywb.340.1522347333944;
- Thu, 29 Mar 2018 11:15:33 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=VnTccLsW1YN1lu1DdZekxXqkoHGpzRz6jUg1SqfpJyM=;
+        b=Ur0QWFbU8j+cLrbKBNvATm1OCbOxXaYpK7NoBFaQSkulu//wjZ9SXcvnMkV/hNPJGP
+         jzQPcvvZhvyNP+/VLcl2xizwAzCNIVZ5UY+zRDv5ODcrF0fdDxqK4S6+lJRqpzG7w8ND
+         RkilLPXaqX+BAYPzPZkHn2XUqAqfeJnq2+CCrG20nVZIxLs1PLKiIuYLbgyoAu5zBf3p
+         Zzpg45DyW288mgwFY51A6E6z29YQi2wZK0TGkW0wYMFEC5rebQzRJ7BeTxvDYuYu9Pqe
+         igQM72b2aj805GW1/RN9Ix5x0zY6XyndB/FU9Ew7SPseHONtHiywggeaCOZKDUgY6xGT
+         Vjmw==
+X-Gm-Message-State: AElRT7FDsZzchUUpVeEYLMTHXAtdjDZHqmh7VB6pcysmZo1ECdfnVGHC
+        EUF9+RpDGvP6K8ki8AMaueM=
+X-Google-Smtp-Source: AIpwx4/ffe88fYWPjWHA2ADgfd3GXp6Zi6/v2sGMNhoyBqP057Lyd2CvFJBY0pXixCzba0vftv0CGg==
+X-Received: by 10.28.213.204 with SMTP id m195mr15986wmg.6.1522346755234;
+        Thu, 29 Mar 2018 11:05:55 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id n21sm3204416wmi.37.2018.03.29.11.05.53
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 29 Mar 2018 11:05:53 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH 2/3] rebase -i --keep-empty: don't prune empty commits
+References: <20180320100315.15261-1-phillip.wood@talktalk.net>
+        <20180320100315.15261-3-phillip.wood@talktalk.net>
+        <nycvar.QRO.7.76.6.1803201630380.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        <xmqqfu4uslar.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1803212336420.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+Date:   Thu, 29 Mar 2018 11:05:53 -0700
+In-Reply-To: <nycvar.QRO.7.76.6.1803212336420.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        (Johannes Schindelin's message of "Wed, 21 Mar 2018 23:38:21 +0100
+        (STD)")
+Message-ID: <xmqq605e7o5a.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 2002:a25:cf81:0:0:0:0:0 with HTTP; Thu, 29 Mar 2018 11:15:33
- -0700 (PDT)
-In-Reply-To: <899ea23951627426ccd0aac79f824af386c5590c.1522336130.git.johannes.schindelin@gmx.de>
-References: <cover.1522336130.git.johannes.schindelin@gmx.de> <899ea23951627426ccd0aac79f824af386c5590c.1522336130.git.johannes.schindelin@gmx.de>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 29 Mar 2018 11:15:33 -0700
-Message-ID: <CAGZ79kapTWGsYznt7rr0QTNX+uH85TPY8AOA1jtDJ6_q8edX1Q@mail.gmail.com>
-Subject: Re: [PATCH 1/9] git_config_set: fix off-by-two
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Thomas Rast <tr@thomasrast.ch>, Phil Haack <haacked@gmail.com>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Jason Frey <jfrey@redhat.com>,
-        Philip Oakley <philipoakley@iee.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 29, 2018 at 8:18 AM, Johannes Schindelin
-<johannes.schindelin@gmx.de> wrote:
-> Currently, we are slightly overzealous When removing an entry from a
-> config file of this form:
->
->         [abc]a
->         [xyz]
->                 key = value
->
-> When calling `git config --unset abc.a` on this file, it leaves this
-> (invalid) config behind:
->
->         [
->         [xyz]
->                 key = value
->
-> The reason is that we try to search for the beginning of the line (or
-> for the end of the preceding section header on the same line) that
-> defines abc.a, but as an optimization, we subtract 2 from the offset
-> pointing just after the definition before we call
-> find_beginning_of_line(). That function, however, *also* performs that
-> optimization and promptly fails to find the section header correctly.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-This commit message would be more convincing if we had it in test form.
+>> But I wonder if this is even easier to follow.  It makes it even
+>> more clear that patchsame commits that are not empty are discarded
+>> unconditionally.
+>> 
+>> 	while ((commit = get_revision(&revs))) {
+>> 		int is_empty  = is_original_commit_empty(commit);
+>> 		if (!is_empty && (commit->object.flags & PATCHSAME))
+>> 			continue;
+>> 		strbuf_reset(&buf);
+>> 		if (!keep_empty && is_empty)
+>> 			strbuf_addf(&buf, "%c ", comment_line_char);
+>> 		strbuf_addf(&buf, "%s %s ", insn,
+>> 			    oid_to_hex(&commit->object.oid));
+>> 		pretty_print_commit(&pp, commit, &buf);
+>> 		strbuf_addch(&buf, '\n');
+>> 		fputs(buf.buf, out);
+>> 	}
+>> 
+>> Or did I screw up the rewrite?
+>
+> This looks correct. And the postimage is easier to follow than the one of
+> my suggested change.
 
-    [abc]a
+OK, let's squash this in and rebuild both pw/rebase-keep-empty-fixes
+and also pw/rebase-signoff that builds on this topic, so that they
+can be advanced to 'next'.
 
-is not written by Git, but would be written from an outside tool or person
-and we barely cope with it?
-
-Thanks,
-Stefan
-
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  config.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/config.c b/config.c
-> index b0c20e6cb8a..5cc049aaef0 100644
-> --- a/config.c
-> +++ b/config.c
-> @@ -2632,7 +2632,7 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
->                         } else
->                                 copy_end = find_beginning_of_line(
->                                         contents, contents_sz,
-> -                                       store.offset[i]-2, &new_line);
-> +                                       store.offset[i], &new_line);
->
->                         if (copy_end > 0 && contents[copy_end-1] != '\n')
->                                 new_line = 1;
-> --
-> 2.16.2.windows.1.26.g2cc3565eb4b
->
->
