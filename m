@@ -2,105 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5801D1F424
-	for <e@80x24.org>; Thu, 29 Mar 2018 10:17:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DDD1D1F424
+	for <e@80x24.org>; Thu, 29 Mar 2018 11:19:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752234AbeC2KRN (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Mar 2018 06:17:13 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:39103 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750753AbeC2KRM (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Mar 2018 06:17:12 -0400
-Received: by mail-wm0-f65.google.com with SMTP id f125so10521001wme.4
-        for <git@vger.kernel.org>; Thu, 29 Mar 2018 03:17:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=hackers-mu.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=iEKISdbupGDvPl0mY5xrfmu4rXS5sogZvabs96sbByU=;
-        b=rJI1yrIE6uox6m1++43zYckWKI2AlCd8tIvwkxkOeYNdpigCSfB9e9HVvp2YEpyT17
-         CFlW0it4EPJx85kTmqynTBPwrlngCHwPkKFFgyIKsOD0Ho8GiwQz1ErXP+S9+57bfzHs
-         xJRnkFyRuVS4r7ZXf3071ydEEM2ArxhmwISYSeSrX9PJWVm4bdAQn4UQ/WfW2e571Up0
-         WxpimhRTrDv6TflA3WJgu0kYNTA51S8Mrk3yYnsVJSYue0zsWqLkOGSV5CAV3jewdGxP
-         TN1TY+ztIR6ONg6BjR0kGS5CmEdISt5T4K3wQYbFsmJWzMmK+ToEuasYMzatWkGX+gv6
-         MRzA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=iEKISdbupGDvPl0mY5xrfmu4rXS5sogZvabs96sbByU=;
-        b=A0gUiwsbKGmfPZ2d88EplZUd88gqWR3QrtNeG8JNO5AB02n1s7wk3Xd1/hXAf8KeEl
-         3X8HdKwukixxmv3ACkJsg64i80DXab63RaP11VCy94GQ9PXOTleZSKx7bRXWNqKZfMI5
-         IER0+3HeZcj1QTQhhwKe0WuDUJeTDcMDLMUEXB7kww6DPh1br3a0KuUdxZ0EeY1U/hHM
-         J5Ro5IQZyvslSmMLc8587kTigmUQUvq+K0kEuwx31bKJfILUWVs2tlxF0EvAz19GPWa1
-         QqtDZGBBJU4aV5fmDfYv0Tit1MPDAv9+t/5Vs4LPzB3gT8YSn/TNhuF4xIz3hpoKKUrS
-         cN8A==
-X-Gm-Message-State: AElRT7HZ+8lHAYJKnb3S21B1HnNCLhq3CUvfRQu4rkKh79KfNoVqEV4Y
-        2xHDbPu+ZpjNzORmhEOTQ73c/JxV
-X-Google-Smtp-Source: AIpwx48EYrCD/sqQyiW/EYpK8azZolj/RKt8xELf2+I1G765Fi/bqPujireVZgIqjSBSPrYYyXcFmg==
-X-Received: by 10.28.55.129 with SMTP id e123mr5109056wma.141.1522318630796;
-        Thu, 29 Mar 2018 03:17:10 -0700 (PDT)
-Received: from voidlinux ([41.136.242.154])
-        by smtp.gmail.com with ESMTPSA id p15sm2183681wmd.7.2018.03.29.03.17.08
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 29 Mar 2018 03:17:09 -0700 (PDT)
-Date:   Thu, 29 Mar 2018 14:14:18 +0400
-From:   Loganaden Velvindron <logan@hackers.mu>
-To:     git@vger.kernel.org
-Subject: [PATCH v4] Allow use of TLS 1.3
-Message-ID: <20180329101418.GA7736@voidlinux>
+        id S1752502AbeC2LTS (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Mar 2018 07:19:18 -0400
+Received: from cloud.peff.net ([104.130.231.41]:47138 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1752489AbeC2LTR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Mar 2018 07:19:17 -0400
+Received: (qmail 985 invoked by uid 109); 29 Mar 2018 11:19:17 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 29 Mar 2018 11:19:17 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 17208 invoked by uid 111); 29 Mar 2018 11:20:16 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 29 Mar 2018 07:20:16 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 29 Mar 2018 07:19:15 -0400
+Date:   Thu, 29 Mar 2018 07:19:15 -0400
+From:   Jeff King <peff@peff.net>
+To:     Erik E Brady <brady@cisco.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] credential: cred helper fast exit can cause SIGPIPE,
+ crash
+Message-ID: <20180329111915.GA30797@sigill.intra.peff.net>
+References: <20180328222051.23684-1-brady@cisco.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <20180328222051.23684-1-brady@cisco.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a tlsv1.3 option to http.sslVersion in addition to the existing
-tlsv1.[012] options. libcurl has supported this since 7.52.0.
+On Wed, Mar 28, 2018 at 03:20:51PM -0700, Erik E Brady wrote:
 
-This requires OpenSSL 1.1.1 with TLS 1.3 enabled or curl built with
-recent versions of NSS or BoringSSL as the TLS backend.
+> Subject: Re: [PATCH] credential: cred helper fast exit can cause SIGPIPE, crash
 
-Signed-off-by: Loganaden Velvindron <logan@hackers.mu>
----
- Documentation/config.txt | 1 +
- http.c                   | 3 +++
- 2 files changed, 4 insertions(+)
+Thanks for sending this. The patch itself looks good to me, but I have a
+few nits with your commit message.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index ce9102cea..f31d62772 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1957,6 +1957,7 @@ http.sslVersion::
- 	- tlsv1.0
- 	- tlsv1.1
- 	- tlsv1.2
-+	- tlsv1.3
- 
- +
- Can be overridden by the `GIT_SSL_VERSION` environment variable.
-diff --git a/http.c b/http.c
-index a5bd5d62c..f84b18551 100644
---- a/http.c
-+++ b/http.c
-@@ -62,6 +62,9 @@ static struct {
- 	{ "tlsv1.1", CURL_SSLVERSION_TLSv1_1 },
- 	{ "tlsv1.2", CURL_SSLVERSION_TLSv1_2 },
- #endif
-+#if LIBCURL_VERSION_NUM >= 0x073400
-+	{ "tlsv1.3", CURL_SSLVERSION_TLSv1_3 }
-+#endif
- };
- #if LIBCURL_VERSION_NUM >= 0x070903
- static const char *ssl_key;
--- 
-2.16.2
+We usually write commit messages in the imperative, with the subject
+summarizing the change. So:
 
+  Subject: credential: ignore SIGPIPE when writing to credential helpers
+
+or similar.
+
+> credential.c, run_credential_helper(): now ignores SIGPIPE
+> when writing to credential helper.  Avoids problem with race
+> where cred helper exits very quickly and, after, git tries
+> to write to it, generating SIGPIPE and crashing git.  To
+> reproduce this the cred helper must not read from STDIN.
+
+We can stop being terse outside of the subject line. :) I'd probably
+write something like:
+
+  The credential subsystem can trigger SIGPIPE when writing to an
+  external helper if that helper closes its stdin before reading the
+  whole input. Normally this is rare, since helpers would need to read
+  that input to make a decision about how to respond, but:
+
+    1. It's reasonable to configure a helper which blindly a "get"
+       answer, and trigger it only for certain hosts via config like:
+
+         [credential "https://example.com"]
+	 helper = "!get-example-password"
+
+    2. A broken or misbehaving helper might exit immediately. That's an
+       error, but it's not reasonable for it to take down the parent Git
+       process with SIGPIPE.
+
+  Even with such a helper, seeing this problem should be rare. Getting
+  SIGPIPE requires the helper racily exiting before we've written the
+  fairly small credential output.
+
+Feel free to steal or adapt any of that as you see fit.
+
+> This was seen with a custom credential helper, written in
+> Go, which ignored the store command (STDIN not read) and
+> then did a quick exit.  Even with this fast helper the race
+> was pretty rare, ie: was only seen on some of our older VM's
+> running 2.6.18-416.el5 #1 SMP linux for whatever reason.  On
+> these VM's it occurred only once every few hundred git cmds.
+> ---
+
+Missing signoff. See Documentation/SubmittingPatches, especially the
+'sign-off' and 'dco' sections.
+
+>  credential.c | 3 +++
+>  1 file changed, 3 insertions(+)
+
+No test, but I think that's fine here. Any such test would be inherently
+racy.
+
+> @@ -227,8 +228,10 @@ static int run_credential_helper(struct credential *c,
+>  		return -1;
+>  
+>  	fp = xfdopen(helper.in, "w");
+> +	sigchain_push(SIGPIPE, SIG_IGN);
+>  	credential_write(c, fp);
+>  	fclose(fp);
+> +	sigchain_pop(SIGPIPE);
+
+This looks like the right place to put the push/pop (as you noted
+before, we may not write until fclose flushes, so it definitely has to
+go after that).
+
+Thanks again for digging this up. It's pretty subtle. :)
+
+-Peff
