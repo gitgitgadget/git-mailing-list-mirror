@@ -6,84 +6,75 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EEF1E1F404
-	for <e@80x24.org>; Thu, 29 Mar 2018 19:39:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 646211F404
+	for <e@80x24.org>; Thu, 29 Mar 2018 19:42:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751907AbeC2Tjg (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Mar 2018 15:39:36 -0400
-Received: from cloud.peff.net ([104.130.231.41]:47742 "HELO cloud.peff.net"
+        id S1751183AbeC2TmC (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Mar 2018 15:42:02 -0400
+Received: from cloud.peff.net ([104.130.231.41]:47770 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751256AbeC2Tjf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Mar 2018 15:39:35 -0400
-Received: (qmail 23063 invoked by uid 109); 29 Mar 2018 19:39:35 -0000
+        id S1750979AbeC2TmB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Mar 2018 15:42:01 -0400
+Received: (qmail 23195 invoked by uid 109); 29 Mar 2018 19:42:01 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 29 Mar 2018 19:39:35 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 29 Mar 2018 19:42:01 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 21557 invoked by uid 111); 29 Mar 2018 19:40:33 -0000
+Received: (qmail 21594 invoked by uid 111); 29 Mar 2018 19:43:00 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 29 Mar 2018 15:40:33 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 29 Mar 2018 15:43:00 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 29 Mar 2018 15:39:33 -0400
-Date:   Thu, 29 Mar 2018 15:39:33 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 29 Mar 2018 15:41:59 -0400
+Date:   Thu, 29 Mar 2018 15:41:59 -0400
 From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
         Thomas Rast <tr@thomasrast.ch>, Phil Haack <haacked@gmail.com>,
         =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
         Jason Frey <jfrey@redhat.com>,
         Philip Oakley <philipoakley@iee.org>
-Subject: Re: [PATCH 0/9] Assorted fixes for `git config` (including the
- "empty sections" bug)
-Message-ID: <20180329193932.GA2939@sigill.intra.peff.net>
+Subject: Re: [PATCH 1/9] git_config_set: fix off-by-two
+Message-ID: <20180329194159.GB2939@sigill.intra.peff.net>
 References: <cover.1522336130.git.johannes.schindelin@gmx.de>
+ <899ea23951627426ccd0aac79f824af386c5590c.1522336130.git.johannes.schindelin@gmx.de>
+ <CAGZ79kapTWGsYznt7rr0QTNX+uH85TPY8AOA1jtDJ6_q8edX1Q@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <cover.1522336130.git.johannes.schindelin@gmx.de>
+In-Reply-To: <CAGZ79kapTWGsYznt7rr0QTNX+uH85TPY8AOA1jtDJ6_q8edX1Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 29, 2018 at 05:18:30PM +0200, Johannes Schindelin wrote:
+On Thu, Mar 29, 2018 at 11:15:33AM -0700, Stefan Beller wrote:
 
-> Little did I know that this would turn not only into a full patch to fix this
-> issue, but into a full-blown series of nine patches.
-
-It's amazing how often that happens. :)
-
-> The first patch is somewhat of a "while at it" bug fix that I first thought
-> would be a lot more critical than it actually is: It really only affects config
-> files that start with a section followed immediately (i.e. without a newline)
-> by a one-letter boolean setting (i.e. without a `= <value>` part). So while it
-> is a real bug fix, I doubt anybody ever got bitten by it.
-
-That makes me wonder if somebody could craft a malicious config to do
-something bad. But I don't think so. Config is trusted already, and it
-looks like this bug is both hard to trigger and doesn't result in any
-kind of memory funniness, just a bogus output.
-
-> Now, to the really important part: why does this patch series not conflict with
-> my very early statements that we cannot simply remove empty sections because we
-> may end up with stale comments?
+> > When calling `git config --unset abc.a` on this file, it leaves this
+> > (invalid) config behind:
+> >
+> >         [
+> >         [xyz]
+> >                 key = value
+> >
+> > The reason is that we try to search for the beginning of the line (or
+> > for the end of the preceding section header on the same line) that
+> > defines abc.a, but as an optimization, we subtract 2 from the offset
+> > pointing just after the definition before we call
+> > find_beginning_of_line(). That function, however, *also* performs that
+> > optimization and promptly fails to find the section header correctly.
 > 
-> Well, the patch in question takes pains to determine *iff* there are any
-> comments surrounding, or included in, the section. If any are found: previous
-> behavior. Under the assumption that the user edited the file, we keep it as
-> intact as possible (see below for some argument against this). If no comments
-> are found, and let's face it, this is probably *the* common case, as few people
-> edit their config files by hand these days (neither should they because it is
-> too easy to end up with an unparseable one), the now-empty section *is*
-> removed.
+> This commit message would be more convincing if we had it in test form.
 
-I'm not against people editing their config files by hand. But I think
-what you propose here makes a lot of sense, because it works as long as
-you don't intermingle hand- and auto-editing in the same section (and it
-even works if you do intermingle, as long as you don't use comments,
-which are probably even more rare).
+I agree a test might be nice. But I don't find the commit message
+unconvincing at all. It explains pretty clearly why the bug occurs, and
+you can verify it by looking at find_beginning_of_line.
 
-So it seems like quite a sensible compromise, and I think should make
-most people happy.
+>     [abc]a
+> 
+> is not written by Git, but would be written from an outside tool or person
+> and we barely cope with it?
+
+Yes, I don't think git would ever write onto the same line. But clearly
+we should handle anything that's syntactically valid.
 
 -Peff
