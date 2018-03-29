@@ -2,90 +2,217 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CDB411F404
-	for <e@80x24.org>; Thu, 29 Mar 2018 01:58:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4CAA11F404
+	for <e@80x24.org>; Thu, 29 Mar 2018 05:54:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751403AbeC2B6z (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Mar 2018 21:58:55 -0400
-Received: from mail-pf0-f176.google.com ([209.85.192.176]:42245 "EHLO
-        mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751195AbeC2B6y (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Mar 2018 21:58:54 -0400
-Received: by mail-pf0-f176.google.com with SMTP id a16so2147001pfn.9
-        for <git@vger.kernel.org>; Wed, 28 Mar 2018 18:58:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=JKh4T1gfBh8L7mx6Yk2xtZb0Kroj6ymixhBdNrwyGSU=;
-        b=Q9z6frTGJeONWOtDQ9D9v/HTF1ziiqdbfz4WYsP36d7WnqEfcUX4y6Pd6yxiOxIA/b
-         OJy+HlsdzNhKeCSZWrT1wEKtquS0guFNyEHZj98oUdKGW5NBYYjohgC31ipEhkK/MAvU
-         3+SJdvyvIcSvRQitrTppvzpC2Z5kmOCXBcyLE=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=JKh4T1gfBh8L7mx6Yk2xtZb0Kroj6ymixhBdNrwyGSU=;
-        b=n4b1YlOYdpWDDb9u6yWN6soHRVF8ac0YEdG1TKTXeqVYPoZUIEgvcvIcs5PM0ZD+eP
-         5+3Gpeq0Qj+fIQdX2DLAIGDH0fdCv5FcSW0oTW1763fj7BGFwuERBWHXLkoZqULsQf0Y
-         GrsDmbAdZjn3T+VKXWsaepdqdQdFMpg+TM9nIJrLsTLjQpA+7AsLZHiycB0gJGOYXBSD
-         ItYq6mukTUtLXNw9gzDsApOwMmekCtlefXM2StLLPQ6rS80qglqD3q9HgJozicBVyh+w
-         D5p77tk0+0DanHtqhH5gLQ5xYN97SaIZOfKqM68ajcXf9TWxkcGhKqZMQTuWpM4fSdIB
-         ee0g==
-X-Gm-Message-State: AElRT7Hg0+OlH/OO55I1bgnBgj3p/bb2YOLriyzVrh8dJOm2By4LyPXK
-        /qLTQlBo/8/Dg2M8rso0cHTgXQ==
-X-Google-Smtp-Source: AIpwx492dzWfZuaAsx4Xd+WXTGUn5nmEkmB2mzdH77E9UT+cp75YCSfxQJMpWnDbeAg+UiNcDQlioA==
-X-Received: by 2002:a17:902:2862:: with SMTP id e89-v6mr6099125plb.348.1522288733866;
-        Wed, 28 Mar 2018 18:58:53 -0700 (PDT)
-Received: from localhost ([2601:602:9500:3a4f:ec10:419d:d341:c920])
-        by smtp.gmail.com with ESMTPSA id s78sm10044972pfa.161.2018.03.28.18.58.52
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 28 Mar 2018 18:58:53 -0700 (PDT)
-Date:   Wed, 28 Mar 2018 18:58:48 -0700
-From:   Taylor Blau <ttaylorr@github.com>
-To:     Mark Wartman <markwartman1@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Git Question
-Message-ID: <20180329015848.GA82123@syl.local>
-References: <CA263ADB-E23D-4C75-ACDC-C9C0B75A4A85@gmail.com>
+        id S1751714AbeC2FyB (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Mar 2018 01:54:01 -0400
+Received: from mail.javad.com ([54.86.164.124]:40922 "EHLO mail.javad.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751199AbeC2Fx7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Mar 2018 01:53:59 -0400
+Received: from osv (unknown [89.175.180.246])
+        by mail.javad.com (Postfix) with ESMTPSA id 5F14F3E898;
+        Thu, 29 Mar 2018 05:53:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1522302838;
+        bh=JfvphpbOONoWH7KlUrJK/AjiQuV7439kADRLgzakQOA=; l=3954;
+        h=Received:From:To:Subject;
+        b=fhMM073iaSWSd2Nd7sUCuJJxcRbPidOySIkDH3DgbfNvVjMcrouwQK7kc374Ys3UY
+         dDgTyM7HglIjhjunoQirBPRMi6pc9fRDdN2fa1fqJdZ91xLGWehvzc5Sr8A3ukbETR
+         +p/v5W39613d5QkatVJKKUsAEdNhyHzX++Wb4PnI=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1522302838;
+        bh=JfvphpbOONoWH7KlUrJK/AjiQuV7439kADRLgzakQOA=; l=3954;
+        h=Received:From:To:Subject;
+        b=fhMM073iaSWSd2Nd7sUCuJJxcRbPidOySIkDH3DgbfNvVjMcrouwQK7kc374Ys3UY
+         dDgTyM7HglIjhjunoQirBPRMi6pc9fRDdN2fa1fqJdZ91xLGWehvzc5Sr8A3ukbETR
+         +p/v5W39613d5QkatVJKKUsAEdNhyHzX++Wb4PnI=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1522302837;
+        bh=JfvphpbOONoWH7KlUrJK/AjiQuV7439kADRLgzakQOA=; l=3954;
+        h=Received:From:To:Subject;
+        b=fnpvfD2AWgRB4GlIAK1gm4YZvAdCHMd3pxz+vVVhN/QT0KjLx+RLqHqsUmd6ZjFU0
+         lgzknSZy1QW8G5K66Er0oA8stacZ9L62lkm9MsNg+lI6/cTfnBOrMOqBaQdFBlVkgQ
+         TgbxmBJk9WLXfKNm/+M7BqLJFXHsE85hTwwaIvxo=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1522302837;
+        bh=JfvphpbOONoWH7KlUrJK/AjiQuV7439kADRLgzakQOA=; l=3954;
+        h=Received:From:To:Subject;
+        b=fnpvfD2AWgRB4GlIAK1gm4YZvAdCHMd3pxz+vVVhN/QT0KjLx+RLqHqsUmd6ZjFU0
+         lgzknSZy1QW8G5K66Er0oA8stacZ9L62lkm9MsNg+lI6/cTfnBOrMOqBaQdFBlVkgQ
+         TgbxmBJk9WLXfKNm/+M7BqLJFXHsE85hTwwaIvxo=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1522302837;
+        bh=JfvphpbOONoWH7KlUrJK/AjiQuV7439kADRLgzakQOA=; l=3954;
+        h=Received:From:To:Subject;
+        b=fnpvfD2AWgRB4GlIAK1gm4YZvAdCHMd3pxz+vVVhN/QT0KjLx+RLqHqsUmd6ZjFU0
+         lgzknSZy1QW8G5K66Er0oA8stacZ9L62lkm9MsNg+lI6/cTfnBOrMOqBaQdFBlVkgQ
+         TgbxmBJk9WLXfKNm/+M7BqLJFXHsE85hTwwaIvxo=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1522302837;
+        bh=JfvphpbOONoWH7KlUrJK/AjiQuV7439kADRLgzakQOA=; l=3954;
+        h=Received:From:To:Subject;
+        b=fnpvfD2AWgRB4GlIAK1gm4YZvAdCHMd3pxz+vVVhN/QT0KjLx+RLqHqsUmd6ZjFU0
+         lgzknSZy1QW8G5K66Er0oA8stacZ9L62lkm9MsNg+lI6/cTfnBOrMOqBaQdFBlVkgQ
+         TgbxmBJk9WLXfKNm/+M7BqLJFXHsE85hTwwaIvxo=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1522302837;
+        bh=JfvphpbOONoWH7KlUrJK/AjiQuV7439kADRLgzakQOA=; l=3954;
+        h=Received:From:To:Subject;
+        b=fnpvfD2AWgRB4GlIAK1gm4YZvAdCHMd3pxz+vVVhN/QT0KjLx+RLqHqsUmd6ZjFU0
+         lgzknSZy1QW8G5K66Er0oA8stacZ9L62lkm9MsNg+lI6/cTfnBOrMOqBaQdFBlVkgQ
+         TgbxmBJk9WLXfKNm/+M7BqLJFXHsE85hTwwaIvxo=
+Authentication-Results: mail.javad.com;
+        spf=pass (sender IP is 89.175.180.246) smtp.mailfrom=osv@javad.com smtp.helo=osv
+Received-SPF: pass (mail.javad.com: connection is authenticated)
+Received: from osv by osv with local (Exim 4.84_2)
+        (envelope-from <osv@osv.gnss.ru>)
+        id 1f1QVX-0004oW-Mc; Thu, 29 Mar 2018 08:53:55 +0300
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Jacob Keller <jacob.keller@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Git Mailing List <git@vger.kernel.org>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC] Rebasing merges: a jorney to the ultimate solution(RoadClear)
+References: <87y3jtqdyg.fsf@javad.com>
+        <1298a701-a860-a675-83d7-72f29e14cd2b@talktalk.net>
+        <CA+P7+xpgChuvh_vsPktBkOEhF=MjJh1n_3jD0-n4d67j9kYqzw@mail.gmail.com>
+        <ee809701-a6d8-157d-09cd-cebbf2e949ec@gmail.com>
+        <1580e48a-be44-38dd-79af-8a2a31c5712e@talktalk.net>
+        <nycvar.QRO.7.76.6.1803061812090.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        <754e2735-1288-9a8d-c8bd-ab39cf733812@gmail.com>
+        <nycvar.QRO.7.76.6.1803070810550.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        <c5a5c2cc-6a11-440f-5b9b-964ae1ca07dd@talktalk.net>
+        <f3872fb9-01bc-b2f1-aee9-cfc0e4db77d6@gmail.com>
+        <nycvar.QRO.7.76.6.1803111301340.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        <b329bb98-f9d6-3d51-2513-465aad2fa37a@gmail.com>
+        <nycvar.QRO.7.76.6.1803121142550.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        <243ca23d-77a9-4ae1-a120-de6c6b195cdc@gmail.com>
+        <nycvar.QRO.7.76.6.1803261455130.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        <87woxyf4lk.fsf@javad.com>
+        <nycvar.QRO.7.76.6.1803271536020.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        <874ll0d9nt.fsf@javad.com>
+        <CA+P7+xoDQ2mzhxeZPFhaY+TaSoKkQm=5AtoduHH06-VggOJ2jg@mail.gmail.com>
+        <87r2o48mm2.fsf@javad.com>
+        <CA+P7+xo19mHrWz9Fy-ifgCcVJM2xwzcLj7F2NvFe2LwGbaJiDQ@mail.gmail.com>
+Date:   Thu, 29 Mar 2018 08:53:55 +0300
+In-Reply-To: <CA+P7+xo19mHrWz9Fy-ifgCcVJM2xwzcLj7F2NvFe2LwGbaJiDQ@mail.gmail.com>
+        (Jacob Keller's message of "Wed, 28 Mar 2018 17:32:25 -0700")
+Message-ID: <87zi2r5swc.fsf@javad.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CA263ADB-E23D-4C75-ACDC-C9C0B75A4A85@gmail.com>
-User-Agent: Mutt/1.9.3 (2018-01-21)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 28, 2018 at 08:49:19PM -0500, Mark Wartman wrote:
-> I am following this tutorial and I expected to only see user.name &
-> user.email, so what are the filters.lfs’s and the credential.helper?
-> Should I ignore them, or try to get rid of them?  Please advise.
+Jacob Keller <jacob.keller@gmail.com> writes:
 
-The `filter.lfs` configuration is set by Git LFS [1] in order to
-correctly filter large files into your working copy.
+> On Wed, Mar 28, 2018 at 4:29 AM, Sergey Organov <sorganov@gmail.com> wrote:
+>
+>> Jacob Keller <jacob.keller@gmail.com> writes:
+>>
+>> > On Tue, Mar 27, 2018 at 10:57 PM, Sergey Organov <sorganov@gmail.com>
+>> wrote:
+>> >>
+>> >> Hi Johannes,
+>> >>
+>> >> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>> >> > Hi Sergey,
+>> >> >
+>> >>
+>> >> [...]
+>> >>
+>> >> >> >> Reusing existing concepts where possible doesn`t have this
+>> problem.
+>> >> >> >
+>> >> >> > Existing concepts are great. As long as they fit the requirements
+>> of
+>> >> >> > the new scenarios. In this case, `pick` does *not* fit the
+>> > requirement
+>> >> >> > of "rebase a merge commit".
+>> >> >>
+>> >> >> It does, provided you use suitable syntax.
+>> >> >
+>> >> > You know what `pick` would also do, provided you use suitable syntax?
+>> > Pick
+>> >> > your nose.
+>> >> >
+>> >> > Don't blame me for this ridiculous turn the discussion took.
+>> >> >
+>> >> > Of course, using the suitable syntax you can do anything. Unless there
+>> > is
+>> >> > *already* a syntax and you cannot break it for backwards-compatibility
+>> >> > reasons, as is the case here.
+>> >>
+>> >> Backward compatibility to what? To a broken '--preserve-merges'? I had a
+>> >> feel you've invented '--recreate-merges' exactly to break that
+>> >> compatibility. No?
+>> >>
+>> >> Or is it "Backwards compatibility of a feature that existed only as a
+>> >> topic branch in `next` before being worked on more?", as you say
+>> >> yourself below?
+>> >>
+>> >
+>> > I'm pretty sure he meant that changing the meaning and behavior of "pick"
+>> > is incompatible, as people use scripts which check the edit lists, and
+>> > these scripts would expect pick to behave in a certain way.
+>>
+>> Are we still speaking about that new --recreate-merges feature? You
+>> already care for compatibility for it? You expect there are already
+>> scripts that use it?
+>>
+>> Once again, it seems like you care and don't care about backward
+>> compatibility at the same time, here is your phrase below:
+>>
+>> "He absolutely cares about compatibility, but in this case, the feature
+>> has not yet been merged into an official release."
+>>
+>> Are we still speaking about that new --recreate-merges feature?
+>>
+>> Do you guys care for compatibility for this particular --recreate-merges
+>> feature or not? I'm lost. "Yes" or "No" answer, if you please!
+>>
+>> -- Sergey
+>>
+>
+> I care about the general compatibility of the rebase todo list regardless
+> of which options you enabled on the command line to generate it.
 
-You can safely ignore these, or remove them if you are not using Git
-LFS.
+It's a good thing in general, yes. However, I recall I was told by the
+author that --recreate-merges was introduced exactly to break backward
+compatibility of the todo list. If so, could we please agree to stop
+using backward compatibility as an objection in the discussion of this
+particular feature?
 
-> What is the best way to upgrade to a newer stable version of git?
+> Yes this has a bit of problem because *any* new todo command will
+> break the todo list, but it's better to only add new commands rather
+> than change semantics of existing ones.
 
-On macOS, you can use Homebrew [2] to install any version of Git.
-Install the latest via:
+I'm not against new commands in general. I'm against inventing new
+entities without necessity, so, provided we did agree not to care about
+compatibility, there should be some other necessity to invent yet
+another command. I don't see such a necessity. Do you?
 
-  brew update && brew install git
+The main principle I stand for in this discussion though is that all the
+commits should be treated equally as much as possible, new command or no
+new command. Doing otherwise will lead to all kinds of troubles and
+confusion, both in implementation and in user experience.
 
-Thanks,
-Taylor
+Overall, what I think is needed is extending the syntax of existing todo
+commands to handle merge commits. This will give a provision to get it
+right this time. Otherwise it will likely end up being yet another
+subject of deprecation in the future.
 
-[1]: https://git-lfs.github.com
-[2]: https://brew.sh
+-- Sergey
