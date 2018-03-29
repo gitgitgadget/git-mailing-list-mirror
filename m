@@ -7,19 +7,19 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F31E61F404
-	for <e@80x24.org>; Thu, 29 Mar 2018 15:19:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5EE8F1F404
+	for <e@80x24.org>; Thu, 29 Mar 2018 15:19:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751750AbeC2PS7 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Mar 2018 11:18:59 -0400
-Received: from mout.gmx.net ([212.227.15.19]:49845 "EHLO mout.gmx.net"
+        id S1751906AbeC2PTE (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Mar 2018 11:19:04 -0400
+Received: from mout.gmx.net ([212.227.15.18]:56903 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751403AbeC2PS6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Mar 2018 11:18:58 -0400
-Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MhAVV-1fEZra3a7d-00MNZN; Thu, 29
- Mar 2018 17:18:48 +0200
-Date:   Thu, 29 Mar 2018 17:18:45 +0200 (DST)
+        id S1751862AbeC2PTC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Mar 2018 11:19:02 -0400
+Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M86Cn-1efW631ySX-00vcBQ; Thu, 29
+ Mar 2018 17:18:54 +0200
+Date:   Thu, 29 Mar 2018 17:18:53 +0200 (DST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@dscho.gitforwindows.org
 To:     git@vger.kernel.org
@@ -29,67 +29,70 @@ cc:     Junio C Hamano <gitster@pobox.com>, Thomas Rast <tr@thomasrast.ch>,
         <avarab@gmail.com>, Stefan Beller <sbeller@google.com>,
         Jason Frey <jfrey@redhat.com>,
         Philip Oakley <philipoakley@iee.org>
-Subject: [PATCH 3/9] t1300: avoid relying on a bug
+Subject: [PATCH 5/9] t1300: `--unset-all` can leave an empty section behind
+ (bug)
 In-Reply-To: <cover.1522336130.git.johannes.schindelin@gmx.de>
-Message-ID: <385674162d2853f6aea153d9d30482034d9fa3df.1522336130.git.johannes.schindelin@gmx.de>
+Message-ID: <484133f267ec2ebb6d6c27ccb40410579c72032a.1522336130.git.johannes.schindelin@gmx.de>
 References: <cover.1522336130.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:MavxHxPwwn1T5MVQhbwWJ+cP6hEemjTvOrpHNgA51ix/tldSKjT
- tPDDLvc4fl8VJMdvllk39/42DMht/ck1WxYXi9OlMCBpZpiJl+cOUxMCpF0+9q7uu47Ol1s
- fJXFsm6nTo372FQ0+uk4TdkbTNujmQk71emmCF5qzluQsVsYZtPCTXmvUcYEnSEH4ch5rSI
- GpqBkFYTd7y8C3xCQ4bMw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:551JzqB1UYA=:73X8GntlzoZ5seKxVtGsrh
- of3mDzwEcELcP9RFuyu+bCGOzVPTwXcMWYpO721y+rnzrsWnRmOmv3OEB4d8JI1Rryuswc41M
- K6lAaXd9Go3HzycL2RtkNaIOlWlclinbxJTVAwRJmXpbO/5xqlAUz9f2sWQTYRS2wn5dsDGIl
- OBuo30Os4mpP2UHzHKWdvbB3CNR1B6rSfSmrzkr79faNZI2a4Qj36aSMgDQuJG6LJ/Bl1JzhH
- wg1LbvBOoqD0MD3iHTlk8zW7bB0D/T5pxu/zCDxwrriBhYKKs+L39WXOA/3UV/Y8zo0BpB9OD
- jGw+tOcGOdCehXln/jPN/UuHtFwGcD4KJhDoo+bRX+EfqWN3HId9RW1BT4/JCpyFyKtwZlgAZ
- iSFpTFjbw16mafAM9A9iWGCPQAc8F4Pbd3subLJHX9v9GrftwxjTevnoFiUcPkzhSFRPJnJIQ
- jHh5qW3oJTlRRPFMikLobHnSOSXbaAgG/NnfIbytorbT8XC59Z2OnYGMcXajsIpKXK4d9n5Qm
- gjdqrVfQX9TZcg/GP9ka0/0D70maBK/1eBUD0qpwNn54H9rdHcJKiakG1NkIGkViSL64A31W5
- E1rAsFiQQB7Z6DooX3OnbQ7s3lRL/7D7AdforklAGK5qp+aoim6UFTw9hFRpZyECWVIPK57ha
- X/kiNW6eevDu8synla83UDot5+HrCcwMdIWqexTMqf9pUe2tCpI+o4MAk2sLi6OTP7ZLTDWxf
- c+kq8kst6bBsqphltsCQtwLQ/OS4AozBXRzhIK4xYlrN0PzgFz0OZLDatEDmbRB81ID1/MhPo
- wWe6y+pHDxoA0qpXNrazuB3D5c1/qPtwDwXDmP1S+IbRndu/A3sjyMIWmK03KTAueRgzsvE
+X-Provags-ID: V03:K0:M3EdadAgIUjsrtKndCMDt4Xxz0I2Knbr8ujWsq3nOCEQoZSFcZV
+ pTn9yLOD9QACp2eEFOR5MS8aS/VV1V9ZlkWI4G1Tlx5tZySAn4caSWHZXg087ol1maifYiC
+ JS06pJjjrXtsMhaiavIj+F2580fyQSGoxeO8AkpdEPMf0DvhtDRlSkXtCyjVswHnBhw+auX
+ v9MUxj5sPimM9G3jo3mvA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:jZDQP0FvtZ0=:xX1TtA1lQpfJOA6vtFRJi9
+ CN4HIF0NZ9M/hiik4aIZCHNzd1h2hceqRCKblWmlBQWbeUExOjFyD1zLjeGiC9a45EBp/hqwm
+ STuX7+ZE2rXF3WTVu9JlnAplji4Yc6IOacMg9udrq2SLefUQkunpQCXyGRZ/0eaUMel+EMkdE
+ X71F9CZRLoCM2yiEt7Qxf6cAqs4MhRI5wPqvCtbarnFedLwQD0/cHUm2HpelScOUhGDW+era/
+ zm+T9FTk61owxqSVGOOcuuO7iq9bnsxKmfSag2t7PBncakIBN3yJ9loWh1SLqw/x8po65r2rL
+ 6zsdcU7tbuaa2gvd3drykpN4053kr6D1JRJ3u6LP8zXFhmJAcS5LF3wboprXO5o/ZJRoSXlWa
+ Kd7n3rsiYJ3m42IUtcNqtV0x4Pwau3C5EbZl1lSz74q+9tAqiU4X8Y5B5MuP1fYJ7fryU2hVa
+ Oj3oEgiOWHmNaBE5etnrVX2q26TOuWc5GbrnhExc5/kCOArQDp8ESYT5bjgWTRk9vJfapno+W
+ oa4n5BuWZ0nvXjWahChp6MA2XLwP7Lmqh62EGpOcM7tfkkqicSx0NlWlfagRiEOaBmYnv0xZU
+ bvRwIHOqlw2B5orl+F5RJfHLhoMyMUGs+adtSXsOOoIvK3y0YESHwBLHhpeKRSvXjxFPjTlU9
+ 40uGLgx/9xkLPyFu8JmIe+1A3OvJOw0bJWwrgUCA59EfNJu9bseCZe2sL9W9tBplWiI59UK3j
+ CE42r6XZ62M/K1ioG4FvnF49DtMkDpK2c76US/eEYXtvf/uhsUfpkSScF+luC442bUuxa1AK3
+ 8DlerKpEBjyhaA+IXmR+77uP0NHlqk90pf3DHWRNUMBOrqdiL+jP63df+47vfcbmly8n3rb
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The test case 'unset with cont. lines' relied on a bug that is about to
-be fixed: it tests *explicitly* that removing the last entry from a
-config section leaves an *empty* section behind.
+We already have a test demonstrating that removing the last entry from a
+config section fails to remove the section header of the now-empty
+section.
 
-Let's fix this test case not to rely on that behavior, simply by
-preventing the section from becoming empty.
+The same can happen, of course, if we remove the last entries in one fell
+swoop. This is *also* a bug, and should be fixed at the same time.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/t1300-config.sh | 2 ++
- 1 file changed, 2 insertions(+)
+ t/t1300-config.sh | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
 diff --git a/t/t1300-config.sh b/t/t1300-config.sh
-index 4f8e6f5fde3..1ece7bad05f 100755
+index 3ad3df0c83e..ff79a213567 100755
 --- a/t/t1300-config.sh
 +++ b/t/t1300-config.sh
-@@ -108,6 +108,7 @@ bar = foo
- [beta]
- baz = multiple \
- lines
-+foo = bar
- EOF
+@@ -1452,6 +1452,17 @@ test_expect_failure '--unset last key removes section (except if commented)' '
+ 	test_cmp expect .git/config
+ '
  
- test_expect_success 'unset with cont. lines' '
-@@ -118,6 +119,7 @@ cat > expect <<\EOF
- [alpha]
- bar = foo
- [beta]
-+foo = bar
- EOF
- 
- test_expect_success 'unset with cont. lines is correct' 'test_cmp expect .git/config'
++test_expect_failure '--unset-all removes section if empty & uncommented' '
++	cat >.git/config <<-\EOF &&
++	[section]
++	key = value1
++	key = value2
++	EOF
++
++	git config --unset-all section.key &&
++	test_line_count = 0 .git/config
++'
++
+ test_expect_failure 'adding a key into an empty section reuses header' '
+ 	cat >.git/config <<-\EOF &&
+ 	[section]
 -- 
 2.16.2.windows.1.26.g2cc3565eb4b
 
