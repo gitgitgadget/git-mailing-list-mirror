@@ -2,240 +2,478 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3B0791F404
-	for <e@80x24.org>; Thu, 29 Mar 2018 20:54:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C4D5D1F404
+	for <e@80x24.org>; Thu, 29 Mar 2018 21:32:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751182AbeC2UyK (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Mar 2018 16:54:10 -0400
-Received: from mail-wr0-f169.google.com ([209.85.128.169]:41404 "EHLO
-        mail-wr0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750971AbeC2UyI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Mar 2018 16:54:08 -0400
-Received: by mail-wr0-f169.google.com with SMTP id f14so6498958wre.8
-        for <git@vger.kernel.org>; Thu, 29 Mar 2018 13:54:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=Xg408C3FjDjjn0bGFOdZhBfGJGiQb21jKioQ4pzRXuM=;
-        b=pznqdkU27OcfhjJEAm7ZMRQBGSMiwHCMbxbHJDOrtz2BNqVadFNAgSUn1n/YR5pvjQ
-         ihbqDNQBVwW5KG3w5b8FGyLF+uN1f6yCbDT71p1OYQY54/iYQTtCXaB8pZH3iJjUJhTq
-         6i6SYpiiUOmuRY/zSaxCG6Rsvm8dxoE/5sQJXFWV9ElEg8v0i0+fwKdo7WDEAFkkHwDJ
-         u4aAU74AanHXAE3tGRuKFCMHCrZxTw1mjPnCeQQDgjlNEwr2aqg9q88S+EJA7bQYMvVY
-         2qVs5kHSe2I3ZV5e/hCSSMUz0ocCNohHpYRAkwAMtJTKuTwJMKuQ+LFnFUtqol7H3jw3
-         Um/A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=Xg408C3FjDjjn0bGFOdZhBfGJGiQb21jKioQ4pzRXuM=;
-        b=cG3uh64fz1kzGYn2xwLZc05uzkbBmOKaqBYqII9k4GCNp2hKq+M9jM/zk+AgZXdsBV
-         sHg1RT8eaIaJiSy/Rq7rft2io2cpzLnnPDytiGhoL68oYtaNLVDMdo2rMLvzi0unf9+F
-         9wvzVOFTXHnwfuSfCPBdFB7jvAyV35lKle524g8XrcV2SZPSp0iyb+zQh1L3hbV31mep
-         5C5eZUR+a63xg/fUQdu/umYAGjY+QF8RZ0QWfAXYH1Qh3HphFW7Go2DDv4wsBxghFU0U
-         K0tt9pUVzBXX32Tomd/V6JBehedAe4gEFa6DFOrJJU5q2sACnUkBOdSQyUCgGzl5vp21
-         /i5g==
-X-Gm-Message-State: AElRT7FUumTHKkcbKy4hJ154ey4QZWAfIiDeD7x+GnP/Q82BtiniqG0E
-        K3fHGP6pzroXKLfOQ9l04X55NAx7LDn0nEo8/TA=
-X-Google-Smtp-Source: AIpwx48pyKjOttMJLbZMZF6znDTr/rmTPS1tL5Sj5YFXih/7DXkWgOdTeuyXE3ZdvggfFxfP8iEwh5dLbeZy5WViy3U=
-X-Received: by 10.223.220.78 with SMTP id m14mr8164709wrj.174.1522356847041;
- Thu, 29 Mar 2018 13:54:07 -0700 (PDT)
+        id S1752458AbeC2Vcf (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Mar 2018 17:32:35 -0400
+Received: from cloud.peff.net ([104.130.231.41]:48014 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1750820AbeC2Vcc (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Mar 2018 17:32:32 -0400
+Received: (qmail 28549 invoked by uid 109); 29 Mar 2018 21:32:32 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 29 Mar 2018 21:32:32 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 22600 invoked by uid 111); 29 Mar 2018 21:33:30 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 29 Mar 2018 17:33:30 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 29 Mar 2018 17:32:30 -0400
+Date:   Thu, 29 Mar 2018 17:32:30 -0400
+From:   Jeff King <peff@peff.net>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Thomas Rast <tr@thomasrast.ch>, Phil Haack <haacked@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Stefan Beller <sbeller@google.com>,
+        Jason Frey <jfrey@redhat.com>,
+        Philip Oakley <philipoakley@iee.org>
+Subject: Re: [PATCH 7/9] git config --unset: remove empty sections (in normal
+ situations)
+Message-ID: <20180329213229.GG2939@sigill.intra.peff.net>
+References: <cover.1522336130.git.johannes.schindelin@gmx.de>
+ <c246c8bc2fb1cd6fe6307463d299cf56fbe4dc5b.1522336130.git.johannes.schindelin@gmx.de>
 MIME-Version: 1.0
-Received: by 10.223.208.210 with HTTP; Thu, 29 Mar 2018 13:54:06 -0700 (PDT)
-In-Reply-To: <CAK0XTWd7QGtVDwm8FDXejZfbgVH6-1NprGY0xxAnC33QH8aCCQ@mail.gmail.com>
-References: <1520366804-28233-1-git-send-email-eddy.petrisor@gmail.com>
- <CAGZ79kb4Ea7t5j9XA0key1f99w5xRDwyRhMder1FMgdiZot3Tg@mail.gmail.com> <CAK0XTWd7QGtVDwm8FDXejZfbgVH6-1NprGY0xxAnC33QH8aCCQ@mail.gmail.com>
-From:   =?UTF-8?Q?Eddy_Petri=C8=99or?= <eddy.petrisor@gmail.com>
-Date:   Thu, 29 Mar 2018 23:54:06 +0300
-Message-ID: <CAK0XTWdxsUwWB7932yqo8+4PQqtEVJ8W_R9b3RK1oLVA6ZWkOg@mail.gmail.com>
-Subject: Fwd: [RFC PATCH] git-submodule.sh:cmd_update: if submodule branch
- exists, fetch that instead of default
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Git List <git@vger.kernel.org>, Heiko Voigt <hvoigt@hvoigt.net>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <c246c8bc2fb1cd6fe6307463d299cf56fbe4dc5b.1522336130.git.johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-mar., 27 mar. 2018, 02:07 Stefan Beller <sbeller@google.com> a scris:
->
-> [snipped the cc list as well]
->
-> On Tue, Mar 6, 2018 at 12:06 PM Eddy Petri=C8=99or <eddy.petrisor@gmail.c=
-om>
-> wrote:
->
-> > Signed-off-by: Eddy Petri=C8=99or <eddy.petrisor@gmail.com>
-> > ---
->
-> Did this go anywhere?
-> (I just came back from a longer vacation, sorry for the delay on my site)
+On Thu, Mar 29, 2018 at 05:19:00PM +0200, Johannes Schindelin wrote:
+
+> Let's generalize this observation to this conservative strategy: if we
+> are removing the last entry from a section, and there are no comments
+> inside that section nor surrounding it, then remove the entire section.
+> Otherwise behave as before: leave the now-empty section (including those
+> comments, even the one about the now-deleted entry).
+
+Yep, as I said earlier, this makes a ton of sense to me.
+
+> +/*
+> + * This function determines whether the offset is in a line that starts with a
+> + * comment character.
+> + *
+> + * Note: it does *not* report when a regular line (section header, config
+> + * setting) *ends* in a comment.
+> + */
+> +static int is_in_comment_line(const char *contents, size_t offset)
+> +{
+> +	int comment = 0;
+> +
+> +	while (offset > 0)
+> +		switch (contents[--offset]) {
+> +		case ';':
+> +		case '#':
+> +			comment = 1;
+> +			break;
+> +		case '\n':
+> +			break;
+> +		case ' ':
+> +		case '\t':
+> +			continue;
+> +		default:
+> +			comment = 0;
+> +		}
+> +
+> +	return comment;
+> +}
+
+This doesn't pay any attention to quoting, so I wondered if it would get
+fooled by a line like:
+
+  key = "this content has a # comment in it"
+
+or even:
+
+  [section "this section has a # comment in it"]
+
+but those don't count because the line doesn't _start_ with the comment
+character. Could we design one that does? This isn't valid:
+
+  [section]
+  key = multiline \
+    # with comment
+
+But I think this is:
+
+  [section]
+  key = "multiline \
+    # with comment"
+
+So let's see if we can fool it:
+
+-- >8 --
+
+cat >file <<-\EOF
+[one]
+key = "multiline \
+  # with comment"
+[two]
+key = true
+EOF
+
+# should produce "multiline   # with comment"
+./git config --file=file one.key
+
+# this should ideally remove the section
+./git config --file=file --unset two.key
+cat file
+
+-- 8< --
+
+That seems to work as expected. I'm not 100% sure why, though, since I
+thought we'd hit the "seen_section && !is_in_comment_line" bit of the
+look_before loop. Running it through gdb, I'm not convinced that
+is_in_comment_line is working correctly, though. Shouldn't it stop when
+it sees the newline, and return "comment"? There's a "break" there, but
+it doesn't break out of the loop due to the switch statement.
+
+So we'll _always_ walk back to the beginning of file. So I suspect your
+test passes because it does:
+
+  # this is the start of the file
+  [section]
+  key = true
+
+but:
+
+  [anotherSection]
+  key = true
+  # a comment not at the start
+  [section]
+  key = true
+
+does the wrong thing, and removes [section]. If we fix that bug like
+this:
+
+diff --git a/config.c b/config.c
+index b04c40f76b..3b2c7e9387 100644
+--- a/config.c
++++ b/config.c
+@@ -2461,7 +2461,7 @@ static int is_in_comment_line(const char *contents, size_t offset)
+ 			comment = 1;
+ 			break;
+ 		case '\n':
+-			break;
++			return comment;
+ 		case ' ':
+ 		case '\t':
+ 			continue;
+
+then it keeps "[section]" correctly. But now if we go back to our funny
+multiline example, it does the wrong thing (it keeps [two], even though
+that's not _really_ a comment).
+
+To be honest, I could live with that as an open bug. It's a pretty
+ridiculous situation, and the worst case is that we err on the side of
+caution and don't remove the section. And I think it would be hard to
+fix. We could look for the continuation backslash when we find the
+newline, but that gets fooled by:
+
+  # a comment \
+  # with a pointless backslash
+
+You can't just notice the quote and say "oh, I'm in a quoted section"
+because that gets fooled by:
+
+  # a pointless "quote
+
+To know whether that quote is valid or not, you have to find the other
+quote. But doing that backwards is hard (if not impossible).
+
+> +static void maybe_remove_section(const char *contents, size_t size,
+> +				 const char *section_name,
+> +				 size_t section_name_len,
+> +				 size_t *begin, int *i_ptr, int *new_line)
+> +{
+> +	size_t begin2, end2;
+> +	int seen_section = 0, dummy, i = *i_ptr;
+> +
+> +	/*
+> +	 * First, make sure that this is the last key in the section, and that
+> +	 * there are no comments that are possibly about the current section.
+> +	 */
+> +next_entry:
+> +	for (end2 = store.offset[i]; end2 < size; end2++) {
+> +		switch (contents[end2]) {
+> +		case ' ':
+> +		case '\t':
+> +		case '\n':
+> +			continue;
+> +		case '\r':
+> +			if (++end2 < size && contents[end2] == '\n')
+> +				continue;
+> +			break;
+> +		case '[':
+> +			/* If the section name is repeated, continue */
+> +			if (end2 + 1 + section_name_len < size &&
+> +			    contents[end2 + section_name_len] == ']' &&
+> +			    !memcmp(contents + end2 + 1, section_name,
+> +				    section_name_len)) {
+> +				end2 += section_name_len;
+> +				continue;
+> +			}
+> +			goto look_before;
+> +		case ';':
+> +		case '#':
+> +			/* There is a comment, cannot remove this section */
+> +			return;
+> +		default:
+> +			/* There are other keys in that section */
+> +			break;
+> +		}
+
+OK, this all makes sense. We're scanning forward to find the next '[',
+without finding any keys or comments. We don't have to worry about
+quoting because we'd quit as soon as we see a key anyway. I like the
+special-case for finding our same section name, since that would help
+clean up cruft from existing versions of Git.
+
+It looks like there may be an off-by-one, though. Should it be checking:
+
+  contents[end2 + 1 + section_name_len] == ']'
+
+to skip over the opening '['? In a simple example:
+
+  [foo]
+  bar = true
+  [foo]
+
+we don't seem to remove the second section header. It works with the
+patch below:
+
+diff --git a/config.c b/config.c
+index b04c40f76b..48dcb52840 100644
+--- a/config.c
++++ b/config.c
+@@ -2508,10 +2508,10 @@ static void maybe_remove_section(const char *contents, size_t size,
+ 		case '[':
+ 			/* If the section name is repeated, continue */
+ 			if (end2 + 1 + section_name_len < size &&
+-			    contents[end2 + section_name_len] == ']' &&
++			    contents[end2 + 1 + section_name_len] == ']' &&
+ 			    !memcmp(contents + end2 + 1, section_name,
+ 				    section_name_len)) {
+-				end2 += section_name_len;
++				end2 += section_name_len + 1;
+ 				continue;
+ 			}
+ 			goto look_before;
+
+Unfortunately I think this whole thing breaks down with subsections. If
+we try this:
+
+  [foo "subsection"]
+  bar = true
+  [foo "subsection"]
+
+then the section_name variable contains "foo.subsection", which we can't
+textually match. And we end up failing to remove either section (the
+latter one because of this loop, and the former because of the same
+problem in the look_before loop).
+
+> +		/*
+> +		 * Uh oh... we found something else in this section. But do
+> +		 * we want to remove this, too?
+> +		 */
+> +		if (++i >= store.seen)
+> +			return;
+> +
+> +		begin2 = find_beginning_of_line(contents, size, store.offset[i],
+> +						&dummy);
+> +		if (begin2 > end2)
+> +			return;
+> +
+> +		/* Looks like we want to remove the next one, too... */
+> +		goto next_entry;
+> +	}
+
+OK, makes sense.
+
+> +look_before:
+> +	/*
+> +	 * Now, ensure that this is the first key, and that there are no
+> +	 * comments before the entry nor before the section header.
+> +	 */
+> +	for (begin2 = *begin; begin2 > 0; )
+> +		switch (contents[begin2 - 1]) {
+> +		case ' ':
+> +		case '\t':
+> +			begin2--;
+> +			continue;
+> +		case '\n':
+> +			if (--begin2 > 0 && contents[begin2 - 1] == '\r')
+> +				begin2--;
+> +			continue;
+> +		case ']':
+> +			if (begin2 > section_name_len + 1 &&
+> +			    contents[begin2 - section_name_len - 2] == '[' &&
+> +			    !memcmp(contents + begin2 - section_name_len - 1,
+> +				    section_name, section_name_len)) {
+> +				begin2 -= section_name_len + 2;
+> +				seen_section = 1;
+> +				continue;
+> +			}
+
+OK, this is the backwards mirror image of the earlier part. Which makes
+sense. And this handles the reverse case for the doubled section name:
+
+  [foo]
+  [foo]
+  bar = true
+
+because we'd hit this section-name check twice, and just set
+"seen_section = 1" both times. So that works (modulo the subsection
+parsing thing).
+
+As far as quoting goes, now we're coming from the back of each line now.
+And I don't think we strictly require double-quotes around string
+values. So imagine this:
+
+  [one]
+  foo = this has [brackets]
+  bar = this does not
+
+When deleting one.bar, we'd erroneously think that closing bracket is
+the prior section header. I _think_ it behaves correctly, though,
+because we then say "well, delete everything back to that bracket
+character". Which happens to be the correct thing to do anyway.
+
+But let's get more devious. What about this:
+
+  [one]
+  foo = fake section [one]
+  bar = whatever
+
+If I unset foo.bar with your patch, I end up with the truncated:
+
+  [one]
+  foo = fake sectio
+
+Yikes. This is obviously a ridiculous example, but the failure case is
+pretty nasty.
+
+Again, the tricky thing here is that we're parsing backwards. We don't
+know what's syntactically relevant and what isn't.
+
+> +
+> +			/*
+> +			 * It looks like a section header, but it could be a
+> +			 * comment instead...
+> +			 */
+> +			if (is_in_comment_line(contents, begin2))
+> +				return;
+
+This would get fooled if we allowed line continuation in subsection
+names, like:
+
+  [one "subsection\
+     # with newline"]
+  key = true
+
+but it looks like our parser doesn't allow that (aside from it being
+slightly insane, of course). Good.
+
+> +			/*
+> +			 * We encountered the previous section header: This
+> +			 * really was the only entry, so remove the entire
+> +			 * section.
+> +			 */
+> +			if (contents[begin2] != '\n') {
+> +				begin2--;
+> +				*new_line = 1;
+> +			}
+> +
+> +			store.offset[i] = end2;
+> +			*begin = begin2;
+> +			*i_ptr = i;
+> +			return;
+
+OK, makes sense.
+
+> +		default:
+> +			/*
+> +			 * Any other character means it is either a comment or
+> +			 * a config setting; if it is a comment, we do not want
+> +			 * to remove this section. If it is a config setting,
+> +			 * we only want to remove this section if this is
+> +			 * already the next section.
+> +			 */
+> +			if (seen_section &&
+> +			    !is_in_comment_line(contents, begin2)) {
+> +				if (contents[begin2] != '\n') {
+> +					begin2--;
+> +					*new_line = 1;
+> +				}
+> +
+> +				store.offset[i] = end2;
+> +				*begin = begin2;
+> +				*i_ptr = i;
+> +			}
+> +			return;
+> +		}
+
+Here's where we get fooled by is_in_comment_line() that I showed at the
+beginning. We don't have to worry about other quoting, because any key
+(quoted or not) would cause us to abort, since it's in the section.
+
+> +	/* This section extends to the beginning of the file. */
+> +	store.offset[i] = end2;
+> +	*begin = begin2;
+> +	*i_ptr = i;
+> +}
+
+Right, makes sense.
 
 
-Not really. I am still unsure how is best to proceed. Details below.
+Ok, phew. That was a tough read. So here's what I see:
 
-> > There are projects such as llvm/clang which use several repositories, a=
-nd
-> they
-> > might be forked for providing support for various features such as addi=
-ng
-> Redox
-> > awareness to the toolchain. This typically means the superproject will =
-use
-> > another branch than master, occasionally even use an old commit from th=
-at
-> > non-master branch.
->
-> > Combined with the fact that when incorporating such a hierachy of
-> repositories
-> > usually the user is interested in just the exact commit specified in th=
-e
-> > submodule info, it follows that a desireable usecase is to be also able=
- to
-> > provide '--depth 1' to avoid waiting for ages for the clone operation t=
-o
-> > finish.
->
-> Very sensible.
+  1. Minor bug in is_in_comment_line(), patch above.
 
+  2. Minor bug in matching section names, patch above.
 
-The only change is that I realized that hard coding the depth is not
-necessary because the client can fetch more and more from the branch
-until the commit hash is found or the entire history was fetched and
-it wasn't found.
+  3. Matching subsection names doesn't work. I think this should be
+     fixable with a helper function which can match '[one "two"]' when
+     given "one.two".
 
-This is more robust but has a variable performance penalty and is
-probably slower than single branch fetching from the start.
+  4. Backwards parsing causes is_in_comment_line to trigger more than it
+     should. I can live with that because the trigger is arcane, and the
+     error behavior is pretty harmless.
 
-> > Git submodule seems to be very stubborn and cloning master, although th=
-e
-> > wrapper script and the gitmodules-helper could work together to clone
-> directly
-> > the branch specified in the .gitmodules file, if specified.
->
-> Also very sensible.
->
-> So far so good, could you move these paragraphs before the triple dashed
-> line
-> and sign off so we record it as the commit message?
+  5. Backwards parsing can find a bogus section. Also arcane, but the
+     error behavior is pretty scary.
 
+(4) and (5) are the ones that I don't see a way to fix, given the
+current way in which we do the config-writing (i.e., running it through
+the regular read-parser and then trying to "patch up" the found
+locations). I think that's also what's contributing to the code being
+hard to read, since you end up doing quite a lot of manual re-parsing.
 
-Sure, as long as the implementation and design makes sense.
+I think the sane way to do this would be to parse the whole thing into
+a tree (that includes things like comments and whitespace), and then we
+could much more easily manipulate that tree, without dealing with the
+parsing (forwards _and_ backwards). But that's a pretty big change from
+the current code.
 
-> > Another wrinkle is that when the commit is not the tip of the branch, t=
-he
-> depth
-> > parameter should somehow be stored in the .gitmodules info, but any
-> change in
-> > the submodule will break the supermodule submodule depth info sooner or
-> later,
-> > which is definitly frigile.
->
-> ... which is why I would not include that.
->
-> git-fetch knows about --shallow-since or even better
-> shallow-exclude which could be set to the (depth+1)-th commit
-> (the boundary commit) recorded in the shallow information.
+It also potentially means duplicating the parsing logic, unless we teach
+the regular reader to do the tree-parse, and then pick out the config
+from that. That's likely much slower than the existing parser (since
+we'd allocate a bunch of tree nodes instead of just dumping strings to
+the callbacks). But these days we cache the parsed config anyway, so I'm
+not sure if a slight slowdown would actually matter that much.
 
+I guess the holy grail would be a parser which reports _all_ syntactic
+events (section names, keys, comments, whitespace, etc) as a stream
+without storing anything. And then the normal reader could just discard
+the non-key events, and the writer here could build the tree from those
+events.
 
-I am unsure what that means. Without yet looking in the docs, would
-this --shallow-since be better than the try-until-found algorithm
-explained above?
-
-> > I tried digging into this section of the code and debugging with bashdb
-> to see
-> > where --depth might fit, but I got stuck on the shell-to-helper
-> interaction and
-> > the details of the submodule implementation, so I want to lay out this
-> first
-> > patch as starting point for the discussion in the hope somebody else
-> picks it
-> > up or can provide some inputs. I have the feeling there are multiple co=
-de
-> paths
-> > that are being ran, depending on the moment (initial clone, submodule
-> > recursive, post-clone update etc.) and I have a gut feeling there
-> shouldn't be
-> > any code duplication just because the operation is different.
->
-> > This first patch is only trying to use a non-master branch, I have some
-> changes
-> > for the --depth part, but I stopped working on it due to the "default
-> depth"
-> > issue above.
->
-> > Does any of this sound reasonable?
-> > Is this patch idea usable or did I managed to touch the part of the cod=
-e
-> that
-> > should not be touched?
->
-> This sounds reasonable. Thanks for writing the patch!
-
-
-OK. Now I need to make it good, which is the hard part :)
-
-> > diff --git a/git-submodule.sh b/git-submodule.sh
-> > index 2491496..370f19e 100755
-> > --- a/git-submodule.sh
-> > +++ b/git-submodule.sh
-> > @@ -589,8 +589,11 @@ cmd_update()
-> >                          branch=3D$(git submodule--helper remote-branch
-> "$sm_path")
-> >                          if test -z "$nofetch"
-> >                          then
-> > +                               # non-default branch
-> > +                               rbranch=3D$(git config -f .gitmodules
-> submodule.$sm_path.branch)
-> > +
-> br_refspec=3D${rbanch:+"refs/heads/$rbranch:refs/heads/$rbranch"}
->
-> Wouldn't we want to fetch into a remote tracking branch instead?
-> Instead of computing all this by yourself, these two lines could be
->
->      br_refspec=3D$(git submodule--helper remote-branch $sm_path)
->
-> I would think.
-
-
-I wasn't aware of this, will implement I  the next version and see what hap=
-pens.
->
->
-> >                                  # Fetch remote before determining
-> tracking $sha1
-> > -                               fetch_in_submodule "$sm_path" $depth ||
-> > +                               fetch_in_submodule "$sm_path" $depth
-> $br_refspec ||
-> >                                  die "$(eval_gettext "Unable to fetch i=
-n
-> submodule path '\$sm_path'")"
-> >                          fi
-> >                          remote_name=3D$(sanitize_submodule_env; cd
-> "$sm_path" && get_default_remote)
->
-> It would be awesome if you could write a little test for this feature, to=
-o.
-> Look for the tests in regarding --remote in t7406 (in the t/ directory) a=
-s
-> a starting point, please.
-
-
-Coming up with a test case is probably a better way to explain what I
-want the behaviour to be. Thanks for pointing out the test case area
-to look into.
-
-> Thanks!
-> Stefan
-
---=20
-Eddy Petri=C8=99or
+-Peff
