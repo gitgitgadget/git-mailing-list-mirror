@@ -7,19 +7,19 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 697121F404
-	for <e@80x24.org>; Fri, 30 Mar 2018 12:37:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E072B1F404
+	for <e@80x24.org>; Fri, 30 Mar 2018 12:38:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751281AbeC3Mhv (ORCPT <rfc822;e@80x24.org>);
-        Fri, 30 Mar 2018 08:37:51 -0400
-Received: from mout.gmx.net ([212.227.15.19]:54925 "EHLO mout.gmx.net"
+        id S1751264AbeC3Mir (ORCPT <rfc822;e@80x24.org>);
+        Fri, 30 Mar 2018 08:38:47 -0400
+Received: from mout.gmx.net ([212.227.17.22]:47397 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751247AbeC3Mhu (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Mar 2018 08:37:50 -0400
-Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LyVIk-1eVcpB1TV8-015pdT; Fri, 30
- Mar 2018 14:37:39 +0200
-Date:   Fri, 30 Mar 2018 14:37:37 +0200 (DST)
+        id S1751247AbeC3Miq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Mar 2018 08:38:46 -0400
+Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0Lm7MT-1eT6Vu3b4D-00Zcyp; Fri, 30
+ Mar 2018 14:38:36 +0200
+Date:   Fri, 30 Mar 2018 14:38:33 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@dscho.gitforwindows.org
 To:     Jeff King <peff@peff.net>
@@ -29,31 +29,30 @@ cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         <avarab@gmail.com>, Stefan Beller <sbeller@google.com>,
         Jason Frey <jfrey@redhat.com>,
         Philip Oakley <philipoakley@iee.org>
-Subject: Re: [PATCH 2/9] t1300: rename it to reflect that `repo-config` was
- deprecated
-In-Reply-To: <20180329194221.GC2939@sigill.intra.peff.net>
-Message-ID: <nycvar.QRO.7.76.6.1803301435590.5026@qfpub.tvgsbejvaqbjf.bet>
-References: <cover.1522336130.git.johannes.schindelin@gmx.de> <6023d70cff199424893d116339f860952c6a6b4b.1522336130.git.johannes.schindelin@gmx.de> <20180329194221.GC2939@sigill.intra.peff.net>
+Subject: Re: [PATCH 3/9] t1300: avoid relying on a bug
+In-Reply-To: <20180329194313.GD2939@sigill.intra.peff.net>
+Message-ID: <nycvar.QRO.7.76.6.1803301438120.5026@qfpub.tvgsbejvaqbjf.bet>
+References: <cover.1522336130.git.johannes.schindelin@gmx.de> <385674162d2853f6aea153d9d30482034d9fa3df.1522336130.git.johannes.schindelin@gmx.de> <20180329194313.GD2939@sigill.intra.peff.net>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:7zG4kF/sKOsfo7xZ8mFd1xpgAKI/oPjT0NWmidtpkB0MUgIa/Yv
- j1orKvRU3LCdHkk8XOorZRHpxMuI6DtJkqRMZFIPJrldeTVBWrmyPAz+76lkVZgfDOY47Ak
- ASOlbBR5RV8SfQV0ndcQi5fSEZcSAfcfEkjBWkgTA2HHOQYOIMLU8cpwrCiQJEPDtgcYE/N
- dvQ864wlGugXHMMrZWuRQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:dkOot+TgtIc=:fVUIuQCBF7vPmWVm5sCY+U
- BjKibfqq9sx8w7dAQAu3aO7IsEAtG/4A4HM8M9wqw9z/5RWFyEEELLw6shtvxmaJ3thSRxMLY
- mqRPvEqDIgHq6w5/NaN3L5HmjVEkrE4Vc8vOhTJvReY8VADQlafSJtz9LgET3hmb9hMKH12s0
- WeSWrHfQ5XZbC5yCPJp9iyv90IB/4xTwcV+u8IZKek0O8xPzKfwXjCDCzH58fuOUb4MaMlKgD
- k6LdWOEayzIMhCgYTIf66nK8JJa2idD8vFJrUoC+w+SKg8uVvxprnkINu6CrzPc+JNd0o4Fzv
- EbfNqKYAvmYiHs00YbpCnEhPPE2hoIlf05gIQXW3uI1hCO0ZZhqI9iBC/YS2Ifl9yhJhmuaFI
- 6EE3lsEJsHIN18E9Y7KYv4RVU+FMKGjIDbRk4QSM0Md6Z/MINuglLhNndcRytFRPhHHglOkf6
- qDqJw7B7tIZxBWi14N+7Xiag4ufVI8ILqySnF4N1IF+eD7O83p1YkeQ9hj+uFtApKdIm/q/P1
- 1wJWYQA/MIWhsFheyUZlnFBV51IqFEe/P8vHnONSYaWoYcPL48eUW+Jypxx2IDs+nae0vf51C
- WPZYbOiYf0rEQ3aSeUKudNXc/Roze/Pqr3isFZZbaGcbxfVdtvRCxRFNu5O2qbV57AYcdbKHo
- qxTxbqKoy9hhXjfxlAHJMvPZJ9fUAgaAZRWOD1BvQme7uwMcKMNUFXo4Q+I2c0Y2yKHwcqBwn
- OskyVD+Ts4Ux3NslYRndTylpPlghP3006hxtF5daSQh6zjdv2+ak9QTTgdYc/yroeR3/Rco46
- dFVBi0i+J+oyV0VzoQiC//aIGSXHhKmIZzVikFsBX36YzsgwDqx5fIyGsHyZKJ0I0wdQ+50
+X-Provags-ID: V03:K0:KWsmlp7j4erfcIzH3pi4Be2vLFRNH7AKvoycE3R0QRbTdS7AQct
+ Siy6izdoLv601u0M16JF8WmzlymsgqiWyWdVPkhJKuRNWu5cu7hJOQo3X3C31b8OkkiNHwV
+ TnL94vAJ+hLbcl1grW2HiOEyX1g3La9xjQD7D0/IK098cEdbML4+jlkc9YOFWsXlNDX2ItB
+ Gb9CVSng2+FXGvduz4mpA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:6zLjP30a1XA=:k8ug1uy+mh78lKJ/NymGvU
+ D/5hNu0oqNE/9TgBkbg3cfwOfNHuJm8MJF/0CGZPAwFqPHB+TYHYiY4xI5SwGBU5EIq+Q/eg+
+ NlJiTYS7f7gA4Q2jBEE3q+tRb4GJOs79DGy/OkpUzZKGik8e9Uv+ck1D5OlBJX7xutvzaqXU8
+ VMrbwrWhjK4OHOKjxHHv6Jap9+fuFuPSIAc39boU1FP11DB9GWXWIAN2NH2q6ZojQtpqwmIt/
+ jp2kcaz8+KBYWycPMe3GWSmHUVCFkvHPj7q9h7LdQtnmJXx/6Y9k3nwFndUKFq4USz5HlfCWv
+ 0UQYjUsL+rBLHjmFIKt3h1fU8qDH2Q/6Aon4QY24Zy7wQkiO+ucwYB+QnyCXzaeM6Hwmku0EX
+ MP1BPX/RNF5wMgDdfOFiSEqKginej5lC/wIBbHSsK9gBY7SAnOIm5d8Zrz8tnLuXki4QlbkF0
+ AQnNrmbF/L0onET91bbuDXfTxQkl4v0yGkyGSxh/tZ7T6ZTUZpWAW5OLXV8hGPNKLb9DEfb4/
+ 5bf/xqX4175fHrGNbooSm5fu5hvm+Nu1h/7+sM3jtudvFW5zwyUukhExEa25NZponqBl1jBf9
+ WUqqA//BlMxJxWmjCpiwnUoCjeTCTSSoLxFRXARWdgpDUJ4vBQgXNl9m8jCOoq/9fWsom6i2T
+ V+a0afRK0JAdSRURGzGDGlArPuqH8CsU74KSoNpetwyx9axliH2hPmp60ps4iHcQEw+pgw8zv
+ jTXVcF21+048S2NCL4zU9POqfGO0XtkDN/PuF5ledvbkNeeuSl2gyqtbZg+IoPfbEdd/SURL2
+ QCA9CaRQJ5QkYS28r7MA1J5/GRmYyQchb9HI/A8B991nI8r8s0ZXSgqkeVltiRpaiyxeD4x
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -63,25 +62,19 @@ Hi Peff,
 
 On Thu, 29 Mar 2018, Jeff King wrote:
 
-> On Thu, Mar 29, 2018 at 05:18:40PM +0200, Johannes Schindelin wrote:
+> On Thu, Mar 29, 2018 at 05:18:45PM +0200, Johannes Schindelin wrote:
 > 
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> >  t/{t1300-repo-config.sh => t1300-config.sh} | 0
-> >  1 file changed, 0 insertions(+), 0 deletions(-)
-> >  rename t/{t1300-repo-config.sh => t1300-config.sh} (100%)
+> > The test case 'unset with cont. lines' relied on a bug that is about to
+> > be fixed: it tests *explicitly* that removing the last entry from a
+> > config section leaves an *empty* section behind.
+> > 
+> > Let's fix this test case not to rely on that behavior, simply by
+> > preventing the section from becoming empty.
 > 
-> This has only been bugging me for oh, about 10 years.
+> Seems like a good solution. I don't think we care in particular about
+> testing a multi-line value at the end of the file.
 
-Yep.
-
-We should have done that right after moving the builtins' code to
-builtins/.
-
-Which reminds me that we *still* do not have a lib/ where all the source
-code for libgit.a lives. And then maybe standalone/ for the source code of
-the non-builtin tools. And... this would make for a fine micro-project
-next year, I guess. Or in ten.
+... and if we did, we should have documented that.
 
 Ciao,
 Dscho
