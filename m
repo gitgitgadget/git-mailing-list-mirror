@@ -7,73 +7,110 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F01531F424
-	for <e@80x24.org>; Fri, 30 Mar 2018 10:28:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DF6591F424
+	for <e@80x24.org>; Fri, 30 Mar 2018 10:29:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751234AbeC3K2E (ORCPT <rfc822;e@80x24.org>);
-        Fri, 30 Mar 2018 06:28:04 -0400
-Received: from mout.gmx.net ([212.227.17.20]:43333 "EHLO mout.gmx.net"
+        id S1751068AbeC3K3p (ORCPT <rfc822;e@80x24.org>);
+        Fri, 30 Mar 2018 06:29:45 -0400
+Received: from mout.gmx.net ([212.227.15.18]:38293 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750794AbeC3K2D (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Mar 2018 06:28:03 -0400
-Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MUTSJ-1fAUFO0Zil-00RLSk; Fri, 30
- Mar 2018 12:28:01 +0200
-Date:   Fri, 30 Mar 2018 12:28:00 +0200 (DST)
+        id S1750790AbeC3K3n (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Mar 2018 06:29:43 -0400
+Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MFMEG-1ena531tDw-00EIuJ; Fri, 30
+ Mar 2018 12:29:41 +0200
+Date:   Fri, 30 Mar 2018 12:29:40 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@dscho.gitforwindows.org
-To:     Tatsuyuki Ishi <ishitatsuyuki@gmail.com>,
-        Alex Vandiver <alexmv@dropbox.com>
-cc:     git@vger.kernel.org
-Subject: Re: core.fsmonitor always perform rescans
-In-Reply-To: <CANqewP332-+esYWDPBtPif==wnb4PiNd89R1qTZsuWZAFSV0ew@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1803301226400.5026@qfpub.tvgsbejvaqbjf.bet>
-References: <CANqewP332-+esYWDPBtPif==wnb4PiNd89R1qTZsuWZAFSV0ew@mail.gmail.com>
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: [RFC][PATCH] git-stash: convert git stash list to C builtin
+In-Reply-To: <20180326205831.GG10909@hank>
+Message-ID: <nycvar.QRO.7.76.6.1803301228230.5026@qfpub.tvgsbejvaqbjf.bet>
+References: <20180324182313.13705-1-ungureanupaulsebastian@gmail.com> <CAPig+cS9QwCOG7BA7O5Nu_zsh-xTbDFy2vTWpAXxBuKTY-uzUw@mail.gmail.com> <nycvar.QRO.7.76.6.1803262058490.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <20180326205831.GG10909@hank>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:N3yiaK1O3pWm71yUDOLXiYAXu6VcdaiA64edDBgEMJAz9//FFI+
- IVmso5Bv0p4K7hTwQKB4Jh5k3eh1247IyN6hw0+a+YGcE6VLTpeEAAjCr/XPImwgfAkP1KA
- MVSvy40xwFwpPmP/FXHcz2B4jOfsiaiCmpDEvJYjmS9MrbE/EMdaV+NEmW7njqld9zDMcxo
- jiTX2e3ZmNBewCw2SpuIA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:4QNCPArTxRk=:S7HiQIFVV1uvaX3T5p1PZd
- C5PazqEsgsafApVl4VkcQcDSMDC6oFSZAjDCXtjWZQu0r0lNFMMPXi1e7+XmUDE6Lx19aYRro
- sIfaoIkAdkOUFtuqhspuash4k22MAGklnrZrB68Mlsm3K2iGXBfy9CXnT4HWdOgQ6Wo8ez8V4
- vC/Pyfv7NmIIe+98ZruT7Hvsm7SEzEIjDC4unGMc0EI91FTXoZKWefxrY+SanAMsD90ZVT1tv
- CATHKYjEjcQ5GSeiPp2nsXr3kVeSrVxieEXi/GZ7pxSDqKLqD6Njn64n4MSlpe3hx3RY2S93q
- 3TmTnmP44Ge1QiLagNgCyg6TL4qKRFQKQ4Ox4ka2vmcYDL/e5WYYqLQJK2f3/llmFAfR0Tdba
- R6E0gjLhQFh9HedhsrG0bkNASoD5EEU2BCiyMuwXs69PH7MSKFl0cWqIvjPe90aBRdkbvlvcC
- qrkccZnN9sDeKo9ihhOJWqMSRFvXRrYf4lMli3zT8DvJdW98FCxYTyMHc0Y4JAG+ko2GvgEJ3
- MOUwhCbz1K6f6Aou9l6bnQ/HsQ5Af3jM2yNYaNSYiDF/TqtrCcTlAQ92Ji2LgaNOtyIpDNEUU
- s5QWMapF9TbKGT7fBsb4lY6xHwVLHzvebhSe19qvZCNGQaUZ0LuJnHbTl5EkS4li9pQiDrDD8
- ruLmtM3k0JxomBypS84i82zvNx+ewp+z+ntOnBrhsllAWjV//nz5Yg2w+mh6R9lpwR4Aamx0F
- SvCcVJ78rv/8df5+UbmbUThFOWjCF0xy2JDRhkV5pbCV7CTdRaNJDsfIiCvTLcjhLS8fOniH3
- AErzXuPSJyzS+OyoU1rCjJZcps9ImylDPy0i/7onIhLZXYNbdhztPtsTGiMMsh1zm03gde9
+X-Provags-ID: V03:K0:71xK6iH7ywBkkH/j7RTgoBu88paZxQHYCduXQLoFZJ2AdUrqRBy
+ WuHtVGwFOlkpEI4pkSrE7Ca7fzc9lDRWD3eiEUj4e5NDFsCT58PVHwNiJV+dz+dHgtgwJLb
+ XQzZ2/2F4LNX0ZAhlWj2281xbpTtnhp1CaGt5wfFxG7JxG9s0+qt5KE/lUpdj7GANKM876t
+ OCPM3cZt0BaqPdH8HALpQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:8pkhHeRIuUY=:jtMdvXmyD95nnU1Dy8bktA
+ Px/bPzXVoMhOx0sC2qUMrWC8tzkos3l4klqZS9JORR/cVAiSwiU75slKlPaFBG0Ybvd8xUgdG
+ gN8w/RVQWDQkIugyBXZzrpAwOJ65CGSDy0keaI3gZ3QkzjwYRO391UO2jLDIeYwjdNhS90MoO
+ mbzh3rugJ5zeiCBnJ/yPfmd44jpNbzDQoI4V95np7vQg5791xM4pb4xPFR3JXDI1kZOCALTlx
+ 5xCgEMLG+ZYWaXXvh/bKgL/XbOIvQsii4r1xsGuozIAdY7XPil7znNO+3+CXIxnrBSwm1+Od9
+ oB/X+dYnM679ZfKz2gNbfpNsV93XKjVtGRHUmk4Z2QfeMRgLOTH9KWor3SGH8iy0hPT54dZ28
+ sIp1zrPc+qAve97EM2jyPIJXcqL1SedqlLUnSXMVLVq9OgyjBrduM1QKgzDruA89vPeG0M+Oi
+ BE5tzPG1TDwUENBnLn3p/NQI1AQmOlVMXAQjHHEa1AHclB7qb++Zn5xhU6BAQjoQOPmCDMhnB
+ hF3ksiyDFx08Rss29KmQUKdCB9anXr4H78xZr54mwq2CeL7XkaTbhw9PbM0Z1fJU2lPtZe+DN
+ Euo/K7UKjzyvykM6KBaGXI7bkUYle62vRyNxDyXOgw3aNelT9b26oAwKPqEXEHaT0gQrZpmy2
+ dtMM7+qlVxHztYMXbQxUfi3jyf4KbKYeLBjW3QeikB4ymR8HEbYX/36SYu0QJZQb7WGcMPBQC
+ zb+7wheT9LNb+NSExsF6MvP8wTpCWEr/4CZONugcass1w+SWQtw8e3rZ5avxjNmWfZ6Jz9SLw
+ idxINMXk6Uem5S5yUrcfsWC12ivUMWHY4B/UT+xXb/+/A0DXrtfkDZnbNPBFeku1vM/t6h3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hi Thomas,
 
-On Mon, 26 Mar 2018, Tatsuyuki Ishi wrote:
+On Mon, 26 Mar 2018, Thomas Gummerer wrote:
 
-> I'm facing issue with core.fsmonitor.
+> On 03/26, Johannes Schindelin wrote:
+> > 
+> > On Sun, 25 Mar 2018, Eric Sunshine wrote:
+> > 
+> > > On Sat, Mar 24, 2018 at 2:23 PM, Paul-Sebastian Ungureanu
+> > > <ungureanupaulsebastian@gmail.com> wrote:
+> > > > Currently, because git stash is not fully converted to C, I
+> > > > introduced a new helper that will hold the converted commands.
+> > > > ---
+> > > > diff --git a/builtin/stash--helper.c b/builtin/stash--helper.c
+> > > > @@ -0,0 +1,52 @@
+> > > > +int cmd_stash__helper(int argc, const char **argv, const char *prefix)
+> > > > +{
+> > > > +       int cmdmode = 0;
+> > > > +
+> > > > +       struct option options[] = {
+> > > > +               OPT_CMDMODE(0, "list", &cmdmode,
+> > > > +                        N_("list stash entries"), LIST_STASH),
+> > > > +               OPT_END()
+> > > > +       };
+> > > 
+> > > Is the intention that once git-stash--helper implements all 'stash'
+> > > functionality, you will simply rename git-stash--helper to git-stash?
+> > > If so, then I'd think that you'd want it to accept subcommand
+> > > arguments as bare words ("apply", "drop") in order to be consistent
+> > > with the existing git-stash command set, not in dashed form
+> > 
+> > Why not start with cmdmode, and then add a single patch that *also*
+> > accepts argv[1] as a bare-word cmdmode?
 > 
-> I'm currently using the provided watchman hook, but it doesn't seem to
-> record the fact that it has queried the fsmonitor backend, and as a
-> result the timestamp passed to the hook doesn't seem to change.
+> I don't think we should accept the dashed form of the commands for
+> 'git stash'.  The main reason being that we also have 'git stash'
+> without any arguments, which acts as 'git stash push'.  So if we would
+> ever come up with an argument to 'git stash push', that matches one of
+> the current verbs, or if we come up with a new verb that matches one
+> of the options to 'git stash push', that would not work.
 > 
-> As it always pass a timestamp before watchman has crawled the
-> directories, watchman will always return all files inside the
-> directory. This happens everytime I run a git command, resulting in
-> slowness.
+> In that case we could obviously go for a different word, but I think
+> the rules when 'git stash' is going to be 'git stash push' and when it
+> is not are already complicated enough, and allowing the verbs as
+> dashed options would only make the interface more complicated.
 > 
-> Is the timestamp not being updated an intended behavior, or is this a bug?
+> > This could even potentially be a patch to parse-options.[ch] that
+> > introduces, say, PARSE_OPT_ALLOW_BARE_CMDMODE.
+> 
+> Now if we'd take that one step further and make it
+> PARSE_OPT_BARE_CMDMODE, which would only allow the non-dashed options,
+> I think we could use that in other places in git as well (for example
+> in 'git worktree').
 
-There are some bug fixes pending, and IIRC Alex was even working on some
-more patches that are in an intermediate stage. Alex, could you share them
-with us (even in their unfinished state, maybe others can help)?
+But the valid options change with the subcommands, too. So my idea, even
+with your adjustment to disallow dashed cmdmode, simply does not work.
 
-Ciao,
-Johannes
+Thanks for setting my head straight,
+Dscho
