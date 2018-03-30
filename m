@@ -2,113 +2,66 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 351A31F404
-	for <e@80x24.org>; Fri, 30 Mar 2018 15:13:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A24AB1F404
+	for <e@80x24.org>; Fri, 30 Mar 2018 16:00:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751268AbeC3PNI (ORCPT <rfc822;e@80x24.org>);
-        Fri, 30 Mar 2018 11:13:08 -0400
-Received: from mail.javad.com ([54.86.164.124]:41686 "EHLO mail.javad.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750927AbeC3PNH (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Mar 2018 11:13:07 -0400
-Received: from osv (unknown [89.175.180.246])
-        by mail.javad.com (Postfix) with ESMTPSA id 218C53E9A4;
-        Fri, 30 Mar 2018 15:13:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1522422786;
-        bh=Sx2FUW9uIMy6Nm/nT9FcwkeEKD3ruZdU/nz2RTUhoxs=; l=2595;
-        h=Received:From:To:Subject;
-        b=KrtbpbnH7P2Jr4aEQTdiJ8ctqLeZJCupoHSKFk0phhTfXBrWxPtnERrr9VFv9TR96
-         227bisDPTC1HzCOHsK6BPSiYVJEanS6VgFLz0DwvZKMSdnbkphXroALb0Ffnh5+a+F
-         LwdZuNAbe2qVBuA6LaIaZyoR/XEWKbAruYSGc5Bc=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1522422786;
-        bh=Sx2FUW9uIMy6Nm/nT9FcwkeEKD3ruZdU/nz2RTUhoxs=; l=2595;
-        h=Received:From:To:Subject;
-        b=KrtbpbnH7P2Jr4aEQTdiJ8ctqLeZJCupoHSKFk0phhTfXBrWxPtnERrr9VFv9TR96
-         227bisDPTC1HzCOHsK6BPSiYVJEanS6VgFLz0DwvZKMSdnbkphXroALb0Ffnh5+a+F
-         LwdZuNAbe2qVBuA6LaIaZyoR/XEWKbAruYSGc5Bc=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1522422786;
-        bh=Sx2FUW9uIMy6Nm/nT9FcwkeEKD3ruZdU/nz2RTUhoxs=; l=2595;
-        h=Received:From:To:Subject;
-        b=KrtbpbnH7P2Jr4aEQTdiJ8ctqLeZJCupoHSKFk0phhTfXBrWxPtnERrr9VFv9TR96
-         227bisDPTC1HzCOHsK6BPSiYVJEanS6VgFLz0DwvZKMSdnbkphXroALb0Ffnh5+a+F
-         LwdZuNAbe2qVBuA6LaIaZyoR/XEWKbAruYSGc5Bc=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1522422786;
-        bh=Sx2FUW9uIMy6Nm/nT9FcwkeEKD3ruZdU/nz2RTUhoxs=; l=2595;
-        h=Received:From:To:Subject;
-        b=KrtbpbnH7P2Jr4aEQTdiJ8ctqLeZJCupoHSKFk0phhTfXBrWxPtnERrr9VFv9TR96
-         227bisDPTC1HzCOHsK6BPSiYVJEanS6VgFLz0DwvZKMSdnbkphXroALb0Ffnh5+a+F
-         LwdZuNAbe2qVBuA6LaIaZyoR/XEWKbAruYSGc5Bc=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1522422786;
-        bh=Sx2FUW9uIMy6Nm/nT9FcwkeEKD3ruZdU/nz2RTUhoxs=; l=2595;
-        h=Received:From:To:Subject;
-        b=KrtbpbnH7P2Jr4aEQTdiJ8ctqLeZJCupoHSKFk0phhTfXBrWxPtnERrr9VFv9TR96
-         227bisDPTC1HzCOHsK6BPSiYVJEanS6VgFLz0DwvZKMSdnbkphXroALb0Ffnh5+a+F
-         LwdZuNAbe2qVBuA6LaIaZyoR/XEWKbAruYSGc5Bc=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1522422786;
-        bh=Sx2FUW9uIMy6Nm/nT9FcwkeEKD3ruZdU/nz2RTUhoxs=; l=2595;
-        h=Received:From:To:Subject;
-        b=KrtbpbnH7P2Jr4aEQTdiJ8ctqLeZJCupoHSKFk0phhTfXBrWxPtnERrr9VFv9TR96
-         227bisDPTC1HzCOHsK6BPSiYVJEanS6VgFLz0DwvZKMSdnbkphXroALb0Ffnh5+a+F
-         LwdZuNAbe2qVBuA6LaIaZyoR/XEWKbAruYSGc5Bc=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1522422786;
-        bh=Sx2FUW9uIMy6Nm/nT9FcwkeEKD3ruZdU/nz2RTUhoxs=; l=2595;
-        h=Received:From:To:Subject;
-        b=KrtbpbnH7P2Jr4aEQTdiJ8ctqLeZJCupoHSKFk0phhTfXBrWxPtnERrr9VFv9TR96
-         227bisDPTC1HzCOHsK6BPSiYVJEanS6VgFLz0DwvZKMSdnbkphXroALb0Ffnh5+a+F
-         LwdZuNAbe2qVBuA6LaIaZyoR/XEWKbAruYSGc5Bc=
-Authentication-Results: mail.javad.com;
-        spf=pass (sender IP is 89.175.180.246) smtp.mailfrom=osv@javad.com smtp.helo=osv
-Received-SPF: pass (mail.javad.com: connection is authenticated)
-Received: from osv by osv with local (Exim 4.84_2)
-        (envelope-from <osv@osv.gnss.ru>)
-        id 1f1viB-0002SO-PN; Fri, 30 Mar 2018 18:13:03 +0300
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Jacob Keller <jacob.keller@gmail.com>,
-        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Git Mailing List <git@vger.kernel.org>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC] Rebasing merges: a jorney to the ultimate solution(RoadClear)
-References: <87y3jtqdyg.fsf@javad.com>
-        <nycvar.QRO.7.76.6.1803070810550.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <c5a5c2cc-6a11-440f-5b9b-964ae1ca07dd@talktalk.net>
-        <f3872fb9-01bc-b2f1-aee9-cfc0e4db77d6@gmail.com>
-        <nycvar.QRO.7.76.6.1803111301340.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <b329bb98-f9d6-3d51-2513-465aad2fa37a@gmail.com>
-        <nycvar.QRO.7.76.6.1803121142550.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <243ca23d-77a9-4ae1-a120-de6c6b195cdc@gmail.com>
-        <nycvar.QRO.7.76.6.1803261455130.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <87woxyf4lk.fsf@javad.com>
-        <nycvar.QRO.7.76.6.1803271536020.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <874ll0d9nt.fsf@javad.com>
-        <CA+P7+xoDQ2mzhxeZPFhaY+TaSoKkQm=5AtoduHH06-VggOJ2jg@mail.gmail.com>
-        <87r2o48mm2.fsf@javad.com>
-        <CA+P7+xo19mHrWz9Fy-ifgCcVJM2xwzcLj7F2NvFe2LwGbaJiDQ@mail.gmail.com>
-        <87zi2r5swc.fsf@javad.com>
-        <nycvar.QRO.7.76.6.1803301235560.5026@qfpub.tvgsbejvaqbjf.bet>
-        <87bmf5zqn3.fsf@javad.com>
-        <nycvar.QRO.7.76.6.1803301523060.5026@qfpub.tvgsbejvaqbjf.bet>
-Date:   Fri, 30 Mar 2018 18:13:03 +0300
-In-Reply-To: <nycvar.QRO.7.76.6.1803301523060.5026@qfpub.tvgsbejvaqbjf.bet>
-        (Johannes Schindelin's message of "Fri, 30 Mar 2018 15:33:46 +0200
-        (DST)")
-Message-ID: <87tvsxwq9s.fsf@javad.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+        id S1751345AbeC3QAJ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 30 Mar 2018 12:00:09 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:50635 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751147AbeC3QAI (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Mar 2018 12:00:08 -0400
+Received: by mail-wm0-f65.google.com with SMTP id l201so16212171wmg.0
+        for <git@vger.kernel.org>; Fri, 30 Mar 2018 09:00:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=5URJoF4NPCtdAhzrdUdgaSxA2xSxKCVFLD9pLjkle1Q=;
+        b=bGQlcv8CVWAfyrX3GJTXmpCSI/X+24UsG8G3+rPMcMEwG6k5loenD6P7GA6+sWZT29
+         qSJ7EQvUlAnukp3pr2dLD49QIwy+yE0ZOkVweJFashAlgj5FzAyt7So5hHvkojR6powd
+         QZw/a4rOmvg8R4lDHKNcJnPI4kWAM/+NWuAJVovpOfZ+KJ2NZe5WkVjfRhFOft70xZt2
+         A3ERDNNrlgefdt2UgX0L1QJdQgT8OmAzNxAax1qtcY0sEFzwS8fpNgGN588mdyCnpKV8
+         iJM3xFMtdBnTVjJehR3JwzEdytbBMlDV74i/c1IgsoXBvDQssyyeyoyjfvie7+Hp9jYv
+         B80A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=5URJoF4NPCtdAhzrdUdgaSxA2xSxKCVFLD9pLjkle1Q=;
+        b=eBV3D6Fm4ELbtRN04ln4Ll5Rq0S4DWWjDaIS/wQD77X3CKclBKjjZhiobXj8oQQLp+
+         6BvN9XcOdFQ13072cMxxNBcN4GAYm89uBOKr6Q/eIZ+OxRJRgAkq1CuIL2g01CoMi+4E
+         xtMQE2l44K68FJMeC/+MlQ1bbDzueyJPe2HD5cx0VJGY0WouCjcVAVRWBXj860x+2wce
+         po5p31doVyHx/yXH9eq2TtuMVSpklGdJRgjQtoR0Kjn0c7dZaI1dq9DlteKF0ll/S76P
+         meN7wPPx6IKqSi0nkIMZGgutGXZAWadJm75eypLH/IJQDssJz+8VwznJ0AcSOwXw4qqw
+         Sv9Q==
+X-Gm-Message-State: AElRT7G5ALVfAgbuHn7jCmiIM6O9xyiQP03jPuXYk1WrebP/JPQMPkAn
+        ecYfP9ZsWcKsi5TyfA60LBs=
+X-Google-Smtp-Source: AIpwx48Y6oU+mfk6+Jtfe3wQ5g/RNl9G2BJh1CTbKVJQHH4AKIq1WQA5BxF0k6RVqoZzQRRRDFKrAA==
+X-Received: by 10.28.155.66 with SMTP id d63mr2505373wme.144.1522425607087;
+        Fri, 30 Mar 2018 09:00:07 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id z16sm12544905wrc.70.2018.03.30.09.00.05
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 30 Mar 2018 09:00:06 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
+Subject: Re: [PATCH] builtin/config.c: prefer `--type=bool` over `--bool`, etc.
+References: <20180328234719.595-1-me@ttaylorr.com>
+        <20180329221122.GL2939@sigill.intra.peff.net>
+        <20180330052719.GA6628@syl.local>
+        <20180330135315.GE29568@sigill.intra.peff.net>
+Date:   Fri, 30 Mar 2018 09:00:05 -0700
+In-Reply-To: <20180330135315.GE29568@sigill.intra.peff.net> (Jeff King's
+        message of "Fri, 30 Mar 2018 09:53:15 -0400")
+Message-ID: <xmqqmuyp4kqi.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
@@ -116,75 +69,30 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Johannes,
+Jeff King <peff@peff.net> writes:
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-
-> Hi Sergey,
+> ... But actually, last-one-wins applies only
+> to a _single_ option, not necessarily unrelated ones. Many other
+> multi-action commands actually have a series of separate boolean flags,
+> and then complain when more than one of the flags is set.
 >
-> On Fri, 30 Mar 2018, Sergey Organov wrote:
->
->> Could we please agree to stop using backward compatibility as an
->> objection in the discussion of the  --recreate-merges feature?
->
-> No.
->
-> The expectation of users as to what a `pick` is has not changed just
-> because you wish it would.
+> So maybe it's not such a good idea for the actions (I do still think
+> it's the right path for the types).
 
-As if I ever suggested to change user expectations. Could you please
-stop putting words into my mouth?
+If this were using command verbs (e.g. "git config get foo.bar") as
+opposed to command options (e.g. "git config --get foo.bar"), it
+wouldn't ahve allowed multiple command verbs from the command line,
+and last-one-wins would not have made much sense because there is no
+way to trigger it as a desirable "feature".
 
-I _am_ a user, and I expect 'pick' to pick commits, no matter how many
-parents they might have.
+Just like the topic of the discussion unifies --int/--bool/etc. into
+a single --type={int,bool,...}, perhaps the existing command options
+--get/--list/etc. can be taken as if they were a mistaken historical
+way to spell --action={get,list,...}.  I of course am not recommending
+to add a new "--action" option.  I am suggesting it as a thought-aid
+to see if actions are all that different from value type options.
 
-And no, --preserve-merges did not ever pick commits with number of
-parents more than one, it rather threw them away and re-merged the
-heads. Calling it 'pick' was a huge mistake indeed! Fixing that mistake
-is what I expect, as a user.
-
-Just teach the 'pick' to correctly pick any commit, please!
-
->
-> That is a matter of backwards-compatibility.
-
-OK, fine, at least its only about user expectations and not about some
-scripting incompatibility.
-
-> You see, if you are driving a car for a hundred years already, and then
-> switch to a different car, and it has a lever in the same place as your
-> previous car's windshield wiper, but in the new car it has a button that
-> activates the emergency driver seat ejection OMG *it has a seat ejection
-> like in the James Bond movies! Where can I get that car?* Sorry for
-> disgressing.
-
-Except it's irrelevant as the 'pick' will still pick commits.
-
-> I am really concerned about that willingness to put an innocuous button,
-> so to speak, onto something users got really used to, over the course of a
-> decade or so, when that button should really be made red and blinking and
-> OMG where can I get that car?
-
-It's irrelevant as the 'pick' will still pick commits.
-
-> So to reiterate, I am really interested in a practical solution that won't
-> cause nasty surprises.
-
-I rather don't see how it possibly could cause any surprises, especially
-compared to using 'merge' to pick commits.
-
-> Meaning: `pick` != merge.
-
-Exactly! Use 'merge' when you merge, as you are already doing. Use 'pick'
-when you are picking. You don't merge "merge commit" when you are
-picking it!
-
-> That was a mistake in preserve-merges, as I have only mentioned like a
-> hundred times, and we won't repeat it.
-
-The mistake was that it used 'pick' to denote re-merge. You already
-fixed that mistake by introducing 'merge' to re-merge, thanks God.
-
-Please don't commit yet another mistake by now using 'merge' to pick!
-
--- Sergey
+I agree that a-bit-per-type that is checked with HAS_MULTI_BITS()
+for error at the end does not make much sense.  I also think what
+you did in this patch for actions is a good clean-up for the above
+reason.
