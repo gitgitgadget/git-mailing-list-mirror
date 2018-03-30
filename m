@@ -2,168 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 32F501F404
-	for <e@80x24.org>; Fri, 30 Mar 2018 12:36:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 697121F404
+	for <e@80x24.org>; Fri, 30 Mar 2018 12:37:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751749AbeC3Mgx (ORCPT <rfc822;e@80x24.org>);
-        Fri, 30 Mar 2018 08:36:53 -0400
-Received: from mail.javad.com ([54.86.164.124]:43615 "EHLO mail.javad.com"
+        id S1751281AbeC3Mhv (ORCPT <rfc822;e@80x24.org>);
+        Fri, 30 Mar 2018 08:37:51 -0400
+Received: from mout.gmx.net ([212.227.15.19]:54925 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751118AbeC3Mgw (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Mar 2018 08:36:52 -0400
-Received: from osv (unknown [89.175.180.246])
-        by mail.javad.com (Postfix) with ESMTPSA id A6B143E9A4;
-        Fri, 30 Mar 2018 12:36:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1522413411;
-        bh=ha72L2EwR6W3M0o2uuyEl/IJijn0N1DaivIcZmDbH2U=; l=1813;
-        h=Received:From:To:Subject;
-        b=LHBHVzzz8Gc+I27ksspLnsXU5HdZbhmSwj96qtSCupw42FeYPeOmBQcRc9O9vHVHO
-         6cMsyl5DHjBdByWEveTxmrh+RgtBF4CXM1L/+2vMWj+yCfhWmw4F1sLXQMm2yCwjoY
-         GBRBFZLWACUZcXfk4/nRDX7njn2FXPMZcdz9dubw=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1522413411;
-        bh=ha72L2EwR6W3M0o2uuyEl/IJijn0N1DaivIcZmDbH2U=; l=1813;
-        h=Received:From:To:Subject;
-        b=LHBHVzzz8Gc+I27ksspLnsXU5HdZbhmSwj96qtSCupw42FeYPeOmBQcRc9O9vHVHO
-         6cMsyl5DHjBdByWEveTxmrh+RgtBF4CXM1L/+2vMWj+yCfhWmw4F1sLXQMm2yCwjoY
-         GBRBFZLWACUZcXfk4/nRDX7njn2FXPMZcdz9dubw=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1522413411;
-        bh=ha72L2EwR6W3M0o2uuyEl/IJijn0N1DaivIcZmDbH2U=; l=1813;
-        h=Received:From:To:Subject;
-        b=LHBHVzzz8Gc+I27ksspLnsXU5HdZbhmSwj96qtSCupw42FeYPeOmBQcRc9O9vHVHO
-         6cMsyl5DHjBdByWEveTxmrh+RgtBF4CXM1L/+2vMWj+yCfhWmw4F1sLXQMm2yCwjoY
-         GBRBFZLWACUZcXfk4/nRDX7njn2FXPMZcdz9dubw=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1522413411;
-        bh=ha72L2EwR6W3M0o2uuyEl/IJijn0N1DaivIcZmDbH2U=; l=1813;
-        h=Received:From:To:Subject;
-        b=LHBHVzzz8Gc+I27ksspLnsXU5HdZbhmSwj96qtSCupw42FeYPeOmBQcRc9O9vHVHO
-         6cMsyl5DHjBdByWEveTxmrh+RgtBF4CXM1L/+2vMWj+yCfhWmw4F1sLXQMm2yCwjoY
-         GBRBFZLWACUZcXfk4/nRDX7njn2FXPMZcdz9dubw=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1522413411;
-        bh=ha72L2EwR6W3M0o2uuyEl/IJijn0N1DaivIcZmDbH2U=; l=1813;
-        h=Received:From:To:Subject;
-        b=LHBHVzzz8Gc+I27ksspLnsXU5HdZbhmSwj96qtSCupw42FeYPeOmBQcRc9O9vHVHO
-         6cMsyl5DHjBdByWEveTxmrh+RgtBF4CXM1L/+2vMWj+yCfhWmw4F1sLXQMm2yCwjoY
-         GBRBFZLWACUZcXfk4/nRDX7njn2FXPMZcdz9dubw=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1522413411;
-        bh=ha72L2EwR6W3M0o2uuyEl/IJijn0N1DaivIcZmDbH2U=; l=1813;
-        h=Received:From:To:Subject;
-        b=LHBHVzzz8Gc+I27ksspLnsXU5HdZbhmSwj96qtSCupw42FeYPeOmBQcRc9O9vHVHO
-         6cMsyl5DHjBdByWEveTxmrh+RgtBF4CXM1L/+2vMWj+yCfhWmw4F1sLXQMm2yCwjoY
-         GBRBFZLWACUZcXfk4/nRDX7njn2FXPMZcdz9dubw=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1522413411;
-        bh=ha72L2EwR6W3M0o2uuyEl/IJijn0N1DaivIcZmDbH2U=; l=1813;
-        h=Received:From:To:Subject;
-        b=LHBHVzzz8Gc+I27ksspLnsXU5HdZbhmSwj96qtSCupw42FeYPeOmBQcRc9O9vHVHO
-         6cMsyl5DHjBdByWEveTxmrh+RgtBF4CXM1L/+2vMWj+yCfhWmw4F1sLXQMm2yCwjoY
-         GBRBFZLWACUZcXfk4/nRDX7njn2FXPMZcdz9dubw=
-Authentication-Results: mail.javad.com;
-        spf=pass (sender IP is 89.175.180.246) smtp.mailfrom=osv@javad.com smtp.helo=osv
-Received-SPF: pass (mail.javad.com: connection is authenticated)
-Received: from osv by osv with local (Exim 4.84_2)
-        (envelope-from <osv@osv.gnss.ru>)
-        id 1f1tGy-0001x2-Tl; Fri, 30 Mar 2018 15:36:48 +0300
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Jacob Keller <jacob.keller@gmail.com>,
-        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Git Mailing List <git@vger.kernel.org>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC] Rebasing merges: a jorney to the ultimate solution(RoadClear)
-References: <87y3jtqdyg.fsf@javad.com>
-        <754e2735-1288-9a8d-c8bd-ab39cf733812@gmail.com>
-        <nycvar.QRO.7.76.6.1803070810550.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <c5a5c2cc-6a11-440f-5b9b-964ae1ca07dd@talktalk.net>
-        <f3872fb9-01bc-b2f1-aee9-cfc0e4db77d6@gmail.com>
-        <nycvar.QRO.7.76.6.1803111301340.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <b329bb98-f9d6-3d51-2513-465aad2fa37a@gmail.com>
-        <nycvar.QRO.7.76.6.1803121142550.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <243ca23d-77a9-4ae1-a120-de6c6b195cdc@gmail.com>
-        <nycvar.QRO.7.76.6.1803261455130.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <87woxyf4lk.fsf@javad.com>
-        <nycvar.QRO.7.76.6.1803271536020.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <874ll0d9nt.fsf@javad.com>
-        <CA+P7+xoDQ2mzhxeZPFhaY+TaSoKkQm=5AtoduHH06-VggOJ2jg@mail.gmail.com>
-        <87r2o48mm2.fsf@javad.com>
-        <CA+P7+xo19mHrWz9Fy-ifgCcVJM2xwzcLj7F2NvFe2LwGbaJiDQ@mail.gmail.com>
-        <87zi2r5swc.fsf@javad.com>
-        <nycvar.QRO.7.76.6.1803301235560.5026@qfpub.tvgsbejvaqbjf.bet>
-Date:   Fri, 30 Mar 2018 15:36:48 +0300
-In-Reply-To: <nycvar.QRO.7.76.6.1803301235560.5026@qfpub.tvgsbejvaqbjf.bet>
-        (Johannes Schindelin's message of "Fri, 30 Mar 2018 12:38:55 +0200
-        (DST)")
-Message-ID: <87bmf5zqn3.fsf@javad.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+        id S1751247AbeC3Mhu (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Mar 2018 08:37:50 -0400
+Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LyVIk-1eVcpB1TV8-015pdT; Fri, 30
+ Mar 2018 14:37:39 +0200
+Date:   Fri, 30 Mar 2018 14:37:37 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@dscho.gitforwindows.org
+To:     Jeff King <peff@peff.net>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Thomas Rast <tr@thomasrast.ch>, Phil Haack <haacked@gmail.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Stefan Beller <sbeller@google.com>,
+        Jason Frey <jfrey@redhat.com>,
+        Philip Oakley <philipoakley@iee.org>
+Subject: Re: [PATCH 2/9] t1300: rename it to reflect that `repo-config` was
+ deprecated
+In-Reply-To: <20180329194221.GC2939@sigill.intra.peff.net>
+Message-ID: <nycvar.QRO.7.76.6.1803301435590.5026@qfpub.tvgsbejvaqbjf.bet>
+References: <cover.1522336130.git.johannes.schindelin@gmx.de> <6023d70cff199424893d116339f860952c6a6b4b.1522336130.git.johannes.schindelin@gmx.de> <20180329194221.GC2939@sigill.intra.peff.net>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:7zG4kF/sKOsfo7xZ8mFd1xpgAKI/oPjT0NWmidtpkB0MUgIa/Yv
+ j1orKvRU3LCdHkk8XOorZRHpxMuI6DtJkqRMZFIPJrldeTVBWrmyPAz+76lkVZgfDOY47Ak
+ ASOlbBR5RV8SfQV0ndcQi5fSEZcSAfcfEkjBWkgTA2HHOQYOIMLU8cpwrCiQJEPDtgcYE/N
+ dvQ864wlGugXHMMrZWuRQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:dkOot+TgtIc=:fVUIuQCBF7vPmWVm5sCY+U
+ BjKibfqq9sx8w7dAQAu3aO7IsEAtG/4A4HM8M9wqw9z/5RWFyEEELLw6shtvxmaJ3thSRxMLY
+ mqRPvEqDIgHq6w5/NaN3L5HmjVEkrE4Vc8vOhTJvReY8VADQlafSJtz9LgET3hmb9hMKH12s0
+ WeSWrHfQ5XZbC5yCPJp9iyv90IB/4xTwcV+u8IZKek0O8xPzKfwXjCDCzH58fuOUb4MaMlKgD
+ k6LdWOEayzIMhCgYTIf66nK8JJa2idD8vFJrUoC+w+SKg8uVvxprnkINu6CrzPc+JNd0o4Fzv
+ EbfNqKYAvmYiHs00YbpCnEhPPE2hoIlf05gIQXW3uI1hCO0ZZhqI9iBC/YS2Ifl9yhJhmuaFI
+ 6EE3lsEJsHIN18E9Y7KYv4RVU+FMKGjIDbRk4QSM0Md6Z/MINuglLhNndcRytFRPhHHglOkf6
+ qDqJw7B7tIZxBWi14N+7Xiag4ufVI8ILqySnF4N1IF+eD7O83p1YkeQ9hj+uFtApKdIm/q/P1
+ 1wJWYQA/MIWhsFheyUZlnFBV51IqFEe/P8vHnONSYaWoYcPL48eUW+Jypxx2IDs+nae0vf51C
+ WPZYbOiYf0rEQ3aSeUKudNXc/Roze/Pqr3isFZZbaGcbxfVdtvRCxRFNu5O2qbV57AYcdbKHo
+ qxTxbqKoy9hhXjfxlAHJMvPZJ9fUAgaAZRWOD1BvQme7uwMcKMNUFXo4Q+I2c0Y2yKHwcqBwn
+ OskyVD+Ts4Ux3NslYRndTylpPlghP3006hxtF5daSQh6zjdv2+ak9QTTgdYc/yroeR3/Rco46
+ dFVBi0i+J+oyV0VzoQiC//aIGSXHhKmIZzVikFsBX36YzsgwDqx5fIyGsHyZKJ0I0wdQ+50
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Johannes,
+Hi Peff,
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> Hi,
->
-> On Thu, 29 Mar 2018, Sergey Organov wrote:
->
->> Jacob Keller <jacob.keller@gmail.com> writes:
->> 
->> > I care about the general compatibility of the rebase todo list
->> > regardless of which options you enabled on the command line to
->> > generate it.
->> 
->> It's a good thing in general, yes. However, I recall I was told by the
->> author that --recreate-merges was introduced exactly to break backward
->> compatibility of the todo list. If so, could we please agree to stop
->> using backward compatibility as an objection in the discussion of this
->> particular feature?
->
-> That is a serious misrepresentation of what I said.
->
-> If I had changed --preserve-merges to the new format, *that* would have
-> broken backwards-compatibility.
->
-> So the entire reason of introducing --recreate-merges was to *not have to
-> break backwards-compatibility*.
->
-> I definitely did not say the *exact opposite*.
+On Thu, 29 Mar 2018, Jeff King wrote:
 
-I'm sorry I committed ambiguity in my wording that allowed it to be
-misinterpreted. I actually intended to say roughly the same thing you
-are saying, as what matters for the discussion is that new todo list
-format does not need to be (backward-)compatible to that of
---preserve-merges. 
+> On Thu, Mar 29, 2018 at 05:18:40PM +0200, Johannes Schindelin wrote:
+> 
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> >  t/{t1300-repo-config.sh => t1300-config.sh} | 0
+> >  1 file changed, 0 insertions(+), 0 deletions(-)
+> >  rename t/{t1300-repo-config.sh => t1300-config.sh} (100%)
+> 
+> This has only been bugging me for oh, about 10 years.
 
-> Hopefully this clarifies your confusion,
+Yep.
 
-There was actually no confusion on my side, and I like your wording
-better.
+We should have done that right after moving the builtins' code to
+builtins/.
 
-Except that you've managed to clarify your intentions without actually
-addressing the primary concern:
+Which reminds me that we *still* do not have a lib/ where all the source
+code for libgit.a lives. And then maybe standalone/ for the source code of
+the non-builtin tools. And... this would make for a fine micro-project
+next year, I guess. Or in ten.
 
-Could we please agree to stop using backward compatibility as an
-objection in the discussion of the  --recreate-merges feature?
-
-Could we?
-
-I understand you are still resistant to change 'pick' syntax, but it's
-not because of backward-compatibility, right?
-
--- Sergey
+Ciao,
+Dscho
