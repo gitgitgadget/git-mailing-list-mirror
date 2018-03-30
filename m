@@ -2,84 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E40191FAE5
-	for <e@80x24.org>; Fri, 30 Mar 2018 20:53:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B9F751F404
+	for <e@80x24.org>; Fri, 30 Mar 2018 20:56:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752759AbeC3Uxt (ORCPT <rfc822;e@80x24.org>);
-        Fri, 30 Mar 2018 16:53:49 -0400
-Received: from cloud.peff.net ([104.130.231.41]:49430 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1752568AbeC3Uxs (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Mar 2018 16:53:48 -0400
-Received: (qmail 31446 invoked by uid 109); 30 Mar 2018 20:53:48 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 30 Mar 2018 20:53:48 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 487 invoked by uid 111); 30 Mar 2018 20:54:47 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 30 Mar 2018 16:54:47 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 30 Mar 2018 16:53:46 -0400
-Date:   Fri, 30 Mar 2018 16:53:46 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     avarab@gmail.com, e@80x24.org, git@vger.kernel.org,
-        gitster@pobox.com
-Subject: Re: [PATCH v7 07/13] pack-objects: refer to delta objects by index
- instead of pointer
-Message-ID: <20180330205346.GF14782@sigill.intra.peff.net>
-References: <20180318142526.9378-1-pclouds@gmail.com>
- <20180324063353.24722-1-pclouds@gmail.com>
- <20180324063353.24722-8-pclouds@gmail.com>
+        id S1752638AbeC3U4c (ORCPT <rfc822;e@80x24.org>);
+        Fri, 30 Mar 2018 16:56:32 -0400
+Received: from mail-wr0-f181.google.com ([209.85.128.181]:41562 "EHLO
+        mail-wr0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752568AbeC3U4b (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Mar 2018 16:56:31 -0400
+Received: by mail-wr0-f181.google.com with SMTP id f14so8861902wre.8
+        for <git@vger.kernel.org>; Fri, 30 Mar 2018 13:56:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=vZHD+I5NHdGdtltRaQfEcdb/tJeinyxouU+aZuK10oQ=;
+        b=segQHflgnO5qOYC+ukfd3v2p3KVNBgdHIDshqe+V4zPAWX4aHAdM84cYZMSL2UjJTa
+         GJED82DmSxbDkjxUWz617iJ+zDNlmntdmHw0lTRQXsDcHCRJ7MOtLhOs/OuM4fWZbVtG
+         eau+3+7eIBkOK5u6eJ4Pc2j80C9WS5PsO42JTko4hQnzFhWAc71aiHPXxXJ4LDOBcuq4
+         TkyxX528+jOm2TwkRzkLHmMevBz/R0LPHzq9aRZrBZXUbR3Ny6yTPyioP5WHx/XPd7xY
+         TOUtOrQCwe9jTLEaJdFEw27IwsXimXg5/CLJKai46HOtWPev0EfyNdvJa62k/iWvL/+q
+         nY1A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=vZHD+I5NHdGdtltRaQfEcdb/tJeinyxouU+aZuK10oQ=;
+        b=rT9Sjfc4jpv3Wd9gQw4bG8MJvsr3NKqARGKYCgSivEI5g34M7KN3r5q5iPh5HGRWsH
+         q9d1Z0tBTkV5im2QnlKfSvY5tLiVRJGbELqaiAxmzLE0P3u6WI/NTqBqbH+edOvZpO0+
+         tvD1+12CYPbG+rD6xFYc0ILP2t7hgAJ8Y4UxHABtvCRMrXYiKuGWdtW6U6+Y6l9AfWvI
+         fruLA00+ixEELavpPUQIo9zka0n8vgebd8XLjqxio1rd2uUnKoMFrx0AdW82ScOB9W0h
+         Wy786x0xbfaw1/MSwdDghPDoSydrNXUQug5HcilHIlEuojWPhuE5Nh8ECN0l3zEHzQOe
+         iRMA==
+X-Gm-Message-State: AElRT7GiMvqDCagBZRKYbgUUbdv0NT4FPak9o3ThMp3crY2c7GzzvWlK
+        tqH3L0G7cSg+6Bgh20gMsfY=
+X-Google-Smtp-Source: AIpwx48g+qDc+VKuVc1oYFAlCqVO78gDLwu4rq0ps6JrLSSlG/VL5XC5Fbt5ng800F4tUm9DEqbW8A==
+X-Received: by 10.223.201.3 with SMTP id m3mr294334wrh.137.1522443389779;
+        Fri, 30 Mar 2018 13:56:29 -0700 (PDT)
+Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
+        by smtp.gmail.com with ESMTPSA id c14sm6621944wmi.28.2018.03.30.13.56.28
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 30 Mar 2018 13:56:28 -0700 (PDT)
+Date:   Fri, 30 Mar 2018 21:59:56 +0100
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Mar 2018, #06; Fri, 30)
+Message-ID: <20180330205956.GA13643@hank>
+References: <xmqqvadd1epf.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20180324063353.24722-8-pclouds@gmail.com>
+In-Reply-To: <xmqqvadd1epf.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Mar 24, 2018 at 07:33:47AM +0100, Nguyễn Thái Ngọc Duy wrote:
+On 03/30, Junio C Hamano wrote:
 
-> These delta pointers always point to elements in the objects[] array
-> in packing_data struct. We can only hold maximum 4G of those objects
-> because the array size in nr_objects is uint32_t. We could use
-> uint32_t indexes to address these elements instead of pointers. On
-> 64-bit architecture (8 bytes per pointer) this would save 4 bytes per
-> pointer.
+> * tg/worktree-add-existing-branch (2018-03-27) 6 commits
+>  - t2025: rename now outdated branch name
+>  - worktree: teach "add" to check out existing branches
+>  - worktree: factor out dwim_branch function
+>  - worktree: remove force_new_branch from struct add_opts
+>  - worktree: be clearer when "add" dwim-ery kicks in
+>  - worktree: improve message when creating a new worktree
 > 
-> Convert these delta pointers to indexes. Since we need to handle NULL
-> pointers as well, the index is shifted by one [1].
+>  "git worktree add" learned to check out an existing branch.
 > 
-> [1] This means we can only index 2^32-2 objects even though nr_objects
->     could contain 2^32-1 objects. It should not be a problem in
->     practice because when we grow objects[], nr_alloc would probably
->     blow up long before nr_objects hits the wall.
+>  Is this ready for 'next'?
 
-Hmm, that may be something we eventually fix. I suspect all of this code
-does some pretty horrible things as you approach 2^32 objects, though.
-I've never tried to make such a pack, but it may be within the realm of
-possibility. The .idx file would be 80+GB, but the packfile might not be
-much bigger if specially crafted.
-
-I guess that's outside the realm of reasonable, though, so we can assume
-that nobody would _really_ want to do that anytime soon. And anything
-malicious would probably die long before this code triggers.
-
-> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-> ---
->  builtin/pack-objects.c | 116 ++++++++++++++++++++++-------------------
->  pack-objects.h         |  67 ++++++++++++++++++++++--
->  2 files changed, 124 insertions(+), 59 deletions(-)
-
-The patch itself looks OK. This is one of the nicer ones, because it
-really doesn't involve any extra storage management, just some accessor
-functions.
-
--Peff
+Not quite yet.  Eric spotted some UI deficiencies which I'm currently
+trying to address.  I hope to re-roll this in a few days with those
+deficiencies fixed.
