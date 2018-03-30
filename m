@@ -2,92 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8E87F1F404
-	for <e@80x24.org>; Fri, 30 Mar 2018 19:52:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DA1161F404
+	for <e@80x24.org>; Fri, 30 Mar 2018 19:54:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752571AbeC3TwO (ORCPT <rfc822;e@80x24.org>);
-        Fri, 30 Mar 2018 15:52:14 -0400
-Received: from mail-wm0-f54.google.com ([74.125.82.54]:37568 "EHLO
-        mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752314AbeC3TwN (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Mar 2018 15:52:13 -0400
-Received: by mail-wm0-f54.google.com with SMTP id r131so18150578wmb.2
-        for <git@vger.kernel.org>; Fri, 30 Mar 2018 12:52:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=ch50ocz/fyh8riYCFKGxPBzjX+cH2h5w2vRntqGRqfA=;
-        b=C+P0gFvG8CUSZbgwrAoXe5Uw33QSqTKztxJWOT3BRkrVIFBdVXlpHS0OHN3rjIz/dm
-         paGO3R31IBmdSeBRDRuwK0Bf8yNLpEztRQAqrMCtAARcX43cvxH8se6eP8AFUB0JpH3D
-         xQ0L7ntHdrUdWCCBYdKqx+okMhBel5NCDlihy+uafr0lkzVTPKNhPfXzoYGNHwGxHx0A
-         ZRKQtpNXI3Jjowh3blxaKLIeE3VwPPrXazihtYJ3CrRNyodoxPpvcEjs2w7Syg4fdUYx
-         3siKeCwKwLLYtySzHUVeVUByMILsjXA3GQ6yDvFxk+1iWmqr02BkYMWfmKRqmPqz/8Gl
-         vIpQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=ch50ocz/fyh8riYCFKGxPBzjX+cH2h5w2vRntqGRqfA=;
-        b=RUlYULbMJv3U6ZPf5mq45WdKBgnwCkfbZWTUAahlr3le6NyetguiN4xt2oxrBNlgyq
-         7qyYaj13IwXgM6zOXsARfoDJD3w/vas3VgaPxR/IBPT8khAVZdL/7eBY73J4obrBcdhO
-         LF7rvfhDUzJzux8B9WN+ncs8I6xgvoDbt/JQnQMNiqhOEgPRSh7E6YaRhhZA6+bUZpdm
-         g1T+4sgfS2KxMFzN2/zDkdTVA1cdIXIxNaHCRPmfByYrJMjAQBQLfffU94w5RxzzUiBz
-         y26jEBLC7fybfxHVCnC8Nok2q7wVkjROlg9YkM2XbCS/2f7kW1TEudWNlvFXbYEo5k5j
-         e14A==
-X-Gm-Message-State: ALQs6tAk5R71Z/mtNfOtJ4em6TTTp+i264Pk2y0oFNCZt1nxmKtzlMry
-        gtgko4xcqcPIwzFir3hhoIw=
-X-Google-Smtp-Source: AIpwx49o7+CQ79NWwx9WGfe5SrjqX9DEhQY2S+cuXOR+Zv6u5nIdw0n2hqf3XNBRF2tamvW0YoQXSw==
-X-Received: by 10.28.25.130 with SMTP id 124mr3230657wmz.92.1522439532043;
-        Fri, 30 Mar 2018 12:52:12 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id y42sm12399802wry.97.2018.03.30.12.52.11
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 30 Mar 2018 12:52:11 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] config: move flockfile() closer to unlocked functions
-References: <20180330192615.GB32338@sigill.intra.peff.net>
-Date:   Fri, 30 Mar 2018 12:52:11 -0700
-In-Reply-To: <20180330192615.GB32338@sigill.intra.peff.net> (Jeff King's
-        message of "Fri, 30 Mar 2018 15:26:15 -0400")
-Message-ID: <xmqqzi2p1gus.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1752536AbeC3Tyj (ORCPT <rfc822;e@80x24.org>);
+        Fri, 30 Mar 2018 15:54:39 -0400
+Received: from cloud.peff.net ([104.130.231.41]:49308 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1752318AbeC3Tyi (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Mar 2018 15:54:38 -0400
+Received: (qmail 28222 invoked by uid 109); 30 Mar 2018 19:54:38 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 30 Mar 2018 19:54:38 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 32576 invoked by uid 111); 30 Mar 2018 19:55:37 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 30 Mar 2018 15:55:37 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 30 Mar 2018 15:54:36 -0400
+Date:   Fri, 30 Mar 2018 15:54:36 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Duy Nguyen <pclouds@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH v2 2/5] trace.c: export trace_setup_key
+Message-ID: <20180330195436.GA14217@sigill.intra.peff.net>
+References: <20180330183425.GA30575@sigill.intra.peff.net>
+ <20180330183459.GB31135@sigill.intra.peff.net>
+ <xmqq8ta92vot.fsf@gitster-ct.c.googlers.com>
+ <20180330194749.GA13537@sigill.intra.peff.net>
+ <xmqq4lkx2vhh.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqq4lkx2vhh.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Fri, Mar 30, 2018 at 12:50:50PM -0700, Junio C Hamano wrote:
 
-> On Fri, Mar 30, 2018 at 09:04:13PM +0200, Johannes Schindelin wrote:
->
->> > Probably the flockfile should go into do_config_from_file(), where we
->> > specify to use the unlocked variants.
->> 
->> Ah, that makes sense now! I am glad I could also help ;-)
->
-> :)
->
->> > Yeah, I'll wait to see how your refactor turns out.
->> 
->> I don't think I'll touch too much in that part of the code. My changes
->> should not cause merge conflicts with a patch moving the
->> flockfile()/funlockfile() calls to do_config_from_file().
->
-> OK, then let's do this while we're thinking about it:
+> Jeff King <peff@peff.net> writes:
+> 
+> > On Fri, Mar 30, 2018 at 12:46:26PM -0700, Junio C Hamano wrote:
+> >
+> >> Jeff King <peff@peff.net> writes:
+> >> 
+> >> > From: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+> >> >
+> >> > This is so that we can print traces based on this key outside trace.c.
+> >> 
+> >> "this key" meaning...?  GIT_TRACE_SETUP?
+> >
+> > I think "based on trace_setup_key".
+> >
+> > -Peff
+> 
+> Yeah, I read, but did not pay enough attention to, the subject X-<.
 
-Yup, what Dscho found was quite amusing ;-) and this obviously makes
-the code clearer to follow.
+To be fair, one of our guidelines is that the commit message should not
+overly rely on the subject line. Though I am certainly guilty of
+starting many a message with "This".
 
-Will queue, thanks.
+Perhaps:
 
+  The setup-tracing code is static-local to trace.c. In preparation for
+  new GIT_TRACE_SETUP code outside of trace.c, let's make the trace_key
+  globally available.
+
+would be a better commit message.
+
+-Peff
