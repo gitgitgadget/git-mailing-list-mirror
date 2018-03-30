@@ -2,153 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 718451F404
-	for <e@80x24.org>; Fri, 30 Mar 2018 13:25:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AB4601F404
+	for <e@80x24.org>; Fri, 30 Mar 2018 13:33:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751262AbeC3NZl (ORCPT <rfc822;e@80x24.org>);
-        Fri, 30 Mar 2018 09:25:41 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:50377 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751223AbeC3NZj (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Mar 2018 09:25:39 -0400
-Received: by mail-wm0-f65.google.com with SMTP id l201so15626841wmg.0
-        for <git@vger.kernel.org>; Fri, 30 Mar 2018 06:25:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=DSmlnEutKnF8iq8WUzLKsjp/n8OS9bH5J9VGV0wuozc=;
-        b=A1fh0g7XokfuetI0pZIFlVE4cVx0I+btKy/etQBbWZ4uwrhcaVzQ8N5eTVZlQOa6iF
-         TxPmVWipAOpO5QExyffb5we6fFIAEbesYnUsmFXzx7NimdrjEqStt94gESheh182JN2w
-         1DpvwI+JI9l5N4ovdHvcoTm6Er1IV/SG8x4rPQ9nX1Q+Of1UKx9aSDjvDm154eIEfeKg
-         j7ABN2OU9XqoNFvMM3aD6NhP4n/OWEWaUHeWLgLctsvtVqqMv5nb+Pi4H+LdiF7v//0k
-         f07Kvwq1NZRSjY5rQ1DHQg99stsJgorSaVFnl6EeMXg4bfCMpTrHY/atVozcmz9CM/WY
-         AnkA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version:content-transfer-encoding;
-        bh=DSmlnEutKnF8iq8WUzLKsjp/n8OS9bH5J9VGV0wuozc=;
-        b=ORi3kGsniTKmxJLdQvCapGQBKJVwlHkCuHCXfPn5yO53A8DjT4xK2f9uj/qOWNmdCl
-         ivfDbEwRclS162kRAJlI52UmEUtMXF7cM1iPWAsvASYO4Ri+u9fmjawqQXlBgDtCTsGw
-         Kei188M07z2RbpUZwqT2k0fgKE5QJoP43QCxIw9/tXCnD2QyqnOL1LFZXvdbe1yA6NJP
-         WVgpx3lVoUXB4qlTPKUGlNXXBwB0+Admd9G1A7OCi7vYY86udSdGrwe3hiuKw36PatMg
-         6BH9mN1leCE4pF4JFJ+34U1VSuhqy2Y7itG0k9T9+8+M5jGvE/NIF5fnx2MmlidS7CGW
-         2KDg==
-X-Gm-Message-State: AElRT7FQF9K4rlMG5oP2PhOaAxZ80l0tFVs3zCNahxAFWWcXcnISZEzx
-        e+YgtMFu15sptvnuxGUfewY=
-X-Google-Smtp-Source: AIpwx4/n7znBfe8PNdRF5+lWGY0nZBm2UOOhGuZl1leQb/bL4Re/OgLgVrwEQ8h1e8mdaE6yV2IsIw==
-X-Received: by 10.28.10.83 with SMTP id 80mr2508452wmk.70.1522416338578;
-        Fri, 30 Mar 2018 06:25:38 -0700 (PDT)
-Received: from Laptop-Acer-Aspire-F15 (agd201.neoplus.adsl.tpnet.pl. [83.25.159.201])
-        by smtp.gmail.com with ESMTPSA id k14sm11469449wrc.62.2018.03.30.06.25.36
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 30 Mar 2018 06:25:37 -0700 (PDT)
-From:   Jakub Narebski <jnareb@gmail.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     git@vger.kernel.org, git@jeffhostetler.com, peff@peff.net,
-        jonathantanmy@google.com, szeder.dev@gmail.com, sbeller@google.com,
-        gitster@pobox.com, Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v4 01/13] commit-graph: add format document
-References: <4d1ee202-7d79-d73c-6e05-d0fc85db943c@gmail.com>
-        <1519066406-81663-1-git-send-email-dstolee@microsoft.com>
-        <1519066406-81663-2-git-send-email-dstolee@microsoft.com>
-Date:   Fri, 30 Mar 2018 15:25:34 +0200
-In-Reply-To: <1519066406-81663-2-git-send-email-dstolee@microsoft.com>
-        (Derrick Stolee's message of "Mon, 19 Feb 2018 13:53:14 -0500")
-Message-ID: <86370hk84x.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
+        id S1751368AbeC3Ndz (ORCPT <rfc822;e@80x24.org>);
+        Fri, 30 Mar 2018 09:33:55 -0400
+Received: from mout.gmx.net ([212.227.15.15]:46747 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751258AbeC3Ndy (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Mar 2018 09:33:54 -0400
+Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MOfx8-1evpsr2Ous-0068ph; Fri, 30
+ Mar 2018 15:33:47 +0200
+Date:   Fri, 30 Mar 2018 15:33:46 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@dscho.gitforwindows.org
+To:     Sergey Organov <sorganov@gmail.com>
+cc:     Jacob Keller <jacob.keller@gmail.com>,
+        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Git Mailing List <git@vger.kernel.org>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC] Rebasing merges: a jorney to the ultimate
+ solution(RoadClear)
+In-Reply-To: <87bmf5zqn3.fsf@javad.com>
+Message-ID: <nycvar.QRO.7.76.6.1803301523060.5026@qfpub.tvgsbejvaqbjf.bet>
+References: <87y3jtqdyg.fsf@javad.com> <nycvar.QRO.7.76.6.1803070810550.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <c5a5c2cc-6a11-440f-5b9b-964ae1ca07dd@talktalk.net> <f3872fb9-01bc-b2f1-aee9-cfc0e4db77d6@gmail.com>
+ <nycvar.QRO.7.76.6.1803111301340.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <b329bb98-f9d6-3d51-2513-465aad2fa37a@gmail.com> <nycvar.QRO.7.76.6.1803121142550.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <243ca23d-77a9-4ae1-a120-de6c6b195cdc@gmail.com>
+ <nycvar.QRO.7.76.6.1803261455130.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <87woxyf4lk.fsf@javad.com> <nycvar.QRO.7.76.6.1803271536020.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <874ll0d9nt.fsf@javad.com> <CA+P7+xoDQ2mzhxeZPFhaY+TaSoKkQm=5AtoduHH06-VggOJ2jg@mail.gmail.com>
+ <87r2o48mm2.fsf@javad.com> <CA+P7+xo19mHrWz9Fy-ifgCcVJM2xwzcLj7F2NvFe2LwGbaJiDQ@mail.gmail.com> <87zi2r5swc.fsf@javad.com> <nycvar.QRO.7.76.6.1803301235560.5026@qfpub.tvgsbejvaqbjf.bet> <87bmf5zqn3.fsf@javad.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:dO8L69MMD3mZpCri9TT3YK8mx8+Q3BLhmLdCvoHD9euZ+m8zZGJ
+ wHy8d2kpxh2hERtBWmzaPMUt/a8zKC9rrFN7fXdBlLFWn06QriqEbP87WSPIGSUWv1kVcAM
+ 2mmmTlQ2Jc6W+tNqsOOBh0dN1k+VLhYFEigzxVs2VgoewQONVAsdiyOE8XSS5wMu+Ur5gu9
+ /ouZ2kxrFWWayPtuN0/zQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:0ACvstk7n6U=:nqtzAIQw4jzoi9a9yfDRG5
+ xuz1zLxzvCzLdtmQcXzPVAuPNO7HwEpQLW9xZ89JIx00VXJJTRko2jBvmqCJj9iihiJPD/q8w
+ YFJJDlW6lrPqa0pfJNuJMei8wlc3KoNQpz/M4pyyMn8EW0A5Uv2SphF92wZQAx+OKgnbZDTQ0
+ bgm2O7manddCLJG2KOHQ7QA76qQdrVFDA7OV5BBIGHvRsDgPnkVTXxfW8ars/VyZ0n9+LfRgY
+ nkXmd58jGxDTuUwfxMMzuYxJfsy57O/Nw2uO+5YUY6NBOzhuWY55cac/E5MKB4j8KBalhx9iz
+ rfDn/+tkIBBMwEdOO2hGC6fZBZ0juqev4agBjCFz85gdAT2AGaf6ViLIHzI1e4NaVoXLAXMzS
+ zgWLDBykNgrKq4DXqi8uKjz+sQqs8Mv81XAMel8IAxxNlIBfbwh/L2FRK78cT4j7cgwtGWa8E
+ zz6Z4Mm6D7CL8RJnPbCIZKj1oUO1jMOUC1xKWIWrH80ISEDfuPa0fB6wTEVqmHNRP6QgXug+l
+ yWuZCDdH+KPJ3XmH+F9VziKfIFTUj/81ntDE8R5SCzviNAEr2jIvCJ3q1E2T3nUSGTX6Haqk9
+ 840Dje9laaQ9AYuiL3Wv/6hMnxGHrq8fKED2GmZTPdCuxhMx5gQUEdc3WGQgYnZTLBs3I+hWB
+ elmZTdDI5O2o7UF84PLzSJMWk2v15sI2twrTvP4eI6qtfo5BAfqPS7Ke8xQqsEBfkAMkuk4AA
+ bWZY1vaDFa+au5Q0G0+mCJtdyjtvIXsRnHnVz27yBTfvVEOMmRMuLMjIjVTUzfQkcAD5bXzmC
+ 1hnWbUDEa4LXF4RFS2Ztpyrh5PP2eHtGA7Dq+rEOeUNPc69UxkTnZSFlYPjbS6EXp82Is8+
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <stolee@gmail.com> writes:
+Hi Sergey,
 
-> +=3D=3D graph-*.graph files have the following format:
+On Fri, 30 Mar 2018, Sergey Organov wrote:
 
-What is this '*' here?
+> Could we please agree to stop using backward compatibility as an
+> objection in the discussion of the  --recreate-merges feature?
 
-[...]
-> +  The remaining data in the body is described one chunk at a time, and
-> +  these chunks may be given in any order. Chunks are required unless
-> +  otherwise specified.
+No.
 
-Does Git need to understand all chunks, or could there be optional
-chunks that can be safely ignored (like in PNG format)?  Though this may
-be overkill, and could be left for later revision of the format if
-deemed necessary.
+The expectation of users as to what a `pick` is has not changed just
+because you wish it would.
 
-> +
-> +CHUNK DATA:
-> +
-> +  OID Fanout (ID: {'O', 'I', 'D', 'F'}) (256 * 4 bytes)
-> +      The ith entry, F[i], stores the number of OIDs with first
-> +      byte at most i. Thus F[255] stores the total
-> +      number of commits (N).
+That is a matter of backwards-compatibility.
 
-All right, it is small enough that can be required even for a very small
-number of commits.
+You see, if you are driving a car for a hundred years already, and then
+switch to a different car, and it has a lever in the same place as your
+previous car's windshield wiper, but in the new car it has a button that
+activates the emergency driver seat ejection OMG *it has a seat ejection
+like in the James Bond movies! Where can I get that car?* Sorry for
+disgressing.
 
-> +
-> +  OID Lookup (ID: {'O', 'I', 'D', 'L'}) (N * H bytes)
-> +      The OIDs for all commits in the graph, sorted in ascending order.
-> +
-> +  Commit Data (ID: {'C', 'G', 'E', 'T' }) (N * (H + 16) bytes)
+I am really concerned about that willingness to put an innocuous button,
+so to speak, onto something users got really used to, over the course of a
+decade or so, when that button should really be made red and blinking and
+OMG where can I get that car?
 
-Do commits need to be put here in the ascending order of OIDs?
+So to reiterate, I am really interested in a practical solution that won't
+cause nasty surprises. Meaning: `pick` != merge. That was a mistake in
+preserve-merges, as I have only mentioned like a hundred times, and we
+won't repeat it.
 
-If so, this would mean that it is not possible to add information about
-new commits by only appending data and maybe overwriting some fields, I
-think.  You would need to do full rewrite to insert new commit in
-appropriate place.
+Now back to that important question: where can I get such a James Bond
+car? Ideally also with Turbo Boost. Oh wait, that was somebody else's car.
 
-> +    * The first H bytes are for the OID of the root tree.
-> +    * The next 8 bytes are for the int-ids of the first two parents
-> +      of the ith commit. Stores value 0xffffffff if no parent in that
-> +      position. If there are more than two parents, the second value
-> +      has its most-significant bit on and the other bits store an array
-> +      position into the Large Edge List chunk.
-> +    * The next 8 bytes store the generation number of the commit and
-> +      the commit time in seconds since EPOCH. The generation number
-> +      uses the higher 30 bits of the first 4 bytes, while the commit
-> +      time uses the 32 bits of the second 4 bytes, along with the lowest
-> +      2 bits of the lowest byte, storing the 33rd and 34th bit of the
-> +      commit time.
-> +
-> +  Large Edge List (ID: {'E', 'D', 'G', 'E'}) [Optional]
-> +      This list of 4-byte values store the second through nth parents for
-> +      all octopus merges. The second parent value in the commit data sto=
-res
-> +      an array position within this list along with the most-significant=
- bit
-> +      on. Starting at that array position, iterate through this list of =
-int-ids
-> +      for the parents until reaching a value with the most-significant b=
-it on.
-> +      The other bits correspond to the int-id of the last parent.
-
-All right, that is one chunk that cannot use fixed-length records; this
-shouldn't matter much, as we iterate only up to the number of parents
-less two.
-
-A question: what happens to the last list of parents?  Is there a
-guardian value of 0xffffffff at last place?
-
-> +
-> +TRAILER:
-> +
-> +	H-byte HASH-checksum of all of the above.
-> +
-
-Best,
---
-Jakub Nar=C4=99bski
+Ciao,
+Johannes
