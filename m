@@ -2,94 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 648491F404
-	for <e@80x24.org>; Fri, 30 Mar 2018 17:18:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D60211F404
+	for <e@80x24.org>; Fri, 30 Mar 2018 17:21:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751327AbeC3RSP (ORCPT <rfc822;e@80x24.org>);
-        Fri, 30 Mar 2018 13:18:15 -0400
-Received: from mail-wr0-f171.google.com ([209.85.128.171]:34651 "EHLO
-        mail-wr0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751215AbeC3RSP (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Mar 2018 13:18:15 -0400
-Received: by mail-wr0-f171.google.com with SMTP id o8so8552910wra.1
-        for <git@vger.kernel.org>; Fri, 30 Mar 2018 10:18:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=YYMCJQuX4IuzxrmRK79Q6wU0Vx8sofwCXnwjtrOPcws=;
-        b=HiTRB+AE6yJ0POIeVvYuFIU7jeHnpK+8idxD5Cctfzd5I/ybkGVIb2OsA17/eyxCKw
-         xWZFBwxvziCbQPbXWS+muCBzv2Unm7FYS86xUUV+zfng5RssrnejsUQLkrrJmqKSXVSD
-         EIVFTHgUG4foMMJ5HdyEZrX0j9FhV8xPUjNBsf+M6fh3nnpL4OhTDDu8682COpSyLdY7
-         I91wKeYAF6BE96FoXxHsO0IgxJ0T5Gtrwg+ZbEclryySPc+x8wwrR8GXUaiuP//z2l8k
-         eazFkmVwGFpAWCXl8eIQf/hZOQzUd9eRyNwzR3NhdEdDksFs7kldGkBB/u2npMSrWUju
-         QDOw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=YYMCJQuX4IuzxrmRK79Q6wU0Vx8sofwCXnwjtrOPcws=;
-        b=bfmnuP2PHllHI976mxBYvnUYABqN015XUt0bVplF3VAJz6tJWhfMliFj08Q916J+PG
-         xbrDmwokf9VWqwzBoZSzagRy9rRphu+bmd0LtRyOR/gMgZNllyDNLlbYwql1k+920tNp
-         sBx5TNWLZF9mJaJVWUnm2l6ETkM+M7JNdphUNF0TAkhek7V5RN1Hs/Z8VWu0ifCtmx5J
-         6x9xZ9nXLQ2waOb5lVeSS2kzYFZ1vK+usGtraFVVYFm8iVyMlCaeU8Dc9G4VrPhrvkt0
-         iwXgNqBMmDSKCXNmbfWfpaeOskHpxL5wi57lLT0ODRgeH39AgjWUn+x82pDqq/BHsOzM
-         OkSg==
-X-Gm-Message-State: AElRT7F8eRAYwRV1DfTnmEE+r5qGn2+toodRcytHEWaqJfgztfqSkMfw
-        O2sjhCu03wF77nSUYwo3pU0=
-X-Google-Smtp-Source: AIpwx4/YHvYMUuOWX8ioRxxDya5gsfkbvekL59RbErQKcPTyKVWWjQRw5B0lWGPtsYoyMLwe7T3ocg==
-X-Received: by 10.223.141.162 with SMTP id o31mr10449219wrb.167.1522430293530;
-        Fri, 30 Mar 2018 10:18:13 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id e196sm5438809wmg.26.2018.03.30.10.18.12
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 30 Mar 2018 10:18:12 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Luciano Joublanc <ljoublanc@dinogroup.eu>, git@vger.kernel.org
-Subject: Re: Bad refspec messes up bundle.
-References: <CAO+-ZX_-COVpzqoAZLRGu4mvLMkLYiR3y7rkCtwmnvJ8kA7txQ@mail.gmail.com>
-        <xmqq370wvugk.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1803301102430.5026@qfpub.tvgsbejvaqbjf.bet>
-Date:   Fri, 30 Mar 2018 10:18:12 -0700
-In-Reply-To: <nycvar.QRO.7.76.6.1803301102430.5026@qfpub.tvgsbejvaqbjf.bet>
-        (Johannes Schindelin's message of "Fri, 30 Mar 2018 12:20:21 +0200
-        (DST)")
-Message-ID: <xmqq370h4h4b.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1752365AbeC3RVD (ORCPT <rfc822;e@80x24.org>);
+        Fri, 30 Mar 2018 13:21:03 -0400
+Received: from cloud.peff.net ([104.130.231.41]:48894 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1751938AbeC3RVC (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Mar 2018 13:21:02 -0400
+Received: (qmail 20800 invoked by uid 109); 30 Mar 2018 17:21:02 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 30 Mar 2018 17:21:02 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 29938 invoked by uid 111); 30 Mar 2018 17:22:01 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 30 Mar 2018 13:22:01 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 30 Mar 2018 13:21:00 -0400
+Date:   Fri, 30 Mar 2018 13:21:00 -0400
+From:   Jeff King <peff@peff.net>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     git@vger.kernel.org, Rafael Ascensao <rafa.almas@gmail.com>
+Subject: Re: [PATCH 0/8] Re: git complains packed-refs is not a directory
+ when used with GIT_DIR and GIT_WORK_TREE envvars.
+Message-ID: <20180330172100.GA18648@sigill.intra.peff.net>
+References: <20180328094733.GA1523@sigill.intra.peff.net>
+ <20180328175537.17450-1-pclouds@gmail.com>
+ <20180328181932.GB16565@sigill.intra.peff.net>
+ <20180329145726.GA10253@duynguyen.home>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20180329145726.GA10253@duynguyen.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Thu, Mar 29, 2018 at 04:57:26PM +0200, Duy Nguyen wrote:
 
-> Hi Luciano,
->
->> > Is this a bug? Should bundle allow providing multiple refspecs when
-> ...
-> I agree that it is a bug if a bundle file records a ref multiple times.
-> Luciano, here are some pointers so you can fix it:
->
-> - probably the best way to start would be to add a new test case to
->   t/t5607-clone-bundle.sh. The script *should* be relatively easy to
->   understand and imitate. The new test case would probably look somewhat
->   like this:
->
-> 	test_expect_failure 'bundles must not contain multiple refs' '
+> On Wed, Mar 28, 2018 at 02:19:32PM -0400, Jeff King wrote:
+> > 
+> > > I will probably rework on top of your chdir-notify instead (and let
+> > > yours to be merged earlier)
+> > 
+> > Thanks. I like some of the related changes you made, like including this
+> > in the tracing output. That should be easy to do on top of mine, I
+> > think.
+> 
+> Yeah. But is it possible to sneak something like this in your series
+> (I assume you will reroll anyway)? I could do it separately, but it
+> looks nicer if it's split out and merged in individual patches that
+> add new chdir-notify call site.
 
-s/multiple/duplicate/.  It is not unusual for a bundle to record
-more than one ref; it is (1) useless and harmful to unsuspecting
-clients to record the same ref twice with the same value and (2)
-nonesnse to record the same ref twice with different value.
+Sure.
 
-Other than that, the outline seems to go in the right general
-direction.
+> -void chdir_notify_register(chdir_notify_callback cb, void *data)
+> +void chdir_notify_register(const char *name,
+> +			   chdir_notify_callback cb,
+> +			   void *data)
+>  {
+>  	struct chdir_notify_entry *e = xmalloc(sizeof(*e));
+>  	e->cb = cb;
+>  	e->data = data;
+> +	e->name = name;
+>  	list_add_tail(&e->list, &chdir_notify_entries);
+>  }
 
+I'm tempted to make a copy of the name here (or at least document that
+it must remain valid forever).
+
+-Peff
