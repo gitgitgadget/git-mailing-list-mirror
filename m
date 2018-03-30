@@ -2,101 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 478CE1F404
-	for <e@80x24.org>; Fri, 30 Mar 2018 19:06:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E5FE91F404
+	for <e@80x24.org>; Fri, 30 Mar 2018 19:11:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752131AbeC3TGa (ORCPT <rfc822;e@80x24.org>);
-        Fri, 30 Mar 2018 15:06:30 -0400
-Received: from mail-yw0-f174.google.com ([209.85.161.174]:44760 "EHLO
-        mail-yw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751275AbeC3TG3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Mar 2018 15:06:29 -0400
-Received: by mail-yw0-f174.google.com with SMTP id z21so3212032ywg.11
-        for <git@vger.kernel.org>; Fri, 30 Mar 2018 12:06:29 -0700 (PDT)
+        id S1752564AbeC3TLL (ORCPT <rfc822;e@80x24.org>);
+        Fri, 30 Mar 2018 15:11:11 -0400
+Received: from mail-ot0-f169.google.com ([74.125.82.169]:41777 "EHLO
+        mail-ot0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752318AbeC3TLK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Mar 2018 15:11:10 -0400
+Received: by mail-ot0-f169.google.com with SMTP id i28-v6so10346685otf.8
+        for <git@vger.kernel.org>; Fri, 30 Mar 2018 12:11:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
+        d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=QcJzbpXRnHVHzY4yURin5XbBRnGgd0YY7jI26DgnOOs=;
-        b=CryZWxi8nS9js90C0OXpNwlvaj7YT6ehvqZ+8cXeDCmjNbDKEP5mJnUtM3jezAT9l0
-         KsXdSh/J3kZK3CCxJTtGrXF8Nbu4eDzfRF9uYfEw+5OuLs254ebcoX08WxP9enON69po
-         yZFpaEZiBxja5ijfJpTY4tpYHPJwzQtqzjXrT+iBKnBqZ1dca9NqPqcSq8/dsISf5FGi
-         yANIAPpuGBFIAktFsL08XF/IZkvqSa4LH4nhA5DfkUJzShDeKsXRjj9UJjTmOgMPpfFT
-         kP0QJjml+hI0KGZfQS3gaaFR5rojW7bQX8iaG8QbmV+CwBGusbblNJcmb1uRSlsTIpHy
-         +GVQ==
+         :cc;
+        bh=XZCMiCwyyofC6S6+q0FlCiDyseEUSVI/G2hug6Fsmjk=;
+        b=esyNatTRqWr8CIGgCmSRbvYmn3OJn2Bv4BcpeVr481GQOLHiQn3K0xt8uP+Isd9unQ
+         zLyGBHwifnDj4sNvxONSOdvhjZvj4SOiaUnohxEvZ+YXLUfpgEfaDQv/a9rpk9B64JcF
+         2CY8z5XynRD+wyq154w7oELOxmxGULr4uDYjyZhwx4ZRA6FpOjkoJ9AAiqQeUSJqgtWM
+         FsAYMOIIKyuLIthGom3m0rR0IGUDYms2PzzEA1Ei0ToVH2VNLs8jDSWVyQ7SnQIUDBGR
+         ZeOWsW/m73EorB2FXBGjMnggBm3pznx8So9BZHEuL8MqT5ZhurGB1qxpXbK1G0umd0ek
+         DyTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=QcJzbpXRnHVHzY4yURin5XbBRnGgd0YY7jI26DgnOOs=;
-        b=JRrO9jOwhejIiV2+swrmIcK3HcEXhLYh85a2q+7qr8rklgIJkb44CRo2qybDatvXGi
-         hG19fjLqDcjb7t7aGmfxdf0hFzGwkXsycP3b9h5dWQNyfeSu0jn+Mu05p4rBTtjhuLp6
-         F9AwAdrsCC2ZMj5wK1BHZrcGadTsihb1Tauqca01my1MydFzQ/A7o2QNloIUTeZdz/+V
-         51IS2gBqSiPdayWrp8udWcOMB+0YbAxkbvD81Qywr1BtYP15XJLiS6WG9RNrZcGEQzbo
-         j/J3NXPoqiBYHHgltvPkYdHI0nUAUT0bhkwLmOFeWW22ih9zl7tj393wh8xyZMxYGK6n
-         MecA==
-X-Gm-Message-State: ALQs6tChzV2M7QPfU1juEHZ3BXDFL167l39bbmsp/JLUiZkSdNSByS3e
-        ZMHx9DEN/n0lMw62VOHjGdehaAvvWbv7C2pTr4Vuzw==
-X-Google-Smtp-Source: AIpwx48dW+pve956aFQEyHbD68FVDRyDPkv25lw/CNfqy+zsK+isQpkRFy2ANVVgmAMdHAjlii0lNfP+aQcsZ/Tv8DE=
-X-Received: by 10.129.86.5 with SMTP id k5mr107212ywb.345.1522436788375; Fri,
- 30 Mar 2018 12:06:28 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=XZCMiCwyyofC6S6+q0FlCiDyseEUSVI/G2hug6Fsmjk=;
+        b=h4T6MiQAxNQ6drWOfixrLz/inD3vNGGk708P20D6lIVK0DUpzjeS11qR82uKnZ2D6S
+         g9OkNyXqhNR5I14C3/mNbNPJ1abJG0IMvVplPCvdC4E139m1kwh1N7xX9aBLOSwuKK1r
+         ceyKe+a2+qsRe3pflIacuCYRLBxnw4RwSXK7L8nRcwJWgscNXL5C8vHZnaj78r9LdDVz
+         mHYyFKktZ1VCRXczSPkyoiFpQtLfRHKTMLt647/sOJcSOCCc33i3Zcxjl8FZPTHKYiIM
+         7QQxvEIwa82pTayCpVIas9auL+tfg0i9bESsSCippbMS2mYt6KbuQtxNjYpECTxRvSvr
+         URjw==
+X-Gm-Message-State: ALQs6tDP4SgFOAJc+bql7IRmzYx7USXHrbHEtaDdQz5+IfOzzUl2d8S7
+        JtXRGCCxRAAKzs9fowHc6oumgXVEISoRoXdFKow=
+X-Google-Smtp-Source: AIpwx4/Maed/cDLeca/iiDS+CQMEFn8xXPBunE1j9vNCFe2W4rtQe0YeeuxdoCkM8XOsq4juYwvOhMPC45aei+uvAMU=
+X-Received: by 2002:a9d:16f3:: with SMTP id s48-v6mr148259ots.304.1522437070241;
+ Fri, 30 Mar 2018 12:11:10 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:a25:cf81:0:0:0:0:0 with HTTP; Fri, 30 Mar 2018 12:06:27
- -0700 (PDT)
-In-Reply-To: <20180330190343.GB171603@google.com>
-References: <20180314183213.223440-1-bmwill@google.com> <20180330092907.611-1-avarab@gmail.com>
- <20180330190343.GB171603@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 30 Mar 2018 12:06:27 -0700
-Message-ID: <CAGZ79kaS834w1OjGpr9CzLNKcZ50p3jpaMaRxUKWHkvcF6-LoA@mail.gmail.com>
-Subject: Re: [PATCH] {fetch,upload}-pack: clearly mark unreachable v2 code
-To:     Brandon Williams <bmwill@google.com>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>
+Received: by 10.74.198.152 with HTTP; Fri, 30 Mar 2018 12:10:39 -0700 (PDT)
+In-Reply-To: <xmqqo9j52z4m.fsf@gitster-ct.c.googlers.com>
+References: <20180330070744.22466-1-pclouds@gmail.com> <xmqq7ept4hhj.fsf@gitster-ct.c.googlers.com>
+ <CACsJy8DS2pRaDhXgKqFQaqjFft_EW5G=8t9PhNcAgMsSDsS0jA@mail.gmail.com> <xmqqo9j52z4m.fsf@gitster-ct.c.googlers.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Fri, 30 Mar 2018 21:10:39 +0200
+Message-ID: <CACsJy8BL6JbXj9in3CsRQcxG5Ru8GCBquaspEMvVUN6kq+FNzg@mail.gmail.com>
+Subject: Re: [PATCH] setup.c: reset candidate->work_tree after freeing it
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 30, 2018 at 12:03 PM, Brandon Williams <bmwill@google.com> wrot=
-e:
-> On 03/30, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->> Change the switch statement driving upload_pack_v2() and
->> do_fetch_pack_v2() to clearly indicate that the FETCH_DONE case is
->> being handled implicitly by other code, instead of giving the reader
->> the impression that the "continue" statement is needed.
->>
->> This issue was flagged as DEADCODE by Coverity[1]. Simply removing the
->> "case FETCH_DONE" would make -Wswitch warn. Instead implement the same
->> solution discussed for my "[PATCH v2 18/29] grep: catch a missing enum
->> in switch statement" patch[2] (which never made it into git.git).
->>
->> 1. https://public-inbox.org/git/CAGZ79kbAOcwaRzjuMtZ_HVsYvUr_7UAPbOcnrmP=
-gsdE19q=3DPrQ@mail.gmail.com/
->> 2. https://public-inbox.org/git/20170513231509.7834-19-avarab@gmail.com/
+On Fri, Mar 30, 2018 at 8:32 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Duy Nguyen <pclouds@gmail.com> writes:
 >
-> I understand why you want this change, but I dislike it because it
-> removes the ability to have the compiler tell you that your switch
-> statements are exhaustive.  Of course it should be noticed rather
-> quickly by the addition of those BUG statements :)
+>> On Fri, Mar 30, 2018 at 7:10 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>>> Which fields in candidate are safe to peek by the caller?  How can a
+>>> caller tell?
+>>
+>> To me, all fields should be valid after
+>> check_repository_format_gently().
+>
+> If so, free() is wrong in the first place, and FREE_AND_NULL() is
+> making it even worse, no?  We learned there is work_tree set to
+> somewhere, the original code by Peff before abade65b ("setup: expose
+> enumerated repo info", 2017-11-12) freed it because the code no
+> longer needed that piece of information.  If we are passing all we
+> learned back to the caller, we should not free the field in the
+> function at all.  But it seems (below) the codepath is messier than
+> that.
 
-I think coverity doesn't flag empty sections, i.e.
+Actually no, NULL is the right value. I was trying to say that this
+mysterious code was about _deliberately_ ignore core.worktree. By
+keeping repo_fmt->worktree as NULL we tell the caller "core.worktree
+is not set". The current code also does that but in a different way:
+it sets git_work_tree_cfg based on candidate->worktree, but only for
+the "!has_common" block.
 
-    case FETCH_DONE:
-    default:
-        BUG(...)
+>> We still need to free and set NULL here though in addition to a
+>> cleanup interface. The reason is, when checking repo config from a
+>> worktree, we deliberately ignore core.worktree (which belongs to the
+>> main repo only). The implicit line near this
+>> free(candidate->work_tree) is "leave git_work_tree_cfg alone, we don't
+>> recognize core.worktree". Once we move setting git_work_tree_cfg out
+>> of this function, this becomes clear.
+>
+> So in other words, there is a code that looks at the field and it
+> _wants_ to see NULL there---otherwise that brittle code misbehaves
+> and FREE_AND_NULL() is a bad-aid to work it around?
+>
+> Then proposed log message "leaving it dangling is unsanitary" is
+> *not* what is going on here, and the real reason why the code should
+> be like so deserve to be described both in the log message and in a
+> large in-code comment, no?
 
-would do for coverity. Not sure if we want to add a /*fall thru */
-comment, that would aid other compilers to not warn about it.
-
-This would cover both the compiler as well as coverity.
-
-Stefan
+Let's drop this for now. I'm a bit further along in refactoring this
+code that I thought I could. It'll be clearer when the caller is also
+updated to show what's wrong.
+-- 
+Duy
