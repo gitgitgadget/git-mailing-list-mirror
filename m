@@ -7,59 +7,59 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0EA681F404
-	for <e@80x24.org>; Fri, 30 Mar 2018 18:06:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 38B841F404
+	for <e@80x24.org>; Fri, 30 Mar 2018 18:09:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752106AbeC3SG0 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 30 Mar 2018 14:06:26 -0400
-Received: from mail-wr0-f169.google.com ([209.85.128.169]:33741 "EHLO
-        mail-wr0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751203AbeC3SGZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Mar 2018 14:06:25 -0400
-Received: by mail-wr0-f169.google.com with SMTP id z73so8623596wrb.0
-        for <git@vger.kernel.org>; Fri, 30 Mar 2018 11:06:24 -0700 (PDT)
+        id S1752500AbeC3SJr (ORCPT <rfc822;e@80x24.org>);
+        Fri, 30 Mar 2018 14:09:47 -0400
+Received: from mail-wm0-f52.google.com ([74.125.82.52]:38341 "EHLO
+        mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752474AbeC3SJq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Mar 2018 14:09:46 -0400
+Received: by mail-wm0-f52.google.com with SMTP id l16so17952178wmh.3
+        for <git@vger.kernel.org>; Fri, 30 Mar 2018 11:09:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=hfObI7ipVboRiIZ2jCHmmqCZE53mQa+t3s5A77dTaXo=;
-        b=CxEQg+e8yaCIeqATO8+YUAfZtD1c1pLlWUIUfrH3zwInaUZlzySTXQFwmpcvZtZgbl
-         D4qtF9WgZYhx9uWa/RxJkh2rElZ7ULnAaqG43iAwkunnNxANArzlgC5BtkFEs/ZFBVbo
-         BKUofYkRkTnOwQs+ezLpFTeWE5JhyGeL3a7DRQU7p7Cww1lkvD6kkTc8irCiDpggphTK
-         Ov/tw6e5t3VtXme4BLjxGn/xmrVtpN3/M0RIop6BSltl2wbWOX+2XLB1eNZ/cp9MQ4aY
-         KuXox/C7mSIeKW6lVUd1K5zWmFhDGod4KF+dEAuyfgQlPFObBaEgIz0juwqNaKh58SLj
-         5/QA==
+        bh=GYQ+HLKopXrBDdbj/xOWyt2quv31/ffmIeEBK8MZOJo=;
+        b=WhJ9MIXN7GIPOOor8mAkYtIUzv69FyWqU3lNcepV04yuZ0hosWWITRRSzrPOkAVBkF
+         m/2nwkQDDFF2cqfLLhf/29ROgxSxSHZy7geGPB+AKUrgzXVeEtae34yFprZwpgwvyHmt
+         Xjv4hjNR95os9YzeNfYhJS/qGmewBDounnZv8MMtAu/Bo2N2bJT4mUXFOqpv4zVpWDZQ
+         boCfFOyQJmK8RqVwHBWjwSd0GT3WKi7tHrzGX2Zb0I5VrN4qepSr6brs9SzjrlT60FDy
+         c8wOG6RafweE0JyjK/12vbPEHt1sJpnV8khExJIx6r2/rj8bZlj4nNPuuFNyK4B9RSWc
+         MiGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=hfObI7ipVboRiIZ2jCHmmqCZE53mQa+t3s5A77dTaXo=;
-        b=ZrppZ4CXKBbhuz7yos9vh5HGJDAyK+0uG1prlEDKOUdg436kBQW1sg8Qqv0kNyULRu
-         gE5VnP5hbRWmLmr9QXu/qg0wSNKJnPStRY3zBkIM/Lp/1bKQ11ryguLdC6yj8wmArjiZ
-         1Jkggk4t6XBlxCLdfeuq2De12fKJu367fPpJOuiamPRTkpqpUFoPk6a3LO/8ZlwWS4RU
-         8Rl7hwX8vQOaoUsfFPgYkdvaXyD4mxKf0FJPLq9qF5F/4dEpcag+aNI2xG8swuqU0WXd
-         HbQISpeTpRs/QO0O2DMxoJ+7mcZiLuLnJiq4KBNY8mPmhGU3LT1GwLg9xhuAgn+E1Clw
-         7niA==
-X-Gm-Message-State: AElRT7GTCHmWPGiG+P/pH99tadxZJRmR/KVZFoRPhvxfvlcNHXaXCWMD
-        I1HIBMRGt59FotyiLz4XOp8=
-X-Google-Smtp-Source: AIpwx4/thLNzhM1hwiQAaF8gFkV8bq0ctdQZIDlQhOAsyh8peZBDyeWJZynDEbKcEQyvKh1aTdg0SA==
-X-Received: by 10.223.184.56 with SMTP id h53mr10179769wrf.87.1522433183967;
-        Fri, 30 Mar 2018 11:06:23 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id 134sm7574017wmm.42.2018.03.30.11.06.22
+        bh=GYQ+HLKopXrBDdbj/xOWyt2quv31/ffmIeEBK8MZOJo=;
+        b=lRNbGWZyQWh6TzLdV4ev2Fjuz6h5yLOHAaszsxsROx/ILs/Ym+Sruezil3OAM7Nmf+
+         j2TbfcD3FiVRrD4ueIYFNAncOMb0IQxkGHKnhkkIdjCea2Q6aB3OvsCa3vf/i0DogGzn
+         w7gbUUlvTSqsLMlNXcjgpowBEbPIwKDE6i+KirQ9bprQVKSFg9dT9oU/ArngxUcrwtaU
+         lcKMYEMEjUsdjm/Q7u/gBPAWw1MnxGi3GKCSIZFooLsW2grvBv7anCJ5emTAquBCxxCF
+         +Tslwpm9RMWIOavUt8+AXms2UQdWiMlnps7JQ1TPPM9ClfdetD2O+eQjxqD+cjLPHK7I
+         128w==
+X-Gm-Message-State: AElRT7HpXdxjH7JqUzH5TEhpktqTYk1LV+GdSAwfcrHqQPxe0KaWILpA
+        4xz5R0t8akLujmVg5CUsL+Y=
+X-Google-Smtp-Source: AIpwx49BLM0AIo6ig8vHdy2g7gIqDLof77cOz5oQsFP45c6AZ5smZKHbdEX0EVJu4YfXDrSIdN8jhw==
+X-Received: by 10.28.110.17 with SMTP id j17mr3126921wmc.65.1522433384553;
+        Fri, 30 Mar 2018 11:09:44 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id x9sm11414950wrb.18.2018.03.30.11.09.43
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 30 Mar 2018 11:06:23 -0700 (PDT)
+        Fri, 30 Mar 2018 11:09:43 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Taylor Blau <me@ttaylorr.com>
 Cc:     peff@peff.net, git@vger.kernel.org
-Subject: Re: [PATCH v3 1/3] builtin/config: introduce `--default`
+Subject: Re: [PATCH v3 3/3] builtin/config: introduce `color` type specifier
 References: <20180324005556.8145-1-me@ttaylorr.com>
         <20180329011634.68582-1-me@ttaylorr.com>
-        <20180329011634.68582-2-me@ttaylorr.com>
-Date:   Fri, 30 Mar 2018 11:06:22 -0700
-In-Reply-To: <20180329011634.68582-2-me@ttaylorr.com> (Taylor Blau's message
-        of "Wed, 28 Mar 2018 18:16:32 -0700")
-Message-ID: <xmqqy3i930bl.fsf@gitster-ct.c.googlers.com>
+        <20180329011634.68582-4-me@ttaylorr.com>
+Date:   Fri, 30 Mar 2018 11:09:43 -0700
+In-Reply-To: <20180329011634.68582-4-me@ttaylorr.com> (Taylor Blau's message
+        of "Wed, 28 Mar 2018 18:16:34 -0700")
+Message-ID: <xmqqtvsx3060.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -70,15 +70,21 @@ X-Mailing-List: git@vger.kernel.org
 
 Taylor Blau <me@ttaylorr.com> writes:
 
-> For some use cases, callers of the `git-config(1)` builtin would like to
-> fallback to default values when the slot asked for does not exist. In
-> addition, users would like to use existing type specifiers to ensure
-> that values are parsed correctly when they do exist in the
-> configuration.
-> ...
-> +--default value::
-> +  When using `--get`, and the requested slot is not found, behave as if value
-> +  were the value assigned to the that slot.
+> @@ -184,6 +183,7 @@ Valid `[type]`'s include:
+>  --bool-or-int::
+>  --path::
+>  --expiry-date::
+> +--color::
+>    Historical options for selecting a type specifier. Prefer instead `--type`,
+>    (see: above).
+>  
+> @@ -223,6 +223,9 @@ Valid `[type]`'s include:
+>  	output it as the ANSI color escape sequence to the standard
+>  	output.  The optional `default` parameter is used instead, if
+>  	there is no color configured for `name`.
+> ++
+> +It is preferred to use `--type=color`, or `--type=color --default=[default]`
+> +instead of `--get-color`.
 
-For "diff.<slot>.color", the above is OK, but in general,
-configuration variables are not called "slot".  s/slot/variable/.
+Wasn't the whole point of the preliminary --type=<type> patch to
+avoid having to add thse two hunks?
