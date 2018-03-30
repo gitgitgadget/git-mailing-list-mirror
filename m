@@ -2,136 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BF2C91F404
-	for <e@80x24.org>; Fri, 30 Mar 2018 19:03:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4C8851F404
+	for <e@80x24.org>; Fri, 30 Mar 2018 19:04:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752299AbeC3TDr (ORCPT <rfc822;e@80x24.org>);
-        Fri, 30 Mar 2018 15:03:47 -0400
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:43479 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752159AbeC3TDq (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Mar 2018 15:03:46 -0400
-Received: by mail-pf0-f195.google.com with SMTP id j2so5905950pff.10
-        for <git@vger.kernel.org>; Fri, 30 Mar 2018 12:03:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=Geaox+bsTEdKRmFyvkGj6RsPzdKAO92hbIbGzpmyAWg=;
-        b=lug8Ssb+6nkvYSuoa5R4hIxpiQuZ7T1M4b0XW2lj86y+Bul3hUPTsXiMh/Agrz9Urp
-         vEHtblaMHRRj6F5H/34S9ptIRXS1jrqsODn3E6jL1kh7qYOjtG3XaC0N1AFgdXac1UEI
-         hZk47Bh/7uqpmAZbuw05TgQzDUv3HuOm8k33/fYzwGl/hAo6OE8BKmHUvrpZRlDNRw0n
-         MNMbuSWVHlkRGfZacK6aAKoap18jHSujosAxlB5oDXuN5f+tDj+DPStf1Lbahxx3pgfu
-         oHjjULbMi5Yfh+StVWUPZ6UkoMkZpqa5GJUk5NCWo0uQXgQtIvF6m5dUeA3CK+dfvD3W
-         NIbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=Geaox+bsTEdKRmFyvkGj6RsPzdKAO92hbIbGzpmyAWg=;
-        b=eh8OTV+GMttBd0sEcmvaFkp1eW8IGx+XH/kyDNqDqh9P5U0fXGSDnDFriStjLlcjPC
-         m82/4Cij5UvZZP5h/ZMHMOw/79HD6WRVBggfHd2jvyMkkojUV5vrMFtd5LB3NOn93YRj
-         UFpGvRYvCV5czjyhTeQYshvLS5qYOnCnAIR3nqfVf45mANVKo0cYr206nQQJRs1LzGqu
-         DKOWSsMKZFctTJ66X/x9oTS7Emv5ATzpYFnkgx3jCjuu7j9DijfVbAZoHhJ5nhcAQdY/
-         kKNs+etXuyBu2nxrjmS0vPFP30v0TFuUhCOG/4xtEBf4jKp8ZAZS5DvIRHGhZ2bo2CIA
-         zy5A==
-X-Gm-Message-State: AElRT7FHUfQckpWGni3ykV/rAdkkaTfXFL9GhuMJ7U+lCxrs7fUE8ABB
-        wUEylJV4fg3ncILP74ObkhaBLw==
-X-Google-Smtp-Source: AIpwx48/Lt5jlPSD5NeJR2CPPKgVUUy7yiEQsnn1iqTWxFSYJn9F4LMeu8s4ZwmmD7NVJAe7oHwrXw==
-X-Received: by 2002:a17:902:209:: with SMTP id 9-v6mr166797plc.403.1522436625496;
-        Fri, 30 Mar 2018 12:03:45 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
-        by smtp.gmail.com with ESMTPSA id c62sm19753466pfk.179.2018.03.30.12.03.44
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 30 Mar 2018 12:03:44 -0700 (PDT)
-Date:   Fri, 30 Mar 2018 12:03:43 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH] {fetch,upload}-pack: clearly mark unreachable v2 code
-Message-ID: <20180330190343.GB171603@google.com>
-References: <20180314183213.223440-1-bmwill@google.com>
- <20180330092907.611-1-avarab@gmail.com>
+        id S1752683AbeC3TE1 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 30 Mar 2018 15:04:27 -0400
+Received: from mout.gmx.net ([212.227.15.19]:48707 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752619AbeC3TE0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Mar 2018 15:04:26 -0400
+Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MaJPk-1fHRnq48cK-00Jodt; Fri, 30
+ Mar 2018 21:04:15 +0200
+Date:   Fri, 30 Mar 2018 21:04:13 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@dscho.gitforwindows.org
+To:     Jeff King <peff@peff.net>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Thomas Rast <tr@thomasrast.ch>, Phil Haack <haacked@gmail.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Stefan Beller <sbeller@google.com>,
+        Jason Frey <jfrey@redhat.com>,
+        Philip Oakley <philipoakley@iee.org>
+Subject: Re: [PATCH 8/9] git_config_set: use do_config_from_file() directly
+In-Reply-To: <20180330140840.GA5869@sigill.intra.peff.net>
+Message-ID: <nycvar.QRO.7.76.6.1803302102480.5026@qfpub.tvgsbejvaqbjf.bet>
+References: <cover.1522336130.git.johannes.schindelin@gmx.de> <e3032300946eb5962878341f7796f5872c4d138d.1522336130.git.johannes.schindelin@gmx.de> <20180329213823.GH2939@sigill.intra.peff.net> <nycvar.QRO.7.76.6.1803301500560.5026@qfpub.tvgsbejvaqbjf.bet>
+ <20180330131456.GB29568@sigill.intra.peff.net> <nycvar.QRO.7.76.6.1803301558360.5026@qfpub.tvgsbejvaqbjf.bet> <20180330140840.GA5869@sigill.intra.peff.net>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20180330092907.611-1-avarab@gmail.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:8KjBMgzZsjt1Fu7FGdNlIe8eswLeaRQtkMsSdQ55ZzNDVjV8AT3
+ 1p8zepdXny0YhZyV9oxZ1z3rE0q0Dd7G6OqRgWL+GPPuF6YsUFpsD1sEll3GtOEJdJUU3GM
+ ozgTHAU3fEOp+QHUqwy+yXBLGcMIxITCbTokDoJ8HiA3RKLYThkdGz4GY7L9RIPhMw+I4/v
+ qgx+CKPjKLolBh2CU8RIg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:vXk0AK6fiP4=:A8hbgGBalInwmPzjU0ljg2
+ JsWclR0rFhRaKbS+TILiFoSg0H2ITmyt5ONGWiaZjZj0JbCmv8lnZyBhcjmy+o3E4qXHsz50w
+ vBvxqM0vqo7vwwfu34fyaxQxtlTNpz/wFzzdsmmbJs9sO/ATl89wpRAhpEv/eU0gDC3gqHnZm
+ Aadoh5QtC3iWZrtPtc75lWHNg6uX4Sp4jGazo6L0L/vQeSMtzQ6TboRYAR3m0zIFeBYn8H9Wt
+ CPmO3zZd3T3K4kHSFo9nBbT0J6rIaYvqeYbU8G7xM7btRXGGaLEhB46r3xtkxp0aFdWV+APkM
+ s0xuitg3ZjIWV/mC3l5imdfB4xG2npWa8Iya9XrPvtPeqb+oDF2ZYiKWJxFBBs5zm95j7RA/T
+ XbvCNoN46dy7rUJpDLi/ITojLutNrhKalUT6juREXMVkNLs7+NPhEj857Ar1XwqNPU90MuS4y
+ Xoph5X0VJazfdqZc3wt8N3BmFLLuN166aWR22xi2aBmsu3ERSlogq+FP4sDxC4xnJfrrg83fc
+ N6K4WdonuxDwnFN+QhdfLmIYhCW9gwh8vH5DyqltnBd61yd5DjD2Rb9aOzj8/d0DAV6Ll7wbY
+ xGzLw9pJq6hXvR5K0pNXOO7upQi589PDFK3Fu03lJ9szhY9WwEbuEeVEGB2Qkr6V28lQ2nyho
+ yb53Nb0kdJHQQg1NLw9GpYZnzSRppWhxfAzh6GKubc9xjYIwUC9mQuZ1i840b4/mCznkhSI3P
+ WwH1tbdWjoa9zRN56PpM2m0SFAnZxC5g8b+pDbQtZKb+UoT+H6jm7UWSg1SQJ97R5SWurJ+bw
+ gXATRlMeEerBfE6XwDhuSGsEeo8Eh/frOoakM6CLUxM4JL+F2zjIBudFmJKuRC2I6nDFpC2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 03/30, Ævar Arnfjörð Bjarmason wrote:
-> Change the switch statement driving upload_pack_v2() and
-> do_fetch_pack_v2() to clearly indicate that the FETCH_DONE case is
-> being handled implicitly by other code, instead of giving the reader
-> the impression that the "continue" statement is needed.
-> 
-> This issue was flagged as DEADCODE by Coverity[1]. Simply removing the
-> "case FETCH_DONE" would make -Wswitch warn. Instead implement the same
-> solution discussed for my "[PATCH v2 18/29] grep: catch a missing enum
-> in switch statement" patch[2] (which never made it into git.git).
-> 
-> 1. https://public-inbox.org/git/CAGZ79kbAOcwaRzjuMtZ_HVsYvUr_7UAPbOcnrmPgsdE19q=PrQ@mail.gmail.com/
-> 2. https://public-inbox.org/git/20170513231509.7834-19-avarab@gmail.com/
+Hi Peff,
 
-I understand why you want this change, but I dislike it because it
-removes the ability to have the compiler tell you that your switch
-statements are exhaustive.  Of course it should be noticed rather
-quickly by the addition of those BUG statements :)
+On Fri, 30 Mar 2018, Jeff King wrote:
 
+> On Fri, Mar 30, 2018 at 04:01:56PM +0200, Johannes Schindelin wrote:
 > 
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> ---
->  fetch-pack.c  | 4 ++--
->  upload-pack.c | 4 ++--
->  2 files changed, 4 insertions(+), 4 deletions(-)
+> > You know what is *really* funny?
+> > 
+> > -- snip --
+> > static int git_config_from_stdin(config_fn_t fn, void *data)
+> > {
+> >         return do_config_from_file(fn, CONFIG_ORIGIN_STDIN, "", NULL, stdin, data, 0);
+> > }
+> > 
+> > int git_config_from_file(config_fn_t fn, const char *filename, void *data)
+> > {
+> >         int ret = -1;
+> >         FILE *f;
+> > 
+> >         f = fopen_or_warn(filename, "r");
+> >         if (f) {
+> >                 flockfile(f);
+> >                 ret = do_config_from_file(fn, CONFIG_ORIGIN_FILE, filename, filename, f, data, 0);
+> >                 funlockfile(f);
+> >                 fclose(f);
+> >         }
+> >         return ret;
+> > }
+> > -- snap --
+> > 
+> > So the _stdin variant *goes out of its way not to flockfile()*...
 > 
-> diff --git a/fetch-pack.c b/fetch-pack.c
-> index 216d1368be..3a16b4bc1a 100644
-> --- a/fetch-pack.c
-> +++ b/fetch-pack.c
-> @@ -1393,8 +1393,8 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
->  
->  			state = FETCH_DONE;
->  			break;
-> -		case FETCH_DONE:
-> -			continue;
-> +		default:
-> +			BUG("Added a new fetch_state without updating switch");
->  		}
->  	}
->  
-> diff --git a/upload-pack.c b/upload-pack.c
-> index 87b4d32a6e..b7a7601c83 100644
-> --- a/upload-pack.c
-> +++ b/upload-pack.c
-> @@ -1416,8 +1416,8 @@ int upload_pack_v2(struct repository *r, struct argv_array *keys,
->  			create_pack_file();
->  			state = FETCH_DONE;
->  			break;
-> -		case FETCH_DONE:
-> -			continue;
-> +		default:
-> +			BUG("Added a new fetch_state without updating switch");
->  		}
->  	}
->  
-> -- 
-> 2.16.2.804.g6dcf76e118
+> *facepalm* That's probably my fault, since git_config_from_stdin()
+> existed already when I did the flockfile stuff.
 > 
+> Probably the flockfile should go into do_config_from_file(), where we
+> specify to use the unlocked variants.
 
--- 
-Brandon Williams
+Ah, that makes sense now! I am glad I could also help ;-)
+
+> > But I guess all this will become moot when I start handing down the config
+> > options. It does mean that I have to change the signatures in header
+> > files, oh well ;-)
+> > 
+> > But then I can drop this here patch and we can stop musing about
+> > flockfile()  ;-)
+> 
+> Yeah, I'll wait to see how your refactor turns out.
+
+I don't think I'll touch too much in that part of the code. My changes
+should not cause merge conflicts with a patch moving the
+flockfile()/funlockfile() calls to do_config_from_file().
+
+Ciao,
+Dscho
