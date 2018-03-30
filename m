@@ -3,133 +3,140 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5E7C11F404
-	for <e@80x24.org>; Fri, 30 Mar 2018 19:36:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1D0E81F404
+	for <e@80x24.org>; Fri, 30 Mar 2018 19:46:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752318AbeC3Tgn (ORCPT <rfc822;e@80x24.org>);
-        Fri, 30 Mar 2018 15:36:43 -0400
-Received: from mail-lf0-f53.google.com ([209.85.215.53]:46233 "EHLO
-        mail-lf0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752069AbeC3Tgm (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Mar 2018 15:36:42 -0400
-Received: by mail-lf0-f53.google.com with SMTP id j68-v6so13642205lfg.13
-        for <git@vger.kernel.org>; Fri, 30 Mar 2018 12:36:41 -0700 (PDT)
+        id S1752575AbeC3Tq3 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 30 Mar 2018 15:46:29 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:55956 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752254AbeC3Tq3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Mar 2018 15:46:29 -0400
+Received: by mail-wm0-f65.google.com with SMTP id b127so16133753wmf.5
+        for <git@vger.kernel.org>; Fri, 30 Mar 2018 12:46:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=OrrM1DGm4otPa4GLV1FE+7vT/3rJ7mPDPkXytPKcpPU=;
-        b=sxBXn1ijiWTuj/7WYJL75KLyhdQbQkrCOp3CnmiG2Kq+I/eejZ4hO9aWmCh2OvC59T
-         wU0mrL0pUsp1+6yIeCnp7WpizcSk3A03xEsoVwO+PXlsveAcwH/TZpt4FNzoep1PHn1Y
-         jqC9DzSykixUluTIc1sMfn24zwp2I6fldGVjnTOA1u8sMtu1KR8NR8itJqYcU5xAH/8T
-         XIBnE6wVzeUycKoY9L4aubv9hhWRi6MQb3pqZnOHWS5Gda9u/9KebFcCAqRk1q9+tF+R
-         HBhGfsoZlEc8/I2Ralu89T1mVQtcYfvfn0H2g3V3TxDHydfJr3LNazHxpcliDwP7qOnu
-         eITA==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=uzZ5tVqqJKXerewON8z2WbWMnbA+7y3f62W8LshqtMU=;
+        b=ZmzV1hPDCxQnmy6wIl6KyR1B10np5YbnbrGqdP/pfl63WU6n+Ifa5jX3dxFwI1KaCQ
+         r7GadNvMARow61+WGFvEyT60zP/HFlZ91KwW/7W3V3qF0w9DNcQGaYkDHIt2uBgmdUC+
+         my4YLilI09d+NAC17SPDhaVhlaW5AvQ6IKOdV0euSkm2OXgN3DmKxgKONYMiNCLYjkic
+         28O1V/4bsvvtpJR+q1SEQ0JqAt6rN5jCppUhcrCXtcZ8x+Z4t/1R1hCABZBe0wK+HmUZ
+         iztvwkEoNwj6EsMvrR+4/pzsk95LoskYVL2sUAtG2c1KiD4yYNlKS4uMbx1T2xHWxo1g
+         UhYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=OrrM1DGm4otPa4GLV1FE+7vT/3rJ7mPDPkXytPKcpPU=;
-        b=X8p4m4ICFiRAI2kLUhkp+aOv6runvHKKWVyhC0hSFvb6C7dYp1VY/F6M9g1kXGhEDN
-         jLH0OQd2nXXs0sKictUtTwUX9yIJSaaWNzpc/3S5oXmskV29IeIBIb7CHdp/CS7sYXSo
-         EDmPQPz+fwEODJBKilIlXZMBdz+CNuwb8aG9b6XVvSX+IUdQVQ5LcuwRCGZBmeheX07x
-         SnVtXEKe2e3kxfH5GHehEJG9w0sLDfaFFrf9qqkFXY3gs3O34B2yYLtLjhBX9o3S72w5
-         Ra/TLSgV7Cj2B7G2zZ6W/toHieAJ/qJ9ScvMePmTxrIfRDlAcYZ2IoZUzFvlFkinh4w+
-         q7Kg==
-X-Gm-Message-State: ALQs6tAoa0v925wY0LxJ8cJ1y25YfsG8Mi3luuVajDeX0w6782bnF0IO
-        TSvwTVkXB4yrxQAwiDa15OJtmA==
-X-Google-Smtp-Source: AIpwx4+5/XUWHP4ihuSNifZewZqgGJA1zRpeb0Va6xpAg/pY9uym3xKlr2ZRFXxvwjoB8mJa5+2cxQ==
-X-Received: by 10.46.156.207 with SMTP id g15mr137791ljj.95.1522438600681;
-        Fri, 30 Mar 2018 12:36:40 -0700 (PDT)
-Received: from duynguyen.home (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id c19-v6sm1788556lfb.54.2018.03.30.12.36.39
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 30 Mar 2018 12:36:39 -0700 (PDT)
-Date:   Fri, 30 Mar 2018 21:36:37 +0200
-From:   Duy Nguyen <pclouds@gmail.com>
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=uzZ5tVqqJKXerewON8z2WbWMnbA+7y3f62W8LshqtMU=;
+        b=Vz2rFJyvUhFUOt5tE7EWdligEI5pPkC8oqwHNL1sdM8cv6fOIS9lptQBznQP4lrL7f
+         Uh+zk2k4wqoJ7spxiWX2K0ITGz5exbQl2oiCtfdBnXU/F3LPUL35TbeAElvn7QTw4srE
+         sgrdHbrD2arrihTH9waqEIXS6wFbawWBhd2F1UQz2X0EXnBVsgFcZknSuQ+LGoczjpdu
+         ldMFvNMl2EyoSYtcAiLbd+eWabElr2rtdTbfndBQZuhRdYdGbilOTr741bT4L8K0QEMb
+         eEU1LwXrDO6f6MGN9qxAeDiM+jVDJ/4XYmOSLm/M010RLP4glOwuMCsSAUfc4uEdT6sJ
+         MGTQ==
+X-Gm-Message-State: AElRT7Hl1NwUuvZWH1cFJhBRR+XIbvpm8nBSsIf373JMxy0bc4210pgZ
+        NZoMbR03vt2P4awhXx4sBNkH/HHr
+X-Google-Smtp-Source: AIpwx4+JLIyKfxLIpqsH1qTbVT0pzc8WqstIZdP8qFn5qPGFdafiofppAZ75K7slM/Oy5d5acP222A==
+X-Received: by 10.28.147.8 with SMTP id v8mr3358417wmd.13.1522439187508;
+        Fri, 30 Mar 2018 12:46:27 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id n47sm9319015wrf.41.2018.03.30.12.46.26
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 30 Mar 2018 12:46:26 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH v2 0/5] re-parenting relative directories after chdir
-Message-ID: <20180330193637.GA1620@duynguyen.home>
-References: <CACUQV5_3Pw+vnyyNUL4oE4tMLG_wKVdqdVk01rg4V92ufUYHHA@mail.gmail.com>
- <20180327063137.GA24044@sigill.intra.peff.net>
- <CACsJy8DP53Og1crS1bLoJf6w8cJhjGKy=ggfbsqzJ6AU4eNhPA@mail.gmail.com>
- <20180327164757.GB24747@sigill.intra.peff.net>
- <CACsJy8Bog6U7X-jvzDhq14heQWx0HA_21HsSYR0nykU9aDsCYQ@mail.gmail.com>
- <20180327173024.GA5017@duynguyen.home>
- <20180328095203.GB1523@sigill.intra.peff.net>
- <CACsJy8AVcPi=0i7s9o8cy-XGFuOLr72fe9WLRnEqo1SwLJEBOw@mail.gmail.com>
- <20180328173656.GA29094@sigill.intra.peff.net>
- <20180330183425.GA30575@sigill.intra.peff.net>
+Cc:     Duy Nguyen <pclouds@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH v2 2/5] trace.c: export trace_setup_key
+References: <20180330183425.GA30575@sigill.intra.peff.net>
+        <20180330183459.GB31135@sigill.intra.peff.net>
+Date:   Fri, 30 Mar 2018 12:46:26 -0700
+In-Reply-To: <20180330183459.GB31135@sigill.intra.peff.net> (Jeff King's
+        message of "Fri, 30 Mar 2018 14:34:59 -0400")
+Message-ID: <xmqq8ta92vot.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180330183425.GA30575@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 30, 2018 at 02:34:25PM -0400, Jeff King wrote:
-> On Wed, Mar 28, 2018 at 01:36:56PM -0400, Jeff King wrote:
-> 
-> > For those just joining us, this fixes a regression that was in v2.13 (so
-> > nothing we need to worry about as part of the 2.17-rc track).
-> > 
-> >   [1/4]: set_git_dir: die when setenv() fails
-> >   [2/4]: add chdir-notify API
-> >   [3/4]: set_work_tree: use chdir_notify
-> >   [4/4]: refs: use chdir_notify to update cached relative paths
-> 
-> Here's a re-roll based on the feedback I got, including:
-> 
->  - fixes the memory leak and vague comment pointed out by Eric
-> 
->  - adds in tracing code from Duy
-> 
->  - I took Duy's suggestions regarding "least" surprise in some of the
->    functions (reparenting NULL is a noop, and registering a reparent
->    handler does so even for an absolute path).
-> 
-> I punted on the "registering the same path twice" thing. That is a
-> potential way to misuse this API, but I don't think there's a good
-> solution. The "reparent" helper could figure this out for you, but in
-> the general case we actually install an arbitrary callback. So the
-> caller really has to handle it there.
+Jeff King <peff@peff.net> writes:
 
-The series looks good to me.
+> From: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+>
+> This is so that we can print traces based on this key outside trace.c.
 
-> 
-> I think in the long run we'd want to outlaw calling set_git_dir() twice
-> anyway.
+"this key" meaning...?  GIT_TRACE_SETUP?
 
-Oh yeah. With my latest WIP changes, the bottom of
-setup_git_directory_gently() looks like this. Nowhere else in setup
-code calls these functions anymore (except the current
-setup_work_tree)
-
--- 8< --
-	if (result.worktree)
-		set_git_work_tree(result.worktree);
-	if (result.gitdir)
-		set_git_dir(result.gitdir);
-	if (startup_info->have_repository)
-		repo_set_hash_algo(the_repository, result.repo_fmt.hash_algo);
-	...
-	return result.prefix;
--- 8< --
-
-From here on, it's not hard to see how to turn set_git_work_tree()
-into setup_work_tree_gently() (without doing any set_git_dir) and the
-last two calls into "repo_init_gitdir(gitdir, hash_algo)", which
-should be where we allocate a new repository object and initialize
-related object store, ref store...
-
-But I still have a couple setup corner cases to deal with first :(
---
-Duy
+>
+> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  trace.c | 14 +++++++-------
+>  trace.h |  1 +
+>  2 files changed, 8 insertions(+), 7 deletions(-)
+>
+> diff --git a/trace.c b/trace.c
+> index 7f3b08e148..fc623e91fd 100644
+> --- a/trace.c
+> +++ b/trace.c
+> @@ -26,6 +26,7 @@
+>  
+>  struct trace_key trace_default_key = { "GIT_TRACE", 0, 0, 0 };
+>  struct trace_key trace_perf_key = TRACE_KEY_INIT(PERFORMANCE);
+> +struct trace_key trace_setup_key = TRACE_KEY_INIT(SETUP);
+>  
+>  /* Get a trace file descriptor from "key" env variable. */
+>  static int get_trace_fd(struct trace_key *key)
+> @@ -300,11 +301,10 @@ static const char *quote_crnl(const char *path)
+>  /* FIXME: move prefix to startup_info struct and get rid of this arg */
+>  void trace_repo_setup(const char *prefix)
+>  {
+> -	static struct trace_key key = TRACE_KEY_INIT(SETUP);
+>  	const char *git_work_tree;
+>  	char *cwd;
+>  
+> -	if (!trace_want(&key))
+> +	if (!trace_want(&trace_setup_key))
+>  		return;
+>  
+>  	cwd = xgetcwd();
+> @@ -315,11 +315,11 @@ void trace_repo_setup(const char *prefix)
+>  	if (!prefix)
+>  		prefix = "(null)";
+>  
+> -	trace_printf_key(&key, "setup: git_dir: %s\n", quote_crnl(get_git_dir()));
+> -	trace_printf_key(&key, "setup: git_common_dir: %s\n", quote_crnl(get_git_common_dir()));
+> -	trace_printf_key(&key, "setup: worktree: %s\n", quote_crnl(git_work_tree));
+> -	trace_printf_key(&key, "setup: cwd: %s\n", quote_crnl(cwd));
+> -	trace_printf_key(&key, "setup: prefix: %s\n", quote_crnl(prefix));
+> +	trace_printf_key(&trace_setup_key, "setup: git_dir: %s\n", quote_crnl(get_git_dir()));
+> +	trace_printf_key(&trace_setup_key, "setup: git_common_dir: %s\n", quote_crnl(get_git_common_dir()));
+> +	trace_printf_key(&trace_setup_key, "setup: worktree: %s\n", quote_crnl(git_work_tree));
+> +	trace_printf_key(&trace_setup_key, "setup: cwd: %s\n", quote_crnl(cwd));
+> +	trace_printf_key(&trace_setup_key, "setup: prefix: %s\n", quote_crnl(prefix));
+>  
+>  	free(cwd);
+>  }
+> diff --git a/trace.h b/trace.h
+> index 88055abef7..2b6a1bc17c 100644
+> --- a/trace.h
+> +++ b/trace.h
+> @@ -15,6 +15,7 @@ extern struct trace_key trace_default_key;
+>  
+>  #define TRACE_KEY_INIT(name) { "GIT_TRACE_" #name, 0, 0, 0 }
+>  extern struct trace_key trace_perf_key;
+> +extern struct trace_key trace_setup_key;
+>  
+>  extern void trace_repo_setup(const char *prefix);
+>  extern int trace_want(struct trace_key *key);
