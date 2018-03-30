@@ -7,137 +7,101 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5B8E21F404
-	for <e@80x24.org>; Fri, 30 Mar 2018 12:33:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AD8461F404
+	for <e@80x24.org>; Fri, 30 Mar 2018 12:35:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751254AbeC3MdI (ORCPT <rfc822;e@80x24.org>);
-        Fri, 30 Mar 2018 08:33:08 -0400
-Received: from mout.gmx.net ([212.227.17.20]:42683 "EHLO mout.gmx.net"
+        id S1751384AbeC3Mfe (ORCPT <rfc822;e@80x24.org>);
+        Fri, 30 Mar 2018 08:35:34 -0400
+Received: from mout.gmx.net ([212.227.17.21]:57319 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751118AbeC3MdH (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Mar 2018 08:33:07 -0400
-Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0M8ZtH-1efq301xGF-00wEM2; Fri, 30
- Mar 2018 14:32:49 +0200
-Date:   Fri, 30 Mar 2018 14:32:47 +0200 (DST)
+        id S1751118AbeC3Mfd (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Mar 2018 08:35:33 -0400
+Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0M82zV-1egOE52kbp-00vg3Y; Fri, 30
+ Mar 2018 14:35:20 +0200
+Date:   Fri, 30 Mar 2018 14:35:18 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@dscho.gitforwindows.org
 To:     Jeff King <peff@peff.net>
-cc:     Stefan Beller <sbeller@google.com>, git <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Thomas Rast <tr@thomasrast.ch>, Phil Haack <haacked@gmail.com>,
         =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Jason Frey <jfrey@redhat.com>,
+        <avarab@gmail.com>, Stefan Beller <sbeller@google.com>,
+        Jason Frey <jfrey@redhat.com>,
         Philip Oakley <philipoakley@iee.org>
-Subject: Re: [PATCH 1/9] git_config_set: fix off-by-two
-In-Reply-To: <20180329194159.GB2939@sigill.intra.peff.net>
-Message-ID: <nycvar.QRO.7.76.6.1803301415240.5026@qfpub.tvgsbejvaqbjf.bet>
-References: <cover.1522336130.git.johannes.schindelin@gmx.de> <899ea23951627426ccd0aac79f824af386c5590c.1522336130.git.johannes.schindelin@gmx.de> <CAGZ79kapTWGsYznt7rr0QTNX+uH85TPY8AOA1jtDJ6_q8edX1Q@mail.gmail.com>
- <20180329194159.GB2939@sigill.intra.peff.net>
+Subject: Re: [PATCH 0/9] Assorted fixes for `git config` (including the "empty
+ sections" bug)
+In-Reply-To: <20180329193932.GA2939@sigill.intra.peff.net>
+Message-ID: <nycvar.QRO.7.76.6.1803301433020.5026@qfpub.tvgsbejvaqbjf.bet>
+References: <cover.1522336130.git.johannes.schindelin@gmx.de> <20180329193932.GA2939@sigill.intra.peff.net>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:sH9/4dXY4goxay4nb0ideVj+GrBxKvi1cz01PHNe+hSsAIBttoB
- HcQ7XU61QUW51dAKWBoWqc9cUpiVnAUNQ201wDLajum4o1W5f1P3RdUQEqif/CchbCJHmIr
- o0cRkqpQM+hyUH61Flqkdg4n/VxNm0AG/9s3tCG+pp7cHvYCYpuaQGScLDW8S7Vwfgd3twU
- 2emZhiSDbjCT8C1qVFDiQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:3cQ+JfPgcnI=:n7rwvo69gCUtuqxxT0zPcY
- Gp3efqJYXkePg6N8dAGYdrf+EB2iMD+7/t65pk1OqhjJn/+GSswF3lnNWqxw/tbTtXOrd28fQ
- tDwWRSGmWMJ2/KP+tB3a2Wvxp2iFf19WQ4qpxfzSPAl0apcbGDLBWLQAorBsOq5Uz061RZz+j
- yD2ZeG3ZCklx1RYFR3SHJKYE5uXz9bzm/nlyjAm6QzMwIuq02UlZ6ebPxwMptsyOEdyFy/syB
- s+2mWg+hh0VB3qZDHB9VZzM6+gbgDmKbX3WHiSVQnf6LXxiPGgU/RLnT2XrJ1OPQ8hkAAAyjI
- glGk4K+o4f/d5CEBCqRNQsGx/4GpKrRmrZFK4idtvrgJ8+8aPNM+1ngMKNtKx2qu9nNufriyh
- MEqinKGwA+ao0oCX6XHk2aSXUA/DhNj3l5t0kmOZsEQu6XUAC2vleiwzBfu2kmCRpGK5Dogc5
- RLhWJTOMf+bL1ZBpmauMnliGhhoMFvVz1dfWsq6w7R7/Q8aETg3eS3xO+1EXcxIWll/dd3/gh
- Vktv1mQsFXjJexoj6v6agsy7PCtKwjucyo63M/s4E5T3gs32u2FGfciZ6RWjik17yScMzSMWK
- VKCt9690xK93Su2AEisRH14dOIzGhFbm2Orqd7Hi3xjAGEEw5ocwDIT3JxrnVNieSW/9h+qPI
- hWM5wZzgxQmis3YJbyF9/qL9obEP5Qu0hmRUiBhz82cuxayvZn/bGhccLcUuiORBjScHTfdi+
- USJm/IPtXW/8QARodU8oxdGH5BhshoXpJS6UPhUyJvDFfTMo6Vc4jayEZrprf4XaSanXoMXUc
- 7DpKDmDA3CYfJ4pdJmpnLEj5I8c3jaXCFZfZAAAqZkYRoYYHY2Mg30kTz/Eaj/9TCfYJ1x6
+X-Provags-ID: V03:K0:q353gmLTDulQbE+Ro42ntv7hGrslSs2VxbgOn1gzcwB4Mf6DYoG
+ oKGxuxTY2lJAZfSRr+m+ENJxR/Z+WR6m6R+Oezyf/Fh93QaNs3dI+OEvP/Vf/qSbN++8HYn
+ odmgj/a4oYWTtaz60vokbuww4iPLY5nB4q3D5DHuaVdO5O61QFounDrn8uI20XxAkNKxMfN
+ KVUX86cN3+cHEhmD5mpsQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:FOzAn5btz4k=:e30/5XDUp/Tdrk6G4WgYNp
+ xTubIWWYEr5R5wmRg4IrHg/+2UvyhBof2ixku+X7aCQvyaje9HPU4mmgdd/TkxIkMCl3u8PP4
+ 5JB9qPbLlmMzbL6G+lJeicecVl9a9fBqYM8dECMwnO1C7AAyu5zTvwG3SzdQC9ORth5h4JkRF
+ g1UQe66F6SOAe72VDZJjmTcIoHtchWX5rPgQmvgY/QGeAHH8ahnG+YYeJRb30UiWpHjX+kguo
+ kouF6wR8nPdm4ljdxJPNUMDM4UcGk9ITJwbG0WdgaC7wiLzSCePRmiusfWKNxRWaEwLRoEpoi
+ Mal39Ro6ycXxFM0NPOQhOT680Nb8u49Y9BP7O4HqelG/3yJRCYbdUz4EVLQOm99+hXzKcCS6F
+ VeMlypsNQ1j7WKGHEJCXcQjH8aSyv8KMZT4+J0lU7jusN88gzd3f1akUNPbXICuxgSnvzOWac
+ a7W6Tj9dTeGagLmEFXirD6jYweVJ2EI1d+u2qgT+FCcBsONoSWVQ5GFlDEzuG2Ec0O2oDDUES
+ 8kg4cXfwq38AyZYZNe/eJB2rinlU1Aal5CZ4BjvkWN4xh0djfyBjIEv+Z4tTzkDp+86viYJUe
+ ghzKPH5OyNGFF2SRV2I0/wUiYnZanYTWa+2s1GMSvE7+X6kf+dzRrHwZ7ZktIfeFMpuVlGNoY
+ FcGkPK6fm0TD72glF7qBQxnMvaAPXERhHIb4fn2CQEDdZop/hVSpRBVG03mTKqVgaBD7lP6Lm
+ mVPcGmD457cBlKL7aHdz9l07tHS1RW9UuIhsNSEdqkzii5GKi4X32rvmILwzTUB5VFrVax6y4
+ lMUNi4uFatV28ISDtA9O/xbPSWG60rUEbQIu67cySvia5sliCXFfNQMloQyhHFyq5+390fn
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hi Peff,
 
 On Thu, 29 Mar 2018, Jeff King wrote:
 
-> On Thu, Mar 29, 2018 at 11:15:33AM -0700, Stefan Beller wrote:
+> On Thu, Mar 29, 2018 at 05:18:30PM +0200, Johannes Schindelin wrote:
 > 
-> > > When calling `git config --unset abc.a` on this file, it leaves this
-> > > (invalid) config behind:
-> > >
-> > >         [
-> > >         [xyz]
-> > >                 key = value
-> > >
-> > > The reason is that we try to search for the beginning of the line (or
-> > > for the end of the preceding section header on the same line) that
-> > > defines abc.a, but as an optimization, we subtract 2 from the offset
-> > > pointing just after the definition before we call
-> > > find_beginning_of_line(). That function, however, *also* performs that
-> > > optimization and promptly fails to find the section header correctly.
+> > The first patch is somewhat of a "while at it" bug fix that I first
+> > thought would be a lot more critical than it actually is: It really
+> > only affects config files that start with a section followed
+> > immediately (i.e. without a newline) by a one-letter boolean setting
+> > (i.e. without a `= <value>` part). So while it is a real bug fix, I
+> > doubt anybody ever got bitten by it.
+> 
+> That makes me wonder if somebody could craft a malicious config to do
+> something bad.
+
+I thought about that, and could not think of anything other than social
+engineering vectors. Even in that case, the error message is instructive
+enough that the user should be able to fix the config without consulting
+StackOverflow.
+
+> > Now, to the really important part: why does this patch series not
+> > conflict with my very early statements that we cannot simply remove
+> > empty sections because we may end up with stale comments?
 > > 
-> > This commit message would be more convincing if we had it in test form.
+> > Well, the patch in question takes pains to determine *iff* there are
+> > any comments surrounding, or included in, the section. If any are
+> > found: previous behavior. Under the assumption that the user edited
+> > the file, we keep it as intact as possible (see below for some
+> > argument against this). If no comments are found, and let's face it,
+> > this is probably *the* common case, as few people edit their config
+> > files by hand these days (neither should they because it is too easy
+> > to end up with an unparseable one), the now-empty section *is*
+> > removed.
 > 
-> I agree a test might be nice. But I don't find the commit message
-> unconvincing at all. It explains pretty clearly why the bug occurs, and
-> you can verify it by looking at find_beginning_of_line.
+> I'm not against people editing their config files by hand. But I think
+> what you propose here makes a lot of sense, because it works as long as
+> you don't intermingle hand- and auto-editing in the same section (and it
+> even works if you do intermingle, as long as you don't use comments,
+> which are probably even more rare).
 > 
-> >     [abc]a
-> > 
-> > is not written by Git, but would be written from an outside tool or person
-> > and we barely cope with it?
-> 
-> Yes, I don't think git would ever write onto the same line. But clearly
-> we should handle anything that's syntactically valid.
+> So it seems like quite a sensible compromise, and I think should make
+> most people happy.
 
-I was tempted to add the test case, because it is easy to test it.
-
-But I then decided *not* to add it. Why? Testing is a balance between "can
-do" and "need to do".
-
-Can you imagine that I did *not* run the entire test suite before
-submitting this patch series, because it takes an incredible *90 minutes*
-to run *on a fast Windows machine*?
-
-Seriously, this is hurting me. I do not complain about this due to some
-mental illness forcing me to do it. I complain about this so often
-*because it slows me down*, you gentle people. And you don't seem to care,
-at least the test suite gets noticably worse by the month. I frankly do
-not know what to do about this, as you keep adding and adding and it gets
-less and less feasible for me to run the full test suite. I seem to be
-totally unable to get through to you with the message that this is a real
-problem with a real need to get fixed.
-
-So with this in mind, I do not want to add a test case for a concocted
-example that won't affect anybody except users who *want* to trigger this
-bug.
-
-I hope you agree,
+Thanks for confirming my line of thinking,
 Dscho
-
-P.S.: Of course I ran the entire test suite. Not on Windows, but in a
-Linux VM, because Linux is what Git is fine-tuned for, most obviously so.
-An alien digging up ancient Earth history in the far future might be
-tempted to assume that Git was developed to develop Linux which was
-developed to develop Git, and then ask herself why humans bothered at all.
-
-I actually ran the entire test suite on Linux on every single patch, via
-`git rebase -x "make -j15 DEVELOPER=1 test" @{u}`, as I usually do before
-submitting a patch series.
-
-And it *did* find an obscure bug in an earlier iteration, where
-t5512-ls-remote.sh demonstrated that looking at only one entry at a time
-is not enough: `git config --unset-all uploadpack.hiderefs` *also* needs
-to remove the now-empty section, because we might end up with the empty
-sections in the wrong order, and the order of [transfer] and [uploadpack]
-*matters* if the transfer.hiderefs setting is negative and the
-uploadpack.hiderefs setting is positive, as is the case in 'overrides work
-between mixed transfer/upload-pack hideRefs'. (Side-note: this looks like
-a pretty obvious design bug to me, as there is *no tooling* to switch
-around the order of these settings. Even worse: if somebody gets
-instructions to add those settings, and there is already a [transfer]
-section in the config: you're out of luck! You will have to *know* that
-the order matters, *and add a second [transfer] section manually*!)
