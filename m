@@ -2,96 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B42B71F424
-	for <e@80x24.org>; Fri, 30 Mar 2018 09:02:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 936CA1F424
+	for <e@80x24.org>; Fri, 30 Mar 2018 09:25:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750967AbeC3JCf (ORCPT <rfc822;e@80x24.org>);
-        Fri, 30 Mar 2018 05:02:35 -0400
-Received: from mout.gmx.net ([212.227.17.22]:39105 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750765AbeC3JCe (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Mar 2018 05:02:34 -0400
-Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0Lngv5-1eL33I3sit-00huLE; Fri, 30
- Mar 2018 11:02:08 +0200
-Date:   Fri, 30 Mar 2018 11:02:06 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@dscho.gitforwindows.org
-To:     Christian Couder <christian.couder@gmail.com>
-cc:     Jacob Keller <jacob.keller@gmail.com>, git <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jakub Narebski <jnareb@gmail.com>,
-        Markus Jansen <mja@jansen-preisler.de>,
-        Gabriel Alcaras <gabriel.alcaras@telecom-paristech.fr>,
-        Jeff King <peff@peff.net>,
-        Hilco Wijbenga <hilco.wijbenga@gmail.com>,
-        Phillip Wood <phillip.wood@talktalk.net>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        William Chia <wchia@gitlab.com>,
-        Alex Vandiver <alexmv@dropbox.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: Draft of Git Rev News edition 37
-In-Reply-To: <CAP8UFD0wWiivjzJ29-RPVyOxkmbFACXTwHLyPrMdsUsW__RsYQ@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1803301059450.5026@qfpub.tvgsbejvaqbjf.bet>
-References: <CAP8UFD35QP0jwQ22jfUaNgo92o3vG8bV5n=iYnmn1ichxndphg@mail.gmail.com> <CA+P7+xoL6TRP0NZJR7gQrVeLoQwK_1D_iDmG18Y=_i=U4uttgg@mail.gmail.com> <CAP8UFD0wWiivjzJ29-RPVyOxkmbFACXTwHLyPrMdsUsW__RsYQ@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1751322AbeC3JY7 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 30 Mar 2018 05:24:59 -0400
+Received: from mail-wm0-f45.google.com ([74.125.82.45]:51118 "EHLO
+        mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751312AbeC3JYz (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Mar 2018 05:24:55 -0400
+Received: by mail-wm0-f45.google.com with SMTP id l201so14749943wmg.0
+        for <git@vger.kernel.org>; Fri, 30 Mar 2018 02:24:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=IhEaBINMOt21xyDLDwNy15/AjdvWwNFihN2hMjcNRmo=;
+        b=XHEIhSxpoEVgIm0SU4Zk38LhjmrE0qGiyaRcuuTRF5qHVt2IacBpUCybbrZx6cCUGn
+         dKNyX3q3P05cYbyL7mLT+TAc6Uz/5eVjfwMlb/dbQerTkHRdMCg4akjH0fBiz+verGHy
+         wv2sfyBLigjFJDaSWkZBpydSq4faSuGHwLGF3mx5jyNqRQXf7yccGy5Eao3v+zC1redx
+         OpSvqHABl1Oqobi50lIE6zE+wjTz7cHS0qM1+T+SN93MHtPi6e69mkKnyxluzy4b49/c
+         TK+ZpGIde7gOgg8d9SeJOr2nAdDxUbo2WZNZNR1BeyARPWDfPNytBFOtFUW1TX5EJomm
+         uG6w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=IhEaBINMOt21xyDLDwNy15/AjdvWwNFihN2hMjcNRmo=;
+        b=c5SQY/AG3w17zaFoklH5A1bPomihbHoRuEVnke57d4lBcCOqgclKd98ePujyPsCDoJ
+         CqBNXj1vnzbE66oGlxm/OObxQBb7jXCZjO9P2PjBYRoHoW7MnV8Mq3Voawl8fTQhGIWr
+         NiWKGtFszJi5rbyl9owaadTDz75ziQtmv9uTJo1nTVpv++1iKxPj5UwKTKdu6HctKvCs
+         MTzm7wfoz12X6d5P3O+1RnsskkGgAanG7gY2tpymXb+Dc1zjYc1+qUqJ6NFI+R+5+GAR
+         L53Yz4uMtMXTmLVFXcsBd6cEF4wXpDg/s8tkW9HsT1YnnaFEvau7JMg4QwwEWRUDY51c
+         JGDg==
+X-Gm-Message-State: AElRT7Ey1407eAstbzXFfNDL4X4NzcL/QAV6PWEb0KrCbClZ6koNoJbn
+        JzMx0X6HmnwfdZewgJRR9yM=
+X-Google-Smtp-Source: AIpwx4/NUONaLpIoJLhpyEg6zoEn9u/Xo1t+yMUhnXsOF4zOJObz4Y4GKhrk790wO4dN2+tPoxTCPQ==
+X-Received: by 10.80.136.107 with SMTP id c40mr2230934edc.231.1522401894268;
+        Fri, 30 Mar 2018 02:24:54 -0700 (PDT)
+Received: from evledraar (proxy-gw-a.booking.com. [5.57.21.8])
+        by smtp.gmail.com with ESMTPSA id h33sm5785279edh.1.2018.03.30.02.24.53
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 30 Mar 2018 02:24:53 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: What's cooking in git.git (Mar 2018, #05; Wed, 28)
+References: <xmqqsh8k6khj.fsf@gitster-ct.c.googlers.com>
+User-agent: Debian GNU/Linux 9.4 (stretch); Emacs 25.1.1; mu4e 1.1.0
+In-reply-to: <xmqqsh8k6khj.fsf@gitster-ct.c.googlers.com>
+Date:   Fri, 30 Mar 2018 11:24:52 +0200
+Message-ID: <87lge9x6e3.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:4akwoHVeWHakUcOpUQtt0fZevYdNSfnNuZBLhB94q1aU74UM0Ba
- bK8jjqUK/i4LgfKmI/J0ZanOHlQUQN+MoQTb1nlOrcwab6o+D8jr7xF/L4goAf0BqR4p/fv
- eGgvjgKQHu7L9anR74ywH2OMa7m9GuorR1PaYnnTV1Fyo88KCBXGffq+3JHBzIdX7AApumz
- 1R21F1PEdQcMJ8Ryzqd5Q==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:bTke+oonAJw=:5CrQ88xDmpF1mW53qGz0ST
- cibYnfnq05RN6b0yeIiZmVDE2JVCCBLZ5KrmURW3pG2XTBmXY7hA8Kec2dbz5/jZCfZfejhOg
- gpsGq+rY/IEzQbLcI9Yad6b6ctuT1VgIkkbGAMK2/Ae5AwvV1gyOky6zAyjUl6iaTFBrkr7al
- 1XhF7I+t28c2OuosETEeysa12Vksrp3RY2Bagx7/UBUYYJ+QvP6vAdGeWxDBZoQguSD9UGP0j
- CnlP1SEwctiJq373YP27s30oWZ1qGgb/eIkgB9J0WBavxFe4PjwuCKxBHAXTk82XICVh2A9CZ
- iPd5GP1nb4xmsRo08u0zd4Qzj8fL/XoZdZNtV5u0YV7ZenApkC/+lY1WSaDqOq+4b2qby5fkP
- jWTtm33vKNfJJKOEiBmse9YqVihm4rFH8p/M/oLqRniFtyirqHmixTThE7ZZRNE9B6+9yXNI6
- r+pkBSeoYpl+7K+OTa7CTrvL4IP1p5tFIDB1928nJ+UuiCYZYp+6mWrtFGAAiP23QBpYYh6ne
- LXQCkq+4khtYQlpfyqJHIhfXmiZ+Iu+Jgsd3T8mOtxJDWNy58cr7BSyyATbc60+NWw1v5+GIu
- n30h1EnTZVf/nCAPxjczWXluVNqRBh+N7yctn2KllUmhLbdtwAhoQNuoQPPAEb4tJ9hF6wJwZ
- P7lAvVi9+oGoEQHtLb7mo8DyQnY59YMgqvoNQVAfiuyXkFT5fQePQCVGLEjvgPAj+mJYDrOte
- aUbxE2JphTiA9tiPdcsfr7oeLT4vBeBpNM6DwRw5v4wktgSyrwEMsbzJjVUrHPHIQNPyZOYwg
- OVxTb3drf8GYktbNzZQmZEpATwhnqkGKetmhFEttFIS4CcNnHwNUogwxHadKHDaRyYPQOsR
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
 
-On Mon, 19 Mar 2018, Christian Couder wrote:
+On Wed, Mar 28 2018, Junio C. Hamano wrote:
 
-> On Sun, Mar 18, 2018 at 11:41 PM, Jacob Keller <jacob.keller@gmail.com> wrote:
-> >
-> > I don't have a good summary yet, but I think a section about the
-> > discussion regarding the new recreate-merges and rebasing merges
-> > that's been on going might be useful?
-> 
-> Yeah sure, we would gladly accept a summary of this discussion.
+> * ls/checkout-encoding (2018-03-16) 10 commits
+>  - convert: add round trip check based on 'core.checkRoundtripEncoding'
+>  - convert: add tracing for 'working-tree-encoding' attribute
+>  - convert: check for detectable errors in UTF encodings
+>  - convert: add 'working-tree-encoding' attribute
+>  - utf8: add function to detect a missing UTF-16/32 BOM
+>  - utf8: add function to detect prohibited UTF-16/32 BOM
+>  - utf8: teach same_encoding() alternative UTF encoding names
+>  - strbuf: add a case insensitive starts_with()
+>  - strbuf: add xstrdup_toupper()
+>  - strbuf: remove unnecessary NUL assignment in xstrdup_tolower()
+>
+>  The new "checkout-encoding" attribute can ask Git to convert the
+>  contents to the specified encoding when checking out to the working
+>  tree (and the other way around when checking in).
 
-I would *love* a summary of that discussion, especially since it got
-pretty unwieldy (and partially out of hand, but that part probably does
-not need a lot of detail apart from the adjective "heated").
-
-> > a lot of that discussion occurred prior to git-merge (tho it's been
-> > ongoing since then?).
-> 
-> If you want to take the latest discussions into account, the summary
-> could be either split into two parts, one for this edition and the
-> other one for the next edition. Or we could wait and have the whole
-> summary in the next edition.
-
-Jake, I do not know about your availability, but I would love it if you
-could take a stab, as I trust you to be unbiased. I would not trust myself
-to be unbiased because (as everybody saw who cared to read) I got a little
-bit too emotional and should have stayed more professional.
-
-Thanks,
-Dscho
+There's an issue in ca16fc3635 ("convert: check for detectable errors in
+UTF encodings", 2018-03-15) flagged by Coverity:
+https://public-inbox.org/git/CAGZ79kbAOcwaRzjuMtZ_HVsYvUr_7UAPbOcnrmPgsdE19q=PrQ@mail.gmail.com/
