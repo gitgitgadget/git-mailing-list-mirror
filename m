@@ -2,84 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B9F751F404
-	for <e@80x24.org>; Fri, 30 Mar 2018 20:56:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 162401F404
+	for <e@80x24.org>; Fri, 30 Mar 2018 20:59:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752638AbeC3U4c (ORCPT <rfc822;e@80x24.org>);
-        Fri, 30 Mar 2018 16:56:32 -0400
-Received: from mail-wr0-f181.google.com ([209.85.128.181]:41562 "EHLO
-        mail-wr0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752568AbeC3U4b (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Mar 2018 16:56:31 -0400
-Received: by mail-wr0-f181.google.com with SMTP id f14so8861902wre.8
-        for <git@vger.kernel.org>; Fri, 30 Mar 2018 13:56:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=vZHD+I5NHdGdtltRaQfEcdb/tJeinyxouU+aZuK10oQ=;
-        b=segQHflgnO5qOYC+ukfd3v2p3KVNBgdHIDshqe+V4zPAWX4aHAdM84cYZMSL2UjJTa
-         GJED82DmSxbDkjxUWz617iJ+zDNlmntdmHw0lTRQXsDcHCRJ7MOtLhOs/OuM4fWZbVtG
-         eau+3+7eIBkOK5u6eJ4Pc2j80C9WS5PsO42JTko4hQnzFhWAc71aiHPXxXJ4LDOBcuq4
-         TkyxX528+jOm2TwkRzkLHmMevBz/R0LPHzq9aRZrBZXUbR3Ny6yTPyioP5WHx/XPd7xY
-         TOUtOrQCwe9jTLEaJdFEw27IwsXimXg5/CLJKai46HOtWPev0EfyNdvJa62k/iWvL/+q
-         nY1A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=vZHD+I5NHdGdtltRaQfEcdb/tJeinyxouU+aZuK10oQ=;
-        b=rT9Sjfc4jpv3Wd9gQw4bG8MJvsr3NKqARGKYCgSivEI5g34M7KN3r5q5iPh5HGRWsH
-         q9d1Z0tBTkV5im2QnlKfSvY5tLiVRJGbELqaiAxmzLE0P3u6WI/NTqBqbH+edOvZpO0+
-         tvD1+12CYPbG+rD6xFYc0ILP2t7hgAJ8Y4UxHABtvCRMrXYiKuGWdtW6U6+Y6l9AfWvI
-         fruLA00+ixEELavpPUQIo9zka0n8vgebd8XLjqxio1rd2uUnKoMFrx0AdW82ScOB9W0h
-         Wy786x0xbfaw1/MSwdDghPDoSydrNXUQug5HcilHIlEuojWPhuE5Nh8ECN0l3zEHzQOe
-         iRMA==
-X-Gm-Message-State: AElRT7GiMvqDCagBZRKYbgUUbdv0NT4FPak9o3ThMp3crY2c7GzzvWlK
-        tqH3L0G7cSg+6Bgh20gMsfY=
-X-Google-Smtp-Source: AIpwx48g+qDc+VKuVc1oYFAlCqVO78gDLwu4rq0ps6JrLSSlG/VL5XC5Fbt5ng800F4tUm9DEqbW8A==
-X-Received: by 10.223.201.3 with SMTP id m3mr294334wrh.137.1522443389779;
-        Fri, 30 Mar 2018 13:56:29 -0700 (PDT)
-Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
-        by smtp.gmail.com with ESMTPSA id c14sm6621944wmi.28.2018.03.30.13.56.28
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 30 Mar 2018 13:56:28 -0700 (PDT)
-Date:   Fri, 30 Mar 2018 21:59:56 +0100
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Mar 2018, #06; Fri, 30)
-Message-ID: <20180330205956.GA13643@hank>
-References: <xmqqvadd1epf.fsf@gitster-ct.c.googlers.com>
+        id S1752827AbeC3U7I (ORCPT <rfc822;e@80x24.org>);
+        Fri, 30 Mar 2018 16:59:08 -0400
+Received: from cloud.peff.net ([104.130.231.41]:49444 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1752568AbeC3U7I (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Mar 2018 16:59:08 -0400
+Received: (qmail 31688 invoked by uid 109); 30 Mar 2018 20:59:08 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 30 Mar 2018 20:59:08 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 522 invoked by uid 111); 30 Mar 2018 21:00:07 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 30 Mar 2018 17:00:07 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 30 Mar 2018 16:59:06 -0400
+Date:   Fri, 30 Mar 2018 16:59:06 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     avarab@gmail.com, e@80x24.org, git@vger.kernel.org,
+        gitster@pobox.com
+Subject: Re: [PATCH v7 08/13] pack-objects: shrink z_delta_size field in
+ struct object_entry
+Message-ID: <20180330205905.GG14782@sigill.intra.peff.net>
+References: <20180318142526.9378-1-pclouds@gmail.com>
+ <20180324063353.24722-1-pclouds@gmail.com>
+ <20180324063353.24722-9-pclouds@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqvadd1epf.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20180324063353.24722-9-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 03/30, Junio C Hamano wrote:
+On Sat, Mar 24, 2018 at 07:33:48AM +0100, Nguyễn Thái Ngọc Duy wrote:
 
-> * tg/worktree-add-existing-branch (2018-03-27) 6 commits
->  - t2025: rename now outdated branch name
->  - worktree: teach "add" to check out existing branches
->  - worktree: factor out dwim_branch function
->  - worktree: remove force_new_branch from struct add_opts
->  - worktree: be clearer when "add" dwim-ery kicks in
->  - worktree: improve message when creating a new worktree
-> 
->  "git worktree add" learned to check out an existing branch.
-> 
->  Is this ready for 'next'?
+> We only cache deltas when it's smaller than a certain limit. This limit
+> defaults to 1000 but save its compressed length in a 64-bit field.
+> Shrink that field down to 16 bits, so you can only cache 65kb deltas.
+> Larger deltas must be recomputed at when the pack is written down.
 
-Not quite yet.  Eric spotted some UI deficiencies which I'm currently
-trying to address.  I hope to re-roll this in a few days with those
-deficiencies fixed.
+Unlike the depth, I don't think there's any _inherent_ reason you
+couldn't throw, say, 1MB deltas into the cache (if you sized it large
+enough). But I doubt such deltas are really all that common. Here are
+the top 10 in linux.git:
+
+  $ git cat-file --batch-all-objects --batch-check='%(deltabase) %(objectsize:disk)' |
+    grep -v ^00000 | sort -k 2nr | head
+  a02b6794337286bc12c907c33d5d75537c240bd0 769103
+  b28d4b64c05da02c5e8c684dcb9422876225ebdc 327116
+  1e98ce86ed19aff9ba721d13a749ff08088c9922 325257
+  a02b6794337286bc12c907c33d5d75537c240bd0 240647
+  c550d99286c01867dfb26e432417f3106acf8611 177896
+  5977795854f852c2b95dd023fd03cace023ee41c 119737
+  4ccf9681c45d01d17376f7e0d266532a4460f5f8 112671
+  b39fb6821faa9e7bc36de738152a2817b4bf3654 112657
+  2645d6239b74bebd661436762e819b831095b084 103980
+  b8ce7fe5d8def58dc63b7ae099eff7bd07e4e845 101014
+
+It's possible some weird workload would want to tweak this. Say you were
+storing a ton of delta-capable files that were big and always differed
+by a megabyte. And it was somehow really important to you to tradeoff
+memory for CPU during the write phase of a pack.
+
+That seems pretty unlikely to bite anybody (and that was the best I
+could come up with as a devil's advocate against it).
+
+> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+> ---
+>  Documentation/config.txt |  3 ++-
+>  builtin/pack-objects.c   | 22 ++++++++++++++++------
+>  pack-objects.h           |  3 ++-
+>  3 files changed, 20 insertions(+), 8 deletions(-)
+
+Patch looks OK.
+
+-Peff
