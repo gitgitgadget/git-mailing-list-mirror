@@ -2,160 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 02B1B1F424
-	for <e@80x24.org>; Fri, 30 Mar 2018 11:10:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 93DAE1F404
+	for <e@80x24.org>; Fri, 30 Mar 2018 12:14:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751250AbeC3LKP (ORCPT <rfc822;e@80x24.org>);
-        Fri, 30 Mar 2018 07:10:15 -0400
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:37385 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751096AbeC3LKO (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Mar 2018 07:10:14 -0400
-Received: by mail-wr0-f194.google.com with SMTP id l49so7783974wrl.4
-        for <git@vger.kernel.org>; Fri, 30 Mar 2018 04:10:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=2yIDjSram/PKL0Urkglz/b4BWK4PQ29xrzOy3MNewIc=;
-        b=Ws3Ip4u+VSCy+gvvMFQ8WZ4c/J3crAyHGSk90GXl56k/n8b76eqP7DPQ46PMnucIC3
-         mXITxqrXPzVXkIdzmrfun5TGJJv2YrHtEx8X7awK5NsrjJcwGXl8u8Pjp3veKt1+E3dH
-         qzQja7WIBORRuT4ZlX9/uTsgmiS8Hgx4rAqb5U4CXJFvA0S7qvVLRPThvjmaeaFcU7G9
-         ZAiteWkQeHtNtTAPTgCzbJ4VOVY+LZpDlMkaUwaj9B1PpDpLeSYwRzltRtyofD/TaYmZ
-         ulrmtR7eOrPfMCjbGe0aE/gGU3XUNsia1QNgWsEd35IsT3/Qw5WCNWcTK7kLXfBq+kV1
-         /KxQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version:content-transfer-encoding;
-        bh=2yIDjSram/PKL0Urkglz/b4BWK4PQ29xrzOy3MNewIc=;
-        b=to+2bL8Pqb4X3yzRcz8FAbuLiAbxZ/WXGS/lZLR6ajfIrsS1Nl0tZZ0T5zkTWTrwtT
-         1E7oIhsGH7QfB3OopvMe7IbEX8kBhwASrawrjW4FyoeQyPtvkZ3DTPpZC1ZfdMIwUF/E
-         +VAlaFbLtXWQW/MrV2C4tANeHtewp+mk0YvhGgKmnugxMFZ9Sh+2QEZKM55G8Eo5LgFs
-         uGKdF0HvvKTvopGeXDM2XsUpacmbiMi6PWmwXCpCQet9Vo1PN9fjzy9N28/kiluR/6IR
-         zrG4UtQdkl6IFP34QGvcrgZpNiJtAfPfoBsImOAhnSWEZt+J3HzkIo+V5scFxriVlocJ
-         pPeA==
-X-Gm-Message-State: AElRT7ELbuyRfvOak29xqTdHKPiX9Mos7Q6o4zvJeVHS0lrwS0uzC/Mq
-        92Hzc29pVYPJ/DNVpv52BBY=
-X-Google-Smtp-Source: AIpwx4+ZsCVZFYBq1CHKwZYxsV/bhxzdBakU+Vgaer40VbHWSKqd19iOV65iojvqVwY+CfOND5a8kw==
-X-Received: by 10.223.182.132 with SMTP id j4mr9325127wre.66.1522408213156;
-        Fri, 30 Mar 2018 04:10:13 -0700 (PDT)
-Received: from Laptop-Acer-Aspire-F15 (agd201.neoplus.adsl.tpnet.pl. [83.25.159.201])
-        by smtp.gmail.com with ESMTPSA id 6sm2315329wmd.40.2018.03.30.04.10.10
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 30 Mar 2018 04:10:11 -0700 (PDT)
-From:   Jakub Narebski <jnareb@gmail.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     git@vger.kernel.org, git@jeffhostetler.com, peff@peff.net,
-        jonathantanmy@google.com, szeder.dev@gmail.com, sbeller@google.com,
-        gitster@pobox.com, Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v4 00/13] Serialized Git Commit Graph
-References: <4d1ee202-7d79-d73c-6e05-d0fc85db943c@gmail.com>
-        <1519066406-81663-1-git-send-email-dstolee@microsoft.com>
-Date:   Fri, 30 Mar 2018 13:10:05 +0200
-In-Reply-To: <1519066406-81663-1-git-send-email-dstolee@microsoft.com>
-        (Derrick Stolee's message of "Mon, 19 Feb 2018 13:53:13 -0500")
-Message-ID: <867eptkeeq.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
+        id S1751223AbeC3MOk (ORCPT <rfc822;e@80x24.org>);
+        Fri, 30 Mar 2018 08:14:40 -0400
+Received: from mout.gmx.net ([212.227.15.15]:37797 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751191AbeC3MOj (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Mar 2018 08:14:39 -0400
+Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MFdDB-1enqhP07bZ-00Ea7K; Fri, 30
+ Mar 2018 14:14:22 +0200
+Date:   Fri, 30 Mar 2018 14:14:19 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@dscho.gitforwindows.org
+To:     Stefan Beller <sbeller@google.com>
+cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Thomas Rast <tr@thomasrast.ch>, Phil Haack <haacked@gmail.com>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Jason Frey <jfrey@redhat.com>,
+        Philip Oakley <philipoakley@iee.org>
+Subject: Re: [PATCH 0/9] Assorted fixes for `git config` (including the "empty
+ sections" bug)
+In-Reply-To: <CAGZ79ka41uD7A_64kz5oyrhCBci+oXmDGEVc6mHWyQd7d9avAQ@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1803301411480.5026@qfpub.tvgsbejvaqbjf.bet>
+References: <cover.1522336130.git.johannes.schindelin@gmx.de> <CAGZ79ka41uD7A_64kz5oyrhCBci+oXmDGEVc6mHWyQd7d9avAQ@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:lT2KuEK8gDx0I+wRGiORWtPgS/3I5JtwiIpUEV2ZrOauI/YJTDG
+ rkXBUW9fHCnao6t9ZnxnDH2AzfXX7iN2Qws4/8l+53ZOteOkC3hnlruTJOSpU34aqMRslRZ
+ yai+PUl6KtumybnASZJohK767IDGPWpSt3Y74HO6AqHKKDPiVj2bC4gv7VwE1Cu9dYrXv7N
+ 5LSytuW+es9TYGQPhovIQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:oYUjAuoc+YM=:EROP2kRm0dXOBHkUeV5wB/
+ KDAssKDG8ammI8opypm81t31J4UpO1aqHFYpp9H6IErqfJ0XCY3dwJgzbUoZ6LAwSGjenCzrE
+ 0icaZ6QOrd6+ognKCrcZcg7Hl08IhGCFP2s74RntjxMhAEd+GlL+jaY3MJJy/IgvsmvW3Frue
+ J1TXzm35c9sIpsElXwdJ6Ks7RuCv//1bYJ2WhzEcDi/ncPlHlJwtUCsjdcroXfr8TmmQ8d40l
+ oXBbtAeGqpch/uNdjtJX2tQKpPvDqv+JIk6jXeerwYuTomqeWckJ5HENFKvvCJRyQbmV+jk0l
+ 3D9hihVnx4e+f94Irr4Un6vbBv9+SDbxorNPHqWQ/ou2aLNTs6MC0Twa1z0yJjsKu/8w+Si/s
+ IoHOscJgk0dVloUN1nKwIoz73eOD47alZ0BL66Kyma010oxI7dssrR1UFb0nRw3hnHrtE/lBl
+ IittcBcm+9c7KHAD+GAJq2QSwVHZUAynRlh+9gGiKH9ITa2FIJ5Q3u1LW2NMNzYryXqF7Wiii
+ a/WYsIGb1UXp1lJVvukznZMwwAUrb6tW55z/SNNexNhmhiZIZMEXgKpEfBXwNbVYNceG7ILHL
+ zircO8XTn7IpFNgEyIMgqC8GtvfirmIq5UVzTZzaV3wvpdchHVYosO9HNZJwEKWfp70KAhfne
+ 37IPds0/BsSf3kUzr80471wyI2v8ZgDKcL+/0Fi35g09Ox7rcOVjFNuK4LuuzN47c6bDRAvFh
+ QqqE6IfNXt16SGi9aWHeufBsoX1sOFh3E7YSPp9UQZjeP3BAqiag0Bivc9U61xPA06pv1dpHN
+ jvKp8GbpbvEq0YWfz0TX3eaXhSi/niBGYKn+w4jn6eZZyUg5QIKLGp1GnmyJrRFpqGaAFV8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I hope that I am addressing the most recent version of this series.
+Hi Stefan,
 
-Derrick Stolee <stolee@gmail.com> writes:
+On Thu, 29 Mar 2018, Stefan Beller wrote:
 
-> As promised [1], this patch contains a way to serialize the commit graph.
-> The current implementation defines a new file format to store the graph
-> structure (parent relationships) and basic commit metadata (commit date,
-> root tree OID) in order to prevent parsing raw commits while performing
-> basic graph walks. For example, we do not need to parse the full commit
-> when performing these walks:
->
-> * 'git log --topo-order -1000' walks all reachable commits to avoid
->   incorrect topological orders, but only needs the commit message for
->   the top 1000 commits.
->
-> * 'git merge-base <A> <B>' may walk many commits to find the correct
->   boundary between the commits reachable from A and those reachable
->   from B. No commit messages are needed.
->
-> * 'git branch -vv' checks ahead/behind status for all local branches
->   compared to their upstream remote branches. This is essentially as
->   hard as computing merge bases for each.
->
-> The current patch speeds up these calculations by injecting a check in
-> parse_commit_gently() to check if there is a graph file and using that
-> to provide the required metadata to the struct commit.
+> On Thu, Mar 29, 2018 at 8:18 AM, Johannes Schindelin
+> <johannes.schindelin@gmx.de> wrote:
+> 
+> > So what is the argument against this extra care to detect comments? Well, if
+> > you have something like this:
+> >
+> >         [section]
+> >                 ; Here we comment about the variable called snarf
+> >                 snarf = froop
+> >
+> > and we run `git config --unset section.snarf`, we end up with this config:
+> >
+> >         [section]
+> >                 ; Here we comment about the variable called snarf
+> >
+> > which obviously does not make sense. However, that is already established
+> > behavior for quite a few years, and I do not even try to think of a way how
+> > this could be solved.
+> 
+> By commenting out the key/value pair instead of deleting it.
+> It's called --unset, not --delete ;)
 
-That's nice.
+That would open the door to new bug reports when a user starts with this
+concocted config:
 
-What are the assumptions about the serialized commit graph format? Does
-it need to be:
- - extensible without rewriting (e.g. append-only)?
- - like the above, but may need rewriting for optimal performance?
- - extending it needs to rewrite whole file?
+	[section]
+		# This is a comment about the `key` setting
+		key = value
 
-Excuse me if it waas already asked and answered.
+and then does this:
 
->
-> The file format has room to store generation numbers, which will be
-> provided as a patch after this framework is merged. Generation numbers
-> are referenced by the design document but not implemented in order to
-> make the current patch focus on the graph construction process. Once
-> that is stable, it will be easier to add generation numbers and make
-> graph walks aware of generation numbers one-by-one.
+	git config --unset section.key
+	git config section.key value
+	git config --unset section.key
+	git config section.key value
+	git config --unset section.key
+	git config section.key value
 
-As the serialized commit graph format is versioned, I wonder if it would
-be possible to speed up graph walks even more by adding to it FELINE
-index (pair of numbers) from "Reachability Queries in Very Large Graphs:
-A Fast Refined Olnine Search Approach" (2014) - available at
-http://openproceedings.org/EDBT/2014/paper_166.pdf
+and then ends up with a config like this:
 
-The implementation would probably need adjustments to make it
-unambiguous and unambiguously extensible; unless there is place for
-indices that are local-only and need to be recalculated from scratch
-when graph changes (to cover all graph).
+	[section]
+		# This is a comment about the `key` setting
+		;key = value
+		;key = value
+		;key = value
+		key = value
 
->
-> Here are some performance results for a copy of the Linux repository
-> where 'master' has 704,766 reachable commits and is behind 'origin/master'
-> by 19,610 commits.
->
-> | Command                          | Before | After  | Rel % |
-> |----------------------------------|--------|--------|-------|
-> | log --oneline --topo-order -1000 |  5.9s  |  0.7s  | -88%  |
-> | branch -vv                       |  0.42s |  0.27s | -35%  |
-> | rev-list --all                   |  6.4s  |  1.0s  | -84%  |
-> | rev-list --all --objects         | 32.6s  | 27.6s  | -15%  |
+And note that the comment might be about `value` instead, so reusing a
+commented-out `key` setting won't fly, either.
 
-That's the "Rel %" of "Before", that is delta/before, isn't it?
+I *did* give this problem a couple of minutes of thought before writing my
+assessment that is quoted above ;-)
 
-> To test this yourself, run the following on your repo:
->
->   git config core.commitGraph true
->   git show-ref -s | git commit-graph write --set-latest --stdin-commits
->
-> The second command writes a commit graph file containing every commit
-> reachable from your refs. Now, all git commands that walk commits will
-> check your graph first before consulting the ODB. You can run your own
-> performance comparisions by toggling the 'core.commitgraph' setting.
-
-Good.  It is nicely similar to how bitmap indices (of reachability) are
-handled.
-
-I just wonder what happens in the (rare) presence of grafts (old
-mechanism), or "git replace"-d commits...
-
-Regards,
---=20
-Jakub Nar=C4=99bski
+Ciao,
+Dscho
