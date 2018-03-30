@@ -2,84 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BDCFA1F404
-	for <e@80x24.org>; Fri, 30 Mar 2018 18:27:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6D8AA1F404
+	for <e@80x24.org>; Fri, 30 Mar 2018 18:32:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752564AbeC3S1S (ORCPT <rfc822;e@80x24.org>);
-        Fri, 30 Mar 2018 14:27:18 -0400
-Received: from cloud.peff.net ([104.130.231.41]:49004 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1752069AbeC3S1Q (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Mar 2018 14:27:16 -0400
-Received: (qmail 23773 invoked by uid 109); 30 Mar 2018 18:27:15 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 30 Mar 2018 18:27:15 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 30871 invoked by uid 111); 30 Mar 2018 18:28:14 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 30 Mar 2018 14:28:14 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 30 Mar 2018 14:27:13 -0400
-Date:   Fri, 30 Mar 2018 14:27:13 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
-Subject: Re: [PATCH] builtin/config.c: prefer `--type=bool` over `--bool`,
- etc.
-Message-ID: <20180330182713.GA30349@sigill.intra.peff.net>
-References: <20180328234719.595-1-me@ttaylorr.com>
- <20180329221122.GL2939@sigill.intra.peff.net>
- <20180330052719.GA6628@syl.local>
- <20180330135315.GE29568@sigill.intra.peff.net>
- <xmqqmuyp4kqi.fsf@gitster-ct.c.googlers.com>
+        id S1752210AbeC3ScN (ORCPT <rfc822;e@80x24.org>);
+        Fri, 30 Mar 2018 14:32:13 -0400
+Received: from mail-wm0-f53.google.com ([74.125.82.53]:39634 "EHLO
+        mail-wm0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751275AbeC3ScM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Mar 2018 14:32:12 -0400
+Received: by mail-wm0-f53.google.com with SMTP id f125so17899595wme.4
+        for <git@vger.kernel.org>; Fri, 30 Mar 2018 11:32:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=3VUqp9lV6cmOEdfgXUHG8p4Ylt0rSq6GtY3X3gV2AiQ=;
+        b=b7sBBX/65uQNn1JnN3GfB5JmQjqpTQZNR0BQsi6+UiVbZ228KnoxKkF+LC8MhK1i99
+         YAv8j8dovKqlKKltrdknA7n681w/qlkmN39Tue2GFBg92w5wvWsn1OdoN0tn+VY5QpwA
+         b+Gk0J0UyHyGjn9TmS1oBydIngBiDdeGf2ySwS9j+y+yYcv9nGtZ7Ulqt1+sOFS/fw69
+         fzGlNOfB7OhWC2n8giRfObet0POHWsRuuv30Nh7JfrF2ts/vBU1eabO6Q0sXRWLzFGAX
+         t5TMf94LhBLWKqCWvSreVbeo8SM9TxpG/vZgHnK4T5S4SDfCPd/lC26wRETtV0Dv67D1
+         7REg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=3VUqp9lV6cmOEdfgXUHG8p4Ylt0rSq6GtY3X3gV2AiQ=;
+        b=QuVmNI5XxV2QY46yCBWltYCxy5AFm5lfvh98xmWn980cn9fTQWdvqV7l0iKhWse6jK
+         T8ILS51CB+qeZDTxdL+CFXCH3aS3X0VaSH0dzN3/gsPzZaN2wAUuC4RUS1xi+Ng9ve4N
+         9jj3y97T5ykzjMSIZbO6XzcRj6tklvLAbPh6hD41Oea9g0uad5YWhjMe+77fY30/8Eow
+         EJHjgLiClUeTMEmsrZb/lxhHA6Aqa9mZW3M6y3HujNwn/Ki/DRUpRGaDBRXw/kEkDU8B
+         kwhgLZum9ahQbirVKuGW6ARkV3TKuQWZzbjn7Xw+QzGKU+0yGZgmMVkxH9tHp1puWPFk
+         2F8Q==
+X-Gm-Message-State: ALQs6tCG9BkNArj5CTc1hdgCqnferLSkLTkuMsqzFs53oQ++6mMm+zYg
+        g8EMefNmDchBu4AwGpPisoI=
+X-Google-Smtp-Source: AIpwx48U/ByeBQyUBW5O732RDIqiHuNP9cL7A/h69X0XPiip28nVCO7+MSez25ksCWUYejykl2LebQ==
+X-Received: by 10.28.54.6 with SMTP id d6mr2005047wma.32.1522434730538;
+        Fri, 30 Mar 2018 11:32:10 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id d9sm10752338wmh.38.2018.03.30.11.32.09
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 30 Mar 2018 11:32:09 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH] setup.c: reset candidate->work_tree after freeing it
+References: <20180330070744.22466-1-pclouds@gmail.com>
+        <xmqq7ept4hhj.fsf@gitster-ct.c.googlers.com>
+        <CACsJy8DS2pRaDhXgKqFQaqjFft_EW5G=8t9PhNcAgMsSDsS0jA@mail.gmail.com>
+Date:   Fri, 30 Mar 2018 11:32:09 -0700
+In-Reply-To: <CACsJy8DS2pRaDhXgKqFQaqjFft_EW5G=8t9PhNcAgMsSDsS0jA@mail.gmail.com>
+        (Duy Nguyen's message of "Fri, 30 Mar 2018 19:41:02 +0200")
+Message-ID: <xmqqo9j52z4m.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqmuyp4kqi.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 30, 2018 at 09:00:05AM -0700, Junio C Hamano wrote:
+Duy Nguyen <pclouds@gmail.com> writes:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > ... But actually, last-one-wins applies only
-> > to a _single_ option, not necessarily unrelated ones. Many other
-> > multi-action commands actually have a series of separate boolean flags,
-> > and then complain when more than one of the flags is set.
-> >
-> > So maybe it's not such a good idea for the actions (I do still think
-> > it's the right path for the types).
-> 
-> If this were using command verbs (e.g. "git config get foo.bar") as
-> opposed to command options (e.g. "git config --get foo.bar"), it
-> wouldn't ahve allowed multiple command verbs from the command line,
-> and last-one-wins would not have made much sense because there is no
-> way to trigger it as a desirable "feature".
-> 
-> Just like the topic of the discussion unifies --int/--bool/etc. into
-> a single --type={int,bool,...}, perhaps the existing command options
-> --get/--list/etc. can be taken as if they were a mistaken historical
-> way to spell --action={get,list,...}.  I of course am not recommending
-> to add a new "--action" option.  I am suggesting it as a thought-aid
-> to see if actions are all that different from value type options.
-> 
-> I agree that a-bit-per-type that is checked with HAS_MULTI_BITS()
-> for error at the end does not make much sense.  I also think what
-> you did in this patch for actions is a good clean-up for the above
-> reason.
+> On Fri, Mar 30, 2018 at 7:10 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>
+>> Which fields in candidate are safe to peek by the caller?  How can a
+>> caller tell?
+>
+> To me, all fields should be valid after
+> check_repository_format_gently().
 
-I agree the code internally is nicer after the patch. If we throw away
-the argument of "last-one-wins is more consistent with other parts of
-git" (because I don't really think that it is for this type of option),
-I could possibly buy this as a code cleanup. But it does have a
-user-visible impact, which makes the question: are we _OK_ with
-switching to last-one-wins?
+If so, free() is wrong in the first place, and FREE_AND_NULL() is
+making it even worse, no?  We learned there is work_tree set to
+somewhere, the original code by Peff before abade65b ("setup: expose
+enumerated repo info", 2017-11-12) freed it because the code no
+longer needed that piece of information.  If we are passing all we
+learned back to the caller, we should not free the field in the
+function at all.  But it seems (below) the codepath is messier than
+that.
 
--Peff
+> We still need to free and set NULL here though in addition to a
+> cleanup interface. The reason is, when checking repo config from a
+> worktree, we deliberately ignore core.worktree (which belongs to the
+> main repo only). The implicit line near this
+> free(candidate->work_tree) is "leave git_work_tree_cfg alone, we don't
+> recognize core.worktree". Once we move setting git_work_tree_cfg out
+> of this function, this becomes clear.
+
+So in other words, there is a code that looks at the field and it
+_wants_ to see NULL there---otherwise that brittle code misbehaves
+and FREE_AND_NULL() is a bad-aid to work it around?
+
+Then proposed log message "leaving it dangling is unsanitary" is
+*not* what is going on here, and the real reason why the code should
+be like so deserve to be described both in the log message and in a
+large in-code comment, no?
