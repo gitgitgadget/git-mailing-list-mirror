@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 159391F404
-	for <e@80x24.org>; Sat, 31 Mar 2018 15:14:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4B9FB1F404
+	for <e@80x24.org>; Sat, 31 Mar 2018 15:14:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752598AbeCaPOt (ORCPT <rfc822;e@80x24.org>);
-        Sat, 31 Mar 2018 11:14:49 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:54088 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752460AbeCaPOr (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 31 Mar 2018 11:14:47 -0400
-Received: by mail-wm0-f67.google.com with SMTP id p9so19234601wmc.3
-        for <git@vger.kernel.org>; Sat, 31 Mar 2018 08:14:46 -0700 (PDT)
+        id S1752868AbeCaPOx (ORCPT <rfc822;e@80x24.org>);
+        Sat, 31 Mar 2018 11:14:53 -0400
+Received: from mail-wr0-f195.google.com ([209.85.128.195]:46957 "EHLO
+        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752660AbeCaPOu (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 31 Mar 2018 11:14:50 -0400
+Received: by mail-wr0-f195.google.com with SMTP id d1so10085324wrj.13
+        for <git@vger.kernel.org>; Sat, 31 Mar 2018 08:14:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=VIxryRWjgEcmMWUe+FP/+uM9Wygnoes353SHTOb9j8w=;
-        b=HlmCaAxOA+eW/auYAMT9u7QM+7syTJluoztE4Bj+avxAkVhxgOhuogwV7wClE4MCF4
-         IeveU5H6zbL5T7LVfxb8XqgQuNMNNibo2ZKMj/MiCXmT1aAF09z48OoyIXXV9cc/5Hr6
-         zKBN7cWtny1CvjuraAFA5ek7A96lLs3+HtwTHAq/S05xfgl55QYKd1CWQ6QyaMKxMTqc
-         9XO+brUekFe5Pxb0K/Y+qappes1E63SrQ4/h/fX2MRhMp6Tvo52EWeQCxJSldgqxYaRO
-         p8NSGJEz4NBD0MpvXxH64QqRy9QDR0zDqevyodTflLrhfkvxgWw4HvmUHI6J6SPN4MsY
-         2Qbw==
+        bh=X0Yw0WgU/1dMMY4C+ZIkjFvGe2Li8nDXFfJ4AykGQJM=;
+        b=DrxzaDMtOFwTh3pCGSrD2YRCTAOB47Jax1KNQL/S6KnMDqcsYxxh5gk0Iv0vL4gxse
+         p0cUUBWhdKR4AM4iffb0XEKVAVGlQ2mB+l+jJ1xCeKJmDVoMAvpWUvO0gmkRaurKbD9k
+         1fxJTxlOX2P0cK8YUD4NUlGpsrWYmN/xFgQqHJnzeNQx5y8uRL28YDV81XgcCneOB2xY
+         Lj3/xRuj6Q24n5S2jOPDL6kC42f/b17mB1nMBGsdyVyP8cFo0j7pWB8my0CKWEnSC37Y
+         j++VT6WNystwMvLMPE0GC/GG8m/WwdXKEpKtkeSsMSiqMK8SdORIx0sba0GjoG8PVMet
+         Q+0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=VIxryRWjgEcmMWUe+FP/+uM9Wygnoes353SHTOb9j8w=;
-        b=cmHB6x0uF/1I+17vauwbvix8mlaQEGh84fyBjGO1iG28+zHF0AO2uIvHPd6CFJwZDD
-         Qifm/5YzdqrY2kX+xygWr3snIGPx3czW4prX+mqO2kcsp4AZiYqtH2t1qJ8WiCx+hCX1
-         2w4eSpwQ5iihcLCYAFuTMqC4jBP7mnvlWIGreovmZ+l/BZ7snxG9h0boDxT7ntyireOg
-         +XO3SR5FHudxbJ33alhh4xabGsj0i8eozLDDDccnm/YRSdcLVI9cGCbSVgbD2N6G2YCk
-         JYjr/P/D7iZIxps5MpASg5iEi8e9krRxw5NSe9YUogcviKw4B3HJIAZYScZOMD3CfvDu
-         CA7w==
-X-Gm-Message-State: AElRT7G9+M/+ffguYG6v7ebox08tyG0KVl6mQ4zH7dhLWkBtgHmp9eaD
-        HlXyAJvzVmGsfaHcKTLiiAoU52ou
-X-Google-Smtp-Source: AIpwx48cTsCz6dkrHM9Dn3/Col9yDLg1tD20HG+PvHoc0PkUTX6mmKnzItVOAE75Agfy6grDfyAcXg==
-X-Received: by 10.28.7.133 with SMTP id 127mr4502192wmh.74.1522509285379;
-        Sat, 31 Mar 2018 08:14:45 -0700 (PDT)
+        bh=X0Yw0WgU/1dMMY4C+ZIkjFvGe2Li8nDXFfJ4AykGQJM=;
+        b=iyljWIKnXZMaYX9R6M3SNkuJykNUSt3KKcwqyeQnQN4SH+osqdQRl2lpibPH9V8YtK
+         w04mzrhywKKXVdE0pUmGvDYrwAQMcy76eCFcxA63saeTq8RUqFn3hOlbyNDgf0s5zIWI
+         1jVTYPslt3yuc8Ony9s97S9iPhs4hs+xObKv7BPmKtmNkLe6mO9934VQjp3kyIWFaaSm
+         FV6ARw23ffJG1gox6DMVAG8d2D8sI19y+KR+NXCDF1RmC+ql4Dus8kU+ExEOajCNgxzM
+         sW2fQHeuCgYXM9H1QlQ0nr6QVMaGnUJzktyq3ftvMpkkSiSTgvTBAOMbP2pA0aJM2Vjb
+         A/RQ==
+X-Gm-Message-State: AElRT7Hjg8tFgNbe9qeGxmvibtsm8JFo4/NjtKzni6ATa/hO0Jr4RxeU
+        D4AGc/TKJAEdmS3QNb2/8USfuhH3
+X-Google-Smtp-Source: AIpwx48VpOxRQIaFyC1Pp9TnbF7OUjInIrc4Y6J55uGv4PwXIae0C1aLhlmjbcFoNwndak50WAWU6g==
+X-Received: by 10.223.132.103 with SMTP id 94mr2019401wrf.275.1522509288769;
+        Sat, 31 Mar 2018 08:14:48 -0700 (PDT)
 Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
-        by smtp.gmail.com with ESMTPSA id s15sm11518423wrg.28.2018.03.31.08.14.44
+        by smtp.gmail.com with ESMTPSA id f2sm5206883wre.31.2018.03.31.08.14.47
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 31 Mar 2018 08:14:44 -0700 (PDT)
+        Sat, 31 Mar 2018 08:14:48 -0700 (PDT)
 From:   Thomas Gummerer <t.gummerer@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
         Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH v6 1/6] worktree: remove extra members from struct add_opts
-Date:   Sat, 31 Mar 2018 16:17:59 +0100
-Message-Id: <20180331151804.30380-2-t.gummerer@gmail.com>
+Subject: [PATCH v6 3/6] worktree: improve message when creating a new worktree
+Date:   Sat, 31 Mar 2018 16:18:01 +0100
+Message-Id: <20180331151804.30380-4-t.gummerer@gmail.com>
 X-Mailer: git-send-email 2.16.1.78.ga2082135d8
 In-Reply-To: <20180331151804.30380-1-t.gummerer@gmail.com>
 References: <20180325134947.25828-1-t.gummerer@gmail.com>
@@ -66,125 +66,75 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-There are two members of 'struct add_opts', which are only used inside
-the 'add()' function, but being part of 'struct add_opts' they are
-needlessly also passed to the 'add_worktree' function.
+Currently 'git worktree add' produces output like the following, when
+'--no-checkout' is not given:
 
-Make them local to the 'add()' function to make it clearer where they
-are used.
+    Preparing foo (identifier foo)
+    HEAD is now at 26da330922 <title>
+
+where the first line is written to stderr, and the second line coming
+from 'git reset --hard' is written to stdout, even though both lines are
+supposed to tell the user what has happened.  In addition to someone not
+familiar with 'git worktree', this might seem as if the current HEAD was
+modified, not the HEAD in the new working tree.
+
+If the '--no-checkout' flag is given, the output of 'git worktree add'
+is just:
+
+    Preparing foo (identifier foo)
+
+even though the HEAD is set to a commit, which is just not checked out.
+
+The identifier is also not particularly relevant for the user at the
+moment, as it's only used internally to distinguish between different
+worktrees that have the same $(basename <path>).
+
+Fix these inconsistencies, and no longer show the identifier by making
+the 'git reset --hard' call not print the "HEAD is now at ..." line
+using the newly introduced flag from the previous commit, and printing
+the message directly from the builtin command instead.
 
 Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
 ---
- builtin/worktree.c | 32 +++++++++++++++-----------------
- 1 file changed, 15 insertions(+), 17 deletions(-)
+ builtin/worktree.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
 diff --git a/builtin/worktree.c b/builtin/worktree.c
-index 7cef5b120b..4d96a21a45 100644
+index 4d96a21a45..cc94325886 100644
 --- a/builtin/worktree.c
 +++ b/builtin/worktree.c
-@@ -27,8 +27,6 @@ struct add_opts {
- 	int detach;
- 	int checkout;
- 	int keep_locked;
--	const char *new_branch;
--	int force_new_branch;
- };
+@@ -301,8 +301,6 @@ static int add_worktree(const char *path, const char *refname,
+ 	strbuf_addf(&sb, "%s/commondir", sb_repo.buf);
+ 	write_file(sb.buf, "../..");
  
- static int show_only;
-@@ -363,10 +361,11 @@ static int add(int ac, const char **av, const char *prefix)
- 	const char *new_branch_force = NULL;
- 	char *path;
- 	const char *branch;
-+	const char *new_branch = NULL;
- 	const char *opt_track = NULL;
- 	struct option options[] = {
- 		OPT__FORCE(&opts.force, N_("checkout <branch> even if already checked out in other worktree")),
--		OPT_STRING('b', NULL, &opts.new_branch, N_("branch"),
-+		OPT_STRING('b', NULL, &new_branch, N_("branch"),
- 			   N_("create a new branch")),
- 		OPT_STRING('B', NULL, &new_branch_force, N_("branch"),
- 			   N_("create or reset a branch")),
-@@ -384,7 +383,7 @@ static int add(int ac, const char **av, const char *prefix)
- 	memset(&opts, 0, sizeof(opts));
- 	opts.checkout = 1;
- 	ac = parse_options(ac, av, prefix, options, worktree_usage, 0);
--	if (!!opts.detach + !!opts.new_branch + !!new_branch_force > 1)
-+	if (!!opts.detach + !!new_branch + !!new_branch_force > 1)
- 		die(_("-b, -B, and --detach are mutually exclusive"));
- 	if (ac < 1 || ac > 2)
- 		usage_with_options(worktree_usage, options);
-@@ -395,33 +394,32 @@ static int add(int ac, const char **av, const char *prefix)
- 	if (!strcmp(branch, "-"))
- 		branch = "@{-1}";
- 
--	opts.force_new_branch = !!new_branch_force;
--	if (opts.force_new_branch) {
-+	if (new_branch_force) {
- 		struct strbuf symref = STRBUF_INIT;
- 
--		opts.new_branch = new_branch_force;
-+		new_branch = new_branch_force;
- 
- 		if (!opts.force &&
--		    !strbuf_check_branch_ref(&symref, opts.new_branch) &&
-+		    !strbuf_check_branch_ref(&symref, new_branch) &&
- 		    ref_exists(symref.buf))
- 			die_if_checked_out(symref.buf, 0);
- 		strbuf_release(&symref);
+-	fprintf_ln(stderr, _("Preparing %s (identifier %s)"), path, name);
+-
+ 	argv_array_pushf(&child_env, "%s=%s", GIT_DIR_ENVIRONMENT, sb_git.buf);
+ 	argv_array_pushf(&child_env, "%s=%s", GIT_WORK_TREE_ENVIRONMENT, path);
+ 	cp.git_cmd = 1;
+@@ -322,12 +320,22 @@ static int add_worktree(const char *path, const char *refname,
+ 		cp.argv = NULL;
+ 		argv_array_clear(&cp.args);
+ 		argv_array_pushl(&cp.args, "reset", "--hard", NULL);
++		argv_array_push(&cp.args, "--no-show-new-head-line");
+ 		cp.env = child_env.argv;
+ 		ret = run_command(&cp);
+ 		if (ret)
+ 			goto done;
  	}
  
--	if (ac < 2 && !opts.new_branch && !opts.detach) {
-+	if (ac < 2 && !new_branch && !opts.detach) {
- 		int n;
- 		const char *s = worktree_basename(path, &n);
--		opts.new_branch = xstrndup(s, n);
-+		new_branch = xstrndup(s, n);
- 		if (guess_remote) {
- 			struct object_id oid;
- 			const char *remote =
--				unique_tracking_name(opts.new_branch, &oid);
-+				unique_tracking_name(new_branch, &oid);
- 			if (remote)
- 				branch = remote;
- 		}
- 	}
- 
--	if (ac == 2 && !opts.new_branch && !opts.detach) {
-+	if (ac == 2 && !new_branch && !opts.detach) {
- 		struct object_id oid;
- 		struct commit *commit;
- 		const char *remote;
-@@ -430,25 +428,25 @@ static int add(int ac, const char **av, const char *prefix)
- 		if (!commit) {
- 			remote = unique_tracking_name(branch, &oid);
- 			if (remote) {
--				opts.new_branch = branch;
-+				new_branch = branch;
- 				branch = remote;
- 			}
- 		}
- 	}
- 
--	if (opts.new_branch) {
-+	if (new_branch) {
- 		struct child_process cp = CHILD_PROCESS_INIT;
- 		cp.git_cmd = 1;
- 		argv_array_push(&cp.args, "branch");
--		if (opts.force_new_branch)
-+		if (new_branch_force)
- 			argv_array_push(&cp.args, "--force");
--		argv_array_push(&cp.args, opts.new_branch);
-+		argv_array_push(&cp.args, new_branch);
- 		argv_array_push(&cp.args, branch);
- 		if (opt_track)
- 			argv_array_push(&cp.args, opt_track);
- 		if (run_command(&cp))
- 			return -1;
--		branch = opts.new_branch;
-+		branch = new_branch;
- 	} else if (opt_track) {
- 		die(_("--[no-]track can only be used if a new branch is created"));
- 	}
++	fprintf(stderr, _("New worktree HEAD is now at %s"),
++		find_unique_abbrev(commit->object.oid.hash, DEFAULT_ABBREV));
++
++	strbuf_reset(&sb);
++	pp_commit_easy(CMIT_FMT_ONELINE, commit, &sb);
++	if (sb.len > 0)
++		fprintf(stderr, " %s", sb.buf);
++	fputc('\n', stderr);
++
+ 	is_junk = 0;
+ 	FREE_AND_NULL(junk_work_tree);
+ 	FREE_AND_NULL(junk_git_dir);
 -- 
 2.16.1.78.ga2082135d8
 
