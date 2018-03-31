@@ -2,233 +2,146 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+X-Spam-Status: No, score=-2.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 62BD11F404
-	for <e@80x24.org>; Sat, 31 Mar 2018 17:04:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CF21A1F404
+	for <e@80x24.org>; Sat, 31 Mar 2018 17:20:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752895AbeCaREy (ORCPT <rfc822;e@80x24.org>);
-        Sat, 31 Mar 2018 13:04:54 -0400
-Received: from mail-yb0-f178.google.com ([209.85.213.178]:44836 "EHLO
-        mail-yb0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752321AbeCaREx (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 31 Mar 2018 13:04:53 -0400
-Received: by mail-yb0-f178.google.com with SMTP id m185-v6so3869173ybm.11
-        for <git@vger.kernel.org>; Sat, 31 Mar 2018 10:04:53 -0700 (PDT)
+        id S1752911AbeCaRNp (ORCPT <rfc822;e@80x24.org>);
+        Sat, 31 Mar 2018 13:13:45 -0400
+Received: from mail-wm0-f47.google.com ([74.125.82.47]:35088 "EHLO
+        mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752412AbeCaRNo (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 31 Mar 2018 13:13:44 -0400
+Received: by mail-wm0-f47.google.com with SMTP id r82so21087300wme.0
+        for <git@vger.kernel.org>; Sat, 31 Mar 2018 10:13:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=ywTQJINkRxWuLjAwBFVZ+Ap2YCmOaCE5dALGGibJm3I=;
-        b=gTVmBxODXrr6Mk3H7cM9KNIqG9f3AIi6TEffDUQRO2xZJ4q3NGb85YazwKDC6eP0vy
-         woTrdZj6ouV5QTdIDeUN4Ui3DPsUxH6AbfL4At2Xxg3iRTLR5/PreiFU2Rw5Wb4rCwzz
-         Xa9DDXeSnfh4BeZNXn3csgZ0CyHsiUYACMc9mmrvJ6ciTR2DE7/ktNu+Y/EOjpYl3oyb
-         mlye1GR86FpY+iCrK/bygJ4qDLP2gugU7zvBdUyVywGjrZZYkzIGC4V8nCC12xXyvG3+
-         1T9xWRsqI+5moAUZPhJ7wydIhxqLJ0g5vnVRK4h+DMYcxVfgrnyXjBTbdfTtjMWFGkXW
-         AF7A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=teichroeb-net.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=ywTQJINkRxWuLjAwBFVZ+Ap2YCmOaCE5dALGGibJm3I=;
-        b=X51YlCDUcBsmUvUoO5SZIgPauinItZz/6vKETlJIZ9aTK72G4X4H8UlWP9on9xu97z
-         Bgiuxudl9rtiOq4mZm7flPc27I/yUZieA1jHK+5PMptTdNQooxzfBSDLhhE1S9B9X8fH
-         bLVE5WVCR/RoF3fOLYN3QKXM6QCM/rYGrQE/ce/GRESfI5wAl8R34DViomkFIG0TMemz
-         sWmqLIqAmeEgp1wD/JGLQEV38p06RdB0onCrcmwSnfahFfMMUsyoz9EQsKc8jL7J/2Xm
-         YsZdPsQZP5fB5agW0nUG61em4hshpSbvJm6QZKvk0k6IwU0KDtK+oy2Dh5BJplDrDUCv
-         Q0sw==
+        h=to:cc:subject:references:user-agent:in-reply-to:from:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=M0yd3z2yY5AxWbA9EXak142g1G8lstZ7IlZzKhOhEqY=;
+        b=ECLxz/OomKu0qouBJ7J4qWW6euA+Q3246cj1EStmMA2UTgHH3S0NY7MRnwOtpcKD/0
+         b3E5VWVCovVqAIMpvi5AQhfweau8f1r85EqKX4A6WD042zE7x/whBwUotRmotBqWfshL
+         AHTS/iQjxyW3KAGXc5nLECs6kXgq3HQt+q0Bq+VKpsUue1XqnUfdlFxBq5jS5ST7ZfX2
+         IpdO4ezyFm/cOHNg/07qTGaem2gB6yEKw2+jLTEc1NCfysy2b1wnkP81gkzqXp7bPOuP
+         Dp3ahZ0zyW93C0P5zPfT23S8+ufKN7eEtE7JpreobJBaHOaimQ19zy2jVC4IRUgzIyNg
+         8jqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=ywTQJINkRxWuLjAwBFVZ+Ap2YCmOaCE5dALGGibJm3I=;
-        b=mp8R9Z3QHADFhRPS6i8hIlhWMqdoG3ah3WLYorpfdyLSlo5wHtQ0PtSSJ2R6fT/89f
-         ER0xf/mE64v+XQdeoxFr82yihafAqS77K5wNQNqO0h3rcIR/vobf6xqw4XDwiISqIl13
-         ubhLvz/ufuqfI+h/WBRl76XSj41dfwgIlZp2HX1mK+v7Oro/dHYgX73twKwP1GhwBoO8
-         tpf8Ma6CHBiVvVDjlAKlRWniLXJa+aBARfqhMHDudptuAfCu36+xMJf5EvCM3AA7oxMD
-         6yBIdPXnPtiS1iWxa+R05PjXorZ0RWSnaccrwITtWYq1V8hZirxyhMS1MScg9sTccGDc
-         8MSA==
-X-Gm-Message-State: ALQs6tALJfAh/dF2CgGYy+hv/JUe0fqXHVcXsAZy0zhEQfZu8QIpxiRE
-        BhkYhgeArnAajzhfhdtEG5jzOxq7ueyNQLd0QOg=
-X-Google-Smtp-Source: AIpwx48jSgm3P+l+iEcsAIzRguBuxx0F8xYq8HehjZUPnbADZGeSTGkZUfXWQe2+eRC+cZKYasmJifgB3H5uqYZHGWo=
-X-Received: by 2002:a25:e757:: with SMTP id e84-v6mr1328463ybh.217.1522515892593;
- Sat, 31 Mar 2018 10:04:52 -0700 (PDT)
+        h=x-gm-message-state:to:cc:subject:references:user-agent:in-reply-to
+         :from:date:message-id:mime-version:content-transfer-encoding;
+        bh=M0yd3z2yY5AxWbA9EXak142g1G8lstZ7IlZzKhOhEqY=;
+        b=d12tUSD8+VdD1VO5ixfpCsXlgpc32UUESqvN/nX5+9gx6JZe0vY/IjDKz0bf6xxHus
+         jeYjl6nRbb6Wmp7ptTgHi38FN0utHfdsiHIS/R6Tw2DJi/dpyNxxvMewDm6QdeymIP4H
+         yjRCCURmRS3KpZqDNc2mwrTib0r0zCPYqFSkKzajn9Wto9gKFKAf6OJqZx858/Y1TBp8
+         1Q0rx/P1+k92ywU5GLTSEZizu6T8zeFgBcZv77q4eHIHtA89qhlvBiwcbDMN2R35pRbU
+         9eG0F9J9Fyx29doyarT5MFCSYVWM3o47RjV6RCqyBkctPSViqF+xO9kWvb8gPgzHqWuh
+         hKfg==
+X-Gm-Message-State: AElRT7G3IzUA9/2MvfOiUhiSIrrK8HhArYmJNtGFx6gMODRHjaEidEtZ
+        pHBvWIk9uTSc8azVp6mL+AMEjcpp
+X-Google-Smtp-Source: AIpwx49HaexJPQ/vo08OQ/aRsbn2ZaNW9+uynsxrtqqws0j+r+bCVKyMd/XY/GzohgV6mRoNtadVHA==
+X-Received: by 10.80.179.236 with SMTP id t41mr7042133edd.40.1522516422679;
+        Sat, 31 Mar 2018 10:13:42 -0700 (PDT)
+Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
+        by smtp.gmail.com with ESMTPSA id o60sm6657416eda.17.2018.03.31.10.13.41
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sat, 31 Mar 2018 10:13:41 -0700 (PDT)
+To:     phillip.wood@dunelm.org.uk
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] add -p: fix 2.17.0-rc* regression due to moved code
+References: <20180331123605.30076-1-avarab@gmail.com> <20180331125058.4506-1-avarab@gmail.com> <f60a2014-3b02-3eae-76cb-950330113afa@talktalk.net>
+User-agent: Debian GNU/Linux 9.4 (stretch); Emacs 25.1.1; mu4e 1.1.0
+In-reply-to: <f60a2014-3b02-3eae-76cb-950330113afa@talktalk.net>
+ From: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+From:   avarab@gmail.com (=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason)
+Date:   Sat, 31 Mar 2018 19:13:40 +0200
+Message-ID: <87bmf4w4l7.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Received: by 2002:a25:3804:0:0:0:0:0 with HTTP; Sat, 31 Mar 2018 10:04:32
- -0700 (PDT)
-In-Reply-To: <xmqqlgea63xu.fsf@gitster-ct.c.googlers.com>
-References: <20180328222129.22192-1-joel@teichroeb.net> <20180328222129.22192-3-joel@teichroeb.net>
- <xmqqlgea63xu.fsf@gitster-ct.c.googlers.com>
-From:   Joel Teichroeb <joel@teichroeb.net>
-Date:   Sat, 31 Mar 2018 10:04:32 -0700
-X-Google-Sender-Auth: TzNCgrFAvnpibBuOjCLMGWEWnjQ
-Message-ID: <CA+CzEk9vLRMGSMmdpEe6mm9f4f8+Cs+ZBb3sTS0TeZDbWKemcw@mail.gmail.com>
-Subject: Re: [PATCH v4 2/5] stash: convert apply to builtin
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 29, 2018 at 1:07 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Joel Teichroeb <joel@teichroeb.net> writes:
->
->> +static int get_stash_info(struct stash_info *info, int argc, const char **argv)
->> +{
->
-> So, this roughly corresponds to parse_flags_and_rev function, it seems.
->
->> +     struct strbuf w_commit_rev = STRBUF_INIT;
->> +     struct strbuf b_commit_rev = STRBUF_INIT;
->> +     struct strbuf w_tree_rev = STRBUF_INIT;
->> +     struct strbuf b_tree_rev = STRBUF_INIT;
->> +     struct strbuf i_tree_rev = STRBUF_INIT;
->> +     struct strbuf u_tree_rev = STRBUF_INIT;
->> +     struct strbuf symbolic = STRBUF_INIT;
->> +     struct strbuf out = STRBUF_INIT;
->> +     int ret;
->> +     const char *revision;
->> +     const char *commit = NULL;
->> +     char *end_of_rev;
->> +     info->is_stash_ref = 0;
->> +
->> +     if (argc > 1) {
->> +             int i;
->> +             struct strbuf refs_msg = STRBUF_INIT;
->> +             for (i = 0; i < argc; ++i)
->> +                     strbuf_addf(&refs_msg, " '%s'", argv[i]);
->> +
->> +             fprintf_ln(stderr, _("Too many revisions specified:%s"), refs_msg.buf);
->> +             strbuf_release(&refs_msg);
->> +
->> +             return -1;
->> +     }
->> +
->> +     if (argc == 1)
->> +             commit = argv[0];
->> +
->> +     strbuf_init(&info->revision, 0);
->> +     if (commit == NULL) {
->> +             if (have_stash()) {
->> +                     free_stash_info(info);
->> +                     return error(_("No stash entries found."));
->> +             }
->> +
->> +             strbuf_addf(&info->revision, "%s@{0}", ref_stash);
->> +     } else if (strspn(commit, "0123456789") == strlen(commit)) {
->> +             strbuf_addf(&info->revision, "%s@{%s}", ref_stash, commit);
->> +     } else {
->> +             strbuf_addstr(&info->revision, commit);
->> +     }
->> +
->> +     revision = info->revision.buf;
->> +     strbuf_addstr(&w_commit_rev, revision);
->> +     ret = !get_oid(w_commit_rev.buf, &info->w_commit);
->> +     strbuf_release(&w_commit_rev);
->
-> Use of strbuf w_commit_rev looks completely pointless here.  Am I
-> mistaken to say that the above three lines are equivalent to:
->
->         ret = !get_oid(revision, &info->w_commit);
->
 
-Right, it was refactored to this in a previous version, but I didn't
-quite think it through.
+On Sat, Mar 31 2018, Phillip Wood wrote:
 
->> +
->> +     if (!ret) {
->> +             error(_("%s is not a valid reference"), revision);
->> +             free_stash_info(info);
->> +             return -1;
->> +     }
->> +
->> +     strbuf_addf(&b_commit_rev, "%s^1", revision);
->> +     strbuf_addf(&w_tree_rev, "%s:", revision);
->> +     strbuf_addf(&b_tree_rev, "%s^1:", revision);
->> +     strbuf_addf(&i_tree_rev, "%s^2:", revision);
->> +
->> +     ret = !get_oid(b_commit_rev.buf, &info->b_commit) &&
->> +             !get_oid(w_tree_rev.buf, &info->w_tree) &&
->> +             !get_oid(b_tree_rev.buf, &info->b_tree) &&
->> +             !get_oid(i_tree_rev.buf, &info->i_tree);
->> +
->> +     strbuf_release(&b_commit_rev);
->> +     strbuf_release(&w_tree_rev);
->> +     strbuf_release(&b_tree_rev);
->> +     strbuf_release(&i_tree_rev);
+> On 31/03/18 13:50, Ævar Arnfjörð Bjarmason wrote:
+>> Fix a regression in 88f6ffc1c2 ("add -p: only bind search key if
+>> there's more than one hunk", 2018-02-13) which is present in
+>> 2.17.0-rc*, but not 2.16.0.
+>>
+>> In Perl, regex variables like $1 always refer to the last regex
+>> match. When the aforementioned change added a new regex match between
+>> the old match and the corresponding code that was expecting $1, the $1
+>> variable would always be undef, since the newly inserted regex match
+>> doesn't have any captures.
+>>
+>> As a result the "/" feature to search for a string in a hunk by regex
+>> completely broke, on git.git:
 >
-> For the same reason, these strbuf's look pretty much pointless.  I
-> wonder if a private helper
->
->         static int grab_oid(struct oid *oid, const char *fmt, const char *rev)
->         {
->                 struct strbuf buf = STRBUF_INIT;
->                 int ret;
->
->                 strbuf_addf(&buf, fmt, rev);
->                 ret = get_oid(buf, oid);
->                 strbuf_release(&buf);
->                 return ret;
->         }
->
-> would help here?  Then you wouldn't be writing something like the
-> above, and instead you'd grab four object names like so:
->
->         if (grab_oid(&info->b_commit, "%s^1", revision) ||
->             grab_oid(&info->w_tree, "%s:", revision) ||
->             grab_oid(&info->b_tree, "%s&1:", revision) ||
->             grab_oid(&info->i_tree, "%s&2:", revision)) {
->                 ... we found an error ...
->                 return -1;
->         }
->
-> which would be a lot easier to follow, no?
+> Good catch, I could have sworn I'd tested my patch but I obviously
+> didn't notice the warning (I've got interactive.singlekey set so it
+> prints the warning and then prompts as it always has done). Calling it
+> completely broken is perhaps a little harsh as it does work if you
+> enter the regex again and with interactive.singlekey set you only have
+> to enter the regex once.
 
-Very much agreed! I felt like that part of the code was the weakest
-part of my patch before. I'm very happy to have it cleaned up like
-this!
+To clarify by "completely broken" I mean the "/" feature itself, but
+yeah, you can still search by regex since we just so happen to have the
+fallback codepath intended to catch "/" without an accompanying string,
+which'll kick in and ask you for the regex since $1 will be undef at
+that point, and will thus coerce stringwise to "".
 
+> Thanks for fixing it
 >
->> +int cmd_stash__helper(int argc, const char **argv, const char *prefix)
->> +{
->> +     int result = 0;
->> +     pid_t pid = getpid();
->> +     const char *index_file;
->> +
->> +     struct option options[] = {
->> +             OPT_END()
->> +     };
->> +
->> +     git_config(git_default_config, NULL);
->> +
->> +     argc = parse_options(argc, argv, prefix, options, git_stash_helper_usage,
->> +             PARSE_OPT_KEEP_UNKNOWN|PARSE_OPT_KEEP_DASHDASH);
->> +
->> +     index_file = get_index_file();
->> +     xsnprintf(stash_index_path, PATH_MAX, "%s.stash.%"PRIuMAX, index_file, (uintmax_t)pid);
->
-> Wouldn't it make more sense to get rid of PATH_MAX and hold it in a
-> strbuf instead?  I.e.
->
->     static struct strbuf stash_index_path = STRBUF_INIT;
->     ...
->     strbuf_addf(&stash_index_path, "%s.stash.%" PRIuMAX, index_file, (uintmax_t)pid);
->
-
-That makes it a lot cleaner, thanks!
-
->> +     cd "$START_DIR"
->> +     git stash--helper apply "$@"
->> +     res=$?
->> +     cd_to_toplevel
->> +     return $res
->>  }
+> Phillip
+>>
+>>      $ perl -pi -e 's/Git/Tig/g' README.md
+>>      $ ./git --exec-path=$PWD add -p
+>>      [..]
+>>      Stage this hunk [y,n,q,a,d,j,J,g,/,s,e,?]? s
+>>      Split into 4 hunks.
+>>      [...]
+>>      Stage this hunk [y,n,q,a,d,j,J,g,/,s,e,?]? /Many
+>>      Use of uninitialized value $1 in string eq at /home/avar/g/git/git-add--interactive line 1568, <STDIN> line 1.
+>>      search for regex? Many
+>>
+>> I.e. the initial "/regex" command wouldn't work, and would always emit
+>> a warning and ask again for a regex, now it works as intended again.
+>>
+>> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+>> ---
+>>
+>> Of course I just noticed the grammar errors in the commit message
+>> after sending. Here's a v2 with that fixed, also genreated the patch
+>> with -U6 to make it clear what's going on.
+>>
+>>   git-add--interactive.perl | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/git-add--interactive.perl b/git-add--interactive.perl
+>> index d190469cd8..c1f52e457f 100755
+>> --- a/git-add--interactive.perl
+>> +++ b/git-add--interactive.perl
+>> @@ -1561,13 +1561,13 @@ sub patch_update_file {
+>>   			elsif ($line =~ m|^/(.*)|) {
+>>   				my $regex = $1;
+>>   				unless ($other =~ m|/|) {
+>>   					error_msg __("No other hunks to search\n");
+>>   					next;
+>>   				}
+>> -				if ($1 eq "") {
+>> +				if ($regex eq "") {
+>>   					print colored $prompt_color, __("search for regex? ");
+>>   					$regex = <STDIN>;
+>>   					if (defined $regex) {
+>>   						chomp $regex;
+>>   					}
+>>   				}
+>>
