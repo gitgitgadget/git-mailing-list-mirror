@@ -2,127 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9A73C1F404
-	for <e@80x24.org>; Sat, 31 Mar 2018 15:15:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 603A21F42D
+	for <e@80x24.org>; Sat, 31 Mar 2018 15:43:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752915AbeCaPPD (ORCPT <rfc822;e@80x24.org>);
-        Sat, 31 Mar 2018 11:15:03 -0400
-Received: from mail-wr0-f195.google.com ([209.85.128.195]:34044 "EHLO
-        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752861AbeCaPOy (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 31 Mar 2018 11:14:54 -0400
-Received: by mail-wr0-f195.google.com with SMTP id o8so10125208wra.1
-        for <git@vger.kernel.org>; Sat, 31 Mar 2018 08:14:52 -0700 (PDT)
+        id S1753162AbeCaPnm (ORCPT <rfc822;e@80x24.org>);
+        Sat, 31 Mar 2018 11:43:42 -0400
+Received: from mail-wm0-f45.google.com ([74.125.82.45]:50356 "EHLO
+        mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752423AbeCaPnl (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 31 Mar 2018 11:43:41 -0400
+Received: by mail-wm0-f45.google.com with SMTP id l201so19331972wmg.0
+        for <git@vger.kernel.org>; Sat, 31 Mar 2018 08:43:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=KG2LeyOpLJfv44tU/F6FEG9IqZJf0Qi5KaT/LN3MGAc=;
-        b=k+L0z2evrBIjnT9AZMxKc9dd4nr22EMd0fXdUiOzb/SSGHtvvkBHwIt7a4hvHSHtnK
-         Sj6aNVdtQYNK4Cz0FmjsnDnBvAZdOAxpwySj5+1LjajoPiCI6W3tpjM6M6sDIC9dSul5
-         nodABDJ7KKYx/J1GZ01hQLVZ0UDBE+Wyo77y+5+iQuRkQwMKmjuKYv+9ha1zWCyggt0e
-         4oFd2fGQ+b43Ke0q6d0ctQBNBA4O7mJplvNlgrf4ZWFCcHzY5ANPIM+soglB2JrNSDaN
-         HqAFL3qgdU/iz4GwRBU1jTwlJEu09qz67CejezmWFhwSlDm0+fwyvxltW4JO9kJgkp6L
-         fn8A==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=FWKY88KfUxGkLDoappvZ3RQdMCMV5aczBOOS3aB8UwY=;
+        b=NdS+6rUjj0oP4BwD2oZVMkN8cDFxWQrEXPEAKSkfFpkV99NclYRjpOD5c1fkAfe9d+
+         gbg9pj/spacYG4Mi4HqH8V5AqkniiLr03WtlqiQ5cIg2u1ldYTikaOwQ9JNGuoe989YB
+         Oe7DYkUhPwU2RNtF7KwozokJn5XFSwQELGD+uUFA6XayKhhHhgjQ82QLgCX0Rjf53YbB
+         FEQGKCfYtd9ycqNIwL0CqAq1P8bLlqN7jATa2TSiiI1By5po6s942wFpIH4KFu4dxw6r
+         VkDAce4qsDR4sYiOmtnIPzf1t3urPJm+wmUsOlKpZC8uc+hjOOtTGM43jSQW1jywuuA7
+         W9pg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=KG2LeyOpLJfv44tU/F6FEG9IqZJf0Qi5KaT/LN3MGAc=;
-        b=I0lnYsQ85vWDBrnSL/5zv/DPl61fDKjz1WVhuepvVLqeEwO/TyCygtErA+iOb1q1II
-         4Y0SQafZN5e6wZUHG0Linxxer4DBMRyee/dBuCkxOq9BcCSWCROopdvmDC6fAYfWjnYw
-         TsmwsOT4ge28w2B+x1eRqTJVhHXFSEpTOuENYUv55pXgd5klcz68BgEiCo10HBAsPGic
-         omUqMN4tULS8po2usZd+dj940osURnnroqPLzS9eOdyEzCSr+qgj7hC/uRCWXxwCqTh0
-         ywDGEjj7QVxFbU3DFWMGcOGaYu5Shlr6ABxkdweMDh2ECvJkTSqN2cs5Wcx2sLerTIeM
-         i5MA==
-X-Gm-Message-State: AElRT7GR/rxpwUBQ8lUcfJmdakOYZzScERBZpeygz1KEEt1iA1b3KicD
-        PJ3rP1mJ2YIqaGZMXTqo7K7Mr6e9
-X-Google-Smtp-Source: AIpwx4+a7sb7Ydl6sNlf48W9amNzckLO5D+FWNu6u3UiuXfFCZJ0SmM9BUygcc61msoFiJm0wx1imA==
-X-Received: by 10.223.210.82 with SMTP id o18mr2274918wri.85.1522509291868;
-        Sat, 31 Mar 2018 08:14:51 -0700 (PDT)
-Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
-        by smtp.gmail.com with ESMTPSA id g185sm5975439wmf.40.2018.03.31.08.14.50
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=FWKY88KfUxGkLDoappvZ3RQdMCMV5aczBOOS3aB8UwY=;
+        b=UJVqqz3kuhResNeROW+I8+1pdpbwv+keHwRTVjFzCfJ4pVI5ceZDZFvW9FIqVKstit
+         c/FHAXrZhxJ4d/B0ssKYA+XNSJZduYedhXJ7dOnoMYvZLpEH7TpYj9wSUlWGB3KmlZka
+         HqZTURt0sMJBS06rKHQ1DW8B7VTI9mJbGBg5bDj5rVn+m0ebk0YeW8CiYTUT50Sv5Wb1
+         tX0b+n9B7SwX/ODeLhfdRJPV0TndnD3P3gqmkef9DmSrUJineHJZIZSRd1daxoJ0ZB4N
+         S7jmDpRQSoLlAJlNeE6PLyFPNwd2rOjUi/rVpLIhrBnR95JLtilifwrmmGcvT9GAaxK/
+         aOlQ==
+X-Gm-Message-State: AElRT7FXVUli1+5zb5902caDQFie6z0ucRIWt3YaUfJ7edA/AJ0Ed9D1
+        VPIAm2yXb7vWQNww6nak+8uyAr89
+X-Google-Smtp-Source: AIpwx49cXIZp2h7VEok2QFFvlmJu3CjoLd0N5Gvj/DrIS7bzruEocvvjJgR+8GkVWza/s3uTTQlAZQ==
+X-Received: by 10.80.144.119 with SMTP id z52mr6661958edz.79.1522511020387;
+        Sat, 31 Mar 2018 08:43:40 -0700 (PDT)
+Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
+        by smtp.gmail.com with ESMTPSA id h13sm6159643edi.91.2018.03.31.08.43.38
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 31 Mar 2018 08:14:51 -0700 (PDT)
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH v6 5/6] worktree: factor out dwim_branch function
-Date:   Sat, 31 Mar 2018 16:18:03 +0100
-Message-Id: <20180331151804.30380-6-t.gummerer@gmail.com>
-X-Mailer: git-send-email 2.16.1.78.ga2082135d8
-In-Reply-To: <20180331151804.30380-1-t.gummerer@gmail.com>
-References: <20180325134947.25828-1-t.gummerer@gmail.com>
- <20180331151804.30380-1-t.gummerer@gmail.com>
+        Sat, 31 Mar 2018 08:43:39 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Eric Wong <e@80x24.org>, Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH v8 00/15] nd/pack-objects-pack-struct updates
+References: <20180324063353.24722-1-pclouds@gmail.com> <20180331100311.32373-1-pclouds@gmail.com> <87efk0wk7f.fsf@evledraar.gmail.com> <CACsJy8AAApXdxPwt6Yoc-gESXFLVNW8O2u_LF6HUBJTAQaCsTw@mail.gmail.com>
+User-agent: Debian GNU/Linux 9.4 (stretch); Emacs 25.1.1; mu4e 1.1.0
+In-reply-to: <CACsJy8AAApXdxPwt6Yoc-gESXFLVNW8O2u_LF6HUBJTAQaCsTw@mail.gmail.com>
+Date:   Sat, 31 Mar 2018 17:43:38 +0200
+Message-ID: <87d0zkw8r9.fsf@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Factor out a dwim_branch function, which takes care of the dwim'ery in
-'git worktree add <path>'.  It's not too much code currently, but we're
-adding a new kind of dwim in a subsequent patch, at which point it makes
-more sense to have it as a separate function.
 
-Factor it out now to reduce the patch noise in the next patch.
+On Sat, Mar 31 2018, Duy Nguyen wrote:
 
-Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
----
- builtin/worktree.c | 27 +++++++++++++++++----------
- 1 file changed, 17 insertions(+), 10 deletions(-)
+> On Sat, Mar 31, 2018 at 1:36 PM, Ævar Arnfjörð Bjarmason
+> <avarab@gmail.com> wrote:
+>>> +GIT_TEST_SPLIT_INDEX forces split-index mode on the whole test suite.
+>>> +
+>>>  GIT_TEST_FULL_IN_PACK_ARRAY exercises the uncommon pack-objects code
+>>>  path where there are more than 1024 packs even if the actual number of
+>>>  packs in repository is below this limit.
+>>>
+>>> -GIT_TEST_OE_SIZE_BITS=<bits> exercises the uncommon pack-objects
+>>> -code path where we do not cache objecct size in memory and read it
+>>> -from existing packs on demand. This normally only happens when the
+>>> -object size is over 2GB. This variable forces the code path on any
+>>> -object larger than 2^<bits> bytes.
+>>
+>> The docs here say set these env variables, but actually
+>> GIT_TEST_FULL_IN_PACK_ARRAY is a special snowflake in requiring you to
+>> set a bool value.
+>>
+>> I'd set GIT_TEST_SPLIT_INDEX=YesPlease already in my test setup & just
+>> copied that as GIT_TEST_FULL_IN_PACK_ARRAY=YesPlease, but that'll error
+>> out since it's expecting bool, not the env variable to be set.
+>>
+>> I really don't care which we use, but let's use either if(getenv()) or
+>> if(git_env_bool()) consistently, and then have the docs either say "if
+>> set" or "if set to a boolean value (see git-config(1))".
+>
+> I'll change GIT_TEST_SPLIT_INDEX to boolean too since I document it
+> here anyway. Will wait for a while though to see if anything else
+> should be part of v9.
 
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index f686ee1440..47189d50dd 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -363,6 +363,20 @@ static int add_worktree(const char *path, const char *refname,
- 	return ret;
- }
- 
-+static const char *dwim_branch(const char *path, const char **new_branch)
-+{
-+	int n;
-+	const char *s = worktree_basename(path, &n);
-+	*new_branch = xstrndup(s, n);
-+	if (guess_remote) {
-+		struct object_id oid;
-+		const char *remote =
-+			unique_tracking_name(*new_branch, &oid);
-+		return remote;
-+	}
-+	return NULL;
-+}
-+
- static int add(int ac, const char **av, const char *prefix)
- {
- 	struct add_opts opts;
-@@ -415,16 +429,9 @@ static int add(int ac, const char **av, const char *prefix)
- 	}
- 
- 	if (ac < 2 && !new_branch && !opts.detach) {
--		int n;
--		const char *s = worktree_basename(path, &n);
--		new_branch = xstrndup(s, n);
--		if (guess_remote) {
--			struct object_id oid;
--			const char *remote =
--				unique_tracking_name(new_branch, &oid);
--			if (remote)
--				branch = remote;
--		}
-+		const char *s = dwim_branch(path, &new_branch);
-+		if (s)
-+			branch = s;
- 	}
- 
- 	if (ac == 2 && !new_branch && !opts.detach) {
--- 
-2.16.1.78.ga2082135d8
+Sounds good, FWIW (since I spied your forced push to your private branch
+on Github) I mean something like this on top of what you just pushed:
 
+    diff --git a/t/README b/t/README
+    index 65dee935c0..583bede192 100644
+    --- a/t/README
+    +++ b/t/README
+    @@ -298,7 +298,8 @@ Running tests with special setups
+     The whole test suite could be run to test some special features
+     that cannot be easily covered by a few specific test cases. These
+     could be enabled by running the test suite with correct GIT_TEST_
+    -environment set.
+    +environment variable set to a boolean value, as documented in the
+    +"Values" section of git-config(1).
+
+     GIT_TEST_SPLIT_INDEX=<true|false> forces split-index mode on the whole
+     test suite.
+
+I.e. the part above where we just say it has to be set should be changed
+to indicate it's a boolean as understood by git, since in shell/*nix
+idiom saying something has to be set just means ensure getenv() won't
+return NULL.
