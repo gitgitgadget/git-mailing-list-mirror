@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0F73A1F424
-	for <e@80x24.org>; Sat, 31 Mar 2018 10:03:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 408D51F424
+	for <e@80x24.org>; Sat, 31 Mar 2018 10:03:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753198AbeCaKDk (ORCPT <rfc822;e@80x24.org>);
+        id S1753222AbeCaKDm (ORCPT <rfc822;e@80x24.org>);
+        Sat, 31 Mar 2018 06:03:42 -0400
+Received: from mail-lf0-f65.google.com ([209.85.215.65]:38365 "EHLO
+        mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753179AbeCaKDk (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 31 Mar 2018 06:03:40 -0400
-Received: from mail-lf0-f67.google.com ([209.85.215.67]:35085 "EHLO
-        mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753119AbeCaKDc (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 31 Mar 2018 06:03:32 -0400
-Received: by mail-lf0-f67.google.com with SMTP id t132-v6so15143451lfe.2
-        for <git@vger.kernel.org>; Sat, 31 Mar 2018 03:03:32 -0700 (PDT)
+Received: by mail-lf0-f65.google.com with SMTP id u3-v6so15106997lff.5
+        for <git@vger.kernel.org>; Sat, 31 Mar 2018 03:03:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=pG+Gt8DLShKTnBxgGcVrJnuBEkl8hTe0zofk+/Lk4jU=;
-        b=aEnWXVjRWW4HbAXbNLCGMCj3NcM+xpm0HpNNTeFDPOvTb0xO89z45hMTV5m4yZu/8t
-         jG9i/mvWFrVYAGdN5rRuKbcVxa3sTNn1e9BkoBWpZSoBOO/bf4iZWsn1zlG4yNOSFQRu
-         J3sESl+x71ZzIi9xvadslUxH0WaJi8FdfjhHP3NCj76lNeoFGB4bgLvMNLFmVmz2dStT
-         R/vm7F/6c3NmnEZjVnL3yF797euTGHsXC3/msWthGyXBTw1IrmR2KKx6nAQGuZx7i7Ov
-         eDp0Nj2qR/kyCs+xiRkBzAg6teTxqqXcYgJ/FfvFAtnV9lutfX2Or/tlPd28wlttwTn6
-         hUzQ==
+        bh=9b5Q2eyewgzbIkgrNxcqR6QvpMjm0xbhgveRl39SWE4=;
+        b=i02m3STx9MVbZyRKw11U15P22h8/PA/66RsOb+AtcDr6jg1B1xnaRk4Cvj/ZGQZBFb
+         Byje0goWBv5FngapbKXKw7j8/syGunuhA0mM3LMiSCF9MhFO+h5K74am0HuQ5AMQmdIZ
+         9AncHe3Kqga4tCA6cSZcMIXorRIDMdA10jW5YkB7iSwh3zi/OTK0Q/4kzV/6qqO2yvpz
+         Mc+GMDlz/zYJoTGKpHSpd/9WuelS+H94ULeLPBGw6YaogTFnMmxHnXbSnX4ke2NRTZ5A
+         Mf5NasLtvNR8zHtnFtfgBvyM/6IQopki7uJeXWq36dY4Z6NvTFm/uIXlJngNbLpt5Dpv
+         RT/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=pG+Gt8DLShKTnBxgGcVrJnuBEkl8hTe0zofk+/Lk4jU=;
-        b=IE2kxpsIdh8i4kmi/nooRZZ53eyX8ckSbXf5LxM47onFxxo75eQe3Vd9AbHmXBuUUR
-         9/S9QeSsrgMmBUUkID0HvYmRbg5hKO5Q5/y4vFFdPJ93DSO4Vu/F7acjR2vHUyaocaD9
-         BM3wDKpDZPbWdtP9vgm1fYOUk+jNDNzmjhmYQqanJbD0mz0id+mfUqs75qTXs8sRgMNA
-         P02jLaxUrI8dO8aTYF9aaX4g+EJmGbRmnOvMW4+ffNpi0xw6Gx8CuN9Xv8iPqJGEzbGN
-         vVLOVxkWHgYDLqmoEJ5fZKEYXiF+bSO17bP66ZZewUHa3k6/EMNfIY6WSO63i38eYDAF
-         fNjw==
-X-Gm-Message-State: ALQs6tCCiRaGPs0FSSO5kQCY6kiMoD4ObyPIq3jMvEYrH1XR3GoDNAm2
-        h0gki7qzr0ItR12raJRjJvU=
-X-Google-Smtp-Source: AIpwx4/pilL1puxzIUqNfzLe638rPVa0B0jGoKEBltcUnZAYR/1ijSxiVXq/bK5NxalU28wBN+2QwA==
-X-Received: by 10.46.144.2 with SMTP id h2mr1398338ljg.37.1522490610881;
-        Sat, 31 Mar 2018 03:03:30 -0700 (PDT)
+        bh=9b5Q2eyewgzbIkgrNxcqR6QvpMjm0xbhgveRl39SWE4=;
+        b=mLWN6h+x7zASMm7pg28Wk6MQYmWgsDqR9wRZZvg7WY/3UYnYHnAX2QpTl8Db5Cjbvc
+         atyhwrKc+8cTWuME1vxKqyup8IITGOQYi2BC3XuIdwDZlWevnHLKt1ga9KD49j475JFy
+         IUc9dCFZFJQuA3uqg+ZtqDtCuhjq0yF68v1S5/UmA3HIpQOApTKznhRkf3xJweOpUdWP
+         8TybUM/yzJwteO8XaXerS935vCZ/iqsqvTCUet99sEf1vPJOvVEA0RqbXYBWGPsj96m+
+         58xpeksZUVji+sDGuxcAhCaJTEV1DTqMGtx/klYFvKCfboODOrwZ6sfQZ6Eg7nDwYZCj
+         qwRQ==
+X-Gm-Message-State: ALQs6tC6+nkH+pkhLKeVoN6mQuxswEG815yowzmfpOtuLgiOiI9P4sBj
+        Q+1ByxnXMfk2MyiskJvBvWw=
+X-Google-Smtp-Source: AIpwx4/Ib1ogf/H64sewdgHCHOyx9tLOEt7NyTvUwTIA2DnKEZf2K6+IzcHv7q12t4XDLFgAyght9Q==
+X-Received: by 10.46.129.67 with SMTP id t3mr1475060ljg.123.1522490619082;
+        Sat, 31 Mar 2018 03:03:39 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id a1sm1799175ljj.90.2018.03.31.03.03.29
+        by smtp.gmail.com with ESMTPSA id a1sm1799175ljj.90.2018.03.31.03.03.37
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 31 Mar 2018 03:03:30 -0700 (PDT)
+        Sat, 31 Mar 2018 03:03:38 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     avarab@gmail.com, e@80x24.org, git@vger.kernel.org,
         gitster@pobox.com, peff@peff.net
-Subject: [PATCH v8 08/15] pack-objects: refer to delta objects by index instead of pointer
-Date:   Sat, 31 Mar 2018 12:03:04 +0200
-Message-Id: <20180331100311.32373-9-pclouds@gmail.com>
+Subject: [PATCH v8 14/15] pack-objects: reorder members to shrink struct object_entry
+Date:   Sat, 31 Mar 2018 12:03:10 +0200
+Message-Id: <20180331100311.32373-15-pclouds@gmail.com>
 X-Mailer: git-send-email 2.17.0.rc2.515.g4feb9b7923
 In-Reply-To: <20180331100311.32373-1-pclouds@gmail.com>
 References: <20180324063353.24722-1-pclouds@gmail.com>
@@ -69,479 +69,100 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-These delta pointers always point to elements in the objects[] array
-in packing_data struct. We can only hold maximum 4G of those objects
-because the array size in nr_objects is uint32_t. We could use
-uint32_t indexes to address these elements instead of pointers. On
-64-bit architecture (8 bytes per pointer) this would save 4 bytes per
-pointer.
+Previous patches leave lots of holes and padding in this struct. This
+patch reorders the members and shrinks the struct down to 80 bytes
+(from 136 bytes on 64-bit systems, before any field shrinking is done)
+with 16 bits to spare (and a couple more in in_pack_header_size when
+we really run out of bits).
 
-Convert these delta pointers to indexes. Since we need to handle NULL
-pointers as well, the index is shifted by one [1].
+This is the last in a series of memory reduction patches (see
+"pack-objects: a bit of document about struct object_entry" for the
+first one).
 
-[1] This means we can only index 2^32-2 objects even though nr_objects
-    could contain 2^32-1 objects. It should not be a problem in
-    practice because when we grow objects[], nr_alloc would probably
-    blow up long before nr_objects hits the wall.
+Overall they've reduced repack memory size on linux-2.6.git from
+3.747G to 3.424G, or by around 320M, a decrease of 8.5%. The runtime
+of repack has stayed the same throughout this series. Ævar's testing
+on a big monorepo he has access to (bigger than linux-2.6.git) has
+shown a 7.9% reduction, so the overall expected improvement should be
+somewhere around 8%.
+
+See 87po42cwql.fsf@evledraar.gmail.com on-list
+(https://public-inbox.org/git/87po42cwql.fsf@evledraar.gmail.com/) for
+more detailed numbers and a test script used to produce the numbers
+cited above.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- builtin/pack-objects.c | 116 ++++++++++++++++++++++-------------------
- pack-objects.h         |  67 ++++++++++++++++++++++--
- 2 files changed, 124 insertions(+), 59 deletions(-)
+ pack-objects.h | 28 +++++++++++++++++++++-------
+ 1 file changed, 21 insertions(+), 7 deletions(-)
 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 4e5812a053..118c8fd993 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -30,6 +30,12 @@
- #include "packfile.h"
- 
- #define IN_PACK(obj) oe_in_pack(&to_pack, obj)
-+#define DELTA(obj) oe_delta(&to_pack, obj)
-+#define DELTA_CHILD(obj) oe_delta_child(&to_pack, obj)
-+#define DELTA_SIBLING(obj) oe_delta_sibling(&to_pack, obj)
-+#define SET_DELTA(obj, val) oe_set_delta(&to_pack, obj, val)
-+#define SET_DELTA_CHILD(obj, val) oe_set_delta_child(&to_pack, obj, val)
-+#define SET_DELTA_SIBLING(obj, val) oe_set_delta_sibling(&to_pack, obj, val)
- 
- static const char *pack_usage[] = {
- 	N_("git pack-objects --stdout [<options>...] [< <ref-list> | < <object-list>]"),
-@@ -127,11 +133,11 @@ static void *get_delta(struct object_entry *entry)
- 	buf = read_sha1_file(entry->idx.oid.hash, &type, &size);
- 	if (!buf)
- 		die("unable to read %s", oid_to_hex(&entry->idx.oid));
--	base_buf = read_sha1_file(entry->delta->idx.oid.hash, &type,
-+	base_buf = read_sha1_file(DELTA(entry)->idx.oid.hash, &type,
- 				  &base_size);
- 	if (!base_buf)
- 		die("unable to read %s",
--		    oid_to_hex(&entry->delta->idx.oid));
-+		    oid_to_hex(&DELTA(entry)->idx.oid));
- 	delta_buf = diff_delta(base_buf, base_size,
- 			       buf, size, &delta_size, 0);
- 	if (!delta_buf || delta_size != entry->delta_size)
-@@ -288,12 +294,12 @@ static unsigned long write_no_reuse_object(struct hashfile *f, struct object_ent
- 		size = entry->delta_size;
- 		buf = entry->delta_data;
- 		entry->delta_data = NULL;
--		type = (allow_ofs_delta && entry->delta->idx.offset) ?
-+		type = (allow_ofs_delta && DELTA(entry)->idx.offset) ?
- 			OBJ_OFS_DELTA : OBJ_REF_DELTA;
- 	} else {
- 		buf = get_delta(entry);
- 		size = entry->delta_size;
--		type = (allow_ofs_delta && entry->delta->idx.offset) ?
-+		type = (allow_ofs_delta && DELTA(entry)->idx.offset) ?
- 			OBJ_OFS_DELTA : OBJ_REF_DELTA;
- 	}
- 
-@@ -317,7 +323,7 @@ static unsigned long write_no_reuse_object(struct hashfile *f, struct object_ent
- 		 * encoding of the relative offset for the delta
- 		 * base from this object's position in the pack.
- 		 */
--		off_t ofs = entry->idx.offset - entry->delta->idx.offset;
-+		off_t ofs = entry->idx.offset - DELTA(entry)->idx.offset;
- 		unsigned pos = sizeof(dheader) - 1;
- 		dheader[pos] = ofs & 127;
- 		while (ofs >>= 7)
-@@ -343,7 +349,7 @@ static unsigned long write_no_reuse_object(struct hashfile *f, struct object_ent
- 			return 0;
- 		}
- 		hashwrite(f, header, hdrlen);
--		hashwrite(f, entry->delta->idx.oid.hash, 20);
-+		hashwrite(f, DELTA(entry)->idx.oid.hash, 20);
- 		hdrlen += 20;
- 	} else {
- 		if (limit && hdrlen + datalen + 20 >= limit) {
-@@ -379,8 +385,8 @@ static off_t write_reuse_object(struct hashfile *f, struct object_entry *entry,
- 		      dheader[MAX_PACK_OBJECT_HEADER];
- 	unsigned hdrlen;
- 
--	if (entry->delta)
--		type = (allow_ofs_delta && entry->delta->idx.offset) ?
-+	if (DELTA(entry))
-+		type = (allow_ofs_delta && DELTA(entry)->idx.offset) ?
- 			OBJ_OFS_DELTA : OBJ_REF_DELTA;
- 	hdrlen = encode_in_pack_object_header(header, sizeof(header),
- 					      type, entry->size);
-@@ -408,7 +414,7 @@ static off_t write_reuse_object(struct hashfile *f, struct object_entry *entry,
- 	}
- 
- 	if (type == OBJ_OFS_DELTA) {
--		off_t ofs = entry->idx.offset - entry->delta->idx.offset;
-+		off_t ofs = entry->idx.offset - DELTA(entry)->idx.offset;
- 		unsigned pos = sizeof(dheader) - 1;
- 		dheader[pos] = ofs & 127;
- 		while (ofs >>= 7)
-@@ -427,7 +433,7 @@ static off_t write_reuse_object(struct hashfile *f, struct object_entry *entry,
- 			return 0;
- 		}
- 		hashwrite(f, header, hdrlen);
--		hashwrite(f, entry->delta->idx.oid.hash, 20);
-+		hashwrite(f, DELTA(entry)->idx.oid.hash, 20);
- 		hdrlen += 20;
- 		reused_delta++;
- 	} else {
-@@ -467,13 +473,13 @@ static off_t write_object(struct hashfile *f,
- 	else
- 		limit = pack_size_limit - write_offset;
- 
--	if (!entry->delta)
-+	if (!DELTA(entry))
- 		usable_delta = 0;	/* no delta */
- 	else if (!pack_size_limit)
- 	       usable_delta = 1;	/* unlimited packfile */
--	else if (entry->delta->idx.offset == (off_t)-1)
-+	else if (DELTA(entry)->idx.offset == (off_t)-1)
- 		usable_delta = 0;	/* base was written to another pack */
--	else if (entry->delta->idx.offset)
-+	else if (DELTA(entry)->idx.offset)
- 		usable_delta = 1;	/* base already exists in this pack */
- 	else
- 		usable_delta = 0;	/* base could end up in another pack */
-@@ -489,7 +495,7 @@ static off_t write_object(struct hashfile *f,
- 				/* ... but pack split may override that */
- 	else if (oe_type(entry) != entry->in_pack_type)
- 		to_reuse = 0;	/* pack has delta which is unusable */
--	else if (entry->delta)
-+	else if (DELTA(entry))
- 		to_reuse = 0;	/* we want to pack afresh */
- 	else
- 		to_reuse = 1;	/* we have it in-pack undeltified,
-@@ -541,12 +547,12 @@ static enum write_one_status write_one(struct hashfile *f,
- 	}
- 
- 	/* if we are deltified, write out base object first. */
--	if (e->delta) {
-+	if (DELTA(e)) {
- 		e->idx.offset = 1; /* now recurse */
--		switch (write_one(f, e->delta, offset)) {
-+		switch (write_one(f, DELTA(e), offset)) {
- 		case WRITE_ONE_RECURSIVE:
- 			/* we cannot depend on this one */
--			e->delta = NULL;
-+			SET_DELTA(e, NULL);
- 			break;
- 		default:
- 			break;
-@@ -608,34 +614,34 @@ static void add_descendants_to_write_order(struct object_entry **wo,
- 			/* add this node... */
- 			add_to_write_order(wo, endp, e);
- 			/* all its siblings... */
--			for (s = e->delta_sibling; s; s = s->delta_sibling) {
-+			for (s = DELTA_SIBLING(e); s; s = DELTA_SIBLING(s)) {
- 				add_to_write_order(wo, endp, s);
- 			}
- 		}
- 		/* drop down a level to add left subtree nodes if possible */
--		if (e->delta_child) {
-+		if (DELTA_CHILD(e)) {
- 			add_to_order = 1;
--			e = e->delta_child;
-+			e = DELTA_CHILD(e);
- 		} else {
- 			add_to_order = 0;
- 			/* our sibling might have some children, it is next */
--			if (e->delta_sibling) {
--				e = e->delta_sibling;
-+			if (DELTA_SIBLING(e)) {
-+				e = DELTA_SIBLING(e);
- 				continue;
- 			}
- 			/* go back to our parent node */
--			e = e->delta;
--			while (e && !e->delta_sibling) {
-+			e = DELTA(e);
-+			while (e && !DELTA_SIBLING(e)) {
- 				/* we're on the right side of a subtree, keep
- 				 * going up until we can go right again */
--				e = e->delta;
-+				e = DELTA(e);
- 			}
- 			if (!e) {
- 				/* done- we hit our original root node */
- 				return;
- 			}
- 			/* pass it off to sibling at this level */
--			e = e->delta_sibling;
-+			e = DELTA_SIBLING(e);
- 		}
- 	};
- }
-@@ -646,7 +652,7 @@ static void add_family_to_write_order(struct object_entry **wo,
- {
- 	struct object_entry *root;
- 
--	for (root = e; root->delta; root = root->delta)
-+	for (root = e; DELTA(root); root = DELTA(root))
- 		; /* nothing */
- 	add_descendants_to_write_order(wo, endp, root);
- }
-@@ -661,8 +667,8 @@ static struct object_entry **compute_write_order(void)
- 	for (i = 0; i < to_pack.nr_objects; i++) {
- 		objects[i].tagged = 0;
- 		objects[i].filled = 0;
--		objects[i].delta_child = NULL;
--		objects[i].delta_sibling = NULL;
-+		SET_DELTA_CHILD(&objects[i], NULL);
-+		SET_DELTA_SIBLING(&objects[i], NULL);
- 	}
- 
- 	/*
-@@ -672,11 +678,11 @@ static struct object_entry **compute_write_order(void)
- 	 */
- 	for (i = to_pack.nr_objects; i > 0;) {
- 		struct object_entry *e = &objects[--i];
--		if (!e->delta)
-+		if (!DELTA(e))
- 			continue;
- 		/* Mark me as the first child */
--		e->delta_sibling = e->delta->delta_child;
--		e->delta->delta_child = e;
-+		e->delta_sibling_idx = DELTA(e)->delta_child_idx;
-+		SET_DELTA_CHILD(DELTA(e), e);
- 	}
- 
- 	/*
-@@ -1493,10 +1499,10 @@ static void check_object(struct object_entry *entry)
- 			 * circular deltas.
- 			 */
- 			oe_set_type(entry, entry->in_pack_type);
--			entry->delta = base_entry;
-+			SET_DELTA(entry, base_entry);
- 			entry->delta_size = entry->size;
--			entry->delta_sibling = base_entry->delta_child;
--			base_entry->delta_child = entry;
-+			entry->delta_sibling_idx = base_entry->delta_child_idx;
-+			SET_DELTA_CHILD(base_entry, entry);
- 			unuse_pack(&w_curs);
- 			return;
- 		}
-@@ -1567,17 +1573,19 @@ static int pack_offset_sort(const void *_a, const void *_b)
-  */
- static void drop_reused_delta(struct object_entry *entry)
- {
--	struct object_entry **p = &entry->delta->delta_child;
-+	unsigned *idx = &to_pack.objects[entry->delta_idx - 1].delta_child_idx;
- 	struct object_info oi = OBJECT_INFO_INIT;
- 	enum object_type type;
- 
--	while (*p) {
--		if (*p == entry)
--			*p = (*p)->delta_sibling;
-+	while (*idx) {
-+		struct object_entry *oe = &to_pack.objects[*idx - 1];
-+
-+		if (oe == entry)
-+			*idx = oe->delta_sibling_idx;
- 		else
--			p = &(*p)->delta_sibling;
-+			idx = &oe->delta_sibling_idx;
- 	}
--	entry->delta = NULL;
-+	SET_DELTA(entry, NULL);
- 	entry->depth = 0;
- 
- 	oi.sizep = &entry->size;
-@@ -1617,7 +1625,7 @@ static void break_delta_chains(struct object_entry *entry)
- 
- 	for (cur = entry, total_depth = 0;
- 	     cur;
--	     cur = cur->delta, total_depth++) {
-+	     cur = DELTA(cur), total_depth++) {
- 		if (cur->dfs_state == DFS_DONE) {
- 			/*
- 			 * We've already seen this object and know it isn't
-@@ -1642,7 +1650,7 @@ static void break_delta_chains(struct object_entry *entry)
- 		 * it's not a delta, we're done traversing, but we'll mark it
- 		 * done to save time on future traversals.
- 		 */
--		if (!cur->delta) {
-+		if (!DELTA(cur)) {
- 			cur->dfs_state = DFS_DONE;
- 			break;
- 		}
-@@ -1665,7 +1673,7 @@ static void break_delta_chains(struct object_entry *entry)
- 		 * We keep all commits in the chain that we examined.
- 		 */
- 		cur->dfs_state = DFS_ACTIVE;
--		if (cur->delta->dfs_state == DFS_ACTIVE) {
-+		if (DELTA(cur)->dfs_state == DFS_ACTIVE) {
- 			drop_reused_delta(cur);
- 			cur->dfs_state = DFS_DONE;
- 			break;
-@@ -1680,7 +1688,7 @@ static void break_delta_chains(struct object_entry *entry)
- 	 * an extra "next" pointer to keep going after we reset cur->delta.
- 	 */
- 	for (cur = entry; cur; cur = next) {
--		next = cur->delta;
-+		next = DELTA(cur);
- 
- 		/*
- 		 * We should have a chain of zero or more ACTIVE states down to
-@@ -1865,7 +1873,7 @@ static int try_delta(struct unpacked *trg, struct unpacked *src,
- 
- 	/* Now some size filtering heuristics. */
- 	trg_size = trg_entry->size;
--	if (!trg_entry->delta) {
-+	if (!DELTA(trg_entry)) {
- 		max_size = trg_size/2 - 20;
- 		ref_depth = 1;
- 	} else {
-@@ -1941,7 +1949,7 @@ static int try_delta(struct unpacked *trg, struct unpacked *src,
- 	if (!delta_buf)
- 		return 0;
- 
--	if (trg_entry->delta) {
-+	if (DELTA(trg_entry)) {
- 		/* Prefer only shallower same-sized deltas. */
- 		if (delta_size == trg_entry->delta_size &&
- 		    src->depth + 1 >= trg->depth) {
-@@ -1970,7 +1978,7 @@ static int try_delta(struct unpacked *trg, struct unpacked *src,
- 		free(delta_buf);
- 	}
- 
--	trg_entry->delta = src_entry;
-+	SET_DELTA(trg_entry, src_entry);
- 	trg_entry->delta_size = delta_size;
- 	trg->depth = src->depth + 1;
- 
-@@ -1979,13 +1987,13 @@ static int try_delta(struct unpacked *trg, struct unpacked *src,
- 
- static unsigned int check_delta_limit(struct object_entry *me, unsigned int n)
- {
--	struct object_entry *child = me->delta_child;
-+	struct object_entry *child = DELTA_CHILD(me);
- 	unsigned int m = n;
- 	while (child) {
- 		unsigned int c = check_delta_limit(child, n + 1);
- 		if (m < c)
- 			m = c;
--		child = child->delta_sibling;
-+		child = DELTA_SIBLING(child);
- 	}
- 	return m;
- }
-@@ -2054,7 +2062,7 @@ static void find_deltas(struct object_entry **list, unsigned *list_size,
- 		 * otherwise they would become too deep.
- 		 */
- 		max_depth = depth;
--		if (entry->delta_child) {
-+		if (DELTA_CHILD(entry)) {
- 			max_depth -= check_delta_limit(entry, 0);
- 			if (max_depth <= 0)
- 				goto next;
-@@ -2104,7 +2112,7 @@ static void find_deltas(struct object_entry **list, unsigned *list_size,
- 		 * depth, leaving it in the window is pointless.  we
- 		 * should evict it first.
- 		 */
--		if (entry->delta && max_depth <= n->depth)
-+		if (DELTA(entry) && max_depth <= n->depth)
- 			continue;
- 
- 		/*
-@@ -2112,7 +2120,7 @@ static void find_deltas(struct object_entry **list, unsigned *list_size,
- 		 * currently deltified object, to keep it longer.  It will
- 		 * be the first base object to be attempted next.
- 		 */
--		if (entry->delta) {
-+		if (DELTA(entry)) {
- 			struct unpacked swap = array[best_base];
- 			int dist = (window + idx - best_base) % window;
- 			int dst = best_base;
-@@ -2433,7 +2441,7 @@ static void prepare_pack(int window, int depth)
- 	for (i = 0; i < to_pack.nr_objects; i++) {
- 		struct object_entry *entry = to_pack.objects + i;
- 
--		if (entry->delta)
-+		if (DELTA(entry))
- 			/* This happens if we decided to reuse existing
- 			 * delta from a pack.  "reuse_delta &&" is implied.
- 			 */
 diff --git a/pack-objects.h b/pack-objects.h
-index 4a8aa56042..272ddeeedb 100644
+index b5114a70a7..60192cce1f 100644
 --- a/pack-objects.h
 +++ b/pack-objects.h
-@@ -68,11 +68,11 @@ struct object_entry {
- 	unsigned long size;	/* uncompressed size */
- 	unsigned in_pack_idx:OE_IN_PACK_BITS;	/* already in pack */
- 	off_t in_pack_offset;
--	struct object_entry *delta;	/* delta base object */
--	struct object_entry *delta_child; /* deltified objects who bases me */
--	struct object_entry *delta_sibling; /* other deltified objects who
--					     * uses the same base as me
--					     */
-+	uint32_t delta_idx;	/* delta base object */
-+	uint32_t delta_child_idx; /* deltified objects who bases me */
-+	uint32_t delta_sibling_idx; /* other deltified objects who
-+				     * uses the same base as me
-+				     */
- 	void *delta_data;	/* cached delta (uncompressed) */
- 	unsigned long delta_size;	/* delta data size (uncompressed) */
- 	unsigned long z_delta_size;	/* delta data size (compressed) */
-@@ -192,4 +192,61 @@ static inline void oe_set_in_pack(struct packing_data *pack,
- 		pack->in_pack[e - pack->objects] = p;
- }
+@@ -26,6 +26,10 @@ enum dfs_state {
+ };
  
-+static inline struct object_entry *oe_delta(
-+		const struct packing_data *pack,
-+		const struct object_entry *e)
-+{
-+	if (e->delta_idx)
-+		return &pack->objects[e->delta_idx - 1];
-+	return NULL;
-+}
+ /*
++ * The size of struct nearly determines pack-objects's memory
++ * consumption. This struct is packed tight for that reason. When you
++ * add or reorder something in this struct, think a bit about this.
++ *
+  * basic object info
+  * -----------------
+  * idx.oid is filled up before delta searching starts. idx.crc32 is
+@@ -74,34 +78,44 @@ enum dfs_state {
+  */
+ struct object_entry {
+ 	struct pack_idx_entry idx;
++	void *delta_data;	/* cached delta (uncompressed) */
++	off_t in_pack_offset;
++	uint32_t hash;			/* name hint hash */
+ 	unsigned size_:OE_SIZE_BITS;
+ 	unsigned size_valid:1;
+-	unsigned in_pack_idx:OE_IN_PACK_BITS;	/* already in pack */
+-	off_t in_pack_offset;
+ 	uint32_t delta_idx;	/* delta base object */
+ 	uint32_t delta_child_idx; /* deltified objects who bases me */
+ 	uint32_t delta_sibling_idx; /* other deltified objects who
+ 				     * uses the same base as me
+ 				     */
+-	void *delta_data;	/* cached delta (uncompressed) */
+ 	unsigned delta_size_:OE_DELTA_SIZE_BITS; /* delta data size (uncompressed) */
+ 	unsigned delta_size_valid:1;
++	unsigned in_pack_idx:OE_IN_PACK_BITS;	/* already in pack */
+ 	unsigned z_delta_size:OE_Z_DELTA_BITS;
++	unsigned type_valid:1;
+ 	unsigned type_:TYPE_BITS;
++	unsigned no_try_delta:1;
+ 	unsigned in_pack_type:TYPE_BITS; /* could be delta */
+-	unsigned type_valid:1;
+-	uint32_t hash;			/* name hint hash */
+-	unsigned char in_pack_header_size;
+ 	unsigned preferred_base:1; /*
+ 				    * we do not pack this, but is available
+ 				    * to be used as the base object to delta
+ 				    * objects against.
+ 				    */
+-	unsigned no_try_delta:1;
+ 	unsigned tagged:1; /* near the very tip of refs */
+ 	unsigned filled:1; /* assigned write-order */
+ 	unsigned dfs_state:OE_DFS_STATE_BITS;
++	unsigned char in_pack_header_size;
+ 	unsigned depth:OE_DEPTH_BITS;
 +
-+static inline void oe_set_delta(struct packing_data *pack,
-+				struct object_entry *e,
-+				struct object_entry *delta)
-+{
-+	if (delta)
-+		e->delta_idx = (delta - pack->objects) + 1;
-+	else
-+		e->delta_idx = 0;
-+}
-+
-+static inline struct object_entry *oe_delta_child(
-+		const struct packing_data *pack,
-+		const struct object_entry *e)
-+{
-+	if (e->delta_child_idx)
-+		return &pack->objects[e->delta_child_idx - 1];
-+	return NULL;
-+}
-+
-+static inline void oe_set_delta_child(struct packing_data *pack,
-+				      struct object_entry *e,
-+				      struct object_entry *delta)
-+{
-+	if (delta)
-+		e->delta_child_idx = (delta - pack->objects) + 1;
-+	else
-+		e->delta_child_idx = 0;
-+}
-+
-+static inline struct object_entry *oe_delta_sibling(
-+		const struct packing_data *pack,
-+		const struct object_entry *e)
-+{
-+	if (e->delta_sibling_idx)
-+		return &pack->objects[e->delta_sibling_idx - 1];
-+	return NULL;
-+}
-+
-+static inline void oe_set_delta_sibling(struct packing_data *pack,
-+					struct object_entry *e,
-+					struct object_entry *delta)
-+{
-+	if (delta)
-+		e->delta_sibling_idx = (delta - pack->objects) + 1;
-+	else
-+		e->delta_sibling_idx = 0;
-+}
-+
- #endif
++	/*
++	 * pahole results on 64-bit linux (gcc and clang)
++	 *
++	 *   size: 80, bit_padding: 20 bits, holes: 8 bits
++	 *
++	 * and on 32-bit (gcc)
++	 *
++	 *   size: 76, bit_padding: 20 bits, holes: 8 bits
++	 */
+ };
+ 
+ struct packing_data {
 -- 
 2.17.0.rc2.515.g4feb9b7923
 
