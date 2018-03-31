@@ -2,97 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DDEB11F404
-	for <e@80x24.org>; Sat, 31 Mar 2018 18:37:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9B2661F404
+	for <e@80x24.org>; Sat, 31 Mar 2018 18:41:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753169AbeCaShL (ORCPT <rfc822;e@80x24.org>);
-        Sat, 31 Mar 2018 14:37:11 -0400
-Received: from mail-ot0-f173.google.com ([74.125.82.173]:46313 "EHLO
-        mail-ot0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753118AbeCaShK (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 31 Mar 2018 14:37:10 -0400
-Received: by mail-ot0-f173.google.com with SMTP id v64-v6so12262058otb.13
-        for <git@vger.kernel.org>; Sat, 31 Mar 2018 11:37:10 -0700 (PDT)
+        id S1753319AbeCaSlP (ORCPT <rfc822;e@80x24.org>);
+        Sat, 31 Mar 2018 14:41:15 -0400
+Received: from mail-wm0-f46.google.com ([74.125.82.46]:54984 "EHLO
+        mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753011AbeCaSlO (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 31 Mar 2018 14:41:14 -0400
+Received: by mail-wm0-f46.google.com with SMTP id h76so19799585wme.4
+        for <git@vger.kernel.org>; Sat, 31 Mar 2018 11:41:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=HDcG4OccxyXuM6uze0FGt6bFOwLWQaBcWUdcW/bU7Jk=;
-        b=R2FY6NpaqUlu5qkHZLvxJFidC7f5GBncMRhNOiVX9Q5qkOHm6mK2TSXc8TCCXtY03/
-         0F9mH40StqhRpUDKr/VE+OP3WUUyYuz/eOHYs8ikjSf3U4We5vITAoyem6S53P3owofz
-         RgKNMWTlyQRKaV73nIFD1Ey+VqvyEzlfP9wEeQFr9dOY/WbBwoy8u7epya3VVdpuMqnl
-         RZjU8HjeUP5zOPH4t6ufsqgjlSOQ7Jkg8UCC875LOzxxi46H9ZHZoVBEmSuF65ntaIs9
-         EabeEhujJKysWA6C7dokKdMyucq0qi7KJ39e+d1riPP0m9oYxwb8NuGqOZ+yXZiGjcOj
-         y/oA==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=KQCKIwTe2fqvi2LZHsyK8yl/3AEth9P1oifsH2jB11c=;
+        b=UaIydrBep68aH+DukjkP1TVUbsnoxGfAfu6wriK22piV7HFTtofAX/B8nmhw6EF6On
+         9z801fBTiZoYAArmfjM1gecBTB95q3xvXyJ5E+9eDBbodYtmv0f/NQ3Rp4qHLc40GrM3
+         KGict891AQMA+a1kEoZPLP1+YAhe59QmyQOyIw7W385mHd3F5AlL3s5ev3ENQ5ItJvXe
+         Fw1f9b+JS7ff5iM+ovLrnXjTXFWRsjqR22Uw2YbdZ3xetk6fMsMDZsLWDtV2jYZxPLD9
+         UjyptQ3Dx4FoHR9EtQyMSjKvf4Vr+ng9X1SaZQ4mJDIF/EARIzjnUIX5AF6xgUH1p9qq
+         i/GQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=HDcG4OccxyXuM6uze0FGt6bFOwLWQaBcWUdcW/bU7Jk=;
-        b=Q59OnYjEkfUdOxsonXiZegLx3DgpXuMUjXGxwp/LCZBQyMRieAMx3pGgdFxCsG+KnX
-         QsT1HiFk8DC5VmPn80FFWDdKyUcpmufxSX7K/w5lJnUQvbe/7AcEcnihHwokIRfuj/qa
-         EXqybf61lxg0M1vWi46CdR4/y8He65oX8ru5w13fNW+2Cy3dd0nxlHUbdywIZ82K1gJY
-         t2c07YQEQdHA0aG+Z96hetSTSrIMCEZd/FWBlYWtrtkEc0YtDykbdEB5gwiVMR6o5T71
-         GOmsn9VwN99Z3bo292qA+3kB3drWWrltyXrEQsrrLWTT2L8SepTaVzI5DnCzDj1LW602
-         k0nQ==
-X-Gm-Message-State: ALQs6tDFErjoiijjCZgXPihgu+tYMH5i/huXNYQ5o9euLAvowZFYa6v2
-        J/+INgwHZfZTCBIxRqsiusT4guBspaPLPbLzB+Y=
-X-Google-Smtp-Source: AIpwx4/m2ocpNtKT7JV3hCNprBlYzSKDSnZlqnRK2e1Vuma8KDjbX2ya85Uf7moGS7E1X+g67dHhcopiGFV7LjZtGoc=
-X-Received: by 2002:a9d:154c:: with SMTP id z12-v6mr2221106otz.65.1522521430055;
- Sat, 31 Mar 2018 11:37:10 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=KQCKIwTe2fqvi2LZHsyK8yl/3AEth9P1oifsH2jB11c=;
+        b=lald/uHDPOaVNfG37Ad69YFagOF9F/KKHWsIyQdNoN+qJ7srQtdOZ7ipgcGZIHxWxT
+         BXV5qx1LasmH3XGwnyZzoP8JrC42qjiEZ7lBV+1D4MbN0m9o+wDCau6fURZtLGDQAdx1
+         P2TV6bVs/kItF0tP/ZWOpvmVN2orFrbdw00L3Kn8dIiylxwNyM5dUU1ge0TrQfJZXQQO
+         2xf29VZYLUA+VLCCurX2wE5JMz3KwMYJzxEmLRzSK5Y0QFNISmbE9x0CoUZtVLqcw9nH
+         KIL8E4ox2UU8w6SKy/d9NPMSQhqGksTgZCxIYT4BIBk/e83I5nMpUNXuJ8F7L++cC/zh
+         IvSA==
+X-Gm-Message-State: AElRT7GqTLDDrcZMRkzX4mGMItFHPzmWjYKmzWYfEAJ/fGRyzwroinuj
+        M+0QZzTYbNbC/LQnXleguek=
+X-Google-Smtp-Source: AIpwx4+D6yKr/xIBsMq5hd9fDqo/XPSNBmoRnino9XSheFz2xxacDjnqRLJzViwMT9MHQKLw/FgXtg==
+X-Received: by 10.80.151.167 with SMTP id e36mr7210786edb.210.1522521673610;
+        Sat, 31 Mar 2018 11:41:13 -0700 (PDT)
+Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
+        by smtp.gmail.com with ESMTPSA id o3sm6749526edi.24.2018.03.31.11.41.12
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sat, 31 Mar 2018 11:41:12 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Daniel Jacques <dnj@google.com>
+Subject: Re: What's cooking in git.git (Mar 2018, #06; Fri, 30)
+References: <xmqqvadd1epf.fsf@gitster-ct.c.googlers.com>
+User-agent: Debian GNU/Linux 9.4 (stretch); Emacs 25.1.1; mu4e 1.1.0
+In-reply-to: <xmqqvadd1epf.fsf@gitster-ct.c.googlers.com>
+Date:   Sat, 31 Mar 2018 20:41:11 +0200
+Message-ID: <87a7uow0jc.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Received: by 10.74.198.152 with HTTP; Sat, 31 Mar 2018 11:36:39 -0700 (PDT)
-In-Reply-To: <20180331164009.2264-1-avarab@gmail.com>
-References: <20180329150322.10722-1-pclouds@gmail.com> <20180331164009.2264-1-avarab@gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sat, 31 Mar 2018 20:36:39 +0200
-Message-ID: <CACsJy8CyB0igY365NMkswSgAi9_rf+XBOMQyJ7XW6iQxQiCEyQ@mail.gmail.com>
-Subject: Re: [PATCH 4/3] Makefile: untangle DEVELOPER and -Werror
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        ric Sunshine <sunshine@sunshineco.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Mar 31, 2018 at 6:40 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
-> Change the DEVELOPER flag, and the newly added EAGER_DEVELOPER flag
-> which (approximately) enables -Wextra so that any combination of them
-> and -Werror can be set.
->
-> I've long wanted to use DEVELOPER=3D1 in my production builds, but on
-> some old systems I still get warnings, and thus the build would
-> fail. However if the build/tests fail for some other reason, it would
-> still be useful to scroll up and see what the relevant code is warning
-> about.
->
-> This change allows for that. Now setting DEVELOPER will set -Werror as
-> before, but if DEVELOPER_NONFATAL is set you'll get the same warnings,
-> but without -Werror.
->
-> I've renamed the newly added EAGER_DEVELOPER flag to
-> DEVELOPER_EXTRA. The reason is that it approximately turns on -Wextra,
-> and it'll be more consistent to add e.g. DEVELOPER_PEDANTIC later than
-> inventing some new name of our own (VERY_EAGER_DEVELOPER?).
 
-Before we go with zillions of *DEVELOPER* maybe we can have something
-like DEVOPTS where you can give multiple keywords to a single variable
-to influence config.mak.dev. This is similar to COMPILER_FEATURES we
-already have in there, but now it's driven by the dev instead of the
-compiler. So you can have keywords like "gentle" (no -Werror) "extra"
-(-Wextra with no suppression) and something else.
---=20
-Duy
+On Fri, Mar 30 2018, Junio C. Hamano wrote:
+
+> [...]
+> * jk/drop-ancient-curl (2017-08-09) 5 commits
+>  - http: #error on too-old curl
+>  - curl: remove ifdef'd code never used with curl >=7.19.4
+>  - http: drop support for curl < 7.19.4
+>  - http: drop support for curl < 7.16.0
+>  - http: drop support for curl < 7.11.1
+>
+>  Some code in http.c that has bitrot is being removed.
+>
+>  Expecting a reroll.
+
+This has been idle for a long time. Peff: What's left to be done for it?
+
+> [...]
+> * dj/runtime-prefix (2018-03-25) 3 commits
+>  - exec_cmd: RUNTIME_PREFIX on some POSIX systems
+>  - Makefile: add Perl runtime prefix support
+>  - Makefile: generate Perl header from template file
+>  (this branch is used by js/runtime-prefix-windows.)
+>
+>  A build-time option has been added to allow Git to be told to refer
+>  to its associated files relative to the main binary, in the same
+>  way that has been possible on Windows for quite some time, for
+>  Linux, BSDs and Darwin.
+>
+>  Is this, together with the js/runtime-prefix-windows topic, ready
+>  for 'next'?
+
+dj/runtime-prefix look good to me (and I've been the reviewing it the
+most it seems), I don't see any problems with js/runtime-prefix-windows
+from peeking at it, but I haven't run it for obvious reasons.
