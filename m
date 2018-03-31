@@ -2,127 +2,172 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5C9161F404
-	for <e@80x24.org>; Sat, 31 Mar 2018 16:26:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 021A61F404
+	for <e@80x24.org>; Sat, 31 Mar 2018 16:40:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752868AbeCaQ02 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 31 Mar 2018 12:26:28 -0400
-Received: from smtp-out-5.talktalk.net ([62.24.135.69]:5775 "EHLO
-        smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752358AbeCaQ01 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 31 Mar 2018 12:26:27 -0400
-Received: from [192.168.2.240] ([92.22.46.114])
-        by smtp.talktalk.net with SMTP
-        id 2JKifWjDxlWlT2JKifDiKl; Sat, 31 Mar 2018 17:26:25 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1522513585;
-        bh=zYxlVPgBdQ5MEC1TsgeDbPe9UKh6w1+Uu4jO4L7CBGw=;
-        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=JySgHHvpaowMyebsq6cKidSgMx5cFVDy+JwcE7Z0JYvo5MH5ms5Se7X7qKZj0lPlx
-         PisVJ/oZhETz6KHgi+nSQHPKjabDcxtgFPYcK/LtVaGvab12lAeaI0DjOktRgacLT3
-         3ziqkj9mBC2YHbcSokg3n0H9CRoO3Hls5u1C+BXU=
-X-Originating-IP: [92.22.46.114]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=N4gH6V1B c=1 sm=1 tr=0 a=KUgcAvQ5w6cTYeaau6oCBw==:117
- a=KUgcAvQ5w6cTYeaau6oCBw==:17 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8
- a=sskFmYGrgnlK9S6yxVQA:9 a=QEXdDO2ut3YA:10
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2] add -p: fix 2.17.0-rc* regression due to moved code
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <20180331123605.30076-1-avarab@gmail.com>
- <20180331125058.4506-1-avarab@gmail.com>
-From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <f60a2014-3b02-3eae-76cb-950330113afa@talktalk.net>
-Date:   Sat, 31 Mar 2018 17:26:22 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
+        id S1752460AbeCaQkY (ORCPT <rfc822;e@80x24.org>);
+        Sat, 31 Mar 2018 12:40:24 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:53880 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752321AbeCaQkX (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 31 Mar 2018 12:40:23 -0400
+Received: by mail-wm0-f67.google.com with SMTP id p9so19426303wmc.3
+        for <git@vger.kernel.org>; Sat, 31 Mar 2018 09:40:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=9MixjjCAah6j+FuDnjP0l4yxVEVOVU6Q+Lw10sgyHKY=;
+        b=LPQa9DSXNGlqJAGZogCtpTsm2YiF6SEg6FKPsJ8xmvJGzyv7mvi6Ea0E9p2Y10g+y7
+         4UU3SPgIPXs9IDvRz/Axu6QoKeEgE8t36y+Fr+nIw8s9b5gnF+sDFN/oxjeaoMS0BS6k
+         PEd7tQGUbHsGYdnJPc3Lh0EtjYOmC1UKwqprrzmlRcEKVVbZHCKnaihe7D4Rn6fWmJda
+         RM6qOUJnJLIXoQ+8DSRpxKKnXcZghEoYWxsPYSZbUw6eiXh4GToUcf1/tpKGL3l+BIgq
+         5Hl0paKV1DULlYIZ7oAy4ZQkysiRwPfyf4bgCZCbFLQyuBD3PN4pY4J+8GIAl6l/6ybV
+         PNkA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=9MixjjCAah6j+FuDnjP0l4yxVEVOVU6Q+Lw10sgyHKY=;
+        b=K6eSPCTRgpQrL/Lffm4KApjNezfhMJndhL1RMaOADOskYQx5Fyb0LuvWEKL+iDlGEL
+         8XnGQGkgMcEFu1Nu57NUI3GMWl8yvEpjFMHpqTsSKKSw7SrPHcpYQ5aKYTHqBB6aonBy
+         1jUzOGLUUuq4QiOf6Yriw6OHyqxG8hvVnCXbnKu0I1ADyeXUesn/KKFftR6iA495Kabs
+         frRkAkdG1wHZ4RBGvEAjkyCITfOfVMAByhrbcRp+2z0ER/dN/Rczloe86+HDbTsjNA9I
+         jrM9rmgNR5RPWNH8Ke3deupBOgtNLvUFzXKzDih/bxAnBFCFICpsle9XugiMnj6sYF2X
+         LV7A==
+X-Gm-Message-State: AElRT7FRqKoaVmLvcFrUwUKzK7CsjaYsBiIl6T/e6q3VkiigdD5gMA1A
+        FmIRudGfJvpk+xtSApDF0Dr4M8ft
+X-Google-Smtp-Source: AIpwx49hGh7PkRY2G/PZK4oDn3elo012qpYs41ZJ3p9IyjB/unYUccGCxkdgpdubxtneS6S/Vv741A==
+X-Received: by 10.28.236.145 with SMTP id h17mr4742061wmi.43.1522514421543;
+        Sat, 31 Mar 2018 09:40:21 -0700 (PDT)
+Received: from u.nix.is ([2a01:4f8:190:5095::2])
+        by smtp.gmail.com with ESMTPSA id p15sm9461920wmd.7.2018.03.31.09.40.20
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 31 Mar 2018 09:40:20 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>, ramsay@ramsayjones.plus.com,
+        larsxschneider@gmail.com, ric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH 4/3] Makefile: untangle DEVELOPER and -Werror
+Date:   Sat, 31 Mar 2018 16:40:09 +0000
+Message-Id: <20180331164009.2264-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.17.0.rc1.321.gba9d0f2565
+In-Reply-To: <20180329150322.10722-1-pclouds@gmail.com>
+References: <20180329150322.10722-1-pclouds@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20180331125058.4506-1-avarab@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfP1RLd30D3bEV9iG29fvhphAYJIyf68DaWB2faMcedJoqCtb1aLti9gEAjTkzb6VR97QxJy9QF0z8+/th3DIZoW6qmdFsGgtA5vcN+QZ6nwLL16Xj5ET
- 2xV/2t+BoxjzUYLMfRfPfE6P8V0l339koHuOCQrESHtC9KFhGBLL8rwvWVkBFJIkedCRExpSsYY63BUVzzNaXSF7ya63IHPRW1ooDxCblwRllvTQnpsWLNkq
- ESpzHEl4fPKmUERfxGORcTw0YuMIONLQ+LvTqbqZBdU=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 31/03/18 13:50, Ævar Arnfjörð Bjarmason wrote:
-> Fix a regression in 88f6ffc1c2 ("add -p: only bind search key if
-> there's more than one hunk", 2018-02-13) which is present in
-> 2.17.0-rc*, but not 2.16.0.
-> 
-> In Perl, regex variables like $1 always refer to the last regex
-> match. When the aforementioned change added a new regex match between
-> the old match and the corresponding code that was expecting $1, the $1
-> variable would always be undef, since the newly inserted regex match
-> doesn't have any captures.
-> 
-> As a result the "/" feature to search for a string in a hunk by regex
-> completely broke, on git.git:
+Change the DEVELOPER flag, and the newly added EAGER_DEVELOPER flag
+which (approximately) enables -Wextra so that any combination of them
+and -Werror can be set.
 
-Good catch, I could have sworn I'd tested my patch but I obviously 
-didn't notice the warning (I've got interactive.singlekey set so it 
-prints the warning and then prompts as it always has done). Calling it 
-completely broken is perhaps a little harsh as it does work if you enter 
-the regex again and with interactive.singlekey set you only have to 
-enter the regex once.
+I've long wanted to use DEVELOPER=1 in my production builds, but on
+some old systems I still get warnings, and thus the build would
+fail. However if the build/tests fail for some other reason, it would
+still be useful to scroll up and see what the relevant code is warning
+about.
 
-Thanks for fixing it
+This change allows for that. Now setting DEVELOPER will set -Werror as
+before, but if DEVELOPER_NONFATAL is set you'll get the same warnings,
+but without -Werror.
 
-Phillip
-> 
->      $ perl -pi -e 's/Git/Tig/g' README.md
->      $ ./git --exec-path=$PWD add -p
->      [..]
->      Stage this hunk [y,n,q,a,d,j,J,g,/,s,e,?]? s
->      Split into 4 hunks.
->      [...]
->      Stage this hunk [y,n,q,a,d,j,J,g,/,s,e,?]? /Many
->      Use of uninitialized value $1 in string eq at /home/avar/g/git/git-add--interactive line 1568, <STDIN> line 1.
->      search for regex? Many
-> 
-> I.e. the initial "/regex" command wouldn't work, and would always emit
-> a warning and ask again for a regex, now it works as intended again.
-> 
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> ---
-> 
-> Of course I just noticed the grammar errors in the commit message
-> after sending. Here's a v2 with that fixed, also genreated the patch
-> with -U6 to make it clear what's going on.
-> 
->   git-add--interactive.perl | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-> index d190469cd8..c1f52e457f 100755
-> --- a/git-add--interactive.perl
-> +++ b/git-add--interactive.perl
-> @@ -1561,13 +1561,13 @@ sub patch_update_file {
->   			elsif ($line =~ m|^/(.*)|) {
->   				my $regex = $1;
->   				unless ($other =~ m|/|) {
->   					error_msg __("No other hunks to search\n");
->   					next;
->   				}
-> -				if ($1 eq "") {
-> +				if ($regex eq "") {
->   					print colored $prompt_color, __("search for regex? ");
->   					$regex = <STDIN>;
->   					if (defined $regex) {
->   						chomp $regex;
->   					}
->   				}
-> 
+I've renamed the newly added EAGER_DEVELOPER flag to
+DEVELOPER_EXTRA. The reason is that it approximately turns on -Wextra,
+and it'll be more consistent to add e.g. DEVELOPER_PEDANTIC later than
+inventing some new name of our own (VERY_EAGER_DEVELOPER?).
+
+The DEVELOPER_EXTRA flag implicitly means DEVELOPER_NONFATAL, but just
+so that this change doesn't introduce yet another arbitrary limitation
+it's possible to combine it with DEVELOPER_FATAL, which will turn on
+-Werror for it as well.
+
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+
+I really like where this is going, but as noted I think this on top
+would be even better.
+
+ Makefile       | 17 +++++++++++------
+ config.mak.dev | 10 ++++++++--
+ 2 files changed, 19 insertions(+), 8 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index e4f04ce1cb..641461a569 100644
+--- a/Makefile
++++ b/Makefile
+@@ -432,11 +432,16 @@ all::
+ # When cross-compiling, define HOST_CPU as the canonical name of the CPU on
+ # which the built Git will run (for instance "x86_64").
+ #
+-# Define DEVELOPER to enable more compiler warnings. Compiler version
+-# and faimily are auto detected, but could be overridden by defining
+-# COMPILER_FEATURES (see config.mak.dev).
+-# Define EAGER_DEVELOPER keeps compiler warnings non-fatal, but no warning
+-# class is suppressed anymore.
++# Define DEVELOPER to enable more compiler warnings. We'll also enable
++# -Werror unless DEVELOPER_NONFATAL is defined. To enable even more
++# pedantic warnings that'll flag some potential existing issues in the
++# codebase turn on DEVELOPER_EXTRA, which implicitly sets DEVELOPER as
++# well, This is -Wextra with a whitelist of disabled warnings. Unless
++# DEVELOPER_NONFATAL is set DEVELOPER_EXTRA will turn it on
++# implicitly, so if you for some reason want both DEVELOPER and
++# DEVELOPER_EXTRA with fatal warnings, you need to set
++# DEVELOPER_FATAL=1 to force -Werror. See config.mak.dev for how this
++# all works.
+ 
+ GIT-VERSION-FILE: FORCE
+ 	@$(SHELL_PATH) ./GIT-VERSION-GEN
+@@ -1043,7 +1048,7 @@ include config.mak.uname
+ -include config.mak.autogen
+ -include config.mak
+ 
+-ifdef EAGER_DEVELOPER
++ifdef DEVELOPER_EXTRA
+ DEVELOPER = Yes
+ endif
+ ifdef DEVELOPER
+diff --git a/config.mak.dev b/config.mak.dev
+index 13883410b3..40f3365729 100644
+--- a/config.mak.dev
++++ b/config.mak.dev
+@@ -1,6 +1,12 @@
+-ifndef EAGER_DEVELOPER
++ifndef DEVELOPER_NONFATAL
++ifndef DEVELOPER_EXTRA
+ CFLAGS += -Werror
+ endif
++endif
++ifdef DEVELOPER_FATAL
++CFLAGS += -Werror
++endif
++
+ CFLAGS += -Wdeclaration-after-statement
+ CFLAGS += -Wno-format-zero-length
+ CFLAGS += -Wold-style-definition
+@@ -23,7 +29,7 @@ CFLAGS += -Wextra
+ # if a function is public, there should be a prototype and the right
+ # header file should be included. If not, it should be static.
+ CFLAGS += -Wmissing-prototypes
+-ifndef EAGER_DEVELOPER
++ifndef DEVELOPER_EXTRA
+ # These are disabled because we have these all over the place.
+ CFLAGS += -Wno-empty-body
+ CFLAGS += -Wno-missing-field-initializers
+-- 
+2.17.0.rc1.321.gba9d0f2565
 
