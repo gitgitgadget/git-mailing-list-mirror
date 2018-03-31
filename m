@@ -2,86 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DE1291F424
-	for <e@80x24.org>; Sat, 31 Mar 2018 09:40:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BBFB81F42D
+	for <e@80x24.org>; Sat, 31 Mar 2018 10:03:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752967AbeCaJkD (ORCPT <rfc822;e@80x24.org>);
-        Sat, 31 Mar 2018 05:40:03 -0400
-Received: from mail-oi0-f51.google.com ([209.85.218.51]:34985 "EHLO
-        mail-oi0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752955AbeCaJkC (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 31 Mar 2018 05:40:02 -0400
-Received: by mail-oi0-f51.google.com with SMTP id z8-v6so9427290oix.2
-        for <git@vger.kernel.org>; Sat, 31 Mar 2018 02:40:02 -0700 (PDT)
+        id S1752967AbeCaKDY (ORCPT <rfc822;e@80x24.org>);
+        Sat, 31 Mar 2018 06:03:24 -0400
+Received: from mail-lf0-f68.google.com ([209.85.215.68]:40115 "EHLO
+        mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752442AbeCaKDX (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 31 Mar 2018 06:03:23 -0400
+Received: by mail-lf0-f68.google.com with SMTP id e5-v6so15127792lfb.7
+        for <git@vger.kernel.org>; Sat, 31 Mar 2018 03:03:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=2w7gM8CZtPfnkuHy/dkJKr0EaDObZrxgasySQJWAKmc=;
-        b=LYpbx9m8WzP+EY9TegZFxJ9mVW1jr8NiJewyi50Vkzk0+t0bj3s8eygS4WcU2kuf7j
-         6LvwRKK62YDrbxoB8aJGm1CEh1TyXh8fIi58HvEmVathasW3tYrs21RRrc44zy+I/Gpj
-         RvOA+uDVoF0vUj/GmpnallM7AkCQCnOYkaZGKf3rBssE4R/wuH650PIN1vOlqkd8Ja9n
-         1NqmN5gumO0q+Okp5P/8/+CFV8CEq0S98uxtBH9KmjtPBEb+KaYQmgUHGjQbH7tczmyT
-         LWd64F/0S9Yp3ZGM2zKNqhFTz0FWLGCCQer+BuTia1lOd+oCU/KfZUgV/Tgk4Jr6daCx
-         iWAA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=3nWBabZJ/1KOdOj6eFyhtDYpDdMTeg/oL57KprlLmjE=;
+        b=D86l++owbJUhd4NoGYouOZLEnFRRLdwFbWDo39Ajp+ycWq+MaMCjGtJMByfEGISo30
+         EPQCq4f3nC4jqVGODPPuGMom093K8hnEls4T3sd+gNzZ/ht8s4uWUfgotuSVHAmpSUr+
+         QNGae0Yz8QlVjMbNwZJIaNVcoSkZ1soC8ggJMTsQ96WjbSNTBVtl6Ntnjmj7DogZKEkR
+         1/Dh1uNdgSXovlB1yHhfS9rHukCYKdug/wKNP8T+j68cZTJexiXIT35EBDhHtnKlwUR3
+         Cd6RZS9U5/A30Bh38nVf8wpuq4p7NFRBruDNCq4oi7A/lnjg1VmxiNy4v8sCpGWwL410
+         hWkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=2w7gM8CZtPfnkuHy/dkJKr0EaDObZrxgasySQJWAKmc=;
-        b=ntiJja+UdddwUaASVvxC/c+cKp1NoYSH3z+jkyZ7QKb/A/LioQ2y1jcNEcxM7m+VNk
-         weSvte/xHIR1U8fke+OKQTin7L5Y74YUABgFHAa0EEMcyHy66b+EW6+GYJag/QCQeLVb
-         jxNWLaTnr6XKAazISFnr6bf/ygwu6uHDQXUZbDkGy/LNGI1OpB6l2VAhYCrrBZ8+RcMW
-         0+FEtuNGJGXf9hX6UGRJHCmpwFhBjK6It+5FykWtYPt8gkF9y4IZ/3N+ooSjqIf9+9TE
-         EjtmQgOZUwrUfZ8px87YjaSqnFcC8JTLC0Vfg1eTnrX8rDPSqdcdXzkXiiLsNSSSWitg
-         OMYA==
-X-Gm-Message-State: ALQs6tDX2zv8v3N4W5RwroLjJEjJ/bzt54NXtlmZb6kO3jRmEGsoy248
-        U0C1Fl/7mQeuMW4WMHpU1C+ojtV9RobDERBf5l8=
-X-Google-Smtp-Source: AIpwx4/+iuVb7MIe/NBaXLbj8sIl+ncxixjYEu4Eko6/VqD5NkwZFwJKTZuJ9BQHRAfTL6mjq3VKjuvShgp3oe6KORQ=
-X-Received: by 2002:aca:4055:: with SMTP id n82-v6mr1168082oia.30.1522489201994;
- Sat, 31 Mar 2018 02:40:01 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=3nWBabZJ/1KOdOj6eFyhtDYpDdMTeg/oL57KprlLmjE=;
+        b=JnM5P8xnNyqO2c21uArbWLqdE/+HkZtnPzObRY/a9fW+EaUv5S0kGnA/JVx1LbKTjT
+         xjlgzv0kdU9ZkPITZ5TkMRuwmkMhLJ4TaB/VbtbYoQTEVc5N53gdtbFhaR3YyMDLisKK
+         RDTsSM/T++erpoJO08wc6mmrwLxIhObJ4FJaOVu4/IxODyzKEVa2jjZDn1zbvh1hgpYm
+         jHTVASwC9XdKDCG3L6rppjHtDLXcpAhESRyf/LiKYIbTZT4PB1LnEhhV1eqm8ObswGsv
+         jzGV2dNIHwuehIgKUvbNU3NG6Eq3heoPnX8IeR4MplAPT/Z1j4OqRxgz36jlYAEwqgrp
+         QIsg==
+X-Gm-Message-State: AElRT7GLPL+gICDGVGuCULhuZ1TKD6ZbKlrHCElR9xKp15vBA/AhDT05
+        vCYg9YhTKdvVJiaD/Q3jF3Q=
+X-Google-Smtp-Source: AIpwx48Y+lz2OO7AjjpjICIAOrsKT+65C0mH4ULdH4y7edGuhjhRhz1oCnAde1KGmDAEYjozmxf3/g==
+X-Received: by 10.46.2.134 with SMTP id y6mr1404613lje.118.1522490601731;
+        Sat, 31 Mar 2018 03:03:21 -0700 (PDT)
+Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
+        by smtp.gmail.com with ESMTPSA id a1sm1799175ljj.90.2018.03.31.03.03.20
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 31 Mar 2018 03:03:20 -0700 (PDT)
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     pclouds@gmail.com
+Cc:     avarab@gmail.com, e@80x24.org, git@vger.kernel.org,
+        gitster@pobox.com, peff@peff.net
+Subject: [PATCH v8 01/15] t/README: mention about running the test suite in special modes
+Date:   Sat, 31 Mar 2018 12:02:57 +0200
+Message-Id: <20180331100311.32373-2-pclouds@gmail.com>
+X-Mailer: git-send-email 2.17.0.rc2.515.g4feb9b7923
+In-Reply-To: <20180331100311.32373-1-pclouds@gmail.com>
+References: <20180324063353.24722-1-pclouds@gmail.com>
+ <20180331100311.32373-1-pclouds@gmail.com>
 MIME-Version: 1.0
-Received: by 10.74.198.152 with HTTP; Sat, 31 Mar 2018 02:39:31 -0700 (PDT)
-In-Reply-To: <xmqqvadd1epf.fsf@gitster-ct.c.googlers.com>
-References: <xmqqvadd1epf.fsf@gitster-ct.c.googlers.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sat, 31 Mar 2018 11:39:31 +0200
-Message-ID: <CACsJy8C2YuxfjBannunoTr8zERf8hC1z568KLAbfhtQYQyf+FQ@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Mar 2018, #06; Fri, 30)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 30, 2018 at 10:38 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> * nd/repack-keep-pack (2018-03-26) 7 commits
->  - pack-objects: show some progress when counting kept objects
->  - gc --auto: exclude base pack if not enough mem to "repack -ad"
->  - gc: handle a corner case in gc.bigPackThreshold
->  - gc: add gc.bigPackThreshold config
->  - gc: add --keep-largest-pack option
->  - repack: add --keep-pack option
->  - t7700: have closing quote of a test at the beginning of line
->
->  "git gc" in a large repository takes a lot of time as it considers
->  to repack all objects into one pack by default.  The command has
->  been taught to pretend as if the largest existing packfile is
->  marked with ".keep" so that it is left untouched while objects in
->  other packs and loose ones are repacked.
->
->  Reroll exists, but it seems to be still slushy.
->  cf. <20180316192745.19557-1-pclouds@gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
 
-The next one v4 [1] should be less slushy.
+There are features that would benefit from running the whole test
+suite instead of just a few test cases written specifically for
+them. Split-index mode is one of them. Document it.
 
-[1] https://public-inbox.org/git/20180324072507.21059-1-pclouds@gmail.com/#t
+This step is required because a few patches later, we will be
+introduce more test modes like this to test some corner cases of
+pack-objects as much as possible.
+
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ t/README | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/t/README b/t/README
+index 1a1361a806..09eb2b9768 100644
+--- a/t/README
++++ b/t/README
+@@ -292,6 +292,16 @@ and know what setup is needed for it.  Or when you want to run
+ everything up to a certain test.
+ 
+ 
++Running tests with special setups
++---------------------------------
++
++The whole test suite could be run to test some special features
++that cannot be easily covered by a few specific test cases. These
++could be enabled by running the test suite with correct GIT_TEST_
++environment set.
++
++GIT_TEST_SPLIT_INDEX forces split-index mode on the whole test suite.
++
+ Naming Tests
+ ------------
+ 
 -- 
-Duy
+2.17.0.rc2.515.g4feb9b7923
+
