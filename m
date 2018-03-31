@@ -2,155 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D8F7B1F404
-	for <e@80x24.org>; Sat, 31 Mar 2018 04:51:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 40A1B1F424
+	for <e@80x24.org>; Sat, 31 Mar 2018 08:50:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750854AbeCaEvm (ORCPT <rfc822;e@80x24.org>);
-        Sat, 31 Mar 2018 00:51:42 -0400
-Received: from mail-ot0-f193.google.com ([74.125.82.193]:35314 "EHLO
-        mail-ot0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750724AbeCaEvl (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 31 Mar 2018 00:51:41 -0400
-Received: by mail-ot0-f193.google.com with SMTP id f47-v6so2239476oth.2
-        for <git@vger.kernel.org>; Fri, 30 Mar 2018 21:51:41 -0700 (PDT)
+        id S1752162AbeCaIuk (ORCPT <rfc822;e@80x24.org>);
+        Sat, 31 Mar 2018 04:50:40 -0400
+Received: from mail-wr0-f182.google.com ([209.85.128.182]:32893 "EHLO
+        mail-wr0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751560AbeCaIuj (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 31 Mar 2018 04:50:39 -0400
+Received: by mail-wr0-f182.google.com with SMTP id z73so9607290wrb.0
+        for <git@vger.kernel.org>; Sat, 31 Mar 2018 01:50:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=dinogroup-eu.20150623.gappssmtp.com; s=20150623;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=iuYdlXCXV2XXZJFOuBhvieMqakT49ZUFElguOYdiBQ0=;
-        b=M5lnZwS+RBH9tO6lD+MbyW7EFknLvEnrtNjsMUdIH9IrC2aDroNGuekp7OzVZNnIDY
-         wz6eQbBAv+0voKsjFS8q3l6ufRjwcNqOdYUl82kn5pHc4hNQoNeU7N+PvZERdyGtWcbl
-         MeFY5XSVdpCG3Yz4qszirTILpWvggv0UmsoXGNkXbdTJ5NuPrLfJQBnnfp7co/80RNhh
-         E9LhECDd+NHMIsC0PguxXJzEDoER7cV44o8vC1c5Svu87sZKCMy23XUwIH8tPmB8qIav
-         poJpM17G54zuleQkiZi0bD8izmhUHELqdXXB+HaW5IEY9BzAFKVUJ+v2pnu3HlyBkWGs
-         aQfQ==
+         :cc;
+        bh=2zHYQ0gDvIprnLbt5aQhYlKDdHanpVuGv/lRzhUozJQ=;
+        b=I0BHKOL8UItGDp1oYdaq5A3qSDXq9u4iybVsx2kq1h1LyNoPm+YQsvSbNgbgjKxGLR
+         UYQaC0Q9o7LT0H7ducn0MSMuqkL8mCQqaexvXnqyHxMXoDL4SE5/LY63ALzu7yqDxTb5
+         kM64vKj25fdVGDsRYe+LqTbSUYW9gQYFviWtLwqj7K8W8BKZhO4UwABn0tn4xCcTccjP
+         HvObmr1/DR1iK1SuEAzOzXci9Jz2WLOHIK/WPw3mxQSj13Hm58Ggd2T4UGLG1j1U1Yoe
+         gDs2rruCt7x2MoTFgjb/qpJKgHeQ7689t/dOu0UTlfI2hzS6A0n6H7qrJJA4eMn5TwrP
+         6ZwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=iuYdlXCXV2XXZJFOuBhvieMqakT49ZUFElguOYdiBQ0=;
-        b=QDMQ5J9jEeLwae9kPXzkjljTxlYhm40fh0PJtCIaB61nLnxWwN4kFFUGPl6Oxcx1Df
-         XKW2xQ1mtSwYwv/w6WSY4q8b+NwwT4y8RdjXNz0YtHSCP6lsUELV97GCnQxWfpLRTd+b
-         0NChwAys6LsPUAsF0gJdfQkB/JTKEjaq258IqfDD1sM+dXYnFkS4stVcb8ur3bYSLqax
-         EsZGVM24I9rGAgwpUP5vFHImCV/YZZ+w8mLbw3lQQ4xo6OhSGHMIgzBuc+JYAunn0tRj
-         HeHnKqlpcHO2EyMiXfQyx5ccuJBhfaABDmGhtgNH4uf0t3Yrqc+Xy6KcZFstTQm2jf9m
-         AqmA==
-X-Gm-Message-State: ALQs6tCAScu+vi2i7sRFNEi/cM5OnoE9LxaZ3UaVTAOkpzqFo3c/CwMg
-        0ReCg4OhrKJhaF8HgPZLSFSeUWjTbGLB1N85zpg=
-X-Google-Smtp-Source: AIpwx4+R/dAgA7N0oS1fFBkuognv5P/JY2i1OuMVUVC7NP0Pgj5HO68NKnYNn4XVus+3D68Vne0Y40KmLA7jvbyy4nM=
-X-Received: by 2002:a9d:e84:: with SMTP id 4-v6mr958044otj.14.1522471901295;
- Fri, 30 Mar 2018 21:51:41 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=2zHYQ0gDvIprnLbt5aQhYlKDdHanpVuGv/lRzhUozJQ=;
+        b=PBIe4B6umAtRDGogw63bX5QFPcTWrRMNCkSo3kF/dCNsBrQ6JWgzA/d+DG8NxDmbwS
+         iDYubdvFw7BVlxU/gQ5oLmaP9GIFCSDsoRQRnmLElgDHfvle24z9hlYzkilpYWiBmRMJ
+         DgwuurYK1qHOjr53p4gnqY/x1szzhG+sNMNXlKrTIeA73M/vVlUIsCb667uvVte2gZcX
+         7x3bq8mzP9PhlhsFbCl6hFKIXMIBZRT+4hW2wKS05hEzrIuzmNuSsdhnrS8QlY1p8mDU
+         8X1U49uBJI99qhfN9uqSUOjbGHL4v0ZFXK61mGWgDn8LVSHIOIjqX4UcowBqD1UkkY2Q
+         Lp0w==
+X-Gm-Message-State: AElRT7F8leizisCpkZEacpx+189TlK4b+pldmJyitBc55p/XQPXmmAde
+        4cXIBYofWQ14CWirGSGVWzYoUU+tqFWsWhbmXq27rpxLw8VudOWeQQI/3bbqnuFSGnknJAcnYpi
+        Ib1D+vdcJ0ipy0Mfa0KCu5Nzsb7+pGqy+hw9I2V53ed1U8Ub2F/DDnyN1ReSclcDOmxTJ3HYZ8d
+        7+nbkzUSzsz8S6XSNyh8D8yTSbs4VPuAFkBtsu
+X-Google-Smtp-Source: AIpwx49TGn5e0U/QTJs0gLN3wDdtcXxVFJGPEyYKiCDHKrLsvPQxyD8Frtpmd5N3KAwaQMZ/6aRAgZTdhPPtLqcI6y4=
+X-Received: by 10.223.209.143 with SMTP id h15mr1333352wri.208.1522486237971;
+ Sat, 31 Mar 2018 01:50:37 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.74.198.152 with HTTP; Fri, 30 Mar 2018 21:51:10 -0700 (PDT)
-In-Reply-To: <20180330204812.GE14782@sigill.intra.peff.net>
-References: <20180318142526.9378-1-pclouds@gmail.com> <20180324063353.24722-1-pclouds@gmail.com>
- <20180324063353.24722-7-pclouds@gmail.com> <20180330204812.GE14782@sigill.intra.peff.net>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sat, 31 Mar 2018 06:51:10 +0200
-Message-ID: <CACsJy8Dma-xrDcK1vQ-s4F+Dwt4oWOQ89yr33OPJdO1g0ryQWw@mail.gmail.com>
-Subject: Re: [PATCH v7 06/13] pack-objects: move in_pack out of struct object_entry
-To:     Jeff King <peff@peff.net>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Eric Wong <e@80x24.org>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
+Received: by 10.223.177.220 with HTTP; Sat, 31 Mar 2018 01:50:17 -0700 (PDT)
+In-Reply-To: <nycvar.QRO.7.76.6.1803301102430.5026@qfpub.tvgsbejvaqbjf.bet>
+References: <CAO+-ZX_-COVpzqoAZLRGu4mvLMkLYiR3y7rkCtwmnvJ8kA7txQ@mail.gmail.com>
+ <xmqq370wvugk.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1803301102430.5026@qfpub.tvgsbejvaqbjf.bet>
+From:   Luciano Joublanc <ljoublanc@dinogroup.eu>
+Date:   Sat, 31 Mar 2018 09:50:17 +0100
+Message-ID: <CAO+-ZX-DvjsOnpvfPuLkx2w2cR5FDb6Ww8xEyuZHMmC57=b2yQ@mail.gmail.com>
+Subject: Re: Bad refspec messes up bundle.
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 30, 2018 at 10:48 PM, Jeff King <peff@peff.net> wrote:
-> On Sat, Mar 24, 2018 at 07:33:46AM +0100, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=
-=BB=8Dc Duy wrote:
->
->> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
->> index e1244918a5..b41610569e 100644
->> --- a/builtin/pack-objects.c
->> +++ b/builtin/pack-objects.c
->> @@ -29,6 +29,8 @@
->>  #include "list.h"
->>  #include "packfile.h"
->>
->> +#define IN_PACK(obj) oe_in_pack(&to_pack, obj)
->
-> How come this one gets a macro, but the earlier conversions don't?
->
-> I guess the problem is that oe_in_pack() is defined in the generic
-> pack-objects.h, but &to_pack is only in builtin/pack-objects.c?
->
-> I wonder if it would be that bad to just say oe_in_pack(&to_pack, obj)
-> everywhere. It's longer, but it makes the code slightly less magical to
-> read.
+Hi Johannes,
 
-Longer was exactly why I added these macros (with the hope that the
-macro upper case names already ring a "it's magical" bell). Should I
-drop all these macros? Some code becomes a lot more verbose though.
+With such a comprehensive reply, I would feel guilty not making a
+contribution now :) Be forewarned though, It's been about ten years
+since I wrote anything in `C`!
 
->> +static void prepare_in_pack_by_idx(struct packing_data *pdata)
->> +{
->> +     struct packed_git **mapping, *p;
->> +     int cnt =3D 0, nr =3D 1 << OE_IN_PACK_BITS;
->> +
->> +     if (getenv("GIT_TEST_FULL_IN_PACK_ARRAY")) {
->> +             /*
->> +              * leave in_pack_by_idx NULL to force in_pack[] to be
->> +              * used instead
->> +              */
->> +             return;
->> +     }
->> +
->> +     ALLOC_ARRAY(mapping, nr);
->> +     mapping[cnt++] =3D NULL; /* zero index must be mapped to NULL */
+I've cloned the `maint` branch, built the project, and added the test
+as you suggested - it's failing as expected.
+
+I'm somewhat confused though. I think it's m limited understanding of
+'ref' and 'commit'.
+
+On 30 March 2018 at 11:20, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
 >
-> Why? I guess because index=3D=3D0 is a sentinel for "we're using the smal=
-l
-> index numbers?"
-
-No because by default all values in object_entry is zero (or NULL). If
-I remember correctly, some code will skip setting in_pack pointer to
-leave it NULL. When we convert it to an index, it should also point to
-NULL.
-
->> +     prepare_packed_git();
->> +     for (p =3D packed_git; p; p =3D p->next, cnt++) {
->> +             if (cnt =3D=3D nr) {
->> +                     free(mapping);
->> +                     return;
->> +             }
->> +             p->index =3D cnt;
->> +             mapping[cnt] =3D p;
->> +     }
->> +     pdata->in_pack_by_idx =3D mapping;
->> +}
 >
-> What happens if we later have to reprepare_packed_git() and end up with
-> more packs? We only call this for the first pack.
+>   However, this would be incorrect, as the flags are stored with the
+>   *commit*, not with the ref. So if two refs point to the same commit,
+>   that new code would skip the second one by mistake!
+
+
+Isn't that the point here? to deduplicate commits?  My limited
+understanding is that at a 'ref' is like an alias or pointer to a
+commit.
+
 >
-> It may well be handled, but I'm having trouble following the code to see
-> if it is. And I doubt that case is covered by our test suite (since it
-> inherently involves a race).
+>   By the way, this makes me think that there is another very real bug in
+>   the bundle code, in the part I showed above. Suppose you have a `master`
+>   and a `next` ref, and both point at the same commit, then you would want
+>   `git bundle create next.bundle master..next` to list `next`, don't you
+>   think?
 
-I don't think I covered this case. But since "index" field in
-packed_git should be zero for the new packs, we could check and either
-add it to in_pack_by_idx[].
 
->>  /*
->> + * The size of struct nearly determines pack-objects's memory
->> + * consumption. This struct is packed tight for that reason. When you
->> + * add or reorder something in this struct, think a bit about this.
->> + *
+Doesn't this contradict what you just said, that we don't want to skip
+refs with the same commit #?
+
+In fact, if you look in the calling function, there is a
+`    object_array_remove_duplicates(&revs.pending);`
+Which to the best of my understanding removes duplicate refs (not
+commits). However, I suspect this doesn't cover the `--all` case as
+it's a switch rather than a revspec? Would that be right?
+
 >
-> It's funny to see this warning come in the middle. Should it be part of
-> the final struct reordering at the end?
+>
+> - most likely, the best way to avoid duplicate refs entries is to use the
+>   actual ref name and put it into a hash set. Luckily, we do have code
+>   for this, and examples how to use it, too. See e.g. fc65b00da7e
+>   (merge-recursive: change current file dir string_lists to hashmap,
+>   2017-09-07). So you would define something like
+>
 
-It was at the end in some version, the I shuffled the patches and
-forgot about this one :)
---=20
-Duy
+Separately, if I do end up including the hashmap code, it should be
+refactored out into it's own file, right?
+
+Thanks again,
+
+Luciano
+
+-- 
+This message is intended only for the personal and confidential use of the 
+designated recipient(s) named above.  If you are not the intended recipient 
+of this message you are hereby notified that any review, dissemination, 
+distribution or copying of this message is strictly prohibited.  This 
+communication is for information purposes only and should not be regarded 
+as an offer to sell or as a solicitation of an offer to buy any financial 
+product, an official confirmation of any transaction, or as an official 
+statement of the Dinosaur Group.  Email transmission cannot be guaranteed 
+to be secure or error-free.  Therefore, we do not represent that this 
+information is complete or accurate and it should not be relied upon as 
+such.  All information is subject to change without notice.
