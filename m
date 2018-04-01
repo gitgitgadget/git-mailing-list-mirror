@@ -2,120 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 05B5D1F404
-	for <e@80x24.org>; Sat, 31 Mar 2018 20:10:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F105A1F404
+	for <e@80x24.org>; Sun,  1 Apr 2018 03:15:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751207AbeCaUKd (ORCPT <rfc822;e@80x24.org>);
-        Sat, 31 Mar 2018 16:10:33 -0400
-Received: from mail-wm0-f50.google.com ([74.125.82.50]:52083 "EHLO
-        mail-wm0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750861AbeCaUKc (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 31 Mar 2018 16:10:32 -0400
-Received: by mail-wm0-f50.google.com with SMTP id v21so20003646wmc.1
-        for <git@vger.kernel.org>; Sat, 31 Mar 2018 13:10:32 -0700 (PDT)
+        id S1752949AbeDADP2 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 31 Mar 2018 23:15:28 -0400
+Received: from mail-it0-f44.google.com ([209.85.214.44]:35930 "EHLO
+        mail-it0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752851AbeDADP1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 31 Mar 2018 23:15:27 -0400
+Received: by mail-it0-f44.google.com with SMTP id 15-v6so4906132itl.1
+        for <git@vger.kernel.org>; Sat, 31 Mar 2018 20:15:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=08CPpHKGk1/AQDSGRNqravTCayl/V+h2gZv7/QwFUzE=;
-        b=TQJ1j8Jpu5I7FYXaWJfaVltWHO+LepHgT1Yx5KIZc5lPu4sSKFqGLctt0o5aYJrVDA
-         UkylfVVBY2ScEtlkAaHCdmNnrgxofU+ftpwotTnIBWPEkrx2n1jGy/47Cm2Qky/BJ4vU
-         +SNxuyJZC4hMo9xwFuMtq4wSaejKQMBotCoKEX2C6P+C73MxHdEABFgVcFoVLoRbIsX5
-         Hd62soR81CddGE1UGRbRksgFGdu5b92d0JTuifc8ZovXh8wSVZfE7sPOryUU2iXTVab3
-         iCdWWb8UeY2w7Ijm8I7w7ycdSUIgNH0GW3d9jvNghHOuJRV6unk1HlmeBp+WMv9v/Wye
-         +QBA==
+        d=github.com; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=B+fwYiAUS5IXb9mFV5ihM0kqw3CokwIFuyOK+uibuLw=;
+        b=Tn+EUtZCd+1KFXpHcf1QdHKv7i40IOTCtqY3T9EZxOkARMjdzLZjxxXc7mpwrOJkr5
+         TZcwMt67sw4bzugQcxCj/1OCy3yIetfoPerRD7xlCsln9xoNkPsjEQMgvxOlUMiZ6LLb
+         d/sD1X/Zv29Lcgv8MW/08hENaKECLttvzZg9E=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=08CPpHKGk1/AQDSGRNqravTCayl/V+h2gZv7/QwFUzE=;
-        b=OChJA6cI546Xd1LGTpoMQ1BCtLYY/EoJr9q65vgc//KnOdct53cpNZgf3GQdCgW4yj
-         OK3/exPwY6TxYZfKzNVy+X4Artw18Apewa+hcYkp5CNMqoSpZcZ8D4RV7J1VeP7gJiim
-         /kmON/GG5pNOZlyCiEP8Q4DH51oSk7XWzayiZzIl1/hHSodwwwI3fLApq0HhdhZMO+OB
-         meBByxH6k8JsBaUEtKAMI5Uca8h2vaeuwLyA7XUVDJRXwmjCNJF7S7OWJhibnNbB/ZDZ
-         ZGeuDPC2NW4OcYaSCea0qZUaxFmKZr0gGYyFd4o2IhJPRouAtpz1TinBX9EbusZan1tO
-         n5qw==
-X-Gm-Message-State: AElRT7FEYNVM6pad65R+OQWJf51PQ1KHYG49ygu0Iu8ArmFgHfr+LLcq
-        9ozalJvXvWMI9O/nHd2pyzTX6DtC
-X-Google-Smtp-Source: AIpwx4+tc2I6hB3rHM5SCFSiOJFRv34HLvL2zKN/MQWyWE4LfjU4Bh+ATuuDwhoihM27eXMuwjLj1A==
-X-Received: by 10.80.168.69 with SMTP id j63mr7217470edc.301.1522527031716;
-        Sat, 31 Mar 2018 13:10:31 -0700 (PDT)
-Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
-        by smtp.gmail.com with ESMTPSA id b31sm7232573eda.70.2018.03.31.13.10.30
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 31 Mar 2018 13:10:30 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
-Cc:     Git Mailing list <git@vger.kernel.org>
-Subject: Re: [OT] how does "git review --setup" figure out my username?
-References: <alpine.LFD.2.21.1803311453250.21368@localhost.localdomain> <CACBZZX7wQChuEQeBHQzgg-XsMmmryB4qBXT9K4HxwxaSNe4UWg@mail.gmail.com> <alpine.LFD.2.21.1803311555500.23345@localhost.localdomain>
-User-agent: Debian GNU/Linux 9.4 (stretch); Emacs 25.1.1; mu4e 1.1.0
-In-reply-to: <alpine.LFD.2.21.1803311555500.23345@localhost.localdomain>
-Date:   Sat, 31 Mar 2018 22:10:30 +0200
-Message-ID: <877epsvweh.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=B+fwYiAUS5IXb9mFV5ihM0kqw3CokwIFuyOK+uibuLw=;
+        b=a6jJZiawimHD7VR9CZo7Gd0mdGaqnDyCeZGd5BXcBV8JQUdubaKEkHMRe1r5aBtaEE
+         GqUsFL33Rcc3b/AQsPrzBuz4/d4V4FxcKNZ3ZBAbEnNu+dRuEAr1W9gNtOjpWNARVYOZ
+         f8xDA/NrK+KgmTrJW9hYQrDNlzx2Y+nU86exkJSF1InY8akWaQbKtg9pzdQHFILI7AQl
+         3tGXiNqWtPgdMV1Z14ucDOn4R1p3yVqS2u1xAQqcQSEgrxwMLhrJ3xvtp+d30wOusKK8
+         lrH4MWql2XcsX1+/L2e0tSr5XjtTS8k9/sLpW8OjKE186Vmksmc8+ygaCqTptudnNN2p
+         BeYg==
+X-Gm-Message-State: AElRT7H9+C/9krOcF9i7wfOt3QbfnjI1/trJz/wVU/tK7iX60NltlG22
+        QxmRzQSBrvIVBTqWOn1grYrTOA==
+X-Google-Smtp-Source: AIpwx49dcW1M9Lr1TknVxFON3WU15KzdwogFGFK6U7RB6cN1bE5Qm1TM+9t8EkF3gOBqDkJcvJPdEQ==
+X-Received: by 2002:a24:496a:: with SMTP id z103-v6mr7592703ita.133.1522552526920;
+        Sat, 31 Mar 2018 20:15:26 -0700 (PDT)
+Received: from localhost ([2601:401:c500:7dd8:84ee:c3a4:39aa:e237])
+        by smtp.gmail.com with ESMTPSA id v5sm6429715iog.67.2018.03.31.20.15.26
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 31 Mar 2018 20:15:26 -0700 (PDT)
+Date:   Sat, 31 Mar 2018 23:15:22 -0400
+From:   Taylor Blau <ttaylorr@github.com>
+To:     Mark Wartman <markwartman1@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Git Question
+Message-ID: <20180401031522.GA80891@syl.local>
+References: <CA263ADB-E23D-4C75-ACDC-C9C0B75A4A85@gmail.com>
+ <20180329015848.GA82123@syl.local>
+ <15759EC4-0867-44B3-995D-6EC121A6EC4C@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <15759EC4-0867-44B3-995D-6EC121A6EC4C@gmail.com>
+User-Agent: Mutt/1.9.3 (2018-01-21)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Sat, Mar 31, 2018 at 09:06:53PM -0500, Mark Wartman wrote:
+> I saw this pretty exhaustive .gitignore list that a GitHub Help page
+> linked to: 9257657 <https://gist.github.com/octocat/9257657> .  Are
+> these configurations from the list something one should install on the
+> User/global level, or do you recommend managing it in each and every
+> project repository?
 
-On Sat, Mar 31 2018, Robert P. J. Day wrote:
+If those appear helpful for your project(s), then sure; but this is up
+to you.
 
-> On Sat, 31 Mar 2018, Ævar Arnfjörð Bjarmason wrote:
+> Concerning these items below, when I said I get these when running a:
+> git config —list
 >
->> On Sat, Mar 31, 2018 at 9:04 PM, Robert P. J. Day <rpjday@crashcourse.ca> wrote:
->> >
->> >   (technically not a git question, but i kind of need to know the
->> > answer to this quickly as i'm writing some documentation and this is
->> > something i have to explain.)
->> >
->> >   i cloned a repository (hyperledger fabric) which has a top-level
->> > .gitreview file:
->> >
->> >   [gerrit]
->> >   host=gerrit.hyperledger.org
->> >   port=29418
->> >   project=fabric
->> >
->> > and, as i read it, if i want to configure to use gerrit, an initial
->> > invocation of "git review --setup" should do that for me, which it
->> > appears to do, as it adds the following to .git/config:
->> >
->> >   [remote "gerrit"]
->> >         url = ssh://rpjday@gerrit.hyperledger.org:29418/fabric
->> >         fetch = +refs/heads/*:refs/remotes/gerrit/*
->> >
->> > and copies over the commit-msg hook. so far, so good.
->> >
->> >   but from where does it figure out the username (rpjday) to use when
->> > configuring that remote? i have no gerrit configuration in my
->> > .gitconfig file. however, i have configured gerrit at the hyperledger
->> > end to use my SSH key, which is associated with my linux foundation ID
->> > (rpjday) that i registered to start using that repo.
->> >
->> >   is that where it gets the username from?
->>
->> I've never used gerrit, but from my skimming of
->> https://www.mediawiki.org/wiki/Gerrit/git-review#Setting_up_git-review
->> and
->> https://www.mediawiki.org/wiki/Gerrit/Tutorial#Configuring_git-review
->> it seems (to me) to say that it simply tries if your local loginname
->> works on the remote. Is rpjday your loginname on this system?
+> credential.helper-osxkeychain
+> filter.lfs.clean=git=lfs clean — %f
+> filter.lfs.smudge=git-lfs smudge — %f
+> filter.lfs.process=git-lfs filter-process
+> filter.lfs.required=true
 >
->   yes, but it's just a fluke that i used the same user name in both
-> places ... what if i hadn't? which one would it have selected?
+> I suspect that the GitHub GUI tool has installed them.  Do you find
+> that possible?  I ask because I did not write them.
 
-Seems like a fairly common case, especially as gerrit tends to be used
-in Big Corp setups where your username is the same.
+Yes, I believe that GitHub Desktop runs 'git lfs install', which adds
+these to your configuration.
 
-According to the docs I linked to it'll ask you if it doesn't happen to
-match, but as I've said never used it, and that may be wrong.
+
+Thanks,
+Taylor
