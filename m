@@ -2,103 +2,148 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 849DF1F404
-	for <e@80x24.org>; Sun,  1 Apr 2018 05:00:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6D47F1F424
+	for <e@80x24.org>; Sun,  1 Apr 2018 11:18:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750862AbeDAFAb (ORCPT <rfc822;e@80x24.org>);
-        Sun, 1 Apr 2018 01:00:31 -0400
-Received: from mail-wm0-f54.google.com ([74.125.82.54]:37835 "EHLO
-        mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750818AbeDAFAa (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 1 Apr 2018 01:00:30 -0400
-Received: by mail-wm0-f54.google.com with SMTP id r131so22133364wmb.2
-        for <git@vger.kernel.org>; Sat, 31 Mar 2018 22:00:29 -0700 (PDT)
+        id S1753466AbeDALSQ (ORCPT <rfc822;e@80x24.org>);
+        Sun, 1 Apr 2018 07:18:16 -0400
+Received: from mail-qk0-f177.google.com ([209.85.220.177]:37034 "EHLO
+        mail-qk0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753335AbeDALSO (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 1 Apr 2018 07:18:14 -0400
+Received: by mail-qk0-f177.google.com with SMTP id w6so12807331qkb.4
+        for <git@vger.kernel.org>; Sun, 01 Apr 2018 04:18:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=uLDiUwtA6e4OlbRVQ31DG07SHecmoJl5RXQEl8L+uek=;
-        b=bbxjQhvs7z134rHW8FyvfT44BWkcnI+yGAvaOkbIZlWw7gTOLgVW8eqCvHuiAGsFos
-         vR78QozQ6J2aF5WKUeaEVagFxaadzHN2uHc/CaRN8l98xsId7Sfo/cvH2B5HCCyaJxJx
-         29kudkdi/U23g7FrxTmun39Ejb3702vsCgX29TMIgk96tN14qmaFNEPtCjEdBf3HqEdb
-         8qwSdkjcEl1JwmxTeVaxwTm1+eUzL0F9iKVCGFy6cPw5HI82HA2WT44bQ8hnSnNSxpfv
-         CHi0ziJXM2LxHhBeyJILdqSS/g/YB27XBUZdKV0ruBRIZ+U0ooPlKvdheyjZT4aiz5ls
-         r7jw==
+        h=mime-version:from:date:message-id:subject:to:cc
+         :content-transfer-encoding;
+        bh=sgX72PboNWUUQHHMHNxJyC2Jv0iiABrOVDVQFfrsw9U=;
+        b=TgOxxe7q+s3+eRTXEU7oGEAQxOqATD5DrtRfzzYIRXGabnDWJVuoCQI5gWopzldGtK
+         qnlZtbzXYAsjv/Zu3cu2ZzyNZVlbSh6vSNm5UjhNgJa3aXp+avb/U66dW1YdLksyabSI
+         5Yp5bpA1I8l1I/TxPf6r9N+G5KHtGYWZ458LbBqgfbD8L7oR6B1FZ6xnV39+hxuekdxb
+         Kvb+jWTCeJKt2GHNkQCaBC8V1xMTnEv8f68wtIqPSxQ8ALU6kd4vppdCGhmENgZrxJoK
+         Ou/IOhD6HW8SVBGJRacZywuKYB0Mo9us23ar28tghM3Q23/qkbuqmM0+GKMBJkstP0Wt
+         WGfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc
          :content-transfer-encoding;
-        bh=uLDiUwtA6e4OlbRVQ31DG07SHecmoJl5RXQEl8L+uek=;
-        b=OLk/cGPYxGyjTyol9k+U9TRhdIZNPlonFX8lW8v1PlJ9KDytGZq3uNzyANFaGvsf60
-         aM31pZmoLNZTiyUGqWJzRCA33fzH2tNYMOBOUqqalpNGyPvDpeRm9r4el4931zeQuwVf
-         ZlNYQbCa02t/R1JduAOXuA7qKU/vQ6nVXxWMuJdpG+O+CqjR74ulRmQfI8BWZ8Qvchkw
-         up8OmA+UUjyI541Jc8sIXEsgrK+CwwH2Xs2w6cax9bxX0mrwI0EDXlfKdf8uEba0r/cr
-         RW5t4ExGoaFYRBHLSV8EjwdKuMwcEcTSocSK9D+SUV8t4r0/iUlmdDBS192qwE3qOsZn
-         uZOQ==
-X-Gm-Message-State: AElRT7HDU58i3vrpHXRifldKZu3X7XBkH6Hnn7tdGnLGhqZFIFw0UA5s
-        M0B839hpV38N0mpbUnKaOUo=
-X-Google-Smtp-Source: AIpwx488OTg5wPq8YAPePNG8A6DE6HlE10DTceBeLiZjqRDiohrj+HbuZVSkwpi+83qZQERfGj0m4g==
-X-Received: by 10.28.10.195 with SMTP id 186mr5877275wmk.136.1522558828662;
-        Sat, 31 Mar 2018 22:00:28 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id p4sm9066369wma.5.2018.03.31.22.00.26
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 31 Mar 2018 22:00:27 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v2] add -p: fix 2.17.0-rc* regression due to moved code
-References: <20180331123605.30076-1-avarab@gmail.com>
-        <20180331125058.4506-1-avarab@gmail.com>
-Date:   Sat, 31 Mar 2018 22:00:26 -0700
-In-Reply-To: <20180331125058.4506-1-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
- =?utf-8?B?IEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Sat, 31 Mar 2018 12:50:58 +0000")
-Message-ID: <xmqqbmf31pxx.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        bh=sgX72PboNWUUQHHMHNxJyC2Jv0iiABrOVDVQFfrsw9U=;
+        b=OzxJ07C2Z7itRvQ1EY0e5wP1ZAJYmn7usDLlsIlQWgzjalnwDvNwGmPAYeh1l4SzdA
+         KUgnQvG+l643tQPZh6Xj6jG0r4jEygzCfe0Ze9rOwrlv+CEhePixuDBzRhZkk9RXZruY
+         +2DVjPa0jOK3iJW/9v6EfSCcy8Ry9shONemyhlSQPcHWWmYBzBtNqmaOhZaPdbCwPRB0
+         qyEUkq1lcxg+QtgJ0ImrrXHgxOxrkFO8xX28sfGSIokRg6LqkIPhFuNlFnZkCbd035eB
+         oOnb/P3d2D/1ZQxHNohrphTrM/RhYoqM5MlsryX71A13/3Qaf1EKaW7cQSqGJEGoy/jW
+         Js/A==
+X-Gm-Message-State: ALQs6tCWSxVqnlLpJMtWfykeX76+ZQxfStt7/KUXfs4w4gW7J1hwEZqI
+        T2LcwmHcwjn1fLK42q+rpBj40eEtKqANZa7B1yE=
+X-Google-Smtp-Source: AIpwx4/zjiXIjy2vdM7x/EYDqKstTsT8/BDBS9J3nophIO6k27b2X9hyrgAnO7XlBM2JqrUaM8V2HqNki84OAqNOw8s=
+X-Received: by 10.55.89.65 with SMTP id n62mr8252043qkb.46.1522581494062; Sun,
+ 01 Apr 2018 04:18:14 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Received: by 10.12.185.171 with HTTP; Sun, 1 Apr 2018 04:18:13 -0700 (PDT)
+From:   Jiang Xin <worldhello.net@gmail.com>
+Date:   Sun, 1 Apr 2018 19:18:13 +0800
+Message-ID: <CANYiYbGfJ_R_yT5+0=qTrvzt0GdxsG6EtjWJauHNAyUNpaPwNg@mail.gmail.com>
+Subject: [GIT PULL] l10n updates for 2.17.0 round 1
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Alexander Shopov <ash@kambanaria.org>,
+        Changwoo Ryu <cwryu@debian.org>,
+        =?UTF-8?Q?Christopher_D=C3=ADaz?= <christopher.diaz.riv@gmail.com>,
+        Dimitriy Ryazantcev <DJm00n@mail.ru>,
+        =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>,
+        Jiang Xin <worldhello.net@gmail.com>,
+        Jordi Mas <jmas@softcatala.org>,
+        Marco Paolone <marcopaolone@gmail.com>,
+        Peter Krefting <peter@softwolves.pp.se>,
+        Ralf Thielow <ralf.thielow@gmail.com>,
+        Ray Chen <oldsharp@gmail.com>,
+        =?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
+        Vasco Almeida <vascomalmeida@sapo.pt>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
+Hi Junio,
 
-> diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-> index d190469cd8..c1f52e457f 100755
-> --- a/git-add--interactive.perl
-> +++ b/git-add--interactive.perl
-> @@ -1561,13 +1561,13 @@ sub patch_update_file {
->  			elsif ($line =~ m|^/(.*)|) {
->  				my $regex = $1;
->  				unless ($other =~ m|/|) {
->  					error_msg __("No other hunks to search\n");
->  					next;
->  				}
-> -				if ($1 eq "") {
-> +				if ($regex eq "") {
->  					print colored $prompt_color, __("search for regex? ");
+Would you please pull the following git l10n updates.
 
-Ah.  That "unless ... { }" thing is what was inserted recently, and
-the patch is an obvious fix once the problem is pointed out.  Thanks
-for a careful reading.
+The following changes since commit 0afbf6caa5b16dcfa3074982e5b48e27d452dbbb=
+:
 
-It makes me wonder what the original author, who already captured $1
-in $regex, was thinking when he wrote the comparison with $1 there,
-but that is OK---ithappend long time ago in early 2009.
+  Git 2.17-rc0 (2018-03-15 15:01:05 -0700)
 
-Will apply.  Thanks.
+are available in the Git repository at:
 
->  					$regex = <STDIN>;
->  					if (defined $regex) {
->  						chomp $regex;
->  					}
->  				}
+  git://github.com/git-l10n/git-po tags/l10n-2.17.0-rnd1
+
+for you to fetch changes up to 8bb6d60dd6b6f2f72fe091cb03d571dbdc01aa3e:
+
+  l10n: de.po: translate 132 new messages (2018-03-31 13:21:09 +0200)
+
+----------------------------------------------------------------
+l10n for Git 2.17.0 round 1
+
+----------------------------------------------------------------
+Alexander Shopov (1):
+      l10n: bg.po: Updated Bulgarian translation (3376t)
+
+Changwoo Ryu (1):
+      l10n: ko.po: Update Korean translation
+
+Christopher Diaz Riveros (2):
+      l10n: es.po: fixes to Spanish translation
+      l10n: es.po: Update Spanish translation 2.17.0
+
+Jean-No=C3=ABl Avila (2):
+      l10n: fr.po v2.17.0 round 1
+      l10n: fr.po: v2.17.0 no fuzzy
+
+Jiang Xin (10):
+      Merge branch 'merge' of https://github.com/ChrisADR/git-po into maint
+      l10n: git.pot: v2.17.0 round 1 (132 new, 44 removed)
+      Merge remote-tracking branch 'git-po/maint'
+      Merge branch 'master' of git://github.com/alshopov/git-po
+      Merge branch 'master' of https://github.com/vnwildman/git
+      Merge branch 'fr_v2.17.0' of git://github.com/jnavila/git
+      Merge branch 'master' of https://github.com/Softcatala/git-po
+      Merge branch 'master' of git://github.com/nafmo/git-l10n-sv
+      Merge branch 'fr_v2.17.0' of git://github.com/jnavila/git
+      l10n: zh_CN: for git v2.17.0 l10n round 1
+
+Jordi Mas (1):
+      l10n: Update Catalan translation
+
+Peter Krefting (1):
+      l10n: sv.po: Update Swedish translation (3376t0f0u)
+
+Ralf Thielow (1):
+      l10n: de.po: translate 132 new messages
+
+Ray Chen (1):
+      l10n: zh_CN: review for git v2.17.0 l10n round 1
+
+Tr=E1=BA=A7n Ng=E1=BB=8Dc Qu=C3=A2n (1):
+      l10n: vi.po(3376t): Updated Vietnamese translation for v2.17
+
+ po/bg.po    | 4598 ++++++++++++++++++++----------------
+ po/ca.po    | 7551 ++++++++++++++++++++++++++++++-------------------------=
+----
+ po/de.po    | 4670 +++++++++++++++++++-----------------
+ po/es.po    | 5213 ++++++++++++++++++++++-------------------
+ po/fr.po    | 4586 +++++++++++++++++++-----------------
+ po/git.pot  | 4396 ++++++++++++++++++----------------
+ po/ko.po    | 4583 ++++++++++++++++++++----------------
+ po/sv.po    | 4571 ++++++++++++++++++++----------------
+ po/vi.po    | 4591 ++++++++++++++++++++----------------
+ po/zh_CN.po | 4561 ++++++++++++++++++++----------------
+ 10 files changed, 26709 insertions(+), 22611 deletions(-)
