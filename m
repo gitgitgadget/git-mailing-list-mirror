@@ -2,126 +2,162 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A8ECE1F404
+	by dcvr.yhbt.net (Postfix) with ESMTP id BE2421F404
 	for <e@80x24.org>; Sun,  1 Apr 2018 13:08:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753410AbeDANII (ORCPT <rfc822;e@80x24.org>);
-        Sun, 1 Apr 2018 09:08:08 -0400
-Received: from mail-pf0-f173.google.com ([209.85.192.173]:40701 "EHLO
-        mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753340AbeDANIH (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 1 Apr 2018 09:08:07 -0400
-Received: by mail-pf0-f173.google.com with SMTP id y66so7920256pfi.7
-        for <git@vger.kernel.org>; Sun, 01 Apr 2018 06:08:07 -0700 (PDT)
+        id S1753446AbeDANIN (ORCPT <rfc822;e@80x24.org>);
+        Sun, 1 Apr 2018 09:08:13 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:35999 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753340AbeDANIM (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 1 Apr 2018 09:08:12 -0400
+Received: by mail-wm0-f67.google.com with SMTP id x82so23046364wmg.1
+        for <git@vger.kernel.org>; Sun, 01 Apr 2018 06:08:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=kOHh8jVbQu7XVRvxnLTKNOE9aAkVtvdyeaLj6m8fouE=;
-        b=QfInD68bIlPUDc+g0E0TWCOrkY3I756ernQtiayGf1NkAPh8Z+Ylx9eHpMy1pzllwd
-         REo3tvPPCNY5Kp4LKzsDPvnNGsTjetBvBAFWd7Xynagj6QbnYSVaqpUaUEYQtEDhn2xv
-         qPD6W+vSF00buHrkgLIMFBF1jG7WKXUEqXvWjxymF+TKAzqc1y2yB6cO7lpb4YGvtNiE
-         Zk+PCx9HYnD6l7JHSq5HPxsHw6S99oxIyVlVOiMAan+LwWKc3fpAbQGgScGh9I1kujmr
-         RDpmhsTGlG5k7fft9/liA13UeztYA+jUqdrUQoBH32AgaKifvayW4uFzniVaSS5C0b7/
-         tLdA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=f+MlbQEFlvXbKu89OxeRa0ZG/w3OZxPuLKmhYmSiPFw=;
+        b=a7wAl+C88MPfvkXPs1QTWztOOe6SYaXQadxPfBGEf5DckcRkV36P72wz9HBnY/j9/k
+         90pNvn0Alm4XiOIujzKKbsLyYfLgII40YaeWT0mDDiosJwElq3GB0FG7mTqql20RMXbm
+         7NruITPEygjHwKGTTwlMzgtG8ToCxWSqQ0vPybKgiMLXfz1aqKf+B7Gt3DaNeccyjutk
+         +3zvTI/jH3BG+vkzEKMWN2lJVvbeHRIF04djVIMaRHxdmCCELQFkmr2emLD0JUyR99pE
+         SmDF1G3YyeUqr4QF8XaP+4JyBT156ealDDNpejt/6lZy7md8AsvxIv7SyOFHZOxPCHBV
+         PCcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=kOHh8jVbQu7XVRvxnLTKNOE9aAkVtvdyeaLj6m8fouE=;
-        b=X/7vduWuuDxP21HipEsVIcgHqinnNefMuVkQhzFzusgmHbxiWnxV+8799w5OISxIbM
-         wmhbV+XWM4cc/uokKyZpggLAvrM3F5D3cYm2ChqBGcP7KjdmrOt4LW0YOKOuzSEJydGj
-         J4YvleplPRYlTZnQCLsSkDewlaS3EaNd+O0rPnzKCD+JCn2BhTM7i5mEOxuEwRS/KiSR
-         vRoxtVwzhC9bbXAIh7Svuy5tbgDF0rnPmnrMXeaey4RmKAFtjaLOKDFzJ1kfHB38gHLR
-         8B6XlaN0iNksp7CDYleKkjRaMnRYdV9q8OPgkKII48ujACA43iZ8rPvddcHk0X7/UKwB
-         GyfQ==
-X-Gm-Message-State: AElRT7E4OQi5tOTK0+JKBUmchp9L3W+846yvjoFaWP9+jwIpTxsRGVq7
-        4aHEAAFiXJSq22FVBEc9/olKcoAI
-X-Google-Smtp-Source: AIpwx49gY8JE4meHNCoy9RszvDpNGYeYFrTguAMIaoPM1q5LIyl5bSIghKO7HMjog+dmNDROR2hJqA==
-X-Received: by 10.101.87.138 with SMTP id b10mr3911292pgr.241.1522588086481;
-        Sun, 01 Apr 2018 06:08:06 -0700 (PDT)
-Received: from rempc0jmh7t.ads.autodesk.com (adsknateur.autodesk.com. [132.188.32.100])
-        by smtp.gmail.com with ESMTPSA id q67sm26777212pfg.39.2018.04.01.06.08.03
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 01 Apr 2018 06:08:05 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: What's cooking in git.git (Mar 2018, #05; Wed, 28)
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <B86BE818-A385-4E0C-9AE1-1E974471CEB9@gmail.com>
-Date:   Sun, 1 Apr 2018 15:07:57 +0200
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <27C25705-EDA7-4CD8-BBE7-F253555C4F96@gmail.com>
-References: <xmqqsh8k6khj.fsf@gitster-ct.c.googlers.com> <87lge9x6e3.fsf@evledraar.gmail.com> <B86BE818-A385-4E0C-9AE1-1E974471CEB9@gmail.com>
-To:     =?utf-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-X-Mailer: Apple Mail (2.3124)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=f+MlbQEFlvXbKu89OxeRa0ZG/w3OZxPuLKmhYmSiPFw=;
+        b=OetIRvarM09n9y2JjRi5k1cWbAl9BpS6NXZ43mjBanaA6JYscZFGBRN3On0ujkkL8G
+         JX00lQ8a1YziXauzpsKVQ7XonES7Hoba030BWSFblwDsMseu0AgMfimvaXi0vFoD8yOL
+         gl/qczSbbBQpDKyOms7kjaEsIdJT60n+xz+m1TIPCMDaaRVCWdMjBSnJtWyT33SLjWG7
+         Ew4KL9MlgPCKniXaEePOp2SLFDtdFSRQ6qD4FjfNysGmXRAfF2dnNgzPsDoclTQ+C7hL
+         Xguu5O+y8ps/6dph7E//MaPpnS/T2Nc8IGu/W0gvcwW5k1cqU5Go0nrND0BoOx27Tf5o
+         606A==
+X-Gm-Message-State: AElRT7Gn7kwQ/Lvv8L0R5dQ6SGRhWcZ1ZraD7gcROJFwz5SNL7ZIEbxt
+        39FONzr61V9vykqX8aCbC39OI+uj
+X-Google-Smtp-Source: AIpwx4/aJtcHXr6cVg0N28IO/xwxA9obhsPUuZvu0wR9X+IcVDmPkDh5U3N/68BwYophJuAc04h/1Q==
+X-Received: by 10.28.184.21 with SMTP id i21mr7148602wmf.94.1522588090598;
+        Sun, 01 Apr 2018 06:08:10 -0700 (PDT)
+Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
+        by smtp.gmail.com with ESMTPSA id p14sm28780456wrc.30.2018.04.01.06.08.09
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 01 Apr 2018 06:08:09 -0700 (PDT)
+Date:   Sun, 1 Apr 2018 14:11:38 +0100
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v6 6.5/6] fixup! worktree: teach "add" to check out existing
+ branches
+Message-ID: <20180401131138.GE2629@hank>
+References: <20180325134947.25828-1-t.gummerer@gmail.com>
+ <20180331151804.30380-1-t.gummerer@gmail.com>
+ <20180331151804.30380-7-t.gummerer@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180331151804.30380-7-t.gummerer@gmail.com>
+User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
+---
 
-> On 30 Mar 2018, at 12:32, Lars Schneider <larsxschneider@gmail.com> =
-wrote:
->=20
->=20
->> On 30 Mar 2018, at 11:24, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason =
-<avarab@gmail.com> wrote:
->>=20
->>=20
->> On Wed, Mar 28 2018, Junio C. Hamano wrote:
->>=20
->>> * ls/checkout-encoding (2018-03-16) 10 commits
->>> - convert: add round trip check based on =
-'core.checkRoundtripEncoding'
->>> - convert: add tracing for 'working-tree-encoding' attribute
->>> - convert: check for detectable errors in UTF encodings
->>> - convert: add 'working-tree-encoding' attribute
->>> - utf8: add function to detect a missing UTF-16/32 BOM
->>> - utf8: add function to detect prohibited UTF-16/32 BOM
->>> - utf8: teach same_encoding() alternative UTF encoding names
->>> - strbuf: add a case insensitive starts_with()
->>> - strbuf: add xstrdup_toupper()
->>> - strbuf: remove unnecessary NUL assignment in xstrdup_tolower()
->>>=20
->>> The new "checkout-encoding" attribute can ask Git to convert the
->>> contents to the specified encoding when checking out to the working
->>> tree (and the other way around when checking in).
->>=20
->> There's an issue in ca16fc3635 ("convert: check for detectable errors =
-in
->> UTF encodings", 2018-03-15) flagged by Coverity:
->> =
-https://public-inbox.org/git/CAGZ79kbAOcwaRzjuMtZ_HVsYvUr_7UAPbOcnrmPgsdE1=
-9q=3DPrQ@mail.gmail.com/
->=20
-> Thanks a lot for pointing me at this!
-> I'll prepare a new round soonish.
+So while playing with it a bit more I found one case where the new UI
+is not ideal and a bit confusing.  Namely when the new check out dwim
+kicks in, but there is already a file/directory at the path we're
+giving to 'git worktree add'.
 
+In that case something like the following would be printed:
 
-The report says:
+    $ g worktree add ../next
+    Checking out branch 'next'
+    fatal: '../next' already exists
 
-  >>>     CID 1433528:  Null pointer dereferences  (FORWARD_NULL)
-  >>>     Passing null pointer "src" to "validate_encoding", which =
-dereferences it.
+Instead I think we'd just want the error without the "Checking out
+branch" message, which is what this fixup here does.
 
-  411             if (validate_encoding(path, enc, src, src_len, =
-die_on_error))
+One thing that gets a bit strange is that the "Checking out branch"
+message and the "Creating branch" messages are printed from different
+places.  But without doing quite some refactoring I don't think
+there's a good way to do that, and I think having the UI do the right
+thing is more important.
 
-However, validate_encoding() does not dereference it. It just passes the
-pointer to has_prohibited_utf_bom() and is_missing_required_utf_bom().
-These functions just pass the pointer to has_bom_prefix().
+One thing I also noticed is that if a branch is created by 'git
+worktree add', but we fail, we never clean up that branch again, which
+I'm not sure is ideal.  As a pre-existing problem I'd like to keep
+fixing that out of the scope of this series though (at least after
+this series the user would get some output showing that this happened,
+even when the branch is not set up to track a remote), so I'd like to
+keep fixing that out of the scope of this series.
 
-In has_bom_prefix() we pass the pointer to memcmp() which is undefined
-for null pointers. I think that is what Coverity is complaining about,
-right?
+Junio: could you please squash this in in 6/6 while queuing?  I'd
+prefer not to re-send the whole series just for fixing this up, but
+obviously can if that makes your life easier :)
 
+Thanks!
 
-- Lars=
+ builtin/worktree.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index 511d0aa370..ccc2e63e0f 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -27,6 +27,7 @@ struct add_opts {
+ 	int detach;
+ 	int checkout;
+ 	int keep_locked;
++	int checkout_existing_branch;
+ };
+ 
+ static int show_only;
+@@ -316,6 +317,8 @@ static int add_worktree(const char *path, const char *refname,
+ 	if (ret)
+ 		goto done;
+ 
++	if (opts->checkout_existing_branch)
++		  fprintf_ln(stderr, _("Checking out branch '%s'"), refname);
+ 	if (opts->checkout) {
+ 		cp.argv = NULL;
+ 		argv_array_clear(&cp.args);
+@@ -397,7 +400,6 @@ static int add(int ac, const char **av, const char *prefix)
+ 	const char *branch;
+ 	const char *new_branch = NULL;
+ 	const char *opt_track = NULL;
+-	int checkout_existing_branch = 0;
+ 	struct option options[] = {
+ 		OPT__FORCE(&opts.force, N_("checkout <branch> even if already checked out in other worktree")),
+ 		OPT_STRING('b', NULL, &new_branch, N_("branch"),
+@@ -443,7 +445,7 @@ static int add(int ac, const char **av, const char *prefix)
+ 
+ 	if (ac < 2 && !new_branch && !opts.detach) {
+ 		const char *s = dwim_branch(path, &new_branch,
+-					    &checkout_existing_branch);
++					    &opts.checkout_existing_branch);
+ 		if (s)
+ 			branch = s;
+ 	}
+@@ -478,8 +480,6 @@ static int add(int ac, const char **av, const char *prefix)
+ 		if (run_command(&cp))
+ 			return -1;
+ 		branch = new_branch;
+-	} else if (checkout_existing_branch) {
+-		  fprintf_ln(stderr, _("Checking out branch '%s'"), branch);
+ 	} else if (opt_track) {
+ 		die(_("--[no-]track can only be used if a new branch is created"));
+ 	}
+-- 
+2.16.1.78.g71f731ae26.dirty
+
