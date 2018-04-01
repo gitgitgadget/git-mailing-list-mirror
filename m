@@ -2,106 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E679A1F404
-	for <e@80x24.org>; Sun,  1 Apr 2018 16:37:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EB3AC1F404
+	for <e@80x24.org>; Sun,  1 Apr 2018 17:40:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753663AbeDAQhy (ORCPT <rfc822;e@80x24.org>);
-        Sun, 1 Apr 2018 12:37:54 -0400
-Received: from mail-wr0-f178.google.com ([209.85.128.178]:34649 "EHLO
-        mail-wr0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753656AbeDAQhx (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 1 Apr 2018 12:37:53 -0400
-Received: by mail-wr0-f178.google.com with SMTP id o8so11647383wra.1
-        for <git@vger.kernel.org>; Sun, 01 Apr 2018 09:37:53 -0700 (PDT)
+        id S1753764AbeDARkw (ORCPT <rfc822;e@80x24.org>);
+        Sun, 1 Apr 2018 13:40:52 -0400
+Received: from mail-io0-f175.google.com ([209.85.223.175]:46773 "EHLO
+        mail-io0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753743AbeDARkw (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 1 Apr 2018 13:40:52 -0400
+Received: by mail-io0-f175.google.com with SMTP id q80so15737843ioi.13
+        for <git@vger.kernel.org>; Sun, 01 Apr 2018 10:40:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=uU91o+Iaou9S5XnzIE8qg3b6VAjqPU9M2YtVy9m8CcQ=;
-        b=nhT6DTBMqffyxWa234tJIOPMubTxRTZV/50GTs07icDwHjak2EErLeqdsL8aywpXN3
-         b37jKa47dEeR/tUoOBcGKN6CmMnOkPmLqio08QY1glPJpfIPT57YhjY8vogIM2ZIYUPt
-         6MlwxLX8EC8ww3/lpoJX8JI5PtxTe0fw55/DNpXSGjShcrgXgmFB4rguDMEbnbb6xzvb
-         3/L7x1QZC17Zwo9WWQrYufFZDu1LXWhybtnCE0lgXXLmJrxTWpEHbGn5QKhiTt64JBIL
-         5bM0qyjG7TMq3h0/LMH1as3m9Es27JcKtCr35o0e+SGqTxqTxSm6Ci9GMTczIu+UGGGZ
-         Ia2Q==
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=Bm4ae2nyi3NNUIaDsw7iy+oBiAlKxTeuIyMkeffGGJY=;
+        b=YCLiMqHMq34NpxDDJf0BypzEqzBvsC+Upx52jq5EZLYgiP1FaIAwL7HaDzKznEQFu/
+         8HBRjJ6DwyRGUOwpDe+qoT1pl/fkPeSu+cnuGcyGxb3WW65/b6L/1ztdY1I9c9Xa9iEV
+         NfCEpIvFiVpKBbUnfdKp10rIEIRZW0UjGn1Zfxy6hZjQkG21koIBzcN46vIKYbU4UHpX
+         G4F8utkRGbTHYXfzvgJGxn+I+dT3QzkMyKvPLj4MXnbZJncQRFZSkijT+CRgrKhH/5UO
+         x+r0E6CRgyi4hqIf9aC21D9WDgF78naOF+IGDFuWmlchXJU37aPoLE9VgHwLCa+HOzpw
+         gfkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=uU91o+Iaou9S5XnzIE8qg3b6VAjqPU9M2YtVy9m8CcQ=;
-        b=DrK9VWTSmLkkNUbBGScR76UU2A6HRG+XC7nqZgR6SYuZ+NsEH6iRDlHIdD5D2R+OXs
-         NW9x48FD5RDmBsyVNy51BGGPLMTYaF9BSNWJI0bbRUn8jzwGAVoJq4Szk5ey0ReIWbd0
-         ZSS41yfo4Mn0xm64CMa95GBQDmLTe0oO/KYcpOVGRyyVUF/yNg0Cp6Jt59s8nyLVBzoq
-         bjSDc87EASwlRB7pUfRglSiYdO97hXZIyZ7s7uqOGa58xpdWC/e8e690+FfOZePJWmsT
-         0YsI2Hf5F5Ao7BgV+DeEVAqRuMa+ohHIYioSmwnaXkBIz8Bmm7D5zQtEHw0DR5EA8RSU
-         hz+A==
-X-Gm-Message-State: AElRT7HAxbxPqnsJW9Shqhp4caStcLus9PIpGMzTrypXyLrqZYBWEqO9
-        vZRAI6jBzk4bcHidog2HzYg=
-X-Google-Smtp-Source: AIpwx4+yG5dPR+UEOvVfFn78EwfiMuPBq5YqkFjdsZBv8ekok9hwzvBb5TTgbZ8QiEC9F4r3KOzgBw==
-X-Received: by 10.223.131.229 with SMTP id 92mr4678859wre.249.1522600672328;
-        Sun, 01 Apr 2018 09:37:52 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id y6sm6804506wmy.16.2018.04.01.09.37.51
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 01 Apr 2018 09:37:51 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Dan Aloni <alonid@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] builtin/commit.c: prevent bad commits
-References: <20180401140650.18928-1-alonid@gmail.com>
-Date:   Sun, 01 Apr 2018 09:37:51 -0700
-In-Reply-To: <20180401140650.18928-1-alonid@gmail.com> (Dan Aloni's message of
-        "Sun, 1 Apr 2018 17:06:50 +0300")
-Message-ID: <xmqq4lku2880.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=Bm4ae2nyi3NNUIaDsw7iy+oBiAlKxTeuIyMkeffGGJY=;
+        b=WHS7/c3TH+AHcV5bN3FYZxcQut8iDhgzpvdCER/1aPwGSX34PM1H9goZIrMh5IXy0B
+         oqcwI3tXEP1g9sKcBQSUNrrzy0VS3XA/smrrNmUvtjayvyxO+l+IrDg7k1y65KNqW0hb
+         gazPgmE9jeV/SHaVpnr9YO8U1Ovt7dj5HWD/Frmh/C/fSNCdwpSpcPkBpOr2u17MjLDQ
+         cJ4f9Ocd3n07oxauAQOcPfhAExPBqAkgzjAOGo6X7wabve6T1uzHu4R52/d5ySNYP1Kv
+         uDdVpPfxwKuBBpCsac7GJmtJP2OqYXqfdx0/+C+IMEHzHl4GFwo6+nEYsmwAgpLVMB2U
+         LqIA==
+X-Gm-Message-State: ALQs6tCfer41K6ayyIBCXrOTSi4+IrXO7V8hRFFL5xYazXgZikW9os0x
+        wjnzEaxNDpRlQWj2EwOlew6Y0Qn4Rc8MA+I7c/bsGKa6
+X-Google-Smtp-Source: AIpwx48wTvAHzik/q8kQSisWRq5Vnor7Ng/TWv3gqkZqCynRVpJ4prdLuAzlz6jVtXhtddFd93P4bSGdMgs19nfdACY=
+X-Received: by 10.107.144.197 with SMTP id s188mr6387009iod.147.1522604451025;
+ Sun, 01 Apr 2018 10:40:51 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.79.34.9 with HTTP; Sun, 1 Apr 2018 10:40:50 -0700 (PDT)
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Sun, 1 Apr 2018 19:40:50 +0200
+Message-ID: <CAP8UFD0WZ07EVER_HupcFLw4w-4H2hb2cp8wTaj2i9jOc_+pTA@mail.gmail.com>
+Subject: [ANNOUNCE] Git developers contacted by an advanced alien species
+To:     git <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Stefan Beller <sbeller@google.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@sfconservancy.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dan Aloni <alonid@gmail.com> writes:
+Members of an Alien species that have a far superior technology have
+recently privately contacted some Git developers. They said that they
+are amazed by Git technology and mostly wanted to thank us all for our
+hard work on Git, as they are surely going to use it due to its free
+software nature.
 
-> These commits which have hashes starting with the hex string 'bad',
-> always give me the chills. Why should a perfectly good commit be
-> jinxed?
-> ...
-> Note that this change does not affect actual software quality maintained
-> using Git. Thus, it is recommended keep testing all generated versions
-> regardless of commit hash jinxes.
->
-> Signed-off-by: Dan Aloni <alonid@gmail.com>
-> ---
+At the same time they expressed that they are a bit appalled by the
+state of our free software operating systems like Linux, though they
+told us Windows might have been used by them if it was not proprietary
+and especially if it was faster at running the awesome Git test suite.
 
-Ah, I forgot that it's that time of the year again.
+The Git developers are all the more amazed by the fact that Dscho, the
+Git for Windows maintainer, had written just a few days before this
+contact (https://public-inbox.org/git/nycvar.QRO.7.76.6.1803301415240.5026@qfpub.tvgsbejvaqbjf.bet/):
 
-> + ...
-> +		oid_hex = oid_to_hex(&oid);
-> +		if (prevent_bad &&
-> +		    oid_hex[0] == 'b' &&
-> +		    oid_hex[1] == 'a' &&
-> +		    oid_hex[2] == 'd' )
-> +		{
-> +			parents = copy_parents;
-> +			strbuf_add(&sb, "\n", 1);
-> +			continue;
-
-We used to allow a variant of this that lets you append invisible
-cruft at the end of the log message by hiding it after a NUL.  You
-also could loop here to turn the abbreviated commit object name to
-an actively good one, not just "not bad" name ;-).
-
-> +		}
-> +
-> +		free_commit_list(copy_parents);
-> +		break;
->  	}
-> +
->  	strbuf_release(&author_ident);
->  	free_commit_extra_headers(extra);
+"An alien digging up ancient Earth history in the far future might be
+tempted to assume that Git was developed to develop Linux which was
+developed to develop Git, and then ask herself why humans bothered at all."
