@@ -2,101 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 214B11F404
-	for <e@80x24.org>; Mon,  2 Apr 2018 18:31:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E623E1F404
+	for <e@80x24.org>; Mon,  2 Apr 2018 18:33:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753218AbeDBSbZ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Apr 2018 14:31:25 -0400
-Received: from mail-pl0-f65.google.com ([209.85.160.65]:36557 "EHLO
-        mail-pl0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753030AbeDBSbY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Apr 2018 14:31:24 -0400
-Received: by mail-pl0-f65.google.com with SMTP id 91-v6so5210425pld.3
-        for <git@vger.kernel.org>; Mon, 02 Apr 2018 11:31:24 -0700 (PDT)
+        id S1753253AbeDBSdA (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Apr 2018 14:33:00 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:45364 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753072AbeDBSc7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Apr 2018 14:32:59 -0400
+Received: by mail-wr0-f193.google.com with SMTP id u11so15033309wri.12
+        for <git@vger.kernel.org>; Mon, 02 Apr 2018 11:32:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=wnnsUwVLszhCHI/XJ4Vt+dXchRXQTEkOrBxVZ3s9YRc=;
-        b=DaXOsdUNHf8jKgzGHDGucWFjC0Dv8e2dDAMHV3HtOpJI5M8VA8/Sd9DQGxSSnAZY7a
-         PclbN+rb211miBTBmzs1KnFflrY5r7zWFuOOFIBY5YLa0c+85ggBXDG8+ZvjXImFWx6p
-         9WyO6e0ObOrTPp+N4a7uFBiYXe0xI9+xMQt38pt4cYcsW3H4WvO4T3mcsoS4SEUPQvxe
-         W+pM37kILNxC7jeneDBQvRGwAb+Rg1/i7AyVqR6mGVs8xBsCsFkg0UgToDm1F868xyyI
-         4JllOHgBjxpqY81JTWhOcgWiBpvSEyzi6c7aIgcghOUYdeKAyp/C6TSBmxz8a2dj0Oyx
-         B9Mg==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=J1hSbS9Wgw53iTVfbE0WolQwG6KGsx7P8EAXUCZyGmc=;
+        b=hVVBdgRhdoYyTvhUvia/FayTXt91tBc3sOIo8VlAbTtjh8zCpm9Tc5vVRMSjLhveQo
+         Q9XaSxff1D4mMzvjXjwPWb21g95aaSZzmWguHZ7WhT8EDMZ4bgdWhT+yVL0RaroHrdJg
+         HNzo/+9bG0U1Abf42f1ayuffKFfIToOqX8vuKmPMKjZpxAcA2yOXGtczdvpBnjVcY3LA
+         i9BfSqkMf/29xITL7YBvXtP8cjYQCXa6xeJcn2+oxqO7cqHKyhGvb/NdfNhavnTdG5PL
+         9DPJ7KQCoR4OINFY2LTIinwvYvgj+KPDLv1F5gU61Y9puU5Nb8S8+acsON/XpmD89SyM
+         4/ug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=wnnsUwVLszhCHI/XJ4Vt+dXchRXQTEkOrBxVZ3s9YRc=;
-        b=AkEv6FRq1Mah5kiSUTGzxxJsnPSTKD1Pb1MyWJxm+CZnL+ZATxoWmlEUtmUeu1BpeR
-         29FcsJg4PKLrkkTTODKPQXtq4R49OOr6ymagjR5luBiEX4k6OWzXr77vYNRrItizCS9Z
-         C9AlffkMePLyN2vdfcAWuaWQ+jj0qq6TxnFc32s3Rajqx9INNZMfzFkful+Xnwkjo6lb
-         vdEcVlO/Zfqm2nUmtXAR4Q2PANdpbP7Um13+27Xp14dcg1Pz3WQGvNeyHkJtk3SoiD2H
-         TAzLuZ0m9rreyQ7obatbgbqQTVJ1cwhb2Tb5FG2/YoR4UhTQ4H0ZxGBwPIt7e2V+AyHh
-         X7Mw==
-X-Gm-Message-State: AElRT7G7eyTxvVRyLJhG9FZdtR1gR8fJLBJ9rHYxmnRTpciD7X/nwpRq
-        qEvgQaKoplBcPuQtMtxKVy0=
-X-Google-Smtp-Source: AIpwx49IgQpix25smQbW5UNa0Q14T5C+ggTZs3OyUy/yofA2Q9tEvz7sAirdA2s7a7FHeST6GzAb+w==
-X-Received: by 2002:a17:902:24:: with SMTP id 33-v6mr10845182pla.341.1522693884176;
-        Mon, 02 Apr 2018 11:31:24 -0700 (PDT)
-Received: from farpc0j7wwf.ads.autodesk.com (adsknateur.autodesk.com. [132.188.32.100])
-        by smtp.gmail.com with ESMTPSA id y6sm1718343pfd.18.2018.04.02.11.31.17
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 02 Apr 2018 11:31:23 -0700 (PDT)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH v12 00/10] convert: add support for different encodings
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <xmqqwoxu684c.fsf@gitster-ct.c.googlers.com>
-Date:   Mon, 2 Apr 2018 20:31:09 +0200
-Cc:     Lars Schneider <lars.schneider@autodesk.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        =?utf-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-        j6t@kdbg.org, sunshine@sunshineco.com, peff@peff.net,
-        ramsay@ramsayjones.plus.com, Johannes.Schindelin@gmx.de,
-        pclouds@gmail.com
-Content-Transfer-Encoding: 7bit
-Message-Id: <3DC6237B-002F-4CAE-AD57-E10A5B5D3D3C@gmail.com>
-References: <20180315225746.18119-1-lars.schneider@autodesk.com> <xmqqwoxu684c.fsf@gitster-ct.c.googlers.com>
-To:     Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3124)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=J1hSbS9Wgw53iTVfbE0WolQwG6KGsx7P8EAXUCZyGmc=;
+        b=LLxzqbBqlNvgIFhGXNA5T47gERW9Qn14qAoMIRqhZSCvO23bVWuYzeDPk8MSCh0lPy
+         HpyR5MoRpPug2oxDoORCpiy8ryzSTKasgT7B/6tr9eBJEVoQQMWdHyuk++R3qDheq0tc
+         luYi5df3JnPbqrXyUqj2UMto6zcIn4R/QdKnyFYqeUgqlzDd4C1Pv4vwozpAVGDXeLHg
+         8X6/f+UYekxIv5hcykavhrtBYtyiFwhjhaHkAFS75+2pG+j6PQHOFLY7yR3t+nPfiTMu
+         2Ca4V97dsXxPFbS5sM1t0AtbOcIE9KdSdIs4Da/io6YjpsltiE4C9QH2t7OhXtlC/je8
+         6pUg==
+X-Gm-Message-State: AElRT7FoX5lDr2F+MOCLm/3cKkCOBDmCUFxGcJvr8Sn/6OO+fiCsq+od
+        aAUHeisWbcvWlH1rj79M2DMROLGg
+X-Google-Smtp-Source: AIpwx4+yWUM5T3DR5TYQYEO3PnvwyB5mQF4HETreLMR5sj6yNjsmV1mJqbGuHjuMoFWKcNnFzjXNRg==
+X-Received: by 10.223.128.40 with SMTP id 37mr8007507wrk.73.1522693977800;
+        Mon, 02 Apr 2018 11:32:57 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id b185sm122819wmb.48.2018.04.02.11.32.56
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 02 Apr 2018 11:32:56 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Harald Nordgren <haraldnordgren@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH] ls-remote: create option to sort by versions
+References: <20180402005248.52418-1-haraldnordgren@gmail.com>
+        <87605aw1ue.fsf@evledraar.gmail.com>
+Date:   Mon, 02 Apr 2018 11:32:56 -0700
+In-Reply-To: <87605aw1ue.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Mon, 02 Apr 2018 08:37:29 +0200")
+Message-ID: <xmqqbmf1zcfb.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 
-> On 29 Mar 2018, at 20:37, Junio C Hamano <gitster@pobox.com> wrote:
-> 
-> lars.schneider@autodesk.com writes:
-> 
->> From: Lars Schneider <larsxschneider@gmail.com>
->> 
->> Patches 1-6,9 are preparation and helper functions. Patch 4 is new.
->> Patch 7,8,10 are the actual change.
->> 
->> This series depends on Torsten's 8462ff43e4 (convert_to_git():
->> safe_crlf/checksafe becomes int conv_flags, 2018-01-13) which is
->> already in master.
-> 
-> I didn't see any further review comments on this round, and as far
-> as I can tell from my reading, these patches looked more-or-less
-> ready.  
-> 
-> Except for 04/10 that had a few messages around "who should be
-> responsible for handling the 'NULL is for the default UTF-8'?", that
-> is.
-> 
-> So, what's the doneness of this thing?
+> This is a sensible thing to want, but why not follow the UI we have for
+> this with git-tag? I.e. --sort=<key> & -i (or --ignore-case)? Of course
+> ls-remote doesn't just show tags, so maybe we'd want --tag-sort=<key>
+> and --ignore-tag-case or something, but the rest should be equivalent,
+> no?
 
-Almost. I'll send a new round tomorrow. I hope to make this the final
-round.
-
-- Lars
+Yeah, and if we can reuse more of ref-filter.c machinery (which was
+factored out of for-each-ref and tag you suggested borrows from),
+that would be even better.  In the context of ls-remote, however, we
+cannot inspect the object (we typically do not have them yet), so it
+may not be practical, but I agree with your suggestion---we should
+match the behaviour at the UI level at least when we can.
 
