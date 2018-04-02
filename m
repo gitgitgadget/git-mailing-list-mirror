@@ -2,142 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3EE111F404
-	for <e@80x24.org>; Mon,  2 Apr 2018 15:02:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A087B1F404
+	for <e@80x24.org>; Mon,  2 Apr 2018 16:07:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751315AbeDBPCN (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Apr 2018 11:02:13 -0400
-Received: from mail-qt0-f194.google.com ([209.85.216.194]:33372 "EHLO
-        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751255AbeDBPCM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Apr 2018 11:02:12 -0400
-Received: by mail-qt0-f194.google.com with SMTP id d50so8390820qtc.0
-        for <git@vger.kernel.org>; Mon, 02 Apr 2018 08:02:12 -0700 (PDT)
+        id S1752216AbeDBQH4 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Apr 2018 12:07:56 -0400
+Received: from mail-qt0-f179.google.com ([209.85.216.179]:47058 "EHLO
+        mail-qt0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751443AbeDBQHz (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Apr 2018 12:07:55 -0400
+Received: by mail-qt0-f179.google.com with SMTP id h4so15993874qtn.13
+        for <git@vger.kernel.org>; Mon, 02 Apr 2018 09:07:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=/AH4G7MV/RO8RRRe4Z1HBGQOcMBSclXNsguwLO64Has=;
-        b=jeq7h1mGfPhQyg/tQosL5L7SbjjYctjd+pPfVKPIVAnmoNTMt2Cg4QMWLePqUF7O0N
-         85faBPRmpwofeLq45nXpfB7yZXspQUGWwuIPfSgA3BZoxYmLbueXMyT4NhtoYg+JfsHl
-         3BzEFX3xcXq12EFq37DluMApeDs4rymMkgya10JYkxaRQyQrZtzuurJzYmd8pr5Wy22d
-         ULTEiW24/u9lkbzWBz+jhE6CFotflb8iQUKTohofz0KoqMIcMpL8ZeHQHs3129WCFmUr
-         mCXmA1zUFXtl9gYcpKUcw+lyNYroIfsgHsua2bT+DKJFQbQMR7WqUqvZGynAGkFksCYg
-         iMzw==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=GsDdWJR7RLnY9tkU5LqAcrwLtotaRAQxOvySlxBbWmg=;
+        b=MuzU/Q6QSs8T05BhmCkf2/jhjNXPezTZNIelV1c12uCLxBdYpQKEJmNVRLlN7S2lBk
+         bC9cjKZxWTyp5lcTrkT9PHD3I/zWbdRUNDi0uuAo/+9PqXS4H8NfFZg0+d28few2+1sI
+         tFWGm2VqyX3lt884cVODfDcqema7ylUPgrpsi5y2M8nevklW9rKfQT7HOadTRrEsBf2L
+         87ZcBhUXGzEbIk2cDSUjdDCyvUuUbkbby9mH+I8j87uO8BSID912t05ylBfYK038ndJt
+         Ec1nVJBuonC4+vLyMjfkeSJlUturxUlZc3vntkxkMsD7S4DsEp2mvN4XyXv2uz9GeyI1
+         ZFjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=/AH4G7MV/RO8RRRe4Z1HBGQOcMBSclXNsguwLO64Has=;
-        b=sJ5e0G3xNGx0bi0A0+VwhNDceBVXgpUFgf19jAHQq9x/7qSFYBUBdQBgBMnkmCs8pX
-         2R3Bbcm38AbtuvIgeWj9bCEf5oLT79TRTCjz8Mc1pu4gxwNzIaRHBDYgYTtBap3HAZ2u
-         sBeEnjHH59VjefWqHPTRWUg2aztnhkopdbOrb/qDUz8+Mpc52HSWPhjozATuFc83xT54
-         SXoGZuPTGB+L8OFW30pPMz4FT94ZR7Z+JXVakfRxyEQCm4vdgtqFmp5qiJKi9XgU12I+
-         YneHh5ZYe/iOGl/AUJ9IXKRFEj6bWqzfBsgozZvpY/2hvC0gMAWp0uwDcCbaJDXJi8c1
-         lVoA==
-X-Gm-Message-State: ALQs6tAiMyJCRjZhoqADkPyREW49hvxbRZ/5zULwdm+JdkL7IIxyEkOc
-        iHVk82GMLXSDDs3fdC08KW0=
-X-Google-Smtp-Source: AIpwx48jx6qFL6qUc54hMhCHA3sMg60P1fnr2EGSABm3phdtOAvB/YMEp1PX3DRZ3/fFIbNZXYzJ2A==
-X-Received: by 10.237.55.42 with SMTP id i39mr14788167qtb.15.1522681331399;
-        Mon, 02 Apr 2018 08:02:11 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:c4e6:7a22:56f1:df04? ([2001:4898:8010:0:ae1c:7a22:56f1:df04])
-        by smtp.gmail.com with ESMTPSA id b10sm422669qtg.78.2018.04.02.08.02.10
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 02 Apr 2018 08:02:10 -0700 (PDT)
-Subject: Re: [PATCH v4 00/13] Serialized Git Commit Graph
-To:     Jakub Narebski <jnareb@gmail.com>
-Cc:     git@vger.kernel.org, git@jeffhostetler.com, peff@peff.net,
-        jonathantanmy@google.com, szeder.dev@gmail.com, sbeller@google.com,
-        gitster@pobox.com, Derrick Stolee <dstolee@microsoft.com>
-References: <4d1ee202-7d79-d73c-6e05-d0fc85db943c@gmail.com>
- <1519066406-81663-1-git-send-email-dstolee@microsoft.com>
- <867eptkeeq.fsf@gmail.com> <f5d8934e-afc2-39d4-b7d5-e5ba5e5021a1@gmail.com>
- <861sfxekeo.fsf@gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <d3060103-7fab-3b6c-e968-cb49f3f23acb@gmail.com>
-Date:   Mon, 2 Apr 2018 11:02:09 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=GsDdWJR7RLnY9tkU5LqAcrwLtotaRAQxOvySlxBbWmg=;
+        b=ufBaLothAPxZtApgFvryKy8qajBWj/WYVEwKFMDEI8knjnC1bk7MkMiFTxKNESsLDI
+         RetikI6hGmKhRh/Ah93ntfpMhc12/Zda8366+3FOYAhZbjBcyRVTqdTkXDNoHv8Ce5ga
+         Ggqd9vw/oF/EPt38UF8p7GWM33dD+mieJ5045MliS8TyJAX4mt/pPjJHrK7NhkahM/Mw
+         PKj9QFqrsn9IqXlOQJgsAuqTBUejTuGr0rLmVpsK5J44ihUS25U3Ep4VFCEl0hCdJuh3
+         Xv42YTN6fqKv39lPhADCIrmM4Nd9AGl7LW5IjBDDTkO7HJ2rwKV6MNcq+Hev5l0OCQZh
+         0+tg==
+X-Gm-Message-State: ALQs6tCr9W8DJcueGMpfTaZhH/uX+0/eAWm1aP5PJl9JwEgSNER7eoUy
+        Jpk54r69YqONDub2/MvCt7qTBui2mwPVeGTKUlydeA==
+X-Google-Smtp-Source: AIpwx4+TYNI+J+7yiB9A9KbGlq+q3LWJXHNZXbVNvV81hn1STNu1aE/DBg4Piihwi5P9F6wDTtFuhiCwGf/C2KjhB+E=
+X-Received: by 10.237.61.184 with SMTP id i53mr14334814qtf.293.1522685274347;
+ Mon, 02 Apr 2018 09:07:54 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <861sfxekeo.fsf@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Received: by 10.237.54.34 with HTTP; Mon, 2 Apr 2018 09:07:13 -0700 (PDT)
+From:   Hosam Aly Mahmoud <hosamaly6@gmail.com>
+Date:   Mon, 2 Apr 2018 17:07:13 +0100
+Message-ID: <CAJA-u1okS1GO8+mHGbz23cs0CRt7wQAPHHsnvmZnZe4ZOf2VqQ@mail.gmail.com>
+Subject: git stash push -u deletes untracked files
+To:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 4/2/2018 10:46 AM, Jakub Narebski wrote:
-> Derrick Stolee <stolee@gmail.com> writes:
-[...]
->> At one point, I was investigating these reachability indexes (I read
->> "SCARAB: Scaling Reachability Computation on Large Graphs" by Jihn,
->> Ruan, Dey, and Xu [2]) but find the question that these indexes target
->> to be lacking for most of the Git uses. That is, they ask the boolean
->> question "Can X reach Y?". More often, Git needs to answer "What is
->> the set of commits reachable from X but not from Y" or "Topologically
->> sort commits reachable from X" or "How many commits are in each part
->> of the symmetric difference between reachable from X or reachable from
->> Y?"
-> In the "Reachability Queries in Very Large Graphs..." by Veloso, Cerf,
-> Meira and Zaki FELINE-index work, authors mention SCARAB as something
-> that can be used in addition to FELINE-index, as a complementary data
-> (FELINE-SCARAB in the work, section 4.4).
->
-> I see the FELINE-index as a stronger form of generation numbers (called
-> also level of the vertex / node), in that it allows to negative-cut even
-> more, pruning paths that are known to be unreachable (or marking nodes
-> known to be unreachable in the "calculate difference" scenario).
->
-> Also, FELINE-index uses two integer numbers (coordinates in 2d space);
-> one of those indices can be the topological numbering (topological
-> sorting order) of nodes in the commit graph.  That would help to answer
-> even more Git questions.
+Hi,
 
-This two-dimensional generation number is helpful for non-reachability 
-queries, but is something that needs the "full" commit graph in order to 
-define the value for a single commit (hence the O(N lg N) performance 
-mentioned below). Generation numbers are effective while being easy to 
-compute and immutable.
+Using Git 2.16.3 on MacOS 10.13.3, running `git stash push
+--include-untracked` deletes the untracked files specified in its
+arguments and creates an empty stash commit.
 
-I wonder if FELINE was compared directly to a one-dimensional index (I 
-apologize that I have not read the paper in detail, so I don't 
-understand the indexes they compare against). It also appears the graphs 
-they use for their tests are not commit graphs, which have a different 
-shape than many of the digraphs studies by that work.
+In the example below, I create a repository with a single file and a
+single commit. Then I create two untracked files and push one of them
+to the stash. Although I get an error, an empty stash commit is
+generated and the specified file is deleted.
 
-This is all to say: I would love to see an interesting study in this 
-direction, specifically comparing this series' definition of generation 
-numbers to the 2-dimensional system in FELINE, and on a large sample of 
-commit graphs available in open-source data sets (Linux kernel, Git, 
-etc.) and possibly on interesting closed-source data sets.
+```
+$ git init . && touch README && git commit -m "README"
+$ touch my-file my-other-file
+$ git status
+On branch master
+Untracked files:
+my-file
+my-other-file
 
->
->> The case for "Can X reach Y?" is mostly for commands like 'git branch
->> --contains', when 'git fetch' checks for forced-updates of branches,
->> or when the server decides enough negotiation has occurred during a
->> 'git fetch'. While these may be worth investigating, they also benefit
->> greatly from the accelerated graph walk introduced in the current
->> format.
->>
->> I would be happy to review any effort to extend the commit-graph
->> format to include such indexes, as long as the performance benefits
->> outweigh the complexity to create them.
->>
->> [2] http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.719.8396&rep=rep1&type=pdf
-> The complexity of calculating FELINE index is O(|V| log(|V|) + |E|), the
-> storage complexity is 2*|V|.
->
+nothing added to commit but untracked files present
+$ git stash push -u my-file
+Saved working directory and index state WIP on master: e89afc6 README
+fatal: pathspec 'my-file' did not match any files
+error: unrecognized input
+$ git status
+On branch master
+Untracked files:
+my-other-file
 
-This would be very easy to add as an optional chunk, since it can use 
-one row per commit.
+nothing added to commit but untracked files present
+$ git stash list
+stash@{0}: WIP on master: e89afc6 README
+$ git stash show
+$
+$ ls
+README        my-other-file
+```
 
-Thanks,
--Stolee
+I tested this using git built from the latest commit on master at the
+time of writing (c2a499e6c31ed613a606ffdeb5bb74ab41e9a586) and got the
+same results. Could you please check it out?
+
+
+Thank you,
+
+Hosam Aly
