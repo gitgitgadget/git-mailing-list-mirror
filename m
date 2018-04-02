@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 82BBC1F404
-	for <e@80x24.org>; Mon,  2 Apr 2018 20:34:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8D7101F404
+	for <e@80x24.org>; Mon,  2 Apr 2018 20:35:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932449AbeDBUe4 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Apr 2018 16:34:56 -0400
-Received: from mail-qt0-f195.google.com ([209.85.216.195]:38517 "EHLO
-        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932424AbeDBUez (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Apr 2018 16:34:55 -0400
-Received: by mail-qt0-f195.google.com with SMTP id z23so16230717qti.5
-        for <git@vger.kernel.org>; Mon, 02 Apr 2018 13:34:55 -0700 (PDT)
+        id S932455AbeDBUfB (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Apr 2018 16:35:01 -0400
+Received: from mail-qt0-f193.google.com ([209.85.216.193]:34774 "EHLO
+        mail-qt0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932424AbeDBUe5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Apr 2018 16:34:57 -0400
+Received: by mail-qt0-f193.google.com with SMTP id l18so16933169qtj.1
+        for <git@vger.kernel.org>; Mon, 02 Apr 2018 13:34:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=agLi/qIN3famcin0GKJJCxuOu+/U5mWZXeM+POkFeSY=;
-        b=Gej9sMv7dXlBUuoW2z96dvETMCaQxu339dchwRJBhCBS4vreqhQNQPz19BL7/psw9f
-         gDQgbNOqCmq01Pe4nCIh+luJv2bfMB4uiZ0N+A65raggPtcZ0T5eoDe8y1rons9Wct1k
-         pcKkTKMVzu6KanIX6azhVl/2Gzq2EZBnwkNZ7i/fyoi6jS7Fri5Yc15kZpZwyj5z/0ul
-         crHNtu3HcqqiktaD/0Dd0jAk3ruHhH5ojnZ8ZKQvpkYfAUvetQ10kYMjZLKL2pFX//J7
-         cFs7ZMayQl0l3BRpRcfOgwGll/c+Yb9dAKtruordFa3AYzhcayrm2niLCHasyBeyee23
-         b0uw==
+        bh=pVUyCjmdfhPWPajtp1p3VnQvI/92kuHeYGfjKMJIQhA=;
+        b=khW3A47W/UENojRmvIDAtINeWBkyTvtsMtcMi0GAkXzZL4NNTygmnnQQ2Vq6i/SAfY
+         xqMYZ0w2vxpNHb3XS5VLUK6+wWQhsFV9ZgBtmhT6Fk97crReGp3sOzQ6N6h1rmLe9gDg
+         xt8ZLhechwg2AUROGhAUDHRxrwUyOK0t0n1YOf20ajYYXzlnQR3DTKJ+WEeWe+wqJZNB
+         PxfWWNnYiA25UWj+ace4bBvfdmu2R3+IlFKExMkdhbJ/PgW0flLC3VX5afxZCyQ42w61
+         V3xV54rhw081Y1jf74tvE5oZgW2VFbm5EaSVgYREbQHZOYMiFdB++avpkjmAhui7y7Rr
+         2R6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=agLi/qIN3famcin0GKJJCxuOu+/U5mWZXeM+POkFeSY=;
-        b=M8wQ3TnvtEvFXHSp+Neqjl7I+YCCsnhz3+wKjo0l+UgCpwmoyjH2Welf8C8fDsFTYu
-         CRLmWW7qkUB1qsVSaUAf1kVdgOQfxwWmokpAJ7tOR7qCsjxKWuyyF8v1mbGEQjw3SwUg
-         fqBiRVrrqV5tmR014obvua/TF95E08HfqCX6ERuTKJpH6qT7ZdkX23qCQv6BO7d4UzSz
-         Q0NuopzL8cVDPlpsgcygMGvxZWsv5nvwdh11iqPG3YqHnQx91aczpnseUNwdkORGaPqh
-         e5H0W+375SQXKC45q6o6sAZ/ViaK1DgHiidZBjvtDxumEw3oBdoZGjwGCScrYeJeyEoO
-         WVyg==
-X-Gm-Message-State: ALQs6tBXCov94FRHvPYXsFxH7yV30BhspZMurQKUf6L0S1uM5Wxz4+Ii
-        D5VpCnxq6wJuVLZsGE0ffljzCoNyKGc=
-X-Google-Smtp-Source: AIpwx4/0TRiEKqqRUftlXxGUEz5SN5LU4h8oGx0/p4dm4qX1OPlV/+IsHWQOFSiMk2TDXqvO8Y/V0Q==
-X-Received: by 10.200.8.117 with SMTP id x50mr15763209qth.240.1522701294717;
-        Mon, 02 Apr 2018 13:34:54 -0700 (PDT)
+        bh=pVUyCjmdfhPWPajtp1p3VnQvI/92kuHeYGfjKMJIQhA=;
+        b=Zh4QV9Z9fu4/6WxmKTSefDoWOx/QEOzdpc9ZO6/NC9rR6tP1LAAjYmcvs0BPi7nEM8
+         m2hvzg71mf/r274CFP2GJp0obt/k5v8iCGthUKifl0ZG+Xec3Qdre9a3vwo7/Heqvaw4
+         vJcPvsumBHxL1ww4nHK66naQA9oDNzhmohCvLbkcJ05Vxg14tvPBv0YeZQ7iwNXebQiu
+         A7GLg5U+rshfIiMCEakQLtu5jxLTgqhyusy42q2x6Ah5zkVAs+0T4LiAcp4Ulqo6aKdC
+         Q8EAbFopmbZzbTrp7tkm5MD0SCgNX0L3q3vqEWsQyfZLqU+e6uNcuHZDxGo0pkJMkXY9
+         hbMw==
+X-Gm-Message-State: ALQs6tDf5O1P1BttFZ9R9ozwCO2OOxpfcDz/ZKbRL9rLjqwKQqlBQNeY
+        /uOJWH7IPVJXmMlQgXoF9v+3HQ3rC3g=
+X-Google-Smtp-Source: AIpwx4+xaOWpMY+abQ+HEiBENmS3b0om+05YbMkZ6/ghduj49G+7hIfQc2D3tNdXdZZvcyA2QapCqw==
+X-Received: by 10.200.38.152 with SMTP id 24mr16232318qto.249.1522701296784;
+        Mon, 02 Apr 2018 13:34:56 -0700 (PDT)
 Received: from stolee-linux-2.corp.microsoft.com ([2001:4898:8010:0:eb4a:5dff:fe0f:730f])
-        by smtp.gmail.com with ESMTPSA id n30sm998611qtb.93.2018.04.02.13.34.53
+        by smtp.gmail.com with ESMTPSA id n30sm998611qtb.93.2018.04.02.13.34.55
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 02 Apr 2018 13:34:54 -0700 (PDT)
+        Mon, 02 Apr 2018 13:34:56 -0700 (PDT)
 From:   Derrick Stolee <stolee@gmail.com>
 X-Google-Original-From: Derrick Stolee <dstolee@microsoft.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, sbeller@google.com, szeder.dev@gmail.com,
         ramsay@ramsayjones.plus.com, git@jeffhostetler.com, peff@peff.net,
         Derrick Stolee <dstolee@microsoft.com>
-Subject: [PATCH v7 03/14] commit-graph: add format document
-Date:   Mon,  2 Apr 2018 16:34:16 -0400
-Message-Id: <20180402203427.170177-4-dstolee@microsoft.com>
+Subject: [PATCH v7 04/14] graph: add commit graph design document
+Date:   Mon,  2 Apr 2018 16:34:17 -0400
+Message-Id: <20180402203427.170177-5-dstolee@microsoft.com>
 X-Mailer: git-send-email 2.17.0.rc0
 In-Reply-To: <20180402203427.170177-1-dstolee@microsoft.com>
 References: <20180314192736.70602-1-dstolee@microsoft.com>
@@ -68,136 +68,184 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-Add document specifying the binary format for commit graphs. This
-format allows for:
-
-* New versions.
-* New hash functions and hash lengths.
-* Optional extensions.
-
-Basic header information is followed by a binary table of contents
-into "chunks" that include:
-
-* An ordered list of commit object IDs.
-* A 256-entry fanout into that list of OIDs.
-* A list of metadata for the commits.
-* A list of "large edges" to enable octopus merges.
-
-The format automatically includes two parent positions for every
-commit. This favors speed over space, since using only one position
-per commit would cause an extra level of indirection for every merge
-commit. (Octopus merges suffer from this indirection, but they are
-very rare.)
+Add Documentation/technical/commit-graph.txt with details of the planned
+commit graph feature, including future plans.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- .../technical/commit-graph-format.txt         | 97 +++++++++++++++++++
- 1 file changed, 97 insertions(+)
- create mode 100644 Documentation/technical/commit-graph-format.txt
+ Documentation/technical/commit-graph.txt | 163 +++++++++++++++++++++++
+ 1 file changed, 163 insertions(+)
+ create mode 100644 Documentation/technical/commit-graph.txt
 
-diff --git a/Documentation/technical/commit-graph-format.txt b/Documentation/technical/commit-graph-format.txt
+diff --git a/Documentation/technical/commit-graph.txt b/Documentation/technical/commit-graph.txt
 new file mode 100644
-index 0000000000..ad6af8105c
+index 0000000000..0550c6d0dc
 --- /dev/null
-+++ b/Documentation/technical/commit-graph-format.txt
-@@ -0,0 +1,97 @@
-+Git commit graph format
-+=======================
++++ b/Documentation/technical/commit-graph.txt
+@@ -0,0 +1,163 @@
++Git Commit Graph Design Notes
++=============================
 +
-+The Git commit graph stores a list of commit OIDs and some associated
-+metadata, including:
++Git walks the commit graph for many reasons, including:
 +
-+- The generation number of the commit. Commits with no parents have
-+  generation number 1; commits with parents have generation number
-+  one more than the maximum generation number of its parents. We
-+  reserve zero as special, and can be used to mark a generation
-+  number invalid or as "not computed".
++1. Listing and filtering commit history.
++2. Computing merge bases.
 +
-+- The root tree OID.
++These operations can become slow as the commit count grows. The merge
++base calculation shows up in many user-facing commands, such as 'merge-base'
++or 'status' and can take minutes to compute depending on history shape.
 +
-+- The commit date.
++There are two main costs here:
 +
-+- The parents of the commit, stored using positional references within
-+  the graph file.
++1. Decompressing and parsing commits.
++2. Walking the entire graph to satisfy topological order constraints.
 +
-+These positional references are stored as unsigned 32-bit integers
-+corresponding to the array position withing the list of commit OIDs. We
-+use the most-significant bit for special purposes, so we can store at most
-+(1 << 31) - 1 (around 2 billion) commits.
++The commit graph file is a supplemental data structure that accelerates
++commit graph walks. If a user downgrades or disables the 'core.commitGraph'
++config setting, then the existing ODB is sufficient. The file is stored
++as "commit-graph" either in the .git/objects/info directory or in the info
++directory of an alternate.
 +
-+== Commit graph files have the following format:
++The commit graph file stores the commit graph structure along with some
++extra metadata to speed up graph walks. By listing commit OIDs in lexi-
++cographic order, we can identify an integer position for each commit and
++refer to the parents of a commit using those integer positions. We use
++binary search to find initial commits and then use the integer positions
++for fast lookups during the walk.
 +
-+In order to allow extensions that add extra data to the graph, we organize
-+the body into "chunks" and provide a binary lookup table at the beginning
-+of the body. The header includes certain values, such as number of chunks
-+and hash type.
++A consumer may load the following info for a commit from the graph:
 +
-+All 4-byte numbers are in network order.
++1. The commit OID.
++2. The list of parents, along with their integer position.
++3. The commit date.
++4. The root tree OID.
++5. The generation number (see definition below).
 +
-+HEADER:
++Values 1-4 satisfy the requirements of parse_commit_gently().
 +
-+  4-byte signature:
-+      The signature is: {'C', 'G', 'P', 'H'}
++Define the "generation number" of a commit recursively as follows:
 +
-+  1-byte version number:
-+      Currently, the only valid version is 1.
++ * A commit with no parents (a root commit) has generation number one.
 +
-+  1-byte Hash Version (1 = SHA-1)
-+      We infer the hash length (H) from this value.
++ * A commit with at least one parent has generation number one more than
++   the largest generation number among its parents.
 +
-+  1-byte number (C) of "chunks"
++Equivalently, the generation number of a commit A is one more than the
++length of a longest path from A to a root commit. The recursive definition
++is easier to use for computation and observing the following property:
 +
-+  1-byte (reserved for later use)
-+     Current clients should ignore this value.
++    If A and B are commits with generation numbers N and M, respectively,
++    and N <= M, then A cannot reach B. That is, we know without searching
++    that B is not an ancestor of A because it is further from a root commit
++    than A.
 +
-+CHUNK LOOKUP:
++    Conversely, when checking if A is an ancestor of B, then we only need
++    to walk commits until all commits on the walk boundary have generation
++    number at most N. If we walk commits using a priority queue seeded by
++    generation numbers, then we always expand the boundary commit with highest
++    generation number and can easily detect the stopping condition.
 +
-+  (C + 1) * 12 bytes listing the table of contents for the chunks:
-+      First 4 bytes describe the chunk id. Value 0 is a terminating label.
-+      Other 8 bytes provide the byte-offset in current file for chunk to
-+      start. (Chunks are ordered contiguously in the file, so you can infer
-+      the length using the next chunk position if necessary.) Each chunk
-+      ID appears at most once.
++This property can be used to significantly reduce the time it takes to
++walk commits and determine topological relationships. Without generation
++numbers, the general heuristic is the following:
 +
-+  The remaining data in the body is described one chunk at a time, and
-+  these chunks may be given in any order. Chunks are required unless
-+  otherwise specified.
++    If A and B are commits with commit time X and Y, respectively, and
++    X < Y, then A _probably_ cannot reach B.
 +
-+CHUNK DATA:
++This heuristic is currently used whenever the computation is allowed to
++violate topological relationships due to clock skew (such as "git log"
++with default order), but is not used when the topological order is
++required (such as merge base calculations, "git log --graph").
 +
-+  OID Fanout (ID: {'O', 'I', 'D', 'F'}) (256 * 4 bytes)
-+      The ith entry, F[i], stores the number of OIDs with first
-+      byte at most i. Thus F[255] stores the total
-+      number of commits (N).
++In practice, we expect some commits to be created recently and not stored
++in the commit graph. We can treat these commits as having "infinite"
++generation number and walk until reaching commits with known generation
++number.
 +
-+  OID Lookup (ID: {'O', 'I', 'D', 'L'}) (N * H bytes)
-+      The OIDs for all commits in the graph, sorted in ascending order.
++Design Details
++--------------
 +
-+  Commit Data (ID: {'C', 'G', 'E', 'T' }) (N * (H + 16) bytes)
-+    * The first H bytes are for the OID of the root tree.
-+    * The next 8 bytes are for the positions of the first two parents
-+      of the ith commit. Stores value 0xffffffff if no parent in that
-+      position. If there are more than two parents, the second value
-+      has its most-significant bit on and the other bits store an array
-+      position into the Large Edge List chunk.
-+    * The next 8 bytes store the generation number of the commit and
-+      the commit time in seconds since EPOCH. The generation number
-+      uses the higher 30 bits of the first 4 bytes, while the commit
-+      time uses the 32 bits of the second 4 bytes, along with the lowest
-+      2 bits of the lowest byte, storing the 33rd and 34th bit of the
-+      commit time.
++- The commit graph file is stored in a file named 'commit-graph' in the
++  .git/objects/info directory. This could be stored in the info directory
++  of an alternate.
 +
-+  Large Edge List (ID: {'E', 'D', 'G', 'E'}) [Optional]
-+      This list of 4-byte values store the second through nth parents for
-+      all octopus merges. The second parent value in the commit data stores
-+      an array position within this list along with the most-significant bit
-+      on. Starting at that array position, iterate through this list of commit
-+      positions for the parents until reaching a value with the most-significant
-+      bit on. The other bits correspond to the position of the last parent.
++- The core.commitGraph config setting must be on to consume graph files.
 +
-+TRAILER:
++- The file format includes parameters for the object ID hash function,
++  so a future change of hash algorithm does not require a change in format.
 +
-+	H-byte HASH-checksum of all of the above.
++Future Work
++-----------
++
++- The commit graph feature currently does not honor commit grafts. This can
++  be remedied by duplicating or refactoring the current graft logic.
++
++- The 'commit-graph' subcommand does not have a "verify" mode that is
++  necessary for integration with fsck.
++
++- The file format includes room for precomputed generation numbers. These
++  are not currently computed, so all generation numbers will be marked as
++  0 (or "uncomputed"). A later patch will include this calculation.
++
++- After computing and storing generation numbers, we must make graph
++  walks aware of generation numbers to gain the performance benefits they
++  enable. This will mostly be accomplished by swapping a commit-date-ordered
++  priority queue with one ordered by generation number. The following
++  operations are important candidates:
++
++    - paint_down_to_common()
++    - 'log --topo-order'
++
++- Currently, parse_commit_gently() requires filling in the root tree
++  object for a commit. This passes through lookup_tree() and consequently
++  lookup_object(). Also, it calls lookup_commit() when loading the parents.
++  These method calls check the ODB for object existence, even if the
++  consumer does not need the content. For example, we do not need the
++  tree contents when computing merge bases. Now that commit parsing is
++  removed from the computation time, these lookup operations are the
++  slowest operations keeping graph walks from being fast. Consider
++  loading these objects without verifying their existence in the ODB and
++  only loading them fully when consumers need them. Consider a method
++  such as "ensure_tree_loaded(commit)" that fully loads a tree before
++  using commit->tree.
++
++- The current design uses the 'commit-graph' subcommand to generate the graph.
++  When this feature stabilizes enough to recommend to most users, we should
++  add automatic graph writes to common operations that create many commits.
++  For example, one could compute a graph on 'clone', 'fetch', or 'repack'
++  commands.
++
++- A server could provide a commit graph file as part of the network protocol
++  to avoid extra calculations by clients. This feature is only of benefit if
++  the user is willing to trust the file, because verifying the file is correct
++  is as hard as computing it from scratch.
++
++Related Links
++-------------
++[0] https://bugs.chromium.org/p/git/issues/detail?id=8
++    Chromium work item for: Serialized Commit Graph
++
++[1] https://public-inbox.org/git/20110713070517.GC18566@sigill.intra.peff.net/
++    An abandoned patch that introduced generation numbers.
++
++[2] https://public-inbox.org/git/20170908033403.q7e6dj7benasrjes@sigill.intra.peff.net/
++    Discussion about generation numbers on commits and how they interact
++    with fsck.
++
++[3] https://public-inbox.org/git/20170908034739.4op3w4f2ma5s65ku@sigill.intra.peff.net/
++    More discussion about generation numbers and not storing them inside
++    commit objects. A valuable quote:
++
++    "I think we should be moving more in the direction of keeping
++     repo-local caches for optimizations. Reachability bitmaps have been
++     a big performance win. I think we should be doing the same with our
++     properties of commits. Not just generation numbers, but making it
++     cheap to access the graph structure without zlib-inflating whole
++     commit objects (i.e., packv4 or something like the "metapacks" I
++     proposed a few years ago)."
++
++[4] https://public-inbox.org/git/20180108154822.54829-1-git@jeffhostetler.com/T/#u
++    A patch to remove the ahead-behind calculation from 'status'.
 -- 
 2.17.0.14.gba1221a8ce
 
