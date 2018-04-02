@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6AB981F404
-	for <e@80x24.org>; Mon,  2 Apr 2018 20:35:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D1DB41F404
+	for <e@80x24.org>; Mon,  2 Apr 2018 20:35:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932502AbeDBUfg (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Apr 2018 16:35:36 -0400
-Received: from mail-qk0-f196.google.com ([209.85.220.196]:41245 "EHLO
-        mail-qk0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932471AbeDBUfI (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Apr 2018 16:35:08 -0400
-Received: by mail-qk0-f196.google.com with SMTP id s78so16377736qkl.8
-        for <git@vger.kernel.org>; Mon, 02 Apr 2018 13:35:07 -0700 (PDT)
+        id S932465AbeDBUfE (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Apr 2018 16:35:04 -0400
+Received: from mail-qt0-f196.google.com ([209.85.216.196]:43563 "EHLO
+        mail-qt0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932452AbeDBUfA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Apr 2018 16:35:00 -0400
+Received: by mail-qt0-f196.google.com with SMTP id s48so16896653qtb.10
+        for <git@vger.kernel.org>; Mon, 02 Apr 2018 13:34:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=wXvTEFa6DzRWlM3AybnVZRMTijz5sh3rmWXXMX8cX3c=;
-        b=Axzhh8jAnZ0tcd1R44wSnvPVCIKn/QlNxhVDZ0yezyRLOBahq3gpLHghgEHOGWvlmP
-         0CKRIVecbZjTu+lU8CSsKd1ao0Xucnun7yl+TfAEJOCLGNk3cgrQs9h7mMHPvYGpWT/h
-         5UGGfeOK4eUCgeDpVuXJ2FqtcwR7Fh5rDmEs0TuxHn9ICLkNgNuIvYjzewYxKw/pacH+
-         8qfUk0aEl/uRWUj2VJE5/uSvl38v4JQzpjXGvONAB5aqCdbjJEjBG1nAd34UjoICKZFm
-         PGJ32LpIzKxSebz+U4yzrx1EFd9B1d41ha0p5VRFgibJxThSJNLvqqJVVNUuM35fz4yH
-         hvFw==
+        bh=9IFnpXamcq/RF1fl1AIb1MQ/GhEiZbJNF7+qS5hsyJQ=;
+        b=vIagd+kACNFUBDeSHtKTGoFGU/dOb1JCx47uBxjpv8RMa9YDYqFPuRUuHBdebOsalg
+         xo3qFg0tzLIv7oN/mPjYtCKkbnI6M1IsY75MOeT9hVe1Z2e9a5Dk6TNvgDx8++xl25eA
+         egeQM9znDQz+rVwwknLQHNR/ftrzV0ZBmF/NrJ+yP8BLt/WM820hi+umTqlB8bezax0j
+         LXZw53vkNlC4N/HgaICC0J4AVIY2dJ9SbeWcIO4LdqqbqCH0i3uVYOgi1UHQM91D4HNW
+         j873VArPL8D43D42YQgEsyhYxkaCzWwMuFQKhEzcMIwjnW6Y3Ex+Mo5d/pcm33M9J0N9
+         9Hcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=wXvTEFa6DzRWlM3AybnVZRMTijz5sh3rmWXXMX8cX3c=;
-        b=FqsqV08pgZdpNZ1SrUDxXjU5chatHN2cNtXXh6gkLvQWUg+V3y+8U0/420qJnPUpEo
-         Kru5U6FzKiY1BLwSsa9zUtazFBxRvNvyC0Zmq9PGG4wKKUIKWq8fS3D0Gil4AFNlusOv
-         WnECKJkO57zlG/MyReZbuL+/trqlMQ5sWVk9L6PWEPs6ck70rKjehlPEPxZt3pLRMlw4
-         fjH9OTLWyHfo+60NkeyzCzghyfH5wbe9fJYfT7+tehZYWgyfODPmIQnI0Dgux+3CPUNf
-         1YFF13UVTRxFEgSfMbB9uqz1s4RD89jYfFc7X3o+aqmCZ7EtXRK1Hw1r2ANvrXmPuRxR
-         MTgg==
-X-Gm-Message-State: ALQs6tCMj3qHzaI8gvHJLoJTr8Bi4sfZ4N/Dmac0tIqSFapZNU0RpjDC
-        og0z3sl7Bl+ifpg52SqH4Tf7LQoqvS4=
-X-Google-Smtp-Source: AIpwx48POpyrpn9uY1bhAm7ig6Ku4zxeWRlRmpRrZDqIUR6k9mM9474Uvae/aCEYRw6hH40M1jwTeA==
-X-Received: by 10.55.164.136 with SMTP id n130mr14939732qke.13.1522701306900;
-        Mon, 02 Apr 2018 13:35:06 -0700 (PDT)
+        bh=9IFnpXamcq/RF1fl1AIb1MQ/GhEiZbJNF7+qS5hsyJQ=;
+        b=tdKaW8JF6Vhb/PVhkS19sm7S33tVvrfvsJ7omdvsRZ9wA6pqcwc2l+3vlgATS58O6o
+         ZIXl7Jf5Czu+CQvd1FP9ZZ5VBv/i+PT7gKOT60Lwhk5TWE/xKWHjRTrTN7w5oCvMPpjb
+         3VqpRLi8A3xBBy0vfJwELtgIKDabxZwLuXzSASYZbHC85BzjQ6k5mFyNzbkqEPx7T4rA
+         4RuRyyj645m7879e2x0Rdk+I2YqmaNfaPfoAXeEh93x66c0A+5HN1z8n8hjx4OV+xsZr
+         XCLYpX3Ruy3shRp0UEfbUFd1DWwFolTDlgRFV3Wvjo57TCm3l0vuzMKGaeMGCwZ6Ec3b
+         MQ3g==
+X-Gm-Message-State: ALQs6tB+IRLuahA0j58UlDVVvLp1IxR4oGPa15/pO1Z/OT2ax7nwVjae
+        dkoxh6s6X9V7aAzKu3HqB5/YiScmvxI=
+X-Google-Smtp-Source: AIpwx48KpEFlzHz6Ed36zx47I05PY4Sa10+KR8T8tKJieYAomp7lrU8yl3dTnTRexdu0zBQvqWyPZQ==
+X-Received: by 10.237.61.213 with SMTP id j21mr15945080qtf.251.1522701299117;
+        Mon, 02 Apr 2018 13:34:59 -0700 (PDT)
 Received: from stolee-linux-2.corp.microsoft.com ([2001:4898:8010:0:eb4a:5dff:fe0f:730f])
-        by smtp.gmail.com with ESMTPSA id n30sm998611qtb.93.2018.04.02.13.35.05
+        by smtp.gmail.com with ESMTPSA id n30sm998611qtb.93.2018.04.02.13.34.58
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 02 Apr 2018 13:35:06 -0700 (PDT)
+        Mon, 02 Apr 2018 13:34:58 -0700 (PDT)
 From:   Derrick Stolee <stolee@gmail.com>
 X-Google-Original-From: Derrick Stolee <dstolee@microsoft.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, sbeller@google.com, szeder.dev@gmail.com,
         ramsay@ramsayjones.plus.com, git@jeffhostetler.com, peff@peff.net,
         Derrick Stolee <dstolee@microsoft.com>
-Subject: [PATCH v7 09/14] commit-graph: add core.commitGraph setting
-Date:   Mon,  2 Apr 2018 16:34:22 -0400
-Message-Id: <20180402203427.170177-10-dstolee@microsoft.com>
+Subject: [PATCH v7 05/14] commit-graph: create git-commit-graph builtin
+Date:   Mon,  2 Apr 2018 16:34:18 -0400
+Message-Id: <20180402203427.170177-6-dstolee@microsoft.com>
 X-Mailer: git-send-email 2.17.0.rc0
 In-Reply-To: <20180402203427.170177-1-dstolee@microsoft.com>
 References: <20180314192736.70602-1-dstolee@microsoft.com>
@@ -68,75 +68,162 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-The commit graph feature is controlled by the new core.commitGraph config
-setting. This defaults to 0, so the feature is opt-in.
-
-The intention of core.commitGraph is that a user can always stop checking
-for or parsing commit graph files if core.commitGraph=0.
+Teach git the 'commit-graph' builtin that will be used for writing and
+reading packed graph files. The current implementation is mostly
+empty, except for an '--object-dir' option.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- Documentation/config.txt | 4 ++++
- cache.h                  | 1 +
- config.c                 | 5 +++++
- environment.c            | 1 +
- 4 files changed, 11 insertions(+)
+ .gitignore                             |  1 +
+ Documentation/git-commit-graph.txt     | 10 +++++++
+ Makefile                               |  1 +
+ builtin.h                              |  1 +
+ builtin/commit-graph.c                 | 36 ++++++++++++++++++++++++++
+ command-list.txt                       |  1 +
+ contrib/completion/git-completion.bash |  2 ++
+ git.c                                  |  1 +
+ 8 files changed, 53 insertions(+)
+ create mode 100644 Documentation/git-commit-graph.txt
+ create mode 100644 builtin/commit-graph.c
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 4e0cff87f6..e5c7013fb0 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -898,6 +898,10 @@ core.notesRef::
- This setting defaults to "refs/notes/commits", and it can be overridden by
- the `GIT_NOTES_REF` environment variable.  See linkgit:git-notes[1].
- 
-+core.commitGraph::
-+	Enable git commit graph feature. Allows reading from the
-+	commit-graph file.
+diff --git a/.gitignore b/.gitignore
+index 833ef3b0b7..e82f90184d 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -34,6 +34,7 @@
+ /git-clone
+ /git-column
+ /git-commit
++/git-commit-graph
+ /git-commit-tree
+ /git-config
+ /git-count-objects
+diff --git a/Documentation/git-commit-graph.txt b/Documentation/git-commit-graph.txt
+new file mode 100644
+index 0000000000..f3b34622a8
+--- /dev/null
++++ b/Documentation/git-commit-graph.txt
+@@ -0,0 +1,10 @@
++git-commit-graph(1)
++===================
 +
- core.sparseCheckout::
- 	Enable "sparse checkout" feature. See section "Sparse checkout" in
- 	linkgit:git-read-tree[1] for more information.
-diff --git a/cache.h b/cache.h
-index a61b2d3f0d..8bdbcbbbf7 100644
---- a/cache.h
-+++ b/cache.h
-@@ -805,6 +805,7 @@ extern char *git_replace_ref_base;
- 
- extern int fsync_object_files;
- extern int core_preload_index;
-+extern int core_commit_graph;
- extern int core_apply_sparse_checkout;
- extern int precomposed_unicode;
- extern int protect_hfs;
-diff --git a/config.c b/config.c
-index b0c20e6cb8..25ee4a676c 100644
---- a/config.c
-+++ b/config.c
-@@ -1226,6 +1226,11 @@ static int git_default_core_config(const char *var, const char *value)
- 		return 0;
- 	}
- 
-+	if (!strcmp(var, "core.commitgraph")) {
-+		core_commit_graph = git_config_bool(var, value);
-+		return 0;
-+	}
++NAME
++----
++git-commit-graph - Write and verify Git commit graph files
 +
- 	if (!strcmp(var, "core.sparsecheckout")) {
- 		core_apply_sparse_checkout = git_config_bool(var, value);
- 		return 0;
-diff --git a/environment.c b/environment.c
-index d6dd64662c..8853e2f0dd 100644
---- a/environment.c
-+++ b/environment.c
-@@ -62,6 +62,7 @@ enum push_default_type push_default = PUSH_DEFAULT_UNSPECIFIED;
- enum object_creation_mode object_creation_mode = OBJECT_CREATION_MODE;
- char *notes_ref_name;
- int grafts_replace_parents = 1;
-+int core_commit_graph;
- int core_apply_sparse_checkout;
- int merge_log_config = -1;
- int precomposed_unicode = -1; /* see probe_utf8_pathname_composition() */
++GIT
++---
++Part of the linkgit:git[1] suite
+diff --git a/Makefile b/Makefile
+index a1d8775adb..a59b62bed1 100644
+--- a/Makefile
++++ b/Makefile
+@@ -952,6 +952,7 @@ BUILTIN_OBJS += builtin/clone.o
+ BUILTIN_OBJS += builtin/column.o
+ BUILTIN_OBJS += builtin/commit-tree.o
+ BUILTIN_OBJS += builtin/commit.o
++BUILTIN_OBJS += builtin/commit-graph.o
+ BUILTIN_OBJS += builtin/config.o
+ BUILTIN_OBJS += builtin/count-objects.o
+ BUILTIN_OBJS += builtin/credential.o
+diff --git a/builtin.h b/builtin.h
+index 42378f3aa4..079855b6d4 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -149,6 +149,7 @@ extern int cmd_clone(int argc, const char **argv, const char *prefix);
+ extern int cmd_clean(int argc, const char **argv, const char *prefix);
+ extern int cmd_column(int argc, const char **argv, const char *prefix);
+ extern int cmd_commit(int argc, const char **argv, const char *prefix);
++extern int cmd_commit_graph(int argc, const char **argv, const char *prefix);
+ extern int cmd_commit_tree(int argc, const char **argv, const char *prefix);
+ extern int cmd_config(int argc, const char **argv, const char *prefix);
+ extern int cmd_count_objects(int argc, const char **argv, const char *prefix);
+diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
+new file mode 100644
+index 0000000000..b466ecd781
+--- /dev/null
++++ b/builtin/commit-graph.c
+@@ -0,0 +1,36 @@
++#include "builtin.h"
++#include "config.h"
++#include "parse-options.h"
++
++static char const * const builtin_commit_graph_usage[] = {
++	N_("git commit-graph [--object-dir <objdir>]"),
++	NULL
++};
++
++static struct opts_commit_graph {
++	const char *obj_dir;
++} opts;
++
++
++int cmd_commit_graph(int argc, const char **argv, const char *prefix)
++{
++	static struct option builtin_commit_graph_options[] = {
++		OPT_STRING(0, "object-dir", &opts.obj_dir,
++			N_("dir"),
++			N_("The object directory to store the graph")),
++		OPT_END(),
++	};
++
++	if (argc == 2 && !strcmp(argv[1], "-h"))
++		usage_with_options(builtin_commit_graph_usage,
++				   builtin_commit_graph_options);
++
++	git_config(git_default_config, NULL);
++	argc = parse_options(argc, argv, prefix,
++			     builtin_commit_graph_options,
++			     builtin_commit_graph_usage,
++			     PARSE_OPT_STOP_AT_NON_OPTION);
++
++	usage_with_options(builtin_commit_graph_usage,
++			   builtin_commit_graph_options);
++}
+diff --git a/command-list.txt b/command-list.txt
+index a1fad28fd8..835c5890be 100644
+--- a/command-list.txt
++++ b/command-list.txt
+@@ -34,6 +34,7 @@ git-clean                               mainporcelain
+ git-clone                               mainporcelain           init
+ git-column                              purehelpers
+ git-commit                              mainporcelain           history
++git-commit-graph                        plumbingmanipulators
+ git-commit-tree                         plumbingmanipulators
+ git-config                              ancillarymanipulators
+ git-count-objects                       ancillaryinterrogators
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index b09c8a2362..6726daaf69 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -878,6 +878,7 @@ __git_list_porcelain_commands ()
+ 		check-ref-format) : plumbing;;
+ 		checkout-index)   : plumbing;;
+ 		column)           : internal helper;;
++		commit-graph)     : plumbing;;
+ 		commit-tree)      : plumbing;;
+ 		count-objects)    : infrequent;;
+ 		credential)       : credentials;;
+@@ -2350,6 +2351,7 @@ _git_config ()
+ 		core.bigFileThreshold
+ 		core.checkStat
+ 		core.commentChar
++		core.commitGraph
+ 		core.compression
+ 		core.createObject
+ 		core.deltaBaseCacheLimit
+diff --git a/git.c b/git.c
+index ceaa58ef40..2808c51de9 100644
+--- a/git.c
++++ b/git.c
+@@ -388,6 +388,7 @@ static struct cmd_struct commands[] = {
+ 	{ "clone", cmd_clone },
+ 	{ "column", cmd_column, RUN_SETUP_GENTLY },
+ 	{ "commit", cmd_commit, RUN_SETUP | NEED_WORK_TREE },
++	{ "commit-graph", cmd_commit_graph, RUN_SETUP },
+ 	{ "commit-tree", cmd_commit_tree, RUN_SETUP },
+ 	{ "config", cmd_config, RUN_SETUP_GENTLY | DELAY_PAGER_CONFIG },
+ 	{ "count-objects", cmd_count_objects, RUN_SETUP },
 -- 
 2.17.0.14.gba1221a8ce
 
