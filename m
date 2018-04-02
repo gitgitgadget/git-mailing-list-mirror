@@ -2,343 +2,180 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C7F8D1F424
-	for <e@80x24.org>; Mon,  2 Apr 2018 11:42:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4CA631F424
+	for <e@80x24.org>; Mon,  2 Apr 2018 11:56:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754330AbeDBLj0 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Apr 2018 07:39:26 -0400
-Received: from mail-wm0-f49.google.com ([74.125.82.49]:36370 "EHLO
-        mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754303AbeDBLjZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Apr 2018 07:39:25 -0400
-Received: by mail-wm0-f49.google.com with SMTP id x82so26469542wmg.1
-        for <git@vger.kernel.org>; Mon, 02 Apr 2018 04:39:24 -0700 (PDT)
+        id S1754343AbeDBLz6 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Apr 2018 07:55:58 -0400
+Received: from mail-io0-f169.google.com ([209.85.223.169]:34942 "EHLO
+        mail-io0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754326AbeDBLz6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Apr 2018 07:55:58 -0400
+Received: by mail-io0-f169.google.com with SMTP id x77so11385675ioi.2
+        for <git@vger.kernel.org>; Mon, 02 Apr 2018 04:55:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=rtKkGgcKdVIAb8vWCWVjtTvtV8EfTjBkSYkm00jD2gQ=;
-        b=JB12h/Py3rTkgmpxFE6d0SJuFf+LvJVJnWOFZ7CwutCT+e3jDUCVmTcg0/suaaWro8
-         2QEfvxHzYjf+wNSQ55pMDE2qyjdd7pOjhW25STUl7zns9wj8kVQxpEEJM1cx33B6NxWp
-         XlZckQMnyxVZJV9+ZR2KJnF/XtkVX9PIwgFIOXF24kXxyQqfBcHW4vJSKOKdyNzidMqI
-         Qp0IhArSYoFOQ6r35MsCYQATPiMZ0p84EyQ721VYXB2oUQWJ+NoMflOZMlffcBzZuiDW
-         nl110pSvw2088w5msyzQxZ1EwHWzxaNBVR/OyPL1l88rMJWsox6VUKaWlje65hgstMiR
-         JMQw==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=hZM9ZNjEm8/kAjSjf0d3VCmjkmqjw+LuL4L2cV3RcgI=;
+        b=cwDKZVhWMJ1KuJFrAVJIbqFQeISGLSBlI6x4i37WBZp4al+GLhbnCpG8AiVBgox1oO
+         i66/SqQxn0XRT3pxg/+djLpfnjCSVyD0KrlaC4nCN1lUR4+SUAQBYJt27smPk8zFt8IL
+         8Yxu62bEz4hK2GmudEHqkBmUlE56fkL5Q3SPfaVXRH6U4dbXSg6kJDeuwtNgmjwSgyUo
+         f/s7v5wYzoW3yGwDvWlpBPe9V6POkYFqW3aOGoJWcb3yWXesFKph7Lx/21obTuLlMjvy
+         gKIJ+m34dvaGuGuzkeRVxsw+dtTLxkFtLldtOTcUwboda4mnkuwnCkurLT88I10/nPIy
+         g9fw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=rtKkGgcKdVIAb8vWCWVjtTvtV8EfTjBkSYkm00jD2gQ=;
-        b=sxyHp3iwWbq/e/ZPBN5SL3+F1bdl9rbVqVl/ckUZpa89lOrcVUFK9SnAtpZG0QI+fZ
-         TTjGfHESMsynpp/7fNRCaW6bLrmdZ0O0Qu6CWMEBNZkm6LhSANZnQ6+o0SABblQKHnox
-         GCpMr5vZ/VdNjoeGwWpTgP2rzkZkJkeqaycL13mL7/4+NG/1bHhmaqZ/P4zhgpaHJab2
-         guvpuf2MI2eLEOSfuhpQ3SOUnKrfsChAdZI+CqiZTK/ciXEFGfuApZEerXnsXPFs1QFK
-         ZxSuujUUU9rIUDsceQDWUQ/Wbk0KQSsTDjb4aFLvPaS5tu476bU3OfpViHCWvkpFR7K3
-         9zMw==
-X-Gm-Message-State: AElRT7GSA1gR/RkeWGlVSbJwK4aVEXB4YRyZ6WirCHDykM1YzvqwFSZB
-        kusmhia6arR0fyIHq8WGsph61/rX
-X-Google-Smtp-Source: AIpwx4+zPHUWE/GLTrUMAfLCQB4Iab8DT0bIj3cUwi0aleOeQByGWe2OGwpxkOEHm/XFuX5xrRVfzg==
-X-Received: by 10.80.144.120 with SMTP id z53mr12038517edz.163.1522669164050;
-        Mon, 02 Apr 2018 04:39:24 -0700 (PDT)
-Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
-        by smtp.gmail.com with ESMTPSA id b31sm273714eda.70.2018.04.02.04.39.22
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 02 Apr 2018 04:39:22 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     phillip.wood@dunelm.org.uk
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Gustavo Leite <gustavoleite.ti@gmail.com>,
-        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
-        Fernando Vezzosi <fv@repnz.net>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 0/3] add -p: select individual hunk lines
-References: <20180219113619.26566-1-phillip.wood@talktalk.net>
-        <20180316101346.7137-1-phillip.wood@talktalk.net>
-        <xmqq1sg27mwf.fsf@gitster-ct.c.googlers.com>
-        <a8dd262b-8b0c-8632-bf28-e03f9405317f@talktalk.net>
-        <878ta8vyqe.fsf@evledraar.gmail.com>
-        <1e8daa35-3749-fec7-ae88-541169dd0b2a@talktalk.net>
-User-agent: Debian GNU/Linux 9.4 (stretch); Emacs 25.1.1; mu4e 1.1.0
-In-reply-to: <1e8daa35-3749-fec7-ae88-541169dd0b2a@talktalk.net>
-Date:   Mon, 02 Apr 2018 13:39:21 +0200
-Message-ID: <87370dx2fq.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=hZM9ZNjEm8/kAjSjf0d3VCmjkmqjw+LuL4L2cV3RcgI=;
+        b=MHG1cdetgiW6Y3blA6GDcK7ywF24VqyVbPxrR6OC26OYrjRHORyJ8d+Z/IzX1g/vQ/
+         +T/b9fewOqipS6lQUufEslNrJ6wjO7Tm2aQ0/UN9EhwGrHkodu8N72hsIlKYa+ZHhD3+
+         OI7AVXZtMtb1FVEcQU1dbGfi9MBsnd9rgmPNbq0tS/QFK13whwZ0IoJLDJ3e8nujZ1Pm
+         tmebMi9T9609aHZ8FuLNjAsOWh1DEknsWTHCqZnEyoBxxTYzqkoxH7WBpp8wJ10BNwMO
+         9qdzLbgvrx/q/OpzTs3xhQTvtYJrVDNMHpjcQocoU9Ce4W5Ci2M73wBjoEd97iMwr8Zf
+         /9pA==
+X-Gm-Message-State: ALQs6tADdroJWV//gr+yxMzJjcqxBH6nSFUPj03xh73MsWlc4oGG3gq7
+        Kb/R5xG9ca6v/kudBj9ubIlLCohhjetNiFk4XWLwNw==
+X-Google-Smtp-Source: AIpwx493UpOaLGXNs10hTXLvhp/CDzuljq+FyA+SKncaRlkINkTiRV2PDdLWWmJd7bZBvYmRHBidJ3SctJBibZy66L4=
+X-Received: by 10.107.201.23 with SMTP id z23mr7685575iof.135.1522670157158;
+ Mon, 02 Apr 2018 04:55:57 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Received: by 10.107.85.4 with HTTP; Mon, 2 Apr 2018 04:55:16 -0700 (PDT)
+From:   David Hoyle <davidghoyle@gmail.com>
+Date:   Mon, 2 Apr 2018 12:55:16 +0100
+Message-ID: <CAFGVh0yh-w3=s5WBK-HqHQd+dWKgpnqytF4E3mXv_HxrC1i78Q@mail.gmail.com>
+Subject: Possible bug in git log with date ranges
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi,
 
-On Mon, Apr 02 2018, Phillip Wood wrote:
+Hopefully I've read the readme file correctly for submitting something
+that might be a bug.
 
-> On 31/03/18 20:20, Ævar Arnfjörð Bjarmason wrote:
->>
->> On Fri, Mar 30 2018, Phillip Wood wrote:
->>
->>> On 29/03/18 19:32, Junio C Hamano wrote:
->>>> Phillip Wood <phillip.wood@talktalk.net> writes:
->>>>
->>>>> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->>>>>
->>>>> Since v2 I've updated the patches to use '-' instead of '^' to invert
->>>>> the selection to match the rest of add -i and clean -i.
->>>>>
->>>>> These patches build on top of the recount fixes in [1]. The commit
->>>>> message for the first patch describes the motivation:
->>>>>
->>>>> "When I end up editing hunks it is almost always because I want to
->>>>> stage a subset of the lines in the hunk. Doing this by editing the
->>>>> hunk is inconvenient and error prone (especially so if the patch is
->>>>> going to be reversed before being applied). Instead offer an option
->>>>> for add -p to stage individual lines. When the user presses 'l' the
->>>>> hunk is redrawn with labels by the insertions and deletions and they
->>>>> are prompted to enter a list of the lines they wish to stage. Ranges
->>>>> of lines may be specified using 'a-b' where either 'a' or 'b' may be
->>>>> omitted to mean all lines from 'a' to the end of the hunk or all lines
->>>>> from 1 upto and including 'b'."
->>>>
->>>> I haven't seen any review comments on this round, and as I am not a
->>>> heavy user of "add -i" interface (even though I admit that I
->>>> originally wrote it), I haven't had a chance to exercise the code
->>>> myself in the two weeks since the patches have been queued in my
->>>> tree.
->>>>
->>>> I am inclihned to merge them to 'next' soonish, but please stop me
->>>> if anybody (including the original author) has further comments.
->>>>
->>>> Thanks.
->>>>
->>> Hi Junio, if no one else has any comments, then I think it's ready for
->>> next. I've not used this latest incarnation much but I've used the
->>> previous versions quite a bit.
->
-> Ah it seems I spoke too soon.
->
-> Thanks for taking a look at this Ævar
->
->> First of all thinks for working on this. Something like this is a
->> feature I've long wanted to have and have just been manually using edit.
->>
->> As for the code, one comment: For reasons of avoiding something like the
->> 2.17.0-rc* bug I just sent a patch for, I think you should change your
->> use of the implicit $_ to something where you explicitly create lexical
->> variables instead.
->>
->> It's bad style in Perl to use $_ for anything except a one-liner, and
->> similar to the $1 bug with your other patch, you'll get buggy code
->> (regardless of your use of local $_) if one of the functions you're
->> calling in these >10 line for-loops starts doing something to set $_
->> itself, as demonstrated by:
->>
->>     $ perl -wE 'sub foo { local $_; for (1..3) { bar(); say } } sub bar { $_ = $_ ** 2; } foo()'
->>     1
->>     4
->>     9
->>
->> Let's just name these variables, even if it wasn't for that caveat it
->> would still be a good idea, since for any non-trivial use of $_ you've
->> got to mentally keep track of what set $_ where, so it's hard to read.
->
-> Right, I'll use lexical variables.
->
->>
->> As for the implementation, I *want* to love this, but it seems the way
->> it works is just fatally flawed, consider. *The* use-case I've had for
->> something like this (maybe yours differs?) is something where I do e.g.:
->
-> I've used it for selecting a subset of additions or deletions when my
-> work has run ahead of a logical commit boundary. I've also used it in
-> cases such as
->
-> 	-original
-> 	+modified
-> 	+new stuff
->
-> To separate the modification from the addition of new stuff, but I've
-> not used it on a list of modifications as in your example.
+I've recently migrated projects from an old version control system
+(JEDI VCS) to Git (which I really like BTW). The way this was done was
+by extracting the files from the original database and saving them to
+a folder layout and then running git add / commit on the files. When
+using the commit command I've used the --date switch to commit the
+files using their original dates. However if I run git log with say
+--since=date it seems as if this command uses the actual date the
+commit was entered not the date given for the commit. The same seems
+to apply to the other date filtering switches.
 
-Right. I was wrong in saying that it wouldn't work as expected for hunks
-with removed/added lines, but only for a subset of those cases.
+Below is an example using a log alias switch shows dates in a single
+line format.
 
->>     $ perl -pi -e 's/git/Git/g' README.md
->>
->> Which gives me (among other things):
->>
->>     -See [Documentation/gittutorial.txt][] to get started, then see
->>     -[Documentation/giteveryday.txt][] for a useful minimum set of commands, and
->>     -Documentation/git-<commandname>.txt for documentation of each command.
->>     -If git has been correctly installed, then the tutorial can also be
->>     -read with `man gittutorial` or `git help tutorial`, and the
->>     -documentation of each command with `man git-<commandname>` or `git help
->>     +See [Documentation/Gittutorial.txt][] to get started, then see
->>     +[Documentation/Giteveryday.txt][] for a useful minimum set of commands, and
->>     +Documentation/Git-<commandname>.txt for documentation of each command.
->>     +If Git has been correctly installed, then the tutorial can also be
->>     +read with `man Gittutorial` or `Git help tutorial`, and the
->>     +documentation of each command with `man Git-<commandname>` or `Git help
->>
->> Which to me, is a perfect use-case for this feature. Here I
->> hypothetically want to change "git" to "Git" in prose, so I only want to
->> change that "If git has been" line, the rest are all references to
->> filenames or command names.
->>
->> So I would manually edit the hunk via "e" to:
->>
->>      See [Documentation/gittutorial.txt][] to get started, then see
->>      [Documentation/giteveryday.txt][] for a useful minimum set of commands, and
->>      Documentation/git-<commandname>.txt for documentation of each command.
->>     -If git has been correctly installed, then the tutorial can also be
->>     +If Git has been correctly installed, then the tutorial can also be
->>      read with `man gittutorial` or `git help tutorial`, and the
->>      documentation of each command with `man git-<commandname>` or `git help
->>      <commandname>`.
->>
->> Yay, but very tedious. Now let's use your feature to do this:
->>
->>      1 -See [Documentation/gittutorial.txt][] to get started, then see
->>      2 -[Documentation/giteveryday.txt][] for a useful minimum set of commands, and
->>      3 -Documentation/git-<commandname>.txt for documentation of each command.
->>      4 -If git has been correctly installed, then the tutorial can also be
->>      5 -read with `man gittutorial` or `git help tutorial`, and the
->>      6 -documentation of each command with `man git-<commandname>` or `git help
->>      7 +See [Documentation/Gittutorial.txt][] to get started, then see
->>      8 +[Documentation/Giteveryday.txt][] for a useful minimum set of commands, and
->>      9 +Documentation/Git-<commandname>.txt for documentation of each command.
->>     10 +If Git has been correctly installed, then the tutorial can also be
->>     11 +read with `man Gittutorial` or `Git help tutorial`, and the
->>     12 +documentation of each command with `man Git-<commandname>` or `Git help
->>         <commandname>`.
->>
->>     select lines? 4,10
->>
->> So what I was expecting this to do was some automagic where it would
->> pair up the 4 line, and based on the removed/added count figure out
->> which line I'm also adding corresponds to that. I.e. both selected lines
->> are the 4th line removed/added, so it should transpose the 10th to the
->> 4th, but instead I get a patch that looks like this:
->>
->>     diff --git a/README.md b/README.md
->>     index f17af66a97..7234756e64 100644
->>     --- a/README.md
->>     +++ b/README.md
->>     @@ -18,9 +18,9 @@ including full documentation and Git related tools.
->>      See [Documentation/gittutorial.txt][] to get started, then see
->>      [Documentation/giteveryday.txt][] for a useful minimum set of commands, and
->>      Documentation/git-<commandname>.txt for documentation of each command.
->>     -If git has been correctly installed, then the tutorial can also be
->>      read with `man gittutorial` or `git help tutorial`, and the
->>      documentation of each command with `man git-<commandname>` or `git help
->>     +If Git has been correctly installed, then the tutorial can also be
->>      <commandname>`.
->>
->> I.e. it just grepped out the removed line from the removed chunk, and
->> the same for the added bit, which of course means that now the added
->> line doesn't get injected into the correct place, but added to the end.
->>
->> I can see *why* that happens, but I can't imagine a case where this
->> behavior isn't useless.
->
-> I agree it's useless here I've got some suggestions on how to fix it
-> though I've not spent much time thinking them through - any comments
-> would be most welcome.
->
-> I think we want something that pairs up groups of selected deletions and
-> insertions rather than lines, so that it can handle cases where the
-> number of inserted lines differs from the number of deletions but there
-> are the same number of groups. For example given
->
-> 	1 -* first
-> 	2 -* second
-> 	3 -* third
-> 	4 +* a longer description of the
-> 	5 +  first item
-> 	6 +* the second item
-> 	7 +* the third item
->
-> 1,3,4-5,7 would give
->
-> 	-* first
-> 	+* a longer description of the
-> 	+  first item
-> 	 * second
-> 	-* third
-> 	+* the third item
->
-> If the number of deletion groups differs from the number of insertion
-> groups then there is no way to automagically pair them up so we'd need
-> some syntax to do that. We could make the order of the numbers given by
-> the user significant so that 1,6,7,2,4,9 would pair line 1 with 6 & 7
-> and line 4 with 9 and delete line 2. It would then be an error if the an
-> earlier deletion was pair with a later insertion, so in the example
-> above 1,6,7,4,9,2 or 2,4,9,1,6,7 would be valid but 1,9,2,4,8 wouldn't).
-> We could also use brackets to group things e.g. [1,6,7],2,[4,9] which
-> makes the groups clearer visually.
->
-> Thinking further there is a problem with
->
-> 	1 -original
-> 	2 +a new paragraph before
-> 	3 +original
-> 	4 +
-> 	5 +modified original
->
-> if the user wants to commit the new paragraph before the modified
-> original then they need a way to specify that the insertion should come
-> before the deletion. At the moment giving 2-4 will put the new paragraph
-> after the unmodified original. To solve that there needs to be a way to
-> indicate that a group of insertions needs to come before the context
-> lines created by not staging the deletions - perhaps ^[2-4] or [^2-4]?
-> (we could distinguish between commas and spaces so that ^2,3,5 is
-> different to ^2 3,5 but that is then different to how lists work in the
-> rest of git)
->
->
->> What this seems useful for now is for chunks that only consist of lines
->> that are added or removed, maybe there's similar edge cases with those,
->> but I can't think of any, there I think we should do the obvious and
->> intuitive thing.
->>
->> But I think that as this stands we really should at least disable this
->> where we present the user with a hunk that consists of both removed &
->> added lines, since I think the desired behavior I've described above
->> should be the default, and once we pick one we're going to have to
->> support it forever, so it's important to get it right to begin with.
->>
->
-> Thanks for your feedback it's been really useful, let me know what you
-> think about grouping things.
+Date: Mon  2 Apr 2018, Time: 12:39:21, Location: D:\Documents\RAD
+Studio\Applications\Eidolon.GIT
+>git lg1 --since=01/Jan/2018
+* 9ce470f - (Sat Jan 20 11:54:54 2018 +0000) Prevent an overflow with
+an Int64 for integers by not converting. - DGH2112 (HEAD ->
+Development, master)
+* 863988f - (Sat Jan 20 11:53:44 2018 +0000) Tested large hard coded
+integer conversion integers - stopped conversion and left as string. -
+DGH2112
+* e14ecc9 - (Thu Jan 4 16:33:49 2018 +0000) Added new sub-option for
+Hard Coded Integers to skip 'DIV 2'. - DGH2112
+* 6039285 - (Wed Jan 3 21:51:08 2018 +0000) Bracketed CodeSiteLogging
+with a CODESITE IFDEF. - DGH2112
+* 651c682 - (Wed Jan 3 21:50:39 2018 +0000) Bracketed CodeSiteLogging
+with a CODESITE IFDEF. - DGH2112
+* c94ba4e - (Wed Jan 3 19:40:42 2018 +0000) Fixed unit name
+correction. - DGH2112
+* 368258b - (Wed Jan 3 14:09:48 2018 +0000) Separated Metric and Check
+options from their sub-options (made them a simple enumerte set). -
+DGH2112
+* d7aa03e - (Tue Jan 2 18:10:20 2018 +0000) Fixed issues with disabled
+metrics and checks showing up in the editor reports. - DGH2112
+* f7fbe87 - (Fri Dec 29 20:59:22 2017 +0000) Fixed cyclometric
+complexity test as the method default is 1 not 0. - DGH2112
+* ab609f9 - (Thu Dec 28 22:54:45 2017 +0000) Added two new document
+options for auto hiding checks and metrics with no issues. - DGH2112
+* 6ed4786 - (Thu Dec 28 22:54:24 2017 +0000) Added two new document
+options for auto hiding checks and metrics with no issues. - DGH2112
+* e422751 - (Thu Dec 28 22:42:31 2017 +0000) Added two new document
+options for auto hiding checks and metrics with no issues. - DGH2112
+* d8a9b06 - (Thu Dec 28 18:11:11 2017 +0000) Updated all reference to
+AddModuleCheck to AddCheck and update the method with checks. -
+DGH2112
+* 52bd768 - (Wed Dec 27 23:31:52 2017 +0000) Fixed depreciated
+IsLetter().\nAdd the ability for metrics to be marked as overridden. -
+DGH2112
+* 0b05b16 - (Wed Dec 27 22:51:53 2017 +0000) Split metrics and checks. - DGH2112
+* e94ab97 - (Wed Dec 27 16:13:00 2017 +0000) Fixed unit backward
+compatibility. - DGH2112
+* d6fde37 - (Wed Dec 27 15:12:53 2017 +0000) Fixed TParallel.For(). - DGH2112
+* 9161ded - (Sat Dec 23 16:51:33 2017 +0000) Updated code for
+VirtualTress 5.5.2. - DGH2112
+* 2fa264d - (Sun Dec 17 14:02:54 2017 +0000) Fixed tests. - DGH2112
+* 75d438f - (Sun Dec 17 12:09:04 2017 +0000) Fixed cyclometric
+comlpexity sub options for boolean expressions. - DGH2112
+* 9075a62 - (Sun Dec 17 11:56:55 2017 +0000) Broke a part metrics and
+checks and their sub options. - DGH2112
+* 76b5ec9 - (Sat Dec 16 21:01:18 2017 +0000) Broke a part metrics and
+checks and sub options. - DGH2112
+* 9807ad4 - (Tue Dec 12 20:43:04 2017 +0000) Tested unicode
+identifiers. - DGH2112
+* d831bc0 - (Sat Dec 9 20:35:05 2017 +0000) Fixed missing CONST in
+parameters. - DGH2112
+* fab9981 - (Sun Nov 26 19:22:21 2017 +0000) Moved some of the metric
+checks so that they only work on implemented methods not declarations.
+- DGH2112
+* c61f460 - (Sun Nov 19 20:22:43 2017 +0000) Updated the special tags
+to have custom fonts styles, fore and background colours. - DGH2112
+* 7d1fced - (Sun Nov 12 19:47:00 2017 +0000) Fixed metrics for non
+unit implementations. - DGH2112
+* 32fe4de - (Sun Nov 12 19:45:21 2017 +0000) Added test for checks and
+metrics. - DGH2112
+* 6827a22 - (Sun Nov 12 13:40:54 2017 +0000) Fixed
+TestGrammarForErrors. - DGH2112
+* 8713e52 - (Sun Nov 12 13:07:57 2017 +0000) Added Doc Conflicts and
+Mertrics to the list of checks. - DGH2112
+* 0e5c169 - (Sun Nov 12 10:03:10 2017 +0000) Added an END line to
+record, objects ,classes and interfaces. - DGH2112
+* ac8091c - (Sun Nov 5 20:22:23 2017 +0000) Updated the special tags
+to have custom fonts styles, fore and background colours. - DGH2112
+* 10dacab - (Sun Nov 5 16:19:31 2017 +0000) Fixed tests for Program,
+Library and Packages where Uses does not have Interface and
+Implementation sections. - DGH2112
+* e7996fa - (Sun Nov 5 16:17:44 2017 +0000) Ensured metrics are
+expanded. - DGH2112
+* 3f6d401 - (Sun Nov 5 16:17:25 2017 +0000) Added checks for Empty
+FOR, WHILE, REPEAT, and BEGIN END. - DGH2112
+* 579ebc8 - (Fri Nov 3 19:07:44 2017 +0000) Fixed capitalised USES
+clause. - DGH2112
+* 673de9a - (Sun Oct 29 10:25:03 2017 +0000) Added checks and metrics
+to the module and did some refactoring in the process. - DGH2112
+* ecd7f2b - (Sat Oct 28 12:02:06 2017 +0100) Updated the signatures of
+a few of the base methods to have CONST keywords for their parameters.
+- DGH2112
+* 105c6b9 - (Fri Oct 27 21:04:18 2017 +0100) Added CONST to
+parameters. - DGH2112
+* e639e91 - (Fri Oct 27 21:04:06 2017 +0100) Added CONST to
+parameters. - DGH2112
+* f4a1576 - (Fri Oct 27 21:03:56 2017 +0100) Added CONST to
+parameters. - DGH2112
+* de2052e - (Fri Oct 27 21:03:50 2017 +0100) Added CONST to
+parameters. - DGH2112
+* 23094dd - (Fri Oct 27 21:03:44 2017 +0100) Added CONST to
+parameters. - DGH2112
+* 40380c0 - (Fri Oct 27 21:03:39 2017 +0100) Added CONST to
+parameters. - DGH2112
+* 3d0aa7e - (Fri Oct 27 21:03:16 2017 +0100) Added CONST to
+parameters. - DGH2112
+* 88cbfe1 - (Sun Oct 22 12:03:15 2017 +0100) Updated code to a
+Container parameter in AddIssue(). - DGH2112
+* 05ddbcd - (Sun Oct 22 12:02:50 2017 +0100) Updated code to a
+Container parameter in AddIssue(). - DGH2112
 
-All of that makes sense to me. Yes as you noted earlier there's only so
-far we can get in this case by automatically trying to pair up
-removed/added lines, and actually your example wasn't even very
-pathological, consider:
-
-    1 -* a longer description of the
-    2 -  first item
-    3 -* second
-    4 -* third
-    5 +* first
-    6 +* a longer description of the
-    7 +  second item
-    8 +* the third item
-
-There the naïve heuristic I initially noted for selecting 4,8 would
-work, but not we couldn't in the general case rely on the removed/added
-lines being equal in number as some fallback for the simpler transpose
-behavior.
-
-It sounds like you're interested in hacking more on this, great. I'll be
-happy to review & add tests once you have something.
-
-I'll just say that I wonder if we should simply leave some of these more
-complex cases on the table, and only handle some subsets of simple cases
-in liue of coming up with a syntax that handles everything. there's
-always "edit" as the fallback for the complex cases.
+regards
+David Hoyle
