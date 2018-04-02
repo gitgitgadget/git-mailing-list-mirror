@@ -2,111 +2,63 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+X-Spam-Status: No, score=-2.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AE91E1F404
-	for <e@80x24.org>; Mon,  2 Apr 2018 06:07:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ABCDE1F424
+	for <e@80x24.org>; Mon,  2 Apr 2018 06:37:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752583AbeDBGHG (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Apr 2018 02:07:06 -0400
-Received: from mail.javad.com ([54.86.164.124]:33846 "EHLO mail.javad.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752491AbeDBGHF (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Apr 2018 02:07:05 -0400
-Received: from osv (unknown [89.175.180.246])
-        by mail.javad.com (Postfix) with ESMTPSA id 2CB333E898;
-        Mon,  2 Apr 2018 06:07:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1522649224;
-        bh=s0VSbtkiWbQZvLiw3LhDmYVNdSC18bFW40wdHLyUgCc=; l=4013;
-        h=Received:From:To:Subject;
-        b=PJwdJ3sbwKe4DybLPMeC3MBwSzWDSQsgv0lIbTGfDAvcqyt1+sYeUTNOmo+N8nM5N
-         NZ0zvHi/gBEulOtOzG5wLjseLx163T1YfJbgj54L7gBC4S6QIpSBPvqQT4FZVsO8Oq
-         tmdDZMekXtCmWl694Vu8FlDb8WFs2O4cW8CDSY6Q=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1522649224;
-        bh=s0VSbtkiWbQZvLiw3LhDmYVNdSC18bFW40wdHLyUgCc=; l=4013;
-        h=Received:From:To:Subject;
-        b=PJwdJ3sbwKe4DybLPMeC3MBwSzWDSQsgv0lIbTGfDAvcqyt1+sYeUTNOmo+N8nM5N
-         NZ0zvHi/gBEulOtOzG5wLjseLx163T1YfJbgj54L7gBC4S6QIpSBPvqQT4FZVsO8Oq
-         tmdDZMekXtCmWl694Vu8FlDb8WFs2O4cW8CDSY6Q=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1522649224;
-        bh=s0VSbtkiWbQZvLiw3LhDmYVNdSC18bFW40wdHLyUgCc=; l=4013;
-        h=Received:From:To:Subject;
-        b=PJwdJ3sbwKe4DybLPMeC3MBwSzWDSQsgv0lIbTGfDAvcqyt1+sYeUTNOmo+N8nM5N
-         NZ0zvHi/gBEulOtOzG5wLjseLx163T1YfJbgj54L7gBC4S6QIpSBPvqQT4FZVsO8Oq
-         tmdDZMekXtCmWl694Vu8FlDb8WFs2O4cW8CDSY6Q=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1522649224;
-        bh=s0VSbtkiWbQZvLiw3LhDmYVNdSC18bFW40wdHLyUgCc=; l=4013;
-        h=Received:From:To:Subject;
-        b=PJwdJ3sbwKe4DybLPMeC3MBwSzWDSQsgv0lIbTGfDAvcqyt1+sYeUTNOmo+N8nM5N
-         NZ0zvHi/gBEulOtOzG5wLjseLx163T1YfJbgj54L7gBC4S6QIpSBPvqQT4FZVsO8Oq
-         tmdDZMekXtCmWl694Vu8FlDb8WFs2O4cW8CDSY6Q=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1522649224;
-        bh=s0VSbtkiWbQZvLiw3LhDmYVNdSC18bFW40wdHLyUgCc=; l=4013;
-        h=Received:From:To:Subject;
-        b=PJwdJ3sbwKe4DybLPMeC3MBwSzWDSQsgv0lIbTGfDAvcqyt1+sYeUTNOmo+N8nM5N
-         NZ0zvHi/gBEulOtOzG5wLjseLx163T1YfJbgj54L7gBC4S6QIpSBPvqQT4FZVsO8Oq
-         tmdDZMekXtCmWl694Vu8FlDb8WFs2O4cW8CDSY6Q=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1522649224;
-        bh=s0VSbtkiWbQZvLiw3LhDmYVNdSC18bFW40wdHLyUgCc=; l=4013;
-        h=Received:From:To:Subject;
-        b=PJwdJ3sbwKe4DybLPMeC3MBwSzWDSQsgv0lIbTGfDAvcqyt1+sYeUTNOmo+N8nM5N
-         NZ0zvHi/gBEulOtOzG5wLjseLx163T1YfJbgj54L7gBC4S6QIpSBPvqQT4FZVsO8Oq
-         tmdDZMekXtCmWl694Vu8FlDb8WFs2O4cW8CDSY6Q=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1522649224;
-        bh=s0VSbtkiWbQZvLiw3LhDmYVNdSC18bFW40wdHLyUgCc=; l=4013;
-        h=Received:From:To:Subject;
-        b=PJwdJ3sbwKe4DybLPMeC3MBwSzWDSQsgv0lIbTGfDAvcqyt1+sYeUTNOmo+N8nM5N
-         NZ0zvHi/gBEulOtOzG5wLjseLx163T1YfJbgj54L7gBC4S6QIpSBPvqQT4FZVsO8Oq
-         tmdDZMekXtCmWl694Vu8FlDb8WFs2O4cW8CDSY6Q=
-Authentication-Results: mail.javad.com;
-        spf=pass (sender IP is 89.175.180.246) smtp.mailfrom=osv@javad.com smtp.helo=osv
-Received-SPF: pass (mail.javad.com: connection is authenticated)
-Received: from osv by osv with local (Exim 4.84_2)
-        (envelope-from <osv@osv.gnss.ru>)
-        id 1f2scP-0006eZ-OM; Mon, 02 Apr 2018 09:07:01 +0300
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Igor Djordjevic <igor.d.djordjevic@gmail.com>,
-        phillip.wood@dunelm.org.uk, Jacob Keller <jacob.keller@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC] Rebasing merges: a jorney to the ultimate solution(RoadClear)
-References: <87y3jtqdyg.fsf@javad.com>
-        <CA+P7+xpgChuvh_vsPktBkOEhF=MjJh1n_3jD0-n4d67j9kYqzw@mail.gmail.com>
-        <ee809701-a6d8-157d-09cd-cebbf2e949ec@gmail.com>
-        <1580e48a-be44-38dd-79af-8a2a31c5712e@talktalk.net>
-        <nycvar.QRO.7.76.6.1803061812090.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <754e2735-1288-9a8d-c8bd-ab39cf733812@gmail.com>
-        <nycvar.QRO.7.76.6.1803070810550.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <c5a5c2cc-6a11-440f-5b9b-964ae1ca07dd@talktalk.net>
-        <483674f8-4097-a374-c8f3-cf56cbb92042@talktalk.net>
-        <29bc6661-1d78-8f89-194e-1dcc9d88c34e@gmail.com>
-        <nycvar.QRO.7.76.6.1803111256410.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <f4e6237a-84dc-1aa8-150d-041806e2416e@gmail.com>
-        <nycvar.QRO.7.76.6.1803121122390.20700@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <87h8plh2qd.fsf@javad.com>
-        <39327070-f13a-f7e5-6c8c-cd204530f051@gmail.com>
-        <nycvar.QRO.7.76.6.1803261351070.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <87muyugl60.fsf@javad.com>
-        <nycvar.QRO.7.76.6.1803271456050.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-Date:   Mon, 02 Apr 2018 09:07:01 +0300
-In-Reply-To: <nycvar.QRO.7.76.6.1803271456050.77@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        (Johannes Schindelin's message of "Tue, 27 Mar 2018 15:35:38 +0200
-        (DST)")
-Message-ID: <87y3i6ta4a.fsf@javad.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+        id S1754144AbeDBGhd (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Apr 2018 02:37:33 -0400
+Received: from mail-wm0-f46.google.com ([74.125.82.46]:37484 "EHLO
+        mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752485AbeDBGhc (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Apr 2018 02:37:32 -0400
+Received: by mail-wm0-f46.google.com with SMTP id r131so25076724wmb.2
+        for <git@vger.kernel.org>; Sun, 01 Apr 2018 23:37:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=V0uRW2OKWsLi7JrsWreA+A4qHP4iXE3Ja6av6kMsGTY=;
+        b=TG7mwEegnIdwCHcoAIyaNHkqFcYEv80wCaLsRIBpMSatZ2IOmbXDfmAlXpPujaBdQz
+         BxC4kmv/11OxAC1KzhQl4hB1Ypjd66hMHh3HpCwRYI9KnIqvkL6tAWL+IqNAoKdiAXqT
+         UJEjl2LsTgzKMQTfNFNHk/mJvF+I/2DshksWMmMNNuxu3OoAMwcEzP6dJ+P9Rw9MmsgL
+         28PjJtfFZUoYEdlQzGW7hEIYWBitqfAywvMV9amZfdFBTzwwaPYl71dLDuQdns54wV2E
+         X8eM3fWeffVQ3EDtpWHEa0LFXv9XXVWf2nFa9H3D2I8Z/lHoLKN+pUVVg1hBJg2CYtQT
+         vc9Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=V0uRW2OKWsLi7JrsWreA+A4qHP4iXE3Ja6av6kMsGTY=;
+        b=fliG+4zSyiOmOvW/mgmj6ReIrJM/uYhBaRf+TWba+Ev6jVRM20qbHEvkbxN7VSgpbf
+         NagtS/ucpzZUU948i8LSmKcWCHsAX+JKmSqZbmFEfH9xhRULWW6T83xss0/RR3z1pKpT
+         di3bL837NJ7B2ihMZTvWgZbuCXxp46zAJ70prwLbn8PWMAWI3HhuoH8KxIEgg52uhI/9
+         sT2FVz9Y0mMHexWxU14fTQ0tYFleFPyC46dpaCErkr55Gf2NxHRnI6Cm06dWd8V/qddO
+         fUavEpgAYKQDZspe1BYJ42A299GQBUtvwrBAnHzNula0eMW3iHFy5uT4ufeJOYhv/GG2
+         juSg==
+X-Gm-Message-State: AElRT7HqdFk6zv6oU7b5tmbCCFwleuDLyNnnUZZeWAimLR8U319+TXQP
+        wCxvYs/mzz/zSal2yo+erHlZVUMa
+X-Google-Smtp-Source: AIpwx4/YfYp8o5JDBtHJtfOREE+gfQCRmW3nU7ySsRPgmcdpp1MABMqeHwC2jfJDLFH/aoo8jOlj/A==
+X-Received: by 10.80.181.12 with SMTP id y12mr11573635edd.166.1522651051356;
+        Sun, 01 Apr 2018 23:37:31 -0700 (PDT)
+Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
+        by smtp.gmail.com with ESMTPSA id e18sm8392118edj.38.2018.04.01.23.37.30
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 01 Apr 2018 23:37:30 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Harald Nordgren <haraldnordgren@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] ls-remote: create option to sort by versions
+References: <20180402005248.52418-1-haraldnordgren@gmail.com>
+User-agent: Debian GNU/Linux 9.4 (stretch); Emacs 25.1.1; mu4e 1.1.0
+In-reply-to: <20180402005248.52418-1-haraldnordgren@gmail.com>
+Date:   Mon, 02 Apr 2018 08:37:29 +0200
+Message-ID: <87605aw1ue.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
@@ -114,128 +66,58 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Johannes,
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Mon, Apr 02 2018, Harald Nordgren wrote:
 
-> Hi Sergey,
+> Create the options '-V ' and '--version-sort' to sort
+> 'git ls-remote' output by version semantics. This is useful e.g. for
+> the Go repository after the release of version 1.10, where otherwise
+> v1.10 is sorted before v1.2. See:
 >
+> 	$ git ls-remote -t https://go.googlesource.com/go
+> 	...
+> 	205f850ceacfc39d1e9d76a9569416284594ce8c	refs/tags/go1.1
+> 	d260448f6b6ac10efe4ae7f6dfe944e72bc2a676	refs/tags/go1.1.1
+> 	1d6d8fca241bb611af51e265c1b5a2e9ae904702	refs/tags/go1.1.2
+> 	bf86aec25972f3a100c3aa58a6abcbcc35bdea49	refs/tags/go1.10
+> 	ac7c0ee26dda18076d5f6c151d8f920b43340ae3	refs/tags/go1.10.1
+> 	9ce6b5c2ed5d3d5251b9a6a0c548d5fb2c8567e8	refs/tags/go1.10beta1
+> 	594668a5a96267a46282ce3007a584ec07adf705	refs/tags/go1.10beta2
+> 	5348aed83e39bd1d450d92d7f627e994c2db6ebf	refs/tags/go1.10rc1
+> 	20e228f2fdb44350c858de941dff4aea9f3127b8	refs/tags/go1.10rc2
+> 	1c5438aae896edcd1e9f9618f4776517f08053b3	refs/tags/go1.1rc2
+> 	46a6097aa7943a490e9bd2e04274845d0e5e200f	refs/tags/go1.1rc3
+> 	402d3590b54e4a0df9fb51ed14b2999e85ce0b76	refs/tags/go1.2
+> 	9c9802fad57c1bcb72ea98c5c55ea2652efc5772	refs/tags/go1.2.1
+> 	...
 
-[...]
+This is a sensible thing to want, but why not follow the UI we have for
+this with git-tag? I.e. --sort=<key> & -i (or --ignore-case)? Of course
+ls-remote doesn't just show tags, so maybe we'd want --tag-sort=<key>
+and --ignore-tag-case or something, but the rest should be equivalent,
+no?
 
-> In the parlance of your RFC v2, where you start with this history (which I
-> translated into the left-to-right notation that is used in pretty much all
-> of Git's own documentation about interactive rebases, which you apparently
-> either did not read, or chose *not* to imitate, creating yet another
-> unnecessary diversion):
+> [...]
+> @@ -101,13 +115,22 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
+>  	if (transport_disconnect(transport))
+>  		return 1;
 >
->
-> - B1
->      \
-> - B2 - M
+> -	if (!dest && !quiet)
+> -		fprintf(stderr, "From %s\n", *remote->url);
+>  	for ( ; ref; ref = ref->next) {
+>  		if (!check_ref_type(ref, flags))
+>  			continue;
+>  		if (!tail_match(pattern, ref->name))
+>  			continue;
+> +		REALLOC_ARRAY(refs, nr + 1);
+> +		refs[nr++] = ref;
+> +	}
+> +
+> +	if (version_sort)
+> +		QSORT(refs, nr, cmp_ref_versions);
+> +
+> +	if (!dest && !quiet)
+> +		fprintf(stderr, "From %s\n", *remote->url);
 
-First, it should rather be:
-
-- B1
-    \
-     M
-    / 
-- B2
-
-as RFC presents essentially symmetric approach and I'd like it to be
-explicit. Representation in RFC simply saves some vertical
-space: 
-
-  M
- / \
-B1  B2
-
-Another reason to use it is that I liked to somehow indicate that this
-is about abstract DAG representation of Git history, not to be confused
-with some actual practical Git history. So that, for example, the reader
-can't be tempted to even try to assume that M has been necessarily
-created by "git merge" operation in the first place.
-
-That said, I'm sorry if it upsets you. I'll stick to your preferred
-notation below.
-
->
-> You now insert U1 and U2 with trees identical to M:
->
-> - B1 - U1
->           \
-> - B2 - U2 - M
-
- - B1 - U1 
-          \
-           UM
-          / 
- - B2 - U2
-
-_YES_. You've slightly screwed RFC as UM is not M anymore, having
-different parents, but otherwise it's still right.
-
-> So U1 is essentially B2 cherry-picked on top of B1, and U2 is essentially
-> B1 cherry-picked on top of B2.
-
-_NO_. No any cherry-picking has been involved, and I see absolutely no
-reason to pretend there has, except to intentionally make otherwise
-simple thing look tricky.
-
-U1 tree is still M tree, and U2 tree is still M tree, and UM tree is
-still M tree. That's what actually matters from RFC POV.
-
-> These U1/U2 commits are now to be cherry-picked on top of the rebased B1'
-> and B2'. I spare you more diagrams, you get the idea.
-
-_YES_. Exactly 2 cherry-picks.
-
-> Now, the changes in U1/U2 *are* the changes of the merge parents, that's
-> how they were constructed.
-
-Either _YES_, or _NO_, depending on the exact meaning of the term "the
-changes of the merge parents" you've used, but I suspect it's _NO_,
-taking into account your further inferences.
-
-The U1/U2 are constructed by simply duplicating the tree of the original
-merge commit M and thus they represent the changes _to_ the merge
-parents B1/B2 introduced by M, and not the changes "_of_ the merge
-parents" B1/B2, provided the latter meant to have some relation to the
-changes introduced by the merge parents B1/B2 themselves.
-
->
-> Since they repeat what B1 and B2 are about,
-
-_NO_, they do not repeat what B1 and B2 are about at all. They rather
-represent what M is about. In other words, whatever B1 and B2 are about,
-the RFC method doesn't care.
-
-And as this is fundamental misinterpretation of the RFC on your side, it
-starts to be big _NO_ from now on...
-
-> and since B1'/B2' means they are rebased, and since U1'/U2' are *also*
-> rebased, but independently...
->
-> 	...  you essentially have to rebase *every parent's changes
-> 	twice*.
-
-_NO_. U1' is rebase of U1 (on top of B1'), and U2' is rebase of U2 (on
-top of B2'). Each of U1/U2 is rebased only once.
-
-> The answer "No" to this is... astonishing.
-
-It's still _NO_, sorry.
-
-In fact, I could have said _NO_ the first time you started to assign
-some arbitrary "meaning" to the commits, as RFC is about somewhat formal
-proof of the method, using already well-known operations on the DAG, and
-to criticize the RFC, you need to either find and show a _formal_
-mistake somewhere in the proof logic, or to show a use-case where it
-fails, as you did for RFC v1. Assigning arbitrary "meaning" to the DAG
-nodes and operations on them won't do the trick, sorry.
-
-I'd like to reach some agreement on formal correctness of the RFC first,
-and then discuss the meanings, the implementations, and other
-consequences based on well-established formal base.
-
--- Sergey
+Is there some subtlety here I'm missing which means that when sorting
+we'd now need to print this "From" line later (i.e. after sorting?
