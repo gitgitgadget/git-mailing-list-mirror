@@ -2,166 +2,211 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B51F91F404
-	for <e@80x24.org>; Mon,  2 Apr 2018 00:53:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7EC681F404
+	for <e@80x24.org>; Mon,  2 Apr 2018 01:08:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754096AbeDBAxE (ORCPT <rfc822;e@80x24.org>);
-        Sun, 1 Apr 2018 20:53:04 -0400
-Received: from mail-lf0-f65.google.com ([209.85.215.65]:38854 "EHLO
-        mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753988AbeDBAxD (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 1 Apr 2018 20:53:03 -0400
-Received: by mail-lf0-f65.google.com with SMTP id u3-v6so18604418lff.5
-        for <git@vger.kernel.org>; Sun, 01 Apr 2018 17:53:02 -0700 (PDT)
+        id S1754036AbeDBBHr (ORCPT <rfc822;e@80x24.org>);
+        Sun, 1 Apr 2018 21:07:47 -0400
+Received: from mail-lf0-f67.google.com ([209.85.215.67]:37057 "EHLO
+        mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753988AbeDBBHq (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 1 Apr 2018 21:07:46 -0400
+Received: by mail-lf0-f67.google.com with SMTP id m200-v6so12888659lfm.4
+        for <git@vger.kernel.org>; Sun, 01 Apr 2018 18:07:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=IqbkyiSQYE8mOwCJVPBz+BSIpLIMaCqLXsQKgUrqzso=;
-        b=GdTpa6oqWzTtTcGqWr64ckVp8TYHuzffSXdMyctYRVwYuMxbyZ0f9H9qWIWCjRatn4
-         x7blGdFO7u8pJTDIe5RdBxDdaWIANve3CeyOeAN9hMust0fTxQQ7WK5ZsHdptfPx4wkn
-         djWQtK0wQLaPGmDlLxQNPkqTWBt1aF3DD/C5Mws+624eYDztz/kRHYtSS2drYDDK+xsX
-         orn9EsWMNzcuhtDCSH3+vsdMK2Wpd7AKSZ0mG2vdHybmuNvV90jdLxd02lr8EqxRUT/c
-         wRlleh/aWUm1/4fdwrYJnImh+iXDKqfUJNcUgYT8MYyLaK1yGX6WKz+H2tVFQ5aDfYB7
-         Q+Zw==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=CrHSki3Mifu1K2U/FggfwC7csgb1Ynf49oJK4yM7It0=;
+        b=t330WCbwRcP/9baymYCS0IvTlhmk7JBYb1kTG62QlmmuNP55pkID7644hgyDGz31zq
+         FZLC6jJlasyNZZ6c19poEc6MxdpGlqNuFzQZmpe+E3W2NJut9/0Z+ulHi+GcYER1EnsY
+         5CmMxdHQ3gz6WAzE7qlvpu4UsgfOKI0kpqXrkmDuPy7/DmYYioHhtuH877FRsoE0NfOj
+         PhohKA27L+E+n04hf9T+lNmObMhfqp2gmdwtzCl2+tbqDU8tfj8d0p1tG3n3PEFfhMUZ
+         PlIkUFnOeEme2w/wM/LfGvTfhcehChzCVE3ctK9BSWV2BqNzTOUHB4rB57hF3aNjq/WY
+         RJEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=IqbkyiSQYE8mOwCJVPBz+BSIpLIMaCqLXsQKgUrqzso=;
-        b=XiG1wS7Xg2QNzX54uzICmsET2fYCIHcF7Muszzpyilo3i29ERPUApYt/yFs4XnJ9yq
-         25Ry9T5DvoF4SYb21YDcDp3fPFXufrFLWKyJ3wrJrvyLrfR711QqclyC6eJ176rX3ZGM
-         jFERnU8izkpSh/ynevUKfYAg920XxytovNuSB66WG4VZON1yf5JvZm4wWqs01/f+8kko
-         WhfhYO0vDTZqLx9iS3yDjB7d0jApo49g4uLmv+Uv7P8b0YHqg8vZOzeIxLw1MJwwE/4X
-         eAJAHfX6C9NEdfL5ucqeqpc0i4gmeLnpcRA8ad30KvLrVn0pjEOXXHjWpn04TytlVtgc
-         CghA==
-X-Gm-Message-State: ALQs6tDgbZgChobOp4ELMO3bHr4wGYeNVM3ulP0xAFjiIITLON+f+utv
-        XI3nJB/P453CpiuDcYiUlBmPZYED
-X-Google-Smtp-Source: AIpwx48aKowP8yUZnCzQIi/VAQ5y1IPrGIpioE/ZVjecNht0hR2m5cS2whhP9b9qljxC05vqccNmMg==
-X-Received: by 10.46.99.93 with SMTP id x90mr4792218ljb.2.1522630381524;
-        Sun, 01 Apr 2018 17:53:01 -0700 (PDT)
-Received: from localhost.localdomain ([94.234.36.18])
-        by smtp.gmail.com with ESMTPSA id h68-v6sm2755528lfk.67.2018.04.01.17.53.00
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 01 Apr 2018 17:53:00 -0700 (PDT)
-From:   Harald Nordgren <haraldnordgren@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Harald Nordgren <haraldnordgren@gmail.com>
-Subject: [PATCH] ls-remote: create option to sort by versions
-Date:   Mon,  2 Apr 2018 02:52:48 +0200
-Message-Id: <20180402005248.52418-1-haraldnordgren@gmail.com>
-X-Mailer: git-send-email 2.14.3 (Apple Git-98)
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=CrHSki3Mifu1K2U/FggfwC7csgb1Ynf49oJK4yM7It0=;
+        b=SYDaWJgHTDGgwfrhZrawa51KvpXUStt2qvPxN+Jj/nsDW9xVN7aMkvHY9Iuvt+ZmP4
+         gZ+689yuPPq0gMPnhNzp+0I7xNNrWuazWTq39TK9XfDVQqe7PkmVk86myFK7iMil0MAT
+         gDPlcWpAYSbSXxYR9c/4OfAxpiNSCM0kToG3i70WLyE/nJYGq8rVK7srQhowdAyXggZd
+         L8LEN3dLnJ8u46MM+ZL0//XOmJKwVQFouNRP+G7njK4oC9A7TiAAcAv3xUoL3UwoFlPJ
+         Fl5bwDpAOLyUtIOgRvqEaZCDUs+M4zNhaL0ge9wfZmtM3D9JSwGHr4fWVTxo9JRUgqKT
+         mArw==
+X-Gm-Message-State: ALQs6tBhkMHL48FlH+UDXoYzazhOr3nbXWxE1TjqG4Lrih2iJwSYC5Tl
+        aC94JVBMk+WDCQnv/6t8L1JV+846kgcIuQ/43wo=
+X-Google-Smtp-Source: AIpwx4+rCKEvsKFyKYxniPKUlR1hEUp6VyAMhQ/VGmSlFdW5kqD0uOoNaflObsYQdSNJmUBHMUnPLJF5Bh7WbNJmEJs=
+X-Received: by 2002:a19:a60a:: with SMTP id p10-v6mr4652948lfe.41.1522631264557;
+ Sun, 01 Apr 2018 18:07:44 -0700 (PDT)
+MIME-Version: 1.0
+X-Google-Sender-Delegation: rcdailey@gmail.com
+Received: by 10.46.151.90 with HTTP; Sun, 1 Apr 2018 18:07:43 -0700 (PDT)
+In-Reply-To: <CAGZ79kZ_j3_mhk5asNEBgBe_2qD7=18foJgW=p0+p=uJa3U2nw@mail.gmail.com>
+References: <20180307211140.19272-1-rcdailey@gmail.com> <CAGZ79kZk7N4zQUS1eMFMPTuPPuo5ViOeLj5hQHV=E+A=OO+D0w@mail.gmail.com>
+ <xmqqina56t8h.fsf@gitster-ct.c.googlers.com> <CAGZ79kZ_j3_mhk5asNEBgBe_2qD7=18foJgW=p0+p=uJa3U2nw@mail.gmail.com>
+From:   Robert Dailey <rcdailey.lists@gmail.com>
+Date:   Sun, 1 Apr 2018 20:07:43 -0500
+X-Google-Sender-Auth: z4cRf3-ErB4v05ZrXNd0Ea1VoKM
+Message-ID: <CAHd499AraFfWY-L9+RFj2E=p58QK0njyS8dQHEOGHjeoTW=YQw@mail.gmail.com>
+Subject: Re: [PATCH] Support long format for log-based submodule diff
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
+        Stefan Beller <stefanbeller@gmail.com>,
+        Brandon Williams <bmwill@google.com>
+Content-Type: multipart/mixed; boundary="000000000000a7dd440568d33754"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Create the options '-V ' and '--version-sort' to sort
-'git ls-remote' output by version semantics. This is useful e.g. for
-the Go repository after the release of version 1.10, where otherwise
-v1.10 is sorted before v1.2. See:
+--000000000000a7dd440568d33754
+Content-Type: text/plain; charset="UTF-8"
 
-	$ git ls-remote -t https://go.googlesource.com/go
-	...
-	205f850ceacfc39d1e9d76a9569416284594ce8c	refs/tags/go1.1
-	d260448f6b6ac10efe4ae7f6dfe944e72bc2a676	refs/tags/go1.1.1
-	1d6d8fca241bb611af51e265c1b5a2e9ae904702	refs/tags/go1.1.2
-	bf86aec25972f3a100c3aa58a6abcbcc35bdea49	refs/tags/go1.10
-	ac7c0ee26dda18076d5f6c151d8f920b43340ae3	refs/tags/go1.10.1
-	9ce6b5c2ed5d3d5251b9a6a0c548d5fb2c8567e8	refs/tags/go1.10beta1
-	594668a5a96267a46282ce3007a584ec07adf705	refs/tags/go1.10beta2
-	5348aed83e39bd1d450d92d7f627e994c2db6ebf	refs/tags/go1.10rc1
-	20e228f2fdb44350c858de941dff4aea9f3127b8	refs/tags/go1.10rc2
-	1c5438aae896edcd1e9f9618f4776517f08053b3	refs/tags/go1.1rc2
-	46a6097aa7943a490e9bd2e04274845d0e5e200f	refs/tags/go1.1rc3
-	402d3590b54e4a0df9fb51ed14b2999e85ce0b76	refs/tags/go1.2
-	9c9802fad57c1bcb72ea98c5c55ea2652efc5772	refs/tags/go1.2.1
-	...
+On Tue, Mar 27, 2018 at 5:17 PM, Stefan Beller <sbeller@google.com> wrote:
+>> >> $ git diff --submodule=log --submodule-log-detail=(long|short)
+>> >>
+>> >> I'm not sure what makes sense here. I welcome thoughts/discussion and
+>> >> will provide follow-up patches.
+>> >
+>> > The case of merges is usually configured with --[no-]merges, or
+>> > --min-parents=<n>.
+>
+>> But that is a knob that controls an irrelevant aspect of the detail
+>> in the context of this discussion, isn't it?  This code is about "to
+>> what degree the things that happened between two submodule commits
+>> in an adjacent pair of commits in the superproject are summarized?"
+>
+> And I took it a step further and wanted to give a general solution, which
+> allows giving any option that the diff machinery accepts to only apply
+> to the submodule diffing part of the current diff.
+>
+>> The hack Robert illustrates below is to change it to stop favouring
+>> such projects with "clean" histories, and show "log --oneline
+>> --no-merges --left-right".  When presented that way, clean histories
+>> of topic-branch based projects will suffer by losing conciseness,
+>> but clean histories of totally linear projects will still be shown
+>> the same way, and messy history that sometimes merges, sometimes
+>> merges mergy histories, and sometimes directly builds on the trunk
+>> will be shown as an enumeration of individual commits in a flat way
+>> by ignoring merges and not restricting the traversal to the first
+>> parent chains, which would appear more uniform than what the current
+>> code shows.
+>
+> Oh, I realize this is in the *summary* code path, I was thinking about the
+> show_submodule_inline_diff, which would benefit from more diff options.
+>
+>> I do not see a point in introducing --min/max-parents as a knob to
+>> control how the history is summarized.
+>
+> For a summary a flat list of commits may be fine, ignoring
+> (ideally non-evil) merges.
+>
+>> This is a strongly related tangent, but I wonder if we can and/or
+>> want to share more code with the codepath that prepares the log
+>> message for a merge.  It summarizes what happened on the side branch
+>> since it forked from the history it is joining back to (I think it
+>> is merge.c::shortlog() that computes this)
+>
+> I do not find code there. To me it looks like builtin/fmt-merge-msg.c
+> is responsible for coming up with a default merge message?
+> In that file there is a shortlog() function, which walks revisions
+> and puts together the subject lines of commits.
+>
+>> and it is quite similar
+>> to what Robert wants to use for submodules here.  On the other hand,
+>> in a project _without_ submodule, if you are pulling history made by
+>> your lieutenant whose history is full of linear merges of topic
+>> branches to the mainline, it may not be a bad idea to allow
+>> fmt-merge-msg to alternatively show something similar to the "diff
+>> --submodule=log" gives us, i.e. summarize the history of the side
+>> branch being merged by just listing the commits on the first-parent
+>> chain.  So I sense some opportunity for cross pollination here.
+>
+> The cross pollination that I sense is the desire in both cases to freely
+> specify the format as it may depend on the workflow.
 
-Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
----
- builtin/ls-remote.c | 27 +++++++++++++++++++++++++--
- 1 file changed, 25 insertions(+), 2 deletions(-)
+First I want to apologize for having taken so long to get back with
+each of you about this. I actually have a lot of work started to
+expand the --submodule option to add a "full-log" option in addition
+to the existing "log". This is a pretty big task for me already,
+mostly because I'm unfamiliar with git and have limited personal time
+to do this at home (this is part of what I am apologizing for). I kind
+of get what Stefan and Junio are saying. There's a lot of opportunity
+for cleanup. More specific to my use case, adding some functionality
+to generate a log message (although I've developed a bash script to do
+this since I wrote my original email. I'll attach it to this email for
+those interested). Also I get that taking this a notch higher and
+adding a new option to pass options down to submodules also addresses
+my case. Before I waste anyone's time on this, I want to make sure
+that my very narrow and specific implementation will be ideal. By all
+means I do not want to do things the easy way which ends up adding
+"cruft" you'll have to deal with later. If there's a larger effort to
+generalize this and other things related to submodules maybe I can
+just wait for that to happen instead? What direction would you guys
+recommend?
 
-diff --git a/builtin/ls-remote.c b/builtin/ls-remote.c
-index 540d56429..740c6f117 100644
---- a/builtin/ls-remote.c
-+++ b/builtin/ls-remote.c
-@@ -1,6 +1,7 @@
- #include "builtin.h"
- #include "cache.h"
- #include "transport.h"
-+#include "ref-filter.h"
- #include "remote.h"
- 
- static const char * const ls_remote_usage[] = {
-@@ -33,11 +34,20 @@ static int tail_match(const char **pattern, const char *path)
- 	return 0;
- }
- 
-+static int cmp_ref_versions(const void *_a, const void *_b)
-+{
-+	const struct ref *a = *(const struct ref **)_a;
-+	const struct ref *b = *(const struct ref **)_b;
-+
-+	return versioncmp(a->name, b->name);
-+}
-+
- int cmd_ls_remote(int argc, const char **argv, const char *prefix)
- {
- 	const char *dest = NULL;
- 	unsigned flags = 0;
- 	int get_url = 0;
-+	int version_sort = 0;
- 	int quiet = 0;
- 	int status = 0;
- 	int show_symref_target = 0;
-@@ -47,6 +57,8 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
- 	struct remote *remote;
- 	struct transport *transport;
- 	const struct ref *ref;
-+	const struct ref **refs = NULL;
-+	int nr = 0;
- 
- 	struct option options[] = {
- 		OPT__QUIET(&quiet, N_("do not print remote URL")),
-@@ -60,6 +72,8 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
- 		OPT_BIT(0, "refs", &flags, N_("do not show peeled tags"), REF_NORMAL),
- 		OPT_BOOL(0, "get-url", &get_url,
- 			 N_("take url.<base>.insteadOf into account")),
-+		OPT_BOOL('V', "version-sort", &version_sort,
-+			 N_("sort tags by version numbers")),
- 		OPT_SET_INT_F(0, "exit-code", &status,
- 			      N_("exit with exit code 2 if no matching refs are found"),
- 			      2, PARSE_OPT_NOCOMPLETE),
-@@ -101,13 +115,22 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
- 	if (transport_disconnect(transport))
- 		return 1;
- 
--	if (!dest && !quiet)
--		fprintf(stderr, "From %s\n", *remote->url);
- 	for ( ; ref; ref = ref->next) {
- 		if (!check_ref_type(ref, flags))
- 			continue;
- 		if (!tail_match(pattern, ref->name))
- 			continue;
-+		REALLOC_ARRAY(refs, nr + 1);
-+		refs[nr++] = ref;
-+	}
-+
-+	if (version_sort)
-+		QSORT(refs, nr, cmp_ref_versions);
-+
-+	if (!dest && !quiet)
-+		fprintf(stderr, "From %s\n", *remote->url);
-+	for (int i = 0; i < nr; i++) {
-+		const struct ref *ref = refs[i];
- 		if (show_symref_target && ref->symref)
- 			printf("ref: %s\t%s\n", ref->symref, ref->name);
- 		printf("%s\t%s\n", oid_to_hex(&ref->old_oid), ref->name);
--- 
-2.14.3 (Apple Git-98)
+Junio basically hit the nail on the head with the comparisons of
+different mainlines. I think some repositories are more disciplined
+than others. At my workplace, I deal with a lot of folks that aren't
+interested in learning git beyond the required day to day
+responsibilities. It's difficult to enforce very specific branching,
+rebase, and merge habits. As such, the best I can do to work around
+that for building release notes is to exclude merge commits (since
+most of the time, people keep the default message which is generally
+useless) and include all commits in the ancestry path (since often
+times commits on the right side of a merge will have important
+information such as JIRA issue keys, which if shown in the parent repo
+will cause appropriate links back to parent repositories to show when
+changes in submodules were introduced there as well).
 
+Based on how constructive this email thread has gotten since I started
+it, I'm starting to feel like my solution is too narrowly-focused and
+doesn't have the long term appeal expected. Let me know, I'm happy to
+do what I can but I think it will be limited due to my lack of domain
+expertise in the code base and inability to invest the required time
+for significant scope of work.
+
+--000000000000a7dd440568d33754
+Content-Type: application/octet-stream; name=git-smcommit
+Content-Disposition: attachment; filename=git-smcommit
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_jfhj8lth0
+
+IyEvdXNyL2Jpbi9lbnYgYmFzaAojc21jb21taXQgPSAiIWYoKSB7IGdpdCBjb21taXQgLW0gXCIk
+KHByaW50ZiBcIlVwZGF0ZWQgJDEgU3VibW9kdWxlXG5cblwiOyBnaXQgZGlmZiBcIiQxXCIpXCIg
+LS1lZGl0IC0tICQxOyB9OyBmIgoKc3VibW9kPSIkezElL30iCgojIENoZWNrIGlmIHRoZSBzcGVj
+aWZpZWQgc3VibW9kdWxlIGV4aXN0cy4gSWYgaXQgZG9lc24ndCwgdGhpcyB3aWxsIGhhdmUgYSBu
+b24temVybyByZXR1cm4gY29kZS4KIyBUaGlzIHdpbGwgY2F1c2UgdGhlIHNjcmlwdCB0byBleGl0
+LiBUaGUgIi4vIiBpbiBmcm9udCBhbGxvd3MgcmVsYXRpdmUgcGF0aHMgdG8gdGhlIHN1Ym1vZHVs
+ZQojIGRpcmVjdG9yaWVzIHRvIGJlIHVzZWQgZnJvbSBhbnkgZGlyZWN0b3J5Cmxhc3Rfc2hhMT0k
+KGdpdCByZXYtcGFyc2UgIjouLyRzdWJtb2QiIDI+IC9kZXYvbnVsbCkKaWYgW1sgJD8gIT0gMCBd
+XTsgdGhlbgogICAgZWNobyAiRVJST1I6IFRoZSBzcGVjaWZpZWQgc3VibW9kdWxlIGRvZXMgbm90
+IGV4aXN0IgogICAgZXhpdCAxCmZpCgojIElmIHRoZSBzdWJtb2R1bGUgaGFzIG5vdCBwaHlzaWNh
+bGx5IGNoYW5nZWQgKGkuZS4gcG9pbnRpbmcgdG8gYSBkaWZmZXJlbnQgU0hBMSkgdGhlbiB3ZSBk
+b24ndAojIGNhcmUuCmRpZmZfcmVzdWx0PSQoZ2l0IGRpZmYgLS1zdWJtb2R1bGU9c2hvcnQgLS1p
+Z25vcmUtc3VibW9kdWxlcz1kaXJ0eSAtLSAiJHN1Ym1vZCIpCmlmIFtbIC16ICIkZGlmZl9yZXN1
+bHQiIF1dOyB0aGVuCiAgICBlY2hvICJFUlJPUjogVGhhdCBzdWJtb2R1bGUgaXMgYWxyZWFkeSB1
+cCB0byBkYXRlIgogICAgZXhpdCAxCmZpCgpjZCAiJDEiCgpnZXRDaGFuZ2Vsb2dzKCkgewogICAg
+Z2l0IC0tbm8tcGFnZXIgbG9nIC0tb25lbGluZSAtLW5vLWRlY29yYXRlIC0tbm8tbWVyZ2VzICQx
+Li4kMiB8IHNlZCAicy9eLyAgICAvZyIKfQoKY29tbWl0c19mb3J3YXJkPSQoZ2V0Q2hhbmdlbG9n
+cyAkbGFzdF9zaGExIEhFQUQpCmNvbW1pdHNfYmFja3dhcmQ9JChnZXRDaGFuZ2Vsb2dzIEhFQUQg
+JGxhc3Rfc2hhMSkKCmNkIC0gPiAvZGV2L251bGwKCmJ1aWxkTG9nU2VjdGlvbigpIHsKICAgICMg
+JDE6IFRoZSBoZWFkZXIgbWVzc2FnZSBmb3IgdGhlIGdyb3VwIG9mIGxvZ3MKICAgICMgJDI6IFRo
+ZSBzdHJpbmcgb2YgbG9ncyB0byBhZGQKICAgIGlmIFtbICEgLXogIiQyIiBdXTsgdGhlbgogICAg
+ICAgIGVjaG8gLWUgIiQxXG5cbiQyIgogICAgZmkKfQoKaW50cm9kdWNlZF9zZWN0aW9uPSQoYnVp
+bGRMb2dTZWN0aW9uICJJbnRyb2R1Y2VkIENvbW1pdHM6IiAiJGNvbW1pdHNfZm9yd2FyZCIpCnJl
+d291bmRfc2VjdGlvbj0kKGJ1aWxkTG9nU2VjdGlvbiAiUmV3b3VuZCBDb21taXRzOiIgIiRjb21t
+aXRzX2JhY2t3YXJkIikKCmlmIFsgIiRjb21taXRzX2ZvcndhcmQiIF07IHRoZW4gYWRkc3BhY2U9
+JCdcblxuJzsgZmkKCnJlYWQgLXIgLWQgJycgY29tbWl0X21lc3NhZ2UgPDwgRU9GClVwZGF0ZWQg
+JHN1Ym1vZCBTdWJtb2R1bGUKCiR7aW50cm9kdWNlZF9zZWN0aW9ufSR7YWRkc3BhY2V9JHtyZXdv
+dW5kX3NlY3Rpb259CkVPRgoKZ2l0IGNvbW1pdCAtbSAiJGNvbW1pdF9tZXNzYWdlIiAtLWVkaXQg
+LS0gIiRzdWJtb2QiCg==
+--000000000000a7dd440568d33754--
