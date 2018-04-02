@@ -2,90 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D70041F404
-	for <e@80x24.org>; Mon,  2 Apr 2018 18:09:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 77B081F404
+	for <e@80x24.org>; Mon,  2 Apr 2018 18:14:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753279AbeDBSJI (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Apr 2018 14:09:08 -0400
-Received: from mail-wm0-f46.google.com ([74.125.82.46]:54388 "EHLO
-        mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753177AbeDBSJH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Apr 2018 14:09:07 -0400
-Received: by mail-wm0-f46.google.com with SMTP id h76so27438361wme.4
-        for <git@vger.kernel.org>; Mon, 02 Apr 2018 11:09:07 -0700 (PDT)
+        id S1753355AbeDBSOB (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Apr 2018 14:14:01 -0400
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:46253 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753030AbeDBSOA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Apr 2018 14:14:00 -0400
+Received: by mail-wr0-f196.google.com with SMTP id d1so14965253wrj.13
+        for <git@vger.kernel.org>; Mon, 02 Apr 2018 11:14:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=1yJcjEItu5kQfFYdwZxq/QPDnbzVNNnGt4A8y8xPnmI=;
-        b=u4BKMVV6FqSzOPLAO36uHyUk0MD2Z+762G8KO7KQsItX12FMTPCPLN5ciCy39/gO8j
-         L5Kn0+cawnphIS+BKPWwbtad2q67pLvk+6/UdwllDdUCwtmElBc1Rmpi1e4c2DMwIqBj
-         0MO+VFQ2ExrO7fSP7jnrnd9pXQ7m5xfBGeEaJL/lC4kTYZyhJVa7K08BC7MehKTd6l4j
-         cVP/xhgZRwdCyfxPUTc1QDwlRqcf3hVrtXRrFXtfTJ6R/DUHpWT32ScBlmxyjLn8CIS6
-         v14BDWl86jE/MZMYphesPR7DTXhgnoKP711VpeIW1CIMtHqCKNG4BMD5O8qqcVEj7MiD
-         XU0Q==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=Sy71toaqoJ4vp34xYQkAeHwmAk1dM2nQMhYIzouKgyI=;
+        b=Of2K98X/yq/tJRzsLFtdIyoC93UycTW7aE0P863LllzxUPRqaQDaMOfbcql+DH0XTL
+         Mo0y0ubOq+p/wxuwm7aaSrVQVmVE5WFhoTuRvAjAzfhwChvsdmHPegDjFv/MYZUByjCm
+         RgGQ9kTvv4Gmd84Vp8wbfVgpuU/7XGWjQLycS/aXlf/5FYzq82YXPQ5rkf93wQXFc3/X
+         TdRj3eoBUh5v4SU6VKIZFRVtuzsqJYgbjE3Rs/RMlP2b0JxX4YriQgspgU8FgWdBL4Od
+         OzpNHEE1KZ5LHr9OVXyJzM66UHUQUmEsaCB7vYU4tyGrxPpAbYhhQ+hDuTJbxLT4IlDy
+         SeRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=1yJcjEItu5kQfFYdwZxq/QPDnbzVNNnGt4A8y8xPnmI=;
-        b=iutPprAZ14L6iTE5NNg0sOAGP9lv5Y6wyWcM1e32QSEeNQw0gZ6oMn7AqegSwgiHwq
-         giN0opC89CyjljojGmd+EfATNYiAEs7guBRwhbqeiR1e2+GPCmpkn4KgRzaEsYN8OEae
-         QolAVrFCH2dTUZvVkUCv9AuEOhkfI6xSq4eMNOVQ0i/uCvGZehicgEenxPtXOx3V3V5B
-         ug1EUomOcysrDQQyTrH+Oz+GdWYTOJ4gesDvv/n9ryzgfZq3u8yBfQw6sAkEPE8oHbTJ
-         SVoye3cw9euyLaA4TZADpowWHXzpgeP3OugaagjG0WqgGkFVohCTVWeM7kvxR6ZkupHj
-         EyKg==
-X-Gm-Message-State: ALQs6tA4EqqH0pWswOhP7RBpPRYH+Zow5AGkG7AYwb7ekQ8UT+P8Litj
-        wbOT5FUv7yxhIyyUceSstVo=
-X-Google-Smtp-Source: AIpwx4+BT+KQpGk7N0GneH81Nbn+vIg30Fk0d7ck7TmVF9T+G6zngYarYdlxAzoJVHHcUK0zTPJc7w==
-X-Received: by 10.28.237.11 with SMTP id l11mr388118wmh.124.1522692546457;
-        Mon, 02 Apr 2018 11:09:06 -0700 (PDT)
-Received: from [192.168.178.26] (ipservice-092-213-029-060.092.213.pools.vodafone-ip.de. [92.213.29.60])
-        by smtp.gmail.com with ESMTPSA id p4sm1055100wrf.27.2018.04.02.11.09.04
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 02 Apr 2018 11:09:05 -0700 (PDT)
-Subject: Re: [PATCH] l10n: de.po: translate 132 new messages
-To:     Ralf Thielow <ralf.thielow@gmail.com>, git@vger.kernel.org
-Cc:     Thomas Rast <tr@thomasrast.ch>,
-        =?UTF-8?Q?Jan_Kr=c3=bcger?= <jk@jk.gs>,
-        Christian Stimming <stimming@tuhh.de>,
-        Phillip Szelat <phillip.szelat@gmail.com>,
-        =?UTF-8?Q?Magnus_G=c3=b6rlitz?= <magnus.goerlitz@googlemail.com>
-References: <20180328055531.4769-1-ralf.thielow@gmail.com>
-From:   =?UTF-8?Q?Matthias_R=c3=bcster?= <matthias.ruester@gmail.com>
-Message-ID: <a2965f28-0db1-a560-38d2-fd7122e7137a@gmail.com>
-Date:   Mon, 2 Apr 2018 20:09:02 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=Sy71toaqoJ4vp34xYQkAeHwmAk1dM2nQMhYIzouKgyI=;
+        b=CAcH2hWMvUmummLJIkGlRyihnumU7JKCTMdPV0olp0tI76My/gwwb8+oqBjdEsUTkF
+         xvVu0ORiZ5l47/6UjLJRjenpaAgGRUelFOjTYxdAYFUexmP4fFDC8vQynHnsZ9ue4d6N
+         YAK0J3kaCJiWDL1oEv1MiQT4U4BaMyzfLVUn/kO2eEgrL2r+avkwtVsBgRQWOgtrM6UY
+         lQCyXQbYWVwCFaUgc3thN0sHeLotlxrN5KyxqCTxDmrSyjuHRRNaYNQZLFE0c+I7lZVt
+         i7tW8+GbR0Mk5sgEwbPwp5EBKTrKi1v+mt9bxd4B4OX1wfOtV/DAW3xXoH0F5GDqOL01
+         MVIQ==
+X-Gm-Message-State: AElRT7GRGXehc5ab0PDm1RqR+JNMXKv82sxt4ABLjiNn7plxstQSmAFg
+        OSIi5ZokOgC290vPmhvx8nQ=
+X-Google-Smtp-Source: AIpwx4+xSY4+hTKbwhRQePOhoo1Xs0KhoLzbYmu1m51aPGcfgsmQByjIgT3yS65gTcP2Pld78pxMYg==
+X-Received: by 10.223.144.69 with SMTP id h63mr7143377wrh.218.1522692839067;
+        Mon, 02 Apr 2018 11:13:59 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id a205sm832617wmf.18.2018.04.02.11.13.58
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 02 Apr 2018 11:13:58 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Lyubomyr Shaydariv <lsh.dev@ukr.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] graph.c: log.showRootMark to indicate root commits
+References: <0102016283000c69-b09d1499-8a50-45a7-9f41-01be648398bc-000000@eu-west-1.amazonses.com>
+        <xmqqk1tpze1x.fsf@gitster-ct.c.googlers.com>
+Date:   Mon, 02 Apr 2018 11:13:58 -0700
+In-Reply-To: <xmqqk1tpze1x.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Mon, 02 Apr 2018 10:57:46 -0700")
+Message-ID: <xmqqfu4dzdax.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20180328055531.4769-1-ralf.thielow@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Ralf,
+Junio C Hamano <gitster@pobox.com> writes:
 
-thanks a lot for your translations!
+> Lyubomyr Shaydariv <lsh.dev@ukr.net> writes:
+>
+>> When log.showRootMark is set, root commits are marked with
+>> the at sign (@).
+>>
+>> When log.showRootMark is not set, root commits are marked with
+>> the asterisk sign (*). This is the default behavior.
+>>
+>> Signed-off-by: Lyubomyr Shaydariv <lsh.dev@ukr.net>
+>> ---
+>
+> So the idea is when you have a history like this:
+> ...
+> and that would work well with --left-right automatically (as you
+> would just do the same thing as you would to a normal asterisk).
 
-I've only found a small issue:
+There was some discussion a while back on making root commits more
+apparent in the graph view, e.g.
 
->   #: git-add--interactive.perl:1405
-> -#, fuzzy, perl-format
-> +#, perl-format
->   msgid "Discard this hunk from worktree [y,n,q,a,d%s,?]? "
-> -msgstr "diesen Patch-Block im Arbeitsverzeichnis verwerfen [y,n,q,a,d,/%s,?]? "
-> +msgstr "diesen Patch-Block im Arbeitsverzeichnis verwerfen [y,n,q,a,d%s,?]? "
+https://public-inbox.org/git/1382717268-21884-1-git-send-email-milton.soares.filho@gmail.com/
 
-"Diesen ..."
-
-
-Kind regards,
-Matthias
