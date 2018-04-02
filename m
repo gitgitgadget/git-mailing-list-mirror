@@ -2,509 +2,214 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D44551F404
-	for <e@80x24.org>; Mon,  2 Apr 2018 19:34:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 27DAF1F404
+	for <e@80x24.org>; Mon,  2 Apr 2018 19:35:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756677AbeDBTe1 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Apr 2018 15:34:27 -0400
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:36220 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753141AbeDBTeY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Apr 2018 15:34:24 -0400
-Received: by mail-wr0-f194.google.com with SMTP id y55so15301632wry.3;
-        Mon, 02 Apr 2018 12:34:23 -0700 (PDT)
+        id S1757123AbeDBTfr (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Apr 2018 15:35:47 -0400
+Received: from mail-yb0-f174.google.com ([209.85.213.174]:45264 "EHLO
+        mail-yb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756742AbeDBTfq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Apr 2018 15:35:46 -0400
+Received: by mail-yb0-f174.google.com with SMTP id k199-v6so5368587ybk.12
+        for <git@vger.kernel.org>; Mon, 02 Apr 2018 12:35:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:date:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=V94DJw2Aw60LG6Danels/CFWizP3HHj1hCw0ZM33dGY=;
-        b=q3G1bIFNWxOPy6Sj6J1wJtG7PKnPdgccP/nfcU1q3eo4DEumutsA30knbeJA29k7xN
-         j/IFtmJ3sryu05f4VfUh2P4yqLBiv2iLZ0LUGAqL8WlwMcuY4mjg4OGRcc8h42rU+uJS
-         yFt3afBg1dDsvd0oGe3rQ+oYfp9Eo2AQj03RIsFGUAej7nJvk/w5YoYiTUa95Fn3G7UZ
-         wFpPCM3iMWt9MlESk1ds9aO4sko6WfGK0PG/WOxXXgsEiky80cCvnakDxfwosRH3KHE8
-         MFWWKhwt7YzgEGDhjAhnVi5rPlX3Zd28Spov/fYOGDGXFvztd+DGr+GNBx6KbaeaT3XI
-         TgWw==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=VD5q6fzvG86xvars/j5M4zCg5a92/6ThFd5BjkkwuqQ=;
+        b=jirturPJW9MSoYKk1NomnwyxX0g+Db2FugcMdlM2ldNRjT+AbjvBILoXajp8FMLxxP
+         6Dl8qIdXaYcg+cWvZMNkYbkxYIl15iJjdSyd5ct5yUXkgySDUqioZDeegwefbUNleP00
+         Cw4+cuwKCL+H4vHvpDEvhxkhEWHMnKf4vD/1NfRy+T0QLf7IKj0Y2w2QifE+iE3/KJIk
+         AxaaCRW6Gv0OU4R5cURCflvp2knhFYI3K0/5O7cbXR1WBCGfapiAMMt7je87PXiiMymV
+         YmEo73v5lmXgKMlBhx4LkDrWMsHWkoF682XEUMQuB2QkKg5sU/PvxnC1LttorZZQSyou
+         1SEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=V94DJw2Aw60LG6Danels/CFWizP3HHj1hCw0ZM33dGY=;
-        b=p3vVglhqzPYYfNkNqrujpnuHUGgEdib9MpbKh5vxzANK89Dsvjmdbp0/8xA4C6pFdg
-         gkd6uiz8bI+liE/PfDtMXRXB/CXbCiTj03/GMoKcL62Ulipm0MCfqakWG40mR102+cwx
-         swBzB7acPzJ1JFs2Vv1h6f59kzFkc5nGNk3YUXQYMipQ+vD57bcO/Fuja7XdDCqB5++3
-         sXMxXAutQpPlqqde8/2vXTEtZSfBcPhdkNR+uc2n4+VESqTvzroduEy9xT29UJQbeBf/
-         mBx4uJcsDWrZGL/yPMDcRSRUvulacIB/qFGTWtEWebMcS3ZCSfZXY0WuS0hyh6rSSUYc
-         aV8A==
-X-Gm-Message-State: AElRT7F30e926xldat/FutD5yO1Yv+183TCnkGVjBgQrdL6C2L4W8iiO
-        D3PFEjnZA+sqavfu2Z9I6lyiSKO+
-X-Google-Smtp-Source: AIpwx4+rICbTIWe/7TLemXa2UGbB05q4QwnrhZDohpu9bRmbOuZeimFxBVp7AD7ViwLVxiTI78dALQ==
-X-Received: by 10.223.177.213 with SMTP id r21mr7942255wra.89.1522697661618;
-        Mon, 02 Apr 2018 12:34:21 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id c187sm1222622wmf.18.2018.04.02.12.34.20
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 02 Apr 2018 12:34:20 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org
-Cc:     Linux Kernel <linux-kernel@vger.kernel.org>,
-        git-packagers@googlegroups.com
-Subject: [ANNOUNCE] Git v2.17.0
-Date:   Mon, 02 Apr 2018 12:34:20 -0700
-Message-ID: <xmqq6059z9kz.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=VD5q6fzvG86xvars/j5M4zCg5a92/6ThFd5BjkkwuqQ=;
+        b=ptXvdZvpSPQhpoDhQd4CBv0ytxbctt/v1RntG9Iyr444MdmPMJEhROrn+hLPQA6wkO
+         n5qreSjDBDlw53chDPBkw1q/N5P+E8asXk1tQUfXUcIAe6G6g7bO9B2hmM32KFFkUBiX
+         DTPF95utk4m5QKsWRdt5NJ6ehxon61MFaxkaT6o9XzHa6eO11Bxv8RzyjOXg1Od+txol
+         kcPlmmemnt84q46uaku4THidAnMtv8drwpHRKONaYjneWQGInjeAvAnxNvoSrz/9cTr5
+         1wMGKOzgo5wCxdEoCfHcJNAI4cyKQctiRtvXLp9e/1S6SCs2VHI+sKVzjLx4hzcRudwG
+         w2tw==
+X-Gm-Message-State: ALQs6tAVs7PXbz3ubq7CsHFj0ljEcryh02XAi7Wnm5JSBOWEowcwrd0C
+        w0f9FTpvLsEsKZD4kmUflj3V00cnXKgYG28dgYgvqw==
+X-Google-Smtp-Source: AIpwx4/DjhMTcgBIL+dNze9s+KG5TzH9DUMC44XDT2pqUonW6Mw9v/JRHeDmIkfODs5HOcuajfm9hpWYrdFA8uAqVsE=
+X-Received: by 2002:a25:ba51:: with SMTP id z17-v6mr3705128ybj.334.1522697744940;
+ Mon, 02 Apr 2018 12:35:44 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Received: by 2002:a25:cf81:0:0:0:0:0 with HTTP; Mon, 2 Apr 2018 12:35:44 -0700 (PDT)
+In-Reply-To: <CAHd499AraFfWY-L9+RFj2E=p58QK0njyS8dQHEOGHjeoTW=YQw@mail.gmail.com>
+References: <20180307211140.19272-1-rcdailey@gmail.com> <CAGZ79kZk7N4zQUS1eMFMPTuPPuo5ViOeLj5hQHV=E+A=OO+D0w@mail.gmail.com>
+ <xmqqina56t8h.fsf@gitster-ct.c.googlers.com> <CAGZ79kZ_j3_mhk5asNEBgBe_2qD7=18foJgW=p0+p=uJa3U2nw@mail.gmail.com>
+ <CAHd499AraFfWY-L9+RFj2E=p58QK0njyS8dQHEOGHjeoTW=YQw@mail.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 2 Apr 2018 12:35:44 -0700
+Message-ID: <CAGZ79kb6Ot_Lso+_K6VXcLsT=1hv0JaXXF8j3PpH+2FHQ-8QpA@mail.gmail.com>
+Subject: Re: [PATCH] Support long format for log-based submodule diff
+To:     Robert Dailey <rcdailey.lists@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
+        Stefan Beller <stefanbeller@gmail.com>,
+        Brandon Williams <bmwill@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The latest feature release Git v2.17.0 is now available at the
-usual places.  It is comprised of 516 non-merge commits since
-v2.16.0, contributed by 71 people, 20 of which are new faces.
-
-The tarballs are found at:
-
-    https://www.kernel.org/pub/software/scm/git/
-
-The following public repositories all have a copy of the 'v2.17.0'
-tag and the 'master' branch that the tag points at:
-
-  url = https://kernel.googlesource.com/pub/scm/git/git
-  url = git://repo.or.cz/alt-git.git
-  url = https://github.com/gitster/git
-
-New contributors whose contributions weren't in v2.16.0 are as follows.
-Welcome to the Git development community!
-
-  Adam Borowski, Alban Gruin, Andreas G. Schacker, Bernhard
-  M. Wiedemann, Christian Ludwig, Christopher Diaz Riveros,
-  Gargi Sharma, Genki Sky, Gregory Herrero, Jon Simons, Juan
-  F. Codagnone, Kim Gybels, Lucas Werkmeister, Mathias Rav,
-  Michele Locati, Motoki Seki, Stefan Moch, Stephen R Guglielmo,
-  Tatyana Krasnukha, and Thomas Levesque.
-
-Returning contributors who helped this release are as follows.
-Thanks for your continued support.
-
-  Ævar Arnfjörð Bjarmason, Alexander Shopov, Alex Bennée,
-  Ben Peart, Brandon Williams, brian m. carlson, Changwoo Ryu,
-  Christian Couder, Daniel Knittl-Frank, David Pursehouse,
-  Derrick Stolee, Elijah Newren, Eric Sunshine, Eric Wong, Jason
-  Merrill, Jean-Noël Avila, Jeff Hostetler, Jeff King, Jiang Xin,
-  Johannes Schindelin, Jonathan Nieder, Jonathan Tan, Jordi Mas,
-  Junio C Hamano, Kaartic Sivaraam, Mårten Kongstad, Martin
-  Ågren, Matthieu Moy, Michael Haggerty, Nathan Payre, Nguyễn
-  Thái Ngọc Duy, Nicolas Morey-Chaisemartin, Olga Telezhnaya,
-  Patryk Obara, Peter Krefting, Phillip Wood, Prathamesh Chavan,
-  Ralf Thielow, Ramsay Jones, Randall S. Becker, Rasmus Villemoes,
-  Ray Chen, René Scharfe, Robert P. J. Day, Stefan Beller, SZEDER
-  Gábor, Thomas Gummerer, Todd Zullinger, Torsten Bögershausen,
-  Trần Ngọc Quân, and Yasushi SHOJI.
-
-----------------------------------------------------------------
-
-Git 2.17 Release Notes
-======================
-
-Updates since v2.16
--------------------
-
-UI, Workflows & Features
-
- * "diff" family of commands learned "--find-object=<object-id>" option
-   to limit the findings to changes that involve the named object.
-
- * "git format-patch" learned to give 72-cols to diffstat, which is
-   consistent with other line length limits the subcommand uses for
-   its output meant for e-mails.
-
- * The log from "git daemon" can be redirected with a new option; one
-   relevant use case is to send the log to standard error (instead of
-   syslog) when running it from inetd.
-
- * "git rebase" learned to take "--allow-empty-message" option.
-
- * "git am" has learned the "--quit" option, in addition to the
-   existing "--abort" option; having the pair mirrors a few other
-   commands like "rebase" and "cherry-pick".
-
- * "git worktree add" learned to run the post-checkout hook, just like
-   "git clone" runs it upon the initial checkout.
-
- * "git tag" learned an explicit "--edit" option that allows the
-   message given via "-m" and "-F" to be further edited.
-
- * "git fetch --prune-tags" may be used as a handy short-hand for
-   getting rid of stale tags that are locally held.
-
- * The new "--show-current-patch" option gives an end-user facing way
-   to get the diff being applied when "git rebase" (and "git am")
-   stops with a conflict.
-
- * "git add -p" used to offer "/" (look for a matching hunk) as a
-   choice, even there was only one hunk, which has been corrected.
-   Also the single-key help is now given only for keys that are
-   enabled (e.g. help for '/' won't be shown when there is only one
-   hunk).
-
- * Since Git 1.7.9, "git merge" defaulted to --no-ff (i.e. even when
-   the side branch being merged is a descendant of the current commit,
-   create a merge commit instead of fast-forwarding) when merging a
-   tag object.  This was appropriate default for integrators who pull
-   signed tags from their downstream contributors, but caused an
-   unnecessary merges when used by downstream contributors who
-   habitually "catch up" their topic branches with tagged releases
-   from the upstream.  Update "git merge" to default to --no-ff only
-   when merging a tag object that does *not* sit at its usual place in
-   refs/tags/ hierarchy, and allow fast-forwarding otherwise, to
-   mitigate the problem.
-
- * "git status" can spend a lot of cycles to compute the relation
-   between the current branch and its upstream, which can now be
-   disabled with "--no-ahead-behind" option.
-
- * "git diff" and friends learned funcname patterns for Go language
-   source files.
-
- * "git send-email" learned "--reply-to=<address>" option.
-
- * Funcname pattern used for C# now recognizes "async" keyword.
-
- * In a way similar to how "git tag" learned to honor the pager
-   setting only in the list mode, "git config" learned to ignore the
-   pager setting when it is used for setting values (i.e. when the
-   purpose of the operation is not to "show").
-
-
-Performance, Internal Implementation, Development Support etc.
-
- * More perf tests for threaded grep
-
- * "perf" test output can be sent to codespeed server.
-
- * The build procedure for perl/ part has been greatly simplified by
-   weaning ourselves off of MakeMaker.
-
- * Perl 5.8 or greater has been required since Git 1.7.4 released in
-   2010, but we continued to assume some core modules may not exist and
-   used a conditional "eval { require <<module>> }"; we no longer do
-   this.  Some platforms (Fedora/RedHat/CentOS, for example) ship Perl
-   without all core modules by default (e.g. Digest::MD5, File::Temp,
-   File::Spec, Net::Domain, Net::SMTP).  Users on such platforms may
-   need to install these additional modules.
-
- * As a convenience, we install copies of Perl modules we require which
-   are not part of the core Perl distribution (e.g. Error and
-   Mail::Address).  Users and packagers whose operating system provides
-   these modules can set NO_PERL_CPAN_FALLBACKS to avoid installing the
-   bundled modules.
-
- * In preparation for implementing narrow/partial clone, the machinery
-   for checking object connectivity used by gc and fsck has been
-   taught that a missing object is OK when it is referenced by a
-   packfile specially marked as coming from trusted repository that
-   promises to make them available on-demand and lazily.
-
- * The machinery to clone & fetch, which in turn involves packing and
-   unpacking objects, has been told how to omit certain objects using
-   the filtering mechanism introduced by another topic.  It now knows
-   to mark the resulting pack as a promisor pack to tolerate missing
-   objects, laying foundation for "narrow" clones.
-
- * The first step to getting rid of mru API and using the
-   doubly-linked list API directly instead.
-
- * Retire mru API as it does not give enough abstraction over
-   underlying list API to be worth it.
-
- * Rewrite two more "git submodule" subcommands in C.
-
- * The tracing machinery learned to report tweaking of environment
-   variables as well.
-
- * Update Coccinelle rules to catch and optimize strbuf_addf(&buf, "%s", str)
-
- * Prevent "clang-format" from breaking line after function return type.
-
- * The sequencer infrastructure is shared across "git cherry-pick",
-   "git rebase -i", etc., and has always spawned "git commit" when it
-   needs to create a commit.  It has been taught to do so internally,
-   when able, by reusing the codepath "git commit" itself uses, which
-   gives performance boost for a few tens of percents in some sample
-   scenarios.
-
- * Push the submodule version of collision-detecting SHA-1 hash
-   implementation a bit harder on builders.
-
- * Avoid mmapping small files while using packed refs (especially ones
-   with zero size, which would cause later munmap() to fail).
-
- * Conversion from uchar[20] to struct object_id continues.
-
- * More tests for wildmatch functions.
-
- * The code to binary search starting from a fan-out table (which is
-   how the packfile is indexed with object names) has been refactored
-   into a reusable helper.
-
- * We now avoid using identifiers that clash with C++ keywords.  Even
-   though it is not a goal to compile Git with C++ compilers, changes
-   like this help use of code analysis tools that targets C++ on our
-   codebase.
-
- * The executable is now built in 'script' phase in Travis CI integration,
-   to follow the established practice, rather than during 'before_script'
-   phase.  This allows the CI categorize the failures better ('failed'
-   is project's fault, 'errored' is build environment's).
-   (merge 3c93b82920 sg/travis-build-during-script-phase later to maint).
-
- * Writing out the index file when the only thing that changed in it
-   is the untracked cache information is often wasteful, and this has
-   been optimized out.
-
- * Various pieces of Perl code we have have been cleaned up.
-
- * Internal API clean-up to allow write_locked_index() optionally skip
-   writing the in-core index when it is not modified.
-
-
-Also contains various documentation updates and code clean-ups.
-
-
-Fixes since v2.16
------------------
-
- * An old regression in "git describe --all $annotated_tag^0" has been
-   fixed.
-
- * "git status" after moving a path in the working tree (hence making
-   it appear "removed") and then adding with the -N option (hence
-   making that appear "added") detected it as a rename, but did not
-   report the  old and new pathnames correctly.
-
- * "git svn dcommit" did not take into account the fact that a
-   svn+ssh:// URL with a username@ (typically used for pushing) refers
-   to the same SVN repository without the username@ and failed when
-   svn.pushmergeinfo option is set.
-
- * API clean-up around revision traversal.
-
- * "git merge -Xours/-Xtheirs" learned to use our/their version when
-   resolving a conflicting updates to a symbolic link.
-
- * "git clone $there $here" is allowed even when here directory exists
-   as long as it is an empty directory, but the command incorrectly
-   removed it upon a failure of the operation.
-
- * "git commit --fixup" did not allow "-m<message>" option to be used
-   at the same time; allow it to annotate resulting commit with more
-   text.
-
- * When resetting the working tree files recursively, the working tree
-   of submodules are now also reset to match.
-
- * "git stash -- <pathspec>" incorrectly blew away untracked files in
-   the directory that matched the pathspec, which has been corrected.
-
- * Instead of maintaining home-grown email address parsing code, ship
-   a copy of reasonably recent Mail::Address to be used as a fallback
-   in 'git send-email' when the platform lacks it.
-   (merge d60be8acab mm/send-email-fallback-to-local-mail-address later to maint).
-
- * "git add -p" was taught to ignore local changes to submodules as
-   they do not interfere with the partial addition of regular changes
-   anyway.
-
- * Avoid showing a warning message in the middle of a line of "git
-   diff" output.
-   (merge 4e056c989f nd/diff-flush-before-warning later to maint).
-
- * The http tracing code, often used to debug connection issues,
-   learned to redact potentially sensitive information from its output
-   so that it can be more safely sharable.
-   (merge 8ba18e6fa4 jt/http-redact-cookies later to maint).
-
- * Crash fix for a corner case where an error codepath tried to unlock
-   what it did not acquire lock on.
-   (merge 81fcb698e0 mr/packed-ref-store-fix later to maint).
-
- * The split-index mode had a few corner case bugs fixed.
-   (merge ae59a4e44f tg/split-index-fixes later to maint).
-
- * Assorted fixes to "git daemon".
-   (merge ed15e58efe jk/daemon-fixes later to maint).
-
- * Completion of "git merge -s<strategy>" (in contrib/) did not work
-   well in non-C locale.
-   (merge 7cc763aaa3 nd/list-merge-strategy later to maint).
-
- * Workaround for segfault with more recent versions of SVN.
-   (merge 7f6f75e97a ew/svn-branch-segfault-fix later to maint).
-
- * Plug recently introduced leaks in fsck.
-   (merge ba3a08ca0e jt/fsck-code-cleanup later to maint).
-
- * "git pull --rebase" did not pass verbosity setting down when
-   recursing into a submodule.
-   (merge a56771a668 sb/pull-rebase-submodule later to maint).
-
- * The way "git reset --hard" reports the commit the updated HEAD
-   points at is made consistent with the way how the commit title is
-   generated by the other parts of the system.  This matters when the
-   title is spread across physically multiple lines.
-   (merge 1cf823fb68 tg/reset-hard-show-head-with-pretty later to maint).
-
- * Test fixes.
-   (merge 63b1a175ee sg/test-i18ngrep later to maint).
-
- * Some bugs around "untracked cache" feature have been fixed.  This
-   will notice corrupt data in the untracked cache left by old and
-   buggy code and issue a warning---the index can be fixed by clearing
-   the untracked cache from it.
-   (merge 0cacebf099 nd/fix-untracked-cache-invalidation later to maint).
-   (merge 7bf0be7501 ab/untracked-cache-invalidation-docs later to maint).
-
- * "git blame HEAD COPYING" in a bare repository failed to run, while
-   "git blame HEAD -- COPYING" run just fine.  This has been corrected.
-
- * "git add" files in the same directory, but spelling the directory
-   path in different cases on case insensitive filesystem, corrupted
-   the name hash data structure and led to unexpected results.  This
-   has been corrected.
-   (merge c95525e90d bp/name-hash-dirname-fix later to maint).
-
- * "git rebase -p" mangled log messages of a merge commit, which is
-   now fixed.
-   (merge ed5144d7eb js/fix-merge-arg-quoting-in-rebase-p later to maint).
-
- * Some low level protocol codepath could crash when they get an
-   unexpected flush packet, which is now fixed.
-   (merge bb1356dc64 js/packet-read-line-check-null later to maint).
-
- * "git check-ignore" with multiple paths got confused when one is a
-   file and the other is a directory, which has been fixed.
-   (merge d60771e930 rs/check-ignore-multi later to maint).
-
- * "git describe $garbage" stopped giving any errors when the garbage
-   happens to be a string with 40 hexadecimal letters.
-   (merge a8e7a2bf0f sb/describe-blob later to maint).
-
- * Code to unquote single-quoted string (used in the parser for
-   configuration files, etc.) did not diagnose bogus input correctly
-   and produced bogus results instead.
-   (merge ddbbf8eb25 jk/sq-dequote-on-bogus-input later to maint).
-
- * Many places in "git apply" knew that "/dev/null" that signals
-   "there is no such file on this side of the diff" can be followed by
-   whitespace and garbage when parsing a patch, except for one, which
-   made an otherwise valid patch (e.g. ones from subversion) rejected.
-   (merge e454ad4bec tk/apply-dev-null-verify-name-fix later to maint).
-
- * We no longer create any *.spec file, so "make clean" should not
-   remove it.
-   (merge 4321bdcabb tz/do-not-clean-spec-file later to maint).
-
- * "git push" over http transport did not unquote the push-options
-   correctly.
-   (merge 90dce21eb0 jk/push-options-via-transport-fix later to maint).
-
- * "git send-email" learned to complain when the batch-size option is
-   not defined when the relogin-delay option is, since these two are
-   mutually required.
-   (merge 9caa70697b xz/send-email-batch-size later to maint).
-
- * Y2k20 fix ;-) for our perl scripts.
-   (merge a40e06ee33 bw/perl-timegm-timelocal-fix later to maint).
-
- * Threaded "git grep" has been optimized to avoid allocation in code
-   section that is covered under a mutex.
-   (merge 38ef24dccf rv/grep-cleanup later to maint).
-
- * "git subtree" script (in contrib/) scripted around "git log", whose
-   output got affected by end-user configuration like log.showsignature
-   (merge 8841b5222c sg/subtree-signed-commits later to maint).
-
- * While finding unique object name abbreviation, the code may
-   accidentally have read beyond the end of the array of object names
-   in a pack.
-   (merge 21abed500c ds/find-unique-abbrev-optim later to maint).
-
- * Micro optimization in revision traversal code.
-   (merge ebbed3ba04 ds/mark-parents-uninteresting-optim later to maint).
-
- * "git commit" used to run "gc --auto" near the end, which was lost
-   when the command was reimplemented in C by mistake.
-   (merge 095c741edd ab/gc-auto-in-commit later to maint).
-
- * Allow running a couple of tests with "sh -x".
-   (merge c20bf94abc sg/cvs-tests-with-x later to maint).
-
- * The codepath to replace an existing entry in the index had a bug in
-   updating the name hash structure, which has been fixed.
-   (merge 0e267b7a24 bp/refresh-cache-ent-rehash-fix later to maint).
-
- * The transfer.fsckobjects configuration tells "git fetch" to
-   validate the data and connected-ness of objects in the received
-   pack; the code to perform this check has been taught about the
-   narrow clone's convention that missing objects that are reachable
-   from objects in a pack that came from a promissor remote is OK.
-
- * There was an unused file-scope static variable left in http.c when
-   building for versions of libCURL that is older than 7.19.4, which
-   has been fixed.
-   (merge b8fd6008ec rj/http-code-cleanup later to maint).
-
- * Shell script portability fix.
-   (merge 206a6ae013 ml/filter-branch-portability-fix later to maint).
-
- * Other minor doc, test and build updates and code cleanups.
-   (merge e2a5a028c7 bw/oidmap-autoinit later to maint).
-   (merge ec3b4b06f8 cl/t9001-cleanup later to maint).
-   (merge e1b3f3dd38 ks/submodule-doc-updates later to maint).
-   (merge fbac558a9b rs/describe-unique-abbrev later to maint).
-   (merge 8462ff43e4 tb/crlf-conv-flags later to maint).
-   (merge 7d68bb0766 rb/hashmap-h-compilation-fix later to maint).
-   (merge 3449847168 cc/sha1-file-name later to maint).
-   (merge ad622a256f ds/use-get-be64 later to maint).
-   (merge f919ffebed sg/cocci-move-array later to maint).
-   (merge 4e801463c7 jc/mailinfo-cleanup-fix later to maint).
-   (merge ef5b3a6c5e nd/shared-index-fix later to maint).
-   (merge 9f5258cbb8 tz/doc-show-defaults-to-head later to maint).
-   (merge b780e4407d jc/worktree-add-short-help later to maint).
-   (merge ae239fc8e5 rs/cocci-strbuf-addf-to-addstr later to maint).
-   (merge 2e22a85e5c nd/ignore-glob-doc-update later to maint).
-   (merge 3738031581 jk/gettext-poison later to maint).
-   (merge 54360a1956 rj/sparse-updates later to maint).
-   (merge 12e31a6b12 sg/doc-test-must-fail-args later to maint).
-   (merge 760f1ad101 bc/doc-interpret-trailers-grammofix later to maint).
-   (merge 4ccf461f56 bp/fsmonitor later to maint).
-   (merge a6119f82b1 jk/test-hashmap-updates later to maint).
-   (merge 5aea9fe6cc rd/typofix later to maint).
-   (merge e4e5da2796 sb/status-doc-fix later to maint).
-   (merge 7976e901c8 gs/test-unset-xdg-cache-home later to maint).
-   (merge d023df1ee6 tg/worktree-create-tracking later to maint).
-   (merge 4cbe92fd41 sm/mv-dry-run-update later to maint).
-   (merge 75e5e9c3f7 sb/color-h-cleanup later to maint).
-   (merge 2708ef4af6 sg/t6300-modernize later to maint).
-   (merge d88e92d4e0 bw/doc-submodule-recurse-config-with-clone later to maint).
-   (merge f74bbc8dd2 jk/cached-commit-buffer later to maint).
-   (merge 1316416903 ms/non-ascii-ticks later to maint).
-   (merge 878056005e rs/strbuf-read-file-or-whine later to maint).
-   (merge 79f0ba1547 jk/strbuf-read-file-close-error later to maint).
-   (merge edfb8ba068 ot/ref-filter-cleanup later to maint).
-   (merge 11395a3b4b jc/test-must-be-empty later to maint).
-   (merge 768b9d6db7 mk/doc-pretty-fill later to maint).
-   (merge 2caa7b8d27 ab/man-sec-list later to maint).
-   (merge 40c17eb184 ks/t3200-typofix later to maint).
-   (merge bd9958c358 dp/merge-strategy-doc-fix later to maint).
-   (merge 9ee0540a40 js/ming-strftime later to maint).
-   (merge 1775e990f7 tz/complete-tag-delete-tagname later to maint).
-   (merge 00a4b03501 rj/warning-uninitialized-fix later to maint).
-   (merge b635ed97a0 jk/attributes-path-doc later to maint).
+On Sun, Apr 1, 2018 at 6:07 PM, Robert Dailey <rcdailey.lists@gmail.com> wrote:
+> On Tue, Mar 27, 2018 at 5:17 PM, Stefan Beller <sbeller@google.com> wrote:
+>>> >> $ git diff --submodule=log --submodule-log-detail=(long|short)
+>>> >>
+>>> >> I'm not sure what makes sense here. I welcome thoughts/discussion and
+>>> >> will provide follow-up patches.
+>>> >
+>>> > The case of merges is usually configured with --[no-]merges, or
+>>> > --min-parents=<n>.
+>>
+>>> But that is a knob that controls an irrelevant aspect of the detail
+>>> in the context of this discussion, isn't it?  This code is about "to
+>>> what degree the things that happened between two submodule commits
+>>> in an adjacent pair of commits in the superproject are summarized?"
+>>
+>> And I took it a step further and wanted to give a general solution, which
+>> allows giving any option that the diff machinery accepts to only apply
+>> to the submodule diffing part of the current diff.
+>>
+>>> The hack Robert illustrates below is to change it to stop favouring
+>>> such projects with "clean" histories, and show "log --oneline
+>>> --no-merges --left-right".  When presented that way, clean histories
+>>> of topic-branch based projects will suffer by losing conciseness,
+>>> but clean histories of totally linear projects will still be shown
+>>> the same way, and messy history that sometimes merges, sometimes
+>>> merges mergy histories, and sometimes directly builds on the trunk
+>>> will be shown as an enumeration of individual commits in a flat way
+>>> by ignoring merges and not restricting the traversal to the first
+>>> parent chains, which would appear more uniform than what the current
+>>> code shows.
+>>
+>> Oh, I realize this is in the *summary* code path, I was thinking about the
+>> show_submodule_inline_diff, which would benefit from more diff options.
+>>
+>>> I do not see a point in introducing --min/max-parents as a knob to
+>>> control how the history is summarized.
+>>
+>> For a summary a flat list of commits may be fine, ignoring
+>> (ideally non-evil) merges.
+>>
+>>> This is a strongly related tangent, but I wonder if we can and/or
+>>> want to share more code with the codepath that prepares the log
+>>> message for a merge.  It summarizes what happened on the side branch
+>>> since it forked from the history it is joining back to (I think it
+>>> is merge.c::shortlog() that computes this)
+>>
+>> I do not find code there. To me it looks like builtin/fmt-merge-msg.c
+>> is responsible for coming up with a default merge message?
+>> In that file there is a shortlog() function, which walks revisions
+>> and puts together the subject lines of commits.
+>>
+>>> and it is quite similar
+>>> to what Robert wants to use for submodules here.  On the other hand,
+>>> in a project _without_ submodule, if you are pulling history made by
+>>> your lieutenant whose history is full of linear merges of topic
+>>> branches to the mainline, it may not be a bad idea to allow
+>>> fmt-merge-msg to alternatively show something similar to the "diff
+>>> --submodule=log" gives us, i.e. summarize the history of the side
+>>> branch being merged by just listing the commits on the first-parent
+>>> chain.  So I sense some opportunity for cross pollination here.
+>>
+>> The cross pollination that I sense is the desire in both cases to freely
+>> specify the format as it may depend on the workflow.
+>
+> First I want to apologize for having taken so long to get back with
+> each of you about this. I actually have a lot of work started to
+> expand the --submodule option to add a "full-log" option in addition
+> to the existing "log". This is a pretty big task for me already,
+> mostly because I'm unfamiliar with git and have limited personal time
+> to do this at home (this is part of what I am apologizing for).
+
+No worries wrt. time.
+
+> I kind
+> of get what Stefan and Junio are saying. There's a lot of opportunity
+> for cleanup. More specific to my use case, adding some functionality
+> to generate a log message (although I've developed a bash script to do
+> this since I wrote my original email. I'll attach it to this email for
+> those interested).
+
+The functionality looks very similar what Gerrit does in its
+"superproject subscription mode", which would update the submodules in
+the superproject automatically, when you submit on the submodule.
+For example [1] is an update of the Gerrit project itself, that has some
+submodules. This commit only updates the replication plugin, but
+provides a summary what happened in that plugin.
+
+[1] https://gerrit.googlesource.com/gerrit/+/db20af7123221b0b2f01d1f06e4eaac32a04cef6
+
+
+I wonder if there is need for this in upstream git as well, e.g.
+"git submodule update --remote" would also want to have a
+switch "--commit-with-proposed-commit-message" or if the
+standard commit message template would provide a submodule
+summary for you. I realize that there is the config option
+status.submoduleSummary already, but it is not as clear as either
+your script or the Gerrit example.
+
+> Also I get that taking this a notch higher and
+> adding a new option to pass options down to submodules also addresses
+> my case. Before I waste anyone's time on this, I want to make sure
+> that my very narrow and specific implementation will be ideal. By all
+> means I do not want to do things the easy way which ends up adding
+> "cruft" you'll have to deal with later.
+
+Sounds good. I am undecided whether to count this as cruft, as it brings in
+real improvements for certain histories. And if you need this, it is not cruft
+but a feature.
+
+> If there's a larger effort to
+> generalize this and other things related to submodules maybe I can
+> just wait for that to happen instead? What direction would you guys
+> recommend?
+
+You could do that, though there are no timelines and you'd wait quite a
+long time, potentially.
+
+> Junio basically hit the nail on the head with the comparisons of
+> different mainlines. I think some repositories are more disciplined
+> than others. At my workplace, I deal with a lot of folks that aren't
+> interested in learning git beyond the required day to day
+> responsibilities. It's difficult to enforce very specific branching,
+> rebase, and merge habits. As such, the best I can do to work around
+> that for building release notes is to exclude merge commits (since
+> most of the time, people keep the default message which is generally
+> useless) and include all commits in the ancestry path (since often
+> times commits on the right side of a merge will have important
+> information such as JIRA issue keys, which if shown in the parent repo
+> will cause appropriate links back to parent repositories to show when
+> changes in submodules were introduced there as well).
+
+It sounds it is fixing a real need, so don't call it cruft. ;)
+
+> Based on how constructive this email thread has gotten since I started
+> it, I'm starting to feel like my solution is too narrowly-focused and
+> doesn't have the long term appeal expected. Let me know, I'm happy to
+> do what I can but I think it will be limited due to my lack of domain
+> expertise in the code base and inability to invest the required time
+> for significant scope of work.
+
+I guess we can have it as
+
+  $ git diff --submodule=long-log
+
+for now? Or instead "detailed-log" or "log-with-commits" ?
+
+Thanks,
+Stefan
