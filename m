@@ -2,114 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 31D1A1F404
-	for <e@80x24.org>; Mon,  2 Apr 2018 17:57:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 368541F404
+	for <e@80x24.org>; Mon,  2 Apr 2018 18:02:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753223AbeDBR5u (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Apr 2018 13:57:50 -0400
-Received: from mail-wr0-f177.google.com ([209.85.128.177]:45454 "EHLO
-        mail-wr0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752920AbeDBR5t (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Apr 2018 13:57:49 -0400
-Received: by mail-wr0-f177.google.com with SMTP id u11so14892886wri.12
-        for <git@vger.kernel.org>; Mon, 02 Apr 2018 10:57:48 -0700 (PDT)
+        id S1753223AbeDBSCw (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Apr 2018 14:02:52 -0400
+Received: from mail-yb0-f170.google.com ([209.85.213.170]:42954 "EHLO
+        mail-yb0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753080AbeDBSCv (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Apr 2018 14:02:51 -0400
+Received: by mail-yb0-f170.google.com with SMTP id d7-v6so5052429ybn.9
+        for <git@vger.kernel.org>; Mon, 02 Apr 2018 11:02:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=m8KDIbhYsQDZq/SkkcUpecIN942n7XcnYs0TzHGKRNw=;
-        b=nIGaZfJ+cfnnu+K69oycLBBGEeQDYkLuCftas0IYjq4jaINSKTPEg0G7uLr5joWKHc
-         PZf5q7WL8bYCDn0C+pNwf3X/1Z24v2kdPiCfIifuRaJW+rvHD18DUM0YtuVANvBhkGqz
-         nLBbQ8KAyQ5kLPtiy5nuxs+6KdFzBFzyWauf20cASjTkl5PD8dU2L3S6CGCx2vvOrGQG
-         Pu5VPRE0J+hNMWjS1ttOXsvlbkGelckwKt7bSC0WXlUHcJuNEb7mrWu0Qa3FE5qTshqK
-         j/nMyjRH5+5zowyA7p0XE8cj7AItCSkPyw8K2wYAPI58JdzeEtt6N17vKo2eiUvRwJFx
-         w1Hg==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=TOkx8QSE6O4s6nZro0FwMTTGn3g5v0oaBOkLsj+PHOw=;
+        b=PWWniDWiqOxDLqWcnqw8fvUeMsptAppgjAAe7+eI9d1MdWro239sexN25qvFpPOnWl
+         DAcg1zKJ2kbp/o5SuLo1ivpwkjH+5Rh4WmE+Bh4+THbDKQCUmbnNyknx57TW8ApqPrgE
+         I+QXFaFGjq7aAnWcg+w9IW1DgKVpnPi4A/sXWrXXFgVKLAo6rBGDsOGa2NfrBcqS7cV3
+         xUFI+DA9D1scUYbDrVzjb18C4YrtIxO6U/OQPCqfylZlH7zj4UotWD5XooqtaBm+zCmd
+         n90/VoND+k2KUq7wNb/XN4LO7XX755Teki8ACz5DKsz+3xwf/HN0Dbn7QjhJcuExiqxm
+         UveQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=m8KDIbhYsQDZq/SkkcUpecIN942n7XcnYs0TzHGKRNw=;
-        b=UWSeRHRduyUxnmObgvcYpCBjvjrU1O4RudIMjXgEuE+BXvhVLblQipX169oZeQUn1H
-         BKlqy5Um3huCxrywgYZNCZgJ0xS8OYCkv3uqG6n9zgl5GC6vQykb+xz1ARTu9ekIO3N3
-         D+2jMjN2NlEaADdHRvmFdofJiTDZRj1wtqtqWEBfIzFuyiAuZ7ssSzssrdgPKjysgyrN
-         UH7IuQjGDCsJSHfxc3WD+Fd1P/tZK+fxaUJTRCxF1SDhZqikRLn5Ev+RsEqrV/olmGsZ
-         tLHf2+ndjvL4++pGo1rEs7mJl2qz1JN8SBqPCL3iss2kw42A5cNn1ghNpZQHYYBTD9G6
-         bNKw==
-X-Gm-Message-State: AElRT7Eu+Eypn+9TdFjLnjQiKy1W/R//SdNwBJwRb8TH9mQi8csbRH9l
-        mq7vcSQXnaoh3tcELgLXjaE=
-X-Google-Smtp-Source: AIpwx4+cov6CnETMaLf8I8g2Z5/OxX4aM+C6ibvjB18S9DQo32Ljx+OKUgck6w4uEluRS8ZYr82uOA==
-X-Received: by 10.223.225.76 with SMTP id f12mr7133584wri.128.1522691867862;
-        Mon, 02 Apr 2018 10:57:47 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id 140sm832770wmy.38.2018.04.02.10.57.46
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 02 Apr 2018 10:57:47 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Lyubomyr Shaydariv <lsh.dev@ukr.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] graph.c: log.showRootMark to indicate root commits
-References: <0102016283000c69-b09d1499-8a50-45a7-9f41-01be648398bc-000000@eu-west-1.amazonses.com>
-Date:   Mon, 02 Apr 2018 10:57:46 -0700
-In-Reply-To: <0102016283000c69-b09d1499-8a50-45a7-9f41-01be648398bc-000000@eu-west-1.amazonses.com>
-        (Lyubomyr Shaydariv's message of "Sun, 1 Apr 2018 20:57:21 +0000")
-Message-ID: <xmqqk1tpze1x.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=TOkx8QSE6O4s6nZro0FwMTTGn3g5v0oaBOkLsj+PHOw=;
+        b=oDfOz0G54Zw9Yn2eJRMNVF4+S1wf8voL6gdLLP1uHfl9BMa4ZIykRt15am0L435N3z
+         Ul4gxbnjN6/Olhh8vVzUkblFGDJPxsEi5tHQsp0QS1zuUcm1TsQ6TF1/UspfGNJENGDn
+         vXdMgW7WL826WrKC5gQN9ZV9s8SnNADstnYlKmwuYcH9rFxNA4nBj3Hw5dW7yGwSNC3U
+         fx9OYLojISzKOvhIo1qFyOT0Hgp1uosvWTNFgFIQos9pGpzj3k5ZXqQEngEzqODPPvRV
+         Zm691dSxrODeWmTurL3nLfCIri7D6Ii8Fr1AxTupXrMHNA+69N9OhQ4fkfFq5R+eUe5Q
+         /epQ==
+X-Gm-Message-State: AElRT7F7PfsuQ74DGyUbuLLkR69XVF6Pxe+NugeF79VbTLeCCZjqIgKP
+        MWhoX2TeXm8bBNgYsXOj7q8iZ3R050sXJpApDTrRpQ==
+X-Google-Smtp-Source: AIpwx4/WBPocfCDF9MY71P1UhrB1MW1qt5fGoc8Xv++bz4stQkGqIX8uTu6N+j0qP5BNc/BsX2kI9hSEPMbX6mMd07Q=
+X-Received: by 2002:a25:c713:: with SMTP id w19-v6mr5618892ybe.515.1522692170246;
+ Mon, 02 Apr 2018 11:02:50 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 2002:a25:cf81:0:0:0:0:0 with HTTP; Mon, 2 Apr 2018 11:02:49 -0700 (PDT)
+In-Reply-To: <17430580-aae6-8693-c4c9-0935104bc535@gmail.com>
+References: <4d1ee202-7d79-d73c-6e05-d0fc85db943c@gmail.com>
+ <1519066406-81663-1-git-send-email-dstolee@microsoft.com> <867eptkeeq.fsf@gmail.com>
+ <f5d8934e-afc2-39d4-b7d5-e5ba5e5021a1@gmail.com> <861sfxekeo.fsf@gmail.com>
+ <d3060103-7fab-3b6c-e968-cb49f3f23acb@gmail.com> <CAGZ79kaoDNNcu8zqaTnoXWfJ0FnLwqvZfOHUniG-izndAjvDVw@mail.gmail.com>
+ <17430580-aae6-8693-c4c9-0935104bc535@gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 2 Apr 2018 11:02:49 -0700
+Message-ID: <CAGZ79kZZCFTm-+=E-HOMNt-3wKS=ZSyCz-rrPsY+mPQXq3VXAg@mail.gmail.com>
+Subject: Re: [PATCH v4 00/13] Serialized Git Commit Graph
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Jakub Narebski <jnareb@gmail.com>, git <git@vger.kernel.org>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Jeff King <peff@peff.net>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Lyubomyr Shaydariv <lsh.dev@ukr.net> writes:
+> Currently, the format includes 8 bytes to share between the generation
+> number and commit date. Due to alignment concerns, we will want to keep this
+> as 8 bytes or truncate it to 4-bytes. Either we would be wasting at least 3
+> bytes or truncating dates too much (presenting the 2038 problem [1] since
+> dates are signed).
 
-> When log.showRootMark is set, root commits are marked with
-> the at sign (@).
+Good point. I forgot about them while writing the previous email.
+That is reason enough to keep the generation numbers, sorry
+for the noise.
+
 >
-> When log.showRootMark is not set, root commits are marked with
-> the asterisk sign (*). This is the default behavior.
+>> I only glanced at the paper, but it looks like a "more advanced 2d
+>> generation number" that seems to be able to answer questions
+>> that gen numbers can answer, but that paper also refers
+>> to SCARAB as well as GRAIL as the state of the art, so maybe
+>> there are even more papers to explore?
 >
-> Signed-off-by: Lyubomyr Shaydariv <lsh.dev@ukr.net>
-> ---
+>
+> The biggest reason I can say to advance this series (and the small follow-up
+> series that computes and consumes generation numbers) is that generation
+> numbers are _extremely simple_. You only need to know your parents and their
+> generation numbers to compute your own. These other reachability indexes
+> require examining the entire graph to create "good" index values.
 
-So the idea is when you have a history like this:
+Yes, that is a good point, too. Generation numbers can be computed
+"commit locally" and do not need expensive setups, which the others
+presumably need.
 
-    R1--A---B
-              \
-    R2--C---D---M
+> The hard part about using generation numbers (or any other reachability
+> index) in Git is refactoring the revision-walk machinery to take advantage
+> of them; current code requires O(reachable commits) to topo-order instead of
+> O(commits that will be output). I think we should table any discussion of
+> these advanced indexes until that work is done and a valuable comparison can
+> be done. "Premature optimization is the root of all evil" and all that.
 
-to show "git log --oneline --graph D B" like
+agreed,
 
-        * B
-        * A
-        @ R1
-        * D
-        * C
-        @ R2
-
-because you cannot tell that between R1 and D there is no
-parent-child relationship otherwise?
-
-One downside of that approach is that it is not clear how this
-feature should interact with --left-right.  I do not think there is
-a clean way to do that, unless you come up with a pair of symbols,
-not just a single '@'.
-
-Another way to show that there is no parent-child relationship
-between R1 and D is to show it like this instead:
-
-        * B
-        * A
-         \
-          * R1
-        * D
-        * C
-        * R2
-
-and that would work well with --left-right automatically (as you
-would just do the same thing as you would to a normal asterisk).
+Stefan
