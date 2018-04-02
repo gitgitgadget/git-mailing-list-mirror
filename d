@@ -1,65 +1,47 @@
-From: "Hiram Guidry" <Tashaigtp@yahoo.com>
-Subject: Get Laid !
-Date: Tue, 13 Jun 2006 04:32:48 -0500
-Message-ID: <3503D112.965431.20408@MHSG>
+From: "Nichole" <Nicholeaggressive@earthlink.net>
+Subject: Damn, you can not stop premature ejaculation!
+Date: Wed, 21 Jun 2006 15:33:18 +0900
+Message-ID: <60012329923857.52124A3BB3@07KN2N>
+Mime-Version: 1.0
 Content-Type: text/plain;
-	charset="us-ascii"
+        charset="Windows-1252"
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Tue Jun 13 10:33:00 2006
+X-From: git-owner@vger.kernel.org Wed Jun 21 08:36:38 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Fq4KX-00078H-W4
-	for gcvg-git@gmane.org; Tue, 13 Jun 2006 10:32:58 +0200
+	id 1FswKD-0005kx-DU
+	for gcvg-git@gmane.org; Wed, 21 Jun 2006 08:36:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750761AbWFMIcu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 13 Jun 2006 04:32:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750765AbWFMIcu
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Jun 2006 04:32:50 -0400
-Received: from [219.241.35.242] ([219.241.35.242]:33548 "HELO 44A9B368")
-	by vger.kernel.org with SMTP id S1750761AbWFMIct (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 13 Jun 2006 04:32:49 -0400
-Received: from local (unknown [10.66.1.6])
-	by competitive.yahoo.com (Postfix) with ESMTP id B153162D72
-	for <git@vger.kernel.org>; Tue, 13 Jun 2006 04:32:48 -0500
-X-Provags-ID: yahoo.com abuse@yahoo.com login:LO7VwsetzsJ4S3Edl2l4GLKrSyrnxMxH
-X-FID: 05E59DBC-9852-73AF-B4E9-96CDEA14DCB7
-To: git@vger.kernel.org
+	id S1751199AbWFUGf4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 21 Jun 2006 02:35:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751999AbWFUGf4
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jun 2006 02:35:56 -0400
+Received: from [210.124.172.225] ([210.124.172.225]:4114 "EHLO HOPE21TH")
+	by vger.kernel.org with ESMTP id S1751199AbWFUGfz (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 21 Jun 2006 02:35:55 -0400
+To: <git@vger.kernel.org>
+X-Mailer: Microsoft Office Outlook, Build 11.0.5510
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1106
+Thread-Index: MqpTr3Z14AlzRn5iAIiGmpRmlhFdzjuSY5lO
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 16.2 points;
- *  3.9 RATWARE_RCVD_PF Bulk email fingerprint (Received PF) found
- *  0.0 COMPLETELY_FREE BODY: No such thing as a free lunch (2)
- * -0.4 BAYES_05 BODY: Bayesian spam probability is 1 to 5%
- *      [score: 0.0115]
+X-Spam-Report: 10.2 points;
+ *  0.1 IMPOTENCE BODY: Impotence cure
+ * -2.0 BAYES_20 BODY: Bayesian spam probability is 5 to 20%
+ *      [score: 0.1443]
  *  3.0 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
- *      [Blocked - see <http://www.spamcop.net/bl.shtml?219.241.35.242>]
- *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
- *      [URIs: realgreatdates.com]
+ *      [Blocked - see <http://www.spamcop.net/bl.shtml?210.124.172.225>]
+ *  0.4 URIBL_AB_SURBL Contains an URL listed in the AB SURBL blocklist
+ *      [URIs: magpills.com]
+ *  1.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
+ *      [URIs: magpills.com]
  *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
- *      [URIs: realgreatdates.com]
+ *      [URIs: magpills.com]
  *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
- *      [URIs: realgreatdates.com]
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/21774>
+ *      [URIs: magpills.com]
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22236>
 
-100% FREE Adult Personals
-
-YOU NEED TO GET LAID!!!!!!!!!!!
-
-We can help.
-http://realgreatdates.com/cutiepie/dating/
-
-Real profiles of people in your area that 
-just want sex!  
-
-100% FREE!!!!!
-
-http://realgreatdates.com/cutiepie/dating/
-
---------------------------------------------
-
-
-no plz
-http://realgreatdates.com/rr2.html
+Hey, friend, I see you are very upset!Buy Extra-Time and forget your fears! http://magpills.com/gall/get I felt it myself when my girlfriend had left me!It’s possible because I always use Extra-Time!It seems you wish to have sex longer, but without any results…
