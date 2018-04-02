@@ -7,57 +7,58 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3D0B71F404
-	for <e@80x24.org>; Mon,  2 Apr 2018 23:47:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 758B21F404
+	for <e@80x24.org>; Mon,  2 Apr 2018 23:51:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754665AbeDBXrq (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Apr 2018 19:47:46 -0400
-Received: from mail-pl0-f52.google.com ([209.85.160.52]:41131 "EHLO
-        mail-pl0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754584AbeDBXrp (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Apr 2018 19:47:45 -0400
-Received: by mail-pl0-f52.google.com with SMTP id bj1-v6so3860867plb.8
-        for <git@vger.kernel.org>; Mon, 02 Apr 2018 16:47:45 -0700 (PDT)
+        id S1754606AbeDBXvs (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Apr 2018 19:51:48 -0400
+Received: from mail-pl0-f67.google.com ([209.85.160.67]:46924 "EHLO
+        mail-pl0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754550AbeDBXvr (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Apr 2018 19:51:47 -0400
+Received: by mail-pl0-f67.google.com with SMTP id 59-v6so3618221plc.13
+        for <git@vger.kernel.org>; Mon, 02 Apr 2018 16:51:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:from:to:cc:subject:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=z+GF5/7sJlMVRX6HrIeNZJjhu3vZnuX0SyBvJ7+uHEc=;
-        b=qmBBq4889HICjGzQAgUWFA1ayUEosRJAixrB04EnXgTMOJv/ey8I6K9Vl4ERXRpDy1
-         /PNilRrMKslKB73JZybgaceIj0omgmCDGW0oceVaK8gj0nNS8oy1LUSyynY7bB+LOb21
-         g5AXxAqysQhuKdkmS+Ab3/EmYX+qP15xYnhitosMC7XKEP6q6fbUG5/ivl4tCEjueVF4
-         7tS+x4Jms824lHjcJXhL1CXQL9RjCRLEL8FWfVf3vik93tz8BoF01d27zKomBoR6ma0y
-         0eu0IyUlV5Z43WQJslWmZtxTvMB7xwokN+jl8nThavEqo/xVrTCq4SIImSErswpcUMHk
-         P+IQ==
+        bh=zrlyGAsTZ0oy4fku8//G+SsYIiugdjOOJe0UqN+p/T4=;
+        b=rDJGD45N3vHynmj6sCMWeR5wbysXa25llGqRGXk1fhVXmhjI6ZdaCT4wJuyTnikuxb
+         BT/CoUnHrBxCtZMldC1KQT/T8ibDeevd32iyS1tniC4Cmk6JzLl0BOugCA9m68uR9f+Y
+         6kQMT7vBWNr1D69LTi+/h0p3SU3ejCve3Nc//bgxXn5TwtuyGM4sYR9npAi5uZ43FlLK
+         5WSSeDeOrkWVCnv/mTCKimjvMgsWQVkW4ys8rO/cjzVlEoyXGpl06vDIm8J7X/cejDeK
+         5xU7IM9kSJQdTzIYIYm2SBdX34ZKo97j5GXUskbW3IyOx0r7TnjOztGf9Swe52/sjqee
+         WxEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=z+GF5/7sJlMVRX6HrIeNZJjhu3vZnuX0SyBvJ7+uHEc=;
-        b=E+xRAuNDrt5l4l5fviP18kngi1RV94E9kW1FGDqZY9deR8NMJU8DIYn7zpoy4IYEZS
-         N/04fjCAq6jBrjeF29zl89Q1tLOAK9rpJ444fv9om20E4yEOpb+mTSzVqajopvzxTL3W
-         Zd1HGBGu0T3ldwKV4bED6rEIHujCQ2kvY97mLfF4XGGcqWgfje6EhKU2RR23HeLB0WXA
-         3giUElAFvg2NwWZzf2REuVX+AvVkJjUtiq1oBDK8MOWHckhc/VK0lv2bp5Bw055bpL7q
-         OOmvtlk08/BH8gUIHAAr76Rjc4yJhEsB/p+oldJvphRjf0C/Ze/WtNHZkC1EFzV3hjF1
-         Xfsg==
-X-Gm-Message-State: AElRT7H+n3jDYlFnBQzuPW5pgsRzyF+h8T+2JhFJKOWJc8WN0ko3qr8V
-        cX9mIwNy8WyhyEdTTwodFtVLPw==
-X-Google-Smtp-Source: AIpwx49ZFHQ1A20blryci+7fadupfxMpETopIMhi36sgPEAAlsZmfxNNGaajPARC6ZgeWNhsgo6WOA==
-X-Received: by 2002:a17:902:85:: with SMTP id a5-v6mr11496214pla.99.1522712864881;
-        Mon, 02 Apr 2018 16:47:44 -0700 (PDT)
+        bh=zrlyGAsTZ0oy4fku8//G+SsYIiugdjOOJe0UqN+p/T4=;
+        b=BB8lB3rtpoD+h/IrWMk8rEaKwdq7p92Prm5Kp5PtTt16Kpc2kbdzu008U/hTLhLYej
+         Jscli+WJ9jp5SQ1zu9vRHSVFF8hgxNpErTljPA21t4Wbi84P2c4VpvbkXRwFJ/ZersoI
+         LneM8mqbCMsCgrDd/4xAltjvIVbe4v6oAJkIJLSUK/DBrKoMEb5L7MF1uoZVwtqrcOEU
+         W7fYLDiDA+7jnqhQuYGZuNWuCmZwqV9uPH5wL1GuHeJcajcXlmCLxAStO2jnM6+97XB0
+         YnDhC1RgJdjJgWgb/XHsCkxi/Y3nywlde2IGnBsB5N2aYWK5dbiAEHotcyS54zsRzIBJ
+         sJqw==
+X-Gm-Message-State: AElRT7EkscZJnqLEd9FDfkEHISQ471s4bLBuy8bbtlgHut4Uys2DSlxv
+        pM7V3/8NHaxh2JAldCKvu+HMFA==
+X-Google-Smtp-Source: AIpwx4+Iz1y/G/k3mwr5owftXNp8MlfGJxTm4mKM/ieQqE7d+P2OD3QVdPkaDCag131H2QFlPGQf7A==
+X-Received: by 10.99.168.13 with SMTP id o13mr7539749pgf.198.1522713106879;
+        Mon, 02 Apr 2018 16:51:46 -0700 (PDT)
 Received: from twelve3.svl.corp.google.com ([2620:0:100e:422:ffac:c1d4:4bf7:bb93])
-        by smtp.gmail.com with ESMTPSA id p1sm2132977pgr.67.2018.04.02.16.47.43
+        by smtp.gmail.com with ESMTPSA id x1sm2664353pfa.134.2018.04.02.16.51.45
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 02 Apr 2018 16:47:43 -0700 (PDT)
-Date:   Mon, 2 Apr 2018 16:47:42 -0700
+        Mon, 02 Apr 2018 16:51:45 -0700 (PDT)
+Date:   Mon, 2 Apr 2018 16:51:44 -0700
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     Stefan Beller <sbeller@google.com>
 Cc:     jacob.keller@gmail.com, simon@ruderich.org, git@vger.kernel.org
-Subject: Re: [RFC PATCH 0/7] Moved code detection: ignore space on uniform
- indentation
-Message-Id: <20180402164742.11d4c5507d6ee737c9935d73@google.com>
-In-Reply-To: <20180402224854.86922-1-sbeller@google.com>
+Subject: Re: [PATCH 5/7] diff.c: refactor internal representation for
+ coloring moved code
+Message-Id: <20180402165144.73e701d7816ddfcf00006d95@google.com>
+In-Reply-To: <20180402224854.86922-6-sbeller@google.com>
 References: <20180402224854.86922-1-sbeller@google.com>
+        <20180402224854.86922-6-sbeller@google.com>
 X-Mailer: Sylpheed 3.6.0 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
@@ -67,25 +68,22 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon,  2 Apr 2018 15:48:47 -0700
+On Mon,  2 Apr 2018 15:48:52 -0700
 Stefan Beller <sbeller@google.com> wrote:
 
-> This is a re-attempt of [1], which allows the moved code detection to
-> ignore blanks in various modes.
+> At the time the move coloring was implemented we thought an enum of modes
+> is the best to configure this feature.  However as we want to tack on new
+> features, the enum would grow exponentially.
 > 
-> patches 1-5 are refactoring, patch 6 adds all existing white space options
-> of regular diff to the move detection. (I am unsure about this patch,
-> as I presume we want to keep the option space at a minimum if possible).
+> Refactor the code such that features are enabled via bits. Currently we can
+> * activate the move detection,
+> * enable the block detection on top, and
+> * enable the dimming inside a block, though this could be done without
+>   block detection as well (mode "plain, dimmed")
 
-My preference is to not do this until a need has been demonstrated, but
-this sounds like it could be useful one day. I'll review the patches
-from the viewpoint that we do want this feature.
+Firstly, patches 1-4 are obviously correct.
 
-> The fun is in the last patch, which allows white space sensitive
-> languages to trust the move detection, too. Each block that is marked as
-> moved will have the same delta in {in-, de-}dentation.
-> I would think this mode might be a reasonable default eventually.
-
-This sounds like a good idea. "Trust" is probably too strong a word, but
-I can see this being useful even in non-whitespace-sensitive languages
-with nested blocks (like C).
+As for this patch, I don't think that using flags is the right way to do
+this. We are not under any size pressure for struct diff_options, and
+the additional options that we plan to add (color-moved-whitespace-flags
+and ignore-space-delta) can easily be additional fields instead.
