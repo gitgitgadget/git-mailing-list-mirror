@@ -2,110 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 368541F404
-	for <e@80x24.org>; Mon,  2 Apr 2018 18:02:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D70041F404
+	for <e@80x24.org>; Mon,  2 Apr 2018 18:09:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753223AbeDBSCw (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Apr 2018 14:02:52 -0400
-Received: from mail-yb0-f170.google.com ([209.85.213.170]:42954 "EHLO
-        mail-yb0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753080AbeDBSCv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Apr 2018 14:02:51 -0400
-Received: by mail-yb0-f170.google.com with SMTP id d7-v6so5052429ybn.9
-        for <git@vger.kernel.org>; Mon, 02 Apr 2018 11:02:51 -0700 (PDT)
+        id S1753279AbeDBSJI (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Apr 2018 14:09:08 -0400
+Received: from mail-wm0-f46.google.com ([74.125.82.46]:54388 "EHLO
+        mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753177AbeDBSJH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Apr 2018 14:09:07 -0400
+Received: by mail-wm0-f46.google.com with SMTP id h76so27438361wme.4
+        for <git@vger.kernel.org>; Mon, 02 Apr 2018 11:09:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=TOkx8QSE6O4s6nZro0FwMTTGn3g5v0oaBOkLsj+PHOw=;
-        b=PWWniDWiqOxDLqWcnqw8fvUeMsptAppgjAAe7+eI9d1MdWro239sexN25qvFpPOnWl
-         DAcg1zKJ2kbp/o5SuLo1ivpwkjH+5Rh4WmE+Bh4+THbDKQCUmbnNyknx57TW8ApqPrgE
-         I+QXFaFGjq7aAnWcg+w9IW1DgKVpnPi4A/sXWrXXFgVKLAo6rBGDsOGa2NfrBcqS7cV3
-         xUFI+DA9D1scUYbDrVzjb18C4YrtIxO6U/OQPCqfylZlH7zj4UotWD5XooqtaBm+zCmd
-         n90/VoND+k2KUq7wNb/XN4LO7XX755Teki8ACz5DKsz+3xwf/HN0Dbn7QjhJcuExiqxm
-         UveQ==
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=1yJcjEItu5kQfFYdwZxq/QPDnbzVNNnGt4A8y8xPnmI=;
+        b=u4BKMVV6FqSzOPLAO36uHyUk0MD2Z+762G8KO7KQsItX12FMTPCPLN5ciCy39/gO8j
+         L5Kn0+cawnphIS+BKPWwbtad2q67pLvk+6/UdwllDdUCwtmElBc1Rmpi1e4c2DMwIqBj
+         0MO+VFQ2ExrO7fSP7jnrnd9pXQ7m5xfBGeEaJL/lC4kTYZyhJVa7K08BC7MehKTd6l4j
+         cVP/xhgZRwdCyfxPUTc1QDwlRqcf3hVrtXRrFXtfTJ6R/DUHpWT32ScBlmxyjLn8CIS6
+         v14BDWl86jE/MZMYphesPR7DTXhgnoKP711VpeIW1CIMtHqCKNG4BMD5O8qqcVEj7MiD
+         XU0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=TOkx8QSE6O4s6nZro0FwMTTGn3g5v0oaBOkLsj+PHOw=;
-        b=oDfOz0G54Zw9Yn2eJRMNVF4+S1wf8voL6gdLLP1uHfl9BMa4ZIykRt15am0L435N3z
-         Ul4gxbnjN6/Olhh8vVzUkblFGDJPxsEi5tHQsp0QS1zuUcm1TsQ6TF1/UspfGNJENGDn
-         vXdMgW7WL826WrKC5gQN9ZV9s8SnNADstnYlKmwuYcH9rFxNA4nBj3Hw5dW7yGwSNC3U
-         fx9OYLojISzKOvhIo1qFyOT0Hgp1uosvWTNFgFIQos9pGpzj3k5ZXqQEngEzqODPPvRV
-         Zm691dSxrODeWmTurL3nLfCIri7D6Ii8Fr1AxTupXrMHNA+69N9OhQ4fkfFq5R+eUe5Q
-         /epQ==
-X-Gm-Message-State: AElRT7F7PfsuQ74DGyUbuLLkR69XVF6Pxe+NugeF79VbTLeCCZjqIgKP
-        MWhoX2TeXm8bBNgYsXOj7q8iZ3R050sXJpApDTrRpQ==
-X-Google-Smtp-Source: AIpwx4/WBPocfCDF9MY71P1UhrB1MW1qt5fGoc8Xv++bz4stQkGqIX8uTu6N+j0qP5BNc/BsX2kI9hSEPMbX6mMd07Q=
-X-Received: by 2002:a25:c713:: with SMTP id w19-v6mr5618892ybe.515.1522692170246;
- Mon, 02 Apr 2018 11:02:50 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=1yJcjEItu5kQfFYdwZxq/QPDnbzVNNnGt4A8y8xPnmI=;
+        b=iutPprAZ14L6iTE5NNg0sOAGP9lv5Y6wyWcM1e32QSEeNQw0gZ6oMn7AqegSwgiHwq
+         giN0opC89CyjljojGmd+EfATNYiAEs7guBRwhbqeiR1e2+GPCmpkn4KgRzaEsYN8OEae
+         QolAVrFCH2dTUZvVkUCv9AuEOhkfI6xSq4eMNOVQ0i/uCvGZehicgEenxPtXOx3V3V5B
+         ug1EUomOcysrDQQyTrH+Oz+GdWYTOJ4gesDvv/n9ryzgfZq3u8yBfQw6sAkEPE8oHbTJ
+         SVoye3cw9euyLaA4TZADpowWHXzpgeP3OugaagjG0WqgGkFVohCTVWeM7kvxR6ZkupHj
+         EyKg==
+X-Gm-Message-State: ALQs6tA4EqqH0pWswOhP7RBpPRYH+Zow5AGkG7AYwb7ekQ8UT+P8Litj
+        wbOT5FUv7yxhIyyUceSstVo=
+X-Google-Smtp-Source: AIpwx4+BT+KQpGk7N0GneH81Nbn+vIg30Fk0d7ck7TmVF9T+G6zngYarYdlxAzoJVHHcUK0zTPJc7w==
+X-Received: by 10.28.237.11 with SMTP id l11mr388118wmh.124.1522692546457;
+        Mon, 02 Apr 2018 11:09:06 -0700 (PDT)
+Received: from [192.168.178.26] (ipservice-092-213-029-060.092.213.pools.vodafone-ip.de. [92.213.29.60])
+        by smtp.gmail.com with ESMTPSA id p4sm1055100wrf.27.2018.04.02.11.09.04
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 02 Apr 2018 11:09:05 -0700 (PDT)
+Subject: Re: [PATCH] l10n: de.po: translate 132 new messages
+To:     Ralf Thielow <ralf.thielow@gmail.com>, git@vger.kernel.org
+Cc:     Thomas Rast <tr@thomasrast.ch>,
+        =?UTF-8?Q?Jan_Kr=c3=bcger?= <jk@jk.gs>,
+        Christian Stimming <stimming@tuhh.de>,
+        Phillip Szelat <phillip.szelat@gmail.com>,
+        =?UTF-8?Q?Magnus_G=c3=b6rlitz?= <magnus.goerlitz@googlemail.com>
+References: <20180328055531.4769-1-ralf.thielow@gmail.com>
+From:   =?UTF-8?Q?Matthias_R=c3=bcster?= <matthias.ruester@gmail.com>
+Message-ID: <a2965f28-0db1-a560-38d2-fd7122e7137a@gmail.com>
+Date:   Mon, 2 Apr 2018 20:09:02 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.6.0
 MIME-Version: 1.0
-Received: by 2002:a25:cf81:0:0:0:0:0 with HTTP; Mon, 2 Apr 2018 11:02:49 -0700 (PDT)
-In-Reply-To: <17430580-aae6-8693-c4c9-0935104bc535@gmail.com>
-References: <4d1ee202-7d79-d73c-6e05-d0fc85db943c@gmail.com>
- <1519066406-81663-1-git-send-email-dstolee@microsoft.com> <867eptkeeq.fsf@gmail.com>
- <f5d8934e-afc2-39d4-b7d5-e5ba5e5021a1@gmail.com> <861sfxekeo.fsf@gmail.com>
- <d3060103-7fab-3b6c-e968-cb49f3f23acb@gmail.com> <CAGZ79kaoDNNcu8zqaTnoXWfJ0FnLwqvZfOHUniG-izndAjvDVw@mail.gmail.com>
- <17430580-aae6-8693-c4c9-0935104bc535@gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 2 Apr 2018 11:02:49 -0700
-Message-ID: <CAGZ79kZZCFTm-+=E-HOMNt-3wKS=ZSyCz-rrPsY+mPQXq3VXAg@mail.gmail.com>
-Subject: Re: [PATCH v4 00/13] Serialized Git Commit Graph
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Jakub Narebski <jnareb@gmail.com>, git <git@vger.kernel.org>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Jeff King <peff@peff.net>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20180328055531.4769-1-ralf.thielow@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Currently, the format includes 8 bytes to share between the generation
-> number and commit date. Due to alignment concerns, we will want to keep this
-> as 8 bytes or truncate it to 4-bytes. Either we would be wasting at least 3
-> bytes or truncating dates too much (presenting the 2038 problem [1] since
-> dates are signed).
+Hi Ralf,
 
-Good point. I forgot about them while writing the previous email.
-That is reason enough to keep the generation numbers, sorry
-for the noise.
+thanks a lot for your translations!
 
->
->> I only glanced at the paper, but it looks like a "more advanced 2d
->> generation number" that seems to be able to answer questions
->> that gen numbers can answer, but that paper also refers
->> to SCARAB as well as GRAIL as the state of the art, so maybe
->> there are even more papers to explore?
->
->
-> The biggest reason I can say to advance this series (and the small follow-up
-> series that computes and consumes generation numbers) is that generation
-> numbers are _extremely simple_. You only need to know your parents and their
-> generation numbers to compute your own. These other reachability indexes
-> require examining the entire graph to create "good" index values.
+I've only found a small issue:
 
-Yes, that is a good point, too. Generation numbers can be computed
-"commit locally" and do not need expensive setups, which the others
-presumably need.
+>   #: git-add--interactive.perl:1405
+> -#, fuzzy, perl-format
+> +#, perl-format
+>   msgid "Discard this hunk from worktree [y,n,q,a,d%s,?]? "
+> -msgstr "diesen Patch-Block im Arbeitsverzeichnis verwerfen [y,n,q,a,d,/%s,?]? "
+> +msgstr "diesen Patch-Block im Arbeitsverzeichnis verwerfen [y,n,q,a,d%s,?]? "
 
-> The hard part about using generation numbers (or any other reachability
-> index) in Git is refactoring the revision-walk machinery to take advantage
-> of them; current code requires O(reachable commits) to topo-order instead of
-> O(commits that will be output). I think we should table any discussion of
-> these advanced indexes until that work is done and a valuable comparison can
-> be done. "Premature optimization is the root of all evil" and all that.
+"Diesen ..."
 
-agreed,
 
-Stefan
+Kind regards,
+Matthias
