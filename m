@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A956B1F404
-	for <e@80x24.org>; Mon,  2 Apr 2018 22:49:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E2D8D1F404
+	for <e@80x24.org>; Mon,  2 Apr 2018 22:49:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754763AbeDBWtT (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Apr 2018 18:49:19 -0400
-Received: from mail-pl0-f48.google.com ([209.85.160.48]:40350 "EHLO
-        mail-pl0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754743AbeDBWtO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Apr 2018 18:49:14 -0400
-Received: by mail-pl0-f48.google.com with SMTP id x4-v6so6119541pln.7
-        for <git@vger.kernel.org>; Mon, 02 Apr 2018 15:49:14 -0700 (PDT)
+        id S1754760AbeDBWtS (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Apr 2018 18:49:18 -0400
+Received: from mail-pl0-f66.google.com ([209.85.160.66]:45975 "EHLO
+        mail-pl0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754709AbeDBWtQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Apr 2018 18:49:16 -0400
+Received: by mail-pl0-f66.google.com with SMTP id v18-v6so4150454ply.12
+        for <git@vger.kernel.org>; Mon, 02 Apr 2018 15:49:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=CD6hfAcuikMh2lRaaImOR+d7GWa+qQRHsiCD1/GQetg=;
-        b=soZHwPVTqeh8beUtEH2OcHlYaHII3Wj+DtmuPdPf1PFPGya9zqWumRgeaJwy2bIRau
-         DKMu9i4cLyerwYb15239QtokQQFMC27RoH3gkvWYKdUwKs41UTzilIdU71llVqS1nqis
-         UiymtX+u/icgVuYWppeA759IXbwqDAxuur/XQ6JIzvEfUud5VF+Y9LRD+jSFTNSbpNyl
-         8fZvWQekpCh4qm5UH/0Q8Ewkxb6EDX4iwxbMRDV1ETY0sOr48gXL5K/+/HCT8PoB1Prc
-         YibaCcQ6YLKd/LGu/xxioqErrj6pKuurdQg+i3cYNnYXwMXbDsr8j+v+ZakEDAq3Hlj6
-         47fg==
+        bh=nRsPoDrDKP4Ih06Ska7V0VBs2JRLMSdzNIw6vIMZUug=;
+        b=lt2JQ1zP0w4S4jNO7AoG6OifwNqSEKlGbDReDyIU5pznuiyfCz1sO5A2/DG0B3zZn+
+         beHZUDYIJ6fDN3LS3vsEbwW90h5liddah0MGmuopbj1ORRvDVFxjEs3F6qjLqvaXzdZ+
+         a9+PEpZ6+JHhaif0o9s4Ellj52DWygu10kSAz5KH6y1U+rldKcUnxHaT1CHFgkdrmuKb
+         X1tgMYMBSHO/kSBdECI7iKm9Ff/NiykaSPuRoNuhCyxlcBANJ/L5I/LN1/5W/h7QqBPr
+         H8kKDmh3VHOgjEEgJIT2U2oE/zwY74lVJ4E5jFXy9xru7vRrMs8c2nr0qXBdwSgCugDQ
+         NFZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=CD6hfAcuikMh2lRaaImOR+d7GWa+qQRHsiCD1/GQetg=;
-        b=uGlNH98/k1kpqo+HCTJAaO/Eu4csQcR9m4UldzHZw+k2d0z7sf4R7YIRdfBCo0fqUZ
-         c8S+jn2cxCywlmxCN4iPa9W8GppDczpmSmNXVkGmE1GXxBeNUziEZoVz+3BvVzXWieYu
-         dBo/uitefYDW5UBEpGQHrUfa8TuffiYxhJnU1dyM7a5XSYYE9QYk5QUxG6VJDgl/y3uY
-         T6SUbkTpqNSEHpCvHs09/J9MFscDXWeGZnMQeOJUCUC23wjuRh2WiE11ScUzH8h9dz0B
-         dWe51UCyZx6sta52LfcCNtcwWCBN/8r5R7yvUBl9l4ArS7OgqzWpp544hCCkUVaydTGY
-         9ktA==
-X-Gm-Message-State: AElRT7HZWOZZMs8UP363KA+aUG1mVhejDLxy9LLBDk4kj98GW2KTSLS8
-        vYir+1uhfMnA9lYbi8zp47ac/Q==
-X-Google-Smtp-Source: AIpwx4+3usiWWewimzdTUKhH92s+QSOI6Z1Yh7s5eXHPj6OTtcUYTyAI09iCeICvt8EVlxWAj14ZIw==
-X-Received: by 2002:a17:902:b7c2:: with SMTP id v2-v6mr6471780plz.190.1522709353630;
-        Mon, 02 Apr 2018 15:49:13 -0700 (PDT)
+        bh=nRsPoDrDKP4Ih06Ska7V0VBs2JRLMSdzNIw6vIMZUug=;
+        b=jMORlBLYosNI8REepLk5daMNr81zghYsHgpOtags24IwvFpHOGhU8Tcr7cbIDJHplI
+         RlZ7ymAk/ySGjIXeGFWABEID2KL1BK9gy7uojaLR+Tibr0XVMY5K4A3cL+eG7Ys4keSU
+         9fE1n0HMoGsHAWUpOd6c+PBNGcsA3RccQQBZhdjOYJnUwuQL/g8j4IC7ncUkiyfDGcKH
+         jvFL6abpuP7JjfyXkdhb3IMWTF8AnRpoflbhX2zCz0F1uXr0y3WjSWN7n6apH+yLqUFc
+         fayetNiG2RMGghcpqqt0vf6cV1+gCZj77S+eox5BilaBOXsBtVxpfaAt3MS7Zm5ySaXL
+         WN4Q==
+X-Gm-Message-State: AElRT7F15hh9XYUiOPvVKo6H3RC3/GBmc3ACxP/ownBbae1Hg3eKS6AS
+        02R2QfCixKQ01pwraCzZOzOMv8aPZhc=
+X-Google-Smtp-Source: AIpwx4/LaGnvoAHUpSfidvBZAzmTTnZNpylATLoK2msB1UHWt/9EVFnea6YW3jcQcKqzv6ucauE1+Q==
+X-Received: by 10.101.100.132 with SMTP id e4mr7467960pgv.240.1522709355012;
+        Mon, 02 Apr 2018 15:49:15 -0700 (PDT)
 Received: from localhost ([2620:0:100e:422:ea58:fa52:fa77:9b41])
-        by smtp.gmail.com with ESMTPSA id t64sm2292574pfi.34.2018.04.02.15.49.12
+        by smtp.gmail.com with ESMTPSA id e62sm2350486pfl.117.2018.04.02.15.49.14
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 02 Apr 2018 15:49:12 -0700 (PDT)
+        Mon, 02 Apr 2018 15:49:14 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     jonathantanmy@google.com, jacob.keller@gmail.com,
         simon@ruderich.org
 Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-Subject: [PATCH 6/7] diff.c: decouple white space treatment for move detection from generic option
-Date:   Mon,  2 Apr 2018 15:48:53 -0700
-Message-Id: <20180402224854.86922-7-sbeller@google.com>
+Subject: [PATCH 7/7] diff.c: add --color-moved-ignore-space-delta option
+Date:   Mon,  2 Apr 2018 15:48:54 -0700
+Message-Id: <20180402224854.86922-8-sbeller@google.com>
 X-Mailer: git-send-email 2.17.0.484.g0c8726318c-goog
 In-Reply-To: <20180402224854.86922-1-sbeller@google.com>
 References: <20180402224854.86922-1-sbeller@google.com>
@@ -63,317 +63,408 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In the original implementation of the move detection logic we assumed that
-the choice for ignoring white space changes is the same for the move
-detection as it is for the generic diff.  It turns out this is wrong.
-
-There are a couple of things where the user wants to input their
-decision into the diff machinery:
-
-* Whether or not to ignore white space for the general diff detection.
-  This is covered with the -w, -b options already.
-* Whether the move detection ought to pay attention to white spaces
-  in general. And if so, how are white spaces handled for the block
-  detection.
-
-One example would be reviewing a current patch under discussion, that moves
-code around.  In that case, you may want to have the general diff machinery
-not ignore the white spaces (i.e. exact matching), as that will show you
-the diff as the patch sent. The code moved however may have another
-indentation level, such that you want to ignore white spaces for the move
-detection. The code may be in python, such that spaces matter for program
-flow, though. That is why you'd want each block to have the same change
-in white space.
-
-This patch decouples white space treatment in the general diff machinery
-from the white space treatment in the move detection.
-
-This adds all the the options for ignoring white space that the regular
-diff machinery has to the move detection, such that we can cover all the
-cases that were introduced in 7a55427094 (Merge branch
-'jk/diff-color-moved-fix', 2017-11-06).
-
-The example from above (different lines in the diff with -w for the regular
-diff) is covered in a test. Convert the existing tests to be more explicit
-on their choice of white space behavior in the move detection as the tests
-should not fail if the default is changed.
+This marks moved code still as blocks when their indentation level
+changes uniformly.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- Documentation/diff-options.txt |  13 +++
- diff.c                         |  17 +++-
- t/t4015-diff-whitespace.sh     | 150 +++++++++++++++++++++++++++++++--
- 3 files changed, 171 insertions(+), 9 deletions(-)
+ diff.c                     |  93 ++++++++++++++++--
+ diff.h                     |   1 +
+ t/t4015-diff-whitespace.sh | 191 +++++++++++++++++++++++++++++++++++++
+ 3 files changed, 278 insertions(+), 7 deletions(-)
 
-diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-index e3a44f03cd..4ca09c1977 100644
---- a/Documentation/diff-options.txt
-+++ b/Documentation/diff-options.txt
-@@ -288,6 +288,19 @@ dimmed_zebra::
- 	blocks are considered interesting, the rest is uninteresting.
- --
- 
-+--color-moved-[no-]ignore-all-space::
-+	Ignore whitespace when comparing lines when performing the move
-+	detection for --color-moved.  This ignores differences even if
-+	one line has whitespace where the other line has none.
-+--color-moved-[no-]ignore-space-change::
-+	Ignore changes in amount of whitespace when performing the move
-+	detection for --color-moved.  This ignores whitespace
-+	at line end, and considers all other sequences of one or
-+	more whitespace characters to be equivalent.
-+--color-moved-[no-]ignore-space-at-eol::
-+	Ignore changes in whitespace at EOL when performing the move
-+	detection for --color-moved.
-+
- --word-diff[=<mode>]::
- 	Show a word diff, using the <mode> to delimit changed words.
- 	By default, words are delimited by whitespace; see
 diff --git a/diff.c b/diff.c
-index 2052a43f7a..5fe2930dca 100644
+index 5fe2930dca..9f969be588 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -720,7 +720,7 @@ static int moved_entry_cmp(const void *hashmap_cmp_fn_data,
+@@ -709,6 +709,41 @@ struct moved_entry {
+ 	struct moved_entry *next_line;
+ };
+ 
++struct ws_delta {
++	int deltachars;
++	char firstchar;
++};
++
++static void compute_ws_delta(const struct emitted_diff_symbol *a,
++			     const struct emitted_diff_symbol *b,
++			     struct ws_delta *out)
++{
++	int i;
++	const struct emitted_diff_symbol *longer = a->len > b->len ? a : b;
++
++
++	out->deltachars = 0;
++	out->firstchar = 0;
++
++	if (longer->len > 0 && isspace(longer->line[0]))
++		out->firstchar = longer->line[0];
++	else
++		return;
++
++	for (i = 0; i < a->len; i++)
++		if (a->line[i] == out->firstchar)
++			out->deltachars ++;
++
++	for (i = 0; i < b->len; i++)
++		if (b->line[i] == out->firstchar)
++			out->deltachars --;
++}
++
++static int compare_ws_delta(const struct ws_delta *a, const struct ws_delta *b)
++{
++	return  a->firstchar == b->firstchar && a->deltachars == b->deltachars;
++}
++
+ static int moved_entry_cmp(const void *hashmap_cmp_fn_data,
+ 			   const void *entry,
+ 			   const void *entry_or_key,
+@@ -717,10 +752,20 @@ static int moved_entry_cmp(const void *hashmap_cmp_fn_data,
+ 	const struct diff_options *diffopt = hashmap_cmp_fn_data;
+ 	const struct moved_entry *a = entry;
+ 	const struct moved_entry *b = entry_or_key;
++	unsigned flags = diffopt->color_moved & XDF_WHITESPACE_FLAGS;
++
++	if (diffopt->color_moved & COLOR_MOVED_DELTA_WHITESPACES)
++		/*
++		 * As there is not specific white space config given,
++		 * we'd need to check for a new block, so ignore all
++		 * white space. The setup of the white space
++		 * configuration for the next block is done else where
++		 */
++		flags |= XDF_IGNORE_WHITESPACE;
  
  	return !xdiff_compare_lines(a->es->line, a->es->len,
  				    b->es->line, b->es->len,
--				    diffopt->xdl_opts);
-+				    diffopt->color_moved & XDF_WHITESPACE_FLAGS);
+-				    diffopt->color_moved & XDF_WHITESPACE_FLAGS);
++				    flags);
  }
  
  static struct moved_entry *prepare_entry(struct diff_options *o,
-@@ -728,8 +728,9 @@ static struct moved_entry *prepare_entry(struct diff_options *o,
+@@ -770,7 +815,8 @@ static void add_lines_to_move_detection(struct diff_options *o,
+ }
+ 
+ static int shrink_potential_moved_blocks(struct moved_entry **pmb,
+-					 int pmb_nr)
++					 int pmb_nr,
++					 struct ws_delta **wsd)
  {
- 	struct moved_entry *ret = xmalloc(sizeof(*ret));
- 	struct emitted_diff_symbol *l = &o->emitted_symbols->buf[line_no];
-+	unsigned flags = o->color_moved & XDF_WHITESPACE_FLAGS;
+ 	int lp, rp;
  
--	ret->ent.hash = xdiff_hash_string(l->line, l->len, o->xdl_opts);
-+	ret->ent.hash = xdiff_hash_string(l->line, l->len, flags);
- 	ret->es = l;
- 	ret->next_line = NULL;
+@@ -786,6 +832,8 @@ static int shrink_potential_moved_blocks(struct moved_entry **pmb,
  
-@@ -4638,6 +4639,18 @@ int diff_opt_parse(struct diff_options *options,
- 		DIFF_XDL_SET(options, IGNORE_CR_AT_EOL);
- 	else if (!strcmp(arg, "--ignore-blank-lines"))
- 		DIFF_XDL_SET(options, IGNORE_BLANK_LINES);
-+	else if (!strcmp(arg, "--color-moved-no-ignore-all-space"))
-+		options->color_moved &= ~XDF_IGNORE_WHITESPACE;
-+	else if (!strcmp(arg, "--color-moved-no-ignore-space-change"))
-+		options->color_moved &= ~XDF_IGNORE_WHITESPACE_CHANGE;
-+	else if (!strcmp(arg, "--color-moved-no-ignore-space-at-eol"))
-+		options->color_moved &= ~XDF_IGNORE_WHITESPACE_AT_EOL;
-+	else if (!strcmp(arg, "--color-moved-ignore-all-space"))
-+		options->color_moved |= XDF_IGNORE_WHITESPACE;
-+	else if (!strcmp(arg, "--color-moved-ignore-space-change"))
-+		options->color_moved |= XDF_IGNORE_WHITESPACE_CHANGE;
-+	else if (!strcmp(arg, "--color-moved-ignore-space-at-eol"))
-+		options->color_moved |= XDF_IGNORE_WHITESPACE_AT_EOL;
+ 		if (lp < pmb_nr && rp > -1 && lp < rp) {
+ 			pmb[lp] = pmb[rp];
++			if (*wsd)
++				(*wsd)[lp] = (*wsd)[rp];
+ 			pmb[rp] = NULL;
+ 			rp--;
+ 			lp++;
+@@ -835,8 +883,11 @@ static void mark_color_as_moved(struct diff_options *o,
+ {
+ 	struct moved_entry **pmb = NULL; /* potentially moved blocks */
+ 	int pmb_nr = 0, pmb_alloc = 0;
+-	int n, flipped_block = 1, block_length = 0;
+ 
++	struct ws_delta *wsd = NULL; /* white space deltas between pmb */
++	int wsd_alloc = 0;
++
++	int n, flipped_block = 1, block_length = 0;
+ 
+ 	for (n = 0; n < o->emitted_symbols->nr; n++) {
+ 		struct hashmap *hm = NULL;
+@@ -879,14 +930,30 @@ static void mark_color_as_moved(struct diff_options *o,
+ 			struct moved_entry *p = pmb[i];
+ 			struct moved_entry *pnext = (p && p->next_line) ?
+ 					p->next_line : NULL;
+-			if (pnext && !hm->cmpfn(o, pnext, match, NULL)) {
+-				pmb[i] = p->next_line;
++
++			if (o->color_moved & COLOR_MOVED_DELTA_WHITESPACES) {
++				struct ws_delta out;
++
++				if (pnext)
++					compute_ws_delta(l, pnext->es, &out);
++				if (pnext &&
++				    !hm->cmpfn(o, pnext, match, NULL) &&
++				    compare_ws_delta(&out, &wsd[i])) {
++					pmb[i] = p->next_line;
++					/* wsd[i] is the same */
++				} else {
++					pmb[i] = NULL;
++				}
+ 			} else {
+-				pmb[i] = NULL;
++				if (pnext && !hm->cmpfn(o, pnext, match, NULL)) {
++					pmb[i] = p->next_line;
++				} else {
++					pmb[i] = NULL;
++				}
+ 			}
+ 		}
+ 
+-		pmb_nr = shrink_potential_moved_blocks(pmb, pmb_nr);
++		pmb_nr = shrink_potential_moved_blocks(pmb, pmb_nr, &wsd);
+ 
+ 		if (pmb_nr == 0) {
+ 			/*
+@@ -895,6 +962,10 @@ static void mark_color_as_moved(struct diff_options *o,
+ 			 */
+ 			for (; match; match = hashmap_get_next(hm, match)) {
+ 				ALLOC_GROW(pmb, pmb_nr + 1, pmb_alloc);
++				if (o->color_moved & COLOR_MOVED_DELTA_WHITESPACES) {
++					ALLOC_GROW(wsd, pmb_nr + 1, wsd_alloc);
++					compute_ws_delta(l, match->es, &wsd[pmb_nr]);
++				}
+ 				pmb[pmb_nr++] = match;
+ 			}
+ 
+@@ -912,6 +983,7 @@ static void mark_color_as_moved(struct diff_options *o,
+ 	adjust_last_block(o, n, block_length);
+ 
+ 	free(pmb);
++	free(wsd);
+ }
+ 
+ #define DIFF_SYMBOL_MOVED_LINE_ZEBRA_MASK \
+@@ -4645,12 +4717,16 @@ int diff_opt_parse(struct diff_options *options,
+ 		options->color_moved &= ~XDF_IGNORE_WHITESPACE_CHANGE;
+ 	else if (!strcmp(arg, "--color-moved-no-ignore-space-at-eol"))
+ 		options->color_moved &= ~XDF_IGNORE_WHITESPACE_AT_EOL;
++	else if (!strcmp(arg, "--color-moved-no-ignore-space-delta"))
++		options->color_moved &= ~COLOR_MOVED_DELTA_WHITESPACES;
+ 	else if (!strcmp(arg, "--color-moved-ignore-all-space"))
+ 		options->color_moved |= XDF_IGNORE_WHITESPACE;
+ 	else if (!strcmp(arg, "--color-moved-ignore-space-change"))
+ 		options->color_moved |= XDF_IGNORE_WHITESPACE_CHANGE;
+ 	else if (!strcmp(arg, "--color-moved-ignore-space-at-eol"))
+ 		options->color_moved |= XDF_IGNORE_WHITESPACE_AT_EOL;
++	else if (!strcmp(arg, "--color-moved-ignore-space-delta"))
++		options->color_moved |= COLOR_MOVED_DELTA_WHITESPACES;
  	else if (!strcmp(arg, "--indent-heuristic"))
  		DIFF_XDL_SET(options, INDENT_HEURISTIC);
  	else if (!strcmp(arg, "--no-indent-heuristic"))
+@@ -5555,6 +5631,9 @@ static void diff_flush_patch_all_file_pairs(struct diff_options *o)
+ 			hashmap_init(&del_lines, moved_entry_cmp, o, 0);
+ 			hashmap_init(&add_lines, moved_entry_cmp, o, 0);
+ 
++			if (o->color_moved & COLOR_MOVED_DELTA_WHITESPACES)
++				o->color_moved |= XDF_IGNORE_WHITESPACE;
++
+ 			add_lines_to_move_detection(o, &add_lines, &del_lines);
+ 			mark_color_as_moved(o, &add_lines, &del_lines);
+ 			if (o->color_moved & COLOR_MOVED_DIMMED_BLOCKS)
+diff --git a/diff.h b/diff.h
+index 9542017986..b8c0cf1232 100644
+--- a/diff.h
++++ b/diff.h
+@@ -212,6 +212,7 @@ struct diff_options {
+ 	#define COLOR_MOVED_FIND_BLOCKS		(1 << 1)
+ 	/* XDF_WHITESPACE_FLAGS regarding block detection are set at 2, 3, 4 */
+ 
++	#define COLOR_MOVED_DELTA_WHITESPACES	(1 << 22)
+ 	#define COLOR_MOVED_DIMMED_BLOCKS	(1 << 23)
+ 
+ 	#define COLOR_MOVED_DEFAULT (COLOR_MOVED_ENABLED | COLOR_MOVED_FIND_BLOCKS)
 diff --git a/t/t4015-diff-whitespace.sh b/t/t4015-diff-whitespace.sh
-index 17df491a3a..38aaf4c46c 100755
+index 38aaf4c46c..246ccadf9b 100755
 --- a/t/t4015-diff-whitespace.sh
 +++ b/t/t4015-diff-whitespace.sh
-@@ -1395,7 +1395,10 @@ test_expect_success 'move detection ignoring whitespace ' '
- 	line 4
- 	line 5
- 	EOF
--	git diff HEAD --no-renames --color-moved --color |
-+	git diff HEAD --no-renames --color-moved --color \
-+		--color-moved-no-ignore-all-space \
-+		--color-moved-no-ignore-space-change \
-+		--color-moved-no-ignore-space-at-eol |
- 		grep -v "index" |
- 		test_decode_color >actual &&
- 	cat <<-\EOF >expected &&
-@@ -1419,7 +1422,10 @@ test_expect_success 'move detection ignoring whitespace ' '
- 	EOF
- 	test_cmp expected actual &&
- 
--	git diff HEAD --no-renames -w --color-moved --color |
-+	git diff HEAD --no-renames --color-moved --color \
-+		--color-moved-ignore-all-space \
-+		--color-moved-no-ignore-space-change \
-+		--color-moved-no-ignore-space-at-eol |
- 		grep -v "index" |
- 		test_decode_color >actual &&
- 	cat <<-\EOF >expected &&
-@@ -1459,7 +1465,10 @@ test_expect_success 'move detection ignoring whitespace changes' '
- 	line 5
- 	EOF
- 
--	git diff HEAD --no-renames --color-moved --color |
-+	git diff HEAD --no-renames --color-moved --color \
-+		--color-moved-no-ignore-all-space \
-+		--color-moved-no-ignore-space-change \
-+		--color-moved-no-ignore-space-at-eol |
- 		grep -v "index" |
- 		test_decode_color >actual &&
- 	cat <<-\EOF >expected &&
-@@ -1483,7 +1492,10 @@ test_expect_success 'move detection ignoring whitespace changes' '
- 	EOF
- 	test_cmp expected actual &&
- 
--	git diff HEAD --no-renames -b --color-moved --color |
-+	git diff HEAD --no-renames --color-moved --color \
-+		--color-moved-no-ignore-all-space \
-+		--color-moved-no-ignore-space-at-eol \
-+		--color-moved-ignore-space-change |
- 		grep -v "index" |
- 		test_decode_color >actual &&
- 	cat <<-\EOF >expected &&
-@@ -1526,7 +1538,10 @@ test_expect_success 'move detection ignoring whitespace at eol' '
- 	# avoid cluttering the output with complaints about our eol whitespace
- 	test_config core.whitespace -blank-at-eol &&
- 
--	git diff HEAD --no-renames --color-moved --color |
-+	git diff HEAD --no-renames --color-moved --color \
-+		--color-moved-no-ignore-all-space \
-+		--color-moved-no-ignore-space-change \
-+		--color-moved-no-ignore-space-at-eol |
- 		grep -v "index" |
- 		test_decode_color >actual &&
- 	cat <<-\EOF >expected &&
-@@ -1550,7 +1565,10 @@ test_expect_success 'move detection ignoring whitespace at eol' '
- 	EOF
- 	test_cmp expected actual &&
- 
--	git diff HEAD --no-renames --ignore-space-at-eol --color-moved --color |
-+	git diff HEAD --no-renames --color-moved --color \
-+		--color-moved-no-ignore-all-space \
-+		--color-moved-no-ignore-space-change \
-+		--color-moved-ignore-space-at-eol |
- 		grep -v "index" |
- 		test_decode_color >actual &&
- 	cat <<-\EOF >expected &&
-@@ -1722,7 +1740,125 @@ test_expect_success 'move detection with submodules' '
- 
- 	# nor did we mess with it another way
- 	git diff --submodule=diff --color | test_decode_color >expect &&
--	test_cmp expect decoded_actual
-+	test_cmp expect decoded_actual &&
-+	rm -rf bananas &&
-+	git submodule deinit bananas
-+'
-+
-+test_expect_success 'move detection only ignores white spaces' '
-+	git reset --hard &&
-+	q_to_tab <<-\EOF >function.c &&
-+	int func()
-+	{
-+	Qif (foo) {
-+	QQ// this part of the function
-+	QQ// function will be very long
-+	QQ// indeed. We must exceed both
-+	QQ// per-line and number of line
-+	QQ// minimums
-+	QQ;
-+	Q}
-+	Qbaz();
-+	Qbar();
-+	Q// more unrelated stuff
-+	}
-+	EOF
-+	git add function.c &&
-+	git commit -m "add function.c" &&
-+	q_to_tab <<-\EOF >function.c &&
-+	int do_foo()
-+	{
-+	Q// this part of the function
-+	Q// function will be very long
-+	Q// indeed. We must exceed both
-+	Q// per-line and number of line
-+	Q// minimums
-+	Q;
-+	}
-+
-+	int func()
-+	{
-+	Qif (foo)
-+	QQdo_foo();
-+	Qbaz();
-+	Qbar();
-+	Q// more unrelated stuff
-+	}
-+	EOF
-+
-+	# Make sure we get a different diff using -w ("moved function header")
-+	git diff --color --color-moved -w \
-+		--color-moved-no-ignore-all-space \
-+		--color-moved-no-ignore-space-change \
-+		--color-moved-no-ignore-space-at-eol |
-+		grep -v "index" |
-+		test_decode_color >actual &&
-+	q_to_tab <<-\EOF >expected &&
-+	<BOLD>diff --git a/function.c b/function.c<RESET>
-+	<BOLD>--- a/function.c<RESET>
-+	<BOLD>+++ b/function.c<RESET>
-+	<CYAN>@@ -1,6 +1,5 @@<RESET>
-+	<BOLD;MAGENTA>-int func()<RESET>
-+	<GREEN>+<RESET><GREEN>int do_foo()<RESET>
-+	 {<RESET>
-+	<RED>-	if (foo) {<RESET>
-+	 Q// this part of the function<RESET>
-+	 Q// function will be very long<RESET>
-+	 Q// indeed. We must exceed both<RESET>
-+	<CYAN>@@ -8,6 +7,11 @@<RESET> <RESET>int func()<RESET>
-+	 Q// minimums<RESET>
-+	 Q;<RESET>
-+	 }<RESET>
-+	<GREEN>+<RESET>
-+	<BOLD;CYAN>+<RESET><BOLD;CYAN>int func()<RESET>
-+	<GREEN>+<RESET><GREEN>{<RESET>
-+	<GREEN>+<RESET>Q<GREEN>if (foo)<RESET>
-+	<GREEN>+<RESET>QQ<GREEN>do_foo();<RESET>
-+	 Qbaz();<RESET>
-+	 Qbar();<RESET>
-+	 Q// more unrelated stuff<RESET>
-+	EOF
-+	test_cmp expected actual &&
-+
-+	# And now ignoring white space only in the move detection
-+	git diff --color --color-moved \
-+		--color-moved-ignore-all-space \
-+		--color-moved-ignore-space-change \
-+		--color-moved-ignore-space-at-eol |
-+		grep -v "index" |
-+		test_decode_color >actual &&
-+	q_to_tab <<-\EOF >expected &&
-+	<BOLD>diff --git a/function.c b/function.c<RESET>
-+	<BOLD>--- a/function.c<RESET>
-+	<BOLD>+++ b/function.c<RESET>
-+	<CYAN>@@ -1,13 +1,17 @@<RESET>
-+	<GREEN>+<RESET><GREEN>int do_foo()<RESET>
-+	<GREEN>+<RESET><GREEN>{<RESET>
-+	<BOLD;CYAN>+<RESET>Q<BOLD;CYAN>// this part of the function<RESET>
-+	<BOLD;CYAN>+<RESET>Q<BOLD;CYAN>// function will be very long<RESET>
-+	<BOLD;CYAN>+<RESET>Q<BOLD;CYAN>// indeed. We must exceed both<RESET>
-+	<BOLD;CYAN>+<RESET>Q<BOLD;CYAN>// per-line and number of line<RESET>
-+	<BOLD;CYAN>+<RESET>Q<BOLD;CYAN>// minimums<RESET>
-+	<BOLD;CYAN>+<RESET>Q<BOLD;CYAN>;<RESET>
-+	<BOLD;CYAN>+<RESET><BOLD;CYAN>}<RESET>
-+	<GREEN>+<RESET>
-+	 int func()<RESET>
-+	 {<RESET>
-+	<RED>-Qif (foo) {<RESET>
-+	<BOLD;MAGENTA>-QQ// this part of the function<RESET>
-+	<BOLD;MAGENTA>-QQ// function will be very long<RESET>
-+	<BOLD;MAGENTA>-QQ// indeed. We must exceed both<RESET>
-+	<BOLD;MAGENTA>-QQ// per-line and number of line<RESET>
-+	<BOLD;MAGENTA>-QQ// minimums<RESET>
-+	<BOLD;MAGENTA>-QQ;<RESET>
-+	<BOLD;MAGENTA>-Q}<RESET>
-+	<GREEN>+<RESET>Q<GREEN>if (foo)<RESET>
-+	<GREEN>+<RESET>QQ<GREEN>do_foo();<RESET>
-+	 Qbaz();<RESET>
-+	 Qbar();<RESET>
-+	 Q// more unrelated stuff<RESET>
-+	EOF
-+	test_cmp expected actual
+@@ -1861,4 +1861,195 @@ test_expect_success 'move detection only ignores white spaces' '
+ 	test_cmp expected actual
  '
  
++test_expect_success 'compare whitespace delta across moved blocks' '
++
++	git reset --hard &&
++	q_to_tab <<-\EOF >text.txt &&
++	QIndented
++	QText
++	Qacross
++	Qfive
++	Qlines
++	QBut!
++	Qthis
++	QQone
++	Qline
++	QQdid
++	Qnot
++	QQadjust
++	EOF
++
++	git add text.txt &&
++	git commit -m "add text.txt" &&
++
++	q_to_tab <<-\EOF >text.txt &&
++	QQIndented
++	QQText
++	QQacross
++	QQfive
++	QQlines
++	QQQBut!
++	QQthis
++	QQQone
++	QQline
++	QQQdid
++	QQnot
++	QQQadjust
++	EOF
++
++	git diff --color --color-moved-ignore-space-delta |
++		grep -v "index" |
++		test_decode_color >actual &&
++
++	q_to_tab <<-\EOF >expected &&
++	<BOLD>diff --git a/text.txt b/text.txt<RESET>
++	<BOLD>--- a/text.txt<RESET>
++	<BOLD>+++ b/text.txt<RESET>
++	<CYAN>@@ -1,12 +1,12 @@<RESET>
++	<BOLD;MAGENTA>-QIndented<RESET>
++	<BOLD;MAGENTA>-QText<RESET>
++	<BOLD;MAGENTA>-Qacross<RESET>
++	<BOLD;MAGENTA>-Qfive<RESET>
++	<BOLD;MAGENTA>-Qlines<RESET>
++	<RED>-QBut!<RESET>
++	<BOLD;MAGENTA>-Qthis<RESET>
++	<BOLD;MAGENTA>-QQone<RESET>
++	<BOLD;MAGENTA>-Qline<RESET>
++	<BOLD;MAGENTA>-QQdid<RESET>
++	<BOLD;MAGENTA>-Qnot<RESET>
++	<BOLD;MAGENTA>-QQadjust<RESET>
++	<BOLD;YELLOW>+<RESET>QQ<BOLD;YELLOW>Indented<RESET>
++	<BOLD;YELLOW>+<RESET>QQ<BOLD;YELLOW>Text<RESET>
++	<BOLD;YELLOW>+<RESET>QQ<BOLD;YELLOW>across<RESET>
++	<BOLD;YELLOW>+<RESET>QQ<BOLD;YELLOW>five<RESET>
++	<BOLD;YELLOW>+<RESET>QQ<BOLD;YELLOW>lines<RESET>
++	<GREEN>+<RESET>QQQ<GREEN>But!<RESET>
++	<BOLD;YELLOW>+<RESET>QQ<BOLD;YELLOW>this<RESET>
++	<BOLD;YELLOW>+<RESET>QQQ<BOLD;YELLOW>one<RESET>
++	<BOLD;YELLOW>+<RESET>QQ<BOLD;YELLOW>line<RESET>
++	<BOLD;YELLOW>+<RESET>QQQ<BOLD;YELLOW>did<RESET>
++	<BOLD;YELLOW>+<RESET>QQ<BOLD;YELLOW>not<RESET>
++	<BOLD;YELLOW>+<RESET>QQQ<BOLD;YELLOW>adjust<RESET>
++	EOF
++
++	test_cmp expected actual
++'
++
++test_expect_success 'compare whitespace delta across moved blocks with multiple indentation levels' '
++	# alternative: "python programmers would love the move detection, too"
++
++	git reset --hard &&
++	q_to_tab <<-\EOF >test.py &&
++	class test:
++	Qdef f(x):
++	QQ"""
++	QQA simple python function
++	QQthat returns the square of a number
++	QQAlthough it may not be pythonic
++	QQ"""
++	QQdef g(x):
++	QQQ"""
++	QQQNested function that returns the same number
++	QQQWe just multiply by 1.0
++	QQQso we can write a comment about it
++	QQQas we need longer blocks
++	QQQ"""
++	QQQreturn 1.0 * x
++	QQ# Another comment for f(x)
++	QQ# also spanning multiple lines
++	QQ# to make a block
++	QQreturn g(x) * g(x)
++	Qdef h(x):
++	QQ# Another function unrelated to the previous
++	QQ# but building a block,
++	QQ# long enough to call it a block
++	QQreturn x * 1.0
++	EOF
++
++	git add test.py &&
++	git commit -m "add test.py" &&
++
++	q_to_tab <<-\EOF >test.py &&
++	class test:
++	Qdef h(x):
++	QQ# Another function unrelated to the previous
++	QQ# but building a block,
++	QQ# long enough to call it a block
++	QQreturn x * 1.0
++	def f(x):
++	Q"""
++	QA simple python function
++	Qthat returns the square of a number
++	QAlthough it may not be pythonic
++	Q"""
++	Qdef g(x):
++	QQ"""
++	QQNested function that returns the same number
++	QQWe just multiply by 1.0
++	QQso we can write a comment about it
++	QQas we need longer blocks
++	QQ"""
++	QQreturn 1.0 * x
++	Q# Another comment for f(x)
++	Q# also spanning multiple lines
++	Q# to make a block
++	Qreturn g(x) * g(x)
++	EOF
++
++	git diff --color --color-moved-ignore-space-delta |
++		grep -v "index" |
++		test_decode_color >actual &&
++
++	q_to_tab <<-\EOF >expected &&
++	<BOLD>diff --git a/test.py b/test.py<RESET>
++	<BOLD>--- a/test.py<RESET>
++	<BOLD>+++ b/test.py<RESET>
++	<CYAN>@@ -1,24 +1,24 @@<RESET>
++	 class test:<RESET>
++	<BOLD;MAGENTA>-Qdef f(x):<RESET>
++	<BOLD;MAGENTA>-QQ"""<RESET>
++	<BOLD;MAGENTA>-QQA simple python function<RESET>
++	<BOLD;MAGENTA>-QQthat returns the square of a number<RESET>
++	<BOLD;MAGENTA>-QQAlthough it may not be pythonic<RESET>
++	<BOLD;MAGENTA>-QQ"""<RESET>
++	<BOLD;MAGENTA>-QQdef g(x):<RESET>
++	<BOLD;MAGENTA>-QQQ"""<RESET>
++	<BOLD;MAGENTA>-QQQNested function that returns the same number<RESET>
++	<BOLD;MAGENTA>-QQQWe just multiply by 1.0<RESET>
++	<BOLD;MAGENTA>-QQQso we can write a comment about it<RESET>
++	<BOLD;MAGENTA>-QQQas we need longer blocks<RESET>
++	<BOLD;MAGENTA>-QQQ"""<RESET>
++	<BOLD;MAGENTA>-QQQreturn 1.0 * x<RESET>
++	<BOLD;MAGENTA>-QQ# Another comment for f(x)<RESET>
++	<BOLD;MAGENTA>-QQ# also spanning multiple lines<RESET>
++	<BOLD;MAGENTA>-QQ# to make a block<RESET>
++	<BOLD;MAGENTA>-QQreturn g(x) * g(x)<RESET>
++	 Qdef h(x):<RESET>
++	 QQ# Another function unrelated to the previous<RESET>
++	 QQ# but building a block,<RESET>
++	 QQ# long enough to call it a block<RESET>
++	 QQreturn x * 1.0<RESET>
++	<BOLD;CYAN>+<RESET><BOLD;CYAN>def f(x):<RESET>
++	<BOLD;CYAN>+<RESET>Q<BOLD;CYAN>"""<RESET>
++	<BOLD;CYAN>+<RESET>Q<BOLD;CYAN>A simple python function<RESET>
++	<BOLD;CYAN>+<RESET>Q<BOLD;CYAN>that returns the square of a number<RESET>
++	<BOLD;CYAN>+<RESET>Q<BOLD;CYAN>Although it may not be pythonic<RESET>
++	<BOLD;CYAN>+<RESET>Q<BOLD;CYAN>"""<RESET>
++	<BOLD;CYAN>+<RESET>Q<BOLD;CYAN>def g(x):<RESET>
++	<BOLD;CYAN>+<RESET>QQ<BOLD;CYAN>"""<RESET>
++	<BOLD;CYAN>+<RESET>QQ<BOLD;CYAN>Nested function that returns the same number<RESET>
++	<BOLD;CYAN>+<RESET>QQ<BOLD;CYAN>We just multiply by 1.0<RESET>
++	<BOLD;CYAN>+<RESET>QQ<BOLD;CYAN>so we can write a comment about it<RESET>
++	<BOLD;CYAN>+<RESET>QQ<BOLD;CYAN>as we need longer blocks<RESET>
++	<BOLD;CYAN>+<RESET>QQ<BOLD;CYAN>"""<RESET>
++	<BOLD;CYAN>+<RESET>QQ<BOLD;CYAN>return 1.0 * x<RESET>
++	<BOLD;CYAN>+<RESET>Q<BOLD;CYAN># Another comment for f(x)<RESET>
++	<BOLD;CYAN>+<RESET>Q<BOLD;CYAN># also spanning multiple lines<RESET>
++	<BOLD;CYAN>+<RESET>Q<BOLD;CYAN># to make a block<RESET>
++	<BOLD;CYAN>+<RESET>Q<BOLD;CYAN>return g(x) * g(x)<RESET>
++	EOF
++
++	test_cmp expected actual
++'
++
  test_done
 -- 
 2.17.0.484.g0c8726318c-goog
