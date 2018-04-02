@@ -1,47 +1,67 @@
-From: "Nichole" <Nicholeaggressive@earthlink.net>
-Subject: Damn, you can not stop premature ejaculation!
-Date: Wed, 21 Jun 2006 15:33:18 +0900
-Message-ID: <60012329923857.52124A3BB3@07KN2N>
-Mime-Version: 1.0
+From: "Nigel Matthews" <Keven_GeeHansenDubois@yahoo.com>
+Subject: Find sex-addicts in your area
+Date: Fri, 21 Jul 2006 16:39:03 -0500
+Message-ID: <36915624_611098_677048.iauuv@yahoo.com>
 Content-Type: text/plain;
-        charset="Windows-1252"
+	charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Wed Jun 21 08:36:38 2006
+X-From: git-owner@vger.kernel.org Fri Jul 21 22:39:12 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1FswKD-0005kx-DU
-	for gcvg-git@gmane.org; Wed, 21 Jun 2006 08:36:29 +0200
+	id 1G41m1-0004yB-DQ
+	for gcvg-git@gmane.org; Fri, 21 Jul 2006 22:39:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751199AbWFUGf4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 21 Jun 2006 02:35:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751999AbWFUGf4
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jun 2006 02:35:56 -0400
-Received: from [210.124.172.225] ([210.124.172.225]:4114 "EHLO HOPE21TH")
-	by vger.kernel.org with ESMTP id S1751199AbWFUGfz (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 21 Jun 2006 02:35:55 -0400
-To: <git@vger.kernel.org>
-X-Mailer: Microsoft Office Outlook, Build 11.0.5510
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1106
-Thread-Index: MqpTr3Z14AlzRn5iAIiGmpRmlhFdzjuSY5lO
+	id S1751149AbWGUUjA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 21 Jul 2006 16:39:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751163AbWGUUi7
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Jul 2006 16:38:59 -0400
+Received: from VDSL-130-13-35-25.PHNX.QWEST.NET ([130.13.35.25]:46856 "HELO
+	441F7A18") by vger.kernel.org with SMTP id S1751149AbWGUUi5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 21 Jul 2006 16:38:57 -0400
+Received: from 74.131.226.208.in-addr.arpa.yahoo.com (HELO localhost.localdomain) ([130.13.35.25])
+          (envelope-sender <Keven_GeeHansenDubois@yahoo.com>)
+          by email-0.yahoo.com (qmail-ldap-1.03) with SMTP
+          for <git@vger.kernel.org>; Fri, 21 Jul 2006 16:39:03 -0500
+X-Mailer: iGMail [www.ig.com.br]
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 10.2 points;
- *  0.1 IMPOTENCE BODY: Impotence cure
- * -2.0 BAYES_20 BODY: Bayesian spam probability is 5 to 20%
- *      [score: 0.1443]
+X-Spam-Report: 9.5 points;
+ *  0.0 COMPLETELY_FREE BODY: No such thing as a free lunch (2)
+ *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
+ *      [score: 0.5000]
+ *  0.3 RCVD_IN_SORBS_SOCKS RBL: SORBS: sender is open SOCKS proxy server
+ *      [130.13.35.25 listed in dnsbl.sorbs.net]
  *  3.0 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
- *      [Blocked - see <http://www.spamcop.net/bl.shtml?210.124.172.225>]
- *  0.4 URIBL_AB_SURBL Contains an URL listed in the AB SURBL blocklist
- *      [URIs: magpills.com]
- *  1.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
- *      [URIs: magpills.com]
+ *      [Blocked - see <http://www.spamcop.net/bl.shtml?130.13.35.25>]
+ *  0.4 RCVD_IN_NJABL_PROXY RBL: NJABL: sender is an open proxy
+ *      [130.13.35.25 listed in combined.njabl.org]
+ *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
+ *      [URIs: hookupsarefun.com]
  *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
- *      [URIs: magpills.com]
- *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
- *      [URIs: magpills.com]
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/22236>
+ *      [URIs: hookupsarefun.com]
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24058>
 
-Hey, friend, I see you are very upset!Buy Extra-Time and forget your fears! http://magpills.com/gall/get I felt it myself when my girlfriend had left me!It’s possible because I always use Extra-Time!It seems you wish to have sex longer, but without any results…
+100% FREE Adult Personals
+
+YOU NEED TO GET LAID!!!!!!!!!!!
+
+We can help.
+
+http://hookupsarefun.com/cutiepie/dating/
+
+Real profiles of people in your area that 
+just want sex!  
+
+100% FREE!!!!!
+
+http://hookupsarefun.com/cutiepie/dating/
+
+--------------------------------------------
+
+
+no plz
+http://hookupsarefun.com/rr2.html
