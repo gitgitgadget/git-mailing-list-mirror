@@ -7,242 +7,81 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5E5A61F404
-	for <e@80x24.org>; Mon,  2 Apr 2018 21:05:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1C46F1F404
+	for <e@80x24.org>; Mon,  2 Apr 2018 21:06:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754430AbeDBVFs (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Apr 2018 17:05:48 -0400
-Received: from mail-wm0-f49.google.com ([74.125.82.49]:55827 "EHLO
-        mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754415AbeDBVFr (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Apr 2018 17:05:47 -0400
-Received: by mail-wm0-f49.google.com with SMTP id b127so27694397wmf.5
-        for <git@vger.kernel.org>; Mon, 02 Apr 2018 14:05:46 -0700 (PDT)
+        id S1754481AbeDBVG0 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Apr 2018 17:06:26 -0400
+Received: from mail-wr0-f179.google.com ([209.85.128.179]:42289 "EHLO
+        mail-wr0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753218AbeDBVGY (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Apr 2018 17:06:24 -0400
+Received: by mail-wr0-f179.google.com with SMTP id s18so15621198wrg.9
+        for <git@vger.kernel.org>; Mon, 02 Apr 2018 14:06:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Mkn/GGp9DsFJbCz3XvwHMWqMMsZ79nOX5MGrBVXGIaY=;
-        b=GszPJllOA4LVD1z08uFEU5u9r8GtgENAhPynSJj0Eh3nF9r+hPXRqPQ0kNm1b8H7sx
-         9j9H4olFcf6VCyZO0oDIRmwsWdw0DaZbj7SpkKnWgLLHJ09N/EBcLjljyBUclCdo5h6z
-         ikzjfvos9fmfJvIS1t1OEMuiPSAdwSyEWKXSgR71wt6umRdbK63392oC7Xbb3m7sO6hx
-         3jhjI7lkhInrstB4I0EqmNB5LwTkATZdYvmGWRVFOGVgKPQ/RAh+EFXjnNy/RcJHT38a
-         MJ8wxsjVj3ABnS+4Mlv9I0bWhC7tIMTh0SV0KlifMi2UMfHAv+Ic2PnXsFGyCmH8qcWB
-         xFvw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=ElxWtW7t6bYTDDvRuwZt+8TB5yJwIYrJGig0xRBCpxI=;
+        b=uDc+e/are4X2U7kiQSrmywHZpiBmI98IFiVo3IupkmJmBC9hZl0jXyC7yzIJdkFYxF
+         to5N8PsI7DXWYBKdwYXAFpdXzh88ivQDXSi2iD5Pllgv84MHfb7oy8EGjlnQgvqMT27x
+         uZExcCF0BnFdAQuc49Pis6Sa+eJyWYbhWnkX2krWy9PoMdPoC9YOusSadinYI4bCv+qo
+         tWauuYf9dyLKgrTc/3FMGc1ITcKCmnXGq7lcRwjIy2XheJaCfLDQ3Fa1yYzlisWS2tki
+         GCnkxxnLvEPJILVK6UxL6g8amIRIwp4s4dwM47E6NsQbpoCudZTmWNwS/66wfUCisvQu
+         jkxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=Mkn/GGp9DsFJbCz3XvwHMWqMMsZ79nOX5MGrBVXGIaY=;
-        b=qVC1Cy6m3XXzDI+XPP605Uj6rKfTZC+ahjMc6xcWc/zsrFdVpp799uACrga1e5SaOE
-         z/7+lAdlodXCwjYfjHDX1iWcFoLiUhwIYbqNuUbemOdvdoAKeAYTn69M72cStGzwp3w3
-         2du1jw1Dnr8IIiv6hYj34Z80ZprG5QCFpltGoSkZSZEdU+T75QJ3ZoN7LSfcdQXINiJZ
-         LIF+1jmuE2vtQqhOJP4dQ22IF3rPOTPWz9pNExPH0fRT4ImiXIYu79Jgldb4BA33/TF5
-         0SPMyAuIKrMonH+Bx5t+847fvyh7eIPen/iFvHuX6DD8ismooVTeinr9YpO+94kkPVOr
-         K/rA==
-X-Gm-Message-State: ALQs6tCUPNNpBfNzIWEAdl7/1CXhNnNKDYDsxkrt8R8MnPo2btlEmgpF
-        hlbCdXaGag9eDLSAhl16HBonXsK4
-X-Google-Smtp-Source: AIpwx486LL4BY32OEflclrct91IAITacEvsLtddw+Yzdm0hmqIm6H+R5nJLBBJV8XOpX1PbiZNh5JA==
-X-Received: by 10.46.153.13 with SMTP id v13mr6537084lji.145.1522703145775;
-        Mon, 02 Apr 2018 14:05:45 -0700 (PDT)
-Received: from localhost.localdomain (c-5eea2412-74736162.cust.telenor.se. [94.234.36.18])
-        by smtp.gmail.com with ESMTPSA id o2sm189712lja.86.2018.04.02.14.05.44
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 02 Apr 2018 14:05:45 -0700 (PDT)
-From:   Harald Nordgren <haraldnordgren@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Harald Nordgren <haraldnordgren@gmail.com>
-Subject: [PATCH v4] ls-remote: create '--sort' option
-Date:   Mon,  2 Apr 2018 23:05:23 +0200
-Message-Id: <20180402210523.83293-1-haraldnordgren@gmail.com>
-X-Mailer: git-send-email 2.14.3 (Apple Git-98)
-In-Reply-To: <20180402005248.52418-1-haraldnordgren@gmail.com>
-References: <20180402005248.52418-1-haraldnordgren@gmail.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=ElxWtW7t6bYTDDvRuwZt+8TB5yJwIYrJGig0xRBCpxI=;
+        b=dAThExFAnJ4jBbGGwTUIRxffnACavRs6H4B6xFPjx5FtJaC1jx09kbd6vtY0qucDka
+         Yxh0jbwLiJlIGNepxgOkaTJ0C/mA9D3Exdwg+fuwIsqe8mNGje6i2SZWZ4CUltXQWPlT
+         csPRDytGPYPLvy7hXsVyZW7yuij/q/9JnzXvQtvWs4hGd7rBTbUSKWW55mdbj7zWEHuj
+         JtuNfrQT+Sqg9g4yDzJ+ulf2kG77SA4/pqWNSoNiwFNRp3bxG1yHZeIH8+iWos9CdVhM
+         5EbAwJ8JrftbGS8C7Y7b7+1RmVjtuGFN0VAJBi8psXdM/3moKAvtPtnAMq1NtulEXIa1
+         qYKg==
+X-Gm-Message-State: AElRT7HThgcU1chhZuGfFWUUt9icrHVNf/d8vSEg6clc+Bhh2HdueNHi
+        5plKLV7a5zo9KUVXeso6iO0=
+X-Google-Smtp-Source: AIpwx4/GsPgiaMdPxaYYe0iyHMTdeshsnRvJGH4eGYYDCqEm8/oXLpXgkh59V1Q1QwsCzxReIRUo5g==
+X-Received: by 10.223.208.146 with SMTP id y18mr7083832wrh.54.1522703183122;
+        Mon, 02 Apr 2018 14:06:23 -0700 (PDT)
+Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
+        by smtp.gmail.com with ESMTPSA id b34sm2773151wra.21.2018.04.02.14.06.22
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 02 Apr 2018 14:06:22 -0700 (PDT)
+Date:   Mon, 2 Apr 2018 23:09:52 +0100
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Subject: Re: [PATCH v6 2/6] reset: introduce show-new-head-line option
+Message-ID: <20180402220952.GH2629@hank>
+References: <20180325134947.25828-1-t.gummerer@gmail.com>
+ <20180331151804.30380-1-t.gummerer@gmail.com>
+ <20180331151804.30380-3-t.gummerer@gmail.com>
+ <xmqqsh8dxs86.fsf@gitster-ct.c.googlers.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqsh8dxs86.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Create a '--sort' option for ls-remote, based on the one from
-for-each-ref. This e.g. allows ref names to be sorted by version
-semantics, so that v1.2 is sorted before v1.10.
+On 04/02, Junio C Hamano wrote:
+> Thomas Gummerer <t.gummerer@gmail.com> writes:
+> 
+> > +test_expect_success 'reset --no-show-new-head-line suppresses "HEAD is now at" output' '
+> > +	git reset --hard --no-show-new-head-line HEAD >actual &&
+> > +	! grep "HEAD is now at" <actual
+> > +'
+> 
+> As builtin/reset.c::print_new_head_line() does this:
+> 
+> 	printf(_("HEAD is now at %s"), hex);
+> 
+> this needs to use "test_i18ngrep !" instead, no?
 
-Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
----
- Documentation/git-ls-remote.txt | 12 +++++++++++-
- builtin/ls-remote.c             | 27 +++++++++++++++++++++++++--
- t/t5512-ls-remote.sh            | 41 ++++++++++++++++++++++++++++++++++++++++-
- 3 files changed, 76 insertions(+), 4 deletions(-)
-
-diff --git a/Documentation/git-ls-remote.txt b/Documentation/git-ls-remote.txt
-index 5f2628c8f..17fae7218 100644
---- a/Documentation/git-ls-remote.txt
-+++ b/Documentation/git-ls-remote.txt
-@@ -10,7 +10,7 @@ SYNOPSIS
- --------
- [verse]
- 'git ls-remote' [--heads] [--tags] [--refs] [--upload-pack=<exec>]
--	      [-q | --quiet] [--exit-code] [--get-url]
-+	      [-q | --quiet] [--exit-code] [--get-url] [--sort=<key>]
- 	      [--symref] [<repository> [<refs>...]]
- 
- DESCRIPTION
-@@ -60,6 +60,16 @@ OPTIONS
- 	upload-pack only shows the symref HEAD, so it will be the only
- 	one shown by ls-remote.
- 
-+--sort=<key>::
-+	Sort based on the key given.  Prefix `-` to sort in
-+	descending order of the value. You may use the --sort=<key> option
-+	multiple times, in which case the last key becomes the primary
-+	key. Also supports "version:refname" or "v:refname" (tag
-+	names are treated as versions). The "version:refname" sort
-+	order can also be affected by the "versionsort.suffix"
-+	configuration variable.
-+	The keys supported are the same as those in `git for-each-ref`.
-+
- <repository>::
- 	The "remote" repository to query.  This parameter can be
- 	either a URL or the name of a remote (see the GIT URLS and
-diff --git a/builtin/ls-remote.c b/builtin/ls-remote.c
-index 540d56429..5521c72f4 100644
---- a/builtin/ls-remote.c
-+++ b/builtin/ls-remote.c
-@@ -1,6 +1,7 @@
- #include "builtin.h"
- #include "cache.h"
- #include "transport.h"
-+#include "ref-filter.h"
- #include "remote.h"
- 
- static const char * const ls_remote_usage[] = {
-@@ -47,6 +48,8 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
- 	struct remote *remote;
- 	struct transport *transport;
- 	const struct ref *ref;
-+	struct ref_array array;
-+	static struct ref_sorting *sorting = NULL, **sorting_tail = &sorting;
- 
- 	struct option options[] = {
- 		OPT__QUIET(&quiet, N_("do not print remote URL")),
-@@ -60,6 +63,8 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
- 		OPT_BIT(0, "refs", &flags, N_("do not show peeled tags"), REF_NORMAL),
- 		OPT_BOOL(0, "get-url", &get_url,
- 			 N_("take url.<base>.insteadOf into account")),
-+		OPT_CALLBACK(0 , "sort", sorting_tail, N_("key"),
-+			     N_("field name to sort on"), &parse_opt_ref_sorting),
- 		OPT_SET_INT_F(0, "exit-code", &status,
- 			      N_("exit with exit code 2 if no matching refs are found"),
- 			      2, PARSE_OPT_NOCOMPLETE),
-@@ -68,6 +73,8 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
- 		OPT_END()
- 	};
- 
-+	memset(&array, 0, sizeof(array));
-+
- 	argc = parse_options(argc, argv, prefix, options, ls_remote_usage,
- 			     PARSE_OPT_STOP_AT_NON_OPTION);
- 	dest = argv[0];
-@@ -108,9 +115,25 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
- 			continue;
- 		if (!tail_match(pattern, ref->name))
- 			continue;
-+
-+		struct ref_array_item *item;
-+		FLEX_ALLOC_MEM(item, refname, ref->name, strlen(ref->name));
-+		item->symref = ref->symref;
-+		item->objectname = ref->old_oid;
-+
-+		REALLOC_ARRAY(array.items, array.nr + 1);
-+		array.items[array.nr++] = item;
-+	}
-+
-+	if (sorting) {
-+		ref_array_sort(sorting, &array);
-+	}
-+
-+	for (int i = 0; i < array.nr; i++) {
-+		const struct ref_array_item *ref = array.items[i];
- 		if (show_symref_target && ref->symref)
--			printf("ref: %s\t%s\n", ref->symref, ref->name);
--		printf("%s\t%s\n", oid_to_hex(&ref->old_oid), ref->name);
-+			printf("ref: %s\t%s\n", ref->symref, ref->refname);
-+		printf("%s\t%s\n", oid_to_hex(&ref->objectname), ref->refname);
- 		status = 0; /* we found something */
- 	}
- 	return status;
-diff --git a/t/t5512-ls-remote.sh b/t/t5512-ls-remote.sh
-index 02106c922..66370cd88 100755
---- a/t/t5512-ls-remote.sh
-+++ b/t/t5512-ls-remote.sh
-@@ -10,6 +10,9 @@ test_expect_success setup '
- 	test_tick &&
- 	git commit -m initial &&
- 	git tag mark &&
-+	git tag mark1.1 &&
-+	git tag mark1.2 &&
-+	git tag mark1.10 &&
- 	git show-ref --tags -d | sed -e "s/ /	/" >expected.tag &&
- 	(
- 		echo "$(git rev-parse HEAD)	HEAD"
-@@ -39,6 +42,39 @@ test_expect_success 'ls-remote self' '
- 	test_cmp expected.all actual
- '
- 
-+test_expect_success 'ls-remote --sort="version:refname" --tags self' '
-+	cat >expect <<-\EOF &&
-+	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	refs/tags/mark
-+	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	refs/tags/mark1.1
-+	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	refs/tags/mark1.2
-+	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	refs/tags/mark1.10
-+	EOF
-+	git ls-remote --sort="version:refname" --tags self >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'ls-remote --sort="-version:refname" --tags self' '
-+	cat >expect <<-\EOF &&
-+	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	refs/tags/mark1.10
-+	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	refs/tags/mark1.2
-+	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	refs/tags/mark1.1
-+	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	refs/tags/mark
-+	EOF
-+	git ls-remote --sort="-version:refname" --tags self >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'ls-remote --sort="-refname" --tags self' '
-+	cat >expect <<-\EOF &&
-+	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	refs/tags/mark1.2
-+	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	refs/tags/mark1.10
-+	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	refs/tags/mark1.1
-+	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	refs/tags/mark
-+	EOF
-+	git ls-remote --sort="-refname" --tags self >actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'dies when no remote specified and no default remotes found' '
- 	test_must_fail git ls-remote
- '
-@@ -131,7 +167,7 @@ test_expect_success 'Report no-match with --exit-code' '
- 
- test_expect_success 'Report match with --exit-code' '
- 	git ls-remote --exit-code other.git "refs/tags/*" >actual &&
--	git ls-remote . tags/mark >expect &&
-+	git ls-remote . tags/mark* >expect &&
- 	test_cmp expect actual
- '
- 
-@@ -178,6 +214,9 @@ test_expect_success 'ls-remote --symref' '
- 	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	refs/remotes/origin/HEAD
- 	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	refs/remotes/origin/master
- 	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	refs/tags/mark
-+	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	refs/tags/mark1.1
-+	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	refs/tags/mark1.10
-+	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	refs/tags/mark1.2
- 	EOF
- 	git ls-remote --symref >actual &&
- 	test_cmp expect actual
--- 
-2.14.3 (Apple Git-98)
-
+Ah yes you're right.  Thanks for catching this.
