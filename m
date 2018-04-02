@@ -2,250 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 74F851F404
-	for <e@80x24.org>; Mon,  2 Apr 2018 22:11:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 818961F404
+	for <e@80x24.org>; Mon,  2 Apr 2018 22:49:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754526AbeDBWLq (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Apr 2018 18:11:46 -0400
-Received: from mail-wm0-f53.google.com ([74.125.82.53]:35425 "EHLO
-        mail-wm0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754430AbeDBWLp (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Apr 2018 18:11:45 -0400
-Received: by mail-wm0-f53.google.com with SMTP id r82so30589199wme.0
-        for <git@vger.kernel.org>; Mon, 02 Apr 2018 15:11:44 -0700 (PDT)
+        id S1754746AbeDBWtH (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Apr 2018 18:49:07 -0400
+Received: from mail-pl0-f51.google.com ([209.85.160.51]:46896 "EHLO
+        mail-pl0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754709AbeDBWtG (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Apr 2018 18:49:06 -0400
+Received: by mail-pl0-f51.google.com with SMTP id 59-v6so3431778plc.13
+        for <git@vger.kernel.org>; Mon, 02 Apr 2018 15:49:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=QXrVwr+CD/Y8XPObuBh+hQb/gMNZT6xJqR9UtHTLzTQ=;
-        b=VrwxeuGSgQohbDgoaRNkjyLuIA5hqO2HbpBECKA/rv0wjJSusgPFdSKZABgUj07ait
-         1AcvqqEcLSZMeWkfXFUgvbToWD208TuePbdu2gcY/MGlfvXKqOt0dcfxwWNJ6wZH9mF3
-         ++WQ8z12WPZK4lcX3hWxfHBBo5QwibPWUH1XUe3cQMyOZ0pMi6z/WhQFiZ0zYCNOAAem
-         NVDrReg3ZZx5gHDZqMFlFjsfeDLHPVS+7Jut/lXft76WoQQjnyD/r81BhMwJReyISLvM
-         NcR28O9Fh2FvYjv5eTvWRj/TxyyTrfYusZ4cBhQ2WJNZIuhFH+aRaJeKf8Eeqim4dOD0
-         NtUQ==
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=9kybc9VI9rshQSr3+DIFXR90/lUZ10hWCzZN2qcQdQM=;
+        b=dQstrzXkAf74UpUSfn9dyTsbewLeI/z00rBF29aNlAKDJH4bCKt7GSrUXzPUAaSwpE
+         oXsV+kgQVFEnJ+o1ZkJJE2VcMs2ia+Mubg997TG8QdH18/S5ExR9FZm323qS6JUGekSM
+         gNHwqsEu5L1fTmPj+IpLuqwwsvnR8J+Wp9OgSOgKxpTUHYERieHktGEr9ljLSp/4BF97
+         k8YoA++9aBaZVlUqIwfMMrUOvPNekS1hBrpChBRzq2t0Io/JrRUjTdkjLa/281N0hUkQ
+         xlBS4BRU9Xdtt7W9Q8+U5ao65rw8/AE7tza+05jr1SneFcrdHRjxT1LWBpxu9B2m8MEI
+         39Lw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=QXrVwr+CD/Y8XPObuBh+hQb/gMNZT6xJqR9UtHTLzTQ=;
-        b=Zjh85anvl8F+IeyoOw/qv5i3nT57N1FUS4UWC2E9OYXYsL2WU7o2jEvL/nIlHevfJD
-         N4FsrTh3pX/lIL0OVWEB3G/Zn6Vu6HVG3DPfIZX/S2ndOHp3jNyOR7tYks7csnn89StL
-         eCbaSwWnV47S4LM/SSuFxme87+AA5/z/0SB7sUTqaCIAmestvoQXU5vinNqSLfN+hWde
-         s48rKEOCy7pPbX7FbX35aHM8T7JMXY7Lek8cZrJ022hT1yzJqB9lCoKmrB7+iy3lDGWR
-         j1ZAEAnWwf7wZ3cKKCs8ma07++C+tv26eIRBdGlFv0XME6UAFapiOLYwR83b2yNSTQz/
-         Z/Kg==
-X-Gm-Message-State: AElRT7HFa30D9htri7gk0wIxoEo6Bsfd5CiTbM16FYW1xa8YWMr8XxKq
-        DXLls9QP3Cpz1jUpEqvXPpgHq7Ke
-X-Google-Smtp-Source: AIpwx4/AUYSfY9croUez30vOCrzqjEIR0LzvCXikYL5v4XygOEPfZ0ZjeuxnDZv1mpmqL+wvY6k+IQ==
-X-Received: by 10.46.134.129 with SMTP id l1mr7177035lji.23.1522707103787;
-        Mon, 02 Apr 2018 15:11:43 -0700 (PDT)
-Received: from localhost.localdomain (c-5eea2412-74736162.cust.telenor.se. [94.234.36.18])
-        by smtp.gmail.com with ESMTPSA id u12sm209202lji.87.2018.04.02.15.11.42
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 02 Apr 2018 15:11:43 -0700 (PDT)
-From:   Harald Nordgren <haraldnordgren@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Harald Nordgren <haraldnordgren@gmail.com>
-Subject: [PATCH v5] ls-remote: create '--sort' option
-Date:   Tue,  3 Apr 2018 00:11:24 +0200
-Message-Id: <20180402221124.88049-1-haraldnordgren@gmail.com>
-X-Mailer: git-send-email 2.14.3 (Apple Git-98)
-In-Reply-To: <CAHwyqnV8tB63gQFVJhyNtr304Uv1TwWvYiX+3wuU0fDFhOphgg@mail.gmail.com>
-References: <CAHwyqnV8tB63gQFVJhyNtr304Uv1TwWvYiX+3wuU0fDFhOphgg@mail.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=9kybc9VI9rshQSr3+DIFXR90/lUZ10hWCzZN2qcQdQM=;
+        b=dzG8A/raxB28VNijmJBmHwpv1VYl5Y03mVdvaPG/wGC+FIXAZmJJiOmWVd9RD5Wfyq
+         T/VQlGC7oBQp3NL6HY62qFsOegj2cN6dqMfo0gyWb/NIYzSm1NtPf06IJUntq4hihlgf
+         XX7yREsogbK3yZA5gAWEGH0+/0moGntxT2anpOi62ufrX1PYHpyqzEL5kdZ/rCANTgvl
+         DdC8CVnDGMbygROVWzC36gc6xwA4u1p7YBU/rBTUpI7IM09uaA7mCBqOYRdhAcYfJWzx
+         L8hOhgbsYBkVSolsoTPNE76lDrO8nKF4E2+LJJFVCUwtnzuTptRx1ajXWgNY10o/6/bM
+         ExHg==
+X-Gm-Message-State: AElRT7H8SQXjOeEEk6Onj098YQHuRzAvqO8uqLUQecSHH86Zgo0c0J++
+        7Q1Fy1wjAM5KnA8RyKgetXUFasYu6xU=
+X-Google-Smtp-Source: AIpwx4+9O3ZiSwAoQW2f/EfF9UlDyc+5t1nLrW5qyvoLUnrdyzsWhnbV4s5vHAtsfNEihpgrCkzE/g==
+X-Received: by 2002:a17:902:9898:: with SMTP id s24-v6mr11511269plp.318.1522709345074;
+        Mon, 02 Apr 2018 15:49:05 -0700 (PDT)
+Received: from localhost ([2620:0:100e:422:ea58:fa52:fa77:9b41])
+        by smtp.gmail.com with ESMTPSA id d77sm2654410pfe.127.2018.04.02.15.49.04
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 02 Apr 2018 15:49:04 -0700 (PDT)
+From:   Stefan Beller <sbeller@google.com>
+To:     jonathantanmy@google.com, jacob.keller@gmail.com,
+        simon@ruderich.org
+Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
+Subject: [RFC PATCH 0/7] Moved code detection: ignore space on uniform indentation
+Date:   Mon,  2 Apr 2018 15:48:47 -0700
+Message-Id: <20180402224854.86922-1-sbeller@google.com>
+X-Mailer: git-send-email 2.17.0.484.g0c8726318c-goog
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Create a '--sort' option for ls-remote, based on the one from
-for-each-ref. This e.g. allows ref names to be sorted by version
-semantics, so that v1.2 is sorted before v1.10.
+This is a re-attempt of [1], which allows the moved code detection to
+ignore blanks in various modes.
 
-Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
----
- Documentation/git-ls-remote.txt | 12 +++++++++++-
- builtin/ls-remote.c             | 26 ++++++++++++++++++++++++--
- t/t5512-ls-remote.sh            | 41 ++++++++++++++++++++++++++++++++++++++++-
- 3 files changed, 75 insertions(+), 4 deletions(-)
+patches 1-5 are refactoring, patch 6 adds all existing white space options
+of regular diff to the move detection. (I am unsure about this patch,
+as I presume we want to keep the option space at a minimum if possible).
 
-diff --git a/Documentation/git-ls-remote.txt b/Documentation/git-ls-remote.txt
-index 5f2628c8f..17fae7218 100644
---- a/Documentation/git-ls-remote.txt
-+++ b/Documentation/git-ls-remote.txt
-@@ -10,7 +10,7 @@ SYNOPSIS
- --------
- [verse]
- 'git ls-remote' [--heads] [--tags] [--refs] [--upload-pack=<exec>]
--	      [-q | --quiet] [--exit-code] [--get-url]
-+	      [-q | --quiet] [--exit-code] [--get-url] [--sort=<key>]
- 	      [--symref] [<repository> [<refs>...]]
- 
- DESCRIPTION
-@@ -60,6 +60,16 @@ OPTIONS
- 	upload-pack only shows the symref HEAD, so it will be the only
- 	one shown by ls-remote.
- 
-+--sort=<key>::
-+	Sort based on the key given.  Prefix `-` to sort in
-+	descending order of the value. You may use the --sort=<key> option
-+	multiple times, in which case the last key becomes the primary
-+	key. Also supports "version:refname" or "v:refname" (tag
-+	names are treated as versions). The "version:refname" sort
-+	order can also be affected by the "versionsort.suffix"
-+	configuration variable.
-+	The keys supported are the same as those in `git for-each-ref`.
-+
- <repository>::
- 	The "remote" repository to query.  This parameter can be
- 	either a URL or the name of a remote (see the GIT URLS and
-diff --git a/builtin/ls-remote.c b/builtin/ls-remote.c
-index 540d56429..7e2d820c4 100644
---- a/builtin/ls-remote.c
-+++ b/builtin/ls-remote.c
-@@ -1,6 +1,7 @@
- #include "builtin.h"
- #include "cache.h"
- #include "transport.h"
-+#include "ref-filter.h"
- #include "remote.h"
- 
- static const char * const ls_remote_usage[] = {
-@@ -47,6 +48,8 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
- 	struct remote *remote;
- 	struct transport *transport;
- 	const struct ref *ref;
-+	struct ref_array array;
-+	static struct ref_sorting *sorting = NULL, **sorting_tail = &sorting;
- 
- 	struct option options[] = {
- 		OPT__QUIET(&quiet, N_("do not print remote URL")),
-@@ -60,6 +63,8 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
- 		OPT_BIT(0, "refs", &flags, N_("do not show peeled tags"), REF_NORMAL),
- 		OPT_BOOL(0, "get-url", &get_url,
- 			 N_("take url.<base>.insteadOf into account")),
-+		OPT_CALLBACK(0 , "sort", sorting_tail, N_("key"),
-+			     N_("field name to sort on"), &parse_opt_ref_sorting),
- 		OPT_SET_INT_F(0, "exit-code", &status,
- 			      N_("exit with exit code 2 if no matching refs are found"),
- 			      2, PARSE_OPT_NOCOMPLETE),
-@@ -68,6 +73,8 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
- 		OPT_END()
- 	};
- 
-+	memset(&array, 0, sizeof(array));
-+
- 	argc = parse_options(argc, argv, prefix, options, ls_remote_usage,
- 			     PARSE_OPT_STOP_AT_NON_OPTION);
- 	dest = argv[0];
-@@ -104,13 +111,28 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
- 	if (!dest && !quiet)
- 		fprintf(stderr, "From %s\n", *remote->url);
- 	for ( ; ref; ref = ref->next) {
-+		struct ref_array_item *item;
- 		if (!check_ref_type(ref, flags))
- 			continue;
- 		if (!tail_match(pattern, ref->name))
- 			continue;
-+
-+		FLEX_ALLOC_MEM(item, refname, ref->name, strlen(ref->name));
-+		item->symref = ref->symref;
-+		item->objectname = ref->old_oid;
-+
-+		REALLOC_ARRAY(array.items, array.nr + 1);
-+		array.items[array.nr++] = item;
-+	}
-+
-+	if (sorting)
-+		ref_array_sort(sorting, &array);
-+
-+	for (int i = 0; i < array.nr; i++) {
-+		const struct ref_array_item *ref = array.items[i];
- 		if (show_symref_target && ref->symref)
--			printf("ref: %s\t%s\n", ref->symref, ref->name);
--		printf("%s\t%s\n", oid_to_hex(&ref->old_oid), ref->name);
-+			printf("ref: %s\t%s\n", ref->symref, ref->refname);
-+		printf("%s\t%s\n", oid_to_hex(&ref->objectname), ref->refname);
- 		status = 0; /* we found something */
- 	}
- 	return status;
-diff --git a/t/t5512-ls-remote.sh b/t/t5512-ls-remote.sh
-index 02106c922..66370cd88 100755
---- a/t/t5512-ls-remote.sh
-+++ b/t/t5512-ls-remote.sh
-@@ -10,6 +10,9 @@ test_expect_success setup '
- 	test_tick &&
- 	git commit -m initial &&
- 	git tag mark &&
-+	git tag mark1.1 &&
-+	git tag mark1.2 &&
-+	git tag mark1.10 &&
- 	git show-ref --tags -d | sed -e "s/ /	/" >expected.tag &&
- 	(
- 		echo "$(git rev-parse HEAD)	HEAD"
-@@ -39,6 +42,39 @@ test_expect_success 'ls-remote self' '
- 	test_cmp expected.all actual
- '
- 
-+test_expect_success 'ls-remote --sort="version:refname" --tags self' '
-+	cat >expect <<-\EOF &&
-+	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	refs/tags/mark
-+	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	refs/tags/mark1.1
-+	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	refs/tags/mark1.2
-+	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	refs/tags/mark1.10
-+	EOF
-+	git ls-remote --sort="version:refname" --tags self >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'ls-remote --sort="-version:refname" --tags self' '
-+	cat >expect <<-\EOF &&
-+	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	refs/tags/mark1.10
-+	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	refs/tags/mark1.2
-+	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	refs/tags/mark1.1
-+	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	refs/tags/mark
-+	EOF
-+	git ls-remote --sort="-version:refname" --tags self >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'ls-remote --sort="-refname" --tags self' '
-+	cat >expect <<-\EOF &&
-+	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	refs/tags/mark1.2
-+	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	refs/tags/mark1.10
-+	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	refs/tags/mark1.1
-+	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	refs/tags/mark
-+	EOF
-+	git ls-remote --sort="-refname" --tags self >actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'dies when no remote specified and no default remotes found' '
- 	test_must_fail git ls-remote
- '
-@@ -131,7 +167,7 @@ test_expect_success 'Report no-match with --exit-code' '
- 
- test_expect_success 'Report match with --exit-code' '
- 	git ls-remote --exit-code other.git "refs/tags/*" >actual &&
--	git ls-remote . tags/mark >expect &&
-+	git ls-remote . tags/mark* >expect &&
- 	test_cmp expect actual
- '
- 
-@@ -178,6 +214,9 @@ test_expect_success 'ls-remote --symref' '
- 	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	refs/remotes/origin/HEAD
- 	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	refs/remotes/origin/master
- 	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	refs/tags/mark
-+	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	refs/tags/mark1.1
-+	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	refs/tags/mark1.10
-+	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	refs/tags/mark1.2
- 	EOF
- 	git ls-remote --symref >actual &&
- 	test_cmp expect actual
+The fun is in the last patch, which allows white space sensitive
+languages to trust the move detection, too. Each block that is marked as
+moved will have the same delta in {in-, de-}dentation.
+I would think this mode might be a reasonable default eventually.
+
+Thanks,
+Stefan
+
+[1] https://public-inbox.org/git/20171025224620.27657-1-sbeller@google.com/
+
+Stefan Beller (7):
+  xdiff/xdiff.h: remove unused flags
+  xdiff/xdiffi.c: remove unneeded function declarations
+  diff.c: do not pass diff options as keydata to hashmap
+  diff.c: adjust hash function signature to match hashmap expectation
+  diff.c: refactor internal representation for coloring moved code
+  diff.c: decouple white space treatment for move detection from generic
+    option
+  diff.c: add --color-moved-ignore-space-delta option
+
+ Documentation/diff-options.txt |  13 ++
+ diff.c                         | 155 ++++++++++++---
+ diff.h                         |  18 +-
+ t/t4015-diff-whitespace.sh     | 341 ++++++++++++++++++++++++++++++++-
+ xdiff/xdiff.h                  |   8 -
+ xdiff/xdiffi.c                 |  17 --
+ 6 files changed, 483 insertions(+), 69 deletions(-)
+
 -- 
-2.14.3 (Apple Git-98)
+2.17.0.484.g0c8726318c-goog
 
