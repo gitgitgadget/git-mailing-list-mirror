@@ -2,91 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 77B081F404
-	for <e@80x24.org>; Mon,  2 Apr 2018 18:14:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 214B11F404
+	for <e@80x24.org>; Mon,  2 Apr 2018 18:31:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753355AbeDBSOB (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Apr 2018 14:14:01 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:46253 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753030AbeDBSOA (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Apr 2018 14:14:00 -0400
-Received: by mail-wr0-f196.google.com with SMTP id d1so14965253wrj.13
-        for <git@vger.kernel.org>; Mon, 02 Apr 2018 11:14:00 -0700 (PDT)
+        id S1753218AbeDBSbZ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Apr 2018 14:31:25 -0400
+Received: from mail-pl0-f65.google.com ([209.85.160.65]:36557 "EHLO
+        mail-pl0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753030AbeDBSbY (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Apr 2018 14:31:24 -0400
+Received: by mail-pl0-f65.google.com with SMTP id 91-v6so5210425pld.3
+        for <git@vger.kernel.org>; Mon, 02 Apr 2018 11:31:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=Sy71toaqoJ4vp34xYQkAeHwmAk1dM2nQMhYIzouKgyI=;
-        b=Of2K98X/yq/tJRzsLFtdIyoC93UycTW7aE0P863LllzxUPRqaQDaMOfbcql+DH0XTL
-         Mo0y0ubOq+p/wxuwm7aaSrVQVmVE5WFhoTuRvAjAzfhwChvsdmHPegDjFv/MYZUByjCm
-         RgGQ9kTvv4Gmd84Vp8wbfVgpuU/7XGWjQLycS/aXlf/5FYzq82YXPQ5rkf93wQXFc3/X
-         TdRj3eoBUh5v4SU6VKIZFRVtuzsqJYgbjE3Rs/RMlP2b0JxX4YriQgspgU8FgWdBL4Od
-         OzpNHEE1KZ5LHr9OVXyJzM66UHUQUmEsaCB7vYU4tyGrxPpAbYhhQ+hDuTJbxLT4IlDy
-         SeRA==
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=wnnsUwVLszhCHI/XJ4Vt+dXchRXQTEkOrBxVZ3s9YRc=;
+        b=DaXOsdUNHf8jKgzGHDGucWFjC0Dv8e2dDAMHV3HtOpJI5M8VA8/Sd9DQGxSSnAZY7a
+         PclbN+rb211miBTBmzs1KnFflrY5r7zWFuOOFIBY5YLa0c+85ggBXDG8+ZvjXImFWx6p
+         9WyO6e0ObOrTPp+N4a7uFBiYXe0xI9+xMQt38pt4cYcsW3H4WvO4T3mcsoS4SEUPQvxe
+         W+pM37kILNxC7jeneDBQvRGwAb+Rg1/i7AyVqR6mGVs8xBsCsFkg0UgToDm1F868xyyI
+         4JllOHgBjxpqY81JTWhOcgWiBpvSEyzi6c7aIgcghOUYdeKAyp/C6TSBmxz8a2dj0Oyx
+         B9Mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=Sy71toaqoJ4vp34xYQkAeHwmAk1dM2nQMhYIzouKgyI=;
-        b=CAcH2hWMvUmummLJIkGlRyihnumU7JKCTMdPV0olp0tI76My/gwwb8+oqBjdEsUTkF
-         xvVu0ORiZ5l47/6UjLJRjenpaAgGRUelFOjTYxdAYFUexmP4fFDC8vQynHnsZ9ue4d6N
-         YAK0J3kaCJiWDL1oEv1MiQT4U4BaMyzfLVUn/kO2eEgrL2r+avkwtVsBgRQWOgtrM6UY
-         lQCyXQbYWVwCFaUgc3thN0sHeLotlxrN5KyxqCTxDmrSyjuHRRNaYNQZLFE0c+I7lZVt
-         i7tW8+GbR0Mk5sgEwbPwp5EBKTrKi1v+mt9bxd4B4OX1wfOtV/DAW3xXoH0F5GDqOL01
-         MVIQ==
-X-Gm-Message-State: AElRT7GRGXehc5ab0PDm1RqR+JNMXKv82sxt4ABLjiNn7plxstQSmAFg
-        OSIi5ZokOgC290vPmhvx8nQ=
-X-Google-Smtp-Source: AIpwx4+xSY4+hTKbwhRQePOhoo1Xs0KhoLzbYmu1m51aPGcfgsmQByjIgT3yS65gTcP2Pld78pxMYg==
-X-Received: by 10.223.144.69 with SMTP id h63mr7143377wrh.218.1522692839067;
-        Mon, 02 Apr 2018 11:13:59 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id a205sm832617wmf.18.2018.04.02.11.13.58
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 02 Apr 2018 11:13:58 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Lyubomyr Shaydariv <lsh.dev@ukr.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] graph.c: log.showRootMark to indicate root commits
-References: <0102016283000c69-b09d1499-8a50-45a7-9f41-01be648398bc-000000@eu-west-1.amazonses.com>
-        <xmqqk1tpze1x.fsf@gitster-ct.c.googlers.com>
-Date:   Mon, 02 Apr 2018 11:13:58 -0700
-In-Reply-To: <xmqqk1tpze1x.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Mon, 02 Apr 2018 10:57:46 -0700")
-Message-ID: <xmqqfu4dzdax.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=wnnsUwVLszhCHI/XJ4Vt+dXchRXQTEkOrBxVZ3s9YRc=;
+        b=AkEv6FRq1Mah5kiSUTGzxxJsnPSTKD1Pb1MyWJxm+CZnL+ZATxoWmlEUtmUeu1BpeR
+         29FcsJg4PKLrkkTTODKPQXtq4R49OOr6ymagjR5luBiEX4k6OWzXr77vYNRrItizCS9Z
+         C9AlffkMePLyN2vdfcAWuaWQ+jj0qq6TxnFc32s3Rajqx9INNZMfzFkful+Xnwkjo6lb
+         vdEcVlO/Zfqm2nUmtXAR4Q2PANdpbP7Um13+27Xp14dcg1Pz3WQGvNeyHkJtk3SoiD2H
+         TAzLuZ0m9rreyQ7obatbgbqQTVJ1cwhb2Tb5FG2/YoR4UhTQ4H0ZxGBwPIt7e2V+AyHh
+         X7Mw==
+X-Gm-Message-State: AElRT7G7eyTxvVRyLJhG9FZdtR1gR8fJLBJ9rHYxmnRTpciD7X/nwpRq
+        qEvgQaKoplBcPuQtMtxKVy0=
+X-Google-Smtp-Source: AIpwx49IgQpix25smQbW5UNa0Q14T5C+ggTZs3OyUy/yofA2Q9tEvz7sAirdA2s7a7FHeST6GzAb+w==
+X-Received: by 2002:a17:902:24:: with SMTP id 33-v6mr10845182pla.341.1522693884176;
+        Mon, 02 Apr 2018 11:31:24 -0700 (PDT)
+Received: from farpc0j7wwf.ads.autodesk.com (adsknateur.autodesk.com. [132.188.32.100])
+        by smtp.gmail.com with ESMTPSA id y6sm1718343pfd.18.2018.04.02.11.31.17
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 02 Apr 2018 11:31:23 -0700 (PDT)
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [PATCH v12 00/10] convert: add support for different encodings
+From:   Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <xmqqwoxu684c.fsf@gitster-ct.c.googlers.com>
+Date:   Mon, 2 Apr 2018 20:31:09 +0200
+Cc:     Lars Schneider <lars.schneider@autodesk.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        =?utf-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+        j6t@kdbg.org, sunshine@sunshineco.com, peff@peff.net,
+        ramsay@ramsayjones.plus.com, Johannes.Schindelin@gmx.de,
+        pclouds@gmail.com
+Content-Transfer-Encoding: 7bit
+Message-Id: <3DC6237B-002F-4CAE-AD57-E10A5B5D3D3C@gmail.com>
+References: <20180315225746.18119-1-lars.schneider@autodesk.com> <xmqqwoxu684c.fsf@gitster-ct.c.googlers.com>
+To:     Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
 
-> Lyubomyr Shaydariv <lsh.dev@ukr.net> writes:
->
->> When log.showRootMark is set, root commits are marked with
->> the at sign (@).
->>
->> When log.showRootMark is not set, root commits are marked with
->> the asterisk sign (*). This is the default behavior.
->>
->> Signed-off-by: Lyubomyr Shaydariv <lsh.dev@ukr.net>
->> ---
->
-> So the idea is when you have a history like this:
-> ...
-> and that would work well with --left-right automatically (as you
-> would just do the same thing as you would to a normal asterisk).
+> On 29 Mar 2018, at 20:37, Junio C Hamano <gitster@pobox.com> wrote:
+> 
+> lars.schneider@autodesk.com writes:
+> 
+>> From: Lars Schneider <larsxschneider@gmail.com>
+>> 
+>> Patches 1-6,9 are preparation and helper functions. Patch 4 is new.
+>> Patch 7,8,10 are the actual change.
+>> 
+>> This series depends on Torsten's 8462ff43e4 (convert_to_git():
+>> safe_crlf/checksafe becomes int conv_flags, 2018-01-13) which is
+>> already in master.
+> 
+> I didn't see any further review comments on this round, and as far
+> as I can tell from my reading, these patches looked more-or-less
+> ready.  
+> 
+> Except for 04/10 that had a few messages around "who should be
+> responsible for handling the 'NULL is for the default UTF-8'?", that
+> is.
+> 
+> So, what's the doneness of this thing?
 
-There was some discussion a while back on making root commits more
-apparent in the graph view, e.g.
+Almost. I'll send a new round tomorrow. I hope to make this the final
+round.
 
-https://public-inbox.org/git/1382717268-21884-1-git-send-email-milton.soares.filho@gmail.com/
+- Lars
 
