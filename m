@@ -2,187 +2,172 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 75A461F424
-	for <e@80x24.org>; Tue,  3 Apr 2018 11:28:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 255B81F424
+	for <e@80x24.org>; Tue,  3 Apr 2018 11:39:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755380AbeDCL2W (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Apr 2018 07:28:22 -0400
-Received: from mail-wm0-f50.google.com ([74.125.82.50]:51619 "EHLO
-        mail-wm0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755193AbeDCL2V (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Apr 2018 07:28:21 -0400
-Received: by mail-wm0-f50.google.com with SMTP id v21so33089829wmc.1
-        for <git@vger.kernel.org>; Tue, 03 Apr 2018 04:28:20 -0700 (PDT)
+        id S1755344AbeDCLj1 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Apr 2018 07:39:27 -0400
+Received: from mail-qk0-f180.google.com ([209.85.220.180]:44502 "EHLO
+        mail-qk0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755387AbeDCLjY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Apr 2018 07:39:24 -0400
+Received: by mail-qk0-f180.google.com with SMTP id u9so4742052qkk.11
+        for <git@vger.kernel.org>; Tue, 03 Apr 2018 04:39:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=AAXidTxylrRJUU/Pkh0tuUdl/jqbuL/prDWQHNvCOzg=;
-        b=Ex80O98A4anKcvQTOzUNZQAzMduS6l3o/vGsBcRKzRsQb9AbqsSPGtKuc7ztATbbPk
-         JN+xFx2T2/qJ2nnTw6v2AtakU6K/e3mL7M1ul06EPrY6+KDm4pHraaQzJXlFIRLbFIsX
-         9qso3kZ75U/gVgXkU99Eua/VEhtXeKZp0euODBhQz6zoimaBfVgXgmelPiwFaDxmeZ2u
-         /GyYa76fEb1d9L9tHvXl25LKcPc9J6LuvjOteTCQGVhFgcyBHQyjOPToa+jX7eUlOyVO
-         9b2NdommCZLdxmWmIeNOSF9EAnYRElyClAZOceOZEPrQ3/WSgvVz3cRipJu4b4Q5lCzk
-         bF4A==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=8/OyoWTVH8R1UIPqMoFdFnSlMMk9ih6NsfaQcfVa8gU=;
+        b=igj/ww+YcR7YRS+VRRQsFOX9Tu7txxVztKrRrSPDs95UjWr2YZCZV44ctU5q7AP8H9
+         CtplM4bX2qWBojjT2JhLddPu+M5qLbMmZbkBmftd16IhLG1bkO8vMtc2qQnVmw8cf08Z
+         VbPeUAnzCpGffgolcWMqycRWX4w1qgArHwlM7fAcrQ53Bv2FJIBAUoq+rQBOfQpsnfZI
+         rgek8E9Nojuc+MO5HBqMR7qrqLg4uyjADIY2vBxZCST/MedEkJOGn5G9lkJboDQnvDqb
+         zJ0lFjzwxPOFNX//q+nab2O8d72BhKPrI1d7AOfDllpIVwVmpbCuIBleZEgBqAiSg8p1
+         1DnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=AAXidTxylrRJUU/Pkh0tuUdl/jqbuL/prDWQHNvCOzg=;
-        b=JI3XYY1lkNWCsMbaSc5XKLrHBXcy8vPRO4YWK3uAlrbIndEDZwjmzzVWsYW0LTuEAU
-         mN82LFVhHgfzC47iajPxUlH1IWaRv2FDzzWERqoIccnaBCbZhxr+T4KOk///UCXbNshu
-         /j5+aZCvDQbkuMtTDhhzjuXfD59IWS3TdshLyEYuRSKLhmsbKrOOWsE74oMrPxGFmSyn
-         qdMcn3/pq5/PckS8k5exgX7qAnzUDq5kMW8nYkWGvzYYNT6hkYp3HlAnj3hJcJNJfn8Y
-         cHEEaw4uS0BaoWfIo4MmFXhwJDKNfy/IiOnSklbm1btc47GZQn6h1rCmeYwwtI4uioLt
-         FwnA==
-X-Gm-Message-State: AElRT7EstYGIJZ5S/hBG1tVaJBXryQj3UoT7gnSG2VYu88rlBDFXgY3S
-        6xNxbOKGiy5yUiMpSZcqDLM=
-X-Google-Smtp-Source: AIpwx49MAUBYD5eqdMyyuvopfeGuYXW3KCthSKSxWf/QsqQXuvm27lY19yGdDXbhZS5j/fROYQY3pg==
-X-Received: by 10.80.250.13 with SMTP id b13mr16074242edq.290.1522754900283;
-        Tue, 03 Apr 2018 04:28:20 -0700 (PDT)
-Received: from evledraar (proxy-gw-a.booking.com. [5.57.21.8])
-        by smtp.gmail.com with ESMTPSA id r1sm1604760edc.0.2018.04.03.04.28.18
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 03 Apr 2018 04:28:19 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>,
-        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Thomas Rast <tr@thomasrast.ch>, Phil Haack <haacked@gmail.com>,
-        Jason Frey <jfrey@redhat.com>,
-        Philip Oakley <philipoakley@iee.org>,
-        Duy Nguyen <pclouds@gmail.com>
-Subject: Re: A potential approach to making tests faster on Windows
-References: <cover.1522336130.git.johannes.schindelin@gmx.de>
-        <899ea23951627426ccd0aac79f824af386c5590c.1522336130.git.johannes.schindelin@gmx.de>
-        <CAGZ79kapTWGsYznt7rr0QTNX+uH85TPY8AOA1jtDJ6_q8edX1Q@mail.gmail.com>
-        <20180329194159.GB2939@sigill.intra.peff.net>
-        <nycvar.QRO.7.76.6.1803301415240.5026@qfpub.tvgsbejvaqbjf.bet>
-        <87fu4hwgfa.fsf@evledraar.gmail.com>
-        <20180330191620.GA32338@sigill.intra.peff.net>
-        <nycvar.QRO.7.76.6.1804031133270.5026@qfpub.tvgsbejvaqbjf.bet>
-User-agent: Debian GNU/Linux 9.4 (stretch); Emacs 25.1.1; mu4e 1.1.0
-In-reply-to: <nycvar.QRO.7.76.6.1804031133270.5026@qfpub.tvgsbejvaqbjf.bet>
-Date:   Tue, 03 Apr 2018 13:28:18 +0200
-Message-ID: <87sh8cv8a5.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=8/OyoWTVH8R1UIPqMoFdFnSlMMk9ih6NsfaQcfVa8gU=;
+        b=cXcIXHTS/hCMaJQ8I7YUzrbcdLPkm/JE+OTP/hkNzGcd/1xv/du9saRcHyOXqlwydO
+         Lecn/w8+jGQND5EwpRo8lKRLFbvfPOXtaX5LfE3OUFurZD5HjmrpWPZJNAI5wmfDJzKs
+         AgsMCP+lnuDc4TU/sVPqvnG0F7VtIlhm3tftX6DGoifn5wOlK7m5CQgN7cvGn5YAsOiv
+         SJX8jHUid5032WBoh/ecwSE9mkBqina3tgSFxIGBiQUwQjPNceFPNOgXIb9drBDG9+h9
+         VzJze+SBwvK7BhCvdnySusFGulkV6Tw5nAKZg3XLb9/j0hcYm9P1R8CtPzz+oQ79okTD
+         zurg==
+X-Gm-Message-State: ALQs6tDH+bThLUfEXnCIdv54VScEjKEZzLjeTgt/ZXQsK2snS2C800xw
+        RbqzX30k8idnRpUh+27xUfg=
+X-Google-Smtp-Source: AIpwx4/1TgKTFK3RHyQxn1pGymLwEV4GIBjRDN7lMUFAIW4aQPpkQLmBsDShGtBGUqjRlX6VxGoLqw==
+X-Received: by 10.55.138.194 with SMTP id m185mr12030806qkd.103.1522755562414;
+        Tue, 03 Apr 2018 04:39:22 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:c4e6:7a22:56f1:df04? ([2001:4898:8010:0:ae1c:7a22:56f1:df04])
+        by smtp.gmail.com with ESMTPSA id b125sm2076268qkd.62.2018.04.03.04.39.21
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 03 Apr 2018 04:39:21 -0700 (PDT)
+Subject: Re: [PATCH v2 1/5] core.aheadbehind: add new config setting
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Lars Schneider <larsxschneider@gmail.com>
+Cc:     Jeff Hostetler <jeffhost@microsoft.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>
+References: <20171221190909.62995-1-git@jeffhostetler.com>
+ <20171221190909.62995-2-git@jeffhostetler.com>
+ <20171221204356.GA58971@aiede.mtv.corp.google.com>
+ <xmqq3742tyho.fsf@gitster.mtv.corp.google.com>
+ <20171224143318.GC23648@sigill.intra.peff.net>
+ <xmqq1sjgoyph.fsf@gitster.mtv.corp.google.com>
+ <20180104192604.GA27528@sigill.intra.peff.net>
+ <091D90DC-DAA2-4338-AAFA-01CB75807992@gmail.com>
+ <87vad8vbid.fsf@evledraar.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <d63b54e9-5ec6-f523-d882-756ac38b882b@gmail.com>
+Date:   Tue, 3 Apr 2018 07:39:20 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.6.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <87vad8vbid.fsf@evledraar.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 4/3/2018 6:18 AM, Ævar Arnfjörð Bjarmason wrote:
+> On Tue, Apr 03 2018, Lars Schneider wrote:
+>> What is the state of this series? I can't find it in git/git nor in
+>> git-for-windows/git. I think Stolee mentioned the config in
+>> his Git Merge talk [1] and I was about to test it/roll it out :-)
+> It's in the gvfs branch of git@github.com:Microsoft/git.git, i.e. it's
+> not in Git for Windows, but used in Microsoft's own in-house version
+> used for Windows.git.
 
-On Tue, Apr 03 2018, Johannes Schindelin wrote:
+Thanks for adding me to CC. I mentioned it in my talk because that was 
+one thing we shipped internally as a "quick fix" until we could do the 
+right thing.
 
-> Hi Peff,
->
-> On Fri, 30 Mar 2018, Jeff King wrote:
->
->> On Fri, Mar 30, 2018 at 08:45:45PM +0200, Ævar Arnfjörð Bjarmason wrote:
->>
->> > I've wondered for a while whether it wouldn't be a viable approach to
->> > make something like an interpreter for our test suite to get around
->> > this problem, i.e. much of it's very repetitive and just using a few
->> > shell functions we've defined, what if we had C equivalents of those?
->>
->> I've had a similar thought, though I wonder how far we could get with
->> just shell. I even tried it out with test_cmp:
->>
->>   https://public-inbox.org/git/20161020215647.5no7effvutwep2xt@sigill.intra.peff.net/
->>
->> But Johannes Sixt pointed out that they already do this (see
->> mingw_test_cmp in test-lib-functions).
->
-> Right.
->
-> Additionally, I noticed that that simple loop in shell is *also* very slow on
-> Windows (at least in the MSYS2 Bash we use in Git for Windows).
->
-> Under the assumption that it is the Bash with the loop that uses too much
-> POSIX emulation to make it fast, I re-implemented mingw_test_cmp in pure
-> C:
-> https://github.com/git-for-windows/git/commit/8a96ef63a0083ba02305dfeef6ff92c31b4fd7c3
->
-> Unfortunately, it did not produce any noticeable speed improvement, so I
-> did not even finish the conversion (when the cmp fails, it does not show
-> you any helpful diff yet).
+If I remember correctly, Jeff abandoned shipping this upstream because 
+it did have the feel of a hack and we wanted to see if users used the 
+config setting or really cared about the output values. We saw fast 
+adoption of the feature and even turned the config setting on 
+automatically in the following version of GVFS.
 
-I don't know the details of Windows, but it sounds like you're trying to
-performance test two things that are going to suck for different
-reasons.
+> I may be misunderstanding this feature, but my impression was that it
+> was a kludge as a workaround until the commit graph code landed, because
+> once we have that then surely we can just cheaply report the actual (or
+> approximate?) number in the common case, but of course it may still be
+> slow if your commit graph file is out of date.
 
-On one hand the pure-*.sh comparison would be slower than just diff on
-*nix, because it's not C, so you'll get that slowness, but gain in not
-having to fork another process.
+You are correct that the commit-graph file may be out of date, causing 
+slower performance. Even worse: the current graph patch only provides a 
+constant-multiple speedup (still walking the same number of commits, but 
+each commit is parsed much faster).
 
-On the other hand the C implementation is going to be really fast, but
-it's going to take you a long time to get it started on Windows.
+Speaking of our GVFS-specific fork [0], the 'gvfs' branch was updated 
+just yesterday with a couple of changes that I am prepping for 
+submission upstream:
 
-Which is why I think it would be really interesting to see the third
-approach I suggested, i.e. hack the shell to make the test_cmp a builtin
-and test that. Then you won't fork, but will get the advantage of your
-fast C codepath.
+* Lazy-load trees when parsing commits from commit-graph [1]
+* Compute and consume generation numbers [2]
 
-Also, even if test_cmp is much faster, Peff's results over at
-https://public-inbox.org/git/20161020123111.qnbsainul2g54z4z@sigill.intra.peff.net/
-suggest that you may not notice anyway. Aside from the points raised
-there about the bin wrappers it seems the easiest wins are having a
-builtin version of "rm" and "cat".
+Each of these will speed up this ahead/behind calculation in different 
+ways. [1] makes the cost of loading each commit a bit faster, saving up 
+to 20% overall. [2] uses generation numbers in paint_down_to_common() to 
+make the while() condition O(1) instead of O(Q) where Q is the size of 
+the priority queue. The Windows repo is particularly "wide" with many 
+parallel branches being merged in complicated ways, so the queue becomes 
+quite large. This use of generation numbers saves about 4% on some 
+ahead/behind calculations. This speedup is modest, but the existing code 
+already made good use of limiting the commit walk to be mostly the 
+"important" commits.
 
-Are you able to compile dash on Windows with some modification of the
-patch I sent upthread? If not it doesn't seem too hard to do the same
-trick for bash, see:
+The real benefit of generation numbers will manifest in a way to make 
+--topo-order much faster when rendering a small number of commits.
 
-    git grep '\balias\b' -- builtins
+The generation numbers _could_ be used to approximate the ahead/behind 
+calculation in the following way: When comparing A and B, and gen(A) < 
+gen(B), then A is at least (gen(B) - gen(A)) behind. That's the only 
+information that can be gathered directly from those values, but may be 
+enough to short circuit an exact count.
 
-Once you have bash.git checked out. I.e. you add a bit of Makefile
-boilerplate and you should be able to get a new builtin.
+To truly accelerate these ahead/behind calculations to be sub-linear* in 
+the ahead/behind counts, we would need a bitmap-based approach. The 
+object-reachability bitmap is a non-starter for client machines in the 
+Windows repo, but perhaps a commit-reachability bitmap could be 
+interesting. Performing set operations on the bitmaps could more quickly 
+answer these questions. Just thinking about it makes me want to go down 
+a deep rabbit hole, investigating ways to compute, store, and use these 
+bitmaps. However: let's wait and see how necessary it is as the 
+commit-graph feature stabilizes. (*These bitmap approaches are not 
+guaranteed to be sub-linear, because it may include iterating through a 
+list of O(N) bits, but good run-length encodings will likely make the 
+count operation very fast, even with a set-difference operation included.)
 
->> I also tried to explore a few numbers about process invocations to see
->> if running shell commands is the problem:
->>
->>   https://public-inbox.org/git/20161020123111.qnbsainul2g54z4z@sigill.intra.peff.net/
->
-> This mail was still in my inbox, in want of me saying something about
-> this.
->
-> My main evidence that shell scripts on macOS are slower than on Linux was
-> the difference of the improvement incurred by moving more things from
-> git-rebase--interactive.sh into sequencer.c: Linux saw an improvement only
-> of about 3x, while macOS saw an improvement of 4x, IIRC. If I don't
-> remember the absolute numbers correctly, at least I vividly remember the
-> qualitative difference: It was noticeable.
->
->> There was some discussion there about whether the problem is programs
->> being exec'd, or if it's forks due to subshells. And if it is programs
->> being exec'd, whether it's shell programs or if it is simply that we
->> exec Git a huge number of times.
->
-> One large problem there is that it is really hard to analyze performance
-> over such a heterogenous code base: part C, part Perl, part Unix shell
-> (and of course, when you say Unix shell, you imply dozens of separate
-> tools that *also* need to be performance-profiled). I have very good
-> profiling tools for C, I saw some built-in performance profiling for Perl,
-> but there is no good performance profiling for Unix shell scripting: I
-> doubt that the inventors of shell scripting had speed-critical production
-> code in mind when they came up with the idea.
->
-> I did invest dozens of hours earlier this year trying to obtain debug
-> symbols in .pdb format (ready for Visual Studio's really envy-inducing
-> performance profiler) also for the MSYS2 runtime and Bash, so that I could
-> analyze what makes things so awfully slow in Git's test suite.
->
-> The only problem is that I also have to do other things in my day-job, so
-> that project waits patiently until I have some time to come back to that
-> project.
->
-> Ciao,
-> Dscho
+There are too many fun things to work on, not enough time!
+
+Thanks,
+-Stolee
+
+[0] https://github.com/microsoft/git
+     Fork of GitForWindows that ships to Windows developers
+
+[1] 
+https://github.com/Microsoft/git/commit/29114bf86f591f5c87075f779a1faa2d0f17b92f
+     Lazy-load trees when parsing commits from commit-graph 
+(accidentally squashed to one commit)
+
+[2] 
+https://github.com/microsoft/git/compare/879b7d3b1bddea2587b28cdd656c9c655018683a...a0731ca93a35fd042560c4b30e8e0edbdfa4bf9f
+     Compute and consume generation numbers
