@@ -7,33 +7,33 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 33DEF1F404
-	for <e@80x24.org>; Tue,  3 Apr 2018 16:52:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E24E51F404
+	for <e@80x24.org>; Tue,  3 Apr 2018 16:52:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752672AbeDCQwS (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Apr 2018 12:52:18 -0400
+        id S1752688AbeDCQwU (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Apr 2018 12:52:20 -0400
 Received: from mail-by2nam03on0113.outbound.protection.outlook.com ([104.47.42.113]:45952
         "EHLO NAM03-BY2-obe.outbound.protection.outlook.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1752661AbeDCQwP (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Apr 2018 12:52:15 -0400
+        id S1752641AbeDCQwO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Apr 2018 12:52:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=selector1; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
- bh=P3G+XR5SI6g5C4+XIFdo9UIceV+JhTRpYQRV8x3MXbY=;
- b=E+20PU1U8PNUhue3lovREycxoZg9gJoOMUFhYL/NV76HQC5v1ogrr+NTUZjh2q0kYG5lcJotXdCQ7U56SbuZEzEWSlomWVHskWvpdtTSSmY38eoocnGqp47sjUsemFtGjl61B2YXlR1sNL+K/rzzL2a5y0RxjAmFcxnQBMd5xdk=
+ bh=a8niD+8DQWd5oYzOF2e+w0d+HV7osL25J8DIycv1Mac=;
+ b=mOiM2EFX2KtCESalTOdPwTBHCBOQEBGcrjjtYjHPTNvbhMVSoZfKFrJR+CW37qZOWEKUKrqZJ8b7QMBDeCisH7RZdq2OIJjOkVXN26Iv6X3fYdR68MyFq0ILskX4soVU7KL6gCUaF/UkzBvhunXO7DsllMWuJBbDqo9OK738vAU=
 Received: from stolee-linux-2.corp.microsoft.com
  (2001:4898:8010:0:eb4a:5dff:fe0f:730f) by
  BL0PR2101MB1011.namprd21.prod.outlook.com (2603:10b6:207:37::10) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.675.1; Tue, 3 Apr 2018
- 16:52:10 +0000
+ 16:52:09 +0000
 From:   Derrick Stolee <dstolee@microsoft.com>
 To:     git@vger.kernel.org
 Cc:     avarab@gmail.com, sbeller@google.com, larsxschneider@gmail.com,
         peff@peff.net, Derrick Stolee <dstolee@microsoft.com>
-Subject: [PATCH 6/6] commit-graph.txt: update future work
-Date:   Tue,  3 Apr 2018 12:51:43 -0400
-Message-Id: <20180403165143.80661-7-dstolee@microsoft.com>
+Subject: [PATCH 5/6] commit.c: use generation to halt paint walk
+Date:   Tue,  3 Apr 2018 12:51:42 -0400
+Message-Id: <20180403165143.80661-6-dstolee@microsoft.com>
 X-Mailer: git-send-email 2.17.0.rc0
 In-Reply-To: <20180403165143.80661-1-dstolee@microsoft.com>
 References: <20180403165143.80661-1-dstolee@microsoft.com>
@@ -44,55 +44,54 @@ X-ClientProxiedBy: BL0PR1501CA0018.namprd15.prod.outlook.com
  (2603:10b6:207:17::31) To BL0PR2101MB1011.namprd21.prod.outlook.com
  (2603:10b6:207:37::10)
 X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: c39dc48d-8196-4d8f-558b-08d599833e2b
+X-MS-Office365-Filtering-Correlation-Id: 03df94ad-9a2e-489b-0a08-08d599833ddf
 X-MS-Office365-Filtering-HT: Tenant
 X-Microsoft-Antispam: UriScan:;BCL:0;PCL:0;RULEID:(7020095)(4652020)(5600026)(4604075)(48565401081)(4534165)(4627221)(201703031133081)(201702281549075)(2017052603328)(7193020);SRVR:BL0PR2101MB1011;
-X-Microsoft-Exchange-Diagnostics: 1;BL0PR2101MB1011;3:3xgDvpu/GXAohQrPUJbcoy2+KL00NCY6wgC1SanIssy+kULMynIMnd0b3hAy+D6Yy1xyeD7jS4dDUGlpP2TBGunNwcIS3IcXOkEl+Wh2+JOkL12DHF9T8GNHKvTqookHdQ/lXsd4AKl53uwatgN4xcTeydahSVAoWbLpnSu4VBdaazAiUEoRuvwYv/8Mm6ETH055SOdkZce/cvqXCEj5bfXv8GwqaYXAI7VCZNb+AUd60esaPkHQxz+/p3Q8wY53;25:bgy3PsSH8fSw+Ld5855OlA4fR+d0nzGUsYAfDFdTI+dRkST03rTIwvH7IQ/WiURHziuooVtDmb1yieN8hXaXPLiWRPJ6G31K1tI2bPkQQG5xl3+gpEql+bzjSHwz75TAjrjPsRUDbPF7t55CC63gFQynyj0qBLAt4V1f+K4YlWSYZ6tUkpqPK6ishiWgK304NIdpkZgKfvhx3MrsnxV2JBnmqzO0k0/FS3VZyYh2M4dqruI+lzlARTd79x4FxX154KXDiobU9G1ilcLo5p6HaMtZGq6XuuG7qk64+VxLIMChp73gnt0OKzr6lXNIS5IueLCY3Vlz85cXMQBsEDb4GA==;31:WCI0A7aEcz+U+Gmb8rSUMnuWvODcdEb9T8XFmzA9sLpbNJe1HrMq7aqrDoJgmWzIKi1ufviArCe4wTrTMO+s/8emylkN32YMAtHGKY6kes9sgfxSiHL0excEgtYhviFzia0po8Mb7EGSzv3q1uHb1RurMOdXRJxq8Hw2kjpIwhK1w2LkXUAk5TsOpcpum7sYi7nVxPmdxu/BGOgz3mYmf0J6xzPvqGUXKVAi7sKq1cQ=
+X-Microsoft-Exchange-Diagnostics: 1;BL0PR2101MB1011;3:q5KEackNuyUByn1cdP3sKx0iMGsyP6IfYMAl8HYxTTzCk4AOH4hJOFHWMdOGcET7M7kW3mqB/As8TVsbXISi2UtSpNERqtL58lihDusujXf6qfJNXyaVrUCftcuQm2uLFalZ/3AS+r+q3qEa7/r6jpzPhjLGRjEVWeRrPRmxejFkLEh3cDzvbT9KO1+5mJCjumj0B+AfYGQXowgUa02IQGhvAUeew7UCwq0v+ixd3F3m4XwbBdY6vdiFlJXg5W9a;25:JYA31pw5UC9qatWLwXAhB6EyxzK6G0oMTTkZU7dd5j9znbqcJ3rPQGG1cB/JdsH++LIF3EJn0N6Py0I95iqfePy1OyfwtnIkse6Q7VE9NwYxoZMkL3A5LfrACLdy4f3S/XlwQ2rJNAfpxvRTsSMqsM1Ok3Y/abZZO55LrDhkp/ZQFsswrZVnnRVcSCkys4lyQ6LN4xTwIQEbIWTwfu3XHXIa7mlEng4A3IG9a9wkGFDRMVwlgZDqhheZR6se8K+U2DYAsm/+5Q//nz5nSDDd4YUqQnViGSxGvQavf3L6VJe00ef+aGcccTrSdd7Derkql0naUpftw4zmKiCDU5Y0Zw==;31:5WqDeu2dtftVYC77iLXSowxqrb61AaLZEACF2VG1XXA1k86Lf8fIRL9nrxLOaxv2SERleroGN1OXrR2BSl+vQefllSB2MrFrfwPIMvO9W6apr3cFxRBh5ktNdNKWfDy1uBEVGc4ek4wwAB0G4i5ljs2D8Bntxw6cEqY4VDmHM0WcCmCgvbISHDUgq9K3IraBl5zWsVZSbO9dZDg2pTOlSn2xoaTAtSR9d5NHS9crqXY=
 X-MS-TrafficTypeDiagnostic: BL0PR2101MB1011:
 Authentication-Results: spf=none (sender IP is )
  smtp.mailfrom=dstolee@microsoft.com; 
-X-Microsoft-Exchange-Diagnostics: 1;BL0PR2101MB1011;20:yNJSwqYyzex3Gcw0UFUn9FPeU560DGqkFJE9tiIfwApFRmvX71K+DfnaS0iId2E58SVX+WEgUG4eX78daxWw8SrO4UUrlTR8F3NhuW1DKLpBacfELlxO55p6957A/EuH7Y5sthLGMAEdMCjgTZJrwAK6tocpuSUU5JTKPdXoynYXs++W+oHXxVrE2kanOoNJPwsiI2WIBYkAWueqCf67RO3ak5ymtm8V0T4A/W+9acoUHNkzTsdsDWd30iKHhJtRJt5tb81ZqJw5p+WKmYGWgBMBFYYxcMnXX5XyjDPj0JDRraU5fQsCCG30D7s/j3+F6R7QhdqQfWr0CXKmJEqX6RtBpDqr98XqbtpLxKT/yLiG1hV6P+QaPpRXumVH3azqiO1FBDUMaHfEAysSIgc1PKDjh6fWfYqI6ClnLJUg9Fe/cuKuxhQcjiEBevLV9opgXKMrsRDcmbVp2S7xRf95LslXJ+5wxdYSq+pscnv9MxV6vHBz1FogZ1zw4dJZNGJf;4:ygkRAX7/47uzgPb+Y6q/9KlYT5vMNr+HuWzcMoJweTRyEpMMikhvactJG8tjtGU/QVs8vbdq9tzw+pevP8bZ40zcqxWPXIuyRhNaPN0S8yphiMNurskCj2hUgwQQxM/mqoPE1hmzkomYdRl//7BbyFTimT1lUFBlna9ZyZFgTjTCMtS//uU2TdhK7tIToJhyQrTjV2U0GVEZlU3VM6FpMHdD1A3LRacWENyTA17ebHBM2QiCzwMJ/Iq3pneKigU2DwbwJD8Oow+U8mDuC23UaGev/FAeFmzxO3zIcjitFCAjox1aLvseJQmM+q6+8syI6gwQoORc3z/bmWw6LqcV8/8h1V9yMdbLIip4qtxTHCk=
-X-Microsoft-Antispam-PRVS: <BL0PR2101MB101187A468726F31815A4F3CA1A50@BL0PR2101MB1011.namprd21.prod.outlook.com>
-X-Exchange-Antispam-Report-Test: UriScan:(28532068793085)(89211679590171);
+X-Microsoft-Exchange-Diagnostics: 1;BL0PR2101MB1011;20:iV4l2AppAp4LlqimQ0Asp/j868qKxLvRy9adeyhqSG76n1tkZKqpqmAUjxiGFSjMW5+YJ9/T9hKRuLWD8/nCU6hpirsK/hayXU5kqxDHxfwwuw/ag1PB3EVL4xf6zVkRXe/SxJ42IiuL/kKKkYHMphWD2YjwjWsyb/JY7BWGt2uDKA3/8d9D1UCA5VqtwWEn+rmz4KPZArn03VbZnXJ988iS6mrEP4cw7erYIb8FT1iIvseO4GohipEr0pOzfQfUG5ouQxkj2MF9vEX9vpnFAqa4Bp985K1igjVkLs4VcVWo3iHTWUGkX2a60stnZRuCgsValQoj+uKnum2hAZyh4zahxy3C4rU+ZJ89684eeR3xYVCR+SC0+7ngMfsyjB9qaz9z31p31uoMxb3R6rRHdzcVJgGxhb/rJSzjYAh64uzYJMBOv0KmUjX7stNOZCKd3w7rMYgE0RqZk1bBhHNkc5NdE9Kyn9JTGRF6XnyNMI9fcmIq//lWJOBB9M827bv1;4:k3D/gg9aO8repYt7KpwJGa9YmZJXgQKotumzlMQMEUj7/wArDj03SZxTATiSGVLjYVeGKsw0STq3LSCEZPSjsSEfBaLhAUmMzQQDjyyKOimsJvxQFAAfrotRABX3Ey9NfyeldtwUT4yc1pvveMbURWYUSQnf4eiaKYTduxTariHhpNvop/edi0VhVt7xAWS/bOvKXsNb9zRqaYAVooKTo7TP3UbsNCvoMlsNtDYCFrXYFx/NLyCSfeO4x8auFtpPhpbrR5y3+xMUmEOel108Q2S1dKXuixIggo8LKeMa/l4e4HYPVwB1j6RqR9d7JynEMeapLJ/RxpYYKOi9K9aFHVpBu0rsFhJh94uvxUGVDaMWYhy446s6fF2fZzAgyWt6
+X-Microsoft-Antispam-PRVS: <BL0PR2101MB101100385487C1FD181288DEA1A50@BL0PR2101MB1011.namprd21.prod.outlook.com>
+X-Exchange-Antispam-Report-Test: UriScan:(28532068793085)(89211679590171)(131327999870524);
 X-Exchange-Antispam-Report-CFA-Test: BCL:0;PCL:0;RULEID:(8211001083)(61425038)(6040522)(2401047)(8121501046)(5005006)(93006095)(93001095)(3002001)(3231221)(944501327)(52105095)(10201501046)(6055026)(61426038)(61427038)(6041310)(20161123564045)(20161123560045)(20161123562045)(20161123558120)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(6072148)(201708071742011);SRVR:BL0PR2101MB1011;BCL:0;PCL:0;RULEID:;SRVR:BL0PR2101MB1011;
 X-Forefront-PRVS: 0631F0BC3D
-X-Forefront-Antispam-Report: SFV:NSPM;SFS:(10019020)(376002)(396003)(346002)(39860400002)(39380400002)(366004)(199004)(189003)(6666003)(6916009)(105586002)(53936002)(7696005)(15650500001)(52116002)(68736007)(51416003)(76176011)(4326008)(52396003)(1076002)(107886003)(86362001)(575784001)(386003)(106356001)(59450400001)(39060400002)(6116002)(22452003)(478600001)(86612001)(2906002)(16586007)(316002)(50466002)(2616005)(5660300001)(25786009)(97736004)(81156014)(486005)(486005)(50226002)(186003)(476003)(16526019)(305945005)(81166006)(48376002)(11346002)(8676002)(7736002)(47776003)(46003)(6486002)(446003)(2351001)(2361001)(10290500003)(10090500001)(36756003)(8936002);DIR:OUT;SFP:1102;SCL:1;SRVR:BL0PR2101MB1011;H:stolee-linux-2.corp.microsoft.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
+X-Forefront-Antispam-Report: SFV:NSPM;SFS:(10019020)(376002)(396003)(346002)(39860400002)(39380400002)(366004)(199004)(189003)(6666003)(6916009)(105586002)(53936002)(7696005)(52116002)(68736007)(51416003)(76176011)(4326008)(52396003)(1076002)(107886003)(86362001)(386003)(106356001)(59450400001)(39060400002)(6116002)(22452003)(478600001)(86612001)(2906002)(16586007)(316002)(50466002)(2616005)(5660300001)(25786009)(97736004)(81156014)(486005)(486005)(50226002)(186003)(476003)(16526019)(305945005)(81166006)(48376002)(11346002)(8676002)(7736002)(47776003)(46003)(6486002)(446003)(2351001)(2361001)(10290500003)(10090500001)(36756003)(8936002);DIR:OUT;SFP:1102;SCL:1;SRVR:BL0PR2101MB1011;H:stolee-linux-2.corp.microsoft.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
 Received-SPF: None (protection.outlook.com: microsoft.com does not designate
  permitted sender hosts)
-X-Microsoft-Exchange-Diagnostics: =?us-ascii?Q?1;BL0PR2101MB1011;23:zgLWLJv5MHMFd9L4aT9a0P2Chr8z/WhMDEalsRD?=
- =?us-ascii?Q?/bqITAABKa8f0Dqj8T+5mF8ehMoQqKtMo6GdxFzZh8PtZfFZDanGCS04H6RL?=
- =?us-ascii?Q?p9EhsthTguz2IRipc5aIgRbgEJx3RM1QtO9/nqxjBXZP1O5KvefT9ItQpsjz?=
- =?us-ascii?Q?Y7azH3KW7Z9s8aLXLWXhmB/hWC3WffY9vHQ0x5p8IdxLhm1uDHYZ6PquCeJA?=
- =?us-ascii?Q?DDJh65wRIwe0Kdfnj8JEVjIlVfIvkIRqXjIo1n/NuavBicmCzZWxt3LjKp6Y?=
- =?us-ascii?Q?J68iIubp8MKxO286VriSXq+gaFYGKZiPXFSGicCGaNpXWzQnWtg540j0VTH0?=
- =?us-ascii?Q?jSdxTfYXjStutx914DI3CCU8+h0P5YB+nQzFGgNlN9wddkWaMBSncyG2gi42?=
- =?us-ascii?Q?lrUB+HP/x+PFPYxfOSpdwEyI0AHaoc1u5nmZGyc2CNlVXJVoEOVUUI3wrNJd?=
- =?us-ascii?Q?G9YaxNUm1cRpmUzHvF/FEZ3WeqJOLkOBk5WuLTia4M+g22mSLbwOdsrjbWDj?=
- =?us-ascii?Q?CkvxJhU2H3vtdE6FYV1JIcZhfJeMzSbYXH6HKMyL4VgDpm5+hOPlwp751c/Z?=
- =?us-ascii?Q?59ls+UqQr+Q3GY1R6WpRtoi7SHlaFV5QivSAWvSRNLSgh3IXXC8hyjPl7LFe?=
- =?us-ascii?Q?XnXI70SX5tKdmrIr4R+wsEcEmzRQ9PLGECIWFHpkfCAX3E/Gt5uFEO0JXChW?=
- =?us-ascii?Q?5ZYNuKC27eGM1dYWDk/6CPCT8oM8wnfDfJl9AXoRHoZ21zMvTykxRMqqdlBa?=
- =?us-ascii?Q?yv8C1mdL5n931hM++w/YBdoGLuBzSw4vxzYiFpGL0AZ0DuKj8poXV3m2CKsS?=
- =?us-ascii?Q?N0aIouhNOHhD5wHATKALLr81pg3c7M1J63d8IVigODQlpcOJZl79IbL6f3wY?=
- =?us-ascii?Q?qtvDYvFQZ+cNvals/iljMXJrvsqGxSoOvRvatN2eTHG5JZAI42Fco/9Wq8kx?=
- =?us-ascii?Q?KRNTPXxqZUHt4uFOt+QKVvTaD5DFfEC3OLAzDnabSdFS6kdVuoSccLkHGhFr?=
- =?us-ascii?Q?QirBB+eEucAuGo509qE8Wl4NZ/IsVDuaBQgRRQ3zLu0YPnskrkM4gSNi0Qys?=
- =?us-ascii?Q?nCATQvZ2rqiH0uE+XYyE0S6qwHKJ2Pkp8rBa/+XkwbmoJy0tlkpkxekzWTwG?=
- =?us-ascii?Q?RnncrarLS6kfqT+sLmcGbOzuOeb6Xek6bEx60Z7ueHzz99cq4tIj4VpZuJzI?=
- =?us-ascii?Q?Gk/eI4tu9cvIqEdh2SOW8K1pGi99toeSoZzAfffk3xJlPM6Y07AU6w+cJZyj?=
- =?us-ascii?Q?REub8jPxqkQG6zWtFXCZHmVS9USQLXJ49QDoP+fiMCDMIslJreRjk4jNI+Kp?=
- =?us-ascii?Q?dMVLUWTJ61n1l9rvot0fjSwoEFSkGN4poi7ZZfbpsbWYV610ruecy5jyWpT7?=
- =?us-ascii?Q?YDBBCGNf6r6UubsXsZJCA0GQP+erxuxkgt9s7ow8sStVpH7JaNiPetq8gpLe?=
- =?us-ascii?Q?alrrwJBHB2Q=3D=3D?=
-X-Microsoft-Antispam-Message-Info: RE+B5xNx0YuUzVrkePoDIUU2ZQg0J3I9wiGbiSlm422H3PPrjmccXwU/LowJwiqPnATOMaoXasSDvF8DoNeuerV8Mqoajt33hCLq60FBHfVcRfnK8MU6P/zAQjpdobM6T9h6m9kvgIER0FJULhgwkydA/+u3boUgEPf9Pn98Wi22Fm5RwmRwSONJ9kVP7xCo
-X-Microsoft-Exchange-Diagnostics: 1;BL0PR2101MB1011;6:EjDWO8T0l5apXM4DXCSH1Poydk/OE0ecqaLEZ0eCCvvRTjIrvgKZUH6VNOPk+TMWWSbSW6P63G8DbRwtZnb358D/FRS8QPHsuSj3Sv3lQJOkJI9xMSUQQUMelen1QVJ2FYONbrVX5zPzymhapk22mITCdSwwdTOKSnULeM6XkQk32dikPxj7TnvIB7N4qFEmP8kcR0sHvxg/5XbW+1832vvJoAwFVunr7Wr99eyHyu9TDQImzNTU5HGyZw8MBdzs5h9V1Znr5IjfNCICQsuvX0d4XJVKzHhUDbBX4dezbpjfZNO39cXCWv+6dKPXrE35vaQ2nIYD4u0TxyOh+K0AoUWV5Inwlf7I5Et6Bk4d3aBV91ifc+CU2pOaftkLenNMOJRqQiFzW51Hxhzefx4N6x1s50+G8REPeJDRZy+NyQfEkELrgmNJjdtbFH7AOOEWXR9J3o1QF5cor+Mh/lZQSQ==;5:MQSfNqyy1FYsF1pdTrf5JwAle/NKn9PVXepRRLObnPDM5nkXAMjNpFRCsYhueupxFsS1dvddn77CPvyiFZAxg5/+ZF9dxiG/JW7+XFPvWxarYC2kHLWXdVvurVDE02bjHk2mHgjm6QznXmIDe6yy132iRjnZU60LglcPgxeX0iE=;24:UO/5R35YwAdiAump/GWnULMvF9WwaeSLQf7NMxL7KHnv5MdUTJNmp9waOaSz39hgGmlvmJ70sUtjy84xBbnCxeLqK7rakgv0E/mvqFkjKag=
+X-Microsoft-Exchange-Diagnostics: =?us-ascii?Q?1;BL0PR2101MB1011;23:JP2sq9uOB/DVWerWtkCMG67EzCe2yl76LQGnxPp?=
+ =?us-ascii?Q?M6yuXJvlbchCdxlqmqXryC2ViT1nkZlamkiJE6V7Iz0bpRmfLAbgz6zwFC3D?=
+ =?us-ascii?Q?ksjwghXLgyO5GnbjriCbzfMNtR/NL7zBwgDldnwRSFYiYWfLnZgb+dESXfQZ?=
+ =?us-ascii?Q?gRxGTF6Tjn8sc5yc2wzCh8LxdMEg4FErfYWBxS2rw6WZwshqRisyHYON0Dq/?=
+ =?us-ascii?Q?VImQkrbfIsevhBHP+u+FWQwLzyCqQDvU6JaAUJVRZczdnysrZzxx5GUgHzsB?=
+ =?us-ascii?Q?M3vc93XqtzIO37/wLSda94vh1DexQ6Gj4eP+1iUoAPgyjNOrUJVYOehgd+fu?=
+ =?us-ascii?Q?yKOdpirT6mSk59x5WFmznWUtGCdricmpzODfbyGruQmsW8HSRnjLsi/fUB2V?=
+ =?us-ascii?Q?vVq/r1Hn4o0BCoahJL4nZkD6Mt8asq4Dvis1GxsTFLDllUWchf6R/PFw75yf?=
+ =?us-ascii?Q?iZBJuWvWRbgWrZEomtVrqiR8HLVJooKTW14CYAA+n4QlFM9dXy5eG12XHoxF?=
+ =?us-ascii?Q?oCMHmXAN5KuzpHbELd82zYimth86lcYGOlJ72H6Dyr8s14ESNo0etfHRvTMb?=
+ =?us-ascii?Q?KbnAFaYwJzssTGGwSNyC/s6y5v08si/Z3SMOKGc4FQGrWmW0qihNW0heAiWT?=
+ =?us-ascii?Q?we9z+kOB7P/asTnlnPzesBI59w5g99qHjKKPk2Ke4NnP2AGpKpOgyZggu6rk?=
+ =?us-ascii?Q?vYlShFJ5gqnJWRJpCPYqy7KKMU56kwpQdTC5N0wAAoF9CwD3lDyEvx1WNuo4?=
+ =?us-ascii?Q?KJ0fjRetgul0LcusnRKlwJxJDFrsO5XHfgQLxUZPgsudpkQEDqPwuiT1qb11?=
+ =?us-ascii?Q?PUWq4evoWEyICAKhKQrF560om3sSlv+Q9vpryclqz2B9FnnLHBxG63ZhBdeh?=
+ =?us-ascii?Q?3vGIiB3PM66zBvTFzKLEEhI9u2tt7GKH0+Y4n1Ib8tPIcl9cz/lj3nV32P+D?=
+ =?us-ascii?Q?Im0eTgcOHLNleH5smFelHG2+DvXd9X1ShsxW02S/FUwRX5RBDK6iajg5czo4?=
+ =?us-ascii?Q?3KrhZ+TAkVacjMwjNvQdb6qyGuCYEl2dTEARGE9y2Mk2FqSy6Xg/oMIsYCzx?=
+ =?us-ascii?Q?ty9451IZuUVmPbxP5uWxWnlR/MA69n+Ov8A7ZeRktcLLXNGL8XtL7cjK5MG4?=
+ =?us-ascii?Q?B4LOIQWj8SJZN1t6rA0kO9/3oqMjTRKEFFUPGOuGxYYQvV98LihaJAPlxbBL?=
+ =?us-ascii?Q?AOQYKwvYtIjWrKKJExApsIqeK7G3ewlLDQicmkI7Ftw+2VP6ptFXpcNoDlzq?=
+ =?us-ascii?Q?JY2YbJyErKkAE+JFQye8QBMEe2Gaf2lriTQIF0YEtly46fQFB2+g768byleQ?=
+ =?us-ascii?Q?tpktLcRA59BccTvnrRFrUuW9GfZoboagZhHTBCMNlhl+5MgsQteBxICnlMj4?=
+ =?us-ascii?Q?OtuegPz/4ksfZfzXw4r5Z/IH1h4A=3D?=
+X-Microsoft-Antispam-Message-Info: UDjgcBu9ih3s9QyW6eBhhAUEcA2/tRxCd4d5mtSgvOkmsCRBDdkqXCHlODelfACDJodL61PlGyYkTrcL1rRwJxOjpwi+dE03d6t3Zfo55BV8+78L1ipzrVRRbuQcyL/fDaWScKWgP/Q7ju26BqxxLJdTmWcCBuKRfDXXtfYMCZmo/6+LPoR10xgkwwmtxRV5
+X-Microsoft-Exchange-Diagnostics: 1;BL0PR2101MB1011;6:G7Z80qXIUFRjC/7dXv/X7mkLBTNlpqkCUrZJs3ZEiGRc23noGj0xGznt8XzME9sThImvnYa/nLP8MVvo3ldokY98ZapwoH+rKsHjhLH31E1vo6MxsDPO39e7nj0RKS/5JLhTTcSnSr4f3P1EU2Ux1w268S43BOrKXhRZSgma9KlFlhtriHUKLC/cuBAXkeT1yQ3jdeK6PaIg46eAks2nj/y/4el24s9IsKMrT4/5a0qG5IgoS/aFSW1fr8LOo4u1xbVoSdeyqxSmDafLBssP5B7e4480d4q0HhEpqrfxOhACtC0I5Vb638uJFaa2dk52QnlsVbfjZVKprg6gJ2i2cJ3TGMdpgdhqPXK0E9iMPiTb23Kq3/jDOTJ1QxpgMKW+1RtIcUt0MQYt8RVjPS/w3azCJiGZNWj1HdHpHbPKplzdJJINVjCuKQKTVXk1HwX1iC7LtlP/j+dN63KiVzn6Gg==;5:FKD1sWQfgVFPxzpsm4D7V6eDWvCIBK6cPnJdeXv2On0VNfL80I1QeZchxSyrndtXMR1AH7J14e0nKvlafWGK096ccFyUg+RD/wqw4EPlnd7Nr2B2hwNywkCSNQsmQrogGK4q50OUzlI8d8Q6/5l8570yKP37dtD8AuGkR3kF088=;24:jc4rmStqgrUn8o1FbnVKE71d14UK/JF3/7F5uao32eVN4mNKMy0XANaAtJeaeBVmt/0kAmwtIPr/I00KeI/7meNlWs/CdrrzMsdLCmfhuUM=
 SpamDiagnosticOutput: 1:99
 SpamDiagnosticMetadata: NSPM
-X-Microsoft-Exchange-Diagnostics: 1;BL0PR2101MB1011;7:Y8qRtlv5slsWAkus4n8Cf7SDRPsiiVCacCekWZs21JkfKGDUi5zFqrpSL/eCrb8PQgfZMTzWYepCOKquAEw1V+kdRpGnkhWktbHfjQbMEkGgoSX0Ou4TftV+X69B1YzRpY4e6uWLVYvUJSNrE9OUj0nEC1+pmLFP9IWp/i0LTBHpG1hPRVjhMSpNB+CBe1XzW3uRdjFnW5ENkr2EFQXTi2TZfhjO1njvXngcgxoAsnPeF/5w2agxBfo9OHYvA7wK;20:C+WdInMCEq0bzF7FksX2+y8Zl8urv8MZgPWgZN9QbgJwThL4cpWjiDkGhvQsthIjDcCa7uurHq8h0dWX681vXM8Jyrrj3GINAsvhoNC54cG6Q/ztNhzO1vxKLu3myWEdupkt010lUJLTym6HMjLP9ACLf3SuqvPeEupT7v5/iWg=
+X-Microsoft-Exchange-Diagnostics: 1;BL0PR2101MB1011;7:mLylbaRvSYQ57C2RC82rnjBwpmjcVvIMbStwqEPNmSmq5WjsClaXPCp1vX6UW3Ak5Fxta6Ga1AyDpf2YbwIiARhXTWvDulzuWRYZnnwvlGKVNW+5tuK0NWoKUH3HiiE5/B+w37X+fkdanWKFri5mvwNp1aRZp42q0+pZB1TSLDzRlctLN0C5iOU3GxQnLanAjGUMP2uoqfeskWwxC98BwzBowgkEKnrshjQniOXYVcxPH+4hiWAUPYQyAnV4tvjw;20:ZHvst1irWbeboIUMbrSRHD/S6yEwSD5JNHY/jfOWW4oZfiJ4JSDWhzyThJVUVmS+DOlyt7ZY3r7AcxtpOfIRR3dnDsTHwstqi6hed8KGAnNGbiETknNGqp0IhZSB7YkFp0k26464VccFp96exzYQQOEanT5TqGNdiCG/D/nD340=
 X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Apr 2018 16:52:10.3242
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Apr 2018 16:52:09.8086
  (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: c39dc48d-8196-4d8f-558b-08d599833e2b
+X-MS-Exchange-CrossTenant-Network-Message-Id: 03df94ad-9a2e-489b-0a08-08d599833ddf
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 72f988bf-86f1-41af-91ab-2d7cd011db47
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL0PR2101MB1011
@@ -101,37 +100,105 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We now calculate generation numbers in the commit-graph file and use
-them in paint_down_to_common().
+In paint_down_to_common(), the walk is halted when the queue contains
+only stale commits. The queue_has_nonstale() method iterates over the
+entire queue looking for a nonstale commit. In a wide commit graph where
+the two sides share many commits in common, but have deep sets of
+different commits, this method may inspect many elements before finding
+a nonstale commit. In the worst case, this can give quadratic
+performance in paint_down_to_common().
+
+Convert queue_has_nonstale() to use generation numbers for an O(1)
+termination condition. To properly take advantage of this condition,
+track the minimum generation number of a commit that enters the queue
+with nonstale status.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- Documentation/technical/commit-graph.txt | 7 +------
- 1 file changed, 1 insertion(+), 6 deletions(-)
+ commit.c | 37 ++++++++++++++++++++++++++++++-------
+ 1 file changed, 30 insertions(+), 7 deletions(-)
 
-diff --git a/Documentation/technical/commit-graph.txt b/Documentation/technical/commit-graph.txt
-index 0550c6d0dc..be68bee43d 100644
---- a/Documentation/technical/commit-graph.txt
-+++ b/Documentation/technical/commit-graph.txt
-@@ -98,17 +98,12 @@ Future Work
- - The 'commit-graph' subcommand does not have a "verify" mode that is
-   necessary for integration with fsck.
+diff --git a/commit.c b/commit.c
+index 95ae7e13a3..858f4fdbc9 100644
+--- a/commit.c
++++ b/commit.c
+@@ -776,14 +776,22 @@ void sort_in_topological_order(struct commit_list **list, enum rev_sort_order so
  
--- The file format includes room for precomputed generation numbers. These
--  are not currently computed, so all generation numbers will be marked as
--  0 (or "uncomputed"). A later patch will include this calculation.
--
- - After computing and storing generation numbers, we must make graph
-   walks aware of generation numbers to gain the performance benefits they
-   enable. This will mostly be accomplished by swapping a commit-date-ordered
-   priority queue with one ordered by generation number. The following
--  operations are important candidates:
-+  operation is an important candidate:
+ static const unsigned all_flags = (PARENT1 | PARENT2 | STALE | RESULT);
  
--    - paint_down_to_common()
-     - 'log --topo-order'
+-static int queue_has_nonstale(struct prio_queue *queue)
++static int queue_has_nonstale(struct prio_queue *queue, uint32_t min_gen)
+ {
+-	int i;
+-	for (i = 0; i < queue->nr; i++) {
+-		struct commit *commit = queue->array[i].data;
+-		if (!(commit->object.flags & STALE))
+-			return 1;
++	if (min_gen != GENERATION_NUMBER_UNDEF) {
++		if (queue->nr > 0) {
++			struct commit *commit = queue->array[0].data;
++			return commit->generation >= min_gen;
++		}
++	} else {
++		int i;
++		for (i = 0; i < queue->nr; i++) {
++			struct commit *commit = queue->array[i].data;
++			if (!(commit->object.flags & STALE))
++				return 1;
++		}
+ 	}
++
+ 	return 0;
+ }
  
- - Currently, parse_commit_gently() requires filling in the root tree
+@@ -793,6 +801,8 @@ static struct commit_list *paint_down_to_common(struct commit *one, int n, struc
+ 	struct prio_queue queue = { compare_commits_by_gen_then_commit_date };
+ 	struct commit_list *result = NULL;
+ 	int i;
++	uint32_t last_gen = GENERATION_NUMBER_UNDEF;
++	uint32_t min_nonstale_gen = GENERATION_NUMBER_UNDEF;
+ 
+ 	one->object.flags |= PARENT1;
+ 	if (!n) {
+@@ -800,17 +810,26 @@ static struct commit_list *paint_down_to_common(struct commit *one, int n, struc
+ 		return result;
+ 	}
+ 	prio_queue_put(&queue, one);
++	if (one->generation < min_nonstale_gen)
++		min_nonstale_gen = one->generation;
+ 
+ 	for (i = 0; i < n; i++) {
+ 		twos[i]->object.flags |= PARENT2;
+ 		prio_queue_put(&queue, twos[i]);
++		if (twos[i]->generation < min_nonstale_gen)
++			min_nonstale_gen = twos[i]->generation;
+ 	}
+ 
+-	while (queue_has_nonstale(&queue)) {
++	while (queue_has_nonstale(&queue, min_nonstale_gen)) {
+ 		struct commit *commit = prio_queue_get(&queue);
+ 		struct commit_list *parents;
+ 		int flags;
+ 
++		if (commit->generation > last_gen)
++			BUG("bad generation skip");
++
++		last_gen = commit->generation;
++
+ 		flags = commit->object.flags & (PARENT1 | PARENT2 | STALE);
+ 		if (flags == (PARENT1 | PARENT2)) {
+ 			if (!(commit->object.flags & RESULT)) {
+@@ -830,6 +849,10 @@ static struct commit_list *paint_down_to_common(struct commit *one, int n, struc
+ 				return NULL;
+ 			p->object.flags |= flags;
+ 			prio_queue_put(&queue, p);
++
++			if (!(flags & STALE) &&
++			    p->generation < min_nonstale_gen)
++				min_nonstale_gen = p->generation;
+ 		}
+ 	}
+ 
 -- 
 2.17.0.rc0
 
