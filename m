@@ -2,109 +2,136 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 79DD61F404
-	for <e@80x24.org>; Tue,  3 Apr 2018 21:36:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DF2711F404
+	for <e@80x24.org>; Tue,  3 Apr 2018 21:38:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753305AbeDCVgx (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Apr 2018 17:36:53 -0400
-Received: from mail-qt0-f169.google.com ([209.85.216.169]:40940 "EHLO
-        mail-qt0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752863AbeDCVgw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Apr 2018 17:36:52 -0400
-Received: by mail-qt0-f169.google.com with SMTP id g5so20964235qth.7
-        for <git@vger.kernel.org>; Tue, 03 Apr 2018 14:36:52 -0700 (PDT)
+        id S1753577AbeDCVik (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Apr 2018 17:38:40 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:52669 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752813AbeDCVii (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Apr 2018 17:38:38 -0400
+Received: by mail-wm0-f66.google.com with SMTP id g8so12588668wmd.2
+        for <git@vger.kernel.org>; Tue, 03 Apr 2018 14:38:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=zZR1Bw8kJ/iKYKIAWnRn959rfLB/EyOFoPx39ck1gWs=;
-        b=Ok/LwpSlewB4hyCIJBchef0OHeuucxKzKuAWsAM2fvcFcI7T/kdv6uZdMRIZeWqSLr
-         AUElznMJXMx+3V3rj7TgJ9LYna8Mp5xHUezeC/27Igsv06NkxRo+HT1hs8KdZFGlR1fQ
-         DQCtNPo9c3gifzSC0CbubTuzQEd5sZ3IzEaWn6vOJa6mOSY0++9H/ofJXB3qtmtY0+TN
-         yKmwHt2egqg3eg17/Lyy1NTsBkVr9PC2LnGKLWVC9KD/ERgIdOALXxjW0pgJrilytpvQ
-         Fx5cUJ7hS9KzPq2rHyIZX94HDPhYVn6/2/rdw350303O+sGIaWx+BUKgr4YpkptT4SNa
-         VWsw==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=9r4PMig0GKVCbpEAPGjZKVL9Dqok4ZUzrKj0jourV38=;
+        b=FHEEWgWErYW/tv5G6CkDnkmsb1W+R47qbqbIDDyDfrGLcpJ3Cdqjc7pAqquBIs60jU
+         KDHzgQMqUhPQ3/g+BkhhJ5zWpFXCjf6UktYXo5bmVjWfW5xYvz/cOjc20R6UcCBpEPkQ
+         Ba8hjiqjp0ri8fi9ISRNXFKmFV3WPNLXugYuHHQwYuSusd/eLlr/VVb7YVeZ7HuV3H0N
+         9Gg/ZVTMGraCPxs90GzYFPKfGIQKojRONSMB9IXisyTXb2frCwBKy72i2G61z0idF+z5
+         +KAW4rZ0myCcHsaydVqXqyawURgBvRXc7YIT+8QlKmYj6ucOWBCzrgWLW0w1mMV9IviM
+         4ILA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=zZR1Bw8kJ/iKYKIAWnRn959rfLB/EyOFoPx39ck1gWs=;
-        b=RcLMZiexE/HWLKpOppJlo/XDNshNMlG79jkd4Ha3G+zO2mzq6KgNqGNYiqzwKteiiB
-         IMcMVW5DPKyXt0hqm2x8jIF/BIP+a1x9EV8E9HBuRVps1FHtRoI+GDh8/qt1JugVls01
-         XfSYFex3c8lIhSW43SW70xr6WDzSje99zpWhmi8lNUr2wsjTSMZDhSKPzZMtKOIA7j9B
-         LnCZJtfbBhUOI3qM4NvV4cGJpwDAbP/t/tu2+p6Ipr5wAaLqr/I/eS+WA9JK2cWnhas6
-         5hDLsD4OJ7LHn3noCA2hEPJGVPFm6q0izoNTfKjKJUzgJoG0pnPwVG5lBQ1sgkW243EZ
-         Ndmg==
-X-Gm-Message-State: ALQs6tAXMX4NKgWLzT3ONkTN16ZYkPH832hqHoJGjF8+73UD+XjtrTsZ
-        VHqyiPwH1zUNmbpFCmfOYSnh28c8VQnAToAB9S8=
-X-Google-Smtp-Source: AIpwx4/YCo6pAa8wn6o2ZzecskhUf0mkxNEZS/8u7FrRmZY2CyJZcn6Q1ByYb3uwKeqoe6LFoHUCoqHeAPhsNpYBxms=
-X-Received: by 10.237.57.166 with SMTP id m35mr21682449qte.220.1522791411376;
- Tue, 03 Apr 2018 14:36:51 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=9r4PMig0GKVCbpEAPGjZKVL9Dqok4ZUzrKj0jourV38=;
+        b=n0gmGDz1Ooka89IpjH/RnolKlxLrAWIQ05aTM8E3NVdFBS2vwXBYmj/GUEvrGU4aV9
+         tCzvFS3f9ra3UZNH+67CtCR9qNgYh2+qnzlvEhI4n56d7zEaLE9R7firvVey1Mz5m8eT
+         Js8TJfoGIJk405IhYkYJ2wvmv2wSqAJGv+uVRgUeKdkVD7DVPnlCKAAPgsLW3XP87s3n
+         rjGwzo3XbhozgimMHC5RrEXuYOvdNPN3auh6f3XpdaqeJz5ucm8sd3v9A1LoTvJHULCJ
+         fs4Dv+IqW5JQWdSMk2cr+MD1O/DVnqq6tLH9z65I/iNIYgL/jhcrGSYv5Fr3KnGLe9Ny
+         HmSg==
+X-Gm-Message-State: AElRT7GgQCPE7hcazHf1XmVIZRfXwKReSdizmFtZTgst53U7cUcStEli
+        kEgPk40/+/xKHmMKZlGdbm9KeuWh
+X-Google-Smtp-Source: AIpwx48bSlscADppIopwrsqEqeG5U2eKAjrpLlTPEBO5AK4MiRU123uwnWe9HgRt1ORkgzfEt2X7eg==
+X-Received: by 10.28.132.7 with SMTP id g7mr5112635wmd.109.1522791517489;
+        Tue, 03 Apr 2018 14:38:37 -0700 (PDT)
+Received: from [192.168.0.103] ([92.55.154.10])
+        by smtp.gmail.com with ESMTPSA id u110sm5393642wrc.72.2018.04.03.14.38.36
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 03 Apr 2018 14:38:36 -0700 (PDT)
+Subject: Re: [RFC][PATCH] git-stash: convert git stash list to C builtin
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>
+References: <20180324182313.13705-1-ungureanupaulsebastian@gmail.com>
+ <CAPig+cS9QwCOG7BA7O5Nu_zsh-xTbDFy2vTWpAXxBuKTY-uzUw@mail.gmail.com>
+From:   Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
+Message-ID: <63772b7d-7b1e-2a3a-b12c-2dae9e254b68@gmail.com>
+Date:   Wed, 4 Apr 2018 00:38:35 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.7.0
 MIME-Version: 1.0
-Received: by 10.12.174.202 with HTTP; Tue, 3 Apr 2018 14:36:50 -0700 (PDT)
-In-Reply-To: <nycvar.QRO.7.76.6.1804031133270.5026@qfpub.tvgsbejvaqbjf.bet>
-References: <cover.1522336130.git.johannes.schindelin@gmx.de>
- <899ea23951627426ccd0aac79f824af386c5590c.1522336130.git.johannes.schindelin@gmx.de>
- <CAGZ79kapTWGsYznt7rr0QTNX+uH85TPY8AOA1jtDJ6_q8edX1Q@mail.gmail.com>
- <20180329194159.GB2939@sigill.intra.peff.net> <nycvar.QRO.7.76.6.1803301415240.5026@qfpub.tvgsbejvaqbjf.bet>
- <87fu4hwgfa.fsf@evledraar.gmail.com> <20180330191620.GA32338@sigill.intra.peff.net>
- <nycvar.QRO.7.76.6.1804031133270.5026@qfpub.tvgsbejvaqbjf.bet>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 3 Apr 2018 17:36:50 -0400
-X-Google-Sender-Auth: tJwj7r6q37IRnA6zsdo50l7GNRo
-Message-ID: <CAPig+cSEmHnmfhE1_1j0aVr0cfh4um=MxDr_n3jQq0skHesXGw@mail.gmail.com>
-Subject: Re: A potential approach to making tests faster on Windows
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Jeff King <peff@peff.net>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Stefan Beller <sbeller@google.com>, git <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Thomas Rast <tr@thomasrast.ch>, Phil Haack <haacked@gmail.com>,
-        Jason Frey <jfrey@redhat.com>,
-        Philip Oakley <philipoakley@iee.org>,
-        Duy Nguyen <pclouds@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <CAPig+cS9QwCOG7BA7O5Nu_zsh-xTbDFy2vTWpAXxBuKTY-uzUw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 3, 2018 at 5:49 AM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> My main evidence that shell scripts on macOS are slower than on Linux was
-> the difference of the improvement incurred by moving more things from
-> git-rebase--interactive.sh into sequencer.c: Linux saw an improvement only
-> of about 3x, while macOS saw an improvement of 4x, IIRC. If I don't
-> remember the absolute numbers correctly, at least I vividly remember the
-> qualitative difference: It was noticeable.
 
-MacOS is _slow_, much, much slower than, say, Linux.
 
-Several years ago, when I had this machine configured for multi-boot,
-I ran MacOS and Linux on bare metal. Back then, using ram disk for the
-"trash" directories, and disabling Spotlight indexing on MacOS to
-avoid it eating CPU and causing I/O contention, the Git test suite
-would run to completion on Linux in slightly over 1 minute. On MacOS,
-it would take over 10 minutes; 10 times slower.
+On 25.03.2018 10:08, Eric Sunshine wrote:
+> On Sat, Mar 24, 2018 at 2:23 PM, Paul-Sebastian Ungureanu
+> <ungureanupaulsebastian@gmail.com> wrote:
+>> Currently, because git stash is not fully converted to C, I
+>> introduced a new helper that will hold the converted commands.
+>> ---
+>> diff --git a/builtin/stash--helper.c b/builtin/stash--helper.c
+>> @@ -0,0 +1,52 @@
+>> +int cmd_stash__helper(int argc, const char **argv, const char *prefix)
+>> +{
+>> +       int cmdmode = 0;
+>> +
+>> +       struct option options[] = {
+>> +               OPT_CMDMODE(0, "list", &cmdmode,
+>> +                        N_("list stash entries"), LIST_STASH),
+>> +               OPT_END()
+>> +       };
+> 
+> Is the intention that once git-stash--helper implements all 'stash'
+> functionality, you will simply rename git-stash--helper to git-stash?
+> If so, then I'd think that you'd want it to accept subcommand
+> arguments as bare words ("apply", "drop") in order to be consistent
+> with the existing git-stash command set, not in dashed form
+> ("--apply", "--drop"). In that case, OPT_CMDMODE doesn't seem
+> appropriate. Instead, you should be consulting argv[] directly (as in
+> [1]) after parse_options().
+> 
+> [1]: https://public-inbox.org/git/20180324173707.17699-2-joel@teichroeb.net/
 
-These days, the Git test suite takes 15 minutes to run on the same
-hardware (with same conditions: ram disk and Spotlight disabled),
-which is painfully slow, thus I rarely do it. Unfortunately, I don't
-have Linux installed on bare metal anymore, so I can't make a proper
-comparison, but I do run Linux in a virtual machine under MacOS and,
-even though its running within a virtualized environment, Linux is
-still much faster than MacOS, taking 4:25 (slow, but not to the point
-of outright pain).
+It makes sense. In the end, when all stash is converted, it would just 
+require an additional pointless effort to bring (back) from dashed form 
+to bare word form.
 
-That the test suite runs so much faster on Linux (bare metal or
-virtualized) than MacOS on this machine, I have attributed (or
-understood as being due) to poor HFS+ filesystem performance. It's
-even worse when Spotlight interferes. Presumably, the new, recently
-released, Mac filesystem has improved performance, but it's restricted
-to SSD's, whereas this machine has a physical drive, thus I can't test
-it.
+>> +       argc = parse_options(argc, argv, prefix, options,
+>> +                            git_stash__helper_usage, PARSE_OPT_KEEP_UNKNOWN);
+>> +
+>> +       if (!cmdmode)
+>> +               usage_with_options(git_stash__helper_usage, options);
+>> +
+>> +       switch (cmdmode) {
+>> +               case LIST_STASH:
+>> +                       return list_stash(argc, argv, prefix);
+>> +       }
+>> +       return 0;
+>> +}
+>> diff --git a/git.c b/git.c
+>> @@ -466,6 +466,7 @@ static struct cmd_struct commands[] = {
+>>          { "show-branch", cmd_show_branch, RUN_SETUP },
+>>          { "show-ref", cmd_show_ref, RUN_SETUP },
+>>          { "stage", cmd_add, RUN_SETUP | NEED_WORK_TREE },
+>> +       { "stash--helper", cmd_stash__helper, RUN_SETUP },
+> 
+> You don't require a working tree? Seems odd for git-stash.
+> 
+>>          { "status", cmd_status, RUN_SETUP | NEED_WORK_TREE },
+>>          { "stripspace", cmd_stripspace },
+>>          { "submodule--helper", cmd_submodule__helper, RUN_SETUP | SUPPORT_SUPER_PREFIX},
+
+For now, I do not think that it is necessary (for stash list), but I am 
+pretty sure that it will be required in the future when porting other 
+commands.
+
+Thanks for advice!
