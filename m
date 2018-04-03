@@ -2,119 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 288961F404
-	for <e@80x24.org>; Tue,  3 Apr 2018 12:15:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8E0241F404
+	for <e@80x24.org>; Tue,  3 Apr 2018 12:34:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755443AbeDCMPN (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Apr 2018 08:15:13 -0400
-Received: from mail-qt0-f178.google.com ([209.85.216.178]:40354 "EHLO
-        mail-qt0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755300AbeDCMPM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Apr 2018 08:15:12 -0400
-Received: by mail-qt0-f178.google.com with SMTP id g5so18876769qth.7
-        for <git@vger.kernel.org>; Tue, 03 Apr 2018 05:15:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=60kji29airkCsFUYP+i/MDUd/EcKmVwLLVzLqrECKL4=;
-        b=AGNI1VpL651SwdmFMxQpMTiah6EeSk2NYpOfCPja8rFuirQREjV9IFPlr3qlpC9AU0
-         gdWJ20dxSiojDqfUEPtKXUGtJdMXXmZYFYHLPKM9ZxpIZfRzEf4M/vT20BM1qpQzjmcU
-         trUjZloRkhsECferiI2c6xMa+iWTu4BX8C3upk3hF0d+wTrxtAp1ilLUK2N0k3XW/H4L
-         7NikH26zP9rIIIv54Rs0C+jdBO+x3TBvR40CWbys2SfiYifbO5ppqbmlSQEkTWzRKx0S
-         bn9ag/7XgaPomfZ5FhXYhyG5S60ycbhL9QOrw4eniG4F4S6d6yE+O6bp6BZJcTBLHCQZ
-         F/lA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=60kji29airkCsFUYP+i/MDUd/EcKmVwLLVzLqrECKL4=;
-        b=NnirtoIEesWmUEH4h5sxiG4TM1GOtP8W4Zxb2CcwpGuC2Jiit3MpevvRf/ZtcxjVnR
-         c8hxzGmWSsjE8O14TfMrZBRtcadWC5LYvifoComPsKVM1+1tV8brAskld62dgsxOcnjH
-         352vot477OuSi7z6kg8iHwQHBXJcxmm0qKRbx/qz/396G9w0tKUu6y58Ky1vtgiYiAyO
-         508W/TS7SBu2WfeKsQlpU501LXvzo/Ebh8H70pyNg8TImbD5BYf7R4uWm89k3i4S8IuD
-         P8ZT3YhJMcij7hqUCxFAMqRl4kK4PdidNzMZrQiFUmxVfq/C4/fzvYR8CMnZFLVg+BnB
-         jPng==
-X-Gm-Message-State: ALQs6tCl0F1KVxhRO2RpYh7VTXJFwWhQobIn7jjTQbsTi1+C4mdamM+6
-        4sGrSsooUuyz7xqHUAdNCR8eTDjQg7U=
-X-Google-Smtp-Source: AIpwx4+rw/nYOM+Iw9+FZoEHeHnvx16Bh404Oydxf0DUbiS3XPXVMVRfFOBaSPMx/nYG47rqoz0wMw==
-X-Received: by 10.200.102.71 with SMTP id j7mr6908503qtp.189.1522757711573;
-        Tue, 03 Apr 2018 05:15:11 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:c4e6:7a22:56f1:df04? ([2001:4898:8010:0:ae1c:7a22:56f1:df04])
-        by smtp.gmail.com with ESMTPSA id n30sm2176002qtb.93.2018.04.03.05.15.10
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 03 Apr 2018 05:15:10 -0700 (PDT)
-Subject: Re: [PATCH 0/3] Lazy-load trees when reading commit-graph
-To:     Derrick Stolee <dstolee@microsoft.com>, git@vger.kernel.org
-Cc:     avarab@gmail.com, sbeller@google.com, larsxschneider@gmail.com
-References: <20180403120057.173849-1-dstolee@microsoft.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <00d5cd22-3492-73cf-3493-1f6f1ec15922@gmail.com>
-Date:   Tue, 3 Apr 2018 08:15:09 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
+        id S932165AbeDCMeV (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Apr 2018 08:34:21 -0400
+Received: from mout.gmx.net ([212.227.15.19]:59331 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S932245AbeDCMeT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Apr 2018 08:34:19 -0400
+Received: from localhost.localdomain ([65.55.188.218]) by mail.gmx.com
+ (mrgmx003 [212.227.17.190]) with ESMTPSA (Nemesis) id
+ 0MY86C-1eyotU3224-00UrwF; Tue, 03 Apr 2018 14:34:17 +0200
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+To:     git-for-windows@googlegroups.com, git@vger.kernel.org,
+        git-packagers@googlegroups.com
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [ANNOUNCE] Git for Windows 2.17.0
+Date:   Tue,  3 Apr 2018 12:34:09 +0000
+Message-Id: <20180403123410.13300-1-johannes.schindelin@gmx.de>
+X-Mailer: git-send-email 2.17.0.windows.1
+Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
-In-Reply-To: <20180403120057.173849-1-dstolee@microsoft.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Fcc:    Sent
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:kY8lssVZLfbm0ZCqa3OaoINPDVEw7FAXAmNj+Eurp0n3CQ5mvTb
+ ACP0FvjQmJTSuFQPfDVn/4Uim2RgmS0xOLMB7ejFm8pZhr+Zzl6YSuF61Q1PP0PMF7jKNdA
+ LCFVLwAQEm42b6o5Z6lcH3OCdn4y1UBUNuwHG8X7yi+qGTI+f44AKZ8NL+0mn32CL4IiIoA
+ v45Jh7OrXo6MF+K8BmawA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:8oWrPNUCKVE=:81I0Y6s0boYcRXMoi3OV/k
+ lkJkhwW5gshhLGqQrgslrY18hAcJMP/JTbWgOCsS/fEpqFwllG2GCndyVhgLyEXUPH6G0Izsb
+ SXYGopnjt5v9sV412pmlzSSsBk1O+LBf7gtG9wPQpgWwfTOKoLABe/PSG60Ofj6C9Pb0YvKu0
+ NhrtlBQCYuP9+tZkrHkCFo/0FqfFwjVgEWcSKj19qVd6FyigQSUJIwJrlF/QU+C/hOJ1xGX6i
+ U19xUfrXOm7+vvGRJrpEO5YSEfJXRIo/NtT3XIoJtJc35/y9KJ162WpUprjzHUAUkea3qo0fg
+ egJjiXWt9EBeE2GeA5hb20tLF7vsGGgsn700LhDLB6KJqkj624hg7lX+T6FYKC9G/rqEIr8V9
+ FwLX6OiRG1YjvL0wnxupoV42+uwXrqaJueGekFA9nSR5y3JS2JI8VHj9gIQN7ivzH4ZhCLj/W
+ +a8PBSefGEbQd5gqaJswofLj/uTIsHv/AXeCNhr1y5ilzDIN6HnEnSblq8lS3fNQ30hsmNPlx
+ /pU6mbeE266r2qxHoBsyx1wL+j2IVjEB4bCnuRVBGSDSpXcZMo0zilewjLimCsqCOIW+tDgKt
+ H1DEFFx4xK95XrhrqBq8MyDe8P3j0TB+xc5WSp8a/UbbGKlG5ZX4pIDcwRAr2zuTLO7A0qlY0
+ Q8QsI5ZfL717469mxI5kdNh8y4hv+g4mu3D9ofbiBtaPYnarJmX3IYWHR0cQJnnonWOIu7vPl
+ u161Tl2jLUR+lMb5+km5pS4OrUbCOskyNh7XukIrk44N+ytQd5flKkxOzDnkHOzwRZWFJeGkh
+ t4JKBzlPS1IOgIURcaWbidXfexFOxkWeO5+ybQJQ2oS51ClQ+A=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 4/3/2018 8:00 AM, Derrick Stolee wrote:
-> There are several commit-graph walks that require loading many commits
-> but never walk the trees reachable from those commits. However, the
-> current logic in parse_commit() requires the root tree to be loaded.
-> This only uses lookup_tree(), but when reading commits from the commit-
-> graph file, the hashcpy() to load the root tree hash and the time spent
-> checking the object cache take more time than parsing the rest of the
-> commit.
->
-> In this patch series, all direct references to accessing the 'tree'
-> member of struct commit are replaced instead by one of the following
-> methods:
->
-> 	struct tree *get_commit_tree(struct commit *)
-> 	struct object_id *get_commit_tree_oid(struct commit *)
->
-> This replacement was assisted by a Coccinelle script, but the 'tree'
-> member is overloaded in other types, so the script gave false-positives
-> that were removed from the diff.
->
-> After all access is restricted to use these methods, we can then
-> change the postcondition of parse_commit_in_graph() to allow 'tree'
-> to be NULL. If the tree is accessed later, we can load the tree's
-> OID from the commit-graph in constant time and perform the lookup_tree().
->
-> On the Linux repository, performance tests were run for the following
-> command:
->
->      git log --graph --oneline -1000
->
-> Before: 0.83s
-> After:  0.65s
-> Rel %: -21.6%
->
-> Adding '-- kernel/' to the command requires loading the root tree
-> for every commit that is walked. There was no measureable performance
-> change as a result of this patch.
->
-> This patch series depends on v7 of ds/commit-graph.
->
-> Derrick Stolee (3):
->    commit: create get_commit_tree() method
->    treewide: use get_commit_tree() for tree access
->    commit-graph: lazy-load trees
->
+Dear Git users,
 
-This patch series is also available as a GitHub pull request [1]
+It is my pleasure to announce that Git for Windows 2.17.0 is available from:
 
-[1] https://github.com/derrickstolee/git/pull/4
+	https://gitforwindows.org/
+
+Changes since Git for Windows v2.16.3 (March 23rd 2018)
+
+New Features
+
+  * Comes with Git v2.17.0.
+  * Comes with OpenSSL v1.0.2o.
+  * Comes with Git Credential Manager v1.15.2.
+  * Comes with OpenSSH v7.7p1.
+
+Bug Fixes
+
+  * When git.exe is called with an invalid subcommand, it no longer
+    complains about file handles.
+
+Filename | SHA-256
+-------- | -------
+Git-2.17.0-64-bit.exe | 39b3da8be4f1cf396663dc892cbf818cb4cfddb5bf08c13f13f5b784f6654496
+Git-2.17.0-32-bit.exe | 65b710e39db3d83b04a8a4bd56f54e929fb0abbab728c0a9abbc0dace8e361d2
+PortableGit-2.17.0-64-bit.7z.exe | 9625365ccb67d1c7c52f14824c5dd68af4cca2a1b83a2ba998ba9ba45b708551
+PortableGit-2.17.0-32-bit.7z.exe | f2344ec1bb2d87a1ab7b05bd2e7bcbbbbf4de6ae8a6b1dc034b9de4b3a1f0ec9
+MinGit-2.17.0-64-bit.zip | 14c780bfc7af2bb85f6860fd1927402c87393201b7639e5bc3ce0fdc5688931e
+MinGit-2.17.0-32-bit.zip | b1896b23d0d7ab7c1ad6705ce760763ae9802cff2d2e0aaee141806a2a319c4c
+MinGit-2.17.0-busybox-64-bit.zip | 6f4599f367f784087e96f5c7689b2807718d7f75296e2beb4280a0fc2fdfdc1c
+MinGit-2.17.0-busybox-32-bit.zip | 3ded3fc7245fd026cab3ef05e9cc867c138e3e858aea42f68369a0e0aad1067f
+Git-2.17.0-64-bit.tar.bz2 | e5faf8e26de8dcc57b3848793e754fa1d16253c0ce66b12bc3afa1091284e6a3
+Git-2.17.0-32-bit.tar.bz2 | d589200952debd3848602ee1287075428c096a8d94776090641645a858d020ec
+pdbs-for-git-64-bit-2.17.0.1.e7621d891d-1.zip | dc387ca23b94170832a9894d5812e4ad31c56552e4f68de154491dfe3d471a3c
+pdbs-for-git-32-bit-2.17.0.1.e7621d891d-1.zip | e1c4478b2874560df3a669f15b36360fffe556e8de3885d3cdb96202947dba7b
+
+Ciao,
+Johannes
