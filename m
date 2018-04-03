@@ -2,99 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 10C651F404
-	for <e@80x24.org>; Tue,  3 Apr 2018 18:32:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8F0FF1F404
+	for <e@80x24.org>; Tue,  3 Apr 2018 18:33:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752829AbeDCScE (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Apr 2018 14:32:04 -0400
-Received: from mail-pl0-f68.google.com ([209.85.160.68]:35005 "EHLO
-        mail-pl0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752525AbeDCScD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Apr 2018 14:32:03 -0400
-Received: by mail-pl0-f68.google.com with SMTP id 61-v6so8062776plb.2
-        for <git@vger.kernel.org>; Tue, 03 Apr 2018 11:32:03 -0700 (PDT)
+        id S1753131AbeDCSdJ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Apr 2018 14:33:09 -0400
+Received: from mail-qt0-f182.google.com ([209.85.216.182]:43537 "EHLO
+        mail-qt0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753124AbeDCSdI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Apr 2018 14:33:08 -0400
+Received: by mail-qt0-f182.google.com with SMTP id s48so20272394qtb.10
+        for <git@vger.kernel.org>; Tue, 03 Apr 2018 11:33:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=hjDnU7TnjBUyNwYKmandXTkJ2r22a2GuoOJ09tw3K0k=;
-        b=CjVrdsT86+TUH7WJW3ABFjHgvHHr8VH+WPmtsNQ+WnYoqIHiieqjo1Lki/heAq4UcE
-         0CQQge2gN0d+L74JgMwODXzQCqgo8r5osd+qOaq73wtZTPlOvl2uNsUXvrgvzkAINA7F
-         6w9qYd+NA8/RhBJ+oFo9p/yh3NJdyzn6JL01IldwMV8KTqYLwB4Lph7j1WRVvziaoI59
-         K2Kwo/NEjbxTQ8o70XOndqRg28eTx1s7WcebSea1k5tVto85fRbPAYY33aGbm59hslUm
-         2O4CXVI/SujEbcZN4pvPRHIIUF3/46WZEe0jI/wlGmqFVx9s0JrTze6watYO3EZJUgP/
-         BEuQ==
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=gtBpmKG3j4q2AwzCVlBc2ZxLdJrw8kDPCdDIw88zIeA=;
+        b=PLwE6Eu3HAbTjL7rnmTvQnYoAWoy4Du/RDyFAelVAajPBm7RLzFbDEbWmeWs7mmQ6P
+         uoR32XY96T6sYfDpf7lU3Sf6Xw3Dcpsait6Z+mYOjzZVO9nTmJgQbRyKFLRDNpHfMDfv
+         OpHITyav/GsxTOPpgPDOWSR4afbZRrOaHmRfgqde6tX/oREeqiNET4xhhhQNBGAVbw9q
+         cvVSm/UZW+dWUhpKFGnDm08sWfCqokF/5/ypK5DI8uzP/qNLi8Rthe8O1q6JCE3Rlnne
+         Y8DpvGT+e574iAdgV5Fs9uOU2IJdE3j0jmJm+rxK9yFCVCdg7wfgU/h04YbP+zwyBlAp
+         0keg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=hjDnU7TnjBUyNwYKmandXTkJ2r22a2GuoOJ09tw3K0k=;
-        b=BP+kk2cQxaIa0YaAohj/Q9Lp0VEybdy7KD84rjYy5kSBUQ99Bvi3IQNu9fT5gOMWuq
-         lkZCXa4AxVbZlozG8epcciDgLfv+UbKmk974pi1hFe0TfzXKA+DECLa/vBBh0OJPcz9s
-         FKPIqVxO7UK2kwiQKQvajckIgPHSodSu5qz44II87Tcp3xmmeCpoqX62/Yo3WLhCAsJx
-         YcEBhSkq8Cgffz1LqFkDs3z4NJS4AR5pbpBLCqi2uTWFKKuBdTDBSKPNG2NIY+myS5Hq
-         ro4x9CRR6b3A5GYXAvK0daa72J6xapLqigYsbt47G+Uby+O5ArFO4Y4kUS0Yivizin3K
-         a3+g==
-X-Gm-Message-State: AElRT7GlLUmsyLxgn9mv6vKYIboqan2gM5uUO80kNWWR5lGOAHQZ/TFY
-        YRzvPF6YCRXQ6Ug42IHMiF0c7ngfIzw=
-X-Google-Smtp-Source: AIpwx4/65lMwuPxymcEktTAs4TPq57iBQjok9ces6/AFL6CZmSyBxSZKjYuSx6ZVkQCFAV9X3FOV+A==
-X-Received: by 10.99.49.84 with SMTP id x81mr5206122pgx.38.1522780322865;
-        Tue, 03 Apr 2018 11:32:02 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
-        by smtp.gmail.com with ESMTPSA id c15sm7034779pfm.114.2018.04.03.11.32.01
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 03 Apr 2018 11:32:02 -0700 (PDT)
-Date:   Tue, 3 Apr 2018 11:32:01 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Jeff King <peff@peff.net>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=gtBpmKG3j4q2AwzCVlBc2ZxLdJrw8kDPCdDIw88zIeA=;
+        b=binfMXZ26Sk0qCgEwLsZWTEVNHi64TFTvgY0Hfgx3meLZ/ChgMgzviWz2Vkx8aDnqY
+         vftRVLyZ0N+Dy3mISCOAhEj7GaFBWjqTkY4fVNFP2936cc1HqwI0AX+D3YvZSwAdhqf8
+         LeRvSzK6rkBpmnvx8IvPQA90lekTJm/iECZ5I8SxLMOa73Ui378n21sWUHZ/dfhKLZIU
+         VHACqa8QJMvwdmy6E8hB0U95qDRQBXbOqUBzsCJ3ARNNZKI38icsO/hQXrtvzLjdDDPp
+         y+9syWFHNgcockDIRBnnt0aDy+e3aiWDJF1oFFfKtwdBYukJ8h9kBXWMV4PacWlueVQw
+         r/nw==
+X-Gm-Message-State: ALQs6tB1X7j2fUrOiaPB1pqi/8VFL2B0jsRtNfnunzb0Wz8ja1sYzkGz
+        TscCMzKFgzoTgDKDecYcbAs=
+X-Google-Smtp-Source: AIpwx49T9EDxRLevDA8YHKiKFSBVTPzoS/z2Sq74GQtqy3cjMmavDWsMBH6NhWIpFZ6W2WQ9Mv1Hbw==
+X-Received: by 10.200.48.135 with SMTP id v7mr21668215qta.296.1522780387430;
+        Tue, 03 Apr 2018 11:33:07 -0700 (PDT)
+Received: from [10.160.98.110] ([167.220.148.110])
+        by smtp.gmail.com with ESMTPSA id r22sm2839468qkr.96.2018.04.03.11.33.06
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 03 Apr 2018 11:33:06 -0700 (PDT)
+Subject: Re: [PATCH 1/6] object.c: parse commit in graph first
+To:     Jeff King <peff@peff.net>, Jonathan Tan <jonathantanmy@google.com>
 Cc:     Derrick Stolee <dstolee@microsoft.com>, git@vger.kernel.org,
         avarab@gmail.com, sbeller@google.com, larsxschneider@gmail.com
-Subject: Re: [PATCH 2/6] commit: add generation number to struct commmit
-Message-ID: <20180403183201.GC100220@google.com>
 References: <20180403165143.80661-1-dstolee@microsoft.com>
- <20180403165143.80661-3-dstolee@microsoft.com>
- <20180403180536.GB100220@google.com>
- <20180403182800.GA8377@sigill.intra.peff.net>
+ <20180403165143.80661-2-dstolee@microsoft.com>
+ <20180403112136.db2aeda65afe0c09f262dfb9@google.com>
+ <20180403182846.GB8377@sigill.intra.peff.net>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <04f9d212-58b0-df15-43e1-ce6320585291@gmail.com>
+Date:   Tue, 3 Apr 2018 14:32:19 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.6.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180403182800.GA8377@sigill.intra.peff.net>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+In-Reply-To: <20180403182846.GB8377@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 04/03, Jeff King wrote:
-> On Tue, Apr 03, 2018 at 11:05:36AM -0700, Brandon Williams wrote:
-> 
-> > On 04/03, Derrick Stolee wrote:
-> > > The generation number of a commit is defined recursively as follows:
-> > > 
-> > > * If a commit A has no parents, then the generation number of A is one.
-> > > * If a commit A has parents, then the generation number of A is one
-> > >   more than the maximum generation number among the parents of A.
-> > > 
-> > > Add a uint32_t generation field to struct commit so we can pass this
-> > 
-> > Is there any reason to believe this would be too small of a value in the
-> > future?  Or is a 32 bit unsigned good enough?
-> 
-> The linux kernel took ~10 years to produce 500k commits. Even assuming
-> those were all linear (and they're not), that gives us ~80,000 years of
-> leeway. So even if the pace of development speeds up or we have a
-> quicker project, it still seems we have a pretty reasonable safety
-> margin.
-> 
-> -Peff
 
-I figured as much, but just wanted to check since the windows folks
-seems to produce commits pretty quickly.
 
--- 
-Brandon Williams
+On 4/3/2018 2:28 PM, Jeff King wrote:
+> On Tue, Apr 03, 2018 at 11:21:36AM -0700, Jonathan Tan wrote:
+>
+>> On Tue,  3 Apr 2018 12:51:38 -0400
+>> Derrick Stolee <dstolee@microsoft.com> wrote:
+>>
+>>> Most code paths load commits using lookup_commit() and then
+>>> parse_commit(). In some cases, including some branch lookups, the commit
+>>> is parsed using parse_object_buffer() which side-steps parse_commit() in
+>>> favor of parse_commit_buffer().
+>>>
+>>> Before adding generation numbers to the commit-graph, we need to ensure
+>>> that any commit that exists in the graph is loaded from the graph, so
+>>> check parse_commit_in_graph() before calling parse_commit_buffer().
+>>>
+>>> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+>> Modifying parse_object_buffer() is the most pragmatic way to accomplish
+>> this, but this also means that parse_object_buffer() now potentially
+>> reads from the local object store (instead of only relying on what's in
+>> memory and what's in the provided buffer). parse_object_buffer() is
+>> called by several callers including in builtin/fsck.c. I would feel more
+>> comfortable if the relevant [1] caller to parse_object_buffer() was
+>> modified instead of parse_object_buffer(), but I'll let others give
+>> their opinions too.
+> It's not just you. This seems like a really odd place to put it.
+> Especially because if we have the buffer to pass to this function, then
+> we'd already have incurred the cost to inflate the object.
+>
+
+OK. Thanks. I'll try to find the better place to put this check.
+
+-Stolee
