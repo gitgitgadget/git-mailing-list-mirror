@@ -2,80 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A26DC1F404
-	for <e@80x24.org>; Tue,  3 Apr 2018 19:00:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C1E0F1F404
+	for <e@80x24.org>; Tue,  3 Apr 2018 19:00:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753074AbeDCTA3 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Apr 2018 15:00:29 -0400
-Received: from forward105o.mail.yandex.net ([37.140.190.183]:55904 "EHLO
-        forward105o.mail.yandex.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752132AbeDCTA1 (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 3 Apr 2018 15:00:27 -0400
-X-Greylist: delayed 435 seconds by postgrey-1.27 at vger.kernel.org; Tue, 03 Apr 2018 15:00:27 EDT
-Received: from mxback14g.mail.yandex.net (mxback14g.mail.yandex.net [IPv6:2a02:6b8:0:1472:2741:0:8b7:93])
-        by forward105o.mail.yandex.net (Yandex) with ESMTP id B6F9E4445305
-        for <git@vger.kernel.org>; Tue,  3 Apr 2018 21:53:10 +0300 (MSK)
-Received: from localhost (localhost [::1])
-        by mxback14g.mail.yandex.net (nwsmtp/Yandex) with ESMTP id ur4LV98O9Y-rAoukNJs;
-        Tue, 03 Apr 2018 21:53:10 +0300
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ya.ru; s=mail; t=1522781590;
-        bh=9wiiARBTQq8GvCLP5wzaOtRwJipmFcDobZX494T9290=;
-        h=From:To:Subject:Message-Id:Date;
-        b=lFq4Byq+Y7qCmLo319fPxkIIJvq9mQRbE88uOw1qmReZcwCdD6TqX2y6N1fmqnRXH
-         PZ+4kxKtiYV25Uofgjlts7mO0RlEeNVuAm/ruh1MxtyZtzU1pbE3qE1OCjA2piEXyu
-         RP1Z4f35/pRi6zE1QDcvTzX4v1S2Hm0X/vg88mh0=
-Authentication-Results: mxback14g.mail.yandex.net; dkim=pass header.i=@ya.ru
-Received: by web3o.yandex.ru with HTTP;
-        Tue, 03 Apr 2018 21:53:10 +0300
-From:   Alex Ivanov <gnidorah@ya.ru>
-Envelope-From: gnidorah@yandex.ru
-To:     git@vger.kernel.org
-Subject: Socket activation for GitWeb FastCGI with systemd?
+        id S1753117AbeDCTAg (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Apr 2018 15:00:36 -0400
+Received: from mail-yb0-f181.google.com ([209.85.213.181]:41317 "EHLO
+        mail-yb0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752986AbeDCTAe (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Apr 2018 15:00:34 -0400
+Received: by mail-yb0-f181.google.com with SMTP id p126-v6so967292ybg.8
+        for <git@vger.kernel.org>; Tue, 03 Apr 2018 12:00:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=Ykj2n5DJUhTv93h1B6AFH49ykqAuusilqqZqFbUE7SI=;
+        b=KjzxZYkh1siN25PiTIBwLzQflHdh8AW3PqsJVviYPL113DTB3MwfrepIw6nh+voJGA
+         rjDFG/U0rlPUOTk6/RizgJvg3UjKvgHT1dfmeSj6wU8ujPDBfc3NcqfUMM4UXVZZbbT0
+         7RX/A3Sh/UMSKjoK470ZM46y+KGFgpRtd/L/iYi6BqeXQq9RfPHBkArqamDI7jmk8jP9
+         ghR2fHdOes7OTXPoO7gp6gnBnjDwbgT8cmXYOUSNc45gi9Z9Ad/pRnPJDnzDbx0mhndH
+         AwTLkCjYGmvJOvjjOz2FMEblXZX7zqpKPyVxBPFhFTxjRVrzqt8WcjaL7IBPeJDga2wD
+         b1cQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Ykj2n5DJUhTv93h1B6AFH49ykqAuusilqqZqFbUE7SI=;
+        b=KGJBC79xuoZIjtc9wuDDm+xGiXaZUB5TwNH8AkrOW+OPmSlv6P/7L3Q04ybGBjIT6G
+         dUXPESTZJzmAMVIvizdfFFfL1XuFIvcq5+nmCBZEfzHtZwxlsgnCkupZ2iMvgqmFPfnu
+         PyLmGm//GJ36zkNngOUAmRy4qD3e6zJXscaveUJqOSkJkxXh+l9mmlp7JBHc8MwCiwGg
+         i12+OnVyqIWJBr7G5Bcxna6DZtqyHAXCaUCicZjvwaNIlhQIqTVaX6gf0NSNfU6CMt8h
+         xjN2cRleqcWvRJoCFqVfu8eEvmGYZh4PIUZjk7LdKas/JXiKljZCuCA6s4IsxRoVH2gj
+         51Rg==
+X-Gm-Message-State: AElRT7HxIm2ELZ1fVJQJmSx6UbsvavgmYqQgsnebce4yp2VhAwzHw3oM
+        pQ9TgbCX+PXRoHCmK0YCD4Lbls98kCCJjhJABrzjOg==
+X-Google-Smtp-Source: AIpwx48itObCpaItSccJ1ZEc26awpKFp61MUS770Ic+KdYmMvXa+fX+hdtJl+o2BvijMcoAl7h7NpdhEyRU7A/NIjas=
+X-Received: by 2002:a5b:143:: with SMTP id c3-v6mr5868868ybp.292.1522782032236;
+ Tue, 03 Apr 2018 12:00:32 -0700 (PDT)
 MIME-Version: 1.0
-Message-Id: <671541522781590@web3o.yandex.ru>
-X-Mailer: Yamail [ http://yandex.ru ] 5.0
-Date:   Tue, 03 Apr 2018 21:53:10 +0300
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain
+Received: by 2002:a25:cf81:0:0:0:0:0 with HTTP; Tue, 3 Apr 2018 12:00:31 -0700 (PDT)
+In-Reply-To: <CA+P7+xpDfKSvQZ+YktsSSBPTc3JXzc9dR36tohLctfDf04iaOg@mail.gmail.com>
+References: <20180402224854.86922-1-sbeller@google.com> <20180402164742.11d4c5507d6ee737c9935d73@google.com>
+ <CA+P7+xpDfKSvQZ+YktsSSBPTc3JXzc9dR36tohLctfDf04iaOg@mail.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 3 Apr 2018 12:00:31 -0700
+Message-ID: <CAGZ79kZ-k7Ho-_Cg3OLLypfjoEn8pTDN7dWpX0=8o+o2BvUcqA@mail.gmail.com>
+Subject: Re: [RFC PATCH 0/7] Moved code detection: ignore space on uniform indentation
+To:     Jacob Keller <jacob.keller@gmail.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>,
+        Simon Ruderich <simon@ruderich.org>,
+        Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi.
-I want to use systemd as fastcgi spawner for gitweb + nginx. 
-The traffic is low and number of users is limited + traversal bots. For that reason I've decided to use following mimimal services
+>>> The fun is in the last patch, which allows white space sensitive
+>>> languages to trust the move detection, too. Each block that is marked as
+>>> moved will have the same delta in {in-, de-}dentation.
+>>> I would think this mode might be a reasonable default eventually.
+>>
+>> This sounds like a good idea. "Trust" is probably too strong a word, but
+>> I can see this being useful even in non-whitespace-sensitive languages
+>> with nested blocks (like C).
+>
+> The ability to detect moved code despite whitespace changes would be
+> good, even while showing diffs with the whitespace intact.
 
-gitweb.socket
-[Unit]
-Description=GitWeb Socket
-
-[Socket]
-ListenStream=/run/gitweb.sock
-Accept=false
-
-[Install]
-WantedBy=sockets.target
-
-gitweb.service
-[Unit]
-Description=GitWeb Service
-
-[Service]
-Type=simple
-ExecStart=/path/to/gitweb.cgi --fcgi
-StandardInput=socket
-
-However this scheme is not resistant to simple DDOS.
-E.g. traversal bots often kill the service by opening non existing path (e.g http://host/?p=repo;a=blob;f=nonexisting/path;hb=HEAD showing in browser 404 - Cannot find file) many times consecutively, which leads to
-Apr 03 21:32:10 host systemd[1]: gitweb.service: Start request repeated too quickly.
-Apr 03 21:32:10 host systemd[1]: gitweb.service: Failed with result 'start-limit-hit'.
-Apr 03 21:32:10 host systemd[1]: Failed to start GitWeb service.
-and 502 Bad Gateway in browser. I believe the reason is that gitweb.service dies on failure and if it happens too often, systemd declines to restart the service due to start limit hit.
-So my question is how to correct systemd services for GitWeb to be resistant to such issue? I prefer to use single process to process all clients.
-Thanks.
+That is what the last patch is about.
