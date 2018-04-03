@@ -7,19 +7,19 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BF81B1F404
-	for <e@80x24.org>; Tue,  3 Apr 2018 16:28:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7935F1F404
+	for <e@80x24.org>; Tue,  3 Apr 2018 16:28:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752414AbeDCQ21 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Apr 2018 12:28:27 -0400
-Received: from mout.gmx.net ([212.227.15.18]:48667 "EHLO mout.gmx.net"
+        id S1752460AbeDCQ2b (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Apr 2018 12:28:31 -0400
+Received: from mout.gmx.net ([212.227.15.18]:46633 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752334AbeDCQ2Y (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Apr 2018 12:28:24 -0400
+        id S1752420AbeDCQ22 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Apr 2018 12:28:28 -0400
 Received: from MININT-AIVCFQ2.fareast.corp.microsoft.com ([37.201.195.115]) by
- mail.gmx.com (mrgmx003 [212.227.17.190]) with ESMTPSA (Nemesis) id
- 0Lvkwm-1eT0j51PyO-017W20; Tue, 03 Apr 2018 18:28:15 +0200
-Date:   Tue, 3 Apr 2018 18:28:14 +0200 (DST)
+ mail.gmx.com (mrgmx001 [212.227.17.190]) with ESMTPSA (Nemesis) id
+ 0MYfX0-1eyUzI3xly-00VOQi; Tue, 03 Apr 2018 18:28:19 +0200
+Date:   Tue, 3 Apr 2018 18:28:18 +0200 (DST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@dscho.gitforwindows.org
 To:     git@vger.kernel.org
@@ -29,71 +29,67 @@ cc:     Junio C Hamano <gitster@pobox.com>, Thomas Rast <tr@thomasrast.ch>,
         <avarab@gmail.com>, Stefan Beller <sbeller@google.com>,
         Jason Frey <jfrey@redhat.com>,
         Philip Oakley <philipoakley@iee.org>
-Subject: [PATCH v2 04/15] config --replace-all: avoid extra line breaks
+Subject: [PATCH v2 05/15] t1300: avoid relying on a bug
 In-Reply-To: <cover.1522772789.git.johannes.schindelin@gmx.de>
-Message-ID: <8264d7aa630a23167f8cffcb23462371f7511be8.1522772789.git.johannes.schindelin@gmx.de>
+Message-ID: <4c8159bd9d77f7e21052e9c9b453f47b83847885.1522772789.git.johannes.schindelin@gmx.de>
 References: <cover.1522336130.git.johannes.schindelin@gmx.de> <cover.1522772789.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:NhlvUyPPDneCO04T+xFg7bjJcMUzeGzY/I/eRBOlLgr+g/fqOu5
- I8xM0TxsEngFNb1XXDp7uAApb77+u8TIj659zMy1JrurCwPY6NwkgupWdk+j2+tirfP1Rhb
- +PW7lGWiZVQVmExJULPXiUW0Oy+wuZEG3aSfOswqttmp0qnB1ythjX8j6JzcYLVuKPz9anH
- xApApRT7beQ17iBFwWJzQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:YLX4YYBEzAA=:KIAbJ9dvRhbMNTbggXgfc+
- mcvkWhpuDvoOmJm7UgcyZCfH9xYWxFXHTM63/ccxKR/NfQ/mqu2Kl9LSHbFE8ED8VrfVJa8dr
- gk/P9kaFHj+DoPPworefUeNumENa0mxDcnDG3eP8fRiDU835h3Wvdp+3DFSh4EQgiL2PicjfL
- KvXB1UIGYzZ8gBcrcUClHj3la5hi//25xpFRkBbwQ9rMrnlbBuAD5Pw9OE18Z2Hxhl8Ls1kXc
- avfDzTvZWneIkwaUG71reFUCw4GitJKsunAe0spTkFNlIRMeD1CugmEwQY98ruoTpVToZd2qp
- /EsYjDHZnWQu9CLrfj6WU00e3Lfx0UnKNFOP5g1K/cGJSlQrjdiZVPuJGoq8U03u1AUqkylQ7
- Zcmm/BIh1Wc4tDtoKCKVXjw+pgR9YX51lH/yGa61/jZpgP3ZE5RcEMwyBFAeMhZNYCK5mV2zD
- VtN7DE7ZgYSNTUp9QyYNubBTPJTbX5kJ6w+8qzKA482cB0Nm3e0UqEHBHLOKzbeuUzLiGYE4o
- HGzaJO7LGFW0pGfmDS67uYgEPOIf2ZofGYRxqt4ruBMNR/2YRhC6Oypd93HNJCihR+2XLhau8
- 2o8UAD9K9g0btIDkfBphgJtLCT4q5BhVTH9NS/GJeuygv1HfVdRiIGwsIgeHawF1ozUEecjYB
- aQ3luYzkkSxqh//2hfh6mJg6x9u4XmWR9+3wqRex6rTYd6LS953+monSN88GP7p03sCGir0p3
- LkVHoT9AshQoj5BNPlAVMLDx5pNkZef66ysC59sFxQ6si9qlzoW86pKZDNIQNtWM5gYYXnjy5
- JnT4A9yKhPMMwWCJKCilVNARyETidaGJaKMWq2QOlK1ev604rUVLeFz7xqmbZ7vNz7avRGb
+X-Provags-ID: V03:K1:giKSn+xPUavS5bhKWFuxDMMkCQueWQC+TGHpgq8vaOcNzcbnXm+
+ xxVViG48kWPZq1ArPFsYf1J1UmSCIIVvfLb7n6bZvoTk2Ne/xYMhTiP7Tr4/Hrq5mPSkVWU
+ Wsd5BZpJKHj6AKVWPBGf2BHhclTVn1pbf8t/TeDVBzpJlKqxWLJKKmjJJvz19+2DP39BsJQ
+ INZZb4UvM8BaJB2/Yz6Hg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:pPANpa0lN+I=:b6ugo6lzaVaFAVAaU6qA1A
+ BjRfcbf0qYGbDUeZQLWJk179onFuT7Q40K9UM8Q5zXyv9amZborjQQv3TwlUz25Jmid0UVGp6
+ 5K5qeFOe2CkNqhS/MTwRyXK5khfF5HTw1yfE4FblSSlS8oCPr1TyCM/jIHMValc7fHl80bV1M
+ kx2nFH4dCpc7VpeZEIiHpcWskMilLIS94K4DGTUhY8O8LEtyb7C6WA/AkiTCNSG0l2DwMkGbb
+ HWVf+GoCZ2E0XSAk7XnZLQhXNzkQfl1gij7PDXhoUKob1wblVYv0/qD/DcVsZAL49MDQErgtY
+ xysjOv0fu3t0bXY3aRptohM0NlUqWrq5pat9SSsuTgnZTw/cXctqlhtmOXWCPGUmbCBjplD/Y
+ yBKLI3ihgn2C2fGISIHM8zx04fgFd0WsNOdN2u+18ETc7oLHzG4Z5nf+g65gK3OoDg51ZV4Ei
+ //ZqxB7uVCQa04AEJuypAz+/RCy4N+5EUuoW0KEaITPMKQZZt4cEioL7Z0qHuV02mMoR3veEg
+ h7chIYtz+cUx/8IW/gqg47Y/YYVOOaV1X0B/DzLOwwdJWE0VRhRH95ZOthYtRrdJOo48bp9Ep
+ Ein7aOUE5Cc2kY07eiXN5xCylc+NI6JDN3NKFB5LbZsp58lShaTYNULvTAWmMkYSnG424M21H
+ +7g6SFHHn4nl+VYCNszN+mqHKXL0VSyjwJ/TLWdBdqFzVhZWT+g1M4E8SUBZClxlsGIBMLmQj
+ LSoLpVfIRc+uWcZWp0WAGTqgWHnol+FMqrrEEk/DW3+LqtbRzekvSjmp1Bp2mALIDwKHDeEMC
+ 09X/7OPy7iNtMZPEI+vg328Ux6YwHicwKwURg/u0en7PzjLbLYv6wgZdpW2+q/IIQLbnFeV
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When replacing multiple config entries at once, we did not re-set the
-flag that indicates whether we need to insert a new-line before the new
-entry. As a consequence, an extra new-line was inserted under certain
-circumstances.
+The test case 'unset with cont. lines' relied on a bug that is about to
+be fixed: it tests *explicitly* that removing the last entry from a
+config section leaves an *empty* section behind.
+
+Let's fix this test case not to rely on that behavior, simply by
+preventing the section from becoming empty.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- config.c          | 1 +
- t/t1300-config.sh | 2 +-
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ t/t1300-config.sh | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/config.c b/config.c
-index 5cc049aaef0..f10f8c6f52f 100644
---- a/config.c
-+++ b/config.c
-@@ -2625,6 +2625,7 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
- 			store.seen = 1;
- 
- 		for (i = 0, copy_begin = 0; i < store.seen; i++) {
-+			new_line = 0;
- 			if (store.offset[i] == 0) {
- 				store.offset[i] = copy_end = contents_sz;
- 			} else if (store.state != KEY_SEEN) {
 diff --git a/t/t1300-config.sh b/t/t1300-config.sh
-index cc417687e8d..aed12be492f 100755
+index aed12be492f..7c0ee208dea 100755
 --- a/t/t1300-config.sh
 +++ b/t/t1300-config.sh
-@@ -1611,7 +1611,7 @@ test_expect_success '--local requires a repo' '
- 	test_expect_code 128 nongit git config --local foo.bar
- '
+@@ -108,6 +108,7 @@ bar = foo
+ [beta]
+ baz = multiple \
+ lines
++foo = bar
+ EOF
  
--test_expect_failure '--replace-all does not invent newlines' '
-+test_expect_success '--replace-all does not invent newlines' '
- 	q_to_tab >.git/config <<-\EOF &&
- 	[abc]key
- 	QkeepSection
+ test_expect_success 'unset with cont. lines' '
+@@ -118,6 +119,7 @@ cat > expect <<\EOF
+ [alpha]
+ bar = foo
+ [beta]
++foo = bar
+ EOF
+ 
+ test_expect_success 'unset with cont. lines is correct' 'test_cmp expect .git/config'
 -- 
 2.16.2.windows.1.26.g2cc3565eb4b
 
