@@ -2,101 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BF6201F424
-	for <e@80x24.org>; Tue,  3 Apr 2018 08:43:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B89AC1F424
+	for <e@80x24.org>; Tue,  3 Apr 2018 08:45:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755242AbeDCIns (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Apr 2018 04:43:48 -0400
-Received: from mailhost.frm2.tum.de ([129.187.179.12]:55272 "EHLO
-        mailhost.frm2.tum.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755187AbeDCInr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Apr 2018 04:43:47 -0400
-Received: from mailhost.frm2.tum.de (localhost [127.0.0.1])
-        by mailhost.frm2.tum.de (8.15.2/8.15.2) with ESMTP id w338gig7053324;
-        Tue, 3 Apr 2018 10:43:13 +0200 (CEST)
-        (envelope-from jens.krueger@frm2.tum.de)
-X-Virus-Scanned: at mailhost.frm2.tum.de
-Received: from taco61.taco.frm2 (taco61.ictrl.frm2 [172.25.2.61])
-        (authenticated bits=0)
-        by mailhost.frm2.tum.de (8.15.2/8.15.2) with ESMTPSA id w338gj68053335
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-        Tue, 3 Apr 2018 10:42:46 +0200 (CEST)
-        (envelope-from jens.krueger@frm2.tum.de)
-X-Authentication-Warning: mailhost.frm2.tum.de: Host taco61.ictrl.frm2 [172.25.2.61] claimed to be taco61.taco.frm2
-Subject: Re: Test t2028 failes
-To:     Eric Sunshine <sunshine@sunshineco.us>
-Cc:     Git List <git@vger.kernel.org>
+        id S1755117AbeDCIpJ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Apr 2018 04:45:09 -0400
+Received: from mail-qk0-f178.google.com ([209.85.220.178]:39335 "EHLO
+        mail-qk0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754961AbeDCIpJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Apr 2018 04:45:09 -0400
+Received: by mail-qk0-f178.google.com with SMTP id j73so17773347qke.6
+        for <git@vger.kernel.org>; Tue, 03 Apr 2018 01:45:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-transfer-encoding;
+        bh=TBMFIiHdh1VYQ/2nRRICzRB5+zneHxNxhfiBtN1goZQ=;
+        b=kni6VnRZA/oBlW+gGn9w7c0fMn+gV+beNJPMquW5MGn8RJIbdmjCLm9khWectBMuz8
+         EzKgo+gq9ApsBYcGxaq27UZJK/9KXg/iA9P7ev1jKKDsCJOLC8KgY+3Dm573W5cyQoyk
+         dVj2Lu0RsrZxioIQzLMzsJ4sh22AdNs+R+COiQMsL6jD8vhfahPF9ciwXqM8O8LYdJGm
+         /ommgNbvaxRfKy9XPM6oBnyTtXqjZX6OjvrV+2mgtt7NTZ2cLaAkeJIoZGELXl0nXSEt
+         +BRFPALVWes58oViSzb+jzWVsAZ6egms39HCSotICtBTdPN5JgOpiKcgTqlpIUOVxdWk
+         Jysg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=TBMFIiHdh1VYQ/2nRRICzRB5+zneHxNxhfiBtN1goZQ=;
+        b=VHYSsvpjc9vOe0FbXclLsGnoDocGUUzBnn9kFGnkLwaVuAFOO4RMQiZMwDP3jRtkF0
+         zuvFVNXiFpooDPIB2ywZ+LNcChA52FBaEVM8qcOGxh9IhXni90vEi8gA+6LzYkkf5W6+
+         mmDCwAZZZDrMHjiyqoPaTl+AcXLGE6edB8n8krAnnBGb4C6DvHtGMKRF3j7sxNzXOcBW
+         IKA2eQgRkAkg0gceCNEA9w4Y8YAc802cX1dH32XogVnl/WYhZ082chu3nLrXPhMj0FMz
+         OJmWDumVs4enH8GjhqDZyRNg4D2bBBE8+WzSdm0Cs6GHOQZ7ygVef1n78SuvER02NeW9
+         GWWQ==
+X-Gm-Message-State: ALQs6tBVc7w7hjlS/6VjdgUTOJI6OlHbTn/ByiaZI3ijMcg798139+Jb
+        fSUwPXODHFg1Gpghvy3viZkclCX8j9YpcR4NFVg=
+X-Google-Smtp-Source: AIpwx48K8+ppY3il7WbBbI5Nem+3TE/l3GeCMqV3h8Z3bC9bLlYpfirpz37kuGLJnFeae1doF+UYbgziKXel8bYUdKM=
+X-Received: by 10.55.182.70 with SMTP id g67mr16970067qkf.314.1522745108334;
+ Tue, 03 Apr 2018 01:45:08 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.12.174.202 with HTTP; Tue, 3 Apr 2018 01:45:07 -0700 (PDT)
+In-Reply-To: <0156c688-2c81-1de8-f550-efb517b7707d@frm2.tum.de>
 References: <dfb01281-2ffb-a0ac-a44d-74ccd304a7ea@frm2.tum.de>
  <CAPig+cRTf+WHaSJsLhbPuG0fwd6zkTP_zhwLhB14GdC81xiHRQ@mail.gmail.com>
- <cdec466c-ecc9-b1d7-c637-04e63552c759@frm2.tum.de>
- <CAPig+cSsTPKoLfcxrgD4+NhXa5AeWynxumo8Zed_PH-q3U163w@mail.gmail.com>
-From:   =?UTF-8?Q?Jens_Kr=c3=bcger?= <Jens.Krueger@frm2.tum.de>
-Message-ID: <6d28dbb1-0c4c-6fca-555c-afb6c1c9e781@frm2.tum.de>
-Date:   Tue, 3 Apr 2018 10:42:45 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
-MIME-Version: 1.0
-In-Reply-To: <CAPig+cSsTPKoLfcxrgD4+NhXa5AeWynxumo8Zed_PH-q3U163w@mail.gmail.com>
-Content-Type: multipart/mixed;
- boundary="------------1C1EE8620F63C9B4FCD0A697"
-Content-Language: de-DE-1901
-X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.6.2 (mailhost.frm2.tum.de [129.187.179.12]); Tue, 03 Apr 2018 10:42:46 +0200 (CEST)
+ <cdec466c-ecc9-b1d7-c637-04e63552c759@frm2.tum.de> <CAPig+cSsTPKoLfcxrgD4+NhXa5AeWynxumo8Zed_PH-q3U163w@mail.gmail.com>
+ <0156c688-2c81-1de8-f550-efb517b7707d@frm2.tum.de>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Tue, 3 Apr 2018 04:45:07 -0400
+X-Google-Sender-Auth: 86-1d9boUnZxG1FW_0SDemX2fyE
+Message-ID: <CAPig+cTvVwLDW+6rHNZbUwWwYUGBRioA6B+jM832JpUYAoPVWw@mail.gmail.com>
+Subject: Re: Test t2028 failes
+To:     =?UTF-8?B?SmVucyBLcsO8Z2Vy?= <Jens.Krueger@frm2.tum.de>
+Cc:     Eric Sunshine <sunshine@sunshineco.us>,
+        Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a multi-part message in MIME format.
---------------1C1EE8620F63C9B4FCD0A697
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
+On Tue, Apr 3, 2018 at 4:38 AM, Jens Kr=C3=BCger <Jens.Krueger@frm2.tum.de>=
+ wrote:
+> Am 03.04.2018 um 10:16 schrieb Eric Sunshine:
+>> Using the "out" file you attached, can you show the output of these
+>> commands?
+>>      grep "^worktree.*/destination" out
+>>      echo $?
+>>      grep "^worktree.*/source" out
+>>      echo $?
+>> I'd expect the first $? to report 0 and the second 1 in a working
+>> installation.
+>
+> Both of them return 0, but I guess I found the problem. The second
+> 'grep' call returned the following output:
+>
+> worktree /home/jkrueger/sources/git/t/trash directory.t2028-worktree-move
+> worktree /home/jkrueger/sources/git/t/trash
+> directory.t2028-worktree-move/elsewhere
+> worktree /home/jkrueger/sources/git/t/trash
+> directory.t2028-worktree-move/some-dir/destination
+>
+> If I move my checkout into another directory not containing 'source' in
+> the path it will work.
 
-Am 03.04.2018 um 10:16 schrieb Eric Sunshine:
-> On Tue, Apr 3, 2018 at 4:01 AM, Jens Krüger <Jens.Krueger@frm2.tum.de> wrote:
->> The actual2 file does not exists, if I call the ./t2028-worktree-move.sh
->> with the '-v -i' options, only without any option or with '-v' option.
-> 
-> The content of the various files looks correct, and absence of
-> "actual2" implies that one of the grep's failed, which is very odd
-> considering that "out" has the expected content.
-> 
-> Using the "out" file you attached, can you show the output of these commands?
-> 
->      grep "^worktree.*/destination" out
->      echo $?
->      grep "^worktree.*/source" out
->      echo $?
-> 
-> I'd expect the first $? to report 0 and the second 1 in a working installation.
-> 
-> Also, are you using an unusual 'grep'? What does "command -v grep" report?
-> 
-
-Maybe, the attached patch may help. On my machine(s) it helped.
-
---------------1C1EE8620F63C9B4FCD0A697
-Content-Type: text/x-patch;
- name="a.patch"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
- filename="a.patch"
-
-diff --git a/t/t2028-worktree-move.sh b/t/t2028-worktree-move.sh
-index 5d5b3632ba..65c7311865 100755
---- a/t/t2028-worktree-move.sh
-+++ b/t/t2028-worktree-move.sh
-@@ -77,7 +77,7 @@ test_expect_success 'move worktree' '
- 	test_path_is_missing source &&
- 	git worktree list --porcelain >out &&
- 	grep "^worktree.*/destination" out &&
--	! grep "^worktree.*/source" out &&
-+	! grep "^worktree.*/source$" out &&
- 	git -C destination log --format=%s >actual2 &&
- 	echo init >expected2 &&
- 	test_cmp expected2 actual2
-
---------------1C1EE8620F63C9B4FCD0A697--
+Okay, thanks for diagnosing the problem. We can fix the test by
+tightening the regex to also anchor with '$' so that it won't be
+fooled like that.
