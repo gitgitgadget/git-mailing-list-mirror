@@ -2,89 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 737C51F404
-	for <e@80x24.org>; Tue,  3 Apr 2018 17:35:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E8E101F404
+	for <e@80x24.org>; Tue,  3 Apr 2018 17:57:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752316AbeDCRf4 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Apr 2018 13:35:56 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:54373 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751802AbeDCRf4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Apr 2018 13:35:56 -0400
-Received: by mail-wm0-f65.google.com with SMTP id r191so4570876wmg.4
-        for <git@vger.kernel.org>; Tue, 03 Apr 2018 10:35:55 -0700 (PDT)
+        id S1752547AbeDCR5u (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Apr 2018 13:57:50 -0400
+Received: from mail-ua0-f201.google.com ([209.85.217.201]:36368 "EHLO
+        mail-ua0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751461AbeDCR5t (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Apr 2018 13:57:49 -0400
+Received: by mail-ua0-f201.google.com with SMTP id t34so14700406uat.3
+        for <git@vger.kernel.org>; Tue, 03 Apr 2018 10:57:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=cf+fiukjnMa6Upe2qyoG3egfoaekbp9cw70wSSMkamg=;
-        b=OWmm+mAc7Dz4HYzir5L/KX3jAoMLw5EkqGp+85wMKZPD+j1EjGSU3JBVEeqRKDmsBS
-         eK3AKIJA2sx0Ueci9LjCFHFd432J0TK0IIcVn6bNZkEC3Pknox5qDVenIIcrEhaL2JmI
-         AuU2Rkrq2TO338sTOqtucQ77I+1IOWxa+8mfKMCSY8mlxzsDtjCieeXwenoZmE8MrrUC
-         UEj70NjtH3FkaCNNTBORHoptOabLO0zJbzFQ0LNVYX/3UwKJ3+MlNd87wrzspg8kqspw
-         BCk9gR5wjCD7tnGhrc7UvAb+K2jTPULRzrqEeNZx61cx5OoxdFcuZpG+3oRzcTDcqgBo
-         2mZw==
+        d=google.com; s=20161025;
+        h=mime-version:date:message-id:subject:from:to:cc;
+        bh=YGtqUC/H3RTB1+aN61VNux7D0rthSGnNaIEY+tEKXWo=;
+        b=LVHIj/58YSfrBtiG8a6WQt1lKA/WNO6ukWTaYOMptOHDpzseBJV5ljSH5oA3laPQbW
+         Fgp0EXXzg+u7rCUg3xULzHZyvnG5BRVSXRMCq9jOuwjYF/8Yxn1tLEFX/L6g5/l9e2y/
+         JKe7pib/hWcDCjj3Vyt0c+pWNkhJiUQbHZyy1vfsL3BicKvf0+s+oPa+CuQ8qeqgBvDK
+         UUvxx6jvei409ILUptTpmAM2pJpEMGBXKMtQCWTr4tc6nlMlbVwfQF5/KDyacuLD71lC
+         NuZp7IqIkrGrdlFbpquYJKVRxd8uRUxPQlxXr9EOESzkYC+jrW6oT05Ln6VXtocVe6vx
+         U/IQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=cf+fiukjnMa6Upe2qyoG3egfoaekbp9cw70wSSMkamg=;
-        b=HBy5MSK00C+YRRdxo1X7sSgrhFD3cTl9UGnmsTpO5WMVcmaet3xaKrKOuDweVmD4ZZ
-         Zis81+sxGcpoa7s/Jp8itOfZefJBfMbp00r3A68rcp132tpi+zwy63aIuT0lpGE92tW/
-         xKtxQfY0skhkktGgAbotjyLlvN3b65nqtUyz1bmmK9ofXplC9ZDkVSFlFn2uZ2XRxHsC
-         EDXVPskDSb0DZ5eXcCdRbgKpR/+9jhvtJCiwvwCglJUuq1vpJHuVjOztZnI6jspRUls/
-         WWtEimXofARggKG4MHrNgNe6cShg4Ko7uNgHIS3pkpN/elE5EzcYuSPXa9/m3LDf9vrK
-         TKGg==
-X-Gm-Message-State: AElRT7GoU5oO4UbaUN6j+PqqdgxQDiylzDZVQatBl/Ahsi5S1Cf6rCD+
-        UxvAqgU71rlpozac6gQ5vEYswByS
-X-Google-Smtp-Source: AIpwx4/vnIZH7p+10I4N0jFZ5ydOUkKNjzpPlMnv4YQG7B++Dws51PXO+SuzMrJmcfTcHJXNcVSn8A==
-X-Received: by 10.80.165.218 with SMTP id b26mr17602951edc.147.1522776954596;
-        Tue, 03 Apr 2018 10:35:54 -0700 (PDT)
-Received: from localhost (cable-94-139-5-172.cust.telecolumbus.net. [94.139.5.172])
-        by smtp.gmail.com with ESMTPSA id b8sm1998460edi.14.2018.04.03.10.35.53
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 03 Apr 2018 10:35:53 -0700 (PDT)
-From:   Ralf Thielow <ralf.thielow@gmail.com>
-To:     git@vger.kernel.org,
-        =?UTF-8?q?Matthias=20R=C3=BCster?= <matthias.ruester@gmail.com>
-Cc:     Phillip Szelat <phillip.szelat@gmail.com>,
-        Ralf Thielow <ralf.thielow@gmail.com>
-Subject: [PATCH] l10n: de.po: fix a 'add --interactive' message
-Date:   Tue,  3 Apr 2018 19:35:51 +0200
-Message-Id: <20180403173551.5057-1-ralf.thielow@gmail.com>
-X-Mailer: git-send-email 2.17.0.484.g0c8726318
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to:cc;
+        bh=YGtqUC/H3RTB1+aN61VNux7D0rthSGnNaIEY+tEKXWo=;
+        b=AMbbfgbgLG+4N+S/nXNlqNmTvFH/DvVSZBUKRnIp0sX5Kr8dNxt8AUc/VrjVnKjnmK
+         vOCgIKKHIzOYgB/d7KLffLl/4lYYS+IsrLnYxD3Tnia6yrHFRpWzrA5fjP7uJ69+t/Zz
+         fkgMuD8mdKVLaqDn4pxWIelCo4r29z3C4XpulOt4AN04z/Z0N74V5/h0QnHSl819aZie
+         yXGVAnBMo1SOZJsAFD/xsG1DJXvUNOXrWzY+C8CS/pnWJUKftbr3ycMNUTIxlWLmh1EW
+         TyEf+HC9RW5gDqpctKjX4LKC3tkeeeoMNFRD3Zm3SgPf4u+w0k/ScyXU2blahXUE8ino
+         4TXQ==
+X-Gm-Message-State: ALQs6tBDtlKULpF2ID03or5r18qNNNwpzzfKFOJKKyK0PlH83QW5n/q4
+        3h8nUjXMvLsELu/DfhHC07EWuX8bNgUt7D8+A7PLzKpxaiXhT4vGHZ0+wcvs7RH6tMUciwoJQwe
+        6mhLGtuU2w9+5YO5+UKs7tuw755SSDJxyiR1dwCXqoQi8KqBcDJltwLFqTw==
+X-Google-Smtp-Source: AIpwx489ZnroCW3hJere/OSZCafkPPFAuZ/dI7pVB9J6kzZdbwrSt2Hlz3JoDr/dS7LG0Lq1FGSMNHMF6sA=
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+X-Received: by 10.176.26.139 with SMTP id j11mr6052532uai.103.1522778268890;
+ Tue, 03 Apr 2018 10:57:48 -0700 (PDT)
+Date:   Tue,  3 Apr 2018 10:57:45 -0700
+Message-Id: <20180403175745.140638-1-bmwill@google.com>
+X-Mailer: git-send-email 2.17.0.rc1.321.gba9d0f2565-goog
+Subject: [PATCH] commit: allow partial commits with relative paths
+From:   Brandon Williams <bmwill@google.com>
+To:     git@vger.kernel.org, bmwill@google.com
+Cc:     Brandon Williams <bmwill@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Noticed-by: Matthias Rüster <matthias.ruester@gmail.com>
-Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
----
- po/de.po | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Commit 8894d53580 (commit: allow partial commits with relative paths,
+2011-07-30) ensured that partial commits were allowed when a user
+supplies a relative pathspec but then this was regressed in 5879f5684c
+(remove prefix argument from pathspec_prefix, 2011-09-04) when the
+prefix argument to 'pathspec_prefix' removed and the 'list_paths'
+function wasn't properly adjusted to cope with the change, resulting in
+over-eager pruning of the tree that is overlayed on the index.
 
-diff --git a/po/de.po b/po/de.po
-index 793bd2a80..257f527d6 100644
---- a/po/de.po
-+++ b/po/de.po
-@@ -16991,7 +16991,7 @@ msgstr "Löschung im Arbeitsverzeichnis verwerfen [y,n,q,a,d%s,?]? "
- #: git-add--interactive.perl:1405
- #, perl-format
- msgid "Discard this hunk from worktree [y,n,q,a,d%s,?]? "
--msgstr "diesen Patch-Block im Arbeitsverzeichnis verwerfen [y,n,q,a,d%s,?]? "
-+msgstr "Diesen Patch-Block im Arbeitsverzeichnis verwerfen [y,n,q,a,d%s,?]? "
+This fixes the regression and adds a regression test so this can be
+prevented in the future.
+
+Signed-off-by: Brandon Williams <bmwill@google.com>
+---
+ builtin/commit.c  |  3 +--
+ t/t7501-commit.sh | 12 ++++++++++++
+ 2 files changed, 13 insertions(+), 2 deletions(-)
+
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 37fcb55ab0..5571d4a3e2 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -218,8 +218,7 @@ static int list_paths(struct string_list *list, const char *with_tree,
  
- #: git-add--interactive.perl:1408
- #, perl-format
+ 	if (with_tree) {
+ 		char *max_prefix = common_prefix(pattern);
+-		overlay_tree_on_index(&the_index, with_tree,
+-				      max_prefix ? max_prefix : prefix);
++		overlay_tree_on_index(&the_index, with_tree, max_prefix);
+ 		free(max_prefix);
+ 	}
+ 
+diff --git a/t/t7501-commit.sh b/t/t7501-commit.sh
+index fa61b1a4ee..9dbbd01fc0 100755
+--- a/t/t7501-commit.sh
++++ b/t/t7501-commit.sh
+@@ -52,6 +52,18 @@ test_expect_success PERL 'can use paths with --interactive' '
+ 	git reset --hard HEAD^
+ '
+ 
++test_expect_success 'removed files and relative paths' '
++	test_when_finished "rm -rf foo" &&
++	git init foo &&
++	>foo/foo.txt &&
++	git -C foo add foo.txt &&
++	git -C foo commit -m first &&
++	git -C foo rm foo.txt &&
++
++	mkdir -p foo/bar &&
++	git -C foo/bar commit -m second ../foo.txt
++'
++
+ test_expect_success 'using invalid commit with -C' '
+ 	test_must_fail git commit --allow-empty -C bogus
+ '
 -- 
-2.17.0.484.g0c8726318
+2.17.0.rc1.321.gba9d0f2565-goog
 
