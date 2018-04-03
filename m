@@ -7,19 +7,19 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7935F1F404
-	for <e@80x24.org>; Tue,  3 Apr 2018 16:28:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 28A921F404
+	for <e@80x24.org>; Tue,  3 Apr 2018 16:28:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752460AbeDCQ2b (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Apr 2018 12:28:31 -0400
-Received: from mout.gmx.net ([212.227.15.18]:46633 "EHLO mout.gmx.net"
+        id S1752478AbeDCQ2e (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Apr 2018 12:28:34 -0400
+Received: from mout.gmx.net ([212.227.15.19]:33123 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752420AbeDCQ22 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Apr 2018 12:28:28 -0400
+        id S1752431AbeDCQ2c (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Apr 2018 12:28:32 -0400
 Received: from MININT-AIVCFQ2.fareast.corp.microsoft.com ([37.201.195.115]) by
  mail.gmx.com (mrgmx001 [212.227.17.190]) with ESMTPSA (Nemesis) id
- 0MYfX0-1eyUzI3xly-00VOQi; Tue, 03 Apr 2018 18:28:19 +0200
-Date:   Tue, 3 Apr 2018 18:28:18 +0200 (DST)
+ 0M8NBi-1eGOkG40OY-00vt5A; Tue, 03 Apr 2018 18:28:23 +0200
+Date:   Tue, 3 Apr 2018 18:28:22 +0200 (DST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@dscho.gitforwindows.org
 To:     git@vger.kernel.org
@@ -29,67 +29,90 @@ cc:     Junio C Hamano <gitster@pobox.com>, Thomas Rast <tr@thomasrast.ch>,
         <avarab@gmail.com>, Stefan Beller <sbeller@google.com>,
         Jason Frey <jfrey@redhat.com>,
         Philip Oakley <philipoakley@iee.org>
-Subject: [PATCH v2 05/15] t1300: avoid relying on a bug
+Subject: [PATCH v2 06/15] t1300: remove unreasonable expectation from TODO
 In-Reply-To: <cover.1522772789.git.johannes.schindelin@gmx.de>
-Message-ID: <4c8159bd9d77f7e21052e9c9b453f47b83847885.1522772789.git.johannes.schindelin@gmx.de>
+Message-ID: <5a4791e582116d83425918f9bb13201a44c91aa6.1522772789.git.johannes.schindelin@gmx.de>
 References: <cover.1522336130.git.johannes.schindelin@gmx.de> <cover.1522772789.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:giKSn+xPUavS5bhKWFuxDMMkCQueWQC+TGHpgq8vaOcNzcbnXm+
- xxVViG48kWPZq1ArPFsYf1J1UmSCIIVvfLb7n6bZvoTk2Ne/xYMhTiP7Tr4/Hrq5mPSkVWU
- Wsd5BZpJKHj6AKVWPBGf2BHhclTVn1pbf8t/TeDVBzpJlKqxWLJKKmjJJvz19+2DP39BsJQ
- INZZb4UvM8BaJB2/Yz6Hg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:pPANpa0lN+I=:b6ugo6lzaVaFAVAaU6qA1A
- BjRfcbf0qYGbDUeZQLWJk179onFuT7Q40K9UM8Q5zXyv9amZborjQQv3TwlUz25Jmid0UVGp6
- 5K5qeFOe2CkNqhS/MTwRyXK5khfF5HTw1yfE4FblSSlS8oCPr1TyCM/jIHMValc7fHl80bV1M
- kx2nFH4dCpc7VpeZEIiHpcWskMilLIS94K4DGTUhY8O8LEtyb7C6WA/AkiTCNSG0l2DwMkGbb
- HWVf+GoCZ2E0XSAk7XnZLQhXNzkQfl1gij7PDXhoUKob1wblVYv0/qD/DcVsZAL49MDQErgtY
- xysjOv0fu3t0bXY3aRptohM0NlUqWrq5pat9SSsuTgnZTw/cXctqlhtmOXWCPGUmbCBjplD/Y
- yBKLI3ihgn2C2fGISIHM8zx04fgFd0WsNOdN2u+18ETc7oLHzG4Z5nf+g65gK3OoDg51ZV4Ei
- //ZqxB7uVCQa04AEJuypAz+/RCy4N+5EUuoW0KEaITPMKQZZt4cEioL7Z0qHuV02mMoR3veEg
- h7chIYtz+cUx/8IW/gqg47Y/YYVOOaV1X0B/DzLOwwdJWE0VRhRH95ZOthYtRrdJOo48bp9Ep
- Ein7aOUE5Cc2kY07eiXN5xCylc+NI6JDN3NKFB5LbZsp58lShaTYNULvTAWmMkYSnG424M21H
- +7g6SFHHn4nl+VYCNszN+mqHKXL0VSyjwJ/TLWdBdqFzVhZWT+g1M4E8SUBZClxlsGIBMLmQj
- LSoLpVfIRc+uWcZWp0WAGTqgWHnol+FMqrrEEk/DW3+LqtbRzekvSjmp1Bp2mALIDwKHDeEMC
- 09X/7OPy7iNtMZPEI+vg328Ux6YwHicwKwURg/u0en7PzjLbLYv6wgZdpW2+q/IIQLbnFeV
+X-Provags-ID: V03:K1:GmLyohcNcQuqFYIFCYxm0KlCwBdBOrhwomXe4e3Ynqi9SzvDJ2q
+ jN7myQOgaBBqAjNB9cf1AdCO1dlmQetziVl284tyh8ytWby0I35pD1275VwjUdQrD58b6aJ
+ ufz8zpoPrtfgZuW1hCnGN7U2qzCEwdRROTkc8XRzQQmBF0dURP4D40oOSNNXnrJfqUVWWYc
+ X8H0vauMro3TlvmkVI/BQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:LlcY7I7zgN4=:G4Wz61+8JIeaq+RjuoCnKa
+ cmWjefZjDplGnU6O09adpZocl60amU5BpNkTABU0wSbCvp2IlscyKupGfxPcqJ9af5wKRTLPc
+ qCRF+6C1ngXTFw0P3ejQEHTaykgQqaVC6O1hcBICC9g0ydft398bqbK9QwhtT4kW6aKx94wor
+ GobA1hrkKyNHTgjCGDpdmiXaPpHXjdv+eUmsGdr40ukYZzj/0i2O9VGE1TAp/+ITjxgYVHYwo
+ 4OwOv8MaV4G/3eijleB3FtLB/HrRhTZo8hg81DkGltXTU5/gEpy0d2EAXNP33tDnyULfvEvm5
+ xp9phlRNdE9TZ6sGTCDxkGZqZlmSS8PMvYLpUNzzGkTDMxmpxgc8feXarBqaY/QAIQiFFKlpI
+ gUVGJSIZO2T9Mde+w7tZXCaDL8bNHiPOAJuZkVE+Jk3j3BATYBDzJfjQuWij2Cfpk89shLl1h
+ qQnpYruNZ15T/fX5VvAIfZ3SKLesa42cqfXQ32PwIob80/XczRAtiK2YImUwxl5ufIQqKMEPH
+ OOg9zc5R9UQva+C5xI8+6PkjLaMtl9uMhkzoM4Yi7LODaQbZdD7OekqHJKxDioxTKu3mggVsb
+ OW8IP8hjFc7R0TKriTxyJGx6tmEUGRmuJAYCwNHJXemaplzBJJZ/pltMrgPFpUfKd+hLcgxLU
+ OpwFg4uDhIeOHg6n+7d8buES3CWvj+OKqv6uZffNQMa5ZuJqYCMX5oXqUJS4qt7BpBjyp8teb
+ FNZoYMoHGnu69x6boH6DLG8TWedPByGp4TsryVZqRGGmIxiA0yslw1cTF+RvFaBWXEnz4Y0hA
+ 1l7TiQQT6Ml/NKfCgPIAnSYhpDxg8XZ4SZJbQjtTEgSxeLbsJtAqJqEDRlpepFjODO+SjjU
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The test case 'unset with cont. lines' relied on a bug that is about to
-be fixed: it tests *explicitly* that removing the last entry from a
-config section leaves an *empty* section behind.
+In https://public-inbox.org/git/7vvc8alzat.fsf@alter.siamese.dyndns.org/
+a reasonable patch was made quite a bit less so by changing a test case
+demonstrating a bug to a test case that demonstrates that we ask for too
+much: the test case 'unsetting the last key in a section removes header'
+now expects a future bug fix to be able to determine whether a free-form
+comment above a section header refers to said section or not.
 
-Let's fix this test case not to rely on that behavior, simply by
-preventing the section from becoming empty.
+Rather than shooting for the stars (and not even getting off the
+ground), let's start shooting for something obtainable and be reasonably
+confident that we *can* get it.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/t1300-config.sh | 2 ++
- 1 file changed, 2 insertions(+)
+ t/t1300-config.sh | 21 ++++++++++++++++++++-
+ 1 file changed, 20 insertions(+), 1 deletion(-)
 
 diff --git a/t/t1300-config.sh b/t/t1300-config.sh
-index aed12be492f..7c0ee208dea 100755
+index 7c0ee208dea..187fc5b195f 100755
 --- a/t/t1300-config.sh
 +++ b/t/t1300-config.sh
-@@ -108,6 +108,7 @@ bar = foo
- [beta]
- baz = multiple \
- lines
-+foo = bar
- EOF
+@@ -1413,7 +1413,7 @@ test_expect_success 'urlmatch with wildcard' '
+ '
  
- test_expect_success 'unset with cont. lines' '
-@@ -118,6 +119,7 @@ cat > expect <<\EOF
- [alpha]
- bar = foo
- [beta]
-+foo = bar
- EOF
+ # good section hygiene
+-test_expect_failure 'unsetting the last key in a section removes header' '
++test_expect_failure '--unset last key removes section (except if commented)' '
+ 	cat >.git/config <<-\EOF &&
+ 	# some generic comment on the configuration file itself
+ 	# a comment specific to this "section" section.
+@@ -1427,6 +1427,25 @@ test_expect_failure 'unsetting the last key in a section removes header' '
  
- test_expect_success 'unset with cont. lines is correct' 'test_cmp expect .git/config'
+ 	cat >expect <<-\EOF &&
+ 	# some generic comment on the configuration file itself
++	# a comment specific to this "section" section.
++	[section]
++	# some intervening lines
++	# that should also be dropped
++
++	# please be careful when you update the above variable
++	EOF
++
++	git config --unset section.key &&
++	test_cmp expect .git/config &&
++
++	cat >.git/config <<-\EOF &&
++	[section]
++	key = value
++	[next-section]
++	EOF
++
++	cat >expect <<-\EOF &&
++	[next-section]
+ 	EOF
+ 
+ 	git config --unset section.key &&
 -- 
 2.16.2.windows.1.26.g2cc3565eb4b
 
