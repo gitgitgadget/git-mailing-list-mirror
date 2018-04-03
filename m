@@ -7,34 +7,36 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DC87B1F424
-	for <e@80x24.org>; Tue,  3 Apr 2018 12:01:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B368D1F424
+	for <e@80x24.org>; Tue,  3 Apr 2018 12:01:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755415AbeDCMBY (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Apr 2018 08:01:24 -0400
+        id S1755470AbeDCMB1 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Apr 2018 08:01:27 -0400
 Received: from mail-bn3nam01on0131.outbound.protection.outlook.com ([104.47.33.131]:22187
         "EHLO NAM01-BN3-obe.outbound.protection.outlook.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1755300AbeDCMBX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Apr 2018 08:01:23 -0400
+        id S1755371AbeDCMBY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Apr 2018 08:01:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=selector1; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
- bh=9/LdPKlUlKX6lFCnO3IbctFyXdk11Jaf8vPeawNwac4=;
- b=nONqqu+grB19m82gGYxwDRoQVUkcpbmJjeoKUWgkM20IPLH6+uGxdGPCfnPhxyN+RlTy3/PgPUTcZ3j3McsSJuNDtxp6ZlIx10OrlRFl3URg2fK2z4GPW+YXb5Pf0gqzTMqkQnPjrOccweB1MCeJCpH3fLP9+xGiLmD18pEJjc0=
+ bh=MYkCmeZQvi/Wm1NHQcev7LSuWGYllycqQLzRlcWzkaw=;
+ b=CNHnf9TVMmFoo8mzi4oZgmMfc2JuNSrmRfx8nKT0G8cmnD8450fAsq3TNECjRxlZSjrR0+i+LPX/Thzm1BkBBFVB5g+BWoaG4zloIvF9qxJSc2qV2cZGUgfADlVHpsMnqRLAULlFgSN5YeSpBhubpfjN7tuCCfT32i5hgg737l0=
 Received: from stolee-linux-2.corp.microsoft.com
  (2001:4898:8010:0:eb4a:5dff:fe0f:730f) by
  MW2PR2101MB1019.namprd21.prod.outlook.com (2603:10b6:302:5::10) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.675.1; Tue, 3 Apr 2018
- 12:01:20 +0000
+ 12:01:21 +0000
 From:   Derrick Stolee <dstolee@microsoft.com>
 To:     git@vger.kernel.org
 Cc:     avarab@gmail.com, sbeller@google.com, larsxschneider@gmail.com,
         Derrick Stolee <dstolee@microsoft.com>
-Subject: [PATCH 0/3] Lazy-load trees when reading commit-graph
-Date:   Tue,  3 Apr 2018 08:00:54 -0400
-Message-Id: <20180403120057.173849-1-dstolee@microsoft.com>
+Subject: [PATCH 1/3] commit: create get_commit_tree() method
+Date:   Tue,  3 Apr 2018 08:00:55 -0400
+Message-Id: <20180403120057.173849-2-dstolee@microsoft.com>
 X-Mailer: git-send-email 2.17.0.rc0
+In-Reply-To: <20180403120057.173849-1-dstolee@microsoft.com>
+References: <20180403120057.173849-1-dstolee@microsoft.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Originating-IP: [2001:4898:8010:0:eb4a:5dff:fe0f:730f]
@@ -42,53 +44,53 @@ X-ClientProxiedBy: DM5PR06CA0049.namprd06.prod.outlook.com
  (2603:10b6:3:37::11) To MW2PR2101MB1019.namprd21.prod.outlook.com
  (2603:10b6:302:5::10)
 X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 18eef142-4c47-4af8-01d7-08d5995a9d42
+X-MS-Office365-Filtering-Correlation-Id: 322ea3e4-1e6e-4e88-aa04-08d5995a9ded
 X-MS-Office365-Filtering-HT: Tenant
 X-Microsoft-Antispam: UriScan:;BCL:0;PCL:0;RULEID:(7020095)(4652020)(5600026)(4604075)(48565401081)(4534165)(4627221)(201703031133081)(201702281549075)(2017052603328)(7193020);SRVR:MW2PR2101MB1019;
-X-Microsoft-Exchange-Diagnostics: 1;MW2PR2101MB1019;3:6U/X1k57BsyqwQNshf/91oo2utg56UBqAOno8HlZx3CuxzD0yPFsCNjoqLhsWCnb4M+hvgMuCknzGHQeFGhxpG98r8NAqzvTi7qt1uax4mYoL1Fkvgr4NfBIDsbaTFiuIm+kgQuXBjK6NNWuRDCB4tW/eUxUnnCRjLf2FeQWkJKXT4hIBiJO7DIqLF2OPtDHkc+hmvqOWV8eIW3wwvR56wkWOC3HnHqD4jVv7gxHaH9CJbMsK9x1oqE1Niu9M16O;25:njE/tbap8XczidpgQQ6GXS1RwT4N5LyGPpYIyGek0gs5Qv/4ZMZ1265A8rgazSaE1ftebldrooDy51S1fLAY71254JAX5in1oBr+VkHpxT79OFtR3GEgXjxqEwyP5ouWzztYxHk5Y44CA/UTDSFD8YCR0ivtQH+cTPafNPz+Kslc3Q+/2cVKPyRdvo/uFrsuKmLmx5CX/oXyLSet1UlgWWOTF60FxSt5VjU7IS8zWPliz9ITLABMCHgAlid+V/U5JGmMThbgnG518KRbJ45vMkC0b3uZme1VySWbAQvaGvc9T9mvW1EclEtYtYiXTZF3RI3yq4IiNMI/S9gWscn9EQ==;31:PXFEgcnhIPIswqlMO3NM2y1HkbpWhvWYN4YV30E97hQyj7hkYTLL2e4ptXd2dFhwyj5y1DshVz+tmU7J21iof2Y1TexqplpMRy0BcJ/51nApc7gR+is2hybnw7lFoCoRr5qmKSNj6fqp1HywTJlASYBxfhsfPjG5/Sz6VrpCIUloZjrNpFGk62BbhJVkCxA4Z5ygnu1xy7cifUz10IHrHahHBSYMJZgchdyVdrgP/54=
+X-Microsoft-Exchange-Diagnostics: 1;MW2PR2101MB1019;3:7V9PJzB6Jdr+QOYpxiqVTQWt14irOXCmeWtufZmPhgDDwTOE5+V7UfdM+qEuX3eWOaxNZL78cNCsxUisy/fICdAraTwrvlYj+ENRE+EesrQuP9wUJ4YukkUgJCP7dgNBkISiZNXn80jCUD3RO6khtGAFjfbBzGSdRZbVpYyOoDIUs0MONYGrUz4g8VwLvBdd1Fu80YpYH6tlm2N+qBTiHhMG+SVhoM1Xa+e2mu3o+bfs2AdvyFCH/LmDbqw1baqx;25:PXSwMG1isrL3ouA6iD8OuTZ84J1pu4hT7BKFzKGRLcCDcDRjQlOb2XXlhneCoX52PP3e3OXonCN83cHgNpF8fJ4j9Kbwao68tid0kLt+DqvmvLjl/DZJCZNzqRP6hBB2UkY/xV/6JJeACn0lp3H676HGwcWDzBu1GILHB6Zznycvjg86QP4ZnD1JR/WRiB+9uVBO/pUUvXiOWaSfThA8esrOnbCl9d4Ze5NmE7Lbnlmc/YUW2z6zQlN1zLQEKGmzTU4r1zM54pZvuD8Y/U5dp1+OAnwsZw08KGh+/2cy21w+w02VBp0P7oZcvBwdZJWKiuNXjrUseh7UqQdiSjwAHQ==;31:9R8uCLfmCyR8c7SQ+rCNGsXZeKmNgf2RLW7t5woUDnBKI4FZZrUTD+efujTbL35IZ6p8Z4sUyl/o3Ba618uO092kKakZUzsotSLr4W7QenyHAjez1H0xnlV95Ne818l6wmBtiEKnBZVwBRvqoJcZgrjqft8L+ZvMximEeHlSzhzvSNDxNrJI2kNqwEkQ8bDgMDb/Scc1UQD7NW9UQjOG7fYLsSJ0arQUW4bVyqryh5s=
 X-MS-TrafficTypeDiagnostic: MW2PR2101MB1019:
 Authentication-Results: spf=none (sender IP is )
  smtp.mailfrom=dstolee@microsoft.com; 
-X-Microsoft-Exchange-Diagnostics: 1;MW2PR2101MB1019;20:JBVfa357VYAncfeIza1S8dKotb8drHy5w6tMIw3/IY6WI9ASiG+u8w/mkTYjb+/dFrG/gGm9YTjdAy0nvc1flDY9vWXa9OK1d+ODHUXhj98iGwQsXaEcg7PdgnjCnWGqoyPxW7Y+p7wOeZKk7LC/o5zyKpqRLDdC/e+O1gbQuYfb8+AfLoQa1WIXZySt1jDTdpftHvwDIel7rouPtaYAxC9ZYVcaYV1rJAbTnQBD7tOXjMX0PWTLNOyfbouEoqdj0+FYXKZTasVlmsZfcRKKF1BqN1KiuUfIt1ch87wvIVCODbLgiSGRkvtp6TLL6+kwLNP7/jN4j5MBRCgYd0ei69KuLFpAPLIYIPKtUF7SV56Sxn/9E73NHnLdI/PGj1otovk2qLv2wzNDQrMDKVyMba0h22+Yn1vXxwuhXAl26F0J7yF9kPrfgEUYZTiyYJH9NP3wIzgRN5EFxGe92UyjBLDUlmNJE8AWu2J1luJB375OIRU9gaEgAlpZt1tf39Zl;4:VPdsBeWqBOdDYU51jucs3Pc5UmTIc5YUREewnZIHTGdU0PMuvtNH3DtPYVqgTXNO+OKNlnlyzbPfvW8dcdVG6M8hAEXZw6md1ZD9DQ6aFO/M2gYFkVpGSHUnsMJd6gvg2ttPfbVtW5JcJab5gI9zFgmSpVjxuLG+xcOThvQCbLN8PvNyKlUQGi6NJmW2tN/BwoFs5lcsBYecmzvnBOefm1WRNgMLMvdU6ik5rmgQ/SfpNCLvU5XrRz5KeAoow4IH1LH8ATIZD9nm7xdzcOzsPw==
-X-Microsoft-Antispam-PRVS: <MW2PR2101MB10191D9F9774C36CA004EAA4A1A50@MW2PR2101MB1019.namprd21.prod.outlook.com>
-X-Exchange-Antispam-Report-Test: UriScan:;
+X-Microsoft-Exchange-Diagnostics: 1;MW2PR2101MB1019;20:6JT6KYfiiN1u47cGFwZxDiHjgTGcYSPkOKHbJ8sVL3O4z8n34XP5NU36mGw0jMWGtGjyWU5008lY1FOMu5E2+V+PVxM5rW2J7BSy6JQKmqHNQiNgfT8S7dz2xq2FpUCy8nGD0H9iJC1AqpjQSWrIH6FzP30J5VMZOGxUTbTXjNaj8WW/FxyLI/Z1z6EQZ2q0/8LqgzmIn0zDv4nNG3oEQV3QzpRhRtBd93kfFvXMFbrcSjTNmJ3HLQSx4EsTfTA8R7KxSqGo/V6C8y439uK2FV4tUaWiE7czrE0bm0dwMGc25bxFdoX3kO7Pl92f7GJirdnsB5eSm5jVJnTYAodiHhkkqPhiARI7kQCGt9rEtAA1lxyxy/ktk/E8m9IFftUqgaLRBEFys9bZ0vjA/PtHlGRLHmCjTy/shY8D01i/mDaCAtYl6tO59KMeqPIMg9w2FfpTziD1+8zsTDAuuZ+V+yDM+mTl/w784skKZGRzvrXSdt2sQ3ZBSe0MVkj42SWC;4:EXS6zOoeXyN69w+0TsMuLirvOje2wytApqnnwDfGZQtO+WA8XViHRgDDWJVipYhwk6Mk3m9jdrE3LJ1NttxvmXKu9EzdAa2UGjSvcdPDmzVamSXtMb3xrT0MQTySgiV/JZjNOOoJGd0QiBLoSbOyfVrr8eLzuFLneoK6qY9G4xhFVOIzBTeHHwQlmmiack49qe+tDGNXx6FckoFlcPyWpBfXoQYiZfIG0WUP9kTvh9EuyKwFscKcnfNokikxPO3j0RdQbRJ0zd+AXN/Ri0xRox6882cObY9SiyKXGgGFsEG7dpOWsl9HU6t/tr2XgZzPgXlEM68GToXVzvQ1tKqeoKXoupL1mpoNhYomnVMuubY=
+X-Microsoft-Antispam-PRVS: <MW2PR2101MB10199F46809FEA9B86E2A4E6A1A50@MW2PR2101MB1019.namprd21.prod.outlook.com>
+X-Exchange-Antispam-Report-Test: UriScan:(28532068793085)(89211679590171);
 X-Exchange-Antispam-Report-CFA-Test: BCL:0;PCL:0;RULEID:(8211001083)(61425038)(6040522)(2401047)(8121501046)(5005006)(93006095)(93001095)(3231221)(944501327)(52105095)(3002001)(10201501046)(6055026)(61426038)(61427038)(6041310)(20161123564045)(20161123562045)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(20161123558120)(20161123560045)(6072148)(201708071742011);SRVR:MW2PR2101MB1019;BCL:0;PCL:0;RULEID:;SRVR:MW2PR2101MB1019;
 X-Forefront-PRVS: 0631F0BC3D
-X-Forefront-Antispam-Report: SFV:NSPM;SFS:(10019020)(366004)(396003)(39380400002)(39860400002)(376002)(346002)(189003)(199004)(47776003)(7696005)(59450400001)(6116002)(16526019)(1076002)(52116002)(50466002)(476003)(68736007)(97736004)(486005)(486005)(51416003)(25786009)(106356001)(186003)(6916009)(10290500003)(6666003)(52396003)(386003)(305945005)(46003)(7736002)(16586007)(316002)(86612001)(48376002)(2616005)(50226002)(22452003)(478600001)(36756003)(8936002)(81156014)(81166006)(39060400002)(2361001)(86362001)(2351001)(6486002)(10090500001)(53936002)(8676002)(4326008)(107886003)(105586002)(5660300001)(2906002);DIR:OUT;SFP:1102;SCL:1;SRVR:MW2PR2101MB1019;H:stolee-linux-2.corp.microsoft.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
+X-Forefront-Antispam-Report: SFV:NSPM;SFS:(10019020)(366004)(396003)(39380400002)(39860400002)(376002)(346002)(189003)(199004)(47776003)(7696005)(6116002)(16526019)(1076002)(52116002)(50466002)(476003)(68736007)(97736004)(486005)(486005)(51416003)(11346002)(25786009)(106356001)(186003)(6916009)(10290500003)(6666003)(76176011)(52396003)(386003)(305945005)(46003)(7736002)(16586007)(316002)(86612001)(48376002)(2616005)(50226002)(22452003)(478600001)(36756003)(8936002)(81156014)(81166006)(39060400002)(2361001)(86362001)(2351001)(6486002)(10090500001)(53936002)(8676002)(4326008)(107886003)(105586002)(446003)(5660300001)(2906002);DIR:OUT;SFP:1102;SCL:1;SRVR:MW2PR2101MB1019;H:stolee-linux-2.corp.microsoft.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
 Received-SPF: None (protection.outlook.com: microsoft.com does not designate
  permitted sender hosts)
-X-Microsoft-Exchange-Diagnostics: =?us-ascii?Q?1;MW2PR2101MB1019;23:8kzhRvR2S7eTSqkzIkm/+RHZNrr0kbaCVda6fJa?=
- =?us-ascii?Q?J3UyDmXUCwIvcX6KBdrwPAT4L9v17KO6UvDoT79vWsq9yxhH4tDluK2pCnVX?=
- =?us-ascii?Q?CCP5YImvpZgkLmW7asg1W47pPZ8NeXjxWViE7phqG7KHFPQ6o7Nb06XXcmHf?=
- =?us-ascii?Q?bJrRtPjx0WbcCwNqB2fUc5PibPhvK7OCqYmrY5WPzuwvTHni8iYbkxmSliYm?=
- =?us-ascii?Q?yNqsnRF7OWUpqtlpssDwVdrIkUaj1/16pTUjbliFGQtER50Th9fWZHXdEiD7?=
- =?us-ascii?Q?jgIwHgA/cLXk0bxEIy5dvebdPg8k5srVuZhOQajWf4erLyo4XsNmSkXTCKAA?=
- =?us-ascii?Q?Z7Qmv7LxGz0LATOKayA3P8t585z+Q+SnBxsyYajF10P4dW9Q/181HapIuaAy?=
- =?us-ascii?Q?J3t1qd3fGiDcli7vJadI4raSRq9GUa0LhG2XZ1b38S2dT0pa1RoedmMtEY5h?=
- =?us-ascii?Q?zbJOmup2DNFblwAeVS+V06I3TROXANzlGYMWzI8J9DBfTBZ2cjqQkCdBqqvX?=
- =?us-ascii?Q?aHAoeQ5YMGRic+ZnEpXxrNy6SGPAah1AvB0cUdrMz1zlyduPRYBZaA+NrfzB?=
- =?us-ascii?Q?QQIhk6NlqgB4y8RcVo4WGyEXHuGGxbiclgGvgkKeDZrCZFx18HriZ8LDGRjh?=
- =?us-ascii?Q?u3Sf3Zdhf9ID1oEy/93OAhhYmjyK04fHR0U/XpJ7V9Y/kUYOXbsKePahAP1q?=
- =?us-ascii?Q?FNwfVtIyT0tylp9J03lsUtWNVz8jpMbOM6QabC3pDpNonWoqt7q820e1+JZa?=
- =?us-ascii?Q?Uc1afF90c4K0A++2YQy/QOWzkLu3GsJ79gvqaMCcwnMl1c+Wl5xJKLXxNzJU?=
- =?us-ascii?Q?Bs844e4akqq1JTRFlYyvC2d2bmA2D7uI/WYkdXu61boWDsHLJBz2TC/iBYBy?=
- =?us-ascii?Q?NPqgOzUJ+6Crd9QuEHAeA8h/ezCnmqSJ8xVI/ENK8+PwrZJLeJpWPtUIllHz?=
- =?us-ascii?Q?5GuGSmd+FsYtlzmZTo0Dpa/bgkrkc0dKuxp6E8SAxXj8vOnydiU7eoYZHxZv?=
- =?us-ascii?Q?zRdGcU4YTPU2nw1qHyHGmF+8oEY5vJAtXtQmjj+6ipmKe49EcwE34iDZlyAz?=
- =?us-ascii?Q?PxGmtTNNDARBky2G1eesv5GzPpWdDnaVZbQKkIhZPqCZyW9churet8D0rOwq?=
- =?us-ascii?Q?8wfnC/4tDouVWGk1UQEXacLBSAft1JwppiK+PO3ycZaUJI1A2ThLgfZpdgMK?=
- =?us-ascii?Q?Y8Z+hUCzp4swOADC2ZkpOcR/m61zudyAdvmxX6pVTwDIls7DVtJSXmmFMDzq?=
- =?us-ascii?Q?9eS56j46l/wFuH4GQ2yTb35NvS/CEIVsZoOGg9GuEbEzGQ89+4nwQBR2Jbux?=
- =?us-ascii?Q?3UvltW7Z0i6AbWSzBTQEvC9I=3D?=
-X-Microsoft-Antispam-Message-Info: t4pat7cQbvLW5RNH3HRnksOcpn9iTdvMeyzoOTqyP588vLFN0PlR261btNObU8Rq4qY5THpaA3aRaOjrZD0WMXFF5OtqkxxMZrg1m/gUs91tBE+H1c/98Qy+X4b+7lpFQcyW1Koa4HcLDAd+uG+u+VrbS1soh8OIXhj6nLCbgs5Dq4lxUxDydrRgpeCrOtNB
-X-Microsoft-Exchange-Diagnostics: 1;MW2PR2101MB1019;6:nAXOT2M8ASyY1Lua0JsyXeCvZHddI7e6oyY4XLbfHF+SlGXfHanjkcN8owah1Nt6FR/4d6EsJkamcAvGJsGzt9fOpnVgvTy8nZEeA522alB9+ljaurOfJcgLNhQN9edgMBTHnmDOnwiMgfmdqAGbexdOUkdGIxDXYJtmGbAzLT3ixWxth6lu0JBUFtrtAYQM12eAsjrCMGo3CnrlsvyOTtN/LJeLLwvAzdlwNt9/kuhtbmFx5Gt9i2hCj2vH4FFtTsjxezo/dHCRUWlSbSqH2XcujWcxwGP+1z10Df4raEuQSp53Q7hfSbhm24Y+mgmzuWrz43nGqMW0aiy5J6Q19/RWqxYw9d9YfKtAHvGBVZrVF97r0+3YxyZWF6uUuwYYDdxWj8edjE5imAw9FU7pyrzvMROEflW+2snc74W1N7WCM8AAs63EmqFlgoQ/UfSZdzLVPBuSdZfh+qYj4HudiA==;5:ueZgw943NOVsb2tbEVd1afaRngwoyxVooajhzHEbfP7J1UXfki6pcGiu4lZuOsOGNEt4dgvcmw7qrZ4Y/T50hIafcoziwaMI2hWvcv/pE1e9IChrXm4co51gC8T6Jp5WdqG2NXa4pP4Tz86d1Uz0jtXCcvBbVLaPc0afS0LDgA4=;24:Y2lFu0YzPManCW3RYEMUuhPf1/yb8gbfzj7vLPhYC20vzCNQJG17cytQaYHItLStyPNDFnhw3QvLubYUXeRupne5Hh90hc4v3mgIBX7p/lo=
+X-Microsoft-Exchange-Diagnostics: =?us-ascii?Q?1;MW2PR2101MB1019;23:s8ZaCXRSjg3DAPRWCSz2Ce8+jRhK7WePlecCV2o?=
+ =?us-ascii?Q?DKbhujYMMgSC3488Kh/ArpO2jB3FOOxSLRroB7c81Vaqig4uLo/+1PtoCfAg?=
+ =?us-ascii?Q?ldxOR774XNO+uC2hUasmmbEkiCqsosqRo1XQGOLz4QeLzPIsmXXd0L7d2cyJ?=
+ =?us-ascii?Q?bZJRbABCQlPTELlywPwXmMFqKLdts4LFgKDrPW262bFuU37nNB59feuag1s1?=
+ =?us-ascii?Q?Nu7IPOYk7XLoj5zKu6KsRGiIOAIOnOJjaTmDstI8BT/+oHoH3FL2yLSJWIYA?=
+ =?us-ascii?Q?EGsHsMYFSVcrdeNjj9JbLI7dvRYJiaDJcmqXDm87Js+DXlSdSwyaXPq+lhN8?=
+ =?us-ascii?Q?r00MzXFCXcs+SKJgs1KSKOLlpXmnS8U0K0Recla4bH0hSRPPppeoPyv78Gew?=
+ =?us-ascii?Q?AK/BFzfYHk/saE/uSLsUrGniSEiEX0Yh1kCeDoDdUPI4VrVCP4EH70N/Nh8t?=
+ =?us-ascii?Q?b3ZhEN0loSa6rlhzQSNeX17luNpjb6hjg2Byi5qLoxFx+eTyVjLb/qd5O3dP?=
+ =?us-ascii?Q?lpNdKE4bM6p2nR+xnX/wFxB007FUkZtLNJaYPycP/eEQOAskvMlFKqrZBIH5?=
+ =?us-ascii?Q?+pmqi+1zNxuNfeKUuDEQK/XGe657U45XHIEWZOVRXfeQGoq3SIlVbLz0Opr0?=
+ =?us-ascii?Q?t0qwGKxqozVJgpXyXYk93zTNtSUWdholeJxD48rUxdT62eva457oFyv1ZsfU?=
+ =?us-ascii?Q?l1xlI6Yf/rDg9o3HuU4D5dSKq03JTi2zS5c8MurxYC4NYBfimc7xVfid/Gu9?=
+ =?us-ascii?Q?YV0kuVQTB4/xBoxBZqts0dlDBXj7/DEgOY15z4+bwWB5TXt+YBFzvb63LxCF?=
+ =?us-ascii?Q?icFT9VsXoWHnx76heBfYirKJK/K0MJySfc1YwcDCPAJeDe0BcCpK8Ki3XkA7?=
+ =?us-ascii?Q?hKOcY/9uJwdsg9djjenimSvlqAW5Ivk8EpkjpeGnuFgagwlC38a1hL5acswl?=
+ =?us-ascii?Q?t4HcQzTHjyuw2DF4kfI5QqdLOhocQxgeYbbD+sWZPdBuW5+bjlukNgtp6UnV?=
+ =?us-ascii?Q?M7lJD7X3/ZWO4usmJNr2gsZ2pnSUA47RzefmeyaG8NWPH65KRuT/pHKjZmjN?=
+ =?us-ascii?Q?iamijmKnMpAVIpyoBKNEsABakTooJ7kCpW5fPlOGa2u9Xx+AD+0LlC6tYV2E?=
+ =?us-ascii?Q?O1qFlqyOPOwGUjplAF8O1HXOBo1B1vRVS4OXYg7WEwgluNDWvaSj4HSa40o7?=
+ =?us-ascii?Q?EWCq+BZmd+TgoHlIFYlgYxO0LjHegwLxlfdevYCGhLBvVgoKz1yOYFmiawzC?=
+ =?us-ascii?Q?RSNh3Dw1LivptzVn54i/ngsG5VibrlvNME/JQcWTA0W2B+N5TidaNNuboTOo?=
+ =?us-ascii?Q?+KsUsRjGMbJoEIIvQm4TOYzZYAqF0i2Xyt8m8MNplaX/X?=
+X-Microsoft-Antispam-Message-Info: JhWjx+aTKFAdsqBWZbii4Xm9oGIIDkw2jD1gqkk6lAueMHeMwVLkkQ2Yb163KKVJZlI6pQ3ahXrWNtU2qnVmXVtqQRx1ATIu90fXl9LYYTENLFUY6o/oPQgA9wk85X9mstC3MIJ3Cxcfoq00/GF973R2iUghuueLuqrJ6NLN5WhjwDYrDcKr58O4L+i3OCb0
+X-Microsoft-Exchange-Diagnostics: 1;MW2PR2101MB1019;6:TgiOXBkW7TyOke6mHhKI1yBapJArmxlYSGDb0mwoPPZJ/rP5zHopZD0YwXNb+gTT7VhaDMIbWGh49rSkwZwo9Pak3vWVrjA3C2xmGRBkBFTSd4fQt+Ke+CiYsEqxMEn0SfBKYgZTWzHWAL4C3iAIjnIOmmXv+of9aYbqwG2l4C394ZL2MIcRAJRluWK6gB0q5k6DinOuLjnXjHsLDqkFJ2J7KvbS6qPhufFKfZZM7WlFo7x+oLua4gh+rUkIbdNXzEckdoTAzRSLnmSCgnCBNMggCaqPt8axN9vwmNnmV/cRNJPwTNmPPVmFW1IdD2+aXW53m2cvjkBNvqDh1qgEcvNjPbpGyI2sBHHu2kTH5bBCqgoeiVbfHLYBm0dhnKL7QR0cyf+ulC5ITlqJ1o4wZvys1h5SzF9ebtwuSQdLJ/8M2Atj9EZat71EvkMvSVjRR9ouur1uJUuTi9kfNs136A==;5:hVIv0XOEBh+AhWOSdgxhXL+e0+4Zma1W+62ITSf+3jRQb38aW30Gdth8rOUNzGbBsvMsyrt4oOMjCvsREZ9xW6cq2aIs2h6hlrm55yl4Bw13giggUv4+gpIslMuKFuzxb9TwH+hVEz8tfcwmF9qJQZVXSNc37p/6Nea/TGFg+eg=;24:u7JtSmLZOV1Z2py3Bk0s8RF3dQ58pQT7au5G6x0xVhC2kp0LL+Brfw5PaCzztvplqF3Xza0NNloXuQs5XspocURh33VZsNoI9a206jcRmpw=
 SpamDiagnosticOutput: 1:99
 SpamDiagnosticMetadata: NSPM
-X-Microsoft-Exchange-Diagnostics: 1;MW2PR2101MB1019;7:1GqlV7KXGZyvZ+45UrDV7Wh5OFyfCnA318LMxuYljpRSHm+AM2+uyNg3Wt7pLG0wF+RDJLsTlwjuSw7ieQGIE9O1xQzMN7m1cdAseDWhnziVzJJ0sAKBekUw6yJEmOeU2EHNo2/qoWpBclfG76PHael4RTiQVYtleeABRkrTzBKYQFZ3fzYsZEmLkCJ+rQQf+okFKvAj7uT4elnyWIYIbS+OqpMhYqKR8K6hK3Vakl5Bwjc2HFgeYEqD2zYy8Wmj;20:RKwv44CR8nFI3JtbgB6g9t0KJrnpRTkSTTw5FcYz94cRbsKzzcb7B3Vu3Snb3/Api7P5NpHnloDomgHccZSD0fCW5F1gyGkiuZ3u2U7HFGYG9bGQoonZSb+ZlKm7TYZEBfxJ2nMXkT3giaUol4KzB5YyAwhzOroYXkLyfqa/dns=
+X-Microsoft-Exchange-Diagnostics: 1;MW2PR2101MB1019;7:+YRpnjEA4zml4p4mbGzSwBjDrmK5WE+ngBAMA5KikxQOyl9o5yIJcoL/pn+r/NpyPYiU6JymztC23n2DJup4WiCdQR2pimt+y2V5uM8hWbZ8syNuBd5uZsOT/2WIFlzuH8tTbYUXYJwle74zcZqc1kxknrPlyjMpW+XH0dYB70gQ4pzgxHzrtfF6eAkEPD0PFg74F/bQHXBWJF28z3Z0DJMTPfj+CFe86rFK4rqTU8SfuSpACYMNShOgTB/e9dF7;20:FRsLx/fq26iUKXqwuVu7rLaYhxus4TEii2u08bUfYB5sJEF0VNhscSEUdjEO0az8+KaH8ySdFY7jgdtOYrRJwNBGlMIFuDug3cIW4Vx8zw8U2PhW5qdStN09LU4Y4Guc67yElVPELeTMUlgFlwKq34/pAK06y/cPBWPeo930Omg=
 X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Apr 2018 12:01:20.0529
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Apr 2018 12:01:21.1779
  (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 18eef142-4c47-4af8-01d7-08d5995a9d42
+X-MS-Exchange-CrossTenant-Network-Message-Id: 322ea3e4-1e6e-4e88-aa04-08d5995a9ded
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 72f988bf-86f1-41af-91ab-2d7cd011db47
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW2PR2101MB1019
@@ -97,77 +99,59 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-There are several commit-graph walks that require loading many commits
-but never walk the trees reachable from those commits. However, the
-current logic in parse_commit() requires the root tree to be loaded.
-This only uses lookup_tree(), but when reading commits from the commit-
-graph file, the hashcpy() to load the root tree hash and the time spent
-checking the object cache take more time than parsing the rest of the
-commit.
+While walking the commit graph, we load struct commit objects into
+the object cache. During this process, we also load struct tree
+objects for the root tree of each of these commits. We load these
+objects even if we are only computing commit reachability information,
+such as a merge base or ahead/behind information.
 
-In this patch series, all direct references to accessing the 'tree'
-member of struct commit are replaced instead by one of the following
-methods:
+Create get_commit_tree() as a first step to removing direct
+references to the 'tree' member of struct commit.
 
-	struct tree *get_commit_tree(struct commit *)
-	struct object_id *get_commit_tree_oid(struct commit *)
+Create get_commit_tree_oid() as a shortcut for several references
+to "&commit->tree->object.oid" in the codebase.
 
-This replacement was assisted by a Coccinelle script, but the 'tree'
-member is overloaded in other types, so the script gave false-positives
-that were removed from the diff.
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
+ commit.c | 10 ++++++++++
+ commit.h |  3 +++
+ 2 files changed, 13 insertions(+)
 
-After all access is restricted to use these methods, we can then
-change the postcondition of parse_commit_in_graph() to allow 'tree'
-to be NULL. If the tree is accessed later, we can load the tree's
-OID from the commit-graph in constant time and perform the lookup_tree().
-
-On the Linux repository, performance tests were run for the following
-command:
-
-    git log --graph --oneline -1000
-
-Before: 0.83s
-After:  0.65s
-Rel %: -21.6%
-
-Adding '-- kernel/' to the command requires loading the root tree
-for every commit that is walked. There was no measureable performance
-change as a result of this patch.
-
-This patch series depends on v7 of ds/commit-graph.
-
-Derrick Stolee (3):
-  commit: create get_commit_tree() method
-  treewide: use get_commit_tree() for tree access
-  commit-graph: lazy-load trees
-
- blame.c               | 18 +++++++++---------
- builtin/checkout.c    | 17 +++++++++--------
- builtin/diff.c        |  2 +-
- builtin/fast-export.c |  6 +++---
- builtin/log.c         |  4 ++--
- builtin/reflog.c      |  2 +-
- commit-graph.c        | 27 +++++++++++++++++++++++----
- commit-graph.h        |  7 +++++++
- commit.c              | 16 ++++++++++++++++
- commit.h              |  3 +++
- fsck.c                |  8 +++++---
- http-push.c           |  2 +-
- line-log.c            |  4 ++--
- list-objects.c        | 10 +++++-----
- log-tree.c            |  6 +++---
- merge-recursive.c     |  3 ++-
- notes-merge.c         |  8 ++++----
- packfile.c            |  2 +-
- pretty.c              |  5 +++--
- ref-filter.c          |  2 +-
- revision.c            |  8 ++++----
- sequencer.c           | 12 ++++++------
- sha1_name.c           |  2 +-
- tree.c                |  4 ++--
- walker.c              |  2 +-
- 25 files changed, 115 insertions(+), 65 deletions(-)
-
+diff --git a/commit.c b/commit.c
+index 3e39c86abf..d65c7b3b47 100644
+--- a/commit.c
++++ b/commit.c
+@@ -296,6 +296,16 @@ void free_commit_buffer(struct commit *commit)
+ 	}
+ }
+ 
++struct tree *get_commit_tree(const struct commit *commit)
++{
++	return commit->tree;
++}
++
++struct object_id *get_commit_tree_oid(const struct commit *commit)
++{
++	return &commit->tree->object.oid;
++}
++
+ const void *detach_commit_buffer(struct commit *commit, unsigned long *sizep)
+ {
+ 	struct commit_buffer *v = buffer_slab_peek(&buffer_slab, commit);
+diff --git a/commit.h b/commit.h
+index e57ae4b583..fa79cc4d1f 100644
+--- a/commit.h
++++ b/commit.h
+@@ -102,6 +102,9 @@ void unuse_commit_buffer(const struct commit *, const void *buffer);
+  */
+ void free_commit_buffer(struct commit *);
+ 
++struct tree *get_commit_tree(const struct commit *);
++struct object_id *get_commit_tree_oid(const struct commit *);
++
+ /*
+  * Disassociate any cached object buffer from the commit, but do not free it.
+  * The buffer (or NULL, if none) is returned.
 -- 
 2.17.0.20.g9f30ba16e1
 
