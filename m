@@ -2,147 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8ABBB1F424
-	for <e@80x24.org>; Tue,  3 Apr 2018 09:50:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8D4911F424
+	for <e@80x24.org>; Tue,  3 Apr 2018 09:54:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754876AbeDCJt6 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Apr 2018 05:49:58 -0400
-Received: from mout.gmx.net ([212.227.17.20]:46215 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754762AbeDCJt5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Apr 2018 05:49:57 -0400
-Received: from minint-aivcfq2.fareast.corp.microsoft.com ([37.201.195.115]) by
- mail.gmx.com (mrgmx103 [212.227.17.168]) with ESMTPSA (Nemesis) id
- 0Lh7M3-1ehl7D3uj9-00oSqs; Tue, 03 Apr 2018 11:49:41 +0200
-Date:   Tue, 3 Apr 2018 11:49:38 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@dscho.gitforwindows.org
-To:     Jeff King <peff@peff.net>
-cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Stefan Beller <sbeller@google.com>,
-        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Thomas Rast <tr@thomasrast.ch>, Phil Haack <haacked@gmail.com>,
-        Jason Frey <jfrey@redhat.com>,
-        Philip Oakley <philipoakley@iee.org>,
-        Duy Nguyen <pclouds@gmail.com>
-Subject: Re: A potential approach to making tests faster on Windows
-In-Reply-To: <20180330191620.GA32338@sigill.intra.peff.net>
-Message-ID: <nycvar.QRO.7.76.6.1804031133270.5026@qfpub.tvgsbejvaqbjf.bet>
-References: <cover.1522336130.git.johannes.schindelin@gmx.de> <899ea23951627426ccd0aac79f824af386c5590c.1522336130.git.johannes.schindelin@gmx.de> <CAGZ79kapTWGsYznt7rr0QTNX+uH85TPY8AOA1jtDJ6_q8edX1Q@mail.gmail.com> <20180329194159.GB2939@sigill.intra.peff.net>
- <nycvar.QRO.7.76.6.1803301415240.5026@qfpub.tvgsbejvaqbjf.bet> <87fu4hwgfa.fsf@evledraar.gmail.com> <20180330191620.GA32338@sigill.intra.peff.net>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
-MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1399196620-1522748980=:5026"
-X-Provags-ID: V03:K0:h962hNsvekIuqv0sSbK6oJE+Yvdx87cbIPk/OdOpw7bLSXiqfX1
- Md8jzzj2hx0l/XTukBL4umreU83dxhpEW5bQIdh2lK8sGDNXrxNGSQ5x8n3l2S+9yqHdVQL
- TSQ04g4n77FABjlM8eutGXjC0cGUafBU9CgpXuOD1n4TWvfs31UbLjkPAuZupH2/fLuFtXg
- uUm/Mo1MbhgoZhyCLFlsA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:rPA5H0MIfqg=:auE20Z5LbWW6K/II6GEBHK
- ID2fMVMtgQXitawtdyocrz5Vkb325VvN+9aYqDwLC5cYu5WT+/ZTPyDqSxead6wfpmYAdjrzm
- QLQ9AwUs+As+i5HQP2uDnBEfXS4QvM4faSOC5qh/sAhLBrACZdM/ZnpbfxEVogRpfcqxehcbN
- UheqkbqTeIpNCdPgU6sB8tGmoqDevwYIc7gKAjQUl8MkK01FxwPZ5i1FOn8irHf5eRnZThJPD
- OYPt3yFYT0mil867BpD8JSdOEZyMb2evpsdCge8Gh+2/vk2nbG+2bPN2wVB9+z2UJDnQySo19
- Zg4R+2Gt2KYKwen+/9+ynreNe5dzCqiyaw/CtBudnCjdiVXDqEFIJ1cHFLZ/LoDvIlHwSN4zz
- ZfeCPBnWeMO5Gr4qgSWOuW+APf3mIzuwQ5Le9kATysfXPhhNQ2OxVxmiBFNtsJig4zfeSD73j
- tjRmISNedMVC8wCS3z6+Vbr6vzNOIk5kjRcWBrHKcuXYBTyTkosw3VW59bftoJZVTWoodG7yw
- s0lHOCOuR7ZjkHkBX/OkC2YF6TaDMvFziv/XEii3JC94JMxmZkYIuLQhq+K492hifEupumaTI
- m0cdveFGIfrNimqBZu4fFaK4LbQAS5WGavLzAceEPn/OB6ZZlZ2pibBwedafMLNRdMDK+q30e
- cHi48bXr8jwm2dQ+vBnXHBolnb+8N4hdcBr44NZSy1Sl24GL1GbBeoMx/pnJgilsGQ7ZlcPon
- JJBS2VQ9GTUlY3pX50h9oj+fDbvASMt77iGUB7RLi7Xa0HEeG4ulhT5JkyVd06Vw5weiTgz46
- kDLURodPSsh8QvaHgkFvXPWsYQHdIvGLThtsRvVSDhbHOnDAL1xk6b3OnwkTLtFK0O2zeXQ
+        id S1754852AbeDCJyq (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Apr 2018 05:54:46 -0400
+Received: from mail-pl0-f52.google.com ([209.85.160.52]:46986 "EHLO
+        mail-pl0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754784AbeDCJyp (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Apr 2018 05:54:45 -0400
+Received: by mail-pl0-f52.google.com with SMTP id 59-v6so5407990plc.13
+        for <git@vger.kernel.org>; Tue, 03 Apr 2018 02:54:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=hxzOFqhgqXleE33TC6ldA+3mfjLYp+jAFORv6guIH9I=;
+        b=d9pkoszuUW64jKx6EO6c7sO11t+tja4mgdYPVvy1WpyG4ANkhA6vrWadwrYmHOYOqF
+         /kSi+1o/ec7ovwzrAO3hHrA7zYWdpt3f+WdXRYTaRUhG/BA28oeuJI4jC/kSxqGHtW3p
+         GJcCGUPDM9vU6W2U1O2ZetPaRuKdYpdZAKjWQ1jiYX31JeD8T8fwnPM4FVt0/6nmTItf
+         xCv0BBEc4ex3x0tS42yrCRlhO5ICAF98peKOvd41kGCdOEWjNa5d3NwswYx55dHtvcrn
+         OGNruFXPfXtQ4mA+CyviGxsTsIrf4mt9JsI5e/oi0zKaj1A+pSAw4jkN8QZFoVc1JBX1
+         RqLA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=hxzOFqhgqXleE33TC6ldA+3mfjLYp+jAFORv6guIH9I=;
+        b=T21iYZs2SqfcoBaYzWKggCsJhoXEiO/X6fdHfEmOPwGGyFDAr+XaBXn5otomlyvwSK
+         gsmxo0UGJ1vdBs5K1xwMAPLh1rn987TCd6mlGvnNnh81kEfUr64/4LX+PbXgc7tjJfDx
+         aFROIR9wWnG8gymAj+2uXxObr77/eEvvxt67tMkp1ZMyeWWgumDfFq25SA9ULEoR+zRh
+         g/nMOP9nJsYcAbsaXsc/k1hlK1TNJXJI0HiJ4tGuhoPky374J0xnyn9oeCDetW0P0Mav
+         TpT0UGBb5GFyhMS2F0yHT63+PMKb5FC8cTrAsF9Ee+1jFihb/PGY3ARjGCccF0F0HrkG
+         Iy1A==
+X-Gm-Message-State: AElRT7FnbSfPYgKTExHbMNNYbLyJ7y6YyH5sHpDDRWRl1+JOQ8cUrf69
+        xuU0vdwWmJurqm0i2EkvnnQ=
+X-Google-Smtp-Source: AIpwx49QS8Vq792qhlbd60BqidLRy+7RUmQ9jWTVtGsyY3O7MWq9GK2GimRNiOE+KpfNJOBzotLcrw==
+X-Received: by 10.98.253.22 with SMTP id p22mr10013282pfh.217.1522749284457;
+        Tue, 03 Apr 2018 02:54:44 -0700 (PDT)
+Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
+        by smtp.gmail.com with ESMTPSA id p3sm3952077pga.45.2018.04.03.02.54.37
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 03 Apr 2018 02:54:43 -0700 (PDT)
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [PATCH v2 1/5] core.aheadbehind: add new config setting
+From:   Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <20180104192604.GA27528@sigill.intra.peff.net>
+Date:   Tue, 3 Apr 2018 11:54:33 +0200
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>
+Content-Transfer-Encoding: 7bit
+Message-Id: <091D90DC-DAA2-4338-AAFA-01CB75807992@gmail.com>
+References: <20171221190909.62995-1-git@jeffhostetler.com> <20171221190909.62995-2-git@jeffhostetler.com> <20171221204356.GA58971@aiede.mtv.corp.google.com> <xmqq3742tyho.fsf@gitster.mtv.corp.google.com> <20171224143318.GC23648@sigill.intra.peff.net> <xmqq1sjgoyph.fsf@gitster.mtv.corp.google.com> <20180104192604.GA27528@sigill.intra.peff.net>
+To:     Jeff Hostetler <jeffhost@microsoft.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Derrick Stolee <dstolee@microsoft.com>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-1399196620-1522748980=:5026
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+> On 04 Jan 2018, at 20:26, Jeff King <peff@peff.net> wrote:
+> 
+> On Wed, Dec 27, 2017 at 09:41:30AM -0800, Junio C Hamano wrote:
+> 
+>> Jeff King <peff@peff.net> writes:
+>> 
+>>> I, too, had a funny feeling about calling this "core". But I didn't have
+>>> a better name, as I'm not sure what other place we have for config
+>>> options that cross many command boundaries. "diff" and "status" don't
+>>> seem quite right to me. While you can argue they are subsystems, it
+>>> seems too easy for users to confuse them with the commands of the same
+>>> names.
+>>> 
+>>> Maybe there should be a "ui.*" config hierarchy for these kinds of
+>>> cross-command interface options?
+>> 
+>> I had an impression that ui.* was primarily pretty-printing,
+>> colouring and things of such nature.
+> 
+> I didn't think we had a "ui.*" so far. We have "color.ui" and
+> "column.ui", but I think that's it.
+> 
+> At any rate, my intent was to consider this a "ui" issue, in that we are
+> deciding how the ahead/behind hints should be shown to the user.
+> 
+>> I do not think it is such a
+>> bad idea to honor a status.frotz variable that affects how (e.g. to
+>> what degree of detailedness) status on frotz are reported in Git
+>> subcommands other than 'git status' if they report the same sort of
+>> information on 'frotz' that 'git status' makes.
+> 
+> Is ahead/behind uniquely attached to git-status? IOW, could this be called
+> "branch.aheadbehind" and git-status respects it? It seems like putting
+> it in status introduces a weird asymmetry.
+> 
+> I buy the argument more that "status" here is not "this is a git-status
+> config option", but "this config section encompasses various things
+> about the status of a repository reported by many commands". But then
+> it's kind of funny to have many of the existing options there that
+> really are specific to git-status.
+> 
+> In can be both of those things, of course, but then it becomes less
+> clear to the user which config options affect which command.
+> 
+> I dunno. It is probably not _that_ big a deal, and I can live with it
+> wherever. But Git has a reputation for having inconsistencies and weird
+> asymmetries in its UI, so I like to give some thought to squashing them
+> preemptively.
 
-Hi Peff,
+What is the state of this series? I can't find it in git/git nor in 
+git-for-windows/git. I think Stolee mentioned the config in
+his Git Merge talk [1] and I was about to test it/roll it out :-)
 
-On Fri, 30 Mar 2018, Jeff King wrote:
+- Lars
 
-> On Fri, Mar 30, 2018 at 08:45:45PM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
->=20
-> > I've wondered for a while whether it wouldn't be a viable approach to
-> > make something like an interpreter for our test suite to get around
-> > this problem, i.e. much of it's very repetitive and just using a few
-> > shell functions we've defined, what if we had C equivalents of those?
->=20
-> I've had a similar thought, though I wonder how far we could get with
-> just shell. I even tried it out with test_cmp:
->=20
->   https://public-inbox.org/git/20161020215647.5no7effvutwep2xt@sigill.int=
-ra.peff.net/
->=20
-> But Johannes Sixt pointed out that they already do this (see
-> mingw_test_cmp in test-lib-functions).
 
-Right.
+[1] https://youtu.be/oOMzi983Qmw
 
-Additionally, I noticed that that simple loop in shell is *also* very slow =
-on
-Windows (at least in the MSYS2 Bash we use in Git for Windows).
-
-Under the assumption that it is the Bash with the loop that uses too much
-POSIX emulation to make it fast, I re-implemented mingw_test_cmp in pure
-C:
-https://github.com/git-for-windows/git/commit/8a96ef63a0083ba02305dfeef6ff9=
-2c31b4fd7c3
-
-Unfortunately, it did not produce any noticeable speed improvement, so I
-did not even finish the conversion (when the cmp fails, it does not show
-you any helpful diff yet).
-
-> I also tried to explore a few numbers about process invocations to see
-> if running shell commands is the problem:
->=20
->   https://public-inbox.org/git/20161020123111.qnbsainul2g54z4z@sigill.int=
-ra.peff.net/
-
-This mail was still in my inbox, in want of me saying something about
-this.
-
-My main evidence that shell scripts on macOS are slower than on Linux was
-the difference of the improvement incurred by moving more things from
-git-rebase--interactive.sh into sequencer.c: Linux saw an improvement only
-of about 3x, while macOS saw an improvement of 4x, IIRC. If I don't
-remember the absolute numbers correctly, at least I vividly remember the
-qualitative difference: It was noticeable.
-
-> There was some discussion there about whether the problem is programs
-> being exec'd, or if it's forks due to subshells. And if it is programs
-> being exec'd, whether it's shell programs or if it is simply that we
-> exec Git a huge number of times.
-
-One large problem there is that it is really hard to analyze performance
-over such a heterogenous code base: part C, part Perl, part Unix shell
-(and of course, when you say Unix shell, you imply dozens of separate
-tools that *also* need to be performance-profiled). I have very good
-profiling tools for C, I saw some built-in performance profiling for Perl,
-but there is no good performance profiling for Unix shell scripting: I
-doubt that the inventors of shell scripting had speed-critical production
-code in mind when they came up with the idea.
-
-I did invest dozens of hours earlier this year trying to obtain debug
-symbols in .pdb format (ready for Visual Studio's really envy-inducing
-performance profiler) also for the MSYS2 runtime and Bash, so that I could
-analyze what makes things so awfully slow in Git's test suite.
-
-The only problem is that I also have to do other things in my day-job, so
-that project waits patiently until I have some time to come back to that
-project.
-
-Ciao,
-Dscho
---8323328-1399196620-1522748980=:5026--
