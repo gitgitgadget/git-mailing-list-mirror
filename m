@@ -7,89 +7,86 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7976C1F404
-	for <e@80x24.org>; Tue,  3 Apr 2018 15:21:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C8A7A1F404
+	for <e@80x24.org>; Tue,  3 Apr 2018 15:29:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751588AbeDCPVk (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Apr 2018 11:21:40 -0400
-Received: from mail-ot0-f175.google.com ([74.125.82.175]:42728 "EHLO
-        mail-ot0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751414AbeDCPVj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Apr 2018 11:21:39 -0400
-Received: by mail-ot0-f175.google.com with SMTP id h55-v6so18278755ote.9
-        for <git@vger.kernel.org>; Tue, 03 Apr 2018 08:21:39 -0700 (PDT)
+        id S1752501AbeDCP3z (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Apr 2018 11:29:55 -0400
+Received: from mail-ot0-f196.google.com ([74.125.82.196]:32772 "EHLO
+        mail-ot0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751457AbeDCP3y (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Apr 2018 11:29:54 -0400
+Received: by mail-ot0-f196.google.com with SMTP id 23-v6so19841459otj.0
+        for <git@vger.kernel.org>; Tue, 03 Apr 2018 08:29:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=gx2tfE2nj1Qo2xM5pLLWHBexRI/WvBF0ndJ1qaw/S/Q=;
-        b=ntoEMqcMTcnholR+iO/HPQQpn0fzZAGLekm0/bPNa/GyTpKDoUDYaoy4m/nyMCQac3
-         JGv4yG76yikAvkQ9P5H/C8fzmoWU9Wdm+C11ddr99n2XMP50QRKkWqvQ0AfeLgiWXnCD
-         WoTk8tCkh+bzah2qCOsHWyOw3/pbGU7O9al77uhs5YG0ypKO1UJDr+u0A8nPzaArgJww
-         4vjfs9T+Hrgect3tcxI5ns19iwAStBKWaTIWYhlhIHxBR9vPEQD2k9Kyw/2toK7CsmBq
-         3cyuXXoBd+TkN959JaXnIFEzF50a1TpVZ8nwrAw9+W7/iFJpJRdUpwJZWLtq2sLC85T0
-         jqCw==
+         :cc;
+        bh=LXi6rGyLG76uUqnwkvMzQ7yqWgJ6oW/ad+Vw6MUrSFI=;
+        b=bt716hwD+Djo5HSfA2co2xwIERmSyB55JnRWBa8Q3JCHxLSQysfemSHakjQhJGcWlx
+         D3PZygi579QnF5jtIj6sy6E4EM8NTqH9HuvK2WtM9TJphPm88ABD8aoXAGHLOG1hGOq3
+         Unww0omgj1IvwnsgtZbG9ZVlkPOlvjAllxDFXqAsdCte+I2pMVZJgD3+VbXHj+2jOCTx
+         c4pNlMm49eZlnOBYyCTsQnbeYbzdtIGNuNeeDz81W6IZHy6/4leTF1OfBPnSjyJPkq6d
+         1e1HWlZAOFNuz34EOpmyUcyj36byj+pggtl/4PnbcYzzfDoc5JZLCUmyZVU+n7FM08CD
+         afVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=gx2tfE2nj1Qo2xM5pLLWHBexRI/WvBF0ndJ1qaw/S/Q=;
-        b=UBCTPcnUhFW6jhVNLvyDyqSNb2ioFMhUHIqGPxdkWLdnPUURLERW+6+biK4x3MOg74
-         5wl8m9xj8UQ+ZFpJqfIV53DxPuRTxiMKD5XiLvTa5XyfggtPCHdkBndn51T7HpWRYlo3
-         jZ+0cP0HuWwAxu5F4odjPIH/SJN8dYlNtaeIIBK9g/rgUcuWdDfV83TP/i+AbdbK7wmo
-         YhdDhtHDysWhsvX9Din6elHXZmutVcAU8BFgMKHSla+P8KdPAQ+AKkI7v2h8z4mxCwjX
-         ook4mfRiO0lmZ07ruAqf3xg1N03ZLqs5Ugf2ZEteK/1D4Y1etlRBM9qMwgMBeeqVV93p
-         yKRw==
-X-Gm-Message-State: ALQs6tDwSbinmph9VGCrQNVWeqOxB9v069bQHSv6etD2kZdnZgxsjSxK
-        /wDsyzljuhI2KXXHiFeSFRqa75+LCNP2NtfTQ2U=
-X-Google-Smtp-Source: AIpwx49aJS4n8zXWc9VISzsp+woljCk1RgkXZgxYfLmUxuq4AJbL7ygD7tjJJsQ25NisA9/N4k+c8Shye14z0iHxyWg=
-X-Received: by 2002:a9d:e84:: with SMTP id 4-v6mr8780676otj.14.1522768899390;
- Tue, 03 Apr 2018 08:21:39 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=LXi6rGyLG76uUqnwkvMzQ7yqWgJ6oW/ad+Vw6MUrSFI=;
+        b=rb1a9BdsNeF3PFxIkYz8d9IpiUAupb532hHis9TyqGCxfKzY+Rvp0g1dSlplVDJ9yk
+         AyDH0GLL6F1L2U1hezAfsgzvyZrWVFHKi8V9R8c/0hZx8GSnlBN3wo4zbF/RWVW/J3/Y
+         oMG/bxxATOiLEQYYuK8RfgoOcprgdZGdxrLLlRKacFAkd9WRKvHj8BcRZXS98L8ljETt
+         wUL+CKYv5Suq0bN/sfw75cQ17iy5WK1fjz22rG7q5EOfgk4WTSHBKCROpBUVzTYDogWx
+         Kfr8e7nn0a2GfEJkVOoVjLP1Q33TZWEBU5yHbxfbd7g/FovJPAMd2VyJ/MBdkgSHS2Xw
+         NGCA==
+X-Gm-Message-State: ALQs6tADXbxECVUuhM0yxoASujIvzwjdzmpUvtGIed+lEEA69jVliOmq
+        uELgdWLzb6XnA2rkdPaKE9ms9GSO7T9Wb3xObt4=
+X-Google-Smtp-Source: AIpwx4983RzCPWIjJxZAezhOMDLxITOwRSneQBk1Hc0EOnIc6HBjrSKrEfHWdEHFReP+960+OrVvx9/H74knlqpaJPk=
+X-Received: by 2002:a9d:24c7:: with SMTP id z65-v6mr8901815ota.152.1522769393947;
+ Tue, 03 Apr 2018 08:29:53 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.74.198.152 with HTTP; Tue, 3 Apr 2018 08:21:08 -0700 (PDT)
-In-Reply-To: <20180403092541.43920-1-sunshine@sunshineco.com>
-References: <20180403092541.43920-1-sunshine@sunshineco.com>
+Received: by 10.74.198.152 with HTTP; Tue, 3 Apr 2018 08:29:23 -0700 (PDT)
+In-Reply-To: <nycvar.QRO.7.76.6.1804031127400.5026@qfpub.tvgsbejvaqbjf.bet>
+References: <cover.1522336130.git.johannes.schindelin@gmx.de>
+ <899ea23951627426ccd0aac79f824af386c5590c.1522336130.git.johannes.schindelin@gmx.de>
+ <CAGZ79kapTWGsYznt7rr0QTNX+uH85TPY8AOA1jtDJ6_q8edX1Q@mail.gmail.com>
+ <20180329194159.GB2939@sigill.intra.peff.net> <nycvar.QRO.7.76.6.1803301415240.5026@qfpub.tvgsbejvaqbjf.bet>
+ <87in9dwsxl.fsf@evledraar.gmail.com> <xmqqefk14jlb.fsf@gitster-ct.c.googlers.com>
+ <nycvar.QRO.7.76.6.1803302042570.5026@qfpub.tvgsbejvaqbjf.bet>
+ <xmqqfu4h2xsl.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1804031127400.5026@qfpub.tvgsbejvaqbjf.bet>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 3 Apr 2018 17:21:08 +0200
-Message-ID: <CACsJy8DszXXK2htRupg8FhdcSgYweCv4FPAA_ZG23YKGz7AG=Q@mail.gmail.com>
-Subject: Re: [PATCH] t2028: tighten grep expression to make "move worktree"
- test more robust
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?B?SmVucyBLcsO8Z2Vy?= <Jens.Krueger@frm2.tum.de>
+Date:   Tue, 3 Apr 2018 17:29:23 +0200
+Message-ID: <CACsJy8Bt3AEZmjudL+scXqOC_oW1WtU0_QZVD9PM+drGbEBeVw@mail.gmail.com>
+Subject: Re: [PATCH 1/9] git_config_set: fix off-by-two
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>,
+        git <git@vger.kernel.org>, Thomas Rast <tr@thomasrast.ch>,
+        Phil Haack <haacked@gmail.com>, Jason Frey <jfrey@redhat.com>,
+        Philip Oakley <philipoakley@iee.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 3, 2018 at 11:25 AM, Eric Sunshine <sunshine@sunshineco.com> wr=
-ote:
-> Following a rename of worktree "source" to "destination", the "move
-> worktree" test uses grep to verify that the output of "git worktree list
-> --porcelain" does not contain "source" (and does contain "destination").
-> Unfortunately, the grep expression is too loose and can match
-> unexpectedly. For example, if component of the test trash directory path
-> matches "source" (e.g. "/home/me/sources/git/t/trash*"), then the test
-> will be fooled into thinking that "source" still exists. Tighten the
-> expression to avoid such accidental matches.
->
-> While at it, drop an unused variable ("toplevel") from the test and
-> tighten a similarly too-loose expression in a related test.
->
-> Reported-by: Jens Kr=C3=BCger <Jens.Krueger@frm2.tum.de>
-> Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
-> ---
->
-> t2028 in 2.17.0 can be fooled into failing depending upon the path of
-> the test's trash directory. The problem is with the test being too
-> loose, not with Git itself. Problem report and diagnosis here[1].
->
-> [1]: https://public-inbox.org/git/26a00c2b-c588-68d5-7085-22310c20e6df@fr=
-m2.tum.de/T/#m994cdb29f141656b0ab48dd0d152432c7e86fc20
+On Tue, Apr 3, 2018 at 11:31 AM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> It is very frustrating to spend that much time with only little gains here
+> and there (and BusyBox-w32 is simply not robust enough yet, apart from
+> also not showing a significant improvement in performance).
 
-Thanks both. It was great to scroll to the latest mails and saw that I
-didn't have to do anything else :)
---=20
+You still use busybox-w32? It's amazing that people still use it after
+the linux subsystem comes. busybox has a lot of commands built in
+(i.e. no new processes) and unless rmyorston did something more, the
+"fork" in ash shell should be as cheap as it could be: it simply
+serializes data and sends to the new process.
+
+If performance does not improve, I guess the process creation cost
+dominates. There's not much we could do except moving away from the
+zillion processes test framework: either something C-based or another
+scripting language (ok I don't want to bring this up again)
+-- 
 Duy
