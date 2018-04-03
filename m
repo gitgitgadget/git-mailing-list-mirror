@@ -2,136 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DF2711F404
-	for <e@80x24.org>; Tue,  3 Apr 2018 21:38:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F17831F404
+	for <e@80x24.org>; Tue,  3 Apr 2018 22:21:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753577AbeDCVik (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Apr 2018 17:38:40 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:52669 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752813AbeDCVii (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Apr 2018 17:38:38 -0400
-Received: by mail-wm0-f66.google.com with SMTP id g8so12588668wmd.2
-        for <git@vger.kernel.org>; Tue, 03 Apr 2018 14:38:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=9r4PMig0GKVCbpEAPGjZKVL9Dqok4ZUzrKj0jourV38=;
-        b=FHEEWgWErYW/tv5G6CkDnkmsb1W+R47qbqbIDDyDfrGLcpJ3Cdqjc7pAqquBIs60jU
-         KDHzgQMqUhPQ3/g+BkhhJ5zWpFXCjf6UktYXo5bmVjWfW5xYvz/cOjc20R6UcCBpEPkQ
-         Ba8hjiqjp0ri8fi9ISRNXFKmFV3WPNLXugYuHHQwYuSusd/eLlr/VVb7YVeZ7HuV3H0N
-         9Gg/ZVTMGraCPxs90GzYFPKfGIQKojRONSMB9IXisyTXb2frCwBKy72i2G61z0idF+z5
-         +KAW4rZ0myCcHsaydVqXqyawURgBvRXc7YIT+8QlKmYj6ucOWBCzrgWLW0w1mMV9IviM
-         4ILA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=9r4PMig0GKVCbpEAPGjZKVL9Dqok4ZUzrKj0jourV38=;
-        b=n0gmGDz1Ooka89IpjH/RnolKlxLrAWIQ05aTM8E3NVdFBS2vwXBYmj/GUEvrGU4aV9
-         tCzvFS3f9ra3UZNH+67CtCR9qNgYh2+qnzlvEhI4n56d7zEaLE9R7firvVey1Mz5m8eT
-         Js8TJfoGIJk405IhYkYJ2wvmv2wSqAJGv+uVRgUeKdkVD7DVPnlCKAAPgsLW3XP87s3n
-         rjGwzo3XbhozgimMHC5RrEXuYOvdNPN3auh6f3XpdaqeJz5ucm8sd3v9A1LoTvJHULCJ
-         fs4Dv+IqW5JQWdSMk2cr+MD1O/DVnqq6tLH9z65I/iNIYgL/jhcrGSYv5Fr3KnGLe9Ny
-         HmSg==
-X-Gm-Message-State: AElRT7GgQCPE7hcazHf1XmVIZRfXwKReSdizmFtZTgst53U7cUcStEli
-        kEgPk40/+/xKHmMKZlGdbm9KeuWh
-X-Google-Smtp-Source: AIpwx48bSlscADppIopwrsqEqeG5U2eKAjrpLlTPEBO5AK4MiRU123uwnWe9HgRt1ORkgzfEt2X7eg==
-X-Received: by 10.28.132.7 with SMTP id g7mr5112635wmd.109.1522791517489;
-        Tue, 03 Apr 2018 14:38:37 -0700 (PDT)
-Received: from [192.168.0.103] ([92.55.154.10])
-        by smtp.gmail.com with ESMTPSA id u110sm5393642wrc.72.2018.04.03.14.38.36
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 03 Apr 2018 14:38:36 -0700 (PDT)
-Subject: Re: [RFC][PATCH] git-stash: convert git stash list to C builtin
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>
-References: <20180324182313.13705-1-ungureanupaulsebastian@gmail.com>
- <CAPig+cS9QwCOG7BA7O5Nu_zsh-xTbDFy2vTWpAXxBuKTY-uzUw@mail.gmail.com>
-From:   Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
-Message-ID: <63772b7d-7b1e-2a3a-b12c-2dae9e254b68@gmail.com>
-Date:   Wed, 4 Apr 2018 00:38:35 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.7.0
+        id S1753520AbeDCWVU (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Apr 2018 18:21:20 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:41022 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753328AbeDCWVT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Apr 2018 18:21:19 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 527A7607E5; Tue,  3 Apr 2018 22:21:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1522794079;
+        bh=1nfeQNbpURwqCtaYWD0Co4lHxZduDGOLBy2iFz+sLW4=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=Yz2Hm1xP+Ley16ZEWGrAPh66J0QKvL9tZKb0WMN5e7HQ1CG6nH5q5aGpCDa9wv4tJ
+         o8NrBq42PHiTvBbJSrrZqhxNzKoGPjRHEpTN0VhupPFms6bxiZc+z1nDoksT7O0ue3
+         HOi4VENOg1ryEKUv22Od3uWlQE3lmifhgnkuBgvA=
+Received: from localhost.localdomain (unknown [79.115.169.239])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: eddy.petrisor@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B891360591;
+        Tue,  3 Apr 2018 22:21:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1522794079;
+        bh=1nfeQNbpURwqCtaYWD0Co4lHxZduDGOLBy2iFz+sLW4=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=Yz2Hm1xP+Ley16ZEWGrAPh66J0QKvL9tZKb0WMN5e7HQ1CG6nH5q5aGpCDa9wv4tJ
+         o8NrBq42PHiTvBbJSrrZqhxNzKoGPjRHEpTN0VhupPFms6bxiZc+z1nDoksT7O0ue3
+         HOi4VENOg1ryEKUv22Od3uWlQE3lmifhgnkuBgvA=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B891360591
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=eddy.petrisor@codeaurora.org
+From:   =?UTF-8?q?Eddy=20Petri=C8=99or?= <eddy.petrisor@codeaurora.org>
+To:     sbeller@google.com, jrnieder@gmail.com
+Cc:     =?UTF-8?q?Eddy=20Petri=C8=99or?= <eddy.petrisor@gmail.com>,
+        git@vger.kernel.org
+Subject: [RFC PATCH v3 1/2] git-submodule.sh:cmd_update: if submodule branch exists, fetch that instead of default
+Date:   Wed,  4 Apr 2018 01:20:52 +0300
+Message-Id: <20180403222053.23132-1-eddy.petrisor@codeaurora.org>
+X-Mailer: git-send-email 2.16.2
+In-Reply-To: <CAK0XTWdpKnMbXs5sq2qsERxQO20sQW6YwL=2kfBHmSwHMmunBg@mail.gmail.com>
+References: <CAK0XTWdpKnMbXs5sq2qsERxQO20sQW6YwL=2kfBHmSwHMmunBg@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <CAPig+cS9QwCOG7BA7O5Nu_zsh-xTbDFy2vTWpAXxBuKTY-uzUw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: Eddy Petrișor <eddy.petrisor@gmail.com>
 
+There are projects such as llvm/clang which use several repositories, and they
+might be forked for providing support for various features such as adding Redox
+awareness to the toolchain. This typically means the superproject will use
+another branch than master, occasionally even use an old commit from that
+non-master branch.
 
-On 25.03.2018 10:08, Eric Sunshine wrote:
-> On Sat, Mar 24, 2018 at 2:23 PM, Paul-Sebastian Ungureanu
-> <ungureanupaulsebastian@gmail.com> wrote:
->> Currently, because git stash is not fully converted to C, I
->> introduced a new helper that will hold the converted commands.
->> ---
->> diff --git a/builtin/stash--helper.c b/builtin/stash--helper.c
->> @@ -0,0 +1,52 @@
->> +int cmd_stash__helper(int argc, const char **argv, const char *prefix)
->> +{
->> +       int cmdmode = 0;
->> +
->> +       struct option options[] = {
->> +               OPT_CMDMODE(0, "list", &cmdmode,
->> +                        N_("list stash entries"), LIST_STASH),
->> +               OPT_END()
->> +       };
-> 
-> Is the intention that once git-stash--helper implements all 'stash'
-> functionality, you will simply rename git-stash--helper to git-stash?
-> If so, then I'd think that you'd want it to accept subcommand
-> arguments as bare words ("apply", "drop") in order to be consistent
-> with the existing git-stash command set, not in dashed form
-> ("--apply", "--drop"). In that case, OPT_CMDMODE doesn't seem
-> appropriate. Instead, you should be consulting argv[] directly (as in
-> [1]) after parse_options().
-> 
-> [1]: https://public-inbox.org/git/20180324173707.17699-2-joel@teichroeb.net/
+Combined with the fact that when incorporating such a hierachy of repositories
+usually the user is interested in just the exact commit specified in the
+submodule info, it follows that a desireable usecase is to be also able to
+provide '--depth 1' or at least have a shallow clone to avoid waiting for ages
+for the clone operation to finish.
 
-It makes sense. In the end, when all stash is converted, it would just 
-require an additional pointless effort to bring (back) from dashed form 
-to bare word form.
+In theory, this should be straightforward since the git protocol allows
+fetching an arbitary commit, but, in practice, some servers do not permit
+fetch-by-sha1.
 
->> +       argc = parse_options(argc, argv, prefix, options,
->> +                            git_stash__helper_usage, PARSE_OPT_KEEP_UNKNOWN);
->> +
->> +       if (!cmdmode)
->> +               usage_with_options(git_stash__helper_usage, options);
->> +
->> +       switch (cmdmode) {
->> +               case LIST_STASH:
->> +                       return list_stash(argc, argv, prefix);
->> +       }
->> +       return 0;
->> +}
->> diff --git a/git.c b/git.c
->> @@ -466,6 +466,7 @@ static struct cmd_struct commands[] = {
->>          { "show-branch", cmd_show_branch, RUN_SETUP },
->>          { "show-ref", cmd_show_ref, RUN_SETUP },
->>          { "stage", cmd_add, RUN_SETUP | NEED_WORK_TREE },
->> +       { "stash--helper", cmd_stash__helper, RUN_SETUP },
-> 
-> You don't require a working tree? Seems odd for git-stash.
-> 
->>          { "status", cmd_status, RUN_SETUP | NEED_WORK_TREE },
->>          { "stripspace", cmd_stripspace },
->>          { "submodule--helper", cmd_submodule__helper, RUN_SETUP | SUPPORT_SUPER_PREFIX},
+Git submodule seems to be very stubborn and cloning master, although the
+wrapper script and the gitmodules-helper could work together to clone directly
+the branch specified in the .gitmodules file, if specified.
 
-For now, I do not think that it is necessary (for stash list), but I am 
-pretty sure that it will be required in the future when porting other 
-commands.
+Signed-off-by: Eddy Petrișor <eddy.petrisor@gmail.com>
+---
+ git-submodule.sh | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-Thanks for advice!
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 24914963c..65e3af08b 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -589,8 +589,10 @@ cmd_update()
+ 			branch=$(git submodule--helper remote-branch "$sm_path")
+ 			if test -z "$nofetch"
+ 			then
++				# non-default branch refspec
++				br_refspec=$(git submodule-helper remote-branch $sm_path)
+ 				# Fetch remote before determining tracking $sha1
+-				fetch_in_submodule "$sm_path" $depth ||
++				fetch_in_submodule "$sm_path" $depth $br_refspec ||
+ 				die "$(eval_gettext "Unable to fetch in submodule path '\$sm_path'")"
+ 			fi
+ 			remote_name=$(sanitize_submodule_env; cd "$sm_path" && get_default_remote)
+-- 
+2.16.2
+
