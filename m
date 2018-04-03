@@ -2,172 +2,183 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 255B81F424
-	for <e@80x24.org>; Tue,  3 Apr 2018 11:39:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C7F1F1F424
+	for <e@80x24.org>; Tue,  3 Apr 2018 11:43:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755344AbeDCLj1 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Apr 2018 07:39:27 -0400
-Received: from mail-qk0-f180.google.com ([209.85.220.180]:44502 "EHLO
-        mail-qk0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755387AbeDCLjY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Apr 2018 07:39:24 -0400
-Received: by mail-qk0-f180.google.com with SMTP id u9so4742052qkk.11
-        for <git@vger.kernel.org>; Tue, 03 Apr 2018 04:39:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=8/OyoWTVH8R1UIPqMoFdFnSlMMk9ih6NsfaQcfVa8gU=;
-        b=igj/ww+YcR7YRS+VRRQsFOX9Tu7txxVztKrRrSPDs95UjWr2YZCZV44ctU5q7AP8H9
-         CtplM4bX2qWBojjT2JhLddPu+M5qLbMmZbkBmftd16IhLG1bkO8vMtc2qQnVmw8cf08Z
-         VbPeUAnzCpGffgolcWMqycRWX4w1qgArHwlM7fAcrQ53Bv2FJIBAUoq+rQBOfQpsnfZI
-         rgek8E9Nojuc+MO5HBqMR7qrqLg4uyjADIY2vBxZCST/MedEkJOGn5G9lkJboDQnvDqb
-         zJ0lFjzwxPOFNX//q+nab2O8d72BhKPrI1d7AOfDllpIVwVmpbCuIBleZEgBqAiSg8p1
-         1DnA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=8/OyoWTVH8R1UIPqMoFdFnSlMMk9ih6NsfaQcfVa8gU=;
-        b=cXcIXHTS/hCMaJQ8I7YUzrbcdLPkm/JE+OTP/hkNzGcd/1xv/du9saRcHyOXqlwydO
-         Lecn/w8+jGQND5EwpRo8lKRLFbvfPOXtaX5LfE3OUFurZD5HjmrpWPZJNAI5wmfDJzKs
-         AgsMCP+lnuDc4TU/sVPqvnG0F7VtIlhm3tftX6DGoifn5wOlK7m5CQgN7cvGn5YAsOiv
-         SJX8jHUid5032WBoh/ecwSE9mkBqina3tgSFxIGBiQUwQjPNceFPNOgXIb9drBDG9+h9
-         VzJze+SBwvK7BhCvdnySusFGulkV6Tw5nAKZg3XLb9/j0hcYm9P1R8CtPzz+oQ79okTD
-         zurg==
-X-Gm-Message-State: ALQs6tDH+bThLUfEXnCIdv54VScEjKEZzLjeTgt/ZXQsK2snS2C800xw
-        RbqzX30k8idnRpUh+27xUfg=
-X-Google-Smtp-Source: AIpwx4/1TgKTFK3RHyQxn1pGymLwEV4GIBjRDN7lMUFAIW4aQPpkQLmBsDShGtBGUqjRlX6VxGoLqw==
-X-Received: by 10.55.138.194 with SMTP id m185mr12030806qkd.103.1522755562414;
-        Tue, 03 Apr 2018 04:39:22 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:c4e6:7a22:56f1:df04? ([2001:4898:8010:0:ae1c:7a22:56f1:df04])
-        by smtp.gmail.com with ESMTPSA id b125sm2076268qkd.62.2018.04.03.04.39.21
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 03 Apr 2018 04:39:21 -0700 (PDT)
-Subject: Re: [PATCH v2 1/5] core.aheadbehind: add new config setting
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Lars Schneider <larsxschneider@gmail.com>
-Cc:     Jeff Hostetler <jeffhost@microsoft.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>
-References: <20171221190909.62995-1-git@jeffhostetler.com>
- <20171221190909.62995-2-git@jeffhostetler.com>
- <20171221204356.GA58971@aiede.mtv.corp.google.com>
- <xmqq3742tyho.fsf@gitster.mtv.corp.google.com>
- <20171224143318.GC23648@sigill.intra.peff.net>
- <xmqq1sjgoyph.fsf@gitster.mtv.corp.google.com>
- <20180104192604.GA27528@sigill.intra.peff.net>
- <091D90DC-DAA2-4338-AAFA-01CB75807992@gmail.com>
- <87vad8vbid.fsf@evledraar.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <d63b54e9-5ec6-f523-d882-756ac38b882b@gmail.com>
-Date:   Tue, 3 Apr 2018 07:39:20 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
+        id S1755506AbeDCLnh (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Apr 2018 07:43:37 -0400
+Received: from mout.gmx.net ([212.227.15.19]:38897 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1755135AbeDCLnf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Apr 2018 07:43:35 -0400
+Received: from MININT-AIVCFQ2.fareast.corp.microsoft.com ([37.201.195.115]) by
+ mail.gmx.com (mrgmx003 [212.227.17.190]) with ESMTPSA (Nemesis) id
+ 0Luxaj-1eL5cm1uOv-0105vU; Tue, 03 Apr 2018 13:43:13 +0200
+Date:   Tue, 3 Apr 2018 13:43:10 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@dscho.gitforwindows.org
+To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+cc:     Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>,
+        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Thomas Rast <tr@thomasrast.ch>, Phil Haack <haacked@gmail.com>,
+        Jason Frey <jfrey@redhat.com>,
+        Philip Oakley <philipoakley@iee.org>,
+        Duy Nguyen <pclouds@gmail.com>
+Subject: Re: A potential approach to making tests faster on Windows
+In-Reply-To: <87fu4hwgfa.fsf@evledraar.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1804031150030.5026@qfpub.tvgsbejvaqbjf.bet>
+References: <cover.1522336130.git.johannes.schindelin@gmx.de> <899ea23951627426ccd0aac79f824af386c5590c.1522336130.git.johannes.schindelin@gmx.de> <CAGZ79kapTWGsYznt7rr0QTNX+uH85TPY8AOA1jtDJ6_q8edX1Q@mail.gmail.com> <20180329194159.GB2939@sigill.intra.peff.net>
+ <nycvar.QRO.7.76.6.1803301415240.5026@qfpub.tvgsbejvaqbjf.bet> <87fu4hwgfa.fsf@evledraar.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <87vad8vbid.fsf@evledraar.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+Content-Type: multipart/mixed; BOUNDARY="8323328-1941110784-1522752445=:5026"
+Content-ID: <nycvar.QRO.7.76.6.1804031328440.5026@qfpub.tvgsbejvaqbjf.bet>
+X-Provags-ID: V03:K0:TyWxuF3mcZvr1kOECkpxkj/yFf4ZTQrMZr8WH77iT8acBUMTX9w
+ F1hDWyc9HPhW27uceNqoQCzup1qU5ieI0KmEcEaiT3PSoCrixmddvyumdJOIrATUyvi9IQ+
+ yTY5OoNGRR+kktEjpFn+pgROfo7Eb5KIN2PzDRv2X6B+sSWG+VICKX/w04QtZbC1CUxPC0t
+ 3VPpOtcioLDhcrKiAvong==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:UJ9eZSUvSLw=:UIC4udT7beiL7O7Z5lN1G/
+ Q4i1qGYdX6EZG+nzlVi8EioB4sSZfRjG50PaG3LgQlVa3Hz7HxDBM0UAGyOQCWaoL1cy9D0rQ
+ xHYougH4+NUzwQ63BpULwqc3dtYOO2keEc5/G5hzL/8nm7Id89IvxgRbalLkahcDLnB4cXW/e
+ IqWvkkBq2hygmXRQ7D9bGnjG5ncV+vTUJFfhG8IYVOVybIXgKiXTvs53dU1byI+nf4db2NARl
+ SramlXVX8gFxSfv0MSujvl8YERFUESye9/R4Wy1x8t45OqMG3CCIfqoDsO/F9EZ7NdHV5varV
+ ntSu+YhQ1F0Hso8+oyakqmOef8bLaLiHQcOIHppkOPFLzLhu3GKbZqMJbBLO+mBs1WK7cRDCk
+ c9A1S7WzEXEFjWWpMsFKxyPQhzKZSRrLiD2LRThYxi9HP+OoGyvikaOgBHXEpIlDhJRb741N7
+ C47pevpF2lvGRXxeMNYS68L1gHZxf71tvc7lJXzJDb6t24aHTxjzj8EJCL6Gv6Y9kXMZvT4Hp
+ nE+NpQjQzFmC/nipJ15JWVqQAyXzPJvGNiK/7Qi/IeUj6Xdp1fme5+TQBffn0Tc/PXhxw7VKc
+ fy2TI/Q9vtXOS7JziDGpHsv10JfcnEok5BYdD/0gJbgIk+FH451rsNeljOnbZtVq6RMZEycy9
+ c+QwMgBWsmFgXhVjXm6emmyTkj3xvA6MYzkiDiLTdZioxequzIHGzk3N0V76fxZ4yFAKGWn5i
+ GJHUmV8ni6prn2znRL1NZj/ah5yYA+U9g65DuDjzsl8WXeWbk3BRariY1nSF3YiZ8ubUcSx3h
+ chz5cHqmzos9k3mrGz1WIBz3T30FGPNZ2mY1guHWFI0kUrxLSraJrBqLCBYGvfIuhJkcIiV
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 4/3/2018 6:18 AM, Ævar Arnfjörð Bjarmason wrote:
-> On Tue, Apr 03 2018, Lars Schneider wrote:
->> What is the state of this series? I can't find it in git/git nor in
->> git-for-windows/git. I think Stolee mentioned the config in
->> his Git Merge talk [1] and I was about to test it/roll it out :-)
-> It's in the gvfs branch of git@github.com:Microsoft/git.git, i.e. it's
-> not in Git for Windows, but used in Microsoft's own in-house version
-> used for Windows.git.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Thanks for adding me to CC. I mentioned it in my talk because that was 
-one thing we shipped internally as a "quick fix" until we could do the 
-right thing.
+--8323328-1941110784-1522752445=:5026
+Content-Type: text/plain; CHARSET=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-ID: <nycvar.QRO.7.76.6.1804031328441.5026@qfpub.tvgsbejvaqbjf.bet>
 
-If I remember correctly, Jeff abandoned shipping this upstream because 
-it did have the feel of a hack and we wanted to see if users used the 
-config setting or really cared about the output values. We saw fast 
-adoption of the feature and even turned the config setting on 
-automatically in the following version of GVFS.
+Hi =C3=86var,
 
-> I may be misunderstanding this feature, but my impression was that it
-> was a kludge as a workaround until the commit graph code landed, because
-> once we have that then surely we can just cheaply report the actual (or
-> approximate?) number in the common case, but of course it may still be
-> slow if your commit graph file is out of date.
+On Fri, 30 Mar 2018, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-You are correct that the commit-graph file may be out of date, causing 
-slower performance. Even worse: the current graph patch only provides a 
-constant-multiple speedup (still walking the same number of commits, but 
-each commit is parsed much faster).
+> On Fri, Mar 30 2018, Johannes Schindelin wrote [expressing frustrations
+> about Windows test suite slowness]:
 
-Speaking of our GVFS-specific fork [0], the 'gvfs' branch was updated 
-just yesterday with a couple of changes that I am prepping for 
-submission upstream:
+To be precise (and I think it is important to be precise here): it is not
+the Windows test suite about which I talked, it is Git's test suite, as
+run on Windows. It might sound like a small difference, but it is not: the
+fault really lies with Git because it wants to be a portable software.
 
-* Lazy-load trees when parsing commits from commit-graph [1]
-* Compute and consume generation numbers [2]
+> I've wondered for a while whether it wouldn't be a viable approach to
+> make something like an interpreter for our test suite to get around this
+> problem, i.e. much of it's very repetitive and just using a few shell
+> functions we've defined, what if we had C equivalents of those?
 
-Each of these will speed up this ahead/behind calculation in different 
-ways. [1] makes the cost of loading each commit a bit faster, saving up 
-to 20% overall. [2] uses generation numbers in paint_down_to_common() to 
-make the while() condition O(1) instead of O(Q) where Q is the size of 
-the priority queue. The Windows repo is particularly "wide" with many 
-parallel branches being merged in complicated ways, so the queue becomes 
-quite large. This use of generation numbers saves about 4% on some 
-ahead/behind calculations. This speedup is modest, but the existing code 
-already made good use of limiting the commit walk to be mostly the 
-"important" commits.
+There has even been an attempt to do this by Linus Torvalds himself:
 
-The real benefit of generation numbers will manifest in a way to make 
---topo-order much faster when rendering a small number of commits.
+https://public-inbox.org/git/Pine.LNX.4.64.0602232229340.3771@g5.osdl.org/
 
-The generation numbers _could_ be used to approximate the ahead/behind 
-calculation in the following way: When comparing A and B, and gen(A) < 
-gen(B), then A is at least (gen(B) - gen(A)) behind. That's the only 
-information that can be gathered directly from those values, but may be 
-enough to short circuit an exact count.
+It has not really gone anywhere...
 
-To truly accelerate these ahead/behind calculations to be sub-linear* in 
-the ahead/behind counts, we would need a bitmap-based approach. The 
-object-reachability bitmap is a non-starter for client machines in the 
-Windows repo, but perhaps a commit-reachability bitmap could be 
-interesting. Performing set operations on the bitmaps could more quickly 
-answer these questions. Just thinking about it makes me want to go down 
-a deep rabbit hole, investigating ways to compute, store, and use these 
-bitmaps. However: let's wait and see how necessary it is as the 
-commit-graph feature stabilizes. (*These bitmap approaches are not 
-guaranteed to be sub-linear, because it may include iterating through a 
-list of O(N) bits, but good run-length encodings will likely make the 
-count operation very fast, even with a set-difference operation included.)
+To be honest, I had a different idea (because I do not really want to
+maintain yet another piece of software): BusyBox. The source code is clean
+enough, and it should, in theory, allow us to go really fast.
 
-There are too many fun things to work on, not enough time!
+> Duy had a WIP patch set a while ago to add C test suite support, but I
+> thought what if we turn that inside-out, and instead have a shell
+> interpreter that knows about the likes of test_cmp, and executes them
+> directly?
 
-Thanks,
--Stolee
+The problem, of course, is: if you add Git-test-suite-specific stuff to
+any Unix shell, you are going to have to maintain this fork, and all of a
+sudden it has become a lot harder to develop Git, and to port it.
 
-[0] https://github.com/microsoft/git
-     Fork of GitForWindows that ships to Windows developers
+Quite frankly, I would rather go with Duy's original approach, or a
+variation thereof, as snuck into the wildmatch discussion here:
 
-[1] 
-https://github.com/Microsoft/git/commit/29114bf86f591f5c87075f779a1faa2d0f17b92f
-     Lazy-load trees when parsing commits from commit-graph 
-(accidentally squashed to one commit)
+=09https://public-inbox.org/git/20180110090724.GA2893@ash/
 
-[2] 
-https://github.com/microsoft/git/compare/879b7d3b1bddea2587b28cdd656c9c655018683a...a0731ca93a35fd042560c4b30e8e0edbdfa4bf9f
-     Compute and consume generation numbers
+> Here's proof of concept as a patch to the dash shell:
+>=20
+>     u dash (debian/master=3D) $ git diff
+>     diff --git a/src/builtins.def.in b/src/builtins.def.in
+>     index 4441fe4..b214a17 100644
+>     --- a/src/builtins.def.in
+>     +++ b/src/builtins.def.in
+>     @@ -92,3 +92,4 @@ ulimitcmd     ulimit
+>      #endif
+>      testcmd                test [
+>      killcmd                -u kill
+>     +testcmpcmd     test_cmp
+>     diff --git a/src/jobs.c b/src/jobs.c
+>     index c2c2332..905563f 100644
+>     --- a/src/jobs.c
+>     +++ b/src/jobs.c
+>     @@ -1502,3 +1502,12 @@ getstatus(struct job *job) {
+>                     jobno(job), job->nprocs, status, retval));
+>             return retval;
+>      }
+>     +
+>     +#include <stdio.h>
+>     +int
+>     +testcmpcmd(argc, argv)
+>     +       int argc;
+>     +       char **argv;
+>     +{
+>     +       fprintf(stderr, "Got %d arguments\n", argc);
+>     +}
+>=20
+> I just added that to jobs.c because it was easiest, then test_cmp
+> becomes a builtin:
+>=20
+>     u dash (debian/master=3D) $ src/dash -c 'type test_cmp'
+>     test_cmp is a shell builtin
+>     u dash (debian/master=3D) $ src/dash -c 'echo foo && test_cmp 1 2 3'
+>     foo
+>     Got 4 arguments
+>=20
+> I.e. it's really easy to add new built in commands to the dash shell
+> (and probably other shells, but dash is really small & fast).
+>=20
+> We could carry some patch like that to dash, and also patch it so
+> test-lib.sh could know that that was our own custom shell, and we'd then
+> skip defining functions like test_cmp, and instead use that new builtin.
+
+Or even use the output of `type test_cmp` as a tell-tale.
+
+> Similarly, it could then be linked to our own binaries, and the
+> test-tool would be a builtin that would appropriately dispatch, and we
+> could even eventually make "git" a shell builtin.
+>=20
+> I don't have time or interest to work on this now, but thought it was
+> interesting to share. This assumes that something in shellscript like:
+>=20
+>     while echo foo; do echo bar; done
+>=20
+> Is no slower on Windows than *nix, since it's purely using built-ins, as
+> opposed to something that would shell out.
+
+It is still interpreting stuff. And it still goes through the POSIX
+emulation layer.
+
+I did see reports on the Git for Windows bug tracker that gave me the
+impression that such loops in Unix shell scripts may not, in fact, be as
+performant in MSYS2's Bash as you would like to believe:
+
+https://github.com/git-for-windows/git/issues/1533#issuecomment-372025449
+
+Ciao,
+Dscho
+--8323328-1941110784-1522752445=:5026--
