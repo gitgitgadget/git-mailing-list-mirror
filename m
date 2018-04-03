@@ -7,19 +7,19 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E603A1F404
-	for <e@80x24.org>; Tue,  3 Apr 2018 16:28:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 68B9D1F404
+	for <e@80x24.org>; Tue,  3 Apr 2018 16:29:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752547AbeDCQ26 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Apr 2018 12:28:58 -0400
-Received: from mout.gmx.net ([212.227.15.18]:47675 "EHLO mout.gmx.net"
+        id S1752558AbeDCQ3B (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Apr 2018 12:29:01 -0400
+Received: from mout.gmx.net ([212.227.15.15]:41307 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751638AbeDCQ24 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Apr 2018 12:28:56 -0400
+        id S1751638AbeDCQ3A (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Apr 2018 12:29:00 -0400
 Received: from MININT-AIVCFQ2.fareast.corp.microsoft.com ([37.201.195.115]) by
- mail.gmx.com (mrgmx002 [212.227.17.190]) with ESMTPSA (Nemesis) id
- 0MIu7d-1f5JXb49Gb-002X3m; Tue, 03 Apr 2018 18:28:47 +0200
-Date:   Tue, 3 Apr 2018 18:28:46 +0200 (DST)
+ mail.gmx.com (mrgmx001 [212.227.17.190]) with ESMTPSA (Nemesis) id
+ 0M0y8F-1eF04j3FNP-00v5HC; Tue, 03 Apr 2018 18:28:50 +0200
+Date:   Tue, 3 Apr 2018 18:28:50 +0200 (DST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@dscho.gitforwindows.org
 To:     git@vger.kernel.org
@@ -29,316 +29,244 @@ cc:     Junio C Hamano <gitster@pobox.com>, Thomas Rast <tr@thomasrast.ch>,
         <avarab@gmail.com>, Stefan Beller <sbeller@google.com>,
         Jason Frey <jfrey@redhat.com>,
         Philip Oakley <philipoakley@iee.org>
-Subject: [PATCH v2 12/15] git_config_set: make use of the config parser's
- event stream
+Subject: [PATCH v2 13/15] git config --unset: remove empty sections (in the
+ common case)
 In-Reply-To: <cover.1522772789.git.johannes.schindelin@gmx.de>
-Message-ID: <f65d03849854bb7e46041225e9f7bb4ba8f043f7.1522772789.git.johannes.schindelin@gmx.de>
+Message-ID: <8046fb9c3d0af0f442ff65ce703f0898a95d8976.1522772789.git.johannes.schindelin@gmx.de>
 References: <cover.1522336130.git.johannes.schindelin@gmx.de> <cover.1522772789.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:eJFFVSV7RLg2VzA+lgnO/gDpeRoBgLomSopZAIgwbykeU9lN7Cf
- RZYjVft3lWY7i9RkZA6pNdcSmWKBUhdmkvYoGYFatm7gotEGoll6hkgqf5xe5QwNE/Kh++E
- yMXny82jrhJ2CxOo5ffmmt7X5YU7S1UpwN32Kw2cL2t3woCdcC4wfvXdGHRfFLY+20XtKRT
- uK/gzjMFWVikC9LKKk+hA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:bRI9GogplxU=:Oa//ljH1DHw+VdwK+2CCyc
- ZKRneTYG12Xbb78lmpHED/O+QXKIaEURCOpyaaoX7xU42t1yXYefV7P7ltkm6DC870p1z9IR4
- MKVK5TRuMd8VF+VrPGq2aq2euZopZHKMitSmO3Dmu6cKapLDwumOzquZfjGbWtIeq2KoctyoH
- 7Hjz4C4NnD6X4IrmQs/kYHRQtB9aRo1EKWRjM8z5GI6v+WPnXGoMftpRq7cW2zsbKWC9bSKiS
- 5tdyTaAsLTKiXZ2/PQ5FxrDvFWtKuXSP/iZlbd2HHORloqDklt3O2zLPL0rP2XLRZv7t4rK8G
- PhNpRfDLCfes8qCUUEDxF5r4DNSkJa4D+8lIrYT1dw9pkT099unKvi4b4+/B4rCJPgRsxzj8q
- 24Z9+zqSd/6Ex3mV80Oz9ehlrAYjGvN56+2G3/2Y4dc29LrZsKvyxssJQ1wkavfpFkzWrn5pK
- s97pLs7nZ+KdQ5GIO3wvGgNZzEm6HP+vwUG0mwwhGiMcyP0SyRUgW7TXUZ/jN0XaGI6qmqjdy
- FRIsFWIPbmM5+5JtrowfcLuUxWoXC5hFxklF7SkyT17MoST8wr51c53rmh99iZ1/b5fi0wXYQ
- p5TN8H78n9cYzC0y+V3IcJHj9LKAwbX6E/Ii1zgDPAFaScFy+giiqPvcUS1l37TgowZ6iq8RQ
- jhcETvRGwT3OeevpSFJ0uhGa9XayGAT9GLTGL1zqIVQTuV6dPd402HGwVf8Hph+WRc8TPLbJ5
- 14jc0W51AE2zmE7iT0zr7/dkDXauyZb8xGXTC0BE/nmwtar83sNxBS8pTf5jW3vIXbU4ytq+V
- SB5AnSOi8UkJzKx3ZTlRhGD7Zs8Q2NAyh5lk/AUaPYqt3cN85R4afoJ7fOHvLNlT3HsBQvr
+X-Provags-ID: V03:K1:OIhLo4DnpG6L7XDRHqYvGRrxZuAaPPVc8NOInH6jjmiSJN1k97x
+ 7PbnlzUCK32XyNhQMjr4eEEgxqoziQ99P3Ahe39atDcKwhDywhKIj9mJzOY0xRN4BjCjxbm
+ fZaoq2mkHxSyI8d+g55Kz2BhURFwckcurB5fBeDV3tE19R9jL95keeAGahAQgj19nWAKfNp
+ g66Xx+RCBPvyhCSW0qV1Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:IniVRCEQV14=:aDdsLu0WC/g+vXcWB4qnJ5
+ tlgTDGIb+2+h37kbwfhmWtZ6w6bClSaZWuYhgOsomAYTX3OZL6OKMvUL3jS2HjV3yI6iM+Tej
+ k6p2fMhBaGj0CTPF7zYe29aZJz+LrCqLbX8A+T362O0KQFfMPV5pS2FNqshHQJUpouILXpv+o
+ fTHQp0aQQK3dnUdrnnizRLj1dsAeUsftJSO8vbF5czjaFkh9TrazCnPja9CvWyrtU/J1Yp98X
+ 42WYOuZpnOJJWHiPeIBElvAM8/SbdlpUQW/B2sZvPev7NVXpRpLXbndOCA7zhOETeR513MlC9
+ 7O3cjePDy35NtTGDLTgfn/893RDMUyrKJKp90q85sFH2ZhLJODTWdAAI4Yut/nMZ6vZtq4Hwb
+ g0XNE7WjF/sL6GLGnuxwKg7snAqA7Ga3c8d+NE0WY5jjzVfPzuZHtGOcyhkV1BgeSCICsvK0W
+ bW/y5a9sdzYkUgauH6KNjnNYscMM8Bv8cDfTMo9THPIchetOhoSFL0VznjbIuZ4EcAs0vpkTs
+ +LP45Idyp1yJPzWBF6ir50hOMbiVTKLZOpZCW304FFHUMfzHcYAl2c9EXceYk4l0NpCFPtqxb
+ xZp1B3oxWZw9n2sD4ey0/+4IntRwFkV24h2f9YThIAwAtxq69sfRYa4137KQ21SToeLUaAmDQ
+ ENvpCukKhocg6sHi3ydeK4zHq91Eq1IqHYwcL0bFuHw1oBMqSmHgBtwAAsiyHytw5zbIE56S5
+ C8K02MoHFLHDwzPlzuubgg+jQIhD8qowIdyuONhCTNQ54QnnKfrdovbFxdpnTesvhzaCrTgpx
+ JPBuY2vOR8CGtqLm05PotugL16x3Ziw1raxwsuoLmHt4aSl8jDoi7J5XQlgBhPmNL1Gr/Fw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In the recent commit with the title "config: introduce an optional event
-stream while parsing", we introduced an optional callback to keep track
-of the config parser's events "comment", "white-space", "section header"
-and "entry".
+The original reasoning for not removing section headers upon removal of
+the last entry went like this: the user could have added comments about
+the section, or about the entries therein, and if there were other
+comments there, we would not know whether we should remove them.
 
-One motivation for this feature was to make use of it in the code that
-edits the config. And this commit makes it so.
+In particular, a concocted example was presented that looked like this
+(and was added to t1300):
 
-Note: this patch changes the meaning of the `seen` array that records
-whether we saw the config entry that is to be edited: previously, it
-contained the end offset of the found entry. Now, we introduce a new
-array `parsed` that keeps a record of *all* config parser events (with
-begin/end offsets), and the items in the `seen` array now point into the
-`parsed` array.
+	# some generic comment on the configuration file itself
+	# a comment specific to this "section" section.
+	[section]
+	# some intervening lines
+	# that should also be dropped
 
-There are two reasons why we do it this way:
+	key = value
+	# please be careful when you update the above variable
 
-1. To keep the implementation simple, the config parser's event stream
-   reports the event only after the config callback was called, so we
-   would not receive the begin offset otherwise.
+The ideal thing for `git config --unset section.key` in this case would
+be to leave only the first line behind, because all the other comments
+are now obsolete.
 
-2. In the following patches, we will re-use the `parsed` array to fix two
-   long-standing bugs related to empty sections.
+However, this is unfeasible, short of adding a complete Natural Language
+Processing module to Git, which seems not only a lot of work, but a
+totally unreasonable feature (for little benefit to most users).
 
-Note that this also makes the code more robust with respect to finding the
-begin offset of the part(s) of the config file to be edited, as we no
-longer back-track to find the beginning of the line.
+Now, the real kicker about this problem is: most users do not edit their
+config files at all! In their use case, the config looks like this
+instead:
+
+	[section]
+		key = value
+
+... and it is totally obvious what should happen if the entry is
+removed: the entire section should vanish.
+
+Let's generalize this observation to this conservative strategy: if we
+are removing the last entry from a section, and there are no comments
+inside that section nor surrounding it, then remove the entire section.
+Otherwise behave as before: leave the now-empty section (including those
+comments, even ones about the now-deleted entry).
+
+We have to be extra careful to handle the case where more than one entry
+is removed: any subset of them might be the last entries of their
+respective sections (and if there are no comments in or around that
+section, the section should be removed, too).
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- config.c | 170 ++++++++++++++++++++++++++++++---------------------------------
- 1 file changed, 81 insertions(+), 89 deletions(-)
+ config.c          | 93 +++++++++++++++++++++++++++++++++++++++++++++++++++++--
+ t/t1300-config.sh |  4 +--
+ 2 files changed, 93 insertions(+), 4 deletions(-)
 
 diff --git a/config.c b/config.c
-index 84e8f7ffeb8..345b1d2f140 100644
+index 345b1d2f140..271e9605ec1 100644
 --- a/config.c
 +++ b/config.c
-@@ -2303,8 +2303,11 @@ struct config_set_store {
- 	int do_not_match;
- 	regex_t *value_regex;
- 	int multi_replace;
--	size_t *seen;
--	unsigned int seen_nr, seen_alloc;
-+	struct {
-+		size_t begin, end;
-+		enum config_event_t type;
-+	} *parsed;
-+	unsigned int parsed_nr, parsed_alloc, *seen, seen_nr, seen_alloc;
+@@ -2306,6 +2306,7 @@ struct config_set_store {
+ 	struct {
+ 		size_t begin, end;
+ 		enum config_event_t type;
++		int is_keys_section;
+ 	} *parsed;
+ 	unsigned int parsed_nr, parsed_alloc, *seen, seen_nr, seen_alloc;
  	unsigned int key_seen:1, section_seen:1, is_keys_section:1;
- };
+@@ -2334,17 +2335,20 @@ static int store_aux_event(enum config_event_t type,
+ 	store->parsed[store->parsed_nr].begin = begin;
+ 	store->parsed[store->parsed_nr].end = end;
+ 	store->parsed[store->parsed_nr].type = type;
+-	store->parsed_nr++;
  
-@@ -2322,10 +2325,31 @@ static int matches(const char *key, const char *value,
- 		(value && !regexec(store->value_regex, value, 0, NULL, 0));
- }
+ 	if (type == CONFIG_EVENT_SECTION) {
+ 		if (cf->var.len < 2 || cf->var.buf[cf->var.len - 1] != '.')
+ 			BUG("Invalid section name '%s'", cf->var.buf);
  
-+static int store_aux_event(enum config_event_t type,
-+			   size_t begin, size_t end, void *data)
-+{
-+	struct config_set_store *store = data;
-+
-+	ALLOC_GROW(store->parsed, store->parsed_nr + 1, store->parsed_alloc);
-+	store->parsed[store->parsed_nr].begin = begin;
-+	store->parsed[store->parsed_nr].end = end;
-+	store->parsed[store->parsed_nr].type = type;
-+	store->parsed_nr++;
-+
-+	if (type == CONFIG_EVENT_SECTION) {
-+		if (cf->var.len < 2 || cf->var.buf[cf->var.len - 1] != '.')
-+			BUG("Invalid section name '%s'", cf->var.buf);
-+
-+		/* Is this the section we were looking for? */
-+		store->is_keys_section = cf->var.len - 1 == store->baselen &&
-+			!strncasecmp(cf->var.buf, store->key, store->baselen);
-+	}
-+
-+	return 0;
-+}
-+
- static int store_aux(const char *key, const char *value, void *cb)
- {
--	const char *ep;
--	size_t section_len;
- 	struct config_set_store *store = cb;
- 
- 	if (store->key_seen) {
-@@ -2337,55 +2361,21 @@ static int store_aux(const char *key, const char *value, void *cb)
- 			ALLOC_GROW(store->seen, store->seen_nr + 1,
- 				   store->seen_alloc);
- 
--			store->seen[store->seen_nr] = cf->do_ftell(cf);
-+			store->seen[store->seen_nr] = store->parsed_nr;
- 			store->seen_nr++;
- 		}
--		return 0;
- 	} else if (store->is_keys_section) {
- 		/*
--		 * What we are looking for is in store->key (both
--		 * section and var), and its section part is baselen
--		 * long.  We found key (again, both section and var).
--		 * We would want to know if this key is in the same
--		 * section as what we are looking for.  We already
--		 * know we are in the same section as what should
--		 * hold store->key.
-+		 * Do not increment matches yet: this may not be a match, but we
-+		 * are in the desired section.
- 		 */
--		ep = strrchr(key, '.');
--		section_len = ep - key;
--
--		if ((section_len != store->baselen) ||
--		    memcmp(key, store->key, section_len+1)) {
--			store->is_keys_section = 0;
--			return 0;
--		}
--		/*
--		 * Do not increment matches: this is no match, but we
--		 * just made sure we are in the desired section.
--		 */
--		ALLOC_GROW(store->seen, store->seen_nr + 1,
--			   store->seen_alloc);
--		store->seen[store->seen_nr] = cf->do_ftell(cf);
--	}
--
--	if (matches(key, value, store)) {
--		ALLOC_GROW(store->seen, store->seen_nr + 1,
--			   store->seen_alloc);
--		store->seen[store->seen_nr] = cf->do_ftell(cf);
--		store->seen_nr++;
--		store->key_seen = 1;
-+		ALLOC_GROW(store->seen, store->seen_nr + 1, store->seen_alloc);
-+		store->seen[store->seen_nr] = store->parsed_nr;
- 		store->section_seen = 1;
--		store->is_keys_section = 1;
--	} else {
--		if (strrchr(key, '.') - key == store->baselen &&
--		      !strncmp(key, store->key, store->baselen)) {
--				store->section_seen = 1;
--				store->is_keys_section = 1;
--				ALLOC_GROW(store->seen,
--					   store->seen_nr + 1,
--					   store->seen_alloc);
--				store->seen[store->seen_nr] =
--					cf->do_ftell(cf);
-+
-+		if (matches(key, value, store)) {
-+			store->seen_nr++;
-+			store->key_seen = 1;
- 		}
+ 		/* Is this the section we were looking for? */
+-		store->is_keys_section = cf->var.len - 1 == store->baselen &&
++		store->is_keys_section =
++			store->parsed[store->parsed_nr].is_keys_section =
++			cf->var.len - 1 == store->baselen &&
+ 			!strncasecmp(cf->var.buf, store->key, store->baselen);
  	}
  
-@@ -2486,32 +2476,6 @@ static ssize_t write_pair(int fd, const char *key, const char *value,
++	store->parsed_nr++;
++
+ 	return 0;
+ }
+ 
+@@ -2476,6 +2480,87 @@ static ssize_t write_pair(int fd, const char *key, const char *value,
  	return ret;
  }
  
--static ssize_t find_beginning_of_line(const char *contents, size_t size,
--	size_t offset_, int *found_bracket)
--{
--	size_t equal_offset = size, bracket_offset = size;
--	ssize_t offset;
--
--contline:
--	for (offset = offset_-2; offset > 0
--			&& contents[offset] != '\n'; offset--)
--		switch (contents[offset]) {
--			case '=': equal_offset = offset; break;
--			case ']': bracket_offset = offset; break;
--		}
--	if (offset > 0 && contents[offset-1] == '\\') {
--		offset_ = offset;
--		goto contline;
--	}
--	if (bracket_offset < equal_offset) {
--		*found_bracket = 1;
--		offset = bracket_offset+1;
--	} else
--		offset++;
--
--	return offset;
--}
--
++/*
++ * If we are about to unset the last key(s) in a section, and if there are
++ * no comments surrounding (or included in) the section, we will want to
++ * extend begin/end to remove the entire section.
++ *
++ * Note: the parameter `seen_ptr` points to the index into the store.seen
++ * array.  * This index may be incremented if a section has more than one
++ * entry (which all are to be removed).
++ */
++static void maybe_remove_section(struct config_set_store *store,
++				 const char *contents,
++				 size_t *begin_offset, size_t *end_offset,
++				 int *seen_ptr)
++{
++	size_t begin;
++	int i, seen, section_seen = 0;
++
++	/*
++	 * First, ensure that this is the first key, and that there are no
++	 * comments before the entry nor before the section header.
++	 */
++	seen = *seen_ptr;
++	for (i = store->seen[seen]; i > 0; i--) {
++		enum config_event_t type = store->parsed[i - 1].type;
++
++		if (type == CONFIG_EVENT_COMMENT)
++			/* There is a comment before this entry or section */
++			return;
++		if (type == CONFIG_EVENT_ENTRY) {
++			if (!section_seen)
++				/* This is not the section's first entry. */
++				return;
++			/* We encountered no comment before the section. */
++			break;
++		}
++		if (type == CONFIG_EVENT_SECTION) {
++			if (!store->parsed[i - 1].is_keys_section)
++				break;
++			section_seen = 1;
++		}
++	}
++	begin = store->parsed[i].begin;
++
++	/*
++	 * Next, make sure that we are removing he last key(s) in the section,
++	 * and that there are no comments that are possibly about the current
++	 * section.
++	 */
++	for (i = store->seen[seen] + 1; i < store->parsed_nr; i++) {
++		enum config_event_t type = store->parsed[i].type;
++
++		if (type == CONFIG_EVENT_COMMENT)
++			return;
++		if (type == CONFIG_EVENT_SECTION) {
++			if (store->parsed[i].is_keys_section)
++				continue;
++			break;
++		}
++		if (type == CONFIG_EVENT_ENTRY) {
++			if (++seen < store->seen_nr &&
++			    i == store->seen[seen])
++				/* We want to remove this entry, too */
++				continue;
++			/* There is another entry in this section. */
++			return;
++		}
++	}
++
++	/*
++	 * We are really removing the last entry/entries from this section, and
++	 * there are no enclosed or surrounding comments. Remove the entire,
++	 * now-empty section.
++	 */
++	*seen_ptr = seen;
++	*begin_offset = begin;
++	if (i < store->parsed_nr)
++		*end_offset = store->parsed[i].begin;
++	else
++		*end_offset = store->parsed[store->parsed_nr - 1].end;
++}
++
  int git_config_set_in_file_gently(const char *config_filename,
  				  const char *key, const char *value)
  {
-@@ -2622,6 +2586,7 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
- 		struct stat st;
- 		size_t copy_begin, copy_end;
- 		int i, new_line = 0;
-+		struct config_options opts;
+@@ -2698,6 +2783,10 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
+ 			} else {
+ 				replace_end = store.parsed[j].end;
+ 				copy_end = store.parsed[j].begin;
++				if (!value)
++					maybe_remove_section(&store, contents,
++							     &copy_end,
++							     &replace_end, &i);
+ 				/*
+ 				 * Swallow preceding white-space on the same
+ 				 * line.
+diff --git a/t/t1300-config.sh b/t/t1300-config.sh
+index 10b9bf4b088..6d34513eedd 100755
+--- a/t/t1300-config.sh
++++ b/t/t1300-config.sh
+@@ -1413,7 +1413,7 @@ test_expect_success 'urlmatch with wildcard' '
+ '
  
- 		if (value_regex == NULL)
- 			store.value_regex = NULL;
-@@ -2644,17 +2609,24 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
- 			}
- 		}
+ # good section hygiene
+-test_expect_failure '--unset last key removes section (except if commented)' '
++test_expect_success '--unset last key removes section (except if commented)' '
+ 	cat >.git/config <<-\EOF &&
+ 	# some generic comment on the configuration file itself
+ 	# a comment specific to this "section" section.
+@@ -1452,7 +1452,7 @@ test_expect_failure '--unset last key removes section (except if commented)' '
+ 	test_cmp expect .git/config
+ '
  
--		ALLOC_GROW(store.seen, 1, store.seen_alloc);
--		store.seen[0] = 0;
--		store.seen_nr = 0;
-+		ALLOC_GROW(store.parsed, 1, store.parsed_alloc);
-+		store.parsed[0].end = 0;
-+
-+		memset(&opts, 0, sizeof(opts));
-+		opts.event_fn = store_aux_event;
-+		opts.event_fn_data = &store;
- 
- 		/*
--		 * After this, store.offset will contain the *end* offset
--		 * of the last match, or remain at 0 if no match was found.
-+		 * After this, store.parsed will contain offsets of all the
-+		 * parsed elements, and store.seen will contain a list of
-+		 * matches, as indices into store.parsed.
-+		 *
- 		 * As a side effect, we make sure to transform only a valid
- 		 * existing config file.
- 		 */
--		if (git_config_from_file(store_aux, config_filename, &store)) {
-+		if (git_config_from_file_with_options(store_aux,
-+						      config_filename,
-+						      &store, &opts)) {
- 			error("invalid config file %s", config_filename);
- 			free(store.key);
- 			if (store.value_regex != NULL &&
-@@ -2706,19 +2678,39 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
- 			goto out_free;
- 		}
- 
--		if (store.seen_nr == 0)
-+		if (store.seen_nr == 0) {
-+			if (!store.seen_alloc) {
-+				/* Did not see key nor section */
-+				ALLOC_GROW(store.seen, 1, store.seen_alloc);
-+				store.seen[0] = store.parsed_nr
-+					- !!store.parsed_nr;
-+			}
- 			store.seen_nr = 1;
-+		}
- 
- 		for (i = 0, copy_begin = 0; i < store.seen_nr; i++) {
-+			size_t replace_end;
-+			int j = store.seen[i];
-+
- 			new_line = 0;
--			if (store.seen[i] == 0) {
--				store.seen[i] = copy_end = contents_sz;
--			} else if (!store.key_seen) {
--				copy_end = store.seen[i];
--			} else
--				copy_end = find_beginning_of_line(
--					contents, contents_sz,
--					store.seen[i], &new_line);
-+			if (!store.key_seen) {
-+				replace_end = copy_end = store.parsed[j].end;
-+			} else {
-+				replace_end = store.parsed[j].end;
-+				copy_end = store.parsed[j].begin;
-+				/*
-+				 * Swallow preceding white-space on the same
-+				 * line.
-+				 */
-+				while (copy_end > 0 ) {
-+					char c = contents[copy_end - 1];
-+
-+					if (isspace(c) && c != '\n')
-+						copy_end--;
-+					else
-+						break;
-+				}
-+			}
- 
- 			if (copy_end > 0 && contents[copy_end-1] != '\n')
- 				new_line = 1;
-@@ -2732,7 +2724,7 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
- 				    write_str_in_full(fd, "\n") < 0)
- 					goto write_err_out;
- 			}
--			copy_begin = store.seen[i];
-+			copy_begin = replace_end;
- 		}
- 
- 		/* write the pair (value == NULL means unset) */
+-test_expect_failure '--unset-all removes section if empty & uncommented' '
++test_expect_success '--unset-all removes section if empty & uncommented' '
+ 	cat >.git/config <<-\EOF &&
+ 	[section]
+ 	key = value1
 -- 
 2.16.2.windows.1.26.g2cc3565eb4b
 
