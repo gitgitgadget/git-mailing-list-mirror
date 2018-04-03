@@ -2,163 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-1.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 412A91F404
-	for <e@80x24.org>; Tue,  3 Apr 2018 18:00:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B3B8A1F404
+	for <e@80x24.org>; Tue,  3 Apr 2018 18:03:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751588AbeDCSAZ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Apr 2018 14:00:25 -0400
-Received: from mail-yb0-f196.google.com ([209.85.213.196]:39090 "EHLO
-        mail-yb0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751461AbeDCSAY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Apr 2018 14:00:24 -0400
-Received: by mail-yb0-f196.google.com with SMTP id g197-v6so2369208ybf.6
-        for <git@vger.kernel.org>; Tue, 03 Apr 2018 11:00:24 -0700 (PDT)
+        id S1752650AbeDCSDk (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Apr 2018 14:03:40 -0400
+Received: from mail-pl0-f68.google.com ([209.85.160.68]:35526 "EHLO
+        mail-pl0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752600AbeDCSDj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Apr 2018 14:03:39 -0400
+Received: by mail-pl0-f68.google.com with SMTP id 61-v6so7951495plb.2
+        for <git@vger.kernel.org>; Tue, 03 Apr 2018 11:03:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=rzdaqL0BqTCx+cbDxv/o28dKShL2Ec23qPIa28+bUuY=;
-        b=tCYISRiPLN1cQstmoctwgVLp34fWm/1nLcpvvZcPEY8v2+cT/lP2PwSyP0EZLViOOz
-         C+7Uvnq/ESwqaUdllkpCGbf6Db8/w+6npIhehVXNvntHN7QoMnVh5oSC3vOF+bTyXLGn
-         v6tsAM5+91n6+Rj/HBy2b9xTxPV05BBvNPAatvv+FWQAcrzT31b9BailGf/PeVAXL+i/
-         3vS0BRNFl8oDnJR09yr+z0It4kgGfpCA2yS9w//hlryMful2ToYGxSf+8cILkuXEDdBY
-         xuKeuLARNQJZeJjt5HEGNsfCi7ac5onrcZP8955OJaNR7sfVNPsNYVI+eQX9wjXTzrx5
-         lv7g==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=fcPI2JG5GZc43h0fYA9YUSCchqeP3HCiy7au5CyAi3o=;
+        b=Mg/JecUjujcx3StO6UWYeYXC/Al40pdedOzevbNl9DDMFyHOYXrpv4tEbYhFkYxdTi
+         0kF7J+LpvSyO1W6MbpBEoxlFmELTd0gSNE5iqxsXggVKfJB4bYD4F+/4z1u0SU8TzfFG
+         oy/L+EkVcToX4g4mw8shSulWstxQBC76+np0Ivza012Aa9W1JNAqL0KUVr1GGO2DH73T
+         CttQ5y+tOwck5mh+pHsNIxt1h/BecK3Cb28rjxHeHws9riiybbqgFf9czv2jW/NRxPUC
+         i4ft2eElDknNI+DObiaimTrCn05pjqhd+3bFy/g/9tRIzkIa4IGXuO17ybfAgQ0dgriq
+         jEqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=rzdaqL0BqTCx+cbDxv/o28dKShL2Ec23qPIa28+bUuY=;
-        b=EhVq0DrDEfJW+Yd388cw3mJbGEYsMG+dZp8UUFXcF1bY94BgM8i5p0mqood3cmWAVz
-         3ao1nJXAVxjWC68MjQdLY5v1XXHbn1OzW97tMgocyI4b3tKl8nr+HFWpqWB1xzkDU+ED
-         NiiapkWhHKIEvutlolGu72mxp0f6ZUkvvgeTenbur3aMlKJknCxKjRV5MyE++EmStQXJ
-         IeL+/eWPSovGnltHLzbpRrMqvkSaTZnkmo/6XPX6vuszQpQuLvNNr/sYXRgip+9Mfwbo
-         Lozg2Pgg17XMfETHowcc2rXkNIWni5/OUz8IsboV7pj4Aw/4U01m84UaLzU5LR3ayY5Z
-         EpSw==
-X-Gm-Message-State: ALQs6tA93brTCMu7ke2milzVwaoR+hhnyj6tnNls8IrX5Ctr5c0yKFBc
-        o3HJVu5GKo/1HnF0775S4BQMzTe99A4yJjCKcHgq8g==
-X-Google-Smtp-Source: AIpwx4+2lJ44swc1l8v2GzzFv5GJKIVLDwTQtyO0bHBM4CAABBy5SFewCMOuUm4oGMyH4mcug4vzb25CeubQ6cy2Ntc=
-X-Received: by 2002:a25:ba51:: with SMTP id z17-v6mr6074077ybj.334.1522778422252;
- Tue, 03 Apr 2018 11:00:22 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 2002:a25:cf81:0:0:0:0:0 with HTTP; Tue, 3 Apr 2018 11:00:21 -0700 (PDT)
-In-Reply-To: <20180403120057.173849-4-dstolee@microsoft.com>
-References: <20180403120057.173849-1-dstolee@microsoft.com> <20180403120057.173849-4-dstolee@microsoft.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 3 Apr 2018 11:00:21 -0700
-Message-ID: <CAGZ79kZ0XZRiKcJG-5Ckd=XjE-3GfGHkNuyu4590OyfGPve4Rg@mail.gmail.com>
-Subject: Re: [PATCH 3/3] commit-graph: lazy-load trees
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=fcPI2JG5GZc43h0fYA9YUSCchqeP3HCiy7au5CyAi3o=;
+        b=PVwwER2XJfT68n81eYWfyM/P2f7hJc7vs0IjmuYtzCOU5HeRVfJcWOxgoLFyYIi35E
+         yXyWHjMg8yxTGJkTVKGeMF7TiWNouzNjmNWHwlUjEvyl8HA4TesaD7hggS4ju2G0/7Do
+         yqmnZLJzlUqDdwowPxA2PeIqcmtzw6WpIQc0t5Iiz87RZbr5tca4yUPC3S99ufMnt5J3
+         8ue+ItNbuKMOgSkD8dxbsytFrA03Mc7ijihJR1pUl51zOUXop/F2OGZNQq8815CwmmQs
+         0ERL0zMS9g4sYJIp/hnFSUaQGeAZd3UmPY3chzV6PlaPhMTpshivtUSF65sl2qrt11II
+         8kZQ==
+X-Gm-Message-State: AElRT7FzkD5qtxNHk/qTxN4oc3y62QjsgDV2WUV6UfsQh/Fyy+jiSQUy
+        qrQ+6hlwc7a5wAK1B8UPmBa+SA==
+X-Google-Smtp-Source: AIpwx4/1KlzVraQRR/vAhckNNDrHMn6HUrLSSRbxQrhZu3pn1de8uAvCR2dbOBjVmif5Le/38pPV/Q==
+X-Received: by 2002:a17:902:71cc:: with SMTP id t12-v6mr8296846plm.247.1522778618868;
+        Tue, 03 Apr 2018 11:03:38 -0700 (PDT)
+Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
+        by smtp.gmail.com with ESMTPSA id m1sm7287883pfi.80.2018.04.03.11.03.37
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 03 Apr 2018 11:03:37 -0700 (PDT)
+Date:   Tue, 3 Apr 2018 11:03:36 -0700
+From:   Brandon Williams <bmwill@google.com>
 To:     Derrick Stolee <dstolee@microsoft.com>
-Cc:     git <git@vger.kernel.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Lars Schneider <larsxschneider@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     git@vger.kernel.org, avarab@gmail.com, sbeller@google.com,
+        larsxschneider@gmail.com, peff@peff.net
+Subject: Re: [PATCH 0/6] Compute and consume generation numbers
+Message-ID: <20180403180336.GA100220@google.com>
+References: <20180403165143.80661-1-dstolee@microsoft.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180403165143.80661-1-dstolee@microsoft.com>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 3, 2018 at 5:00 AM, Derrick Stolee <dstolee@microsoft.com> wrote:
-> The commit-graph file provides quick access to commit data, including
-> the OID of the root tree for each commit in the graph. When performing
-> a deep commit-graph walk, we may not need to load most of the trees
-> for these commits.
->
-> Delay loading the tree object for a commit loaded from the graph
-> until requested via get_commit_tree(). Do not lazy-load trees for
-> commits not in the graph, since that requires duplicate parsing
-> and the relative peformance improvement when trees are not needed
-> is small.
->
-> On the Linux repository, performance tests were run for the following
-> command:
->
->         git log --graph --oneline -1000
->
-> Before: 0.83s
-> After:  0.65s
-> Rel %: -21.6%
+On 04/03, Derrick Stolee wrote:
+> This is the first of several "small" patches that follow the serialized
+> Git commit graph patch (ds/commit-graph).
+> 
+> As described in Documentation/technical/commit-graph.txt, the generation
+> number of a commit is one more than the maximum generation number among
+> its parents (trivially, a commit with no parents has generation number
+> one).
 
-This is an awesome speedup.
+Thanks for ensuring that this is defined and documented somewhere :)
 
->
-> Adding '-- kernel/' to the command requires loading the root tree
-> for every commit that is walked.
+> 
+> This series makes the computation of generation numbers part of the
+> commit-graph write process.
+> 
+> Finally, generation numbers are used to order commits in the priority
+> queue in paint_down_to_common(). This allows a constant-time check in
+> queue_has_nonstale() instead of the previous linear-time check.
+> 
+> This does not have a significant performance benefit in repositories
+> of normal size, but in the Windows repository, some merge-base
+> calculations improve from 3.1s to 2.9s. A modest speedup, but provides
+> an actual consumer of generation numbers as a starting point.
+> 
+> A more substantial refactoring of revision.c is required before making
+> 'git log --graph' use generation numbers effectively.
 
-and as the walk prunes those commits that do not touch kernel/
-which from my quick glance is the real core thing. Linus' announcements
-claim that > 50% is drivers, networking and documentation[1].
-So the "-- kernel/" walk needs to walk twice as many commits to find
-a thousand commits that actually touch kernel/ ?
+log --graph should benefit a lot more from this correct?  I know we've
+talked a bit about negotiation and I wonder if these generation numbers
+should be able to help out a little bit with that some day.
 
-[1] http://lkml.iu.edu/hypermail/linux/kernel/1801.3/02794.html
-http://lkml.iu.edu/hypermail/linux/kernel/1803.3/00580.html
+> 
+> This patch series depends on v7 of ds/commit-graph.
+> 
+> Derrick Stolee (6):
+>   object.c: parse commit in graph first
+>   commit: add generation number to struct commmit
+>   commit-graph: compute generation numbers
+>   commit: sort by generation number in paint_down_to_common()
+>   commit.c: use generation number to stop merge-base walks
+>   commit-graph.txt: update design doc with generation numbers
+> 
+>  Documentation/technical/commit-graph.txt |  7 +---
+>  alloc.c                                  |  1 +
+>  commit-graph.c                           | 48 +++++++++++++++++++++
+>  commit.c                                 | 53 ++++++++++++++++++++----
+>  commit.h                                 |  7 +++-
+>  object.c                                 |  4 +-
+>  6 files changed, 104 insertions(+), 16 deletions(-)
+> 
+> -- 
+> 2.17.0.20.g9f30ba16e1
+> 
 
-> There was no measureable performance
-> change as a result of this patch.
-
-... which means that the walking itself is really fast now and the
-dominating effects are setup and checking the tree?
-
-Is git smart enough to not load the root tree for "log -- ./" or
-would we get the desired performance numbers from that?
-
-> @@ -317,6 +315,27 @@ int parse_commit_in_graph(struct commit *item)
->         return 0;
->  }
->
-> +static struct tree *load_tree_for_commit(struct commit_graph *g, struct commit *c)
-> +{
-> +       struct object_id oid;
-> +       const unsigned char *commit_data = g->chunk_commit_data + (g->hash_len + 16) * (c->graph_pos);
-
-What is 16? (I imagine it is the "length of the row" - g->hash_len ?)
-Would it make sense to have a constant/define for an entire row instead?
-(By any chance what is the meaning of GRAPH_DATA_WIDTH, which is 36?
-That is defined but never used.)
-
-> +struct tree *get_commit_tree_in_graph(const struct commit *c)
-> +{
-> +       if (c->tree)
-> +               return c->tree;
-
-This double checking is defensive programming, in case someone
-doesn't check themselves (as get_commit_tree does below).
-
-ok.
-
-> @@ -17,6 +17,13 @@ char *get_commit_graph_filename(const char *obj_dir);
->   */
->  int parse_commit_in_graph(struct commit *item);
->
-> +/*
-> + * For performance reasons, a commit loaded from the graph does not
-> + * have a tree loaded until trying to consume it for the first time.
-
-That is the theme of this series/patch, but do we need to write it down
-into the codebase? I'd be inclined to omit this part and only go with:
-
-  Load the root tree of a commit and return the tree.
-
->  struct tree *get_commit_tree(const struct commit *commit)
->  {
-> -       return commit->tree;
-> +       if (commit->tree || !commit->object.parsed)
-
-I understand to return the tree from the commit
-when we have the tree in the commit object (the first
-part).
-
-But 'when we have not (yet) parsed the commit object',
-we also just return its tree? Could you explain the
-second part of the condition?
-Is that for commits that are not part of the commit graph?
-(But then why does it need to be negated?)
-
-Thanks,
-Stefan
+-- 
+Brandon Williams
