@@ -2,29 +2,29 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3DC701F424
-	for <e@80x24.org>; Tue,  3 Apr 2018 08:38:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BF6201F424
+	for <e@80x24.org>; Tue,  3 Apr 2018 08:43:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755167AbeDCIiy (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Apr 2018 04:38:54 -0400
-Received: from mailhost.frm2.tum.de ([129.187.179.12]:54991 "EHLO
+        id S1755242AbeDCIns (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Apr 2018 04:43:48 -0400
+Received: from mailhost.frm2.tum.de ([129.187.179.12]:55272 "EHLO
         mailhost.frm2.tum.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754990AbeDCIix (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Apr 2018 04:38:53 -0400
+        with ESMTP id S1755187AbeDCInr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Apr 2018 04:43:47 -0400
 Received: from mailhost.frm2.tum.de (localhost [127.0.0.1])
-        by mailhost.frm2.tum.de (8.15.2/8.15.2) with ESMTP id w338cn64053174;
-        Tue, 3 Apr 2018 10:38:49 +0200 (CEST)
+        by mailhost.frm2.tum.de (8.15.2/8.15.2) with ESMTP id w338gig7053324;
+        Tue, 3 Apr 2018 10:43:13 +0200 (CEST)
         (envelope-from jens.krueger@frm2.tum.de)
 X-Virus-Scanned: at mailhost.frm2.tum.de
 Received: from taco61.taco.frm2 (taco61.ictrl.frm2 [172.25.2.61])
         (authenticated bits=0)
-        by mailhost.frm2.tum.de (8.15.2/8.15.2) with ESMTPSA id w338ckOm053167
+        by mailhost.frm2.tum.de (8.15.2/8.15.2) with ESMTPSA id w338gj68053335
         (version=TLSv1.2 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-        Tue, 3 Apr 2018 10:38:47 +0200 (CEST)
+        Tue, 3 Apr 2018 10:42:46 +0200 (CEST)
         (envelope-from jens.krueger@frm2.tum.de)
 X-Authentication-Warning: mailhost.frm2.tum.de: Host taco61.ictrl.frm2 [172.25.2.61] claimed to be taco61.taco.frm2
 Subject: Re: Test t2028 failes
@@ -35,20 +35,25 @@ References: <dfb01281-2ffb-a0ac-a44d-74ccd304a7ea@frm2.tum.de>
  <cdec466c-ecc9-b1d7-c637-04e63552c759@frm2.tum.de>
  <CAPig+cSsTPKoLfcxrgD4+NhXa5AeWynxumo8Zed_PH-q3U163w@mail.gmail.com>
 From:   =?UTF-8?Q?Jens_Kr=c3=bcger?= <Jens.Krueger@frm2.tum.de>
-Message-ID: <0156c688-2c81-1de8-f550-efb517b7707d@frm2.tum.de>
-Date:   Tue, 3 Apr 2018 10:38:46 +0200
+Message-ID: <6d28dbb1-0c4c-6fca-555c-afb6c1c9e781@frm2.tum.de>
+Date:   Tue, 3 Apr 2018 10:42:45 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
  Thunderbird/52.6.0
 MIME-Version: 1.0
 In-Reply-To: <CAPig+cSsTPKoLfcxrgD4+NhXa5AeWynxumo8Zed_PH-q3U163w@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: multipart/mixed;
+ boundary="------------1C1EE8620F63C9B4FCD0A697"
 Content-Language: de-DE-1901
-Content-Transfer-Encoding: 8bit
-X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.6.2 (mailhost.frm2.tum.de [129.187.179.12]); Tue, 03 Apr 2018 10:38:47 +0200 (CEST)
+X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.6.2 (mailhost.frm2.tum.de [129.187.179.12]); Tue, 03 Apr 2018 10:42:46 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
+
+This is a multi-part message in MIME format.
+--------------1C1EE8620F63C9B4FCD0A697
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
 Am 03.04.2018 um 10:16 schrieb Eric Sunshine:
 > On Tue, Apr 3, 2018 at 4:01 AM, Jens Krüger <Jens.Krueger@frm2.tum.de> wrote:
@@ -68,20 +73,30 @@ Am 03.04.2018 um 10:16 schrieb Eric Sunshine:
 > 
 > I'd expect the first $? to report 0 and the second 1 in a working installation.
 > 
-
-Both of them return 0, but I guess I found the problem. The second
-'grep' call returned the following output:
-
-worktree /home/jkrueger/sources/git/t/trash directory.t2028-worktree-move
-worktree /home/jkrueger/sources/git/t/trash 
-directory.t2028-worktree-move/elsewhere
-worktree /home/jkrueger/sources/git/t/trash 
-directory.t2028-worktree-move/some-dir/destination
-
-If I move my checkout into another directory not containing 'source' in
-the path it will work.
-
 > Also, are you using an unusual 'grep'? What does "command -v grep" report?
 > 
 
-alias grep='grep --color=auto'
+Maybe, the attached patch may help. On my machine(s) it helped.
+
+--------------1C1EE8620F63C9B4FCD0A697
+Content-Type: text/x-patch;
+ name="a.patch"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+ filename="a.patch"
+
+diff --git a/t/t2028-worktree-move.sh b/t/t2028-worktree-move.sh
+index 5d5b3632ba..65c7311865 100755
+--- a/t/t2028-worktree-move.sh
++++ b/t/t2028-worktree-move.sh
+@@ -77,7 +77,7 @@ test_expect_success 'move worktree' '
+ 	test_path_is_missing source &&
+ 	git worktree list --porcelain >out &&
+ 	grep "^worktree.*/destination" out &&
+-	! grep "^worktree.*/source" out &&
++	! grep "^worktree.*/source$" out &&
+ 	git -C destination log --format=%s >actual2 &&
+ 	echo init >expected2 &&
+ 	test_cmp expected2 actual2
+
+--------------1C1EE8620F63C9B4FCD0A697--
