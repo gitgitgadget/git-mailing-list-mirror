@@ -2,190 +2,184 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F24C71F404
-	for <e@80x24.org>; Tue,  3 Apr 2018 20:44:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 83AA51F404
+	for <e@80x24.org>; Tue,  3 Apr 2018 21:05:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752639AbeDCUoc (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Apr 2018 16:44:32 -0400
-Received: from mail-wm0-f42.google.com ([74.125.82.42]:54662 "EHLO
-        mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752420AbeDCUob (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Apr 2018 16:44:31 -0400
-Received: by mail-wm0-f42.google.com with SMTP id r191so5524403wmg.4
-        for <git@vger.kernel.org>; Tue, 03 Apr 2018 13:44:30 -0700 (PDT)
+        id S1752675AbeDCVFw (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Apr 2018 17:05:52 -0400
+Received: from mail-pl0-f67.google.com ([209.85.160.67]:37918 "EHLO
+        mail-pl0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752525AbeDCVFv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Apr 2018 17:05:51 -0400
+Received: by mail-pl0-f67.google.com with SMTP id k6-v6so5606073pls.5
+        for <git@vger.kernel.org>; Tue, 03 Apr 2018 14:05:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=vSCMpKbg1s7U5955i9XTIZTNYjgrMMNKL38LY3gx54M=;
-        b=fPpURass74+bg6llLZ18t67UKTIpvqw1qw9qd20EzQF0oWkJbk5Tvir36NAFVqhwRE
-         I0BCp3oSAVopVCxeDYdHF+DOqsff9BwpEhzD4LqqitgjD3ldWq7FQ5d01MIggbqGLJAC
-         Z1eY0csIpMQcG0DjdKg+jsMsRii1EwWuUFECXxAsxcRUxKw+PYpZCnEy4B/k6vPHMNEJ
-         e4RiQkeaXhMBzXBmEdv5dmxcLmIlxKNoyjB+kRnIL9dz3ZwsdH8g0hBl4UAbg65o6DQY
-         9Wfx2zITiOt+jvRxE1czeOgRmK4GcY2xoCSCfdlEwoJko4h5z8l2CwRoedOQgcUrdDdc
-         TnuQ==
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=DSaNjnmvn0QJouXR5vJ7gITf3zDPXK6ddfCFejd50lc=;
+        b=bEMzitkq32rL93UtYLlgBoDoVvpRBLLWj4zT9AVn/+ij/4B9pVNl7HdmgOZmXtDQN0
+         SZrFWBeZYLOd7uYVtC8mVv8qPyYVIis4iAYd0UPG6LPm7zzzCUKaaZ0kh5SOLsOmUDAH
+         ieI3N0+GTN7RN4l1baRoE0YpSG+8uxuPpf2osIFBCigeAadJsWxkTU16jzcYfhZEbF7C
+         iTTNULwatRsw7GkWXWsNnEV4AQqpI9TIsrWmN+kUhWfLP20+oudxhVNjhma1Zz6FbuWG
+         i79BvSnACdPBuTEmvlT12A1jVH6HIK0oSRgyVD3MP/BPU42NkQuxyn9BHVpvlpVR+E1f
+         VhMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=vSCMpKbg1s7U5955i9XTIZTNYjgrMMNKL38LY3gx54M=;
-        b=tjjIWFUkPaD+8a5wJph6wnnx48k40nUVvm4UFd4ObHfFcTVJczEDp7S5Cseyh4ynEW
-         aP5KsyQ/7U6F6/oOfc0hez4Hw26uhBDslNFGNi1/U5v06EbWJUhuIFaGxqN4pVoaw+Zi
-         AzTeHeV61sdbzc/VYA/owMd57aroNfMmEliTOq9yfRTDr3wqM4KN5IFidz8VHtn1x6vC
-         LaHIgOb9L617TGNhxJyUDvg6GUw1pAemJPgbv6W4UrjOUnO9XzRoBU3DuRacmruuEOeT
-         EhoEAmJmT0dLQpv4cM3vuGlE1HQcn2OEwOeDb9uB/vVAah6pQ7hM5syziwO7zQkSOr8p
-         jbFw==
-X-Gm-Message-State: AElRT7GnyyXSFnmALATK5lA1yNI5xi4sVnfdllwdpzTswKOBOx1R/XiY
-        nCFBZNfmje64/+Pql5oTd8Q=
-X-Google-Smtp-Source: AIpwx4/PYQgMMq2h9deD6hLeaMarcMEDdJ3KBNFtxC9jYtPx/mzLpKAs9LmIIsr4VWoacz73g79xkQ==
-X-Received: by 10.80.130.67 with SMTP id 61mr17869076edf.184.1522788269930;
-        Tue, 03 Apr 2018 13:44:29 -0700 (PDT)
-Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
-        by smtp.gmail.com with ESMTPSA id m7sm2318962eda.36.2018.04.03.13.44.28
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=DSaNjnmvn0QJouXR5vJ7gITf3zDPXK6ddfCFejd50lc=;
+        b=pwh2qlDN1pCIuHb76Rse+6fJlnM5Xo3EImCr78X+gANHgUBGS+v1fIzxJ1xiePN3IS
+         +tOFkZz185OwB78b6pqjjlhyGsTjUP525BjAuIfQVruGy1VxFuyzPOYwZixmfZSEced1
+         vD8ypt1pMscAnvTFdBCTfs9llun9LrK9RgSMu/GzqgSpoSov6Kww5UsoeRmyZsh7N55k
+         WkfZzrQvl1L4KL/+Eq8VF13ak85DjPX9BTAVfZbxfEJtJy71BIRwEWVO/V0OwZJqwpO6
+         w5rcismRjrdmc2tuMp6W1QZg751HaZxsCBaKkzFlTfUFL/JEl11egds8DcCxNvrX7mQ2
+         9eqw==
+X-Gm-Message-State: AElRT7Fh4QTsZoww9B13GmbHxmRUnNEU2M4D1v4WCZqSVMy/rENXXIxt
+        wheqJMn1pkRDTUvMF3BoZ/P+jg==
+X-Google-Smtp-Source: AIpwx4+oVMD8JTF68QDwckgWBCz893Yn8u4ZwzAbPj5tNywa+XPFNLLHiGNUel2m8sqcMGyWE1jgJQ==
+X-Received: by 10.167.129.217 with SMTP id c25mr11844632pfn.143.1522789550540;
+        Tue, 03 Apr 2018 14:05:50 -0700 (PDT)
+Received: from localhost ([2620:0:100e:422:ea58:fa52:fa77:9b41])
+        by smtp.gmail.com with ESMTPSA id j10sm6901595pfj.1.2018.04.03.14.05.49
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 03 Apr 2018 13:44:29 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Simon Ruderich <simon@ruderich.org>, git <git@vger.kernel.org>
-Subject: Re: [PATCH 5/7] diff.c: refactor internal representation for coloring moved code
-References: <20180402224854.86922-1-sbeller@google.com>
-        <20180402224854.86922-6-sbeller@google.com>
-        <87o9j0uljo.fsf@evledraar.gmail.com>
-        <CAGZ79kaQV-F0by52fbv3fmOH_ZVMU6u=KOkJFxALyHHaH2Enfw@mail.gmail.com>
-User-agent: Debian GNU/Linux 9.4 (stretch); Emacs 25.1.1; mu4e 1.1.0
-In-reply-to: <CAGZ79kaQV-F0by52fbv3fmOH_ZVMU6u=KOkJFxALyHHaH2Enfw@mail.gmail.com>
-Date:   Tue, 03 Apr 2018 22:44:28 +0200
-Message-ID: <87muykuij7.fsf@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+        Tue, 03 Apr 2018 14:05:49 -0700 (PDT)
+From:   Stefan Beller <sbeller@google.com>
+To:     avarab@gmail.com
+Cc:     git@vger.kernel.org, jacob.keller@gmail.com,
+        jonathantanmy@google.com, sbeller@google.com, simon@ruderich.org
+Subject: [PATCH] diff: add a blocks mode for moved code detection
+Date:   Tue,  3 Apr 2018 14:05:36 -0700
+Message-Id: <20180403210536.33798-1-sbeller@google.com>
+X-Mailer: git-send-email 2.17.0.484.g0c8726318c-goog
+In-Reply-To: <87muykuij7.fsf@evledraar.gmail.com>
+References: <87muykuij7.fsf@evledraar.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Tue, Apr 03 2018, Stefan Beller wrote:
-
-> On Tue, Apr 3, 2018 at 12:39 PM, Ævar Arnfjörð Bjarmason
-> <avarab@gmail.com> wrote:
->>
->> On Mon, Apr 02 2018, Stefan Beller wrote:
->>
->>> At the time the move coloring was implemented we thought an enum of modes
->>> is the best to configure this feature.  However as we want to tack on new
->>> features, the enum would grow exponentially.
->>>
->>> Refactor the code such that features are enabled via bits. Currently we can
->>> * activate the move detection,
->>> * enable the block detection on top, and
->>> * enable the dimming inside a block, though this could be done without
->>>   block detection as well (mode "plain, dimmed")
->>>
->>> Choose the flags to not be at bit position 2,3,4 as the next patch
->>> will occupy these.
->>
->> When I've been playing with colorMoved the thing I've found really
->> confusing is that the current config has confused two completely
->> unrelated things (at least, from a user perspective), what underlying
->> algorithm you use, and how the colors look.
+> Currently we have plain, zebra & dimmed_zebra, and zebra is the
+> default.
 >
-> Not sure I follow. The colors are in color.diff.X and the algorithm is in
-> diff.colorMoved, whereas some colors are reused for different algorithms?
+> I got an internal report from someone who had, because zebra looked
+> crappy in his terminal, moved to "plain", and was reporting getting
+> worse moved diffs as a result.
 >
->>
->> I was helping someone at work the other day where they were trying:
->>
->>     git -c color.diff.new="green bold" \
->>         -c color.diff.old="red bold" \
->>         -c color.diff.newMoved="green" \
->>         -c color.diff.oldMoved="red" \
->>         -c diff.colorMoved=plain show <commit>
->>
->> But what gave better results was:
->>
->>     git -c color.diff.new="green bold" \
->>         -c color.diff.old="red bold" \
->>         -c color.diff.newMoved="green" \
->>         -c color.diff.oldMoved="red" \
->>         -c diff.colorMoved=zebra \
->>         -c color.diff.oldMovedAlternative=red \
->>         -c color.diff.newMovedAlternative=green show <commit>
->>
->> I don't have a public test commit to share (sorry), but I have an
->> internal example where "plain" will consider a thing as falling under
->> color.diff.old OR color.diff.oldMoved, but zebra will consider that
->> whole part only color.diff.old.
+> I found that there's essentially a missing setting between "plain" and
+> "zebra", in git command terms:
 >
-> What do you mean by "OR" ?
-> Is the hunk present multiple times and colored one or the other way?
-> Is it colored differently in different invocations of Git?
-> Is one hunk mixing up both colors?
+>     # The "plain" setting
+>     git -c diff.colorMoved=true \
+>         -c diff.colorMoved=plain \
+>         show <commit>
 >
-> Is the hunk "small" ?
-> small hunks are un-colored, to avoid showing empty lines
-> or closing braces as moved. But plain mode ignores this heuristic.
+>     # We don't have this, it's "plain" but with "zebra" heuristics,
+>     # plain_zebra?
+>     git -c diff.colorMoved=true \
+>         -c color.diff.oldMovedAlternative="bold magenta" \
+>         -c color.diff.newMovedAlternative="bold yellow" \
+>         -c diff.colorMoved=zebra \
+>         show <commit>
 >
->> I see now that that might be since only the "zebra" supports the
->> *Alternative that it ends up "stealing" chunks from something that would
->> have otherwise been classified differently, so I have no idea if there's
->> an easy "solution", or if it's even a problem.
+>     # The "zebra" setting.
+>     git -c diff.colorMoved=true \
+>         -c diff.colorMoved=zebra \
+>         show <commit>
 >
-> Can you describe the issue more to see if it is a problem?
-> (It sounds like a problem in the documentation/UX to me already
-> as the docs could not tell you what to expect)
->
->> Sorry about being vague, I just dug this up from some old notes now
->> after this patch jolted my memory about it.
+> Which is what I mean by the current config conflating two (to me)
+> unrelated things. One is how we, via any method, detect what's moved or
+> not, and the other is what color/format we use to present this to the
+> user.
 
-Forget about what I said so far, sorry, that was a really shitty
-report. I dug into this a bit more and here's a better one.
+Oh I see.
 
-I still can't share the actual diff I have in front of me (internal
-code).
+Reading the docs again, maybe we want to have a "blocks" mode,
+that is zebra with the same color for any block?
 
-Currently we have plain, zebra & dimmed_zebra, and zebra is the
-default.
+> You can feed that plain_zebra invocation input where it'll color-wise
+> produce something that looks *almost* like "plain", but will differ (and
+> usually be better) in what lines it decides to show as moved, which of
+> course is due to *MovedAlternative.
 
-I got an internal report from someone who had, because zebra looked
-crappy in his terminal, moved to "plain", and was reporting getting
-worse moved diffs as a result.
+I would think this is close to what you want (module implementation errors,
+I did not run/test this code).
 
-I found that there's essentially a missing setting between "plain" and
-"zebra", in git command terms:
+One could also argue that this is *too* weak, as when there are
+multiple blocks of say 15 chars adjacent, they might be one large block.
 
-    # The "plain" setting
-    git -c diff.colorMoved=true \
-        -c diff.colorMoved=plain \
-        show <commit>
+---8<----
 
-    # We don't have this, it's "plain" but with "zebra" heuristics,
-    # plain_zebra?
-    git -c diff.colorMoved=true \
-        -c color.diff.oldMovedAlternative="bold magenta" \
-        -c color.diff.newMovedAlternative="bold yellow" \
-        -c diff.colorMoved=zebra \
-        show <commit>
+From dde04f6afa35a313fac3575100fe83b554ec2b59 Mon Sep 17 00:00:00 2001
+From: Stefan Beller <sbeller@google.com>
+Date: Tue, 3 Apr 2018 14:03:01 -0700
+Subject: [PATCH] diff: add a blocks mode for moved code detection
 
-    # The "zebra" setting.
-    git -c diff.colorMoved=true \
-        -c diff.colorMoved=zebra \
-        show <commit>
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ Documentation/diff-options.txt | 5 +++++
+ diff.c                         | 4 +++-
+ diff.h                         | 5 +++--
+ 3 files changed, 11 insertions(+), 3 deletions(-)
 
-Which is what I mean by the current config conflating two (to me)
-unrelated things. One is how we, via any method, detect what's moved or
-not, and the other is what color/format we use to present this to the
-user.
+diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+index c330c01ff0..abce5142d2 100644
+--- a/Documentation/diff-options.txt
++++ b/Documentation/diff-options.txt
+@@ -268,6 +268,11 @@ plain::
+ 	that are added somewhere else in the diff. This mode picks up any
+ 	moved line, but it is not very useful in a review to determine
+ 	if a block of code was moved without permutation.
++blocks:
++	Blocks of moved text of at least 20 alphanumeric characters
++	are detected greedily. The detected blocks are
++	painted using either the 'color.diff.{old,new}Moved' color.
++	Adjacent blocks cannot be told apart.
+ zebra::
+ 	Blocks of moved text of at least 20 alphanumeric characters
+ 	are detected greedily. The detected blocks are
+diff --git a/diff.c b/diff.c
+index 21c3838b25..80dd8cbd9a 100644
+--- a/diff.c
++++ b/diff.c
+@@ -271,6 +271,8 @@ static int parse_color_moved(const char *arg)
+ 		return COLOR_MOVED_NO;
+ 	else if (!strcmp(arg, "plain"))
+ 		return COLOR_MOVED_PLAIN;
++	else if (!strcmp(arg, "blocks"))
++		return COLOR_MOVED_BLOCKS;
+ 	else if (!strcmp(arg, "zebra"))
+ 		return COLOR_MOVED_ZEBRA;
+ 	else if (!strcmp(arg, "default"))
+@@ -899,7 +901,7 @@ static void mark_color_as_moved(struct diff_options *o,
+ 
+ 		block_length++;
+ 
+-		if (flipped_block)
++		if (flipped_block && o->color_moved != COLOR_MOVED_BLOCKS)
+ 			l->flags |= DIFF_SYMBOL_MOVED_LINE_ALT;
+ 	}
+ 	adjust_last_block(o, n, block_length);
+diff --git a/diff.h b/diff.h
+index 6bd278aac1..3a228861d9 100644
+--- a/diff.h
++++ b/diff.h
+@@ -207,8 +207,9 @@ struct diff_options {
+ 	enum {
+ 		COLOR_MOVED_NO = 0,
+ 		COLOR_MOVED_PLAIN = 1,
+-		COLOR_MOVED_ZEBRA = 2,
+-		COLOR_MOVED_ZEBRA_DIM = 3,
++		COLOR_MOVED_BLOCKS = 2,
++		COLOR_MOVED_ZEBRA = 3,
++		COLOR_MOVED_ZEBRA_DIM = 4,
+ 	} color_moved;
+ 	#define COLOR_MOVED_DEFAULT COLOR_MOVED_ZEBRA
+ 	#define COLOR_MOVED_MIN_ALNUM_COUNT 20
+-- 
+2.17.0.484.g0c8726318c-goog
 
-You can feed that plain_zebra invocation input where it'll color-wise
-produce something that looks *almost* like "plain", but will differ (and
-usually be better) in what lines it decides to show as moved, which of
-course is due to *MovedAlternative.
