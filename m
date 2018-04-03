@@ -2,113 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 743441F404
-	for <e@80x24.org>; Tue,  3 Apr 2018 20:05:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D93851F404
+	for <e@80x24.org>; Tue,  3 Apr 2018 20:20:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753124AbeDCUE6 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Apr 2018 16:04:58 -0400
-Received: from mail-wm0-f48.google.com ([74.125.82.48]:35210 "EHLO
-        mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753116AbeDCUE5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Apr 2018 16:04:57 -0400
-Received: by mail-wm0-f48.google.com with SMTP id r82so37837703wme.0
-        for <git@vger.kernel.org>; Tue, 03 Apr 2018 13:04:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=fOH+iMIJUJppuJo6b5jK77Ig9mq0gfYk9ipeR0eKDdM=;
-        b=DKAINdeXn+iL2BfgHYa1mgSfR07yuWot9TL7Lda+7yP5fTVJ2kTKId7uF/EB/jAc1M
-         x2D9x68H7zPIonCBb50qxsQ8LAVyETwlN/DpvCFvrnaertS/WqrZey5pDDsRJIPxiBDo
-         Y0du2edoFGDdWNLTtuNxbbQVfk5aCWduHDk4BTyPDaEMDnDLKIY2V8xGMh5VmSZNr5cW
-         ibDejwOTy1zf56UcP7HxcpGJZRclqxagWVtjERfjxhLG1kaCUF1vKRricn3SFs1Qn4I7
-         dHStTkHpEpUSuhKENWLQ/Dgomhl1trVpFzo4oAzmc+Wh8oHmxv4g1aw6EiXRmxda1TUS
-         SXYw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=fOH+iMIJUJppuJo6b5jK77Ig9mq0gfYk9ipeR0eKDdM=;
-        b=Fv8hvn2Lt89bsVjTUDuMkdEiuA13J7vFHkGzFoj30jlHk0nWNjQx5y8GYaqe81U6As
-         qoMMp0Rw7bZGTO6jfnJHCHa4LI9bpPJec5WabbBlFPT2zqL6yZZczue5zeIRzLPTOCXm
-         Nx4GyXyjma6O+ZZLHJrDIE4ujbgm+PYMpHb3JjTWN/BVt3cu3SPuxYJstEmtLvgyiD+J
-         RbZ9HFEdnLSof3CJIzj42al2UwIT0za5dBmBLxODVy4QRFNE4S+LYQv488WjVIuM26VC
-         dQ6HUdSW5K1eDYOadHdU0qOwozxa1PZMuVbSdFaI3de1DuXyOvi2leOaoX4saIi+lsfI
-         Y21g==
-X-Gm-Message-State: ALQs6tC4WAsIL2ybyq8cepf0aWZzTFEoG6zV0y0SoQWasIKtzV/TWs7q
-        wKtu6izZoETPGuLwjggS8HSnlZOXUjDlH5fkzwE=
-X-Google-Smtp-Source: AIpwx48ZPobPaAbET6KXBAPAI/tc7roGQk/FHsMNbvg1dlMU30iZoThj+P63acglZqGa59Xwmp+9MZ+BWC8BYzO6gVI=
-X-Received: by 10.80.203.71 with SMTP id h7mr3473333edi.118.1522785896310;
- Tue, 03 Apr 2018 13:04:56 -0700 (PDT)
+        id S1753071AbeDCUUd (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Apr 2018 16:20:33 -0400
+Received: from cloud.peff.net ([104.130.231.41]:52736 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1752515AbeDCUUc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Apr 2018 16:20:32 -0400
+Received: (qmail 17120 invoked by uid 109); 3 Apr 2018 20:20:33 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 03 Apr 2018 20:20:33 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 32025 invoked by uid 111); 3 Apr 2018 20:21:32 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 03 Apr 2018 16:21:32 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 03 Apr 2018 16:20:30 -0400
+Date:   Tue, 3 Apr 2018 16:20:30 -0400
+From:   Jeff King <peff@peff.net>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Derrick Stolee <dstolee@microsoft.com>, git@vger.kernel.org,
+        avarab@gmail.com, sbeller@google.com, larsxschneider@gmail.com
+Subject: Re: [PATCH 0/3] Lazy-load trees when reading commit-graph
+Message-ID: <20180403202030.GA15157@sigill.intra.peff.net>
+References: <20180403120057.173849-1-dstolee@microsoft.com>
+ <20180403130615.GA18824@sigill.intra.peff.net>
+ <007c630a-0df8-803c-b637-fb5ccefa7b7c@gmail.com>
 MIME-Version: 1.0
-Received: by 10.80.201.196 with HTTP; Tue, 3 Apr 2018 13:04:35 -0700 (PDT)
-In-Reply-To: <671541522781590@web3o.yandex.ru>
-References: <671541522781590@web3o.yandex.ru>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Tue, 3 Apr 2018 13:04:35 -0700
-Message-ID: <CA+P7+xoaOt4KwTOQSfwiyB1CQ317kbCZ2u26RoPA02Z4WYr9EA@mail.gmail.com>
-Subject: Re: Socket activation for GitWeb FastCGI with systemd?
-To:     Alex Ivanov <gnidorah@ya.ru>
-Cc:     Git mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <007c630a-0df8-803c-b637-fb5ccefa7b7c@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 3, 2018 at 11:53 AM, Alex Ivanov <gnidorah@ya.ru> wrote:
-> Hi.
-> I want to use systemd as fastcgi spawner for gitweb + nginx.
-> The traffic is low and number of users is limited + traversal bots. For that reason I've decided to use following mimimal services
->
-> gitweb.socket
-> [Unit]
-> Description=GitWeb Socket
->
-> [Socket]
-> ListenStream=/run/gitweb.sock
-> Accept=false
->
-> [Install]
-> WantedBy=sockets.target
->
-> gitweb.service
-> [Unit]
-> Description=GitWeb Service
->
-> [Service]
-> Type=simple
-> ExecStart=/path/to/gitweb.cgi --fcgi
-> StandardInput=socket
->
-> However this scheme is not resistant to simple DDOS.
-> E.g. traversal bots often kill the service by opening non existing path (e.g http://host/?p=repo;a=blob;f=nonexisting/path;hb=HEAD showing in browser 404 - Cannot find file) many times consecutively, which leads to
-> Apr 03 21:32:10 host systemd[1]: gitweb.service: Start request repeated too quickly.
-> Apr 03 21:32:10 host systemd[1]: gitweb.service: Failed with result 'start-limit-hit'.
-> Apr 03 21:32:10 host systemd[1]: Failed to start GitWeb service.
-> and 502 Bad Gateway in browser. I believe the reason is that gitweb.service dies on failure and if it happens too often, systemd declines to restart the service due to start limit hit.
-> So my question is how to correct systemd services for GitWeb to be resistant to such issue? I prefer to use single process to process all clients.
-> Thanks.
+On Tue, Apr 03, 2018 at 09:14:50AM -0400, Derrick Stolee wrote:
 
-This sounds like a systemd specific question that might get a better
-answer from the systemd mailing list.
+> > I'm not sure what the exact solution would be, but I imagine something
+> > like variable-sized "struct commit"s with the parent pointers embedded,
+> > with some kind of flag to indicate the number of parents (and probably
+> > some fallback to break out to a linked list for extreme cases of more
+> > than 2 parents).  It may end up pretty invasive, though, as there's a
+> > lot of open-coded traversals of that parent list.
+> > 
+> > Anyway, not anything to do with this patch, but food for thought as you
+> > micro-optimize these traversals.
+> 
+> One other thing that I've been thinking about is that 'struct commit' is so
+> much bigger than the other structs in 'union any_object'. This means that
+> the object cache, which I think creates blocks of 'union any_object' for
+> memory-alignment reasons, is overly bloated. This would be especially true
+> when walking many more trees than commits.
+> 
+> Perhaps there are other memory concerns in that case (such as cached
+> buffers) that the 'union any_object' is not a concern, but it is worth
+> thinking about as we brainstorm how to reduce the parent-list memory.
 
-That being said, I believe if in this case gitweb is dying due to the
-path not existing? You might be able to configure systemd to
-understand that the particular exit code for when the path doesn't
-exist is a "valid" exit, and not a failure case..
+It definitely bloats any_object, but I don't think we typically allocate
+too many of those. Those should only come from lookup_unknown_object(),
+but typically we'll come across objects by traversing the graph, in
+which case we have an expectation of the type (and use the appropriate
+lookup_foo() function, which uses the type-specific block allocators).
 
-I'm not entirely understanding your goal.. you want each request to
-launch the gitweb process, and when it's done you want it to exit? But
-if there are multiple connections at once you want it to stay alive
-until it services them all? I think the best answer is configure
-systemd to understand that the exit code for when the path is invalid
-will be counted as a success.
-
-Thanks,
-Jake
+-Peff
