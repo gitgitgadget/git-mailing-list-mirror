@@ -7,20 +7,20 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 299621F404
-	for <e@80x24.org>; Tue,  3 Apr 2018 16:52:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E03991F404
+	for <e@80x24.org>; Tue,  3 Apr 2018 16:52:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752638AbeDCQwM (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Apr 2018 12:52:12 -0400
+        id S1752696AbeDCQw3 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Apr 2018 12:52:29 -0400
 Received: from mail-by2nam03on0113.outbound.protection.outlook.com ([104.47.42.113]:45952
         "EHLO NAM03-BY2-obe.outbound.protection.outlook.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1752582AbeDCQwL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Apr 2018 12:52:11 -0400
+        id S1752622AbeDCQwM (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Apr 2018 12:52:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=selector1; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
- bh=I7jJ7wn8OmHOTt0ctjGfXdrmSWapCv4JZ9Oaj9FTHWs=;
- b=UeeJaKGon/5vqEFJL0o7Se9rs9ZJUfmYH/MwfT7RUCTtebVBh9f9YfOCCTxQfs7yjwj+hp2HUprBD/53fTuZ6qehA+LQk7oSRI+YzN7qGwvJfNJBQSYlfxDCYpHHqMa+xrWaDxaXWIqrnm7i1cbLgU0jsuclpFe3JoAeuWf62CY=
+ bh=WFwP3LvvjaYaXoKCT4hPzPp5Xm5umbLTpnMMuCCh0X4=;
+ b=CEd7ABNgJQ5YtbIrAk0LKoPRuTpH3lHD+U/rV1lvhnekgGPKKJ233Lfm7lEC/GONdCkqSSG78TVB8GBHIzDMOKSrV/d+kkdbRkaIOEM3hO0Y2Pseg5Z1gRSz/7wOw/W7m1oucWBTQwWv2gZlO6v5hIawIGF/Lu8Nyc3VW3ujupA=
 Received: from stolee-linux-2.corp.microsoft.com
  (2001:4898:8010:0:eb4a:5dff:fe0f:730f) by
  BL0PR2101MB1011.namprd21.prod.outlook.com (2603:10b6:207:37::10) with
@@ -31,9 +31,9 @@ From:   Derrick Stolee <dstolee@microsoft.com>
 To:     git@vger.kernel.org
 Cc:     avarab@gmail.com, sbeller@google.com, larsxschneider@gmail.com,
         peff@peff.net, Derrick Stolee <dstolee@microsoft.com>
-Subject: [PATCH 2/6] commit: add generation number to struct commmit
-Date:   Tue,  3 Apr 2018 12:51:39 -0400
-Message-Id: <20180403165143.80661-3-dstolee@microsoft.com>
+Subject: [PATCH 3/6] commit-graph: compute generation numbers
+Date:   Tue,  3 Apr 2018 12:51:40 -0400
+Message-Id: <20180403165143.80661-4-dstolee@microsoft.com>
 X-Mailer: git-send-email 2.17.0.rc0
 In-Reply-To: <20180403165143.80661-1-dstolee@microsoft.com>
 References: <20180403165143.80661-1-dstolee@microsoft.com>
@@ -44,53 +44,54 @@ X-ClientProxiedBy: BL0PR1501CA0018.namprd15.prod.outlook.com
  (2603:10b6:207:17::31) To BL0PR2101MB1011.namprd21.prod.outlook.com
  (2603:10b6:207:37::10)
 X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: e433ffd5-baca-4b61-b2af-08d599833ce4
+X-MS-Office365-Filtering-Correlation-Id: aaf4a1ba-6b36-444f-8778-08d599833d3a
 X-MS-Office365-Filtering-HT: Tenant
 X-Microsoft-Antispam: UriScan:;BCL:0;PCL:0;RULEID:(7020095)(4652020)(5600026)(4604075)(48565401081)(4534165)(4627221)(201703031133081)(201702281549075)(2017052603328)(7193020);SRVR:BL0PR2101MB1011;
-X-Microsoft-Exchange-Diagnostics: 1;BL0PR2101MB1011;3:jcrBlwBEEBmsE3sTsJ4BNs0LDrUPrhY9RhmX+JWFWn65+v0q0q6jnPntOrLCvT5HC6ukNLjHtz8XGx7fI7ajIQq1MZjq6ZgHJ1/0A4DviF6ceaCcUF2vNTjgd1HlMC3y08KFOiNnpegmE6E39gYPhioKlNvMlxIzTa72bQZpufYkp6ICyXpAQD/A2bzGKAXGhk0gGxNMNNWWINKe+WDHIF5fg5xYfBEpsgQLQ61GH6zhnCGAbAcBmXfDegh4UDfP;25:FtDM5ylakVI9yLDLZTgOijCxHHHJdO30mD4XBfpjeyBcs+7JLmA6qhbx+fcAFN8eiFmR9peAPvCnUqz28QY/gpMELdtOb9V9gnDxmtLZLO+BRvGM9yYsPna+qXjlEQCv0R4Q+twrls4HPYt+6RgeTppZgaX9Ea+sNiTj6FrpYx92sThGO7EFlOhCcmsBZdWMSCxFBjxKGDhJAG/O225WtgmI4/cxqkY9gdaMvadNc6LwzZmsVRUIpirGN36y7xenlCK4xM3592zW6uqoCiIOI83Ztb37cLX2G/P1rOs9G1+gRiWq1tLaLVEZTdqxWzN0DRQHAswdWdSrUu+LVnmceQ==;31:SdBqmUCjrg1Uzdtq8YvxLVBW69HhLWlqhjurEdvnheNAfqtLKaaALdf/++V5vB3SpZ2DovWkgXNK11O1tXRA2Yrm8joEwqSSTIu4arUUuLbTkyelaO7FudVCqeZPCSKPHpzSWcwoiAcr9AC1iSxZ3glG92InME2QXiEykSKch4RFY70Aduv1+ZKkgGRxQg7H0TWGB9YXENQpqmHL1hbPzEtH+Q5eA4MSfZeUOvGjaco=
+X-Microsoft-Exchange-Diagnostics: 1;BL0PR2101MB1011;3:zEMcoE3B+u9oII6jlFlIr4wDGuxKF3AMY/4jQXGQdl1qVcNhflibUrQg18F4ojqiiOqDhgzAv8Kspgw2xx1nMRrHkKHDGTVAe4fO01T0f7wKmgbhykEQw/grYI6ymnyw86Zp6qwCJnF57VUv+5HKi7Hyrg+O3JAEU+JMphQUPeXQCEvtsmfVtsy7W8CPiCde7gapAM7CzXkrh36R7tkx2AUTDVhRD5F9gTWQjOXdgQ6wF4ztELGxojOhp41HkNaM;25:S80icRyDONN2YIKTx0Js1eRsiNbtmauzDZRezz7qqDfmKq7hPzJpq7oMKBO0ZIfrnWWAsiW+Acp/LqaVJQl8AOlefgIFfZfXZl8GXh+zMn2Qw9s57A7FWkK/Ug2+WX6Kx3eXnMmlAd7U9BF0fABm9KmylkJbo7127NIO6N+goachHVM39FEmFWKFVZT5iZ1E1CQ34iFPPCdxzqN+Uox4v4R7ZCjUrjLaSjrOHKvamjuhU+CYv1QAup4ENlPNaMzNiqy+2HzFboaSsvTQGZjNXVRlO/mGp5I/9Ld7vgyjGpj1JSmbvq8Kmbn1AzLXPBeih0o818RAKWmpwaUzFRYvjw==;31:Hr9qmqVaDKlWw8u1Oehxkek0ZtDu9lk9JGzqOMEgYE6lBOkD+MBBdH0xkdFchc7N1quwfqWFLY8EPxo4+cV+KIOKrqyDhIY6XLUFyt8Cbh9++7LVJM3TaXbDJIw79hCbRI0/jkFbJ7AhYrVcrVUrC2wzg22/5QcXEZA2FnZM8JjwIhZzcKo+rZJ1+R7nZ8lAbKI5Fk4/cGEkSs/+uwIQTtmhdD49a9XhsqiWb4f+Gtk=
 X-MS-TrafficTypeDiagnostic: BL0PR2101MB1011:
 Authentication-Results: spf=none (sender IP is )
  smtp.mailfrom=dstolee@microsoft.com; 
-X-Microsoft-Exchange-Diagnostics: 1;BL0PR2101MB1011;20:3niPJGZIMRTft1WwtvbNYkikBWtgeEbiKw2nbPmDAaDCypjxXmk2NJBHHucMguTTRpytqiQ7keSr51wg2MET/kDSXvDg7SNZZ44lXTDN2g36z9ogIBjclIdgT+qHXaENAbaytsIdLB21s8O3k89kDhwBugNZpyNmCbPygWg+ES4rHufygorj9bTZa8UwK4rRh9Ngi8Z3h1BIDAb5xkYeXb2/G93J1aiIuREEvtwSKHI0Ghcw/qf91veEBHT4fhBgFEk5BnRjf2QIXUrbN3NIFJ4mrdCWQmsw+6fWTCj0abjxIntcn1Te1S59R07x2rCUllQUKqnDADwLcSa7GjS7Leb/fjnpjkumYq2NZ/6EbcxgkNbX+gL3mNoTdSadXMyfCK3LQGK+qR0WMs+BBq/GRvrFu6+QVyovuZ4t01Kh+8Dd+7/qk5wQtdc/UElQyLBQDqVnPpgE76/s4Jb1XRjXApJTkR2kx5VfLJCVQWztKtuqnLKU4OY4anws9+ISVnNK;4:95Ak+uP6uHC239Ues58H4fHNtts1C0Any9nKKRmqkHTFtrSNPJ0fRoC1FdXhiMu8aT/I9IG+3mQ3jZgJfMuM86+8IBbIkerLiEctw469d7sCsKDpg6SDhXLZhlmeH/l/Sw9Gsf56uuUd45TV3F/KB5ev3dQADz0On2750r3ci/VVg0W7zVsBQEOwNC1Z4BBw3tP5deV2iWYYbhygdoAgTa1YpURk0MQoQ9n3VYGbK3NKZDrji0mG6RWxJOO6/8aMvhh0vNz9g5iERmoVs0Ft3dbsU6GBwDxH09jZbNTxL5LT4ITduJIt2rINpOVoMiMl3KLH2jd9P4ugWy1egWOeIgGKe7o3CQ+Xjqz2xwhoBmI=
-X-Microsoft-Antispam-PRVS: <BL0PR2101MB1011CEE381576C6A5F0B8B10A1A50@BL0PR2101MB1011.namprd21.prod.outlook.com>
+X-Microsoft-Exchange-Diagnostics: 1;BL0PR2101MB1011;20:UhDKDsMR1v+9FC1452KatxIz1CTVXM///L30P8xjoTqCwZp698VKxo48zQzrT9G+6GKMVgwSAGXwXYWQEHs5GM+HYdlBVU/7BzcAcRENy3/ISMMbHGyoFMYPkSj1rfEu3gJnFiPCV28pdpr8bB/R70BA0du5vWB4DKQhZrVNX/+Ai89uDDZM6WYi+qD/GWuyg+Qfirb5CyLRvQSWzlhGTfahqPb98/JDvuTw28pn8VOdY38fUVWRQvhjLfxoTO1ZfPitENk2I8MPCOXnj1KrbNFkqdGEzv3rXj0YZaK27OCxitV71PuE45R+3z0hNm0VHe/FEGFnCbJkvvj+AWDBLjPJ06WbkLXgUh6OxC+mKQUj2eJqGUrDnMth/1Ytm6zbI4k6eI+rdF3dFEITxhLOcQfCzosK9Ugklp1LmmFH+p0GMhc494OOhKegWM6hlqbbwDWoAwuNVqjGqXZ1JVrIUf236OJMWiiU3IXukw9cTSEFOP+utp4K4dWJnciV5gvY;4:k8p1dhu750xkYDlLD8CcBurykeWECuUAAkxswb+xhsftXeS3SGZsVKwSDOWFdVnBLC3FWqxNZgf3NUV9Uwfpt3EZRrU3N70sjO6zqld9CCSalMXg/KOGr+3sW5DX0hVR8QsYw8P6vIvDmnwe0x9uofsoaLJrsubF4WkJg78ZV5j3irQ+N8kbmutH7qNNOHVr0RRG+es5lr2lY39VfM3ZXvMBhwEJ5GU2nuM9cqe8WS/XibwHj965+/a2Ore7l0qfY5oERJkfp7Jy+sc9NWoOauqHmTPSf6U1e9k2pRXnrgAcaZ24ZpoD2iW3Z2nLD70u83HvZ072C4xmdyk+SbixctYUvZGwZ38KTmL9xKs2ZvI=
+X-Microsoft-Antispam-PRVS: <BL0PR2101MB1011BF58A99E441244A53F97A1A50@BL0PR2101MB1011.namprd21.prod.outlook.com>
 X-Exchange-Antispam-Report-Test: UriScan:(28532068793085)(89211679590171);
 X-Exchange-Antispam-Report-CFA-Test: BCL:0;PCL:0;RULEID:(8211001083)(61425038)(6040522)(2401047)(8121501046)(5005006)(93006095)(93001095)(3002001)(3231221)(944501327)(52105095)(10201501046)(6055026)(61426038)(61427038)(6041310)(20161123564045)(20161123560045)(20161123562045)(20161123558120)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(6072148)(201708071742011);SRVR:BL0PR2101MB1011;BCL:0;PCL:0;RULEID:;SRVR:BL0PR2101MB1011;
 X-Forefront-PRVS: 0631F0BC3D
-X-Forefront-Antispam-Report: SFV:NSPM;SFS:(10019020)(376002)(396003)(346002)(39860400002)(39380400002)(366004)(199004)(189003)(6666003)(6916009)(105586002)(53936002)(7696005)(52116002)(68736007)(51416003)(76176011)(4326008)(52396003)(1076002)(107886003)(86362001)(386003)(106356001)(39060400002)(6116002)(22452003)(478600001)(86612001)(2906002)(16586007)(316002)(50466002)(2616005)(5660300001)(25786009)(97736004)(81156014)(486005)(486005)(50226002)(186003)(476003)(16526019)(305945005)(81166006)(48376002)(11346002)(8676002)(7736002)(47776003)(46003)(6486002)(446003)(2351001)(2361001)(10290500003)(10090500001)(36756003)(8936002);DIR:OUT;SFP:1102;SCL:1;SRVR:BL0PR2101MB1011;H:stolee-linux-2.corp.microsoft.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
+X-Forefront-Antispam-Report: SFV:NSPM;SFS:(10019020)(376002)(396003)(346002)(39860400002)(39380400002)(366004)(199004)(189003)(6666003)(6916009)(105586002)(53936002)(7696005)(52116002)(68736007)(51416003)(76176011)(4326008)(52396003)(1076002)(107886003)(86362001)(386003)(106356001)(59450400001)(39060400002)(6116002)(22452003)(478600001)(86612001)(2906002)(16586007)(316002)(50466002)(2616005)(5660300001)(25786009)(97736004)(81156014)(486005)(486005)(50226002)(186003)(476003)(16526019)(305945005)(81166006)(48376002)(11346002)(8676002)(7736002)(47776003)(46003)(6486002)(446003)(2351001)(2361001)(10290500003)(10090500001)(36756003)(8936002);DIR:OUT;SFP:1102;SCL:1;SRVR:BL0PR2101MB1011;H:stolee-linux-2.corp.microsoft.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
 Received-SPF: None (protection.outlook.com: microsoft.com does not designate
  permitted sender hosts)
-X-Microsoft-Exchange-Diagnostics: =?us-ascii?Q?1;BL0PR2101MB1011;23:1WnqK54JQzwhHIS/nOMRLnpdV/LzltkcGymDLwv?=
- =?us-ascii?Q?0rhxQh+4csmm+6Cg62Bc6HuO+7rx5GzqFJim64V+cCqwp4y7ywpY9LNyRpmr?=
- =?us-ascii?Q?7WvtLpbdfaOLe++PzmXii/qSFLen1Pu5Ld9LpqjfDuN+/2S27HLUjLRac6D3?=
- =?us-ascii?Q?ukNU81bpXh3gKJkxZB5Q1MptWdf9ZWyXnl0MIk+9BIjdw3zdHRFK620DylDf?=
- =?us-ascii?Q?IoZe5WQ/VezOX39KV16zsERYmlq1fdVUkFDFMTYiPBMxn/oj4Efd/tiTCFPM?=
- =?us-ascii?Q?vQlBgupCAf8hooAVFhNsWBPC/q1egXr6qiPrKSUPYDPe8rqDmzIqQB3qYpOu?=
- =?us-ascii?Q?J0tpXGqgiBvzXcDxrTBaRMFYGt/Zv3cvju6gNPIX9PsBvEoWm/RObA5PXSNQ?=
- =?us-ascii?Q?G6dnRUMhRJU7cyiqeiUZE7YGctH/pWXBIb2cCFB3/cvkBww8v7ycYBTYKv1p?=
- =?us-ascii?Q?qLzLGk/U7o4VqdNXx858bvS0AmFrmpyz5Dj8FLWpuZ/GdURexiJBCr02703F?=
- =?us-ascii?Q?OKIlg4aoSQPpudC9EqFwGPih3rcXm2YkWYNcyrEsXDD4Ji0Wk065E0gi/jfn?=
- =?us-ascii?Q?h8pdhIOp45dIj4t4191Ye6Cr2KTH6bH9BHKgvqk2sq2VR9SLCSaFXVJUraYc?=
- =?us-ascii?Q?4ixBBG1uKSpFGwQjq1lqLsJysyigqhuOCDq+YpqyFt/FFdJAcNgy3Tpa6cxR?=
- =?us-ascii?Q?yGidmywerqWPpzKJF3BxkxeKIm28f/KHDJt3zHpvQwm6h29K79tfxAGgDB9Y?=
- =?us-ascii?Q?TNzzFeDEhsPBFIAGUTWJf1vml3JNxtEAQQkL/vxtZdZsgwaPibrjDaFpLO/I?=
- =?us-ascii?Q?NXMM6funX6MllVc9Zop4YV342TJUBxEk9cwQAQW+VMhh+K73ocJP9WRd2Htx?=
- =?us-ascii?Q?R1L0rWJ6aE8hdBWxFKtjYFmyBBJKqveFeeeiqRhbX6FoMeRHoAJ5s6hk7jMS?=
- =?us-ascii?Q?FsOnFmskwWjfI72BzM3u6ZDQOsFAx2QXwlBEbqd4QFooM0A94OozYCgA/hHv?=
- =?us-ascii?Q?Az1w9QmtHVXV548ww2XafjaobPTmRFhla6SsQ9/8c2ifHgJJtxuH76dSGzWO?=
- =?us-ascii?Q?Ff41ecEVjcvmkUbpVeADlMohFEGayYTa0vjYMWSiuzLK3PbNLmwFbq5yjo82?=
- =?us-ascii?Q?YwtVBZ0k/pFTZBXE5FJiaqBx6qhkasYtWqPHOVNCZv2T36tJrHiRIBOQmS/f?=
- =?us-ascii?Q?UFWIc5ITSWrk+DShfzvl1dYkfZzB2uecxxpxTnmnnGl9kXzTIaGYnvN8aaWI?=
- =?us-ascii?Q?2iQGl4nsMhQ9WjgsplqBcoMNxHW5OVIryoX+xw/+/SRFQw5K4T0oFE4xveEm?=
- =?us-ascii?Q?RZUM3F4cfXulEt1v3w02YoIhMqTO3v/8hVzWrmoqbSgtW?=
-X-Microsoft-Antispam-Message-Info: VtBqIsw6KCVefx/33BjXbffO71rs73zvQ1PcY786iJiQdgwu5zrFqK+TF66DuvXrpPyBUxzlfC8Int0yyo/QH6Sh+FSHp4F3y/knJaA9QC+NmL9ecMJC2G55rIhABx2qJrkrbiJuhP4f8Ofj7igm+6RU/iZ9qxXV+V++85lJIL2QWuEaUQcoMBnLWhxcgnuP
-X-Microsoft-Exchange-Diagnostics: 1;BL0PR2101MB1011;6:OyCrdJmZZTpxVS+MU4ZRG8gXRC6dB8gi683gO0JefZXcJCf5kamzmPxmiIHfsLmkMZQWekPszeDBvx1gfPtYzM7mRGZbQTPmp4gXRbCqoKIx0NOhIADdlHIjEAXym/2BhfJYwhC3fKRnGfLOMiasa5k91BCunmlP0A/dWCY1yjyOeSqusB5BrDMhxmtCoB4YqUaz8gxjm2Ne+WSVw4sx7E1/effLZxFyQwyTfirO/zNVIiDo/xJfQj62TBq41UUsqDHtTCvodzYQAS2YX2gKWraMsbkpgd+6ImXrZVgcFLsW9l47pLkCF9M9nqd8CcI+OkISvQcHWA5/N47xcFMdkbGddA4rZbYkEfLVrhYhL/5DYm527p5TLmb4+W66ANS4LpFHdvmtwr0WavogfzzRnnyae9kTx/PKUggJMhqF/Er+gpqdh17uix58dVkKggeydXuKHTE2RjCsBBzNOURJOg==;5:0YDl2keKVdAx2R2ocJJkzBfoa/qtNVyM18VdFfbQzxS+Qc0OXiaB6uEw04ifgaxRq/PZXKHf/ILI2oc8TWjTtH7ScjIj/gaUXkz99cyOA3LwCOh1ZlA0EN9wMUzqabIW1TgnWrGG9fQTBvkqNKvESg5+lS4Ii86CDEoHZ1jOV64=;24:Ponnp4iO/eKjOrNo1ij2iXxIQXAJ+la19azizjoeovbC8/ZlbJcEdQvFyTwqTSSJ6iYzqR10tfFRXII6XdW+DbjMN+imPdDFJKOBOhVtouc=
+X-Microsoft-Exchange-Diagnostics: =?us-ascii?Q?1;BL0PR2101MB1011;23:dyD0X57nSRr/1Rt8SHChRj2HSxRMJKOZWIXVs6U?=
+ =?us-ascii?Q?jeQnGJZX/LPIkwqCa8KYtOdtRQZQ7QAaiOZAB6+TQQg/qZs0y8gqPhNNpDOd?=
+ =?us-ascii?Q?Qd0ZfWLAXPmcSIm+No3bZSFS0rb1Pgx2T88rM36tff+q8Tjo1H7y7JJLhdPV?=
+ =?us-ascii?Q?N8o9JhTB4gwHfA81KkiHHWd4Xht8QT7Eb1d6TkvOUKpp5y4wLWtWOj0M43v4?=
+ =?us-ascii?Q?Jp6OkbxOeecveBS8N5A8qMfNa5jtlzlbfx7JUM4rCjPcoOI9Ry7RJv5riYwJ?=
+ =?us-ascii?Q?UCe2fb9RH8WccXorM/Kqfu8hB4/M7awNLcjIMabyRvIj1va9HDKmTbv3JfjY?=
+ =?us-ascii?Q?TLW9tUJ1D2/xnIpF0G17fW3STIyPSpXQkIXffm3Kv8Qt8ZwB7oRUqjFKZZ0c?=
+ =?us-ascii?Q?OiiY0MAdQos9+fX0CmILhJtYP8Nwi0wW6fRLmrZJfXiKXQr+jZnEk8W9oEJe?=
+ =?us-ascii?Q?Nt6ingJPnCQfxBzHCN5wDShLwXZ7c+bPvkJ7uyHZf5yCfCkeKMtrcRg+YsTp?=
+ =?us-ascii?Q?pW8DI49Q+EuTI6NKu3TSvGxAP0yGYCcqkOFU4cGlAS10pzmR80lH1/TVGUom?=
+ =?us-ascii?Q?wqER4flpYqFB2HoA6voDvXcUX/7FUI2tM6iU0h9RHbatQQ3COl+MF+p3177m?=
+ =?us-ascii?Q?3tb7h/RwT4efai2ofQPPc4NpiExhs2+ICPcJifQJe8Cbwcr9qEvJoQYrXPPi?=
+ =?us-ascii?Q?Sj0JOe+3M3gbdmDjUHbyFIMTkg4DRHZw2Wh7mQnlLHeOeUPoRs9Y8YQDrecu?=
+ =?us-ascii?Q?SNWa3rRz8Gc9OUe0GvEGRNHk8vhbyKKxTANb2ActhDe7JW6zUKObgVbc7/5r?=
+ =?us-ascii?Q?xm4UFh7BzWX0YCq9mY7Oj/dONIgC3uRdi//lsFDTJBgsrkLImieERNKRZpDI?=
+ =?us-ascii?Q?E0De+4HMiH43vNwkndtADuONQE899jjWzoSZY5PO2rHzJOQvwBZEhahnM0oI?=
+ =?us-ascii?Q?Rj6zlpYzveYRQJ9gxLVq8YGbTbiEJDY9KwYsD3zYstUF7Vxd+rlDvvXrF4Sw?=
+ =?us-ascii?Q?kXPD6dpQIPMurxWuX1byZm69JYGa5xAbcXDk6/YVaPbiZonSKW0Jg6+fsuI/?=
+ =?us-ascii?Q?xPEn2sn3LYmgLxNtYlUoxOFMkAeTflZ3KwBjEqGcY7z4UFR/wAI2BJ7WKEcF?=
+ =?us-ascii?Q?px68RyK/JPp93AA/FDcFrmaTWO9oiGFqRQGdHASf81hEqVRO2nmqtmCyfpZb?=
+ =?us-ascii?Q?lcv3DpMr297kBkreZ6Y6casCV2ZGYmGew86piuHxozaz8QV6lkJPWjOBdKvQ?=
+ =?us-ascii?Q?TtkXlFVJF7fxi7+Ds4waFTxp28jnlNGpkeI35BwnPcVBPdO0ClJ9AY4yNSUk?=
+ =?us-ascii?Q?FoHCp4jdbxqKbSP+MqLZCJjY+jVp7jGl0hPF86DEzH5kbcB0zwTjm6+cvYMI?=
+ =?us-ascii?Q?tjk/9erpovjxv1qMeOlRPksV2roo=3D?=
+X-Microsoft-Antispam-Message-Info: IciIaO7ZthFmhWRhoOGnGks42aGI6+ujubfS4g86vvjBY+R6UprS9BnUOps6oKuB8I+X+hn0b1fN5mFyWL4nsX6p+wWTlS00ngjhIM6x7+9Z8TU+jOv3tIXS/x9+UTAgLERh2wJqJv4snF3qpztYh9uwM9tFuq7AR7ZOQtlrx7Gbph16hpUzTA2sxCuSJS5J
+X-Microsoft-Exchange-Diagnostics: 1;BL0PR2101MB1011;6:yonA6aWJGiQPenuI+j4lywBfLpHr08BWnQTzZrYCmO0/ZiPT0B582dLmOVY+4pBjNP9oKNsCkxzMtFgJBjWIFZUCRuGXPuhwze9gR1vNHQBXw/vTjk9qGT6WYSwfW7rDzSOQgHZmBFgyf20b1NpIkA2zix9NnU1y4x1exqqDzxj0fchdg93urQI1ppkC8yt9ToKuEYZNcvE5sYpSDah9x6jEhiyf4RNrnIQ5Ga97oRWV+Zn50ww7KScSsgnskLW0w07mU0JZuLWnvpCqPe3LFCQnjbDDU3xToykszdSJiJsKmZdPOGFS+VsNFDFcLI5z9DDybRiFYm7AyUo4fOun/7zy3Jkc8C/9yW4yQqwLvP/Z4qi+rIKOR+k6DOuG/XN3yPuSuLO54yzYzkfk/W1wDrE15wwxkbjeMEZoWdG63Owh8nvclvWLA937lUksCpjOtagSgtvJ7HnpJK+mAMxPYA==;5:91uy+GMoYVN5FYJW+Dd1N7Tjl1obBlLhFbJS2i8AN4BtfwTDMn+wIBi+g6oOi82nyQJwvZPj+l5CQFHsSQ2zXAryjKHkniVGFT4j5S+ZJX7C8CGuONwF8hAso9NshZN6PQgIRXm1YmUqTwtAwprHvosBb1xzO/El0OwtAwEB8VQ=;24:FukTHbIwPHz41ivM42p7li+UxVNG0ZIvQI/1ijkNp8lGdsa3quJ1i0OmFnHT8hlhO6b+abJ17JOEarb99LO/dj7bxtPEhtWT2nWnzSca2K4=
 SpamDiagnosticOutput: 1:99
 SpamDiagnosticMetadata: NSPM
-X-Microsoft-Exchange-Diagnostics: 1;BL0PR2101MB1011;7:+8VPVKtdReVIaTT3olYf6TE6MD25DlUthL1XQPfYeZPE/QxLi/iKyo7xipPJNHzAGfQzj4MyHX38RabqEvms3qpIfIDMBrFpkHWIZMgwoGGLOkgw+oWvqpFiZYiO+AVN0oesy+35MN5ANRKY4OIZhrSwBKqvsSA18cgNpXeMErQ9TGPWKUhKJX341XayHHZY3RmKg8a9wS2rMx1n4/AEtQHvz2p8aCpP1/IaEDIsl9OnPoB17VFjCwgYN/Ef9GIi;20:JikzKG2OnGCd9E9/Ybsqxm7PxRzajJwWvIpNUos0lfbGycodhxLaTQPTIgqCy7/VQ1F/P0kTmbdcdBwxR9Ukf4cENW1nhJloPrIPjNPYkoEzne59fXTdco1HCUrzic//MYAkwZISr1sr2XgX519NzQCovfwiuyWCa3qg/Umuvuw=
+X-Microsoft-Exchange-Diagnostics: 1;BL0PR2101MB1011;7:DunWzQ1HRSShH4188NlWjRVcmdUAz1It/Oz6ud31KWDnphZve+UXQJGcIW5Uumy/7kp7DCTYa5xLcc37z4dbbzvYk8fZPBo84/eXBVwx9OBHI+pRontL5Jm7W/bjhSm8gh9mTJv7jsfxbxyufnqECit/6ak+mTIc2GRg2N/DFFCDNVRj2agH0tD0gnkzmWimeD5r67qofNh5oI9BVbFIjV3k+Htsn4vgDv62bo8l7HlyErw4Mt8LtlFkt0hXeOlC;20:yHJDkUJ1oXhAmjBcHaZuO5GNH3AFyjB2aHCo0EejOXpaRXxzoXA+iJ5aUznT406G/PUUeJga50CHJ10KPf7EC3cRcX3neE7zLN2VMflTKSlnFWnY9KZ+uGASMawWMcwl7eajVNOxNMB1ydX286LBUJ+QG0ysyduwvFkDloNbeV4=
 X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Apr 2018 16:52:08.1679
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Apr 2018 16:52:08.7304
  (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: e433ffd5-baca-4b61-b2af-08d599833ce4
+X-MS-Exchange-CrossTenant-Network-Message-Id: aaf4a1ba-6b36-444f-8778-08d599833d3a
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 72f988bf-86f1-41af-91ab-2d7cd011db47
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL0PR2101MB1011
@@ -99,77 +100,102 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The generation number of a commit is defined recursively as follows:
+While preparing commits to be written into a commit-graph file, compute
+the generation numbers using a depth-first strategy.
 
-* If a commit A has no parents, then the generation number of A is one.
-* If a commit A has parents, then the generation number of A is one
-  more than the maximum generation number among the parents of A.
-
-Add a uint32_t generation field to struct commit so we can pass this
-information to revision walks. We use two special values to signal
-the generation number is invalid:
-
-GENERATION_NUMBER_UNDEF 0xFFFFFFFF
-GENERATION_NUMBER_NONE 0
-
-The first (_UNDEF) means the generation number has not been loaded or
-computed. The second (_NONE) means the generation number was loaded
-from a commit graph file that was stored before generation numbers
-were computed.
+The only commits that are walked in this depth-first search are those
+without a precomputed generation number. Thus, computation time will be
+relative to the number of new commits to the commit-graph file.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- alloc.c        | 1 +
- commit-graph.c | 2 ++
- commit.h       | 3 +++
- 3 files changed, 6 insertions(+)
+ commit-graph.c | 46 ++++++++++++++++++++++++++++++++++++++++++++++
+ commit.h       |  1 +
+ 2 files changed, 47 insertions(+)
 
-diff --git a/alloc.c b/alloc.c
-index cf4f8b61e1..1a62e85ac3 100644
---- a/alloc.c
-+++ b/alloc.c
-@@ -94,6 +94,7 @@ void *alloc_commit_node(void)
- 	c->object.type = OBJ_COMMIT;
- 	c->index = alloc_commit_index();
- 	c->graph_pos = COMMIT_NOT_FROM_GRAPH;
-+	c->generation = GENERATION_NUMBER_UNDEF;
- 	return c;
- }
- 
 diff --git a/commit-graph.c b/commit-graph.c
-index 1fc63d541b..d24b947525 100644
+index d24b947525..b80c8ad80e 100644
 --- a/commit-graph.c
 +++ b/commit-graph.c
-@@ -264,6 +264,8 @@ static int fill_commit_in_graph(struct commit *item, struct commit_graph *g, uin
- 	date_low = get_be32(commit_data + g->hash_len + 12);
- 	item->date = (timestamp_t)((date_high << 32) | date_low);
+@@ -419,6 +419,13 @@ static void write_graph_chunk_data(struct hashfile *f, int hash_len,
+ 		else
+ 			packedDate[0] = 0;
  
-+	item->generation = get_be32(commit_data + g->hash_len + 8) >> 2;
++		if ((*list)->generation != GENERATION_NUMBER_UNDEF) {
++			if ((*list)->generation > GENERATION_NUMBER_MAX)
++				die("generation number %u is too large to store in commit-graph",
++				    (*list)->generation);
++			packedDate[0] |= htonl((*list)->generation << 2);
++		}
 +
- 	pptr = &item->parents;
+ 		packedDate[1] = htonl((*list)->date);
+ 		hashwrite(f, packedDate, 8);
  
- 	edge_value = get_be32(commit_data + g->hash_len);
+@@ -551,6 +558,43 @@ static void close_reachable(struct packed_oid_list *oids)
+ 	}
+ }
+ 
++static void compute_generation_numbers(struct commit** commits,
++				       int nr_commits)
++{
++	int i;
++	struct commit_list *list = NULL;
++
++	for (i = 0; i < nr_commits; i++) {
++		if (commits[i]->generation != GENERATION_NUMBER_UNDEF &&
++		    commits[i]->generation != GENERATION_NUMBER_NONE)
++			continue;
++
++		commit_list_insert(commits[i], &list);
++		while (list) {
++			struct commit *current = list->item;
++			struct commit_list *parent;
++			int all_parents_computed = 1;
++			uint32_t max_generation = 0;
++
++			for (parent = current->parents; parent; parent = parent->next) {
++				if (parent->item->generation == GENERATION_NUMBER_UNDEF ||
++				    parent->item->generation == GENERATION_NUMBER_NONE) {
++					all_parents_computed = 0;
++					commit_list_insert(parent->item, &list);
++					break;
++				} else if (parent->item->generation > max_generation) {
++					max_generation = parent->item->generation;
++				}
++			}
++
++			if (all_parents_computed) {
++				current->generation = max_generation + 1;
++				pop_commit(&list);
++			}
++		}
++	}
++}
++
+ void write_commit_graph(const char *obj_dir,
+ 			const char **pack_indexes,
+ 			int nr_packs,
+@@ -674,6 +718,8 @@ void write_commit_graph(const char *obj_dir,
+ 	if (commits.nr >= GRAPH_PARENT_MISSING)
+ 		die(_("too many commits to write graph"));
+ 
++	compute_generation_numbers(commits.list, commits.nr);
++
+ 	graph_name = get_commit_graph_filename(obj_dir);
+ 	fd = hold_lock_file_for_update(&lk, graph_name, 0);
+ 
 diff --git a/commit.h b/commit.h
-index e57ae4b583..3cadd386f3 100644
+index 3cadd386f3..bc7a3186c5 100644
 --- a/commit.h
 +++ b/commit.h
-@@ -10,6 +10,8 @@
- #include "pretty.h"
+@@ -11,6 +11,7 @@
  
  #define COMMIT_NOT_FROM_GRAPH 0xFFFFFFFF
-+#define GENERATION_NUMBER_UNDEF 0xFFFFFFFF
-+#define GENERATION_NUMBER_NONE 0
+ #define GENERATION_NUMBER_UNDEF 0xFFFFFFFF
++#define GENERATION_NUMBER_MAX 0x3FFFFFFF
+ #define GENERATION_NUMBER_NONE 0
  
  struct commit_list {
- 	struct commit *item;
-@@ -24,6 +26,7 @@ struct commit {
- 	struct commit_list *parents;
- 	struct tree *tree;
- 	uint32_t graph_pos;
-+	uint32_t generation;
- };
- 
- extern int save_commit_buffer;
 -- 
 2.17.0.rc0
 
