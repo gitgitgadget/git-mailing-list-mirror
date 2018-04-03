@@ -2,94 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-1.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A4ACD1F404
-	for <e@80x24.org>; Tue,  3 Apr 2018 18:31:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 10C651F404
+	for <e@80x24.org>; Tue,  3 Apr 2018 18:32:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752813AbeDCSb5 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Apr 2018 14:31:57 -0400
-Received: from mail-pl0-f53.google.com ([209.85.160.53]:34431 "EHLO
-        mail-pl0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752525AbeDCSb5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Apr 2018 14:31:57 -0400
-Received: by mail-pl0-f53.google.com with SMTP id u11-v6so10054174plq.1
-        for <git@vger.kernel.org>; Tue, 03 Apr 2018 11:31:57 -0700 (PDT)
+        id S1752829AbeDCScE (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Apr 2018 14:32:04 -0400
+Received: from mail-pl0-f68.google.com ([209.85.160.68]:35005 "EHLO
+        mail-pl0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752525AbeDCScD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Apr 2018 14:32:03 -0400
+Received: by mail-pl0-f68.google.com with SMTP id 61-v6so8062776plb.2
+        for <git@vger.kernel.org>; Tue, 03 Apr 2018 11:32:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=5fLi9XzI6BJ4Z6A/jeXc8C8xj0fAkYZCV16uSDVm9ss=;
-        b=vhiioC2c7T1DB20SAcQUFJq46fxhuvocrqLCyCruXX57F9hW5lleHeyipy7QfgjuMa
-         /Tahcv2TS5xDs1l/zBiiDESy9xENyfxaFvHZmSaEADWN3Ij5aoTR9/ValX5bmezfKLBF
-         IV4ohbe9oAf06fJrMm/j6GDqqNG5P7gzT8C2UTAF5x9ZyzxPwmisdfJn167QVSBJZYY0
-         PTmM2H1zo6RBX30xTfTpSrNsw1ZsPxkkDMt+fs2C7bj1c95Wq806Bmu0WkuR3k0s1Bt3
-         jNZuKFdu8VthX4RB9Or3tGBVC88e4rpZpltu+IWpw7kxck8BEXGBB2pyZV4IOAR+pdqD
-         vFLg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=hjDnU7TnjBUyNwYKmandXTkJ2r22a2GuoOJ09tw3K0k=;
+        b=CjVrdsT86+TUH7WJW3ABFjHgvHHr8VH+WPmtsNQ+WnYoqIHiieqjo1Lki/heAq4UcE
+         0CQQge2gN0d+L74JgMwODXzQCqgo8r5osd+qOaq73wtZTPlOvl2uNsUXvrgvzkAINA7F
+         6w9qYd+NA8/RhBJ+oFo9p/yh3NJdyzn6JL01IldwMV8KTqYLwB4Lph7j1WRVvziaoI59
+         K2Kwo/NEjbxTQ8o70XOndqRg28eTx1s7WcebSea1k5tVto85fRbPAYY33aGbm59hslUm
+         2O4CXVI/SujEbcZN4pvPRHIIUF3/46WZEe0jI/wlGmqFVx9s0JrTze6watYO3EZJUgP/
+         BEuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=5fLi9XzI6BJ4Z6A/jeXc8C8xj0fAkYZCV16uSDVm9ss=;
-        b=t9LscfJcEKpyXgZsfOeP19srhsk1b88xwaTX24vro2OdOIAqyqYkodo/Vkqo9xvgpO
-         jMGkuKvQCSst8KN6WzfxnZNQ84WTtXO9PxvZXTVGGiZva/VjDeMTUPw/l3nQ1y4tv4EI
-         5SjHAtTgW+Mh9+pTvnbnMvt8Uywc02ixMF7oW53psO2NRU4n2xQUZTqTOS7HbWrA1fnY
-         0Cw8b3mnOdQIdnmfz2L/abupq+bdchhr7E2Q+fpyeUnNS3uYPCiDJ0MfthxPlGRRl5R9
-         vRaL43M7AlMc3ujRcmLgVGCs+00U3U0SlH0ndK2LXe3eC5yXc4sV4ZHTDuYYE89V1XE3
-         8oig==
-X-Gm-Message-State: AElRT7EC/lYmmUKDdEuJsbIkd0znAaaWU2y1yWChYosopu//RZiK4OUb
-        lXorPNDiqAGIUVTJfnqf3Dw6Jw==
-X-Google-Smtp-Source: AIpwx4/eWcWQ6zVv1LBZkmc9f913nQDrgynozS7AQ3YeqO1Z+4IT4J/9XyfIXy+Mk59t7ovbwH3kaA==
-X-Received: by 2002:a17:902:a9c9:: with SMTP id b9-v6mr8495690plr.8.1522780316440;
-        Tue, 03 Apr 2018 11:31:56 -0700 (PDT)
-Received: from twelve3.svl.corp.google.com ([2620:0:100e:422:ffac:c1d4:4bf7:bb93])
-        by smtp.gmail.com with ESMTPSA id z78sm6419464pfd.23.2018.04.03.11.31.54
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=hjDnU7TnjBUyNwYKmandXTkJ2r22a2GuoOJ09tw3K0k=;
+        b=BP+kk2cQxaIa0YaAohj/Q9Lp0VEybdy7KD84rjYy5kSBUQ99Bvi3IQNu9fT5gOMWuq
+         lkZCXa4AxVbZlozG8epcciDgLfv+UbKmk974pi1hFe0TfzXKA+DECLa/vBBh0OJPcz9s
+         FKPIqVxO7UK2kwiQKQvajckIgPHSodSu5qz44II87Tcp3xmmeCpoqX62/Yo3WLhCAsJx
+         YcEBhSkq8Cgffz1LqFkDs3z4NJS4AR5pbpBLCqi2uTWFKKuBdTDBSKPNG2NIY+myS5Hq
+         ro4x9CRR6b3A5GYXAvK0daa72J6xapLqigYsbt47G+Uby+O5ArFO4Y4kUS0Yivizin3K
+         a3+g==
+X-Gm-Message-State: AElRT7GlLUmsyLxgn9mv6vKYIboqan2gM5uUO80kNWWR5lGOAHQZ/TFY
+        YRzvPF6YCRXQ6Ug42IHMiF0c7ngfIzw=
+X-Google-Smtp-Source: AIpwx4/65lMwuPxymcEktTAs4TPq57iBQjok9ces6/AFL6CZmSyBxSZKjYuSx6ZVkQCFAV9X3FOV+A==
+X-Received: by 10.99.49.84 with SMTP id x81mr5206122pgx.38.1522780322865;
+        Tue, 03 Apr 2018 11:32:02 -0700 (PDT)
+Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
+        by smtp.gmail.com with ESMTPSA id c15sm7034779pfm.114.2018.04.03.11.32.01
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 03 Apr 2018 11:31:55 -0700 (PDT)
-Date:   Tue, 3 Apr 2018 11:31:54 -0700
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Derrick Stolee <dstolee@microsoft.com>
-Cc:     git@vger.kernel.org, avarab@gmail.com, sbeller@google.com,
-        larsxschneider@gmail.com, peff@peff.net
-Subject: Re: [PATCH 4/6] commit: use generations in paint_down_to_common()
-Message-Id: <20180403113154.4d81719baba74aae53c9a58c@google.com>
-In-Reply-To: <20180403165143.80661-5-dstolee@microsoft.com>
+        Tue, 03 Apr 2018 11:32:02 -0700 (PDT)
+Date:   Tue, 3 Apr 2018 11:32:01 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Derrick Stolee <dstolee@microsoft.com>, git@vger.kernel.org,
+        avarab@gmail.com, sbeller@google.com, larsxschneider@gmail.com
+Subject: Re: [PATCH 2/6] commit: add generation number to struct commmit
+Message-ID: <20180403183201.GC100220@google.com>
 References: <20180403165143.80661-1-dstolee@microsoft.com>
-        <20180403165143.80661-5-dstolee@microsoft.com>
-X-Mailer: Sylpheed 3.6.0 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+ <20180403165143.80661-3-dstolee@microsoft.com>
+ <20180403180536.GB100220@google.com>
+ <20180403182800.GA8377@sigill.intra.peff.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180403182800.GA8377@sigill.intra.peff.net>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue,  3 Apr 2018 12:51:41 -0400
-Derrick Stolee <dstolee@microsoft.com> wrote:
+On 04/03, Jeff King wrote:
+> On Tue, Apr 03, 2018 at 11:05:36AM -0700, Brandon Williams wrote:
+> 
+> > On 04/03, Derrick Stolee wrote:
+> > > The generation number of a commit is defined recursively as follows:
+> > > 
+> > > * If a commit A has no parents, then the generation number of A is one.
+> > > * If a commit A has parents, then the generation number of A is one
+> > >   more than the maximum generation number among the parents of A.
+> > > 
+> > > Add a uint32_t generation field to struct commit so we can pass this
+> > 
+> > Is there any reason to believe this would be too small of a value in the
+> > future?  Or is a 32 bit unsigned good enough?
+> 
+> The linux kernel took ~10 years to produce 500k commits. Even assuming
+> those were all linear (and they're not), that gives us ~80,000 years of
+> leeway. So even if the pace of development speeds up or we have a
+> quicker project, it still seems we have a pretty reasonable safety
+> margin.
+> 
+> -Peff
 
-> +int compare_commits_by_gen_then_commit_date(const void *a_, const void *b_, void *unused)
-> +{
-> +	const struct commit *a = a_, *b = b_;
-> +
-> +	if (a->generation < b->generation)
-> +		return 1;
-> +	else if (a->generation > b->generation)
-> +		return -1;
-> +
-> +	/* newer commits with larger date first */
-> +	if (a->date < b->date)
-> +		return 1;
-> +	else if (a->date > b->date)
-> +		return -1;
-> +	return 0;
-> +}
+I figured as much, but just wanted to check since the windows folks
+seems to produce commits pretty quickly.
 
-I think it would be clearer if you commented above the first block
-"newer commits first", then on the second block, "use date as a
-heuristic to determine newer commit".
-
-Other than that, this looks good.
+-- 
+Brandon Williams
