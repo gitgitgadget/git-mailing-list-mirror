@@ -2,77 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F1F0F1F404
-	for <e@80x24.org>; Tue,  3 Apr 2018 13:12:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0D3991F404
+	for <e@80x24.org>; Tue,  3 Apr 2018 13:14:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932258AbeDCNMk (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Apr 2018 09:12:40 -0400
-Received: from mout.gmx.net ([212.227.15.19]:54119 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932151AbeDCNMk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Apr 2018 09:12:40 -0400
-Received: from MININT-AIVCFQ2.fareast.corp.microsoft.com ([37.201.195.115]) by
- mail.gmx.com (mrgmx001 [212.227.17.190]) with ESMTPSA (Nemesis) id
- 0LaGJa-1efnEi47e2-00m74b; Tue, 03 Apr 2018 15:12:35 +0200
-Date:   Tue, 3 Apr 2018 15:12:33 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@dscho.gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org
-Subject: js/runtime-prefix-windows, was Re: What's cooking in git.git (Mar
- 2018, #06; Fri, 30)
-In-Reply-To: <xmqqvadd1epf.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1804031511510.5026@qfpub.tvgsbejvaqbjf.bet>
-References: <xmqqvadd1epf.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S932198AbeDCNOu (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Apr 2018 09:14:50 -0400
+Received: from cloud.peff.net ([104.130.231.41]:51778 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S932151AbeDCNOu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Apr 2018 09:14:50 -0400
+Received: (qmail 30775 invoked by uid 109); 3 Apr 2018 13:14:50 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 03 Apr 2018 13:14:50 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 25267 invoked by uid 111); 3 Apr 2018 13:15:50 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 03 Apr 2018 09:15:50 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 03 Apr 2018 09:14:48 -0400
+Date:   Tue, 3 Apr 2018 09:14:48 -0400
+From:   Jeff King <peff@peff.net>
+To:     Jens =?utf-8?Q?Kr=C3=BCger?= <Jens.Krueger@frm2.tum.de>
+Cc:     Git List <git@vger.kernel.org>
+Subject: Re: Test 5561 failed
+Message-ID: <20180403131447.GB18824@sigill.intra.peff.net>
+References: <66ac8aec-3e4c-43be-83d1-7bd823ec2b20@frm2.tum.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:nsL+yDbzEevE95NcLpmzCtirAQTi9J720htwOAA0re0uryocYFX
- Upa/2/M9C7X1HPuSH9FDY0yKz+mxqA62rP23cPEifsOJ4BvDYe4XZkJqgnl29GNPPX/47kU
- aSMcJrtYgeOznPvEVxG1CTrDw7tbWSpDkid+enQcT7QAav9BrAYzrmIkqJPBWcSe0wVi17s
- Kh455SQVsY/m6encLFrBQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:W7WBJYqV1lM=:FoomiPdQ/yiI/ftPP91Wi+
- 2BJdDYb1bHeXEDW9MDWpz8QniFWBQqsuqHPmlNNDc1f3he9ZXwzfzAP90tzQjwnuyiHDT1p3a
- bmjiuUzIp7vVzu6E9R0GS+PiBJqK5u0figWNIx1FLgZT3B5aFpykn3Rn+vJUU6debQDYAQ5KU
- /ann9I1NFbx8UBTxFjTUO6Ak5559GuGPpAZDqTcTwxkv6V5RDtoePyEaTbicxBuUs+rR+1Xma
- PD3m3ZiiZsVlk6VtsvXLHGwkVfeD/QhPXfQpbU8Xs9NbcImNIFUCPor47vuM9SyxF4LbnmNMo
- hTcqjA4fIAU6wNoWhdaY/OpXRZa/RyQTpN5f+V1mTOPNXoR53hd1sjfUbuAUSSJHm6LGhC+kj
- 9RJJzOQYZOTMde8eYFJvxWIfIB1GuCAdS7EusMa98RZqT4BYUb47A6Huc4AZZKuRU9QPKmcRJ
- KG+jI4+4GRTHBrDPR9EfMpgOi4gAKfJeuY+KSzie+pqSK5YMolgzhz4d/IP99KYvYd3PY1PEB
- yOrlwoq70A9VSc3xw0oZnn8+HBD7Gxe7bINAMNOokQVLdxrSy/dc0D2RuoAHQ0GiPZiQN/ZVk
- aUfbT1BeJlCoeCBFyBe14LICzY7lM457iE1ddYgAkJBfqtPhZIsanMtOnRccn7NhEuArtQ6kg
- fs10zcGO6FVR239NXz70/CpNephef7mqiMsDt3zuwyHHaTRS4IYOmkNxOE07Cm9FFxRHtpV7W
- 7SU8iBY+FuBacLVb4oJmsaM3leLKeB47Dd+vLOYfFteehKHLzIiEvMVRSB/hfU8GzJnraweJb
- FRFeLPX7fYnFvMW+fScmgIVEnLBAii61zei7+PxGyi9no48leMct170M3Co/TpCE0z79cZs
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <66ac8aec-3e4c-43be-83d1-7bd823ec2b20@frm2.tum.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+On Tue, Apr 03, 2018 at 01:43:37PM +0200, Jens Krüger wrote:
 
-On Fri, 30 Mar 2018, Junio C Hamano wrote:
-
-> * js/runtime-prefix-windows (2018-03-27) 2 commits
->  - mingw/msvc: use the new-style RUNTIME_PREFIX helper
->  - exec_cmd: provide a new-style RUNTIME_PREFIX helper for Windows
->  (this branch uses dj/runtime-prefix.)
+> expecting success: 
+> 	GET refs/heads/master "404 Not Found"
 > 
->  The Windows port was the first that allowed Git to be installed
->  anywhere by having its components refer to each other with relative
->  pathnames.  The recent dj/runtime-prefix topic extends the idea to
->  other platforms, and its approach has been adopted back in the
->  Windows port.
-> 
->  Is this, together with the dj/runtime-prefix topic, ready for
->  'next'?
+> not ok 2 - direct refs/heads/master not found
 
-As far as I am concerned: yes!
+That GET function is:
 
-Ciao,
-Dscho
+  GET() {
+        curl --include "$HTTPD_URL/$SMART/repo.git/$1" >out 2>/dev/null &&
+        tr '\015' Q <out |
+        sed '
+                s/Q$//
+                1q
+        ' >act &&
+        echo "HTTP/1.1 $2" >exp &&
+        test_cmp exp act
+  }
+
+The tarball you sent shows "out" as empty, and "act" is missing. So
+"curl" produced no output, and we did not make it as far as the tr/sed
+pipe. Just a guess, but are you missing the "curl" command-line tool on
+your system? If so, "apt install curl" should fix the failure.
+
+As far as code changes in Git, perhaps (assuming my guess is right):
+
+  - drop the redirect of stderr here; the test suite already handles
+    hiding stderr from the user (without "-v"), and in "-v" mode you
+    probably would have gotten a useful error like "curl: not found"
+
+  - it's rare but possible to have libcurl installed (which is needed
+    for the server side, and what we key on for running the httpd tests)
+    but not the curl binary. This test probably should check for the
+    existence of the curl binary as a prerequisite.
+
+-Peff
