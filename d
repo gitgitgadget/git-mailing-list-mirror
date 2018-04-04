@@ -1,50 +1,47 @@
-From: "Gloria Lin" <Pittsssu@yahoo.com>
-Subject: Find local sex-addicts
-Date: Sun, 30 Jul 2006 18:22:40 -0500
-Message-ID: <78535665_528525_159990.wmfgg@yahoo.com>
+From: "Kenneth" <Iris_LucasWrightWall@yahoo.com>
+Subject: We are professionals in getting people laid
+Date: Tue, 01 Aug 2006 21:00:09 -0500
+Message-ID: <33791781.4884458713290.JavaMail.nfsnobody@yahoo.com>
 Content-Type: text/plain;
 	charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Mon Jul 31 00:22:36 2006
+X-From: git-owner@vger.kernel.org Wed Aug 02 03:00:26 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G7Jg9-00014c-Ko
-	for gcvg-git@gmane.org; Mon, 31 Jul 2006 00:22:33 +0200
+	id 1G8560-0006an-VW
+	for gcvg-git@gmane.org; Wed, 02 Aug 2006 03:00:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751398AbWG3WWa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 30 Jul 2006 18:22:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751400AbWG3WWa
-	(ORCPT <rfc822;git-outgoing>); Sun, 30 Jul 2006 18:22:30 -0400
-Received: from 52.Red-83-39-54.dynamicIP.rima-tde.net ([83.39.54.52]:50698
-	"HELO 540DD0D0") by vger.kernel.org with SMTP id S1751398AbWG3WW3
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Jul 2006 18:22:29 -0400
-Received: from 74.131.226.202.in-addr.arpa.yahoo.com (HELO localhost.localdomain) ([83.39.54.52])
-          (envelope-sender <Pittsssu@yahoo.com>)
-          by email-0.yahoo.com (qmail-ldap-1.03) with SMTP
-          for <git@vger.kernel.org>; Sun, 30 Jul 2006 18:22:40 -0500
-X-Mailer: iGMail [www.ig.com.br]
+	id S1750890AbWHBBAV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 1 Aug 2006 21:00:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750892AbWHBBAU
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Aug 2006 21:00:20 -0400
+Received: from adsl-67-123-250-25.dsl.pltn13.pacbell.net ([67.123.250.25]:62477
+	"HELO 42DAF880") by vger.kernel.org with SMTP id S1750890AbWHBBAU
+	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 1 Aug 2006 21:00:20 -0400
+Received: from crm0.yahoo.com (localhost.localdomain [127.0.0.1])
+	by crm7.yahoo.com (Postfix) with ESMTP id 910789EBA;
+	Tue, 01 Aug 2006 21:00:09 -0500
+X-Mailer: Mediacomm Communicator 1.1
+X-Virus-Scanned: amavisd-new at yahoo.com
+X-Antispam-ID: EDA229342564
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 14.2 points;
+X-Spam-Report: 12.6 points;
+ *  3.9 RATWARE_RCVD_PF Bulk email fingerprint (Received PF) found
  *  0.0 COMPLETELY_FREE BODY: No such thing as a free lunch (2)
  *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
- *      [score: 0.4898]
+ *      [score: 0.4600]
  *  3.0 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
- *      [Blocked - see <http://www.spamcop.net/bl.shtml?83.39.54.52>]
+ *      [Blocked - see <http://www.spamcop.net/bl.shtml?67.123.250.25>]
  *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
- *      [URIs: meetnewbabes.com]
- *  1.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
- *      [URIs: meetnewbabes.com]
+ *      [URIs: datingisrealfun.com]
  *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
- *      [URIs: meetnewbabes.com]
- *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
- *      [URIs: meetnewbabes.com]
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24475>
+ *      [URIs: datingisrealfun.com]
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24618>
 
 100% FREE Adult Personals
 
@@ -52,17 +49,17 @@ YOU NEED TO GET LAID!!!!!!!!!!!
 
 We can help.
 
-http://meetnewbabes.com/cutiepie/dating/
+http://datingisrealfun.com/cutiepie/dating/
 
 Real profiles of people in your area that 
 just want sex!  
 
 100% FREE!!!!!
 
-http://meetnewbabes.com/cutiepie/dating/
+
 
 --------------------------------------------
 
 
 no plz
-http://meetnewbabes.com/rr2.html
+http://datingisrealfun.com/rr2.html
