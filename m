@@ -2,114 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D90EF1F404
-	for <e@80x24.org>; Wed,  4 Apr 2018 16:43:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A65C31F404
+	for <e@80x24.org>; Wed,  4 Apr 2018 17:01:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752163AbeDDQnR (ORCPT <rfc822;e@80x24.org>);
-        Wed, 4 Apr 2018 12:43:17 -0400
-Received: from forward2j.cmail.yandex.net ([5.255.227.20]:53080 "EHLO
-        forward2j.cmail.yandex.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751950AbeDDQnQ (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 4 Apr 2018 12:43:16 -0400
-X-Greylist: delayed 426 seconds by postgrey-1.27 at vger.kernel.org; Wed, 04 Apr 2018 12:43:16 EDT
-Received: from mxback20j.mail.yandex.net (mxback20j.mail.yandex.net [IPv6:2a02:6b8:0:1619::114])
-        by forward2j.cmail.yandex.net (Yandex) with ESMTP id F067D20C5D;
-        Wed,  4 Apr 2018 19:36:08 +0300 (MSK)
-Received: from localhost (localhost [::1])
-        by mxback20j.mail.yandex.net (nwsmtp/Yandex) with ESMTP id rXc3hnjrYK-a80aegJO;
-        Wed, 04 Apr 2018 19:36:08 +0300
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ya.ru; s=mail; t=1522859768;
-        bh=uv4753VjFNQYbBizsV/ZrpYvh6DxGzs2CL0oYF1le9g=;
-        h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date;
-        b=fh89vBF+7JM4iOBHFg5JiN3jL9cseEtMofx+LFFM4dzd8ta0LGILeYQX7cbd6C3Ne
-         wD/CBPdIvaETeTnizBllYRa4Rv0J7HVB+NWhK5QzQ0KAfkblevXwkRX9mm1yu+4ubz
-         nf9XEjZnRZRmzKFBaQ9RVhyuKAo/6Ggjx1Bc+kOo=
-Authentication-Results: mxback20j.mail.yandex.net; dkim=pass header.i=@ya.ru
-Received: by web13j.yandex.ru with HTTP;
-        Wed, 04 Apr 2018 19:36:08 +0300
-From:   Alex Ivanov <gnidorah@ya.ru>
-Envelope-From: gnidorah@yandex.ru
-To:     Jacob Keller <jacob.keller@gmail.com>
-Cc:     Git mailing list <git@vger.kernel.org>
-In-Reply-To: <CA+P7+xoaOt4KwTOQSfwiyB1CQ317kbCZ2u26RoPA02Z4WYr9EA@mail.gmail.com>
-References: <671541522781590@web3o.yandex.ru> <CA+P7+xoaOt4KwTOQSfwiyB1CQ317kbCZ2u26RoPA02Z4WYr9EA@mail.gmail.com>
-Subject: Re: Socket activation for GitWeb FastCGI with systemd?
+        id S1752555AbeDDRBe (ORCPT <rfc822;e@80x24.org>);
+        Wed, 4 Apr 2018 13:01:34 -0400
+Received: from mail-pl0-f52.google.com ([209.85.160.52]:36793 "EHLO
+        mail-pl0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752121AbeDDRBd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Apr 2018 13:01:33 -0400
+Received: by mail-pl0-f52.google.com with SMTP id 91-v6so14895643pld.3
+        for <git@vger.kernel.org>; Wed, 04 Apr 2018 10:01:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=ywHUGO64jj0iOjSPc8K8bxdiqVz6Jk6y0fFLT8K40qU=;
+        b=rA772o5TdJE88dMaQUlYwjxTMisJLlvJeHt5z75H20Ngshbp45lcldSu7ZpOuGyV0l
+         xQuX9C9bJnG3ex/LIcKNg6bQRWi968wdICGSxgAIRdC3sT1FcQmJ67mEGdtuTxcBtmCH
+         r656hgIbTco+hKluow4gc99IiAjZtzViB4ogV1F1G+lCoIu4w96zRz5kX0N9JAClGQOQ
+         rnbPU7+ZyizE5StZAhb8HB58qo1AHrjtqKMvrHeA2lQzBSwUmSxrGLf6vklrMIxKFPKD
+         3q1RzzYYKoMBJtsnZtGjGuGMi7gXPpTHaQm1HphMcnwyT9nqH+UfkCloZDTjhee2v4b6
+         M3QA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=ywHUGO64jj0iOjSPc8K8bxdiqVz6Jk6y0fFLT8K40qU=;
+        b=GWhCY52WUHL9n892xAPfUI/8a3CWKjBQl1Vvg5lUiJTa1PbUwxxx4WOIiwPr3kWwSK
+         8m8663iqUqy0ooIalHrvjfwiyGkYhmMdw8RLIrcZ9PzvAj6RmalxDreUgXyjMVdSdjYA
+         ym7LrDFHB054tWE+aYjVIaVDuFNa/ftRl7vQD2b5TTQRkGC/bvhwNMTiEhkUjF4vppOU
+         WK/rFCg+pmKUONWo8IrgY5ZzjKCAo85SoxrdaTCj5331HPaQwBA1E9VeovwDO3onhewQ
+         45aSul1+ON9Yyxzm7O0SifO0zxPOtZMXN8mH968UBJiyPh7L0kt9lpqJAn+1DW12ld7y
+         hppQ==
+X-Gm-Message-State: AElRT7EBLkzP+Uy/uV2x0q0TNlCzAXaSQRdzdiAslYJHPnmbEoKR8Tzh
+        uZMw8/l7XkioNfvnI5tBUAismYE4AYw=
+X-Google-Smtp-Source: AIpwx4/NLzZ2DAgcdM/yT7/31KfOI0W6W0YttiRyav75kjWyQf4ELekT0J2ng8g2KsyqPhD/7cgZqQ==
+X-Received: by 2002:a17:902:32a2:: with SMTP id z31-v6mr19902410plb.41.1522861293179;
+        Wed, 04 Apr 2018 10:01:33 -0700 (PDT)
+Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
+        by smtp.gmail.com with ESMTPSA id b184sm3835460pfg.110.2018.04.04.10.01.31
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 04 Apr 2018 10:01:32 -0700 (PDT)
+Date:   Wed, 4 Apr 2018 10:01:31 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Derrick Stolee <dstolee@microsoft.com>, git@vger.kernel.org,
+        peff@peff.net, avarab@gmail.com, sbeller@gmail.com,
+        larsxschneider@gmail.com
+Subject: Re: [PATCH 8/6] commit: use generation numbers for in_merge_bases()
+Message-ID: <20180404170131.GD100220@google.com>
+References: <20180403190500.GA10930@sigill.intra.peff.net>
+ <20180404154554.140716-1-dstolee@microsoft.com>
+ <20180404154554.140716-2-dstolee@microsoft.com>
+ <14e4e1d3-5c77-dc7c-10d5-e9406b992f0e@gmail.com>
 MIME-Version: 1.0
-Message-Id: <2030761522859768@web13j.yandex.ru>
-X-Mailer: Yamail [ http://yandex.ru ] 5.0
-Date:   Wed, 04 Apr 2018 19:36:08 +0300
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <14e4e1d3-5c77-dc7c-10d5-e9406b992f0e@gmail.com>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 04/04, Derrick Stolee wrote:
+> On 4/4/2018 11:45 AM, Derrick Stolee wrote:
+> > The containment algorithm for 'git branch --contains' is different
+> > from that for 'git tag --contains' in that it uses is_descendant_of()
+> > instead of contains_tag_algo(). The expensive portion of the branch
+> > algorithm is computing merge bases.
+> > 
+> > When a commit-graph file exists with generation numbers computed,
+> > we can avoid this merge-base calculation when the target commit has
+> > a larger generation number than the target commits.
+> > 
+> > Performance tests were run on a copy of the Linux repository where
+> > HEAD is contained in v4.13 but no earlier tag. Also, all tags were
+> > copied to branches and 'git branch --contains' was tested:
+> > 
+> > Before: 60.0s
+> > After:   0.4s
+> > Rel %: -99.3%
 
+Now that is an impressive speedup.
 
-03.04.2018, 23:04, "Jacob Keller" <jacob.keller@gmail.com>:
-> On Tue, Apr 3, 2018 at 11:53 AM, Alex Ivanov <gnidorah@ya.ru> wrote:
->>  Hi.
->>  I want to use systemd as fastcgi spawner for gitweb + nginx.
->>  The traffic is low and number of users is limited + traversal bots. For that reason I've decided to use following mimimal services
->>
->>  gitweb.socket
->>  [Unit]
->>  Description=GitWeb Socket
->>
->>  [Socket]
->>  ListenStream=/run/gitweb.sock
->>  Accept=false
->>
->>  [Install]
->>  WantedBy=sockets.target
->>
->>  gitweb.service
->>  [Unit]
->>  Description=GitWeb Service
->>
->>  [Service]
->>  Type=simple
->>  ExecStart=/path/to/gitweb.cgi --fcgi
->>  StandardInput=socket
->>
->>  However this scheme is not resistant to simple DDOS.
->>  E.g. traversal bots often kill the service by opening non existing path (e.g http://host/?p=repo;a=blob;f=nonexisting/path;hb=HEAD showing in browser 404 - Cannot find file) many times consecutively, which leads to
->>  Apr 03 21:32:10 host systemd[1]: gitweb.service: Start request repeated too quickly.
->>  Apr 03 21:32:10 host systemd[1]: gitweb.service: Failed with result 'start-limit-hit'.
->>  Apr 03 21:32:10 host systemd[1]: Failed to start GitWeb service.
->>  and 502 Bad Gateway in browser. I believe the reason is that gitweb.service dies on failure and if it happens too often, systemd declines to restart the service due to start limit hit.
->>  So my question is how to correct systemd services for GitWeb to be resistant to such issue? I prefer to use single process to process all clients.
->>  Thanks.
->
-> This sounds like a systemd specific question that might get a better
-> answer from the systemd mailing list.
-
-Thanks I will try that too.
-
->
-> That being said, I believe if in this case gitweb is dying due to the
-> path not existing? You might be able to configure systemd to
-> understand that the particular exit code for when the path doesn't
-> exist is a "valid" exit, and not a failure case..
-
-I will try to do that, but I'm afraid that there may be other ways to remotely abuse the service.
-
->
-> I'm not entirely understanding your goal.. you want each request to
-> launch the gitweb process, and when it's done you want it to exit? But
-> if there are multiple connections at once you want it to stay alive
-> until it services them all? I think the best answer is configure
-> systemd to understand that the exit code for when the path is invalid
-> will be counted as a success.
-
-I want a single process for all connections too keep RAM usage at minimal. I also though it fits my case since number of users is low.
-
->
-> Thanks,
-> Jake
+-- 
+Brandon Williams
