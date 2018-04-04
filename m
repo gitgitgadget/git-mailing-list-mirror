@@ -2,133 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7C10E1F42D
-	for <e@80x24.org>; Wed,  4 Apr 2018 15:48:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3D0C61F404
+	for <e@80x24.org>; Wed,  4 Apr 2018 16:16:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752463AbeDDPsr (ORCPT <rfc822;e@80x24.org>);
-        Wed, 4 Apr 2018 11:48:47 -0400
-Received: from mail-qt0-f170.google.com ([209.85.216.170]:34446 "EHLO
-        mail-qt0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752454AbeDDPsp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Apr 2018 11:48:45 -0400
-Received: by mail-qt0-f170.google.com with SMTP id l18so23606070qtj.1
-        for <git@vger.kernel.org>; Wed, 04 Apr 2018 08:48:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=DcUVrR57KEFUF7hV3kovfVflbdYK1vlNub3bpgs9tIo=;
-        b=MMs5ntxpS9llF2//XOc0rZ0KGuFi5iPlsDVnWqLjsM7TafxVhdgltIEFf1P9OUzmHc
-         80xBtKw5F+cf5WpmViDVlN9TtK9E2PkZOlAHnvtkIEsM7yTHGK4CXRWC+Eq8XMYGxser
-         V8svRwsMJfuc0l9KX/+eYHGWPKwx4+sEEJs4vyiUqoHMeqWEWfqX4ajFWhxUaIO6JRlH
-         be7M2MW5KowLt3Z4zo6tDOsFdwomo8R88tPfSIBAD+tSPyETOQu2b1rdIQOlJIQJpE15
-         R/y+GY6ODtXIle55w4u+mptoNV3mIq9jUsxEcyWeIM9VYXCMoFHk0WP0jdJHH8i0ecYU
-         Nv8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=DcUVrR57KEFUF7hV3kovfVflbdYK1vlNub3bpgs9tIo=;
-        b=H7aFnxw1DyhGvPn7RFH0iQ+IwrsvtU/dZyEClDVMZmAV2pjUdQh2DONTPIEq2U1AKV
-         fk9lhMIaKhIvTjZ1NRukYCdboV99HSKZE180DmuoU+gbp/g+QkNjUaoRGdT934vOUN8a
-         5A+yYji/s4Yg4RJsiOzbZQzm4uMcb1BtHuxFDNonKrScYpnbRc2BehVhvHwsusFD6lmq
-         CIVRZwaqmwDTgXfvZBb2KL1yMOGnY35JZwW3tqkYIwr9gJhHyVKqzBA6V6iHpOucCAXv
-         CE6xp9vlzyVHMhyVVsrZSVUbBuIczIM7mYXCXGtz90rjdqOBsLC1972lr1jm7iEAPfc1
-         FQdw==
-X-Gm-Message-State: ALQs6tB+9FnzknkhNSOhpHtMVFQ9vrISanS+IDiTNt+F/4OqNzBsPvwN
-        zL3e/tEsCuG1I/XIL5vwaBpCcM/G
-X-Google-Smtp-Source: AIpwx4869wtd39fQNRCdKRFPehM1RgLsvvwz+D1RGJoQOzJHxxkUeMfCBmiQ0goO/U+yLfSE0/Lz1g==
-X-Received: by 10.200.48.71 with SMTP id g7mr26834492qte.56.1522856924439;
-        Wed, 04 Apr 2018 08:48:44 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:c4e6:7a22:56f1:df04? ([2001:4898:8010:0:ae1c:7a22:56f1:df04])
-        by smtp.gmail.com with ESMTPSA id q184sm3930063qkf.79.2018.04.04.08.48.43
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 04 Apr 2018 08:48:43 -0700 (PDT)
-Subject: Re: [PATCH 8/6] commit: use generation numbers for in_merge_bases()
-To:     Derrick Stolee <dstolee@microsoft.com>, git@vger.kernel.org
-Cc:     peff@peff.net, avarab@gmail.com, sbeller@gmail.com,
-        larsxschneider@gmail.com, bmwill@google.com
-References: <20180403190500.GA10930@sigill.intra.peff.net>
- <20180404154554.140716-1-dstolee@microsoft.com>
- <20180404154554.140716-2-dstolee@microsoft.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <14e4e1d3-5c77-dc7c-10d5-e9406b992f0e@gmail.com>
-Date:   Wed, 4 Apr 2018 11:48:42 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
+        id S1751906AbeDDQQU (ORCPT <rfc822;e@80x24.org>);
+        Wed, 4 Apr 2018 12:16:20 -0400
+Received: from mout.gmx.net ([212.227.15.15]:33531 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751606AbeDDQQU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Apr 2018 12:16:20 -0400
+Received: from MININT-AIVCFQ2.fareast.corp.microsoft.com ([37.201.195.115]) by
+ mail.gmx.com (mrgmx001 [212.227.17.190]) with ESMTPSA (Nemesis) id
+ 0M4WuC-1eIEZG36SK-00ye3g; Wed, 04 Apr 2018 18:16:14 +0200
+Date:   Wed, 4 Apr 2018 18:16:13 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+To:     Clemens Buchacher <drizzd@gmx.net>,
+        Manlio Perillo <manlio.perillo@gmail.com>
+cc:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org, manlio.perillo@gmail.com, gitster@pobox.com
+Subject: Re: [PATCH] completion: improve ls-files filter performance
+In-Reply-To: <20180404074658.GA5833@Sonnenschein.localdomain>
+Message-ID: <nycvar.QRO.7.76.6.1804041805150.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <1521274624-1370-1-git-send-email-drizzd@gmx.net> <1521274624-1370-2-git-send-email-drizzd@gmx.net> <20180318012618.32691-1-szeder.dev@gmail.com> <20180404074658.GA5833@Sonnenschein.localdomain>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <20180404154554.140716-2-dstolee@microsoft.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:TlkT3vH05ibdjWNQDmtIBW5u5OpEeFZw6bIADWSXz4hGTp/n09w
+ t8hWRc0m2Xr0mG2T/4HpDa1z1k2L/L9VqZziwmud2YezdSCogcxmVsSN55A+iw6BlPbken4
+ AHSQ2w7p0o45VsGFKFweIBYvMuLr9MN32xR+jP0M3OQwSCWcwqKO4HN7c7g8O4RLcjlt/Lh
+ WWyBzp5pUDlK/ZDj0Z6yQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:AGww24UivAE=:5RqiNmIthvX7/j457gJ8lX
+ wnkwvL+7YUdx7Ij+BnFqiLbIIoscksI5tjyVozT0y6SckYBwxIy415FiFM1rERYdra4NHgo1E
+ 2AcoWRYGLOlsF3sy1huyc42Q15GIjoh5cEJ3qOt/SHkzAekwpigydNU1p3jVOF0OTmCMSOs9l
+ r3ijWvgYHCEA8k3VJAdrk3BrvCB/y9gFWXKZdFDAbMLsIw2NyFQmn/6vlyvfBZRTi6tnYqUJM
+ FcySp9cWQAFqt3fYegFelsfB3swdDGbKDNsfGMh+0T7oyJEilwg2FkNcXBVDCVHGxN8Rk5S6s
+ 5K7khdyHVdrMe9M47pQ34K49PY2sVCiv5H3XbLxfz5kiWM+36+lcpLzVCScERC7NF7tTwA75X
+ Csfz8t2clbUqexlqKA2olRn+rSqiDuqO5uPers1AaSRZ0CX/j8T9s2nE1OC0L+H4kYR/fpi0e
+ XITyZS/yvbo+eYSxo/YfuVF3wvNh1bUTLGxhOk4E2VaJ+tqFwMAHppwokzAXrl3ZM4ZckyzJm
+ VxFJVguxENEE9N0YWq8svm4LpwF0TTcomhORtNS7bJL3QphKUvffcNDuh5agWlcf/KPWc8QS4
+ NmK/jG8o1wQWFlxFJipttVYhXUA51q5jNHHokrseaH/UThyeukQwl/Ep6tWNNHuS/L8N2B8ND
+ Ep3gb0Bo/aitgii5kqyLiy/KxG5ztCnhH7o41kM9mBRfzAluapDOQVDk8udnkD1w19LBgoWRA
+ uMN6PVzdFHtF5eqAvBHEYQmEBs6A+wHTMmY1PK3Af31am6Z2YYLSA7Qgdv6o0swd4OsWAIQu5
+ ipxqVi2H0HUjyEJbp9agXQMTeafEuaEIBVxIKfX6hHYRaXGfcqqYJ99ZM5GXWFk+iO2qDJi
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 4/4/2018 11:45 AM, Derrick Stolee wrote:
-> The containment algorithm for 'git branch --contains' is different
-> from that for 'git tag --contains' in that it uses is_descendant_of()
-> instead of contains_tag_algo(). The expensive portion of the branch
-> algorithm is computing merge bases.
->
-> When a commit-graph file exists with generation numbers computed,
-> we can avoid this merge-base calculation when the target commit has
-> a larger generation number than the target commits.
->
-> Performance tests were run on a copy of the Linux repository where
-> HEAD is contained in v4.13 but no earlier tag. Also, all tags were
-> copied to branches and 'git branch --contains' was tested:
->
-> Before: 60.0s
-> After:   0.4s
-> Rel %: -99.3%
->
-> Reported-by: Jeff King <peff@peff.net>
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
->   commit.c | 9 ++++++++-
->   1 file changed, 8 insertions(+), 1 deletion(-)
->
-> diff --git a/commit.c b/commit.c
-> index 858f4fdbc9..2566cba79f 100644
-> --- a/commit.c
-> +++ b/commit.c
-> @@ -1059,12 +1059,19 @@ int in_merge_bases_many(struct commit *commit, int nr_reference, struct commit *
->   {
->   	struct commit_list *bases;
->   	int ret = 0, i;
-> +	uint32_t min_generation = GENERATION_NUMBER_UNDEF;
->   
->   	if (parse_commit(commit))
->   		return ret;
-> -	for (i = 0; i < nr_reference; i++)
-> +	for (i = 0; i < nr_reference; i++) {
->   		if (parse_commit(reference[i]))
->   			return ret;
-> +		if (min_generation > reference[i]->generation)
-> +			min_generation = reference[i]->generation;
-> +	}
-> +
-> +	if (commit->generation > min_generation)
-> +		return 0;
->   
->   	bases = paint_down_to_common(commit, nr_reference, reference);
->   	if (commit->object.flags & PARENT2)
+Hi drizzd,
 
-This patch may suffice to speed up 'git branch --contains' instead of 
-needing to always use the 'git tag --contains' algorithm as considered 
-in [1].
+On Wed, 4 Apr 2018, Clemens Buchacher wrote:
 
-Thanks,
--Stolee
+> From the output of ls-files, we remove all but the leftmost path
+> component and then we eliminate duplicates. We do this in a while loop,
+> which is a performance bottleneck when the number of iterations is large
+> (e.g. for 60000 files in linux.git).
+> 
+> $ COMP_WORDS=(git status -- ar) COMP_CWORD=3; time _git
+> 
+> real    0m11.876s
+> user    0m4.685s
+> sys     0m6.808s
+> 
+> Replacing the loop with the cut command improves performance
+> significantly:
+> 
+> $ COMP_WORDS=(git status -- ar) COMP_CWORD=3; time _git
+> 
+> real    0m1.372s
+> user    0m0.263s
+> sys     0m0.167s
+> 
+> The measurements were done with Msys2 bash, which is used by Git for
+> Windows.
 
-[1] 
-https://public-inbox.org/git/20180303051516.GE27689@sigill.intra.peff.net/
-     Re: [PATCH 0/4] Speed up git tag --contains
+Those are nice numbers right there, so I am eager to get this into Git for
+Windows as quickly as it stabilizes (i.e. when it hits `next` or so).
+
+I was wondering about one thing, though:
+
+> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+> index 6da95b8..69a2d41 100644
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -384,12 +384,7 @@ __git_index_files ()
+>  	local root="${2-.}" file
+>  
+>  	__git_ls_files_helper "$root" "$1" |
+> -	while read -r file; do
+> -		case "$file" in
+> -		?*/*) echo "${file%%/*}" ;;
+
+This is a bit different from the `cut -f1 -d/` logic, as it does *not
+necessarily* strip a leading slash: for `/abc` the existing code would
+return the string unmodified, for `/abc/def` it would return an empty
+string!
+
+Now, I think that this peculiar behavior is most likely bogus as `git
+ls-files` outputs only relative paths (that I know of). In any case,
+reducing paths to an empty string seems fishy.
+
+I looked through the history of that code and tracked it all the way back
+to
+https://public-inbox.org/git/1357930123-26310-1-git-send-email-manlio.perillo@gmail.com/
+(that is the reason why you are Cc:ed, Manlio). Manlio, do you remember
+why you put the `?` in front of `?*/*` here? I know, it's been more than
+five years...
+
+Out of curiosity, would the numbers change a lot if you replaced the `cut
+-f1 -d/` call by a `sed -e 's/^\//' -e 's/\/.*//'` one?
+
+I am not proposing to change the patch, though, because we really do not
+need to expect `ls-files` to print lines with leading slashes.
+
+> -		*) echo "$file" ;;
+> -		esac
+> -	done | sort | uniq
+> +	cut -f1 -d/ | sort | uniq
+>  }
+>  
+>  # Lists branches from the local repository.
+
+Ciao,
+Dscho
