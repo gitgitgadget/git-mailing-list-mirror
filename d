@@ -1,47 +1,51 @@
-From: "Kenneth" <Iris_LucasWrightWall@yahoo.com>
-Subject: We are professionals in getting people laid
-Date: Tue, 01 Aug 2006 21:00:09 -0500
-Message-ID: <33791781.4884458713290.JavaMail.nfsnobody@yahoo.com>
+From: "Jeremiah" <Valenciajuk@yahoo.com>
+Subject: We are experts in getting people laid
+Date: Wed, 02 Aug 2006 20:11:50 -0500
+Message-ID: <47783994_793923_926472.jbhud@yahoo.com>
 Content-Type: text/plain;
 	charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Wed Aug 02 03:00:26 2006
+X-From: git-owner@vger.kernel.org Thu Aug 03 02:12:41 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G8560-0006an-VW
-	for gcvg-git@gmane.org; Wed, 02 Aug 2006 03:00:25 +0200
+	id 1G8QpA-0005B1-Cj
+	for gcvg-git@gmane.org; Thu, 03 Aug 2006 02:12:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750890AbWHBBAV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 1 Aug 2006 21:00:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750892AbWHBBAU
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Aug 2006 21:00:20 -0400
-Received: from adsl-67-123-250-25.dsl.pltn13.pacbell.net ([67.123.250.25]:62477
-	"HELO 42DAF880") by vger.kernel.org with SMTP id S1750890AbWHBBAU
-	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 1 Aug 2006 21:00:20 -0400
-Received: from crm0.yahoo.com (localhost.localdomain [127.0.0.1])
-	by crm7.yahoo.com (Postfix) with ESMTP id 910789EBA;
-	Tue, 01 Aug 2006 21:00:09 -0500
-X-Mailer: Mediacomm Communicator 1.1
-X-Virus-Scanned: amavisd-new at yahoo.com
-X-Antispam-ID: EDA229342564
+	id S1750743AbWHCAML (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 2 Aug 2006 20:12:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750843AbWHCAML
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Aug 2006 20:12:11 -0400
+Received: from pppoe-66-112-65-45.rb2.lax.centurytel.net ([66.112.65.45]:44559
+	"HELO 441A3128") by vger.kernel.org with SMTP id S1750743AbWHCAMK
+	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 2 Aug 2006 20:12:10 -0400
+Received: from 74.131.226.200.in-addr.arpa.yahoo.com (HELO localhost.localdomain) ([66.112.65.45])
+          (envelope-sender <Valenciajuk@yahoo.com>)
+          by email-4.yahoo.com (qmail-ldap-1.03) with SMTP
+          for <git@vger.kernel.org>; Wed, 02 Aug 2006 20:11:50 -0500
+X-Mailer: iGMail [www.ig.com.br]
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 12.6 points;
- *  3.9 RATWARE_RCVD_PF Bulk email fingerprint (Received PF) found
+X-Spam-Report: 9.5 points;
  *  0.0 COMPLETELY_FREE BODY: No such thing as a free lunch (2)
  *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
- *      [score: 0.4600]
+ *      [score: 0.4994]
+ *  0.3 RCVD_IN_SORBS_SOCKS RBL: SORBS: sender is open SOCKS proxy server
+ *      [66.112.65.45 listed in dnsbl.sorbs.net]
  *  3.0 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
- *      [Blocked - see <http://www.spamcop.net/bl.shtml?67.123.250.25>]
+ *      [Blocked - see <http://www.spamcop.net/bl.shtml?66.112.65.45>]
+ *  0.4 RCVD_IN_NJABL_PROXY RBL: NJABL: sender is an open proxy
+ *      [66.112.65.45 listed in combined.njabl.org]
+ *  0.0 RCVD_IN_SORBS_WEB RBL: SORBS: sender is a abuseable web server
+ *      [66.112.65.45 listed in dnsbl.sorbs.net]
  *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
  *      [URIs: datingisrealfun.com]
  *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
  *      [URIs: datingisrealfun.com]
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24618>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24700>
 
 100% FREE Adult Personals
 
