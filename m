@@ -7,127 +7,201 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3D0C61F404
-	for <e@80x24.org>; Wed,  4 Apr 2018 16:16:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 60FE71F404
+	for <e@80x24.org>; Wed,  4 Apr 2018 16:36:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751906AbeDDQQU (ORCPT <rfc822;e@80x24.org>);
-        Wed, 4 Apr 2018 12:16:20 -0400
-Received: from mout.gmx.net ([212.227.15.15]:33531 "EHLO mout.gmx.net"
+        id S1752079AbeDDQgC (ORCPT <rfc822;e@80x24.org>);
+        Wed, 4 Apr 2018 12:36:02 -0400
+Received: from mout.gmx.net ([212.227.17.22]:47271 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751606AbeDDQQU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Apr 2018 12:16:20 -0400
+        id S1751714AbeDDQgB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Apr 2018 12:36:01 -0400
 Received: from MININT-AIVCFQ2.fareast.corp.microsoft.com ([37.201.195.115]) by
- mail.gmx.com (mrgmx001 [212.227.17.190]) with ESMTPSA (Nemesis) id
- 0M4WuC-1eIEZG36SK-00ye3g; Wed, 04 Apr 2018 18:16:14 +0200
-Date:   Wed, 4 Apr 2018 18:16:13 +0200 (DST)
+ mail.gmx.com (mrgmx103 [212.227.17.168]) with ESMTPSA (Nemesis) id
+ 0MJjUO-1f2evT3fhE-0019sG for <git@vger.kernel.org>; Wed, 04 Apr 2018 18:35:59
+ +0200
+Date:   Wed, 4 Apr 2018 18:35:59 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Clemens Buchacher <drizzd@gmx.net>,
-        Manlio Perillo <manlio.perillo@gmail.com>
-cc:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        git@vger.kernel.org, manlio.perillo@gmail.com, gitster@pobox.com
-Subject: Re: [PATCH] completion: improve ls-files filter performance
-In-Reply-To: <20180404074658.GA5833@Sonnenschein.localdomain>
-Message-ID: <nycvar.QRO.7.76.6.1804041805150.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <1521274624-1370-1-git-send-email-drizzd@gmx.net> <1521274624-1370-2-git-send-email-drizzd@gmx.net> <20180318012618.32691-1-szeder.dev@gmail.com> <20180404074658.GA5833@Sonnenschein.localdomain>
+To:     git@vger.kernel.org
+Subject: commit -> public-inbox link helper
+Message-ID: <nycvar.QRO.7.76.6.1804041821420.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:TlkT3vH05ibdjWNQDmtIBW5u5OpEeFZw6bIADWSXz4hGTp/n09w
- t8hWRc0m2Xr0mG2T/4HpDa1z1k2L/L9VqZziwmud2YezdSCogcxmVsSN55A+iw6BlPbken4
- AHSQ2w7p0o45VsGFKFweIBYvMuLr9MN32xR+jP0M3OQwSCWcwqKO4HN7c7g8O4RLcjlt/Lh
- WWyBzp5pUDlK/ZDj0Z6yQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:AGww24UivAE=:5RqiNmIthvX7/j457gJ8lX
- wnkwvL+7YUdx7Ij+BnFqiLbIIoscksI5tjyVozT0y6SckYBwxIy415FiFM1rERYdra4NHgo1E
- 2AcoWRYGLOlsF3sy1huyc42Q15GIjoh5cEJ3qOt/SHkzAekwpigydNU1p3jVOF0OTmCMSOs9l
- r3ijWvgYHCEA8k3VJAdrk3BrvCB/y9gFWXKZdFDAbMLsIw2NyFQmn/6vlyvfBZRTi6tnYqUJM
- FcySp9cWQAFqt3fYegFelsfB3swdDGbKDNsfGMh+0T7oyJEilwg2FkNcXBVDCVHGxN8Rk5S6s
- 5K7khdyHVdrMe9M47pQ34K49PY2sVCiv5H3XbLxfz5kiWM+36+lcpLzVCScERC7NF7tTwA75X
- Csfz8t2clbUqexlqKA2olRn+rSqiDuqO5uPers1AaSRZ0CX/j8T9s2nE1OC0L+H4kYR/fpi0e
- XITyZS/yvbo+eYSxo/YfuVF3wvNh1bUTLGxhOk4E2VaJ+tqFwMAHppwokzAXrl3ZM4ZckyzJm
- VxFJVguxENEE9N0YWq8svm4LpwF0TTcomhORtNS7bJL3QphKUvffcNDuh5agWlcf/KPWc8QS4
- NmK/jG8o1wQWFlxFJipttVYhXUA51q5jNHHokrseaH/UThyeukQwl/Ep6tWNNHuS/L8N2B8ND
- Ep3gb0Bo/aitgii5kqyLiy/KxG5ztCnhH7o41kM9mBRfzAluapDOQVDk8udnkD1w19LBgoWRA
- uMN6PVzdFHtF5eqAvBHEYQmEBs6A+wHTMmY1PK3Af31am6Z2YYLSA7Qgdv6o0swd4OsWAIQu5
- ipxqVi2H0HUjyEJbp9agXQMTeafEuaEIBVxIKfX6hHYRaXGfcqqYJ99ZM5GXWFk+iO2qDJi
+X-Provags-ID: V03:K1:n2NCHp2X1OZ/HzALoHLYM2HPfT6Y7h/kxN8iZ/9lCtdCEIMqHZQ
+ 86AxbBQ8SOjBI9ETCeK1M06b7Vd09fRdhGjW3eIU/9iG1LjnyWCWLlmGKq4PhFg+96ffWDe
+ us3MTunpUrpOLqwaiMnxUYqGY+wRsDKdoPYdbbqiR2n8xnpvzWV62LLpxFTXpH2dEe95TLp
+ gyDtUlCTMUDqCkA8Hlbaw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:77JlIbxHuTk=:TbZNKz75k0R4EMTe7enleV
+ LCcNoTs2f/ALZnXCj5vEfCvG2wXXi4HEsv5WPyGZqGHgLruqgE1ZqXUhuFKAo1yvP9hzBJ1ve
+ TNUAB/hQi7Lz7QUvUZMpp1GPKYveP/YJkVWVPm10gPP/7wS8OyBzK9j7MxinlSC4/JkvNq9k8
+ gWX8BrwVNSwGLBvMxRri5qFrZHCDPRUDhLSPzY1Q6OBWZ/Ikp5pUWHUO9h9YmY0U/aoabWLoH
+ O9cUQkIZ8shXquHs0fqE6p5GyTZKXLmvbMfB3f3FGdOpVT0C9tv6gYPYvHMlFNxIFjb8+vUlQ
+ HTy3WBYawVpZi+SM9jwylJ29YqeXokZiziRTMupZVi0NjsR+SSDTahzh3OywMDQyGac7Q0kh/
+ ZX2D6nkCSakQ4UmaTd7I9DuzNXvGNuqx8vN7CS8up80DlnOxhIIzE3RkLBWsxg7PJCB6F1CAI
+ /mf+cxFooR+0rLMhYtq9WJyKXFKq/phAyj01wpI8gn1P81aA3QtJk2eUYUYUiO7rbxSF+u1J9
+ SBlj9XfLrdYRRJMsS6EnOemoAaGI1Pzt2vZ2aOLfx6F97aDDHXGXyayEYXJ6NJDp1MVGoAYLO
+ xIIwj3ERjpX0j5mIwX2jgOQqL0WeaQ47FiIyTtRJAubnSyVSa3RYwojNK01fNZZkItJ1f126Z
+ 6Bv47PsfrggcE8eIx87/2sNX0IL18MmtrrW5gzsaMvb01jrsLsmjxU4kfKqOr9JzwX6NCVEme
+ 8R5Lv1PKtbv5tWD+1GO0RA6J1EHEEHR27LxB3KOs/uBsO7VohXEJUzgmUyYp+nyz82w3+ynzk
+ L4TUqIjB0HlZUvOShPHSftrzHSJlmTS/1/QUDjRjE0oA4wOyN8m/GcHE+hvamvbXGYSh9ks
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi drizzd,
+Hi team,
 
-On Wed, 4 Apr 2018, Clemens Buchacher wrote:
+I found myself in dear need to quickly look up mails in the public-inbox
+mail archive corresponding to any given commit in git.git. Some time ago,
+I wrote a shell script to help me with that, and I found myself using it a
+couple of times, so I think it might be useful for others, too.
 
-> From the output of ls-files, we remove all but the leftmost path
-> component and then we eliminate duplicates. We do this in a while loop,
-> which is a performance bottleneck when the number of iterations is large
-> (e.g. for 60000 files in linux.git).
-> 
-> $ COMP_WORDS=(git status -- ar) COMP_CWORD=3; time _git
-> 
-> real    0m11.876s
-> user    0m4.685s
-> sys     0m6.808s
-> 
-> Replacing the loop with the cut command improves performance
-> significantly:
-> 
-> $ COMP_WORDS=(git status -- ar) COMP_CWORD=3; time _git
-> 
-> real    0m1.372s
-> user    0m0.263s
-> sys     0m0.167s
-> 
-> The measurements were done with Msys2 bash, which is used by Git for
-> Windows.
+This script (I call it lookup-commit.sh) needs to be dropped into a *bare*
+clone of http://public-inbox.org/git, and called with its absolute or
+relative path from a git.git worktree, e.g.
 
-Those are nice numbers right there, so I am eager to get this into Git for
-Windows as quickly as it stabilizes (i.e. when it hits `next` or so).
+	~/public-inbox-git.git/lookup-commit.sh \
+		fea16b47b603e7e4fa7fca198bd49229c0e5da3d
 
-I was wondering about one thing, though:
+This will take a while initially, or when the `master` branch of the
+public-inbox mirror was updated, as it will generate two files with
+plain-text mappings.
 
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-> index 6da95b8..69a2d41 100644
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -384,12 +384,7 @@ __git_index_files ()
->  	local root="${2-.}" file
->  
->  	__git_ls_files_helper "$root" "$1" |
-> -	while read -r file; do
-> -		case "$file" in
-> -		?*/*) echo "${file%%/*}" ;;
+In its default mode, it will print the Message-ID of the mail (if found).
 
-This is a bit different from the `cut -f1 -d/` logic, as it does *not
-necessarily* strip a leading slash: for `/abc` the existing code would
-return the string unmodified, for `/abc/def` it would return an empty
-string!
+With --open, it opens the mail in a browser (macOS support is missing,
+mainly because I cannot test: just add an `open` alternative to
+`xdg-open`).
 
-Now, I think that this peculiar behavior is most likely bogus as `git
-ls-files` outputs only relative paths (that I know of). In any case,
-reducing paths to an empty string seems fishy.
+With --reply, it puts the mail into the `from-public-inbox` folder of a
+maildir-formatted ~/Mail/, so it is pretty specific to my setup here.
 
-I looked through the history of that code and tracked it all the way back
-to
-https://public-inbox.org/git/1357930123-26310-1-git-send-email-manlio.perillo@gmail.com/
-(that is the reason why you are Cc:ed, Manlio). Manlio, do you remember
-why you put the `?` in front of `?*/*` here? I know, it's been more than
-five years...
+Note: the way mails are matched is by timestamp. In practice, this works
+amazingly often (although not always, I reported findings short after
+GitMerge 2017). My plan was to work on this when/as needed.
 
-Out of curiosity, would the numbers change a lot if you replaced the `cut
--f1 -d/` call by a `sed -e 's/^\//' -e 's/\/.*//'` one?
+Note also: the script is very much in a 'works-for-me' state, and I could
+imagine that others might want to modify it to their needs. I would be
+delighted if somebody would take custody of it (as in: start a repository
+on GitHub, adding a README.md, adding a config setting to point to the
+location of the public-inbox mirror without having to copy the script,
+adding an option to install an alias to run the script, etc).
 
-I am not proposing to change the patch, though, because we really do not
-need to expect `ls-files` to print lines with leading slashes.
+And now, without further ado, here it is, the script, in its current glory:
 
-> -		*) echo "$file" ;;
-> -		esac
-> -	done | sort | uniq
-> +	cut -f1 -d/ | sort | uniq
->  }
->  
->  # Lists branches from the local repository.
+-- snipsnap --
+#!/bin/sh
 
-Ciao,
-Dscho
+# This is a very simple helper to assist with finding the mail (if any)
+# corresponding to a given commit in git.git.
+
+die () {
+	echo "$*" >&2
+	exit 1
+}
+
+mode=print
+while case "$1" in
+--open) mode=open;;
+--reply) mode=reply;;
+-*) die "Unknown option: $1";;
+*) break;;
+esac; do shift; done
+
+test $# = 1 ||
+die "Usage: $0 ( [--open] | [--reply] ) <commit>"
+
+test reply != $mode ||
+test -d "$HOME/Mail" ||
+die "Need $HOME/Mail to reply"
+
+commit="$1"
+tae="$(git show -s --format='%at %an <%ae>' "$1")" ||
+die "Could not get Timestamp/Author/Email triplet from $1"
+
+# We try to match the timestamp first; the author name and author email are
+# not as reliable: they might have been overridden via a "From:" line in the
+# mail's body
+timestamp=${tae%% *}
+
+cd "$(dirname "$0")" ||
+die "Could not cd to the public-inbox directory"
+
+git rev-parse --quiet --verify \
+	b60d038730d2c2bb8ab2b48c117db917ad529cf7 >/dev/null 2>&1 ||
+die "Not a public-inbox directory: $(pwd)"
+
+head="$(git rev-parse --verify master)" ||
+die "Could not determine tip of master"
+
+prevhead=
+test ! -f map.latest-rev ||
+prevhead="$(cat map.latest-rev)"
+
+if test $head != "$prevhead"
+then
+	range=${prevhead:+$prevhead..}$head
+	echo "Inserting records for $range" >&2
+	git log --format="%at %h %an <%ae>" $range >map.txt.add ||
+	die "Could not enumerate $range"
+
+	cat map.txt map.txt.add 2>/dev/null | sort -n >map.txt.new &&
+	mv -f map.txt.new map.txt ||
+	die "Could not insert new records"
+
+	echo $head >map.latest-rev
+fi
+
+lines="$(grep "^$timestamp " <map.txt)"
+if test 1 != $(echo "$lines" | wc -l)
+then
+	test -n "$lines" ||
+	die "No records found for timestamp $timestamp"
+
+	echo "Multiple records found:"
+
+	for h in $(echo "$lines" | cut -d ' ' -f 2)
+	do
+		git show -s --format="%nOn %ad, %an <%ae> sent" $h
+		git show $h |
+		sed -n -e 's/^+Message-Id: <\(.*\)>/\1/ip' \
+			-e 's/^+Subject: //ip'
+	done
+
+	exit 1
+fi
+
+# We found exactly one record: print the message ID
+h=${lines#$timestamp }
+h=${h%% *}
+messageid="$(git show $h | sed -n 's/^+Message-Id: <\(.*\)>/\1/ip')" ||
+die "Could not determine Message-Id from $h"
+
+case $mode in
+print) echo $messageid;;
+open)
+	url=https://public-inbox.org/git/$messageid
+	case "$(uname -s)" in
+	Linux) xdg-open "$url";;
+	MINGW*|MSYS*) start "$url";;
+	*) die "Need to learn how to open URLs on $(uname -s)";;
+	esac
+	;;
+reply)
+	mkdir -p "$HOME/Mail/from-public-inbox/new" &&
+	mkdir -p "$HOME/Mail/from-public-inbox/cur" &&
+	mkdir -p "$HOME/Mail/from-public-inbox/tmp" ||
+	die "Could not set up mail folder 'from-public-inbox'"
+
+	path=$(git diff --name-only $h^!) &&
+	mail="$(printf "%s_%09d.%s:2," $(date +%s.%N) $$ $(hostname -f))"
+&&
+	git show $h:$path >"$HOME/Mail/from-public-inbox/new/$mail" ||
+	die "Could not write mail"
+	;;
+*)
+	die "Unhandled mode: $mode"
+	;;
+esac
