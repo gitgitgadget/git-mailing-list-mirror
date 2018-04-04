@@ -2,206 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 60FE71F404
-	for <e@80x24.org>; Wed,  4 Apr 2018 16:36:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D90EF1F404
+	for <e@80x24.org>; Wed,  4 Apr 2018 16:43:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752079AbeDDQgC (ORCPT <rfc822;e@80x24.org>);
-        Wed, 4 Apr 2018 12:36:02 -0400
-Received: from mout.gmx.net ([212.227.17.22]:47271 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751714AbeDDQgB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Apr 2018 12:36:01 -0400
-Received: from MININT-AIVCFQ2.fareast.corp.microsoft.com ([37.201.195.115]) by
- mail.gmx.com (mrgmx103 [212.227.17.168]) with ESMTPSA (Nemesis) id
- 0MJjUO-1f2evT3fhE-0019sG for <git@vger.kernel.org>; Wed, 04 Apr 2018 18:35:59
- +0200
-Date:   Wed, 4 Apr 2018 18:35:59 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     git@vger.kernel.org
-Subject: commit -> public-inbox link helper
-Message-ID: <nycvar.QRO.7.76.6.1804041821420.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1752163AbeDDQnR (ORCPT <rfc822;e@80x24.org>);
+        Wed, 4 Apr 2018 12:43:17 -0400
+Received: from forward2j.cmail.yandex.net ([5.255.227.20]:53080 "EHLO
+        forward2j.cmail.yandex.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751950AbeDDQnQ (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 4 Apr 2018 12:43:16 -0400
+X-Greylist: delayed 426 seconds by postgrey-1.27 at vger.kernel.org; Wed, 04 Apr 2018 12:43:16 EDT
+Received: from mxback20j.mail.yandex.net (mxback20j.mail.yandex.net [IPv6:2a02:6b8:0:1619::114])
+        by forward2j.cmail.yandex.net (Yandex) with ESMTP id F067D20C5D;
+        Wed,  4 Apr 2018 19:36:08 +0300 (MSK)
+Received: from localhost (localhost [::1])
+        by mxback20j.mail.yandex.net (nwsmtp/Yandex) with ESMTP id rXc3hnjrYK-a80aegJO;
+        Wed, 04 Apr 2018 19:36:08 +0300
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ya.ru; s=mail; t=1522859768;
+        bh=uv4753VjFNQYbBizsV/ZrpYvh6DxGzs2CL0oYF1le9g=;
+        h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date;
+        b=fh89vBF+7JM4iOBHFg5JiN3jL9cseEtMofx+LFFM4dzd8ta0LGILeYQX7cbd6C3Ne
+         wD/CBPdIvaETeTnizBllYRa4Rv0J7HVB+NWhK5QzQ0KAfkblevXwkRX9mm1yu+4ubz
+         nf9XEjZnRZRmzKFBaQ9RVhyuKAo/6Ggjx1Bc+kOo=
+Authentication-Results: mxback20j.mail.yandex.net; dkim=pass header.i=@ya.ru
+Received: by web13j.yandex.ru with HTTP;
+        Wed, 04 Apr 2018 19:36:08 +0300
+From:   Alex Ivanov <gnidorah@ya.ru>
+Envelope-From: gnidorah@yandex.ru
+To:     Jacob Keller <jacob.keller@gmail.com>
+Cc:     Git mailing list <git@vger.kernel.org>
+In-Reply-To: <CA+P7+xoaOt4KwTOQSfwiyB1CQ317kbCZ2u26RoPA02Z4WYr9EA@mail.gmail.com>
+References: <671541522781590@web3o.yandex.ru> <CA+P7+xoaOt4KwTOQSfwiyB1CQ317kbCZ2u26RoPA02Z4WYr9EA@mail.gmail.com>
+Subject: Re: Socket activation for GitWeb FastCGI with systemd?
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:n2NCHp2X1OZ/HzALoHLYM2HPfT6Y7h/kxN8iZ/9lCtdCEIMqHZQ
- 86AxbBQ8SOjBI9ETCeK1M06b7Vd09fRdhGjW3eIU/9iG1LjnyWCWLlmGKq4PhFg+96ffWDe
- us3MTunpUrpOLqwaiMnxUYqGY+wRsDKdoPYdbbqiR2n8xnpvzWV62LLpxFTXpH2dEe95TLp
- gyDtUlCTMUDqCkA8Hlbaw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:77JlIbxHuTk=:TbZNKz75k0R4EMTe7enleV
- LCcNoTs2f/ALZnXCj5vEfCvG2wXXi4HEsv5WPyGZqGHgLruqgE1ZqXUhuFKAo1yvP9hzBJ1ve
- TNUAB/hQi7Lz7QUvUZMpp1GPKYveP/YJkVWVPm10gPP/7wS8OyBzK9j7MxinlSC4/JkvNq9k8
- gWX8BrwVNSwGLBvMxRri5qFrZHCDPRUDhLSPzY1Q6OBWZ/Ikp5pUWHUO9h9YmY0U/aoabWLoH
- O9cUQkIZ8shXquHs0fqE6p5GyTZKXLmvbMfB3f3FGdOpVT0C9tv6gYPYvHMlFNxIFjb8+vUlQ
- HTy3WBYawVpZi+SM9jwylJ29YqeXokZiziRTMupZVi0NjsR+SSDTahzh3OywMDQyGac7Q0kh/
- ZX2D6nkCSakQ4UmaTd7I9DuzNXvGNuqx8vN7CS8up80DlnOxhIIzE3RkLBWsxg7PJCB6F1CAI
- /mf+cxFooR+0rLMhYtq9WJyKXFKq/phAyj01wpI8gn1P81aA3QtJk2eUYUYUiO7rbxSF+u1J9
- SBlj9XfLrdYRRJMsS6EnOemoAaGI1Pzt2vZ2aOLfx6F97aDDHXGXyayEYXJ6NJDp1MVGoAYLO
- xIIwj3ERjpX0j5mIwX2jgOQqL0WeaQ47FiIyTtRJAubnSyVSa3RYwojNK01fNZZkItJ1f126Z
- 6Bv47PsfrggcE8eIx87/2sNX0IL18MmtrrW5gzsaMvb01jrsLsmjxU4kfKqOr9JzwX6NCVEme
- 8R5Lv1PKtbv5tWD+1GO0RA6J1EHEEHR27LxB3KOs/uBsO7VohXEJUzgmUyYp+nyz82w3+ynzk
- L4TUqIjB0HlZUvOShPHSftrzHSJlmTS/1/QUDjRjE0oA4wOyN8m/GcHE+hvamvbXGYSh9ks
+Message-Id: <2030761522859768@web13j.yandex.ru>
+X-Mailer: Yamail [ http://yandex.ru ] 5.0
+Date:   Wed, 04 Apr 2018 19:36:08 +0300
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi team,
 
-I found myself in dear need to quickly look up mails in the public-inbox
-mail archive corresponding to any given commit in git.git. Some time ago,
-I wrote a shell script to help me with that, and I found myself using it a
-couple of times, so I think it might be useful for others, too.
 
-This script (I call it lookup-commit.sh) needs to be dropped into a *bare*
-clone of http://public-inbox.org/git, and called with its absolute or
-relative path from a git.git worktree, e.g.
+03.04.2018, 23:04, "Jacob Keller" <jacob.keller@gmail.com>:
+> On Tue, Apr 3, 2018 at 11:53 AM, Alex Ivanov <gnidorah@ya.ru> wrote:
+>>  Hi.
+>>  I want to use systemd as fastcgi spawner for gitweb + nginx.
+>>  The traffic is low and number of users is limited + traversal bots. For that reason I've decided to use following mimimal services
+>>
+>>  gitweb.socket
+>>  [Unit]
+>>  Description=GitWeb Socket
+>>
+>>  [Socket]
+>>  ListenStream=/run/gitweb.sock
+>>  Accept=false
+>>
+>>  [Install]
+>>  WantedBy=sockets.target
+>>
+>>  gitweb.service
+>>  [Unit]
+>>  Description=GitWeb Service
+>>
+>>  [Service]
+>>  Type=simple
+>>  ExecStart=/path/to/gitweb.cgi --fcgi
+>>  StandardInput=socket
+>>
+>>  However this scheme is not resistant to simple DDOS.
+>>  E.g. traversal bots often kill the service by opening non existing path (e.g http://host/?p=repo;a=blob;f=nonexisting/path;hb=HEAD showing in browser 404 - Cannot find file) many times consecutively, which leads to
+>>  Apr 03 21:32:10 host systemd[1]: gitweb.service: Start request repeated too quickly.
+>>  Apr 03 21:32:10 host systemd[1]: gitweb.service: Failed with result 'start-limit-hit'.
+>>  Apr 03 21:32:10 host systemd[1]: Failed to start GitWeb service.
+>>  and 502 Bad Gateway in browser. I believe the reason is that gitweb.service dies on failure and if it happens too often, systemd declines to restart the service due to start limit hit.
+>>  So my question is how to correct systemd services for GitWeb to be resistant to such issue? I prefer to use single process to process all clients.
+>>  Thanks.
+>
+> This sounds like a systemd specific question that might get a better
+> answer from the systemd mailing list.
 
-	~/public-inbox-git.git/lookup-commit.sh \
-		fea16b47b603e7e4fa7fca198bd49229c0e5da3d
+Thanks I will try that too.
 
-This will take a while initially, or when the `master` branch of the
-public-inbox mirror was updated, as it will generate two files with
-plain-text mappings.
+>
+> That being said, I believe if in this case gitweb is dying due to the
+> path not existing? You might be able to configure systemd to
+> understand that the particular exit code for when the path doesn't
+> exist is a "valid" exit, and not a failure case..
 
-In its default mode, it will print the Message-ID of the mail (if found).
+I will try to do that, but I'm afraid that there may be other ways to remotely abuse the service.
 
-With --open, it opens the mail in a browser (macOS support is missing,
-mainly because I cannot test: just add an `open` alternative to
-`xdg-open`).
+>
+> I'm not entirely understanding your goal.. you want each request to
+> launch the gitweb process, and when it's done you want it to exit? But
+> if there are multiple connections at once you want it to stay alive
+> until it services them all? I think the best answer is configure
+> systemd to understand that the exit code for when the path is invalid
+> will be counted as a success.
 
-With --reply, it puts the mail into the `from-public-inbox` folder of a
-maildir-formatted ~/Mail/, so it is pretty specific to my setup here.
+I want a single process for all connections too keep RAM usage at minimal. I also though it fits my case since number of users is low.
 
-Note: the way mails are matched is by timestamp. In practice, this works
-amazingly often (although not always, I reported findings short after
-GitMerge 2017). My plan was to work on this when/as needed.
-
-Note also: the script is very much in a 'works-for-me' state, and I could
-imagine that others might want to modify it to their needs. I would be
-delighted if somebody would take custody of it (as in: start a repository
-on GitHub, adding a README.md, adding a config setting to point to the
-location of the public-inbox mirror without having to copy the script,
-adding an option to install an alias to run the script, etc).
-
-And now, without further ado, here it is, the script, in its current glory:
-
--- snipsnap --
-#!/bin/sh
-
-# This is a very simple helper to assist with finding the mail (if any)
-# corresponding to a given commit in git.git.
-
-die () {
-	echo "$*" >&2
-	exit 1
-}
-
-mode=print
-while case "$1" in
---open) mode=open;;
---reply) mode=reply;;
--*) die "Unknown option: $1";;
-*) break;;
-esac; do shift; done
-
-test $# = 1 ||
-die "Usage: $0 ( [--open] | [--reply] ) <commit>"
-
-test reply != $mode ||
-test -d "$HOME/Mail" ||
-die "Need $HOME/Mail to reply"
-
-commit="$1"
-tae="$(git show -s --format='%at %an <%ae>' "$1")" ||
-die "Could not get Timestamp/Author/Email triplet from $1"
-
-# We try to match the timestamp first; the author name and author email are
-# not as reliable: they might have been overridden via a "From:" line in the
-# mail's body
-timestamp=${tae%% *}
-
-cd "$(dirname "$0")" ||
-die "Could not cd to the public-inbox directory"
-
-git rev-parse --quiet --verify \
-	b60d038730d2c2bb8ab2b48c117db917ad529cf7 >/dev/null 2>&1 ||
-die "Not a public-inbox directory: $(pwd)"
-
-head="$(git rev-parse --verify master)" ||
-die "Could not determine tip of master"
-
-prevhead=
-test ! -f map.latest-rev ||
-prevhead="$(cat map.latest-rev)"
-
-if test $head != "$prevhead"
-then
-	range=${prevhead:+$prevhead..}$head
-	echo "Inserting records for $range" >&2
-	git log --format="%at %h %an <%ae>" $range >map.txt.add ||
-	die "Could not enumerate $range"
-
-	cat map.txt map.txt.add 2>/dev/null | sort -n >map.txt.new &&
-	mv -f map.txt.new map.txt ||
-	die "Could not insert new records"
-
-	echo $head >map.latest-rev
-fi
-
-lines="$(grep "^$timestamp " <map.txt)"
-if test 1 != $(echo "$lines" | wc -l)
-then
-	test -n "$lines" ||
-	die "No records found for timestamp $timestamp"
-
-	echo "Multiple records found:"
-
-	for h in $(echo "$lines" | cut -d ' ' -f 2)
-	do
-		git show -s --format="%nOn %ad, %an <%ae> sent" $h
-		git show $h |
-		sed -n -e 's/^+Message-Id: <\(.*\)>/\1/ip' \
-			-e 's/^+Subject: //ip'
-	done
-
-	exit 1
-fi
-
-# We found exactly one record: print the message ID
-h=${lines#$timestamp }
-h=${h%% *}
-messageid="$(git show $h | sed -n 's/^+Message-Id: <\(.*\)>/\1/ip')" ||
-die "Could not determine Message-Id from $h"
-
-case $mode in
-print) echo $messageid;;
-open)
-	url=https://public-inbox.org/git/$messageid
-	case "$(uname -s)" in
-	Linux) xdg-open "$url";;
-	MINGW*|MSYS*) start "$url";;
-	*) die "Need to learn how to open URLs on $(uname -s)";;
-	esac
-	;;
-reply)
-	mkdir -p "$HOME/Mail/from-public-inbox/new" &&
-	mkdir -p "$HOME/Mail/from-public-inbox/cur" &&
-	mkdir -p "$HOME/Mail/from-public-inbox/tmp" ||
-	die "Could not set up mail folder 'from-public-inbox'"
-
-	path=$(git diff --name-only $h^!) &&
-	mail="$(printf "%s_%09d.%s:2," $(date +%s.%N) $$ $(hostname -f))"
-&&
-	git show $h:$path >"$HOME/Mail/from-public-inbox/new/$mail" ||
-	die "Could not write mail"
-	;;
-*)
-	die "Unhandled mode: $mode"
-	;;
-esac
+>
+> Thanks,
+> Jake
