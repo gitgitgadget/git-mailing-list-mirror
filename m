@@ -2,64 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A92521F404
-	for <e@80x24.org>; Wed,  4 Apr 2018 20:05:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A3A4A1F404
+	for <e@80x24.org>; Wed,  4 Apr 2018 20:21:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751559AbeDDUFj (ORCPT <rfc822;e@80x24.org>);
-        Wed, 4 Apr 2018 16:05:39 -0400
-Received: from a7-12.smtp-out.eu-west-1.amazonses.com ([54.240.7.12]:41790
-        "EHLO a7-12.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751399AbeDDUFj (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 4 Apr 2018 16:05:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=uku4taia5b5tsbglxyj6zym32efj7xqv; d=amazonses.com; t=1522872337;
-        h=From:To:Message-ID:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-        bh=r7wdloFG+Dt+6Nu3S+PTzNhyZ4L+Vvk6k4r2kiZbS3U=;
-        b=fDh7vWoPEBE5LrhWVMNoVmjCDGs743b6mdc4ARhuay7fS/dAAHG+fh7OImcpgCtv
-        /558Lcy+jI8cO1C/pscupGpSxAqHZ9/nLKtIvKqiZEt7LOK/uJBEt8E+XX6ybt0hJB4
-        ws6eRF0iepqtDk85THI5W3B+S8OaDkJxy899VNMo=
-From:   Stephon Harris <theonestep4@gmail.com>
-To:     git@vger.kernel.org
-Message-ID: <010201629243c44a-4a158009-aa68-4e05-ab54-f15a49ffb606-000000@eu-west-1.amazonses.com>
-Subject: [PATCH] Change permissions on git-completion.bash
+        id S1751896AbeDDUVS (ORCPT <rfc822;e@80x24.org>);
+        Wed, 4 Apr 2018 16:21:18 -0400
+Received: from mail-wm0-f50.google.com ([74.125.82.50]:55795 "EHLO
+        mail-wm0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751809AbeDDUVR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Apr 2018 16:21:17 -0400
+Received: by mail-wm0-f50.google.com with SMTP id b127so383399wmf.5
+        for <git@vger.kernel.org>; Wed, 04 Apr 2018 13:21:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=KLMdaej4OmR8vxDBUar2QfBRHfREVtnZrlBe3pCYvo0=;
+        b=CxNXumhA3mQMILJncncqSCa0LlKyU87lOGvmKcosciuDYKPPCZI5XM7VKVbtfugLB+
+         dp8gDWYJhHDGC95EawL2s/cvc18UPClGLFOOQsYuIwdG6/WoT9Du2DRjeuFcTbrGkYiK
+         FIhl9ny22tlcOPAmNlr6mnAG395lH1oNElCQITh6K4q2Rd4AFmfVHc/vqoC3JuPBxVfv
+         6dxUfVRADU24bseQ5j57fz6H/y39ujxUq6LU3hZxnARM5q89Bx0LGwXQq7qUSCGVNdfT
+         BpOxEB3HfieetjH73hb6wLW+VqiDjqPyxnne1Kap84F0JWlJK1j2Gnbyr3okUqj33Gpb
+         Cmjw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=KLMdaej4OmR8vxDBUar2QfBRHfREVtnZrlBe3pCYvo0=;
+        b=Vlpt688AocZ1+NYRoTTl1sDS6tbWoeaiOzoGWYTAAKF6S66BNt3CBkPvw5vCInLuxc
+         sWG1aFN8H/2GGZ5VZPprlwjzNEUrtTTZwxU2jaRo18Q6BPWX2MEb2LCLpm13/y1oKWfR
+         XIFdrWqT7vuTbGMpqThVlG3RhRCe8wJOMpM8G5aGfZHv5DYH/N2lygXUOXeXbOzFMW8d
+         1NvfZJCL02LVOEkoToAx653jcl7FkKPsxC3x4iEQiH4UalbMsTzQ6SovbP45vrdabzDD
+         NxlqUWQpe0iyLlKmsWwq71QfIcfn5KZ8H1iL9q6QzJ9ICiLhcBiD/BTklzd9OlRPBfLH
+         PhmQ==
+X-Gm-Message-State: ALQs6tAZkWMG1YYoYHPzLwz//LxU9ZqTFniyNxXESwU4rn64DGOlleyI
+        U/wErS4xzlKvyC6n9iNKbNR3RQOd
+X-Google-Smtp-Source: AIpwx4+D69//0KJq6k5lv73QAnoV4i0n7wzO9/iDKEiASJFrleCwjlofVz8zLPIaWQMBPz0iGpM3ZQ==
+X-Received: by 10.80.247.4 with SMTP id g4mr334795edn.121.1522873276355;
+        Wed, 04 Apr 2018 13:21:16 -0700 (PDT)
+Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
+        by smtp.gmail.com with ESMTPSA id f21sm2152597edm.37.2018.04.04.13.21.13
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 04 Apr 2018 13:21:14 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Stephon Harris <theonestep4@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] Change permissions on git-completion.bash
+References: <010201629243c44a-4a158009-aa68-4e05-ab54-f15a49ffb606-000000@eu-west-1.amazonses.com>
+User-agent: Debian GNU/Linux 9.4 (stretch); Emacs 25.1.1; mu4e 1.1.0
+In-reply-to: <010201629243c44a-4a158009-aa68-4e05-ab54-f15a49ffb606-000000@eu-west-1.amazonses.com>
+Date:   Wed, 04 Apr 2018 22:21:13 +0200
+Message-ID: <877epm205i.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Date:   Wed, 4 Apr 2018 20:05:37 +0000
-X-SES-Outgoing: 2018.04.04-54.240.7.12
-Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Updating  git-completion.bash to include instructions to change the permissions on the file when sourcing it in your .bashrc or .zshrc file.
----
- contrib/completion/git-completion.bash | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index b09c8a23626b4..fcd76cf169559 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -18,9 +18,10 @@
- # To use these routines:
- #
- #    1) Copy this file to somewhere (e.g. ~/.git-completion.bash).
--#    2) Add the following line to your .bashrc/.zshrc:
-+#    2) Change the permissions of the file to be executable (e.g. chmod u+x  ~/.git-completion.bash)
-+#    3) Add the following line to your .bashrc/.zshrc:
- #        source ~/.git-completion.bash
--#    3) Consider changing your PS1 to also show the current branch,
-+#    4) Consider changing your PS1 to also show the current branch,
- #       see git-prompt.sh for details.
- #
- # If you use complex aliases of form '!f() { ... }; f', you can use the null
+On Wed, Apr 04 2018, Stephon Harris wrote:
 
---
-https://github.com/git/git/pull/480
+> Updating git-completion.bash to include instructions to change the
+> permissions on the file when sourcing it in your .bashrc or .zshrc
+> file.
+
+But why is this needed? Files sourced by shells don't need to be
+executable, and quoting the bash manual "The file searched for in PATH
+need not be executable.".
+
+What breaks for you / doesn't work because it doesn't have the +x bit?
