@@ -6,114 +6,80 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D60591F404
-	for <e@80x24.org>; Thu,  5 Apr 2018 02:46:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B828F1F404
+	for <e@80x24.org>; Thu,  5 Apr 2018 02:47:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751195AbeDECq3 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 4 Apr 2018 22:46:29 -0400
-Received: from mail-pl0-f51.google.com ([209.85.160.51]:41008 "EHLO
-        mail-pl0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751117AbeDECq3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Apr 2018 22:46:29 -0400
-Received: by mail-pl0-f51.google.com with SMTP id bj1-v6so14655822plb.8
-        for <git@vger.kernel.org>; Wed, 04 Apr 2018 19:46:28 -0700 (PDT)
+        id S1751117AbeDECr1 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 4 Apr 2018 22:47:27 -0400
+Received: from mail-pl0-f65.google.com ([209.85.160.65]:39934 "EHLO
+        mail-pl0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750995AbeDECrZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Apr 2018 22:47:25 -0400
+Received: by mail-pl0-f65.google.com with SMTP id s24-v6so17093447plq.6
+        for <git@vger.kernel.org>; Wed, 04 Apr 2018 19:47:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=PtA9CZTkOfYSrRPzGU7z0PrFcINDnL5USWbVRQxl0hQ=;
-        b=fAxe9AEfs86003OQW6BslQvStEHCD/eWz2aOHSAqvmVfvV+HawrnOUKoEeTKkfBRD+
-         1Ui/0hpZy++HjWjqXK4hvZLe1uIsNxVrlFX3CEDZ+YPQdkCG3ocLy/Clb5zSfUxtU7oE
-         PRb8TGuNmrlkgD36c05LmrGEEg4ytnTRU9Duc5mQ8z2rTAnemYKE2mrHMz1WLZeGdMLl
-         E5iNFpyUPIjBU5eLsr/Q9MZC8f5i0P1OAiudv1j/RGExiPh7tVLMLusG9P+Rz7gn6s0H
-         OODj7OSd6yZRJ+HfFhjzIUX2UNzrwpkZz/FPQ/IHjC/pbCCpq7QFt5N1+50IaUJtQW0R
-         BPrQ==
+        bh=f+1q1w3uXAqEXKpgFanTjyWq/QHp7qZ2k3yb19taEC4=;
+        b=kl/fhQXMIua3B7y66vIR1e2XTH42eYbaUUSa93NYFGmqW6F1+AfLFfDBq6JAE6ELDi
+         3JnJeyQ2rLctUTZkT16mYyJzHDLPGNxr9k2AIUfnbOtXQr2p1c7RyRg2MHDqn2osPDms
+         pvSm7awKN1TOX4jxo5jZZpPgWH/nq8e8uxWLa4L2a+n5loJkAZTpuWMq+IaCukpP1LHa
+         8Q0ueC4q/fsL2PynRQ4kDL8wJ6YkyDuNF8P438ZC8iBL+pZ7f+7//xmkndECFmrbF9ZS
+         3OoZfbslDRtVf+ApMNvoecRTIzi7mVNG2/ftlnXDtXYn6M+Bm9FckUZan+fvT9wZ885T
+         Wjjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=PtA9CZTkOfYSrRPzGU7z0PrFcINDnL5USWbVRQxl0hQ=;
-        b=IwJw52PRfXdx4y7tjpkB8yMU5ywO/DeB6ghGcLp1eJgzMlv19ml4zwQiwty/7m5/FT
-         0K3w/SM+8waq3xRiQ81eDfRbn8DF19s1dMvPWMwsg4RH7rejHD+Cjg4tS2Th/S7LmOKC
-         gkhL4kRSquZCejJCcEoQklgFEeQ6+1Ks6dl1/TAvzZ6wWt2Bqa4MGMybYDbRsqigvBcN
-         uWP0BNWr+c4gqsGuAQ9CBAZC1XLEy2y26rLpfhbBurwmQoYeivzYfH3hGo2G+MTrBBcg
-         FNWqK5x+B9TnEPm0D5tCuMt/ihApDDmNCx5HeN3qerMb11jcXAXAFiolrRNEULyu2Maq
-         XOaA==
-X-Gm-Message-State: AElRT7FVd/GjHRSJ+QGQhzj3CxNDpvjOksO3/pN7DwgSXoU185KqXoQR
-        RhUA6sCyHVpNgAQmV6vIx9bPrQ==
-X-Google-Smtp-Source: AIpwx490TK8B49MXxpYatXerhxl9BtgslDAdg6fIvSQ73yIzVOaKRWv+UiWbnJAtMQaIojH0+igblA==
-X-Received: by 10.99.115.69 with SMTP id d5mr13632717pgn.289.1522896388309;
-        Wed, 04 Apr 2018 19:46:28 -0700 (PDT)
+        bh=f+1q1w3uXAqEXKpgFanTjyWq/QHp7qZ2k3yb19taEC4=;
+        b=TFkXYk+MHB5e6jqmg4PTQPFtZQSJWSVhr5Idi1lwr/JjZ6RlFgUY0t8sMWl9VONo79
+         0fVnDDFi+ZRRssSHE4F6HIaU+zhLP8UUzHz26mXzUlbevTt55rNIEMEmVljSMpfnwCOy
+         joIfLfDmaaDeuJwjdp4zzx8C8pxSSZgcLvjj2JsnT+kU/5KLjLhjFsn5s4JRkE5wpjlq
+         HjEwnUQesKBpLlFJZRkGTABYwbl2fof6kFTF2QFofJgf3vZlq45fKCdnFFz0w5J/J6Xs
+         S+FNlxvYho+k1Mug3NfZ8714BWluyxSAtIcMFKH8m+8VhtBb4QAggGXzzM8La/sv3GS4
+         6SDw==
+X-Gm-Message-State: AElRT7F7aizYjgONylEpleQV2tY2PiIko8vd5LLPjEO6F+8nT1QdDiOd
+        g9zIXnBsMOcduPJXfKrdBFRpLQ64xD4JrA==
+X-Google-Smtp-Source: AIpwx4/iQbZS8sAdyTN3rixhqyvpuKvdXb7slmRCDE0gzvB+nEipOAA7pj4sytR9X6VQ8+Idb/B97Q==
+X-Received: by 2002:a17:902:6b03:: with SMTP id o3-v6mr15402085plk.183.1522896445117;
+        Wed, 04 Apr 2018 19:47:25 -0700 (PDT)
 Received: from localhost ([2601:602:9500:3a4f:dc75:c2ae:e99:b3d1])
-        by smtp.gmail.com with ESMTPSA id p8sm11200230pgf.75.2018.04.04.19.46.26
+        by smtp.gmail.com with ESMTPSA id x27sm2751018pfa.134.2018.04.04.19.47.23
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 04 Apr 2018 19:46:27 -0700 (PDT)
-Date:   Wed, 4 Apr 2018 19:46:26 -0700
+        Wed, 04 Apr 2018 19:47:24 -0700 (PDT)
+Date:   Wed, 4 Apr 2018 19:47:23 -0700
 From:   Taylor Blau <me@ttaylorr.com>
 To:     Eric Sunshine <sunshine@sunshineco.com>
 Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
         Git List <git@vger.kernel.org>
-Subject: Re: [PATCH v3 1/3] builtin/config: introduce `--default`
-Message-ID: <20180405024626.GB31883@syl.local>
+Subject: Re: [PATCH v3 2/3] config.c: introduce 'git_config_color' to parse
+ ANSI colors
+Message-ID: <20180405024723.GC31883@syl.local>
 References: <20180324005556.8145-1-me@ttaylorr.com>
  <20180329011634.68582-1-me@ttaylorr.com>
- <20180329011634.68582-2-me@ttaylorr.com>
- <CAPig+cSk_H-Dh585JsynNfp1GSuXSkKay0Vo3Jhda6-vPdi6Uw@mail.gmail.com>
+ <20180329011634.68582-3-me@ttaylorr.com>
+ <CAPig+cRbQbFLw_qarT0rcOoEgBg-7gW_pbFpiH5yuO=miLuWfA@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAPig+cSk_H-Dh585JsynNfp1GSuXSkKay0Vo3Jhda6-vPdi6Uw@mail.gmail.com>
+In-Reply-To: <CAPig+cRbQbFLw_qarT0rcOoEgBg-7gW_pbFpiH5yuO=miLuWfA@mail.gmail.com>
 User-Agent: Mutt/1.9.3 (2018-01-21)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 30, 2018 at 04:23:56PM -0400, Eric Sunshine wrote:
+On Fri, Mar 30, 2018 at 04:26:09PM -0400, Eric Sunshine wrote:
 > On Wed, Mar 28, 2018 at 9:16 PM, Taylor Blau <me@ttaylorr.com> wrote:
-> > This commit (and those following it in this series) aim to eventually
-> > replace `--get-color` with a consistent alternative. By introducing
-> > `--default`, we allow the `--get-color` action to be promoted to a
-> > `--color` type specifier, retaining the "fallback" behavior via the
-> > `--default` flag introduced in this commit.
+> > In preparation for adding `--color` to the `git-config(1)` builtin,
+> > let's introduce a color parsing utility, `git_config_color` in a similar
+> > fashion to `git_config_<type>`.
 >
-> I'm confused. The cover letter said that this iteration no longer
-> introduces a --color option (favoring instead --type=color), but this
-> commit message still talks about --color. Did you mean
-> s/--color/--type=color/ ?
+> Did you mean s/--color/--type=color/ ?
 
-My mistake; I think I rebased this series off of the "--type=" series
-and forgot to amend this change. I have updated this and the below in
-the subsequent re-roll.
-
-> > For example, we aim to replace:
-> >
-> >   $ git config --get-color slot [default] [...]
-> >
-> > with:
-> >
-> >   $ git config --default default --color slot [...]
->
-> Ditto: s/--color/--type=color/
-
-Ack.
-
-> > Values filled by `--default` behave exactly as if they were present in
-> > the affected configuration file; they will be parsed by type specifiers
-> > without the knowledge that they are not themselves present in the
-> > configuration.
-> >
-> > Specifically, this means that the following will work:
-> >
-> >   $ git config --int --default 1M does.not.exist
-> >   1048576
-> >
-> > In subsequent commits, we will offer `--color`, which (in conjunction
-> > with `--default`) will be sufficient to replace `--get-color`.
->
-> Ditto: s/--color/--type=color/
-
-Ack.
+I did; thanks for pointing this out. I have fixed this to mention
+"--type=color" in the subsequent re-roll.
 
 Thanks,
 Taylor
