@@ -2,94 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3841D1F404
-	for <e@80x24.org>; Thu,  5 Apr 2018 22:15:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E9C671F404
+	for <e@80x24.org>; Thu,  5 Apr 2018 22:29:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753233AbeDEWPi (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Apr 2018 18:15:38 -0400
-Received: from mail-pl0-f65.google.com ([209.85.160.65]:39527 "EHLO
-        mail-pl0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752595AbeDEWPh (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Apr 2018 18:15:37 -0400
-Received: by mail-pl0-f65.google.com with SMTP id s24-v6so21258534plq.6
-        for <git@vger.kernel.org>; Thu, 05 Apr 2018 15:15:37 -0700 (PDT)
+        id S1754106AbeDEW3U (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Apr 2018 18:29:20 -0400
+Received: from mail-qk0-f174.google.com ([209.85.220.174]:32801 "EHLO
+        mail-qk0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752666AbeDEW3T (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Apr 2018 18:29:19 -0400
+Received: by mail-qk0-f174.google.com with SMTP id d206so28123843qkb.0
+        for <git@vger.kernel.org>; Thu, 05 Apr 2018 15:29:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=uksrXI9tOLD+RT/DhsChAQLHHOIXRC/KvgZ+q+y3ZzU=;
-        b=Vc9bc+9L0Xmr1bazLoiT9Y7r8htqqvsW5tjj7YqBGBf5SaE5u190IFAQj4oao63q6u
-         We6jHoFX7uRLCa3zORgcd5/9DKJr40z4tYS8kSoAEJ/Bd6Fyfeo+Osoq8ivOHwo15tRs
-         LwLV5l5CPRdRDzjAQh3YXQHmxv27m4Viql5bcItZBYCvmpi8/KrybnAVTAeQmouDq4rI
-         rDQTCVlHZrYGYQ7G3ce56wB6B4R9GLi0K6f52NMY8WRhX/20sfLn3U8SdOcM3HsOs755
-         cRQUspZY1ew3MCcUTBiQwWk3QkQI06f84SLV+t9cMJ5OxcRFajPfQnaafnmZsMn0kcJs
-         A2bg==
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=RLUDDDmzgJOAPdPckEl57breM0e8Y4ByPxIEQZHIb0U=;
+        b=lt0KwfXGTs2QYeNqVVP11CqdHMt+cnbiOLVK4F22o5hds1Aqlafiktsgty5R7Nr4LE
+         6rp9ZifU0NZGzwXrO/L/nWjbhJj5de1Q+yigKQ81O/v9XlAxfwrjwknwHYeQN/LpFKaX
+         fn0fBliwFn1/3LFM9aOBfhztzLIjGmZVmrMqLyoyagRSkVVpnerhOtOT0NkrIuv0vcpr
+         jplvJitCjXdXfhiRJw4LyJ6gz8V3nF6e5bB7PtDw8aVVS4Ic8pI6annin2ced3588RXp
+         FEwVMmkivIvp4DpbJrmjvQBm+zSWLu5Ffp7yw5EYInE7HQkquv1iYySqIF54DywGgumO
+         IwGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=uksrXI9tOLD+RT/DhsChAQLHHOIXRC/KvgZ+q+y3ZzU=;
-        b=PrlG3zP+ITnDdFSa9sNmYV/LtE4OLdAwiNXbYAYyeLi7DhKf1m2aHudID+7c6FTv0s
-         9WjQCcCLvgEkpfunmncJw3ilTwcXOUgLWafcGvUV0zaFUnuww+CA67gbQ6F353Z9TdzK
-         UFt5Ln++tQnifl1eQkldkgcEIWLqTZSvOxakLuuujRyAucodi6k7Rc4rT+5yZ1jpn5pN
-         fetzge7kQpWsOPQWXFdfBPoUpIWLmRbBst1rT4va0melWGLErKaAxcpWea1zoraVmP2C
-         FGC8maO4z6I2LL4yzQDm41Sr4iFGy7ltor5xYurtMMDnurfJ3KUBSwX3p/ZUEOO/TIL8
-         uYBA==
-X-Gm-Message-State: AElRT7H7z2PutO04T4SPfYt72Uo8f+SYiiTjzK9lPCvaKqzICIyg9cwj
-        bcGFwadBH50tKIGGhTBp+WQ8xA==
-X-Google-Smtp-Source: AIpwx4/HNp5hdx7POzyOfPvNKpIy1UsKOlePi6dnqhAlmPS1UR/4GRkP8mkNKOU1K95zGR4lXYuekQ==
-X-Received: by 10.99.120.3 with SMTP id t3mr15745880pgc.56.1522966537071;
-        Thu, 05 Apr 2018 15:15:37 -0700 (PDT)
-Received: from localhost ([2601:602:9500:3a4f:3d01:699f:f606:da49])
-        by smtp.gmail.com with ESMTPSA id 27sm16874626pfo.137.2018.04.05.15.15.35
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 05 Apr 2018 15:15:36 -0700 (PDT)
-Date:   Thu, 5 Apr 2018 15:15:35 -0700
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, sunshine@sunshineco.com, gitster@pobox.com
-Subject: Re: [PATCH v4 0/2] builtin/config.c: prefer `--type=bool` over
- `--bool`, etc.
-Message-ID: <20180405221535.GB87758@syl.local>
-References: <20180328234719.595-1-me@ttaylorr.com>
- <20180405020034.GA8879@syl.local>
- <20180405215759.GB29117@sigill.intra.peff.net>
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=RLUDDDmzgJOAPdPckEl57breM0e8Y4ByPxIEQZHIb0U=;
+        b=fyBCjudgZCDSN7ienc9ZfAnPoEgBdL4ZcjBscoJKwmgNbO7VjvhevX+DseVpiK+xKw
+         UAp35l7rUJDu1WvS0SZfAQhPOcgWapZXdXbvDKOK9UPqEN5H0seTDEv0mDxH5V0vd4ad
+         8vBt42r9PLFPYm313SULhIMUkq21gH7sr7HFxT819ySzdnAHzYFqNmx8hC2fPcyA04ej
+         PVPQLT/jl5wEeCc1G58xcOJi9DHXrOeF3cvwzA/Gwaw9+zfntCoe6TEZjavR4J55jvXH
+         noff8cGoksTWTUFsGw64TWysCAHZQWedT+TajO/A4YxRQFiQx2QbeMtY/aUjB3sCnmCO
+         N0/g==
+X-Gm-Message-State: ALQs6tAgPMrdqLi85CQ2PHaOFeWM8iOGmtw0S9u3VCPOE42N3fqTwpLi
+        efRHH4JXStmefVxz+CMf3fsQ34JXWGrbNMJhXhw=
+X-Google-Smtp-Source: AIpwx48OvKgviOZuDIGJDOHEHr+vhrU9evEhapNC15fj9H54z+9DhPEJ7dr9qszAKI4Hn+NnpXdak3heRX4lrryS5NI=
+X-Received: by 10.55.108.69 with SMTP id h66mr32315269qkc.42.1522967359117;
+ Thu, 05 Apr 2018 15:29:19 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180405215759.GB29117@sigill.intra.peff.net>
-User-Agent: Mutt/1.9.3 (2018-01-21)
+Received: by 10.12.174.202 with HTTP; Thu, 5 Apr 2018 15:29:18 -0700 (PDT)
+In-Reply-To: <20180405020040.GC8879@syl.local>
+References: <20180328234719.595-1-me@ttaylorr.com> <cover.1522893363.git.me@ttaylorr.com>
+ <20180405020040.GC8879@syl.local>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Thu, 5 Apr 2018 18:29:18 -0400
+X-Google-Sender-Auth: W_-lDqi-Mg9Zx7XBY1c6zkxeP98
+Message-ID: <CAPig+cSr744Y293qvgLG8jLHdNsGypkHU6QUQ-AcOyk=-JAbDw@mail.gmail.com>
+Subject: Re: [PATCH v4 2/2] builtin/config.c: prefer `--type=bool` over
+ `--bool`, etc.
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Apr 05, 2018 at 05:58:00PM -0400, Jeff King wrote:
-> On Wed, Apr 04, 2018 at 07:00:34PM -0700, Taylor Blau wrote:
+On Wed, Apr 4, 2018 at 10:00 PM, Taylor Blau <me@ttaylorr.com> wrote:
+> [...]
+> In this patch, we prefer `--type=[int|bool|bool-or-int|...]` over
+> `--int`, `--bool`, and etc. This allows the aforementioned upcoming
+> patch to support querying a color value with a default via `--type=color
+> --default=....`
 >
-> > I have attached a fourth re-roll of my series to introduce
-> > "--type=<type>" in "git config", and prefer it to "--<type>".
-> >
-> > In particular, since the last update, I have changed the following:
-> >
-> >   - Clearer wording in the second patch per Eric's suggestion.
-> >
-> >   - Stopped spelling the required argument to "--type=" as "[type]", and
-> >     instead as "<type>" (cc: Eric).
-> >
-> >   - Changed "unexpected" to "unrecognized" in the fatal message when we
-> >     don't know how to interpret the argument to "--type".
+> Signed-off-by: Taylor Blau <me@ttaylorr.com>
+> ---
+> diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
+> @@ -38,12 +38,10 @@ existing values that match the regexp are updated or unset.  If
+> +A type specifier may be given as an argument to `--type` to make 'git config'
+
+In [1], you said that the argument to --type is required, so use of
+"may be given" here is ambiguous; it makes it sound as if the argument
+is optional. Perhaps rewrite something like:
+
+    The --type option requests `git config` to ...
+
+Not necessarily worth a re-roll, though. (But if you do need to
+re-roll for some reason, it might make sense to combine this series
+with the --default series to make it slightly easier to review them
+together -- since the one depends upon the other -- and probably ease
+the burden on Junio slightly.)
+
+> +ensure that the variable(s) are of the given type and convert the value to the
+> +canonical form. If no type specifier is passed, no checks or transformations are
+> +performed on the value.
+> @@ -160,30 +158,34 @@ See also <<FILES>>.
+>  --list::
+>         List all variables set in config file, along with their values.
 >
-> This iteration looks good to me, assuming that last-one-wins is still
-> the direction we want to go. I'm open to the notion that the cleanup is
-> not worth the change in behavior. It is IMHO, but obviously it's
-> somewhat subjective.
+> ---bool::
+> -       'git config' will ensure that the output is "true" or "false"
+> +--type <type>::
+> +  'git config' will ensure that any input output is valid under the given type
+> +  constraint(s), and will canonicalize outgoing values in `<type>`'s canonical
+> +  form.
 
-I am too, unless people on this thread have strong feelings otherwise.
+In response to my question[2] about whether the typesetting "[type]"
+meant that it was optional, you responded[1] that it was not, thus
+correctly changed the typesetting to "<type>". However...
 
-Thanks,
-Taylor
+> diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
+> @@ -1622,4 +1623,21 @@ test_expect_success 'later legacy specifiers are given precedence' '
+> +test_expect_success '--no-type unsets type specifiers' '
+> +       echo "10" > expect &&
+> +       git config --type=bool --no-type core.number >actual &&
+> +       test_cmp expect actual
+> +'
+
+What does --no-type mean and why is it being tested? If this is an
+explicitly supported user-facing option, should it be documented? If
+it's not meant to be user-facing, then why are we enforcing its
+presence and behavior via a test?
+
+[1]: https://public-inbox.org/git/20180405014758.GA4671@syl.local/
+[2]: https://public-inbox.org/git/CAPig+cR4uFiC_gFsb2e9JR6SdP-wUQVz-E0MjRHR=vNHd+hvhA@mail.gmail.com/
