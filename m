@@ -2,95 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BC3EC1F404
-	for <e@80x24.org>; Thu,  5 Apr 2018 21:46:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D5C921F404
+	for <e@80x24.org>; Thu,  5 Apr 2018 21:51:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752258AbeDEVqM (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Apr 2018 17:46:12 -0400
-Received: from mail-qk0-f180.google.com ([209.85.220.180]:41439 "EHLO
-        mail-qk0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751417AbeDEVqL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Apr 2018 17:46:11 -0400
-Received: by mail-qk0-f180.google.com with SMTP id s78so27983794qkl.8
-        for <git@vger.kernel.org>; Thu, 05 Apr 2018 14:46:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=EYCAl4lq3qyCjIf2X9IdFJVt763goC77u6lLB2VRNw0=;
-        b=mbmsKUeqKokbNz6k7PdR2EzMfDLEptvtsYSL3efkvAaZ8GAqfXFOv+XUA8WBnw+tBd
-         CNrZBat1IftuPYHBsioEInBVwPwBv9oF2T7WeHibhzJnbQoN2v0wkY2ygrePnH3Ass2Y
-         +ohloAgEwAEnum6B6gm8/dvbLitze39tX0ungGb8DKDWsEG/7Y4K/za1/Qo9baPNPn+6
-         Aadb4DBxgwB0NRhX4ptcqsPsCWzsGQVFDC0+OG6Hcd0Dn9rPu1BZ8qALyh7T6mI1+PdO
-         pg2GWu1PwUsOYV11DJtHYcdXOQgbk1j38PyegHAH3ezSHwJhd1pjVNbc0l/5rYJHlQfg
-         A69Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=EYCAl4lq3qyCjIf2X9IdFJVt763goC77u6lLB2VRNw0=;
-        b=TLSbS05pHBXp9tr4oEISTaBdD7ILEGltXw5shzafOUKj9EUtsQNgCRBXLUj4eu2Cwh
-         rXdW3n2oemP5Q68SplsbBTBdvrytb0LsskoV/750qZ036h50fkJiq3VQrLZaWyFvZT/q
-         RHo4TsV/DdXlejsTj6Sq75BN5ekWGTLWXBGlCVverfwaLyz2DqMQ/4oiHVlq3hM/z2U6
-         OwO9uS/hIuIfe22TE1EmHXruWCa7p9Ozu6nATTFLekURv1/2pf8hP27RrLE/qQN+SiHP
-         hCuvG8nOZ+oEKwCtlgkW43XDuCDZuY9h00gSaIYwzA2LaJoMyRgDoCCGXyJCnNeVLqvM
-         jQTg==
-X-Gm-Message-State: ALQs6tCbnF8NBClfhyS5G0TZION/wGhD3yISd/ZhDjwjr9mCBDXD0CNl
-        mwlpJBpYJTK7GOB0ON9kKhS/IzUy/ANRERF15tc=
-X-Google-Smtp-Source: AIpwx48mFCvMDvpoq0fO7Sq/4T9VtmrxSLXRU0V0oMmzexaFc48iqZAbdZUIGnsi3tMh1Um6WYrGLugaNcT+FrCtbi4=
-X-Received: by 10.55.3.140 with SMTP id 134mr32986835qkd.26.1522964771097;
- Thu, 05 Apr 2018 14:46:11 -0700 (PDT)
+        id S1752552AbeDEVvj (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Apr 2018 17:51:39 -0400
+Received: from cloud.peff.net ([104.130.231.41]:55072 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1752463AbeDEVvi (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Apr 2018 17:51:38 -0400
+Received: (qmail 8315 invoked by uid 109); 5 Apr 2018 21:51:38 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 05 Apr 2018 21:51:38 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 19612 invoked by uid 111); 5 Apr 2018 21:52:39 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 05 Apr 2018 17:52:39 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 05 Apr 2018 17:51:36 -0400
+Date:   Thu, 5 Apr 2018 17:51:36 -0400
+From:   Jeff King <peff@peff.net>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Subject: Re: [PATCH v3 1/2] builtin/config.c: treat type specifiers singularly
+Message-ID: <20180405215136.GA29117@sigill.intra.peff.net>
+References: <20180328234719.595-1-me@ttaylorr.com>
+ <20180404060743.39278-1-me@ttaylorr.com>
+ <20180404060743.39278-2-me@ttaylorr.com>
+ <CAPig+cRNSYz_guBS9yNEXdAbfG+FWtvnzwsWRu0DRe0N_VkiOQ@mail.gmail.com>
+ <20180405015304.GB4671@syl.local>
 MIME-Version: 1.0
-Received: by 10.12.174.202 with HTTP; Thu, 5 Apr 2018 14:46:10 -0700 (PDT)
-In-Reply-To: <CA+FnnTxbg97A4P3AP7n5RT8+=W8PY0yx3644Ay2Zi9xgKD2aoA@mail.gmail.com>
-References: <CA+FnnTxbg97A4P3AP7n5RT8+=W8PY0yx3644Ay2Zi9xgKD2aoA@mail.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 5 Apr 2018 17:46:10 -0400
-X-Google-Sender-Auth: ppFJaqxVS01Iv8rNWWZxjLL7XQw
-Message-ID: <CAPig+cR19LS2vfjBQ71c3j2g61vSHnYRj1iSX1-V_E3Fj=kwOA@mail.gmail.com>
-Subject: Re: Is support for 10.8 dropped?
-To:     Igor Korot <ikorot01@gmail.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20180405015304.GB4671@syl.local>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Apr 5, 2018 at 3:48 PM, Igor Korot <ikorot01@gmail.com> wrote:
-> Is support for 10.8 dropped?
+On Wed, Apr 04, 2018 at 06:53:04PM -0700, Taylor Blau wrote:
 
-Until about a year ago, I was still periodically building Git from
-source on MacOS 10.5, and there hasn't been any outright effort to
-drop support for older MacOS, so I expect that 10.8 is still supported
-by the Git project itself.
+> > I understand that you're doing this to avoid complaining about "--int
+> > --type=int", but exactly how that case is supported should be an
+> > implementation detail; it doesn't need to bleed into the UI as an
+> > unnecessary and not-well-justified loosening of an age-old
+> > restriction. There are other ways to support "--int --type=int"
+> > without "last wins". Also, do we really need to support "--int
+> > --type=int"? Is that an expected use-case?
+> 
+> This is a fair concern, though I view the problem slightly differently.
+> I see this change as being motivated by the fact that we are adding
+> "--type", not removing an age-old restriction.
+> 
+> Peff's motivation for this--as I understand it--is that "--type=int"
+> should be a _true_ synonym for "--int". Adopting the old-style
+> "OPT_SET_BIT" for this purpose makes "--type=int" and "--int" _mostly_ a
+> synonym for one another, except that "--type=bool --type=int" will not
+> complain, whereas "--bool --int" would.
+> 
+> Loosening this restriction, in my view, brings us closer (1) to the new
+> semantics of multiple "--type"'s, and (2) to the existing semantics of
+> "--verbose=1 --verbose=2" as you mentioned above.
+> 
+> I would like to hear Peff's take on this as well, since he suggested the
+> patch originally, and would likely provide the clearest insight into
+> this.
 
-However, whether various packagers of (pre-built) Git support 10.8 is
-a different matter.
+I think you've captured it fairly well.  The options _are_ semantically
+linked, in that they are all mutually-exclusive types. Obviously we
+could continue to flag errors, and even catch "--type=int --type=bool"
+in the same way if we really wanted to (by using a custom parse-options
+callback).
 
-> dyld: lazy symbol binding failed: Symbol not found: ___strlcpy_chk
->   Referenced from: /usr/local/git/libexec/git-core/git
->   Expected in: /usr/lib/libSystem.B.dylib
-> dyld: Symbol not found: ___strlcpy_chk
->   Referenced from: /usr/local/git/libexec/git-core/git
->   Expected in: /usr/lib/libSystem.B.dylib
->
-> Now my question is - how I can upgrade the git console client for my
-> OSX version?
-> It looks like all installers are written for 10.9+ and the only way to
-> work it is to update the OS?
->
-> Is there a version of the git console app for OSX 10.8?
+So I think the primary value here is in the code cleanup. Even without
+the new "--type" option, avoiding the bitset makes the code clearer
+(IMHO).
 
-It's not clear what installer you used? Was it the package from
-git-scm? Was it from Homebrew?
+I do agree that a user saying "--int --bool" is almost certainly an
+error, and they'd be just as happy to see an error message as to get the
+last-one-wins behavior. But I also doubt that it comes up very much
+either way.
 
-I would guess that, even if the git-scm installer no longer supports
-10.8, it is likely that Homebrew does. Have you tried it?
-
-If both those options fail, you can always build from source.
+-Peff
