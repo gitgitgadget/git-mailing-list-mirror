@@ -6,56 +6,56 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 628DF1F404
-	for <e@80x24.org>; Thu,  5 Apr 2018 02:02:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 04F921F404
+	for <e@80x24.org>; Thu,  5 Apr 2018 02:06:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752745AbeDECCm (ORCPT <rfc822;e@80x24.org>);
-        Wed, 4 Apr 2018 22:02:42 -0400
-Received: from mail-pl0-f67.google.com ([209.85.160.67]:35683 "EHLO
-        mail-pl0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752677AbeDECCl (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Apr 2018 22:02:41 -0400
-Received: by mail-pl0-f67.google.com with SMTP id 61-v6so14961175plb.2
-        for <git@vger.kernel.org>; Wed, 04 Apr 2018 19:02:41 -0700 (PDT)
+        id S1752727AbeDECGy (ORCPT <rfc822;e@80x24.org>);
+        Wed, 4 Apr 2018 22:06:54 -0400
+Received: from mail-pl0-f66.google.com ([209.85.160.66]:35669 "EHLO
+        mail-pl0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752674AbeDECGx (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Apr 2018 22:06:53 -0400
+Received: by mail-pl0-f66.google.com with SMTP id 61-v6so14976919plb.2
+        for <git@vger.kernel.org>; Wed, 04 Apr 2018 19:06:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
         bh=OReXN/taI2a61vyADs9MgKH6/jxvXGI8fISj08/sXAs=;
-        b=T9uKEV97bQy5wilehmc6Q53Nf5QRgFjTg5mKFdY7ByH/FFuM+lU8VzGJSDWf6Dj2YX
-         dYqAAfx7Tl/W2mCCmAdWH1Zha0mYm8fVrokvNKP1nwq3VXJ61ZC7UeH3jyGL4B/olS0b
-         Nfx+uSh8i8tKT7GUJ94oDAN8pvOyMJ0i1pI6eZfcxUtc6uW7yxPoxL/rRSp7W0svhEUk
-         ISWYDPmE/vXqU4CZarNBeIAxqg7rbMm50SiauzsViXcMGMYhZ3KgY/qor2i6u+qBxsMn
-         UT/oJn92zjvTBot+ozUwC9B+lh667iZfWqbnzNi9nKuXiIMKd4Lt26ew3X9CSE1oB2ft
-         veGA==
+        b=HDNUxWKZkXZ7I3gdaIfFF3ZCHAVT4P671Bvsw1DHCZMfRSXhjm7reE1q239QmOHE8W
+         8QpQ+RVv6C+iitJPsnazNcoDo6zhsAkesr+bxSg0nI5g/q2lPxQwNeZPgp+8+72YbnpC
+         W/WakYvEaf3BH0KLEEwWN9CNjYcYV3pFE81QY9L7UP4HNTU7h3eLNm6gyqSgHPopYCcj
+         3L+1HLqLDULEmzL0mn2W7V8qUQGnkT/vskJPUPebsvBNGCPSujA79/xSceQPVvqSIw41
+         QA6nYZDn0Jo6Lz0A9eHYTff23wh0V0WYflMjiaFZtmbC9GTSw0TYEaMf2mEXcYZl1Dnn
+         WTrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
         bh=OReXN/taI2a61vyADs9MgKH6/jxvXGI8fISj08/sXAs=;
-        b=B1kvEMePC5fmY5esJmBy1azt6hp7ilsKL9Z0L45bj811G/FFwXSVsaKHoIQGrDku2l
-         q2vbXjuFZ/RHn/d5GxaPR0CLh3E9o6FUjcxh257NXV8wuhtD5QjGOe/jhs5GJdONsJHT
-         cgPoVy1vsxdcczz0nJRjkpe8SIj054m3N7FfVvqXsmYw1QCxDK0kq3Q9mR5wNoC48Oqz
-         PkDsuDypAvLRAEl6uq3qPHtD6xrMu++n7p8PE6kcmiJOYbDFBqUW2u7Rdy5XCkDUqGhc
-         OqqefyEm7l7jH1FmFpwZ27+s4JLckdOZvL0HWEzpGhXBGnvmgk2yFqRRJHxNzovgxeak
-         XWkQ==
-X-Gm-Message-State: AElRT7FlgTaddz+aAEs6u4WgFYEVeAFGHxa2ZP+tRVLMQ3ExLN8X4wy/
-        WWnIYjEi0SQ30yVCpfCM3xF/3s8ugWdZgQ==
-X-Google-Smtp-Source: AIpwx48bBRk/Ygpfkx80ht3Ydllugz/ev540+xvXwuTuscvxE0oHPwl0YCCkAYm4fXg2IfH0ryA4Gw==
-X-Received: by 2002:a17:902:1e5:: with SMTP id b92-v6mr20709553plb.78.1522893760124;
-        Wed, 04 Apr 2018 19:02:40 -0700 (PDT)
+        b=oQrwqvUYs8pVYhjybcHAJQr0sEPU41ccu9ox7OHr4P560Rw9IubR9szhmU6bLir6AR
+         b/BJGXZkaNUY6mUfL1Cx99jxGY7byPHl1fJTf4vkXxM5IhIQ9XwncY/0DMD1ptWKXg1b
+         bjYd9vaLTjUZsl96glcLgiQOtXA5NBF7zRlFbVPDDhIkhkKs8pSTd89OP1oeaRQJRMSA
+         ip6Eaz1TH/vbwIxru8SFYEYv4OoUtEVa3xf11iTxYO7C7BNbkshLpWPzfu7sCzl9W33M
+         5dk1Ag4Lxfe+GAvsxMWeXYHoFYUMsRvWqAa0y8ePpIJH90eg1Bn421QRa9f7aiMW0/xz
+         LTvA==
+X-Gm-Message-State: AElRT7G2O9upLT8gLIJvP3+uz0laklm/HCAXT5EzqhzSdgH74hg82ahA
+        kkeu+RCzqzgkQeWfkda3AtV2dGXi+99nbA==
+X-Google-Smtp-Source: AIpwx4/4zaIH4Q0taP/d3eV0M3gz0+dAbiiTHNwyMWPKCd0aMdgvcrijlFoQIxgHaGs/fZFyASTiwQ==
+X-Received: by 10.101.93.75 with SMTP id e11mr9390256pgt.356.1522893641875;
+        Wed, 04 Apr 2018 19:00:41 -0700 (PDT)
 Received: from localhost ([2601:602:9500:3a4f:dc75:c2ae:e99:b3d1])
-        by smtp.gmail.com with ESMTPSA id a65sm13382639pfg.170.2018.04.04.19.02.38
+        by smtp.gmail.com with ESMTPSA id t14sm12253309pfa.74.2018.04.04.19.00.40
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 04 Apr 2018 19:02:38 -0700 (PDT)
-Date:   Wed, 4 Apr 2018 19:02:38 -0700
+        Wed, 04 Apr 2018 19:00:40 -0700 (PDT)
+Date:   Wed, 4 Apr 2018 19:00:40 -0700
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     peff@peff.net, sunshine@sunshineco.com, gitster@pobox.com,
         me@ttaylorr.com
 Subject: [PATCH v4 2/2] builtin/config.c: prefer `--type=bool` over `--bool`,
  etc.
-Message-ID: <20180405020238.GD8879@syl.local>
+Message-ID: <20180405020040.GC8879@syl.local>
 References: <20180328234719.595-1-me@ttaylorr.com>
  <cover.1522893363.git.me@ttaylorr.com>
 MIME-Version: 1.0
