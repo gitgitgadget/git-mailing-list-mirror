@@ -2,275 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 04F921F404
-	for <e@80x24.org>; Thu,  5 Apr 2018 02:06:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E9A881F404
+	for <e@80x24.org>; Thu,  5 Apr 2018 02:28:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752727AbeDECGy (ORCPT <rfc822;e@80x24.org>);
-        Wed, 4 Apr 2018 22:06:54 -0400
-Received: from mail-pl0-f66.google.com ([209.85.160.66]:35669 "EHLO
-        mail-pl0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752674AbeDECGx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Apr 2018 22:06:53 -0400
-Received: by mail-pl0-f66.google.com with SMTP id 61-v6so14976919plb.2
-        for <git@vger.kernel.org>; Wed, 04 Apr 2018 19:06:53 -0700 (PDT)
+        id S1752727AbeDEC2X (ORCPT <rfc822;e@80x24.org>);
+        Wed, 4 Apr 2018 22:28:23 -0400
+Received: from mail-pl0-f67.google.com ([209.85.160.67]:45639 "EHLO
+        mail-pl0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752692AbeDEC2W (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Apr 2018 22:28:22 -0400
+Received: by mail-pl0-f67.google.com with SMTP id v18-v6so15042799ply.12
+        for <git@vger.kernel.org>; Wed, 04 Apr 2018 19:28:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=OReXN/taI2a61vyADs9MgKH6/jxvXGI8fISj08/sXAs=;
-        b=HDNUxWKZkXZ7I3gdaIfFF3ZCHAVT4P671Bvsw1DHCZMfRSXhjm7reE1q239QmOHE8W
-         8QpQ+RVv6C+iitJPsnazNcoDo6zhsAkesr+bxSg0nI5g/q2lPxQwNeZPgp+8+72YbnpC
-         W/WakYvEaf3BH0KLEEwWN9CNjYcYV3pFE81QY9L7UP4HNTU7h3eLNm6gyqSgHPopYCcj
-         3L+1HLqLDULEmzL0mn2W7V8qUQGnkT/vskJPUPebsvBNGCPSujA79/xSceQPVvqSIw41
-         QA6nYZDn0Jo6Lz0A9eHYTff23wh0V0WYflMjiaFZtmbC9GTSw0TYEaMf2mEXcYZl1Dnn
-         WTrw==
+        d=teichroeb-net.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id;
+        bh=hHrrGspn793553M8P3Gl8btH4wrrIdf//YuGeYtXscc=;
+        b=1bpFCrS46K7s2KhNXqiOv/+eh5xFlK0fktopd81WjhUOupFCvnd0VDZX2lEQeulInB
+         v/ZSCLvc1YON3We7G8Nzo40EpRqBAU2eNqnKT6uCya96p7T1teG3csJ/0GrztLnD7JmR
+         NiwfwAxQtgVd0S2T9flHBhY453h8Bw2XjhMRAIwGXN1x7vkOQFqKWCPKr3H6NlLlIlVb
+         YnrAh77Q3Syh94SE7MaQXwrYZUg6V/5vpt+jN641OwzlPekHivp2gYUM8XOdpD5HInjs
+         e4LPXKPx4Nqk/KzmN2HcAjSHKEcgDn1yAdNjsTB4qx5LnmwXD4qLuXKrraXWZPLLNfhW
+         ghdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=OReXN/taI2a61vyADs9MgKH6/jxvXGI8fISj08/sXAs=;
-        b=oQrwqvUYs8pVYhjybcHAJQr0sEPU41ccu9ox7OHr4P560Rw9IubR9szhmU6bLir6AR
-         b/BJGXZkaNUY6mUfL1Cx99jxGY7byPHl1fJTf4vkXxM5IhIQ9XwncY/0DMD1ptWKXg1b
-         bjYd9vaLTjUZsl96glcLgiQOtXA5NBF7zRlFbVPDDhIkhkKs8pSTd89OP1oeaRQJRMSA
-         ip6Eaz1TH/vbwIxru8SFYEYv4OoUtEVa3xf11iTxYO7C7BNbkshLpWPzfu7sCzl9W33M
-         5dk1Ag4Lxfe+GAvsxMWeXYHoFYUMsRvWqAa0y8ePpIJH90eg1Bn421QRa9f7aiMW0/xz
-         LTvA==
-X-Gm-Message-State: AElRT7G2O9upLT8gLIJvP3+uz0laklm/HCAXT5EzqhzSdgH74hg82ahA
-        kkeu+RCzqzgkQeWfkda3AtV2dGXi+99nbA==
-X-Google-Smtp-Source: AIpwx4/4zaIH4Q0taP/d3eV0M3gz0+dAbiiTHNwyMWPKCd0aMdgvcrijlFoQIxgHaGs/fZFyASTiwQ==
-X-Received: by 10.101.93.75 with SMTP id e11mr9390256pgt.356.1522893641875;
-        Wed, 04 Apr 2018 19:00:41 -0700 (PDT)
-Received: from localhost ([2601:602:9500:3a4f:dc75:c2ae:e99:b3d1])
-        by smtp.gmail.com with ESMTPSA id t14sm12253309pfa.74.2018.04.04.19.00.40
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=hHrrGspn793553M8P3Gl8btH4wrrIdf//YuGeYtXscc=;
+        b=LVj1H0jWo6FQk2VurRnm9DL9e3pi48oMskggaiVQ3CBJScCD5UGESe+vNleKz1bglk
+         UJzPB9wigfecqHzQAo7WOrlD+f/JLmZxJgfhOxTVflNv7i012IV35nq3peBq37T/dAQq
+         JGS5brbflYpGZ9RMOUvo/JnfZ21RJ7xrQRzVuEBFrsfUVdCCANY7dRC3gxYe/95En3jq
+         vWc+Or587wHENbSQvhDjiQaRdTLahO91D9/g1/LTjT0BZc1jbEU8PUZjfEjkGoJQU/7B
+         jqg/PXdsv88C363RuiEIUH3wfVSYpcIMShpBEeinZLyozbv9JhgWlu5GkRvWKY01wKqo
+         Nqdg==
+X-Gm-Message-State: AElRT7HoThN7SAiSBFo904/dYY//TbyDkF2J90wXJFalvrLN2KY1P+Lv
+        zKWcE00Z2nGJnGIbWXDKYQlYzfI=
+X-Google-Smtp-Source: AIpwx4+ib4nvW1i0I2dbw2u+g55czKSQOwMOlAnb73gqa0rW7ttin7c4GNBk5n+fpehpxi2092xGiQ==
+X-Received: by 10.101.102.3 with SMTP id w3mr13189140pgv.200.1522895301310;
+        Wed, 04 Apr 2018 19:28:21 -0700 (PDT)
+Received: from localhost.localdomain (S01066c3b6b1953d0.vc.shawcable.net. [24.80.205.243])
+        by smtp.gmail.com with ESMTPSA id 86sm14194093pfh.93.2018.04.04.19.28.19
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 04 Apr 2018 19:00:40 -0700 (PDT)
-Date:   Wed, 4 Apr 2018 19:00:40 -0700
-From:   Taylor Blau <me@ttaylorr.com>
-To:     git@vger.kernel.org
-Cc:     peff@peff.net, sunshine@sunshineco.com, gitster@pobox.com,
-        me@ttaylorr.com
-Subject: [PATCH v4 2/2] builtin/config.c: prefer `--type=bool` over `--bool`,
- etc.
-Message-ID: <20180405020040.GC8879@syl.local>
-References: <20180328234719.595-1-me@ttaylorr.com>
- <cover.1522893363.git.me@ttaylorr.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1522893363.git.me@ttaylorr.com>
-User-Agent: Mutt/1.9.3 (2018-01-21)
+        Wed, 04 Apr 2018 19:28:20 -0700 (PDT)
+From:   Joel Teichroeb <joel@teichroeb.net>
+To:     Git Mailing List <git@vger.kernel.org>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        gitster@pobox.com
+Cc:     Joel Teichroeb <joel@teichroeb.net>
+Subject: [PATCH v5 0/5] Convert some stash functionality to a builtin
+Date:   Wed,  4 Apr 2018 19:28:05 -0700
+Message-Id: <20180405022810.15796-1-joel@teichroeb.net>
+X-Mailer: git-send-email 2.16.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-`git config` has long allowed the ability for callers to provide a 'type
-specifier', which instructs `git config` to (1) ensure that incoming
-values are satisfiable under that type, and (2) that outgoing values are
-canonicalized under that type.
+I've been working on converting all of git stash to be a
+builtin, however it's hard to get it all working at once with
+limited time, so I've moved around half of it to a new
+stash--helper builtin and called these functions from the shell
+script. Once this is stabalized, it should be easier to convert
+the rest of the commands one at a time without breaking
+anything.
 
-In another series, we propose to add extend this functionality with
-`--color` and `--default` to replace `--get-color`.
+I've sent most of this code before, but that was targetting a
+full replacement of stash. The code is overall the same, but
+with some code review changes and updates for internal api
+changes.
 
-However, we traditionally use `--color` to mean "colorize this output",
-instead of "this value should be treated as a color".
+Since there seems to be interest from GSOC students who want to
+work on converting builtins, I figured I should finish what I
+have that works now so they could build on top of it.
 
-Currently, `git config` does not support this kind of colorization, but
-we should be careful to avoid inhabiting this option too soon, so that
-`git config` can support `--color` (in the traditional sense) in the
-future, if that is desired.
+The code is based on next as write_cache_as_tree was changed to
+take an object ID. It can easily be rebase on master by changing
+the two calls to write_cache_as_tree to use tha hash.
 
-In this patch, we prefer `--type=[int|bool|bool-or-int|...]` over
-`--int`, `--bool`, and etc. This allows the aforementioned upcoming
-patch to support querying a color value with a default via `--type=color
---default=....`
+Previous threads:
+v1: https://public-inbox.org/git/20180325173916.GE10909@hank/T/
+v2: https://public-inbox.org/git/20180326011426.19159-1-joel@teichroeb.net/
+v3: https://public-inbox.org/git/20180327054432.26419-1-joel@teichroeb.net/
+v4: https://public-inbox.org/git/20180328222129.22192-1-joel@teichroeb.net/
 
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- Documentation/git-config.txt | 66 +++++++++++++++++++-----------------
- builtin/config.c             | 28 +++++++++++++++
- t/t1300-repo-config.sh       | 18 ++++++++++
- 3 files changed, 80 insertions(+), 32 deletions(-)
+Changes from v4:
+ - Fixed a typo (Thanks Eric)
+ - Redid my test again with input from Junio
+ - Cleaned up usages of get_oid (Thanks Junio)
+ - Slightly reduced calls to builtin functions (rerere, rev-parse)
+ - Added comments clarifying why when forking/cmd_* is used
 
-diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
-index e09ed5d7d..c7e56e3fd 100644
---- a/Documentation/git-config.txt
-+++ b/Documentation/git-config.txt
-@@ -9,13 +9,13 @@ git-config - Get and set repository or global options
- SYNOPSIS
- --------
- [verse]
--'git config' [<file-option>] [type] [--show-origin] [-z|--null] name [value [value_regex]]
--'git config' [<file-option>] [type] --add name value
--'git config' [<file-option>] [type] --replace-all name value [value_regex]
--'git config' [<file-option>] [type] [--show-origin] [-z|--null] --get name [value_regex]
--'git config' [<file-option>] [type] [--show-origin] [-z|--null] --get-all name [value_regex]
--'git config' [<file-option>] [type] [--show-origin] [-z|--null] [--name-only] --get-regexp name_regex [value_regex]
--'git config' [<file-option>] [type] [-z|--null] --get-urlmatch name URL
-+'git config' [<file-option>] [--type] [--show-origin] [-z|--null] name [value [value_regex]]
-+'git config' [<file-option>] [--type] --add name value
-+'git config' [<file-option>] [--type] --replace-all name value [value_regex]
-+'git config' [<file-option>] [--type] [--show-origin] [-z|--null] --get name [value_regex]
-+'git config' [<file-option>] [--type] [--show-origin] [-z|--null] --get-all name [value_regex]
-+'git config' [<file-option>] [--type] [--show-origin] [-z|--null] [--name-only] --get-regexp name_regex [value_regex]
-+'git config' [<file-option>] [--type] [-z|--null] --get-urlmatch name URL
- 'git config' [<file-option>] --unset name [value_regex]
- 'git config' [<file-option>] --unset-all name [value_regex]
- 'git config' [<file-option>] --rename-section old_name new_name
-@@ -38,12 +38,10 @@ existing values that match the regexp are updated or unset.  If
- you want to handle the lines that do *not* match the regex, just
- prepend a single exclamation mark in front (see also <<EXAMPLES>>).
- 
--The type specifier can be either `--int` or `--bool`, to make
--'git config' ensure that the variable(s) are of the given type and
--convert the value to the canonical form (simple decimal number for int,
--a "true" or "false" string for bool), or `--path`, which does some
--path expansion (see `--path` below).  If no type specifier is passed, no
--checks or transformations are performed on the value.
-+A type specifier may be given as an argument to `--type` to make 'git config'
-+ensure that the variable(s) are of the given type and convert the value to the
-+canonical form. If no type specifier is passed, no checks or transformations are
-+performed on the value.
- 
- When reading, the values are read from the system, global and
- repository local configuration files by default, and options
-@@ -160,30 +158,34 @@ See also <<FILES>>.
- --list::
- 	List all variables set in config file, along with their values.
- 
----bool::
--	'git config' will ensure that the output is "true" or "false"
-+--type <type>::
-+  'git config' will ensure that any input output is valid under the given type
-+  constraint(s), and will canonicalize outgoing values in `<type>`'s canonical
-+  form.
-++
-+Valid `<type>`'s include:
-++
-+- 'bool': canonicalize values as either "true" or "false".
-+- 'int': canonicalize values as simple decimal numbers. An optional suffix of
-+  'k', 'm', or 'g' will cause the value to be multiplied by 1024, 1048576, or
-+  1073741824 prior to output.
-+- 'bool-or-int': canonicalize according to either 'bool' or 'int', as described
-+  above.
-+- 'path': canonicalize by adding a leading `~` to the value of `$HOME` and
-+  `~user` to the home directory for the specified user. This specifier has no
-+  effect when setting the value (but you can use `git config section.variable
-+  ~/` from the command line to let your shell do the expansion.)
-+- 'expiry-date': canonicalize by converting from a fixed or relative date-string
-+  to a timestamp. This specifier has no effect when setting the value.
-++
- 
-+--bool::
- --int::
--	'git config' will ensure that the output is a simple
--	decimal number.  An optional value suffix of 'k', 'm', or 'g'
--	in the config file will cause the value to be multiplied
--	by 1024, 1048576, or 1073741824 prior to output.
--
- --bool-or-int::
--	'git config' will ensure that the output matches the format of
--	either --bool or --int, as described above.
--
- --path::
--	`git config` will expand a leading `~` to the value of
--	`$HOME`, and `~user` to the home directory for the
--	specified user.  This option has no effect when setting the
--	value (but you can use `git config section.variable ~/`
--	from the command line to let your shell do the expansion).
--
- --expiry-date::
--	`git config` will ensure that the output is converted from
--	a fixed or relative date-string to a timestamp. This option
--	has no effect when setting the value.
-+  Historical options for selecting a type specifier. Prefer instead `--type`,
-+  (see: above).
- 
- -z::
- --null::
-diff --git a/builtin/config.c b/builtin/config.c
-index 92fb8d56b..6e1495eac 100644
---- a/builtin/config.c
-+++ b/builtin/config.c
-@@ -61,6 +61,33 @@ static int show_origin;
- #define TYPE_PATH		4
- #define TYPE_EXPIRY_DATE	5
- 
-+static int option_parse_type(const struct option *opt, const char *arg,
-+			     int unset)
-+{
-+	int *type = opt->value;
-+
-+	if (unset) {
-+		*type = 0;
-+		return 0;
-+	}
-+
-+	if (!strcmp(arg, "bool"))
-+		*type = TYPE_BOOL;
-+	else if (!strcmp(arg, "int"))
-+		*type = TYPE_INT;
-+	else if (!strcmp(arg, "bool-or-int"))
-+		*type = TYPE_BOOL_OR_INT;
-+	else if (!strcmp(arg, "path"))
-+		*type = TYPE_PATH;
-+	else if (!strcmp(arg, "expiry-date"))
-+		*type = TYPE_EXPIRY_DATE;
-+	else {
-+		die(_("unrecognized --type argument, %s"), arg);
-+		return 1;
-+	}
-+	return 0;
-+}
-+
- static struct option builtin_config_options[] = {
- 	OPT_GROUP(N_("Config file location")),
- 	OPT_BOOL(0, "global", &use_global_config, N_("use global config file")),
-@@ -84,6 +111,7 @@ static struct option builtin_config_options[] = {
- 	OPT_BIT(0, "get-color", &actions, N_("find the color configured: slot [default]"), ACTION_GET_COLOR),
- 	OPT_BIT(0, "get-colorbool", &actions, N_("find the color setting: slot [stdout-is-tty]"), ACTION_GET_COLORBOOL),
- 	OPT_GROUP(N_("Type")),
-+	OPT_CALLBACK('t', "type", &type, N_("type"), N_("value is given this type"), option_parse_type),
- 	OPT_SET_INT(0, "bool", &type, N_("value is \"true\" or \"false\""), TYPE_BOOL),
- 	OPT_SET_INT(0, "int", &type, N_("value is decimal number"), TYPE_INT),
- 	OPT_SET_INT(0, "bool-or-int", &type, N_("value is --bool or --int"), TYPE_BOOL_OR_INT),
-diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
-index 24de37d54..b25ab7b9e 100755
---- a/t/t1300-repo-config.sh
-+++ b/t/t1300-repo-config.sh
-@@ -1613,6 +1613,7 @@ test_expect_success '--local requires a repo' '
- 
- cat >.git/config <<-\EOF &&
- [core]
-+foo = true
- number = 10
- EOF
- 
-@@ -1622,4 +1623,21 @@ test_expect_success 'later legacy specifiers are given precedence' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success '--type allows valid type specifiers' '
-+	echo "true" >expect &&
-+	git config --type=bool core.foo >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '--no-type unsets type specifiers' '
-+	echo "10" > expect &&
-+	git config --type=bool --no-type core.number >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '--type rejects unknown specifiers' '
-+	test_must_fail git config --type=nonsense core.foo 2>error &&
-+	test_i18ngrep "unrecognized --type argument" error
-+'
-+
- test_done
+Joel Teichroeb (5):
+  stash: improve option parsing test coverage
+  stash: convert apply to builtin
+  stash: convert drop and clear to builtin
+  stash: convert branch to builtin
+  stash: convert pop to builtin
+
+ .gitignore              |   1 +
+ Makefile                |   1 +
+ builtin.h               |   1 +
+ builtin/stash--helper.c | 630 ++++++++++++++++++++++++++++++++++++++++++++++++
+ git-stash.sh            | 136 +----------
+ git.c                   |   1 +
+ t/t3903-stash.sh        |  35 +++
+ 7 files changed, 677 insertions(+), 128 deletions(-)
+ create mode 100644 builtin/stash--helper.c
+
 -- 
-2.16.2.440.gc6284da4f
+2.16.3
+
