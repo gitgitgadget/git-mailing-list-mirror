@@ -2,102 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2A7B51F404
-	for <e@80x24.org>; Thu,  5 Apr 2018 19:31:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 514691F404
+	for <e@80x24.org>; Thu,  5 Apr 2018 19:32:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752014AbeDETb1 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Apr 2018 15:31:27 -0400
-Received: from cloud.peff.net ([104.130.231.41]:54948 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751573AbeDETb0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Apr 2018 15:31:26 -0400
-Received: (qmail 3489 invoked by uid 109); 5 Apr 2018 19:31:26 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 05 Apr 2018 19:31:26 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 18664 invoked by uid 111); 5 Apr 2018 19:32:27 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 05 Apr 2018 15:32:27 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 05 Apr 2018 15:31:24 -0400
-Date:   Thu, 5 Apr 2018 15:31:24 -0400
-From:   Jeff King <peff@peff.net>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Samuel Lijin <sxlijin@gmail.com>
-Subject: Re: [RFC PATCH 4/7] dir: Directories should be checked for matching
- pathspecs too
-Message-ID: <20180405193124.GA24643@sigill.intra.peff.net>
-References: <20180405173446.32372-1-newren@gmail.com>
- <20180405173446.32372-5-newren@gmail.com>
- <20180405185805.GA21164@sigill.intra.peff.net>
- <CABPp-BEnFiEnao0NqU3GerYkpxO9fJadQLHo6_PZ-hXLZfbbdg@mail.gmail.com>
+        id S1752198AbeDETcQ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Apr 2018 15:32:16 -0400
+Received: from mout.gmx.net ([212.227.15.15]:53379 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751573AbeDETcP (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Apr 2018 15:32:15 -0400
+Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MKpvc-1f4AcH38jI-0004ED; Thu, 05
+ Apr 2018 21:32:13 +0200
+Date:   Thu, 5 Apr 2018 21:32:13 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+To:     Wink Saville <wink@saville.com>
+cc:     Git List <git@vger.kernel.org>
+Subject: Re: [RFC PATCH 0/1] bdl-lib.sh: add bash debug logger
+In-Reply-To: <CAKk8isqGe=H7aEtDZtKTpzQMxeshp0oC6tMwhA9rW=PhLt3buA@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1804052131070.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <cover.1522190580.git.wink@saville.com> <nycvar.QRO.7.76.6.1803301231430.5026@qfpub.tvgsbejvaqbjf.bet> <CAKk8isqA6Ru05kRJ+xiVHEkzPgH24cKUZbbgw2tEnw4rhafDQw@mail.gmail.com> <nycvar.QRO.7.76.6.1804051536080.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+ <CAKk8isqGe=H7aEtDZtKTpzQMxeshp0oC6tMwhA9rW=PhLt3buA@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CABPp-BEnFiEnao0NqU3GerYkpxO9fJadQLHo6_PZ-hXLZfbbdg@mail.gmail.com>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:uIeA/eGiHrgGiTv81Fo1siRRxMzVlL9jfctAjzNbZ6x5wyiRoOq
+ dj1/KAovHKVV6Cd/wRu+7jqogZILx7CtNK7RQNNw3csDFKGc+TGcUmFjOToVzex9VGDQdij
+ SZnkaW5Eflkdhw3lIT8jB22dL8i//lEpGoLNVRl7bdFxUEaiWH0gh2HWdmVK5oDdqg0ODLu
+ M0cRduRqNwE623SIDQfsw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:qMGhxrxwU8g=:ALQ8hUTpLfM4GsRkwdxBD4
+ Nqzn4ZiS8AtY+TAQ5QPFGKCrQhmwq+bE9dX+fCwrbOTlMZ2kJkHkfyjU8NyTYiLZSA41sqL74
+ 6tUx+PsBNeta60es6i52r63hDjGi4mDPzr+LY9LD9EHU1GY1lOypnNsebbpXaFaphj2nYCV4O
+ Swvq8S0Qh942G+RjBtggSy+DF4phpfEY60vX8wDs9qK/Rz4ld1bT8xxItDjbkkfJpDjNajUVw
+ HYjBVb+iLjGPAkTrIPj+eSpA0OMo3TK4VRQbmUVQ1uo5QYcmR11CXoiJqovPz08Q7gzY/JvKg
+ 0qlRDTeX3u1L0vgBCcsx/D27jcDekTWOBO5OWF7eAOJ3rtIF0tKp6RoToMV93hdqvPV+YVjoF
+ jrL5gKJb4xhAMO780FnsT8szCL7YQY7vIYL2WjoS8WZVNJExHBASuxRUoYwionK6vX6PjFzt1
+ VZFoMJUCqmOl+P0dEkAOyT9WmNnFguF5EW5SLucjSV+O9L5r/ZzRJmK3OD1Pju+PR/gOt72L/
+ PI10kWbTYo1IqsB1xxkSOeORsAyK9mrb674hz4jaLCb/zSCg5sS6xYWBsVgvTfxWgsOnFF4KO
+ 6zvYu52Ab1NOZqtFxxNFKLvrWm/xcprvmJHVIOoKfSi3Mvy3B4Qp63Xo1GYgvbRUVtkbMMNsb
+ AEPdk/0ycbcupdtQxenYlwiVqOzgT+vFcwKnU0sL3vSdkKVQlhNBuYCn8Cn+1fwVxpO2X+1Ju
+ qLd8YKUGTfovzCIfeZjA42+K+epcuDzRj59POopq7q0iUGPpOcNmy/j7e1Cic8ITBuGGTQQoa
+ LfE0HAl6GTwFrJouRdWLSMXJ0EB/aEt0bY+uUe/UN0zCvhRqO32jhPQbDtEQQUcekTO4Xm1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Apr 05, 2018 at 12:15:59PM -0700, Elijah Newren wrote:
+Hi Wink,
 
-> On Thu, Apr 5, 2018 at 11:58 AM, Jeff King <peff@peff.net> wrote:
+On Thu, 5 Apr 2018, Wink Saville wrote:
+
+> On Thu, Apr 5, 2018 at 6:37 AM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> > After thinking about this more, I am a lot less opposed to including this
+> > in Git's source code. However, as it is not necessary for Git's
+> > functionality, it should probably go into contrib/, and I would much
+> > rather have a more descriptive name such as
+> > contrib/bash-debugging-library/...
 > 
-> > It sounds like correct_untracked_entries() is doing the wrong thing, and
-> > it should be aware of the pathspec-matching when culling entries. In
-> > other words, my understanding was that read_directory() does not
-> > necessarily promise to cull fully (which is what led to cf424f5fd in the
-> > first place), and callers are forced to apply their own pathspecs.
-> >
-> > The distinction is academic for this particular bug, but it makes me
-> > wonder if there are other cases where "clean" needs to be more careful
-> > with what comes out of dir.c.
-> 
-> Interesting, I read things very differently.  Looking back at commit
-> 6b1db43109ab ("clean: teach clean -d to preserve ignored paths",
-> 2017-05-23), which introduced correct_untracked_entries(), I thought
-> that correct_untracked_entries() wasn't there to correct pathspec
-> issues with fill_directory(), but instead to special case the handling
-> of files which are both untracked and ignored.  Did I mis-read or were
-> there other commits that changed the semantics?
-> 
-> Also, it would just seem odd to me that fill_directory() requires
-> pathspecs, and it uses those pathspecs, but it doesn't guarantee that
-> the files it returns matches them.  That seems like an API ripe for
-> mis-use, especially since I don't see any comment in the code about
-> such an assumption.  Is that really the expectation?
+> I'll move it, thanks for the feed back and considering it for inclusion.
 
-To be honest, I don't know. Most of dir.c predates me, and I've tried to
-avoid looking at it too hard. But I had a vague recollection of it being
-"best effort", and this bit from cf424f5fd89b reinforces that:
+Note: I have nothing to do with including it. That is the sole discretion
+of Junio (who is offline for a week or two, if I understood correctly).
 
-  However, read_directory does not actually check against our pathspec.
-  It uses a simplified version that may turn up false positives. As a
-  result, we need to check that any hits match our pathspec.
-
-So I don't know that correct_untracked_entries() is there to fix the
-pathspec handling. But I think that anybody who looks at the output of
-fill_directory() does need to be aware that they may get more entries
-than they expected, and has to apply the pathspecs themselves. And
-that's what that extra dir_path_match() call in cmd_clean() is
-there for (it used to be match_pathspec before some renaming).
-
-I agree it's an error-prone interface. I don't know all the conditions
-under which dir.c might return extra entries, but it seems like it might
-be sane for it to do a final pathspec-matching pass so that callers
-don't have to. That would mean that correct_untracked_entries() sees the
-correctly culled list, and the extra check in cmd_clean() could be
-dropped.
-
-Ideally, of course, we'd fix those individual cases, since that would be
-more efficient. And your patch may be the right first step in that
-direction. But since we don't know what all of them are, it seems ripe
-for regressions.
-
--Peff
+Ciao,
+Johannes
