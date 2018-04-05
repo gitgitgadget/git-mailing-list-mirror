@@ -2,73 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B605B1F42D
-	for <e@80x24.org>; Thu,  5 Apr 2018 19:44:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4275B1F404
+	for <e@80x24.org>; Thu,  5 Apr 2018 19:48:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752906AbeDEToW (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Apr 2018 15:44:22 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:33858 "EHLO dcvr.yhbt.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752843AbeDEToW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Apr 2018 15:44:22 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-        by dcvr.yhbt.net (Postfix) with ESMTP id D1FFD1F404;
-        Thu,  5 Apr 2018 19:44:21 +0000 (UTC)
-Date:   Thu, 5 Apr 2018 19:44:21 +0000
-From:   Eric Wong <e@80x24.org>
-To:     Junio C Hamano <gitster@pobox.com>,
-        Andreas Heiduk <asheiduk@gmail.com>
-Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v3] git-svn: allow empty email-address using authors-prog
- and authors-file
-Message-ID: <20180405194421.GA25243@80x24.org>
-References: <20180320220743.GA17234@whir>
- <20180324102046.8840-1-asheiduk@gmail.com>
- <20180405075113.3y6a5nadijswt7pm@untitled>
- <e2234113-52cf-1443-5abb-70a595037f30@gmail.com>
+        id S1752872AbeDETsI (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Apr 2018 15:48:08 -0400
+Received: from mail-ot0-f171.google.com ([74.125.82.171]:38154 "EHLO
+        mail-ot0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752848AbeDETsH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Apr 2018 15:48:07 -0400
+Received: by mail-ot0-f171.google.com with SMTP id o9-v6so28721258otj.5
+        for <git@vger.kernel.org>; Thu, 05 Apr 2018 12:48:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=2EkQpRrX5dXQOmdtFWqNFXu6AqzfaJSwUzDEtfNn4qU=;
+        b=g7GRjeqpA3MhbK4SXbhmmK3c4ADmgjJjWRSiNWltn8fQwl/7G80WSqYs5YEWdUWym1
+         QCZ/D7QWHDnJbL58wBaO2hQxP/qYh1ob3SNwYwG1tQ9vPNWeb+KezUIXqDDdYlbTQ5ut
+         x6W+iQAs1e/AjmCCaCaLJSCT303hsPYpaIU4K/NDW+O0+Yazdvs9yNIuWtbGtslIJwCQ
+         mMlDjEXEYS9Rmx5voESg1/2M3nxyAj8p5htVB3iDbwvv+REh8rzItYMsnzXPQiRswhfT
+         3XXrn6mtQr38blyFDAx0pj8TTe7vFZmm72Pe9HrfKb0/cr0Kaeto/AosOrMWNc+HeHiS
+         h0sA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=2EkQpRrX5dXQOmdtFWqNFXu6AqzfaJSwUzDEtfNn4qU=;
+        b=r4MHRKZHFUR89VKdMuSe+JkjaWaDPzJVZcxpsXbXMOa9q7qY9i3VZvJP5ktCBw94fc
+         CR6HfbBx9Q8n+meGbJRg6orF1an51MlI88MANH4tEivd4cOuIdXbD80au3rQbongVkLG
+         7NF0fB+srpu0SKLe60hci18ZhQzXsQMT92vVomrZsr+CN0VdLrl3zIOlhco9EDtoDjZ2
+         FnHAaP+eDihIM56XszRwcC6QknvT5+M2i3qtIASboe3/1gBG1bq1H6tlIocEUKt/kdS7
+         6eiOgHZSnHsI/0S+wecm2utu3KdiKO5qgJRXL2QuXm73ytHSQ84nAhxT5wxoaxylhz5p
+         t81g==
+X-Gm-Message-State: ALQs6tBVMrpLAowOxDMqzWjQvzQuKTan3GsbZweGYaLr1iBChNDnIJ6X
+        /FrZYj1GoG2Ey7p0DQjAjCuWEWwJ9v9UDvHILbzGlw==
+X-Google-Smtp-Source: AIpwx49IPnQ8DJ96BvWE+GndOix0g+neudX58WwfX8XcjBrcIgSYU/0Of7uLwQJAKytaGhZC+WtnGHRnAdURLjHT84w=
+X-Received: by 2002:a9d:528f:: with SMTP id f15-v6mr15476974oth.134.1522957686642;
+ Thu, 05 Apr 2018 12:48:06 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <e2234113-52cf-1443-5abb-70a595037f30@gmail.com>
+Received: by 10.201.43.98 with HTTP; Thu, 5 Apr 2018 12:48:06 -0700 (PDT)
+From:   Igor Korot <ikorot01@gmail.com>
+Date:   Thu, 5 Apr 2018 14:48:06 -0500
+Message-ID: <CA+FnnTxbg97A4P3AP7n5RT8+=W8PY0yx3644Ay2Zi9xgKD2aoA@mail.gmail.com>
+Subject: Is support for 10.8 dropped?
+To:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Andreas Heiduk <asheiduk@gmail.com> wrote:
-> Am 05.04.2018 um 09:51 schrieb Eric Wong:
-> > Can you confirm it's OK for you?  Thanks.
-> 
-> Looks good, works for me.
-> 
-> Do you squash this patch with with my commit or do you need a reroll?
+Hi, ALL,
+I am a successful user of git and my project is locad on GitHub (still
+in development).
 
-Nope, no need to reroll.  Pushed to my repo for Junio.  Thanks all.
+I have console git client installed on  all 3 major platforms -
+Windows, Linux and Mac.
 
-The following changes since commit 468165c1d8a442994a825f3684528361727cd8c0:
+Up until recently everything was working fine. However about a month
+ago I started experiencing issues with OSX.
 
-  Git 2.17 (2018-04-02 10:13:35 -0700)
+I am running OSX 10.8 and initially I was receiving the following:
 
-are available in the Git repository at:
+[quote]
+fatal: unable to access
+'https://github.com/oneeyeman1/dbhandler.git/': error:1407742E:SSL
+routines:SSL23_GET_SERVER_HELLO:tlsv1 alert protocol version
+[/quote].
 
-  git://bogomips.org/git-svn.git svn/authors-prog-2
+After asking on the stackoverflow I received a suggestion of updating
+the git application.
+I did that successfully) and now am getting the following:
 
-for you to fetch changes up to cb427e9eb0243fe7a1a22ea3bd0a46b7410c0bf3:
+[quote]
+MyMac:dbhandler igorkorot$ /usr/local/git/bin/git pull
+dyld: lazy symbol binding failed: Symbol not found: ___strlcpy_chk
+  Referenced from: /usr/local/git/libexec/git-core/git
+  Expected in: /usr/lib/libSystem.B.dylib
+dyld: Symbol not found: ___strlcpy_chk
+  Referenced from: /usr/local/git/libexec/git-core/git
+  Expected in: /usr/lib/libSystem.B.dylib
+error: fetch died of signal 5
+[/quote]
 
-  git-svn: allow empty email-address using authors-prog and authors-file (2018-04-05 19:22:06 +0000)
+Now my question is - how I can upgrade the git console client for my
+OSX version?
+It looks like all installers are written for 10.9+ and the only way to
+work it is to update the OS?
 
-----------------------------------------------------------------
-Andreas Heiduk (2):
-      git-svn: search --authors-prog in PATH too
-      git-svn: allow empty email-address using authors-prog and authors-file
+Is there a version of the git console app for OSX 10.8?
 
- Documentation/git-svn.txt       | 13 ++++++++++---
- git-svn.perl                    |  3 ++-
- perl/Git/SVN.pm                 | 13 ++++++-------
- t/t9130-git-svn-authors-file.sh | 14 ++++++++++++++
- t/t9138-git-svn-authors-prog.sh | 26 +++++++++++++++++++++++++-
- 5 files changed, 57 insertions(+), 12 deletions(-)
+Thank you.
