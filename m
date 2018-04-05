@@ -3,150 +3,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6E7DC1F404
-	for <e@80x24.org>; Thu,  5 Apr 2018 21:16:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 376761F404
+	for <e@80x24.org>; Thu,  5 Apr 2018 21:33:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751714AbeDEVQ0 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Apr 2018 17:16:26 -0400
-Received: from mail-ua0-f181.google.com ([209.85.217.181]:37928 "EHLO
-        mail-ua0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751278AbeDEVQV (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Apr 2018 17:16:21 -0400
-Received: by mail-ua0-f181.google.com with SMTP id q38so16367911uad.5
-        for <git@vger.kernel.org>; Thu, 05 Apr 2018 14:16:21 -0700 (PDT)
+        id S1751412AbeDEVd3 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Apr 2018 17:33:29 -0400
+Received: from mail-qk0-f177.google.com ([209.85.220.177]:36210 "EHLO
+        mail-qk0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751332AbeDEVd2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Apr 2018 17:33:28 -0400
+Received: by mail-qk0-f177.google.com with SMTP id o205so27972026qke.3
+        for <git@vger.kernel.org>; Thu, 05 Apr 2018 14:33:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=8qAVPoEO0WAOq5EkHCck5v5H9xV7DevLEFz4W3E+BTQ=;
-        b=AUxJNEXCgWgyQa4DlcyWTZWwFOzcrffwym7MvG5CqdF2/lvr2h7P73cVihQRZEqFFI
-         RkAQQY5uL+HfxMrIyDMU/HJmVlZcZJ7lFGA1CFBvK87fsLEO40Cbkc0rBGjfp0y2/C/N
-         G/ldcAebAbZ4UMEi31H5CfvhJR+WV+LXDDkZgZ96YkP/LNXSMU0TsmHpny3tPjVnnpia
-         MBSUTFq4MkiaMua4ZP0UKRy+PN9z1zdt/OceIsnQD5OgCH08feB/eCTK1qrv/HCF0Hqq
-         r5NbwrkWwbVr1q4W69YeP/XLZ31AbK+hl+/L+20DUd+OAxM9uoobCdvhTh+5tSq2rPeE
-         13Ug==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=aCL2J+xgvQ85e7WL+3Nu2Lk8g/8FxKATfY6LIxVslCo=;
+        b=ttx8YQb4nwyHiVP0gc+DkwRuSiUHZAlFCVdvHPZPuUAy6I9mlVbvqXCuDvdl8E0Mbp
+         ZzUtOue1HQCXEVUwt1h79SFgyXHByq2XiyMauQX2nzzorejjYfdVSsnhEJO4o8W9Sf1w
+         6O7sh9r81v9WwLdZb10Q+mFEVJ85eq5McGqTUxGerInkIidZKL/kfJy/+wDx4dbPUzN8
+         ZwQkJJYCQf+LF1QYutF25qp7/XvT0FnZ2V0JEpUetCSRA5LBlRpmTofSTxDFulOkyVSl
+         DR7jZfVchdhdhPlgk87KLdmNabjv30N5cyzQSpUUhUoOilj/sZKq7rCCaH24WAiUgCC8
+         qENw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=8qAVPoEO0WAOq5EkHCck5v5H9xV7DevLEFz4W3E+BTQ=;
-        b=GivRvzcdrSY4wOFv/ECP95ksV0ky/lsOSKLOqrlzvDm388/DFN6e3jl/CAfkoacYdc
-         pvq2zRR9R/0xnsmpKJaStS0V4vRs0Y9sOd3Hw/NMv5FsB0G1kVzHyA1hG2mjUf1B3jEQ
-         SeIJpG0VSAVgfzHIbyXpgdlJWWkNmzX7c8YZ6R/IZny/O+1R78EG4mu0yS8odSr9yncR
-         3S9KDcz97MZsC6rty8t74zcMc46+myWCH+BzHEDfmKyFkSpX7deBLKvZn5PYBkDRQJng
-         Bx6I2ZImc/PHkP9FpOhz+UcxOnNV5VHMgYHWepSPbaenk4X22ScU9PXdZ473SrlBJv/2
-         7frA==
-X-Gm-Message-State: ALQs6tD2mIAsfl+l0CNnA6aSwlNDf+Q2DrnYxdRbNQjvXRzAK6Fpq28+
-        bCpW/mzmLMUBsnPy/VKqfhzdzNCHBrDD7utf2ks=
-X-Google-Smtp-Source: AIpwx49qo6z9fYSih83NoHAOFoNXfzSsRMwDlqsYe1Ofu4uDaxZt3fBbjcvb/FmD3drjtr2p7wSWPis+VvAS9Rh4TUw=
-X-Received: by 10.176.90.38 with SMTP id l35mr15542495uad.79.1522962980260;
- Thu, 05 Apr 2018 14:16:20 -0700 (PDT)
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=aCL2J+xgvQ85e7WL+3Nu2Lk8g/8FxKATfY6LIxVslCo=;
+        b=F62SMm+TuQ6z9dYzu5huAedqCCuqQyozGU8VKuvEDB7X9DrSdqqe5hZSt7g3Vo5sdV
+         lZ0cZETFdBtG1ld/ushBNOIv+XrqYLyeJtpwNIl4R7r93fz+b/TXKaNoWx1mwgMZK1hm
+         CQwQlBmKISvP6nvx6SaREG5wZnPiaBZtty1Q2NXPus4C1ko6tQmQmmEpv5k8Tujq1W9Z
+         +dWi321Ev2Z3rX87/dndilrl2SIdz9C1V1VWOrwJkeY0x1rAYX38lI7v9jd+kNpIkcs3
+         Dln0wRRejazmGgKFUEBF/HZPQNhJ+lMTU5Kx3f+8YbErN2VAZZOq3I5G/SzqSvWA2D/F
+         scvQ==
+X-Gm-Message-State: ALQs6tDuQEA9O854DUd3GiGXYBMuP9aDxkQ5mE7Wv/HPt0z2fyD3813x
+        w0cceUnyG9XA37TqutQU1PR3WxJHEDYjKHhZ7GE=
+X-Google-Smtp-Source: AIpwx49MJLPqNjhNhfqOnj6yQYuD+XKNdsFWNZCfdEbkeDxwl/hV/SAn1mdlLZT0C3+G0849ZNdxjgwMb9QV6sydJ+U=
+X-Received: by 10.55.108.69 with SMTP id h66mr32076394qkc.42.1522964007827;
+ Thu, 05 Apr 2018 14:33:27 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.159.40.42 with HTTP; Thu, 5 Apr 2018 14:16:19 -0700 (PDT)
-In-Reply-To: <nycvar.QRO.7.76.6.1804052144310.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <20180405174935.598-1-newren@gmail.com> <nycvar.QRO.7.76.6.1804052144310.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 5 Apr 2018 14:16:19 -0700
-Message-ID: <CABPp-BHhdxuV9a_4OfgaRu89Kx2039OLeS1vW-KdzpLxb-ZF3g@mail.gmail.com>
-Subject: Re: [PATCH] Make running git under other debugger-like programs easy
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Git Mailing List <git@vger.kernel.org>
+Received: by 10.12.174.202 with HTTP; Thu, 5 Apr 2018 14:33:27 -0700 (PDT)
+In-Reply-To: <CAKk8ispGB2cxCxVpmabf7ASU3bSTLdMPbSQeAdYNom_JL=O0Bw@mail.gmail.com>
+References: <CAKk8ispGB2cxCxVpmabf7ASU3bSTLdMPbSQeAdYNom_JL=O0Bw@mail.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Thu, 5 Apr 2018 17:33:27 -0400
+X-Google-Sender-Auth: 3PXXvMMNbqVnudVkYm-_JnXhbks
+Message-ID: <CAPig+cT6wq3=0ychBH9+YharVvX8KNFLStdb8wGG33o_Lungyg@mail.gmail.com>
+Subject: Re: Errors testing on macOS High Sierra version 10.13.4
+To:     Wink Saville <wink@saville.com>
+Cc:     Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Johannes,
-
-On Thu, Apr 5, 2018 at 12:57 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-
-> I wonder whether a better approach would be to add an optional argument to
-> that `debug` function (which is intended to have `git` as first argument,
-> anyway, or at least a command/function that does not start with a dash):
+On Wed, Apr 4, 2018 at 1:06 PM, Wink Saville <wink@saville.com> wrote:
+> I built git on a mac osx laptop and got some errors when testing.
+> I ran ./ci/run-build-and-tests.sh and three of the tests had failures
+> that appear to be associated with character encoding:
+> ...
+> Of course on travis-ci there are no failures so I dug deeper and found
+> that travis-ci is running 10.12.6 (I added a call to system_profier in
+> ci/run-build-and-tests.sh) where as I'm running is 10.13.4:
 >
-> debug_aux () {
->         shift
->         "$@" <&6 >&5 2>&7
-> }
->
-> debug () {
->         case "$1" in
->         -d)
->                 shift &&
->                 GIT_TEST_GDB="$1" debug_aux "$@"
->                 ;;
->         --debugger=*)
->                 GIT_TEST_GDB="${1#*=}" debug_aux "$@"
->                 ;;
->         *)
->                 GIT_TEST_GDB=1 "$@" <&6 >&5 2>&7
->                 ;;
->         esac
-> }
->
-> ... and then in wrap-for-bin.sh, we would replace the last lines
->
-> if test -n "$GIT_TEST_GDB"
-> then
->         unset GIT_TEST_GDB
->         exec gdb --args "${GIT_EXEC_PATH}/@@PROG@@" "$@"
-> else
->         exec "${GIT_EXEC_PATH}/@@PROG@@" "$@"
-> fi
->
-> by
->
-> case "$GIT_TEST_GDB" in
-> '')
->         exec "${GIT_EXEC_PATH}/@@PROG@@" "$@"
->         ;;
-> 1)
->         unset GIT_TEST_GDB
->         exec gdb --args "${GIT_EXEC_PATH}/@@PROG@@" "$@"
->         ;;
-> *)
->         GIT_TEST_GDB_$$="$GIT_TEST_GDB"
->         unset GIT_TEST_GDB
->         exec $GIT_TEST_GDB_$$ "${GIT_EXEC_PATH}/@@PROG@@" "$@"
->         ;;
-> esac
->
-> or some such.
+> Not sure, but maybe I've got something configured incorrectly.
+> Suggestions anyone?
 
-That all looks great to me.  But at this point, it seems like it's a
-full rewrite and your patch to submit (which I'd be happy to endorse
-in lieu of my own)...or do you want me to submit with you as author
-and me as committer?
+I'm still on 10.12.6 and I don't plan on upgrading, so you may need to
+dig into this yourself.
 
-Also, a side question: if we go this route, do we want to rename
-GIT_TEST_GDB to reflect its expanded usage?
-
-> Then your magic "GIT_WRAPPER" invocation would become a bit more explicit:
->
->     debug --debugger=nemiver git $ARGS
->     debug -d "valgrind --tool=memcheck --track-origins=yes" git $ARGS
-
-No, for most (60-80%?) of my invocations, I wouldn't be able to use
-the debug function; only a minority of my uses are from within the
-testsuite.  The rest are from the command line (I have
-git/bin-wrappers/ in my $PATH), so the above suggestions would mean
-that my invocation would become:
-
-GIT_TEST_GDB="nemiver" git $ARGS
-GIT_TEST_GDB="valgrind --tool-memcheck --track-origins=yes" git $ARGS
-
-> (In any case, "GIT_WRAPPER" is probably a name in want of being renamed.)
-
-Well, with your suggestion, it'd just be whatever that environment
-variable is named.  I'm perfectly happy with something other than
-GIT_WRAPPER (or GIT_TEST_GDB).  I'm not so good at coming up with such
-myself, but maybe something like GIT_DEBUGGER or GIT_DEBUG_WITH?
-
-Thanks,
-Elijah
+Try narrowing down the problem to the exact command within the test
+which is failing or giving unexpected results. From there, it may be
+possible to identify some difference between 10.12.6 and 10.13.4 or
+between something in your current configuration and that on Travis or
+elsewhere.
