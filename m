@@ -6,83 +6,90 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 03FAD1F404
-	for <e@80x24.org>; Thu,  5 Apr 2018 22:15:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3841D1F404
+	for <e@80x24.org>; Thu,  5 Apr 2018 22:15:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752340AbeDEWPE (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Apr 2018 18:15:04 -0400
-Received: from mail-pl0-f50.google.com ([209.85.160.50]:44845 "EHLO
-        mail-pl0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751443AbeDEWPD (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Apr 2018 18:15:03 -0400
-Received: by mail-pl0-f50.google.com with SMTP id b6-v6so19279134pla.11
-        for <git@vger.kernel.org>; Thu, 05 Apr 2018 15:15:03 -0700 (PDT)
+        id S1753233AbeDEWPi (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Apr 2018 18:15:38 -0400
+Received: from mail-pl0-f65.google.com ([209.85.160.65]:39527 "EHLO
+        mail-pl0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752595AbeDEWPh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Apr 2018 18:15:37 -0400
+Received: by mail-pl0-f65.google.com with SMTP id s24-v6so21258534plq.6
+        for <git@vger.kernel.org>; Thu, 05 Apr 2018 15:15:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=K/OBZKee59HQev+gXE+w6338NZYeBmepBXywXzYCC5k=;
-        b=BpqU79wvIqSAjbvX88ufpyWTvxrs5+NeugQeAGpOHFQvB59Dc5MWNgoeV+L4a1GK1X
-         nS0G8EgbuMVuJ9vLRm/7IN7hblMjJxMEJK/g164zgAPsKYRaHPxwpEdUNqMtsgzBXtKw
-         V/xiCplaWm8pnOmbqeQno7WguyHyxKQBxueKt4l2hJUgljrfbQLokVsTUOewSVC8AVhw
-         ZsGZtYUalgq98NI7Rk/NRdzs8v9v9P3jyymaLFtxmPyG3PqccsKUwEeZg0eyWp9cALjm
-         auH4WiqUzyNd76Xfteq66VC0q8A4XuQqcQ/1B1EHvjKgbsd3j69dWCJ81ckYpRoOOf6H
-         rHIw==
+        bh=uksrXI9tOLD+RT/DhsChAQLHHOIXRC/KvgZ+q+y3ZzU=;
+        b=Vc9bc+9L0Xmr1bazLoiT9Y7r8htqqvsW5tjj7YqBGBf5SaE5u190IFAQj4oao63q6u
+         We6jHoFX7uRLCa3zORgcd5/9DKJr40z4tYS8kSoAEJ/Bd6Fyfeo+Osoq8ivOHwo15tRs
+         LwLV5l5CPRdRDzjAQh3YXQHmxv27m4Viql5bcItZBYCvmpi8/KrybnAVTAeQmouDq4rI
+         rDQTCVlHZrYGYQ7G3ce56wB6B4R9GLi0K6f52NMY8WRhX/20sfLn3U8SdOcM3HsOs755
+         cRQUspZY1ew3MCcUTBiQwWk3QkQI06f84SLV+t9cMJ5OxcRFajPfQnaafnmZsMn0kcJs
+         A2bg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=K/OBZKee59HQev+gXE+w6338NZYeBmepBXywXzYCC5k=;
-        b=FWaKdMxZf4QxrE9yf8TQCsqh4PMslN0Gcoea58OQ6ghda6It4WRPhwoDw1I41nQfWh
-         E26yzDV3Hht4hMiPPNXD/JpgiVnobnjgPHRiz1WU2yblgiou7vvaCmdhrGgkdmoR5fcX
-         miIXknemXD17AedBs6X3+gd82RWrsffkF7pLq+E3lwr3S8/jkW3yLT1tDql6UGyNhllZ
-         d7Hx9q+zlZ1GFR696TJNm8m3uB3zjOGDZOfnRAVQr77YTdkM2G82CbD5HcNG7qF3oCnL
-         GV9WHQBPCRP0Dfe7yTFuVdB8fQCnOzV4SFfgeZYUTvy9KWVRsv2JgpAxv99G4htwIUAI
-         e/4w==
-X-Gm-Message-State: AElRT7FIrWk3RW2Pn/JULOU7spkDC+jFSjVvktEhXTNDl7BKVimVkxSR
-        NCpYFQq8BwduCR4RZILuLCo7bg==
-X-Google-Smtp-Source: AIpwx4+GAZj83n8lV8pcORHze0OqajgzpXRtVlEsnPav59tx1uASEF4zvfrQfoWBjXJlu1aRhR5hPA==
-X-Received: by 2002:a17:902:8304:: with SMTP id bd4-v6mr24663212plb.70.1522966502559;
-        Thu, 05 Apr 2018 15:15:02 -0700 (PDT)
+        bh=uksrXI9tOLD+RT/DhsChAQLHHOIXRC/KvgZ+q+y3ZzU=;
+        b=PrlG3zP+ITnDdFSa9sNmYV/LtE4OLdAwiNXbYAYyeLi7DhKf1m2aHudID+7c6FTv0s
+         9WjQCcCLvgEkpfunmncJw3ilTwcXOUgLWafcGvUV0zaFUnuww+CA67gbQ6F353Z9TdzK
+         UFt5Ln++tQnifl1eQkldkgcEIWLqTZSvOxakLuuujRyAucodi6k7Rc4rT+5yZ1jpn5pN
+         fetzge7kQpWsOPQWXFdfBPoUpIWLmRbBst1rT4va0melWGLErKaAxcpWea1zoraVmP2C
+         FGC8maO4z6I2LL4yzQDm41Sr4iFGy7ltor5xYurtMMDnurfJ3KUBSwX3p/ZUEOO/TIL8
+         uYBA==
+X-Gm-Message-State: AElRT7H7z2PutO04T4SPfYt72Uo8f+SYiiTjzK9lPCvaKqzICIyg9cwj
+        bcGFwadBH50tKIGGhTBp+WQ8xA==
+X-Google-Smtp-Source: AIpwx4/HNp5hdx7POzyOfPvNKpIy1UsKOlePi6dnqhAlmPS1UR/4GRkP8mkNKOU1K95zGR4lXYuekQ==
+X-Received: by 10.99.120.3 with SMTP id t3mr15745880pgc.56.1522966537071;
+        Thu, 05 Apr 2018 15:15:37 -0700 (PDT)
 Received: from localhost ([2601:602:9500:3a4f:3d01:699f:f606:da49])
-        by smtp.gmail.com with ESMTPSA id a65sm18678368pfg.170.2018.04.05.15.15.01
+        by smtp.gmail.com with ESMTPSA id 27sm16874626pfo.137.2018.04.05.15.15.35
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 05 Apr 2018 15:15:01 -0700 (PDT)
-Date:   Thu, 5 Apr 2018 15:15:00 -0700
+        Thu, 05 Apr 2018 15:15:36 -0700 (PDT)
+Date:   Thu, 5 Apr 2018 15:15:35 -0700
 From:   Taylor Blau <me@ttaylorr.com>
-To:     Jeff King <peff@peff.net>, gitster@pobox.org
-Cc:     git@vger.kernel.org, sunshine@sunshineco.com
-Subject: Re: [PATCH v4 2/2] builtin/config.c: prefer `--type=bool` over
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, sunshine@sunshineco.com, gitster@pobox.com
+Subject: Re: [PATCH v4 0/2] builtin/config.c: prefer `--type=bool` over
  `--bool`, etc.
-Message-ID: <20180405221500.GA87758@syl.local>
+Message-ID: <20180405221535.GB87758@syl.local>
 References: <20180328234719.595-1-me@ttaylorr.com>
- <cover.1522893363.git.me@ttaylorr.com>
- <20180405020238.GD8879@syl.local>
- <20180405221201.GA29929@sigill.intra.peff.net>
+ <20180405020034.GA8879@syl.local>
+ <20180405215759.GB29117@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20180405221201.GA29929@sigill.intra.peff.net>
+In-Reply-To: <20180405215759.GB29117@sigill.intra.peff.net>
 User-Agent: Mutt/1.9.3 (2018-01-21)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Apr 05, 2018 at 06:12:02PM -0400, Jeff King wrote:
-> On Wed, Apr 04, 2018 at 07:02:38PM -0700, Taylor Blau wrote:
+On Thu, Apr 05, 2018 at 05:58:00PM -0400, Jeff King wrote:
+> On Wed, Apr 04, 2018 at 07:00:34PM -0700, Taylor Blau wrote:
 >
-> > +test_expect_success '--no-type unsets type specifiers' '
-> > +	echo "10" > expect &&
-> > +	git config --type=bool --no-type core.number >actual &&
-> > +	test_cmp expect actual
-> > +'
+> > I have attached a fourth re-roll of my series to introduce
+> > "--type=<type>" in "git config", and prefer it to "--<type>".
+> >
+> > In particular, since the last update, I have changed the following:
+> >
+> >   - Clearer wording in the second patch per Eric's suggestion.
+> >
+> >   - Stopped spelling the required argument to "--type=" as "[type]", and
+> >     instead as "<type>" (cc: Eric).
+> >
+> >   - Changed "unexpected" to "unrecognized" in the fatal message when we
+> >     don't know how to interpret the argument to "--type".
 >
-> Actually, one minor nit (not worth a re-roll, but Junio may want to mark
-> it up): drop the space in "> expect".
+> This iteration looks good to me, assuming that last-one-wins is still
+> the direction we want to go. I'm open to the notion that the cleanup is
+> not worth the change in behavior. It is IMHO, but obviously it's
+> somewhat subjective.
 
-Ack; I thought I picked this one up. I am happy to re-roll it, but maybe
-it makes to amend while queueing.
+I am too, unless people on this thread have strong feelings otherwise.
 
 Thanks,
 Taylor
