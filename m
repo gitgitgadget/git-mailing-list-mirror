@@ -7,133 +7,94 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 67C581F42D
-	for <e@80x24.org>; Thu,  5 Apr 2018 13:35:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3D78E1F404
+	for <e@80x24.org>; Thu,  5 Apr 2018 13:38:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751360AbeDENfE (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Apr 2018 09:35:04 -0400
-Received: from mout.gmx.net ([212.227.15.19]:40613 "EHLO mout.gmx.net"
+        id S1751249AbeDENiB (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Apr 2018 09:38:01 -0400
+Received: from mout.gmx.net ([212.227.15.18]:56263 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751165AbeDENfC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Apr 2018 09:35:02 -0400
-Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LtIdP-1eOBjv0zf9-012r3s; Thu, 05
- Apr 2018 15:34:56 +0200
-Date:   Thu, 5 Apr 2018 15:34:55 +0200 (DST)
+        id S1751165AbeDENiA (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Apr 2018 09:38:00 -0400
+Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0McVGq-1emYEg20x6-00HcdL; Thu, 05
+ Apr 2018 15:37:58 +0200
+Date:   Thu, 5 Apr 2018 15:37:58 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Christian Couder <christian.couder@gmail.com>
-cc:     Joel Teichroeb <joel@teichroeb.net>,
-        Git Mailing List <git@vger.kernel.org>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 2/5] stash: convert apply to builtin
-In-Reply-To: <CAP8UFD3SM9e+_VGpxVNzMoEYnyzkF0EzjAPjvbFakr9t9Z-muQ@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1804051528560.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <20180405022810.15796-1-joel@teichroeb.net> <20180405022810.15796-3-joel@teichroeb.net> <CAP8UFD3SM9e+_VGpxVNzMoEYnyzkF0EzjAPjvbFakr9t9Z-muQ@mail.gmail.com>
+To:     Wink Saville <wink@saville.com>
+cc:     Git List <git@vger.kernel.org>
+Subject: Re: [RFC PATCH 0/1] bdl-lib.sh: add bash debug logger
+In-Reply-To: <CAKk8isqA6Ru05kRJ+xiVHEkzPgH24cKUZbbgw2tEnw4rhafDQw@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1804051536080.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <cover.1522190580.git.wink@saville.com> <nycvar.QRO.7.76.6.1803301231430.5026@qfpub.tvgsbejvaqbjf.bet> <CAKk8isqA6Ru05kRJ+xiVHEkzPgH24cKUZbbgw2tEnw4rhafDQw@mail.gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:7xINikT8LtGuZxoFMoJa6xtCrVjY8ntByldhMQAc7ZYzh43c5SL
- EIgvbu6XcITtyxqijw20l/FuWUSIcMx7IelczN2AVQbZ//v2ahpv6c20CjSI20vWHz3NrYk
- RgglnpSVa6wxBc0q37NRv86GztE/j/Z20kCyJgHyujkqjWxzttnlnoNTRyv6toFT1DiWUhk
- KDTTVLIpvh4VlpSzBnX+g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:AM6c8z/5ErE=:wtQE+zmh305rP47K68eHGa
- ibOYRK4LOIoZVnIGT95LrWeKA84Nv51rXOau8oCWElciOPH6enb18h7SYwi15cf1SmUsgBdoA
- sLdQ6fErQsrNbJKuI+clu1nh7v+n4VAXuxlzryH4DcyIm4GLI8aIjvLtrB2YVzPPTBAqsy3Sy
- 3PeOfUnANK84ec6yM+IaaO0uEhOoDwiO37ttYrhK/GiPlDUdNkeTv8uY4r/IRsHwpOk59UEAg
- HYFCadS+mW0C+gBPCqa4La6AIf78G6VZUogv2VOQ7IDtV6I+fHf6ruT7zoOYLhSdN3STp9yFG
- lc1V7peVxPLvWu+Ssl7sXJUISea+cj5cKrC4Tw2X8ZwXw1fE7oof61DGVr1fZi0d7rLMZ1PcA
- zLfpopZcw2GFDoZ53g75gPBGDk9SnU1OKa/UHqIQq+rNH3QmzzrKUMWvBBoj/+VYBN5aeDi+L
- cQbAahbrQ6aPhO9B2WwVIuk0e/ZJtk9r52eFNGEuKW/E7EurdgX95+BDgaSIYpjK3WNAZR0kN
- 2l2UD8a8laan9lI7/KK9fxoUDta8bZxDIoPCYpGB90QJFg1++SQWgCuy85GWa76OHyRq+XtGY
- 8FqPBmEhRrjB15WihGq4+LLz0Z9/kgxBF6jOCO+Mz1lRh+uo9xDQzzU5ahBACO0Ph55czlzRK
- Vaz3zg7WZhSxHRu5jN38A9LAQM6PcaYKPw4pyqYnmcZmJixy3xKxItAF3RMTPS6RE27dfS/Pp
- PzomH6Avi63JPIbdsdm55N9niHiz6/v3P70jxCIIJJ+83Um4V8RlZlIbNOC5I0qYprgjmsfNC
- X5t3qNuH0iWcaPQ56XmDPdtwawuBtM+3WV19NBUu6bRcl2Qc3M9BnxJ72yP/yblN3/uzXiD
+X-Provags-ID: V03:K1:prtlGUl6jr2ZV9Du754EIGkEVgxODXHXlFd6b6/kRcerNz3IHuS
+ qvj7/DsCM9OQI47LkvX3bMYtm0tWEnwblY5YheQTp99cug0iRZwMIJm3ACI9zJcgcyqaqI1
+ IwBykwGfuC0GZQEycdN3rn8b6V7vRKXp1GQ9mJ5AU2e/Xt4OZJL2MjCA2uegb14/4vqqU7j
+ vdn4QDhJqTHRHACJ10U6w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:ErSx+hHEL0M=:Uf3+Hh3BYijEwR/1druXRK
+ 6evlQ5q4nszRLfqiZPKiiu39nlebpuZ3Kk2SmdXQW9mEvKJcT5S1WyIQkJe5/NRzh/nVoGtfe
+ hGT6paES8JHyUGjOfdOFsTdX3R5szTGUPbcoUQ7uLCjdOVycBVuX7F1PfoH0iBsSOxRttMCob
+ uT9CER08vPyUwZpt3uid3EUeX6ExULYtfe0tES+q32KZBW4yQBtPXSlrBtyOd3FdrawENEwXd
+ rf++mi17fnGPm8XneCCeZoPyIp9Mu11xP+jC3BUZOm+sDtwv75QuoZTxY030b/6L0ykgKo9Qk
+ gPghr/jATpY+y9kP48/mJyqX02G+rS/Rwh7nTJ1WuO0VYbYoKk+dv6187pMymw95icIOwIAoO
+ 9w1PZeHv8GUHA3/EUGhOkq20WL63/6CLlKzdSXqvh4ZgBQdwbNWaFVHG3JphFMSQYYKe2DQpu
+ ohzMt7/BCTGWAe/zskeDm2rWKr+oEu5voUdYR92+2y8LUzDmwdIkKJiCYH4TSfsX01J112MMU
+ 7gagCHvs+5HTngivoIV8zC8cNPZZ1AXa+gcUZj8mhdqXRmUJgw+EWC1uxDsOzmKLYrALTgFmH
+ DyEuSuUUBEFppT4KEYxChN8fah6ctQ4EVFN+gpympiH7tgJOejlgfsRyxz2CrE6YZasUJdOR3
+ xU9scCrGAhjuSy3yDVo5fkAFxXezsWjHDaykkyE5Gv+K4+MxazO4kc/+81ODOQ7+ShEjALWjh
+ YGSusSZZklCTuQAPcrgTooLNqetcN0I/5A7ZcIMM7NROV6QY5Y4nE/mUbJHC0o4ymf7Cxdmb1
+ /8NePL31gUid+BywIuZS7EcLu7SZzheA6/p6C0FXLfp6Z7+LVC6PpiGp5BMI1LvrGJowDrr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Christian,
+Hi Wink,
 
-[please cull a *lot* more of the quoted mail when you do not reference any
-of it... Thanks]
+On Fri, 30 Mar 2018, Wink Saville wrote:
 
-On Thu, 5 Apr 2018, Christian Couder wrote:
-
-> On Thu, Apr 5, 2018 at 4:28 AM, Joel Teichroeb <joel@teichroeb.net> wrote:
+> On Fri, Mar 30, 2018 at 3:34 AM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
 > >
-> > [...]
-> > +
-> > +       revision = info->revision.buf;
-> > +
-> > +       if (get_oid(revision, &info->w_commit)) {
-> > +               error(_("%s is not a valid reference"), revision);
-> > +               free_stash_info(info);
-> > +               return -1;
+> > On Tue, 27 Mar 2018, Wink Saville wrote:
+> >
+> >> Add bdl-lib.sh which provides functions to assit in debugging git
+> >> shell scripts and tests.
+> >
+> > Interesting idea. It is Bash-only, though... (and it is not a secret
+> > that I want to discourage using Unix shell scripts in Git's production
+> > code, they are a decent way to prototype things, but they fall short
+> > of being robust and portable in practice, and don't get me started on
+> > speed issues).
+> >
+> > So rather than spending time on making it easier to debug shell
+> > scripts, I would love to see us going into the direction of a
+> > consistent C source code. I still believe that we can get there, and
+> > that the benefits are worth the (huge) effort.
 > 
-> Maybe:
-> 
->                free_stash_info(info);
->                return error(_("%s is not a valid reference"), revision);
-> 
-> to save one line and be more consistent with above.
+> I totally agree the code base should use primarily one language!
 
-No. The parameter `revision` of the `error()` call is assigned just above
-the `if()` block and clearly points into the `info` structure. So you must
-not release that `info` before printing the error. The order of statements
-is correct.
+Great!
 
-> > +       if (grab_oid(&info->b_commit, "%s^1", revision) ||
-> > +               grab_oid(&info->w_tree, "%s:", revision) ||
-> > +               grab_oid(&info->b_tree, "%s^1:", revision) ||
-> > +               grab_oid(&info->i_tree, "%s^2:", revision)) {
-> > +
-> > +               error(_("'%s' is not a stash-like commit"), revision);
-> > +               free_stash_info(info);
-> > +               return -1;
-> 
-> Here also.
+> But that's not the case now and "bdl" gave me insight into the workings
+> of rebase--interactive and I found little guidance on how to debug
+> or learn the code base. So I thought I'd see if there was interest
+> in what I'd done.
 
-Yes, here, too, `revision` points at a field inside `info`, so we must not
-release it before using it.
+And realistically, requiring Bash is not all that much of a problem when
+targeting developers.
 
-> > +       if (info->has_u) {
-> > +               if (restore_untracked(&info->u_tree))
-> > +                       return error(_("Could not restore untracked files from stash"));
-> > +       }
-> 
-> Maybe:
-> 
->        if (info->has_u && restore_untracked(&info->u_tree))
->                return error(_("Could not restore untracked files from stash"));
+> If I were to make it non-bash specific would there be any interest?
 
-I agree with this, as it avoids an unncessary indentation level.
-
-> So maybe we can get rid of `result` and have something like:
-> 
->        if (argc < 1) {
->                error(_("at least one argument is required"));
->                usage_with_options(git_stash_helper_usage, options);
->        }
-> 
->        if (!strcmp(argv[0], "apply"))
->                return apply_stash(argc, argv, prefix);
-
-... except we have to use !!apply_stash() here: apply_stash() probably
-returns -1 in case of error (at least that would be consistent with our
-coding conventions), and the return value from cmd_*() is handed to exit()
-as exit status. The `!!` trick turns any non-zero value into a 1, also
-consistent with our coding conventions where we set exit code 1 upon error
-in the "business logic".
-
-> 
->        error(_("unknown subcommand: %s"), argv[0]);
->        usage_with_options(git_stash_helper_usage, options);
-> }
+After thinking about this more, I am a lot less opposed to including this
+in Git's source code. However, as it is not necessary for Git's
+functionality, it should probably go into contrib/, and I would much
+rather have a more descriptive name such as
+contrib/bash-debugging-library/...
 
 Ciao,
-Dscho
+Johannes
