@@ -2,100 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8E8B31F424
-	for <e@80x24.org>; Thu,  5 Apr 2018 06:53:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 074281F424
+	for <e@80x24.org>; Thu,  5 Apr 2018 07:24:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751062AbeDEGxc (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Apr 2018 02:53:32 -0400
-Received: from mail-wm0-f48.google.com ([74.125.82.48]:39778 "EHLO
-        mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750835AbeDEGxb (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Apr 2018 02:53:31 -0400
-Received: by mail-wm0-f48.google.com with SMTP id f125so3718903wme.4
-        for <git@vger.kernel.org>; Wed, 04 Apr 2018 23:53:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=ldVJUNLmzWij+0ap30bIdW4mbkHvMX6/t1ARi3PCAs8=;
-        b=ezlSMC2o1rgaz9e2JnbeeGky8Xq0OvvYrb/eKcR1OeS3l7YRJhIQA6B4W5Ncyf81OB
-         aPkm3f7KszfnDp0jZytTJvw1apa1S9+mciHcWrSYe34OoE7Bv4GRjMV3AbbV1fBHmRvD
-         y1WX8RxyBjGT+LGmbNo0eh43EDFftZFwwlpH0sMftWz8fGsX0SjfIG0HPcZccG0gy57V
-         9OWvzN8CsulY7cEpYvA6eZJqHWW7Y0chXTnNRYQ/zpps8L7FMKutyXFhej+ru+HCbsLw
-         ne+IUcWxeGtzUK6RfL+9ZV6CNx61QmJmhul+1TSDvpCD5NDP9I/MwicPid81Mp1slEKe
-         nsIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=ldVJUNLmzWij+0ap30bIdW4mbkHvMX6/t1ARi3PCAs8=;
-        b=KZ3rvLueQAI3wPRrJBUJ7njXaTyer34DBrfmWmQ9dc2zshUyaTUz7MxaSUdKClrE0B
-         5tuHbOtEGhUqf6GySQqumaOHDEdShYamT3j8j4XS6ZRvxhU/J2u03you1itAFkkf5vUP
-         nQ4aWmaC61skjmXOm0WfSD1aLcSwiD4XsfQzrofCpQkHaURefUWyjpEi2VRrjdlVJStY
-         l08qtaGkPHzjWyREAWOo7SC6nuFEtgYJtdvYIG0IbLUL0PtnHAURIM0m402UTryPX5RM
-         0wNcOnyDSbB1E76lbSgMVjz5eXmnfGkWIFq/UfE/f7KKdPHsNzTcyRYTvhnP1KRs207G
-         X96A==
-X-Gm-Message-State: ALQs6tAs57vo42tl6/ZDR3ZUD1yd8Gk7eaAkh4lhGmvmkukn+RPiJl/2
-        ej3okjSs3AaJtC3FiIuH3gME6s+y
-X-Google-Smtp-Source: AIpwx4/c+b4Uw6hFawFOb0sJvu5qmVI6tnUJCMgVxaJ2ZlSqx47b/VDJnjBmj8s6sGVA0DaFv6Yl2g==
-X-Received: by 10.80.142.21 with SMTP id 21mr1760880edw.127.1522911210290;
-        Wed, 04 Apr 2018 23:53:30 -0700 (PDT)
-Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
-        by smtp.gmail.com with ESMTPSA id m7sm4417171eda.36.2018.04.04.23.53.28
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 04 Apr 2018 23:53:29 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Stephon Harris <theonestep4@gmail.com>
-Cc:     git@vger.kernel.org, Duy Nguyen <pclouds@gmail.com>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH] specify encoding for sed command
-References: <0102016293c8dca7-6626fcde-548d-476e-b61f-c83ecdeedfe1-000000@eu-west-1.amazonses.com>
-User-agent: Debian GNU/Linux 9.4 (stretch); Emacs 25.1.1; mu4e 1.1.0
-In-reply-to: <0102016293c8dca7-6626fcde-548d-476e-b61f-c83ecdeedfe1-000000@eu-west-1.amazonses.com>
-Date:   Thu, 05 Apr 2018 08:53:28 +0200
-Message-ID: <87605616vr.fsf@evledraar.gmail.com>
+        id S1751231AbeDEHYG (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Apr 2018 03:24:06 -0400
+Received: from mo4-p00-ob.smtp.rzone.de ([81.169.146.220]:32012 "EHLO
+        mo4-p00-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751062AbeDEHYF (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Apr 2018 03:24:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1522913043;
+        s=strato-dkim-0002; d=aepfle.de;
+        h=Content-Type:Message-ID:Subject:To:From:Date:X-RZG-CLASS-ID:
+        X-RZG-AUTH:From:Subject:Sender;
+        bh=hqzWsWJQOtdHYuI8zepdp4T2LwcCtpIq3ruhkDX0irM=;
+        b=hG3ooYaGVYrtmsE2J6IFa5zRzGtV/ggGI1sW5dC3LQcy50Yy4zmWdcC6CfqLV/UOJN
+        c+SKkjpBV35V+tEGX9zuYWMl0jhz2g9LCnU1a5RhIi8SQ4m1Hz6pTdJBbw0gUFKYh8Z/
+        n+DNWalGrdE4pixVVLRNzBmJLPh28agtTOFFjh8/B1AO4Pz+MByZxx7ScRvEoLxbgQvG
+        ckTwVqyiZDnuxywBxIwVbkTjCx6fyfLpxo1jNFg96WKuLyR9CwNikf7tBUexD5wTB7et
+        eabPhoO7cljaA/t88bhFj66b8zWPhadFnjktqk7/WDKyc9YuQnYH+UAibvSGIVIMjYs8
+        PfBQ==
+X-RZG-AUTH: :P2EQZWCpfu+qG7CngxMFH1J+3q8wa/QED/SSGq+wjGiUC4oc0Nr2ihluivsBRtyRe2qcrldJj63vYUTRQR/0RqPSgWq+RVwc
+X-RZG-CLASS-ID: mo00
+Received: from sender ([2001:a62:816:91ff:a572:884d:f51d:1a86])
+        by smtp.strato.de (RZmta 43.1 AUTH)
+        with ESMTPSA id K08137u357O3Uzv
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (curve secp521r1 with 521 ECDH bits, eq. 15360 bits RSA))
+        (Client did not present a certificate)
+        for <git@vger.kernel.org>;
+        Thu, 5 Apr 2018 09:24:03 +0200 (CEST)
+Date:   Thu, 5 Apr 2018 09:23:58 +0200
+From:   Olaf Hering <olaf@aepfle.de>
+To:     git@vger.kernel.org
+Subject: How to configure sendemail for no-auth?
+Message-ID: <20180405092358.569e0315.olaf@aepfle.de>
+X-Mailer: Claws Mail 3.16.1 (GTK+ 2.24.32; x86_64-suse-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ boundary="Sig_/8hhCRXVumEercKC9xZkK4aj"; protocol="application/pgp-signature"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+--Sig_/8hhCRXVumEercKC9xZkK4aj
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Apr 05 2018, Stephon Harris wrote:
+My ~/.gitconfig looks like this, because all cloned repositories require th=
+ese settings:
+[sendemail]
+        from =3D Olaf Hering <olaf@aepfle.de>
+        envelopesender =3D olaf@aepfle.de
+        chainreplyto =3D false
+        ccover =3D yes
+        smtpencryption =3D tls
+        smtpdomain =3D sender
+        smtppass =3D smtppass
+        smtpAuth =3D PLAIN
+        smtpserver =3D smtp.strato.de
+        smtpuser =3D smtpuser
+        confirm =3D always
+        assume8bitEncoding =3D yes
+        transferEncoding =3D 8bit
 
-> Fixes issue with seeing `sed: RE error: illegal byte sequence` when running git-completion.bash
-> ---
->  contrib/completion/git-completion.bash | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-> index b09c8a23626b4..52a4ab5e2165a 100644
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -282,7 +282,7 @@ __gitcomp ()
->
->  # Clear the variables caching builtins' options when (re-)sourcing
->  # the completion script.
-> -unset $(set |sed -ne 's/^\(__gitcomp_builtin_[a-zA-Z0-9_][a-zA-Z0-9_]*\)=.*/\1/p') 2>/dev/null
-> +unset $(set |LANG=C sed -ne 's/^\(__gitcomp_builtin_[a-zA-Z0-9_][a-zA-Z0-9_]*\)=.*/\1/p') 2>/dev/null
+Now there is that one repo that requires this:
 
-This is getting closer to the issue than your previous patch, but
-there's still some open questions:
+[sendemail]
+        from =3D Olaf Hering <a@b.c>
+        envelopesender =3D a@b.c
+        smtpserver =3D otherhost
 
-1) What platform OS / version / sed version is this on?
+That "otherhost" does just plain oldstyle unencrypted SMTP.
 
-2) What's the output from "set" that's causing this error? Do we have an
-   isolated test case for that?
+How do I undo the global sendemail settings for that one repo?
+Setting the knobs to empty strings does not help:
+Command unknown: 'AUTH' at /usr/lib/git/git-send-email line 1455.
 
-3) There's other invocations of "sed" in the file, aren't those affected
-   as well?
+It seems the global smtpuser is causing the error.
 
-4) Any reason we wouldn't just set LC_AlL=C for the whole file? I see we
-   already do it for our invocation to "git merge".
+Olaf
+
+--Sig_/8hhCRXVumEercKC9xZkK4aj
+Content-Type: application/pgp-signature
+Content-Description: Digitale Signatur von OpenPGP
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EARECAB0WIQSkRyP6Rn//f03pRUBdQqD6ppg2fgUCWsXPDgAKCRBdQqD6ppg2
+fucMAKD6YRSYS3U353zIIjqGvxX+/WQWlgCdFYowLNm7sFfGXHOXR4qs6EKFfkA=
+=4WKo
+-----END PGP SIGNATURE-----
+
+--Sig_/8hhCRXVumEercKC9xZkK4aj--
