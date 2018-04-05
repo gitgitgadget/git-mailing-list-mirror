@@ -1,776 +1,216 @@
-From: "ARA 2013 (Advanced Research and Applications)" <ara@snd.edu.gr>
-Subject: ARA 2013 >-----  ECS 2013 (part of ARA 2013)    -----   New Deadline for  ECS 2013.  Indexing in ISI, EI Compendex, SCOPUS, INSPEC (IET) etc... Publication of accepted papers in Journals or Chapters in Springer Verlag, World Scientific, Imperial College Press, IOS Press, IGI Global
-Date: Fri, 12 Apr 2013 16:41:54 +0300
-Message-ID: <auto-000058412482@snd.edu.gr>
-Reply-To: "ARA 2013 (Advanced Research and Applications)" 
-	  <info@europment.org>
+From: "Reni Dimitrova" <no-reply-cscc@france.pe>
+Subject: 19th International Conference on Circuits, Systems, Communications and Computers, (CSCC 2015), Zakynthos Island, Greece, July 16-20, 2015.     We have arranged post-conference publication of all the acepted papers in 44 ISI/SCI (Thomson Reuters)
+Date: Sat, 20 Jun 2015 18:46:32 +0300
+Message-ID: <20150620154632.150AF35AFC6E@genf174.server4you.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8bit
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Sat Apr 13 10:57:40 2013
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Jun 21 08:29:39 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UQwHB-0002r7-BQ
-	for gcvg-git-2@plane.gmane.org; Sat, 13 Apr 2013 10:57:38 +0200
+	id 1Z6Yl8-0000xR-Cx
+	for gcvg-git-2@plane.gmane.org; Sun, 21 Jun 2015 08:29:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752182Ab3DMI5d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Apr 2013 04:57:33 -0400
-Received: from [195.251.98.30] ([195.251.98.30]:55419 "EHLO snd.edu.gr"
-	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751789Ab3DMI5Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Apr 2013 04:57:25 -0400
-Received: from 192.168.9.221 ([192.168.9.221] verified)
-  by snd.edu.gr (CommuniGate Pro SMTP 5.3.13)
-  with SMTP id 58412482; Fri, 12 Apr 2013 16:38:38 +0300
-X-Priority: 1 (Highest)
+	id S1751466AbbFUG32 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 21 Jun 2015 02:29:28 -0400
+Received: from genf174.server4you.net ([217.172.184.70]:37339 "EHLO
+	genf174.server4you.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752042AbbFUG30 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 21 Jun 2015 02:29:26 -0400
+X-Greylist: delayed 2960 seconds by postgrey-1.27 at vger.kernel.org; Sun, 21 Jun 2015 02:29:26 EDT
+Received: from localhost (localhost [127.0.0.1])
+	by genf174.server4you.net (Postfix) with ESMTP id 246C836057E0
+	for <git@vger.kernel.org>; Sun, 21 Jun 2015 07:31:04 +0200 (CEST)
+Received: from genf174.server4you.net ([127.0.0.1])
+	by localhost (genf174.server4you.net [127.0.0.1]) (amavisd-new, port 10032)
+	with ESMTP id B8VwpS4v7PbO for <git@vger.kernel.org>;
+	Sun, 21 Jun 2015 07:31:03 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by genf174.server4you.net (Postfix) with ESMTP id 78BF2360C773
+	for <git@vger.kernel.org>; Sun, 21 Jun 2015 03:04:49 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at genf174.server4you.net
+Received: from genf174.server4you.net ([127.0.0.1])
+	by localhost (genf174.server4you.net [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id yFvzvFp0ECqR for <git@vger.kernel.org>;
+	Sun, 21 Jun 2015 03:04:49 +0200 (CEST)
+Received: from 10.0.2.15 (genf174.server4you.net [217.172.184.70])
+	by genf174.server4you.net (Postfix) with SMTP id 150AF35AFC6E
+	for <git@vger.kernel.org>; Sat, 20 Jun 2015 17:46:30 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/221057>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/272252>
 
-           *****    ECS 2013    *****
+19th International Conference on Circuits, Systems, Communications and =
+Computers, (CSCC 2015), Zakynthos Island, Greece, July 16-20, 2015=20
+                                      jointly with INASE.org conference=
+s
+www.cscc.co     and      www.inase.org=20
 
-The 2013 International Conference on Electronics and Communication Systems
-July 16-19, 2013, Rhodes (Rodos) Island, Greece
-http://www.europment.org/conf2013/ecs.htm
+*** 44 ISI/SCI/SCOPUS (with Impact Factor from Thomson Reuters) will ho=
+st the extended version of all the accepted papers after the conference=
+=2E
 
+*** Proceedings will be published in CD-ROM and to 17 hard-copy volumes=
+=2E Hard-copy volumes and the CD-ROM will be distributed to the partici=
+pants in the conference and will be indexed in ISI, SCOPUS, DBLP, AMS, =
+Zentrablatt, ACM, Compendex, Engineering Village, DoPP, Copernicus, Sch=
+olargoogle and other 25 indexes.
 
- 
-PUBLICATIONS:
-Extended Versions of Selected papers (about 40%) will be published in Journals of NOVA Publishers 
-or as Chapters in Books of Springer Verlag, World Scientific, 
-Imperial College Press, IOS Press, IGI Global and others.
+*** Photos from CSCC 2014 and INASE.org conferences can be found here: =
+inase-news.blogspot.com/2014/12/post-conference-report-inase_15.html
 
-These Books (hard copies) of  Springer Verlag, World Scientific, Imperial College Press, 
-IOS Press, IGI Global, etc will be sent to all authors after the conference. 
-These publishers will take care of Indexing of these Books in all major indexes (including ISI).
+If you want to organize a special session contact us: info@cscc.co and =
+inase.editorial@gmail.com (do not use the address: no-reply-cscc@france=
+=2Epe )
+Successful Special Session organizers always receive full or partial fi=
+nancial support and other benefits=20
+(Editors in the Proceedings and Members in the committee of CSCC 2016)
 
+As of June 20, 2015 we have:
+60 Special Sessions in CSCC.co and other 10 Special Sessions in other I=
+NASE.org events , 5 Plenary Speakers, 5 Tutorials,=20
+44 ISI/SCI/SCOPUS (with Impact Factor from Thomson Reuters) will host t=
+he extended version of all the accepted papers after the conference
+and will be indexed in ISI, SCOPUS, DBLP, AMS, Zentrablatt, ACM, Compen=
+dex, Engineering Village, DoPP, Copernicus, Scholargoogle and other 25 =
+indexes
+www.cscc.co  <Jointly with the conferences of INASE: www.inase.org >
 
-Samples from our previous work with SPRINGER:
-http://www.springer.com/?SGWID=0-102-24-0-0&searchType=EASY_CDA&queryText=Mastorakis
+Sponsored by 1) Technical University of Sofia, Bulgaria,=20
+2) Polytechnic University of Bari, Italy and=20
+3) University Politehnica of Bucharest, Romania
+4) Technical Co-Sponsored by IEEE RA, Egypt Chapter
 
-Samples from our previous work with WORLDSCIENTIFIC
-http://www.worldscientific.com/action/doSearch?searchType=normal&searchText=Mastorakis&publicationFilterSearch=all
+Plenary Speakers (confirmed their trips and accommodation)
+1) Professor Pierre Borne, IEEE Fellow, Ecole Centrale de Lille, France
+2) Professor Erchin Serpedin, IEEE Fellow, Texas A&M University, USA
+3) Professor Tadeusz Kaczorek, IEEE Fellow, Warsaw University of Techno=
+logy, Poland
+4) Professor George Vachtsevanos, Georgia Institute of Technology, USA
+5) Professor Minjuan Wang, San Diego State University, USA
 
-Samples from our previous work with NOVA Publishers
-https://www.novapublishers.com/catalog/advanced_search_result.php?keywords=Mastorakis&osCsid=85c084d2f14555a3366fac07495f9b98&x=0&y=0
+Tutorials:
+1) Professor Sudharman K. Jayaweera, University of New Mexico, USA
+2) Professor Rodolfo A. Fiorini, Politecnico di Milano University, ITAL=
+Y (1)
+3) Professor Rodolfo A. Fiorini, Politecnico di Milano University, ITAL=
+Y (2)
+4) Professor Dalibor Biolek, University of Defence/Brno University of T=
+echnology, CZECH RPB
+5) Professor Claudio Talarico, Gonzaga University, WA, USA
 
-
-
-The Proceedings of the Conferences (all the accepted and registered papers; 
-not only the selected ones to be sent to the previous publishers) with all 
-the accepted and registered papers of the conferences will be sent for 
-indexing to: ISI (Thomson Reuters), ELSEVIER, SCOPUS, ACM - Association for 
-Computing Machinery, Zentralblatt MATH, British Library, EBSCO, SWETS, EMBASE, 
-CAS - American Chemical Society, EI Compendex, Engineering Village, DoPP, 
-GEOBASE, Biobase, TIB|UB - German National Library of Science and Technology,
- American Mathematical Society (AMS), Inspec - The IET, Ulrich's International Periodicals Directory.
-
-The conferences will feature tutorials, technical paper presentations, workshops and distinguished keynote speeches
-
-
-
-Organizing Committee
---------------------
-
-General Chairs
------------------
-Professor Charles A. Long
-Professor Emeritus
-University of Wisconsin
-Stevens Point, Wisconsin, USA
-
-Professor Nikos E. Mastorakis
-Military Institutes of University Education (ASEI)
-Hellenic Naval Academy Sector of Electrical Engineering
-and Computer Science Piraeus, Greece
--also with- Technical University of Sofia
-1000 Sofia, Bulgaria
-
-Professor Valeri Mladenov
-Technical University of Sofia
-1000 Sofia, Bulgaria
-Senior Program Chair
-
-Professor Philippe Dondon
-ENSEIRB
-Rue A Schweitzer 33400 Talence
-France
-
-Program Chairs
--------------
-Professor Filippo Neri
-Dipartimento di Informatica e Sistemistica University of Naples "Federico II"
-Naples, Italy
-
-Professor Hamid Reza Karimi
-Department of Engineering
-Faculty of Engineering and Science
-University of Agder, N-4898 Grimstad
-Norway
-
-Professor Sandra Sendra
-Instituto de Inv. para la Gestion Integrada de 
-Zonas Costeras (IGIC) Universidad Politecnica de Valencia, Spain
-
-Tutorials Chair
---------------
-Professor Pradip Majumdar
-Department of Mechanical Engineering
-Northern Illinois University
-Dekalb, Illinois, USA
-Special Session Chair
-
-Professor Pavel Varacha
-Tomas Bata University in Zlin
-Faculty of Applied Informatics
-Department of Informatics and Artificial Intelligence Zlin, Czech Republic
-
-Workshops Chair
---------------
-Professor Ryszard S. Choras
-Institute of Telecommunications
-University of Technology & Life Sciences Bydgoszcz, Poland
-
-Local Organizing Chair
----------------------
-Assistant Professor Klimis Ntalianis,
-Technological Educat. Inst. of
-Athens (TEI), Athens, Greece
-
-Publication Chair
+Zakynthos Island: =20
 ----------------
-Professor Gen Qi Xu
-Department of Mathematics
-Tianjin University
-Tianjin, China
+Zakynthos is a tourist destination, with an international airport serve=
+d by many charter flights from northern Europe.=20
+The island's nickname is To fioro tou Levante (Italian: Il fiore di Lev=
+ante, English: The flower of the East), given by the Venetians
 
-Publicity Committee
-------------------
-Professor Reinhard Neck
-Department of Economics
-Klagenfurt University
-Klagenfurt, Austria
+History of Zakynthos - Monuments - Museums - Natural Beauty - Night Lif=
+e -=20
+Easy Transportation by Air, and 40 minutes by Boat from greek mainland
+-----------------------------------------------------------------------=
+-
+Zakynthos was inhabited from the Neolithic Age, as some archaeological =
+excavations have proved. The ancient Greek poet Homer mentioned the isl=
+and in the Iliad and the Odyssey, stating that the first inhabitants of=
+ it were the son of King=20
+Dardanos of Troy called Zakynthos and his men. In mythology the island =
+was then conquered by King Arkesios of Kefalonia, and then by Odysseus =
+from Ithaca. Later on, a treaty was signed that made Zakynthos an indep=
+endent democracy, the first established in Greece, that lasted more tha=
+n 650 years. The Athenian military commander Tolmides concluded an alli=
+ance with Zakynthus during the First Peloponnesian War sometime between=
+ 459 and 446 BC.
+The importance of this alliance for Athens was that it provided them wi=
+th a source of tar. Tar is a more effective protector of ship planking =
+than pitch (which is made from pine trees). The Athenian trireme fleet =
+needed protection from rot, decay and the teredo, so this new source of=
+ tar was valuable to them. The tar was dredged up from the bottom of a =
+lake (now known as Lake Keri) using leafy myrtle branches tied to the e=
+nds of poles.=20
+It was then collected in pots and could be carried to the beach and swa=
+bbed directly onto ship hulls. Alternatively, the tar could be shipped =
+to the Athenian naval yard at the Piraeus for storage. During the Middl=
+e Ages, the island was part of the Byzantine theme of Cephallenia. Afte=
+r 1185 it became part of the County palatine of Cephalonia and Zakyntho=
+s under the Kingdom of Naples until its last Count Leonardo III Tocco w=
+as defeated by the Ottomans in 1479. The Turkish rule lasted only until=
+ 22 April 1484, when it was swapped with the Turks by Venetian secretar=
+y Giovanni Dario, negotiator of the treaty of Constantinople (1479), ag=
+ainst neighboring Cephalonia and an annual tribute of 500 ducats. From =
+then on Zakynthos remained an overseas colony of the Venetian Republic =
+until its very end in 1797, following the fate of the Ionian islands, c=
+ompleted by the capture of Cephalonia in 1500
+and Lefkas in 1684 from the Turks. Venetian rule protected the island f=
+rom Ottoman domination but in its place it put a feudal oligarchy. The =
+cultural influence of Venice (and of Venetian on local dialect) was con=
+siderable. The wealthy made a habit of sending their sons to Italy to b=
+e educated.  Good examples are Dionysios Solomos, a native of Zakynthos=
+ and Greece's national poet, and Ugo Foscolo, also native of Zakynthos =
+and a national Italian poet. However, both the Greek language and Ortho=
+dox faith survived intact. From the 16th to the 18th centuries, it was =
+one of the largest exporters of currants in the world together with Cep=
+halonia. French, Ionian state period and British Rule: The Treaty of Ca=
+mpoformio dismantling the Venetian Republic awarded the Ionian Islands =
+to France. General Antoine Gentili, leading a French expeditionary forc=
+e with boats captured in Venice, took control
+of the islands on 26 June 1797. From 1797 to 1798, the island was part =
+of the French d=E9partment Mer-=C9g=E9e. A Russian-Turkish fleet captur=
+ed the island on 23 October 1798. From 1800 to 1807, it was part of the=
+ Septinsular Republic, nominally under sovereignty of the Ottoman Empir=
+e but protected by Russia. In 1800=961801, Britain attempted to take co=
+ntrol of the Ionian islands from Zakynthos after a revolt, under the le=
+adership of James Callander Campbell[7] but these intentions stopped af=
+ter the Peace of Amiens.[8][9][10] After a second period under French c=
+ontrol (1807=961809) following the treaty of Tilsit, it was conquered b=
+y Great Britain on 16 October 1809, and was part of the British protect=
+orate of the United States of the Ionian Islands from 1815 to 1864. In =
+1864, Zakynthos, together with all the other Ionian Islands, became a f=
+ull member of the Greek state, ceded by Britain to
+stabilize the rule of the newly crowned Danish-born King of the Hellene=
+s, George I. During the Nazi occupation of Greece, Mayor Karrer and Bis=
+hop Chrysostomos refused Nazi orders to turn in a list of the members o=
+f the town's Jewish community for deportation to the death camps. Inste=
+ad they hid the town's 275 Jews in rural villages. Every Jew of Zakynth=
+os survived the war. Statues of the Bishop and the Mayor commemorate th=
+eir heroism on the site of the town's historic synagogue, destroyed in =
+the earthquake of 1953. In 1978, Yad Vashem, the Holocaust Martyrs' and=
+ Heroes' Remembrance Authority in Israel, honored Bishop Chrysostomos a=
+nd Mayor Loukas Karrer with the title of "Righteous among the Nations",=
+ an honor given to non-Jews who, at personal risk, saved Jews during th=
+e Holocaust. After the war, all of the Jews of Zakynthos moved either t=
+o Israel or to Athens.=20
 
-Professor Myriam Lazard
-Institut Superieur d' Ingenierie de la Conception Saint Die, 
-France International Liaisons, France
+See you in Zakynthos, Greece in July
 
-Professor Ka-Lok Ng
-Department of Bioinformatics
-Asia University
-Taichung, Taiwan
+Prof. Kleanthis Psarris, The City University of New York, USA=20
+Prof. George Vachtsevanos, Georgia Institute of Technology, USA
+Prof. Valeri Mladenov, Technical University of Sofia, Bulgaria
+Prof. Aida Bulucea, University of Craiova, Craiova, Romania
+Prof. Klimis Ntalianis, Technological Educational Institute of Athens, =
+Greece
+Prof. Nikos Mastorakis, Technical University of Sofia, Bulgaria and HNA=
+, Greece
 
-Professor Olga Martin
-Applied Sciences Faculty
-Politehnica University of Bucharest
-Romania
+***********************************************************************=
+*************************************
 
-Professor Vincenzo Niola
-Departement of Mechanical Engineering for Energetics University of Naples "Federico II"
-Naples, Italy
-
-Professor Eduardo Mario Dias
-Electrical Energy and Automation
-Engineering Department
-Escola Politecnica da Universidade de Sao Paulo Brazil
-
-
-Steering Committee
----------------
-Professor Aida Bulucea, University of Craiova,
-Romania Professor Dana Simian, Univ. of Sibiu, Sibiu, Romania
-Professor Zoran Bojkovic, Univ. of Belgrade, Serbia
-Professor Metin Demiralp, Istanbul Technical University, Turkey
-Professor F. V. Topalis, Nat. Tech. Univ. of Athens, Greece
-Professor Imre Rudas, Obuda University, Budapest, Hungary
-
-Program Committee
-----------------
-Prof. Lotfi Zadeh (IEEE Fellow,University of Berkeley, USA)
-Prof. Leon Chua (IEEE Fellow,University of Berkeley, USA)
-Prof. Michio Sugeno (RIKEN Brain Science Institute (RIKEN BSI), Japan)
-Prof. Dimitri Bertsekas (IEEE Fellow, MIT, USA)
-Prof. Demetri Terzopoulos (IEEE Fellow, ACM Fellow, UCLA, USA)
-Prof. Georgios B. Giannakis (IEEE Fellow, University of Minnesota, USA)
-Prof. George Vachtsevanos (Georgia Institute of Technology, USA)
-Prof. Abraham Bers (IEEE Fellow, MIT, USA)
-Prof. David Staelin (IEEE Fellow, MIT, USA)
-Prof. Brian Barsky (IEEE Fellow, University of Berkeley, USA)
-Prof. Aggelos Katsaggelos (IEEE Fellow, Northwestern University, USA)
-Prof. Josef Sifakis (Turing Award 2007, CNRS/Verimag, France)
-Prof. Hisashi Kobayashi (Princeton University, USA)
-Prof. Kinshuk (Fellow IEEE, Massey Univ. New Zeland),
-Prof. Leonid Kazovsky (Stanford University, USA)
-Prof. Narsingh Deo (IEEE Fellow, ACM Fellow, University of Central Florida, USA)
-Prof. Kamisetty Rao (Fellow IEEE, Univ. of Texas at Arlington,USA)
-Prof. Anastassios Venetsanopoulos (Fellow IEEE, University of Toronto, Canada)
-Prof. Steven Collicott (Purdue University, West Lafayette, IN, USA)
-Prof. Nikolaos Paragios (Ecole Centrale Paris, France)
-Prof. Nikolaos G. Bourbakis (IEEE Fellow, Wright State University, USA)
-Prof. Stamatios Kartalopoulos (IEEE Fellow, University of Oklahoma, USA)
-Prof. Irwin Sandberg (IEEE Fellow, University of Texas at Austin, USA),
-Prof. Michael Sebek (IEEE Fellow, Czech Technical University in Prague, Czech Republic)
-Prof. Hashem Akbari (University of California, Berkeley, USA)
-Prof. Yuriy S. Shmaliy, (IEEE Fellow, The University of Guanajuato, Mexico)
-Prof. Lei Xu (IEEE Fellow, Chinese University of Hong Kong, Hong Kong)
-Prof. Paul E. Dimotakis (California Institute of Technology Pasadena, USA)
-Prof. M. Pelikan (UMSL, USA)
-Prof. Patrick Wang (MIT, USA)
-Prof. Wasfy B Mikhael (IEEE Fellow, University of Central Florida Orlando,USA)
-Prof. Sunil Das (IEEE Fellow, University of Ottawa, Canada)
-Prof. Panos Pardalos (University of Florida, USA)
-Prof. Nikolaos D. Katopodes (University of Michigan, USA)
-Prof. Bimal K. Bose (Life Fellow of IEEE, University of Tennessee, Knoxville, USA)
-Prof. Janusz Kacprzyk (IEEE Fellow, Polish Academy of Sciences, Poland)
-Prof. Sidney Burrus (IEEE Fellow, Rice University, USA)
-Prof. Biswa N. Datta (IEEE Fellow, Northern Illinois University, USA)
-Prof. Mihai Putinar (University of California at Santa Barbara, USA)
-Prof. Wlodzislaw Duch (Nicolaus Copernicus University, Poland)
-Prof. Tadeusz Kaczorek (IEEE Fellow, Warsaw University of Tehcnology, Poland)
-Prof. Michael N. Katehakis (Rutgers, The State University of New Jersey, USA)
-Prof. Pan Agathoklis (Univ. of Victoria, Canada)
-Prof. P. Demokritou (Harvard University, USA)
-Prof. P. Razelos (Columbia University, USA)
-Dr. Subhas C. Misra (Harvard University, USA)
-Prof. Martin van den Toorn (Delft University of Technology, The Netherlands)
-Prof. Malcolm J. Crocker (Distinguished University Prof., Auburn University,USA)
-Prof. S. Dafermos (Brown University, USA)
-Prof. Urszula Ledzewicz, Southern Illinois University , USA.
-Prof. Dimitri Kazakos, Dean, (Texas Southern University, USA)
-Prof. Ronald Yager (Iona College, USA)
-Prof. Athanassios Manikas (Imperial College, London, UK)
-Prof. Keith L. Clark (Imperial College, London, UK)
-Prof. Argyris Varonides (Univ. of Scranton, USA)
-Prof. S. Furfari (Direction Generale Energie et Transports, Brussels, EU)
-Prof. Constantin Udriste, University Politehnica of Bucharest , ROMANIA
-Dr. Michelle Luke (Univ. Berkeley, USA)
-Prof. Patrice Brault (Univ. Paris-sud, France)
-Dr. Christos E. Vasios (MIT, USA)
-Prof. Jim Cunningham (Imperial College London, UK)
-Prof. Philippe Ben-Abdallah (Ecole Polytechnique de l'Universite de Nantes, France)
-Prof. Photios Anninos (Medical School of Thrace, Greece)
-Prof. Ichiro Hagiwara, (Tokyo Institute of Technology, Japan)
-Prof. Metin Demiralp ( Istanbul Technical University / Turkish Academy of Sciences, Istanbul, Turkey)
-Prof. Andris Buikis (Latvian Academy of Science. Latvia)
-Prof. Akshai Aggarwal (University of Windsor, Canada)
-Prof. George Vachtsevanos (Georgia Institute of Technology, USA)
-Prof. Ulrich Albrecht (Auburn University, USA)
-Prof. Imre J. Rudas (Obuda University, Hungary)
-Prof. Alexey L Sadovski (IEEE Fellow, Texas A&M University, USA)
-Prof. Amedeo Andreotti (University of Naples, Italy)
-Prof. Ryszard S. Choras (University of Technology and Life Sciences Bydgoszcz, Poland)
-Prof. Remi Leandre (Universite de Bourgogne, Dijon, France)
-Prof. Moustapha Diaby (University of Connecticut, USA)
-Prof. Brian McCartin (New York University, USA)
-Prof. Elias C. Aifantis (Aristotle Univ. of Thessaloniki, Greece)
-Prof. Anastasios Lyrintzis (Purdue University, USA)
-Prof. Charles Long (Prof. Emeritus University of Wisconsin, USA)
-Prof. Marvin Goldstein (NASA Glenn Research Center, USA)
-Prof. Costin Cepisca (University POLITEHNICA of Bucharest, Romania)
-Prof. Kleanthis Psarris (University of Texas at San Antonio, USA)
-Prof. Ron Goldman (Rice University, USA)
-Prof. Ioannis A. Kakadiaris (University of Houston, USA)
-Prof. Richard Tapia (Rice University, USA)
-Prof. F.-K. Benra (University of Duisburg-Essen, Germany)
-Prof. Milivoje M. Kostic (Northern Illinois University, USA)
-Prof. Helmut Jaberg (University of Technology Graz, Austria)
-Prof. Ardeshir Anjomani (The University of Texas at Arlington, USA)
-Prof. Heinz Ulbrich (Technical University Munich, Germany)
-Prof. Reinhard Leithner (Technical University Braunschweig, Germany)
-Prof. Elbrous M. Jafarov (Istanbul Technical University, Turkey)
-Prof. M. Ehsani (Texas A&M University, USA)
-Prof. Sesh Commuri (University of Oklahoma, USA)
-Prof. Nicolas Galanis (Universite de Sherbrooke, Canada)
-Prof. S. H. Sohrab (Northwestern University, USA)
-Prof. Rui J. P. de Figueiredo (University of California, USA)
-Prof. Valeri Mladenov (Technical University of Sofia, Bulgaria)
-Prof. Hiroshi Sakaki (Meisei University, Tokyo, Japan)
-Prof. Zoran S. Bojkovic (Technical University of Belgrade, Serbia)
-Prof. K. D. Klaes, (Head of the EPS Support Science Team in the MET Division at EUMETSAT, France)
-Prof. Emira Maljevic (Technical University of Belgrade, Serbia)
-Prof. Kazuhiko Tsuda (University of Tsukuba, Tokyo, Japan)
-Prof. Milan Stork (University of West Bohemia , Czech Republic)
-Prof. C. G. Helmis (University of Athens, Greece)
-Prof. Lajos Barna (Budapest University of Technology and Economics, Hungary)
-Prof. Nobuoki Mano (Meisei University, Tokyo, Japan)
-Prof. Nobuo Nakajima (The University of Electro-Communications, Tokyo, Japan)
-Prof. Victor-Emil Neagoe (Polytechnic University of Bucharest, Romania)
-Prof. E. Protonotarios (National Technical University of Athens, Greece)
-Prof. P. Vanderstraeten (Brussels Institute for Environmental Management, Belgium)
-Prof. Annaliese Bischoff (University of Massachusetts, Amherst, USA)
-Prof. Virgil Tiponut (Politehnica University of Timisoara, Romania)
-Prof. Andrei Kolyshkin (Riga Technical University, Latvia)
-Prof. Fumiaki Imado (Shinshu University, Japan)
-Prof. Sotirios G. Ziavras (New Jersey Institute of Technology, USA)
-Prof. Constantin Volosencu (Politehnica University of Timisoara, Romania)
-Prof. Marc A. Rosen (University of Ontario Institute of Technology, Canada)
-Prof. Alexander Zemliak (Puebla Autonomous University, Mexico)
-Prof. Thomas M. Gatton (National University, San Diego, USA)
-Prof. Leonardo Pagnotta (University of Calabria, Italy)
-Prof. Yan Wu (Georgia Southern University, USA)
-Prof. Daniel N. Riahi (University of Texas-Pan American, USA)
-Prof. Alexander Grebennikov (Autonomous University of Puebla, Mexico)
-Prof. Bennie F. L. Ward (Baylor University, TX, USA)
-Prof. Guennadi A. Kouzaev (Norwegian University of Science and Technology, Norway)
-Prof. Eugene Kindler (University of Ostrava, Czech Republic)
-Prof. Geoff Skinner (The University of Newcastle, Australia)
-Prof. Hamido Fujita (Iwate Prefectural University(IPU), Japan)
-Prof. Francesco Muzi (University of L'Aquila, Italy)
-Prof. Les M. Sztandera (Philadelphia University, USA)
-Prof. Claudio Rossi (University of Siena, Italy)
-Prof. Christopher J. Koroneos (Aristotle University of Thessaloniki, Greece)
-Prof. Sergey B. Leonov (Joint Institute for High Temperature Russian Academy of Science, Russia)
-Prof. Arpad A. Fay (University of Miskolc, Hungary)
-Prof. Lili He (San Jose State University, USA)
-Prof. M. Nasseh Tabrizi (East Carolina University, USA)
-Prof. Alaa Eldin Fahmy (University Of Calgary, Canada)
-Prof. Ion Carstea (University of Craiova, Romania)
-Prof. Paul Dan Cristea (University "Politehnica" of Bucharest, Romania)
-Prof. Gh. Pascovici (University of Koeln, Germany)
-Prof. Pier Paolo Delsanto (Politecnico of Torino, Italy)
-Prof. Radu Munteanu (Rector of the Technical University of Cluj-Napoca, Romania)
-Prof. Ioan Dumitrache (Politehnica University of Bucharest, Romania)
-Prof. Corneliu Lazar (Technical University Gh.Asachi Iasi, Romania)
-Prof. Nicola Pitrone (Universita degli Studi Catania, Italia)
-Prof. Miquel Salgot (University of Barcelona, Spain)
-Prof. Amaury A. Caballero (Florida International University, USA)
-Prof. Maria I. Garcia-Planas (Universitat Politecnica de Catalunya, Spain)
-Prof. Petar Popivanov (Bulgarian Academy of Sciences, Bulgaria)
-Prof. Alexander Gegov (University of Portsmouth, UK)
-Prof. Lin Feng (Nanyang Technological University, Singapore)
-Prof. Colin Fyfe (University of the West of Scotland, UK)
-Prof. Zhaohui Luo (Univ of London, UK)
-Prof. Mikhail Itskov (RWTH Aachen University, Germany)
-Prof. George G. Tsypkin (Russian Academy of Sciences, Russia)
-Prof. Wolfgang Wenzel (Institute for Nanotechnology, Germany)
-Prof. Weilian Su (Naval Postgraduate School, USA)
-Prof. Phillip G. Bradford (The University of Alabama, USA)
-Prof. Ray Hefferlin (Southern Adventist University, TN, USA)
-Prof. Gabriella Bognar (University of Miskolc, Hungary)
-Prof. Hamid Abachi (Monash University, Australia)
-Prof. Karlheinz Spindler (Fachhochschule Wiesbaden, Germany)
-Prof. Josef Boercsoek (Universitat Kassel, Germany)
-Prof. Eyad H. Abed (University of Maryland, Maryland, USA)
-Prof. F. Castanie (TeSA, Toulouse, France)
-Prof. Robert K. L. Gay (Nanyang Technological University, Singapore)
-Prof. Andrzej Ordys (Kingston University, UK)
-Prof. Harris Catrakis (Univ of California Irvine, USA)
-Prof. T Bott (The University of Birmingham, UK)
-Prof. Petr Filip (Institute of Hydrodynamics, Prague, Czech Republic)
-Prof. T.-W. Lee (Arizona State University, AZ, USA)
-Prof. Le Yi Wang (Wayne State University, Detroit, USA)
-Prof. George Stavrakakis (Technical University of Crete, Greece)
-Prof. John K. Galiotos (Houston Community College, USA)
-Prof. M. Petrakis (National Observatory of Athens, Greece)
-Prof. Philippe Dondon (ENSEIRB, Talence, France)
-Prof. Dalibor Biolek (Brno University of Technology, Czech Republic)
-Prof. Oleksander Markovskyy (National Technical University of Ukraine, Ukraine)
-Prof. Suresh P. Sethi (University of Texas at Dallas, USA)
-Prof. Hartmut Hillmer(University of Kassel, Germany)
-Prof. Bram Van Putten (Wageningen University, The Netherlands)
-Prof. Alexander Iomin (Technion - Israel Institute of Technology, Israel)
-Prof. Roberto San Jose (Technical University of Madrid, Spain)
-Prof. Minvydas Ragulskis (Kaunas University of Technology, Lithuania)
-Prof. Arun Kulkarni (The University of Texas at Tyler, USA)
-Prof. Joydeep Mitra (New Mexico State University, USA)
-Prof. Vincenzo Niola (University of Naples Federico II, Italy)
-Prof. Ion Chryssoverghi (National Technical University of Athens, Greece)
-Prof. Dr. Aydin Akan (Istanbul University, Turkey)
-Prof. Sarka Necasova (Academy of Sciences, Prague, Czech Republic)
-Prof. C. D. Memos (National Technical University of Athens, Greece)
-Prof. S. Y. Chen, (Zhejiang University of Technology, China and University of Hamburg, Germany)
-Prof. Duc Nguyen (Old Dominion University, Norfolk, USA)
-Prof. Tuan Pham (James Cook University, Townsville, Australia)
-Prof. Habil M. Patzold (Agder University College,Norway )
-Prof. Jiri Klima (Technical Faculty of CZU in Prague, Czech Republic)
-Prof. Rossella Cancelliere (University of Torino, Italy)
-Prof. L.Kohout (Florida State University, Tallahassee, Florida, USA)
-Prof. D' Attelis (Univ. Buenos Ayres, Argentina)
-Prof. Dr-Eng. Christian Bouquegneau (Faculty Polytechnique de Mons, Belgium)
-Prof. Wladyslaw Mielczarski (Technical University of Lodz, Poland)
-Prof. Ibrahim Hassan (Concordia University, Montreal, Quebec, Canada)
-Prof. Stavros J.Baloyannis (Medical School, Aristotle University of Thessaloniki, Greece)
-Prof. James F. Frenzel (University of Idaho, USA)
-Prof. Mirko Novak (Czech Technical University in Prague,Czech Republic)
-Prof. Zdenek Votruba (Czech Technical University in Prague,Czech Republic)
-Prof. Vilem Srovnal,(Technical University of Ostrava, Czech Republic)
-Prof. J. M. Giron-Sierra (Universidad Complutense de Madrid, Spain)
-Prof. Zeljko Panian (University of Zagreb, Croatia)
-Prof. Walter Dosch (University of Luebeck, Germany)
-Prof. Rudolf Freund (Vienna University of Technology, Austria)
-Prof. Erich Schmidt (Vienna University of Technology, Austria)
-Prof. Alessandro Genco (University of Palermo, Italy)
-Prof. Martin Lopez Morales (Technical University of Monterey, Mexico)
-Prof. Ralph W. Oberste-Vorth (Marshall University, USA)
-Prof. Vladimir Damgov (Bulgarian Academy of Sciences, Bulgaria)
-Prof. Menelaos Karanasos (Brunel University, UK)
-Prof. P.Borne (Ecole Central de Lille, France)
-
-
-Topics of Interest
-==================
-Network Theory and Applications
-Filter Theory
-Nanostructures and nanotechnologies
-Molecular Electronics
-Molecular Computing
-DNA Computing
-Circuits and Networks inspired from Biology
-Metabolic Networks
-Microelectronics
-Microcircuits
-Analog, Digital, Mixed-Mode Circuits
-Electronics: Components, Devices, Systems
-Silicon Devices: Technology, Modeling, Reliability
-Optoelectronic Devices
-Laser and Optical Systems
-Thin Film Technologies
-Very Large Scale Integration Systems (VLSI)
-Hardware/Software CodesignVery Large Scale Integration Systems (VLSI)
-Digital Filters
-Highe Level Synthesis
-Amplifiers
-Nonlinear Circuits
-Sensors
-Physical Design
-Time-Frequency and Wavelet Applications
-Modelling and Simulation
-CAD Tools
-Circuits and Electronics for Data Conversion and S-D Modulation
-Capacitor/Current Technoques
-Prototype Devices and Measurement
-Circuits and Systems for Control and Robotics
-Electron Devices for Power Technology
-High Voltages and Electric Machines
-Device Physics
-Physical Design
-High-Level Synthesis and Testing
-Non-Linear Circuits
-Formal Verification
-Semiconductors
-Superconductivity Circuits
-Computer-Aided Design
-Instrumentation
-Instrument-Computer Interface
-Military Electronics
-Electronics for Space exploration
-Consumer Electronics
-Circuits in Power Technology
-Electron Devices for Video Technology
-Circuits for Antennas Technology
-Electron Devices and Systems for Radar and Sonar Systems
-Circuit Models, Electrical and Electronic Measurement
-Circuits for Industrial Applications
-Circuit models for Electromagnetic Fields
-Electronics for Signal Processing and other Applications
-Neural Networks
-Numerical Analysis and Circuits
-Logic Synthesis
-Fuzzy Logic and Circuits Design
-Circuit Implementation for Fuzzy Systems
-Multidimensional Circuits and Systems
-Dynamical systems
-Differential Equations:
-Ordinary Differential Equations
-Functional Differential Equations
-Partial Differential Equations
-Nonlinear analysis
-Stability
-Nonlinear oscillations
-Bifurcations
-Singular perturbations
-Fractals
-Ergodic theory
-Image compression
-Scientific visualization
-Stability of matter
-Schroedinger operators
-Dynamics of numerics
-Numerical analysis and lattice dynamical systems
-Non-linear Structures
-Dynamics
-Function Soft condensed matter
-Fluid Dynamics
-Granular Materials
-Colloids
-Theory and Simulation of Turbulent Flows
-Nonlinear phenomena
-Nonlinear excitations in materials
-Reaction-Diffusion Systems
-Nonlinear Optics and Spectroscopy
-Hamiltonian and Lagrangian dynamics
-Hyperbolic dynamics
-Topological and smooth dynamics
-Topological Methods in Surface Dynamics
-Random dynamical systems
-Visualization of Complex Dynamical Systems
-Applications in Biology
-Applications in Physics
-Applications in Chemistry
-Applications in Astronomy
-Applications in Engineering
-Mathematical Theory of Control
-Stability, Observability, Controlability, Factorizability, Reachability
-Linear Control
-Non-Linear Control
-Optimal Control
-Robust Control
-Computational Intelligence
-Neural Control
-Fuzzy Control
-Genetic Control
-Hybrid (Neural-Fuzzy-Evolutionary) Methodologies
-Intelligent Control
-Stochastic Control
-Discrete Control
-Hierarchical Control
-Large Scale Systems
-Adaptive Control
-Predictive Control
-Process Control
-H-infinity Control
-Multivariable Control
-Multivariable Systems
-Multidimensional Systems
-Discrete Event Systems
-Re-configurable Systems
-Real-Time Control
-Industrial Control
-Control for Electric Machines
-Control for Power Systems
-Fault Detection
-Simulation
-Optimization
-Identification
-Estimation
-Kalman Filtering
-Robotics
-Robotic Networks
-Mechatronics
-Artificial Intelligence
-Circuits, Devices and Systems for Automation and Control
-Electronics for Control
-Electrical and Electronic Measurement
-Signal Processing for Control
-Human-Machine Systems and Cybernetics
-Modeling and Simulation
-Computer Networks for Control
-Internet Control
-Microprocessors, Computer Architecture for Control
-Software tools for Control
-CAD/CAM systems
-Applications in Biology
-Applications in Physics,
-Applications in Chemistry,
-Applications in Astronomy,
-Applications in Civil Engineering
-Applications in Chemical Engineering
-Applications in Naval and Marine Engineering
-Applications in Aerospace Engineering
-Applications in Agricultural Engineering
-Applications in Structures
-Applications in Transportation Engineering
-Other Applications and Special Topics
-Filter design and structures
-Fast algorithms
-Adaptive filters
-Nonlinear Signals and Systems
-Multirate filtering and filter banks
-Signal reconstruction
-Time-frequency analysis
-Spectral estimation
-Higher order spectrum analysis
-Parameter estimation
-Detection
-Array signal processing
-Statistical signal analysis
-Signal and system modeling
-Cyclostationary signal analysis
-Speech production and perception
-Speech analysis
-Speech synthesis
-Speech coding
-Speech recognition
-Speech enhancement and noise reduction
-Active noise control
-Active noise reduction
-Echo cancellation
-Psychoacoustics
-Broadband audio coding
-Signal processing for music
-Binaural systems
-Room acoustics
-Digital transforms
-HDTV
-Multidimensional systems
-Machine vision
-Image coding
-Image motion / sequence / video
-Computed imaging
-Geophysical and seismic processing
-Image analysis and segmentation
-Image filtering, restoration and enhancement
-Image representation and modeling
-Pattern recognition
-Neural networks
-Fuzzy Systems
-Evolutionary computation
-Expert systems
-Multisensor Data Fusion
-Architectures and VLSI hardware
-Programmable signal processors
-Algorithms and applications mappings
-Design methology and CAD tools
-Languages and real time software
-Real time system estimation
-Optimization problems in signal processing
-Radar
-Sonar
-Biomedical processing
-Geophysical signal processing
-Underwater signal processing
-Remote sensing
-Robotics
-Astronomy
-Satellite signals processing
-Measure and Instrumentation
-Algorithms and Theory of Computation
-Artificial Intelligence
-Automata and Formal Language Theory
-Bioinformatics and Computational Biology
-Graphics
-Computer Networking
-Computer Vision
-Computer Science Education
-Databases, Information Retrieval and Data Mining
-Distributed and Parallel Computing
-Hardware and Architecture
-Human Computer Interaction
-Machine Learning and Pattern Recognition
-Multimedia
-Operating, Networked and Storage Systems
-Programming languages
-Quantum Computing
-Real Time and Embedded Systems
-Security and Privacy
-Scientific Computing
-Software engineering
-Wireless Sensor Networks
-Network Reliability
-Military Communications
-Internet
-Programming Languages
-High Performance Languages
-Operating Systems
-Hardware Engineering
-Supercomputing
-Parallel Computing Systems Architectures
-Supercomputing
-Reusability
-Protocols, Routing, Scheduling
-Fault Tolerance
-Software Evaluation Standards
-Distributed Multimedia
-Performance Evaluation
-Intelligent Systems
-Digital Speech Processing
-Statistical Methods for Signal Processing
-Tele-automatic control
-E-commerce
-Tele-medicine and medical informatics, Tele-healthcare
-Tele-manufacturing systems
-Tele-artificial intelligence
-Tele-robotics
-Artificial intelligence
-Computational linguistics
-Computer networks
-Interconnection Networks
-Optical Interconnection Networks
-Broadband Networks, Mobile Networks, Network Applications
-Computational Biophysics
-Computers and Biomedical Engineering
-Computers and Automation
-Digital Signal Processing and Pattern Recognition
-Digital Systems and Computer Architecture
-Computational Geometry
-Algorithms and Multiplexity
-Multimedia
-Microprocessors, Microcomputers
-Microelectronics
-Mobile Computing
-NETwork Management and Optimal Design
-Software Engineering
-Computation and Reasoning Laboratory
-Knowledge and Data-Base Systems
-Software Engineering
-Educational Software
-Knowledge Engineering
-Security
-Software Methodologies
-Software Requirements
-Software Design and Development
-Software Maintenance, Software Metrics
-Software Testing
-Fault Tolerance
-Project Management
-Intelligent Agents
-JAVA, COBRA, XML
-Cyber-Science and Cyber-Space
-Object-Oriented Analysis and Design
-Software for Parallel and Distributed Systems
-Databases, Data Mining
-Data Warehousing
-Mathematical Logic and Computers
-Image, Video and Internet Technologies
-Web-Based Education
-Distributed Real Time Systems
-Distributed Data Base
-Distributed Knowledge-base Systems
-Data Mining
-Data Warehousing
-Computer Applications in Science
-Computer Applications in Engineering
-Computer Applications in Business, Commerce and Economics
-Computer Applications in Earth Sciences, Aerospace and Transportation Science
-Computer Applications in Biology, Chemistry, Medicine, Healthcare and Bioengineering
-Computer Applications in Acoustics, Music, Speech Processing
-Computer Applications in Signal and Image Processing
-Computer Applications in Communication
-Computer Applications in Arts, Archaeology, Education and Animation
-Modelling and Simulation
-Law Aspects related to informatics
-Others...
-
-Location and Venue
-============================
-Rhodes (Rodos) Island:  http://en.wikipedia.org/wiki/Rhodes
-
-http://www.rhodesguide.com
-
-http://www.rodosisland.gr
-
-
-========================================================================
-           *****    ECS 2013    *****
-
-The 2013 International Conference on Electronics and Communication Systems
-July 16-19, 2013, Rhodes (Rodos) Island, Greece
-http://www.europment.org/conf2013/ecs.htm
-
-
-======================================================================================== 
-This message satisfies the requirements of the European legislation on advertising (Directiva 2002/58/CE of the European Parliament). If you do not
-wish to receive e-mails from us.  
-If you want to un~subscribe, send an email to rena.n.politi@gmail.com with the following
-command as Subject:  
-un~subscribe email1, email2, email3, ....
-where email1, email2, email3 are all the possible emails that you have
-For  example
-un~subscribe johnsmith@gmail.com, jsmith@server.mbu.uk etc..
-Please accept our apologies for any inconvenience caused.
+If you do not want to participate any longer in our academic activities=
+, send to cscc2015@gmail.com an EMPTY (blank) email with the following =
+exact subject in the SUBJECT line:
+"  REMOVE git@vger.kernel.org "
+ (Attention: include this command "  REMOVE git@vger.kernel.org " ONLY =
+in the Subject line. Do not include it in the main part - body of your =
+email message, please. The main part - body of your email must be absou=
+ltely blank, absolutely empty, otherwise the unsubscription will not be=
+ executed)
+=20
+=20
+=20
