@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F33D21F404
-	for <e@80x24.org>; Wed,  4 Apr 2018 23:32:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 98CD61F404
+	for <e@80x24.org>; Thu,  5 Apr 2018 00:05:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752518AbeDDXcx (ORCPT <rfc822;e@80x24.org>);
-        Wed, 4 Apr 2018 19:32:53 -0400
-Received: from mail-wr0-f177.google.com ([209.85.128.177]:34675 "EHLO
-        mail-wr0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752395AbeDDXcw (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Apr 2018 19:32:52 -0400
-Received: by mail-wr0-f177.google.com with SMTP id d17so9992998wre.1
-        for <git@vger.kernel.org>; Wed, 04 Apr 2018 16:32:51 -0700 (PDT)
+        id S1752622AbeDEAFH (ORCPT <rfc822;e@80x24.org>);
+        Wed, 4 Apr 2018 20:05:07 -0400
+Received: from mail-wm0-f42.google.com ([74.125.82.42]:39367 "EHLO
+        mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752484AbeDEAFE (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Apr 2018 20:05:04 -0400
+Received: by mail-wm0-f42.google.com with SMTP id f125so1765593wme.4
+        for <git@vger.kernel.org>; Wed, 04 Apr 2018 17:05:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=ZIjVvcnyOu6ZCwjWpdyZ0KxyhRsBTo9814/+bQNw4rk=;
-        b=gxxExyQ67D9Kyd84x/ZXDgOQ3AY1APRn0tUO1lFsIP4jJwXVVSWJqKq+MEEBoiYd7x
-         611AhTxlI6lWaQpQVfzk2K/DA7qcvRs7koVaJj5b+e9YKYdMwSYu66q+0BeB/WLxv2tK
-         VrViwyHu6c+xYzGu/IVwPF8g3dUVD049fNad9NISoeLOt1aOFOPFnN4nnu3tAIANwgfC
-         8z7XbCmK1ib07jnwXR7J5d5G/0+XgXEzOQlcp6XwASN/fMFIep0EELI18zXqAzABgB+b
-         DPXBAHvVhebedXyNDNr1+vcn1r3gPhO8yfINXjX/D7v+7pSmXgptzV+sOKeZLork+xG+
-         gC3A==
+        bh=WWH0TXX57Vev1GyXzYJ/K1jw9EkbIgiqjYAgD6msY94=;
+        b=q8tb0XDneLokhfjS+2l6qrvPw3iYbE8p+ZIVO0tXExhYW/eLVsefnRUHhcvhkbw81d
+         i56SgAsTf7dhr3vIOwVgRQoSGKVpJL44wxoANhfpEj+qrwGf5mxs2Mq9M6q4SRjDJb8p
+         pd8CAvv3uaaZlrW5MGreGIA3UacX9FpKiEb/qdJKx8zMZWrQF9p67NuOumSy2iMHX3sj
+         kBQa+EXWgzg9uF+/yirp6biD+ZmH+LGnVIe74rECMCjrcT+VVbfdlKfvfV5cx06bFWVJ
+         BIfDHaI9x09nUuzhLBJ/dnEjGY+CnEjvHVVRIkkbXxUqbhTBE6zxevEbRFgj6gmL7Gez
+         b81A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=ZIjVvcnyOu6ZCwjWpdyZ0KxyhRsBTo9814/+bQNw4rk=;
-        b=RmIAsvlh8XTn0G8SLdp7N+Oy/1IryeYxYqHkwTH5iNzgJ/5zbXN9OU/DVTwSdO1Q+J
-         XALuNzKuOoGH7LhDH+qY5lN8ZQ8K7TdplE4tRJY+J6IZieYPY7AfWfe/yPLcxovk0UP0
-         /B6kW1hG39jsdyFNBoVkQM2N0tva5KpCBjsAsz9qJO8j7TlUFn0e4dKI1GuI44DAV83U
-         NSoHOrYgvDtj1t1bDlB2nopc+zJ5C5plBwAhAzUp6t4kAAy8DehMzRUlQW+n39jOPoWg
-         QX2SWpL+nyZF6+aRbhVimNe0NRZxQ305qf8C0ByeAHQpurjUKJBiwPz/xhgAeFyPlTxZ
-         3qGg==
-X-Gm-Message-State: ALQs6tAoaywz+BbvR7pkn0Bz3Ld/8ZMVTgmM/7Abv+SxMfuNql+Oh5ZB
-        xbYTmoJrEVeawnjFdbOe+73quAgV0aw=
-X-Google-Smtp-Source: AIpwx48LpVpKQ3YtF6n3S2gT6gj/thBaVkcV+zlquecpbn2KJEmozzEupo/eb0maq8yL1lAkJOyjmw==
-X-Received: by 2002:a19:1903:: with SMTP id 3-v6mr11795607lfz.59.1522884770410;
-        Wed, 04 Apr 2018 16:32:50 -0700 (PDT)
+        bh=WWH0TXX57Vev1GyXzYJ/K1jw9EkbIgiqjYAgD6msY94=;
+        b=TRflQMZYMozqRI4TaAdOjOecLn65d5kUrHkfs8jiR9jUaiMZOkCwS+oLN5LGHMmIyZ
+         DZ9aXl3e3bv8/pXdEysLvJ11F8VwZxgkbcDBHMILTqFC11bGO09MAsWVBjhMf3KtD1Xq
+         +DT77UcEC2cwS5ureltY2FYtdfLpTK8vQ+2oqVr19A+Ch85A2fFMCiBK8jbVylxPpPqV
+         +o8VYjcY8Jb8+coOD+qlapDXIFHPQ4mWQ8UYxVRauusyVcdrZ2ezhcfnkrDQ6BGvC2Iz
+         j2RFpEmdDOjuDm48iaPpfGzp22Temz/0CbKGugeGKDroGxF6IHHGskMO918xnhY8Lg/k
+         N22A==
+X-Gm-Message-State: ALQs6tDfgrX44FsKNztlLMYQtRLMrJTYQIVDmlZe2NowPgeOKcGzguDa
+        Olp0umVU88iEJ5lsTQoQGjzTNFfA9rQ=
+X-Google-Smtp-Source: AIpwx49NOJ9fCtGQKwZAPXYQqS+jKUA87pPi9/8oAOm2K2cH29TF5tDwa+1WkpB94O0QgxSoVykezA==
+X-Received: by 10.46.134.141 with SMTP id l13mr12194306lji.5.1522886701848;
+        Wed, 04 Apr 2018 17:05:01 -0700 (PDT)
 Received: from localhost.localdomain (c-5eea2375-74736162.cust.telenor.se. [94.234.35.117])
-        by smtp.gmail.com with ESMTPSA id t6sm1052139ljd.55.2018.04.04.16.32.48
+        by smtp.gmail.com with ESMTPSA id u12-v6sm1243281lfg.27.2018.04.04.17.05.00
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 04 Apr 2018 16:32:49 -0700 (PDT)
+        Wed, 04 Apr 2018 17:05:01 -0700 (PDT)
 From:   Harald Nordgren <haraldnordgren@gmail.com>
 To:     git@vger.kernel.org, avarab@gmail.com, peff@peff.net,
         gitster@pobox.com, sunshine@sunshineco.com
 Cc:     Harald Nordgren <haraldnordgren@gmail.com>
-Subject: [PATCH v9] ls-remote: create '--sort' option
-Date:   Thu,  5 Apr 2018 01:32:32 +0200
-Message-Id: <20180404233232.14913-1-haraldnordgren@gmail.com>
+Subject: [PATCH v10] ls-remote: create '--sort' option
+Date:   Thu,  5 Apr 2018 02:04:47 +0200
+Message-Id: <20180405000447.19443-1-haraldnordgren@gmail.com>
 X-Mailer: git-send-email 2.14.3 (Apple Git-98)
 In-Reply-To: <20180402005248.52418-1-haraldnordgren@gmail.com>
 References: <20180402005248.52418-1-haraldnordgren@gmail.com>
@@ -71,14 +71,14 @@ Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
 ---
 
 Notes:
-    Create 'ref_array_push' function in ref-filter
+    Use 'ref_array_item_push' to fix 'REALLOC_ARRAY' call in ref-filter
 
  Documentation/git-ls-remote.txt | 15 ++++++++++++++-
  builtin/ls-remote.c             | 20 ++++++++++++++++++--
- ref-filter.c                    | 12 ++++++++++++
+ ref-filter.c                    | 20 ++++++++++++++++++--
  ref-filter.h                    |  2 ++
  t/t5512-ls-remote.sh            | 41 ++++++++++++++++++++++++++++++++++++++++-
- 5 files changed, 86 insertions(+), 4 deletions(-)
+ 5 files changed, 92 insertions(+), 6 deletions(-)
 
 diff --git a/Documentation/git-ls-remote.txt b/Documentation/git-ls-remote.txt
 index 5f2628c8f..fa4505fd7 100644
@@ -178,13 +178,19 @@ index 540d56429..f87b2657c 100644
  	}
  	return status;
 diff --git a/ref-filter.c b/ref-filter.c
-index 45fc56216..a5686dacd 100644
+index 45fc56216..6dbafba07 100644
 --- a/ref-filter.c
 +++ b/ref-filter.c
-@@ -1861,6 +1861,18 @@ static int ref_kind_from_refname(const char *refname)
+@@ -1861,6 +1861,23 @@ static int ref_kind_from_refname(const char *refname)
  	return FILTER_REFS_OTHERS;
  }
  
++void ref_array_item_push(struct ref_array *array, struct ref_array_item *item)
++{
++	ALLOC_GROW(array->items, array->nr + 1, array->alloc);
++	array->items[array->nr++] = item;
++}
++
 +void ref_array_push(struct ref_array *array, const struct ref *ref)
 +{
 +	struct ref_array_item *item;
@@ -193,13 +199,22 @@ index 45fc56216..a5686dacd 100644
 +	item->symref = xstrdup_or_null(ref->symref);
 +	oidcpy(&item->objectname, &ref->old_oid);
 +
-+	ALLOC_GROW(array->items, array->nr + 1, array->alloc);
-+	array->items[array->nr++] = item;
++	ref_array_item_push(array, item);
 +}
 +
  static int filter_ref_kind(struct ref_filter *filter, const char *refname)
  {
  	if (filter->kind == FILTER_REFS_BRANCHES ||
+@@ -1930,8 +1947,7 @@ static int ref_filter_handler(const char *refname, const struct object_id *oid,
+ 	ref = new_ref_array_item(refname, oid->hash, flag);
+ 	ref->commit = commit;
+ 
+-	REALLOC_ARRAY(ref_cbdata->array->items, ref_cbdata->array->nr + 1);
+-	ref_cbdata->array->items[ref_cbdata->array->nr++] = ref;
++	ref_array_item_push(ref_cbdata->array, ref);
+ 	ref->kind = kind;
+ 	return 0;
+ }
 diff --git a/ref-filter.h b/ref-filter.h
 index 0d98342b3..43e713a72 100644
 --- a/ref-filter.h
