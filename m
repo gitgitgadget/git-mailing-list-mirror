@@ -2,129 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A01C71F404
-	for <e@80x24.org>; Thu,  5 Apr 2018 19:51:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9D7501F404
+	for <e@80x24.org>; Thu,  5 Apr 2018 19:57:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752861AbeDETvO (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Apr 2018 15:51:14 -0400
-Received: from connotech.com ([76.10.176.241]:55444 "EHLO mail.connotech.com"
+        id S1752863AbeDET5y (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Apr 2018 15:57:54 -0400
+Received: from mout.gmx.net ([212.227.15.15]:39091 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752701AbeDETvN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Apr 2018 15:51:13 -0400
-X-Greylist: delayed 432 seconds by postgrey-1.27 at vger.kernel.org; Thu, 05 Apr 2018 15:51:13 EDT
-Received: from [192.168.1.11] (unknown [192.168.1.11])
-        by mail.connotech.com (Postfix) with ESMTPA id C2A1E196E4F
-        for <git@vger.kernel.org>; Thu,  5 Apr 2018 19:44:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=connotech.com; s=key3;
-        t=1522957440; bh=gJ6Hd2O7fEX6Dqkhziu4Fitlzi/dKy8664YCMIFteiI=;
-        h=Date:From:To:Subject;
-        b=AmjOeW9A80bbeaHwV5eFbwNPpZ56orkPoqjTHWPzduS1iTBTZ0H5UQy75s9RdgRII
-         +m3s/hsRmQEAEUuf52j8nCPGs8eUj2PN6jwVa1XrD/wB0svhafu6LDOpgr/RQ/euj0
-         dPSxXAhMtuCyOkpzi2i5pIzuTiq+Mvl7jCygmP2U=
-Message-ID: <5AC67C43.9080500@connotech.com>
-Date:   Thu, 05 Apr 2018 19:42:59 +0000
-From:   Thierry Moreau <thierry.moreau@connotech.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.0
+        id S1752777AbeDET5x (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Apr 2018 15:57:53 -0400
+Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LbM2k-1efWJu0R10-00kuQg; Thu, 05
+ Apr 2018 21:57:52 +0200
+Date:   Thu, 5 Apr 2018 21:57:51 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+To:     Elijah Newren <newren@gmail.com>
+cc:     git@vger.kernel.org
+Subject: Re: [PATCH] Make running git under other debugger-like programs
+ easy
+In-Reply-To: <20180405174935.598-1-newren@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1804052144310.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <20180405174935.598-1-newren@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Subject: Self-inflicted "abort" in a newbie attempt at read-only exploration
- of a cloned repository?
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:zeB9BvZzR0RfJiDtG2PzyMWwZuFOrfCM7yYhB/LDY5UNygt1oGt
+ PggSfWKB7D3bdwyqnzxk+2nuUBYbWuIDgYTG79ETpuN/kv6nzLPAQhvBI4TiTIrOujYW5KH
+ E1OLZsGg0/aoOFebQyP6+3kCjwrLDM3JlfSTY1I2nRMx4nQIpVVbOxRJeIEPRL/VLCFMXtr
+ P3jg9JUxzV0qHUx7uAjsA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:2cHy3nEHS0g=:JdeiQPehAzkyPK6M4aTIxm
+ mXuUKgtJez6Js/tfwb0lo+B2kXFt/BEPOiqLhLpIcyRDnbtzPTw5cN3Lw3mIqO8IV2eKYO/A/
+ 15e9L1VD5skihUYpgBZPqeJ9CnocdNK0GCJ6tNabr4RJKIGut+RySTCn+AMwtfCaWERN5lio7
+ 7DYS77muKcHftuInWlv5fEqWgqcoB5DA1I0mrUulpjNfzNE+Kqyazf0OCYf3CJTda0KYs7RY0
+ IwrQio/0ueI2I2MZwe/lR8AOHojYo3Ps7KTUABQzPYnM3DLZZ7vGKLYUvmVKPaQEYNXblgeU+
+ Sl3YBcq8eQDG5YJ36q5S6ZFIudWY3KaSHd+iRgNhUr8I844pu6Mn10O+VMr+42vvFBq42r6cR
+ so6MlCfmhG0Kuv3PEmBqGVQZwwjelSBjRMJagFzRf9FyKZgcHCdN05gM1IklPJpd60t2FP10E
+ b0jtkc/HIH8IxPk+2iJT4igQnmb9M/kiCvqCu8Jw05o44jq3p+RWB+MGPn3T0tOAyX82zs2cT
+ +7GUD8qk0gJWJku7f6kg7oPRNObEGKmqGB3uRJRyQZ6JxplGRJ1wzPp6vWKh4C077I0e51QLA
+ eTdubFgs5JfKp5OHReYXJAZ2xCBrtABHb7zqPjfHBp5YXKoFKylZ4q9aJVSoTGEt65FEyJHRh
+ TYxFDul+33UtYVXP62aluUxXJYGG/r8d86BRSwgSt8tIUL4PTMWjwC16vh1VpuqQo6/Td0wXE
+ xCXb1xv8ERlaYbC/ODOVphTtGBGRZjKy0q/HoPqZyPLEh0grrWwHdV+XRucd9nejScoJ/h/ho
+ cbckmN3kvkd4C+MFXu+CmnwcpQaUwA8qh7NbmutcpXDglsIagYxjVdu4z2ndQvj6ngjhTJo
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear GIT enthusiasts!
+Hi Elijah,
 
-This ends up with a "git checkout" command aborting. A bit frustrating 
-at the early stage of GIT learning curve.
+On Thu, 5 Apr 2018, Elijah Newren wrote:
 
-My first goal is to clone repositories locally in order to explore the 
-various linux kernel versions, with the rich GIT metadata.
+> This allows us to run git, when using the script from bin-wrappers, under
+> other programs.  A few examples:
+>    GIT_WRAPPER=nemiver git $ARGS
+>    GIT_WRAPPER="valgrind --tool=memcheck --track-origins=yes" git $ARGS
+> 
+> Yes, we already have GIT_TEST_GDB (which could potentially be replaced
+> with GIT_WRAPPER="gdb --args"), and a bunch of options for running
+> a testcase or multiple testcases under valgrind, but I find the extra
+> flexibility useful.
 
-Thus, I clone:
+It would be even more useful if it could be made to work interactively,
+too, by removing those redirections. The `debug` function does this
+thusly:
 
-$  git clone --branch linux-4.16.y 
-https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git 
-linux-stable
-$  git -C linux-stable/ branch
-* linux-4.16.y
+debug () {
+         GIT_TEST_GDB=1 "$@" <&6 >&5 2>&7
+}
 
-So far so good. Then, I want to extract an earlier kernel version into a 
-tmp dir:
+I wonder whether a better approach would be to add an optional argument to
+that `debug` function (which is intended to have `git` as first argument,
+anyway, or at least a command/function that does not start with a dash):
 
-$  mkdir tmp
-$  git -C linux-stable/ --work-tree $PWD/tmp/ checkout linux-4.15.y
-$  git -C linux-stable/ branch
-* linux-4.15.y
-   linux-4.16.y
+debug_aux () {
+	shift
+	"$@" <&6 >&5 2>&7
+}
 
-I got my extracted 4.15 version but the source repository (index? ...?) 
-has somehow changed. Let me try something silly:
+debug () {
+	case "$1" in
+	-d)
+		shift &&
+		GIT_TEST_GDB="$1" debug_aux "$@"
+		;;
+	--debugger=*)
+		GIT_TEST_GDB="${1#*=}" debug_aux "$@"
+		;;
+	*)
+		GIT_TEST_GDB=1 "$@" <&6 >&5 2>&7
+		;;
+	esac
+}
 
-$  git -C linux-stable/ --work-tree $PWD/tmp/ checkout linux-4.14.y
-$  git -C linux-stable/ branch
-* linux-4.14.y
-   linux-4.15.y
-   linux-4.16.y
+... and then in wrap-for-bin.sh, we would replace the last lines
 
-I indeed switched my extracted version from 4.15 to 4.14, but I am 
-puzzled that the local source repository (linux-stable) is modified. 
-Then I try to bring it back closer to its original state, just to keep 
-things tidy:
+if test -n "$GIT_TEST_GDB"
+then
+	unset GIT_TEST_GDB
+	exec gdb --args "${GIT_EXEC_PATH}/@@PROG@@" "$@"
+else
+	exec "${GIT_EXEC_PATH}/@@PROG@@" "$@"
+fi
 
-$  git -C linux-stable/ checkout linux-4.16.y
+by
 
-And this command aborts, both with Git versions 2.01 and 2.17. Here is 
-the truncated command output:
+case "$GIT_TEST_GDB" in
+'')
+	exec "${GIT_EXEC_PATH}/@@PROG@@" "$@"
+	;;
+1)
+	unset GIT_TEST_GDB
+	exec gdb --args "${GIT_EXEC_PATH}/@@PROG@@" "$@"
+	;;
+*)
+	GIT_TEST_GDB_$$="$GIT_TEST_GDB"
+	unset GIT_TEST_GDB
+	exec $GIT_TEST_GDB_$$ "${GIT_EXEC_PATH}/@@PROG@@" "$@"
+	;;
+esac
 
-error: Your local changes to the following files would be overwritten by 
-checkout:
-	.gitignore
-	.mailmap
-	Documentation/00-INDEX
-	Documentation/ABI/obsolete/sysfs-gpio
-	Documentation/ABI/stable/sysfs-bus-vmbus
-	Documentation/ABI/stable/sysfs-devices
-	[... ...]
-	Documentation/devicetree/bindings/arm/mediatek/mediatek,vencsys.txt
-	Documentation/devicetree/bindings/arm/omap/crossbar.txt
-	Documentation/devicetree/bindings/arm/omap/ctrl.txt
-	Documentation/devicetree/bindings/arm/realtek.txt
-	Documentation/devicetree/bindings/arm/rock
-error: The following untracked working tree files would be overwritten 
-by checkout:
-	Documentation/RCU/Design/Memory-Ordering/Tree-RCU-Diagram.html
-	Documentation/RCU/Design/Memory-Ordering/Tree-RCU-Memory-Ordering.html
-	Documentation/RCU/Design/Memory-Ordering/TreeRCU-callback-invocation.svg
-	Documentation/RCU/Design/Memory-Ordering/TreeRCU-callback-registry.svg
-	Documentation/RCU/Design/Memory-Ordering/TreeRCU-dyntick.svg
-	[... ...]
-	arch/riscv/include/asm/smp.h
-	arch/riscv/include/asm/spinlock.h
-	arch/riscv/include/asm/spinlock_types.h
-	arch/riscv/include/asm/string.h
-	arch/riscv/include/
-Aborting
+or some such.
 
-Questions:
-=========
+Then your magic "GIT_WRAPPER" invocation would become a bit more explicit:
 
-Is there a GIT tutorial that begins with my stated goal of an 
-extract-only usage of cloned GIT repositories? (Maybe the root cause is 
-my reluctance to learn the more involved GIT usages.)
+    debug --debugger=nemiver git $ARGS
+    debug -d "valgrind --tool=memcheck --track-origins=yes" git $ARGS
 
-Does the above reproducible abort deserve attention?
+(In any case, "GIT_WRAPPER" is probably a name in want of being renamed.)
 
-Any suggestion for my stated goal?
-
-Thanks in advance,
-
-- Thierry Moreau
+Ciao,
+Dscho
