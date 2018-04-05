@@ -2,98 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4275B1F404
-	for <e@80x24.org>; Thu,  5 Apr 2018 19:48:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A01C71F404
+	for <e@80x24.org>; Thu,  5 Apr 2018 19:51:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752872AbeDETsI (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Apr 2018 15:48:08 -0400
-Received: from mail-ot0-f171.google.com ([74.125.82.171]:38154 "EHLO
-        mail-ot0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752848AbeDETsH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Apr 2018 15:48:07 -0400
-Received: by mail-ot0-f171.google.com with SMTP id o9-v6so28721258otj.5
-        for <git@vger.kernel.org>; Thu, 05 Apr 2018 12:48:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=2EkQpRrX5dXQOmdtFWqNFXu6AqzfaJSwUzDEtfNn4qU=;
-        b=g7GRjeqpA3MhbK4SXbhmmK3c4ADmgjJjWRSiNWltn8fQwl/7G80WSqYs5YEWdUWym1
-         QCZ/D7QWHDnJbL58wBaO2hQxP/qYh1ob3SNwYwG1tQ9vPNWeb+KezUIXqDDdYlbTQ5ut
-         x6W+iQAs1e/AjmCCaCaLJSCT303hsPYpaIU4K/NDW+O0+Yazdvs9yNIuWtbGtslIJwCQ
-         mMlDjEXEYS9Rmx5voESg1/2M3nxyAj8p5htVB3iDbwvv+REh8rzItYMsnzXPQiRswhfT
-         3XXrn6mtQr38blyFDAx0pj8TTe7vFZmm72Pe9HrfKb0/cr0Kaeto/AosOrMWNc+HeHiS
-         h0sA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=2EkQpRrX5dXQOmdtFWqNFXu6AqzfaJSwUzDEtfNn4qU=;
-        b=r4MHRKZHFUR89VKdMuSe+JkjaWaDPzJVZcxpsXbXMOa9q7qY9i3VZvJP5ktCBw94fc
-         CR6HfbBx9Q8n+meGbJRg6orF1an51MlI88MANH4tEivd4cOuIdXbD80au3rQbongVkLG
-         7NF0fB+srpu0SKLe60hci18ZhQzXsQMT92vVomrZsr+CN0VdLrl3zIOlhco9EDtoDjZ2
-         FnHAaP+eDihIM56XszRwcC6QknvT5+M2i3qtIASboe3/1gBG1bq1H6tlIocEUKt/kdS7
-         6eiOgHZSnHsI/0S+wecm2utu3KdiKO5qgJRXL2QuXm73ytHSQ84nAhxT5wxoaxylhz5p
-         t81g==
-X-Gm-Message-State: ALQs6tBVMrpLAowOxDMqzWjQvzQuKTan3GsbZweGYaLr1iBChNDnIJ6X
-        /FrZYj1GoG2Ey7p0DQjAjCuWEWwJ9v9UDvHILbzGlw==
-X-Google-Smtp-Source: AIpwx49IPnQ8DJ96BvWE+GndOix0g+neudX58WwfX8XcjBrcIgSYU/0Of7uLwQJAKytaGhZC+WtnGHRnAdURLjHT84w=
-X-Received: by 2002:a9d:528f:: with SMTP id f15-v6mr15476974oth.134.1522957686642;
- Thu, 05 Apr 2018 12:48:06 -0700 (PDT)
+        id S1752861AbeDETvO (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Apr 2018 15:51:14 -0400
+Received: from connotech.com ([76.10.176.241]:55444 "EHLO mail.connotech.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752701AbeDETvN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Apr 2018 15:51:13 -0400
+X-Greylist: delayed 432 seconds by postgrey-1.27 at vger.kernel.org; Thu, 05 Apr 2018 15:51:13 EDT
+Received: from [192.168.1.11] (unknown [192.168.1.11])
+        by mail.connotech.com (Postfix) with ESMTPA id C2A1E196E4F
+        for <git@vger.kernel.org>; Thu,  5 Apr 2018 19:44:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=connotech.com; s=key3;
+        t=1522957440; bh=gJ6Hd2O7fEX6Dqkhziu4Fitlzi/dKy8664YCMIFteiI=;
+        h=Date:From:To:Subject;
+        b=AmjOeW9A80bbeaHwV5eFbwNPpZ56orkPoqjTHWPzduS1iTBTZ0H5UQy75s9RdgRII
+         +m3s/hsRmQEAEUuf52j8nCPGs8eUj2PN6jwVa1XrD/wB0svhafu6LDOpgr/RQ/euj0
+         dPSxXAhMtuCyOkpzi2i5pIzuTiq+Mvl7jCygmP2U=
+Message-ID: <5AC67C43.9080500@connotech.com>
+Date:   Thu, 05 Apr 2018 19:42:59 +0000
+From:   Thierry Moreau <thierry.moreau@connotech.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.0
 MIME-Version: 1.0
-Received: by 10.201.43.98 with HTTP; Thu, 5 Apr 2018 12:48:06 -0700 (PDT)
-From:   Igor Korot <ikorot01@gmail.com>
-Date:   Thu, 5 Apr 2018 14:48:06 -0500
-Message-ID: <CA+FnnTxbg97A4P3AP7n5RT8+=W8PY0yx3644Ay2Zi9xgKD2aoA@mail.gmail.com>
-Subject: Is support for 10.8 dropped?
-To:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Subject: Self-inflicted "abort" in a newbie attempt at read-only exploration
+ of a cloned repository?
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi, ALL,
-I am a successful user of git and my project is locad on GitHub (still
-in development).
+Dear GIT enthusiasts!
 
-I have console git client installed on  all 3 major platforms -
-Windows, Linux and Mac.
+This ends up with a "git checkout" command aborting. A bit frustrating 
+at the early stage of GIT learning curve.
 
-Up until recently everything was working fine. However about a month
-ago I started experiencing issues with OSX.
+My first goal is to clone repositories locally in order to explore the 
+various linux kernel versions, with the rich GIT metadata.
 
-I am running OSX 10.8 and initially I was receiving the following:
+Thus, I clone:
 
-[quote]
-fatal: unable to access
-'https://github.com/oneeyeman1/dbhandler.git/': error:1407742E:SSL
-routines:SSL23_GET_SERVER_HELLO:tlsv1 alert protocol version
-[/quote].
+$  git clone --branch linux-4.16.y 
+https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git 
+linux-stable
+$  git -C linux-stable/ branch
+* linux-4.16.y
 
-After asking on the stackoverflow I received a suggestion of updating
-the git application.
-I did that successfully) and now am getting the following:
+So far so good. Then, I want to extract an earlier kernel version into a 
+tmp dir:
 
-[quote]
-MyMac:dbhandler igorkorot$ /usr/local/git/bin/git pull
-dyld: lazy symbol binding failed: Symbol not found: ___strlcpy_chk
-  Referenced from: /usr/local/git/libexec/git-core/git
-  Expected in: /usr/lib/libSystem.B.dylib
-dyld: Symbol not found: ___strlcpy_chk
-  Referenced from: /usr/local/git/libexec/git-core/git
-  Expected in: /usr/lib/libSystem.B.dylib
-error: fetch died of signal 5
-[/quote]
+$  mkdir tmp
+$  git -C linux-stable/ --work-tree $PWD/tmp/ checkout linux-4.15.y
+$  git -C linux-stable/ branch
+* linux-4.15.y
+   linux-4.16.y
 
-Now my question is - how I can upgrade the git console client for my
-OSX version?
-It looks like all installers are written for 10.9+ and the only way to
-work it is to update the OS?
+I got my extracted 4.15 version but the source repository (index? ...?) 
+has somehow changed. Let me try something silly:
 
-Is there a version of the git console app for OSX 10.8?
+$  git -C linux-stable/ --work-tree $PWD/tmp/ checkout linux-4.14.y
+$  git -C linux-stable/ branch
+* linux-4.14.y
+   linux-4.15.y
+   linux-4.16.y
 
-Thank you.
+I indeed switched my extracted version from 4.15 to 4.14, but I am 
+puzzled that the local source repository (linux-stable) is modified. 
+Then I try to bring it back closer to its original state, just to keep 
+things tidy:
+
+$  git -C linux-stable/ checkout linux-4.16.y
+
+And this command aborts, both with Git versions 2.01 and 2.17. Here is 
+the truncated command output:
+
+error: Your local changes to the following files would be overwritten by 
+checkout:
+	.gitignore
+	.mailmap
+	Documentation/00-INDEX
+	Documentation/ABI/obsolete/sysfs-gpio
+	Documentation/ABI/stable/sysfs-bus-vmbus
+	Documentation/ABI/stable/sysfs-devices
+	[... ...]
+	Documentation/devicetree/bindings/arm/mediatek/mediatek,vencsys.txt
+	Documentation/devicetree/bindings/arm/omap/crossbar.txt
+	Documentation/devicetree/bindings/arm/omap/ctrl.txt
+	Documentation/devicetree/bindings/arm/realtek.txt
+	Documentation/devicetree/bindings/arm/rock
+error: The following untracked working tree files would be overwritten 
+by checkout:
+	Documentation/RCU/Design/Memory-Ordering/Tree-RCU-Diagram.html
+	Documentation/RCU/Design/Memory-Ordering/Tree-RCU-Memory-Ordering.html
+	Documentation/RCU/Design/Memory-Ordering/TreeRCU-callback-invocation.svg
+	Documentation/RCU/Design/Memory-Ordering/TreeRCU-callback-registry.svg
+	Documentation/RCU/Design/Memory-Ordering/TreeRCU-dyntick.svg
+	[... ...]
+	arch/riscv/include/asm/smp.h
+	arch/riscv/include/asm/spinlock.h
+	arch/riscv/include/asm/spinlock_types.h
+	arch/riscv/include/asm/string.h
+	arch/riscv/include/
+Aborting
+
+Questions:
+=========
+
+Is there a GIT tutorial that begins with my stated goal of an 
+extract-only usage of cloned GIT repositories? (Maybe the root cause is 
+my reluctance to learn the more involved GIT usages.)
+
+Does the above reproducible abort deserve attention?
+
+Any suggestion for my stated goal?
+
+Thanks in advance,
+
+- Thierry Moreau
