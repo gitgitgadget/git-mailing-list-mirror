@@ -2,122 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 45D111F404
-	for <e@80x24.org>; Thu,  5 Apr 2018 23:34:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 602531F404
+	for <e@80x24.org>; Thu,  5 Apr 2018 23:37:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751362AbeDEXer (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Apr 2018 19:34:47 -0400
-Received: from mail-it0-f66.google.com ([209.85.214.66]:38075 "EHLO
-        mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750835AbeDEXeq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Apr 2018 19:34:46 -0400
-Received: by mail-it0-f66.google.com with SMTP id 19-v6so6421571itw.3
-        for <git@vger.kernel.org>; Thu, 05 Apr 2018 16:34:46 -0700 (PDT)
+        id S1751359AbeDEXhq (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Apr 2018 19:37:46 -0400
+Received: from mail-wm0-f47.google.com ([74.125.82.47]:36394 "EHLO
+        mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750835AbeDEXhp (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Apr 2018 19:37:45 -0400
+Received: by mail-wm0-f47.google.com with SMTP id x82so11738052wmg.1
+        for <git@vger.kernel.org>; Thu, 05 Apr 2018 16:37:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=atlassian-com.20150623.gappssmtp.com; s=20150623;
+        d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=OHQO/yySVNGjq83LsbOv5ilMQeZ/HSwSP2WF+AxEaTE=;
-        b=wpi/IVOQDpKG3dKzSZn615vH5IX+9qJj7MbbYQhM/MT9/4b1pnI5mL/7eF7lmFlXMG
-         w94HlXmUCO0zTwzlis9/5y0Zyb5O1iXzOtf3lGBxrdIEmahIqLmkAWJoNNQO++znSdtg
-         IPlKWfDJwex/a2uJx8XzIznpgBhknEQNT3dJKuFM16Ls/W5nZYAtP1DM1V2xU4U99Qch
-         ETRCRxfvJ+c1Lq3QqZ7SHhyURNQheLGrI+kc6m9/7jJM5TG4yDmGZ8VH/SRLNZ28aeVI
-         QotOO91px09d56svAFwnKy3oPLAY/NY6V1aOV8QfkQIoP18TBu6j4YwoUNs4B5mT5bOk
-         dsAQ==
+        bh=pXehEm6fxlQ9bbK7B708MzCLn/dmVYcPoo8dq/cXiko=;
+        b=ij1IQKJlcEcQCUoxhjbvbxclDaBN1VVhOuIQ4OBpjL+rjv87nAShSdvQZExr/6ZHB0
+         yD69Nc6O699E8Q4Df5aUsbNFn1wPccZojLTf9SpL0dpQnJueW9URHt25fU9N6OgDrUZg
+         ZJffmIU5mjA3tvXLmQlavibSDYGKfVH03CXJg8hSDTW10cIF6c/xTfH52lR4hF1RRaUj
+         zOonrkEbSnmdBgR6RCjO6jsuu52K/C10D/+0G2ES/ZwxuVpbewoRHVOWhawqkzTTBlma
+         q+j6su7RQyNw8tVTFe/GGGNOHOEee4GJREvOkkKH2GeMa+0wscpp8IAfLa0f1BLmvjKz
+         JsbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=OHQO/yySVNGjq83LsbOv5ilMQeZ/HSwSP2WF+AxEaTE=;
-        b=My8q9gn8/Fo7EtN41RPjhLRyvxMKX2gI5S2Ievbiqdl3v9zotVCQQJaFm1fA7IMEOL
-         +Bg0wmeLv/Fw5FE1TR5FI6jXHQB9LJb1qL/CEnvek8KLTv1oxFPllrEJnhAXc6eYvw16
-         EWs0g56MxsfbmpsO1ctGSLrnHTYf0hj+TCiVNJ7L10LKZ/mAzUNU1ZWEij6srkXbDcsf
-         JV5Fz9b2Vfy2ktmU/VAR6wS+WLI8v1Yin7inqMHC9CBv9CiTu7czE4lBfb5y2u3y8Vdj
-         KqK2q4/KhbK+RT9dgViWGOlX1ajA/GqN+bTkg7pf/JqNQRSimZysrbLP8VQquHeBzSc6
-         CAmA==
-X-Gm-Message-State: AElRT7F5OmXsUeAV4L4tmu66405WALlg42PmJT2zSYnB/j345ts8PujV
-        2h3U8sA2eIAoE7/erCobwx0l0c6J5wNVNByfXoo4yg==
-X-Google-Smtp-Source: AIpwx4//B4s8YBF76yQlLvqZJZIxWWxvoPlRFdXhJMGxHh9xOE6oq0bCz/BSBZL+qnxAfKAmhD0d5zYb8WB+f2Jnyn0=
-X-Received: by 2002:a24:624b:: with SMTP id d72-v6mr16752562itc.70.1522971285633;
- Thu, 05 Apr 2018 16:34:45 -0700 (PDT)
+        bh=pXehEm6fxlQ9bbK7B708MzCLn/dmVYcPoo8dq/cXiko=;
+        b=DWJrDq8448v3ZwRf/QnR06XS1Z+J8b5jVWCp6q0QnJNeZsFHi02WsMZq3JR15VwrV6
+         hlVZODkoQITl5WkQD/052VwN3KmReF5wIwzSTIAk50ptJVjFRMyS8vVJ348b0tj/h/+p
+         DJySKlfuLwB/bEKlBCKjVo7SzquPORoidnEwJKjrP+qiYk15R/aDkgG2Anf4PtyiGYvY
+         Zo4+E62vgX19ofejcBZwQ09Sa+ocH8VuxOLr7laEORZZW9tIEXdPOdxVg3k33iaxVnjm
+         U8EwhkNfzyLm0/nsTib0Xfz7FzxhFLFZ1k8MmZDgQwlTFlPIGBcYo0cN31B5xdamFajN
+         twxQ==
+X-Gm-Message-State: ALQs6tA3kOCDEsUy5jceXaFbhRm2e1t8urSsk7UugElbshXidoDPBQt2
+        3t9VkaQVfp1KBhOkaq9VCy8/9/wrZ6GfLVo78pY=
+X-Google-Smtp-Source: AIpwx49ptRHiwdXsQfLikUdkKNoqFWvU75gwxHU1CLTAb+1r9A0W2M6nmDTYqQD28WKAXg9m7ptgR16HyDB2eghLQQ0=
+X-Received: by 10.80.153.9 with SMTP id k9mr4614681edb.303.1522971464069; Thu,
+ 05 Apr 2018 16:37:44 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.107.97.20 with HTTP; Thu, 5 Apr 2018 16:34:45 -0700 (PDT)
-In-Reply-To: <CAGyf7-E9=Mm1oJdhwHTmg2byrOxMRFVEjmYHCFGqqP8pvK=vJg@mail.gmail.com>
-References: <5AC67C43.9080500@connotech.com> <CAGyf7-E9=Mm1oJdhwHTmg2byrOxMRFVEjmYHCFGqqP8pvK=vJg@mail.gmail.com>
-From:   Bryan Turner <bturner@atlassian.com>
-Date:   Thu, 5 Apr 2018 16:34:45 -0700
-Message-ID: <CAGyf7-GZgTpYXt4s+NURABYLBr8HQAZWxsrpLLVKnsOf2SYcBQ@mail.gmail.com>
-Subject: Re: Self-inflicted "abort" in a newbie attempt at read-only
- exploration of a cloned repository?
-To:     Thierry Moreau <thierry.moreau@connotech.com>
-Cc:     Git Users <git@vger.kernel.org>
+Received: by 10.80.201.196 with HTTP; Thu, 5 Apr 2018 16:37:23 -0700 (PDT)
+In-Reply-To: <b2771f9d8e441b6f902924a3b4f037b3874e4191.1522968472.git.johannes.schindelin@gmx.de>
+References: <cover.1518783709.git.johannes.schindelin@gmx.de>
+ <cover.1522968472.git.johannes.schindelin@gmx.de> <b2771f9d8e441b6f902924a3b4f037b3874e4191.1522968472.git.johannes.schindelin@gmx.de>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Thu, 5 Apr 2018 16:37:23 -0700
+Message-ID: <CA+P7+xp6fDbabGVKDsRFhixkWRKTuUo_A3UqbQscsBbKiOJmmA@mail.gmail.com>
+Subject: Re: [PATCH v2 2/4] push: colorize errors
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     Git mailing list <git@vger.kernel.org>,
+        Ryan Dammrose <ryandammrose@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Apr 5, 2018 at 4:18 PM, Bryan Turner <bturner@atlassian.com> wrote:
-> On Thu, Apr 5, 2018 at 12:42 PM, Thierry Moreau
-> <thierry.moreau@connotech.com> wrote:
->> Dear GIT enthusiasts!
->>
->> This ends up with a "git checkout" command aborting. A bit frustrating at
->> the early stage of GIT learning curve.
->>
->> My first goal is to clone repositories locally in order to explore the
->> various linux kernel versions, with the rich GIT metadata.
->>
->> Thus, I clone:
->>
->> $  git clone --branch linux-4.16.y
->> https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git
->> linux-stable
->> $  git -C linux-stable/ branch
->> * linux-4.16.y
->>
->> So far so good. Then, I want to extract an earlier kernel version into a tmp
->> dir:
->>
->> $  mkdir tmp
->> $  git -C linux-stable/ --work-tree $PWD/tmp/ checkout linux-4.15.y
->> $  git -C linux-stable/ branch
->> * linux-4.15.y
->>   linux-4.16.y
+On Thu, Apr 5, 2018 at 3:48 PM, Johannes Schindelin
+<johannes.schindelin@gmx.de> wrote:
+> From: Ryan Dammrose <ryandammrose@gmail.com>
 >
-> The documentation for --work-tree says:
+> This is an attempt to resolve an issue I experience with people that are
+> new to Git -- especially colleagues in a team setting -- where they miss
+> that their push to a remote location failed because the failure and
+> success both return a block of white text.
 >
-> --work-tree=<path>
+> An example is if I push something to a remote repository and then a
+> colleague attempts to push to the same remote repository and the push
+> fails because it requires them to pull first, but they don't notice
+> because a success and failure both return a block of white text. They
+> then continue about their business, thinking it has been successfully
+> pushed.
 >
-> Set the path to the working tree. It can be an absolute path or a path
-> relative to the current working directory. This can also be controlled
-> by setting the GIT_WORK_TREE environment variable and the
-> core.worktree configuration variable (see core.worktree in
-> git-config(1) for a more detailed discussion).
+> This patch colorizes the errors and hints (in red and yellow,
+> respectively) so whenever there is a failure when pushing to a remote
+> repository that fails, it is more noticeable.
 >
-> So passing --work-tree tells Git where to store your _files_, but it's
-> still using the same .git directory.
+> [jes: fixed a couple bugs, added the color.{advice,push,transport}
+> settings, refactored to use want_color_stderr().]
 >
-> If your goal is to have worktrees for various versions, that implies
-> the git worktree [1] command might be more along the lines of what
-> you're looking for. An invocation based on above might look like this:
-> $ git -C linux-stable/ worktree add $PWD/tmp/ checkout linux-4.15.y
+> Signed-off-by: Ryan Dammrose ryandammrose@gmail.com
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+>
+> squash! push: colorize errors
+>
+> Stop talking about localized errors
 
-Apologies, I didn't mean to have the "checkout" in that.
-$ git -C linux-stable/ worktree add $PWD/tmp/ linux-4.15.y
+Guessing you intended to remove this part after squashing?
 
->
-> That should leave linux-4.16.y checked out in linux-stable, while
-> creating a full work tree in $PWD/tmp that has 4.15.y checked out.
->
-> Note that worktree is a newer git command. 2.17 has it, but old
-> versions like 2.1 won't.
->
-> [1] https://git-scm.com/docs/git-worktree
->
-> Hope this helps!
-> Bryan
+Didn't see anything else to comment on in the actual code.
+
+Thanks,
+Jake
