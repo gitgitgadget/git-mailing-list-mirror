@@ -2,88 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 79C361F404
-	for <e@80x24.org>; Thu,  5 Apr 2018 19:04:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 63F3C1F404
+	for <e@80x24.org>; Thu,  5 Apr 2018 19:16:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752410AbeDETEv (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Apr 2018 15:04:51 -0400
-Received: from cloud.peff.net ([104.130.231.41]:54926 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751913AbeDETEt (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Apr 2018 15:04:49 -0400
-Received: (qmail 2563 invoked by uid 109); 5 Apr 2018 19:04:48 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 05 Apr 2018 19:04:48 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 18491 invoked by uid 111); 5 Apr 2018 19:05:49 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 05 Apr 2018 15:05:49 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 05 Apr 2018 15:04:47 -0400
-Date:   Thu, 5 Apr 2018 15:04:47 -0400
-From:   Jeff King <peff@peff.net>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>, sxlijin@gmail.com
-Subject: Re: [RFC PATCH 2/7] dir.c: fix off-by-one error in
- match_pathspec_item
-Message-ID: <20180405190446.GB21164@sigill.intra.peff.net>
-References: <20180405173446.32372-1-newren@gmail.com>
- <20180405173446.32372-3-newren@gmail.com>
- <20180405174925.GA19974@sigill.intra.peff.net>
- <CABPp-BERWUPCPq-9fVW1LNocqkrfsoF4BPj3gJd9+En43vEkTQ@mail.gmail.com>
+        id S1752034AbeDETQC (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Apr 2018 15:16:02 -0400
+Received: from mail-vk0-f47.google.com ([209.85.213.47]:38315 "EHLO
+        mail-vk0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751573AbeDETQB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Apr 2018 15:16:01 -0400
+Received: by mail-vk0-f47.google.com with SMTP id b16so15161225vka.5
+        for <git@vger.kernel.org>; Thu, 05 Apr 2018 12:16:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=wlX81Pfk9YRCt/CufXFFSugpLzdoL9NvX+ymfBKyZOY=;
+        b=jaD9SqDrGGONrmaxXjuxvTX1fAT85saXzml62bWS2nZB1B3aeqcO6l016ECd2wD+ta
+         MgWrEPmbJeixMnl3Kfl1eQWph/uEXQM+K+kOcC6FjHwdzWa3frySan9PwxTn2CHb+Sd5
+         YM+hOPpSif9GxeE4gYjutctU88EO2ZjrVt4Zn3IR+sWZbqlbNwHLt6jR/VCb9/BiLuGd
+         AZC/3klrodaounO7d7t1STfS6TehmMA+rWCGkk9MoXDUPutLUUUUW/AcVcNSVMJBT3N4
+         glbjpq5LVrF+t6AutFZG13iQPqs/cnoMu0KI57uZ+ZOM1dcGLwH786fNf2HqNioiWhTF
+         YJ4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=wlX81Pfk9YRCt/CufXFFSugpLzdoL9NvX+ymfBKyZOY=;
+        b=qksFa9AFEPKLpV21HDjZbS8GjbK6OsxjNTlfGXXfFoLGsHhrsiQvTOZ29bm6XsY02E
+         Kxh/LwTWGr6YYuXyZgmMijaKgXv7NbXrmnIh29njlXT2FxCRSNoB3cFNztxTTAFHK63H
+         fIOYeIM1OKZwvGelLg44vpgVfoOYgo3V1XVSZi288bqQGuWE5P7C6Bf9Bupn/1iGsVSg
+         8PzhF14Kd4f8+5n3OkkjYcYTsmxkvRzMiNRA1EnbnQLqOVrN16iTwJF884zWWHi2q7VC
+         F+zf75/fCA2kUzz+L/XOTPTj2jU1oT/KHdYSb5mrKEnG/VrEnK0Y2uOw5bS4auBOVE/B
+         JW/Q==
+X-Gm-Message-State: ALQs6tDnPZVh67T8fQcjRpzBrEKpMMyExxE404Dzuc3W+JQALfHZbruk
+        ghgkrq+oZGmZNQM8tclnVuoJ068JdP9zY25btq65gQ==
+X-Google-Smtp-Source: AIpwx48z48rwt+aDyG6ngtl/mWXnHCr3AKrxJ7IalegokEH4Ny+hOkK2Q4Ft2Fvqp6vOv+WZzLydifBdc6WgjzUrqQM=
+X-Received: by 10.31.192.146 with SMTP id q140mr14261807vkf.7.1522955760812;
+ Thu, 05 Apr 2018 12:16:00 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CABPp-BERWUPCPq-9fVW1LNocqkrfsoF4BPj3gJd9+En43vEkTQ@mail.gmail.com>
+Received: by 10.159.40.42 with HTTP; Thu, 5 Apr 2018 12:15:59 -0700 (PDT)
+In-Reply-To: <20180405185805.GA21164@sigill.intra.peff.net>
+References: <20180405173446.32372-1-newren@gmail.com> <20180405173446.32372-5-newren@gmail.com>
+ <20180405185805.GA21164@sigill.intra.peff.net>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Thu, 5 Apr 2018 12:15:59 -0700
+Message-ID: <CABPp-BEnFiEnao0NqU3GerYkpxO9fJadQLHo6_PZ-hXLZfbbdg@mail.gmail.com>
+Subject: Re: [RFC PATCH 4/7] dir: Directories should be checked for matching
+ pathspecs too
+To:     Jeff King <peff@peff.net>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Samuel Lijin <sxlijin@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Apr 05, 2018 at 11:36:45AM -0700, Elijah Newren wrote:
+On Thu, Apr 5, 2018 at 11:58 AM, Jeff King <peff@peff.net> wrote:
 
-> > Do we care about matching the name "foo" against the patchspec_item "foo/"?
-> >
-> > That matches now, but wouldn't after your patch.
-> 
-> Technically, the tests pass anyway due to the fallback behavior
-> mentioned in the commit message, but this is a really good point.  It
-> looks like the call to submodule_path_match() from builtin/grep.c is
-> going to be passing name without the trailing '/', which is contrary
-> to how read_directory_recursive() in dir.c builds up paths (namely
-> with the trailing '/'). If we tried to force consistency (either
-> always omit the trailing slash or always include it), then we'd
-> probably want to do so for match_pathspec() calls as well, and there
-> are lots of those throughout the code and auditing it all looks
-> painful.
-> 
-> So I should probably make the check handle both cases:
-> 
-> @@ -383,8 +383,9 @@ static int match_pathspec_item(const struct
-> pathspec_item *item, int prefix,
->         /* Perform checks to see if "name" is a super set of the pathspec */
->         if (flags & DO_MATCH_LEADING_PATHSPEC) {
->                 /* name is a literal prefix of the pathspec */
-> +               int offset = name[namelen-1] == '/' ? 1 : 0;
->                 if ((namelen < matchlen) &&
-> -                   (match[namelen] == '/') &&
-> +                   (match[namelen-offset] == '/') &&
->                     !ps_strncmp(item, match, name, namelen))
->                         return MATCHED_RECURSIVELY_LEADING_PATHSPEC;
+> It sounds like correct_untracked_entries() is doing the wrong thing, and
+> it should be aware of the pathspec-matching when culling entries. In
+> other words, my understanding was that read_directory() does not
+> necessarily promise to cull fully (which is what led to cf424f5fd in the
+> first place), and callers are forced to apply their own pathspecs.
+>
+> The distinction is academic for this particular bug, but it makes me
+> wonder if there are other cases where "clean" needs to be more careful
+> with what comes out of dir.c.
 
-That seems reasonable to me, and your "offset" trick here should prevent
-us from getting confused. Can namelen ever be zero here? I guess
-probably not (I could see an empty pathspec, but an empty path does not
-make sense).
+Interesting, I read things very differently.  Looking back at commit
+6b1db43109ab ("clean: teach clean -d to preserve ignored paths",
+2017-05-23), which introduced correct_untracked_entries(), I thought
+that correct_untracked_entries() wasn't there to correct pathspec
+issues with fill_directory(), but instead to special case the handling
+of files which are both untracked and ignored.  Did I mis-read or were
+there other commits that changed the semantics?
 
-There are other similar trailing-slash matches in that function, but I'm
-not sure of all the cases in which they're used. I don't know if any of
-those would need similar treatment (sorry for being vague; I expect I'd
-need a few hours to dig into how the pathspec code actually works, and I
-don't have that today).
-
--Peff
+Also, it would just seem odd to me that fill_directory() requires
+pathspecs, and it uses those pathspecs, but it doesn't guarantee that
+the files it returns matches them.  That seems like an API ripe for
+mis-use, especially since I don't see any comment in the code about
+such an assumption.  Is that really the expectation?
