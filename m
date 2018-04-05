@@ -2,141 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3D7881F404
-	for <e@80x24.org>; Thu,  5 Apr 2018 18:23:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 730541F404
+	for <e@80x24.org>; Thu,  5 Apr 2018 18:36:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751642AbeDESXt (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Apr 2018 14:23:49 -0400
-Received: from mail-wm0-f47.google.com ([74.125.82.47]:35039 "EHLO
-        mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751606AbeDESXr (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Apr 2018 14:23:47 -0400
-Received: by mail-wm0-f47.google.com with SMTP id r82so9891321wme.0
-        for <git@vger.kernel.org>; Thu, 05 Apr 2018 11:23:46 -0700 (PDT)
+        id S1751971AbeDESgr (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Apr 2018 14:36:47 -0400
+Received: from mail-vk0-f65.google.com ([209.85.213.65]:42481 "EHLO
+        mail-vk0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751785AbeDESgr (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Apr 2018 14:36:47 -0400
+Received: by mail-vk0-f65.google.com with SMTP id m72so3006901vkh.9
+        for <git@vger.kernel.org>; Thu, 05 Apr 2018 11:36:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:openpgp:autocrypt:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=vtSCoaE7dstgbGCq9iKDQwaDW0R2bPvq3DR274jf2C8=;
-        b=r2+yXlzr4A5A6pnpAOuG7bHmwdzCk81zNwT7PsU9V8dgsr5XYVrZ7jhwmuDjBMdpqW
-         uXItm0UiH4Fb021rRfqUKCo5qxZhDbLJMlULyMh548Q70vF8lymtcIm1ZbLMslhIKeyl
-         BoNZyvc+LOiarErBK64PubOB4O+ZtDZ9/uKGGAQ6IbgEldAFTAj0u+bsZxua4m0jAE//
-         vNB8LC/u70C2cVCSU/u3R2ctv3SwVGUZz/L1kxQqshd8be8kQiTh26qZAKZvRxXjc8Tz
-         4Z4Y1zO2bNUCoewXoXOWkRF9JnEo/6SVPXm8gzPSKLPPeuIpT59ih8PW/p/b1miev6gm
-         wqvg==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=p4LcegwP85dKm7/wVHXY5J9hpmC6cOFaMNmTcV8GMNk=;
+        b=axERcfWDU0VeJJuM5u995HdhzN4c0dS0XztJjA/AuFj9Tocs5z28jSG6fUuvV6XXxZ
+         qe1EL7Lu+G4m3XSza8FBvdojMBiHQWpNO+lAv99A4lBXU/8SAdILu8fNR7mcZ3roaeXS
+         dwWMRXZUMK/aALfFFgJAbKXdiCDNGec/hhmIH/lslZdiLPnQbviKfHwPNG++KYZgE81e
+         C/QVlkz5Ij7rLk6l/oXdQ2p/YM9cCZRDLXXeVkZ0f0Ow7BbcNy62F18kC5J0JandMSp4
+         mTiA8yKd4ZrA9SkjGfWKqZXpUCI8ySL5RZdQ3F1gh/GTzdyR0dVNsxjVljd1ZBnlea5+
+         vfZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:openpgp:autocrypt
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=vtSCoaE7dstgbGCq9iKDQwaDW0R2bPvq3DR274jf2C8=;
-        b=ZDgDLNrLGmczJoDF9pGrAkV3OqzWrcXYBIdFo8E0qDw53tZeKleEhwPcrMYthfXTnD
-         OdM0rUbR8UodFcmhq6QwW67ZZiafJtQPT2rDorfGAQlcj9m/4kMDfUukDmbTlMtRVXdQ
-         gWhm661Eo7gHgAHs8YUIpNvMld91oCPORAgr5Atla6lbkwtasIhlkp00XcfNZSQG9U78
-         ud7hnHS4gHVIsiTvEvotWz2/KHd0SKviF80clIHuZyOwCwZ+tpKC8tQ9liy0zkjgNzjT
-         qO4+yGMlCNAFLlTB/vCoqSWjI2EulaAqURycwIIGik3yoa4q2XEbr+CQbsSiP7J32YKL
-         +NhQ==
-X-Gm-Message-State: AElRT7HejUGVPQPnvU8whBld+05mks04hSKy6U9EStc2qTD7k87vwXQZ
-        0MbW1Vlb4h4SXUNxPbFIrDTKkA==
-X-Google-Smtp-Source: AIpwx4+oieQaQjdwBAyZmiqYVyhtvQWnGknAMxXfBE8WbJfGxwJO4+ZZZjy9i6X/xWUVDz58lGJAXA==
-X-Received: by 10.28.149.71 with SMTP id x68mr12589917wmd.78.1522952626020;
-        Thu, 05 Apr 2018 11:23:46 -0700 (PDT)
-Received: from ?IPv6:2001:a62:81d:ab01:697a:68ea:e25a:9da8? ([2001:a62:81d:ab01:697a:68ea:e25a:9da8])
-        by smtp.googlemail.com with ESMTPSA id 71sm9516558wmg.11.2018.04.05.11.23.44
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 05 Apr 2018 11:23:45 -0700 (PDT)
-Subject: Re: [PATCH v3] git-svn: allow empty email-address using authors-prog
- and authors-file
-To:     Eric Wong <e@80x24.org>
-Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
-References: <20180320220743.GA17234@whir>
- <20180324102046.8840-1-asheiduk@gmail.com>
- <20180405075113.3y6a5nadijswt7pm@untitled>
-From:   Andreas Heiduk <asheiduk@gmail.com>
-Openpgp: preference=signencrypt
-Autocrypt: addr=asheiduk@gmail.com; prefer-encrypt=mutual; keydata=
- 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
- khKIKhAKu5lezA==
-Message-ID: <e2234113-52cf-1443-5abb-70a595037f30@gmail.com>
-Date:   Thu, 5 Apr 2018 20:23:43 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.7.0
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=p4LcegwP85dKm7/wVHXY5J9hpmC6cOFaMNmTcV8GMNk=;
+        b=biZi7j96oeD/sa74egAmpWFpbWE74lJooLsUKzbATNmWryPjijpIDED80xozX760ZS
+         HnFcRsxae6oRGCGi2Y6tMggjDHxU4CFGplvyfy4DGrg41KswUIsoJ0I5uQiw4EVdf9I9
+         hJ3ec85GEQ9a0c+8X4VeT5va1YN5zqH5/ahiCa8Mzp0OsIBCbflDbap25dp+PEJI1gSv
+         9dErgnhWsC6Wh+rhfychtOgLWj+B5RSeghivQNewRFinkQ7K7m2XMBa92TkPYCr47aG+
+         Vp7a27RD9M7hL2O5uUJgoGRmB1aK3mLm0wAOYxCbCLVyIbpwOtTsPeQMNkfJS2PEsfzk
+         8u2Q==
+X-Gm-Message-State: ALQs6tAKnoAK2vaPNAb0As3RgqFxAm44sdUfNS6bHd6NkbJ/ICghhYAZ
+        vcFVbxNaS4znUVEa8lBhujpqTpXd9YD0ypydnAE=
+X-Google-Smtp-Source: AIpwx497t6wSmlHPTKpmio3mVpXFc2yfiHVhyd7/kC313oaXxzXxs2espl0aU9IgRvSeyeMnuZdkld6tbCfiG+e1w88=
+X-Received: by 10.31.150.143 with SMTP id y137mr2955393vkd.118.1522953406068;
+ Thu, 05 Apr 2018 11:36:46 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20180405075113.3y6a5nadijswt7pm@untitled>
-Content-Type: text/plain; charset=utf-8
-Content-Language: de-BE
-Content-Transfer-Encoding: 7bit
+Received: by 10.159.40.42 with HTTP; Thu, 5 Apr 2018 11:36:45 -0700 (PDT)
+In-Reply-To: <20180405174925.GA19974@sigill.intra.peff.net>
+References: <20180405173446.32372-1-newren@gmail.com> <20180405173446.32372-3-newren@gmail.com>
+ <20180405174925.GA19974@sigill.intra.peff.net>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Thu, 5 Apr 2018 11:36:45 -0700
+Message-ID: <CABPp-BERWUPCPq-9fVW1LNocqkrfsoF4BPj3gJd9+En43vEkTQ@mail.gmail.com>
+Subject: Re: [RFC PATCH 2/7] dir.c: fix off-by-one error in match_pathspec_item
+To:     Jeff King <peff@peff.net>
+Cc:     Git Mailing List <git@vger.kernel.org>, sxlijin@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 05.04.2018 um 09:51 schrieb Eric Wong:
-> Thanks for the update.  The patch itself looks good, but I
-> noticed one --show-item isn't supported on SVN 1.8.10 for me.
+On Thu, Apr 5, 2018 at 10:49 AM, Jeff King <peff@peff.net> wrote:
+>> diff --git a/dir.c b/dir.c
+>> index 19212129f0..c915a69385 100644
+>> --- a/dir.c
+>> +++ b/dir.c
+>> @@ -384,7 +384,7 @@ static int match_pathspec_item(const struct pathspec_item *item, int prefix,
+>>       if (flags & DO_MATCH_SUBMODULE) {
+>>               /* name is a literal prefix of the pathspec */
+>>               if ((namelen < matchlen) &&
+>> -                 (match[namelen] == '/') &&
+>> +                 (match[namelen-1] == '/') &&
+>>                   !ps_strncmp(item, match, name, namelen))
+>>                       return MATCHED_RECURSIVELY;
+>
+> Do we care about matching the name "foo" against the patchspec_item "foo/"?
+>
+> That matches now, but wouldn't after your patch.
 
---show-item is indeed a 1.9.0 thing:
+Technically, the tests pass anyway due to the fallback behavior
+mentioned in the commit message, but this is a really good point.  It
+looks like the call to submodule_path_match() from builtin/grep.c is
+going to be passing name without the trailing '/', which is contrary
+to how read_directory_recursive() in dir.c builds up paths (namely
+with the trailing '/'). If we tried to force consistency (either
+always omit the trailing slash or always include it), then we'd
+probably want to do so for match_pathspec() calls as well, and there
+are lots of those throughout the code and auditing it all looks
+painful.
 
-https://subversion.apache.org/docs/release-notes/1.9.html#svn-info-item
+So I should probably make the check handle both cases:
 
-> I've tested the following on both SVN 1.8.10 and 1.9.5:
-> 
-> --- a/t/t9138-git-svn-authors-prog.sh
-> +++ b/t/t9138-git-svn-authors-prog.sh
-> @@ -83,7 +83,8 @@ test_expect_success 'authors-prog imported user without email' '
->  test_expect_success 'imported without authors-prog and authors-file' '
->  	svn mkdir -m hh --username hh "$svnrepo"/hh &&
->  	(
-> -		uuid=$(svn info --show-item=repos-uuid "$svnrepo") &&
-> +		uuid=$(svn info "$svnrepo" |
-> +			sed -n "s/^Repository UUID: //p") &&
->  		cd x &&
->  		git svn fetch &&
->  		git rev-list -1 --pretty=raw refs/remotes/git-svn | \
-> 
-> Can you confirm it's OK for you?  Thanks.
-
-Looks good, works for me.
-
-Do you squash this patch with with my commit or do you need a reroll?
+@@ -383,8 +383,9 @@ static int match_pathspec_item(const struct
+pathspec_item *item, int prefix,
+        /* Perform checks to see if "name" is a super set of the pathspec */
+        if (flags & DO_MATCH_LEADING_PATHSPEC) {
+                /* name is a literal prefix of the pathspec */
++               int offset = name[namelen-1] == '/' ? 1 : 0;
+                if ((namelen < matchlen) &&
+-                   (match[namelen] == '/') &&
++                   (match[namelen-offset] == '/') &&
+                    !ps_strncmp(item, match, name, namelen))
+                        return MATCHED_RECURSIVELY_LEADING_PATHSPEC;
