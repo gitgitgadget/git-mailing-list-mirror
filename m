@@ -2,88 +2,138 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 55BA21F404
-	for <e@80x24.org>; Thu,  5 Apr 2018 13:31:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 67C581F42D
+	for <e@80x24.org>; Thu,  5 Apr 2018 13:35:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751312AbeDENbq (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Apr 2018 09:31:46 -0400
-Received: from mo4-p00-ob.smtp.rzone.de ([81.169.146.216]:17124 "EHLO
-        mo4-p00-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751242AbeDENbp (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Apr 2018 09:31:45 -0400
-X-Greylist: delayed 367 seconds by postgrey-1.27 at vger.kernel.org; Thu, 05 Apr 2018 09:31:45 EDT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1522935104;
-        s=strato-dkim-0002; d=aepfle.de;
-        h=Content-Type:References:In-Reply-To:Message-ID:Subject:Cc:To:From:
-        Date:X-RZG-CLASS-ID:X-RZG-AUTH:From:Subject:Sender;
-        bh=5oBAZI8Mk1Xst+POR0q7xGfRp1wGTaESVqMcU8/4wOA=;
-        b=NWqH0iq0NYCyl4bOKASnGDY37YqvxJ1IsGQY+2U8JE5bhM42xQT2//Rs/zfwORBBIy
-        5bwJk3wtf0b9CHxxXQfThXxJ+Y9E4GplUywgHVphwao/2ZZfN/VE6otNmrDcxrWvSlSh
-        MnSiqOkIbC2d4HgMrQMhG7y2t0GePI8IW0d7W88Of6rt3jmKVIM3ZTuPCsIGn9pX8QC4
-        8DdDHBmGHtknC7Be581P2O5o9iY9dgK016Pf6zOlJPHOjIbbVb7WJ/D8fChJzTLlz5dj
-        ouGF7YFx45+338T98/OdC7LCVFYnrMaSftxWVQIXBdiCdSbVSrmiVPtjx4bNvs8cIPRH
-        c0hQ==
-X-RZG-AUTH: :P2EQZWCpfu+qG7CngxMFH1J+3q8wa/QED/SSGq+wjGiUC4oc0Nr2ihluivsBRtyRe2qcrldJj63vYUTRQR/0RqPSgWq+RVwc
-X-RZG-CLASS-ID: mo00
-Received: from sender ([2001:a62:816:91ff:a572:884d:f51d:1a86])
-        by smtp.strato.de (RZmta 43.1 AUTH)
-        with ESMTPSA id K08137u35DPUXHH
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (curve secp521r1 with 521 ECDH bits, eq. 15360 bits RSA))
-        (Client did not present a certificate);
-        Thu, 5 Apr 2018 15:25:30 +0200 (CEST)
-Date:   Thu, 5 Apr 2018 15:25:25 +0200
-From:   Olaf Hering <olaf@aepfle.de>
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: Re: How to undo previously set configuration?
-Message-ID: <20180405152525.13d1c776.olaf@aepfle.de>
-In-Reply-To: <8737092929.fsf@evledraar.gmail.com>
-References: <20180405092358.569e0315.olaf@aepfle.de>
-        <874lkq11ug.fsf@evledraar.gmail.com>
-        <20180405104948.276de0ca.olaf@aepfle.de>
-        <8737092929.fsf@evledraar.gmail.com>
-X-Mailer: Claws Mail 3.16.1 (GTK+ 2.24.32; x86_64-suse-linux-gnu)
+        id S1751360AbeDENfE (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Apr 2018 09:35:04 -0400
+Received: from mout.gmx.net ([212.227.15.19]:40613 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751165AbeDENfC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Apr 2018 09:35:02 -0400
+Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LtIdP-1eOBjv0zf9-012r3s; Thu, 05
+ Apr 2018 15:34:56 +0200
+Date:   Thu, 5 Apr 2018 15:34:55 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+To:     Christian Couder <christian.couder@gmail.com>
+cc:     Joel Teichroeb <joel@teichroeb.net>,
+        Git Mailing List <git@vger.kernel.org>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v5 2/5] stash: convert apply to builtin
+In-Reply-To: <CAP8UFD3SM9e+_VGpxVNzMoEYnyzkF0EzjAPjvbFakr9t9Z-muQ@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1804051528560.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <20180405022810.15796-1-joel@teichroeb.net> <20180405022810.15796-3-joel@teichroeb.net> <CAP8UFD3SM9e+_VGpxVNzMoEYnyzkF0EzjAPjvbFakr9t9Z-muQ@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- boundary="Sig_/P5f_46X6GxVngKgPJ0QGGhn"; protocol="application/pgp-signature"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:7xINikT8LtGuZxoFMoJa6xtCrVjY8ntByldhMQAc7ZYzh43c5SL
+ EIgvbu6XcITtyxqijw20l/FuWUSIcMx7IelczN2AVQbZ//v2ahpv6c20CjSI20vWHz3NrYk
+ RgglnpSVa6wxBc0q37NRv86GztE/j/Z20kCyJgHyujkqjWxzttnlnoNTRyv6toFT1DiWUhk
+ KDTTVLIpvh4VlpSzBnX+g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:AM6c8z/5ErE=:wtQE+zmh305rP47K68eHGa
+ ibOYRK4LOIoZVnIGT95LrWeKA84Nv51rXOau8oCWElciOPH6enb18h7SYwi15cf1SmUsgBdoA
+ sLdQ6fErQsrNbJKuI+clu1nh7v+n4VAXuxlzryH4DcyIm4GLI8aIjvLtrB2YVzPPTBAqsy3Sy
+ 3PeOfUnANK84ec6yM+IaaO0uEhOoDwiO37ttYrhK/GiPlDUdNkeTv8uY4r/IRsHwpOk59UEAg
+ HYFCadS+mW0C+gBPCqa4La6AIf78G6VZUogv2VOQ7IDtV6I+fHf6ruT7zoOYLhSdN3STp9yFG
+ lc1V7peVxPLvWu+Ssl7sXJUISea+cj5cKrC4Tw2X8ZwXw1fE7oof61DGVr1fZi0d7rLMZ1PcA
+ zLfpopZcw2GFDoZ53g75gPBGDk9SnU1OKa/UHqIQq+rNH3QmzzrKUMWvBBoj/+VYBN5aeDi+L
+ cQbAahbrQ6aPhO9B2WwVIuk0e/ZJtk9r52eFNGEuKW/E7EurdgX95+BDgaSIYpjK3WNAZR0kN
+ 2l2UD8a8laan9lI7/KK9fxoUDta8bZxDIoPCYpGB90QJFg1++SQWgCuy85GWa76OHyRq+XtGY
+ 8FqPBmEhRrjB15WihGq4+LLz0Z9/kgxBF6jOCO+Mz1lRh+uo9xDQzzU5ahBACO0Ph55czlzRK
+ Vaz3zg7WZhSxHRu5jN38A9LAQM6PcaYKPw4pyqYnmcZmJixy3xKxItAF3RMTPS6RE27dfS/Pp
+ PzomH6Avi63JPIbdsdm55N9niHiz6/v3P70jxCIIJJ+83Um4V8RlZlIbNOC5I0qYprgjmsfNC
+ X5t3qNuH0iWcaPQ56XmDPdtwawuBtM+3WV19NBUu6bRcl2Qc3M9BnxJ72yP/yblN3/uzXiD
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
---Sig_/P5f_46X6GxVngKgPJ0QGGhn
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Hi Christian,
 
-Am Thu, 05 Apr 2018 13:21:02 +0200
-schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>:
+[please cull a *lot* more of the quoted mail when you do not reference any
+of it... Thanks]
 
-> I'm assuming you mean something like:
->         [user]
->         # This is an error
->         -email
+On Thu, 5 Apr 2018, Christian Couder wrote:
 
-Yes. Just some flag to say "whatever value this variable has from earlier p=
-arsing, forget it in case it really exists". Just like "unset PATH" in bash.
+> On Thu, Apr 5, 2018 at 4:28 AM, Joel Teichroeb <joel@teichroeb.net> wrote:
+> >
+> > [...]
+> > +
+> > +       revision = info->revision.buf;
+> > +
+> > +       if (get_oid(revision, &info->w_commit)) {
+> > +               error(_("%s is not a valid reference"), revision);
+> > +               free_stash_info(info);
+> > +               return -1;
+> 
+> Maybe:
+> 
+>                free_stash_info(info);
+>                return error(_("%s is not a valid reference"), revision);
+> 
+> to save one line and be more consistent with above.
 
-I do not know the git internals, so can not really help with the case.
+No. The parameter `revision` of the `error()` call is assigned just above
+the `if()` block and clearly points into the `info` structure. So you must
+not release that `info` before printing the error. The order of statements
+is correct.
 
-Olaf
+> > +       if (grab_oid(&info->b_commit, "%s^1", revision) ||
+> > +               grab_oid(&info->w_tree, "%s:", revision) ||
+> > +               grab_oid(&info->b_tree, "%s^1:", revision) ||
+> > +               grab_oid(&info->i_tree, "%s^2:", revision)) {
+> > +
+> > +               error(_("'%s' is not a stash-like commit"), revision);
+> > +               free_stash_info(info);
+> > +               return -1;
+> 
+> Here also.
 
---Sig_/P5f_46X6GxVngKgPJ0QGGhn
-Content-Type: application/pgp-signature
-Content-Description: Digitale Signatur von OpenPGP
+Yes, here, too, `revision` points at a field inside `info`, so we must not
+release it before using it.
 
------BEGIN PGP SIGNATURE-----
+> > +       if (info->has_u) {
+> > +               if (restore_untracked(&info->u_tree))
+> > +                       return error(_("Could not restore untracked files from stash"));
+> > +       }
+> 
+> Maybe:
+> 
+>        if (info->has_u && restore_untracked(&info->u_tree))
+>                return error(_("Could not restore untracked files from stash"));
 
-iF0EARECAB0WIQSkRyP6Rn//f03pRUBdQqD6ppg2fgUCWsYjxQAKCRBdQqD6ppg2
-ft2GAJ4jt7Fum8Hy/x0zN/OlPevvdEc5dACfUNb/9f99gwOIWB6oNBZBgyHOZ4k=
-=ByYx
------END PGP SIGNATURE-----
+I agree with this, as it avoids an unncessary indentation level.
 
---Sig_/P5f_46X6GxVngKgPJ0QGGhn--
+> So maybe we can get rid of `result` and have something like:
+> 
+>        if (argc < 1) {
+>                error(_("at least one argument is required"));
+>                usage_with_options(git_stash_helper_usage, options);
+>        }
+> 
+>        if (!strcmp(argv[0], "apply"))
+>                return apply_stash(argc, argv, prefix);
+
+... except we have to use !!apply_stash() here: apply_stash() probably
+returns -1 in case of error (at least that would be consistent with our
+coding conventions), and the return value from cmd_*() is handed to exit()
+as exit status. The `!!` trick turns any non-zero value into a 1, also
+consistent with our coding conventions where we set exit code 1 upon error
+in the "business logic".
+
+> 
+>        error(_("unknown subcommand: %s"), argv[0]);
+>        usage_with_options(git_stash_helper_usage, options);
+> }
+
+Ciao,
+Dscho
