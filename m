@@ -7,80 +7,70 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7965B1F404
-	for <e@80x24.org>; Fri,  6 Apr 2018 12:15:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4E1461F404
+	for <e@80x24.org>; Fri,  6 Apr 2018 12:21:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752366AbeDFMPZ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 6 Apr 2018 08:15:25 -0400
-Received: from mout.gmx.net ([212.227.15.15]:58969 "EHLO mout.gmx.net"
+        id S1752274AbeDFMV5 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 6 Apr 2018 08:21:57 -0400
+Received: from mout.gmx.net ([212.227.17.21]:37251 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751579AbeDFMPY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Apr 2018 08:15:24 -0400
-Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0McVGq-1emkrf2Oau-00Hcj4; Fri, 06
- Apr 2018 14:15:19 +0200
-Date:   Fri, 6 Apr 2018 14:15:03 +0200 (DST)
+        id S1752021AbeDFMV4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Apr 2018 08:21:56 -0400
+Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MOkQc-1f7BWf13Kw-0064ia; Fri, 06
+ Apr 2018 14:21:47 +0200
+Date:   Fri, 6 Apr 2018 14:21:31 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Eric Sunshine <sunshine@sunshineco.com>
-cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 4/4] Document the new color.* settings to colorize
- push errors/hints
-In-Reply-To: <CAPig+cRW6VhZGrV3qN5gDyMu1Oc=hjDOpyo_OY43jyoQNc6Q1A@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1804061414330.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <cover.1518783709.git.johannes.schindelin@gmx.de> <cover.1522968472.git.johannes.schindelin@gmx.de> <516b28e82ace0a0b6831c644f246c19dad1187ac.1522968472.git.johannes.schindelin@gmx.de>
- <CAPig+cRW6VhZGrV3qN5gDyMu1Oc=hjDOpyo_OY43jyoQNc6Q1A@mail.gmail.com>
+To:     Joseph Mingrone <jrm@ftfl.ca>
+cc:     git@vger.kernel.org, garga@FreeBSD.org
+Subject: Re: git 2.17.0: uninitialized value $rec in scalar chomp at ...Git.pm
+ line 557
+In-Reply-To: <86h8oobl36.fsf@phe.ftfl.ca>
+Message-ID: <nycvar.QRO.7.76.6.1804061420340.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <86h8oobl36.fsf@phe.ftfl.ca>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:h7Rn0y113id7R5cnLAYuJr72YnqCbNGpr9uEuV9bKbVsENtusBa
- H1aMiYf7xal28iLvYy3lcHs89Nte67umyQe0et9kCqZ5dF2YMuU3PsoAOVto8FtSEBiYzAT
- gCAPk7YCAbwl7QzJKS/uIP0PaFWDRGYC4NtmSUfqQpQ7lBevllhNJNji8+tLmJsUcJ+qYGI
- QGYKfbhfG4p2e9gyoUD8Q==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:fzPEB9V5jLU=:rKlb0rEsm/ob9wLirAqnrV
- zmulhtsYEgcXw5KOgTl7pP0JT+wbxpxo3m/p2ie7u/UIALfSZb/F7TxLGRrQRwmWYdGYer+Ez
- Cj8+Db7td6E8SDkYniQUlUrVPu3hyqSNNgNtvGzKaXJ46b6IQekRIp+XnEhy4eysTXU0wi51u
- 4+742POapcOnaMRTx0lWErEz4FBKlEpHeLVbh8Yqgs5sk7grgdBKpMhEruS6V3K06mAHigU5Y
- xuohYwZKxFv026Ms7ZL8u8TYhYeMSiE+n5J0e6RNysFEnsWRLM6U9Qf27Co5G+4UFK4E26NJq
- EKsbCXm0j1FMhr42m0yek/ItpufLLcz9Srq09CAhcYgXFQVq4cGJFaT+s3IQrd6/kqpES7aEm
- toLhxMdMMJ2eZ8dgK42q3aYLAxmXadAlPi4lfCFE1rlgYdtxPSjOgw2KEi315dlebG1fEw+kA
- lXCcioQkUTloSaXVz+Q7XNKADGhf3laX86TkgiI/9lOT+7RjZMKNPTUb3I/0tVseUC9vS0DNT
- Apr+aVPna0YhE6i+CxiiaXaaUf12AaOJ1Ete/ZnUaRrW/rtQQHLLprAhf04wWqQjG5OA+9/O5
- EwmTQC3+Y2OSFjKl5mEkLbz41a9eCcOmtCqVAvVUkRsb+P7mF1mJrffF/VPP3XD/84WxUBpNM
- iSKIXybPQCckQihzsHzrASjLB2SeEChCvPEIIizWc3JXmrwmlGM7/AW7AA1aHeuswQzy5OBQ9
- GQuir/xrGMJa5BS+TA9qdzZeeDvPLJqTLgviTc/IT35PLhC/bhx+pUJ/6MuxImc5WKSsIpf4S
- CWS0Rxy2sc1CpWkC2r949w3FCGLmdK7ZFnaSCMkoq5MX0TDyI5wwOTgQuxLRtHQB6wUslGe
+X-Provags-ID: V03:K1:Uwl80UEArJ9NwY0Sdlxut40bQkhWQ6amf7wmDjm74RZ/qof16df
+ d/2XZCVg9M9TEuXl7bCVO0kFEM7kj64q+rrxCsr/EcjiKwFoa5pMwctRO3WIGl9hygYurT1
+ xUcmyaaACAuHcjwnRxjMCOWUJDd+s5zXH4C7ySciTHr6AQwq7Ven56FUXnSgQRNg0ZuqKzq
+ 5k139y9p0lUgjXE6QC8mg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:qC+5Ph0+A/I=:oykmP4N+z8mRB6ZHGVQrfZ
+ qS9MjtaSobVf4mmFHwi0A9uk7f4VQKnl04qopkZ8IKQ5p8BklXr8SbATSTy71IfNMAE4bX18M
+ vHKYCeRlJmWMsoeYkDzWOWLrG9BDvAj0M6wSQgh+9QU2ViSAXgRoqm8wkmQ4udQIAEClIQcYf
+ jB5BH4m/SBYeFhqnEzzhOuQKg4jeAfDJOvJR2ibZppXLDvW3iMOxA5gMEe9dL0OhTXcLJReZL
+ DVkWmmS6z6jlJfg2j61GDDPZO7kFnOB9kGRwT5yqAutCIfAhXDqy7B/u9KHwZbT8YqRz3gN+D
+ 8OcdHRc9zeLJW5o66B1Mgvazb1+r+q2DV3vI+I5oaOUpZml/nSE0clJDtFl3KgfWdejJV/q/4
+ 7FRvpeFvdOuNJzINbRdX68YA9HdRkqlekDV5yOW2/K5l3s1DMKfSBJRb6MY3L8NJYnHGUhJCp
+ 1FYyJ/kBm2gtt7C1f0ptQeQtpIDtxvgtgEa6rRjciw2+ox5LU0ZI1qOcxS7JfsFBQV4Qq/lUC
+ FoiatJ4mc49HItrlN09yGKQngkE8KwK2R2bnl+oRdGPasKivuDaMFz5dfdzRR+q4W3tzul5UY
+ 6m/E0VEedrCUtnPy+K2KVYcevNL/qVzSWOIJ4jZU+ejFxVGH4NWtYmcbL053Gl+7TAmFP46z7
+ UakMDaobgK7zhXQFn9O4nxtiVZE66+PVLaKnBxcoY//tkqljueWyq3lM88a3j0oVGt41k/qFW
+ sWJw9s+1v0oG2fI1D5RWQEoZ4OKCuvi3sMai8Tql/dY75RVzArHqCHzRyQIDvWB1VZb8XrD1a
+ uIztu107mK7Z4HGgxU2O5H+BvjxqANnwGnptKtfqnhvRT4BwHX+hHNpS3WPJcTDxzBI1348
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Eric,
+Hi Joseph,
 
-On Fri, 6 Apr 2018, Eric Sunshine wrote:
+On Fri, 6 Apr 2018, Joseph Mingrone wrote:
 
-> On Thu, Apr 5, 2018 at 6:48 PM, Johannes Schindelin
-> <johannes.schindelin@gmx.de> wrote:
-> > Let's make it easier for users to find out how to customize these colors.
-> >
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> > diff --git a/Documentation/config.txt b/Documentation/config.txt
-> > @@ -1088,6 +1088,16 @@ clean.requireForce::
-> > +color.advice::
-> > +       A boolean to enable/disable color in hints (e.g. when a push
-> > +       failed, see `advice.*` for a list).  May be set to `always`,
-> > +       `false` (or `never`) or `auto` (or `true`), in which case colors
-> > +       are used only when the error output goes to a terminal. If
-> > +       unset, then the value of `color.ui` is used (`auto` by default).
-> > +
-> > +color.advice.advice::
-> > +       Use customized color for hints.
+> After upgrading to version 2.17.0, this message appears repeatedly when
+> running `git svn rebase`:
 > 
-> Is "color.advice.advice" correct?
+> Use of uninitialized value $rec in scalar chomp at /usr/local/lib/perl5/site_perl/Git.pm line 557, <$fh> chunk 1.
+> 
+> The value of chunk varies.  For example the message above may end with
+> '...<$fh> chunk 5.'  This is with the FreeBSD packages git-2.17.0 and
+> perl 5.26.1.
 
-As per the patch, yes. But you're right, it sounds silly. Will change to
-`color.advice.hint`, okay?
+Does this stop the `rebase`?
 
-Will be fixed in v3,
-Dscho
+Also: could you publish the unrebased branch so that others can reproduce
+the error? (I am not claiming that I have enough time; I don't...)
+
+Thanks,
+Johannes
