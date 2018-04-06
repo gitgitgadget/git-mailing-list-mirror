@@ -2,98 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7218C1F424
-	for <e@80x24.org>; Fri,  6 Apr 2018 11:21:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 448E11F424
+	for <e@80x24.org>; Fri,  6 Apr 2018 12:01:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751570AbeDFLVX (ORCPT <rfc822;e@80x24.org>);
-        Fri, 6 Apr 2018 07:21:23 -0400
-Received: from mout.gmx.net ([212.227.17.21]:35027 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751434AbeDFLVW (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Apr 2018 07:21:22 -0400
-Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MCtLD-1fCQAh3zkZ-009dp9; Fri, 06
- Apr 2018 13:21:17 +0200
-Date:   Fri, 6 Apr 2018 13:21:01 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org
-Subject: Re: [PATCH 0/1] Colorize some errors on stderr
-In-Reply-To: <xmqqwozc68r2.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1804061315500.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <cover.1518783709.git.johannes.schindelin@gmx.de> <xmqqwozc68r2.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1751809AbeDFMBF (ORCPT <rfc822;e@80x24.org>);
+        Fri, 6 Apr 2018 08:01:05 -0400
+Received: from mail-qk0-f181.google.com ([209.85.220.181]:33071 "EHLO
+        mail-qk0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751492AbeDFMBF (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Apr 2018 08:01:05 -0400
+Received: by mail-qk0-f181.google.com with SMTP id d206so833604qkb.0
+        for <git@vger.kernel.org>; Fri, 06 Apr 2018 05:01:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ftfl.ca; s=google;
+        h=from:to:cc:subject:date:message-id:user-agent:mime-version;
+        bh=gf0OCUCnNTsekmGH9rJtRCCAKBsQ8Ag6uL+smzXSAJQ=;
+        b=ZlTb+n6dUIjVNiv0MikcuBFf3i+cxsz+uBThzwTyRXN0ga5XH0uNwiHsODt0fBLKV4
+         rJ3cOTQXSw635sFzTbYDW0kr9xFzMWZ3uHvSe85k9ePvqFJIhc63h7567XzzZGm7StDQ
+         PvsfUqHgFB7WYPVJclmVKRnNHL8KEzJqv4rL4=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:user-agent
+         :mime-version;
+        bh=gf0OCUCnNTsekmGH9rJtRCCAKBsQ8Ag6uL+smzXSAJQ=;
+        b=J9CszajFJTCxBKqqZUXS0b0mTsBWoTz/gjNSaSNW2EhwcVgxHrjVtNwiviPfgGoBF/
+         vXD+zg8nPnPH95AmMUiT37DT11iBv7mu/JPfwTr0amJKWQ95d6Z1emSSoEsLiinYhArx
+         wE5HO9yabHbG2uKvVyc3RjNon/Rxsoxplo/XVwgTwfwCUCQoA2dNhfvNqpmtwfA8vKgF
+         xJC2sg1APe/6J21nTedXiE6eeg9lRgVl2UORRyz87Oea3kZNIC8rFx4SXKOtj7e55+V9
+         eZhctjMaTXhdR6wn9iV3/rRUFt7yj+enl+6ulSBL6D5h30zdoP2eYXHe43EWiyi7nrlk
+         kzTw==
+X-Gm-Message-State: ALQs6tAbwGBfQQUBHcnFlgvtnxM26RaP8g/KdArra7CljAE/8piV9+Qn
+        AxuzhMZowSWVdCy7fOk6dMtirg==
+X-Google-Smtp-Source: AIpwx4/JKGy9DoL3ElC/U5/zJvn7HWy2L0uVGlEGlYCM417Z9eZzSfV5h36sdFBcLPn2VJS1LBW6Kg==
+X-Received: by 10.55.172.9 with SMTP id e9mr13995191qkm.112.1523016064288;
+        Fri, 06 Apr 2018 05:01:04 -0700 (PDT)
+Received: from phe.ftfl.ca.ftfl.ca (hlfxns017vw-47-55-140-73.dhcp-dynamic.fibreop.ns.bellaliant.net. [47.55.140.73])
+        by smtp.gmail.com with ESMTPSA id r79sm659498qkl.35.2018.04.06.05.01.02
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 06 Apr 2018 05:01:03 -0700 (PDT)
+From:   Joseph Mingrone <jrm@ftfl.ca>
+To:     git@vger.kernel.org
+Cc:     garga@FreeBSD.org
+Subject: git 2.17.0: uninitialized value $rec in scalar chomp at ...Git.pm line 557
+Date:   Fri, 06 Apr 2018 09:01:01 -0300
+Message-ID: <86h8oobl36.fsf@phe.ftfl.ca>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.3 (berkeley-unix)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:qJX1uwCRu/RPjmVQiZQsEQG4f5bY9uUyk2fmgGUdz3tJEL48JPo
- C2J10EjBw7jr1YMtSZEufymMPK3yDb8I2ub/41hml21oT3RmOFYjwhf1srnfl4XF1HMGp3w
- R2C0YrOWwOazD4EBfiMUu0U6UQuQPlYbs4U94ZuW5zVcrzaZj09d7poOEMztd10gLadSgn6
- e9Dwey0NRcSf8wbs3ymjA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:KAsGKZgJgTQ=:7GmA4DXGRA+x+Z/93HGayE
- vlylnwynbd2Z/J2keyZg83IB63rRQZ1MWJYs2rG2mBHcirkk38uugpTc/3CvpSW8mYfshPOtQ
- 4ouLgjH0J3RYljH5ZJIH6UHZ+kpafNtnqP9sSwrs1dlJkOJb8mh7kQY5FGf9p79oqq1HrS3oo
- 6BMskzUp6jxKOZubt0hsMzzSxmGNueQCQKWpQHtdGk+KuM62M+9Jfsc2hnAnWktTUOFAmKTgP
- Wfxj5MGDXOQ9MtCehdI97mwXZ7HS3gBTluFlXJafKs1WW8FRoWq/W1PqF/zI1kZN/oJbd8zEr
- 1OlF1CwMOHvDSVOIinFHKO8MHa0CXHsS2TcoP8ID76cTvbybKn2TSK/aLDwxRqxa0LnBW/qt5
- hTbVxr7/oFkO7sqi9c4wk4iRZIANrj2qH7XkNyn3pmyKAsHcXeJxB4UhiWv5tTlnnbSbVWGH2
- otYq+kDXLtv35J73OHny3Vk9msfVDwaLtReSrKOnwRcy8M1ctuMq8vDfNE8ya7kJ0+y+jaUp4
- cUvYeT8fRaXSR7Sgqbkgv4IxlhXyHz2MhEjXtnSnBforKoNHioR9X7alfiUIsOiGXUXEbyL73
- v2nfxm5SXF8LDLbkHheHgLj9LbmGLx9bkeuKcGdXiJ4b/6G3b2n7P3k9d5b00l+6F5Y8oZ2vI
- 4g5IutAue2o5AnWMgsFodAFyM4iYfioNgpo7B8gzoRe7zJJZB7gdqDgE9QFG3cGfW5xFmXtdo
- Mqa+gHq0zWCQnuEPG41/Uy3tRzqmwhVIwXv/2DfJvlAlrjk69MJS2tRi7FASLjaeUe05TY8K9
- pgUQ3Nudvb/keL2uWNd28uJpukHe/L+0QlCEJ4ks1FlmR5/D202pwJqsY44DxquYnWX9tTY
+Content-Type: multipart/signed; boundary="=-=-=";
+        micalg=pgp-sha512; protocol="application/pgp-signature"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+--=-=-=
+Content-Type: text/plain
 
-[and welcome back, at least I hope you only read this after a good and
-relaxing vacation]
+Hello,
 
-On Fri, 16 Feb 2018, Junio C Hamano wrote:
+After upgrading to version 2.17.0, this message appears repeatedly when
+running `git svn rebase`:
 
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-> 
-> > Now, what would be possible solutions for this?
-> >
-> > - introduce `int fd` in `want_color()` (and callees) so that we can make
-> >   a distinction whether we want to detect whether stdout or stderr is connected
-> >   to a tty
-> >
-> > - introduce a separate `want_color_stderr()` (we still would need to decide
-> >   whether we want a config setting for this)
-> 
-> Between the above two, there probably aren't so big a difference, but
-> in order to avoid disrupting existing callers of want_color() while
-> possibly sharing as much code between the old and new callers,
-> perhaps:
-> 
-> 	extern int want_color_fd(int fd, int colorbool);
-> 	#define want_color(colorbool) want_color_fd(1, (colorbool))
-> 	#define want_color_stderr(colorbool) want_color_fd(2, (colorbool))
+Use of uninitialized value $rec in scalar chomp at /usr/local/lib/perl5/site_perl/Git.pm line 557, <$fh> chunk 1.
 
-I made it so.
+The value of chunk varies.  For example the message above may end with
+'...<$fh> chunk 5.'  This is with the FreeBSD packages git-2.17.0 and
+perl 5.26.1.
 
-Note that I also had to change the check_auto_color() function, and while
-want_color_fd() can have a "private" record of previous results,
-check_auto_color() needs to use the global color_stdout_is_tty (so that
-builtin/config.c can edit it, for use in `git config --colorbool <name>
-[stdout-is-tty]`).
+Regards,
 
-> We should honor configuration at two levels, just like the colors on
-> stdout, i.e. color in which individual items are painted (e.g.
-> color.diff.filename, color.advice.hint) and whether we use colors in
-> UI at all (e.g. color.ui).
+J.
 
-This is how v2 does it.
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Thanks for your suggestions,
-Dscho
+-----BEGIN PGP SIGNATURE-----
+
+iQKTBAEBCgB9FiEEVbCTpybDiFVxIrrVNqQMg7DW754FAlrHYX1fFIAAAAAALgAo
+aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldDU1
+QjA5M0E3MjZDMzg4NTU3MTIyQkFENTM2QTQwQzgzQjBENkVGOUUACgkQNqQMg7DW
+757Sfg/+L9AwidWr9pAH7aRaSuBqDDueUfT1xz8OTHjRbyHvm0NJyDec1YXMPCPH
+OZHmW8Hx6MuTM0ei6dsBZU4RaeiRCCVEJfGcXVT1kAjkVLYWucwKscbbrehOvOuW
+nRKWL3aJoIMfV1pF+cmhVljWQfki2AD41oNozzCbc5nyjATTK/ea4855XonEugYg
+xnMcx1hG1kMIEihlYKB1VHrZrxOxxDkqVPv/vuf2p3NVX4IuuPYOr60BO9tdzTMp
+jiYE4+PO94CGyyexVV8+3QWcDc5cMf2zZi5+lYsnHuSyfG1+UpBEbse/VFprE/og
+KkYmPJIAV1GjjyTaEb/Zw031VHJnETzrwr4S6aF5iWjztzAuSrCdalH0sMBRHb4W
+W11I6u5t/tCCRNu7MyFUdtFlVEju/OtYpOE1sqm61HmufwAs3reuwgzyMOJdNMTD
+k998knAHBByYDW1oCkvUe6xCLM9JfQPY4VPowa20xscuss5jO1xvLT/KlWFMHJOB
+Htl75x4kfjWyEA60Hi/kaFbW/IJkkN6/rMuBclHpBL4MtGXeAfbjE2V4WkICtg+X
+2rHfDHmrZnNNlm70IDldR+tbn+mM0Dv8wvNgeiE4GMXaLl15BtB7PyMpa/xhJ7+D
+dBW+imC5T1e5A8OVP66CexhKGsegtbddvJzEVoFAwH8L1zTvX7I=
+=KfDo
+-----END PGP SIGNATURE-----
+--=-=-=--
