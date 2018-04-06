@@ -7,101 +7,93 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B9AFE1F424
-	for <e@80x24.org>; Fri,  6 Apr 2018 11:15:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7218C1F424
+	for <e@80x24.org>; Fri,  6 Apr 2018 11:21:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752075AbeDFLPm (ORCPT <rfc822;e@80x24.org>);
-        Fri, 6 Apr 2018 07:15:42 -0400
-Received: from mout.gmx.net ([212.227.15.18]:41325 "EHLO mout.gmx.net"
+        id S1751570AbeDFLVX (ORCPT <rfc822;e@80x24.org>);
+        Fri, 6 Apr 2018 07:21:23 -0400
+Received: from mout.gmx.net ([212.227.17.21]:35027 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751492AbeDFLPl (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Apr 2018 07:15:41 -0400
-Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MX16a-1eyqt13WT6-00Vw0B; Fri, 06
- Apr 2018 13:15:35 +0200
-Date:   Fri, 6 Apr 2018 13:15:20 +0200 (DST)
+        id S1751434AbeDFLVW (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Apr 2018 07:21:22 -0400
+Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MCtLD-1fCQAh3zkZ-009dp9; Fri, 06
+ Apr 2018 13:21:17 +0200
+Date:   Fri, 6 Apr 2018 13:21:01 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Jacob Keller <jacob.keller@gmail.com>
-cc:     Git mailing list <git@vger.kernel.org>,
-        Ryan Dammrose <ryandammrose@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 2/4] push: colorize errors
-In-Reply-To: <CA+P7+xp6fDbabGVKDsRFhixkWRKTuUo_A3UqbQscsBbKiOJmmA@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1804061313070.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <cover.1518783709.git.johannes.schindelin@gmx.de> <cover.1522968472.git.johannes.schindelin@gmx.de> <b2771f9d8e441b6f902924a3b4f037b3874e4191.1522968472.git.johannes.schindelin@gmx.de>
- <CA+P7+xp6fDbabGVKDsRFhixkWRKTuUo_A3UqbQscsBbKiOJmmA@mail.gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org
+Subject: Re: [PATCH 0/1] Colorize some errors on stderr
+In-Reply-To: <xmqqwozc68r2.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1804061315500.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <cover.1518783709.git.johannes.schindelin@gmx.de> <xmqqwozc68r2.fsf@gitster-ct.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:B4UMY1l27l40qVq1A96SiAVxP56R3VWj9IhiPWiabyIAfChkL66
- cZJe/PYclxDBsvUTDqmiXaKkG9tcDFOQ1J3jHrGwAyQR2oCvoYdac1Yy+zBiXmX5YC36vSW
- AXE2LnGBP+obWMVovTe9+9Gpyqagc7ZksURO8373Pi5yLZAAD+aUkc2Xp+EqYvAKMfg1jKi
- x0f2gtZ1NMaWpOw654RHA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:ZZ4lULv6EAo=:DVTshiDaVNiAotvcSibcgX
- guPHaVLFLHvKfkhk1o2OyJJWORDGE+ujdS43TOQ5D023vwZCH0lxac6d+H48AHWBIlzOtqhsH
- tVIA+OzOBSami38WK85TK0B/JTFLDKyOg86+JaEOsJz4qa9lNsmRiZstARPzs5CC5jyVDRWEG
- cOLmRWfRotzB2IMZIP7kEj70uigaSiK0SLXoQrH2+vOUfs9JsD2vowWhVrmR5p/ktKeDMVR0Q
- KN/R8pKoa+7Bv8XuQFotr1MEtbdP4XzPblMWrOKX9MzHktGXz/ox66cTcHE7q965SgHRAy4Ph
- jX/EfvkkMRQ14JpUBmRgG18UIkiqjRSl+5vR24sHvvdHxpvpvMWhvbqhExgrS+cxJbYmtyhHU
- OfmEryQTYr0kwgU8sLTew7y9/U9T1SYQMtIAq5OH29bdIk1K9bh4w55AeIZLJZ9A8pfYlB6xu
- RGZLPLN87Oy0f+BAhi/pW3HCWYIEVF/s68+V2Qc/b2NbWl5aV8wCFAdwpWSmRCaJh4523VSMJ
- rqG7SLBePptWiz7nWQOOCydQgJkR2LXmPWlmtfFYjfZNzycshyV5I1IbUcxKtT9qSqP9e1S/0
- C1GQ/pYxSo5nHChoSLenqLHljlQGI2G+JbYiEl49D8cwr0RKgbc+oIcSNVYQJvObDQv52rnWZ
- BlXUir59zRorvoF5tEtggN+Z0AHwIK/GhkNsg/xL4ZbNrdXnzNdDH/ePDAzxTs0Cmnf3bIzH6
- VETXZK93SNK9lVm0T6Mg9J0g6t0cB6zE6uzbpAY5pFiHIji+w1rNIFDJH1pnFBNetmDtsPLWz
- Ug8aU5+ePiYus7StH0HpDXhF5smNqLKZch++h+s2nEYqxkaLIck3qkn0w70gZYQ/AwZNEqz
+X-Provags-ID: V03:K1:qJX1uwCRu/RPjmVQiZQsEQG4f5bY9uUyk2fmgGUdz3tJEL48JPo
+ C2J10EjBw7jr1YMtSZEufymMPK3yDb8I2ub/41hml21oT3RmOFYjwhf1srnfl4XF1HMGp3w
+ R2C0YrOWwOazD4EBfiMUu0U6UQuQPlYbs4U94ZuW5zVcrzaZj09d7poOEMztd10gLadSgn6
+ e9Dwey0NRcSf8wbs3ymjA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:KAsGKZgJgTQ=:7GmA4DXGRA+x+Z/93HGayE
+ vlylnwynbd2Z/J2keyZg83IB63rRQZ1MWJYs2rG2mBHcirkk38uugpTc/3CvpSW8mYfshPOtQ
+ 4ouLgjH0J3RYljH5ZJIH6UHZ+kpafNtnqP9sSwrs1dlJkOJb8mh7kQY5FGf9p79oqq1HrS3oo
+ 6BMskzUp6jxKOZubt0hsMzzSxmGNueQCQKWpQHtdGk+KuM62M+9Jfsc2hnAnWktTUOFAmKTgP
+ Wfxj5MGDXOQ9MtCehdI97mwXZ7HS3gBTluFlXJafKs1WW8FRoWq/W1PqF/zI1kZN/oJbd8zEr
+ 1OlF1CwMOHvDSVOIinFHKO8MHa0CXHsS2TcoP8ID76cTvbybKn2TSK/aLDwxRqxa0LnBW/qt5
+ hTbVxr7/oFkO7sqi9c4wk4iRZIANrj2qH7XkNyn3pmyKAsHcXeJxB4UhiWv5tTlnnbSbVWGH2
+ otYq+kDXLtv35J73OHny3Vk9msfVDwaLtReSrKOnwRcy8M1ctuMq8vDfNE8ya7kJ0+y+jaUp4
+ cUvYeT8fRaXSR7Sgqbkgv4IxlhXyHz2MhEjXtnSnBforKoNHioR9X7alfiUIsOiGXUXEbyL73
+ v2nfxm5SXF8LDLbkHheHgLj9LbmGLx9bkeuKcGdXiJ4b/6G3b2n7P3k9d5b00l+6F5Y8oZ2vI
+ 4g5IutAue2o5AnWMgsFodAFyM4iYfioNgpo7B8gzoRe7zJJZB7gdqDgE9QFG3cGfW5xFmXtdo
+ Mqa+gHq0zWCQnuEPG41/Uy3tRzqmwhVIwXv/2DfJvlAlrjk69MJS2tRi7FASLjaeUe05TY8K9
+ pgUQ3Nudvb/keL2uWNd28uJpukHe/L+0QlCEJ4ks1FlmR5/D202pwJqsY44DxquYnWX9tTY
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jake,
+Hi Junio,
 
-On Thu, 5 Apr 2018, Jacob Keller wrote:
+[and welcome back, at least I hope you only read this after a good and
+relaxing vacation]
 
-> On Thu, Apr 5, 2018 at 3:48 PM, Johannes Schindelin
-> <johannes.schindelin@gmx.de> wrote:
-> > From: Ryan Dammrose <ryandammrose@gmail.com>
-> >
-> > This is an attempt to resolve an issue I experience with people that are
-> > new to Git -- especially colleagues in a team setting -- where they miss
-> > that their push to a remote location failed because the failure and
-> > success both return a block of white text.
-> >
-> > An example is if I push something to a remote repository and then a
-> > colleague attempts to push to the same remote repository and the push
-> > fails because it requires them to pull first, but they don't notice
-> > because a success and failure both return a block of white text. They
-> > then continue about their business, thinking it has been successfully
-> > pushed.
-> >
-> > This patch colorizes the errors and hints (in red and yellow,
-> > respectively) so whenever there is a failure when pushing to a remote
-> > repository that fails, it is more noticeable.
-> >
-> > [jes: fixed a couple bugs, added the color.{advice,push,transport}
-> > settings, refactored to use want_color_stderr().]
-> >
-> > Signed-off-by: Ryan Dammrose ryandammrose@gmail.com
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> >
-> > squash! push: colorize errors
-> >
-> > Stop talking about localized errors
+On Fri, 16 Feb 2018, Junio C Hamano wrote:
+
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 > 
-> Guessing you intended to remove this part after squashing?
+> > Now, what would be possible solutions for this?
+> >
+> > - introduce `int fd` in `want_color()` (and callees) so that we can make
+> >   a distinction whether we want to detect whether stdout or stderr is connected
+> >   to a tty
+> >
+> > - introduce a separate `want_color_stderr()` (we still would need to decide
+> >   whether we want a config setting for this)
+> 
+> Between the above two, there probably aren't so big a difference, but
+> in order to avoid disrupting existing callers of want_color() while
+> possibly sharing as much code between the old and new callers,
+> perhaps:
+> 
+> 	extern int want_color_fd(int fd, int colorbool);
+> 	#define want_color(colorbool) want_color_fd(1, (colorbool))
+> 	#define want_color_stderr(colorbool) want_color_fd(2, (colorbool))
 
-Hah! You caught be red-handed.
+I made it so.
 
-This was intended as a reminder, as you probably guessed, to remove any
-mentions of "localized errors" because I had verified that there was no
-localized error message; besides, I replaced the call to strstr() looking
-at the error message with a call to push_had_errors() (i.e. using the
-ref_status instead). So there are definitely no issues about localized
-errors left.
+Note that I also had to change the check_auto_color() function, and while
+want_color_fd() can have a "private" record of previous results,
+check_auto_color() needs to use the global color_stdout_is_tty (so that
+builtin/config.c can edit it, for use in `git config --colorbool <name>
+[stdout-is-tty]`).
 
-> Didn't see anything else to comment on in the actual code.
+> We should honor configuration at two levels, just like the colors on
+> stdout, i.e. color in which individual items are painted (e.g.
+> color.diff.filename, color.advice.hint) and whether we use colors in
+> UI at all (e.g. color.ui).
 
-Thank you,
+This is how v2 does it.
+
+Thanks for your suggestions,
 Dscho
