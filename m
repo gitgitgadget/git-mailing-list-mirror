@@ -7,19 +7,19 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 498001F404
-	for <e@80x24.org>; Fri,  6 Apr 2018 15:39:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9A35E1F404
+	for <e@80x24.org>; Fri,  6 Apr 2018 15:50:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751679AbeDFPj5 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 6 Apr 2018 11:39:57 -0400
-Received: from mout.gmx.net ([212.227.15.19]:59233 "EHLO mout.gmx.net"
+        id S1751696AbeDFPui (ORCPT <rfc822;e@80x24.org>);
+        Fri, 6 Apr 2018 11:50:38 -0400
+Received: from mout.gmx.net ([212.227.17.20]:44461 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751603AbeDFPj4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Apr 2018 11:39:56 -0400
-Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MJSx9-1f5rRe2EG3-00371B; Fri, 06
- Apr 2018 17:39:49 +0200
-Date:   Fri, 6 Apr 2018 17:39:32 +0200 (DST)
+        id S1751027AbeDFPuh (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Apr 2018 11:50:37 -0400
+Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LzKQf-1eQYJ21uwD-014Tx6; Fri, 06
+ Apr 2018 17:50:29 +0200
+Date:   Fri, 6 Apr 2018 17:50:12 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
 To:     Joel Teichroeb <joel@teichroeb.net>
@@ -27,30 +27,30 @@ cc:     Git Mailing List <git@vger.kernel.org>,
         Thomas Gummerer <t.gummerer@gmail.com>,
         Christian Couder <christian.couder@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>, gitster@pobox.com
-Subject: Re: [PATCH v5 3/5] stash: convert drop and clear to builtin
-In-Reply-To: <20180405022810.15796-4-joel@teichroeb.net>
-Message-ID: <nycvar.QRO.7.76.6.1804061712230.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <20180405022810.15796-1-joel@teichroeb.net> <20180405022810.15796-4-joel@teichroeb.net>
+Subject: Re: [PATCH v5 4/5] stash: convert branch to builtin
+In-Reply-To: <20180405022810.15796-5-joel@teichroeb.net>
+Message-ID: <nycvar.QRO.7.76.6.1804061743210.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <20180405022810.15796-1-joel@teichroeb.net> <20180405022810.15796-5-joel@teichroeb.net>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:Bn7UyfHVA9QPghOKrLHGGZIPZIJ820txPhun3OO8aTCPZlmyDCe
- hTYOxqxTj1HUEoAuYi6vqWvPvTwndb3JAvOPWgRVNL2byfKARf70RqMcGIV6p0t/4Mb+E62
- btnmDQg6KSkSFwdxkAjTTyNgK4yyzTgBkCsdFLw1ErgUSrcb4vZ0uUMEUrvT/fIDefjteYl
- aWf9Rw+oOj23zcEUcGiGg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:xhow8/CPeoo=:czG6l0Msb1+QzXu5A6rVWW
- /85Y5M1ipOkyiLu6S79akDsX53wgApATopzfbeBd/lXVtjTnCKOXSShv1WvCKxOwBh5TEV3cS
- t1MfgZeh4GND0E1dW1hPiq0HrqK+cUIqQfArZ1ft8MSbM21iuO1gEsW4jWc1xJQS/L7qhJ3h6
- /ZO3eFfA7qjgxShNCUZNTr/NHBBl/5+8/R3ZOvGT0RSpWulARgkE+Bm6o5DtJuZ1ZJ7RdvYoy
- JZj4TVo4C0RBCxRKFp7bMK3KuGOlAowEDTP50SQpIU1R0K1X5XNkN4pa//ssM+HhvNPerHlvh
- eSxB1a6oKR2DVkF3ncB93dvl8WAUTy8e289GkrvWNqJbOTkzT13EZ/WeIaAaD/Zpgra0vdxWS
- /Z5ps+3QZ5MmvNH5nUygl9Rz7NIm4Zw9JfIzWzj4oh+gLMQzB45HoaWtcQvHZwm2lsWvlPelT
- 6VsIM+LhNZZskGH2ezTB2n/JpuCBqlFMm9gOqO7emcRIKhf2udCoGfQXMOfMiRhYMvCr2DjQ7
- 35G7xQSqwHFFv5NHLFDnEPSH2XBj/1d43LaMccSc5cBQKNkpl2px+h5JyrPvGf9W7EBqM/HOR
- ftkfiAHrXQKZr1YIIAL4kcila2paYMPvPDtuhuOXQIq4+wqnrc7i/ioOmdQvKeRlqmtFgVeCP
- xPG1lruSQMf+OxHpIiQKdRewSdGp4LePofaG+tKH3lfcOPIseKS7KF4xRoGc5+t4zeR2By7Ax
- cf7iUG3j5r29gXEzFOn2zIXuMLw0vgP50HJugTBquwvL1AJEOaudM/Cy/X4YDw+zcaHf7Xkj2
- 1XpqXYrcE8QHw39sHwWaB4hk7/2+3idgcCGVvW4NBRFYpBlG7oSP/ISeVRIDsKHz6xEtJZ6
+X-Provags-ID: V03:K1:VoLYHEi3nCTwaEZoPDUTxfow6gUlHgcUBi++YiP1k3+RHpHaoOW
+ HsmqhxT2oxFsxxEmLAQ84NmKZt/EfoQ9Aw2vWooDqZW3rsl+6a2vLeRf+5XEVp/Q+k7ImW0
+ R2xY0cG2Y1Nt8GgJ7v/M0TT2QlS1yROYgqTz37koVT+So+rJ/dwobdjm/T/ljk83b3cNWuT
+ Vqne9tf4Aq5158w0rrVvA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:jdkGNksuKjI=:L4ANJ7vRz602p+inGZmzZw
+ RmaawmFn6WemkDZNwvPV48w56rtqg6+RX+N0qpKrFbMuX0GLNzwFdWgfvysLQ4sSlqonBaKus
+ mJ4WjBlIKLUC5Qxrm12rkYP37bUO4QbHp7rbFysa3u4uTTW3vvaB/yDG7KNcsCfrukpHwZZsi
+ TvkQZ5nVa4fb1v3Ae9qZLzhQCyW6RAZ0ebckbgpQlWFleqtZrVTDG9xP+UUs2+Qa4DjMcShNw
+ qoSdcrsCH/d5Ed0PSW1CR0xqACyl8YFi0D9njq0njw9LZjz6/lbVrSTsnBKm6sXsdRSd27Upz
+ l6tSoimddPU3XQW75idM9ip4/JrNCvwzBeUJ360Z537x3n3xX+WfdUG9PZOxUNeJGhScwoLuN
+ w74Cv+wlyvAPTiHBYUIm+4/+uoj0cup0NmZGEuDPZ+PuDG4a27hpR1dckltQTroavV1inIaJU
+ lLxnOqlYGYtgwvP/6+ErgpBOPlS/UDbSWn2IchS6SxOFiIqlhLioc769qvIQoYOq6ct7TcAS4
+ lOK6IVefPtlVUY8yZPgfGjShc6HPWjkDgEmD5wHNsyadSA77m/Fy6fbk4lMUu4XMk68NuV26B
+ R10NvHzk97mtULf/eeM64IfutwVtYqu6FXWzhce9Z/fON5AMnAIw1wfvnlNC3w2tlcCIvKxCG
+ lWKQ5C4jP7CJmL3RoFEYAHBZGxqcip0o84udwabz0SBMG5TDZhKN0kkl2ELbe/NlYa3j363cS
+ w3g8paex0d3wt8APO5PrXRJOr9SUjyN/nDXmPUZyUFfK977PyfaQMSbTd7m41gyBtOPGgrHoN
+ HAEkX6rJUYAsSAv/V1HjAUzuPfHjayYWlA6BMQU6Lm+vdeLCZGIdB9KENgSjDmQpluceq7E
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -60,121 +60,125 @@ Hi Joel,
 
 On Wed, 4 Apr 2018, Joel Teichroeb wrote:
 
-> Add the drop and clear commands to the builtin helper. These two
-> are each simple, but are being added together as they are quite
-> related.
-
-Makes sense.
-
-> We have to unfortunately keep the drop and clear functions in the
-> shell script as functions are called with parameters internally
-> that are not valid when the commands are called externally. Once
-> pop is converted they can both be removed.
-
-Excellent explanation.
-
 > diff --git a/builtin/stash--helper.c b/builtin/stash--helper.c
-> index 9d00a9547d..520cd746c4 100644
+> index 520cd746c4..486796bb6a 100644
 > --- a/builtin/stash--helper.c
 > +++ b/builtin/stash--helper.c
-> @@ -134,6 +146,29 @@ static int get_stash_info(struct stash_info *info, int argc, const char **argv)
->  	return 0;
+> @@ -502,6 +508,49 @@ static int drop_stash(int argc, const char **argv, const char *prefix)
+>  	return ret;
 >  }
 >  
-> +static int do_clear_stash(void)
+> +static int branch_stash(int argc, const char **argv, const char *prefix)
 > +{
-> +	struct object_id obj;
-> +	if (get_oid(ref_stash, &obj))
-> +		return 0;
-> +
-> +	return delete_ref(NULL, ref_stash, &obj, 0);
-> +}
-> +
-> +static int clear_stash(int argc, const char **argv, const char *prefix)
-> +{
+> +	const char *branch = NULL;
+> +	int ret;
+> +	struct argv_array args = ARGV_ARRAY_INIT;
+> +	struct stash_info info;
 > +	struct option options[] = {
 > +		OPT_END()
 > +	};
 > +
-> +	argc = parse_options(argc, argv, prefix, options, git_stash_helper_clear_usage, PARSE_OPT_STOP_AT_NON_OPTION);
+> +	argc = parse_options(argc, argv, prefix, options,
+> +			git_stash_helper_branch_usage, 0);
 > +
-> +	if (argc != 0)
-> +		return error(_("git stash--helper clear with parameters is unimplemented"));
+> +	if (argc == 0)
+> +		return error(_("No branch name specified"));
+
+We should probably also test for argc > 2 and error out in that case...
+
 > +
-> +	return do_clear_stash();
-> +}
+> +	branch = argv[0];
 > +
->  static int reset_tree(struct object_id *i_tree, int update, int reset)
->  {
->  	struct unpack_trees_options opts;
-> @@ -399,6 +434,74 @@ static int apply_stash(int argc, const char **argv, const char *prefix)
->  	return ret;
->  }
->  
-> +static int do_drop_stash(const char *prefix, struct stash_info *info)
-> +{
-> +	struct argv_array args = ARGV_ARRAY_INIT;
-> +	int ret;
-> +	struct child_process cp = CHILD_PROCESS_INIT;
+> +	if (get_stash_info(&info, argc - 1, argv + 1))
+> +		return -1;
 > +
-> +	/* reflog does not provide a simple function for deleting refs. One will
-> +	 * need to be added to avoid implementing too much reflog code here
+> +	/* Checkout does not currently provide a function for checking out a branch
+> +	 * as cmd_checkout does a large amount of sanity checks first that we
+> +	 * require here.
 > +	 */
-> +	argv_array_pushl(&args, "reflog", "delete", "--updateref", "--rewrite", NULL);
-> +	argv_array_push(&args, info->revision.buf);
-> +	ret = cmd_reflog(args.argc, args.argv, prefix);
-> +	if (!ret) {
-> +		if (!quiet)
-> +			printf(_("Dropped %s (%s)\n"), info->revision.buf, oid_to_hex(&info->w_commit));
 
-This is a correct conversion. In the future, we will want to print this to
-stderr, though.
+While this is true, this code comment is *prone* to become stale. Maybe
+move this remark into the commit message?
 
-> +	} else {
-> +		return error(_("%s: Could not drop stash entry"), info->revision.buf);
+> +	argv_array_pushl(&args, "checkout", "-b", NULL);
+> +	argv_array_push(&args, branch);
+> +	argv_array_push(&args, oid_to_hex(&info.b_commit));
+> +	ret = cmd_checkout(args.argc, args.argv, prefix);
+> +	if (ret) {
+> +		free_stash_info(&info);
+> +		return -1;
 > +	}
 > +
-> +	/* This could easily be replaced by get_oid, but currently it will throw a
-> +	 * fatal error when a reflog is empty, which we can not recover from
-> +	 */
-> +	cp.git_cmd = 1;
-> +	/* Even though --quiet is specified, rev-parse still outputs the hash */
-> +	cp.no_stdout = 1;
-> +	argv_array_pushl(&cp.args, "rev-parse", "--verify", "--quiet", NULL);
-> +	argv_array_pushf(&cp.args, "%s@{0}", ref_stash);
-> +	ret = run_command(&cp);
+> +	ret = do_apply_stash(prefix, &info, 1);
+> +	if (!ret && info.is_stash_ref)
+> +		ret = do_drop_stash(prefix, &info);
 
-Since we already have `grab_oid()` (or `get_oidf()` if you heed my
-suggestion), we could use that here right away.
+An alternative way to translate that &&-chain would be to do this:
 
-> +
-> +	if (ret)
-> +		do_clear_stash();
+	ret = cmd_checkout(args.argc, args.argv, prefix);
+	if (!ret)
+		ret = do_apply_stash(prefix, &info, 1);
+	if (!ret && info.is_stash_ref)
+		ret = do_drop_stash(prefix, &info);
 
-I was a bit puzzled why we clear the entire stash when we only wanted to
-drop one? Going back to the shell script, there is this helpful comment:
-
-	# clear_stash if we just dropped the last stash entry
-
-Can you please add that comment here, too? It really helps readers, such
-as myself...
+... which might be a bit easier to read and to maintain?
 
 > +
-> +	return 0;
+> +	free_stash_info(&info);
+> +
+> +	return ret;
 > +}
 > +
-> +static int assert_stash_ref(struct stash_info *info)
-> +{
-> +	if (!info->is_stash_ref)
-> +		return error(_("'%s' is not a stash reference"), info->revision.buf);
-> +
-> +	return 0;
-> +}
+>  int cmd_stash__helper(int argc, const char **argv, const char *prefix)
+>  {
+>  	int result = 0;
+> @@ -528,6 +577,8 @@ int cmd_stash__helper(int argc, const char **argv, const char *prefix)
+>  		result = clear_stash(argc, argv, prefix);
+>  	else if (!strcmp(argv[0], "drop"))
+>  		result = drop_stash(argc, argv, prefix);
+> +	else if (!strcmp(argv[0], "branch"))
+> +		result = branch_stash(argc, argv, prefix);
+>  	else {
+>  		error(_("unknown subcommand: %s"), argv[0]);
+>  		usage_with_options(git_stash_helper_usage, options);
+> diff --git a/git-stash.sh b/git-stash.sh
+> index 0b8f07b38a..c5fd4c6c44 100755
+> --- a/git-stash.sh
+> +++ b/git-stash.sh
+> @@ -598,20 +598,6 @@ drop_stash () {
+>  	clear_stash
+>  }
+>  
+> -apply_to_branch () {
+> -	test -n "$1" || die "$(gettext "No branch name specified")"
+> -	branch=$1
+> -	shift 1
+> -
+> -	set -- --index "$@"
+> -	assert_stash_like "$@"
+> -
+> -	git checkout -b $branch $REV^ &&
+> -	apply_stash "$@" && {
+> -		test -z "$IS_STASH_REF" || drop_stash "$@"
+> -	}
+> -}
+> -
+>  test "$1" = "-p" && set "push" "$@"
+>  
+>  PARSE_CACHE='--not-parsed'
+> @@ -672,7 +658,8 @@ pop)
+>  	;;
+>  branch)
+>  	shift
+> -	apply_to_branch "$@"
+> +	cd "$START_DIR"
+> +	git stash--helper branch "$@"
+>  	;;
+>  *)
+>  	case $# in
 
-I am a bit curious why that did not appear in the previous patch, as
-`apply_stash()` in the shell script already called `assert_stash_ref()`...
-
-The rest of the patch looks pretty good to me! Thank you.
+The rest looks obviously good to me (I am not all that sure about the `cd
+"$START_DIR"` but it definitely does not hurt).
 
 Ciao,
 Dscho
