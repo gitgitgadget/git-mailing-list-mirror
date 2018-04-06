@@ -2,101 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 602531F404
-	for <e@80x24.org>; Thu,  5 Apr 2018 23:37:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D08CC1F404
+	for <e@80x24.org>; Fri,  6 Apr 2018 00:20:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751359AbeDEXhq (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Apr 2018 19:37:46 -0400
-Received: from mail-wm0-f47.google.com ([74.125.82.47]:36394 "EHLO
-        mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750835AbeDEXhp (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Apr 2018 19:37:45 -0400
-Received: by mail-wm0-f47.google.com with SMTP id x82so11738052wmg.1
-        for <git@vger.kernel.org>; Thu, 05 Apr 2018 16:37:44 -0700 (PDT)
+        id S1751470AbeDFAUm (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Apr 2018 20:20:42 -0400
+Received: from mail-wr0-f180.google.com ([209.85.128.180]:41665 "EHLO
+        mail-wr0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751155AbeDFAUl (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Apr 2018 20:20:41 -0400
+Received: by mail-wr0-f180.google.com with SMTP id s12so20562191wrc.8
+        for <git@vger.kernel.org>; Thu, 05 Apr 2018 17:20:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=saville-com.20150623.gappssmtp.com; s=20150623;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=pXehEm6fxlQ9bbK7B708MzCLn/dmVYcPoo8dq/cXiko=;
-        b=ij1IQKJlcEcQCUoxhjbvbxclDaBN1VVhOuIQ4OBpjL+rjv87nAShSdvQZExr/6ZHB0
-         yD69Nc6O699E8Q4Df5aUsbNFn1wPccZojLTf9SpL0dpQnJueW9URHt25fU9N6OgDrUZg
-         ZJffmIU5mjA3tvXLmQlavibSDYGKfVH03CXJg8hSDTW10cIF6c/xTfH52lR4hF1RRaUj
-         zOonrkEbSnmdBgR6RCjO6jsuu52K/C10D/+0G2ES/ZwxuVpbewoRHVOWhawqkzTTBlma
-         q+j6su7RQyNw8tVTFe/GGGNOHOEee4GJREvOkkKH2GeMa+0wscpp8IAfLa0f1BLmvjKz
-         JsbA==
+        bh=azdx9wmb5yIQ1ujZOaAbay8uAa9FQ06AlJ9Yhz4nEYU=;
+        b=DNgLG0kEzsh75d1pq/G+CnT4zqIwfhHf7FWauV+rndqKFzTmnVtqMV+bqPq9Y+B7OX
+         KskX/XRXJ55k0DlsMhwxvCi42rYruU5v+zjUOS0+/wUAN1I6LNPEbIz2vroVtuUlbbf2
+         fgImt/8nAzIx2QEBun7wZBXw4VP4BFEgS5V5K7BqqCy8rY5iy+/mB7Sw5/xN3pcFu9/J
+         dqLo/F8hywszTVISk2oloDaAJNDUeuukcalh/F8SSHgW1uVwQPrJQz5Nw+xx6lIvFDqC
+         r2SSjVJ5CITFs9MG1MnLIFh3qI3mKGEBgoFK3aSb7bheynhdZsZlzS+v/f5mzcAwiD6K
+         d+bQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=pXehEm6fxlQ9bbK7B708MzCLn/dmVYcPoo8dq/cXiko=;
-        b=DWJrDq8448v3ZwRf/QnR06XS1Z+J8b5jVWCp6q0QnJNeZsFHi02WsMZq3JR15VwrV6
-         hlVZODkoQITl5WkQD/052VwN3KmReF5wIwzSTIAk50ptJVjFRMyS8vVJ348b0tj/h/+p
-         DJySKlfuLwB/bEKlBCKjVo7SzquPORoidnEwJKjrP+qiYk15R/aDkgG2Anf4PtyiGYvY
-         Zo4+E62vgX19ofejcBZwQ09Sa+ocH8VuxOLr7laEORZZW9tIEXdPOdxVg3k33iaxVnjm
-         U8EwhkNfzyLm0/nsTib0Xfz7FzxhFLFZ1k8MmZDgQwlTFlPIGBcYo0cN31B5xdamFajN
-         twxQ==
-X-Gm-Message-State: ALQs6tA3kOCDEsUy5jceXaFbhRm2e1t8urSsk7UugElbshXidoDPBQt2
-        3t9VkaQVfp1KBhOkaq9VCy8/9/wrZ6GfLVo78pY=
-X-Google-Smtp-Source: AIpwx49ptRHiwdXsQfLikUdkKNoqFWvU75gwxHU1CLTAb+1r9A0W2M6nmDTYqQD28WKAXg9m7ptgR16HyDB2eghLQQ0=
-X-Received: by 10.80.153.9 with SMTP id k9mr4614681edb.303.1522971464069; Thu,
- 05 Apr 2018 16:37:44 -0700 (PDT)
+        bh=azdx9wmb5yIQ1ujZOaAbay8uAa9FQ06AlJ9Yhz4nEYU=;
+        b=A1cDAKA+2krT4VN8YMPgrZJfFmUUu+H0hOzNhYMCg6IZVlbAe/R13PvAnhPweRwn2B
+         dG+dA0B/iBSoSIS0bQWzqkimhzoFje5EtFOXs5U3mJ7ihniTFblMePD3R6Y0wIn50Ydh
+         M10JAKWihKl5ehbBRw/UROn1+fhafxXT+mSzE+mrzslxuCep0CNuNxWaUSj2C5N1bIz3
+         RBv9QN8su0qJ9dhBfSzm7wuoxCyQL0R3oGYOhfP48sfDHUSf4YJQlgOENdrpS0B//NtE
+         Ml8gg5BZ4ZrOdOnVxH1+C76RlLw+sRQLcB/pe0dl8saL2xnVgGrnzUlHYxjNMZwVDo3v
+         cZUw==
+X-Gm-Message-State: ALQs6tBuQTVm9cH2NiS4L9vATECUVhaD9FDBhdR/BdS7W5CgW8airvX0
+        Aq+KlHifOv5I+qWkVbar1WJmyLuj1hv22SS8tu6Khg==
+X-Google-Smtp-Source: AIpwx49KQF879U7GOLi6cJld5Al4rLxxLcpueTz/l1iBKlAmmiOit8qHKmMsx7bKaX2/8XXm9zuaZECrfumDY5cQVuw=
+X-Received: by 2002:a19:c1c8:: with SMTP id r191-v6mr14038490lff.45.1522974040401;
+ Thu, 05 Apr 2018 17:20:40 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.80.201.196 with HTTP; Thu, 5 Apr 2018 16:37:23 -0700 (PDT)
-In-Reply-To: <b2771f9d8e441b6f902924a3b4f037b3874e4191.1522968472.git.johannes.schindelin@gmx.de>
-References: <cover.1518783709.git.johannes.schindelin@gmx.de>
- <cover.1522968472.git.johannes.schindelin@gmx.de> <b2771f9d8e441b6f902924a3b4f037b3874e4191.1522968472.git.johannes.schindelin@gmx.de>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Thu, 5 Apr 2018 16:37:23 -0700
-Message-ID: <CA+P7+xp6fDbabGVKDsRFhixkWRKTuUo_A3UqbQscsBbKiOJmmA@mail.gmail.com>
-Subject: Re: [PATCH v2 2/4] push: colorize errors
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     Git mailing list <git@vger.kernel.org>,
-        Ryan Dammrose <ryandammrose@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
+Received: by 2002:a19:9690:0:0:0:0:0 with HTTP; Thu, 5 Apr 2018 17:20:19 -0700 (PDT)
+In-Reply-To: <CAPig+cT6wq3=0ychBH9+YharVvX8KNFLStdb8wGG33o_Lungyg@mail.gmail.com>
+References: <CAKk8ispGB2cxCxVpmabf7ASU3bSTLdMPbSQeAdYNom_JL=O0Bw@mail.gmail.com>
+ <CAPig+cT6wq3=0ychBH9+YharVvX8KNFLStdb8wGG33o_Lungyg@mail.gmail.com>
+From:   Wink Saville <wink@saville.com>
+Date:   Thu, 5 Apr 2018 17:20:19 -0700
+Message-ID: <CAKk8isoHq0KTUfKuuHh=6HzV5ncBryatR6GiPoXYDngF5xjQSQ@mail.gmail.com>
+Subject: Re: Errors testing on macOS High Sierra version 10.13.4
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Apr 5, 2018 at 3:48 PM, Johannes Schindelin
-<johannes.schindelin@gmx.de> wrote:
-> From: Ryan Dammrose <ryandammrose@gmail.com>
+On Thu, Apr 5, 2018 at 2:33 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Wed, Apr 4, 2018 at 1:06 PM, Wink Saville <wink@saville.com> wrote:
+>> I built git on a mac osx laptop and got some errors when testing.
+>> I ran ./ci/run-build-and-tests.sh and three of the tests had failures
+>> that appear to be associated with character encoding:
+>> ...
+>> Of course on travis-ci there are no failures so I dug deeper and found
+>> that travis-ci is running 10.12.6 (I added a call to system_profier in
+>> ci/run-build-and-tests.sh) where as I'm running is 10.13.4:
+>>
+>> Not sure, but maybe I've got something configured incorrectly.
+>> Suggestions anyone?
 >
-> This is an attempt to resolve an issue I experience with people that are
-> new to Git -- especially colleagues in a team setting -- where they miss
-> that their push to a remote location failed because the failure and
-> success both return a block of white text.
+> I'm still on 10.12.6 and I don't plan on upgrading, so you may need to
+> dig into this yourself.
 >
-> An example is if I push something to a remote repository and then a
-> colleague attempts to push to the same remote repository and the push
-> fails because it requires them to pull first, but they don't notice
-> because a success and failure both return a block of white text. They
-> then continue about their business, thinking it has been successfully
-> pushed.
->
-> This patch colorizes the errors and hints (in red and yellow,
-> respectively) so whenever there is a failure when pushing to a remote
-> repository that fails, it is more noticeable.
->
-> [jes: fixed a couple bugs, added the color.{advice,push,transport}
-> settings, refactored to use want_color_stderr().]
->
-> Signed-off-by: Ryan Dammrose ryandammrose@gmail.com
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
->
-> squash! push: colorize errors
->
-> Stop talking about localized errors
+> Try narrowing down the problem to the exact command within the test
+> which is failing or giving unexpected results. From there, it may be
+> possible to identify some difference between 10.12.6 and 10.13.4 or
+> between something in your current configuration and that on Travis or
+> elsewhere.
 
-Guessing you intended to remove this part after squashing?
-
-Didn't see anything else to comment on in the actual code.
-
-Thanks,
-Jake
+OK
