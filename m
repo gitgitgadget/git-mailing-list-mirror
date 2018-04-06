@@ -7,53 +7,54 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C76BF1F404
-	for <e@80x24.org>; Fri,  6 Apr 2018 23:22:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 97FC41F404
+	for <e@80x24.org>; Fri,  6 Apr 2018 23:22:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752283AbeDFXW1 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 6 Apr 2018 19:22:27 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:38622 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752202AbeDFXWQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Apr 2018 19:22:16 -0400
-Received: by mail-pf0-f193.google.com with SMTP id y69so1795682pfb.5
-        for <git@vger.kernel.org>; Fri, 06 Apr 2018 16:22:16 -0700 (PDT)
+        id S1752307AbeDFXWe (ORCPT <rfc822;e@80x24.org>);
+        Fri, 6 Apr 2018 19:22:34 -0400
+Received: from mail-pl0-f65.google.com ([209.85.160.65]:45303 "EHLO
+        mail-pl0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752065AbeDFXWF (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Apr 2018 19:22:05 -0400
+Received: by mail-pl0-f65.google.com with SMTP id v18-v6so1522336ply.12
+        for <git@vger.kernel.org>; Fri, 06 Apr 2018 16:22:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=8ro5bFlTXObFrbqVmPGJVh+Z+yE92k3hJgGJZvT26ns=;
-        b=INULVLfGECECgUz4dcHKH6guwWPaiV/RYYurn4W4VB1NGpqO5gZnC7YV6ROfKrZupW
-         3DgJMEMT4iGPFEQMr+EFloWVuLWB5k15D5JKU5eIbQS1vX2WdkH0BlljIZ9fj3YyB1w+
-         482XUlzEXItA4ujEaF3pW5cZkM6oU6H7lwqUw00f2HAYBg0m3JmyFDDwH7+qlITWTJd4
-         21GdhpysWAJdWbwUls0+Gs91LjS7P6LFXkWTYAuxEXrRFHBqHQZ/Bo1JnESSxnsNmNav
-         fD6VUu7YTbMkUoZAQRyzFA8Dq4xz5eAN6bGawPiz6mzGwnXCCmFjKL1TKJDfErLTNv+L
-         PBQg==
+        bh=Eqeohi2hkPkbayySmb/Vc4l3Dg4olMnXqouexqHvBEw=;
+        b=QK7G9KZVPAJJZ4aCd4591G9jtzQ4Nc1sPN1Fna/6B3SDA2Ae8EQq0gbHMSKhHaWnnf
+         rQqqBbqNZt2sQnMhn4V7ew4tngmVz4v84CclyF0ug+fDUxJGpyXPQ6Jlj1Y+m57Znt/+
+         havo7gpmiq7/aaEIgHxLC8OqIr2OSTDatMp/F2xxpHR7YoIgHzfaM3zEI8RETOiVAlF1
+         aZVQF9kBG6BueBYd2QnnwKnYqMr6YOkyuao+4K0Dz7B/SUm8JVDyFdX6L+R8zVhJ8r/l
+         BCoujfHICWt5cDTBZYLc72CIg/QI4xB3c4GPrPraEVn2lWMjmQIbXFvGUrXupNaviQKD
+         NPLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=8ro5bFlTXObFrbqVmPGJVh+Z+yE92k3hJgGJZvT26ns=;
-        b=JbLrsyaD8oxLY+ASTtmAjx2qVcAoYo0XbZ1h0Ta2M31zTjXzK5844pXXVkD+okFQRA
-         bVQP8XpdJoopSeTL53HGIhx5OjJWE3Xs41DVwpmXLnbZffC20h4yZpuJPfRbyykWWEdZ
-         Nug2IvXUq4l41UqUEPPh1HcO3j45ByndYeesQlTKZ4PVAp0VworqCOKXIj0ahoCPRsHq
-         NWvjCITrXxOO32iTQIPzJ4SWoUCSneavfl8Vodvqgusma9ZfG0OZfeVMvVfxVNxsPqEM
-         tTELIpAaycEM496JYkSiJ51YpgHJH3aVJTQhGSbVRUoY+l02SpJJzsoKQBL62lkpV7oc
-         EDwQ==
-X-Gm-Message-State: AElRT7F94s4IionDdeyeuMIQjVnbe6gTLl8iNVckfa0t8/y5Fks4RX9d
-        6jdPS1qE8/mYXhD73DshLYi27Q==
-X-Google-Smtp-Source: AIpwx48mhRUSZbPfTSDfsUou7JDpnQCs/ZR7m5BntGZbszvHGS317IadvOpZRAEzjR/gl4GQdkQoTw==
-X-Received: by 10.98.157.199 with SMTP id a68mr21722154pfk.237.1523056936000;
-        Fri, 06 Apr 2018 16:22:16 -0700 (PDT)
+        bh=Eqeohi2hkPkbayySmb/Vc4l3Dg4olMnXqouexqHvBEw=;
+        b=IKfHA2mIUUshn3WMYRe3/RMpMfGsGSUNh5Rsr51c8vGU6kUtIR3RL1NffIyhQXXUqU
+         lp9e/8gDXP9ohFIU+ZuDW+pd2G2HRSFXwH9U8QOAt7VeRrmJrJIoQZrCwRi5rta0rIsV
+         ak/ClQa9J9DXyz2XmG73gNvTdH43WydhdCCJIcxQ2pbcks7pFnjyClEnOTr85BgDK6xg
+         +WAV8A9tcPmjdDde41oOCQraS/6AvaKXRgedfFyp3ioj33ow78Onkoxyih9oHlfMdeIm
+         cbpXvvyD6kpBBnEwIyIE8Y+/h8MUqL1S1WRyn1s9sBGwWwY0TemzpjmiNVnzJW+G2QqU
+         dlVg==
+X-Gm-Message-State: AElRT7F7enaiheJWBXHxTaCMVlO0OkBjCX0HiL/wn587T2rwTWgMGLne
+        YPK13O4C/zi+ivtnorsAUewDmQ==
+X-Google-Smtp-Source: AIpwx4/R3MkZJ3vjHcpN6qLKgLiQzdZnDNCTRZ5Nv+a+vPNTSqvTkEHTCRKm5KlG+rI9L0FcPHlEew==
+X-Received: by 2002:a17:902:8c8e:: with SMTP id t14-v6mr29188864plo.206.1523056924501;
+        Fri, 06 Apr 2018 16:22:04 -0700 (PDT)
 Received: from localhost ([2620:0:100e:422:ea58:fa52:fa77:9b41])
-        by smtp.gmail.com with ESMTPSA id d4sm20753591pgc.43.2018.04.06.16.22.14
+        by smtp.gmail.com with ESMTPSA id j3sm21245906pfj.60.2018.04.06.16.22.03
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 06 Apr 2018 16:22:15 -0700 (PDT)
+        Fri, 06 Apr 2018 16:22:03 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     jonathantanmy@google.com
-Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-Subject: [PATCH 18/19] replace-object: allow do_lookup_replace_object to handle arbitrary repositories
-Date:   Fri,  6 Apr 2018 16:21:35 -0700
-Message-Id: <20180406232136.253950-19-sbeller@google.com>
+Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH 10/19] replace-object: add repository argument to prepare_replace_object
+Date:   Fri,  6 Apr 2018 16:21:27 -0700
+Message-Id: <20180406232136.253950-11-sbeller@google.com>
 X-Mailer: git-send-email 2.17.0.484.g0c8726318c-goog
 In-Reply-To: <20180406232136.253950-1-sbeller@google.com>
 References: <20180406232136.253950-1-sbeller@google.com>
@@ -62,58 +63,44 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Add a repository argument to allow the prepare_replace_object caller
+to be more specific about which repository to handle. This is a small
+mechanical change; it doesn't change the implementation to handle
+repositories other than the_repository yet.
+
+As with the previous commits, use a macro to catch callers passing a
+repository other than the_repository at compile time.
+
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- replace-object.c | 9 +++++----
- replace-object.h | 3 +--
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ replace-object.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/replace-object.c b/replace-object.c
-index 967d794687..075a48b661 100644
+index e9aa964978..3a3d971732 100644
 --- a/replace-object.c
 +++ b/replace-object.c
-@@ -91,12 +91,13 @@ static void prepare_replace_object(struct repository *r)
-  * permanently-allocated value.  This function always respects replace
-  * references, regardless of the value of check_replace_refs.
-  */
--const unsigned char *do_lookup_replace_object_the_repository(const unsigned char *sha1)
-+const unsigned char *do_lookup_replace_object(struct repository *r,
-+					      const unsigned char *sha1)
+@@ -75,7 +75,9 @@ static int register_replace_ref(const char *refname,
+ 	return 0;
+ }
+ 
+-static void prepare_replace_object(void)
++#define prepare_replace_object(r) \
++	prepare_replace_object_##r()
++static void prepare_replace_object_the_repository(void)
  {
+ 	if (the_repository->objects->replacements.prepared)
+ 		return;
+@@ -99,7 +101,7 @@ const unsigned char *do_lookup_replace_object(const unsigned char *sha1)
  	int pos, depth = MAXREPLACEDEPTH;
  	const unsigned char *cur = sha1;
  
--	prepare_replace_object(the_repository);
-+	prepare_replace_object(r);
+-	prepare_replace_object();
++	prepare_replace_object(the_repository);
  
  	/* Try to recursively replace the object */
  	do {
-@@ -104,9 +105,9 @@ const unsigned char *do_lookup_replace_object_the_repository(const unsigned char
- 			die("replace depth too high for object %s",
- 			    sha1_to_hex(sha1));
- 
--		pos = replace_object_pos(the_repository, cur);
-+		pos = replace_object_pos(r, cur);
- 		if (0 <= pos)
--			cur = the_repository->objects->replacements.items[pos]->replacement;
-+			cur = r->objects->replacements.items[pos]->replacement;
- 	} while (0 <= pos);
- 
- 	return cur;
-diff --git a/replace-object.h b/replace-object.h
-index 6a2d37d717..e15f0725cb 100644
---- a/replace-object.h
-+++ b/replace-object.h
-@@ -14,8 +14,7 @@ struct replace_object {
-  * This internal function is only declared here for the benefit of
-  * lookup_replace_object().  Please do not call it directly.
-  */
--#define do_lookup_replace_object(r, s) do_lookup_replace_object_##r(s)
--extern const unsigned char *do_lookup_replace_object_the_repository(const unsigned char *sha1);
-+extern const unsigned char *do_lookup_replace_object(struct repository *r, const unsigned char *sha1);
- 
- /*
-  * If object sha1 should be replaced, return the replacement object's
 -- 
 2.17.0.484.g0c8726318c-goog
 
