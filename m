@@ -2,83 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 633051F424
-	for <e@80x24.org>; Fri,  6 Apr 2018 10:56:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B9AFE1F424
+	for <e@80x24.org>; Fri,  6 Apr 2018 11:15:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751933AbeDFK4W (ORCPT <rfc822;e@80x24.org>);
-        Fri, 6 Apr 2018 06:56:22 -0400
-Received: from mail-qt0-f181.google.com ([209.85.216.181]:44273 "EHLO
-        mail-qt0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751434AbeDFK4V (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Apr 2018 06:56:21 -0400
-Received: by mail-qt0-f181.google.com with SMTP id j26so635568qtl.11
-        for <git@vger.kernel.org>; Fri, 06 Apr 2018 03:56:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=sQYJqvIj1jQbiV8dJWA3T7qpawcaHp6FE0miJSKYf8U=;
-        b=Hv0kiCl5YnvMw7fhBDKW9C1Um76kbJhcPvUjIW8LmcJhNF7qg1zYJNIFq+8N8jJgDC
-         9uuAnAJHJyI7mkTrfwudCKUnHBju6LfGW7F2FnqRPSMLwlBElY7KDIqb2uC+5bq0IOCk
-         qvHXhLZGlYS/dMXOyZpHIY1MOLfQOnlJkzFQporA+Gb+NZ3Ll9GSRxlOVyO2lyv4+MTB
-         0naw5ESyZtg5seF5ESN3E59YdzYjKDogJfejG+p+62VzBla8UUJK06NSVBqUWYP42FDJ
-         N0HnYMpR1qkuvEY5nx8zC9Ems5TvXmAT85fSPbHnlcXcacpw0UBBfrdS3QmiuDBfQo7S
-         fxZw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=sQYJqvIj1jQbiV8dJWA3T7qpawcaHp6FE0miJSKYf8U=;
-        b=PwL5Rol/RPvUGWPm5nnVgGQHO4NhLLDtk/2JxdTJefT9LgY11LQ72rmJoPdyUn3FNA
-         Gle30uD4jEaToQiJ+rTHvx6JK1axbKVNA6wRrtapzmVMCjOSji7LLEViqOfwjklCcHDz
-         AtJyLFQlpydGRdGUe+MsQSrXv2ngkkL6m/9PE7+pdJRrL6xwlQM7JIoT/9osvmm2oRLU
-         v7qBZu57XZXuBexiRBGeF7r/8h5O1Jt4xKEoQ8V1iqDen0yqq1/5NXmw+URd1Hl9uN/g
-         METXhZpWKqtJSQJHFZkdT/wAwo0KY+gCUGe5Dc62oHtOi5XhRGFyeYPTnpzVPXBNIB91
-         Ia5w==
-X-Gm-Message-State: ALQs6tBBtVM+aXl1rUMSCcRtN+dXifu/+9wNKxFuaLA7pT/DrlLk6d8f
-        6Dkg1aDDMgu7AFBtu/8kom/bmGPnyxquKq32wbU=
-X-Google-Smtp-Source: AIpwx4/OqulHHtzo5eLxjIVRofaXCgdr7xVJJ3onvO8RCtxLi+IvFNc+DF2ETey1D/yMYvTbPL7QvdIIy1l5mtTZzaQ=
-X-Received: by 10.237.49.195 with SMTP id 61mr36967665qth.77.1523012180570;
- Fri, 06 Apr 2018 03:56:20 -0700 (PDT)
+        id S1752075AbeDFLPm (ORCPT <rfc822;e@80x24.org>);
+        Fri, 6 Apr 2018 07:15:42 -0400
+Received: from mout.gmx.net ([212.227.15.18]:41325 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751492AbeDFLPl (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Apr 2018 07:15:41 -0400
+Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MX16a-1eyqt13WT6-00Vw0B; Fri, 06
+ Apr 2018 13:15:35 +0200
+Date:   Fri, 6 Apr 2018 13:15:20 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+To:     Jacob Keller <jacob.keller@gmail.com>
+cc:     Git mailing list <git@vger.kernel.org>,
+        Ryan Dammrose <ryandammrose@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 2/4] push: colorize errors
+In-Reply-To: <CA+P7+xp6fDbabGVKDsRFhixkWRKTuUo_A3UqbQscsBbKiOJmmA@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1804061313070.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <cover.1518783709.git.johannes.schindelin@gmx.de> <cover.1522968472.git.johannes.schindelin@gmx.de> <b2771f9d8e441b6f902924a3b4f037b3874e4191.1522968472.git.johannes.schindelin@gmx.de>
+ <CA+P7+xp6fDbabGVKDsRFhixkWRKTuUo_A3UqbQscsBbKiOJmmA@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Received: by 10.12.174.202 with HTTP; Fri, 6 Apr 2018 03:56:20 -0700 (PDT)
-In-Reply-To: <516b28e82ace0a0b6831c644f246c19dad1187ac.1522968472.git.johannes.schindelin@gmx.de>
-References: <cover.1518783709.git.johannes.schindelin@gmx.de>
- <cover.1522968472.git.johannes.schindelin@gmx.de> <516b28e82ace0a0b6831c644f246c19dad1187ac.1522968472.git.johannes.schindelin@gmx.de>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 6 Apr 2018 06:56:20 -0400
-X-Google-Sender-Auth: OmQuZf2GECZe7K-zPfLf_Z34cCM
-Message-ID: <CAPig+cRW6VhZGrV3qN5gDyMu1Oc=hjDOpyo_OY43jyoQNc6Q1A@mail.gmail.com>
-Subject: Re: [PATCH v2 4/4] Document the new color.* settings to colorize push errors/hints
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:B4UMY1l27l40qVq1A96SiAVxP56R3VWj9IhiPWiabyIAfChkL66
+ cZJe/PYclxDBsvUTDqmiXaKkG9tcDFOQ1J3jHrGwAyQR2oCvoYdac1Yy+zBiXmX5YC36vSW
+ AXE2LnGBP+obWMVovTe9+9Gpyqagc7ZksURO8373Pi5yLZAAD+aUkc2Xp+EqYvAKMfg1jKi
+ x0f2gtZ1NMaWpOw654RHA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:ZZ4lULv6EAo=:DVTshiDaVNiAotvcSibcgX
+ guPHaVLFLHvKfkhk1o2OyJJWORDGE+ujdS43TOQ5D023vwZCH0lxac6d+H48AHWBIlzOtqhsH
+ tVIA+OzOBSami38WK85TK0B/JTFLDKyOg86+JaEOsJz4qa9lNsmRiZstARPzs5CC5jyVDRWEG
+ cOLmRWfRotzB2IMZIP7kEj70uigaSiK0SLXoQrH2+vOUfs9JsD2vowWhVrmR5p/ktKeDMVR0Q
+ KN/R8pKoa+7Bv8XuQFotr1MEtbdP4XzPblMWrOKX9MzHktGXz/ox66cTcHE7q965SgHRAy4Ph
+ jX/EfvkkMRQ14JpUBmRgG18UIkiqjRSl+5vR24sHvvdHxpvpvMWhvbqhExgrS+cxJbYmtyhHU
+ OfmEryQTYr0kwgU8sLTew7y9/U9T1SYQMtIAq5OH29bdIk1K9bh4w55AeIZLJZ9A8pfYlB6xu
+ RGZLPLN87Oy0f+BAhi/pW3HCWYIEVF/s68+V2Qc/b2NbWl5aV8wCFAdwpWSmRCaJh4523VSMJ
+ rqG7SLBePptWiz7nWQOOCydQgJkR2LXmPWlmtfFYjfZNzycshyV5I1IbUcxKtT9qSqP9e1S/0
+ C1GQ/pYxSo5nHChoSLenqLHljlQGI2G+JbYiEl49D8cwr0RKgbc+oIcSNVYQJvObDQv52rnWZ
+ BlXUir59zRorvoF5tEtggN+Z0AHwIK/GhkNsg/xL4ZbNrdXnzNdDH/ePDAzxTs0Cmnf3bIzH6
+ VETXZK93SNK9lVm0T6Mg9J0g6t0cB6zE6uzbpAY5pFiHIji+w1rNIFDJH1pnFBNetmDtsPLWz
+ Ug8aU5+ePiYus7StH0HpDXhF5smNqLKZch++h+s2nEYqxkaLIck3qkn0w70gZYQ/AwZNEqz
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Apr 5, 2018 at 6:48 PM, Johannes Schindelin
-<johannes.schindelin@gmx.de> wrote:
-> Let's make it easier for users to find out how to customize these colors.
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> @@ -1088,6 +1088,16 @@ clean.requireForce::
-> +color.advice::
-> +       A boolean to enable/disable color in hints (e.g. when a push
-> +       failed, see `advice.*` for a list).  May be set to `always`,
-> +       `false` (or `never`) or `auto` (or `true`), in which case colors
-> +       are used only when the error output goes to a terminal. If
-> +       unset, then the value of `color.ui` is used (`auto` by default).
-> +
-> +color.advice.advice::
-> +       Use customized color for hints.
+Hi Jake,
 
-Is "color.advice.advice" correct?
+On Thu, 5 Apr 2018, Jacob Keller wrote:
+
+> On Thu, Apr 5, 2018 at 3:48 PM, Johannes Schindelin
+> <johannes.schindelin@gmx.de> wrote:
+> > From: Ryan Dammrose <ryandammrose@gmail.com>
+> >
+> > This is an attempt to resolve an issue I experience with people that are
+> > new to Git -- especially colleagues in a team setting -- where they miss
+> > that their push to a remote location failed because the failure and
+> > success both return a block of white text.
+> >
+> > An example is if I push something to a remote repository and then a
+> > colleague attempts to push to the same remote repository and the push
+> > fails because it requires them to pull first, but they don't notice
+> > because a success and failure both return a block of white text. They
+> > then continue about their business, thinking it has been successfully
+> > pushed.
+> >
+> > This patch colorizes the errors and hints (in red and yellow,
+> > respectively) so whenever there is a failure when pushing to a remote
+> > repository that fails, it is more noticeable.
+> >
+> > [jes: fixed a couple bugs, added the color.{advice,push,transport}
+> > settings, refactored to use want_color_stderr().]
+> >
+> > Signed-off-by: Ryan Dammrose ryandammrose@gmail.com
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> >
+> > squash! push: colorize errors
+> >
+> > Stop talking about localized errors
+> 
+> Guessing you intended to remove this part after squashing?
+
+Hah! You caught be red-handed.
+
+This was intended as a reminder, as you probably guessed, to remove any
+mentions of "localized errors" because I had verified that there was no
+localized error message; besides, I replaced the call to strstr() looking
+at the error message with a call to push_had_errors() (i.e. using the
+ref_status instead). So there are definitely no issues about localized
+errors left.
+
+> Didn't see anything else to comment on in the actual code.
+
+Thank you,
+Dscho
