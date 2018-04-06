@@ -2,87 +2,167 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C48341F424
-	for <e@80x24.org>; Fri,  6 Apr 2018 07:41:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ABAD81F424
+	for <e@80x24.org>; Fri,  6 Apr 2018 10:38:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751298AbeDFHk6 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 6 Apr 2018 03:40:58 -0400
-Received: from mail-qt0-f194.google.com ([209.85.216.194]:36668 "EHLO
-        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750882AbeDFHk5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Apr 2018 03:40:57 -0400
-Received: by mail-qt0-f194.google.com with SMTP id w23so241771qtn.3
-        for <git@vger.kernel.org>; Fri, 06 Apr 2018 00:40:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=9DuV6BW2qwyG3GxtkPtj0MVe/VjC6cGKt4jwZ6/bmRs=;
-        b=tErfzrQ/NcDBJmdFEest3Ul4MufCJIPfkbyvRd3/3ANE0cB+Y1ZiNnfXQw5Av7avlf
-         PIbl6Prdj+Xymrlk16DbJKSlYbS9JvUyc2LoDs/PN4orutdRaP34LYVFk5iZ0r3YAb7t
-         8gmiwV05Axv0jeddB1GaRxxOxEZlOWG9l3Y9rcj8XpocES+uJ/isVyya1LEk73iKMqOz
-         i+fMdrFwKs3Ay0BeFlO4xIN+pz5LWTQATFCNFgTkM6S+uaWQIXDKIvy+h55YjNtjgnxG
-         RNQolkFR/cMWNpJY2WPrpZUCagZRfLT+gIYVSTUtQlvdbggYfJ3l/AHRGdfnv30656rr
-         RNEw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=9DuV6BW2qwyG3GxtkPtj0MVe/VjC6cGKt4jwZ6/bmRs=;
-        b=JEjaFA5BuM4TPnV8vOiyCzJY5Ifc3L3eNbtB+wTVomrleHmUemQtSihvnj9m2432wR
-         VJnVy4wQSX/2pI2Q9+OOl418KRKL/HyH4u7PxhNMdVM8glbRwJ6uQraB/k4P77JRCFRg
-         6Ibp9xYtDFsnBoAmS+Ph36MHBCCqeId+cRxan7VpF8pXKknDuMnGG0nZAaFHMvqgY+C4
-         jftnndwiBrMotxWyVqwyEypBk0NVL90RqvZMABvVK6Z7YS+TrwFNMQM7D/Npry6FKGpX
-         KRxhHMg1dFIs3dpkghZeKIkCeW3eOz8VN7wxGinTtPZRk5wSxWPdU7x20BsqRKtR1hXc
-         pICg==
-X-Gm-Message-State: ALQs6tAQQSfC9xhrC3CNtnBz4Niu7wprZCAIG2GxWhcXeJfWP8yA3pEY
-        qeG3pEDTgPeCeNkXh5yDZhmsY7zems9BPSMpNwg=
-X-Google-Smtp-Source: AIpwx4/VxIAwecSk5AJghI5Vh8VhkMIsVb/K+Gi7WFJIAGw/IkpT1CzlADWwXqHozJLxWTfvP1Dd5dz+wNTs8E9VcbA=
-X-Received: by 10.200.50.174 with SMTP id z43mr35211785qta.250.1523000457015;
- Fri, 06 Apr 2018 00:40:57 -0700 (PDT)
+        id S1751570AbeDFKit (ORCPT <rfc822;e@80x24.org>);
+        Fri, 6 Apr 2018 06:38:49 -0400
+Received: from mout.gmx.net ([212.227.15.15]:59775 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751434AbeDFKis (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Apr 2018 06:38:48 -0400
+Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LskfZ-1eOQFo3p4z-012Izw; Fri, 06
+ Apr 2018 12:38:46 +0200
+Date:   Fri, 6 Apr 2018 12:38:29 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+To:     Elijah Newren <newren@gmail.com>
+cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH] Make running git under other debugger-like programs
+ easy
+In-Reply-To: <CABPp-BHhdxuV9a_4OfgaRu89Kx2039OLeS1vW-KdzpLxb-ZF3g@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1804061233330.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <20180405174935.598-1-newren@gmail.com> <nycvar.QRO.7.76.6.1804052144310.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <CABPp-BHhdxuV9a_4OfgaRu89Kx2039OLeS1vW-KdzpLxb-ZF3g@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Received: by 10.12.174.202 with HTTP; Fri, 6 Apr 2018 00:40:56 -0700 (PDT)
-In-Reply-To: <CAPig+cRKaxECLHb1id6Mcd0O3uOiDzdGB4ZxPt1UpwUDi9Xb+g@mail.gmail.com>
-References: <20180306021729.45813-1-me@ttaylorr.com> <cover.1522996150.git.me@ttaylorr.com>
- <20180406063013.GB662@syl.local> <CAPig+cRKaxECLHb1id6Mcd0O3uOiDzdGB4ZxPt1UpwUDi9Xb+g@mail.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 6 Apr 2018 03:40:56 -0400
-X-Google-Sender-Auth: h9OL_G8sMCGuO21t047pJp_tQ08
-Message-ID: <CAPig+cRrz_Reb1CJN0u1LSQ38LjED+tuBAT=RT5rESfJ05absg@mail.gmail.com>
-Subject: Re: [PATCH v5 1/3] builtin/config: introduce `--default`
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:TV9HcBKBPLcwNpH/oQcNg2X/uUMD1z9JWiuN4DjRcU7kVcSW6Vr
+ UaMcsO+cx2WX7N2ymulyAU3EUqNTgvhH026s7p271/LJQWWh30dX8IdlFiC5jyFTbSeBm+T
+ zCnY8W6MlLJnp940rpSXTipqLZtc+pZNREcW6FBe+uuBEIyxYHx35bSHfHthd/Ojx+E2KVt
+ cZl7xSlrwVD7AFCA8lB/w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:7mdtI5zjsPY=:ZQlSuJX0TPedwDLXR7tx5L
+ vdksHekWc8tDuXHZP8ZUrBgKpmRHXxT/jRES72pvU3muFJesdiG3YEbIGNQVQm1uMKU0B+P0v
+ f3/mbLHO1pSTXtpH1mdbYgxtSyY8azsRzwwedCpPCJUBl+4mHEr5OpU38XMwnd8r6PgoO/Jyw
+ 7OwcvPcvvqjo7z1Q7NLDoejApraawR9U7BF3lk+8HkEXbkXUrQUr2ZYdR3J4jyEKdkHkTqzx/
+ xic5iRLskzjAUI0Itd9CULXJ1I6C4ygUFlGxTdiR0nKP5x0ejbVD0hHb4EdxBGRLdC3Fu+/8b
+ tlqRtYdP5VXFGh8YboEOAWp3RukzTJs5wGqgrEgaWrwlPK815oiasXwpPWk1H24SnP60zQcJf
+ xRAxemczzb8dpt6QLPGO5lUWeChQ8sP+L54TAP16wg1UQtbpQYyq8jN/YPNz0TDp7R+wNlner
+ xZmzfK5YFQE7ilPbA0m16j5CFuqXp2ZTeAIvldyK5ZKOkZH7fZvJh31F6BRt1qIkVNxeev6gz
+ 1i6yq4UeRmU2OvjG/6Ln4nNjCgz/Zc8/E1QrAVrn+qURiRtdiZT1L5lUPSDz4/e0SX5JM8wQJ
+ E/cjjgvdE97hdvXRGvJ4lWg5ZAppJBcEe8MNr7wt5VovgDXVC4xMFU9yDFY4jNnOVJ4w0i8gZ
+ TbpixB5Ysk7yMO/Pd80D/CygjYR+lmNmkKl4TT0wZ9O5jGna+cPgje1Cr/fmvMw61dgu83+NG
+ zFMOWQRAfeWA9r5K/afeH42VHvQoEWJwxuoLYY8TYK28D+y92zkHobGujtXPYktdvejaMoXbA
+ yWUr9S4VVw56hjVYsViG6NorvDv97lMSaUwTvOYPLBIAdyHH9DvNHAFFQeWN5vHIBFoeGP6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 6, 2018 at 2:53 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Fri, Apr 6, 2018 at 2:30 AM, Taylor Blau <me@ttaylorr.com> wrote:
->> +test_expect_success 'uses entry when available' '
->> +       echo bar >expect &&
->> +       git config --add core.foo bar &&
->> +       git config --default baz core.foo >actual &&
->> +       git config --unset core.foo &&
->> +       test_cmp expect actual
->> +'
->
-> If you happen to re-roll, can we move this test so it immediately
-> follows the "uses --default when missing entry" test?
+Hi Elijah,
 
-One other issue. If "git config --default ..." fails, the --unset line
-will never be invoked, thus cleanup won't happen.
+On Thu, 5 Apr 2018, Elijah Newren wrote:
 
-To ensure cleanup, either use:
+> On Thu, Apr 5, 2018 at 12:57 PM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> 
+> > I wonder whether a better approach would be to add an optional argument to
+> > that `debug` function (which is intended to have `git` as first argument,
+> > anyway, or at least a command/function that does not start with a dash):
+> >
+> > debug_aux () {
+> >         shift
+> >         "$@" <&6 >&5 2>&7
+> > }
+> >
+> > debug () {
+> >         case "$1" in
+> >         -d)
+> >                 shift &&
+> >                 GIT_TEST_GDB="$1" debug_aux "$@"
+> >                 ;;
+> >         --debugger=*)
+> >                 GIT_TEST_GDB="${1#*=}" debug_aux "$@"
+> >                 ;;
+> >         *)
+> >                 GIT_TEST_GDB=1 "$@" <&6 >&5 2>&7
+> >                 ;;
+> >         esac
+> > }
+> >
+> > ... and then in wrap-for-bin.sh, we would replace the last lines
+> >
+> > if test -n "$GIT_TEST_GDB"
+> > then
+> >         unset GIT_TEST_GDB
+> >         exec gdb --args "${GIT_EXEC_PATH}/@@PROG@@" "$@"
+> > else
+> >         exec "${GIT_EXEC_PATH}/@@PROG@@" "$@"
+> > fi
+> >
+> > by
+> >
+> > case "$GIT_TEST_GDB" in
+> > '')
+> >         exec "${GIT_EXEC_PATH}/@@PROG@@" "$@"
+> >         ;;
+> > 1)
+> >         unset GIT_TEST_GDB
+> >         exec gdb --args "${GIT_EXEC_PATH}/@@PROG@@" "$@"
+> >         ;;
+> > *)
+> >         GIT_TEST_GDB_$$="$GIT_TEST_GDB"
+> >         unset GIT_TEST_GDB
+> >         exec $GIT_TEST_GDB_$$ "${GIT_EXEC_PATH}/@@PROG@@" "$@"
+> >         ;;
+> > esac
+> >
+> > or some such.
+> 
+> That all looks great to me.  But at this point, it seems like it's a
+> full rewrite and your patch to submit (which I'd be happy to endorse
+> in lieu of my own)...
 
-    test_when_finished "git config --unset core.foo" &&
+:-)
 
-earlier in the test (just after the --add line) or use the
-test_config() function to both set the value and ensure its cleanup.
+> or do you want me to submit with you as author and me as committer?
+
+That would be my preference. I have not even tested what I wrote above...
+
+> Also, a side question: if we go this route, do we want to rename
+> GIT_TEST_GDB to reflect its expanded usage?
+
+Sure. Probably GIT_TEST_DEBUGGER? Or GIT_TEST_DBG? Or GIT_TEST_DEBUG?
+
+> > Then your magic "GIT_WRAPPER" invocation would become a bit more explicit:
+> >
+> >     debug --debugger=nemiver git $ARGS
+> >     debug -d "valgrind --tool=memcheck --track-origins=yes" git $ARGS
+> 
+> No, for most (60-80%?) of my invocations, I wouldn't be able to use
+> the debug function; only a minority of my uses are from within the
+> testsuite.  The rest are from the command line (I have
+> git/bin-wrappers/ in my $PATH),
+
+Oy vey. bin-wrappers in your PATH? That's even worse than what I did in
+the first two years of developing Git: I always ran `git` in-place.
+However, I was bitten by a couple of bugs introduced while developing that
+made it hard to recover (if I don't have a functional Git, I cannot use it
+to go back to a working version, can I?). How do *you* deal with these
+things?
+
+> so the above suggestions would mean that my invocation would become:
+> 
+> GIT_TEST_GDB="nemiver" git $ARGS
+> GIT_TEST_GDB="valgrind --tool-memcheck --track-origins=yes" git $ARGS
+
+Right.
+
+> > (In any case, "GIT_WRAPPER" is probably a name in want of being renamed.)
+> 
+> Well, with your suggestion, it'd just be whatever that environment
+> variable is named.  I'm perfectly happy with something other than
+> GIT_WRAPPER (or GIT_TEST_GDB).  I'm not so good at coming up with such
+> myself, but maybe something like GIT_DEBUGGER or GIT_DEBUG_WITH?
+
+I like both. Pick whatever you like, as long as it starts with `GIT_` and
+is descriptive enough. Even `GIT_LAUNCH_THROUGH` would work, but
+`GIT_DEBUGGER` seems to be the shortest that still makes sense.
+
+Ciao,
+Dscho
