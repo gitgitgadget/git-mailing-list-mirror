@@ -2,129 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 15C431F404
-	for <e@80x24.org>; Fri,  6 Apr 2018 21:57:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5742F1F404
+	for <e@80x24.org>; Fri,  6 Apr 2018 21:57:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752012AbeDFV5S (ORCPT <rfc822;e@80x24.org>);
-        Fri, 6 Apr 2018 17:57:18 -0400
-Received: from mail-qt0-f169.google.com ([209.85.216.169]:41126 "EHLO
-        mail-qt0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751730AbeDFV5R (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Apr 2018 17:57:17 -0400
-Received: by mail-qt0-f169.google.com with SMTP id d3so2752131qth.8
-        for <git@vger.kernel.org>; Fri, 06 Apr 2018 14:57:17 -0700 (PDT)
+        id S1751750AbeDFV54 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 6 Apr 2018 17:57:56 -0400
+Received: from mail-yb0-f174.google.com ([209.85.213.174]:43081 "EHLO
+        mail-yb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751417AbeDFV5z (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Apr 2018 17:57:55 -0400
+Received: by mail-yb0-f174.google.com with SMTP id z5-v6so906054ybo.10
+        for <git@vger.kernel.org>; Fri, 06 Apr 2018 14:57:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=m6/Zwj1WNSZ1iKPChNUDdy77Aidj4mykYbH9UpHqV1g=;
-        b=CilMYP5ZfIvXY17/Uh6TErsqnQ14QsNR02o+X8yAE4PfwmQu8hDWNtOIXoOUOEwQqm
-         FKvctlc8j+zCcECfRrbVUIh6FpXdffAtuJCQlrbLmgNfAszCPLauvkZ87e1GUyPY7tew
-         FnuSD6HjisYKpgvC8MZutwaESoKWICIzKLuib379080gZTDTbAplka6ffLca/xeY/tjB
-         MCTf8UHfyiYFhk0KpbUEgXgNbSlrHs4T1PRtvlkIsk8Ji1rKOh5DrMcUkz984+uuYY4P
-         uH7tyekN0swPhLvYFMhF7k3OBXwjP/qVTDsb8DnjNmoJOxLrtw595MStWUo5xkKF6EGa
-         +YUw==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=CSof+ypdV48/YWxIMCGI/mEP8cuWMoK9z9aYpgLeeOY=;
+        b=HHgGy99t/URCC4K5KpRlCx9ctTTfY2/dtH6sK8zq8zXuyqzdAZsMp/ItCMKrrbUTxg
+         Z0mRTg4/++CphdiYBsED7jJSCUGxpOTGDtGMemrmpzi4n0z85EkHKww5tX8B8ynAZYAg
+         yxp926oHEBssJ8jVkYxQgNRCnlXAINdnQ6opW13SdDEWVzN2rixkmlK31IfRuTXCuJxP
+         9K4rlbUloMteGZuDwfDA/mc+yRdQMbYvYXuB0bRyKs04hGX4iUyOfJhtUS+C+CbgD7WS
+         RiQMqK+HqsLPTpPJRoATJ19l/1rK7kyd4Ycjaw0hygjFqTx4bL+TMFXFqbWGx+hfJp8y
+         5oHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=m6/Zwj1WNSZ1iKPChNUDdy77Aidj4mykYbH9UpHqV1g=;
-        b=PEZ8yGv+EdpW/MkcJ6SfAtW+fCUQtAmadCkoZqiFhccN/vO+os3FthTfzcoaF83DXw
-         HImj8/57cvof5WXlzkUWtvckTf9ZVFqyrQLkbV0sUCV+k0KupNAiEjXBBgploysOtADt
-         Gmr+jqDGsY/SNISuU/sRN7fjwnZqFAK3i1nEmf2TeN9BrMrB43DQUjPKW+FUhiqkdPx1
-         9i0ozOdIetnxHM59VtE/84iJYFDMChCJlV9mfEa22LiRxCvZYKx2Bx0uOAGPejeskty8
-         24MnwZPJl18WkJViQdLa0XpA8dbO/er4BmNKDfdt1x9T3tPpkdtNoo3Ff9Nzbb8D7Q3x
-         VaNw==
-X-Gm-Message-State: ALQs6tDu5Z+AywkApceZKobSqkXgbIe6ByC65MVBQcccSQNe/LvgK1Ob
-        2ZK3p84QLP8RclE0pnNsaxZxBg==
-X-Google-Smtp-Source: AIpwx4/FsbHxv7bopxz75mGQKZfb0dkHeOStK0ibL/pTTEskm8MjDW4LPSO3EOXByEckpztBy13G1w==
-X-Received: by 10.200.54.179 with SMTP id a48mr39911087qtc.123.1523051836463;
-        Fri, 06 Apr 2018 14:57:16 -0700 (PDT)
-Received: from [192.168.0.101] (70.15.201.38.res-cmts.sm.ptd.net. [70.15.201.38])
-        by smtp.gmail.com with ESMTPSA id f197sm7380754qka.80.2018.04.06.14.57.15
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 06 Apr 2018 14:57:15 -0700 (PDT)
-Subject: Re: FREAD_READS_DIRECTORIES test fails for the wrong reasons
-To:     Jeff King <peff@peff.net>
-References: <82c91eac-9dc4-834b-4648-3c4ba45af80d@gmail.com>
- <20180406193301.GA11450@sigill.intra.peff.net>
-Cc:     git@vger.kernel.org
-From:   Jonathan Primrose <jprimros@gmail.com>
-Message-ID: <8ed8491f-9410-c509-5ef7-77638aa74038@gmail.com>
-Date:   Fri, 6 Apr 2018 17:57:15 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.4.0
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=CSof+ypdV48/YWxIMCGI/mEP8cuWMoK9z9aYpgLeeOY=;
+        b=ZqOkeqEbDLhwNNENqF8AjdmH1Tl7N9zzudNe16Kqwy5dW9IpeORMnVbqMrXfOSHWBi
+         NEpOMhMWNmpjf75vHbGRnimHqXWvJ/3AMeGT7ck/yDNkHU3YeNqbpBod3izuE/zvNVk8
+         ijVOzVepfYqBqeJ+G1SMXlYANznDeUa2mgmCg1+5nr85VfgwmT4VpoK6ZL/nrCaZztDb
+         SY5sNmVfQzzKNJmvG1AsDaHOa4wnb6M3ChpEAFfnXXyYrA4hcM1tL1vbIeAbrRuh/64y
+         XkT86Ipl/9oaRX5k741KP2nU4c1w/vTa1bL7Tr1fJxtUV3okvA4veUUISj0zy/foYS64
+         bYoA==
+X-Gm-Message-State: ALQs6tDFiB5EItFwH+LuyX2ADjlJy0wMSjZ9qeCnisdr87MmdtISW+X/
+        gYcofAFEi57wug+Zl3NIq+zQ0qCXE3KjXL+F8MD8XA==
+X-Google-Smtp-Source: AIpwx49awhmBGOcIXW1kvdhRyFjZtKEFcKUNKZMjlmRMOTf9Jia34qBo6j92YWoDhLex08NyZhiLfKwSj8dxEbjLv/E=
+X-Received: by 2002:a25:2782:: with SMTP id n124-v6mr10947340ybn.307.1523051874603;
+ Fri, 06 Apr 2018 14:57:54 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20180406193301.GA11450@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Received: by 2002:a25:cf81:0:0:0:0:0 with HTTP; Fri, 6 Apr 2018 14:57:54 -0700 (PDT)
+In-Reply-To: <20180406214006.GE7870@sigill.intra.peff.net>
+References: <cover.1522336130.git.johannes.schindelin@gmx.de>
+ <899ea23951627426ccd0aac79f824af386c5590c.1522336130.git.johannes.schindelin@gmx.de>
+ <CAGZ79kapTWGsYznt7rr0QTNX+uH85TPY8AOA1jtDJ6_q8edX1Q@mail.gmail.com>
+ <20180329194159.GB2939@sigill.intra.peff.net> <nycvar.QRO.7.76.6.1803301415240.5026@qfpub.tvgsbejvaqbjf.bet>
+ <87fu4hwgfa.fsf@evledraar.gmail.com> <nycvar.QRO.7.76.6.1804031150030.5026@qfpub.tvgsbejvaqbjf.bet>
+ <20180403132717.GC18824@sigill.intra.peff.net> <nycvar.QRO.7.76.6.1804031758160.5026@qfpub.tvgsbejvaqbjf.bet>
+ <20180406214006.GE7870@sigill.intra.peff.net>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 6 Apr 2018 14:57:54 -0700
+Message-ID: <CAGZ79kaCSyz94_-a_Xq0LWT-tGqr+46me3gHy8d55HpxdU6f-A@mail.gmail.com>
+Subject: Re: A potential approach to making tests faster on Windows
+To:     Jeff King <peff@peff.net>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Thomas Rast <tr@thomasrast.ch>, Phil Haack <haacked@gmail.com>,
+        Jason Frey <jfrey@redhat.com>,
+        Philip Oakley <philipoakley@iee.org>,
+        Duy Nguyen <pclouds@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 04/06/2018 03:33 PM, Jeff King wrote:
-> On Fri, Apr 06, 2018 at 02:06:50PM -0400, Jonathan Primrose wrote:
+On Fri, Apr 6, 2018 at 2:40 PM, Jeff King <peff@peff.net> wrote:
+> On Tue, Apr 03, 2018 at 06:00:05PM +0200, Johannes Schindelin wrote:
 >
->> A while ago, the configure test for FREAD_READS_DIRECTORIES was changed
->> to (attempt to) check for a NULL result from fopen. Unfortunately, the
->> test will always fail - because it won't compile. The code snippet in
->> configure.ac translates to:
+>> > But if we're at the point of creating custom C builtins for
+>> > busybox/dash/etc, you should be able to create a primitive for "read
+>> > this using buffered stdio, other processes be damned, and return one
+>> > line at a time".
 >>
->> return f);
->>
->> Either there's an extra ) or a missing (. A cast to int wouldn't hurt
->> either.
+>> Well, you know, I do not think that papering over the root cause will make
+>> anything better. And the root cause is that we use a test framework
+>> written in Unix shell.
 >
-> Oops. This is due to my 3adf9fdecf (configure.ac: loosen
-> FREAD_READS_DIRECTORIES test program, 2017-06-14).
+> I'm not entirely convinced of this. My earlier numbers show that we
+> spend a lot of time actually running Git. But that's not because we're
+> written in shell, but because the stable interface to Git is running
+> individual processes.
 >
-> Neither I nor the original tester noticed, because we're on Linux, which
-> needs that set.
+> So we can unit-test wildmatch or similar in a single C program, but I
+> think we inherently need to run "git init" a lot of times.
+>
+> Now I think there's reason to doubt some of my numbers. I was counting
+> exec's, and non-exec forks due to subshells, etc, may be important. So I
+> claim only that I remain unconvinced that we are certain of the root
+> cause.
+>
+> At any rate, I would be happy to see more study into this. If we can
+> create a measurable speedup for an existing script, that might give us a
+> blueprint for speeding up the whole suite.
 
-I'm also running Linux, but somehow I ended up needing to check
-config.log and saw the error. I don't remember why I had to check.
-(I've been fixing the problem locally for the last few releases,
-figuring someone else would notice. I also remove the 'rm configure'
-from the distclean target in Makefile, just in case I decide to
-rebuild later.)
->
->> I'd supply a patch to fix this, but I'm not sure what the results of
->> suddenly fixing the test would be. It seems to work well on my
->> machine, but I don't stress git much here, and it's just one machine.
->
-> I think it should be fixed (and agreed on the "int" thing; the return
-> value should be "f != NULL" or similar).
-
-Ironically, most of the time I check config.log is because of the
-missing cast to int. A few years ago I set this machine up as a
-tri-arch system (x86, x86_64, and x32). Because of subtle errors
-that appear when converting between int and pointer on x32, I
-tend to use -Werror=int-conversion on all my builds, and I wrap
-configure in a script that (among other things) checks config.log
-for that particular error. Even though x32 isn't as promising
-anymore (thanks to a few projects rejecting support patches),
-there are very few packages that still trigger the error.
->
-> I don't know autoconf very well, but is there a way to invoke it that
-> will let us know if a test-program fails to compile at all? Obviously
-> for probing the system compler/includes, "does not compile" is an
-> expected possible outcome. But for tests like this it's really a
-> tristate: yes, no, or something went horribly wrong.
-
-I don't know if that's supported. From what I've seen in the docs I've
-found online, it looks like the closest is a case for "I couldn't run
-the program because I'm cross-compiling." You might be able to
-determine that the compile and/or link failed by looking at some of
-autoconf's internal variables, but it would be fragile.
->
-> -Peff
->
-
-Jonathan
+The setup of each test is finicky, as we'd do different setups for each test
+as we'd test different things. I once wondered if we'd want to have a
+"ready made" directory that contains repositories in various states
+that we can copy for each test and only need minimal adjustments
+instead of writing the setup from scratch in each script.
