@@ -2,112 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 156A21F404
-	for <e@80x24.org>; Fri,  6 Apr 2018 22:27:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 70D731F404
+	for <e@80x24.org>; Fri,  6 Apr 2018 22:36:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752623AbeDFW1k (ORCPT <rfc822;e@80x24.org>);
-        Fri, 6 Apr 2018 18:27:40 -0400
-Received: from mail-pl0-f48.google.com ([209.85.160.48]:45714 "EHLO
-        mail-pl0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752117AbeDFW1h (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Apr 2018 18:27:37 -0400
-Received: by mail-pl0-f48.google.com with SMTP id v18-v6so1459957ply.12
-        for <git@vger.kernel.org>; Fri, 06 Apr 2018 15:27:37 -0700 (PDT)
+        id S1752565AbeDFWgS (ORCPT <rfc822;e@80x24.org>);
+        Fri, 6 Apr 2018 18:36:18 -0400
+Received: from mail-vk0-f44.google.com ([209.85.213.44]:37167 "EHLO
+        mail-vk0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751730AbeDFWgR (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Apr 2018 18:36:17 -0400
+Received: by mail-vk0-f44.google.com with SMTP id r19so1594696vkf.4
+        for <git@vger.kernel.org>; Fri, 06 Apr 2018 15:36:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=xu9FKnOvReGffRYytZHyvdWan5qhaIbMH3TmN5UcRmI=;
-        b=WKpjubFT0OGdJqyktwGPmdxZJe4DOTP5HMQbeJF27Z5651wfHxjGcpGoCqsiDiuGlC
-         z/7YgGN9lwBc5nB3zTaGVON8NZXrOv3AunfzZCjCzwtGIbOelOGAtDh8mp/zMgUm1NDW
-         YVGHBiGiwGGB3sFIAJttZl2vO21EVNp0u3g6P9Zwji9eZbdLJ2fDdohkX8hpH91Nf2KQ
-         oC8cS9GlKGzbm7C42NYmv/PszYNDGkLFfmGoSTjHa4PNyJWbrvz2ornaB+iYkVJYz8x1
-         O70IlFyR0xUshE5mIl5echyD6Mv2hSNYrP0eEQuXeQyL3xCCzWueUrce6sFM2yKUbbeN
-         x6lg==
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=+yH1MRio2Gao0/QMaJSB8ZDtD9AAMxIVXssAR6G7k4A=;
+        b=bftUWbcHYM+leUCh9KLou0Vty2IG0hXwY5cEnoXvDyNuZ6kIc0N1uhfau7jWmtqBS/
+         /pho3nqAok5+E/2+PLJQKO8pROXtJrVZ5votBlFgziA4iiCQOZWQmBE3IRMbIiIk1yIK
+         jqCcIth80PFE6rnIygVIOAGV7M4wJaZnxsWvbfvGFYP2G/8zt8wKum2pvZeCoVMb2fhP
+         MoI8RxKB/FC1BMsi4xZUx0SccevCRbr4Rv81vkSFiaQvy/Kslh0WN38rR6pGFTzJq7Gb
+         9Ixa8SZFDhA12LATYCw2ju19OdZsyN8z/p6B4a/beXWZvm5BnVSCksn7h2TPq4qCVKCp
+         9iDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=xu9FKnOvReGffRYytZHyvdWan5qhaIbMH3TmN5UcRmI=;
-        b=t3acEFzmo2RKCrtfhetyRo7KUVKdwXpHjPBg4X8jGKyxZ7zLt0s1dZckETfGeIv0co
-         nRJLOEWG+OukiKXLZL2WGZ3my2dPOUa77cmvx/CIZvwkxWL25UV7ocmEEH01sv3QMQSw
-         eB34tvzubmZEt2ZD7CdUYOPYLCoFNmvGrCw6qE7NH3gdWkVaHjTliqDi2SSBhf3RKQW7
-         t6XLj00w7mTxhuRBsPrLlzsUg12LFIMvVPd4HjHk2EXI7lGQ8lG2kvlePYSgApn6JtkE
-         4zl2PavFWIeQ10WwHMb4UewykW8m/L7c6AGzvz1kMQZOEo66zquLU4MzrSIMXaI22KF/
-         tRAw==
-X-Gm-Message-State: AElRT7FU5GmnPC/IqlHVFORDkZ3HcJwi9k49V4oFngx0POk9Yb25WOwJ
-        6/Hdv59uC0agRoX9EiJngYiI6Q==
-X-Google-Smtp-Source: AIpwx49hYzoSm9K2Q+vgY7C76HacvRoZ3J+8gKE0rGY6U0oizV2ufoFGKCvVVrer6Po1nMPNYMM8bQ==
-X-Received: by 2002:a17:902:bc41:: with SMTP id t1-v6mr28754225plz.56.1523053656844;
-        Fri, 06 Apr 2018 15:27:36 -0700 (PDT)
-Received: from twelve3.svl.corp.google.com ([2620:0:100e:422:ffac:c1d4:4bf7:bb93])
-        by smtp.gmail.com with ESMTPSA id n73sm22780777pfb.108.2018.04.06.15.27.35
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 06 Apr 2018 15:27:35 -0700 (PDT)
-Date:   Fri, 6 Apr 2018 15:27:34 -0700
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Jacob Keller <jacob.keller@gmail.com>,
-        Simon Ruderich <simon@ruderich.org>, git <git@vger.kernel.org>
-Subject: Re: [PATCH 5/7] diff.c: refactor internal representation for
- coloring moved code
-Message-Id: <20180406152734.b36d1301fb49fb6db7307b51@google.com>
-In-Reply-To: <CAGZ79kZe1SEy2PkYGe200KwZHZVieAJJaiWYLD7GadOCCcmeOg@mail.gmail.com>
-References: <20180402224854.86922-1-sbeller@google.com>
-        <20180402224854.86922-6-sbeller@google.com>
-        <20180402165144.73e701d7816ddfcf00006d95@google.com>
-        <CAGZ79kZe1SEy2PkYGe200KwZHZVieAJJaiWYLD7GadOCCcmeOg@mail.gmail.com>
-X-Mailer: Sylpheed 3.6.0 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=+yH1MRio2Gao0/QMaJSB8ZDtD9AAMxIVXssAR6G7k4A=;
+        b=XOi8YewqbDRZygsk8iovL/6TK8T1Qtl5b/2tqMQQvJ07RM93AZTCpIav2kDtveVIDz
+         kBhSlcnzyK7u+XBLDriHOs6grOh8S9E4yQ2JsYOKt1ruZ+HuzhHLJGH2VOy7FvCMKQ47
+         /ifnHJYS4bOIf1EC7FJ0TNa1sR/C5dqMTYhjJXQwjJ5negwNqsEpmunaTD5ef3a3cBSU
+         17Ok5VI41dVg34sZXy3sjW0Jgsi2UfhGevnZp+cP+WsPyQwGo/3JkXm1vvv4R2feXhNX
+         QGBCB/jjOMl2B2eyJJS41y3B/gwVEgVOiRenhpq0kzhTbsuPhTzexSW3D/I0UkHn89V9
+         B+cQ==
+X-Gm-Message-State: ALQs6tB4hro69RDfE+geVuUVmOZrj53V0geXXiaRslyQ5z+W50DZEhII
+        J4EUG/RPxPZJHq+EVWYKoU/DvYXTzOZSQ5Jiozo=
+X-Google-Smtp-Source: AIpwx4+2UldEUthNIUmQJAXxIp3dsmy/IjoGfaIbRyUIla2DDh10xCkfYg1DOKflGn380IuQS1tJRu9Balai2TJx49U=
+X-Received: by 10.31.192.146 with SMTP id q140mr17528744vkf.7.1523054176403;
+ Fri, 06 Apr 2018 15:36:16 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.159.40.42 with HTTP; Fri, 6 Apr 2018 15:36:15 -0700 (PDT)
+In-Reply-To: <nycvar.QRO.7.76.6.1804061233330.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <20180405174935.598-1-newren@gmail.com> <nycvar.QRO.7.76.6.1804052144310.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+ <CABPp-BHhdxuV9a_4OfgaRu89Kx2039OLeS1vW-KdzpLxb-ZF3g@mail.gmail.com> <nycvar.QRO.7.76.6.1804061233330.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 6 Apr 2018 15:36:15 -0700
+Message-ID: <CABPp-BE0ERL0ueX_sqUwDvt_cQ8QYkzWruvSWZiFGNawR3vCeg@mail.gmail.com>
+Subject: Re: [PATCH] Make running git under other debugger-like programs easy
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 6 Apr 2018 14:28:40 -0700
-Stefan Beller <sbeller@google.com> wrote:
+Hi Dscho,
 
-> Now that I redid it another way[1], I have the impression that this was the
-> right approach, because it allows for a short
->   if (o->color_moved)
-> condition. If we treat white spaces separately, then we'd have to
-> have implications such as:
-> 
->   if (some white space option)
->     the enum = default if not given explicitely.
-> 
-> which we do not need in case of a flags field.
-> 
-> [1] Keeping the enum around and having an extra variable for the
-> white space related configuration.
+On Fri, Apr 6, 2018 at 3:38 AM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> On Thu, 5 Apr 2018, Elijah Newren wrote:
+>> On Thu, Apr 5, 2018 at 12:57 PM, Johannes Schindelin
+>> <Johannes.Schindelin@gmx.de> wrote:
 
-Ah, I think I see what you mean. In your way, move detection can be
-activated either by explicitly setting a color-move pattern (e.g.
-zebra), or by setting a move-detection whitespace option, both of which
-will set bits in the uint32.
+<snip>
 
-As opposed to my proposed way, where you either have to set the default
-explicitly (like you describe), or write "if (o->color_moved ||
-o->color_moved_whitespace_handling)" instead of "if (o->color_moved)".
+>> That all looks great to me.  But at this point, it seems like it's a
+>> full rewrite and your patch to submit (which I'd be happy to endorse
+>> in lieu of my own)...
+>
+> :-)
+>
+>> or do you want me to submit with you as author and me as committer?
+>
+> That would be my preference. I have not even tested what I wrote above...
 
-I don't think such an implicit dependence (whitespace option to
-color-move pattern) is reason enough to use a bitfield, and I think the
-opposite actually - this dependence should be in fact explicit, not
-implicit. But I'm open to opinions from others.
+Sure, will do.
 
-> > We are not under any size pressure for struct diff_options, and
-> > the additional options that we plan to add (color-moved-whitespace-flags
-> > and ignore-space-delta) can easily be additional fields instead.
-> 
-> The  traditional white space flags would want to be a field and occupy
-> the same bits in that field for ease of implementation, and the new option
-> would just fit in by picking a new place in the bit field.
+>> Also, a side question: if we go this route, do we want to rename
+>> GIT_TEST_GDB to reflect its expanded usage?
+>
+> Sure. Probably GIT_TEST_DEBUGGER? Or GIT_TEST_DBG? Or GIT_TEST_DEBUG?
+>
+>> > Then your magic "GIT_WRAPPER" invocation would become a bit more explicit:
+>> >
+>> >     debug --debugger=nemiver git $ARGS
+>> >     debug -d "valgrind --tool=memcheck --track-origins=yes" git $ARGS
+>>
+>> No, for most (60-80%?) of my invocations, I wouldn't be able to use
+>> the debug function; only a minority of my uses are from within the
+>> testsuite.  The rest are from the command line (I have
+>> git/bin-wrappers/ in my $PATH),
+>
+> Oy vey. bin-wrappers in your PATH? That's even worse than what I did in
+> the first two years of developing Git: I always ran `git` in-place.
+> However, I was bitten by a couple of bugs introduced while developing that
+> made it hard to recover (if I don't have a functional Git, I cannot use it
+> to go back to a working version, can I?). How do *you* deal with these
+> things?
 
-If we were to use bitfields, this would be the way, yes.
+I also have an older system git in /usr/bin; if things go sideways, I
+just explicitly use '/usr/bin/git' instead of 'git'.
+
+>> > (In any case, "GIT_WRAPPER" is probably a name in want of being renamed.)
+>>
+>> Well, with your suggestion, it'd just be whatever that environment
+>> variable is named.  I'm perfectly happy with something other than
+>> GIT_WRAPPER (or GIT_TEST_GDB).  I'm not so good at coming up with such
+>> myself, but maybe something like GIT_DEBUGGER or GIT_DEBUG_WITH?
+>
+> I like both. Pick whatever you like, as long as it starts with `GIT_` and
+> is descriptive enough. Even `GIT_LAUNCH_THROUGH` would work, but
+> `GIT_DEBUGGER` seems to be the shortest that still makes sense.
+
+Cool, GIT_DEBUGGER sounds good to me, I'll just proceed with it.
