@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_DKIM_INVALID,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4A1971F424
-	for <e@80x24.org>; Fri,  6 Apr 2018 10:50:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 633051F424
+	for <e@80x24.org>; Fri,  6 Apr 2018 10:56:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751494AbeDFKuZ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 6 Apr 2018 06:50:25 -0400
-Received: from mail-qk0-f177.google.com ([209.85.220.177]:34312 "EHLO
-        mail-qk0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751434AbeDFKuY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Apr 2018 06:50:24 -0400
-Received: by mail-qk0-f177.google.com with SMTP id g7so641270qkm.1
-        for <git@vger.kernel.org>; Fri, 06 Apr 2018 03:50:24 -0700 (PDT)
+        id S1751933AbeDFK4W (ORCPT <rfc822;e@80x24.org>);
+        Fri, 6 Apr 2018 06:56:22 -0400
+Received: from mail-qt0-f181.google.com ([209.85.216.181]:44273 "EHLO
+        mail-qt0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751434AbeDFK4V (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Apr 2018 06:56:21 -0400
+Received: by mail-qt0-f181.google.com with SMTP id j26so635568qtl.11
+        for <git@vger.kernel.org>; Fri, 06 Apr 2018 03:56:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:sender:in-reply-to:references:from:date:message-id
          :subject:to:cc;
-        bh=A/i/AzRfx4citoJSHojqQB86IGe1lrZ2KVnLEEfhehA=;
-        b=OTjVX5qeR/UCTRrbuP0ZEd7Ih09h3LjtICws7ZDQDCApxVowaJVTu4SZ7jU5yeb9kK
-         SkSNvBtG5SmfuaEtaVBf6h0d2bGXj36sgYRIE3MZKSIXGmKDDnobtfSc1X3iHUvz2hJp
-         pANs3MJsYJTlV2CgE1YbOimbCJQeE+DurRvDBsMI3H38tUw38+1J3nBn8Qgf+1pw5T7v
-         jgYYVfrV1qUuNDjWcumYXFPgNw746YblymprV9Wum3wUSLu4vhYUnrpo+le4TlS1sSYK
-         4MgIXQpT7n6mjEomS2/uTqUjHMx2kJlcXL2OW12VcoEuRkvKkf1u4d/ug/VOOjNisj1M
-         Ia7A==
+        bh=sQYJqvIj1jQbiV8dJWA3T7qpawcaHp6FE0miJSKYf8U=;
+        b=Hv0kiCl5YnvMw7fhBDKW9C1Um76kbJhcPvUjIW8LmcJhNF7qg1zYJNIFq+8N8jJgDC
+         9uuAnAJHJyI7mkTrfwudCKUnHBju6LfGW7F2FnqRPSMLwlBElY7KDIqb2uC+5bq0IOCk
+         qvHXhLZGlYS/dMXOyZpHIY1MOLfQOnlJkzFQporA+Gb+NZ3Ll9GSRxlOVyO2lyv4+MTB
+         0naw5ESyZtg5seF5ESN3E59YdzYjKDogJfejG+p+62VzBla8UUJK06NSVBqUWYP42FDJ
+         N0HnYMpR1qkuvEY5nx8zC9Ems5TvXmAT85fSPbHnlcXcacpw0UBBfrdS3QmiuDBfQo7S
+         fxZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
          :date:message-id:subject:to:cc;
-        bh=A/i/AzRfx4citoJSHojqQB86IGe1lrZ2KVnLEEfhehA=;
-        b=AV5+xf8O9eEfsTI31ruZ7lUrlZWaxN2y9X/i4wqfZ8o00PUOgYmHrPBbMUC3PZJB4T
-         Kyh89dbzK13YdKD7Uab1csSnU1aPrHVjVC2YfXwNVLQQso/C7Ge0Acr338NJhn8WXtsX
-         SOT+nLV5rwjEoy73fq4LRyMprlPl7P1QDP6+xdpL8qvDNlYSEbNtLrOgawNzp69Xx2JU
-         30f56LHuELEuM+P5sKnKhvzhNTLRAy+q/3i/EG7D/nTzLD3tdGNKEJQivvucMvAWgzMD
-         mQfiyh+X7O2KLzRZT52VWds89CkvopsZAwq1/I4Bl4j2FxUn9mk8ZkPfjRM9ANtDnpqp
-         7BOA==
-X-Gm-Message-State: ALQs6tD5FmmiHXGM7EpSuWHGWdkE3fXuoRmLmDnSbuuSiGrq7YCYtKBv
-        cIp/qFc0ILRImF30dyja+ttctZ3oEhmdbpgVsnw=
-X-Google-Smtp-Source: AIpwx497Auyw0YtRNueo0ynVfU5YbgGY4brKiQRRQ6Ch5e9hJMWAuHMY89XjW89YybIyteeVgw1156C+xpzz/OgIVVo=
-X-Received: by 10.55.108.69 with SMTP id h66mr34753411qkc.42.1523011823496;
- Fri, 06 Apr 2018 03:50:23 -0700 (PDT)
+        bh=sQYJqvIj1jQbiV8dJWA3T7qpawcaHp6FE0miJSKYf8U=;
+        b=PwL5Rol/RPvUGWPm5nnVgGQHO4NhLLDtk/2JxdTJefT9LgY11LQ72rmJoPdyUn3FNA
+         Gle30uD4jEaToQiJ+rTHvx6JK1axbKVNA6wRrtapzmVMCjOSji7LLEViqOfwjklCcHDz
+         AtJyLFQlpydGRdGUe+MsQSrXv2ngkkL6m/9PE7+pdJRrL6xwlQM7JIoT/9osvmm2oRLU
+         v7qBZu57XZXuBexiRBGeF7r/8h5O1Jt4xKEoQ8V1iqDen0yqq1/5NXmw+URd1Hl9uN/g
+         METXhZpWKqtJSQJHFZkdT/wAwo0KY+gCUGe5Dc62oHtOi5XhRGFyeYPTnpzVPXBNIB91
+         Ia5w==
+X-Gm-Message-State: ALQs6tBBtVM+aXl1rUMSCcRtN+dXifu/+9wNKxFuaLA7pT/DrlLk6d8f
+        6Dkg1aDDMgu7AFBtu/8kom/bmGPnyxquKq32wbU=
+X-Google-Smtp-Source: AIpwx4/OqulHHtzo5eLxjIVRofaXCgdr7xVJJ3onvO8RCtxLi+IvFNc+DF2ETey1D/yMYvTbPL7QvdIIy1l5mtTZzaQ=
+X-Received: by 10.237.49.195 with SMTP id 61mr36967665qth.77.1523012180570;
+ Fri, 06 Apr 2018 03:56:20 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.12.174.202 with HTTP; Fri, 6 Apr 2018 03:50:22 -0700 (PDT)
-In-Reply-To: <021133cae0d27359a5e3ee520fc26f58b7030f59.1522968472.git.johannes.schindelin@gmx.de>
+Received: by 10.12.174.202 with HTTP; Fri, 6 Apr 2018 03:56:20 -0700 (PDT)
+In-Reply-To: <516b28e82ace0a0b6831c644f246c19dad1187ac.1522968472.git.johannes.schindelin@gmx.de>
 References: <cover.1518783709.git.johannes.schindelin@gmx.de>
- <cover.1522968472.git.johannes.schindelin@gmx.de> <021133cae0d27359a5e3ee520fc26f58b7030f59.1522968472.git.johannes.schindelin@gmx.de>
+ <cover.1522968472.git.johannes.schindelin@gmx.de> <516b28e82ace0a0b6831c644f246c19dad1187ac.1522968472.git.johannes.schindelin@gmx.de>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 6 Apr 2018 06:50:22 -0400
-X-Google-Sender-Auth: -UHhBU4ESOCzPZqiEpqpzfVYJcQ
-Message-ID: <CAPig+cRL1t78W+58HnN3bFJhZa7b9iu=vQxfAq=rF79p1NgeHw@mail.gmail.com>
-Subject: Re: [PATCH v2 3/4] Add a test to verify that push errors are colorful
+Date:   Fri, 6 Apr 2018 06:56:20 -0400
+X-Google-Sender-Auth: OmQuZf2GECZe7K-zPfLf_Z34cCM
+Message-ID: <CAPig+cRW6VhZGrV3qN5gDyMu1Oc=hjDOpyo_OY43jyoQNc6Q1A@mail.gmail.com>
+Subject: Re: [PATCH v2 4/4] Document the new color.* settings to colorize push errors/hints
 To:     Johannes Schindelin <johannes.schindelin@gmx.de>
 Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
@@ -65,32 +65,20 @@ X-Mailing-List: git@vger.kernel.org
 
 On Thu, Apr 5, 2018 at 6:48 PM, Johannes Schindelin
 <johannes.schindelin@gmx.de> wrote:
-> This actually only tests whether the push errors/hints are colored if
-> the respective color.* config settings are `always`, but in the regular
-> case they default to `auto` (in which case we color the messages when
-> stderr is connected to an interactive terminal), therefore these tests
-> should suffice.
+> Let's make it easier for users to find out how to customize these colors.
 >
 > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 > ---
-> diff --git a/t/t5541-http-push-smart.sh b/t/t5541-http-push-smart.sh
-> @@ -377,5 +377,23 @@ test_expect_success 'push status output scrubs password' '
-> +test_expect_success 'colorize errors/hints' '
-> +       cd "$ROOT_PATH"/test_repo_clone &&
-> +       cat >exp <<-EOF &&
-> +       To http://127.0.0.1:$LIB_HTTPD_PORT/smart/test_repo.git
-> +        <RED>! [rejected]       <RESET> origin/master^ -> master (non-fast-forward)
-> +       error: failed to push some refs to '\''http://127.0.0.1:$LIB_HTTPD_PORT/smart/test_repo.git'\''
-> +       EOF
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> @@ -1088,6 +1088,16 @@ clean.requireForce::
+> +color.advice::
+> +       A boolean to enable/disable color in hints (e.g. when a push
+> +       failed, see `advice.*` for a list).  May be set to `always`,
+> +       `false` (or `never`) or `auto` (or `true`), in which case colors
+> +       are used only when the error output goes to a terminal. If
+> +       unset, then the value of `color.ui` is used (`auto` by default).
+> +
+> +color.advice.advice::
+> +       Use customized color for hints.
 
-This "exp" file is not used by the test.
-
-> +       test_must_fail git -c color.transport=always -c color.advice=always \
-> +               -c color.push=always \
-> +               push origin origin/master^:master 2>act &&
-> +       test_decode_color <act >decoded &&
-> +       test_i18ngrep "<RED>.*rejected.*<RESET>" decoded &&
-> +       test_i18ngrep "<RED>error: failed to push some refs" decoded &&
-> +       test_i18ngrep "<YELLOW>hint: " decoded &&
-> +       test_i18ngrep ! "^hint: " decoded
-> +'
+Is "color.advice.advice" correct?
