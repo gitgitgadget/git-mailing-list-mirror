@@ -2,122 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0D3E21F42D
-	for <e@80x24.org>; Fri,  6 Apr 2018 18:23:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8864C1F404
+	for <e@80x24.org>; Fri,  6 Apr 2018 18:26:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752075AbeDFSXO (ORCPT <rfc822;e@80x24.org>);
-        Fri, 6 Apr 2018 14:23:14 -0400
-Received: from mail-wm0-f43.google.com ([74.125.82.43]:54868 "EHLO
-        mail-wm0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752069AbeDFSXN (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Apr 2018 14:23:13 -0400
-Received: by mail-wm0-f43.google.com with SMTP id r191so5169544wmg.4
-        for <git@vger.kernel.org>; Fri, 06 Apr 2018 11:23:12 -0700 (PDT)
+        id S1751869AbeDFS0N (ORCPT <rfc822;e@80x24.org>);
+        Fri, 6 Apr 2018 14:26:13 -0400
+Received: from mail-pl0-f45.google.com ([209.85.160.45]:33269 "EHLO
+        mail-pl0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751807AbeDFS0M (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Apr 2018 14:26:12 -0400
+Received: by mail-pl0-f45.google.com with SMTP id s10-v6so1133791plp.0
+        for <git@vger.kernel.org>; Fri, 06 Apr 2018 11:26:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=b8ISOH3x3HzCjdVw+3oBjjAusANE/Z5/2VZduP7uS74=;
-        b=hIES4VGJYnr/JPQb9NHFjQRev7jykN6hMfpaVsOCYTlzXKWRga4THftBYk1wjwVD5M
-         Rmg0m08jN9kw+JXlmMl2FSnpnSr37DCbscEQWUlJ8NWgrjwYnMc+Zx3F+7fdERVgUQxo
-         1/10lyQnWQt8Mp7qIUAiWNIoBYt+JcgCBanuMCXbDBF94a1xCgdysf/iHC+qekVjQDdB
-         PYs//kzqFfyT04GnYYk7c4mkRAt8OEk+Flj6EZcrfSl0vvwGW0ZrUb97tW5aUPIJ5ADe
-         2ZBmGkjdS7zjTeKZnZBRl0Qiexkxv8GgjAUTlqfaxaswqEjK6xFCh77cR4guH1EGIx3r
-         2TEw==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=BXWE4yiJjZGApnWVDirPAfmaS3cOViw67Y/tW9w3gkA=;
+        b=jlqPFRzncHHxgmRwfygkxI08AJH2a/ROLWzBxyoI3QQ8Aepe6hbfKBrcA2zopT2Qe8
+         r5mK1TLoEoT1dSqtBvvB2rNQ7WDYRJmp3ls6HdCFTitmHaUa7YQfpRLWEW9aOksz3B7H
+         0ljYjN0iRWsUTpSiF8g11T2QhKNstzHmnw0Kmenovpjcz3iJ6Aed7FZxIXzGBrw+7Zn/
+         4+4XpqGWWaSlYoz3+rZd555Ct51CbmdB8honKdgdsIPbEHnEXQVOCrRXZ+KuSI7DXLJr
+         4xX019nNjpB+5UEzIE8RuqdRsoTNth4TJj5K7gI+rJARReT2jTvNqRsgqPOIhPNElQMx
+         qKiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=b8ISOH3x3HzCjdVw+3oBjjAusANE/Z5/2VZduP7uS74=;
-        b=ZjISnzvQexoae9UlwHzU5tkrlBUxLa++/Liwrj28rN9MJ2/wPKZDaEYlQTFCi+fN1s
-         +6sJN3G87t4rMCXHFm4xECZwWG5uYpChbjdSI7rmPgAs4NWL/vWk6z2dLJuhB51l5hGb
-         wPiJEfCp+qx4RZRuNlYMeW7lc0TP8b+Ofta7XDZTAPKBZJSsmtdw0BmiW14ApY7nVIzf
-         NHBIbeCwo6lSo4j7pjERtg9kp0Myow0VW1U/qUAy+oimpSGkFDyJ1GSqPYfyI3wNmQgh
-         wknz8V8ro3ve1JPhEZcW+0S5TfucH4WXAd8sWIrSolA7XFche8sg+Om9QgLxhx4Dvyor
-         iblw==
-X-Gm-Message-State: ALQs6tBt50MgFq8N0SRiDdS7kqD7djaVxKUun17fcW2wq6NrZQDAaCec
-        9OSDTWQPv6XEnIvujFudQc8=
-X-Google-Smtp-Source: AIpwx48GNCGtlCKKuhl9mgeDIskBuUlF4j8Z2ZuX2thYuek3ObM17HJUtRYr4+/JeqmJy+bqel7LAw==
-X-Received: by 10.80.182.121 with SMTP id c54mr8040371ede.112.1523038991957;
-        Fri, 06 Apr 2018 11:23:11 -0700 (PDT)
-Received: from evledraar (dhcp-089-098-184-206.chello.nl. [89.98.184.206])
-        by smtp.gmail.com with ESMTPSA id i48sm6547994ede.39.2018.04.06.11.23.10
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 06 Apr 2018 11:23:11 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Eric Wong <e@80x24.org>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Joseph Mingrone <jrm@ftfl.ca>, garga@FreeBSD.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Ben Caradoc-Davies <ben@transient.nz>, 894997@bugs.debian.org
-Subject: Re: [PATCH] git-svn: avoid warning on undef readline()
-References: <86h8oobl36.fsf@phe.ftfl.ca> <20180406131514.740-1-avarab@gmail.com> <20180406165618.GA6367@80x24.org>
-User-agent: Debian GNU/Linux 9.4 (stretch); Emacs 25.1.1; mu4e 1.1.0
-In-reply-to: <20180406165618.GA6367@80x24.org>
-Date:   Fri, 06 Apr 2018 20:23:10 +0200
-Message-ID: <87y3i0yz1t.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=BXWE4yiJjZGApnWVDirPAfmaS3cOViw67Y/tW9w3gkA=;
+        b=V0xV63+Wt/Quv9rH3OPfTyiUU56VGKq++DUdnjmKBLlBIhaOJtyefvMxW4z7weLhd5
+         DOfbBq+5he5JzQ1pHYduabmsD8h1Mzvks989O5Pb++ph8tiTuRW2SaxuaKm8lxbCsqvZ
+         X+5T/9+/+hJCpVA+DIjqu7+yEe594ZHgi2xI/eQ6iLJOrqTkQTRz38VBNlfhwiVcisNT
+         SEwuRT/ctqx9ZHLWZL7fFy/bKZH5CyWWPZNvA7GflITDIvYKbVNf/EBGWRnFbQ6eLcNe
+         UkIxtcFhwS7W+L5qGzrQDUf2s5uzgazTqaasV79AuZpGy2r3G8fZT2rxmRn/z2y5kcg8
+         u0+A==
+X-Gm-Message-State: AElRT7HOydCEI7eqH45O3eTqxeMA0DIch9W1j63Yofy3fhGDC1bLbPv6
+        i+G/b4SM8jNRWAWYkdpH1lEReO2HhswT4K6X2IVa9UuQ
+X-Google-Smtp-Source: AIpwx49a1h38uFwE0jQC06XURx7UOzzdqwFIzLmUHoIjxozwicA5soThGIPRhMLpyyFPXX74F/ggge6aptNSEsxLRKw=
+X-Received: by 2002:a17:902:4001:: with SMTP id b1-v6mr27966855pld.273.1523039171621;
+ Fri, 06 Apr 2018 11:26:11 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Received: by 10.100.149.77 with HTTP; Fri, 6 Apr 2018 11:25:51 -0700 (PDT)
+From:   Satya Prakash GS <g.satyaprakash@gmail.com>
+Date:   Fri, 6 Apr 2018 23:55:51 +0530
+Message-ID: <CAJZK4X4-AZ6uEoVbAtQ9ErdJ2guKj9puXcpdX_3igBNPdQNp5A@mail.gmail.com>
+Subject: reg. fatal: The remote end hung up unexpectedly on NFS
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi,
 
-On Fri, Apr 06 2018, Eric Wong wrote:
+We have a distributed filesystem with NFS access. On the NFS mount, I
+was doing a git-clone and if NFS server crashed and came back up while
+the clone is going on, clone fails with the below message:
 
-> Ævar Arnfjörð Bjarmason <avarab@gmail.com> wrote:
->> See https://public-inbox.org/git/86h8oobl36.fsf@phe.ftfl.ca/ for the
->> original report.
->
-> Thanks for taking a look at this.  Also https://bugs.debian.org/894997
->
->> --- a/perl/Git.pm
->> +++ b/perl/Git.pm
->> @@ -554,7 +554,7 @@ sub get_record {
->>  	my ($fh, $rs) = @_;
->>  	local $/ = $rs;
->>  	my $rec = <$fh>;
->> -	chomp $rec if defined $rs;
->> +	chomp $rec if defined $rs and defined $rec;
->
-> I'm struggling to understand the reason for the "defined $rs"
-> check.  I think it was a braino on my part and meant to use:
->
-> 	chomp $rec if defined $rec;
+git clone https://satgs@github.com/fs/private-qa.git
 
-Whether this makes any sense is another question, but you seem to have
-explicitly meant this at the time. The full function definition with
-documentation:
+remote: Counting objects: 139419, done.
+remote: Compressing objects: 100% (504/504), done.
+Receiving objects:   7% (9760/139419), 5.32 MiB | 5.27 MiB/s
+error: RPC failed; result=18, HTTP code = 200 MiB | 96.00 KiB/s
+fatal: The remote end hung up unexpectedly
+fatal: early EOF
+fatal: index-pack failed
 
-    =item get_record ( FILEHANDLE, INPUT_RECORD_SEPARATOR )
+On NFS server crash, it usually takes a minute or two for our
+filesystem to failover to new NFS server. Initially I suspected it had
+something to do with the filesystem, like attributes of the file
+written by git weren't matching what it was expecting but the same
+test fails on open source NFS server. While clone is going on, if I
+stopped the open source NFS server for 2 minutes and restarted it, git
+clone fails.
 
-    Read one record from FILEHANDLE delimited by INPUT_RECORD_SEPARATOR,
-    removing any trailing INPUT_RECORD_SEPARATOR.
+Another interesting thing is, if the restart happens within a few
+seconds, git clone succeeds.
 
-    =cut
+Sideband_demux fails while trying to read from the pipe. Read size
+doesn't match what is expected. If there are 2 parts to git clone
+which is fetching data and writing to local filesystem, is this error
+happening while trying to fetch ? Since it succeeds if the restart is
+done immediately, has this got something to do with the protocol
+timeouts.
 
-    sub get_record {
-    	my ($fh, $rs) = @_;
-    	local $/ = $rs;
-    	my $rec = <$fh>;
-    	chomp $rec if defined $rs;
-    	$rec;
-    }
+Please advise on how to debug this further.
 
-It doesn't make to remove the trailing record separator if it's not
-defined, otherwise we'd be coercing undef to "\n" while at the same time
-returning multiple records. But then of course the only user of this
-with an "undef" argument just does:
-
-    chomp($log_entry{log} = get_record($log_fh, undef));
-
-So we could also remove that chomp(), adn not check defined $rs, but IMO
-it's cleaner & more consistent this way.
+Thanks,
+Satya.
