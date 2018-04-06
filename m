@@ -2,73 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 00C371F404
-	for <e@80x24.org>; Fri,  6 Apr 2018 00:51:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CDC281F404
+	for <e@80x24.org>; Fri,  6 Apr 2018 05:08:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751314AbeDFAvn (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Apr 2018 20:51:43 -0400
-Received: from connotech.com ([76.10.176.241]:57396 "EHLO mail.connotech.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751274AbeDFAvn (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Apr 2018 20:51:43 -0400
-Received: from [192.168.1.11] (unknown [192.168.1.11])
-        by mail.connotech.com (Postfix) with ESMTPA id 0DA03196E4F;
-        Fri,  6 Apr 2018 00:51:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=connotech.com; s=key3;
-        t=1522975902; bh=Bpa32Pmx2os04fDDOpDensZNRr/6bzj6s2aSxwL8fyc=;
-        h=Date:From:To:CC:Subject:References:In-Reply-To;
-        b=pVRQlCFVyWom4ICqzjHTk47zr6u/ovTcYObFbhBS/5SM6PxQZ6fL6d8Nxgb9zCIXe
-         hyGvr0OFjF4eHsj/E6k0V0ELPluQ2AIii32YVzGDW82RIx/zEmNeRC3+pW8CpL2urR
-         VreX6hF+jqczJFTz2bhpdV3xj7rL3VcvU9+WbpJ8=
-Message-ID: <5AC6C460.7060005@connotech.com>
-Date:   Fri, 06 Apr 2018 00:50:40 +0000
-From:   Thierry Moreau <thierry.moreau@connotech.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.0
+        id S1752745AbeDFFIy (ORCPT <rfc822;e@80x24.org>);
+        Fri, 6 Apr 2018 01:08:54 -0400
+Received: from mail-pl0-f42.google.com ([209.85.160.42]:45969 "EHLO
+        mail-pl0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751585AbeDFFIw (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Apr 2018 01:08:52 -0400
+Received: by mail-pl0-f42.google.com with SMTP id v18-v6so20011563ply.12
+        for <git@vger.kernel.org>; Thu, 05 Apr 2018 22:08:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=mc2JpZIwrz2QvbYTAM+GAGmUcP7icda/B5vjZlO9/Ok=;
+        b=JmWeHG78UEl/A3x1fx6Srsso2WgQer3tFcZrv4GLe3K4FASUH/ZabuH4ePz6403ByQ
+         9s/Rol1MiYAUVtzajzTHYEA+a0F3IjnCMw0Bu3nm+GODuFax/1e/nNcBp2daqVs8clv/
+         tMn51wYTbkpqx1Siq7qm8oeedgEFfrq5LiuHwzxHHUKkJAhrT5l5EqDjuzEWbY+JsBm1
+         1y2F0IPG+MQXzbxPUu+1Z141+IldRVH1RJGMhrqB0tRYTy6g95kteCLwZ9iAaKMLYLzq
+         WVCiFbXUPGBDfxKMaU0i31o3yUD4FtSeWWVD4VjfFjTOqyHIdheB9gJ8/SPn6ezAxFvZ
+         dt8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=mc2JpZIwrz2QvbYTAM+GAGmUcP7icda/B5vjZlO9/Ok=;
+        b=jGRErC3pMrskmfoLIGfInKm+1mIfmIKEPckXB2XRsS3L83iDJC6HGLulk2Z6T74VQP
+         sDYfluWg9alQooGr5FmB/RdPpHrOjYyciko5KhehLvT+EU23VSYtW9AcOzzIDTrZsEHx
+         JVgCquascdmGL7fRa7hIciroqj6W6BdtbnPXcZMuiAI/VloWUvG3hlqX4UkUvPqZgeSj
+         glqsyKWVfJVZhEC6Viuf/6IzA2KzBW4entDQStojB+z2jp1y2gOwrcz8dCxGdlTL9ks5
+         Eobk55PWupqGJNB5m8ZeNKlFNm+iXFtwIbMz1Ju0N0Lq9IyN1B5Ws7YUpDQ9kjUX+hWd
+         Ouhw==
+X-Gm-Message-State: AElRT7FAofmtKSOd1ZVKnXP9WrSYxBpNQfVd3MuOkmAmL0Kb+Qvf4t+3
+        lAmnRVO9eu/a2CfUXliyuwF6Xw==
+X-Google-Smtp-Source: AIpwx48Lg0pZqyaajrBBNGFAcm0bdiDpd5ZPZsQtjMesjnZCnjXf2dwwZANrb11kRXD6mrCPSSbiYw==
+X-Received: by 2002:a17:902:8212:: with SMTP id x18-v6mr26475679pln.372.1522991331163;
+        Thu, 05 Apr 2018 22:08:51 -0700 (PDT)
+Received: from localhost ([2601:602:9500:3a4f:3d01:699f:f606:da49])
+        by smtp.gmail.com with ESMTPSA id c186sm11509759pfb.40.2018.04.05.22.08.47
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 05 Apr 2018 22:08:48 -0700 (PDT)
+Date:   Thu, 5 Apr 2018 22:08:47 -0700
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, sunshine@sunshineco.com, gitster@pobox.com
+Subject: Re: [PATCH v4 2/2] builtin/config.c: prefer `--type=bool` over
+ `--bool`, etc.
+Message-ID: <20180406050847.GA52220@syl.local>
+References: <20180328234719.595-1-me@ttaylorr.com>
+ <cover.1522893363.git.me@ttaylorr.com>
+ <20180405020238.GD8879@syl.local>
+ <20180405221201.GA29929@sigill.intra.peff.net>
 MIME-Version: 1.0
-To:     Bryan Turner <bturner@atlassian.com>
-CC:     Git Users <git@vger.kernel.org>
-Subject: Re: Self-inflicted "abort" in a newbie attempt at read-only exploration
- of a cloned repository?
-References: <5AC67C43.9080500@connotech.com> <CAGyf7-E9=Mm1oJdhwHTmg2byrOxMRFVEjmYHCFGqqP8pvK=vJg@mail.gmail.com> <CAGyf7-GZgTpYXt4s+NURABYLBr8HQAZWxsrpLLVKnsOf2SYcBQ@mail.gmail.com>
-In-Reply-To: <CAGyf7-GZgTpYXt4s+NURABYLBr8HQAZWxsrpLLVKnsOf2SYcBQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180405221201.GA29929@sigill.intra.peff.net>
+User-Agent: Mutt/1.9.3 (2018-01-21)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 05/04/18 11:34 PM, Bryan Turner wrote:
-> On Thu, Apr 5, 2018 at 4:18 PM, Bryan Turner <bturner@atlassian.com> wrote:
->>
->> So passing --work-tree tells Git where to store your _files_, but it's
->> still using the same .git directory.
->>
->> If your goal is to have worktrees for various versions, that implies
->> the git worktree [1] command might be more along the lines of what
->> you're looking for. An invocation based on above might look like this:
->> $ git -C linux-stable/ worktree add $PWD/tmp/ checkout linux-4.15.y
+On Thu, Apr 05, 2018 at 06:12:02PM -0400, Jeff King wrote:
+> On Wed, Apr 04, 2018 at 07:02:38PM -0700, Taylor Blau wrote:
 >
-> Apologies, I didn't mean to have the "checkout" in that.
-> $ git -C linux-stable/ worktree add $PWD/tmp/ linux-4.15.y
+> > +test_expect_success '--no-type unsets type specifiers' '
+> > +	echo "10" > expect &&
+> > +	git config --type=bool --no-type core.number >actual &&
+> > +	test_cmp expect actual
+> > +'
 >
->>
->> That should leave linux-4.16.y checked out in linux-stable, while
->> creating a full work tree in $PWD/tmp that has 4.15.y checked out.
->>
->> Note that worktree is a newer git command. 2.17 has it, but old
->> versions like 2.1 won't.
->>
->> [1] https://git-scm.com/docs/git-worktree
->>
->> Hope this helps!
+> Actually, one minor nit (not worth a re-roll, but Junio may want to mark
+> it up): drop the space in "> expect".
 
-For sure, it helps! Thanks.
+I'm re-rolling for some of the other review this round picked up, so
+I've included this in the forthcoming v5.
 
-- Thierry
-
+Thanks,
+Taylor
