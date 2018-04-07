@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_DKIM_INVALID,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B94751F424
-	for <e@80x24.org>; Sat,  7 Apr 2018 08:40:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 160ED1F424
+	for <e@80x24.org>; Sat,  7 Apr 2018 08:44:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751153AbeDGIiX (ORCPT <rfc822;e@80x24.org>);
-        Sat, 7 Apr 2018 04:38:23 -0400
-Received: from mail-qk0-f195.google.com ([209.85.220.195]:38723 "EHLO
-        mail-qk0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751031AbeDGIiW (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 7 Apr 2018 04:38:22 -0400
-Received: by mail-qk0-f195.google.com with SMTP id 132so3783192qkd.5
-        for <git@vger.kernel.org>; Sat, 07 Apr 2018 01:38:21 -0700 (PDT)
+        id S1751128AbeDGIon (ORCPT <rfc822;e@80x24.org>);
+        Sat, 7 Apr 2018 04:44:43 -0400
+Received: from mail-qt0-f195.google.com ([209.85.216.195]:42862 "EHLO
+        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751031AbeDGIom (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 7 Apr 2018 04:44:42 -0400
+Received: by mail-qt0-f195.google.com with SMTP id j3so3720242qtn.9
+        for <git@vger.kernel.org>; Sat, 07 Apr 2018 01:44:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:sender:in-reply-to:references:from:date:message-id
          :subject:to:cc;
-        bh=MXGJwirFGCKENllc9uJcEoltGWEKjA+J9ru8LlniiOI=;
-        b=T/jYSaSDh7Z17NmaFtMZ3ywSzJHeckqVPXRto4rSLBPxNsS4Je3OubpdBofyMkKVTv
-         YI4LlCIhhWh+VFqYY5dKdF5p7JYm8SfxDLSaj2dyaVRVdq/1eMXOGemDfxPsoR3Bnrfu
-         g6pHbDaffZuGy2wxxdWNNhFvlGhT5CziLbHF21CuGOCOEi1WPA97Rt6ozZtde6O+/FjF
-         nZqeiIbD0kp2QJa0Vdtl0+R1HQpZMw5piLa/2Cs/JmaQCjXnBwCLEdn2BcOvpGmlV2d7
-         a4QQ9B0uslL14EYEdyglcyqbCEq5hvCAwffVj1i4IGXMgkbwyrdMCxJkbgcmPzd0nAvb
-         h3+A==
+        bh=+5h4w9iOaZrIh8P7O7L4c4p6tfmXxUJJSyS/8mOpIMo=;
+        b=cTJNZwlfF1QB8vSfwqgscYZsxQqpKNFYWRf+8q5V+SEHXxP/Z+uO19wflv39s+bLsb
+         752nYUtZd+4BqLCQY7+6EiNCbfOygtOwlpxFj/wybife41T9FZS2eKJkUbmyUGB1Tz4D
+         FeKD0c5YZMt8gen2R3kK+uyM0bHaeZGNAzXkUDVLuCesBmIXYevP8qcUVqj+fWCQJe9F
+         VJk78FVPNgcgkNAwppRMp56tZB4fW8aHEyfz1O/DQEUZR/8GL3uhOA3lrjWwxick9it8
+         6dzHKyk0WnDWPh0q/xUazNd5aBtyQjCftOHKHT59HgV2X+BWKaAwaA7bja3LPX8Xd7fD
+         LU8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
          :date:message-id:subject:to:cc;
-        bh=MXGJwirFGCKENllc9uJcEoltGWEKjA+J9ru8LlniiOI=;
-        b=p30iiU3LwPfCVaJbzDY/Wjup0r+ulcAOv0ntT+DWf9DcN8axKvEkmAKUXsHcknatVB
-         QO0TFLPt2wDjdYSxf9lb1SkeglwzPB5lq+nYWidUUpJSl8cxmj7PxwSSpQW+njLC4mxi
-         Kzq8cGYgNX3MkJlo0ja2GN3Ojuor5LAfP24larH+9SLxEbHU4V1E3rcyNXKU3JV9jOQq
-         TuITo041VcKOoMySjko7CC7oGXJv9TivFocA0WAT+0WOJrNMUhogwTqT1FTKthDsvb+Z
-         +Xmrup+pC05FgojL2ogJCYUOpJWLPdwzOADI7le/S7wPNbLQJKBOwrqgPdYYlIpnRC9v
-         3a8A==
-X-Gm-Message-State: ALQs6tCr9EW81uEqESP5Mt/6n4rhYwUYTbkRtaI5E03VoY0w6iLUnmdD
-        dOhHv7twmAoQUn2Y8l/TDGExFIGoB/Vzd8ZKhs4=
-X-Google-Smtp-Source: AIpwx4+Khxn8iLVPTmR3nrQ/yVIU1BzB6ApjB9YG8ZhUoHrzOh8Hir2VDA021LWitgxF/ipjdtz79RgVLEs5PfIo2dw=
-X-Received: by 10.55.182.70 with SMTP id g67mr38809325qkf.314.1523090301546;
- Sat, 07 Apr 2018 01:38:21 -0700 (PDT)
+        bh=+5h4w9iOaZrIh8P7O7L4c4p6tfmXxUJJSyS/8mOpIMo=;
+        b=Ii/LXiR5cfG4IoatTq9CA0pfGmz290Y6p8w5MVydD3jDLCFzqbLFIYplMU6o0MGEPt
+         z61LVWV0veseJLN/suFrJdGv7WE/3tzMjbn7bSHS2PhQRuNFcuWIUdS8aw2yLh0gDCjO
+         sDIO00d0WcQ//87Pkpb/mdMPLWhpMvaMNmB4Wfl7XBNfahcYI2p3vCnFH1EPVvq2lqnc
+         /IfteW4g/cs/DXn1+nr+xGnEBJs2zL1rBcltBdvr3RRZ8o2YvGLQGgVQuRhdz/a93d1j
+         7eqdkU9tlW9gmbbdaKqnG19Qp+SlVddEUQ2Iju2X/K2QqPdetXPpFXphfIXQa8Nt4jNG
+         yJug==
+X-Gm-Message-State: ALQs6tBT/rJ16kTFbzpdbAYcR16AmgmkXcJZtFaC7xrbEEfnCpZz85wP
+        qtaFoc1aORV0dhPdTLqI19xtcKnarYgYUdEWsos=
+X-Google-Smtp-Source: AIpwx49ZFY7ANrt88QEALtcJF3gdVAh15QCZXe1PDux2kwVsAgoKpvstLdgwE+hp8AlT+ulG3moBXSCuex/uG/GZffw=
+X-Received: by 10.200.1.2 with SMTP id e2mr43001725qtg.121.1523090681584; Sat,
+ 07 Apr 2018 01:44:41 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.12.174.202 with HTTP; Sat, 7 Apr 2018 01:38:21 -0700 (PDT)
-In-Reply-To: <20180407004916.GC78042@syl.local>
+Received: by 10.12.174.202 with HTTP; Sat, 7 Apr 2018 01:44:41 -0700 (PDT)
+In-Reply-To: <20180407005837.GD78042@syl.local>
 References: <20180306021729.45813-1-me@ttaylorr.com> <cover.1522996150.git.me@ttaylorr.com>
  <20180406063013.GB662@syl.local> <CAPig+cRKaxECLHb1id6Mcd0O3uOiDzdGB4ZxPt1UpwUDi9Xb+g@mail.gmail.com>
- <20180407004916.GC78042@syl.local>
+ <CAPig+cRrz_Reb1CJN0u1LSQ38LjED+tuBAT=RT5rESfJ05absg@mail.gmail.com> <20180407005837.GD78042@syl.local>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sat, 7 Apr 2018 04:38:21 -0400
-X-Google-Sender-Auth: Knc6iFv0fFIvNG4FYeqGWklAVI8
-Message-ID: <CAPig+cR5szdsE79-S4So1kGhe5EVHFDFJnPK7R59kBwn79KtJg@mail.gmail.com>
+Date:   Sat, 7 Apr 2018 04:44:41 -0400
+X-Google-Sender-Auth: 1YG49-jkwR1FHhqbRhBfn51qcTo
+Message-ID: <CAPig+cSZPrnCuqZ0JG2hKqQEqYT6qYoGEzy4Une3GOo6hX_LCg@mail.gmail.com>
 Subject: Re: [PATCH v5 1/3] builtin/config: introduce `--default`
 To:     Taylor Blau <me@ttaylorr.com>
 Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
@@ -65,45 +65,35 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 6, 2018 at 8:49 PM, Taylor Blau <me@ttaylorr.com> wrote:
-> On Fri, Apr 06, 2018 at 02:53:45AM -0400, Eric Sunshine wrote:
->> On Fri, Apr 6, 2018 at 2:30 AM, Taylor Blau <me@ttaylorr.com> wrote:
->> > +test_expect_success 'uses --default when missing entry' '
->> > +       echo quux >expect &&
->> > +       git config -f config --default quux core.foo >actual &&
->> > +       test_cmp expect actual
->> > +'
->> >
->> > +test_expect_success 'uses entry when available' '
->> > +       echo bar >expect &&
->> > +       git config --add core.foo bar &&
->> > +       git config --default baz core.foo >actual &&
->> > +       git config --unset core.foo &&
->> > +       test_cmp expect actual
->> > +'
+On Fri, Apr 6, 2018 at 8:58 PM, Taylor Blau <me@ttaylorr.com> wrote:
+> On Fri, Apr 06, 2018 at 03:40:56AM -0400, Eric Sunshine wrote:
+>> On Fri, Apr 6, 2018 at 2:53 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>> One other issue. If "git config --default ..." fails, the --unset line
+>> will never be invoked, thus cleanup won't happen.
 >>
->> If you happen to re-roll, can we move this test so it immediately
->> follows the "uses --default when missing entry" test? That's where I
->> had expected to find it and had even written a review comment saying
->> so (but deleted the comment once I got down to this spot in the
->> patch). Also, perhaps rename the test to make it clearer that it
->> complements the "uses --default when missing entry" test; perhaps
->> "does not fallback to --default when entry present" or something.
+>> To ensure cleanup, either use:
+>>
+>>     test_when_finished "git config --unset core.foo" &&
+>>
+>> earlier in the test (just after the --add line) or use the
+>> test_config() function to both set the value and ensure its cleanup.
 >
-> That location makes much more sense, as does using --default=yes to
-> ensure that canonicalization is taking place. I've updated that locally,
-> as well as the preceding test to make it clearer that they are
-> contrasting tests:
->
->         - 'falls back to --default when missing entry'
->         - 'does not fallback to --default when entry present'
->
-> Though I am not sure about "falls back" to mean "uses --default". I am
-> not sure which to pick here... what are your thoughts?
+> Neat. I wasn't aware of 'test_when_finished'. I think that I prefer the
+> explicitness of 'test_when_finished "git config ..."' over
+> 'test_config()', but I am happy to use whichever is preferred. Since
+> t1310 is new, there's no historical precedent to follow. Please let me
+> know if you have a preference one way or another.
 
-It's nice for the titles to show that the two tests complement one
-another but the exact wording is not terribly important. Taking your
-original test title (slightly modified), perhaps:
+test_config() is preferred; not only is it shorter but, because it
+automates cleanup, there's less opportunity to screw up (like
+forgetting to use test_when_finished()).
 
-    - 'uses --default when entry missing'
-    - 'does not use --default when entry present'
+However, since this config setting needs to be present for only a
+single command, you can go even simpler by collapsing the entire test
+to:
+
+test_expect_success 'does not use --default when entry present' '
+    echo bar >expect &&
+    git -c core.foo=bar config --default baz core.foo >actual &&
+    test_cmp expect actual
+'
