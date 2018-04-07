@@ -1,47 +1,47 @@
-From: "Ricks" <Ricksbull@columnist.com>
-Subject: Forget about it and take pleasure every night!
-Date: Thu, 13 Jul 2006 08:11:03 -0500
-Message-ID: <41337353616639.802B292AED@XJVJDP>
+From: "Mcgill" <Mcgillallan@consultant.com>
+Subject: You cumm right after penetration!
+Date: Mon, 24 Jul 2006 16:20:29 +0300
+Message-ID: <44560483579284.BD24D29291@JAGDAP6>
 Mime-Version: 1.0
 Content-Type: text/plain;
         charset="Windows-1252"
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Thu Jul 13 15:11:21 2006
+X-From: git-owner@vger.kernel.org Mon Jul 24 15:21:10 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G10xH-0003AJ-JU
-	for gcvg-git@gmane.org; Thu, 13 Jul 2006 15:10:12 +0200
+	id 1G50Mh-000882-2t
+	for gcvg-git@gmane.org; Mon, 24 Jul 2006 15:20:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030203AbWGMNKG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 13 Jul 2006 09:10:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030212AbWGMNKG
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Jul 2006 09:10:06 -0400
-Received: from zeus2.kernel.org ([204.152.191.36]:57026 "EHLO zeus2.kernel.org")
-	by vger.kernel.org with ESMTP id S1030203AbWGMNKA (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 13 Jul 2006 09:10:00 -0400
-Received: from LMAY042A (c-71-201-5-202.hsd1.il.comcast.net [71.201.5.202])
-	by zeus2.kernel.org (8.13.1/8.13.1) with ESMTP id k6DD9lSq021607;
-	Thu, 13 Jul 2006 13:09:59 GMT
-To: <godard@vger.kernel.org>
+	id S932158AbWGXNU2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 24 Jul 2006 09:20:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932160AbWGXNU2
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Jul 2006 09:20:28 -0400
+Received: from dsl85-102-59050.ttnet.net.tr ([85.102.230.170]:38150 "EHLO
+	q1ameuin.ao2a1.aol.com") by vger.kernel.org with ESMTP
+	id S932158AbWGXNU0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Jul 2006 09:20:26 -0400
+To: <git@vger.kernel.org>
 X-Mailer: Microsoft Office Outlook, Build 11.0.5510
 X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1106
-Thread-Index: XcDSlTCmTpcxJyxVL6U7KGYn5cJR9IOwjhG5
-X-Virus-Scanned: ClamAV 0.88.2/1596/Thu Jul 13 05:13:25 2006 on zeus2.kernel.org
-X-Virus-Status: Clean
+Thread-Index: 9lLmOUOHWgz7dAOKQ5fOLtLjmQi88xVAbQdl
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 7.7 points;
- * -2.0 BAYES_20 BODY: Bayesian spam probability is 5 to 20%
- *      [score: 0.1841]
+X-Spam-Report: 11.6 points;
+ *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
+ *      [score: 0.5000]
+ *  0.4 URIBL_AB_SURBL Contains an URL listed in the AB SURBL blocklist
+ *      [URIs: oxtrent.com]
  *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
- *      [URIs: ferrold.com]
+ *      [URIs: oxtrent.com]
+ *  1.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
+ *      [URIs: oxtrent.com]
  *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
- *      [URIs: ferrold.com]
+ *      [URIs: oxtrent.com]
  *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
- *      [URIs: ferrold.com]
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/23833>
+ *      [URIs: oxtrent.com]
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24145>
 
-Happy day! Cope with this forever and watch other men in helpless distress. Eliminating each cause, Extra-Time gives you unmatched act duration. You tried condoms, pauses, alcohol, but nothing worked. Eager to find a way to stop this premature thing forever? See our offer: http://ferrold.com/dll/get/ Give her the beautiful romantic evening full of love that she has been waiting for.
+Hi Bro! Studies show this is the most common disorder affecting millions of men - and women, too! With all the reasons combated, Extra-Time is the unmatched comprehensive non-hormonal solution. You tried condoms, pauses, alcohol, but nothing worked. Eager to find a way to stop this premature thing forever? Come on in: http://oxtrent.com/gall/get/ You'll bring your marriage to new levels of passion and dedication with this.
