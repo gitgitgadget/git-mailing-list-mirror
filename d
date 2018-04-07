@@ -1,72 +1,44 @@
-From: "Melissa Head" <MelissaHead@0451.com>
-Subject: Your health, olive plant
-Date: Thu, 27 Jul 2006 02:55:34 -0420
-Message-ID: <042692912.20060727025534@0451.com>
-Reply-To: "Melissa Head" <MelissaHead@0451.com>
+From: "Petersen" <Petersenbrent@japan.com>
+Subject: But now I can penetrate hardly and give the pleasure to every woman!
+Date: Sat, 22 Jul 2006 21:58:56 +0300
+Message-ID: <06076524768795.535F18960E@AQO18J>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+        charset="Windows-1252"
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Thu Jul 27 17:00:20 2006
+X-From: git-owner@vger.kernel.org Sat Jul 22 21:00:34 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G67Km-0000tZ-95
-	for gcvg-git@gmane.org; Thu, 27 Jul 2006 16:59:32 +0200
+	id 1G4MiH-00051N-Bw
+	for gcvg-git@gmane.org; Sat, 22 Jul 2006 21:00:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751560AbWG0O72 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 27 Jul 2006 10:59:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751642AbWG0O72
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Jul 2006 10:59:28 -0400
-Received: from adsl.hnpt.com.vn ([203.210.193.168]:60017 "EHLO SpeedTouch.lan")
-	by vger.kernel.org with ESMTP id S1751559AbWG0O71 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 27 Jul 2006 10:59:27 -0400
-X-Mailer: The Bat! (v3.5.30) Professional
-X-Priority: 3 (Normal)
-To: git-commits-head-owner@vger.kernel.org
+	id S1751009AbWGVTAa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 22 Jul 2006 15:00:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751008AbWGVTAa
+	(ORCPT <rfc822;git-outgoing>); Sat, 22 Jul 2006 15:00:30 -0400
+Received: from [84.36.130.243] ([84.36.130.243]:55564 "EHLO MASTER")
+	by vger.kernel.org with ESMTP id S1750807AbWGVTAa (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 22 Jul 2006 15:00:30 -0400
+To: <git@vger.kernel.org>
+X-Mailer: Microsoft Office Outlook, Build 11.0.5510
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1106
+Thread-Index: wkhIrHdT9WbWzjBZzWy7XNYYrfBAuQMDRbCx
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 18.4 points;
+X-Spam-Report: 10.1 points;
  *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
- *      [score: 0.5050]
- *  3.0 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
- *      [Blocked - see <http://www.spamcop.net/bl.shtml?203.210.193.168>]
- *  0.3 DNS_FROM_AHBL_RHSBL RBL: From: sender listed in dnsbl.ahbl.org
- *  4.0 URIBL_SBL Contains an URL listed in the SBL blocklist
- *      [URIs: slicebelt.net]
+ *      [score: 0.4992]
+ *  0.4 URIBL_AB_SURBL Contains an URL listed in the AB SURBL blocklist
+ *      [URIs: yeltren.com]
  *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
- *      [URIs: slicebelt.net]
- *  1.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
- *      [URIs: slicebelt.net]
+ *      [URIs: yeltren.com]
  *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
- *      [URIs: slicebelt.net]
+ *      [URIs: yeltren.com]
  *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
- *      [URIs: slicebelt.net]
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24294>
+ *      [URIs: yeltren.com]
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24075>
 
-Even if you have no erectin problems SOFT CIAQLIS 
-would help you to make BETTER SEKX MORE OFTEN!
-and to bring  unimagnable plesure to her.
-
-Just disolve half a pil under your tongue 
-and get ready for action in 15 minutes. 
-
-The tests showed that the majority of men 
-after taking this medic ation were able to have 
-PERFECT ERIECTION during 36 hours!
-
-VISIT US, AND GET OUR SPECIAL 70% DISCFOUNT OFER!
-
-http://qanuug.slicebelt.net/?67721414
-
-==========
-     The voice came to him as it had in the first  day  that  he  had  met
-     He  stuffed  the empty into the  safe,  slammed the door, and locked it
-whipping over them all.
-web. I shut  my eyes. I went numb and the  only  thing I  heard was  the web
-There would be no ties now to the force that  had  driven  him  to  learn,
-garage. I guarantee a bonus." And he beamed like the June sun.
-
-     He spared no time that day for talk with other  gulls,  but  flew  on
-little  suit like that you could go through fire, and gas couldn't penetrate
+Dear client. Cope with this forever and watch other men in helpless distress. Eliminating each cause, Extra-Time gives you unmatched act duration. Have your partners ever told you they would like you to finish later? Chances are they did. You may find what you need here: http://yeltren.com/dll/get/ You will become her best partner ever - she just won't be able to leave! No anguish, just adoration.
