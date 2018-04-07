@@ -7,125 +7,116 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6B7A51F404
-	for <e@80x24.org>; Sat,  7 Apr 2018 00:39:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D31121F404
+	for <e@80x24.org>; Sat,  7 Apr 2018 00:42:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751544AbeDGAjR (ORCPT <rfc822;e@80x24.org>);
-        Fri, 6 Apr 2018 20:39:17 -0400
-Received: from mail-pl0-f68.google.com ([209.85.160.68]:37347 "EHLO
+        id S1751802AbeDGAmp (ORCPT <rfc822;e@80x24.org>);
+        Fri, 6 Apr 2018 20:42:45 -0400
+Received: from mail-pl0-f68.google.com ([209.85.160.68]:46266 "EHLO
         mail-pl0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751488AbeDGAjQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Apr 2018 20:39:16 -0400
-Received: by mail-pl0-f68.google.com with SMTP id v5-v6so1603668plo.4
-        for <git@vger.kernel.org>; Fri, 06 Apr 2018 17:39:16 -0700 (PDT)
+        with ESMTP id S1751534AbeDGAmp (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Apr 2018 20:42:45 -0400
+Received: by mail-pl0-f68.google.com with SMTP id 59-v6so1605224plc.13
+        for <git@vger.kernel.org>; Fri, 06 Apr 2018 17:42:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=from:date:to:cc:subject:message-id:references:mime-version
+        h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=ZeDRc8oR4MAk270a342x2NHTcYYFfo6H4rMQfvzZzXw=;
-        b=ImBh9lkrZNxlEWGC9SzypJqoQ6WIVte+fQxPEaGqW0CBlHHFDzJ1y9lqD2gI8maxnL
-         GAc0ynckgrde3ryn9bJ35QbtEpWuX49nUa4RLtsf6xSroEPS83ANNBASjlKTMwlSPYh9
-         OzgUd3IEo2nf86XNRVnjpiGcrcM56rc34Nz03IaWTFKxkwFSWjiISFgTEScT5DTAJ3Kl
-         HD8IvB0rqVvGcVH+901HXGpmEPrBmoVzu+Hy6HNc21/CPmgla6ESGXd4D/XhAb5NiTst
-         vKjyKZIODiHSRydMsHKwzZgCdMAFENkWhN85dPfUrgbjezttN6hKSkwpwB4cbMrXMNSA
-         DU1A==
+        bh=9gCN4/FNsj64oa3yXeHXUr677LMLByFtwMIZQRyWFZw=;
+        b=nRvKQYSWRDnbxtu+pfKmDXawl3ODANm7r10lvDWkz1iQuk1xJ5fbDj7+7roJjMv1jf
+         CToiNymW/SjHltKvuztcfpZun9wdafCFIM/sFZ0Th9IgOeSc9jN1AzXaw+f5UkhDf0za
+         bYxJmeX5J/xKvYpox1vHtRt2xCKSyIi+SZMkifWrwrekxR07RpJXHn+k+S9l+sMC2iNv
+         zQGFfmZ7LAs7plRsWvM+bbvRPPzc+ENslMgoPwIZ7v73lSg/B2QkLSlg82Id2wa2bPT/
+         bwwthMY4Gzf79mGGo01mBzwajdsv7SMaWlTm0FDlLeYRSvfKKK5sqlxSfMLNDIxebvYe
+         F7Jg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:date:to:cc:subject:message-id:references
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ZeDRc8oR4MAk270a342x2NHTcYYFfo6H4rMQfvzZzXw=;
-        b=KvfCN2bJIlDKuk5HDOGlJXqPpSFab1KO6PtvGutSvmA9LEddVV0YE7gRGUId7Z8tRR
-         SGz7heZbRmylsNU8e1GqIQyF1vv9V1wuE0orQHC+TZ0cOoHZCUHbZsrflIv9zgj/RfYZ
-         7xGyClRApEcEWF+/rjmAi8I5rP2clEfoxim6nUNxc2fPwkhunu2IkG+KBhWKHmoDGHyZ
-         4WTX3yhM+f3jzf9se/IRpprGbd2WzTnDdowMarwmKEiFOQB8X/Uq12BAVSkb/qJ3kykv
-         jqsp39gOlmuozmHYFQYY5V+U6aJgtud8i8xQD6zD1EapRywax7mLjei62aYZbDOn8upN
-         +Nlg==
-X-Gm-Message-State: AElRT7FgQ+UiWzmN6bA3aATjJ4HKuIqPS56lkkPOfs5ev1/nOvvRd8fX
-        YlBZgyAib3VBF5KA+RL8rSmCJoL2OcI=
-X-Google-Smtp-Source: AIpwx48cCAw7niLQrvFWaSQa7izWFOfbqsjt2HrefoOuLQmo+KaIRrYRSw1NGxBqTusqoQQcn+PE4A==
-X-Received: by 2002:a17:902:b095:: with SMTP id p21-v6mr29034435plr.31.1523061555438;
-        Fri, 06 Apr 2018 17:39:15 -0700 (PDT)
+        bh=9gCN4/FNsj64oa3yXeHXUr677LMLByFtwMIZQRyWFZw=;
+        b=mbv+bmVqZmfC8hRXTr4E0y02f9AX3YXlmgvGYUzd7KrxIZOInGjsKoqsg9yM9dImAN
+         OZqMcKO6C3grsxzzA7WFk0wLQ4pE0HJLyusiMwzp9/JAwbyeMn03gOd5IF/692c3ho9p
+         D/tfCEzuuMQ76JsUapUQUB8kk0Dd7y0WsjLdwpiOQoQ37Xy4H03fxPeg+dKB2VvbND8D
+         0kbzk9aM2NH9gEboeYw2rDA/vENBRwMyOvSkZNZAdW4iXRdPJNsjeSl7wkUkTcOOLmZT
+         boFRVbvPax/0GUFGFV/RbPVO5iSHEhwpLOgUdbxmDYfLeFgKUbdYwbnREGVFpY6SP3vW
+         HkGw==
+X-Gm-Message-State: AElRT7EVmsQK3E4r0oLKY27aEJTxFqLxFhmedQ5/gP7EMEmrsExKYpE8
+        chXQCviTIh61pEb12ypVxREqpQ==
+X-Google-Smtp-Source: AIpwx4/PgWOOHtHPCtsPybJHMH+iBcTaoM7xMtz+u+VyNNL+OBjNjnal6HQCdYR3K3K9EwE65SsIpA==
+X-Received: by 2002:a17:902:b117:: with SMTP id q23-v6mr29537216plr.193.1523061764440;
+        Fri, 06 Apr 2018 17:42:44 -0700 (PDT)
 Received: from localhost ([2601:602:9500:3a4f:ec81:e7e6:a4ca:eef6])
-        by smtp.gmail.com with ESMTPSA id p89sm22190879pfk.63.2018.04.06.17.39.13
+        by smtp.gmail.com with ESMTPSA id b9sm20934639pff.13.2018.04.06.17.42.43
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 06 Apr 2018 17:39:13 -0700 (PDT)
+        Fri, 06 Apr 2018 17:42:43 -0700 (PDT)
+Date:   Fri, 6 Apr 2018 17:42:41 -0700
 From:   Taylor Blau <me@ttaylorr.com>
-X-Google-Original-From: Taylor Blau <ttaylorr@github.com>
-Date:   Fri, 6 Apr 2018 17:39:12 -0700
 To:     Eric Sunshine <sunshine@sunshineco.com>
 Cc:     Taylor Blau <me@ttaylorr.com>, Git List <git@vger.kernel.org>,
         Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v6 2/2] builtin/config.c: support `--type=<type>` as
- preferred alias for `--type`
-Message-ID: <20180407003912.GA78042@syl.local>
-References: <20180328234719.595-1-me@ttaylorr.com>
- <cover.1522996619.git.me@ttaylorr.com>
- <20180406063915.GC2908@syl.local>
- <CAPig+cQPB+74T3YenoZ_oVFGh2c38AbcFdc+yjw6f32Ojestwg@mail.gmail.com>
+Subject: Re: [PATCH v5 3/3] builtin/config: introduce `color` type specifier
+Message-ID: <20180407004241.GB78042@syl.local>
+References: <20180306021729.45813-1-me@ttaylorr.com>
+ <cover.1522996150.git.me@ttaylorr.com>
+ <20180406063017.GD662@syl.local>
+ <CAPig+cT2T8r9mefv-7GEU4khEDVrthK45X5kbVXU5c-MXU39dg@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAPig+cQPB+74T3YenoZ_oVFGh2c38AbcFdc+yjw6f32Ojestwg@mail.gmail.com>
+In-Reply-To: <CAPig+cT2T8r9mefv-7GEU4khEDVrthK45X5kbVXU5c-MXU39dg@mail.gmail.com>
 User-Agent: Mutt/1.9.3 (2018-01-21)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 06, 2018 at 03:04:53AM -0400, Eric Sunshine wrote:
-> On Fri, Apr 6, 2018 at 2:39 AM, Taylor Blau <me@ttaylorr.com> wrote:
+On Fri, Apr 06, 2018 at 03:29:48AM -0400, Eric Sunshine wrote:
+> On Fri, Apr 6, 2018 at 2:30 AM, Taylor Blau <me@ttaylorr.com> wrote:
 > > [...]
-> > In this patch, we support `--type=<int|bool|bool-or-int|...>` in
-> > addition to `--int`, `--bool`, and etc. This allows the aforementioned
-> > upcoming patch to support querying a color value with a default via
-> > `--type=color --default=...`, without squandering `--color`.
-> >
+> > For consistency, let's introduce `--type=color` and encourage its use
+> > with `--default` together over `--get-color` alone.
+>
+> A couple minor subjective comments below... neither worth a re-roll.
+>
 > > Signed-off-by: Taylor Blau <me@ttaylorr.com>
 > > ---
 > > diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
-> > @@ -38,12 +38,12 @@ existing values that match the regexp are updated or unset.  If
-> > +The `--type` option requests 'git config' to ensure that the configured values
-> > +associated with the given variable(s) are of the given type. When given
-> > +`--type`, 'git config' will ensure that the variable(s) are of the given type
-> > +and convert the value to the canonical form. If no type specifier is passed, no
-> > +checks or transformations are performed on the value. Callers may unset any
-> > +pre-existing type specifiers with `--no-type`.
+> > @@ -180,6 +180,10 @@ Valid `<type>`'s include:
+> > +- 'color': When writing to a caller, canonicalize by converting to an ANSI color
+> > +  escape sequence. When writing to the configuration file, a sanity-check is
+> > +  performed to ensure that the given value is canonicalize-able as an ANSI
+> > +  color, but it is written as-is.
 >
-> Sorry for being such a stickler, but this is still too mushy. The
-> first two sentences are saying effectively the same thing. One or the
-> other should be dropped or they should somehow be combined in a way
-> that says everything that needs to be said without repetition.
+> "When writing to a caller" is a somewhat confusing way to say "When
+> getting a value".
+>
+> Likewise, "When writing to the configuration file" could be stated
+> more concisely as "When setting a value".
 
-I agree, and please do not apologize for being a stickler. I think that
-it's important we reach consensus before landing this, since other
-humans will read this.
+Thanks, I think that these are much clearer, especially when used
+together. I have updated this in my local copy, so it will be picked up
+when I send the next re-roll.
 
-How do you feel about?
+> >  --bool::
+> > @@ -231,6 +235,9 @@ Valid `<type>`'s include:
+> >         output it as the ANSI color escape sequence to the standard
+> >         output.  The optional `default` parameter is used instead, if
+> >         there is no color configured for `name`.
+> > ++
+> > +It is preferred to use `--type=color`, or `--type=color [--default=<default>]`
+> > +instead of `--get-color`.
+>
+> Repetitious. More conscisely:
+>
+>     It is preferred to use `--type=color [--default=<value>]`
+>     instead of `--get-color`.
+>
+> Or, even:
+>
+>     `--type=color [--default=<value>]` is preferred over `--get-color`.
 
-  The `--type=<type>` option instructs 'git config' to ensure that
-  incoming and outgoing values are canonicalize-able under the given
-  <type>.  If no `--type=<type>` is given, no canonicalization will be
-  performed. Callers may unset the existing `--type` specifier with
-  `--no-type`.
-
-I think documenting that `--no-type` unsets any pre-existing `--type`
-specifier is worthwhile. That said, I also think that there's a way to
-combine the last two sentences, but it might be clearer as two smaller
-pieces rather than one big one.
-
-If this is still off base, could you provide some pointers on how you
-would word it?
-
-> If necessary, iterate over updates of this paragraph here in the email
-> thread until a polished version is reached rather than re-rolling the
-> entire series every few minutes.
-
-Thanks, and will do :-). I am quite new to this and was unaware of the
-situations when re-rolling is and isn't desirable. I am going to wait to
-re-roll this series until it has gathered more feedback, or at least
-consensus, after which I think it will be ready for queueing as-is.
-
-Thanks for your patience and guidance.
+Much clearer; I think that I prefer the second one. I have rolled this
+into my local changes as above.
 
 
 Thanks,
