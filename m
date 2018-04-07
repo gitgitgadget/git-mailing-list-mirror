@@ -2,121 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2C4C31F42D
-	for <e@80x24.org>; Sat,  7 Apr 2018 19:20:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 308511F404
+	for <e@80x24.org>; Sat,  7 Apr 2018 20:37:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752587AbeDGTUe (ORCPT <rfc822;e@80x24.org>);
-        Sat, 7 Apr 2018 15:20:34 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:50496 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752552AbeDGTUd (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 7 Apr 2018 15:20:33 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 9D1946099B;
-        Sat,  7 Apr 2018 19:20:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1523128829;
-        bh=/1OV1nViy0tTcnMZiqpywn04NCT2Ha6Kn4BQQaICWJk=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=OBtvDuy47iGF2lcI5FP0ihPpWSSKIsf9LjvD56rd73B6nuqcCmNDRXO9my97iZCW0
-         bvjDqB5yMLYJLHaTj9W8EgVXOBtmq8qaNn01DW99hG9YewGp+MHXAC55QW0vIbaphp
-         YJHVVb8vXAckBMG4zBKh51CCOlmqo/+wlTj+QF9hhPI+mVZooKhIZ2yuEbddQKs1FI
-         xjiGSkybVfQwR9C8qELb4GGqP74Zlrjcm+jdLOIs0614SKiHXrl2voSIFViy7MWU2Q
-         ZavHTXTWjOpFlpS70AYjHqGa0FfrirKprWuBYobE1RG17SHomnd2kMbdrls8ChmheE
-         tE5qiA9UAUxS+tcvw4wijwysU/x5S0LMgtBKKRP54E5LSN2ER/lk8UkyLl3gTnscwj
-         I2c/+7+fQJyzmhRCOSvhJG0lbp7lPuXxc2T4aCPtxnyomoFl6gAFhrNumhJoCEc8Pl
-         CkopST3stm5AKOgKghncDeRL3kwTaYiS85CXyizktR8AgGRFIcb
-Date:   Sat, 7 Apr 2018 19:20:23 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Joseph Mingrone <jrm@ftfl.ca>, garga@FreeBSD.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Eric Wong <e@80x24.org>
-Subject: Re: [PATCH] git-svn: avoid warning on undef readline()
-Message-ID: <20180407192022.GD9954@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Joseph Mingrone <jrm@ftfl.ca>, garga@FreeBSD.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Eric Wong <e@80x24.org>
-References: <86h8oobl36.fsf@phe.ftfl.ca>
- <20180406131514.740-1-avarab@gmail.com>
+        id S1752870AbeDGUhp (ORCPT <rfc822;e@80x24.org>);
+        Sat, 7 Apr 2018 16:37:45 -0400
+Received: from mail-lf0-f66.google.com ([209.85.215.66]:45178 "EHLO
+        mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752865AbeDGUho (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 7 Apr 2018 16:37:44 -0400
+Received: by mail-lf0-f66.google.com with SMTP id q5-v6so4937771lff.12
+        for <git@vger.kernel.org>; Sat, 07 Apr 2018 13:37:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=xFPoWiiSV+eNQPdqO5gtjahumRwhN7NJqae/R3xG/5o=;
+        b=siMAb/KN+JZXNnanm4pWSuUF6OAk/keTe1BTYbuOF/KR5/fFsEBno40ocf9f/WTc5K
+         FSLVE8kuaQMdYBBbIqgu5exbcQRUc+45Z2M2YifCsT70zyEIhMZGmePwuU+fkWEh00F9
+         A1weZXheGj4dKiy3LXCv5yuOkB84LjfVCwzp9oLjNyw61RO/OXc3DkvOkUCJRYvmEuiZ
+         LnKJklqZtLxX/u4eluA1l4jeNKgF/0s9kNMYATkAfn6hKnDfOzVc8dgqoavTm3EjFs18
+         g4aqw5zr7LkpEm7VjgPidAZfbTYWINV8zKMfiDLyvyqsOIO37Q3uDf+Kf+t5wAWwWqyv
+         jNUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version:content-transfer-encoding;
+        bh=xFPoWiiSV+eNQPdqO5gtjahumRwhN7NJqae/R3xG/5o=;
+        b=ljqnIvhU0yfrI6kjdAbR1JbteFaNCdTJ90eDTk5sPr40SKT/OR6dVRjaC5UVXPgowq
+         VUIrDX3j/lQb/JFW32wV82ypTuFk+25Gqd7/nsI1Nc9d3FQ6XP2/s29GwmamBCD6/8b3
+         EzoaKikc/M5+QfbKfGB4MLgXv53pA2zaZLm6Jnd8tOBPJcCGL7p9vIsyrv4N5JfwhVIT
+         TZvGQVOpVvOD76f2rKCcAVJcQMKrlp4q9tKO/G41lLkjcIBx0xvZplVbL2dPkCYqzQl3
+         RYS5JAqRSl9FjkZQn4jWhJTckOdtAJbQb3M6PmtZxbHMKLNAyfEBLF0XoWS03bqPGETs
+         H+lw==
+X-Gm-Message-State: ALQs6tBakvx9kByQiIxSZ7H/ZnkmuvOyhdoZushwhlMXgApRprtenC54
+        G0RyDKCGPUOeXJimSeBhcmU=
+X-Google-Smtp-Source: AIpwx49M0De/nDdNmlK3VXIKVgohEui95eBs5IL8hejqHFnBkLXdUQoAFYVT1CqucUt7yCEQcUBZZw==
+X-Received: by 10.46.101.16 with SMTP id z16mr19412740ljb.72.1523133462674;
+        Sat, 07 Apr 2018 13:37:42 -0700 (PDT)
+Received: from Laptop-Acer-Aspire-F15 (aga121.neoplus.adsl.tpnet.pl. [83.25.156.121])
+        by smtp.gmail.com with ESMTPSA id j74-v6sm2683746lfg.92.2018.04.07.13.37.39
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sat, 07 Apr 2018 13:37:41 -0700 (PDT)
+From:   Jakub Narebski <jnareb@gmail.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     Jeff Hostetler <git@jeffhostetler.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmo=?= =?utf-8?B?w7Zyw7A=?= Bjarmason 
+        <avarab@gmail.com>, Alex Vandiver <alexmv@dropbox.com>,
+        git@vger.kernel.org, jonathantanmy@google.com, stolee@gmail.com,
+        sbeller@google.com, peff@peff.net, johannes.schindelin@gmx.de,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: Git Merge contributor summit notes
+References: <alpine.DEB.2.20.1803091557510.23109@alexmv-linux>
+        <874ll3yd75.fsf@evledraar.gmail.com>
+        <0c3bb65f-d418-b39e-34c7-c2f3efec7e50@jeffhostetler.com>
+        <20180326180517.GA205538@google.com>
+Date:   Sat, 07 Apr 2018 22:37:37 +0200
+In-Reply-To: <20180326180517.GA205538@google.com> (Brandon Williams's message
+        of "Mon, 26 Mar 2018 11:05:17 -0700")
+Message-ID: <86tvsmeory.fsf@gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="PHCdUe6m4AxPMzOu"
-Content-Disposition: inline
-In-Reply-To: <20180406131514.740-1-avarab@gmail.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.16.0-rc6-amd64)
-User-Agent: Mutt/1.9.4 (2018-02-28)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Brandon Williams <bmwill@google.com> writes:
+> On 03/26, Jeff Hostetler wrote:
 
---PHCdUe6m4AxPMzOu
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+[...]
+>> All of these cases could be eliminated if the type/size were available
+>> in the OID.
+>>=20
+>> Just a thought.  While we are converting to a new hash it seems like
+>> this would be a good time to at least discuss it.
+>
+> Echoing what Stefan said.  I don't think its a good idea to embed this
+> sort of data into the OID.  There are a lot of reasons but one of them
+> being that would block having access to this data behind completing the
+> hash transition (which could very well still be years away from
+> completing).
+>
+> I think that a much better approach would be to create a meta-data data
+> structure, much like the commit graph that stolee has been working on)
+> which can store this data along side the objects (but not in the
+> packfiles themselves).  It could be a stacking structure which is
+> periodically coalesced and we could add in a wire feature to fetch this
+> meta data from the server upon fetching objects.
 
-On Fri, Apr 06, 2018 at 01:15:14PM +0000, =C3=86var Arnfj=C3=B6r=C3=B0 Bjar=
-mason wrote:
-> Change code in Git.pm that sometimes calls chomp() on undef to only do
-> so the value is defined.
->=20
-> This code has been chomping undef values ever since it was added in
-> b26098fc2f ("git-svn: reduce scope of input record separator change",
-> 2016-10-14), but started warning due to the introduction of "use
-> warnings" to Git.pm in my f0e19cb7ce ("Git.pm: add the "use warnings"
-> pragma", 2018-02-25) released with 2.17.0.
->=20
-> Since this function will return undef in those cases it's still
-> possible that the code using it will warn if it does a chomp of its
-> own, as the code added in b26098fc2f ("git-svn: reduce scope of input
-> record separator change", 2016-10-14) might do, but since git-svn has
-> "use warnings" already that's clearly not a codepath that's going to
-> warn.
+Well, the type of the object is available, from what I remember, in the
+bitmap file for a packfile (if one does enable creaating them).  There
+are four compressed bit vectors, one for each type, with bit set to 1 on
+i-th place if i-th object in packfile is of given type.
 
-Thanks for this patch.  I ran into this earlier this week (with git svn
-fetch) and had intended to send a patch, but you clearly got to it
-before I did.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
-
---PHCdUe6m4AxPMzOu
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.5 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlrJGfYACgkQv1NdgR9S
-9ov/LA/+OGblNHvWiLfrqmIIlEoyO2yyGRl+ESwiUxaoZyK7R/aX+rgOcm6WOYQY
-UYdPffAIs7PAwhAoEPx8pLDlt4HNgDnZArzhn26PrT8vuEWbGncKws2G8nIFoC/7
-O1VgRKRzk0s8KxSNRLCRiWEuGzFpcv9x61Kp0l7Ce8mmSXsKgdf79qaRq3tyRTXi
-gJ77eWKHfgHfGBBdoqTAo4a794QL9dHlX7k9uvx27NWdzMM9r3m+V82TYyP+iFak
-bNkjZRH5LctPcHknZCvsY6SqvnFYIRTz31R36/MlyaRiSt0MIm6gLRP2MooGYOTE
-LPw6GNeOC2drHwWEppQxnt3C4zaEDji/ZZIZLRcxIG5Nhdt8yHNCsfip96fvUsLH
-6WYaMZ3m5a++ED7gEFpX//SLMMzdUQ7DRb32u2fKBbkGvRDy+26PCzdcnGT7/Twe
-3ha5z11TvZOREixzqcscFeYgJez4c8exRwk9dUJzNWRUVMBm/OdLTcYKQPW1fsJC
-yncofzzyoyQpAhIJ+eJwHiZh7riYveeWs1og27zle7YfT9wauQgotZuGXY9pQPJf
-SoKam7SWrq3LPlNTg+eOZH3QfcCykSAOng5ajTU3UPzReiBXyNdNXk38uLWnl1LC
-Tcs1hNRe3XVktdiBgxIJnlaK6zH3icE8L4otLWpMsRqSx2Lgtes=
-=3MkM
------END PGP SIGNATURE-----
-
---PHCdUe6m4AxPMzOu--
+Just FYI.
+--
+Jakub Nar=C4=99bski
