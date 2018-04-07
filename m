@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_DKIM_INVALID,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3004A1F424
-	for <e@80x24.org>; Sat,  7 Apr 2018 06:53:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AE0D01F424
+	for <e@80x24.org>; Sat,  7 Apr 2018 06:54:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751069AbeDGGxZ (ORCPT <rfc822;e@80x24.org>);
-        Sat, 7 Apr 2018 02:53:25 -0400
-Received: from mail-qt0-f176.google.com ([209.85.216.176]:35844 "EHLO
-        mail-qt0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750945AbeDGGxY (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 7 Apr 2018 02:53:24 -0400
-Received: by mail-qt0-f176.google.com with SMTP id w23so3572372qtn.3
-        for <git@vger.kernel.org>; Fri, 06 Apr 2018 23:53:24 -0700 (PDT)
+        id S1751276AbeDGGyg (ORCPT <rfc822;e@80x24.org>);
+        Sat, 7 Apr 2018 02:54:36 -0400
+Received: from mail-qt0-f177.google.com ([209.85.216.177]:44082 "EHLO
+        mail-qt0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751064AbeDGGyf (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 7 Apr 2018 02:54:35 -0400
+Received: by mail-qt0-f177.google.com with SMTP id j26so3571465qtl.11
+        for <git@vger.kernel.org>; Fri, 06 Apr 2018 23:54:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:sender:in-reply-to:references:from:date:message-id
          :subject:to:cc;
-        bh=nj/OYpXKzuJPWuKmBPurV1jzZ0M1O0yB7exoHzDE4tc=;
-        b=YIlaDx4JjMd8zCdPJXOQqKJC69qmY0iS4vs3KCH9cwFjWN93JZZlsbtgBObtgq5fBK
-         AAO83Mq+Bf6HdM5k6QERERxx0L8wNRAUrz7UWPUwgTXNzL1+otu5z9h6GBfCXH3XWczi
-         hKVrQxYgN8Eyqduwwk1nIPgttn6CDW6kAk+Tb1cmfVwYewsP2gomr03ni0F/UIDJMKgB
-         RlG4w80oi6f65bflTmjYdz72hgePmgEjtolFitq8pV+/RuG5OMaTRJBppxNVgf+Usn+h
-         r8BHMVPmm/cxpO/EDbksZdMhf1PJx+ybqHYb5cbh3dp74mbE4wZU84Y9PuOI5Ng//Q4j
-         cJ2w==
+        bh=ABZev6jBke/yL40lltDvxw8T1gsxOUR1DMoMcvPkBxw=;
+        b=BdJEZdPZ4YW1SKo+NShGuCiUSSTvKJFYwo3kB4qxhuKiGT5jBtonwSKDuyJ54QgaHr
+         lThaB2XgUGKt5/Bt/tu/p/5JBPrBWUKLe9VsXSd0/gUK3O5sQEeJTX8yXsTRYNTVBNAk
+         wQ+/zZsT3iCPIbrN95/2zwiv8BrxgtFiSMGcgnXuIfMbSPwtoGs7nRLzLqEwPqibRFHv
+         14oKC07Z4VwQOckKS7h+04X+3jkNEykiw57YpwOewchD6OtjwbLt+5WOsL4n0mEDzKU8
+         pg/H/7lRFy4pnsoY6KQ0/MoC+trqyUGf6C5ayxTjsduJuqbsZw7QzFHfi6SsO8vxKhvk
+         LMoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
          :date:message-id:subject:to:cc;
-        bh=nj/OYpXKzuJPWuKmBPurV1jzZ0M1O0yB7exoHzDE4tc=;
-        b=OP/Ps7MFsZ4D0/u16bv2WJBV6p8LV02dpOUaYIC6+MpRuKjtMa/3/+nBnjhVvInGMh
-         ggO5nMfRW2zWMNRwtQ4rDDcnyNxv03uM6yHC76i7mCMgX+QdXQx96uhC8EI3s07Vtlfb
-         V0qYKIGbrgfcnFNgt2IVvXcbVAQ4egigaAaMwA3iM75emePYdDKsNYsiysxYXCUmypBB
-         x9LwiUnnEfKWa6/qTOMKdzdNlS7ZphStQcxhsUTF7FHBL/nKo54hEPdIh+HC/INfxMpd
-         JF47OvqtcZBxqYRRRNamyo727qbUPryfIOQr7nqy0xgbCYtnV70tRlIpZ4fWn2BPX7XF
-         BeNg==
-X-Gm-Message-State: ALQs6tDKBt4mZXRjT4tDDpk+AATGij6ypVhbvdwJ51qGJ3SxnIsSStiD
-        SHKIckUHJ28K8zVzdsPhddUfXXbgwZ+ClqPZTgo=
-X-Google-Smtp-Source: AIpwx4+cBav9U+akdxtdn9P3y2zaVvNyaYqB0Q+mxS1snpDqOhx0bIFmUdPjnqPwT7vRR3eVon2ZwfVb1Pb90Dll3+M=
-X-Received: by 10.200.80.78 with SMTP id h14mr16651116qtm.154.1523084003820;
- Fri, 06 Apr 2018 23:53:23 -0700 (PDT)
+        bh=ABZev6jBke/yL40lltDvxw8T1gsxOUR1DMoMcvPkBxw=;
+        b=LnT2fjpiC1bRNC2z5SAtrL2JdRlVxkBlLSl3mp0JacqKIcnX95UgX2SbtnPbkz6qlN
+         jpXcYBQJy8/8+rNzzGZVmmGbwT+e/+rnfs0TrrhMiXiEemnOh0llcrv/nP4MZFFPaRah
+         7NzDrjy2j7olAb5DCPwhpctanso7sQIsI/Uafz3Il24ZsdGRziM5c3uN9axCiyyb67rO
+         kCdxHGqJiQ09v8SDUgRJIRXuzOJoMKo0+0WLgSo+YQANq4tumLz1TwnxO6mPRTNDaJn7
+         BAf4dhweJauPpT4PWJaYAl9MnvEbHKM2LfhKPtm787shpMTFcymnDjSLlBeKnW4cEQ+V
+         cX4A==
+X-Gm-Message-State: ALQs6tBmYi5m2RMJCoPNsSGHDoUFjHk3Ep14+/URRUuAFtPFTbsrLjlN
+        sySBtrBrjRZi+Idd4yLF4wynZ4uiUuVRSxRO2K0=
+X-Google-Smtp-Source: AIpwx4/iDX6iSjxHdQKKPZpz67oqB7pa1KOkBlK/BF5/miGqqeFNNI9aHy/O0xyFPcOk3EYztvc8zNuUUjL+M/PEs6g=
+X-Received: by 10.237.49.195 with SMTP id 61mr41608590qth.77.1523084075079;
+ Fri, 06 Apr 2018 23:54:35 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.12.174.202 with HTTP; Fri, 6 Apr 2018 23:53:23 -0700 (PDT)
-In-Reply-To: <20180406232136.253950-7-sbeller@google.com>
-References: <20180406232136.253950-1-sbeller@google.com> <20180406232136.253950-7-sbeller@google.com>
+Received: by 10.12.174.202 with HTTP; Fri, 6 Apr 2018 23:54:34 -0700 (PDT)
+In-Reply-To: <20180406232136.253950-14-sbeller@google.com>
+References: <20180406232136.253950-1-sbeller@google.com> <20180406232136.253950-14-sbeller@google.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sat, 7 Apr 2018 02:53:23 -0400
-X-Google-Sender-Auth: YAuJQJ9aru991vOO176bdI19GmM
-Message-ID: <CAPig+cQT0Cgd4gto0dv91XUPDbweG97=waoDCOP-r3S2LbXpUA@mail.gmail.com>
-Subject: Re: [PATCH 06/19] refs: add repository argument to get_main_ref_store
+Date:   Sat, 7 Apr 2018 02:54:34 -0400
+X-Google-Sender-Auth: QPXAmodiYJaiDpFr9Z0ds1f62BQ
+Message-ID: <CAPig+cQp2dH2bY=sfNZoCwt-S3tTMDgJ_2td6JkDqwz=zqm3_A@mail.gmail.com>
+Subject: Re: [PATCH 13/19] refs: store the main ref store inside the
+ repository struct
 To:     Stefan Beller <sbeller@google.com>
 Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        Git List <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>
+        Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -65,18 +65,14 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On Fri, Apr 6, 2018 at 7:21 PM, Stefan Beller <sbeller@google.com> wrote:
-> Add a repository argument to allow the get_main_ref_store caller
-> to be more specific about which repository to handle. This is a small
-> mechanical change; it doesn't change the implementation to handle
-> repositories other than the_repository yet.
->
-> As with the previous commits, use a macro to catch callers passing a
-> repository other than the_repository at compile time.
->
-> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
-> Signed-off-by: Stefan Beller <sbeller@google.com>
->
-> # Conflicts:
-> #       t/helper/test-ref-store.c
+> diff --git a/repository.h b/repository.h
+> @@ -26,6 +26,11 @@ struct repository {
+> +       /*
+> +        * The store in which the refs are hold.
+> +        */
 
-Meh.
+s/hold/held/
+
+Also, this comment is short enough to fit on one line: /* ... */
+
+> +       struct ref_store *main_ref_store;
