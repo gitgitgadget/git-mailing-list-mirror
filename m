@@ -2,141 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DAE501F404
-	for <e@80x24.org>; Sun,  8 Apr 2018 12:29:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BEEE51F404
+	for <e@80x24.org>; Sun,  8 Apr 2018 13:00:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751736AbeDHM2v (ORCPT <rfc822;e@80x24.org>);
-        Sun, 8 Apr 2018 08:28:51 -0400
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:39010 "EHLO
-        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751610AbeDHM2u (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 8 Apr 2018 08:28:50 -0400
-Received: by mail-wr0-f193.google.com with SMTP id c24so5644007wrc.6
-        for <git@vger.kernel.org>; Sun, 08 Apr 2018 05:28:49 -0700 (PDT)
+        id S1751770AbeDHNAD (ORCPT <rfc822;e@80x24.org>);
+        Sun, 8 Apr 2018 09:00:03 -0400
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:46262 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751601AbeDHNAC (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 8 Apr 2018 09:00:02 -0400
+Received: by mail-wr0-f194.google.com with SMTP id d1so5680933wrj.13
+        for <git@vger.kernel.org>; Sun, 08 Apr 2018 06:00:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :in-reply-to:references;
-        bh=14dDpLUz/O8Jo87ZEY1u02btoPmxPBcw8Y4WaAc1l9E=;
-        b=JmsESZZFfqoGIKcWfFBomXXeJ2KvuHpoWe17ycwVp/dk02dFzO2vASwftFa6uhW6eh
-         ElDlJPvT06POTigGTmuCraK8OZk4OaBwPD7zR80lz8CMwXykhYQt9SyQTsnDLC1dHLTx
-         X+o/qlCu5SvvDjzr7YoisFF6oUgE2BWHQ40cWr8kNb+W7SdlJTsxV7ryePdUI6lldmqF
-         s8lnr4qsrIhjLNNSp1KjK3sPnxRrgTJnzajVDlyzLdm3Wy6HaZDfqrfpJPX8lsZKLTyi
-         rhmn/r3l0B4RijfMjBTc1H0HAJKNecftx4E6Njt6DIvJw17RD6WDrvenJeMr3+YXNzPM
-         a2kg==
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=fIF4/alhvK4ZjFAE+RJOE0FUwIUZZJ+EVRfRuvvQpAA=;
+        b=h3Uxy5/SsUfSTIt+++TATL1kR+LJGw+8Wfotw+rke9JzCjPmuON9MD59Y5v8tTPmYz
+         lA4GnJx8Lg0n2LtaokREVkundhKNptfIYuPrTG2tVOBua15n9ba+qoXxeETWvFQIBVRh
+         tWAOmKI6RETqEIoyyZhEdSXpoCVa1/qRwVVc7xbZ2sky92lpDIkH/WkBeuJQpk1pkuCW
+         KliGC5ra0B8XlnCPH6rXMNSqEO0tDeyMOE9qhP7klKeFlxa9QvZCJejObaNGDGdQydxt
+         pyu1bfc7LnmVM8C326Xq3PYFNMPajWzm69jg+gNL9JTdACrQc+g/jE3NQqvRZYE9ue4/
+         am+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:in-reply-to:references;
-        bh=14dDpLUz/O8Jo87ZEY1u02btoPmxPBcw8Y4WaAc1l9E=;
-        b=e/20LJUBiThysVLBlND3VJrhjKeSFDuenCKWtfFc1XAM7fivr9rCkzd5R9HqIKQSFM
-         Ibj/VeLxv6fL6l0TLEHudty8okqsQ96kP2bJardqBuklROQienF/Zh6Y43HkjmwiJzpQ
-         c3mfSI+B504aC93e+Dkcr8uawXNX9l7DoACPxuhRucQUuZv36cYTaQUxqJ7Bg7ZX+aj5
-         rhzjRIJ6Gu2dVpIUuZk7LVoBSM+FOJTpcRbGZbLvR6qndWOSyKK+9EAIzzsPbSFJs0y3
-         lgWX6ps8neHflPD34JxWFgviz+4awgtLNo27y4hP9H4t6AWK5ckdANSSvzybgDUKLO2R
-         KCeA==
-X-Gm-Message-State: ALQs6tAColXSlaOamlFTaHMMaRVrzdtFh5Gv4/I3/pK5pQOpf5q66qed
-        iGszBIzWdOqvzEWusWv5Fs26h5GXI34=
-X-Google-Smtp-Source: AIpwx49K0qP8Ihqb9ZVTkmTMQk1JWAmd6kzoM3Ec2FRgo6w7EfpVGQ79F5d3VKNE1DjcobLHx2Et3g==
-X-Received: by 2002:a19:c441:: with SMTP id u62-v6mr20641656lff.104.1523190528903;
-        Sun, 08 Apr 2018 05:28:48 -0700 (PDT)
-Received: from localhost.localdomain ([94.234.37.145])
-        by smtp.gmail.com with ESMTPSA id p9-v6sm2965038lfh.93.2018.04.08.05.28.47
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 08 Apr 2018 05:28:48 -0700 (PDT)
-From:   Harald Nordgren <haraldnordgren@gmail.com>
-To:     git@vger.kernel.org, avarab@gmail.com, peff@peff.net,
-        gitster@pobox.com, sunshine@sunshineco.com
-Cc:     Harald Nordgren <haraldnordgren@gmail.com>
-Subject: [PATCH v12 2/4] ref-filter: make ref_array_item allocation more consistent
-Date:   Sun,  8 Apr 2018 14:28:30 +0200
-Message-Id: <20180408122832.65414-2-haraldnordgren@gmail.com>
-X-Mailer: git-send-email 2.14.3 (Apple Git-98)
-In-Reply-To: <20180408122832.65414-1-haraldnordgren@gmail.com>
-References: <20180408122832.65414-1-haraldnordgren@gmail.com>
-In-Reply-To: <20180402005248.52418-1-haraldnordgren@gmail.com>
-References: <20180402005248.52418-1-haraldnordgren@gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version:content-transfer-encoding;
+        bh=fIF4/alhvK4ZjFAE+RJOE0FUwIUZZJ+EVRfRuvvQpAA=;
+        b=i23ab/7lf6YMihzAKc5Qv9Tc3peim/X63DnUahHgtPqX/RDFbFvejnV/hXzQIxCYBc
+         A9ELVV/cXb8PhC5sVrcb9YkV7eUhhwZsgiSaFVgdmWLq8+ThDSw5jGHMGCLcTk8toFu6
+         1512QEDa7VlgT88FhMRhWOuOk/h52Mwa4r+rUTSCE4badJOt1JGWE28j/rF0LO0Km1dG
+         Dt5TRlRFDpaozp7Wht/sqASebRJJRlczVh5j57+t38tYp4pdQ4ljoovCNU4Bp6JMmliq
+         J8q/0fXtqkmp3Y1y9WAYTKkVDq2fOE3NO36yZH3TtBg7fqvnp+Essju3UmTXwOVuCob8
+         jJhA==
+X-Gm-Message-State: ALQs6tCD4xl/eTLQQFiFNTjaH5TW7gSaEGZa715QvLyr65V8bYywrbhj
+        gC5tsdjiC1VXk0+OlAdgjzA=
+X-Google-Smtp-Source: AIpwx4/kD/azHCQXhoaeCYX73UEGDKiQ20n7HjgPcM+YGsW+Ny6B2Fmst+oJuO5gR7vmzf1DdHTxcA==
+X-Received: by 2002:a19:b588:: with SMTP id g8-v6mr20394958lfk.90.1523192401467;
+        Sun, 08 Apr 2018 06:00:01 -0700 (PDT)
+Received: from Laptop-Acer-Aspire-F15 (aga121.neoplus.adsl.tpnet.pl. [83.25.156.121])
+        by smtp.gmail.com with ESMTPSA id q28-v6sm2969419lfb.84.2018.04.08.05.59.59
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 08 Apr 2018 06:00:00 -0700 (PDT)
+From:   Jakub Narebski <jnareb@gmail.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, sbeller@google.com,
+        szeder.dev@gmail.com, ramsay@ramsayjones.plus.com,
+        git@jeffhostetler.com, peff@peff.net,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v7 08/14] commit-graph: implement git commit-graph read
+References: <20180314192736.70602-1-dstolee@microsoft.com>
+        <20180402203427.170177-1-dstolee@microsoft.com>
+        <20180402203427.170177-9-dstolee@microsoft.com>
+Date:   Sun, 08 Apr 2018 14:59:57 +0200
+In-Reply-To: <20180402203427.170177-9-dstolee@microsoft.com> (Derrick Stolee's
+        message of "Mon, 2 Apr 2018 16:34:21 -0400")
+Message-ID: <86woxhdfaq.fsf@gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jeff King <peff@peff.net>
+Derrick Stolee <stolee@gmail.com> writes:
 
-We have a helper function to allocate ref_array_item
-structs, but it only takes a subset of the possible fields
-in the struct as initializers. We could have it accept an
-argument for _every_ field, but that becomes a pain for the
-fields which some callers don't want to set initially.
+[...]
+>  EXAMPLES
+>  --------
+> @@ -45,6 +51,12 @@ EXAMPLES
+>  $ git commit-graph write
+>  ------------------------------------------------
+>=20=20
+> +* Read basic information from the commit-graph file.
+> ++
+> +------------------------------------------------
+> +$ git commit-graph read
+> +------------------------------------------------
 
-Instead, let's be explicit that it takes only the minimum
-required to create the ref, and that callers should then
-fill in the rest themselves.
+It would be better to have example output of this command here, perhaps
+together with ASCII-art diagram of the code graph.
 
-Signed-off-by: Jeff King <peff@peff.net>
-Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
----
- ref-filter.c | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+[...]
+> +	if (!graph)
+> +		die("graph file %s does not exist", graph_name);
+> +	FREE_AND_NULL(graph_name);
 
-diff --git a/ref-filter.c b/ref-filter.c
-index ade97a848..c1c3cc948 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -1824,15 +1824,18 @@ static const struct object_id *match_points_at(struct oid_array *points_at,
- 	return NULL;
- }
- 
--/* Allocate space for a new ref_array_item and copy the objectname and flag to it */
-+/*
-+ * Allocate space for a new ref_array_item and copy the name and oid to it.
-+ *
-+ * Callers can then fill in other struct members at their leisure.
-+ */
- static struct ref_array_item *new_ref_array_item(const char *refname,
--						 const struct object_id *oid,
--						 int flag)
-+						 const struct object_id *oid)
- {
- 	struct ref_array_item *ref;
-+
- 	FLEX_ALLOC_STR(ref, refname, refname);
- 	oidcpy(&ref->objectname, oid);
--	ref->flag = flag;
- 
- 	return ref;
- }
-@@ -1927,12 +1930,13 @@ static int ref_filter_handler(const char *refname, const struct object_id *oid,
- 	 * to do its job and the resulting list may yet to be pruned
- 	 * by maxcount logic.
- 	 */
--	ref = new_ref_array_item(refname, oid, flag);
-+	ref = new_ref_array_item(refname, oid);
- 	ref->commit = commit;
-+	ref->flag = flag;
-+	ref->kind = kind;
- 
- 	REALLOC_ARRAY(ref_cbdata->array->items, ref_cbdata->array->nr + 1);
- 	ref_cbdata->array->items[ref_cbdata->array->nr++] = ref;
--	ref->kind = kind;
- 	return 0;
- }
- 
-@@ -2169,7 +2173,7 @@ void pretty_print_ref(const char *name, const struct object_id *oid,
- 		      const struct ref_format *format)
- {
- 	struct ref_array_item *ref_item;
--	ref_item = new_ref_array_item(name, oid, 0);
-+	ref_item = new_ref_array_item(name, oid);
- 	ref_item->kind = ref_kind_from_refname(name);
- 	show_ref_array_item(ref_item, format);
- 	free_array_item(ref_item);
--- 
-2.14.3 (Apple Git-98)
+Shouldn't the error message be marked up for translation, too?
 
+Regards,
+--=20
+Jakub Nar=C4=99bski
