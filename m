@@ -2,103 +2,200 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 919B11F404
-	for <e@80x24.org>; Sun,  8 Apr 2018 13:59:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 19DEA1F404
+	for <e@80x24.org>; Sun,  8 Apr 2018 14:24:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751712AbeDHN7K (ORCPT <rfc822;e@80x24.org>);
-        Sun, 8 Apr 2018 09:59:10 -0400
-Received: from mail-wr0-f176.google.com ([209.85.128.176]:37258 "EHLO
-        mail-wr0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751549AbeDHN7J (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 8 Apr 2018 09:59:09 -0400
-Received: by mail-wr0-f176.google.com with SMTP id l49so5835051wrl.4
-        for <git@vger.kernel.org>; Sun, 08 Apr 2018 06:59:09 -0700 (PDT)
+        id S1751587AbeDHOYR (ORCPT <rfc822;e@80x24.org>);
+        Sun, 8 Apr 2018 10:24:17 -0400
+Received: from mail-wr0-f174.google.com ([209.85.128.174]:35440 "EHLO
+        mail-wr0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751402AbeDHOYQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 8 Apr 2018 10:24:16 -0400
+Received: by mail-wr0-f174.google.com with SMTP id 80so5885132wrb.2
+        for <git@vger.kernel.org>; Sun, 08 Apr 2018 07:24:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=pYBRw+Huux4NSus1lIU37J2W/NXI36YDyr+v22mwSis=;
-        b=gp2ZJMGWIWwFenou4Ic4xP/wCFgZeg4HM+lsxy8PWt3hd88hTF9eFNcEEBFZcbA/q6
-         EwUEvdceuR1UCJGFwZtbzhqGhviwbzwPI1ACwa9/MMWNohTU9jyRjXwL8LxfmwvW8kPn
-         9wsrpCDcK/rjHmHJj4lfpFt7TEtm3RJtrKaFhJjFKIayzSZ84WhrZxASTN5JS35OVtTN
-         irFrPiX7/vx+d5ZdIWtrT4aP9sU33QIoHQOxyzHKFb96IQfMr1TLfNaDzWz7DeybqM4Z
-         GJ0BZkmoRrDzVtR7roeAUEufrm5eKM8gT3NZROX+EyV/Sa7s7D+oWx8yxFBLbb1LsD+K
-         0Bzw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=Kz65BKVSfX4+fZtu5E3bqBu8bDv13NQkbQ88PNMzqF4=;
+        b=llE1A+MPKXdQcbxWHci8uPe68h+dUIL8LsJCSbPc21urLFzTxnfjqrTSOXlxOSZ/VZ
+         Cgdd8TaZKRhc8SiIxQYIv0VRXvtauJKsXDoqvgxOUaIoLxbtGdel/4RCgu/C/qc7VGaO
+         Jb0HDc9iw+HfKVkC0kLTel2l41EUh6KbS3j/kW9/IFIkZMAgA1e6xRHg8Cg0hB4DZ5Eh
+         nUEgtRdmVORP2dks6SMaUYsU7BdisNrQk6YHVkBNgHvVTHHSCn1oJhDco/8GZfMI04wn
+         /ZPC7l1MXFbcUHSiMtjwMEGZ0qZN7WYutsoH71YRl17Y2Sh9E94SSLJhRPnbnM7JfHXB
+         ilvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version:content-transfer-encoding;
-        bh=pYBRw+Huux4NSus1lIU37J2W/NXI36YDyr+v22mwSis=;
-        b=Kd6bNjJY0iHQeqAXLcsSJhPK7OBXIUyS1G7KJmFu4rYyTM62XzjmVYjCUnTQ/UcGnK
-         pMO8zQvEUXFVdThh6GvLronaxRvcJRaEwql8tKszKSNWc9kerCOnXZBhokTSbr+VyrA3
-         0gTQeDIaXFxig496QoAe/53S/GGx+y1lcpTgmpSvyLi+IwdXqZZiBENrPhOw6fK1v/uB
-         /tQ3aeEjd8HaUrE9e0bhKHn2B0C4OXy+KG9lQEf2vcOpxO9o1o9atc8J0dCDARNqwoZ+
-         Za83ViScYfCoXClEw6X0tjFC9f5WbHsY7f1DZHX0yNqdx9WjmUKyUc5WPssaHhtYuyxx
-         8C9g==
-X-Gm-Message-State: ALQs6tAZinAniR6VMlcEvUzXR06zU6T6a1qc8bNPPFJNZ7o/d/+jOwNM
-        fr76aM2IJQks/k6a6u7XdEJBzG75
-X-Google-Smtp-Source: AIpwx4+24mzGzM7DeUQHhqFfsYqXqEuIbuVctiHgdLXmHzvLTvQQeQUJ4xgrbVv3BnJHNpMNCiHKMQ==
-X-Received: by 2002:a19:f1d:: with SMTP id e29-v6mr19105703lfi.138.1523195948073;
-        Sun, 08 Apr 2018 06:59:08 -0700 (PDT)
-Received: from Laptop-Acer-Aspire-F15 (aga121.neoplus.adsl.tpnet.pl. [83.25.156.121])
-        by smtp.gmail.com with ESMTPSA id i19sm2492983ljj.84.2018.04.08.06.59.06
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=Kz65BKVSfX4+fZtu5E3bqBu8bDv13NQkbQ88PNMzqF4=;
+        b=Ux9mb0DwQN67UH3DoFb+fY6HPH0hWsE3xae+2I5obCuSP96PaREpahRirMNXAAgzSk
+         3KxoW9vihFFBGevGbRXIqkAdrGT0B+uH8WLqfkI2Q+sqRDIE7GMeIIFzcL5YInXV/HTy
+         3wnUb45SIaqI6lkIdKTibhAQFhxAC+taIx38S8HuZjGuGF8I8qPLimpafPMzGLhIeWYv
+         jKFE9ApMBPrMArI95goQMirtrHTjrTaScaf5/56Jypqw3PgCdQsbF2GiWyH89x7Gq1FS
+         gc19Iqe8Sui/cs/X4YIIB0VJXgsTsRkXuZivKc0aJPOxmuMeEjRTh92aiBnNXlT1m8Np
+         UB3g==
+X-Gm-Message-State: AElRT7GRmEph/whmSnWOs6L56jTdx47nvUs1gGh5H6VAMI/sAQzAV8AK
+        r0mLrEkal5QtP+I6eym3t2k=
+X-Google-Smtp-Source: AIpwx4/DAHowHgu/wihqODbbJkUX8isaSLXA7o2gCWl19FZtudiQG4SPoZWqKCpZ1vWIep1GJO/YsQ==
+X-Received: by 10.223.149.68 with SMTP id 62mr21720003wrs.201.1523197455365;
+        Sun, 08 Apr 2018 07:24:15 -0700 (PDT)
+Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
+        by smtp.gmail.com with ESMTPSA id y191sm29239579wme.14.2018.04.08.07.24.13
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 08 Apr 2018 06:59:07 -0700 (PDT)
-From:   Jakub Narebski <jnareb@gmail.com>
-To:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc:     git@vger.kernel.org
-Subject: Re: Is offloading to GPU a worthwhile feature?
-References: <efc4af6b-53c9-bd02-65f6-9de517f6868e@linuxfoundation.org>
-Date:   Sun, 08 Apr 2018 15:59:04 +0200
-In-Reply-To: <efc4af6b-53c9-bd02-65f6-9de517f6868e@linuxfoundation.org>
-        (Konstantin Ryabitsev's message of "Tue, 27 Feb 2018 15:52:12 -0500")
-Message-ID: <86k1thdck7.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
+        Sun, 08 Apr 2018 07:24:14 -0700 (PDT)
+Date:   Sun, 8 Apr 2018 15:24:17 +0100
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v6 0/6] worktree: teach "add" to check out existing
+ branches
+Message-ID: <20180408142417.GJ2629@hank>
+References: <20180325134947.25828-1-t.gummerer@gmail.com>
+ <20180331151804.30380-1-t.gummerer@gmail.com>
+ <CAPig+cQ8VzDycUMo-QOexNDBgQGEGj2BPmPa-Y0vhGCt_brbhg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAPig+cQ8VzDycUMo-QOexNDBgQGEGj2BPmPa-Y0vhGCt_brbhg@mail.gmail.com>
+User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+On 04/08, Eric Sunshine wrote:
+> On Sat, Mar 31, 2018 at 11:17 AM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
+> > This round should fix all the UI issues Eric found in the last round.
+> > The changes I made in a bit more detail:
+> >
+> > - added a new commit introducing a new hidden --show-new-head-line
+> >   flag in 'git reset'.  This is used to suppress the "HEAD is now at
+> >   ..."  line that 'git reset --hard' usually prints, so we can replace
+> >   it with our own "New worktree HEAD is now at ..." line instead,
+> >   while keeping the progress indicator for larger repositories.
+> 
+> As with Junio, I'm fine with this hidden option (for now), however, I
+> think you can take this a step further. Rather than having a (hidden)
+> git-reset option which suppresses "HEAD is now at...", instead have a
+> (hidden) option which augments the message. For example,
+> --new-head-desc="New worktree" would make it output "New worktree HEAD
+> is now at...". Changes to builtin/reset.c to support this would hardly
+> be larger than the changes you already made.
+> 
+> The major benefit is that patch 3/6 no longer has to duplicate the
+> code from builtin/reset.c:print_new_head_line() just to print its own
+> "New worktree HEAD is now at..." message. (As for the argument that
+> "git worktree add" must duplicate that code because it wants the
+> message on stderr, whereas git-reset prints it to stdout, I don't see
+> why git-worktree puts those messages to stderr in the first place. As
+> far as I can tell, it would be equally valid to print them to stdout.)
 
-Konstantin Ryabitsev <konstantin@linuxfoundation.org> writes:
+I didn't think of that, but I think that's nicer indeed.  Will change.
+This will also be nicer when we're in a position to remove the hidden
+option and do all of this with internal functions.  Then we can just
+re-use the new function that also takes a prefix at that point (after
+moving the function to 'libgit.a' of course.
 
-> This is an entirely idle pondering kind of question, but I wanted to
-> ask. I recently discovered that some edge providers are starting to
-> offer systems with GPU cards in them -- primarily for clients that need
-> to provide streaming video content, I guess. As someone who needs to run
-> a distributed network of edge nodes for a fairly popular git server, I
-> wondered if git could at all benefit from utilizing a GPU card for
-> something like delta calculations or compression offload, or if benefits
-> would be negligible.
->
-> I realize this would be silly amounts of work. But, if it's worth it,
-> perhaps we can benefit from all the GPU computation libs written for
-> cryptocoin mining and use them for something good. :)
+> > Some examples of the new UI behaviour here for reference:
+> >
+> >  - guess-remote mode
+> >
+> >     $ git worktree add --guess-remote ../next
+> >     Creating branch 'next'
+> >     Branch 'next' set up to track remote branch 'next' from 'origin'.
+> >     New worktree HEAD is now at caa68db14 Merge branch 'sb/packfiles-in-repository' into next
+> >
+> >  - original dwim (create a branch based on the current HEAD)
+> >
+> >     $ git worktree add ../test
+> >     Creating branch 'test'
+> >     New worktree HEAD is now at c2a499e6c Merge branch 'jh/partial-clone'
+> >
+> >  - new dwim (check out existing branch)
+> >
+> >     $ git worktree add ../test
+> >     Checking out branch 'test'
+> >     New worktree HEAD is now at c2a499e6c Merge branch 'jh/partial-clone'
+> >
+> >  - no new branch created
+> >
+> >     $ git worktree add ../test2 origin/master
+> >     New worktree HEAD is now at c2a499e6c Merge branch 'jh/partial-clone'
+> 
+> I like the "creating" or "checking out" messages we now get for all
+> the DWIM cases. I wonder if it would make sense to print "Checkout out
+> blah..." for this case too. It's certainly not necessary since the
+> user specified <commit-ish> explicitly, but it would make the UI even
+> more consistent, and address your subsequent comment about missing
+> context above the "Checking out files: ...%" line for this case.
+> Thoughts?
 
-The problem is that you need to transfer the data from the main memory
-(host memory) geared towards low-latency thanks to cache hierarchy, to
-the GPU memory (device memory) geared towards bandwidth and parallel
-access, and back again.  So to make sense the time for copying data plus
-the time to perform calculations on GPU (and not all kinds of
-computations can be speed up on GPU -- you need fine-grained massively
-data-parallel task) must be less than time to perform calculations on
-CPU (with multi-threading).
+Let me think through some of the cases here, of 'git worktre add
+<path> <commit-ish>' with various flags and what the UI would be with
+that added:
 
-Also you would need to keep non-GPU and GPGPU code in sync.  Some parts
-of code do not change much; and there also solutions to generate dual
-code from one source.
+  - no flags:
 
-Still, it might be good idea,
---=20
-Jakub Nar=C4=99bski
+    $ git worktree add ../test origin/master
+    Checking out 'origin/master'
+    Checking out files: ...%
+    New worktree HEAD is now at c2a499e6c Merge branch 'jh/partial-clone'
 
+  - -b branch:
+
+    $ git worktree add -b test ../test origin/master
+    Creating branch 'test'
+    Checking out 'origin/master'
+    Checking out files: ...%
+    New worktree HEAD is now at c2a499e6c Merge branch 'jh/partial-clone'
+
+    Would we want to omit the "Checking out ..." here?  I'm leaning
+    towards yes, but dunno?
+
+  - --no-checkout
+
+    $ git worktree add --no-checkout test ../test origin/master
+    New worktree HEAD is now at c2a499e6c Merge branch 'jh/partial-clone'
+
+  - Original dwim with --detach flag
+
+    $ git worktree add --detach ../test
+    Checking out 'c2a499e6c'
+    Checking out files: ...%
+    New worktree HEAD is now at c2a499e6c Merge branch 'jh/partial-clone'
+
+Looking at this, I'm not sure what's best here.  I'm not sure I'm a
+fan of the duplicate "Checking out " message (I assume that's what you
+meant above, or did you mean just "Checkout ..."?)
+
+I als don't think it gives too much context compared to just "Checking
+out files: ...%".  I think it gives a bit more context when that
+message is not displayed at all, as it shows whether files are checked
+out or not, but if we do that, when we create a new branch, the amount
+of output we'd display is getting a bit long, to the point where I
+suspect users would just not read it anymore.
+
+So I personally don't feel like this is worth it, even though it may
+give some context in some cases.  But I'm also far from an expert in
+UI design, so if you (or others) feel this would be nicer I'm happy to
+implement it :)
+
+> > Compare this to the old UI (new dwim omitted, as there's no old
+> > version of that):
+> 
+> Thanks for contrasting the new with the old. The new output is nicer
+> and more helpful.
+> 
+> > The one thing we are loosing is a context line before "Checking out
+> > files:", if no new branch is created.  Personally I feel like that's
+> > acceptable, as the user just used the 'git worktree add' command, so
+> > it should be intuitive where those files are being checked out.
