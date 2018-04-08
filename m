@@ -2,145 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+	T_DKIM_INVALID,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E7F331F404
-	for <e@80x24.org>; Sun,  8 Apr 2018 23:58:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 453781F404
+	for <e@80x24.org>; Sun,  8 Apr 2018 23:59:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752919AbeDHX6y (ORCPT <rfc822;e@80x24.org>);
-        Sun, 8 Apr 2018 19:58:54 -0400
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:34678 "EHLO
-        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752763AbeDHX6e (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 8 Apr 2018 19:58:34 -0400
-Received: by mail-wr0-f193.google.com with SMTP id d19so3171033wre.1
-        for <git@vger.kernel.org>; Sun, 08 Apr 2018 16:58:34 -0700 (PDT)
+        id S1752999AbeDHX7t (ORCPT <rfc822;e@80x24.org>);
+        Sun, 8 Apr 2018 19:59:49 -0400
+Received: from mail-qk0-f179.google.com ([209.85.220.179]:35360 "EHLO
+        mail-qk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752990AbeDHX7s (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 8 Apr 2018 19:59:48 -0400
+Received: by mail-qk0-f179.google.com with SMTP id c188so7478636qkg.2
+        for <git@vger.kernel.org>; Sun, 08 Apr 2018 16:59:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :in-reply-to:references;
-        bh=QKcry4kzV21/y/X71Ud+Q6qoV4iWVtcFVAyqWjIBh8M=;
-        b=YrkTQ8qmKSs5f9zYkhPH5FljoiW6Q1SORQ0LfVJDHW77dnmqe42IosCNAJuqyijvKa
-         EpE5G0OXxqwmEnY6BtBu8OR/DI5yca4U8o6qEOwUTQizO0796HWog2fIbvO8GiqXJjX1
-         hmLqJlu44TszFhCopWTuQio8MkiWIXGUVyZC7paPlKVCihFGY4f/tOoHDOrrP78v/+72
-         OfsidEIjGv8TIeqGH1omxkcIDR6c7jC8QS5wiyPxcD8xzQXuLBnBgRLgu2X6N73hyelB
-         +CX2oGcAjOf4WobisHgSDP32YxbUWFKEdP0Z7XuC7f4TNhNdELVACovgsZEv3/owCK4k
-         N4JQ==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=tmxebXMeso0ouLgAht4qSbdB1VE5NMI24z9i5ip5dGY=;
+        b=LbsvuaaHgF+KK5cDnanHAo5qNpRyA07+uKpfukpERMNMOHhPvY39nnXUXHrYrVPw+D
+         FJ5PnEnAudGsEJGJiLusUZWVYQT3+mP2b9ZQDgJHueD47ZrLBfPSDVNd8bO5yyulCIdZ
+         voSJVcyJHxswiNoxOfeafksay05Uhuc0ksgzcL2Jp9qIm4twR0PbOYbCwtVLXQG7aG5X
+         uD7PkkmIuPTO6vQ3Mnyl9Q5VqPvdmWTIB9YYr/w7fD2EtQNgjXSKThYqmPR9uQKkJIjB
+         zZjgH38JpY+/Eyh+VndOG5RE2O9tNERTAvu0zQwLQtdQjedP585dhYdUHul2lVp7vx28
+         B0TA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:in-reply-to:references;
-        bh=QKcry4kzV21/y/X71Ud+Q6qoV4iWVtcFVAyqWjIBh8M=;
-        b=LX6ZKR7tvEyFlqmnoeByt/2JabLPKTRXwLyTdieYlX3NHOZvqZNXtUwVNvWN0L0AI6
-         SBehrrPplckZjg2MBEM3bUA8dMQt9a+sGwYwAdmOaXxQgz0GvNZVo44Nrm4oU8BhgxUs
-         OeNGNQqFfXAyVm3hMJojeuMSBOBDDPPXFFWRE6MspTiASNmrtG2z2LLsJchx//s1kqAq
-         RoNqSrhizOg3rYTgMBoMSm+roxUa9ooQhatLZQPq+AnmX3t4r2M0kBxHEDWe732kVMiY
-         wpSpXOk8iR44WE4q4HA6DoEJLkIOUlw9i28e/WCF+2+BcqlF4mOpSe7CaQY8jGre8IqN
-         AUbw==
-X-Gm-Message-State: ALQs6tBExXl3S3kUGoUHei2QMsnaIw3PLUDdgqj55htnU1Q8GFxgvyo6
-        AJUb4uEtJZbg2XumMTwywbdxyJKh8ks=
-X-Google-Smtp-Source: AIpwx48qxyYYwhjjFyvT4tkwl9mBKGTFRb+LlFmhaNPIVKtB+ofnbZzVsuy13dBv6N7mVsnSEq6oSQ==
-X-Received: by 2002:a19:4e5d:: with SMTP id c90-v6mr20206367lfb.98.1523231913344;
-        Sun, 08 Apr 2018 16:58:33 -0700 (PDT)
-Received: from localhost.localdomain ([94.234.37.145])
-        by smtp.gmail.com with ESMTPSA id x4-v6sm3108742lfa.23.2018.04.08.16.58.32
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 08 Apr 2018 16:58:32 -0700 (PDT)
-From:   Harald Nordgren <haraldnordgren@gmail.com>
-To:     git@vger.kernel.org, avarab@gmail.com, peff@peff.net,
-        gitster@pobox.com, sunshine@sunshineco.com
-Cc:     Harald Nordgren <haraldnordgren@gmail.com>
-Subject: [PATCH v13 3/4] ref-filter: factor ref_array pushing into its own function
-Date:   Mon,  9 Apr 2018 01:58:14 +0200
-Message-Id: <20180408235815.36582-3-haraldnordgren@gmail.com>
-X-Mailer: git-send-email 2.14.3 (Apple Git-98)
-In-Reply-To: <20180408235815.36582-1-haraldnordgren@gmail.com>
-References: <20180408235815.36582-1-haraldnordgren@gmail.com>
-In-Reply-To: <20180402005248.52418-1-haraldnordgren@gmail.com>
-References: <20180402005248.52418-1-haraldnordgren@gmail.com>
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=tmxebXMeso0ouLgAht4qSbdB1VE5NMI24z9i5ip5dGY=;
+        b=Iy/9pzVv7sQbPE3RZJyHHC97bht5BohHUltiTscUIQWoK4HvWgRKJKIUe/SNq/zvgX
+         f97PK0+4pTif7WcQJnbn8/EeQCXKT0+pnx17lpeonsK6PWy2waC9lIxsJmJzVzG1HdZH
+         Nrpba8XpXN6P8NuGVRsiRulFKsDrVrqRbEnTpHz4tRkZRZv1i+0jXgvVidZM0qUFe0Kw
+         YAqjguIemW4Wh/gdOlEcX025wq3FPFMxGcfvMMYYt0mM3HM5rG6OQn7yy+AJVZxoA190
+         A6wWhz2oJzugfhcFTg4hgBummsLQ3DS64n1Tv7VfaFJPSICjWy9EVRGrD9LYRd4P8sXX
+         gHNQ==
+X-Gm-Message-State: ALQs6tC3E76UwW8y6dxOruDoFQYRrDwuTPWU3R00QsRxkQf2J0tQk+XM
+        HXgmRjtY+7UArqBNn/s51Ga4vnsvW6ACWs+OYIk=
+X-Google-Smtp-Source: AIpwx48aEcVEJQ99v9taQ3i5sWUlNwPrwSLod8L/KGo48UqKBJQG4rYnkEqSRFV42hPxOXURVBjUiGzT9BWpfU7es+k=
+X-Received: by 10.55.159.140 with SMTP id i134mr45856044qke.220.1523231987933;
+ Sun, 08 Apr 2018 16:59:47 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.12.174.202 with HTTP; Sun, 8 Apr 2018 16:59:47 -0700 (PDT)
+In-Reply-To: <CA+FnnTwvnA90nDARKW9r7p5iraoOGTvfDJ26n6Udc68bDSUASw@mail.gmail.com>
+References: <CA+FnnTxbg97A4P3AP7n5RT8+=W8PY0yx3644Ay2Zi9xgKD2aoA@mail.gmail.com>
+ <CAPig+cR19LS2vfjBQ71c3j2g61vSHnYRj1iSX1-V_E3Fj=kwOA@mail.gmail.com>
+ <CA+FnnTzfJMBuSMAD7PgUurRu8jOpirEgM6=+=i91zdGLWmfUpg@mail.gmail.com>
+ <CAPig+cQOzKbM0R6vKTg_BU6meEbAAJWL1T0jZkaCOF0uJ=_Lmw@mail.gmail.com>
+ <CA+FnnTzqaPrLgYv-8X9BDW0DR7331morN33B81w8T3vzOwn+Pw@mail.gmail.com>
+ <CA+FnnTz-qdVK5482GJo06QrvMktGYhJAJ6g-Naq0BgT-uoRvEA@mail.gmail.com>
+ <CAPig+cS+gf5gGM3fmnxk-6k7ezbtS=KQFqkkxVtcytHfcQApEQ@mail.gmail.com> <CA+FnnTwvnA90nDARKW9r7p5iraoOGTvfDJ26n6Udc68bDSUASw@mail.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Sun, 8 Apr 2018 19:59:47 -0400
+X-Google-Sender-Auth: x--LS8D9TyPuMqCJEOgW6kvI88E
+Message-ID: <CAPig+cRjYju4zEgiY_TuOOk0e7A8zNz+hu+40vQUEGDX6FGDxw@mail.gmail.com>
+Subject: Re: Is support for 10.8 dropped?
+To:     Igor Korot <ikorot01@gmail.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jeff King <peff@peff.net>
+On Sun, Apr 8, 2018 at 7:55 PM, Igor Korot <ikorot01@gmail.com> wrote:
+> On Sun, Apr 8, 2018, 6:23 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
+>> And, as noted earlier, before running "make", you may need to create
+>> config.mak to override some settings documented at the top of Makefile
+>> (in particular, you may want to set NO_GETTEXT if you don't want to
+>> install gettext and don't think you'll need it). As prerequisite,
+>> you'll probably need to install OpenSSL.
+>
+> Is there a way to check for OpenSSL presence?
 
-In preparation for callers constructing their own ref_array
-structs, let's move our own internal push operation into its
-own function.
+Not sure what you're asking. Are you asking how to determine if you
+already have OpenSSL built on your machine?
 
-While we're at it, we can replace REALLOC_ARRAY() with
-ALLOC_GROW(), which should give the growth operation
-amortized linear complexity (as opposed to growing by one,
-which is potentially quadratic, though in-place realloc
-growth often makes this faster in practice).
-
-Signed-off-by: Jeff King <peff@peff.net>
-Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
----
- ref-filter.c | 16 +++++++++++++---
- ref-filter.h |  8 ++++++++
- 2 files changed, 21 insertions(+), 3 deletions(-)
-
-diff --git a/ref-filter.c b/ref-filter.c
-index c1c3cc948..6e9328b27 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -1840,6 +1840,18 @@ static struct ref_array_item *new_ref_array_item(const char *refname,
- 	return ref;
- }
- 
-+struct ref_array_item *ref_array_push(struct ref_array *array,
-+				      const char *refname,
-+				      const struct object_id *oid)
-+{
-+	struct ref_array_item *ref = new_ref_array_item(refname, oid);
-+
-+	ALLOC_GROW(array->items, array->nr + 1, array->alloc);
-+	array->items[array->nr++] = ref;
-+
-+	return ref;
-+}
-+
- static int ref_kind_from_refname(const char *refname)
- {
- 	unsigned int i;
-@@ -1930,13 +1942,11 @@ static int ref_filter_handler(const char *refname, const struct object_id *oid,
- 	 * to do its job and the resulting list may yet to be pruned
- 	 * by maxcount logic.
- 	 */
--	ref = new_ref_array_item(refname, oid);
-+	ref = ref_array_push(ref_cbdata->array, refname, oid);
- 	ref->commit = commit;
- 	ref->flag = flag;
- 	ref->kind = kind;
- 
--	REALLOC_ARRAY(ref_cbdata->array->items, ref_cbdata->array->nr + 1);
--	ref_cbdata->array->items[ref_cbdata->array->nr++] = ref;
- 	return 0;
- }
- 
-diff --git a/ref-filter.h b/ref-filter.h
-index 68268f9eb..76cf87cb6 100644
---- a/ref-filter.h
-+++ b/ref-filter.h
-@@ -135,4 +135,12 @@ void setup_ref_filter_porcelain_msg(void);
- void pretty_print_ref(const char *name, const struct object_id *oid,
- 		      const struct ref_format *format);
- 
-+/*
-+ * Push a single ref onto the array; this can be used to construct your own
-+ * ref_array without using filter_refs().
-+ */
-+struct ref_array_item *ref_array_push(struct ref_array *array,
-+				      const char *refname,
-+				      const struct object_id *oid);
-+
- #endif /*  REF_FILTER_H  */
--- 
-2.14.3 (Apple Git-98)
-
+Note that you might be able to get by without installing OpenSSL since
+Git will try to use Apple's "Common Crypto" instead, so you could
+define NO_OPENSSL in config.mak and see if the project builds.
