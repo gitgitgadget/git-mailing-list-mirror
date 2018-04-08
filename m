@@ -7,55 +7,59 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_DKIM_INVALID,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C43BA1F404
-	for <e@80x24.org>; Sun,  8 Apr 2018 23:17:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2BFE31F404
+	for <e@80x24.org>; Sun,  8 Apr 2018 23:18:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752668AbeDHXRy (ORCPT <rfc822;e@80x24.org>);
-        Sun, 8 Apr 2018 19:17:54 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:34128 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752479AbeDHXRx (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 8 Apr 2018 19:17:53 -0400
-Received: by mail-wm0-f68.google.com with SMTP id w2so15134364wmw.1
-        for <git@vger.kernel.org>; Sun, 08 Apr 2018 16:17:53 -0700 (PDT)
+        id S1752488AbeDHXSW (ORCPT <rfc822;e@80x24.org>);
+        Sun, 8 Apr 2018 19:18:22 -0400
+Received: from mail-wr0-f179.google.com ([209.85.128.179]:36452 "EHLO
+        mail-wr0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752307AbeDHXSV (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 8 Apr 2018 19:18:21 -0400
+Received: by mail-wr0-f179.google.com with SMTP id y55so7021682wry.3
+        for <git@vger.kernel.org>; Sun, 08 Apr 2018 16:18:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:message-id:user-agent
          :mime-version;
-        bh=4S/fPfjXQxRo923J/kQXpvvgNKV+c38VACaCLpONstM=;
-        b=Or6HmukNh05tufBImHy+2PI6VgqSHqAf2LSq+X2hNG+gKmSJBiQ0fkI4UOx3fCpj1b
-         P3JtsjFNIRKj9ztyqzXqGS0Jq/B6fpxaIW64QcQKa4IkQYgGsvxph8uVoNWDmNWKlmEH
-         GTraVaHdJIwlQ2ttsL6mgBYdOvDFLIF9EX4rSVgak3azdsTymhwOUZFaRIAS9E5aQFla
-         w0iROKwO6Kq/hPRSwZi0mDhKCb7v7EZCH6eYRVYAgvV0shQYEqyLChxUqiFCYDKQozIs
-         juZq5EzNz887ZmGL89V3gMLkYeXpIB8/MtOB4PFwgly8C1xYaQ584KH8pduOcM4I9rGj
-         d/hw==
+        bh=SxTM8tDZh9FNZKjIv1n5AZ8SkNlInKKlgcywUbyYj3I=;
+        b=WRn7ah0F61uzQ9yvqB4YM8j9/21xDdX5//Lbeysytaq1uV3dRc4mP+5L0e1il6yobv
+         1ySNO3LWi1JzXFTPctZf/MSzlIWKdvOJFCbrMlg2woWwl0NsnMh+zyiidVYMaUSoEbqb
+         XerfM28I1H7tRhHR6hHETuz1+WKd24r5wFetcknEJw6BVII8cvfxrNU8x2Whr7SzS1Q1
+         frsziui1ohDSebuEXixipt/a6ciwrq6g6Z5OTMJGPrtICYkyEv+B9F1Y9IQ05r4qIQXd
+         57Cl/1eXgIHWuyjz+Q47gVuHI7JloKrXr/s5mrDHErcemRRCOeAjngJrNlXai3PeuaDc
+         CNJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :message-id:user-agent:mime-version;
-        bh=4S/fPfjXQxRo923J/kQXpvvgNKV+c38VACaCLpONstM=;
-        b=b4hMXprrJ59ha72eDVMv+bcD5TQGqDEqbpry+JtB5NqhzvYZmApVQnQEP3NhsMgfuX
-         9hQkTQCaoO88o4xWql64OeULhBxgGS8FdRMSLGonUjXLjV56CGoCNnwNk8y3VIWV12Nr
-         M05vkoYke+HrYmK62NbEVDDZr61Mq/tMDGf9FHCrDhzkvG4GZAKSPLIXKVQAUP/KQjZ+
-         ZMevzs8PeKw3Tpg4EIHvMD/xhBmvEwD/DB9k0vWhLCpXZyN1pVk9Lu1leLVDaLKvHrXr
-         SHzO+9q86Quu1lRZ5gWGU8DiZXITIAU49SDJV7QpbsyHagcpXNBBy2PLqK4P5bfNY9zU
-         wdKg==
-X-Gm-Message-State: AElRT7ExxypfYAetAeBeVUePvtd19/7rw7QX5XNOvIRmyALfJC0mH8kZ
-        0C/epSZLH3jU5nkefPlqBCs=
-X-Google-Smtp-Source: AIpwx496vqA8y7I2lutSGfMwJmhhw/ZvB1Rm884UUASZAgu6QGvvFeFtEoSyEbGOd4ZeZ5+xmimm1w==
-X-Received: by 10.28.153.12 with SMTP id b12mr20239539wme.104.1523229472205;
-        Sun, 08 Apr 2018 16:17:52 -0700 (PDT)
+        bh=SxTM8tDZh9FNZKjIv1n5AZ8SkNlInKKlgcywUbyYj3I=;
+        b=GH4h7cxU/sjK2ZYeNeEOi/4jtQtxnyqaYfEFO9tfQ42pTcL2WXTty02e/zgj6wLIQt
+         KFxB/z8jhAVw8K/lpVRswbvkRIzokR/JfsSnc+zmflwFy9kvNfbV37E7R+aK3txkjfQG
+         B3eZXsWNO0fSQIMmz6G+mStkIksm2sV2dZG1J1Ex3hjqCCr8Hm9H6c6Mok/E69Tfch0z
+         ZMiH7wNgDzxEA9OtiRXlS4iBNS/e6pzN1vGOmrDEqDN8cTw8m2T28mG+HwmbTzDIavSd
+         yuteAQEcs6UQ15pFxyV9PNVf9RSd/3fPNd7uc+h3d1e/nBoA8+8Enqo6CGsSqAUFD4N+
+         Vb0w==
+X-Gm-Message-State: AElRT7FcVWsJRnmHSg7VyLC9RCJwTioDmlyu4tFFmCr+wWh6eO43RG0m
+        IHIXC7K6zx/bh1/ddk9eARM=
+X-Google-Smtp-Source: AIpwx4/57bvC7Y8uDSvMr2Flcj6GDeaDyDlG+qgsaEITvmqWL6tWSVcTp0kWhpIkarIbTqbf62ci2w==
+X-Received: by 10.223.142.164 with SMTP id q33mr23484406wrb.72.1523229500037;
+        Sun, 08 Apr 2018 16:18:20 -0700 (PDT)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id i44sm475104wri.17.2018.04.08.16.17.51
+        by smtp.gmail.com with ESMTPSA id n47sm15151918wrf.41.2018.04.08.16.18.19
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 08 Apr 2018 16:17:51 -0700 (PDT)
+        Sun, 08 Apr 2018 16:18:19 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Stephon Harris <theonestep4@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] specify encoding for sed command
-References: <0102016293c8dca7-6626fcde-548d-476e-b61f-c83ecdeedfe1-000000@eu-west-1.amazonses.com>
-Date:   Mon, 09 Apr 2018 08:17:51 +0900
-Message-ID: <xmqqd0z98ezk.fsf@gitster-ct.c.googlers.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+        sunshine@sunshineco.com
+Subject: Re: [PATCH v4 1/3] builtin/config: introduce `--default`
+References: <20180329011634.68582-1-me@ttaylorr.com>
+        <cover.1522896713.git.me@ttaylorr.com>
+        <20180405025912.GB49902@syl.local>
+        <20180405222949.GC29117@sigill.intra.peff.net>
+Date:   Mon, 09 Apr 2018 08:18:18 +0900
+Message-ID: <xmqq60518eyt.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -64,32 +68,44 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stephon Harris <theonestep4@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> Fixes issue with seeing `sed: RE error: illegal byte sequence` when running git-completion.bash
-> ---
->  contrib/completion/git-completion.bash | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> On Wed, Apr 04, 2018 at 07:59:12PM -0700, Taylor Blau wrote:
 >
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-> index b09c8a23626b4..52a4ab5e2165a 100644
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -282,7 +282,7 @@ __gitcomp ()
->  
->  # Clear the variables caching builtins' options when (re-)sourcing
->  # the completion script.
-> -unset $(set |sed -ne 's/^\(__gitcomp_builtin_[a-zA-Z0-9_][a-zA-Z0-9_]*\)=.*/\1/p') 2>/dev/null
-> +unset $(set |LANG=C sed -ne 's/^\(__gitcomp_builtin_[a-zA-Z0-9_][a-zA-Z0-9_]*\)=.*/\1/p') 2>/dev/null
+>> @@ -286,6 +288,16 @@ static int get_value(const char *key_, const char *regex_)
+>>  	config_with_options(collect_config, &values,
+>>  			    &given_config_source, &config_options);
+>>  
+>> +	if (!values.nr && default_value) {
+>> +		struct strbuf *item;
+>> +		ALLOC_GROW(values.items, values.nr + 1, values.alloc);
+>> +		item = &values.items[values.nr++];
+>> +		strbuf_init(item, 0);
+>> +		if (format_config(item, key_, default_value) < 0) {
+>> +			exit(1);
+>> +		}
+>> +	}
+> ...
+>
+> It's obvious in this toy example, but that config call may be buried
+> deep in a script. It'd probably be nicer for that exit(1) to be
+> something like:
+>
+>   die(_("failed to format default config value"));
 
-Shouldn't LC_ALL and LANG both set and exported to C, as
+Together with key_ and default_value, you mean?
 
- (1) ancient systems understand only LANG but not LC_*; and
+>
+>> +test_expect_success 'does not allow --default without --get' '
+>> +	test_must_fail git config --default quux --unset a >output 2>&1 &&
+>> +	test_i18ngrep "\-\-default is only applicable to" output
+>> +'
+>
+> I think "a" here needs to be "a.section". I get:
+>
+>   error: key does not contain a section: a
 
- (2) modern ones that understand both give precedence to LC_ALL over
-     LANG?
+"section.var"?  That aside, even with a properly formatted key, I
+seem to get an empty output here, so this may need a bit more work.
 
-If we were to set only one, it is probably more sensible to set
-LC_ALL, I suspect, but it may be better to set both, which sends a
-sign to the readers that we know what we are doing ;-)
 
