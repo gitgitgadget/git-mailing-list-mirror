@@ -7,88 +7,130 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5374C1F404
-	for <e@80x24.org>; Sun,  8 Apr 2018 18:26:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D1E0F1F404
+	for <e@80x24.org>; Sun,  8 Apr 2018 18:26:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752234AbeDHS0L (ORCPT <rfc822;e@80x24.org>);
-        Sun, 8 Apr 2018 14:26:11 -0400
-Received: from mout.kundenserver.de ([212.227.126.130]:54595 "EHLO
+        id S1752364AbeDHS0Q (ORCPT <rfc822;e@80x24.org>);
+        Sun, 8 Apr 2018 14:26:16 -0400
+Received: from mout.kundenserver.de ([212.227.126.131]:38161 "EHLO
         mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751919AbeDHS0K (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 8 Apr 2018 14:26:10 -0400
-Received: from furore ([82.194.150.97]) by mrelayeu.kundenserver.de (mreue003
- [212.227.15.167]) with ESMTPSA (Nemesis) id 0LzWX0-1eRB220QZG-014lRD; Sun, 08
- Apr 2018 20:26:08 +0200
-Date:   Sun, 8 Apr 2018 20:26:07 +0200
+        with ESMTP id S1752258AbeDHS0P (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 8 Apr 2018 14:26:15 -0400
+Received: from furore ([82.194.150.97]) by mrelayeu.kundenserver.de (mreue005
+ [212.227.15.167]) with ESMTPSA (Nemesis) id 0LvxEH-1eQtNw2wCz-017obx; Sun, 08
+ Apr 2018 20:26:13 +0200
+Date:   Sun, 8 Apr 2018 20:26:08 +0200
 From:   Florian =?utf-8?Q?Gamb=C3=B6ck?= <mail@floga.de>
 To:     git@vger.kernel.org
 Cc:     Szeder =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Subject: [RFC PATCH 0/1] completion: Dynamic completion loading
-Message-ID: <20180408182552.26289-1-mail@floga.de>
+Subject: [RFC PATCH 1/1] completion: Load completion file for external
+ subcommand
+Message-ID: <20180408182552.26289-2-mail@floga.de>
 Mail-Followup-To: git@vger.kernel.org,
         Szeder =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+References: <20180408182552.26289-1-mail@floga.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20180408182552.26289-1-mail@floga.de>
 X-Mailer: git-send-email 2.16.1
 User-Agent: Mutt/1.9.4 (2018-02-28)
-X-Provags-ID: V03:K1:o5pXe159JtULGPR/ku/Cmuoi93nhYJ/KPPmVwMgen9ebu2SpDqF
- hxmZ5iUaKc9jQ0Or2Twt6uFLGSx+xsE4WdJtb0k3wa3PgEXtvRKHPCyw7CtdC0J1W+LmMx2
- Uo+tpeWi5cJDc1o6k9AwMt/C/vInZQn09qWKaqgdgBuUlH91yBWVr+Gya4khoILFSL0zEn2
- guWm3z+Dnmtg2ouVOLfDA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:zEOn3Kcr1RQ=:omAYWxw2fv/EFCniooQrl8
- TtNU3jHA3VA5OF3BopnWEfD3OJ3e5qpk9sqtfkS3+VyJFQOtHj95QAvHFEM1oa34FvwPMXq2M
- sJiC1M7lHmg6q8oEpKfd26JrP6Y86ZsqA/dInf6u//oMrpfSuRaon2iUGuOTLfovVEfmzXORU
- BP0BFjdj16tQs/7Bh9U+ny4/HGsUlXYu7HwMgNopsCWuUXSplpOxrx07phajnn+wpr6acTcr/
- ZkEQhfqXVKbUE8/PjlaLGNVT/HyR4UFMO77y0EeOzxcufUD8I87LsfCjcfRI/bHx3ReM5NGSZ
- MqfSxWXqfgteNIKlN1DdPTnlC6H4oQiIFgZSi5aYhKR+5NzCs+WaEObf4qqvV/EZnKqWoB96M
- T92JAx0kNuWmsipXvkakD+hyXgS4wVyZjb6DkZahTspp5xu4wYgsafJWX3FLNWPETAQm3DYVl
- Y+LVsKt/h/cT+NafzYDQGBt9Yk052akpnNNRib3JmBfi1JXTPMCeXwhIv5rS8yeQJwEyoa0tm
- Sl3WHmuQ41u9ab4Foh8XpYE+0TBghW5jcvgbzi8qHKCegS3jK78vqUpg06h+bMptnnSP8Ir8z
- nhgDYn5ex+e0rr8jCqkxIb3ZRtqyvwof0TfPaU/l+PcZIsl0PZMg5gI1VoymDjG+IIhNkA5Xz
- jo4x+VpmdFS/CHqsMMvM/DPooPdQeU3TuGNYacwnNyv3S8o1YW0mcOqIPHuQThuufCYhO4oVg
- eC19jGc+sEJTUFgXBB+iMUhRkwUw4Zl2KO+Kfw==
+X-Provags-ID: V03:K1:iVG5I3hYk8AnAGBpmKbXr1VlayCNGvb5OedT4tqF++ECdBs8C9w
+ j9is8wZ1xmirQ2V65a67A5KOt7ql1RRz9mQDl/dplzFytnzHRVPzmHlzLssMiZC3tCJcekU
+ 99DQBSr8G5ZaQMya5cIImYGzAkPwLvUtVb/MR6BKGauwY+QGVvG7OxkrZyMdCtbohS1Swzj
+ +ESym5byL6r+luyXJxfNQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:mEQv6zadIHk=:ACZTZwLsrleWr+vlJv3Jvq
+ pYBFut6ZBsP+JUCn/8vPbeBHe4HIkSSjPQke3g8eGigGFmHAR/uIMi7CuwZHhOXzQnsIMv6UN
+ C0S1SDAeZ0E7Yj+xkJrOVHN2VFkQyurHGMMe71Et67T12yiCZHGfy/zPp5El5iw0JjPWEdz/v
+ Jo4FBfmjc1ZhfBi4w4Sp6/m/8lKd4qikV7174BZjiVaBt95Y+r91QSHhIgZxJFjhebbOAVj++
+ 9gE5LzR6ecOgpxrvV1O6EAfIVL9NdUBGImckMqs2lmZKXjuuj6GJQjJkYHSBpMKIAEcNTi3/r
+ q81nFohF/9BBrhY4YqbLZpBkxkTgI85uAXwAR37d/TRK54zdlta72IdequMxvsOtPBFLMF5gg
+ mJFzCYlOTQDzsLHPWSU22akCTrUVkw/B7xLm0SdyiUbIyDh+h4h5IjxLHhCqevYOm4w4PakgP
+ aVRPk4B04feez50C6NgW2M7the/nQCzX0FZdrG5fNKr8QPtlSAXEIcaCY4IrAzyLeG4/3O+29
+ IBmAwoE/IyGOZ4Haxr0B0LkDC92LLKV2fE0V76yHbtlKVQf1FMbLuilZfn37ZGkWV3NvlcH5q
+ f1HffcoFyEOpSLIwDCA+UTnO8a4JQwrrYo74Sa7vBVVUjizVoWGRka8Qo1gdOCgtlckNrbDlW
+ xJyG09k/eKEFeRdeGMuRa2aGFRuuEE8AZ7cUrdSWI3VmfE7e/j4LOEuXCnvGtZYCrs3ocucpy
+ chNZ+eQ5hTY69pzo46/1IuOlBUx14PUzxZf40Q==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In this small patch I want to introduce a way to dynamically load completion 
-scripts for external subcommands.
+Adding external subcommands to Git is as easy as to put an executable
+file git-foo into PATH. Packaging such subcommands for a Linux
+distribution can be achieved by unpacking the executable into /usr/bin
+of the user's system. Adding system-wide completion scripts for new
+subcommands, however, can be a bit tricky.
 
-A few years ago, you would put a completion script (which defines a Bash 
-function _git_foo for a custom git subcommand foo) into 
-/etc/bash_completion.d, or save it somewhere in your $HOME and source it 
-manually in your .bashrc.
+Since bash-completion started to use dynamical loading of completion
+scripts somewhere around v2.0, it is no longer sufficient to drop a
+completion script of a subcommand into the standard completions path,
+/usr/share/bash-completion/completions, since this script will not be
+loaded if called as a git subcommand.
 
-Starting with bash-completion v2.0 (or, to be absolutely exact, the preview 
-versions started at v1.90), completion scripts are not sourced at bash startup 
-anymore. Rather, when typing in a command and trigger completion by pressing 
-the TAB key, the new bash-completion's main script looks for a script with the 
-same name as the typed command in the completion directory, sources it, and 
-provides the completions defined in this script.
+For example, look at https://bugs.gentoo.org/544722. To give a short
+summary: The popular git-flow subcommand provides a completion script,
+which gets installed as /usr/share/bash-completion/completions/git-flow.
 
-However, that only works for top level commands. After a completion script has 
-been found, the logic is delegated to this script. This means, that the 
-completion of subcommands must be handled by the corresponding completion 
-script.
+If you now type into a Bash shell:
 
-As it is now, git is perfectly able to call custom completion functions, iff 
-they are already defined when calling the git completion. With my patch, git 
-uses an already defined loader function of bash-completion (or continues 
-silently if this function is not found), loads an external completion script, 
-and provides its completions.
+    git flow <TAB>
 
-An example for an external completion script would be 
-/usr/share/bash-completion/completions/git-foo for a git subcommand foo.
+You will not get any completions, because bash-completion only loads
+completions for git and git has no idea that git-flow is defined in
+another file. You have to load this script manually or trigger the
+dynamic loader with:
 
-Florian Gamböck (1):
-  completion: Load completion file for external subcommand
+    git-flow <TAB> # Please notice the dash instead of whitespace
 
+This will not complete anything either, because it only defines a Bash
+function, without generating completions. But now the correct completion
+script has been loaded and the first command can use the completions.
+
+So, the goal is now to teach the git completion script to consider the
+possibility of external completion scripts for subcommands, but of
+course without breaking current workflows.
+
+I think the easiest method is to use a function that is defined by
+bash-completion v2.0+, namely __load_completion. It will take care of
+loading the correct script if present. Afterwards, the git completion
+script behaves as usual.
+
+This way we can leverage bash-completion's dynamic loading for git
+subcommands and make it easier for developers to distribute custom
+completion scripts.
+
+Signed-off-by: Florian Gamböck <mail@floga.de>
+---
  contrib/completion/git-completion.bash | 8 ++++++++
  1 file changed, 8 insertions(+)
 
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index b09c8a236..e6114822c 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -3096,12 +3096,20 @@ __git_main ()
+ 	fi
+ 
+ 	local completion_func="_git_${command//-/_}"
++	if ! declare -f $completion_func >/dev/null 2>/dev/null; then
++		declare -f __load_completion >/dev/null 2>/dev/null &&
++			__load_completion "git-$command"
++	fi
+ 	declare -f $completion_func >/dev/null 2>/dev/null && $completion_func && return
+ 
+ 	local expansion=$(__git_aliased_command "$command")
+ 	if [ -n "$expansion" ]; then
+ 		words[1]=$expansion
+ 		completion_func="_git_${expansion//-/_}"
++		if ! declare -f $completion_func >/dev/null 2>/dev/null; then
++			declare -f __load_completion >/dev/null 2>/dev/null &&
++				__load_completion "git-$expansion"
++		fi
+ 		declare -f $completion_func >/dev/null 2>/dev/null && $completion_func
+ 	fi
+ }
 -- 
 2.16.1
 
