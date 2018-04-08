@@ -8,55 +8,55 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 29AC81F404
-	for <e@80x24.org>; Sun,  8 Apr 2018 12:28:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DAE501F404
+	for <e@80x24.org>; Sun,  8 Apr 2018 12:29:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751896AbeDHM2z (ORCPT <rfc822;e@80x24.org>);
-        Sun, 8 Apr 2018 08:28:55 -0400
-Received: from mail-wr0-f195.google.com ([209.85.128.195]:34380 "EHLO
-        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751794AbeDHM2x (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 8 Apr 2018 08:28:53 -0400
-Received: by mail-wr0-f195.google.com with SMTP id d19so1736300wre.1
-        for <git@vger.kernel.org>; Sun, 08 Apr 2018 05:28:52 -0700 (PDT)
+        id S1751736AbeDHM2v (ORCPT <rfc822;e@80x24.org>);
+        Sun, 8 Apr 2018 08:28:51 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:39010 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751610AbeDHM2u (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 8 Apr 2018 08:28:50 -0400
+Received: by mail-wr0-f193.google.com with SMTP id c24so5644007wrc.6
+        for <git@vger.kernel.org>; Sun, 08 Apr 2018 05:28:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references;
-        bh=//slVdyuM65CS0xWpc9QhnW7kRwRVk5+cTN+C9PdU6E=;
-        b=hmSGh1cwzjPiwvwuJxQ2O4JxWDFOgw4d4H6OgKckBVI+WH0hJPKDQSZf4JrCPiVPf1
-         3Yr74FwyEzPjYRC2LwH4aYXsmjHdG1t2ew2qv/+bhVG+0LF8uAP+/8TO93tIigydC70h
-         DNP/rlCCL2GJEqHggVd+eeKRtdZek+MAMJA67Zc0D8Z4UmiaUtVEr34SqcoqR/yzOF9a
-         HRyL4pKGanIdt+O4J5cesN1LCjCxpF11PJXvt+2iJ9o5hXUILPWPBANk1mUVsoETpey1
-         vM6WGXAAA72PYdnN/H0T6tRF5pS/gZwcmz+/tgkRbETEPigYnBRnZgDZoLGIW6rn7mq+
-         P9iQ==
+        bh=14dDpLUz/O8Jo87ZEY1u02btoPmxPBcw8Y4WaAc1l9E=;
+        b=JmsESZZFfqoGIKcWfFBomXXeJ2KvuHpoWe17ycwVp/dk02dFzO2vASwftFa6uhW6eh
+         ElDlJPvT06POTigGTmuCraK8OZk4OaBwPD7zR80lz8CMwXykhYQt9SyQTsnDLC1dHLTx
+         X+o/qlCu5SvvDjzr7YoisFF6oUgE2BWHQ40cWr8kNb+W7SdlJTsxV7ryePdUI6lldmqF
+         s8lnr4qsrIhjLNNSp1KjK3sPnxRrgTJnzajVDlyzLdm3Wy6HaZDfqrfpJPX8lsZKLTyi
+         rhmn/r3l0B4RijfMjBTc1H0HAJKNecftx4E6Njt6DIvJw17RD6WDrvenJeMr3+YXNzPM
+         a2kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:in-reply-to:references;
-        bh=//slVdyuM65CS0xWpc9QhnW7kRwRVk5+cTN+C9PdU6E=;
-        b=s8HaK0YAYRqxFsPozlYuspkzlFu/3pFzIag66SgU0mfIwhCPTxapFcNNs15px+9yig
-         XqzWmAgSgHXks+YneR2U0xQQ6iUVVEL6HaCIeCpARv16ZN1W6azEC8QOpGJrvwCOAAIN
-         xP+dYW8Qse7agu15eGoVbjX2VUJFiTGxqmdlFcVVHHmEST3RpdCGTveFqtQSSwemZJ/Z
-         DjB+xzWF6rQtPBEuQOckvB1cqtC6+BG+PPAcymfOcBvBmL357ISmYrAU1UoLFBiIFU2o
-         9QGCE5KFItacA2NgxN9RKMSw429x+WGZz/Y6HESkGYhyf/SJsm/LrhLEvOUISkU8sy3j
-         mfqw==
-X-Gm-Message-State: ALQs6tDl4BTsytjcz/RDy/udgw6eJFXsd1lhDN7bwfHKL5302acfMa0+
-        iUIyU4w5DwJuRtQU5ROXME66WSo9iJs=
-X-Google-Smtp-Source: AIpwx4+O55CHmeHSZT+xFTwdkEJfSLmWx5irYYzR9GlMjoBxvWYDOKOdwEsFvZJ9W1k1uJS8OkDHbQ==
-X-Received: by 2002:a19:53cf:: with SMTP id h76-v6mr19992756lfl.87.1523190531721;
-        Sun, 08 Apr 2018 05:28:51 -0700 (PDT)
+        bh=14dDpLUz/O8Jo87ZEY1u02btoPmxPBcw8Y4WaAc1l9E=;
+        b=e/20LJUBiThysVLBlND3VJrhjKeSFDuenCKWtfFc1XAM7fivr9rCkzd5R9HqIKQSFM
+         Ibj/VeLxv6fL6l0TLEHudty8okqsQ96kP2bJardqBuklROQienF/Zh6Y43HkjmwiJzpQ
+         c3mfSI+B504aC93e+Dkcr8uawXNX9l7DoACPxuhRucQUuZv36cYTaQUxqJ7Bg7ZX+aj5
+         rhzjRIJ6Gu2dVpIUuZk7LVoBSM+FOJTpcRbGZbLvR6qndWOSyKK+9EAIzzsPbSFJs0y3
+         lgWX6ps8neHflPD34JxWFgviz+4awgtLNo27y4hP9H4t6AWK5ckdANSSvzybgDUKLO2R
+         KCeA==
+X-Gm-Message-State: ALQs6tAColXSlaOamlFTaHMMaRVrzdtFh5Gv4/I3/pK5pQOpf5q66qed
+        iGszBIzWdOqvzEWusWv5Fs26h5GXI34=
+X-Google-Smtp-Source: AIpwx49K0qP8Ihqb9ZVTkmTMQk1JWAmd6kzoM3Ec2FRgo6w7EfpVGQ79F5d3VKNE1DjcobLHx2Et3g==
+X-Received: by 2002:a19:c441:: with SMTP id u62-v6mr20641656lff.104.1523190528903;
+        Sun, 08 Apr 2018 05:28:48 -0700 (PDT)
 Received: from localhost.localdomain ([94.234.37.145])
-        by smtp.gmail.com with ESMTPSA id p9-v6sm2965038lfh.93.2018.04.08.05.28.50
+        by smtp.gmail.com with ESMTPSA id p9-v6sm2965038lfh.93.2018.04.08.05.28.47
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 08 Apr 2018 05:28:51 -0700 (PDT)
+        Sun, 08 Apr 2018 05:28:48 -0700 (PDT)
 From:   Harald Nordgren <haraldnordgren@gmail.com>
 To:     git@vger.kernel.org, avarab@gmail.com, peff@peff.net,
         gitster@pobox.com, sunshine@sunshineco.com
 Cc:     Harald Nordgren <haraldnordgren@gmail.com>
-Subject: [PATCH v12 4/4] ls-remote: create '--sort' option
-Date:   Sun,  8 Apr 2018 14:28:32 +0200
-Message-Id: <20180408122832.65414-4-haraldnordgren@gmail.com>
+Subject: [PATCH v12 2/4] ref-filter: make ref_array_item allocation more consistent
+Date:   Sun,  8 Apr 2018 14:28:30 +0200
+Message-Id: <20180408122832.65414-2-haraldnordgren@gmail.com>
 X-Mailer: git-send-email 2.14.3 (Apple Git-98)
 In-Reply-To: <20180408122832.65414-1-haraldnordgren@gmail.com>
 References: <20180408122832.65414-1-haraldnordgren@gmail.com>
@@ -67,240 +67,76 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Create a '--sort' option for ls-remote, based on the one from
-for-each-ref. This e.g. allows ref names to be sorted by version
-semantics, so that v1.2 is sorted before v1.10.
+From: Jeff King <peff@peff.net>
 
+We have a helper function to allocate ref_array_item
+structs, but it only takes a subset of the possible fields
+in the struct as initializers. We could have it accept an
+argument for _every_ field, but that becomes a pain for the
+fields which some callers don't want to set initially.
+
+Instead, let's be explicit that it takes only the minimum
+required to create the ref, and that callers should then
+fill in the rest themselves.
+
+Signed-off-by: Jeff King <peff@peff.net>
 Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
 ---
+ ref-filter.c | 18 +++++++++++-------
+ 1 file changed, 11 insertions(+), 7 deletions(-)
 
-Notes:
-    Changes according to Eric Sunshine's code review
-
- Documentation/git-ls-remote.txt | 16 ++++++++++++-
- builtin/ls-remote.c             | 30 +++++++++++++++++++++---
- t/t5512-ls-remote.sh            | 52 ++++++++++++++++++++++++++++++++++++-----
- 3 files changed, 88 insertions(+), 10 deletions(-)
-
-diff --git a/Documentation/git-ls-remote.txt b/Documentation/git-ls-remote.txt
-index 5f2628c8f..80a09b518 100644
---- a/Documentation/git-ls-remote.txt
-+++ b/Documentation/git-ls-remote.txt
-@@ -10,7 +10,7 @@ SYNOPSIS
- --------
- [verse]
- 'git ls-remote' [--heads] [--tags] [--refs] [--upload-pack=<exec>]
--	      [-q | --quiet] [--exit-code] [--get-url]
-+	      [-q | --quiet] [--exit-code] [--get-url] [--sort=<key>]
- 	      [--symref] [<repository> [<refs>...]]
- 
- DESCRIPTION
-@@ -60,6 +60,16 @@ OPTIONS
- 	upload-pack only shows the symref HEAD, so it will be the only
- 	one shown by ls-remote.
- 
-+--sort=<key>::
-+	Sort based on the key given. Prefix `-` to sort in descending order
-+	of the value. Supports "version:refname" or "v:refname" (tag names
-+	are treated as versions). The "version:refname" sort order can also
-+	be affected by the "versionsort.suffix" configuration variable.
-+	See linkgit:git-for-each-ref[1] for more sort options, but be aware
-+	that because `ls-remote` deals only with remotes, any key like
-+	`committerdate` that requires access to the object itself will
-+	cause a failure.
-+
- <repository>::
- 	The "remote" repository to query.  This parameter can be
- 	either a URL or the name of a remote (see the GIT URLS and
-@@ -90,6 +100,10 @@ EXAMPLES
- 	c5db5456ae3b0873fc659c19fafdde22313cc441	refs/tags/v0.99.2
- 	7ceca275d047c90c0c7d5afb13ab97efdf51bd6e	refs/tags/v0.99.3
- 
-+SEE ALSO
-+--------
-+linkgit:git-check-ref-format[1].
-+
- GIT
- ---
- Part of the linkgit:git[1] suite
-diff --git a/builtin/ls-remote.c b/builtin/ls-remote.c
-index 540d56429..d3851074c 100644
---- a/builtin/ls-remote.c
-+++ b/builtin/ls-remote.c
-@@ -1,6 +1,7 @@
- #include "builtin.h"
- #include "cache.h"
- #include "transport.h"
-+#include "ref-filter.h"
- #include "remote.h"
- 
- static const char * const ls_remote_usage[] = {
-@@ -43,10 +44,13 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
- 	int show_symref_target = 0;
- 	const char *uploadpack = NULL;
- 	const char **pattern = NULL;
-+	int i;
- 
- 	struct remote *remote;
- 	struct transport *transport;
- 	const struct ref *ref;
-+	struct ref_array ref_array;
-+	static struct ref_sorting *sorting = NULL, **sorting_tail = &sorting;
- 
- 	struct option options[] = {
- 		OPT__QUIET(&quiet, N_("do not print remote URL")),
-@@ -60,6 +64,8 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
- 		OPT_BIT(0, "refs", &flags, N_("do not show peeled tags"), REF_NORMAL),
- 		OPT_BOOL(0, "get-url", &get_url,
- 			 N_("take url.<base>.insteadOf into account")),
-+		OPT_CALLBACK(0 , "sort", sorting_tail, N_("key"),
-+			     N_("field name to sort on"), &parse_opt_ref_sorting),
- 		OPT_SET_INT_F(0, "exit-code", &status,
- 			      N_("exit with exit code 2 if no matching refs are found"),
- 			      2, PARSE_OPT_NOCOMPLETE),
-@@ -68,6 +74,8 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
- 		OPT_END()
- 	};
- 
-+	memset(&ref_array, 0, sizeof(ref_array));
-+
- 	argc = parse_options(argc, argv, prefix, options, ls_remote_usage,
- 			     PARSE_OPT_STOP_AT_NON_OPTION);
- 	dest = argv[0];
-@@ -90,6 +98,7 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
- 
- 	if (get_url) {
- 		printf("%s\n", *remote->url);
-+		UNLEAK(sorting);
- 		return 0;
- 	}
- 
-@@ -98,20 +107,35 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
- 		transport_set_option(transport, TRANS_OPT_UPLOADPACK, uploadpack);
- 
- 	ref = transport_get_remote_refs(transport);
--	if (transport_disconnect(transport))
-+	if (transport_disconnect(transport)) {
-+		UNLEAK(sorting);
- 		return 1;
-+	}
- 
- 	if (!dest && !quiet)
- 		fprintf(stderr, "From %s\n", *remote->url);
- 	for ( ; ref; ref = ref->next) {
-+		struct ref_array_item *item;
- 		if (!check_ref_type(ref, flags))
- 			continue;
- 		if (!tail_match(pattern, ref->name))
- 			continue;
-+		item = ref_array_push(&ref_array, ref->name, &ref->old_oid);
-+		item->symref = xstrdup_or_null(ref->symref);
-+	}
-+
-+	if (sorting)
-+		ref_array_sort(sorting, &ref_array);
-+
-+	for (i = 0; i < ref_array.nr; i++) {
-+		const struct ref_array_item *ref = ref_array.items[i];
- 		if (show_symref_target && ref->symref)
--			printf("ref: %s\t%s\n", ref->symref, ref->name);
--		printf("%s\t%s\n", oid_to_hex(&ref->old_oid), ref->name);
-+			printf("ref: %s\t%s\n", ref->symref, ref->refname);
-+		printf("%s\t%s\n", oid_to_hex(&ref->objectname), ref->refname);
- 		status = 0; /* we found something */
- 	}
-+
-+	UNLEAK(sorting);
-+	UNLEAK(ref_array);
- 	return status;
+diff --git a/ref-filter.c b/ref-filter.c
+index ade97a848..c1c3cc948 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -1824,15 +1824,18 @@ static const struct object_id *match_points_at(struct oid_array *points_at,
+ 	return NULL;
  }
-diff --git a/t/t5512-ls-remote.sh b/t/t5512-ls-remote.sh
-index 02106c922..e8df4c7e0 100755
---- a/t/t5512-ls-remote.sh
-+++ b/t/t5512-ls-remote.sh
-@@ -10,6 +10,9 @@ test_expect_success setup '
- 	test_tick &&
- 	git commit -m initial &&
- 	git tag mark &&
-+	git tag mark1.1 &&
-+	git tag mark1.2 &&
-+	git tag mark1.10 &&
- 	git show-ref --tags -d | sed -e "s/ /	/" >expected.tag &&
- 	(
- 		echo "$(git rev-parse HEAD)	HEAD"
-@@ -39,6 +42,39 @@ test_expect_success 'ls-remote self' '
- 	test_cmp expected.all actual
- '
  
-+test_expect_success 'ls-remote --sort="version:refname" --tags self' '
-+	cat >expect <<-\EOF &&
-+	'$(git rev-parse mark)'	refs/tags/mark
-+	'$(git rev-parse mark1.1)'	refs/tags/mark1.1
-+	'$(git rev-parse mark1.2)'	refs/tags/mark1.2
-+	'$(git rev-parse mark1.10)'	refs/tags/mark1.10
-+	EOF
-+	git ls-remote --sort="version:refname" --tags self >actual &&
-+	test_cmp expect actual
-+'
+-/* Allocate space for a new ref_array_item and copy the objectname and flag to it */
++/*
++ * Allocate space for a new ref_array_item and copy the name and oid to it.
++ *
++ * Callers can then fill in other struct members at their leisure.
++ */
+ static struct ref_array_item *new_ref_array_item(const char *refname,
+-						 const struct object_id *oid,
+-						 int flag)
++						 const struct object_id *oid)
+ {
+ 	struct ref_array_item *ref;
 +
-+test_expect_success 'ls-remote --sort="-version:refname" --tags self' '
-+	cat >expect <<-\EOF &&
-+	'$(git rev-parse mark1.10)'	refs/tags/mark1.10
-+	'$(git rev-parse mark1.2)'	refs/tags/mark1.2
-+	'$(git rev-parse mark1.1)'	refs/tags/mark1.1
-+	'$(git rev-parse mark)'	refs/tags/mark
-+	EOF
-+	git ls-remote --sort="-version:refname" --tags self >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'ls-remote --sort="-refname" --tags self' '
-+	cat >expect <<-\EOF &&
-+	'$(git rev-parse mark1.2)'	refs/tags/mark1.2
-+	'$(git rev-parse mark1.10)'	refs/tags/mark1.10
-+	'$(git rev-parse mark1.1)'	refs/tags/mark1.1
-+	'$(git rev-parse mark)'	refs/tags/mark
-+	EOF
-+	git ls-remote --sort="-refname" --tags self >actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'dies when no remote specified and no default remotes found' '
- 	test_must_fail git ls-remote
- '
-@@ -131,7 +167,7 @@ test_expect_success 'Report no-match with --exit-code' '
+ 	FLEX_ALLOC_STR(ref, refname, refname);
+ 	oidcpy(&ref->objectname, oid);
+-	ref->flag = flag;
  
- test_expect_success 'Report match with --exit-code' '
- 	git ls-remote --exit-code other.git "refs/tags/*" >actual &&
--	git ls-remote . tags/mark >expect &&
-+	git ls-remote . tags/mark* >expect &&
- 	test_cmp expect actual
- '
+ 	return ref;
+ }
+@@ -1927,12 +1930,13 @@ static int ref_filter_handler(const char *refname, const struct object_id *oid,
+ 	 * to do its job and the resulting list may yet to be pruned
+ 	 * by maxcount logic.
+ 	 */
+-	ref = new_ref_array_item(refname, oid, flag);
++	ref = new_ref_array_item(refname, oid);
+ 	ref->commit = commit;
++	ref->flag = flag;
++	ref->kind = kind;
  
-@@ -170,14 +206,18 @@ test_expect_success 'overrides work between mixed transfer/upload-pack hideRefs'
- 	grep refs/tags/magic actual
- '
+ 	REALLOC_ARRAY(ref_cbdata->array->items, ref_cbdata->array->nr + 1);
+ 	ref_cbdata->array->items[ref_cbdata->array->nr++] = ref;
+-	ref->kind = kind;
+ 	return 0;
+ }
  
-+git fetch origin
- test_expect_success 'ls-remote --symref' '
- 	cat >expect <<-\EOF &&
- 	ref: refs/heads/master	HEAD
--	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	HEAD
--	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	refs/heads/master
--	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	refs/remotes/origin/HEAD
--	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	refs/remotes/origin/master
--	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	refs/tags/mark
-+	'$(git rev-parse HEAD)'	HEAD
-+	'$(git rev-parse refs/heads/master)'	refs/heads/master
-+	'$(git rev-parse HEAD)'	refs/remotes/origin/HEAD
-+	'$(git rev-parse refs/remotes/origin/master)'	refs/remotes/origin/master
-+	'$(git rev-parse refs/tags/mark)'	refs/tags/mark
-+	'$(git rev-parse refs/tags/mark1.1)'	refs/tags/mark1.1
-+	'$(git rev-parse refs/tags/mark1.10)'	refs/tags/mark1.10
-+	'$(git rev-parse refs/tags/mark1.2)'	refs/tags/mark1.2
- 	EOF
- 	git ls-remote --symref >actual &&
- 	test_cmp expect actual
+@@ -2169,7 +2173,7 @@ void pretty_print_ref(const char *name, const struct object_id *oid,
+ 		      const struct ref_format *format)
+ {
+ 	struct ref_array_item *ref_item;
+-	ref_item = new_ref_array_item(name, oid, 0);
++	ref_item = new_ref_array_item(name, oid);
+ 	ref_item->kind = ref_kind_from_refname(name);
+ 	show_ref_array_item(ref_item, format);
+ 	free_array_item(ref_item);
 -- 
 2.14.3 (Apple Git-98)
 
