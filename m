@@ -2,106 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7CB5F1F424
-	for <e@80x24.org>; Sun,  8 Apr 2018 09:27:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5C02D1F424
+	for <e@80x24.org>; Sun,  8 Apr 2018 09:35:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752668AbeDHJ15 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 8 Apr 2018 05:27:57 -0400
-Received: from mail-qk0-f195.google.com ([209.85.220.195]:42798 "EHLO
-        mail-qk0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752111AbeDHJ14 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 8 Apr 2018 05:27:56 -0400
-Received: by mail-qk0-f195.google.com with SMTP id b198so6084217qkg.9
-        for <git@vger.kernel.org>; Sun, 08 Apr 2018 02:27:56 -0700 (PDT)
+        id S1752700AbeDHJfc (ORCPT <rfc822;e@80x24.org>);
+        Sun, 8 Apr 2018 05:35:32 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:34978 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752487AbeDHJfb (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 8 Apr 2018 05:35:31 -0400
+Received: by mail-wr0-f193.google.com with SMTP id 80so5328876wrb.2
+        for <git@vger.kernel.org>; Sun, 08 Apr 2018 02:35:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=kVn9fXM+J8TaZkNoJwOhQsThzGSPtnC0aaax5zSI+w4=;
-        b=ETahocKoJKqUROUEH0Zpw1yn2Rzu7SII46FkBOh17khLWKZfMbuR3jyiyV6td1Fr2X
-         yQCP6DscMxFGWyzHDdfzeP2zjjMVynK3J6I7g1Y+9gZ6HMmF3UKV9xzgXNsA6xaafG6v
-         iXyw7MfJRQ8su/vrduvioYBKpzHFvkr8WYRP1YNGFGWsNdmFjajd9yNum0Dc38/AeE1x
-         u/2Xi+Rclju5OScgYaQt+1jwhof3VdrkFjjRSLdgBbCMuC0a/4GFxWYDsv50WjJCmepU
-         Kt4NuaqRSik8HZ1j5/yZJ3cJTLpwA/1kVfcoCFIrDnjCZOtf3pdVlCjXM8f588d8BTky
-         lo1A==
+        h=from:to:cc:subject:date:message-id;
+        bh=FyF4qL7WFCqY5sTgLt82xYuIBVAhQcBM0g7q3G2FPFw=;
+        b=mD4ewq1gC1OZFt/ULphAUDWtYcqfj9jM+KQHXJMf/hne0+J+DtgNfScay24/gD8h0F
+         6NNQxixf7tqBkrr6JYdSAhHbib+pnJO1oQGKBcu6a/s4aQDEpFfbG4DOULjXdlxwLqn6
+         ZgmrxM56aNMT63CKJlCTm749xQSAgWo3H0iH7tAVRf/QV1mQuJ4LuNdNh/V+aOblp9AF
+         tRSq4fkUVrwdGWp631yWYMKrgbJ5QJEi1cwF5eLSwAnsojDD4y2174quPAuc7ZYEvYAf
+         X/XzJgGxnmHy/tqW8ACmHGXohRNET/Nbm45YGHYWO/hSbT4HjHHOighG5rsxatv3S7e+
+         xI9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=kVn9fXM+J8TaZkNoJwOhQsThzGSPtnC0aaax5zSI+w4=;
-        b=jpbGDZ9J8ct4AOlvSYdazY1Dx7bvYOUne48ZS2Ox22Frgx35oFyGNJUOYMYb5nlevB
-         JX4qDuk+KrW5swpZO++w86kbOvul1t9SSg8YId27bnil+YdeXsdoSLzMcXi5dX4pTKQy
-         ivbtnYIteK9iRE6y9Sj6NZw+9vUU4QxZ0r5T8Cjg3Ej/TYQPuAhqSn2Zf9fu6+DL7q6J
-         cqdanucjWzcz9RCXxr4BRoeKw/4zg2K7oJPwQaO/NkdiN+WYMX8YLRVAtneAMw6BVsMs
-         TDOip99dKkfJ3OFMM7TctT9Tt5GX8IrqDsmN7rakEADqv6G+UZbNix4ly1wgFuf9c1ZN
-         uwLw==
-X-Gm-Message-State: ALQs6tAN5YPh5EwL+qsMlZvXjQ/n5g4M0tFGNB5nI6m1Z3apBsyE9SCH
-        sKkNb5KXJ+JSsfl1REiM1WoKA4EJpmH6m+apleA=
-X-Google-Smtp-Source: AIpwx48MXfZkvYCE4alVMuGIM/YEVQrDleiFxnf9cHes0fOTYy+ViMOwMCU2j6PSC3J09EDlWQI+MqACPU1mBY9Zxvk=
-X-Received: by 10.55.156.79 with SMTP id f76mr43596742qke.36.1523179675559;
- Sun, 08 Apr 2018 02:27:55 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.12.174.202 with HTTP; Sun, 8 Apr 2018 02:27:55 -0700 (PDT)
-In-Reply-To: <20180331151804.30380-4-t.gummerer@gmail.com>
-References: <20180325134947.25828-1-t.gummerer@gmail.com> <20180331151804.30380-1-t.gummerer@gmail.com>
- <20180331151804.30380-4-t.gummerer@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 8 Apr 2018 05:27:55 -0400
-X-Google-Sender-Auth: 6d69xM7osU_vRFSMGqjMrMDgG7Q
-Message-ID: <CAPig+cQmEHx1N1Q9in6K8n3AyUMCk1V7JyAoeXrQVNQDQdxZ0w@mail.gmail.com>
-Subject: Re: [PATCH v6 3/6] worktree: improve message when creating a new worktree
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=FyF4qL7WFCqY5sTgLt82xYuIBVAhQcBM0g7q3G2FPFw=;
+        b=SCdbWLlyFxtAdK2kT32wv2QCAmh1HxP1GkW8DF9K2pEkuqM67Q9FWjx950PRfXezDV
+         Pw2l0P69fkFYkhPgvijviB6/iybzw5pfqNl4z0yFksEHDAGlKjuJtftPh+AkL+RNx59j
+         5N12BEoTndsCk7KowHehqedco266rhYfP5hciRL5S/GXa0iz/9F+YCgYiS5lebcjZNhd
+         fApqYNg05ylbkBkmUkejDYjjtnROl2izGuiauCTF3ngDcuipBhrfIKlb0raQSD4h2zyi
+         e5uQh3GLOTb8HpVIxbpzlOvbL4EbXh663vcob3+0H+E8rWMRAdo/6OH/Ncc4kkLOM71t
+         klNw==
+X-Gm-Message-State: AElRT7FgEk1RvT73UC1F6anZQFKTdSSed0oGH+DKICMzufakOOUfva4E
+        BQjhG7tnbNNMXAUl1la4z9Q1pJT+
+X-Google-Smtp-Source: AIpwx49fokccMc4HRRS4oOujdDUr3qREtHAu4tM5ryugSHgoafB1DTqPPXR557wPhPgesJofJNaqxw==
+X-Received: by 10.223.154.182 with SMTP id a51mr25997036wrc.176.1523180129597;
+        Sun, 08 Apr 2018 02:35:29 -0700 (PDT)
+Received: from localhost.localdomain (89-95-107-230.abo.bbox.fr. [89.95.107.230])
+        by smtp.gmail.com with ESMTPSA id v75sm13910014wrc.90.2018.04.08.02.35.28
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 08 Apr 2018 02:35:28 -0700 (PDT)
+From:   Christian Couder <christian.couder@gmail.com>
+X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Thomas Rast <tr@thomasrast.ch>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Christian Couder <chriscool@tuxfamily.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Philip Oakley <philipoakley@iee.org>
+Subject: [PATCH v1 0/2] t/perf: bisect performance regressions
+Date:   Sun,  8 Apr 2018 11:35:11 +0200
+Message-Id: <20180408093513.17769-1-chriscool@tuxfamily.org>
+X-Mailer: git-send-email 2.17.0.rc1.36.g098d832c9.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Mar 31, 2018 at 11:18 AM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
-> [...]
-> Fix these inconsistencies, and no longer show the identifier by making
-> the 'git reset --hard' call not print the "HEAD is now at ..." line
-> using the newly introduced flag from the previous commit, and printing
-> the message directly from the builtin command instead.
->
-> Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
-> ---
-> diff --git a/builtin/worktree.c b/builtin/worktree.c
-> @@ -322,12 +320,22 @@ static int add_worktree(const char *path, const char *refname,
->                 argv_array_pushl(&cp.args, "reset", "--hard", NULL);
-> +               argv_array_push(&cp.args, "--no-show-new-head-line");
->                 cp.env = child_env.argv;
->                 ret = run_command(&cp);
->                 if (ret)
->                         goto done;
->         }
->
-> +       fprintf(stderr, _("New worktree HEAD is now at %s"),
-> +               find_unique_abbrev(commit->object.oid.hash, DEFAULT_ABBREV));
-> +
-> +       strbuf_reset(&sb);
-> +       pp_commit_easy(CMIT_FMT_ONELINE, commit, &sb);
-> +       if (sb.len > 0)
-> +               fprintf(stderr, " %s", sb.buf);
-> +       fputc('\n', stderr);
-> +
->         is_junk = 0;
->         FREE_AND_NULL(junk_work_tree);
->         FREE_AND_NULL(junk_git_dir);
+This is a small patch series on top of cc/perf-aggregate-sort, which
+is next, to add scripts that make it much easier to bisect performance
+regressions.
 
-Generally speaking, code such as this probably ought to be inserted
-outside of the is_junk={1,0} context in order to keep that critical
-section as small as possible. However, as mentioned in my response to
-the v6 cover letter[1], I think this chunk of new code can just go
-away entirely if git-reset is made to print the customized message on
-git-worktree's behalf.
+For example if you ran perf test using the perf.conf config file that
+contains a "with libpcre", then using:
 
-[1]: https://public-inbox.org/git/CAPig+cQ8VzDycUMo-QOexNDBgQGEGj2BPmPa-Y0vhGCt_brbhg@mail.gmail.com/
+$ ./aggregate.perl --subsection "with libpcre" --sort-by=regression v2.15.1 v2.16.2 v2.17.0 
+
+you can get a line in the output like:
+
++8.2% p5302-pack-index.6 14.33(44.50+0.77) 15.50(43.83+0.94) v2.16.2 v2.17.0
+
+and you can now use this output line to bisect where the regression
+comes from using:
+
+echo "+8.2% p5302-pack-index.6 14.33(44.50+0.77) 15.50(43.83+0.94) v2.16.2 v2.17.0" | ./bisect_regression --config perf.conf --subsection "with libpcre"
+
+Caveats:
+
+You must make sure that the times are consistent between runs and that
+there is a significant time difference between the "good" runs and the
+"bad" runs.
+
+For example the following is not easily bisectable:
+
++100.0% p0000-perf-lib-sanity.2 0.01(0.01+0.01) 0.02(0.02+0.00) v2.15.1 v2.16.2
+
+as the rtime went from 0.01 s to 0.02 s and we only have 0.01 s precision.
+
+Christian Couder (2):
+  perf/run: add --subsection option
+  t/perf: add scripts to bisect performance regressions
+
+ t/perf/bisect_regression | 73 ++++++++++++++++++++++++++++++++++++++++
+ t/perf/bisect_run_script | 47 ++++++++++++++++++++++++++
+ t/perf/run               | 56 ++++++++++++++++++++++++------
+ 3 files changed, 166 insertions(+), 10 deletions(-)
+ create mode 100755 t/perf/bisect_regression
+ create mode 100755 t/perf/bisect_run_script
+
+-- 
+2.17.0.rc1.36.g098d832c9.dirty
+
