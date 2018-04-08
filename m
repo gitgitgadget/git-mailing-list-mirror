@@ -7,25 +7,25 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D1E0F1F404
-	for <e@80x24.org>; Sun,  8 Apr 2018 18:26:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 01D4B1F404
+	for <e@80x24.org>; Sun,  8 Apr 2018 18:26:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752364AbeDHS0Q (ORCPT <rfc822;e@80x24.org>);
-        Sun, 8 Apr 2018 14:26:16 -0400
-Received: from mout.kundenserver.de ([212.227.126.131]:38161 "EHLO
+        id S1752412AbeDHS0S (ORCPT <rfc822;e@80x24.org>);
+        Sun, 8 Apr 2018 14:26:18 -0400
+Received: from mout.kundenserver.de ([212.227.126.187]:52963 "EHLO
         mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752258AbeDHS0P (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 8 Apr 2018 14:26:15 -0400
-Received: from furore ([82.194.150.97]) by mrelayeu.kundenserver.de (mreue005
- [212.227.15.167]) with ESMTPSA (Nemesis) id 0LvxEH-1eQtNw2wCz-017obx; Sun, 08
- Apr 2018 20:26:13 +0200
-Date:   Sun, 8 Apr 2018 20:26:08 +0200
+        with ESMTP id S1752279AbeDHS0Q (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 8 Apr 2018 14:26:16 -0400
+Received: from furore ([82.194.150.97]) by mrelayeu.kundenserver.de (mreue004
+ [212.227.15.167]) with ESMTPSA (Nemesis) id 0Mb5Gp-1el5ZN1WO3-00KeDt; Sun, 08
+ Apr 2018 20:26:14 +0200
+Date:   Sun, 8 Apr 2018 20:26:13 +0200
 From:   Florian =?utf-8?Q?Gamb=C3=B6ck?= <mail@floga.de>
 To:     git@vger.kernel.org
 Cc:     Szeder =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Subject: [RFC PATCH 1/1] completion: Load completion file for external
+Subject: [RFC PATCH 1/1] completion: load completion file for external
  subcommand
-Message-ID: <20180408182552.26289-2-mail@floga.de>
+Message-ID: <20180408182552.26289-3-mail@floga.de>
 Mail-Followup-To: git@vger.kernel.org,
         Szeder =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
 References: <20180408182552.26289-1-mail@floga.de>
@@ -36,22 +36,22 @@ Content-Transfer-Encoding: 8bit
 In-Reply-To: <20180408182552.26289-1-mail@floga.de>
 X-Mailer: git-send-email 2.16.1
 User-Agent: Mutt/1.9.4 (2018-02-28)
-X-Provags-ID: V03:K1:iVG5I3hYk8AnAGBpmKbXr1VlayCNGvb5OedT4tqF++ECdBs8C9w
- j9is8wZ1xmirQ2V65a67A5KOt7ql1RRz9mQDl/dplzFytnzHRVPzmHlzLssMiZC3tCJcekU
- 99DQBSr8G5ZaQMya5cIImYGzAkPwLvUtVb/MR6BKGauwY+QGVvG7OxkrZyMdCtbohS1Swzj
- +ESym5byL6r+luyXJxfNQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:mEQv6zadIHk=:ACZTZwLsrleWr+vlJv3Jvq
- pYBFut6ZBsP+JUCn/8vPbeBHe4HIkSSjPQke3g8eGigGFmHAR/uIMi7CuwZHhOXzQnsIMv6UN
- C0S1SDAeZ0E7Yj+xkJrOVHN2VFkQyurHGMMe71Et67T12yiCZHGfy/zPp5El5iw0JjPWEdz/v
- Jo4FBfmjc1ZhfBi4w4Sp6/m/8lKd4qikV7174BZjiVaBt95Y+r91QSHhIgZxJFjhebbOAVj++
- 9gE5LzR6ecOgpxrvV1O6EAfIVL9NdUBGImckMqs2lmZKXjuuj6GJQjJkYHSBpMKIAEcNTi3/r
- q81nFohF/9BBrhY4YqbLZpBkxkTgI85uAXwAR37d/TRK54zdlta72IdequMxvsOtPBFLMF5gg
- mJFzCYlOTQDzsLHPWSU22akCTrUVkw/B7xLm0SdyiUbIyDh+h4h5IjxLHhCqevYOm4w4PakgP
- aVRPk4B04feez50C6NgW2M7the/nQCzX0FZdrG5fNKr8QPtlSAXEIcaCY4IrAzyLeG4/3O+29
- IBmAwoE/IyGOZ4Haxr0B0LkDC92LLKV2fE0V76yHbtlKVQf1FMbLuilZfn37ZGkWV3NvlcH5q
- f1HffcoFyEOpSLIwDCA+UTnO8a4JQwrrYo74Sa7vBVVUjizVoWGRka8Qo1gdOCgtlckNrbDlW
- xJyG09k/eKEFeRdeGMuRa2aGFRuuEE8AZ7cUrdSWI3VmfE7e/j4LOEuXCnvGtZYCrs3ocucpy
- chNZ+eQ5hTY69pzo46/1IuOlBUx14PUzxZf40Q==
+X-Provags-ID: V03:K1:mTh0rUH94Mvs4ZmXid3J1yUFowq0sndIWsPrhoeJunkXjsWIzz4
+ MI8u/blP7hTfwb1ERk0IBnc2kjVuG75kpuU1VkVbUO+oQIjFFzlxw04tIETVvfK3JgfXEZ8
+ Um+cS0KAWVfWm2l+Yqve+DJ9AqQE4ZrZYksdnMG5nML3c2RYLNjkNOxHGDOd9p2hd5A5bAH
+ c4v2tXIUgQseGGaQ4Gx+w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:XsKMBrYOnak=:JW9n5yVWqNi0hXBs/BulMX
+ t6YFPuNKveH2iGpxg9V6bTVN40TyEX+U+OrN6onrUIsC/dwhzpEs0R59cpPV4iqIrL4swWi0C
+ hA3UFnUBMH0qmaoVA0V1+IN1M4QQj5b2iAr27/bclCmTf00NnDrdxi5JvsD+Knwi64uY3A7F9
+ qjuirXRA5tEgFyP/othDzHp/KXK/4LNmpmEnL4kkuTPFY/aTtWADyW6WkKpPVU+51BHnCkQ4N
+ xW9gAn7LTpCYGFGDBs/71BOZoeE++r7J7x8Qaklm/Al3gCJbrUHA5+RS/EKBJWa+glM+hXn5K
+ Zi4d+WlsBtLd2c6iVuArd1dHoQtbYGAeaO77gBYcACwADR6jD6Sa8kEALXca8NElfw0eOxPQn
+ jcBLEeNQTZZFKEmMR/geqzR4n7J//IYTJtjKfkT05+KAtuZV2w1tas9fDX7+8oeMNNyhTaHjk
+ sZpATSaP6VPTQtvJ6gWj+TVDJj9KkEQnS0JMmP7bU00sqcQktjWWp/M7ce/3Avrb1Y/XxFsnm
+ +Kp/V98za5a/ZDJ5ql+7BjXL7Lq2YxLFkz6fHgQantP+j3w9j6EWa5vnLias/BIrm+Cm54rF2
+ tQTcO5mVEmqZfGNBr/l/jP8YCvYgZEW3iAIZRW5Ieu31XBGNFvSbUBVcfO+ezYnYkkVDEpYp/
+ WHLchHXwLoyLxjjlsrujD40bUgUdVkc+V3PgVIomKbsCrSWGE/in5MCuL3egB/MhkRY6vs6YG
+ ZeAPw+LGuIDC3zAxw10BvRgM5hsXbDoJ2961OQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
