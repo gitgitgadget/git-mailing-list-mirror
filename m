@@ -2,88 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 43C091F404
-	for <e@80x24.org>; Sun,  8 Apr 2018 01:06:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6C16E1F404
+	for <e@80x24.org>; Sun,  8 Apr 2018 01:06:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752034AbeDHBGK (ORCPT <rfc822;e@80x24.org>);
-        Sat, 7 Apr 2018 21:06:10 -0400
-Received: from mail-qt0-f171.google.com ([209.85.216.171]:44443 "EHLO
-        mail-qt0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751387AbeDHBGK (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 7 Apr 2018 21:06:10 -0400
-Received: by mail-qt0-f171.google.com with SMTP id j26so5341564qtl.11
-        for <git@vger.kernel.org>; Sat, 07 Apr 2018 18:06:10 -0700 (PDT)
+        id S1751735AbeDHBG3 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 7 Apr 2018 21:06:29 -0400
+Received: from mail-qk0-f181.google.com ([209.85.220.181]:45574 "EHLO
+        mail-qk0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751387AbeDHBG2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 7 Apr 2018 21:06:28 -0400
+Received: by mail-qk0-f181.google.com with SMTP id s9so5432016qke.12
+        for <git@vger.kernel.org>; Sat, 07 Apr 2018 18:06:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=xSlC8SbpMLBN1KYColqlNZoAcFZUb9B+L12H/Gfdp2M=;
-        b=X9zK03mpiMbGu5t1a8iXzcsmEcn8Ef5Yfx4a4K1TPCJjAlpNyHCEPyi31QbU91gv0d
-         a7EiWPDNk7TEaToy+OUA/HIJK8PfVkOmT3Mt+LFhcmZhgf86/M1F/t97bAX5EgOrlvft
-         4tZAE4Np2NYxQfuM7ptwIGEN6dG2g3fo7aBsBhDGIpsNiNAhElczZhVYj+HdwGvbJxm2
-         aTlnLJTspTytqJdsPlaFTbQ09138bzluoZ8TB/hNJsTeh4YjgYxr6kjOEs0R2dEPBVIx
-         sYEttJ9vGpHkN9UKF2aPxEf2bGOMZaD91EVjotl6wLaDn+7bv5TAknxETNyAb3wkVE0y
-         jRUg==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=JdNvQrk0ohQsd6mEu5k8ZN8g5pb7j+xegJkLh3GSdsk=;
+        b=KhglpUEXHJu8XPMXiv7sXGblL3psCfr45ak5DTXO+dusKuMVVcHXJYjXPYjw2Qe+1L
+         okMS8w30WC+ODVuysdXaUlfuBkeevszeInL0M+hNMg1rYoyXTPDp7CClXaS4XdHHSn/u
+         2+so5fVb7eLg2LfDIcq+O/3QM1nTMxpr+jKGiNJRybT7569QsoJRrjFwsVrplu+E0ZsA
+         G5Ypn8Z6cy17AP2VveFsrMZP7yxEORSw56wnYIHH3I7BSGNJkl5/J4eY4qkLdSEyRQSq
+         ycUBsSdBEryFsWEDJ6ytOrVAylBOve5IJHpP8uGrVX3+tyDLtHiN5kDbog/0UBRTzRTn
+         zXNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=xSlC8SbpMLBN1KYColqlNZoAcFZUb9B+L12H/Gfdp2M=;
-        b=m+LryJRQMLxpLBPSMPq+I067o5ZaR3Vbs+LzFakUB8uifVTxM1ss8PBnsgfOM7XrsM
-         7bsb3prwOZ6RLAARquIZ5nO60zSeO6Tkbq5Irvwc0c8wxRMORWgjiYEWkkI0YaoYb4yg
-         QGdTzjIoBA8CyCXu5ORrD+0B3IS5uKerXdIJ+ozCl7DDaU1ce4ORCiIc6maClKwYYgAI
-         2Ml1JUYykXq0n8KvjOC2Uc63PcM5FTYiSjnN59qzH8brIK2ut1FkPsLQRLl7QDlxu67S
-         D27A6hSwRjmgSJJAVKtf+g6c3QgHR9hqL1OkjuftyEEW1RzttwD4CSxjLc+JJTtQHv5A
-         ZcFw==
-X-Gm-Message-State: ALQs6tCflIpfNRt0UD7jsby7HUDuHqQ5pf5EUniBQk5yjlP2h4PGunFK
-        ttzw0rquFr0wXKrStPjrnkqpVfb3XS+PAnGhuRo=
-X-Google-Smtp-Source: AIpwx49kxTm3TFBuPY3VBJNLhgb3J4l63JuprSVSmSKBKMApAuDzcwGw0KuiIfBAVKg7NqAV5/mTNYIUqM5CDZrlSNU=
-X-Received: by 10.200.42.37 with SMTP id k34mr46632082qtk.101.1523149569495;
- Sat, 07 Apr 2018 18:06:09 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.12.174.202 with HTTP; Sat, 7 Apr 2018 18:06:08 -0700 (PDT)
-In-Reply-To: <20180407164250.54303-1-haraldnordgren@gmail.com>
-References: <20180402005248.52418-1-haraldnordgren@gmail.com> <20180407164250.54303-1-haraldnordgren@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sat, 7 Apr 2018 21:06:08 -0400
-X-Google-Sender-Auth: BN5HYzxvEClEiazed9mHc2Z5-pA
-Message-ID: <CAPig+cTQ1ZzWTp6Qsj96nE8QwhuRuqB51orTNsCQjGKD=_veyg@mail.gmail.com>
-Subject: Re: [PATCH v11 1/4] ref-filter: use "struct object_id" consistently
-To:     Harald Nordgren <haraldnordgren@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=JdNvQrk0ohQsd6mEu5k8ZN8g5pb7j+xegJkLh3GSdsk=;
+        b=QelNmPbyIkis9TaM0TYjAYOCSifGyBUveIUG3/dndbaqVsxtvmpDRxEK+Yx7/Q4FXR
+         CuvQ1VgL8TjoJkZfSx3RftNMlDIdw936Njvzuh9MzKOZRCbrFI0Zz1OBiUEitImxFo1n
+         fEJoQpJKj/g5bejUJwf9eJIVpPkyfGsora5EiqwMUNEpUgmlVtk0EYUChoX8c35FYuBF
+         /O2IQThJx1EQaCiyhh7FRCEHWH86mlUy8tibo1392+SEwTzZ7S7uPnzRRhRUthjdxTHD
+         39Kuz3Uvd4jNv4wfU+ZRTNZEVRP4Nb4q0y7hGOYKA7QXjTKAzMidYjaIibYdiIyxIxUH
+         Hmgw==
+X-Gm-Message-State: ALQs6tC2eabMNGbSSOKtcjnYFF7oU75z/yRNhdg6UZQdRHhtVK39Dz0k
+        t1EXsCjx++3j5Nm+TEHMTCw=
+X-Google-Smtp-Source: AIpwx4++cjtcQdatQzOBW/rMAQERNg32aX/vJw821tc7cdW08WraX23mXKtX64gHDSkeLq+1WA33xQ==
+X-Received: by 10.55.217.70 with SMTP id u67mr22820271qki.294.1523149587969;
+        Sat, 07 Apr 2018 18:06:27 -0700 (PDT)
+Received: from [172.22.150.178] ([98.122.163.216])
+        by smtp.gmail.com with ESMTPSA id f2sm3831324qtp.81.2018.04.07.18.06.26
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 07 Apr 2018 18:06:27 -0700 (PDT)
+Subject: Re: [PATCH 0/6] Compute and consume generation numbers
+To:     Jakub Narebski <jnareb@gmail.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Cc:     git@vger.kernel.org,
         =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+        Stefan Beller <sbeller@google.com>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Jeff King <peff@peff.net>
+References: <20180403165143.80661-1-dstolee@microsoft.com>
+ <867epjez1n.fsf@gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <07abd2ce-e042-fe3c-b2db-3d2f2aa44de8@gmail.com>
+Date:   Sat, 7 Apr 2018 21:06:24 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.0
+MIME-Version: 1.0
+In-Reply-To: <867epjez1n.fsf@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Apr 7, 2018 at 12:42 PM, Harald Nordgren
-<haraldnordgren@gmail.com> wrote:
-> From: Jeff King <peff@peff.net>
+On 4/7/2018 12:55 PM, Jakub Narebski wrote:
+> Currently I am at the stage of reproducing results in FELINE paper:
+> "Reachability Queries in Very Large Graphs: A Fast Refined Online Search
+> Approach" by Renê R. Veloso, Loïc Cerf, Wagner Meira Jr and Mohammed
+> J. Zaki (2014).  This paper is available in the PDF form at
+> https://openproceedings.org/EDBT/2014/paper_166.pdf
 >
-> Internally we store a "struct object_id", and all of our
-> callers have one to pass us. But we insist that they peel it
-> to its bare-sha1 hash, which we then hashcpy() into place.
-> Let's pass it around as an object_id, which future-proofs us
-> for a post-sha1 world.
-> ---
+> The Jupyter Notebook (which runs on Google cloud, but can be also run
+> locally) uses Python kernel, NetworkX librabry for graph manipulation,
+> and matplotlib (via NetworkX) for display.
+>
+> Available at:
+> https://colab.research.google.com/drive/1V-U7_slu5Z3s5iEEMFKhLXtaxSu5xyzg
+> https://drive.google.com/file/d/1V-U7_slu5Z3s5iEEMFKhLXtaxSu5xyzg/view?usp=sharing
+>
+> I hope that could be of help, or at least interesting
 
-You incorrectly dropped Peff's sign-off[1] when re-sending the patches
-he authored in the series. And, your sign-off should follow his.
+Let me know when you can give numbers (either raw performance or # of 
+commits walked) for real-world Git commit graphs. The Linux repo is a 
+good example to use for benchmarking, but I also use the Kotlin repo 
+sometimes as it has over a million objects and over 250K commits.
 
-Also, if you made any changes to Peff's patch, it's a good idea to
-state so with a bracketed comment at the end of the commit message
-(before the sign-offs). For instance:
+Of course, the only important statistic at the end of the day is the 
+end-to-end time of a 'git ...' command. Your investigations should 
+inform whether it is worth prototyping the feature in the git codebase.
 
-    [hn: tweaked doodle blap]
+Thanks,
 
-or such.
+-Stolee
 
-[1]: https://public-inbox.org/git/20180406185831.GA11108@sigill.intra.peff.net/
