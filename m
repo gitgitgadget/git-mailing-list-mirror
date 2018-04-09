@@ -2,96 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1ADDC1F404
-	for <e@80x24.org>; Mon,  9 Apr 2018 02:21:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B692E1F404
+	for <e@80x24.org>; Mon,  9 Apr 2018 02:23:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932494AbeDICVq (ORCPT <rfc822;e@80x24.org>);
-        Sun, 8 Apr 2018 22:21:46 -0400
-Received: from mail-wm0-f54.google.com ([74.125.82.54]:40077 "EHLO
-        mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932377AbeDICVo (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 8 Apr 2018 22:21:44 -0400
-Received: by mail-wm0-f54.google.com with SMTP id x4so13045181wmh.5
-        for <git@vger.kernel.org>; Sun, 08 Apr 2018 19:21:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=FSO2QEfKe4K+nUashJ8wIMZOiBO3oJF+VMbSGgw89aU=;
-        b=Xt69Cpy60ifIV+yNQfbqKO5pYSq5hq/jLI1wfxEC4CpEKIoUhUp9Xix567ecmPOUlg
-         xsf1pUoIN5fTLSfAEINfNQxV+V/Ta5xtQom989Tu/fvMMr6WNh3dqBaHSI4iq7/5EYlC
-         fb/nzdqQeSumJyWACEnYV0NYlFCiFkChbiVkjfpaiBNYDr4OkaNKt5kt/gjDc6tSduKT
-         AiTEDWAsGHChIVH2RihgAwtjQOShlemnS3p9UKnmyJ0hyFrCQqq4Pl/igATWn9P+gosK
-         CzcFhAQ7flVhDXFEu9pYfBC85fPS3vRnWaC4TWLFmHneWF/UI7ZxxAu6jaB8x6trTxmC
-         qWEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=FSO2QEfKe4K+nUashJ8wIMZOiBO3oJF+VMbSGgw89aU=;
-        b=rWz/CFVLtq+8bpL4gG+adWlOQOv3+R1Lu9THnpzw/0YtDTLExuyLuOIwNzibym/iYL
-         BB7XAd/ESHlyUEDk3kkF2T3lTQkY6i56mGTSgkQf2TB0RbMR6dNFZ2TAFBV+qg3cOUv5
-         JAPWajbeLexFb3aPDbECWYXE1BB8FY+LcplTkXz/KfdzIEEioPo2COTi8G2QBl1GbF2W
-         f8MTNxwRrtsSZzdpFS+0lc9TXQBxhV+iYMsnQzQtIQnsuLs/ElRY5NSGwhBYUpBRbaez
-         YvG3aKnk1XtZUu37h+0SKz07xLAtElEh+gPJrhEs00/TP0FOWS6e0fYMf5pI4ymP35eT
-         iFkw==
-X-Gm-Message-State: AElRT7GwCBfSRpJcju652xKJixTxbB7TA0u7FKr/lx0XTIjaEo1tN9I0
-        1WmXS2GwLQ6K1Za6Xq7A5Kg=
-X-Google-Smtp-Source: AIpwx49uiXPO6YMPto+uYcag34cQJE0DhbZeD0pIEjkoRcbNU8MNid58a/Pkl6c19rP4Uca3dYcRlw==
-X-Received: by 10.28.184.204 with SMTP id i195mr16779521wmf.15.1523240502613;
-        Sun, 08 Apr 2018 19:21:42 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id m9sm11868747wrf.13.2018.04.08.19.21.41
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 08 Apr 2018 19:21:42 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] t5404: relax overzealous test
-References: <958ee6f006aba0c67c8e064d31206e3e68a1cc49.1523043053.git.johannes.schindelin@gmx.de>
-        <20180406195331.GC11450@sigill.intra.peff.net>
-Date:   Mon, 09 Apr 2018 11:21:41 +0900
-In-Reply-To: <20180406195331.GC11450@sigill.intra.peff.net> (Jeff King's
-        message of "Fri, 6 Apr 2018 15:53:31 -0400")
-Message-ID: <xmqq60516rwq.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1757580AbeDICXL (ORCPT <rfc822;e@80x24.org>);
+        Sun, 8 Apr 2018 22:23:11 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:50175 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1757550AbeDICXJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 8 Apr 2018 22:23:09 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 54FCBE393C;
+        Sun,  8 Apr 2018 22:23:06 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
+        :cc:subject:message-id:references:mime-version:content-type
+        :in-reply-to; s=sasl; bh=h4aWfsT3oYZBg3iUbrBMKeFnW9Q=; b=Pa4UnUp
+        TWaI7hsyb1XMkgh/VtzQoKLYsvkLOHELfO1m+l5p7fyiau/ffY5+K3Efvu2rUwB/
+        Fg9xuHwu+SWX7q+rf8KhgteAsdcHqwhRNqRwcH2bzGs0SdXkRmWuvT74PjTSJSbm
+        pYqcUPL2oOZtHuWbwYbh/aX6JgewT6tt1/N8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
+        :subject:message-id:references:mime-version:content-type
+        :in-reply-to; q=dns; s=sasl; b=onBw2kuNtMS+Y3TyBJVmCAPpp19mtWyB6
+        zE7kKYVQk/CgWSv/ExmOgIDIe6NFcN9oHZGvl/GiSRX7VInYVLSzxrofemEnjBWd
+        mTsBp2hOPiF3Zzj2guYX5AY4IiaUd267bvbYUIV4MN8xGxE6lJzo9Awhm/m0ZWtk
+        4CxlhV+lic=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4CCF3E393B;
+        Sun,  8 Apr 2018 22:23:06 -0400 (EDT)
+Received: from zaya.teonanacatl.net (unknown [173.67.181.41])
+        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id CABCEE393A;
+        Sun,  8 Apr 2018 22:23:05 -0400 (EDT)
+Date:   Sun, 8 Apr 2018 22:23:04 -0400
+From:   Todd Zullinger <tmz@pobox.com>
+To:     Lucas Werkmeister <mail@lucaswerkmeister.de>
+Cc:     git@vger.kernel.org,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH] Fix condition for redirecting stderr
+Message-ID: <20180409022303.GS29680@zaya.teonanacatl.net>
+References: <20180403221307.29194-1-mail@lucaswerkmeister.de>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180403221307.29194-1-mail@lucaswerkmeister.de>
+User-Agent: Mutt/1.9.4 (2018-02-28)
+X-Pobox-Relay-ID: EFCDB91C-3B9C-11E8-B874-67830C78B957-09356542!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Lucas Werkmeister wrote:
+> Since the --log-destination option was added in 0c591cacb ("daemon: add
+> --log-destination=(stderr|syslog|none)", 2018-02-04) with the explicit
+> goal of allowing logging to stderr when running in inetd mode, we should
+> not always redirect stderr to /dev/null in inetd mode, but rather only
+> when stderr is not being used for logging.
 
-> On Fri, Apr 06, 2018 at 09:31:22PM +0200, Johannes Schindelin wrote:
->
->> In 0b294c0abf0 (make deleting a missing ref more quiet, 2008-07-08), we
->> added a test to verify that deleting an already-deleted ref does not
->> show an error.
->
-> Amazing that it took this long to come up.
-> ...
->> This patch chooses instead to look for the prefix "error:" at the
->> beginning of the line, so that there can be no ambiguity that any catch
->> was indeed a message generated by Git's `error_builtin()` function.
->
-> Yep, this seems obviously correct.
+Perhaps 's/^F/daemon: f/' on the subject?  (Junio may well
+already have done so while queueing locally.)
 
-Hits in
+The patch itself looks reasonable (to my relatively untrained eyes).
 
-    $ git grep 'grep ["'\'']*error' t
-
-shows that many checks for errors that are not anchored, but I do
-not think any of them are looking for the string in a pathname other
-than this instance, so it would be OK.
-
-Thanks, both.  Will apply.
-
+-- 
+Todd
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Hardware:  the parts of a computer that can be kicked.
+    -- Jeff Pesis
 
