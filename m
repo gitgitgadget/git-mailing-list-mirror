@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 295431F404
-	for <e@80x24.org>; Mon,  9 Apr 2018 20:42:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5BC861F404
+	for <e@80x24.org>; Mon,  9 Apr 2018 20:42:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754116AbeDIUmQ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Apr 2018 16:42:16 -0400
-Received: from mail-it0-f43.google.com ([209.85.214.43]:35072 "EHLO
-        mail-it0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754097AbeDIUmO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Apr 2018 16:42:14 -0400
-Received: by mail-it0-f43.google.com with SMTP id v194-v6so12026512itb.0
-        for <git@vger.kernel.org>; Mon, 09 Apr 2018 13:42:13 -0700 (PDT)
+        id S1754223AbeDIUmU (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Apr 2018 16:42:20 -0400
+Received: from mail-it0-f66.google.com ([209.85.214.66]:55936 "EHLO
+        mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754117AbeDIUmR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Apr 2018 16:42:17 -0400
+Received: by mail-it0-f66.google.com with SMTP id 142-v6so12892812itl.5
+        for <git@vger.kernel.org>; Mon, 09 Apr 2018 13:42:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=r2t3gNfCO6IfUA1bbi+84t+25Sulo05Ekc2cRYNHHm4=;
-        b=IyK5XHX1+ySHZqnmS81A0es5ZURuAXiY2sKTNmizME5EaUu1tE+wrM3sUb69qxGEEv
-         3x53iAOcfQpyVJzyrCk7l2DQ6xqNGhpIuzY9IEbXnlvfdGiUask9Hn1FJ9dAGIEMoNr+
-         /BOaW2R4xAsth4Xcdec0r7EsBzCeCKP29Lw9vwF+3bZD6o86RVictjSM4JsypyPuAL8i
-         87El8RWvNRhhAHgl/et/B4W/TcHsJzwvH40r2wjBroX/6F+/y59G4AePd+fOl/Ic4IF0
-         wNIzPfRe9608Fd8DN08HOv68DcODcXuDQm9iz4m4yTLIxLjDJIdIt+5B1i2eoBklSpmn
-         X0wg==
+        bh=UCCUEmOto+NjRg7gGzGA0g8BysG5rRdQwZU0/cAITY0=;
+        b=oNtitu0co3Ee4A6PY10HyE4VWmwC7ssQVtivoxclGR5BM+D2j/Dx26B18MITjgCgqW
+         LjpRbmxvyI1SOYBWcUtLWsHqQFqsKo0kheCef0aePlRxtIVNyEt+f0SUWNPRxkaW/8P+
+         5TyOflK8CJLsbxyDdCGR0e33JIkf3aSJ5wZ+TM0zCZVjqVjyjr+fQuGV3tTWWTI7QIlm
+         ovcKUcSdRQOtiWyG5yYc2Rw96h4MNWihOunuWujzOmYGCEBoHaoTEo5TPz4Pherj+jGB
+         i0aSTqvoPTVts+8/s1ATQ7Dn+mv5Eq2JUtiQnFyyu6/IazagQKqvlDR5eAo4sRZ0GNxl
+         moFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=r2t3gNfCO6IfUA1bbi+84t+25Sulo05Ekc2cRYNHHm4=;
-        b=tVauQgSDBM25XL2Pd3+9eT5lc6NMcI9qmeRFk8sQB/VdFUEfkisfOFq5AT8XcJ2Vp6
-         umHk6SLXL9+Zqsa60bYDwzXodAcz3JpfAUnculwgLL/ro1Hl4wgvqWL5ZNfNhbnK/lVm
-         D07Ovjg0H85MC1NSEaQRZdOTN5vJExZw87UyL+3lhnafqUHHisamD0b19dNBRp1DemE8
-         9Xc/Zw2/b93ALCLOo/hGZtbJT2ng5D8IAZP6pYhmamlSsS+tvqNtLag0+l+NljvkpU6L
-         MSoggvNF55p2gVP+E8q92ju0nbg8mXs6Rtl+a8EKtC1+9CrtZj3T/0vGpS3wFJqr0MaD
-         /irg==
-X-Gm-Message-State: ALQs6tBwLnEpBhxMLDLVeptIetmNut5tFY7aG17Xy5BuDXZS66yUBQF+
-        Cr/S9J3b2ohr/94zwSqeSxgfFt16
-X-Google-Smtp-Source: AIpwx4/s+CGr+/oGAVrtYEr45n8qoKJwGEWvc2Z67f18NmE5XrejGUCCKPwk3hbbWn8pHbnJFTHK3A==
-X-Received: by 2002:a24:393:: with SMTP id e141-v6mr1617660ite.17.1523306533289;
-        Mon, 09 Apr 2018 13:42:13 -0700 (PDT)
+        bh=UCCUEmOto+NjRg7gGzGA0g8BysG5rRdQwZU0/cAITY0=;
+        b=lfdnmGwB6GsarrjCSFtsIBh6MVp6XNYWD+xL+cP2urWLptJAzF19SYNfnKVm0FrfEU
+         zL0SeC3k+Sc1xeUX0Dkk+LS19wznUUp26xpG0QSH7d3yhRRtZl+ke8LOcAxbiC2t2nlx
+         igYjLbmARpZgou9bm+XMgInycGwIun9NduJeAPhv+zgfH/2w1KbhN7uHwtckcOnVEXz8
+         Su4mIj3G+aIeuX7/3TKsNQbNN72jIkYn58owblomctLhhCQ78dGxFc2lvZuOUd+1S5J/
+         6vu5D5dpPmalSPyj2BMgN4l9H0hfGTRj0mD+ouURQN1n6pggWO2y3TtOlW6P6LLYO6BW
+         sQTA==
+X-Gm-Message-State: ALQs6tD6N8OHIORButHTvDAG7iPAepTDzYLliZG15lMTOoMVA1WXhOh7
+        nVmOiVI4d95vbg0vYqK1FnLLGdni
+X-Google-Smtp-Source: AIpwx4+tP+HmehMtgkoUa3o/WyCXtnOF8m+bLSeS9GKMgpnTWeS2YDFYRS+ZXxeHIGrotA3jgp6Q2w==
+X-Received: by 2002:a24:dd82:: with SMTP id t124-v6mr1667431itf.2.1523306535999;
+        Mon, 09 Apr 2018 13:42:15 -0700 (PDT)
 Received: from localhost.localdomain (174-16-129-48.hlrn.qwest.net. [174.16.129.48])
-        by smtp.gmail.com with ESMTPSA id 134-v6sm98775itl.34.2018.04.09.13.42.12
+        by smtp.gmail.com with ESMTPSA id 134-v6sm98775itl.34.2018.04.09.13.42.14
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 09 Apr 2018 13:42:12 -0700 (PDT)
+        Mon, 09 Apr 2018 13:42:14 -0700 (PDT)
 From:   Ben Toews <mastahyeti@gmail.com>
 To:     git@vger.kernel.org
 Cc:     me@ttaylorr.com, peff@peff.net, mastahyeti@gmail.com
-Subject: [PATCH 1/8] gpg-interface: handle bool user.signingkey
-Date:   Mon,  9 Apr 2018 14:41:22 -0600
-Message-Id: <20180409204129.43537-2-mastahyeti@gmail.com>
+Subject: [PATCH 3/8] gpg-interface: use size_t for signature buffer size
+Date:   Mon,  9 Apr 2018 14:41:24 -0600
+Message-Id: <20180409204129.43537-4-mastahyeti@gmail.com>
 X-Mailer: git-send-email 2.15.1 (Apple Git-101)
 In-Reply-To: <20180409204129.43537-1-mastahyeti@gmail.com>
 References: <20180409204129.43537-1-mastahyeti@gmail.com>
@@ -64,50 +64,41 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff King <peff@peff.net>
 
-The config handler for user.signingkey does not check for a
-boolean value, and thus:
-
-  git -c user.signingkey tag
-
-will segfault. We could fix this and even shorten the code
-by using git_config_string(). But our set_signing_key()
-helper is used by other code outside of gpg-interface.c, so
-we must keep it (and we may as well use it, because unlike
-git_config_string() it does not leak when we overwrite an
-old value).
-
-Ironically, the handler for gpg.program just below _could_
-use git_config_string() but doesn't. But since we're going
-to touch that in a future patch, we'll leave it alone for
-now. We will add some whitespace and returns in preparation
-for adding more config keys, though.
+Even though our object sizes (from which these buffers would
+come) are typically "unsigned long", this is something we'd
+like to eventually fix (since it's only 32-bits even on
+64-bit Windows). It makes more sense to use size_t when
+taking an in-memory buffer.
 ---
- gpg-interface.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ gpg-interface.c | 2 +-
+ gpg-interface.h | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/gpg-interface.c b/gpg-interface.c
-index 4feacf16e5..61c0690e12 100644
+index 08de0daa41..ac852ad4b9 100644
 --- a/gpg-interface.c
 +++ b/gpg-interface.c
-@@ -128,13 +128,19 @@ void set_signing_key(const char *key)
- int git_gpg_config(const char *var, const char *value, void *cb)
- {
- 	if (!strcmp(var, "user.signingkey")) {
-+		if (!value)
-+			return config_error_nonbool(var);
- 		set_signing_key(value);
-+		return 0;
- 	}
-+
- 	if (!strcmp(var, "gpg.program")) {
- 		if (!value)
- 			return config_error_nonbool(var);
- 		gpg_program = xstrdup(value);
-+		return 0;
- 	}
-+
- 	return 0;
+@@ -101,7 +101,7 @@ void print_signature_buffer(const struct signature_check *sigc, unsigned flags)
+ 		fputs(output, stderr);
  }
+ 
+-size_t parse_signature(const char *buf, unsigned long size)
++size_t parse_signature(const char *buf, size_t size)
+ {
+ 	char *eol;
+ 	size_t len = 0;
+diff --git a/gpg-interface.h b/gpg-interface.h
+index 2c40a9175f..a5e6517ae6 100644
+--- a/gpg-interface.h
++++ b/gpg-interface.h
+@@ -31,7 +31,7 @@ void signature_check_clear(struct signature_check *sigc);
+  * offset where the embedded detached signature begins, or the end of
+  * the data when there is no such signature.
+  */
+-size_t parse_signature(const char *buf, unsigned long size);
++size_t parse_signature(const char *buf, size_t size);
+ 
+ void parse_gpg_output(struct signature_check *);
  
 -- 
 2.15.1 (Apple Git-101)
