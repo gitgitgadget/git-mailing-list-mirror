@@ -7,131 +7,212 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2FB221F404
-	for <e@80x24.org>; Mon,  9 Apr 2018 13:37:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1AA201F404
+	for <e@80x24.org>; Mon,  9 Apr 2018 13:51:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751851AbeDINhU (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Apr 2018 09:37:20 -0400
-Received: from mail-pf0-f175.google.com ([209.85.192.175]:41789 "EHLO
-        mail-pf0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751801AbeDINhT (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Apr 2018 09:37:19 -0400
-Received: by mail-pf0-f175.google.com with SMTP id a2so5783586pff.8
-        for <git@vger.kernel.org>; Mon, 09 Apr 2018 06:37:19 -0700 (PDT)
+        id S1752033AbeDINvs (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Apr 2018 09:51:48 -0400
+Received: from mail-pl0-f67.google.com ([209.85.160.67]:39816 "EHLO
+        mail-pl0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751539AbeDINvr (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Apr 2018 09:51:47 -0400
+Received: by mail-pl0-f67.google.com with SMTP id e7-v6so3177777plt.6
+        for <git@vger.kernel.org>; Mon, 09 Apr 2018 06:51:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-transfer-encoding:content-language;
-        bh=QKo2O1xS4pPL6CNqfA/lJYcMRTVApCUdRUqrAiwrXzo=;
-        b=IKjiTYkMrlRZupLAtZTwV9CSupecACrsZ+CeYWj9erRIL50s/DaWpacu7UFUIvpAWx
-         W0N+FFezXeysJ9FoT31muBGlg3fFNbJAsnzRDVEG0DYUa68BFYkT3WQtjM/odfogrYOC
-         aCXfpNIVO9oa3Wl74ZohZvmu7llYhbtsAPfsyTgrLZ2EnrBdNpJFmTiDIjreIShFXvFt
-         b5/MeQjLUzWTTu/wpQy4/ii0TigXn78JxpXPRR3ri2swpmk0k9i1PZ9rkqFjg0Qu/bw8
-         sH+pp5JiC75E0/YckhOYFvyuWg8lZs9XnKP2AaEs/E2T8CaVXInkQyna95G3/DSabZ2Z
-         ftZw==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=VhUb5UfRi5PgB1quasqSDnJX310BGGzJtY1iyIke1aY=;
+        b=sKR3TnsLsEaa7VNRABprCo46lRp0+pv+/+zI8s/wOqev4Zx5poKdC4nScV+pjnvmd3
+         PM6ZRKB3kOT/ZPElTqJB1riFOYYhZ7pA+nmKTayBCCFMqYnXqFIQLEMJe+xtn5/4bnKV
+         iS2x0gjUk+BIYTADen24UbRyOIzRKU9K9u9ykshMiSviDpgiK4ELTyumsxEvrlbihzmH
+         ERlnWrx3EZInXAfPY2lvu17a6WXChZbXBlC4n6C0pSwXn4giB1Md4CCmSYszeSvci/ek
+         8KwWn/917aMavpguMdewnCVMQiTNDKM9jaRmhgfb332h0qWzTYeiu6F6yrh0Q5PibTMu
+         bokA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-transfer-encoding
          :content-language;
-        bh=QKo2O1xS4pPL6CNqfA/lJYcMRTVApCUdRUqrAiwrXzo=;
-        b=hU4b/pFKexYFgjBMUTGi1P+H91P+07pzAlor3iim/OixuFYrnb8S0zoL09sQVLytqu
-         uWP+Ifvdt6xJpevI04qJeXTuOMaOaf+Jvv2ZROVtKmjII0RmLyD1a3AHD9P+0KmkDes7
-         UjBRwxClcjiUXAPulzIstn6bDokqfP3xa/jGDY9uZgnoUnpPBrrXO7rUNdLxlAfUMjXd
-         gniDGEdevRggmMjQR4CS5eqYqZi3n1pQd0KlkdQpRpUAXxxRbPuY57eHIPVtR3yAC0dJ
-         svh/hFbDQeIwouJykvwkIIK8VJM0m5pSB2RsxhtHE6gDKMucasTXYq0VINEj6Ldadz30
-         mUJw==
-X-Gm-Message-State: AElRT7HylgFRVpo9foaiFqi4nJXv1VmS4Rld6O/Dr4lWLZZErf5usrfD
-        +NmQ6WTObugMNUdyvKSOzHett1aI
-X-Google-Smtp-Source: AIpwx49N0ykgDoX3fFICHoeL/cMh6c7iRAMOWapiBX9tNf2xuDu9zyl/HtcHDPA08tlVR/7q7lISbw==
-X-Received: by 10.99.98.196 with SMTP id w187mr25619681pgb.307.1523281038698;
-        Mon, 09 Apr 2018 06:37:18 -0700 (PDT)
+        bh=VhUb5UfRi5PgB1quasqSDnJX310BGGzJtY1iyIke1aY=;
+        b=kumAsCBLGfI/mD77Opi2T1JIjJSsoCS3mWdsNt9CqQVlD+u8mKuUaQqUN/ZJdGA29b
+         AB7okrfr48hmvZkKjPt6d8+1JrbBBWzaBxy6g6GJH7nAhnUgfSyot/Y/qPuQbp+roxwU
+         MeyLBppAbEUE4tU6b1N99Yor+X7l/TLSZxfF12ffqypgVV+5tROT3ayhgVJdJ0XuC068
+         mSGfExAPMrGB0KDGC2ZiJ1thHNsDaZDHwcwT8BQidDq077p7plZ/+q17tMsfLuEHG+cM
+         DKZ6ptDMd9dHkccMzxEsJyOK7M1L7LZclwgEiVmE7IHFVN8mpYuL7Vs5DzIXeFn4Wpib
+         x85A==
+X-Gm-Message-State: AElRT7HMU9amJku0Gnkwk+QTUBNf9Djrw6wDs/loL+MOFw5p7LndkC45
+        NTkqw7fGNNwGUhZGlhrKGIM=
+X-Google-Smtp-Source: AIpwx480661K4t4H5fo/fiunf4EiIiIdv7OCVcBgINJoEs6qi8s6lRmw8Ib/nOeWJfpytt4KXx5Hng==
+X-Received: by 2002:a17:902:3381:: with SMTP id b1-v6mr38909877plc.214.1523281906140;
+        Mon, 09 Apr 2018 06:51:46 -0700 (PDT)
 Received: from ?IPv6:2001:4898:6808:13e:c4e6:7a22:56f1:df04? ([2001:4898:8010:0:ae1c:7a22:56f1:df04])
-        by smtp.gmail.com with ESMTPSA id r11sm1125257pfg.0.2018.04.09.06.37.14
+        by smtp.gmail.com with ESMTPSA id e73sm1750582pfj.186.2018.04.09.06.51.42
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 09 Apr 2018 06:37:18 -0700 (PDT)
-Subject: Re: What's cooking in git.git (Apr 2018, #01; Mon, 9)
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <xmqqd0z865pk.fsf@gitster-ct.c.googlers.com>
+        Mon, 09 Apr 2018 06:51:45 -0700 (PDT)
+Subject: Re: [PATCH 02/19] replace-object: move replace_object to object store
+To:     Stefan Beller <sbeller@google.com>, jonathantanmy@google.com
+Cc:     git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
+References: <20180406232136.253950-1-sbeller@google.com>
+ <20180406232136.253950-3-sbeller@google.com>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <98394864-ece6-5112-0274-b2399087f207@gmail.com>
-Date:   Mon, 9 Apr 2018 09:37:11 -0400
+Message-ID: <9cf5ca7b-4837-8626-f4f6-f580fd33128b@gmail.com>
+Date:   Mon, 9 Apr 2018 09:51:39 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
  Thunderbird/52.7.0
 MIME-Version: 1.0
-In-Reply-To: <xmqqd0z865pk.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <20180406232136.253950-3-sbeller@google.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 4/9/2018 6:21 AM, Junio C Hamano wrote:
-> * ds/commit-graph (2018-04-02) 16 commits
->   - commit-graph: implement "--additive" option
->   - commit-graph: build graph from starting commits
->   - commit-graph: read only from specific pack-indexes
->   - commit: integrate commit graph with commit parsing
->   - commit-graph: close under reachability
->   - commit-graph: add core.commitGraph setting
->   - commit-graph: implement git commit-graph read
->   - commit-graph: implement git-commit-graph write
->   - commit-graph: implement write_commit_graph()
->   - commit-graph: create git-commit-graph builtin
->   - graph: add commit graph design document
->   - commit-graph: add format document
->   - csum-file: refactor finalize_hashfile() method
->   - csum-file: rename hashclose() to finalize_hashfile()
->   - Merge branch 'jk/cached-commit-buffer' into HEAD
->   - Merge branch 'jt/binsearch-with-fanout' into HEAD
->   (this branch is used by ds/lazy-load-trees.)
+On 4/6/2018 7:21 PM, Stefan Beller wrote:
+> Refs belong to particular repositories, so the replacements defined by
+> them should belong to a particular repository as well.
 >
->   Precompute and store information necessary for ancestry traversal
->   in a separate file to optimize graph walking.
+> Move the definition of a single object replacement to a new header
+> "replace-object.h". While at it replace the hardcoded 20 by GIT_MAX_RAWSZ.
 >
->   Ready???
->   It seems that this topic is getting there.
+> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+>   object-store.h   | 14 ++++++++++++++
+>   replace-object.c | 40 ++++++++++++++++++----------------------
+>   replace-object.h |  9 +++++++++
+>   3 files changed, 41 insertions(+), 22 deletions(-)
+>   create mode 100644 replace-object.h
 
-I think this patch is ready to go, barring the edit of "--additive" to 
-"--append" in the final commit message and squashing following diff into 
-"commit-graph: implement git commit-graph read":
+Throughout this commit, there appears to be an extra space inserted 
+before 'the_repository'. Some are more obvious than others (such as a 
+'free( the_repository->...)' but others are after the indentation.
 
-@@ -31,7 +31,7 @@ static struct opts_commit_graph {
+> diff --git a/object-store.h b/object-store.h
+> index fef33f345f..da639b3184 100644
+> --- a/object-store.h
+> +++ b/object-store.h
+> @@ -93,6 +93,20 @@ struct raw_object_store {
+>   	struct alternate_object_database *alt_odb_list;
+>   	struct alternate_object_database **alt_odb_tail;
+>   
+> +	/*
+> +	 * Objects that should be substituted by other objects
+> +	 * (see git-replace(1)).
+> +	 */
+> +	struct replace_objects {
+> +		/*
+> +		 * An array of replacements.  The array is kept sorted by the original
+> +		 * sha1.
+> +		 */
+> +		struct replace_object **items;
+> +
+> +		int alloc, nr;
+> +	} replacements;
+> +
+>   	/*
+>   	 * private data
+>   	 *
+> diff --git a/replace-object.c b/replace-object.c
+> index 3e49965d05..a7eb31026e 100644
+> --- a/replace-object.c
+> +++ b/replace-object.c
+> @@ -1,19 +1,11 @@
+>   #include "cache.h"
+> +#include "replace-object.h"
+> +#include "object-store.h"
+>   #include "sha1-lookup.h"
+>   #include "refs.h"
+> +#include "repository.h"
+>   #include "commit.h"
+>   
+> -/*
+> - * An array of replacements.  The array is kept sorted by the original
+> - * sha1.
+> - */
+> -static struct replace_object {
+> -	unsigned char original[20];
+> -	unsigned char replacement[20];
+> -} **replace_object;
+> -
+> -static int replace_object_alloc, replace_object_nr;
+> -
+>   static const unsigned char *replace_sha1_access(size_t index, void *table)
+>   {
+>   	struct replace_object **replace = table;
+> @@ -22,7 +14,8 @@ static const unsigned char *replace_sha1_access(size_t index, void *table)
+>   
+>   static int replace_object_pos(const unsigned char *sha1)
+>   {
+> -	return sha1_pos(sha1, replace_object, replace_object_nr,
+> +	return sha1_pos(sha1,  the_repository->objects->replacements.items,
+> +			 the_repository->objects->replacements.nr,
+>   			replace_sha1_access);
+>   }
+>   
+> @@ -35,18 +28,21 @@ static int register_replace_object(struct replace_object *replace,
+>   		if (ignore_dups)
+>   			free(replace);
+>   		else {
+> -			free(replace_object[pos]);
+> -			replace_object[pos] = replace;
+> +			free( the_repository->objects->replacements.items[pos]);
+> +			 the_repository->objects->replacements.items[pos] = replace;
+>   		}
+>   		return 1;
+>   	}
+>   	pos = -pos - 1;
+> -	ALLOC_GROW(replace_object, replace_object_nr + 1, replace_object_alloc);
+> -	replace_object_nr++;
+> -	if (pos < replace_object_nr)
+> -		MOVE_ARRAY(replace_object + pos + 1, replace_object + pos,
+> -			   replace_object_nr - pos - 1);
+> -	replace_object[pos] = replace;
+> +	ALLOC_GROW( the_repository->objects->replacements.items,
+> +		    the_repository->objects->replacements.nr + 1,
+> +		    the_repository->objects->replacements.alloc);
+> +	 the_repository->objects->replacements.nr++;
+> +	if (pos <  the_repository->objects->replacements.nr)
+> +		MOVE_ARRAY( the_repository->objects->replacements.items + pos + 1,
+> +			    the_repository->objects->replacements.items + pos,
+> +			    the_repository->objects->replacements.nr - pos - 1);
+> +	 the_repository->objects->replacements.items[pos] = replace;
+>   	return 0;
+>   }
+>   
+> @@ -84,7 +80,7 @@ static void prepare_replace_object(void)
+>   
+>   	for_each_replace_ref(register_replace_ref, NULL);
+>   	replace_object_prepared = 1;
+> -	if (!replace_object_nr)
+> +	if (!the_repository->objects->replacements.nr)
+>   		check_replace_refs = 0;
+>   }
+>   
+> @@ -113,7 +109,7 @@ const unsigned char *do_lookup_replace_object(const unsigned char *sha1)
+>   
+>   		pos = replace_object_pos(cur);
+>   		if (0 <= pos)
+> -			cur = replace_object[pos]->replacement;
+> +			cur = the_repository->objects->replacements.items[pos]->replacement;
+>   	} while (0 <= pos);
+>   
+>   	return cur;
+> diff --git a/replace-object.h b/replace-object.h
+> new file mode 100644
+> index 0000000000..50731ec9c2
+> --- /dev/null
+> +++ b/replace-object.h
+> @@ -0,0 +1,9 @@
+> +#ifndef REPLACE_OBJECT_H
+> +#define REPLACE_OBJECT_H
+> +
+> +struct replace_object {
+> +	unsigned char original[GIT_MAX_RAWSZ];
+> +	unsigned char replacement[GIT_MAX_RAWSZ];
+> +};
+> +
+> +#endif /* REPLACE_OBJECT_H */
 
-  static int graph_read(int argc, const char **argv)
-  {
--       struct commit_graph *graph = 0;
-+       struct commit_graph *graph = NULL;
-         char *graph_name;
-
-         static struct option builtin_commit_graph_read_options[] = {
-
-If you prefer that I re-roll with those changes, I can send a v8.
-
-I'm currently working on new series based on this feature:
-
-* [1] Lazy-load trees when reading commit-graph (ds/lazy-load-trees)
-
-* [2] Compute and consume generation numbers
-
-* Move commit-graph.c globals to the_repository
-
-* Implement 'fsck' functionality for the commit-graph file
-
-* Integrate 'commit-graph write' into 'gc --auto'
-
-I would also like to open the feature to other contributors, especially 
-for others who can contribute performance improvements using generation 
-numbers. We had a very valuable discussion on the list [2], and I look 
-forward to more collaborations like that.
-
-Thanks,
--Stolee
-
-[1] 
-https://public-inbox.org/git/20180403120057.173849-1-dstolee@microsoft.com/T/#u
-
-[2] 
-https://public-inbox.org/git/20180403165143.80661-1-dstolee@microsoft.com/T/#u
