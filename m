@@ -2,84 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 057061F404
-	for <e@80x24.org>; Mon,  9 Apr 2018 13:52:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E26491F404
+	for <e@80x24.org>; Mon,  9 Apr 2018 13:52:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752064AbeDINwG (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Apr 2018 09:52:06 -0400
-Received: from mail-oi0-f45.google.com ([209.85.218.45]:36906 "EHLO
-        mail-oi0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751539AbeDINwF (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Apr 2018 09:52:05 -0400
-Received: by mail-oi0-f45.google.com with SMTP id f63-v6so7649236oic.4
-        for <git@vger.kernel.org>; Mon, 09 Apr 2018 06:52:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=WHdTW7VbEtRH6rZjH16HJbgm/ZHJqY9rSVUivllUBZE=;
-        b=hkx4ytl0WMbVKY3gYtUWq4Tx2B403ItS5Flp0Exu99xGJ9qOr+t92TSnjCX18lciHD
-         YtQEJC1nDwF9fLGpAn6Awm/pQE73u3a9Eb6UMH6LUmLHVLIotwIEp478AvHeybN5VwwM
-         OlBiWjnDVVvbfTdBnUfocltHcWpCQ+qhAQ8jXaMTpRb7XBP4pAsAG21DWhvm0iOuFOrt
-         LDhosx+QejY38P1ebu6kgxwoDRU9g52PS3IDWRfvkk9RdIiCvTXOLSH/75DA2iz/bNwY
-         DmQd8K9QQk6sNCBLW3NIMmgyO4aN23jIxMWLTa+wE4jI9lHQqLAGyUeelDp70aN2Sy1x
-         2NCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=WHdTW7VbEtRH6rZjH16HJbgm/ZHJqY9rSVUivllUBZE=;
-        b=B/AcoCGKA9VeHUnGG88DaenTFGR2qqkTY4zjOIIq4MtYtSLfgkDhPhP4iYOcfUPNXW
-         n7sXeTjYI6cOkg6OrOq3x60bOJO8e1k5IX4KYylS/HGNl6Q32LlFkgQZ8bliiqi5aYdm
-         9d8oyRqD3mNXZhTZQFsDIyX2OqctZGstypbau1VGE40i6w+hIb3hatUiaXpk0+tBCkIm
-         HnhnY2YHzlxMn/GalmqHuoCi/hV1Yi9JHVbP0nO2d2rwiiQDspAAY4tCKh/LzjZuxYJ9
-         RsIPbvkLxuXvlV/e+D47xSVnHinwofJV/xkHDZaSdP8QBR7oFkrz89fKFCc9DGzekufm
-         RXEQ==
-X-Gm-Message-State: AElRT7E9UzgESBRuhq91VfwTKvtzlVC8p2vSbojl7u8IL1XqVjdmI2qV
-        zDTqw0G6MEJxQxfJ6umYsJdbJ6MxCNjgt93iL3xHPOX+
-X-Google-Smtp-Source: AIpwx49MRLnLFfFmlhf2AdL9iKqfFczN8yixhlZHXDA0rM7pZ29qKddB1zmar1F9DGnfGOUWgdjuXBmOsR0SY/gX52Q=
-X-Received: by 2002:aca:b5d4:: with SMTP id e203-v6mr22781874oif.163.1523281924860;
- Mon, 09 Apr 2018 06:52:04 -0700 (PDT)
+        id S1751581AbeDINww (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Apr 2018 09:52:52 -0400
+Received: from mout.gmx.net ([212.227.17.20]:35057 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751456AbeDINwv (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Apr 2018 09:52:51 -0400
+Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MeQ43-1eqLDx1baR-00QEzC; Mon, 09
+ Apr 2018 15:52:42 +0200
+Date:   Mon, 9 Apr 2018 15:52:42 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: Re: [PATCH] t5404: relax overzealous test
+In-Reply-To: <xmqq60516rwq.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1804091551170.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <958ee6f006aba0c67c8e064d31206e3e68a1cc49.1523043053.git.johannes.schindelin@gmx.de> <20180406195331.GC11450@sigill.intra.peff.net> <xmqq60516rwq.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Received: by 10.74.160.222 with HTTP; Mon, 9 Apr 2018 06:51:44 -0700 (PDT)
-From:   vaibhav kurhe <vaibhav.kurhe@gmail.com>
-Date:   Mon, 9 Apr 2018 19:21:44 +0530
-Message-ID: <CAHKv1qs-cnmcd2pR9iv=Xx1aKnb=SEsCQ7OAjy-4yHhCE_e_dw@mail.gmail.com>
-Subject: Want to start contributing to git through this task: "Use
- dir-iterator to avoid explicit recursiv
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:/ZncH4/GmP7MClevxoQjt7+slXH/aLz8p7gGjD6zQesK7guhl8V
+ YORbdLOFD7UywiW6JsZkmvaa4XWJYs5s7goDsGCuKyRsBUBv3HTDNJWOJ4iOmG4FpBW0OxF
+ kH62GqTK2W+9mla1qJeRNxeZvZn6ApYOQ9LwMcFGSl8vCp7aXYZCZlE41R9Ohzu71M5JlNz
+ Vz4L8qeYRiDZe/4ZySahw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:c/Eetno9bEU=:EsUKZ6WtVi0fv7B7QMdwP+
+ Z3+G6536kifKUG+ss0+NWfmE8FyBpXZawShv7TyDKXtwzRaPzufpjxde1gHCnhCvpp5RnjGij
+ Pf7a2NpnTS2QnmLa1Flzuc/b8DdwZth1ijM8zbIpk09Asuh2fuNHukv9lQ+W0Eju34zXNGqrx
+ eZ++P6oibLkUsfnCPpeBo2s0HfFLtE7UmFgQWJDrBVuAtsrtgm163KlyPHIVOt3jjjqoLnWg9
+ TANWEkqxKnA8idMdT41KsiJaMqyjLfoSgKdgnAayqaovmvwLxkEFrmHquVUGXPVgN1XeTxsMg
+ hlh6nsPvMSkBTIIixRXdvPgtKGkteLZW0vRAK5Un7+Y8TqUN1nfoQdbWIXXN28VSRjvdm0ABG
+ 4d6sLpT28P80zlp5HY3qxL2tanuyL3Xcqop/OGY4s9XKZ/qST2FZXarEWTiqBO1FsbkbLeo+x
+ MgxdLVRv7P8Qqk3r1FuHrxTthwaraQdHTrG/fAb7ykEF+Fmb1ekXgG2Cu75ufzaMN9LRX7oHd
+ GdPuEJyuMQHJJfJi2harsjAcsVUB4wq5WZwYFo/6R0Kurb2cOiesc+eJbpxMaidLMuIsA8J6q
+ 4PH57xQ91taG4Wyj981/QeEEri1KQ5T29dyxOLH1Zn1N348j/TsUiMVF4G3XWHrDbYX8gyee9
+ BR2o8RV7RdaMx0wi+w1fqAT7YgVjAEubKoKA8UB1wJybmxWsuk10fZXLoX6mRzOD0/9mlM6g/
+ 0FDgTrDsa1af29zWBQckWO8HG5lUPl6y+R2Lospm4lqJUdqgDwdFvNfpJbKURtJ9yRsgROXKC
+ xVm+l/tMbRyEQTcFqEqaZeNciXDQhW9k8w9f70B+yem0Y4uPfw=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello all,
-I am a Git user since last 2 years and now I want to contribute
-towards its development.
-Yesterday, I had a discussion with Kevin on the IRC channel
-#git-devel, where I got this link:-
-https://git.github.io/SoC-2018-Microprojects/.
-Out of the tasks listed down in above URL, I found this one interesting:-
-"Use dir-iterator to avoid explicit recursive directory traversal"
-==>
-Some places in git use raw API opendir/readdir/closedir to traverse a
-directory recursively, which usually involves function recursion. Now
-that we have struct dir_iterator (see dir-iterator.h), convert these
-to use the dir-iterator to simplify the code. Do only one conversion
-per microproject.
+Hi Junio,
 
-I cloned the git repo and browsed through it. I found that in git
-clone (buildtin/clone.c), raw directory API readdir() is used
-recursively.
-So there is a place to change it to use the already available
-"dir_iterator" structure.
+On Mon, 9 Apr 2018, Junio C Hamano wrote:
 
-I just want to know, if anybody is working on this task already.
-If not, then I can proceed to work.
+> Jeff King <peff@peff.net> writes:
+> 
+> > On Fri, Apr 06, 2018 at 09:31:22PM +0200, Johannes Schindelin wrote:
+> >
+> >> In 0b294c0abf0 (make deleting a missing ref more quiet, 2008-07-08), we
+> >> added a test to verify that deleting an already-deleted ref does not
+> >> show an error.
+> >
+> > Amazing that it took this long to come up.
+> > ...
+> >> This patch chooses instead to look for the prefix "error:" at the
+> >> beginning of the line, so that there can be no ambiguity that any catch
+> >> was indeed a message generated by Git's `error_builtin()` function.
+> >
+> > Yep, this seems obviously correct.
+> 
+> Hits in
+> 
+>     $ git grep 'grep ["'\'']*error' t
+> 
+> shows that many checks for errors that are not anchored, but I do
+> not think any of them are looking for the string in a pathname other
+> than this instance, so it would be OK.
 
-Thank you and Regards,
-Vaibhav
+Yes, they are okay, I did run the entire test suite in a worktree with the
+same name as my branch name: fix-t5404-error.
+
+Ciao,
+Dscho
