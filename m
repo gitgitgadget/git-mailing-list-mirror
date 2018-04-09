@@ -7,59 +7,58 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_DKIM_INVALID,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 165DD1F404
-	for <e@80x24.org>; Mon,  9 Apr 2018 02:36:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ED6CC1F404
+	for <e@80x24.org>; Mon,  9 Apr 2018 03:29:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755786AbeDICgE (ORCPT <rfc822;e@80x24.org>);
-        Sun, 8 Apr 2018 22:36:04 -0400
-Received: from mail-wm0-f54.google.com ([74.125.82.54]:51750 "EHLO
-        mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755638AbeDICff (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 8 Apr 2018 22:35:35 -0400
-Received: by mail-wm0-f54.google.com with SMTP id u189so15175263wmd.1
-        for <git@vger.kernel.org>; Sun, 08 Apr 2018 19:35:34 -0700 (PDT)
+        id S1753767AbeDID3S (ORCPT <rfc822;e@80x24.org>);
+        Sun, 8 Apr 2018 23:29:18 -0400
+Received: from mail-wr0-f195.google.com ([209.85.128.195]:37057 "EHLO
+        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752561AbeDID3Q (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 8 Apr 2018 23:29:16 -0400
+Received: by mail-wr0-f195.google.com with SMTP id l49so7511401wrl.4
+        for <git@vger.kernel.org>; Sun, 08 Apr 2018 20:29:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=jWIlMT4xkYBDcIFjbCitDIGiae1Zx6q9zgnL6Ih++no=;
-        b=AtvW6FVvjtWwAdB/ZnaNr++GMae9tG29gaenfVJdW3GcLu8yTxqAvdVFTVVrHhOkIg
-         5hwRsgj1y3dj2wnG7uSY2JK0CK9aJMEq46BxgQo5ZFjhwOdbazTQulTXbAU45qDXm+a8
-         p3Ko6kCgpnYf2djd1FGZMzbjIUs39gf6EM2O5J7QVrOeoTwvjsEtnHuvxNN8waTPyP+y
-         khEmsJJ0mQWJb+B/8rnqRtyNy2p33k1HrgbVRJ2bt/6OsSzqUV9zpMhjoS44IMGOsgKa
-         eUiuH/3ik8J0NvP8vwy4CuVxaDxunFncUPQ+As5gnXyT4WJWb3EMkMRgSt+W3HlMpL/u
-         vRPA==
+        bh=I2zRAaXNpiEC1heZ808Y16IG/vk6w1oZyZXVSgS7VJk=;
+        b=YypjxehmbDTUTOJnKPX5Fogp+YN8Qv5Fu6ZTJ2cV1PGqN0pArV3VMFU/zQ81ZerHXj
+         /nmg4Kp3S+1OzSyiFu9Jl6un7AFfVE7LmnpfxW79oKe/KfQEh5zwdrYNA4LRinTbN86h
+         8/995rMC+stybNBFbHyhFxFxe+Fak0sd7zkg4shjNDiKeCeZtvJ0JgGCqvlMaLvNZKzo
+         8Uyctxv22uWYCfdzpf0rZbtpxUugUgpYuvYFqSoGG2R25/n5QsfvTdrIlgola6Hp60jE
+         UgywUOvGNEDQCJJQq38EWnX8/e14BXoeV1C2MifOdOrYJ4QiSNb8v0EvR5G1gLxtx1qK
+         DFSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=jWIlMT4xkYBDcIFjbCitDIGiae1Zx6q9zgnL6Ih++no=;
-        b=D8/s3Xov/hRRrZzYAHNhke5yBhL9Rc5IsIbRTUPjaVb+ZNUByiXpCEsux2ktIgSeQQ
-         2d9nzPaYRddhctZexSB8R3VyYmb36pfhc+xC0kd7uQ8B/oQIwbDIx+fo1PVFtUtB4PYx
-         pN67JFvcGjrZD8lBt5CoqYaqfMYlWIoEZk4BWOUUOj27mD+CnOgmKXL2U5i32nXQpoZ5
-         0n+2I4/vF199A4uPJ0Vfj0u4+WHPmgiYRJk4oJk8LB1z6AGTMp+/gyQRLb4o0DNn5iFl
-         o0HFfVhpYIfiafkBhEjDCuce5qeqKyLv5GjGJG6fcTvrSqXvdepGfWATDX+vBvlb12+p
-         v0aA==
-X-Gm-Message-State: ALQs6tAOPOh4N+EuXsINBdnHHpaYWQGFKKfNHNgwmwNumQHvb3uYs+ed
-        wRnI8JYhzelWQ6VWcB/EWXQd3FL5
-X-Google-Smtp-Source: AIpwx49Fjd36LZMHU3eNwyqYSWTzPOrVDHeRV3C829IBfWKYTIgLRYkxELzQUoCJuQfnItR8ifTkGg==
-X-Received: by 10.28.231.4 with SMTP id e4mr18020928wmh.23.1523241333751;
-        Sun, 08 Apr 2018 19:35:33 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id j21sm18823436wrb.49.2018.04.08.19.35.33
+        bh=I2zRAaXNpiEC1heZ808Y16IG/vk6w1oZyZXVSgS7VJk=;
+        b=Qutb9+JLfTqIefnOiOavHW5VX4sMN9b9D0uC98yfx6Hk7Fh6hxs2D9TocXCE13WC0q
+         QZ/zoD+LNH2dxG3aA4VdZfjwn1m7LBV3PyuB/bFluj2U4lWGnH+8dA1ELM/LG1/ocuYy
+         scU63KXjWXDDRhsGVyQJitRonJ1r7vPOH7aQhfOsOges7Jsi8/S2ncW0IdZmnSndlLO7
+         oam61s7qoHiZ+xE0dMoMM+hwh8eCby7T6sOM/E4TRfAAfINBBtmnZNvEtrsOgVWqWCWv
+         5gB5crkTpqiO0flRF3gjAIKPFAoKFc2gu6ZNQ418QUOmEKUlc6phbf9GUf10SbvpBw11
+         kaww==
+X-Gm-Message-State: AElRT7GdSkbBIk0Nff5PkMryUh0M4f1tAPTzeZ7uVQ7l7tuiHy3MwYcm
+        Pcr/8e6V/53qRTNMR5/mohg=
+X-Google-Smtp-Source: AIpwx4/6DfKl8OQMDdmpokPxm3UkCr35r8AGEUBqZmx/S9AHkW0Ku6onhS8P3ptcSEn4sdnTk4B5Zw==
+X-Received: by 10.223.226.14 with SMTP id j14mr23364808wri.17.1523244554822;
+        Sun, 08 Apr 2018 20:29:14 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id o20sm12477459wro.7.2018.04.08.20.29.12
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 08 Apr 2018 19:35:33 -0700 (PDT)
+        Sun, 08 Apr 2018 20:29:13 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org
 Subject: Re: [PATCH] t/helper: 'test-chmtime (--get|-g)' to print only the mtime
 References: <20180406221947.28402-1-ungureanupaulsebastian@gmail.com>
-Date:   Mon, 09 Apr 2018 11:35:32 +0900
+Date:   Mon, 09 Apr 2018 12:29:12 +0900
 In-Reply-To: <20180406221947.28402-1-ungureanupaulsebastian@gmail.com>
         (Paul-Sebastian Ungureanu's message of "Sat, 7 Apr 2018 01:19:47
         +0300")
-Message-ID: <xmqq1sfp6r9n.fsf@gitster-ct.c.googlers.com>
+Message-ID: <xmqqvad15a7r.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -70,33 +69,28 @@ X-Mailing-List: git@vger.kernel.org
 
 Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com> writes:
 
-> Compared to 'test-chmtime -v +0 file' which prints the mtime and
-> and the file name, 'test-chmtime --get file' displays only the mtime.
-> If it is used in combination with (+|=|=+|=-|-)seconds, it changes
-> and prints the new value.
->
-> 	test-chmtime -v +0 file | sed 's/[^0-9].*$//'
->
-> is now equivalent to:
->
-> 	test-chmtime --get file
->
-> Signed-off-by: Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
-> ---
->  t/helper/test-chmtime.c              | 44 +++++++++++++++++++++++-----
->  t/t2022-checkout-paths.sh            |  4 +--
->  t/t3404-rebase-interactive.sh        |  2 +-
->  t/t3510-cherry-pick-sequence.sh      |  4 +--
->  t/t4200-rerere.sh                    |  8 ++---
->  t/t5000-tar-tree.sh                  |  2 +-
->  t/t6022-merge-rename.sh              | 25 +++++++---------
->  t/t6501-freshen-objects.sh           |  6 ++--
->  t/t7508-status.sh                    |  4 +--
->  t/t7701-repack-unpack-unreachable.sh |  6 ++--
->  10 files changed, 63 insertions(+), 42 deletions(-)
+> -	find .git/rr-cache/ -type f | xargs test-chmtime -172800 &&
+> +	test-chmtime -172800 $(find .git/rr-cache/ -type f) &&
 
-Thanks both for suggesting and implementing an obvious improvement
-and updating many places that are helped by it.
+You've sneaked this kind of rewrite in, as if you are testing to see
+how careful the reviewers are ;-).
 
-Will queue.
-.
+We often use "find piped to xargs" pattern to avoid unbounded number
+of paths from appearing on a command line, busting platform limits.
+In the case of these test scripts, it does not matter very much, but
+such a "we can save a process and a pipe this way" optimization is
+not within the scope of "chmtime +v often is piped to sed only to
+strip path---let's give it a way to just grab the timestamp" topic.
+Not a very welcome change.
+
+Having said that, I do not want this to be rerolled if this
+unrelated "removal of find-piped-to-xargs pattern" is the only
+niggle in the patch, as I've already checked if these conversions
+are safe (they are---we are not dealing with hundreds of stuff in
+.git/objects/ or .git/rr-cache/).  There were conflicts caused by
+this patch and nd/combined-test-helper (which makes the test-chmtime
+standalone binary as a subcommand of test-tool); I think I resolved
+them correctly, but please double check when I update the public
+repositories in several hours.
+
+Thanks.
