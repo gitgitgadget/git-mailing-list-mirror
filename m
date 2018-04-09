@@ -7,66 +7,66 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 109AB1F404
-	for <e@80x24.org>; Mon,  9 Apr 2018 19:44:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C62631F404
+	for <e@80x24.org>; Mon,  9 Apr 2018 19:47:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752202AbeDIToE (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Apr 2018 15:44:04 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:46413 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751942AbeDIToD (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Apr 2018 15:44:03 -0400
-Received: by mail-wr0-f196.google.com with SMTP id d1so10703843wrj.13
-        for <git@vger.kernel.org>; Mon, 09 Apr 2018 12:44:02 -0700 (PDT)
+        id S1751919AbeDITrW (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Apr 2018 15:47:22 -0400
+Received: from mail-wm0-f54.google.com ([74.125.82.54]:52712 "EHLO
+        mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751507AbeDITrV (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Apr 2018 15:47:21 -0400
+Received: by mail-wm0-f54.google.com with SMTP id g8so21456048wmd.2
+        for <git@vger.kernel.org>; Mon, 09 Apr 2018 12:47:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=KsTHbRGIhz52vZgwjn+M8RD/BP9QfBaAT/94Iic1/3Y=;
-        b=G/JYBQ0hoQSXny1i7dGjXJyHMTCtzO+H70ZQXeck+v6ec99T17T0m2rtJGeuLpfugP
-         9slc5h9b1Gvg691R9/PzfAlTOxuIrOA+WX5TPgFLnQvD9gtB9VAfIhzmWvtzvPZt9MAK
-         zb0B1Go4OCm/vannF3IJIZGpwLnf+aM7P9wX+YRX0tJ7d90pGL4Y7vLIb96fySK0MD0X
-         v0io7s75KYP5JrQ5X4nfA+VsXBZ35QgYDPRkfYcD2PcRxUffw0LhF96e5Yunvk7k6VVh
-         ke/s0u7/vBDgNOQFPEz6af5jKtxjoLgRDbc/rXp451pFDfBFXRpn+PD3U+mtc/AGGV07
-         nC5A==
+        bh=HV17G+OLs2+AXfYFsUkq3reXLyYPJNPFYH/jlckuE1o=;
+        b=nvYYCm93A5fj2CQGHby1yqa2qfapEl5VKRiUVpQH2I0QaboTP7qllU6KXjmFoRTCyC
+         w9irw1SFXPROomQwIliYsF1LHPRG801wE4qipZedKsNLPo7kUN96rypaIR5FmTC1wlJN
+         QJlmytFojqt6DAcLFuP0xVcaDlu6Qte/m/Yvb311j51m3acZhIw/WybhyGci8/7Xgewv
+         QTvOlCNxxsYF/1IXKH4uPfxpMyHHeY14pHGpV2N8+6y79PG25vqSO6pbDGv+hSKRAxIp
+         WR0jnysQO7So/N+eCotA48FtwdRr3C27Y0sd1YdDt9Cd1Nk0GxV5iM9OmUVmhW2qy0sZ
+         ovJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=KsTHbRGIhz52vZgwjn+M8RD/BP9QfBaAT/94Iic1/3Y=;
-        b=ObZQ/mY8ZSVv+bdR1n5ntLwCpq+vRq5WQfEnQDpbtDqXGnmxnp6PMjxeFMKQKJV1td
-         tfbmlwFHuMtE8Wfil7MgB1zSNzYOQOSqVZUAR9VPMokumQnTSNtL5+OqDYryAv5Uc+Hu
-         8bQNSSJhMIZEYMi59WvlxTwjK7mUIzs6YOU4hTeZRpohoYk2Pql9o3p4931I/6CKgINW
-         u+JI3H5Jf9Z/5p23V/oAPVah06Zr1ZBkdVE5UrHtOmu/CIDVggnVqUuFe6lc0hE/dYEl
-         LI4dp7JoCn7kKaNkFyWcdXxt7FMSw5lqjKuFRsxp4q4EY9yx+p4k1s7mQ43Os8zupYjF
-         ahUg==
-X-Gm-Message-State: AElRT7HmiEYx1YnEgSFi5s8Ln1J0Tstu/3q75/V4MIzKrCfGT1E7Zm/D
-        SjqZR48jZkK7Q12jk7MBTyM=
-X-Google-Smtp-Source: AIpwx4/dHyaUEEn2p98qksccu1bwaul0m7JLDLtKROyBcBktNIzNSz/6PKpOo2GnVPNDkG0WtyIMTg==
-X-Received: by 10.223.220.77 with SMTP id m13mr24747053wrj.274.1523303041797;
-        Mon, 09 Apr 2018 12:44:01 -0700 (PDT)
+        bh=HV17G+OLs2+AXfYFsUkq3reXLyYPJNPFYH/jlckuE1o=;
+        b=Br3UXbla8DLIv7xalJdLclZmz8Pz1+CxuizVYI24pnEyQMlzfydIha40Ng6PmdPefg
+         otIL1UDFUkLwT61cdHsVrymQDKWrZnQ7X8kW8drFSHtbd6STg9ihWG7FCypHhgPCLZ3v
+         Vd8izfXHvumAIEJ59fpO48ojJQQYWUwrm83uxb+jbhitAzweto5D2iFFBSS0k28bCai1
+         M+94XtkVBapn3CTGPyfSPCNIr1MXpWY2eyeY3+SGi/uVJSK63p/hgKHedjQq2YuwXKi2
+         KHVb128CvRN2zPsjucNbBguxr9Y9H2VfM7aPAVNIjOKou6ZQfyGLCa6K95az6OT9JdMP
+         HRWQ==
+X-Gm-Message-State: ALQs6tBtwD9ze8U6/g/HWILcJwNMmWbYK+Mm/yhbXUfbjGPtZtNPFoM7
+        8wwhJ3GJsbP2JOSlrPuTSWJAZMCg
+X-Google-Smtp-Source: AIpwx4+mFis4acSmZsbXoj31edqp32ipLbeXC9lhoJjVykz//An/elSZv+qqLEEoy66RLe5DnfSehQ==
+X-Received: by 10.28.213.139 with SMTP id m133mr799365wmg.144.1523303239841;
+        Mon, 09 Apr 2018 12:47:19 -0700 (PDT)
 Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
-        by smtp.gmail.com with ESMTPSA id 39sm1655979wry.89.2018.04.09.12.44.00
+        by smtp.gmail.com with ESMTPSA id 69sm156755wmn.9.2018.04.09.12.47.18
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 09 Apr 2018 12:44:00 -0700 (PDT)
-Date:   Mon, 9 Apr 2018 20:44:05 +0100
+        Mon, 09 Apr 2018 12:47:19 -0700 (PDT)
+Date:   Mon, 9 Apr 2018 20:47:23 +0100
 From:   Thomas Gummerer <t.gummerer@gmail.com>
 To:     Eric Sunshine <sunshine@sunshineco.com>
 Cc:     Git List <git@vger.kernel.org>,
         =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v6 6.5/6] fixup! worktree: teach "add" to check out
- existing branches
-Message-ID: <20180409194405.GM2629@hank>
+Subject: Re: [PATCH v6 0/6] worktree: teach "add" to check out existing
+ branches
+Message-ID: <20180409194723.GN2629@hank>
 References: <20180325134947.25828-1-t.gummerer@gmail.com>
  <20180331151804.30380-1-t.gummerer@gmail.com>
- <20180331151804.30380-7-t.gummerer@gmail.com>
- <20180401131138.GE2629@hank>
- <CAPig+cRYgLwLZnXeOc2VWBmh8j_AxSGmf2x-DJ1kAbY3BzsAPQ@mail.gmail.com>
+ <CAPig+cQ8VzDycUMo-QOexNDBgQGEGj2BPmPa-Y0vhGCt_brbhg@mail.gmail.com>
+ <20180408142417.GJ2629@hank>
+ <CAPig+cSGxMgEwqXDb4-_AWbdvm5=x-dgwi4mKqDbNfex2KDm0Q@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAPig+cRYgLwLZnXeOc2VWBmh8j_AxSGmf2x-DJ1kAbY3BzsAPQ@mail.gmail.com>
+In-Reply-To: <CAPig+cSGxMgEwqXDb4-_AWbdvm5=x-dgwi4mKqDbNfex2KDm0Q@mail.gmail.com>
 User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -74,101 +74,77 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On 04/08, Eric Sunshine wrote:
-> On Sun, Apr 1, 2018 at 9:11 AM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
-> > So while playing with it a bit more I found one case where the new UI
-> > is not ideal and a bit confusing.  Namely when the new check out dwim
-> > kicks in, but there is already a file/directory at the path we're
-> > giving to 'git worktree add'.
+> On Sun, Apr 8, 2018 at 10:24 AM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
+> > On 04/08, Eric Sunshine wrote:
+> >> On Sat, Mar 31, 2018 at 11:17 AM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
+> > Let me think through some of the cases here, of 'git worktre add
+> > <path> <commit-ish>' with various flags and what the UI would be with
+> > that added:
 > >
-> > In that case something like the following would be printed:
+> >   - no flags:
 > >
-> >     $ g worktree add ../next
-> >     Checking out branch 'next'
-> >     fatal: '../next' already exists
+> >     $ git worktree add ../test origin/master
+> >     Checking out 'origin/master'
+> >     Checking out files: ...%
+> >     New worktree HEAD is now at c2a499e6c Merge branch 'jh/partial-clone'
 > >
-> > Instead I think we'd just want the error without the "Checking out
-> > branch" message, which is what this fixup here does.
+> >   - -b branch:
+> >
+> >     $ git worktree add -b test ../test origin/master
+> >     Creating branch 'test'
+> >     Checking out 'origin/master'
 > 
-> Doesn't the same UI "problem" exist when it creates a new branch?
+> Did you mean "Checking out 'test'"?
 > 
->     $ git worktree add ../dwim
->     Creating branch 'dwim'
->     fatal: '../dwim' already exists
+> >     Checking out files: ...%
+> >     New worktree HEAD is now at c2a499e6c Merge branch 'jh/partial-clone'
+> >
+> >     Would we want to omit the "Checking out ..." here?  I'm leaning
+> >     towards yes, but dunno?
 > 
-> As you mention below, we don't (yet) clean up the newly-created branch
-> upon failure, so we can't suppress the "Creating branch" message as
-> you suppress the "Checking out branch" message above (since the user
-> needs to know that the new branch exists).
+> To which "Checking out" message do you refer, the one showing the
+> branch name or the one showing the checkout progress?
 > 
-> This is making me wonder if "Checking out branch" is perhaps the wrong
-> terminology. What if it said something like this instead:
+> I'd probably agree that showing both "Creating" and "Checkout out" is
+> overkill. However, see my response[1] to your "fixup!" patch in which
+> I explore the idea that unifying "Checking out 'branch' and "Creating
+> branch" messages may be a good idea and get us out of some UI jams
+> which seem to be cropping up.
 > 
->     $ git worktree add ../next
->     Preparing worktree (branch 'next' <= 'origin/next')
->     fatal: '../next' already exists
+> [1]: https://public-inbox.org/git/20180325134947.25828-1-t.gummerer@gmail.com/T/#m5d38b0c6427609e8c36aa6af83d518791c1e1581
 > 
->     $ git worktree add ../gobble
->     Preparing worktree (new branch 'gobble')
->     fatal: '../gobble' already exists
+> >   - Original dwim with --detach flag
+> >
+> >     $ git worktree add --detach ../test
+> >     Checking out 'c2a499e6c'
+> >     Checking out files: ...%
+> >     New worktree HEAD is now at c2a499e6c Merge branch 'jh/partial-clone'
+> >
+> > Looking at this, I'm not sure what's best here.  I'm not sure I'm a
+> > fan of the duplicate "Checking out " message (I assume that's what you
+> > meant above, or did you mean just "Checkout ..."?)
 > 
-> This way, we don't need the special case added by this "fixup!" patch.
-> (I'm not wedded to the "Preparing" message but just used it as an
-> example; better suggestions welcome.)
+> Taking [1] into account, this might become something like:
+> 
+>     $ git worktree add --detach ../test
+>     Preparing worktree (detached HEAD c2a499e6c)
+>     Checking out files: ...%
+>     New worktree HEAD is now at c2a499e6c Gobbledygook
 
-Yeah, I think this looks like another improvement of what I currently
-have.  I'm not sure about the "(branch 'next' <= 'origin/next')"
-message though, as it doesn't cover all the ways the branch could be
-set up for tracking the remote branch, e.g. tracking by rebasing, when
-'branch.autosetuprebase' is set up.
+The more I look at this solution, the more I like it.  I'll try to
+implement this to see if there's anything I'm not thinking of right
+now, but I think I'll take the suggestion and send a re-roll with it
+implemented. 
 
-But how about just "Preparing worktree (new branch 'next')", and then
-keeping the message from 'git branch' about setting up the remote
-tracking branch?
-
-> > One thing that gets a bit strange is that the "Checking out branch"
-> > message and the "Creating branch" messages are printed from different
-> > places.  But without doing quite some refactoring I don't think
-> > there's a good way to do that, and I think having the UI do the right
-> > thing is more important.
+> > I als don't think it gives too much context compared to just "Checking
+> > out files: ...%".  I think it gives a bit more context when that
+> > message is not displayed at all, as it shows whether files are checked
+> > out or not, but if we do that, when we create a new branch, the amount
+> > of output we'd display is getting a bit long, to the point where I
+> > suspect users would just not read it anymore.
+> >
+> > So I personally don't feel like this is worth it, even though it may
+> > give some context in some cases.
 > 
-> The implementation is getting rather ugly, though, especially with
-> these messages being printed by different bits of code like this.
-> worktree.c:add_worktree() was supposed to be the low-level worker; it
-> wasn't intended for it to take on UI duties like this "fixup!" makes
-> it do. UI should be handled by worktree.c:add().
-> 
-> Taking the abonve "Preparing..." idea into consideration, then it
-> should be possible to sidestep this implementation ugliness, I would
-> think.
-> 
-> > One thing I also noticed is that if a branch is created by 'git
-> > worktree add', but we fail, we never clean up that branch again, which
-> > I'm not sure is ideal.  As a pre-existing problem I'd like to keep
-> > fixing that out of the scope of this series though (at least after
-> > this series the user would get some output showing that this happened,
-> > even when the branch is not set up to track a remote), so I'd like to
-> > keep fixing that out of the scope of this series.
-> 
-> Nice idea, but outside the scope of this series, as you mention.
-> 
-> > diff --git a/builtin/worktree.c b/builtin/worktree.c
-> > @@ -27,6 +27,7 @@ struct add_opts {
-> >         int keep_locked;
-> > +       int checkout_existing_branch;
-> >  };
-> > @@ -316,6 +317,8 @@ static int add_worktree(const char *path, const char *refname,
-> > +       if (opts->checkout_existing_branch)
-> > +                 fprintf_ln(stderr, _("Checking out branch '%s'"), refname);
-> >         if (opts->checkout) {
-> 
-> I'd have expected to see the "if (opts->checkout_existing_branch)
-> fprintf_ln(...)" inside the following "if (opts->checkout)"
-> conditional, though, as noted above, I'm not entirely happy about
-> worktree.c:add_worktree() taking on UI duties.
-
-Fair enough.  I didn't quite like the code either.  I think what you
-have above would be much nicer, and I'll implement that in the
-re-roll.
-
-> >                 cp.argv = NULL;
-> >                 argv_array_clear(&cp.args);
+> Fair enough observation. The idea suggested in [1] may keep output to
+> a reasonable amount.
