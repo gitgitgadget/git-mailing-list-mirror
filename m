@@ -2,100 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5D17F1F516
-	for <e@80x24.org>; Mon,  9 Apr 2018 20:14:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1A9581F404
+	for <e@80x24.org>; Mon,  9 Apr 2018 20:42:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754660AbeDIUOO (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Apr 2018 16:14:14 -0400
-Received: from mout.gmx.net ([212.227.15.19]:57449 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752718AbeDIUON (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Apr 2018 16:14:13 -0400
-Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MOfcU-1fAbWI3VuY-0065hP; Mon, 09
- Apr 2018 22:14:09 +0200
-Date:   Mon, 9 Apr 2018 22:14:08 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Apr 2018, #01; Mon, 9)
-In-Reply-To: <xmqqd0z865pk.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1804092110300.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <xmqqd0z865pk.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:4P3n/fnVXv4wyMgP20ihpiOSTdDYBEQHbU0m5EB5kLEvG8zn/11
- giYLeBqUd/gbhiINV04R3M6YzfjYy8OjzSuK5e89T+K1dKk0lY3jqImJw4ac1yr0lHrE8VK
- 1s/4ovM3a5TiCmlqHTmVazLQpKrXAR7pPOb/xWqBB0Z5kUCgnt0mU1Pp3YEju9Gkkuqbnb5
- QQ/BuJq2HDPW3XaDOElCQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:gmrjEEGA+vs=:HhfgGK1IbiRQAFjHKVzHA8
- 1TpernETG4xxn018ZpH36xqqK/KbUX5GOOkI2A848F5IsDLxrN3V1uR3zIFkxxeFscF6CoQgQ
- KrikDeawU8k0wSt+M/pVCcxDo6SL1OtjIT9I3uKk1y76TmZ51Em9lZ0+IAyfQuRS7aeDXM89i
- zBLN47UIE/WyGwc79RcRPEEUVHE6gH9mhmVhIpJoFfnE9NvTtJtJXK+ZEuNVWuHP0m1L7Gftb
- yUW/YgCfH7GEaUOkhS5Lj5IICPcqaWjQfxelMzvJNAx4b36SnjnPY9YhzD5h2/CcVtoks26VW
- 6pUo/MA5rv2wOLz4jvqVx6SJWrUkxkiJ+kp4lbZdVBZUOFGxjcRH4Cc4dqHCGyLarKDGafBED
- I+DNzzSMNh38qP44atOyy/MOBTXGZhlXZyAdyVrnkeHgRoKmhvmgcstR2VwoDptIKAQhk9+g1
- ZojPqSB87T3QpfCbGTrFHwcFS2l2aAB8/9BwXzmmV3XZW/iTqI2r74C7//xTLbFQG89evsEPA
- tUeUOauWH+xZjuAbOr9n/q41L1OIY3P0BpWVgXPTVAsVmfmvbdF75PasxjssQ6btjR4FWAiiE
- 2d0ftcSE4volvRTi8xxeRvxOmyQmOg4QyvOYkjjI7kg0GjgQ4VUa1lv0P3GQOCt5JM8ZTGWgp
- ApQcLtq0Fk56nZor3p9/np+S9yx1sM4ValNLxFboU1i9B6TMSaw/v2+kS9bC28u+LmP7iahV2
- jZ7J6vqdt7GIXn0qtR3RXzGHSDGG43vBY6cJPDTPlpJZUmretMxhLcanC1d/8BaLdYtWU3Mq3
- lr/imfz8chaxdqXYCo3O6WWN/N6mz9yufbymkFdhbrYUfS7AKw=
+        id S1754095AbeDIUmN (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Apr 2018 16:42:13 -0400
+Received: from mail-it0-f42.google.com ([209.85.214.42]:33233 "EHLO
+        mail-it0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753599AbeDIUmM (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Apr 2018 16:42:12 -0400
+Received: by mail-it0-f42.google.com with SMTP id x144-v6so12831462itc.0
+        for <git@vger.kernel.org>; Mon, 09 Apr 2018 13:42:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=Re0aDF6z94PHM8U7wSo5PUEfIdTN1eWxyttRPEGJfNY=;
+        b=CszpWuwYvbNINkiouW2dftMbu5NDT9vxPEVCzwK6lim92CBDpZ8EM5NV/cMtupJMY3
+         C+fAkzx8eK+QqDLTjfEsMMLc8imn7Mu/lTamlTbiM3Zpck3bWlWy4FwspQuarh9MLbEP
+         keMMzEHuH6dMoTRGIh82sVmv/cDEHxUMj2nkjYdt3EKe+JDMlX9Fb99Dx39CKWeJXloW
+         S3W9y/0R59qh8MeS5LMtJYGjZqqwX02UE1hx5Qg2q26g6t8UkTUtky8TBpv4Isup5dxZ
+         ZL22t3juVZ4ivrl5iHIpD0YJOe545hJkFT2KgUDsB8mU9fkGN8sgysjQjdebtDxG1X4p
+         YnWg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=Re0aDF6z94PHM8U7wSo5PUEfIdTN1eWxyttRPEGJfNY=;
+        b=ESW/2iFkRpiNfxWPHqpg9UfRpl78kIs514U9gXwn7c1b1kVBmxGjzhksYyRc/nqSno
+         iF3MQLPp2J6GGvO62/TmoXdXf0saWOh+Wb1PDOkMOCUzXlME/lwlXQ5Kj/PnfdGslGYd
+         64Vomr8uyes9acIcQUlLuZINdb3rQd9wdPWZUgRcjctByVXwBJtXSayP/o0K+a4NgsBL
+         JsWTj2Bo1Il0OSFnPzMFcqK1QQ92jmsGfHWkhErs7CXnZrDMgxoLwLujG6vjpupY3L+I
+         N0fs5ldEbkTJSfcu3lZP3MfBTJjkCGgPQAW1Uw4ISuXcJZr4eZ6qS/nkWfKHlPEq1UH9
+         xHeA==
+X-Gm-Message-State: ALQs6tB1ZdRRT463PcH4STRYJhHuDhSm99DXJCzszhx0jbwaFhHttyzi
+        CD92sw5eUQ882bhCb5qkAQiteZST
+X-Google-Smtp-Source: AIpwx4+ETiucu3lajsUTOZ/IAvlGZe3rVTJ99g+1q6GDN6eaFsQ8tlZTj/eLPAym3cx01kCjI/BB3g==
+X-Received: by 2002:a24:6c4a:: with SMTP id w71-v6mr1620976itb.87.1523306531999;
+        Mon, 09 Apr 2018 13:42:11 -0700 (PDT)
+Received: from localhost.localdomain (174-16-129-48.hlrn.qwest.net. [174.16.129.48])
+        by smtp.gmail.com with ESMTPSA id 134-v6sm98775itl.34.2018.04.09.13.42.11
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 09 Apr 2018 13:42:11 -0700 (PDT)
+From:   Ben Toews <mastahyeti@gmail.com>
+To:     git@vger.kernel.org
+Cc:     me@ttaylorr.com, peff@peff.net, mastahyeti@gmail.com
+Subject: [PATCH 0/8] gpg-interface: Multiple signing tools
+Date:   Mon,  9 Apr 2018 14:41:21 -0600
+Message-Id: <20180409204129.43537-1-mastahyeti@gmail.com>
+X-Mailer: git-send-email 2.15.1 (Apple Git-101)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+This series extends the configuration to allow Git to better work with multiple signing tools.
 
-On Mon, 9 Apr 2018, Junio C Hamano wrote:
+Ben Toews (1):
+  gpg-interface: handle alternative signature types
 
-> * js/rebase-recreate-merge (2018-02-23) 12 commits
->   (merged to 'next' on 2018-03-15 at 3d1671756f)
->  + rebase -i: introduce --recreate-merges=[no-]rebase-cousins
->  + pull: accept --rebase=recreate to recreate the branch topology
->  + sequencer: handle post-rewrite for merge commands
->  + sequencer: make refs generated by the `label` command worktree-local
->  + rebase: introduce the --recreate-merges option
->  + rebase-helper --make-script: introduce a flag to recreate merges
->  + sequencer: fast-forward merge commits, if possible
->  + sequencer: introduce the `merge` command
->  + sequencer: introduce new commands to reset the revision
->  + git-rebase--interactive: clarify arguments
->  + sequencer: make rearrange_squash() a bit more obvious
->  + sequencer: avoid using errno clobbered by rollback_lock_file()
-> 
->  "git rebase" learned "--recreate-merges" to transplant the whole
->  topology of commit graph elsewhere.
-> 
->  This serise has been reverted out of 'next', expecting that it will
->  be replaced by a reroll on top of a couple of topics by Phillip.
+Jeff King (7):
+  gpg-interface: handle bool user.signingkey
+  gpg-interface: modernize function declarations
+  gpg-interface: use size_t for signature buffer size
+  gpg-interface: fix const-correctness of "eol" pointer
+  gpg-interface: extract gpg line matching helper
+  gpg-interface: find the last gpg signature line
+  gpg-interface: prepare for parsing arbitrary PEM blocks
 
-Sorry, it took a little longer. I did decide in the end that
---rebase-merges is a better name for the option.
+ Documentation/config.txt |  40 +++++++---
+ builtin/fmt-merge-msg.c  |   6 +-
+ builtin/receive-pack.c   |   7 +-
+ builtin/tag.c            |   2 +-
+ commit.c                 |   2 +-
+ gpg-interface.c          | 198 +++++++++++++++++++++++++++++++++++++++--------
+ gpg-interface.h          |  67 +++++++++++++---
+ log-tree.c               |   7 +-
+ ref-filter.c             |   2 +-
+ t/lib-gpg.sh             |  26 +++++++
+ t/t7004-tag.sh           |  11 +++
+ t/t7510-signed-commit.sh |  32 +++++++-
+ tag.c                    |   2 +-
+ 13 files changed, 336 insertions(+), 66 deletions(-)
 
-And I worked on the add-on patch series, too, mainly to prove that we can
-switch to a better strategy than blindly re-create recursive merges from
-scratch. That part is not really done to my satisfaction, though: while I
-already demonstrated that Sergey's approach causes way too many merge
-conflicts to be useful in practice, I now have a reproducer to show that
-even Phillip's strategy *can* cause awful (and avoidable) merge conflicts.
+-- 
+2.15.1 (Apple Git-101)
 
-For anybody who is interested in the specifics, I'd like to point you to
-the `sequencer-shears` branch thicket in https://github.com/dscho/git (it
-is a moving target, but you should find the commit called "t3430: add some
-realistic tests for --rebase-merges" that demonstrates the issues.
-
-Be that as it may, I will send out a new iteration of the patch series
-(the --rebase-merges one, formerly known as --recreate-merges) soon
-(hopefully still today).
-
-Ciao,
-Dscho
