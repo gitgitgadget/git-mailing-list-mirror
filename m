@@ -7,79 +7,70 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1131E1F404
-	for <e@80x24.org>; Mon,  9 Apr 2018 18:26:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 380491F404
+	for <e@80x24.org>; Mon,  9 Apr 2018 18:51:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751942AbeDIS0I (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Apr 2018 14:26:08 -0400
-Received: from mail-yb0-f169.google.com ([209.85.213.169]:41092 "EHLO
-        mail-yb0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751742AbeDIS0H (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Apr 2018 14:26:07 -0400
-Received: by mail-yb0-f169.google.com with SMTP id p126-v6so3359584ybg.8
-        for <git@vger.kernel.org>; Mon, 09 Apr 2018 11:26:06 -0700 (PDT)
+        id S1753083AbeDISvv (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Apr 2018 14:51:51 -0400
+Received: from mail-yw0-f175.google.com ([209.85.161.175]:38152 "EHLO
+        mail-yw0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751610AbeDISvu (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Apr 2018 14:51:50 -0400
+Received: by mail-yw0-f175.google.com with SMTP id x20so3153744ywg.5
+        for <git@vger.kernel.org>; Mon, 09 Apr 2018 11:51:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=pVpyk2I75wn5olaUrSNxa1BY2WQbCw91JpgPnpB4HGs=;
-        b=C5LwAJBoAxQMC9o2wikv0huMAvjjKo5baKkfFDD96dIKBcds2TVwBM9B2xTk0NWVp5
-         dFDoGle5kDcFDLcs+md2f3gKL+eQbGJr2N45NvTzKJai4emvMIy6yhcpiYuwF1jHDe90
-         7mKUmKhHs5pjvWXlQD2O4xgo6q1DgD5mHnbzPvlwKPHz4YozVeo7h4voxZgaulxOz0ON
-         /CyuwkFum7WWUN2jsIR+o9oQzolFqNITD7VoMJUOyxi6hn5XMEDSm9Q9IJgUhJdjuPLX
-         0o+Il7NYQVG/f8bL+vZAzScU9xM07yWa6mIj6gvFCmGNloyMxWyfGwCwQq4gyUiQkwuG
-         p2mQ==
+         :cc;
+        bh=lk0nECXHyUebHKLg73pRtWz3dsENl1daNlMB14wlLiI=;
+        b=JQUK6JG6xY8qicbP7v/8REeSXN7+pNNgjsg2SJJWSR5Z3+j6RQxV2On+mMJ8d0QhFU
+         zbW1JPZbi90rBVnIavI1NxaAnJhvUVOr/XOtTIuBZg/Hl3XZfi7Ql9vx81QdMDfrlpoq
+         u9FXHNL4ebMuYcOKWEl1P35lEfDk7tyIdZQX2eP54QYU8rou8ILq3M6UP5MBxZzMWY25
+         l1sbl9Fpb3P4x3W7Yb2ZL7N/RxiT11E3uU3NtNTF4RIjS5dcWSMkI3YP4DADRpdcKoVR
+         NuWRqsVkYPUdYOZYz6QQF0jvTAnOoIXcevow6i3p+BJAp01nmpst5EBMwOQaJ6WF452x
+         XkoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:content-transfer-encoding;
-        bh=pVpyk2I75wn5olaUrSNxa1BY2WQbCw91JpgPnpB4HGs=;
-        b=QTX4AJAoqKqz1P5sWj+EzeLbEVfcuh16kDMkWlxePo/a0zq4cvgzs0/AzS9OjnUdqu
-         ixULXmczQGnpORIzAwA/qKNVxt1QtRlkAokMkuqa+vI7K94d7fcvFUzbKFwzjDthDh13
-         KVf9L4aMTXZ082R1GnDOPdBxuc7MKqbaEtdHgEiVpMWDKzR7YMSDtjfPYz4cq+vA3MfJ
-         PoBNqcTgORb1M+tr58uPsuiLSeSLlVxXO9hqWGOWZ4/cYnra++maMnNEAVl7bBmAnl6E
-         foRPoaRwTFV0Okkx+R0pMYSuUrS7PCUxwzhPzk4EqHuiXlubJTDD8sT7J0eDQ0PvxdUD
-         JGxA==
-X-Gm-Message-State: ALQs6tDLvX6ojysutkDKYq1/aij7mNPrFAq2Bqv29COvHifT3kNemcAA
-        0jZF5pCt5ZEP+P1zcAuvCgnsXAC01E2Xf6M9PMKPTVVA
-X-Google-Smtp-Source: AIpwx48BXTxPHV0piV0V4J8IM7R/J7hq+JmMJVskyCPjjooxdu+LCvSZdoPqdylIWSDeQL9WTqH5UWieupZ/ckhY5mw=
-X-Received: by 2002:a25:2704:: with SMTP id n4-v6mr20254985ybn.167.1523298365918;
- Mon, 09 Apr 2018 11:26:05 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=lk0nECXHyUebHKLg73pRtWz3dsENl1daNlMB14wlLiI=;
+        b=XQZeahy+QGAXTT896sAYaRIah0Bvr7iZP90iiRd2x1V32kSnHjWziq75oy5keHW76d
+         PgpEJME6r5QF2dlhoqeKWm5aK98HNnvGzQ2UaK9P4985na/BpGBkWE/T7CHZNl7kEtRG
+         WpPnDf+V4d82UFPeSihfMHKuleQslW1im1RMDAdkQJkC8EF76jXCJfQs0ASdETa2Y574
+         DfRGeT7tl2vImleQ2zmT6Mj4QaWXsUP3T6TMtFoIzuy0l5dHbqmKd1bMLYOi2Tq24w1v
+         4e/MqXy6K58Y2yPCUISP4KgDKlCRf8pQUzdCzyvYDG68o0BFdHfpKgTlK6a4AFyZSvVe
+         fpgg==
+X-Gm-Message-State: ALQs6tDBMwQNoS/0wbRcrygseXJiEdHwAFDYbo+bLxDvLQluTmTAhhh0
+        ozB9F3wj0lkv6oBDJATvwMpn354Yhqxmib8XXRU0Rg==
+X-Google-Smtp-Source: AIpwx4/dU3Qh1kUraf3IMBQfH4YDen/Uc0q1UJ2f/xrEqKjE5lW0FzQWHdf8M/8fsAq8KeZueMeRG1HsPz3jUWS2WLE=
+X-Received: by 10.129.86.5 with SMTP id k5mr11926546ywb.345.1523299909419;
+ Mon, 09 Apr 2018 11:51:49 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:a25:cf81:0:0:0:0:0 with HTTP; Mon, 9 Apr 2018 11:26:05 -0700 (PDT)
-In-Reply-To: <20180408182552.26289-2-mail@floga.de>
-References: <20180408182552.26289-1-mail@floga.de> <20180408182552.26289-2-mail@floga.de>
+Received: by 2002:a25:cf81:0:0:0:0:0 with HTTP; Mon, 9 Apr 2018 11:51:48 -0700 (PDT)
+In-Reply-To: <CAPig+cQT0Cgd4gto0dv91XUPDbweG97=waoDCOP-r3S2LbXpUA@mail.gmail.com>
+References: <20180406232136.253950-1-sbeller@google.com> <20180406232136.253950-7-sbeller@google.com>
+ <CAPig+cQT0Cgd4gto0dv91XUPDbweG97=waoDCOP-r3S2LbXpUA@mail.gmail.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 9 Apr 2018 11:26:05 -0700
-Message-ID: <CAGZ79kZzMDjKzuHn5ph+zMkh_9Zt_at37MssOjHvzJndUjt9yQ@mail.gmail.com>
-Subject: Re: [RFC PATCH 1/1] completion: Load completion file for external subcommand
-To:     git <git@vger.kernel.org>,
-        =?UTF-8?Q?Szeder_G=C3=A1bor?= <szeder.dev@gmail.com>
+Date:   Mon, 9 Apr 2018 11:51:48 -0700
+Message-ID: <CAGZ79kb09U4s791C-dW1kCSvYSNGu=UWfH7hxT8Euo13M6-FBg@mail.gmail.com>
+Subject: Re: [PATCH 06/19] refs: add repository argument to get_main_ref_store
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>,
+        Git List <git@vger.kernel.org>,
+        Jonathan Nieder <jrnieder@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Apr 8, 2018 at 11:26 AM, Florian Gamb=C3=B6ck <mail@floga.de> wrote=
-:
-> Adding external subcommands to Git is as easy as to put an executable
-> file git-foo into PATH. Packaging such subcommands for a Linux
-> distribution can be achieved by unpacking the executable into /usr/bin
-> of the user's system. Adding system-wide completion scripts for new
-> subcommands, however, can be a bit tricky.
+Hi Eric,
+
+On Fri, Apr 6, 2018 at 11:53 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>>
+>> # Conflicts:
+>> #       t/helper/test-ref-store.c
 >
-> Since bash-completion started to use dynamical loading of completion
-> scripts somewhere around v2.0, it is no longer sufficient to drop a
-> completion script of a subcommand into the standard completions path,
-> /usr/share/bash-completion/completions, since this script will not be
-> loaded if called as a git subcommand.
+> Meh.
 
-Also v1.90 here? (hint from the cover letter, please be exact)
-
-If Gits own completion script would be broken up by subcommand,
-would that also deliver an improvement in performance?
-
-Thanks,
-Stefan
+Fixed in a reroll.
