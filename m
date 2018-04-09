@@ -7,130 +7,87 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_DKIM_INVALID,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 344B31F404
-	for <e@80x24.org>; Mon,  9 Apr 2018 00:38:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 764D51F404
+	for <e@80x24.org>; Mon,  9 Apr 2018 00:49:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932932AbeDIAiP (ORCPT <rfc822;e@80x24.org>);
-        Sun, 8 Apr 2018 20:38:15 -0400
-Received: from mail-qk0-f182.google.com ([209.85.220.182]:44639 "EHLO
-        mail-qk0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932906AbeDIAiN (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 8 Apr 2018 20:38:13 -0400
-Received: by mail-qk0-f182.google.com with SMTP id n139so7518445qke.11
-        for <git@vger.kernel.org>; Sun, 08 Apr 2018 17:38:13 -0700 (PDT)
+        id S1757133AbeDIAs6 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 8 Apr 2018 20:48:58 -0400
+Received: from mail-wm0-f49.google.com ([74.125.82.49]:39908 "EHLO
+        mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1757128AbeDIAs4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 8 Apr 2018 20:48:56 -0400
+Received: by mail-wm0-f49.google.com with SMTP id f125so12800041wme.4
+        for <git@vger.kernel.org>; Sun, 08 Apr 2018 17:48:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=mMfoVj2vjg6sSkHAJT8gQgVQ6AbPUJ1aDA9KcGprHAQ=;
-        b=kigRckUmULGPoS929TRPbQRE0ER7S7yjAd+Er+qSVx1fbCh8dd6CfBGFIXgFLOSQyb
-         2Akl+Yk1A9w7Wj1v4ClAo1Wv9ks25DzPjQge3b5Jwp6f6FlfCE8TjDDLObUDALuOtnXt
-         b5BSnKX7DkoadD9Q2guzYYqL2IsIW4FsBajXhZffQcTys9TuQHUelaBbkIFbidUBkDZV
-         LpaTpdUd6wm8nchnN9SdPlE5QNKYTBfkJT/mKgTAmUZWoAhaH+tnY5SbCFBggm/ELEwm
-         JUdo6k6NVso3hWxVw9vI+wMZ/V7JV0GWZ+KFR3sxbfBJ4iZ3OaWV8k1FuFyNPjqXBgtT
-         DZDw==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=IP8Qs4qc+qIHNsm73E9GY2XFnvX0AQaId8kF3pRrkb0=;
+        b=IetKAbK2M83RowKZECu6Zlmi9/dDDWTen58YbVWmg5gLfw9TKzFpiGkxGnIF+puv0E
+         TW6jE/1eWsgpoYLDmTMwKLhUXJWIkYVna5mF7324uNJhrRiTublu2YETGwVxjxdZ/H40
+         KOqQXekqf3RGTZw4wMDFeyRmOQLRwAifU21d+jJs9sKYzO+czsdJP7z27Fc7VwF85FNQ
+         gu/kZRIuFaOCBfi6mnqUPoy1veHKP9smoeqP+X6NtcnvedCAtwg9cQQve71hQcb8ibD8
+         Fj2hlanq45gZCjmM4l6l2KWpM+sxM5jBXLOpiK+sZLtpDSlMXuZx2uPW3kEwmQV77BVq
+         u92A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=mMfoVj2vjg6sSkHAJT8gQgVQ6AbPUJ1aDA9KcGprHAQ=;
-        b=ePC61y7jX9QZUdo1ioGMJ3jr1a2t9fkiENLIdkzdWr0ioogcvTdUXzb/3PSehtGfhA
-         6GGyEqkxpwXY3r5E0xTV+y//RcU2RtwlQnSvjH+XMIh4skAzT0ksFPwWbTPk3qq8HnT6
-         bKACTyhei/pBpxv25xACS2QbG27QEF9+DI5nsgadug5zpv1wtjq2mSdn0wVZpJQIP3kH
-         Fmiv7jbhqQ4IAfn/YJQc1GgpfKzPiX7IZeH+VOdoY/6FUVcX0AKesFo93RRX1lvXrfMN
-         OjaTgH5LfTaTY8XoPBQtZcOyl7NP2+znQPq363yyGG9+x0crbZiCghLVcI493ryT6GKS
-         zQyQ==
-X-Gm-Message-State: ALQs6tD0zBeKVPWs230/v69I9Lg1kvBki4rutTsEghZ6S96fQg6d500E
-        SU9lkz76xqNGAzBQSAe8nEs0wOymW3IeUDXnxSk=
-X-Google-Smtp-Source: AIpwx4/b3Zn5mLBOX25B5MiNCRTzlCvh7fK6AqyaBKhimJ3AdtXgSLJMxaeHRresyBV6wZNshOAaNvO+vS8X+UyVBWI=
-X-Received: by 10.55.159.140 with SMTP id i134mr45962373qke.220.1523234293198;
- Sun, 08 Apr 2018 17:38:13 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.12.174.202 with HTTP; Sun, 8 Apr 2018 17:38:12 -0700 (PDT)
-In-Reply-To: <20180408142417.GJ2629@hank>
-References: <20180325134947.25828-1-t.gummerer@gmail.com> <20180331151804.30380-1-t.gummerer@gmail.com>
- <CAPig+cQ8VzDycUMo-QOexNDBgQGEGj2BPmPa-Y0vhGCt_brbhg@mail.gmail.com> <20180408142417.GJ2629@hank>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 8 Apr 2018 20:38:12 -0400
-X-Google-Sender-Auth: HLiS-RtyTYxKPZKlwmG1lxhsXWE
-Message-ID: <CAPig+cSGxMgEwqXDb4-_AWbdvm5=x-dgwi4mKqDbNfex2KDm0Q@mail.gmail.com>
-Subject: Re: [PATCH v6 0/6] worktree: teach "add" to check out existing branches
-To:     Thomas Gummerer <t.gummerer@gmail.com>
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=IP8Qs4qc+qIHNsm73E9GY2XFnvX0AQaId8kF3pRrkb0=;
+        b=axhKjgXeMvTVQpz/FTyrhbuG7BUcMk8ufPT+sA+mHXQwHrMYPVxwirW9vUxylvgH9u
+         M6xL9NpsU8RHLc23CYkWhk+8NkVhQ61Gy9xkO3/GHxDSjrBjyzK+i+Zj0HHvzNk/J0SQ
+         Vm51MAHB6uWxAQup5eyfxXcrpiVnROGlHNRnpPoiadIrZjw/U1rmy5+jO5U7b05Ntd2/
+         UNMiepY6TSw/X0WlmE9sFuQvxudRQKS404zvDKNV/ejEljnsnQey0mkQ89AjK9tAJoji
+         Cv2kLk+tuVa6txl0FLNrz7WAswbFCH2UqTyl+NR8MIUUT+pAcyIBnClWR4Q1Hbpxxnar
+         NyDQ==
+X-Gm-Message-State: AElRT7GomVrTcsZRibj74fTzP+Hxt3RqJKHdFDJQ3KWybmiXDFHBSYfe
+        t8xXhXGuxhciOrEbwC3Pb5Y=
+X-Google-Smtp-Source: AIpwx49+TgbjXFmGHj75jW3EiZopSZNhh7is6TICFW5uq+ULR0X+5wx5aBWxWkY4ayXQNr9u3PRK8g==
+X-Received: by 10.28.110.17 with SMTP id j17mr21179741wmc.65.1523234935305;
+        Sun, 08 Apr 2018 17:48:55 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id j4sm14994024wrd.53.2018.04.08.17.48.54
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 08 Apr 2018 17:48:54 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Harald Nordgren <haraldnordgren@gmail.com>
 Cc:     Git List <git@vger.kernel.org>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v12 4/4] ls-remote: create '--sort' option
+References: <20180408122832.65414-1-haraldnordgren@gmail.com>
+        <20180402005248.52418-1-haraldnordgren@gmail.com>
+        <20180408122832.65414-4-haraldnordgren@gmail.com>
+        <xmqq7eph9wds.fsf@gitster-ct.c.googlers.com>
+        <CAHwyqnWe=KmmdGJJ_DnCK+D_FoC0sAQG_8=_p+4+Yxmr8s8sPA@mail.gmail.com>
+Date:   Mon, 09 Apr 2018 09:48:54 +0900
+In-Reply-To: <CAHwyqnWe=KmmdGJJ_DnCK+D_FoC0sAQG_8=_p+4+Yxmr8s8sPA@mail.gmail.com>
+        (Harald Nordgren's message of "Mon, 9 Apr 2018 02:09:15 +0200")
+Message-ID: <xmqqmuyd6w7d.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Apr 8, 2018 at 10:24 AM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
-> On 04/08, Eric Sunshine wrote:
->> On Sat, Mar 31, 2018 at 11:17 AM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
-> Let me think through some of the cases here, of 'git worktre add
-> <path> <commit-ish>' with various flags and what the UI would be with
-> that added:
+Harald Nordgren <haraldnordgren@gmail.com> writes:
+
+>> It is not too big a deal, but I find that liberal sprinkling of
+>> UNLEAK() is somewhat unsightly.  From the code we leave with this
+>> change, it is clear what we'd need to do when we make the code fully
+>> leak-proof (i.e. we'd have a several lines to free resources held by
+>> these two variables here, and then UNLEAK() that appear earlier in
+>> the function will become a "goto cleanup;" after setting appropriate
+>> value to "status"), so let's not worry about it.
 >
->   - no flags:
->
->     $ git worktree add ../test origin/master
->     Checking out 'origin/master'
->     Checking out files: ...%
->     New worktree HEAD is now at c2a499e6c Merge branch 'jh/partial-clone'
->
->   - -b branch:
->
->     $ git worktree add -b test ../test origin/master
->     Creating branch 'test'
->     Checking out 'origin/master'
+> Removed the "extra" unleak annotations within the if-return blocks,
+> but kept them at the end.
 
-Did you mean "Checking out 'test'"?
-
->     Checking out files: ...%
->     New worktree HEAD is now at c2a499e6c Merge branch 'jh/partial-clone'
->
->     Would we want to omit the "Checking out ..." here?  I'm leaning
->     towards yes, but dunno?
-
-To which "Checking out" message do you refer, the one showing the
-branch name or the one showing the checkout progress?
-
-I'd probably agree that showing both "Creating" and "Checkout out" is
-overkill. However, see my response[1] to your "fixup!" patch in which
-I explore the idea that unifying "Checking out 'branch' and "Creating
-branch" messages may be a good idea and get us out of some UI jams
-which seem to be cropping up.
-
-[1]: https://public-inbox.org/git/20180325134947.25828-1-t.gummerer@gmail.com/T/#m5d38b0c6427609e8c36aa6af83d518791c1e1581
-
->   - Original dwim with --detach flag
->
->     $ git worktree add --detach ../test
->     Checking out 'c2a499e6c'
->     Checking out files: ...%
->     New worktree HEAD is now at c2a499e6c Merge branch 'jh/partial-clone'
->
-> Looking at this, I'm not sure what's best here.  I'm not sure I'm a
-> fan of the duplicate "Checking out " message (I assume that's what you
-> meant above, or did you mean just "Checkout ..."?)
-
-Taking [1] into account, this might become something like:
-
-    $ git worktree add --detach ../test
-    Preparing worktree (detached HEAD c2a499e6c)
-    Checking out files: ...%
-    New worktree HEAD is now at c2a499e6c Gobbledygook
-
-> I als don't think it gives too much context compared to just "Checking
-> out files: ...%".  I think it gives a bit more context when that
-> message is not displayed at all, as it shows whether files are checked
-> out or not, but if we do that, when we create a new branch, the amount
-> of output we'd display is getting a bit long, to the point where I
-> suspect users would just not read it anymore.
->
-> So I personally don't feel like this is worth it, even though it may
-> give some context in some cases.
-
-Fair enough observation. The idea suggested in [1] may keep output to
-a reasonable amount.
+I actually think that is worse.  The UNLEAK()s near early-return
+serve to remind us: "here we are making early return and when we
+properly plug the leak, here is one of the places we need to fix".
+Please keep them, unless (and I do not recommend to do this) you are
+plugging the leaks for real.
