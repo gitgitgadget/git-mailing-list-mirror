@@ -6,120 +6,93 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E77CC1F404
-	for <e@80x24.org>; Mon,  9 Apr 2018 22:06:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 768171F404
+	for <e@80x24.org>; Mon,  9 Apr 2018 22:07:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752037AbeDIWGI (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Apr 2018 18:06:08 -0400
-Received: from mail-io0-f195.google.com ([209.85.223.195]:42766 "EHLO
-        mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751759AbeDIWGH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Apr 2018 18:06:07 -0400
-Received: by mail-io0-f195.google.com with SMTP id d5so11459059iob.9
-        for <git@vger.kernel.org>; Mon, 09 Apr 2018 15:06:07 -0700 (PDT)
+        id S1751834AbeDIWG7 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Apr 2018 18:06:59 -0400
+Received: from mail-wm0-f51.google.com ([74.125.82.51]:38786 "EHLO
+        mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751367AbeDIWG6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Apr 2018 18:06:58 -0400
+Received: by mail-wm0-f51.google.com with SMTP id i3so19503318wmf.3
+        for <git@vger.kernel.org>; Mon, 09 Apr 2018 15:06:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=4TLDDhLcHJ3vaolzSK+BcIE8KYWAE6X19bPCW2RGISI=;
-        b=VlIxUdhRTsqpcmBQyKkuSjCeB2XYh59+KYXHHkA2ct7uvPDJ6RCnSuWdnCvSZoPUxY
-         DbxtrZv9Yf2g1KtjwtAm6vaxRAZs8/REugDr9csJ3+1E2X857QcsvJLrXyVadmnSA7mW
-         AxD/irZ21nTJuZjUVOHjnjvHtcBEWJizQpdlE4TUIi1mOTmfUT+DTWiuoPQQqUehQwBF
-         AdkJPhGZX8B2ZY0ROO3BYpsWqXN1U2twIGx4tReplva/nIARdQYMWBzUSVbTL/QxgA/y
-         bNh1rw+NJG470Z6KNdH5biGozbGJEnLCq2/+AkqzLWwZyeTM46Dm7Wf3qi2VKIQZxjQ7
-         XFbA==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=LaehdqQ+1JXQ2da/ES/nye1poxXih47j/rUAZmN4Mgo=;
+        b=pwGipYmgwxAG6WLZ5EGh7svTM9ri5Lh+UtWdcmvai0WAAHifZvY/ng6Ris/5lJkiJV
+         t6pWa1hx3tT/YY6hKUNjKzZqj0kj0TJl5g3BTs7ZspYCarz63RnvNYq22n51Uq7vslRx
+         1uN6iggkLnRV/l5CX25gj0zL7tmxfYz/FTmMII9tv/iCah54k/0e4ASvXGU19eIvQ8u1
+         pZyYNthZzIq2dOmJNdqIseS+8Gg8m+212sNXyp5QztzKyuen7LBYejflR4/Cy605uEEP
+         mmESxuYNfRpZUEg7+fgYQGu+0QWKr8BDfSThJkK0QipZnYuupaJG4y2DQKDH5q4I0ask
+         NImw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=4TLDDhLcHJ3vaolzSK+BcIE8KYWAE6X19bPCW2RGISI=;
-        b=fqHNB97TIqhltGTpKo/RU7uaUGkoM+i/biGMHM/P29kpa1L8AFo7rXUp/77klDz65y
-         HG1s67pp5uLtNQ8hs33sfYovD8Li84DXWtRkDJ6ipO3Z1EudVQSSAsor9bt7c8pP8dO6
-         x3/cJ3X3b9IWUQMUeJ7PEnT9+rxhUju+qYyc1LBxaNSDCkqdLBE7IQuJGO85UqMF+eoy
-         NEDDKoL/1IyObXduDu5v99KSV6F+jIdf5aagjOzDBSAdzemzYN/cjzS8b3gygKlHnlji
-         Q7PWQme9CNnTvVtiDx+XKfe2gBaqDf0SQjxESd4MenzYX+uKnhg5eDq1+dPdXmtKC74n
-         /+qQ==
-X-Gm-Message-State: ALQs6tAuoMXk7ZJhA1f8K4m2u/9iM+ZGWTaVkOxlGVpxFzsUsmjp+3lo
-        KMqvjiNJMfwkwXwJ36a7M1a0PX2KtuZUrUpfwpE=
-X-Google-Smtp-Source: AIpwx49T2rr433PmeNSJAoS4tTUIFwQF+MDO9pUYgex7tTSTLwdXtUIvsbpXoUkPWqJO60IvcImxnLrswE/lxtkP9S4=
-X-Received: by 10.107.12.230 with SMTP id 99mr730733iom.117.1523311567075;
- Mon, 09 Apr 2018 15:06:07 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=LaehdqQ+1JXQ2da/ES/nye1poxXih47j/rUAZmN4Mgo=;
+        b=i8paZPiQ6h46JkiiWtkgtkjsLv/IeDkK5Dv2TUh7FvOM3np4yMKWHy5m71Z48K3NwL
+         pd7wAbtA+WcLJ4uQ63/vr3PPV0a+shUEauuhricyQmr9q9eX9jNgcVaSTI9weSdDXXpK
+         qOmXYsW8UjX5QvnJuJ4lhROLAZoKOqPzMRH1ka6Ik7S53YJ/pHnRf7xQ4w/UY7LaAw/z
+         EW6M1n1VwVAAIKQgOxAl/2zfHfa3hJjnhvBlLPlLq6gnZuXxKHoxYwcqTtINJ3okms3E
+         8BupeI16pSItatE7RY9ONksIWHEyNuixeC+ku3wLW4HMzU56YJmQLaQ5cqCaOgTcactK
+         034g==
+X-Gm-Message-State: ALQs6tCc5/d96KlaNqQ3jhy1m2JfIzG2Kfnl58T7FfyYtS2FueygosCR
+        zwKr20HemRCmeQjO5yuCkbs=
+X-Google-Smtp-Source: AIpwx48LeHEDTiu/KY/kWDNZnFQdK5XEhaY9AKK5fFygciHOSd58ccdtyATd3gm2b3cJw5wK0RllGg==
+X-Received: by 10.28.5.10 with SMTP id 10mr1028719wmf.47.1523311617124;
+        Mon, 09 Apr 2018 15:06:57 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id i141sm517684wmd.6.2018.04.09.15.06.56
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 09 Apr 2018 15:06:56 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Florian =?utf-8?Q?Gamb=C3=B6ck?= <mail@floga.de>
+Cc:     git@vger.kernel.org,
+        Szeder =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: Re: [RFC PATCH 1/1] completion: load completion file for external subcommand
+References: <20180409133627.GA25078@arbeitsviech>
+Date:   Tue, 10 Apr 2018 07:06:56 +0900
+In-Reply-To: <20180409133627.GA25078@arbeitsviech> ("Florian =?utf-8?Q?Gam?=
+ =?utf-8?Q?b=C3=B6ck=22's?=
+        message of "Mon, 9 Apr 2018 15:36:27 +0200")
+Message-ID: <xmqq8t9w591b.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.12.174.202 with HTTP; Mon, 9 Apr 2018 15:06:05 -0700 (PDT)
-In-Reply-To: <20180409193007.GL2629@hank>
-References: <20180325134947.25828-1-t.gummerer@gmail.com> <20180331151804.30380-1-t.gummerer@gmail.com>
- <CAPig+cQ8VzDycUMo-QOexNDBgQGEGj2BPmPa-Y0vhGCt_brbhg@mail.gmail.com> <20180409193007.GL2629@hank>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 9 Apr 2018 18:06:05 -0400
-X-Google-Sender-Auth: _7nNivKXhX6KVXlberK8LH3D1CQ
-Message-ID: <CAPig+cRXsir3siZ5eArk6k1mF9kaDfFe1mL+T9faR6dxSUez7w@mail.gmail.com>
-Subject: Re: [PATCH v6 0/6] worktree: teach "add" to check out existing branches
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 9, 2018 at 3:30 PM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
-> On 04/08, Eric Sunshine wrote:
->> As with Junio, I'm fine with this hidden option (for now), however, I
->> think you can take this a step further. Rather than having a (hidden)
->> git-reset option which suppresses "HEAD is now at...", instead have a
->> (hidden) option which augments the message. For example,
->> --new-head-desc="New worktree" would make it output "New worktree HEAD
->> is now at...". Changes to builtin/reset.c to support this would hardly
->> be larger than the changes you already made.
->
-> Something else I just noticed that may make this a worse solution is
-> that this breaks the sentence in two pieces for translators.  I guess
-> we could somehow get the "New worktree" part of the option translated,
-> but that still means that if some language would require to move parts
-> of the sentence around that would be less than ideal for translation.
+Florian Gamböck <mail@floga.de> writes:
 
-Good point.
+> On 2018-04-09 18:36, Junio C Hamano wrote:
+>> Florian Gamböck <mail@floga.de> writes:
+>>
+>> > Good point. I could go even further and ditch the if-construct:
+>> >
+>> >    ! declare -f $completion_func && declare -f __load_completion &&
+>> >        __load_completion "git-$command"
+>>
+>> I personally find that a lot harder to read than if/then/fi.
+> ...
+> Does my reasoning make sense?
 
-One solution would be to have the new hidden option replace the string
-entirely: --new-head-msg="New worktree HEAD is now at %s", which would
-allow translators to deal with the entire sentence. Even clearer would
-be to drop "now", as in "New worktree HEAD is at %s". (Default in
-reset.c would still be "HEAD is now at %s", of course.)
+Not at all.  But ...
 
-Another solution would be not to augment the "HEAD is now at..."
-message at all. I realize that that augmentation was one of the
-original motivations for this patch series, but with the upcoming
-restoration of the "Preparing worktree" message:
+> I mean, the result will be exactly the same, we are clearly only
+> talking about readability here.
 
-    Preparing worktree (_branch disposition_)
-    HEAD is now at ...
+... I agree, and I also think the "readability" is not absolute
+anyway.
 
-it seems clear enough (at least to me) from the context introduced by
-the "Preparing..." message that "HEAD is now at..." refers to HEAD in
-the worktree. (But that's just my opinion.)
+FWIW, personally I'd find "if $completion_func does not yet exist
+and a way to dynload stuff exists, then use that way to load it from
+an external file" the most natural way to express what you are
+doing.
 
-> Would factoring out what we have in 'print_new_head_line()' into some
-> common code, maybe in 'pretty.c', and still doing the printing from
-> here be a reasonable tradeoff?
-
-Isn't that getting uglier again? Not only would you have to publish
-that function, but you'd still need the hidden git-reset
---show-new-head-line option.
-
-Also, you'd end up calling that function from within low-level worker
-worktree.c:add_worktree(), thus making it take on UI duties, which
-would be nice to avoid if possible. (Unfortunately, the alternate idea
-of having worktree.c:add() handle this UI task doesn't quite work
-since add_worktree() doesn't return sufficient information for add()
-to know whether or not it should print "HEAD is now at..."; however,
-add_worktree() could be augmented to return more information.)
-
-So, I don't presently have a good answer. I'm partial to the idea of
-not augmenting "HEAD is now at...", partly because context makes it
-relatively clear that it applies to the new worktree and partly
-because it's simpler (less implementation work for you) to leave it as
-is. If that choice isn't desirable, then next best would be for
---new-head-msg= to replace the entire "HEAD is now at..." string
-rather than augmenting it.
