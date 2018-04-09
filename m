@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 95E221F42D
-	for <e@80x24.org>; Mon,  9 Apr 2018 22:46:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 41DDD1F404
+	for <e@80x24.org>; Mon,  9 Apr 2018 22:46:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752100AbeDIWp5 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Apr 2018 18:45:57 -0400
-Received: from mail-pl0-f65.google.com ([209.85.160.65]:35794 "EHLO
-        mail-pl0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751998AbeDIWps (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Apr 2018 18:45:48 -0400
-Received: by mail-pl0-f65.google.com with SMTP id 61-v6so6095848plb.2
-        for <git@vger.kernel.org>; Mon, 09 Apr 2018 15:45:48 -0700 (PDT)
+        id S1752137AbeDIWqA (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Apr 2018 18:46:00 -0400
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:41820 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751697AbeDIWpu (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Apr 2018 18:45:50 -0400
+Received: by mail-pf0-f195.google.com with SMTP id a2so6608272pff.8
+        for <git@vger.kernel.org>; Mon, 09 Apr 2018 15:45:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=QIXdjGdAykQIYeXNj5fxECgoXlys2ZnEnloD3wexqkA=;
-        b=Ved816GkeUosE6oof6Ipa3dtStIboH4GoGX/MWWy1RwDnmLHiE2vKId772JsYZU6UN
-         5Ejp+p+EiHFSiZMP6freU0oONst5MApI/klNDg2MkZ86cwAJ49eqeZF1yMlhGwY1/ftN
-         IiVvfIILWPM1fm4g5RyG6pe9FXzB6dkPxzRYB2jGM8RlO2M9c8KIjCtqkOdUznuqZ1oL
-         aBG1fk7a3Pify5XnnX21Wcv1npag7WSDSmOU0EOPKH1RO4oMNba42c0+l+D/YorwDupM
-         Uw+SWoCRhZC0EJndSp64+wCJyhXV/gnVwuQi8+/YAHTivZli9BRHQ8Yj6ix56URyLzGH
-         BzbQ==
+        bh=iZRYyXXYgVoWmwwNIYvGXq/7GuAH+dxFj2UFDvqRec0=;
+        b=LIcvbjsTNcpYFWTg4uNOUuvb18RbMmiaXxQ+w+2YkWLO0GJ9Hc6d2VVfS1tepcY/n9
+         HtZPjHKYiQXCkdartxWKg0+IzmqEwkka9IbDww3/Uh7PqLyuVcE9iWS/cGzi4gZ8oJmS
+         x7ldzeKWvtywaEDpWCBHYP5wZvyrjrxGDnD8ZhV6FsOR1E8veDY3y4XCoeiadwh2Umh/
+         G68SJj75WOzkw0e3vnZIGagL0xp5pVfJ8jvgLz9eJzpjuLGTxEStNZQhzGRS3cK9/xBP
+         I4GsrlNFoIB0USAhnOMT/jpLAiRpteKpSLikR43nuEeW41+LH36TS5ps8egBjXb78/Bd
+         ASgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=QIXdjGdAykQIYeXNj5fxECgoXlys2ZnEnloD3wexqkA=;
-        b=UhNPN/+pdQdjUWzcVwwlXXfKKo8qJ0iuapQB8c1tOgedkO9i/FjpUkvFV5ByeidGRQ
-         BK4C7IBYes4fJXmabJWKXQw2+o0WfaV/nw6mWJTH3ZDWgTqpsUOdfL0tnYrbnOX8Kei8
-         tMvvgQvxg3ST4SCV4ePVLZQn/3x02EDnTrGjhmV89CqtlqgnDhpazhQa5A/2aOYqbVyt
-         3jHdsxRelM7mrumGs1ftYXnXr6IKis6RXL9ZnAKrckW0o7NCo5D0Adc+YElJcwTn3oqJ
-         FKJqCvBZi5+VmLbhvdZjMCjQBEEahZTIcPj0yRC4qH5wFNP7xZG4FrYE+lhvLyeyZ04L
-         OezQ==
-X-Gm-Message-State: ALQs6tDX3xfWBMyA15V+ZwFJucYjGA85WRbr7SVb9Z8UTJRursjJBe4J
-        dNwO82Ennt6FUFfLYBSmHwWUUQ==
-X-Google-Smtp-Source: AIpwx48rsqyaKTWcgLvI4wbDKTdyV/qzmoAvVK311y0FfFetUvtqsW6d4blHr8HgFh+krKGtDtJdSg==
-X-Received: by 2002:a17:902:be18:: with SMTP id r24-v6mr2540065pls.275.1523313947956;
-        Mon, 09 Apr 2018 15:45:47 -0700 (PDT)
+        bh=iZRYyXXYgVoWmwwNIYvGXq/7GuAH+dxFj2UFDvqRec0=;
+        b=LGmdevHjV5A0nN0ib0rHAKHLjJ2ipE2YSUoPAMWnXuj215RNDQnhe/A7WmtRfhpC+J
+         bmhJq4WUDd5rMqIiKyVGJWPzDvI5BPqlt9Vy6CEd3VKJRRvlLlo6sPvP25ASWcViLIK1
+         EgB9BP1DMx8uxRerLYG6iSkAGuKVGCZGhpl7onmb/YxYsOxw3xqeJ5jh1mIbpgyIJ2MQ
+         2dexlr4CnAlqORYYGng3sfNoAt75DzUeIcC72FBmFUioTlz3Wvl/D9/J+FQ8df4pv33L
+         uqHETsY4sHgtpc7n7GIF6AsHqCNWnpX1hRwLfaiQute+BcoIWIi61hsTyhuNuoan22EW
+         GBRQ==
+X-Gm-Message-State: AElRT7HRh/KolOKkGD6T0BP3GtnumGNY0TuxKAbcSWGGMuTUiLfmDCqr
+        /JY9cVO/1ZbQ/EmduWqqKxBqdg==
+X-Google-Smtp-Source: AIpwx4/VRSFEEgGXaOwRR/6m3mEuAoh76vzTC3Mj4pOUGu8Kn7PSEETrRRwdcm88mx9Nh3ltaU9JEw==
+X-Received: by 10.99.96.19 with SMTP id u19mr25627658pgb.261.1523313949349;
+        Mon, 09 Apr 2018 15:45:49 -0700 (PDT)
 Received: from localhost ([2620:0:100e:422:ea58:fa52:fa77:9b41])
-        by smtp.gmail.com with ESMTPSA id o30sm2000284pgn.8.2018.04.09.15.45.47
+        by smtp.gmail.com with ESMTPSA id z127sm2198177pfb.72.2018.04.09.15.45.48
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 09 Apr 2018 15:45:47 -0700 (PDT)
+        Mon, 09 Apr 2018 15:45:48 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     sbeller@google.com
 Cc:     git@vger.kernel.org, jonathantanmy@google.com,
         sunshine@sunshineco.com, pclouds@gmail.com, l.s.r@web.de,
         sandals@crustytoothpaste.net, Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 07/16] refs: add repository argument to get_main_ref_store
-Date:   Mon,  9 Apr 2018 15:45:24 -0700
-Message-Id: <20180409224533.17764-8-sbeller@google.com>
+Subject: [PATCH 08/16] refs: add repository argument to for_each_replace_ref
+Date:   Mon,  9 Apr 2018 15:45:25 -0700
+Message-Id: <20180409224533.17764-9-sbeller@google.com>
 X-Mailer: git-send-email 2.17.0.484.g0c8726318c-goog
 In-Reply-To: <20180409224533.17764-1-sbeller@google.com>
 References: <20180406232136.253950-1-sbeller@google.com>
@@ -65,8 +65,8 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a repository argument to allow the get_main_ref_store caller
-to be more specific about which repository to handle. This is a small
+Add a repository argument to allow for_each_replace_ref callers to be
+more specific about which repository to handle. This is a small
 mechanical change; it doesn't change the implementation to handle
 repositories other than the_repository yet.
 
@@ -76,405 +76,75 @@ repository other than the_repository at compile time.
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- builtin/pack-refs.c       |  3 +-
- refs.c                    | 67 ++++++++++++++++++++-------------------
- refs.h                    |  4 ++-
- revision.c                |  5 +--
- t/helper/test-ref-store.c |  3 +-
- 5 files changed, 44 insertions(+), 38 deletions(-)
+ builtin/replace.c | 4 +++-
+ refs.c            | 2 +-
+ refs.h            | 4 +++-
+ replace-object.c  | 2 +-
+ 4 files changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/builtin/pack-refs.c b/builtin/pack-refs.c
-index b106a392a4..f3353564f9 100644
---- a/builtin/pack-refs.c
-+++ b/builtin/pack-refs.c
-@@ -1,6 +1,7 @@
- #include "builtin.h"
- #include "parse-options.h"
+diff --git a/builtin/replace.c b/builtin/replace.c
+index 19006e52bc..ef8145e556 100644
+--- a/builtin/replace.c
++++ b/builtin/replace.c
+@@ -14,6 +14,8 @@
  #include "refs.h"
+ #include "parse-options.h"
+ #include "run-command.h"
++#include "object-store.h"
 +#include "repository.h"
+ #include "tag.h"
  
- static char const * const pack_refs_usage[] = {
- 	N_("git pack-refs [<options>]"),
-@@ -17,5 +18,5 @@ int cmd_pack_refs(int argc, const char **argv, const char *prefix)
- 	};
- 	if (parse_options(argc, argv, prefix, opts, pack_refs_usage, 0))
- 		usage_with_options(pack_refs_usage, opts);
--	return refs_pack_refs(get_main_ref_store(), flags);
-+	return refs_pack_refs(get_main_ref_store(the_repository), flags);
+ static const char * const git_replace_usage[] = {
+@@ -83,7 +85,7 @@ static int list_replace_refs(const char *pattern, const char *format)
+ 		    "valid formats are 'short', 'medium' and 'long'\n",
+ 		    format);
+ 
+-	for_each_replace_ref(show_reference, (void *)&data);
++	for_each_replace_ref(the_repository, show_reference, (void *)&data);
+ 
+ 	return 0;
  }
 diff --git a/refs.c b/refs.c
-index 8b7a77fe5e..74d4ed97cb 100644
+index 74d4ed97cb..f58b9fb7df 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -13,6 +13,7 @@
- #include "tag.h"
- #include "submodule.h"
- #include "worktree.h"
-+#include "repository.h"
- 
- /*
-  * List of all available backends
-@@ -206,7 +207,7 @@ char *refs_resolve_refdup(struct ref_store *refs,
- char *resolve_refdup(const char *refname, int resolve_flags,
- 		     struct object_id *oid, int *flags)
- {
--	return refs_resolve_refdup(get_main_ref_store(),
-+	return refs_resolve_refdup(get_main_ref_store(the_repository),
- 				   refname, resolve_flags,
- 				   oid, flags);
- }
-@@ -228,7 +229,7 @@ int refs_read_ref_full(struct ref_store *refs, const char *refname,
- 
- int read_ref_full(const char *refname, int resolve_flags, struct object_id *oid, int *flags)
- {
--	return refs_read_ref_full(get_main_ref_store(), refname,
-+	return refs_read_ref_full(get_main_ref_store(the_repository), refname,
- 				  resolve_flags, oid, flags);
+@@ -1415,7 +1415,7 @@ int refs_for_each_fullref_in(struct ref_store *refs, const char *prefix,
+ 	return do_for_each_ref(refs, prefix, fn, 0, flag, cb_data);
  }
  
-@@ -375,7 +376,7 @@ int refs_for_each_tag_ref(struct ref_store *refs, each_ref_fn fn, void *cb_data)
- 
- int for_each_tag_ref(each_ref_fn fn, void *cb_data)
+-int for_each_replace_ref(each_ref_fn fn, void *cb_data)
++int for_each_replace_ref_the_repository(each_ref_fn fn, void *cb_data)
  {
--	return refs_for_each_tag_ref(get_main_ref_store(), fn, cb_data);
-+	return refs_for_each_tag_ref(get_main_ref_store(the_repository), fn, cb_data);
- }
- 
- int refs_for_each_branch_ref(struct ref_store *refs, each_ref_fn fn, void *cb_data)
-@@ -385,7 +386,7 @@ int refs_for_each_branch_ref(struct ref_store *refs, each_ref_fn fn, void *cb_da
- 
- int for_each_branch_ref(each_ref_fn fn, void *cb_data)
- {
--	return refs_for_each_branch_ref(get_main_ref_store(), fn, cb_data);
-+	return refs_for_each_branch_ref(get_main_ref_store(the_repository), fn, cb_data);
- }
- 
- int refs_for_each_remote_ref(struct ref_store *refs, each_ref_fn fn, void *cb_data)
-@@ -395,7 +396,7 @@ int refs_for_each_remote_ref(struct ref_store *refs, each_ref_fn fn, void *cb_da
- 
- int for_each_remote_ref(each_ref_fn fn, void *cb_data)
- {
--	return refs_for_each_remote_ref(get_main_ref_store(), fn, cb_data);
-+	return refs_for_each_remote_ref(get_main_ref_store(the_repository), fn, cb_data);
- }
- 
- int head_ref_namespaced(each_ref_fn fn, void *cb_data)
-@@ -730,7 +731,7 @@ int refs_delete_ref(struct ref_store *refs, const char *msg,
- 	struct strbuf err = STRBUF_INIT;
- 
- 	if (ref_type(refname) == REF_TYPE_PSEUDOREF) {
--		assert(refs == get_main_ref_store());
-+		assert(refs == get_main_ref_store(the_repository));
- 		return delete_pseudoref(refname, old_oid);
- 	}
- 
-@@ -752,7 +753,7 @@ int refs_delete_ref(struct ref_store *refs, const char *msg,
- int delete_ref(const char *msg, const char *refname,
- 	       const struct object_id *old_oid, unsigned int flags)
- {
--	return refs_delete_ref(get_main_ref_store(), msg, refname,
-+	return refs_delete_ref(get_main_ref_store(the_repository), msg, refname,
- 			       old_oid, flags);
- }
- 
-@@ -928,7 +929,7 @@ struct ref_transaction *ref_store_transaction_begin(struct ref_store *refs,
- 
- struct ref_transaction *ref_transaction_begin(struct strbuf *err)
- {
--	return ref_store_transaction_begin(get_main_ref_store(), err);
-+	return ref_store_transaction_begin(get_main_ref_store(the_repository), err);
- }
- 
- void ref_transaction_free(struct ref_transaction *transaction)
-@@ -1060,7 +1061,7 @@ int refs_update_ref(struct ref_store *refs, const char *msg,
- 	int ret = 0;
- 
- 	if (ref_type(refname) == REF_TYPE_PSEUDOREF) {
--		assert(refs == get_main_ref_store());
-+		assert(refs == get_main_ref_store(the_repository));
- 		ret = write_pseudoref(refname, new_oid, old_oid, &err);
- 	} else {
- 		t = ref_store_transaction_begin(refs, &err);
-@@ -1099,7 +1100,7 @@ int update_ref(const char *msg, const char *refname,
- 	       const struct object_id *old_oid,
- 	       unsigned int flags, enum action_on_err onerr)
- {
--	return refs_update_ref(get_main_ref_store(), msg, refname, new_oid,
-+	return refs_update_ref(get_main_ref_store(the_repository), msg, refname, new_oid,
- 			       old_oid, flags, onerr);
- }
- 
-@@ -1320,7 +1321,7 @@ int refs_head_ref(struct ref_store *refs, each_ref_fn fn, void *cb_data)
- 
- int head_ref(each_ref_fn fn, void *cb_data)
- {
--	return refs_head_ref(get_main_ref_store(), fn, cb_data);
-+	return refs_head_ref(get_main_ref_store(the_repository), fn, cb_data);
- }
- 
- struct ref_iterator *refs_ref_iterator_begin(
-@@ -1379,7 +1380,7 @@ int refs_for_each_ref(struct ref_store *refs, each_ref_fn fn, void *cb_data)
- 
- int for_each_ref(each_ref_fn fn, void *cb_data)
- {
--	return refs_for_each_ref(get_main_ref_store(), fn, cb_data);
-+	return refs_for_each_ref(get_main_ref_store(the_repository), fn, cb_data);
- }
- 
- int refs_for_each_ref_in(struct ref_store *refs, const char *prefix,
-@@ -1390,7 +1391,7 @@ int refs_for_each_ref_in(struct ref_store *refs, const char *prefix,
- 
- int for_each_ref_in(const char *prefix, each_ref_fn fn, void *cb_data)
- {
--	return refs_for_each_ref_in(get_main_ref_store(), prefix, fn, cb_data);
-+	return refs_for_each_ref_in(get_main_ref_store(the_repository), prefix, fn, cb_data);
- }
- 
- int for_each_fullref_in(const char *prefix, each_ref_fn fn, void *cb_data, unsigned int broken)
-@@ -1399,7 +1400,7 @@ int for_each_fullref_in(const char *prefix, each_ref_fn fn, void *cb_data, unsig
- 
- 	if (broken)
- 		flag = DO_FOR_EACH_INCLUDE_BROKEN;
--	return do_for_each_ref(get_main_ref_store(),
-+	return do_for_each_ref(get_main_ref_store(the_repository),
- 			       prefix, fn, 0, flag, cb_data);
- }
- 
-@@ -1416,7 +1417,7 @@ int refs_for_each_fullref_in(struct ref_store *refs, const char *prefix,
- 
- int for_each_replace_ref(each_ref_fn fn, void *cb_data)
- {
--	return do_for_each_ref(get_main_ref_store(),
-+	return do_for_each_ref(get_main_ref_store(the_repository),
+ 	return do_for_each_ref(get_main_ref_store(the_repository),
  			       git_replace_ref_base, fn,
- 			       strlen(git_replace_ref_base),
- 			       DO_FOR_EACH_INCLUDE_BROKEN, cb_data);
-@@ -1427,7 +1428,7 @@ int for_each_namespaced_ref(each_ref_fn fn, void *cb_data)
- 	struct strbuf buf = STRBUF_INIT;
- 	int ret;
- 	strbuf_addf(&buf, "%srefs/", get_git_namespace());
--	ret = do_for_each_ref(get_main_ref_store(),
-+	ret = do_for_each_ref(get_main_ref_store(the_repository),
- 			      buf.buf, fn, 0, 0, cb_data);
- 	strbuf_release(&buf);
- 	return ret;
-@@ -1441,7 +1442,7 @@ int refs_for_each_rawref(struct ref_store *refs, each_ref_fn fn, void *cb_data)
- 
- int for_each_rawref(each_ref_fn fn, void *cb_data)
- {
--	return refs_for_each_rawref(get_main_ref_store(), fn, cb_data);
-+	return refs_for_each_rawref(get_main_ref_store(the_repository), fn, cb_data);
- }
- 
- int refs_read_raw_ref(struct ref_store *ref_store,
-@@ -1547,7 +1548,7 @@ const char *refs_resolve_ref_unsafe(struct ref_store *refs,
- /* backend functions */
- int refs_init_db(struct strbuf *err)
- {
--	struct ref_store *refs = get_main_ref_store();
-+	struct ref_store *refs = get_main_ref_store(the_repository);
- 
- 	return refs->be->init_db(refs, err);
- }
-@@ -1555,7 +1556,7 @@ int refs_init_db(struct strbuf *err)
- const char *resolve_ref_unsafe(const char *refname, int resolve_flags,
- 			       struct object_id *oid, int *flags)
- {
--	return refs_resolve_ref_unsafe(get_main_ref_store(), refname,
-+	return refs_resolve_ref_unsafe(get_main_ref_store(the_repository), refname,
- 				       resolve_flags, oid, flags);
- }
- 
-@@ -1651,7 +1652,7 @@ static struct ref_store *ref_store_init(const char *gitdir,
- 	return refs;
- }
- 
--struct ref_store *get_main_ref_store(void)
-+struct ref_store *get_main_ref_store_the_repository(void)
- {
- 	if (main_ref_store)
- 		return main_ref_store;
-@@ -1726,7 +1727,7 @@ struct ref_store *get_worktree_ref_store(const struct worktree *wt)
- 	const char *id;
- 
- 	if (wt->is_current)
--		return get_main_ref_store();
-+		return get_main_ref_store(the_repository);
- 
- 	id = wt->id ? wt->id : "/";
- 	refs = lookup_ref_store_map(&worktree_ref_stores, id);
-@@ -1782,7 +1783,7 @@ int refs_peel_ref(struct ref_store *refs, const char *refname,
- 
- int peel_ref(const char *refname, struct object_id *oid)
- {
--	return refs_peel_ref(get_main_ref_store(), refname, oid);
-+	return refs_peel_ref(get_main_ref_store(the_repository), refname, oid);
- }
- 
- int refs_create_symref(struct ref_store *refs,
-@@ -1798,7 +1799,7 @@ int refs_create_symref(struct ref_store *refs,
- int create_symref(const char *ref_target, const char *refs_heads_master,
- 		  const char *logmsg)
- {
--	return refs_create_symref(get_main_ref_store(), ref_target,
-+	return refs_create_symref(get_main_ref_store(the_repository), ref_target,
- 				  refs_heads_master, logmsg);
- }
- 
-@@ -2006,7 +2007,7 @@ int refs_for_each_reflog(struct ref_store *refs, each_ref_fn fn, void *cb_data)
- 
- int for_each_reflog(each_ref_fn fn, void *cb_data)
- {
--	return refs_for_each_reflog(get_main_ref_store(), fn, cb_data);
-+	return refs_for_each_reflog(get_main_ref_store(the_repository), fn, cb_data);
- }
- 
- int refs_for_each_reflog_ent_reverse(struct ref_store *refs,
-@@ -2021,7 +2022,7 @@ int refs_for_each_reflog_ent_reverse(struct ref_store *refs,
- int for_each_reflog_ent_reverse(const char *refname, each_reflog_ent_fn fn,
- 				void *cb_data)
- {
--	return refs_for_each_reflog_ent_reverse(get_main_ref_store(),
-+	return refs_for_each_reflog_ent_reverse(get_main_ref_store(the_repository),
- 						refname, fn, cb_data);
- }
- 
-@@ -2034,7 +2035,7 @@ int refs_for_each_reflog_ent(struct ref_store *refs, const char *refname,
- int for_each_reflog_ent(const char *refname, each_reflog_ent_fn fn,
- 			void *cb_data)
- {
--	return refs_for_each_reflog_ent(get_main_ref_store(), refname,
-+	return refs_for_each_reflog_ent(get_main_ref_store(the_repository), refname,
- 					fn, cb_data);
- }
- 
-@@ -2045,7 +2046,7 @@ int refs_reflog_exists(struct ref_store *refs, const char *refname)
- 
- int reflog_exists(const char *refname)
- {
--	return refs_reflog_exists(get_main_ref_store(), refname);
-+	return refs_reflog_exists(get_main_ref_store(the_repository), refname);
- }
- 
- int refs_create_reflog(struct ref_store *refs, const char *refname,
-@@ -2057,7 +2058,7 @@ int refs_create_reflog(struct ref_store *refs, const char *refname,
- int safe_create_reflog(const char *refname, int force_create,
- 		       struct strbuf *err)
- {
--	return refs_create_reflog(get_main_ref_store(), refname,
-+	return refs_create_reflog(get_main_ref_store(the_repository), refname,
- 				  force_create, err);
- }
- 
-@@ -2068,7 +2069,7 @@ int refs_delete_reflog(struct ref_store *refs, const char *refname)
- 
- int delete_reflog(const char *refname)
- {
--	return refs_delete_reflog(get_main_ref_store(), refname);
-+	return refs_delete_reflog(get_main_ref_store(the_repository), refname);
- }
- 
- int refs_reflog_expire(struct ref_store *refs,
-@@ -2091,7 +2092,7 @@ int reflog_expire(const char *refname, const struct object_id *oid,
- 		  reflog_expiry_cleanup_fn cleanup_fn,
- 		  void *policy_cb_data)
- {
--	return refs_reflog_expire(get_main_ref_store(),
-+	return refs_reflog_expire(get_main_ref_store(the_repository),
- 				  refname, oid, flags,
- 				  prepare_fn, should_prune_fn,
- 				  cleanup_fn, policy_cb_data);
-@@ -2114,7 +2115,7 @@ int refs_delete_refs(struct ref_store *refs, const char *msg,
- int delete_refs(const char *msg, struct string_list *refnames,
- 		unsigned int flags)
- {
--	return refs_delete_refs(get_main_ref_store(), msg, refnames, flags);
-+	return refs_delete_refs(get_main_ref_store(the_repository), msg, refnames, flags);
- }
- 
- int refs_rename_ref(struct ref_store *refs, const char *oldref,
-@@ -2125,7 +2126,7 @@ int refs_rename_ref(struct ref_store *refs, const char *oldref,
- 
- int rename_ref(const char *oldref, const char *newref, const char *logmsg)
- {
--	return refs_rename_ref(get_main_ref_store(), oldref, newref, logmsg);
-+	return refs_rename_ref(get_main_ref_store(the_repository), oldref, newref, logmsg);
- }
- 
- int refs_copy_existing_ref(struct ref_store *refs, const char *oldref,
-@@ -2136,5 +2137,5 @@ int refs_copy_existing_ref(struct ref_store *refs, const char *oldref,
- 
- int copy_existing_ref(const char *oldref, const char *newref, const char *logmsg)
- {
--	return refs_copy_existing_ref(get_main_ref_store(), oldref, newref, logmsg);
-+	return refs_copy_existing_ref(get_main_ref_store(the_repository), oldref, newref, logmsg);
- }
 diff --git a/refs.h b/refs.h
-index 01be5ae32f..0d013377ce 100644
+index 0d013377ce..ab3d2bec2f 100644
 --- a/refs.h
 +++ b/refs.h
-@@ -758,7 +758,9 @@ int reflog_expire(const char *refname, const struct object_id *oid,
+@@ -300,7 +300,9 @@ int for_each_fullref_in(const char *prefix, each_ref_fn fn, void *cb_data,
+ int for_each_tag_ref(each_ref_fn fn, void *cb_data);
+ int for_each_branch_ref(each_ref_fn fn, void *cb_data);
+ int for_each_remote_ref(each_ref_fn fn, void *cb_data);
+-int for_each_replace_ref(each_ref_fn fn, void *cb_data);
++#define for_each_replace_ref(r, fn, cb) \
++	for_each_replace_ref_##r(fn, cb)
++int for_each_replace_ref_the_repository(each_ref_fn fn, void *cb_data);
+ int for_each_glob_ref(each_ref_fn fn, const char *pattern, void *cb_data);
+ int for_each_glob_ref_in(each_ref_fn fn, const char *pattern,
+ 			 const char *prefix, void *cb_data);
+diff --git a/replace-object.c b/replace-object.c
+index b2405f6027..16a95ea416 100644
+--- a/replace-object.c
++++ b/replace-object.c
+@@ -40,7 +40,7 @@ static void prepare_replace_object(void)
+ 		xmalloc(sizeof(*the_repository->objects->replace_map));
+ 	oidmap_init(the_repository->objects->replace_map, 0);
  
- int ref_storage_backend_exists(const char *name);
+-	for_each_replace_ref(register_replace_ref, NULL);
++	for_each_replace_ref(the_repository, register_replace_ref, NULL);
+ }
  
--struct ref_store *get_main_ref_store(void);
-+#define get_main_ref_store(r) \
-+	get_main_ref_store_##r()
-+struct ref_store *get_main_ref_store_the_repository(void);
- /*
-  * Return the ref_store instance for the specified submodule. For the
-  * main repository, use submodule==NULL; such a call cannot fail. For
-diff --git a/revision.c b/revision.c
-index b42c836d7a..1cff11833e 100644
---- a/revision.c
-+++ b/revision.c
-@@ -6,6 +6,7 @@
- #include "diff.h"
- #include "refs.h"
- #include "revision.h"
-+#include "repository.h"
- #include "graph.h"
- #include "grep.h"
- #include "reflog-walk.h"
-@@ -1285,7 +1286,7 @@ void add_reflogs_to_pending(struct rev_info *revs, unsigned flags)
- 
- 	cb.all_revs = revs;
- 	cb.all_flags = flags;
--	cb.refs = get_main_ref_store();
-+	cb.refs = get_main_ref_store(the_repository);
- 	for_each_reflog(handle_one_reflog, &cb);
- 
- 	if (!revs->single_worktree)
-@@ -2176,7 +2177,7 @@ static int handle_revision_pseudo_opt(const char *submodule,
- 			die("BUG: --single-worktree cannot be used together with submodule");
- 		refs = get_submodule_ref_store(submodule);
- 	} else
--		refs = get_main_ref_store();
-+		refs = get_main_ref_store(the_repository);
- 
- 	/*
- 	 * NOTE!
-diff --git a/t/helper/test-ref-store.c b/t/helper/test-ref-store.c
-index 7314b5943e..e8c328ec0e 100644
---- a/t/helper/test-ref-store.c
-+++ b/t/helper/test-ref-store.c
-@@ -2,6 +2,7 @@
- #include "refs.h"
- #include "worktree.h"
- #include "object-store.h"
-+#include "repository.h"
- 
- static const char *notnull(const char *arg, const char *name)
- {
-@@ -22,7 +23,7 @@ static const char **get_store(const char **argv, struct ref_store **refs)
- 	if (!argv[0]) {
- 		die("ref store required");
- 	} else if (!strcmp(argv[0], "main")) {
--		*refs = get_main_ref_store();
-+		*refs = get_main_ref_store(the_repository);
- 	} else if (skip_prefix(argv[0], "submodule:", &gitdir)) {
- 		struct strbuf sb = STRBUF_INIT;
- 		int ret;
+ /* We allow "recursive" replacement. Only within reason, though */
 -- 
 2.17.0.484.g0c8726318c-goog
 
