@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 958F21F404
-	for <e@80x24.org>; Mon,  9 Apr 2018 22:46:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3D88C1F404
+	for <e@80x24.org>; Mon,  9 Apr 2018 22:46:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752188AbeDIWqG (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Apr 2018 18:46:06 -0400
-Received: from mail-pl0-f66.google.com ([209.85.160.66]:33673 "EHLO
-        mail-pl0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752128AbeDIWp6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Apr 2018 18:45:58 -0400
-Received: by mail-pl0-f66.google.com with SMTP id s10-v6so6099001plp.0
-        for <git@vger.kernel.org>; Mon, 09 Apr 2018 15:45:57 -0700 (PDT)
+        id S1752128AbeDIWqJ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Apr 2018 18:46:09 -0400
+Received: from mail-pl0-f65.google.com ([209.85.160.65]:38497 "EHLO
+        mail-pl0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752068AbeDIWpz (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Apr 2018 18:45:55 -0400
+Received: by mail-pl0-f65.google.com with SMTP id c7-v6so2842963plr.5
+        for <git@vger.kernel.org>; Mon, 09 Apr 2018 15:45:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=/XaWemEru83qjlrY+6fWNVcWNPA0N9HaQ1XZdJxM8Nc=;
-        b=d2G/4bOqTf0Qam3vkGhdqfTOGI1++Gejc6mQbSwoeEszX9FltacEXBnyrOvQOuUg07
-         WsO/+VrJ2goBHQ1tMBBV9zWcFrlFIj/QeGZkwrhprAGLfDXhj9JHTUAQQAESzN3ZQWLD
-         iWk2SR5rRDFvRPBuWfVJb66kCnlmNFJgSLz+ILtFZxKabqQ8F5/qdMU8SKkCaFtGlkmP
-         x+w/qIhd3wwweJ9M0/sgxbn6GYfKnKyeZGsPWpUVATPZyVrrfW1ticjke7E0z2guhatb
-         vwVaYttLzgv3yHen/QW4BP/pUOd/s/HV6rgFQvyAaTin3DEaPdMX4eVx2b9BBPRLm6ln
-         pMtg==
+        bh=b644eyjjOTxS7dobtNeXa6DyMG84pvgIbHN9e3kKVTA=;
+        b=elNdoIgSohMOfyXeInGF59iYieo0CzIy6d91Z9D0iLNWOvdzFx7qvd5VPEB35LyfaX
+         VmcTYJ89q9IIYPF7iNZejTAfNiC9x45srX+eAjseBpw0K4z2fsF5hGoaqaN7TWD/JaJU
+         O0rvCJF9mBRdA4dAe3e0cn86PySmBTOEszo25knMQDa3V7u0iwvSzvKY1rBK5XjF6bwI
+         WGm+qk7iNEqbsqEc/SvD3XBfmOjjQP3Rinc9vNDA9e6S0Q4v7XTksYFqr0aXP+K1Yc9/
+         7eQB+jB7VUBubKabXjyZ2BsOLHnvcy2EqRMOsWMZvIuA1VoYxXOm2LDT0388EX4UJOX5
+         3ssQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=/XaWemEru83qjlrY+6fWNVcWNPA0N9HaQ1XZdJxM8Nc=;
-        b=pm6mW0mTUPsRDLkVdM/lvbRPRNoy/0hXpjLGQOxJAq5mm6ywWQf2WF2CMW6Ur/Ziql
-         uTPLc+dXT1lhKd415iuNIn56yUEFXrThaCicRsMw0mEeUzG2u0eZ9XO6hA/1GuiSKFFo
-         m8q7IOa+DLWMmfVPL3/8yMjK0yA2UD315Lu6bEPB3Wlw6x2i91GKTZEG/nl12TIOHGW8
-         c8FyHlAmjdOoSSrdO3WFbswOGc0aVkTkoz+ODFABVg7ddpOxz7BP0IcYq/OskHjQ0u20
-         TlSMBUP4ZgkF55gZiRLfwyyi1Mv/N771AtfX4OnUh67P5xp4rIsUy3YVdJKn/kOftqbP
-         w/bA==
-X-Gm-Message-State: AElRT7GfhfXpln/ZKF61buEithpccPeeRfEExBS0Axc3fQW66lyDF2jO
-        QbQP6IIiBsGjPhlsPkNK0krxewwrALc=
-X-Google-Smtp-Source: AIpwx49XjNAY3CPc/pxW8nm9juOKFgm4PLXOcaOJ+wc4/QUMMGXPGCvUUcHEY2UOxTydNYFDDWbA9g==
-X-Received: by 2002:a17:902:2c83:: with SMTP id n3-v6mr38648462plb.140.1523313957277;
-        Mon, 09 Apr 2018 15:45:57 -0700 (PDT)
+        bh=b644eyjjOTxS7dobtNeXa6DyMG84pvgIbHN9e3kKVTA=;
+        b=rDTK5pmcVR7DlabfJ80LYBx/x9Glo2j9xnwzGqIaa3N7syRO/NFNcsg7URVuKSgMCz
+         iYYHnPYSv3M9PsnwNROXkiDsUu1axDu5baZ1JKq3hHwsvdVL8QUSrO5so0/cGRRxFSXF
+         A/q7Ruzbzlxm4X5MyvA20k91OkGBNypbguzRWgIxb34XV1LtgdGSeMYuUw8iCjPQqxFK
+         qJ/Uw9oz15b3QDzlz+w/wUuPlespsy2cL/vGccz3f3kp3EGvAfW0wxeKSvZFMkzBuV1M
+         SowbsSX4Moz28tgWbPh0awhfbwdfg9m1nSYSM2WFJo6LW+AU3VJaDIq/5E+xqUa7iHeG
+         PW9w==
+X-Gm-Message-State: AElRT7FxLSwhYqGeySE4VthKL6zKDVHbGm3E8gdIAzj1MtrMpotq0IQN
+        WFBdRHgfZxXJ3tUt1IaCskBX2g==
+X-Google-Smtp-Source: AIpwx4/uW0RdBXTe8EaD9s2ARnw12UXDqzfAH9gxC3oy9FNiPDV8FsMkgUxth0xsZhOeJaFJKb8/2g==
+X-Received: by 2002:a17:902:2941:: with SMTP id g59-v6mr40617358plb.55.1523313954982;
+        Mon, 09 Apr 2018 15:45:54 -0700 (PDT)
 Received: from localhost ([2620:0:100e:422:ea58:fa52:fa77:9b41])
-        by smtp.gmail.com with ESMTPSA id f19sm1728855pgv.39.2018.04.09.15.45.55
+        by smtp.gmail.com with ESMTPSA id d83sm2622206pfl.176.2018.04.09.15.45.54
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 09 Apr 2018 15:45:55 -0700 (PDT)
+        Mon, 09 Apr 2018 15:45:54 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     sbeller@google.com
 Cc:     git@vger.kernel.org, jonathantanmy@google.com,
         sunshine@sunshineco.com, pclouds@gmail.com, l.s.r@web.de,
         sandals@crustytoothpaste.net
-Subject: [PATCH 13/16] refs: allow for_each_replace_ref to handle arbitrary repositories
-Date:   Mon,  9 Apr 2018 15:45:30 -0700
-Message-Id: <20180409224533.17764-14-sbeller@google.com>
+Subject: [PATCH 12/16] refs: store the main ref store inside the repository struct
+Date:   Mon,  9 Apr 2018 15:45:29 -0700
+Message-Id: <20180409224533.17764-13-sbeller@google.com>
 X-Mailer: git-send-email 2.17.0.484.g0c8726318c-goog
 In-Reply-To: <20180409224533.17764-1-sbeller@google.com>
 References: <20180406232136.253950-1-sbeller@google.com>
@@ -67,41 +67,73 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- refs.c | 4 ++--
- refs.h | 4 +---
- 2 files changed, 3 insertions(+), 5 deletions(-)
+ refs.c       | 13 +++++--------
+ refs.h       |  4 +---
+ repository.h |  3 +++
+ 3 files changed, 9 insertions(+), 11 deletions(-)
 
 diff --git a/refs.c b/refs.c
-index b5be754a97..bed5f88405 100644
+index f58b9fb7df..b5be754a97 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -1415,9 +1415,9 @@ int refs_for_each_fullref_in(struct ref_store *refs, const char *prefix,
- 	return do_for_each_ref(refs, prefix, fn, 0, flag, cb_data);
+@@ -1608,9 +1608,6 @@ static struct ref_store_hash_entry *alloc_ref_store_hash_entry(
+ 	return entry;
  }
  
--int for_each_replace_ref_the_repository(each_ref_fn fn, void *cb_data)
-+int for_each_replace_ref(struct repository *r, each_ref_fn fn, void *cb_data)
+-/* A pointer to the ref_store for the main repository: */
+-static struct ref_store *main_ref_store;
+-
+ /* A hashmap of ref_stores, stored by submodule name: */
+ static struct hashmap submodule_ref_stores;
+ 
+@@ -1652,13 +1649,13 @@ static struct ref_store *ref_store_init(const char *gitdir,
+ 	return refs;
+ }
+ 
+-struct ref_store *get_main_ref_store_the_repository(void)
++struct ref_store *get_main_ref_store(struct repository *r)
  {
--	return do_for_each_ref(get_main_ref_store(the_repository),
-+	return do_for_each_ref(get_main_ref_store(r),
- 			       git_replace_ref_base, fn,
- 			       strlen(git_replace_ref_base),
- 			       DO_FOR_EACH_INCLUDE_BROKEN, cb_data);
+-	if (main_ref_store)
+-		return main_ref_store;
++	if (r->main_ref_store)
++		return r->main_ref_store;
+ 
+-	main_ref_store = ref_store_init(get_git_dir(), REF_STORE_ALL_CAPS);
+-	return main_ref_store;
++	r->main_ref_store = ref_store_init(r->gitdir, REF_STORE_ALL_CAPS);
++	return r->main_ref_store;
+ }
+ 
+ /*
 diff --git a/refs.h b/refs.h
-index f5ab68c0ed..15f3a91cc4 100644
+index ab3d2bec2f..f5ab68c0ed 100644
 --- a/refs.h
 +++ b/refs.h
-@@ -300,9 +300,7 @@ int for_each_fullref_in(const char *prefix, each_ref_fn fn, void *cb_data,
- int for_each_tag_ref(each_ref_fn fn, void *cb_data);
- int for_each_branch_ref(each_ref_fn fn, void *cb_data);
- int for_each_remote_ref(each_ref_fn fn, void *cb_data);
--#define for_each_replace_ref(r, fn, cb) \
--	for_each_replace_ref_##r(fn, cb)
--int for_each_replace_ref_the_repository(each_ref_fn fn, void *cb_data);
-+int for_each_replace_ref(struct repository *r, each_ref_fn fn, void *cb_data);
- int for_each_glob_ref(each_ref_fn fn, const char *pattern, void *cb_data);
- int for_each_glob_ref_in(each_ref_fn fn, const char *pattern,
- 			 const char *prefix, void *cb_data);
+@@ -760,9 +760,7 @@ int reflog_expire(const char *refname, const struct object_id *oid,
+ 
+ int ref_storage_backend_exists(const char *name);
+ 
+-#define get_main_ref_store(r) \
+-	get_main_ref_store_##r()
+-struct ref_store *get_main_ref_store_the_repository(void);
++struct ref_store *get_main_ref_store(struct repository *r);
+ /*
+  * Return the ref_store instance for the specified submodule. For the
+  * main repository, use submodule==NULL; such a call cannot fail. For
+diff --git a/repository.h b/repository.h
+index 09df94a472..7d0710b273 100644
+--- a/repository.h
++++ b/repository.h
+@@ -26,6 +26,9 @@ struct repository {
+ 	 */
+ 	struct raw_object_store *objects;
+ 
++	/* The store in which the refs are held. */
++	struct ref_store *main_ref_store;
++
+ 	/*
+ 	 * Path to the repository's graft file.
+ 	 * Cannot be NULL after initialization.
 -- 
 2.17.0.484.g0c8726318c-goog
 
