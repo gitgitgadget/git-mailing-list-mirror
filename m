@@ -7,76 +7,81 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D2CEB1F404
-	for <e@80x24.org>; Mon,  9 Apr 2018 17:25:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 91D061F404
+	for <e@80x24.org>; Mon,  9 Apr 2018 17:36:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752239AbeDIRZ5 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Apr 2018 13:25:57 -0400
-Received: from mail-yb0-f180.google.com ([209.85.213.180]:46724 "EHLO
-        mail-yb0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751662AbeDIRZ4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Apr 2018 13:25:56 -0400
-Received: by mail-yb0-f180.google.com with SMTP id e5-v6so3282824ybq.13
-        for <git@vger.kernel.org>; Mon, 09 Apr 2018 10:25:56 -0700 (PDT)
+        id S1752283AbeDIRgi (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Apr 2018 13:36:38 -0400
+Received: from mail-yb0-f179.google.com ([209.85.213.179]:34770 "EHLO
+        mail-yb0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751653AbeDIRgh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Apr 2018 13:36:37 -0400
+Received: by mail-yb0-f179.google.com with SMTP id b14-v6so1636707ybk.1
+        for <git@vger.kernel.org>; Mon, 09 Apr 2018 10:36:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=L4GvA5EupQtz2PnQA4B0veLvGTiQ6YY9OPqkgD2paOw=;
-        b=TFHDBQNF5jiSslqnl4g+/sWo2zzlHYzFoixEEUmw+fBFhjiOQ8KH9Vhw5S9Y2IwxJA
-         ZQY82M6KrqOiEKk73q61bHcQqc0AcfnzTAX+8l3wOTEmA8Kz/xeNfsL4yACFvNsMdzss
-         4hn6MmddguCZGmKZBL/xb8dZEGBH2C3+RppT9k1pIUhqwGKX+km0tuS+S/XFUp9M0scS
-         QOHQJRylupUPQpMMO3UStAGGhL+EYxUbMdZOFm0DBGoPhX3Sniw7xpbXXoSQ5pnfUIun
-         pIY05+pj/l4kblvJzutdaLuBguALX+g1Q4Qr9BlrPUJE90j94FCuKrH8UVF/OU6lS44O
-         c1LA==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
+        bh=c6jxE06XARPuf640pA/vDA71YVQZIzXAhVvT8xl/vpw=;
+        b=vAByUq3vF/RFBrlSc/wbZydEB7rmNmluQnN7Dnn1cg4++2P5XsWSAW0HSMveqZ3noc
+         0ri0NQUO0iB4KUAsQ3/jekQ5spgbkz+uP0WkFZFxE6sZBlWv5Gn7f5ZdE7IWM9RRZi5f
+         y65iZ7gNbM7X3aiWktY78B8mCUHToYfqVI7KY6S8JeykeTPGrw3yhcSXG2YMli1fW0JT
+         Zn7p/ep9EVLpG5XL39ggz2bnF1eNOKY75W5OPQpGtw7HhRw+OAnIXJ6v2w3GO89lQKPC
+         cBY+zW53U2yJNqq6BFPAK8y/KA22KbClASHTbos2YYxaNq6d0zcr9sy1AkZf98LD2MUf
+         x5YQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=L4GvA5EupQtz2PnQA4B0veLvGTiQ6YY9OPqkgD2paOw=;
-        b=GYGJth2nm82qQ5wbKw+P3KOsZ5mvjZDEtL7R+1Cjiu6PsASg1Pg3jhgBvkpM3BCx1v
-         wOiSJGXvZnzIUfwaBv9Yai3Pcq1wnLT7/LawoMGqJTks8m94fYI4s61UAL3rAyid0t3K
-         vJBoKBPZUlVqXOq7kCLNDFfzJlAkJXt/Ul+TwOQU70m1ecg2Q3R72kqVOB4PudVByufY
-         7AgLcb6TTWzuRnoKrYCnOkcTdvGYL8scG+umag7Ty7r99hztWDttnBjOhX9Q04QgWifa
-         +c3SGs2FuLRleXeXfbl18LlyjywFiMkVLXNtY9272yfwFsEqAwdLMWdfLqkgR+sx41w3
-         XuxA==
-X-Gm-Message-State: ALQs6tAO/TNUySyc30YD8FGmAiqwJQJvq2C2E4JIIOQYTtmxxzfuV59H
-        WLGZFD2EWqj4j6MKNfGSfLtlozUx/clVN9SaP8JhTA==
-X-Google-Smtp-Source: AIpwx4/ekOgu60/L47uWOmPZUOCIyrnarLfVYjFaTw4IjcM8q8vFxc084v/QS05sF93k6ccoE59OoC4R5ILEcGZsF5E=
-X-Received: by 2002:a25:2704:: with SMTP id n4-v6mr20152744ybn.167.1523294755613;
- Mon, 09 Apr 2018 10:25:55 -0700 (PDT)
+         :message-id:subject:to;
+        bh=c6jxE06XARPuf640pA/vDA71YVQZIzXAhVvT8xl/vpw=;
+        b=Cse5XDwc2QIedGOzwpVh/DWzN1SjR4lwHcgz0qmUEAZTT10b05iFxQmNHQdvh143an
+         xbiVO00YlA3LIR7wIiFRmgamFKvDEOIR2vlnmYW/gWezVp4jBhqVUgMZrQ8Dn5tyODSX
+         sIyDMeEwbpTa2DphC5adCiE1t8JuJKbkCPntR9iXGNP0V/rp+H/4+/P9zcrQf8F5ytU1
+         bgaxUbMIhhgfCAkXF17yeipw/s462gnJD75pKA1IFw1raG4RUz4LSq8vgRL5D6SkCLaa
+         tM4lw3H1fq5eG+KPeFIGkZOHQYdwTfjSK//QjRJpRFjOpN7quSSp5ZF9j/qH+hPd99H9
+         KF7A==
+X-Gm-Message-State: ALQs6tDMiAHzi7x/8liNPqhzhU6V5VMXyNZ67YP2xfQ+z+Wnmgltfsjn
+        hp02hYqKmvV4nPzLZJMuRrTjb2addk9VcWc5TaUADJWn
+X-Google-Smtp-Source: AIpwx4+E0CprNmobxO6tM4HKMRNgnJ+JbnMov9+Mg8apAZtp3DX6cQPUrs8JpiUxgxXRF797WAabj0yYBgqD7FIF34E=
+X-Received: by 2002:a25:ba51:: with SMTP id z17-v6mr17967591ybj.334.1523295396508;
+ Mon, 09 Apr 2018 10:36:36 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:a25:cf81:0:0:0:0:0 with HTTP; Mon, 9 Apr 2018 10:25:55 -0700 (PDT)
-In-Reply-To: <7930c9bf-4f24-2e76-b522-331a2e9ed5d5@gmail.com>
-References: <20180403120057.173849-1-dstolee@microsoft.com>
- <20180406190919.167092-1-dstolee@microsoft.com> <20180406192146.GC921@sigill.intra.peff.net>
- <xmqqr2np70dl.fsf@gitster-ct.c.googlers.com> <7930c9bf-4f24-2e76-b522-331a2e9ed5d5@gmail.com>
+Received: by 2002:a25:cf81:0:0:0:0:0 with HTTP; Mon, 9 Apr 2018 10:36:35 -0700 (PDT)
+In-Reply-To: <nycvar.QRO.7.76.6.1804091038430.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <20180406232136.253950-1-sbeller@google.com> <nycvar.QRO.7.76.6.1804091038430.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 9 Apr 2018 10:25:55 -0700
-Message-ID: <CAGZ79kbV3uM0mkOdnoUF+isGEg_uM-9SKQix96hyQOH1Mg9YNQ@mail.gmail.com>
-Subject: Re: [PATCH v2 0/4] Lazy-load trees when reading commit-graph
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        "avarab@gmail.com" <avarab@gmail.com>,
-        "larsxschneider@gmail.com" <larsxschneider@gmail.com>
+Date:   Mon, 9 Apr 2018 10:36:35 -0700
+Message-ID: <CAGZ79katzVNaC-9qScniMqhBgtT9mD=o=xZffTf6q8=vq08tpg@mail.gmail.com>
+Subject: Re: [RFC PATCH 00/19] object-store refactoring 3 (replace objects,
+ main ref store)
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 9, 2018 at 6:15 AM, Derrick Stolee <stolee@gmail.com> wrote:
++cc list
 
-> I don't understand how folding the patches makes the correctness clearer,
-> since the rename (1/4) is checked by the compiler and the Coccinelle script
-> (3/4) only works after that rename is complete.
+On Mon, Apr 9, 2018 at 1:39 AM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi Stefan,
 >
-> The only thing I can imagine is that it makes smaller patch emails, since
-> there is only one large patch instead of two. In this case, I prefer to make
-> changes that are easier to check by automation (compiler and coccinelle).
+> On Fri, 6 Apr 2018, Stefan Beller wrote:
 >
+>> See cfc62fc98c (sha1_file: add repository argument to link_alt_odb_entry,
+>> 2018-03-23) for explanation.
+>
+> "See ... for explanation." ... are you going full Russian on us? ;-)
 
-I prefer the offloading to automation, too.
-So I would vouch for keeping it as-is.
+That commit is supposed to merge to master now, so we don't lose it.
+I just dislike to repeat myself, and there we explained that trick already.
+As commit messages don't link well together in email clients, I will
+repeat the important part.
+
+Thanks,
+Stefan
+
+>
+> Ciao,
+> Dscho
