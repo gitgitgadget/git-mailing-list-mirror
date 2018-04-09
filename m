@@ -2,87 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E26491F404
-	for <e@80x24.org>; Mon,  9 Apr 2018 13:52:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E21701F404
+	for <e@80x24.org>; Mon,  9 Apr 2018 13:59:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751581AbeDINww (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Apr 2018 09:52:52 -0400
-Received: from mout.gmx.net ([212.227.17.20]:35057 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751456AbeDINwv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Apr 2018 09:52:51 -0400
-Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MeQ43-1eqLDx1baR-00QEzC; Mon, 09
- Apr 2018 15:52:42 +0200
-Date:   Mon, 9 Apr 2018 15:52:42 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
-Subject: Re: [PATCH] t5404: relax overzealous test
-In-Reply-To: <xmqq60516rwq.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1804091551170.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <958ee6f006aba0c67c8e064d31206e3e68a1cc49.1523043053.git.johannes.schindelin@gmx.de> <20180406195331.GC11450@sigill.intra.peff.net> <xmqq60516rwq.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1752454AbeDIN7G (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Apr 2018 09:59:06 -0400
+Received: from mail-pf0-f173.google.com ([209.85.192.173]:39678 "EHLO
+        mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751737AbeDIN7G (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Apr 2018 09:59:06 -0400
+Received: by mail-pf0-f173.google.com with SMTP id c78so5806785pfj.6
+        for <git@vger.kernel.org>; Mon, 09 Apr 2018 06:59:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=eP4GQv39UpDwVf4CeeY5UIDsSSPzMyB0o4bGxlCX6x4=;
+        b=mOo4ij9MOi+iJfS1zSo1Zln3G8WYrytTpY/9HcFABaADe0HK2wqBic7X90G6gB//ys
+         DQOdBynKQwzuHbZmo2yHxv0SWpzUD8tR3bVXtM+Q9VaAuAHDnTBpHGU6aE+xo6dy78E8
+         /nu9PfipbznoECEA39t5hDnCsWg/RY9Z2Csx67Vs1YJ9VsCgliDiowGbQWWc4rRYwF1i
+         g+oHt49K0Rakiau3psrsefdKoxhHz8xdTkefWe8X880Tz/8yWyazezgUZCs9vzbAxk6j
+         iZCAl4J7rXgKr78cNvM/XvMptcUI3rumSa5DiO8jfI6EJTFyc40A/Djc8WERkZjcAOeq
+         /s1Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=eP4GQv39UpDwVf4CeeY5UIDsSSPzMyB0o4bGxlCX6x4=;
+        b=VZTBgjKfPFR3WTGh+nF4fLLNyxviF32kGBtUnDk+Lgy7KZKH4XglIZVD7Mp8RByXVu
+         6YwOFG+6Jsp8wxQTZr6J3EDzSPp+XckfMdyL+s3lk3WixJARwa9RD9WvxWVCFxsqZ+6A
+         PC38rTfAYt+P69QbLayGj2tSaJ6I814cACdTtzzm5sd7+dqHn9qkpiGoDaxMRXlOBTyS
+         BkP0yWSFkB6b5pKDrYjpIVcxbfy7x39So3soi8tyxK3mLDlOJlYhPFjw8uxL/kNPdKTH
+         Xg13gBuATM/B8A9IDmn2GUImI8j7W0i8ItWU/CJGMZpV2Q83pWy5wqhKuVJWFdTiH/Ci
+         Xf2A==
+X-Gm-Message-State: AElRT7H0oNHvhIm+V3QfoHeiyZ00bViJJww0b23oRyJN+31cNzmcUlhZ
+        KbPvQxOMnvYX6J4unAvTrmgQr+4J
+X-Google-Smtp-Source: AIpwx49AL+WRu0rQlNmT3ZzreYE0UAwyvsunihuT/cETpmFW10qIyck3ASHX3NWqGrkV37HlrY834A==
+X-Received: by 10.99.179.68 with SMTP id x4mr20629857pgt.132.1523282345294;
+        Mon, 09 Apr 2018 06:59:05 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:c4e6:7a22:56f1:df04? ([2001:4898:8010:0:ae1c:7a22:56f1:df04])
+        by smtp.gmail.com with ESMTPSA id v23sm951688pfn.65.2018.04.09.06.59.02
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 09 Apr 2018 06:59:04 -0700 (PDT)
+Subject: Re: [RFC PATCH 00/19] object-store refactoring 3 (replace objects,
+ main ref store)
+To:     Stefan Beller <sbeller@google.com>, jonathantanmy@google.com
+Cc:     git@vger.kernel.org
+References: <20180406232136.253950-1-sbeller@google.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <6c319100-df47-3b8d-8661-24e4643ada09@gmail.com>
+Date:   Mon, 9 Apr 2018 09:58:59 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:/ZncH4/GmP7MClevxoQjt7+slXH/aLz8p7gGjD6zQesK7guhl8V
- YORbdLOFD7UywiW6JsZkmvaa4XWJYs5s7goDsGCuKyRsBUBv3HTDNJWOJ4iOmG4FpBW0OxF
- kH62GqTK2W+9mla1qJeRNxeZvZn6ApYOQ9LwMcFGSl8vCp7aXYZCZlE41R9Ohzu71M5JlNz
- Vz4L8qeYRiDZe/4ZySahw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:c/Eetno9bEU=:EsUKZ6WtVi0fv7B7QMdwP+
- Z3+G6536kifKUG+ss0+NWfmE8FyBpXZawShv7TyDKXtwzRaPzufpjxde1gHCnhCvpp5RnjGij
- Pf7a2NpnTS2QnmLa1Flzuc/b8DdwZth1ijM8zbIpk09Asuh2fuNHukv9lQ+W0Eju34zXNGqrx
- eZ++P6oibLkUsfnCPpeBo2s0HfFLtE7UmFgQWJDrBVuAtsrtgm163KlyPHIVOt3jjjqoLnWg9
- TANWEkqxKnA8idMdT41KsiJaMqyjLfoSgKdgnAayqaovmvwLxkEFrmHquVUGXPVgN1XeTxsMg
- hlh6nsPvMSkBTIIixRXdvPgtKGkteLZW0vRAK5Un7+Y8TqUN1nfoQdbWIXXN28VSRjvdm0ABG
- 4d6sLpT28P80zlp5HY3qxL2tanuyL3Xcqop/OGY4s9XKZ/qST2FZXarEWTiqBO1FsbkbLeo+x
- MgxdLVRv7P8Qqk3r1FuHrxTthwaraQdHTrG/fAb7ykEF+Fmb1ekXgG2Cu75ufzaMN9LRX7oHd
- GdPuEJyuMQHJJfJi2harsjAcsVUB4wq5WZwYFo/6R0Kurb2cOiesc+eJbpxMaidLMuIsA8J6q
- 4PH57xQ91taG4Wyj981/QeEEri1KQ5T29dyxOLH1Zn1N348j/TsUiMVF4G3XWHrDbYX8gyee9
- BR2o8RV7RdaMx0wi+w1fqAT7YgVjAEubKoKA8UB1wJybmxWsuk10fZXLoX6mRzOD0/9mlM6g/
- 0FDgTrDsa1af29zWBQckWO8HG5lUPl6y+R2Lospm4lqJUdqgDwdFvNfpJbKURtJ9yRsgROXKC
- xVm+l/tMbRyEQTcFqEqaZeNciXDQhW9k8w9f70B+yem0Y4uPfw=
+In-Reply-To: <20180406232136.253950-1-sbeller@google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+On 4/6/2018 7:21 PM, Stefan Beller wrote:
+> This applies on top of 464416a2eaadf84d2bfdf795007863d03b222b7c
+> (sb/packfiles-in-repository).
+> It is also available at https://github.com/stefanbeller/git/tree/object-store-3
+>
+> This series will bring the replacement mechanism (git replace)
+> into the object store.
+>
+> The first patches are cleaning up a bit, and patches 6-19 are converting
+> one function at a time using the tick-tock pattern with the #define trick.
+> See cfc62fc98c (sha1_file: add repository argument to link_alt_odb_entry,
+> 2018-03-23) for explanation.
+>
+> Thanks,
+> Stefan
 
-On Mon, 9 Apr 2018, Junio C Hamano wrote:
+I looked through these patches and only found one set of whitespace 
+errors. Compiles and tests fine on my machine.
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > On Fri, Apr 06, 2018 at 09:31:22PM +0200, Johannes Schindelin wrote:
-> >
-> >> In 0b294c0abf0 (make deleting a missing ref more quiet, 2008-07-08), we
-> >> added a test to verify that deleting an already-deleted ref does not
-> >> show an error.
-> >
-> > Amazing that it took this long to come up.
-> > ...
-> >> This patch chooses instead to look for the prefix "error:" at the
-> >> beginning of the line, so that there can be no ambiguity that any catch
-> >> was indeed a message generated by Git's `error_builtin()` function.
-> >
-> > Yep, this seems obviously correct.
-> 
-> Hits in
-> 
->     $ git grep 'grep ["'\'']*error' t
-> 
-> shows that many checks for errors that are not anchored, but I do
-> not think any of them are looking for the string in a pathname other
-> than this instance, so it would be OK.
-
-Yes, they are okay, I did run the entire test suite in a worktree with the
-same name as my branch name: fix-t5404-error.
-
-Ciao,
-Dscho
+Reviewed-by: Derrick Stolee <dstolee@microsoft.com>
