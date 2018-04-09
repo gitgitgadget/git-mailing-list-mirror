@@ -7,89 +7,99 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_DKIM_INVALID,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 095A51F404
-	for <e@80x24.org>; Mon,  9 Apr 2018 02:07:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C9BFF1F404
+	for <e@80x24.org>; Mon,  9 Apr 2018 02:09:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756445AbeDICHZ (ORCPT <rfc822;e@80x24.org>);
-        Sun, 8 Apr 2018 22:07:25 -0400
-Received: from mail-wm0-f44.google.com ([74.125.82.44]:54853 "EHLO
-        mail-wm0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755941AbeDICHW (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 8 Apr 2018 22:07:22 -0400
-Received: by mail-wm0-f44.google.com with SMTP id r191so15032550wmg.4
-        for <git@vger.kernel.org>; Sun, 08 Apr 2018 19:07:22 -0700 (PDT)
+        id S1757551AbeDICJM (ORCPT <rfc822;e@80x24.org>);
+        Sun, 8 Apr 2018 22:09:12 -0400
+Received: from mail-wm0-f45.google.com ([74.125.82.45]:55429 "EHLO
+        mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1757271AbeDICJK (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 8 Apr 2018 22:09:10 -0400
+Received: by mail-wm0-f45.google.com with SMTP id b127so15140683wmf.5
+        for <git@vger.kernel.org>; Sun, 08 Apr 2018 19:09:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=A2Uu+aD9ksLLM3DTExYMQTIgPJpcw98Jd7cJ/+3Ifck=;
-        b=NFTQNnt/dbDi0cN37YS2PB9qLROa3P5o5FS0fK1BuPEDsqR1GjZXaxo16s47uWu++r
-         pHee52a5TVYDz8lo82oANJ5vAKPmFDEY1ny2qpurGi62M3ysXS0+NVZ8jV6KyN8K/Bpx
-         Xy36Eweq6BTp512X+OI+UJxt5Q1LC9Ga26jFvPY3LmeakwALj2W65MxnpQTNHDa1dz2r
-         oii2kHwmB31voaybz/8hR0tEogCz8FF5zzSD0lftsSPOHZ3IyV+9SfRs5EDpnnuSxbkz
-         n2i+97YxZXnIK4XHm+av8gZzpcvoZDpzVuFKEa6yGM9SMqzO4PTocn3PU754XQsgSBb/
-         +27Q==
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=QBjyqP0ZQfvRdhNjWRCeSyzjMPBQNjPileW12Orhtm8=;
+        b=RlMiTaXWNHtJDDPMSCxNuhz9xYQz300yjOsnFfW21/Zu4K5QKGxNjbM9CDvtpEi+13
+         1ZZPrFXPm0weo8HLNnT1EMMxA7AbXOQvgpIqJOSGNe6szQskwnqUmVUrX7QIL80lJw59
+         y3vBUEZrYj1pm/HpZ4QOubU4VDjeMT1N0iKVBDavkwLSZnUMUNMIPkLRwIbrL+7Khhqz
+         ASKip+BiCePPzRAEC/wQZKdWMMvyP7nWV4OeV8YbSzADi6ZrR8WM7Lgx+FVIrQcButBN
+         5xGzKz5UaPvrQg794HYk1PFCmSbYxjbsOeWhDGRitVnec4aV9hbtFr6LRgQhZNkykBTC
+         nJbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=A2Uu+aD9ksLLM3DTExYMQTIgPJpcw98Jd7cJ/+3Ifck=;
-        b=hIZmx+PLeE9ODb//9BeKZlJKXCxpLFnmtEPtz/T2ea405g4x3pOnKiUBV71ewdJDFz
-         ZXsYa/s4Vvkx3grLbvJgzEqU+lez/eAd8k4KIsq1+XlAZ+EG5ADnnDGwi8xv3x4o2XLU
-         Rwzgxqsnce/GQ+jQPG0Ersgk8eYXsfcGpWyoXEITJ/u9JRwm1t66XZSo02u8zmfLmzk/
-         RTFnn33d1iOvbVilkxEqX+K09R2d+AEQIqg6Ev4w8XOX49LGp9SOofv+P9aV4qeBA+6C
-         OMAtqvoBBBnUgyVJXFEGn8RUqi262cY+pup3SJtX2a2XPJDvr2R0VKBKNVyHrdKizYgl
-         v5gA==
-X-Gm-Message-State: ALQs6tB25hnq9nf04F8Lyn+mocvFeeLuW/K4R0p6j+kpxu+4WbeCGjJM
-        lL6AiGnTKBm/vpETySBfhAQ=
-X-Google-Smtp-Source: AIpwx4/cBHH44KJS3FCJOTTRfFOuZ2QAnuwWYMkCpFLmszUyAoCMD1rOoRYnXTa0FkOwx8xBAcHXdw==
-X-Received: by 10.28.24.204 with SMTP id 195mr20608147wmy.2.1523239640837;
-        Sun, 08 Apr 2018 19:07:20 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=QBjyqP0ZQfvRdhNjWRCeSyzjMPBQNjPileW12Orhtm8=;
+        b=XWOecN1fAtATl+fZCnxYeH1a1isTY9DeCOO0P1PgCRT/A0Me7tFmgyKeH4UKhql68b
+         l3c1CKLku1tkWcfYqUt4mWd33JxGsYBsxw3hrf+OfBK8dNQ+mLdt5985oKMYIOf1t/nI
+         eEJnDFhb6opaFVOEaVGpASr/8lFnZpXtfYeYrYlIf6cuDOgeyxuqpPG4N2kvcBzyQkCN
+         Yo3fDQMM27GhL2haLdTT9C5s3acq5PW2IJnQfqlj45hMWKFll30s98WaO5DAkpwtbLFP
+         H47xayPFblSo2iCzg2qU88Uv0qAax6caJcmZU4bD4NBV+ua5OybEL1TnYE7AY25VfYdI
+         WUWw==
+X-Gm-Message-State: ALQs6tBD21Mcq/lzWRZggTtSLlj1fo2jqtGnc3D5K9mHqNoPEi6tn68Z
+        ggxvRQnvTXX/C+an3pxplvE=
+X-Google-Smtp-Source: AIpwx4+7tbUoI/qxAR9hTm0AzRP9JvgqN7mi+kBH+Pq85uylNEszOEDm9gLjX1YpXA49ej4Gzgg9iw==
+X-Received: by 10.28.173.77 with SMTP id w74mr17248419wme.60.1523239748750;
+        Sun, 08 Apr 2018 19:09:08 -0700 (PDT)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id k11sm20291588wmi.35.2018.04.08.19.07.19
+        by smtp.gmail.com with ESMTPSA id n29sm11645009wmi.32.2018.04.08.19.09.07
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 08 Apr 2018 19:07:20 -0700 (PDT)
+        Sun, 08 Apr 2018 19:09:07 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Elijah Newren <newren@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Samuel Lijin <sxlijin@gmail.com>
-Subject: Re: [RFC PATCH 4/7] dir: Directories should be checked for matching pathspecs too
-References: <20180405173446.32372-1-newren@gmail.com>
-        <20180405173446.32372-5-newren@gmail.com>
-        <20180405185805.GA21164@sigill.intra.peff.net>
-        <CABPp-BEnFiEnao0NqU3GerYkpxO9fJadQLHo6_PZ-hXLZfbbdg@mail.gmail.com>
-        <20180405193124.GA24643@sigill.intra.peff.net>
-Date:   Mon, 09 Apr 2018 11:07:19 +0900
-In-Reply-To: <20180405193124.GA24643@sigill.intra.peff.net> (Jeff King's
-        message of "Thu, 5 Apr 2018 15:31:24 -0400")
-Message-ID: <xmqqefjp6sko.fsf@gitster-ct.c.googlers.com>
+To:     Eric Wong <e@80x24.org>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, Joseph Mingrone <jrm@ftfl.ca>,
+        garga@FreeBSD.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Ben Caradoc-Davies <ben@transient.nz>, 894997@bugs.debian.org
+Subject: Re: [PATCH] git-svn: avoid warning on undef readline()
+References: <86h8oobl36.fsf@phe.ftfl.ca>
+        <20180406131514.740-1-avarab@gmail.com>
+        <20180406165618.GA6367@80x24.org>
+Date:   Mon, 09 Apr 2018 11:09:07 +0900
+In-Reply-To: <20180406165618.GA6367@80x24.org> (Eric Wong's message of "Fri, 6
+        Apr 2018 16:56:18 +0000")
+Message-ID: <xmqqa7ud6sho.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Eric Wong <e@80x24.org> writes:
 
-> To be honest, I don't know. Most of dir.c predates me, and I've tried to
-> avoid looking at it too hard. But I had a vague recollection of it being
-> "best effort", and this bit from cf424f5fd89b reinforces that:
+> Ævar Arnfjörð Bjarmason <avarab@gmail.com> wrote:
+>> See https://public-inbox.org/git/86h8oobl36.fsf@phe.ftfl.ca/ for the
+>> original report.
 >
->   However, read_directory does not actually check against our pathspec.
->   It uses a simplified version that may turn up false positives. As a
->   result, we need to check that any hits match our pathspec.
+> Thanks for taking a look at this.  Also https://bugs.debian.org/894997
+>
+>> --- a/perl/Git.pm
+>> +++ b/perl/Git.pm
+>> @@ -554,7 +554,7 @@ sub get_record {
+>>  	my ($fh, $rs) = @_;
+>>  	local $/ = $rs;
+>>  	my $rec = <$fh>;
+>> -	chomp $rec if defined $rs;
+>> +	chomp $rec if defined $rs and defined $rec;
+>
+> I'm struggling to understand the reason for the "defined $rs"
+> check.  I think it was a braino on my part and meant to use:
+>
+> 	chomp $rec if defined $rec;
 
-At least the original design of the traversal was "try making use of
-pathspec during the traversal when we can cheaply filter out obvious
-non-hits and avoid recursing into an entire hierarchy---false negative
-is an absolute no-no, but forcing the consumer to post filter is OK".
+That sounds quite plausible, so if there is no further discussion,
+let me queue a version that does s/rs/rec/ on that line myself
+(bypassing a pull from your repository at bogomips.org/).
 
-> ... But I think that anybody who looks at the output of
-> fill_directory() does need to be aware that they may get more entries
-> than they expected, and has to apply the pathspecs themselves.
+Thanks.
 
-That matches with my understanding of how "fill" thing worked from
-early days.
+
