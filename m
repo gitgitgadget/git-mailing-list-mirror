@@ -6,123 +6,244 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A44501F404
-	for <e@80x24.org>; Mon,  9 Apr 2018 22:46:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 031311F404
+	for <e@80x24.org>; Mon,  9 Apr 2018 22:47:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752298AbeDIWqz (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Apr 2018 18:46:55 -0400
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:34937 "EHLO
+        id S1752337AbeDIWq7 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Apr 2018 18:46:59 -0400
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:37296 "EHLO
         mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751550AbeDIWqz (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Apr 2018 18:46:55 -0400
-Received: by mail-pf0-f195.google.com with SMTP id u86so6616218pfd.2
-        for <git@vger.kernel.org>; Mon, 09 Apr 2018 15:46:54 -0700 (PDT)
+        with ESMTP id S1752309AbeDIWq6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Apr 2018 18:46:58 -0400
+Received: by mail-pf0-f195.google.com with SMTP id p6so3049264pfn.4
+        for <git@vger.kernel.org>; Mon, 09 Apr 2018 15:46:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=3Dnspb9jGdQKcWRYVUGCOI34E2QuGddj82DoYgBSkqo=;
-        b=mRUkdDf+PufSJjbbpL34D/ZSP/5ceInlBAdTRUPP6ow4yMTubPBFBSxSufiqpv4GUx
-         txBqyo9lCLbyAUpJjLfyCceBud5huFZsRv9ikVo6GjkWdaaSZziAMlS0WXfOfzfbs/lN
-         JbV9/7PBOqUqIytFNvjx5vWEmD/661kYkBukOrkexfqb0HmamJ4+5j9wVV11HWGN0UJI
-         JDyThHVmisXlrY4ba7QZci2dRahlencjLBGcFvaM8PdSxWRF8fUHRqDhvRC5jQLrSXK+
-         CEl+2X+Oou7Ctxt9yF087j2hCpC3KHISh4E8vmTS4y7sbrfC2ZDTKIN8T/jockHjICo1
-         151A==
+        bh=XB5SWbMqA66Ip8iqu3d27HE2/v9VnewTN/3dchi8Fbo=;
+        b=EhEAbIt2IXLM4L5L5cFUc24lWK1aZfD1oYVquDI5aFdYZXsC7bnTHwdBNGqHfCE301
+         qba3k0z+bD/JskIYmq6Go7crSbIcrKd6OtlZ9Ijtm6GMa560aRVgw7kfy529XxeQ9rRT
+         febY8gMlegLLGNspdPgL+WBt9aSh5Fqiw3RhWa3EnwilOloXwB+uBagwhE1OKMx7QceY
+         wxrSSlcRKr8jDnIqOwB2MOfxjj7o5D5hy1m04QLO5fbz7XHWEaRByZtB02NMW8PrXlpW
+         qUrzpbHys6bNPhiEJ8yycUHJ3CoyQ5HLe3U3wnMvMVNaYl05a5Iahqffsdut0dtHAXNH
+         RZYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=3Dnspb9jGdQKcWRYVUGCOI34E2QuGddj82DoYgBSkqo=;
-        b=i3mPDhgDHBzA0CNHeY0iVjyarL3yRA5IyzM72AIpGnxh20PenbZ0vQhwklLBaT1LS/
-         vQZWEy8WAOSHaju6iRyJ+gyMpEpYZOhqOE9tMnW5c5KBjsqqbIqQ+/5o8wdExwgWpkdJ
-         VjMhgebGTVm3Nnk2+IG+ovj7wGFjs6HbrJ6MszQBnRjjPpMW7cZz/gugK+Qp8x5UJZ1w
-         /qDbu+FVrJSbl7evkX+LyFTsC7GNCWb+/cB23p9g+nHFOjLHZ3bY3TO74zl4fss6U9Xj
-         trnMhvH69k3D4mK/gUh2ViyiFF2cRDFU2wX5F982eO5lXlSi4fx+inKn75U+fHUNeZoB
-         6m7w==
-X-Gm-Message-State: AElRT7F4S8/N6nASiiK2WazstGuI+ojTp3YHNrrKR7D61kxwwKx+4lwj
-        NhoaZnjFNY+LGZFt2JOxKv2xPXtWxRw=
-X-Google-Smtp-Source: AIpwx49uA1enHZX12OYEhPbhdGyKWzKSdlgHhHL9To+3rQ0IWbQ5CbIVCUkanzeS0P1ZLMRXe49PRg==
-X-Received: by 10.99.43.70 with SMTP id r67mr26843577pgr.422.1523314013789;
-        Mon, 09 Apr 2018 15:46:53 -0700 (PDT)
+        bh=XB5SWbMqA66Ip8iqu3d27HE2/v9VnewTN/3dchi8Fbo=;
+        b=kOqUoOyMN3o84HErfauOhQX9oZIMqgF7h1+8mFZfxdm24l13z/O/kcezWdiu2d87Qc
+         SfnUlvKRlKliSZu9BF3MnCpSIYo1l+83UJy0VPd/UjymDoKGt2P/8nyp1o3TCbJEobsI
+         zJhLungJS/9Ijy4dvRB/PCH5xAZ7z2sU609md2Gb68vXLM0LIqK7kKhJ6/GPcR8U329L
+         BeXb82lsXKvC5aWwI8vzR69pce88cwwoPkEWugplPth73Ue6dS9H1TPDIyU8pRFCz0s/
+         fSu+BgsTNywUZaLHoPgPFZ0j1xPbROC8A6VpeEXdZVayyCvGp6ccLd6DvJMOfzywFaf9
+         g2qg==
+X-Gm-Message-State: ALQs6tA3w62KBZqaEZkaA0pUZiRJkYpXmJ8DpbS+n1U74QS5GR+FUU8e
+        xOPiet+J0DIM+P3WoQSwtXYnKuvkFyw=
+X-Google-Smtp-Source: AIpwx4+aibpuUjraaTOfyaY1W2PooEUuhUcCkemjsbsf0j+8OVsEZNtGlv4/rEQMZnIxSE0CwXPdHA==
+X-Received: by 10.99.102.195 with SMTP id a186mr12405489pgc.207.1523314016632;
+        Mon, 09 Apr 2018 15:46:56 -0700 (PDT)
 Received: from localhost ([2601:602:9500:3a4f:1d66:22f3:ac1d:6007])
-        by smtp.gmail.com with ESMTPSA id r75sm2540494pfb.98.2018.04.09.15.46.51
+        by smtp.gmail.com with ESMTPSA id w134sm2982681pfd.132.2018.04.09.15.46.55
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 09 Apr 2018 15:46:51 -0700 (PDT)
-Date:   Mon, 9 Apr 2018 15:46:50 -0700
+        Mon, 09 Apr 2018 15:46:55 -0700 (PDT)
+Date:   Mon, 9 Apr 2018 15:46:54 -0700
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, ericsunshine@sunshineco.com
-Subject: [PATCH v7 0/2] builtin/config.c: support `--type=<type>` as
- preferred alias for `--type`
-Message-ID: <20180409224650.GA34547@syl.local>
+Subject: [PATCH v7 1/2] builtin/config.c: treat type specifiers singularly
+Message-ID: <20180409224654.GB34547@syl.local>
 References: <20180328234719.595-1-me@ttaylorr.com>
+ <cover.1523313730.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20180328234719.595-1-me@ttaylorr.com>
+In-Reply-To: <cover.1523313730.git.me@ttaylorr.com>
 User-Agent: Mutt/1.9.3 (2018-01-21)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Internally, we represent `git config`'s type specifiers as a bitset
+using OPT_BIT. 'bool' is 1<<0, 'int' is 1<<1, and so on. This technique
+allows for the representation of multiple type specifiers in the `int
+types` field, but this multi-representation is left unused.
 
-Attached is the seventh re-roll of my series to support '--type=<type>'
-instead of '--<type>' in 'git-config(1)'.
+In fact, `git config` will not accept multiple type specifiers at a
+time, as indicated by:
 
-Since v6, I have changed only the wording in
-Documentation/git-config.txt, which Eric and I reached consensus upon in
-a sub-thread [1]. Per Eric's suggestion, I have also included an
-inter-diff between this re-roll and the one previous for easier
-consumption.
+  $ git config --int --bool some.section
+  error: only one type at a time.
 
-I anticipate that since relatively little has changed since the last
-re-roll, that this will be the final re-roll of this series. I apologize
-that the re-roll count has gotten so high, though I am glad that we
-hashed out the important details. I have a better idea of how to discuss
-on this list without increasing the re-roll count so much.
+This patch uses `OPT_SET_INT` to prefer the _last_ mentioned type
+specifier, so that the above command would instead be valid, and a
+synonym of:
 
-Thanks in advance for your review :-).
+  $ git config --bool some.section
 
+This change is motivated by two urges: (1) it does not make sense to
+represent a singular type specifier internally as a bitset, only to
+complain when there are multiple bits in the set. `OPT_SET_INT` is more
+well-suited to this task than `OPT_BIT` is. (2) a future patch will
+introduce `--type=<type>`, and we would like not to complain in the
+following situation:
 
-Thanks,
-Taylor
+  $ git config --int --type=int
 
-[1]: https://public-inbox.org/git/CAPig+cQXJuLWpxfwhQ98a23wfAAzKZpkOvqWBdXaKKHLiW-7Uw@mail.gmail.com/
+Signed-off-by: Taylor Blau <me@ttaylorr.com>
+---
+ builtin/config.c       | 49 +++++++++++++++++++-----------------------
+ t/t1300-repo-config.sh | 11 ++++++++++
+ 2 files changed, 33 insertions(+), 27 deletions(-)
 
-Taylor Blau (2):
-  builtin/config.c: treat type specifiers singularly
-  builtin/config.c: support `--type=<type>` as preferred alias for
-    `--type`
-
- Documentation/git-config.txt | 71 ++++++++++++++++++---------------
- builtin/config.c             | 76 +++++++++++++++++++++++-------------
- t/t1300-repo-config.sh       | 29 ++++++++++++++
- 3 files changed, 117 insertions(+), 59 deletions(-)
-
-Inter-diff (since v6):
-
-diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
-index b7686fcbe3..a1e3ffe750 100644
---- a/Documentation/git-config.txt
-+++ b/Documentation/git-config.txt
-@@ -38,12 +38,10 @@ existing values that match the regexp are updated or unset.  If
- you want to handle the lines that do *not* match the regex, just
- prepend a single exclamation mark in front (see also <<EXAMPLES>>).
-
--The `--type` option requests 'git config' to ensure that the configured values
--associated with the given variable(s) are of the given type. When given
--`--type`, 'git config' will ensure that the variable(s) are of the given type
--and convert the value to the canonical form. If no type specifier is passed, no
--checks or transformations are performed on the value. Callers may unset any
--pre-existing type specifiers with `--no-type`.
-+The `--type=<type>` option instructs 'git config' to ensure that incoming and
-+outgoing values are canonicalize-able under the given <type>.  If no
-+`--type=<type>` is given, no canonicalization will be performed. Callers may
-+unset an existing `--type` specifier with `--no-type`.
-
- When reading, the values are read from the system, global and
- repository local configuration files by default, and options
---
+diff --git a/builtin/config.c b/builtin/config.c
+index 01169dd628..92fb8d56b1 100644
+--- a/builtin/config.c
++++ b/builtin/config.c
+@@ -25,7 +25,7 @@ static char term = '\n';
+ 
+ static int use_global_config, use_system_config, use_local_config;
+ static struct git_config_source given_config_source;
+-static int actions, types;
++static int actions, type;
+ static int end_null;
+ static int respect_includes_opt = -1;
+ static struct config_options config_options;
+@@ -55,11 +55,11 @@ static int show_origin;
+ #define PAGING_ACTIONS (ACTION_LIST | ACTION_GET_ALL | \
+ 			ACTION_GET_REGEXP | ACTION_GET_URLMATCH)
+ 
+-#define TYPE_BOOL (1<<0)
+-#define TYPE_INT (1<<1)
+-#define TYPE_BOOL_OR_INT (1<<2)
+-#define TYPE_PATH (1<<3)
+-#define TYPE_EXPIRY_DATE (1<<4)
++#define TYPE_BOOL		1
++#define TYPE_INT		2
++#define TYPE_BOOL_OR_INT	3
++#define TYPE_PATH		4
++#define TYPE_EXPIRY_DATE	5
+ 
+ static struct option builtin_config_options[] = {
+ 	OPT_GROUP(N_("Config file location")),
+@@ -84,11 +84,11 @@ static struct option builtin_config_options[] = {
+ 	OPT_BIT(0, "get-color", &actions, N_("find the color configured: slot [default]"), ACTION_GET_COLOR),
+ 	OPT_BIT(0, "get-colorbool", &actions, N_("find the color setting: slot [stdout-is-tty]"), ACTION_GET_COLORBOOL),
+ 	OPT_GROUP(N_("Type")),
+-	OPT_BIT(0, "bool", &types, N_("value is \"true\" or \"false\""), TYPE_BOOL),
+-	OPT_BIT(0, "int", &types, N_("value is decimal number"), TYPE_INT),
+-	OPT_BIT(0, "bool-or-int", &types, N_("value is --bool or --int"), TYPE_BOOL_OR_INT),
+-	OPT_BIT(0, "path", &types, N_("value is a path (file or directory name)"), TYPE_PATH),
+-	OPT_BIT(0, "expiry-date", &types, N_("value is an expiry date"), TYPE_EXPIRY_DATE),
++	OPT_SET_INT(0, "bool", &type, N_("value is \"true\" or \"false\""), TYPE_BOOL),
++	OPT_SET_INT(0, "int", &type, N_("value is decimal number"), TYPE_INT),
++	OPT_SET_INT(0, "bool-or-int", &type, N_("value is --bool or --int"), TYPE_BOOL_OR_INT),
++	OPT_SET_INT(0, "path", &type, N_("value is a path (file or directory name)"), TYPE_PATH),
++	OPT_SET_INT(0, "expiry-date", &type, N_("value is an expiry date"), TYPE_EXPIRY_DATE),
+ 	OPT_GROUP(N_("Other")),
+ 	OPT_BOOL('z', "null", &end_null, N_("terminate values with NUL byte")),
+ 	OPT_BOOL(0, "name-only", &omit_values, N_("show variable names only")),
+@@ -149,26 +149,26 @@ static int format_config(struct strbuf *buf, const char *key_, const char *value
+ 		if (show_keys)
+ 			strbuf_addch(buf, key_delim);
+ 
+-		if (types == TYPE_INT)
++		if (type == TYPE_INT)
+ 			strbuf_addf(buf, "%"PRId64,
+ 				    git_config_int64(key_, value_ ? value_ : ""));
+-		else if (types == TYPE_BOOL)
++		else if (type == TYPE_BOOL)
+ 			strbuf_addstr(buf, git_config_bool(key_, value_) ?
+ 				      "true" : "false");
+-		else if (types == TYPE_BOOL_OR_INT) {
++		else if (type == TYPE_BOOL_OR_INT) {
+ 			int is_bool, v;
+ 			v = git_config_bool_or_int(key_, value_, &is_bool);
+ 			if (is_bool)
+ 				strbuf_addstr(buf, v ? "true" : "false");
+ 			else
+ 				strbuf_addf(buf, "%d", v);
+-		} else if (types == TYPE_PATH) {
++		} else if (type == TYPE_PATH) {
+ 			const char *v;
+ 			if (git_config_pathname(&v, key_, value_) < 0)
+ 				return -1;
+ 			strbuf_addstr(buf, v);
+ 			free((char *)v);
+-		} else if (types == TYPE_EXPIRY_DATE) {
++		} else if (type == TYPE_EXPIRY_DATE) {
+ 			timestamp_t t;
+ 			if (git_config_expiry_date(&t, key_, value_) < 0)
+ 				return -1;
+@@ -287,7 +287,7 @@ static char *normalize_value(const char *key, const char *value)
+ 	if (!value)
+ 		return NULL;
+ 
+-	if (types == 0 || types == TYPE_PATH || types == TYPE_EXPIRY_DATE)
++	if (type == 0 || type == TYPE_PATH || type == TYPE_EXPIRY_DATE)
+ 		/*
+ 		 * We don't do normalization for TYPE_PATH here: If
+ 		 * the path is like ~/foobar/, we prefer to store
+@@ -296,11 +296,11 @@ static char *normalize_value(const char *key, const char *value)
+ 		 * Also don't do normalization for expiry dates.
+ 		 */
+ 		return xstrdup(value);
+-	if (types == TYPE_INT)
++	if (type == TYPE_INT)
+ 		return xstrfmt("%"PRId64, git_config_int64(key, value));
+-	if (types == TYPE_BOOL)
++	if (type == TYPE_BOOL)
+ 		return xstrdup(git_config_bool(key, value) ?  "true" : "false");
+-	if (types == TYPE_BOOL_OR_INT) {
++	if (type == TYPE_BOOL_OR_INT) {
+ 		int is_bool, v;
+ 		v = git_config_bool_or_int(key, value, &is_bool);
+ 		if (!is_bool)
+@@ -309,7 +309,7 @@ static char *normalize_value(const char *key, const char *value)
+ 			return xstrdup(v ? "true" : "false");
+ 	}
+ 
+-	die("BUG: cannot normalize type %d", types);
++	die("BUG: cannot normalize type %d", type);
+ }
+ 
+ static int get_color_found;
+@@ -566,12 +566,7 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+ 		key_delim = '\n';
+ 	}
+ 
+-	if (HAS_MULTI_BITS(types)) {
+-		error("only one type at a time.");
+-		usage_with_options(builtin_config_usage, builtin_config_options);
+-	}
+-
+-	if ((actions & (ACTION_GET_COLOR|ACTION_GET_COLORBOOL)) && types) {
++	if ((actions & (ACTION_GET_COLOR|ACTION_GET_COLORBOOL)) && type) {
+ 		error("--get-color and variable type are incoherent");
+ 		usage_with_options(builtin_config_usage, builtin_config_options);
+ 	}
+diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
+index 4f8e6f5fde..24de37d544 100755
+--- a/t/t1300-repo-config.sh
++++ b/t/t1300-repo-config.sh
+@@ -1611,4 +1611,15 @@ test_expect_success '--local requires a repo' '
+ 	test_expect_code 128 nongit git config --local foo.bar
+ '
+ 
++cat >.git/config <<-\EOF &&
++[core]
++number = 10
++EOF
++
++test_expect_success 'later legacy specifiers are given precedence' '
++	git config --bool --int core.number >actual &&
++	echo 10 >expect &&
++	test_cmp expect actual
++'
++
+ test_done
+-- 
 2.17.0
+
