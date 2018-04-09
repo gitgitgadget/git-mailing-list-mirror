@@ -7,99 +7,91 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_DKIM_INVALID,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C9BFF1F404
-	for <e@80x24.org>; Mon,  9 Apr 2018 02:09:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1ADDC1F404
+	for <e@80x24.org>; Mon,  9 Apr 2018 02:21:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757551AbeDICJM (ORCPT <rfc822;e@80x24.org>);
-        Sun, 8 Apr 2018 22:09:12 -0400
-Received: from mail-wm0-f45.google.com ([74.125.82.45]:55429 "EHLO
-        mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1757271AbeDICJK (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 8 Apr 2018 22:09:10 -0400
-Received: by mail-wm0-f45.google.com with SMTP id b127so15140683wmf.5
-        for <git@vger.kernel.org>; Sun, 08 Apr 2018 19:09:09 -0700 (PDT)
+        id S932494AbeDICVq (ORCPT <rfc822;e@80x24.org>);
+        Sun, 8 Apr 2018 22:21:46 -0400
+Received: from mail-wm0-f54.google.com ([74.125.82.54]:40077 "EHLO
+        mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932377AbeDICVo (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 8 Apr 2018 22:21:44 -0400
+Received: by mail-wm0-f54.google.com with SMTP id x4so13045181wmh.5
+        for <git@vger.kernel.org>; Sun, 08 Apr 2018 19:21:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=QBjyqP0ZQfvRdhNjWRCeSyzjMPBQNjPileW12Orhtm8=;
-        b=RlMiTaXWNHtJDDPMSCxNuhz9xYQz300yjOsnFfW21/Zu4K5QKGxNjbM9CDvtpEi+13
-         1ZZPrFXPm0weo8HLNnT1EMMxA7AbXOQvgpIqJOSGNe6szQskwnqUmVUrX7QIL80lJw59
-         y3vBUEZrYj1pm/HpZ4QOubU4VDjeMT1N0iKVBDavkwLSZnUMUNMIPkLRwIbrL+7Khhqz
-         ASKip+BiCePPzRAEC/wQZKdWMMvyP7nWV4OeV8YbSzADi6ZrR8WM7Lgx+FVIrQcButBN
-         5xGzKz5UaPvrQg794HYk1PFCmSbYxjbsOeWhDGRitVnec4aV9hbtFr6LRgQhZNkykBTC
-         nJbg==
+         :user-agent:mime-version;
+        bh=FSO2QEfKe4K+nUashJ8wIMZOiBO3oJF+VMbSGgw89aU=;
+        b=Xt69Cpy60ifIV+yNQfbqKO5pYSq5hq/jLI1wfxEC4CpEKIoUhUp9Xix567ecmPOUlg
+         xsf1pUoIN5fTLSfAEINfNQxV+V/Ta5xtQom989Tu/fvMMr6WNh3dqBaHSI4iq7/5EYlC
+         fb/nzdqQeSumJyWACEnYV0NYlFCiFkChbiVkjfpaiBNYDr4OkaNKt5kt/gjDc6tSduKT
+         AiTEDWAsGHChIVH2RihgAwtjQOShlemnS3p9UKnmyJ0hyFrCQqq4Pl/igATWn9P+gosK
+         CzcFhAQ7flVhDXFEu9pYfBC85fPS3vRnWaC4TWLFmHneWF/UI7ZxxAu6jaB8x6trTxmC
+         qWEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=QBjyqP0ZQfvRdhNjWRCeSyzjMPBQNjPileW12Orhtm8=;
-        b=XWOecN1fAtATl+fZCnxYeH1a1isTY9DeCOO0P1PgCRT/A0Me7tFmgyKeH4UKhql68b
-         l3c1CKLku1tkWcfYqUt4mWd33JxGsYBsxw3hrf+OfBK8dNQ+mLdt5985oKMYIOf1t/nI
-         eEJnDFhb6opaFVOEaVGpASr/8lFnZpXtfYeYrYlIf6cuDOgeyxuqpPG4N2kvcBzyQkCN
-         Yo3fDQMM27GhL2haLdTT9C5s3acq5PW2IJnQfqlj45hMWKFll30s98WaO5DAkpwtbLFP
-         H47xayPFblSo2iCzg2qU88Uv0qAax6caJcmZU4bD4NBV+ua5OybEL1TnYE7AY25VfYdI
-         WUWw==
-X-Gm-Message-State: ALQs6tBD21Mcq/lzWRZggTtSLlj1fo2jqtGnc3D5K9mHqNoPEi6tn68Z
-        ggxvRQnvTXX/C+an3pxplvE=
-X-Google-Smtp-Source: AIpwx4+7tbUoI/qxAR9hTm0AzRP9JvgqN7mi+kBH+Pq85uylNEszOEDm9gLjX1YpXA49ej4Gzgg9iw==
-X-Received: by 10.28.173.77 with SMTP id w74mr17248419wme.60.1523239748750;
-        Sun, 08 Apr 2018 19:09:08 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id n29sm11645009wmi.32.2018.04.08.19.09.07
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=FSO2QEfKe4K+nUashJ8wIMZOiBO3oJF+VMbSGgw89aU=;
+        b=rWz/CFVLtq+8bpL4gG+adWlOQOv3+R1Lu9THnpzw/0YtDTLExuyLuOIwNzibym/iYL
+         BB7XAd/ESHlyUEDk3kkF2T3lTQkY6i56mGTSgkQf2TB0RbMR6dNFZ2TAFBV+qg3cOUv5
+         JAPWajbeLexFb3aPDbECWYXE1BB8FY+LcplTkXz/KfdzIEEioPo2COTi8G2QBl1GbF2W
+         f8MTNxwRrtsSZzdpFS+0lc9TXQBxhV+iYMsnQzQtIQnsuLs/ElRY5NSGwhBYUpBRbaez
+         YvG3aKnk1XtZUu37h+0SKz07xLAtElEh+gPJrhEs00/TP0FOWS6e0fYMf5pI4ymP35eT
+         iFkw==
+X-Gm-Message-State: AElRT7GwCBfSRpJcju652xKJixTxbB7TA0u7FKr/lx0XTIjaEo1tN9I0
+        1WmXS2GwLQ6K1Za6Xq7A5Kg=
+X-Google-Smtp-Source: AIpwx49uiXPO6YMPto+uYcag34cQJE0DhbZeD0pIEjkoRcbNU8MNid58a/Pkl6c19rP4Uca3dYcRlw==
+X-Received: by 10.28.184.204 with SMTP id i195mr16779521wmf.15.1523240502613;
+        Sun, 08 Apr 2018 19:21:42 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id m9sm11868747wrf.13.2018.04.08.19.21.41
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 08 Apr 2018 19:09:07 -0700 (PDT)
+        Sun, 08 Apr 2018 19:21:42 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Wong <e@80x24.org>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Joseph Mingrone <jrm@ftfl.ca>,
-        garga@FreeBSD.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Ben Caradoc-Davies <ben@transient.nz>, 894997@bugs.debian.org
-Subject: Re: [PATCH] git-svn: avoid warning on undef readline()
-References: <86h8oobl36.fsf@phe.ftfl.ca>
-        <20180406131514.740-1-avarab@gmail.com>
-        <20180406165618.GA6367@80x24.org>
-Date:   Mon, 09 Apr 2018 11:09:07 +0900
-In-Reply-To: <20180406165618.GA6367@80x24.org> (Eric Wong's message of "Fri, 6
-        Apr 2018 16:56:18 +0000")
-Message-ID: <xmqqa7ud6sho.fsf@gitster-ct.c.googlers.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        git@vger.kernel.org
+Subject: Re: [PATCH] t5404: relax overzealous test
+References: <958ee6f006aba0c67c8e064d31206e3e68a1cc49.1523043053.git.johannes.schindelin@gmx.de>
+        <20180406195331.GC11450@sigill.intra.peff.net>
+Date:   Mon, 09 Apr 2018 11:21:41 +0900
+In-Reply-To: <20180406195331.GC11450@sigill.intra.peff.net> (Jeff King's
+        message of "Fri, 6 Apr 2018 15:53:31 -0400")
+Message-ID: <xmqq60516rwq.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Wong <e@80x24.org> writes:
+Jeff King <peff@peff.net> writes:
 
-> Ævar Arnfjörð Bjarmason <avarab@gmail.com> wrote:
->> See https://public-inbox.org/git/86h8oobl36.fsf@phe.ftfl.ca/ for the
->> original report.
+> On Fri, Apr 06, 2018 at 09:31:22PM +0200, Johannes Schindelin wrote:
 >
-> Thanks for taking a look at this.  Also https://bugs.debian.org/894997
+>> In 0b294c0abf0 (make deleting a missing ref more quiet, 2008-07-08), we
+>> added a test to verify that deleting an already-deleted ref does not
+>> show an error.
 >
->> --- a/perl/Git.pm
->> +++ b/perl/Git.pm
->> @@ -554,7 +554,7 @@ sub get_record {
->>  	my ($fh, $rs) = @_;
->>  	local $/ = $rs;
->>  	my $rec = <$fh>;
->> -	chomp $rec if defined $rs;
->> +	chomp $rec if defined $rs and defined $rec;
+> Amazing that it took this long to come up.
+> ...
+>> This patch chooses instead to look for the prefix "error:" at the
+>> beginning of the line, so that there can be no ambiguity that any catch
+>> was indeed a message generated by Git's `error_builtin()` function.
 >
-> I'm struggling to understand the reason for the "defined $rs"
-> check.  I think it was a braino on my part and meant to use:
->
-> 	chomp $rec if defined $rec;
+> Yep, this seems obviously correct.
 
-That sounds quite plausible, so if there is no further discussion,
-let me queue a version that does s/rs/rec/ on that line myself
-(bypassing a pull from your repository at bogomips.org/).
+Hits in
 
-Thanks.
+    $ git grep 'grep ["'\'']*error' t
+
+shows that many checks for errors that are not anchored, but I do
+not think any of them are looking for the string in a pathname other
+than this instance, so it would be OK.
+
+Thanks, both.  Will apply.
 
 
