@@ -2,102 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3DCC41F404
-	for <e@80x24.org>; Mon,  9 Apr 2018 21:32:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 990901F404
+	for <e@80x24.org>; Mon,  9 Apr 2018 21:35:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752467AbeDIVcT (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Apr 2018 17:32:19 -0400
-Received: from mout.gmx.net ([212.227.17.21]:36903 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751543AbeDIVcS (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Apr 2018 17:32:18 -0400
-Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0Mg0IT-1etC2q3M8b-00NTBB; Mon, 09
- Apr 2018 23:32:13 +0200
-Date:   Mon, 9 Apr 2018 23:32:14 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Apr 2018, #01; Mon, 9)
-In-Reply-To: <nycvar.QRO.7.76.6.1804092110300.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-Message-ID: <nycvar.QRO.7.76.6.1804092325100.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <xmqqd0z865pk.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1804092110300.55@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1751688AbeDIVfl (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Apr 2018 17:35:41 -0400
+Received: from mail-qt0-f194.google.com ([209.85.216.194]:35283 "EHLO
+        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751543AbeDIVfk (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Apr 2018 17:35:40 -0400
+Received: by mail-qt0-f194.google.com with SMTP id s2so10989316qti.2
+        for <git@vger.kernel.org>; Mon, 09 Apr 2018 14:35:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=iiydoJSChtzxG5ppYetQLDc8YxGdI3qlqAdNfsijXWo=;
+        b=toPqKdP4w/cZKpYJvddcSxh0k4vwJKQbhZcwinE4iyAiznu+tsFrSmIdPp8ltaJcDp
+         trk+ofyUzWxsYm0Ei/AyukaELIq844MWGoHRM468to9YKGleQwa9pPFWNtyA+V8pShQL
+         55OHd+iVdu6YRD3ohpR+N294eAgu1acvY+euh3po9NPC4CTXz/4F7ylHOJmSKFljlB+f
+         9oOrgaaC5cuHfuwOwNfBRoqKxQXEYapQ0wu8MlTPvWA33Nt0jY4TJBUJSwFQKHS7iB6j
+         O5gvpsB/Rtw5Nva8ktJFXrYV0i/9fDFF6K7v8kURZT8ivGx47plNkHL4Us0yvUAIm0Fr
+         4iyA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=iiydoJSChtzxG5ppYetQLDc8YxGdI3qlqAdNfsijXWo=;
+        b=WoU70VTsKgQKwKcyocD5iWbrk7nHVw4OGniGW80IOB7Mbt6+y3//7bvRNPOvhDyMkA
+         p/QK0IucmzEptgPOxdcJiT5At4gkqDeqMvfcBMtb5TAPkY9Dj8ektn2UM0PKA83Isp7v
+         KRoaNjfacHiWxhWEISQKz5tAu5T+KDV7l5dXImXnArY9uiwtfChY882sqkFEbYFbQzJR
+         dbsGiVn3cyWjrzsbT9LGxqJA2jv9M02W2xN15wKr1fL0SRoi80FScJRon3fVWecK7JG1
+         cfEEXgXxPDJ7i1Y4K0MDa/ocU9haU+jdzO3Moxu4x/qpYNYHudIoUeB/Xl+vVZIKiXoJ
+         o5/A==
+X-Gm-Message-State: ALQs6tBN5BWTJ/oekNbC26SECuN4B+ZHiCO9IumXIrHunG+ITczlMJC7
+        o/hzX1vci6u4tTGQq/+wgDvYOB1X8mpozMp2pc8=
+X-Google-Smtp-Source: AIpwx48B5R9kXpDtbPnSfELruAF/HIRpUZEqO6c3h4I9nmmAtgh/dDAFc/qZPLdcvI6qxR74rkQaSMYTHdRABLR8nYc=
+X-Received: by 10.200.80.78 with SMTP id h14mr29869214qtm.154.1523309740173;
+ Mon, 09 Apr 2018 14:35:40 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:aFz5Sgyo1Yr+DtS97ldXN769OibCUGjMssGrf/mi0Nza0HrL/p/
- DkZ5pNgrN9qT8K4ZGNRjHO1y5xbAZDoPR9ykW6OaJ1XKVLjDOqGNMoHqjbYR90l6bUrfeK8
- 39mgYk9KmmTYk231t9hH8BY05TD6gGS/iGxtSRbbgJslPnoyAVzyuMAujHm28I0ioJCs8Ms
- qWXxSU6xxGGBEFsStO2rw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:sRMYwawc46I=:NtGotHOyC92Xw9+f3k5oH/
- P5PoDec6vlcx1tqP4gqiWyXGqoFViGKc26EndOfln/vb0lDp5hpq41FQqelVfb+3VhSyHn2BQ
- o3Sp/BGWn7nwKCmtuJKsoL+F1AUYV0YkrDjlz2AGMyZL3tFpfs+5ahuPq2N/jCiXyFAFOMjW+
- Inrlf6vRcahRqzHDzFTg+iVFphGqq1BQD07i+a0jeYF9JW2ZJBPjVcwn50ZET3Bxh/ZTfShLs
- Ua9m3EDQXoa0Wy6Nc0zcEKGIjofNUEOXUZZ56vbVDz2EWmgzcGm7GUSbEYLGNOoclOKTaeLQq
- SaSzUIU17IjcD+VO+1Pno675zB62mwJ+8rlCLf3tFOo5WoSC/V+VB0M8MykfavUaM/o9vKlLJ
- VctS+PI4oowb4d7nSUG0HVdeUGnsw+zepc2G0FNhXXpMqQAJHqoFt/LjqP52GPQGcVexuF9Eq
- Obybl9UrTBC/ZQwz1jlo1/VtO1c0sjLYQ0OWnHysdC6nLP3AzAC4KS5rs512ffuON93bF9MCd
- mKQUwMYvo7pVuJhrs8Q4siUomdcAoG87j4h6KatnnQJ2mXFH24azY9Nj/aO93up0mTXG3J7yn
- 3kYKeIjTQ0NG4fo3aiHRIpJkPE5o02v8LnqU7j0re60JMcbZVvPsnbrm+tnAXvlta+KySLkIV
- DuGS9W99PUJbE7w8EzhPPAxyio1ZxRYPO6MIY/iUkAqCruBSrn8RUbNyYtp6444sgmqi4wdkt
- OHCLXMha94+vrALETG3Aoiipru5TjywESN/OQNRgTy/PFmer/SV9hsrc0wguUR94j2EllR9ZS
- zBZQjtkhQ7V7lSMpY+iK8Qxv74DoqMXkQVqr1+3P8+GBNAPIsA=
+Received: by 10.12.174.202 with HTTP; Mon, 9 Apr 2018 14:35:39 -0700 (PDT)
+In-Reply-To: <20180409194405.GM2629@hank>
+References: <20180325134947.25828-1-t.gummerer@gmail.com> <20180331151804.30380-1-t.gummerer@gmail.com>
+ <20180331151804.30380-7-t.gummerer@gmail.com> <20180401131138.GE2629@hank>
+ <CAPig+cRYgLwLZnXeOc2VWBmh8j_AxSGmf2x-DJ1kAbY3BzsAPQ@mail.gmail.com> <20180409194405.GM2629@hank>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Mon, 9 Apr 2018 17:35:39 -0400
+X-Google-Sender-Auth: yYbnmYgY6pQa6oiOStlkf_01-g0
+Message-ID: <CAPig+cTa8pwL9xveCnxtdT1zFBTmqUecqYL5Du9B6cTGAWR_dQ@mail.gmail.com>
+Subject: Re: [PATCH v6 6.5/6] fixup! worktree: teach "add" to check out
+ existing branches
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+Cc:     Git List <git@vger.kernel.org>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Mon, Apr 9, 2018 at 3:44 PM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
+> On 04/08, Eric Sunshine wrote:
+>> This is making me wonder if "Checking out branch" is perhaps the wrong
+>> terminology. What if it said something like this instead:
+>>
+>>     $ git worktree add ../next
+>>     Preparing worktree (branch 'next' <= 'origin/next')
+>>     fatal: '../next' already exists
+>>
+>> This way, we don't need the special case added by this "fixup!" patch.
+>> (I'm not wedded to the "Preparing" message but just used it as an
+>> example; better suggestions welcome.)
+>
+> Yeah, I think this looks like another improvement of what I currently
+> have.  I'm not sure about the "(branch 'next' <= 'origin/next')"
+> message though, as it doesn't cover all the ways the branch could be
+> set up for tracking the remote branch, e.g. tracking by rebasing, when
+> 'branch.autosetuprebase' is set up.
+>
+> But how about just "Preparing worktree (new branch 'next')", and then
+> keeping the message from 'git branch' about setting up the remote
+> tracking branch?
 
-On Mon, 9 Apr 2018, Johannes Schindelin wrote:
-
-> On Mon, 9 Apr 2018, Junio C Hamano wrote:
-> 
-> > * js/rebase-recreate-merge (2018-02-23) 12 commits (merged to 'next'
-> > on 2018-03-15 at 3d1671756f) + rebase -i: introduce
-> > --recreate-merges=[no-]rebase-cousins + pull: accept --rebase=recreate
-> > to recreate the branch topology + sequencer: handle post-rewrite for
-> > merge commands + sequencer: make refs generated by the `label` command
-> > worktree-local + rebase: introduce the --recreate-merges option +
-> > rebase-helper --make-script: introduce a flag to recreate merges +
-> > sequencer: fast-forward merge commits, if possible + sequencer:
-> > introduce the `merge` command + sequencer: introduce new commands to
-> > reset the revision + git-rebase--interactive: clarify arguments +
-> > sequencer: make rearrange_squash() a bit more obvious + sequencer:
-> > avoid using errno clobbered by rollback_lock_file()
-> > 
-> >  "git rebase" learned "--recreate-merges" to transplant the whole
-> >  topology of commit graph elsewhere.
-> > 
-> >  This serise has been reverted out of 'next', expecting that it will
-> >  be replaced by a reroll on top of a couple of topics by Phillip.
-> 
-> [.,..] I will send out a new iteration of the patch series (the
-> --rebase-merges one, formerly known as --recreate-merges) soon
-> (hopefully still today).
-
-I encountered one more scenario I need to handle: when all the patches in
-a topic branch were already applied upstream, I typically want to skip
-merging a now-empty branch.
-
-Since upstream might have changed the patches subtly (so that
---cherry-pick does not skip them), the user may have had to `git rebase
---skip` the unmodified version of the now-upstream patches. Therefore, we
-cannot test at todo list generation time whether a merge can be skipped
-because it would merge an ancestor of its first parent.
-
-I plan on introducing a flag similar to "rebase-cousins" for this:
-probably "skip-empty-merges", defaulting to skipping them (because why
-would you want to merge something that is already part of the HEAD's
-commit history?).
-
-However, I won't be able to finish this today.
-
-Thanks for your patience,
-Dscho
+Fair enough. Extra annotation (such as "'foo' <= 'bar'" or whatever)
+can always be added later if someone wants it.
