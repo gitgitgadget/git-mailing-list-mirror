@@ -8,55 +8,55 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8FC0E1F404
-	for <e@80x24.org>; Mon,  9 Apr 2018 01:42:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2AD021F404
+	for <e@80x24.org>; Mon,  9 Apr 2018 01:42:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932932AbeDIBms (ORCPT <rfc822;e@80x24.org>);
-        Sun, 8 Apr 2018 21:42:48 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:34703 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932909AbeDIBmo (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 8 Apr 2018 21:42:44 -0400
-Received: by mail-wm0-f67.google.com with SMTP id w2so15434669wmw.1
-        for <git@vger.kernel.org>; Sun, 08 Apr 2018 18:42:44 -0700 (PDT)
+        id S932944AbeDIBmr (ORCPT <rfc822;e@80x24.org>);
+        Sun, 8 Apr 2018 21:42:47 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:39865 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932921AbeDIBmp (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 8 Apr 2018 21:42:45 -0400
+Received: by mail-wm0-f65.google.com with SMTP id f125so12951525wme.4
+        for <git@vger.kernel.org>; Sun, 08 Apr 2018 18:42:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references;
-        bh=14dDpLUz/O8Jo87ZEY1u02btoPmxPBcw8Y4WaAc1l9E=;
-        b=ccNFibnaehsLrr7pYvSv3fflVD5LoIaqQmZrH57EXMfjPBT6K3aSANCLChhrN+5gme
-         2o/dcpkVezZfF8zX4CPPE7aA25awVRGdYwjTKq4lGqnSLxMSdm8+Xn/5SacOmXouPk1J
-         iPelipgt/q79bXC7dRcKGpJRnewEdgcbfpjtxYlUbXwreBqVpdy1MN8r5OaY/rjmJc4Q
-         /ZY0PpBwBTIvA7FcGRlCw87H5SjYFpAzKVvdI7BLc/q26g5YC17kcr3T7Za3ENFwQ8n1
-         /Zv7DzKYppF7vV16ZJ+XoLBTqpbXOLgUJfjsi2dMYBgcaRSLNBxJacFwDx1l4tNKH+aV
-         B88A==
+        bh=QKcry4kzV21/y/X71Ud+Q6qoV4iWVtcFVAyqWjIBh8M=;
+        b=NWM1ao2b8XJJdpZhT8EQxHP6YsexVtQQROF0nrk7agVXeP5Z0JFJ8FbdJoJjPz+8mN
+         nrt7sRoplebk+lAv/QKvCw5FJ6LKdyAgMz8DqxD7s1CshhvLkjFaYAOCUF7f1Z8fpxm8
+         kCcyjZYuSsqYL54Gy0T0JkKyrL+2wFFbQ0q7FJDhY1//tzXHk5XtkawRE0po5mUbPNXe
+         ovJwLRuJrpuUoUmx40cFBbls0+YnPAIF31VfWcsEYXWT3KsoqYL+2kf+f8DpUeCV8Qz+
+         yssbhv2nQjlyyl9a1MSlGP7T4vxtPk2P/Kgsdi/7ja+7XyNwIm0uurP5MHebyq3ojLEE
+         tJrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:in-reply-to:references;
-        bh=14dDpLUz/O8Jo87ZEY1u02btoPmxPBcw8Y4WaAc1l9E=;
-        b=gASz6yMuEHST/scCnaBibYgZ+o731XEqMmLYbYTCPdc9SMx19B3Eo0DJuTqO1r7jlE
-         bqKsHpUZ7LDTb30mFTG/6TeLhNgxQ5ckA1ImgrBID3wXR+NlaPVtJfYuO7rgPMeVWYvV
-         KXxaA0nBsZs895GPVO5rv2yAQYL4b/XejRRl9rYRM71S63Yf2q9B+3N0sScbYJtQCtt8
-         hV1yHFYqhmLFR+J2YiR2WkYwn2WhphBdhWqKuyNLJ8Eoq11tofhsnq54FQKHeDQY2P77
-         eB1gJAC7JAxfVeJSoJnopLEKN2wD5GRDTA90GKyFlQDv1OWbAlXkYVSoOZy3ma3Kfelk
-         9quw==
-X-Gm-Message-State: AElRT7HCyvOVHcRwUcu668cI016+u39MR8rKF/hB7TvXFd+ZDHZrfeP9
-        6/gNk3ABHpyUjymqiIW2dzlTMrVH+VA=
-X-Google-Smtp-Source: AIpwx4/uv/6I6aTlJppsk7Hub9vnCs5PgzvHWg9MNxW5a/ALg1B7vPQh7i3LcAd+A31kORUlZT7etA==
-X-Received: by 10.46.154.71 with SMTP id k7mr21044354ljj.42.1523238162934;
-        Sun, 08 Apr 2018 18:42:42 -0700 (PDT)
+        bh=QKcry4kzV21/y/X71Ud+Q6qoV4iWVtcFVAyqWjIBh8M=;
+        b=s5tfEakglDPqeQcUSOWqCRa1kc/Q6kQpVfIzUltyXBkifw3u/Zy8VjdTxeCPL1RRQY
+         SuKNSaF5sFgRVHz9VqjoU/G78PO2Bn/swdM3cyGKBAGzTWrt4Ty76NYXxkm4xA1u++k9
+         nEE90zBJmmqwiIlRZoRn29gHnvuONAZR/4OwF+s5FbbhheQXZjeaSw6zwnHRd6dUfcL+
+         kXUpDo4j6gK8FrJa/llheEIsxROWVNRN7T14lOMt8cdr62+TO4iTtQVTYPfmD9ZCu6gg
+         NAKib9qeTUbhkwU7xLkluZyOgGv/vfIQuUqMAc9uYk0c4yMTqx66agJBTIqGmmd1s8J4
+         CrfA==
+X-Gm-Message-State: ALQs6tCk6B5NWASX9iTpwB5loULCtR1APcTK9yQoqrNogYSdcE3zOtls
+        p8futC1KtgZdhD8K6BIcBDue7pNgwjg=
+X-Google-Smtp-Source: AIpwx49sa6Tf73gRNf1NGj2MukeEf26t/VpVggg4269Jg/eT+oEP+Ve2Ts/HpusJ4qkXLhzzOZC63Q==
+X-Received: by 10.46.84.93 with SMTP id y29mr20554078ljd.11.1523238164142;
+        Sun, 08 Apr 2018 18:42:44 -0700 (PDT)
 Received: from localhost.localdomain ([94.234.37.145])
-        by smtp.gmail.com with ESMTPSA id n62-v6sm3197231lfi.4.2018.04.08.18.42.41
+        by smtp.gmail.com with ESMTPSA id n62-v6sm3197231lfi.4.2018.04.08.18.42.43
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 08 Apr 2018 18:42:42 -0700 (PDT)
+        Sun, 08 Apr 2018 18:42:43 -0700 (PDT)
 From:   Harald Nordgren <haraldnordgren@gmail.com>
 To:     git@vger.kernel.org, avarab@gmail.com, peff@peff.net,
         gitster@pobox.com, sunshine@sunshineco.com
 Cc:     Harald Nordgren <haraldnordgren@gmail.com>
-Subject: [PATCH v14 2/4] ref-filter: make ref_array_item allocation more consistent
-Date:   Mon,  9 Apr 2018 03:42:24 +0200
-Message-Id: <20180409014226.2647-2-haraldnordgren@gmail.com>
+Subject: [PATCH v14 3/4] ref-filter: factor ref_array pushing into its own function
+Date:   Mon,  9 Apr 2018 03:42:25 +0200
+Message-Id: <20180409014226.2647-3-haraldnordgren@gmail.com>
 X-Mailer: git-send-email 2.14.3 (Apple Git-98)
 In-Reply-To: <20180409014226.2647-1-haraldnordgren@gmail.com>
 References: <20180409014226.2647-1-haraldnordgren@gmail.com>
@@ -69,74 +69,78 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff King <peff@peff.net>
 
-We have a helper function to allocate ref_array_item
-structs, but it only takes a subset of the possible fields
-in the struct as initializers. We could have it accept an
-argument for _every_ field, but that becomes a pain for the
-fields which some callers don't want to set initially.
+In preparation for callers constructing their own ref_array
+structs, let's move our own internal push operation into its
+own function.
 
-Instead, let's be explicit that it takes only the minimum
-required to create the ref, and that callers should then
-fill in the rest themselves.
+While we're at it, we can replace REALLOC_ARRAY() with
+ALLOC_GROW(), which should give the growth operation
+amortized linear complexity (as opposed to growing by one,
+which is potentially quadratic, though in-place realloc
+growth often makes this faster in practice).
 
 Signed-off-by: Jeff King <peff@peff.net>
 Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
 ---
- ref-filter.c | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+ ref-filter.c | 16 +++++++++++++---
+ ref-filter.h |  8 ++++++++
+ 2 files changed, 21 insertions(+), 3 deletions(-)
 
 diff --git a/ref-filter.c b/ref-filter.c
-index ade97a848..c1c3cc948 100644
+index c1c3cc948..6e9328b27 100644
 --- a/ref-filter.c
 +++ b/ref-filter.c
-@@ -1824,15 +1824,18 @@ static const struct object_id *match_points_at(struct oid_array *points_at,
- 	return NULL;
- }
- 
--/* Allocate space for a new ref_array_item and copy the objectname and flag to it */
-+/*
-+ * Allocate space for a new ref_array_item and copy the name and oid to it.
-+ *
-+ * Callers can then fill in other struct members at their leisure.
-+ */
- static struct ref_array_item *new_ref_array_item(const char *refname,
--						 const struct object_id *oid,
--						 int flag)
-+						 const struct object_id *oid)
- {
- 	struct ref_array_item *ref;
-+
- 	FLEX_ALLOC_STR(ref, refname, refname);
- 	oidcpy(&ref->objectname, oid);
--	ref->flag = flag;
- 
+@@ -1840,6 +1840,18 @@ static struct ref_array_item *new_ref_array_item(const char *refname,
  	return ref;
  }
-@@ -1927,12 +1930,13 @@ static int ref_filter_handler(const char *refname, const struct object_id *oid,
+ 
++struct ref_array_item *ref_array_push(struct ref_array *array,
++				      const char *refname,
++				      const struct object_id *oid)
++{
++	struct ref_array_item *ref = new_ref_array_item(refname, oid);
++
++	ALLOC_GROW(array->items, array->nr + 1, array->alloc);
++	array->items[array->nr++] = ref;
++
++	return ref;
++}
++
+ static int ref_kind_from_refname(const char *refname)
+ {
+ 	unsigned int i;
+@@ -1930,13 +1942,11 @@ static int ref_filter_handler(const char *refname, const struct object_id *oid,
  	 * to do its job and the resulting list may yet to be pruned
  	 * by maxcount logic.
  	 */
--	ref = new_ref_array_item(refname, oid, flag);
-+	ref = new_ref_array_item(refname, oid);
+-	ref = new_ref_array_item(refname, oid);
++	ref = ref_array_push(ref_cbdata->array, refname, oid);
  	ref->commit = commit;
-+	ref->flag = flag;
-+	ref->kind = kind;
+ 	ref->flag = flag;
+ 	ref->kind = kind;
  
- 	REALLOC_ARRAY(ref_cbdata->array->items, ref_cbdata->array->nr + 1);
- 	ref_cbdata->array->items[ref_cbdata->array->nr++] = ref;
--	ref->kind = kind;
+-	REALLOC_ARRAY(ref_cbdata->array->items, ref_cbdata->array->nr + 1);
+-	ref_cbdata->array->items[ref_cbdata->array->nr++] = ref;
  	return 0;
  }
  
-@@ -2169,7 +2173,7 @@ void pretty_print_ref(const char *name, const struct object_id *oid,
- 		      const struct ref_format *format)
- {
- 	struct ref_array_item *ref_item;
--	ref_item = new_ref_array_item(name, oid, 0);
-+	ref_item = new_ref_array_item(name, oid);
- 	ref_item->kind = ref_kind_from_refname(name);
- 	show_ref_array_item(ref_item, format);
- 	free_array_item(ref_item);
+diff --git a/ref-filter.h b/ref-filter.h
+index 68268f9eb..76cf87cb6 100644
+--- a/ref-filter.h
++++ b/ref-filter.h
+@@ -135,4 +135,12 @@ void setup_ref_filter_porcelain_msg(void);
+ void pretty_print_ref(const char *name, const struct object_id *oid,
+ 		      const struct ref_format *format);
+ 
++/*
++ * Push a single ref onto the array; this can be used to construct your own
++ * ref_array without using filter_refs().
++ */
++struct ref_array_item *ref_array_push(struct ref_array *array,
++				      const char *refname,
++				      const struct object_id *oid);
++
+ #endif /*  REF_FILTER_H  */
 -- 
 2.14.3 (Apple Git-98)
 
