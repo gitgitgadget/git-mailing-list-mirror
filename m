@@ -7,19 +7,19 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 386201F424
-	for <e@80x24.org>; Mon,  9 Apr 2018 08:32:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AFE0C1F424
+	for <e@80x24.org>; Mon,  9 Apr 2018 08:32:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752070AbeDIIcU (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Apr 2018 04:32:20 -0400
-Received: from mout.gmx.net ([212.227.17.21]:43059 "EHLO mout.gmx.net"
+        id S1752076AbeDIIcX (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Apr 2018 04:32:23 -0400
+Received: from mout.gmx.net ([212.227.17.22]:59513 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751998AbeDIIcS (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Apr 2018 04:32:18 -0400
-Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0Lu7ty-1eOB4h0oCs-011TNR; Mon, 09
- Apr 2018 10:32:09 +0200
-Date:   Mon, 9 Apr 2018 10:32:09 +0200 (DST)
+        id S1751998AbeDIIcW (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Apr 2018 04:32:22 -0400
+Received: from [192.168.0.129] ([37.201.195.115]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MV1wf-1ezjcH391p-00YUJO; Mon, 09
+ Apr 2018 10:32:12 +0200
+Date:   Mon, 9 Apr 2018 10:32:13 +0200 (DST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
 To:     git@vger.kernel.org
@@ -29,324 +29,193 @@ cc:     Junio C Hamano <gitster@pobox.com>, Thomas Rast <tr@thomasrast.ch>,
         <avarab@gmail.com>, Stefan Beller <sbeller@google.com>,
         Jason Frey <jfrey@redhat.com>,
         Philip Oakley <philipoakley@iee.org>
-Subject: [PATCH v3 10/15] config: avoid using the global variable `store`
+Subject: [PATCH v3 11/15] config_set_store: rename some fields for
+ consistency
 In-Reply-To: <cover.1523262449.git.johannes.schindelin@gmx.de>
-Message-ID: <8ba9842d8eee51b6dac772292eefef2c4c36952e.1523262449.git.johannes.schindelin@gmx.de>
+Message-ID: <6f7ed0721749001fa73dadfd271bac255ea8651d.1523262449.git.johannes.schindelin@gmx.de>
 References: <cover.1522772789.git.johannes.schindelin@gmx.de> <cover.1523262449.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:GmjcpYP1Gj++XRJYpdMS9foiohCMdV6KS0jvjQTnDkn6PffELLA
- KxeDJ/u0mGyabvtb1sYIrb7OE+7G+nIUVNH5XR08guD5OC/Yegv6//yg+1ctStERMwXPwXZ
- bCXgsYl8b0NjyGR2FRs68vQMK+GLT8OIcXUuNBfxqFYaVtuwDjJmq028XFpWzMlk9Yp80UI
- 5PwWLHx/24uryE+8upMOA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:U332gzenMc4=:w63rW4RCOfYtMxrRiEES3Q
- xr9VxZtzh22b3lNlEYiqkRInFnO4y+XQIDS+zsQBtjGcKhi9bSqWgODRHcnIOb35rp9yqSYC5
- sg4zHD5zfm3QaDrOgAZmwNfWGmYjKBLoLc3l5XtZ+dkyADCiJvHaWhfBHaxnc4pL9G/WbB5ah
- wgmrRyznTzxujlt7BV9lYtLCYD7PYWFJyaN3Jq7gAOBejCzglijwNqHBVxrMjvntIXt3sSZPF
- ySGZavxfwa4xz08vpZpmM4pygmxYY1mMq6VfimQtAIwd2EI60kCTryQZHDwqAVn7/E/U3E77j
- 9zcCwEONvCKc4u8VloKXjYcAeh7EKk43LiVm6H+XrZ84jT8j+/xouHid9GtjhsLamumejCfK1
- qyvH9bDpt9ru45SSeIS5F4vSvrcIGXiBWntgMCBwCMkO83R4zXx7CvzSH1G8v8bhcg5nqhSf2
- kN9R9HRMYcnDBcPQrnInYrwDjNE6zXp4QqFo5ZaIstP4aP7BFFNhS7tsx9OU3ThXJKDUv/BTv
- Sejm/Z9iBxCVXixbEpbYWHJCaN+N/d7CVIq6UPu3fSM5OP/EP4KG+GhbjdupmnvrjyTOdlx53
- 7lA3VHnRTS9kSXBfK9FL7H3gpVztCFf4C22Jioqowpwgbrg97W1IwWk3OwCER+nkFRb+qIWsp
- lCJYvobrcba1hF6FD30yNdXbmrxQyVHKNM7AyDXUp7vdIXILTOFOZ0g62lqAY4bbxeOlCpSUZ
- G0+3Q5MjV19COq2+QMQP6PRyW7MeXp6licv3hCYh/hGIP/IYH6q1ql5g9VVojOmiHSvX73KKU
- 1KiFEuHVMNVRLUcwDObU5b6wACAGqlF8MSPlvsVDfFQjghIzgU=
+X-Provags-ID: V03:K1:Sl0KDYF1TSfmFEfLJL01zxJ7hDPG98Tsu0k4UEYNucwSl3+gryP
+ cnx2mq4Tmqw4Zpz+isamAcyV5AcHsfbNeyPPEgGn3lV3Xv5T20JaUaJYGJq0GD/K5zW66+5
+ mo+00GPSCSUpspwi1Cqy3pZcaCWYF9gj+8E106TB/mSttcbrKpTpySlKSY7x5WEjA9kdgqs
+ y7+BViF1OPm5TTkZQaHXA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:ZpxGJaYAA4M=:2Buk9kmGhaggbvm2iSDzXC
+ 1ZoOxHhf1vLINQNAGWxOTXSbUGRaxpdl5gKpUOBcXpIY+4yAXS42tDEid8348xEJjjlDG4sd9
+ jpPumhk3uSw89wqG0MQBydaLk0OSriibdB26SHMMXM1YP2/dTCR63e4DUi37EsQKFQc54BBLP
+ /k/lsf6gDeCUy3Oh0YtHIoK0+rWKuEZuEU0RjhbYYk2nqN3uOGprCMgHreZFpG0zdXDTEj5P4
+ fJnvltMYK0861Wj7IxyLkgWp+xOcmbz8qpzXpjZwHv/2CLIaxcOfgPImlQ+AiuG0HbC/D8aPA
+ KxkHBYp/Yjwad0CurtfBuQ7NOFrOiyTJ2tDu78q68N8uU4Vxz6qo9IcpPMEDeRClr+IqQ+fu8
+ swXbEjAfQL2uMvzcik8AHQMPuop8yLybjzlhTbJWFGD7JocdDujnLYGd1jyhvGj06t2WxG13m
+ ng/LVDLwkKom8LjcT1LWp0Lq0VVF0Z/0XfKq+tLmIVk9yZQk1YsvHcM5cyJrAjs2V3kKq4YLI
+ Tb48DNws6IU9oj4QmNG7Ad92gdnplOTBQQpPHo1Qc66JHrWUS/Xy4cLYzfhJIone4nt/pVzrh
+ MNYsKPGTA34Jhx1t8s3vzHFzrAbKIYqDa1QpnXzHS0CK/uJENiIU8LVjxmrkr07cAWUowcJBq
+ dkvBo7qhOXE0607O9+g4VSq68U5DHvO2cc0iipie9fFLAcqrJyzDDWtaj8QgtjO1ZOtGUGpj1
+ mewWz58zCHBlCF6ykDjJuJqFk1G7V9gfWKSVBHgpwtZfXv0AdCzZeo0ugJuXEUUWeKKo8wJoj
+ 5i78fZnDMDD5XieMe+0r+wir2mQbFHirL6ksmkBNQJTvPEIo5s=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It is much easier to reason about, when the config code to set/unset
-variables or to remove/rename sections does not rely on a global (or
-file-local) variable.
+The `seen` field is the actual length of the `offset` array, and the
+`offset_alloc` field records what was allocated (to avoid resizing
+wherever `seen` has to be incremented).
+
+Elsewhere, we use the convention `name` for the array, where `name` is
+descriptive enough to guess its purpose, `name_nr` for the actual length
+and `name_alloc` to record the maximum length without needing to resize.
+
+Let's make the names of the fields in question consistent with that
+convention.
+
+This will also help with the next steps where we will let the
+git_config_set() machinery use the config event stream that we just
+introduced.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- config.c | 119 ++++++++++++++++++++++++++++++-------------------------
- 1 file changed, 66 insertions(+), 53 deletions(-)
+ config.c | 63 ++++++++++++++++++++++++++++----------------------------
+ 1 file changed, 31 insertions(+), 32 deletions(-)
 
 diff --git a/config.c b/config.c
-index 03d8e7709fe..0c0a965267d 100644
+index 0c0a965267d..2341620c11a 100644
 --- a/config.c
 +++ b/config.c
-@@ -2296,7 +2296,7 @@ void git_die_config(const char *key, const char *err, ...)
-  * Find all the stuff for git_config_set() below.
-  */
- 
--static struct {
-+struct config_store_data {
- 	int baselen;
- 	char *key;
+@@ -2302,10 +2302,9 @@ struct config_store_data {
  	int do_not_match;
-@@ -2306,56 +2306,58 @@ static struct {
- 	unsigned int offset_alloc;
+ 	regex_t *value_regex;
+ 	int multi_replace;
+-	size_t *offset;
+-	unsigned int offset_alloc;
++	size_t *seen;
++	unsigned int seen_nr, seen_alloc;
  	enum { START, SECTION_SEEN, SECTION_END_SEEN, KEY_SEEN } state;
- 	unsigned int seen;
--} store;
-+};
+-	unsigned int seen;
+ };
  
--static int matches(const char *key, const char *value)
-+static int matches(const char *key, const char *value,
-+		   const struct config_store_data *store)
- {
--	if (strcmp(key, store.key))
-+	if (strcmp(key, store->key))
- 		return 0; /* not ours */
--	if (!store.value_regex)
-+	if (!store->value_regex)
- 		return 1; /* always matches */
--	if (store.value_regex == CONFIG_REGEX_NONE)
-+	if (store->value_regex == CONFIG_REGEX_NONE)
- 		return 0; /* never matches */
- 
--	return store.do_not_match ^
--		(value && !regexec(store.value_regex, value, 0, NULL, 0));
-+	return store->do_not_match ^
-+		(value && !regexec(store->value_regex, value, 0, NULL, 0));
- }
- 
- static int store_aux(const char *key, const char *value, void *cb)
- {
- 	const char *ep;
- 	size_t section_len;
-+	struct config_store_data *store = cb;
- 
--	switch (store.state) {
-+	switch (store->state) {
+ static int matches(const char *key, const char *value,
+@@ -2331,15 +2330,15 @@ static int store_aux(const char *key, const char *value, void *cb)
+ 	switch (store->state) {
  	case KEY_SEEN:
--		if (matches(key, value)) {
--			if (store.seen == 1 && store.multi_replace == 0) {
-+		if (matches(key, value, store)) {
-+			if (store->seen == 1 && store->multi_replace == 0) {
+ 		if (matches(key, value, store)) {
+-			if (store->seen == 1 && store->multi_replace == 0) {
++			if (store->seen_nr == 1 && store->multi_replace == 0) {
  				warning(_("%s has multiple values"), key);
  			}
  
--			ALLOC_GROW(store.offset, store.seen + 1,
--				   store.offset_alloc);
-+			ALLOC_GROW(store->offset, store->seen + 1,
-+				   store->offset_alloc);
+-			ALLOC_GROW(store->offset, store->seen + 1,
+-				   store->offset_alloc);
++			ALLOC_GROW(store->seen, store->seen_nr + 1,
++				   store->seen_alloc);
  
--			store.offset[store.seen] = cf->do_ftell(cf);
--			store.seen++;
-+			store->offset[store->seen] = cf->do_ftell(cf);
-+			store->seen++;
+-			store->offset[store->seen] = cf->do_ftell(cf);
+-			store->seen++;
++			store->seen[store->seen_nr] = cf->do_ftell(cf);
++			store->seen_nr++;
  		}
  		break;
  	case SECTION_SEEN:
- 		/*
--		 * What we are looking for is in store.key (both
-+		 * What we are looking for is in store->key (both
- 		 * section and var), and its section part is baselen
- 		 * long.  We found key (again, both section and var).
- 		 * We would want to know if this key is in the same
- 		 * section as what we are looking for.  We already
- 		 * know we are in the same section as what should
--		 * hold store.key.
-+		 * hold store->key.
- 		 */
- 		ep = strrchr(key, '.');
- 		section_len = ep - key;
- 
--		if ((section_len != store.baselen) ||
--		    memcmp(key, store.key, section_len+1)) {
--			store.state = SECTION_END_SEEN;
-+		if ((section_len != store->baselen) ||
-+		    memcmp(key, store->key, section_len+1)) {
-+			store->state = SECTION_END_SEEN;
- 			break;
- 		}
- 
-@@ -2363,26 +2365,27 @@ static int store_aux(const char *key, const char *value, void *cb)
+@@ -2365,26 +2364,26 @@ static int store_aux(const char *key, const char *value, void *cb)
  		 * Do not increment matches: this is no match, but we
  		 * just made sure we are in the desired section.
  		 */
--		ALLOC_GROW(store.offset, store.seen + 1,
--			   store.offset_alloc);
--		store.offset[store.seen] = cf->do_ftell(cf);
-+		ALLOC_GROW(store->offset, store->seen + 1,
-+			   store->offset_alloc);
-+		store->offset[store->seen] = cf->do_ftell(cf);
+-		ALLOC_GROW(store->offset, store->seen + 1,
+-			   store->offset_alloc);
+-		store->offset[store->seen] = cf->do_ftell(cf);
++		ALLOC_GROW(store->seen, store->seen_nr + 1,
++			   store->seen_alloc);
++		store->seen[store->seen_nr] = cf->do_ftell(cf);
  		/* fallthru */
  	case SECTION_END_SEEN:
  	case START:
--		if (matches(key, value)) {
--			ALLOC_GROW(store.offset, store.seen + 1,
--				   store.offset_alloc);
--			store.offset[store.seen] = cf->do_ftell(cf);
--			store.state = KEY_SEEN;
--			store.seen++;
-+		if (matches(key, value, store)) {
-+			ALLOC_GROW(store->offset, store->seen + 1,
-+				   store->offset_alloc);
-+			store->offset[store->seen] = cf->do_ftell(cf);
-+			store->state = KEY_SEEN;
-+			store->seen++;
+ 		if (matches(key, value, store)) {
+-			ALLOC_GROW(store->offset, store->seen + 1,
+-				   store->offset_alloc);
+-			store->offset[store->seen] = cf->do_ftell(cf);
++			ALLOC_GROW(store->seen, store->seen_nr + 1,
++				   store->seen_alloc);
++			store->seen[store->seen_nr] = cf->do_ftell(cf);
+ 			store->state = KEY_SEEN;
+-			store->seen++;
++			store->seen_nr++;
  		} else {
--			if (strrchr(key, '.') - key == store.baselen &&
--			      !strncmp(key, store.key, store.baselen)) {
--					store.state = SECTION_SEEN;
--					ALLOC_GROW(store.offset,
--						   store.seen + 1,
--						   store.offset_alloc);
--					store.offset[store.seen] = cf->do_ftell(cf);
-+			if (strrchr(key, '.') - key == store->baselen &&
-+			      !strncmp(key, store->key, store->baselen)) {
-+					store->state = SECTION_SEEN;
-+					ALLOC_GROW(store->offset,
-+						   store->seen + 1,
-+						   store->offset_alloc);
-+					store->offset[store->seen] =
-+						cf->do_ftell(cf);
+ 			if (strrchr(key, '.') - key == store->baselen &&
+ 			      !strncmp(key, store->key, store->baselen)) {
+ 					store->state = SECTION_SEEN;
+-					ALLOC_GROW(store->offset,
+-						   store->seen + 1,
+-						   store->offset_alloc);
+-					store->offset[store->seen] =
++					ALLOC_GROW(store->seen,
++						   store->seen_nr + 1,
++						   store->seen_alloc);
++					store->seen[store->seen_nr] =
+ 						cf->do_ftell(cf);
  			}
  		}
- 	}
-@@ -2397,31 +2400,33 @@ static int write_error(const char *filename)
- 	return 4;
- }
- 
--static struct strbuf store_create_section(const char *key)
-+static struct strbuf store_create_section(const char *key,
-+					  const struct config_store_data *store)
- {
- 	const char *dot;
- 	int i;
- 	struct strbuf sb = STRBUF_INIT;
- 
--	dot = memchr(key, '.', store.baselen);
-+	dot = memchr(key, '.', store->baselen);
- 	if (dot) {
- 		strbuf_addf(&sb, "[%.*s \"", (int)(dot - key), key);
--		for (i = dot - key + 1; i < store.baselen; i++) {
-+		for (i = dot - key + 1; i < store->baselen; i++) {
- 			if (key[i] == '"' || key[i] == '\\')
- 				strbuf_addch(&sb, '\\');
- 			strbuf_addch(&sb, key[i]);
- 		}
- 		strbuf_addstr(&sb, "\"]\n");
- 	} else {
--		strbuf_addf(&sb, "[%.*s]\n", store.baselen, key);
-+		strbuf_addf(&sb, "[%.*s]\n", store->baselen, key);
- 	}
- 
- 	return sb;
- }
- 
--static ssize_t write_section(int fd, const char *key)
-+static ssize_t write_section(int fd, const char *key,
-+			     const struct config_store_data *store)
- {
--	struct strbuf sb = store_create_section(key);
-+	struct strbuf sb = store_create_section(key, store);
- 	ssize_t ret;
- 
- 	ret = write_in_full(fd, sb.buf, sb.len);
-@@ -2430,11 +2435,12 @@ static ssize_t write_section(int fd, const char *key)
- 	return ret;
- }
- 
--static ssize_t write_pair(int fd, const char *key, const char *value)
-+static ssize_t write_pair(int fd, const char *key, const char *value,
-+			  const struct config_store_data *store)
- {
- 	int i;
- 	ssize_t ret;
--	int length = strlen(key + store.baselen + 1);
-+	int length = strlen(key + store->baselen + 1);
- 	const char *quote = "";
- 	struct strbuf sb = STRBUF_INIT;
- 
-@@ -2454,7 +2460,7 @@ static ssize_t write_pair(int fd, const char *key, const char *value)
- 		quote = "\"";
- 
- 	strbuf_addf(&sb, "\t%.*s = %s",
--		    length, key + store.baselen + 1, quote);
-+		    length, key + store->baselen + 1, quote);
- 
- 	for (i = 0; value[i]; i++)
- 		switch (value[i]) {
-@@ -2564,6 +2570,9 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
- 	char *filename_buf = NULL;
- 	char *contents = NULL;
- 	size_t contents_sz;
-+	struct config_store_data store;
-+
-+	memset(&store, 0, sizeof(store));
- 
- 	/* parse-key returns negative; flip the sign to feed exit(3) */
- 	ret = 0 - git_config_parse_key(key, &store.key, &store.baselen);
-@@ -2606,8 +2615,8 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
+@@ -2644,10 +2643,10 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
+ 			}
  		}
  
- 		store.key = (char *)key;
--		if (write_section(fd, key) < 0 ||
--		    write_pair(fd, key, value) < 0)
-+		if (write_section(fd, key, &store) < 0 ||
-+		    write_pair(fd, key, value, &store) < 0)
- 			goto write_err_out;
- 	} else {
- 		struct stat st;
-@@ -2646,7 +2655,7 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
- 		 * As a side effect, we make sure to transform only a valid
- 		 * existing config file.
- 		 */
--		if (git_config_from_file(store_aux, config_filename, NULL)) {
-+		if (git_config_from_file(store_aux, config_filename, &store)) {
- 			error("invalid config file %s", config_filename);
- 			free(store.key);
- 			if (store.value_regex != NULL &&
-@@ -2730,10 +2739,10 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
- 		/* write the pair (value == NULL means unset) */
- 		if (value != NULL) {
- 			if (store.state == START) {
--				if (write_section(fd, key) < 0)
-+				if (write_section(fd, key, &store) < 0)
+-		ALLOC_GROW(store.offset, 1, store.offset_alloc);
+-		store.offset[0] = 0;
++		ALLOC_GROW(store.seen, 1, store.seen_alloc);
++		store.seen[0] = 0;
+ 		store.state = START;
+-		store.seen = 0;
++		store.seen_nr = 0;
+ 
+ 		/*
+ 		 * After this, store.offset will contain the *end* offset
+@@ -2675,8 +2674,8 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
+ 		}
+ 
+ 		/* if nothing to unset, or too many matches, error out */
+-		if ((store.seen == 0 && value == NULL) ||
+-				(store.seen > 1 && multi_replace == 0)) {
++		if ((store.seen_nr == 0 && value == NULL) ||
++		    (store.seen_nr > 1 && multi_replace == 0)) {
+ 			ret = CONFIG_NOTHING_SET;
+ 			goto out_free;
+ 		}
+@@ -2707,19 +2706,19 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
+ 			goto out_free;
+ 		}
+ 
+-		if (store.seen == 0)
+-			store.seen = 1;
++		if (store.seen_nr == 0)
++			store.seen_nr = 1;
+ 
+-		for (i = 0, copy_begin = 0; i < store.seen; i++) {
++		for (i = 0, copy_begin = 0; i < store.seen_nr; i++) {
+ 			new_line = 0;
+-			if (store.offset[i] == 0) {
+-				store.offset[i] = copy_end = contents_sz;
++			if (store.seen[i] == 0) {
++				store.seen[i] = copy_end = contents_sz;
+ 			} else if (store.state != KEY_SEEN) {
+-				copy_end = store.offset[i];
++				copy_end = store.seen[i];
+ 			} else
+ 				copy_end = find_beginning_of_line(
+ 					contents, contents_sz,
+-					store.offset[i], &new_line);
++					store.seen[i], &new_line);
+ 
+ 			if (copy_end > 0 && contents[copy_end-1] != '\n')
+ 				new_line = 1;
+@@ -2733,7 +2732,7 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
+ 				    write_str_in_full(fd, "\n") < 0)
  					goto write_err_out;
  			}
--			if (write_pair(fd, key, value) < 0)
-+			if (write_pair(fd, key, value, &store) < 0)
- 				goto write_err_out;
+-			copy_begin = store.offset[i];
++			copy_begin = store.seen[i];
  		}
  
-@@ -2857,7 +2866,8 @@ static int section_name_is_ok(const char *name)
- 
- /* if new_name == NULL, the section is removed instead */
- static int git_config_copy_or_rename_section_in_file(const char *config_filename,
--				      const char *old_name, const char *new_name, int copy)
-+				      const char *old_name,
-+				      const char *new_name, int copy)
- {
- 	int ret = 0, remove = 0;
- 	char *filename_buf = NULL;
-@@ -2867,6 +2877,9 @@ static int git_config_copy_or_rename_section_in_file(const char *config_filename
- 	FILE *config_file = NULL;
- 	struct stat st;
- 	struct strbuf copystr = STRBUF_INIT;
-+	struct config_store_data store;
-+
-+	memset(&store, 0, sizeof(store));
- 
- 	if (new_name && !section_name_is_ok(new_name)) {
- 		ret = error("invalid section name: %s", new_name);
-@@ -2936,7 +2949,7 @@ static int git_config_copy_or_rename_section_in_file(const char *config_filename
- 				}
- 				store.baselen = strlen(new_name);
- 				if (!copy) {
--					if (write_section(out_fd, new_name) < 0) {
-+					if (write_section(out_fd, new_name, &store) < 0) {
- 						ret = write_error(get_lock_file_path(&lock));
- 						goto out;
- 					}
-@@ -2957,7 +2970,7 @@ static int git_config_copy_or_rename_section_in_file(const char *config_filename
- 						output[0] = '\t';
- 					}
- 				} else {
--					copystr = store_create_section(new_name);
-+					copystr = store_create_section(new_name, &store);
- 				}
- 			}
- 			remove = 0;
+ 		/* write the pair (value == NULL means unset) */
 -- 
 2.17.0.windows.1.4.g7e4058d72e3
 
