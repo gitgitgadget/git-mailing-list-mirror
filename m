@@ -2,113 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E13D11F404
-	for <e@80x24.org>; Mon,  9 Apr 2018 16:49:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7D3EF1F404
+	for <e@80x24.org>; Mon,  9 Apr 2018 17:23:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753304AbeDIQti (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Apr 2018 12:49:38 -0400
-Received: from avasout04.plus.net ([212.159.14.19]:57618 "EHLO
-        avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753097AbeDIQth (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Apr 2018 12:49:37 -0400
-Received: from [10.0.2.15] ([80.189.70.162])
-        by smtp with ESMTPA
-        id 5Zz5fKoiZsD7b5Zz6fLGtO; Mon, 09 Apr 2018 17:49:36 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.3 cv=CvORjEwD c=1 sm=1 tr=0
- a=zzlqjQC3YyNvDZl/Gy+4mg==:117 a=zzlqjQC3YyNvDZl/Gy+4mg==:17
- a=IkcTkHD0fZMA:10 a=VGFLaOeXIzmMvh2IZ_kA:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-Subject: Re: What's cooking in git.git (Apr 2018, #01; Mon, 9)
-To:     Derrick Stolee <stolee@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <xmqqd0z865pk.fsf@gitster-ct.c.googlers.com>
- <98394864-ece6-5112-0274-b2399087f207@gmail.com>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <bba6e3ba-ab28-8cda-eab3-91ec3591bcb5@ramsayjones.plus.com>
-Date:   Mon, 9 Apr 2018 17:49:35 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.7.0
+        id S1753233AbeDIRXw (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Apr 2018 13:23:52 -0400
+Received: from mail-yw0-f174.google.com ([209.85.161.174]:41595 "EHLO
+        mail-yw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751931AbeDIRXu (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Apr 2018 13:23:50 -0400
+Received: by mail-yw0-f174.google.com with SMTP id u15so3054565ywg.8
+        for <git@vger.kernel.org>; Mon, 09 Apr 2018 10:23:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=F3GC9TNL6afJe+VpAljrEEIpIkmW+xD9zYPOKNzMJ60=;
+        b=Q6JpnIOqw9f6wAliKHfRRqhI+4nwdg4QkGRWh7e2TdEBiCahyo4bX2pUr7S3nkMsq3
+         w9sBLkuBN2BiGW0RQoWjq0nnROlH6hPmU6YIoLgw/KsqsS+fx3aN5u1eUtYioPZ1LvJO
+         etee4sP9yRBQ0D5GtZ8j4JoPNmuztUNAj4nYinm7k71vgfBsltUZXNEepJaOfjVh2k0H
+         FMXSMFFO4platBIPBIg98kR9WUJVdprZt3YCy5wxYzlpQMQGeSQtP6uQJ/75FKx+ugr8
+         YFUXAyjJ4zpDPRcCqboeIdXMTJJ3bwMlqDLkXmLOXC6fljmNc7KrmhoSh+dAu2BmhIMR
+         7N4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=F3GC9TNL6afJe+VpAljrEEIpIkmW+xD9zYPOKNzMJ60=;
+        b=FVqCwgHpJskpYFQD1IkRLN2Z58NWsCuuTlj8naR8JvWEkkdgfChvIiY2v0ZB16vpui
+         +yi/DisqCsNWVSc0kCj14AdFMHx53TTFSG6EuuzX+92NmEysDO8fQsJZ+UR0bTvhnZYW
+         1Lul2Gye8tKGfnWH8qRVSe2qL/CfaLgSogna3M4K7xiAkwjtA8kmNTL9CFXxJBQQAspe
+         tNCRnt97sxk9tDLb8sVVqYnrmUYKhRKWOa4Rl0d/UtIQB8u2weKlepi7158FJPUxjVyS
+         BU1R67PGOiyqAQyGgu1hHbV2Wv80trIQUDmVzVaFC+jK8I/baE8AMZPIly7eq+GLMZce
+         wXQg==
+X-Gm-Message-State: ALQs6tDWfsjRyJF59bzXe/bCmVIiDyMmH7FL63NBV/Nr/NdCetKE22gy
+        jgO2d8X6J2Lv88Y21CtYGr1cqGEnOuSsadi+M8OnXA==
+X-Google-Smtp-Source: AIpwx4+J6TS5gD+bBIrdF8p4qp/tTnpyFqNLg3hIIbREGXwSV6OWqLjId1iQy64Mn8zqkSFPHbgFvjvoeDimzu3IgU8=
+X-Received: by 10.129.232.5 with SMTP id a5mr12377575ywm.421.1523294629643;
+ Mon, 09 Apr 2018 10:23:49 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <98394864-ece6-5112-0274-b2399087f207@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfGN9vtxsrIa9cdY3ZUtH681rKC2se0djFQLih6KQopbgTz/Y7b4gr/1LX3TlYq6BxbxpRo1IFC6ohs8gM5SwdfQmE/nSAoTzPEDZ6ijpGi9ULAjtRTUQ
- gnkValESrVJ5aGg1p1kBm2DOk8oDq0hnJ7WbSt4u9u8K28qcHPgvcnhSEDaKjLi7SrorX2dyM/oqrA==
+Received: by 2002:a25:cf81:0:0:0:0:0 with HTTP; Mon, 9 Apr 2018 10:23:49 -0700 (PDT)
+In-Reply-To: <CACsJy8C4GUy1xv10oQyrDVkdy4nq636N24b2_pGo-nivPY-x=A@mail.gmail.com>
+References: <xmqqd0z865pk.fsf@gitster-ct.c.googlers.com> <CACsJy8C4GUy1xv10oQyrDVkdy4nq636N24b2_pGo-nivPY-x=A@mail.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 9 Apr 2018 10:23:49 -0700
+Message-ID: <CAGZ79kYECaGUvHscsDaT_pzBLdRaO0E34275UsxM4LMW1Ykt7g@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Apr 2018, #01; Mon, 9)
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-
-On 09/04/18 14:37, Derrick Stolee wrote:
-> On 4/9/2018 6:21 AM, Junio C Hamano wrote:
->> * ds/commit-graph (2018-04-02) 16 commits
->>   - commit-graph: implement "--additive" option
->>   - commit-graph: build graph from starting commits
->>   - commit-graph: read only from specific pack-indexes
->>   - commit: integrate commit graph with commit parsing
->>   - commit-graph: close under reachability
->>   - commit-graph: add core.commitGraph setting
->>   - commit-graph: implement git commit-graph read
->>   - commit-graph: implement git-commit-graph write
->>   - commit-graph: implement write_commit_graph()
->>   - commit-graph: create git-commit-graph builtin
->>   - graph: add commit graph design document
->>   - commit-graph: add format document
->>   - csum-file: refactor finalize_hashfile() method
->>   - csum-file: rename hashclose() to finalize_hashfile()
->>   - Merge branch 'jk/cached-commit-buffer' into HEAD
->>   - Merge branch 'jt/binsearch-with-fanout' into HEAD
->>   (this branch is used by ds/lazy-load-trees.)
+On Mon, Apr 9, 2018 at 8:31 AM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Mon, Apr 9, 2018 at 12:21 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> * sb/packfiles-in-repository (2018-03-26) 12 commits
+>>   (merged to 'next' on 2018-03-30 at caa68db14d)
+>>  + packfile: keep prepare_packed_git() private
+>>  + packfile: allow find_pack_entry to handle arbitrary repositories
+>>  + packfile: add repository argument to find_pack_entry
+>>  + packfile: allow reprepare_packed_git to handle arbitrary repositories
+>>  + packfile: allow prepare_packed_git to handle arbitrary repositories
+>>  + packfile: allow prepare_packed_git_one to handle arbitrary repositories
+>>  + packfile: add repository argument to reprepare_packed_git
+>>  + packfile: add repository argument to prepare_packed_git
+>>  + packfile: add repository argument to prepare_packed_git_one
+>>  + packfile: allow install_packed_git to handle arbitrary repositories
+>>  + packfile: allow rearrange_packed_git to handle arbitrary repositories
+>>  + packfile: allow prepare_packed_git_mru to handle arbitrary repositories
+>>  (this branch uses nd/remove-ignore-env-field and sb/object-store; is tangled with sb/submodule-move-nested.)
 >>
->>   Precompute and store information necessary for ancestry traversal
->>   in a separate file to optimize graph walking.
+>>  Refactoring of the internal global data structure continues.
 >>
->>   Ready???
->>   It seems that this topic is getting there.
-> 
-> I think this patch is ready to go, barring the edit of "--additive" to "--append" in the final commit message and squashing following diff into "commit-graph: implement git commit-graph read":
-> 
-> @@ -31,7 +31,7 @@ static struct opts_commit_graph {
-> 
->  static int graph_read(int argc, const char **argv)
->  {
-> -       struct commit_graph *graph = 0;
-> +       struct commit_graph *graph = NULL;
->         char *graph_name;
-> 
->         static struct option builtin_commit_graph_read_options[] = {
-> 
+>>  Is this ready for 'master' by now?
+>
+> I think so. Things start to look much nicer.
 
-Also, it seems that the 'static' keyword has been dropped from the
-declaration of 'commit_graph' (commit-graph.c #183) again:
+I think so, too.
 
-  $ diff nsp-out psp-out
-  18a19
-  >     SP chdir-notify.c
-  23a25,26
-  >     SP commit-graph.c
-  > commit-graph.c:183:21: warning: symbol 'commit_graph' was not declared. Should it be static?
-  66a70
-  >     SP json-writer.c
-  209a214,215
-  >     SP builtin/commit-graph.c
-  > builtin/commit-graph.c:34:38: warning: Using plain integer as NULL pointer
-  299d304
-  < fast-import.c:303:40: warning: Using plain integer as NULL pointer
-  312a318
-  >     SP t/helper/test-json-writer.c
-  315a322
-  >     SP t/helper/test-print-larger-than-ssize.c
-  $ 
+I am working on top of that series now for the third part,
+assuming this is good to go.
+https://public-inbox.org/git/20180406232136.253950-1-sbeller@google.com/
 
-ATB,
-Ramsay Jones
-
+Thanks,
+Stefan
