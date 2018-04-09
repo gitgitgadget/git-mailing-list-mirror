@@ -2,278 +2,150 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 58E0B1F404
-	for <e@80x24.org>; Mon,  9 Apr 2018 17:44:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7E8341F404
+	for <e@80x24.org>; Mon,  9 Apr 2018 17:58:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751954AbeDIRo5 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Apr 2018 13:44:57 -0400
-Received: from mail-yb0-f173.google.com ([209.85.213.173]:40838 "EHLO
-        mail-yb0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751549AbeDIRo4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Apr 2018 13:44:56 -0400
-Received: by mail-yb0-f173.google.com with SMTP id y18-v6so3308428ybb.7
-        for <git@vger.kernel.org>; Mon, 09 Apr 2018 10:44:55 -0700 (PDT)
+        id S1752202AbeDIR6B (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Apr 2018 13:58:01 -0400
+Received: from mail-io0-f170.google.com ([209.85.223.170]:36358 "EHLO
+        mail-io0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751549AbeDIR6A (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Apr 2018 13:58:00 -0400
+Received: by mail-io0-f170.google.com with SMTP id o4so10657889iod.3
+        for <git@vger.kernel.org>; Mon, 09 Apr 2018 10:58:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=BUHw/m0eUMJlDqUUEpV05EjTNWW2plqRbX+AQ293pmo=;
-        b=BuzG4JAjsMGApqj/sgneQ9HCxgcJ+DYQ54hMSkFq8kwAA2dfxgnXpCbrpaX8qbYMZB
-         pdI1sxXyiL0LPhwwgs1xlL7eA+he2M4TtHlzPEaFhTm4JcQ1x+EY0Vn2sjdswOg0TCd+
-         OZxTvtlDtFcT5dQp/ENLSQoGaiuBa5uRCZseJI9d3v4pBYd7TOhNEOl+2ws8u4OkkWvg
-         DXACzNmaTiCHVa5tV1KHjwuTKyAkgEAyFhdDinL9vEaBx42ylHsKkfEIfQpoZq/NTHE0
-         V8giz4Fum4KGI1E7pMUp5JT3S5Sk2Xo3xMO1q7ta7+KED5aeqhTNyw39UYkSxHcyB/M2
-         Ymew==
+        d=linuxfoundation.org; s=google;
+        h=subject:to:cc:references:from:organization:message-id:date
+         :user-agent:mime-version:in-reply-to;
+        bh=ZMVvJQxipEUr1YOC8RWDjIkPMeapXBogotjvFdHYhIs=;
+        b=YCGgKbjTjL8q8uauRA9UwVdCkm6CgUwxuQYcrAsKULpqs1zbxNRo5YGMa3HYgyHlcc
+         LPuKKU2PLkuBvzOx4BiciCM5Hjgx2i4uP1RwlFcHt6DZDSnAiLAYnrqfNqefan7VkF++
+         ktMoeDJQ5nX8AUFZAek93OJVs8b0z4TaUSYkI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=BUHw/m0eUMJlDqUUEpV05EjTNWW2plqRbX+AQ293pmo=;
-        b=Zf4l+JKBAzH5gl/rgh2FR38FGn5W/9NzPJZBVowOjnz1UO3iIbqAXo0PZE/J0yuoIJ
-         T2+hbQ1yGo31DBXOVicK36J0nC9zea3JMMJTbucq3FJ1sZsP0nQ6PiUiUcdN1Li6tWeu
-         jKwtnFxx9EUc/wSUP3C6RNWr+jA5uU3JIyXJubJccLqqXMFZivUvGStqsIQ5pGVX+KB8
-         Bt/LYzXRLsTMZfAEbyUyM721MmZcc0yCE4BJdB8N1bIY7F0Z83F8wI+Z3u6UypndbAbY
-         Y9n/lnkjt/NTBBSPqngZrZnCTYIhBnC0cNCJDboIqEnrVvBqVVMlLwWotDUgIArtYZKc
-         dM5g==
-X-Gm-Message-State: ALQs6tAy6d2y9FgKpwiu1lgKgSnt0NQ7PHK01rg5wjofDo9wdGt8C3Ci
-        RWdt08dvvo+AcH3fbUpYFtOaVDk0bpwvAu8msNRQpQ==
-X-Google-Smtp-Source: AIpwx4+Q7RaIUkFfYfhGlJRekPbnADvlbKMQgoeVQw/JnEOVvYu+5+zEJNugBWJv7jNW3Rj2Dy0Ldc9HS4SzGF+r0HE=
-X-Received: by 2002:a25:8e0e:: with SMTP id p14-v6mr2858611ybl.352.1523295894929;
- Mon, 09 Apr 2018 10:44:54 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:organization
+         :message-id:date:user-agent:mime-version:in-reply-to;
+        bh=ZMVvJQxipEUr1YOC8RWDjIkPMeapXBogotjvFdHYhIs=;
+        b=HobiAYXYeMu58R/pzl4E4A/naEqaINWRWCgBPmr06Odqs+AmtKqNW1/X5S23mucqsi
+         a4cvIecHq47QXv3FhXjV1FRHEgapNwuBWuCY1aDvx/SCly0QNyIInWoG0k4fl5hd522q
+         pJ5U4IZe5McMWAnqyehqRLJfrU7ISpCwQIF48K0JGZu46rDMlU1xehCRLu6JKhfc1l4U
+         q0rBBhBVDGC8ah46XO2ab8CMpispr45x5b+YnFmD8VdBqhBKcDDmbkMFkIj6wInkUFdW
+         LAtfjOo3WrL/iZ/A3NrwB3R2Rvs2+MDEPt4tnU3sJZQEyR/9b/IZUbhnQOaUZ5J30wOw
+         T+TA==
+X-Gm-Message-State: ALQs6tCXhry7wfBLWFPo8wJhisAszOo9hqjDlGS8MSGK6sHN6fsP75/7
+        /Y8LmVaZekrOHCCbuTk0/9+C33TGHkA=
+X-Google-Smtp-Source: AIpwx4+/80ht/2CRgQrBv0DSCg9NgIS1nEMVbhWwTI/rH+6Rm/Hn+nD3kYwvW5yaTzJUfa2oJdUYyg==
+X-Received: by 10.107.173.230 with SMTP id m99mr22318037ioo.121.1523296679283;
+        Mon, 09 Apr 2018 10:57:59 -0700 (PDT)
+Received: from [10.137.0.22] ([184.75.214.131])
+        by smtp.gmail.com with ESMTPSA id s128-v6sm690422itb.39.2018.04.09.10.57.58
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 09 Apr 2018 10:57:58 -0700 (PDT)
+Subject: Re: Is offloading to GPU a worthwhile feature?
+To:     Jakub Narebski <jnareb@gmail.com>
+Cc:     git@vger.kernel.org
+References: <efc4af6b-53c9-bd02-65f6-9de517f6868e@linuxfoundation.org>
+ <86k1thdck7.fsf@gmail.com>
+From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Organization: The Linux Foundation
+Message-ID: <57c33d0a-458e-f591-164d-33f8257d3972@linuxfoundation.org>
+Date:   Mon, 9 Apr 2018 13:57:55 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.2
 MIME-Version: 1.0
-Received: by 2002:a25:cf81:0:0:0:0:0 with HTTP; Mon, 9 Apr 2018 10:44:54 -0700 (PDT)
-In-Reply-To: <38962a15-1081-bbdb-b4c4-6b46222b5f64@web.de>
-References: <20180406232136.253950-1-sbeller@google.com> <38962a15-1081-bbdb-b4c4-6b46222b5f64@web.de>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 9 Apr 2018 10:44:54 -0700
-Message-ID: <CAGZ79kZvi9J-V2rYzY=vsf5NMbjambNvZP22cuOfurJZAM3fWw@mail.gmail.com>
-Subject: Re: [RFC PATCH 00/19] object-store refactoring 3 (replace objects,
- main ref store)
-To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git <git@vger.kernel.org>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <86k1thdck7.fsf@gmail.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="VfQTfxtYL7JtZuhnCSsmoJLd6UddnqG7P"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Ren=C3=A9,
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--VfQTfxtYL7JtZuhnCSsmoJLd6UddnqG7P
+Content-Type: multipart/mixed; boundary="88mSN6Slxqow0Z2OXlYu5at7heUqEuA66";
+ protected-headers="v1"
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Jakub Narebski <jnareb@gmail.com>
+Cc: git@vger.kernel.org
+Message-ID: <57c33d0a-458e-f591-164d-33f8257d3972@linuxfoundation.org>
+Subject: Re: Is offloading to GPU a worthwhile feature?
+References: <efc4af6b-53c9-bd02-65f6-9de517f6868e@linuxfoundation.org>
+ <86k1thdck7.fsf@gmail.com>
+In-Reply-To: <86k1thdck7.fsf@gmail.com>
 
-On Fri, Apr 6, 2018 at 9:58 PM, Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
-> Am 07.04.2018 um 01:21 schrieb Stefan Beller:
->> This applies on top of 464416a2eaadf84d2bfdf795007863d03b222b7c
->> (sb/packfiles-in-repository).
->> It is also available at https://github.com/stefanbeller/git/tree/object-=
-store-3
->
-> This series conflicts with 1731a1e239 (replace_object: convert struct
-> replace_object to object_id) and b383a13cc0 (Convert
-> lookup_replace_object to struct object_id), which are in next.
+--88mSN6Slxqow0Z2OXlYu5at7heUqEuA66
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-CA
+Content-Transfer-Encoding: quoted-printable
 
-ok, I'll investigate. Maybe the reroll will be on top of a merge
-of brians series and sb/packfiles-in-repository, both of which go to master
-quickly now that 2.17 is out?
+On 04/08/18 09:59, Jakub Narebski wrote:
+>> This is an entirely idle pondering kind of question, but I wanted to
+>> ask. I recently discovered that some edge providers are starting to
+>> offer systems with GPU cards in them -- primarily for clients that nee=
+d
+>> to provide streaming video content, I guess. As someone who needs to r=
+un
+>> a distributed network of edge nodes for a fairly popular git server, I=
 
->
->> This series will bring the replacement mechanism (git replace)
->> into the object store.
->
-> Good idea.
+>> wondered if git could at all benefit from utilizing a GPU card for
+>> something like delta calculations or compression offload, or if benefi=
+ts
+>> would be negligible.
+>=20
+> The problem is that you need to transfer the data from the main memory
+> (host memory) geared towards low-latency thanks to cache hierarchy, to
+> the GPU memory (device memory) geared towards bandwidth and parallel
+> access, and back again.  So to make sense the time for copying data plu=
+s
+> the time to perform calculations on GPU (and not all kinds of
+> computations can be speed up on GPU -- you need fine-grained massively
+> data-parallel task) must be less than time to perform calculations on
+> CPU (with multi-threading).
 
-heh, thanks. I think this is the smallest unit in which the community is
-willing to digest it. (The largest coherent patch series was the demo of
-"everything in struct repo"[1])
+Would something like this be well-suited for tasks like routine fsck,
+repacking and bitmap generation? That's the kind of workloads I was
+imagining it would be most well-suited for.
 
-[1] https://public-inbox.org/git/20180205235508.216277-1-sbeller@google.com=
-/
+> Also you would need to keep non-GPU and GPGPU code in sync.  Some parts=
 
->
->>   $ git diff 464416a2eaadf84d2bfdf795007863d03b222b7c..HEAD -- object-st=
-ore.h repository.h
->> diff --git a/object-store.h b/object-store.h
->> index fef33f345f..be90c02db6 100644
->> --- a/object-store.h
->> +++ b/object-store.h
->> @@ -93,6 +93,22 @@ struct raw_object_store {
->>          struct alternate_object_database *alt_odb_list;
->>          struct alternate_object_database **alt_odb_tail;
->>
->> +       /*
->> +        * Objects that should be substituted by other objects
->> +        * (see git-replace(1)).
->> +        */
->> +       struct replace_objects {
->> +               /*
->> +                * An array of replacements.  The array is kept sorted b=
-y the original
->> +                * sha1.
->> +                */
->> +               struct replace_object **items;
->> +
->> +               int alloc, nr;
->> +
->> +               unsigned prepared : 1;
->> +       } replacements;
->
-> An oidmap would be a better fit -- lookups should be quicker and
-> memory consumption not much worse.  I meant to submit something like
-> this eventually after Brian's series lands:
->
-> -- >8 --
-> Subject: [PATCH] replace_object: use oidmap
->
-> Load the replace objects into an oidmap to allow for easy lookups in
-> constant time.
->
-> Signed-off-by: Rene Scharfe <l.s.r@web.de>
-> ---
-> This is on top of next.
+> of code do not change much; and there also solutions to generate dual
+> code from one source.
+>=20
+> Still, it might be good idea,
 
-So this is on top of brians series (modulo other next-ish stuff)
-which this series ought to merge with?
+I'm still totally the wrong person to be implementing this, but I do
+have access to Packet.net's edge systems which carry powerful GPUs for
+projects that might be needing these for video streaming services. It
+seems a shame to have them sitting idle if I can offload some of the
+RAM- and CPU-hungry tasks like repacking to be running there.
 
-The patch looks good -- just from the diff stat alone.
-
-Thanks,
-Stefan
+Best,
+--=20
+Konstantin Ryabitsev
+Director, IT Infrastructure Security
+The Linux Foundation
 
 
->
->  replace_object.c | 76 ++++++++++--------------------------------------
->  1 file changed, 16 insertions(+), 60 deletions(-)
->
-> diff --git a/replace_object.c b/replace_object.c
-> index 336357394d..a757a5ebf2 100644
-> --- a/replace_object.c
-> +++ b/replace_object.c
-> @@ -1,54 +1,14 @@
->  #include "cache.h"
-> -#include "sha1-lookup.h"
-> +#include "oidmap.h"
->  #include "refs.h"
->  #include "commit.h"
->
-> -/*
-> - * An array of replacements.  The array is kept sorted by the original
-> - * sha1.
-> - */
-> -static struct replace_object {
-> -       struct object_id original;
-> +struct replace_object {
-> +       struct oidmap_entry original;
->         struct object_id replacement;
-> -} **replace_object;
-> -
-> -static int replace_object_alloc, replace_object_nr;
-> +};
->
-> -static const unsigned char *replace_sha1_access(size_t index, void *tabl=
-e)
-> -{
-> -       struct replace_object **replace =3D table;
-> -       return replace[index]->original.hash;
-> -}
-> -
-> -static int replace_object_pos(const unsigned char *sha1)
-> -{
-> -       return sha1_pos(sha1, replace_object, replace_object_nr,
-> -                       replace_sha1_access);
-> -}
-> -
-> -static int register_replace_object(struct replace_object *replace,
-> -                                  int ignore_dups)
-> -{
-> -       int pos =3D replace_object_pos(replace->original.hash);
-> -
-> -       if (0 <=3D pos) {
-> -               if (ignore_dups)
-> -                       free(replace);
-> -               else {
-> -                       free(replace_object[pos]);
-> -                       replace_object[pos] =3D replace;
-> -               }
-> -               return 1;
-> -       }
-> -       pos =3D -pos - 1;
-> -       ALLOC_GROW(replace_object, replace_object_nr + 1, replace_object_=
-alloc);
-> -       replace_object_nr++;
-> -       if (pos < replace_object_nr)
-> -               MOVE_ARRAY(replace_object + pos + 1, replace_object + pos=
-,
-> -                          replace_object_nr - pos - 1);
-> -       replace_object[pos] =3D replace;
-> -       return 0;
-> -}
-> +static struct oidmap replace_map =3D OIDMAP_INIT;
->
->  static int register_replace_ref(const char *refname,
->                                 const struct object_id *oid,
-> @@ -59,7 +19,7 @@ static int register_replace_ref(const char *refname,
->         const char *hash =3D slash ? slash + 1 : refname;
->         struct replace_object *repl_obj =3D xmalloc(sizeof(*repl_obj));
->
-> -       if (get_oid_hex(hash, &repl_obj->original)) {
-> +       if (get_oid_hex(hash, &repl_obj->original.oid)) {
->                 free(repl_obj);
->                 warning("bad replace ref name: %s", refname);
->                 return 0;
-> @@ -69,7 +29,7 @@ static int register_replace_ref(const char *refname,
->         oidcpy(&repl_obj->replacement, oid);
->
->         /* Register new object */
-> -       if (register_replace_object(repl_obj, 1))
-> +       if (oidmap_put(&replace_map, repl_obj))
->                 die("duplicate replace ref: %s", refname);
->
->         return 0;
-> @@ -84,7 +44,7 @@ static void prepare_replace_object(void)
->
->         for_each_replace_ref(register_replace_ref, NULL);
->         replace_object_prepared =3D 1;
-> -       if (!replace_object_nr)
-> +       if (!replace_map.map.tablesize)
->                 check_replace_refs =3D 0;
->  }
->
-> @@ -100,21 +60,17 @@ static void prepare_replace_object(void)
->   */
->  const struct object_id *do_lookup_replace_object(const struct object_id =
-*oid)
->  {
-> -       int pos, depth =3D MAXREPLACEDEPTH;
-> +       int depth =3D MAXREPLACEDEPTH;
->         const struct object_id *cur =3D oid;
->
->         prepare_replace_object();
->
->         /* Try to recursively replace the object */
-> -       do {
-> -               if (--depth < 0)
-> -                       die("replace depth too high for object %s",
-> -                           oid_to_hex(oid));
-> -
-> -               pos =3D replace_object_pos(cur->hash);
-> -               if (0 <=3D pos)
-> -                       cur =3D &replace_object[pos]->replacement;
-> -       } while (0 <=3D pos);
-> -
-> -       return cur;
-> +       while (depth-- > 0) {
-> +               struct replace_object *repl_obj =3D oidmap_get(&replace_m=
-ap, cur);
-> +               if (!repl_obj)
-> +                       return cur;
-> +               cur =3D &repl_obj->replacement;
-> +       }
-> +       die("replace depth too high for object %s", oid_to_hex(oid));
->  }
-> --
-> 2.17.0
+--88mSN6Slxqow0Z2OXlYu5at7heUqEuA66--
+
+--VfQTfxtYL7JtZuhnCSsmoJLd6UddnqG7P
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEARYIAB0WIQR2vl2yUnHhSB5njDW2xBzjVmSZbAUCWsupowAKCRC2xBzjVmSZ
+bPLzAP9q31T/aRiYWbKcGWKThOVe63KN1yzQ8jFGPDYI1N3e3wEAkRoOuNauiwA9
+vbNw8Ig1JYGxaBvv4qVCh7KLMPaPtAI=
+=h2Yn
+-----END PGP SIGNATURE-----
+
+--VfQTfxtYL7JtZuhnCSsmoJLd6UddnqG7P--
