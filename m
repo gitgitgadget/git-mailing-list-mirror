@@ -2,86 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.5 required=3.0 tests=BAYES_00,FAKE_REPLY_C,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 187001F424
-	for <e@80x24.org>; Mon,  9 Apr 2018 07:29:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8E0B61F424
+	for <e@80x24.org>; Mon,  9 Apr 2018 07:34:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751628AbeDIH3g (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Apr 2018 03:29:36 -0400
-Received: from mout.kundenserver.de ([212.227.17.24]:36261 "EHLO
-        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751455AbeDIH3f (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Apr 2018 03:29:35 -0400
-Received: from arbeitsviech ([141.201.13.56]) by mrelayeu.kundenserver.de
- (mreue104 [212.227.15.183]) with ESMTPSA (Nemesis) id
- 0McWDw-1enuMD2oIi-00HgQ1; Mon, 09 Apr 2018 09:29:29 +0200
-Date:   Mon, 9 Apr 2018 09:29:09 +0200
-From:   Florian =?utf-8?Q?Gamb=C3=B6ck?= <mail@floga.de>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        Szeder =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Subject: Re: [RFC PATCH 1/1] completion: load completion file for external
- subcommand
-Message-ID: <20180409072909.GA30684@arbeitsviech>
-Mail-Followup-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Szeder =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Disposition: inline
-In-Reply-To: <xmqq37059uez.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
-X-Provags-ID: V03:K1:3klpUPbZ4uF88m7L9FBWnyC81bteawPDYXYINojQNjt8P97FzCN
- 1foVTvyIJdegXchKZx0+5Tbb/T3Fnyiw58dSqfJVTP6EYcqp29v2N4aa0j4peQT5GGHEMbN
- kDzo23gABtHCO5jRRPacdKdDYbce3wXndc0z8hcCIvCMER6LHfjgROpFmkmcQ+zZPqUqR4y
- Lrl/pbE+hRWjOqucBlqYA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:vbN/yl+e634=:0adWYRwGSrrReHpJanQ+ud
- 1+c9mxVy+gjTk0622aPouK9GqTmZutxeu40z3FjjBYIZYp2aQV4nPYBocgnFoum4Y7BN5Lnqe
- 4JNvPzva9BIhvFDtFAYxJ56TDrNa9hFfR8ZBb6GnObJtXit2KNmss9ImCdfvSntTpJMe7qEe/
- W0v2OMGjgKJo90oJ++v6pN/WJX6F+plLJjRE6GnFf7w91m/rMaZK8zbhLL2c3Zuupfubcekec
- FQTI60XBmRjzj5K6vmNW4y2KXp872XpB89Y/jy8qLFr1ZxMEXdUVthjVXEvuouNYULcKo54Jz
- 0gbBN3AXtMHLZ50KKKhDfCkR16+1dGmyCjlkmayc3brodeFRKsiKbi0QVpq12xw0sKtDd9rHV
- 3+a8FLL9kongV6ru/au1eUREOlkNtdXue3f5IZ+KKXA/zQ2266evPxhBTCaIHipxopEova35F
- a3MytOHUVabbGHZp4wFC4Z3e6jqUjUJ93ShCqIroHpSC2SzmgInGhadoRYhbKGRvcdjfZqlU0
- zWe3ZSEt47d5uS9zzomorUSOmmpUWWnaVN2L+MpwZu6vDhMYkFBy5oM6k0zBbJDrxZzK6CkuH
- Ap/B8lNq+WVtKnFpW+9qhWKm4Zw6VYmfG0JP8DShXALXD3d2df7Cr+aXZ5G6ipckAtzxuQu6Y
- 3w6JfN+WNCjPfiEBydJ4Al6jJFG2CtuF5u/f96g9bk+hZsGfK+p853kJUqrMDusJxcy/UD+BA
- jeYwAp4XaQhphyxYwl1qrjEyjh0xLY28CHDCGQ==
+        id S1752601AbeDIHeu (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Apr 2018 03:34:50 -0400
+Received: from mail-it0-f68.google.com ([209.85.214.68]:51977 "EHLO
+        mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751792AbeDIHes (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Apr 2018 03:34:48 -0400
+Received: by mail-it0-f68.google.com with SMTP id b5-v6so9672967itj.1
+        for <git@vger.kernel.org>; Mon, 09 Apr 2018 00:34:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:date:message-id;
+        bh=/cKPAjtr9t5XjoO6TWc3iNHCblDNmT69uuvStrikJJM=;
+        b=dszvAiV0iQxGeGT/yjUKvUfmA5cSumsaIR+TJ+2hOewqtM4BQqDPi0/dDfem/HjHli
+         ivzlfaw8/iusva+doF0EPwsquPvd2Zl4/7ez1NbxkZLg0+mLTHCwecVs8oQBO3TvOnVS
+         OUYMTd2ZGHcWx+hoQF4kqsZU0fXDiXp9HobTClwq8d/7iw1fnh0mDnSEYsR2BXNs9kZQ
+         ahU8YXK61N4B5D7QmVKEGrjJfY5Trke67wNhYxVDlXpsqIPY1MCXgjoKALFFc3+c7pYN
+         xxJc3EcTVEtUVg3cGTUH2FsM7grJ7RYgQxhzH3yCY8t6xjakzfML0uHXK4FYHyl8CwEJ
+         HrTA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id;
+        bh=/cKPAjtr9t5XjoO6TWc3iNHCblDNmT69uuvStrikJJM=;
+        b=igRDhf1rL7+Ky7/kWKhaSnznAc2qjU8P0kLoIf87I1u+mxn+achn3WJCgAQ5P0UuLB
+         ETAwvjK35MevyRNZJR9715HW7/SWCOR/sl2aYfVwtkWhRFY1UFvIo6eD3Uiv85UlOd3Y
+         HzmSfbUjRuS3OXqiNcF+wGSP8dFVFKStNGdI1nIWV9tIs03tlMAdtYVFMvt4kSTExQbm
+         lJqS6CrzhcvfleF8L9FhurZHC3ZIbOHPJki8QZ1MKm0wWLj01ZFnH1W2uQmSq55Gw4ZR
+         Oa2QOiO4KW6d6lw3kxRdiOe4JLJO86HeSuiobPfXx1cAO6HCvHptURYxNi8P556kWxtD
+         F58Q==
+X-Gm-Message-State: ALQs6tA7ja50H44dE/igTHaSuAUgu/mlr5LdyNwhcmGNdO82cLAd/jWC
+        SfZAoRMKjPdnQsDQ0RmQv6aMQA==
+X-Google-Smtp-Source: AIpwx4+RFi0IsVIlBNxk4KzK+4bN1n5NkQBbQeti/n4RwMjwNTtfo5/ZFCFSxe5S9VYvTI5KwVgtAw==
+X-Received: by 2002:a24:6f4f:: with SMTP id x76-v6mr27548383itb.77.1523259287768;
+        Mon, 09 Apr 2018 00:34:47 -0700 (PDT)
+Received: from localhost.localdomain (user-12l2cs3.cable.mindspring.com. [69.81.51.131])
+        by smtp.gmail.com with ESMTPSA id a24sm9113485ioc.42.2018.04.09.00.34.46
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Mon, 09 Apr 2018 00:34:47 -0700 (PDT)
+From:   Eric Sunshine <sunshine@sunshineco.com>
+To:     git@vger.kernel.org
+Cc:     Duy Nguyen <pclouds@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH 1/2] git-worktree.txt: recommend 'git worktree remove' over manual deletion
+Date:   Mon,  9 Apr 2018 03:33:59 -0400
+Message-Id: <20180409073400.19415-1-sunshine@sunshineco.com>
+X-Mailer: git-send-email 2.17.0.484.g0c8726318c
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2018-04-09 07:59, Junio C Hamano wrote:
-> >  	local completion_func="_git_${command//-/_}"
-> > +	if ! declare -f $completion_func >/dev/null 2>/dev/null; then
-> > +		declare -f __load_completion >/dev/null 2>/dev/null &&
-> > +			__load_completion "git-$command"
-> 
-> wouldn't the above be easier to read if it were
-> 
-> 	if ! declare ... $completion_func ... && declare -f __load_completion
-> 	then
-> 		__load_completion "git-$command"
-> 	fi
-> 
-> or is there a reason why it is better to &&-chain the check for
-> __load_completion with its use?  Same comment applies to the other
-> hunk.
+When cc73385cf6 (worktree remove: new command, 2018-02-12) implemented
+and documented 'git worktree remove', it forgot to update existing
+instructions suggesting manual deletion. Fix this oversight by
+recommending 'git worktree remove' instead.
 
-Good point. I could go even further and ditch the if-construct:
+Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+---
+ Documentation/git-worktree.txt | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-    ! declare -f $completion_func && declare -f __load_completion &&
-        __load_completion "git-$command"
-
-I originally intended to do a if-else-construct, which I re-thought
-halfway through. I will change that in the next iteration.
-
-Thank you!
-
+diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
+index e7eb24ab85..bc9cd8b60f 100644
+--- a/Documentation/git-worktree.txt
++++ b/Documentation/git-worktree.txt
+@@ -27,11 +27,12 @@ out more than one branch at a time.  With `git worktree add` a new working
+ tree is associated with the repository.  This new working tree is called a
+ "linked working tree" as opposed to the "main working tree" prepared by "git
+ init" or "git clone".  A repository has one main working tree (if it's not a
+-bare repository) and zero or more linked working trees.
++bare repository) and zero or more linked working trees. When you are done
++with a linked working tree, remove it with `git worktree remove`.
+ 
+-When you are done with a linked working tree you can simply delete it.
+-The working tree's administrative files in the repository (see
+-"DETAILS" below) will eventually be removed automatically (see
++If a working tree is deleted without using `git worktree remove`, then
++its associated administrative files, which reside in the repository
++(see "DETAILS" below), will eventually be removed automatically (see
+ `gc.worktreePruneExpire` in linkgit:git-config[1]), or you can run
+ `git worktree prune` in the main or any linked working tree to
+ clean up any stale administrative files.
+@@ -106,7 +107,7 @@ OPTIONS
+ 	By default, `add` refuses to create a new working tree when
+ 	`<commit-ish>` is a branch name and is already checked out by
+ 	another working tree and `remove` refuses to remove an unclean
+-	working tree. This option overrides that safeguard.
++	working tree. This option overrides these safeguards.
+ 
+ -b <new-branch>::
+ -B <new-branch>::
+@@ -278,8 +279,7 @@ $ pushd ../temp
+ # ... hack hack hack ...
+ $ git commit -a -m 'emergency fix for boss'
+ $ popd
+-$ rm -rf ../temp
+-$ git worktree prune
++$ git worktree remove ../temp
+ ------------
+ 
+ BUGS
 -- 
-Regards
+2.17.0.484.g0c8726318c
 
-Florian
