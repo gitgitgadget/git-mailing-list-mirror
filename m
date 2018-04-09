@@ -7,28 +7,28 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_HIGH shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AF6901F404
-	for <e@80x24.org>; Mon,  9 Apr 2018 16:42:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2264F1F404
+	for <e@80x24.org>; Mon,  9 Apr 2018 16:43:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753469AbeDIQmS (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Apr 2018 12:42:18 -0400
-Received: from mail-sn1nam02on0129.outbound.protection.outlook.com ([104.47.36.129]:18944
+        id S1753242AbeDIQm6 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Apr 2018 12:42:58 -0400
+Received: from mail-sn1nam02on0137.outbound.protection.outlook.com ([104.47.36.137]:14508
         "EHLO NAM02-SN1-obe.outbound.protection.outlook.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1753394AbeDIQmO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Apr 2018 12:42:14 -0400
+        id S1753413AbeDIQmN (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Apr 2018 12:42:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=selector1; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
- bh=QiTACQ5t2ZHKcjNvBpzWvLHXslZ/mkzJgBTq0Gb1zq4=;
- b=CNy+UzU/Z6SrDHvB1oDD3vBmZWz9+w+UfxAyr+IrJCojU2+QgKJAe8++N79Lzb5GsFbvHOgkvxhuEySz1bLV0f8A4vTi1Uorx5KcyPzkXuiSW5N8MO2n7RWI4PgxvdVcHD8vRfqywwjbhh+xFJWUDkXive1oK5o5jgDDhYrs58w=
+ bh=JsaZ9RAGh/6/Qwkb3HJlF9ofcaOlHRmqYsi/3j5nBUA=;
+ b=JohW4+aiqGcIcFt3dJghWeil/+BFj+aYNhMxUlNUPn3HUnfDXhlu6UoDA6t1PSftLlvrHtVzD3fIeb921v7SRZFf1jcEs8Xf7jZKmVn55MuJSPQDMwpKWPSBQPgomU06cIW3i+3ec1JyNXxLJWYiL1TcaMzt19/fy3UMHo5JDF4=
 Received: from BL0PR2101MB1011.namprd21.prod.outlook.com (52.132.24.10) by
  BL0PR2101MB0962.namprd21.prod.outlook.com (52.132.20.155) with Microsoft SMTP
  Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.696.0; Mon, 9 Apr 2018 16:42:12 +0000
+ 15.20.696.0; Mon, 9 Apr 2018 16:42:11 +0000
 Received: from BL0PR2101MB1011.namprd21.prod.outlook.com
  ([fe80::c8cd:6461:8337:8ad1]) by BL0PR2101MB1011.namprd21.prod.outlook.com
  ([fe80::c8cd:6461:8337:8ad1%2]) with mapi id 15.20.0696.003; Mon, 9 Apr 2018
- 16:42:12 +0000
+ 16:42:11 +0000
 From:   Derrick Stolee <dstolee@microsoft.com>
 To:     "git@vger.kernel.org" <git@vger.kernel.org>
 CC:     "peff@peff.net" <peff@peff.net>,
@@ -37,12 +37,12 @@ CC:     "peff@peff.net" <peff@peff.net>,
         "larsxschneider@gmail.com" <larsxschneider@gmail.com>,
         "bmwill@google.com" <bmwill@google.com>,
         Derrick Stolee <dstolee@microsoft.com>
-Subject: [PATCH v2 10/10] commit: add short-circuit to paint_down_to_common()
-Thread-Topic: [PATCH v2 10/10] commit: add short-circuit to
- paint_down_to_common()
-Thread-Index: AQHT0CG1lcEaUyDstEeQI4o9ChewGA==
-Date:   Mon, 9 Apr 2018 16:42:12 +0000
-Message-ID: <20180409164131.37312-11-dstolee@microsoft.com>
+Subject: [PATCH v2 09/10] commit: use generation numbers for in_merge_bases()
+Thread-Topic: [PATCH v2 09/10] commit: use generation numbers for
+ in_merge_bases()
+Thread-Index: AQHT0CG0xyCI3K1YRECsBvwT+Z80Cw==
+Date:   Mon, 9 Apr 2018 16:42:10 +0000
+Message-ID: <20180409164131.37312-10-dstolee@microsoft.com>
 References: <20180403165143.80661-1-dstolee@microsoft.com>
  <20180409164131.37312-1-dstolee@microsoft.com>
 In-Reply-To: <20180409164131.37312-1-dstolee@microsoft.com>
@@ -56,29 +56,29 @@ x-clientproxiedby: CY4PR13CA0029.namprd13.prod.outlook.com
 x-ms-exchange-messagesentrepresentingtype: 1
 x-originating-ip: [2001:4898:8010:0:eb4a:5dff:fe0f:730f]
 x-ms-publictraffictype: Email
-x-microsoft-exchange-diagnostics: 1;BL0PR2101MB0962;7:nz9iFvFiue1T2R56eS9K4PvBZ87HjrzfiuQd2vQG38EzUcPGflpj10a4dkb30HykhoUH/iVWBo2u7eEenPnbwSWXL6uFdOgEf9uKjsWaKj7xXM+THu4Sq/JJzyLM5Dv07NxNy4Zdde38cL7HXLP+FAMXKbINv79wz5KGjyPsUPMqDG8KUxO5bTkrtxoa067mHH8Na7fjQB23OeRmVGeYNU2+A2nPr3LVKh7Hg1YMNIJMZTd6YjTi57b0X5nEMVuM;20:T9A7MTyPyPVQEOJjnfiLBlQLM1Ig0eRHrzZklzRW15VSm757wXETUjquJZZTQKJqHT7+G4NMasIHnwzrJlPKtfetVmKYV0KD2bjskvOc4yTTspWXAGwqfVsGyMe+JpPvDttyJayl/g8vL3HfIBxVerZ3Mcnu6TW/7uUVqaP+htA=
-X-MS-Office365-Filtering-Correlation-Id: b5711100-d5e6-4494-7930-08d59e38d817
+x-microsoft-exchange-diagnostics: 1;BL0PR2101MB0962;7:MtiAot8mmAaEEZBDlz8B0FsWH91ql3pbzSWEx0JwZhDCo0s6+laqXsEzCskE/cp88hsxasg38XCM64nz4jwVH5lD/2B1aMtqVsPl9T7XEGtDjRV07hXws/cSLmpARUWLx6/sb5Z4dMUfZTxyiwkrHRQOh+ug69f5TNmIJ5Ll+GVJWnRpll+fHTJ8zTdLjyeo6F5jVE4ONYYyhJ53GHbVB4QcV7rrFQpeJ4US+t6+9PIeHrXgky38xiwI4UXg4tHM;20:nRXZazBMEmdw5DXDryNmxbIsaMJ/jB+P4Q0YE+aaEVM+RUcGOpCsD/MzwGed44vHeufdDH12jYdt4BgP54p76+P906NTD4mA5JypjKRc9rAojHuuCD1j+llovMylqVZt9VD6+5g0S3I+8W/7lq1kAILpHlsp1evtEQYLDXunpJA=
+X-MS-Office365-Filtering-Correlation-Id: 9b1d008d-ebbd-42f3-5d9c-08d59e38d712
 x-ms-office365-filtering-ht: Tenant
 x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(7020095)(4652020)(4534165)(4627221)(201703031133081)(201702281549075)(5600026)(4604075)(3008032)(48565401081)(2017052603328)(7193020);SRVR:BL0PR2101MB0962;
 x-ms-traffictypediagnostic: BL0PR2101MB0962:
 authentication-results: spf=none (sender IP is )
  smtp.mailfrom=dstolee@microsoft.com; 
-x-microsoft-antispam-prvs: <BL0PR2101MB0962E80F5E381B378E5BF570A1BF0@BL0PR2101MB0962.namprd21.prod.outlook.com>
+x-microsoft-antispam-prvs: <BL0PR2101MB0962EBBE87029FA8470C151EA1BF0@BL0PR2101MB0962.namprd21.prod.outlook.com>
 x-exchange-antispam-report-test: UriScan:(28532068793085)(89211679590171);
 x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(8211001083)(61425038)(6040522)(2401047)(5005006)(8121501046)(3231221)(944501327)(52105095)(10201501046)(93006095)(93001095)(3002001)(6055026)(61426038)(61427038)(6041310)(20161123560045)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(20161123562045)(20161123558120)(20161123564045)(6072148)(201708071742011);SRVR:BL0PR2101MB0962;BCL:0;PCL:0;RULEID:;SRVR:BL0PR2101MB0962;
 x-forefront-prvs: 0637FCE711
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(396003)(376002)(39860400002)(39380400002)(366004)(346002)(199004)(189003)(107886003)(105586002)(76176011)(14454004)(2906002)(316002)(68736007)(97736004)(8676002)(46003)(86612001)(3280700002)(39060400002)(386003)(6506007)(1730700003)(5640700003)(6116002)(3660700001)(102836004)(8936002)(25786009)(36756003)(54906003)(22452003)(4326008)(10090500001)(81156014)(81166006)(186003)(486006)(5660300001)(6916009)(5250100002)(2501003)(99286004)(1076002)(6512007)(2900100001)(53936002)(6436002)(305945005)(7736002)(106356001)(86362001)(2351001)(478600001)(476003)(52116002)(446003)(6486002)(11346002)(2616005)(10290500003)(22906009);DIR:OUT;SFP:1102;SCL:1;SRVR:BL0PR2101MB0962;H:BL0PR2101MB1011.namprd21.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(396003)(376002)(39860400002)(39380400002)(366004)(346002)(199004)(189003)(107886003)(59450400001)(105586002)(76176011)(14454004)(2906002)(316002)(68736007)(97736004)(8676002)(46003)(86612001)(3280700002)(39060400002)(386003)(6506007)(1730700003)(5640700003)(6116002)(3660700001)(102836004)(8936002)(25786009)(36756003)(54906003)(22452003)(4326008)(10090500001)(81156014)(81166006)(186003)(486006)(5660300001)(6916009)(5250100002)(2501003)(99286004)(1076002)(6512007)(2900100001)(53936002)(6436002)(305945005)(7736002)(106356001)(86362001)(2351001)(478600001)(476003)(52116002)(446003)(6486002)(11346002)(2616005)(10290500003)(22906009);DIR:OUT;SFP:1102;SCL:1;SRVR:BL0PR2101MB0962;H:BL0PR2101MB1011.namprd21.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
 received-spf: None (protection.outlook.com: microsoft.com does not designate
  permitted sender hosts)
-x-microsoft-antispam-message-info: VCp2GVcMYA9uBjIanc6OzAvKMj/6dvtxk1bpPEqSobIk7Rnyu7K1UBMFG0oB64Kb7Q9n1vr0/BtZNz8z5wGdUWmk8Ra5yMKB3thswCcnBdWtGgyA3l/s6qlDPQ6Aluy8Qa0BZRvOE3OrrodPtwAbaoWcPUfYn/tl6GGb48MQ8q26zvhvecuf5AyZbti2BrAclanMfz4ldXMT56WQgcJj9vxOpfmb+zSlzHeRUsl0NAyP623aV3kaxilJ9D0K/MXolsytyqtO8pB4pgjC3RMEDCLeXivzuU1M0oTSqonfEu7iIQvNMNcniMNRf35pBBwtx53YFAxMPKSGRky/AgFPLrfXx+6cBYdbjggLcDUNLvqm3nlKA4YUhd2CrWszZKlFurnEFn7l6HcZoB5xfbOjWnUIDe0EW/o/aPbR8J0GOTQ=
+x-microsoft-antispam-message-info: LuoehaEYpPbyDXHF3kZsR8m7pCYALdnxhMvc/hJaZj5NoHDKSXyRYt9KiVphh2xEpyO6qx941GI3zGLPQGnLbdqw+3gr9j8g/m3M2FMJb9RFfUDxK2r3jUIQL8zm6TvJHmtxO9rxA84f9Fgxl661W4RE2p7TVTElZhbhIVfN34l5tvNF+8+zTLocLSWm4/Nz21UEh+GjQ3Pbr/wJy2xFaAamMQnUKbCCiJhwmAXdmkZBozxEvYWEkTY+FkcL//Nx4GQyPotzB/fhu8oFyfEj9dSa23+RT97crlQy4Kr4NJlBDbD6KuD8ClpeT+ZEMCwaY40zzPrMukuPjolQ9lSGanAn21F6RMde+o3y2G7x+tTIq7cJ6fLN9YpVXnn3tbU1yvfIMuPNdRfAJ6MJ57ECmqc4SRSXnkWHAuXOWE45T2A=
 spamdiagnosticoutput: 1:99
 spamdiagnosticmetadata: NSPM
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
 X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b5711100-d5e6-4494-7930-08d59e38d817
-X-MS-Exchange-CrossTenant-originalarrivaltime: 09 Apr 2018 16:42:12.7039
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9b1d008d-ebbd-42f3-5d9c-08d59e38d712
+X-MS-Exchange-CrossTenant-originalarrivaltime: 09 Apr 2018 16:42:10.9927
  (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
@@ -88,92 +88,55 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When running 'git branch --contains', the in_merge_bases_many()
-method calls paint_down_to_common() to discover if a specific
-commit is reachable from a set of branches. Commits with lower
-generation number are not needed to correctly answer the
-containment query of in_merge_bases_many().
+The containment algorithm for 'git branch --contains' is different
+from that for 'git tag --contains' in that it uses is_descendant_of()
+instead of contains_tag_algo(). The expensive portion of the branch
+algorithm is computing merge bases.
 
-Add a new parameter, min_generation, to paint_down_to_common() that
-prevents walking commits with generation number strictly less than
-min_generation. If 0 is given, then there is no functional change.
+When a commit-graph file exists with generation numbers computed,
+we can avoid this merge-base calculation when the target commit has
+a larger generation number than the target commits.
 
-For in_merge_bases_many(), we can pass commit->generation as the
-cutoff, and this saves time during 'git branch --contains' queries
-that would otherwise walk "around" the commit we are inspecting.
+Performance tests were run on a copy of the Linux repository where
+HEAD is contained in v4.13 but no earlier tag. Also, all tags were
+copied to branches and 'git branch --contains' was tested:
 
-For a copy of the Linux repository, where HEAD is checked out at
-v4.13~100, we get the following performance improvement for
-'git branch --contains' over the previous commit:
+Before: 60.0s
+After:   0.4s
+Rel %: -99.3%
 
-Before: 0.21s
-After:  0.13s
-Rel %: -38%
-
+Reported-by: Jeff King <peff@peff.net>
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- commit.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ commit.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
 diff --git a/commit.c b/commit.c
-index 0b155dece8..7348075e38 100644
+index 00bdc2ab21..0b155dece8 100644
 --- a/commit.c
 +++ b/commit.c
-@@ -796,7 +796,9 @@ static int queue_has_nonstale(struct prio_queue *queue,=
- uint32_t min_gen)
- }
-=20
- /* all input commits in one and twos[] must have been parsed! */
--static struct commit_list *paint_down_to_common(struct commit *one, int n,=
- struct commit **twos)
-+static struct commit_list *paint_down_to_common(struct commit *one, int n,
-+						struct commit **twos,
-+						int min_generation)
+@@ -1059,12 +1059,19 @@ int in_merge_bases_many(struct commit *commit, int =
+nr_reference, struct commit *
  {
- 	struct prio_queue queue =3D { compare_commits_by_gen_then_commit_date };
- 	struct commit_list *result =3D NULL;
-@@ -830,6 +832,9 @@ static struct commit_list *paint_down_to_common(struct =
-commit *one, int n, struc
+ 	struct commit_list *bases;
+ 	int ret =3D 0, i;
++	uint32_t min_generation =3D GENERATION_NUMBER_INFINITY;
 =20
- 		last_gen =3D commit->generation;
-=20
-+		if (commit->generation < min_generation)
-+			break;
+ 	if (parse_commit(commit))
+ 		return ret;
+-	for (i =3D 0; i < nr_reference; i++)
++	for (i =3D 0; i < nr_reference; i++) {
+ 		if (parse_commit(reference[i]))
+ 			return ret;
++		if (min_generation > reference[i]->generation)
++			min_generation =3D reference[i]->generation;
++	}
 +
- 		flags =3D commit->object.flags & (PARENT1 | PARENT2 | STALE);
- 		if (flags =3D=3D (PARENT1 | PARENT2)) {
- 			if (!(commit->object.flags & RESULT)) {
-@@ -882,7 +887,7 @@ static struct commit_list *merge_bases_many(struct comm=
-it *one, int n, struct co
- 			return NULL;
- 	}
++	if (commit->generation > min_generation)
++		return 0;
 =20
--	list =3D paint_down_to_common(one, n, twos);
-+	list =3D paint_down_to_common(one, n, twos, 0);
-=20
- 	while (list) {
- 		struct commit *commit =3D pop_commit(&list);
-@@ -949,7 +954,7 @@ static int remove_redundant(struct commit **array, int =
-cnt)
- 			filled_index[filled] =3D j;
- 			work[filled++] =3D array[j];
- 		}
--		common =3D paint_down_to_common(array[i], filled, work);
-+		common =3D paint_down_to_common(array[i], filled, work, 0);
- 		if (array[i]->object.flags & PARENT2)
- 			redundant[i] =3D 1;
- 		for (j =3D 0; j < filled; j++)
-@@ -1073,7 +1078,7 @@ int in_merge_bases_many(struct commit *commit, int nr=
-_reference, struct commit *
- 	if (commit->generation > min_generation)
- 		return 0;
-=20
--	bases =3D paint_down_to_common(commit, nr_reference, reference);
-+	bases =3D paint_down_to_common(commit, nr_reference, reference, commit->g=
-eneration);
+ 	bases =3D paint_down_to_common(commit, nr_reference, reference);
  	if (commit->object.flags & PARENT2)
- 		ret =3D 1;
- 	clear_commit_marks(commit, all_flags);
 --=20
 2.17.0
 
