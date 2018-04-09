@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DD0221F404
-	for <e@80x24.org>; Mon,  9 Apr 2018 22:46:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 958F21F404
+	for <e@80x24.org>; Mon,  9 Apr 2018 22:46:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752182AbeDIWqD (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Apr 2018 18:46:03 -0400
-Received: from mail-pl0-f68.google.com ([209.85.160.68]:45976 "EHLO
-        mail-pl0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751875AbeDIWpv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Apr 2018 18:45:51 -0400
-Received: by mail-pl0-f68.google.com with SMTP id e22-v6so4332552plj.12
-        for <git@vger.kernel.org>; Mon, 09 Apr 2018 15:45:51 -0700 (PDT)
+        id S1752188AbeDIWqG (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Apr 2018 18:46:06 -0400
+Received: from mail-pl0-f66.google.com ([209.85.160.66]:33673 "EHLO
+        mail-pl0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752128AbeDIWp6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Apr 2018 18:45:58 -0400
+Received: by mail-pl0-f66.google.com with SMTP id s10-v6so6099001plp.0
+        for <git@vger.kernel.org>; Mon, 09 Apr 2018 15:45:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=iHSAwNXBOtbJVeO54kob9OLLObKZUyl1A4tWgSnixbc=;
-        b=fYcvPZdcosgVj2Rqejw0rglfBiqidjCuIBztqJ531R9jDiBtUuehbgkLp8hnsDYuZF
-         dkm4ie2bQ3GH+AI7+c9aaM6mKa8Qjdp9glkemsGQUMeOywOebeO4buuSQcuQkadLquHy
-         djY3QgBzj3SVdtQbUbO2LhBZRViuZySczGP9kSsI+JblibSdrKPuwqu82cXlJtITAkX/
-         M0eJlmolgjE9WsDpiviMB0SI6PMBXsiw5Z3dn3KVCsxKEyYT+3b26d6wu9RwsqZjMs9k
-         4FCB2qaD5K9hyamxlSTy0w8GU1GEqBMPRmfofb2tO1XvR1MImTkG0KyujOQ+FimyvORv
-         keXA==
+        bh=/XaWemEru83qjlrY+6fWNVcWNPA0N9HaQ1XZdJxM8Nc=;
+        b=d2G/4bOqTf0Qam3vkGhdqfTOGI1++Gejc6mQbSwoeEszX9FltacEXBnyrOvQOuUg07
+         WsO/+VrJ2goBHQ1tMBBV9zWcFrlFIj/QeGZkwrhprAGLfDXhj9JHTUAQQAESzN3ZQWLD
+         iWk2SR5rRDFvRPBuWfVJb66kCnlmNFJgSLz+ILtFZxKabqQ8F5/qdMU8SKkCaFtGlkmP
+         x+w/qIhd3wwweJ9M0/sgxbn6GYfKnKyeZGsPWpUVATPZyVrrfW1ticjke7E0z2guhatb
+         vwVaYttLzgv3yHen/QW4BP/pUOd/s/HV6rgFQvyAaTin3DEaPdMX4eVx2b9BBPRLm6ln
+         pMtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=iHSAwNXBOtbJVeO54kob9OLLObKZUyl1A4tWgSnixbc=;
-        b=i5Lr5curB5vn+yio1tySLrJpoDFcJYozHXQZ2ldKjyw9cVqLqODj/aRjwy4NJAdZGi
-         daXUU6Y+005jlvRZWbF8+hnR3n9/fq8tnR6zV3rHuJRxm6lRc6aJ6eQvcyq2erRM7G0H
-         eUqKYhXWzH9iX2YA7yS4P7NlVOq3Iw/G4VgIYNGe0KaDFlSXucSn1fgJV9gdDM+IfPoq
-         rB4U/2EVO9YbUExBbKXzjYpxtkdQ1IjvrsU0O39sL83Vdc+3Eqq3XpQSZhWZeJZP6uTa
-         flTMnd6PKAcVDThpxH+tNm6cma2zhGt7kZmEAzCAxxtVgPSP4JRnM8vY+ZHkWJ4Z3r2a
-         RtQg==
-X-Gm-Message-State: ALQs6tAZx4a1ctHvMaQcXciwHchZ8Hr9yiNsWRFQuh7gCvQCEEss+NoW
-        V+7azSYFi5qjXNeTR6MHvO0cNw==
-X-Google-Smtp-Source: AIpwx4+cERq/ToEtzFNTuJFeFDuQiPHQcWo2r5cxy8La+2oMoveQskbTT8WA/KAJTKTvkln9mUelqw==
-X-Received: by 2002:a17:902:714e:: with SMTP id u14-v6mr10720682plm.356.1523313950807;
-        Mon, 09 Apr 2018 15:45:50 -0700 (PDT)
+        bh=/XaWemEru83qjlrY+6fWNVcWNPA0N9HaQ1XZdJxM8Nc=;
+        b=pm6mW0mTUPsRDLkVdM/lvbRPRNoy/0hXpjLGQOxJAq5mm6ywWQf2WF2CMW6Ur/Ziql
+         uTPLc+dXT1lhKd415iuNIn56yUEFXrThaCicRsMw0mEeUzG2u0eZ9XO6hA/1GuiSKFFo
+         m8q7IOa+DLWMmfVPL3/8yMjK0yA2UD315Lu6bEPB3Wlw6x2i91GKTZEG/nl12TIOHGW8
+         c8FyHlAmjdOoSSrdO3WFbswOGc0aVkTkoz+ODFABVg7ddpOxz7BP0IcYq/OskHjQ0u20
+         TlSMBUP4ZgkF55gZiRLfwyyi1Mv/N771AtfX4OnUh67P5xp4rIsUy3YVdJKn/kOftqbP
+         w/bA==
+X-Gm-Message-State: AElRT7GfhfXpln/ZKF61buEithpccPeeRfEExBS0Axc3fQW66lyDF2jO
+        QbQP6IIiBsGjPhlsPkNK0krxewwrALc=
+X-Google-Smtp-Source: AIpwx49XjNAY3CPc/pxW8nm9juOKFgm4PLXOcaOJ+wc4/QUMMGXPGCvUUcHEY2UOxTydNYFDDWbA9g==
+X-Received: by 2002:a17:902:2c83:: with SMTP id n3-v6mr38648462plb.140.1523313957277;
+        Mon, 09 Apr 2018 15:45:57 -0700 (PDT)
 Received: from localhost ([2620:0:100e:422:ea58:fa52:fa77:9b41])
-        by smtp.gmail.com with ESMTPSA id e190sm2468978pfe.171.2018.04.09.15.45.49
+        by smtp.gmail.com with ESMTPSA id f19sm1728855pgv.39.2018.04.09.15.45.55
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 09 Apr 2018 15:45:50 -0700 (PDT)
+        Mon, 09 Apr 2018 15:45:55 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     sbeller@google.com
 Cc:     git@vger.kernel.org, jonathantanmy@google.com,
         sunshine@sunshineco.com, pclouds@gmail.com, l.s.r@web.de,
-        sandals@crustytoothpaste.net, Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 09/16] replace-object: add repository argument to prepare_replace_object
-Date:   Mon,  9 Apr 2018 15:45:26 -0700
-Message-Id: <20180409224533.17764-10-sbeller@google.com>
+        sandals@crustytoothpaste.net
+Subject: [PATCH 13/16] refs: allow for_each_replace_ref to handle arbitrary repositories
+Date:   Mon,  9 Apr 2018 15:45:30 -0700
+Message-Id: <20180409224533.17764-14-sbeller@google.com>
 X-Mailer: git-send-email 2.17.0.484.g0c8726318c-goog
 In-Reply-To: <20180409224533.17764-1-sbeller@google.com>
 References: <20180406232136.253950-1-sbeller@google.com>
@@ -65,44 +65,43 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a repository argument to allow the prepare_replace_object caller
-to be more specific about which repository to handle. This is a small
-mechanical change; it doesn't change the implementation to handle
-repositories other than the_repository yet.
-
-As with the previous commits, use a macro to catch callers passing a
-repository other than the_repository at compile time.
-
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- replace-object.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ refs.c | 4 ++--
+ refs.h | 4 +---
+ 2 files changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/replace-object.c b/replace-object.c
-index 16a95ea416..567d9da708 100644
---- a/replace-object.c
-+++ b/replace-object.c
-@@ -31,7 +31,9 @@ static int register_replace_ref(const char *refname,
- 	return 0;
+diff --git a/refs.c b/refs.c
+index b5be754a97..bed5f88405 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1415,9 +1415,9 @@ int refs_for_each_fullref_in(struct ref_store *refs, const char *prefix,
+ 	return do_for_each_ref(refs, prefix, fn, 0, flag, cb_data);
  }
  
--static void prepare_replace_object(void)
-+#define prepare_replace_object(r) \
-+	prepare_replace_object_##r()
-+static void prepare_replace_object_the_repository(void)
+-int for_each_replace_ref_the_repository(each_ref_fn fn, void *cb_data)
++int for_each_replace_ref(struct repository *r, each_ref_fn fn, void *cb_data)
  {
- 	if (the_repository->objects->replace_map)
- 		return;
-@@ -58,7 +60,7 @@ const struct object_id *do_lookup_replace_object(const struct object_id *oid)
- 	int depth = MAXREPLACEDEPTH;
- 	const struct object_id *cur = oid;
- 
--	prepare_replace_object();
-+	prepare_replace_object(the_repository);
- 
- 	/* Try to recursively replace the object */
- 	while (depth-- > 0) {
+-	return do_for_each_ref(get_main_ref_store(the_repository),
++	return do_for_each_ref(get_main_ref_store(r),
+ 			       git_replace_ref_base, fn,
+ 			       strlen(git_replace_ref_base),
+ 			       DO_FOR_EACH_INCLUDE_BROKEN, cb_data);
+diff --git a/refs.h b/refs.h
+index f5ab68c0ed..15f3a91cc4 100644
+--- a/refs.h
++++ b/refs.h
+@@ -300,9 +300,7 @@ int for_each_fullref_in(const char *prefix, each_ref_fn fn, void *cb_data,
+ int for_each_tag_ref(each_ref_fn fn, void *cb_data);
+ int for_each_branch_ref(each_ref_fn fn, void *cb_data);
+ int for_each_remote_ref(each_ref_fn fn, void *cb_data);
+-#define for_each_replace_ref(r, fn, cb) \
+-	for_each_replace_ref_##r(fn, cb)
+-int for_each_replace_ref_the_repository(each_ref_fn fn, void *cb_data);
++int for_each_replace_ref(struct repository *r, each_ref_fn fn, void *cb_data);
+ int for_each_glob_ref(each_ref_fn fn, const char *pattern, void *cb_data);
+ int for_each_glob_ref_in(each_ref_fn fn, const char *pattern,
+ 			 const char *prefix, void *cb_data);
 -- 
 2.17.0.484.g0c8726318c-goog
 
