@@ -2,75 +2,146 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 380491F404
-	for <e@80x24.org>; Mon,  9 Apr 2018 18:51:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 931761F404
+	for <e@80x24.org>; Mon,  9 Apr 2018 18:52:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753083AbeDISvv (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Apr 2018 14:51:51 -0400
-Received: from mail-yw0-f175.google.com ([209.85.161.175]:38152 "EHLO
-        mail-yw0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751610AbeDISvu (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Apr 2018 14:51:50 -0400
-Received: by mail-yw0-f175.google.com with SMTP id x20so3153744ywg.5
-        for <git@vger.kernel.org>; Mon, 09 Apr 2018 11:51:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=lk0nECXHyUebHKLg73pRtWz3dsENl1daNlMB14wlLiI=;
-        b=JQUK6JG6xY8qicbP7v/8REeSXN7+pNNgjsg2SJJWSR5Z3+j6RQxV2On+mMJ8d0QhFU
-         zbW1JPZbi90rBVnIavI1NxaAnJhvUVOr/XOtTIuBZg/Hl3XZfi7Ql9vx81QdMDfrlpoq
-         u9FXHNL4ebMuYcOKWEl1P35lEfDk7tyIdZQX2eP54QYU8rou8ILq3M6UP5MBxZzMWY25
-         l1sbl9Fpb3P4x3W7Yb2ZL7N/RxiT11E3uU3NtNTF4RIjS5dcWSMkI3YP4DADRpdcKoVR
-         NuWRqsVkYPUdYOZYz6QQF0jvTAnOoIXcevow6i3p+BJAp01nmpst5EBMwOQaJ6WF452x
-         XkoQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=lk0nECXHyUebHKLg73pRtWz3dsENl1daNlMB14wlLiI=;
-        b=XQZeahy+QGAXTT896sAYaRIah0Bvr7iZP90iiRd2x1V32kSnHjWziq75oy5keHW76d
-         PgpEJME6r5QF2dlhoqeKWm5aK98HNnvGzQ2UaK9P4985na/BpGBkWE/T7CHZNl7kEtRG
-         WpPnDf+V4d82UFPeSihfMHKuleQslW1im1RMDAdkQJkC8EF76jXCJfQs0ASdETa2Y574
-         DfRGeT7tl2vImleQ2zmT6Mj4QaWXsUP3T6TMtFoIzuy0l5dHbqmKd1bMLYOi2Tq24w1v
-         4e/MqXy6K58Y2yPCUISP4KgDKlCRf8pQUzdCzyvYDG68o0BFdHfpKgTlK6a4AFyZSvVe
-         fpgg==
-X-Gm-Message-State: ALQs6tDBMwQNoS/0wbRcrygseXJiEdHwAFDYbo+bLxDvLQluTmTAhhh0
-        ozB9F3wj0lkv6oBDJATvwMpn354Yhqxmib8XXRU0Rg==
-X-Google-Smtp-Source: AIpwx4/dU3Qh1kUraf3IMBQfH4YDen/Uc0q1UJ2f/xrEqKjE5lW0FzQWHdf8M/8fsAq8KeZueMeRG1HsPz3jUWS2WLE=
-X-Received: by 10.129.86.5 with SMTP id k5mr11926546ywb.345.1523299909419;
- Mon, 09 Apr 2018 11:51:49 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 2002:a25:cf81:0:0:0:0:0 with HTTP; Mon, 9 Apr 2018 11:51:48 -0700 (PDT)
-In-Reply-To: <CAPig+cQT0Cgd4gto0dv91XUPDbweG97=waoDCOP-r3S2LbXpUA@mail.gmail.com>
-References: <20180406232136.253950-1-sbeller@google.com> <20180406232136.253950-7-sbeller@google.com>
- <CAPig+cQT0Cgd4gto0dv91XUPDbweG97=waoDCOP-r3S2LbXpUA@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 9 Apr 2018 11:51:48 -0700
-Message-ID: <CAGZ79kb09U4s791C-dW1kCSvYSNGu=UWfH7hxT8Euo13M6-FBg@mail.gmail.com>
-Subject: Re: [PATCH 06/19] refs: add repository argument to get_main_ref_store
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        Git List <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+        id S1753302AbeDISwK (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Apr 2018 14:52:10 -0400
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:42448 "EHLO
+        mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1752947AbeDISwK (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 9 Apr 2018 14:52:10 -0400
+Received: from pps.filterd (m0131697.ppops.net [127.0.0.1])
+        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w39IiGxg005924;
+        Mon, 9 Apr 2018 11:52:06 -0700
+Authentication-Results: palantir.com;
+        spf=softfail smtp.mailfrom=newren@gmail.com
+Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
+        by mx0a-00153501.pphosted.com with ESMTP id 2h6uukhbkt-1;
+        Mon, 09 Apr 2018 11:52:06 -0700
+Received: from mxw1.palantir.com (new-smtp.yojoe.local [172.19.0.45])
+        by smtp-transport.yojoe.local (Postfix) with ESMTP id E29A42213763;
+        Mon,  9 Apr 2018 11:52:05 -0700 (PDT)
+Received: from newren2-linux.yojoe.local (unknown [10.100.71.66])
+        by smtp.yojoe.local (Postfix) with ESMTP id D9EA02CDE6F;
+        Mon,  9 Apr 2018 11:52:05 -0700 (PDT)
+From:   Elijah Newren <newren@gmail.com>
+To:     git@vger.kernel.org
+Cc:     johannes.schindelin@gmx.de, Elijah Newren <newren@gmail.com>
+Subject: [PATCH v2] Make running git under other debugger-like programs easy
+Date:   Mon,  9 Apr 2018 11:51:36 -0700
+Message-Id: <20180409185136.4880-1-newren@gmail.com>
+X-Mailer: git-send-email 2.15.0.1.gcd9d12fc4a.dirty
+In-Reply-To: <20180405174935.598-1-newren@gmail.com>
+References: <20180405174935.598-1-newren@gmail.com>
+X-Proofpoint-SPF-Result: softfail
+X-Proofpoint-SPF-Record: v=spf1 redirect=_spf.google.com
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2018-04-09_08:,,
+ signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ malwarescore=0 suspectscore=48 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1034 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=650 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1711220000 definitions=main-1804090190
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Eric,
+This allows us to run git, when using the script from bin-wrappers, under
+other programs.  A few examples for usage within testsuite scripts:
 
-On Fri, Apr 6, 2018 at 11:53 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->>
->> # Conflicts:
->> #       t/helper/test-ref-store.c
->
-> Meh.
+   debug git checkout master
+   debug --debugger=nemiver git $ARGS
+   debug -d "valgrind --tool-memcheck --track-origins=yes" git $ARGS
 
-Fixed in a reroll.
+Or, if someone has bin-wrappers/ in their $PATH and is executing git
+outside the testsuite:
+
+   GIT_DEBUGGER="gdb --args" git $ARGS
+   GIT_DEBUGGER=nemiver git $ARGS
+   GIT_DEBUGGER="valgrind --tool=memcheck --track-origins=yes" git $ARGS
+
+There is also a handy shortcut of GIT_DEBUGGER=1 meaning the same as
+GIT_DEBUGGER="gdb --args"
+
+Original-patch-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+ t/test-lib-functions.sh | 24 ++++++++++++++++++++----
+ wrap-for-bin.sh         | 19 +++++++++++++------
+ 2 files changed, 33 insertions(+), 10 deletions(-)
+
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index 1701fe2a06..0591d9a7f8 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -145,12 +145,28 @@ test_pause () {
+ 	"$SHELL_PATH" <&6 >&5 2>&7
+ }
+ 
+-# Wrap git in gdb. Adding this to a command can make it easier to
+-# understand what is going on in a failing test.
++# Wrap git with a debugger. Adding this to a command can make it easier
++# to understand what is going on in a failing test.
+ #
+-# Example: "debug git checkout master".
++# Examples:
++#     debug git checkout master
++#     debug --debugger=nemiver git $ARGS
++#     debug -d "valgrind --tool=memcheck --track-origins=yes" git $ARGS
+ debug () {
+-	 GIT_TEST_GDB=1 "$@" <&6 >&5 2>&7
++	case "$1" in
++	-d)
++		DBG_FLAGS="$2" &&
++		shift 2
++		;;
++	--debugger=*)
++		DBG_FLAGS="${1#*=}" &&
++		shift 1
++		;;
++	*)
++		DBG_FLAGS=1
++		;;
++	esac &&
++	GIT_DEBUGGER="${DBG_FLAGS}" "$@" <&6 >&5 2>&7
+ }
+ 
+ # Call test_commit with the arguments
+diff --git a/wrap-for-bin.sh b/wrap-for-bin.sh
+index 22b6e4948f..376c056842 100644
+--- a/wrap-for-bin.sh
++++ b/wrap-for-bin.sh
+@@ -20,10 +20,17 @@ PATH='@@BUILD_DIR@@/bin-wrappers:'"$PATH"
+ 
+ export GIT_EXEC_PATH GITPERLLIB PATH GIT_TEXTDOMAINDIR
+ 
+-if test -n "$GIT_TEST_GDB"
+-then
+-	unset GIT_TEST_GDB
+-	exec gdb --args "${GIT_EXEC_PATH}/@@PROG@@" "$@"
+-else
++case "$GIT_DEBUGGER" in
++'')
+ 	exec "${GIT_EXEC_PATH}/@@PROG@@" "$@"
+-fi
++	;;
++1)
++	unset GIT_DEBUGGER
++	exec gdb --args "${GIT_EXEC_PATH}/@@PROG@@" "$@"
++	;;
++*)
++	GIT_DEBUGGER_ARGS="$GIT_DEBUGGER"
++	unset GIT_DEBUGGER
++	exec ${GIT_DEBUGGER_ARGS} "${GIT_EXEC_PATH}/@@PROG@@" "$@"
++	;;
++esac
+-- 
+2.15.0.1.gcd9d12fc4a.dirty
+
