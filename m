@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3D88C1F404
-	for <e@80x24.org>; Mon,  9 Apr 2018 22:46:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 045591F404
+	for <e@80x24.org>; Mon,  9 Apr 2018 22:46:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752128AbeDIWqJ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Apr 2018 18:46:09 -0400
-Received: from mail-pl0-f65.google.com ([209.85.160.65]:38497 "EHLO
-        mail-pl0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752068AbeDIWpz (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Apr 2018 18:45:55 -0400
-Received: by mail-pl0-f65.google.com with SMTP id c7-v6so2842963plr.5
-        for <git@vger.kernel.org>; Mon, 09 Apr 2018 15:45:55 -0700 (PDT)
+        id S1752202AbeDIWqK (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Apr 2018 18:46:10 -0400
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:34871 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752163AbeDIWqA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Apr 2018 18:46:00 -0400
+Received: by mail-pf0-f194.google.com with SMTP id u86so6614886pfd.2
+        for <git@vger.kernel.org>; Mon, 09 Apr 2018 15:46:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=b644eyjjOTxS7dobtNeXa6DyMG84pvgIbHN9e3kKVTA=;
-        b=elNdoIgSohMOfyXeInGF59iYieo0CzIy6d91Z9D0iLNWOvdzFx7qvd5VPEB35LyfaX
-         VmcTYJ89q9IIYPF7iNZejTAfNiC9x45srX+eAjseBpw0K4z2fsF5hGoaqaN7TWD/JaJU
-         O0rvCJF9mBRdA4dAe3e0cn86PySmBTOEszo25knMQDa3V7u0iwvSzvKY1rBK5XjF6bwI
-         WGm+qk7iNEqbsqEc/SvD3XBfmOjjQP3Rinc9vNDA9e6S0Q4v7XTksYFqr0aXP+K1Yc9/
-         7eQB+jB7VUBubKabXjyZ2BsOLHnvcy2EqRMOsWMZvIuA1VoYxXOm2LDT0388EX4UJOX5
-         3ssQ==
+        bh=PPX8FqrBQSjvVSWiExVNjsPjMQELkZacgabuG6F5KbU=;
+        b=X86fgv5ENgpzc7aQ8YYDJtZTyzRlkCiR9NKxZ/2WYXJ5YMblqPdI/b/LKBYtDKa7jG
+         JwJO57viYoj7TJcNRpmJiND+d/YbMqTD8qxtNPlS2jA41kkQNl9MgV6LMjsgkU2skS5m
+         doPsngqVaZAMrOFkcNLu/vOXAdTnQ6S6wXL1daE4CjR6WVDSTdQRudcj2O52CkPZx5fl
+         4ysKiUWoitK+K2LIxVYM7rerRa11pM+yzjUVKiJrozsMI9p9do7azqQwzSGVzDX5Pg6s
+         WDv1pO1n0t+1DwLGWVcyoA/l2jqks92fYbX8lCGbzLr+f1kgNc539dJADIMDU/6sb/rS
+         MBHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=b644eyjjOTxS7dobtNeXa6DyMG84pvgIbHN9e3kKVTA=;
-        b=rDTK5pmcVR7DlabfJ80LYBx/x9Glo2j9xnwzGqIaa3N7syRO/NFNcsg7URVuKSgMCz
-         iYYHnPYSv3M9PsnwNROXkiDsUu1axDu5baZ1JKq3hHwsvdVL8QUSrO5so0/cGRRxFSXF
-         A/q7Ruzbzlxm4X5MyvA20k91OkGBNypbguzRWgIxb34XV1LtgdGSeMYuUw8iCjPQqxFK
-         qJ/Uw9oz15b3QDzlz+w/wUuPlespsy2cL/vGccz3f3kp3EGvAfW0wxeKSvZFMkzBuV1M
-         SowbsSX4Moz28tgWbPh0awhfbwdfg9m1nSYSM2WFJo6LW+AU3VJaDIq/5E+xqUa7iHeG
-         PW9w==
-X-Gm-Message-State: AElRT7FxLSwhYqGeySE4VthKL6zKDVHbGm3E8gdIAzj1MtrMpotq0IQN
-        WFBdRHgfZxXJ3tUt1IaCskBX2g==
-X-Google-Smtp-Source: AIpwx4/uW0RdBXTe8EaD9s2ARnw12UXDqzfAH9gxC3oy9FNiPDV8FsMkgUxth0xsZhOeJaFJKb8/2g==
-X-Received: by 2002:a17:902:2941:: with SMTP id g59-v6mr40617358plb.55.1523313954982;
-        Mon, 09 Apr 2018 15:45:54 -0700 (PDT)
+        bh=PPX8FqrBQSjvVSWiExVNjsPjMQELkZacgabuG6F5KbU=;
+        b=nTt0mSP8mi1/hnL1LzAviNkvgkDD5NGaQEPG3wXd66K9m6Z99sEYs50WrsZqqnZk/J
+         pQY4ppWACsLtLrLQWnEdZwldX7r1EhmNrhFEHCUNJPH0ppb52FWrPnpuszoH3eZu1Rm/
+         t1/TciDeC7RhN86+NZVGA3/kD6puc1qEZ91w+kmajzgs/tUxNW42T6eexuX2J/GraXaz
+         y4Nv2gswMjak/OjVTXUbaxNLAwIref8U328BRwk2Z7lXhv+i28gbILpX3gBOGbtEmqSG
+         xF71HJ0tMJ8m1ahQMF38kXd/e2Awmh+iREl1KpWXW7gbi6ICzHLKtr2vC33yEN3ccErS
+         r+Pw==
+X-Gm-Message-State: ALQs6tDl8Net4MaYadDuT9QyV3hS2gRy2hUXIZ/8Dvh+YyusRrNzt3+D
+        AzP/7NmVH9yYyXbNUg/Bc9esBw==
+X-Google-Smtp-Source: AIpwx490rPgGy1UoLXUjDomb34Vv/GWmFBKoOPvTxVjdMvQn0l0rFLjmSprym6GRcHoP8RM4so5qoQ==
+X-Received: by 10.98.58.75 with SMTP id h72mr592600pfa.209.1523313959912;
+        Mon, 09 Apr 2018 15:45:59 -0700 (PDT)
 Received: from localhost ([2620:0:100e:422:ea58:fa52:fa77:9b41])
-        by smtp.gmail.com with ESMTPSA id d83sm2622206pfl.176.2018.04.09.15.45.54
+        by smtp.gmail.com with ESMTPSA id s2sm2226633pfb.66.2018.04.09.15.45.59
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 09 Apr 2018 15:45:54 -0700 (PDT)
+        Mon, 09 Apr 2018 15:45:59 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     sbeller@google.com
 Cc:     git@vger.kernel.org, jonathantanmy@google.com,
         sunshine@sunshineco.com, pclouds@gmail.com, l.s.r@web.de,
         sandals@crustytoothpaste.net
-Subject: [PATCH 12/16] refs: store the main ref store inside the repository struct
-Date:   Mon,  9 Apr 2018 15:45:29 -0700
-Message-Id: <20180409224533.17764-13-sbeller@google.com>
+Subject: [PATCH 15/16] replace-object: allow do_lookup_replace_object to handle arbitrary repositories
+Date:   Mon,  9 Apr 2018 15:45:32 -0700
+Message-Id: <20180409224533.17764-16-sbeller@google.com>
 X-Mailer: git-send-email 2.17.0.484.g0c8726318c-goog
 In-Reply-To: <20180409224533.17764-1-sbeller@google.com>
 References: <20180406232136.253950-1-sbeller@google.com>
@@ -67,73 +67,51 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- refs.c       | 13 +++++--------
- refs.h       |  4 +---
- repository.h |  3 +++
- 3 files changed, 9 insertions(+), 11 deletions(-)
+ replace-object.c | 7 ++++---
+ replace-object.h | 4 ++--
+ 2 files changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/refs.c b/refs.c
-index f58b9fb7df..b5be754a97 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1608,9 +1608,6 @@ static struct ref_store_hash_entry *alloc_ref_store_hash_entry(
- 	return entry;
- }
- 
--/* A pointer to the ref_store for the main repository: */
--static struct ref_store *main_ref_store;
--
- /* A hashmap of ref_stores, stored by submodule name: */
- static struct hashmap submodule_ref_stores;
- 
-@@ -1652,13 +1649,13 @@ static struct ref_store *ref_store_init(const char *gitdir,
- 	return refs;
- }
- 
--struct ref_store *get_main_ref_store_the_repository(void)
-+struct ref_store *get_main_ref_store(struct repository *r)
+diff --git a/replace-object.c b/replace-object.c
+index eae52c66f3..246b98cd4f 100644
+--- a/replace-object.c
++++ b/replace-object.c
+@@ -53,17 +53,18 @@ static void prepare_replace_object(struct repository *r)
+  * permanently-allocated value.  This function always respects replace
+  * references, regardless of the value of check_replace_refs.
+  */
+-const struct object_id *do_lookup_replace_object_the_repository(const struct object_id *oid)
++const struct object_id *do_lookup_replace_object(struct repository *r,
++						 const struct object_id *oid)
  {
--	if (main_ref_store)
--		return main_ref_store;
-+	if (r->main_ref_store)
-+		return r->main_ref_store;
+ 	int depth = MAXREPLACEDEPTH;
+ 	const struct object_id *cur = oid;
  
--	main_ref_store = ref_store_init(get_git_dir(), REF_STORE_ALL_CAPS);
--	return main_ref_store;
-+	r->main_ref_store = ref_store_init(r->gitdir, REF_STORE_ALL_CAPS);
-+	return r->main_ref_store;
- }
+-	prepare_replace_object(the_repository);
++	prepare_replace_object(r);
+ 
+ 	/* Try to recursively replace the object */
+ 	while (depth-- > 0) {
+ 		struct replace_object *repl_obj =
+-			oidmap_get(the_repository->objects->replace_map, cur);
++			oidmap_get(r->objects->replace_map, cur);
+ 		if (!repl_obj)
+ 			return cur;
+ 		cur = &repl_obj->replacement;
+diff --git a/replace-object.h b/replace-object.h
+index dff57bfa1e..3520fd7ff7 100644
+--- a/replace-object.h
++++ b/replace-object.h
+@@ -14,8 +14,8 @@ struct replace_object {
+  * This internal function is only declared here for the benefit of
+  * lookup_replace_object().  Please do not call it directly.
+  */
+-#define do_lookup_replace_object(r, s) do_lookup_replace_object_##r(s)
+-extern const struct object_id *do_lookup_replace_object_the_repository(const struct object_id *oid);
++extern const struct object_id *do_lookup_replace_object(struct repository *r,
++						        const struct object_id *oid);
  
  /*
-diff --git a/refs.h b/refs.h
-index ab3d2bec2f..f5ab68c0ed 100644
---- a/refs.h
-+++ b/refs.h
-@@ -760,9 +760,7 @@ int reflog_expire(const char *refname, const struct object_id *oid,
- 
- int ref_storage_backend_exists(const char *name);
- 
--#define get_main_ref_store(r) \
--	get_main_ref_store_##r()
--struct ref_store *get_main_ref_store_the_repository(void);
-+struct ref_store *get_main_ref_store(struct repository *r);
- /*
-  * Return the ref_store instance for the specified submodule. For the
-  * main repository, use submodule==NULL; such a call cannot fail. For
-diff --git a/repository.h b/repository.h
-index 09df94a472..7d0710b273 100644
---- a/repository.h
-+++ b/repository.h
-@@ -26,6 +26,9 @@ struct repository {
- 	 */
- 	struct raw_object_store *objects;
- 
-+	/* The store in which the refs are held. */
-+	struct ref_store *main_ref_store;
-+
- 	/*
- 	 * Path to the repository's graft file.
- 	 * Cannot be NULL after initialization.
+  * If object sha1 should be replaced, return the replacement object's
 -- 
 2.17.0.484.g0c8726318c-goog
 
