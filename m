@@ -6,55 +6,54 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8BE061F404
-	for <e@80x24.org>; Tue, 10 Apr 2018 00:18:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DFFE01F404
+	for <e@80x24.org>; Tue, 10 Apr 2018 00:18:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751609AbeDJASk (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Apr 2018 20:18:40 -0400
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:40754 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752163AbeDJASc (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Apr 2018 20:18:32 -0400
-Received: by mail-pf0-f194.google.com with SMTP id y66so6754413pfi.7
-        for <git@vger.kernel.org>; Mon, 09 Apr 2018 17:18:32 -0700 (PDT)
+        id S1752235AbeDJASo (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Apr 2018 20:18:44 -0400
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:42769 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752200AbeDJASf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Apr 2018 20:18:35 -0400
+Received: by mail-pf0-f193.google.com with SMTP id o16so6744082pfk.9
+        for <git@vger.kernel.org>; Mon, 09 Apr 2018 17:18:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=25Una9zbUNbSSlW/iwRRn9fkgk7Jh2cTe7hVEpittqk=;
-        b=GBVpsFfWgWuLaSIpBVwK0Sk3VeYPAI1hMr5nV2PcQohLFPkAllqF6o6LUlcRlFcvaO
-         L1l96tWBX6KUSHMemZa8MUIS6ssqv7MxU+nsEHLkrUI23vaEsZZ5ysflF5LKUG3rr/9u
-         K8XNJaRmUHchUGzCUlwQ6kmzPeZEm62SYQ+dnc6crP5GB8J5nhokBgq5KhV1RnxhuWG1
-         dNz9lfslYJb3lG1tBGKT03g/RofCflFjKPP56m2BbwvDFJxjzuQKeBya/rxCOes4Hrrw
-         Jh3fflMqhH3IeCYfuIbl34cOnuwpZ2nB0buGwb6FBaOG0ZuG9/8pd4WoWxZ9EKS8z+5D
-         hjYw==
+        bh=EHUPBdGgXUXtkCSKdGgg8A2RMQjlMuGzzmNJfoIyrXA=;
+        b=Oe98+44ITJRAnNHkSHsGn0qP+rlJ5NZdq7+SYnmh2qolzTy4WCjT3dmdGPOlTNuWjl
+         iVayCLKV0wgXNV+EHh5TkjyPD1CHmDQmM/mOs/OY1fUhi7n0FV/KsNwFxClZopfuxIpO
+         5IAB/ScdJR22C7rgaNPMavacd9vtIPkkNgWD0fYHu75x6KRITv4lGbUZEc3Ie17NsU7p
+         V8AqyxkZpRCXr9+Z4vUjEYlwk7fdIoX5c0bOt8mj8KBQDARNOATn1t3MmZwfY0KuHC8b
+         xPJhLNfSWbVOejuJ7KQDCOBS98KZdk136tlSeMJiHFB9a8I4veS2QyHSz+PZwo8lU4kg
+         /1fg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=25Una9zbUNbSSlW/iwRRn9fkgk7Jh2cTe7hVEpittqk=;
-        b=BjNOH1KuSLarLEBESBRPNtOirXAu4q/7QcswqQrmQTxdjKZRidWzljLboQ6/X4SjOD
-         H2lskPTaHJCueA/41qVcVfOm1xKxUZmf8wPhPGaTtVc2zjCKmb3xmxFc5JzxOCsY9omB
-         EP+yLkfTDbNN+DXZnqBRrj0KDos+bkfVGRGYJtFwRTBspdpLv8ajdMhTpEbTXNrF/buL
-         5NakB4Qt75X+S94HHmUoUBgPNrkWrOO94fd4Z0uWw7K4WQl3SjVpPJ5FTjDlUW1yKRr+
-         YnQJqS//2+0hQ+IqNM2DMtPg3y/VVohn1KgNkiPRZ6PBRCLXI05Ka9S+HKihCpDnmjlG
-         EmhA==
-X-Gm-Message-State: ALQs6tBZp+UGGnVJq1RoVB+pHQtYD8Ihcw5n/H3oJnWFDMlWiKroeNwj
-        K7HKpcdfCNu4IgULNsWtDjFNGrmQiCY=
-X-Google-Smtp-Source: AIpwx4/u3YwCMz+HH5oGJq/TQR8OVtC8rB6RjiR3/Kc1XCHLnnOdZ9sOif5tZy2lGs728JG4aERqMw==
-X-Received: by 10.99.116.76 with SMTP id e12mr17452344pgn.270.1523319511112;
-        Mon, 09 Apr 2018 17:18:31 -0700 (PDT)
+        bh=EHUPBdGgXUXtkCSKdGgg8A2RMQjlMuGzzmNJfoIyrXA=;
+        b=tDTl2HrpvvMjB7idW9PC2uTiz74z93fg7VUIena/YIt4g6JeUwakYustPtWOU+sNSM
+         9VooCtbzQ55NZSNX1VDDYMULeVsDyaDFQpuyVcujxBXO7fDmHytQCQUiEiQ040WVbnhN
+         gUCAPn4JaWsgViSWeYPWA9M5OfsTjuByTzoBXFa0MroWRYK6I9li4kMtOV7mFjs0VYMs
+         kEj8sl63UwX0gLTtbMDsLOH/4aIMsfOCfEyLyzFp86e0KGnK+9BqabnGqzFebK5foLEN
+         F7cv8oNUsQMEIPnPKWYaVlCEpLHXcdUl6L5AgyBqZugCiY+0jDuYjj20S9af4oESp2Vc
+         ni5A==
+X-Gm-Message-State: ALQs6tBaKTBztxflQCTH38imFLdNretpr4WX9k6cQYcgTtyy0JEmRKSs
+        BKZmRwIreCLFqCe08Yem+AwQ+bUfsBc=
+X-Google-Smtp-Source: AIpwx4/cmPSb7DtPbUAelFu+HuKHz9smU0Fi22vo9gTtRy/M8wpUM5mSHz6RfHP6wJ3xufSp4zLyvA==
+X-Received: by 10.98.72.205 with SMTP id q74mr850875pfi.70.1523319513797;
+        Mon, 09 Apr 2018 17:18:33 -0700 (PDT)
 Received: from localhost ([2601:602:9500:3a4f:1d66:22f3:ac1d:6007])
-        by smtp.gmail.com with ESMTPSA id c187sm2412528pfa.181.2018.04.09.17.18.29
+        by smtp.gmail.com with ESMTPSA id 125sm2239284pff.158.2018.04.09.17.18.32
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 09 Apr 2018 17:18:30 -0700 (PDT)
-Date:   Mon, 9 Apr 2018 17:18:28 -0700
+        Mon, 09 Apr 2018 17:18:32 -0700 (PDT)
+Date:   Mon, 9 Apr 2018 17:18:31 -0700
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     sunshine@sunshineco.com, gitster@pobox.com, peff@peff.net
-Subject: [PATCH v6 2/3] config.c: introduce 'git_config_color' to parse ANSI
- colors
-Message-ID: <20180410001828.GC67209@syl.local>
+Subject: [PATCH v6 3/3] builtin/config: introduce `color` type specifier
+Message-ID: <20180410001831.GD67209@syl.local>
 References: <20180306021729.45813-1-me@ttaylorr.com>
  <cover.1523319159.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -67,56 +66,149 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In preparation for adding `--type=color` to the `git-config(1)` builtin,
-let's introduce a color parsing utility, `git_config_color` in a similar
-fashion to `git_config_<type>`.
+As of this commit, the canonical way to retreive an ANSI-compatible
+color escape sequence from a configuration file is with the
+`--get-color` action.
+
+This is to allow Git to "fall back" on a default value for the color
+should the given section not exist in the specified configuration(s).
+
+With the addition of `--default`, this is no longer needed since:
+
+  $ git config --default red --type=color core.section
+
+will be have exactly as:
+
+  $ git config --get-color core.section red
+
+For consistency, let's introduce `--type=color` and encourage its use
+with `--default` together over `--get-color` alone.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- config.c | 10 ++++++++++
- config.h |  1 +
- 2 files changed, 11 insertions(+)
+ Documentation/git-config.txt |  6 ++++++
+ builtin/config.c             | 22 ++++++++++++++++++++++
+ t/t1300-repo-config.sh       | 30 ++++++++++++++++++++++++++++++
+ 3 files changed, 58 insertions(+)
 
-diff --git a/config.c b/config.c
-index b0c20e6cb8..33366b52c7 100644
---- a/config.c
-+++ b/config.c
-@@ -16,6 +16,7 @@
- #include "string-list.h"
- #include "utf8.h"
- #include "dir.h"
-+#include "color.h"
+diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
+index b644a44ae9..7c8365e377 100644
+--- a/Documentation/git-config.txt
++++ b/Documentation/git-config.txt
+@@ -177,6 +177,10 @@ Valid `<type>`'s include:
+   ~/` from the command line to let your shell do the expansion.)
+ - 'expiry-date': canonicalize by converting from a fixed or relative date-string
+   to a timestamp. This specifier has no effect when setting the value.
++- 'color': When getting a value, canonicalize by converting to an ANSI color
++  escape sequence. When setting a value, a sanity-check is performed to ensure
++  that the given value is canonicalize-able as an ANSI color, but it is written
++  as-is.
+ +
  
- struct config_source {
- 	struct config_source *prev;
-@@ -1000,6 +1001,15 @@ int git_config_expiry_date(timestamp_t *timestamp, const char *var, const char *
- 	return 0;
- }
+ --bool::
+@@ -228,6 +232,8 @@ Valid `<type>`'s include:
+ 	output it as the ANSI color escape sequence to the standard
+ 	output.  The optional `default` parameter is used instead, if
+ 	there is no color configured for `name`.
+++
++`--type=color [--default=<default>]` is preferred over `--get-color`.
  
-+int git_config_color(char *dest, const char *var, const char *value)
-+{
-+	if (!value)
-+		return config_error_nonbool(var);
-+	if (color_parse(value, dest) < 0)
-+		return -1;
-+	return 0;
-+}
+ -e::
+ --edit::
+diff --git a/builtin/config.c b/builtin/config.c
+index 014e3a0d53..08016863ac 100644
+--- a/builtin/config.c
++++ b/builtin/config.c
+@@ -61,6 +61,7 @@ static int show_origin;
+ #define TYPE_BOOL_OR_INT	3
+ #define TYPE_PATH		4
+ #define TYPE_EXPIRY_DATE	5
++#define TYPE_COLOR		6
+ 
+ static int option_parse_type(const struct option *opt, const char *arg,
+ 			     int unset)
+@@ -82,6 +83,8 @@ static int option_parse_type(const struct option *opt, const char *arg,
+ 		*type = TYPE_PATH;
+ 	else if (!strcmp(arg, "expiry-date"))
+ 		*type = TYPE_EXPIRY_DATE;
++	else if (!strcmp(arg, "color"))
++		*type = TYPE_COLOR;
+ 	else
+ 		die(_("unrecognized --type argument, %s"), arg);
+ 
+@@ -202,6 +205,11 @@ static int format_config(struct strbuf *buf, const char *key_, const char *value
+ 			if (git_config_expiry_date(&t, key_, value_) < 0)
+ 				return -1;
+ 			strbuf_addf(buf, "%"PRItime, t);
++		} else if (type == TYPE_COLOR) {
++			char v[COLOR_MAXLEN];
++			if (git_config_color(v, key_, value_) < 0)
++				return -1;
++			strbuf_addstr(buf, v);
+ 		} else if (value_) {
+ 			strbuf_addstr(buf, value_);
+ 		} else {
+@@ -347,6 +355,20 @@ static char *normalize_value(const char *key, const char *value)
+ 		else
+ 			return xstrdup(v ? "true" : "false");
+ 	}
++	if (type == TYPE_COLOR) {
++		char v[COLOR_MAXLEN];
++		if (git_config_color(v, key, value))
++			die("cannot parse color '%s'", value);
 +
- static int git_default_core_config(const char *var, const char *value)
- {
- 	/* This needs a better name */
-diff --git a/config.h b/config.h
-index ef70a9cac1..0e060779d9 100644
---- a/config.h
-+++ b/config.h
-@@ -59,6 +59,7 @@ extern int git_config_bool(const char *, const char *);
- extern int git_config_string(const char **, const char *, const char *);
- extern int git_config_pathname(const char **, const char *, const char *);
- extern int git_config_expiry_date(timestamp_t *, const char *, const char *);
-+extern int git_config_color(char *, const char *, const char *);
- extern int git_config_set_in_file_gently(const char *, const char *, const char *);
- extern void git_config_set_in_file(const char *, const char *, const char *);
- extern int git_config_set_gently(const char *, const char *);
++		/*
++		 * The contents of `v` now contain an ANSI escape
++		 * sequence, not suitable for including within a
++		 * configuration file. Treat the above as a
++		 * "sanity-check", and return the given value, which we
++		 * know is representable as valid color code.
++		 */
++		return xstrdup(value);
++	}
+ 
+ 	die("BUG: cannot normalize type %d", type);
+ }
+diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
+index f5ae80e9ae..c494733061 100755
+--- a/t/t1300-repo-config.sh
++++ b/t/t1300-repo-config.sh
+@@ -931,6 +931,36 @@ test_expect_success 'get --expiry-date' '
+ 	test_must_fail git config --expiry-date date.invalid1
+ '
+ 
++test_expect_success 'get --type=color' '
++	rm .git/config &&
++	git config foo.color "red" &&
++	git config --get --type=color foo.color >actual.raw &&
++	test_decode_color <actual.raw >actual &&
++	echo "<RED>" >expect &&
++	test_cmp expect actual
++'
++
++cat >expect << EOF
++[foo]
++	color = red
++EOF
++
++test_expect_success 'set --type=color' '
++	rm .git/config &&
++	git config --type=color foo.color "red" &&
++	test_cmp expect .git/config
++'
++
++test_expect_success 'get --type=color barfs on non-color' '
++	echo "[foo]bar=not-a-color" >.git/config &&
++	test_must_fail git config --get --type=color foo.bar
++'
++
++test_expect_success 'set --type=color barfs on non-color' '
++	test_must_fail git config --type=color foo.color "not-a-color" 2>error &&
++	test_i18ngrep "cannot parse color" error
++'
++
+ cat > expect << EOF
+ [quote]
+ 	leading = " test"
 -- 
 2.17.0
-
