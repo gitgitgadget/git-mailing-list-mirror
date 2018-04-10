@@ -7,93 +7,76 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7CCD51F404
-	for <e@80x24.org>; Tue, 10 Apr 2018 19:10:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C05FC1F404
+	for <e@80x24.org>; Tue, 10 Apr 2018 19:12:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752191AbeDJTK4 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Apr 2018 15:10:56 -0400
-Received: from mail-yb0-f175.google.com ([209.85.213.175]:35019 "EHLO
-        mail-yb0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751963AbeDJTKz (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Apr 2018 15:10:55 -0400
-Received: by mail-yb0-f175.google.com with SMTP id c1-v6so4700775ybm.2
-        for <git@vger.kernel.org>; Tue, 10 Apr 2018 12:10:55 -0700 (PDT)
+        id S1752099AbeDJTM5 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Apr 2018 15:12:57 -0400
+Received: from mail-yb0-f173.google.com ([209.85.213.173]:44966 "EHLO
+        mail-yb0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751600AbeDJTM4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Apr 2018 15:12:56 -0400
+Received: by mail-yb0-f173.google.com with SMTP id m185-v6so4692753ybm.11
+        for <git@vger.kernel.org>; Tue, 10 Apr 2018 12:12:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=BKGseMxbQ2K5jbCi/rFMk95fqCry+0ToKysKlmM8q+M=;
-        b=b5RsNyZ9lZBtXrXofJjPYqKS5cgz6NSqihAtmbO4fzwikfCBpLx3RuGemYiZ3PoSwx
-         R8DevHbDa3NKXfgGAFqpUkzqHzsYsN4sCVJuyNyTwm6gXrmKtKuMgqCnFJxq2FmGXDFf
-         /lSv7CLzuaXoV3ji62fnXIICPOlRszzWj4W9PCAO9KWjkDr0ntvr+pp+bubn/hYng83a
-         V+tjCy9aAVxYSjOSLtFeBgWHPcTPS9dAHIzQ3b7F4818RU2ob1HJMi+hR/ZNs5rVPT+A
-         2rwk6ALW/2myPHafGIuZ7lred2UqLbqnxmDFRZ7tK9n00/F+J4Dgv8I6KJPl3DlwcgZp
-         bW2w==
+        bh=2qSaBeawMwh6EWx8cLGYV0C/E52BDKjeE+dS/j188kg=;
+        b=Lrpk5FGIUy5te7AC/1uFwn+tzeTMWYy7g/wUE1ghT1QLEdOKk8VIZx6gtAEdPJKdTO
+         DJNVB9/CtsmCUEuskgCqYh9Y8N93kUOP9e2P5hPJ72YB2E0cf2OfcSxn9xiuwLeP0L7+
+         aZGtY2sh3a3dkoATp0WcRUgxr47z9DkVFFZMRGjQ6Z9rOj4dOk8WEyne4d3E8ECdRWac
+         puMmgv6T9Ax2VmDriJZEqa5hfmm78IodRd2RIi1AP7JPO/BPpn6zlWptD0ZVj7WbJHIf
+         bwlCYiuSD3ivLT4ogn1hG/er2X+h87zEp1HlaedI+4llKfe+xZyS2tXjw1ZNY3zdi+U5
+         nfPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=BKGseMxbQ2K5jbCi/rFMk95fqCry+0ToKysKlmM8q+M=;
-        b=osU8Wcuv1Iup5ntU0VEJqkzl7aRQ4cdK3cczHtFQwyw3uDnv0ONLIF+K50byZZDFYe
-         tPFjr1I1eS6+7MZ0gGP4X7Rx8/p+bq5UktItuN73Sy9X1EZEiWcyaTP7jdExrcdmpZkn
-         5IhuAUURDxTC9UP27Dc8IFT2tdjU03LZcM5vm62W50aGn6qLc9qbhsOgAN78p8uiwpaa
-         AMAi0X+2C3vbQh8d8YK+yZ9BXmi9rcJpYWM58L3/7kZ4Qhqr4zSPxRSfFi481BYcrkLJ
-         KKbAUQVlaJzszwKhyzcMN9DQ406JDNIcNdQjfJeeKTykDHDgRqgcSbIF6NtjPWjeliL/
-         jD7Q==
-X-Gm-Message-State: ALQs6tDJy09EfVqQQA6Mgs9iTC3mwl+smwVl8ufJDNkg31tqudcrwvK3
-        i972iOcYPImUa/5t23BGOov3SH8WWw3naf4j+6kdSbxoNXE=
-X-Google-Smtp-Source: AIpwx4+VsMpYT9Z/bECnXAkwaVY6w72Bk0LfFVT205gslQQGve89HGlNx4GNVahZnWGMV68d1PMycZF9qPTs/ETCiBc=
-X-Received: by 2002:a25:ba51:: with SMTP id z17-v6mr1039424ybj.334.1523387454636;
- Tue, 10 Apr 2018 12:10:54 -0700 (PDT)
+        bh=2qSaBeawMwh6EWx8cLGYV0C/E52BDKjeE+dS/j188kg=;
+        b=AsRWqHtalTyiE3+kMBDwgP/6htIOrO9Uy9+rqqzOJxzNK4akPzb+XW3QJPiq8jSxdA
+         amOhNT1TM7AM2lN7/Z73PBvdR+yIcIfttgxg0qiviMV8Q5SUA102t+2kQ6PjSrljqlki
+         gXQe8cXG1QX0ycxFQkd1+7JSznZjRz5ASLxhaEMMAGRnuAk6oeS91AXSlRofytM3DlRk
+         vVl52dSwQ6ehO+KPiVz4D17FoC1FcUYw1a/vB0aBpwn8NXu9WW3nLIzufTTAOmADress
+         UNATljj26MrLwj2wyk3CsXcCIlSB8HXsdDLCdK38jvFf856oIZZQRNrsNcXUnFmSQKsg
+         NWVQ==
+X-Gm-Message-State: ALQs6tDNhICTkDMsXxX2n+4ZmhDpBsxp84gAI9SR7+jjIk9MGkiUGoxx
+        ym+jS2GNYvpOmLpYj/fhsYwa3ZvwoAzu7pCkNvf3R1/J
+X-Google-Smtp-Source: AIpwx4+Xmt6ZqQ1zoRB40QC26sZhypY/6owvOPYDhOu+CWzPQzdyjW/w6yhuu2O6piMTU3cyeHCwLc2UUo8ARK+UJjw=
+X-Received: by 2002:a25:8e0e:: with SMTP id p14-v6mr689227ybl.352.1523387575846;
+ Tue, 10 Apr 2018 12:12:55 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:a25:cf81:0:0:0:0:0 with HTTP; Tue, 10 Apr 2018 12:10:54
+Received: by 2002:a25:cf81:0:0:0:0:0 with HTTP; Tue, 10 Apr 2018 12:12:55
  -0700 (PDT)
-In-Reply-To: <20180410125608.39443-4-dstolee@microsoft.com>
-References: <20180402203427.170177-1-dstolee@microsoft.com>
- <20180410125608.39443-1-dstolee@microsoft.com> <20180410125608.39443-4-dstolee@microsoft.com>
+In-Reply-To: <b7644afa-3f5f-4caf-59dc-4ffc8ab0695a@gmail.com>
+References: <xmqqd0z865pk.fsf@gitster-ct.c.googlers.com> <98394864-ece6-5112-0274-b2399087f207@gmail.com>
+ <bba6e3ba-ab28-8cda-eab3-91ec3591bcb5@ramsayjones.plus.com>
+ <xmqq4lkk58y0.fsf@gitster-ct.c.googlers.com> <b7644afa-3f5f-4caf-59dc-4ffc8ab0695a@gmail.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 10 Apr 2018 12:10:54 -0700
-Message-ID: <CAGZ79kYDXTGdS8sx-iW_JNdk7icpwdd3Opwbjw1cL8gMs_47dw@mail.gmail.com>
-Subject: Re: [PATCH v8 03/14] commit-graph: add format document
+Date:   Tue, 10 Apr 2018 12:12:55 -0700
+Message-ID: <CAGZ79kb8_B659WOo0fLWtebX65jetHe=mfNQaHf21udNUM8m_w@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Apr 2018, #01; Mon, 9)
 To:     Derrick Stolee <stolee@gmail.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+Cc:     Junio C Hamano <gitster@pobox.com>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Jeff King <peff@peff.net>,
-        Derrick Stolee <dstolee@microsoft.com>
+        git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Derrick,
+On Tue, Apr 10, 2018 at 5:57 AM, Derrick Stolee <stolee@gmail.com> wrote:
+> On 4/9/2018 6:08 PM, Junio C Hamano wrote:
+>>
+>>
+>> I guess we'd want a final cleaned-up round after all ;-)  Thanks.
+>
+>
+> v8 sent [1]. Thanks.
+>
+> -Stolee
 
-On Tue, Apr 10, 2018 at 5:55 AM, Derrick Stolee <stolee@gmail.com> wrote:
+I gave the series another read and think it is ready.
 
-> +  OID Fanout (ID: {'O', 'I', 'D', 'F'}) (256 * 4 bytes)
-> +      The ith entry, F[i], stores the number of OIDs with first
-> +      byte at most i. Thus F[255] stores the total
-> +      number of commits (N).
-
-I was about to give this series one last read not expecting any questions
-to come up (this series has had a lot of feedback already!)
-Although I just did.
-
-What were your design considerations for the fanout table?
-Did you include it as the pack index has one or did you come up with
-them from first principles?
-Have you measured the performance impact of the fanout table
-(maybe even depending on the size of the fanout) ?
-
-context:
-https://public-inbox.org/git/CAJo=hJsto1ik=GTC8c3+2_jBuUqcAPL0UWp-1uoYYMpgbLB+qg@mail.gmail.com/
-(side note: searching the web for fanout makes it seem
-as if it is git-lingo, apparently the term is not widely used)
-
-I don't think we want to restart the design discussion,
-I am just curious.
-
-Thanks,
 Stefan
