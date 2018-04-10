@@ -2,118 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.9 required=3.0 tests=BAYES_40,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_HK_NAME_MR_MRS shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F1B801F404
-	for <e@80x24.org>; Tue, 10 Apr 2018 20:37:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B5F331F404
+	for <e@80x24.org>; Tue, 10 Apr 2018 20:38:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753375AbeDJUhT (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Apr 2018 16:37:19 -0400
-Received: from avasout04.plus.net ([212.159.14.19]:48533 "EHLO
-        avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753240AbeDJUhT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Apr 2018 16:37:19 -0400
-Received: from [10.0.2.15] ([80.189.70.162])
-        by smtp with ESMTPA
-        id 600yfO576sD7b600zfMIfg; Tue, 10 Apr 2018 21:37:18 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.3 cv=CvORjEwD c=1 sm=1 tr=0
- a=zzlqjQC3YyNvDZl/Gy+4mg==:117 a=zzlqjQC3YyNvDZl/Gy+4mg==:17
- a=IkcTkHD0fZMA:10 a=GiLfns8XnPO8ouBX4acA:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-Subject: Re: What's cooking in git.git (Apr 2018, #01; Mon, 9)
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-To:     Derrick Stolee <stolee@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-References: <xmqqd0z865pk.fsf@gitster-ct.c.googlers.com>
- <98394864-ece6-5112-0274-b2399087f207@gmail.com>
- <bba6e3ba-ab28-8cda-eab3-91ec3591bcb5@ramsayjones.plus.com>
- <xmqq4lkk58y0.fsf@gitster-ct.c.googlers.com>
- <b7644afa-3f5f-4caf-59dc-4ffc8ab0695a@gmail.com>
- <73f2f53d-b73a-bdbe-01a5-8ed1d4fe6b00@ramsayjones.plus.com>
- <f9f5ead8-52c8-0ac4-750c-6d4dc324164d@gmail.com>
- <400756e6-b8df-168e-55b6-652e1f9298be@ramsayjones.plus.com>
-Message-ID: <ebb92e9f-161e-5727-89be-052dfd6e853e@ramsayjones.plus.com>
-Date:   Tue, 10 Apr 2018 21:37:16 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.7.0
+        id S1753300AbeDJUh7 convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Tue, 10 Apr 2018 16:37:59 -0400
+Received: from mail.maltai.hu ([80.77.124.117]:50417 "EHLO mail.maltai.hu"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751629AbeDJUh7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Apr 2018 16:37:59 -0400
+X-Greylist: delayed 529 seconds by postgrey-1.27 at vger.kernel.org; Tue, 10 Apr 2018 16:37:58 EDT
+Received: from localhost (localhost [127.0.0.1])
+        by mail.maltai.hu (Postfix) with ESMTP id 468CA4B33C7
+        for <git@vger.kernel.org>; Tue, 10 Apr 2018 22:28:45 +0200 (CEST)
+Received: from mail.maltai.hu ([127.0.0.1])
+        by localhost (mail.maltai.hu [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id loZys5EPqh8y for <git@vger.kernel.org>;
+        Tue, 10 Apr 2018 22:28:45 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+        by mail.maltai.hu (Postfix) with ESMTP id 898BB4B3301
+        for <git@vger.kernel.org>; Tue, 10 Apr 2018 22:27:21 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at maltai.hu
+Received: from mail.maltai.hu ([127.0.0.1])
+        by localhost (mail.maltai.hu [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id s-sfWzMIrogC for <git@vger.kernel.org>;
+        Tue, 10 Apr 2018 22:27:21 +0200 (CEST)
+Received: from [192.168.8.106] (unknown [197.211.61.174])
+        by mail.maltai.hu (Postfix) with ESMTPSA id C394C4B335D
+        for <git@vger.kernel.org>; Tue, 10 Apr 2018 22:26:14 +0200 (CEST)
+Content-Type: text/plain; charset="iso-8859-1"
 MIME-Version: 1.0
-In-Reply-To: <400756e6-b8df-168e-55b6-652e1f9298be@ramsayjones.plus.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfMopv0Ihde/hvPbBGAVwS2BiBWPCVyhrqJ6cKLbUDlNvjAyfJNn+QRrnXrMABLGpY/9/AMqbVyJml6cMHIvvuIoSqzfucj/xVMADOU+xXC4036q7H6Av
- iQlg44dnRO0+PtosVNkkhP2j8NyuGF5wq6IbVXiu/5bamPcavBFHBU6YsGOCVHuJumMlcVnUKaKwpg==
+Content-Transfer-Encoding: 8BIT
+Content-Description: Mail message body
+Subject: Inbox SMTP, Inbox Webmail, I Sell Sure Spamming Toolz
+To:     git@vger.kernel.org
+From:   "Mr Spamming" <csuri.zsuzsanna@maltai.hu>
+Date:   Tue, 10 Apr 2018 21:26:30 +0100
+Reply-To: export.ltd@hotmail.com
+Message-Id: <20180410202614.C394C4B335D@mail.maltai.hu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+I Sell Sure Spamming Toolz 
+What we have on Stock Daily 
 
+Inbox Webmail
+Inbox SMTP
+Fresh USA email leads
+Fresh Canada email leads
+Fresh Loan email leads
+Fresh Business emails leads
+Real Eastate email leads
+Conference delegates email leads
+Fresh Job Seaker emails
+cPanel HTTP and HTTPs
+Shell Zip/Unzipp
+Mailer
+RDP
+All ScamPages
+Bank ScamPage
 
-On 10/04/18 21:22, Ramsay Jones wrote:
-> 
-> 
-> On 10/04/18 20:35, Derrick Stolee wrote:
->> On 4/10/2018 3:21 PM, Ramsay Jones wrote:
->>>
->>> On 10/04/18 13:57, Derrick Stolee wrote:
->>>> On 4/9/2018 6:08 PM, Junio C Hamano wrote:
->>>>> I guess we'd want a final cleaned-up round after all ;-)  Thanks.
->>>> v8 sent [1]. Thanks.
->>> I just tried to 'git am' this series and I could not get it
->>> to apply cleanly to current 'master', 'next' or 'pu'. I fixed
->>> up a few patches, but just got bored ... ;-)
->>>
->>
->> In my cover letter, I did mention that my patch started here (using 'format-patch --base'):
->>
->> base-commit: 468165c1d8a442994a825f3684528361727cd8c0
->>
->>
->> This corresponds to v2.17.0.
-> 
-> Yep, I forgot to mention that I had already tried that too:
-> 
-> $ git log --oneline -1
-> 468165c1d (HEAD -> master-graph, tag: v2.17.0, origin/maint, maint, build) Git 2.17
-> $ git am patches/*
-> Applying: csum-file: rename hashclose() to finalize_hashfile()
-> Applying: csum-file: refactor finalize_hashfile() method
-> Applying: commit-graph: add format document
-> Applying: graph: add commit graph design document
-> Applying: commit-graph: create git-commit-graph builtin
-> Applying: commit-graph: create git-commit-graph builtin
-> error: patch failed: .gitignore:34
-> error: .gitignore: patch does not apply
-> error: Documentation/git-commit-graph.txt: already exists in index
-> error: patch failed: Makefile:952
-> error: Makefile: patch does not apply
-> error: patch failed: builtin.h:149
-> error: builtin.h: patch does not apply
-> error: builtin/commit-graph.c: already exists in index
-> error: patch failed: command-list.txt:34
-> error: command-list.txt: patch does not apply
-> error: patch failed: contrib/completion/git-completion.bash:878
-> error: contrib/completion/git-completion.bash: patch does not apply
-> error: patch failed: git.c:388
-> error: git.c: patch does not apply
-> Patch failed at 0006 commit-graph: create git-commit-graph builtin
-> Use 'git am --show-current-patch' to see the failed patch
-> When you have resolved this problem, run "git am --continue".
-> If you prefer to skip this patch, run "git am --skip" instead.
-> To restore the original branch and stop patching, run "git am --abort".
-> $ 
+Add me on whatsapp or call me
 
-Ah, OK, it helps if you don't have an edited patch backup
-file in the patches directory! patches now apply cleanly.
+Watsapp: +2348107268246
 
-sparse is also now clean - thanks!
-
-ATB,
-Ramsay Jones
-
-
+Only Real buyers
