@@ -6,111 +6,122 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B12FA1F404
-	for <e@80x24.org>; Tue, 10 Apr 2018 03:37:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E54CA1F404
+	for <e@80x24.org>; Tue, 10 Apr 2018 04:13:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751767AbeDJDhq (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Apr 2018 23:37:46 -0400
-Received: from mail-wr0-f195.google.com ([209.85.128.195]:39481 "EHLO
-        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751624AbeDJDhp (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Apr 2018 23:37:45 -0400
-Received: by mail-wr0-f195.google.com with SMTP id c24so11425456wrc.6
-        for <git@vger.kernel.org>; Mon, 09 Apr 2018 20:37:45 -0700 (PDT)
+        id S1751490AbeDJEN1 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Apr 2018 00:13:27 -0400
+Received: from mail-qk0-f179.google.com ([209.85.220.179]:43325 "EHLO
+        mail-qk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751286AbeDJEN0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Apr 2018 00:13:26 -0400
+Received: by mail-qk0-f179.google.com with SMTP id v2so11970538qkh.10
+        for <git@vger.kernel.org>; Mon, 09 Apr 2018 21:13:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=FCTk6tjdLUDzEZ/9GWXMTokgWoTtJj3jnSOOfyAdYFI=;
-        b=vBV+/B61Ofmzdkk8U2v3Q9BgtnZilT1i98TEeLIiVRoTw+BjCKVMPyj3exU75lMGv6
-         N6HDPNIgQTiw4eUZY+vqe2uVRrqHaxdThUO4TERLfSH1qQ5kQWCIWNadMqy6mR3hHxDc
-         Dyd7/uAsBgNpqZzODjntVIhhjOTRLU9TQ9tawjHiD8ZPIGiCl8MoF1xiaksJ0FcEwycu
-         XBRX9F2ec0dNTzUUuZdNAl5gHljXJpCDK9M9hJTtW/xWgGERvU4g0iHKyfIk9GJ7hl5P
-         //2FS/jdw6AjLdyYpgygOoJuIlEnEPN/rV+hN8NKvKoVyx2OS9qZtxZqW/22vRdHn++5
-         70BA==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=8pFFTMQkHuijfqUBlBDo/ZU6kPxtgiJx0fY2dVAyWTY=;
+        b=e+j2RPVfSo0L3/77R57Gy2kYt8IKP2uHG+kz16+2tF3/OgAYQ/eceZSo3YrIERXCcv
+         2lW7iaLGhmOhaOf+5PCHL7lsl5d0BKlIWo7BurzukJUX2iniS3LpIUS2XoVxpbiKskI+
+         e4oJEDrUODyvO6NyTEepsfRpphhxqw9cns2EaFKtqpHtfuFprkMkVyGvvGQAHbEZ60i2
+         JO1H2hdox0Gx6pBZFBk1U3Gfb6tCRu34bWg/h0ynbjAH0az21OkRbbfhG39SDD72Af7/
+         SH2IgibvJZVWeturwtbuDPoxEntxjK/8N2k6K16JkZAKJROrOia5FOZ6xouNYG7VCYLu
+         GrIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=FCTk6tjdLUDzEZ/9GWXMTokgWoTtJj3jnSOOfyAdYFI=;
-        b=hyCYyV6fsVgesHx6cKhXHeYa6CbX4YX+fMBSFIRiBFeYQpc0G3MuO5TsmNlC3aztwV
-         JEGDDF1GxbrYp40+oViIVz0Z1O1IkJDNel1CLWfzt4dhgW9MGZDFv87zyTu3IlqmQ25I
-         i8YU6+By9mGOKrLPnNj3cnikEuVivCB6zqSXnzFd4AS3AF/tKizjjdP2h6JJVDEedJEb
-         g7CuHCWb3nCq8qC2qoW3WT3uhOCMAqkE9NuR03/cO7JR+gZjyOjllpsfIEJPm9pE681O
-         4w+gA1i41Cy4hP42qQp8v7ovxMZfyZxq3LEysLl0sNg7d0jDu6iOx0jJiP2JnNpdisOp
-         9dFg==
-X-Gm-Message-State: AElRT7Fc3uAPvnrT3H92a6zyVxmxKAW4/ooX8Ni52ncSAB3Ps+V9d784
-        8o9qBxnn2kmPko/vWAZ2S5c=
-X-Google-Smtp-Source: AIpwx4/xEzQ21P0HiYXH3bIgzuYnpDztHDhpeTziBQaFlFAPOkCB8jJxkeSwmQZvWJyKB7+6G+YDvQ==
-X-Received: by 10.223.139.206 with SMTP id w14mr28781811wra.169.1523331464108;
-        Mon, 09 Apr 2018 20:37:44 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id t76sm874755wme.17.2018.04.09.20.37.42
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 09 Apr 2018 20:37:42 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org, jonathantanmy@google.com,
-        sunshine@sunshineco.com, pclouds@gmail.com, l.s.r@web.de,
-        sandals@crustytoothpaste.net
-Subject: Re: [PATCH 06/16] replace-object: check_replace_refs is safe in multi repo environment
-References: <20180406232136.253950-1-sbeller@google.com>
-        <20180409224533.17764-1-sbeller@google.com>
-        <20180409224533.17764-7-sbeller@google.com>
-Date:   Tue, 10 Apr 2018 12:37:42 +0900
-In-Reply-To: <20180409224533.17764-7-sbeller@google.com> (Stefan Beller's
-        message of "Mon, 9 Apr 2018 15:45:23 -0700")
-Message-ID: <xmqqvacz3f5l.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=8pFFTMQkHuijfqUBlBDo/ZU6kPxtgiJx0fY2dVAyWTY=;
+        b=uO2mpaVCCf2LuRHKgTZ8q0kfGwLfQILXrqp0Zw5JAfX69UCx2Tnm/by9q2WoE1cJZD
+         5qiqdgZ+HCedsnbLN5ekpwAI18BvOPgWikZm/cKWqn/zg5wjJBDGBvQ7I20ntfrQQ8Gk
+         scusdbnIeAXLdz/kChH5YqH2zoxxHAzhvVt4Nse8IOWBa0F3yAZxMWWOnnisx/Un8I8R
+         WTV7vLZfFBrce0GmDkRgM6G/b8nSfjtA5Raiaayts5usRwBs5KpamSkU3HXX6SKwBlKF
+         hPYni0X6KFcLmAkHSUMKYg9tqaAtF4Zx6tMIo1+ujWmPI1EV5NdPPXxvhhWpdbsnX46u
+         LZ3g==
+X-Gm-Message-State: ALQs6tAXQPJVa23wrHJ1lL9v/NF/gaaxRWPVjapW/JWmW9QfB5wFvj3u
+        9yyahwFkNeNdsN3LUtnix7IU1CKtxNYe5Bqb9LA=
+X-Google-Smtp-Source: AIpwx48Cvh1wizsJnJNBykeju3KZYUP/mZ0QabWF7nsAlb9xkGDtN16b7+PzCIQBAmQ4RKMtfAKKJvAs6gNAvA4uGY4=
+X-Received: by 10.55.3.140 with SMTP id 134mr53953037qkd.26.1523333605539;
+ Mon, 09 Apr 2018 21:13:25 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.12.174.202 with HTTP; Mon, 9 Apr 2018 21:13:24 -0700 (PDT)
+In-Reply-To: <20180410021253.GA937@syl.local>
+References: <20180328234719.595-1-me@ttaylorr.com> <cover.1523313730.git.me@ttaylorr.com>
+ <20180409224654.GB34547@syl.local> <xmqqy3hv4zzi.fsf@gitster-ct.c.googlers.com>
+ <20180410021253.GA937@syl.local>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Tue, 10 Apr 2018 00:13:24 -0400
+X-Google-Sender-Auth: UZzwgKN2kWacW7fDrBp4u4syL44
+Message-ID: <CAPig+cT4mRQpvF4qNWOoVs-+94Bpg9ZJ3QnxZ4KF7HcKm-cUKQ@mail.gmail.com>
+Subject: Re: [PATCH v7 1/2] builtin/config.c: treat type specifiers singularly
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+        ericsunshine@sunshineco.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
-
-> In e1111cef23 (inline lookup_replace_object() calls, 2011-05-15) a
-> shortcut for checking the object replacement was added by setting
-> check_replace_refs to 0 once the replacements were evaluated to
-> not exist. This works fine in with the assumption of only one
-> repository in existence.
-
-"works fine in with the..."?  I guess s/ in with/ with/?
-
-> The assumption won't hold true any more when we work on multiple
-> instances of a repository structs (e.g. one struct per submodule),
-> as the first repository to be inspected may have no replacements
-> and would set the global variable. Other repositories would then
-> completely omit their evaluation of replacements.
+On Mon, Apr 9, 2018 at 10:12 PM, Taylor Blau <me@ttaylorr.com> wrote:
+> On Tue, Apr 10, 2018 at 10:22:25AM +0900, Junio C Hamano wrote:
+>> I suspect that it may be OK to switch to last-one-wins, but then we
+>> should give a justification that is a bit stronger than "we want to
+>> avoid complaining against --int --type=int" (i.e. "we want to switch
+>> to last-one-wins for such and such reasons").
 >
-> This reverts back the meaning of the flag `check_replace_refs` of
-> "Do we need to check with the lookup table?" to "Do we need to read
-> the replacement definition?", adding the bypassing logic to
-> lookup_replace_object after the replacement definition was read.
-> As with the original patch, delay the renaming of the global variable
+> I think that the major justification is to treat --type=int as a _true_
+> synonym of --int, such that neither `--type=<t1> --type=<t2>` nor
+> `--<t1> --<t2>` will complain. This, as well as the fact that
+> OPT_SET_BIT brings us closer to the semantics of `--verbose=1
+> --verbose=2`, which is something that Eric had mentioned above.
 
-Hmph, if we decided that replace database is per repository
-instance, shouldn't this variable also become per repository,
-instead of staying to be a system-wide global?
+I'm probably being dense, but even after reading this paragraph
+several times, I still don't have a good idea as to what it is trying
+to say.
 
-Perhaps that will happpen in a later stage of the series that I
-haven't seen yet, I guess.  And until that happens, we disable the
-optimization and always call into do_lookup_replace_object() when
-lookup_replace_object() is called, which is OK.
+As for my earlier reference to '--verbose=1 --verbose=2', that was
+cited merely as a "last wins" which I could buy; it was offered in
+contrast to '--type=bool --type=int' "last wins" which this patch
+tries to sell, and which I have a tough time buying (though I defer to
+Junio's and Peff's judgments).
 
->  static inline const struct object_id *lookup_replace_object(const struct object_id *oid)
->  {
-> -	if (!check_replace_refs)
-> +	if (!check_replace_refs ||
-> +	    (the_repository->objects->replace_map &&
-> +	     the_repository->objects->replace_map->map.tablesize == 0))
+This patch (or perhaps its commit message) seems to conflate two
+independent goals. (1) ridding this code of OPT_BIT() since its use in
+this context is not very sensible, and (2) trying to sell "last wins"
+(for a not well justified argument) to support '--int --type=int'
+without complaint.
 
-Ah, we still have the same optimization, so this looks alright.  The
-variable's name and semantics do need to be updated--I didn't check
-but if this variable is exposed to the end users in any way, such a
-fundamental sematic change may be hard to transition, though.
+Goal #1 makes plenty sense; no objection to that. Goal #2 isn't so
+obviously desirable (I already raised objections to the more general
+'--bool --type=int' "last wins" it implements).
 
-This series looks good so far.
+> I think that OPT_CMDMODE would not work quite in the way we desire,
+> since the error messages would not quite line up with the command typed.
+> For instance, after applying the following diff:
+>
+>      OPT_CALLBACK('t', "type", &type, N_("type"), N_("value is given this type"), option_parse_type),
+> -    OPT_SET_INT(0, "bool", &type, N_("value is \"true\" or \"false\""), TYPE_BOOL),
+> -    OPT_SET_INT(0, "int", &type, N_("value is decimal number"), TYPE_INT),
+> -    OPT_SET_INT(0, "bool-or-int", &type, N_("value is --bool or --int"), TYPE_BOOL_OR_INT),
+> -    OPT_SET_INT(0, "path", &type, N_("value is a path (file or directory name)"), TYPE_PATH),
+> -    OPT_SET_INT(0, "expiry-date", &type, N_("value is an expiry date"), TYPE_EXPIRY_DATE),
+> +    OPT_CMDMODE(0, "bool", &type, N_("value is \"true\" or \"false\""), TYPE_BOOL),
+> +    OPT_CMDMODE(0, "int", &type, N_("value is decimal number"), TYPE_INT),
+> +    OPT_CMDMODE(0, "bool-or-int", &type, N_("value is --bool or --int"), TYPE_BOOL_OR_INT),
+> +    OPT_CMDMODE(0, "path", &type, N_("value is a path (file or directory name)"), TYPE_PATH),
+> +    OPT_CMDMODE(0, "expiry-date", &type, N_("value is an expiry date"), TYPE_EXPIRY_DATE),
+>
+>   ~/g/git (tb/config-type-specifier-option!) $ ./git-config --type=int --bool foo.bar
+>   error: option `bool' : incompatible with --int
+>
+> Whereas I would expect that to say:
+>
+>   error: option `bool' is incompatible with `--type=int'.
 
+Couldn't you achieve reasonable output (such as "error: conflicting
+types requested: %s and %s") by handling all those --<type>s with a
+custom callback? You've already coded such a callback for
+--type=<type>, and it doesn't look like it would be much more effort
+to refactor it a bit to handle --<type> as well.
